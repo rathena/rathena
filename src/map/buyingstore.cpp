@@ -248,7 +248,7 @@ int8 buyingstore_create( map_session_data* sd, int zenylimit, unsigned char resu
 		Sql_ShowDebug(mmysql_handle);
 	StringBuf_Destroy(&buf);
 
-	clif_buyingstore_myitemlist(sd);
+	clif_buyingstore_myitemlist( *sd );
 	clif_buyingstore_entry( *sd );
 	idb_put(buyingstore_db, sd->status.char_id, sd);
 
@@ -307,13 +307,13 @@ void buyingstore_open(map_session_data* sd, uint32 account_id)
 		return;
 	}
 
-	if( !searchstore_queryremote(sd, account_id) && ( sd->bl.m != pl_sd->bl.m || !check_distance_bl(&sd->bl, &pl_sd->bl, AREA_SIZE) ) )
+	if( !searchstore_queryremote(*sd, account_id) && ( sd->bl.m != pl_sd->bl.m || !check_distance_bl(&sd->bl, &pl_sd->bl, AREA_SIZE) ) )
 	{// out of view range
 		return;
 	}
 
 	// success
-	clif_buyingstore_itemlist(sd, pl_sd);
+	clif_buyingstore_itemlist( *sd, *pl_sd );
 }
 
 /**
@@ -354,13 +354,13 @@ void buyingstore_trade( map_session_data* sd, uint32 account_id, unsigned int bu
 		return;
 	}
 
-	if( !searchstore_queryremote(sd, account_id) && ( sd->bl.m != pl_sd->bl.m || !check_distance_bl(&sd->bl, &pl_sd->bl, AREA_SIZE) ) )
+	if( !searchstore_queryremote(*sd, account_id) && ( sd->bl.m != pl_sd->bl.m || !check_distance_bl(&sd->bl, &pl_sd->bl, AREA_SIZE) ) )
 	{// out of view range
 		clif_buyingstore_trade_failed_seller(sd, BUYINGSTORE_TRADE_SELLER_FAILED, 0);
 		return;
 	}
 
-	searchstore_clearremote(sd);
+	searchstore_clearremote(*sd);
 
 	// buyer lost zeny in the mean time? fix the limit
 	if( pl_sd->status.zeny < pl_sd->buyingstore.zenylimit ){
@@ -703,6 +703,7 @@ void do_init_buyingstore_autotrade( void ) {
 
 				// initialize player
 				CREATE(at->sd, map_session_data, 1); // TODO: Dont use Memory Manager allocation anymore and rely on the C++ container
+				new (at->sd) map_session_data();
 				pc_setnewpc(at->sd, at->account_id, at->char_id, 0, gettick(), at->sex, 0);
 				at->sd->state.autotrade = 1|4;
 				if (battle_config.autotrade_monsterignore)

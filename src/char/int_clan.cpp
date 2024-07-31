@@ -60,9 +60,12 @@ std::shared_ptr<struct clan> inter_clan_fromsql(int clan_id){
 	clan = std::make_shared<struct clan>();
 
 	clan->id = clan_id;
-	Sql_GetData(sql_handle,  0, &data, &len); memcpy(clan->name, data, min(len, NAME_LENGTH));
-	Sql_GetData(sql_handle,  1, &data, &len); memcpy(clan->master, data, min(len, NAME_LENGTH));
-	Sql_GetData(sql_handle,  2, &data, &len); memcpy(clan->map, data, min(len, MAP_NAME_LENGTH_EXT));
+	Sql_GetData( sql_handle,  0, &data, &len );
+	memcpy( clan->name, data, std::min( len, static_cast<decltype(len)>( NAME_LENGTH ) ) );
+	Sql_GetData( sql_handle,  1, &data, &len );
+	memcpy( clan->master, data, std::min( len, static_cast<decltype(len)>( NAME_LENGTH ) ) );
+	Sql_GetData( sql_handle,  2, &data, &len );
+	memcpy( clan->map, data, std::min( len, static_cast<decltype(len)>( MAP_NAME_LENGTH_EXT ) ) );
 	Sql_GetData(sql_handle,  3, &data, nullptr); clan->max_member = atoi(data);
 
 	clan->connect_member = 0;
@@ -96,16 +99,13 @@ std::shared_ptr<struct clan> inter_clan_fromsql(int clan_id){
 }
 
 int mapif_clan_info( int fd ){
-	int offset;
-	int length;
-
-	length = 4 + clan_db.size() * sizeof( struct clan );
+	size_t offset = 4;
+	size_t length = offset + clan_db.size() * sizeof( struct clan );
 
 	WFIFOHEAD( fd, length );
 	WFIFOW( fd, 0 ) = 0x38A0;
-	WFIFOW( fd, 2 ) = length;
+	WFIFOW( fd, 2 ) = static_cast<int16>( length );
 
-	offset = 4;
 	for( const auto& pair : clan_db ){
 		std::shared_ptr<struct clan> clan = pair.second;
 

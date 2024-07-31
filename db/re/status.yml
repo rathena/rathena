@@ -72,6 +72,7 @@ Body:
       Stun: true
       Sleep: true
       Burning: true
+      Protection: true
     EndOnStart:
       Aeterna: true
     EndReturn:
@@ -125,6 +126,7 @@ Body:
       Stun: true
       Sleep: true
       Burning: true
+      Protection: true
     EndOnStart:
       Aeterna: true
   - Status: Stun
@@ -144,6 +146,7 @@ Body:
       Inspiration: true
       Gvg_Stun: true
       Stun: true
+      Protection: true
   - Status: Sleep
     DurationLookup: NPC_SLEEPATTACK
     States:
@@ -162,6 +165,7 @@ Body:
       Inspiration: true
       Gvg_Sleep: true
       Sleep: true
+      Protection: true
   - Status: Poison
     DurationLookup: NPC_POISON
     CalcFlags:
@@ -180,6 +184,7 @@ Body:
       Inspiration: true
       Poison: true
       Dpoison: true
+      Protection: true
   - Status: Curse
     DurationLookup: NPC_WIDECURSE
     CalcFlags:
@@ -198,6 +203,7 @@ Body:
       Inspiration: true
       Gvg_Curse: true
       Curse: true
+      Protection: true
   - Status: Silence
     DurationLookup: NPC_SILENCEATTACK
     States:
@@ -214,6 +220,7 @@ Body:
       Inspiration: true
       Gvg_Silence: true
       Silence: true
+      Protection: true
   - Status: Confusion
     DurationLookup: NPC_WIDECONFUSE
     Flags:
@@ -223,6 +230,7 @@ Body:
     Fail:
       Refresh: true
       Inspiration: true
+      Protection: true
     EndReturn:
       Confusion: true
   - Status: Blind
@@ -242,6 +250,7 @@ Body:
       Fear: true
       Gvg_Blind: true
       Blind: true
+      Protection: true
   - Status: Bleeding
     Icon: EFST_BLOODING
     DurationLookup: NPC_BLEEDING
@@ -259,6 +268,7 @@ Body:
     Fail:
       Refresh: true
       Inspiration: true
+      Protection: true
   - Status: Dpoison
     DurationLookup: NPC_POISON
     CalcFlags:
@@ -999,6 +1009,7 @@ Body:
     Flags:
       SendOption: true
   - Status: Extremityfist
+    Icon: EFST_EXTREMITYFIST
     DurationLookup: MO_EXTREMITYFIST
     CalcFlags:
       Regen: true
@@ -2589,13 +2600,17 @@ Body:
     DurationLookup: HLIF_AVOID
     CalcFlags:
       Speed: true
+    Flags:
+      NoSave: true
+      RemoveFromHomOnMapWarp: true
   - Status: Change
     DurationLookup: HLIF_CHANGE
     CalcFlags:
       Vit: true
       Int: true
     Flags:
-      RemoveOnChangeMap: true
+      NoSave: true
+      RemoveFromHomOnMapWarp: true
     Fail:
       Change: true
   - Status: Bloodlust
@@ -6107,14 +6122,6 @@ Body:
       NoBanishingBuster: true
       NoDispell: true
       RemoveOnHermode: true
-  - Status: Extremityfist2
-    Icon: EFST_EXTREMITYFIST
-    DurationLookup: MO_EXTREMITYFIST
-    Flags:
-      NoRemoveOnDead: true
-      NoDispell: true
-      NoBanishingBuster: true
-      NoClearance: true
   - Status: Mtf_Aspd2
     Icon: EFST_MTF_ASPD2
     CalcFlags:
@@ -8923,3 +8930,21 @@ Body:
       NoClearance: true
     EndOnStart:
       Decreaseagi: true
+  - Status: Protection
+    Icon: EFST_RAY_OF_PROTECTION
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    EndOnStart:
+      Stun: true
+      Sleep: true
+      Curse: true
+      Stone: true
+      Poison: true
+      Blind: true
+      Silence: true
+      Bleeding: true
+      Confusion: true
+      Freeze: true

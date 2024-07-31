@@ -14232,7 +14232,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      autobonus2 "{ bonus bStr,200; bonus2 bHPLossRate,500,1000; }",20,5000,BF_WEAPON,"{ active_transform 1060,5000; specialeffect2 EF_POTION_BERSERK; showscript \"Bigfoot Power !\"; }";
+      autobonus2 "{ bonus bStr,200; bonus2 bHPLossRate,500,1000; }",20,5000,BF_WEAPON,"{ specialeffect2 EF_POTION_BERSERK; }";
     UnEquipScript: |
       heal 0,-300;
   - Id: 4876
@@ -29172,21 +29172,18 @@ Body:
     Type: Etc
     Buy: 5
     Weight: 1
-    Attack: 10
   - Id: 7664
     AegisName: Shooting_Mine
     Name: Grenade Launcher
     Type: Etc
     Buy: 30
     Weight: 1
-    Attack: 10
   - Id: 7665
     AegisName: Dragon_Tail_Missile
     Name: Dragon Tail Missile
     Type: Etc
     Buy: 15
     Weight: 1
-    Attack: 10
   - Id: 7666
     AegisName: TimeTravel_Scroll
     Name: Time Travel Scroll
@@ -43794,13 +43791,131 @@ Body:
     Script: |
       bonus2 bWeaponDamageRate,W_BOW,10;
       bonus bCritical,10;
+  - Id: 29127
+    AegisName: Mana_Vermilion
+    Name: Red Lotus
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddEle,Ele_Fire,10;
+      bonus2 bMagicAtkEle,Ele_Fire,10;
+      bonus2 bSubEle,Ele_Fire,5;
+  - Id: 29128
+    AegisName: Mana_Braze
+    Name: Brass
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddEle,Ele_Water,10;
+      bonus2 bMagicAtkEle,Ele_Water,10;
+      bonus2 bSubEle,Ele_Water,5;
+  - Id: 29129
+    AegisName: Mana_Chrome
+    Name: Silver
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddEle,Ele_Wind,10;
+      bonus2 bMagicAtkEle,Ele_Wind,10;
+      bonus2 bSubEle,Ele_Wind,5;
+  - Id: 29130
+    AegisName: Mana_Twilight
+    Name: Dusk
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddEle,Ele_Earth,10;
+      bonus2 bMagicAtkEle,Ele_Earth,10;
+      bonus2 bSubEle,Ele_Earth,5;
+  - Id: 29131
+    AegisName: Mana_Chaos
+    Name: Chaos
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddEle,Ele_Dark,10;
+      bonus2 bMagicAtkEle,Ele_Dark,10;
+      bonus2 bSubEle,Ele_Dark,5;
+  - Id: 29132
+    AegisName: Mana_Rise
+    Name: Dawn
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddEle,Ele_Holy,10;
+      bonus2 bMagicAtkEle,Ele_Holy,10;
+      bonus2 bSubEle,Ele_Holy,5;
+  - Id: 29133
+    AegisName: Mana_Heal
+    Name: Recover
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bHealPower,10;
+      bonus bHealPower2,10;
+      bonus bAddItemHealRate,10;
+  - Id: 29134
+    AegisName: Heart_Of_Winner
+    Name: Thoughts of a Champion
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_DemiHuman,5;
+      bonus2 bMagicAddRace,RC_DemiHuman,5;
+  - Id: 29135
+    AegisName: Keen1
+    Name: Sharp 1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritical,3;
+      bonus bCritAtkRate,1;
+  - Id: 29136
+    AegisName: Keen2
+    Name: Sharp 2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritical,6;
+      bonus bCritAtkRate,2;
+  - Id: 29137
+    AegisName: Keen3
+    Name: Sharp 3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritical,9;
+      bonus bCritAtkRate,3;
+  - Id: 29138
+    AegisName: Keen4
+    Name: Sharp 4
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritical,12;
+      bonus bCritAtkRate,4;
+  - Id: 29139
+    AegisName: Keen5
+    Name: Sharp 5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritical,15;
+      bonus bCritAtkRate,5;
   - Id: 29140
     AegisName: Orcish_Hero_Of_Anger
     Name: Anger of the Brave
     Type: Card
     SubType: Enchant
     Script: |
-      autobonus "{ bonus3 bAutoSpell,\"NPC_EARTHQUAKE\",3,1000; }",5,5000,BF_NORMAL,"{ active_transform 1850,5000; }";
+      autobonus "{ bonus3 bAutoSpell,\"NPC_EARTHQUAKE\",3,1000; }",8,5000,BF_WEAPON,"{ active_transform 1850,5000; }";
+  - Id: 29141
+    AegisName: Roar_Of_Baphomet
+    Name: Demon Sheep's Roar
+    Type: Card
+    SubType: Enchant
+    Script: |
+      autobonus "{ bonus3 bAutoSpell,\"NPC_HELLJUDGEMENT\",6,1000; }",8,5000,BF_WEAPON,"{ active_transform 1929,5000; }";
   - Id: 29142
     AegisName: Electric_Effect
     Name: Electric Effect
@@ -46274,25 +46389,39 @@ Body:
       bonus2 bSkillAtk,"SC_FATALMENACE",15;
   - Id: 29619
     AegisName: Shadowchaser_Bottom2
-    Name: Shadow Chaser Stone II (Bottom)
+    Name: Stalker Stone II (Lower)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bHit,getskilllv("TF_MISS");
   - Id: 29620
     AegisName: Shadowchaser_Middle2
-    Name: Shadow Chaser Stone II (Middle)
+    Name: Stalker Stone II (Middle)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bSkillAtk,"RG_BACKSTAP",15;
   - Id: 29621
     AegisName: Shadowchaser_Top2
-    Name: Shadow Chaser Stone II (Upper)
+    Name: Stalker Stone II (Upper)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,2*getskilllv("RG_SNATCHER");
+  - Id: 29647
+    AegisName: Lucky_Amulet7
+    Name: Traitor
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (readparam(bStr)>=110)
+         bonus2 bSkillCooldown,"RL_SLUGSHOT",-10000;
+      if (readparam(bAgi)>=110)
+         bonus2 bSkillAtk,"RL_R_TRIP",30*(readparam(bAgi)/5);
+      if (readparam(bInt)>=110)
+         bonus2 bSkillCooldown,"RL_HAMMER_OF_GOD",-20000;
+      if (readparam(bLuk)>=110)
+         bonus2 bSkillAtk,"RL_D_TAIL",30*(readparam(bLuk)/5);
   - Id: 29651
     AegisName: Soullinker_Top
     Name: Soul Linker Stone (Upper)
@@ -48585,7 +48714,7 @@ Body:
       bonus bHit,-50;
   - Id: 300140
     AegisName: ILL_Sropho_Card
-    Name: Deep Sea Sropho Card
+    Name: Abysmal Sropho Card
     Type: Card
     Weight: 10
     Locations:
@@ -48603,7 +48732,7 @@ Body:
       }
   - Id: 300141
     AegisName: ILL_Obeaune_Card
-    Name: Deep Sea Obeaune Card
+    Name: Abysmal Obeaune Card
     Type: Card
     Weight: 10
     Locations:
@@ -48614,7 +48743,7 @@ Body:
       bonus bMatk,30;
   - Id: 300142
     AegisName: ILL_Deviace_Card
-    Name: Deep Sea Deviace Card
+    Name: Abysmal Deviace Card
     Type: Card
     Weight: 10
     Locations:
@@ -48633,7 +48762,7 @@ Body:
       }
   - Id: 300143
     AegisName: ILL_Marse_Card
-    Name: Deep Sea Marse Card
+    Name: Abysmal Marse Card
     Type: Card
     Weight: 10
     Locations:
@@ -48645,7 +48774,7 @@ Body:
       bonus2 bSubRace,RC_Insect,15;
   - Id: 300144
     AegisName: ILL_Merman_Card
-    Name: Deep Sea Merman Card
+    Name: Abysmal Merman Card
     Type: Card
     Weight: 10
     Locations:
@@ -48656,7 +48785,7 @@ Body:
       bonus bBaseAtk,4*(readparam(bStr)/15);
   - Id: 300145
     AegisName: ILL_Abysmal_Witch_Card
-    Name: Deep Sea Witch Card
+    Name: Abysmal Witch Card
     Type: Card
     Weight: 10
     Locations:
@@ -48669,7 +48798,7 @@ Body:
       bonus2 bSubEle,Ele_All,-30;
   - Id: 300146
     AegisName: ILL_Sedora_Card
-    Name: Deep Sea Sedora Card
+    Name: Abysmal Sedora Card
     Type: Card
     Weight: 10
     Locations:
@@ -48680,7 +48809,7 @@ Body:
       bonus2 bCriticalAddRace,RC_Fish,30;
   - Id: 300147
     AegisName: ILL_Sword_Fish_Card
-    Name: Deep Sea Swordfish Card
+    Name: Abysmal Swordfish Card
     Type: Card
     Weight: 10
     Locations:
@@ -48696,7 +48825,7 @@ Body:
       }
   - Id: 300148
     AegisName: ILL_Strouf_Card
-    Name: Deep Sea Strouf Card
+    Name: Abysmal Strouf Card
     Type: Card
     Weight: 10
     Locations:
@@ -48712,7 +48841,7 @@ Body:
       }
   - Id: 300149
     AegisName: ILL_Phen_Card
-    Name: Deep Sea Phen Card
+    Name: Abysmal Phen Card
     Type: Card
     Weight: 10
     Locations:
@@ -48724,7 +48853,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Wind,3*getrefine();
   - Id: 300150
     AegisName: ILL_King_Dramoh_Card
-    Name: Deep Sea King Dramoh Card
+    Name: Abysmal King Dramoh Card
     Type: Card
     Weight: 10
     Locations:
@@ -48738,7 +48867,7 @@ Body:
       bonus bAtkRate,(getrefine()/3);
   - Id: 300151
     AegisName: ILL_Kraken_Card
-    Name: Deep Sea Kraken Card
+    Name: Abysmal Kraken Card
     Type: Card
     Weight: 10
     Locations:
@@ -50467,8 +50596,8 @@ Body:
     Script: |
       bonus2 bAddRace,RC_Demon,40;
       bonus2 bAddRace,RC_DemiHuman,40;
-      bonus3 bSubRace,RC_Demon,-30,BF_NORMAL;
-      bonus3 bSubRace,RC_DemiHuman,-30,BF_NORMAL;
+      bonus3 bSubRace,RC_Demon,-30,BF_WEAPON;
+      bonus3 bSubRace,RC_DemiHuman,-30,BF_WEAPON;
   - Id: 300281
     AegisName: R001_Bestia_Card
     Name: R001-Bestia Card
@@ -53631,6 +53760,20 @@ Body:
       bonus bMaxHPrate,-15;
       bonus bPAtk,.@r;
       bonus bAtkRate,.@r;
+  - Id: 300549
+    AegisName: aegis_300549
+    Name: Summer Vacation Pope Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Left_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bShortAtkRate,3;
+      bonus bLongAtkRate,3;
+      bonus2 bMagicAtkEle,Ele_All,3;
   - Id: 310000
     AegisName: Ranger_Top2
     Name: Sniper Stone II (Top)
@@ -81508,6 +81651,229 @@ Body:
          bonus bCritAtkRate,(.@param/10);
          bonus bCritical,(.@param/10);
       }
+  - Id: 313269
+    AegisName: aegis_313269
+    Name: Latent Release (Abyss Chaser VII)
+    Type: Card
+    SubType: Enchant
+  - Id: 313289
+    AegisName: aegis_313289
+    Name: Latent Awakening (Duple Light I)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"AB_DUPLELIGHT_MELEE",BaseLevel*2;
+      bonus2 bSkillAtk,"AB_DUPLELIGHT_MAGIC",BaseLevel*2;
+  - Id: 313290
+    AegisName: aegis_313290
+    Name: Latent Awakening (Counter Slash I)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"GC_COUNTERSLASH",BaseLevel/10;
+  - Id: 313292
+    AegisName: aegis_313292
+    Name: Latent Awakening (Rolling Cutter II)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"GC_ROLLINGCUTTER",BaseLevel/2;
+  - Id: 313293
+    AegisName: aegis_313293
+    Name: Latent Awakening (Cross Slash II)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"KO_JYUMONJIKIRI",BaseLevel/3;
+  - Id: 313294
+    AegisName: aegis_313294
+    Name: Latent Awakening (Swirling Petal II)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"KO_HUUMARANKA",BaseLevel/4;
+  - Id: 313295
+    AegisName: aegis_313295
+    Name: Latent Awakening (Shield Press II)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"LG_SHIELDPRESS",BaseLevel/2;
+  - Id: 313296
+    AegisName: aegis_313296
+    Name: Latent Awakening (Ray of Genesis II)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"LG_RAYOFGENESIS",BaseLevel/3;
+  - Id: 313297
+    AegisName: aegis_313297
+    Name: Latent Awakening (Severe Rainstorm III)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",BaseLevel/3;
+  - Id: 313298
+    AegisName: aegis_313298
+    Name: Latent Awakening (Arms Cannon II)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"NC_ARMSCANNON",BaseLevel/5;
+  - Id: 313299
+    AegisName: aegis_313299
+    Name: Latent Awakening (Axe Tornado II)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"NC_AXETORNADO",BaseLevel/2;
+  - Id: 313300
+    AegisName: aegis_313300
+    Name: Latent Awakening (Axe Boomerang II)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"NC_AXEBOOMERANG",BaseLevel/2;
+  - Id: 313301
+    AegisName: aegis_313301
+    Name: Latent Awakening (Arrow Storm III)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"RA_ARROWSTORM",BaseLevel/10;
+  - Id: 313302
+    AegisName: aegis_313302
+    Name: Latent Awakening (Aimed Bolt II)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"RA_AIMEDBOLT",BaseLevel/10;
+  - Id: 313303
+    AegisName: aegis_313303
+    Name: Latent Awakening (Ignition Break III)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"RK_IGNITIONBREAK",BaseLevel/2;
+  - Id: 313304
+    AegisName: aegis_313304
+    Name: Latent Awakening (Slug Shot I)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"RL_SLUGSHOT",BaseLevel/3;
+  - Id: 313305
+    AegisName: aegis_313305
+    Name: Latent Awakening (Hammer of God I)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",BaseLevel/3;
+  - Id: 313306
+    AegisName: aegis_313306
+    Name: Latent Awakening (Anti-Material Blast I)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"RL_AM_BLAST",BaseLevel/3;
+  - Id: 313307
+    AegisName: aegis_313307
+    Name: Latent Awakening (Round Trip II)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"RL_R_TRIP",BaseLevel/2;
+  - Id: 313308
+    AegisName: aegis_313308
+    Name: Latent Awakening (Fire Rain II)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"RL_FIRE_RAIN",BaseLevel/2;
+  - Id: 313309
+    AegisName: aegis_313309
+    Name: Latent Awakening (Triangle Shot II)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SC_TRIANGLESHOT",BaseLevel/3;
+  - Id: 313310
+    AegisName: aegis_313310
+    Name: Latent Awakening (Varetyr Spear II)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SO_VARETYR_SPEAR",BaseLevel/3;
+  - Id: 313311
+    AegisName: aegis_313311
+    Name: Latent Awakening (Diamond Dust I)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SO_DIAMONDDUST",BaseLevel/3;
+  - Id: 313312
+    AegisName: aegis_313312
+    Name: Latent Awakening (Earth Grave I)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SO_EARTHGRAVE",BaseLevel/3;
+  - Id: 313313
+    AegisName: aegis_313313
+    Name: Latent Awakening (Espa II)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SP_SPA",BaseLevel/5;
+  - Id: 313314
+    AegisName: aegis_313314
+    Name: Latent Awakening (Eswoo II)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SP_SWHOO",BaseLevel/5;
+  - Id: 313315
+    AegisName: aegis_313315
+    Name: Latent Awakening (Curse Explosion II)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SP_CURSEEXPLOSION",BaseLevel/5;
+  - Id: 313316
+    AegisName: aegis_313316
+    Name: Latent Awakening (Lion's Howl II)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SR_HOWLINGOFLION",BaseLevel/3;
+  - Id: 313317
+    AegisName: aegis_313317
+    Name: Latent Awakening (Sky Blow II)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SR_SKYNETBLOW",BaseLevel/2;
+  - Id: 313318
+    AegisName: aegis_313318
+    Name: Latent Awakening (Soul Expansion II)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"WL_SOULEXPANSION",BaseLevel/5;
+  - Id: 313319
+    AegisName: aegis_313319
+    Name: Latent Awakening (Crimson Rock II)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"WL_CRIMSONROCK",BaseLevel/5;
+  - Id: 313320
+    AegisName: aegis_313320
+    Name: Skill Stone (Firewall Lv.10)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      skill "MG_FIREWALL",10;
   - Id: 313324
     AegisName: Biolo_Robe
     Name: Biolo Stone (Garment)
@@ -82690,6 +83056,42 @@ Body:
       NoSell: true
       NoCart: true
       NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000284
+    AegisName: EpisodClear13
+    Name: Eps 13 Clear Ticket
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000285
+    AegisName: EpisodClear14
+    Name: Eps 14 Clear Ticket
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000286
+    AegisName: EpisodClear15
+    Name: Eps 15 Clear Ticket
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
@@ -89429,6 +89831,402 @@ Body:
     Weight: 1
     Flags:
       BuyingStore: true
+  - Id: 1001689
+    AegisName: R_Snowflower_Armor
+    Name: Printed Snow Flower Armor
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001690
+    AegisName: R_Snowflower_Manteau
+    Name: Printed Snow Flower Manteau
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001691
+    AegisName: R_Snowflower_Boots
+    Name: Printed Snow Flower Boots
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001692
+    AegisName: R_Snowflower_Pendant
+    Name: Printed Snow Flower Pendant
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001693
+    AegisName: R_Snowflower_Necklace
+    Name: Printed Snow Flower Necklace
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001694
+    AegisName: R_Snowflower_Robe
+    Name: Printed Snow Flower Robe
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001695
+    AegisName: R_Snowflower_Muffler
+    Name: Printed Snow Flower Muffler
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001696
+    AegisName: R_Snowflower_Shoes
+    Name: Printed Snow Flower Shoes
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001697
+    AegisName: R_Snowflower_Ring
+    Name: Printed Snow Flower Ring
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001698
+    AegisName: R_Snowflower_Earring
+    Name: Printed Snow Flower Earring
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001699
+    AegisName: R_Glacier_T_Sword
+    Name: Printed Glacier Two-handed Sword
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001700
+    AegisName: R_Glacier_Lance
+    Name: Printed Glacier Lance
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001701
+    AegisName: R_Glacier_Sword
+    Name: Printed Glacier Sword
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001702
+    AegisName: R_Glacier_B_Sword
+    Name: Printed Glacier Basic Sword
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001703
+    AegisName: R_Glacier_Spear
+    Name: Printed Glacier Spear
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001704
+    AegisName: R_Glacier_T_Axe
+    Name: Printed Glacier Mechanic Axe
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001705
+    AegisName: R_Glacier_Axe
+    Name: Printed Glacier Axe
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001706
+    AegisName: R_Glacier_Mace
+    Name: Printed Glacier Mace
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001707
+    AegisName: R_Glacier_M_Mace
+    Name: Printed Glacier Mechanic Mace
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001708
+    AegisName: R_Glacier_R_Knife
+    Name: Printed Glacier Rogue Knife
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001709
+    AegisName: R_Glacier_B_Knife
+    Name: Printed Glacier Basic Knife
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001710
+    AegisName: R_Glacier_Knuckle
+    Name: Printed Glacier Knuckle
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001711
+    AegisName: R_Glacier_Katar
+    Name: Printed Glacier Katar
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001712
+    AegisName: R_Glacier_Bow
+    Name: Printed Glacier Bow
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001713
+    AegisName: R_Glacier_Violin
+    Name: Printed Glacier Violin
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001714
+    AegisName: R_Glacier_Whip
+    Name: Printed Glacier Whip
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001715
+    AegisName: R_Glacier_Humma
+    Name: Printed Glacier Huuma Shuriken
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001716
+    AegisName: R_Glacier_Book
+    Name: Printed Glacier Book
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001717
+    AegisName: R_Glacier_Wand
+    Name: Printed Glacier Wand
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001718
+    AegisName: R_Glacier_Staff
+    Name: Printed Glacier Staff
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001719
+    AegisName: R_Glacier_Foxtail
+    Name: Printed Glacier Foxtail
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001720
+    AegisName: R_Glacier_Revolver
+    Name: Printed Glacier Revolver
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001721
+    AegisName: R_Glacier_Rifle
+    Name: Printed Glacier Rifle
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001722
+    AegisName: R_Glacier_Shotgun
+    Name: Printed Glacier Shotgun
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001723
+    AegisName: R_Glacier_Gatling
+    Name: Printed Glacier Gatling
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001724
+    AegisName: R_Glacier_Launcher
+    Name: Printed Glacier Launcher
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 1001737
     AegisName: BioloStone_Robe
     Name: Biolo Stone (Garment)
@@ -89444,9 +90242,77 @@ Body:
     Name: Spirit Handler Stone (Garment)
     Type: Etc
     Weight: 100
+  - Id: 1001740
+    AegisName: Summer_Ticket
+    Name: Ocean Week Commemoration Ticket
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001741
+    AegisName: Summer_W_Melon
+    Name: Summer Watermelon
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001742
+    AegisName: aegis_1001742
+    Name: Festival Food Bag
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 1001744
     AegisName: Kr_B_Event04
     Name: Sweet Strawberry Fresh Cream
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001753
+    AegisName: D_EpisodClear13
+    Name: Episode 13 Pass Ticket    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001755
+    AegisName: D_EpisodClear14
+    Name: Episode 14 Pass Ticket    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001756
+    AegisName: D_EpisodClear15
+    Name: Episode 15 Pass Ticket    # !todo check english name
     Type: Etc
     Trade:
       NoDrop: true
