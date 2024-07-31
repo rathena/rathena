@@ -11709,7 +11709,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				break;
 
 			tstatus->hp = max(tstatus->sp, 1);
-			tstatus->sp = tstatus->sp * 10 * skill_lv / 100;
+			tstatus->sp -= tstatus->sp * ( 60 - 10 * skill_lv ) / 100;
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 			pc_revive(reinterpret_cast<map_session_data*>(bl),true,true);
 			clif_resurrection( *bl );
