@@ -8509,6 +8509,15 @@ Opens the tip box UI for the attached player or the given character ID.
 This command requires packet version 2017-11-22 or newer.
 
 ---------------------------------------
+
+*specialpopup(<popup ID>);
+
+Open popup and/or show text by ID from list defined in the client spopup.lub file.
+Popup and text is only visible if the player warped from one map to another map.
+
+This command requires packet version 2022-10-05 or newer.
+
+---------------------------------------
 \\
 6,1.- Unit-related commands
 \\
