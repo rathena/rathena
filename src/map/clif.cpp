@@ -3670,16 +3670,16 @@ void clif_updatestatus( map_session_data& sd, enum _sp type ){
 			break;
 #else
 		case SP_BASEEXP:
-			clif_par_change(sd, type, client_exp(sd.status.base_exp));
+			clif_longpar_change(sd, type, client_exp(sd.status.base_exp));
 			break;
 		case SP_JOBEXP:
-			clif_par_change(sd, type, client_exp(sd.status.job_exp));
+			clif_longpar_change(sd, type, client_exp(sd.status.job_exp));
 			break;
 		case SP_NEXTBASEEXP:
-			clif_par_change(sd, type, client_exp(pc_nextbaseexp(&sd)));
+			clif_longpar_change(sd, type, client_exp(pc_nextbaseexp(&sd)));
 			break;
 		case SP_NEXTJOBEXP:
-			clif_par_change(sd, type, client_exp(pc_nextjobexp(&sd)));
+			clif_longpar_change(sd, type, client_exp(pc_nextjobexp(&sd)));
 			break;
 #endif
 
@@ -10804,8 +10804,7 @@ void clif_parse_LoadEndAck(int fd,map_session_data *sd)
 		clif_hominfo(sd,sd->hd,1);
 		clif_hominfo(sd,sd->hd,0); //for some reason, at least older clients want this sent twice
 		clif_homskillinfoblock( *sd->hd );
-		if( battle_config.hom_setting&HOMSET_COPY_SPEED )
-			status_calc_bl(&sd->hd->bl, { SCB_SPEED }); //Homunc mimic their master's speed on each map change
+		status_calc_bl(&sd->hd->bl, { SCB_SPEED });
 		if( !(battle_config.hom_setting&HOMSET_NO_INSTANT_LAND_SKILL) )
 			skill_unit_move(&sd->hd->bl,gettick(),1); // apply land skills immediately
 	}
