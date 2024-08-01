@@ -693,6 +693,8 @@ enum e_mapflag : int16 {
 	MF_MAX,
 	MF_RESTRICTED,
 	MF_TOWN,
+	MF_SPECIALPOPUP,
+	MF_MAX
 };
 
 /// Enum of damage types

@@ -51,6 +51,7 @@ enum e_macro_detect_status : uint8;
 enum e_macro_report_status : uint8;
 enum e_hom_state2 : uint8;
 enum _sp;
+enum e_searchstore_failure : uint16;
 
 enum e_PacketDBVersion { // packet DB
 	MIN_PACKET_DB  = 0x064,
@@ -644,6 +645,9 @@ enum clif_messages : uint16_t {
 	// Currently there is no attendance check event.
 	MSI_CHECK_ATTENDANCE_NOT_EVENT = 3474,
 
+	// The total amount of items to sell exceeds the amount of Zeny you can have. \nPlease modify the quantity and price.
+	MSI_MERCHANTSHOP_TOTA_LOVER_ZENY_ERR = 3826,
+
 	// It weighs more than 70%. Decrease the Weight and try again.
 	MSI_ENCHANT_FAILED_OVER_WEIGHT = 3837,
 
@@ -787,6 +791,21 @@ enum e_pc_purchase_result_frommc : uint8 {
 	PURCHASEMC_TRADING = 5,
 	PURCHASEMC_STORE_INCORRECT = 6,
 	PURCHASEMC_NO_SALES_INFO = 7,
+};
+
+enum e_ack_openstore2 : uint8 {
+	// Success
+	OPENSTORE2_SUCCESS = 0,
+
+	// (Pop-up) Failed to open stalls. (MSI_MERCHANTSHOP_MAKING_FAIL / 2639)
+	OPENSTORE2_FAILED = 1,
+
+	// 2 is unused
+
+#if PACKETVER >= 20170419
+	// Unable to open a shop at the current location. (MSI_MERCHANTSHOP_FAIL_POSITION / 3229)
+	OPENSTORE2_NOVENDING = 3,
+#endif
 };
 
 enum e_ack_whisper : uint8 {
@@ -1003,6 +1022,7 @@ void clif_closevendingboard(struct block_list* bl, int fd);
 void clif_vendinglist( map_session_data& sd, map_session_data& vsd );
 void clif_buyvending( map_session_data& sd, uint16 index, uint16 amount, e_pc_purchase_result_frommc result );
 void clif_openvending( map_session_data& sd );
+void clif_openvending_ack(map_session_data& sd, e_ack_openstore2 result);
 void clif_vendingreport( map_session_data& sd, uint16 index, uint16 amount, uint32 char_id, int32 zeny );
 
 void clif_movetoattack( map_session_data& sd, block_list& bl );
@@ -1255,9 +1275,9 @@ void clif_buyingstore_trade_failed_seller(map_session_data* sd, short result, t_
 
 /// Search Store System
 void clif_search_store_info_ack( map_session_data& sd );
-void clif_search_store_info_failed(map_session_data* sd, unsigned char reason);
-void clif_open_search_store_info(map_session_data* sd);
-void clif_search_store_info_click_ack(map_session_data* sd, short x, short y);
+void clif_search_store_info_failed(map_session_data& sd, e_searchstore_failure reason);
+void clif_open_search_store_info(map_session_data& sd);
+void clif_search_store_info_click_ack(map_session_data& sd, int16 x, int16 y);
 
 /// Cash Shop
 void clif_cashshop_result( map_session_data* sd, t_itemid item_id, uint16 result );
@@ -1275,7 +1295,7 @@ void clif_parse_roulette_item(int fd, map_session_data *sd);
 
 void clif_elementalconverter_list( map_session_data& sd );
 
-void clif_millenniumshield(struct block_list *bl, short shields);
+void clif_millenniumshield( block_list& bl, int16 shields );
 
 void clif_magicdecoy_list( map_session_data& sd, uint16 skill_lv, short x, short y );
 
@@ -1287,7 +1307,7 @@ int clif_skill_itemlistwindow( map_session_data *sd, uint16 skill_id, uint16 ski
 void clif_elemental_info(map_session_data *sd);
 void clif_elemental_updatestatus(map_session_data *sd, int type);
 
-void clif_spiritcharm(map_session_data *sd);
+void clif_spiritcharm( map_session_data& sd );
 
 void clif_snap( struct block_list *bl, short x, short y );
 void clif_monster_hp_bar( struct mob_data* md, int fd );
@@ -1441,5 +1461,7 @@ void clif_set_npc_window_pos(map_session_data& sd, int x, int y);
 void clif_set_npc_window_pos_percent(map_session_data& sd, int x, int y);
 
 void clif_noask_sub( map_session_data& sd, map_session_data& tsd, int type );
+
+void clif_specialpopup(map_session_data& sd, int32 id);
 
 #endif /* CLIF_HPP */

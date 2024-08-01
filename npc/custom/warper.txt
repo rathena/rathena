@@ -110,7 +110,18 @@ function Pick {
 	Go(.@map$,.@x,.@y);
 }
 function Restrict {
-	if ((getarg(0) == "RE" && !checkre(0)) || (getarg(0) == "Pre-RE" && checkre(0))) {
+	.@type$ = getarg(0);
+	
+	if (.@type$ == "Brasilis") {
+		// If the official warper to Brasilis is enabled, meaning is either
+		// Renewal mode or Pre-renewal Brasilis is enabled, we lift the restriction
+		if (getnpcid(0, "Crewman_bra2"))
+			return;
+		// Otherwise we apply the renewal restriction
+		.@type$ = "RE";
+	}
+
+	if ((.@type$ == "RE" && !checkre(0)) || (.@type$ == "Pre-RE" && checkre(0))) {
 		if (getarg(1,0)) {
 			set @warp_block,0;
 			for (set .@i,1; .@i<getargcount(); set .@i,.@i+1)
@@ -141,7 +152,7 @@ T2: Go("alberta",28,234);
 T3: Go("aldebaran",140,131);
 T4: Go("amatsu",198,84);
 T5: Go("ayothaya",208,166);
-T6: Restrict("RE");
+T6: Restrict("Brasilis");
 	Go("brasilis",196,217);
 T7: Go("comodo",209,143);
 T8: Restrict("RE");
@@ -218,7 +229,7 @@ F2: setarray @c[2],173,134,212,150;
 F3: Restrict("RE");
 	setarray @c[2],193,220,220,187;
 	Disp("Bifrost Field",1,2); Pick("bif_fild");
-F4: Restrict("RE");
+F4: Restrict("Brasilis");
 	setarray @c[2],74,32;
 	Disp("Brasilis Field",1,1); Pick("bra_fild");
 F5: Restrict("Pre-RE",5);
@@ -343,7 +354,7 @@ D7: Restrict("RE");
 D8: Restrict("RE",4,5);
 	setarray @c[2],150,288,150,18,140,134,244,52,100,202;
 	Disp("Bio Lab 1:Bio Lab 2:Bio Lab 3:Bio Lab 4:Tomb of the Fallen"); Pick("","lhz_dun01","lhz_dun02","lhz_dun03","lhz_dun04","lhz_dun_n");
-D9: Restrict("RE");
+D9: Restrict("Brasilis");
 	setarray @c[2],87,47,262,262;
 	Disp("Brasilis Dungeon",1,2); Pick("bra_dun");
 D10: Restrict("RE",6);
