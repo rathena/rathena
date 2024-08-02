@@ -18791,14 +18791,13 @@ void clif_parse_ItemListWindowSelected(int fd, map_session_data* sd) {
 /// Notifies client of a change in an elemental's status parameter.
 /// 0x81e <type>.W <value>.L (ZC_EL_PAR_CHANGE)
 void clif_elemental_updatestatus(map_session_data& sd, _sp type) {
-#if PACKETVER >= 20091222
+#if PACKETVER >= 20100309
+	if (sd.ed == nullptr)
+		return;
+
 	PACKET_ZC_EL_PAR_CHANGE p = {};
 
 	p.packetType = HEADER_ZC_EL_PAR_CHANGE;
-
-	if( sd.ed == nullptr )
-		return;
-
 	p.type = static_cast<decltype(p.type)>(type);
 	status_data* status = &sd.ed->battle_status;
 	switch( type ) {
