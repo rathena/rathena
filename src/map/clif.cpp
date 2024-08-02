@@ -10823,9 +10823,9 @@ void clif_parse_LoadEndAck(int fd,map_session_data *sd)
 			return;
 		clif_spawn(&sd->ed->bl);
 		clif_elemental_info(sd);
-		clif_elemental_updatestatus(sd,SP_HP);
+		clif_elemental_updatestatus(*sd, SP_HP);
 		clif_hpmeter_single( *sd, sd->ed->bl.id, sd->ed->battle_status.hp, sd->ed->battle_status.max_hp );
-		clif_elemental_updatestatus(sd,SP_SP);
+		clif_elemental_updatestatus(*sd, SP_SP);
 		status_calc_bl(&sd->ed->bl, { SCB_SPEED }); //Elemental mimic their master's speed on each map change
 	}
 
@@ -18787,34 +18787,36 @@ void clif_parse_ItemListWindowSelected(int fd, map_session_data* sd) {
 /*==========================================
  * Elemental System
  *==========================================*/
-void clif_elemental_updatestatus(map_session_data *sd, int type) {
-	s_elemental_data *ed;
-	struct status_data *status;
-	int fd;
 
-	if( !clif_session_isValid(sd) || (ed = sd->ed) == nullptr )
+/// Notifies client of a change in an elemental's status parameter.
+/// 0x81e <type>.W <value>.L (ZC_EL_PAR_CHANGE)
+void clif_elemental_updatestatus(map_session_data& sd, _sp type) {
+#if PACKETVER >= 20100309
+	if (sd.ed == nullptr)
 		return;
 
-	fd = sd->fd;
-	status = &ed->battle_status;
-	WFIFOHEAD(fd,8);
-	WFIFOW(fd,0) = 0x81e;
-	WFIFOW(fd,2) = type;
+	PACKET_ZC_EL_PAR_CHANGE p = {};
+
+	p.packetType = HEADER_ZC_EL_PAR_CHANGE;
+	p.type = static_cast<decltype(p.type)>(type);
+	status_data* status = &sd.ed->battle_status;
 	switch( type ) {
 		case SP_HP:
-			WFIFOL(fd,4) = status->hp;
+			p.value = static_cast<decltype(p.value)>(status->hp);
 			break;
 		case SP_MAXHP:
-			WFIFOL(fd,4) = status->max_hp;
+			p.value = static_cast<decltype(p.value)>(status->max_hp);
 			break;
 		case SP_SP:
-			WFIFOL(fd,4) = status->sp;
+			p.value = static_cast<decltype(p.value)>(status->sp);
 			break;
 		case SP_MAXSP:
-			WFIFOL(fd,4) = status->max_sp;
+			p.value = static_cast<decltype(p.value)>(status->max_sp);
 			break;
 	}
-	WFIFOSET(fd,8);
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
 }
 
 void clif_elemental_info(map_session_data *sd) {
