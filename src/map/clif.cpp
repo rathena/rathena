@@ -19713,6 +19713,12 @@ static void clif_loadConfirm( map_session_data *sd ){
 /// 0447
 void clif_parse_blocking_playcancel( int fd, map_session_data *sd ){
 	clif_loadConfirm( sd );
+	
+	int32 mf = map_getmapflag(sd->bl.m, MF_SPECIALPOPUP);
+
+	if (mf > 0) {
+		clif_specialpopup(*sd, mf);
+	}
 }
 
 /// req world info (CZ_CLIENT_VERSION)
@@ -25117,6 +25123,20 @@ void clif_set_npc_window_pos_percent(map_session_data& sd, int x, int y)
 
 	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 #endif  // PACKETVER_MAIN_NUM >= 20220504
+}
+
+/// Displays a special popup.
+/// Works only if player moved from one map to another.
+/// 0bbe <popup id>.L (ZC_SPECIALPOPUP)
+void clif_specialpopup(map_session_data& sd, int32 id ){
+#if PACKETVER >= 20221005
+	PACKET_ZC_SPECIALPOPUP p = {};
+
+	p.PacketType = HEADER_ZC_SPECIALPOPUP;
+	p.ppId = id;
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF);
+#endif
 }
 
 /*==========================================

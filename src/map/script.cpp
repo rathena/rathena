@@ -27234,6 +27234,22 @@ BUILDIN_FUNC(opentips){
 #endif
 }
 
+/**
+ * Displays a special popup.
+ * specialpopup(<popup id>);
+ */
+BUILDIN_FUNC(specialpopup) {
+	map_session_data* sd;
+
+	if( !script_rid2sd(sd) )
+		return SCRIPT_CMD_FAILURE;
+
+	int32 id = script_getnum(st,2);
+	clif_specialpopup(*sd, id);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 BUILDIN_FUNC(setdialogalign){
 	map_session_data *sd;
 
@@ -28143,6 +28159,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(has_autoloot,"?"),
 	BUILDIN_DEF(autoloot,"??"),
 	BUILDIN_DEF(opentips, "i?"),
+	BUILDIN_DEF(specialpopup,"i"),
 
 	BUILDIN_DEF(setdialogalign, "i"),
 	BUILDIN_DEF(setdialogsize, "ii"),
