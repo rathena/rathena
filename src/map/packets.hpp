@@ -1171,6 +1171,13 @@ struct PACKET_ZC_HO_PAR_CHANGE {
 DEFINE_PACKET_HEADER(ZC_HO_PAR_CHANGE, 0x7db);
 #endif
 
+struct PACKET_ZC_EL_PAR_CHANGE {
+	int16 packetType;
+	uint16 type;
+	uint32 value;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_EL_PAR_CHANGE, 0x81e);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )

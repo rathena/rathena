@@ -6124,11 +6124,12 @@ will always return 0.
 
 ---------------------------------------
 
-*skilleffect <skill id>,<number>;
-*skilleffect "<skill name>",<number>;
+*skilleffect <skill id>,<number>{,<game ID>};
+*skilleffect "<skill name>",<number>{,<game ID>};
 
 This command displays visual and aural effects of given skill on currently
-attached character. The number parameter is for skill whose visual effect
+attached character or, when defined, on any unit with the given ID.
+The number parameter is for skill whose visual effect
 involves displaying of a number (healing or damaging). Note, that this command
 will not actually use the skill, it is intended for scripts, which simulate
 skill usage by the NPC, such as buffs, by setting appropriate status and
@@ -8507,6 +8508,15 @@ This command requires packet version 2021-11-03 or newer.
 Opens the tip box UI for the attached player or the given character ID.
 
 This command requires packet version 2017-11-22 or newer.
+
+---------------------------------------
+
+*specialpopup(<popup ID>);
+
+Open popup and/or show text by ID from list defined in the client spopup.lub file.
+Popup and text is only visible if the player warped from one map to another map.
+
+This command requires packet version 2022-10-05 or newer.
 
 ---------------------------------------
 \\

@@ -15337,18 +15337,16 @@ BUILDIN_FUNC(petskillsupport)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-static inline void script_skill_effect(block_list *bl, uint16 skill_id, uint16 skill_lv, int16 x, int16 y) {
-	nullpo_retv(bl);
-
+static inline void script_skill_effect( block_list& bl, uint16 skill_id, uint16 skill_lv, int16 x, int16 y ) {
 	switch (skill_get_casttype(skill_id)) {
 		case CAST_GROUND:
-			clif_skill_poseffect(bl, skill_id, skill_lv, x, y, gettick());
+			clif_skill_poseffect(&bl, skill_id, skill_lv, x, y, gettick());
 			break;
 		case CAST_NODAMAGE:
-			clif_skill_nodamage(bl, bl, skill_id, skill_lv, 1);
+			clif_skill_nodamage(&bl, &bl, skill_id, skill_lv, 1);
 			break;
 		case CAST_DAMAGE:
-			clif_skill_damage(bl, bl, gettick(), status_get_amotion(bl), status_get_dmotion(bl), 0, 1, skill_id, skill_lv, skill_get_hit(skill_id));
+			clif_skill_damage(&bl, &bl, gettick(), status_get_amotion(&bl), status_get_dmotion(&bl), 0, 1, skill_id, skill_lv, skill_get_hit(skill_id));
 			break;
 	}
 }
@@ -15356,32 +15354,46 @@ static inline void script_skill_effect(block_list *bl, uint16 skill_id, uint16 s
 /*==========================================
  * Scripted skill effects [Celest]
  *------------------------------------------*/
-/// skilleffect <skill id>,<level>
-/// skilleffect "<skill name>",<level>
+/// skilleffect <skill id>,<level>{,<game id>}
+/// skilleffect "<skill name>",<level>{,<game id>}
 BUILDIN_FUNC(skilleffect)
 {
-	TBL_PC *sd;
-	uint16 skill_id, skill_lv;
-	
-	if( !script_rid2sd(sd) )
-		return SCRIPT_CMD_FAILURE;
-	
-	skill_id = ( script_isstring(st, 2) ? skill_name2id(script_getstr(st,2)) : script_getnum(st,2) );
-	skill_lv = script_getnum(st,3);
+	block_list* bl;
+	map_session_data* sd;
+
+	if (script_hasdata(st, 4)) {
+		if (!script_rid2bl(4, bl))
+			return SCRIPT_CMD_SUCCESS;
+	}
+	else {
+		// target is the character attached (default)
+		if (!script_rid2sd(sd))
+			return SCRIPT_CMD_SUCCESS;
+
+		bl = &sd->bl;
+	}
+
+	uint16 skill_id = ( script_isstring(st, 2) ? skill_name2id(script_getstr(st, 2)) : script_getnum(st, 2) );
 
 	if (skill_db.find(skill_id) == nullptr) {
 		ShowError("buildin_skilleffect: Invalid skill defined (%s)!\n", script_getstr(st, 2));
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	/* Ensure we're standing because the following packet causes the client to virtually set the char to stand,
-	 * which leaves the server thinking it still is sitting. */
-	if( pc_issit(sd) && pc_setstand(sd, false) ) {
-		skill_sit(sd, 0);
-		clif_standing(&sd->bl);
+	uint16 skill_lv = script_getnum(st, 3);
+
+	if (bl->type == BL_PC) {
+		/* Ensure we're standing because the following packet causes the client to virtually set the char to stand,
+		 * which leaves the server thinking it still is sitting. */
+		sd = reinterpret_cast<map_session_data*>( bl );
+
+		if (pc_issit(sd) && pc_setstand(sd, false)) {
+			skill_sit(sd, 0);
+			clif_standing(&sd->bl);
+		}
 	}
 
-	script_skill_effect(&sd->bl, skill_id, skill_lv, sd->bl.x, sd->bl.y);
+	script_skill_effect( *bl, skill_id, skill_lv, bl->x, bl->y );
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -15413,7 +15425,7 @@ BUILDIN_FUNC(npcskilleffect)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	script_skill_effect(bl, skill_id, skill_lv, bl->x, bl->y);
+	script_skill_effect( *bl, skill_id, skill_lv, bl->x, bl->y );
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -27234,6 +27246,22 @@ BUILDIN_FUNC(opentips){
 #endif
 }
 
+/**
+ * Displays a special popup.
+ * specialpopup(<popup id>);
+ */
+BUILDIN_FUNC(specialpopup) {
+	map_session_data* sd;
+
+	if( !script_rid2sd(sd) )
+		return SCRIPT_CMD_FAILURE;
+
+	int32 id = script_getnum(st,2);
+	clif_specialpopup(*sd, id);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 BUILDIN_FUNC(setdialogalign){
 	map_session_data *sd;
 
@@ -27711,7 +27739,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(petskillattack,"viii"), // [Skotlex]
 	BUILDIN_DEF(petskillattack2,"viiii"), // [Valaris]
 	BUILDIN_DEF(petskillsupport,"viiii"), // [Skotlex]
-	BUILDIN_DEF(skilleffect,"vi"), // skill effect [Celest]
+	BUILDIN_DEF(skilleffect,"vi?"), // skill effect [Celest]
 	BUILDIN_DEF(npcskilleffect,"viii"), // npc skill effect [Valaris]
 	BUILDIN_DEF(specialeffect,"i??"), // npc skill effect [Valaris]
 	BUILDIN_DEF(specialeffect2,"i??"), // skill effect on players[Valaris]
@@ -28143,6 +28171,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(has_autoloot,"?"),
 	BUILDIN_DEF(autoloot,"??"),
 	BUILDIN_DEF(opentips, "i?"),
+	BUILDIN_DEF(specialpopup,"i"),
 
 	BUILDIN_DEF(setdialogalign, "i"),
 	BUILDIN_DEF(setdialogsize, "ii"),

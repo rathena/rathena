@@ -2613,7 +2613,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_SlowDown,5000,0;
+      sc_start SC_SLOWDOWN,5000,100;
   - Id: 12018
     AegisName: Fire_Cracker
     Name: Firecracker
