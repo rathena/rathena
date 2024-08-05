@@ -12173,8 +12173,6 @@ static void pc_unequipitem_sub(map_session_data *sd, int n, int flag) {
 	pc_deleteautobonus( sd->autobonus3, sd->inventory.u.items_inventory[n].equip );
 
 	sd->inventory.u.items_inventory[n].equip = 0;
-	if (!(flag & 4))
-		pc_checkallowskill(sd);
 	iflag = sd->npc_item_flag;
 
 	// Check for combos (MUST be before status_calc_pc)
@@ -12204,7 +12202,8 @@ static void pc_unequipitem_sub(map_session_data *sd, int n, int flag) {
 	}
 
 	if (flag & 1 || status_calc) {
-		pc_checkallowskill(sd);
+		if (!(flag & 4))
+			pc_checkallowskill(sd);
 		status_calc_pc(sd, SCO_FORCE);
 	}
 
