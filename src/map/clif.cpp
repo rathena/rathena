@@ -1749,6 +1749,36 @@ int clif_spawn( struct block_list *bl, bool walking ){
 	return 0;
 }
 
+/// Notifies client of a change in an elemental's status parameter.
+/// 0x7db <type>.W <value>.L (ZC_HO_PAR_CHANGE)
+/// 0xba5 <type>.W <value>.Q (ZC_HO_PAR_CHANGE2)
+void clif_homunculus_updatestatus(map_session_data& sd, _sp type) {
+#if PACKETVER >= 20090610
+	if( !hom_is_active(sd.hd) )
+		return;
+
+	PACKET_ZC_HO_PAR_CHANGE p = {};
+
+	p.packetType = HEADER_ZC_HO_PAR_CHANGE;
+	p.type = static_cast<decltype(p.type)>(type);
+	status_data* status = &sd.hd->battle_status;
+
+	switch (type) {
+	case SP_BASEEXP:
+		p.value = static_cast<decltype(p.value)>(sd.hd->homunculus.exp);
+		break;
+	case SP_HP:
+		p.value = static_cast<decltype(p.value)>(status->hp);
+		break;
+	case SP_SP:
+		p.value = static_cast<decltype(p.value)>(status->sp);
+		break;
+	}
+
+	clif_send(&p, sizeof(p), &sd.bl, SELF);
+#endif
+}
+
 /// Sends information about owned homunculus to the client . [orn]
 /// 022e <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <equip id>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.W <max hp>.W <sp>.W <max sp>.W <exp>.L <max exp>.L <skill points>.W <atk range>.W	(ZC_PROPERTY_HOMUN)
 /// 09f7 <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <equip id>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.L <max hp>.L <sp>.W <max sp>.W <exp>.L <max exp>.L <skill points>.W <atk range>.W (ZC_PROPERTY_HOMUN_2)
@@ -10803,6 +10833,8 @@ void clif_parse_LoadEndAck(int fd,map_session_data *sd)
 		clif_send_homdata( *sd->hd, SP_ACK );
 		clif_hominfo(sd,sd->hd,1);
 		clif_hominfo(sd,sd->hd,0); //for some reason, at least older clients want this sent twice
+		clif_homunculus_updatestatus(*sd, SP_HP);
+		clif_homunculus_updatestatus(*sd, SP_SP);
 		clif_homskillinfoblock( *sd->hd );
 		status_calc_bl(&sd->hd->bl, { SCB_SPEED });
 		if( !(battle_config.hom_setting&HOMSET_NO_INSTANT_LAND_SKILL) )
