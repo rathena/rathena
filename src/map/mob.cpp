@@ -4187,8 +4187,8 @@ int mob_clone_spawn(map_session_data *sd, int16 m, int16 x, int16 y, const char 
 	}
 	if (mode > MD_NONE) //User provided mode.
 		status->mode = mode;
-	else if (flag&1) //Friendly Character, remove looting.
-		status->mode = static_cast<enum e_mode>(status->mode&(~MD_LOOTER));
+	else if (flag&2)// Clone follows the creator
+		status->mode = MONSTER_TYPE_24;
 	status->hp = status->max_hp;
 	status->sp = status->max_sp;
 	memcpy(&db->vd, &sd->vd, sizeof(struct view_data));
@@ -4251,6 +4251,7 @@ int mob_clone_spawn(map_session_data *sd, int16 m, int16 x, int16 y, const char 
 			ms->msg_id = 0;
 
 			inf = skill_get_inf(skill_id);
+			bool is_also_self = false;
 			if (inf&INF_ATTACK_SKILL) {
 				ms->target = MST_TARGET;
 				ms->cond1 = MSC_ALWAYS;
@@ -4292,8 +4293,14 @@ int mob_clone_spawn(map_session_data *sd, int16 m, int16 x, int16 y, const char 
 						ms->delay = 5000; //With a minimum of 5 secs.
 				}
 			} else if (inf&INF_SUPPORT_SKILL) {
-				ms->target = MST_FRIEND;
-				ms->cond1 = MSC_FRIENDHPLTMAXRATE;
+				if (master_id > 0 && (flag&2)) {
+					ms->target = MST_MASTER;
+					ms->cond1 = MSC_MASTERHPLTMAXRATE;
+				}
+				else {
+					ms->target = MST_FRIEND;
+					ms->cond1 = MSC_FRIENDHPLTMAXRATE;
+				}
 				ms->cond2 = 90;
 				if (skill_id == AL_HEAL)
 					ms->permillage = 5000; //Higher skill rate usage for heal.
@@ -4304,11 +4311,7 @@ int mob_clone_spawn(map_session_data *sd, int16 m, int16 x, int16 y, const char 
 				if (ms->delay < 2000)
 					ms->delay = 2000; //With a minimum of 2 secs.
 
-				if (db->skill.size() < MAX_MOBSKILL) { //duplicate this so it also triggers on self.
-					ms->target = MST_SELF;
-					ms->cond1 = MSC_MYHPLTMAXRATE;
-					db->skill.push_back(ms);
-				}
+				is_also_self = true;
 			} else {
 				switch (skill_id) { //Certain Special skills that are passive, and thus, never triggered.
 					case MO_TRIPLEATTACK:
@@ -4330,6 +4333,38 @@ int mob_clone_spawn(map_session_data *sd, int16 m, int16 x, int16 y, const char 
 				ms->delay = ms->delay*battle_config.mob_skill_delay/100;
 
 			db->skill.push_back(ms);
+
+			// Duplicate INF_SUPPORT_SKILL so it also triggers on self.
+			if (is_also_self && db->skill.size() < MAX_MOBSKILL) {
+				std::shared_ptr<s_mob_skill> ms = std::make_shared<s_mob_skill>();
+				
+				ms->skill_id = skill_id;
+				ms->skill_lv = sd->status.skill[sk_idx].lv;
+				ms->state = MSS_ANY;
+				ms->permillage = 500*battle_config.mob_skill_rate/100; //Default chance of all skills: 5%
+				ms->emotion = -1;
+				ms->cancel = 0;
+				ms->casttime = skill_castfix(&sd->bl,skill_id, ms->skill_lv);
+				ms->delay = 5000+skill_delayfix(&sd->bl,skill_id, ms->skill_lv);
+				ms->msg_id = 0;
+				
+				ms->target = MST_SELF;
+				ms->cond1 = MSC_MYHPLTMAXRATE;
+				ms->cond2 = 90;
+				if (skill_id == AL_HEAL)
+					ms->permillage = 5000; //Higher skill rate usage for heal.
+				else if (skill_id == ALL_RESURRECTION)
+					ms->cond2 = 1;
+				//Delay: Remove the stock 5 secs and add half of the support time.
+				ms->delay += -5000 +(skill_get_time(skill_id, ms->skill_lv) + skill_get_time2(skill_id, ms->skill_lv))/2;
+				if (ms->delay < 2000)
+					ms->delay = 2000; //With a minimum of 2 secs.
+				if (battle_config.mob_skill_rate!= 100)
+					ms->permillage = ms->permillage*battle_config.mob_skill_rate/100;
+				if (battle_config.mob_skill_delay != 100)
+					ms->delay = ms->delay*battle_config.mob_skill_delay/100;
+				db->skill.push_back(ms);
+			}
 		}
 	}
 

@@ -9167,7 +9167,7 @@ ACMD_FUNC(clone)
 		y = sd->bl.y;
 	}
 
-	if((x = mob_clone_spawn(pl_sd, sd->bl.m, x, y, "", master, MD_NONE, flag?1:0, 0)) > 0) {
+	if((x = mob_clone_spawn(pl_sd, sd->bl.m, x, y, "", master, MD_NONE, flag, 0)) > 0) {
 		clif_displaymessage(fd, msg_txt(sd,128+flag*2));	// Evil Clone spawned. Clone spawned. Slave clone spawned.
 		return 0;
 	}
