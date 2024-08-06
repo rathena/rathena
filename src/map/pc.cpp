@@ -9594,6 +9594,13 @@ TIMER_FUNC(pc_close_npc_timer){
 void pc_close_npc(map_session_data *sd,int flag)
 {
 	nullpo_retv(sd);
+	
+	for (const auto &it : sd->npc_id_dynamic) {
+		struct npc_data* nd = map_id2nd( it );
+		if( nd != nullptr && nd->dynamicnpc.owner_char_id != 0 ){
+			nd->dynamicnpc.last_interaction = gettick();
+		}
+	}
 
 	if (sd->npc_id || sd->npc_shopid) {
 		if (sd->state.using_fake_npc) {
