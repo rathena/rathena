@@ -1588,7 +1588,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 		mob_damage(reinterpret_cast<mob_data*>(target), src, (int)dhp);
 		break;
 	case BL_HOM:
-		hom_heal(reinterpret_cast<homun_data*>(target), hp, sp);
+		hom_heal(reinterpret_cast<homun_data&>(*target), hp != 0, sp != 0);
 		break;
 	case BL_MER:
 		mercenary_heal(reinterpret_cast<s_mercenary_data*>(target), hp, sp);
@@ -1811,7 +1811,7 @@ int status_heal(struct block_list *bl,int64 hhp,int64 hsp, int64 hap, int flag)
 		mob_heal(reinterpret_cast<mob_data*>(bl), hp);
 		break;
 	case BL_HOM:
-		hom_heal(reinterpret_cast<homun_data*>(bl), hp, sp);
+		hom_heal(reinterpret_cast<homun_data&>(*bl), hp != 0, sp != 0);
 		break;
 	case BL_MER:
 		mercenary_heal(reinterpret_cast<s_mercenary_data*>(bl), hp, sp);

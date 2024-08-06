@@ -216,7 +216,7 @@ void hom_gainexp(struct homun_data *hd,t_exp exp);
 int hom_levelup(struct homun_data *hd);
 int hom_evolution(struct homun_data *hd);
 int hom_mutate(struct homun_data *hd,int homun_id);
-void hom_heal(struct homun_data* hd, int hp, int sp);
+void hom_heal(homun_data& hd, bool hp, bool sp);
 int hom_vaporize(map_session_data *sd, int flag);
 int hom_ressurect(map_session_data *sd, unsigned char per, short x, short y);
 void hom_revive(struct homun_data *hd, unsigned int hp, unsigned int sp);

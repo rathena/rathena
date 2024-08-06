@@ -1749,7 +1749,7 @@ int clif_spawn( struct block_list *bl, bool walking ){
 	return 0;
 }
 
-/// Notifies client of a change in an elemental's status parameter.
+/// Notifies client of a change in an homunculus' status parameter.
 /// 0x7db <type>.W <value>.L (ZC_HO_PAR_CHANGE)
 /// 0xba5 <type>.W <value>.Q (ZC_HO_PAR_CHANGE2)
 void clif_homunculus_updatestatus(map_session_data& sd, _sp type) {
@@ -1765,14 +1765,23 @@ void clif_homunculus_updatestatus(map_session_data& sd, _sp type) {
 
 	switch (type) {
 	case SP_BASEEXP:
-		p.value = static_cast<decltype(p.value)>(sd.hd->homunculus.exp);
+		p.value = static_cast<decltype(p.value)>( std::min<decltype(sd.hd->homunculus.exp)>( sd.hd->homunculus.exp, std::numeric_limits<decltype(PACKET_ZC_PROPERTY_HOMUN::exp)>::max() ) );
 		break;
 	case SP_HP:
-		p.value = static_cast<decltype(p.value)>(status->hp);
+		if (status->max_hp > (std::numeric_limits<decltype(PACKET_ZC_PROPERTY_HOMUN::hp)>::max() / 200))
+			p.value = status->hp / (status->max_hp / 100);
+		else
+			p.value = static_cast<decltype(p.value)>(status->hp);
 		break;
 	case SP_SP:
-		p.value = static_cast<decltype(p.value)>(status->sp);
+		if (status->max_sp > (std::numeric_limits<decltype(PACKET_ZC_PROPERTY_HOMUN::sp)>::max() / 200))
+			p.value = status->sp / (status->max_sp / 100);
+		else
+			p.value = static_cast<decltype(p.value)>(status->sp);
 		break;
+	default:
+		ShowError("clif_homunculus_updatestatus: Unsupported type %d.\n", type);
+		return;
 	}
 
 	clif_send(&p, sizeof(p), &sd.bl, SELF);
@@ -1817,39 +1826,25 @@ void clif_hominfo( map_session_data *sd, struct homun_data *hd, int flag ){
 #endif
 	p.flee = status->flee;
 	p.amotion = (flag) ? 0 : status->amotion;
-#if PACKETVER >= 20141016
-	// Homunculus HP bar will screw up if the percentage calculation exceeds signed values
-	// Tested maximum: 21474836(=INT32_MAX/100), any value above will screw up the HP bar
-	if( status->max_hp > ( INT32_MAX / 100 ) ){
+	// Homunculus HP and SP bars will screw up if the percentage calculation exceeds signed values
+	// Tested maximum: 21474836(=INT32_MAX/100), any value above will screw up the bars
+	if( status->max_hp > ( std::numeric_limits<decltype(p.hp)>::max() / 200 ) ){
 		p.hp = status->hp / ( status->max_hp / 100 );
 		p.maxHp = 100;
 	}else{
-		p.hp = status->hp;
-		p.maxHp = status->max_hp;
+		p.hp = static_cast<decltype(p.hp)>(status->hp);
+		p.maxHp = static_cast<decltype(p.maxHp)>(status->max_hp);
 	}
-#else
-	if( status->max_hp > INT16_MAX ){
-		p.hp = status->hp / ( status->max_hp / 100 );
-		p.maxHp = 100;
-	}else{
-		p.hp = status->hp;
-		p.maxHp = status->max_hp;
-	}
-#endif
-	if( status->max_sp > INT16_MAX ){
+	if( status->max_sp > ( std::numeric_limits<decltype(p.sp)>::max() / 200) ){
 		p.sp = status->sp / ( status->max_sp / 100 );
 		p.maxSp = 100;
 	}else{
-		p.sp = status->sp;
-		p.maxSp = status->max_sp;
+		p.sp = static_cast<decltype(p.sp)>(status->sp);
+		p.maxSp = static_cast<decltype(p.maxSp)>(status->max_sp);
 	}
-#if PACKETVER_MAIN_NUM >= 20210303 || PACKETVER_RE_NUM >= 20211103
-	p.exp = hd->homunculus.exp;
-	p.expNext = hd->exp_next;
-#else
-	p.exp = (uint32)hd->homunculus.exp;
-	p.expNext = (uint32)hd->exp_next;
-#endif
+	p.exp = static_cast<decltype(p.exp)>( std::min<decltype(hd->homunculus.exp)>( hd->homunculus.exp, std::numeric_limits<decltype(p.exp)>::max() ) );
+	p.expNext = static_cast<decltype(p.expNext)>( std::min<decltype(hd->exp_next)>( hd->exp_next, std::numeric_limits<decltype(p.expNext)>::max() ) );
+
 	switch( hom_class2type( hd->homunculus.class_ ) ){
 		case HT_REG:
 		case HT_EVO:

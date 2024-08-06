@@ -688,6 +688,7 @@ int hom_mutate(struct homun_data *hd, int homun_id)
 	status_calc_homunculus(hd, SCO_FIRST);
 
 	clif_hominfo(sd, hd, 0);
+	hom_calc_skilltree(hd);
 
 	if (!(battle_config.hom_setting&HOMSET_NO_INSTANT_LAND_SKILL))
 		skill_unit_move(&sd->hd->bl,gettick(),1); // apply land skills immediately
@@ -787,14 +788,14 @@ int hom_decrease_intimacy(struct homun_data * hd, unsigned int value)
 * @param hp HP amount
 * @param sp SP amount
 */
-void hom_heal(struct homun_data *hd, int hp, int sp) {
-	if (hd->master == nullptr)
+void hom_heal(homun_data& hd, bool hp, bool sp) {
+	if (hd.master == nullptr)
 		return;
 
 	if (hp)
-		clif_homunculus_updatestatus(*hd->master, SP_HP);
+		clif_homunculus_updatestatus(*hd.master, SP_HP);
 	if (sp)
-		clif_homunculus_updatestatus(*hd->master, SP_SP);
+		clif_homunculus_updatestatus(*hd.master, SP_SP);
 }
 
 /**
