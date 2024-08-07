@@ -5387,7 +5387,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
  * eg : bat_c01	mapflag	battleground	2
  * also chking if mapflag conflict with another
  *------------------------------------------*/
-static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
+const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
 	int16 m;
 	char mapname[MAP_NAME_LENGTH_EXT];
@@ -5485,18 +5485,6 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 				map_setmapflag(m, MF_NOCOMMAND, false);
 			break;
 
-		case MF_RESTRICTED:
-			if (state) {
-				union u_mapflag_args args = {};
-
-				if (sscanf(w4, "%11d", &args.flag_val) == 1)
-					map_setmapflag_sub(m, MF_RESTRICTED, true, &args);
-				else // Could not be read, no value defined; don't remove as other restrictions may be set on the map
-					ShowWarning("npc_parse_mapflag: Zone value not set for the restricted mapflag! Skipped flag from %s (file '%s', line '%d').\n", map_mapid2mapname(m), filepath, strline(buffer,start-buffer));
-			} else
-				map_setmapflag(m, MF_RESTRICTED, false);
-			break;
-
 		case MF_JEXP:
 		case MF_BEXP: {
 				union u_mapflag_args args = {};
@@ -5585,6 +5573,40 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 			}
 			break;
 		}
+
+		case MF_INVINCIBLE_TIME: {
+				union u_mapflag_args args = {};
+
+				if (sscanf(w4, "%11d", &args.flag_val) < 1)
+					args.flag_val = 5000;
+
+				map_setmapflag_sub(m, mapflag, state, &args);
+			}
+			break;
+
+		case MF_FLEE_PENALTY: {
+				union u_mapflag_args args = {};
+
+				if (sscanf(w4, "%11d", &args.flag_val) < 1)
+					args.flag_val = 20;
+
+				map_setmapflag_sub(m, mapflag, state, &args);
+			}
+			break;
+
+		case MF_WEAPON_DAMAGE_RATE:
+		case MF_MAGIC_DAMAGE_RATE:
+		case MF_MISC_DAMAGE_RATE:
+		case MF_LONG_DAMAGE_RATE:
+		case MF_SHORT_DAMAGE_RATE: {
+				union u_mapflag_args args = {};
+
+				if (sscanf(w4, "%11d", &args.flag_val) < 1)
+					args.flag_val = 100;
+
+				map_setmapflag_sub(m, mapflag, state, &args);
+			}
+			break;
 
 		// All others do not need special treatment
 		default:

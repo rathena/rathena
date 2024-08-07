@@ -3586,32 +3586,6 @@ void ItemGroupDatabase::loadingFinished() {
 	TypesafeYamlDatabase::loadingFinished();
 }
 
-/** Read item forbidden by mapflag (can't equip item)
-* Structure: <nameid>,<mode>
-*/
-static bool itemdb_read_noequip( char* str[], size_t columns, size_t current ){
-	t_itemid nameid;
-	int flag;
-
-	nameid = strtoul(str[0], nullptr, 10);
-	flag = atoi(str[1]);
-
-	std::shared_ptr<item_data> id = item_db.find(nameid);
-
-	if( id == nullptr )
-	{
-		ShowWarning("itemdb_read_noequip: Invalid item id %u.\n", nameid);
-		return false;
-	}
-
-	if (flag >= 0)
-		id->flag.no_equip |= flag;
-	else
-		id->flag.no_equip &= ~abs(flag);
-
-	return true;
-}
-
 const std::string ComboDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/item_combos.yml";
 }
@@ -4257,24 +4231,19 @@ static int itemdb_read_sqldb(void) {
 	return 0;
 }
 
-/** Check if the item is restricted by item_noequip.txt
-* @param id Item that will be checked
-* @param m Map ID
-* @return true: can't be used; false: can be used
-*/
-bool itemdb_isNoEquip(struct item_data *id, uint16 m) {
-	if (!id->flag.no_equip)
-		return false;
-	
-	struct map_data *mapdata = map_getmapdata(m);
+/**
+ * Check if the item is restricted.
+ * @param sd: Player data
+ * @param nameid: Item that will be checked
+ * @return true: can't be used; false: can be used
+ */
+bool itemdb_isNoEquip(map_session_data &sd, t_itemid nameid) {
+	struct map_data *mapdata = map_getmapdata(sd.bl.m);
 
-	if ((id->flag.no_equip&1 && !mapdata_flag_vs2(mapdata)) || // Normal
-		(id->flag.no_equip&2 && mapdata->getMapFlag(MF_PVP)) || // PVP
-		(id->flag.no_equip&4 && mapdata_flag_gvg2_no_te(mapdata)) || // GVG
-		(id->flag.no_equip&8 && mapdata->getMapFlag(MF_BATTLEGROUND)) || // Battleground
-		(id->flag.no_equip&16 && mapdata_flag_gvg2_te(mapdata)) || // WOE:TE
-		(id->flag.no_equip&(mapdata->zone) && mapdata->getMapFlag(MF_RESTRICTED)) // Zone restriction
-		)
+	if (!mapdata)
+		return true;
+
+	if (mapdata->zone->isItemDisabled(nameid, sd))
 		return true;
 	return false;
 }
@@ -4702,37 +4671,10 @@ bool RandomOptionGroupDatabase::option_get_id(std::string name, uint16 &id) {
 * Read all item-related databases
 */
 static void itemdb_read(void) {
-	int i;
-	const char* dbsubpath[] = {
-		"",
-		"/" DBIMPORT,
-	};
-	
 	if (db_use_sqldbs)
 		itemdb_read_sqldb();
 	else
 		item_db.load();
-	
-	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
-		uint8 n1 = (uint8)(strlen(db_path)+strlen(dbsubpath[i])+1);
-		uint8 n2 = (uint8)(strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1);
-		char* dbsubpath1 = (char*)aMalloc(n1+1);
-		char* dbsubpath2 = (char*)aMalloc(n2+1);
-		
-
-		if(i==0) {
-			safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[i]);
-			safesnprintf(dbsubpath2,n2,"%s/%s%s",db_path,DBPATH,dbsubpath[i]);
-		}
-		else {
-			safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[i]);
-			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
-		}
-
-		sv_readdb(dbsubpath2, "item_noequip.txt",       ',', 2, 2, -1, &itemdb_read_noequip, i > 0);
-		aFree(dbsubpath1);
-		aFree(dbsubpath2);
-	}
 
 	random_option_db.load();
 	random_option_group.load();

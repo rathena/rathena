@@ -1527,6 +1527,34 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 }
 
 /**
+ * Calculate any extra damage based on zone modifiers.
+ * @param bl: Block data
+ * @param damage: Damage done
+ * @param flag: Damage flag
+ * @return Modified damage
+ */
+static int64 battle_calc_zone_damage_rate(block_list &bl, int64 damage, int flag)
+{
+	map_data *mapdata = map_getmapdata(bl.m);
+
+	if (flag & BF_SKILL) { // Skills get a different reduction than non-skills. [Skotlex]
+		if (flag & BF_WEAPON)
+			damage = damage * mapdata->getMapFlag(MF_WEAPON_DAMAGE_RATE) / 100;
+		if (flag & BF_MAGIC)
+			damage = damage * mapdata->getMapFlag(MF_MAGIC_DAMAGE_RATE) / 100;
+		if (flag & BF_MISC)
+			damage = damage * mapdata->getMapFlag(MF_MISC_DAMAGE_RATE) / 100;
+	} else { // Normal attacks get reductions based on range.
+		if (flag & BF_SHORT)
+			damage = damage * mapdata->getMapFlag(MF_SHORT_DAMAGE_RATE) / 100;
+		if (flag & BF_LONG)
+			damage = damage * mapdata->getMapFlag(MF_LONG_DAMAGE_RATE) / 100;
+	}
+
+	return i64max(damage, 1);
+}
+
+/**
  * Check damage through status.
  * ATK may be MISS, BLOCKED FAIL, reduc, increase, end status.
  * After this we apply bg/gvg reduction
@@ -1578,7 +1606,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 #endif
 		case SP_SOULEXPLOSION:
 			// Adjust these based on any possible PK damage rates.
-			if (battle_config.pk_mode == 1 && map_getmapflag(bl->m, MF_PVP) > 0)
+			if (battle_config.pk_mode > 0 && map_getmapflag(bl->m, MF_PVP))
 				damage = battle_calc_pk_damage(*src, *bl, damage, skill_id, flag);
 
 			return damage; //These skills bypass everything else.
@@ -1590,7 +1618,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	// So can defense sphere's but what the heck is that??? [Rytech]
 	if (skill_id == SJ_NOVAEXPLOSING && !(tsc && (tsc->getSCE(SC_SAFETYWALL) || tsc->getSCE(SC_MILLENNIUMSHIELD)))) {
 		// Adjust this based on any possible PK damage rates.
-		if (battle_config.pk_mode == 1 && map_getmapflag(bl->m, MF_PVP) > 0)
+		if (battle_config.pk_mode > 0 && map_getmapflag(bl->m, MF_PVP))
 			damage = battle_calc_pk_damage(*src, *bl, damage, skill_id, flag);
 
 		return damage;
@@ -1982,7 +2010,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	} //End of caster SC_ check
 
 	//PK damage rates
-	if (battle_config.pk_mode == 1 && map_getmapflag(bl->m, MF_PVP) > 0)
+	if (battle_config.pk_mode > 0 && map_getmapflag(bl->m, MF_PVP))
 		damage = battle_calc_pk_damage(*src, *bl, damage, skill_id, flag);
 
 	if(battle_config.skill_min_damage && damage > 0 && damage < div_) {
@@ -2073,22 +2101,7 @@ int64 battle_calc_bg_damage(struct block_list *src, struct block_list *bl, int64
 	if(skill_get_inf2(skill_id, INF2_IGNOREBGREDUCTION))
 		return damage; //skill that ignore bg map reduction
 
-	if( flag&BF_SKILL ) { //Skills get a different reduction than non-skills. [Skotlex]
-		if( flag&BF_WEAPON )
-			damage = damage * battle_config.bg_weapon_damage_rate / 100;
-		if( flag&BF_MAGIC )
-			damage = damage * battle_config.bg_magic_damage_rate / 100;
-		if(	flag&BF_MISC )
-			damage = damage * battle_config.bg_misc_damage_rate / 100;
-	} else { //Normal attacks get reductions based on range.
-		if( flag&BF_SHORT )
-			damage = damage * battle_config.bg_short_damage_rate / 100;
-		if( flag&BF_LONG )
-			damage = damage * battle_config.bg_long_damage_rate / 100;
-	}
-
-	damage = i64max(damage,1); //min 1 damage
-	return damage;
+	return i64max(battle_calc_zone_damage_rate(*bl, damage, flag), 1);
 }
 
 /**
@@ -2148,21 +2161,7 @@ int64 battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int64 
 	if (skill_get_inf2(skill_id, INF2_IGNOREGVGREDUCTION)) //Skills with no gvg damage reduction.
 		return damage;
 
-	if (flag & BF_SKILL) { //Skills get a different reduction than non-skills. [Skotlex]
-		if (flag&BF_WEAPON)
-			damage = damage * battle_config.gvg_weapon_damage_rate / 100;
-		if (flag&BF_MAGIC)
-			damage = damage * battle_config.gvg_magic_damage_rate / 100;
-		if (flag&BF_MISC)
-			damage = damage * battle_config.gvg_misc_damage_rate / 100;
-	} else { //Normal attacks get reductions based on range.
-		if (flag & BF_SHORT)
-			damage = damage * battle_config.gvg_short_damage_rate / 100;
-		if (flag & BF_LONG)
-			damage = damage * battle_config.gvg_long_damage_rate / 100;
-	}
-	damage = i64max(damage,1);
-	return damage;
+	return i64max(battle_calc_zone_damage_rate(*bl, damage, flag), 1);
 }
 
 /**
@@ -2181,23 +2180,13 @@ int64 battle_calc_pk_damage(block_list &src, block_list &bl, int64 damage, uint1
 	if (battle_config.pk_mode == 0) // PK mode is disabled.
 		return damage;
 
-	if (src.type == BL_PC && bl.type == BL_PC) {
-		if (flag & BF_SKILL) { //Skills get a different reduction than non-skills. [Skotlex]
-			if (flag & BF_WEAPON)
-				damage = damage * battle_config.pk_weapon_damage_rate / 100;
-			if (flag & BF_MAGIC)
-				damage = damage * battle_config.pk_magic_damage_rate / 100;
-			if (flag & BF_MISC)
-				damage = damage * battle_config.pk_misc_damage_rate / 100;
-		} else { //Normal attacks get reductions based on range.
-			if (flag & BF_SHORT)
-				damage = damage * battle_config.pk_short_damage_rate / 100;
-			if (flag & BF_LONG)
-				damage = damage * battle_config.pk_long_damage_rate / 100;
-		}
-	}
+	if (skill_get_inf2(skill_id, INF2_IGNOREPKREDUCTION)) //Skills with no pk damage reduction.
+		return damage;
 
-	return i64max(damage, 1);
+	if (src.type == BL_PC && bl.type == BL_PC)
+		return i64max(battle_calc_zone_damage_rate(bl, damage, flag), 1);
+	else
+		return damage;
 }
 
 /**
@@ -2740,12 +2729,11 @@ static int battle_skill_damage_skill(struct block_list *src, struct block_list *
 
 	map_data *mapdata = map_getmapdata(src->m);
 
-	if ((damage->map&1 && (!mapdata->getMapFlag(MF_PVP) && !mapdata_flag_gvg2(mapdata) && !mapdata->getMapFlag(MF_BATTLEGROUND) && !mapdata->getMapFlag(MF_SKILL_DAMAGE) && !mapdata->getMapFlag(MF_RESTRICTED))) ||
+	if ((damage->map&1 && (!mapdata->getMapFlag(MF_PVP) && !mapdata_flag_gvg2(mapdata) && !mapdata->getMapFlag(MF_BATTLEGROUND) && !mapdata->getMapFlag(MF_SKILL_DAMAGE))) ||
 		(damage->map&2 && mapdata->getMapFlag(MF_PVP)) ||
 		(damage->map&4 && mapdata_flag_gvg2(mapdata)) ||
 		(damage->map&8 && mapdata->getMapFlag(MF_BATTLEGROUND)) ||
-		(damage->map&16 && mapdata->getMapFlag(MF_SKILL_DAMAGE)) ||
-		(damage->map&mapdata->zone && mapdata->getMapFlag(MF_RESTRICTED)))
+		(damage->map&16 && mapdata->getMapFlag(MF_SKILL_DAMAGE)))
 	{
 		return damage->rate[battle_skill_damage_type(target)];
 	}
@@ -9529,7 +9517,7 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 		rdamage = battle_calc_gvg_damage(src, tbl, rdamage, skill_id, flag);
 	else if (mapdata->getMapFlag(MF_BATTLEGROUND))
 		rdamage = battle_calc_bg_damage(src, tbl, rdamage, skill_id, flag);
-	else if (mapdata->getMapFlag(MF_PVP))
+	else if (battle_config.pk_mode > 0 && mapdata->getMapFlag(MF_PVP))
 		rdamage = battle_calc_pk_damage(*src, *tbl, rdamage, skill_id, flag);
 
 	// Skill damage adjustment
@@ -11000,7 +10988,6 @@ static const struct _battle_data {
 	{ "basic_skill_check",                  &battle_config.basic_skill_check,               1,      0,      1,              },
 	{ "guild_emperium_check",               &battle_config.guild_emperium_check,            1,      0,      1,              },
 	{ "guild_exp_limit",                    &battle_config.guild_exp_limit,                 50,     0,      99,             },
-	{ "player_invincible_time",             &battle_config.pc_invincible_time,              5000,   0,      INT_MAX,        },
 	{ "pet_catch_rate",                     &battle_config.pet_catch_rate,                  100,    0,      INT_MAX,        },
 	{ "pet_rename",                         &battle_config.pet_rename,                      0,      0,      1,              },
 	{ "pet_friendly_rate",                  &battle_config.pet_friendly_rate,               100,    0,      INT_MAX,        },
@@ -11082,17 +11069,6 @@ static const struct _battle_data {
 	{ "player_cloak_check_type",            &battle_config.pc_cloak_check_type,             1,      0,      1|2|4,          },
 	{ "monster_cloak_check_type",           &battle_config.monster_cloak_check_type,        4,      0,      1|2|4,          },
 	{ "sense_type",                         &battle_config.estimation_type,                 1|2,    0,      1|2,            },
-	{ "gvg_short_attack_damage_rate",       &battle_config.gvg_short_damage_rate,           80,     0,      INT_MAX,        },
-	{ "gvg_long_attack_damage_rate",        &battle_config.gvg_long_damage_rate,            80,     0,      INT_MAX,        },
-	{ "gvg_weapon_attack_damage_rate",      &battle_config.gvg_weapon_damage_rate,          60,     0,      INT_MAX,        },
-	{ "gvg_magic_attack_damage_rate",       &battle_config.gvg_magic_damage_rate,           60,     0,      INT_MAX,        },
-	{ "gvg_misc_attack_damage_rate",        &battle_config.gvg_misc_damage_rate,            60,     0,      INT_MAX,        },
-	{ "gvg_flee_penalty",                   &battle_config.gvg_flee_penalty,                20,     0,      INT_MAX,        },
-	{ "pk_short_attack_damage_rate",        &battle_config.pk_short_damage_rate,            80,     0,      INT_MAX,        },
-	{ "pk_long_attack_damage_rate",         &battle_config.pk_long_damage_rate,             70,     0,      INT_MAX,        },
-	{ "pk_weapon_attack_damage_rate",       &battle_config.pk_weapon_damage_rate,           60,     0,      INT_MAX,        },
-	{ "pk_magic_attack_damage_rate",        &battle_config.pk_magic_damage_rate,            60,     0,      INT_MAX,        },
-	{ "pk_misc_attack_damage_rate",         &battle_config.pk_misc_damage_rate,             60,     0,      INT_MAX,        },
 	{ "mob_changetarget_byskill",           &battle_config.mob_changetarget_byskill,        0,      0,      1,              },
 	{ "attack_direction_change",            &battle_config.attack_direction_change,         BL_ALL, BL_NUL, BL_ALL,         },
 	{ "land_skill_limit",                   &battle_config.land_skill_limit,                BL_ALL, BL_NUL, BL_ALL,         },
@@ -11296,12 +11272,6 @@ static const struct _battle_data {
 	{ "npc_emotion_behavior",               &battle_config.npc_emotion_behavior,            0,      0,      1,              },
 // BattleGround Settings
 	{ "bg_update_interval",                 &battle_config.bg_update_interval,              1000,   100,    INT_MAX,        },
-	{ "bg_short_attack_damage_rate",        &battle_config.bg_short_damage_rate,            80,     0,      INT_MAX,        },
-	{ "bg_long_attack_damage_rate",         &battle_config.bg_long_damage_rate,             80,     0,      INT_MAX,        },
-	{ "bg_weapon_attack_damage_rate",       &battle_config.bg_weapon_damage_rate,           60,     0,      INT_MAX,        },
-	{ "bg_magic_attack_damage_rate",        &battle_config.bg_magic_damage_rate,            60,     0,      INT_MAX,        },
-	{ "bg_misc_attack_damage_rate",         &battle_config.bg_misc_damage_rate,             60,     0,      INT_MAX,        },
-	{ "bg_flee_penalty",                    &battle_config.bg_flee_penalty,                 20,     0,      INT_MAX,        },
 // rAthena
 	{ "max_third_parameter",				&battle_config.max_third_parameter,				135,	10,		SHRT_MAX,		},
 	{ "max_baby_third_parameter",			&battle_config.max_baby_third_parameter,		108,	10,		SHRT_MAX,		},

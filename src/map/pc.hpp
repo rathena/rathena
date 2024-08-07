@@ -1085,10 +1085,6 @@ struct s_job_info {
 	t_exp base_exp[MAX_LEVEL], job_exp[MAX_LEVEL];
 	uint16 max_base_level, max_job_level;
 	uint16 max_param[PARAM_MAX];
-	struct s_job_noenter_map {
-		uint32 zone;
-		uint8 group_lv;
-	} noenter_map;
 };
 
 class JobDatabase : public TypesafeCachedYamlDatabase<uint16, s_job_info> {

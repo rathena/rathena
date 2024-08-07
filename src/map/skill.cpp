@@ -866,14 +866,9 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 
 	uint32 skill_nocast = skill_get_nocast(skill_id);
 	// Check skill restrictions [Celest]
-	if( (skill_nocast&1 && !mapdata_flag_vs2(mapdata)) ||
-		(skill_nocast&2 && mapdata->getMapFlag(MF_PVP)) ||
-		(skill_nocast&4 && mapdata_flag_gvg2_no_te(mapdata)) ||
-		(skill_nocast&8 && mapdata->getMapFlag(MF_BATTLEGROUND)) ||
-		(skill_nocast&16 && mapdata_flag_gvg2_te(mapdata)) || // WOE:TE
-		(mapdata->zone && skill_nocast&(mapdata->zone) && mapdata->getMapFlag(MF_RESTRICTED)) ){
-			clif_msg(&sd, MSI_IMPOSSIBLE_SKILL_AREA); // This skill cannot be used within this area
-			return true;
+	if (mapdata != nullptr && mapdata->zone->isSkillDisabled(skill_id, sd.bl)) {
+		clif_msg(&sd, MSI_IMPOSSIBLE_SKILL_AREA); // This skill cannot be used within this area
+		return true;
 	}
 
 	if( sd.sc.getSCE(SC_ALL_RIDING) )
@@ -24942,20 +24937,6 @@ uint64 MagicMushroomDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	return 1;
 }
 
-/** Reads skill no cast db
- * Structure: SkillID,Flag
- */
-static bool skill_parse_row_nocastdb( char* split[], size_t columns, size_t current ){
-	std::shared_ptr<s_skill_db> skill = skill_db.find(atoi(split[0]));
-
-	if (!skill)
-		return false;
-
-	skill->nocast |= atoi(split[1]);
-
-	return true;
-}
-
 /** Reads Produce db
  * Structure: ProduceItemID,ItemLV,RequireSkill,Requireskill_lv,MaterialID1,MaterialAmount1,...
  */
@@ -25298,8 +25279,6 @@ static void skill_readdb(void) {
 			safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[i]);
 			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
 		}
-
-		sv_readdb(dbsubpath2, "skill_nocast_db.txt"   , ',',   2,  2, -1, skill_parse_row_nocastdb, i > 0);
 
 		sv_readdb(dbsubpath2, "produce_db.txt"        , ',',   5,  5+2*MAX_PRODUCE_RESOURCE, MAX_SKILL_PRODUCE_DB, skill_parse_row_producedb, i > 0);
 		sv_readdb(dbsubpath1, "skill_changematerial_db.txt" , ',',   5,  5+2*MAX_SKILL_CHANGEMATERIAL_SET, MAX_SKILL_CHANGEMATERIAL_DB, skill_parse_row_changematerialdb, i > 0);

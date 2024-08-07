@@ -174,24 +174,6 @@ Disables skill usage on a map.
 
 ---------------------------------------
 
-*restricted	<zone>
-
-Disables certain items and skills on a map through a specified zone number. The zone databases are
-located in 'db/(pre-)re/item_noequip.txt' and 'db/(pre-)re/skill_nocast_db.txt', both of which
-contain explanations and examples of how this mapflag is used.
-
-Restricted Zones:
-1 - Aldebaran Turbo Track
-2 - Jail
-3 - Izlude Battle Arena
-4 - WoE:SE Maps
-5 - Sealed Shrine
-6 - Instances: Endless Tower, Orc's Memory, Nidhoggr's Instance
-7 - Towns
-8 - WOE:TE Dungeons
-
----------------------------------------
-
 *monster_noteleport
 
 Prevents monsters from teleporting on a map, including through the skill RG_INTIMIDATE.
@@ -300,6 +282,16 @@ Disable RODex on a map.
 
 ---------------------------------------
 
+*nobonusitemdrop
+
+Disable the following item bonuses on a map.
+ - bAddMonsterDropItem
+ - bAddClassDropItem
+ - bAddMonsterDropItemGroup
+ - bAddClassDropItemGroup
+
+---------------------------------------
+
 =====================
 | 2. Battle-related |
 =====================
@@ -396,6 +388,67 @@ prtg_cas01	mapflag	skill_duration	HT_ANKLESNARE,400
 
 ---------------------------------------
 
+*invincible_time duration
+
+Sets the duration (in milliseconds) for when a player loads onto a map with how long they are invincible for.
+The duration is cancelled if the player walks or interacts in any fashion.
+
+---------------------------------------
+
+*noknockback
+
+Disables knockback on a map.
+
+---------------------------------------
+
+*hidedamage
+
+Disables the damage display on a map.
+
+---------------------------------------
+
+*weapon_damage_rate	<rate>
+
+Weapon skills damage adjustments.
+<rate> is given as a percentage (i.e. 60 = 60%).
+
+---------------------------------------
+
+*magic_damage_rate	<rate>
+
+Magic skills damage adjustments.
+<rate> is given as a percentage (i.e. 60 = 60%).
+
+---------------------------------------
+
+*misc_damage_rate	<rate>
+
+Misc skills damage adjustments.
+<rate> is given as a percentage (i.e. 60 = 60%).
+
+---------------------------------------
+
+*short_damage_rate	<rate>
+
+Melee damage adjustments (non-skill).
+<rate> is given as a percentage (i.e. 60 = 60%).
+
+---------------------------------------
+
+*long_damage_rate	<rate>
+
+Ranged damage adjustments (non-skill).
+<rate> is given as a percentage (i.e. 60 = 60%).
+
+---------------------------------------
+
+*flee_penalty	<rate>
+
+Flee penalty applied to players.
+<rate> is given as a percentage (i.e. 60 = 60%).
+
+---------------------------------------
+
 ==================
 | 3. Map Effects |
 ==================
@@ -422,12 +475,6 @@ Displays night mode effects on a map. This is used on most outdoor maps.
 ====================
 | 4. Miscellaneous |
 ====================
----------------------------------------
-
-*town
-
-Marks a map as a town. This allows players to access their mail and disables kill stealing.
-
 ---------------------------------------
 
 *reset

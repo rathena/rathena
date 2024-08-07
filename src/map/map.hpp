@@ -6,23 +6,27 @@
 
 #include <algorithm>
 #include <cstdarg>
+#include <memory>
 #include <string>
 #include <unordered_map>
 #include <vector>
 
 #include <common/cbasetypes.hpp>
 #include <common/core.hpp> // CORE_ST_LAST
+#include <common/database.hpp>
 #include <common/db.hpp>
 #include <common/mapindex.hpp>
 #include <common/mmo.hpp>
 #include <common/msg_conf.hpp>
 #include <common/timer.hpp>
+#include <common/utilities.hpp>
 #include <config/core.hpp>
 
 #include "navi.hpp"
 #include "script.hpp"
 #include "path.hpp"
 
+using namespace rathena;
 using rathena::server_core::Core;
 using rathena::server_core::e_core_type;
 
@@ -46,6 +50,8 @@ namespace rathena{
 struct npc_data;
 struct item_data;
 struct Channel;
+enum sc_type : int16;
+enum e_map_type : uint8_t;
 
 struct map_data *map_getmapdata(int16 m);
 #define msg_config_read(cfgName,isnew) map_msg_config_read(cfgName,isnew)
@@ -608,7 +614,7 @@ enum e_mapflag : int16 {
 	MF_PVP_NOPARTY,
 	MF_PVP_NOGUILD,
 	MF_GVG,
-	MF_GVG_NOPARTY,	//10
+	MF_GVG_NOPARTY,
 	MF_NOTRADE,
 	MF_NOSKILL,
 	MF_NOWARP,
@@ -618,7 +624,7 @@ enum e_mapflag : int16 {
 	MF_FOG,
 	MF_SAKURA,
 	MF_LEAVES,
-	//MF_RAIN,	//20 - No longer available, keeping here just in case it's back someday. [Ind]
+	//MF_RAIN,	// No longer available, keeping here just in case it's back someday. [Ind]
 	// 21 free
 	MF_NOGO = 22,
 	MF_CLOUDS,
@@ -628,27 +634,25 @@ enum e_mapflag : int16 {
 	MF_GVG_DUNGEON,
 	MF_NIGHTENABLED,
 	MF_NOBASEEXP,
-	MF_NOJOBEXP,	//30
+	MF_NOJOBEXP,
 	MF_NOMOBLOOT,
 	MF_NOMVPLOOT,
 	MF_NORETURN,
 	MF_NOWARPTO,
 	MF_PVP_NIGHTMAREDROP,
-	MF_RESTRICTED,
 	MF_NOCOMMAND,
 	MF_NODROP,
 	MF_JEXP,
-	MF_BEXP,	//40
+	MF_BEXP,
 	MF_NOVENDING,
 	MF_LOADEVENT,
 	MF_NOCHAT,
 	MF_NOEXPPENALTY,
 	MF_GUILDLOCK,
-	MF_TOWN,
 	MF_AUTOTRADE,
 	MF_ALLOWKS,
 	MF_MONSTER_NOTELEPORT,
-	MF_PVP_NOCALCRANK,	//50
+	MF_PVP_NOCALCRANK,
 	MF_BATTLEGROUND,
 	MF_RESET,
 	MF_NOMAPCHANNELAUTOJOIN,
@@ -658,7 +662,7 @@ enum e_mapflag : int16 {
 	MF_FORCEMINEFFECT,
 	MF_NOLOCKON,
 	MF_NOTOMB,
-	MF_SKILL_DAMAGE,	//60
+	MF_SKILL_DAMAGE,
 	MF_NOCOSTUME,
 	MF_GVG_TE_CASTLE,
 	MF_GVG_TE,
@@ -676,6 +680,18 @@ enum e_mapflag : int16 {
 	MF_NOBUYINGSTORE,
 	MF_NODYNAMICNPC,
 	MF_NOBANK,
+	MF_INVINCIBLE_TIME,
+	MF_WEAPON_DAMAGE_RATE,
+	MF_MAGIC_DAMAGE_RATE,
+	MF_MISC_DAMAGE_RATE,
+	MF_LONG_DAMAGE_RATE,
+	MF_SHORT_DAMAGE_RATE,
+	MF_NOKNOCKBACK,
+	MF_NOBONUSITEMDROP,
+	MF_HIDEDAMAGE,
+	MF_FLEE_PENALTY,
+	MF_RESTRICTED,
+	MF_TOWN,
 	MF_SPECIALPOPUP,
 	MF_MAX
 };
@@ -798,6 +814,24 @@ struct iwall_data {
 	bool shootable;
 };
 
+class c_map_zone_data {
+public:
+	e_map_type id;
+	std::unordered_map<std::string, uint16> disabled_commands;
+	std::unordered_map<uint16, std::pair<uint16, uint16>> disabled_skills;
+	std::unordered_map<t_itemid, uint16> disabled_items;
+	std::unordered_map<sc_type, uint16> disabled_statuses;
+	std::unordered_map<int32, uint16> restricted_jobs;
+
+	e_map_type getMapZone(int16 map_id);
+	bool isCommandDisabled(std::string name, map_session_data &sd);
+	bool isSkillDisabled(uint16 skill_id, block_list &bl);
+	bool isItemDisabled(t_itemid nameid, map_session_data &sd);
+	bool isStatusDisabled(sc_type sc, block_list &bl);
+	bool isJobRestricted(int32 job_id, uint16 group_lv);
+	void clear_all_disabled_status(block_list &bl);
+};
+
 struct map_data {
 	char name[MAP_NAME_LENGTH];
 	uint16 index; // The map index used by the mapindex* functions.
@@ -817,10 +851,11 @@ struct map_data {
 
 	struct point save;
 	std::vector<s_drop_list> drop_list;
-	uint32 zone; // zone number (for item/skill restrictions)
 	struct s_skill_damage damage_adjust; // Used for overall skill damage adjustment
 	std::unordered_map<uint16, s_skill_damage> skill_damage; // Used for single skill damage adjustment
 	std::unordered_map<uint16, int> skill_duration;
+
+	std::shared_ptr<c_map_zone_data> zone;
 
 	struct npc_data *npc[MAX_NPC_PER_MAP];
 	struct spawn_data *moblist[MAX_MOB_LIST_PER_MAP]; // [Wizputer]
@@ -854,6 +889,28 @@ struct map_data {
 private:
 	std::vector<int> flags;
 };
+
+class c_map_zone : public c_map_zone_data {
+public:
+	std::vector<int16> maps;
+	std::multimap<int16, std::string> mapflags;
+};
+
+class MapZoneDatabase : public TypesafeYamlDatabase<uint16, c_map_zone> {
+public:
+	MapZoneDatabase() : TypesafeYamlDatabase("MAP_ZONES", 1) {
+
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const ryml::NodeRef &node) override;
+	void loadingFinished() override;
+
+	// Others
+	bool setZone(int16 map_id, e_map_type zone);
+};
+
+extern MapZoneDatabase map_zone_db;
 
 /// Stores information about a remote map (for multi-mapserver setups).
 /// Beginning of data structure matches 'map_data', to allow typecasting.
@@ -974,7 +1031,7 @@ inline bool mapdata_flag_ks(struct map_data *mapdata) {
 	if (mapdata == nullptr)
 		return false;
 
-	if (mapdata->getMapFlag(MF_TOWN) || mapdata->getMapFlag(MF_PVP) || mapdata->getMapFlag(MF_GVG) || mapdata->getMapFlag(MF_GVG_TE) || mapdata->getMapFlag(MF_BATTLEGROUND))
+	if (mapdata->getMapFlag(MF_PVP) || mapdata->getMapFlag(MF_GVG) || mapdata->getMapFlag(MF_GVG_TE) || mapdata->getMapFlag(MF_BATTLEGROUND))
 		return true;
 
 	return false;

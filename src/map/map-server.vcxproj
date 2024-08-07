@@ -347,12 +347,10 @@
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_db.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_enchant.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_enchant.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_group_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_group_db.yml')" />
-    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_noequip.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_noequip.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_packages.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_packages.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_randomopt_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_randomopt_db.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_randomopt_group.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_randomopt_group.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_reform.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_reform.yml')" />
-    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\job_noenter_map.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\job_noenter_map.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\job_stats.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\job_stats.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\laphine_synthesis.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\laphine_synthesis.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\laphine_upgrade.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\laphine_upgrade.yml')" />
@@ -361,6 +359,7 @@
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\map_cache.dat" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\map_cache.dat')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\map_drops.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\map_drops.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\map_index.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\map_index.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\map_zones.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\map_zones.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mercenary_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mercenary_db.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mob_avail.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mob_avail.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mob_summon.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mob_summon.yml')" />
@@ -377,11 +376,9 @@
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_changematerial_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_changematerial_db.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_damage_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_damage_db.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_db.yml')" />
-    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_nocast_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_nocast_db.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_tree.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_tree.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\spellbook_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\spellbook_db.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\statpoint.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\statpoint.yml')" />
-    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\status_disabled.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\status_disabled.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\status.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\status.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\stylist.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\stylist.yml')" />
   </Target>
