@@ -7964,6 +7964,8 @@ Body:
     DurationLookup: EM_SPELL_ENCHANTING
     CalcFlags:
       Smatk: true
+    Flags:
+      DisplayPc: true
   - Status: Summon_Elemental_Ardor
     Icon: EFST_SUMMON_ELEMENTAL_ARDOR
     DurationLookup: EM_SUMMON_ELEMENTAL_ARDOR
@@ -8015,17 +8017,23 @@ Body:
     DurationLookup: TR_MUSICAL_INTERLUDE
     CalcFlags:
       Res: true
+    Flags:
+      DisplayPc: true
   - Status: Jawaii_Serenade
     Icon: EFST_JAWAII_SERENADE
     DurationLookup: TR_JAWAII_SERENADE
     CalcFlags:
       Smatk: true
       Speed: true
+    Flags:
+      DisplayPc: true
   - Status: Pron_March
     Icon: EFST_PRON_MARCH
     DurationLookup: TR_PRON_MARCH
     CalcFlags:
       Patk: true
+    Flags:
+      DisplayPc: true
   - Status: Roseblossom
     Icon: EFST_ROSEBLOSSOM
     DurationLookup: TR_ROSEBLOSSOM
@@ -8039,6 +8047,8 @@ Body:
       Powerful_Faith: true
       Firm_Faith: true
       Sincere_Faith: true
+    Flags:
+      DisplayPc: true
   - Status: Sincere_Faith
     Icon: EFST_SINCERE_FAITH
     DurationLookup: IQ_SINCERE_FAITH
