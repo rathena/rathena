@@ -13606,7 +13606,7 @@
 20811,ILL_KRAKEN@NPC_HELLJUDGEMENT2,chase,768,2,3000,500,5000,no,target,always,0,,,,,,,
 20811,ILL_KRAKEN@NPC_HELLJUDGEMENT2,attack,768,2,3000,500,5000,no,target,always,0,,,,,,,
 20811,ILL_KRAKEN@NPC_CLOUD_KILL,attack,739,5,2000,500,16000,no,target,always,0,,,,,,,
-20811,ILL_KRAKEN@NPC_DAMAGE_HEAL,attack,753,1,10000,1000,60000,no,target,myhpltmaxrate,10,,,,,,,
+20811,ILL_KRAKEN@NPC_DAMAGE_HEAL,attack,753,1,10000,1000,60000,no,self,myhpltmaxrate,10,,,,,,,
 20811,ILL_KRAKEN@NPC_PHANTOMTHRUST,chase,741,5,1000,0,5000,no,self,always,0,,,,,,,
 20811,ILL_KRAKEN@NPC_CALLSLAVE,idle,352,1,5000,0,30000,yes,self,always,0,,,,,,,
 20843,ILL_ABYSMAL_WITCH@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,0,,,,,,,
@@ -13638,7 +13638,7 @@
 20843,ILL_ABYSMAL_WITCH@NPC_HELLJUDGEMENT2,chase,768,2,2000,500,5000,no,target,always,0,,,,,,,
 20843,ILL_ABYSMAL_WITCH@NPC_HELLJUDGEMENT2,attack,768,2,2000,500,5000,no,target,always,0,,,,,,,
 20843,ILL_ABYSMAL_WITCH@NPC_CLOUD_KILL,attack,739,5,2000,500,16000,no,target,always,0,,,,,,,
-20843,ILL_ABYSMAL_WITCH@NPC_DAMAGE_HEAL,attack,753,1,10000,1000,60000,no,target,myhpltmaxrate,10,,,,,,,
+20843,ILL_ABYSMAL_WITCH@NPC_DAMAGE_HEAL,attack,753,1,10000,1000,60000,no,self,myhpltmaxrate,10,,,,,,,
 20843,ILL_ABYSMAL_WITCH@NPC_CALLSLAVE,idle,352,1,5000,0,30000,yes,self,always,0,,,,,,,
 
 // Episode 17.2 - Sage's Legacy
@@ -14239,7 +14239,7 @@
 20934,R001_BESTIA@NPC_EARTHQUAKE,attack,653,5,10000,500,20000,no,self,myhpltmaxrate,40,,,,,,,
 20934,R001_BESTIA@NPC_PULSESTRIKE,attack,661,5,10000,0,15000,no,self,myhpltmaxrate,60,,,,,,,
 20934,R001_BESTIA@NPC_DRAGONFEAR,attack,659,5,10000,0,10000,no,self,always,0,,,,,,,
-// 20934,R001_BESTIA@NPC_DAMAGE_HEAL,attack,753,1,3000,1500,40000,no,target,myhpltmaxrate,20,,,,,,,
+// 20934,R001_BESTIA@NPC_DAMAGE_HEAL,attack,753,1,3000,1500,40000,no,self,myhpltmaxrate,20,,,,,,,
 
 // nif_dun
 20935,GAN_CEANN@NPC_CRITICALSLASH,attack,170,1,1000,500,5000,no,target,always,0,,,,,,,
@@ -14339,7 +14339,7 @@
 20943,DEATH_WITCH@NPC_HELLJUDGEMENT,chase,662,2,2000,500,5000,no,self,always,0,,,,,,,
 20943,DEATH_WITCH@NPC_HELLJUDGEMENT,attack,662,2,2000,500,5000,no,self,always,0,,,,,,,
 20943,DEATH_WITCH@NPC_CLOUD_KILL,attack,739,5,2000,500,16000,no,target,always,0,,,,,,,
-// 20943,DEATH_WITCH@NPC_DAMAGE_HEAL,attack,753,1,10000,1000,60000,no,target,myhpltmaxrate,10,,,,,,,
+// 20943,DEATH_WITCH@NPC_DAMAGE_HEAL,attack,753,1,10000,1000,60000,no,self,myhpltmaxrate,10,,,,,,,
 20943,DEATH_WITCH@NPC_CALLSLAVE,idle,352,1,5000,0,30000,yes,self,always,0,,,,,,,
 20943,DEATH_WITCH@NPC_CALLSLAVE,attack,352,1,5000,0,30000,yes,self,always,0,,,,,,,
 
@@ -14570,7 +14570,7 @@
 21395,ILL_MAYA@NPC_CRITICALWOUND,attack,673,1,500,0,5000,yes,target,always,0,,,,,,,
 21395,ILL_MAYA@NPC_IMMUNE_PROPERTY,chase,754,4,1500,1500,60000,no,self,casttargeted,0,,,,,,,
 21395,ILL_MAYA@NPC_IMMUNE_PROPERTY,attack,754,1,1500,1500,60000,no,self,longrangeattacked,0,,,,,,,
-21395,ILL_MAYA@NPC_DAMAGE_HEAL,attack,753,1,500,1500,120000,no,target,myhpltmaxrate,50,,,,,,32,
+21395,ILL_MAYA@NPC_DAMAGE_HEAL,attack,753,1,500,1500,120000,no,self,myhpltmaxrate,50,,,,,,32,
 21395,ILL_MAYA@NPC_ALL_STAT_DOWN,attack,751,5,5000,1500,45000,no,target,always,0,,,,,,18,
 
 // Episode 18
