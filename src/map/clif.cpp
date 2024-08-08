@@ -23438,20 +23438,31 @@ void clif_parse_laphine_upgrade( int fd, map_session_data* sd ){
 	}
 
 	// Change the refine rate if needed
-	if( upgrade->resultRefine > 0 ){
-		// Absolute refine level change
-		item->refine = max( item->refine, upgrade->resultRefine );
-	}else if( upgrade->resultRefineMaximum > 0 ){
-		// If a minimum is specified it can also downgrade
-		if( upgrade->resultRefineMinimum ){
-			item->refine = static_cast<uint8>( rnd_value<uint16>( upgrade->resultRefineMinimum, upgrade->resultRefineMaximum ) );
-		}else{
-			// Otherwise it can only be upgraded until the maximum, but not downgraded
-			item->refine = static_cast<uint8>( rnd_value<uint16>( item->refine, upgrade->resultRefineMaximum ) );
+	if (!upgrade->resultRefine.empty()) {
+		int total_rate = 0;
+
+		// Get the total rate (sum of the rate)
+		for (const auto& it : upgrade->resultRefine) {
+			if (it.second == 0)	// Level removed on import
+				continue;
+			total_rate += it.second;
 		}
-	}else if( upgrade->resultRefineMinimum > 0 ){
-		// No maximum has been specified, so it can be anything between minimum and MAX_REFINE
-		item->refine = static_cast<uint8>( rnd_value<uint16>( upgrade->resultRefineMinimum, MAX_REFINE ) );
+
+		if (total_rate > 0) {
+			int chance = rnd_value(1, total_rate);
+			int sum_rate = 0;
+
+			for (const auto& it : upgrade->resultRefine) {
+				if (it.second == 0)
+					continue;
+				sum_rate += it.second;
+
+				if (chance <= sum_rate) {
+					item->refine = cap_value(it.first, 0, MAX_REFINE);
+					break;
+				}
+			}
+		}
 	}
 
 	// Log retrieving the item again -> with the new options
