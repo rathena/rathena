@@ -7832,6 +7832,8 @@ Body:
     Flags:
       BlEffect: true
       DisplayPc: true
+    EndOnStart:
+      Sandy_Festival: true
   - Status: Benedictum
     Icon: EFST_BENEDICTUM
     DurationLookup: CD_BENEDICTUM
@@ -7842,6 +7844,8 @@ Body:
     Flags:
       BlEffect: true
       DisplayPc: true
+    EndOnStart:
+      Marine_Festival: true
   - Status: Axe_Stomp
     Icon: EFST_AXE_STOMP
     DurationLookup: MT_AXE_STOMP
@@ -8948,3 +8952,106 @@ Body:
       Bleeding: true
       Confusion: true
       Freeze: true
+  - Status: Hogogong
+    Icon: EFST_HOGOGONG
+    DurationLookup: SH_HOWLING_OF_CHUL_HO
+    Flags:
+      Debuff: true
+      BlEffect: true
+      DisplayPc: true
+  - Status: Temporary_Communion
+    Icon: EFST_TEMPORARY_COMMUNION
+    DurationLookup: SH_TEMPORARY_COMMUNION
+    CalcFlags:
+      Patk: true
+      Smatk: true
+      Hplus: true
+  - Status: Marine_Festival
+    Icon: EFST_MARINE_FESTIVAL
+    DurationLookup: SH_MARINE_FESTIVAL_OF_KI_SUL
+    CalcFlags:
+      Pow: true
+      Con: true
+      Crt: true
+    EndOnStart:
+      Benedictum: true
+  - Status: Sandy_Festival
+    Icon: EFST_SANDY_FESTIVAL
+    DurationLookup: SH_SANDY_FESTIVAL_OF_KI_SUL
+    CalcFlags:
+      Spl: true
+      Wis: true
+      Sta: true
+    EndOnStart:
+      Religio: true
+  - Status: Ki_Sul_Rampage
+    Icon: EFST_KI_SUL_RAMPAGE
+    DurationLookup: SH_KI_SUL_RAMPAGE
+    States:
+      NoCast: true
+  - Status: Colors_of_Hyun_Rok_Buff
+    Icon: EFST_COLORS_OF_HYUN_ROK_BUFF
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+  - Status: Colors_of_Hyun_Rok_1
+    Icon: EFST_COLORS_OF_HYUN_ROK_1
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+    EndOnStart:
+      Colors_of_Hyun_Rok_2: true
+      Colors_of_Hyun_Rok_3: true
+      Colors_of_Hyun_Rok_4: true
+      Colors_of_Hyun_Rok_5: true
+      Colors_of_Hyun_Rok_6: true
+  - Status: Colors_of_Hyun_Rok_2
+    Icon: EFST_COLORS_OF_HYUN_ROK_2
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+    EndOnStart:
+      Colors_of_Hyun_Rok_1: true
+      Colors_of_Hyun_Rok_3: true
+      Colors_of_Hyun_Rok_4: true
+      Colors_of_Hyun_Rok_5: true
+      Colors_of_Hyun_Rok_6: true
+  - Status: Colors_of_Hyun_Rok_3
+    Icon: EFST_COLORS_OF_HYUN_ROK_3
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+    EndOnStart:
+      Colors_of_Hyun_Rok_1: true
+      Colors_of_Hyun_Rok_2: true
+      Colors_of_Hyun_Rok_4: true
+      Colors_of_Hyun_Rok_5: true
+      Colors_of_Hyun_Rok_6: true
+  - Status: Colors_of_Hyun_Rok_4
+    Icon: EFST_COLORS_OF_HYUN_ROK_4
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+    EndOnStart:
+      Colors_of_Hyun_Rok_1: true
+      Colors_of_Hyun_Rok_2: true
+      Colors_of_Hyun_Rok_3: true
+      Colors_of_Hyun_Rok_5: true
+      Colors_of_Hyun_Rok_6: true
+  - Status: Colors_of_Hyun_Rok_5
+    Icon: EFST_COLORS_OF_HYUN_ROK_5
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+    EndOnStart:
+      Colors_of_Hyun_Rok_1: true
+      Colors_of_Hyun_Rok_2: true
+      Colors_of_Hyun_Rok_3: true
+      Colors_of_Hyun_Rok_4: true
+      Colors_of_Hyun_Rok_6: true
+  - Status: Colors_of_Hyun_Rok_6
+    Icon: EFST_COLORS_OF_HYUN_ROK_6
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+    EndOnStart:
+      Colors_of_Hyun_Rok_1: true
+      Colors_of_Hyun_Rok_2: true
+      Colors_of_Hyun_Rok_3: true
+      Colors_of_Hyun_Rok_4: true
+      Colors_of_Hyun_Rok_5: true
+  - Status: Blessing_of_M_Creatures
+    Icon: EFST_BLESSING_OF_M_CREATURES
+    DurationLookup: SH_BLESSING_OF_MYSTICAL_CREATURES
+    CalcFlags:
+      Patk: true
+      Smatk: true
+  - Status: Blessing_of_M_C_Debuff
+    Icon: EFST_BLESSING_OF_M_C_DEBUFF
+    DurationLookup: SH_BLESSING_OF_MYSTICAL_CREATURES

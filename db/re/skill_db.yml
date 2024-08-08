@@ -41424,6 +41424,489 @@ Body:
     SplashArea: 6
     Requires:
       SpCost: 1
+  - Id: 5433
+    Name: SH_MYSTICAL_CREATURE_MASTERY
+    Description: Mystical Creature Mastery
+    MaxLevel: 10
+  - Id: 5434
+    Name: SH_COMMUNE_WITH_CHUL_HO
+    Description: Commune with Chulho
+    MaxLevel: 1
+  - Id: 5435
+    Name: SH_CHUL_HO_SONIC_CLAW
+    Description: Chulho Sonic Claw
+    MaxLevel: 7
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Critical: true
+    Range: -11
+    Hit: Multi_Hit
+    HitCount: -2
+    GiveAp: 1
+    Element: Weapon
+    AfterCastActDelay: 500
+    Cooldown:
+      - Level: 1
+        Time: 1150
+      - Level: 2
+        Time: 1000
+      - Level: 3
+        Time: 850
+      - Level: 4
+        Time: 700
+      - Level: 5
+        Time: 550
+      - Level: 6
+        Time: 400
+      - Level: 7
+        Time: 250
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 42
+        - Level: 2
+          Amount: 44
+        - Level: 3
+          Amount: 46
+        - Level: 4
+          Amount: 48
+        - Level: 5
+          Amount: 50
+        - Level: 6
+          Amount: 52
+        - Level: 7
+          Amount: 54
+  - Id: 5436
+    Name: SH_HOWLING_OF_CHUL_HO
+    Description: Howling of Chulho
+    MaxLevel: 7
+    Type: Weapon
+    TargetType: Self
+    Range: -9
+    Hit: Multi_Hit
+    HitCount: -3
+    GiveAp: 2
+    Element: Weapon
+    DamageFlags:
+      Splash: true
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
+      - Level: 6
+        Area: 3
+      - Level: 7
+        Area: 4
+    Duration1: 12000
+    Cooldown: 1000
+    CastCancel: true
+    FixedCastTime: 1000
+    Requires:
+      SpCost: 72
+    Status: Hogogong
+  - Id: 5437
+    Name: SH_HOGOGONG_STRIKE
+    Description: Hogogong Strike
+    MaxLevel: 7
+    Type: Weapon
+    TargetType: Self
+    Range: -9
+    Hit: Multi_Hit
+    HitCount: 3
+    GiveAp: 1
+    Element: Weapon
+    DamageFlags:
+      Splash: true
+      Critical: true
+    SplashArea:
+      - Level: 1
+        Area: 3
+      - Level: 2
+        Area: 3
+      - Level: 3
+        Area: 3
+      - Level: 4
+        Area: 4
+      - Level: 5
+        Area: 4
+      - Level: 6
+        Area: 4
+      - Level: 7
+        Area: 5
+    Cooldown: 350
+    CastCancel: true
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 67
+        - Level: 2
+          Amount: 70
+        - Level: 3
+          Amount: 73
+        - Level: 4
+          Amount: 76
+        - Level: 5
+          Amount: 79
+        - Level: 6
+          Amount: 82
+        - Level: 7
+          Amount: 85
+  - Id: 5438
+    Name: SH_COMMUNE_WITH_KI_SUL
+    Description: Commune with Kisul
+    MaxLevel: 1
+  - Id: 5439
+    Name: SH_KI_SUL_WATER_SPRAYING
+    Description: Kisul Water Spraying
+    MaxLevel: 7
+    Type: Magic
+    TargetType: Self
+    GiveAp: 1
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    SplashArea:
+      - Level: 1
+        Area: 3
+      - Level: 2
+        Area: 3
+      - Level: 3
+        Area: 4
+      - Level: 4
+        Area: 4
+      - Level: 5
+        Area: 5
+      - Level: 6
+        Area: 5
+      - Level: 7
+        Area: 6
+    CastCancel: true
+    CastTime: 1700
+    AfterCastActDelay: 1000
+    FixedCastTime: 1000
+    Cooldown: 300
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 61
+        - Level: 2
+          Amount: 65
+        - Level: 3
+          Amount: 69
+        - Level: 4
+          Amount: 73
+        - Level: 5
+          Amount: 77
+        - Level: 6
+          Amount: 81
+        - Level: 7
+          Amount: 85
+  - Id: 5440
+    Name: SH_MARINE_FESTIVAL_OF_KI_SUL
+    Description: Marine Festival of Kisul
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    GiveAp: 4
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 3
+      - Level: 3
+        Area: 4
+      - Level: 4
+        Area: 5
+      - Level: 5
+        Area: 6
+    Duration1: 
+     - Level: 1
+       Time: 60000
+     - Level: 2
+       Time: 75000
+     - Level: 3
+       Time: 90000
+     - Level: 4
+       Time: 105000
+     - Level: 5
+       Time: 120000
+    CastCancel: true
+    CastTime: 1700
+    AfterCastActDelay: 1000
+    FixedCastTime: 1000
+    Cooldown: 2000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 80
+        - Level: 2
+          Amount: 90
+        - Level: 3
+          Amount: 100
+        - Level: 4
+          Amount: 110
+        - Level: 5
+          Amount: 120
+    Status: Marine_Festival
+  - Id: 5441
+    Name: SH_SANDY_FESTIVAL_OF_KI_SUL
+    Description: Sandy Festival of Kisul
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    GiveAp: 4
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 3
+      - Level: 3
+        Area: 4
+      - Level: 4
+        Area: 5
+      - Level: 5
+        Area: 6
+    Duration1: 
+     - Level: 1
+       Time: 60000
+     - Level: 2
+       Time: 75000
+     - Level: 3
+       Time: 90000
+     - Level: 4
+       Time: 105000
+     - Level: 5
+       Time: 120000
+    CastCancel: true
+    CastTime: 1700
+    AfterCastActDelay: 1000
+    FixedCastTime: 1000
+    Cooldown: 2000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 80
+        - Level: 2
+          Amount: 90
+        - Level: 3
+          Amount: 100
+        - Level: 4
+          Amount: 110
+        - Level: 5
+          Amount: 120
+    Status: Sandy_Festival
+  - Id: 5442
+    Name: SH_KI_SUL_RAMPAGE
+    Description: Kisul Rampage
+    MaxLevel: 7
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    SplashArea: 3
+    Duration1: 
+     - Level: 1
+       Time: 4000
+     - Level: 2
+       Time: 5000
+     - Level: 3
+       Time: 6000
+     - Level: 4
+       Time: 7000
+     - Level: 5
+       Time: 8000
+     - Level: 6
+       Time: 9000
+     - Level: 7
+       Time: 10000
+    CastCancel: true
+    CastTime: 3000
+    AfterCastActDelay: 1000
+    Cooldown: 60000
+    FixedCastTime: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 90
+        - Level: 2
+          Amount: 100
+        - Level: 3
+          Amount: 110
+        - Level: 4
+          Amount: 120
+        - Level: 5
+          Amount: 130
+        - Level: 6
+          Amount: 140
+        - Level: 7
+          Amount: 150
+    Status: Ki_Sul_Rampage
+  - Id: 5443
+    Name: SH_COMMUNE_WITH_HYUN_ROK
+    Description: Commune with Hyunrok
+    MaxLevel: 1
+  - Id: 5444
+    Name: SH_COLORS_OF_HYUN_ROK
+    Description: Colors of Hyunrok
+    MaxLevel: 7
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Duration1: 300000
+    CastCancel: true
+    CastTime: 1700
+    FixedCastTime: 1000
+    Requires:
+      SpCost: 90
+  - Id: 5445
+    Name: SH_HYUN_ROKS_BREEZE
+    Description: Hyunrok Breeze
+    MaxLevel: 7
+    Type: Magic
+    TargetType: Ground
+    Hit: Single
+    HitCount: 1
+    Range: 9
+    GiveAp: 4
+    CastCancel: true
+    CastTime: 3000
+    AfterCastActDelay: 500
+    Cooldown: 4500
+    FixedCastTime: 1500
+    Duration1: 4500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 58
+        - Level: 2
+          Amount: 64
+        - Level: 3
+          Amount: 70
+        - Level: 4
+          Amount: 76
+        - Level: 5
+          Amount: 82
+        - Level: 6
+          Amount: 88
+        - Level: 7
+          Amount: 94
+    Unit:
+      Id: HYUN_ROKS_BREEZE
+      Range:
+        - Level: 1
+          Size: 2
+        - Level: 2
+          Size: 2
+        - Level: 3
+          Size: 3
+        - Level: 4
+          Size: 3
+        - Level: 5
+          Size: 4
+        - Level: 6
+          Size: 4
+        - Level: 7
+          Size: 5
+      Interval: 300
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+  - Id: 5446
+    Name: SH_HYUN_ROK_CANNON
+    Description: Hyunrok Cannon
+    MaxLevel: 7
+    Type: Magic
+    TargetType: Attack
+    Range: -11
+    GiveAp: 1
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    CastTime: 2000
+    Cooldown: 300
+    FixedCastTime: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 47
+        - Level: 2
+          Amount: 50
+        - Level: 3
+          Amount: 53
+        - Level: 4
+          Amount: 56
+        - Level: 5
+          Amount: 59
+        - Level: 6
+          Amount: 62
+        - Level: 7
+          Amount: 65
+  - Id: 5447
+    Name: SH_TEMPORARY_COMMUNION
+    Description: Temporary Communion
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Cooldown: 60000
+    FixedCastTime: 1500
+    Duration1: 
+     - Level: 1
+       Time: 30000
+     - Level: 2
+       Time: 60000
+     - Level: 3
+       Time: 90000
+     - Level: 4
+       Time: 12000
+     - Level: 5
+       Time: 150000
+    Requires:
+      SpCost: 100
+      ApCost: 150
+    Status: Temporary_Communion
+  - Id: 5448
+    Name: SH_BLESSING_OF_MYSTICAL_CREATURES
+    Description: Blessing of Mystical Creatures
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Support
+    Range: -9
+    DamageFlags:
+      NoDamage: true
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Cooldown: 60000
+    FixedCastTime: 1500
+    Duration1: 10000
+    Duration2: 60000
+    Requires:
+      SpCost: 100
+      ApCost: 100
+    Status: Blessing_of_M_Creatures
   - Id: 5401
     Name: NW_P_F_I
     Description: P.F.I
