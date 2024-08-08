@@ -2954,6 +2954,7 @@ enum e_status_calc_opt : uint8 {
 	SCO_NONE  = 0x0,
 	SCO_FIRST = 0x1, ///< Trigger the calculations that should take place only onspawn/once, process base status initialization code
 	SCO_FORCE = 0x2, ///< Only relevant to BL_PC types, ensures call bypasses the queue caused by delayed damage
+	SCO_ITEM_RELOAD = 0x4, ///< Triggered when the item database is reloaded to force autobonus types to reset
 };
 
 /// Flags for status_change_start and status_get_sc_def

@@ -3778,9 +3778,9 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	memset(&sd->bonus, 0, sizeof(sd->bonus));
 
 	// Autobonus
-	pc_delautobonus(*sd, sd->autobonus, true);
-	pc_delautobonus(*sd, sd->autobonus2, true);
-	pc_delautobonus(*sd, sd->autobonus3, true);
+	pc_delautobonus(*sd, sd->autobonus, (opt & SCO_ITEM_RELOAD) ? false : true);
+	pc_delautobonus(*sd, sd->autobonus2, (opt & SCO_ITEM_RELOAD) ? false : true);
+	pc_delautobonus(*sd, sd->autobonus3, (opt & SCO_ITEM_RELOAD) ? false : true);
 
 	if (sd->pd != nullptr) {
 		pet_delautobonus(*sd, sd->pd->autobonus, true);
@@ -3801,8 +3801,6 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		if (!sd->inventory_data[index])
 			continue;
 
-		base_status->def += sd->inventory_data[index]->def;
-
 		// Items may be equipped, their effects however are nullified.
 		if (opt&SCO_FIRST && sd->inventory_data[index]->equip_script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT)
 			|| !itemdb_isNoEquip(sd->inventory_data[index],sd->bl.m))) { // Execute equip-script on login
@@ -3811,71 +3809,9 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 				return 1;
 		}
 
-		// Sanitize the refine level in case someone decreased the value inbetween
-		if (sd->inventory.u.items_inventory[index].refine > MAX_REFINE)
-			sd->inventory.u.items_inventory[index].refine = MAX_REFINE;
-
-		std::shared_ptr<s_refine_level_info> info = refine_db.findCurrentLevelInfo( *sd->inventory_data[index], sd->inventory.u.items_inventory[index] );
-#ifdef RENEWAL
-		std::shared_ptr<s_enchantgradelevel> enchantgrade_info = nullptr;
-
-		if( sd->inventory.u.items_inventory[index].enchantgrade > 0 ){
-			enchantgrade_info = enchantgrade_db.findCurrentLevelInfo( *sd->inventory_data[index], sd->inventory.u.items_inventory[index] );
-		}
-#endif
-
 		if (sd->inventory_data[index]->type == IT_WEAPON) {
-			int wlv = sd->inventory_data[index]->weapon_level;
-			struct weapon_data *wd;
-			struct weapon_atk *wa;
-
-			if(wlv >= MAX_WEAPON_LEVEL)
-				wlv = MAX_WEAPON_LEVEL;
-
-			if(i == EQI_HAND_L && sd->inventory.u.items_inventory[index].equip == EQP_HAND_L) {
-				wd = &sd->left_weapon; // Left-hand weapon
-				wa = &base_status->lhw;
-			} else {
-				wd = &sd->right_weapon;
-				wa = &base_status->rhw;
-			}
-			wa->atk += sd->inventory_data[index]->atk;
-			if( info != nullptr ){
-				wa->atk2 += info->bonus / 100;
-
-#ifdef RENEWAL
-				if( enchantgrade_info != nullptr ){
-					wa->atk2 += ( ( ( info->bonus / 100 ) * enchantgrade_info->bonus ) / 100 );
-				}
-
-				if( wlv == 5 ){
-					base_status->patk += sd->inventory.u.items_inventory[index].refine * 2;
-					base_status->smatk += sd->inventory.u.items_inventory[index].refine * 2;
-				}
-#endif
-			}
-#ifdef RENEWAL
-			if (sd->bonus.weapon_atk_rate)
-				wa->atk += wa->atk * sd->bonus.weapon_atk_rate / 100;
-			wa->matk += sd->inventory_data[index]->matk;
-			wa->wlv = wlv;
-			// Renewal magic attack refine bonus
-			if( info != nullptr && sd->weapontype1 != W_BOW ){
-				wa->matk += info->bonus / 100;
-
-				if( enchantgrade_info != nullptr ){
-					wa->matk += ( ( ( info->bonus / 100 ) * enchantgrade_info->bonus ) / 100 );
-				}
-			}
-#endif
-			// Overrefine bonus.
-			if( info != nullptr ){
-				wd->overrefine = info->randombonus_max / 100;
-			}
-
-			wa->range += sd->inventory_data[index]->range;
 			if(sd->inventory_data[index]->script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(sd->inventory_data[index],sd->bl.m))) {
-				if (wd == &sd->left_weapon) {
+				if (i == EQI_HAND_L && sd->inventory.u.items_inventory[index].equip == EQP_HAND_L) {
 					sd->state.lr_flag = 1;
 					run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
 					sd->state.lr_flag = 0;
@@ -3884,30 +3820,7 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 				if (!calculating) // Abort, run_script retriggered this. [Skotlex]
 					return 1;
 			}
-#ifdef RENEWAL
-			if (sd->bonus.weapon_matk_rate)
-				wa->matk += wa->matk * sd->bonus.weapon_matk_rate / 100;
-#endif
-			if(sd->inventory.u.items_inventory[index].card[0] == CARD0_FORGE) { // Forged weapon
-				wd->star += (sd->inventory.u.items_inventory[index].card[1]>>8);
-				if(wd->star >= 15) wd->star = 40; // 3 Star Crumbs now give +40 dmg
-				if(pc_famerank(MakeDWord(sd->inventory.u.items_inventory[index].card[2],sd->inventory.u.items_inventory[index].card[3]) ,MAPID_BLACKSMITH))
-					wd->star += 10;
-				if (!wa->ele) // Do not overwrite element from previous bonuses.
-					wa->ele = (sd->inventory.u.items_inventory[index].card[1]&0x0f);
-			}
 		} else if(sd->inventory_data[index]->type == IT_ARMOR) {
-			if( info != nullptr ){
-				refinedef += info->bonus;
-
-#ifdef RENEWAL
-				if( sd->inventory_data[index]->armor_level == 2 ){
-					base_status->res += sd->inventory.u.items_inventory[index].refine * 2;
-					base_status->mres += sd->inventory.u.items_inventory[index].refine * 2;
-				}
-#endif
-			}
-
 			if(sd->inventory_data[index]->script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(sd->inventory_data[index],sd->bl.m))) {
 				if( i == EQI_HAND_L ) // Shield
 					sd->state.lr_flag = 3;
@@ -4070,6 +3983,114 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 			}
 		}
 		current_equip_opt_index = -1;
+	}
+
+	// Give equipment bonuses based on all parsed information.
+	for (i = 0; i < EQI_MAX; i++) {
+		index = sd->equip_index[i];
+
+		if (index < 0)
+			continue;
+		if (i == EQI_AMMO)
+			continue;
+		if (pc_is_same_equip_index((enum equip_index)i, sd->equip_index, index))
+			continue;
+		if (!sd->inventory_data[index])
+			continue;
+
+		base_status->def += sd->inventory_data[index]->def;
+
+		// Sanitize the refine level in case someone decreased the value inbetween
+		if (sd->inventory.u.items_inventory[index].refine > MAX_REFINE)
+			sd->inventory.u.items_inventory[index].refine = MAX_REFINE;
+
+		std::shared_ptr<s_refine_level_info> info = refine_db.findCurrentLevelInfo(*sd->inventory_data[index], sd->inventory.u.items_inventory[index]);
+#ifdef RENEWAL
+		std::shared_ptr<s_enchantgradelevel> enchantgrade_info = nullptr;
+
+		if (sd->inventory.u.items_inventory[index].enchantgrade > 0)
+			enchantgrade_info = enchantgrade_db.findCurrentLevelInfo(*sd->inventory_data[index], sd->inventory.u.items_inventory[index]);
+#endif
+
+		if (sd->inventory_data[index]->type == IT_WEAPON) {
+			uint16 wlv = sd->inventory_data[index]->weapon_level;
+			weapon_data *wd;
+			weapon_atk *wa;
+
+			if (wlv >= MAX_WEAPON_LEVEL)
+				wlv = MAX_WEAPON_LEVEL;
+
+			if (i == EQI_HAND_L && sd->inventory.u.items_inventory[index].equip == EQP_HAND_L) {
+				wd = &sd->left_weapon; // Left-hand weapon
+				wa = &base_status->lhw;
+			} else {
+				wd = &sd->right_weapon;
+				wa = &base_status->rhw;
+			}
+
+			wa->atk += sd->inventory_data[index]->atk;
+
+			if (info != nullptr) {
+				wa->atk2 += info->bonus / 100;
+
+#ifdef RENEWAL
+				if (enchantgrade_info != nullptr)
+					wa->atk2 += (((info->bonus / 100) * enchantgrade_info->bonus) / 100);
+
+				if (wlv == 5) {
+					base_status->patk += sd->inventory.u.items_inventory[index].refine * 2;
+					base_status->smatk += sd->inventory.u.items_inventory[index].refine * 2;
+				}
+#endif
+			}
+
+#ifdef RENEWAL
+			if (sd->bonus.weapon_atk_rate)
+				wa->atk += wa->atk * sd->bonus.weapon_atk_rate / 100;
+
+			wa->matk += sd->inventory_data[index]->matk;
+			wa->wlv = static_cast<uint8>(wlv);
+
+			// Renewal magic attack refine bonus
+			if (info != nullptr && sd->weapontype1 != W_BOW) {
+				wa->matk += info->bonus / 100;
+
+				if (enchantgrade_info != nullptr)
+					wa->matk += (((info->bonus / 100) * enchantgrade_info->bonus) / 100);
+			}
+#endif
+			// Overrefine bonus.
+			if (info != nullptr)
+				wd->overrefine = info->randombonus_max / 100;
+
+			wa->range += sd->inventory_data[index]->range;
+
+#ifdef RENEWAL
+			if (sd->bonus.weapon_matk_rate)
+				wa->matk += wa->matk * sd->bonus.weapon_matk_rate / 100;
+#endif
+			if (sd->inventory.u.items_inventory[index].card[0] == CARD0_FORGE) { // Forged weapon
+				wd->star += (sd->inventory.u.items_inventory[index].card[1] >> 8);
+
+				if (wd->star >= 15)
+					wd->star = 40; // 3 Star Crumbs now give +40 dmg
+				if (pc_famerank(MakeDWord(sd->inventory.u.items_inventory[index].card[2], sd->inventory.u.items_inventory[index].card[3]), MAPID_BLACKSMITH))
+					wd->star += 10;
+				if (!wa->ele) // Do not overwrite element from previous bonuses.
+					wa->ele = (sd->inventory.u.items_inventory[index].card[1] & 0x0f);
+			}
+		} else if (sd->inventory_data[index]->type == IT_ARMOR) {
+			if (info != nullptr) {
+				refinedef += info->bonus;
+
+#ifdef RENEWAL
+				if (sd->inventory_data[index]->armor_level == 2) {
+					base_status->res += sd->inventory.u.items_inventory[index].refine * 2;
+					base_status->mres += sd->inventory.u.items_inventory[index].refine * 2;
+				}
+#endif
+			}
+		}
 	}
 
 	if (sc->count && sc->getSCE(SC_ITEMSCRIPT)) {
