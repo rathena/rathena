@@ -1607,6 +1607,8 @@ bool npc_isnear(struct block_list * bl);
 
 int npc_get_new_npc_id(void);
 
+const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath);
+
 int npc_addsrcfile(const char* name, bool loadscript);
 void npc_delsrcfile(const char* name);
 int npc_parsesrcfile(const char* filepath);

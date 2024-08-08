@@ -81,6 +81,7 @@ IsShadowSpell				- Make skill available for SC_AUTOSHADOWSPELL.
 IsChorus					- Chorus skill.
 IgnoreBgReduction			- Ignore Battleground reduction.
 IgnoreGvgReduction			- Ignore GvG reduction.
+IgnorePKReduction			- Ignore PK reduction.
 DisableNearNpc				- Disable self/ground skills near NPC. In tandem with NoNearNpc node.
 TargetTrap					- Damage traps. If TargetType is Trap.
 IgnoreLandProtector			- Ignore SA_LANDPROTECTOR.

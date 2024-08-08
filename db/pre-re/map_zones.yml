@@ -1,0 +1,1748 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2024 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http:#www.gnu.org/licenses/>.
+#
+###########################################################################
+# Map Zone Database
+###########################################################################
+#
+# Map Zone Settings
+#
+###########################################################################
+# - Id                        Zone ID.
+#   DisabledCommands:         List of disabled @commands. (Default: null)
+#   DisabledSkills:           List of disabled skills. (Default: null)
+#   DisabledItems:            List of disabled items. (Default: null)
+#   DisabledStatuses:         List of disabled statuses. (Default: null)
+#   RestrictedJobs:           List of restricted jobs from entering zone. (Default: null)
+#   Maps:                     List of maps to apply the zone to.
+#   Mapflags:                 List of mapflags. (Default: null)
+#     - Flag                  Mapflag name.
+#       Value                 Value assigned to mapflag. (Default: true)
+###########################################################################
+
+Header:
+  Type: MAP_ZONES
+  Version: 1
+
+Body:
+  - Id: Village
+    DisabledSkills:
+      - Skill: AM_CANNIBALIZE
+        Pc: 100
+      - Skill: AM_SPHEREMINE
+        Pc: 100
+      - Skill: CR_CULTIVATION
+        Pc: 100
+    DisabledItems:
+      Greed_Scroll: 100
+    Maps:
+      alberta: true
+      aldebaran: true
+      amatsu: true
+      ayothaya: true
+      brasilis: true
+      comodo: true
+      einbech: true
+      einbroch: true
+      evt_bomb: true
+      geffen: true
+      gonryun: true
+      hugel: true
+      izlude: true
+      louyang: true
+      monk_in: true
+      mid_camp: true
+      morocc: true
+      moscovia: true
+      nameless_i: true
+      payon: true
+      prontera: true
+      prt_monk: true
+      rachel: true
+      ra_temple: true
+      umbala: true
+      veins: true
+      x_prt: true
+      xmas: true
+      yuno: true
+    Mapflags:
+      - Flag: NightEnabled
+      - Flag: NoBranch
+      - Flag: NoPenalty
+      - Flag: Reset
+
+  - Id: Village_In
+    Maps:
+      airplane: true
+      airplane_01: true
+      airport: true
+      alberta_in: true
+      aldeba_in: true
+      alde_alche: true
+      ama_in01: true
+      ama_in02: true
+      arena_room: true
+      auction_01: true
+      auction_02: true
+      ayo_in01: true
+      ayo_in02: true
+      bat_room: true
+      bra_in01: true
+      cave: true
+      cmd_in01: true
+      cmd_in02: true
+      ein_in01: true
+      geffen_in: true
+      gef_tower: true
+      gon_in: true
+      guild_vs2: true
+      hu_in01: true
+      in_hunter: true
+      in_orcs01: true
+      in_rogue: true
+      itemmall: true
+      izlude_in: true
+      jawaii: true
+      jawaii_in: true
+      kh_mansion: true
+      kh_rossi: true
+      kh_school: true
+      kh_vila: true
+      lhz_airport: true
+      lhz_in01: true
+      lhz_in02: true
+      lhz_in03: true
+      lighthalzen: true
+      lou_in01: true
+      lou_in02: true
+      man_in01: true
+      mid_campin: true
+      moc_castle: true
+      moc_para01: true
+      morocc_in: true
+      nameless_in: true
+      new_1-3: true
+      new_2-3: true
+      new_3-3: true
+      new_4-3: true
+      new_5-3: true
+      nif_in: true
+      nyd_dun02: true
+      payon_in01: true
+      payon_in02: true
+      payon_in03: true
+      pay_arche: true
+      prt_are01: true
+      prt_castle: true
+      prt_church: true
+      prt_in: true
+      que_ng: true
+      que_rachel: true
+      que_temsky: true
+      ra_in01: true
+      ra_temin: true
+      ra_temsky: true
+      s_atelier: true
+      sch_lab: true
+      sec_in01: true
+      spl_in01: true
+      spl_in02: true
+      turbo_room: true
+      um_in: true
+      ve_in: true
+      ve_in02: true
+      xmas_in: true
+      yuno_in01: true
+      yuno_in02: true
+      yuno_in03: true
+      yuno_in04: true
+      yuno_in05: true
+      yuno_pre: true
+      y_airport: true
+    Mapflags:
+      - Flag: NoBonusItemDrop
+      - Flag: NoBranch
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoTeleport
+      - Flag: NoWarpTo
+
+  - Id: Field
+    Maps:
+      06guild_01: true
+      06guild_02: true
+      06guild_03: true
+      06guild_04: true
+      06guild_05: true
+      06guild_06: true
+      06guild_07: true
+      06guild_08: true
+      06guild_r: true
+      alde_gld: true
+      ama_fild01: true
+      aru_gld: true
+      ayo_fild01: true
+      bif_fild01: true
+      bif_fild02: true
+      cmd_fild01: true
+      cmd_fild02: true
+      cmd_fild03: true
+      cmd_fild04: true
+      cmd_fild05: true
+      cmd_fild06: true
+      cmd_fild07: true
+      cmd_fild08: true
+      cmd_fild09: true
+      ecl_fild01: true
+      ein_fild01: true
+      ein_fild02: true
+      ein_fild03: true
+      ein_fild04: true
+      ein_fild05: true
+      ein_fild06: true
+      ein_fild07: true
+      ein_fild08: true
+      ein_fild09: true
+      ein_fild10: true
+      g_room1-1: true
+      g_room1-2: true
+      g_room1-3: true
+      g_room2: true
+      gef_fild00: true
+      gef_fild01: true
+      gef_fild02: true
+      gef_fild04: true
+      gef_fild06: true
+      gef_fild07: true
+      gef_fild08: true
+      gef_fild10: true
+      gef_fild12: true
+      gef_fild13: true
+      gef_fild14: true
+      gl_cas02_: true
+      gl_chyard_: true
+      glast_01: true
+      gon_fild01: true
+      guild_vs1-1: true
+      guild_vs1-2: true
+      guild_vs1-3: true
+      guild_vs1-4: true
+      guild_vs2-1: true
+      guild_vs2-2: true
+      hu_fild02: true
+      hu_fild03: true
+      hu_fild04: true
+      hu_fild06: true
+      hu_fild07: true
+      izlu2dun: true
+      job_gun: true
+      job_thief1: true
+      lhz_fild01: true
+      lhz_fild02: true
+      lhz_fild03: true
+      ma_fild01: true
+      ma_fild02: true
+      mjolnir_01: true
+      mjolnir_03: true
+      mjolnir_06: true
+      mjolnir_07: true
+      mjolnir_09: true
+      moc_fild01: true
+      moc_fild02: true
+      moc_fild03: true
+      moc_fild07: true
+      moc_fild11: true
+      moc_fild12: true
+      moc_fild13: true
+      moc_fild16: true
+      moc_fild17: true
+      moc_fild18: true
+      moc_ruins: true
+      moro_vol: true
+      mosk_fild02: true
+      pay_fild01: true
+      pay_fild02: true
+      pay_fild03: true
+      pay_fild04: true
+      pay_fild05: true
+      pay_fild06: true
+      pay_fild07: true
+      pay_fild08: true
+      pay_fild09: true
+      pay_fild10: true
+      pay_fild11: true
+      prt_fild00: true
+      prt_fild01: true
+      prt_fild02: true
+      prt_fild03: true
+      prt_fild04: true
+      prt_fild05: true
+      prt_fild06: true
+      prt_fild07: true
+      prt_fild08: true
+      prt_fild08a: true
+      prt_fild08b: true
+      prt_fild08c: true
+      prt_fild08d: true
+      prt_fild09: true
+      prt_fild10: true
+      prt_gld: true
+      que_avan01: true
+      ra_fild01: true
+      ra_fild02: true
+      ra_fild03: true
+      ra_fild05: true
+      ra_fild06: true
+      ra_fild07: true
+      ra_fild08: true
+      ra_fild09: true
+      ra_fild10: true
+      ra_fild11: true
+      ra_fild12: true
+      ra_fild13: true
+      sch_gld: true
+      te_prt_gld: true
+      um_fild01: true
+      um_fild02: true
+      um_fild03: true
+      um_fild04: true
+      un_myst: true
+      ve_fild01: true
+      ve_fild02: true
+      ve_fild03: true
+      ve_fild04: true
+      ve_fild05: true
+      ve_fild06: true
+      ve_fild07: true
+      xmas_fild01: true
+      yuno_fild01: true
+      yuno_fild02: true
+      yuno_fild03: true
+      yuno_fild04: true
+      yuno_fild06: true
+      yuno_fild10: true
+      yuno_fild11: true
+      yuno_fild12: true
+    Mapflags:
+      - Flag: NightEnabled
+
+  - Id: Dungeon
+    Maps:
+      abbey01: true
+      abbey02: true
+      abbey03: true
+      abyss_01: true
+      abyss_02: true
+      abyss_03: true
+      alb2trea: true
+      alde_dun01: true
+      alde_dun02: true
+      alde_dun03: true
+      alde_dun04: true
+      ama_dun02: true
+      ama_dun03: true
+      anthell01: true
+      anthell02: true
+      ayo_dun01: true
+      ayo_dun02: true
+      ayo_fild02: true
+      beach_dun: true
+      beach_dun2: true
+      beach_dun3: true
+      bra_dun01: true
+      bra_dun02: true
+      bra_fild01: true
+      c_tower1: true
+      c_tower2: true
+      c_tower2_: true
+      c_tower3: true
+      c_tower3_: true
+      c_tower4: true
+      dic_dun01: true
+      dic_dun02: true
+      dic_dun03: true
+      dic_fild01: true
+      dic_fild02: true
+      ein_dun01: true
+      ein_dun02: true
+      gef_d01_i: true
+      gef_dun00: true
+      gef_dun01: true
+      gef_dun02: true
+      gef_dun03: true
+      gef_fild03: true
+      gef_fild05: true
+      gef_fild09: true
+      gef_fild11: true
+      gefenia01: true
+      gefenia02: true
+      gefenia03: true
+      gefenia04: true
+      gl_cas01: true
+      gl_cas02: true
+      gl_church: true
+      gl_chyard: true
+      gl_dun01: true
+      gl_dun02: true
+      gl_in01: true
+      gl_knt01: true
+      gl_knt02: true
+      gl_prison: true
+      gl_prison1: true
+      gl_sew01: true
+      gl_sew02: true
+      gl_sew03: true
+      gl_sew04: true
+      gl_step: true
+      gon_dun01: true
+      gon_dun02: true
+      gon_dun03: true
+      hu_fild01: true
+      hu_fild05: true
+      ice_d03_i: true
+      ice_dun01: true
+      ice_dun02: true
+      in_sphinx1: true
+      in_sphinx2: true
+      in_sphinx3: true
+      in_sphinx4: true
+      in_sphinx5: true
+      iz_dun00: true
+      iz_dun01: true
+      iz_dun02: true
+      iz_dun03: true
+      iz_dun04: true
+      jupe_cave: true
+      jupe_core: true
+      juperos_01: true
+      juperos_02: true
+      kh_dun02: true
+      lhz_dun01: true
+      lhz_dun02: true
+      lhz_dun03: true
+      lhz_dun04: true
+      lhz_dun_n: true
+      lou_dun01: true
+      lou_dun02: true
+      lou_dun03: true
+      lou_fild01: true
+      ma_dun01: true
+      mag_dun01: true
+      mag_dun02: true
+      man_fild01: true
+      man_fild02: true
+      man_fild03: true
+      mjo_dun01: true
+      mjo_dun02: true
+      mjo_dun03: true
+      mjolnir_02: true
+      mjolnir_04: true
+      mjolnir_05: true
+      mjolnir_08: true
+      mjolnir_10: true
+      mjolnir_11: true
+      mjolnir_12: true
+      moc_fild19: true
+      moc_fild20: true
+      moc_fild21: true
+      moc_fild22: true
+      moc_pryd01: true
+      moc_pryd02: true
+      moc_pryd03: true
+      moc_pryd04: true
+      moc_pryd05: true
+      moc_pryd06: true
+      moc_prydb1: true
+      moc_prydn1: true
+      moc_prydn2: true
+      moro_cav: true
+      mosk_dun01: true
+      mosk_dun02: true
+      mosk_dun03: true
+      nameless_n: true
+      nif_fild01: true
+      nif_fild02: true
+      niflheim: true
+      nyd_dun01: true
+      odin_past: true
+      odin_tem01: true
+      odin_tem02: true
+      odin_tem03: true
+      orcsdun01: true
+      orcsdun02: true
+      pay_d03_i: true
+      pay_dun00: true
+      pay_dun01: true
+      pay_dun02: true
+      pay_dun03: true
+      pay_dun04: true
+      prt_fild11: true
+      prt_maze01: true
+      prt_maze02: true
+      prt_maze03: true
+      prt_prison: true
+      prt_q: true
+      prt_sewb1: true
+      prt_sewb2: true
+      prt_sewb3: true
+      prt_sewb4: true
+      que_san04: true
+      ra_san01: true
+      ra_san02: true
+      ra_san03: true
+      ra_san04: true
+      ra_san05: true
+      sec_in02: true
+      spl_fild01: true
+      spl_fild02: true
+      spl_fild03: true
+      tha_scene01: true
+      tha_t01: true
+      tha_t02: true
+      tha_t03: true
+      tha_t04: true
+      tha_t05: true
+      tha_t06: true
+      thor_v01: true
+      thor_v02: true
+      thor_v03: true
+      treasure01: true
+      treasure02: true
+      treasure_n1: true
+      treasure_n2: true
+      tur_d03_i: true
+      tur_d04_i: true
+      tur_dun01: true
+      tur_dun02: true
+      tur_dun03: true
+      tur_dun04: true
+      tur_dun05: true
+      tur_dun06: true
+      um_dun01: true
+      um_dun02: true
+      verus01: true
+      verus02: true
+      verus03: true
+      xmas_dun01: true
+      xmas_dun02: true
+      yuno_fild05: true
+      yuno_fild07: true
+      yuno_fild08: true
+      yuno_fild09: true
+    Mapflags:
+      - Flag: NoMemo
+      - Flag: NoWarpTo
+
+  - Id: Quest
+    Maps:
+      alb_ship: true
+      ama_test: true
+      arug_que01: true
+      bossnia_01: true
+      bossnia_02: true
+      bossnia_03: true
+      bossnia_04: true
+      e_tower: true
+      evt_mobroom: true
+      force_1-1: true
+      force_1-2: true
+      force_1-3: true
+      force_2-1: true
+      force_2-2: true
+      force_2-3: true
+      force_3-1: true
+      force_3-2: true
+      force_3-3: true
+      force_4-1: true
+      force_5-1: true
+      gon_test: true
+      guild_room: true
+      himinn: true
+      #hunter_1-1: true
+      #hunter_2-1: true
+      #hunter_3-1: true
+      in_moc_16: true
+      job_cru: true
+      job_duncer: true
+      job_hunte: true
+      job_knt: true
+      job_ko: true
+      job_monk: true
+      job_prist: true
+      job_sage: true
+      job_soul: true
+      job_star: true
+      job_wiz: true
+      jupe_area1: true
+      jupe_area2: true
+      jupe_core2: true
+      jupe_ele: true
+      jupe_ele_r: true
+      jupe_gate: true
+      kh_kiehl01: true
+      kh_kiehl02: true
+      #knight_1-1: true
+      #knight_2-1: true
+      #knight_3-1: true
+      lhz_cube: true
+      lhz_d_n2: true
+      lhz_que01: true
+      #moc_fild04: true
+      #moc_fild05: true
+      #moc_fild06: true
+      #moc_fild08: true
+      #moc_fild09: true
+      #moc_fild10: true
+      #moc_fild14: true
+      #moc_fild15: true
+      moc_fild22b: true
+      monk_test: true
+      mosk_fild01: true
+      mosk_in: true
+      mosk_que: true
+      mosk_ship: true
+      n_castle: true
+      p_track01: true
+      p_track02: true
+      poring_w01: true
+      #priest_1-1: true
+      #priest_2-1: true
+      #priest_3-1: true
+      pvp_n_room: true
+      pvp_room: true
+      pvp_y_room: true
+      que_ba: true
+      que_dan01: true
+      que_dan02: true
+      que_god02: true
+      que_job01: true
+      que_job02: true
+      que_job03: true
+      que_lhz: true
+      que_moc_16: true
+      que_moon: true
+      que_qaru01: true
+      que_qaru02: true
+      que_qaru03: true
+      que_qaru04: true
+      que_qaru05: true
+      que_qsch01: true
+      que_qsch02: true
+      que_qsch03: true
+      que_qsch04: true
+      que_qsch05: true
+      que_sign01: true
+      que_sign02: true
+      que_swat: true
+      que_thor: true
+      quiz_test: true
+      schg_que01: true
+      sword_1-1: true
+      sword_2-1: true
+      sword_3-1: true
+      thor_camp: true
+      valkyrie: true
+      #wizard_1-1: true
+      #wizard_2-1: true
+      #wizard_3-1: true
+      yggdrasil01: true
+      z_agit: true
+    Mapflags:
+      - Flag: GuildLock
+      - Flag: NoBonusItemDrop
+      - Flag: NoBranch
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoTeleport
+      - Flag: NoWarpTo
+
+  - Id: Penalty_FreePkZone # Nightmare Mode
+    DisabledItems:
+      Greed_Scroll: 100
+    Maps:
+      e_hugel: true
+      pvp_c_room: true
+      pvp_n_1-1: true
+      pvp_n_2-1: true
+      pvp_n_2-2: true
+      pvp_n_2-3: true
+      pvp_n_2-4: true
+      pvp_n_2-5: true
+      pvp_n_3-1: true
+      pvp_n_3-2: true
+      pvp_n_3-3: true
+      pvp_n_3-4: true
+      pvp_n_3-5: true
+      pvp_n_4-1: true
+      pvp_n_4-2: true
+      pvp_n_4-3: true
+      pvp_n_4-4: true
+      pvp_n_4-5: true
+      pvp_n_5-1: true
+      pvp_n_5-2: true
+      pvp_n_5-3: true
+      pvp_n_5-4: true
+      pvp_n_5-5: true
+      pvp_n_6-1: true
+      pvp_n_6-2: true
+      pvp_n_6-3: true
+      pvp_n_6-4: true
+      pvp_n_6-5: true
+      pvp_n_7-1: true
+      pvp_n_7-2: true
+      pvp_n_7-3: true
+      pvp_n_7-4: true
+      pvp_n_7-5: true
+      pvp_n_8-1: true
+      pvp_n_8-5: true
+    Mapflags:
+      - Flag: HideMobHpBar
+      - Flag: NoCostume
+      - Flag: NoMemo
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoWarpTo
+      - Flag: PvP
+      - Flag: PvP_NightmareDrop
+        Value: random,drop,300
+
+  - Id: NoPenalty_FreePkZone # Yoyo Mode
+    DisabledItems:
+      Greed_Scroll: 100
+    Maps:
+      guild_vs1: true
+      guild_vs3: true
+      pvp_2vs2: true
+      pvp_n_8-2: true
+      pvp_n_8-3: true
+      pvp_n_8-4: true
+      pvp_y_1-1: true
+      pvp_y_1-2: true
+      pvp_y_1-3: true
+      pvp_y_1-4: true
+      pvp_y_1-5: true
+      pvp_y_2-1: true
+      pvp_y_2-2: true
+      pvp_y_2-3: true
+      pvp_y_2-4: true
+      pvp_y_2-5: true
+      pvp_y_3-1: true
+      pvp_y_3-2: true
+      pvp_y_3-3: true
+      pvp_y_3-4: true
+      pvp_y_3-5: true
+      pvp_y_4-1: true
+      pvp_y_4-2: true
+      pvp_y_4-3: true
+      pvp_y_4-4: true
+      pvp_y_4-5: true
+      pvp_y_5-1: true
+      pvp_y_5-2: true
+      pvp_y_5-3: true
+      pvp_y_5-4: true
+      pvp_y_5-5: true
+      pvp_y_6-1: true
+      pvp_y_6-2: true
+      pvp_y_6-3: true
+      pvp_y_6-4: true
+      pvp_y_6-5: true
+      pvp_y_7-1: true
+      pvp_y_7-2: true
+      pvp_y_7-3: true
+      pvp_y_7-4: true
+      pvp_y_7-5: true
+      pvp_y_8-1: true
+      pvp_y_8-2: true
+      pvp_y_8-3: true
+      pvp_y_8-4: true
+      pvp_y_8-5: true
+    Mapflags:
+      - Flag: HideMobHpBar
+      - Flag: NoCostume
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoTeleport
+      - Flag: NoWarpTo
+      - Flag: PvP
+
+  - Id: Event_GuildWar
+    DisabledSkills:
+      - Skill: TF_BACKSLIDING
+        Pc: 100
+      - Skill: AL_WARP
+        Pc: 100
+      - Skill: WZ_ICEWALL
+        Pc: 100
+      - Skill: WE_CALLPARTNER
+        Pc: 100
+      - Skill: WE_CALLBABY
+        Pc: 100
+      - Skill: WE_CALLPARENT
+        Pc: 100
+      - Skill: LK_FURY
+        Pc: 100
+      - Skill: HP_ASSUMPTIO
+        Pc: 100
+      - Skill: HP_BASILICA
+        Pc: 100
+      - Skill: CR_CULTIVATION
+        Pc: 100
+      - Skill: CG_MOONLIT
+        Pc: 100
+      - Skill: NJ_KIRIKAGE
+        Pc: 100
+      - Skill: CG_MARIONETTE
+        Pc: 100
+    DisabledItems:
+      Anodyne: 100
+      Assumptio_5_Scroll: 100
+      Phen_Card: 100
+      Pty_Assumptio_Scroll: 100
+    Maps:
+      guild_vs5: true
+    Mapflags:
+      - Flag: Flee_Penalty
+        Value: 20
+      - Flag: GvG
+      - Flag: GvG_NoParty
+      - Flag: HideDamage
+      - Flag: HideMobHpBar
+      - Flag: Invincible_Time
+        Value: 10000
+      - Flag: Long_Damage_Rate
+        Value: 60
+      - Flag: Magic_Damage_Rate
+        Value: 60
+      - Flag: Misc_Damage_Rate
+        Value: 60
+      - Flag: NoBranch
+      - Flag: NoCostume
+      - Flag: NoKnockBack
+      - Flag: NoLockOn
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoTeleport
+      - Flag: NoWarpTo
+      - Flag: PvP_NoParty
+      - Flag: Short_Damage_Rate
+        Value: 60
+      - Flag: Skill_Duration
+        Value: HT_SKIDTRAP,400
+      - Flag: Skill_Duration
+        Value: HT_LANDMINE,400
+      - Flag: Skill_Duration
+        Value: HT_ANKLESNARE,400
+      - Flag: Skill_Duration
+        Value: HT_SHOCKWAVE,400
+      - Flag: Skill_Duration
+        Value: HT_SANDMAN,400
+      - Flag: Skill_Duration
+        Value: HT_FLASHER,400
+      - Flag: Skill_Duration
+        Value: HT_FREEZINGTRAP,400
+      - Flag: Skill_Duration
+        Value: HT_BLASTMINE,400
+      - Flag: Skill_Duration
+        Value: HT_CLAYMORETRAP,400
+      - Flag: Skill_Duration
+        Value: HT_TALKIEBOX,400
+      - Flag: Weapon_Damage_Rate
+        Value: 60
+
+  - Id: Agit # WoE:FE
+    DisabledSkills:
+      - Skill: TF_BACKSLIDING
+        Pc: 100
+      - Skill: AL_WARP
+        Pc: 100
+      - Skill: WZ_ICEWALL
+        Pc: 100
+      - Skill: WE_CALLPARTNER
+        Pc: 100
+      - Skill: WE_CALLBABY
+        Pc: 100
+      - Skill: WE_CALLPARENT
+        Pc: 100
+      - Skill: LK_FURY
+        Pc: 100
+      - Skill: HP_ASSUMPTIO
+        Pc: 100
+      - Skill: HP_BASILICA
+        Pc: 100
+      - Skill: CR_CULTIVATION
+        Pc: 100
+      - Skill: CG_MOONLIT
+        Pc: 100
+      - Skill: NJ_KIRIKAGE
+        Pc: 100
+      - Skill: SA_ABRACADABRA
+        Pc: 100
+    DisabledItems:
+      Anodyne: 100
+      Assumptio_5_Scroll: 100
+      Phen_Card: 100
+      Pty_Assumptio_Scroll: 100
+    DisabledStatuses:
+      Endure: 100
+    Maps:
+      aldeg_cas01: true
+      aldeg_cas02: true
+      aldeg_cas03: true
+      aldeg_cas04: true
+      aldeg_cas05: true
+      gefg_cas01: true
+      gefg_cas02: true
+      gefg_cas03: true
+      gefg_cas04: true
+      gefg_cas05: true
+      guild_vs4: true
+      payg_cas01: true
+      payg_cas02: true
+      payg_cas03: true
+      payg_cas04: true
+      payg_cas05: true
+      prtg_cas01: true
+      prtg_cas02: true
+      prtg_cas03: true
+      prtg_cas04: true
+      prtg_cas05: true
+    Mapflags:
+      - Flag: Flee_Penalty
+        Value: 20
+      - Flag: GuildLock
+      - Flag: GvG_Castle
+      - Flag: HideDamage
+      - Flag: HideMobHpBar
+      - Flag: Invincible_Time
+        Value: 10000
+      - Flag: Long_Damage_Rate
+        Value: 60
+      - Flag: Magic_Damage_Rate
+        Value: 60
+      - Flag: Misc_Damage_Rate
+        Value: 60
+      - Flag: Monster_NoTeleport
+      - Flag: NoBranch
+      - Flag: NoCostume
+      - Flag: NoKnockBack
+      - Flag: NoLockOn
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoTeleport
+      - Flag: NoWarp
+      - Flag: NoWarpTo
+      - Flag: PvP_NoParty
+      - Flag: Short_Damage_Rate
+        Value: 60
+      - Flag: Skill_Duration
+        Value: HT_SKIDTRAP,400
+      - Flag: Skill_Duration
+        Value: HT_LANDMINE,400
+      - Flag: Skill_Duration
+        Value: HT_ANKLESNARE,400
+      - Flag: Skill_Duration
+        Value: HT_SHOCKWAVE,400
+      - Flag: Skill_Duration
+        Value: HT_SANDMAN,400
+      - Flag: Skill_Duration
+        Value: HT_FLASHER,400
+      - Flag: Skill_Duration
+        Value: HT_FREEZINGTRAP,400
+      - Flag: Skill_Duration
+        Value: HT_BLASTMINE,400
+      - Flag: Skill_Duration
+        Value: HT_CLAYMORETRAP,400
+      - Flag: Skill_Duration
+        Value: HT_TALKIEBOX,400
+      - Flag: Weapon_Damage_Rate
+        Value: 60
+
+  - Id: Dungeon2 # PK Enabled
+    Maps:
+      arug_dun01: true
+      gld2_ald: true
+      gld2_gef: true
+      gld2_pay: true
+      gld2_prt: true
+      gld_dun01: true
+      gld_dun02: true
+      gld_dun03: true
+      gld_dun04: true
+      schg_dun01: true
+      teg_dun01: true
+      teg_dun02: true
+    Mapflags:
+      - Flag: GvG_Dungeon
+      - Flag: NoCostume
+      - Flag: NoKnockBack
+      - Flag: NoMemo
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoWarpTo
+      - Flag: PvP_NoParty
+
+  - Id: Dungeon3 # Teleport Disabled
+    DisabledItems:
+      N_Fly_Wing: 100
+    Maps:
+      ama_dun01: true
+      kh_dun01: true
+      tha_t07: true
+      tha_t08: true
+      tha_t09: true
+      tha_t10: true
+      tha_t11: true
+      tha_t12: true
+      thana_boss: true
+      thana_step: true
+    Mapflags:
+      - Flag: NoMemo
+      - Flag: NoTeleport
+      - Flag: NoWarpTo
+
+  - Id: PkServer
+    # PK Mode zone is only used when the server has pk_mode (battle.conf) enabled
+    # This applies to all PvP maps that don't have their own zone
+    Maps:
+      pvp_n_1-2: true
+      pvp_n_1-3: true
+      pvp_n_1-4: true
+      pvp_n_1-5: true
+    Mapflags:
+      - Flag: Flee_Penalty
+        Value: 20
+      - Flag: HideMobHpBar
+      - Flag: NoCostume
+      - Flag: PvP
+      - Flag: PvP_NoGuild
+      - Flag: PvP_NoParty
+      - Flag: Weapon_Damage_Rate
+        Value: 60
+      - Flag: Magic_Damage_Rate
+        Value: 60
+      - Flag: Misc_Damage_Rate
+        Value: 60
+      - Flag: Long_Damage_Rate
+        Value: 70
+      - Flag: Short_Damage_Rate
+        Value: 80
+
+  - Id: PvPServer
+    DisabledSkills:
+      - Skill: SM_ENDURE
+        Pc: 100
+      - Skill: WZ_ICEWALL
+        Pc: 100
+      - Skill: AL_WARP
+        Pc: 100
+      - Skill: TF_HIDING
+        Pc: 100
+      - Skill: AS_CLOAKING
+        Pc: 100
+      - Skill: ST_CHASEWALK
+        Pc: 100
+      - Skill: MO_BODYRELOCATION
+        Pc: 100
+      - Skill: LK_CONCENTRATION
+        Pc: 100
+      - Skill: LK_BERSERK
+        Pc: 100
+      - Skill: AL_CURE
+        Pc: 100
+      - Skill: HP_BASILICA
+        Pc: 100
+      - Skill: CG_MOONLIT
+        Pc: 100
+    DisabledItems:
+      Anodyne: 100
+      Green_Potion: 100
+      Panacea: 100
+    Maps:
+      prt_are_in: true
+      turbo_n_1: true
+      turbo_n_16: true
+      turbo_n_4: true
+      turbo_n_8: true
+    Mapflags:
+      - Flag: Flee_Penalty
+        Value: 20
+      - Flag: HideMobHpBar
+      - Flag: Long_Damage_Rate
+        Value: 80
+      - Flag: Magic_Damage_Rate
+        Value: 60
+      - Flag: Misc_Damage_Rate
+        Value: 60
+      - Flag: NoBranch
+      - Flag: NoKnockBack
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoTeleport
+      - Flag: NoWarp
+      - Flag: NoWarpTo
+      - Flag: PvP_NoGuild
+      - Flag: PvP_NoParty
+      - Flag: Short_Damage_Rate
+        Value: 80
+      - Flag: Weapon_Damage_Rate
+        Value: 60
+
+  - Id: DenySkill # For the Korean quiz event and similar things
+    Maps:
+      que_bingo: true
+      quiz_00: true
+      quiz_01: true
+      quiz_02: true
+    Mapflags:
+      - Flag: HideMobHpBar
+      - Flag: NoBranch
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoSkill
+      - Flag: NoTeleport
+      - Flag: NoWarpTo
+      - Flag: PvP_NoGuild
+      - Flag: PvP_NoParty
+
+  - Id: TurboTrack # PK Mode
+    disabled_skills:
+      - Skill: SM_ENDURE
+        Pc: 100
+      - Skill: WZ_ICEWALL
+        Pc: 100
+      - Skill: AL_WARP
+        Pc: 100
+      - Skill: TF_HIDING
+        Pc: 100
+      - Skill: AS_CLOAKING
+        Pc: 100
+      - Skill: ST_CHASEWALK
+        Pc: 100
+      - Skill: MO_BODYRELOCATION
+        Pc: 100
+      - Skill: LK_CONCENTRATION
+        Pc: 100
+      - Skill: LK_BERSERK
+        Pc: 100
+      - Skill: AL_CURE
+        Pc: 100
+      - Skill: HP_BASILICA
+        Pc: 100
+      - Skill: CG_MOONLIT
+        Pc: 100
+    DisabledItems:
+      Anodyne: 100
+      Green_Potion: 100
+      Panacea: 100
+    Maps:
+      turbo_e_4: true
+      turbo_e_8: true
+      turbo_e_16: true
+    Mapflags:
+      - Flag: Flee_Penalty
+        Value: 20
+      - Flag: HideMobHpBar
+      - Flag: Long_Damage_Rate
+        Value: 80
+      - Flag: Magic_Damage_Rate
+        Value: 60
+      - Flag: Misc_Damage_Rate
+        Value: 60
+      - Flag: NoBranch
+      - Flag: NoCostume
+      - Flag: NoKnockBack
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoTeleport
+      - Flag: NoWarp
+      - Flag: NoWarpTo
+      - Flag: PvP
+      - Flag: PvP_NoGuild
+      - Flag: PvP_NoParty
+      - Flag: Short_Damage_Rate
+        Value: 80
+      - Flag: Weapon_Damage_Rate
+        Value: 60
+
+  - Id: Jail
+    DisabledSkills:
+      - Skill: TK_JUMPKICK
+        Pc: 100
+      - Skill: TK_HIGHJUMP
+        Pc: 100
+    DisabledItems:
+      Giant_Fly_Wing: 100
+      N_Fly_Wing: 100
+      Wing_Of_Butterfly: 100
+      Wing_Of_Fly: 100
+      WOB_Local: 100
+      WOB_Rachel: 100
+      WOB_Rune: 100
+      WOB_Schwaltz: 100
+    Maps:
+      que_hugel: true
+      sec_pri: true
+    Mapflags:
+      - Flag: HideMobHpBar
+      - Flag: NoBranch
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoReturn
+      - Flag: NoTeleport
+      - Flag: NoWarp
+      - Flag: NoWarpTo
+      - Flag: PvP_NoGuild
+      - Flag: PvP_NoParty
+
+  - Id: MonsterTrack
+    Maps:
+      gld_dun01_2: true
+      gld_dun02_2: true
+      gld_dun04_2: true
+    Mapflags:
+      - Flag: NoMemo
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoWarp
+      - Flag: NoWarpTo
+      - Flag: PvP_NoGuild
+      - Flag: PvP_NoParty
+
+  - Id: PoringBattle
+    DisabledSkills:
+      - Skill: SM_ENDURE
+        Pc: 100
+      - Skill: WZ_ICEWALL
+        Pc: 100
+      - Skill: AL_WARP
+        Pc: 100
+      - Skill: TF_HIDING
+        Pc: 100
+      - Skill: AS_CLOAKING
+        Pc: 100
+      - Skill: ST_CHASEWALK
+        Pc: 100
+      - Skill: MO_BODYRELOCATION
+        Pc: 100
+      - Skill: LK_CONCENTRATION
+        Pc: 100
+      - Skill: LK_BERSERK
+        Pc: 100
+      - Skill: AL_CURE
+        Pc: 100
+      - Skill: HP_BASILICA
+        Pc: 100
+      - Skill: CG_MOONLIT
+        Pc: 100
+    DisabledItems:
+      Anodyne: 100
+      Green_Potion: 100
+      Panacea: 100
+      Wing_Of_Butterfly: 100
+    Maps:
+      poring_w02: true
+    Mapflags:
+      - Flag: Flee_Penalty
+        Value: 20
+      - Flag: HideMobHpBar
+      - Flag: Long_Damage_Rate
+        Value: 80
+      - Flag: Magic_Damage_Rate
+        Value: 60
+      - Flag: Misc_Damage_Rate
+        Value: 60
+      - Flag: NoBranch
+      - Flag: NoCostume
+      - Flag: NoKnockBack
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoTeleport
+      - Flag: NoWarp
+      - Flag: NoWarpTo
+      - Flag: PvP
+      - Flag: PvP_NoGuild
+      - Flag: Short_Damage_Rate
+        Value: 80
+      - Flag: Weapon_Damage_Rate
+        Value: 60
+
+  - Id: Agit_Siegev15 # WoE:SE
+    DisabledSkills:
+      - Skill: TF_BACKSLIDING
+        Pc: 100
+      - Skill: AL_WARP
+        Pc: 100
+      - Skill: WZ_ICEWALL
+        Pc: 100
+      - Skill: WE_CALLPARTNER
+        Pc: 100
+      - Skill: WE_CALLBABY
+        Pc: 100
+      - Skill: WE_CALLPARENT
+        Pc: 100
+      - Skill: LK_FURY
+        Pc: 100
+      - Skill: HP_ASSUMPTIO
+        Pc: 100
+      - Skill: HP_BASILICA
+        Pc: 100
+      - Skill: CR_CULTIVATION
+        Pc: 100
+      - Skill: CG_MOONLIT
+        Pc: 100
+      - Skill: NJ_KIRIKAGE
+        Pc: 100
+      - Skill: CG_MARIONETTE
+        Pc: 100
+      - Skill: SA_ABRACADABRA
+        Pc: 100
+      - Skill: TK_HIGHJUMP
+        Pc: 100
+    DisabledItems:
+      Anodyne: 100
+      Assumptio_5_Scroll: 100
+      Phen_Card: 100
+      Pty_Assumptio_Scroll: 100
+    DisabledStatuses:
+      Endure: 100
+    Maps:
+      arug_cas01: true
+      arug_cas02: true
+      arug_cas03: true
+      arug_cas04: true
+      arug_cas05: true
+      schg_cas01: true
+      schg_cas02: true
+      schg_cas03: true
+      schg_cas04: true
+      schg_cas05: true
+    Mapflags:
+      - Flag: Flee_Penalty
+        Value: 20
+      - Flag: GuildLock
+      - Flag: GvG_Castle
+      - Flag: HideDamage
+      - Flag: HideMobHpBar
+      - Flag: Invincible_Time
+        Value: 10000
+      - Flag: Long_Damage_Rate
+        Value: 80
+      - Flag: Magic_Damage_Rate
+        Value: 60
+      - Flag: Misc_Damage_Rate
+        Value: 60
+      - Flag: Monster_NoTeleport
+      - Flag: NoBranch
+      - Flag: NoCostume
+      - Flag: NoKnockBack
+      - Flag: NoLockOn
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoTeleport
+      - Flag: NoWarp
+      - Flag: NoWarpTo
+      - Flag: PvP_NoParty
+      - Flag: Short_Damage_Rate
+        Value: 80
+      - Flag: Skill_Duration
+        Value: HT_SKIDTRAP,400
+      - Flag: Skill_Duration
+        Value: HT_LANDMINE,400
+      - Flag: Skill_Duration
+        Value: HT_ANKLESNARE,400
+      - Flag: Skill_Duration
+        Value: HT_SHOCKWAVE,400
+      - Flag: Skill_Duration
+        Value: HT_SANDMAN,400
+      - Flag: Skill_Duration
+        Value: HT_FLASHER,400
+      - Flag: Skill_Duration
+        Value: HT_FREEZINGTRAP,400
+      - Flag: Skill_Duration
+        Value: HT_BLASTMINE,400
+      - Flag: Skill_Duration
+        Value: HT_CLAYMORETRAP,400
+      - Flag: Skill_Duration
+        Value: HT_TALKIEBOX,400
+      - Flag: Weapon_Damage_Rate
+        Value: 60
+
+  - Id: Battlefield
+    DisabledSkills:
+      - Skill: TF_BACKSLIDING
+        Pc: 100
+      - Skill: AL_WARP
+        Pc: 100
+      - Skill: WZ_ICEWALL
+        Pc: 100
+      - Skill: WE_CALLPARTNER
+        Pc: 100
+      - Skill: WE_CALLBABY
+        Pc: 100
+      - Skill: WE_CALLPARENT
+        Pc: 100
+      - Skill: LK_FURY
+        Pc: 100
+      - Skill: HP_ASSUMPTIO
+        Pc: 100
+      - Skill: HP_BASILICA
+        Pc: 100
+      - Skill: CR_CULTIVATION
+        Pc: 100
+      - Skill: CG_MOONLIT
+        Pc: 100
+      - Skill: NJ_KIRIKAGE
+        Pc: 100
+      - Skill: CG_MARIONETTE
+        Pc: 100
+      - Skill: MO_BODYRELOCATION
+        Pc: 100
+      - Skill: SG_FEEL
+        Pc: 100
+      - Skill: TK_RUN
+        Pc: 100
+      - Skill: TK_HIGHJUMP
+        Pc: 100
+    DisabledItems:
+      Anodyne: 100
+      Assumptio_5_Scroll: 100
+      Phen_Card: 100
+      Pty_Assumptio_Scroll: 100
+    DisabledStatuses:
+      Endure: 100
+    Maps:
+      bat_a01: true
+      bat_a02: true
+      bat_b01: true
+      bat_b02: true
+      bat_c01: true
+      bat_c02: true
+      bat_c03: true
+    Mapflags:
+      - Flag: Flee_Penalty
+        Value: 20
+      - Flag: HideMobHpBar
+      - Flag: Long_Damage_Rate
+        Value: 85
+      - Flag: Magic_Damage_Rate
+        Value: 70
+      - Flag: Misc_Damage_Rate
+        Value: 70
+      - Flag: NoBranch
+      - Flag: NoCostume
+      - Flag: NoLockOn
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoTeleport
+      - Flag: NoWarp
+      - Flag: NoWarpTo
+      - Flag: PvP_NoGuild
+      - Flag: PvP_NoParty
+      - Flag: Short_Damage_Rate
+        Value: 85
+      - Flag: Skill_Duration
+        Value: HT_SKIDTRAP,400
+      - Flag: Skill_Duration
+        Value: HT_LANDMINE,400
+      - Flag: Skill_Duration
+        Value: HT_ANKLESNARE,400
+      - Flag: Skill_Duration
+        Value: HT_SHOCKWAVE,400
+      - Flag: Skill_Duration
+        Value: HT_SANDMAN,400
+      - Flag: Skill_Duration
+        Value: HT_FLASHER,400
+      - Flag: Skill_Duration
+        Value: HT_FREEZINGTRAP,400
+      - Flag: Skill_Duration
+        Value: HT_BLASTMINE,400
+      - Flag: Skill_Duration
+        Value: HT_CLAYMORETRAP,400
+      - Flag: Skill_Duration
+        Value: HT_TALKIEBOX,400
+      - Flag: Weapon_Damage_Rate
+        Value: 70
+
+  - Id: PvP_Tournament # Instances
+    DisabledSkills:
+      - Skill: AL_TELEPORT
+        Pc: 100
+        Mob: 100
+        Hom: 100
+        Mer: 100
+      - Skill: WZ_ICEWALL
+        Pc: 100
+      - Skill: PF_SPIDERWEB
+        Pc: 100
+      - Skill: RG_INTIMIDATE
+        Pc: 100
+        Mob: 100
+      - Skill: NPC_EXPULSION
+        Pc: 100
+    Maps:
+      1@cata: true
+      1@nyd: true
+      1@orcs: true
+      1@tower: true
+      2@nyd: true
+      2@orcs: true
+      2@tower: true
+      3@tower: true
+      4@tower: true
+      5@tower: true
+      6@tower: true
+      que_god01: true
+    Mapflags:
+      - Flag: Monster_NoTeleport
+      - Flag: NoBranch
+      - Flag: NoMemo
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoTeleport
+      - Flag: NoWarpTo
+      - Flag: PartyLock
+
+  - Id: Unknown_Sealed_Shrine # Sealed Shrine
+    DisabledSkills:
+      - Skill: AL_TELEPORT
+        Pc: 100
+        Mob: 100
+        Hom: 100
+        Mer: 100
+      - Skill: HP_ASSUMPTIO
+        Pc: 100
+      - Skill: MG_SAFETYWALL
+        Pc: 100
+    Mapflags:
+      - Flag: Monster_NoTeleport
+      - Flag: NoBranch
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoTeleport
+      - Flag: NoWarpTo
+      - Flag: PartyLock
+
+  - Id: Unknown_FrancePvP # France PvP
+    DisabledSkills:
+      - Skill: TF_BACKSLIDING
+        Pc: 100
+      - Skill: AL_WARP
+        Pc: 100
+      - Skill: WZ_ICEWALL
+        Pc: 100
+      - Skill: SM_ENDURE
+        Pc: 100
+      - Skill: WE_CALLPARTNER
+        Pc: 100
+      - Skill: WE_CALLBABY
+        Pc: 100
+      - Skill: WE_CALLPARENT
+        Pc: 100
+      - Skill: LK_FURY
+        Pc: 100
+      - Skill: HP_ASSUMPTIO
+        Pc: 100
+      - Skill: HP_BASILICA
+        Pc: 100
+      - Skill: CR_CULTIVATION
+        Pc: 100
+      - Skill: CG_MOONLIT
+        Pc: 100
+      - Skill: NJ_KIRIKAGE
+        Pc: 100
+      - Skill: LK_BERSERK
+        Pc: 100
+      - Skill: ST_CHASEWALK
+        Pc: 100
+      - Skill: CG_MARIONETTE
+        Pc: 100
+    DisabledItems:
+      Anodyne: 100
+      Phen_Card: 100
+      Pty_Assumptio_Scroll: 100
+    DisabledStatuses:
+      Endure: 100
+    Mapflags:
+      - Flag: Flee_Penalty
+        Value: 20
+      # !TODO: Block party formation; PartyLock is too restrictive
+      - Flag: HideDamage
+      - Flag: Long_Damage_Rate
+        Value: 60
+      - Flag: Magic_Damage_Rate
+        Value: 60
+      - Flag: Misc_Damage_Rate
+        Value: 60
+      - Flag: NoBranch
+      - Flag: NoCostume
+      - Flag: NoKnockBack
+      - Flag: NoLockOn
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoTeleport
+      - Flag: NoWarpTo
+      - Flag: PvP
+      - Flag: PvP_NoGuild
+      - Flag: PvP_NoParty
+      - Flag: Short_Damage_Rate
+        Value: 60
+      - Flag: Weapon_Damage_Rate
+        Value: 60
+
+  - Id: Unknown_Town2 # Town 2
+    Mapflags:
+      - Flag: NightEnabled
+      - Flag: NoBranch
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoWarpTo
+
+  - Id: Unknown_Bossnia # Bossnia Event
+    DisabledItems:
+      Emergency_Scroll1: 100
+      Emergency_Scroll2: 100
+      Emergency_Scroll3: 100
+      N_Fly_Wing: 100
+    Mapflags:
+      - Flag: NoBranch
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoWarpTo
+
+  - Id: Siege_LowLevel # WoE:TE
+    DisabledSkills:
+      - Skill: TF_BACKSLIDING
+        Pc: 100
+      - Skill: AL_WARP
+        Pc: 100
+      - Skill: WZ_ICEWALL
+        Pc: 100
+      - Skill: WE_CALLPARTNER
+        Pc: 100
+      - Skill: WE_CALLBABY
+        Pc: 100
+      - Skill: WE_CALLPARENT
+        Pc: 100
+      - Skill: LK_FURY
+        Pc: 100
+      - Skill: HP_ASSUMPTIO
+        Pc: 100
+      - Skill: HP_BASILICA
+        Pc: 100
+      - Skill: CR_CULTIVATION
+        Pc: 100
+      - Skill: CG_MOONLIT
+        Pc: 100
+      - Skill: CG_MARIONETTE
+        Pc: 100
+      - Skill: NJ_KIRIKAGE
+        Pc: 100
+    DisabledItems:
+      Anodyne: 100
+      Assumptio_5_Scroll: 100
+      Phen_Card: 100
+      Pty_Assumptio_Scroll: 100
+    DisabledStatuses:
+      Endure: 100
+    Maps:
+      gld_dun03_2: true
+      te_aldecas1: true
+      te_aldecas2: true
+      te_aldecas3: true
+      te_aldecas4: true
+      te_aldecas5: true
+      te_prtcas01: true
+      te_prtcas02: true
+      te_prtcas03: true
+      te_prtcas04: true
+      te_prtcas05: true
+    Mapflags:
+      - Flag: Flee_Penalty
+        Value: 20
+      - Flag: HideDamage
+      - Flag: HideMobHpBar
+      - Flag: Invincible_Time
+        Value: 10000
+      - Flag: Long_Damage_Rate
+        Value: 60
+      - Flag: Magic_Damage_Rate
+        Value: 60
+      - Flag: Misc_Damage_Rate
+        Value: 60
+      - Flag: Monster_NoTeleport
+      - Flag: NoBranch
+      - Flag: NoCostume
+      - Flag: NoLockOn
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoTeleport
+      - Flag: NoWarp
+      - Flag: NoWarpTo
+      - Flag: PvP
+      - Flag: PvP_NoParty
+      - Flag: Short_Damage_Rate
+        Value: 60
+      - Flag: Skill_Duration
+        Value: HT_SKIDTRAP,400
+      - Flag: Skill_Duration
+        Value: HT_LANDMINE,400
+      - Flag: Skill_Duration
+        Value: HT_ANKLESNARE,400
+      - Flag: Skill_Duration
+        Value: HT_SHOCKWAVE,400
+      - Flag: Skill_Duration
+        Value: HT_SANDMAN,400
+      - Flag: Skill_Duration
+        Value: HT_FLASHER,400
+      - Flag: Skill_Duration
+        Value: HT_FREEZINGTRAP,400
+      - Flag: Skill_Duration
+        Value: HT_BLASTMINE,400
+      - Flag: Skill_Duration
+        Value: HT_CLAYMORETRAP,400
+      - Flag: Skill_Duration
+        Value: HT_TALKIEBOX,400
+      - Flag: Weapon_Damage_Rate
+        Value: 60

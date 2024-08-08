@@ -702,6 +702,9 @@ int pc_get_group_id(map_session_data *sd) {
 * @return Group Level
 */
 int pc_get_group_level(map_session_data *sd) {
+	if (sd->group == nullptr)
+		return 0;
+
 	return sd->group->level;
 }
 
@@ -771,6 +774,14 @@ static TIMER_FUNC(pc_invincible_timer){
 
 void pc_setinvincibletimer(map_session_data* sd, int val) {
 	nullpo_retv(sd);
+
+	if (val <= 0) {
+		if (sd->invincible_timer != INVALID_TIMER) {
+			delete_timer(sd->invincible_timer, pc_invincible_timer);
+			sd->invincible_timer = INVALID_TIMER;
+		}
+		return;
+	}
 
 	if( sd->invincible_timer != INVALID_TIMER )
 		delete_timer(sd->invincible_timer,pc_invincible_timer);
@@ -1809,7 +1820,7 @@ uint8 pc_isequip(map_session_data *sd,int n)
 		return ITEM_EQUIP_ACK_FAIL;
 
 	//fail to equip if item is restricted
-	if (!battle_config.allow_equip_restricted_item && itemdb_isNoEquip(item, sd->bl.m))
+	if (!battle_config.allow_equip_restricted_item && itemdb_isNoEquip(*sd, item->nameid))
 		return ITEM_EQUIP_ACK_FAIL;
 
 	if (item->equip&EQP_AMMO) {
@@ -6386,7 +6397,7 @@ int pc_useitem(map_session_data *sd,int n)
 		return 0;
 
 	/* on restricted maps the item is consumed but the effect is not used */
-	if (!pc_has_permission(sd,PC_PERM_ITEM_UNCONDITIONAL) && itemdb_isNoEquip(id,sd->bl.m)) {
+	if (!pc_has_permission(sd,PC_PERM_ITEM_UNCONDITIONAL) && itemdb_isNoEquip(*sd, id->nameid)) {
 		clif_msg(sd, MSI_IMPOSSIBLE_USEITEM_AREA); // This item cannot be used within this area
 		if( battle_config.allow_consume_restricted_item && id->flag.delay_consume > 0 ) { //need confirmation for delayed consumption items
 			clif_useitemack(sd,n,item.amount-1,true);
@@ -9652,8 +9663,7 @@ int pc_dead(map_session_data *sd,struct block_list *src)
 			pc_setrestartvalue(sd,1);
 			status_percent_heal(&sd->bl, 100, 100);
 			clif_resurrection( sd->bl );
-			if(battle_config.pc_invincible_time)
-				pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
+			pc_setinvincibletimer(sd, mapdata->getMapFlag(MF_INVINCIBLE_TIME));
 			sc_start(&sd->bl,&sd->bl,SC_STEELBODY,100,5,skill_get_time(MO_STEELBODY,5));
 			if(mapdata_flag_gvg2(mapdata))
 				pc_respawn_timer(INVALID_TIMER, gettick(), sd->bl.id, 0);
@@ -10009,8 +10019,7 @@ void pc_revive(map_session_data *sd,unsigned int hp, unsigned int sp, unsigned i
 	if(ap) clif_updatestatus(*sd,SP_AP);
 
 	pc_setstand(sd, true);
-	if(battle_config.pc_invincible_time > 0)
-		pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
+	pc_setinvincibletimer(sd, map_getmapflag(sd->bl.m, MF_INVINCIBLE_TIME));
 
 	if (sd->state.gmaster_flag && sd->guild) {
 		guild_guildaura_refresh(sd,GD_LEADERSHIP,guild_checkskill(sd->guild->guild,GD_LEADERSHIP));
@@ -12116,7 +12125,7 @@ bool pc_equipitem(map_session_data *sd,short n,int req_pos,bool equipswitch)
 		current_equip_item_index = n;
 		current_equip_card_id = 0;
 		//only run the script if item isn't restricted
-		if (id->equip_script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(id,sd->bl.m)))
+		if (id->equip_script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(*sd, id->nameid)))
 			run_script(id->equip_script,0,sd->bl.id,fake_nd->bl.id);
 		if(itemdb_isspecial(sd->inventory.u.items_inventory[n].card[0]))
 			; //No cards
@@ -12127,7 +12136,7 @@ bool pc_equipitem(map_session_data *sd,short n,int req_pos,bool equipswitch)
 				std::shared_ptr<item_data> data = item_db.find(sd->inventory.u.items_inventory[n].card[i]);
 
 				if ( data != nullptr ) {
-					if (data->equip_script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(data.get(), sd->bl.m))) {
+					if (data->equip_script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(*sd, data->nameid))) {
 						current_equip_card_id = sd->inventory.u.items_inventory[n].card[i];
 						run_script(data->equip_script,0,sd->bl.id,fake_nd->bl.id);
 					}
@@ -12489,7 +12498,7 @@ void pc_checkitem(map_session_data *sd) {
 			continue;
 		}
 
-		if( !pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && !battle_config.allow_equip_restricted_item && itemdb_isNoEquip(sd->inventory_data[i], sd->bl.m) ) {
+		if( !pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && !battle_config.allow_equip_restricted_item && itemdb_isNoEquip(*sd, sd->inventory_data[i]->nameid) ) {
 			pc_unequipitem(sd, i, 2);
 			calc_flag = 1;
 			continue;
@@ -12504,7 +12513,7 @@ void pc_checkitem(map_session_data *sd) {
 		if( !it->equipSwitch )
 			continue;
 		if( it->equipSwitch&~pc_equippoint(sd,i) ||
-			( !pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && !battle_config.allow_equip_restricted_item && itemdb_isNoEquip(sd->inventory_data[i], sd->bl.m) ) ){
+			( !pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && !battle_config.allow_equip_restricted_item && itemdb_isNoEquip(*sd, sd->inventory_data[i]->nameid) ) ){
 			
 			for( int j = 0; j < EQI_MAX; j++ ){
 				if( sd->equip_switch_index[j] == i ){
@@ -14123,40 +14132,6 @@ void JobDatabase::loadingFinished() {
 	TypesafeCachedYamlDatabase::loadingFinished();
 }
 
-/**
- * Read job_noenter_map.txt
- **/
-static bool pc_readdb_job_noenter_map( char *str[], size_t columns, size_t current ){
-	int class_ = -1;
-	int64 class_tmp;
-
-	if (ISDIGIT(str[0][0])) {
-		class_ = atoi(str[0]);
-	} else {
-		if (!script_get_constant(str[0], &class_tmp)) {
-			ShowError("pc_readdb_job_noenter_map: Invalid job %s specified.\n", str[0]);
-			return false;
-		}
-		class_ = static_cast<int>(class_tmp);
-	}
-
-	if (!pcdb_checkid(class_)) {
-		ShowError("pc_readdb_job_noenter_map: Invalid job %d specified.\n", class_);
-		return false;
-	}
-
-	std::shared_ptr<s_job_info> job = job_db.find(class_);
-
-	if (job == nullptr) {
-		ShowError("pc_readdb_job_noenter_map: Job %d data not initialized.\n", class_);
-		return false;
-	}
-
-	job->noenter_map.zone = atoi(str[1]);
-	job->noenter_map.group_lv = atoi(str[2]);
-	return true;
-}
-
 const std::string PlayerStatPointDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/statpoint.yml";
 }
@@ -14299,13 +14274,6 @@ void PlayerStatPointDatabase::loadingFinished(){
  * attr_fix.yml		- elemental adjustment table
  *------------------------------------------*/
 void pc_readdb(void) {
-	int i, s = 1;
-	const char* dbsubpath[] = {
-		"",
-		"/" DBIMPORT,
-		//add other path here
-	};
-		
 	//reset
 	job_db.clear(); // job_info table
 
@@ -14315,26 +14283,6 @@ void pc_readdb(void) {
 
 	statpoint_db.clear();
 	job_db.load();
-
-	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
-		uint8 n1 = (uint8)(strlen(db_path)+strlen(dbsubpath[i])+1);
-		uint8 n2 = (uint8)(strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1);
-		char* dbsubpath1 = (char*)aMalloc(n1+1);
-		char* dbsubpath2 = (char*)aMalloc(n2+1);
-
-		if(i==0) {
-			safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[i]);
-			safesnprintf(dbsubpath2,n2,"%s/%s%s",db_path,DBPATH,dbsubpath[i]);
-		}
-		else {
-			safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[i]);
-			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
-		}
-
-		sv_readdb(dbsubpath2, "job_noenter_map.txt", ',', 3, 3, CLASS_COUNT, &pc_readdb_job_noenter_map, i > 0);
-		aFree(dbsubpath1);
-		aFree(dbsubpath2);
-	}
 
 	// Reset and read skilltree - needs to be read after pc_readdb_job_exp to get max base and job levels
 	skill_tree_db.reload();
@@ -15236,37 +15184,19 @@ void pc_show_questinfo_reinit(map_session_data *sd) {
 }
 
 /**
- * Check if a job is allowed to enter the map
- * @param jobid Job ID see enum e_job or sd->status.class_
- * @param m ID -an index- for direct indexing map[] array
- * @return 1 if job is allowed, 0 otherwise
+ * Check if a job is allowed to enter the map.
+ * @param jobid: Job ID see enum e_job or sd->status.class_
+ * @param m: ID -an index- for direct indexing map[] array
+ * @param group_lv: Group level of the player
+ * @return True if job is allowed, false otherwise
  **/
 bool pc_job_can_entermap(enum e_job jobid, int m, int group_lv) {
-	// Map is other map server.
-	// !FIXME: Currently, a map-server doesn't recognized map's attributes on other server, so we assume it's fine to warp.
-	if (m < 0)
-		return true;
-
-	struct map_data *mapdata = map_getmapdata(m);
-
-	if (!mapdata->cell)
-		return false;
-
 	if (!pcdb_checkid(jobid))
 		return false;
 
-	std::shared_ptr<s_job_info> job = job_db.find(jobid);
+	map_data *mapdata = map_getmapdata(m);
 
-	if (!job->noenter_map.zone || group_lv > job->noenter_map.group_lv)
-		return true;
-
-	if ((job->noenter_map.zone&1 && !mapdata_flag_vs2(mapdata)) || // Normal
-		(job->noenter_map.zone&2 && mapdata->getMapFlag(MF_PVP)) || // PVP
-		(job->noenter_map.zone&4 && mapdata_flag_gvg2_no_te(mapdata)) || // GVG
-		(job->noenter_map.zone&8 && mapdata->getMapFlag(MF_BATTLEGROUND)) || // Battleground
-		(job->noenter_map.zone&16 && mapdata_flag_gvg2_te(mapdata)) || // WOE:TE
-		(job->noenter_map.zone&(mapdata->zone) && mapdata->getMapFlag(MF_RESTRICTED)) // Zone restriction
-		)
+	if (mapdata != nullptr && mapdata->zone->isJobRestricted(jobid, group_lv))
 		return false;
 
 	return true;
