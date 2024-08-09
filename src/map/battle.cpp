@@ -1675,7 +1675,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			damage += damage * bonus / 100;
 		}
 		if (tsc->getSCE(SC_HOLY_OIL) && (flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON))
-			damage += damage * 50 / 100;// Need official adjustment. [Rytech]
+			damage += damage * (3 * tsc->getSCE(SC_HOLY_OIL)->val1) / 100;
 
 		if( tsc->getSCE( SC_RUSH_QUAKE1 ) && ( flag&BF_WEAPON ) == BF_WEAPON ){
 			damage += damage * 50 / 100;
