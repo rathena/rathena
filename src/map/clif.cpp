@@ -1926,6 +1926,17 @@ void clif_homskillinfoblock( homun_data& hd ){
 	}
 
 	clif_send( packet, packet->packetLength, &sd->bl, SELF );
+
+	if (battle_config.display_status_timers) {
+		// Clear cooldown display for skills that are no longer blocked
+		for (auto& it : hd.homunculus.hskill) {
+			if (it.id == 0)
+				continue;
+
+			if (util::vector_get(hd.blockskill, it.id) == hd.blockskill.end())
+				clif_skill_cooldown(*sd, it.id, 0);
+		}
+	}
 #endif
 }
 

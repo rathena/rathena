@@ -23034,13 +23034,17 @@ int skill_blockpc_clear(map_session_data *sd) {
 }
 
 TIMER_FUNC(skill_blockhomun_end){
-	struct homun_data *hd = (TBL_HOM*) map_id2bl(id);
+	homun_data *hd = reinterpret_cast<homun_data *>(map_id2bl(id));
 
 	if (hd) {
-		auto skill = util::vector_get(hd->blockskill, (uint16)data);
+		auto skill = util::vector_get(hd->blockskill, static_cast<uint16>(data));
 
 		if (skill != hd->blockskill.end())
 			hd->blockskill.erase(skill);
+
+		// Make sure the cooldown display is removed
+		if (battle_config.display_status_timers)
+			clif_homskillinfoblock(*hd);
 	}
 
 	return 1;
@@ -23062,8 +23066,11 @@ int skill_blockhomun_start(struct homun_data *hd, uint16 skill_id, int tick)	//[
 
 	hd->blockskill.push_back(skill_id);
 
-	if (battle_config.display_status_timers)
+	if (battle_config.display_status_timers) {
+		// Reset the skill cooldown display first
+		clif_homskillinfoblock(*hd);
 		clif_skill_cooldown(*hd->master, skill_id, tick);
+	}
 
 	return add_timer(gettick() + tick, skill_blockhomun_end, hd->bl.id, skill_id);
 }
