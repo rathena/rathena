@@ -10691,6 +10691,7 @@ current invoking character.
 *addhomintimacy <amount>{,<char_id>};
 
 Increase or decrease a homunculus' intimacy value by the given <amount>. 100000 is full loyalty.
+Fails silently when no players are attached or if the player has no homunculus.
 
 ---------------------------------------
 
