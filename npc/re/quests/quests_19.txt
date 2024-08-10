@@ -5155,7 +5155,7 @@ OnTouch:
 	}
 	// Simulation Battle instance
 	if (ep19_main == 100) {
-		cloakoffnpcself( "ep19_jor_nest_66_260" );
+		cloakoffnpcself( "#warp_ep19re1" );
 		end;
 	}
 	end;
@@ -5201,7 +5201,7 @@ OnTouch:
 		end;
 	}
 	if (ep19_main == 49 || ep19_main == 50) {	// Step 57
-		cloakoffnpcself( "ep19_jor_dun03_57_63" );
+		cloakoffnpcself( "Juncea#ep19re2" );
 		end;
 	}
 	end;
@@ -7934,7 +7934,7 @@ jor_que,36,38,3	script	Rgan#i19ms20	EP19_RGAN_D,5,5,{
 	end;
 OnTouch:
 	if (ep19_main == 59 || ep19_main == 60) {
-		cloakoffnpcself( "ep19_jor_que_32_37" );
+		cloakoffnpcself( "Lehar#i19ms21" );
 		cloakoffnpcself( "Lazy#i19ms21" );
 		end;
 	}
