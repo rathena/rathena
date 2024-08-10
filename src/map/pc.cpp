@@ -7008,6 +7008,16 @@ enum e_setpos pc_setpos(map_session_data* sd, unsigned short mapindex, int x, in
 
 	if( hom_is_active(sd->hd) )
 	{
+		if (sd->state.changemap)
+			status_db.removeByStatusFlag(&sd->hd->bl, { SCF_REMOVEFROMHOMONMAPWARP });
+		else
+			status_db.removeByStatusFlag(&sd->hd->bl, { SCF_REMOVEFROMHOMONWARP });
+
+		if (battle_config.hom_delay_reset_warp) {
+			sd->hd->blockskill.clear();
+			sd->hd->blockskill.shrink_to_fit();
+		}
+
 		sd->hd->bl.m = m;
 		sd->hd->bl.x = sd->hd->ud.to_x = x;
 		sd->hd->bl.y = sd->hd->ud.to_y = y;

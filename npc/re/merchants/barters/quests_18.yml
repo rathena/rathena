@@ -1,0 +1,132 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2022 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Barter Database
+###########################################################################
+#
+# Barter Settings
+#
+###########################################################################
+#  - Name               NPC name.
+#    Map                Map name. (Default: not on a map)
+#    X                  Map x coordinate. (Default: 0)
+#    Y                  Map y coordinate. (Default: 0)
+#    Direction          Direction the NPC is looking. (Default: North)
+#    Sprite             Sprite name of the NPC. (Default: FakeNpc)
+#    Items:             List of sold items.
+#      - Index          Index of the item inside the shop. (0-...)
+#                       Maximum index depends on client.
+#        Item           Aegis name of the item.
+#        Stock          Amount of item in stock. 0 means unlimited. (Default: 0)
+#        Zeny           Cost of them item in Zeny. (Default: 0)
+#        RequiredItems: List of required items (Optional)
+#          - Index      Index of the required item. (0-4)
+#            Item       Aegis name of required item.
+#            Amount     Amount of required item. (Default: 1)
+#            Refine     Refine level of required item. (Default: 0)
+###########################################################################
+
+Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+  - Name: barter_ep18_1
+    Items:
+      - Index: 0
+        Item: Gray_W_Suits
+        RequiredItems:
+          - Index: 0
+            Item: Ep18_Amethyst_Fragment
+            Amount: 350
+      - Index: 1
+        Item: Gray_W_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Ep18_Amethyst_Fragment
+            Amount: 350
+      - Index: 2
+        Item: Gray_W_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: Ep18_Amethyst_Fragment
+            Amount: 350
+      - Index: 3
+        Item: Gray_W_Muffler
+        RequiredItems:
+          - Index: 0
+            Item: Ep18_Amethyst_Fragment
+            Amount: 350
+      - Index: 4
+        Item: Gray_W_Boots
+        RequiredItems:
+          - Index: 0
+            Item: Ep18_Amethyst_Fragment
+            Amount: 350
+      - Index: 5
+        Item: Gray_W_Shoes
+        RequiredItems:
+          - Index: 0
+            Item: Ep18_Amethyst_Fragment
+            Amount: 350
+      - Index: 6
+        Item: Gray_W_Pendant
+        RequiredItems:
+          - Index: 0
+            Item: Ep18_Amethyst_Fragment
+            Amount: 350
+      - Index: 7
+        Item: Gray_W_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Ep18_Amethyst_Fragment
+            Amount: 350
+      - Index: 8
+        Item: Gray_W_Ring
+        RequiredItems:
+          - Index: 0
+            Item: Ep18_Amethyst_Fragment
+            Amount: 350
+      - Index: 9
+        Item: Gray_W_Earing
+        RequiredItems:
+          - Index: 0
+            Item: Ep18_Amethyst_Fragment
+            Amount: 350
+  - Name: barter_ep18_2
+    Items:
+      - Index: 0
+        Item: GrayWolf_7_Ticket
+        RequiredItems:
+          - Index: 0
+            Item: Ep18_Amethyst_Fragment
+            Amount: 1050
+  - Name: barter_ep18_3
+    Items:
+      - Index: 0
+        Item: GrayWolf_7_Ticket
+        RequiredItems:
+          - Index: 0
+            Item: Ep18_Amethyst_Fragment
+            Amount: 1050
+      - Index: 1
+        Item: GrayWolf_9_Ticket
+        RequiredItems:
+          - Index: 0
+            Item: Ep18_Amethyst_Fragment
+            Amount: 2250

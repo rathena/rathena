@@ -2600,13 +2600,17 @@ Body:
     DurationLookup: HLIF_AVOID
     CalcFlags:
       Speed: true
+    Flags:
+      NoSave: true
+      RemoveFromHomOnMapWarp: true
   - Status: Change
     DurationLookup: HLIF_CHANGE
     CalcFlags:
       Vit: true
       Int: true
     Flags:
-      RemoveOnChangeMap: true
+      NoSave: true
+      RemoveFromHomOnMapWarp: true
     Fail:
       Change: true
   - Status: Bloodlust

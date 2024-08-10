@@ -1014,8 +1014,10 @@ bool skill_isNotOk_hom(struct homun_data *hd, uint16 skill_id, uint16 skill_lv)
 	if (sc && !sc->count)
 		sc = nullptr;
 
-	if (util::vector_exists(hd->blockskill, skill_id))
+	if (util::vector_exists(hd->blockskill, skill_id)) {
+		clif_skill_fail(*sd, skill_id, USESKILL_FAIL_SKILLINTERVAL);
 		return true;
+	}
 
 	switch(skill_id) {
 		case HFLI_SBR44:
@@ -1120,8 +1122,15 @@ bool skill_isNotOk_hom(struct homun_data *hd, uint16 skill_id, uint16 skill_lv)
  * @return true: Skill cannot be used, false: otherwise
  */
 bool skill_isNotOk_mercenary( uint16 skill_id, s_mercenary_data& md ){
-	if (util::vector_exists(md.blockskill, skill_id))
+	map_session_data* sd = md.master;
+
+	if (sd == nullptr)
 		return true;
+
+	if (util::vector_exists(md.blockskill, skill_id)) {
+		clif_skill_fail(*sd, skill_id, USESKILL_FAIL_SKILLINTERVAL);
+		return true;
+	}
 
 	if( md.master != nullptr ){
 		return skill_isNotOk( skill_id, *md.master );
@@ -3580,7 +3589,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 	dmg = battle_calc_attack(attack_type,src,bl,skill_id,skill_lv,flag&0xFFF);
 
 	//If the damage source is a unit, the damage is not delayed
-	if (src != dsrc && skill_id != GS_GROUNDDRIFT)
+	if (src != dsrc)
 		dmg.amotion = 0;
 
 	//! CHECKME: This check maybe breaks the battle_calc_attack, and maybe need better calculation.
@@ -7313,12 +7322,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	//Check for undead skills that convert a no-damage skill into a damage one. [Skotlex]
 	switch (skill_id) {
-		case HLIF_HEAL:	//[orn]
-			if (bl->type != BL_HOM) {
-				if (sd) clif_skill_fail( *sd, skill_id );
-				break ;
-			}
-			[[fallthrough]];
  		case AL_HEAL:
 		case ALL_RESURRECTION:
 		case PR_ASPERSIO:
@@ -7342,8 +7345,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			    ret = skill_castend_pos2(src,src->x,src->y,skill_id,skill_lv,tick,flag); //cast on homon
 			if(s_src && !skill_check_unit_range(s_src, s_src->x, s_src->y, skill_id, skill_lv))
 			    ret |= skill_castend_pos2(s_src,s_src->x,s_src->y,skill_id,skill_lv,tick,flag); //cast on master
-			if (hd)
-			    skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 			return ret;
 		    }
 		    break;
@@ -9330,10 +9331,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				break;
 			}
 
-			if (sd->hd && battle_config.hom_setting&HOMSET_RESET_REUSESKILL_TELEPORTED) {
-				sd->hd->blockskill.clear();
-				sd->hd->blockskill.shrink_to_fit();
-			}
 
 			if( sd->state.autocast || ( (sd->skillitem == AL_TELEPORT || battle_config.skip_teleport_lv1_menu) && skill_lv == 1 ) || skill_lv == 3 )
 			{
@@ -10675,11 +10672,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case HAMI_CASTLE:	//[orn]
-		if (src != bl && rnd()%100 < 20 * skill_lv) {
+		if (src != bl && rnd_chance(20 * skill_lv, 100)) {
 			int x = src->x, y = src->y;
 
-			if (hd)
-				skill_blockhomun_start(hd,skill_id,skill_get_time2(skill_id,skill_lv));
 			// Move source
 			if (unit_movepos(src,bl->x,bl->y,0,0)) {
 				clif_skill_nodamage(src,src,skill_id,skill_lv,1); // Homunc
@@ -10717,17 +10712,19 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			status_heal(bl, i, 0, 0);
 		}
 		break;
-	//Homun single-target support skills [orn]
+	// Homun single-target support skills [orn]
+	case HLIF_CHANGE:
+#ifndef RENEWAL
+		status_percent_heal(bl, 100, 100);
+		[[fallthrough]];
+#endif
 	case HAMI_BLOODLUST:
 	case HFLI_FLEET:
 	case HFLI_SPEED:
-	case HLIF_CHANGE:
 	case MH_ANGRIFFS_MODUS:
 	case MH_GOLDENE_FERSE:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-		if (hd)
-			skill_blockhomun_start(hd, skill_id, skill_get_time2(skill_id,skill_lv));
 		break;
 
 	case NPC_DRAGONFEAR:
@@ -11708,15 +11705,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if( !status_isdead(bl) )
 				break;
 
-			status_zap(bl, 0, tstatus->sp * 10 * skill_lv / 100);
-
-			int heal = tstatus->sp;
-
-			if( heal <= 0 )
-				heal = 1;
-			tstatus->hp = heal;
+			tstatus->hp = max(tstatus->sp, 1);
+			tstatus->sp -= tstatus->sp * ( 60 - 10 * skill_lv ) / 100;
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-			pc_revive((TBL_PC*)bl,heal,0);
+			pc_revive(reinterpret_cast<map_session_data*>(bl),true,true);
 			clif_resurrection( *bl );
 		}
 		break;
@@ -12356,15 +12348,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				for (i = 0; i < ARRAYLENGTH(scs); i++)
 					if (tsc->getSCE(scs[i])) status_change_end(bl, scs[i]);
 			}
-			if (hd)
-				skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 		}
 		break;
 	case MH_OVERED_BOOST:
 		if (hd && battle_get_master(src)) {
 			sc_start(src, battle_get_master(src), type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 		}
 		break;
 	case MH_GRANITIC_ARMOR:
@@ -12373,7 +12362,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			struct block_list *s_bl = battle_get_master(src);
 			if(s_bl) sc_start2(src, s_bl, type, 100, skill_lv, hd->homunculus.level, skill_get_time(skill_id, skill_lv)); //start on master
 			sc_start2(src, bl, type, 100, skill_lv, hd->homunculus.level, skill_get_time(skill_id, skill_lv));
-			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 	     }
 	     break;
 	case MH_LIGHT_OF_REGENE: //self
@@ -12381,7 +12369,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			struct block_list *s_bl = battle_get_master(src);
 			if(s_bl) sc_start(src, s_bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 			sc_start2(src, src, type, 100, skill_lv, hd->homunculus.level, skill_get_time(skill_id, skill_lv));
-			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 		}
 		break;
 	case MH_STYLE_CHANGE:
@@ -12407,21 +12394,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			clif_skill_nodamage(src,master_bl,skill_id,skill_lv,1);
 			sc_start(src, master_bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		}
-		
-		if (hd)
-			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 		} break;
 	case MH_PAIN_KILLER:
 		bl = battle_get_master(src);
 		if (bl != nullptr)
 			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-		if (hd)
-			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 		break;
 	case MH_MAGMA_FLOW:
 	   sc_start(src,bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-	   if (hd)
-		   skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 	   break;
 	case MH_SUMMON_LEGION: {
 		int summons[5] = {MOBID_S_HORNET, MOBID_S_GIANT_HORNET, MOBID_S_GIANT_HORNET, MOBID_S_LUCIOLA_VESPA, MOBID_S_LUCIOLA_VESPA};
@@ -12448,8 +12428,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				sc_start4(&sum_md->bl,&sum_md->bl, SC_MODECHANGE, 100, 1, 0, MD_CANATTACK|MD_AGGRESSIVE, 0, 60000);
 			}
 		}
-		if (hd)
-			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 		}
 		break;
 
@@ -13402,10 +13380,25 @@ TIMER_FUNC(skill_castend_id){
 
 		if (!sd || sd->skillitem != ud->skill_id || skill_get_delay(ud->skill_id, ud->skill_lv))
 			ud->canact_tick = i64max(tick + skill_delayfix(src, ud->skill_id, ud->skill_lv), ud->canact_tick - SECURITY_CASTTIME);
-		if (sd) { //Cooldown application
-			int cooldown = pc_get_skillcooldown(sd,ud->skill_id, ud->skill_lv); // Increases/Decreases cooldown of a skill by item/card bonuses.
-			if(cooldown) skill_blockpc_start(sd, ud->skill_id, cooldown);
+
+		// Cooldown application
+		switch (src->type) {
+		case BL_PC:{
+			// Increases/Decreases cooldown of a skill by item/card bonuses.
+			int cooldown = pc_get_skillcooldown(sd, ud->skill_id, ud->skill_lv);
+			if (cooldown > 0)
+				skill_blockpc_start(sd, ud->skill_id, cooldown);
+		} break;
+		case BL_HOM:{
+			homun_data& hd = reinterpret_cast<homun_data&>(*src);
+#ifdef RENEWAL
+			skill_blockhomun_start(&hd, ud->skill_id, skill_get_cooldown(ud->skill_id, ud->skill_lv));
+#else
+			skill_blockhomun_start(&hd, ud->skill_id, skill_get_delay(ud->skill_id, ud->skill_lv));
+#endif
+		} break;
 		}
+
 		if( battle_config.display_status_timers && sd )
 			clif_status_change(src, EFST_POSTDELAY, 1, skill_delayfix(src, ud->skill_id, ud->skill_lv), 0, 0, 0);
 		if( sd )
@@ -23073,6 +23066,9 @@ int skill_blockhomun_start(struct homun_data *hd, uint16 skill_id, int tick)	//[
 
 	hd->blockskill.push_back(skill_id);
 
+	if (battle_config.display_status_timers)
+		clif_skill_cooldown(*hd->master, skill_id, tick);
+
 	return add_timer(gettick() + tick, skill_blockhomun_end, hd->bl.id, skill_id);
 }
 
@@ -23104,6 +23100,9 @@ int skill_blockmerc_start(s_mercenary_data *md, uint16 skill_id, int tick)
 	}
 
 	md->blockskill.push_back(skill_id);
+
+	if (battle_config.display_status_timers)
+		clif_skill_cooldown(*md->master, skill_id, tick);
 
 	return add_timer(gettick() + tick, skill_blockmerc_end, md->bl.id, skill_id);
 }

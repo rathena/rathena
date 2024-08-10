@@ -3670,16 +3670,16 @@ void clif_updatestatus( map_session_data& sd, enum _sp type ){
 			break;
 #else
 		case SP_BASEEXP:
-			clif_par_change(sd, type, client_exp(sd.status.base_exp));
+			clif_longpar_change(sd, type, client_exp(sd.status.base_exp));
 			break;
 		case SP_JOBEXP:
-			clif_par_change(sd, type, client_exp(sd.status.job_exp));
+			clif_longpar_change(sd, type, client_exp(sd.status.job_exp));
 			break;
 		case SP_NEXTBASEEXP:
-			clif_par_change(sd, type, client_exp(pc_nextbaseexp(&sd)));
+			clif_longpar_change(sd, type, client_exp(pc_nextbaseexp(&sd)));
 			break;
 		case SP_NEXTJOBEXP:
-			clif_par_change(sd, type, client_exp(pc_nextjobexp(&sd)));
+			clif_longpar_change(sd, type, client_exp(pc_nextjobexp(&sd)));
 			break;
 #endif
 
@@ -10804,8 +10804,7 @@ void clif_parse_LoadEndAck(int fd,map_session_data *sd)
 		clif_hominfo(sd,sd->hd,1);
 		clif_hominfo(sd,sd->hd,0); //for some reason, at least older clients want this sent twice
 		clif_homskillinfoblock( *sd->hd );
-		if( battle_config.hom_setting&HOMSET_COPY_SPEED )
-			status_calc_bl(&sd->hd->bl, { SCB_SPEED }); //Homunc mimic their master's speed on each map change
+		status_calc_bl(&sd->hd->bl, { SCB_SPEED });
 		if( !(battle_config.hom_setting&HOMSET_NO_INSTANT_LAND_SKILL) )
 			skill_unit_move(&sd->hd->bl,gettick(),1); // apply land skills immediately
 	}
@@ -10824,9 +10823,9 @@ void clif_parse_LoadEndAck(int fd,map_session_data *sd)
 			return;
 		clif_spawn(&sd->ed->bl);
 		clif_elemental_info(sd);
-		clif_elemental_updatestatus(sd,SP_HP);
+		clif_elemental_updatestatus(*sd, SP_HP);
 		clif_hpmeter_single( *sd, sd->ed->bl.id, sd->ed->battle_status.hp, sd->ed->battle_status.max_hp );
-		clif_elemental_updatestatus(sd,SP_SP);
+		clif_elemental_updatestatus(*sd, SP_SP);
 		status_calc_bl(&sd->ed->bl, { SCB_SPEED }); //Elemental mimic their master's speed on each map change
 	}
 
@@ -18788,34 +18787,36 @@ void clif_parse_ItemListWindowSelected(int fd, map_session_data* sd) {
 /*==========================================
  * Elemental System
  *==========================================*/
-void clif_elemental_updatestatus(map_session_data *sd, int type) {
-	s_elemental_data *ed;
-	struct status_data *status;
-	int fd;
 
-	if( !clif_session_isValid(sd) || (ed = sd->ed) == nullptr )
+/// Notifies client of a change in an elemental's status parameter.
+/// 0x81e <type>.W <value>.L (ZC_EL_PAR_CHANGE)
+void clif_elemental_updatestatus(map_session_data& sd, _sp type) {
+#if PACKETVER >= 20100309
+	if (sd.ed == nullptr)
 		return;
 
-	fd = sd->fd;
-	status = &ed->battle_status;
-	WFIFOHEAD(fd,8);
-	WFIFOW(fd,0) = 0x81e;
-	WFIFOW(fd,2) = type;
+	PACKET_ZC_EL_PAR_CHANGE p = {};
+
+	p.packetType = HEADER_ZC_EL_PAR_CHANGE;
+	p.type = static_cast<decltype(p.type)>(type);
+	status_data* status = &sd.ed->battle_status;
 	switch( type ) {
 		case SP_HP:
-			WFIFOL(fd,4) = status->hp;
+			p.value = static_cast<decltype(p.value)>(status->hp);
 			break;
 		case SP_MAXHP:
-			WFIFOL(fd,4) = status->max_hp;
+			p.value = static_cast<decltype(p.value)>(status->max_hp);
 			break;
 		case SP_SP:
-			WFIFOL(fd,4) = status->sp;
+			p.value = static_cast<decltype(p.value)>(status->sp);
 			break;
 		case SP_MAXSP:
-			WFIFOL(fd,4) = status->max_sp;
+			p.value = static_cast<decltype(p.value)>(status->max_sp);
 			break;
 	}
-	WFIFOSET(fd,8);
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
 }
 
 void clif_elemental_info(map_session_data *sd) {
@@ -19714,6 +19715,12 @@ static void clif_loadConfirm( map_session_data *sd ){
 /// 0447
 void clif_parse_blocking_playcancel( int fd, map_session_data *sd ){
 	clif_loadConfirm( sd );
+	
+	int32 mf = map_getmapflag(sd->bl.m, MF_SPECIALPOPUP);
+
+	if (mf > 0) {
+		clif_specialpopup(*sd, mf);
+	}
 }
 
 /// req world info (CZ_CLIENT_VERSION)
@@ -25118,6 +25125,20 @@ void clif_set_npc_window_pos_percent(map_session_data& sd, int x, int y)
 
 	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 #endif  // PACKETVER_MAIN_NUM >= 20220504
+}
+
+/// Displays a special popup.
+/// Works only if player moved from one map to another.
+/// 0bbe <popup id>.L (ZC_SPECIALPOPUP)
+void clif_specialpopup(map_session_data& sd, int32 id ){
+#if PACKETVER >= 20221005
+	PACKET_ZC_SPECIALPOPUP p = {};
+
+	p.PacketType = HEADER_ZC_SPECIALPOPUP;
+	p.ppId = id;
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF);
+#endif
 }
 
 /*==========================================

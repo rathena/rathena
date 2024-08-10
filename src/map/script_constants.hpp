@@ -538,6 +538,7 @@
 	export_constant(MF_NOBUYINGSTORE);
 	export_constant(MF_NODYNAMICNPC);
 	export_constant(MF_NOBANK);
+	export_constant(MF_SPECIALPOPUP);
 	export_constant(MF_NOLOOTNORMALMOB);
 	export_constant(MF_NO_NPC_SELFDESTRUCTION_ON_ALL);
 
@@ -11300,6 +11301,8 @@
 	export_constant(SCF_REMOVEONUNEQUIPARMOR);
 	export_constant(SCF_REMOVEONHERMODE);
 	export_constant(SCF_REQUIRENOWEAPON);
+	export_constant(SCF_REMOVEFROMHOMONWARP);
+	export_constant(SCF_REMOVEFROMHOMONMAPWARP);
 
 	/* enchantgrades */
 	export_constant(ENCHANTGRADE_NONE);

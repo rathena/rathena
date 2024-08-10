@@ -1544,7 +1544,6 @@
 	//packet(0x081B,4);
 	//packet(0x081C,6);
 	packet(0x081d,22);
-	packet(0x081e,8);
 #endif
 
 // 2010-03-23aRagexeRE

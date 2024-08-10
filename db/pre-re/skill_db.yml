@@ -3661,16 +3661,26 @@ Body:
     CastCancel: true
     CastTime:
       - Level: 1
+        Time: 700
+      - Level: 2
+        Time: 1400
+      - Level: 3
+        Time: 2100
+      - Level: 4
+        Time: 2800
+      - Level: 5
+        Time: 3500
+    AfterCastActDelay:
+      - Level: 1
         Time: 1000
       - Level: 2
-        Time: 2000
+        Time: 1200
       - Level: 3
-        Time: 3000
+        Time: 1400
       - Level: 4
-        Time: 4000
+        Time: 1600
       - Level: 5
-        Time: 5000
-    AfterCastActDelay: 700
+        Time: 1800
     Requires:
       SpCost:
         - Level: 1
@@ -3722,7 +3732,7 @@ Body:
         Time: 4000
       - Level: 5
         Time: 5000
-    AfterCastActDelay: 700
+    AfterCastActDelay: 1000
     Duration1: 100
     Requires:
       SpCost:
@@ -30726,10 +30736,8 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-    Range: 9
-    Hit: Single
-    HitCount: 1
     AfterCastActDelay: 2000
+    AfterCastWalkDelay: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -30752,11 +30760,8 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-      Splash: true
-    Hit: Single
-    HitCount: 1
-    SplashArea: -1
     AfterCastActDelay: 35000
+    AfterCastWalkDelay: 1000
     Duration1:
       - Level: 1
         Time: 40000
@@ -30785,7 +30790,6 @@ Body:
     Name: HLIF_BRAIN
     Description: Brain Surgery
     MaxLevel: 5
-    SplashArea: 1
   - Id: 8004
     Name: HLIF_CHANGE
     Description: Change
@@ -30793,7 +30797,14 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-    Hit: Single
+    AfterCastActDelay:
+      - Level: 1
+        Time: 600000
+      - Level: 2
+        Time: 900000
+      - Level: 3
+        Time: 1200000
+    AfterCastWalkDelay: 1000
     Duration1:
       - Level: 1
         Time: 60000
@@ -30801,13 +30812,6 @@ Body:
         Time: 180000
       - Level: 3
         Time: 300000
-    Duration2:
-      - Level: 1
-        Time: 600000
-      - Level: 2
-        Time: 900000
-      - Level: 3
-        Time: 1200000
     Requires:
       SpCost: 100
     Status: Change
@@ -30819,7 +30823,8 @@ Body:
     DamageFlags:
       NoDamage: true
     Hit: Single
-    Duration2: 1000
+    AfterCastActDelay: 1000
+    AfterCastWalkDelay: 1000
     Requires:
       SpCost: 10
   - Id: 8006
@@ -30831,6 +30836,7 @@ Body:
       NoDamage: true
     Hit: Single
     AfterCastActDelay: 30000
+    AfterCastWalkDelay: 1000
     Duration1:
       - Level: 1
         Time: 40000
@@ -30869,6 +30875,14 @@ Body:
     DamageFlags:
       NoDamage: true
     Hit: Single
+    AfterCastActDelay:
+      - Level: 1
+        Time: 300000
+      - Level: 2
+        Time: 600000
+      - Level: 3
+        Time: 900000
+    AfterCastWalkDelay: 1000
     Duration1:
       - Level: 1
         Time: 60000
@@ -30876,13 +30890,6 @@ Body:
         Time: 180000
       - Level: 3
         Time: 300000
-    Duration2:
-      - Level: 1
-        Time: 300000
-      - Level: 2
-        Time: 600000
-      - Level: 3
-        Time: 900000
     Requires:
       SpCost: 120
     Status: Bloodlust
@@ -30905,7 +30912,6 @@ Body:
         Count: -2
       - Level: 5
         Count: -3
-    AfterCastWalkDelay: 2000
     Requires:
       SpCost:
         - Level: 1
@@ -30926,6 +30932,18 @@ Body:
     DamageFlags:
       NoDamage: true
     Hit: Single
+    AfterCastActDelay:
+      - Level: 1
+        Time: 60000
+      - Level: 2
+        Time: 70000
+      - Level: 3
+        Time: 80000
+      - Level: 4
+        Time: 90000
+      - Level: 5
+        Time: 120000
+    AfterCastWalkDelay: 1000
     Duration1:
       - Level: 1
         Time: 60000
@@ -30937,17 +30955,6 @@ Body:
         Time: 45000
       - Level: 5
         Time: 40000
-    Duration2:
-      - Level: 1
-        Time: 60000
-      - Level: 2
-        Time: 70000
-      - Level: 3
-        Time: 80000
-      - Level: 4
-        Time: 90000
-      - Level: 5
-        Time: 120000
     Requires:
       SpCost:
         - Level: 1
@@ -30971,6 +30978,18 @@ Body:
       NoDamage: true
     Hit: Single
     CastCancel: true
+    AfterCastActDelay:
+      - Level: 1
+        Time: 60000
+      - Level: 2
+        Time: 70000
+      - Level: 3
+        Time: 80000
+      - Level: 4
+        Time: 90000
+      - Level: 5
+        Time: 120000
+    AfterCastWalkDelay: 1000
     Duration1:
       - Level: 1
         Time: 60000
@@ -30982,17 +31001,6 @@ Body:
         Time: 45000
       - Level: 5
         Time: 40000
-    Duration2:
-      - Level: 1
-        Time: 60000
-      - Level: 2
-        Time: 70000
-      - Level: 3
-        Time: 80000
-      - Level: 4
-        Time: 90000
-      - Level: 5
-        Time: 120000
     Requires:
       SpCost:
         - Level: 1
@@ -31015,7 +31023,6 @@ Body:
     Range: 15
     Hit: Single
     HitCount: 1
-    AfterCastActDelay: 1000
     Requires:
       SpCost: 1
   - Id: 8013
@@ -31037,17 +31044,6 @@ Body:
         Count: 4
       - Level: 5
         Count: 5
-    AfterCastActDelay:
-      - Level: 1
-        Time: 2000
-      - Level: 2
-        Time: 2200
-      - Level: 3
-        Time: 2400
-      - Level: 4
-        Time: 2600
-      - Level: 5
-        Time: 2800
     Requires:
       SpCost:
         - Level: 1
@@ -31068,8 +31064,7 @@ Body:
     DamageFlags:
       NoDamage: true
     Hit: Single
-    AfterCastActDelay: 3000
-    AfterCastWalkDelay: 3000
+    AfterCastWalkDelay: 1500
     Requires:
       SpCost: 40
   - Id: 8015
@@ -31093,7 +31088,6 @@ Body:
     HitCount: 1
     Element: Weapon
     SplashArea: 4
-    AfterCastWalkDelay: 1000
     Requires:
       SpCost: 1
   - Id: 8018

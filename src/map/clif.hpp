@@ -1299,7 +1299,7 @@ void clif_autoshadowspell_list( map_session_data& sd );
 
 int clif_skill_itemlistwindow( map_session_data *sd, uint16 skill_id, uint16 skill_lv );
 void clif_elemental_info(map_session_data *sd);
-void clif_elemental_updatestatus(map_session_data *sd, int type);
+void clif_elemental_updatestatus(map_session_data& sd, _sp type);
 
 void clif_spiritcharm( map_session_data& sd );
 
@@ -1455,5 +1455,7 @@ void clif_set_npc_window_pos(map_session_data& sd, int x, int y);
 void clif_set_npc_window_pos_percent(map_session_data& sd, int x, int y);
 
 void clif_noask_sub( map_session_data& sd, map_session_data& tsd, int type );
+
+void clif_specialpopup(map_session_data& sd, int32 id);
 
 #endif /* CLIF_HPP */
