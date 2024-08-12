@@ -9329,6 +9329,10 @@ Body:
         Wis: 1
       - Level: 55
         Spl: 1
+      - Level: 57
+        Wis: 1
+      - Level: 59
+        Spl: 1
   - Jobs:
       Cardinal: true
     MaxWeight: 30000
@@ -9616,6 +9620,10 @@ Body:
       - Level: 53
         Sta: 1
       - Level: 55
+        Pow: 1
+      - Level: 57
+        Crt: 1
+      - Level: 59
         Pow: 1
   - Jobs:
       Imperial_Guard: true
