@@ -9183,7 +9183,7 @@ Body:
         Sta: 1
         Crt: 1
       - Level: 55
-        Crt: 
+        Crt: 1
       - Level: 57
         Con: 1
       - Level: 59
