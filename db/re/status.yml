@@ -4130,7 +4130,7 @@ Body:
       Unlimitedhummingvoice: true
       Sircleofnature: true
   - Status: Deepsleep
-    Icon: EFST_HANDICAPSTATE_DEEP_SLEEP
+    Icon: EFST_DEEP_SLEEP
     DurationLookup: WM_LULLABY_DEEPSLEEP
     States:
       NoCast: true
@@ -7450,7 +7450,7 @@ Body:
       NoClearance: true
       NoClearbuff: true
   - Status: Madogear
-    Icon: EFST_MADOGEAR
+    Icon: EFST_MADOGEAR_TYPE
     CalcFlags:
       Speed: true
     Flags:
