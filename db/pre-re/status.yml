@@ -2496,6 +2496,9 @@ Body:
     CalcFlags:
       Batk: true
       Watk: true
+    Flags:
+      NoSave: true
+      RemoveFromHomOnWarp: true
   - Status: Fleet
     DurationLookup: HFLI_FLEET
     CalcFlags:
@@ -2510,6 +2513,10 @@ Body:
     DurationLookup: HAMI_DEFENCE
     CalcFlags:
       Def: true
+      Vit: true
+    Flags:
+      NoSave: true
+      RemoveFromHomOnWarp: true
   - Status: Incaspdrate
     CalcFlags:
       Aspd: true
