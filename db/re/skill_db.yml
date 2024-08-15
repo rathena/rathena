@@ -42502,10 +42502,10 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-    Range: 9
-    Hit: Single
-    HitCount: 1
-    Cooldown: 2000
+    Flags:
+      IgnoreGtb: true
+    AfterCastWalkDelay: 1000
+    Cooldown: 20000
     Requires:
       SpCost:
         - Level: 1
@@ -42528,11 +42528,7 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-      Splash: true
-    Hit: Single
-    HitCount: 1
-    SplashArea: -1
-    Cooldown: 35000
+    AfterCastWalkDelay: 1000
     Duration1:
       - Level: 1
         Time: 40000
@@ -42606,7 +42602,7 @@ Body:
     DamageFlags:
       NoDamage: true
     Hit: Single
-    Cooldown: 30000
+    AfterCastWalkDelay: 1000
     Duration1:
       - Level: 1
         Time: 40000
@@ -42844,8 +42840,8 @@ Body:
     DamageFlags:
       NoDamage: true
     Hit: Single
+    AfterCastWalkDelay: 1500
     Cooldown: 3000
-    AfterCastWalkDelay: 3000
     Requires:
       SpCost: 40
   - Id: 8015
@@ -42869,7 +42865,8 @@ Body:
     HitCount: 1
     Element: Weapon
     SplashArea: 4
-    Cooldown: 1000
+    AfterCastActDelay: 5000
+    CoolDown: 1000
     Requires:
       SpCost: 1
   - Id: 8018

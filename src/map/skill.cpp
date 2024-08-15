@@ -7272,16 +7272,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	//Check for undead skills that convert a no-damage skill into a damage one. [Skotlex]
 	switch (skill_id) {
-		case HLIF_HEAL:	//[orn]
-			if (bl->type != BL_HOM) {
-				if (sd) clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0) ;
-				break ;
-			}
-#ifdef RENEWAL
-			if (hd != nullptr)
-				skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
-#endif
-			[[fallthrough]];
  		case AL_HEAL:
 		case ALL_RESURRECTION:
 		case PR_ASPERSIO:
@@ -12357,23 +12347,18 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		break;
 	case MH_GOLDENE_TONE:
-	case MH_TEMPERING:
-		if (hd != nullptr){
-			if (hd->master != nullptr)
-			{
-				clif_skill_nodamage(src, &hd->master->bl, skill_id, skill_lv, 1);
-				sc_start(src, &hd->master->bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-			}
-			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
+	case MH_TEMPERING: {
+		block_list* master_bl = battle_get_master(src);
+		
+		if (master_bl != nullptr){
+			clif_skill_nodamage(src,master_bl,skill_id,skill_lv,1);
+			sc_start(src, master_bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		}
-		break;
+		} break;
 	case MH_PAIN_KILLER:
-		if (hd != nullptr){
-			if (hd->master != nullptr)
-				sc_start(src, &hd->master->bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-
-			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
-		}
+		bl = battle_get_master(src);
+		if (bl != nullptr)
+			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
 	case MH_MAGMA_FLOW:
 	   sc_start(src,bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
@@ -22916,8 +22901,8 @@ int skill_blockhomun_start(struct homun_data *hd, uint16 skill_id, int tick)	//[
 
 	hd->blockskill.push_back(skill_id);
 
-	if (hd->master != nullptr)
-		skill_blockpc_start(hd->master, skill_id, tick);
+	if (battle_config.display_status_timers)
+		clif_skill_cooldown(*hd->master, skill_id, tick);
 
 	return add_timer(gettick() + tick, skill_blockhomun_end, hd->bl.id, skill_id);
 }
