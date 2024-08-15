@@ -3,7 +3,7 @@
 
 #include "homunculus.hpp"
 
-#include <stdlib.h>
+#include <cstdlib>
 
 #include <common/cbasetypes.hpp>
 #include <common/malloc.hpp>
@@ -130,7 +130,7 @@ struct view_data* hom_get_viewdata(int class_)
 {	//Returns the viewdata for homunculus
 	if (homdb_checkid(class_))
 		return &hom_viewdb[class_-HM_CLASS_BASE];
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -289,10 +289,11 @@ int hom_vaporize(map_session_data *sd, int flag)
 	//Delete timers when vaporized.
 	hom_hungry_timer_delete(hd);
 	hd->homunculus.vaporize = flag ? flag : HOM_ST_REST;
-	if (battle_config.hom_setting&HOMSET_RESET_REUSESKILL_VAPORIZED) {
+	if (battle_config.hom_delay_reset_vaporize) {
 		hd->blockskill.clear();
 		hd->blockskill.shrink_to_fit();
 	}
+	status_change_clear(&hd->bl, 1);
 	clif_hominfo(sd, sd->hd, 0);
 	hom_save(hd);
 
@@ -394,8 +395,7 @@ void hom_calc_skilltree(homun_data *hd) {
 
 	hom_calc_skilltree_sub(*hd, homun_current->skill_tree);
 
-	if (hd->master)
-		clif_homskillinfoblock(hd->master);
+	clif_homskillinfoblock( *hd );
 }
 
 /**
@@ -484,11 +484,14 @@ void hom_skillup(struct homun_data *hd, uint16 skill_id)
 		hd->homunculus.hskill[idx].lv++;
 		hd->homunculus.skillpts-- ;
 		status_calc_homunculus(hd, SCO_NONE);
+
+		clif_homskillup( *hd, skill_id );
+
 		if (hd->master) {
-			clif_homskillup(hd->master, skill_id);
 			clif_hominfo(hd->master,hd,0);
-			clif_homskillinfoblock(hd->master);
 		}
+
+		clif_homskillinfoblock( *hd );
 	}
 }
 
@@ -570,7 +573,7 @@ int hom_levelup(struct homun_data *hd)
 	// Needed to update skill list for mutated homunculus so unlocked skills will appear when the needed level is reached.
 	status_calc_homunculus(hd,SCO_NONE);
 	clif_hominfo(hd->master,hd,0);
-	clif_homskillinfoblock(hd->master);
+	clif_homskillinfoblock( *hd );
 
 	if ( hd->master && battle_config.homunculus_show_growth ) {
 		char output[256] ;
@@ -840,7 +843,7 @@ void hom_save(struct homun_data *hd)
 void hom_menu(map_session_data *sd, int type)
 {
 	nullpo_retv(sd);
-	if (sd->hd == NULL)
+	if (sd->hd == nullptr)
 		return;
 
 	switch(type) {
@@ -876,7 +879,7 @@ int hom_food(map_session_data *sd, struct homun_data *hd)
 	foodID = hd->homunculusDB->foodID;
 	i = pc_search_inventory(sd,foodID);
 	if (i < 0) {
-		clif_hom_food(sd,foodID,0);
+		clif_hom_food( *sd, foodID, 0 );
 		return 1;
 	}
 	pc_delitem(sd,i,1,0,0,LOG_TYPE_CONSUME);
@@ -905,9 +908,9 @@ int hom_food(map_session_data *sd, struct homun_data *hd)
 	log_feeding(sd, LOG_FEED_HOMUNCULUS, foodID);
 
 	clif_emotion(&hd->bl,emotion);
-	clif_send_homdata(sd,SP_HUNGRY,hd->homunculus.hunger);
-	clif_send_homdata(sd,SP_INTIMATE,hd->homunculus.intimacy / 100);
-	clif_hom_food(sd,foodID,1);
+	clif_send_homdata( *hd, SP_HUNGRY );
+	clif_send_homdata( *hd, SP_INTIMATE );
+	clif_hom_food( *sd, foodID, 1 );
 
 	// Too much food :/
 	if(hd->homunculus.intimacy == 0)
@@ -955,10 +958,10 @@ static TIMER_FUNC(hom_hungry){
 		// Delete the homunculus if intimacy <= 100
 		if (!hom_decrease_intimacy(hd, 100))
 			return hom_delete(hd, ET_HUK);
-		clif_send_homdata(sd,SP_INTIMATE,hd->homunculus.intimacy / 100);
+		clif_send_homdata( *hd, SP_INTIMATE );
 	}
 
-	clif_send_homdata(sd,SP_HUNGRY,hd->homunculus.hunger);
+	clif_send_homdata( *hd, SP_HUNGRY );
 
 	int hunger_delay = (battle_config.homunculus_starving_rate > 0 && hd->homunculus.hunger <= battle_config.homunculus_starving_rate) ? battle_config.homunculus_starving_delay : hd->homunculusDB->hungryDelay; // Every 20 seconds if hunger <= 10
 
@@ -1124,7 +1127,7 @@ bool hom_call(map_session_data *sd)
 
 	hom_init_timers(hd);
 	hd->homunculus.vaporize = HOM_ST_ACTIVE;
-	if (hd->bl.prev == NULL)
+	if (hd->bl.prev == nullptr)
 	{	//Spawn him
 		hd->bl.x = sd->bl.x;
 		hd->bl.y = sd->bl.y;
@@ -1132,12 +1135,11 @@ bool hom_call(map_session_data *sd)
 		if(map_addblock(&hd->bl))
 			return false;
 		clif_spawn(&hd->bl);
-		clif_send_homdata(sd,SP_ACK,0);
+		clif_send_homdata( *hd, SP_ACK );
 		clif_hominfo(sd,hd,1);
 		clif_hominfo(sd,hd,0); // send this x2. dunno why, but kRO does that [blackhole89]
-		clif_homskillinfoblock(sd);
-		if (battle_config.hom_setting&HOMSET_COPY_SPEED)
-			status_calc_bl(&hd->bl, { SCB_SPEED });
+		clif_homskillinfoblock( *hd );
+		status_calc_bl(&hd->bl, { SCB_SPEED });
 		hom_save(hd);
 	} else
 		//Warp him to master.
@@ -1191,15 +1193,15 @@ int hom_recv_data(uint32 account_id, struct s_homunculus *sh, int flag)
 	if (created)
 		status_percent_heal(&hd->bl, 100, 100);
 
-	if(hd && hd->homunculus.hp && !hd->homunculus.vaporize && hd->bl.prev == NULL && sd->bl.prev != NULL)
+	if(hd && hd->homunculus.hp && !hd->homunculus.vaporize && hd->bl.prev == nullptr && sd->bl.prev != nullptr)
 	{
 		if(map_addblock(&hd->bl))
 			return 0;
 		clif_spawn(&hd->bl);
-		clif_send_homdata(sd,SP_ACK,0);
+		clif_send_homdata( *hd, SP_ACK );
 		clif_hominfo(sd,hd,1);
 		clif_hominfo(sd,hd,0); // send this x2. dunno why, but kRO does that [blackhole89]
-		clif_homskillinfoblock(sd);
+		clif_homskillinfoblock( *hd );
 		hom_init_timers(hd);
 
 #ifdef RENEWAL
@@ -1314,12 +1316,14 @@ void hom_revive(struct homun_data *hd, unsigned int hp, unsigned int sp)
 	hd->homunculus.hp = hd->battle_status.hp;
 	if (!sd)
 		return;
-	clif_send_homdata(sd,SP_ACK,0);
+	clif_send_homdata( *hd, SP_ACK );
 	clif_hominfo(sd,hd,1);
 	clif_hominfo(sd,hd,0);
-	clif_homskillinfoblock(sd);
-	if (hd->homunculus.class_ == 6052) //eleanor
+	clif_homskillinfoblock( *hd );
+
+	if( hd->homunculus.class_ == MER_ELEANOR ){
 		sc_start(&hd->bl,&hd->bl, SC_STYLE_CHANGE, 100, MH_MD_FIGHTING, INFINITE_TICK);
+	}
 }
 
 /**
@@ -1394,7 +1398,7 @@ int hom_shuffle(struct homun_data *hd)
 	hd->homunculus.exp = exp;
 	memcpy(&hd->homunculus.hskill, &b_skill, sizeof(b_skill));
 	hd->homunculus.skillpts = skillpts;
-	clif_homskillinfoblock(sd);
+	clif_homskillinfoblock( *hd );
 	status_calc_homunculus(hd, SCO_NONE);
 	status_percent_heal(&hd->bl, 100, 100);
 	clif_specialeffect(&hd->bl,EF_HO_UP,AREA);

@@ -4,6 +4,8 @@
 #ifndef SOCKET_HPP
 #define SOCKET_HPP
 
+#include <ctime>
+
 #include <config/core.hpp>
 
 #ifdef WIN32
@@ -14,7 +16,6 @@
 	#include <sys/socket.h>
 	#include <netinet/in.h>
 #endif
-#include <time.h>
 
 #include "cbasetypes.hpp"
 #include "malloc.hpp"

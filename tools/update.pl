@@ -51,7 +51,7 @@ sub GetArgs {
 	'target=s'	=> \$sTarget,	 #Target (which setup to run)
 	'help!' => \$sHelp,
 	) or $sHelp=1; #display help if invalid option
-	
+
 	if( $sHelp ) {
 	print "Incorrect option specified. Available options:\n"
 	    ."\t --target => target (specify which check to ignore [$sValidTarget])\n";
@@ -59,7 +59,7 @@ sub GetArgs {
 	}
 	if(!$sTarget || !($sTarget =~ /$sValidTarget/i)){
 		print "Incorrect target specified. Available targets:\n"
-			."\t --target => target (specify which check to ignore [(default)$sValidTarget])\n 
+			."\t --target => target (specify which check to ignore [(default)$sValidTarget])\n
 			(NOTE: restart is compiling dependent.)\n";
 		exit;
     }
@@ -68,7 +68,7 @@ sub GetArgs {
 sub Main {
 	my $sCurdir = getcwd;
 	chdir "..";
-	
+
 	UpdateSQL($sCurdir,1,\%hFileState);
 	if($sTarget =~ "All|Upd") { GitUpdate($sCurdir); }
 	if($sTarget =~ "All|DB") { UpdateSQL($sCurdir,0,\%hFileState); }
@@ -77,8 +77,8 @@ sub Main {
 
 sub GetSqlFileInDir { my($sDir) = @_;
 	opendir (DIR, $sDir) or die $!;
-	my @aFiles 
-		= grep { 
+	my @aFiles
+		= grep {
 		/^(?!\.)/      # not begins with a period
 		&& /\.sql$/      # finish by .sql
 		&& -f "$sDir/$_"   # and is a file
@@ -98,7 +98,7 @@ sub UpdateSQL  { my($sBaseDir,$sInit,$rhFileState) = @_;
 		print "Reading file status...\n";
 		$rhFileState = YAML::XS::LoadFile("sql-files/".STATE_FILE);
 	}
-	
+
 	if($sTarget =~ "All|MapDB") {
 			chdir "sql-files";
 			print "Getting Map SQL Db file...\n";
@@ -119,17 +119,17 @@ sub UpdateSQL  { my($sBaseDir,$sInit,$rhFileState) = @_;
 			}
 			chdir "..";
 	}
-	
+
 	chdir "sql-files/upgrades";
 	my $raFiles = GetSqlFileInDir("./");
-	
+
 	foreach my $sFile (@$raFiles){
 		#print "Cur file = $sFile \n";
 		if($sInit==1){
 			if(exists $$rhFileState{$sFile} && $$rhFileState{$sFile}{"status"} == ST_DONE ){
 				next;
 			}
-			
+
 			if( $sFile =~ /_opt_/){
 				$$rhFileState{$sFile}{"status"} = ST_SK;
 			} else {
@@ -144,42 +144,42 @@ sub UpdateSQL  { my($sBaseDir,$sInit,$rhFileState) = @_;
 		#		#if it's done or skipped don't do it, if it's old but updated do it
 				next if ( $sT eq ST_OLD or $sT eq ST_DONE or $sLastMode == (stat ($sFile))[9] );
 			}
-			
-			if( $sFile =~ /_log.sql$/) { 
+
+			if( $sFile =~ /_log.sql$/) {
 				print "Found log file '$sFile'.\n";
 				push(@aLogDBFiles,$sFile);
 			}
-			else { 
+			else {
 				print "Found char file '$sFile'.\n";
 				push(@aCharDBFiles,$sFile);
 			}
 			$$rhFileState{$sFile}{"status"} = "done"; #  the query will be applied so mark it so
-			
+
 		# This part is for distributed DB, not supported yet
 		# proposed nomenclature [lighta] : update_date_{opt_}(map|chr|acc|log).sql
 		# (e.g : update_20141218_opt_map.sql or update_20141218_acc.sql
-		
-		#	if( $sFile =~ /_map.sql$/) { 
+
+		#	if( $sFile =~ /_map.sql$/) {
 		#		print "Found log file = $sFile \n";
 		#		push(@aMapDBFiles,$sFile);
-		#		
+		#
 		#	}
-		#	elsif( $sFile =~ /_acc.sql$/) { 
+		#	elsif( $sFile =~ /_acc.sql$/) {
 		#		print "Found log file = $sFile \n";
 		#		push(@aLoginDBFiles,$sFile);
-		#		
+		#
 		#	}
-		#	elsif( $sFile =~ /_chr.sql$/) { 
+		#	elsif( $sFile =~ /_chr.sql$/) {
 		#		print "Found log file = $sFile \n";
 		#		push(@aCharDBFiles,$sFile);
-		#		
+		#
 		#	}
 		}
 	}
 	if($sInit==0){ #apply update
 		return;
-		if( scalar(@aCharDBFiles)==0 and  scalar(@aLogDBFiles)==0 
-			and  scalar(@aMapDBFiles)==0 and  scalar(@aLoginDBFiles)==0
+		if( scalar(@aCharDBFiles)==0 and scalar(@aLogDBFiles)==0 
+			and  scalar(@aMapDBFiles)==0 and scalar(@aLoginDBFiles)==0
 		){
 			print "No SQL update to perform.\n";
 		}
@@ -194,7 +194,7 @@ sub UpdateSQL  { my($sBaseDir,$sInit,$rhFileState) = @_;
 			else {
 				$rhUserConf=\%hDefConf; #we assume it's set correctly
 			}
-			
+
 			CheckAndLoadSQL(\@aMapDBFiles,$rhUserConf,$$rhUserConf{SQL_MAP_DB});
 			CheckAndLoadSQL(\@aCharDBFiles,$rhUserConf,$$rhUserConf{SQL_MAIN_DB});
 			#CheckAndLoadSQL(\@aLoginDBFiles,$rhUserConf,$$rhUserConf{SQL_ACC_DB});
@@ -228,7 +228,7 @@ sub GitUpdate { my($sBaseDir) = @_;
 	my $sGit = Git::Repository->new(
 		work_tree => "$sBaseDir/..",
 	);
-	
+
 	my $sIsOrigin = CheckRemote($sGit);
 	if($sIsOrigin==0){
 		print "Saving current working tree...\n";
@@ -252,10 +252,10 @@ sub GitUpdate { my($sBaseDir) = @_;
 sub CheckRemote { my($sGit) = @_;
 	my $sRaOrigin=0;
 	my $sRaUpstream=0;
-	
+
 	print "Checking remotes\n";
-	my @aRemotes = $sGit->run("remote" => "-v");	
-	
+	my @aRemotes = $sGit->run("remote" => "-v");
+
 	#print "My Remotes are\n";
 	foreach my $sCurRem (@aRemotes){
 		my @aCol = split(' ',$sCurRem);

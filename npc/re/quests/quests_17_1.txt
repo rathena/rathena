@@ -3955,7 +3955,7 @@ sp_rudus,184,360,5	script	Elena Volkova#171_rudus	4_F_ELENA,{
 		setquest 7859;
 		getitem 25723,15;
 		getexp 800000,800000;
-		close;
+		close3;
 	}
 	if (isbegin_quest(7859) == 1) {
 		cutin "162elena_01",2;
@@ -4359,6 +4359,7 @@ sp_rudus,130,200,4	script	Morning#171_rudus	4_EP17_MORNING,{
 	unittalk getcharid(3),strcharinfo(0) + " : This kid seems to be Morning.",bc_self;
 	switch (prompt("Find a meal for Morning.:Chat with Morning.")) {
 	case 255:
+		cutin "",255;
 		setpcblock PCBLOCK_ALL,false;
 		end;
 	case 1:
@@ -4382,6 +4383,7 @@ sp_rudus,130,200,4	script	Morning#171_rudus	4_EP17_MORNING,{
 		sleep2 2000;
 		switch (prompt("I'll bring it.:Something urgent happened.")) {
 		case 255:
+			cutin "",255;
 			setpcblock PCBLOCK_ALL,false;
 			end;
 		case 1:

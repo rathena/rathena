@@ -20,11 +20,30 @@ Title: Quest title.
 
 TimeLimit: Amount of time before the quest expires.
 
-Use a number followed by "d" for day(s), "h" for hour(s), "mn" for minute(s), and "s" for second(s).
 Specifying with "+" will mark how long until the quest expires.
-Specifying without "+" will mark the exact time the quest expires. Format: "d" (optional), [0-23]"h" (required), [0-59]"mn" (optional), [0-59]"s" (optional).
+Use a number followed by "d" for day(s), "h" for hour(s), "mn" for minute(s), and "s" for second(s).
+Format: "d" (optional), [0-23]"h" (optional), [0-59]"mn" (optional), [0-59]"s" (optional).
 
-Please note the number before "d" only shifts the exact timer to the given day(s).
+Example:
+  - Id: 2069
+    Title: Tierra Gorge Battle
+    # The quest expires 5 minutes after being taken.
+    TimeLimit: +5mn
+
+Specifying without "+" will mark the exact time the quest expires.
+Use a number followed by "d" for day(s) to shift the exact timer to the given day(s) or use the days of the week to set the expiration day,
+and "h" for hour(s), "mn" for minute(s), and "s" for second(s).
+Format: [days of the week] or "d" (optionals), [0-23]"h" (optional), [0-59]"mn" (optional), [0-59]"s" (optional).
+
+Examples:
+  - Id: 9419
+    Title: Attack Sky Fortress Invading Prontera
+    # The quest expires 3 days after being taken at 4am.
+    TimeLimit: 3d 4h
+  - Id: 5965
+    Title: "[Standby] Devil's Special"
+    # The quest expires Monday at 4am.
+    TimeLimit: Monday 4h
 
 ---------------------------------------
 

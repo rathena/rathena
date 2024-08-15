@@ -4,19 +4,29 @@
 #ifndef PACKETS_HPP
 #define PACKETS_HPP
 
+#include <functional>
+#include <unordered_map>
+
 #include <common/cbasetypes.hpp>
 #include <common/mmo.hpp>
+#include <common/showmsg.hpp>
+#include <common/socket.hpp>
+#include <common/utilities.hpp>
 
 #pragma warning( push )
 #pragma warning( disable : 4200 )
 
 #define DEFINE_PACKET_HEADER( name, id ) const int16 HEADER_##name = id
-#define DEFINE_PACKET_ID( name, id ) DEFINE_PACKET_HEADER( name, id )
 
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( push, 1 )
 #endif
+
+struct PACKET{
+	int16 packetType;
+	int16 packetLength;
+} __attribute__((packed));
 
 struct PACKET_CA_LOGIN{
 	int16 packetType;
@@ -208,5 +218,89 @@ DEFINE_PACKET_HEADER( TC_RESULT, 0xae3 );
 #endif
 
 #pragma warning( pop )
+
+template <typename sessiontype> class PacketDatabase{
+private:
+	struct s_packet_info{
+		bool fixed;
+		int16 size;
+		std::function<bool ( int fd, sessiontype& sd )> func;
+	};
+
+	std::unordered_map<int16, s_packet_info> infos;
+
+public:
+	void add( int16 packetType, bool fixed, int16 size, std::function<bool ( int fd, sessiontype& sd )> func ){
+		if( fixed ){
+			if( size < 2 ){
+				ShowError( "Definition for packet 0x%04x is invalid. Minimum size for a fixed length packet is 2 bytes.\n", packetType );
+				return;
+			}
+		}else{
+			if( size < 4 ){
+				ShowError( "Definition for packet 0x%04x is invalid. Minimum size for a dynamic length packet is 2 bytes.\n", packetType );
+				return;
+			}
+		}
+
+		s_packet_info& info = infos[packetType];
+
+		info.fixed = fixed;
+		info.size = size;
+		info.func = func;
+	}
+
+	bool handle( int fd, sessiontype& sd ){
+		int16 remaining =  static_cast<int16>( RFIFOREST( fd ) );
+
+		if( remaining < 2 ){
+			ShowError( "Did not receive enough bytes to process a packet\n" );
+			set_eof( fd );
+			return false;
+		}
+
+		PACKET* p = (PACKET*)RFIFOP( fd, 0 );
+
+		s_packet_info* info = rathena::util::umap_find( this->infos, p->packetType );
+
+		if( info == nullptr ){
+			ShowError( "Received unknown packet 0x%04x\n", p->packetType );
+			set_eof( fd );
+			return false;
+		}
+
+		if( info->fixed ){
+			if( remaining < info->size ){
+				ShowError( "Invalid size %hd for packet 0x%04x with fixed size of %hd\n", remaining, p->packetType, info->size );
+				set_eof( fd );
+				return false;
+			}
+
+			bool ret = info->func( fd, sd );
+
+			RFIFOSKIP( fd, info->size );
+
+			return ret;
+		}else{
+			if( remaining < info->size ){
+				ShowError( "Invalid size %hd for packet 0x%04x with dynamic minimum size of %hd\n", remaining, p->packetType, info->size );
+				set_eof( fd );
+				return false;
+			}
+
+			if( remaining < p->packetLength ){
+				ShowError( "Invalid size %hd for packet 0x%04x with dynamic size of %hd\n", remaining, p->packetType, p->packetLength );
+				set_eof( fd );
+				return false;
+			}
+
+			bool ret = info->func( fd, sd );
+
+			RFIFOSKIP( fd, p->packetLength );
+
+			return ret;
+		}
+	}
+};
 
 #endif /* PACKETS_HPP */

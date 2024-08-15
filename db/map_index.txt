@@ -1240,6 +1240,27 @@ t_garden
 2@vrpop
 3@vrpop
 bl_depth2
+1@vrsn
+1@ep21a
+1@ep21b
+1@mdtem
+1@twbs2
+1@wtgs
+2@mdtem
+jalbe_in
+jor_albe
+jor_base
+jor_crk
+jor_crk_p
+jor_mbase
+jor_raise1
+jor_raise2
+jor_tmple1
+jor_tmple2
+luna_sf1
+luna_sf2
+mbase_in
+prt_mk
 
 //======================================================================================
 // - Other/Extra maps -

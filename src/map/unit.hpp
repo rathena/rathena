@@ -27,6 +27,7 @@ struct unit_data {
 	struct skill_unit_group_tickset skillunittick[MAX_SKILLUNITGROUPTICKSET];
 	short attacktarget_lv;
 	short to_x, to_y;
+	uint8 sx, sy; // Subtile position (0-15, with 8 being center of cell)
 	short skillx, skilly;
 	uint16 skill_id, skill_lv;
 	int skilltarget;
@@ -44,7 +45,6 @@ struct unit_data {
 	t_tick canmove_tick;
 	bool immune_attack; ///< Whether the unit is immune to attacks
 	uint8 dir;
-	unsigned char walk_count;
 	unsigned char target_count;
 	struct s_udState {
 		unsigned change_walk_target : 1 ;
@@ -53,7 +53,6 @@ struct unit_data {
 		unsigned step_attack : 1;
 		unsigned walk_easy : 1 ;
 		unsigned running : 1;
-		unsigned speed_changed : 1;
 		unsigned walk_script : 1;
 		unsigned blockedmove : 1;
 		unsigned blockedskill : 1;
@@ -116,13 +115,15 @@ int unit_calc_pos(struct block_list *bl, int tx, int ty, uint8 dir);
 TIMER_FUNC(unit_delay_walktoxy_timer);
 TIMER_FUNC(unit_delay_walktobl_timer);
 
+void unit_stop_walking_soon(struct block_list& bl);
 // Causes the target object to stop moving.
 int unit_stop_walking(struct block_list *bl,int type);
 bool unit_can_move(struct block_list *bl);
 int unit_is_walking(struct block_list *bl);
 int unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int type);
 
-int unit_escape(struct block_list *bl, struct block_list *target, short dist, uint8 flag = 0);
+t_tick unit_get_walkpath_time(struct block_list& bl);
+t_tick unit_escape(struct block_list *bl, struct block_list *target, short dist, uint8 flag = 0);
 
 // Instant unit changes
 bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool checkpath);

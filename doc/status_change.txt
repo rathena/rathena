@@ -1001,13 +1001,16 @@ SC_FLING	()
 	desc:
 	val1:
 
-SC_AVOID	()
-	desc:
-	val1:
+SC_AVOID	(EFST_HLIF_AVOID)
+	desc: Increase walkspeed for Players and Homunculus
+	val1: Skill Level
+	val2: Walkspeed increase (10 * val1 for Players, 40 * val1 for Homunculus)
 
-SC_CHANGE	()
-	desc:
-	val1:
+SC_CHANGE	(EFST_HLIF_CHANGE)
+	desc: Increase some Homunculus' statuses (VIT, INT); Uses MATK for damage calculation; Sets Homunculus' HP and SP to 10 on expiration; On Pre-Renewal, sets Homunculus' HP and SP to 100% on cast
+	val1: Skill Level
+	val2: VIT increase (20 * val1)
+	val3: INT increase (30 * val1)
 
 SC_BLOODLUST	()
 	desc:
@@ -2832,3 +2835,13 @@ SC_WEAPONBREAKER
 	desc: Bonus given when using NPC_WEAPONBRAKER skill
 	val1: Skill level
 	val2: val1 * 2 weapon break chance
+
+SC_POWERUP
+	desc: Increases ATKpercent and Hit.
+	val1: + ATKpercent
+	val2: +% Hit
+
+SC_AGIUP
+	desc: Increase Speed and Flee.
+	val1: +% Walkspeed
+	val2: +% Flee
