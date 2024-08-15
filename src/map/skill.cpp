@@ -10675,8 +10675,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case HAMI_CASTLE:	//[orn]
 		if (src != bl && rnd_chance(20 * skill_lv, 100)) {
-			int16 x = src->x, y = src->y;
+			// Get one of the monsters targeting the player and set the homunculus as its new target
+			block_list* tbl = battle_getenemy(bl, BL_MOB, AREA_SIZE);
+			if (tbl != nullptr) {
+				unit_data *ud = unit_bl2ud(tbl);
+				if (ud != nullptr)
+					unit_change_target(*ud, src->id);
+			}
 
+			int16 x = src->x, y = src->y;
 			// Move homunculus
 			if (unit_movepos(src, bl->x, bl->y, 0, 0)) {
 				// Show the animation on the homunculus only
