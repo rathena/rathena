@@ -5107,7 +5107,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	map_session_data *sd = nullptr;
 	struct status_data *tstatus;
 	status_change *sc, *tsc;
-	struct homun_data *hd;
+
 	if (skill_id > 0 && !skill_lv) return 0;
 
 	nullpo_retr(1, src);
@@ -5120,7 +5120,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		return 1;
 
 	sd = BL_CAST(BL_PC, src);
-	hd = BL_CAST(BL_HOM,src);
+
 	if (status_isdead(bl))
 		return 1;
 
@@ -5145,15 +5145,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	map_freeblock_lock();
 
 	switch(skill_id) {
-	case HFLI_MOON:	//[orn]
-	case HFLI_SBR44:	//[orn]
-	{
-#ifdef RENEWAL
-		if (hd != nullptr)		
-			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
-#endif
-	}
-	[[fallthrough]];
 	case MER_CRASH:
 	case SM_BASH:
 	case MS_BASH:
@@ -5237,6 +5228,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case NJ_SYURIKEN:
 	case NJ_KUNAI:
 	case ASC_BREAKER:
+	case HFLI_MOON:	//[orn]
+	case HFLI_SBR44:	//[orn]
 	case NPC_BLEEDING:
 	case NPC_BLEEDING2:
 	case NPC_CRITICALWOUND:
@@ -6212,10 +6205,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			case 2: sid=MG_LIGHTNINGBOLT; break;
 			case 3: sid=WZ_EARTHSPIKE; break;
 			}
-#ifdef RENEWAL
-			if (hd != nullptr)
-				skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
-#endif
 			skill_attack(BF_MAGIC,src,src,bl,sid,skill_lv,tick,flag|SD_LEVEL);
 		}
 		break;
@@ -6337,10 +6326,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case HVAN_EXPLOSION:
 		if (src != bl)
 			skill_attack(BF_MISC,src,src,bl,skill_id,skill_lv,tick,flag);
-#ifdef RENEWAL
-		if (hd != nullptr)
-			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
-#endif
 		break;
 
 	// Celest
@@ -8256,10 +8241,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case HAMI_DEFENCE:
 		sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)); // Master
 		clif_skill_nodamage(src,src,skill_id,skill_lv,sc_start(src,src,type,100,skill_lv,skill_get_time(skill_id,skill_lv))); // Homunc
-#ifdef RENEWAL
-		if (hd != nullptr)
-			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
-#endif
 		break;
 	case NJ_BUNSINJYUTSU:
 		status_change_end(bl, SC_BUNSINJYUTSU); // on official recasting cancels existing mirror image [helvetica]
@@ -10729,10 +10710,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			clif_skill_nodamage(src,bl,AL_HEAL,i,1);
 			clif_skill_nodamage(src,bl,skill_id,i,1);
 			status_heal(bl, i, 0, 0);
-#ifdef RENEWAL
-			if (hd != nullptr)
-				skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
-#endif
 		}
 		break;
 	// Homun single-target support skills [orn]
@@ -12374,8 +12351,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		break;
 	case MH_OVERED_BOOST:
-		if (hd != nullptr && hd->master != nullptr) {
-			sc_start(src, &hd->master->bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		if (hd != nullptr) {
+			if(hd->master != nullptr)
+				sc_start(src, &hd->master->bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		}
 		break;
