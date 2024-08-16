@@ -56,24 +56,43 @@ Body:
       ayothaya: true
       brasilis: true
       comodo: true
-      einbech: true
-      einbroch: true
-      evt_bomb: true
       geffen: true
       gonryun: true
       hugel: true
       izlude: true
       louyang: true
-      monk_in: true
       mid_camp: true
       morocc: true
       moscovia: true
+      new_1-1: true
+      new_1-2: true
+      new_1-3: true
+      new_1-4: true
+      new_2-1: true
+      new_2-2: true
+      new_2-3: true
+      new_2-4: true
+      new_3-1: true
+      new_3-2: true
+      new_3-3: true
+      new_3-4: true
+      new_4-1: true
+      new_4-2: true
+      new_4-3: true
+      new_4-4: true
+      new_5-1: true
+      new_5-2: true
+      new_5-3: true
+      new_5-4: true
       nameless_i: true
       payon: true
       prontera: true
       prt_monk: true
       rachel: true
       ra_temple: true
+      thief_1-1: true
+      thief_2-1: true
+      thief_3-1: true
       umbala: true
       veins: true
       x_prt: true
@@ -87,6 +106,7 @@ Body:
 
   - Id: Village_In
     Maps:
+      alb_ship: true
       airplane: true
       airplane_01: true
       airport: true
@@ -106,14 +126,15 @@ Body:
       cmd_in01: true
       cmd_in02: true
       ein_in01: true
+      einbech: true
+      einbroch: true
       geffen_in: true
       gef_tower: true
       gon_in: true
-      guild_vs2: true
       hu_in01: true
       in_hunter: true
+      in_moc_16: true
       in_orcs01: true
-      in_rogue: true
       itemmall: true
       izlude_in: true
       jawaii: true
@@ -133,20 +154,16 @@ Body:
       mid_campin: true
       moc_castle: true
       moc_para01: true
+      monk_in: true
       morocc_in: true
+      mosk_fild01: true
+      mosk_in: true
       nameless_in: true
-      new_1-3: true
-      new_2-3: true
-      new_3-3: true
-      new_4-3: true
-      new_5-3: true
       nif_in: true
-      nyd_dun02: true
       payon_in01: true
       payon_in02: true
       payon_in03: true
       pay_arche: true
-      prt_are01: true
       prt_castle: true
       prt_church: true
       prt_in: true
@@ -157,7 +174,6 @@ Body:
       ra_temin: true
       ra_temsky: true
       s_atelier: true
-      sch_lab: true
       sec_in01: true
       spl_in01: true
       spl_in02: true
@@ -237,12 +253,6 @@ Body:
       gl_chyard_: true
       glast_01: true
       gon_fild01: true
-      guild_vs1-1: true
-      guild_vs1-2: true
-      guild_vs1-3: true
-      guild_vs1-4: true
-      guild_vs2-1: true
-      guild_vs2-2: true
       hu_fild02: true
       hu_fild03: true
       hu_fild04: true
@@ -478,6 +488,7 @@ Body:
       nif_fild02: true
       niflheim: true
       nyd_dun01: true
+      nyd_dun02: true
       odin_past: true
       odin_tem01: true
       odin_tem02: true
@@ -549,7 +560,6 @@ Body:
 
   - Id: Quest
     Maps:
-      alb_ship: true
       ama_test: true
       arug_que01: true
       bossnia_01: true
@@ -575,7 +585,7 @@ Body:
       #hunter_1-1: true
       #hunter_2-1: true
       #hunter_3-1: true
-      in_moc_16: true
+      in_rogue: true
       job_cru: true
       job_duncer: true
       job_hunte: true
@@ -611,8 +621,6 @@ Body:
       #moc_fild15: true
       moc_fild22b: true
       monk_test: true
-      mosk_fild01: true
-      mosk_in: true
       mosk_que: true
       mosk_ship: true
       n_castle: true
@@ -622,6 +630,7 @@ Body:
       #priest_1-1: true
       #priest_2-1: true
       #priest_3-1: true
+      prt_are01: true
       pvp_n_room: true
       pvp_room: true
       pvp_y_room: true
@@ -726,8 +735,6 @@ Body:
     DisabledItems:
       Greed_Scroll: 100
     Maps:
-      guild_vs1: true
-      guild_vs3: true
       pvp_2vs2: true
       pvp_n_8-2: true
       pvp_n_8-3: true
@@ -816,8 +823,6 @@ Body:
       Assumptio_5_Scroll: 100
       Phen_Card: 100
       Pty_Assumptio_Scroll: 100
-    Maps:
-      guild_vs5: true
     Mapflags:
       - Flag: Flee_Penalty
         Value: 20
@@ -915,7 +920,6 @@ Body:
       gefg_cas03: true
       gefg_cas04: true
       gefg_cas05: true
-      guild_vs4: true
       payg_cas01: true
       payg_cas02: true
       payg_cas03: true
@@ -1598,6 +1602,18 @@ Body:
       Pty_Assumptio_Scroll: 100
     DisabledStatuses:
       Endure: 100
+    Maps:
+      guild_vs1: true
+      guild_vs1-1: true
+      guild_vs1-2: true
+      guild_vs1-3: true
+      guild_vs1-4: true
+      guild_vs2: true
+      guild_vs2-1: true
+      guild_vs2-2: true
+      guild_vs3: true
+      guild_vs4: true
+      guild_vs5: true
     Mapflags:
       - Flag: Flee_Penalty
         Value: 20
