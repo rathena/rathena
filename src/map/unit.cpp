@@ -3132,14 +3132,16 @@ int unit_counttargeted(struct block_list* bl)
  * @param src Current target
  * @param target New target
  **/
-int unit_changetarget(struct block_list *bl, va_list ap) {
-	struct unit_data *ud = unit_bl2ud(bl);
-	struct block_list *src = va_arg(ap,struct block_list *);
-	struct block_list *target = va_arg(ap,struct block_list *);
-
-	if (!ud || !target || ud->target == target->id)
+int unit_changetarget(block_list *bl, va_list ap) {
+	if (bl == nullptr)
 		return 1;
-	if (!ud->target && !ud->target_to)
+	unit_data *ud = unit_bl2ud(bl);
+	block_list *src = va_arg(ap, block_list *);
+	block_list *target = va_arg(ap, block_list *);
+
+	if (ud == nullptr || src == nullptr || target == nullptr || ud->target == target->id)
+		return 1;
+	if (ud->target <= 0 && ud->target_to <= 0)
 		return 1;
 	if (ud->target != src->id && ud->target_to != src->id)
 		return 1;
@@ -3156,13 +3158,14 @@ int unit_changetarget(struct block_list *bl, va_list ap) {
  * @param target_id: New target ID
  **/
 void unit_change_target(unit_data& ud, int target_id) {
+	if (target_id <= 0)
+		return;
+
 	if (ud.bl->type == BL_MOB)
 		reinterpret_cast<mob_data*>(ud.bl)->target_id = target_id;
-	if (ud.target_to)
+	if (ud.target_to > 0)
 		ud.target_to = target_id;
-	else
-		ud.target_to = 0;
-	if (ud.skilltarget)
+	if (ud.skilltarget > 0)
 		ud.skilltarget = target_id;
 	unit_set_target(&ud, target_id);
 }
