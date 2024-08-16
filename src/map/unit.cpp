@@ -3158,7 +3158,7 @@ int unit_changetarget(block_list *bl, va_list ap) {
  * @param target_id: New target ID
  **/
 void unit_change_target(unit_data& ud, int target_id) {
-	if (target_id <= 0)
+	if (target_id <= 0 || status_isdead(map_id2bl(target_id)))
 		return;
 
 	if (ud.bl->type == BL_MOB)

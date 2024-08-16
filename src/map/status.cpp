@@ -11497,7 +11497,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			// Atk rate change
 			val2 = 20 + (10 * val1);
 			// Leech chance
-			// It's actually 9 * level on both modes, despite the description
+			// It's actually 9 * level on both pre-re and renewal, despite the description
 			val3 = 9 * val1;
 			// Leech percent
 			val4 = 20;
