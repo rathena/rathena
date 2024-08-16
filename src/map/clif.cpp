@@ -25140,7 +25140,12 @@ void clif_specialpopup(map_session_data& sd, int32 id ){
 	clif_send( &p, sizeof( p ), &sd.bl, SELF);
 #endif
 }
-
+struct packet_spammer_data{
+	uint32 client_addr;
+	t_tick tick;
+};
+static std::vector<packet_spammer_data> packet_spammer;
+#define MIN_PACKET_TICK_DELAY 300
 /*==========================================
  * Main client packet processing function
  *------------------------------------------*/
@@ -25148,16 +25153,20 @@ static int clif_parse(int fd)
 {
 	int cmd, packet_len;
 	TBL_PC* sd;
-	int pnum;
+	int piter;
 #ifdef PACKET_OBFUSCATION
 	int cmd2;
 #endif
 
-	//TODO apply delays or disconnect based on packet throughput [FlavioJS]
-	// Note: "click masters" can do 80+ clicks in 10 seconds
-
-	for( pnum = 0; pnum < 3; ++pnum )// Limit max packets per cycle to 3 (delay packet spammers) [FlavioJS]  -- This actually aids packet spammers, but stuff like /str+ gets slow without it [Ai4rei]
-	{ // begin main client packet processing loop
+	ARR_FIND(0,packet_spammer.size(),piter,packet_spammer[piter].client_addr == session[fd]->client_addr);
+	if(piter!=packet_spammer.size() && packet_spammer[piter].tick + MIN_PACKET_TICK_DELAY > gettick())
+		return 0;
+	else if(piter!=packet_spammer.size()){
+		packet_spammer.erase(packet_spammer.begin()+piter);
+		packet_spammer.shrink_to_fit();
+	}
+	else
+		packet_spammer.push_back({session[fd]->client_addr,gettick()});
 
 	sd = (TBL_PC *)session[fd]->session_data;
 
@@ -25280,7 +25289,6 @@ static int clif_parse(int fd)
 	else DumpUnknown(fd,sd,cmd,packet_len);
 #endif
 	RFIFOSKIP(fd, packet_len);
-	}; // main loop end
 
 	return 0;
 }
