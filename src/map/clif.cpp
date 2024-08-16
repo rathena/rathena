@@ -10641,8 +10641,7 @@ void clif_parse_WantToConnection(int fd, map_session_data* sd)
 		return;
 	}
 
-	CREATE(sd, TBL_PC, 1);
-	new(sd) map_session_data();
+	sd = new map_session_data();
 	sd->fd = fd;
 #ifdef PACKET_OBFUSCATION
 	sd->cryptKey = (((((clif_cryptKey[0] * clif_cryptKey[1]) + clif_cryptKey[2]) & 0xFFFFFFFF) * clif_cryptKey[1]) + clif_cryptKey[2]) & 0xFFFFFFFF;
