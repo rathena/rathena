@@ -48,9 +48,7 @@ struct item_data;
 struct Channel;
 
 struct map_data *map_getmapdata(int16 m);
-#define msg_config_read(cfgName,isnew) map_msg_config_read(cfgName,isnew)
 #define msg_txt(sd,msg_number) map_msg_txt(sd,msg_number)
-#define do_final_msg() map_do_final_msg()
 int map_msg_config_read(const char *cfgName,int lang);
 const char* map_msg_txt(map_session_data *sd,int msg_number);
 void map_do_final_msg(void);
@@ -276,8 +274,6 @@ enum e_mapid : uint64{
 #define CHATROOM_PASS_SIZE (8 + 1)
 //Max allowed chat text length
 #define CHAT_SIZE_MAX (255 + 1)
-
-#define DEFAULT_AUTOSAVE_INTERVAL 5*60*1000
 
 //This stackable implementation does not means a BL can be more than one type at a time, but it's
 //meant to make it easier to check for multiple types at a time on invocations such as map_foreach* calls [Skotlex]

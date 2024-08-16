@@ -92,7 +92,7 @@ const char* job_name(int class_) {
 		case JOB_ACOLYTE:
 		case JOB_MERCHANT:
 		case JOB_THIEF:
-			return msg_txt(JOB_NOVICE+class_);
+			return char_msg_txt(JOB_NOVICE+class_);
 
 		case JOB_KNIGHT:
 		case JOB_PRIEST:
@@ -100,10 +100,10 @@ const char* job_name(int class_) {
 		case JOB_BLACKSMITH:
 		case JOB_HUNTER:
 		case JOB_ASSASSIN:
-			return msg_txt(7 - JOB_KNIGHT+class_);
+			return char_msg_txt(7 - JOB_KNIGHT+class_);
 
 		case JOB_KNIGHT2:
-			return msg_txt(7);
+			return char_msg_txt(7);
 
 		case JOB_CRUSADER:
 		case JOB_MONK:
@@ -112,25 +112,25 @@ const char* job_name(int class_) {
 		case JOB_ALCHEMIST:
 		case JOB_BARD:
 		case JOB_DANCER:
-			return msg_txt(13 - JOB_CRUSADER+class_);
+			return char_msg_txt(13 - JOB_CRUSADER+class_);
 
 		case JOB_CRUSADER2:
-			return msg_txt(13);
+			return char_msg_txt(13);
 
 		case JOB_WEDDING:
 		case JOB_SUPER_NOVICE:
 		case JOB_GUNSLINGER:
 		case JOB_NINJA:
 		case JOB_XMAS:
-			return msg_txt(20 - JOB_WEDDING+class_);
+			return char_msg_txt(20 - JOB_WEDDING+class_);
 
 		case JOB_SUMMER:
 		case JOB_SUMMER2:
-			return msg_txt(71);
+			return char_msg_txt(71);
 
 		case JOB_HANBOK:
 		case JOB_OKTOBERFEST:
-			return msg_txt(105 - JOB_HANBOK+class_);
+			return char_msg_txt(105 - JOB_HANBOK+class_);
 
 		case JOB_NOVICE_HIGH:
 		case JOB_SWORDMAN_HIGH:
@@ -139,7 +139,7 @@ const char* job_name(int class_) {
 		case JOB_ACOLYTE_HIGH:
 		case JOB_MERCHANT_HIGH:
 		case JOB_THIEF_HIGH:
-			return msg_txt(25 - JOB_NOVICE_HIGH+class_);
+			return char_msg_txt(25 - JOB_NOVICE_HIGH+class_);
 
 		case JOB_LORD_KNIGHT:
 		case JOB_HIGH_PRIEST:
@@ -147,10 +147,10 @@ const char* job_name(int class_) {
 		case JOB_WHITESMITH:
 		case JOB_SNIPER:
 		case JOB_ASSASSIN_CROSS:
-			return msg_txt(32 - JOB_LORD_KNIGHT+class_);
+			return char_msg_txt(32 - JOB_LORD_KNIGHT+class_);
 
 		case JOB_LORD_KNIGHT2:
-			return msg_txt(32);
+			return char_msg_txt(32);
 
 		case JOB_PALADIN:
 		case JOB_CHAMPION:
@@ -159,10 +159,10 @@ const char* job_name(int class_) {
 		case JOB_CREATOR:
 		case JOB_CLOWN:
 		case JOB_GYPSY:
-			return msg_txt(38 - JOB_PALADIN + class_);
+			return char_msg_txt(38 - JOB_PALADIN + class_);
 
 		case JOB_PALADIN2:
-			return msg_txt(38);
+			return char_msg_txt(38);
 
 		case JOB_BABY:
 		case JOB_BABY_SWORDMAN:
@@ -171,7 +171,7 @@ const char* job_name(int class_) {
 		case JOB_BABY_ACOLYTE:
 		case JOB_BABY_MERCHANT:
 		case JOB_BABY_THIEF:
-			return msg_txt(45 - JOB_BABY + class_);
+			return char_msg_txt(45 - JOB_BABY + class_);
 
 		case JOB_BABY_KNIGHT:
 		case JOB_BABY_PRIEST:
@@ -179,10 +179,10 @@ const char* job_name(int class_) {
 		case JOB_BABY_BLACKSMITH:
 		case JOB_BABY_HUNTER:
 		case JOB_BABY_ASSASSIN:
-			return msg_txt(52 - JOB_BABY_KNIGHT + class_);
+			return char_msg_txt(52 - JOB_BABY_KNIGHT + class_);
 
 		case JOB_BABY_KNIGHT2:
-			return msg_txt(52);
+			return char_msg_txt(52);
 
 		case JOB_BABY_CRUSADER:
 		case JOB_BABY_MONK:
@@ -191,26 +191,26 @@ const char* job_name(int class_) {
 		case JOB_BABY_ALCHEMIST:
 		case JOB_BABY_BARD:
 		case JOB_BABY_DANCER:
-			return msg_txt(58 - JOB_BABY_CRUSADER + class_);
+			return char_msg_txt(58 - JOB_BABY_CRUSADER + class_);
 
 		case JOB_BABY_CRUSADER2:
-			return msg_txt(58);
+			return char_msg_txt(58);
 
 		case JOB_SUPER_BABY:
-			return msg_txt(65);
+			return char_msg_txt(65);
 
 		case JOB_TAEKWON:
-			return msg_txt(66);
+			return char_msg_txt(66);
 		case JOB_STAR_GLADIATOR:
 		case JOB_STAR_GLADIATOR2:
-			return msg_txt(67);
+			return char_msg_txt(67);
 		case JOB_SOUL_LINKER:
-			return msg_txt(68);
+			return char_msg_txt(68);
 
 		case JOB_GANGSI:
 		case JOB_DEATH_KNIGHT:
 		case JOB_DARK_COLLECTOR:
-			return msg_txt(72 - JOB_GANGSI+class_);
+			return char_msg_txt(72 - JOB_GANGSI+class_);
 
 		case JOB_RUNE_KNIGHT:
 		case JOB_WARLOCK:
@@ -218,7 +218,7 @@ const char* job_name(int class_) {
 		case JOB_ARCH_BISHOP:
 		case JOB_MECHANIC:
 		case JOB_GUILLOTINE_CROSS:
-			return msg_txt(75 - JOB_RUNE_KNIGHT+class_);
+			return char_msg_txt(75 - JOB_RUNE_KNIGHT+class_);
 
 		case JOB_RUNE_KNIGHT_T:
 		case JOB_WARLOCK_T:
@@ -226,7 +226,7 @@ const char* job_name(int class_) {
 		case JOB_ARCH_BISHOP_T:
 		case JOB_MECHANIC_T:
 		case JOB_GUILLOTINE_CROSS_T:
-			return msg_txt(75 - JOB_RUNE_KNIGHT_T+class_);
+			return char_msg_txt(75 - JOB_RUNE_KNIGHT_T+class_);
 
 		case JOB_ROYAL_GUARD:
 		case JOB_SORCERER:
@@ -235,7 +235,7 @@ const char* job_name(int class_) {
 		case JOB_SURA:
 		case JOB_GENETIC:
 		case JOB_SHADOW_CHASER:
-			return msg_txt(81 - JOB_ROYAL_GUARD+class_);
+			return char_msg_txt(81 - JOB_ROYAL_GUARD+class_);
 
 		case JOB_ROYAL_GUARD_T:
 		case JOB_SORCERER_T:
@@ -244,23 +244,23 @@ const char* job_name(int class_) {
 		case JOB_SURA_T:
 		case JOB_GENETIC_T:
 		case JOB_SHADOW_CHASER_T:
-			return msg_txt(81 - JOB_ROYAL_GUARD_T+class_);
+			return char_msg_txt(81 - JOB_ROYAL_GUARD_T+class_);
 
 		case JOB_RUNE_KNIGHT2:
 		case JOB_RUNE_KNIGHT_T2:
-			return msg_txt(75);
+			return char_msg_txt(75);
 
 		case JOB_ROYAL_GUARD2:
 		case JOB_ROYAL_GUARD_T2:
-			return msg_txt(81);
+			return char_msg_txt(81);
 
 		case JOB_RANGER2:
 		case JOB_RANGER_T2:
-			return msg_txt(77);
+			return char_msg_txt(77);
 
 		case JOB_MECHANIC2:
 		case JOB_MECHANIC_T2:
-			return msg_txt(79);
+			return char_msg_txt(79);
 
 		case JOB_BABY_RUNE_KNIGHT:
 		case JOB_BABY_WARLOCK:
@@ -275,36 +275,36 @@ const char* job_name(int class_) {
 		case JOB_BABY_SURA:
 		case JOB_BABY_GENETIC:
 		case JOB_BABY_SHADOW_CHASER:
-			return msg_txt(88 - JOB_BABY_RUNE_KNIGHT+class_);
+			return char_msg_txt(88 - JOB_BABY_RUNE_KNIGHT+class_);
 
 		case JOB_BABY_RUNE_KNIGHT2:
-			return msg_txt(88);
+			return char_msg_txt(88);
 
 		case JOB_BABY_ROYAL_GUARD2:
-			return msg_txt(94);
+			return char_msg_txt(94);
 
 		case JOB_BABY_RANGER2:
-			return msg_txt(90);
+			return char_msg_txt(90);
 
 		case JOB_BABY_MECHANIC2:
-			return msg_txt(92);
+			return char_msg_txt(92);
 
 		case JOB_SUPER_NOVICE_E:
 		case JOB_SUPER_BABY_E:
-			return msg_txt(101 - JOB_SUPER_NOVICE_E+class_);
+			return char_msg_txt(101 - JOB_SUPER_NOVICE_E+class_);
 
 		case JOB_KAGEROU:
 		case JOB_OBORO:
-			return msg_txt(103 - JOB_KAGEROU+class_);
+			return char_msg_txt(103 - JOB_KAGEROU+class_);
 
 		case JOB_REBELLION:
-			return msg_txt(106);
+			return char_msg_txt(106);
 
 		case JOB_SUMMONER:
-			return msg_txt(108);
+			return char_msg_txt(108);
 
 		case JOB_BABY_SUMMONER:
-			return msg_txt(109);
+			return char_msg_txt(109);
 
 		case JOB_BABY_NINJA:
 		case JOB_BABY_KAGEROU:
@@ -314,20 +314,20 @@ const char* job_name(int class_) {
 		case JOB_BABY_SOUL_LINKER:
 		case JOB_BABY_GUNSLINGER:
 		case JOB_BABY_REBELLION:
-			return msg_txt(110 - JOB_BABY_NINJA+class_);
+			return char_msg_txt(110 - JOB_BABY_NINJA+class_);
 
 		case JOB_BABY_STAR_GLADIATOR2:
 		case JOB_STAR_EMPEROR:
 		case JOB_SOUL_REAPER:
 		case JOB_BABY_STAR_EMPEROR:
 		case JOB_BABY_SOUL_REAPER:
-			return msg_txt(114 - JOB_BABY_STAR_GLADIATOR2 + class_);
+			return char_msg_txt(114 - JOB_BABY_STAR_GLADIATOR2 + class_);
 
 		case JOB_STAR_EMPEROR2:
-			return msg_txt(118);
+			return char_msg_txt(118);
 
 		case JOB_BABY_STAR_EMPEROR2:
-			return msg_txt(120);
+			return char_msg_txt(120);
 
 		case JOB_DRAGON_KNIGHT:
 		case JOB_MEISTER:
@@ -342,19 +342,19 @@ const char* job_name(int class_) {
 		case JOB_INQUISITOR:
 		case JOB_TROUBADOUR:
 		case JOB_TROUVERE:
-			return msg_txt( 122 - JOB_DRAGON_KNIGHT + class_ );
+			return char_msg_txt( 122 - JOB_DRAGON_KNIGHT + class_ );
 
 		case JOB_WINDHAWK2:
-			return msg_txt( 127 );
+			return char_msg_txt( 127 );
 
 		case JOB_MEISTER2:
-			return msg_txt( 123 );
+			return char_msg_txt( 123 );
 
 		case JOB_DRAGON_KNIGHT2:
-			return msg_txt( 122 );
+			return char_msg_txt( 122 );
 
 		case JOB_IMPERIAL_GUARD2:
-			return msg_txt( 128 );
+			return char_msg_txt( 128 );
 
 		case JOB_SKY_EMPEROR:
 		case JOB_SOUL_ASCETIC:
@@ -363,13 +363,13 @@ const char* job_name(int class_) {
 		case JOB_NIGHT_WATCH:
 		case JOB_HYPER_NOVICE:
 		case JOB_SPIRIT_HANDLER:
-			return msg_txt( 135 - JOB_SKY_EMPEROR + class_ );
+			return char_msg_txt( 135 - JOB_SKY_EMPEROR + class_ );
 
 		case JOB_SKY_EMPEROR2:
-			return msg_txt( 135 );
+			return char_msg_txt( 135 );
 
 		default:
-			return msg_txt(199);
+			return char_msg_txt(199);
 	}
 }
 
@@ -502,10 +502,10 @@ void mapif_parse_accinfo(int fd) {
 		if ( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`name`,`class`,`base_level`,`job_level`,`online` FROM `%s` WHERE `name` LIKE '%s' LIMIT 10", schema_config.char_db, query_esq)
 				|| Sql_NumRows(sql_handle) == 0 ) {
 			if( Sql_NumRows(sql_handle) == 0 ) {
-				inter_to_fd(fd, u_fd, u_aid, (char *)msg_txt(212) ,query);
+				inter_to_fd(fd, u_fd, u_aid, (char *)char_msg_txt(212) ,query);
 			} else {
 				Sql_ShowDebug(sql_handle);
-				inter_to_fd(fd, u_fd, u_aid, (char *)msg_txt(213));
+				inter_to_fd(fd, u_fd, u_aid, (char *)char_msg_txt(213));
 			}
 			Sql_FreeResult(sql_handle);
 			return;
@@ -515,7 +515,7 @@ void mapif_parse_accinfo(int fd) {
 				Sql_GetData(sql_handle, 0, &data, nullptr); account_id = atoi(data);
 				Sql_FreeResult(sql_handle);
 			} else {// more than one, listing... [Dekamaster/Nightroad]
-				inter_to_fd(fd, u_fd, u_aid, (char *)msg_txt(214),(int)Sql_NumRows(sql_handle));
+				inter_to_fd(fd, u_fd, u_aid, (char *)char_msg_txt(214),(int)Sql_NumRows(sql_handle));
 				while ( SQL_SUCCESS == Sql_NextRow(sql_handle) ) {
 					int class_;
 					short base_level, job_level, online;
@@ -528,7 +528,7 @@ void mapif_parse_accinfo(int fd) {
 					Sql_GetData(sql_handle, 4, &data, nullptr); job_level = atoi(data);
 					Sql_GetData(sql_handle, 5, &data, nullptr); online = atoi(data);
 
-					inter_to_fd(fd, u_fd, u_aid, (char *)msg_txt(215), account_id, name, job_name(class_), base_level, job_level, online?"Online":"Offline");
+					inter_to_fd(fd, u_fd, u_aid, (char *)char_msg_txt(215), account_id, name, job_name(class_), base_level, job_level, online?"Online":"Offline");
 				}
 				Sql_FreeResult(sql_handle);
 				return;
@@ -538,7 +538,7 @@ void mapif_parse_accinfo(int fd) {
 
 	/* it will only get here if we have a single match then ask login-server to fetch the `login` record */
 	if (!account_id || chlogif_req_accinfo(fd, u_fd, u_aid, account_id, type) != 1) {
-		inter_to_fd(fd, u_fd, u_aid, (char *)msg_txt(213));
+		inter_to_fd(fd, u_fd, u_aid, (char *)char_msg_txt(213));
 	}
 	return;
 }
@@ -555,7 +555,7 @@ void mapif_accinfo_ack(bool success, int map_fd, int u_fd, int u_aid, int accoun
 		return; // check if we have a valid fd
 
 	if (!success) {
-		inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(216), account_id);
+		inter_to_fd(map_fd, u_fd, u_aid, (char *)char_msg_txt(216), account_id);
 		return;
 	}
 
@@ -564,20 +564,20 @@ void mapif_accinfo_ack(bool success, int map_fd, int u_fd, int u_aid, int accoun
 		return;
 	}
 
-	inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(217), account_id);
-	inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(218), userid, group_id, state);
-	inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(221), email, birthdate);
-	inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(222), last_ip, geoip_getcountry(str2ip(last_ip)));
-	inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(223), logincount, lastlogin);
-	inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(224));
+	inter_to_fd(map_fd, u_fd, u_aid, (char *)char_msg_txt(217), account_id);
+	inter_to_fd(map_fd, u_fd, u_aid, (char *)char_msg_txt(218), userid, group_id, state);
+	inter_to_fd(map_fd, u_fd, u_aid, (char *)char_msg_txt(221), email, birthdate);
+	inter_to_fd(map_fd, u_fd, u_aid, (char *)char_msg_txt(222), last_ip, geoip_getcountry(str2ip(last_ip)));
+	inter_to_fd(map_fd, u_fd, u_aid, (char *)char_msg_txt(223), logincount, lastlogin);
+	inter_to_fd(map_fd, u_fd, u_aid, (char *)char_msg_txt(224));
 
 	if ( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`, `name`, `char_num`, `class`, `base_level`, `job_level`, `online` FROM `%s` WHERE `account_id` = '%d' ORDER BY `char_num` LIMIT %d", schema_config.char_db, account_id, MAX_CHARS)
 		|| Sql_NumRows(sql_handle) == 0 )
 	{
 		if( Sql_NumRows(sql_handle) == 0 )
-			inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(226));
+			inter_to_fd(map_fd, u_fd, u_aid, (char *)char_msg_txt(226));
 		else {
-			inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(213));
+			inter_to_fd(map_fd, u_fd, u_aid, (char *)char_msg_txt(213));
 			Sql_ShowDebug(sql_handle);
 		}
 	} else {
@@ -595,7 +595,7 @@ void mapif_accinfo_ack(bool success, int map_fd, int u_fd, int u_aid, int accoun
 			Sql_GetData(sql_handle, 5, &data, nullptr); job_level = atoi(data);
 			Sql_GetData(sql_handle, 6, &data, nullptr); online = atoi(data);
 
-			inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(225), char_num, char_id, name, job_name(class_), base_level, job_level, online?"Online":"Offline");
+			inter_to_fd(map_fd, u_fd, u_aid, (char *)char_msg_txt(225), char_num, char_id, name, job_name(class_), base_level, job_level, online?"Online":"Offline");
 		}
 	}
 	Sql_FreeResult(sql_handle);

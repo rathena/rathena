@@ -157,12 +157,12 @@ TIMER_FUNC(auction_end_timer){
 	if( auction != nullptr ){
 		if( auction->buyer_id )
 		{
-			mail_sendmail(0, msg_txt(200), auction->buyer_id, auction->buyer_name, msg_txt(201), msg_txt(202), 0, &auction->item, 1);
+			mail_sendmail(0, char_msg_txt(200), auction->buyer_id, auction->buyer_name, char_msg_txt(201), char_msg_txt(202), 0, &auction->item, 1);
 			mapif_Auction_message(auction->buyer_id, 6); // You have won the auction
-			mail_sendmail(0, msg_txt(200), auction->seller_id, auction->seller_name, msg_txt(201), msg_txt(203), auction->price, nullptr, 0);
+			mail_sendmail(0, char_msg_txt(200), auction->seller_id, auction->seller_name, char_msg_txt(201), char_msg_txt(203), auction->price, nullptr, 0);
 		}
 		else
-			mail_sendmail(0, msg_txt(200), auction->seller_id, auction->seller_name, msg_txt(201), msg_txt(204), 0, &auction->item, 1);
+			mail_sendmail(0, char_msg_txt(200), auction->seller_id, auction->seller_name, char_msg_txt(201), char_msg_txt(204), 0, &auction->item, 1);
 
 		ShowInfo("Auction End: id %u.\n", auction->auction_id);
 
@@ -385,7 +385,7 @@ void mapif_parse_Auction_cancel(int fd)
 		return;
 	}
 
-	mail_sendmail(0, msg_txt(200), auction->seller_id, auction->seller_name, msg_txt(201), msg_txt(205), 0, &auction->item, 1);
+	mail_sendmail(0, char_msg_txt(200), auction->seller_id, auction->seller_name, char_msg_txt(201), char_msg_txt(205), 0, &auction->item, 1);
 	auction_delete(auction);
 
 	mapif_Auction_cancel(fd, char_id, 0); // The auction has been canceled
@@ -423,9 +423,9 @@ void mapif_parse_Auction_close(int fd)
 	}
 
 	// Send Money to Seller
-	mail_sendmail(0, msg_txt(200), auction->seller_id, auction->seller_name, msg_txt(201), msg_txt(206), auction->price, nullptr, 0);
+	mail_sendmail(0, char_msg_txt(200), auction->seller_id, auction->seller_name, char_msg_txt(201), char_msg_txt(206), auction->price, nullptr, 0);
 	// Send Item to Buyer
-	mail_sendmail(0, msg_txt(200), auction->buyer_id, auction->buyer_name, msg_txt(201), msg_txt(207), 0, &auction->item, 1);
+	mail_sendmail(0, char_msg_txt(200), auction->buyer_id, auction->buyer_name, char_msg_txt(201), char_msg_txt(207), 0, &auction->item, 1);
 	mapif_Auction_message(auction->buyer_id, 6); // You have won the auction
 	auction_delete(auction);
 
@@ -463,11 +463,11 @@ void mapif_parse_Auction_bid(int fd)
 	{ // Send Money back to the previous Buyer
 		if( auction->buyer_id != char_id )
 		{
-			mail_sendmail(0, msg_txt(200), auction->buyer_id, auction->buyer_name, msg_txt(201), msg_txt(208), auction->price, nullptr, 0);
+			mail_sendmail(0, char_msg_txt(200), auction->buyer_id, auction->buyer_name, char_msg_txt(201), char_msg_txt(208), auction->price, nullptr, 0);
 			mapif_Auction_message(auction->buyer_id, 7); // You have failed to win the auction
 		}
 		else
-			mail_sendmail(0, msg_txt(200), auction->buyer_id, auction->buyer_name, msg_txt(201), msg_txt(209), auction->price, nullptr, 0);
+			mail_sendmail(0, char_msg_txt(200), auction->buyer_id, auction->buyer_name, char_msg_txt(201), char_msg_txt(209), auction->price, nullptr, 0);
 	}
 
 	auction->buyer_id = char_id;
@@ -478,9 +478,9 @@ void mapif_parse_Auction_bid(int fd)
 	{ // Automatic won the auction
 		mapif_Auction_bid(fd, char_id, bid - auction->buynow, 1); // You have successfully bid in the auction
 
-		mail_sendmail(0, msg_txt(200), auction->buyer_id, auction->buyer_name, msg_txt(201), msg_txt(210), 0, &auction->item, 1);
+		mail_sendmail(0, char_msg_txt(200), auction->buyer_id, auction->buyer_name, char_msg_txt(201), char_msg_txt(210), 0, &auction->item, 1);
 		mapif_Auction_message(char_id, 6); // You have won the auction
-		mail_sendmail(0, msg_txt(200), auction->seller_id, auction->seller_name, msg_txt(201), msg_txt(211), auction->buynow, nullptr, 0);
+		mail_sendmail(0, char_msg_txt(200), auction->seller_id, auction->seller_name, char_msg_txt(201), char_msg_txt(211), auction->buynow, nullptr, 0);
 
 		auction_delete(auction);
 		return;

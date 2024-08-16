@@ -287,7 +287,6 @@ extern struct fame_list smith_fame_list[MAX_FAME_LIST];
 extern struct fame_list chemist_fame_list[MAX_FAME_LIST];
 extern struct fame_list taekwon_fame_list[MAX_FAME_LIST];
 
-#define DEFAULT_AUTOSAVE_INTERVAL 300*1000
 #define MAX_CHAR_BUF sizeof( struct CHARACTER_INFO ) //Max size (for WFIFOHEAD calls)
 
 int char_search_mapserver( const std::string& map, uint32 ip, uint16 port );
@@ -335,9 +334,6 @@ void char_set_session_flag_(int account_id, int val, bool set);
 //For use in packets that depend on an sd being present [Skotlex]
 #define FIFOSD_CHECK(rest) { if (RFIFOREST(fd) < rest) return 0; if (sd == nullptr || !sd->auth) { RFIFOSKIP(fd, rest); return 0; } }
 
-#define msg_config_read(cfgName) char_msg_config_read(cfgName)
-#define msg_txt(msg_number) char_msg_txt(msg_number)
-#define do_final_msg() char_do_final_msg()
 int char_msg_config_read(const char *cfgName);
 const char* char_msg_txt(int msg_number);
 void char_do_final_msg(void);

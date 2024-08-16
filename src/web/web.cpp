@@ -373,7 +373,7 @@ void WebServer::finalize(){
 	svr_thr.join();
 	web_sql_close();
 #endif
-	do_final_msg();
+	web_do_final_msg();
 	ShowStatus("Finished.\n");
 }
 
@@ -436,7 +436,7 @@ bool WebServer::initialize( int argc, char* argv[] ){
 	// read web-server configuration
 	web_set_defaults();
 	web_config_read(web_config.webconf_name, true);
-	msg_config_read(web_config.msgconf_name);
+	web_msg_config_read(web_config.msgconf_name);
 
 	inter_config_read(INTER_CONF_NAME);
 	// end config

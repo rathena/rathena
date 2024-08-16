@@ -44,6 +44,7 @@
 using namespace rathena;
 using namespace rathena::server_character;
 
+#define DEFAULT_AUTOSAVE_INTERVAL 300*1000
 //definition of exported var declared in header
 int login_fd=-1; //login file descriptor
 int char_fd=-1; //char file descriptor
@@ -3151,7 +3152,7 @@ void CharacterServer::finalize(){
 
 	flush_fifos();
 
-	do_final_msg();
+	char_do_final_msg();
 	do_final_chmapif();
 	do_final_chlogif();
 
@@ -3195,7 +3196,7 @@ bool CharacterServer::initialize( int argc, char *argv[] ){
 	char_lan_config_read(LAN_CONF_NAME);
 	char_set_default_sql();
 	char_sql_config_read(SQL_CONF_NAME);
-	msg_config_read(MSG_CONF_NAME_EN);
+	char_msg_config_read(MSG_CONF_NAME_EN);
 
 #if !defined(BUILDBOT)
 	if (strcmp(charserv_config.userid, "s1")==0 && strcmp(charserv_config.passwd, "p1")==0) {

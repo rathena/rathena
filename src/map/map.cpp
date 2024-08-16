@@ -117,6 +117,7 @@ static DBMap* map_msg_db=nullptr;
 
 static int map_users=0;
 
+#define DEFAULT_AUTOSAVE_INTERVAL 5*60*1000
 #define BLOCK_SIZE 8
 #define block_free_max 1048576
 struct block_list *block_free[block_free_max];
@@ -4937,7 +4938,7 @@ void MapServer::finalize(){
 	do_final_homunculus();
 	do_final_mercenary();
 	do_final_mob(false);
-	do_final_msg();
+	map_do_final_msg();
 	do_final_skill();
 	do_final_status();
 	do_final_unit();
@@ -5067,7 +5068,7 @@ void map_do_init_msg(void){
 	size = ARRAYLENGTH(listelang); //avoid recalc
 	while(test!=-1 && size>i){ //for all enable lang +(English default)
 		test = msg_checklangtype(i,false);
-		if(test == 1) msg_config_read(listelang[i],i); //if enabled read it and assign i to langtype
+		if(test == 1) map_msg_config_read(listelang[i],i); //if enabled read it and assign i to langtype
 		i++;
 	}
 }

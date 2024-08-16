@@ -820,7 +820,7 @@ void LoginServer::finalize(){
 	if( login_config.log_login )
 		loginlog_final();
 
-	do_final_msg();
+	login_do_final_msg();
 	ipban_final();
 	do_final_loginclif();
 	do_final_logincnslif();
@@ -864,7 +864,7 @@ bool LoginServer::initialize( int argc, char* argv[] ){
 	logcnslif_get_options(argc,argv);
 
 	login_config_read(login_config.loginconf_name, true);
-	msg_config_read(login_config.msgconf_name);
+	login_msg_config_read(login_config.msgconf_name);
 	login_lan_config_read(login_config.lanconf_name);
 	//end config
 

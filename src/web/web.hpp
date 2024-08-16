@@ -69,9 +69,6 @@ extern char merchant_configs_table[32];
 extern char party_table[32];
 extern char partybookings_table[32];
 
-#define msg_config_read(cfgName) web_msg_config_read(cfgName)
-#define msg_txt(msg_number) web_msg_txt(msg_number)
-#define do_final_msg() web_do_final_msg()
 int web_msg_config_read(char *cfgName);
 const char* web_msg_txt(int msg_number);
 void web_do_final_msg(void);

@@ -133,9 +133,6 @@ extern struct Login_Config login_config;
 #define sex_num2str(num) ( (num ==  SEX_FEMALE  ) ? 'F' : (num ==  SEX_MALE  ) ? 'M' : 'S' )
 #define sex_str2num(str) ( (str == 'F' ) ?  SEX_FEMALE  : (str == 'M' ) ?  SEX_MALE  :  SEX_SERVER  )
 
-#define msg_config_read(cfgName) login_msg_config_read(cfgName)
-#define msg_txt(msg_number) login_msg_txt(msg_number)
-#define do_final_msg() login_do_final_msg()
 int login_msg_config_read(char *cfgName);
 const char* login_msg_txt(int msg_number);
 void login_do_final_msg(void);
