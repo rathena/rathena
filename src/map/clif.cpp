@@ -25140,12 +25140,28 @@ void clif_specialpopup(map_session_data& sd, int32 id ){
 	clif_send( &p, sizeof( p ), &sd.bl, SELF);
 #endif
 }
+
+#define MIN_PACKET_TICK_DELAY 100
 struct packet_spammer_data{
 	uint32 client_addr;
 	t_tick tick;
+	struct{
+		short count;
+		short max=10;
+	}click;
 };
 static std::vector<packet_spammer_data> packet_spammer;
-#define MIN_PACKET_TICK_DELAY 300
+
+static bool psd_is_spammer(packet_spammer_data* psd)
+{
+	if(!psd)
+		return false;
+	if(psd->click.count < psd->click.max)
+		return false;
+
+	return true;
+}
+
 /*==========================================
  * Main client packet processing function
  *------------------------------------------*/
@@ -25159,17 +25175,20 @@ static int clif_parse(int fd)
 #endif
 
 	ARR_FIND(0,packet_spammer.size(),piter,packet_spammer[piter].client_addr == session[fd]->client_addr);
-	if(piter!=packet_spammer.size() && packet_spammer[piter].tick + MIN_PACKET_TICK_DELAY > gettick())
+	if(piter!=packet_spammer.size() && packet_spammer[piter].tick + MIN_PACKET_TICK_DELAY > gettick()){
+		if(psd_is_spammer(&packet_spammer[piter]))					
+			clif_authfail_fd(fd,3);
+		packet_spammer[piter].click.count++;
 		return 0;
-	else if(piter!=packet_spammer.size()){
+	} else if(piter!=packet_spammer.size()){
 		packet_spammer.erase(packet_spammer.begin()+piter);
 		packet_spammer.shrink_to_fit();
-	}
-	else
+	} else {
 		packet_spammer.push_back({session[fd]->client_addr,gettick()});
+		packet_spammer.end()->click.count++;
+	}
 
 	sd = (TBL_PC *)session[fd]->session_data;
-
 	if (session[fd]->flag.eof) {
 		if (sd) {
 			if (sd->state.autotrade) {
