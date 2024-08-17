@@ -8454,11 +8454,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case AG_ASTRAL_STRIKE_ATK:
 						skillratio += -100 + 650 * skill_lv + 10 * sstatus->spl;
-						// Not confirmed, but if the main hit deal additional damage
-						// on certain races then the repeated damage should too right?
-						// Guessing a formula here for now. [Rytech]
-						if (tstatus->race == RC_UNDEAD || tstatus->race == RC_DRAGON)
-							skillratio += 200 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
 					case AG_ROCK_DOWN:
