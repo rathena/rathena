@@ -8454,6 +8454,11 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case AG_ASTRAL_STRIKE_ATK:
 						skillratio += -100 + 650 * skill_lv + 10 * sstatus->spl;
+						// Not confirmed, but if the main hit deal additional damage
+						// on certain races then the repeated damage should too right?
+						// Guessing a formula here for now. [Rytech]
+						if (tstatus->race == RC_UNDEAD || tstatus->race == RC_DRAGON)
+							skillratio += 200 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
 					case AG_ROCK_DOWN:
@@ -11532,12 +11537,6 @@ static const struct _battle_data {
 	{ "hom_delay_reset_warp",               &battle_config.hom_delay_reset_warp,            1,      0,      1,              },
 #endif
 
-#ifdef RENEWAL
-	{ "feature.restore_animation_skills",   &battle_config.feature_restore_animation_skills,0,      0,      1,              },
-#else
-	{ "feature.restore_animation_skills",   &battle_config.feature_restore_animation_skills,1,      0,      1,              },
-#endif
-
 #include <custom/battle_config_init.inc>
 };
 
@@ -11759,13 +11758,6 @@ void battle_adjust_conf()
 	if( battle_config.feature_barter_extended ){
 		ShowWarning("conf/battle/feature.conf extended barter shop system is enabled but it requires PACKETVER 2019-11-06 or newer, disabling...\n");
 		battle_config.feature_barter_extended = 0;
-	}
-#endif
-
-#if PACKETVER < 20181128
-	if( battle_config.feature_restore_animation_skills ){
-		ShowWarning("conf/battle/feature.conf restore skill forced attack motion system is enabled but it requires PACKETVER 2018-11-28 or newer, disabling...\n");
-		battle_config.feature_restore_animation_skills = 0;
 	}
 #endif
 

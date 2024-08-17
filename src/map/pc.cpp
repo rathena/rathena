@@ -15870,48 +15870,6 @@ uint64 CaptchaDatabase::parseBodyNode(const ryml::NodeRef &node) {
 
 	return 1;
 }
-/* Animation Timer */
-int animation_forced::get_animation_interval(map_session_data*sd){	
-#ifdef RENEWAL
-	return cap_value(sd->battle_status.adelay - ((sd->battle_status.adelay * sd->bonus.delayrate) / 100), 0, 500); //Kiel uncapped animation remove
-#else
-	return cap_value(sd->battle_status.adelay - ((sd->battle_status.adelay * sd->bonus.delayrate) / 100), 190, 500); //apsd amotion based
-#endif;
-}
-TIMER_FUNC(pc_animation_force_timer){
-	map_session_data* sd = map_id2sd(id);
-	if (sd == nullptr)
-		return 0;
-	int it;
-	ARR_FIND(0,sd->animation_force.size(),it,sd->animation_force[it]->tid==tid);
-	if(it>=sd->animation_force.size())
-		return 0;
-	if (DIFF_TICK(sd->animation_force[it]->tid, gettick()) > 0) {
-		clif_authfail_fd(sd->fd, 15);
-		ShowWarning("fail on animation timer sync from char id: %d \n", sd->status.char_id);
-	}
-	if (sd->animation_force[it]->iter < sd->animation_force[it]->hitcount) {
-		struct block_list* target = map_id2bl(sd->animation_force[it]->target.id);
-		uint8 dir = target?map_calc_dir(&sd->bl,target->x, target->y):sd->animation_force[it]->target.dir;
-		unit_setdir(&sd->bl,dir,true);
-		if(target && sd->animation_force[it]->skill_id==AS_SONICBLOW){
-			if(!status_isdead(target))
-				unit_setdir(target,(dir < 4 ? dir + rand()%4 : dir - rand()%4),true);
-		}
-		clif_hit_frame(&sd->bl);
-		sd->animation_force[it]->iter++;
-		if (sd->animation_force[it]->iter < sd->animation_force[it]->hitcount)
-			sd->animation_force[it]->tid = add_timer(gettick() + data, pc_animation_force_timer, sd->bl.id, data);
-		else
-			sd->animation_force[it]->tid = add_timer(gettick(), pc_animation_force_timer, sd->bl.id, data);		
-	}
-	else
-	{
-		delete_timer(sd->animation_force[it]->tid,pc_animation_force_timer);
-		sd->animation_force.erase(sd->animation_force.begin()+it);
-	}
-	return 0;
-}
 
 /*==========================================
  * pc Init/Terminate
@@ -15960,8 +15918,7 @@ void do_init_pc(void) {
 	add_timer_func_list(pc_autotrade_timer, "pc_autotrade_timer");
 	add_timer_func_list(pc_on_expire_active, "pc_on_expire_active");
 	add_timer_func_list(pc_macro_detector_timeout, "pc_macro_detector_timeout");
-	// force amotion animation timer [AoShinHo]
-	add_timer_func_list(pc_animation_force_timer, "pc_animation_force_timer");
+
 	add_timer(gettick() + autosave_interval, pc_autosave, 0, 0);
 
 	// 0=day, 1=night [Yor]
