@@ -3725,7 +3725,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			if( sd )
 				sd->hd = nullptr;
 			hd->master = nullptr;
-
+			hd->blockskill.clear();
 			skill_clear_unitgroup(bl);
 			status_change_clear(bl,1);
 			break;

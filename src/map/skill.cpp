@@ -1014,7 +1014,7 @@ bool skill_isNotOk_hom(struct homun_data *hd, uint16 skill_id, uint16 skill_lv)
 	if (sc && !sc->count)
 		sc = nullptr;
 
-	if (util::vector_exists(hd->blockskill, skill_id)) {
+	if (skill_blockhom_get(hd,skill_id)>=0) {
 		clif_skill_fail(*sd, skill_id, USESKILL_FAIL_SKILLINTERVAL);
 		return true;
 	}
@@ -13391,11 +13391,22 @@ TIMER_FUNC(skill_castend_id){
 				skill_blockpc_start(sd, ud->skill_id, cooldown);
 		} break;
 		case BL_HOM:{
-			homun_data& hd = reinterpret_cast<homun_data&>(*src);
+			struct homun_data* hd = BL_CAST(BL_HOM,src);
+			int cooldown;
 #ifdef RENEWAL
-			skill_blockhomun_start(&hd, ud->skill_id, skill_get_cooldown(ud->skill_id, ud->skill_lv));
+			cooldown = skill_get_cooldown(ud->skill_id, ud->skill_lv);
+			if(cooldown > 0){
+				skill_blockhomun_start(hd, ud->skill_id, cooldown);
+				if (battle_config.display_status_timers)
+					skill_blockpc_start(hd->master, ud->skill_id, cooldown);
+			}
 #else
-			skill_blockhomun_start(&hd, ud->skill_id, skill_get_delay(ud->skill_id, ud->skill_lv));
+			cooldown = skill_get_delay(ud->skill_id, ud->skill_lv);
+			if(cooldown > 0){
+				skill_blockhomun_start(hd, ud->skill_id, cooldown);
+				if (battle_config.display_status_timers)
+					skill_blockpc_start(hd->master, ud->skill_id, cooldown);
+			}
 #endif
 		} break;
 		}
@@ -23039,20 +23050,24 @@ int skill_blockpc_clear(map_session_data *sd) {
 }
 
 TIMER_FUNC(skill_blockhomun_end){
-	homun_data *hd = reinterpret_cast<homun_data *>(map_id2bl(id));
+	struct homun_data *hd = map_id2hd(id);
+	int skill_id = (int)data;
+	int i;
 
-	if (hd) {
-		auto skill = util::vector_get(hd->blockskill, static_cast<uint16>(data));
+	if (!hd || !skill_id || tick < 1)
+		return 0;
 
-		if (skill != hd->blockskill.end())
-			hd->blockskill.erase(skill);
-
-		// Make sure the cooldown display is removed
-		if (battle_config.display_status_timers)
-			clif_homskillinfoblock(*hd);
+	i=skill_blockhom_get(hd,skill_id);
+	if (i<0 || hd->blockskill[i].second != tid) {
+		ShowWarning("skill_blockhom_end: Invalid Timer or not Skill Cooldown.\n");
+		return 0;
 	}
-
-	return 1;
+	else
+	{
+		hd->blockskill.erase(hd->blockskill.begin()+i);
+		return 1;
+	}
+	return 0;	
 }
 
 int skill_blockhomun_start(struct homun_data *hd, uint16 skill_id, int tick)	//[orn]
@@ -23062,22 +23077,38 @@ int skill_blockhomun_start(struct homun_data *hd, uint16 skill_id, int tick)	//[
 	if (!skill_db.exists(skill_id))
 		return -1;
 
-	auto skill = util::vector_get(hd->blockskill, skill_id);
+	int i = skill_blockhom_get(hd,skill_id);
 
-	if (tick < 1 && skill != hd->blockskill.end()) {
-		hd->blockskill.erase(skill);
+	if (i>=0) {  //bypassed  cd?
+		delete_timer(hd->blockskill[i].second, skill_blockhomun_end);
+		hd->blockskill.erase(hd->blockskill.begin()+i);
+ 	}
+	if(hd->blockskill.size()<MAX_SKILLCOOLDOWN){
+		hd->blockskill.push_back({skill_id,add_timer(gettick() + tick, skill_blockhomun_end, hd->bl.id, skill_id)});
+		if (battle_config.display_status_timers) {
+			clif_homskillinfoblock(*hd);
+			if(hd->master!=nullptr)
+				clif_skill_cooldown(*hd->master, skill_id, tick);		
+		}
+		return 1;
+	} else {
+		ShowWarning("skill_homun_start: Too many skillcooldowns, increase MAX_SKILLCOOLDOWN.\n");
+		return 0;
+	}
+}
+/*==========================================
+ *
+ *------------------------------------------*/
+int skill_blockhom_get(struct homun_data *hd, int skillid) 
+{
+	int i;
+	nullpo_retr(-1, hd);
+	if(!hd)
 		return -1;
-	}
-
-	hd->blockskill.push_back(skill_id);
-
-	if (battle_config.display_status_timers) {
-		// Reset the skill cooldown display first
-		clif_homskillinfoblock(*hd);
-		clif_skill_cooldown(*hd->master, skill_id, tick);
-	}
-
-	return add_timer(gettick() + tick, skill_blockhomun_end, hd->bl.id, skill_id);
+	ARR_FIND(0, hd->blockskill.size(), i, hd->blockskill[i].first == skillid);
+	if(i>=hd->blockskill.size())
+		ShowWarning("skill_blockhom_get fail: Skill Cooldown not found.\n");
+	return (i >= hd->blockskill.size()) ? -1 : i;
 }
 
 TIMER_FUNC(skill_blockmerc_end){
@@ -25368,6 +25399,7 @@ void do_init_skill(void)
 	add_timer_func_list(skill_castend_pos,"skill_castend_pos");
 	add_timer_func_list(skill_timerskill,"skill_timerskill");
 	add_timer_func_list(skill_blockpc_end, "skill_blockpc_end");
+	add_timer_func_list(skill_blockhomun_end, "skill_blockhomun_end");
 	add_timer_func_list(skill_keep_using, "skill_keep_using");
 
 	add_timer_interval(gettick()+SKILLUNITTIMER_INTERVAL,skill_unit_timer,0,0,SKILLUNITTIMER_INTERVAL);

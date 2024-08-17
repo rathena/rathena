@@ -638,7 +638,9 @@ int skill_blockpc_start(map_session_data*, int, t_tick);
 int skill_blockpc_get(map_session_data *sd, int skillid);
 int skill_blockpc_clear(map_session_data *sd);
 TIMER_FUNC(skill_blockpc_end);
+TIMER_FUNC(skill_blockhomun_end);
 int skill_blockhomun_start (struct homun_data*,uint16 skill_id,int);
+int skill_blockhom_get(struct homun_data *, int);
 int skill_blockmerc_start (s_mercenary_data*,uint16 skill_id,int);
 
 

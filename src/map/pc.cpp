@@ -7013,14 +7013,8 @@ enum e_setpos pc_setpos(map_session_data* sd, unsigned short mapindex, int x, in
 		else
 			status_db.removeByStatusFlag(&sd->hd->bl, { SCF_REMOVEFROMHOMONWARP });
 
-		if (battle_config.hom_delay_reset_warp) {
-			sd->hd->blockskill.clear();
-			sd->hd->blockskill.shrink_to_fit();
-
-			// End all cooldown display timers
-			if (battle_config.display_status_timers)
-				clif_homskillinfoblock(*sd->hd);
-		}
+		if(battle_config.hom_delay_reset_warp) 
+			hom_reset_delay(sd->hd,sd->hd->blockskill);	
 
 		sd->hd->bl.m = m;
 		sd->hd->bl.x = sd->hd->ud.to_x = x;

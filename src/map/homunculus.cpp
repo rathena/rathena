@@ -289,14 +289,8 @@ int hom_vaporize(map_session_data *sd, int flag)
 	//Delete timers when vaporized.
 	hom_hungry_timer_delete(hd);
 	hd->homunculus.vaporize = flag ? flag : HOM_ST_REST;
-	if (battle_config.hom_delay_reset_vaporize) {
-		hd->blockskill.clear();
-		hd->blockskill.shrink_to_fit();
-
-		// End all cooldown display timers
-		if (battle_config.display_status_timers)
-			clif_homskillinfoblock(*sd->hd);
-	}
+	if (battle_config.hom_delay_reset_vaporize) 
+		hom_reset_delay(hd,hd->blockskill);
 	status_change_clear(&hd->bl, 1);
 	clif_hominfo(sd, sd->hd, 0);
 	hom_save(hd);
@@ -307,7 +301,20 @@ int hom_vaporize(map_session_data *sd, int flag)
 
 	return unit_remove_map(&hd->bl, CLR_OUTSIGHT);
 }
-
+void hom_reset_delay(struct homun_data *hd,std::vector<std::pair<int16,int>> bsd){
+		for (auto& it : bsd)
+		{
+			int iter = skill_blockhom_get(hd,it.first);
+			if(iter>=0)
+				delete_timer(hd->blockskill[iter].second, skill_blockhomun_end);
+			
+			// End all cooldown display timers
+			if (battle_config.display_status_timers)
+				clif_skill_cooldown(*hd->master, it.first, 0);
+		}
+ 
+		hd->blockskill.clear();
+}
 /**
 * Delete a homunculus, completely "killing it".
 * Emote is the emotion the master should use, send negative to disable.

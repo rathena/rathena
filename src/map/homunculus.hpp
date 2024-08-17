@@ -98,7 +98,7 @@ struct homun_data {
 	map_session_data *master; //pointer back to its master
 	int hungry_timer;	//[orn]
 	t_exp exp_next;
-	std::vector<uint16> blockskill;	// [orn]
+	std::vector<std::pair<int16,int>> blockskill;	// [AoShinHo]
 };
 
 #define HOM_EVO 0x100 //256
@@ -247,6 +247,7 @@ uint32 hom_intimacy_grade2intimacy(enum e_homun_grade grade);
 enum e_homun_grade hom_intimacy_intimacy2grade(uint32 intimacy);
 
 short hom_skill_get_index(uint16 skill_id);
+void hom_reset_delay(struct homun_data *,std::vector<std::pair<int16,int>>);
 
 void do_final_homunculus(void);
 void do_init_homunculus(void);
