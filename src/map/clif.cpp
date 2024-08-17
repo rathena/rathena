@@ -22910,41 +22910,6 @@ void clif_hit_frame(struct block_list* bl)
 		clif_send(buf, packet_len(0x8a), bl, SELF);
 	}
 }
-/*==========================
- RESTORE ANIMATION BY AOSHINHO
-============================*/
-void clif_animation_force_packet(map_session_data * sd, int skill_id, short hit_count)
-{
-#if PACKETVER >= 20181128
-	nullpo_retv(sd);
-	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
-	if (skill == NULL)
-		return;
-	sd->animation_force.iter = 0;
-#ifdef RENEWAL
-	int animation_interval = cap_value(sd->battle_status.adelay - ((sd->battle_status.adelay * sd->bonus.delayrate) / 100), 0, 500); //Kiel can remove all animation from skill
-#else
-	int animation_interval = cap_value(sd->battle_status.adelay - ((sd->battle_status.adelay * sd->bonus.delayrate) / 100), 200, 500); //apsd amotion based
-#endif
-	t_tick start_timer = gettick();
-	switch(skill_id){
-	case AS_SONICBLOW:
-		{
-#ifndef RENEWAL
-		pc_stop_attack(sd);
-#endif
-		}
-		break;
-	case GC_CROSSIMPACT:
-		start_timer += animation_interval; // GC_CROSSIMPACT need to skip 1st hit because it stay in client
-		break;
-	default: break;
-	}		
-	sd->animation_force.hitcount = hit_count;
-	if(animation_interval > 0)
-		sd->animation_force.tid = add_timer(start_timer, pc_animation_force_timer, sd->bl.id, animation_interval);
-#endif
-}
 
 void clif_barter_open( map_session_data& sd, struct npc_data& nd ){
 #if PACKETVER_MAIN_NUM >= 20190116 || PACKETVER_RE_NUM >= 20190116 || PACKETVER_ZERO_NUM >= 20181226

@@ -373,6 +373,9 @@ struct s_qi_display {
 	e_questinfo_types icon;
 	e_questinfo_markcolor color;
 };
+// Forced Amotion Animation [AoShinHo]
+TIMER_FUNC(pc_animation_force_timer);
+class animation_forced;
 
 class map_session_data {
 public:
@@ -940,16 +943,61 @@ public:
 
 	s_macro_detect macro_detect;
 
-	/*==========================
-	 FORCE AMOTION ANIMATION BY AOSHINHO
-	============================*/
-	struct{
-		int tid;
-		int iter;
-		int hitcount;
-	} animation_force;
-
 	std::vector<uint32> party_booking_requests;
+	// Forced Amotion Animation [AoShinHo]
+	std::vector<animation_forced*> animation_force;
+};
+/*==========================
+ FORCE AMOTION ANIMATION BY AOSHINHO
+============================*/
+class animation_forced
+{
+public:
+	int tid;
+	int iter;
+	int hitcount;
+	int16 skill_id;
+	struct{
+		int id;
+		uint8 dir;
+		int x;
+		int y;
+	}target;
+
+	animation_forced(map_session_data*sd,struct block_list*target, uint16 skill_id, short hit_count = 1){
+#if PACKETVER >= 20181128
+	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
+	if (skill == NULL || !sd || !target)
+		return;
+	this->target.dir = map_calc_dir(&sd->bl,target->x, target->y);
+	this->target.x = target->x;
+	this->target.y = target->y;
+	this->target.id = target->id;
+	this->skill_id = skill_id;
+	this->iter = 0;
+	int animation_interval = this->get_animation_interval(sd);
+	t_tick start_timer = gettick();
+	switch (skill->nameid) {
+	case AS_SONICBLOW:
+	{
+#ifndef RENEWAL
+		pc_stop_attack(sd);
+#endif
+	}
+	break;
+	case GC_CROSSIMPACT:
+		start_timer += animation_interval; // GC_CROSSIMPACT need to skip 1st hit because it stay in client
+		break;
+	default: break;
+	}
+	this->hitcount = hit_count;
+
+	if (animation_interval > 0)
+		this->tid = add_timer(start_timer, pc_animation_force_timer, sd->bl.id, animation_interval);
+#endif
+	}
+private:
+	int get_animation_interval(map_session_data*);
 };
 
 extern struct eri *pc_sc_display_ers; /// Player's SC display table
@@ -1756,9 +1804,6 @@ void pc_macro_detector_disconnect(map_session_data &sd);
 // Macro Reporter
 void pc_macro_reporter_area_select(map_session_data &sd, const int16 x, const int16 y, const int8 radius);
 void pc_macro_reporter_process(map_session_data &sd, int32 reporter_account_id = -1);
-
-// Forced Amotion Animation [AoShinHo]
-TIMER_FUNC(pc_animation_force_timer);
 
 #ifdef MAP_GENERATOR
 void pc_reputation_generate();

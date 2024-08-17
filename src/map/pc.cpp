@@ -15814,22 +15814,44 @@ uint64 CaptchaDatabase::parseBodyNode(const ryml::NodeRef &node) {
 	return 1;
 }
 /* Animation Timer */
+int animation_forced::get_animation_interval(map_session_data*sd){	
+#ifdef RENEWAL
+	return cap_value(sd->battle_status.adelay - ((sd->battle_status.adelay * sd->bonus.delayrate) / 100), 0, 500); //Kiel uncapped animation remove
+#else
+	return cap_value(sd->battle_status.adelay - ((sd->battle_status.adelay * sd->bonus.delayrate) / 100), 190, 500); //apsd amotion based
+#endif;
+}
 TIMER_FUNC(pc_animation_force_timer){
-	map_session_data* sd = map_id2sd( id );
-	if( sd == nullptr )
+	map_session_data* sd = map_id2sd(id);
+	if (sd == nullptr)
 		return 0;
-	if (DIFF_TICK(sd->animation_force.tid, gettick()) > 0) {
+	int it;
+	ARR_FIND(0,sd->animation_force.size(),it,sd->animation_force[it]->tid==tid);
+	if(it>=sd->animation_force.size())
+		return 0;
+	if (DIFF_TICK(sd->animation_force[it]->tid, gettick()) > 0) {
 		clif_authfail_fd(sd->fd, 15);
-		ShowWarning("fail on animation timer sync from char id: %d \n",sd->status.char_id);
-	} else if(sd->animation_force.iter < sd->animation_force.hitcount){
+		ShowWarning("fail on animation timer sync from char id: %d \n", sd->status.char_id);
+	}
+	if (sd->animation_force[it]->iter < sd->animation_force[it]->hitcount) {
+		struct block_list* target = map_id2bl(sd->animation_force[it]->target.id);
+		uint8 dir = target?map_calc_dir(&sd->bl,target->x, target->y):sd->animation_force[it]->target.dir;
+		unit_setdir(&sd->bl,dir,true);
+		if(target && sd->animation_force[it]->skill_id==AS_SONICBLOW){
+			if(!status_isdead(target))
+				unit_setdir(target,(dir < 4 ? dir + rand()%4 : dir - rand()%4),true);
+		}
 		clif_hit_frame(&sd->bl);
-		sd->ud.canmove_tick = gettick() + data;
-		sd->animation_force.tid = add_timer(gettick() + data, pc_animation_force_timer, sd->bl.id, data);
-		sd->animation_force.iter++;
-	} else {
-		sd->animation_force.tid = INVALID_TIMER;
-		sd->animation_force.iter = 0;
-		sd->animation_force.hitcount = 0;
+		sd->animation_force[it]->iter++;
+		if (sd->animation_force[it]->iter < sd->animation_force[it]->hitcount)
+			sd->animation_force[it]->tid = add_timer(gettick() + data, pc_animation_force_timer, sd->bl.id, data);
+		else
+			sd->animation_force[it]->tid = add_timer(gettick(), pc_animation_force_timer, sd->bl.id, data);		
+	}
+	else
+	{
+		delete_timer(sd->animation_force[it]->tid,pc_animation_force_timer);
+		sd->animation_force.erase(sd->animation_force.begin()+it);
 	}
 	return 0;
 }
