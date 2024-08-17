@@ -15861,7 +15861,7 @@ BUILDIN_FUNC(addhomintimacy)
 	homun_data *hd;
 
 	if (!script_charid2sd(3, sd) || !(hd = sd->hd))
-		return SCRIPT_CMD_FAILURE;
+		return SCRIPT_CMD_SUCCESS;
 
 	int32 value = script_getnum(st, 2);
 

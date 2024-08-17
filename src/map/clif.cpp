@@ -6488,7 +6488,7 @@ void clif_status_change(struct block_list *bl, int type, int flag, t_tick tick, 
 
 #if !( PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106 )
 	// Older clients display normal riding icon.
-	if (type == EFST_MADOGEAR)
+	if (type == EFST_MADOGEAR_TYPE)
 		type = EFST_RIDING;
 #endif
 

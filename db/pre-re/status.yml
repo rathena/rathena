@@ -3967,7 +3967,7 @@ Body:
       Unlimitedhummingvoice: true
       Sircleofnature: true
   - Status: Deepsleep
-    Icon: EFST_HANDICAPSTATE_DEEP_SLEEP
+    Icon: EFST_DEEP_SLEEP
     DurationLookup: WM_LULLABY_DEEPSLEEP
     States:
       NoCast: true
