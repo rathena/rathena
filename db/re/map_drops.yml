@@ -109,6 +109,37 @@ Body:
           - Index: 2
             Item: Turtle_Is_Box_IL
             Rate: 5
+      - Monster: ILL_TURTLE_GENERAL
+        Drops:
+          - Index: 0
+            Item: Fancy_Flower_IL
+            Rate: 5000
+          - Index: 1
+            Item: Immaterial_Sword_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 2
+            Item: Iron_Driver_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 3
+            Item: Pole_Axe_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 4
+            Item: IllusionStone
+            Rate: 15000
+          - Index: 5
+            Item: War_Axe_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 6
+            Item: Huuma_Bird_Wing_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 7
+            Item: S_Turtle_Is_Box_IL
+            Rate: 150
   - Map: tur_d04_i
     SpecificDrops:
       - Monster: ILL_ASSULTER
@@ -204,4 +235,1831 @@ Body:
             RandomOptionGroup: ILL_PHYSIC_BOSS
           - Index: 7
             Item: S_Turtle_Is_Box_IL
+            Rate: 150
+  - Map: gef_d01_i
+    SpecificDrops:
+      - Monster: ILL_DRAINLIAR
+        Drops:
+          - Index: 0
+            Item: Balistar_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Vampire_Box_IL
+            Rate: 5
+      - Monster: ILL_ZOMBIE_C
+        Drops:
+          - Index: 0
+            Item: Book_Of_The_Apo_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: Ghoul_Leg_IL
+            Rate: 25
+          - Index: 2
+            Item: IllusionStone
+            Rate: 10
+          - Index: 3
+            Item: Vampire_Box_IL
+            Rate: 5
+      - Monster: ILL_ZOMBIE
+        Drops:
+          - Index: 0
+            Item: Cape_Of_Ancient_Lord_IL
+            Rate: 25
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Vampire_Box_IL
+            Rate: 5
+      - Monster: ILL_GHOUL
+        Drops:
+          - Index: 0
+            Item: Infiltrator_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: Skul_Ring_IL
+            Rate: 25
+          - Index: 2
+            Item: IllusionStone
+            Rate: 10
+          - Index: 3
+            Item: Vampire_Box_IL
+            Rate: 5
+      - Monster: ILL_NIGHTMARE
+        Drops:
+          - Index: 0
+            Item: Ring_IL
+            Rate: 25
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Wizardy_Staff_IL
+            Rate: 25
+            RandomOptionGroup: ILL_MAGIC_NORMAL
+          - Index: 3
+            Item: Vampire_Box_IL
+            Rate: 5
+      - Monster: ILL_DRACULA
+        Drops:
+          - Index: 0
+            Item: Cape_Of_Ancient_Lord_IL
+            Rate: 5000
+          - Index: 1
+            Item: Balistar_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 2
+            Item: Book_Of_The_Apo_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 3
+            Item: Infiltrator_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 4
+            Item: Ring_IL
+            Rate: 5000
+          - Index: 5
+            Item: Ghoul_Leg_IL
+            Rate: 5000
+          - Index: 6
+            Item: Skul_Ring_IL
+            Rate: 5000
+          - Index: 7
+            Item: IllusionStone
+            Rate: 15000
+          - Index: 8
+            Item: Wizardy_Staff_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_MAGIC_BOSS
+          - Index: 9
+            Item: S_Vampire_Box_IL
+            Rate: 150
+  - Map: pay_d03_i
+    SpecificDrops:
+      - Monster: ILL_MOONLIGHT
+        Drops:
+          - Index: 0
+            Item: Apple_Of_Archer_IL
+            Rate: 5000
+          - Index: 1
+            Item: Long_Mace_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 2
+            Item: Moonlight_Sword_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 3
+            Item: Muffler_IL
+            Rate: 5000
+          - Index: 4
+            Item: Nurse_Cap_IL
+            Rate: 5000
+          - Index: 5
+            Item: Puente_Robe_IL
+            Rate: 5000
+          - Index: 6
+            Item: Shoes_IL
+            Rate: 5000
+          - Index: 7
+            Item: Spectral_Spear_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 8
+            Item: Staff_Of_Bordeaux_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_MAGIC_BOSS
+          - Index: 9
+            Item: IllusionStone
+            Rate: 15000
+          - Index: 10
+            Item: S_Moonlight_Box_IL
+            Rate: 150
+      - Monster: ILL_NINE_TAIL
+        Drops:
+          - Index: 0
+            Item: Puente_Robe_IL
+            Rate: 25
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Moonlight_Box_IL
+            Rate: 5
+      - Monster: ILL_MUNAK
+        Drops:
+          - Index: 0
+            Item: Nurse_Cap_IL
+            Rate: 25
+          - Index: 1
+            Item: Shoes_IL
+            Rate: 25
+          - Index: 2
+            Item: IllusionStone
+            Rate: 10
+          - Index: 3
+            Item: Moonlight_Box_IL
+            Rate: 5
+      - Monster: ILL_BON_GUN
+        Drops:
+          - Index: 0
+            Item: Long_Mace_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: Spectral_Spear_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 2
+            Item: IllusionStone
+            Rate: 10
+          - Index: 3
+            Item: Moonlight_Box_IL
+            Rate: 5
+      - Monster: ILL_SOHEE
+        Drops:
+          - Index: 0
+            Item: Moonlight_Sword_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: Muffler_IL
+            Rate: 25
+          - Index: 2
+            Item: IllusionStone
+            Rate: 10
+          - Index: 3
+            Item: Moonlight_Box_IL
+            Rate: 5
+      - Monster: ILL_ARCHER_SKELETON
+        Drops:
+          - Index: 0
+            Item: Apple_Of_Archer_IL
+            Rate: 25
+          - Index: 1
+            Item: Staff_Of_Bordeaux_IL
+            Rate: 25
+            RandomOptionGroup: ILL_MAGIC_NORMAL
+          - Index: 2
+            Item: IllusionStone
+            Rate: 10
+          - Index: 3
+            Item: Moonlight_Box_IL
+            Rate: 5
+  - Map: ice_d03_i
+    SpecificDrops:
+      - Monster: ILL_GAZETI
+        Drops:
+          - Index: 0
+            Item: Frozen_Box_IL
+            Rate: 5
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Clack_Of_Servival_IL
+            Rate: 25
+      - Monster: ILL_SNOWIER
+        Drops:
+          - Index: 0
+            Item: Frozen_Box_IL
+            Rate: 5
+          - Index: 1
+            Item: Cap_IL
+            Rate: 25
+          - Index: 2
+            Item: Huuma_Flutter_Snow_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 3
+            Item: IllusionStone
+            Rate: 10
+      - Monster: ILL_ICE_TITAN
+        Drops:
+          - Index: 0
+            Item: Frozen_Box_IL
+            Rate: 5
+          - Index: 1
+            Item: Combo_Battle_Glove_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 2
+            Item: Herald_Of_GOD_IL
+            Rate: 25
+          - Index: 3
+            Item: IllusionStone
+            Rate: 10
+      - Monster: ILL_ICEICLE
+        Drops:
+          - Index: 0
+            Item: Frozen_Box_IL
+            Rate: 5
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+      - Monster: ILL_KTULLANUX
+        Drops:
+          - Index: 0
+            Item: Cap_IL
+            Rate: 5000
+          - Index: 1
+            Item: Combo_Battle_Glove_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 2
+            Item: Huuma_Flutter_Snow_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 3
+            Item: Herald_Of_GOD_IL
+            Rate: 5000
+          - Index: 4
+            Item: IllusionStone
+            Rate: 15000
+          - Index: 5
+            Item: Clack_Of_Servival_IL
+            Rate: 5000
+          - Index: 6
+            Item: S_Frozen_Box_IL
+            Rate: 150
+  - Map: com_d02_i
+    SpecificDrops:
+      - Monster: ILL_TRI_JOINT
+        Drops:
+          - Index: 0
+            Item: IllusionStone
+            Rate: 10
+          - Index: 1
+            Item: Tablet_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 2
+            Item: Luanda_Box_IL
+            Rate: 5
+      - Monster: ILL_STALACTIC_GOLEM
+        Drops:
+          - Index: 0
+            Item: Hunter_Bow_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Luanda_Box_IL
+            Rate: 5
+      - Monster: ILL_MEGALITH
+        Drops:
+          - Index: 0
+            Item: Hunter_Bow_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Luanda_Box_IL
+            Rate: 5
+      - Monster: ILL_TAO_GUNKA
+        Drops:
+          - Index: 0
+            Item: Goibne_Armor_IL
+            Rate: 5000
+          - Index: 1
+            Item: Goibne_Helmet_IL
+            Rate: 5000
+          - Index: 2
+            Item: IllusionStone
+            Rate: 15000
+          - Index: 3
+            Item: Tablet_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 4
+            Item: S_Luanda_Box_IL
+            Rate: 150
+      - Monster: ILL_STONE_SHOOTER
+        Drops:
+          - Index: 0
+            Item: Hunter_Bow_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Luanda_Box_IL
+            Rate: 5
+      - Monster: ILL_WOOTAN_SHOOTER
+        Drops:
+          - Index: 0
+            Item: IllusionStone
+            Rate: 10
+          - Index: 1
+            Item: Tablet_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 2
+            Item: Luanda_Box_IL
+            Rate: 5
+      - Monster: ILL_WOOTAN_FIGHTER
+        Drops:
+          - Index: 0
+            Item: IllusionStone
+            Rate: 10
+          - Index: 1
+            Item: Tablet_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 2
+            Item: Luanda_Box_IL
+            Rate: 5
+      - Monster: ILL_WOOTAN_DEFENDER
+        Drops:
+          - Index: 0
+            Item: Goibne_Boots_IL
+            Rate: 5000
+          - Index: 1
+            Item: Goibne_Shoulder_IL
+            Rate: 5000
+          - Index: 2
+            Item: Hunter_Bow_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 3
+            Item: IllusionStone
+            Rate: 15000
+          - Index: 4
+            Item: S_Luanda_Box_IL
+            Rate: 150
+  - Map: iz_d04_i
+    SpecificDrops:
+      - Monster: ILL_SROPHO
+        Drops:
+          - Index: 0
+            Item: Electric_Eel_IL
+            Rate: 25
+            RandomOptionGroup: ILL_MAGIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Underwater_Box_IL
+            Rate: 5
+      - Monster: ILL_OBEAUNE
+        Drops:
+          - Index: 0
+            Item: Saint_Robe_IL
+            Rate: 25
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Underwater_Box_IL
+            Rate: 5
+      - Monster: ILL_DEVIACE
+        Drops:
+          - Index: 0
+            Item: KatarOfCold_Icicle_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Underwater_Box_IL
+            Rate: 5
+      - Monster: ILL_MARSE
+        Drops:
+          - Index: 0
+            Item: Water_Sprits_Armor_IL
+            Rate: 25
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Underwater_Box_IL
+            Rate: 5
+      - Monster: ILL_MERMAN
+        Drops:
+          - Index: 0
+            Item: IllusionStone
+            Rate: 10
+          - Index: 1
+            Item: Zephyrus_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 2
+            Item: Underwater_Box_IL
+            Rate: 5
+      - Monster: ILL_ABYSMAL_WITCH
+        Drops:
+          - Index: 0
+            Item: Chain_Mail_IL
+            Rate: 5000
+          - Index: 1
+            Item: Electric_Eel_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_MAGIC_BOSS
+          - Index: 2
+            Item: KatarOfCold_Icicle_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 3
+            Item: Morrigane_Belt_IL
+            Rate: 5000
+          - Index: 4
+            Item: Morrigane_Pendant_IL
+            Rate: 5000
+          - Index: 5
+            Item: Water_Sprits_Armor_IL
+            Rate: 5000
+          - Index: 6
+            Item: IllusionStone
+            Rate: 15000
+          - Index: 7
+            Item: Zephyrus_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 8
+            Item: S_Underwater_Box_IL
+            Rate: 150
+  - Map: iz_d05_i
+    SpecificDrops:
+      - Monster: ILL_SEDORA
+        Drops:
+          - Index: 0
+            Item: Electronic_Guitar_IL
+            Rate: 25
+            RandomOptionGroup: ILL_MAGIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Underwater_Box_IL
+            Rate: 5
+      - Monster: ILL_SWORD_FISH
+        Drops:
+          - Index: 0
+            Item: IllusionStone
+            Rate: 10
+          - Index: 1
+            Item: Underwater_Box_IL
+            Rate: 5
+      - Monster: ILL_STROUF
+        Drops:
+          - Index: 0
+            Item: Brionac_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Underwater_Box_IL
+            Rate: 5
+      - Monster: ILL_PHEN
+        Drops:
+          - Index: 0
+            Item: Chain_Mail_IL
+            Rate: 25
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Underwater_Box_IL
+            Rate: 5
+      - Monster: ILL_KING_DRAMOH
+        Drops:
+          - Index: 0
+            Item: Death_Guidance_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Underwater_Box_IL
+            Rate: 5
+      - Monster: ILL_KRAKEN
+        Drops:
+          - Index: 0
+            Item: Brionac_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 1
+            Item: Death_Guidance_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 2
+            Item: Electronic_Guitar_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_MAGIC_BOSS
+          - Index: 3
+            Item: Morrigane_Helm_IL
+            Rate: 5000
+          - Index: 4
+            Item: Morrigane_Manyeau_IL
+            Rate: 5000
+          - Index: 5
+            Item: Saint_Robe_IL
+            Rate: 5000
+          - Index: 6
+            Item: IllusionStone
+            Rate: 15000
+          - Index: 7
+            Item: S_Underwater_Box_IL
+            Rate: 150
+  - Map: amicitia2
+    SpecificDrops:
+      - Monster: CHIMERA_LAVA
+        Drops:
+          - Index: 0
+            Item: Etel_Dust
+            Rate: 875
+          - Index: 1
+            Item: Fourth_Bh_Sword
+            Rate: 50
+          - Index: 2
+            Item: Fourth_1h_Nindo
+            Rate: 50
+          - Index: 3
+            Item: Fourth_1h_Edge
+            Rate: 50
+          - Index: 4
+            Item: Fourth_1h_Book
+            Rate: 50
+          - Index: 5
+            Item: Fourth_1h_Rod
+            Rate: 50
+          - Index: 6
+            Item: Fourth_1h_Spear
+            Rate: 50
+          - Index: 7
+            Item: Fourth_Bh_Staff
+            Rate: 50
+          - Index: 8
+            Item: Fourth_1h_Wand
+            Rate: 50
+      - Monster: CHIMERA_FULGOR
+        Drops:
+          - Index: 0
+            Item: Etel_Dust
+            Rate: 875
+          - Index: 1
+            Item: Fourth_Bh_Sword
+            Rate: 50
+          - Index: 2
+            Item: Fourth_1h_Nindo
+            Rate: 50
+          - Index: 3
+            Item: Fourth_1h_Edge
+            Rate: 50
+          - Index: 4
+            Item: Fourth_1h_Book
+            Rate: 50
+          - Index: 5
+            Item: Fourth_1h_Rod
+            Rate: 50
+          - Index: 6
+            Item: Fourth_1h_Spear
+            Rate: 50
+          - Index: 7
+            Item: Fourth_Bh_Staff
+            Rate: 50
+          - Index: 8
+            Item: Fourth_1h_Wand
+            Rate: 50
+      - Monster: CHIMERA_NAPEO
+        Drops:
+          - Index: 0
+            Item: Etel_Dust
+            Rate: 875
+          - Index: 1
+            Item: Fourth_Bh_Sword
+            Rate: 50
+          - Index: 2
+            Item: Fourth_1h_Nindo
+            Rate: 50
+          - Index: 3
+            Item: Fourth_1h_Edge
+            Rate: 50
+          - Index: 4
+            Item: Fourth_1h_Book
+            Rate: 50
+          - Index: 5
+            Item: Fourth_1h_Rod
+            Rate: 50
+          - Index: 6
+            Item: Fourth_1h_Spear
+            Rate: 50
+          - Index: 7
+            Item: Fourth_Bh_Staff
+            Rate: 50
+          - Index: 8
+            Item: Fourth_1h_Wand
+            Rate: 50
+      - Monster: CHIMERA_GALENSIS
+        Drops:
+          - Index: 0
+            Item: Etel_Dust
+            Rate: 875
+          - Index: 1
+            Item: Fourth_Bh_Sword
+            Rate: 50
+          - Index: 2
+            Item: Fourth_1h_Nindo
+            Rate: 50
+          - Index: 3
+            Item: Fourth_1h_Edge
+            Rate: 50
+          - Index: 4
+            Item: Fourth_1h_Book
+            Rate: 50
+          - Index: 5
+            Item: Fourth_1h_Rod
+            Rate: 50
+          - Index: 6
+            Item: Fourth_1h_Spear
+            Rate: 50
+          - Index: 7
+            Item: Fourth_Bh_Staff
+            Rate: 50
+          - Index: 8
+            Item: Fourth_1h_Wand
+            Rate: 50
+      - Monster: CHIMERA_THEONE
+        Drops:
+          - Index: 0
+            Item: Etel_Dust
+            Rate: 25000
+          - Index: 1
+            Item: Etel_Stone
+            Rate: 5000
+          - Index: 2
+            Item: Fourth_Bh_Sword
+            Rate: 750
+          - Index: 3
+            Item: Fourth_1h_Nindo
+            Rate: 750
+          - Index: 4
+            Item: Fourth_1h_Edge
+            Rate: 750
+          - Index: 5
+            Item: Fourth_1h_Book
+            Rate: 750
+          - Index: 6
+            Item: Fourth_1h_Rod
+            Rate: 750
+          - Index: 7
+            Item: Fourth_1h_Spear
+            Rate: 750
+          - Index: 8
+            Item: Fourth_Bh_Staff
+            Rate: 750
+          - Index: 9
+            Item: Fourth_1h_Wand
+            Rate: 750
+  - Map: amicitia1
+    SpecificDrops:
+      - Monster: CHIMERA_AMITERA
+        Drops:
+          - Index: 0
+            Item: Etel_Dust
+            Rate: 750
+          - Index: 1
+            Item: Fourth_Bh_Sword
+            Rate: 150
+          - Index: 2
+            Item: Fourth_1h_Book
+            Rate: 150
+          - Index: 3
+            Item: Fourth_1h_Spear
+            Rate: 150
+          - Index: 4
+            Item: Fourth_Bh_Staff
+            Rate: 150
+      - Monster: CHIMERA_LITUS
+        Drops:
+          - Index: 0
+            Item: Etel_Dust
+            Rate: 750
+          - Index: 1
+            Item: Fourth_Bh_Sword
+            Rate: 150
+          - Index: 2
+            Item: Fourth_1h_Book
+            Rate: 150
+          - Index: 3
+            Item: Fourth_1h_Spear
+            Rate: 150
+          - Index: 4
+            Item: Fourth_Bh_Staff
+            Rate: 150
+      - Monster: CHIMERA_FILLIA
+        Drops:
+          - Index: 0
+            Item: Etel_Dust
+            Rate: 750
+          - Index: 1
+            Item: Fourth_Bh_Sword
+            Rate: 150
+          - Index: 2
+            Item: Fourth_1h_Book
+            Rate: 150
+          - Index: 3
+            Item: Fourth_1h_Spear
+            Rate: 150
+          - Index: 4
+            Item: Fourth_Bh_Staff
+            Rate: 150
+      - Monster: CHIMERA_VANILAQUS
+        Drops:
+          - Index: 0
+            Item: Etel_Dust
+            Rate: 750
+          - Index: 1
+            Item: Fourth_Bh_Sword
+            Rate: 150
+          - Index: 2
+            Item: Fourth_1h_Book
+            Rate: 150
+          - Index: 3
+            Item: Fourth_1h_Spear
+            Rate: 150
+          - Index: 4
+            Item: Fourth_Bh_Staff
+            Rate: 150
+  - Map: sp_rudus4
+    SpecificDrops:
+      - Monster: GIANT_CAPUT
+        Drops:
+          - Index: 0
+            Item: Etel_Dust
+            Rate: 750
+          - Index: 1
+            Item: Fourth_Grenade
+            Rate: 50
+          - Index: 2
+            Item: Fourth_Bh_Bow
+            Rate: 50
+          - Index: 3
+            Item: Fourth_1h_Knuckle
+            Rate: 50
+          - Index: 4
+            Item: Fourth_Bh_Lute
+            Rate: 50
+          - Index: 5
+            Item: Fourth_Rifle
+            Rate: 50
+          - Index: 6
+            Item: Fourth_Revolver
+            Rate: 50
+          - Index: 7
+            Item: Fourth_Shotgun
+            Rate: 50
+          - Index: 8
+            Item: Fourth_Bh_Fuuma
+            Rate: 50
+          - Index: 9
+            Item: Fourth_Gatling
+            Rate: 50
+          - Index: 10
+            Item: Fourth_1h_Whip
+            Rate: 50
+      - Monster: DOLORIAN
+        Drops:
+          - Index: 0
+            Item: Etel_Dust
+            Rate: 750
+          - Index: 1
+            Item: Fourth_Grenade
+            Rate: 50
+          - Index: 2
+            Item: Fourth_Bh_Bow
+            Rate: 50
+          - Index: 3
+            Item: Fourth_1h_Knuckle
+            Rate: 50
+          - Index: 4
+            Item: Fourth_Bh_Lute
+            Rate: 50
+          - Index: 5
+            Item: Fourth_Rifle
+            Rate: 50
+          - Index: 6
+            Item: Fourth_Revolver
+            Rate: 50
+          - Index: 7
+            Item: Fourth_Shotgun
+            Rate: 50
+          - Index: 8
+            Item: Fourth_Bh_Fuuma
+            Rate: 50
+          - Index: 9
+            Item: Fourth_Gatling
+            Rate: 50
+          - Index: 10
+            Item: Fourth_1h_Whip
+            Rate: 50
+      - Monster: PLAGARION
+        Drops:
+          - Index: 0
+            Item: Etel_Dust
+            Rate: 750
+          - Index: 1
+            Item: Fourth_Grenade
+            Rate: 50
+          - Index: 2
+            Item: Fourth_Bh_Bow
+            Rate: 50
+          - Index: 3
+            Item: Fourth_1h_Knuckle
+            Rate: 50
+          - Index: 4
+            Item: Fourth_Bh_Lute
+            Rate: 50
+          - Index: 5
+            Item: Fourth_Rifle
+            Rate: 50
+          - Index: 6
+            Item: Fourth_Revolver
+            Rate: 50
+          - Index: 7
+            Item: Fourth_Shotgun
+            Rate: 50
+          - Index: 8
+            Item: Fourth_Bh_Fuuma
+            Rate: 50
+          - Index: 9
+            Item: Fourth_Gatling
+            Rate: 50
+          - Index: 10
+            Item: Fourth_1h_Whip
+            Rate: 50
+      - Monster: DEADRE
+        Drops:
+          - Index: 0
+            Item: Etel_Dust
+            Rate: 750
+          - Index: 1
+            Item: Fourth_Grenade
+            Rate: 50
+          - Index: 2
+            Item: Fourth_Bh_Bow
+            Rate: 50
+          - Index: 3
+            Item: Fourth_1h_Knuckle
+            Rate: 50
+          - Index: 4
+            Item: Fourth_Bh_Lute
+            Rate: 50
+          - Index: 5
+            Item: Fourth_Rifle
+            Rate: 50
+          - Index: 6
+            Item: Fourth_Revolver
+            Rate: 50
+          - Index: 7
+            Item: Fourth_Shotgun
+            Rate: 50
+          - Index: 8
+            Item: Fourth_Bh_Fuuma
+            Rate: 50
+          - Index: 9
+            Item: Fourth_Gatling
+            Rate: 50
+          - Index: 10
+            Item: Fourth_1h_Whip
+            Rate: 50
+      - Monster: VENEDI
+        Drops:
+          - Index: 0
+            Item: Etel_Dust
+            Rate: 750
+          - Index: 1
+            Item: Fourth_Grenade
+            Rate: 50
+          - Index: 2
+            Item: Fourth_Bh_Bow
+            Rate: 50
+          - Index: 3
+            Item: Fourth_1h_Knuckle
+            Rate: 50
+          - Index: 4
+            Item: Fourth_Bh_Lute
+            Rate: 50
+          - Index: 5
+            Item: Fourth_Rifle
+            Rate: 50
+          - Index: 6
+            Item: Fourth_Revolver
+            Rate: 50
+          - Index: 7
+            Item: Fourth_Shotgun
+            Rate: 50
+          - Index: 8
+            Item: Fourth_Bh_Fuuma
+            Rate: 50
+          - Index: 9
+            Item: Fourth_Gatling
+            Rate: 50
+          - Index: 10
+            Item: Fourth_1h_Whip
+            Rate: 50
+      - Monster: R001_BESTIA
+        Drops:
+          - Index: 0
+            Item: Etel_Dust
+            Rate: 25000
+          - Index: 1
+            Item: Etel_Stone
+            Rate: 5000
+          - Index: 2
+            Item: Fourth_Grenade
+            Rate: 750
+          - Index: 3
+            Item: Fourth_Bh_Bow
+            Rate: 750
+          - Index: 4
+            Item: Fourth_1h_Knuckle
+            Rate: 750
+          - Index: 5
+            Item: Fourth_Bh_Lute
+            Rate: 750
+          - Index: 6
+            Item: Fourth_Rifle
+            Rate: 750
+          - Index: 7
+            Item: Fourth_Revolver
+            Rate: 750
+          - Index: 8
+            Item: Fourth_Shotgun
+            Rate: 750
+          - Index: 9
+            Item: Fourth_Bh_Fuuma
+            Rate: 750
+          - Index: 10
+            Item: Fourth_Gatling
+            Rate: 750
+          - Index: 11
+            Item: Fourth_1h_Whip
+            Rate: 750
+  - Map: nif_dun01
+    SpecificDrops:
+      - Monster: GAN_CEANN
+        Drops:
+          - Index: 0
+            Item: Etel_Dust
+            Rate: 750
+          - Index: 1
+            Item: Fourth_Bh_Axe
+            Rate: 150
+          - Index: 2
+            Item: Fourth_1h_Sword
+            Rate: 150
+          - Index: 3
+            Item: Fourth_1h_Mace
+            Rate: 150
+          - Index: 4
+            Item: Fourth_1h_Dagger
+            Rate: 150
+          - Index: 5
+            Item: Fourth_Bh_Katar
+            Rate: 150
+      - Monster: BRUTAL_MURDERER
+        Drops:
+          - Index: 0
+            Item: Etel_Dust
+            Rate: 750
+          - Index: 1
+            Item: Fourth_Bh_Axe
+            Rate: 150
+          - Index: 2
+            Item: Fourth_1h_Sword
+            Rate: 150
+          - Index: 3
+            Item: Fourth_1h_Mace
+            Rate: 150
+          - Index: 4
+            Item: Fourth_1h_Dagger
+            Rate: 150
+          - Index: 5
+            Item: Fourth_Bh_Katar
+            Rate: 150
+      - Monster: GHOST_CUBE
+        Drops:
+          - Index: 0
+            Item: Etel_Dust
+            Rate: 750
+          - Index: 1
+            Item: Fourth_Bh_Axe
+            Rate: 150
+          - Index: 2
+            Item: Fourth_1h_Sword
+            Rate: 150
+          - Index: 3
+            Item: Fourth_1h_Mace
+            Rate: 150
+          - Index: 4
+            Item: Fourth_1h_Dagger
+            Rate: 150
+          - Index: 5
+            Item: Fourth_Bh_Katar
+            Rate: 150
+      - Monster: LUDE_GAL
+        Drops:
+          - Index: 0
+            Item: Etel_Dust
+            Rate: 750
+          - Index: 1
+            Item: Fourth_Bh_Axe
+            Rate: 150
+          - Index: 2
+            Item: Fourth_1h_Sword
+            Rate: 150
+          - Index: 3
+            Item: Fourth_1h_Mace
+            Rate: 150
+          - Index: 4
+            Item: Fourth_1h_Dagger
+            Rate: 150
+          - Index: 5
+            Item: Fourth_Bh_Katar
+            Rate: 150
+  - Map: nif_dun02
+    SpecificDrops:
+      - Monster: DISGUISER
+        Drops:
+          - Index: 0
+            Item: Etel_Dust
+            Rate: 875
+          - Index: 1
+            Item: Fourth_Bh_Axe
+            Rate: 50
+          - Index: 2
+            Item: Fourth_1h_Sword
+            Rate: 50
+          - Index: 3
+            Item: Fourth_1h_Manual
+            Rate: 50
+          - Index: 4
+            Item: Fourth_1h_Mace
+            Rate: 50
+          - Index: 5
+            Item: Fourth_1h_Dagger
+            Rate: 50
+          - Index: 6
+            Item: Fourth_1h_Nindo2
+            Rate: 50
+          - Index: 7
+            Item: Fourth_Bh_Katar
+            Rate: 50
+          - Index: 8
+            Item: Fourth_1h_Plant
+            Rate: 50
+      - Monster: BLUEMOON_LOLI_RURI
+        Drops:
+          - Index: 0
+            Item: Etel_Dust
+            Rate: 875
+          - Index: 1
+            Item: Fourth_Bh_Axe
+            Rate: 50
+          - Index: 2
+            Item: Fourth_1h_Sword
+            Rate: 50
+          - Index: 3
+            Item: Fourth_1h_Manual
+            Rate: 50
+          - Index: 4
+            Item: Fourth_1h_Mace
+            Rate: 50
+          - Index: 5
+            Item: Fourth_1h_Dagger
+            Rate: 50
+          - Index: 6
+            Item: Fourth_1h_Nindo2
+            Rate: 50
+          - Index: 7
+            Item: Fourth_Bh_Katar
+            Rate: 50
+          - Index: 8
+            Item: Fourth_1h_Plant
+            Rate: 50
+      - Monster: GROTE
+        Drops:
+          - Index: 0
+            Item: Etel_Dust
+            Rate: 875
+          - Index: 1
+            Item: Fourth_Bh_Axe
+            Rate: 50
+          - Index: 2
+            Item: Fourth_1h_Sword
+            Rate: 50
+          - Index: 3
+            Item: Fourth_1h_Manual
+            Rate: 50
+          - Index: 4
+            Item: Fourth_1h_Mace
+            Rate: 50
+          - Index: 5
+            Item: Fourth_1h_Dagger
+            Rate: 50
+          - Index: 6
+            Item: Fourth_1h_Nindo2
+            Rate: 50
+          - Index: 7
+            Item: Fourth_Bh_Katar
+            Rate: 50
+          - Index: 8
+            Item: Fourth_1h_Plant
+            Rate: 50
+      - Monster: PIERROTZOIST
+        Drops:
+          - Index: 0
+            Item: Etel_Dust
+            Rate: 875
+          - Index: 1
+            Item: Fourth_Bh_Axe
+            Rate: 50
+          - Index: 2
+            Item: Fourth_1h_Sword
+            Rate: 50
+          - Index: 3
+            Item: Fourth_1h_Manual
+            Rate: 50
+          - Index: 4
+            Item: Fourth_1h_Mace
+            Rate: 50
+          - Index: 5
+            Item: Fourth_1h_Dagger
+            Rate: 50
+          - Index: 6
+            Item: Fourth_1h_Nindo2
+            Rate: 50
+          - Index: 7
+            Item: Fourth_Bh_Katar
+            Rate: 50
+          - Index: 8
+            Item: Fourth_1h_Plant
+            Rate: 50
+      - Monster: DEATH_WITCH
+        Drops:
+          - Index: 0
+            Item: Etel_Dust
+            Rate: 25000
+          - Index: 1
+            Item: Etel_Stone
+            Rate: 5000
+          - Index: 2
+            Item: Fourth_Bh_Axe
+            Rate: 750
+          - Index: 3
+            Item: Fourth_1h_Sword
+            Rate: 750
+          - Index: 4
+            Item: Fourth_1h_Manual
+            Rate: 750
+          - Index: 5
+            Item: Fourth_1h_Mace
+            Rate: 750
+          - Index: 6
+            Item: Fourth_1h_Dagger
+            Rate: 750
+          - Index: 7
+            Item: Fourth_1h_Nindo2
+            Rate: 750
+          - Index: 8
+            Item: Fourth_Bh_Katar
+            Rate: 750
+          - Index: 9
+            Item: Fourth_1h_Plant
+            Rate: 750
+  - Map: 1@advs
+    SpecificDrops:
+      - Monster: EP18_MD_SCHULANG_R
+        Drops:
+          - Index: 0
+            Item: Adulter_F_Axe
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_COURAGE
+          - Index: 1
+            Item: Adulter_F_Ballista
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_COURAGE
+          - Index: 2
+            Item: Adulter_F_Bible
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_WISDOM
+          - Index: 3
+            Item: Adulter_F_Cakram
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_COURAGE
+          - Index: 4
+            Item: Adulter_F_C_Humma
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_COURAGE
+          - Index: 5
+            Item: Adulter_F_Dagger
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_COURAGE
+          - Index: 6
+            Item: Adulter_F_F_Wand
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_WISDOM
+          - Index: 7
+            Item: Adulter_F_Gatling
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_COURAGE
+          - Index: 8
+            Item: Adulter_F_G_Sword
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_WISDOM
+          - Index: 9
+            Item: Adulter_F_Harp
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_WISDOM
+          - Index: 10
+            Item: Adulter_F_Knuckle
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_COURAGE
+          - Index: 11
+            Item: Adulter_F_M_Book
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_WISDOM
+          - Index: 12
+            Item: Adulter_F_Moon_B
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_COURAGE
+          - Index: 13
+            Item: Adulter_F_Lapier
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_COURAGE
+          - Index: 14
+            Item: Adulter_F_Shotgun
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_COURAGE
+          - Index: 15
+            Item: Adulter_F_S_Stick
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_WISDOM
+          - Index: 16
+            Item: Adulter_F_T_Staff
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_WISDOM
+          - Index: 17
+            Item: Adulter_F_T_Sword
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_COURAGE
+          - Index: 18
+            Item: Adulter_F_Violin
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_COURAGE
+          - Index: 19
+            Item: Ep18_Amethyst_Fragment
+            Rate: 20000
+          - Index: 20
+            Item: Pontifex_Courage
+            Rate: 10000
+          - Index: 21
+            Item: Pontifex_Wisdom
+            Rate: 10000
+          - Index: 22
+            Item: Vila_Basement_Key
+            Rate: 1000
+      - Monster: EP18_MD_DEMI_FREYJA_R
+        Drops:
+          - Index: 0
+            Item: Adulter_F_A_Bow
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_COURAGE
+          - Index: 1
+            Item: Adulter_F_C_Rope
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_COURAGE
+          - Index: 2
+            Item: Adulter_F_Claw
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_COURAGE
+          - Index: 3
+            Item: Adulter_F_C_Bow
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_COURAGE
+          - Index: 4
+            Item: Adulter_F_D_Wand
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_WISDOM
+          - Index: 5
+            Item: Adulter_F_F_model
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_COURAGE
+          - Index: 6
+            Item: Adulter_F_G_Spear
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_COURAGE
+          - Index: 7
+            Item: Adulter_F_Humma
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_COURAGE
+          - Index: 8
+            Item: Adulter_F_Katar
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_COURAGE
+          - Index: 9
+            Item: Adulter_F_Lance
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_COURAGE
+          - Index: 10
+            Item: Adulter_F_Launcher
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_COURAGE
+          - Index: 11
+            Item: Adulter_F_Mace
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_COURAGE
+          - Index: 12
+            Item: Adulter_F_P_Book
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_WISDOM
+          - Index: 13
+            Item: Adulter_F_Revolver
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_COURAGE
+          - Index: 14
+            Item: Adulter_F_Ribbon
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_WISDOM
+          - Index: 15
+            Item: Adulter_F_Rifle
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_COURAGE
+          - Index: 16
+            Item: Adulter_F_Rod
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_WISDOM
+          - Index: 17
+            Item: Adulter_F_Hall
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_COURAGE
+          - Index: 18
+            Item: Adulter_F_Star_B
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_COURAGE
+          - Index: 19
+            Item: Adulter_F_Wand
+            Rate: 1500
+            RandomOptionGroup: PONTIFEX_WISDOM
+          - Index: 20
+            Item: Ep18_Amethyst_Fragment
+            Rate: 20000
+          - Index: 21
+            Item: Pontifex_Courage
+            Rate: 10000
+          - Index: 22
+            Item: Pontifex_Wisdom
+            Rate: 10000
+          - Index: 23
+            Item: Vila_Basement_Key
+            Rate: 1000
+      - Monster: EP18_MD_SANARE_R
+        Drops:
+          - Index: 0
+            Item: Ep18_Amethyst_Fragment
+            Rate: 100
+          - Index: 1
+            Item: Pontifex_Courage
+            Rate: 500
+      - Monster: EP18_MD_HEARTHUNTER_R2
+        Drops:
+          - Index: 0
+            Item: Ep18_Amethyst_Fragment
+            Rate: 100
+          - Index: 1
+            Item: Pontifex_Wisdom
+            Rate: 500
+      - Monster: EP18_MD_SCHULANG_L
+        Drops:
+          - Index: 0
+            Item: Purificatory_Holy_O
+            Rate: 50000
+          - Index: 1
+            Item: Purificatory_Holy_W
+            Rate: 50000
+          - Index: 2
+            Item: Pontifex_Belief
+            Rate: 40000
+          - Index: 3
+            Item: Pontifex_Tenacity
+            Rate: 40000
+          - Index: 4
+            Item: Blue_Prints_Scroll
+            Rate: 50000
+          - Index: 5
+            Item: Sanctuary_Sudarium
+            Rate: 50000
+          - Index: 6
+            Item: Vivatus_F_Axe
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_TENACITY
+          - Index: 7
+            Item: Vivatus_F_Ballista
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_TENACITY
+          - Index: 8
+            Item: Vivatus_F_Bible
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_BELIEF
+          - Index: 9
+            Item: Vivatus_F_Cakram
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_TENACITY
+          - Index: 10
+            Item: Vivatus_F_C_Humma
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_TENACITY
+          - Index: 11
+            Item: Vivatus_F_Dagger
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_TENACITY
+          - Index: 12
+            Item: Vivatus_F_Gatling
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_TENACITY
+          - Index: 13
+            Item: Vivatus_F_G_Sword
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_BELIEF
+          - Index: 14
+            Item: Vivatus_F_Harp
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_BELIEF
+          - Index: 15
+            Item: Vivatus_F_Humma
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_TENACITY
+          - Index: 16
+            Item: Vivatus_F_Knuckle
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_TENACITY
+          - Index: 17
+            Item: Vivatus_F_Launcher
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_TENACITY
+          - Index: 18
+            Item: Vivatus_F_M_Book
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_BELIEF
+          - Index: 19
+            Item: Vivatus_F_Lapier
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_TENACITY
+          - Index: 20
+            Item: Vivatus_F_Revolver
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_TENACITY
+          - Index: 21
+            Item: Vivatus_F_Rifle
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_TENACITY
+          - Index: 22
+            Item: Vivatus_F_T_Staff
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_BELIEF
+          - Index: 23
+            Item: Vivatus_F_T_Sword
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_TENACITY
+          - Index: 24
+            Item: Vivatus_F_Violin
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_TENACITY
+      - Monster: EP18_MD_DEMI_FREYJA_L
+        Drops:
+          - Index: 0
+            Item: Purificatory_Holy_O
+            Rate: 50000
+          - Index: 1
+            Item: Purificatory_Holy_W
+            Rate: 50000
+          - Index: 2
+            Item: Pontifex_Belief
+            Rate: 40000
+          - Index: 3
+            Item: Pontifex_Tenacity
+            Rate: 40000
+          - Index: 4
+            Item: Blue_Prints_Scroll
+            Rate: 50000
+          - Index: 5
+            Item: Sanctuary_Sudarium
+            Rate: 50000
+          - Index: 6
+            Item: Vivatus_F_A_Bow
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_TENACITY
+          - Index: 7
+            Item: Vivatus_F_C_Rope
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_TENACITY
+          - Index: 8
+            Item: Vivatus_F_Claw
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_TENACITY
+          - Index: 9
+            Item: Vivatus_F_C_Bow
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_TENACITY
+          - Index: 10
+            Item: Vivatus_F_D_Wand
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_BELIEF
+          - Index: 11
+            Item: Vivatus_F_F_model
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_TENACITY
+          - Index: 12
+            Item: Vivatus_F_F_Wand
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_BELIEF
+          - Index: 13
+            Item: Vivatus_F_G_Spear
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_TENACITY
+          - Index: 14
+            Item: Vivatus_F_Katar
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_TENACITY
+          - Index: 15
+            Item: Vivatus_F_Lance
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_TENACITY
+          - Index: 16
+            Item: Vivatus_F_Mace
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_TENACITY
+          - Index: 17
+            Item: Vivatus_F_Moon_B
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_TENACITY
+          - Index: 18
+            Item: Vivatus_F_P_Book
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_BELIEF
+          - Index: 19
+            Item: Vivatus_F_Ribbon
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_BELIEF
+          - Index: 20
+            Item: Vivatus_F_Rod
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_BELIEF
+          - Index: 21
+            Item: Vivatus_F_Hall
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_TENACITY
+          - Index: 22
+            Item: Vivatus_F_S_Stick
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_BELIEF
+          - Index: 23
+            Item: Vivatus_F_Star_B
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_TENACITY
+          - Index: 24
+            Item: Vivatus_F_Wand
+            Rate: 750
+            RandomOptionGroup: PONTIFEX_BELIEF
+      - Monster: EP18_MD_SANARE_L
+        Drops:
+          - Index: 0
+            Item: Ep18_Amethyst_Fragment
+            Rate: 100
+          - Index: 1
+            Item: Purificatory_Holy_O
+            Rate: 1500
+          - Index: 2
+            Item: Purificatory_Holy_W
+            Rate: 1500
+          - Index: 3
+            Item: Pontifex_Tenacity
+            Rate: 500
+          - Index: 4
+            Item: Blue_Prints_Scroll
+            Rate: 50
+          - Index: 5
+            Item: Sanctuary_Sudarium
+            Rate: 1500
+      - Monster: EP18_MD_HEARTHUNTER_L
+        Drops:
+          - Index: 0
+            Item: Ep18_Amethyst_Fragment
+            Rate: 100
+          - Index: 1
+            Item: Purificatory_Holy_O
+            Rate: 1500
+          - Index: 2
+            Item: Purificatory_Holy_W
+            Rate: 1500
+          - Index: 3
+            Item: Pontifex_Belief
+            Rate: 500
+          - Index: 4
+            Item: Blue_Prints_Scroll
+            Rate: 50
+          - Index: 5
+            Item: Sanctuary_Sudarium
+            Rate: 1500
+  - Map: ant_d02_i
+    SpecificDrops:
+      - Monster: ILL_ANDRE
+        Drops:
+          - Index: 0
+            Item: Excalibur_IL
+            Rate: 10
+            RandomOptionGroup: ILL_MAGIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+      - Monster: ILL_SOLDIER_ANDR
+        Drops:
+          - Index: 0
+            Item: Doom_Slayer_IL
+            Rate: 10
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Twins_Box_IL
+            Rate: 5
+      - Monster: ILL_ANDRE_LARVA
+        Drops:
+          - Index: 0
+            Item: Guard_IL
+            Rate: 5
+          - Index: 1
+            Item: Sprint_Glove_IL
+            Rate: 5
+          - Index: 2
+            Item: IllusionStone
+            Rate: 10
+      - Monster: ILL_DENIRO
+        Drops:
+          - Index: 0
+            Item: Sprint_Mail_IL
+            Rate: 10
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+      - Monster: ILL_PIERE
+        Drops:
+          - Index: 0
+            Item: Gelerdria_IL
+            Rate: 10
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+      - Monster: ILL_ANT_EGG
+        Drops:
+          - Index: 0
+            Item: Siver_Guard_IL
+            Rate: 5
+          - Index: 1
+            Item: Sprint_Shoes_IL
+            Rate: 5
+          - Index: 2
+            Item: IllusionStone
+            Rate: 10
+      - Monster: ILL_GIEARTH
+        Drops:
+          - Index: 0
+            Item: IllusionStone
+            Rate: 10
+          - Index: 1
+            Item: Thorn_Staff_IL
+            Rate: 10
+            RandomOptionGroup: ILL_MAGIC_NORMAL
+          - Index: 2
+            Item: Twins_Box_IL
+            Rate: 5
+      - Monster: ILL_FARMILIAR
+        Drops:
+          - Index: 0
+            Item: Ancient_Dagger_IL
+            Rate: 10
+            RandomOptionGroup: ILL_MAGIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+      - Monster: ILL_VITATA
+        Drops:
+          - Index: 0
+            Item: Sprint_Ring_IL
+            Rate: 10
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Twins_Box_IL
+            Rate: 5
+      - Monster: ILL_MAYA
+        Drops:
+          - Index: 0
+            Item: Ancient_Dagger_IL
+            Rate: 1250
+            RandomOptionGroup: ILL_MAGIC_BOSS
+          - Index: 1
+            Item: Dea_Staff_IL
+            Rate: 2500
+            RandomOptionGroup: ILL_MAGIC_BOSS
+          - Index: 2
+            Item: Doom_Slayer_IL
+            Rate: 1250
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 3
+            Item: Excalibur_IL
+            Rate: 1250
+            RandomOptionGroup: ILL_MAGIC_BOSS
+          - Index: 4
+            Item: Gelerdria_IL
+            Rate: 1250
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 5
+            Item: Guard_IL
+            Rate: 1250
+          - Index: 6
+            Item: Siver_Guard_IL
+            Rate: 1250
+          - Index: 7
+            Item: Sprint_Glove_IL
+            Rate: 1250
+          - Index: 8
+            Item: Sprint_Mail_IL
+            Rate: 1250
+          - Index: 9
+            Item: Sprint_Ring_IL
+            Rate: 1250
+          - Index: 10
+            Item: Sprint_Shoes_IL
+            Rate: 1250
+          - Index: 11
+            Item: IllusionStone
+            Rate: 15000
+          - Index: 12
+            Item: Thorn_Staff_IL
+            Rate: 1250
+            RandomOptionGroup: ILL_MAGIC_BOSS
+          - Index: 13
+            Item: S_Twins_Box_IL
             Rate: 150

@@ -117,12 +117,12 @@ bool rathena::util::safe_multiplication( int64 a, int64 b, int64& result ){
 
 void rathena::util::string_left_pad_inplace(std::string& str, char padding, size_t num)
 {
-	str.insert(0, min(0, num - str.length()), padding);
+	str.insert( 0, std::min( static_cast<size_t>( 0 ), num - str.length() ), padding );
 }
 
 std::string rathena::util::string_left_pad(const std::string& original, char padding, size_t num)
 {
-	return std::string(num - min(num, original.length()), padding) + original;
+	return std::string( num - std::min( num, original.length() ), padding ) + original;
 }
 
 constexpr char base62_dictionary[] = {

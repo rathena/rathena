@@ -3650,6 +3650,7 @@ que_swat,145,57,3	script	Philopontess#ep162_04	4_M_PHILOFONTES,{
 		terra_gloria_main = 25;
 		questinfo_refresh();
 		close2;
+		cutin "",255;
 		npctalk "Oh, please come here for a moment.", "Rookie#ep162_03", bc_self;
 		end;
 	}
@@ -3669,7 +3670,7 @@ que_swat,145,57,3	script	Philopontess#ep162_04	4_M_PHILOFONTES,{
 				mes "[Tess]";
 				mes "Not now?";
 				mes "Then get some rest and come back please.";
-				close;
+				close3;
 			}
 			mes "[Tess]";
 			mes "Since we don't know where they are hiding, start looking in corners such as cabinets and boxes.";
@@ -3876,7 +3877,7 @@ rebel_in,70,78,3	script	Elena Volkova#16.2rm	4_F_ELENA,{
 		if (countitem(25161) < 1) {
 			mes "[USU commander Elena]";
 			mes "...Why are you empty-handed? Where is the cookie?";
-			close;
+			close3;
 		}
 		emotion ET_DELIGHT;
 		mes "[USU commander Elena]";

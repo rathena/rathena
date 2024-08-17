@@ -162,6 +162,7 @@ Body:
   - Status: Poison
     DurationLookup: NPC_POISON
     CalcFlags:
+      Def: true
       Def2: true
       Regen: true
     Opt2:
@@ -252,6 +253,7 @@ Body:
   - Status: Dpoison
     DurationLookup: NPC_POISON
     CalcFlags:
+      Def: true
       Def2: true
       Regen: true
     Opt2:
@@ -767,7 +769,6 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       RemoveOnChangeMap: true
-    MinDuration: 5000
   - Status: Keeping
     DurationLookup: NPC_KEEPING
     CalcFlags:
@@ -1098,6 +1099,7 @@ Body:
     Icon: EFST_GROUNDMAGIC
     DurationLookup: SA_VOLCANO
     CalcFlags:
+      Batk: true
       Watk: true
     Flags:
       NoSave: true
@@ -1121,8 +1123,14 @@ Body:
       NoClearance: true
   - Status: Watk_Element
     DurationLookup: MS_MAGNUM
+    Flags:
+      NoSave: true
+    EndOnStart:
+      Watk_Element: true
   - Status: Armor
     DurationLookup: NPC_DEFENDER
+    CalcFlags:
+      Speed: true
   - Status: Armor_Element_Water
     Icon: EFST_RESIST_PROPERTY_WATER
     CalcFlags:
@@ -2050,7 +2058,6 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
   - Status: Inchitrate
-    DurationLookup: NPC_POWERUP
     CalcFlags:
       Hit: true
     Flags:
@@ -2069,7 +2076,6 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
   - Status: Incfleerate
-    DurationLookup: NPC_AGIUP
     CalcFlags:
       Flee: true
     Flags:
@@ -2472,13 +2478,17 @@ Body:
     DurationLookup: HLIF_AVOID
     CalcFlags:
       Speed: true
+    Flags:
+      NoSave: true
+      RemoveFromHomOnWarp: true
   - Status: Change
     DurationLookup: HLIF_CHANGE
     CalcFlags:
       Vit: true
       Int: true
     Flags:
-      RemoveOnChangeMap: true
+      NoSave: true
+      RemoveFromHomOnWarp: true
     Fail:
       Change: true
   - Status: Bloodlust
@@ -2712,6 +2722,7 @@ Body:
     CalcFlags:
       Flee: true
     Flags:
+      BlEffect: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
@@ -2720,6 +2731,7 @@ Body:
     CalcFlags:
       Watk: true
     Flags:
+      BlEffect: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
@@ -2728,6 +2740,7 @@ Body:
     CalcFlags:
       MaxHp: true
     Flags:
+      BlEffect: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
@@ -2736,6 +2749,7 @@ Body:
     CalcFlags:
       MaxSp: true
     Flags:
+      BlEffect: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
@@ -2744,6 +2758,7 @@ Body:
     CalcFlags:
       Hit: true
     Flags:
+      BlEffect: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
@@ -2812,23 +2827,12 @@ Body:
     Icon: EFST_INVINCIBLE
     DurationLookup: NPC_INVINCIBLE
     CalcFlags:
+      Aspd: true
       Speed: true
     Flags:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    EndOnStart:
-      Invincibleoff: true
-  - Status: Invincibleoff
-    DurationLookup: NPC_INVINCIBLEOFF
-    CalcFlags:
-      Speed: true
-    Flags:
-      NoDispell: true
-      NoBanishingBuster: true
-      NoClearance: true
-    EndOnStart:
-      Invincible: true
   - Status: Manu_Atk
     Icon: EFST_MANU_ATK
     Flags:
@@ -3963,7 +3967,7 @@ Body:
       Unlimitedhummingvoice: true
       Sircleofnature: true
   - Status: Deepsleep
-    Icon: EFST_HANDICAPSTATE_DEEP_SLEEP
+    Icon: EFST_DEEP_SLEEP
     DurationLookup: WM_LULLABY_DEEPSLEEP
     States:
       NoCast: true
@@ -7048,3 +7052,25 @@ Body:
       NoClearbuff: true
   - Status: WeaponBreaker
     DurationLookup: NPC_WEAPONBRAKER
+  - Status: Powerup
+    Icon: EFST_POWERUP
+    DurationLookup: NPC_POWERUP
+    CalcFlags:
+      Hit: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Agiup
+    Icon: EFST_AGIUP
+    DurationLookup: NPC_AGIUP
+    CalcFlags:
+      Speed: true
+      Flee: true
+    Flags:
+      NoClearbuff: true
+      NoBanishingBuster: true
+      NoClearance: true
+    EndOnStart:
+      Decreaseagi: true

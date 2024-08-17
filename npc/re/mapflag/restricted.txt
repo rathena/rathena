@@ -247,7 +247,6 @@ lhz_d_n2	mapflag	restricted	6
 //============================================================
 // Municipality (Cities/Towns/Villages)
 //============================================================
-brasilis	mapflag	restricted	7
 dewata	mapflag	restricted	7
 dicastes01	mapflag	restricted	7
 eclage	mapflag	restricted	7
