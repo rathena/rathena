@@ -1252,10 +1252,10 @@ void clif_macro_detector_status(map_session_data &sd, e_macro_detect_status styp
 void clif_macro_reporter_select(map_session_data &sd, const std::vector<uint32> &aid_list);
 void clif_macro_reporter_status(map_session_data &sd, e_macro_report_status stype);
 
-// Duplicate Dynamic NPC
-void clif_dynamicnpc_result( map_session_data& sd, e_dynamicnpc_result result );
-
 // Restore Amotion Animation 
 void clif_hit_frame(struct block_list* bl);
+
+// Duplicate Dynamic NPC
+void clif_dynamicnpc_result( map_session_data& sd, e_dynamicnpc_result result );
 
 #endif /* CLIF_HPP */
