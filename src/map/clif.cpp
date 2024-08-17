@@ -22752,6 +22752,24 @@ void clif_parse_inventory_expansion_reject( int fd, map_session_data* sd ){
 #endif
 }
 
+/*==========================
+ RESTORE ANIMATION BY AOSHINHO
+============================*/
+void clif_hit_frame(struct block_list* bl)
+{
+	unsigned char buf[32];
+	nullpo_retv(bl);
+	WBUFW(buf, 0) = 0x8a;
+	WBUFL(buf, 2) = bl->id;
+	WBUFB(buf, 26) = 10;
+	clif_send(buf, packet_len(0x8a), bl, AREA);
+	if (disguised(bl)) {
+		WBUFL(buf, 2) = disguised_bl_id(bl->id);
+		WBUFB(buf, 26) = 10;
+		clif_send(buf, packet_len(0x8a), bl, SELF);
+	}
+}
+
 void clif_barter_open( map_session_data& sd, struct npc_data& nd ){
 #if PACKETVER_MAIN_NUM >= 20190116 || PACKETVER_RE_NUM >= 20190116 || PACKETVER_ZERO_NUM >= 20181226
 	if( nd.subtype != NPCTYPE_BARTER || nd.u.barter.extended || sd.state.barter_open ){

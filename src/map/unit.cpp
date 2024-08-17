@@ -2205,6 +2205,46 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	if( sd && battle_config.prevent_logout_trigger&PLT_SKILL )
 		sd->canlog_tick = gettick();
 
+	/*==========================
+	 RESTORE ANIMATION BY AOSHINHO
+	============================*/
+
+	if (battle_config.feature_restore_animation_skills && src->type & BL_PC)
+	{
+		bool is_forced=false;
+		short hit_count=0;
+		switch (skill_id)
+		{
+#if PACKETVER >= 20191016
+		case GC_CROSSIMPACT:
+			is_forced=true;
+			hit_count=3;
+			break;
+#endif
+		case AS_SONICBLOW:
+		case CG_ARROWVULCAN:
+			is_forced=true;
+			hit_count=4;
+			break;
+		default:
+			break;
+		}
+		if(is_forced)
+		{
+			int it;
+			ARR_FIND(0,sd->animation_force.size(),it,sd->animation_force[it]->skill_id==skill_id);
+			if(it>=sd->animation_force.size())
+				sd->animation_force.push_back(new animation_forced(sd, target, skill_id, hit_count));
+			else
+			{
+				delete_timer(sd->animation_force[it]->tid,pc_animation_force_timer);
+				sd->animation_force.erase(sd->animation_force.begin()+it);
+				sd->animation_force.push_back(new animation_forced(sd, target, skill_id, hit_count));
+			}
+		}
+	}
+
+
 	return 1;
 }
 
