@@ -11532,6 +11532,12 @@ static const struct _battle_data {
 	{ "hom_delay_reset_warp",               &battle_config.hom_delay_reset_warp,            1,      0,      1,              },
 #endif
 
+#ifdef RENEWAL
+	{ "feature.restore_animation_skills",   &battle_config.feature_restore_animation_skills,0,      0,      1,              },
+#else
+	{ "feature.restore_animation_skills",   &battle_config.feature_restore_animation_skills,1,      0,      1,              },
+#endif
+
 #include <custom/battle_config_init.inc>
 };
 
@@ -11763,6 +11769,13 @@ void battle_adjust_conf()
 
 #ifdef MAP_GENERATOR
 	battle_config.dynamic_mobs = 1;
+#endif
+
+#if PACKETVER < 20181128
+	if( battle_config.feature_restore_animation_skills ){
+		ShowWarning("conf/battle/feature.conf restore skill forced attack motion system is enabled but it requires PACKETVER 2018-11-28 or newer, disabling...\n");
+		battle_config.feature_restore_animation_skills = 0;
+	}
 #endif
 }
 
