@@ -11537,6 +11537,7 @@ static const struct _battle_data {
 #else
 	{ "feature.restore_animation_skills",   &battle_config.feature_restore_animation_skills,1,      0,      1,              },
 #endif
+	{ "feature.ras_min_renewal_motion",     &battle_config.feature_ras_min_renewal_motion,  0,      0,      400,            },
 
 #include <custom/battle_config_init.inc>
 };

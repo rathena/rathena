@@ -1459,6 +1459,6 @@ void clif_noask_sub( map_session_data& sd, map_session_data& tsd, int type );
 void clif_specialpopup(map_session_data& sd, int32 id);
 
 // Restore Amotion Animation 
-void clif_hit_frame(struct block_list*,int);
+void clif_hit_frame(struct block_list*,int,uint16);
 
 #endif /* CLIF_HPP */
