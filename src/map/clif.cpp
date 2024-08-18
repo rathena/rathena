@@ -25140,6 +25140,24 @@ void clif_specialpopup(map_session_data& sd, int32 id ){
 #endif
 }
 
+/*==========================
+ RESTORE ANIMATION BY AOSHINHO
+============================*/
+void clif_hit_frame(struct block_list* bl)
+{
+	unsigned char buf[32];
+	nullpo_retv(bl);
+	WBUFW(buf, 0) = 0x8a;
+	WBUFL(buf, 2) = bl->id;
+	WBUFB(buf, 26) = 10;
+	clif_send(buf, packet_len(0x8a), bl, AREA);
+	if (disguised(bl)) {
+		WBUFL(buf, 2) = disguised_bl_id(bl->id);
+		WBUFB(buf, 26) = 10;
+		clif_send(buf, packet_len(0x8a), bl, SELF);
+	}
+}
+
 /*==========================================
  * Main client packet processing function
  *------------------------------------------*/
