@@ -12736,6 +12736,43 @@ void clif_parse_skill_toid( map_session_data* sd, uint16 skill_id, uint16 skill_
 		return;
 	}
 
+	/*==========================
+	 RESTORE ANIMATION BY AOSHINHO
+	============================*/ 
+	if (battle_config.feature_restore_animation_skills)  // ikn why it not work anymore in unit_useskill_id
+	{
+		bool is_forced = false;
+		short hit_count = 0;
+		switch (skill_id)
+		{
+#if PACKETVER >= 20191016
+		case GC_CROSSIMPACT:
+			is_forced=true;
+			hit_count=3;
+			break;
+#endif
+		case AS_SONICBLOW:
+		case CG_ARROWVULCAN:
+			is_forced=true;
+			hit_count=4;
+			break;
+		default:
+			break;
+		}
+		if(is_forced){
+
+			int it;
+			ARR_FIND(0,sd->animation_force.size(),it,sd->animation_force[it]->skill_id==skill_id);
+			if(it>=sd->animation_force.size())
+				sd->animation_force.push_back(new animation_forced(sd, map_id2bl(target_id), skill_id, hit_count));
+			else
+			{
+				sd->animation_force[it]->hitcount += hit_count;
+				sd->animation_force[it]->motion = sd->animation_force[it]->motion/2;
+			}
+		}
+	}
+
 	t_tick tick = gettick();
 
 	if( skill_lv < 1 ) skill_lv = 1; //No clue, I have seen the client do this with guild skills :/ [Skotlex]
@@ -25143,20 +25180,21 @@ void clif_specialpopup(map_session_data& sd, int32 id ){
 /*==========================
  RESTORE ANIMATION BY AOSHINHO
 ============================*/
-void clif_hit_frame(struct block_list* bl,int motion_time)
+void clif_hit_frame(struct block_list* bl,int motion_time,uint16 skill_id)
 {
 	unsigned char buf[32];
 	nullpo_retv(bl);
 	WBUFW(buf, 0) = 0x8a;
 	WBUFL(buf, 2) = bl->id;
-	WBUFL(buf, 14) = motion_time;
+	if(skill_id != CG_ARROWVULCAN)
+		WBUFL(buf, 14) = motion_time;
 	WBUFB(buf, 26) = 10;
-	send_target st = AREA;
+	clif_send(buf, packet_len(0x8a), bl, AREA);
 	if (disguised(bl)) {
 		WBUFL(buf, 2) = disguised_bl_id(bl->id);
-		st=SELF;
+		WBUFB(buf, 26) = 10;
+		clif_send(buf, packet_len(0x8a), bl, SELF);
 	}
-	clif_send(buf, packet_len(0x8a), bl, st);
 }
 
 /*==========================================

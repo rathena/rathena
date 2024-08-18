@@ -15873,43 +15873,44 @@ uint64 CaptchaDatabase::parseBodyNode(const ryml::NodeRef &node) {
 /* Animation Timer */
 int animation_forced::get_animation_interval(map_session_data*sd){	
 #ifdef RENEWAL
-	return cap_value(sd->battle_status.adelay - ((sd->battle_status.adelay * sd->bonus.delayrate) / 100), 0, 400); //Kiel uncapped animation remove
+	return cap_value(sd->battle_status.adelay - ((sd->battle_status.adelay * sd->bonus.delayrate) / 100), battle_config.feature_ras_min_renewal_motion, 400); //Kiel uncapped animation remove
 #else
-	return cap_value(sd->battle_status.adelay - ((sd->battle_status.adelay * sd->bonus.delayrate) / 100), 150, 400); //apsd amotion based
+	return cap_value(sd->battle_status.adelay - ((sd->battle_status.adelay * sd->bonus.delayrate) / 100), 240, 400); //apsd amotion based
 #endif
 }
 TIMER_FUNC(pc_animation_force_timer){
 	map_session_data* sd = map_id2sd(id);
 	if (sd == nullptr)
 		return 0;
-	int it;
-	ARR_FIND(0,sd->animation_force.size(),it,sd->animation_force[it]->tid==tid);
-	if(it>=sd->animation_force.size())
+	int i;
+	ARR_FIND(0,sd->animation_force.size(),i,sd->animation_force[i]->tid==tid);
+	if(i>=sd->animation_force.size())
 		return 0;
-	if (DIFF_TICK(sd->animation_force[it]->tid, gettick()) > 0) {
+	auto *it = sd->animation_force[i];
+	if (DIFF_TICK(it->tid, gettick()) > 0) {
 		clif_authfail_fd(sd->fd, 15);
 		ShowWarning("fail on animation timer sync from char id: %d \n", sd->status.char_id);
 	}
-	if (sd->animation_force[it]->iter < sd->animation_force[it]->hitcount) {
-		int motion = sd->animation_force[it]->motion != data ? sd->animation_force[it]->motion : data;
-		struct block_list* target = map_id2bl(sd->animation_force[it]->target.id);
-		uint8 dir = target?map_calc_dir(&sd->bl,target->x, target->y):sd->animation_force[it]->target.dir;
+	if (it->iter < it->hitcount) {
+		int motion = it->motion != data ? it->motion : data;
+		struct block_list* target = map_id2bl(it->target.id);
+		uint8 dir = target ? map_calc_dir(&sd->bl,target->x, target->y) : it->target.dir;
 		unit_setdir(&sd->bl,dir,true);
-		if(target && sd->animation_force[it]->skill_id==AS_SONICBLOW){
+		if(target && it->skill_id != CG_ARROWVULCAN){
 			if(!status_isdead(target))
 				unit_setdir(target,(dir < 4 ? dir + rand()%4 : dir - rand()%4),true);
 		}
-		clif_hit_frame(&sd->bl, motion);
-		sd->animation_force[it]->iter++;
-		if (sd->animation_force[it]->iter <= sd->animation_force[it]->hitcount)
-			sd->animation_force[it]->tid = add_timer(gettick() + motion, pc_animation_force_timer, sd->bl.id, motion);
+		clif_hit_frame(&sd->bl, motion, it->skill_id);
+		it->iter++;
+		if (it->iter <= it->hitcount)
+			it->tid = add_timer(gettick() + motion, pc_animation_force_timer, sd->bl.id, motion);
 		else
-			sd->animation_force[it]->tid = add_timer(gettick(), pc_animation_force_timer, sd->bl.id, motion);		
+			it->tid = add_timer(gettick(), pc_animation_force_timer, sd->bl.id, motion);		
 	}
 	else
 	{
-		delete_timer(sd->animation_force[it]->tid,pc_animation_force_timer);
-		sd->animation_force.erase(sd->animation_force.begin()+it);
+		delete_timer(it->tid,pc_animation_force_timer);
+		util::vector_erase_if_exists(sd->animation_force,it);
 	}
 	return 0;
 }

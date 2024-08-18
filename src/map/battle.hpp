@@ -765,7 +765,10 @@ struct Battle_Config
 	int hom_delay_reset_vaporize;
 	int hom_delay_reset_warp;
 
+	//restore animation ----//
 	int feature_restore_animation_skills;
+	int feature_ras_min_renewal_motion;
+	//restore animation ----//
 
 #include <custom/battle_config_struct.inc>
 };
