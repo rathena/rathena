@@ -15874,9 +15874,9 @@ uint64 CaptchaDatabase::parseBodyNode(const ryml::NodeRef &node) {
 /* Animation Timer */
 int animation_forced::get_animation_interval(map_session_data*sd){	
 #ifdef RENEWAL
-	return cap_value(sd->battle_status.adelay - ((sd->battle_status.adelay * sd->bonus.delayrate) / 100), 0, 500); //Kiel uncapped animation remove
+	return cap_value(sd->battle_status.adelay - ((sd->battle_status.adelay * sd->bonus.delayrate) / 100), 0, 400); //Kiel uncapped animation remove
 #else
-	return cap_value(sd->battle_status.adelay - ((sd->battle_status.adelay * sd->bonus.delayrate) / 100), 190, 500); //apsd amotion based
+	return cap_value(sd->battle_status.adelay - ((sd->battle_status.adelay * sd->bonus.delayrate) / 100), 150, 400); //apsd amotion based
 #endif;
 }
 TIMER_FUNC(pc_animation_force_timer){
@@ -15892,6 +15892,7 @@ TIMER_FUNC(pc_animation_force_timer){
 		ShowWarning("fail on animation timer sync from char id: %d \n", sd->status.char_id);
 	}
 	if (sd->animation_force[it]->iter < sd->animation_force[it]->hitcount) {
+		int motion = sd->animation_force[it]->motion != data ? sd->animation_force[it]->motion : data;
 		struct block_list* target = map_id2bl(sd->animation_force[it]->target.id);
 		uint8 dir = target?map_calc_dir(&sd->bl,target->x, target->y):sd->animation_force[it]->target.dir;
 		unit_setdir(&sd->bl,dir,true);
@@ -15899,12 +15900,12 @@ TIMER_FUNC(pc_animation_force_timer){
 			if(!status_isdead(target))
 				unit_setdir(target,(dir < 4 ? dir + rand()%4 : dir - rand()%4),true);
 		}
-		clif_hit_frame(&sd->bl);
+		clif_hit_frame(&sd->bl, motion);
 		sd->animation_force[it]->iter++;
-		if (sd->animation_force[it]->iter < sd->animation_force[it]->hitcount)
-			sd->animation_force[it]->tid = add_timer(gettick() + data, pc_animation_force_timer, sd->bl.id, data);
+		if (sd->animation_force[it]->iter <= sd->animation_force[it]->hitcount)
+			sd->animation_force[it]->tid = add_timer(gettick() + motion, pc_animation_force_timer, sd->bl.id, motion);
 		else
-			sd->animation_force[it]->tid = add_timer(gettick(), pc_animation_force_timer, sd->bl.id, data);		
+			sd->animation_force[it]->tid = add_timer(gettick(), pc_animation_force_timer, sd->bl.id, motion);		
 	}
 	else
 	{
