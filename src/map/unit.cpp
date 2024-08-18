@@ -2206,7 +2206,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 
 	/*==========================
 	 RESTORE ANIMATION BY AOSHINHO
-	============================*/
+	============================*/ 
 
 	if (battle_config.feature_restore_animation_skills && src->type & BL_PC)
 	{
@@ -2228,17 +2228,15 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		default:
 			break;
 		}
-		if(is_forced)
-		{
+		if(is_forced){
 			int it;
 			ARR_FIND(0,sd->animation_force.size(),it,sd->animation_force[it]->skill_id==skill_id);
 			if(it>=sd->animation_force.size())
 				sd->animation_force.push_back(new animation_forced(sd, target, skill_id, hit_count));
 			else
 			{
-				delete_timer(sd->animation_force[it]->tid,pc_animation_force_timer);
-				sd->animation_force.erase(sd->animation_force.begin()+it);
-				sd->animation_force.push_back(new animation_forced(sd, target, skill_id, hit_count));
+				sd->animation_force[it]->hitcount += hit_count;
+				sd->animation_force[it]->motion = sd->animation_force[it]->motion/2;
 			}
 		}
 	}

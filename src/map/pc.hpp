@@ -961,6 +961,7 @@ public:
 	int tid;
 	int iter;
 	int hitcount;
+	int motion;
 	int16 skill_id;
 	struct{
 		int id;
@@ -978,9 +979,10 @@ public:
 	this->target.x = target->x;
 	this->target.y = target->y;
 	this->target.id = target->id;
-	this->skill_id = skill_id;
+	this->skill_id=skill_id;
 	this->iter = 0;
 	int animation_interval = this->get_animation_interval(sd);
+	this->motion = animation_interval;
 	t_tick start_timer = gettick();
 	switch (skill->nameid) {
 	case AS_SONICBLOW:

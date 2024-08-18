@@ -25143,19 +25143,20 @@ void clif_specialpopup(map_session_data& sd, int32 id ){
 /*==========================
  RESTORE ANIMATION BY AOSHINHO
 ============================*/
-void clif_hit_frame(struct block_list* bl)
+void clif_hit_frame(struct block_list* bl,int motion_time)
 {
 	unsigned char buf[32];
 	nullpo_retv(bl);
 	WBUFW(buf, 0) = 0x8a;
 	WBUFL(buf, 2) = bl->id;
+	WBUFL(buf, 14) = motion_time;
 	WBUFB(buf, 26) = 10;
-	clif_send(buf, packet_len(0x8a), bl, AREA);
+	send_target st = AREA;
 	if (disguised(bl)) {
 		WBUFL(buf, 2) = disguised_bl_id(bl->id);
-		WBUFB(buf, 26) = 10;
-		clif_send(buf, packet_len(0x8a), bl, SELF);
+		st=SELF;
 	}
+	clif_send(buf, packet_len(0x8a), bl, st);
 }
 
 /*==========================================
