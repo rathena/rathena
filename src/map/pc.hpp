@@ -988,7 +988,7 @@ public:
 	case AS_SONICBLOW:
 	{
 #ifndef RENEWAL
-		pc_stop_attack(sd);
+		unit_stop_attack(&sd->bl);
 #endif
 	}
 	break;
