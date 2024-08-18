@@ -15877,7 +15877,7 @@ int animation_forced::get_animation_interval(map_session_data*sd){
 	return cap_value(sd->battle_status.adelay - ((sd->battle_status.adelay * sd->bonus.delayrate) / 100), 0, 400); //Kiel uncapped animation remove
 #else
 	return cap_value(sd->battle_status.adelay - ((sd->battle_status.adelay * sd->bonus.delayrate) / 100), 150, 400); //apsd amotion based
-#endif;
+#endif
 }
 TIMER_FUNC(pc_animation_force_timer){
 	map_session_data* sd = map_id2sd(id);
