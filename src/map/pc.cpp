@@ -15872,7 +15872,10 @@ uint64 CaptchaDatabase::parseBodyNode(const ryml::NodeRef &node) {
 }
 
 /* Animation Timer */
-int animation_forced::get_animation_interval(map_session_data*sd){	
+bool PACKET_ZC_RESTORE_ANIMATION::check_target_dead(struct block_list* target){
+	return status_isdead(target);
+}
+int PACKET_ZC_RESTORE_ANIMATION::get_animation_interval(map_session_data*sd){	
 #ifdef RENEWAL
 	return cap_value(sd->battle_status.adelay - ((sd->battle_status.adelay * sd->bonus.delayrate) / 100), battle_config.feature_ras_min_renewal_motion, 400); //Kiel uncapped animation remove
 #else
@@ -15884,22 +15887,32 @@ TIMER_FUNC(pc_animation_force_timer){
 	if (sd == nullptr)
 		return 0;
 	int i;
-	ARR_FIND(0,sd->animation_force.size(),i,sd->animation_force[i]->tid==tid);
-	if(i>=sd->animation_force.size())
+	ARR_FIND(0,sd->animation.size(),i,sd->animation[i]->tid==tid);
+	if(i>=sd->animation.size())
 		return 0;
-	auto *it = sd->animation_force[i];
+	PACKET_ZC_RESTORE_ANIMATION *it = sd->animation[i].get();
 	if (DIFF_TICK(it->tid, gettick()) > 0) {
 		clif_authfail_fd(sd->fd, 15);
 		ShowWarning("fail on animation timer sync from char id: %d \n", sd->status.char_id);
 	}
-	if (it->iter < it->hitcount) {
+	if(it->miss_flag == ATK_FLEE || it->iter >= it->hitcount){
+		delete_timer(it->tid,pc_animation_force_timer);
+		sd->animation.erase(sd->animation.begin()+i);
+		sd->animation.shrink_to_fit();
+	}
+	else
+	{
 		int motion = it->motion != data ? it->motion : data;
 		struct block_list* target = map_id2bl(it->target.id);
 		uint8 dir = target ? map_calc_dir(&sd->bl,target->x, target->y) : it->target.dir;
-		unit_setdir(&sd->bl,dir,true);
+		if(unit_getdir(&sd->bl) != dir)
+			unit_setdir(&sd->bl,dir,true);
 		if(target && it->skill_id != CG_ARROWVULCAN){
 			if(!status_isdead(target))
-				unit_setdir(target,(dir < 4 ? dir + rand()%4 : dir - rand()%4),true);
+			{
+				uint8 t_dir = unit_getdir(target);				
+				unit_setdir(target,(t_dir < DIR_MAX ? t_dir + DIR_WEST : DIR_NORTH),true);
+			}
 		}
 		clif_hit_frame(&sd->bl, motion, it->skill_id);
 		it->iter++;
@@ -15907,11 +15920,6 @@ TIMER_FUNC(pc_animation_force_timer){
 			it->tid = add_timer(gettick() + motion, pc_animation_force_timer, sd->bl.id, motion);
 		else
 			it->tid = add_timer(gettick(), pc_animation_force_timer, sd->bl.id, motion);		
-	}
-	else
-	{
-		delete_timer(it->tid,pc_animation_force_timer);
-		util::vector_erase_if_exists(sd->animation_force,it);
 	}
 	return 0;
 }
