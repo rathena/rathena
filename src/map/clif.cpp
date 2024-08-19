@@ -12736,56 +12736,58 @@ static void clif_parse_UseSkillToPos_mercenary(s_mercenary_data *md, map_session
 		unit_skilluse_pos(&md->bl, x, y, skill_id, skill_lv);
 }
 
+/*==========================
+ RESTORE ANIMATION BY AOSHINHO
+============================*/ 
+static void clif_restore_animation(map_session_data* sd, uint16 skill_id, uint16 skill_lv, int target_id)
+{
+	bool restore = false;
+	short hit_count = 0;
+	switch (skill_id)
+	{
+#if PACKETVER >= 20191016
+	case GC_CROSSIMPACT:
+		restore=true;
+		hit_count=3;
+		break;
+#endif
+	case AS_SONICBLOW:
+	case CG_ARROWVULCAN:
+		restore=true;
+		hit_count=4;
+		break;
+	default:
+		break;
+	}
+	if(restore){
+		if(sd->animation.empty())
+			sd->animation.push_back(std::make_unique<PACKET_ZC_RESTORE_ANIMATION>(sd, map_id2bl(target_id), skill_id, skill_lv, hit_count));
+		else
+		{
+			int i;
+			ARR_FIND(0,sd->animation.size(),i,sd->animation[i]->skill_id==skill_id);
+			if(i>=sd->animation.size())
+				sd->animation.push_back(std::make_unique<PACKET_ZC_RESTORE_ANIMATION>(sd, map_id2bl(target_id), skill_id, skill_lv, hit_count));
+			else
+			{
+				if(!status_isdead(map_id2bl(target_id))){
+					PACKET_ZC_RESTORE_ANIMATION *it = sd->animation[i].get();
+					it->hitcount += hit_count;
+					it->motion = it->motion/2;
+				}
+			}
+		}
+		if(!sd->animation.empty() && sd->animation.back()->skill_id == 0)
+			sd->animation.pop_back();
+	}
+}
+
 void clif_parse_skill_toid( map_session_data* sd, uint16 skill_id, uint16 skill_lv, int target_id ){
 	if( sd == nullptr ){
 		return;
 	}
-
-	/*==========================
-	 RESTORE ANIMATION BY AOSHINHO
-	============================*/ 
-	if (battle_config.feature_restore_animation_skills)  // ikn why it not work anymore in unit_useskill_id
-	{
-		bool restore = false;
-		short hit_count = 0;
-		switch (skill_id)
-		{
-#if PACKETVER >= 20191016
-		case GC_CROSSIMPACT:
-			restore=true;
-			hit_count=3;
-			break;
-#endif
-		case AS_SONICBLOW:
-		case CG_ARROWVULCAN:
-			restore=true;
-			hit_count=4;
-			break;
-		default:
-			break;
-		}
-		if(restore){
-			if(sd->animation.empty())
-				sd->animation.push_back(std::make_unique<PACKET_ZC_RESTORE_ANIMATION>(sd, map_id2bl(target_id), skill_id, hit_count));
-			else
-			{
-				int i;
-				ARR_FIND(0,sd->animation.size(),i,sd->animation[i]->skill_id==skill_id);
-				if(i>=sd->animation.size())
-					sd->animation.push_back(std::make_unique<PACKET_ZC_RESTORE_ANIMATION>(sd, map_id2bl(target_id), skill_id, hit_count));
-				else
-				{
-					if(!status_isdead(map_id2bl(target_id))){
-						PACKET_ZC_RESTORE_ANIMATION *it = sd->animation[i].get();
-						it->hitcount += hit_count;
-						it->motion = it->motion/2;
-					}
-				}
-			}
-			if(!sd->animation.empty() && sd->animation.back()->skill_id == 0)
-				sd->animation.pop_back();
-		}
-	}
+	if (battle_config.feature_restore_animation_skills)  // idkn why it not work anymore in unit_useskill_id
+		clif_restore_animation(sd,skill_id,skill_lv,target_id);
 
 	t_tick tick = gettick();
 
