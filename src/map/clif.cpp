@@ -12759,23 +12759,27 @@ static void clif_restore_animation(map_session_data* sd, uint16 skill_id, uint16
 		break;
 	}
 	if(restore){
-		if(sd->animation.empty())
-			sd->animation.push_back(std::make_unique<PACKET_ZC_RESTORE_ANIMATION>(sd, map_id2bl(target_id), skill_id, skill_lv, hit_count));
-		else
+
+		bool exist = false;
+
+		if(!sd->animation.empty())
 		{
 			int i;
 			ARR_FIND(0,sd->animation.size(),i,sd->animation[i]->skill_id==skill_id);
-			if(i>=sd->animation.size())
-				sd->animation.push_back(std::make_unique<PACKET_ZC_RESTORE_ANIMATION>(sd, map_id2bl(target_id), skill_id, skill_lv, hit_count));
-			else
+			if(i < sd->animation.size())				
 			{
 				if(!status_isdead(map_id2bl(target_id))){
 					PACKET_ZC_RESTORE_ANIMATION *it = sd->animation[i].get();
 					it->hitcount += hit_count;
 					it->motion = it->motion/2;
 				}
+				exist = true;
 			}
 		}
+
+		if(!exist)
+			sd->animation.push_back(std::make_unique<PACKET_ZC_RESTORE_ANIMATION>(sd, map_id2bl(target_id), skill_id, skill_lv, hit_count));
+
 		if(!sd->animation.empty() && sd->animation.back()->skill_id == 0)
 			sd->animation.pop_back();
 	}
