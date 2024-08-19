@@ -1783,7 +1783,11 @@ public:
 	PACKET_ZC_RESTORE_ANIMATION(map_session_data*sd,struct block_list*target, uint16 skill_id, short hit_count = 1){
 #if PACKETVER >= 20181128
 	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
-	if (skill == nullptr || sd == nullptr || target == nullptr || this->check_target_dead(target) || skill_isNotOk(skill_id,*sd) || !skill_check_condition_castbegin(*sd,skill_id,pc_checkskill(sd,skill_id)))
+	if(skill == nullptr || sd == nullptr || target == nullptr)
+		return;
+	if(this->check_target_dead(target) || skill_isNotOk(skill_id,*sd) ||
+		(skill->require.weapon && !pc_check_weapontype(sd,skill->require.weapon)) ||
+		(skill_get_sp(skill_id,pc_checkskill(sd,skill_id)) && (int)sd->battle_status.sp < skill_get_sp(skill_id,pc_checkskill(sd,skill_id))))
 		return;
 	this->target.dir = map_calc_dir(&sd->bl,target->x, target->y);
 	this->target.x = target->x;
@@ -1802,6 +1806,9 @@ public:
 #endif
 	}
 	break;
+	case CG_ARROWVULCAN:
+		start_timer += skill_delayfix(&sd->bl,skill_id,pc_checkskill(sd,skill_id));//CG_ARROWVULCAN have casttime
+		break;
 	case GC_CROSSIMPACT:
 		start_timer += animation_interval; // GC_CROSSIMPACT need to skip 1st hit because it stay in client
 		break;
