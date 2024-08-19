@@ -64,27 +64,14 @@ Body:
       mid_camp: true
       morocc: true
       moscovia: true
+      nameless_i: true
       new_1-1: true
       new_1-2: true
       new_1-3: true
-      new_1-4: true
-      new_2-1: true
-      new_2-2: true
       new_2-3: true
-      new_2-4: true
-      new_3-1: true
-      new_3-2: true
       new_3-3: true
-      new_3-4: true
-      new_4-1: true
-      new_4-2: true
       new_4-3: true
-      new_4-4: true
-      new_5-1: true
-      new_5-2: true
       new_5-3: true
-      new_5-4: true
-      nameless_i: true
       payon: true
       prontera: true
       prt_monk: true
@@ -95,8 +82,8 @@ Body:
       thief_3-1: true
       umbala: true
       veins: true
-      x_prt: true
       xmas: true
+      x_prt: true
       yuno: true
     Mapflags:
       - Flag: NightEnabled
@@ -104,13 +91,13 @@ Body:
       - Flag: NoPenalty
       - Flag: Reset
 
-  - Id: Village_In
+  - Id: Village_In # Indoor
     Maps:
-      alb_ship: true
       airplane: true
       airplane_01: true
       airport: true
       alberta_in: true
+      alb_ship: true
       aldeba_in: true
       alde_alche: true
       ama_in01: true
@@ -125,9 +112,9 @@ Body:
       cave: true
       cmd_in01: true
       cmd_in02: true
-      ein_in01: true
       einbech: true
       einbroch: true
+      ein_in01: true
       geffen_in: true
       gef_tower: true
       gon_in: true
@@ -153,12 +140,24 @@ Body:
       man_in01: true
       mid_campin: true
       moc_castle: true
-      moc_para01: true
       monk_in: true
       morocc_in: true
       mosk_fild01: true
       mosk_in: true
       nameless_in: true
+      new_1-4: true
+      new_2-1: true
+      new_2-2: true
+      new_2-4: true
+      new_3-1: true
+      new_3-2: true
+      new_3-4: true
+      new_4-1: true
+      new_4-2: true
+      new_4-4: true
+      new_5-1: true
+      new_5-2: true
+      new_5-4: true
       nif_in: true
       payon_in01: true
       payon_in02: true
@@ -173,7 +172,6 @@ Body:
       ra_in01: true
       ra_temin: true
       ra_temsky: true
-      s_atelier: true
       sec_in01: true
       spl_in01: true
       spl_in02: true
@@ -199,31 +197,16 @@ Body:
 
   - Id: Field
     Maps:
-      06guild_01: true
-      06guild_02: true
-      06guild_03: true
-      06guild_04: true
-      06guild_05: true
-      06guild_06: true
-      06guild_07: true
-      06guild_08: true
-      06guild_r: true
+      alb2trea: true
       alde_gld: true
       ama_fild01: true
       aru_gld: true
       ayo_fild01: true
-      bif_fild01: true
-      bif_fild02: true
-      cmd_fild01: true
-      cmd_fild02: true
-      cmd_fild03: true
-      cmd_fild04: true
-      cmd_fild05: true
+      bra_fild01: true
       cmd_fild06: true
       cmd_fild07: true
       cmd_fild08: true
       cmd_fild09: true
-      ecl_fild01: true
       ein_fild01: true
       ein_fild02: true
       ein_fild03: true
@@ -234,23 +217,16 @@ Body:
       ein_fild08: true
       ein_fild09: true
       ein_fild10: true
-      g_room1-1: true
-      g_room1-2: true
-      g_room1-3: true
-      g_room2: true
       gef_fild00: true
       gef_fild01: true
       gef_fild02: true
       gef_fild04: true
+      gef_fild05: true
       gef_fild06: true
       gef_fild07: true
       gef_fild08: true
       gef_fild10: true
-      gef_fild12: true
       gef_fild13: true
-      gef_fild14: true
-      gl_cas02_: true
-      gl_chyard_: true
       glast_01: true
       gon_fild01: true
       hu_fild02: true
@@ -259,42 +235,37 @@ Body:
       hu_fild06: true
       hu_fild07: true
       izlu2dun: true
-      job_gun: true
       job_thief1: true
       lhz_fild01: true
       lhz_fild02: true
       lhz_fild03: true
-      ma_fild01: true
-      ma_fild02: true
+      man_fild01: true
+      man_fild02: true
+      man_fild03: true
       mjolnir_01: true
-      mjolnir_03: true
+      mjolnir_02: true
       mjolnir_06: true
-      mjolnir_07: true
       mjolnir_09: true
+      mjolnir_11: true
       moc_fild01: true
       moc_fild02: true
-      moc_fild03: true
+      moc_fild05: true
+      moc_fild06: true
       moc_fild07: true
+      moc_fild10: true
       moc_fild11: true
       moc_fild12: true
-      moc_fild13: true
-      moc_fild16: true
-      moc_fild17: true
       moc_fild18: true
-      moc_ruins: true
-      moro_vol: true
       mosk_fild02: true
       pay_fild01: true
       pay_fild02: true
       pay_fild03: true
       pay_fild04: true
-      pay_fild05: true
       pay_fild06: true
       pay_fild07: true
       pay_fild08: true
       pay_fild09: true
-      pay_fild10: true
-      pay_fild11: true
+      pay_gld: true
       prt_fild00: true
       prt_fild01: true
       prt_fild02: true
@@ -304,17 +275,12 @@ Body:
       prt_fild06: true
       prt_fild07: true
       prt_fild08: true
-      prt_fild08a: true
-      prt_fild08b: true
-      prt_fild08c: true
-      prt_fild08d: true
       prt_fild09: true
-      prt_fild10: true
       prt_gld: true
-      que_avan01: true
       ra_fild01: true
       ra_fild02: true
       ra_fild03: true
+      ra_fild04: true
       ra_fild05: true
       ra_fild06: true
       ra_fild07: true
@@ -325,22 +291,20 @@ Body:
       ra_fild12: true
       ra_fild13: true
       sch_gld: true
-      te_prt_gld: true
+      spl_fild01: true
+      spl_fild03: true
       um_fild01: true
       um_fild02: true
       um_fild03: true
       um_fild04: true
-      un_myst: true
       ve_fild01: true
       ve_fild02: true
-      ve_fild03: true
       ve_fild04: true
       ve_fild05: true
       ve_fild06: true
       ve_fild07: true
       xmas_fild01: true
       yuno_fild01: true
-      yuno_fild02: true
       yuno_fild03: true
       yuno_fild04: true
       yuno_fild06: true
@@ -358,7 +322,6 @@ Body:
       abyss_01: true
       abyss_02: true
       abyss_03: true
-      alb2trea: true
       alde_dun01: true
       alde_dun02: true
       alde_dun03: true
@@ -375,33 +338,25 @@ Body:
       beach_dun3: true
       bra_dun01: true
       bra_dun02: true
-      bra_fild01: true
+      cmd_fild01: true
+      cmd_fild02: true
+      cmd_fild03: true
+      cmd_fild04: true
+      cmd_fild05: true
       c_tower1: true
       c_tower2: true
-      c_tower2_: true
       c_tower3: true
-      c_tower3_: true
       c_tower4: true
-      dic_dun01: true
-      dic_dun02: true
-      dic_dun03: true
-      dic_fild01: true
-      dic_fild02: true
       ein_dun01: true
       ein_dun02: true
-      gef_d01_i: true
       gef_dun00: true
       gef_dun01: true
       gef_dun02: true
-      gef_dun03: true
       gef_fild03: true
-      gef_fild05: true
       gef_fild09: true
       gef_fild11: true
-      gefenia01: true
-      gefenia02: true
-      gefenia03: true
-      gefenia04: true
+      gef_fild12: true
+      gef_fild14: true
       gl_cas01: true
       gl_cas02: true
       gl_church: true
@@ -423,9 +378,9 @@ Body:
       gon_dun03: true
       hu_fild01: true
       hu_fild05: true
-      ice_d03_i: true
       ice_dun01: true
       ice_dun02: true
+      ice_dun03: true
       in_sphinx1: true
       in_sphinx2: true
       in_sphinx3: true
@@ -436,40 +391,44 @@ Body:
       iz_dun02: true
       iz_dun03: true
       iz_dun04: true
-      jupe_cave: true
-      jupe_core: true
       juperos_01: true
       juperos_02: true
+      jupe_cave: true
+      jupe_core: true
       kh_dun02: true
       lhz_dun01: true
       lhz_dun02: true
       lhz_dun03: true
-      lhz_dun04: true
-      lhz_dun_n: true
       lou_dun01: true
       lou_dun02: true
       lou_dun03: true
       lou_fild01: true
-      ma_dun01: true
       mag_dun01: true
       mag_dun02: true
-      man_fild01: true
-      man_fild02: true
-      man_fild03: true
+      mjolnir_03: true
+      mjolnir_04: true
+      mjolnir_05: true
+      mjolnir_07: true
+      mjolnir_08: true
+      mjolnir_10: true
+      mjolnir_12: true
       mjo_dun01: true
       mjo_dun02: true
       mjo_dun03: true
-      mjolnir_02: true
-      mjolnir_04: true
-      mjolnir_05: true
-      mjolnir_08: true
-      mjolnir_10: true
-      mjolnir_11: true
-      mjolnir_12: true
+      moc_fild03: true
+      moc_fild04: true
+      moc_fild08: true
+      moc_fild09: true
+      moc_fild13: true
+      moc_fild14: true
+      moc_fild15: true
+      moc_fild16: true
+      moc_fild17: true
       moc_fild19: true
       moc_fild20: true
       moc_fild21: true
       moc_fild22: true
+      moc_fild22b: true
       moc_pryd01: true
       moc_pryd02: true
       moc_pryd03: true
@@ -477,36 +436,34 @@ Body:
       moc_pryd05: true
       moc_pryd06: true
       moc_prydb1: true
-      moc_prydn1: true
-      moc_prydn2: true
-      moro_cav: true
+      moc_ruins: true
       mosk_dun01: true
       mosk_dun02: true
       mosk_dun03: true
       nameless_n: true
+      niflheim: true
       nif_fild01: true
       nif_fild02: true
-      niflheim: true
       nyd_dun01: true
       nyd_dun02: true
-      odin_past: true
       odin_tem01: true
       odin_tem02: true
       odin_tem03: true
       orcsdun01: true
       orcsdun02: true
-      pay_d03_i: true
       pay_dun00: true
       pay_dun01: true
       pay_dun02: true
       pay_dun03: true
       pay_dun04: true
+      pay_fild05: true
+      pay_fild10: true
+      pay_fild11: true
+      prt_fild10: true
       prt_fild11: true
       prt_maze01: true
       prt_maze02: true
       prt_maze03: true
-      prt_prison: true
-      prt_q: true
       prt_sewb1: true
       prt_sewb2: true
       prt_sewb3: true
@@ -518,9 +475,7 @@ Body:
       ra_san04: true
       ra_san05: true
       sec_in02: true
-      spl_fild01: true
       spl_fild02: true
-      spl_fild03: true
       tha_scene01: true
       tha_t01: true
       tha_t02: true
@@ -533,10 +488,6 @@ Body:
       thor_v03: true
       treasure01: true
       treasure02: true
-      treasure_n1: true
-      treasure_n2: true
-      tur_d03_i: true
-      tur_d04_i: true
       tur_dun01: true
       tur_dun02: true
       tur_dun03: true
@@ -545,15 +496,15 @@ Body:
       tur_dun06: true
       um_dun01: true
       um_dun02: true
-      verus01: true
-      verus02: true
-      verus03: true
+      ve_fild03: true
       xmas_dun01: true
       xmas_dun02: true
+      yuno_fild02: true
       yuno_fild05: true
       yuno_fild07: true
       yuno_fild08: true
       yuno_fild09: true
+      z_agit: true
     Mapflags:
       - Flag: NoMemo
       - Flag: NoWarpTo
@@ -562,12 +513,7 @@ Body:
     Maps:
       ama_test: true
       arug_que01: true
-      bossnia_01: true
-      bossnia_02: true
-      bossnia_03: true
-      bossnia_04: true
       e_tower: true
-      evt_mobroom: true
       force_1-1: true
       force_1-2: true
       force_1-3: true
@@ -579,18 +525,23 @@ Body:
       force_3-3: true
       force_4-1: true
       force_5-1: true
+      gef_dun03: true
       gon_test: true
-      guild_room: true
+      #guild_room: true
+      #g_room1-1: true
+      #g_room1-2: true
+      #g_room1-3: true
+      #g_room2: true
       himinn: true
       #hunter_1-1: true
       #hunter_2-1: true
       #hunter_3-1: true
+      ice_dun04: true
       in_rogue: true
       job_cru: true
       job_duncer: true
       job_hunte: true
       job_knt: true
-      job_ko: true
       job_monk: true
       job_prist: true
       job_sage: true
@@ -599,7 +550,6 @@ Body:
       job_wiz: true
       jupe_area1: true
       jupe_area2: true
-      jupe_core2: true
       jupe_ele: true
       jupe_ele_r: true
       jupe_gate: true
@@ -609,39 +559,37 @@ Body:
       #knight_2-1: true
       #knight_3-1: true
       lhz_cube: true
-      lhz_d_n2: true
       lhz_que01: true
-      #moc_fild04: true
-      #moc_fild05: true
-      #moc_fild06: true
-      #moc_fild08: true
-      #moc_fild09: true
-      #moc_fild10: true
-      #moc_fild14: true
-      #moc_fild15: true
-      moc_fild22b: true
       monk_test: true
       mosk_que: true
       mosk_ship: true
       n_castle: true
-      p_track01: true
-      p_track02: true
+      ordeal_1-1: true
+      ordeal_1-2: true
+      ordeal_1-3: true
+      ordeal_2-1: true
+      ordeal_2-2: true
+      ordeal_2-3: true
+      ordeal_3-1: true
+      ordeal_3-2: true
+      ordeal_3-3: true
       poring_w01: true
       #priest_1-1: true
       #priest_2-1: true
       #priest_3-1: true
       prt_are01: true
+      pvp_c_room: true
       pvp_n_room: true
       pvp_room: true
       pvp_y_room: true
       que_ba: true
       que_dan01: true
       que_dan02: true
+      que_god01: true
       que_god02: true
       que_job01: true
       que_job02: true
       que_job03: true
-      que_lhz: true
       que_moc_16: true
       que_moon: true
       que_qaru01: true
@@ -656,9 +604,7 @@ Body:
       que_qsch05: true
       que_sign01: true
       que_sign02: true
-      que_swat: true
       que_thor: true
-      quiz_test: true
       schg_que01: true
       sword_1-1: true
       sword_2-1: true
@@ -669,7 +615,6 @@ Body:
       #wizard_2-1: true
       #wizard_3-1: true
       yggdrasil01: true
-      z_agit: true
     Mapflags:
       - Flag: GuildLock
       - Flag: NoBonusItemDrop
@@ -684,10 +629,27 @@ Body:
   - Id: Penalty_FreePkZone # Nightmare Mode
     DisabledItems:
       Greed_Scroll: 100
+    Mapflags:
+      - Flag: HideMobHpBar
+      - Flag: NoCostume
+      - Flag: NoMemo
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoWarpTo
+      - Flag: PvP
+      - Flag: PvP_NightmareDrop
+        Value: random,drop,300
+
+  - Id: NoPenalty_FreePkZone # Yoyo Mode
+    DisabledItems:
+      Greed_Scroll: 100
     Maps:
-      e_hugel: true
-      pvp_c_room: true
+      pvp_2vs2: true
       pvp_n_1-1: true
+      pvp_n_1-2: true
+      pvp_n_1-3: true
+      pvp_n_1-4: true
+      pvp_n_1-5: true
       pvp_n_2-1: true
       pvp_n_2-2: true
       pvp_n_2-3: true
@@ -719,26 +681,10 @@ Body:
       pvp_n_7-4: true
       pvp_n_7-5: true
       pvp_n_8-1: true
-      pvp_n_8-5: true
-    Mapflags:
-      - Flag: HideMobHpBar
-      - Flag: NoCostume
-      - Flag: NoMemo
-      - Flag: NoSave
-        Value: SavePoint
-      - Flag: NoWarpTo
-      - Flag: PvP
-      - Flag: PvP_NightmareDrop
-        Value: random,drop,300
-
-  - Id: NoPenalty_FreePkZone # Yoyo Mode
-    DisabledItems:
-      Greed_Scroll: 100
-    Maps:
-      pvp_2vs2: true
       pvp_n_8-2: true
       pvp_n_8-3: true
       pvp_n_8-4: true
+      pvp_n_8-5: true
       pvp_y_1-1: true
       pvp_y_1-2: true
       pvp_y_1-3: true
@@ -826,6 +772,7 @@ Body:
     Mapflags:
       - Flag: Flee_Penalty
         Value: 20
+      - Flag: ForceMinEffect
       - Flag: GvG
       - Flag: GvG_NoParty
       - Flag: HideDamage
@@ -920,6 +867,10 @@ Body:
       gefg_cas03: true
       gefg_cas04: true
       gefg_cas05: true
+      nguild_alde: true
+      nguild_gef: true
+      nguild_pay: true
+      nguild_prt: true
       payg_cas01: true
       payg_cas02: true
       payg_cas03: true
@@ -930,9 +881,11 @@ Body:
       prtg_cas03: true
       prtg_cas04: true
       prtg_cas05: true
+      #siege_test: true
     Mapflags:
       - Flag: Flee_Penalty
         Value: 20
+      - Flag: ForceMinEffect
       - Flag: GuildLock
       - Flag: GvG_Castle
       - Flag: HideDamage
@@ -983,20 +936,14 @@ Body:
       - Flag: Weapon_Damage_Rate
         Value: 60
 
-  - Id: Dungeon2 # PK Enabled
+  - Id: Dungeon2 # Guild Dungeon (PK Enabled)
     Maps:
       arug_dun01: true
-      gld2_ald: true
-      gld2_gef: true
-      gld2_pay: true
-      gld2_prt: true
       gld_dun01: true
       gld_dun02: true
       gld_dun03: true
       gld_dun04: true
       schg_dun01: true
-      teg_dun01: true
-      teg_dun02: true
     Mapflags:
       - Flag: GvG_Dungeon
       - Flag: NoCostume
@@ -1012,15 +959,18 @@ Body:
       N_Fly_Wing: 100
     Maps:
       ama_dun01: true
+      gefenia01: true
+      gefenia02: true
+      gefenia03: true
+      gefenia04: true
       kh_dun01: true
+      thana_step: true
       tha_t07: true
       tha_t08: true
       tha_t09: true
       tha_t10: true
       tha_t11: true
       tha_t12: true
-      thana_boss: true
-      thana_step: true
     Mapflags:
       - Flag: NoMemo
       - Flag: NoTeleport
@@ -1029,11 +979,6 @@ Body:
   - Id: PkServer
     # PK Mode zone is only used when the server has pk_mode (battle.conf) enabled
     # This applies to all PvP maps that don't have their own zone
-    Maps:
-      pvp_n_1-2: true
-      pvp_n_1-3: true
-      pvp_n_1-4: true
-      pvp_n_1-5: true
     Mapflags:
       - Flag: Flee_Penalty
         Value: 20
@@ -1053,7 +998,7 @@ Body:
       - Flag: Short_Damage_Rate
         Value: 80
 
-  - Id: PvPServer
+  - Id: PvPServer # Turbo Track
     DisabledSkills:
       - Skill: SM_ENDURE
         Pc: 100
@@ -1084,7 +1029,6 @@ Body:
       Green_Potion: 100
       Panacea: 100
     Maps:
-      prt_are_in: true
       turbo_n_1: true
       turbo_n_16: true
       turbo_n_4: true
@@ -1108,8 +1052,6 @@ Body:
       - Flag: NoTeleport
       - Flag: NoWarp
       - Flag: NoWarpTo
-      - Flag: PvP_NoGuild
-      - Flag: PvP_NoParty
       - Flag: Short_Damage_Rate
         Value: 80
       - Flag: Weapon_Damage_Rate
@@ -1117,10 +1059,14 @@ Body:
 
   - Id: DenySkill # For the Korean quiz event and similar things
     Maps:
+      prt_are_in: true
+      p_track01: true
+      p_track02: true
       que_bingo: true
       quiz_00: true
       quiz_01: true
       quiz_02: true
+      quiz_test: true
     Mapflags:
       - Flag: HideMobHpBar
       - Flag: NoBranch
@@ -1131,10 +1077,8 @@ Body:
       - Flag: NoSkill
       - Flag: NoTeleport
       - Flag: NoWarpTo
-      - Flag: PvP_NoGuild
-      - Flag: PvP_NoParty
 
-  - Id: TurboTrack # PK Mode
+  - Id: TurboTrack # Turbo Track (PK Mode)
     disabled_skills:
       - Skill: SM_ENDURE
         Pc: 100
@@ -1165,9 +1109,9 @@ Body:
       Green_Potion: 100
       Panacea: 100
     Maps:
+      turbo_e_16: true
       turbo_e_4: true
       turbo_e_8: true
-      turbo_e_16: true
     Mapflags:
       - Flag: Flee_Penalty
         Value: 20
@@ -1223,22 +1167,18 @@ Body:
       - Flag: NoTeleport
       - Flag: NoWarp
       - Flag: NoWarpTo
-      - Flag: PvP_NoGuild
-      - Flag: PvP_NoParty
 
-  - Id: MonsterTrack
+  - Id: MonsterTrack # Boss area
     Maps:
-      gld_dun01_2: true
-      gld_dun02_2: true
-      gld_dun04_2: true
+      poring_c01: true
+      poring_c02: true
+      thana_boss: true
     Mapflags:
       - Flag: NoMemo
       - Flag: NoSave
         Value: SavePoint
       - Flag: NoWarp
       - Flag: NoWarpTo
-      - Flag: PvP_NoGuild
-      - Flag: PvP_NoParty
 
   - Id: PoringBattle
     DisabledSkills:
@@ -1353,6 +1293,7 @@ Body:
     Mapflags:
       - Flag: Flee_Penalty
         Value: 20
+      - Flag: ForceMinEffect
       - Flag: GuildLock
       - Flag: GvG_Castle
       - Flag: HideDamage
@@ -1518,7 +1459,6 @@ Body:
       - Skill: NPC_EXPULSION
         Pc: 100
     Maps:
-      1@cata: true
       1@nyd: true
       1@orcs: true
       1@tower: true
@@ -1529,7 +1469,6 @@ Body:
       4@tower: true
       5@tower: true
       6@tower: true
-      que_god01: true
     Mapflags:
       - Flag: Monster_NoTeleport
       - Flag: NoBranch
@@ -1551,6 +1490,9 @@ Body:
         Pc: 100
       - Skill: MG_SAFETYWALL
         Pc: 100
+    Maps:
+      1@cata: true
+      2@cata: true
     Mapflags:
       - Flag: Monster_NoTeleport
       - Flag: NoBranch
@@ -1562,7 +1504,7 @@ Body:
       - Flag: NoWarpTo
       - Flag: PartyLock
 
-  - Id: Unknown_FrancePvP # France PvP
+  - Id: Unknown_FrancePvP # EuRO Style PvP
     DisabledSkills:
       - Skill: TF_BACKSLIDING
         Pc: 100
@@ -1604,19 +1546,14 @@ Body:
       Endure: 100
     Maps:
       guild_vs1: true
-      guild_vs1-1: true
-      guild_vs1-2: true
-      guild_vs1-3: true
-      guild_vs1-4: true
       guild_vs2: true
-      guild_vs2-1: true
-      guild_vs2-2: true
       guild_vs3: true
       guild_vs4: true
       guild_vs5: true
     Mapflags:
       - Flag: Flee_Penalty
         Value: 20
+      - Flag: ForceMinEffect
       # !TODO: Block party formation; PartyLock is too restrictive
       - Flag: HideDamage
       - Flag: Long_Damage_Rate
@@ -1643,7 +1580,10 @@ Body:
       - Flag: Weapon_Damage_Rate
         Value: 60
 
-  - Id: Unknown_Town2 # Town 2
+  - Id: Unknown_Town2 # Another World Village
+    Maps:
+      manuk: true
+      splendide: true
     Mapflags:
       - Flag: NightEnabled
       - Flag: NoBranch
@@ -1651,12 +1591,17 @@ Body:
       - Flag: NoPenalty
       - Flag: NoWarpTo
 
-  - Id: Unknown_Bossnia # Bossnia Event
+  - Id: Unknown_Training_Grounds # Bossnia Event
     DisabledItems:
       Emergency_Scroll1: 100
       Emergency_Scroll2: 100
       Emergency_Scroll3: 100
       N_Fly_Wing: 100
+    Maps:
+      bossnia_01: true
+      bossnia_02: true
+      bossnia_03: true
+      bossnia_04: true
     Mapflags:
       - Flag: NoBranch
       - Flag: NoMemo
@@ -1665,7 +1610,7 @@ Body:
         Value: SavePoint
       - Flag: NoWarpTo
 
-  - Id: Siege_LowLevel # WoE:TE
+  - Id: Siege_LowLevel # WoE PvP
     DisabledSkills:
       - Skill: TF_BACKSLIDING
         Pc: 100
@@ -1700,21 +1645,10 @@ Body:
       Pty_Assumptio_Scroll: 100
     DisabledStatuses:
       Endure: 100
-    Maps:
-      gld_dun03_2: true
-      te_aldecas1: true
-      te_aldecas2: true
-      te_aldecas3: true
-      te_aldecas4: true
-      te_aldecas5: true
-      te_prtcas01: true
-      te_prtcas02: true
-      te_prtcas03: true
-      te_prtcas04: true
-      te_prtcas05: true
     Mapflags:
       - Flag: Flee_Penalty
         Value: 20
+      - Flag: ForceMinEffect
       - Flag: HideDamage
       - Flag: HideMobHpBar
       - Flag: Invincible_Time
@@ -1728,6 +1662,7 @@ Body:
       - Flag: Monster_NoTeleport
       - Flag: NoBranch
       - Flag: NoCostume
+      - Flag: NoKnockBack
       - Flag: NoLockOn
       - Flag: NoMemo
       - Flag: NoPenalty

@@ -237,7 +237,7 @@ Body:
       - Flag: PrivateAirship_Source
       - Flag: Reset
 
-  - Id: Village_In
+  - Id: Village_In # Indoor
     DisabledSkills:
       - Skill: AM_CANNIBALIZE
         Pc: 100
@@ -2320,7 +2320,7 @@ Body:
       - Flag: Weapon_Damage_Rate
         Value: 60
 
-  - Id: Dungeon2 # Guild Dungeon - PK Enabled
+  - Id: Dungeon2 # Guild Dungeon (PK Enabled)
     DisabledItems:
       Minus_Agi: 100
       Minus_Dex: 100
@@ -2631,7 +2631,7 @@ Body:
       - Flag: Weapon_Damage_Rate
         Value: 60
 
-  - Id: PvpServer
+  - Id: PvPServer # Turbo Track
     DisabledSkills:
       - Skill: SM_ENDURE
         Pc: 100
@@ -2961,7 +2961,7 @@ Body:
       - Flag: PvP_NoGuild
       - Flag: PvP_NoParty
 
-  - Id: TurboTrack # PK Mode
+  - Id: TurboTrack # Turbo Track (PK Mode)
     DisabledSkills:
       - Skill: SM_ENDURE
         Pc: 100
@@ -3257,7 +3257,7 @@ Body:
       - Flag: PvP_NoGuild
       - Flag: PvP_NoParty
 
-  - Id: MonsterTrack
+  - Id: MonsterTrack # Boss area
     DisabledSkills:
       - Skill: BD_ETERNALCHAOS
         Pc: 100
@@ -4242,7 +4242,7 @@ Body:
       - Flag: NoWarpTo
       - Flag: PartyLock
 
-  - Id: Unknown_FrancePvP # France PvP
+  - Id: Unknown_FrancePvP # EuRO Style PvP
     DisabledSkills:
       - Skill: TF_BACKSLIDING
         Pc: 100
@@ -4367,7 +4367,7 @@ Body:
       - Flag: Weapon_Damage_Rate
         Value: 60
 
-  - Id: Unknown_Town2 # Town 2
+  - Id: Unknown_Town2 # Another World Village
     DisabledSkills:
       - Skill: BS_GREED
         Pc: 100
