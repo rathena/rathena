@@ -4144,6 +4144,10 @@ void clif_arrowequip( map_session_data& sd ) {
 void clif_arrow_fail( map_session_data& sd, e_action_failure type ) {
 	PACKET_ZC_ACTION_FAILURE packet{};
 
+	if(battle_config.feature_restore_animation_skills){
+		if(!sd.animation.empty())
+			sd.animation.back()->miss_flag=ATK_FLEE; //stop last animation with flee flag for CG_ARROWVULCAN
+	}
 	packet.packetType = HEADER_ZC_ACTION_FAILURE;
 	packet.type = static_cast<decltype(packet.type)>(type);
 
