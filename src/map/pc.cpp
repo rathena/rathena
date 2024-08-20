@@ -15873,7 +15873,7 @@ uint64 CaptchaDatabase::parseBodyNode(const ryml::NodeRef &node) {
 /* Animation Timer */
 bool PACKET_ZC_RESTORE_ANIMATION::meet_conditions(map_session_data* sd,struct block_list* target, int skill_id, int skill_lv){
 	nullpo_retv(sd);
-	nullpo_retr(nullptr,target);
+	nullpo_retr(false,target);
 
 	if(sd == nullptr || target == nullptr)
 		return false;
