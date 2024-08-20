@@ -15873,16 +15873,14 @@ uint64 CaptchaDatabase::parseBodyNode(const ryml::NodeRef &node) {
 
 /* Animation Timer */
 bool PACKET_ZC_RESTORE_ANIMATION::meet_conditions(map_session_data* sd,struct block_list* target, int skill_id, int skill_lv){
-	nullpo_retv(sd);
+	nullpo_retr(false,sd);
 	nullpo_retr(false,target);
 
 	if(sd == nullptr || target == nullptr)
 		return false;
 
 	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
-	if (skill == nullptr || status_isdead(target) || skill_isNotOk(skill_id, *sd) ||
-		(skill->require.weapon && !pc_check_weapontype(sd,skill->require.weapon)) ||
-		(skill_get_sp(skill_id,skill_lv) && (int)sd->battle_status.sp < skill_get_sp(skill_id,skill_lv)))
+	if(skill == nullptr || status_isdead(target) || skill_isNotOk(skill_id, *sd) ||(skill->require.weapon && !pc_check_weapontype(sd,skill->require.weapon)) ||(skill_get_sp(skill_id,skill_lv) && (int)sd->battle_status.sp < skill_get_sp(skill_id,skill_lv)))
 		return false;
 	
 	return true;
