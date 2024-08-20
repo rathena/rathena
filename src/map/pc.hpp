@@ -1780,14 +1780,10 @@ public:
 		int y;
 	}target;
 
-	PACKET_ZC_RESTORE_ANIMATION(map_session_data*sd,struct block_list*target, uint16 skill_id, uint16 skill_lv, short hit_count = 1){
-#if PACKETVER >= 20181128
-	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
-	if(skill == nullptr || sd == nullptr || target == nullptr)
-		return;
-	if(this->check_target_dead(target) || skill_isNotOk(skill_id,*sd) ||
-		(skill->require.weapon && !pc_check_weapontype(sd,skill->require.weapon)) ||
-		(skill_get_sp(skill_id,skill_lv) && (int)sd->battle_status.sp < skill_get_sp(skill_id,skill_lv)))
+	PACKET_ZC_RESTORE_ANIMATION(map_session_data*sd, struct block_list* target, uint16 skill_id, uint16 skill_lv, short hit_count = 1){
+
+#if PACKETVER >= 20181128	
+	if(!this->meet_conditions(sd,target,skill_id,skill_lv))
 		return;
 	this->target.dir = map_calc_dir(&sd->bl,target->x, target->y);
 	this->target.x = target->x;
@@ -1798,7 +1794,7 @@ public:
 	int animation_interval = this->get_animation_interval(sd);
 	this->motion = animation_interval;
 	t_tick start_timer = gettick();
-	switch (skill->nameid) {
+	switch (skill_id) {
 	case AS_SONICBLOW:
 	{
 #ifndef RENEWAL
@@ -1821,7 +1817,7 @@ public:
 #endif
 	}
 private:
-	bool check_target_dead(struct block_list*);
+	bool meet_conditions(map_session_data* sd, struct block_list*, int, int);
 	int get_animation_interval(map_session_data*);
 };
 
