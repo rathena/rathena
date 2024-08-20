@@ -7834,10 +7834,11 @@ BUILDIN_FUNC(getitem2)
 		}
 
 		int get_count = 0;
-	
+		uint64 unique_id;
 		//Check if it's stackable.
 		if( !itemdb_isstackable2( item_data.get() ) ){
 			get_count = 1;
+			unique_id = item_tmp.unique_id = pc_generate_unique_id(sd);
 		}else{
 			get_count = amount;
 		}
@@ -7856,6 +7857,8 @@ BUILDIN_FUNC(getitem2)
 				}
 			}
 		}
+		if(unique_id)
+			script_pushint64(st,unique_id);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -16768,6 +16771,16 @@ BUILDIN_FUNC(equip) {
 
 	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
+
+	// equip item by unique_id
+	int u;
+	ARR_FIND( 0, MAX_INVENTORY, u, sd->inventory.u.items_inventory[u].unique_id == script_getnum64(st,2));
+	if (u < MAX_INVENTORY) {
+		std::shared_ptr<item_data> id = item_db.find(sd->inventory.u.items_inventory[u].nameid);
+		pc_equipitem(sd,u,id->equip);
+		script_pushint(st,1);
+		return SCRIPT_CMD_SUCCESS;
+	}
 
 	t_itemid nameid = script_getnum(st,2);
 	std::shared_ptr<item_data> id = item_db.find(nameid);
