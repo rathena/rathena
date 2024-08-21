@@ -12769,12 +12769,13 @@ static void clif_restore_animation(map_session_data* sd, struct block_list* targ
 			int i = sd->animation_getIndex(skill_id);
 			if(i < sd->animation.size())				
 			{
-				if(!status_isdead(target)){
-					PACKET_ZC_RESTORE_ANIMATION *it = sd->animation[i].get();
+				PACKET_ZC_RESTORE_ANIMATION *it = sd->animation[i].get();
+				if(!status_isdead(target) && target->id == it->target.id)
+				{					
 					it->hitcount += hit_count;
 					it->motion = it->motion/2;
+					exist = true;
 				}
-				exist = true;
 			}
 		}
 
