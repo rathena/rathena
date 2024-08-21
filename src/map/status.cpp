@@ -9223,7 +9223,7 @@ std::vector<e_race2> status_get_race2(struct block_list *bl)
  */
 int status_isdead(struct block_list *bl)
 {
-	nullpo_ret(bl);
+	nullpo_retr(1, bl);
 	return status_get_status_data(bl)->hp == 0;
 }
 
