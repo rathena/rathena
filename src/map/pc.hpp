@@ -949,7 +949,7 @@ public:
 
 	// Forced Amotion Animation [AoShinHo]
 	std::vector<std::unique_ptr<PACKET_ZC_RESTORE_ANIMATION>> animation;
-
+	int animation_getIndex(int,bool=true);
 };
 
 extern struct eri *pc_sc_display_ers; /// Player's SC display table
@@ -1817,7 +1817,7 @@ public:
 #endif
 	}
 private:
-	bool meet_conditions(map_session_data* sd, struct block_list*, int, int);
+	bool meet_conditions(map_session_data*, struct block_list*, int, int);
 	int get_animation_interval(map_session_data*);
 };
 

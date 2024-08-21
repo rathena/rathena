@@ -4146,7 +4146,7 @@ void clif_arrow_fail( map_session_data& sd, e_action_failure type ) {
 
 	if(battle_config.feature_restore_animation_skills){
 		if(!sd.animation.empty())
-			sd.animation.back()->miss_flag=ATK_FLEE; //stop last animation with flee flag for CG_ARROWVULCAN
+			sd.animation.front()->miss_flag=ATK_FLEE; //stop animation with flee flag for CG_ARROWVULCAN
 	}
 	packet.packetType = HEADER_ZC_ACTION_FAILURE;
 	packet.type = static_cast<decltype(packet.type)>(type);
@@ -12738,37 +12738,38 @@ static void clif_parse_UseSkillToPos_mercenary(s_mercenary_data *md, map_session
 /*==========================
  RESTORE ANIMATION BY AOSHINHO
 ============================*/ 
-static void clif_restore_animation(map_session_data* sd, uint16 skill_id, uint16 skill_lv, int target_id)
+static void clif_restore_animation(map_session_data* sd, struct block_list* target, uint16 skill_id, uint16 skill_lv)
 {
+	nullpo_retv(target);
+
 	bool restore = false;
 	short hit_count = 0;
+
 	switch (skill_id)
 	{
 #if PACKETVER >= 20191016
 	case GC_CROSSIMPACT:
-		restore=true;
-		hit_count=3;
+		restore = true;
+		hit_count = 3;
 		break;
 #endif
 	case AS_SONICBLOW:
 	case CG_ARROWVULCAN:
-		restore=true;
-		hit_count=4;
+		restore = true;
+		hit_count = 4;
 		break;
 	default:
 		break;
 	}
 	if(restore){
-
 		bool exist = false;
 
 		if(!sd->animation.empty())
 		{
-			int i;
-			ARR_FIND(0,sd->animation.size(),i,sd->animation[i]->skill_id==skill_id);
+			int i = sd->animation_getIndex(skill_id);
 			if(i < sd->animation.size())				
 			{
-				if(!status_isdead(map_id2bl(target_id))){
+				if(!status_isdead(target)){
 					PACKET_ZC_RESTORE_ANIMATION *it = sd->animation[i].get();
 					it->hitcount += hit_count;
 					it->motion = it->motion/2;
@@ -12778,7 +12779,7 @@ static void clif_restore_animation(map_session_data* sd, uint16 skill_id, uint16
 		}
 
 		if(!exist)
-			sd->animation.push_back(std::make_unique<PACKET_ZC_RESTORE_ANIMATION>(sd, map_id2bl(target_id), skill_id, skill_lv, hit_count));
+			sd->animation.push_back(std::make_unique<PACKET_ZC_RESTORE_ANIMATION>(sd, target, skill_id, skill_lv, hit_count));
 
 		if(!sd->animation.empty() && sd->animation.back()->skill_id == 0)
 			sd->animation.pop_back();
@@ -12790,7 +12791,7 @@ void clif_parse_skill_toid( map_session_data* sd, uint16 skill_id, uint16 skill_
 		return;
 	}
 	if (battle_config.feature_restore_animation_skills)  // idkn why it not work anymore in unit_useskill_id
-		clif_restore_animation(sd,skill_id,skill_lv,target_id);
+		clif_restore_animation(sd,map_id2bl(target_id),skill_id,skill_lv);
 
 	t_tick tick = gettick();
 
@@ -25207,13 +25208,15 @@ void clif_hit_frame(struct block_list* bl,int motion_time,uint16 skill_id)
 	WBUFL(buf, 2) = bl->id;
 	if(skill_id != CG_ARROWVULCAN)
 		WBUFL(buf, 14) = motion_time;
+	else
+		WBUFL(buf, 14) = motion_time * 2;
 	WBUFB(buf, 26) = 10;
-	clif_send(buf, packet_len(0x8a), bl, AREA);
+	send_target st = AREA;
 	if (disguised(bl)) {
 		WBUFL(buf, 2) = disguised_bl_id(bl->id);
-		WBUFB(buf, 26) = 10;
-		clif_send(buf, packet_len(0x8a), bl, SELF);
+		st=SELF;
 	}
+	clif_send(buf, packet_len(0x8a), bl, st);
 }
 
 /*==========================================
