@@ -15871,16 +15871,6 @@ uint64 CaptchaDatabase::parseBodyNode(const ryml::NodeRef &node) {
 }
 
 /* Animation Timer */
-bool PACKET_ZC_RESTORE_ANIMATION::meet_conditions(map_session_data* sd,struct block_list* target, int skill_id, int skill_lv){
-	nullpo_retr(false,sd);
-	nullpo_retr(false,target);
-
-	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
-	if(skill == nullptr || status_isdead(target) || skill_isNotOk(skill_id, *sd) ||(skill->require.weapon && !pc_check_weapontype(sd,skill->require.weapon)) ||(skill->require.sp && (int)sd->battle_status.sp < skill_get_sp(skill_id,skill_lv)) || !battle_check_target(&sd->bl, target, BCT_ENEMY))
-		return false;
-
-	return true;
-}
 int PACKET_ZC_RESTORE_ANIMATION::get_animation_interval(map_session_data*sd){	
 #ifdef RENEWAL
 	return cap_value(sd->battle_status.adelay - ((sd->battle_status.adelay * sd->bonus.delayrate) / 100), battle_config.feature_ras_min_renewal_motion, 432); //Kiel uncapped animation remove
@@ -15888,10 +15878,12 @@ int PACKET_ZC_RESTORE_ANIMATION::get_animation_interval(map_session_data*sd){
 	return cap_value(sd->battle_status.adelay - ((sd->battle_status.adelay * sd->bonus.delayrate) / 100), 242, 432); //apsd amotion based
 #endif
 }
-int map_session_data::animation_getIndex(int id, bool is_skill){	
+int map_session_data::animation_getIndex(int id, bool is_skill, struct block_list* target){	
 	int i;
 	if(!is_skill)
 		ARR_FIND(0,this->animation.size(),i,this->animation[i]->tid==id);
+	else if(target != nullptr)
+		ARR_FIND(0,this->animation.size(),i,this->animation[i]->skill_id==id && this->animation[i]->target.id==target->id);
 	else
 		ARR_FIND(0,this->animation.size(),i,this->animation[i]->skill_id==id);
 
