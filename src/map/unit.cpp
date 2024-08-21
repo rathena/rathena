@@ -1668,7 +1668,7 @@ int unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int typ
 
 	if (type) {
 		//Bosses can ignore skill induced walkdelay (but not damage induced)
-		if(bl->type == BL_MOB && status_has_mode(status_get_status_data(bl),MD_STATUSIMMUNE))
+		if(bl->type == BL_MOB && status_has_mode(status_get_status_data(*bl),MD_STATUSIMMUNE))
 			return 0;
 		//Make sure walk delay is not decreased
 		if (DIFF_TICK(ud->canmove_tick, tick+delay) > 0)
@@ -1873,7 +1873,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		return 0;
 	}
 
-	tstatus = status_get_status_data(target);
+	tstatus = status_get_status_data(*target);
 
 	// Record the status of the previous skill)
 	if(sd) {
@@ -2856,7 +2856,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, t_tick tick)
 		return 1;
 	}
 
-	sstatus = status_get_status_data(src);
+	sstatus = status_get_status_data(*src);
 	range = sstatus->rhw.range;
 
 	if( (unit_is_walking(target) || ud->state.step_attack)

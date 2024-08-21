@@ -2104,7 +2104,7 @@ TIMER_FUNC(pet_heal_timer){
 		return 0;
 	}
 
-	status = status_get_status_data(&sd->bl);
+	status = status_get_status_data(sd->bl);
 
 	if(pc_isdead(sd) ||
 		(rate = get_percentage(status->sp, status->max_sp)) > pd->s_skill->sp ||
@@ -2147,7 +2147,7 @@ TIMER_FUNC(pet_skill_support_timer){
 		return 0;
 	}
 
-	status = status_get_status_data(&sd->bl);
+	status = status_get_status_data(sd->bl);
 
 	if (DIFF_TICK(pd->ud.canact_tick, tick) > 0) {
 		//Wait until the pet can act again.

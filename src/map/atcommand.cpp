@@ -6262,7 +6262,7 @@ ACMD_FUNC(displayskill)
 		clif_displaymessage(fd, msg_txt(sd,825));// Effect Types: 0: All, 1: Damage, 2: Splash Dmg, 3: No Damage, 4: Ground
 		return -1;
 	}
-	status = status_get_status_data(&sd->bl);
+	status = status_get_status_data(sd->bl);
 	tick = gettick();
 	if (type == 0 || type == 1)
 		clif_skill_damage(&sd->bl, &sd->bl, tick, status->amotion, status->dmotion, 1, 1, skill_id, skill_lv, DMG_SINGLE);
@@ -8190,7 +8190,7 @@ ACMD_FUNC(hominfo)
 	}
 
 	hd = sd->hd;
-	status = status_get_status_data(&hd->bl);
+	status = status_get_status_data(hd->bl);
 	clif_displaymessage(fd, msg_txt(sd,1261)); // Homunculus stats:
 
 	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1262), // HP: %d/%d - SP: %d/%d

@@ -6273,7 +6273,7 @@ void clif_skill_estimation(map_session_data *sd,struct block_list *dst)
 	if( dst->type != BL_MOB )
 		return;
 
-	status = status_get_status_data(dst);
+	status = status_get_status_data(*dst);
 
 	WBUFW(buf, 0)=0x18c;
 	WBUFW(buf, 2)=status_get_class(dst);

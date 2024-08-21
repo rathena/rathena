@@ -1246,7 +1246,7 @@ int status_set_hp(struct block_list *bl, unsigned int hp, int flag)
 	struct status_data *status;
 	if (hp < 1)
 		return 0;
-	status = status_get_status_data(bl);
+	status = status_get_status_data(*bl);
 	if (status == &dummy_status)
 		return 0;
 
@@ -1274,7 +1274,7 @@ int status_set_maxhp(struct block_list *bl, unsigned int maxhp, int flag)
 
 	if (maxhp < 1)
 		return 0;
-	status = status_get_status_data(bl);
+	status = status_get_status_data(*bl);
 	if (status == &dummy_status)
 		return 0;
 
@@ -1304,7 +1304,7 @@ int status_set_sp(struct block_list *bl, unsigned int sp, int flag)
 {
 	struct status_data *status;
 
-	status = status_get_status_data(bl);
+	status = status_get_status_data(*bl);
 	if (status == &dummy_status)
 		return 0;
 
@@ -1330,7 +1330,7 @@ int status_set_maxsp(struct block_list *bl, unsigned int maxsp, int flag)
 	struct status_data *status;
 	if (maxsp < 1)
 		return 0;
-	status = status_get_status_data(bl);
+	status = status_get_status_data(*bl);
 	if (status == &dummy_status)
 		return 0;
 
@@ -1355,7 +1355,7 @@ int status_set_maxsp(struct block_list *bl, unsigned int maxsp, int flag)
 */
 int status_set_ap(struct block_list *bl, unsigned int ap, int flag)
 {
-	status_data *status = status_get_status_data(bl);
+	status_data *status = status_get_status_data(*bl);
 
 	if (status == &dummy_status)
 		return 0;
@@ -1382,7 +1382,7 @@ int status_set_maxap(struct block_list *bl, unsigned int maxap, int flag)
 	if (maxap < 1)
 		return 0;
 
-	status_data *status = status_get_status_data(bl);
+	status_data *status = status_get_status_data(*bl);
 
 	if (status == &dummy_status)
 		return 0;
@@ -1469,7 +1469,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 		return 0;
 	}
 
-	status = status_get_status_data(target);
+	status = status_get_status_data(*target);
 	if(!status || status == &dummy_status )
 		return 0;
 
@@ -1726,7 +1726,7 @@ int status_heal(struct block_list *bl,int64 hhp,int64 hsp, int64 hap, int flag)
 	int sp = (int)cap_value(hsp,INT_MIN,INT_MAX);
 	int ap = (int)cap_value(hap,INT_MIN,INT_MAX);
 
-	status = status_get_status_data(bl);
+	status = status_get_status_data(*bl);
 
 	if (status == &dummy_status || !status->hp)
 		return 0;
@@ -1824,7 +1824,7 @@ int status_percent_change(struct block_list *src, struct block_list *target, int
 	struct status_data *status;
 	unsigned int hp = 0, sp = 0, ap = 0;
 
-	status = status_get_status_data(target);
+	status = status_get_status_data(*target);
 
 
 	// It's safe now [MarkZD]
@@ -1906,7 +1906,7 @@ int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per
 	unsigned int hp, sp, ap;
 	if (!status_isdead(*bl)) return 0;
 
-	status = status_get_status_data(bl);
+	status = status_get_status_data(*bl);
 	if (status == &dummy_status)
 		return 0; // Invalid target.
 
@@ -1964,7 +1964,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 	if (src) {
 		if (src->type != BL_PC && status_isdead(*src))
 			return false;
-		status = status_get_status_data(src);
+		status = status_get_status_data(*src);
 	}else{
 		status = &dummy_status;
 	}
@@ -2222,7 +2222,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 int status_check_visibility(struct block_list *src, struct block_list *target)
 {
 	int view_range;
-	struct status_data* status = status_get_status_data(src);
+	struct status_data* status = status_get_status_data(*src);
 	status_change* tsc = status_get_sc(target);
 	switch (src->type) {
 		case BL_MOB:
@@ -2877,7 +2877,7 @@ int status_calc_mob_(struct mob_data* md, uint8 opt)
 				}
 				case NC_SILVERSNIPER:
 				{
-					struct status_data *mstatus = status_get_status_data(mbl);
+					struct status_data *mstatus = status_get_status_data(*mbl);
 					if(!mstatus)
 						break;
 					status->max_hp = (1000 * ud->skill_lv) + (mstatus->hp / 3) + (status_get_lv(mbl) * 12);
@@ -2886,7 +2886,7 @@ int status_calc_mob_(struct mob_data* md, uint8 opt)
 				}
 				case NC_MAGICDECOY:
 				{
-					struct status_data *mstatus = status_get_status_data(mbl);
+					struct status_data *mstatus = status_get_status_data(*mbl);
 					if(!mstatus)
 						break;
 					status->max_hp = (1000 * ((TBL_PC*)mbl)->menuskill_val) + (mstatus->sp * 4) + (status_get_lv(mbl) * 12);
@@ -2898,7 +2898,7 @@ int status_calc_mob_(struct mob_data* md, uint8 opt)
 				case MT_SUMMON_ABR_MOTHER_NET:
 				case MT_SUMMON_ABR_INFINITY: {
 						map_session_data *msd = BL_CAST(BL_PC, mbl);
-						status_data *mstatus = status_get_status_data(mbl);
+						status_data *mstatus = status_get_status_data(*mbl);
 
 						if (msd == nullptr || mstatus == nullptr)
 							break;
@@ -2933,7 +2933,7 @@ int status_calc_mob_(struct mob_data* md, uint8 opt)
 				case BO_CREEPER:
 				case BO_HELLTREE: {
 						map_session_data *msd = BL_CAST(BL_PC, mbl);
-						status_data *mstatus = status_get_status_data(mbl);
+						status_data *mstatus = status_get_status_data(*mbl);
 
 						if (msd == nullptr || mstatus == nullptr)
 							break;
@@ -5596,7 +5596,7 @@ void status_calc_state( struct block_list *bl, status_change *sc, std::bitset<SC
 void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 {
 	const struct status_data *b_status = status_get_base_status(&bl); // Base Status
-	struct status_data *status = status_get_status_data(&bl); // Battle Status
+	struct status_data *status = status_get_status_data(bl); // Battle Status
 	status_change *sc = status_get_sc(&bl);
 	TBL_PC *sd = BL_CAST(BL_PC,&bl);
 	int temp;
@@ -6256,7 +6256,7 @@ void status_calc_bl_(struct block_list* bl, std::bitset<SCB_MAX> flag, uint8 opt
 	}
 
 	// Remember previous values
-	status = status_get_status_data(bl);
+	status = status_get_status_data(*bl);
 	memcpy(&b_status, status, sizeof(struct status_data));
 
 	if( flag[SCB_BASE] ) { // Calculate the object's base status too
@@ -8991,18 +8991,18 @@ struct regen_data *status_get_regen_data(struct block_list *bl)
  * @param bl: Object whose status to get [PC|MOB|PET|HOM|MER|ELEM|NPC]
  * @return status or "dummy_status" if any other bl->type than noted above
  */
-struct status_data *status_get_status_data(struct block_list *bl)
+struct status_data* status_get_status_data(struct block_list &bl)
 {
-	nullpo_retr(&dummy_status, bl);
+	nullpo_retr(&dummy_status, &bl);
 
-	switch (bl->type) {
-		case BL_PC: 	return &((TBL_PC*)bl)->battle_status;
-		case BL_MOB:	return &((TBL_MOB*)bl)->status;
-		case BL_PET:	return &((TBL_PET*)bl)->status;
-		case BL_HOM:	return &((TBL_HOM*)bl)->battle_status;
-		case BL_MER:	return &((TBL_MER*)bl)->battle_status;
-		case BL_ELEM:	return &((TBL_ELEM*)bl)->battle_status;
-		case BL_NPC:	return ((mobdb_checkid(((TBL_NPC*)bl)->class_) == 0) ? &((TBL_NPC*)bl)->status : &dummy_status);
+	switch (bl.type) {
+		case BL_PC: 	return &(BL_CAST(BL_PC,&bl))->battle_status;
+		case BL_MOB:	return &(BL_CAST(BL_MOB,&bl))->status;
+		case BL_PET:	return &(BL_CAST(BL_PET,&bl))->status;
+		case BL_HOM:	return &(BL_CAST(BL_HOM,&bl))->battle_status;
+		case BL_MER:	return &(BL_CAST(BL_MER,&bl))->battle_status;
+		case BL_ELEM:	return &(BL_CAST(BL_ELEM,&bl))->battle_status;
+		case BL_NPC:	return ((mobdb_checkid((BL_CAST(BL_NPC,&bl))->class_) == 0) ? &(BL_CAST(BL_NPC,&bl))->status : &dummy_status);
 		default:
 			return &dummy_status;
 	}
@@ -9037,7 +9037,7 @@ struct status_data *status_get_base_status(struct block_list *bl)
 defType status_get_def(struct block_list *bl)
 {
 	struct unit_data *ud;
-	struct status_data *status = status_get_status_data(bl);
+	struct status_data *status = status_get_status_data(*bl);
 	int def = status?status->def:0;
 	ud = unit_bl2ud(bl);
 	if (ud && ud->skilltimer != INVALID_TIMER)
@@ -9055,7 +9055,7 @@ unsigned short status_get_speed(struct block_list *bl)
 {
 	if(bl->type==BL_NPC)// Only BL with speed data but no status_data [Skotlex]
 		return ((struct npc_data *)bl)->speed;
-	return status_get_status_data(bl)->speed;
+	return status_get_status_data(*bl)->speed;
 }
 
 /**
@@ -9224,7 +9224,7 @@ std::vector<e_race2> status_get_race2(struct block_list *bl)
 bool status_isdead(struct block_list &bl)
 {
 	nullpo_retr(true, &bl);
-	return status_get_status_data(&bl)->hp == 0;
+	return status_get_status_data(bl)->hp == 0;
 }
 
 /**
@@ -9549,8 +9549,8 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 	}
 
 	sd = BL_CAST(BL_PC,bl);
-	status = status_get_status_data(bl);
-	status_src = status_get_status_data(src);
+	status = status_get_status_data(*bl);
+	status_src = status_get_status_data(*src);
 	sc = status_get_sc(bl);
 	if( sc && !sc->count )
 		sc = nullptr;
@@ -10034,7 +10034,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 	nullpo_ret(bl);
 	sc = status_get_sc(bl);
-	status = status_get_status_data(bl);
+	status = status_get_status_data(*bl);
 
 	if( !scdb ) {
 		ShowError("status_change_start: Invalid status change (%d)!\n", type);
@@ -11220,7 +11220,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			status_change *psc = pbl?status_get_sc(pbl):nullptr;
 			struct status_change_entry *psce = psc?psc->getSCE(SC_MARIONETTE):nullptr;
 			// Fetch target's stats
-			struct status_data* status2 = status_get_status_data(bl); // Battle status
+			struct status_data* status2 = status_get_status_data(*bl); // Battle status
 
 			if (!psce)
 				return 0;
@@ -13253,7 +13253,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 	nullpo_ret(bl);
 
 	sc = status_get_sc(bl);
-	status = status_get_status_data(bl);
+	status = status_get_status_data(*bl);
 
 	if(!sc || !(sce = sc->getSCE(type)) || !scdb)
 		return 0;
@@ -13931,7 +13931,7 @@ TIMER_FUNC(status_change_timer){
 	}
 
 	status_change * const sc = status_get_sc(bl);
-	struct status_data * const status = status_get_status_data(bl);
+	struct status_data * const status = status_get_status_data(*bl);
 	if(!sc) {
 		ShowDebug("status_change_timer: Null pointer id: %d data: %" PRIdPTR " bl-type: %d\n", id, data, bl->type);
 		return 0;
@@ -15219,7 +15219,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 	regen = status_get_regen_data(bl);
 	if (!regen)
 		return 0;
-	status = status_get_status_data(bl);
+	status = status_get_status_data(*bl);
 	sc = status_get_sc(bl);
 	if (sc && !sc->count)
 		sc = nullptr;

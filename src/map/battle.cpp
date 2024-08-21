@@ -709,8 +709,8 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 	tsd = BL_CAST(BL_PC, target);
 	t_class = status_get_class(target);
 	s_class = status_get_class(src);
-	sstatus = status_get_status_data(src);
-	tstatus = status_get_status_data(target);
+	sstatus = status_get_status_data(*src);
+	tstatus = status_get_status_data(*target);
 	s_race2 = status_get_race2(src);
 	t_race2 = status_get_race2(target);
 	s_defele = (tsd) ? (enum e_element)status_get_element(src) : ELE_NONE;
@@ -1167,7 +1167,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 
 	int element;
 	if (flag & BF_WEAPON) {
-		struct status_data *sstatus = status_get_status_data(src);
+		struct status_data *sstatus = status_get_status_data(*src);
 		if(sstatus->rhw.ele == ELE_NEUTRAL && sstatus->lhw.ele > sstatus->rhw.ele)
 			element = battle_get_weapon_element(d, src, target, skill_id, skill_lv, EQI_HAND_L, false);
 		else
@@ -1358,7 +1358,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 			skill_id == WL_SOULEXPANSION ||
 			skill_id == AG_SOUL_VC_STRIKE ||
 			(skill_id && skill_get_ele(skill_id, skill_lv) == ELE_GHOST) ||
-			(skill_id == 0 && (status_get_status_data(src))->rhw.ele == ELE_GHOST))
+			(skill_id == 0 && (status_get_status_data(*src))->rhw.ele == ELE_GHOST))
 		{
 			if (skill_id == WL_SOULEXPANSION)
 				damage *= 2; // If used against a player in White Imprison, the skill deals double damage.
@@ -1792,7 +1792,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 #endif
 			) )
 		{
-			struct status_data *status = status_get_status_data(bl);
+			struct status_data *status = status_get_status_data(*bl);
 			int per = 100*status->sp / status->max_sp -1; //100% should be counted as the 80~99% interval
 			per /=20; //Uses 20% SP intervals.
 			//SP Cost: 1% + 0.5% per every 20% SP
@@ -2234,7 +2234,7 @@ static int battle_calc_drain(int64 damage, int rate, int per)
 int64 battle_addmastery(map_session_data *sd,struct block_list *target,int64 dmg,int type)
 {
 	int64 damage;
-	struct status_data *status = status_get_status_data(target);
+	struct status_data *status = status_get_status_data(*target);
 	int weapon, skill;
 
 #ifdef RENEWAL
@@ -2399,7 +2399,7 @@ static int battle_calc_sizefix(int64 damage, map_session_data *sd, unsigned char
  */
 static int battle_calc_base_weapon_attack(struct block_list *src, struct status_data *tstatus, struct weapon_atk *wa, map_session_data *sd, bool critical)
 {
-	struct status_data *status = status_get_status_data(src);
+	struct status_data *status = status_get_status_data(*src);
 	uint8 type = (wa == &status->lhw)?EQI_HAND_L:EQI_HAND_R;
 	uint16 atkmin = (type == EQI_HAND_L)?status->watk2:status->watk;
 	uint16 atkmax = atkmin;
@@ -2835,7 +2835,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
  */
 bool is_infinite_defense(struct block_list *target, int flag)
 {
-	struct status_data *tstatus = status_get_status_data(target);
+	struct status_data *tstatus = status_get_status_data(*target);
 
 	if(target->type == BL_SKILL) {
 		TBL_SKILL *su = ((TBL_SKILL*)target);
@@ -2871,7 +2871,7 @@ bool is_infinite_defense(struct block_list *target, int flag)
 static bool is_skill_using_arrow(struct block_list *src, int skill_id)
 {
 	if(src != nullptr) {
-		struct status_data *sstatus = status_get_status_data(src);
+		struct status_data *sstatus = status_get_status_data(*src);
 		map_session_data *sd = BL_CAST(BL_PC, src);
 
 		return ((sd && sd->state.arrow_atk) || (!sd && ((skill_id && skill_get_ammotype(skill_id)) || sstatus->rhw.range>3))
@@ -2922,7 +2922,7 @@ static bool is_attack_left_handed(struct block_list *src, int skill_id)
 					return true;
 			}
 
-			struct status_data *sstatus = status_get_status_data(src);
+			struct status_data *sstatus = status_get_status_data(*src);
 
 			if (sstatus->lhw.atk)
 				return true;
@@ -2950,7 +2950,7 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 	if( skill_id && !skill_get_nk(skill_id,NK_CRITICAL) )
 		return false;
 
-	struct status_data *sstatus = status_get_status_data(src);
+	struct status_data *sstatus = status_get_status_data(*src);
 
 	if( sstatus->cri )
 	{
@@ -2964,7 +2964,7 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 				return false;
 		}
 
-		struct status_data *tstatus = status_get_status_data(target);
+		struct status_data *tstatus = status_get_status_data(*target);
 		status_change *sc = status_get_sc(src);
 		status_change *tsc = status_get_sc(target);
 		map_session_data *tsd = BL_CAST(BL_PC, target);
@@ -3060,7 +3060,7 @@ static int is_attack_piercing(struct Damage* wd, struct block_list *src, struct 
 
 	if(src != nullptr) {
 		map_session_data *sd = BL_CAST(BL_PC, src);
-		struct status_data *tstatus = status_get_status_data(target);
+		struct status_data *tstatus = status_get_status_data(*target);
 
 		if( skill_id != PA_SACRIFICE && skill_id != CR_GRANDCROSS && skill_id != NPC_GRANDDARKNESS && skill_id != PA_SHIELDCHAIN && skill_id != KO_HAPPOKUNAI
 #ifndef RENEWAL
@@ -3118,8 +3118,8 @@ static std::bitset<NK_MAX> battle_skill_get_damage_properties(uint16 skill_id, i
  */
 static bool is_attack_hitting(struct Damage* wd, struct block_list *src, struct block_list *target, int skill_id, int skill_lv, bool first_call)
 {
-	struct status_data *sstatus = status_get_status_data(src);
-	struct status_data *tstatus = status_get_status_data(target);
+	struct status_data *sstatus = status_get_status_data(*src);
+	struct status_data *tstatus = status_get_status_data(*target);
 	status_change *sc = status_get_sc(src);
 	status_change *tsc = status_get_sc(target);
 	map_session_data *sd = BL_CAST(BL_PC, src);
@@ -3312,7 +3312,7 @@ static bool is_attack_hitting(struct Damage* wd, struct block_list *src, struct 
  */
 static bool attack_ignores_def(struct Damage* wd, struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv, short weapon_position)
 {
-	struct status_data *tstatus = status_get_status_data(target);
+	struct status_data *tstatus = status_get_status_data(*target);
 	status_change *sc = status_get_sc(src);
 	map_session_data *sd = BL_CAST(BL_PC, src);
 	std::bitset<NK_MAX> nk = battle_skill_get_damage_properties(skill_id, wd->miscflag);
@@ -3417,7 +3417,7 @@ static int battle_calc_equip_attack(struct block_list *src, int skill_id)
 {
 	if(src != nullptr) {
 		int eatk = 0;
-		struct status_data *status = status_get_status_data(src);
+		struct status_data *status = status_get_status_data(*src);
 		map_session_data *sd = BL_CAST(BL_PC, src);
 
 		// Add arrow atk if using an applicable skill
@@ -3446,7 +3446,7 @@ int battle_get_weapon_element(struct Damage* wd, struct block_list *src, struct 
 {
 	map_session_data *sd = BL_CAST(BL_PC, src);
 	status_change *sc = status_get_sc(src);
-	struct status_data *sstatus = status_get_status_data(src);
+	struct status_data *sstatus = status_get_status_data(*src);
 	int element = skill_get_ele(skill_id, skill_lv);
 
 	//Take weapon's element
@@ -3549,7 +3549,7 @@ int battle_get_magic_element(struct block_list* src, struct block_list* target, 
 	int element = skill_get_ele(skill_id, skill_lv);
 	map_session_data *sd = BL_CAST(BL_PC, src);
 	status_change *sc = status_get_sc(src);
-	struct status_data *sstatus = status_get_status_data(src);
+	struct status_data *sstatus = status_get_status_data(*src);
 	
 	if (element == ELE_WEAPON) { // pl=-1 : the skill takes the weapon's element
 		element = sstatus->rhw.ele;
@@ -3719,8 +3719,8 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 	std::bitset<NK_MAX> nk = battle_skill_get_damage_properties(skill_id, wd->miscflag);
 	map_session_data* sd = BL_CAST(BL_PC, src);
 	status_change* sc = status_get_sc(src);
-	struct status_data* sstatus = status_get_status_data(src);
-	struct status_data* tstatus = status_get_status_data(target);
+	struct status_data* sstatus = status_get_status_data(*src);
+	struct status_data* tstatus = status_get_status_data(*target);
 	int right_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_R, true);
 
 	// Elemental attribute fix
@@ -3853,7 +3853,7 @@ static void battle_calc_attack_masteries(struct Damage* wd, struct block_list *s
 {
 	map_session_data *sd = BL_CAST(BL_PC, src);
 	status_change *sc = status_get_sc(src);
-	struct status_data *sstatus = status_get_status_data(src);
+	struct status_data *sstatus = status_get_status_data(*src);
 	int t_class = status_get_class(target);
 
 #ifndef RENEWAL
@@ -3913,7 +3913,7 @@ static void battle_calc_attack_masteries(struct Damage* wd, struct block_list *s
 			case NC_ARMSCANNON:
 				// Arrow attack of these skills is not influenced by P.ATK so we add it as mastery attack
 				if (sd != nullptr) {
-					struct status_data* tstatus = status_get_status_data(target);
+					struct status_data* tstatus = status_get_status_data(*target);
 					ATK_ADD(wd->masteryAtk, wd->masteryAtk2, battle_attr_fix(src, target, sd->bonus.arrow_atk, sd->bonus.arrow_ele, tstatus->def_ele, tstatus->ele_lv));
 				}
 				break;
@@ -3959,8 +3959,8 @@ static void battle_calc_attack_masteries(struct Damage* wd, struct block_list *s
  */
 static void battle_calc_damage_parts(struct Damage* wd, struct block_list *src,struct block_list *target,uint16 skill_id,uint16 skill_lv)
 {
-	struct status_data *sstatus = status_get_status_data(src);
-	struct status_data *tstatus = status_get_status_data(target);
+	struct status_data *sstatus = status_get_status_data(*src);
+	struct status_data *tstatus = status_get_status_data(*target);
 	map_session_data *sd = BL_CAST(BL_PC, src);
 	bool critical = false;
 
@@ -4034,8 +4034,8 @@ static void battle_calc_damage_parts(struct Damage* wd, struct block_list *src,s
 static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *src,struct block_list *target,uint16 skill_id,uint16 skill_lv)
 {
 	status_change *sc = status_get_sc(src);
-	struct status_data *sstatus = status_get_status_data(src);
-	struct status_data *tstatus = status_get_status_data(target);
+	struct status_data *sstatus = status_get_status_data(*src);
+	struct status_data *tstatus = status_get_status_data(*target);
 	map_session_data *sd = BL_CAST(BL_PC, src);
 	map_session_data *tsd = BL_CAST(BL_PC, target);
 
@@ -4329,7 +4329,7 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 	map_session_data *sd = BL_CAST(BL_PC, src);
 	status_change *sc = status_get_sc(src);
 	status_change *tsc = status_get_sc(target);
-	struct status_data *tstatus = status_get_status_data(target);
+	struct status_data *tstatus = status_get_status_data(*target);
 
 	if( sd && !skill_id ) {	// if no skill_id passed, check for double attack [helvetica]
 		short i;
@@ -4526,8 +4526,8 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 	map_session_data *tsd = BL_CAST(BL_PC, target);
 	status_change *sc = status_get_sc(src);
 	status_change *tsc = status_get_sc(target);
-	struct status_data *sstatus = status_get_status_data(src);
-	struct status_data *tstatus = status_get_status_data(target);
+	struct status_data *sstatus = status_get_status_data(*src);
+	struct status_data *tstatus = status_get_status_data(*target);
 	int skillratio = 100;
 	int i;
 
@@ -6289,8 +6289,8 @@ static int64 battle_calc_skill_constant_addition(struct Damage* wd, struct block
 {
 	map_session_data *sd = BL_CAST(BL_PC, src);
 	map_session_data *tsd = BL_CAST(BL_PC, target);
-	struct status_data *sstatus = status_get_status_data(src);
-	struct status_data *tstatus = status_get_status_data(target);
+	struct status_data *sstatus = status_get_status_data(*src);
+	struct status_data *tstatus = status_get_status_data(*target);
 	int64 atk = 0;
 
 	//Constant/misc additions from skills
@@ -6341,8 +6341,8 @@ static void battle_attack_sc_bonus(struct Damage* wd, struct block_list *src, st
 {
 	map_session_data *sd = BL_CAST(BL_PC, src);
 	status_change *sc = status_get_sc(src);
-	struct status_data *sstatus = status_get_status_data(src);
-	struct status_data *tstatus = status_get_status_data(target);
+	struct status_data *sstatus = status_get_status_data(*src);
+	struct status_data *tstatus = status_get_status_data(*target);
 	uint8 anger_id = 0; // SLS Anger
 
 	// Kagerou/Oboro Earth Charm effect +15% wATK
@@ -6530,8 +6530,8 @@ static void battle_calc_defense_reduction(struct Damage* wd, struct block_list *
 	map_session_data *tsd = BL_CAST(BL_PC, target);
 	status_change *sc = status_get_sc(src);
 	status_change *tsc = status_get_sc(target);
-	struct status_data *sstatus = status_get_status_data(src);
-	struct status_data *tstatus = status_get_status_data(target);
+	struct status_data *sstatus = status_get_status_data(*src);
+	struct status_data *tstatus = status_get_status_data(*target);
 
 	//Defense reduction
 	short vit_def;
@@ -6701,7 +6701,7 @@ static void battle_calc_attack_post_defense(struct Damage* wd, struct block_list
 {
 	map_session_data *sd = BL_CAST(BL_PC, src);
 	status_change *sc = status_get_sc(src);
-	struct status_data *sstatus = status_get_status_data(src);
+	struct status_data *sstatus = status_get_status_data(*src);
 
 	// Post skill/vit reduction damage increases
 #ifndef RENEWAL
@@ -6756,7 +6756,7 @@ static void battle_calc_attack_post_defense(struct Damage* wd, struct block_list
  */
 static void battle_calc_attack_plant(struct Damage* wd, struct block_list *src,struct block_list *target, uint16 skill_id, uint16 skill_lv)
 {
-	struct status_data *tstatus = status_get_status_data(target);
+	struct status_data *tstatus = status_get_status_data(*target);
 	bool attack_hits = is_attack_hitting(wd, src, target, skill_id, skill_lv, false);
 
 	if (skill_id != SN_SHARPSHOOTING && skill_id != RA_ARROWSTORM)
@@ -6913,7 +6913,7 @@ static void battle_calc_attack_gvg_bg(struct Damage* wd, struct block_list *src,
 			(src->type == BL_SKILL && (skill_id == SG_SUN_WARM || skill_id == SG_MOON_WARM || skill_id == SG_STAR_WARM))) ) {
 				int64 damage = wd->damage + wd->damage2, rdamage = 0;
 				map_session_data *tsd = BL_CAST(BL_PC, target);
-				struct status_data *sstatus = status_get_status_data(src);
+				struct status_data *sstatus = status_get_status_data(*src);
 				t_tick tick = gettick(), rdelay = 0;
 
 				rdamage = battle_calc_return_damage(target, src, &damage, wd->flag, skill_id, false);
@@ -6975,8 +6975,8 @@ static void battle_calc_weapon_final_atk_modifiers(struct Damage* wd, struct blo
 	map_session_data *tsd = BL_CAST(BL_PC, target);
 	status_change *sc = status_get_sc(src);
 	status_change *tsc = status_get_sc(target);
-	struct status_data *sstatus = status_get_status_data(src);
-	struct status_data *tstatus = status_get_status_data(target);
+	struct status_data *sstatus = status_get_status_data(*src);
+	struct status_data *tstatus = status_get_status_data(*target);
 	int skill_damage = 0;
 
 	//Reject Sword bugreport:4493 by Daegaladh
@@ -7070,8 +7070,8 @@ static void battle_calc_weapon_final_atk_modifiers(struct Damage* wd, struct blo
  */
 static struct Damage initialize_weapon_data(struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv, int wflag)
 {
-	struct status_data *sstatus = status_get_status_data(src);
-	struct status_data *tstatus = status_get_status_data(target);
+	struct status_data *sstatus = status_get_status_data(*src);
+	struct status_data *tstatus = status_get_status_data(*target);
 	status_change *sc = status_get_sc(src);
 	map_session_data *sd = BL_CAST(BL_PC, src);
 	struct Damage wd;
@@ -7264,7 +7264,7 @@ void battle_do_reflect(int attack_type, struct Damage *wd, struct block_list* sr
 		int64 damage = wd->damage + wd->damage2, rdamage = 0;
 		map_session_data *tsd = BL_CAST(BL_PC, target);
 		status_change *tsc = status_get_sc(target);
-		struct status_data *sstatus = status_get_status_data(src);
+		struct status_data *sstatus = status_get_status_data(*src);
 		struct unit_data *ud = unit_bl2ud(target);
 		t_tick tick = gettick(), rdelay = 0;
 
@@ -7315,8 +7315,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 	struct Damage wd;
 	status_change *sc = status_get_sc(src);
 	status_change *tsc = status_get_sc(target);
-	struct status_data *sstatus = status_get_status_data(src);
-	struct status_data *tstatus = status_get_status_data(target);
+	struct status_data *sstatus = status_get_status_data(*src);
+	struct status_data *tstatus = status_get_status_data(*target);
 	int right_element, left_element;
 	bool infdef = false;
 
@@ -7390,7 +7390,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 
 #ifdef RENEWAL
 		if(skill_id == HW_MAGICCRASHER) { // Add weapon attack for MATK onto Magic Crasher
-			struct status_data *sstatus = status_get_status_data(src);
+			struct status_data *sstatus = status_get_status_data(*src);
 
 			if (sstatus->matk_max > sstatus->matk_min) {
 				ATK_ADD(wd.weaponAtk, wd.weaponAtk2, sstatus->matk_min+rnd()%(sstatus->matk_max-sstatus->matk_min));
@@ -7596,7 +7596,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 				ATK_ADD(wd.damage, wd.damage2, skill_lv * 240 + status_get_lv(target) * 40);
 			break;
 		case SR_GATEOFHELL: {
-			status_data *sstatus = status_get_status_data(src);
+			status_data *sstatus = status_get_status_data(*src);
 			double bonus = 1 + skill_lv * 2 / 10;
 
 			ATK_ADD(wd.damage, wd.damage2, sstatus->max_hp - sstatus->hp);
@@ -7721,8 +7721,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	TBL_PC *tsd;
 	status_change *sc, *tsc;
 	struct Damage ad;
-	struct status_data *sstatus = status_get_status_data(src);
-	struct status_data *tstatus = status_get_status_data(target);
+	struct status_data *sstatus = status_get_status_data(*src);
+	struct status_data *tstatus = status_get_status_data(*target);
 	struct {
 		unsigned imdef : 1;
 		unsigned infdef : 1;
@@ -8956,8 +8956,8 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 
 	map_session_data *sd, *tsd;
 	struct Damage md; //DO NOT CONFUSE with md of mob_data!
-	struct status_data *sstatus = status_get_status_data(src);
-	struct status_data *tstatus = status_get_status_data(target);
+	struct status_data *sstatus = status_get_status_data(*src);
+	struct status_data *tstatus = status_get_status_data(*target);
 	status_change *ssc = status_get_sc(src);
 
 	memset(&md,0,sizeof(md));
@@ -9571,7 +9571,7 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
  */
 bool battle_check_coma(map_session_data& sd, struct block_list& target, e_battle_flag attack_type)
 {
-	struct status_data* tstatus = status_get_status_data(&target);
+	struct status_data* tstatus = status_get_status_data(target);
 	mob_data* dstmd = BL_CAST(BL_MOB, &target);
 
 	// Coma
@@ -9606,7 +9606,7 @@ bool battle_vellum_damage(map_session_data *sd, struct block_list *target, struc
 	nullpo_retr(false, target);
 	nullpo_retr(false, wd);
 
-	struct status_data *tstatus = status_get_status_data(target);
+	struct status_data *tstatus = status_get_status_data(*target);
 	// bHPVanishRaceRate
 	int16 vellum_rate_hp = cap_value(sd->hp_vanish_race[tstatus->race].rate + sd->hp_vanish_race[RC_ALL].rate, 0, INT16_MAX);
 	int8 vellum_hp = cap_value(sd->hp_vanish_race[tstatus->race].per + sd->hp_vanish_race[RC_ALL].per, INT8_MIN, INT8_MAX);
@@ -9801,8 +9801,8 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	sd = BL_CAST(BL_PC, src);
 	tsd = BL_CAST(BL_PC, target);
 
-	sstatus = status_get_status_data(src);
-	tstatus = status_get_status_data(target);
+	sstatus = status_get_status_data(*src);
+	tstatus = status_get_status_data(*target);
 
 	sc = status_get_sc(src);
 	tsc = status_get_sc(target);
