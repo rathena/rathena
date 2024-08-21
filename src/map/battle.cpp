@@ -7704,15 +7704,12 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 
 	if (battle_config.feature_restore_animation_skills && sd) 
 	{
-		if(!sd->animation.empty())
+		if(!sd->animation.empty() && (wd.dmg_lv==ATK_FLEE||wd.dmg_lv==ATK_MISS||wd.dmg_lv==ATK_BLOCK))
 		{
-			if(wd.dmg_lv==ATK_FLEE||wd.dmg_lv==ATK_MISS||wd.dmg_lv==ATK_BLOCK)
-			{ //miss cancel animation
-				int i;
-				ARR_FIND(0,sd->animation.size(),i,sd->animation[i]->skill_id==skill_id);
-				if(i<sd->animation.size())
-					sd->animation[i]->miss_flag = ATK_FLEE;
-			}
+			//miss cancel animation
+			int i = sd->animation_getIndex(skill_id);
+			if(i<sd->animation.size())
+				sd->animation[i]->miss_flag = ATK_FLEE;
 		}
 	}
 
