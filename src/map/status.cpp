@@ -1904,7 +1904,7 @@ int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per
 {
 	struct status_data *status;
 	unsigned int hp, sp, ap;
-	if (!status_isdead(bl)) return 0;
+	if (!status_isdead(*bl)) return 0;
 
 	status = status_get_status_data(bl);
 	if (status == &dummy_status)
@@ -1962,7 +1962,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 	int hide_flag;
 
 	if (src) {
-		if (src->type != BL_PC && status_isdead(src))
+		if (src->type != BL_PC && status_isdead(*src))
 			return false;
 		status = status_get_status_data(src);
 	}else{
@@ -1980,7 +1980,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 			return false;
 		// Dead state is not checked for skills as some skills can be used
 		// on dead characters, said checks are left to skill.cpp [Skotlex]
-		if (target && status_isdead(target))
+		if (target && status_isdead(*target))
 			return false;
 	}
 
@@ -1992,7 +1992,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 			break;
 #endif
 		case GN_WALLOFTHORN:
-			if( target && status_isdead(target) )
+			if( target && status_isdead(*target) )
 				return false;
 			break;
 		case AL_TELEPORT:
@@ -9221,10 +9221,10 @@ std::vector<e_race2> status_get_race2(struct block_list *bl)
  * @param bl: Object to check [PC|MOB|HOM|MER|ELEM]
  * @return 1: Is dead or 0: Is alive
  */
-int status_isdead(struct block_list *bl)
+bool status_isdead(struct block_list &bl)
 {
-	nullpo_retr(1, bl);
-	return status_get_status_data(bl)->hp == 0;
+	nullpo_retr(true, &bl);
+	return status_get_status_data(&bl)->hp == 0;
 }
 
 /**
@@ -10044,7 +10044,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	if( !sc )
 		return 0; // Unable to receive status changes
 
-	if( bl->type != BL_NPC && status_isdead(bl) && ( type != SC_NOCHAT && type != SC_JAILED ) ) // SC_NOCHAT and SC_JAILED should work even on dead characters
+	if( bl->type != BL_NPC && status_isdead(*bl) && ( type != SC_NOCHAT && type != SC_JAILED ) ) // SC_NOCHAT and SC_JAILED should work even on dead characters
 		return 0;
 
 	if (status_change_isDisabledOnMap(type, map_getmapdata(bl->m)))
@@ -13299,7 +13299,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 				sce->val4 = 0;
 			if (group)
 				skill_delunitgroup(group);
-			if (!status_isdead(bl) && (sce->val2 || sce->val3 || sce->val4))
+			if (!status_isdead(*bl) && (sce->val2 || sce->val3 || sce->val4))
 				return 0; //Don't end the status change yet as there are still unit groups associated with it
 		}
 		if (sce->timer != INVALID_TIMER) // Could be a SC with infinite duration
@@ -13747,7 +13747,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			if( tid != INVALID_TIMER ){
 				map_session_data *caster = nullptr;
 
-				if (status_isdead(bl) || !(caster = map_id2sd(sce->val2)))
+				if (status_isdead(*bl) || !(caster = map_id2sd(sce->val2)))
 					break;
 
 				std::shared_ptr<s_skill_db> skill = skill_db.find(RL_H_MINE);
@@ -14564,7 +14564,7 @@ TIMER_FUNC(status_change_timer){
 		if (--(sce->val4) >= 0) {
 			struct block_list *src = map_id2bl(sce->val2);
 
-			if (!src || (src && (status_isdead(src) || src->m != bl->m)))
+			if (!src || (src && (status_isdead(*src) || src->m != bl->m)))
 				break;
 			map_freeblock_lock();
 			if (!status_charge(bl, 0, 50))
@@ -14864,7 +14864,7 @@ TIMER_FUNC(status_change_timer){
 			struct block_list *star_caster = map_id2bl(sce->val2);
 			struct skill_unit *star_aoe = (struct skill_unit *)map_id2bl(sce->val3);
 
-			if (star_caster == nullptr || status_isdead(star_caster) || star_caster->m != bl->m || star_aoe == nullptr)
+			if (star_caster == nullptr || status_isdead(*star_caster) || star_caster->m != bl->m || star_aoe == nullptr)
 				break;
 
 			sc_timer_next(500 + tick);
@@ -14878,7 +14878,7 @@ TIMER_FUNC(status_change_timer){
 		if (--(sce->val4) >= 0) { // Needed to check the caster's location for the range check.
 			struct block_list *unity_src = map_id2bl(sce->val2);
 
-			if (!unity_src || status_isdead(unity_src) || unity_src->m != bl->m || !check_distance_bl(bl, unity_src, 11))
+			if (!unity_src || status_isdead(*unity_src) || unity_src->m != bl->m || !check_distance_bl(bl, unity_src, 11))
 				break;
 
 			status_heal(bl, 150 * sce->val1, 0, 2);
@@ -15004,7 +15004,7 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
 	enum sc_type type = (sc_type)va_arg(ap,int); // gcc: enum args get promoted to int
 	t_tick tick = va_arg(ap,t_tick);
 
-	if (status_isdead(bl))
+	if (status_isdead(*bl))
 		return 0;
 
 	tsc = status_get_sc(bl);
@@ -15237,7 +15237,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 		flag &= ~RGN_SSP;
 
 	if (flag && (
-		status_isdead(bl) ||
+		status_isdead(*bl) ||
 		(sc && (sc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK) || sc->getSCE(SC__INVISIBILITY)))
 	))
 		flag = RGN_NONE;

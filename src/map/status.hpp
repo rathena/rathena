@@ -3479,7 +3479,7 @@ void status_set_viewdata(struct block_list *bl, int class_);
 void status_change_init(struct block_list *bl);
 status_change *status_get_sc(struct block_list *bl);
 
-int status_isdead(struct block_list *bl);
+bool status_isdead(struct block_list &bl);
 int status_isimmune(struct block_list *bl);
 
 t_tick status_get_sc_def(struct block_list *src,struct block_list *bl, enum sc_type type, int rate, t_tick tick, unsigned char flag);

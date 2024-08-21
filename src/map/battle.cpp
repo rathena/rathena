@@ -161,7 +161,7 @@ static int battle_getenemy_sub(struct block_list *bl, va_list ap)
 	if (*c >= 24)
 		return 0;
 
-	if (status_isdead(bl))
+	if (status_isdead(*bl))
 		return 0;
 
 	if (battle_check_target(target, bl, BCT_ENEMY) > 0) {
@@ -219,7 +219,7 @@ static int battle_getenemyarea_sub(struct block_list *bl, va_list ap)
 	if( *c >= 23 )
 		return 0;
 
-	if( status_isdead(bl) )
+	if( status_isdead(*bl) )
 		return 0;
 
 	if( battle_check_target(src, bl, BCT_ENEMY) > 0 ) {// Is Enemy!...
@@ -286,7 +286,7 @@ int battle_damage(struct block_list *src, struct block_list *target, int64 damag
 		dmg_change = status_damage(src, target, damage, 0, delay, 16, skill_id); // Coma attack
 	else
 		dmg_change = status_fix_damage(src, target, damage, delay, skill_id);
-	if (attack_type && !status_isdead(target) && additional_effects)
+	if (attack_type && !status_isdead(*target) && additional_effects)
 		skill_additional_effect(src, target, skill_id, skill_lv, attack_type, dmg_lv, tick);
 	if (dmg_lv > ATK_BLOCK && attack_type && additional_effects)
 		skill_counter_additional_effect(src, target, skill_id, skill_lv, attack_type, tick);
@@ -296,7 +296,7 @@ int battle_damage(struct block_list *src, struct block_list *target, int64 damag
 
 		if (md != nullptr) {
 			// Trigger monster skill condition for non-skill attacks.
-			if (!status_isdead(target) && src != target) {
+			if (!status_isdead(*target) && src != target) {
 				if (damage > 0)
 					mobskill_event(md, src, tick, attack_type, damage);
 				if (skill_id > 0)
@@ -335,7 +335,7 @@ TIMER_FUNC(battle_delay_damage_sub){
 		struct block_list* src = map_id2bl(dat->src_id);
 		struct block_list* target = map_id2bl(dat->target_id);
 
-		if (target && !status_isdead(target)) {
+		if (target && !status_isdead(*target)) {
 			if( src && target->m == src->m &&
 				(target->type != BL_PC || ((TBL_PC*)target)->invincible_timer == INVALID_TIMER) &&
 				check_distance_bl(src, target, dat->distance) ) //Check to see if you haven't teleported. [Skotlex]
@@ -507,7 +507,7 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 			struct block_list *src2;
 
 			if( !su || !su->alive || (sg = su->group) == nullptr || !sg || sg->val3 == -1 ||
-			   (src2 = map_id2bl(sg->src_id)) == nullptr || status_isdead(src2) )
+			   (src2 = map_id2bl(sg->src_id)) == nullptr || status_isdead(*src2) )
 				return 0;
 
 			if( sg->unit_id != UNT_FIREWALL ) {
@@ -1494,7 +1494,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 
 	if (((sce = sc->getSCE(SC_UTSUSEMI)) || sc->getSCE(SC_BUNSINJYUTSU)) && flag&BF_WEAPON && !skill_get_inf2(skill_id, INF2_IGNORECICADA)) {
 		skill_additional_effect(src, target, skill_id, skill_lv, flag, ATK_BLOCK, gettick());
-		if (!status_isdead(src))
+		if (!status_isdead(*src))
 			skill_counter_additional_effect(src, target, skill_id, skill_lv, flag, gettick());
 		if (sce) {
 			clif_specialeffect(target, EF_STORMKICK4, AREA);
@@ -6992,7 +6992,7 @@ static void battle_calc_weapon_final_atk_modifiers(struct Damage* wd, struct blo
 		ATK_RATER(wd->damage, 50)
 		clif_skill_nodamage(target,target,ST_REJECTSWORD, tsc->getSCE(SC_REJECTSWORD)->val1,1);
 		battle_fix_damage(target,src,wd->damage,clif_damage(target,src,gettick(),0,0,wd->damage,0,DMG_NORMAL,0,false),ST_REJECTSWORD);
-		if (status_isdead(target))
+		if (status_isdead(*target))
 			return;
 		if( --(tsc->getSCE(SC_REJECTSWORD)->val3) <= 0 )
 			status_change_end(target, SC_REJECTSWORD);
@@ -10060,7 +10060,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	map_freeblock_lock();
 
 	if( !(tsc && tsc->getSCE(SC_DEVOTION)) && !vellum_damage && skill_check_shadowform(target, damage, wd.div_) ) {
-		if( !status_isdead(target) )
+		if( !status_isdead(*target) )
 			skill_additional_effect(src, target, 0, 0, wd.flag, wd.dmg_lv, tick);
 		if( wd.dmg_lv > ATK_BLOCK )
 			skill_counter_additional_effect(src, target, 0, 0, wd.flag, tick);
@@ -10111,7 +10111,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		if (tsc->getSCE(SC_WATER_SCREEN_OPTION)) {
 			struct block_list *e_bl = map_id2bl(tsc->getSCE(SC_WATER_SCREEN_OPTION)->val1);
 
-			if (e_bl && !status_isdead(e_bl)) {
+			if (e_bl && !status_isdead(*e_bl)) {
 				clif_damage(e_bl, e_bl, tick, 0, 0, damage, wd.div_, DMG_NORMAL, 0, false);
 				battle_fix_damage(src, e_bl, damage, 0, EL_WATER_SCREEN);
 			}
