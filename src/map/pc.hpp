@@ -948,8 +948,8 @@ public:
 	std::vector<uint32> party_booking_requests;
 
 	// Forced Amotion Animation [AoShinHo]
-	std::vector<std::unique_ptr<PACKET_ZC_RESTORE_ANIMATION>> animation;
-	int animation_getIndex(int,bool=true);
+	std::vector<std::shared_ptr<PACKET_ZC_RESTORE_ANIMATION>> animation;
+	int animation_getIndex(int,bool=true,struct block_list* = nullptr);
 };
 
 extern struct eri *pc_sc_display_ers; /// Player's SC display table
@@ -1783,8 +1783,6 @@ public:
 	PACKET_ZC_RESTORE_ANIMATION(map_session_data*sd, struct block_list* target, uint16 skill_id, uint16 skill_lv, short hit_count = 1){
 
 #if PACKETVER >= 20181128	
-	if(!this->meet_conditions(sd,target,skill_id,skill_lv))
-		return;
 	this->target.dir = map_calc_dir(&sd->bl,target->x, target->y);
 	this->target.x = target->x;
 	this->target.y = target->y;
@@ -1817,7 +1815,6 @@ public:
 #endif
 	}
 private:
-	bool meet_conditions(map_session_data*, struct block_list*, int, int);
 	int get_animation_interval(map_session_data*);
 };
 
