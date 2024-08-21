@@ -13018,7 +13018,7 @@ wolfvill,164,137,3	script	Emmet#emet	4_EP18_GW_WOMAN01,{
 		mes "I mean, the Amethyst Fragment.";
 		mes "Please select the part you want to enchant.";
 		next;
-		switch( select( "Armor", "Coat", "Shoes", "Right(R) Accessory", "Left(L) Accessory" ) ) {
+		switch( select( "Armor", "Garment", "Shoes", "Right(R) Accessory", "Left(L) Accessory" ) ) {
 		case 1:
 			mes "[Emmet]";
 			mes "You're enchanting the armor, I see.";
@@ -13027,7 +13027,7 @@ wolfvill,164,137,3	script	Emmet#emet	4_EP18_GW_WOMAN01,{
 			end;
 		case 2:
 			mes "[Emmet]";
-			mes "You're enchanting the footwear, I see.";
+			mes "You're enchanting the garment, I see.";
 			close2;
 			item_enchant(2);
 			end;
