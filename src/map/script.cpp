@@ -7834,17 +7834,17 @@ BUILDIN_FUNC(getitem2)
 		}
 
 		int get_count = 0;
-		uint64 unique_id;
+
 		//Check if it's stackable.
 		if( !itemdb_isstackable2( item_data.get() ) ){
-			get_count = 1;
-			unique_id = item_tmp.unique_id = pc_generate_unique_id(sd);
+			get_count = 1;			
 		}else{
 			get_count = amount;
 		}
 
 		for (int i = 0; i < amount; i += get_count)
 		{
+			uint64 unique_id = item_tmp.unique_id = pc_generate_unique_id(sd);
 			// if not pet egg
 			if (!pet_create_egg(sd, nameid))
 			{
@@ -7856,9 +7856,12 @@ BUILDIN_FUNC(getitem2)
 					return SCRIPT_CMD_FAILURE;
 				}
 			}
+			int maxlen = 256;
+			char *buf = (char *)aMalloc(maxlen*sizeof(char));
+			memset(buf, 0, maxlen);
+			snprintf(buf, maxlen-1, "%llu", (unsigned long long)unique_id);
+			mapreg_setregstr(amount > 1? reference_uid(add_str("$@unique_id$"), i):add_str("$@unique_id$"), buf);
 		}
-		if(unique_id)
-			script_pushint64(st,unique_id);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -16772,31 +16775,16 @@ BUILDIN_FUNC(equip) {
 	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
-	// equip item by unique_id
-	int u;
-	ARR_FIND( 0, MAX_INVENTORY, u, sd->inventory.u.items_inventory[u].unique_id == script_getnum64(st,2));
-	if (u < MAX_INVENTORY) {
-		std::shared_ptr<item_data> id = item_db.find(sd->inventory.u.items_inventory[u].nameid);
-		pc_equipitem(sd,u,id->equip);
+	uint64 id = script_getnum64(st,2);
+	int i;
+	ARR_FIND( 0, MAX_INVENTORY, i, sd->inventory.u.items_inventory[i].nameid == (t_itemid)id || sd->inventory.u.items_inventory[i].unique_id == id);
+	if (i < MAX_INVENTORY) {
+		std::shared_ptr<item_data> id = item_db.find(sd->inventory.u.items_inventory[i].nameid);
+		pc_equipitem(sd,i,id->equip);
 		script_pushint(st,1);
 		return SCRIPT_CMD_SUCCESS;
 	}
-
-	t_itemid nameid = script_getnum(st,2);
-	std::shared_ptr<item_data> id = item_db.find(nameid);
-
-	if (id != nullptr) {
-		int i;
-
-		ARR_FIND( 0, MAX_INVENTORY, i, sd->inventory.u.items_inventory[i].nameid == nameid );
-		if (i < MAX_INVENTORY) {
-			pc_equipitem(sd,i,id->equip);
-			script_pushint(st,1);
-			return SCRIPT_CMD_SUCCESS;
-		}
-	}
-
-	ShowError("buildin_equip: Item %u cannot be equipped\n",nameid);
+	ShowError("buildin_equip: Item %u cannot be equipped\n",id);
 	script_pushint(st,0);
 	return SCRIPT_CMD_FAILURE;
 }
@@ -27848,7 +27836,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(npcshopadditem,"sii*"),
 	BUILDIN_DEF(npcshopdelitem,"si*"),
 	BUILDIN_DEF(npcshopattach,"s?"),
-	BUILDIN_DEF(equip,"i?"),
+	BUILDIN_DEF(equip,"v?"),
 	BUILDIN_DEF(autoequip,"ii"),
 	BUILDIN_DEF(setbattleflag,"si?"),
 	BUILDIN_DEF(getbattleflag,"s"),

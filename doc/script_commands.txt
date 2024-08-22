@@ -4953,14 +4953,14 @@ Example to get Crimson Weapon with Ghost property:
 	setarray .@OptParam[0],0;
 	getitem3 28705,1,1,9,0,0,0,0,0,.@OptID,.@OptVal,.@OptParam;
 
-This command return an attached unique_id
+This command return an maparray string containing unique_id
 Example of Usage:
 	// +9 Crimson Dagger [2]
 	setarray .@OptID[0],RDMOPT_WEAPON_ATTR_TELEKINESIS;
 	setarray .@OptVal[0],0;
 	setarray .@OptParam[0],0;
-	.@unique_id = getitem3 28705,1,1,9,0,0,0,0,0,.@OptID,.@OptVal,.@OptParam;
-	equip(.@unique_id);
+	getitem3 28705,1,1,9,0,0,0,0,0,.@OptID,.@OptVal,.@OptParam;
+	equip($@unique_id$);
 
 ---------------------------------------
 
@@ -5695,8 +5695,8 @@ Example to get Crimson Weapon with Ghost property and equip it:
 	setarray .@OptID[0],RDMOPT_WEAPON_ATTR_TELEKINESIS;
 	setarray .@OptVal[0],0;
 	setarray .@OptParam[0],0;
-	.@uniqueid = getitem3 28705,1,1,9,0,0,0,0,0,.@OptID,.@OptVal,.@OptParam;
-	equip(.@uniqueid);
+	getitem3 28705,1,1,9,0,0,0,0,0,.@OptID,.@OptVal,.@OptParam;
+	equip($@unique_id$);
 
 ---------------------------------------
 
