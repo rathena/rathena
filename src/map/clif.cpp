@@ -12781,9 +12781,10 @@ static void clif_restore_animation(map_session_data* sd, struct block_list* targ
 
 		if(!exist && target != nullptr && !status_isdead(target)){
 			std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
-			if(skill != nullptr && !skill_isNotOk(skill_id, *sd) && !(skill->require.weapon && !pc_check_weapontype(sd,skill->require.weapon)) && !(skill->require.sp && (int)sd->battle_status.sp < skill_get_sp(skill_id,skill_lv)) && battle_check_target(&sd->bl,target,BCT_ENEMY))
+			if(skill != nullptr && !skill_isNotOk(skill_id, *sd) && !(skill->require.weapon && !pc_check_weapontype(sd,skill->require.weapon)) && !(skill->require.sp && (int)sd->battle_status.sp < skill_get_sp(skill_id,skill_lv)) && battle_check_target(&sd->bl,target,BCT_ENEMY) && battle_check_range(&sd->bl,target,skill_get_range2(&sd->bl,skill_id,skill_lv,false)))
 				sd->animation.push_back(std::make_shared<PACKET_ZC_RESTORE_ANIMATION>(sd, target, skill_id, skill_lv, hit_count));
 		}
+
 		if(!sd->animation.empty() && sd->animation.back()->skill_id == 0)
 			sd->animation.pop_back();
 	}
