@@ -374,8 +374,7 @@ struct s_qi_display {
 	e_questinfo_markcolor color;
 };
 
-// Forced Amotion Animation [AoShinHo]
-TIMER_FUNC(pc_animation_force_timer);
+// Forced Amotion Animation early decl [AoShinHo]
 class PACKET_ZC_RESTORE_ANIMATION;
 
 class map_session_data {
@@ -948,8 +947,8 @@ public:
 	std::vector<uint32> party_booking_requests;
 
 	// Forced Amotion Animation [AoShinHo]
-	std::vector<std::shared_ptr<PACKET_ZC_RESTORE_ANIMATION>> animation;
-	int animation_getIndex(int,bool=true,struct block_list* = nullptr);
+	std::vector<std::unique_ptr<PACKET_ZC_RESTORE_ANIMATION>> animation;
+	int animation_getIndex(int,int=0);
 };
 
 extern struct eri *pc_sc_display_ers; /// Player's SC display table
@@ -1764,6 +1763,7 @@ void pc_reputation_generate();
 /*==========================
  FORCE AMOTION ANIMATION BY AOSHINHO
 ============================*/
+TIMER_FUNC(pc_animation_force_timer);
 class PACKET_ZC_RESTORE_ANIMATION
 {
 public:
@@ -1780,16 +1780,16 @@ public:
 		int y;
 	}target;
 
-	PACKET_ZC_RESTORE_ANIMATION(map_session_data*sd, struct block_list* target, uint16 skill_id, uint16 skill_lv, short hit_count = 1){
+	PACKET_ZC_RESTORE_ANIMATION(map_session_data* sd, block_list& target, uint16 skill_id, uint16 skill_lv, short hit_count = 1){
 
 #if PACKETVER >= 20181128	
-	this->target.dir = map_calc_dir(&sd->bl,target->x, target->y);
-	this->target.x = target->x;
-	this->target.y = target->y;
-	this->target.id = target->id;
+	this->target.dir = map_calc_dir(&sd->bl,target.x, target.y);
+	this->target.x = target.x;
+	this->target.y = target.y;
+	this->target.id = target.id;
 	this->skill_id = skill_id;
 	this->iter = 0;
-	int animation_interval = this->get_animation_interval(sd);
+	int animation_interval = this->get_animation_interval(*sd);
 	this->motion = animation_interval;
 	t_tick start_timer = gettick();
 	switch (skill_id) {
@@ -1801,8 +1801,16 @@ public:
 	}
 	break;
 	case CG_ARROWVULCAN:
-		start_timer += skill_delayfix(&sd->bl,skill_id,skill_lv);//CG_ARROWVULCAN have casttime
-		break;
+	{
+		int casttime = skill_castfix(&sd->bl,skill_id, skill_lv);	
+#ifndef RENEWAL_CAST
+		casttime = skill_castfix_sc(&sd->bl, casttime, skill_get_castnodex(skill_id));
+#else
+		casttime = skill_vfcastfix(&sd->bl, casttime, skill_id, skill_lv);
+#endif
+		start_timer += casttime;
+	}
+	break;
 	case GC_CROSSIMPACT:
 		start_timer += animation_interval; // GC_CROSSIMPACT need to skip 1st hit because it stay in client
 		break;
@@ -1815,7 +1823,7 @@ public:
 #endif
 	}
 private:
-	int get_animation_interval(map_session_data*);
+	int get_animation_interval(map_session_data&);
 };
 
 #endif /* PC_HPP */

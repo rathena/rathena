@@ -12736,67 +12736,10 @@ static void clif_parse_UseSkillToPos_mercenary(s_mercenary_data *md, map_session
 		unit_skilluse_pos(&md->bl, x, y, skill_id, skill_lv);
 }
 
-/*==========================
- RESTORE ANIMATION BY AOSHINHO
-============================*/ 
-static void clif_restore_animation(map_session_data* sd, struct block_list* target, uint16 skill_id, uint16 skill_lv)
-{
-	nullpo_retv(target);
-
-	bool restore = false;
-	short hit_count = 0;
-
-	switch (skill_id)
-	{
-#if PACKETVER >= 20191016
-	case GC_CROSSIMPACT:
-		restore = true;
-		hit_count = 3;
-		break;
-#endif
-	case AS_SONICBLOW:
-	case CG_ARROWVULCAN:
-		restore = true;
-		hit_count = 4;
-		break;
-	default:
-		break;
-	}
-	if(restore){
-		bool exist = false;
-
-		if(!sd->animation.empty())
-		{
-			int i = sd->animation_getIndex(skill_id,true,target);
-			if(i < sd->animation.size())				
-			{
-				PACKET_ZC_RESTORE_ANIMATION *it = sd->animation[i].get();
-				if(target != nullptr && !status_isdead(target))
-				{					
-					it->hitcount += hit_count;
-					it->motion = it->motion/2;
-					exist = true;
-				}
-			}
-		}
-
-		if(!exist && target != nullptr && !status_isdead(target)){
-			std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
-			if(skill != nullptr && !skill_isNotOk(skill_id, *sd) && !(skill->require.weapon && !pc_check_weapontype(sd,skill->require.weapon)) && !(skill->require.sp && (int)sd->battle_status.sp < skill_get_sp(skill_id,skill_lv)) && battle_check_target(&sd->bl,target,BCT_ENEMY) && battle_check_range(&sd->bl,target,skill_get_range2(&sd->bl,skill_id,skill_lv,false)))
-				sd->animation.push_back(std::make_shared<PACKET_ZC_RESTORE_ANIMATION>(sd, target, skill_id, skill_lv, hit_count));
-		}
-
-		if(!sd->animation.empty() && sd->animation.back()->skill_id == 0)
-			sd->animation.pop_back();
-	}
-}
-
 void clif_parse_skill_toid( map_session_data* sd, uint16 skill_id, uint16 skill_lv, int target_id ){
 	if( sd == nullptr ){
 		return;
 	}
-	if (battle_config.feature_restore_animation_skills)  // idkn why it not work anymore in unit_useskill_id
-		clif_restore_animation(sd,map_id2bl(target_id),skill_id,skill_lv);
 
 	t_tick tick = gettick();
 
@@ -25205,23 +25148,68 @@ void clif_specialpopup(map_session_data& sd, int32 id ){
 /*==========================
  RESTORE ANIMATION BY AOSHINHO
 ============================*/
-void clif_hit_frame(struct block_list* bl,int motion_time,uint16 skill_id)
+void clif_parse_restore_animation(map_session_data* sd, block_list& target, uint16 skill_id, uint16 skill_lv)
+{
+	bool restore = false;
+	short hit_count = 0;
+
+	switch (skill_id)
+	{
+#if PACKETVER >= 20191016
+	case GC_CROSSIMPACT:
+		restore = true;
+		hit_count = 3;
+		break;
+#endif
+	case AS_SONICBLOW:
+	case CG_ARROWVULCAN:
+		restore = true;
+		hit_count = 4;
+		break;
+	default:
+		break;
+	}
+	if(restore){
+		bool exist = false;
+
+		if(!sd->animation.empty())
+		{
+			int i = sd->animation_getIndex(skill_id,target.id);
+			if(i < sd->animation.size())				
+			{
+				if(!status_isdead(&target))
+				{
+					PACKET_ZC_RESTORE_ANIMATION *it = sd->animation[i].get();
+					it->hitcount += hit_count;
+					it->motion = it->motion/2;
+					exist = true;
+				}
+			}
+		}
+
+		if(!exist && !status_isdead(&target)){
+			if(battle_check_target(&sd->bl,&target,BCT_ENEMY) && battle_check_range(&sd->bl,&target,skill_get_range2(&sd->bl,skill_id,skill_lv,false)))
+				sd->animation.push_back(std::make_unique<PACKET_ZC_RESTORE_ANIMATION>(sd, target, skill_id, skill_lv, hit_count));
+		}
+
+		if(!sd->animation.empty() && sd->animation.back()->skill_id == 0)
+			sd->animation.pop_back();
+	}
+}
+/// 08c8 <src ID>.L <dst ID>.L <server tick>.L <src speed>.L <dst speed>.L <damage>.L <IsSPDamage>.B <div>.W <type>.B <damage2>.L (ZC_NOTIFY_ACT3)
+void clif_hit_frame(block_list& bl,int cdelay,uint16 skill_id)
 {
 	unsigned char buf[32];
-	nullpo_retv(bl);
-	WBUFW(buf, 0) = 0x8a;
-	WBUFL(buf, 2) = bl->id;
+	WBUFW(buf, 0) = 0x8c8;
+	WBUFL(buf, 2) = bl.id;
 	if(skill_id != CG_ARROWVULCAN)
-		WBUFL(buf, 14) = motion_time;
-	else
-		WBUFL(buf, 14) = motion_time * 2;
-	WBUFB(buf, 26) = 10;
-	send_target st = AREA;
-	if (disguised(bl)) {
-		WBUFL(buf, 2) = disguised_bl_id(bl->id);
-		st=SELF;
+		WBUFL(buf, 14) = cdelay;
+	WBUFB(buf, 29) = DMG_MULTI_HIT;
+	clif_send(buf, packet_len(0x8c8), &bl, AREA);
+	if (disguised(&bl)) {
+		WBUFL(buf, 2) = disguised_bl_id(bl.id);
+		clif_send(buf, packet_len(0x8c8), &bl, SELF);
 	}
-	clif_send(buf, packet_len(0x8a), bl, st);
 }
 
 /*==========================================

@@ -2205,6 +2205,9 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	if( sd && battle_config.prevent_logout_trigger&PLT_SKILL )
 		sd->canlog_tick = gettick();
 
+	if (battle_config.feature_restore_animation_skills && sd)
+		clif_parse_restore_animation(sd,*target,skill_id,skill_lv);
+
 	return 1;
 }
 

@@ -15872,23 +15872,21 @@ uint64 CaptchaDatabase::parseBodyNode(const ryml::NodeRef &node) {
 }
 
 /* Animation Timer */
-int PACKET_ZC_RESTORE_ANIMATION::get_animation_interval(map_session_data*sd){	
+int PACKET_ZC_RESTORE_ANIMATION::get_animation_interval(map_session_data&sd){	
 #ifdef RENEWAL
-	return cap_value(sd->battle_status.adelay - ((sd->battle_status.adelay * sd->bonus.delayrate) / 100), battle_config.feature_ras_min_renewal_motion, 432); //Kiel uncapped animation remove
+	return cap_value(sd.battle_status.adelay - ((sd.battle_status.adelay * sd.bonus.delayrate) / 100), battle_config.feature_ras_min_renewal_motion, 432); //Kiel uncapped animation remove
 #else
-	return cap_value(sd->battle_status.adelay - ((sd->battle_status.adelay * sd->bonus.delayrate) / 100), 242, 432); //apsd amotion based
+	return cap_value(sd.battle_status.adelay - ((sd.battle_status.adelay * sd.bonus.delayrate) / 100), 242, 432); //apsd amotion based
 #endif
 }
-int map_session_data::animation_getIndex(int id, bool is_skill, struct block_list* target){	
+int map_session_data::animation_getIndex(int id, int target_id){	
 	int i;
-	if(!is_skill)
+	if(target_id==0)
 		ARR_FIND(0,this->animation.size(),i,this->animation[i]->tid==id);
-	else if(target != nullptr)
-		ARR_FIND(0,this->animation.size(),i,this->animation[i]->skill_id==id && this->animation[i]->target.id==target->id);
 	else
-		ARR_FIND(0,this->animation.size(),i,this->animation[i]->skill_id==id);
+		ARR_FIND(0,this->animation.size(),i,this->animation[i]->skill_id==id && this->animation[i]->target.id==target_id);
 
-	if(i<this->animation.size())
+	if(i < this->animation.size())
 		return i;
 
 	return this->animation.size();
@@ -15899,7 +15897,7 @@ TIMER_FUNC(pc_animation_force_timer){
 		return 0;
 	if(sd->animation.empty())
 		 return 0;
-	int i = sd->animation_getIndex(tid,false);
+	int i = sd->animation_getIndex(tid);
 	if(i>=sd->animation.size())
 		return 0;
 	PACKET_ZC_RESTORE_ANIMATION *it = sd->animation[i].get();
@@ -15927,7 +15925,7 @@ TIMER_FUNC(pc_animation_force_timer){
 				unit_setdir(target,(t_dir < DIR_MAX ? t_dir + DIR_WEST : DIR_NORTH),true);
 			}
 		}
-		clif_hit_frame(&sd->bl, motion, it->skill_id);
+		clif_hit_frame(sd->bl, motion, it->skill_id);
 		it->iter++;		
 		it->tid = add_timer(gettick() + motion, pc_animation_force_timer, sd->bl.id, motion);	
 	}
