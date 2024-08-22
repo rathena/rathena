@@ -3399,7 +3399,7 @@ static int status_heal( struct block_list *bl,int64 hhp,int64 hsp, int flag ){
 int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per_sp, unsigned char per_ap = 0);
 
 struct regen_data *status_get_regen_data(struct block_list *bl);
-struct status_data *status_get_status_data(struct block_list &bl);
+status_data* status_get_status_data(block_list& bl);
 struct status_data *status_get_base_status(struct block_list *bl);
 const char * status_get_name(struct block_list *bl);
 int status_get_class(struct block_list *bl);
@@ -3479,7 +3479,7 @@ void status_set_viewdata(struct block_list *bl, int class_);
 void status_change_init(struct block_list *bl);
 status_change *status_get_sc(struct block_list *bl);
 
-bool status_isdead(struct block_list &bl);
+bool status_isdead(block_list &bl);
 int status_isimmune(struct block_list *bl);
 
 t_tick status_get_sc_def(struct block_list *src,struct block_list *bl, enum sc_type type, int rate, t_tick tick, unsigned char flag);

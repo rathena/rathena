@@ -716,7 +716,7 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 			break;
 		default:
 			{
-				struct status_data *status = status_get_status_data(*src);
+				status_data* status = status_get_status_data(*src);
 				int min, max;
 
 				min = status_base_matk_min(src, status, status_get_lv(src));
@@ -2946,7 +2946,8 @@ bool skill_strip_equip(struct block_list *src, struct block_list *target, uint16
 	const int pos[6]             = { EQP_WEAPON, EQP_SHIELD, EQP_ARMOR, EQP_HELM, EQP_ACC, EQP_SHADOW_GEAR };
 	const enum sc_type sc_atk[6] = { SC_STRIPWEAPON, SC_STRIPSHIELD, SC_STRIPARMOR, SC_STRIPHELM, SC__STRIPACCESSORY, SC_SHADOW_STRIP };
 	const enum sc_type sc_def[6] = { SC_CP_WEAPON, SC_CP_SHIELD, SC_CP_ARMOR, SC_CP_HELM, SC_NONE, SC_PROTECTSHADOWEQUIP };
-	struct status_data *sstatus = status_get_status_data(*src), *tstatus = status_get_status_data(*target);
+	status_data* sstatus = status_get_status_data(*src);
+	status_data* tstatus = status_get_status_data(*target);
 	int rate, time, location, mod = 100;
 
 	switch (skill_id) { // Rate
@@ -3536,7 +3537,6 @@ void skill_attack_blow(struct block_list *src, struct block_list *dsrc, struct b
 int64 skill_attack (int attack_type, struct block_list* src, struct block_list *dsrc, struct block_list *bl, uint16 skill_id, uint16 skill_lv, t_tick tick, int flag)
 {
 	struct Damage dmg;
-	struct status_data *sstatus, *tstatus;
 	status_change *sc, *tsc;
 	map_session_data *sd, *tsd;
 	int64 damage;
@@ -3569,8 +3569,8 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 	sd = BL_CAST(BL_PC, src);
 	tsd = BL_CAST(BL_PC, bl);
 
-	sstatus = status_get_status_data(*src);
-	tstatus = status_get_status_data(*bl);
+	status_data* sstatus = status_get_status_data(*src);
+	status_data* tstatus = status_get_status_data(*bl);
 	sc= status_get_sc(src);
 	tsc= status_get_sc(bl);
 	if (tsc && !tsc->count)
@@ -3669,7 +3669,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 				dmg.damage = battle_attr_fix(bl, bl, dmg.damage, s_ele, status_get_element(bl), status_get_element_level(bl));
 
 				if( tsc && tsc->getSCE(SC_ENERGYCOAT) ) {
-					struct status_data *status = status_get_status_data(*bl);
+					status_data* status = status_get_status_data(*bl);
 					int per = 100*status->sp / status->max_sp -1; //100% should be counted as the 80~99% interval
 					per /=20; //Uses 20% SP intervals.
 					//SP Cost: 1% + 0.5% per every 20% SP
@@ -4396,7 +4396,6 @@ void skill_consume_hpspap(block_list* bl, uint16 skill_id, int hp, int sp, int a
  *------------------------------------------*/
 static int skill_check_condition_mercenary(struct block_list *bl, uint16 skill_id, uint16 skill_lv, int type)
 {
-	struct status_data *status;
 	map_session_data *sd = nullptr;
 	int i, hp, sp, hp_rate, sp_rate, state, mhp;
 	t_itemid itemid[MAX_SKILL_ITEM_REQUIRE];
@@ -4414,7 +4413,7 @@ static int skill_check_condition_mercenary(struct block_list *bl, uint16 skill_i
 		return 0;
 	}
 
-	status = status_get_status_data(*bl);
+	status_data* status = status_get_status_data(*bl);
 	skill_lv = cap_value(skill_lv, 1, MAX_SKILL_LEVEL);
 
 	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
@@ -5105,7 +5104,6 @@ static int skill_tarotcard(struct block_list* src, struct block_list *target, ui
 int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint16 skill_id, uint16 skill_lv, t_tick tick, int flag)
 {
 	map_session_data *sd = nullptr;
-	struct status_data *tstatus;
 	status_change *sc, *tsc;
 
 	if (skill_id > 0 && !skill_lv) return 0;
@@ -5140,7 +5138,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	if (tsc && !tsc->count)
 		tsc = nullptr;
 
-	tstatus = status_get_status_data(*bl);
+	status_data* tstatus = status_get_status_data(*bl);
 
 	map_freeblock_lock();
 
@@ -7276,7 +7274,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	struct mob_data *md, *dstmd;
 	struct homun_data *hd;
 	s_mercenary_data *mer;
-	struct status_data *sstatus, *tstatus;
 	status_change *tsc;
 	struct status_change_entry *tsce;
 
@@ -7317,8 +7314,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 	}
 
-	tstatus = status_get_status_data(*bl);
-	sstatus = status_get_status_data(*src);
+	status_data* tstatus = status_get_status_data(*bl);
+	status_data* sstatus = status_get_status_data(*src);
 
 	//Check for undead skills that convert a no-damage skill into a damage one. [Skotlex]
 	switch (skill_id) {
@@ -13043,7 +13040,7 @@ static int8 skill_castend_id_check(struct block_list *src, struct block_list *ta
 			break;
 		case PR_TURNUNDEAD:
 			{
-				struct status_data *tstatus = status_get_status_data(*target);
+				status_data* tstatus = status_get_status_data(*target);
 				if (!battle_check_undead(tstatus->race, tstatus->def_ele))
 					return USESKILL_FAIL_MAX;
 			}
@@ -14112,7 +14109,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			// Final heal increased by HPlus.
 			// Is this the right place for this??? [Rytech]
 			// Can HPlus also affect SP recovery???
-			status_data *sstatus = status_get_status_data(*src);
+			status_data* sstatus = status_get_status_data(*src);
 
 			if (sstatus && sstatus->hplus > 0) {
 				potion_hp += potion_hp * sstatus->hplus / 100;
@@ -14477,10 +14474,9 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		}
 		break;
 	case KO_MUCHANAGE: {
-			struct status_data *sstatus;
 			int rate = 0;
 
-			sstatus = status_get_status_data(*src);
+			status_data* sstatus = status_get_status_data(*src);
 			i = skill_get_splash(skill_id,skill_lv);
 			rate = (100 - (1000 / (sstatus->dex + sstatus->luk) * 5)) * (skill_lv / 2 + 5) / 10;
 			if( rate < 0 )
@@ -14997,7 +14993,6 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(struct block_list *src, ui
 	t_itemid req_item = 0;
 	struct s_skill_unit_layout *layout;
 	map_session_data *sd;
-	struct status_data *status;
 	status_change *sc;
 	int active_flag = 1;
 	int subunt = 0;
@@ -15016,7 +15011,7 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(struct block_list *src, ui
 	layout = skill_get_unit_layout(skill_id,skill_lv,src,x,y);
 
 	sd = BL_CAST(BL_PC, src);
-	status = status_get_status_data(*src);
+	status_data* status = status_get_status_data(*src);
 	sc = status_get_sc(src);	// for traps, firewall and fogwall - celest
 	hidden = (skill->unit_flag[UF_HIDDENTRAP] && (battle_config.traps_setting == 2 || (battle_config.traps_setting == 1 && map_flag_vs(src->m))));
 
@@ -15596,7 +15591,6 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, t_
 	struct block_list *ss; // Actual source that cast the skill unit
 	status_change *sc;
 	struct status_change_entry *sce;
-	struct status_data *tstatus;
 	enum sc_type type;
 	uint16 skill_id;
 
@@ -15613,7 +15607,7 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, t_
 
 	nullpo_ret(ss = map_id2bl(sg->src_id));
 
-	tstatus = status_get_status_data(*bl);
+	status_data* tstatus = status_get_status_data(*bl);
 
 	if( (skill_get_type(sg->skill_id) == BF_MAGIC && ((battle_config.land_protector_behavior) ? map_getcell(bl->m, bl->x, bl->y, CELL_CHKLANDPROTECTOR) : map_getcell(unit->bl.m, unit->bl.x, unit->bl.y, CELL_CHKLANDPROTECTOR)) && sg->skill_id != SA_LANDPROTECTOR) ||
 		map_getcell(bl->m, bl->x, bl->y, CELL_CHKMAELSTROM) )
@@ -15941,7 +15935,6 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 {
 	struct block_list *ss;
 	TBL_PC* tsd;
-	struct status_data *tstatus;
 	status_change *sc, *tsc;
 	struct skill_unit_group_tickset *ts;
 	enum sc_type type;
@@ -15964,7 +15957,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 	tsd = BL_CAST(BL_PC, bl);
 	tsc = status_get_sc(bl);
 	sc = status_get_sc(ss);
-	tstatus = status_get_status_data(*bl);
+	status_data* tstatus = status_get_status_data(*bl);
 	type = skill_get_sc(sg->skill_id);
 	skill_id = sg->skill_id;
 
@@ -20454,7 +20447,7 @@ static int skill_trap_splash(struct block_list *bl, va_list ap)
 		case UNT_MAIZETRAP:
 		case UNT_VERDURETRAP:
 			if( bl->type == BL_MOB && status_get_class_(bl) != CLASS_BOSS ) {
-				struct status_data *status = status_get_status_data(*bl);
+				status_data* status = status_get_status_data(*bl);
 
 				status->def_ele = skill_get_ele(sg->skill_id, sg->skill_lv);
 				status->ele_lv = (unsigned char)sg->skill_lv;
@@ -21877,11 +21870,10 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 	int slot[3];
 	int i, sc, ele, idx, equip, wlv, make_per = 0, flag = 0, skill_lv = 0;
 	int num = -1; // exclude the recipe
-	struct status_data *status;
 
 	nullpo_ret(sd);
 
-	status = status_get_status_data(sd->bl);
+	status_data* status = status_get_status_data(sd->bl);
 
 	if( sd->skill_id_old == skill_id )
 		skill_lv = sd->skill_lv_old;

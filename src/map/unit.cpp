@@ -1724,7 +1724,6 @@ int unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int typ
 int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, uint16 skill_lv, int casttime, int castcancel, bool ignore_range)
 {
 	struct unit_data *ud;
-	struct status_data *tstatus;
 	status_change *sc;
 	map_session_data *sd = nullptr;
 	struct block_list * target = nullptr;
@@ -1873,7 +1872,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		return 0;
 	}
 
-	tstatus = status_get_status_data(*target);
+	status_data* tstatus = status_get_status_data(*target);
 
 	// Record the status of the previous skill)
 	if(sd) {
@@ -2245,7 +2244,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 	struct block_list bl;
 	t_tick tick = gettick();
 	int range;
-	
+
 	nullpo_ret(src);
 
 	if (!src->prev)
@@ -2797,7 +2796,6 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, t_tick tick)
 {
 	struct block_list *target;
 	struct unit_data *ud;
-	struct status_data *sstatus;
 	map_session_data *sd = nullptr;
 	struct mob_data *md = nullptr;
 	int range;
@@ -2856,7 +2854,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, t_tick tick)
 		return 1;
 	}
 
-	sstatus = status_get_status_data(*src);
+	status_data* sstatus = status_get_status_data(*src);
 	range = sstatus->rhw.range;
 
 	if( (unit_is_walking(target) || ud->state.step_attack)
