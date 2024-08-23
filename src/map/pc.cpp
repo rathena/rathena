@@ -15871,63 +15871,55 @@ uint64 CaptchaDatabase::parseBodyNode(const ryml::NodeRef &node) {
 	return 1;
 }
 
-/* Animation Timer */
-int PACKET_ZC_RESTORE_ANIMATION::get_animation_interval(map_session_data&sd){	
-#ifdef RENEWAL
-	return cap_value(sd.battle_status.adelay - ((sd.battle_status.adelay * sd.bonus.delayrate) / 100), battle_config.feature_ras_min_renewal_motion, 432); //Kiel uncapped animation remove
-#else
-	return cap_value(sd.battle_status.adelay - ((sd.battle_status.adelay * sd.bonus.delayrate) / 100), 242, 432); //apsd amotion based
-#endif
-}
+/* Animation Force Related */
 int map_session_data::animation_getIndex(int id, int target_id){	
 	int i;
-	if(target_id==0)
-		ARR_FIND(0,this->animation.size(),i,this->animation[i]->tid==id);
-	else
-		ARR_FIND(0,this->animation.size(),i,this->animation[i]->skill_id==id && this->animation[i]->target.id==target_id);
+	ARR_FIND(0,this->animation.size(),i, (target_id==0) ? (this->animation[i]->tid == id) : (this->animation[i]->skill_id == id && this->animation[i]->target.id == target_id));
 
 	if(i < this->animation.size())
 		return i;
 
 	return this->animation.size();
 }
+int PACKET_ZC_RESTORE_ANIMATION::get_animation_interval(map_session_data&sd,int skill_id,int skill_lv){	
+#ifdef RENEWAL
+	return cap_value(sd.battle_status.adelay + skill_delayfix(&sd.bl,skill_id,skill_lv), battle_config.feature_ras_min_renewal_motion, 432); //Kiel uncapped animation remove
+#else
+	return cap_value(sd.battle_status.adelay + skill_delayfix(&sd.bl,skill_id,skill_lv), 242, 432); //apsd amotion based
+#endif
+}
 TIMER_FUNC(pc_animation_force_timer){
 	map_session_data* sd = map_id2sd(id);
-	if (sd == nullptr)
+	if (sd == nullptr || sd->animation.empty())
 		return 0;
-	if(sd->animation.empty())
-		 return 0;
+
 	int i = sd->animation_getIndex(tid);
-	if(i>=sd->animation.size())
+	if(i >= sd->animation.size())
 		return 0;
+
 	PACKET_ZC_RESTORE_ANIMATION *it = sd->animation[i].get();
 	if (DIFF_TICK(it->tid, gettick()) > 0) {
 		clif_authfail_fd(sd->fd, 15);
 		ShowWarning("fail on animation timer sync from char id: %d \n", sd->status.char_id);
 	}
-	if(it->miss_flag == ATK_FLEE || it->iter >= it->hitcount)
-	{
+	if(it->check_dmg_flag(ATK_FLEE) || it->finished()){
 		delete_timer(it->tid,pc_animation_force_timer);
 		sd->animation.erase(sd->animation.begin()+i);
 		sd->animation.shrink_to_fit();
-	}
-	else
-	{
-		int motion = it->motion != data ? it->motion : data;
+	} else {
+		int motion = it->recalculate_motion(data);
 		struct block_list* target = map_id2bl(it->target.id);
 		uint8 dir = target != nullptr ? map_calc_dir(&sd->bl,target->x, target->y) : it->target.dir;
 		if(unit_getdir(&sd->bl) != dir)
 			unit_setdir(&sd->bl,dir,true);
-		if(target != nullptr && it->skill_id != CG_ARROWVULCAN){
+		if(target != nullptr && it->can_spin()){
 			if(!status_isdead(target))
 			{
-				uint8 t_dir = unit_getdir(target);				
-				unit_setdir(target,(t_dir < DIR_MAX ? t_dir + DIR_WEST : DIR_NORTH),true);
+				uint8 t_dir = unit_getdir(target);
+				unit_setdir(target,(t_dir < DIR_MAX ? t_dir + DIR_WEST : DIR_NORTH),true); //spin target
 			}
 		}
-		clif_hit_frame(sd->bl, motion, it->skill_id);
-		it->iter++;		
-		it->tid = add_timer(gettick() + motion, pc_animation_force_timer, sd->bl.id, motion);	
+		it->hit(sd->bl, motion);
 	}
 	return 0;
 }

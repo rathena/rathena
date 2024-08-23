@@ -4146,7 +4146,7 @@ void clif_arrow_fail( map_session_data& sd, e_action_failure type ) {
 
 	if(battle_config.feature_restore_animation_skills){
 		if(!sd.animation.empty())
-			sd.animation.front()->miss_flag=ATK_FLEE; //stop animation with flee flag for CG_ARROWVULCAN
+			sd.animation.back()->miss_flag=ATK_FLEE; //stop animation with flee flag for CG_ARROWVULCAN
 	}
 	packet.packetType = HEADER_ZC_ACTION_FAILURE;
 	packet.type = static_cast<decltype(packet.type)>(type);
@@ -25150,26 +25150,24 @@ void clif_specialpopup(map_session_data& sd, int32 id ){
 ============================*/
 void clif_parse_restore_animation(map_session_data* sd, block_list& target, uint16 skill_id, uint16 skill_lv)
 {
-	bool restore = false;
-	short hit_count = 0;
+	nullpo_retv(sd);
 
+	short hit_count = 0;
 	switch (skill_id)
 	{
 #if PACKETVER >= 20191016
 	case GC_CROSSIMPACT:
-		restore = true;
 		hit_count = 3;
 		break;
 #endif
 	case AS_SONICBLOW:
 	case CG_ARROWVULCAN:
-		restore = true;
 		hit_count = 4;
 		break;
 	default:
 		break;
 	}
-	if(restore){
+	if(hit_count > 0){
 		bool exist = false;
 
 		if(!sd->animation.empty())
@@ -25179,9 +25177,7 @@ void clif_parse_restore_animation(map_session_data* sd, block_list& target, uint
 			{
 				if(!status_isdead(&target))
 				{
-					PACKET_ZC_RESTORE_ANIMATION *it = sd->animation[i].get();
-					it->hitcount += hit_count;
-					it->motion = it->motion/2;
+					sd->animation[i].get()->update_animation(hit_count);
 					exist = true;
 				}
 			}
@@ -25197,13 +25193,13 @@ void clif_parse_restore_animation(map_session_data* sd, block_list& target, uint
 	}
 }
 /// 08c8 <src ID>.L <dst ID>.L <server tick>.L <src speed>.L <dst speed>.L <damage>.L <IsSPDamage>.B <div>.W <type>.B <damage2>.L (ZC_NOTIFY_ACT3)
-void clif_hit_frame(block_list& bl,int cdelay,uint16 skill_id)
+void clif_hit_frame(block_list& bl, PACKET_ZC_RESTORE_ANIMATION& p)
 {
 	unsigned char buf[32];
 	WBUFW(buf, 0) = 0x8c8;
 	WBUFL(buf, 2) = bl.id;
-	if(skill_id != CG_ARROWVULCAN)
-		WBUFL(buf, 14) = cdelay;
+	if(p.can_spin())
+		WBUFL(buf, 14) = p.get_motion();
 	WBUFB(buf, 29) = DMG_MULTI_HIT;
 	clif_send(buf, packet_len(0x8c8), &bl, AREA);
 	if (disguised(&bl)) {
