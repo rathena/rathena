@@ -7704,12 +7704,11 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 
 	if (battle_config.feature_restore_animation_skills && sd) 
 	{
-		if(!sd->animation.empty() && (wd.dmg_lv==ATK_FLEE||wd.dmg_lv==ATK_MISS||wd.dmg_lv==ATK_BLOCK))
+		if(!sd->animation.empty())
 		{
-			//miss cancel animation
 			int i = sd->animation_getIndex(skill_id, target->id);
 			if(i<sd->animation.size())
-				sd->animation[i]->miss_flag = ATK_FLEE;
+				sd->animation[i]->set_dmg_flag(wd.dmg_lv); //attack not connected cancel animation
 		}
 	}
 

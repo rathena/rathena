@@ -4146,7 +4146,7 @@ void clif_arrow_fail( map_session_data& sd, e_action_failure type ) {
 
 	if(battle_config.feature_restore_animation_skills){
 		if(!sd.animation.empty())
-			sd.animation.back()->miss_flag=ATK_FLEE; //stop animation with flee flag for CG_ARROWVULCAN
+			sd.animation.back()->set_dmg_flag(ATK_NONE); //stop animation with flee flag for CG_ARROWVULCAN
 	}
 	packet.packetType = HEADER_ZC_ACTION_FAILURE;
 	packet.type = static_cast<decltype(packet.type)>(type);
@@ -25149,6 +25149,7 @@ void clif_specialpopup(map_session_data& sd, int32 id ){
 ============================*/
 void clif_parse_restore_animation(map_session_data* sd, block_list& target, uint16 skill_id, uint16 skill_lv)
 {
+#if PACKETVER >= 20181128
 	nullpo_retv(sd);
 
 	short hit_count = 0;
@@ -25174,36 +25175,34 @@ void clif_parse_restore_animation(map_session_data* sd, block_list& target, uint
 			int i = sd->animation_getIndex(skill_id,target.id);
 			if(i < sd->animation.size())				
 			{
-				if(!status_isdead(target))
-				{
+				if(!status_isdead(target)){
 					sd->animation[i].get()->update_animation(hit_count);
 					exist = true;
 				}
 			}
 		}
+		if(!exist)
+			sd->animation.push_back(std::make_unique<PACKET_ZC_RESTORE_ANIMATION>(sd, target, skill_id, skill_lv, hit_count));
 
-		if(!exist && !status_isdead(target)){
-			if(battle_check_target(&sd->bl,&target,BCT_ENEMY) && battle_check_range(&sd->bl,&target,skill_get_range2(&sd->bl,skill_id,skill_lv,false)))
-				sd->animation.push_back(std::make_unique<PACKET_ZC_RESTORE_ANIMATION>(sd, target, skill_id, skill_lv, hit_count));
-		}
-
-		if(!sd->animation.empty() && sd->animation.back()->skill_id == 0)
+		if(!sd->animation.empty() && (sd->animation.back()->get_skillid() == 0 || sd->animation.back()->get_motion() == 0))
 			sd->animation.pop_back();
 	}
+#endif
 }
 /// 08c8 <src ID>.L <dst ID>.L <server tick>.L <src speed>.L <dst speed>.L <damage>.L <IsSPDamage>.B <div>.W <type>.B <damage2>.L (ZC_NOTIFY_ACT3)
+/// yep sending damage action without damage&target
 void clif_hit_frame(block_list& bl, PACKET_ZC_RESTORE_ANIMATION& p)
 {
 	unsigned char buf[32];
-	WBUFW(buf, 0) = 0x8c8;
+	WBUFW(buf, 0) = p.packetType;
 	WBUFL(buf, 2) = bl.id;
-	if(p.can_spin())
+	if(p.is_katar())
 		WBUFL(buf, 14) = p.get_motion();
 	WBUFB(buf, 29) = DMG_MULTI_HIT;
-	clif_send(buf, packet_len(0x8c8), &bl, AREA);
+	clif_send(buf, packet_len(p.packetType), &bl, AREA);
 	if (disguised(&bl)) {
 		WBUFL(buf, 2) = disguised_bl_id(bl.id);
-		clif_send(buf, packet_len(0x8c8), &bl, SELF);
+		clif_send(buf, packet_len(p.packetType), &bl, SELF);
 	}
 }
 

@@ -1770,68 +1770,70 @@ private:
 	int hitcount;
 	int max_hits;
 	int motion;
-public:
-	int tid;
+	int16 skill_id;
+	damage_lv miss_flag;
 	struct{
 		int id;
 		uint8 dir;
 		int x;
 		int y;
 	}target;
-	int16 skill_id = 0;
-	damage_lv miss_flag;
-
-	PACKET_ZC_RESTORE_ANIMATION(map_session_data* sd, block_list& target, uint16 skill_id, uint16 skill_lv, short hit_count = 1){
-
-#if PACKETVER >= 20181128	
-	this->target.dir = map_calc_dir(&sd->bl,target.x, target.y);
-	this->target.x = target.x;
-	this->target.y = target.y;
-	this->target.id = target.id;
-	this->skill_id = skill_id;
-	this->hitcount = 0;
-	this->motion = this->get_animation_interval(*sd,skill_id,skill_lv);
-	t_tick start_timer = gettick();
-	switch (skill_id) {
-	case AS_SONICBLOW:
-	{
+	int get_animation_interval(map_session_data&,int,int,int);
+	int tid;
+	int src_id;
+public:
+	int packetType = 0x8c8; /// 08c8 newer client packet type
+	PACKET_ZC_RESTORE_ANIMATION(map_session_data* sd, block_list& target, uint16 skill_id, uint16 skill_lv, short hit_count = 1){	
+		this->target.dir = map_calc_dir(&sd->bl,target.x, target.y);
+		this->target.x = target.x;
+		this->target.y = target.y;
+		this->target.id = target.id;
+		this->skill_id = skill_id;
+		this->src_id = sd->bl.id;
+		this->hitcount = 0;
+		this->miss_flag = (damage_lv)5U;
+		this->motion = this->get_animation_interval(*sd,skill_id,skill_lv,hit_count);
+		t_tick start_timer = gettick();
+		switch (skill_id) {
+			case AS_SONICBLOW:
+			{
 #ifndef RENEWAL
-		pc_stop_attack(sd);
+				pc_stop_attack(sd);
 #endif
-	}
-	break;
-	case CG_ARROWVULCAN:
-	{
-		int casttime = skill_castfix(&sd->bl,skill_id, skill_lv);	
+			} break;
+			case CG_ARROWVULCAN:
+			{
+				int casttime = skill_castfix(&sd->bl,skill_id, skill_lv);	
 #ifndef RENEWAL_CAST
-		casttime = skill_castfix_sc(&sd->bl, casttime, skill_get_castnodex(skill_id));
+				casttime = skill_castfix_sc(&sd->bl, casttime, skill_get_castnodex(skill_id));
 #else
-		casttime = skill_vfcastfix(&sd->bl, casttime, skill_id, skill_lv);
+				casttime = skill_vfcastfix(&sd->bl, casttime, skill_id, skill_lv);
 #endif
-		start_timer += static_cast<t_tick>(casttime + this->motion);
-	}
-	break;
-	case GC_CROSSIMPACT:
-		start_timer += this->motion; // GC_CROSSIMPACT need to skip 1st hit because it stay in client
-		break;
-	default: break;
-	}
-	this->max_hits = hit_count;
+				start_timer += static_cast<t_tick>(casttime);
+			} break;
+			case GC_CROSSIMPACT:
+				start_timer += this->motion;
+				break;
+			default:
+				break;
+		}
+		this->max_hits = hit_count;
 
-	if (this->motion > 0)
-		this->tid = add_timer(start_timer, pc_animation_force_timer, sd->bl.id, this->motion);
-#endif
+		if (this->motion > 0)
+			this->tid = add_timer(start_timer, pc_animation_force_timer, sd->bl.id, this->motion);
 	} //end of constructor
-
 
 	bool finished() const {
 		return (this->hitcount >= this->max_hits);
 	}
-	bool check_dmg_flag(uint8 flag) const {
+	bool check_dmg_flag(damage_lv flag) const {
 		return (this->miss_flag == flag);
 	}
-	bool can_spin() const {
-		return (this->skill_id == AS_SONICBLOW || this->skill_id == GC_CROSSIMPACT);
+	void set_dmg_flag(damage_lv flag) {
+		this->miss_flag = flag;
+	}
+	bool is_katar() const {
+		return (this->get_skillid() == AS_SONICBLOW || this->get_skillid() == GC_CROSSIMPACT);
 	}
 	int recalculate_motion(intptr_t data) const {
 		return this->motion != data ? this->motion : data;
@@ -1839,19 +1841,36 @@ public:
 	int get_motion() const {
 		return this->motion;
 	}
+	int get_targetid() const {
+		return this->target.id;
+	}
+	int get_tid() const {
+		return this->tid;
+	}
+	uint8 old_target_dir() const {
+		return this->target.dir;
+	}
+	uint16 get_skillid() const {
+		return this->skill_id;
+	}
+	//update number of hits
 	void update_animation(int hit_count){
 		this->max_hits += hit_count;
 		this->motion = this->motion/2;
+		delete_timer(this->tid,pc_animation_force_timer);
+		this->tid = add_timer(gettick(), pc_animation_force_timer, this->src_id, this->motion);
 	}
+	void looktodir_ifnotlooking(block_list& bl, uint8 dir){
+		if(unit_getdir(&bl) != dir)
+			unit_setdir(&bl,dir,true);
+	}
+	//do a single hit
 	void hit(block_list &src, int motion) {
 		this->motion = motion;
 		this->hitcount++;
 		this->tid = add_timer(gettick() + motion, pc_animation_force_timer, src.id, motion);
 		clif_hit_frame(src, *this);
 	}
-private:
-	int get_animation_interval(map_session_data&,int,int);
-
 };
 
 #endif /* PC_HPP */

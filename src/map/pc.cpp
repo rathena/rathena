@@ -15873,18 +15873,18 @@ uint64 CaptchaDatabase::parseBodyNode(const ryml::NodeRef &node) {
 /* Animation Force Related */
 int map_session_data::animation_getIndex(int id, int target_id){	
 	int i;
-	ARR_FIND(0,this->animation.size(),i, (target_id==0) ? (this->animation[i]->tid == id) : (this->animation[i]->skill_id == id && this->animation[i]->target.id == target_id));
+	ARR_FIND(0,this->animation.size(),i, (target_id==0) ? (this->animation[i]->get_tid() == id) : (this->animation[i]->get_skillid() == id && this->animation[i]->get_targetid() == target_id));
 
 	if(i < this->animation.size())
 		return i;
 
 	return this->animation.size();
 }
-int PACKET_ZC_RESTORE_ANIMATION::get_animation_interval(map_session_data&sd,int skill_id,int skill_lv){	
+int PACKET_ZC_RESTORE_ANIMATION::get_animation_interval(map_session_data&sd,int skill_id,int skill_lv,int hit_count){	
 #ifdef RENEWAL
-	return cap_value(sd.battle_status.adelay + skill_delayfix(&sd.bl,skill_id,skill_lv), battle_config.feature_ras_min_renewal_motion, 432); //Kiel uncapped animation remove
+	return cap_value(sd.battle_status.adelay - ((sd.battle_status.adelay * sd.bonus.delayrate) / 100), battle_config.feature_ras_min_renewal_motion, 432); //Kiel uncapped animation remove
 #else
-	return cap_value(sd.battle_status.adelay + skill_delayfix(&sd.bl,skill_id,skill_lv), 242, 432); //apsd amotion based
+	return cap_value(sd.battle_status.adelay - ((sd.battle_status.adelay * sd.bonus.delayrate) / 100)), 242, 432); //apsd amotion based
 #endif
 }
 TIMER_FUNC(pc_animation_force_timer){
@@ -15897,25 +15897,24 @@ TIMER_FUNC(pc_animation_force_timer){
 		return 0;
 
 	PACKET_ZC_RESTORE_ANIMATION *it = sd->animation[i].get();
-	if (DIFF_TICK(it->tid, gettick()) > 0) {
+	if (DIFF_TICK(it->get_tid(), gettick()) > 0) {
 		clif_authfail_fd(sd->fd, 15);
 		ShowWarning("fail on animation timer sync from char id: %d \n", sd->status.char_id);
 	}
-	if(it->check_dmg_flag(ATK_FLEE) || it->finished()){
-		delete_timer(it->tid,pc_animation_force_timer);
+	if(!it->check_dmg_flag(ATK_DEF) || it->finished()){
+		delete_timer(it->get_tid(),pc_animation_force_timer);
 		sd->animation.erase(sd->animation.begin()+i);
 		sd->animation.shrink_to_fit();
 	} else {
 		int motion = it->recalculate_motion(data);
-		struct block_list* target = map_id2bl(it->target.id);
-		uint8 dir = target != nullptr ? map_calc_dir(&sd->bl,target->x, target->y) : it->target.dir;
-		if(unit_getdir(&sd->bl) != dir)
-			unit_setdir(&sd->bl,dir,true);
-		if(target != nullptr && it->can_spin()){
+		struct block_list* target = map_id2bl(it->get_targetid());
+		uint8 dir = target != nullptr ? map_calc_dir(&sd->bl,target->x, target->y) : it->old_target_dir();
+		it->looktodir_ifnotlooking(sd->bl,dir);
+		if(target != nullptr && it->is_katar()){
 			if(!status_isdead(*target))
 			{
-				uint8 t_dir = unit_getdir(target);
-				unit_setdir(target,(t_dir < DIR_MAX ? t_dir + DIR_WEST : DIR_NORTH),true); //spin target
+				dir = unit_getdir(target);
+				unit_setdir(target,(dir < DIR_MAX ? dir + DIR_WEST : DIR_NORTH),true); //spin target
 			}
 		}
 		it->hit(sd->bl, motion);
