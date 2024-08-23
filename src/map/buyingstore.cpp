@@ -631,7 +631,7 @@ void buyingstore_reopen( map_session_data* sd ){
 			if( at->sit ) {
 				pc_setsit(sd);
 				skill_sit(sd, 1);
-				clif_sitting(&sd->bl);
+				clif_sitting(sd->bl);
 			}
 
 			// Immediate save

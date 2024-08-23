@@ -1161,6 +1161,38 @@ struct PACKET_ZC_EL_PAR_CHANGE {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_EL_PAR_CHANGE, 0x81e);
 
+struct PACKET_ZC_NOTIFY_ACT {  //PACKET_ZC_NOTIFY_ACT, PACKET_ZC_NOTIFY_ACT2, PACKET_ZC_NOTIFY_ACT3
+	int16 packetType;
+    uint32 srcID;       // <src ID>.L
+    uint32 targetID;    // <dst ID>.L
+    uint32 serverTick;  // <server tick>.L
+    int32 srcSpeed;    // <src speed>.L
+    int32 dmgSpeed;    // <dst speed>.L
+#if PACKETVER < 20071113
+	int16 damage;		// <damage>.W
+#else
+    int32 damage;      // <damage>.L
+#endif
+#if PACKETVER >= 20131223
+    uint8 isSPDamage;   // <IsSPDamage>.B
+#endif
+    uint16 div;         // <div>.W
+    uint8 type;         // <type>.B
+#if PACKETVER < 20071113
+	int16 damage2;		// <damage2>.W
+#else
+    int32 damage2;     // <damage2>.L
+#endif
+} __attribute__((packed));
+
+#if PACKETVER < 20071113
+DEFINE_PACKET_HEADER(ZC_NOTIFY_ACT, 0x8a);
+#elif PACKETVER < 20131223
+DEFINE_PACKET_HEADER(ZC_NOTIFY_ACT, 0x2e1); //ZC_NOTIFY_ACT2
+#else
+DEFINE_PACKET_HEADER(ZC_NOTIFY_ACT, 0x8c8); //ZC_NOTIFY_ACT3
+#endif
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )

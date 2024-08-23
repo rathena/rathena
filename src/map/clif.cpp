@@ -5134,38 +5134,26 @@ static int clif_hallucination_damage()
 ///     11 = lucky dodge
 ///     12 = (touch skill?)
 ///     13 = multi-hit critical
-int clif_damage(struct block_list* src, struct block_list* dst, t_tick tick, int sdelay, int ddelay, int64 sdamage, int div, enum e_damage_type type, int64 sdamage2, bool spdamage)
-{
-	unsigned char buf[34];
-	status_change *sc;
+int clif_damage(block_list& src, block_list& dst, t_tick tick, int sdelay, int ddelay, int64 sdamage, int div, enum e_damage_type type, int64 sdamage2, bool spdamage){
 	int damage = (int)cap_value(sdamage,INT_MIN,INT_MAX);
 	int damage2 = (int)cap_value(sdamage2,INT_MIN,INT_MAX);
-#if PACKETVER < 20071113
-	const int cmd = 0x8a;
-	int offset = 0;
-#elif PACKETVER < 20131223
-	const int cmd = 0x2e1;
-	int offset = 2;
-#else
-	const int cmd = 0x8c8;
-	int offset = 3;
-#endif
-
-	nullpo_ret(src);
-	nullpo_ret(dst);
+	PACKET_ZC_NOTIFY_ACT p{};
 
 	if (type != DMG_MULTI_HIT_CRITICAL)
 		type = clif_calc_delay(type,div,damage+damage2,ddelay);
-	sc = status_get_sc(dst);
+
+	status_change *sc = status_get_sc(&dst);
+
 	if(sc && sc->count) {
 		if(sc->getSCE(SC_HALLUCINATION)) {
 			damage = clif_hallucination_damage();
-			if(damage2) damage2 = clif_hallucination_damage();
+			if(damage2)
+				damage2 = clif_hallucination_damage();
 		}
 	}
 
 	// Calculate what sdelay to send to the client so it applies damage at the same time as the server
-	if (battle_config.synchronize_damage && src->type == BL_MOB) {
+	if (battle_config.synchronize_damage && src.type&BL_MOB) {
 		// When a clif_damage packet is sent to the client it will also send "sdelay" (amotion) as value.
 		// The client however does not interpret this value as AttackMotion but incorrectly as an inverted
 		// animation speed modifier, with 432 standing for 1x animation speed.
@@ -5175,7 +5163,7 @@ int clif_damage(struct block_list* src, struct block_list* dst, t_tick tick, int
 		// it displays the damage and makes the target flinch / stop. If the damage frame is undefined,
 		// it instead displays the damage / flinch / stop at the beginning of the second to last frame.
 		// We define the time after which the damage frame shows at 1x speed as clientamotion.
-		uint16 clientamotion = std::max((uint16)1, status_get_clientamotion(src));
+		uint16 clientamotion = std::max((uint16)1, status_get_clientamotion(&src));
 
 		// Knowing when the damage frame happens in the animation allows us to synchronize the timing
 		// between client and server using the formula below.
@@ -5187,120 +5175,92 @@ int clif_damage(struct block_list* src, struct block_list* dst, t_tick tick, int
 		sdelay = std::min(sdelay, DEFAULT_ANIMATION_SPEED);
 	}
 
-	WBUFW(buf,0) = cmd;
-	WBUFL(buf,2) = src->id;
-	WBUFL(buf,6) = dst->id;
-	WBUFL(buf,10) = client_tick(tick);
-	WBUFL(buf,14) = sdelay;
-	WBUFL(buf,18) = ddelay;
-	if (battle_config.hide_woe_damage && map_flag_gvg(src->m)) {
-#if PACKETVER < 20071113
-		WBUFW(buf,22) = damage ? div : 0;
-		WBUFW(buf,27+offset) = damage2 ? div : 0;
-#else
-		WBUFL(buf, 22) = damage ? div : 0;
-		WBUFL(buf, 27 + offset) = damage2 ? div : 0;
-#endif
+	p.packetType = HEADER_ZC_NOTIFY_ACT;
+	p.srcID = src.id;
+	p.targetID = dst.id;
+	p.serverTick = client_tick(tick);
+	p.srcSpeed = sdelay;
+	p.dmgSpeed = ddelay;
+
+	if (battle_config.hide_woe_damage && map_flag_gvg(src.m)) {
+		p.damage = damage ? div : 0;
+		p.damage2 = damage2 ? div : 0;
 	} else {
-#if PACKETVER < 20071113
-		WBUFW(buf,22) = min(damage, INT16_MAX);
-		WBUFW(buf,27+offset) = damage2;
-#else
-		WBUFL(buf,22) = damage;
-		WBUFL(buf,27+offset) = damage2;
-#endif
+		p.damage = damage;
+		p.damage2 = damage2;
 	}
+
 #if PACKETVER >= 20131223
-	WBUFB(buf,26) = (spdamage) ? 1 : 0; // IsSPDamage - Displays blue digits.
+	p.isSPDamage = (spdamage) ? 1 : 0; // IsSPDamage - Displays blue digits.
 #endif
-	WBUFW(buf,24+offset) = div;
-	WBUFB(buf,26+offset) = type;
 
-	if(disguised(dst)) {
-		clif_send(buf, packet_len(cmd), dst, AREA_WOS);
-		WBUFL(buf,6) = disguised_bl_id( dst->id );
-		clif_send(buf, packet_len(cmd), dst, SELF);
+	p.div = div;
+	p.type = type;
+
+	if(disguised(&dst)) {
+		clif_send( &p, sizeof(p), &dst, AREA_WOS);
+		p.targetID = disguised_bl_id( dst.id );
+		clif_send( &p, sizeof(p), &dst, SELF);
 	} else
-		clif_send(buf, packet_len(cmd), dst, AREA);
+		clif_send(&p, sizeof(p), &dst, AREA);
 
-	if(disguised(src)) {
-		WBUFL(buf,2) = disguised_bl_id( src->id );
-		if (disguised(dst))
-			WBUFL(buf,6) = dst->id;
-#if PACKETVER < 20071113
-		if(damage > 0) WBUFW(buf,22) = -1;
-		if(damage2 > 0) WBUFW(buf,27) = -1;
-#else
-		if(damage > 0) WBUFL(buf,22) = -1;
-		if(damage2 > 0) WBUFL(buf,27+offset) = -1;
-#endif
-		clif_send(buf,packet_len(cmd),src,SELF);
+	if(disguised(&src)) {
+		p.srcID = disguised_bl_id( src.id );
+		if(damage > 0)
+			p.damage = -1;
+		if(damage2 > 0)
+			p.damage2 = -1;
+		clif_send( &p, sizeof(p), &src, SELF);
 	}
 
-	if(src == dst) {
-		unit_setdir(src, unit_getdir(src));
-	}
+	if(&src == &dst) 
+		unit_setdir(&src, unit_getdir(&src));
 
 	// In case this assignment is bypassed by DMG_MULTI_HIT_CRITICAL
 	type = clif_calc_delay(type, div, damage + damage2, ddelay);
 	//Return adjusted can't walk delay for further processing.
-	return clif_calc_walkdelay(dst, ddelay, type, damage+damage2, div);
+	return clif_calc_walkdelay(&dst, ddelay, type, damage+damage2, div);
 }
 
 /*==========================================
  * src picks up dst
  *------------------------------------------*/
-void clif_takeitem(struct block_list* src, struct block_list* dst)
-{
-	//clif_damage(src,dst,0,0,0,0,0,DMG_PICKUP_ITEM,0,false);
-	unsigned char buf[32];
-
-	nullpo_retv(src);
-	nullpo_retv(dst);
-
-	WBUFW(buf, 0) = 0x8a;
-	WBUFL(buf, 2) = src->id;
-	WBUFL(buf, 6) = dst->id;
-	WBUFB(buf,26) = 1;
-	clif_send(buf, packet_len(0x8a), src, AREA);
-
+void clif_takeitem(block_list& src, block_list& dst){
+	PACKET_ZC_NOTIFY_ACT p{};
+	p.packetType = HEADER_ZC_NOTIFY_ACT;
+	p.srcID = src.id;
+	p.targetID = dst.id;
+	p.type = DMG_PICKUP_ITEM;
+	clif_send(&p, sizeof(p), &src, AREA);
 }
 
 /*==========================================
  * inform clients in area that `bl` is sitting
  *------------------------------------------*/
-void clif_sitting(struct block_list* bl)
-{
-	unsigned char buf[32];
-	nullpo_retv(bl);
-
-	WBUFW(buf, 0) = 0x8a;
-	WBUFL(buf, 2) = bl->id;
-	WBUFB(buf,26) = 2;
-	clif_send(buf, packet_len(0x8a), bl, AREA);
-
-	if(disguised(bl)) {
-		WBUFL(buf, 2) = disguised_bl_id( bl->id );
-		clif_send(buf, packet_len(0x8a), bl, SELF);
+void clif_sitting(block_list& bl){
+	PACKET_ZC_NOTIFY_ACT p{};
+	p.packetType = HEADER_ZC_NOTIFY_ACT;
+	p.srcID = bl.id;
+	p.type = DMG_SIT_DOWN;
+	clif_send(&p, sizeof(p), &bl, AREA);
+	if(disguised(&bl)) {
+		p.srcID = disguised_bl_id( bl.id );
+		clif_send(&p, sizeof(p), &bl, SELF);
 	}
 }
 
 /*==========================================
  * inform clients in area that `bl` is standing
  *------------------------------------------*/
-void clif_standing(struct block_list* bl)
-{
-	unsigned char buf[32];
-	nullpo_retv(bl);
-
-	WBUFW(buf, 0) = 0x8a;
-	WBUFL(buf, 2) = bl->id;
-	WBUFB(buf,26) = 3;
-	clif_send(buf, packet_len(0x8a), bl, AREA);
-
-	if(disguised(bl)) {
-		WBUFL(buf, 2) = disguised_bl_id( bl->id );
-		clif_send(buf, packet_len(0x8a), bl, SELF);
+void clif_standing(block_list& bl){
+	PACKET_ZC_NOTIFY_ACT p{};
+	p.packetType = HEADER_ZC_NOTIFY_ACT;
+	p.srcID = bl.id;
+	p.type = DMG_STAND_UP;
+	clif_send(&p, sizeof(p), &bl, AREA);
+	if(disguised(&bl)) {
+		p.srcID = disguised_bl_id( bl.id );
+		clif_send(&p, sizeof(p), &bl, SELF);
 	}
 }
 
@@ -9815,7 +9775,7 @@ void clif_refresh(map_session_data *sd)
 	if( sd->state.vending )
 		clif_openvending( *sd );
 	if( pc_issit(sd) )
-		clif_sitting(&sd->bl); // FIXME: just send to self, not area
+		clif_sitting(sd->bl);
 	if( pc_isdead(sd) ) // When you refresh, resend the death packet.
 		clif_clearunit_single( sd->bl.id, CLR_DEAD, *sd );
 	else
@@ -11622,7 +11582,7 @@ void clif_parse_ActionRequest_sub( map_session_data& sd, int action_type, int ta
 
 		if(pc_issit(&sd)) {
 			//Bugged client? Just refresh them.
-			clif_sitting(&sd.bl);
+			clif_sitting(sd.bl);
 			return;
 		}
 
@@ -11649,12 +11609,12 @@ void clif_parse_ActionRequest_sub( map_session_data& sd, int action_type, int ta
 
 		pc_setsit(&sd);
 		skill_sit(&sd, true);
-		clif_sitting(&sd.bl);
+		clif_sitting(sd.bl);
 		break;
 	case 0x03: // standup
 		if (!pc_issit(&sd)) {
 			//Bugged client? Just refresh them.
-			clif_standing(&sd.bl);
+			clif_standing(sd.bl);
 			return;
 		}
 
@@ -11674,7 +11634,7 @@ void clif_parse_ActionRequest_sub( map_session_data& sd, int action_type, int ta
 			if (battle_config.mer_idle_no_share && sd.md && battle_config.idletime_mer_option&IDLE_SIT)
 				sd.idletime_mer = last_tick;
 			skill_sit(&sd, false);
-			clif_standing(&sd.bl);
+			clif_standing(sd.bl);
 		}
 		break;
 	}

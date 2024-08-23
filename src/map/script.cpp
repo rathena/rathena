@@ -15389,7 +15389,7 @@ BUILDIN_FUNC(skilleffect)
 
 		if (pc_issit(sd) && pc_setstand(sd, false)) {
 			skill_sit(sd, 0);
-			clif_standing(&sd->bl);
+			clif_standing(sd->bl);
 		}
 	}
 
@@ -23150,7 +23150,7 @@ BUILDIN_FUNC(sit)
 	if( !pc_issit(sd) ) {
 		pc_setsit(sd);
 		skill_sit(sd, 1);
-		clif_sitting(&sd->bl);
+		clif_sitting(sd->bl);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -23167,7 +23167,7 @@ BUILDIN_FUNC(stand)
 
 	if( pc_issit(sd) && pc_setstand(sd, false)) {
 		skill_sit(sd, 0);
-		clif_standing(&sd->bl);
+		clif_standing(sd->bl);
 	}
 
 	return SCRIPT_CMD_SUCCESS;
