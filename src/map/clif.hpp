@@ -1458,7 +1458,8 @@ void clif_noask_sub( map_session_data& sd, map_session_data& tsd, int type );
 
 void clif_specialpopup(map_session_data& sd, int32 id);
 
-// Restore Amotion Animation 
-void clif_hit_frame(block_list&,int,uint16);
+// Restore Amotion Animation
+class PACKET_ZC_RESTORE_ANIMATION;
+void clif_hit_frame(block_list&,PACKET_ZC_RESTORE_ANIMATION&);
 void clif_parse_restore_animation(map_session_data* sd, block_list& target, uint16 skill_id, uint16 skill_lv);
 #endif /* CLIF_HPP */
