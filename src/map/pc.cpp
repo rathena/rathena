@@ -15884,7 +15884,7 @@ int PACKET_ZC_RESTORE_ANIMATION::get_animation_interval(map_session_data&sd,int 
 #ifdef RENEWAL
 	return cap_value(sd.battle_status.adelay - ((sd.battle_status.adelay * sd.bonus.delayrate) / 100), battle_config.feature_ras_min_renewal_motion, 432); //Kiel uncapped animation remove
 #else
-	return cap_value(sd.battle_status.adelay - ((sd.battle_status.adelay * sd.bonus.delayrate) / 100)), 242, 432); //apsd amotion based
+	return cap_value(sd.battle_status.adelay - ((sd.battle_status.adelay * sd.bonus.delayrate) / 100), 242, 432); //apsd amotion based
 #endif
 }
 TIMER_FUNC(pc_animation_force_timer){
