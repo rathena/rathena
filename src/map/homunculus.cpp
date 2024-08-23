@@ -279,7 +279,7 @@ int hom_vaporize(map_session_data *sd, int flag)
 	if (!hd || hd->homunculus.vaporize)
 		return 0;
 
-	if (status_isdead(&hd->bl))
+	if (status_isdead(hd->bl))
 		return 0; //Can't vaporize a dead homun.
 
 	if (flag == HOM_ST_REST && get_percentage(hd->battle_status.hp, hd->battle_status.max_hp) < 80)
@@ -1280,7 +1280,7 @@ int hom_ressurect(map_session_data* sd, unsigned char per, short x, short y)
 	if (hd->homunculus.vaporize == HOM_ST_REST)
 		return 0; // vaporized homunculi need to be 'called'
 
-	if (!status_isdead(&hd->bl))
+	if (!status_isdead(hd->bl))
 		return 0; // already alive
 
 	hom_init_timers(hd);
