@@ -25174,7 +25174,7 @@ void clif_parse_restore_animation(map_session_data* sd, block_list& target, uint
 			int i = sd->animation_getIndex(skill_id,target.id);
 			if(i < sd->animation.size())				
 			{
-				if(!status_isdead(&target))
+				if(!status_isdead(target))
 				{
 					sd->animation[i].get()->update_animation(hit_count);
 					exist = true;
@@ -25182,7 +25182,7 @@ void clif_parse_restore_animation(map_session_data* sd, block_list& target, uint
 			}
 		}
 
-		if(!exist && !status_isdead(&target)){
+		if(!exist && !status_isdead(target)){
 			if(battle_check_target(&sd->bl,&target,BCT_ENEMY) && battle_check_range(&sd->bl,&target,skill_get_range2(&sd->bl,skill_id,skill_lv,false)))
 				sd->animation.push_back(std::make_unique<PACKET_ZC_RESTORE_ANIMATION>(sd, target, skill_id, skill_lv, hit_count));
 		}

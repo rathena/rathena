@@ -15912,7 +15912,7 @@ TIMER_FUNC(pc_animation_force_timer){
 		if(unit_getdir(&sd->bl) != dir)
 			unit_setdir(&sd->bl,dir,true);
 		if(target != nullptr && it->can_spin()){
-			if(!status_isdead(target))
+			if(!status_isdead(*target))
 			{
 				uint8 t_dir = unit_getdir(target);
 				unit_setdir(target,(t_dir < DIR_MAX ? t_dir + DIR_WEST : DIR_NORTH),true); //spin target
