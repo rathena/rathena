@@ -7834,10 +7834,10 @@ BUILDIN_FUNC(getitem2)
 		}
 
 		int get_count = 0;
-
+	
 		//Check if it's stackable.
 		if( !itemdb_isstackable2( item_data.get() ) ){
-			get_count = 1;			
+			get_count = 1;
 		}else{
 			get_count = amount;
 		}
