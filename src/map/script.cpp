@@ -16784,7 +16784,7 @@ BUILDIN_FUNC(equip) {
 		script_pushint(st,1);
 		return SCRIPT_CMD_SUCCESS;
 	}
-	ShowError("buildin_equip: Item %u cannot be equipped\n",id);
+	ShowError("buildin_equip: Item %llu cannot be equipped\n",(unsigned long long)id);
 	script_pushint(st,0);
 	return SCRIPT_CMD_FAILURE;
 }
