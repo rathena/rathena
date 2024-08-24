@@ -25141,7 +25141,8 @@ void clif_specialpopup(map_session_data& sd, int32 id ){
 #endif
 }
 
-#define MIN_PACKET_TICK_DELAY 100
+static int min_tick_interval = 100;
+static int ban_time = min_tick_interval*10000;
 struct packet_spammer_data{
 	uint32 client_addr;
 	t_tick tick;
@@ -25168,27 +25169,13 @@ static bool psd_is_spammer(packet_spammer_data* psd)
 static int clif_parse(int fd)
 {
 	int cmd, packet_len;
-	TBL_PC* sd;
 	int piter;
 #ifdef PACKET_OBFUSCATION
 	int cmd2;
 #endif
 
-	ARR_FIND(0,packet_spammer.size(),piter,packet_spammer[piter].client_addr == session[fd]->client_addr);
-	if(piter!=packet_spammer.size() && packet_spammer[piter].tick + MIN_PACKET_TICK_DELAY > gettick()){
-		if(psd_is_spammer(&packet_spammer[piter]))					
-			clif_authfail_fd(fd,3);
-		packet_spammer[piter].click.count++;
-		return 0;
-	} else if(piter!=packet_spammer.size()){
-		packet_spammer.erase(packet_spammer.begin()+piter);
-		packet_spammer.shrink_to_fit();
-	} else {
-		packet_spammer.push_back({session[fd]->client_addr,gettick()});
-		packet_spammer.end()->click.count++;
-	}
+	TBL_PC* sd = (TBL_PC *)session[fd]->session_data;
 
-	sd = (TBL_PC *)session[fd]->session_data;
 	if (session[fd]->flag.eof) {
 		if (sd) {
 			if (sd->state.autotrade) {
@@ -25231,6 +25218,24 @@ static int clif_parse(int fd)
 		cmd = (cmd ^ ((((clif_cryptKey[0] * clif_cryptKey[1]) + clif_cryptKey[2]) >> 16) & 0x7FFF));
 	}
 #endif
+
+	ARR_FIND(0,packet_spammer.size(),piter,packet_spammer[piter].client_addr == session[fd]->client_addr);
+	if(piter!=packet_spammer.size() && packet_spammer[piter].tick + min_tick_interval > gettick()){
+		if(psd_is_spammer(&packet_spammer[piter]))
+			clif_authfail_fd(fd,3);
+		packet_spammer[piter].click.count++;
+		return 0;
+	}
+	else if(sd && piter!=packet_spammer.size() && (cmd > MAX_PACKET_DB || cmd < MIN_PACKET_DB || packet_db[cmd].len == 0)){
+		chrif_req_login_operation(sd->status.account_id, sd->status.name, CHRIF_OP_LOGIN_BAN, gettick()+ban_time, 0, 0);
+		return 0;
+	} else if(piter!=packet_spammer.size()){
+		packet_spammer.erase(packet_spammer.begin()+piter);
+		packet_spammer.shrink_to_fit();
+	} else {
+		packet_spammer.push_back({session[fd]->client_addr,gettick()});
+		packet_spammer.end()->click.count++;
+	}
 
 	// filter out invalid / unsupported packets
 	if (cmd > MAX_PACKET_DB || cmd < MIN_PACKET_DB || packet_db[cmd].len == 0) {
