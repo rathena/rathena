@@ -219,7 +219,7 @@ struct PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK{
 #if PACKETVER >= 20130000
 	uint32 wearLocation;
 #else
-	uint16 pos;
+	uint16 wearLocation;
 #endif
 	uint8 flag;
 } __attribute__((packed));
