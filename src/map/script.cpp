@@ -19910,7 +19910,7 @@ BUILDIN_FUNC(unitattack)
 		case BL_PC: {
 			map_session_data* sd = (map_session_data*)unit_bl;
 
-			clif_parse_ActionRequest_sub( *sd, actiontype > 0 ? 0x07 : 0x00, target_bl->id, gettick() );
+			clif_parse_ActionRequest_sub( *sd, actiontype > 0 ? DMG_REPEAT : DMG_NORMAL, target_bl->id, gettick() );
 			script_pushint(st, sd->ud.target == target_bl->id);
 			return SCRIPT_CMD_SUCCESS;
 		}

@@ -11532,14 +11532,14 @@ void clif_parse_HowManyConnections(int fd, map_session_data *sd)
 	clif_user_count(sd, map_getusers());
 }
 
-void clif_parse_ActionRequest_sub( map_session_data& sd, int action_type, int target_id, t_tick tick ){
+void clif_parse_ActionRequest_sub( map_session_data& sd, e_damage_type action_type, int target_id, t_tick tick ){
 	if (pc_isdead(&sd)) {
 		clif_clearunit_area(sd.bl, CLR_DEAD);
 		return;
 	}
 
 	// Statuses that don't let the player sit / stand / talk with NPCs (targeted)
-	if (action_type != 0x00 && action_type != 0x07) {
+	if (action_type != DMG_NORMAL && action_type != DMG_REPEAT) {
 		if (sd.sc.cant.interact)
 			return;
 		pc_stop_walking(&sd, 1);
@@ -11551,8 +11551,8 @@ void clif_parse_ActionRequest_sub( map_session_data& sd, int action_type, int ta
 
 	switch(action_type)
 	{
-	case 0x00: // once attack
-	case 0x07: // continuous attack
+	case DMG_NORMAL: // once attack
+	case DMG_REPEAT: // continuous attack
 
 		if( pc_cant_act(&sd) )
 			return;
@@ -11573,7 +11573,7 @@ void clif_parse_ActionRequest_sub( map_session_data& sd, int action_type, int ta
 			sd.idletime_mer = last_tick;
 		unit_attack(&sd.bl, target_id, action_type != 0);
 		break;
-	case 0x02: // sitdown
+	case DMG_SIT_DOWN: // sitdown
 		if (battle_config.basic_skill_check && pc_checkskill(&sd, NV_BASIC) < 3 && pc_checkskill(&sd, SU_BASIC_SKILL) < 1) {
 			clif_skill_fail( sd, 1, USESKILL_FAIL_LEVEL, 2 );
 			break;
@@ -11610,7 +11610,7 @@ void clif_parse_ActionRequest_sub( map_session_data& sd, int action_type, int ta
 		skill_sit(&sd, true);
 		clif_sitting(sd.bl);
 		break;
-	case 0x03: // standup
+	case DMG_STAND_UP: // standup
 		if (!pc_issit(&sd)) {
 			//Bugged client? Just refresh them.
 			clif_standing(sd.bl);
@@ -11659,7 +11659,7 @@ void clif_parse_ActionRequest(int fd, map_session_data *sd)
 
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
 	clif_parse_ActionRequest_sub( *sd,
-		RFIFOB(fd,info->pos[1]),
+		(e_damage_type)RFIFOB(fd,info->pos[1]),
 		RFIFOL(fd,info->pos[0]),
 		gettick()
 	);
@@ -12062,7 +12062,7 @@ void clif_parse_NpcClicked(int fd,map_session_data *sd)
 	switch (bl->type) {
 		case BL_MOB:
 		case BL_PC:
-			clif_parse_ActionRequest_sub( *sd, 0x07, bl->id, gettick() );
+			clif_parse_ActionRequest_sub( *sd, DMG_REPEAT, bl->id, gettick() );
 			break;
 		case BL_NPC:
 #ifdef RENEWAL
