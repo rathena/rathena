@@ -1377,6 +1377,7 @@ int guild_send_memberinfoshort(map_session_data *sd,int online) { // cleaned up 
 
 	if(sd->state.connect_new) {	//Note that this works because it is invoked in parse_LoadEndAck before connect_new is cleared.
 		clif_guild_belonginfo( *sd );
+		clif_guild_basicinfo( *sd ); // client need this packet to show guild name on login alt+c [hotfix~AoShinHo]
 		sd->guild_emblem_id = g->guild.emblem_id;
 	}
 	return 0;
