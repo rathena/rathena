@@ -6410,10 +6410,8 @@ void clif_cooking_list( map_session_data& sd, int trigger, uint16 skill_id, int 
 /// @param val1
 /// @param val2
 /// @param val3
-void clif_status_change_sub(struct block_list *bl, int id, int type, int flag, t_tick tick, int val1, int val2, int val3, enum send_target target_type)
+static void clif_status_change_sub(struct block_list *bl, int id, int type, int flag, t_tick tick, int val1, int val2, int val3, enum send_target target_type)
 {
-	unsigned char buf[32];
-
 	if (type == EFST_BLANK)  //It shows nothing on the client...
 		return;
 
@@ -6426,42 +6424,34 @@ void clif_status_change_sub(struct block_list *bl, int id, int type, int flag, t
 	if (type == EFST_LUNARSTANCE || type == EFST_UNIVERSESTANCE || type == EFST_SUNSTANCE || type == EFST_STARSTANCE)
 		tick = 200;
 
-#if PACKETVER >= 20120618
-	if (flag && battle_config.display_status_timers)
-		WBUFW(buf,0) = 0x983;
-	else
-#elif PACKETVER >= 20090121
-	if (flag && battle_config.display_status_timers)
-		WBUFW(buf,0) = 0x43f;
-	else
-#endif
-		WBUFW(buf,0) = 0x196;
-	WBUFW(buf,2) = type;
-	WBUFL(buf,4) = id;
-	WBUFB(buf,8) = flag;
-#if PACKETVER >= 20120618
-	if (flag && battle_config.display_status_timers) {
+#if PACKETVER >= 20090121
+	if (flag&&battle_config.display_status_timers){
+		PACKET_ZC_MSG_STATE_CHANGE2 p{};
+		p.packetType = HEADER_ZC_MSG_STATE_CHANGE2;
+		p.type = type;
+		p.id = id;
+		p.flag = flag;
 		if (tick <= 0)
 			tick = 9999; // this is indeed what official servers do
-
-		WBUFL(buf,9) = client_tick(tick);/* at this stage remain and total are the same value I believe */
-		WBUFL(buf,13) = client_tick(tick);
-		WBUFL(buf,17) = val1;
-		WBUFL(buf,21) = val2;
-		WBUFL(buf,25) = val3;
-	}
-#elif PACKETVER >= 20090121
-	if (flag && battle_config.display_status_timers) {
-		if (tick <= 0)
-			tick = 9999; // this is indeed what official servers do
-
-		WBUFL(buf,9) = client_tick(tick);
-		WBUFL(buf,13) = val1;
-		WBUFL(buf,17) = val2;
-		WBUFL(buf,21) = val3;
+		p.duration = client_tick(tick);/* at this stage remain and total are the same value I believe */
+#if PACKETVER >= 20120618
+		p.duration2 = client_tick(tick);
+#endif
+		p.val1 = val1;
+		p.val2 = val2;
+		p.val3 = val3;
+		clif_send(&p,sizeof(p),bl,target_type);
+		return;
 	}
 #endif
-	clif_send(buf, packet_len(WBUFW(buf,0)), bl, target_type);
+	PACKET_ZC_MSG_STATE_CHANGE p{};	
+	p.packetType = HEADER_ZC_MSG_STATE_CHANGE;
+	p.type = type;
+	p.id = id;
+#if PACKETVER >= 20090121
+	p.flag = flag;
+#endif
+	clif_send(&p,sizeof(p),bl,target_type);
 }
 
 /* Sends status effect to clients around the bl
@@ -6577,14 +6567,6 @@ void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, 
 /// 0984 <id>.L <index>.W <total msec>.L <remain msec>.L { <val>.L }*3 (ZC_EFST_SET_ENTER2) (PACKETVER >= 20120618)
 void clif_efst_status_change(struct block_list *bl, int tid, enum send_target target, int type, t_tick tick, int val1, int val2, int val3) {
 #if PACKETVER >= 20111108
-	unsigned char buf[32];
-#if PACKETVER >= 20120618
-	const int cmd = 0x984;
-#elif PACKETVER >= 20111108
-	const int cmd = 0x8ff;
-#endif
-	int offset = 0;
-
 	if (type == EFST_BLANK)
 		return;
 
@@ -6592,21 +6574,19 @@ void clif_efst_status_change(struct block_list *bl, int tid, enum send_target ta
 
 	if (tick <= 0)
 		tick = 9999;
-
-	WBUFW(buf,offset + 0) = cmd;
-	WBUFL(buf,offset + 2) = tid;
-	WBUFW(buf,offset + 6) = type;
-#if PACKETVER >= 20111108
-	WBUFL(buf,offset + 8) = client_tick(tick); // Set remaining status duration [exneval]
+	PACKET_ZC_EFST_SET_ENTER p{};
+	p.packetType = HEADER_ZC_EFST_SET_ENTER;
+	p.tid = tid;
+	p.type = type;
+	p.duration = client_tick(tick); // Set remaining status duration [exneval]
 #if PACKETVER >= 20120618
-	WBUFL(buf,offset + 12) = client_tick(tick);
-	offset += 4;
+	p.duration2 = client_tick(tick); // client need it? 
 #endif
-	WBUFL(buf,offset + 12) = val1;
-	WBUFL(buf,offset + 16) = val2;
-	WBUFL(buf,offset + 20) = val3;
-#endif
-	clif_send(buf,packet_len(cmd),bl,target);
+	p.val1 = val1;
+	p.val2 = val2;
+	p.val3 = val3;
+
+	clif_send(&p,sizeof(p),bl,target);
 #endif
 }
 
@@ -9818,7 +9798,7 @@ void clif_refresh(map_session_data *sd)
 	if( pc_isdead(sd) ) // When you refresh, resend the death packet.
 		clif_clearunit_single( sd->bl.id, CLR_DEAD, *sd );
 	else
-		clif_changed_dir(&sd->bl, SELF);
+		clif_changed_dir(sd->bl, SELF);
 	clif_efst_status_change_sub(&sd->bl,&sd->bl,SELF);
 
 	//Issue #2143
@@ -11056,7 +11036,7 @@ void clif_parse_LoadEndAck(int fd,map_session_data *sd)
 	else {
 		skill_usave_trigger(sd);
 		if (battle_config.spawn_direction)
-			clif_changed_dir(&sd->bl, SELF);
+			clif_changed_dir(sd->bl, SELF);
 	}
 
 	// Trigger skill effects if you appear standing on them
@@ -11469,21 +11449,17 @@ void clif_parse_MapMove(int fd, map_session_data *sd)
 ///     5 = southeast
 ///     6 = east
 ///     7 = northeast
-void clif_changed_dir(struct block_list *bl, enum send_target target)
-{
-	unsigned char buf[64];
-
-	WBUFW(buf,0) = 0x9c;
-	WBUFL(buf,2) = bl->id;
-	WBUFW(buf,6) = bl->type==BL_PC?((TBL_PC*)bl)->head_dir:0;
-	WBUFB(buf,8) = unit_getdir(bl);
-
-	clif_send(buf, packet_len(0x9c), bl, target);
-
-	if (disguised(bl)) {
-		WBUFL(buf,2) = disguised_bl_id(bl->id);
-		WBUFW(buf,6) = 0;
-		clif_send(buf, packet_len(0x9c), bl, SELF);
+void clif_changed_dir(block_list &bl, enum send_target target){
+	PACKET_ZC_CHANGE_DIRECTION p{};
+	p.packetType = HEADER_ZC_CHANGE_DIRECTION;
+	p.srcId = bl.id;
+	p.headDir = bl.type==BL_PC?reinterpret_cast<TBL_PC*>(&bl)->head_dir:0;
+	p.dir = unit_getdir(&bl);
+	clif_send(&p, sizeof(p), &bl, target);
+	if (disguised(&bl)) {
+		p.srcId = disguised_bl_id(bl.id);
+		p.headDir = 0;
+		clif_send(&p, sizeof(p), &bl, SELF);
 	}
 }
 
@@ -11501,7 +11477,7 @@ void clif_parse_ChangeDir(int fd, map_session_data *sd)
 	dir = RFIFOB(fd,info->pos[1]);
 	pc_setdir(sd, dir, headdir);
 
-	clif_changed_dir(&sd->bl, AREA_WOS);
+	clif_changed_dir(sd->bl, AREA_WOS);
 }
 
 
@@ -11553,14 +11529,12 @@ void clif_parse_Emotion(int fd, map_session_data *sd){
 
 /// Amount of currently online players, reply to /w /who (ZC_USER_COUNT).
 /// 00c2 <count>.L
-void clif_user_count(map_session_data* sd, int count)
+void clif_user_count(map_session_data& sd, int count)
 {
-	int fd = sd->fd;
-
-	WFIFOHEAD(fd,packet_len(0xc2));
-	WFIFOW(fd,0) = 0xc2;
-	WFIFOL(fd,2) = count;
-	WFIFOSET(fd,packet_len(0xc2));
+	PACKET_ZC_USER_COUNT p{};
+	p.packetType = HEADER_ZC_USER_COUNT;
+	p.playersCount = count;
+	clif_send(&p,sizeof(p),&sd.bl,SELF);
 }
 
 
@@ -11569,7 +11543,7 @@ void clif_user_count(map_session_data* sd, int count)
 /// 00c1
 void clif_parse_HowManyConnections(int fd, map_session_data *sd)
 {
-	clif_user_count(sd, map_getusers());
+	clif_user_count(*sd, map_getusers());
 }
 
 void clif_parse_ActionRequest_sub( map_session_data& sd, int action_type, int target_id, t_tick tick ){

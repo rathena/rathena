@@ -1166,7 +1166,7 @@ bool unit_setdir(block_list *bl, uint8 dir, bool send_update)
 	}
 
 	if (send_update)
-		clif_changed_dir(bl, AREA);
+		clif_changed_dir(*bl, AREA);
 
 	return true;
 }

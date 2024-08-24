@@ -116,6 +116,75 @@ struct PACKET_CZ_REQ_REMOVE_BARGAIN_SALE_ITEM{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_REQ_REMOVE_BARGAIN_SALE_ITEM, 0x9b0)
 
+struct PACKET_ZC_USER_COUNT{
+	uint16 packetType;
+	uint32 playersCount;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_USER_COUNT, 0xc2)
+
+struct PACKET_ZC_CHANGE_DIRECTION{
+	uint16 packetType;
+	uint32 srcId;
+	uint16 headDir;
+	uint8 dir;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_CHANGE_DIRECTION, 0x9c)
+
+#if PACKETVER >= 20111108
+struct PACKET_ZC_EFST_SET_ENTER{
+	uint16 packetType;
+	uint32 tid;
+	uint16 type;
+	uint32 duration;
+#if PACKETVER >= 20120618
+	uint32 duration2;
+#endif
+	uint32 val1;
+	uint32 val2;
+	uint32 val3;
+} __attribute__((packed));
+#if PACKETVER >= 20120618
+DEFINE_PACKET_HEADER(ZC_EFST_SET_ENTER, 0x984) // ZC_EFST_SET_ENTER
+#else
+DEFINE_PACKET_HEADER(ZC_EFST_SET_ENTER, 0x8ff) //ZC_EFST_SET_ENTER2
+#endif
+#endif
+
+struct PACKET_ZC_MSG_STATE_CHANGE{
+	uint16 packetType;
+	uint16 type;
+	uint32 id;
+#if PACKETVER >= 20090121
+	uint8 flag;
+#endif
+} __attribute__((packed));
+#if PACKETVER >= 20081112 && PACKETVER < 20090121
+DEFINE_PACKET_HEADER(ZC_MSG_STATE_CHANGE, 0x43f)
+#else
+DEFINE_PACKET_HEADER(ZC_MSG_STATE_CHANGE, 0x196)
+#endif
+
+#if PACKETVER >= 20090121
+struct PACKET_ZC_MSG_STATE_CHANGE2{
+	uint16 packetType;
+	uint16 type;
+	uint32 id;
+	uint8 flag;
+	uint32 duration;
+#if PACKETVER >= 20120618
+	uint32 duration2;
+#endif
+	uint32 val1;
+	uint32 val2;
+	uint32 val3;
+} __attribute__((packed));
+#if PACKETVER >= 20120618
+DEFINE_PACKET_HEADER(ZC_MSG_STATE_CHANGE2, 0x983); //ZC_MSG_STATE_CHANGE3
+#else
+DEFINE_PACKET_HEADER(ZC_MSG_STATE_CHANGE2, 0x43f); //ZC_MSG_STATE_CHANGE2
+#endif
+#endif
+
 struct PACKET_ZC_NOTIFY_BARGAIN_SALE_SELLING{
 	int16 packetType;
 #if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
