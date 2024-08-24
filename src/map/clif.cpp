@@ -25142,7 +25142,7 @@ void clif_specialpopup(map_session_data& sd, int32 id ){
 }
 
 static int min_tick_interval = 100;
-static int ban_time = min_tick_interval*10000;
+static int32 ban_time = min_tick_interval*10000;
 struct packet_spammer_data{
 	uint32 client_addr;
 	t_tick tick;
@@ -25227,7 +25227,7 @@ static int clif_parse(int fd)
 		return 0;
 	}
 	else if(sd && piter!=packet_spammer.size() && (cmd > MAX_PACKET_DB || cmd < MIN_PACKET_DB || packet_db[cmd].len == 0)){
-		chrif_req_login_operation(sd->status.account_id, sd->status.name, CHRIF_OP_LOGIN_BAN, gettick()+ban_time, 0, 0);
+		chrif_req_login_operation(sd->status.account_id, sd->status.name, CHRIF_OP_LOGIN_BAN, ban_time+(int32)gettick(), 0, 0);
 		return 0;
 	} else if(piter!=packet_spammer.size()){
 		packet_spammer.erase(packet_spammer.begin()+piter);
