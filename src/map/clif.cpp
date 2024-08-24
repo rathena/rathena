@@ -4661,26 +4661,17 @@ void clif_leavechat(struct chat_data* cd, map_session_data* sd, bool flag)
 /// Opens a trade request window from char 'name'.
 /// 00e5 <nick>.24B (ZC_REQ_EXCHANGE_ITEM)
 /// 01f4 <nick>.24B <charid>.L <baselvl>.W (ZC_REQ_EXCHANGE_ITEM2)
-void clif_traderequest(map_session_data* sd, const char* name)
-{
-	int fd = sd->fd;
-
-#if PACKETVER < 6
-	WFIFOHEAD(fd,packet_len(0xe5));
-	WFIFOW(fd,0) = 0xe5;
-	safestrncpy(WFIFOCP(fd,2), name, NAME_LENGTH);
-	WFIFOSET(fd,packet_len(0xe5));
-#else
+void clif_traderequest(map_session_data* sd, const char* name){
+	PACKET_ZC_REQ_EXCHANGE_ITEM p{};
+	p.packetType = HEADER_ZC_REQ_EXCHANGE_ITEM;
+	safestrncpy(p.requesterName, name, NAME_LENGTH);
+#if PACKETVER > 6
 	map_session_data* tsd = map_id2sd(sd->trade_partner);
-	if( !tsd ) return;
-
-	WFIFOHEAD(fd,packet_len(0x1f4));
-	WFIFOW(fd,0) = 0x1f4;
-	safestrncpy(WFIFOCP(fd,2), name, NAME_LENGTH);
-	WFIFOL(fd,26) = tsd->status.char_id;
-	WFIFOW(fd,30) = tsd->status.base_level;
-	WFIFOSET(fd,packet_len(0x1f4));
+	if( tsd == nullptr ) return;
+	p.targetId = tsd->status.char_id; //In client shows PN:0N645(random digits i think), is encrypted char id? it show same without apply this packet [TODO] Check Official behavior
+	p.targetLv = tsd->status.base_level;
 #endif
+	clif_send(&p,sizeof(p),&sd->bl,SELF);
 }
 
 

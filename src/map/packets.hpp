@@ -122,6 +122,19 @@ struct PACKET_ZC_USER_COUNT{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_USER_COUNT, 0xc2)
 
+struct PACKET_ZC_REQ_EXCHANGE_ITEM{
+	uint16 packetType;
+	char requesterName[NAME_LENGTH];
+#if PACKETVER > 6
+	uint32 targetId;
+	uint16 targetLv;
+#endif
+} __attribute__((packed));
+#if PACKETVER < 6
+DEFINE_PACKET_HEADER(ZC_REQ_EXCHANGE_ITEM, 0x9a)
+#else
+DEFINE_PACKET_HEADER(ZC_REQ_EXCHANGE_ITEM, 0x1f4)
+#endif
 struct PACKET_ZC_CHANGE_DIRECTION{
 	uint16 packetType;
 	uint32 srcId;
@@ -189,7 +202,7 @@ struct PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK{
 	uint16 packetType;
 	uint16 index;
 #if PACKETVER >= 20130000
-	uint32 pos;
+	uint32 wearLocation;
 #else
 	uint16 pos;
 #endif
