@@ -25228,6 +25228,7 @@ static int clif_parse(int fd)
 	}
 	else if(sd && piter!=packet_spammer.size() && (cmd > MAX_PACKET_DB || cmd < MIN_PACKET_DB || packet_db[cmd].len == 0)){
 		chrif_req_login_operation(sd->status.account_id, sd->status.name, CHRIF_OP_LOGIN_BAN, ban_time+(int32)gettick(), 0, 0);
+		set_eof(fd);
 		return 0;
 	} else if(piter!=packet_spammer.size()){
 		packet_spammer.erase(packet_spammer.begin()+piter);
