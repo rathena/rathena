@@ -4277,8 +4277,8 @@ void clif_unequipitemack(map_session_data *sd,int n,int pos,int ok){
 	nullpo_retv(sd);
 	PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK p{};
 	p.packetType = HEADER_ZC_REQ_TAKEOFF_EQUIP_ACK;
-	p.index = n+2;
-	p.pos = pos;
+	p.index = client_index(n);
+	p.wearLocation = pos;
 	p.flag = ok;
 	clif_send(&p,sizeof(p),&sd->bl,SELF);
 }
