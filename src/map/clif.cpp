@@ -5382,15 +5382,19 @@ static void clif_graffiti(struct block_list *bl, struct skill_unit *unit, enum s
 /// 099f <lenght>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.L <range>.W <visible>.B (ZC_SKILL_ENTRY4)
 /// 09ca <lenght>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.L <range>.B <visible>.B <skill level>.B (ZC_SKILL_ENTRY5)
 void clif_getareachar_skillunit(struct block_list *bl, struct skill_unit *unit, enum send_target target, bool visible) {
-	int header = 0, unit_id = 0, pos = 0, fd = 0, len = -1;
+	int header = 0, unit_id = 0, pos = 0, len = -1;
 	unsigned char buf[128];
 
 	nullpo_retv(bl);
 	nullpo_retv(unit);
 
-	if (bl->type == BL_PC)
-		fd = ((TBL_PC*)bl)->fd;
-
+	if (bl->type == BL_PC){
+		TBL_PC* sd = ((TBL_PC*)bl);
+		if (unit->group->skill_id == WZ_ICEWALL)
+			clif_changemapcell(sd->fd, unit->bl.m, unit->bl.x, unit->bl.y, 5, SELF);
+		if(!sd->state.lesseffect)
+			return;
+	}
 	if (unit->group->state.guildaura)
 		return;
 
@@ -5456,9 +5460,6 @@ void clif_getareachar_skillunit(struct block_list *bl, struct skill_unit *unit, 
 			break;
 	}
 	clif_send(buf, len, bl, target);
-
-	if (unit->group->skill_id == WZ_ICEWALL)
-		clif_changemapcell(fd, unit->bl.m, unit->bl.x, unit->bl.y, 5, SELF);
 }
 
 /// 09ca <lenght>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.L <range>.B <visible>.B <skill level>.B (ZC_SKILL_ENTRY5)
