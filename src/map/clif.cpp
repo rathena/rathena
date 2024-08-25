@@ -80,6 +80,17 @@ static inline int32 client_exp(t_exp exp) {
 static struct eri *delay_clearunit_ers;
 
 struct s_packet_db packet_db[MAX_PACKET_DB + 1];
+
+std::unordered_map<clif_colors, unsigned long> color_table {
+	{	COLOR_DEFAULT, (0x00FF00 & 0x0000FF) << 16 | (0x00FF00 & 0x00FF00) | (0x00FF00 & 0xFF0000) >> 16      },
+	{	COLOR_RED, (0xFF0000 & 0x0000FF) << 16 | (0xFF0000 & 0x00FF00) | (0xFF0000 & 0xFF0000) >> 16          },
+	{	COLOR_WHITE, (0xFFFFFF & 0x0000FF) << 16 | (0xFFFFFF & 0x00FF00) | (0xFFFFFF & 0xFF0000) >> 16        },
+	{	COLOR_YELLOW, (0xFFFF00 & 0x0000FF) << 16 | (0xFFFF00 & 0x00FF00) | (0xFFFF00 & 0xFF0000) >> 16       },
+	{	COLOR_CYAN, (0x00FFFF & 0x0000FF) << 16 | (0x00FFFF & 0x00FF00) | (0x00FFFF & 0xFF0000) >> 16         },
+	{	COLOR_LIGHT_GREEN, (0xB5FFB5 & 0x0000FF) << 16 | (0xB5FFB5 & 0x00FF00) | (0xB5FFB5 & 0xFF0000) >> 16  },
+	{	COLOR_LIGHT_YELLOW, (0xFFFF63 & 0x0000FF) << 16 | (0xFFFF63 & 0x00FF00) | (0xFFFF63 & 0xFF0000) >> 16 },
+};
+
 #include "clif_obfuscation.hpp"
 static bool clif_session_isValid(map_session_data *sd);
 static void clif_loadConfirm( map_session_data *sd );
@@ -339,16 +350,6 @@ uint16 clif_getport(void)
 {
 	return map_port;
 }
-
-std::unordered_map<clif_colors, unsigned long> color_table {
-	{	COLOR_DEFAULT, (0x00FF00 & 0x0000FF) << 16 | (0x00FF00 & 0x00FF00) | (0x00FF00 & 0xFF0000) >> 16      },
-	{	COLOR_RED, (0xFF0000 & 0x0000FF) << 16 | (0xFF0000 & 0x00FF00) | (0xFF0000 & 0xFF0000) >> 16          },
-	{	COLOR_WHITE, (0xFFFFFF & 0x0000FF) << 16 | (0xFFFFFF & 0x00FF00) | (0xFFFFFF & 0xFF0000) >> 16        },
-	{	COLOR_YELLOW, (0xFFFF00 & 0x0000FF) << 16 | (0xFFFF00 & 0x00FF00) | (0xFFFF00 & 0xFF0000) >> 16       },
-	{	COLOR_CYAN, (0x00FFFF & 0x0000FF) << 16 | (0x00FFFF & 0x00FF00) | (0x00FFFF & 0xFF0000) >> 16         },
-	{	COLOR_LIGHT_GREEN, (0xB5FFB5 & 0x0000FF) << 16 | (0xB5FFB5 & 0x00FF00) | (0xB5FFB5 & 0xFF0000) >> 16  },
-	{	COLOR_LIGHT_YELLOW, (0xFFFF63 & 0x0000FF) << 16 | (0xFFFF63 & 0x00FF00) | (0xFFFF63 & 0xFF0000) >> 16 },
-};
 
 #if PACKETVER >= 20071106
 enum pointer_types : uint8 {
