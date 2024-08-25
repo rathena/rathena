@@ -4071,12 +4071,12 @@ struct PACKET_ZC_SKILL_ENTRY {
 	int32 srcId;
 	int16 x;
 	int16 y;
-#if PACKETVER < 20130731
-	int8 effectId;
-#else 
+#if PACKETVER >= 20130320
 	int32 effectId;
+#else 
+	int8 effectId;
 #endif
-#if PACKETVER >= 20130731
+#if PACKETVER >= 20130320
 	int8 range;
 #elif PACKETVER >= 20110718
 	int16 range;

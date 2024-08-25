@@ -97,7 +97,7 @@
 	parseable_packet(0x00d9,14,clif_parse_ChatAddMember,2,6);
 	packet(0x00db,-1);
 	//packet(0x00dc,28);
-	packet(0x00dd,29);
+	//packet(0x00dd,29);
 	parseable_packet(0x00de,-1,clif_parse_ChatRoomStatusChange,2,4,6,7,15);
 	packet(0x00df,-1);
 	parseable_packet(0x00e0,30,clif_parse_ChangeChatOwner,2,6);
@@ -148,7 +148,7 @@
 	parseable_packet(0x011b,20,clif_parse_UseSkillMap,2,4);
 	packet(0x011c,68);
 	parseable_packet(0x011d,2,clif_parse_RequestMemo,0);
-	packet(0x011f,16);
+	//packet(0x011f,16);
 	packet( cartlistequipType, -1 );
 	packet( cartlistnormalType, -1 );
 	parseable_packet( HEADER_CZ_MOVE_ITEM_FROM_BODY_TO_CART, sizeof( PACKET_CZ_MOVE_ITEM_FROM_BODY_TO_CART ), clif_parse_PutItemToCart, 0 );
@@ -1860,7 +1860,7 @@
 #endif
 
 #if PACKETVER >= 20121212
-	packet(0x08C7,20);
+	//packet(0x08C7,20);
 #endif
 
 // 2013-03-20Ragexe (Judas)
@@ -1913,7 +1913,7 @@
 	//packet(0x08ff,24); // ZC_EFST_SET_ENTER
 	//packet(0x0984,28); // ZC_EFST_SET_ENTER2
 	packet(0x08C8,34); // ZC_NOTIFY_ACT3
-	packet(0x099f,22); // ZC_SKILL_ENTRY4
+	//packet(0x099f,22); // ZC_SKILL_ENTRY4
 #endif
 
 // 2013-06-05Ragexe
