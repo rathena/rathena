@@ -80,8 +80,6 @@ static inline int32 client_exp(t_exp exp) {
 static struct eri *delay_clearunit_ers;
 
 struct s_packet_db packet_db[MAX_PACKET_DB + 1];
-unsigned long color_table[COLOR_MAX];
-
 #include "clif_obfuscation.hpp"
 static bool clif_session_isValid(map_session_data *sd);
 static void clif_loadConfirm( map_session_data *sd );
@@ -342,36 +340,46 @@ uint16 clif_getport(void)
 	return map_port;
 }
 
-#if PACKETVER >= 20071106
-enum object_types : unsigned char {
-    PC_TYPE = 0x0,
-    DISGUISED_PC_TYPE = 0x1,
-    ITEM_TYPE = 0x2,
-    SKILL_TYPE = 0x3,
-    UNKNOWN_TYPE = 0x4,
-    NPC_MOB_TYPE = 0x5,
-    NPC_EVT_TYPE = 0x6,
-    NPC_PET_TYPE = 0x7,
-    NPC_HOM_TYPE = 0x8,
-    NPC_MERSOL_TYPE = 0x9,
-    NPC_ELEMENTAL_TYPE = 0xA,
-	DISGUISED_NPC_TYPE = 0xC,
-    NPC_ABR_TYPE = 0xD,
-    NPC_BIONIC_TYPE = 0xE,
-    NPC_TYPE = 0x1
+std::unordered_map<clif_colors, unsigned long> color_table {
+	{	COLOR_DEFAULT, (0x00FF00 & 0x0000FF) << 16 | (0x00FF00 & 0x00FF00) | (0x00FF00 & 0xFF0000) >> 16      },
+	{	COLOR_RED, (0xFF0000 & 0x0000FF) << 16 | (0xFF0000 & 0x00FF00) | (0xFF0000 & 0xFF0000) >> 16          },
+	{	COLOR_WHITE, (0xFFFFFF & 0x0000FF) << 16 | (0xFFFFFF & 0x00FF00) | (0xFFFFFF & 0xFF0000) >> 16        },
+	{	COLOR_YELLOW, (0xFFFF00 & 0x0000FF) << 16 | (0xFFFF00 & 0x00FF00) | (0xFFFF00 & 0xFF0000) >> 16       },
+	{	COLOR_CYAN, (0x00FFFF & 0x0000FF) << 16 | (0x00FFFF & 0x00FF00) | (0x00FFFF & 0xFF0000) >> 16         },
+	{	COLOR_LIGHT_GREEN, (0xB5FFB5 & 0x0000FF) << 16 | (0xB5FFB5 & 0x00FF00) | (0xB5FFB5 & 0xFF0000) >> 16  },
+	{	COLOR_LIGHT_YELLOW, (0xFFFF63 & 0x0000FF) << 16 | (0xFFFF63 & 0x00FF00) | (0xFFFF63 & 0xFF0000) >> 16 },
 };
 
-static inline unsigned char clif_bl_type(struct block_list *bl, bool walking) {
-	switch (bl->type) {
-	case BL_PC:    return (disguised(bl) && !pcdb_checkid(status_get_viewdata(bl)->class_))? DISGUISED_PC_TYPE:PC_TYPE;
+#if PACKETVER >= 20071106
+enum pointer_types : uint8 {
+	PC_TYPE =           0x0,
+	DISGUISED_PC_TYPE = 0x1,
+	ITEM_TYPE =         0x2,
+	SKILL_TYPE =        0x3,
+	UNKNOWN_TYPE =      0x4,
+	NPC_MOB_TYPE =      0x5,
+	NPC_EVT_TYPE =      0x6,
+	NPC_PET_TYPE =      0x7,
+	NPC_HOM_TYPE =      0x8,
+	NPC_MERSOL_TYPE =   0x9,
+	NPC_ELEMENTAL_TYPE= 0xA,
+	DISGUISED_NPC_TYPE= 0xC,
+	NPC_ABR_TYPE =      0xD,
+	NPC_BIONIC_TYPE =   0xE,
+	NPC_TYPE =          0x1,
+};
+
+static inline uint8 clif_bl_type(block_list &bl, bool walking) {
+	switch (bl.type) {
+	case BL_PC:    return (disguised(&bl) && !pcdb_checkid(status_get_viewdata(&bl)->class_))? DISGUISED_PC_TYPE:PC_TYPE;
 	case BL_ITEM:  return ITEM_TYPE;
 	case BL_SKILL: return SKILL_TYPE;
 	case BL_CHAT:  return UNKNOWN_TYPE;
 	case BL_MOB:
-		if( pcdb_checkid( status_get_viewdata( bl )->class_ ) ){
-			return PC_TYPE; //PC_TYPE
-		}else{
-			switch( ( (mob_data*)bl )->special_state.ai ){
+		if( pcdb_checkid( status_get_viewdata( &bl )->class_ ) ){
+			return PC_TYPE;
+		} else {
+			switch( reinterpret_cast<TBL_MOB*>( &bl )->special_state.ai ){
 				case AI_ABR:
 					return NPC_ABR_TYPE;
 				case AI_BIONIC:
@@ -385,16 +393,16 @@ static inline unsigned char clif_bl_type(struct block_list *bl, bool walking) {
 // There is one exception and this is if they are walking.
 // Since walking NPCs are not supported on official servers, the client does not know how to handle it.
 #if PACKETVER >= 20170726
-		if (pcdb_checkid( status_get_viewdata( bl )->class_ ) && walking)
+		if (pcdb_checkid( status_get_viewdata( &bl )->class_ ) && walking)
 			return PC_TYPE;
-		else if (mobdb_checkid( status_get_viewdata( bl )->class_ ))
+		else if (mobdb_checkid( status_get_viewdata( &bl )->class_ ))
 			return DISGUISED_NPC_TYPE;
 		else
 			return NPC_EVT_TYPE;
 #else
-		return pcdb_checkid(status_get_viewdata(bl)->class_) ? PC_TYPE : NPC_EVT_TYPE;
+		return pcdb_checkid(status_get_viewdata(&bl)->class_) ? PC_TYPE : NPC_EVT_TYPE;
 #endif
-	case BL_PET:   return pcdb_checkid(status_get_viewdata(bl)->class_)? PC_TYPE:NPC_PET_TYPE;
+	case BL_PET:   return pcdb_checkid(status_get_viewdata(&bl)->class_)? PC_TYPE : NPC_PET_TYPE;
 	case BL_HOM:   return NPC_HOM_TYPE;
 	case BL_MER:   return NPC_MERSOL_TYPE;
 	case BL_ELEM:  return NPC_ELEMENTAL_TYPE;
@@ -1108,7 +1116,7 @@ static void clif_set_unit_idle( struct block_list* bl, bool walking, send_target
 
 		p.PacketType = idle_unit2Type;
 #if PACKETVER >= 20071106
-		p.objecttype = clif_bl_type( bl, walking );
+		p.objecttype = clif_bl_type( *bl, walking );
 #endif
 		p.GID = bl->id;
 		p.speed = status_get_speed( bl );
@@ -1154,7 +1162,7 @@ static void clif_set_unit_idle( struct block_list* bl, bool walking, send_target
 	p.PacketType = idle_unitType;
 #if PACKETVER >= 20091103
 	p.PacketLength = sizeof(p);
-	p.objecttype = clif_bl_type( bl, walking );
+	p.objecttype = clif_bl_type( *bl, walking );
 #endif
 #if PACKETVER >= 20131223
 	p.AID = bl->id;
@@ -1273,7 +1281,7 @@ static void clif_spawn_unit( struct block_list *bl, enum send_target target ){
 
 		p.PacketType = spawn_unit2Type;
 #if PACKETVER >= 20071106
-		p.objecttype = clif_bl_type( bl, false );
+		p.objecttype = clif_bl_type( *bl, false );
 #endif
 		p.GID = bl->id;
 		p.speed = status_get_speed( bl );
@@ -1312,7 +1320,7 @@ static void clif_spawn_unit( struct block_list *bl, enum send_target target ){
 	p.PacketType = spawn_unitType;
 #if PACKETVER >= 20091103
 	p.PacketLength = sizeof(p);
-	p.objecttype = clif_bl_type( bl, false );
+	p.objecttype = clif_bl_type( *bl, false );
 #endif
 #if PACKETVER >= 20131223
 	p.AID = bl->id;
@@ -1417,7 +1425,7 @@ static void clif_set_unit_walking( struct block_list& bl, map_session_data* tsd,
 	p.PacketLength = sizeof(p);
 #endif
 #if PACKETVER >= 20071106
-	p.objecttype = clif_bl_type( &bl, true );
+	p.objecttype = clif_bl_type( bl, true );
 #endif
 	map_session_data* sd = BL_CAST(BL_PC, &bl);
 #if PACKETVER >= 20131223
@@ -25294,25 +25302,10 @@ void packetdb_readdb(){
 #endif
 }
 
-static constexpr std::array<unsigned long, COLOR_MAX> setup_color_table() {
-	return {
-		(0x00FF00 & 0x0000FF) << 16 | (0x00FF00 & 0x00FF00) | (0x00FF00 & 0xFF0000) >> 16, // COLOR_DEFAULT
-		(0xFF0000 & 0x0000FF) << 16 | (0xFF0000 & 0x00FF00) | (0xFF0000 & 0xFF0000) >> 16, // COLOR_RED
-		(0xFFFFFF & 0x0000FF) << 16 | (0xFFFFFF & 0x00FF00) | (0xFFFFFF & 0xFF0000) >> 16, // COLOR_WHITE
-		(0xFFFF00 & 0x0000FF) << 16 | (0xFFFF00 & 0x00FF00) | (0xFFFF00 & 0xFF0000) >> 16, // COLOR_YELLOW
-		(0x00FFFF & 0x0000FF) << 16 | (0x00FFFF & 0x00FF00) | (0x00FFFF & 0xFF0000) >> 16, // COLOR_CYAN
-		(0xB5FFB5 & 0x0000FF) << 16 | (0xB5FFB5 & 0x00FF00) | (0xB5FFB5 & 0xFF0000) >> 16, // COLOR_LIGHT_GREEN
-		(0xFFFF63 & 0x0000FF) << 16 | (0xFFFF63 & 0x00FF00) | (0xFFFF63 & 0xFF0000) >> 16  // COLOR_LIGHT_YELLOW
-    };
-}
 /*==========================================
  *
  *------------------------------------------*/
 void do_init_clif(void) {
-	constexpr auto colors = setup_color_table();
-
-	for(int i = 0; i < COLOR_MAX; i++) 
-		color_table[i] = colors[i];
 
 	packetdb_readdb();
 
