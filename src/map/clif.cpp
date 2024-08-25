@@ -4277,19 +4277,18 @@ void clif_equipitemack( map_session_data& sd, uint8 flag, int index, int pos ){
 /// @ok : //inversed for v2 v5
 ///     0 = failure
 ///     1 = success
-void clif_unequipitemack(map_session_data *sd,int n,int pos,int ok){
+void clif_unequipitemack(map_session_data &sd,int n,int pos,int ok){
 #if PACKETVER >= 20130000
 	ok = ok ? 0 : 1;
 #elif PACKETVER >= 20110824
 	ok = ok ? 0 : 1;
 #endif
-	nullpo_retv(sd);
 	PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK p{};
 	p.packetType = HEADER_ZC_REQ_TAKEOFF_EQUIP_ACK;
 	p.index = client_index(n);
 	p.wearLocation = pos;
 	p.flag = ok;
-	clif_send(&p,sizeof(p),&sd->bl,SELF);
+	clif_send(&p,sizeof(p),&sd.bl,SELF);
 }
 
 
@@ -4608,41 +4607,29 @@ void clif_joinchatok(map_session_data *sd,struct chat_data* cd)
 
 /// Notifies clients in a chat about a new member (ZC_MEMBER_NEWENTRY).
 /// 00dc <users>.W <name>.24B
-void clif_addchat(struct chat_data* cd,map_session_data *sd)
+void clif_addchat(chat_data& cd,map_session_data &sd)
 {
-	unsigned char buf[29];
-
-	nullpo_retv(sd);
-	nullpo_retv(cd);
-
-	WBUFW(buf, 0) = 0xdc;
-	WBUFW(buf, 2) = cd->users;
-	safestrncpy(WBUFCP(buf, 4),sd->status.name,NAME_LENGTH);
-	clif_send(buf,packet_len(0xdc),&sd->bl,CHAT_WOS);
+	PACKET_ZC_MEMBER_NEWENTRY p{};
+	p.packetType = HEADER_ZC_MEMBER_NEWENTRY;
+	p.count = cd.users;
+	safestrncpy(p.name,sd.status.name,NAME_LENGTH);
+	clif_send(&p,sizeof(p),&sd.bl,CHAT_WOS);
 }
-
 
 /// Announce the new owner (ZC_ROLE_CHANGE).
 /// 00e1 <role>.L <nick>.24B
 /// role:
 ///     0 = owner (menu)
 ///     1 = normal
-void clif_changechatowner(struct chat_data* cd, map_session_data* sd)
+void clif_changechatowner(chat_data& cd, map_session_data& sd)
 {
-	unsigned char buf[64];
-
-	nullpo_retv(sd);
-	nullpo_retv(cd);
-
-	WBUFW(buf, 0) = 0xe1;
-	WBUFL(buf, 2) = 1;
-	safestrncpy(WBUFCP(buf,6),cd->usersd[0]->status.name,NAME_LENGTH);
-
-	WBUFW(buf,30) = 0xe1;
-	WBUFL(buf,32) = 0;
-	safestrncpy(WBUFCP(buf,36),sd->status.name,NAME_LENGTH);
-
-	clif_send(buf,packet_len(0xe1)*2,&sd->bl,CHAT);
+	PACKET_ZC_ROLE_CHANGE p{};
+	p.packetType = p.newOwner.packetType = HEADER_ZC_ROLE_CHANGE;
+	p.flag = 1;
+	safestrncpy(p.name,cd.usersd[0]->status.name,NAME_LENGTH);
+	p.newOwner.flag = 0;
+	safestrncpy(p.newOwner.name,sd.status.name,NAME_LENGTH);
+	clif_send(&p,sizeof(p),&sd.bl,CHAT);
 }
 
 
@@ -4651,36 +4638,31 @@ void clif_changechatowner(struct chat_data* cd, map_session_data* sd)
 /// flag:
 ///     0 = left
 ///     1 = kicked
-void clif_leavechat(struct chat_data* cd, map_session_data* sd, bool flag)
+void clif_leavechat(chat_data& cd, map_session_data& sd, bool flag)
 {
-	unsigned char buf[32];
-
-	nullpo_retv(sd);
-	nullpo_retv(cd);
-
-	WBUFW(buf, 0) = 0xdd;
-	WBUFW(buf, 2) = cd->users-1;
-	safestrncpy(WBUFCP(buf,4),sd->status.name,NAME_LENGTH);
-	WBUFB(buf,28) = flag;
-
-	clif_send(buf,packet_len(0xdd),&sd->bl,CHAT);
+	PACKET_ZC_MEMBER_EXIT p{};
+	p.packetType = HEADER_ZC_MEMBER_EXIT;
+	p.playersRemaining = cd.users - 1;
+	safestrncpy(p.exitPlayername,sd.status.name,NAME_LENGTH);
+	p.flag = flag;
+	clif_send(&p,sizeof(p),&sd.bl,CHAT);
 }
 
 
 /// Opens a trade request window from char 'name'.
 /// 00e5 <nick>.24B (ZC_REQ_EXCHANGE_ITEM)
 /// 01f4 <nick>.24B <charid>.L <baselvl>.W (ZC_REQ_EXCHANGE_ITEM2)
-void clif_traderequest(map_session_data* sd, const char* name){
+void clif_traderequest(map_session_data& sd, const char* name){
 	PACKET_ZC_REQ_EXCHANGE_ITEM p{};
 	p.packetType = HEADER_ZC_REQ_EXCHANGE_ITEM;
 	safestrncpy(p.requesterName, name, NAME_LENGTH);
 #if PACKETVER > 6
-	map_session_data* tsd = map_id2sd(sd->trade_partner);
+	map_session_data* tsd = map_id2sd(sd.trade_partner);
 	if( tsd == nullptr ) return;
-	p.targetId = tsd->status.char_id; //In client shows PN:0N645(random digits i think), is encrypted char id? it show same without apply this packet [TODO] Check Official behavior
+	p.targetId = tsd->status.char_id; //client need it to show an encrypted name to player on PN :  [official behavior]
 	p.targetLv = tsd->status.base_level;
 #endif
-	clif_send(&p,sizeof(p),&sd->bl,SELF);
+	clif_send(&p,sizeof(p),&sd.bl,SELF);
 }
 
 
@@ -4694,16 +4676,16 @@ void clif_traderequest(map_session_data* sd, const char* name){
 ///     3 = Accept
 ///     4 = Cancel
 ///     5 = Busy
-void clif_tradestart(map_session_data* sd, uint8 type){
+void clif_tradestart(map_session_data& sd, uint8 type){
 	PACKET_ZC_ACK_EXCHANGE_ITEM p{};
 	p.packetType = HEADER_ZC_ACK_EXCHANGE_ITEM;
 	p.result = type;
 #if PACKETVER > 6
-	map_session_data* tsd = map_id2sd(sd->trade_partner);
-	p.targetId = (tsd != nullptr ? tsd->status.char_id : 0); //In client shows PN:0N645(random digits i think), is encrypted char id? it show same without apply this packet [TODO] Check Official behavior
+	map_session_data* tsd = map_id2sd(sd.trade_partner);
+	p.targetId = (tsd != nullptr ? tsd->status.char_id : 0);
 	p.targetLv = (tsd != nullptr ? tsd->status.base_level : 0);
 #endif
-	clif_send(&p,sizeof(p),&sd->bl,SELF);
+	clif_send(&p,sizeof(p),&sd.bl,SELF);
 }
 
 
@@ -5350,28 +5332,24 @@ void clif_getareachar_item( map_session_data* sd,struct flooritem_data* fitem ){
 	p.amount = fitem->item.amount;
 	p.subX = fitem->subx;
 	p.subY = fitem->suby;
-
+	
 	clif_send( &p, sizeof( p ), &sd->bl, SELF );
 }
 
 /// Notifes client about Graffiti
 /// 01c9 <id>.L <creator id>.L <x>.W <y>.W <unit id>.B <visible>.B <has msg>.B <msg>.80B (ZC_SKILL_ENTRY2)
-static void clif_graffiti(struct block_list *bl, struct skill_unit *unit, enum send_target target) {
-	unsigned char buf[128];
-	
-	nullpo_retv(bl);
-	nullpo_retv(unit);
-
-	WBUFW(buf, 0) = 0x1c9;
-	WBUFL(buf, 2) = unit->bl.id;
-	WBUFL(buf, 6) = unit->group->src_id;
-	WBUFW(buf,10) = unit->bl.x;
-	WBUFW(buf,12) = unit->bl.y;
-	WBUFB(buf,14) = unit->group->unit_id;
-	WBUFB(buf,15) = 1;
-	WBUFB(buf,16) = 1;
-	safestrncpy(WBUFCP(buf,17),unit->group->valstr,MESSAGE_SIZE);
-	clif_send(buf,packet_len(0x1c9),bl,target);
+static void clif_graffiti(block_list &bl, skill_unit &unit, enum send_target target) {
+	PACKET_ZC_SKILL_ENTRY2 p = {};
+	p.packetType = graffiti_entryType;
+	p.unit_blId = unit.bl.id;
+	p.srcId = unit.group->src_id;
+	p.x = unit.bl.x;
+	p.y = unit.bl.y;
+	p.effectId = unit.group->unit_id;
+	p.isVisible = 1;
+	p.hasMsg = 1;
+	safestrncpy(p.mes,unit.group->valstr,MESSAGE_SIZE);
+	clif_send(&p,sizeof(p),&bl,target);
 }
 
 /// Notifies the client of a skill unit.
@@ -5379,25 +5357,21 @@ static void clif_graffiti(struct block_list *bl, struct skill_unit *unit, enum s
 /// 08c7 <lenght>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.B <range>.W <visible>.B (ZC_SKILL_ENTRY3)
 /// 099f <lenght>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.L <range>.W <visible>.B (ZC_SKILL_ENTRY4)
 /// 09ca <lenght>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.L <range>.B <visible>.B <skill level>.B (ZC_SKILL_ENTRY5)
-void clif_getareachar_skillunit(struct block_list *bl, struct skill_unit *unit, enum send_target target, bool visible) {
-	int header = 0, unit_id = 0, pos = 0, fd = 0, len = -1;
-	unsigned char buf[128];
+void clif_getareachar_skillunit(block_list &bl, skill_unit &unit, enum send_target target, bool visible) {
+	int unit_id = 0, fd = 0;
 
-	nullpo_retv(bl);
-	nullpo_retv(unit);
+	if (bl.type == BL_PC)
+		fd = reinterpret_cast<TBL_PC*>(&bl)->fd;
 
-	if (bl->type == BL_PC)
-		fd = ((TBL_PC*)bl)->fd;
-
-	if (unit->group->state.guildaura)
+	if (unit.group->state.guildaura)
 		return;
 
-	if (unit->group->state.song_dance&0x1 && unit->val2&(1 << UF_ENSEMBLE))
-		unit_id = unit->val2&(1 << UF_SONG) ? UNT_DISSONANCE : UNT_UGLYDANCE;
-	else if (skill_get_unit_flag(unit->group->skill_id, UF_RANGEDSINGLEUNIT) && !(unit->val2 & (1 << UF_RANGEDSINGLEUNIT)))
+	if (unit.group->state.song_dance&0x1 && unit.val2&(1 << UF_ENSEMBLE))
+		unit_id = unit.val2&(1 << UF_SONG) ? UNT_DISSONANCE : UNT_UGLYDANCE;
+	else if (skill_get_unit_flag(unit.group->skill_id, UF_RANGEDSINGLEUNIT) && !(unit.val2 & (1 << UF_RANGEDSINGLEUNIT)))
 		unit_id = UNT_DUMMYSKILL; // Use invisible unit id for other case of rangedsingle unit
 	else
-		unit_id = unit->group->unit_id;
+		unit_id = unit.group->unit_id;
 
 	if (!visible)
 		unit_id = UNT_DUMMYSKILL; // Hack to makes hidden trap really hidden!
@@ -5409,74 +5383,50 @@ void clif_getareachar_skillunit(struct block_list *bl, struct skill_unit *unit, 
 	}
 #endif
 
-#if PACKETVER <= 20120702
-	header = 0x011f;
-//#if PACKETVER < 20110718
-//	header = 0x011f;
-//#elif PACKETVER < 20121212
-//	header = 0x08c7;
-#elif PACKETVER < 20130731
-	header = 0x099f;
+	PACKET_ZC_SKILL_ENTRY p = {};
+	p.packetType = skill_entryType;
+	p.unit_blId = unit.bl.id;
+	p.srcId = unit.group->src_id;
+	p.x = unit.bl.x;
+	p.y = unit.bl.y;
+	p.effectId = unit_id;
+	p.isVisible = visible;
+#if PACKETVER >= 20110718
+	p.packetLen = sizeof(p);
+#if PACKETVER >= 20130731
+	p.range = (unsigned char)unit.range;
+	p.skillLv = (unsigned char)unit.group->skill_lv;
 #else
-	header = 0x09ca;
+	p.range = unit.range;
 #endif
+#endif
+	clif_send(&p,sizeof(p),&bl,target);
 
-	len = packet_len(header);
-	WBUFW(buf,pos) = header;
-	if (header != 0x011f) {
-		WBUFW(buf, pos+2) = len;
-		pos += 2;
-	}
-	WBUFL(buf,pos+2) = unit->bl.id;
-	WBUFL(buf,pos+6) = unit->group->src_id;
-	WBUFW(buf,pos+10) = unit->bl.x;
-	WBUFW(buf,pos+12) = unit->bl.y;
-	switch (header) {
-		case 0x011f:
-			WBUFB(buf,pos+14) = unit_id;
-			WBUFB(buf,pos+15) = visible;
-			break;
-		case 0x08c7:
-			WBUFB(buf,pos+14) = unit_id;
-			WBUFW(buf,pos+15) = unit->range;
-			WBUFB(buf,pos+17) = visible;
-			break;
-		case 0x099f:
-			WBUFL(buf,pos+14) = unit_id;
-			WBUFW(buf,pos+18) = unit->range;
-			WBUFB(buf,pos+20) = visible;
-			break;
-		case 0x09ca:
-			WBUFL(buf,pos+14) = unit_id;
-			WBUFB(buf,pos+18) = (unsigned char)unit->range;
-			WBUFB(buf,pos+19) = visible;
-			WBUFB(buf,pos+20) = (unsigned char)unit->group->skill_lv;
-			break;
-	}
-	clif_send(buf, len, bl, target);
-
-	if (unit->group->skill_id == WZ_ICEWALL)
-		clif_changemapcell(fd, unit->bl.m, unit->bl.x, unit->bl.y, 5, SELF);
+	if (unit.group->skill_id == WZ_ICEWALL)
+		clif_changemapcell(fd, unit.bl.m, unit.bl.x, unit.bl.y, 5, SELF);
 }
 
-/// 09ca <lenght>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.L <range>.B <visible>.B <skill level>.B (ZC_SKILL_ENTRY5)
-void clif_skill_unit_test(struct block_list *bl, short x, short y, int unit_id, short range, short skill_lv) {
-	unsigned char buf[128];
+void clif_skill_unit_test(block_list &bl, short x, short y, int unit_id, short range, short skill_lv) {
 
-	nullpo_retv(bl);
+	PACKET_ZC_SKILL_ENTRY p = {};
 
-	WBUFW(buf, 0) = 0x09ca;
-	WBUFW(buf, 2) = packet_len(0x09ca);
-	WBUFL(buf, 4) = 1000;
-	WBUFL(buf, 8) = 2000;
-	WBUFW(buf, 12) = x;
-	WBUFW(buf, 14) = y;
-	WBUFL(buf, 16) = unit_id;
-	WBUFB(buf, 20) = (unsigned char)range;
-	WBUFB(buf, 21) = 1;
-	WBUFB(buf, 22) = (unsigned char)skill_lv;
-
-	clif_send(buf, packet_len(0x09ca), bl, AREA);
+	p.packetType = skill_entryType;
+	p.unit_blId = 1000;
+	p.srcId = 2000;
+	p.x = x;
+	p.y = y;
+	p.effectId = unit_id;
+	p.isVisible = 1;
+#if PACKETVER >= 20110718
+	p.packetLen = sizeof(p);
+#if PACKETVER >= 20130731
+	p.range = (unsigned char)range;
+	p.skillLv = (unsigned char)skill_lv;
+#else
+	p.range = range;
+#endif
+#endif
+	clif_send(&p,sizeof(p),&bl,AREA);
 }
 
 /// Server tells client to remove unit of id 'unit->bl.id'
@@ -6408,15 +6358,13 @@ void clif_cooking_list( map_session_data& sd, int trigger, uint16 skill_id, int 
 /// @param val1
 /// @param val2
 /// @param val3
-static void clif_status_change_sub(struct block_list *bl, int id, int type, int flag, t_tick tick, int val1, int val2, int val3, enum send_target target_type)
+static void clif_status_change_sub(block_list &bl, int id, int type, int flag, t_tick tick, int val1, int val2, int val3, enum send_target target_type)
 {
 	if (type == EFST_BLANK)  //It shows nothing on the client...
 		return;
 
 	if (type == EFST_POSTDELAY && tick == 0)
 		return;
-
-	nullpo_retv(bl);
 
 	// Statuses with an infinite duration, but still needs a duration sent to display properly.
 	if (type == EFST_LUNARSTANCE || type == EFST_UNIVERSESTANCE || type == EFST_SUNSTANCE || type == EFST_STARSTANCE)
@@ -6438,7 +6386,7 @@ static void clif_status_change_sub(struct block_list *bl, int id, int type, int 
 		p.val1 = val1;
 		p.val2 = val2;
 		p.val3 = val3;
-		clif_send(&p,sizeof(p),bl,target_type);
+		clif_send(&p,sizeof(p),&bl,target_type);
 		return;
 	}
 #endif
@@ -6449,7 +6397,7 @@ static void clif_status_change_sub(struct block_list *bl, int id, int type, int 
 #if PACKETVER >= 20090121
 	p.flag = flag;
 #endif
-	clif_send(&p,sizeof(p),bl,target_type);
+	clif_send(&p,sizeof(p),&bl,target_type);
 }
 
 /* Sends status effect to clients around the bl
@@ -6487,7 +6435,7 @@ void clif_status_change(struct block_list *bl, int type, int flag, t_tick tick, 
 	if (!(status_efst_get_bl_type(static_cast<efst_type>(type)) & bl->type))
 		return;
 
-	clif_status_change_sub(bl, bl->id, type, flag, tick, val1, val2, val3, ((sd ? (pc_isinvisible(sd) ? SELF : AREA) : AREA_WOS)));
+	clif_status_change_sub(*bl, bl->id, type, flag, tick, val1, val2, val3, ((sd ? (pc_isinvisible(sd) ? SELF : AREA) : AREA_WOS)));
 }
 
 /**
@@ -6553,9 +6501,9 @@ void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, 
 		}
 
 #if PACKETVER > 20120418
-		clif_efst_status_change(tbl, bl->id, target, status_db.getIcon(type), tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3);
+		clif_efst_status_change(*tbl, bl->id, target, status_db.getIcon(type), tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3);
 #else
-		clif_status_change_sub(tbl, bl->id, status_db.getIcon(type), 1, tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3, target);
+		clif_status_change_sub(*tbl, bl->id, status_db.getIcon(type), 1, tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3, target);
 #endif
 	}
 }
@@ -6563,12 +6511,10 @@ void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, 
 /// Notifies the client when a player enters the screen with an active EFST.
 /// 08ff <id>.L <index>.W <remain msec>.L { <val>.L }*3  (ZC_EFST_SET_ENTER) (PACKETVER >= 20111108)
 /// 0984 <id>.L <index>.W <total msec>.L <remain msec>.L { <val>.L }*3 (ZC_EFST_SET_ENTER2) (PACKETVER >= 20120618)
-void clif_efst_status_change(struct block_list *bl, int tid, enum send_target target, int type, t_tick tick, int val1, int val2, int val3) {
+void clif_efst_status_change(block_list &bl, int tid, enum send_target target, int type, t_tick tick, int val1, int val2, int val3) {
 #if PACKETVER >= 20111108
 	if (type == EFST_BLANK)
 		return;
-
-	nullpo_retv(bl);
 
 	if (tick <= 0)
 		tick = 9999;
@@ -6584,7 +6530,7 @@ void clif_efst_status_change(struct block_list *bl, int tid, enum send_target ta
 	p.val2 = val2;
 	p.val3 = val3;
 
-	clif_send(&p,sizeof(p),bl,target);
+	clif_send(&p,sizeof(p),&bl,target);
 #endif
 }
 
@@ -11451,7 +11397,7 @@ void clif_changed_dir(block_list &bl, enum send_target target){
 	PACKET_ZC_CHANGE_DIRECTION p{};
 	p.packetType = HEADER_ZC_CHANGE_DIRECTION;
 	p.srcId = bl.id;
-	p.headDir = bl.type==BL_PC?reinterpret_cast<TBL_PC*>(&bl)->head_dir:0;
+	p.headDir = bl.type&BL_PC? reinterpret_cast<TBL_PC*>(&bl)->head_dir : 0;
 	p.dir = unit_getdir(&bl);
 	clif_send(&p, sizeof(p), &bl, target);
 	if (disguised(&bl)) {
@@ -11527,7 +11473,7 @@ void clif_parse_Emotion(int fd, map_session_data *sd){
 
 /// Amount of currently online players, reply to /w /who (ZC_USER_COUNT).
 /// 00c2 <count>.L
-void clif_user_count(map_session_data& sd, int count)
+static void clif_user_count(map_session_data& sd, int count)
 {
 	PACKET_ZC_USER_COUNT p{};
 	p.packetType = HEADER_ZC_USER_COUNT;
@@ -12347,7 +12293,7 @@ void clif_parse_TradeRequest(int fd,map_session_data *sd)
 
 			// Fake trading
 			sd->trade_partner = t_sd->status.account_id;
-			clif_tradestart(sd, 5);
+			clif_tradestart(*sd, 5);
 			// Restore old state
 			sd->trade_partner = old;
 

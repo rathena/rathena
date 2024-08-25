@@ -41,6 +41,7 @@
 	packet(0x008b,2);
 	parseable_packet(0x008c,-1,clif_parse_GlobalMessage,2,4);
 	packet(0x008d,-1);
+	//packet(0x008e,-1);
 	//packet(0x008f,-1);
 	parseable_packet(0x0090,7,clif_parse_NpcClicked,2,6);
 	packet(0x0093,2);
@@ -49,6 +50,7 @@
 	parseable_packet(0x0099,-1,clif_parse_Broadcast,2,4);
 	//packet(0x009a,-1);
 	parseable_packet(0x009b,5,clif_parse_ChangeDir,2,4);
+	//packet(0x009c,9);
 	packet( HEADER_ZC_ITEM_ENTRY, sizeof( struct PACKET_ZC_ITEM_ENTRY ) );
 	packet(0x009e,17);
 	parseable_packet(0x009f,6,clif_parse_TakeItem,2);
@@ -61,6 +63,7 @@
 	packet( useItemAckType, sizeof( struct PACKET_ZC_USE_ITEM_ACK ) );
 	parseable_packet(0x00a9,6,clif_parse_EquipItem,2,4);
 	parseable_packet(0x00ab,4,clif_parse_UnequipItem,2);
+	//packet(0x00ac,7);
 	//packet(0x00ad,-1);
 	packet(0x00ae,-1);
 	parseable_packet(0x00b2,3,clif_parse_Restart,2);
@@ -71,6 +74,7 @@
 	parseable_packet(0x00bf,3,clif_parse_Emotion,2);
 	packet(0x00c0,7);
 	parseable_packet(0x00c1,2,clif_parse_HowManyConnections,0);
+	//packet(0x00c2,6);
 	packet(0x00c3,8);
 	parseable_packet(0x00c5,7,clif_parse_NpcBuySellSelected,2,6);
 	packet(0x00c6,-1);
@@ -92,12 +96,12 @@
 	packet(0x00d8,6);
 	parseable_packet(0x00d9,14,clif_parse_ChatAddMember,2,6);
 	packet(0x00db,-1);
-	packet(0x00dc,28);
+	//packet(0x00dc,28);
 	packet(0x00dd,29);
 	parseable_packet(0x00de,-1,clif_parse_ChatRoomStatusChange,2,4,6,7,15);
 	packet(0x00df,-1);
 	parseable_packet(0x00e0,30,clif_parse_ChangeChatOwner,2,6);
-	packet(0x00e1,30);
+	//packet(0x00e1,30);
 	parseable_packet(0x00e2,26,clif_parse_KickFromChat,2);
 	parseable_packet(0x00e3,2,clif_parse_ChatLeave,0);
 	parseable_packet(0x00e4,6,clif_parse_TradeRequest,2);
@@ -229,6 +233,7 @@
 	parseable_packet(0x0193,6,clif_parse_SolveCharName,2);
 	packet(0x0194,30);
 	packet( HEADER_ZC_ACK_REQNAMEALL, sizeof( struct PACKET_ZC_ACK_REQNAMEALL ) );
+	//packet(0x0196,9);
 	parseable_packet(0x0197,4,clif_parse_ResetChar,2);
 	parseable_packet(0x0198,8,clif_parse_GMChangeMapType,2,4,6);
 	packet(0x0199,4);
@@ -269,7 +274,7 @@
 	packet(0x01c3,-1);
 	packet(0x01c6,4);
 	packet(0x01c7,2);
-	packet(0x01c9,97);
+	//packet(0x01c9,97);
 	//packet(0x01ca,-1);
 	packet(0x01cb,9);
 	packet(0x01cc,9);
@@ -1233,6 +1238,7 @@
 // 2008-11-13aSakexe
 #if PACKETVER >= 20081113
 	packet(0x043e,-1);
+	//packet(0x043f,8);
 #endif
 
 // 2008-11-26aSakexe
@@ -1248,6 +1254,7 @@
 
 // 2009-01-14aSakexe
 #if PACKETVER >= 20090114
+	//packet(0x043f,25);
 	packet(0x0444,-1);
 	packet(0x0445,10);
 #endif
@@ -1307,6 +1314,12 @@
 	parseable_packet(0x0439,8,clif_parse_UseItem,2,4);
 #endif
 
+// 2008-11-12aRagexeRE
+#if PACKETVER >= 20081112
+	//packet(0x043e,-1);
+	//packet(0x043f,8);
+#endif
+
 // 2008-12-17aRagexeRE
 #if PACKETVER >= 20081217
 	packet(0x01a2,37);
@@ -1317,6 +1330,13 @@
 // 2008-12-17bRagexeRE
 #if PACKETVER >= 20081217
 	packet(0x006d,114);
+#endif
+
+// 2009-01-21aRagexeRE
+#if PACKETVER >= 20090121
+	//packet(0x043f,25);
+	//packet(0x0444,-1);
+	//packet(0x0445,10);
 #endif
 
 // 2009-02-18aRagexeRE
@@ -1654,6 +1674,7 @@
 	parseable_packet(0x0838,6,clif_parse_SolveCharName,2);
 	parseable_packet(0x0439,8,clif_parse_UseItem,2,4);
 	packet(0x08d2,10);
+	//packet(0x08d1,7);
 #endif
 
 // 2011-11-02aRagexe
@@ -1815,6 +1836,7 @@
 
 // 2012-06-18
 #if PACKETVER >= 20120618
+	//packet(0x0983,29); // ZC_MSG_STATE_CHANGE3
 	parseable_packet(0x0861,41,clif_parse_PartyBookingRegisterReq,2,4,6); //actually 12-05-03
 #endif
 
@@ -1885,8 +1907,11 @@
 	parseable_packet(0x0978,6,clif_parse_reqworldinfo,2);
 	packet(0x0979,50); //ackworldinfo
 	parseable_packet(0x0998,8,clif_parse_EquipItem,2,4); // CZ_REQ_WEAR_EQUIP_V5
+	//packet(0x099a,9); // take_off_equipv5
 	packet(0x099b,8); //maptypeproperty2
 	// New Packets
+	//packet(0x08ff,24); // ZC_EFST_SET_ENTER
+	//packet(0x0984,28); // ZC_EFST_SET_ENTER2
 	packet(0x08C8,34); // ZC_NOTIFY_ACT3
 	packet(0x099f,22); // ZC_SKILL_ENTRY4
 #endif
@@ -1913,7 +1938,7 @@
 
 // 2013-07-31cRagexe
 #if PACKETVER >= 20130731
-	packet(0x09ca,23); // ZC_SKILL_ENTRY5
+	//packet(0x09ca,23); // ZC_SKILL_ENTRY5
 	packet(0x09cb,17); // ZC_USE_SKILL2
 #endif
 

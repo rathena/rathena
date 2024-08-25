@@ -169,7 +169,7 @@ int chat_joinchat(map_session_data* sd, int chatid, const char* pass)
 	pc_setchatid(sd,cd->bl.id);
 
 	clif_joinchatok(sd, cd); //To the person who newly joined the list of all
-	clif_addchat(cd, sd); //Reports To the person who already in the chat
+	clif_addchat(*cd, *sd); //Reports To the person who already in the chat
 	clif_dispchat(cd, 0); //Reported number of changes to the people around
 
 	if (cd->owner->type == BL_PC)
@@ -207,7 +207,7 @@ int chat_leavechat(map_session_data* sd, bool kicked)
 		return -1;
 	}
 
-	clif_leavechat(cd, sd, kicked);
+	clif_leavechat(*cd, *sd, kicked);
 	pc_setchatid(sd, 0);
 	cd->users--;
 
@@ -233,7 +233,7 @@ int chat_leavechat(map_session_data* sd, bool kicked)
 
 	if( leavechar == 0 && cd->owner->type == BL_PC ) { // Set and announce new owner
 		cd->owner = (struct block_list*) cd->usersd[0];
-		clif_changechatowner(cd, cd->usersd[0]);
+		clif_changechatowner(*cd, *cd->usersd[0]);
 		clif_clearchat(cd, 0);
 
 		//Adjust Chat location after owner has been changed.
@@ -279,7 +279,7 @@ int chat_changechatowner(map_session_data* sd, const char* nextownername)
 
 	// set new owner
 	cd->owner = (struct block_list*) cd->usersd[i];
-	clif_changechatowner(cd,cd->usersd[i]);
+	clif_changechatowner(*cd,*cd->usersd[i]);
 
 	// swap the old and new owners' positions
 	tmpsd = cd->usersd[i];
