@@ -25140,23 +25140,15 @@ void clif_specialpopup(map_session_data& sd, int32 id ){
 #endif
 }
 
-static int min_tick_interval = 100;
-static int32 ban_time = min_tick_interval*10000;
 struct packet_spammer_data{
-	uint32 client_addr;
+	int fd;
 	t_tick tick;
-	struct{
-		short count;
-		short max=10;
-	}click;
+	short count;
 };
 static std::vector<packet_spammer_data> packet_spammer;
 
-static bool psd_is_spammer(packet_spammer_data* psd)
-{
-	if(!psd)
-		return false;
-	if(psd->click.count < psd->click.max)
+static bool psd_is_spammer(packet_spammer_data& psd) {
+	if(psd.count < max_packet_per_tick)
 		return false;
 
 	return true;
@@ -25168,7 +25160,6 @@ static bool psd_is_spammer(packet_spammer_data* psd)
 static int clif_parse(int fd)
 {
 	int cmd, packet_len;
-	int piter;
 #ifdef PACKET_OBFUSCATION
 	int cmd2;
 #endif
@@ -25217,24 +25208,30 @@ static int clif_parse(int fd)
 		cmd = (cmd ^ ((((clif_cryptKey[0] * clif_cryptKey[1]) + clif_cryptKey[2]) >> 16) & 0x7FFF));
 	}
 #endif
+	
+	if (min_packet_tick_interval > 0){
+		auto it = std::find_if(packet_spammer.begin(), packet_spammer.end(), [fd](const packet_spammer_data& data) { return data.fd == fd; });
+		if (it != packet_spammer.end()) {
+			if (it->tick + min_packet_tick_interval > gettick()) {
+				if (psd_is_spammer(*it)) {
+					if (sd && packetspamm_ban_interval > 0)
+						chrif_req_login_operation(sd->status.account_id, sd->status.name, CHRIF_OP_LOGIN_BAN, (int32)(packetspamm_ban_interval + gettick()), 0, 0);
 
-	ARR_FIND(0,packet_spammer.size(),piter,packet_spammer[piter].client_addr == session[fd]->client_addr);
-	if(piter!=packet_spammer.size() && packet_spammer[piter].tick + min_tick_interval > gettick()){
-		if(psd_is_spammer(&packet_spammer[piter]))
-			clif_authfail_fd(fd,3);
-		packet_spammer[piter].click.count++;
-		return 0;
-	}
-	else if(sd && piter!=packet_spammer.size() && (cmd > MAX_PACKET_DB || cmd < MIN_PACKET_DB || packet_db[cmd].len == 0)){
-		chrif_req_login_operation(sd->status.account_id, sd->status.name, CHRIF_OP_LOGIN_BAN, ban_time+(int32)gettick(), 0, 0);
-		set_eof(fd);
-		return 0;
-	} else if(piter!=packet_spammer.size()){
-		packet_spammer.erase(packet_spammer.begin()+piter);
-		packet_spammer.shrink_to_fit();
-	} else {
-		packet_spammer.push_back({session[fd]->client_addr,gettick()});
-		packet_spammer.end()->click.count++;
+					clif_authfail_fd(fd, 3);
+				}
+				it->count++;
+				return 0;
+			}
+			else if (sd && packetspamm_ban_interval > 0 && (cmd > MAX_PACKET_DB || cmd < MIN_PACKET_DB || packet_db[cmd].len == 0)) { // they spamming unknow packet?
+				chrif_req_login_operation(sd->status.account_id, sd->status.name, CHRIF_OP_LOGIN_BAN, (int32)(packetspamm_ban_interval + gettick()), 0, 0);
+				set_eof(fd);
+				return 0;
+			}
+			else
+				packet_spammer.erase(it);
+		}
+		else
+			packet_spammer.push_back({ fd,gettick(),1 });
 	}
 
 	// filter out invalid / unsupported packets

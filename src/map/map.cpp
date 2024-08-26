@@ -143,6 +143,10 @@ bool agit2_flag = false;
 bool agit3_flag = false;
 int night_flag = 0; // 0=day, 1=night [Yor]
 
+int min_packet_tick_interval;
+int max_packet_per_tick;
+int packetspamm_ban_interval;
+
 struct charid_request {
 	struct charid_request* next;
 	int charid;// who want to be notified of the nick
@@ -4061,7 +4065,16 @@ int map_config_read(const char *cfgName)
 				minsave_interval = 1;
 		} else if (strcmpi(w1, "save_settings") == 0)
 			save_settings = cap_value(atoi(w2),CHARSAVE_NONE,CHARSAVE_ALL);
-		else if (strcmpi(w1, "motd_txt") == 0)
+		else if (strcmpi(w1, "min_packet_tick_interval") == 0){
+			if(atoi(w2) > 0)
+				min_packet_tick_interval = atoi(w2);
+		}
+		else if (strcmpi(w1, "max_packet_per_tick") == 0)
+			max_packet_per_tick = atoi(w2);
+		else if (strcmpi(w1, "packetspamm_ban_interval") == 0){
+			if(atoi(w2) > 0)
+				packetspamm_ban_interval = atoi(w2);
+		}else if (strcmpi(w1, "motd_txt") == 0)
 			safestrncpy(motd_txt, w2, sizeof(motd_txt));
 		else if (strcmpi(w1, "charhelp_txt") == 0)
 			safestrncpy(charhelp_txt, w2, sizeof(charhelp_txt));

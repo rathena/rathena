@@ -899,6 +899,10 @@ extern int16 save_settings;
 extern int night_flag; // 0=day, 1=night [Yor]
 extern int enable_spy; //Determines if @spy commands are active.
 
+extern int min_packet_tick_interval;
+extern int max_packet_per_tick;
+extern int packetspamm_ban_interval;
+
 // Agit Flags
 extern bool agit_flag;
 extern bool agit2_flag;
