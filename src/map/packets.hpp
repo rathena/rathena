@@ -1163,25 +1163,25 @@ DEFINE_PACKET_HEADER(ZC_EL_PAR_CHANGE, 0x81e);
 
 struct PACKET_ZC_NOTIFY_ACT {  //PACKET_ZC_NOTIFY_ACT, PACKET_ZC_NOTIFY_ACT2, PACKET_ZC_NOTIFY_ACT3
 	int16 packetType;
-    uint32 srcID;       // <src ID>.L
-    uint32 targetID;    // <dst ID>.L
-    uint32 serverTick;  // <server tick>.L
-    int32 srcSpeed;    // <src speed>.L
-    int32 dmgSpeed;    // <dst speed>.L
+	int32 srcID;       // <src ID>.L
+	int32 targetID;    // <dst ID>.L
+	int32 serverTick;  // <server tick>.L
+	int32 srcSpeed;    // <src speed>.L
+	int32 dmgSpeed;    // <dst speed>.L
 #if PACKETVER < 20071113
-	int16 damage;		// <damage>.W
+	uint16 damage;		// <damage>.W
 #else
-    int32 damage;      // <damage>.L
+	uint32 damage;      // <damage>.L
 #endif
 #if PACKETVER >= 20131223
-    uint8 isSPDamage;   // <IsSPDamage>.B
+	int8 isSPDamage;   // <IsSPDamage>.B
 #endif
-    uint16 div;         // <div>.W
-    uint8 type;         // <type>.B
+	uint16 div;         // <div>.W
+	uint8 type;         // <type>.B
 #if PACKETVER < 20071113
-	int16 damage2;		// <damage2>.W
+	uint16 damage2;		// <damage2>.W
 #else
-    int32 damage2;     // <damage2>.L
+	uint32 damage2;     // <damage2>.L
 #endif
 } __attribute__((packed));
 
