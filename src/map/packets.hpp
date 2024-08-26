@@ -992,6 +992,7 @@ struct PACKET_ZC_CONCLUDE_EXCHANGE_ITEM {
 	int16 packetType;
 	uint8 who;
 } __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_CONCLUDE_EXCHANGE_ITEM, 0xec);
 
 struct PACKET_ZC_ACK_CREATE_CHATROOM {
 	int16 packetType;
@@ -999,7 +1000,20 @@ struct PACKET_ZC_ACK_CREATE_CHATROOM {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_ACK_CREATE_CHATROOM, 0xd6);
 
-DEFINE_PACKET_HEADER(ZC_CONCLUDE_EXCHANGE_ITEM, 0xec);
+struct PACKET_ZC_MEMBER_EXIT{
+	uint16 packetType;
+	uint16 playersRemaining;
+	char exitPlayername[NAME_LENGTH];
+	uint8 flag;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_MEMBER_EXIT, 0xdd)
+
+struct PACKET_ZC_MEMBER_NEWENTRY {
+	int16 packetType;
+	int16 count;
+	char name[NAME_LENGTH];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_MEMBER_NEWENTRY, 0xdc);
 
 struct PACKET_ZC_REFUSE_ENTER_ROOM {
 	int16 packetType;
@@ -1028,6 +1042,43 @@ struct PACKET_ZC_NOTIFY_EFFECT {
 	uint32 effectId;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_NOTIFY_EFFECT, 0x19b);
+
+struct PACKET_ZC_SKILL_ENTRY {
+	int16 packetType;
+#if PACKETVER >= 20110718
+	int16 packetLen;
+#endif
+	int32 unit_blId;
+	int32 srcId;
+	int16 x;
+	int16 y;
+#if PACKETVER >= 20130320
+	int32 effectId;
+#else 
+	int8 effectId;
+#endif
+#if PACKETVER >= 20130320
+	int8 range;
+#elif PACKETVER >= 20110718
+	int16 range;
+#endif
+	int8 isVisible;
+#if PACKETVER >= 20130731
+	int8 skillLv;
+#endif
+} __attribute__((packed));
+
+struct PACKET_ZC_SKILL_ENTRY2 {  //used on graffity
+	int16 packetType;
+	int32 unit_blId;
+	int32 srcId;
+	int16 x;
+	int16 y;
+	int8 effectId;
+	int8 isVisible;
+	int8 hasMsg;
+	char mes[MESSAGE_SIZE];
+} __attribute__((packed));
 
 struct PACKET_ZC_ACK_ITEMCOMPOSITION {
 	int16 packetType;

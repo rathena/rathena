@@ -4040,14 +4040,6 @@ struct PACKET_ZC_PARTY_CONFIG {
 DEFINE_PACKET_HEADER(ZC_PARTY_CONFIG, 0x02c9);
 #endif
 
-struct PACKET_ZC_MEMBER_EXIT{
-	uint16 packetType;
-	uint16 playersRemaining;
-	char exitPlayername[NAME_LENGTH];
-	uint8 flag;
-} __attribute__((packed));
-DEFINE_PACKET_HEADER(ZC_MEMBER_EXIT, 0xdd)
-
 struct PACKET_ZC_ROLE_CHANGE_sub {
 	int16 packetType;
 	int32 flag;
@@ -4060,51 +4052,7 @@ struct PACKET_ZC_ROLE_CHANGE {
 	char name[NAME_LENGTH];
 	PACKET_ZC_ROLE_CHANGE_sub newOwner;
 } __attribute__((packed));
-DEFINE_PACKET_HEADER(ZC_ROLE_CHANGE, 0xe1);
-
-struct PACKET_ZC_SKILL_ENTRY {
-	int16 packetType;
-#if PACKETVER >= 20110718
-	int16 packetLen;
-#endif
-	int32 unit_blId;
-	int32 srcId;
-	int16 x;
-	int16 y;
-#if PACKETVER >= 20130320
-	int32 effectId;
-#else 
-	int8 effectId;
-#endif
-#if PACKETVER >= 20130320
-	int8 range;
-#elif PACKETVER >= 20110718
-	int16 range;
-#endif
-	int8 isVisible;
-#if PACKETVER >= 20130731
-	int8 skillLv;
-#endif
-} __attribute__((packed));
-
-struct PACKET_ZC_SKILL_ENTRY2 {  //used on graffity
-	int16 packetType;
-	int32 unit_blId;
-	int32 srcId;
-	int16 x;
-	int16 y;
-	int8 effectId;
-	int8 isVisible;
-	int8 hasMsg;
-	char mes[MESSAGE_SIZE];
-} __attribute__((packed));
-
-struct PACKET_ZC_MEMBER_NEWENTRY {
-	int16 packetType;
-	int16 count;
-	char name[NAME_LENGTH];
-} __attribute__((packed));
-DEFINE_PACKET_HEADER(ZC_MEMBER_NEWENTRY, 0xdc);
+DEFINE_PACKET_HEADER(ZC_ROLE_CHANGE, 0x00e1);
 
 #if PACKETVER >= 20200902
 struct PACKET_ZC_BAN_LIST_sub {
