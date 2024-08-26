@@ -37,6 +37,7 @@
 	packet(0x0084,2);
 	parseable_packet(0x0085,5,clif_parse_WalkToXY,2);
 	parseable_packet(0x0089,7,clif_parse_ActionRequest,2,6);
+	//packet(0x008a,29);
 	packet(0x008b,2);
 	parseable_packet(0x008c,-1,clif_parse_GlobalMessage,2,4);
 	packet(0x008d,-1);
@@ -1020,6 +1021,11 @@
 	packet(0x029b,80);
 #endif
 
+// 2007-11-13aSakexe
+#if PACKETVER >= 20071113
+	//packet(0x02e1,33);
+#endif
+
 // 2007-11-20aSakexe
 #if PACKETVER >= 20071120
 	//packet(0x01df,10 <- ???);
@@ -1904,6 +1910,7 @@
 	packet(0x099a,9); // take_off_equipv5
 	packet(0x099b,8); //maptypeproperty2
 	// New Packets
+	//packet(0x08C8,34); // ZC_NOTIFY_ACT3
 	packet(0x08ff,24); // ZC_EFST_SET_ENTER
 	packet(0x0984,28); // ZC_EFST_SET_ENTER2
 	packet(0x099f,22); // ZC_SKILL_ENTRY4
