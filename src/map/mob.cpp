@@ -1443,7 +1443,7 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,t_tick tick)
 
 	bl=map_id2bl(md->master_id);
 
-	if (!bl || status_isdead(bl)) {
+	if (!bl || status_isdead(*bl)) {
 		status_kill(&md->bl);
 		return 1;
 	}

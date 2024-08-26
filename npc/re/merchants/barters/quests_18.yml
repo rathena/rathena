@@ -91,19 +91,19 @@ Body:
             Item: Ep18_Amethyst_Fragment
             Amount: 350
       - Index: 7
-        Item: Gray_W_Robe
-        RequiredItems:
-          - Index: 0
-            Item: Ep18_Amethyst_Fragment
-            Amount: 350
-      - Index: 8
         Item: Gray_W_Ring
         RequiredItems:
           - Index: 0
             Item: Ep18_Amethyst_Fragment
             Amount: 350
-      - Index: 9
+      - Index: 8
         Item: Gray_W_Earing
+        RequiredItems:
+          - Index: 0
+            Item: Ep18_Amethyst_Fragment
+            Amount: 350
+      - Index: 9
+        Item: Gray_W_Necklace
         RequiredItems:
           - Index: 0
             Item: Ep18_Amethyst_Fragment

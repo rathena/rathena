@@ -12253,18 +12253,24 @@ rachel,70,135,4	script(CLOAKED)	Mejai#E18_7	4_M_DST_CHILD,{
 		mes "Grand opening over! Shall we now put our hearts into our work?";
 		next;
 	}
-	setpcblock PCBLOCK_NPC, true;
-	if (checkquest(5937,PLAYTIME) != 2)
-		npctalk "Mejai: Hello. Let's do our best today too.", "Mejai#E18_7", bc_self;
-	else {
+	switch( checkquest(5937,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		setpcblock PCBLOCK_NPC, true;
 		npctalk "Mejai: Come on! Today's work is done.", "Mejai#E18_7", bc_self;
 		sleep2 1000;
 		setpcblock PCBLOCK_NPC, false;
 		npctalk "Mejai: Go home and be faithful to your family. It's not like this is the only thing you have to do.", "Mejai#E18_7", bc_self;
 		end;
+	case 2:
+		setpcblock PCBLOCK_NPC, true;
+		npctalk "Mejai: Hello. Let's do our best today too.", "Mejai#E18_7", bc_self;
+		sleep2 1000;
+		setpcblock PCBLOCK_NPC, false;
+		break;
 	}
-	sleep2 1000;
-	setpcblock PCBLOCK_NPC, false;
 	switch( select( "I'm currently busy..", "Harvesting Half Flowers", "Delivering Half Flowers" ) ) {
 	case 1:
 		npctalk "Mejai: It seems you're busy with something? Please come see me when you're free.", "Mejai#E18_7", bc_self;
@@ -13012,7 +13018,7 @@ wolfvill,164,137,3	script	Emmet#emet	4_EP18_GW_WOMAN01,{
 		mes "I mean, the Amethyst Fragment.";
 		mes "Please select the part you want to enchant.";
 		next;
-		switch( select( "Armor", "Coat", "Shoes", "Right(R) Accessory", "Left(L) Accessory" ) ) {
+		switch( select( "Armor", "Garment", "Shoes", "Right(R) Accessory", "Left(L) Accessory" ) ) {
 		case 1:
 			mes "[Emmet]";
 			mes "You're enchanting the armor, I see.";
@@ -13021,7 +13027,7 @@ wolfvill,164,137,3	script	Emmet#emet	4_EP18_GW_WOMAN01,{
 			end;
 		case 2:
 			mes "[Emmet]";
-			mes "You're enchanting the footwear, I see.";
+			mes "You're enchanting the garment, I see.";
 			close2;
 			item_enchant(2);
 			end;
