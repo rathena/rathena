@@ -201,6 +201,7 @@ struct PACKET_ZC_MSG_STATE_CHANGE2{
 	uint32 val2;
 	uint32 val3;
 } __attribute__((packed));
+#endif
 
 struct PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK{
 	uint16 packetType;
