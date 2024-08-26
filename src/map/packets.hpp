@@ -609,35 +609,24 @@ struct PACKET_CZ_REQ_BANKING_WITHDRAW{
 	int32 zeny;
 } __attribute__((packed));
 
-#if PACKETVER < 20080102
 struct PACKET_ZC_ACCEPT_ENTER {
 	int16 packetType;
 	uint32 startTime;
 	uint8 posDir[3];
 	uint8 xSize;
 	uint8 ySize;
-} __attribute__((packed));
-DEFINE_PACKET_HEADER(ZC_ACCEPT_ENTER, 0x73)
-#elif PACKETVER < 20141022 || PACKETVER >= 20160330
-struct PACKET_ZC_ACCEPT_ENTER {
-	int16 packetType;
-	uint32 startTime;
-	uint8 posDir[3];
-	uint8 xSize;
-	uint8 ySize;
+#if PACKETVER > 20141022
 	uint16 font;
+#if PACKETVER >= 20160330
+	uint8 sex;
+#endif
+#endif
 } __attribute__((packed));
+#if PACKETVER <= 20141022
+DEFINE_PACKET_HEADER(ZC_ACCEPT_ENTER, 0x73)
+#elif PACKETVER > 20141022 && PACKETVER < 20160330
 DEFINE_PACKET_HEADER(ZC_ACCEPT_ENTER, 0x2eb)
 #else
-struct PACKET_ZC_ACCEPT_ENTER {
-	int16 packetType;
-	uint32 startTime;
-	uint8 posDir[3];
-	uint8 xSize;
-	uint8 ySize;
-	uint16 font;
-	uint8 sex;
-} __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_ACCEPT_ENTER, 0xa18)
 #endif
 
@@ -752,27 +741,20 @@ struct PACKET_ZC_NPCACK_MAPMOVE {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_NPCACK_MAPMOVE, 0x91)
 
+struct PACKET_ZC_NPCACK_SERVERMOVE {
+	int16 packetType;
+	char mapName[MAP_NAME_LENGTH_EXT];
+	uint16 xPos;
+	uint16 yPos;
+	uint32 ip;
+	uint16 port;
 #if PACKETVER >= 20170315
-// Actually ZC_NPCACK_SERVERMOVE_DOMAIN
-struct PACKET_ZC_NPCACK_SERVERMOVE {
-	int16 packetType;
-	char mapName[MAP_NAME_LENGTH_EXT];
-	uint16 xPos;
-	uint16 yPos;
-	uint32 ip;
-	uint16 port;
 	char domain[128];
+#endif
 } __attribute__((packed));
-DEFINE_PACKET_HEADER(ZC_NPCACK_SERVERMOVE, 0xac7)
+#if PACKETVER >= 20170315
+DEFINE_PACKET_HEADER(ZC_NPCACK_SERVERMOVE, 0xac7) // Actually ZC_NPCACK_SERVERMOVE_DOMAIN
 #else
-struct PACKET_ZC_NPCACK_SERVERMOVE {
-	int16 packetType;
-	char mapName[MAP_NAME_LENGTH_EXT];
-	uint16 xPos;
-	uint16 yPos;
-	uint32 ip;
-	uint16 port;
-} __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_NPCACK_SERVERMOVE, 0x92)
 #endif
 
@@ -1148,34 +1130,31 @@ struct PACKET_ZC_SKILL_UPDATE {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_SKILL_UPDATE, 0x1ac);
 
-#if PACKETVER >= 20141022
 struct PACKET_ZC_RECOVERY {
 	int16 packetType;
 	uint16 type;
+#if PACKETVER >= 20141022
 	int32 amount;
+#else
+	int16 amount;
+#endif
 } __attribute__((packed));
+#if PACKETVER >= 20141022
 DEFINE_PACKET_HEADER(ZC_RECOVERY, 0xa27);
 #else
-struct PACKET_ZC_RECOVERY {
-	int16 packetType;
-	uint16 type;
-	int16 amount;
-} __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_RECOVERY, 0x13d);
 #endif
 
-#if PACKETVER >= 20131223
 struct PACKET_ZC_ACK_WHISPER {
 	int16 packetType;
 	uint8 result;
+#if PACKETVER >= 20131223
 	uint32 CID;
+#endif
 } __attribute__((packed));
+#if PACKETVER >= 20131223
 DEFINE_PACKET_HEADER(ZC_ACK_WHISPER, 0x9df);
 #else
-struct PACKET_ZC_ACK_WHISPER {
-	int16 packetType;
-	uint8 result;
-} __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_ACK_WHISPER, 0x98);
 #endif
 
@@ -1185,23 +1164,21 @@ struct PACKET_ZC_ACK_ADDITEM_TO_CART {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_ACK_ADDITEM_TO_CART, 0x12c);
 
-// TODO : not sure for client date [Napster]
-#if PACKETVER >= 20141016
+
 struct PACKET_ZC_DELETEITEM_FROM_MCSTORE {
 	int16 packetType;
 	uint16 index;
 	uint16 amount;
+// TODO : not sure for client date [Napster]
+#if PACKETVER >= 20141016
 	uint32 buyerCID;
 	uint32 date;
 	int32 zeny;
+#endif
 } __attribute__((packed));
+#if PACKETVER >= 20141016
 DEFINE_PACKET_HEADER(ZC_DELETEITEM_FROM_MCSTORE, 0x9e5);
 #else
-struct PACKET_ZC_DELETEITEM_FROM_MCSTORE {
-	int16 packetType;
-	uint16 index;
-	uint16 amount;
-} __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_DELETEITEM_FROM_MCSTORE, 0x137);
 #endif
 
