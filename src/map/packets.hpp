@@ -1161,30 +1161,50 @@ struct PACKET_ZC_EL_PAR_CHANGE {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_EL_PAR_CHANGE, 0x81e);
 
-struct PACKET_ZC_NOTIFY_ACT {  //PACKET_ZC_NOTIFY_ACT, PACKET_ZC_NOTIFY_ACT2, PACKET_ZC_NOTIFY_ACT3
-	int16 packetType;
-	int32 srcID;       // <src ID>.L
-	int32 targetID;    // <dst ID>.L
-	int32 serverTick;  // <server tick>.L
-	int32 srcSpeed;    // <src speed>.L
-	int32 dmgSpeed;    // <dst speed>.L
-#if PACKETVER < 20071113
-	int16 damage;		// <damage>.W
-#else
-	int32 damage;      // <damage>.L
-#endif
 #if PACKETVER >= 20131223
-	int8 isSPDamage;   // <IsSPDamage>.B
-#endif
-	uint16 div;         // <div>.W
-	uint8 type;         // <type>.B
-#if PACKETVER < 20071113
-	int16 damage2;		// <damage2>.W
-#else
-	int32 damage2;     // <damage2>.L
-#endif
+struct PACKET_ZC_NOTIFY_ACT{
+	int16 packetType;
+	int32 srcID;
+	int32 targetID;
+	int32 serverTick;
+	int32 srcSpeed;
+	int32 dmgSpeed;
+	int32 damage;
+	int8 isSPDamage;
+	uint16 div;
+	uint8 type;
+	int32 damage2;
 } __attribute__((packed));
-// header on packet_struct.hpp damageType
+DEFINE_PACKET_HEADER(ZC_NOTIFY_ACT, 0x8c8);
+#elif PACKETVER >= 20071113
+struct PACKET_ZC_NOTIFY_ACT{
+	int16 packetType;
+	int32 srcID;
+	int32 targetID;
+	int32 serverTick;
+	int32 srcSpeed;
+	int32 dmgSpeed;
+	int32 damage;
+	uint16 div;
+	uint8 type;
+	int32 damage2;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_NOTIFY_ACT, 0x2e1);
+#else
+struct PACKET_ZC_NOTIFY_ACT{
+	int16 packetType;
+	int32 srcID;
+	int32 targetID;
+	int32 serverTick;
+	int32 srcSpeed;
+	int32 dmgSpeed;
+	int16 damage;
+	uint16 div;
+	uint8 type;
+	int16 damage2;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_NOTIFY_ACT, 0x8a);
+#endif
 
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )

@@ -5174,7 +5174,7 @@ int clif_damage(block_list& src, block_list& dst, t_tick tick, int sdelay, int d
 		sdelay = std::min(sdelay, DEFAULT_ANIMATION_SPEED);
 	}
 	PACKET_ZC_NOTIFY_ACT p{};
-	p.packetType = damageType;
+	p.packetType = HEADER_ZC_NOTIFY_ACT;
 	p.srcID = src.id;
 	p.targetID = dst.id;
 	p.serverTick = client_tick(tick);
@@ -5231,7 +5231,7 @@ int clif_damage(block_list& src, block_list& dst, t_tick tick, int sdelay, int d
  *------------------------------------------*/
 void clif_takeitem(block_list& src, block_list& dst){
 	PACKET_ZC_NOTIFY_ACT p{};
-	p.packetType = damageType;
+	p.packetType = HEADER_ZC_NOTIFY_ACT;
 	p.srcID = src.id;
 	p.targetID = dst.id;
 	p.type = DMG_PICKUP_ITEM;
@@ -5243,7 +5243,7 @@ void clif_takeitem(block_list& src, block_list& dst){
  *------------------------------------------*/
 void clif_sitting(block_list& bl){
 	PACKET_ZC_NOTIFY_ACT p{};
-	p.packetType = damageType;
+	p.packetType = HEADER_ZC_NOTIFY_ACT;
 	p.srcID = bl.id;
 	p.type = DMG_SIT_DOWN;
 	clif_send(&p, sizeof(p), &bl, AREA);
@@ -5258,7 +5258,7 @@ void clif_sitting(block_list& bl){
  *------------------------------------------*/
 void clif_standing(block_list& bl){
 	PACKET_ZC_NOTIFY_ACT p{};
-	p.packetType = damageType;
+	p.packetType = HEADER_ZC_NOTIFY_ACT;
 	p.srcID = bl.id;
 	p.type = DMG_STAND_UP;
 	clif_send(&p, sizeof(p), &bl, AREA);
