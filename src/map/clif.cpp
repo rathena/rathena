@@ -5152,7 +5152,7 @@ int clif_damage(block_list& src, block_list& dst, t_tick tick, int sdelay, int d
 	}
 
 	// Calculate what sdelay to send to the client so it applies damage at the same time as the server
-	if (battle_config.synchronize_damage && src.type==BL_MOB) {
+	if (battle_config.synchronize_damage && src.type == BL_MOB) {
 		// When a clif_damage packet is sent to the client it will also send "sdelay" (amotion) as value.
 		// The client however does not interpret this value as AttackMotion but incorrectly as an inverted
 		// animation speed modifier, with 432 standing for 1x animation speed.
@@ -5173,7 +5173,9 @@ int clif_damage(block_list& src, block_list& dst, t_tick tick, int sdelay, int d
 		// on the server to clientamotion ms instead (see battle_delay_damage).
 		sdelay = std::min(sdelay, DEFAULT_ANIMATION_SPEED);
 	}
+
 	PACKET_ZC_NOTIFY_ACT p{};
+
 	p.packetType = HEADER_ZC_NOTIFY_ACT;
 	p.srcID = src.id;
 	p.targetID = dst.id;
@@ -5185,13 +5187,8 @@ int clif_damage(block_list& src, block_list& dst, t_tick tick, int sdelay, int d
 		p.damage = damage ? div : 0;
 		p.damage2 = damage2 ? div : 0;
 	} else {
-#if PACKETVER < 20071113
-		p.damage = min(damage, INT16_MAX);
-		p.damage2 = min(damage2, INT16_MAX);
-#else
-		p.damage = damage;
-		p.damage2 = damage2;
-#endif
+		p.damage = static_cast<decltype(p.damage)>( std::min( damage, static_cast<decltype(damage)>( std::numeric_limits<decltype(p.damage)>::max() ) ) );
+		p.damage2 = static_cast<decltype(p.damage2)>( std::min( damage2, static_cast<decltype(damage2)>( std::numeric_limits<decltype(p.damage2)>::max() ) ) );
 	}
 
 #if PACKETVER >= 20131223
@@ -5231,10 +5228,12 @@ int clif_damage(block_list& src, block_list& dst, t_tick tick, int sdelay, int d
  *------------------------------------------*/
 void clif_takeitem(block_list& src, block_list& dst){
 	PACKET_ZC_NOTIFY_ACT p{};
+
 	p.packetType = HEADER_ZC_NOTIFY_ACT;
 	p.srcID = src.id;
 	p.targetID = dst.id;
 	p.type = DMG_PICKUP_ITEM;
+
 	clif_send(&p, sizeof(p), &src, AREA);
 }
 
@@ -5243,10 +5242,13 @@ void clif_takeitem(block_list& src, block_list& dst){
  *------------------------------------------*/
 void clif_sitting(block_list& bl){
 	PACKET_ZC_NOTIFY_ACT p{};
+
 	p.packetType = HEADER_ZC_NOTIFY_ACT;
 	p.srcID = bl.id;
 	p.type = DMG_SIT_DOWN;
+
 	clif_send(&p, sizeof(p), &bl, AREA);
+
 	if(disguised(&bl)) {
 		p.srcID = disguised_bl_id( bl.id );
 		clif_send(&p, sizeof(p), &bl, SELF);
@@ -5258,10 +5260,13 @@ void clif_sitting(block_list& bl){
  *------------------------------------------*/
 void clif_standing(block_list& bl){
 	PACKET_ZC_NOTIFY_ACT p{};
+
 	p.packetType = HEADER_ZC_NOTIFY_ACT;
 	p.srcID = bl.id;
 	p.type = DMG_STAND_UP;
+
 	clif_send(&p, sizeof(p), &bl, AREA);
+
 	if(disguised(&bl)) {
 		p.srcID = disguised_bl_id( bl.id );
 		clif_send(&p, sizeof(p), &bl, SELF);
@@ -9778,7 +9783,7 @@ void clif_refresh(map_session_data *sd)
 	if( sd->state.vending )
 		clif_openvending( *sd );
 	if( pc_issit(sd) )
-		clif_sitting(sd->bl);  // FIXME: just send to self, not area
+		clif_sitting(sd->bl); // FIXME: just send to self, not area
 	if( pc_isdead(sd) ) // When you refresh, resend the death packet.
 		clif_clearunit_single( sd->bl.id, CLR_DEAD, *sd );
 	else
@@ -11536,7 +11541,7 @@ void clif_parse_HowManyConnections(int fd, map_session_data *sd)
 	clif_user_count(sd, map_getusers());
 }
 
-void clif_parse_ActionRequest_sub( map_session_data& sd, e_damage_type action_type, int target_id, t_tick tick ){
+void clif_parse_ActionRequest_sub( map_session_data& sd, uint8 action_type, int target_id, t_tick tick ){
 	if (pc_isdead(&sd)) {
 		clif_clearunit_area(sd.bl, CLR_DEAD);
 		return;
@@ -11663,7 +11668,7 @@ void clif_parse_ActionRequest(int fd, map_session_data *sd)
 
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
 	clif_parse_ActionRequest_sub( *sd,
-		static_cast<e_damage_type>(RFIFOB(fd, info->pos[1])),
+		RFIFOB(fd, info->pos[1]),
 		RFIFOL(fd,info->pos[0]),
 		gettick()
 	);
