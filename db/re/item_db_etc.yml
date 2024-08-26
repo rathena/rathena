@@ -90384,7 +90384,7 @@ Body:
       Ammo: true
     EquipLevelMin: 1
     Script: |
-      bonus bAtkEle,Ele_Neutral;
+      bonus bAtkEle,Ele_Ghost;
   - Id: 1220003
     AegisName: Kunai_Of_Shadow
     Name: Kunai Of Shadow

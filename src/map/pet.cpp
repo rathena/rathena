@@ -714,7 +714,7 @@ int pet_attackskill(struct pet_data *pd, int target_id)
 
 		bl = map_id2bl(target_id);
 
-		if(bl == nullptr || pd->bl.m != bl->m || bl->prev == nullptr || status_isdead(bl) ||
+		if(bl == nullptr || pd->bl.m != bl->m || bl->prev == nullptr || status_isdead(*bl) ||
 			!check_distance_bl(&pd->bl, bl, pd->db->range3))
 			return 0;
 
@@ -1791,7 +1791,7 @@ static int pet_ai_sub_hard(struct pet_data *pd, map_session_data *sd, t_tick tic
 	if (pd->target_id) {
 		target = map_id2bl(pd->target_id);
 
-		if (!target || pd->bl.m != target->m || status_isdead(target) ||
+		if (!target || pd->bl.m != target->m || status_isdead(*target) ||
 			!check_distance_bl(&pd->bl, target, pd->db->range3)) {
 			target = nullptr;
 			pet_unlocktarget(pd);
@@ -2090,7 +2090,6 @@ TIMER_FUNC(pet_recovery_timer){
  */
 TIMER_FUNC(pet_heal_timer){
 	map_session_data *sd = map_id2sd(id);
-	struct status_data *status;
 	struct pet_data *pd;
 	unsigned int rate = 100;
 
@@ -2104,7 +2103,7 @@ TIMER_FUNC(pet_heal_timer){
 		return 0;
 	}
 
-	status = status_get_status_data(&sd->bl);
+	status_data* status = status_get_status_data(sd->bl);
 
 	if(pc_isdead(sd) ||
 		(rate = get_percentage(status->sp, status->max_sp)) > pd->s_skill->sp ||
@@ -2134,7 +2133,6 @@ TIMER_FUNC(pet_heal_timer){
 TIMER_FUNC(pet_skill_support_timer){
 	map_session_data *sd = map_id2sd(id);
 	struct pet_data *pd;
-	struct status_data *status;
 	short rate = 100;
 
 	if(sd == nullptr || sd->pd == nullptr || sd->pd->s_skill == nullptr)
@@ -2147,7 +2145,7 @@ TIMER_FUNC(pet_skill_support_timer){
 		return 0;
 	}
 
-	status = status_get_status_data(&sd->bl);
+	status_data* status = status_get_status_data(sd->bl);
 
 	if (DIFF_TICK(pd->ud.canact_tick, tick) > 0) {
 		//Wait until the pet can act again.
