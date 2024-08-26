@@ -6675,7 +6675,6 @@ bool pc_steal_item(map_session_data *sd,struct block_list *bl, uint16 skill_lv)
 	t_itemid itemid;
 	double rate;
 	unsigned char flag = 0;
-	struct status_data *sd_status, *md_status;
 	struct mob_data *md;
 
 	if(!sd || !bl || bl->type!=BL_MOB)
@@ -6686,8 +6685,8 @@ bool pc_steal_item(map_session_data *sd,struct block_list *bl, uint16 skill_lv)
 	if(md->state.steal_flag == UCHAR_MAX || ( md->sc.opt1 && md->sc.opt1 != OPT1_BURNING ) ) //already stolen from / status change check
 		return false;
 
-	sd_status= status_get_status_data(&sd->bl);
-	md_status= status_get_status_data(bl);
+	status_data* sd_status = status_get_status_data(sd->bl);
+	status_data* md_status = status_get_status_data(*bl);
 
 	if (md->master_id || status_has_mode(md_status, MD_STATUSIMMUNE) || util::vector_exists(status_get_race2(&md->bl), RC2_TREASURE) ||
 		map_getmapflag(bl->m, MF_NOMOBLOOT) || // check noloot map flag [Lorky]
@@ -8235,7 +8234,7 @@ static void pc_calcexp(map_session_data *sd, t_exp *base_exp, t_exp *job_exp, st
 	int bonus = 0, vip_bonus_base = 0, vip_bonus_job = 0;
 
 	if (src) {
-		struct status_data *status = status_get_status_data(src);
+		status_data* status = status_get_status_data(*src);
 
 		if( sd->indexed_bonus.expaddrace[status->race] )
 			bonus += sd->indexed_bonus.expaddrace[status->race];

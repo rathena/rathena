@@ -6263,7 +6263,6 @@ void clif_skill_teleportmessage( map_session_data& sd, e_notify_mapinfo_result r
 ///     <water%>.B <earth%>.B <fire%>.B <wind%>.B <poison%>.B <holy%>.B <shadow%>.B <ghost%>.B <undead%>.B
 void clif_skill_estimation(map_session_data *sd,struct block_list *dst)
 {
-	struct status_data *status;
 	unsigned char buf[64];
 	int i, fix;
 
@@ -6273,7 +6272,7 @@ void clif_skill_estimation(map_session_data *sd,struct block_list *dst)
 	if( dst->type != BL_MOB )
 		return;
 
-	status = status_get_status_data(dst);
+	status_data* status = status_get_status_data(*dst);
 
 	WBUFW(buf, 0)=0x18c;
 	WBUFW(buf, 2)=status_get_class(dst);
@@ -11048,7 +11047,7 @@ void clif_parse_LoadEndAck(int fd,map_session_data *sd)
 		sd->areanpc.clear();
 
 	/* it broke at some point (e.g. during a crash), so we make it visibly dead again. */
-	if( !sd->status.hp && !pc_isdead(sd) && status_isdead(&sd->bl) )
+	if( !sd->status.hp && !pc_isdead(sd) && status_isdead(sd->bl) )
 		pc_setdead(sd);
 
 	// If player is dead, and is spawned (such as @refresh) send death packet. [Valaris]
