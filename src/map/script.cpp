@@ -7679,6 +7679,7 @@ BUILDIN_FUNC(getitem)
 		// if not pet egg
 		if (!pet_create_egg(sd, nameid))
 		{
+			uint64 unique_id = it.unique_id = pc_generate_unique_id(sd);
 			e_additem_result flag = pc_additem( sd, &it, get_count, LOG_TYPE_SCRIPT );
 
 			if( flag != ADDITEM_SUCCESS ){
@@ -7686,6 +7687,9 @@ BUILDIN_FUNC(getitem)
 				ShowError( "buildin_getitem: Failed to add the item to player.\n" );
 				return SCRIPT_CMD_FAILURE;
 			}
+			std::string buf;
+			snprintf(buf.data(), NAME_LENGTH, "%llu", (unsigned long long)unique_id);
+			setd_sub_str(st, nullptr, ".@unique_id$", i, buf.c_str(), nullptr);
 		}
 	}
 	return SCRIPT_CMD_SUCCESS;
@@ -7844,10 +7848,11 @@ BUILDIN_FUNC(getitem2)
 
 		for (int i = 0; i < amount; i += get_count)
 		{
-			uint64 unique_id = item_tmp.unique_id = pc_generate_unique_id(sd);
 			// if not pet egg
 			if (!pet_create_egg(sd, nameid))
 			{
+				uint64 unique_id = item_tmp.unique_id = pc_generate_unique_id(sd);
+
 				e_additem_result flag = pc_additem( sd, &item_tmp, get_count, LOG_TYPE_SCRIPT );
 
 				if( flag != ADDITEM_SUCCESS ){
@@ -7855,12 +7860,11 @@ BUILDIN_FUNC(getitem2)
 					ShowError( "buildin_getitem2: Failed to add the item to player.\n" );
 					return SCRIPT_CMD_FAILURE;
 				}
+
+				std::string buf;
+				snprintf(buf.data(), NAME_LENGTH, "%llu", (unsigned long long)unique_id);
+				setd_sub_str(st, nullptr, ".@unique_id$", i, buf.c_str(), nullptr);
 			}
-			int maxlen = 256;
-			char *buf = (char *)aMalloc(maxlen*sizeof(char));
-			memset(buf, 0, maxlen);
-			snprintf(buf, maxlen-1, "%llu", (unsigned long long)unique_id);
-			mapreg_setregstr(amount > 1? reference_uid(add_str("$@unique_id$"), i):add_str("$@unique_id$"), buf);
 		}
 	}
 	return SCRIPT_CMD_SUCCESS;
@@ -7907,11 +7911,15 @@ BUILDIN_FUNC(rentitem) {
 	it.expire_time = (unsigned int)(time(nullptr) + seconds);
 	it.bound = BOUND_NONE;
 
+	uint64 unique_id = it.unique_id = pc_generate_unique_id(sd);
 	if( (flag = pc_additem(sd, &it, 1, LOG_TYPE_SCRIPT)) )
 	{
 		clif_additem(sd, 0, 0, flag);
 		return SCRIPT_CMD_FAILURE;
 	}
+	std::string buf;
+	snprintf(buf.data(), NAME_LENGTH, "%llu", (unsigned long long)unique_id);
+	setd_sub_str(st, nullptr, ".@unique_id$", 0, buf.c_str(), nullptr);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -8019,11 +8027,15 @@ BUILDIN_FUNC(rentitem2) {
 
 	unsigned char flag = 0;
 
+	uint64 unique_id = it.unique_id = pc_generate_unique_id(sd);
 	if( (flag = pc_additem(sd, &it, 1, LOG_TYPE_SCRIPT)) ) {
 		clif_additem(sd, 0, 0, flag);
 		return SCRIPT_CMD_FAILURE;
 	}
 
+	std::string buf;
+	snprintf(buf.data(), NAME_LENGTH, "%llu", (unsigned long long)unique_id);
+	setd_sub_str(st, nullptr, ".@unique_id$", 0, buf.c_str(), nullptr);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -8082,11 +8094,14 @@ BUILDIN_FUNC(getnameditem)
 	item_tmp.card[0]=CARD0_CREATE; //we don't use 255! because for example SIGNED WEAPON shouldn't get TOP10 BS Fame bonus [Lupus]
 	item_tmp.card[2]=GetWord(tsd->status.char_id,0);
 	item_tmp.card[3]=GetWord(tsd->status.char_id,1);
+	uint64 unique_id = item_tmp.unique_id = pc_generate_unique_id(sd);
 	if(pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT)) {
 		script_pushint(st,0);
 		return SCRIPT_CMD_SUCCESS;	//Failed to add item, we will not drop if they don't fit
 	}
-
+	std::string buf;
+	snprintf(buf.data(), NAME_LENGTH, "%llu", (unsigned long long)unique_id);
+	setd_sub_str(st, nullptr, ".@unique_id$", 0, buf.c_str(), nullptr);
 	script_pushint(st,1);
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -16775,9 +16790,34 @@ BUILDIN_FUNC(equip) {
 	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
+	t_itemid nameid = script_getnum(st,2);
+	std::shared_ptr<item_data> id = item_db.find(nameid);
+
+	if (id != nullptr) {
+		int i;
+
+		ARR_FIND( 0, MAX_INVENTORY, i, sd->inventory.u.items_inventory[i].nameid == nameid );
+		if (i < MAX_INVENTORY) {
+			pc_equipitem(sd,i,id->equip);
+			script_pushint(st,1);
+			return SCRIPT_CMD_SUCCESS;
+		}
+	}
+
+	ShowError("buildin_equip: Item %u cannot be equipped\n",nameid);
+	script_pushint(st,0);
+	return SCRIPT_CMD_FAILURE;
+}
+
+BUILDIN_FUNC(equip_unique) {
+	TBL_PC *sd;
+
+	if (!script_charid2sd(3,sd))
+		return SCRIPT_CMD_FAILURE;
+
 	uint64 id = script_getnum64(st,2);
 	int i;
-	ARR_FIND( 0, MAX_INVENTORY, i, sd->inventory.u.items_inventory[i].nameid == (t_itemid)id || sd->inventory.u.items_inventory[i].unique_id == id);
+	ARR_FIND( 0, MAX_INVENTORY, i, sd->inventory.u.items_inventory[i].unique_id == id);
 	if (i < MAX_INVENTORY) {
 		std::shared_ptr<item_data> id = item_db.find(sd->inventory.u.items_inventory[i].nameid);
 		pc_equipitem(sd,i,id->equip);
@@ -27836,7 +27876,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(npcshopadditem,"sii*"),
 	BUILDIN_DEF(npcshopdelitem,"si*"),
 	BUILDIN_DEF(npcshopattach,"s?"),
-	BUILDIN_DEF(equip,"v?"),
+	BUILDIN_DEF(equip,"i?"),
+	BUILDIN_DEF(equip_unique,"s?"),
 	BUILDIN_DEF(autoequip,"ii"),
 	BUILDIN_DEF(setbattleflag,"si?"),
 	BUILDIN_DEF(getbattleflag,"s"),

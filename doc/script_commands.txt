@@ -4840,6 +4840,12 @@ apples will be created anyway. It is often a VERY GOOD IDEA to use it like this.
 This is used in pretty much all NPC scripts that have to do with items and
 quite a few item scripts. For more examples check just about any official script.
 
+This command return an scope array string containing unique_id
+Example of Usage:
+	//Crimson Dagger [2]
+	getitem 28705,1;
+	equip_unique(.@unique_id$);
+
 ---------------------------------------
 
 *getitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
@@ -4953,14 +4959,14 @@ Example to get Crimson Weapon with Ghost property:
 	setarray .@OptParam[0],0;
 	getitem3 28705,1,1,9,0,0,0,0,0,.@OptID,.@OptVal,.@OptParam;
 
-This command return an maparray string containing unique_id
+This command return an scope array string containing unique_id
 Example of Usage:
 	// +9 Crimson Dagger [2]
 	setarray .@OptID[0],RDMOPT_WEAPON_ATTR_TELEKINESIS;
 	setarray .@OptVal[0],0;
 	setarray .@OptParam[0],0;
 	getitem3 28705,1,1,9,0,0,0,0,0,.@OptID,.@OptVal,.@OptParam;
-	equip($@unique_id$);
+	equip_unique(.@unique_id$);
 
 ---------------------------------------
 
@@ -4977,6 +4983,12 @@ Valid bound types are:
  Bound_Guild   : Guild Bound item
  Bound_Party   : Party Bound item
  Bound_Char    : Character Bound item
+
+This command return an scope string containing unique_id
+Example of Usage:
+	//Crimson Dagger [2]
+	getitembound 28705,1,Bound_Account;
+	equip_unique(.@unique_id$);
 
 ---------------------------------------
 
@@ -5014,6 +5026,15 @@ Example to get Crimson Weapon with Ghost property:
 	setarray .@OptParam[0],0;
 	getitembound3 28705,1,1,9,0,0,0,0,0,BOUND_CHAR,.@OptID,.@OptVal,.@OptParam;
 
+This command return an scope array string containing unique_id
+Example of Usage:
+	// +9 Crimson Dagger [2]
+	setarray .@OptID[0],RDMOPT_WEAPON_ATTR_TELEKINESIS;
+	setarray .@OptVal[0],0;
+	setarray .@OptParam[0],0;
+	getitembound3 28705,1,1,9,0,0,0,0,0,BOUND_CHAR,.@OptID,.@OptVal,.@OptParam;
+	equip_unique(.@unique_id$);
+
 ---------------------------------------
 
 *getnameditem <item id>,<character name|character ID>;
@@ -5037,6 +5058,13 @@ Example:
 		mes "You now have a Aaron's Apple!";
 	}
 
+
+This command return an scope array string containing unique_id
+Example of Usage:
+	// Crimson Dagger [2]
+	getnameitem("28705","Aaron")
+	equip_unique(.@unique_id$);
+
 ---------------------------------------
 
 *rentitem <item id>,<time>{,<account_id>};
@@ -5055,6 +5083,12 @@ This command can not be used to rent stackable items. Rental items cannot be
 dropped, traded, or placed in guild storage. (i.e. trade mask 67)
 Note: 'delitem' in an NPC script can still remove rental items.
 Note: 'countitem' will not count any item with a rental timer. Use 'rentalcountitem' instead.
+
+This command return an scope array string containing unique_id
+Example of Usage:
+	// Crimson Dagger [2]
+	rentitem 28705,(24*60*60);
+	equip_unique(.@unique_id$);
 
 ---------------------------------------
 
@@ -5089,6 +5123,15 @@ Example to get Crimson Weapon with Ghost property:
 	setarray .@OptVal[0],0;
 	setarray .@OptParam[0],0;
 	rentitem3 28705,(24*60*60),1,9,0,0,0,0,0,.@OptID,.@OptVal,.@OptParam;
+
+This command return an scope array string containing unique_id
+Example of Usage:
+	// +9 Crimson Dagger [2]
+	setarray .@OptID[0],RDMOPT_WEAPON_ATTR_TELEKINESIS;
+	setarray .@OptVal[0],0;
+	setarray .@OptParam[0],0;
+	rentitem3 28705,(24*60*60),1,9,0,0,0,0,0,.@OptID,.@OptVal,.@OptParam;
+	equip_unique(.@unique_id$);
 
 ---------------------------------------
 
@@ -5671,6 +5714,7 @@ storage or cart.
 
 *equip <item id>{,<char_id>};
 *autoequip <item id>,<option>;
+*equip_unique "<unique item id>"{,<char_id>};
 
 These commands are to equip a equipment on the attached character.
 The equip function will equip the item ID given when the player has
@@ -5696,7 +5740,7 @@ Example to get Crimson Weapon with Ghost property and equip it:
 	setarray .@OptVal[0],0;
 	setarray .@OptParam[0],0;
 	getitem3 28705,1,1,9,0,0,0,0,0,.@OptID,.@OptVal,.@OptParam;
-	equip($@unique_id$);
+	equip_unique($@unique_id$);
 
 ---------------------------------------
 
