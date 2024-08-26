@@ -11668,7 +11668,7 @@ void clif_parse_ActionRequest(int fd, map_session_data *sd)
 
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
 	clif_parse_ActionRequest_sub( *sd,
-		RFIFOB(fd, info->pos[1]),
+		RFIFOB(fd,info->pos[1]),
 		RFIFOL(fd,info->pos[0]),
 		gettick()
 	);
