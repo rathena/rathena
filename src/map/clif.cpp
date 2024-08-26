@@ -783,7 +783,7 @@ void clif_authok(map_session_data *sd)
 {
 	PACKET_ZC_ACCEPT_ENTER packet{};
 
-	packet.packetType = HEADER_ZC_ACCEPT_ENTER;
+	packet.packetType = authokType;
 	packet.startTime = client_tick(gettick());
 	WBUFPOS(packet.posDir, 0, sd->bl.x, sd->bl.y, sd->ud.dir);
 	packet.xSize = 5; // ignored
@@ -5332,7 +5332,7 @@ void clif_getareachar_item( map_session_data* sd,struct flooritem_data* fitem ){
 	p.amount = fitem->item.amount;
 	p.subX = fitem->subx;
 	p.subY = fitem->suby;
-	
+
 	clif_send( &p, sizeof( p ), &sd->bl, SELF );
 }
 

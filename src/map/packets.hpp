@@ -622,13 +622,7 @@ struct PACKET_ZC_ACCEPT_ENTER {
 #endif
 #endif
 } __attribute__((packed));
-#if PACKETVER < 20080102
-DEFINE_PACKET_HEADER(ZC_ACCEPT_ENTER, 0x73)
-#elif PACKETVER >= 20141016 && PACKETVER < 20160330
-DEFINE_PACKET_HEADER(ZC_ACCEPT_ENTER, 0x2eb)
-#else
-DEFINE_PACKET_HEADER(ZC_ACCEPT_ENTER, 0xa18)
-#endif
+//header is on packet_struct
 
 struct PACKET_ZC_REFUSE_ENTER {
 	int16 packetType;
