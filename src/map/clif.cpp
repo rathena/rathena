@@ -6373,7 +6373,7 @@ static void clif_status_change_sub(block_list &bl, int id, int type, int flag, t
 #if PACKETVER >= 20090121
 	if (flag&&battle_config.display_status_timers){
 		PACKET_ZC_MSG_STATE_CHANGE2 p{};
-		p.packetType = HEADER_ZC_MSG_STATE_CHANGE2;
+		p.packetType = status_changeType;
 		p.type = type;
 		p.id = id;
 		p.flag = flag;
@@ -6391,7 +6391,7 @@ static void clif_status_change_sub(block_list &bl, int id, int type, int flag, t
 	}
 #endif
 	PACKET_ZC_MSG_STATE_CHANGE p{};	
-	p.packetType = HEADER_ZC_MSG_STATE_CHANGE;
+	p.packetType = status_change2Type;
 	p.type = type;
 	p.id = id;
 #if PACKETVER >= 20090121
