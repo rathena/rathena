@@ -5010,7 +5010,6 @@ static int skill_tarotcard(struct block_list* src, struct block_list *target, ui
 		battle_fix_damage(src, target, 1000, 0, skill_id);
 		clif_damage(*src, *target, tick, 0, 0, 1000, 0, DMG_NORMAL, 0, false);
 		if (!status_isdead(*target))
-
 		{
 			unsigned short where[] = { EQP_ARMOR, EQP_SHIELD, EQP_HELM };
 			skill_break_equip(src, target, where[rnd() % 3], 10000, BCT_ENEMY);
