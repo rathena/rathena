@@ -3661,16 +3661,26 @@ Body:
     CastCancel: true
     CastTime:
       - Level: 1
+        Time: 700
+      - Level: 2
+        Time: 1400
+      - Level: 3
+        Time: 2100
+      - Level: 4
+        Time: 2800
+      - Level: 5
+        Time: 3500
+    AfterCastActDelay:
+      - Level: 1
         Time: 1000
       - Level: 2
-        Time: 2000
+        Time: 1200
       - Level: 3
-        Time: 3000
+        Time: 1400
       - Level: 4
-        Time: 4000
+        Time: 1600
       - Level: 5
-        Time: 5000
-    AfterCastActDelay: 700
+        Time: 1800
     Requires:
       SpCost:
         - Level: 1
@@ -3722,7 +3732,7 @@ Body:
         Time: 4000
       - Level: 5
         Time: 5000
-    AfterCastActDelay: 700
+    AfterCastActDelay: 1000
     Duration1: 100
     Requires:
       SpCost:

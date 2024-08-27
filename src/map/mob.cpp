@@ -1443,7 +1443,7 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,t_tick tick)
 
 	bl=map_id2bl(md->master_id);
 
-	if (!bl || status_isdead(bl)) {
+	if (!bl || status_isdead(*bl)) {
 		status_kill(&md->bl);
 		return 1;
 	}
@@ -1934,7 +1934,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 
 		if (pcdb_checkid(md->vd->class_))
 		{	//Give them walk act/delay to properly mimic players. [Skotlex]
-			clif_takeitem(&md->bl,tbl);
+			clif_takeitem(md->bl,*tbl);
 			md->ud.canact_tick = tick + md->status.amotion;
 			unit_set_walkdelay(&md->bl, tick, md->status.amotion, 1);
 		}
