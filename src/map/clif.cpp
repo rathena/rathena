@@ -11475,7 +11475,11 @@ void clif_changed_dir(block_list &bl, enum send_target target){
 
 	p.packetType = HEADER_ZC_CHANGE_DIRECTION;
 	p.srcId = bl.id;
-	p.headDir = bl.type==BL_PC? reinterpret_cast<TBL_PC*>(&bl)->head_dir : 0;
+	if( bl.type == BL_PC ){
+		p.headDir = reinterpret_cast<map_session_data*>(&bl)->head_dir;
+	}else{
+		p.headDir = 0;
+	}
 	p.dir = unit_getdir(&bl);
 	clif_send(&p, sizeof(p), &bl, target);
 	if (disguised(&bl)) {
