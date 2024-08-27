@@ -4251,7 +4251,6 @@ void clif_equipitemack( map_session_data& sd, uint8 flag, int index, int pos ){
 ///     0 = failure
 ///     1 = success
 void clif_unequipitemack(map_session_data& sd,int n,int pos,int ok){
-	ok = ok ? 0 : 1;
 #elif PACKETVER >= 20110824
 	ok = ok ? 0 : 1;
 #endif
