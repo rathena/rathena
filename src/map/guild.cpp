@@ -894,7 +894,7 @@ int guild_recv_info(const struct mmo_guild &sg) {
 
 		if (guild_new) { // Send information and affiliation if unsent
 #if PACKETVER >= 20200902
-			// clients after this version need this packet to show the guild name on alt+c
+			// Clients after this version need this packet to show the guild name on alt+a
 			clif_guild_basicinfo( *sd );
 #endif
 			clif_guild_belonginfo( *sd );
@@ -1381,7 +1381,7 @@ int guild_send_memberinfoshort(map_session_data *sd,int online) { // cleaned up 
 
 	if(sd->state.connect_new) {	//Note that this works because it is invoked in parse_LoadEndAck before connect_new is cleared.
 #if PACKETVER >= 20200902
-		// clients after this version need this packet to show the guild name on alt+c
+		// Clients after this version need this packet to show the guild name on alt+a
 		clif_guild_basicinfo( *sd );
 #endif
 		clif_guild_belonginfo( *sd );
