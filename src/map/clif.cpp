@@ -11551,7 +11551,7 @@ void clif_parse_Emotion(int fd, map_session_data *sd){
 }
 
 
-/// Amount of currently online players, reply to /w /who (ZC_USER_COUNT).
+/// Amount of currently online players, reply to /w /who
 /// 00c2 <count>.L
 static void clif_user_count(map_session_data& sd)
 {
