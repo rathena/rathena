@@ -5368,8 +5368,8 @@ static void clif_graffiti(block_list &bl, skill_unit &unit, enum send_target tar
 	p.x = unit.bl.x;
 	p.y = unit.bl.y;
 	p.effectId = unit.group->unit_id;
-	p.isVisible = 1;
-	p.hasMsg = 1;
+	p.isVisible = true;
+	p.hasMsg = true;
 	safestrncpy(p.mes,unit.group->valstr,MESSAGE_SIZE);
 
 	clif_send(&p,sizeof(p),&bl,target);
@@ -5440,7 +5440,7 @@ void clif_skill_unit_test(block_list &bl, short x, short y, int unit_id, short r
 	p.x = x;
 	p.y = y;
 	p.effectId = static_cast<decltype(p.effectId)>( std::min( unit_id, static_cast<decltype(unit_id)>( std::numeric_limits<decltype(p.effectId)>::max() ) ) );
-	p.isVisible = 1;
+	p.isVisible = true;
 #if PACKETVER > 20120702
 	p.packetLen = sizeof(p);
 	p.range = static_cast<decltype(p.range)>( std::min( range, static_cast<decltype(range)>( std::numeric_limits<decltype(p.range)>::max() ) ) );
