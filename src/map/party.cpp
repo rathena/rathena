@@ -393,13 +393,13 @@ bool party_invite( map_session_data& sd, map_session_data *tsd ){
 	ARR_FIND( 0, MAX_PARTY, i, p->data[i].sd == &sd );
 
 	if( i == MAX_PARTY || !p->party.member[i].leader ) {
-		clif_displaymessage( sd.fd, msg_txt( &sd, 282 ) );
+		clif_displaymessage(sd, msg_txt( &sd, 282 ) );
 		return false;
 	}
 
 	// Party locked.
 	if( map_getmapflag( sd.bl.m, MF_PARTYLOCK ) ){
-		clif_displaymessage( sd.fd, msg_txt( &sd, 227 ) );
+		clif_displaymessage(sd, msg_txt( &sd, 227 ) );
 		return false;
 	}
 
@@ -442,7 +442,7 @@ bool party_invite( map_session_data& sd, map_session_data *tsd ){
 
 	// confirm whether the account has the ability to invite before checking the player
 	if( !pc_has_permission( &sd, PC_PERM_PARTY ) || !pc_has_permission( tsd, PC_PERM_PARTY ) ) {
-		clif_displaymessage( sd.fd, msg_txt( &sd, 81 ) ); // Your GM level doesn't authorize you to perform this action on the specified player.
+		clif_displaymessage(sd, msg_txt( &sd, 81 ) ); // Your GM level doesn't authorize you to perform this action on the specified player.
 		return false;
 	}
 
@@ -699,7 +699,7 @@ int party_member_added(int party_id,uint32 account_id,uint32 char_id, int flag)
 bool party_removemember( map_session_data& sd, uint32 account_id, const char* name ){
 	// Party locked.
 	if( map_getmapflag( sd.bl.m, MF_PARTYLOCK ) ){
-		clif_displaymessage( sd.fd, msg_txt( &sd, 227 ) );
+		clif_displaymessage(sd, msg_txt( &sd, 227 ) );
 		return false;
 	}
 
@@ -761,7 +761,7 @@ bool party_leave( map_session_data& sd, bool showMessage ){
 	if( map_getmapflag( sd.bl.m, MF_PARTYLOCK ) ){
 		// If it was not triggered by the user itself, but from a script for example
 		if( showMessage ){
-			clif_displaymessage( sd.fd, msg_txt( &sd,227 ) );
+			clif_displaymessage(sd, msg_txt( &sd,227 ) );
 		}
 
 		return false;
@@ -946,12 +946,12 @@ int party_changeleader(map_session_data *sd, map_session_data *tsd, struct party
 			return -1;
 
 		if (!tsd || tsd->status.party_id != sd->status.party_id) {
-			clif_displaymessage(sd->fd, msg_txt(sd,283));
+			clif_displaymessage(*sd, msg_txt(sd,283));
 			return -3;
 		}
 
 		if ( map_getmapflag(sd->bl.m, MF_PARTYLOCK) ) {
-			clif_displaymessage(sd->fd, msg_txt(sd,287));
+			clif_displaymessage(*sd, msg_txt(sd,287));
 			return 0;
 		}
 
@@ -967,7 +967,7 @@ int party_changeleader(map_session_data *sd, map_session_data *tsd, struct party
 			return 0; // Shouldn't happen
 
 		if (!p->party.member[mi].leader) { // Need to be a party leader.
-			clif_displaymessage(sd->fd, msg_txt(sd,282));
+			clif_displaymessage(*sd, msg_txt(sd,282));
 			return 0;
 		}
 

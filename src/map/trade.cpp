@@ -33,7 +33,7 @@ void trade_traderequest(map_session_data *sd, map_session_data *target_sd)
 	nullpo_retv(sd);
 
 	if (map_getmapflag(sd->bl.m, MF_NOTRADE)) {
-		clif_displaymessage (sd->fd, msg_txt(sd,272));
+		clif_displaymessage(*sd, msg_txt(sd,272));
 		return; //Can't trade in notrade mapflag maps.
 	}
 
@@ -71,7 +71,7 @@ void trade_traderequest(map_session_data *sd, map_session_data *target_sd)
 	}
 
 	if (!pc_can_give_items(sd) || !pc_can_give_items(target_sd)) { // check if both GMs are allowed to trade
-		clif_displaymessage(sd->fd, msg_txt(sd,246));
+		clif_displaymessage(*sd, msg_txt(sd,246));
 		clif_tradestart(sd, 2); // GM is not allowed to trade
 		return;
 	}
@@ -378,7 +378,7 @@ void trade_tradeadditem(map_session_data *sd, short index, short amount)
 
 	if( !itemdb_cantrade(item, src_lv, dst_lv) && // Can't trade
 		(pc_get_partner(sd) != target_sd || !itemdb_canpartnertrade(item, src_lv, dst_lv)) ) { // Can't partner-trade
-		clif_displaymessage (sd->fd, msg_txt(sd,260));
+		clif_displaymessage(*sd, msg_txt(sd,260));
 		clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_CLOSED);
 		return;
 	}
@@ -387,13 +387,13 @@ void trade_tradeadditem(map_session_data *sd, short index, short amount)
 		return;
 
 	if( item->expire_time ) { // Rental System
-		clif_displaymessage (sd->fd, msg_txt(sd,260));
+		clif_displaymessage(*sd, msg_txt(sd,260));
 		clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_CLOSED);
 		return;
 	}
 
 	if( ((item->bound == BOUND_ACCOUNT || item->bound > BOUND_GUILD) || (item->bound == BOUND_GUILD && sd->status.guild_id != target_sd->status.guild_id)) && !pc_can_give_bounded_items(sd) ) { // Item Bound
-		clif_displaymessage(sd->fd, msg_txt(sd,293));
+		clif_displaymessage(*sd, msg_txt(sd,293));
 		clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_CLOSED);
 		return;
 	}

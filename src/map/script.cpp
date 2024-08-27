@@ -15653,11 +15653,11 @@ int recovery_sub(map_session_data* sd, int revive)
 {
 	if(revive&(1|4) && pc_isdead(sd)) {
 		status_revive(&sd->bl, 100, 100);
-		clif_displaymessage(sd->fd,msg_txt(sd,16)); // You've been revived!
+		clif_displaymessage(*sd,msg_txt(sd,16)); // You've been revived!
 		clif_specialeffect(&sd->bl, EF_RESURRECTION, AREA);
 	} else if(revive&(1|2) && !pc_isdead(sd)) {
 		status_percent_heal(&sd->bl, 100, 100);
-		clif_displaymessage(sd->fd,msg_txt(sd,680)); // You have been recovered!
+		clif_displaymessage(*sd,msg_txt(sd,680)); // You have been recovered!
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -16007,7 +16007,7 @@ BUILDIN_FUNC(message)
 
 	if((pl_sd=map_nick2sd((char *) player,false)) == nullptr)
 		return SCRIPT_CMD_SUCCESS;
-	clif_displaymessage(pl_sd->fd, msg);
+	clif_displaymessage(*pl_sd, msg);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -22426,7 +22426,7 @@ BUILDIN_FUNC(buyingstore)
 	if( npc_isnear(&sd->bl) ) {
 		char output[150];
 		sprintf(output, msg_txt(sd,662), battle_config.min_npc_vendchat_distance);
-		clif_displaymessage(sd->fd, output);
+		clif_displaymessage(*sd, output);
 		return SCRIPT_CMD_SUCCESS;
 	}
 
@@ -23550,12 +23550,12 @@ BUILDIN_FUNC(montransform) {
 
 	if (tick != 0) {
 		if (battle_config.mon_trans_disable_in_gvg && map_flag_gvg2(sd->bl.m)) {
-			clif_displaymessage(sd->fd, msg_txt(sd,731)); // Transforming into monster is not allowed in Guild Wars.
+			clif_displaymessage(*sd, msg_txt(sd,731)); // Transforming into monster is not allowed in Guild Wars.
 			return SCRIPT_CMD_FAILURE;
 		}
 
 		if (sd->disguise){
-			clif_displaymessage(sd->fd, msg_txt(sd,729)); // Cannot transform into monster while in disguise.
+			clif_displaymessage(*sd, msg_txt(sd,729)); // Cannot transform into monster while in disguise.
 			return SCRIPT_CMD_FAILURE;
 		}
 

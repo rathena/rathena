@@ -87,12 +87,12 @@ int chat_createpcchat(map_session_data* sd, const char* title, const char* pass,
 		return 0;
 
 	if( map_getmapflag(sd->bl.m, MF_NOCHAT) ) {
-		clif_displaymessage(sd->fd, msg_txt(sd,281));
+		clif_displaymessage(*sd, msg_txt(sd,281));
 		return 0; //Can't create chatrooms on this map.
 	}
 
 	if( map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKNOCHAT) ) {
-		clif_displaymessage (sd->fd, msg_txt(sd,665));
+		clif_displaymessage (*sd, msg_txt(sd,665));
 		return 0;
 	}
 

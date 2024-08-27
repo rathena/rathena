@@ -40,7 +40,6 @@
 	packet(0x008b,2);
 	parseable_packet(0x008c,-1,clif_parse_GlobalMessage,2,4);
 	packet(0x008d,-1);
-	packet(0x008e,-1);
 	//packet(0x008f,-1);
 	parseable_packet(0x0090,7,clif_parse_NpcClicked,2,6);
 	packet(0x0093,2);

@@ -1285,7 +1285,7 @@ void do_reload_instance(void)
 					continue;
 			}
 			if (db && instance_enter(sd, instance_id, db->name.c_str(), -1, -1) == IE_OK) { // All good
-				clif_displaymessage(sd->fd, msg_txt(sd, 515)); // Instance has been reloaded
+				clif_displaymessage(*sd, msg_txt(sd, 515)); // Instance has been reloaded
 				instance_reqinfo(sd, instance_id);
 			} else // Something went wrong
 				ShowError("do_reload_instance: Error setting character at instance start: character_id=%d instance=%s.\n", sd->status.char_id, db->name.c_str());

@@ -877,7 +877,7 @@ int chrif_changesex(map_session_data *sd, bool change_account) {
 		WFIFOB(char_fd,32) = sd->status.sex == SEX_MALE ? SEX_FEMALE : SEX_MALE;
 	WFIFOSET(char_fd,44);
 
-	clif_displaymessage(sd->fd, msg_txt(sd,408)); //"Need disconnection to perform change-sex request..."
+	clif_displaymessage(*sd, msg_txt(sd,408)); //"Need disconnection to perform change-sex request..."
 
 	if (sd->fd)
 		clif_authfail_fd(sd->fd, 15);
@@ -940,7 +940,7 @@ static void chrif_ack_login_req(int aid, const char* player_name, uint16 type, u
 		case 4: sprintf(output, msg_txt(sd,424), action, NAME_LENGTH, player_name); break;
 		default: output[0] = '\0'; break;
 	}
-	clif_displaymessage(sd->fd, output);
+	clif_displaymessage(*sd, output);
 }
 
 /*==========================================
@@ -1005,7 +1005,7 @@ int chrif_changedsex(int fd) {
 		// save character
 		sd->login_id1++; // change identify, because if player come back in char within the 5 seconds, he can change its characters
 							  // do same modify in login-server for the account, but no in char-server (it ask again login_id1 to login, and don't remember it)
-		clif_displaymessage(sd->fd, msg_txt(sd,409)); //"Your sex has been changed (need disconnection by the server)..."
+		clif_displaymessage(*sd, msg_txt(sd,409)); //"Your sex has been changed (need disconnection by the server)..."
 		set_eof(sd->fd); // forced to disconnect for the change
 		map_quit(sd); // Remove leftovers (e.g. autotrading) [Paradox924X]
 	}
@@ -1104,11 +1104,11 @@ int chrif_ban(int fd) {
 	if (res == 0) { 
 		int ret_status = RFIFOL(fd,7); // status or final date of a banishment
 		if(0<ret_status && ret_status<=9)
-			clif_displaymessage(sd->fd, msg_txt(sd,411+ret_status));
+			clif_displaymessage(*sd, msg_txt(sd,411+ret_status));
 		else if(ret_status==100)
-			clif_displaymessage(sd->fd, msg_txt(sd,421));
+			clif_displaymessage(*sd, msg_txt(sd,421));
 		 else
-			clif_displaymessage(sd->fd, msg_txt(sd,420)); //"Your account has not more authorised."
+			clif_displaymessage(*sd, msg_txt(sd,420)); //"Your account has not more authorised."
 	} else if (res == 1 || res == 2) {
 		time_t timestamp;
 		char tmpstr[256];
@@ -1116,7 +1116,7 @@ int chrif_ban(int fd) {
 		timestamp = (time_t)RFIFOL(fd,7); // status or final date of a banishment
 		strftime(strtime, 24, "%d-%m-%Y %H:%M:%S", localtime(&timestamp));
 		safesnprintf(tmpstr,sizeof(tmpstr),msg_txt(sd,423),res==2?"char":"account",strtime); //"Your %s has been banished until %s "
-		clif_displaymessage(sd->fd, tmpstr);
+		clif_displaymessage(*sd, tmpstr);
 	}
 
 	set_eof(sd->fd); // forced to disconnect for the change
@@ -1556,7 +1556,7 @@ void chrif_parse_ack_vipActive(int fd) {
 	pc_group_pc_load(sd);
 
 	if ((flag&0x2)) //isgm
-		clif_displaymessage(sd->fd,msg_txt(sd,437));
+		clif_displaymessage(*sd,msg_txt(sd,437));
 	else {
 		changed = (sd->vip.enabled != (flag&0x1));
 		if((flag&0x1)) { //isvip
@@ -1573,7 +1573,7 @@ void chrif_parse_ack_vipActive(int fd) {
 			sd->vip.time = 0;
 			sd->storage.max_amount = MIN_STORAGE;
 			sd->special_state.no_gemstone = 0;
-			clif_displaymessage(sd->fd,msg_txt(sd,438));
+			clif_displaymessage(*sd,msg_txt(sd,438));
 		}
 	}
 	// Show info if status changed

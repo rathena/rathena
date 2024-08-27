@@ -913,12 +913,12 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 			break;
 		case MC_VENDING:
 			if (map_getmapflag(sd.bl.m, MF_NOVENDING)) {
-				clif_displaymessage(sd.fd, msg_txt(&sd, 276)); // "You can't open a shop on this map"
+				clif_displaymessage(sd, msg_txt(&sd, 276)); // "You can't open a shop on this map"
 				clif_skill_fail( sd, skill_id );
 				return true;
 			}
 			if (map_getcell(sd.bl.m, sd.bl.x, sd.bl.y, CELL_CHKNOVENDING)) {
-				clif_displaymessage(sd.fd, msg_txt(&sd, 204)); // "You can't open a shop on this cell."
+				clif_displaymessage(sd, msg_txt(&sd, 204)); // "You can't open a shop on this cell."
 				clif_skill_fail( sd, skill_id );
 				return true;
 			}
@@ -933,12 +933,12 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 			break;
 		case ALL_BUYING_STORE:
 			if( map_getmapflag(sd.bl.m, MF_NOBUYINGSTORE) ) {
-				clif_displaymessage (sd.fd, msg_txt(&sd,276)); // "You can't open a shop on this map"
+				clif_displaymessage (sd, msg_txt(&sd,276)); // "You can't open a shop on this map"
 				clif_skill_fail( sd, skill_id );
 				return true;
 			}
 			if( map_getcell(sd.bl.m,sd.bl.x,sd.bl.y,CELL_CHKNOBUYINGSTORE) ) {
-				clif_displaymessage (sd.fd, msg_txt(&sd,204)); // "You can't open a shop on this cell."
+				clif_displaymessage (sd, msg_txt(&sd,204)); // "You can't open a shop on this cell."
 				clif_skill_fail( sd, skill_id );
 				return true;
 			}
@@ -946,7 +946,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 				// uncomment to send msg_txt.
 				//char output[150];
 				//sprintf(output, msg_txt(662), battle_config.min_npc_vendchat_distance);
-				//clif_displaymessage(sd.fd, output);
+				//clif_displaymessage(sd, output);
 				clif_skill_fail( sd, skill_id, USESKILL_FAIL_THERE_ARE_NPC_AROUND );
 				return true;
 			}
@@ -9324,7 +9324,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			}
 			if(!battle_config.duel_allow_teleport && sd->duel_group && skill_lv <= 2) { // duel restriction [LuzZza]
 				char output[128]; sprintf(output, msg_txt(sd,365), skill_get_name(AL_TELEPORT));
-				clif_displaymessage(sd->fd, output); //"Duel: Can't use %s in duel."
+				clif_displaymessage(*sd, output); //"Duel: Can't use %s in duel."
 				break;
 			}
 
@@ -17532,7 +17532,7 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 			if(!battle_config.duel_allow_teleport && sd.duel_group) { // duel restriction [LuzZza]
 				char output[128];
 				sprintf(output, msg_txt(&sd,365), skill_get_name(AL_WARP));
-				clif_displaymessage(sd.fd, output); //"Duel: Can't use %s in duel."
+				clif_displaymessage(sd, output); //"Duel: Can't use %s in duel."
 				return false;
 			}
 			break;

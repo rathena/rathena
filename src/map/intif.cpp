@@ -3247,9 +3247,8 @@ void intif_parse_MessageToFD(int fd) {
 		if( sd->bl.id == aid ) {
 			char msg[512];
 			safestrncpy(msg, RFIFOCP(fd,12), RFIFOW(fd,2) - 12);
-			clif_displaymessage(u_fd,msg);
+			clif_displaymessage(*sd,msg);
 		}
-
 	}
 
 	return;

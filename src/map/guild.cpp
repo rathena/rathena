@@ -940,7 +940,7 @@ bool guild_invite( map_session_data& sd, map_session_data* tsd ){
 
 	// Guild locked.
 	if( map_getmapflag( sd.bl.m, MF_GUILDLOCK ) ){
-		clif_displaymessage( sd.fd, msg_txt( &sd, 228 ) ); // Guild modification is disabled on this map.
+		clif_displaymessage(sd, msg_txt( &sd, 228 ) ); // Guild modification is disabled on this map.
 		return false;
 	}
 
@@ -1163,12 +1163,12 @@ bool guild_leave( map_session_data& sd, int guild_id, uint32 account_id, uint32 
 	}
 
 	if( map_getmapflag( sd.bl.m, MF_GUILDLOCK ) ){
-		clif_displaymessage( sd.fd, msg_txt( &sd, 228 ) ); // Guild modification is disabled on this map.
+		clif_displaymessage(sd, msg_txt( &sd, 228 ) ); // Guild modification is disabled on this map.
 		return false;
 	}
 
 	if( sd.bg_id ){
-		clif_displaymessage( sd.fd, msg_txt( &sd, 670 ) ); // You can't leave battleground guilds.
+		clif_displaymessage(sd, msg_txt( &sd, 670 ) ); // You can't leave battleground guilds.
 		return false;
 	}
 
@@ -1205,7 +1205,7 @@ bool guild_expulsion( map_session_data& sd, int guild_id, uint32 account_id, uin
 
 	// TODO: for leave this is different messages
 	if( sd.bg_id || map_getmapflag( sd.bl.m, MF_GUILDLOCK ) ){
-		clif_displaymessage( sd.fd, msg_txt( &sd, 228 ) ); // Guild modification is disabled on this map.
+		clif_displaymessage(sd, msg_txt( &sd, 228 ) ); // Guild modification is disabled on this map.
 		return false;
 	}
 
@@ -1850,7 +1850,7 @@ int guild_reqalliance(map_session_data *sd,map_session_data *tsd) {
 	int i;
 
 	if(is_agit_start()) {	// Disable alliance creation during woe [Valaris]
-		clif_displaymessage(sd->fd,msg_txt(sd,676)); //"Alliances cannot be made during Guild Wars!"
+		clif_displaymessage(*sd,msg_txt(sd,676)); //"Alliances cannot be made during Guild Wars!"
 		return 0;
 	}	// end addition [Valaris]
 
@@ -1971,7 +1971,7 @@ int guild_delalliance(map_session_data *sd,int guild_id,int flag) {
 	nullpo_ret(sd);
 
 	if(is_agit_start()) {	// Disable alliance breaking during woe [Valaris]
-		clif_displaymessage(sd->fd,msg_txt(sd,677)); //"Alliances cannot be broken during Guild Wars!"
+		clif_displaymessage(*sd,msg_txt(sd,677)); //"Alliances cannot be broken during Guild Wars!"
 		return 0;
 	}	// end addition [Valaris]
 
@@ -2247,13 +2247,13 @@ int guild_gm_changed(int guild_id, uint32 account_id, uint32 char_id, time_t tim
 	strcpy(g->guild.master, g->guild.member[0].name);
 
 	if (g->guild.member[pos].sd && g->guild.member[pos].sd->fd) {
-		clif_displaymessage(g->guild.member[pos].sd->fd, msg_txt(g->guild.member[pos].sd,678)); //"You no longer are the Guild Master."
+		clif_displaymessage(*g->guild.member[pos].sd, msg_txt(g->guild.member[pos].sd,678)); //"You no longer are the Guild Master."
 		g->guild.member[pos].sd->state.gmaster_flag = 0;
 		clif_name_area(&g->guild.member[pos].sd->bl);
 	}
 
 	if (g->guild.member[0].sd && g->guild.member[0].sd->fd) {
-		clif_displaymessage(g->guild.member[0].sd->fd, msg_txt(g->guild.member[pos].sd,679)); //"You have become the Guild Master!"
+		clif_displaymessage(*g->guild.member[0].sd, msg_txt(g->guild.member[pos].sd,679)); //"You have become the Guild Master!"
 		g->guild.member[0].sd->state.gmaster_flag = 1;
 		clif_name_area(&g->guild.member[0].sd->bl);
 		//Block his skills to prevent abuse.
@@ -2316,7 +2316,7 @@ int guild_break( map_session_data& sd, const char* name ){
 
 	// Guild locked.
 	if( map_getmapflag( sd.bl.m, MF_GUILDLOCK ) ){
-		clif_displaymessage( sd.fd, msg_txt( &sd, 228 ) );
+		clif_displaymessage(sd, msg_txt( &sd, 228 ) );
 		return 0;
 	}
 

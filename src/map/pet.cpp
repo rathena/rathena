@@ -1220,7 +1220,7 @@ int pet_catch_process1(map_session_data *sd,int target_class)
 	nullpo_ret(sd);
 
 	if (map_getmapflag(sd->bl.m, MF_NOPETCAPTURE)) {
-		clif_displaymessage(sd->fd, msg_txt(sd, 669)); // You can't catch any pet on this map.
+		clif_displaymessage(*sd, msg_txt(sd, 669)); // You can't catch any pet on this map.
 		return 0;
 	}
 
@@ -1258,7 +1258,7 @@ int pet_catch_process2(map_session_data* sd, int target_id)
 		sd->catch_target_class = PET_CATCH_FAIL;
 		sd->itemid = 0;
 		sd->itemindex = -1;
-		clif_displaymessage(sd->fd, msg_txt(sd, 669)); // You can't catch any pet on this map.
+		clif_displaymessage(*sd, msg_txt(sd, 669)); // You can't catch any pet on this map.
 		return 1;
 	}
 
@@ -1476,7 +1476,7 @@ int pet_change_name_ack(map_session_data *sd, char* name, int flag)
 	normalize_name(name," ");//bugreport:3032
 
 	if ( !flag || !strlen(name) ) {
-		clif_displaymessage(sd->fd, msg_txt(sd,280)); // You cannot use this name for your pet.
+		clif_displaymessage(*sd, msg_txt(sd,280)); // You cannot use this name for your pet.
 		clif_send_petstatus(sd); //Send status so client knows pet name change got rejected.
 		return 0;
 	}

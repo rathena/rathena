@@ -138,7 +138,7 @@ int storage_storageopen(map_session_data *sd)
 		return 1; //Already open?
 
 	if( !pc_can_give_items(sd) ) { // check is this GM level is allowed to put items to storage
-		clif_displaymessage(sd->fd, msg_txt(sd,246));
+		clif_displaymessage(*sd, msg_txt(sd,246));
 		return 1;
 	}
 
@@ -252,12 +252,12 @@ static int storage_additem(map_session_data* sd, struct s_storage *stor, struct 
 		return 2;
 
 	if( !itemdb_canstore(it, pc_get_group_level(sd)) ) { // Check if item is storable. [Skotlex]
-		clif_displaymessage (sd->fd, msg_txt(sd,264));
+		clif_displaymessage(*sd, msg_txt(sd,264));
 		return 1;
 	}
 
 	if( (it->bound > BOUND_ACCOUNT) && !pc_can_give_bounded_items(sd) ) {
-		clif_displaymessage(sd->fd, msg_txt(sd,294));
+		clif_displaymessage(*sd, msg_txt(sd,294));
 		return 1;
 	}
 
@@ -580,7 +580,7 @@ char storage_guild_storageopen(map_session_data* sd)
 #endif
 
 	if( !pc_can_give_items(sd) ) { //check is this GM level can open guild storage and store items [Lupus]
-		clif_displaymessage(sd->fd, msg_txt(sd,246));
+		clif_displaymessage(*sd, msg_txt(sd,246));
 		return GSTORAGE_ALREADY_OPEN;
 	}
 
@@ -745,12 +745,12 @@ bool storage_guild_additem(map_session_data* sd, struct s_storage* stor, struct 
 		return false;
 
 	if (!itemdb_canguildstore(item_data, pc_get_group_level(sd)) || item_data->expire_time) { // Check if item is storable. [Skotlex]
-		clif_displaymessage (sd->fd, msg_txt(sd,264));
+		clif_displaymessage (*sd, msg_txt(sd,264));
 		return false;
 	}
 
 	if ((item_data->bound == BOUND_ACCOUNT || item_data->bound > BOUND_GUILD) && !pc_can_give_bounded_items(sd)) {
-		clif_displaymessage(sd->fd, msg_txt(sd,294));
+		clif_displaymessage(*sd, msg_txt(sd,294));
 		return false;
 	}
 
@@ -1148,7 +1148,7 @@ bool storage_premiumStorage_load(map_session_data *sd, uint8 num, uint8 mode) {
 		return 0;
 
 	if (!pc_can_give_items(sd)) { // check is this GM level is allowed to put items to storage
-		clif_displaymessage(sd->fd, msg_txt(sd,246));
+		clif_displaymessage(*sd, msg_txt(sd,246));
 		return 0;
 	}
 

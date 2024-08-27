@@ -88,7 +88,7 @@ void vending_vendinglistreq(map_session_data* sd, int id)
 		return; // not vending
 
 	if (!pc_can_give_items(sd) || !pc_can_give_items(vsd)) { //check if both GMs are allowed to trade
-		clif_displaymessage(sd->fd, msg_txt(sd,246));
+		clif_displaymessage(*sd, msg_txt(sd,246));
 		return;
 	}
 
@@ -368,7 +368,7 @@ int8 vending_openvending( map_session_data& sd, const char* message, const uint8
 	}
 
 	if (i != j) {
-		clif_displaymessage(sd.fd, msg_txt(&sd, 266)); //"Some of your items cannot be vended and were removed from the shop."
+		clif_displaymessage(sd, msg_txt(&sd, 266)); //"Some of your items cannot be vended and were removed from the shop."
 		clif_skill_fail( sd, MC_VENDING ); // custom reply packet
 		sd.state.prevend = 0;
 		sd.state.workinprogress = WIP_DISABLE_NONE;

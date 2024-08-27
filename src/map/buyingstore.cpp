@@ -80,13 +80,13 @@ int8 buyingstore_setup(map_session_data* sd, unsigned char slots){
 
 	if( map_getmapflag(sd->bl.m, MF_NOBUYINGSTORE) )
 	{// custom: no buyingstore maps
-		clif_displaymessage(sd->fd, msg_txt(sd,276)); // "You can't open a shop on this map"
+		clif_displaymessage(*sd, msg_txt(sd,276)); // "You can't open a shop on this map"
 		return 3;
 	}
 
 	if( map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOBUYINGSTORE) )
 	{// custom: no buyingstore cells
-		clif_displaymessage(sd->fd, msg_txt(sd,204)); // "You can't open a shop on this cell."
+		clif_displaymessage(*sd, msg_txt(sd,204)); // "You can't open a shop on this cell."
 		return 4;
 	}
 
@@ -135,7 +135,7 @@ int8 buyingstore_create( map_session_data* sd, int zenylimit, unsigned char resu
 	if( !pc_can_give_items(sd) )
 	{// custom: GM is not allowed to buy (give zeny)
 		sd->buyingstore.slots = 0;
-		clif_displaymessage(sd->fd, msg_txt(sd,246));
+		clif_displaymessage(*sd, msg_txt(sd,246));
 		clif_buyingstore_open_failed(sd, BUYINGSTORE_CREATE, 0);
 		return 6;
 	}
@@ -147,13 +147,13 @@ int8 buyingstore_create( map_session_data* sd, int zenylimit, unsigned char resu
 
 	if( map_getmapflag(sd->bl.m, MF_NOBUYINGSTORE) )
 	{// custom: no buyingstore maps
-		clif_displaymessage(sd->fd, msg_txt(sd,276)); // "You can't open a shop on this map"
+		clif_displaymessage(*sd, msg_txt(sd,276)); // "You can't open a shop on this map"
 		return 3;
 	}
 
 	if( map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOBUYINGSTORE) )
 	{// custom: no buyingstore cells
-		clif_displaymessage(sd->fd, msg_txt(sd,204)); // "You can't open a shop on this cell."
+		clif_displaymessage(*sd, msg_txt(sd,204)); // "You can't open a shop on this cell."
 		return 4;
 	}
 
@@ -298,7 +298,7 @@ void buyingstore_open(map_session_data* sd, uint32 account_id)
 
 	if( !pc_can_give_items(sd) )
 	{// custom: GM is not allowed to sell
-		clif_displaymessage(sd->fd, msg_txt(sd,246));
+		clif_displaymessage(*sd, msg_txt(sd,246));
 		return;
 	}
 
@@ -343,7 +343,7 @@ void buyingstore_trade( map_session_data* sd, uint32 account_id, unsigned int bu
 
 	if( !pc_can_give_items(sd) )
 	{// custom: GM is not allowed to sell
-		clif_displaymessage(sd->fd, msg_txt(sd,246));
+		clif_displaymessage(*sd, msg_txt(sd,246));
 		clif_buyingstore_trade_failed_seller(sd, BUYINGSTORE_TRADE_SELLER_FAILED, 0);
 		return;
 	}

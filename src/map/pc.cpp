@@ -2195,7 +2195,7 @@ bool pc_authok(map_session_data *sd, uint32 login_id2, time_t expiration_time, i
 			if (battle_config.motd_type)
 				clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], motd_text[i], false, SELF);
 			else
-				clif_displaymessage(sd->fd, motd_text[i]);
+				clif_displaymessage(*sd, motd_text[i]);
 		}
 
 		if (expiration_time != 0)
@@ -2437,7 +2437,7 @@ void pc_reg_received(map_session_data *sd)
 
 		if( pc_isinvisible( sd ) ){
 			sd->vd.class_ = JT_INVISIBLE;
-			clif_displaymessage( sd->fd, msg_txt( sd, 11 ) ); // Invisible: On
+			clif_displaymessage(*sd, msg_txt( sd, 11 ) ); // Invisible: On
 			// decrement the number of pvp players on the map
 			map_getmapdata( sd->bl.m )->users_pvp--;
 
@@ -6042,13 +6042,13 @@ bool pc_dropitem(map_session_data *sd,int n,int amount)
 
 	if( map_getmapflag(sd->bl.m, MF_NODROP) )
 	{
-		clif_displaymessage (sd->fd, msg_txt(sd,271));
+		clif_displaymessage(*sd, msg_txt(sd,271));
 		return false; //Can't drop items in nodrop mapflag maps.
 	}
 
 	if( !pc_candrop(sd,&sd->inventory.u.items_inventory[n]) )
 	{
-		clif_displaymessage (sd->fd, msg_txt(sd,263));
+		clif_displaymessage(*sd, msg_txt(sd,263));
 		return false;
 	}
 
@@ -6194,7 +6194,7 @@ bool pc_isUseitem(map_session_data *sd,int n)
 		}
 
 		if( sd->duel_group && !battle_config.duel_allow_teleport ){
-			clif_displaymessage( sd->fd, msg_txt( sd, 663 ) ); // Duel: Can't use this item in duel.
+			clif_displaymessage(*sd, msg_txt( sd, 663 ) ); // Duel: Can't use this item in duel.
 			return false;
 		}
 	}
@@ -6205,7 +6205,7 @@ bool pc_isUseitem(map_session_data *sd,int n)
 		}
 
 		if( sd->duel_group && !battle_config.duel_allow_teleport ){
-			clif_displaymessage( sd->fd, msg_txt( sd, 663 ) ); // Duel: Can't use this item in duel.
+			clif_displaymessage(*sd, msg_txt( sd, 663 ) ); // Duel: Can't use this item in duel.
 			return false;
 		}
 	}
@@ -6396,7 +6396,7 @@ int pc_useitem(map_session_data *sd,int n)
 	}
 
 	if (pet_db_search(id->nameid, PET_CATCH) != nullptr && map_getmapflag(sd->bl.m, MF_NOPETCAPTURE)) {
-		clif_displaymessage(sd->fd, msg_txt(sd, 669)); // You can't catch any pet on this map.
+		clif_displaymessage(*sd, msg_txt(sd, 669)); // You can't catch any pet on this map.
 		return 0;
 	}
 
@@ -6464,7 +6464,7 @@ enum e_additem_result pc_cart_additem(map_session_data *sd,struct item *item,int
 
 	if( !itemdb_cancartstore(item, pc_get_group_level(sd)) || (item->bound > BOUND_ACCOUNT && !pc_can_give_bounded_items(sd)))
 	{ // Check item trade restrictions	[Skotlex]
-		clif_displaymessage (sd->fd, msg_txt(sd,264));
+		clif_displaymessage(*sd, msg_txt(sd,264));
 		return ADDITEM_INVALID;
 	}
 
@@ -6657,7 +6657,7 @@ int pc_show_steal(struct block_list *bl,va_list ap)
 		sprintf(output,"%s stole an Unknown Item (id: %u).",sd->status.name, itemid);
 	else
 		sprintf(output,"%s stole %s.",sd->status.name,id->ename.c_str());
-	clif_displaymessage( ((map_session_data *)bl)->fd, output);
+	clif_displaymessage((map_session_data&)bl, output);
 
 	return 0;
 }
@@ -6886,12 +6886,12 @@ enum e_setpos pc_setpos(map_session_data* sd, unsigned short mapindex, int x, in
 		if (mapdata) {
 			// make sure vending is allowed here
 			if (sd->state.vending && mapdata->getMapFlag(MF_NOVENDING)) {
-				clif_displaymessage(sd->fd, msg_txt(sd, 276)); // "You can't open a shop on this map"
+				clif_displaymessage(*sd, msg_txt(sd, 276)); // "You can't open a shop on this map"
 				vending_closevending(sd);
 			}
 			// make sure buyingstore is allowed here
 			if (sd->state.buyingstore && mapdata->getMapFlag(MF_NOBUYINGSTORE)) {
-				clif_displaymessage(sd->fd, msg_txt(sd, 276)); // "You can't open a shop on this map"
+				clif_displaymessage(*sd, msg_txt(sd, 276)); // "You can't open a shop on this map"
 				buyingstore_close(sd);
 			}
 		}
@@ -6971,11 +6971,11 @@ enum e_setpos pc_setpos(map_session_data* sd, unsigned short mapindex, int x, in
 	}
 
 	if (sd->state.vending && map_getcell(m,x,y,CELL_CHKNOVENDING)) {
-		clif_displaymessage (sd->fd, msg_txt(sd,204)); // "You can't open a shop on this cell."
+		clif_displaymessage(*sd, msg_txt(sd,204)); // "You can't open a shop on this cell."
 		vending_closevending(sd);
 	}
 	if (sd->state.buyingstore && map_getcell(m, x, y, CELL_CHKNOBUYINGSTORE)) {
-		clif_displaymessage(sd->fd, msg_txt(sd, 204)); // "You can't open a shop on this cell."
+		clif_displaymessage(*sd, msg_txt(sd, 204)); // "You can't open a shop on this cell."
 		buyingstore_close(sd);
 	}
 
@@ -7138,7 +7138,7 @@ bool pc_memo(map_session_data* sd, int pos)
 	}
 
 	if( map_getmapdata(sd->bl.m)->instance_id ) {
-		clif_displaymessage( sd->fd, msg_txt(sd,384) ); // You cannot create a memo in an instance.
+		clif_displaymessage(*sd, msg_txt(sd,384) ); // You cannot create a memo in an instance.
 		return false;
 	}
 
@@ -12547,7 +12547,7 @@ void pc_check_available_item(map_session_data *sd, uint8 type)
 				continue;
 			if (!itemdb_available(nameid)) {
 				sprintf(output, msg_txt(sd, 709), nameid); // Item %u has been removed from your inventory.
-				clif_displaymessage(sd->fd, output);
+				clif_displaymessage(*sd, output);
 				ShowWarning("Removed invalid/disabled item (ID: %u, amount: %d) from inventory (char_id: %d).\n", nameid, sd->inventory.u.items_inventory[i].amount, sd->status.char_id);
 				pc_delitem(sd, i, sd->inventory.u.items_inventory[i].amount, 4, 0, LOG_TYPE_OTHER);
 				continue;
@@ -12565,7 +12565,7 @@ void pc_check_available_item(map_session_data *sd, uint8 type)
 				continue;
 			if (!itemdb_available(nameid)) {
 				sprintf(output, msg_txt(sd, 710), nameid); // Item %u has been removed from your cart.
-				clif_displaymessage(sd->fd, output);
+				clif_displaymessage(*sd, output);
 				ShowWarning("Removed invalid/disabled item (ID: %u, amount: %d) from cart (char_id: %d).\n", nameid, sd->cart.u.items_cart[i].amount, sd->status.char_id);
 				pc_cart_delitem(sd, i, sd->cart.u.items_cart[i].amount, 0, LOG_TYPE_OTHER);
 				continue;
@@ -12583,7 +12583,7 @@ void pc_check_available_item(map_session_data *sd, uint8 type)
 				continue;
 			if (!itemdb_available(nameid)) {
 				sprintf(output, msg_txt(sd, 711), nameid); // Item %u has been removed from your storage.
-				clif_displaymessage(sd->fd, output);
+				clif_displaymessage(*sd, output);
 				ShowWarning("Removed invalid/disabled item (ID: %u, amount: %d) from storage (char_id: %d).\n", nameid, sd->storage.u.items_storage[i].amount, sd->status.char_id);
 				storage_delitem(sd, &sd->storage, i, sd->storage.u.items_storage[i].amount);
 				continue;
@@ -14783,7 +14783,7 @@ void pc_show_version(map_session_data *sd) {
 		else
 			sprintf(buf,"%s",msg_txt(sd,1296)); //Cannot determine SVN/Git version.
 	}
-	clif_displaymessage(sd->fd,buf);
+	clif_displaymessage(*sd,buf);
 }
 
 /**

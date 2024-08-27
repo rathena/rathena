@@ -443,7 +443,7 @@ bool mail_invalid_operation(map_session_data *sd)
 	}
 #else
 	if( map_getmapflag( sd->bl.m, MF_NORODEX ) ){
-		clif_displaymessage( sd->fd, msg_txt( sd, 796 ) ); // You cannot use RODEX on this map.
+		clif_displaymessage( *sd, msg_txt( sd, 796 ) ); // You cannot use RODEX on this map.
 		return true;
 	}
 #endif
@@ -468,7 +468,7 @@ void mail_send(map_session_data *sd, const char *dest_name, const char *title, c
 		return;
 
 	if( DIFF_TICK(sd->cansendmail_tick, gettick()) > 0 ) {
-		clif_displaymessage(sd->fd,msg_txt(sd,675)); //"Cannot send mails too fast!!."
+		clif_displaymessage(*sd,msg_txt(sd,675)); //"Cannot send mails too fast!!."
 		clif_Mail_send(sd, WRITE_MAIL_FAILED); // fail
 		return;
 	}
