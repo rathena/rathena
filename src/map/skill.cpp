@@ -3821,7 +3821,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 		case NPC_CRITICALSLASH:
 		case TF_DOUBLE:
 		case GS_CHAINACTION:
-			dmg.dmotion = clif_damage(src,bl,tick,dmg.amotion,dmg.dmotion,damage,dmg.div_,dmg.type,dmg.damage2,false);
+			dmg.dmotion = clif_damage(*src,*bl,tick,dmg.amotion,dmg.dmotion,damage,dmg.div_,dmg.type,dmg.damage2,false);
 			break;
 
 		case AS_SPLASHER:
@@ -4050,7 +4050,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 					devotion_damage -= devotion_damage * d_sc->getSCE(SC_REBOUND_S)->val2 / 100;
 
 				if (!rmdamage) {
-					clif_damage(d_bl, d_bl, gettick(), 0, 0, devotion_damage, 0, DMG_NORMAL, 0, false);
+					clif_damage(*d_bl, *d_bl, gettick(), 0, 0, devotion_damage, 0, DMG_NORMAL, 0, false);
 					battle_fix_damage(src, d_bl, devotion_damage, 0, 0);
 				} else {
 					bool isDevotRdamage = false;
@@ -4060,7 +4060,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 					// If !isDevotRdamage, reflected magics are done directly on the target not on paladin
 					// This check is only for magical skill.
 					// For BF_WEAPON skills types track var rdamage and function battle_calc_return_damage
-					clif_damage(bl, (!isDevotRdamage) ? bl : d_bl, gettick(), 0, 0, devotion_damage, 0, DMG_NORMAL, 0, false);
+					clif_damage(*bl, (!isDevotRdamage) ? *bl : *d_bl, gettick(), 0, 0, devotion_damage, 0, DMG_NORMAL, 0, false);
 					battle_fix_damage(bl, (!isDevotRdamage) ? bl : d_bl, devotion_damage, 0, 0);
 				}
 			} else {
@@ -4714,7 +4714,7 @@ static TIMER_FUNC(skill_timerskill){
 						if( (tsd = ((TBL_PC*)target)) && !pc_issit(tsd) ) {
 							pc_setsit(tsd);
 							skill_sit(tsd, true);
-							clif_sitting(&tsd->bl);
+							clif_sitting(tsd->bl);
 						}
 					}
 					break;
@@ -5008,7 +5008,7 @@ static int skill_tarotcard(struct block_list* src, struct block_list *target, ui
 	case 4: // THE CHARIOT - 1000 damage, random armor destroyed
 	{
 		battle_fix_damage(src, target, 1000, 0, skill_id);
-		clif_damage(src, target, tick, 0, 0, 1000, 0, DMG_NORMAL, 0, false);
+		clif_damage(*src, *target, tick, 0, 0, 1000, 0, DMG_NORMAL, 0, false);
 		if (!status_isdead(*target))
 		{
 			unsigned short where[] = { EQP_ARMOR, EQP_SHIELD, EQP_HELM };
@@ -5062,7 +5062,7 @@ static int skill_tarotcard(struct block_list* src, struct block_list *target, ui
 	case 11: // THE DEVIL - 6666 damage, atk and matk halved, cursed
 	{
 		battle_fix_damage(src, target, 6666, 0, skill_id);
-		clif_damage(src, target, tick, 0, 0, 6666, 0, DMG_NORMAL, 0, false);
+		clif_damage(*src, *target, tick, 0, 0, 6666, 0, DMG_NORMAL, 0, false);
 		sc_start(src, target, SC_INCATKRATE, 100, -50, skill_get_time2(skill_id, skill_lv));
 		sc_start(src, target, SC_INCMATKRATE, 100, -50, skill_get_time2(skill_id, skill_lv));
 		sc_start(src, target, SC_CURSE, skill_lv, 100, skill_get_time2(status_db.getSkill(SC_CURSE), 1));
@@ -5071,7 +5071,7 @@ static int skill_tarotcard(struct block_list* src, struct block_list *target, ui
 	case 12: // THE TOWER - 4444 damage
 	{
 		battle_fix_damage(src, target, 4444, 0, skill_id);
-		clif_damage(src, target, tick, 0, 0, 4444, 0, DMG_NORMAL, 0, false);
+		clif_damage(*src, *target, tick, 0, 0, 4444, 0, DMG_NORMAL, 0, false);
 		break;
 	}
 	case 13: // THE STAR - stun
@@ -6130,7 +6130,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 	case CH_PALMSTRIKE: //	Palm Strike takes effect 1sec after casting. [Skotlex]
 	//	clif_skill_nodamage(src,bl,skill_id,skill_lv,0); //Can't make this one display the correct attack animation delay :/
-		clif_damage(src,bl,tick,status_get_amotion(src),0,-1,1,DMG_ENDURE,0,false); //Display an absorbed damage attack.
+		clif_damage(*src,*bl,tick,status_get_amotion(src),0,-1,1,DMG_ENDURE,0,false); //Display an absorbed damage attack.
 		skill_addtimerskill(src, tick + (1000+status_get_amotion(src)), bl->id, 0, 0, skill_id, skill_lv, BF_WEAPON, flag);
 		break;
 
@@ -9379,7 +9379,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			// Commented because of duplicate animation [Lemongrass]
 			// At the moment this displays the pickup animation a second time
 			// If this is required in older clients, we need to add a version check here
-			//clif_takeitem(&sd->bl,&tbl);
+			//clif_takeitem(sd->bl,tbl);
 			eflag = pc_additem(sd,&item_tmp,1,LOG_TYPE_PRODUCE);
 			if(eflag) {
 				clif_additem(sd,0,0,eflag);
@@ -9773,7 +9773,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 				// If damage would be lethal, it does not deal damage
 				if (hp && hp < tstatus->hp) {
-					clif_damage(src, bl, tick, 0, 0, hp, 0, DMG_NORMAL, 0, false);
+					clif_damage(*src, *bl, tick, 0, 0, hp, 0, DMG_NORMAL, 0, false);
 					status_zap(bl, hp, 0);
 					// Recover 50% of damage dealt
 					status_heal(src, hp / 2, 0, 2);
@@ -12267,7 +12267,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				if (!unit_blown_immune(bl, 0x1)) {
 					unit_movepos(bl,x,y,0,0);
 					if (bl->type == BL_PC && pc_issit((TBL_PC*)bl))
-						clif_sitting(bl); //Avoid sitting sync problem
+						clif_sitting(*bl); //Avoid sitting sync problem
 					clif_blown(bl);
 					map_foreachinallrange(unit_changetarget, src, AREA_SIZE, BL_CHAR, src, bl);
 				}
@@ -20611,7 +20611,7 @@ bool skill_check_shadowform(struct block_list *bl, int64 damage, int hit)
 			return false;
 		}
 
-		status_damage(bl, src, damage, 0, clif_damage(src, src, gettick(), 500, 500, damage, hit, (hit > 1 ? DMG_MULTI_HIT : DMG_NORMAL), 0, false), 0, SC__SHADOWFORM);
+		status_damage(bl, src, damage, 0, clif_damage(*src, *src, gettick(), 500, 500, damage, hit, (hit > 1 ? DMG_MULTI_HIT : DMG_NORMAL), 0, false), 0, SC__SHADOWFORM);
 		if( sc && sc->getSCE(SC__SHADOWFORM) && (--sc->getSCE(SC__SHADOWFORM)->val3) <= 0 ) {
 			status_change_end(bl, SC__SHADOWFORM);
 			if( src->type == BL_PC )

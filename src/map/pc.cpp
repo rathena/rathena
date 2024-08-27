@@ -6128,7 +6128,7 @@ bool pc_takeitem(map_session_data *sd,struct flooritem_data *fitem)
 
 	//Display pickup animation.
 	pc_stop_attack(sd);
-	clif_takeitem(&sd->bl,&fitem->bl);
+	clif_takeitem(sd->bl,fitem->bl);
 
 	if (fitem->mob_id &&
 		(itemdb_search(fitem->item.nameid))->flag.broadcast &&
@@ -12969,7 +12969,7 @@ bool pc_setstand(map_session_data *sd, bool force){
 
 	status_change_end(&sd->bl, SC_TENSIONRELAX);
 	clif_status_load(&sd->bl,EFST_SIT,0);
-	clif_standing(&sd->bl); //Inform area PC is standing
+	clif_standing(sd->bl); //Inform area PC is standing
 	//Reset sitting tick.
 	sd->ssregen.tick.hp = sd->ssregen.tick.sp = 0;
 	if( pc_isdead( sd ) ){
