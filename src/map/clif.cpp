@@ -5363,7 +5363,7 @@ static void clif_graffiti(block_list &bl, skill_unit &unit, enum send_target tar
 	PACKET_ZC_SKILL_ENTRY2 p = {};
 
 	p.packetType = HEADER_ZC_SKILL_ENTRY2;
-	p.unit_blId = unit.bl.id;
+	p.unitId = unit.bl.id;
 	p.srcId = unit.group->src_id;
 	p.x = unit.bl.x;
 	p.y = unit.bl.y;
@@ -5409,7 +5409,7 @@ void clif_getareachar_skillunit(block_list &bl, skill_unit &unit, enum send_targ
 	PACKET_ZC_SKILL_ENTRY p = {};
 
 	p.packetType = HEADER_ZC_SKILL_ENTRY;
-	p.unit_blId = unit.bl.id;
+	p.unitId = unit.bl.id;
 	p.srcId = unit.group->src_id;
 	p.x = unit.bl.x;
 	p.y = unit.bl.y;
@@ -5435,7 +5435,7 @@ void clif_skill_unit_test(block_list &bl, short x, short y, int unit_id, short r
 	PACKET_ZC_SKILL_ENTRY p = {};
 
 	p.packetType = HEADER_ZC_SKILL_ENTRY;
-	p.unit_blId = 1000;
+	p.unitId = 1000;
 	p.srcId = 2000;
 	p.x = x;
 	p.y = y;

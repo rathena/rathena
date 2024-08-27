@@ -1001,51 +1001,51 @@ DEFINE_PACKET_HEADER(ZC_RECOVERY, 0x13d);
 #if PACKETVER <= 20120702
 struct PACKET_ZC_SKILL_ENTRY {
 	int16 packetType;
-	int32 unit_blId;
+	int32 unitId;
 	int32 srcId;
 	int16 x;
 	int16 y;
 	int8 effectId;
-	int8 isVisible;
+	bool isVisible;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_SKILL_ENTRY, 0x011f)
 #elif PACKETVER < 20121212
 struct PACKET_ZC_SKILL_ENTRY {
 	int16 packetType;
 	int16 packetLen;
-	int32 unit_blId;
+	int32 unitId;
 	int32 srcId;
 	int16 x;
 	int16 y;
 	int8 effectId;
 	int16 range;
-	int8 isVisible;
+	bool isVisible;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_SKILL_ENTRY, 0x08c7)
 #elif PACKETVER < 20130731
 struct PACKET_ZC_SKILL_ENTRY {
 	int16 packetType;
 	int16 packetLen;
-	int32 unit_blId;
+	int32 unitId;
 	int32 srcId;
 	int16 x;
 	int16 y;
 	int32 effectId;
 	int16 range;
-	int8 isVisible;
+	bool isVisible;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_SKILL_ENTRY, 0x099f)
 #else
 struct PACKET_ZC_SKILL_ENTRY {
 	int16 packetType;
 	int16 packetLen;
-	int32 unit_blId;
+	int32 unitId;
 	int32 srcId;
 	int16 x;
 	int16 y;
 	int32 effectId;
 	int8 range;
-	int8 isVisible;
+	bool isVisible;
 	int8 skillLv;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_SKILL_ENTRY, 0x09ca)
@@ -1053,13 +1053,13 @@ DEFINE_PACKET_HEADER(ZC_SKILL_ENTRY, 0x09ca)
 
 struct PACKET_ZC_SKILL_ENTRY2 {  //used on graffity
 	int16 packetType;
-	int32 unit_blId;
+	int32 unitId;
 	int32 srcId;
 	int16 x;
 	int16 y;
 	int8 effectId;
-	int8 isVisible;
-	int8 hasMsg;
+	bool isVisible;
+	bool hasMsg;
 	char mes[MESSAGE_SIZE];
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_SKILL_ENTRY2, 0x1c9);
