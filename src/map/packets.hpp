@@ -1052,12 +1052,12 @@ DEFINE_PACKET_HEADER(ZC_SKILL_ENTRY, 0x09ca)
 #endif
 
 struct PACKET_ZC_SKILL_ENTRY2 {  //used on graffity
-	int16 packetType;
-	int32 unitId;
-	int32 srcId;
-	int16 x;
-	int16 y;
-	int8 viewId;
+	uint16 packetType;
+	uint32 unitId;
+	uint32 srcId;
+	uint16 x;
+	uint16 y;
+	uint8 viewId;
 	bool isVisible;
 	bool hasMsg;
 	char mes[MESSAGE_SIZE];
