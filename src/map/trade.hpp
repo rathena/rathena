@@ -3,6 +3,7 @@
 
 #ifndef TRADE_HPP
 #define TRADE_HPP
+
 #include <common/cbasetypes.hpp>
 
 class map_session_data;
