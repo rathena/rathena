@@ -1768,13 +1768,13 @@ void clif_homunculus_updatestatus(map_session_data& sd, _sp type) {
 		p.value = static_cast<decltype(p.value)>( std::min<decltype(sd.hd->homunculus.exp)>( sd.hd->homunculus.exp, std::numeric_limits<decltype(PACKET_ZC_PROPERTY_HOMUN::exp)>::max() ) );
 		break;
 	case SP_HP:
-		if (status->max_hp > (std::numeric_limits<decltype(PACKET_ZC_PROPERTY_HOMUN::hp)>::max() / 200))
+		if (status->max_hp > (std::numeric_limits<std::make_signed<decltype(PACKET_ZC_PROPERTY_HOMUN::hp)>::type>::max() / 100))
 			p.value = status->hp / (status->max_hp / 100);
 		else
 			p.value = static_cast<decltype(p.value)>(status->hp);
 		break;
 	case SP_SP:
-		if (status->max_sp > (std::numeric_limits<decltype(PACKET_ZC_PROPERTY_HOMUN::sp)>::max() / 200))
+		if (status->max_sp > (std::numeric_limits<std::make_signed<decltype(PACKET_ZC_PROPERTY_HOMUN::sp)>::type>::max() / 100))
 			p.value = status->sp / (status->max_sp / 100);
 		else
 			p.value = static_cast<decltype(p.value)>(status->sp);
