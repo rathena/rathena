@@ -6321,7 +6321,7 @@ ACMD_FUNC(displayskillunit)
 		return -1;
 	}
 
-	clif_skill_unit_test(&sd->bl, sd->bl.x, sd->bl.y, unit_id, range, skill_lv);
+	clif_skill_unit_test(sd->bl, sd->bl.x, sd->bl.y, unit_id, range, skill_lv);
 
 	return 0;
 }
