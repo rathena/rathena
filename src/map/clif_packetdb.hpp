@@ -48,7 +48,6 @@
 	parseable_packet(0x0094,6,clif_parse_GetCharNameRequest,2);
 	parseable_packet(0x0096,-1,clif_parse_WisMessage,2,4,28);
 	parseable_packet(0x0099,-1,clif_parse_Broadcast,2,4);
-	packet(0x009a,-1);
 	parseable_packet(0x009b,5,clif_parse_ChangeDir,2,4);
 	packet(0x009c,9);
 	packet( HEADER_ZC_ITEM_ENTRY, sizeof( struct PACKET_ZC_ITEM_ENTRY ) );
@@ -107,7 +106,6 @@
 	parseable_packet(0x00e4,6,clif_parse_TradeRequest,2);
 	packet(0x00e5,26);
 	parseable_packet(0x00e6,3,clif_parse_TradeAck,2);
-	packet(0x00e7,3);
 	parseable_packet(0x00e8,8,clif_parse_TradeAddItem,2,4);
 	packet(0x00ea,5);
 	parseable_packet(0x00eb,2,clif_parse_TradeOk,0);
@@ -309,8 +307,6 @@
 	packet(0x01f1,-1);
 	packet(0x01f2,20);
 	packet(0x01f3,10);
-	packet(0x01f4,32);
-	packet(0x01f5,9);
 	packet(0x01f6,34);
 	parseable_packet(0x01f7,14,clif_parse_Adopt_reply,2,6,10);
 	packet(0x01f8,2);

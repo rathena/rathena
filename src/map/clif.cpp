@@ -4656,26 +4656,22 @@ void clif_leavechat(struct chat_data* cd, map_session_data* sd, bool flag)
 /// Opens a trade request window from char 'name'.
 /// 00e5 <nick>.24B (ZC_REQ_EXCHANGE_ITEM)
 /// 01f4 <nick>.24B <charid>.L <baselvl>.W (ZC_REQ_EXCHANGE_ITEM2)
-void clif_traderequest(map_session_data* sd, const char* name)
-{
-	int fd = sd->fd;
+void clif_traderequest(map_session_data& sd, const char* name){
 
-#if PACKETVER < 6
-	WFIFOHEAD(fd,packet_len(0xe5));
-	WFIFOW(fd,0) = 0xe5;
-	safestrncpy(WFIFOCP(fd,2), name, NAME_LENGTH);
-	WFIFOSET(fd,packet_len(0xe5));
-#else
-	map_session_data* tsd = map_id2sd(sd->trade_partner);
-	if( !tsd ) return;
+	PACKET_ZC_REQ_EXCHANGE_ITEM p{};
 
-	WFIFOHEAD(fd,packet_len(0x1f4));
-	WFIFOW(fd,0) = 0x1f4;
-	safestrncpy(WFIFOCP(fd,2), name, NAME_LENGTH);
-	WFIFOL(fd,26) = tsd->status.char_id;
-	WFIFOW(fd,30) = tsd->status.base_level;
-	WFIFOSET(fd,packet_len(0x1f4));
+	p.packetType = HEADER_ZC_REQ_EXCHANGE_ITEM;
+	safestrncpy(p.requesterName, name, NAME_LENGTH);
+#if PACKETVER > 6
+	//client don't need this info to sucessfull trade, just to show info
+	map_session_data* tsd = map_id2sd(sd.trade_partner);
+	if( tsd == nullptr ) return;
+	p.targetId = tsd->status.char_id; //client need it to show an encrypted name to player on PN :  [official behavior]
+	p.targetLv = tsd->status.base_level;
 #endif
+
+	clif_send(&p,sizeof(p),&sd.bl,SELF);
+
 }
 
 
@@ -4689,23 +4685,19 @@ void clif_traderequest(map_session_data* sd, const char* name)
 ///     3 = Accept
 ///     4 = Cancel
 ///     5 = Busy
-void clif_tradestart(map_session_data* sd, uint8 type)
-{
-	int fd = sd->fd;
-	map_session_data* tsd = map_id2sd(sd->trade_partner);
-	if( PACKETVER < 6 || !tsd ) {
-		WFIFOHEAD(fd,packet_len(0xe7));
-		WFIFOW(fd,0) = 0xe7;
-		WFIFOB(fd,2) = type;
-		WFIFOSET(fd,packet_len(0xe7));
-	} else {
-		WFIFOHEAD(fd,packet_len(0x1f5));
-		WFIFOW(fd,0) = 0x1f5;
-		WFIFOB(fd,2) = type;
-		WFIFOL(fd,3) = tsd->status.char_id;
-		WFIFOW(fd,7) = tsd->status.base_level;
-		WFIFOSET(fd,packet_len(0x1f5));
-	}
+void clif_traderesponse(map_session_data& sd, uint8 type){
+	PACKET_ZC_ACK_EXCHANGE_ITEM p{};
+	p.packetType = HEADER_ZC_ACK_EXCHANGE_ITEM;
+	p.result = type;
+
+#if PACKETVER > 6
+	//client don't need this info to sucessfull trade, just to show info
+	map_session_data* tsd = map_id2sd(sd.trade_partner);
+	p.targetId = (tsd != nullptr ? tsd->status.char_id : 0);
+	p.targetLv = (tsd != nullptr ? tsd->status.base_level : 0);
+#endif
+
+	clif_send(&p,sizeof(p),&sd.bl,SELF);
 }
 
 
@@ -12375,7 +12367,7 @@ void clif_parse_TradeRequest(int fd,map_session_data *sd)
 
 			// Fake trading
 			sd->trade_partner = t_sd->status.account_id;
-			clif_tradestart(sd, 5);
+			clif_traderesponse(*sd,TRADE_ACK_BUSY);
 			// Restore old state
 			sd->trade_partner = old;
 

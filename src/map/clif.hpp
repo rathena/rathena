@@ -905,8 +905,8 @@ void clif_parse_LoadEndAck(int fd,map_session_data *sd);
 void clif_hotkeys_send(map_session_data *sd, int tab);
 
 // trade
-void clif_traderequest(map_session_data* sd, const char* name);
-void clif_tradestart(map_session_data* sd, uint8 type);
+void clif_traderequest(map_session_data& sd, const char* name);
+void clif_traderesponse(map_session_data& sd, uint8 type);
 void clif_tradeadditem(map_session_data* sd, map_session_data* tsd, int index, int amount);
 void clif_tradeitemok(map_session_data& sd, int index, e_exitem_add_result result);
 void clif_tradedeal_lock( map_session_data& sd, bool who );
