@@ -80,7 +80,15 @@ static inline int32 client_exp(t_exp exp) {
 static struct eri *delay_clearunit_ers;
 
 struct s_packet_db packet_db[MAX_PACKET_DB + 1];
-unsigned long color_table[COLOR_MAX];
+std::unordered_map<clif_colors, unsigned long> color_table { //RGB to BGR
+	{	COLOR_DEFAULT, (0x00FF00 & 0x0000FF) << 16 | (0x00FF00 & 0x00FF00) | (0x00FF00 & 0xFF0000) >> 16      },
+	{	COLOR_RED, (0xFF0000 & 0x0000FF) << 16 | (0xFF0000 & 0x00FF00) | (0xFF0000 & 0xFF0000) >> 16          },
+	{	COLOR_WHITE, (0xFFFFFF & 0x0000FF) << 16 | (0xFFFFFF & 0x00FF00) | (0xFFFFFF & 0xFF0000) >> 16        },
+	{	COLOR_YELLOW, (0xFFFF00 & 0x0000FF) << 16 | (0xFFFF00 & 0x00FF00) | (0xFFFF00 & 0xFF0000) >> 16       },
+	{	COLOR_CYAN, (0x00FFFF & 0x0000FF) << 16 | (0x00FFFF & 0x00FF00) | (0x00FFFF & 0xFF0000) >> 16         },
+	{	COLOR_LIGHT_GREEN, (0xB5FFB5 & 0x0000FF) << 16 | (0xB5FFB5 & 0x00FF00) | (0xB5FFB5 & 0xFF0000) >> 16  },
+	{	COLOR_LIGHT_YELLOW, (0xFFFF63 & 0x0000FF) << 16 | (0xFFFF63 & 0x00FF00) | (0xFFFF63 & 0xFF0000) >> 16 },
+};
 
 #include "clif_obfuscation.hpp"
 static bool clif_session_isValid(map_session_data *sd);
@@ -25307,22 +25315,6 @@ void packetdb_readdb(){
  *
  *------------------------------------------*/
 void do_init_clif(void) {
-	const int colors[COLOR_MAX] = {
-		0x00FF00, // COLOR_DEFAULT
-		0xFF0000, // COLOR_RED
-		0xFFFFFF, // COLOR_WHITE
-		0xFFFF00, // COLOR_YELLOW
-		0x00FFFF, // COLOR_CYAN
-		0xB5FFB5, // COLOR_LIGHT_GREEN
-		0xFFFF63, // COLOR_LIGHT_YELLOW
-	};
-
-	/**
-	 * Setup Color Table (saves unnecessary load of strtoul on every call)
-	 **/
-	for( int i = 0; i < COLOR_MAX; i++ ){
-		color_table[i] = ( colors[i] & 0x0000FF ) << 16 | ( colors[i] & 0x00FF00 ) | ( colors[i] & 0xFF0000 ) >> 16; //RGB to BGR
-	}
 
 	packetdb_readdb();
 

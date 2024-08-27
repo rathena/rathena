@@ -1334,7 +1334,7 @@ enum clif_colors {
 	COLOR_LIGHT_YELLOW,
 	COLOR_MAX
 };
-extern unsigned long color_table[COLOR_MAX];
+extern std::unordered_map<clif_colors, unsigned long> color_table;
 
 void clif_channel_msg(struct Channel *channel, const char *msg, unsigned long color);
 
