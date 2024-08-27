@@ -6410,7 +6410,7 @@ void clif_cooking_list( map_session_data& sd, int trigger, uint16 skill_id, int 
 /// @param val1
 /// @param val2
 /// @param val3
-static void clif_status_change_sub(block_list &bl, int id, int type, int flag, t_tick tick, int val1, int val2, int val3, enum send_target target_type) {
+static void clif_status_change_sub(block_list &bl, int id, int type, bool flag, t_tick tick, int val1, int val2, int val3, enum send_target target_type) {
 	if (type == EFST_BLANK)  //It shows nothing on the client...
 		return;
 
