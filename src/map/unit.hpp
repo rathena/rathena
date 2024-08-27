@@ -173,7 +173,7 @@ void unit_free_pc(map_session_data *sd);
 int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, int line, const char* func);
 int unit_free(struct block_list *bl, clr_type clrtype);
 int unit_changetarget(block_list *bl,va_list ap);
-void unit_change_target(unit_data& ud, int target_id);
+void unit_changetarget_sub(unit_data& ud, block_list& target);
 
 // Shadow Scar
 void unit_addshadowscar(unit_data &ud, int interval);

@@ -3146,7 +3146,7 @@ int unit_changetarget(block_list *bl, va_list ap) {
 	if (ud->target != src->id && ud->target_to != src->id)
 		return 1;
 
-	unit_change_target(*ud, target->id);
+	unit_changetarget_sub(*ud, *target);
 
 	//unit_attack(bl, target->id, ud->state.attack_continue);
 	return 0;
@@ -3155,19 +3155,19 @@ int unit_changetarget(block_list *bl, va_list ap) {
 /**
  * Changes the target of a unit
  * @param ud: Unit data
- * @param target_id: New target ID
+ * @param target: New target data
  **/
-void unit_change_target(unit_data& ud, int target_id) {
-	if (target_id <= 0 || status_isdead(map_id2bl(target_id)))
+void unit_changetarget_sub(unit_data& ud, block_list& target) {
+	if (status_isdead(&target))
 		return;
 
 	if (ud.bl->type == BL_MOB)
-		reinterpret_cast<mob_data*>(ud.bl)->target_id = target_id;
+		reinterpret_cast<mob_data*>(ud.bl)->target_id = target.id;
 	if (ud.target_to > 0)
-		ud.target_to = target_id;
+		ud.target_to = target.id;
 	if (ud.skilltarget > 0)
-		ud.skilltarget = target_id;
-	unit_set_target(&ud, target_id);
+		ud.skilltarget = target.id;
+	unit_set_target(&ud, target.id);
 }
 
 /**
