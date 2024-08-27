@@ -793,27 +793,38 @@ struct PACKET_ZC_MSG_STATE_CHANGE{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_MSG_STATE_CHANGE,0x196)
 
-#if PACKETVER >= 20081113 //2008 packet use this just for start state change, have packetlen 8
+#if PACKETVER >= 20120618
 struct PACKET_ZC_MSG_STATE_CHANGE2{
 	uint16 packetType;
 	uint16 index;
 	uint32 id;
-#if PACKETVER >= 20090114
 	uint8 state;
 	uint32 duration;
-#if PACKETVER >= 20120618
 	uint32 duration2;
-#endif
 	uint32 val1;
 	uint32 val2;
 	uint32 val3;
-#endif
 } __attribute__((packed));
-#if PACKETVER >= 20120618
 DEFINE_PACKET_HEADER(ZC_MSG_STATE_CHANGE2,0x983)
-#else
+#elif PACKETVER >= 20090121
+struct PACKET_ZC_MSG_STATE_CHANGE2{
+	uint16 packetType;
+	uint16 index;
+	uint32 id;
+	uint8 state;
+	uint32 duration;
+	uint32 val1;
+	uint32 val2;
+	uint32 val3;
+} __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_MSG_STATE_CHANGE2,0x43f)
-#endif
+#elif PACKETVER >= 20081113
+struct PACKET_ZC_MSG_STATE_CHANGE2{ //2008 packet use this just for start state change, have packetlen 8
+	uint16 packetType;
+	uint16 index;
+	uint32 id;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_MSG_STATE_CHANGE2,0x43f)
 #endif
 
 struct PACKET_ZC_NOTIFY_MAPINFO {
