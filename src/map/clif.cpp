@@ -11572,7 +11572,7 @@ void clif_parse_HowManyConnections(int fd, map_session_data *sd) {
 		return;
 	}
 
-	clif_user_count(*sd, map_getusers());
+	clif_user_count(*sd);
 }
 
 void clif_parse_ActionRequest_sub( map_session_data& sd, int action_type, int target_id, t_tick tick ){
