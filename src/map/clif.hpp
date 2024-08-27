@@ -1007,7 +1007,7 @@ void clif_mvp_effect(map_session_data *sd);
 void clif_mvp_item(map_session_data *sd, t_itemid nameid);
 void clif_mvp_exp(map_session_data *sd, t_exp exp);
 void clif_mvp_noitem(map_session_data* sd);
-void clif_changed_dir(block_list &bl, enum send_target target);
+void clif_changed_dir(block_list& bl, enum send_target target);
 
 // vending
 void clif_openvendingreq( map_session_data& sd, uint16 num );
