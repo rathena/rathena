@@ -4606,7 +4606,7 @@ void clif_addchat(chat_data& cd,map_session_data &sd){
 }
 
 
-/// Announce the new owner (ZC_ROLE_CHANGE).
+/// Change menus in chatbox from players who changed roles (ZC_ROLE_CHANGE).
 /// 00e1 <role>.L <nick>.24B
 /// role:
 ///     0 = owner (menu)

@@ -889,13 +889,13 @@ struct PACKET_ZC_MEMBER_EXIT{
 	uint16 packetType;
 	uint16 playersRemaining;
 	char exitPlayername[NAME_LENGTH];
-	uint8 flag;
+	bool flag;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_MEMBER_EXIT, 0xdd)
 
 struct PACKET_ZC_MEMBER_NEWENTRY {
-	int16 packetType;
-	int16 count;
+	uint16 packetType;
+	uint16 count;
 	char name[NAME_LENGTH];
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_MEMBER_NEWENTRY, 0xdc);
