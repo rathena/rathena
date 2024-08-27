@@ -885,10 +885,10 @@ void clif_createchat( map_session_data& sd, e_create_chatroom flag );
 void clif_dispchat(struct chat_data* cd, int fd);	// area or fd
 void clif_joinchatfail( map_session_data& sd, e_refuse_enter_room result );
 void clif_joinchatok(map_session_data *sd,struct chat_data* cd);	// self
-void clif_addchat(struct chat_data* cd,map_session_data *sd);	// chat
-void clif_changechatowner(struct chat_data* cd, map_session_data* sd);	// chat
+void clif_addchat(chat_data& cd,map_session_data &sd);	// chat
+void clif_changechatowner(chat_data& cd, map_session_data& sd);	// chat
 void clif_clearchat(struct chat_data *cd,int fd);	// area or fd
-void clif_leavechat(struct chat_data* cd, map_session_data* sd, bool flag);	// chat
+void clif_leavechat(chat_data& cd, map_session_data& sd, bool flag);	// chat
 void clif_changechatstatus(struct chat_data* cd);	// chat
 void clif_refresh_storagewindow(map_session_data *sd);
 void clif_refresh(map_session_data *sd);	// self

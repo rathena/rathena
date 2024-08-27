@@ -877,6 +877,7 @@ struct PACKET_ZC_CONCLUDE_EXCHANGE_ITEM {
 	int16 packetType;
 	uint8 who;
 } __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_CONCLUDE_EXCHANGE_ITEM, 0xec);
 
 struct PACKET_ZC_ACK_CREATE_CHATROOM {
 	int16 packetType;
@@ -884,7 +885,20 @@ struct PACKET_ZC_ACK_CREATE_CHATROOM {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_ACK_CREATE_CHATROOM, 0xd6);
 
-DEFINE_PACKET_HEADER(ZC_CONCLUDE_EXCHANGE_ITEM, 0xec);
+struct PACKET_ZC_MEMBER_EXIT{
+	uint16 packetType;
+	uint16 playersRemaining;
+	char exitPlayername[NAME_LENGTH];
+	uint8 flag;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_MEMBER_EXIT, 0xdd)
+
+struct PACKET_ZC_MEMBER_NEWENTRY {
+	int16 packetType;
+	int16 count;
+	char name[NAME_LENGTH];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_MEMBER_NEWENTRY, 0xdc);
 
 struct PACKET_ZC_REFUSE_ENTER_ROOM {
 	int16 packetType;

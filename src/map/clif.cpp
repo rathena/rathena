@@ -4594,17 +4594,15 @@ void clif_joinchatok(map_session_data *sd,struct chat_data* cd)
 
 /// Notifies clients in a chat about a new member (ZC_MEMBER_NEWENTRY).
 /// 00dc <users>.W <name>.24B
-void clif_addchat(struct chat_data* cd,map_session_data *sd)
-{
-	unsigned char buf[29];
+void clif_addchat(chat_data& cd,map_session_data &sd){
 
-	nullpo_retv(sd);
-	nullpo_retv(cd);
+	PACKET_ZC_MEMBER_NEWENTRY p{};
 
-	WBUFW(buf, 0) = 0xdc;
-	WBUFW(buf, 2) = cd->users;
-	safestrncpy(WBUFCP(buf, 4),sd->status.name,NAME_LENGTH);
-	clif_send(buf,packet_len(0xdc),&sd->bl,CHAT_WOS);
+	p.packetType = HEADER_ZC_MEMBER_NEWENTRY;
+	p.count = cd.users;
+	safestrncpy(p.name,sd.status.name,NAME_LENGTH);
+
+	clif_send(&p,sizeof(p),&sd.bl,CHAT_WOS);
 }
 
 
@@ -4613,22 +4611,17 @@ void clif_addchat(struct chat_data* cd,map_session_data *sd)
 /// role:
 ///     0 = owner (menu)
 ///     1 = normal
-void clif_changechatowner(struct chat_data* cd, map_session_data* sd)
-{
-	unsigned char buf[64];
+void clif_changechatowner(chat_data& cd, map_session_data& sd){
 
-	nullpo_retv(sd);
-	nullpo_retv(cd);
+	PACKET_ZC_ROLE_CHANGE p{};
 
-	WBUFW(buf, 0) = 0xe1;
-	WBUFL(buf, 2) = 1;
-	safestrncpy(WBUFCP(buf,6),cd->usersd[0]->status.name,NAME_LENGTH);
+	p.packetType = p.newOwner.packetType = HEADER_ZC_ROLE_CHANGE;
+	p.flag = 1;
+	p.newOwner.flag = 0;
+	safestrncpy(p.name,cd.usersd[0]->status.name,NAME_LENGTH);
+	safestrncpy(p.newOwner.name,sd.status.name,NAME_LENGTH);
 
-	WBUFW(buf,30) = 0xe1;
-	WBUFL(buf,32) = 0;
-	safestrncpy(WBUFCP(buf,36),sd->status.name,NAME_LENGTH);
-
-	clif_send(buf,packet_len(0xe1)*2,&sd->bl,CHAT);
+	clif_send(&p,sizeof(p),&sd.bl,CHAT);
 }
 
 
@@ -4637,19 +4630,16 @@ void clif_changechatowner(struct chat_data* cd, map_session_data* sd)
 /// flag:
 ///     0 = left
 ///     1 = kicked
-void clif_leavechat(struct chat_data* cd, map_session_data* sd, bool flag)
-{
-	unsigned char buf[32];
+void clif_leavechat(chat_data& cd, map_session_data& sd, bool flag){
 
-	nullpo_retv(sd);
-	nullpo_retv(cd);
+	PACKET_ZC_MEMBER_EXIT p{};
 
-	WBUFW(buf, 0) = 0xdd;
-	WBUFW(buf, 2) = cd->users-1;
-	safestrncpy(WBUFCP(buf,4),sd->status.name,NAME_LENGTH);
-	WBUFB(buf,28) = flag;
+	p.packetType = HEADER_ZC_MEMBER_EXIT;
+	p.playersRemaining = cd.users - 1;
+	safestrncpy(p.exitPlayername,sd.status.name,NAME_LENGTH);
+	p.flag = flag;
 
-	clif_send(buf,packet_len(0xdd),&sd->bl,CHAT);
+	clif_send(&p,sizeof(p),&sd.bl,CHAT);
 }
 
 

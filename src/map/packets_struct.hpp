@@ -4040,10 +4040,17 @@ struct PACKET_ZC_PARTY_CONFIG {
 DEFINE_PACKET_HEADER(ZC_PARTY_CONFIG, 0x02c9);
 #endif
 
+struct PACKET_ZC_ROLE_CHANGE_sub {
+	int16 packetType;
+	int32 flag;
+	char name[NAME_LENGTH];
+} __attribute__((packed));
+
 struct PACKET_ZC_ROLE_CHANGE {
 	int16 packetType;
 	int32 flag;
 	char name[NAME_LENGTH];
+	PACKET_ZC_ROLE_CHANGE_sub newOwner;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_ROLE_CHANGE, 0x00e1);
 
