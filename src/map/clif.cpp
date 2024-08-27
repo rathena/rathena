@@ -11469,7 +11469,7 @@ void clif_parse_MapMove(int fd, map_session_data *sd)
 ///     5 = southeast
 ///     6 = east
 ///     7 = northeast
-void clif_changed_dir(block_list &bl, enum send_target target){
+void clif_changed_dir(block_list& bl, enum send_target target){
 
 	PACKET_ZC_CHANGE_DIRECTION p{};
 
