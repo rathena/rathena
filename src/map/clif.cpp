@@ -5439,11 +5439,11 @@ void clif_skill_unit_test(block_list &bl, short x, short y, int unit_id, short r
 	p.srcId = 2000;
 	p.x = x;
 	p.y = y;
-	p.effectId = static_cast<decltype(p.effectId)>(unit_id);
+	p.effectId = static_cast<decltype(p.effectId)>( std::min( unit_id, static_cast<decltype(unit_id)>( std::numeric_limits<decltype(p.effectId)>::max() ) ) );
 	p.isVisible = 1;
 #if PACKETVER > 20120702
 	p.packetLen = sizeof(p);
-	p.range = static_cast<decltype(p.range)>(range);
+	p.range = static_cast<decltype(p.range)>( std::min( range, static_cast<decltype(range)>( std::numeric_limits<decltype(p.range)>::max() ) ) );
 #if PACKETVER >= 20130731
 	p.skillLv = static_cast<decltype(p.skillLv)>(skill_lv);
 #endif
