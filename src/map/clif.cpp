@@ -9818,7 +9818,7 @@ void clif_refresh(map_session_data *sd)
 	if( pc_isdead(sd) ) // When you refresh, resend the death packet.
 		clif_clearunit_single( sd->bl.id, CLR_DEAD, *sd );
 	else
-		clif_changed_dir(&sd->bl, SELF);
+		clif_changed_dir(sd->bl, SELF);
 	clif_efst_status_change_sub(&sd->bl,&sd->bl,SELF);
 
 	//Issue #2143
@@ -11056,7 +11056,7 @@ void clif_parse_LoadEndAck(int fd,map_session_data *sd)
 	else {
 		skill_usave_trigger(sd);
 		if (battle_config.spawn_direction)
-			clif_changed_dir(&sd->bl, SELF);
+			clif_changed_dir(sd->bl, SELF);
 	}
 
 	// Trigger skill effects if you appear standing on them
@@ -11469,21 +11469,19 @@ void clif_parse_MapMove(int fd, map_session_data *sd)
 ///     5 = southeast
 ///     6 = east
 ///     7 = northeast
-void clif_changed_dir(struct block_list *bl, enum send_target target)
-{
-	unsigned char buf[64];
+void clif_changed_dir(block_list &bl, enum send_target target){
 
-	WBUFW(buf,0) = 0x9c;
-	WBUFL(buf,2) = bl->id;
-	WBUFW(buf,6) = bl->type==BL_PC?((TBL_PC*)bl)->head_dir:0;
-	WBUFB(buf,8) = unit_getdir(bl);
+	PACKET_ZC_CHANGE_DIRECTION p{};
 
-	clif_send(buf, packet_len(0x9c), bl, target);
-
-	if (disguised(bl)) {
-		WBUFL(buf,2) = disguised_bl_id(bl->id);
-		WBUFW(buf,6) = 0;
-		clif_send(buf, packet_len(0x9c), bl, SELF);
+	p.packetType = HEADER_ZC_CHANGE_DIRECTION;
+	p.srcId = bl.id;
+	p.headDir = bl.type==BL_PC? reinterpret_cast<TBL_PC*>(&bl)->head_dir : 0;
+	p.dir = unit_getdir(&bl);
+	clif_send(&p, sizeof(p), &bl, target);
+	if (disguised(&bl)) {
+		p.srcId = disguised_bl_id(bl.id);
+		p.headDir = 0;
+		clif_send(&p, sizeof(p), &bl, SELF);
 	}
 }
 
@@ -11501,7 +11499,7 @@ void clif_parse_ChangeDir(int fd, map_session_data *sd)
 	dir = RFIFOB(fd,info->pos[1]);
 	pc_setdir(sd, dir, headdir);
 
-	clif_changed_dir(&sd->bl, AREA_WOS);
+	clif_changed_dir(sd->bl, AREA_WOS);
 }
 
 
