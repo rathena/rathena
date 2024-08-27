@@ -32,6 +32,12 @@
 	#pragma pack( push, 1 )
 #endif
 
+struct PACKET_ZC_USER_COUNT{
+	uint16 packetType;
+	int32 playersCount;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_USER_COUNT, 0xc2)
+
 struct PACKET_ZC_PC_PURCHASE_RESULT{
 	int16 packetType;
 	uint8 result;
