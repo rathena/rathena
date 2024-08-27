@@ -1904,8 +1904,6 @@
 	packet(0x099a,9); // take_off_equipv5
 	packet(0x099b,8); //maptypeproperty2
 	// New Packets
-	packet(0x08ff,24); // ZC_EFST_SET_ENTER
-	packet(0x0984,28); // ZC_EFST_SET_ENTER2
 	packet(0x099f,22); // ZC_SKILL_ENTRY4
 #endif
 
