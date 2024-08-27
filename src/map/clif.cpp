@@ -11553,23 +11553,22 @@ void clif_parse_Emotion(int fd, map_session_data *sd){
 
 /// Amount of currently online players, reply to /w /who (ZC_USER_COUNT).
 /// 00c2 <count>.L
-void clif_user_count(map_session_data* sd, int count)
+static void clif_user_count(map_session_data& sd, int count)
 {
-	int fd = sd->fd;
+	PACKET_ZC_USER_COUNT p{};
 
-	WFIFOHEAD(fd,packet_len(0xc2));
-	WFIFOW(fd,0) = 0xc2;
-	WFIFOL(fd,2) = count;
-	WFIFOSET(fd,packet_len(0xc2));
+	p.packetType = HEADER_ZC_USER_COUNT;
+	p.playersCount = count;
+
+	clif_send(&p,sizeof(p),&sd.bl,SELF);
 }
 
 
 /// /w /who (CZ_REQ_USER_COUNT).
 /// Request to display amount of currently connected players.
 /// 00c1
-void clif_parse_HowManyConnections(int fd, map_session_data *sd)
-{
-	clif_user_count(sd, map_getusers());
+void clif_parse_HowManyConnections(int fd, map_session_data *sd) {
+	clif_user_count(*sd, map_getusers());
 }
 
 void clif_parse_ActionRequest_sub( map_session_data& sd, int action_type, int target_id, t_tick tick ){

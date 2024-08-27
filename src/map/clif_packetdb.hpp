@@ -74,7 +74,6 @@
 	parseable_packet(0x00bf,3,clif_parse_Emotion,2);
 	packet(0x00c0,7);
 	parseable_packet(0x00c1,2,clif_parse_HowManyConnections,0);
-	packet(0x00c2,6);
 	packet(0x00c3,8);
 	parseable_packet(0x00c5,7,clif_parse_NpcBuySellSelected,2,6);
 	packet(0x00c6,-1);
