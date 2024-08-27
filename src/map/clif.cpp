@@ -11568,6 +11568,10 @@ static void clif_user_count(map_session_data& sd)
 /// Request to display amount of currently connected players.
 /// 00c1
 void clif_parse_HowManyConnections(int fd, map_session_data *sd) {
+	if( sd == nullptr ){
+		return;
+	}
+
 	clif_user_count(*sd, map_getusers());
 }
 
