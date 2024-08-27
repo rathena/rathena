@@ -4250,7 +4250,7 @@ void clif_equipitemack( map_session_data& sd, uint8 flag, int index, int pos ){
 /// @ok : //inversed for v2 v5
 ///     0 = failure
 ///     1 = success
-void clif_unequipitemack(map_session_data &sd,int n,int pos,int ok){
+void clif_unequipitemack(map_session_data& sd,int n,int pos,int ok){
 #if PACKETVER >= 20130000
 	ok = ok ? 0 : 1;
 #elif PACKETVER >= 20110824
