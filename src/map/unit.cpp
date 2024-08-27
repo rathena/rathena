@@ -3130,30 +3130,42 @@ int unit_counttargeted(struct block_list* bl)
  * @param src Current target
  * @param target New target
  **/
-int unit_changetarget(struct block_list *bl, va_list ap) {
-	struct unit_data *ud = unit_bl2ud(bl);
-	struct block_list *src = va_arg(ap,struct block_list *);
-	struct block_list *target = va_arg(ap,struct block_list *);
-
-	if (!ud || !target || ud->target == target->id)
+int unit_changetarget(block_list *bl, va_list ap) {
+	if (bl == nullptr)
 		return 1;
-	if (!ud->target && !ud->target_to)
+	unit_data *ud = unit_bl2ud(bl);
+	block_list *src = va_arg(ap, block_list *);
+	block_list *target = va_arg(ap, block_list *);
+
+	if (ud == nullptr || src == nullptr || target == nullptr || ud->target == target->id)
+		return 1;
+	if (ud->target <= 0 && ud->target_to <= 0)
 		return 1;
 	if (ud->target != src->id && ud->target_to != src->id)
 		return 1;
 
-	if (bl->type == BL_MOB)
-		(BL_CAST(BL_MOB,bl))->target_id = target->id;
-	if (ud->target_to)
-		ud->target_to = target->id;
-	else
-		ud->target_to = 0;
-	if (ud->skilltarget)
-		ud->skilltarget = target->id;
-	unit_set_target(ud, target->id);
+	unit_changetarget_sub(*ud, *target);
 
 	//unit_attack(bl, target->id, ud->state.attack_continue);
 	return 0;
+}
+
+/**
+ * Changes the target of a unit
+ * @param ud: Unit data
+ * @param target: New target data
+ **/
+void unit_changetarget_sub(unit_data& ud, block_list& target) {
+	if (status_isdead(target))
+		return;
+
+	if (ud.bl->type == BL_MOB)
+		reinterpret_cast<mob_data*>(ud.bl)->target_id = target.id;
+	if (ud.target_to > 0)
+		ud.target_to = target.id;
+	if (ud.skilltarget > 0)
+		ud.skilltarget = target.id;
+	unit_set_target(&ud, target.id);
 }
 
 /**
