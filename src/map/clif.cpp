@@ -6565,7 +6565,7 @@ void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, 
 		}
 
 #if PACKETVER > 20120418
-		clif_efst_status_change(tbl, bl->id, target, status_db.getIcon(type), tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3);
+		clif_efst_status_change(*tbl, bl->id, target, status_db.getIcon(type), tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3);
 #else
 		clif_status_change_sub(tbl, bl->id, status_db.getIcon(type), 1, tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3, target);
 #endif
@@ -6575,38 +6575,30 @@ void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, 
 /// Notifies the client when a player enters the screen with an active EFST.
 /// 08ff <id>.L <index>.W <remain msec>.L { <val>.L }*3  (ZC_EFST_SET_ENTER) (PACKETVER >= 20111108)
 /// 0984 <id>.L <index>.W <total msec>.L <remain msec>.L { <val>.L }*3 (ZC_EFST_SET_ENTER2) (PACKETVER >= 20120618)
-void clif_efst_status_change(struct block_list *bl, int tid, enum send_target target, int type, t_tick tick, int val1, int val2, int val3) {
+void clif_efst_status_change(block_list &bl, int tid, enum send_target target, int type, t_tick tick, int val1, int val2, int val3) {
 #if PACKETVER >= 20111108
-	unsigned char buf[32];
-#if PACKETVER >= 20120618
-	const int cmd = 0x984;
-#elif PACKETVER >= 20111108
-	const int cmd = 0x8ff;
-#endif
-	int offset = 0;
 
 	if (type == EFST_BLANK)
 		return;
 
-	nullpo_retv(bl);
-
 	if (tick <= 0)
-		tick = 9999;
+		tick = 9999; // aegis behavior
 
-	WBUFW(buf,offset + 0) = cmd;
-	WBUFL(buf,offset + 2) = tid;
-	WBUFW(buf,offset + 6) = type;
-#if PACKETVER >= 20111108
-	WBUFL(buf,offset + 8) = client_tick(tick); // Set remaining status duration [exneval]
+	PACKET_ZC_EFST_SET_ENTER p{};
+
+	p.packetType = HEADER_ZC_EFST_SET_ENTER;
+	p.tid = tid;
+	p.type = type;
+	p.duration = client_tick(tick); // Set remaining status duration [exneval]
 #if PACKETVER >= 20120618
-	WBUFL(buf,offset + 12) = client_tick(tick);
-	offset += 4;
+	p.duration2 = client_tick(tick); // client need it
 #endif
-	WBUFL(buf,offset + 12) = val1;
-	WBUFL(buf,offset + 16) = val2;
-	WBUFL(buf,offset + 20) = val3;
-#endif
-	clif_send(buf,packet_len(cmd),bl,target);
+	p.val1 = val1;
+	p.val2 = val2;
+	p.val3 = val3;
+
+	clif_send(&p,sizeof(p),&bl,target);
+
 #endif
 }
 
