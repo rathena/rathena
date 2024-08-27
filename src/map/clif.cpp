@@ -6420,8 +6420,8 @@ static void clif_status_change_sub(block_list &bl, int id, int type, int flag, t
 	// Statuses with an infinite duration, but still needs a duration sent to display properly.
 	if (type == EFST_LUNARSTANCE || type == EFST_UNIVERSESTANCE || type == EFST_SUNSTANCE || type == EFST_STARSTANCE)
 		tick = 200;
-#if PACKETVER >= 20081113
-	// 2008 packetlen = 8
+
+#if PACKETVER >= 20090121
 	if (flag&&battle_config.display_status_timers){
 		PACKET_ZC_MSG_STATE_CHANGE2 p{};
 
@@ -6431,7 +6431,6 @@ static void clif_status_change_sub(block_list &bl, int id, int type, int flag, t
 		p.packetType = HEADER_ZC_MSG_STATE_CHANGE2;
 		p.index = type;
 		p.id = id;
-#if PACKETVER >= 20090121
 		p.state = flag;
 		p.duration = client_tick(tick);/* at this stage remain and total are the same value I believe */
 #if PACKETVER >= 20120618
@@ -6440,7 +6439,7 @@ static void clif_status_change_sub(block_list &bl, int id, int type, int flag, t
 		p.val1 = val1;
 		p.val2 = val2;
 		p.val3 = val3;
-#endif
+
 		clif_send(&p,sizeof(p),&bl,target_type);
 		return;
 	}

@@ -798,7 +798,7 @@ struct PACKET_ZC_MSG_STATE_CHANGE2{
 	uint16 packetType;
 	uint16 index;
 	uint32 id;
-	uint8 state;
+	bool state;
 	uint32 duration;
 	uint32 duration2;
 	uint32 val1;
@@ -811,18 +811,11 @@ struct PACKET_ZC_MSG_STATE_CHANGE2{
 	uint16 packetType;
 	uint16 index;
 	uint32 id;
-	uint8 state;
+	bool state;
 	uint32 duration;
 	uint32 val1;
 	uint32 val2;
 	uint32 val3;
-} __attribute__((packed));
-DEFINE_PACKET_HEADER(ZC_MSG_STATE_CHANGE2,0x43f)
-#elif PACKETVER >= 20081113
-struct PACKET_ZC_MSG_STATE_CHANGE2{ //2008 packet use this just for start state change, have packetlen 8
-	uint16 packetType;
-	uint16 index;
-	uint32 id;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_MSG_STATE_CHANGE2,0x43f)
 #endif
