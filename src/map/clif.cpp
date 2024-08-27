@@ -11487,6 +11487,7 @@ void clif_changed_dir(block_list &bl, enum send_target target){
 	if (disguised(&bl)) {
 		p.srcId = disguised_bl_id(bl.id);
 		p.headDir = 0;
+
 		clif_send(&p, sizeof(p), &bl, SELF);
 	}
 }
