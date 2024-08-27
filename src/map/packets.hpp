@@ -914,24 +914,29 @@ struct PACKET_ZC_NOTIFY_EFFECT {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_NOTIFY_EFFECT, 0x19b);
 
-#if PACKETVER >= 20111108
+#if PACKETVER >= 20120618
 struct PACKET_ZC_EFST_SET_ENTER{
 	uint16 packetType;
 	uint32 tid;
 	uint16 type;
 	uint32 duration;
-#if PACKETVER >= 20120618
 	uint32 duration2;
-#endif
 	uint32 val1;
 	uint32 val2;
 	uint32 val3;
 } __attribute__((packed));
-#if PACKETVER >= 20120618
-DEFINE_PACKET_HEADER(ZC_EFST_SET_ENTER, 0x984) // ZC_EFST_SET_ENTER
-#else
-DEFINE_PACKET_HEADER(ZC_EFST_SET_ENTER, 0x8ff) //ZC_EFST_SET_ENTER2
-#endif
+DEFINE_PACKET_HEADER(ZC_EFST_SET_ENTER, 0x984)
+#elif PACKETVER >= 20111108
+struct PACKET_ZC_EFST_SET_ENTER{
+	uint16 packetType;
+	uint32 tid;
+	uint16 type;
+	uint32 duration;
+	uint32 val1;
+	uint32 val2;
+	uint32 val3;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_EFST_SET_ENTER, 0x8ff)
 #endif
 
 struct PACKET_ZC_ACK_ITEMCOMPOSITION {
