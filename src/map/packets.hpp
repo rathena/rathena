@@ -635,6 +635,14 @@ struct PACKET_ZC_NOTIFY_PLAYERMOVE {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_NOTIFY_PLAYERMOVE, 0x87);
 
+struct PACKET_ZC_CHANGE_DIRECTION{
+	int16 packetType;
+	uint32 srcId;
+	uint16 headDir;
+	uint8 dir;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_CHANGE_DIRECTION, 0x9c)
+
 struct PACKET_ZC_NPCACK_MAPMOVE {
 	int16 packetType;
 	char mapName[MAP_NAME_LENGTH_EXT];
