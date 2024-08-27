@@ -5413,11 +5413,11 @@ void clif_getareachar_skillunit(block_list &bl, skill_unit &unit, enum send_targ
 	p.srcId = unit.group->src_id;
 	p.x = unit.bl.x;
 	p.y = unit.bl.y;
-	p.effectId = static_cast<decltype(p.effectId)>(unit_id);
+	p.effectId = static_cast<decltype(p.effectId)>( std::min( unit_id, static_cast<decltype(unit_id)>( std::numeric_limits<decltype(p.effectId)>::max() ) ) );
 	p.isVisible = visible;
 #if PACKETVER > 20120702
 	p.packetLen = sizeof(p);
-	p.range = static_cast<decltype(p.range)>(unit.range);
+	p.range = static_cast<decltype(p.range)>( std::min( unit.range, static_cast<decltype(unit.range)>( std::numeric_limits<decltype(p.range)>::max() ) ) );
 #if PACKETVER >= 20130731
 	p.skillLv = static_cast<decltype(p.skillLv)>(unit.group->skill_lv);
 #endif

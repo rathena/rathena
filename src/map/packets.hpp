@@ -1020,7 +1020,6 @@ struct PACKET_ZC_SKILL_ENTRY {
 	int8 effectId;
 	int16 range;
 	int8 isVisible;
-	int8 skillLv;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_SKILL_ENTRY, 0x08c7)
 #elif PACKETVER < 20130731
