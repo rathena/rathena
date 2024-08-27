@@ -4699,8 +4699,13 @@ void clif_traderesponse(map_session_data& sd, uint8 type){
 #if PACKETVER > 6
 	//client don't need this info to sucessfull trade, just to show info
 	map_session_data* tsd = map_id2sd(sd.trade_partner);
-	p.targetId = (tsd != nullptr ? tsd->status.char_id : 0);
-	p.targetLv = (tsd != nullptr ? tsd->status.base_level : 0);
+	if( tsd != nullptr ){
+		p.targetId = tsd->status.char_id;
+		p.targetLv = tsd->status.base_level;
+	}else{
+		p.targetId = 0;
+		p.targetLv = 0;
+	}
 #endif
 
 	clif_send(&p,sizeof(p),&sd.bl,SELF);
