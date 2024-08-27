@@ -4665,9 +4665,14 @@ void clif_traderequest(map_session_data& sd, const char* name){
 #if PACKETVER > 6
 	//client don't need this info to sucessfull trade, just to show info
 	map_session_data* tsd = map_id2sd(sd.trade_partner);
-	if( tsd == nullptr ) return;
-	p.targetId = tsd->status.char_id; //client need it to show an encrypted name to player on PN :  [official behavior]
-	p.targetLv = tsd->status.base_level;
+
+	if( tsd != nullptr ){
+		p.targetId = tsd->status.char_id;
+		p.targetLv = tsd->status.base_level;
+	}else{
+		p.targetId = 0;
+		p.targetLv = 0;
+	}
 #endif
 
 	clif_send(&p,sizeof(p),&sd.bl,SELF);
