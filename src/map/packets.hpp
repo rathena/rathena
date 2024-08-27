@@ -34,7 +34,7 @@
 
 struct PACKET_ZC_USER_COUNT{
 	uint16 packetType;
-	uint32 playersCount;
+	int32 playersCount;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_USER_COUNT, 0xc2)
 
