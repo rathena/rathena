@@ -372,18 +372,20 @@ struct PACKET_ZC_REQ_EXCHANGE_ITEM{
 DEFINE_PACKET_HEADER(ZC_REQ_EXCHANGE_ITEM, 0x9a)
 #endif
 
+#if PACKETVER > 6
 struct PACKET_ZC_ACK_EXCHANGE_ITEM{
 	uint16 packetType;
 	uint8 result;
-#if PACKETVER > 6
 	uint32 targetId;
 	uint16 targetLv;
-#endif
 } __attribute__((packed));
-#if PACKETVER <= 6
-DEFINE_PACKET_HEADER(ZC_ACK_EXCHANGE_ITEM, 0xe7)
+DEFINE_PACKET_HEADER(ZC_ACK_EXCHANGE_ITEM, 0x1f5)
 #else
-DEFINE_PACKET_HEADER(ZC_ACK_EXCHANGE_ITEM, 0x1f5) //ZC_ACK_EXCHANGE_ITEM2
+struct PACKET_ZC_ACK_EXCHANGE_ITEM{
+	uint16 packetType;
+	uint8 result;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_EXCHANGE_ITEM, 0xe7)
 #endif
 
 struct PACKET_ZC_ACK_ADD_EXCHANGE_ITEM {
