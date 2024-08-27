@@ -4697,7 +4697,7 @@ void clif_traderesponse(map_session_data& sd, uint8 type){
 	p.result = type;
 
 #if PACKETVER > 6
-	//client don't need this info to sucessfull trade, just to show info
+	// The client doesn't need this info to sucessfully trade, just to show info
 	map_session_data* tsd = map_id2sd(sd.trade_partner);
 
 	if( tsd != nullptr ){
