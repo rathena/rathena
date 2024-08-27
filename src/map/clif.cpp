@@ -6410,58 +6410,50 @@ void clif_cooking_list( map_session_data& sd, int trigger, uint16 skill_id, int 
 /// @param val1
 /// @param val2
 /// @param val3
-void clif_status_change_sub(struct block_list *bl, int id, int type, int flag, t_tick tick, int val1, int val2, int val3, enum send_target target_type)
-{
-	unsigned char buf[32];
-
+static void clif_status_change_sub(block_list &bl, int id, int type, int flag, t_tick tick, int val1, int val2, int val3, enum send_target target_type) {
 	if (type == EFST_BLANK)  //It shows nothing on the client...
 		return;
 
 	if (type == EFST_POSTDELAY && tick == 0)
 		return;
 
-	nullpo_retv(bl);
-
 	// Statuses with an infinite duration, but still needs a duration sent to display properly.
 	if (type == EFST_LUNARSTANCE || type == EFST_UNIVERSESTANCE || type == EFST_SUNSTANCE || type == EFST_STARSTANCE)
 		tick = 200;
+#if PACKETVER >= 20081113
+	// 2008 packetlen = 8
+	if (flag&&battle_config.display_status_timers){
+		PACKET_ZC_MSG_STATE_CHANGE2 p{};
 
-#if PACKETVER >= 20120618
-	if (flag && battle_config.display_status_timers)
-		WBUFW(buf,0) = 0x983;
-	else
-#elif PACKETVER >= 20090121
-	if (flag && battle_config.display_status_timers)
-		WBUFW(buf,0) = 0x43f;
-	else
-#endif
-		WBUFW(buf,0) = 0x196;
-	WBUFW(buf,2) = type;
-	WBUFL(buf,4) = id;
-	WBUFB(buf,8) = flag;
-#if PACKETVER >= 20120618
-	if (flag && battle_config.display_status_timers) {
 		if (tick <= 0)
 			tick = 9999; // this is indeed what official servers do
 
-		WBUFL(buf,9) = client_tick(tick);/* at this stage remain and total are the same value I believe */
-		WBUFL(buf,13) = client_tick(tick);
-		WBUFL(buf,17) = val1;
-		WBUFL(buf,21) = val2;
-		WBUFL(buf,25) = val3;
-	}
-#elif PACKETVER >= 20090121
-	if (flag && battle_config.display_status_timers) {
-		if (tick <= 0)
-			tick = 9999; // this is indeed what official servers do
-
-		WBUFL(buf,9) = client_tick(tick);
-		WBUFL(buf,13) = val1;
-		WBUFL(buf,17) = val2;
-		WBUFL(buf,21) = val3;
+		p.packetType = HEADER_ZC_MSG_STATE_CHANGE2;
+		p.index = type;
+		p.id = id;
+#if PACKETVER >= 20090121
+		p.state = flag;
+		p.duration = client_tick(tick);/* at this stage remain and total are the same value I believe */
+#if PACKETVER >= 20120618
+		p.duration2 = client_tick(tick);
+#endif
+		p.val1 = val1;
+		p.val2 = val2;
+		p.val3 = val3;
+#endif
+		clif_send(&p,sizeof(p),&bl,target_type);
+		return;
 	}
 #endif
-	clif_send(buf, packet_len(WBUFW(buf,0)), bl, target_type);
+
+	PACKET_ZC_MSG_STATE_CHANGE p{};
+
+	p.packetType = HEADER_ZC_MSG_STATE_CHANGE;
+	p.index = type;
+	p.id = id;
+	p.state = flag;
+
+	clif_send(&p,sizeof(p),&bl,target_type);
 }
 
 /* Sends status effect to clients around the bl
@@ -6499,7 +6491,7 @@ void clif_status_change(struct block_list *bl, int type, int flag, t_tick tick, 
 	if (!(status_efst_get_bl_type(static_cast<efst_type>(type)) & bl->type))
 		return;
 
-	clif_status_change_sub(bl, bl->id, type, flag, tick, val1, val2, val3, ((sd ? (pc_isinvisible(sd) ? SELF : AREA) : AREA_WOS)));
+	clif_status_change_sub(*bl, bl->id, type, flag, tick, val1, val2, val3, ((sd ? (pc_isinvisible(sd) ? SELF : AREA) : AREA_WOS)));
 }
 
 /**
@@ -6567,7 +6559,7 @@ void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, 
 #if PACKETVER > 20120418
 		clif_efst_status_change(tbl, bl->id, target, status_db.getIcon(type), tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3);
 #else
-		clif_status_change_sub(tbl, bl->id, status_db.getIcon(type), 1, tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3, target);
+		clif_status_change_sub(*tbl, bl->id, status_db.getIcon(type), 1, tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3, target);
 #endif
 	}
 }

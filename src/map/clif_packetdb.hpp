@@ -233,7 +233,6 @@
 	parseable_packet(0x0193,6,clif_parse_SolveCharName,2);
 	packet(0x0194,30);
 	packet( HEADER_ZC_ACK_REQNAMEALL, sizeof( struct PACKET_ZC_ACK_REQNAMEALL ) );
-	packet(0x0196,9);
 	parseable_packet(0x0197,4,clif_parse_ResetChar,2);
 	parseable_packet(0x0198,8,clif_parse_GMChangeMapType,2,4,6);
 	packet(0x0199,4);
@@ -1238,7 +1237,6 @@
 // 2008-11-13aSakexe
 #if PACKETVER >= 20081113
 	packet(0x043e,-1);
-	packet(0x043f,8);
 #endif
 
 // 2008-11-26aSakexe
@@ -1254,7 +1252,6 @@
 
 // 2009-01-14aSakexe
 #if PACKETVER >= 20090114
-	packet(0x043f,25);
 	packet(0x0444,-1);
 	packet(0x0445,10);
 #endif
@@ -1317,7 +1314,6 @@
 // 2008-11-12aRagexeRE
 #if PACKETVER >= 20081112
 	//packet(0x043e,-1);
-	packet(0x043f,8);
 #endif
 
 // 2008-12-17aRagexeRE
@@ -1334,7 +1330,6 @@
 
 // 2009-01-21aRagexeRE
 #if PACKETVER >= 20090121
-	packet(0x043f,25);
 	//packet(0x0444,-1);
 	//packet(0x0445,10);
 #endif
@@ -1836,7 +1831,6 @@
 
 // 2012-06-18
 #if PACKETVER >= 20120618
-	packet(0x0983,29); // ZC_MSG_STATE_CHANGE3
 	parseable_packet(0x0861,41,clif_parse_PartyBookingRegisterReq,2,4,6); //actually 12-05-03
 #endif
 
