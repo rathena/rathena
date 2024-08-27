@@ -4661,7 +4661,7 @@ void clif_traderequest(map_session_data& sd, const char* name){
 	PACKET_ZC_REQ_EXCHANGE_ITEM p{};
 
 	p.packetType = HEADER_ZC_REQ_EXCHANGE_ITEM;
-	safestrncpy(p.requesterName, name, NAME_LENGTH);
+	safestrncpy(p.requesterName, name, sizeof(p.requesterName));
 #if PACKETVER > 6
 	//client don't need this info to sucessfull trade, just to show info
 	map_session_data* tsd = map_id2sd(sd.trade_partner);
