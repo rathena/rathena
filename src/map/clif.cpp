@@ -11558,7 +11558,7 @@ static void clif_user_count(map_session_data& sd)
 	PACKET_ZC_USER_COUNT p{};
 
 	p.packetType = HEADER_ZC_USER_COUNT;
-	p.playersCount = count;
+	p.playersCount = map_getusers();
 
 	clif_send(&p,sizeof(p),&sd.bl,SELF);
 }
