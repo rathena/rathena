@@ -849,6 +849,12 @@ struct PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_REQ_TAKEOFF_EQUIP_ACK, 0x8d1)
 #else
+struct PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK{
+	uint16 packetType;
+	uint16 index;
+	uint16 wearLocation;
+	bool flag;
+} __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_REQ_TAKEOFF_EQUIP_ACK, 0xac)
 #endif
 
