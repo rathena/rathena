@@ -982,6 +982,14 @@ struct PACKET_ZC_SKILL_DISAPPEAR {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_SKILL_DISAPPEAR, 0x120);
 
+#if PACKETVER >= 20081217
+struct PACKET_ZC_SKILLINFO_DELETE {
+	uint16 packetType;
+	uint16 skillID;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_SKILLINFO_DELETE, 0x441);
+#endif
+
 struct PACKET_ZC_SKILL_UPDATE {
 	int16 packetType;
 	uint32 GID;

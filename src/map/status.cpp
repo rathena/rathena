@@ -4914,7 +4914,7 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		// Client doesn't delete unavailable skills even if we refresh the skill tree, individually delete them.
 		for (i = 0; i < MAX_SKILL; i++) {
 			if (b_skill[i].id != 0 && sd->status.skill[i].id == 0)
-				clif_deleteskill(sd, b_skill[i].id, true);
+				clif_deleteskill(*sd, b_skill[i].id, true);
 		}
 #endif
 		clif_skillinfoblock(sd);
