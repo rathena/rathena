@@ -5614,6 +5614,7 @@ int clif_insight(struct block_list *bl,va_list ap)
 
 /// Updates whole skill tree (ZC_SKILLINFO_LIST).
 /// 010f <packet len>.W { <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <skill name>.24B <upgradable>.B }*
+/// 0b32 <packet len>.W { <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <upgradable>.B <level2>.B }*
 void clif_skillinfoblock(map_session_data &sd){
 
 	if (!session_isActive(sd.fd))
@@ -5646,7 +5647,7 @@ void clif_skillinfoblock(map_session_data &sd){
 			p->skills[skillcount].inf = skill_get_inf(id);
 			p->skills[skillcount].level = sd.status.skill[i].lv;
 #if PACKETVER_RE_NUM >= 20190807 || PACKETVER_ZERO_NUM >= 20190918
-			p->skills[skillcount].level2 = 0;
+			p->skills[skillcount].level2 = 0; //is new skill flag
 #else
 			safestrncpy(p->skills[skillcount].name, skill_get_name(id), NAME_LENGTH);
 #endif
