@@ -898,6 +898,12 @@ struct PACKET_ZC_REFUSE_ENTER_ROOM {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_REFUSE_ENTER_ROOM, 0xda);
 
+struct PACKET_ZC_DESTROY_ROOM {
+	int16 packetType;
+	uint32 chatId;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_DESTROY_ROOM, 0xd8);
+
 struct PACKET_ZC_NPC_SHOWEFST_UPDATE {
 	int16 packetType;
 	uint32 gid;

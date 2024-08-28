@@ -4513,21 +4513,13 @@ void clif_changechatstatus(struct chat_data* cd)
 
 /// Removes the chatroom (ZC_DESTROY_ROOM).
 /// 00d8 <chat id>.L
-void clif_clearchat(struct chat_data *cd,int fd)
-{
-	unsigned char buf[32];
+void clif_clearchat(chat_data &cd){
 
-	nullpo_retv(cd);
+	PACKET_ZC_DESTROY_ROOM p{};
+	p.packetType = HEADER_ZC_DESTROY_ROOM;
+	p.chatId = cd.bl.id;
 
-	WBUFW(buf,0) = 0xd8;
-	WBUFL(buf,2) = cd->bl.id;
-	if( session_isActive(fd) ) {
-		WFIFOHEAD(fd,packet_len(0xd8));
-		memcpy(WFIFOP(fd,0),buf,packet_len(0xd8));
-		WFIFOSET(fd,packet_len(0xd8));
-	} else {
-		clif_send(buf,packet_len(0xd8),cd->owner,AREA_WOSC);
-	}
+	clif_send(&p,sizeof(p),cd.owner,AREA_WOSC);
 }
 
 

@@ -91,7 +91,6 @@
 	packet(0x00d4,-1);
 	parseable_packet(0x00d5,-1,clif_parse_CreateChatRoom,2,4,6,7,15);
 	packet(0x00d7,-1);
-	packet(0x00d8,6);
 	parseable_packet(0x00d9,14,clif_parse_ChatAddMember,2,6);
 	packet(0x00db,-1);
 	packet(0x00dc,28);
