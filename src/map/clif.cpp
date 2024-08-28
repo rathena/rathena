@@ -4557,38 +4557,39 @@ void clif_joinchatfail( map_session_data& sd, e_refuse_enter_room result ){
 /// role:
 ///     0 = owner (menu)
 ///     1 = normal
-void clif_joinchatok(map_session_data *sd,struct chat_data* cd)
-{
-	int fd;
-	int i,t;
+void clif_joinchatok(map_session_data& sd, chat_data& cd){
 
-	nullpo_retv(sd);
-	nullpo_retv(cd);
-
-	fd = sd->fd;
-	if (!session_isActive(fd))
+	if (!session_isActive(sd.fd))
 		return;
-	t = (int)(cd->owner->type == BL_NPC);
-	WFIFOHEAD(fd, 8 + (28*(cd->users+t)));
-	WFIFOW(fd, 0) = 0xdb;
-	WFIFOW(fd, 2) = 8 + (28*(cd->users+t));
-	WFIFOL(fd, 4) = cd->bl.id;
 
-	if(cd->owner->type == BL_NPC){
-		WFIFOL(fd, 30) = 1;
-		WFIFOL(fd, 8) = 0;
-		safestrncpy(WFIFOCP(fd, 12), ((struct npc_data *)cd->owner)->name, NAME_LENGTH);
-		for (i = 0; i < cd->users; i++) {
-			WFIFOL(fd, 8+(i+1)*28) = 1;
-			safestrncpy(WFIFOCP(fd, 8+(i+t)*28+4), cd->usersd[i]->status.name, NAME_LENGTH);
+	PACKET_ZC_ENTER_ROOM* p = reinterpret_cast<PACKET_ZC_ENTER_ROOM*>( packet_buffer );
+
+	p->packetType = HEADER_ZC_ENTER_ROOM;
+	p->packetSize = sizeof(p);
+	p->chatId = cd.bl.id;
+	
+	if(cd.owner->type == BL_NPC){
+		p->Members[0].NotLeader = 0;
+		safestrncpy(p->Members[0].Name, ((struct npc_data *)cd.owner)->name, NAME_LENGTH);
+		p->packetSize += sizeof(PACKET_ZC_ENTER_ROOM_sub);
+		for (int i = 1; i < cd.users; i++) {
+			p->Members[i].NotLeader = 1;
+			safestrncpy(p->Members[i].Name, cd.usersd[i]->status.name, NAME_LENGTH);
+			p->packetSize += sizeof(PACKET_ZC_ENTER_ROOM_sub);
 		}
 	}else{
-		for (i = 0; i < cd->users; i++) {
-			WFIFOL(fd, 8+i*28) = (i != 0 || cd->owner->type == BL_NPC);
-			safestrncpy(WFIFOCP(fd, 8+(i+t)*28+4), cd->usersd[i]->status.name, NAME_LENGTH);
+		for (int i = 0; i < cd.users; i++) {
+			p->Members[i].NotLeader = (i != 0);
+			safestrncpy(p->Members[i].Name, cd.usersd[i]->status.name, NAME_LENGTH);
+			p->packetSize += sizeof(PACKET_ZC_ENTER_ROOM_sub);
 		}
 	}
-	WFIFOSET(fd, WFIFOW(fd, 2));
+	// Idk but client don't show my name without that and -1 count
+	p->Members[cd.users].NotLeader = 0;
+	safestrncpy(p->Members[cd.users].Name, sd.status.name, NAME_LENGTH);
+	p->packetSize += sizeof(PACKET_ZC_ENTER_ROOM_sub);
+
+	clif_send(p,p->packetSize,&sd.bl,SELF);
 }
 
 
