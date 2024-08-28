@@ -4585,7 +4585,7 @@ void clif_joinchatok(map_session_data& sd, chat_data& cd){
 		}
 	}
 	// Idk but client don't show my name without that and -1 count
-	p->Members[cd.users].NotLeader = 0;
+	p->Members[cd.users].NotLeader = 1;
 	safestrncpy(p->Members[cd.users].Name, sd.status.name, NAME_LENGTH);
 	p->packetSize += sizeof(PACKET_ZC_ENTER_ROOM_sub);
 
