@@ -861,10 +861,10 @@ void clif_delitem( map_session_data& sd, int index, int amount, short reason );
 void clif_update_hp(map_session_data &sd);
 void clif_updatestatus( map_session_data& sd, _sp type );
 void clif_changemanner( map_session_data& sd );
-int clif_damage(struct block_list* src, struct block_list* dst, t_tick tick, int sdelay, int ddelay, int64 sdamage, int div, enum e_damage_type type, int64 sdamage2, bool spdamage);	// area
-void clif_takeitem(struct block_list* src, struct block_list* dst);
-void clif_sitting(struct block_list* bl);
-void clif_standing(struct block_list* bl);
+int clif_damage(block_list& src, block_list& dst, t_tick tick, int sdelay, int ddelay, int64 sdamage, int div, enum e_damage_type type, int64 sdamage2, bool spdamage);	// area
+void clif_takeitem(block_list& src, block_list& dst);
+void clif_sitting(block_list& bl);
+void clif_standing(block_list& bl);
 void clif_sprite_change(struct block_list *bl, int id, int type, int val, int val2, enum send_target target);
 void clif_changelook(struct block_list *bl,int type,int val);	// area
 void clif_changetraplook(struct block_list *bl,int val); // area
@@ -900,7 +900,7 @@ void clif_divorced(map_session_data* sd, const char* name);
 void clif_callpartner(map_session_data& sd);
 void clif_playBGM( map_session_data& sd, const char* name );
 void clif_soundeffect( struct block_list& bl, const char* name, int type, enum send_target target );
-void clif_parse_ActionRequest_sub( map_session_data& sd, int action_type, int target_id, t_tick tick );
+void clif_parse_ActionRequest_sub( map_session_data& sd, uint8 action_type, int target_id, t_tick tick );
 void clif_parse_LoadEndAck(int fd,map_session_data *sd);
 void clif_hotkeys_send(map_session_data *sd, int tab);
 
@@ -1007,7 +1007,7 @@ void clif_mvp_effect(map_session_data *sd);
 void clif_mvp_item(map_session_data *sd, t_itemid nameid);
 void clif_mvp_exp(map_session_data *sd, t_exp exp);
 void clif_mvp_noitem(map_session_data* sd);
-void clif_changed_dir(struct block_list *bl, enum send_target target);
+void clif_changed_dir(block_list& bl, enum send_target target);
 
 // vending
 void clif_openvendingreq( map_session_data& sd, uint16 num );
