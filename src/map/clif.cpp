@@ -5647,7 +5647,7 @@ void clif_skillinfoblock(map_session_data &sd){
 			p->skills[skillcount].inf = skill_get_inf(id);
 			p->skills[skillcount].level = sd.status.skill[i].lv;
 #if PACKETVER_RE_NUM >= 20190807 || PACKETVER_ZERO_NUM >= 20190918
-			p->skills[skillcount].level2 = 0; //is new skill flag
+			p->skills[skillcount].level2 = sd.status.skill[i].lv;
 #else
 			safestrncpy(p->skills[skillcount].name, skill_get_name(id), NAME_LENGTH);
 #endif
