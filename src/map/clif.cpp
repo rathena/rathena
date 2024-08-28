@@ -4564,32 +4564,27 @@ void clif_joinchatok(map_session_data& sd, chat_data& cd){
 
 	PACKET_ZC_ENTER_ROOM* p = reinterpret_cast<PACKET_ZC_ENTER_ROOM*>( packet_buffer );
 
+	int is_npc = (cd.owner->type == BL_NPC);
 	p->packetType = HEADER_ZC_ENTER_ROOM;
-	p->packetSize = sizeof(p);
+	p->packetSize = sizeof(p) + (sizeof(PACKET_ZC_ENTER_ROOM_sub) * (cd.users + is_npc)) + sizeof(PACKET_ZC_ENTER_ROOM_sub);
 	p->chatId = cd.bl.id;
 	
-	if(cd.owner->type == BL_NPC){
-		p->Members[0].NotLeader = 0;
+	if(is_npc){
+		p->Members[0].Flag = 0;
 		safestrncpy(p->Members[0].Name, ((struct npc_data *)cd.owner)->name, NAME_LENGTH);
-		p->packetSize += sizeof(PACKET_ZC_ENTER_ROOM_sub);
-		for (int i = 1; i < cd.users; i++) {
-			p->Members[i].NotLeader = 1;
-			safestrncpy(p->Members[i].Name, cd.usersd[i]->status.name, NAME_LENGTH);
-			p->packetSize += sizeof(PACKET_ZC_ENTER_ROOM_sub);
+		for (int i = 0; i < cd.users; i++) {
+			p->Members[i+is_npc].Flag = 1;
+			safestrncpy(p->Members[i+is_npc].Name, cd.usersd[i]->status.name, NAME_LENGTH);
 		}
 	}else{
 		for (int i = 0; i < cd.users; i++) {
-			p->Members[i].NotLeader = (i != 0);
+			p->Members[i].Flag = (i != 0);
 			safestrncpy(p->Members[i].Name, cd.usersd[i]->status.name, NAME_LENGTH);
-			p->packetSize += sizeof(PACKET_ZC_ENTER_ROOM_sub);
 		}
 	}
-	// Idk but client don't show my name without that and -1 count
-	p->Members[cd.users].NotLeader = 1;
-	safestrncpy(p->Members[cd.users].Name, sd.status.name, NAME_LENGTH);
-	p->packetSize += sizeof(PACKET_ZC_ENTER_ROOM_sub);
 
 	clif_send(p,p->packetSize,&sd.bl,SELF);
+
 }
 
 

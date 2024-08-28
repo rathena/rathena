@@ -899,7 +899,7 @@ struct PACKET_ZC_REFUSE_ENTER_ROOM {
 DEFINE_PACKET_HEADER(ZC_REFUSE_ENTER_ROOM, 0xda);
 
 struct PACKET_ZC_ENTER_ROOM_sub{
-	uint32 NotLeader;
+	uint32 Flag;
 	char Name[NAME_LENGTH];
 } __attribute__((packed));
 
