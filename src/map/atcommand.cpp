@@ -10320,7 +10320,7 @@ ACMD_FUNC(vip) {
 	pl_sd->vip.time += vipdifftime; //increase or reduce VIP duration
 	
 	if (pl_sd->vip.time <= now) {
-		clif_displaymessage(pl_sd->fd, msg_txt(pl_sd,703)); // GM has removed your VIP time.
+		clif_displaymessage(*pl_sd, msg_txt(pl_sd,703)); // GM has removed your VIP time.
 		clif_displaymessage(*sd, msg_txt(sd,704)); // Player is no longer VIP.
 	} else {
 		int year,month,day,hour,minute,second;
@@ -10328,10 +10328,10 @@ ACMD_FUNC(vip) {
 		
 		split_time((int)(pl_sd->vip.time-now),&year,&month,&day,&hour,&minute,&second);
 		sprintf(atcmd_output,msg_txt(pl_sd,705),year,month,day,hour,minute); // Your VIP status is valid for %d years, %d months, %d days, %d hours and %d minutes.
-		clif_displaymessage(pl_sd->fd,atcmd_output);
+		clif_displaymessage(*pl_sd,atcmd_output);
 		timestamp2string(timestr,20,pl_sd->vip.time,"%Y-%m-%d %H:%M");
 		sprintf(atcmd_output,msg_txt(pl_sd,707),timestr); // You are VIP until : %s
-		clif_displaymessage(pl_sd->fd,atcmd_output);
+		clif_displaymessage(*pl_sd,atcmd_output);
 
 		if (pl_sd != sd) {
 			sprintf(atcmd_output,msg_txt(sd,706),pl_sd->status.name,year,month,day,hour,minute); // Player '%s' is now VIP for %d years, %d months, %d days, %d hours and %d minutes.
