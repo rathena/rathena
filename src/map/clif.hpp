@@ -928,7 +928,7 @@ void clif_class_change_target(struct block_list *bl,int class_, int type, enum s
 #define clif_class_change(bl, class_, type) clif_class_change_target(bl, class_, type, AREA, nullptr)
 #define clif_mob_class_change(md, class_) clif_class_change(&md->bl, class_, 1)
 
-void clif_skillinfoblock(map_session_data *sd);
+void clif_skillinfoblock(map_session_data& sd);
 void clif_skillup(map_session_data *sd, uint16 skill_id, int lv, int range, int upgradable);
 void clif_skillinfo(map_session_data *sd,int skill_id, int inf);
 void clif_addskill(map_session_data *sd, int skill_id);

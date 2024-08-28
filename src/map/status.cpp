@@ -4917,7 +4917,7 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 				clif_deleteskill(sd, b_skill[i].id, true);
 		}
 #endif
-		clif_skillinfoblock(sd);
+		clif_skillinfoblock(*sd);
 	}
 
 	// If the skill is learned, the status is infinite.

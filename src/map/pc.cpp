@@ -9040,7 +9040,7 @@ void pc_skillup(map_session_data *sd,uint16 skill_id)
 			if (pc_checkskill(sd, SG_DEVIL) && ((sd->class_&MAPID_THIRDMASK) == MAPID_STAR_EMPEROR || pc_is_maxjoblv(sd)))
 				clif_status_change(&sd->bl, EFST_DEVIL1, 1, 0, 0, 0, 1); //Permanent blind effect from SG_DEVIL.
 			if (!pc_has_permission(sd, PC_PERM_ALL_SKILL)) // may skill everything at any time anyways, and this would cause a huge slowdown
-				clif_skillinfoblock(sd);
+				clif_skillinfoblock(*sd);
 		}
 		//else
 		//	ShowDebug("Skill Level up failed. ID:%d idx:%d (CID=%d. AID=%d)\n", skill_id, idx, sd->status.char_id, sd->status.account_id);
@@ -9094,7 +9094,7 @@ int pc_allskillup(map_session_data *sd)
 	status_calc_pc(sd,SCO_NONE);
 	//Required because if you could level up all skills previously,
 	//the update will not be sent as only the lv variable changes.
-	clif_skillinfoblock(sd);
+	clif_skillinfoblock(*sd);
 	return 0;
 }
 
@@ -9204,7 +9204,7 @@ int pc_resetlvl(map_session_data* sd,int type)
 		party_send_levelup(sd);
 
 	status_calc_pc(sd, SCO_FORCE);
-	clif_skillinfoblock(sd);
+	clif_skillinfoblock(*sd);
 
 	return 0;
 }
@@ -9397,7 +9397,7 @@ int pc_resetskill(map_session_data* sd, int flag)
 
 	if (flag&1) {
 		clif_updatestatus(*sd,SP_SKILLPOINT);
-		clif_skillinfoblock(sd);
+		clif_skillinfoblock(*sd);
 		status_calc_pc(sd, SCO_FORCE);
 	}
 
@@ -10859,7 +10859,7 @@ bool pc_jobchange(map_session_data *sd,int job, char upper)
 	*/
 	//Update skill tree.
 	pc_calc_skilltree(sd);
-	clif_skillinfoblock(sd);
+	clif_skillinfoblock(*sd);
 
 	if (sd->ed)
 		elemental_delete(sd->ed);
@@ -11100,7 +11100,7 @@ void pc_setoption(map_session_data *sd,int type, int subtype)
 		clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->vd.cloth_color);
 	if( sd->vd.body_style )
 		clif_changelook(&sd->bl,LOOK_BODY2,sd->vd.body_style);
-	clif_skillinfoblock(sd); // Skill list needs to be updated after base change.
+	clif_skillinfoblock(*sd); // Skill list needs to be updated after base change.
 }
 
 /**
@@ -12108,7 +12108,7 @@ bool pc_equipitem(map_session_data *sd,short n,int req_pos,bool equipswitch)
 
 	status_calc_pc(sd,SCO_NONE);
 	if (flag) //Update skill data
-		clif_skillinfoblock(sd);
+		clif_skillinfoblock(*sd);
 
 	//OnEquip script [Skotlex]
 	if (id) {

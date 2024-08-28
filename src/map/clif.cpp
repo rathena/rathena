@@ -5614,62 +5614,66 @@ int clif_insight(struct block_list *bl,va_list ap)
 
 /// Updates whole skill tree (ZC_SKILLINFO_LIST).
 /// 010f <packet len>.W { <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <skill name>.24B <upgradable>.B }*
-void clif_skillinfoblock(map_session_data *sd)
-{
-	int fd;
-	int i,len,id;
+void clif_skillinfoblock(map_session_data &sd){
 
-	nullpo_retv(sd);
-
-	fd = sd->fd;
-	if (!session_isActive(fd))
+	if (!session_isActive(sd.fd))
 		return;
 
-	WFIFOHEAD(fd, MAX_SKILL * 37 + 4);
-	WFIFOW(fd,0) = 0x10f;
+	PACKET_ZC_SKILLINFO_LIST *p = reinterpret_cast<PACKET_ZC_SKILLINFO_LIST*>( packet_buffer );
+
+	p->packetType = HEADER_ZC_SKILLINFO_LIST;
+	p->packetLength = sizeof(p) + sizeof(SKILLDATA);
+	int id;
 	bool haveCallPartnerSkill = false;
-	for ( i = 0, len = 4; i < MAX_SKILL; i++)
-	{
-		if( (id = sd->status.skill[i].id) != 0 )
-		{
-			// workaround for bugreport:5348
-			if (len + 37 > 8192)
-				break;
-			
+	std::vector<int> remaining_skills; // workaround for bugreport:5348;
+	int skillcount = 0;
+	for ( int i = 0; i < MAX_SKILL; i++){
+		if( (id = sd.status.skill[i].id) != 0 ){
+
 			// skip WE_CALLPARTNER and send it in special way
 			if (id == WE_CALLPARTNER) {
 				haveCallPartnerSkill = true;
 				continue;
 			}
-			WFIFOW(fd,len)   = id;
-			WFIFOL(fd,len+2) = skill_get_inf(id);
-			WFIFOW(fd,len+6) = sd->status.skill[i].lv;
-			WFIFOW(fd,len+8) = skill_get_sp(id,sd->status.skill[i].lv);
-			WFIFOW(fd,len+10)= skill_get_range2(&sd->bl,id,sd->status.skill[i].lv,false);
-			safestrncpy(WFIFOCP(fd,len+12), skill_get_name(id), NAME_LENGTH);
-			if(sd->status.skill[i].flag == SKILL_FLAG_PERMANENT)
-				WFIFOB(fd,len+36) = (sd->status.skill[i].lv < skill_tree_get_max(id, sd->status.class_))? 1:0;
+
+			// workaround for bugreport:5348
+			if (p->packetLength + sizeof(SKILLDATA) > 8192){
+				remaining_skills.push_back(id);
+				continue;
+			}
+
+			p->skills[skillcount].id = id;
+			p->skills[skillcount].inf = skill_get_inf(id);
+			p->skills[skillcount].level = sd.status.skill[i].lv;
+#if PACKETVER_RE_NUM >= 20190807 || PACKETVER_ZERO_NUM >= 20190918
+			p->skills[skillcount].level2 = 0;
+#else
+			safestrncpy(p->skills[skillcount].name, skill_get_name(id), NAME_LENGTH);
+#endif
+			p->skills[skillcount].sp = skill_get_sp(id,sd.status.skill[i].lv);
+			p->skills[skillcount].range2 = skill_get_range2(&sd.bl,id,sd.status.skill[i].lv,false);
+			if(sd.status.skill[i].flag == SKILL_FLAG_PERMANENT)
+				p->skills[skillcount].upFlag = (sd.status.skill[i].lv < skill_tree_get_max(id, sd.status.class_))? 1:0;
 			else
-				WFIFOB(fd,len+36) = 0;
-			len += 37;
+				p->skills[skillcount].upFlag = 0;
+
+			p->packetLength += sizeof(SKILLDATA);
+			skillcount++;
 		}
 	}
-	WFIFOW(fd,2)=len;
-	WFIFOSET(fd,len);
+	clif_send(p,p->packetLength,&sd.bl,SELF);
 
 	// adoption fix
 	if (haveCallPartnerSkill) {
-		clif_addskill(sd, WE_CALLPARTNER);
-		clif_skillinfo(sd, WE_CALLPARTNER, 0);
+		clif_addskill(&sd, WE_CALLPARTNER);
+		clif_skillinfo(&sd, WE_CALLPARTNER, 0);
 	}
 
 	// workaround for bugreport:5348; send the remaining skills one by one to bypass packet size limit
-	for ( ; i < MAX_SKILL; i++)
-	{
-		if( (id = sd->status.skill[i].id) != 0 && ( id != WE_CALLPARTNER || !haveCallPartnerSkill ) )
-		{
-			clif_addskill(sd, id);
-			clif_skillinfo(sd, id, 0);
+	if(!remaining_skills.empty()) {
+		for(int skill_id : remaining_skills){
+			clif_addskill(&sd, skill_id);
+			clif_skillinfo(&sd, skill_id, 0);
 		}
 	}
 }
@@ -5729,7 +5733,7 @@ void clif_deleteskill(map_session_data *sd, int skill_id, bool skip_infoblock)
 #if PACKETVER_MAIN_NUM >= 20190807 || PACKETVER_RE_NUM >= 20190807 || PACKETVER_ZERO_NUM >= 20190918
 	if (!skip_infoblock)
 #endif
-		clif_skillinfoblock(sd);
+		clif_skillinfoblock(*sd);
 }
 
 /// Updates a skill in the skill tree (ZC_SKILLINFO_UPDATE).
@@ -10800,7 +10804,7 @@ void clif_parse_LoadEndAck(int fd,map_session_data *sd)
 	if(sd->state.connect_new) {
 		int lv;
 		guild_notice = true;
-		clif_skillinfoblock(sd);
+		clif_skillinfoblock(*sd);
 		clif_hotkeys_send(sd,0);
 #if PACKETVER_MAIN_NUM >= 20190522 || PACKETVER_RE_NUM >= 20190508 || PACKETVER_ZERO_NUM >= 20190605
 		clif_hotkeys_send(sd,1);
