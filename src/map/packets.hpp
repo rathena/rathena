@@ -667,6 +667,15 @@ struct PACKET_ZC_NPCACK_SERVERMOVE {
 DEFINE_PACKET_HEADER(ZC_NPCACK_SERVERMOVE, 0x92)
 #endif
 
+struct PACKET_ZC_UPDATE_MAPINFO {
+	uint16 packetType;
+	uint16 x;
+	uint16 y;
+	uint16 type;
+	char mapname[MAP_NAME_LENGTH_EXT];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_UPDATE_MAPINFO, 0x192)
+
 struct PACKET_ZC_STOPMOVE {
 	int16 packetType;
 	uint32	AID;

@@ -5276,21 +5276,18 @@ void clif_standing(block_list& bl){
 
 /// Inform client(s) about a map-cell change (ZC_UPDATE_MAPINFO).
 /// 0192 <x>.W <y>.W <type>.W <map name>.16B
-void clif_changemapcell(int fd, int16 m, int x, int y, int type, enum send_target target)
-{
-	unsigned char buf[32];
+void clif_changemapcell(int16 m, int x, int y, int type, enum send_target target, map_session_data* sd){
 
-	WBUFW(buf,0) = 0x192;
-	WBUFW(buf,2) = x;
-	WBUFW(buf,4) = y;
-	WBUFW(buf,6) = type;
-	mapindex_getmapname_ext(map_mapid2mapname(m),WBUFCP(buf,8));
+	PACKET_ZC_UPDATE_MAPINFO p{};
 
-	if( session_isActive(fd) )
-	{
-		WFIFOHEAD(fd,packet_len(0x192));
-		memcpy(WFIFOP(fd,0), buf, packet_len(0x192));
-		WFIFOSET(fd,packet_len(0x192));
+	p.packetType = HEADER_ZC_UPDATE_MAPINFO;
+	p.x = x;
+	p.y = y;
+	p.type = type;
+	mapindex_getmapname_ext(map_mapid2mapname(m),p.mapname);
+
+	if( sd != nullptr && target == SELF ) {
+		clif_send(&p,sizeof(p),&sd->bl,target);
 	}
 	else
 	{
@@ -5299,7 +5296,7 @@ void clif_changemapcell(int fd, int16 m, int x, int y, int type, enum send_targe
 		dummy_bl.x = x;
 		dummy_bl.y = y;
 		dummy_bl.m = m;
-		clif_send(buf,packet_len(0x192),&dummy_bl,target);
+		clif_send(&p,sizeof(p),&dummy_bl,target);
 	}
 }
 
@@ -5427,7 +5424,7 @@ void clif_getareachar_skillunit(struct block_list *bl, struct skill_unit *unit, 
 	clif_send(buf, len, bl, target);
 
 	if (unit->group->skill_id == WZ_ICEWALL)
-		clif_changemapcell(fd, unit->bl.m, unit->bl.x, unit->bl.y, 5, SELF);
+		clif_changemapcell(unit->bl.m, unit->bl.x, unit->bl.y, 5, SELF, ((TBL_PC*)bl));
 }
 
 /// 09ca <lenght>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.L <range>.B <visible>.B <skill level>.B (ZC_SKILL_ENTRY5)
@@ -5461,7 +5458,7 @@ static void clif_clearchar_skillunit( skill_unit& unit, map_session_data& sd ){
 	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 
 	if( unit.group && unit.group->skill_id == WZ_ICEWALL ){
-		clif_changemapcell( sd.fd, unit.bl.m, unit.bl.x, unit.bl.y, unit.val2, SELF );
+		clif_changemapcell(unit.bl.m, unit.bl.x, unit.bl.y, unit.val2, SELF, &sd);
 	}
 }
 
@@ -14862,7 +14859,7 @@ void clif_parse_GMChangeMapType(int fd, map_session_data *sd)
 	type = RFIFOW(fd,info->pos[2]);
 
 	map_setgatcell(sd->bl.m,x,y,type);
-	clif_changemapcell(0,sd->bl.m,x,y,type,ALL_SAMEMAP);
+	clif_changemapcell(sd->bl.m,x,y,type,ALL_SAMEMAP);
 	//FIXME: once players leave the map, the client 'forgets' this information.
 }
 
