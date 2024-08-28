@@ -133,7 +133,6 @@
 	packet(0x010e,11);
 	packet(0x010f,-1);
 	packet( HEADER_ZC_ACK_TOUSESKILL, sizeof( PACKET_ZC_ACK_TOUSESKILL ) );
-	packet(0x0111,39);
 	parseable_packet(0x0112,4,clif_parse_SkillUp,2);
 	parseable_packet(0x0113,10,clif_parse_UseSkillToId,2,4,6);
 	packet(0x0114,31);

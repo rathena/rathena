@@ -5659,7 +5659,7 @@ void clif_skillinfoblock(map_session_data *sd)
 
 	// adoption fix
 	if (haveCallPartnerSkill) {
-		clif_addskill(sd, WE_CALLPARTNER);
+		clif_addskill(*sd, WE_CALLPARTNER);
 		clif_skillinfo(sd, WE_CALLPARTNER, 0);
 	}
 
@@ -5668,7 +5668,7 @@ void clif_skillinfoblock(map_session_data *sd)
 	{
 		if( (id = sd->status.skill[i].id) != 0 && ( id != WE_CALLPARTNER || !haveCallPartnerSkill ) )
 		{
-			clif_addskill(sd, id);
+			clif_addskill(*sd, id);
 			clif_skillinfo(sd, id, 0);
 		}
 	}
@@ -5679,32 +5679,39 @@ void clif_skillinfoblock(map_session_data *sd)
 
 /// Adds new skill to the skill tree (ZC_ADD_SKILL).
 /// 0111 <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <skill name>.24B <upgradable>.B
-void clif_addskill(map_session_data *sd, int skill_id)
-{
-	nullpo_retv(sd);
+/// 0b31 <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <upgradable>.B <isnew>.B (ZC_ADD_SKILL2)
+void clif_addskill(map_session_data &sd, int skill_id){
 
-	int fd = sd->fd;
 	uint16 idx = skill_get_index(skill_id);
 
-	if (!session_isActive(fd) || !idx)
+	if (!session_isActive(sd.fd) || !idx)
 		return;
 
-	if( sd->status.skill[idx].id <= 0 )
+	if( sd.status.skill[idx].id <= 0 )
 		return;
 
-	WFIFOHEAD(fd, packet_len(0x111));
-	WFIFOW(fd,0) = 0x111;
-	WFIFOW(fd,2) = skill_id;
-	WFIFOL(fd,4) = skill_get_inf(skill_id);
-	WFIFOW(fd,8) = sd->status.skill[idx].lv;
-	WFIFOW(fd,10) = skill_get_sp(skill_id,sd->status.skill[idx].lv);
-	WFIFOW(fd,12)= skill_get_range2(&sd->bl,skill_id,sd->status.skill[idx].lv,false);
-	safestrncpy(WFIFOCP(fd,14), skill_get_name(skill_id), NAME_LENGTH);
-	if( sd->status.skill[idx].flag == SKILL_FLAG_PERMANENT )
-		WFIFOB(fd,38) = (sd->status.skill[idx].lv < skill_tree_get_max(skill_id, sd->status.class_))? 1:0;
-	else
-		WFIFOB(fd,38) = 0;
-	WFIFOSET(fd,packet_len(0x111));
+	PACKET_ZC_ADD_SKILL p{};
+
+	p.packetType = HEADER_ZC_ADD_SKILL;
+	p.skill.id = skill_id;
+	p.skill.inf = skill_get_inf(skill_id);
+	p.skill.level = sd.status.skill[idx].lv;
+	p.skill.sp = skill_get_sp(skill_id,sd.status.skill[idx].lv);
+	p.skill.range2 = skill_get_range2(&sd.bl,skill_id,sd.status.skill[idx].lv,false);
+#if PACKETVER_RE_NUM >= 20190807 || PACKETVER_ZERO_NUM >= 20190918
+	p.skill.level2 = 1;
+#else
+	safestrncpy(p.skill.name, skill_get_name(skill_id), NAME_LENGTH);
+#endif
+	if( sd.status.skill[idx].flag == SKILL_FLAG_PERMANENT ){
+		if(sd.status.skill[idx].lv < skill_tree_get_max(skill_id, sd.status.class_))
+			p.skill.upFlag = 1;
+		else
+			p.skill.upFlag = 0;
+	} else
+		p.skill.upFlag = 0;
+
+	clif_send(&p,sizeof(p),&sd.bl,SELF);
 }
 
 
