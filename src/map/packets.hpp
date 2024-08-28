@@ -838,6 +838,18 @@ struct PACKET_ZC_PAR_CHANGE_USER {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_PAR_CHANGE_USER, 0x1ab)
 
+struct PACKET_ZC_CHANGE_CHATROOM{
+	uint16 packetType;
+	uint16 packetSize;
+	uint32 ownerId;
+	uint32 chatId;
+	uint16 Limit;
+	uint16 Users;
+	uint8 Flag;
+	char Title[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_CHANGE_CHATROOM, 0xdf);
+
 struct PACKET_ZC_EQUIP_ARROW {
 	int16 packetType;
 	uint16 index;
