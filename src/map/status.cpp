@@ -14788,7 +14788,7 @@ TIMER_FUNC(status_change_timer){
 				uint16 x = sce->val3 >> 16, y = sce->val3 & 0xFFFF;
 
 				if (distance_xy(x, y, bl->x, bl->y) <= skill_get_unit_range(SO_VACUUM_EXTREME, sce->val1) && unit_movepos(bl, x, y, 0, false)) {
-					clif_slide(bl, x, y);
+					clif_slide(*bl, x, y);
 					clif_fixpos( *bl );
 				}
 			}
