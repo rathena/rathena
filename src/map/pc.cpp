@@ -10048,7 +10048,7 @@ bool pc_revive_item(map_session_data *sd) {
 	else
 		pc_delitem(sd, item_position, 1, 0, 1, LOG_TYPE_CONSUME);
 
-	clif_skill_nodamage(&sd->bl, sd->bl, ALL_RESURRECTION, 4, 1);
+	clif_skill_nodamage(&sd->bl, sd->bl, ALL_RESURRECTION, 4, true);
 
 	return true;
 }

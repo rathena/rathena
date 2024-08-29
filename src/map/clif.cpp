@@ -6088,20 +6088,16 @@ int clif_skill_damage2(struct block_list *src,struct block_list *dst,t_tick tick
 /// Non-damaging skill effect
 /// 011a <skill id>.W <heal>.W <dst id>.L <src id>.L <result>.B (ZC_USE_SKILL).
 /// 09cb <skill id>.W <heal>.L <dst id>.L <src id>.L <result>.B (ZC_USE_SKILL2).
-bool clif_skill_nodamage(struct block_list* src,block_list &dst, uint16 skill_id, int heal, t_tick tick){
+bool clif_skill_nodamage( block_list* src, block_list& dst, uint16 skill_id, int32 heal, bool success ){
 
 	PACKET_ZC_USE_SKILL p{};
 
 	p.PacketType = HEADER_ZC_USE_SKILL;
 	p.SKID = skill_id;
-#if PACKETVER_MAIN_NUM >= 20130731 || PACKETVER_RE_NUM >= 20130724 || defined(PACKETVER_ZERO)
-	p.level = min(heal, INT_MAX);
-#else
-	p.level = min(heal, INT16_MAX);
-#endif
+	p.level = std::min( static_cast<decltype(p.level)>( heal ), std::numeric_limits<decltype(p.level)>::max() );
 	p.targetAID = dst.id;
 	p.srcAID = src != nullptr ? src->id : 0;
-	p.result = ( tick != 0 );
+	p.result = success;
 
 	if (disguised(&dst)) {
 		clif_send(&p, sizeof(p), &dst, AREA_WOS);
@@ -6117,7 +6113,7 @@ bool clif_skill_nodamage(struct block_list* src,block_list &dst, uint16 skill_id
 		clif_send(&p, sizeof(p), src, SELF);
 	}
 
-	return ( tick != 0 );
+	return success;
 }
 
 
