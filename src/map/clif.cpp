@@ -12360,13 +12360,8 @@ void clif_parse_TradeRequest(int fd,map_session_data *sd)
 		}
 
 		if (t_sd->state.mail_writing) {
-			std::pair<int,int> old = { sd->trade_partner.id, sd->trade_partner.lv};
 			// Fake trading
-			sd->trade_partner.id = t_sd->status.account_id;
-			sd->trade_partner.lv = t_sd->status.base_level;
 			clif_traderesponse(*sd,TRADE_ACK_BUSY);
-			// Restore old state
-			sd->trade_partner = {old.first, old.second};
 
 			return;
 		}
@@ -16213,7 +16208,7 @@ void clif_parse_Mail_beginwrite( int fd, map_session_data *sd ){
 		return;
 	}
 
-	if( sd->state.storage_flag || sd->state.mail_writing || sd->trade_partner.id ){
+	if( sd->state.storage_flag || sd->state.mail_writing || sd->state.trading ){
 		clif_send_Mail_beginwrite_ack(sd, name, false);
 		return;
 	}
