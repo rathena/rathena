@@ -316,7 +316,6 @@
 	packet(0x01fb,56);
 	packet(0x01fc,-1);
 	parseable_packet( HEADER_CZ_REQ_ITEMREPAIR1, sizeof( struct PACKET_CZ_REQ_ITEMREPAIR1 ), clif_parse_RepairItem, 0 );
-	packet(0x01ff,10);
 	packet(0x0200,26);
 	packet(0x0201,-1);
 	parseable_packet(0x0202,26,clif_parse_FriendsListAdd,2);
