@@ -4250,9 +4250,9 @@ void clif_equipitemack( map_session_data& sd, uint8 flag, int index, int pos ){
 /// @ok : //inversed for v2 v5
 ///     0 = failure
 ///     1 = success
-void clif_unequipitemack(map_session_data& sd,int n,int pos,int ok){
+void clif_unequipitemack( map_session_data& sd, int32 n, int32 pos, bool success ){
 #if PACKETVER >= 20110824
-	ok = ok ? 0 : 1;
+	success = !success;
 #endif
 
 	PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK p{};
@@ -4260,7 +4260,7 @@ void clif_unequipitemack(map_session_data& sd,int n,int pos,int ok){
 	p.packetType = HEADER_ZC_REQ_TAKEOFF_EQUIP_ACK;
 	p.index = client_index(n);
 	p.wearLocation = static_cast<decltype(p.wearLocation)>(pos);
-	p.flag = ok;
+	p.flag = success;
 
 	clif_send(&p,sizeof(p),&sd.bl,SELF);
 }
