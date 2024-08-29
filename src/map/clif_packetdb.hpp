@@ -129,7 +129,6 @@
 	packet(0x010b,6);
 	packet(0x010c,6);
 	packet(0x010d,2);
-	packet(0x010e,11);
 	packet(0x010f,-1);
 	packet( HEADER_ZC_ACK_TOUSESKILL, sizeof( PACKET_ZC_ACK_TOUSESKILL ) );
 	packet(0x0111,39);

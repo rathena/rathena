@@ -5734,23 +5734,23 @@ void clif_deleteskill(map_session_data *sd, int skill_id, bool skip_infoblock)
 
 /// Updates a skill in the skill tree (ZC_SKILLINFO_UPDATE).
 /// 010e <skill id>.W <level>.W <sp cost>.W <attack range>.W <upgradable>.B
-void clif_skillup(map_session_data *sd, uint16 skill_id, int lv, int range, int upgradable) {
-	nullpo_retv(sd);
+void clif_skillup(map_session_data &sd, uint16 skill_id, int lv, int range, int upgradable) {
 
-	int fd = sd->fd;
 	uint16 idx = skill_get_index(skill_id);
 
-	if (!session_isActive(fd) || !idx)
+	if (!session_isActive(sd.fd) || !idx)
 		return;
 	
-	WFIFOHEAD(fd, packet_len(0x10e));
-	WFIFOW(fd, 0) = 0x10e;
-	WFIFOW(fd, 2) = skill_id;
-	WFIFOW(fd, 4) = lv;
-	WFIFOW(fd, 6) = skill_get_sp(skill_id, lv);
-	WFIFOW(fd, 8) = range;
-	WFIFOB(fd, 10) = upgradable;
-	WFIFOSET(fd, packet_len(0x10e));
+	PACKET_ZC_SKILLINFO_UPDATE p{};
+
+	p.packetType = HEADER_ZC_SKILLINFO_UPDATE;
+	p.skillId = skill_id;
+	p.level = lv;
+	p.sp = skill_get_sp(skill_id, lv);
+	p.range2 = range;
+	p.upFlag = upgradable;
+
+	clif_send(&p,sizeof(p),&sd.bl,SELF);
 }
 
 
