@@ -4691,6 +4691,7 @@ void clif_traderequest(map_session_data& sd, const char* name){
 ///     4 = Cancel
 ///     5 = Busy
 void clif_traderesponse(map_session_data& sd, uint8 type){
+
 	PACKET_ZC_ACK_EXCHANGE_ITEM p{};
 
 	p.packetType = HEADER_ZC_ACK_EXCHANGE_ITEM;
