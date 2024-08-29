@@ -996,6 +996,14 @@ struct PACKET_ZC_SKILL_UPDATE {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_SKILL_UPDATE, 0x1ac);
 
+struct PACKET_ZC_HIGHJUMP{
+	uint16 packetType;
+	uint32 srcId;
+	uint16 x;
+	uint16 y;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_HIGHJUMP, 0x01ff);
+
 #if PACKETVER >= 20141022
 struct PACKET_ZC_RECOVERY {
 	int16 packetType;
