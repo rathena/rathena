@@ -6166,9 +6166,9 @@ void clif_skill_warppoint( map_session_data& sd, uint16 skill_id, uint16 skill_l
 	p->skillId = skill_id;
 
 	std::vector<const char*> maps{ map1, map2, map3, map4 };
-	for(short i=0; i < maps.size();i++){
-		if( strcmp( "", maps[i] ) != 0 ){
-			mapindex_getmapname_ext( maps[i], p->maps[memoCount++].map );
+	for(const char* map : maps){
+		if( strcmp( "", map ) != 0 ){
+			mapindex_getmapname_ext( map, p->maps[memoCount++].map );
 		}
 	}
 	maps.clear();
