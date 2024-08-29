@@ -6096,10 +6096,10 @@ bool clif_skill_nodamage( block_list* src, block_list& dst, uint16 skill_id, int
 	p.SKID = skill_id;
 	p.level = std::min( static_cast<decltype(p.level)>( heal ), std::numeric_limits<decltype(p.level)>::max() );
 	p.targetAID = dst.id;
+	p.result = success;
 	p.srcAID = 0;
 	if(src != nullptr)
 		p.srcAID = src->id;
-	p.result = success;
 
 	if (disguised(&dst)) {
 		clif_send(&p, sizeof(p), &dst, AREA_WOS);
@@ -15017,7 +15017,7 @@ void clif_parse_NoviceExplosionSpirits(int fd, map_session_data *sd)
 
 			if( percent && ( percent%100 ) == 0 ) {// 10.0%, 20.0%, ..., 90.0%
 				sc_start(&sd->bl,&sd->bl, SC_EXPLOSIONSPIRITS, 100, 17, skill_get_time(MO_EXPLOSIONSPIRITS, 5)); //Lv17-> +50 critical (noted by Poki) [Skotlex]
-				clif_skill_nodamage(&sd->bl, sd->bl, MO_EXPLOSIONSPIRITS, 5, 1);  // prayer always shows successful Lv5 cast and disregards noskill restrictions
+				clif_skill_nodamage(&sd->bl, sd->bl, MO_EXPLOSIONSPIRITS, 5);  // prayer always shows successful Lv5 cast and disregards noskill restrictions
 			}
 		}
 	}

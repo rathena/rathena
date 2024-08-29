@@ -1290,7 +1290,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 
 	// Weapon Blocking can be triggered while the above statuses are active.
 	if ((sce = sc->getSCE(SC_WEAPONBLOCKING)) && flag & (BF_SHORT | BF_WEAPON) && rnd() % 100 < sce->val2) {
-		clif_skill_nodamage(target, *src, GC_WEAPONBLOCKING, sce->val1, 1);
+		clif_skill_nodamage(target, *src, GC_WEAPONBLOCKING, sce->val1);
 		sc_start(src, target, SC_WEAPONBLOCK_ON, 100, src->id, skill_get_time2(GC_WEAPONBLOCKING, sce->val1));
 		d->dmg_lv = ATK_BLOCK;
 		return false;
@@ -1407,12 +1407,12 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 			(d_bl->type == BL_PC && ((TBL_PC*)d_bl)->devotion[sce_d->val2] == target->id)) &&
 			check_distance_bl(target, d_bl, sce_d->val3))
 		{ //If player is target of devotion, show guard effect on the devotion caster rather than the target
-			clif_skill_nodamage(d_bl, *d_bl, CR_AUTOGUARD, sce->val1, 1);
+			clif_skill_nodamage(d_bl, *d_bl, CR_AUTOGUARD, sce->val1);
 			unit_set_walkdelay(d_bl, gettick(), delay, 1);
 			d->dmg_lv = ATK_MISS;
 			return false;
 		} else {
-			clif_skill_nodamage(target, *target, CR_AUTOGUARD, sce->val1, 1);
+			clif_skill_nodamage(target, *target, CR_AUTOGUARD, sce->val1);
 			unit_set_walkdelay(target, gettick(), delay, 1);
 #ifdef RENEWAL
 			if (sc->getSCE(SC_SHRINK))
@@ -1455,7 +1455,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 		return false;
 
 	if ((sce = sc->getSCE(SC_PARRYING)) && flag&BF_WEAPON && skill_id != WS_CARTTERMINATION && rnd() % 100 < sce->val2) {
-		clif_skill_nodamage(target, *target, LK_PARRYING, sce->val1, 1);
+		clif_skill_nodamage(target, *target, LK_PARRYING, sce->val1);
 
 		if (skill_id == LK_PARRYING) {
 			unit_data *ud = unit_bl2ud(target);
@@ -1471,7 +1471,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 
 		if (sd && pc_issit(sd))
 			pc_setstand(sd, true); //Stand it to dodge.
-		clif_skill_nodamage(target, *target, TK_DODGE, 1, 1);
+		clif_skill_nodamage(target, *target, TK_DODGE, 1);
 		sc_start4(src, target, SC_COMBO, 100, TK_JUMPKICK, src->id, 1, 0, 2000);
 		return false;
 	}
@@ -6990,7 +6990,7 @@ static void battle_calc_weapon_final_atk_modifiers(struct Damage* wd, struct blo
 		)
 	{
 		ATK_RATER(wd->damage, 50)
-		clif_skill_nodamage(target, *target,ST_REJECTSWORD, tsc->getSCE(SC_REJECTSWORD)->val1,1);
+		clif_skill_nodamage(target, *target,ST_REJECTSWORD, tsc->getSCE(SC_REJECTSWORD)->val1);
 		battle_fix_damage(target,src,wd->damage,clif_damage(*target,*src,gettick(),0,0,wd->damage,0,DMG_NORMAL,0,false),ST_REJECTSWORD);
 		if (status_isdead(*target))
 			return;
@@ -9434,7 +9434,7 @@ struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct bl
 			status_change_entry *tsce = tsc->getSCE(SC_WEAPONBLOCKING);
 
 			if (attack_type == BF_WEAPON && rnd() % 100 < tsce->val2) {
-				clif_skill_nodamage(target, *bl, GC_WEAPONBLOCKING, tsce->val1, 1);
+				clif_skill_nodamage(target, *bl, GC_WEAPONBLOCKING, tsce->val1);
 				sc_start(bl, target, SC_WEAPONBLOCK_ON, 100, bl->id, skill_get_time2(GC_WEAPONBLOCKING, tsce->val1));
 			}
 		}
