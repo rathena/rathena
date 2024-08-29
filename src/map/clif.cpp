@@ -5757,29 +5757,27 @@ void clif_skillup(map_session_data *sd, uint16 skill_id, int lv, int range, int 
 /// Updates a skill in the skill tree
 /// 07e1 <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <upgradable>.B (ZC_SKILLINFO_UPDATE2)
 /// 0b33 <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <upgradable>.B <level2>.W (ZC_SKILLINFO_UPDATE3)
-void clif_skillinfo(map_session_data& sd,int skill_id, int inf){
+void clif_skillinfo( map_session_data& sd, int32 skill_id ){
 #if PACKETVER >= 20090715
 	uint16 idx = skill_get_index(skill_id);
 
-	if (!session_isActive(sd.fd) || !idx)
+	if (idx == 0 || !session_isActive(sd.fd))
 		return;
 
 	PACKET_ZC_SKILLINFO_UPDATE2 p{};
 
 	p.packetType = HEADER_ZC_SKILLINFO_UPDATE2;	
-	p.id = skill_id;
+	p.id = static_cast<uint16>( skill_id );
 	p.level = sd.status.skill[idx].lv;
-	p.sp = skill_get_sp(skill_id,sd.status.skill[idx].lv);
-	p.range2 = skill_get_range2(&sd.bl,skill_id,sd.status.skill[idx].lv,false);
-	p.upFlag = 0;
-
-	if(inf >= 0)
-		p.inf = inf;
+	p.sp = static_cast<uint16>( skill_get_sp(skill_id,sd.status.skill[idx].lv) );
+	p.range2 = static_cast<uint16>( skill_get_range2(&sd.bl,skill_id,sd.status.skill[idx].lv,false) );
 	else
-		p.inf = skill_get_inf(skill_id);
+	p.inf = skill_get_inf(skill_id);
 
 	if( sd.status.skill[idx].flag == SKILL_FLAG_PERMANENT && sd.status.skill[idx].lv < skill_tree_get_max(skill_id, sd.status.class_) )
-		p.upFlag = 1;			
+		p.upFlag = 1;
+	else
+		p.upFlag = 0;
 
 #if PACKETVER_RE_NUM >= 20190807 || PACKETVER_ZERO_NUM >= 20190918
 	p.level2 = p.level;
