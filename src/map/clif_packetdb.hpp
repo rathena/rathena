@@ -141,7 +141,6 @@
 	packet(0x0117,18);
 	parseable_packet(0x0118,2,clif_parse_StopAttack,0);
 	packet(0x0119,13);
-	packet(0x011a,15);
 	parseable_packet(0x011b,20,clif_parse_UseSkillMap,2,4);
 	packet(0x011c,68);
 	parseable_packet(0x011d,2,clif_parse_RequestMemo,0);
@@ -1930,7 +1929,6 @@
 // 2013-07-31cRagexe
 #if PACKETVER >= 20130731
 	packet(0x09ca,23); // ZC_SKILL_ENTRY5
-	packet(0x09cb,17); // ZC_USE_SKILL2
 #endif
 
 // 2013-08-07Ragexe
