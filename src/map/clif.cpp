@@ -4690,7 +4690,7 @@ void clif_traderequest(map_session_data& sd, const char* name){
 ///     3 = Accept
 ///     4 = Cancel
 ///     5 = Busy
-void clif_traderesponse( map_session_data& sd, e_ack_trade_response result ){
+void clif_traderesponse( map_session_data& sd, uint8 result ){
 
 	PACKET_ZC_ACK_EXCHANGE_ITEM p{};
 
