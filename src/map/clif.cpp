@@ -5734,11 +5734,11 @@ void clif_deleteskill(map_session_data *sd, int skill_id, bool skip_infoblock)
 
 /// Updates a skill in the skill tree (ZC_SKILLINFO_UPDATE).
 /// 010e <skill id>.W <level>.W <sp cost>.W <attack range>.W <upgradable>.B
-void clif_skillup(map_session_data &sd, uint16 skill_id, int lv, int range, int upgradable) {
+void clif_skillup(map_session_data &sd, uint16 skill_id, int lv, int range, bool upgradable) {
 
 	uint16 idx = skill_get_index(skill_id);
 
-	if (!session_isActive(sd.fd) || !idx)
+	if (idx == 0 || !session_isActive(sd.fd))
 		return;
 	
 	PACKET_ZC_SKILLINFO_UPDATE p{};
@@ -5748,7 +5748,7 @@ void clif_skillup(map_session_data &sd, uint16 skill_id, int lv, int range, int 
 	p.level = lv;
 	p.sp = skill_get_sp(skill_id, lv);
 	p.range2 = range;
-	p.upFlag = upgradable;
+	p.upFlag = static_cast<decltype(p.upFlag)>(upgradable);
 
 	clif_send(&p,sizeof(p),&sd.bl,SELF);
 }
