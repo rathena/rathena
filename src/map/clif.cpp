@@ -6156,18 +6156,17 @@ void clif_skill_poseffect(struct block_list *src,uint16 skill_id,int val,int x,i
 
 /// Presents a list of available warp destinations.
 /// 011c <skill id>.W { <map name>.16B }*4 (ZC_WARPLIST)
-/// 0abe <lenght>.W <skill id>.W { <map name>.16B }*4 (ZC_WARPLIST2)
-void clif_skill_warppoint( map_session_data& sd, uint16 skill_id, uint16 skill_lv, std::vector<const char*> maps){
+/// 0abe <lenght>.W <skill id>.W { <map name>.16B }*? (ZC_WARPLIST2)
+void clif_skill_warppoint( map_session_data& sd, uint16 skill_id, uint16 skill_lv, std::vector<std::string> maps){
 
 	PACKET_ZC_WARPLIST *p = reinterpret_cast<PACKET_ZC_WARPLIST*>( packet_buffer );
 
-	int len, memoCount=0;
 	p->packetType = HEADER_ZC_WARPLIST;
 	p->skillId = skill_id;
-
-	for(const char* map : maps){
-		if( strcmp( "", map ) != 0 ){
-			mapindex_getmapname_ext( map, p->maps[memoCount++].map );
+	int len, memoCount=0;
+	for(std::string map : maps){
+		if( !map.empty() ){
+			mapindex_getmapname_ext( map.c_str(), p->maps[memoCount++].map );
 		}
 	}
 #if PACKETVER_MAIN_NUM >= 20170502 || PACKETVER_RE_NUM >= 20170419 || defined(PACKETVER_ZERO)
