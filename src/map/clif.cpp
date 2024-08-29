@@ -5852,9 +5852,10 @@ void clif_skillcasting(block_list& src, int dst_id, int dst_x, int dst_y, uint16
 	} else
 		clif_send(&p,sizeof(p), &src, AREA);
 
+#if PACKETVER >= 20151223
 	if( skill_get_inf2( skill_id, INF2_SHOWSCALE ) )
 		clif_skill_scale(&src, src.id, src.x, src.y, skill_id, skill_lv, casttime);
-
+#endif
 }
 
 
