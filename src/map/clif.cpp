@@ -6088,46 +6088,36 @@ int clif_skill_damage2(struct block_list *src,struct block_list *dst,t_tick tick
 /// Non-damaging skill effect
 /// 011a <skill id>.W <heal>.W <dst id>.L <src id>.L <result>.B (ZC_USE_SKILL).
 /// 09cb <skill id>.W <heal>.L <dst id>.L <src id>.L <result>.B (ZC_USE_SKILL2).
-bool clif_skill_nodamage(struct block_list *src,struct block_list *dst, uint16 skill_id, int heal, t_tick tick)
-{
-	unsigned char buf[17];
-#if PACKETVER < 20130731
-	const int cmd = 0x11a;
+bool clif_skill_nodamage(struct block_list* src,block_list &dst, uint16 skill_id, int heal, t_tick tick){
+
+	PACKET_ZC_USE_SKILL p{};
+
+	p.PacketType = HEADER_ZC_USE_SKILL;
+	p.SKID = skill_id;
+#if PACKETVER_MAIN_NUM >= 20130731 || PACKETVER_RE_NUM >= 20130724 || defined(PACKETVER_ZERO)
+	p.level = min(heal, INT_MAX);
 #else
-	const int cmd = 0x9cb;
+	p.level = min(heal, INT16_MAX);
 #endif
-	int offset = 0;
-	bool success = ( tick != 0 );
+	p.targetAID = dst.id;
+	p.srcAID = src != nullptr ? src->id : 0;
+	p.result = ( tick != 0 );
 
-	nullpo_ret(dst);
-
-	WBUFW(buf,0) = cmd;
-	WBUFW(buf,2) = skill_id;
-#if PACKETVER < 20130731
-	WBUFW(buf,4) = min(heal, INT16_MAX);
-#else
-	WBUFL(buf,4) = min(heal, INT32_MAX);
-	offset += 2;
-#endif
-	WBUFL(buf,6+offset) = dst->id;
-	WBUFL(buf,10+offset) = src ? src->id : 0;
-	WBUFB(buf,14+offset) = success;
-
-	if (disguised(dst)) {
-		clif_send(buf, packet_len(cmd), dst, AREA_WOS);
-		WBUFL(buf,6+offset) = disguised_bl_id(dst->id);
-		clif_send(buf, packet_len(cmd), dst, SELF);
+	if (disguised(&dst)) {
+		clif_send(&p, sizeof(p), &dst, AREA_WOS);
+		p.targetAID = disguised_bl_id(dst.id);
+		clif_send(&p, sizeof(p), &dst, SELF);
 	} else
-		clif_send(buf, packet_len(cmd), dst, AREA);
+		clif_send(&p, sizeof(p), &dst, AREA);
 
-	if(src && disguised(src)) {
-		WBUFL(buf,10+offset) = disguised_bl_id(src->id);
-		if (disguised(dst))
-			WBUFL(buf,6+offset) = dst->id;
-		clif_send(buf, packet_len(cmd), src, SELF);
+	if(src != nullptr && disguised(src)) {
+		p.srcAID = disguised_bl_id(src->id);
+		if (disguised(&dst))
+			p.targetAID = dst.id;
+		clif_send(&p, sizeof(p), src, SELF);
 	}
 
-	return success;
+	return ( tick != 0 );
 }
 
 
@@ -15029,7 +15019,7 @@ void clif_parse_NoviceExplosionSpirits(int fd, map_session_data *sd)
 
 			if( percent && ( percent%100 ) == 0 ) {// 10.0%, 20.0%, ..., 90.0%
 				sc_start(&sd->bl,&sd->bl, SC_EXPLOSIONSPIRITS, 100, 17, skill_get_time(MO_EXPLOSIONSPIRITS, 5)); //Lv17-> +50 critical (noted by Poki) [Skotlex]
-				clif_skill_nodamage(&sd->bl, &sd->bl, MO_EXPLOSIONSPIRITS, 5, 1);  // prayer always shows successful Lv5 cast and disregards noskill restrictions
+				clif_skill_nodamage(&sd->bl, sd->bl, MO_EXPLOSIONSPIRITS, 5, 1);  // prayer always shows successful Lv5 cast and disregards noskill restrictions
 			}
 		}
 	}
