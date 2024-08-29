@@ -5754,9 +5754,9 @@ void clif_skillup(map_session_data *sd, uint16 skill_id, int lv, int range, int 
 }
 
 
-/// Updates a skill in the skill tree (ZC_SKILLINFO_UPDATE2).
-/// 07e1 <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <upgradable>.B
-/// 0b33 <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <upgradable>.B <level2>.W
+/// Updates a skill in the skill tree
+/// 07e1 <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <upgradable>.B (ZC_SKILLINFO_UPDATE2)
+/// 0b33 <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <upgradable>.B <level2>.W (ZC_SKILLINFO_UPDATE3)
 void clif_skillinfo(map_session_data& sd,int skill_id, int inf){
 #if PACKETVER >= 20090715
 	uint16 idx = skill_get_index(skill_id);
