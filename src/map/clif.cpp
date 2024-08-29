@@ -6096,7 +6096,9 @@ bool clif_skill_nodamage( block_list* src, block_list& dst, uint16 skill_id, int
 	p.SKID = skill_id;
 	p.level = std::min( static_cast<decltype(p.level)>( heal ), std::numeric_limits<decltype(p.level)>::max() );
 	p.targetAID = dst.id;
-	p.srcAID = src != nullptr ? src->id : 0;
+	p.srcAID = 0;
+	if(src != nullptr)
+		p.srcAID = src->id;
 	p.result = success;
 
 	if (disguised(&dst)) {
