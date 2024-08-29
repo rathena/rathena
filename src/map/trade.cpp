@@ -162,8 +162,8 @@ void trade_tradeack(map_session_data *sd, int type)
 	tsd->state.trading = 1;
 	memset(&sd->deal, 0, sizeof(sd->deal));
 	memset(&tsd->deal, 0, sizeof(tsd->deal));
-	clif_traderesponse(*tsd, type);
-	clif_traderesponse(*sd, type);
+	clif_traderesponse(*tsd, static_cast<e_ack_trade_response>( type ));
+	clif_traderesponse(*sd, static_cast<e_ack_trade_response>( type ));
 }
 
 /**

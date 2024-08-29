@@ -4690,12 +4690,12 @@ void clif_traderequest(map_session_data& sd, const char* name){
 ///     3 = Accept
 ///     4 = Cancel
 ///     5 = Busy
-void clif_traderesponse(map_session_data& sd, uint8 type){
+void clif_traderesponse( map_session_data& sd, e_ack_trade_response result ){
 
 	PACKET_ZC_ACK_EXCHANGE_ITEM p{};
 
 	p.packetType = HEADER_ZC_ACK_EXCHANGE_ITEM;
-	p.result = type;
+	p.result = static_cast<decltype(p.result)>( result );
 
 #if PACKETVER > 6
 	// The client doesn't need this info to sucessfully trade, just to show info
