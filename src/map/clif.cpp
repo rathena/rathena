@@ -4613,15 +4613,15 @@ void clif_addchat(chat_data& cd,map_session_data &sd){
 ///     1 = normal
 void clif_changechatowner(chat_data& cd, map_session_data& sd){
 
-	PACKET_ZC_ROLE_CHANGE p{};
-
-	p.packetType = p.newOwner.packetType = HEADER_ZC_ROLE_CHANGE;
-	p.flag = 1;
-	p.newOwner.flag = 0;
-	safestrncpy(p.name,cd.usersd[0]->status.name,NAME_LENGTH);
-	safestrncpy(p.newOwner.name,sd.status.name,NAME_LENGTH);
-
-	clif_send(&p,sizeof(p),&sd.bl,CHAT);
+	PACKET_ZC_ROLE_CHANGE owner{};
+	PACKET_ZC_ROLE_CHANGE newowner{};
+	owner.packetType = newowner.packetType = HEADER_ZC_ROLE_CHANGE;
+	owner.flag = 1;
+	newowner.flag = 0;
+	safestrncpy(owner.name,cd.usersd[0]->status.name,NAME_LENGTH);
+	safestrncpy(newowner.name,sd.status.name,NAME_LENGTH);
+	clif_send(&owner,sizeof(owner),&cd.usersd[0]->bl,CHAT);
+	clif_send(&newowner,sizeof(newowner),&sd.bl,CHAT);
 }
 
 
