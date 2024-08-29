@@ -6157,7 +6157,7 @@ void clif_skill_poseffect(struct block_list *src,uint16 skill_id,int val,int x,i
 /// Presents a list of available warp destinations.
 /// 011c <skill id>.W { <map name>.16B }*4 (ZC_WARPLIST)
 /// 0abe <lenght>.W <skill id>.W { <map name>.16B }*4 (ZC_WARPLIST2)
-void clif_skill_warppoint( map_session_data& sd, uint16 skill_id, uint16 skill_lv, const char* map1, const char* map2, const char* map3, const char* map4 ){
+void clif_skill_warppoint( map_session_data& sd, uint16 skill_id, uint16 skill_lv, std::vector<const char*> maps){
 
 	PACKET_ZC_WARPLIST *p = reinterpret_cast<PACKET_ZC_WARPLIST*>( packet_buffer );
 
@@ -6165,13 +6165,11 @@ void clif_skill_warppoint( map_session_data& sd, uint16 skill_id, uint16 skill_l
 	p->packetType = HEADER_ZC_WARPLIST;
 	p->skillId = skill_id;
 
-	std::vector<const char*> maps{ map1, map2, map3, map4 };
 	for(const char* map : maps){
 		if( strcmp( "", map ) != 0 ){
 			mapindex_getmapname_ext( map, p->maps[memoCount++].map );
 		}
 	}
-	maps.clear();
 #if PACKETVER_MAIN_NUM >= 20170502 || PACKETVER_RE_NUM >= 20170419 || defined(PACKETVER_ZERO)
 	len = sizeof(PACKET_ZC_WARPLIST) + (sizeof(PACKET_ZC_WARPLIST_sub) * memoCount);
 	p->packetLength = len;

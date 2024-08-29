@@ -9341,10 +9341,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			}
 
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
+			std::vector<const char*> maps{ "Random" };
 			if( skill_lv == 1 && skill_id != ALL_ODINS_RECALL )
-				clif_skill_warppoint( *sd, skill_id, skill_lv, "Random" );
+				clif_skill_warppoint(*sd, skill_id, skill_lv, maps);
 			else
-				clif_skill_warppoint( *sd, skill_id, skill_lv, "Random", sd->status.save_point.map );
+			{
+				maps.push_back(sd->status.save_point.map);
+				clif_skill_warppoint(*sd, skill_id, skill_lv, maps);
+			}
 		} else
 			unit_warp(bl,-1,-1,-1,CLR_TELEPORT);
 		break;
@@ -14038,11 +14042,13 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case AL_WARP:
 		if(sd)
 		{
-			clif_skill_warppoint(*sd, skill_id, skill_lv, sd->status.save_point.map,
-				(skill_lv >= 2) ? sd->status.memo_point[0].map : "",
-				(skill_lv >= 3) ? sd->status.memo_point[1].map : "",
-				(skill_lv >= 4) ? sd->status.memo_point[2].map : ""
-			);
+			std::vector<const char*> maps{ sd->status.save_point.map };
+			if(skill_lv >= 2)
+			{
+				for (int m = 1; m < skill_lv; m++)
+					maps.push_back(sd->status.memo_point[m-1].map);
+			}
+			clif_skill_warppoint(*sd, skill_id, skill_lv, maps);
 		}
 		if( sc && sc->getSCE(SC_CURSEDCIRCLE_ATKER) ) //Should only remove after the skill has been casted.
 			status_change_end(src,SC_CURSEDCIRCLE_ATKER);
