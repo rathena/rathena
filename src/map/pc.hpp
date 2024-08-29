@@ -706,7 +706,11 @@ public:
 	int united_soul[MAX_UNITED_SOULS]; // Stores the account ID's of character's who's soul is united.
 	int servant_sign[MAX_SERVANT_SIGN]; // Stores the account ID's of character's with a servant sign.
 
-	int trade_partner;
+	struct{
+		int id;
+		int lv;
+	}trade_partner;
+
 	struct s_deal {
 		struct s_item {
 			short index, amount;

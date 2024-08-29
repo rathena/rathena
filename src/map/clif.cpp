@@ -56,7 +56,6 @@
 #include "skill.hpp"
 #include "status.hpp"
 #include "storage.hpp"
-#include "trade.hpp"
 #include "unit.hpp"
 #include "vending.hpp"
 
@@ -4655,24 +4654,17 @@ void clif_leavechat(struct chat_data* cd, map_session_data* sd, bool flag)
 
 /// Opens a trade request window from char 'name'.
 /// 00e5 <nick>.24B (ZC_REQ_EXCHANGE_ITEM)
-/// 01f4 <nick>.24B <charid>.L <baselvl>.W (ZC_REQ_EXCHANGE_ITEM2)
+/// 01f4 <nick>.24B <targetid>.L <baselvl>.W (ZC_REQ_EXCHANGE_ITEM2)
 void clif_traderequest(map_session_data& sd, const char* name){
 
 	PACKET_ZC_REQ_EXCHANGE_ITEM p{};
 
 	p.packetType = HEADER_ZC_REQ_EXCHANGE_ITEM;
 	safestrncpy(p.requesterName, name, sizeof(p.requesterName));
-#if PACKETVER > 6
-	// The client doesn't need this info to sucessfully trade, just to show info
-	map_session_data* tsd = map_id2sd(sd.trade_partner);
 
-	if( tsd != nullptr ){
-		p.targetId = tsd->status.char_id;
-		p.targetLv = tsd->status.base_level;
-	}else{
-		p.targetId = 0;
-		p.targetLv = 0;
-	}
+#if PACKETVER > 6
+	p.targetId = sd.trade_partner.id; // Client generate an random char[5] with this info
+	p.targetLv = sd.trade_partner.lv;
 #endif
 
 	clif_send(&p,sizeof(p),&sd.bl,SELF);
@@ -4682,7 +4674,7 @@ void clif_traderequest(map_session_data& sd, const char* name){
 
 /// Reply to a trade-request.
 /// 00e7 <result>.B (ZC_ACK_EXCHANGE_ITEM)
-/// 01f5 <result>.B <charid>.L <baselvl>.W (ZC_ACK_EXCHANGE_ITEM2)
+/// 01f5 <result>.B <targetid>.L <baselvl>.W (ZC_ACK_EXCHANGE_ITEM2)
 /// result:
 ///     0 = Char is too far
 ///     1 = Character does not exist
@@ -4690,7 +4682,7 @@ void clif_traderequest(map_session_data& sd, const char* name){
 ///     3 = Accept
 ///     4 = Cancel
 ///     5 = Busy
-void clif_traderesponse( map_session_data& sd, uint8 result ){
+void clif_traderesponse( map_session_data& sd, e_ack_trade_response result ){
 
 	PACKET_ZC_ACK_EXCHANGE_ITEM p{};
 
@@ -4698,16 +4690,8 @@ void clif_traderesponse( map_session_data& sd, uint8 result ){
 	p.result = static_cast<decltype(p.result)>( result );
 
 #if PACKETVER > 6
-	// The client doesn't need this info to sucessfully trade, just to show info
-	map_session_data* tsd = map_id2sd(sd.trade_partner);
-
-	if( tsd != nullptr ){
-		p.targetId = tsd->status.char_id;
-		p.targetLv = tsd->status.base_level;
-	}else{
-		p.targetId = 0;
-		p.targetLv = 0;
-	}
+	p.targetId = sd.trade_partner.id; // Client generate an random char[5] with this info
+	p.targetLv = sd.trade_partner.lv;
 #endif
 
 	clif_send(&p,sizeof(p),&sd.bl,SELF);
@@ -12376,13 +12360,13 @@ void clif_parse_TradeRequest(int fd,map_session_data *sd)
 		}
 
 		if (t_sd->state.mail_writing) {
-			int old = sd->trade_partner;
-
+			std::pair<int,int> old = { sd->trade_partner.id, sd->trade_partner.lv};
 			// Fake trading
-			sd->trade_partner = t_sd->status.account_id;
+			sd->trade_partner.id = t_sd->status.account_id;
+			sd->trade_partner.lv = t_sd->status.base_level;
 			clif_traderesponse(*sd,TRADE_ACK_BUSY);
 			// Restore old state
-			sd->trade_partner = old;
+			sd->trade_partner = {old.first, old.second};
 
 			return;
 		}
@@ -16229,7 +16213,7 @@ void clif_parse_Mail_beginwrite( int fd, map_session_data *sd ){
 		return;
 	}
 
-	if( sd->state.storage_flag || sd->state.mail_writing || sd->trade_partner ){
+	if( sd->state.storage_flag || sd->state.mail_writing || sd->trade_partner.id ){
 		clif_send_Mail_beginwrite_ack(sd, name, false);
 		return;
 	}
