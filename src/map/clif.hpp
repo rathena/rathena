@@ -943,7 +943,7 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,t_tick tick,
 bool clif_skill_nodamage(struct block_list *src,struct block_list *dst,uint16 skill_id,int heal,t_tick tick);
 void clif_skill_poseffect(struct block_list *src,uint16 skill_id,int val,int x,int y,t_tick tick);
 void clif_skill_estimation(map_session_data *sd,struct block_list *dst);
-void clif_skill_warppoint(map_session_data& sd, uint16 skill_id, uint16 skill_lv, std::vector<std::string> maps );
+void clif_skill_warppoint(map_session_data& sd, uint16 skill_id, uint16 skill_lv );
 void clif_skill_memomessage( map_session_data& sd, e_ack_remember_warppoint_result result );
 void clif_skill_teleportmessage( map_session_data& sd, e_notify_mapinfo_result result );
 void clif_skill_produce_mix_list( map_session_data& sd, int skill_id, int trigger );

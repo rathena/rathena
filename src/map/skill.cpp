@@ -9318,7 +9318,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case AL_TELEPORT:
 	case ALL_ODINS_RECALL:
-		if(sd)
+		if(sd != nullptr)
 		{
 			if (map_getmapflag(bl->m, MF_NOTELEPORT) && skill_lv <= 2) {
 				clif_skill_teleportmessage( *sd, NOTIFY_MAPINFO_CANT_TP );
@@ -9341,14 +9341,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			}
 
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-			std::vector<std::string> maps{ "Random" };
-			if( skill_lv == 1 && skill_id != ALL_ODINS_RECALL )
-				clif_skill_warppoint(*sd, skill_id, skill_lv, maps);
-			else
-			{
-				maps.push_back(sd->status.save_point.map);
-				clif_skill_warppoint(*sd, skill_id, skill_lv, maps);
-			}
+			clif_skill_warppoint(*sd, skill_id, skill_lv);
 		} else
 			unit_warp(bl,-1,-1,-1,CLR_TELEPORT);
 		break;
@@ -14040,15 +14033,8 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	break;
 
 	case AL_WARP:
-		if(sd)
-		{
-			std::vector<std::string> maps{ sd->status.save_point.map };
-			if(skill_lv >= 2)
-			{
-				for (int m = 1; m < skill_lv; m++)
-					maps.push_back(sd->status.memo_point[m-1].map);
-			}
-			clif_skill_warppoint(*sd, skill_id, skill_lv, maps);
+		if(sd != nullptr) {
+			clif_skill_warppoint(*sd, skill_id, skill_lv);
 		}
 		if( sc && sc->getSCE(SC_CURSEDCIRCLE_ATKER) ) //Should only remove after the skill has been casted.
 			status_change_end(src,SC_CURSEDCIRCLE_ATKER);

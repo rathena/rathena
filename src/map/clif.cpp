@@ -6157,12 +6157,36 @@ void clif_skill_poseffect(struct block_list *src,uint16 skill_id,int val,int x,i
 /// Presents a list of available warp destinations.
 /// 011c <skill id>.W { <map name>.16B }*4 (ZC_WARPLIST)
 /// 0abe <lenght>.W <skill id>.W { <map name>.16B }*? (ZC_WARPLIST2)
-void clif_skill_warppoint( map_session_data& sd, uint16 skill_id, uint16 skill_lv, std::vector<std::string> maps){
+void clif_skill_warppoint( map_session_data& sd, uint16 skill_id, uint16 skill_lv){
+
+	std::vector<std::string> maps;
+
+	switch(skill_id){
+		case AL_TELEPORT:
+		case ALL_ODINS_RECALL:
+			maps.push_back("Random");
+			if( skill_lv > 1 || skill_id == ALL_ODINS_RECALL )
+				maps.push_back(sd.status.save_point.map);
+
+			break;
+	case AL_WARP:
+			maps.push_back(sd.status.save_point.map);
+			if(skill_lv >= 2) {
+				for (int i = 1; i < skill_lv; i++)
+					maps.push_back(sd.status.memo_point[i-1].map);
+			}
+			break;
+	default:
+		return;
+	}
+
+	if(maps.empty())
+		return;
 
 	PACKET_ZC_WARPLIST *p = reinterpret_cast<PACKET_ZC_WARPLIST*>( packet_buffer );
 
 	p->packetType = HEADER_ZC_WARPLIST;
-	p->skillId = skill_id;
+	p->skillId = static_cast<decltype(p->skillId)>(skill_id);
 	int len, memoCount=0;
 	for(std::string map : maps){
 		if( !map.empty() ){
