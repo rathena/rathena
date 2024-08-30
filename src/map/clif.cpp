@@ -4663,7 +4663,7 @@ void clif_traderequest(map_session_data& sd, const char* name){
 	safestrncpy(p.requesterName, name, sizeof(p.requesterName));
 
 #if PACKETVER > 6
-	p.targetId = sd.trade_partner.id; // Client generate an random char[5] with this info
+	p.targetId = sd.trade_partner.id; // Client generates a random char[5] with this info
 	p.targetLv = sd.trade_partner.lv;
 #endif
 
@@ -4690,7 +4690,7 @@ void clif_traderesponse( map_session_data& sd, e_ack_trade_response result ){
 	p.result = static_cast<decltype(p.result)>( result );
 
 #if PACKETVER > 6
-	p.targetId = sd.trade_partner.id; // Client generate an random char[5] with this info
+	p.targetId = sd.trade_partner.id; // Client generates a random char[5] with this info
 	p.targetLv = sd.trade_partner.lv;
 #endif
 

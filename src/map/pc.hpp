@@ -707,8 +707,8 @@ public:
 	int servant_sign[MAX_SERVANT_SIGN]; // Stores the account ID's of character's with a servant sign.
 
 	struct{
-		int id;
-		int lv;
+		uint32 id;
+		unsigned int lv;
 	}trade_partner;
 
 	struct s_deal {
