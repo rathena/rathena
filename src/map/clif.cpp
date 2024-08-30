@@ -5711,17 +5711,17 @@ void clif_addskill(map_session_data *sd, int skill_id)
 /// Deletes a skill from the skill tree (ZC_SKILLINFO_DELETE).
 /// 0441 <skill id>.W
 void clif_deleteskill(map_session_data& sd, int skill_id, bool skip_infoblock){
-#if PACKETVER >= 20081217
+#if PACKETVER >= 20081126
 
 	uint16 idx = skill_get_index(skill_id);
 
-	if (!session_isActive(sd.fd) || !idx)
+	if (idx == 0 || !session_isActive(sd.fd))
 		return;
 
 	PACKET_ZC_SKILLINFO_DELETE p{};
 
 	p.packetType = HEADER_ZC_SKILLINFO_DELETE;
-	p.skillID = skill_id;
+	p.skillID = static_cast<decltype(p.skillID)>(skill_id);
 	clif_send(&p,sizeof(p),&sd.bl,SELF);
 #endif
 #if PACKETVER_MAIN_NUM >= 20190807 || PACKETVER_RE_NUM >= 20190807 || PACKETVER_ZERO_NUM >= 20190918
