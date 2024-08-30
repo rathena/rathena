@@ -5745,10 +5745,10 @@ void clif_skillup(map_session_data &sd, uint16 skill_id, int lv, int range, bool
 
 	p.packetType = HEADER_ZC_SKILLINFO_UPDATE;
 	p.skillId = skill_id;
-	p.level = lv;
-	p.sp = skill_get_sp(skill_id, lv);
-	p.range2 = range;
-	p.upFlag = static_cast<decltype(p.upFlag)>(upgradable);
+	p.level = static_cast<decltype(p.level)>( lv );
+	p.sp = static_cast<decltype(p.sp)>( skill_get_sp(skill_id, lv) );
+	p.range2 = static_cast<decltype(p.range2)>( range );
+	p.upFlag = upgradable;
 
 	clif_send(&p,sizeof(p),&sd.bl,SELF);
 }
