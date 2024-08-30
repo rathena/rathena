@@ -6169,7 +6169,7 @@ void clif_skill_warppoint( map_session_data& sd, uint16 skill_id, uint16 skill_l
 				maps.push_back(sd.status.save_point.map);
 
 			break;
-	case AL_WARP:
+		case AL_WARP:
 			maps.push_back(sd.status.save_point.map);
 			if(skill_lv >= 2) {
 				for (int i = 1; i < skill_lv; i++)
