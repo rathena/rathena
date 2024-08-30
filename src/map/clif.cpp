@@ -6195,7 +6195,7 @@ void clif_skill_warppoint( map_session_data& sd, uint16 skill_id, uint16 skill_l
 	}
 #if PACKETVER_MAIN_NUM >= 20170502 || PACKETVER_RE_NUM >= 20170419 || defined(PACKETVER_ZERO)
 	len = sizeof(PACKET_ZC_WARPLIST) + (sizeof(PACKET_ZC_WARPLIST_sub) * memoCount);
-	p->packetLength = len;
+	p->packetLength = static_cast<decltype(p->packetLength)>(len);
 #else
 	len = sizeof(PACKET_ZC_WARPLIST);
 #endif
