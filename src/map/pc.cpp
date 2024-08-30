@@ -9020,7 +9020,7 @@ void pc_skillup(map_session_data *sd,uint16 skill_id)
 			sd->status.skill[idx].flag == SKILL_FLAG_PERMANENT && //Don't allow raising while you have granted skills. [Skotlex]
 			sd->status.skill[idx].lv < skill_tree_get_max(skill_id, sd->status.class_) )
 		{
-			int lv, range, upgradable;
+			int lv, range;
 			sd->status.skill[idx].lv++;
 			sd->status.skill_point--;
 			if( !skill_get_inf(skill_id) || pc_checkskill_summoner(sd, SUMMONER_POWER_LAND) >= 20 || pc_checkskill_summoner(sd, SUMMONER_POWER_SEA) >= 20 )
@@ -9032,7 +9032,7 @@ void pc_skillup(map_session_data *sd,uint16 skill_id)
 
 			lv = sd->status.skill[idx].lv;
 			range = skill_get_range2(&sd->bl, skill_id, lv, false);
-			upgradable = (lv < skill_tree_get_max(sd->status.skill[idx].id, sd->status.class_)) ? 1 : 0;
+			bool upgradable = (lv < skill_tree_get_max(sd->status.skill[idx].id, sd->status.class_)) ? true : false;
 			clif_skillup(*sd,skill_id,lv,range,upgradable);
 			clif_updatestatus(*sd,SP_SKILLPOINT);
 			if( skill_id == GN_REMODELING_CART ) /* cart weight info was updated by status_calc_pc */
