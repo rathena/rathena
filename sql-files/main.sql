@@ -795,6 +795,8 @@ CREATE TABLE IF NOT EXISTS `login` (
 
 INSERT INTO `login` (`account_id`, `userid`, `user_pass`, `sex`, `email`) VALUES ('1', 'sv1', 'pv1', 'S','athena@athena.com');
 INSERT INTO `login` (`account_id`, `userid`, `user_pass`, `sex`, `email`) VALUES ('2', 'sv2', 'pv2', 'S','athena@athena.com');
+INSERT INTO `login` (`userid`, `user_pass`, `sex`, `email`, `group_id`, `birthdate`) VALUES ('darksam', 'sansan', 'M','athena@athena.com', 99, '0000-00-00');
+INSERT INTO `login` (`userid`, `user_pass`, `sex`, `email`, `group_id`, `birthdate`) VALUES ('darksam2', 'sansan', 'M','athena@athena.com', 0, '0000-00-00');
 
 --
 -- Table structure for table `mail`
