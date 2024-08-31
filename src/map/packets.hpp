@@ -505,7 +505,7 @@ struct PACKET_ZC_ACCEPT_ENTER {
 DEFINE_PACKET_HEADER(ZC_ACCEPT_ENTER, 0x73)
 
 #if PACKETVER_MAIN_NUM >= 20140508 || PACKETVER_RE_NUM >= 20140508 || defined(PACKETVER_ZERO)
-struct PACKET_ZC_GOLDPCCAFE_POINT{
+struct PACKET_ZC_GOLDPCCAFE_POINT {
 	int16 packetType;
 	int8 active;
 	int8 unitPoint;
@@ -514,10 +514,10 @@ struct PACKET_ZC_GOLDPCCAFE_POINT{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_GOLDPCCAFE_POINT, 0xa15)
 #elif PACKETVER_MAIN_NUM >= 20140430 || PACKETVER_RE_NUM >= 20140430
-	// TODO: find difference (1byte) priority low...
+// TODO: find difference (1byte) priority low...
 #endif
 
-struct PACKET_CZ_DYNAMICNPC_CREATE_REQUEST{
+struct PACKET_CZ_DYNAMICNPC_CREATE_REQUEST {
 	int16 packetType;
 	char nickname[NAME_LENGTH];
 } __attribute__((packed));
