@@ -24,11 +24,11 @@
 int chat_triggerevent(struct chat_data *cd); // forward declaration
 
 /// Initializes a chatroom object (common functionality for both pc and npc chatrooms).
-/// Returns a chatroom object on success, or NULL on failure.
+/// Returns a chatroom object on success, or nullptr on failure.
 static struct chat_data* chat_createchat(struct block_list* bl, const char* title, const char* pass, int limit, bool pub, int trigger, const char* ev, int zeny, int minLvl, int maxLvl)
 {
 	struct chat_data* cd;
-	nullpo_retr(NULL, bl);
+	nullpo_retr(nullptr, bl);
 
 	cd = (struct chat_data *) aMalloc(sizeof(struct chat_data));
 
@@ -50,11 +50,11 @@ static struct chat_data* chat_createchat(struct block_list* bl, const char* titl
 	cd->bl.x    = bl->x;
 	cd->bl.y    = bl->y;
 	cd->bl.type = BL_CHAT;
-	cd->bl.next = cd->bl.prev = NULL;
+	cd->bl.next = cd->bl.prev = nullptr;
 
 	if( cd->bl.id == 0 ) {
 		aFree(cd);
-		cd = NULL;
+		cd = nullptr;
 	}
 
 	map_addiddb(&cd->bl);
@@ -105,7 +105,7 @@ int chat_createpcchat(map_session_data* sd, const char* title, const char* pass,
 		cd->usersd[0] = sd;
 		pc_setchatid(sd,cd->bl.id);
 		pc_stop_attack(sd);
-		clif_createchat(sd,0);
+		clif_createchat( *sd, CREATEROOM_SUCCESS );
 		clif_dispchat(cd,0);
 
 		if (status_isdead(&sd->bl))
@@ -113,7 +113,7 @@ int chat_createpcchat(map_session_data* sd, const char* title, const char* pass,
 		else
 			achievement_update_objective(sd, AG_CHATTING_CREATE, 1, 1);
 	} else
-		clif_createchat(sd,1);
+		clif_createchat( *sd, CREATEROOM_LIMIT_EXCEEDED );
 
 	return 0;
 }
@@ -133,32 +133,32 @@ int chat_joinchat(map_session_data* sd, int chatid, const char* pass)
 
 	cd = (struct chat_data*)map_id2bl(chatid);
 
-	if( cd == NULL || cd->bl.type != BL_CHAT || cd->bl.m != sd->bl.m || sd->state.vending || sd->state.buyingstore || sd->chatID || ((cd->owner->type == BL_NPC) ? cd->users+1 : cd->users) >= cd->limit ) {
-		clif_joinchatfail(sd,0);
+	if( cd == nullptr || cd->bl.type != BL_CHAT || cd->bl.m != sd->bl.m || sd->state.vending || sd->state.buyingstore || sd->chatID || ((cd->owner->type == BL_NPC) ? cd->users+1 : cd->users) >= cd->limit ) {
+		clif_joinchatfail( *sd, ENTERROOM_FULL );
 		return 0;
 	}
 
 	if( !cd->pub && strncmp(pass, cd->pass, sizeof(cd->pass)) != 0 && !pc_has_permission(sd, PC_PERM_JOIN_ALL_CHAT) ) {
-		clif_joinchatfail(sd,1);
+		clif_joinchatfail( *sd, ENTERROOM_WRONG_PASSWORD );
 		return 0;
 	}
 
 	if( sd->status.base_level < cd->minLvl || sd->status.base_level > cd->maxLvl ) {
 		if(sd->status.base_level < cd->minLvl)
-			clif_joinchatfail(sd,5);
+			clif_joinchatfail( *sd, ENTERROOM_TOO_LOW_LEVEL );
 		else
-			clif_joinchatfail(sd,6);
+			clif_joinchatfail( *sd, ENTERROOM_TOO_HIGH_LEVEL );
 
 		return 0;
 	}
 
 	if( sd->status.zeny < cd->zeny ) {
-		clif_joinchatfail(sd,4);
+		clif_joinchatfail( *sd, ENTERROOM_NO_ZENY );
 		return 0;
 	}
 
 	if( cd->owner->type != BL_NPC && idb_exists(cd->kick_list,sd->status.char_id) ) {
-		clif_joinchatfail(sd,2);//You have been kicked out of the room.
+		clif_joinchatfail( *sd, ENTERROOM_KICKED );
 		return 0;
 	}
 
@@ -196,7 +196,7 @@ int chat_leavechat(map_session_data* sd, bool kicked)
 
 	cd = (struct chat_data*)map_id2bl(sd->chatID);
 
-	if( cd == NULL ) {
+	if( cd == nullptr ) {
 		pc_setchatid(sd, 0);
 		return 1;
 	}
@@ -267,7 +267,7 @@ int chat_changechatowner(map_session_data* sd, const char* nextownername)
 
 	cd = (struct chat_data*)map_id2bl(sd->chatID);
 
-	if( cd == NULL || (struct block_list*) sd != cd->owner )
+	if( cd == nullptr || (struct block_list*) sd != cd->owner )
 		return 1;
 
 	ARR_FIND( 1, cd->users, i, strncmp(cd->usersd[i]->status.name, nextownername, NAME_LENGTH) == 0 );
@@ -317,7 +317,7 @@ int chat_changechatstatus(map_session_data* sd, const char* title, const char* p
 
 	cd = (struct chat_data*)map_id2bl(sd->chatID);
 
-	if( cd == NULL || (struct block_list *)sd != cd->owner )
+	if( cd == nullptr || (struct block_list *)sd != cd->owner )
 		return 1;
 
 	safestrncpy(cd->title, title, CHATROOM_TITLE_SIZE);
@@ -364,7 +364,7 @@ int chat_kickchat(map_session_data* sd, const char* kickusername)
 
 	cd = (struct chat_data *)map_id2bl(sd->chatID);
 
-	if( cd == NULL || (struct block_list *)sd != cd->owner )
+	if( cd == nullptr || (struct block_list *)sd != cd->owner )
 		return -1;
 
 	ARR_FIND( 0, cd->users, i, strncmp(cd->usersd[i]->status.name, kickusername, NAME_LENGTH) == 0 );
@@ -432,7 +432,7 @@ int chat_deletenpcchat(struct npc_data* nd)
 
 	cd = (struct chat_data*)map_id2bl(nd->chat_id);
 
-	if( cd == NULL )
+	if( cd == nullptr )
 		return 0;
 
 	chat_npckickall(cd);

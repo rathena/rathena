@@ -55,8 +55,7 @@ einbroch,57,202,6	duplicate(Healer)	Healer#einbr	909
 geffen,115,72,6	duplicate(Healer)	Healer#gef	909
 gonryun,156,122,6	duplicate(Healer)	Healer#gon	909
 hugel,89,150,6	duplicate(Healer)	Healer#hug	909
-//izlude,125,118,6	duplicate(Healer)	Healer#izlprere	909	//Pre-RE
-izlude,121,150,6	duplicate(Healer)	Healer#izlre	909 //RE
+izlude,121,150,6	duplicate(Healer)	Healer#izl	909	//Pre-RE: (125,118)
 jawaii,250,139,4	duplicate(Healer)	Healer#jaw	909
 lighthalzen,152,100,6	duplicate(Healer)	Healer#lhz	909
 louyang,226,103,4	duplicate(Healer)	Healer#lou	909

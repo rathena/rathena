@@ -3,12 +3,11 @@
 
 #include "char_clif.hpp"
 
+#include <cstdlib>
+#include <cstring>
 #include <memory>
 #include <unordered_map>
 #include <vector>
-
-#include <stdlib.h>
-#include <string.h>
 
 #include <common/malloc.hpp>
 #include <common/mapindex.hpp>
@@ -29,10 +28,6 @@
 #include "packets.hpp"
 
 using namespace rathena;
-
-// Reuseable global packet buffer to prevent too many allocations
-// Take socket.cpp::socket_max_client_packet into consideration
-static int8 packet_buffer[UINT16_MAX];
 
 std::vector<struct s_point_str> accessible_maps{
 	s_point_str{ MAP_PRONTERA, 273, 354 },
@@ -172,15 +167,22 @@ int chclif_parse_pincode_check( int fd, struct char_session_data* sd ){
 
 	char pin[PINCODE_LENGTH+1];
 
-	if( charserv_config.pincode_config.pincode_enabled==0 || RFIFOL(fd,2) != sd->account_id )
+	if( charserv_config.pincode_config.pincode_enabled==0 || RFIFOL(fd,2) != sd->account_id ) {
+		set_eof(fd);
 		return 1;
+	}
 
 	memset(pin,0,PINCODE_LENGTH+1);
 	strncpy((char*)pin, RFIFOCP(fd, 6), PINCODE_LENGTH);
 	RFIFOSKIP(fd,10);
 
-	char_pincode_decrypt(sd->pincode_seed, pin );
+	if (!char_pincode_decrypt(sd->pincode_seed, pin )) {
+		set_eof(fd);
+		return 1;
+	}
+
 	if( char_pincode_compare( fd, sd, pin ) ){
+		sd->pincode_correct = true;
 		chclif_pincode_sendstate( fd, sd, PINCODE_PASSED );
 	}
 	return 1;
@@ -262,28 +264,34 @@ bool pincode_allowed( char* pincode ){
 int chclif_parse_pincode_change( int fd, struct char_session_data* sd ){
 	FIFOSD_CHECK(14);
 
-	if( charserv_config.pincode_config.pincode_enabled==0 || RFIFOL(fd,2) != sd->account_id )
+	if( charserv_config.pincode_config.pincode_enabled==0 || RFIFOL(fd,2) != sd->account_id ) {
+		set_eof(fd);
 		return 1;
+	}
 	else {
 		char oldpin[PINCODE_LENGTH+1];
 		char newpin[PINCODE_LENGTH+1];
-		
+
 		memset(oldpin,0,PINCODE_LENGTH+1);
 		memset(newpin,0,PINCODE_LENGTH+1);
 		strncpy(oldpin, RFIFOCP(fd,6), PINCODE_LENGTH);
 		strncpy(newpin, RFIFOCP(fd,10), PINCODE_LENGTH);
 		RFIFOSKIP(fd,14);
-		
-		char_pincode_decrypt(sd->pincode_seed,oldpin);
+
+		if (!char_pincode_decrypt(sd->pincode_seed,oldpin) || !char_pincode_decrypt(sd->pincode_seed,newpin)) {
+			set_eof(fd);
+			return 1;
+		}
+
 		if( !char_pincode_compare( fd, sd, oldpin ) )
 			return 1;
-		char_pincode_decrypt(sd->pincode_seed,newpin);
 
 		if( pincode_allowed(newpin) ){
 			chlogif_pincode_notifyLoginPinUpdate( sd->account_id, newpin );
 			strncpy(sd->pincode, newpin, sizeof(newpin));
 			ShowInfo("Pincode changed for AID: %d\n", sd->account_id);
-		
+			sd->pincode_correct = true;
+
 			chclif_pincode_sendstate( fd, sd, PINCODE_PASSED );
 		}else{
 			chclif_pincode_sendstate( fd, sd, PINCODE_ILLEGAL );
@@ -298,21 +306,27 @@ int chclif_parse_pincode_change( int fd, struct char_session_data* sd ){
 int chclif_parse_pincode_setnew( int fd, struct char_session_data* sd ){
 	FIFOSD_CHECK(10);
 
-	if( charserv_config.pincode_config.pincode_enabled==0 || RFIFOL(fd,2) != sd->account_id )
+	if( charserv_config.pincode_config.pincode_enabled==0 || RFIFOL(fd,2) != sd->account_id ) {
+		set_eof(fd);
 		return 1;
+	}
 	else {
 		char newpin[PINCODE_LENGTH+1];
 		memset(newpin,0,PINCODE_LENGTH+1);
 		strncpy( newpin, RFIFOCP(fd,6), PINCODE_LENGTH );
 		RFIFOSKIP(fd,10);
 
-		char_pincode_decrypt( sd->pincode_seed, newpin );
+		if (!char_pincode_decrypt( sd->pincode_seed, newpin )) {
+			set_eof(fd);
+			return 1;
+		}
 
 		if( pincode_allowed(newpin) ){
 			chlogif_pincode_notifyLoginPinUpdate( sd->account_id, newpin );
 			strncpy( sd->pincode, newpin, sizeof( newpin ) );
+			sd->pincode_correct = true;
 
-			chclif_pincode_sendstate( fd, sd, PINCODE_PASSED );	
+			chclif_pincode_sendstate( fd, sd, PINCODE_PASSED );
 		}else{
 			chclif_pincode_sendstate( fd, sd, PINCODE_ILLEGAL );
 		}
@@ -457,7 +471,7 @@ void chclif_char_delete2_ack(int fd, uint32 char_id, uint32 result, time_t delet
 	WFIFOL(fd,2) = char_id;
 	WFIFOL(fd,6) = result;
 #if PACKETVER_CHAR_DELETEDATE
-	WFIFOL(fd,10) = TOL(delete_date-time(NULL));
+	WFIFOL(fd,10) = TOL(delete_date-time(nullptr));
 #else
 	WFIFOL(fd,10) = TOL(delete_date);
 #endif
@@ -527,9 +541,9 @@ int chclif_parse_char_delete2_req(int fd, struct char_session_data* sd) {
 			return 1;
 		}
 
-		Sql_GetData(sql_handle, 0, &data, NULL); delete_date = strtoul(data, NULL, 10);
-		Sql_GetData(sql_handle, 1, &data, NULL); party_id    = strtoul(data, NULL, 10);
-		Sql_GetData(sql_handle, 2, &data, NULL); guild_id    = strtoul(data, NULL, 10);
+		Sql_GetData(sql_handle, 0, &data, nullptr); delete_date = strtoul(data, nullptr, 10);
+		Sql_GetData(sql_handle, 1, &data, nullptr); party_id    = strtoul(data, nullptr, 10);
+		Sql_GetData(sql_handle, 2, &data, nullptr); guild_id    = strtoul(data, nullptr, 10);
 
 		if( delete_date ) {// character already queued for deletion
 			chclif_char_delete2_ack(fd, char_id, 0, 0);
@@ -549,7 +563,7 @@ int chclif_parse_char_delete2_req(int fd, struct char_session_data* sd) {
 		}
 		
 		// success
-		delete_date = time(NULL)+(charserv_config.char_config.char_del_delay);
+		delete_date = time(nullptr)+(charserv_config.char_config.char_del_delay);
 
 		if( SQL_SUCCESS != Sql_Query(sql_handle, "UPDATE `%s` SET `delete_date`='%lu' WHERE `char_id`='%d'", schema_config.char_db, (unsigned long)delete_date, char_id) )
 		{
@@ -746,6 +760,7 @@ int chclif_parse_reqtoconnect(int fd, struct char_session_data* sd,uint32 ipl){
 		sd->login_id2 = login_id2;
 		sd->sex = sex;
 		sd->auth = false; // not authed yet
+		sd->pincode_correct = false; // not entered pincode correctly yet
 
 		// send back account_id
 		WFIFOHEAD(fd,4);
@@ -768,6 +783,7 @@ int chclif_parse_reqtoconnect(int fd, struct char_session_data* sd,uint32 ipl){
 		{// authentication found (coming from map server)
 			char_get_authdb().erase(account_id);
 			char_auth_ok(fd, sd);
+			sd->pincode_correct = true; // already entered pincode correctly yet
 		}
 		else
 		{// authentication not found (coming from login server)
@@ -858,7 +874,7 @@ int chclif_parse_select_accessible_map( int fd, struct char_session_data* sd, ui
 	}
 
 	/* client doesn't let it get to this point if you're banned, so its a forged packet */
-	if( sd->found_char[p.slot] == char_id && sd->unban_time[p.slot] > time(NULL) ) {
+	if( sd->found_char[p.slot] == char_id && sd->unban_time[p.slot] > time(nullptr) ) {
 		chclif_reject( fd, 0 ); // rejected from server
 		return 1;
 	}
@@ -955,7 +971,7 @@ int chclif_parse_select_accessible_map( int fd, struct char_session_data* sd, ui
 
 void chclif_accessible_maps( int fd ){
 #if PACKETVER >= 20100714
-	struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME* p = (struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME*)packet_buffer;
+	PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME* p = reinterpret_cast<PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME*>( packet_buffer );
 
 	p->packetType = HEADER_HC_NOTIFY_ACCESSIBLE_MAPNAME;
 	p->packetLength = sizeof( *p );
@@ -1005,7 +1021,7 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 		// Check if the character exists and is not scheduled for deletion
 		if ( SQL_SUCCESS != Sql_Query(sql_handle, "SELECT `char_id` FROM `%s` WHERE `account_id`='%d' AND `char_num`='%d' AND `delete_date` = 0", schema_config.char_db, sd->account_id, slot)
 		  || SQL_SUCCESS != Sql_NextRow(sql_handle)
-		  || SQL_SUCCESS != Sql_GetData(sql_handle, 0, &data, NULL) )
+		  || SQL_SUCCESS != Sql_GetData(sql_handle, 0, &data, nullptr) )
 		{	//Not found?? May be forged packet.
 			Sql_ShowDebug(sql_handle);
 			Sql_FreeResult(sql_handle);
@@ -1023,7 +1039,7 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 		}
 
 		/* client doesn't let it get to this point if you're banned, so its a forged packet */
-		if( sd->found_char[slot] == char_id && sd->unban_time[slot] > time(NULL) ) {
+		if( sd->found_char[slot] == char_id && sd->unban_time[slot] > time(nullptr) ) {
 			chclif_reject(fd, 0); // rejected from server
 			return 1;
 		}
@@ -1092,7 +1108,7 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 
 		//Send NEW auth packet [Kevin]
 		//FIXME: is this case even possible? [ultramage]
-		if ((map_fd = map_server[i].fd) < 1 || session[map_fd] == NULL)
+		if ((map_fd = map_server[i].fd) < 1 || session[map_fd] == nullptr)
 		{
 			ShowError("parse_char: Attempting to write to invalid session %d! Map Server #%d disconnected.\n", map_fd, i);
 			map_server[i] = {};
@@ -1353,11 +1369,11 @@ int chclif_parse_reqrename( int fd, struct char_session_data* sd ){
 
 
 TIMER_FUNC(charblock_timer){
-	struct char_session_data* sd=NULL;
+	struct char_session_data* sd=nullptr;
 	int i=0;
 	ARR_FIND( 0, fd_max, i, session[i] && (sd = (struct char_session_data*)session[i]->session_data) && sd->account_id == id);
 
-	if(sd == NULL || sd->charblock_timer==INVALID_TIMER) //has disconected or was required to stop
+	if(sd == nullptr || sd->charblock_timer==INVALID_TIMER) //has disconected or was required to stop
 		return 0;
 	if (sd->charblock_timer != tid){
 		sd->charblock_timer = INVALID_TIMER;
@@ -1373,7 +1389,7 @@ TIMER_FUNC(charblock_timer){
  */
 void chclif_block_character( int fd, struct char_session_data* sd){
 	int i=0, j=0, len=4;
-	time_t now = time(NULL);
+	time_t now = time(nullptr);
 
 	WFIFOHEAD(fd, 4+MAX_CHARS*24);
 	WFIFOW(fd, 0) = 0x20d;
@@ -1537,7 +1553,7 @@ int chclif_parse(int fd) {
 		set_eof(fd);
 
 	if(session[fd]->flag.eof) {
-		if( sd != NULL && sd->auth ) { // already authed client
+		if( sd != nullptr && sd->auth ) { // already authed client
 			std::shared_ptr<struct online_char_data> data = util::umap_find( char_get_onlinedb(), sd->account_id );
 
 			if( data != nullptr && data->fd == fd ){
@@ -1558,6 +1574,54 @@ int chclif_parse(int fd) {
 		unsigned short cmd;
 
 		cmd = RFIFOW(fd,0);
+
+#if PACKETVER_SUPPORTS_PINCODE
+		// If the pincode system is enabled
+		if( charserv_config.pincode_config.pincode_enabled ){
+			switch( cmd ){
+				// Connect of player
+				case 0x65:
+				// Client keep-alive packet (every 12 seconds)
+				case 0x187:
+				// Checks the entered pin
+				case 0x8b8:
+				// Request PIN change
+				case 0x8be:
+				// Request for PIN window
+				case 0x8c5:
+				// Request character list
+				case 0x9a1:
+				// Connect of map-server
+				case 0x2af8:
+					break;
+
+				// Before processing any other packets, do a few checks
+				default:
+					// To reach this block the client should have attained a session already
+					if( sd != nullptr ){
+						// If the pincode was entered correctly
+						if( sd->pincode_correct ){
+							break;
+						}
+
+						// If no pincode is set (yet)
+						if( strlen( sd->pincode ) <= 0 ){
+							break;
+						}
+
+						// The pincode was not entered correctly, yet the player (=bot) tried to send a different packet => Goodbye!
+						set_eof( fd );
+						return 0;
+					}else{
+						// Unknown packet received
+						ShowError( "chclif_parse: Received unknown packet " CL_WHITE "0x%x" CL_RESET " from ip '" CL_WHITE "%s" CL_RESET "'! Disconnecting!\n", cmd, ip2str( ipl, nullptr ) );
+						set_eof( fd );
+						return 0;
+					}
+			}
+		}
+#endif
+
 		switch( cmd ) {
 			case 0x65: next=chclif_parse_reqtoconnect(fd,sd,ipl); break;
 			// char select
@@ -1601,7 +1665,7 @@ int chclif_parse(int fd) {
 				break;
 			// unknown packet received
 			default:
-				ShowError("parse_char: Received unknown packet " CL_WHITE "0x%x" CL_RESET " from ip '" CL_WHITE "%s" CL_RESET "'! Disconnecting!\n", RFIFOW(fd,0), ip2str(ipl, NULL));
+				ShowError( "chclif_parse: Received unknown packet " CL_WHITE "0x%x" CL_RESET " from ip '" CL_WHITE "%s" CL_RESET "'! Disconnecting!\n", cmd, ip2str( ipl, nullptr ) );
 				set_eof(fd);
 				return 0;
 		}

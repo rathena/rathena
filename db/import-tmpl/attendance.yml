@@ -28,15 +28,14 @@
 #     - Day                 Reward day.
 #       ItemId              Item ID.
 ###########################################################################
-# Last generated using Hosting Malaya Attendance Generator (https://hostingmalaya.com): 20231121
 
 Header:
   Type: ATTENDANCE_DB
   Version: 1
 
 Body:
-  - Start: 20230101
-    End: 20231231
+  - Start: 20240101
+    End: 20241231
     Rewards:
       - Day: 1
         ItemId: 100933

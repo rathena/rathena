@@ -4,7 +4,7 @@
 #ifndef MMO_HPP
 #define MMO_HPP
 
-#include <time.h>
+#include <ctime>
 
 #include <config/core.hpp>
 
@@ -90,7 +90,8 @@ typedef uint32 t_itemid;
 #define MAX_FAME 1000000000 ///Max fame points
 #define MAX_CART 100 ///Maximum item in cart
 #define MAX_SKILL 1623 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
-#define DEFAULT_WALK_SPEED 150 ///Default walk speed
+#define DEFAULT_WALK_SPEED 150 ///Default walk speed (other than NPC)
+#define DEFAULT_NPC_WALK_SPEED 200 ///Default NPC walk speed
 #define MIN_WALK_SPEED 20 ///Min walk speed
 #define MAX_WALK_SPEED 1000 ///Max walk speed
 #define MAX_STORAGE 600 ///Max number of storage slots a player can have
@@ -114,7 +115,10 @@ typedef uint32 t_itemid;
 #define MAX_CLAN 500
 #define MAX_CLANALLIANCE 6
 #ifndef MAX_BARTER_REQUIREMENTS
-	#define MAX_BARTER_REQUIREMENTS 5
+	#define MAX_BARTER_REQUIREMENTS 6
+#endif
+#ifndef WEB_AUTH_TOKEN_LENGTH
+	#define WEB_AUTH_TOKEN_LENGTH 16+1
 #endif
 
 enum e_enchantgrade : uint16{
@@ -148,7 +152,7 @@ const t_itemid WEDDING_RING_F = 2635;
 //For character names, title names, guilds, maps, etc.
 //Includes null-terminator as it is the length of the array.
 #define NAME_LENGTH (23 + 1)
-#define PASSWD_LENGTH (32+1)
+#define PASSWD_LENGTH (32 + 1)
 //NPC names can be longer than it's displayed on client (NAME_LENGTH).
 #define NPC_NAME_LENGTH 50
 // <NPC_NAME_LENGTH> for npc name + 2 for a "::" + <NAME_LENGTH> for label + 1 for EOS
@@ -604,7 +608,8 @@ struct mmo_charstatus {
 #ifdef HOTKEY_SAVING
 	struct hotkey hotkeys[MAX_HOTKEYS_DB];
 #endif
-	bool show_equip,allow_party, disable_call;
+	bool show_equip, disable_call;
+	bool disable_partyinvite;
 	short rename;
 
 	time_t delete_date;
@@ -1119,8 +1124,8 @@ enum e_pc_reg_loading {
 enum e_party_member_withdraw {
 	PARTY_MEMBER_WITHDRAW_LEAVE,	  ///< /leave
 	PARTY_MEMBER_WITHDRAW_EXPEL,	  ///< Kicked
-	PARTY_MEMBER_WITHDRAW_CANT_LEAVE, ///< TODO: Cannot /leave
-	PARTY_MEMBER_WITHDRAW_CANT_EXPEL, ///< TODO: Cannot be kicked
+	PARTY_MEMBER_WITHDRAW_CANT_LEAVE, ///< Cannot /leave
+	PARTY_MEMBER_WITHDRAW_CANT_EXPEL, ///< Cannot be kicked
 };
 
 enum e_rank {

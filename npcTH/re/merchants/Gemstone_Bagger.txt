@@ -10,19 +10,19 @@
 //============================================================
 -	script	#GemstoneBagger	HIDDEN_NPC,{
 	mes "[Gemstone Bagger]";
-	mes "เราบรรจุอัญมณีลงในถุงด้วยวิธีที่ง่ายต่อการค้นหา";
-	mes "คุณอยากจะทำอะไร?";
+	mes "We pack gemstones in bags in an easy to find way.";
+	mes "What would you like to do?";
 	next;
-	switch(select("แลกเปลี่ยนอัญมณี:ยกเลิก")) {
+	switch(select("Exchange Gemstones:Cancel")) {
 	case 1:
 		mes "[Gemstone Bagger]";
-		mes "ฉันจะเตรียมถุงใส่อัญมณี";
+		mes "I will prepare a bag for gemstones.";
 		close2;
 		callshop "Gemstone_Bagger";
 		break;
 	case 2:
 		mes "[Gemstone Bagger]";
-		mes "กลับมาถ้าคุณต้องการความช่วยเหลือ";
+		mes "Come back if you need help.";
 		close;
 	}
 }

@@ -4,7 +4,7 @@
 #ifndef CHRIF_HPP
 #define CHRIF_HPP
 
-#include <time.h>
+#include <ctime>
 
 #include <common/cbasetypes.hpp>
 #include <common/mmo.hpp> // NAME_LENGTH

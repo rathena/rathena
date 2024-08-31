@@ -479,21 +479,21 @@ moc_para01,50,39,4	script	Eve Natalia	882,{
 //============================================================
 moc_para01,48,184,2	script	Gum & Manual Exchanger	562,{
 	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2000) {
-		mes "คุณบรรทุกสิ่งของมากเกินไปในขณะนี้";
+		mes "You're carrying too many items right now.";
 		close;	
 	}
 	mes "[Trader Machine]";
-	mes "ใส่ Bubble Gums และ/หรือ Battle Manuals เพื่อแลกกับ Gums และ Manuals ที่มีประสิทธิภาพสูงขึ้น";
+	mes "Insert Bubble Gums and/or Battle Manuals to trade for higher efficiency Gums and Manuals.";
 	next;
 	mes "[Trader Machine]";
-	mes "อัตราแลกเปลี่ยน:";
+	mes "Exchange rate:";
 	mes "2 Bubble Gum -> 1 HE Bubble Gum";
 	mes "2 Battle Manual -> 1 HE Battle Manual";
 	mes "4 HE Battle Manual -> 1 Battle Manual X3";
 	mes "3 Thick Battle Manual -> 2 Battle Manual X3";
-	mes "คุณต้องการแลกเปลี่ยนเพื่ออะไร?";
+	mes "What would you like to exchange for?";
 	next;
-	switch(select("HE Bubble Gum:HE Battle Manual:1 Battle Manual X3:2 Battle Manual X3:1 Costume Corsair:ไม่มีอะไร")) {
+	switch(select("HE Bubble Gum:HE Battle Manual:1 Battle Manual X3:2 Battle Manual X3:1 Costume Corsair:Nothing")) {
 	case 1:
 		callsub L_Exchange,12210,2,12412,1;
 		break;
@@ -508,22 +508,22 @@ moc_para01,48,184,2	script	Gum & Manual Exchanger	562,{
 		break;
 	case 5:
 		mes "[Trader Machine]";
-		mes "ฉันให้คุณได้ 1 Battle Manual X3 สำหรับ 1 Costume Corsair.";
+		mes "I can give you 1 Battle Manual X3 for 1 Costume Corsair.";
 		next;
 		if (countitem(19619) == 0) {
 			mes "[Trader Machine]";
-			mes "คุณไม่มี Costume Corsair หมวกเพื่อทำการค้านั้น";
+			mes "You don't have a Costume Corsair hat to make that trade.";
 			close;
 		}
 		next;
-		if(select("ใช่ ให้ฉันหน่อยสิ!:ไม่ อย่าเพิ่งรอ") == 2)
+		if(select("Yes, give it to me!:No, wait not yet.") == 2)
 			close;
 		// Unofficial dialogue.
 		mes "[Trader Machine]";
-		mes "คุณวางรายการที่จำเป็นลงในเครื่อง...";
+		mes "You place the required items into the machine...";
 		next;
 		mes "[Trader Machine]";
-		mes "Machine ได้มอบไอเทมตอบแทนให้คุณ!";
+		mes "The Machine has given you an item in return!";
 		delitem 19619,1; //C_Corsair
 		getitem 14545,1; //Battle_Manual_X3
 		close;
@@ -534,31 +534,31 @@ moc_para01,48,184,2	script	Gum & Manual Exchanger	562,{
 //callsub L_Exchange,<Insert Item>,<Amount>,<Return Item>,<Amount>
 L_Exchange:
 	mes "[Trader Machine]";
-	mes "อยากได้ "+getitemname(getarg(2))+" กี่ชิ้น?";
-	mes "ให้คุณได้ถึง 60";
-	mes "พิมพ์ 0 เพื่อยกเลิก";
+	mes "How many "+getitemname(getarg(2))+" do you want?";
+	mes "I can give you up to 60.";
+	mes "Type 0 to cancel.";
 	next;
 	input .@amount;
 	if (.@amount == 0) {
 		mes "[Trader Machine]";
-		mes "ยกเลิก.";
+		mes "Cancelled.";
 		close;
 	} else if (.@amount < 0 || .@amount > 60) {
 		mes "[Trader Machine]";
-		mes "บอกว่าสูงสุดแค่ 60 เท่านั้น";
+		mes "I said only 60 max.";
 		close;
 	}
 	mes "[Trader Machine]";
-	mes "รวมเป็น  "+.@amount+" "+getitemname(getarg(2))+".";
-	mes "สิ่งนี้ถูกต้องหรือไม่?";
+	mes "That's a total of "+.@amount+" "+getitemname(getarg(2))+".";
+	mes "Is this correct?";
 	next;
-	if(select("ใช่ มอบให้ฉันสิ!:ไม่ อย่าเพิ่ง รอ") == 2)
+	if(select("Yes, give them to me!:No, wait not yet.") == 2)
 		close;
 	set .@cost, getarg(1) * .@amount;
 	set .@total_amount, getarg(3) * .@amount;
 	if (countitem(getarg(0)) < .@cost) {
 		mes "[Trader Machine]";
-		mes "คุณมี "+getitemname(getarg(0))+" ไม่เพียงพอที่จะทำการแลกเปลี่ยน";
+		mes "You don't have enough "+getitemname(getarg(0))+" to make that trade.";
 		close;
 	}
 	delitem getarg(0),.@cost;

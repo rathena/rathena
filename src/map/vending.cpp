@@ -3,7 +3,7 @@
 
 #include "vending.hpp"
 
-#include <stdlib.h> // atoi
+#include <cstdlib> // atoi
 
 #include <common/malloc.hpp> // aMalloc, aFree
 #include <common/nullpo.hpp>
@@ -82,7 +82,7 @@ void vending_vendinglistreq(map_session_data* sd, int id)
 	map_session_data* vsd;
 	nullpo_retv(sd);
 
-	if( (vsd = map_id2sd(id)) == NULL )
+	if( (vsd = map_id2sd(id)) == nullptr )
 		return;
 	if( !vsd->state.vending )
 		return; // not vending
@@ -94,7 +94,7 @@ void vending_vendinglistreq(map_session_data* sd, int id)
 
 	sd->vended_id = vsd->vender_id;  // register vending uid
 
-	clif_vendinglist( sd, vsd );
+	clif_vendinglist( *sd, *vsd );
 }
 
 /**
@@ -128,18 +128,18 @@ void vending_purchasereq(map_session_data* sd, int aid, int uid, const uint8* da
 	map_session_data* vsd = map_id2sd(aid);
 
 	nullpo_retv(sd);
-	if( vsd == NULL || !vsd->state.vending || vsd->bl.id == sd->bl.id )
+	if( vsd == nullptr || !vsd->state.vending || vsd->bl.id == sd->bl.id )
 		return; // invalid shop
 
 	if( vsd->vender_id != uid ) { // shop has changed
-		clif_buyvending(sd, 0, 0, 6);  // store information was incorrect
+		clif_buyvending( *sd, 0, 0, PURCHASEMC_STORE_INCORRECT );  // store information was incorrect
 		return;
 	}
 
-	if( !searchstore_queryremote(sd, aid) && ( sd->bl.m != vsd->bl.m || !check_distance_bl(&sd->bl, &vsd->bl, AREA_SIZE) ) )
+	if( !searchstore_queryremote(*sd, aid) && ( sd->bl.m != vsd->bl.m || !check_distance_bl(&sd->bl, &vsd->bl, AREA_SIZE) ) )
 		return; // shop too far away
 
-	searchstore_clearremote(sd);
+	searchstore_clearremote(*sd);
 
 	if( count < 1 || count > MAX_VENDING || count > vsd->vend_num )
 		return; // invalid amount of purchased items
@@ -172,17 +172,17 @@ void vending_purchasereq(map_session_data* sd, int aid, int uid, const uint8* da
 
 		z += ((double)vsd->vending[j].value * (double)amount);
 		if( z > (double)sd->status.zeny || z < 0. || z > (double)MAX_ZENY ) {
-			clif_buyvending(sd, idx, amount, 1); // you don't have enough zeny
+			clif_buyvending( *sd, idx, amount, PURCHASEMC_NO_ZENY ); // you don't have enough zeny
 			return;
 		}
-		if( z + (double)vsd->status.zeny > (double)MAX_ZENY && !battle_config.vending_over_max ) {
-			clif_buyvending(sd, idx, vsd->vending[j].amount, 4); // too much zeny = overflow
+		if( z + (double)vsd->status.zeny > (double)MAX_ZENY ) {
+			clif_buyvending( *sd, idx, vsd->vending[j].amount, PURCHASEMC_OUT_OF_STOCK ); // too much zeny = overflow
 			return;
 
 		}
 		w += itemdb_weight(vsd->cart.u.items_cart[idx].nameid) * amount;
 		if( w + sd->weight > sd->max_weight ) {
-			clif_buyvending(sd, idx, amount, 2); // you can not buy, because overweight
+			clif_buyvending( *sd, idx, amount, PURCHASEMC_OVERWEIGHT );
 			return;
 		}
 
@@ -194,7 +194,7 @@ void vending_purchasereq(map_session_data* sd, int aid, int uid, const uint8* da
 		// here, we check cumulative amounts
 		if( vending[j].amount < amount ) {
 			// send more quantity is not a hack (an other player can have buy items just before)
-			clif_buyvending(sd, idx, vsd->vending[j].amount, 4); // not enough quantity
+			clif_buyvending( *sd, idx, vsd->vending[j].amount, PURCHASEMC_OUT_OF_STOCK );
 			return;
 		}
 
@@ -241,7 +241,7 @@ void vending_purchasereq(map_session_data* sd, int aid, int uid, const uint8* da
 
 		pc_cart_delitem(vsd, idx, amount, 0, LOG_TYPE_VENDING);
 		z = vending_calc_tax(sd, z);
-		clif_vendingreport(vsd, idx, amount, sd->status.char_id, (int)z);
+		clif_vendingreport( *vsd, idx, amount, sd->status.char_id, (int)z );
 
 		//print buyer's name
 		if( battle_config.buyer_name ) {
@@ -292,41 +292,45 @@ void vending_purchasereq(map_session_data* sd, int aid, int uid, const uint8* da
  * @param data : itemlist data
  *	data := {<index>.w <amount>.w <value>.l}[count]
  * @param count : number of different items
- * @param at Autotrader info, or NULL if requetsed not from autotrade persistance
+ * @param at Autotrader info, or nullptr if requetsed not from autotrade persistance
  * @return 0 If success, 1 - Cannot open (die, not state.prevend, trading), 2 - No cart, 3 - Count issue, 4 - Cart data isn't saved yet, 5 - No valid item found
  */
-int8 vending_openvending(map_session_data* sd, const char* message, const uint8* data, int count, struct s_autotrader *at)
-{
+int8 vending_openvending( map_session_data& sd, const char* message, const uint8* data, int count, struct s_autotrader *at ){
 	int i, j;
 	int vending_skill_lvl;
 	char message_sql[MESSAGE_SIZE*2];
 	StringBuf buf;
-	
-	nullpo_retr(false,sd);
 
-	if ( pc_isdead(sd) || !sd->state.prevend || pc_istrading(sd)) {
+	if ( pc_isdead(&sd) || !sd.state.prevend || pc_istrading(&sd)) {
 		return 1; // can't open vendings lying dead || didn't use via the skill (wpe/hack) || can't have 2 shops at once
 	}
 
-	vending_skill_lvl = pc_checkskill(sd, MC_VENDING);
+	vending_skill_lvl = pc_checkskill(&sd, MC_VENDING);
 	
 	// skill level and cart check
-	if( !vending_skill_lvl || !pc_iscarton(sd) ) {
-		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0);
+	if( !vending_skill_lvl || !pc_iscarton(&sd) ) {
+		clif_skill_fail( sd, MC_VENDING );
+		sd.state.prevend = 0;
+		sd.state.workinprogress = WIP_DISABLE_NONE;
+		clif_openvending_ack( sd, OPENSTORE2_FAILED );
 		return 2;
 	}
 
 	// check number of items in shop
 	if( count < 1 || count > MAX_VENDING || count > 2 + vending_skill_lvl ) { // invalid item count
-		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0);
+		clif_skill_fail( sd, MC_VENDING );
+		sd.state.prevend = 0;
+		sd.state.workinprogress = WIP_DISABLE_NONE;
+		clif_openvending_ack( sd, OPENSTORE2_FAILED );
 		return 3;
 	}
 
 	if (save_settings&CHARSAVE_VENDING) // Avoid invalid data from saving
-		chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
+		chrif_save(&sd, CSAVE_INVENTORY|CSAVE_CART);
 
 	// filter out invalid items
 	i = 0;
+	int64 total = 0;
 	for( j = 0; j < count; j++ ) {
 		short index        = *(uint16*)(data + 8*j + 0);
 		short amount       = *(uint16*)(data + 8*j + 2);
@@ -335,51 +339,70 @@ int8 vending_openvending(map_session_data* sd, const char* message, const uint8*
 		index -= 2; // offset adjustment (client says that the first cart position is 2)
 
 		if( index < 0 || index >= MAX_CART // invalid position
-		||  pc_cartitem_amount(sd, index, amount) < 0 // invalid item or insufficient quantity
+		||  pc_cartitem_amount(&sd, index, amount) < 0 // invalid item or insufficient quantity
 		//NOTE: official server does not do any of the following checks!
-		||  !sd->cart.u.items_cart[index].identify // unidentified item
-		||  sd->cart.u.items_cart[index].attribute == 1 // broken item
-		||  sd->cart.u.items_cart[index].expire_time // It should not be in the cart but just in case
-		||  (sd->cart.u.items_cart[index].bound && !pc_can_give_bounded_items(sd)) // can't trade account bound items and has no permission
-		||  !itemdb_cantrade(&sd->cart.u.items_cart[index], pc_get_group_level(sd), pc_get_group_level(sd)) ) // untradeable item
+		||  !sd.cart.u.items_cart[index].identify // unidentified item
+		||  sd.cart.u.items_cart[index].attribute == 1 // broken item
+		||  sd.cart.u.items_cart[index].expire_time // It should not be in the cart but just in case
+		||  (sd.cart.u.items_cart[index].bound && !pc_can_give_bounded_items(&sd)) // can't trade account bound items and has no permission
+		||  !itemdb_cantrade(&sd.cart.u.items_cart[index], pc_get_group_level(&sd), pc_get_group_level(&sd)) ) // untradeable item
 			continue;
 
-		sd->vending[i].index = index;
-		sd->vending[i].amount = amount;
-		sd->vending[i].value = min(value, (unsigned int)battle_config.vending_max_value);
+		sd.vending[i].index = index;
+		sd.vending[i].amount = amount;
+		sd.vending[i].value = min(value, (unsigned int)battle_config.vending_max_value);
+		total += static_cast<int64>(sd.vending[i].value) * amount;
 		i++; // item successfully added
 	}
 
+	// check if the total value of the items plus the current zeny is over the limit
+	if ( !battle_config.vending_over_max && (static_cast<int64>(sd.status.zeny) + total) > MAX_ZENY ) {
+#if PACKETVER >= 20200819
+		clif_msg_color( &sd, MSI_MERCHANTSHOP_TOTA_LOVER_ZENY_ERR, color_table[COLOR_RED] );
+#endif
+		clif_skill_fail( sd, MC_VENDING );
+		sd.state.prevend = 0;
+		sd.state.workinprogress = WIP_DISABLE_NONE;
+		clif_openvending_ack( sd, OPENSTORE2_FAILED );
+		return 1;
+	}
+
 	if (i != j) {
-		clif_displaymessage(sd->fd, msg_txt(sd, 266)); //"Some of your items cannot be vended and were removed from the shop."
-		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0); // custom reply packet
+		clif_displaymessage(sd.fd, msg_txt(&sd, 266)); //"Some of your items cannot be vended and were removed from the shop."
+		clif_skill_fail( sd, MC_VENDING ); // custom reply packet
+		sd.state.prevend = 0;
+		sd.state.workinprogress = WIP_DISABLE_NONE;
+		clif_openvending_ack( sd, OPENSTORE2_FAILED );
 		return 5;
 	}
 
 	if( i == 0 ) { // no valid item found
-		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0); // custom reply packet
+		clif_skill_fail( sd, MC_VENDING ); // custom reply packet
+		sd.state.prevend = 0;
+		sd.state.workinprogress = WIP_DISABLE_NONE;
+		clif_openvending_ack( sd, OPENSTORE2_FAILED );
 		return 5;
 	}
 
-	sd->state.prevend = 0;
-	sd->state.vending = true;
-	sd->state.workinprogress = WIP_DISABLE_NONE;
-	sd->vender_id = vending_getuid();
-	sd->vend_num = i;
-	safestrncpy(sd->message, message, MESSAGE_SIZE);
+	sd.state.prevend = 0;
+	sd.state.vending = true;
+	sd.state.workinprogress = WIP_DISABLE_NONE;
+	sd.vender_id = vending_getuid();
+	sd.vend_num = i;
+	safestrncpy(sd.message, message, MESSAGE_SIZE);
 	
-	Sql_EscapeString( mmysql_handle, message_sql, sd->message );
+	Sql_EscapeString( mmysql_handle, message_sql, sd.message );
 
 	if( Sql_Query( mmysql_handle, "INSERT INTO `%s`(`id`, `account_id`, `char_id`, `sex`, `map`, `x`, `y`, `title`, `autotrade`, `body_direction`, `head_direction`, `sit`) "
 		"VALUES( %d, %d, %d, '%c', '%s', %d, %d, '%s', %d, '%d', '%d', '%d' );",
-		vendings_table, sd->vender_id, sd->status.account_id, sd->status.char_id, sd->status.sex == SEX_FEMALE ? 'F' : 'M', map_getmapdata(sd->bl.m)->name, sd->bl.x, sd->bl.y, message_sql, sd->state.autotrade, at ? at->dir : sd->ud.dir, at ? at->head_dir : sd->head_dir, at ? at->sit : pc_issit(sd) ) != SQL_SUCCESS ) {
+		vendings_table, sd.vender_id, sd.status.account_id, sd.status.char_id, sd.status.sex == SEX_FEMALE ? 'F' : 'M', map_getmapdata(sd.bl.m)->name, sd.bl.x, sd.bl.y, message_sql, sd.state.autotrade, at ? at->dir : sd.ud.dir, at ? at->head_dir : sd.head_dir, at ? at->sit : pc_issit(&sd) ) != SQL_SUCCESS ) {
 		Sql_ShowDebug(mmysql_handle);
 	}
 
 	StringBuf_Init(&buf);
 	StringBuf_Printf(&buf, "INSERT INTO `%s`(`vending_id`,`index`,`cartinventory_id`,`amount`,`price`) VALUES", vending_items_table);
 	for (j = 0; j < i; j++) {
-		StringBuf_Printf(&buf, "(%d,%d,%d,%d,%d)", sd->vender_id, j, sd->cart.u.items_cart[sd->vending[j].index].id, sd->vending[j].amount, sd->vending[j].value);
+		StringBuf_Printf(&buf, "(%d,%d,%d,%d,%d)", sd.vender_id, j, sd.cart.u.items_cart[sd.vending[j].index].id, sd.vending[j].amount, sd.vending[j].value);
 		if (j < i-1)
 			StringBuf_AppendStr(&buf, ",");
 	}
@@ -387,10 +410,10 @@ int8 vending_openvending(map_session_data* sd, const char* message, const uint8*
 		Sql_ShowDebug(mmysql_handle);
 	StringBuf_Destroy(&buf);
 
-	clif_openvending(sd,sd->bl.id,sd->vending);
-	clif_showvendingboard( *sd );
+	clif_openvending( sd );
+	clif_showvendingboard( sd );
 
-	idb_put(vending_db, sd->status.char_id, sd);
+	idb_put(vending_db, sd.status.char_id, &sd);
 
 	return 0;
 }
@@ -494,15 +517,13 @@ bool vending_searchall(map_session_data* sd, const struct s_search_store_search*
 * Open vending for Autotrader
 * @param sd Player as autotrader
 */
-void vending_reopen( map_session_data* sd )
+void vending_reopen( map_session_data& sd )
 {
-	struct s_autotrader *at = NULL;
+	struct s_autotrader *at = nullptr;
 	int8 fail = -1;
 
-	nullpo_retv(sd);
-
 	// Open vending for this autotrader
-	if ((at = (struct s_autotrader *)uidb_get(vending_autotrader_db, sd->status.char_id)) && at->count && at->entries) {
+	if ((at = (struct s_autotrader *)uidb_get(vending_autotrader_db, sd.status.char_id)) && at->count && at->entries) {
 		uint8 *data, *p;
 		uint16 j, count;
 
@@ -516,7 +537,7 @@ void vending_reopen( map_session_data* sd )
 			uint32 *value = (uint32*)(p + 4);
 
 			// Find item position in cart
-			ARR_FIND(0, MAX_CART, entry->index, sd->cart.u.items_cart[entry->index].id == entry->cartinventory_id);
+			ARR_FIND(0, MAX_CART, entry->index, sd.cart.u.items_cart[entry->index].id == entry->cartinventory_id);
 
 			if (entry->index == MAX_CART) {
 				count--;
@@ -524,35 +545,35 @@ void vending_reopen( map_session_data* sd )
 			}
 
 			*index = entry->index + 2;
-			*amount = itemdb_isstackable(sd->cart.u.items_cart[entry->index].nameid) ? entry->amount : 1;
+			*amount = itemdb_isstackable(sd.cart.u.items_cart[entry->index].nameid) ? entry->amount : 1;
 			*value = entry->price;
 
 			p += 8;
 		}
 
-		sd->state.prevend = 1; // Set him into a hacked prevend state
-		sd->state.autotrade = 1;
+		sd.state.prevend = 1; // Set him into a hacked prevend state
+		sd.state.autotrade = 1;
 
 		// Make sure abort all NPCs
-		npc_event_dequeue(sd);
-		pc_cleareventtimer(sd);
+		npc_event_dequeue(&sd);
+		pc_cleareventtimer(&sd);
 
 		// Open the vending again
 		if( (fail = vending_openvending(sd, at->title, data, count, at)) == 0 ) {
 			// Make vendor look perfect
-			pc_setdir(sd, at->dir, at->head_dir);
-			clif_changed_dir(&sd->bl, AREA_WOS);
+			pc_setdir(&sd, at->dir, at->head_dir);
+			clif_changed_dir(&sd.bl, AREA_WOS);
 			if( at->sit ) {
-				pc_setsit(sd);
-				skill_sit(sd, 1);
-				clif_sitting(&sd->bl);
+				pc_setsit(&sd);
+				skill_sit(&sd, 1);
+				clif_sitting(&sd.bl);
 			}
 
 			// Immediate save
-			chrif_save(sd, CSAVE_AUTOTRADE);
+			chrif_save(&sd, CSAVE_AUTOTRADE);
 
 			ShowInfo("Vending loaded for '" CL_WHITE "%s" CL_RESET "' with '" CL_WHITE "%d" CL_RESET "' items at " CL_WHITE "%s (%d,%d)" CL_RESET "\n",
-				sd->status.name, count, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y);
+				sd.status.name, count, mapindex_id2name(sd.mapindex), sd.bl.x, sd.bl.y);
 		}
 		aFree(data);
 	}
@@ -564,8 +585,8 @@ void vending_reopen( map_session_data* sd )
 	}
 
 	if (fail != 0) {
-		ShowError("vending_reopen: (Error:%d) Load failed for autotrader '" CL_WHITE "%s" CL_RESET "' (CID=%d/AID=%d)\n", fail, sd->status.name, sd->status.char_id, sd->status.account_id);
-		map_quit(sd);
+		ShowError("vending_reopen: (Error:%d) Load failed for autotrader '" CL_WHITE "%s" CL_RESET "' (CID=%d/AID=%d)\n", fail, sd.status.name, sd.status.char_id, sd.status.account_id);
+		map_quit(&sd);
 	}
 }
 
@@ -588,24 +609,24 @@ void do_init_vending_autotrade(void)
 
 		if( Sql_NumRows(mmysql_handle) > 0 ) {
 			uint16 items = 0;
-			DBIterator *iter = NULL;
-			struct s_autotrader *at = NULL;
+			DBIterator *iter = nullptr;
+			struct s_autotrader *at = nullptr;
 
 			// Init each autotrader data
 			while (SQL_SUCCESS == Sql_NextRow(mmysql_handle)) {
 				size_t len;
 				char* data;
 
-				at = NULL;
+				at = nullptr;
 				CREATE(at, struct s_autotrader, 1);
-				Sql_GetData(mmysql_handle, 0, &data, NULL); at->id = atoi(data);
-				Sql_GetData(mmysql_handle, 1, &data, NULL); at->account_id = atoi(data);
-				Sql_GetData(mmysql_handle, 2, &data, NULL); at->char_id = atoi(data);
-				Sql_GetData(mmysql_handle, 3, &data, NULL); at->sex = (data[0] == 'F') ? SEX_FEMALE : SEX_MALE;
+				Sql_GetData(mmysql_handle, 0, &data, nullptr); at->id = atoi(data);
+				Sql_GetData(mmysql_handle, 1, &data, nullptr); at->account_id = atoi(data);
+				Sql_GetData(mmysql_handle, 2, &data, nullptr); at->char_id = atoi(data);
+				Sql_GetData(mmysql_handle, 3, &data, nullptr); at->sex = (data[0] == 'F') ? SEX_FEMALE : SEX_MALE;
 				Sql_GetData(mmysql_handle, 4, &data, &len); safestrncpy(at->title, data, zmin(len + 1, MESSAGE_SIZE));
-				Sql_GetData(mmysql_handle, 5, &data, NULL); at->dir = atoi(data);
-				Sql_GetData(mmysql_handle, 6, &data, NULL); at->head_dir = atoi(data);
-				Sql_GetData(mmysql_handle, 7, &data, NULL); at->sit = atoi(data);
+				Sql_GetData(mmysql_handle, 5, &data, nullptr); at->dir = atoi(data);
+				Sql_GetData(mmysql_handle, 6, &data, nullptr); at->head_dir = atoi(data);
+				Sql_GetData(mmysql_handle, 7, &data, nullptr); at->sit = atoi(data);
 				at->count = 0;
 
 				if (battle_config.feature_autotrade_direction >= 0)
@@ -617,6 +638,7 @@ void do_init_vending_autotrade(void)
 
 				// initialize player
 				CREATE(at->sd, map_session_data, 1); // TODO: Dont use Memory Manager allocation anymore and rely on the C++ container
+				new (at->sd) map_session_data();
 				pc_setnewpc(at->sd, at->account_id, at->char_id, 0, gettick(), at->sex, 0);
 				at->sd->state.autotrade = 1|2;
 				if (battle_config.autotrade_monsterignore)
@@ -658,9 +680,9 @@ void do_init_vending_autotrade(void)
 				while (SQL_SUCCESS == Sql_NextRow(mmysql_handle) && j < at->count) {
 					char *data;
 					CREATE(at->entries[j], struct s_autotrade_entry, 1);
-					Sql_GetData(mmysql_handle, 0, &data, NULL); at->entries[j]->cartinventory_id = atoi(data);
-					Sql_GetData(mmysql_handle, 1, &data, NULL); at->entries[j]->amount = atoi(data);
-					Sql_GetData(mmysql_handle, 2, &data, NULL); at->entries[j]->price = atoi(data);
+					Sql_GetData(mmysql_handle, 0, &data, nullptr); at->entries[j]->cartinventory_id = atoi(data);
+					Sql_GetData(mmysql_handle, 1, &data, nullptr); at->entries[j]->amount = atoi(data);
+					Sql_GetData(mmysql_handle, 2, &data, nullptr); at->entries[j]->price = atoi(data);
 					j++;
 				}
 				items += j;

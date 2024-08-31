@@ -1,0 +1,169 @@
+//===== rAthena Script =======================================
+//= Brasilis Town
+//===== Description: =========================================
+//= [Official Conversion]
+//= Brasilis Town Script
+//===== Changelog: ===========================================
+//= 1.0 First version. Transportation and Basic NPCs. [L0ne_W0lf]
+//= 1.1 Fixed Zeny not being removed for payment. [Kisuka]
+//= 1.2 Updated dialog, added Ice Cream Maker. [L0ne_W0lf]
+//= 1.3 Moved Alberta NPC to pre-re/re paths. [Euphy]
+//= 1.4 Added VIP features. [Euphy]
+//============================================================
+
+// Brasilis Transportation :: brasilis_trans
+//============================================================
+-	script	::Crewman_bra2	-1,{
+	mes "[Crewman]";
+	mes "Hey, have you heard of a place called Brasilis?";
+	mes "It's a tropical city that's hot like the desert but also rainy. It is a very mysterious place.";
+	next;
+	mes "[Crewman]";
+	mes "We recently found a new ocean route to get there easily.";
+	if (VIP_SCRIPT) {
+		set .@cost, vip_status(VIP_STATUS_ACTIVE)?1000:10000;
+		mes "It's just 10,000 zeny for a round trip, and 1,000 for VIP! So do you want to go?"; //custom translation (VIP)
+	} else {
+		set .@cost,10000;
+		mes "It's just 10,000 zeny for a round trip! So do you want to go?";
+	}
+	next;
+	switch(select("Take me to Brasilis!:I'll stay here.")) {
+	case 1:
+		if (Zeny < .@cost) {
+			mes "[Crewman]";
+			mes "I said "+callfunc("F_InsertComma",.@cost)+" zeny.";
+			close;
+		}
+		else {
+			mes "[Crewman]";
+			mes "Cool~!! Let's go~!";
+			set Zeny, Zeny-.@cost;
+			close2;
+			warp "brasilis",314,60;
+			end;
+		}
+	case 2:
+		mes "[Crewman]";
+		mes "Well if you're ever interested, let me know and I can take you there.";
+		close;
+	}
+}
+
+brasilis,316,57,3	script	Crewman#bra1	100,{
+	mes "[Crewman]";
+	mes "My ship is going to back to Alberta, do you want to join us?";
+	next;
+	switch(select("Go back to Alberta.:Not yet~.")) {
+	case 1:
+		mes "[Crewman]";
+		mes "I sure do miss home.";
+		close2;
+		if (checkre(0))
+			warp "alberta",243,82;
+		else
+			warp "alberta",244,115;
+		end;
+	case 2:
+		mes "[Crewman]";
+		mes "Ok, suit yourself. We'll see you when we get back then.";
+		close;
+	}
+}
+
+// Generic Brasilis NPCs :: brazil_tre
+//============================================================
+brasilis,155,165,3	script	Signpost#bra1	858,{
+	mes ":: Art Museum ::";
+	close;
+}
+
+brasilis,191,239,3	script	Signpost#bra2	858,{
+	mes ":: Verass Monument ::";
+	close;
+}
+
+brasilis,240,247,3	script	Signpost#bra3	858,{
+	mes ":: Market ::";
+	mes " ";
+	mes "- For your Potions and Weaponry -";
+	close;
+}
+
+brasilis,303,309,3	script	Signpost#bra4	858,{
+	mes ":: Jungle Cable ::";
+	mes "- Not for the faint of heart -";
+	close;
+}
+
+brasilis,278,137,3	script	Signpost#bra5	858,{
+	mes ":: Brasilis Hotel ::";
+	close;
+}
+
+brasilis,137,77,5	script	Ice-Cream Maker	85,{
+	mes "[Ice Cream Maker]";
+	mes "Come~come~";
+	mes "Ice cream is the perfect snack for a hot day~";
+	mes "It's just ^3355FF100 Zeny^000000~";
+	mes "Ice Cream~";
+	mes "Get 'yer Ice Cream!";
+	next;
+	switch(select("Give me one!:Ice Cream?:Cancel.")) {
+	case 1:
+		mes "[Ice Cream Maker]";
+		mes "Since there are so many people want to get a cool ice cream you can order only 5 at a time.";
+		mes "So how many d'ya want?";
+		next;
+		while(1) {
+			input .@input; //,1,5;
+			if (.@input == 0) {
+				mes "[Ice Cream Maker]";
+				mes "None?";
+				mes "Fine get outta the way, I have customers to serve.";
+				close;
+			}
+			else if ((.@input < 0) || (.@input > 5)) {
+				mes "[Ice Cream Maker]";
+				mes "Wow.";
+				mes "You ordered too much.";
+				mes "If you eat over 5 you might need to fight with a monster in your stomach. Calm down buddy.";
+				next;
+			}
+			else
+				break;
+		}
+		set .@icecream_hap,.@input*100;
+		if (Zeny < .@icecream_hap) {
+			mes "[Ice Cream Maker]";
+			mes "Dood~! You don't have enough money.";
+			mes "It's only ^3355FF100 Zeny^000000~ Seriously!";
+			close;
+		}
+		if (!checkweight(536,.@input)) {
+			mes "[Ice Cream Maker]";
+			mes "You seem to have too much stuff.";
+			mes "Lighten your pack before buying this.";
+			close;
+		}
+		set Zeny, Zeny-.@icecream_hap;
+		getitem 536,.@input; //Ice_Cream
+		close;
+	case 2:
+		mes "[Ice Cream Maker]";
+		mes "'Ice cream is...";
+		mes "Wait, don't you know";
+		mes "what Ice Cream is?";
+		mes "What rock have you";
+		mes "been living under?";
+		next;
+		mes "[Ice Cream Maker]";
+		mes "I'm not going to even start with how weird that sounds.";
+		mes "Anyway, get 'yer Ice Cream right here while it's nice and cold.";
+		close;
+	case 3:
+		mes "[Ice Cream Maker]";
+		mes "Don't miss your chance to eat the greatest Ice Cream in all the land~!";
+		close;
+	}
+}

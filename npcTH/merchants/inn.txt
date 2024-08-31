@@ -201,6 +201,47 @@ ve_in,157,219,5	script	Inn Master#Receptionist	709,{
 	}
 }
 
+//======================== Brasilis =================================
+bra_in01,27,24,3	script	Hotel Keeper#bra1	478,{
+	mes "[Hotel Keeper]";
+	mes "Welcome to the beautiful Brasilis Hotel.";
+	next;
+	switch(select("Save:Rest -5000 zeny:Cancel")) {
+	case 1:
+		mes "[Hotel Keeper]";
+		mes "Do you want to save here at the Brasilis Hotel?";
+		next;
+		switch(select("No thank you.:Absolutely.")) {
+		case 1:
+			mes "[Hotel Keeper]";
+			mes "Ok then, enjoy your stay.";
+			close;
+		case 2:
+			mes "[Hotel Keeper]";
+			mes "Your respawn has been saved here at the hotel. I hope that you enjoy your stay here in Brasilis.";
+			savepoint "bra_in01",144,69,1,1;
+			close;
+		}
+		end;
+	case 2:
+		if (Zeny > 4999) {
+			mes "[Hotel Keeper]";
+			mes "I will show you a great room.";
+			close2;
+			if (Zeny < 5000)
+				end;
+			Zeny -= 5000;
+			percentheal 100,100;
+			warp "bra_in01",144,69;
+			end;
+		}
+		mes "[Hotel Keeper]";
+		mes "I'm sorry, but the service charge is 5,000 zeny per night.";
+	case 3:
+		close;
+	}
+}
+
 //======================= Inn Function ==============================
 function	script	F_InnMaid	{
 	.@npc_name$ = getarg(0);

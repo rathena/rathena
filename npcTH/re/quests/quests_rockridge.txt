@@ -1225,9 +1225,9 @@ OnInit:
 rockrdg1,160,306,3	duplicate(dummy_cloaked_npc)	Johnny James#revt04	4_M_JOHNNYJAMES
 rockrdg1,168,306,3	duplicate(dummy_cloaked_npc)	Albert Ford#revt08	4_M_ALBERTFORD
 rockrdg1,156,302,7	duplicate(dummy_cloaked_npc)	Ivoka Skudi#revt02	4_M_EVOKASCUDI
-rockrdg1,156,306,5	duplicate(dummy_cloaked_npc)	Cactus Gunslinger#revt01	4_M_EVOKASCUDI
-rockrdg1,161,302,1	duplicate(dummy_cloaked_npc)	Cactus Gunslinger#revt02	4_M_EVOKASCUDI
-rockrdg1,164,306,3	duplicate(dummy_cloaked_npc)	Cactus Gunslinger#revt03	4_M_EVOKASCUDI
+rockrdg1,156,306,5	duplicate(dummy_cloaked_npc)	Cactus Gunslinger#revt05	4_M_EVOKASCUDI
+rockrdg1,161,302,1	duplicate(dummy_cloaked_npc)	Cactus Gunslinger#revt06	4_M_EVOKASCUDI
+rockrdg1,164,306,3	duplicate(dummy_cloaked_npc)	Cactus Gunslinger#revt07	4_M_EVOKASCUDI
 
 rockrdg1,156,312,3	script	Unmoving Freight Train#	4_ENERGY_RED,{
 	if (rock_main_quest == 5) {

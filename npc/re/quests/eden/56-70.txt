@@ -17,6 +17,7 @@
 //= 1.5 Optimized, based on code by Zopokx. [Euphy]
 //= 1.6 Added support to Para_Team_Mark_ in Eden Group. [Ragno]
 //= 1.7 Added use of F_HasEdenGroupMark function. [Ragno]
+//= 1.8 Reverting Magic Wand Quest to request Trunks. [Carlosgrr]
 //============================================================
 
 moc_para01,42,38,3	script	Mission [56 - 70]	857,{
@@ -49,7 +50,7 @@ moc_para01,42,38,3	script	Mission [56 - 70]	857,{
 			case 1: callsub L_HuntingQuest,3260,16000,6000;
 			case 2: callsub L_HuntingQuest,3261,16000,7000;
 			case 3: callsub L_Quest,3262,17000,7000,1032,40;
-			case 4: callsub L_Quest,3263,18000,8000,1021,30,7150,30;
+			case 4: callsub L_Quest,3263,18000,8000,1021,30,1019,30;
 		}
 	}
 	end;

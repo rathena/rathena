@@ -65,9 +65,9 @@ Pick6:
 
 	// BROADCASTS DRAW
 L_Broadcast:
-	Announce "ลอตเตอรี่: ยินดีต้อนรับสู่การออกรางวัลลอตเตอรี่คืนนี้!",8;
-	Announce "ตัวเลขมีดังนี้: [" + $LW1 + "] [" + $LW2 + "] [" + $LW3 + "] [" + $LW4 + "] [" + $LW5 + "] [" + $LW6 + "]",8;
-	Announce "ขอแสดงความยินดีกับผู้ชนะในคืนนี้!",8;
+	Announce "Lottery: Welcome to tonight's lotto draw!",8;
+	Announce "The numbers are as follows: [" + $LW1 + "] [" + $LW2 + "] [" + $LW3 + "] [" + $LW4 + "] [" + $LW5 + "] [" + $LW6 + "]",8;
+	Announce "Congratulations to the winners of tonight!",8;
 
 	// GENERATES DRAW ID CODE
 L_GenID:
@@ -91,29 +91,29 @@ L_Rigged_Draw:
 prontera,141,182,5	script	Lottery	76,{
 L_Begin:
 	mes "[Lottery]";
-	mes "หมายเลขลอตเตอรี่ที่ชนะ ("+$LID2+"):";
+	mes "Winning Lotto Numbers ("+$LID2+"):";
 	mes "^0000FF[" + $LW1 + "] [" + $LW2 + "] [" + $LW3 + "] [" + $LW4 + "] [" + $LW5 + "] [" + $LW6 + "]^000000";
 	if ($LID > 99999) mes "Your Ticket ("+#LID+"):";
 	if ($LID > 99999) mes "^FF0000[" + #LW1 + "] [" + #LW2 + "] [" + #LW3 + "] [" + #LW4 + "] [" + #LW5 + "] [" + #LW6 + "]^000000";
 	mes "Next Draw-ID: ^FF0000" + $LID + "^000000.";
 	next;
 	if (getgmlevel() > 90) goto L_GM;
-	menu "รับรางวัล",L_Claim,"ซื้อลอตเตอรี่",L_Buy,"ยกเลิก",L_Cancel;
+	menu "Claim Prize",L_Claim,"Buy New Ticket",L_Buy,"Cancel",L_Cancel;
 
 // PURCHASE TICKET
 L_Buy:
 	if (#LID == $LID && #L1 != 0) goto L_DoubleTicket;
 	mes "[Lottery]";
-	mes "ราคา ^0000FF" + $L_TicketPrice + "z^000000.";
-	mes "เงินรางวัล ^FF0000" + $L_Prize_Money + "z^000000.";
+	mes "Tickets cost ^0000FF" + $L_TicketPrice + "z^000000.";
+	mes "The Jackpot is ^FF0000" + $L_Prize_Money + "z^000000.";
 	next;
-	menu "ซื้อลอตเตอรี่",-,"ยกเลิก",L_Cancel;
+	menu "Buy Ticket",-,"Cancel",L_Cancel;
 	if (Zeny < $L_TicketPrice) goto L_NoZeny;
 	set Zeny, Zeny-$L_TicketPrice;
 	mes "[Lottery]";
-	mes "คุณต้องการให้ตัวเลขของคุณถูกเลือกหรือสร้างจากคอมพิวเตอร์?";
+	mes "Would you like your numbers hand picked or computer generated?";
 	next;
-	menu "คอมพิวเตอร์สร้างขึ้น",L_ComputerGen,"คัดสรรด้วยมือ",L_HandPick,"Renew Ticket",L_Renew;
+	menu "Computer Generated",L_ComputerGen,"Hand Picked",L_HandPick,"Renew Ticket",L_Renew;
 
 // RENEW LAST TICKET
 L_Renew:
@@ -157,15 +157,15 @@ Pick6:
 	if (@L6 == @L4) goto Pick6;
 	if (@L6 == @L5) goto Pick6;
 	mes "[Lottery]";
-	mes "คอมพิวเตอร์ได้เลือกหมายเลขต่อไปนี้:";
+	mes "The computer has selected the following numbers:";
 	mes "^0000FF" + @L1 + " " + @L2 + " " + @L3 + " " + @L4 + " " + @L5 + " " + @L6 + "^000000";
 	next;
-	menu "ยืนยัน",L_Confirm,"สร้างใหม่",L_ComputerGen;
+	menu "Confirm",L_Confirm,"Re-Generate",L_ComputerGen;
 
 // HAND PICK LOTTERY NUMBERS
 L_HandPick:
 	mes "[Lottery]";
-	mes "กรุณาเลือกหมายเลขของคุณ (1-40):";
+	mes "Please pick your numbers (1-40):";
 	set @L1,0;
 	set @L2,0;
 	set @L3,0;
@@ -213,10 +213,10 @@ Input6:
 	mes @L6;
 	next;
 	mes "[Lottery]";
-	mes "หมายเลขของคุณคือ:";
+	mes "Your numbers are:";
 	mes "^0000FF" + @L1 + " " + @L2 + " " + @L3 + " " + @L4 + " " + @L5 + " " + @L6 + "^000000";
 	next;
-	menu "ยืนยัน",L_Confirm,"เลือกใหม่",L_HandPick;
+	menu "Confirm",L_Confirm,"Re-Pick",L_HandPick;
 
 L_Confirm:
 	set #LW1,@L1;
@@ -228,11 +228,11 @@ L_Confirm:
 	set #LID,$LID;
 L_Confirm2:
 	mes "[Lottery]";
-	mes "ถ่ายทอดสดการจับรางวัลเวลา 21.00 น.";
-	mes "คุณสามารถรับลอตเตอรี่ของคุณได้ระหว่างนั้นถึงงวดถัดไป";
+	mes "The live broadcasted draw is at 9pm.";
+	mes "You can claim your ticket between then and the next draw.";
 	next;
 	mes "[Lottery]";
-	mes "โชคดี!";
+	mes "Good luck!";
 	close;
 
 L_Claim:
@@ -282,10 +282,10 @@ L_Claim:
 
 // NO WINNER
 	mes "[Lottery]";
-	mes "โชคไม่ดี ดูเหมือนว่าคุณไม่ได้ถือลอตเตอรี่ที่ชนะเลย";
+	mes "Bad luck, it appears you do not hold a winning ticket.";
 	next;
 	mes "[Lottery]";
-	mes "โชคดียิ่งขึ้นในครั้งต่อไป!.";
+	mes "Better luck next time!.";
 	close;
 
 // MATCHED ALL SIX

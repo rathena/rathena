@@ -103,7 +103,7 @@ prt_in,33,114,5	script	Raffam Oranpere	10058,{
 					if( getcharid( 2 ) ){
 						mes "[Raffam Oranpere]";
 						mes "กลับมาใหม่เมื่อออกจากกิลด์แล้ว.";
-						close;
+						close3;
 					}else if( getcharid( 5 ) != 0 ){
 						cutin "laperm04.bmp", 2;
 						mes "[Raffam Oranpere]";
@@ -268,7 +268,7 @@ prt_in,35,114,5	script	Devon Aire	10059,{
 					if( getcharid( 2 ) ){
 						mes "[Devon Aire]";
 						mes "ออกจากกิลด์ก่อนเข้าแคลน, ย่าห์.";
-						close;
+						close3;
 					}else if( getcharid( 5 ) != 0 ){
 						cutin "debon03.bmp", 2;
 						mes "[Devon Aire]";
@@ -421,7 +421,7 @@ prt_in,37,114,5	script	Berman Aire	10060,{
 						mes "[Berman Aire]";
 						mes "โอ้, ม่าย.";
 						mes "เจ้าต้องออกจากกิลด์ก่อน.";
-						close;
+						close3;
 					}else if( getcharid( 5 ) != 0 ){
 						mes "[Berman Aire]";
 						mes "เจ้ามีแคลนอยู่แล้ว.";
@@ -567,7 +567,7 @@ prt_in,39,114,5	script	Shaam Rumi	10027,{
 					if( getcharid( 2 ) ){
 						mes "[Shaam Rumi]";
 						mes "เจ้ามีกิลด์อยู่แล้ว ?";
-						close;
+						close3;
 					}else if( getcharid( 5 ) != 0 ){
 						mes "[Shaam Rumi]";
 						mes "เอ๋, เจ้ามีแคลนอยู่แล้ว. เฮ้, มันไม่ตลกน่ะ.";

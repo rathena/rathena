@@ -401,8 +401,8 @@ lhz_in02,280,17,3	duplicate(Basta)	Basta#lighthalzen	4_M_DWARF
 	end;
 OnInit:
 	if (getbattleflag("feature.refineui")) {
-		//unloadnpc "Basta";
-		//unloadnpc "MightyHammer";
+		unloadnpc "Basta";
+		unloadnpc "MightyHammer";
 	}
 	end;
 }

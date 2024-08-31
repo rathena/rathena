@@ -138,7 +138,7 @@ typedef struct eri {
 #	define ers_destroy(obj)
 #	define ers_chunk_size(obj,size)
 // Disable the public functions
-#	define ers_new(size,name,options) NULL
+#	define ers_new(size,name,options) nullptr
 #	define ers_report()
 #	define ers_final()
 #else /* not DISABLE_ERS */

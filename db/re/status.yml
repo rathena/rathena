@@ -72,6 +72,7 @@ Body:
       Stun: true
       Sleep: true
       Burning: true
+      Protection: true
     EndOnStart:
       Aeterna: true
     EndReturn:
@@ -125,6 +126,7 @@ Body:
       Stun: true
       Sleep: true
       Burning: true
+      Protection: true
     EndOnStart:
       Aeterna: true
   - Status: Stun
@@ -144,6 +146,7 @@ Body:
       Inspiration: true
       Gvg_Stun: true
       Stun: true
+      Protection: true
   - Status: Sleep
     DurationLookup: NPC_SLEEPATTACK
     States:
@@ -162,9 +165,11 @@ Body:
       Inspiration: true
       Gvg_Sleep: true
       Sleep: true
+      Protection: true
   - Status: Poison
     DurationLookup: NPC_POISON
     CalcFlags:
+      Def: true
       Def2: true
       Regen: true
     Opt2:
@@ -179,6 +184,7 @@ Body:
       Inspiration: true
       Poison: true
       Dpoison: true
+      Protection: true
   - Status: Curse
     DurationLookup: NPC_WIDECURSE
     CalcFlags:
@@ -197,6 +203,7 @@ Body:
       Inspiration: true
       Gvg_Curse: true
       Curse: true
+      Protection: true
   - Status: Silence
     DurationLookup: NPC_SILENCEATTACK
     States:
@@ -213,6 +220,7 @@ Body:
       Inspiration: true
       Gvg_Silence: true
       Silence: true
+      Protection: true
   - Status: Confusion
     DurationLookup: NPC_WIDECONFUSE
     Flags:
@@ -222,6 +230,7 @@ Body:
     Fail:
       Refresh: true
       Inspiration: true
+      Protection: true
     EndReturn:
       Confusion: true
   - Status: Blind
@@ -241,6 +250,7 @@ Body:
       Fear: true
       Gvg_Blind: true
       Blind: true
+      Protection: true
   - Status: Bleeding
     Icon: EFST_BLOODING
     DurationLookup: NPC_BLEEDING
@@ -258,9 +268,11 @@ Body:
     Fail:
       Refresh: true
       Inspiration: true
+      Protection: true
   - Status: Dpoison
     DurationLookup: NPC_POISON
     CalcFlags:
+      Def: true
       Def2: true
       Regen: true
     Opt2:
@@ -784,7 +796,6 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       RemoveOnChangeMap: true
-    MinDuration: 5000
   - Status: Keeping
     DurationLookup: NPC_KEEPING
     CalcFlags:
@@ -998,6 +1009,7 @@ Body:
     Flags:
       SendOption: true
   - Status: Extremityfist
+    Icon: EFST_EXTREMITYFIST
     DurationLookup: MO_EXTREMITYFIST
     CalcFlags:
       Regen: true
@@ -1115,6 +1127,7 @@ Body:
     Icon: EFST_GROUNDMAGIC
     DurationLookup: SA_VOLCANO
     CalcFlags:
+      Batk: true
       Watk: true
       Matk: true
     Flags:
@@ -1139,8 +1152,14 @@ Body:
       NoClearance: true
   - Status: Watk_Element
     DurationLookup: MS_MAGNUM
+    Flags:
+      NoSave: true
+    EndOnStart:
+      Watk_Element: true
   - Status: Armor
     DurationLookup: NPC_DEFENDER
+    CalcFlags:
+      Speed: true
   - Status: Armor_Element_Water
     Icon: EFST_RESIST_PROPERTY_WATER
     CalcFlags:
@@ -2163,7 +2182,6 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
   - Status: Inchitrate
-    DurationLookup: NPC_POWERUP
     CalcFlags:
       Hit: true
     Flags:
@@ -2182,7 +2200,6 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
   - Status: Incfleerate
-    DurationLookup: NPC_AGIUP
     CalcFlags:
       Flee: true
     Flags:
@@ -2583,13 +2600,17 @@ Body:
     DurationLookup: HLIF_AVOID
     CalcFlags:
       Speed: true
+    Flags:
+      NoSave: true
+      RemoveFromHomOnMapWarp: true
   - Status: Change
     DurationLookup: HLIF_CHANGE
     CalcFlags:
       Vit: true
       Int: true
     Flags:
-      RemoveOnChangeMap: true
+      NoSave: true
+      RemoveFromHomOnMapWarp: true
     Fail:
       Change: true
   - Status: Bloodlust
@@ -2822,6 +2843,7 @@ Body:
     CalcFlags:
       Flee: true
     Flags:
+      BlEffect: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
@@ -2830,6 +2852,7 @@ Body:
     CalcFlags:
       Watk: true
     Flags:
+      BlEffect: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
@@ -2838,6 +2861,7 @@ Body:
     CalcFlags:
       MaxHp: true
     Flags:
+      BlEffect: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
@@ -2846,6 +2870,7 @@ Body:
     CalcFlags:
       MaxSp: true
     Flags:
+      BlEffect: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
@@ -2854,6 +2879,7 @@ Body:
     CalcFlags:
       Hit: true
     Flags:
+      BlEffect: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
@@ -2916,23 +2942,12 @@ Body:
     Icon: EFST_INVINCIBLE
     DurationLookup: NPC_INVINCIBLE
     CalcFlags:
+      Aspd: true
       Speed: true
     Flags:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    EndOnStart:
-      Invincibleoff: true
-  - Status: Invincibleoff
-    DurationLookup: NPC_INVINCIBLEOFF
-    CalcFlags:
-      Speed: true
-    Flags:
-      NoDispell: true
-      NoBanishingBuster: true
-      NoClearance: true
-    EndOnStart:
-      Invincible: true
   - Status: Manu_Atk
     Icon: EFST_MANU_ATK
     Flags:
@@ -4115,7 +4130,7 @@ Body:
       Unlimitedhummingvoice: true
       Sircleofnature: true
   - Status: Deepsleep
-    Icon: EFST_HANDICAPSTATE_DEEP_SLEEP
+    Icon: EFST_DEEP_SLEEP
     DurationLookup: WM_LULLABY_DEEPSLEEP
     States:
       NoCast: true
@@ -5732,6 +5747,8 @@ Body:
     DurationLookup: RA_UNLIMIT
     Flags:
       DisplayPc: true
+      NoDispell: true
+      NoClearance: true
   - Status: Kings_Grace
     Icon: EFST_KINGS_GRACE
     DurationLookup: LG_KINGS_GRACE
@@ -6105,14 +6122,6 @@ Body:
       NoBanishingBuster: true
       NoDispell: true
       RemoveOnHermode: true
-  - Status: Extremityfist2
-    Icon: EFST_EXTREMITYFIST
-    DurationLookup: MO_EXTREMITYFIST
-    Flags:
-      NoRemoveOnDead: true
-      NoDispell: true
-      NoBanishingBuster: true
-      NoClearance: true
   - Status: Mtf_Aspd2
     Icon: EFST_MTF_ASPD2
     CalcFlags:
@@ -7441,7 +7450,7 @@ Body:
       NoClearance: true
       NoClearbuff: true
   - Status: Madogear
-    Icon: EFST_MADOGEAR
+    Icon: EFST_MADOGEAR_TYPE
     CalcFlags:
       Speed: true
     Flags:
@@ -7633,7 +7642,7 @@ Body:
       RemoveOnDamaged: true
   - Status: Handicapstate_Lightningstrike
     Icon: EFST_HANDICAPSTATE_LIGHTNINGSTRIKE
-    DurationLookup: WH_SWIFTTRAP
+    DurationLookup: EM_LIGHTNING_LAND
     States:
       #NoMove: true
       #NoCast: true
@@ -7646,7 +7655,7 @@ Body:
       RemoveOnDamaged: true
   - Status: Handicapstate_Crystallization
     Icon: EFST_HANDICAPSTATE_CRYSTALLIZATION
-    DurationLookup: WH_SOLIDTRAP
+    DurationLookup: EM_TERRA_DRIVE
     States:
       #NoMove: true
       #NoCast: true
@@ -7660,7 +7669,7 @@ Body:
       RemoveOnDamaged: true
   - Status: Handicapstate_Conflagration
     Icon: EFST_HANDICAPSTATE_CONFLAGRATION
-    DurationLookup: WH_FLAMETRAP
+    DurationLookup: EM_CONFLAGRATION
     Flags:
       BlEffect: true
       DisplayPc: true
@@ -7888,6 +7897,8 @@ Body:
       BlEffect: true
       DisplayPc: true
       SendVal1: true
+      NoDispell: true
+      NoClearance: true
   - Status: Shadow_Weapon
     Icon: EFST_SHADOW_WEAPON
     DurationLookup: SHC_ENCHANTING_SHADOW
@@ -7933,6 +7944,9 @@ Body:
     Flags:
       BlEffect: true
       DisplayPc: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
   - Status: Ultimate_S
     Icon: EFST_ULTIMATE_S
     DurationLookup: IG_ULTIMATE_SACRIFICE
@@ -8745,9 +8759,192 @@ Body:
     DurationLookup: MT_RUSH_QUAKE
     CalcFlags:
       All: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
   - Status: G_LIFEPOTION
     Icon: EFST_G_LIFEPOTION
     Flags:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+  - Status: Hnnoweapon
+    Icon: EFST_NOEQUIPWEAPON
+    DurationLookup: HN_DOUBLEBOWLINGBASH
+  - Status: Shieldchainrush
+    Icon: EFST_SHIELDCHAINRUSH
+    DurationLookup: HN_SHIELD_CHAIN_RUSH
+    CalcFlags:
+      Speed: true
+    Flags:
+      BossResist: true
+  - Status: Mistyfrost
+    Icon: EFST_MISTYFROST
+    DurationLookup: HN_JACK_FROST_NOVA
+    Flags:
+      BossResist: true
+  - Status: Groundgravity
+    Icon: EFST_GROUNDGRAVITY
+    DurationLookup: HN_GROUND_GRAVITATION
+    CalcFlags:
+      Speed: true
+    Flags:
+      BossResist: true
+  - Status: Breakinglimit
+    Icon: EFST_BREAKINGLIMIT
+    DurationLookup: HN_BREAKINGLIMIT
+  - Status: Rulebreak
+    Icon: EFST_RULEBREAK
+    DurationLookup: HN_RULEBREAK
+  - Status: Intensive_Aim
+    Icon: EFST_INTENSIVE_AIM
+    States:
+      NoMove: true
+    CalcFlags:
+      Batk: true
+      Hit: true
+      Cri: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      SendVal1: true
+      NoSave: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+  - Status: Intensive_Aim_Count
+    Icon: EFST_INTENSIVE_AIM_COUNT
+    Flags:
+      DisplayPc: true
+      SendVal1: true
+      NoSave: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+  - Status: Grenade_Fragment_1
+    Icon: EFST_GRENADE_FRAGMENT_1
+    DurationLookup: NW_GRENADE_FRAGMENT
+    EndOnStart:
+      Grenade_Fragment_2: true
+      Grenade_Fragment_3: true
+      Grenade_Fragment_4: true
+      Grenade_Fragment_5: true
+      Grenade_Fragment_6: true
+  - Status: Grenade_Fragment_2
+    Icon: EFST_GRENADE_FRAGMENT_2
+    DurationLookup: NW_GRENADE_FRAGMENT
+    EndOnStart:
+      Grenade_Fragment_1: true
+      Grenade_Fragment_3: true
+      Grenade_Fragment_4: true
+      Grenade_Fragment_5: true
+      Grenade_Fragment_6: true
+  - Status: Grenade_Fragment_3
+    Icon: EFST_GRENADE_FRAGMENT_3
+    DurationLookup: NW_GRENADE_FRAGMENT
+    EndOnStart:
+      Grenade_Fragment_1: true
+      Grenade_Fragment_2: true
+      Grenade_Fragment_4: true
+      Grenade_Fragment_5: true
+      Grenade_Fragment_6: true
+  - Status: Grenade_Fragment_4
+    Icon: EFST_GRENADE_FRAGMENT_4
+    DurationLookup: NW_GRENADE_FRAGMENT
+    EndOnStart:
+      Grenade_Fragment_1: true
+      Grenade_Fragment_2: true
+      Grenade_Fragment_3: true
+      Grenade_Fragment_5: true
+      Grenade_Fragment_6: true
+  - Status: Grenade_Fragment_5
+    Icon: EFST_GRENADE_FRAGMENT_5
+    DurationLookup: NW_GRENADE_FRAGMENT
+    EndOnStart:
+      Grenade_Fragment_1: true
+      Grenade_Fragment_2: true
+      Grenade_Fragment_3: true
+      Grenade_Fragment_4: true
+      Grenade_Fragment_6: true
+  - Status: Grenade_Fragment_6
+    Icon: EFST_GRENADE_FRAGMENT_6
+    DurationLookup: NW_GRENADE_FRAGMENT
+    EndOnStart:
+      Grenade_Fragment_1: true
+      Grenade_Fragment_2: true
+      Grenade_Fragment_3: true
+      Grenade_Fragment_4: true
+      Grenade_Fragment_5: true
+  - Status: Auto_Firing_Launcher
+    Icon: EFST_AUTO_FIRING_LAUNCHEREFST
+    DurationLookup: NW_AUTO_FIRING_LAUNCHER
+    Flags:
+      SendVal1: true
+  - Status: Hidden_Card
+    Icon: EFST_HIDDEN_CARD
+    DurationLookup: NW_HIDDEN_CARD
+    CalcFlags:
+      All: true
+    Flags:
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+  - Status: Period_Receiveitem_2nd
+    Icon: EFST_PERIOD_RECEIVEITEM_2ND
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal1: true
+  - Status: Period_Plusexp_2nd
+    Icon: EFST_PERIOD_PLUSEXP_2ND
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal1: true
+  - Status: Powerup
+    Icon: EFST_POWERUP
+    DurationLookup: NPC_POWERUP
+    CalcFlags:
+      Hit: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Agiup
+    Icon: EFST_AGIUP
+    DurationLookup: NPC_AGIUP
+    CalcFlags:
+      Speed: true
+      Flee: true
+    Flags:
+      NoClearbuff: true
+      NoBanishingBuster: true
+      NoClearance: true
+    EndOnStart:
+      Decreaseagi: true
+  - Status: Protection
+    Icon: EFST_RAY_OF_PROTECTION
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    EndOnStart:
+      Stun: true
+      Sleep: true
+      Curse: true
+      Stone: true
+      Poison: true
+      Blind: true
+      Silence: true
+      Bleeding: true
+      Confusion: true
+      Freeze: true

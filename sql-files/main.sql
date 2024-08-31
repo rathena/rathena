@@ -291,7 +291,7 @@ CREATE TABLE IF NOT EXISTS `char` (
   KEY `party_id` (`party_id`),
   KEY `guild_id` (`guild_id`),
   KEY `online` (`online`)
-) ENGINE=MyISAM AUTO_INCREMENT=150000; 
+) ENGINE=MyISAM DEFAULT CHARSET=tis620 AUTO_INCREMENT=150000 ; 
 
 --
 -- Table structure for table `char_reg_num`
@@ -1096,10 +1096,10 @@ CREATE TABLE IF NOT EXISTS `storage` (
 ) ENGINE=MyISAM;
 
 --
--- Table structure for table `storage_vip`
+-- Table structure for table `vip_storage`
 --
 
-CREATE TABLE IF NOT EXISTS `storage_vip` (
+CREATE TABLE IF NOT EXISTS `vip_storage` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `account_id` int(11) unsigned NOT NULL default '0',
   `nameid` int(10) unsigned NOT NULL default '0',

@@ -16,7 +16,7 @@
 //= 2.0 Added 4th class [Lemongrass]
 //============================================================
 
-moc_para01,41,160,6	script	Job Master	123,{
+prontera,153,193,6	script	Job Master	123,{
 function Get_Job_Equip;
 // Checks if the Player has the required level.
 // closes if not, returns if yes
@@ -155,7 +155,7 @@ function	Job_Options	{
 	//dispbottom "Debug: eac ("+.@eac+"), third ("+.@third_possible+"), rebirth("+.@rebirth_possible+"), BaseClass ("+BaseClass+"), BaseJob ("+BaseJob+")";
 		
 	// From here on the jobmaster checks the current class
-	// and fills the the array `.@job_opt` with possible
+	// and fills the array `.@job_opt` with possible
 	// job options for the player.
 	
 	if( .@rebirth_possible ) {
@@ -184,7 +184,28 @@ function	Job_Options	{
 			Job_Options(.@job_opt,roclass(.@eac|EAJL_THIRD)); // Expanded SN is "third" cls
 		}
 	}
+
+	// babies don't get to become 4th jobs
+	if (.FourthExpanded && .@eac == EAJ_REBELLION) {
+		Require_Level(.Req_Fourth[0], .Req_Fourth[1]);
+		Job_Options(.@job_opt, roclass(EAJ_NIGHT_WATCH));
+	}
+
+	if (.FourthExpanded && .@eac == EAJ_KAGEROUOBORO) {
+		Require_Level(.Req_Fourth[0], .Req_Fourth[1]);
+		Job_Options(.@job_opt, roclass(EAJ_SHINKIRO_SHIRANUI));
+	}
+
+	if (.FourthExpanded && .@eac == EAJ_SUPER_NOVICE_E) {
+		Require_Level(.Req_Fourth[0], .Req_Fourth[1]);
+		Job_Options(.@job_opt, roclass(EAJ_HYPER_NOVICE));
+	}
 	
+	if (.FourthExpanded && .@eac == EAJ_SUMMONER) {
+		Require_Level(.Req_SHandler[0], .Req_SHandler[1]);
+		Job_Options(.@job_opt, roclass(EAJ_SPIRIT_HANDLER));
+	}
+
 	if (.SecondExpanded && 
 		((.@eac&(~EAJL_BABY)) == EAJ_NINJA || 		// is (Baby) Ninja
 		(.@eac&(~EAJL_BABY)) == EAJ_GUNSLINGER)) {	// is (Baby) Gunslinger
@@ -483,6 +504,7 @@ OnInit:
 	
 	// Settings
 	.FourthClass = true;				// Enable fourth classes?
+	.FourthExpanded = true;				// Enable new expanded fourth classes: Ex. Hyper Novice, Rebellion, Shinkiro/Shiranui?
 	.ThirdClass = true;					// Enable third classes?
 	.RebirthClass = true;				// Enable rebirth classes?
 	.SecondExpanded = true;				// Enable new expanded second classes: Ex. Super Novice, Kagerou/Oboro, Rebellion?
@@ -504,6 +526,7 @@ OnInit:
 	setarray .Req_Fourth[0],200,70;		// Minimum base level, job level to change to fourth class
 	setarray .Req_Exp_NJ_GS[0],99,70; 	// Minimum base level, job level to turn into Expanded Ninja and Gunslinger
 	setarray .Req_Exp_SNOVI[0],99,99; 	// Minimum base level, job level to turn into Expanded Super Novice
+	setarray .Req_SHandler[0],200,60;	// Minimum base level, job level to turn into Spirit Handler
 	.SNovice = 45;						// Minimum base level to turn into Super Novice
 	
 	// Setting adjustments by PACKETVER

@@ -10,10 +10,10 @@
 //============================================================
 -	script	#over_arrow	HIDDEN_NPC,{
 	mes "[Arrow Merchant]";
-	mes "สวัสดี!";
-	mes "คุณต้องการซื้อลูกธนูหรือแลกลูกธนูหรือไม่?";
+	mes "Hi!";
+	mes "Do you want to buy arrows or exchange the quiver?";
 	next;
-	switch ( select( "ซื้อ Arrows", "แลกเปลี่ยน Quiver", "ขายของ", "ยกเลิก" )) {
+	switch ( select( "Buy Arrows", "Quiver Exchange", "Sell Items", "Cancel" )) {
 	case 1:
 		close2;
 		callshop "Arrow_Archer", 1;
@@ -28,7 +28,7 @@
 		break;
 	case 4:
 		mes "[Arrow Merchant]";
-		mes "คุณสามารถดูสิ่งอื่นได้อย่างสงบมากขึ้น";
+		mes "You can take a look at other things more calmly.";
 		close;
 	}
 	end;
@@ -42,37 +42,37 @@ OnInit:
 //============================================================
 -	script	#over_bullet	HIDDEN_NPC,{
 	mes "[Ammunition Merchant]";
-	mes "สวัสดี!";
-	mes "ได้มาเห็นอะไร?";
+	mes "Hi!";
+	mes "What did you come to see?";
 	next;
-	switch ( select( "ซื้ออาวุธ", "ซื้อกระสุน", "แลกเปลี่ยน ตลับกระสุน", "ขายของ", "ยกเลิก" )) {
+	switch ( select( "Buy Weapons", "Buy Ammunition", "Cartridge Exchange", "Sell Items", "Cancel" )) {
 	case 1:
 		mes "[Ammunition Merchant]";
-		mes "ฉันจะเตรียมอาวุธ";
+		mes "I will prepare the weapon.";
 		close2;
 		callshop "Weapons_Gunslinger", 1;
 		break;
 	case 2:
 		mes "[Ammunition Merchant]";
-		mes "ฉันจะเริ่มเตรียมกระสุน";
+		mes "I will start preparing the ammunition.";
 		close2;
 		callshop "Ammunition_Gunslinger", 1;
 		break;
 	case 3:
 		mes "[Ammunition Merchant]";
-		mes "ฉันจะเริ่มเตรียมตลับกระสุน!";
+		mes "I will start preparing ammunition cartridges!";
 		close2;
 		callshop "Box_Exchange_Gunslinger", 1;
 		break;
 	case 4:
 		mes "[Ammunition Merchant]";
-		mes "คุณอยากจะขายอะไร?";
+		mes "What would you like to sell?";
 		close2;
 		callshop "Selling_Items", 2;
 		break;
 	case 5:
 		mes "[Ammunition Merchant]";
-		mes "คุณสามารถดูสิ่งอื่นได้อย่างสงบมากขึ้น";
+		mes "You can take a look at other things more calmly.";
 		close;
 	}
 	end;
@@ -86,9 +86,9 @@ OnInit:
 //============================================================
 -	script	#over_kunai	HIDDEN_NPC,{
 	mes "[Ninja Tool Merchant]";
-	mes "สวัสดี ฉันสามารถช่วยอะไรคุณได้บ้าง?";
+	mes "Hi, what can I do to help you?";
 	next;
-	switch ( select( "ซื้อเครื่องมือ Ninjutsu", "แลกเปลี่ยน Parchment", "ขายของ", "ยกเลิก" )) {
+	switch ( select( "Buy Ninjutsu Tool", "Parchment Exchange", "Sell Items", "Cancel" )) {
 	case 1:
 		close2;
 		callshop "Weapons_Ninja", 1;
@@ -115,38 +115,38 @@ OnInit:
 //============================================================
 -	script	#over_madogear	HIDDEN_NPC,{
 	mes "[Mado Gear Merchant]";
-	mes "สวัสดี!";
-	mes "ที่นี่คุณจะได้พบกับอุปกรณ์สำหรับ Madogear ยกเว้นอุปกรณ์ที่ไม่สามารถขายได้!";
-	mes "ฉันจะช่วยคุณได้อย่างไร?";
+	mes "Hi!";
+	mes "Here you will find equipment for Madogear, except those that cannot be sold!";
+	mes "How can I help you?";
 	next;
-	switch ( select( "ซื้อส่วนประกอบ", "วัสดุสิ้นเปลืองและอุปกรณ์ทำความเย็น", "แลกกล่อง", "ขายของ", "ยกเลิก" )) {
+	switch ( select( "Buy Component", "Consumables and Cooling Device", "Box Exchange", "Sell Items", "Cancel" )) {
 	case 1:
 		mes "[Mado Gear Merchant]";
-		mes "ฉันจะเริ่มเตรียมชิ้นส่วน Madogear";
+		mes "I will start preparing the Madogear pieces.";
 		close2;
 		callshop "Weapons_Mechanic", 1;
 		break;
 	case 2:
 		mes "[Mado Gear Merchant]";
-		mes "ฉันจะเริ่มเตรียมวัสดุสิ้นเปลืองที่ Madogear ใช้";
+		mes "I will start preparing the consumables used by Madogear.";
 		close2;
 		callshop "Ammunition_Mechanic", 1;
 		break;
 	case 3:
 		mes "[Mado Gear Merchant]";
-		mes "ฉันจะจัดเตรียมชุดสิ้นเปลืองที่ MadoGear ใช้ใส่กล่อง!";
+		mes "I will arrange for the consumable packs used by MadoGear to be boxed!";
 		close2;
 		callshop "Box_Exchange_Mechanic", 1;
 		break;
 	case 4:
 		mes "[Mado Gear Merchant]";
-		mes "คุณมีของที่จะขายหรือไม่?";
+		mes "Do you have something to sell?";
 		close2;
 		callshop "Selling_Items", 2;
 		break;
 	case 5:
 		mes "[Mado Gear Merchant]";
-		mes "คุณสามารถดูสิ่งอื่นได้อย่างสงบมากขึ้น";
+		mes "You can take a look at other things more calmly.";
 		close;
 	}
 	end;
@@ -160,24 +160,24 @@ OnInit:
 //============================================================
 -	script	#over_talisman	HIDDEN_NPC,{
 	mes "[Talisman Merchant]";
-	mes "สวัสดี คุณมาเพื่อดูวิญญาณหรือไม่?";
+	mes "Hello. Did you come to see the spirits?";
 	next;
-	switch ( select( "ซื้อ Talisman", "แลก Talisman Bundle", "ยกเลิก" )) {
+	switch ( select( "Buy Talisman", "Talisman Bundle Exchange", "Cancel" )) {
 	case 1:
 		mes "[Talisman Merchant]";
-		mes "คุณจะชอบมัน";
+		mes "You'll like it.";
 		close2;
 		callshop "Talisman_Merchant", 1;
 		break;
 	case 2:
 		mes "[Talisman Merchant]";
-		mes "เรายังแลกเป็นมัดรวมอีกด้วย";
+		mes "We also exchange for bundles.";
 		close2;
 		callshop "Talisman_Bundle", 1;
 		break;
 	case 3:
 		mes "[Talisman Merchant]";
-		mes "ขอบคุณ มาอีกครั้ง.";
+		mes "Thank you. Come again.";
 		close;
 	}
 	end;

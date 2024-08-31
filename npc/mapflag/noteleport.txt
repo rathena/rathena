@@ -426,7 +426,7 @@ bat_a01	mapflag	noteleport
 bat_a02	mapflag	noteleport
 
 //============================================================
-// Episode 13
+// Episode 13.2
 //============================================================
 mid_campin	mapflag	noteleport
 moc_fild22b	mapflag	noteleport
@@ -437,6 +437,11 @@ arug_que01	mapflag	noteleport
 man_in01	mapflag	noteleport
 spl_in01	mapflag	noteleport
 spl_in02	mapflag	noteleport
+
+//============================================================
+// Brasilis
+//============================================================
+bra_in01	mapflag	noteleport
 
 //============================================================
 // Orc's Memory

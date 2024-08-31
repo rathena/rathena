@@ -38,6 +38,9 @@ const t_tick MIN_MOBLINKTIME = 1000;
 //Min time between random walks
 const t_tick MIN_RANDOMWALKTIME = 4000;
 
+// How often a monster will check for using a skill on non-attack states (in ms)
+const t_tick MOB_SKILL_INTERVAL = 1000;
+
 //Distance that slaves should keep from their master.
 #define MOB_SLAVEDISTANCE 2
 
@@ -277,7 +280,7 @@ private:
 	bool parseDropNode(std::string nodeName, const ryml::NodeRef& node, uint8 max, s_mob_drop *drops);
 
 public:
-	MobDatabase() : TypesafeCachedYamlDatabase("MOB_DB", 3, 1) {
+	MobDatabase() : TypesafeCachedYamlDatabase("MOB_DB", 4, 1) {
 
 	}
 
@@ -351,6 +354,7 @@ struct mob_data {
 	uint32 spotted_log[DAMAGELOG_SIZE];
 	struct spawn_data *spawn; //Spawn data.
 	int spawn_timer; //Required for Convex Mirror
+	int16 centerX, centerY; // Spawn center of this individual monster
 	struct s_mob_lootitem *lootitems;
 	short mob_id;
 	unsigned int tdmg; //Stores total damage given to the mob, for exp calculations. [Skotlex]
@@ -359,7 +363,7 @@ struct mob_data {
 	int areanpc_id; //Required in OnTouchNPC (to avoid multiple area touchs)
 	int bg_id; // BattleGround System
 
-	t_tick next_walktime,last_thinktime,last_linktime,last_pcneartime,dmgtick;
+	t_tick next_walktime,last_thinktime,last_linktime,last_pcneartime,dmgtick,last_canmove,last_skillcheck;
 	short move_fail_count;
 	short lootitem_count;
 	short min_chase;
@@ -465,16 +469,18 @@ enum e_mob_skill_condition {
 };
 
 // The data structures for storing delayed item drops
-struct item_drop {
+struct s_item_drop{
 	struct item item_data;
 	unsigned short mob_id;
 	enum bl_type src_type;
-	struct item_drop* next;
 };
-struct item_drop_list {
-	int16 m, x, y;                       // coordinates
-	int first_charid, second_charid, third_charid; // charid's of players with higher pickup priority
-	struct item_drop* item;            // linked list of drops
+
+struct s_item_drop_list{
+	// coordinates
+	int16 m, x, y;
+	// charid's of players with higher pickup priority
+	int first_charid, second_charid, third_charid;
+	std::vector<std::shared_ptr<s_item_drop>> items;
 };
 
 uint16 mobdb_searchname(const char * const str);
@@ -536,6 +542,7 @@ int mobskill_event(struct mob_data *md,struct block_list *src,t_tick tick, int f
 int mob_summonslave(struct mob_data *md2,int *value,int amount,uint16 skill_id);
 int mob_countslave(struct block_list *bl);
 int mob_count_sub(struct block_list *bl, va_list ap);
+int mob_removeslaves(block_list* bl);
 
 int mob_is_clone(int mob_id);
 
@@ -556,7 +563,7 @@ TIMER_FUNC(mvptomb_delayspawn);
 void mvptomb_create(struct mob_data *md, char *killer, time_t time);
 void mvptomb_destroy(struct mob_data *md);
 
-void mob_setdropitem_option(struct item *itm, struct s_mob_drop *mobdrop);
+void mob_setdropitem_option( item& itm, s_mob_drop& mobdrop );
 
 #define CHK_MOBSIZE(size) ((size) >= SZ_SMALL && (size) < SZ_MAX) /// Check valid Monster Size
 

@@ -284,7 +284,7 @@ prontera,124,297,3	script	Tialfi	706,{
 				next;
 				mes "[Tialfi]";
 				mes "I think we'd better wait and see what's happening. Someone will deliver the news to us. Though, I am unsure of whether or not it will be good news or bad...";
-				close;
+				close3;
 			}
 			else if (BaseLevel < 70) {
 				cutin "god_tialpi02",2;

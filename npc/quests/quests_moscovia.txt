@@ -9935,7 +9935,7 @@ mosk_dun02,48,214,5	script	Baba Yaga#rus32	4_F_BABAYAGA,{
 					mes "I don't understand you. What do you want? Kehehehehe.";
 					close;
 				} else if (.@input > 100) {
-					mes "I said no more then 100 at a time. Kehehehehe.";
+					mes "I said no more than 100 at a time. Kehehehehe.";
 					next;
 				} else break;
 			}
