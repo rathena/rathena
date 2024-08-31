@@ -65,7 +65,6 @@ class MapGuild;
 #define ATTENDANCE_DATE_VAR "#AttendanceDate"
 #define ATTENDANCE_COUNT_VAR "#AttendanceCounter"
 #define ACHIEVEMENTLEVEL "AchievementLevel"
-
 #ifndef GOLDPC_POINT_VAR
 	#define GOLDPC_POINT_VAR "Goldpc_Points"
 #endif
@@ -949,7 +948,6 @@ public:
 	s_macro_detect macro_detect;
 
 	std::vector<uint32> party_booking_requests;
-	
 	int goldpc_tid;
 };
 

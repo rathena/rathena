@@ -19947,6 +19947,10 @@ void clif_display_pinfo( map_session_data& sd ){
 
 		//1:Premium
 		if( pc_isvip( &sd ) ){
+			details_bexp[PINFO_PREMIUM] = battle_config.vip_base_exp_increase * battle_config.base_exp_rate / 100;
+			if (details_bexp[PINFO_PREMIUM] < 0)
+				details_bexp[PINFO_PREMIUM] = 0 - details_bexp[PINFO_PREMIUM];
+		} else
 			details_bexp[PINFO_PREMIUM] = 0;
 
 		//2:Server
@@ -19962,31 +19966,21 @@ void clif_display_pinfo( map_session_data& sd ){
 		}
 
 		//3:TPLUS
-		//details_bexp[PINFO_CAFE] = 0;
-		if( pc_isvip( &sd ) ){
-			details_bexp[PINFO_CAFE] = battle_config.vip_base_exp_increase;
-			if (details_bexp[PINFO_CAFE] < 0)
-				details_bexp[PINFO_CAFE] = 0 - details_bexp[PINFO_CAFE];
-		} else
-			details_bexp[PINFO_CAFE] = 0;
+		details_bexp[PINFO_CAFE] = 0;
 
 		/**
 		 * Drop rate
 		 */
 		//0:PCRoom
-		details_drop[PINFO_BASIC] = map_getmapflag( sd.bl.m, MF_BEXP );
-		if (details_drop[PINFO_BASIC] == 100 || !details_drop[PINFO_BASIC])
-			details_drop[PINFO_BASIC] = 0;
-		else {
-			if (details_drop[PINFO_BASIC] < 100) {
-				details_drop[PINFO_BASIC] = 100 - details_drop[PINFO_BASIC];
-				details_drop[PINFO_BASIC] = 0 - details_drop[PINFO_BASIC];
-			} else
-				details_drop[PINFO_BASIC] = details_drop[PINFO_BASIC] - 100;
-		}
+		details_drop[PINFO_BASIC] = 0;
 
 		//1:Premium
-		details_drop[PINFO_PREMIUM] = 0;
+		if( pc_isvip( &sd ) ){
+			details_drop[PINFO_PREMIUM] = (battle_config.vip_drop_increase * battle_config.item_rate_common) / 100;
+			if (details_drop[PINFO_PREMIUM] < 0)
+				details_drop[PINFO_PREMIUM] = 0 - details_drop[PINFO_PREMIUM];
+		} else
+			details_drop[PINFO_PREMIUM] = 0;
 
 		//2:Server
 		details_drop[PINFO_SERVER] = battle_config.item_rate_common;
@@ -20001,12 +19995,7 @@ void clif_display_pinfo( map_session_data& sd ){
 		}
 
 		//3:TPLUS
-		if( pc_isvip( &sd ) ){
-			details_drop[PINFO_CAFE] = battle_config.vip_base_exp_increase;
-			if (details_drop[PINFO_CAFE] < 0)
-				details_drop[PINFO_CAFE] = 0 - details_drop[PINFO_CAFE];
-		} else
-			details_drop[PINFO_CAFE] = 0;
+		details_drop[PINFO_CAFE] = 0;
 
 		/**
 		 * Penalty rate
@@ -20016,7 +20005,21 @@ void clif_display_pinfo( map_session_data& sd ){
 		details_penalty[PINFO_BASIC] = 0;
 
 		//1:Premium
-		details_penalty[PINFO_PREMIUM] = 0;
+		if( pc_isvip( &sd ) ){
+			details_penalty[PINFO_PREMIUM] = battle_config.vip_exp_penalty_base;
+			if (details_penalty[PINFO_PREMIUM] == 100)
+				details_penalty[PINFO_PREMIUM] = 0;
+			else {
+				if (details_penalty[PINFO_PREMIUM] < 100) {
+					details_penalty[PINFO_PREMIUM] = 100 - details_penalty[PINFO_PREMIUM];
+					details_penalty[PINFO_PREMIUM] = 0 - details_penalty[PINFO_PREMIUM];
+				} else
+					details_penalty[PINFO_PREMIUM] = details_penalty[PINFO_PREMIUM] - 100;
+			}
+			if (battle_config.death_penalty_base > battle_config.vip_exp_penalty_base)
+				details_penalty[PINFO_PREMIUM] = battle_config.vip_exp_penalty_base - battle_config.death_penalty_base;
+		} else
+			details_penalty[PINFO_PREMIUM] = 0;
 
 		//2:Server
 		details_penalty[PINFO_SERVER] = battle_config.death_penalty_base;
@@ -20031,21 +20034,7 @@ void clif_display_pinfo( map_session_data& sd ){
 		}
 
 		//3:TPLUS
-		if( pc_isvip( &sd ) ){
-			details_penalty[PINFO_CAFE] = battle_config.vip_exp_penalty_base;
-			if (details_penalty[PINFO_CAFE] == 100)
-				details_penalty[PINFO_CAFE] = 0;
-			else {
-				if (details_penalty[PINFO_CAFE] < 100) {
-					details_penalty[PINFO_CAFE] = 100 - details_penalty[PINFO_CAFE];
-					details_penalty[PINFO_CAFE] = 0 - details_penalty[PINFO_CAFE];
-				} else
-					details_penalty[PINFO_CAFE] = details_penalty[PINFO_CAFE] - 100;
-			}
-			if (battle_config.death_penalty_base > battle_config.vip_exp_penalty_base)
-				details_penalty[PINFO_CAFE] = battle_config.vip_exp_penalty_base - battle_config.death_penalty_base;
-		} else
-			details_penalty[PINFO_CAFE] = 0;
+		details_penalty[PINFO_CAFE] = 0;
 
 	PACKET_ZC_PERSONAL_INFOMATION* p = reinterpret_cast<PACKET_ZC_PERSONAL_INFOMATION*>( packet_buffer );
 
@@ -21597,7 +21586,7 @@ void clif_attendence_response( map_session_data *sd, int32 data ){
 
 	WFIFOHEAD(fd,packet_len(0xAF0));
 	WFIFOW(fd,0) = 0xAF0;
-	WFIFOL(fd,2) = battle_config.feature_attendance_close;
+	WFIFOL(fd,2) = 0;
 	WFIFOL(fd,6) = data;
 	WFIFOSET(fd,packet_len(0xAF0));
 }
@@ -25115,6 +25104,70 @@ void clif_set_npc_window_size(map_session_data& sd, int width, int height)
 #endif  // PACKETVER_MAIN_NUM >= 20220504
 }
 
+void clif_goldpc_info( map_session_data& sd ){
+#if PACKETVER_MAIN_NUM >= 20140508 || PACKETVER_RE_NUM >= 20140508 || defined(PACKETVER_ZERO)
+	const static int32 client_max_seconds = 3600;
+
+	if( battle_config.feature_goldpc_active ){
+		struct PACKET_ZC_GOLDPCCAFE_POINT p = {};
+
+		p.PacketType = HEADER_ZC_GOLDPCCAFE_POINT;
+		p.isActive = true;
+		if( battle_config.feature_goldpc_vip && pc_isvip( &sd ) ){
+			p.mode = 2;
+		}else{
+			p.mode = 1;
+		}
+		p.point = (int32)pc_readparam( &sd, SP_GOLDPC_POINTS );
+		if( sd.goldpc_tid != INVALID_TIMER ){
+			const struct TimerData* td = get_timer( sd.goldpc_tid );
+
+			if( td != nullptr ){
+				// Get the remaining milliseconds until the next reward
+				t_tick remaining = td->tick - gettick();
+
+				// Always round up to full second
+				remaining += ( remaining % 1000 );
+
+				p.playedTime = (int32)( client_max_seconds - ( remaining / 1000 ) );
+			}else{
+				p.playedTime = 0;
+			}
+		}else{
+			p.playedTime = client_max_seconds;
+		}
+
+		clif_send( &p, sizeof( p ), &sd.bl, SELF );
+	}
+#endif
+}
+
+void clif_parse_dynamic_npc( int fd, map_session_data* sd ){
+#if PACKETVER_MAIN_NUM >= 20140430 || PACKETVER_RE_NUM >= 20140430 || defined(PACKETVER_ZERO)
+	struct PACKET_CZ_DYNAMICNPC_CREATE_REQUEST* p = (struct PACKET_CZ_DYNAMICNPC_CREATE_REQUEST*)RFIFOP( fd, 0 );
+
+	char npcname[NPC_NAME_LENGTH + 1];
+
+	if( strncasecmp( "GOLDPCCAFE", p->name, sizeof( p->name ) ) == 0 ){
+		safestrncpy( npcname, p->name, sizeof( npcname ) );
+	}else{
+		return;
+	}
+
+	struct npc_data* nd = npc_name2id( npcname );
+
+	if( nd == nullptr ){
+		ShowError( "clif_parse_dynamic_npc: Original NPC \"%s\" was not found.\n", npcname );
+		clif_dynamicnpc_result( *sd, DYNAMICNPC_RESULT_UNKNOWNNPC );
+		return;
+	}
+
+	if( npc_duplicate_npc_for_player( *nd, *sd ) != nullptr ){
+		clif_dynamicnpc_result( *sd, DYNAMICNPC_RESULT_SUCCESS );
+	}
+#endif
+}
+
 void clif_set_npc_window_pos(map_session_data& sd, int x, int y)
 {
 #if PACKETVER_MAIN_NUM >= 20220504
@@ -25152,70 +25205,6 @@ void clif_specialpopup(map_session_data& sd, int32 id ){
 	p.ppId = id;
 
 	clif_send( &p, sizeof( p ), &sd.bl, SELF);
-#endif
-}
-
-void clif_goldpc_info( map_session_data& sd ){
-#if PACKETVER_MAIN_NUM >= 20140508 || PACKETVER_RE_NUM >= 20140508 || defined(PACKETVER_ZERO)
-	const static int32 client_max_seconds = 3600;
-
-	if( battle_config.feature_goldpc_active ){
-		struct PACKET_ZC_GOLDPCCAFE_POINT p = {};
-
-		p.packetType = HEADER_ZC_GOLDPCCAFE_POINT;
-		p.active = map_getmapflag(sd.bl.m, MF_BATTLEGROUND) ? false:true;
-		if( battle_config.feature_goldpc_vip && pc_isvip( &sd ) ){
-			p.unitPoint = 2;
-		}else{
-			p.unitPoint = 1;
-		}
-		p.point = (int32)pc_readparam( &sd, SP_GOLDPC_POINTS );
-		if( sd.goldpc_tid != INVALID_TIMER ){
-			const struct TimerData* td = get_timer( sd.goldpc_tid );
-
-			if( td != nullptr ){
-				// Get the remaining milliseconds until the next reward
-				t_tick remaining = td->tick - gettick();
-
-				// Always round up to full second
-				remaining += ( remaining % 1000 );
-
-				p.accumulatePlaySecond = (int32)( client_max_seconds - ( remaining / 1000 ) );
-			}else{
-				p.accumulatePlaySecond = 0;
-			}
-		}else{
-			p.accumulatePlaySecond = client_max_seconds;
-		}
-
-		clif_send( &p, sizeof( p ), &sd.bl, SELF );
-	}
-#endif
-}
-
-void clif_parse_dynamic_npc( int fd, map_session_data* sd ){
-#if PACKETVER_MAIN_NUM >= 20140430 || PACKETVER_RE_NUM >= 20140430 || defined(PACKETVER_ZERO)
-	struct PACKET_CZ_DYNAMICNPC_CREATE_REQUEST* p = (struct PACKET_CZ_DYNAMICNPC_CREATE_REQUEST*)RFIFOP( fd, 0 );
-
-	char npcname[NPC_NAME_LENGTH + 1];
-
-	if( strncasecmp( "GOLDPCCAFE", p->nickname, sizeof( p->nickname ) ) == 0 ){
-		safestrncpy( npcname, p->nickname, sizeof( npcname ) );
-	}else{
-		return;
-	}
-
-	struct npc_data* nd = npc_name2id( npcname );
-
-	if( nd == nullptr ){
-		ShowError( "clif_parse_dynamic_npc: Original NPC \"%s\" was not found.\n", npcname );
-		clif_dynamicnpc_result( *sd, DYNAMICNPC_RESULT_UNKNOWNNPC );
-		return;
-	}
-
-	if( npc_duplicate_npc_for_player( *nd, *sd ) != nullptr ){
-		clif_dynamicnpc_result( *sd, DYNAMICNPC_RESULT_SUCCESS );
-	}
 #endif
 }
 

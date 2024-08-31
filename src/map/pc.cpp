@@ -2294,7 +2294,7 @@ TIMER_FUNC(pc_goldpc_update){
 	}
 
 	sd->goldpc_tid = INVALID_TIMER;
-
+	
 	// Check if feature is still active
 	if( !battle_config.feature_goldpc_active ){
 		return 0;
@@ -2424,7 +2424,7 @@ void pc_reg_received(map_session_data *sd)
 	// Before those clients you could send out the instance info even when the client was still loading the map, afterwards you need to send it later
 	clif_instance_info( *sd );
 #endif
-
+	
 	if( battle_config.feature_goldpc_active && pc_readreg2( sd, GOLDPC_POINT_VAR ) < battle_config.feature_goldpc_max_points && !sd->state.autotrade ){
 		sd->goldpc_tid = add_timer( gettick() + ( battle_config.feature_goldpc_time - pc_readreg2( sd, GOLDPC_SECONDS_VAR ) ) * 1000, pc_goldpc_update, sd->bl.id, (intptr_t)nullptr );
 #ifndef VIP_ENABLE
@@ -2433,7 +2433,6 @@ void pc_reg_received(map_session_data *sd)
 	}else{
 		sd->goldpc_tid = INVALID_TIMER;
 	}
-	
 	// pet
 	if (sd->status.pet_id > 0)
 		intif_request_petdata(sd->status.account_id, sd->status.char_id, sd->status.pet_id);
@@ -10546,15 +10545,24 @@ bool pc_setparam(map_session_data *sd,int64 type,int64 val_tmp)
 		// If you do not check this, some funny things happen (circle logics, timer mismatches, etc...)
 		if( !sd->state.connect_new ){
 			// Make sure to always delete the timer
-			if( sd->goldpc_tid != INVALID_TIMER ){
+			const struct TimerData* td{};
+			if (sd->goldpc_tid != INVALID_TIMER) {
+				td = get_timer(sd->goldpc_tid);
 				delete_timer( sd->goldpc_tid, pc_goldpc_update );
 				sd->goldpc_tid = INVALID_TIMER;
 			}
 
 			// If the system is enabled and the player can still earn some points restart the timer
 			if( battle_config.feature_goldpc_active && val < battle_config.feature_goldpc_max_points && !sd->state.autotrade ){
-				sd->goldpc_tid = add_timer( gettick() + ( battle_config.feature_goldpc_time - pc_readreg2( sd, GOLDPC_SECONDS_VAR ) ) * 1000, pc_goldpc_update, sd->bl.id, (intptr_t)nullptr );
-			}
+				// Capture the current time
+				t_tick current_time = (td != NULL ? td->tick : 0) - gettick();
+				current_time += (current_time % 1000);
+				t_tick remaining_seconds = battle_config.feature_goldpc_time - current_time / 1000;
+				// Ensure remaining time is non-negative				
+				remaining_seconds = (t_tick)max(static_cast<int>(remaining_seconds), 0);
+				// Restart the timer with the remaining time
+				sd->goldpc_tid = add_timer(gettick() + ((battle_config.feature_goldpc_time - remaining_seconds) * 1000 > 1000 ? (battle_config.feature_goldpc_time - remaining_seconds) * 1000 :  (battle_config.feature_goldpc_time * 1000)+1000), pc_goldpc_update, sd->bl.id, (intptr_t)nullptr);
+				}
 
 			// Update the client
 			clif_goldpc_info( *sd );

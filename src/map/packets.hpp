@@ -427,25 +427,6 @@ struct PACKET_ZC_ACK_SE_CASH_ITEM_LIST2{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_ACK_SE_CASH_ITEM_LIST2, 0x8c0)
 
-#if PACKETVER_MAIN_NUM >= 20140508 || PACKETVER_RE_NUM >= 20140508 || defined(PACKETVER_ZERO)
-struct PACKET_ZC_GOLDPCCAFE_POINT{
-	int16 packetType;
-	int8 active;
-	int8 unitPoint;
-	int32 point;
-	int32 accumulatePlaySecond;
-} __attribute__((packed));
-DEFINE_PACKET_HEADER(ZC_GOLDPCCAFE_POINT, 0xa15)
-#elif PACKETVER_MAIN_NUM >= 20140430 || PACKETVER_RE_NUM >= 20140430
-	// TODO: find difference (1byte) priority low...
-#endif
-
-struct PACKET_CZ_DYNAMICNPC_CREATE_REQUEST{
-	int16 packetType;
-	char nickname[NAME_LENGTH];
-} __attribute__((packed));
-DEFINE_PACKET_HEADER(CZ_DYNAMICNPC_CREATE_REQUEST, 0xa16)
-
 struct PACKET_CZ_REQ_MERGE_ITEM{
 	int16 packetType;
 	int16 packetLength;
@@ -522,7 +503,6 @@ struct PACKET_ZC_ACCEPT_ENTER {
 	uint8 ySize;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_ACCEPT_ENTER, 0x73)
-
 #elif PACKETVER < 20141022 || PACKETVER >= 20160330
 struct PACKET_ZC_ACCEPT_ENTER {
 	int16 packetType;
@@ -534,7 +514,6 @@ struct PACKET_ZC_ACCEPT_ENTER {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_ACCEPT_ENTER, 0x2eb)
 #else
-
 struct PACKET_ZC_ACCEPT_ENTER {
 	int16 packetType;
 	uint32 startTime;

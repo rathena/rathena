@@ -760,14 +760,14 @@ struct Battle_Config
 	int feature_stylist;
 	int feature_banking_state_enforce;
 	int instance_allow_reconnect;
-	int synchronize_damage;
-	int item_stacking;
-	int hom_delay_reset_vaporize;
-	int hom_delay_reset_warp;
 	int feature_goldpc_active;
 	int feature_goldpc_time;
 	int feature_goldpc_max_points;
 	int feature_goldpc_vip;
+	int synchronize_damage;
+	int item_stacking;
+	int hom_delay_reset_vaporize;
+	int hom_delay_reset_warp;
 
 #include <custom/battle_config_struct.inc>
 };

@@ -4139,9 +4139,9 @@ void map_reloadnpc(bool clear)
 		npc_addsrcfile("clear", false); // this will clear the current script list
 
 #ifdef RENEWAL
-	map_reloadnpc_sub("npcTH/re/scripts_main.conf");
+	map_reloadnpc_sub("npc/re/scripts_main.conf");
 #else
-	map_reloadnpc_sub("npcTH/pre-re/scripts_main.conf");
+	map_reloadnpc_sub("npc/pre-re/scripts_main.conf");
 #endif
 }
 
