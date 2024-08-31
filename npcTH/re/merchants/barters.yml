@@ -47,17 +47,17 @@ Header:
 
 Footer:
   Imports:
-  - Path: npc/re/merchants/barters/Extended_Ammunition.yml
-  - Path: npc/re/merchants/barters/Gemstone_Bagger.yml
-  - Path: npc/re/merchants/barters/quests_16_1.yml
-  - Path: npc/re/merchants/barters/quests_16_2.yml
-  - Path: npc/re/merchants/barters/quests_17_1.yml
-  - Path: npc/re/merchants/barters/quests_17_2.yml
-  - Path: npc/re/merchants/barters/refine.yml
-  - Path: npc/re/merchants/barters/enchantgrade.yml
-  - Path: npc/re/merchants/barters/cashmall.yml
-  - Path: npc/re/merchants/barters/rgsr_in.yml
-  - Path: npc/re/merchants/barters/enchan_illusion_dungeons.yml
-  - Path: npc/re/merchants/barters/quests_exp_175.yml
-  - Path: npc/re/merchants/barters/mysterious_cookie_shop.yml
-  - Path: npc/re/merchants/barters/quests_18.yml
+  - Path: npcTH/re/merchants/barters/Extended_Ammunition.yml
+  - Path: npcTH/re/merchants/barters/Gemstone_Bagger.yml
+  - Path: npcTH/re/merchants/barters/quests_16_1.yml
+  - Path: npcTH/re/merchants/barters/quests_16_2.yml
+  - Path: npcTH/re/merchants/barters/quests_17_1.yml
+  - Path: npcTH/re/merchants/barters/quests_17_2.yml
+  - Path: npcTH/re/merchants/barters/refine.yml
+  - Path: npcTH/re/merchants/barters/enchantgrade.yml
+  - Path: npcTH/re/merchants/barters/cashmall.yml
+  - Path: npcTH/re/merchants/barters/rgsr_in.yml
+  - Path: npcTH/re/merchants/barters/enchan_illusion_dungeons.yml
+  - Path: npcTH/re/merchants/barters/quests_exp_175.yml
+  - Path: npcTH/re/merchants/barters/mysterious_cookie_shop.yml
+  - Path: npcTH/re/merchants/barters/quests_18.yml
