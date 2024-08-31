@@ -503,6 +503,26 @@ struct PACKET_ZC_ACCEPT_ENTER {
 	uint8 ySize;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_ACCEPT_ENTER, 0x73)
+
+#if PACKETVER_MAIN_NUM >= 20140508 || PACKETVER_RE_NUM >= 20140508 || defined(PACKETVER_ZERO)
+struct PACKET_ZC_GOLDPCCAFE_POINT{
+	int16 packetType;
+	int8 active;
+	int8 unitPoint;
+	int32 point;
+	int32 accumulatePlaySecond;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_GOLDPCCAFE_POINT, 0xa15)
+#elif PACKETVER_MAIN_NUM >= 20140430 || PACKETVER_RE_NUM >= 20140430
+	// TODO: find difference (1byte) priority low...
+#endif
+
+struct PACKET_CZ_DYNAMICNPC_CREATE_REQUEST{
+	int16 packetType;
+	char nickname[NAME_LENGTH];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_DYNAMICNPC_CREATE_REQUEST, 0xa16)
+
 #elif PACKETVER < 20141022 || PACKETVER >= 20160330
 struct PACKET_ZC_ACCEPT_ENTER {
 	int16 packetType;
@@ -514,23 +534,6 @@ struct PACKET_ZC_ACCEPT_ENTER {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_ACCEPT_ENTER, 0x2eb)
 #else
-	
-#if PACKETVER_MAIN_NUM >= 20140508 || PACKETVER_RE_NUM >= 20140508 || defined(PACKETVER_ZERO)
-struct PACKET_ZC_GOLDPCCAFE_POINT{
-	int16 packetType;
-	int8 active;
-	int8 unitPoint;
-	int32 point;
-	int32 accumulatePlaySecond;
-} __attribute__((packed));
-#elif PACKETVER_MAIN_NUM >= 20140430 || PACKETVER_RE_NUM >= 20140430
-	// TODO: find difference (1byte) priority low...
-#endif
-
-struct PACKET_CZ_DYNAMICNPC_CREATE_REQUEST{
-	int16 packetType;
-	char nickname[NAME_LENGTH];
-} __attribute__((packed));
 
 struct PACKET_ZC_ACCEPT_ENTER {
 	int16 packetType;
@@ -1216,8 +1219,6 @@ DEFINE_PACKET_HEADER(CZ_REQ_BANKING_WITHDRAW, 0x9a9)
 DEFINE_PACKET_HEADER(CZ_REQ_BANKING_CHECK, 0x9ab)
 DEFINE_PACKET_HEADER(CZ_REQ_OPEN_BANKING, 0x9b6)
 DEFINE_PACKET_HEADER(CZ_REQ_CLOSE_BANKING, 0x9b8)
-DEFINE_PACKET_HEADER(ZC_GOLDPCCAFE_POINT, 0xa15)
-DEFINE_PACKET_HEADER(CZ_DYNAMICNPC_CREATE_REQUEST, 0xa16)
 DEFINE_PACKET_HEADER(CZ_REQ_APPLY_BARGAIN_SALE_ITEM2, 0xa3d)
 DEFINE_PACKET_HEADER(CZ_REQ_STYLE_CHANGE, 0xa46)
 DEFINE_PACKET_HEADER(ZC_STYLE_CHANGE_RES, 0xa47)
