@@ -11532,6 +11532,7 @@ static const struct _battle_data {
 	{ "feature.goldpc_time",                &battle_config.feature_goldpc_time,          3600,      0,   3600,              },
 	{ "feature.goldpc_max_points",          &battle_config.feature_goldpc_max_points,     300,      0,    300,              },
 	{ "feature.goldpc_vip",                 &battle_config.feature_goldpc_vip,              1,      0,      1,              },
+	{ "feature.goldpc_script",              &battle_config.feature_goldpc_script,           1,      0,      1,              },
 	{ "synchronize_damage",                 &battle_config.synchronize_damage,              0,      0,      1,              },
 	{ "item_stacking",                      &battle_config.item_stacking,                   1,      0,      1,              },
 #ifdef RENEWAL

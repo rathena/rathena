@@ -764,6 +764,7 @@ struct Battle_Config
 	int feature_goldpc_time;
 	int feature_goldpc_max_points;
 	int feature_goldpc_vip;
+	int feature_goldpc_script;
 	int synchronize_damage;
 	int item_stacking;
 	int hom_delay_reset_vaporize;

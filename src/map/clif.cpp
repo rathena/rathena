@@ -25162,8 +25162,15 @@ void clif_parse_dynamic_npc( int fd, map_session_data* sd ){
 		return;
 	}
 
-	if( npc_duplicate_npc_for_player( *nd, *sd ) != nullptr ){
-		clif_dynamicnpc_result( *sd, DYNAMICNPC_RESULT_SUCCESS );
+	if( nd ){
+		if( battle_config.feature_goldpc_script ){
+			run_script( nd->u.scr.script, 0, sd->bl.id, nd->bl.id );
+			return;
+		}else{
+			if( npc_duplicate_npc_for_player( *nd, *sd ) != nullptr ){
+				clif_dynamicnpc_result( *sd, DYNAMICNPC_RESULT_SUCCESS );
+			}
+		}
 	}
 #endif
 }
