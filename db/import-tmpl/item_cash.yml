@@ -32,7 +32,7 @@ Header:
   Type: ITEM_CASH_DB
   Version: 1
 
-Body:
+#Body:
 #  - Tab: New
 #    Items:
 #      - Item: Apple
@@ -260,6 +260,18 @@ Body:
 #
 #  - Tab: Other
 #    Items:
+#      - Item: World_Tour_Ticket
+#        Price: 1
+#      - Item: Silvervine
+#        Price: 1
+#      - Item: Silvervine_Fruit_Box10
+#        Price: 10
+#      - Item: Silvervine_Box100
+#        Price: 100
+#      - Item: Silvervine_Box500
+#        Price: 500
+#      - Item: Megaphone_Box
+#        Price: 45
 #      - Item: F_Clothing_Dye_Coupon
 #        Price: 150
 #      - Item: Apple

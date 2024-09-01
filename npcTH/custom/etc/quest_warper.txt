@@ -70,9 +70,9 @@
 
 function	script	Q_Warpra	{
 	mes "[Warpra]";
-	mes "Hello,";
-	mes "I can warp you to any town or dungeon, but you need to unlock them first by visiting us.";
-	mes "What do you need?";
+	mes "สวัสดี,";
+	mes "ฉันสามารถวาร์ปคุณไปยังเมืองหรือดันเจี้ยนใดก็ได้ แต่คุณต้องปลดล็อคมันก่อนโดยเข้าไปที่พวกเรา";
+	mes "คุณต้องการอะไร?";
 	
 	if(getarg(0) == 0) callfunc "QWS_MMarray",0;
 	if(getarg(0) == 1) callfunc "QWS_MMarray",1;
@@ -84,7 +84,7 @@ function	script	Q_Warpra	{
 	case 2:
 		warp $QW_SP_WarpMap$, $QW_SP_WarpX, $QW_SP_WarpY;
 		close2;
-		debugmes "Please check your special warp menu settings on the Warpra.";
+		debugmes "โปรดตรวจสอบการตั้งค่าเมนูวาร์ปพิเศษของคุณบน Warpra";
 		end;
 	case 3: goto L_town;
 	case 4: goto L_dungeon;

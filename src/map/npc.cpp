@@ -389,7 +389,7 @@ uint64 StylistDatabase::parseBodyNode( const ryml::NodeRef& node ){
 StylistDatabase stylist_db;
 
 const std::string BarterDatabase::getDefaultLocation(){
-	return "npc/barters.yml";
+	return "npcTH/barters.yml";
 }
 
 uint64 BarterDatabase::parseBodyNode( const ryml::NodeRef& node ){
