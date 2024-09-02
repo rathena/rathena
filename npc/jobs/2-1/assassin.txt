@@ -22,7 +22,7 @@
 //= 2.0 Changed numbers to constants. [Vicious]
 //= 2.1 Removed Duplicates [Silent]
 //= 2.2 Merged back JFunc. Fixed missing dialogue [Lupus]
-//= 2.3 Fixed typo and change Nameless addtimer to 100 (with 700ms I 
+//= 2.3 Fixed typo and change Nameless addtimer to 100 (with 700ms I
 //=     was still able to bypass it) [Toms]
 //= 2.4 Fixed skipping of Nameless NPC [Lupus]
 //= 2.5 Fixed a Rogue exploit [Lupus]
@@ -92,6 +92,8 @@ in_moc_16,19,33,1	script	Guildsman#asn	55,{
 		close2;
 		ASSIN_Q = 0;
 		ASSIN_Q2 = 0;
+		if (ASSIN_Q3 < 3)
+			ASSIN_Q3 = 0;
 		savepoint "in_moc_16",18,14,1,1;
 		warp "in_moc_16",18,14;
 		end;
@@ -546,7 +548,7 @@ OnTouch_:
 				mes "Alright then,";
 				mes "best of luck to you!";
 				close2;
-				if (!ASSIN_Q3)
+				if (ASSIN_Q3 < 3)
 					ASSIN_Q3 = 1;
 				ASSIN_Q = 1;
 				changequest 8001,8002;
@@ -570,7 +572,7 @@ OnTouch_:
 				mes "to the Test Hall.";
 				mes "Best of luck~";
 				close2;
-				if (!ASSIN_Q3)
+				if (ASSIN_Q3 < 3)
 					ASSIN_Q3 = 2;
 				ASSIN_Q = 1;
 				changequest 8001,8002;
@@ -624,7 +626,7 @@ OnTouch_:
 				mes "[Assassin 'Khai']";
 				mes "Are you done filling out the form? Alright, give it to me so I can send you to the Test Hall. Good luck~";
 				next;
-				if (!ASSIN_Q3)
+				if (ASSIN_Q3 < 3)
 					ASSIN_Q3 = 1;
 				ASSIN_Q = 1;
 				changequest 8001,8002;
@@ -639,7 +641,7 @@ OnTouch_:
 				mes "Then give me the form so that I can send you to the Test Hall, alright?";
 				mes "Good luck...";
 				next;
-				if (!ASSIN_Q3)
+				if (ASSIN_Q3 < 3)
 					ASSIN_Q3 = 2;
 				ASSIN_Q = 1;
 				changequest 8001,8002;
@@ -981,12 +983,12 @@ OnTouch_:
 			mes "[The Anonymous One]";
 			mes "7. Choose the maximum AGI bonus an Assassin can get at job level 50.";
 			next;
-			if (select("7:8:9:10") == 4) 
+			if (select("7:8:9:10") == 4)
 				.@assassin_t += 10;
 			mes "[The Anonymous One]";
 			mes "8. Choose the item that an Assassin cannot equip.";
 			next;
-			if (select("Dagger:Helm:Boots:Brooch") == 2) 
+			if (select("Dagger:Helm:Boots:Brooch") == 2)
 				.@assassin_t += 10;
 			mes "[The Anonymous One]";
 			mes "9. Choose the job change item for Thief.";
@@ -1482,7 +1484,7 @@ OnTimer187000:
 OnDisable:
 	stopnpctimer;
 	end;
-	
+
 OnMyMobDead:
 	mapannounce "in_moc_16","Hey, what the hell was that?! I told you: No killing monsters!",bc_map;
 	mapannounce "in_moc_16","I'm bringing you back... *Sigh...*",bc_map;
@@ -1972,7 +1974,7 @@ OnTouch_:
 		mes "supports you. How";
 		mes "about you, Huey?";
 		next;
-		if (ASSIN_Q3 == 1) {
+		if (ASSIN_Q3 == 1) { // player Job Level was above 48
 			mes "[Huey]";
 			mes "A rarity.";
 			mes "You can tell";
@@ -1982,7 +1984,7 @@ OnTouch_:
 			mes "I agree with";
 			mes "the Anonymous One.";
 		}
-		else {
+		else { // player Job Level was below 48
 			mes "[Huey]";
 			mes "Although "+ strcharinfo(0) +" looks too mellow and gentle, kind of like a pussycat, "+ strcharinfo(0) +" has the stuff.";
 			next;
@@ -2058,7 +2060,7 @@ OnTouch_:
 			next;
 		}
 		switch(ASSIN_Q3) {
-		case 1:
+		case 1: // player Job Level was above 48
 			mes "[Guildmaster]";
 			mes "Well, I've said too much. Please choose a weapon as a present.";
 			next;
@@ -2095,7 +2097,7 @@ OnTouch_:
 			ASSIN_Q3 = 3;
 			next;
 			break;
-		case 2:
+		case 2: // player Job Level was below 48
 			mes "[Guildmaster]";
 			mes "Well, I talked too much.";
 			mes "Please take this first.";
