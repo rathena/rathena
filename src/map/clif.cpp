@@ -5684,7 +5684,7 @@ void clif_addskill(map_session_data &sd, int skill_id){
 
 	uint16 idx = skill_get_index(skill_id);
 
-	if (!session_isActive(sd.fd) || !idx)
+	if (!session_isActive(sd.fd) || idx == 0)
 		return;
 
 	if( sd.status.skill[idx].id <= 0 || sd.status.skill[idx].id > MAX_SKILL)
@@ -5693,23 +5693,19 @@ void clif_addskill(map_session_data &sd, int skill_id){
 	PACKET_ZC_ADD_SKILL p{};
 
 	p.packetType = HEADER_ZC_ADD_SKILL;
-	p.skill.id = skill_id;
-	p.skill.inf = skill_get_inf(skill_id);
-	p.skill.level = sd.status.skill[idx].lv;
-	p.skill.sp = skill_get_sp(skill_id,sd.status.skill[idx].lv);
-	p.skill.range2 = skill_get_range2(&sd.bl,skill_id,sd.status.skill[idx].lv,false);
+	p.skill.id = static_cast<decltype(p.skill.id)>(skill_id);
+	p.skill.inf = static_cast<decltype(p.skill.inf)>( skill_get_inf(skill_id) );
+	p.skill.level = static_cast<decltype(p.skill.level)>(sd.status.skill[idx].lv);
+	p.skill.sp = static_cast<decltype(p.skill.sp)>( skill_get_sp(skill_id,sd.status.skill[idx].lv) );
+	p.skill.range2 = static_cast<decltype(p.skill.range2)>( skill_get_range2(&sd.bl,skill_id,sd.status.skill[idx].lv,false) );
 #if PACKETVER_RE_NUM >= 20190807 || PACKETVER_ZERO_NUM >= 20190918
-	p.skill.level2 = pc_checkskill(&sd,skill_id); //new skillflag = 0, if pc have skill, not add lv on this, just for safe call
+	p.skill.level2 = static_cast<decltype(p.skill.level2)>( pc_checkskill(&sd,skill_id) ); //new skillflag = 0, if pc have skill, not add lv on this, just for safe call
 #else
 	safestrncpy(p.skill.name, skill_get_name(skill_id), NAME_LENGTH);
 #endif
-	if( sd.status.skill[idx].flag == SKILL_FLAG_PERMANENT ){
-		if(sd.status.skill[idx].lv < skill_tree_get_max(skill_id, sd.status.class_))
+	p.skill.upFlag = 0;
+	if( sd.status.skill[idx].flag == SKILL_FLAG_PERMANENT && sd.status.skill[idx].lv < skill_tree_get_max(skill_id, sd.status.class_))
 			p.skill.upFlag = 1;
-		else
-			p.skill.upFlag = 0;
-	} else
-		p.skill.upFlag = 0;
 
 	clif_send(&p,sizeof(p),&sd.bl,SELF);
 }
