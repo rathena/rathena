@@ -4562,7 +4562,6 @@ void clif_joinchatok(map_session_data& sd, chat_data& cd){
 
 	PACKET_ZC_ENTER_ROOM* p = reinterpret_cast<PACKET_ZC_ENTER_ROOM*>( packet_buffer );
 
-	int is_npc = (cd.owner->type == BL_NPC);
 	p->packetType = HEADER_ZC_ENTER_ROOM;
 	p->packetSize = sizeof(*p);
 	p->chatId = cd.bl.id;
