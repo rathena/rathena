@@ -6093,7 +6093,7 @@ bool clif_skill_nodamage( block_list* src, block_list& dst, uint16 skill_id, int
 	PACKET_ZC_USE_SKILL p{};
 
 	p.PacketType = HEADER_ZC_USE_SKILL;
-	p.SKID = static_cast<decltype(p.SKID)>(skill_id);
+	p.SKID = skill_id;
 	p.level = std::min( static_cast<decltype(p.level)>( heal ), std::numeric_limits<decltype(p.level)>::max() );
 	p.targetAID = static_cast<decltype(p.targetAID)>(dst.id);
 	p.result = static_cast<decltype(p.result)>(success);
