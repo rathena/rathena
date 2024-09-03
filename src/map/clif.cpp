@@ -5827,11 +5827,11 @@ void clif_skillcasting(block_list& src, int dst_id, int dst_x, int dst_y, uint16
 	PACKET_ZC_USESKILL_ACK p{};
 
 	p.packetType = HEADER_ZC_USESKILL_ACK;
-	p.srcId = static_cast<decltype(p.srcId)>(src.id);
+	p.srcId = src.id;
 	p.dstId  = static_cast<decltype(p.dstId)>(dst_id);
 	p.x = static_cast<decltype(p.x)>(dst_x);
 	p.y = static_cast<decltype(p.y)>(dst_y);
-	p.skillId = static_cast<decltype(p.skillId)>(skill_id);
+	p.skillId = skill_id;
 	p.delayTime = static_cast<decltype(p.delayTime)>(casttime);
 	p.element = 0;
 
