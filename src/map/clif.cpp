@@ -6429,12 +6429,12 @@ static void clif_status_change_sub(block_list &bl, int id, int type, bool flag, 
 			tick = 9999; // this is indeed what official servers do
 
 		p.packetType = HEADER_ZC_MSG_STATE_CHANGE2;
-		p.index = type;
-		p.id = id;
+		p.index = static_cast<decltype(p.index)>(type);
+		p.id = static_cast<decltype(p.id)>(id);
 		p.state = flag;
-		p.duration = client_tick(tick);/* at this stage remain and total are the same value I believe */
+		p.duration = client_tick(tick);
 #if PACKETVER >= 20120618
-		p.duration2 = client_tick(tick);
+		p.duration2 = p.duration;
 #endif
 		p.val1 = val1;
 		p.val2 = val2;
@@ -6448,8 +6448,8 @@ static void clif_status_change_sub(block_list &bl, int id, int type, bool flag, 
 	PACKET_ZC_MSG_STATE_CHANGE p{};
 
 	p.packetType = HEADER_ZC_MSG_STATE_CHANGE;
-	p.index = type;
-	p.id = id;
+	p.index = static_cast<decltype(p.index)>(type);
+	p.id = static_cast<decltype(p.id)>(id);
 	p.state = flag;
 
 	clif_send(&p,sizeof(p),&bl,target_type);

@@ -789,7 +789,7 @@ struct PACKET_ZC_MSG_STATE_CHANGE{
 	uint16 packetType;
 	uint16 index;
 	uint32 id;
-	uint8 state;
+	bool state;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_MSG_STATE_CHANGE,0x196)
 
@@ -801,9 +801,9 @@ struct PACKET_ZC_MSG_STATE_CHANGE2{
 	bool state;
 	uint32 duration;
 	uint32 duration2;
-	uint32 val1;
-	uint32 val2;
-	uint32 val3;
+	int val1;
+	int val2;
+	int val3;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_MSG_STATE_CHANGE2,0x983)
 #elif PACKETVER >= 20090121
@@ -813,9 +813,9 @@ struct PACKET_ZC_MSG_STATE_CHANGE2{
 	uint32 id;
 	bool state;
 	uint32 duration;
-	uint32 val1;
-	uint32 val2;
-	uint32 val3;
+	int val1;
+	int val2;
+	int val3;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_MSG_STATE_CHANGE2,0x43f)
 #endif
