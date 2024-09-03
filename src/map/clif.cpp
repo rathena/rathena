@@ -4491,7 +4491,7 @@ void clif_changechatstatus(chat_data& cd) {
 	if(cd.usersd[0] == nullptr )
 		return;
 
-	enum chat_flags:uint8 {
+	enum e_chat_flags:uint8 {
 		CHAT_PRIVATE = 0,
 		CHAT_PUBLIC,
 		CHAT_ARENA,
