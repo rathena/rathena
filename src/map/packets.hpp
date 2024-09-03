@@ -789,7 +789,7 @@ struct PACKET_ZC_MSG_STATE_CHANGE{
 	uint16 packetType;
 	uint16 index;
 	uint32 id;
-	uint8 state;
+	bool state;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_MSG_STATE_CHANGE,0x196)
 
