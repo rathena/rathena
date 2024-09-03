@@ -452,7 +452,7 @@ struct PACKET_ZC_SKILLINFO_UPDATE {
 	uint16 level;
 	uint16 sp;
 	uint16 range2;
-	uint8 upFlag;
+	bool upFlag;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_SKILLINFO_UPDATE, 0x10e);
 
