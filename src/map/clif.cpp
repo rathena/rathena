@@ -2118,7 +2118,7 @@ void clif_changemapserver( map_session_data& sd, const char* map, uint16 x, uint
 /// This function combines both calls and allows to simplify the calling code
 void clif_blown(struct block_list *bl)
 {
-	clif_slide(bl, bl->x, bl->y);
+	clif_slide(*bl, bl->x, bl->y);
 	clif_fixpos( *bl );
 }
 
@@ -9992,21 +9992,20 @@ void clif_name( struct block_list* src, struct block_list *bl, send_target targe
 /// Visually moves(instant) a character to x,y. The char moves even
 /// when the target cell isn't walkable. If the char is sitting it
 /// stays that way.
-void clif_slide(struct block_list *bl, int x, int y)
-{
-	unsigned char buf[10];
-	nullpo_retv(bl);
+void clif_slide(block_list& bl, int x, int y){
 
-	WBUFW(buf, 0) = 0x01ff;
-	WBUFL(buf, 2) = bl->id;
-	WBUFW(buf, 6) = x;
-	WBUFW(buf, 8) = y;
-	clif_send(buf, packet_len(0x1ff), bl, AREA);
+	PACKET_ZC_HIGHJUMP p{};
 
-	if( disguised(bl) )
+	p.packetType = HEADER_ZC_HIGHJUMP;
+	p.srcId = bl.id;
+	p.x = x;
+	p.y = y;
+	clif_send(&p, sizeof(p), &bl, AREA);
+
+	if( disguised(&bl) )
 	{
-		WBUFL(buf,2) = disguised_bl_id(bl->id);
-		clif_send(buf, packet_len(0x1ff), bl, SELF);
+		p.srcId = disguised_bl_id(bl.id);
+		clif_send(&p, sizeof(p), &bl, SELF);
 	}
 }
 
@@ -17031,7 +17030,7 @@ void clif_parse_CashShopReqTab(int fd, map_session_data *sd) {
 		p->items[p->count].itemId = client_nameid( item->nameid );
 		p->items[p->count].price = item->price;
 
-		p->packetLength += static_cast<decltype>(p->packetLength)>( sizeof( p->items[0] ) );
+		p->packetLength += static_cast<decltype(p->packetLength)>( sizeof( p->items[0] ) );
 		p->count++;
 	}
 
