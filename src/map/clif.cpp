@@ -4559,27 +4559,36 @@ void clif_joinchatfail( map_session_data& sd, e_refuse_enter_room result ){
 ///     1 = normal
 void clif_joinchatok(map_session_data& sd, chat_data& cd){
 
-	if (!session_isActive(sd.fd))
-		return;
 
 	PACKET_ZC_ENTER_ROOM* p = reinterpret_cast<PACKET_ZC_ENTER_ROOM*>( packet_buffer );
 
 	int is_npc = (cd.owner->type == BL_NPC);
 	p->packetType = HEADER_ZC_ENTER_ROOM;
-	p->packetSize = sizeof(p) + (sizeof(PACKET_ZC_ENTER_ROOM_sub) * (cd.users + is_npc)) + sizeof(PACKET_ZC_ENTER_ROOM_sub);
+	p->packetSize = sizeof(*p);
 	p->chatId = cd.bl.id;
 	
-	if(is_npc){
-		p->Members[0].Flag = 0;
-		safestrncpy(p->Members[0].Name, ((struct npc_data *)cd.owner)->name, NAME_LENGTH);
-		for (int i = 0; i < cd.users; i++) {
-			p->Members[i+is_npc].Flag = 1;
-			safestrncpy(p->Members[i+is_npc].Name, cd.usersd[i]->status.name, NAME_LENGTH);
+	if(cd.owner->type == BL_NPC){
+		PACKET_ZC_ENTER_ROOM_sub& owner = p->members[0];
+		owner.flag = 0;
+		safestrncpy(owner.name, reinterpret_cast<npc_data*>(cd.owner)->name, sizeof(owner.name));
+		p->packetSize += static_cast<decltype(p->packetSize)>( sizeof( owner ) );
+
+		for (size_t i = 0; i < cd.users; i++) {
+			PACKET_ZC_ENTER_ROOM_sub& member = p->members[i + 1];
+
+			member.flag = 1;
+			safestrncpy(member.name, cd.usersd[i]->status.name, sizeof(member.name));
+
+			p->packetSize += static_cast<decltype(p->packetSize)>( sizeof( member ) );
 		}
 	}else{
-		for (int i = 0; i < cd.users; i++) {
-			p->Members[i].Flag = (i != 0);
-			safestrncpy(p->Members[i].Name, cd.usersd[i]->status.name, NAME_LENGTH);
+		for (size_t i = 0; i < cd.users; i++) {
+			PACKET_ZC_ENTER_ROOM_sub& member = p->members[i];
+
+			member.flag = i > 0;
+			safestrncpy(member.name, cd.usersd[i]->status.name, sizeof(member.name));
+
+			p->packetSize += static_cast<decltype(p->packetSize)>( sizeof( member ) );
 		}
 	}
 

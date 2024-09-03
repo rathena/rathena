@@ -899,15 +899,15 @@ struct PACKET_ZC_REFUSE_ENTER_ROOM {
 DEFINE_PACKET_HEADER(ZC_REFUSE_ENTER_ROOM, 0xda);
 
 struct PACKET_ZC_ENTER_ROOM_sub{
-	uint32 Flag;
-	char Name[NAME_LENGTH];
+	uint32 flag;
+	char name[NAME_LENGTH];
 } __attribute__((packed));
 
 struct PACKET_ZC_ENTER_ROOM{
 	uint16 packetType;
 	uint16 packetSize;
 	uint32 chatId;
-	PACKET_ZC_ENTER_ROOM_sub Members[];
+	PACKET_ZC_ENTER_ROOM_sub members[];
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_ENTER_ROOM, 0xdb);
 
