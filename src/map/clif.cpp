@@ -4501,26 +4501,28 @@ void clif_changechatstatus(chat_data& cd) {
 	PACKET_ZC_CHANGE_CHATROOM* p = reinterpret_cast<PACKET_ZC_CHANGE_CHATROOM*>( packet_buffer );
 
 	p->packetType = HEADER_ZC_CHANGE_CHATROOM;
-	p->packetSize = static_cast<decltype(p->packetSize)>(17 + strlen(cd.title));
+	p->packetSize = static_cast<decltype(p->packetSize)>(sizeof(*p) + strlen(cd.title));
 	p->ownerId = cd.owner->id;
 	p->chatId = cd.bl.id;
-	p->Limit = cd.limit;
-	p->Users = cd.users;
+	p->limit = cd.limit;
+	p->users = cd.users;
 
-	memcpy(p->Title, cd.title, strlen(cd.title)); // not zero-terminated
-
-	uint8 type = CHAT_PUBLIC;
+	// not zero-terminated
+	strncpy(p->title, cd.title, strlen(cd.title));
 
 	if(cd.owner->type == BL_NPC){
-		p->Users++;
-		if(cd.limit)
-			type = CHAT_ARENA;
-		else
-			type = CHAT_PK;
-	}else if(cd.owner->type == BL_PC && cd.pub == false)
-		type = CHAT_PRIVATE;
+		// NPC itself counts as additional chat user
+		p->users++;
 
-	p->Flag = type;
+		if(cd.limit)
+			p->flag = CHAT_ARENA;
+		else
+			p->flag = CHAT_PK;
+	}else if(cd.owner->type == BL_PC && cd.pub == false){
+		p->flag = CHAT_PRIVATE;
+	}else{
+		p->flag = CHAT_PUBLIC;
+	}
 
 	clif_send(p,p->packetSize,cd.owner,CHAT);
 }
