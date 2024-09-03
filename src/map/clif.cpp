@@ -10,6 +10,7 @@
 #include <cstring>
 #include <ctime>
 #include <unordered_set>
+#include <sstream>
 
 #include <common/cbasetypes.hpp>
 #include <common/conf.hpp>
@@ -6579,30 +6580,33 @@ void clif_efst_status_change(struct block_list *bl, int tid, enum send_target ta
 #endif
 }
 
-/// Send message (modified by [Yor]) (ZC_NOTIFY_PLAYERCHAT).
-/// 008e <packet len>.W <message>.?B
+/// 008e <packet len>.W <message>.?B (ZC_NOTIFY_PLAYERCHAT).
 void clif_displaymessage(map_session_data& sd, const char* mes){
 
 	nullpo_retv(mes);
 
 	if(session_isActive(sd.fd)){
+		std::string message(mes);
 		std::string line;
-		line.append(mes);
-		if(!line.empty()) {
-#if PACKETVER == 20141022
-			/** for some reason game client crashes depending on message pattern (only for this packet) **/
-			/** so we redirect to ZC_NPC_CHAT **/
-			clif_messagecolor_target(&sd.bl, color_table[COLOR_DEFAULT], mes, true, SELF, &sd);
-#else		
-			PACKET_ZC_NOTIFY_PLAYERCHAT* p = reinterpret_cast<PACKET_ZC_NOTIFY_PLAYERCHAT*>( packet_buffer );
+		std::istringstream stream(message);
 
-			p->PacketType = HEADER_ZC_NOTIFY_PLAYERCHAT;
-			// Limit message to 255+1 characters (otherwise it causes a buffer overflow in the client)
-			p->PacketLength = static_cast<decltype(p->PacketLength)>( cap_value(line.size(),0,CHAT_SIZE_MAX-1) ); 
-			safestrncpy(p->Message, line.c_str(), p->PacketLength + 1);
-			p->PacketLength += 5; // 4 + len + nullptr teminate
-			clif_send(p, p->PacketLength, &sd.bl, SELF);
+		while (std::getline(stream, line)) {
+			if(!line.empty()) {
+#if PACKETVER == 20141022
+				/** for some reason game client crashes depending on message pattern (only for this version) **/
+				/** so we redirect to ZC_NPC_CHAT **/
+				clif_messagecolor_target(&sd.bl, color_table[COLOR_DEFAULT], line.c_str(), true, SELF, &sd);
+#else		
+				PACKET_ZC_NOTIFY_PLAYERCHAT* p = reinterpret_cast<PACKET_ZC_NOTIFY_PLAYERCHAT*>( packet_buffer );
+
+				p->PacketType = HEADER_ZC_NOTIFY_PLAYERCHAT;
+				// Limit message to 255+1 characters (otherwise it causes a buffer overflow in the client)
+				p->PacketLength = static_cast<decltype(p->PacketLength)>( strnlen(line.c_str(), CHAT_SIZE_MAX) ); 
+				safestrncpy(p->Message, line.c_str(), p->PacketLength + 1);
+				p->PacketLength += static_cast<decltype(p->PacketLength)>(sizeof(*p) + 1); // 4 + len + nullptr teminate
+				clif_send(p, p->PacketLength, &sd.bl, SELF);
 #endif
+			}
 		}
 	}
 }
