@@ -5827,27 +5827,27 @@ void clif_skillcasting(block_list& src, int dst_id, int dst_x, int dst_y, uint16
 	PACKET_ZC_USESKILL_ACK p{};
 
 	p.packetType = HEADER_ZC_USESKILL_ACK;
-	p.srcId = src.id;
-	p.dstId  = dst_id;
-	p.x = dst_x;
-	p.y = dst_y;
-	p.skillId = skill_id;
-	p.delayTime = casttime;
+	p.srcId = static_cast<decltype(p.srcId)>(src.id);
+	p.dstId  = static_cast<decltype(p.dstId)>(dst_id);
+	p.x = static_cast<decltype(p.x)>(dst_x);
+	p.y = static_cast<decltype(p.y)>(dst_y);
+	p.skillId = static_cast<decltype(p.skillId)>(skill_id);
+	p.delayTime = static_cast<decltype(p.delayTime)>(casttime);
 	p.element = 0;
 
 	if(property > 0  && property < 7)
-		p.element = property; // Avoid sending unknow element
+		p.element = static_cast<decltype(p.element)>(property); // Avoid sending unknow element
 
 #if PACKETVER_MAIN_NUM >= 20091124 || PACKETVER_RE_NUM >= 20091124 || defined(PACKETVER_ZERO)
-	p.disposable = 0;
+	p.disposable = static_cast<decltype(p.disposable)>(0);
 #if PACKETVER_MAIN_NUM >= 20181212 || PACKETVER_RE_NUM >= 20181212 || PACKETVER_ZERO_NUM >= 20190130
-	p.attackMT = 0;
+	p.attackMT = static_cast<decltype(p.attackMT)>(0);
 #endif
 #endif
 
 	if (disguised(&src)) {
 		clif_send(&p,sizeof(p), &src, AREA_WOS);
-		p.srcId = disguised_bl_id( src.id );
+		p.srcId = static_cast<decltype(p.srcId)>(disguised_bl_id( src.id ));
 		clif_send(&p,sizeof(p), &src, SELF);
 	} else
 		clif_send(&p,sizeof(p), &src, AREA);
