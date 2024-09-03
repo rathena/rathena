@@ -843,10 +843,10 @@ struct PACKET_ZC_CHANGE_CHATROOM{
 	uint16 packetSize;
 	uint32 ownerId;
 	uint32 chatId;
-	uint16 Limit;
-	uint16 Users;
-	uint8 Flag;
-	char Title[];
+	uint16 limit;
+	uint16 users;
+	uint8 flag;
+	char title[];
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_CHANGE_CHATROOM, 0xdf);
 
