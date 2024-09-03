@@ -6179,7 +6179,7 @@ void clif_skill_warppoint( map_session_data& sd, uint16 skill_id, uint16 skill_l
 		PACKET_ZC_WARPLIST* p = reinterpret_cast<PACKET_ZC_WARPLIST*>(packet_buffer);
 
 		p->packetType = HEADER_ZC_WARPLIST;
-		p->skillId = static_cast<decltype(p->skillId)>(skill_id);
+		p->skillId = skill_id;
 		int len, memoCount = 0;
 		for (std::string map : maps) {
 			if (!map.empty()) {
