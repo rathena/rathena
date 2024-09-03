@@ -6189,7 +6189,7 @@ void clif_skill_warppoint( map_session_data& sd, uint16 skill_id, uint16 skill_l
 	p.packetType = HEADER_ZC_WARPLIST;
 	p.skillId = skill_id;
 
-	size_t memoCount = 0, max = ARRAYSIZE( p.maps );
+	size_t memoCount = 0, max = 4;
 	for( std::string& map : maps ){
 		if( map.empty() ){
 			continue;
