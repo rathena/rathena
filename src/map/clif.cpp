@@ -5281,12 +5281,12 @@ void clif_changemapcell(int16 m, int x, int y, int type, enum send_target target
 	PACKET_ZC_UPDATE_MAPINFO p{};
 
 	p.packetType = HEADER_ZC_UPDATE_MAPINFO;
-	p.x = x;
-	p.y = y;
-	p.type = type;
+	p.x = static_cast<decltype(p.x)>(x);
+	p.y = static_cast<decltype(p.y)>(y);
+	p.type = static_cast<decltype(p.type)>(type);
 	mapindex_getmapname_ext(map_mapid2mapname(m),p.mapname);
 
-	if( sd != nullptr && target == SELF ) {
+	if( sd != nullptr && session_isActive(sd->fd) && target == SELF ) {
 		clif_send(&p,sizeof(p),&sd->bl,target);
 	}
 	else
