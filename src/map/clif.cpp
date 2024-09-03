@@ -6556,15 +6556,15 @@ void clif_efst_status_change(block_list &bl, int tid, enum send_target target, i
 	PACKET_ZC_EFST_SET_ENTER p{};
 
 	p.packetType = HEADER_ZC_EFST_SET_ENTER;
-	p.tid = tid;
-	p.type = type;
-	p.duration = client_tick(tick); // Set remaining status duration [exneval]
+	p.tid = static_cast<decltype(p.tid)>(tid);
+	p.type = static_cast<decltype(p.type)>(type);
+	p.duration = client_tick(tick);
 #if PACKETVER >= 20120618
-	p.duration2 = client_tick(tick); // client need it
+	p.duration2 = p.duration; // client need it
 #endif
-	p.val1 = val1;
-	p.val2 = val2;
-	p.val3 = val3;
+	p.val1 = static_cast<decltype(p.val1)>(val1);
+	p.val2 = static_cast<decltype(p.val2)>(val2);
+	p.val3 = static_cast<decltype(p.val3)>(val3);
 
 	clif_send(&p,sizeof(p),&bl,target);
 
