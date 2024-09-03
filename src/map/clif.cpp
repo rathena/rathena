@@ -19962,7 +19962,7 @@ void clif_display_pinfo( map_session_data& sd ){
 
 		//3:TPLUS
 		if( pc_isvip( &sd ) ){
-			details_bexp[PINFO_CAFE] = battle_config.vip_base_exp_increase * battle_config.base_exp_rate / 100;
+			details_bexp[PINFO_CAFE] = battle_config.vip_base_exp_increase + battle_config.base_exp_rate / 100;
 			if (details_bexp[PINFO_CAFE] < 0)
 				details_bexp[PINFO_CAFE] = 0 - details_bexp[PINFO_CAFE];
 		} else
@@ -19991,7 +19991,7 @@ void clif_display_pinfo( map_session_data& sd ){
 
 		//3:TPLUS
 		if( pc_isvip( &sd ) ){
-			details_drop[PINFO_CAFE] = (battle_config.vip_drop_increase * battle_config.item_rate_common) / 100;
+			details_drop[PINFO_CAFE] = (battle_config.vip_drop_increase + battle_config.item_rate_common) / 100;
 			if (details_drop[PINFO_CAFE] < 0)
 				details_drop[PINFO_CAFE] = 0 - details_drop[PINFO_CAFE];
 		} else

@@ -16,9 +16,9 @@
 
 OnHour00:
 OnHour12:
-	set $@brate,1000;
-	set $@jrate,1000;
-	set $@drate,1000;
+	set $@brate,1500;
+	set $@jrate,1500;
+	set $@drate,1500;
 	
 	//Base exp
 	setbattleflag("base_exp_rate",$@brate);
@@ -35,9 +35,9 @@ OnHour12:
 
 OnHour06:
 OnHour18:
-	set $@brate,500;
-	set $@jrate,500;
-	set $@drate,500;
+	set $@brate,1000;
+	set $@jrate,1000;
+	set $@drate,1000;
 
 	//Base exp
 	setbattleflag("base_exp_rate",$@brate);
