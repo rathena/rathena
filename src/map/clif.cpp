@@ -5623,14 +5623,13 @@ void clif_skillinfoblock(map_session_data &sd){
 	PACKET_ZC_SKILLINFO_LIST *p = reinterpret_cast<PACKET_ZC_SKILLINFO_LIST*>( packet_buffer );
 
 	p->packetType = HEADER_ZC_SKILLINFO_LIST;
-	p->packetLength = sizeof(p) + sizeof(SKILLDATA);
-	int id;
+	p->packetLength = sizeof(*p);
+	int id, skillcount = 0;
 	bool haveCallPartnerSkill = false;
-	std::vector<int> remaining_skills; // workaround for bugreport:5348;
-	int skillcount = 0;
+	std::vector<int> remaining_skills; // workaround for bugreport:5348
 	for ( int i = 0; i < MAX_SKILL; i++){
 		if( (id = sd.status.skill[i].id) != 0 ){
-
+			
 			// skip WE_CALLPARTNER and send it in special way
 			if (id == WE_CALLPARTNER) {
 				haveCallPartnerSkill = true;
@@ -5643,25 +5642,27 @@ void clif_skillinfoblock(map_session_data &sd){
 				continue;
 			}
 
-			p->skills[skillcount].id = id;
-			p->skills[skillcount].inf = skill_get_inf(id);
-			p->skills[skillcount].level = sd.status.skill[i].lv;
+			SKILLDATA& skill = p->skills[skillcount];
+			skill.id = static_cast<decltype(skill.id)>(id);
+			skill.inf = static_cast<decltype(skill.inf)>( skill_get_inf(id) );
+			skill.level = static_cast<decltype(skill.level)>( sd.status.skill[i].lv );
 #if PACKETVER_RE_NUM >= 20190807 || PACKETVER_ZERO_NUM >= 20190918
-			p->skills[skillcount].level2 = sd.status.skill[i].lv;
+			skill.level2 = skill.level;
 #else
 			safestrncpy(p->skills[skillcount].name, skill_get_name(id), NAME_LENGTH);
 #endif
-			p->skills[skillcount].sp = skill_get_sp(id,sd.status.skill[i].lv);
-			p->skills[skillcount].range2 = skill_get_range2(&sd.bl,id,sd.status.skill[i].lv,false);
-			if(sd.status.skill[i].flag == SKILL_FLAG_PERMANENT)
-				p->skills[skillcount].upFlag = (sd.status.skill[i].lv < skill_tree_get_max(id, sd.status.class_))? 1:0;
-			else
-				p->skills[skillcount].upFlag = 0;
+			skill.sp = static_cast<decltype(skill.sp)>( skill_get_sp(id,sd.status.skill[i].lv) );
+			skill.range2 = static_cast<decltype(skill.range2)>( skill_get_range2(&sd.bl, id, sd.status.skill[i].lv, false) );
 
-			p->packetLength += sizeof(SKILLDATA);
+			skill.upFlag = 0;
+			if(sd.status.skill[i].flag == SKILL_FLAG_PERMANENT && sd.status.skill[i].lv < skill_tree_get_max(id, sd.status.class_))
+				skill.upFlag = 1;
+
+			p->packetLength += sizeof(skill);
 			skillcount++;
 		}
 	}
+
 	clif_send(p,p->packetLength,&sd.bl,SELF);
 
 	// adoption fix
@@ -5672,9 +5673,9 @@ void clif_skillinfoblock(map_session_data &sd){
 
 	// workaround for bugreport:5348; send the remaining skills one by one to bypass packet size limit
 	if(!remaining_skills.empty()) {
-		for(int skill_id : remaining_skills){
-			clif_addskill(&sd, skill_id);
-			clif_skillinfo(&sd, skill_id, 0);
+		for(int skill_remaining : remaining_skills){
+			clif_addskill(&sd, skill_remaining);
+			clif_skillinfo(&sd, skill_remaining, 0);
 		}
 	}
 }
