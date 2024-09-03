@@ -921,9 +921,9 @@ struct PACKET_ZC_EFST_SET_ENTER{
 	uint16 type;
 	uint32 duration;
 	uint32 duration2;
-	uint32 val1;
-	uint32 val2;
-	uint32 val3;
+	int val1;
+	int val2;
+	int val3;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_EFST_SET_ENTER, 0x984)
 #elif PACKETVER >= 20111108
@@ -932,9 +932,9 @@ struct PACKET_ZC_EFST_SET_ENTER{
 	uint32 tid;
 	uint16 type;
 	uint32 duration;
-	uint32 val1;
-	uint32 val2;
-	uint32 val3;
+	int val1;
+	int val2;
+	int val3;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_EFST_SET_ENTER, 0x8ff)
 #endif
