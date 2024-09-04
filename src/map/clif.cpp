@@ -4557,7 +4557,7 @@ void clif_joinchatfail( map_session_data& sd, e_refuse_enter_room result ){
 /// role:
 ///     0 = owner (menu)
 ///     1 = normal
-vvoid clif_joinchatok(map_session_data& sd, chat_data& cd){
+void clif_joinchatok(map_session_data& sd, chat_data& cd){
 
 
 	PACKET_ZC_ENTER_ROOM* p = reinterpret_cast<PACKET_ZC_ENTER_ROOM*>( packet_buffer );
