@@ -4557,38 +4557,42 @@ void clif_joinchatfail( map_session_data& sd, e_refuse_enter_room result ){
 /// role:
 ///     0 = owner (menu)
 ///     1 = normal
-void clif_joinchatok(map_session_data *sd,struct chat_data* cd)
-{
-	int fd;
-	int i,t;
+vvoid clif_joinchatok(map_session_data& sd, chat_data& cd){
 
-	nullpo_retv(sd);
-	nullpo_retv(cd);
 
-	fd = sd->fd;
-	if (!session_isActive(fd))
-		return;
-	t = (int)(cd->owner->type == BL_NPC);
-	WFIFOHEAD(fd, 8 + (28*(cd->users+t)));
-	WFIFOW(fd, 0) = 0xdb;
-	WFIFOW(fd, 2) = 8 + (28*(cd->users+t));
-	WFIFOL(fd, 4) = cd->bl.id;
+	PACKET_ZC_ENTER_ROOM* p = reinterpret_cast<PACKET_ZC_ENTER_ROOM*>( packet_buffer );
 
-	if(cd->owner->type == BL_NPC){
-		WFIFOL(fd, 30) = 1;
-		WFIFOL(fd, 8) = 0;
-		safestrncpy(WFIFOCP(fd, 12), ((struct npc_data *)cd->owner)->name, NAME_LENGTH);
-		for (i = 0; i < cd->users; i++) {
-			WFIFOL(fd, 8+(i+1)*28) = 1;
-			safestrncpy(WFIFOCP(fd, 8+(i+t)*28+4), cd->usersd[i]->status.name, NAME_LENGTH);
+	p->packetType = HEADER_ZC_ENTER_ROOM;
+	p->packetSize = sizeof(*p);
+	p->chatId = cd.bl.id;
+	
+	if(cd.owner->type == BL_NPC){
+		PACKET_ZC_ENTER_ROOM_sub& owner = p->members[0];
+		owner.flag = 0;
+		safestrncpy(owner.name, reinterpret_cast<npc_data*>(cd.owner)->name, sizeof(owner.name));
+		p->packetSize += static_cast<decltype(p->packetSize)>( sizeof( owner ) );
+
+		for (size_t i = 0; i < cd.users; i++) {
+			PACKET_ZC_ENTER_ROOM_sub& member = p->members[i + 1];
+
+			member.flag = 1;
+			safestrncpy(member.name, cd.usersd[i]->status.name, sizeof(member.name));
+
+			p->packetSize += static_cast<decltype(p->packetSize)>( sizeof( member ) );
 		}
 	}else{
-		for (i = 0; i < cd->users; i++) {
-			WFIFOL(fd, 8+i*28) = (i != 0 || cd->owner->type == BL_NPC);
-			safestrncpy(WFIFOCP(fd, 8+(i+t)*28+4), cd->usersd[i]->status.name, NAME_LENGTH);
+		for (size_t i = 0; i < cd.users; i++) {
+			PACKET_ZC_ENTER_ROOM_sub& member = p->members[i];
+
+			member.flag = i > 0;
+			safestrncpy(member.name, cd.usersd[i]->status.name, sizeof(member.name));
+
+			p->packetSize += static_cast<decltype(p->packetSize)>( sizeof( member ) );
 		}
 	}
-	WFIFOSET(fd, WFIFOW(fd, 2));
+	
+	clif_send(p,p->packetSize,&sd.bl,SELF);
+
 }
 
 
@@ -19946,7 +19950,12 @@ void clif_display_pinfo( map_session_data& sd ){
 		}
 
 		//1:Premium
-		details_bexp[PINFO_PREMIUM] = 0;
+		if( pc_isvip( &sd ) ){
+			details_bexp[PINFO_PREMIUM] = battle_config.vip_base_exp_increase * battle_config.base_exp_rate / 100;
+			if (details_bexp[PINFO_PREMIUM] < 0)
+				details_bexp[PINFO_PREMIUM] = 0 - details_bexp[PINFO_PREMIUM];
+		} else
+			details_bexp[PINFO_PREMIUM] = 0;
 
 		//2:Server
 		details_bexp[PINFO_SERVER] = battle_config.base_exp_rate;
@@ -19961,12 +19970,7 @@ void clif_display_pinfo( map_session_data& sd ){
 		}
 
 		//3:TPLUS
-		if( pc_isvip( &sd ) ){
-			details_bexp[PINFO_CAFE] = battle_config.vip_base_exp_increase + battle_config.base_exp_rate / 100;
-			if (details_bexp[PINFO_CAFE] < 0)
-				details_bexp[PINFO_CAFE] = 0 - details_bexp[PINFO_CAFE];
-		} else
-			details_bexp[PINFO_CAFE] = 0;
+		details_bexp[PINFO_CAFE] = 0;
 
 		/**
 		 * Drop rate
@@ -19975,7 +19979,12 @@ void clif_display_pinfo( map_session_data& sd ){
 		details_drop[PINFO_BASIC] = 0;
 
 		//1:Premium
-		details_drop[PINFO_PREMIUM] = 0;
+		if( pc_isvip( &sd ) ){
+			details_drop[PINFO_PREMIUM] = (battle_config.vip_drop_increase * battle_config.item_rate_common) / 100;
+			if (details_drop[PINFO_PREMIUM] < 0)
+				details_drop[PINFO_PREMIUM] = 0 - details_drop[PINFO_PREMIUM];
+		} else
+			details_drop[PINFO_PREMIUM] = 0;
 
 		//2:Server
 		details_drop[PINFO_SERVER] = battle_config.item_rate_common;
@@ -19990,12 +19999,7 @@ void clif_display_pinfo( map_session_data& sd ){
 		}
 
 		//3:TPLUS
-		if( pc_isvip( &sd ) ){
-			details_drop[PINFO_CAFE] = (battle_config.vip_drop_increase + battle_config.item_rate_common) / 100;
-			if (details_drop[PINFO_CAFE] < 0)
-				details_drop[PINFO_CAFE] = 0 - details_drop[PINFO_CAFE];
-		} else
-			details_drop[PINFO_CAFE] = 0;
+		details_drop[PINFO_CAFE] = 0;
 
 		/**
 		 * Penalty rate
@@ -20005,7 +20009,21 @@ void clif_display_pinfo( map_session_data& sd ){
 		details_penalty[PINFO_BASIC] = 0;
 
 		//1:Premium
-		details_penalty[PINFO_PREMIUM] = 0;
+		if( pc_isvip( &sd ) ){
+			details_penalty[PINFO_PREMIUM] = battle_config.vip_exp_penalty_base;
+			if (details_penalty[PINFO_PREMIUM] == 100)
+				details_penalty[PINFO_PREMIUM] = 0;
+			else {
+				if (details_penalty[PINFO_PREMIUM] < 100) {
+					details_penalty[PINFO_PREMIUM] = 100 - details_penalty[PINFO_PREMIUM];
+					details_penalty[PINFO_PREMIUM] = 0 - details_penalty[PINFO_PREMIUM];
+				} else
+					details_penalty[PINFO_PREMIUM] = details_penalty[PINFO_PREMIUM] - 100;
+			}
+			if (battle_config.death_penalty_base > battle_config.vip_exp_penalty_base)
+				details_penalty[PINFO_PREMIUM] = battle_config.vip_exp_penalty_base - battle_config.death_penalty_base;
+		} else
+			details_penalty[PINFO_PREMIUM] = 0;
 
 		//2:Server
 		details_penalty[PINFO_SERVER] = battle_config.death_penalty_base;
@@ -20020,21 +20038,7 @@ void clif_display_pinfo( map_session_data& sd ){
 		}
 
 		//3:TPLUS
-		if( pc_isvip( &sd ) ){
-			details_penalty[PINFO_CAFE] = battle_config.vip_exp_penalty_base;
-			if (details_penalty[PINFO_CAFE] == 100)
-				details_penalty[PINFO_CAFE] = 0;
-			else {
-				if (details_penalty[PINFO_CAFE] < 100) {
-					details_penalty[PINFO_CAFE] = 100 - details_penalty[PINFO_CAFE];
-					details_penalty[PINFO_CAFE] = 0 - details_penalty[PINFO_CAFE];
-				} else
-					details_penalty[PINFO_CAFE] = details_penalty[PINFO_CAFE] - 100;
-			}
-			if (battle_config.death_penalty_base > battle_config.vip_exp_penalty_base)
-				details_penalty[PINFO_CAFE] = battle_config.vip_exp_penalty_base - battle_config.death_penalty_base;
-		} else
-			details_penalty[PINFO_CAFE] = 0;
+		details_penalty[PINFO_CAFE] = 0;
 
 	PACKET_ZC_PERSONAL_INFOMATION* p = reinterpret_cast<PACKET_ZC_PERSONAL_INFOMATION*>( packet_buffer );
 
