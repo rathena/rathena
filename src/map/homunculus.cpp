@@ -616,7 +616,7 @@ int hom_evolution(struct homun_data *hd)
 		return 0;
 	}
 
-	//Apply evolution bonuses
+	// Apply evolution bonuses
 	s_homunculus *hom = &hd->homunculus;
 	s_hom_stats *max = &hd->homunculusDB->emax;
 	s_hom_stats *min = &hd->homunculusDB->emin;
@@ -633,12 +633,15 @@ int hom_evolution(struct homun_data *hd)
 
 	clif_class_change(&hd->bl, hd->homunculusDB->evo_class, 0);
 
-	//status_Calc flag&1 will make current HP/SP be reloaded from hom structure
+	// status_Calc flag&1 will make current HP/SP be reloaded from hom structure
 	hom->hp = hd->battle_status.hp;
 	hom->sp = hd->battle_status.sp;
 	status_calc_homunculus(hd, SCO_FIRST);
 
 	clif_hominfo(sd, hd, 0);
+	// Official servers don't recaculate the skill tree after evolution
+	// but we do it for convenience
+	hom_calc_skilltree(hd);
 
 	if (!(battle_config.hom_setting&HOMSET_NO_INSTANT_LAND_SKILL))
 		skill_unit_move(&sd->hd->bl,gettick(),1); // apply land skills immediately
@@ -680,7 +683,7 @@ int hom_mutate(struct homun_data *hd, int homun_id)
 
 	clif_class_change(&hd->bl, homun_id, 0);
 
-	//status_Calc flag&1 will make current HP/SP be reloaded from hom structure
+	// status_Calc flag&1 will make current HP/SP be reloaded from hom structure
 	hom = &hd->homunculus;
 	hom->hp = hd->battle_status.hp;
 	hom->sp = hd->battle_status.sp;
@@ -688,6 +691,8 @@ int hom_mutate(struct homun_data *hd, int homun_id)
 	status_calc_homunculus(hd, SCO_FIRST);
 
 	clif_hominfo(sd, hd, 0);
+	// Official servers don't recaculate the skill tree after evolution
+	// but we do it for convenience
 	hom_calc_skilltree(hd);
 
 	if (!(battle_config.hom_setting&HOMSET_NO_INSTANT_LAND_SKILL))
