@@ -7037,6 +7037,7 @@ Body:
     Icon: EFST_SPORE_EXPLOSION_DEBUFF
     DurationLookup: GN_SPORE_EXPLOSION
     Flags:
+      BlEffect: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true

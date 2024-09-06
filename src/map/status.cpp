@@ -13714,6 +13714,9 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 		case SC_INTRAVISION:
 			calc_flag = status_db.getSCB_ALL(); // Required for overlapping
 			break;
+        case SC_EARTHSHAKER:
+            clif_specialeffect_remove(bl, 1398, AREA, bl);
+            break;
 
 		case SC_GRAVITYCONTROL:
 			status_fix_damage(bl, bl, sce->val2, clif_damage(*bl, *bl, gettick(), 0, 0, sce->val2, 0, DMG_NORMAL, 0, false), 0);
