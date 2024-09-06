@@ -290,6 +290,7 @@
 	packet(0x01dd,47);
 	packet(0x01de,33);
 	parseable_packet(0x01df,6,clif_parse_GMReqAccountName,2);
+	parseable_packet(0x0a88,2,clif_parse_GMCooldownReset,0);
 	packet(0x01e0,30);
 	packet(0x01e1,8);
 	packet(0x01e2,34);
