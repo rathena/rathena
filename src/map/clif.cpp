@@ -14759,8 +14759,8 @@ void clif_parse_GM_Item_Monster(int fd, map_session_data *sd)
 
 /// /resetcooltime 
 /// 0a88 (CZ_CMD_RESETCOOLTIME).
-void clif_parse_GMCooldownReset(int fd, map_session_data *sd)
-{
+void clif_parse_GMCooldownReset(int fd, map_session_data* sd) {
+#if PACKETVER >= 20160622
 	if(sd->group_id < 99)
 		return;
 	for (int i = 0; i < MAX_SKILLCOOLDOWN; i++) {
@@ -14777,6 +14777,7 @@ void clif_parse_GMCooldownReset(int fd, map_session_data *sd)
 			sd->scd[i] = nullptr;
 		}
 	}
+#endif
 }
 
 /// /hide (CZ_CHANGE_EFFECTSTATE).
