@@ -7115,6 +7115,11 @@ bool pc_memo(map_session_data* sd, int pos)
 	if( pos < -1 || pos >= MAX_MEMOPOINTS )
 		return false; // invalid input
 
+#if PACKETVER_MAIN_NUM >= 20170502 || PACKETVER_RE_NUM >= 20170419 || defined(PACKETVER_ZERO)
+	if( pos >= ((MAX_MEMOPOINTS / 2) + pc_readreg2(sd,EXT_MEMO_VAR)) )
+		return false; // invalid input
+#endif
+
 	// check required skill level
 	skill = pc_checkskill(sd, AL_WARP);
 	if( skill < 1 ) {
@@ -9400,6 +9405,9 @@ int pc_resetskill(map_session_data* sd, int flag)
 		clif_skillinfoblock(sd);
 		status_calc_pc(sd, SCO_FORCE);
 	}
+
+	if(pc_readreg2(sd,EXT_MEMO_VAR))
+		pc_setreg2(sd,EXT_MEMO_VAR,0); //kro wipe your progress
 
 	return skill_point;
 }

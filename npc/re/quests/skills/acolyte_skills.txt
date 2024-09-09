@@ -1,0 +1,760 @@
+//===== rAthena Script =======================================
+//= Acolyte Skills Quests
+//===== By: ==================================================
+//= AoShinHo
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Quests for skills: Extended memo slots
+//===== Additional Comments: =================================
+//= 1.0 
+//============================================================
+
+prontera,225,330,4	script	Missionary Rosetta	4_F_SISTER,{
+
+	if((Class != JOB_CARDINAL && Class != JOB_INQUISITOR) || getskilllv(27) < 4)
+		end;
+
+
+	if(isbegin_quest(16587) == 1){ // Umbala Missionary Work
+		mes .npc_name$;
+		mes "So, did you go to see Sister Tita? ";
+		mes "Have you finished the task and returned?";
+		next;
+		clear;
+		mes "<NAVI>[Sister Tita]<INFO>umbala,123,138,0,000,0</INFO></NAVI> is dedicated to the missionary work.";
+		mes "However, I’ve heard that she has recently encountered some significant troubles.";
+		close;
+	}
+
+	if(isbegin_quest(16588) == 1){ // Einbroch Missionary Work
+		mes .npc_name$;
+		mes "So, did you go to see Brother Suan? ";
+		mes "Have you finished the task and returned?";
+		next;
+		clear;
+		mes "<NAVI>[Brother Suan]<INFO>einbroch,178,148,0,000,0</INFO></NAVI> seemed extremely busy, hardly having a moment to breathe.";
+		mes "It would be great if you could lend him a hand.";
+		close;
+	}
+
+	if(isbegin_quest(16597) == 1){ // Return to the Cathedral of Prontera
+		if(finished_memo_step){
+			mes .npc_name$;	
+			mes "You have safely returned from your mission. ";
+			mes "I have received word from Sister Titte and Brother Suan. ";
+			mes "I heard that you successfully resolved the issues at both locations.";
+			next;
+			clear;
+			mes .npc_name$;	
+			mes "After observing, I’ve determined that you are consistently devoted to spreading the name of Odin.";
+			mes "Therefore, I will allow you to remember two more locations.";
+			next;
+			clear;
+			mes .npc_name$;	
+			mes "I hope that you will continue to think and act as a faithful believer of Odin.";
+			mes "If any further tasks arise, I will call upon you again.";
+			finished_memo_step = 0;
+			EXT_MEMO_SLOTS = 3;
+			erasequest(16597); // Return to the Cathedral of Prontera
+			erasequest(16586); // The Path of Missionary Work
+			close;
+		}
+		mes .npc_name$;
+		mes "In Einbroch, Brother Suan is dedicated to educational service.";
+		mes "He opened a study room for children who have been neglected because their parents work in the factories.";
+		next;
+		clear;
+		mes .npc_name$;
+		mes "It seems that the children there are quite mischievous. ";
+		mes "Please go meet them and see if there is any way you can assist.";
+		next;
+		clear;
+		mes .npc_name$;
+		mes "I will prepare the detailed information for you to receive directly. ";
+		mes "First, to help you move quickly to Einbroch, ";
+		mes "I will save the coordinates of Einbroch in your fourth warp memory slot.";
+		next;
+		clear;
+		mes .npc_name$;
+		mes "If there is no location saved in your fourth memory slot,";
+		mes "the third slot will be overwritten, and the coordinates of Einbroch will be saved there.";
+		next;
+		.@continue = select("Save.:I told him to wait for me to catch him.");
+		if(.@continue == 2)
+			end;
+		clear;
+		mes .npc_name$;
+		mes "The coordinates have been saved.";
+		mes "You can now open the warp portal and travel to Einbroch.";
+		next;
+		clear;
+		mes .npc_name$;
+		mes "Then, please go to <NAVI>[Einbroch]<INFO>einbroch,178,148,0,000,0</INFO></NAVI> and listen to Brother Suan’s situation. ";
+		mes "I will pray that everything goes smoothly and that you can spread the name of Odin in this world.";
+		force_memo("einbroch",178,148,3);
+		changequest(16597,16588); // Return to the Cathedral of Prontera -> Einbroch Missionary Work
+		finished_memo_step = 1;
+		close;
+	}
+
+	if(isbegin_quest(16598) == 1){ // Return to the Cathedral of Prontera(2)
+		if(finished_memo_step){
+			mes .npc_name$;	
+			mes "You have safely returned from your mission. ";
+			mes "I have received word from Sister Titte and Brother Suan. ";
+			mes "I heard that you successfully resolved the issues at both locations.";
+			next;
+			clear;
+			mes .npc_name$;	
+			mes "After observing, I’ve determined that you are consistently devoted to spreading the name of Odin.";
+			mes "Therefore, I will allow you to remember two more locations.";
+			next;
+			clear;
+			mes .npc_name$;	
+			mes "I hope that you will continue to think and act as a faithful believer of Odin.";
+			mes "If any further tasks arise, I will call upon you again.";
+			finished_memo_step = 0;
+			EXT_MEMO_SLOTS = 3;
+			erasequest(16586); // The Path of Missionary Work
+			erasequest(16598); // Return to the Cathedral of Prontera(2)
+			close;
+		}
+		mes .npc_name$;
+		mes "In Umbala, Sister Tita is dedicated to the missionary work. However, I’ve heard that she has recently encountered some significant troubles.";
+		next;
+		clear;
+		mes .npc_name$;
+		mes "It has been reported that other brothers and sisters who were actively engaged in missionary work, along with residents of Umbala, have suddenly disappeared.";
+		next;
+		clear;
+		mes .npc_name$;
+		mes "I will prepare the detailed information for you to receive directly. ";
+		mes "First, to help you move quickly to Umbala, ";
+		mes "I will save the coordinates of Umbala in your fourth warp memory slot.";
+		next;
+		clear;
+		mes .npc_name$;
+		mes "If there is no location saved in your fourth memory slot,";
+		mes "the third slot will be overwritten, and the coordinates of Umbala will be saved there.";
+		next;
+		.@continue = select("Save.:I told him to wait for me to catch him.");
+		if(.@continue == 2)
+			end;
+		clear;
+		mes .npc_name$;
+		mes "The coordinates have been saved.";
+		mes "You can now open the warp portal and travel to Umbala.";
+		next;
+		clear;
+		mes .npc_name$;
+		mes "Then, please go to <NAVI>[Umbala]<INFO>umbala,127,140,0,000,0</INFO></NAVI> and listen to Sister Tita situation. ";
+		mes "I will pray that everything goes smoothly and that you can spread the name of Odin in this world.";
+		force_memo("umbala",123,138,3);
+		changequest(16598,16587); // Return to the Cathedral of Prontera(2) -> Umbala Missionary Work
+		finished_memo_step = 1;
+		close;
+	}
+
+	if(isbegin_quest(16586) == 1 && isbegin_quest(16587) == 0 && isbegin_quest(16588) == 0){
+		mes .npc_name$;
+		mes "The upcoming missionary service will take place in two locations. Neither of them is close to Prontera.";
+		next;
+		clear;
+		mes .npc_name$;
+		mes "One location is Umbala, which is adjacent to the land of the dead, Niflheim. The other is Einbroch, beyond the border.";
+		next;
+		clear;
+		mes .npc_name$;
+		mes "To make it easier for you to visit each location, I will allow you to remember one additional warp point.";
+		next;
+		clear;
+		mes .npc_name$;
+		mes "You can visit either location first. Once there, you can assist the sisters and brothers who are engaged in missionary work.";
+		next;
+		clear;
+		mes .npc_name$;
+		mes "Which location would you like to visit first?";
+		next;
+		.@continue = select("Umbala:Einbroch");
+		clear;
+		if(.@continue == 1){
+			mes .npc_name$;
+			mes "In Umbala, Sister Tita is dedicated to the missionary work. However, I’ve heard that she has recently encountered some significant troubles.";
+			next;
+			clear;
+			mes .npc_name$;
+			mes "It has been reported that other brothers and sisters who were actively engaged in missionary work, along with residents of Umbala, have suddenly disappeared.";
+			next;
+			clear;
+			mes .npc_name$;
+			mes "We will prepare a detailed story for you to hear directly. First, we will add another warp memory location to make it easier for you to move to Umbala";
+			next;
+			clear;
+			mes .npc_name$;
+			mes "We will warp you to Umbala. Once you arrive in Umbala, use the^FF0000 /memo^000000 to remember Umbala. This will store Umbala in your fourth memory slot.";
+			next;
+			clear;
+			mes .npc_name$;
+			mes "Please go to Umbala and listen to Sister Tita's story. May you be safe. I will pray that you spread Odin's message in this world";
+			close2;
+			EXT_MEMO_SLOTS = 1;
+			setquest 16587; // Umbala Missionary Work
+			warp "umbala",123,138;
+		} else {
+			mes .npc_name$;
+			mes "In Einbroch, Brother Suan is dedicated to educational service.";
+			mes "He opened a study room for children who have been neglected because their parents work in the factories.";
+			next;
+			clear;
+			mes .npc_name$;
+			mes "It seems that the children there are quite mischievous. ";
+			mes "Please go meet them and see if there is any way you can assist.";
+			next;
+			clear;
+			mes .npc_name$;
+			mes "We will prepare a detailed story for you to hear directly. First, we will add another warp memory location to make it easier for you to move to Einbroch";
+			next;
+			clear;
+			mes .npc_name$;
+			mes "We will warp you to Einbroch. Once you arrive in Einbroch, use the^FF0000 /memo^000000 to remember Einbroch. This will store Einbroch in your fourth memory slot.";
+			next;
+			clear;
+			mes .npc_name$;
+			mes "Please go to Einbroch and listen to Brother Suan's story. May you be safe. I will pray that you spread Odin's message in this world";
+			close2;
+			EXT_MEMO_SLOTS = 1;
+			setquest 16588; // Einbroch Missionary Work
+			warp "einbroch",178,145;
+		}
+	}
+
+	if(isbegin_quest(16586) == 0){ // The Path of Missionary Work
+
+		if(EXT_MEMO_SLOTS > 0)
+			end;
+
+		mes .npc_name$;
+		mes "Hello, brother. You have become an extraordinary priest!";
+		mes "You must have gone through a lot of training and effort to achieve such a remarkable accomplishment.";
+		next;
+		clear;
+		mes .npc_name$;
+		mes "I am "+strnpcinfo(0)+", in charge of the missionary work at the Prontera Cathedral.";
+		next;
+		clear;
+		mes .npc_name$;
+		mes "Have you come to participate in the missionary work?";
+		mes "I always express my deep gratitude and respect to you, brother, for eagerly joining in the work of the cathedral.";
+		next;
+		.@continue = select("I'll participate:I won't participate");
+		if(.@continue != 1)
+			end;
+		clear;
+		mes .npc_name$;
+		mes "Thank you as always. The task I ask of you is to go to various places and help the believers there, as well as guide those who do not believe toward faith.";
+		next;
+		clear;
+		mes .npc_name$;
+		mes "Considering the nature of missionary work, which requires visiting various places, I understand that it may be quite inconvenient for you.";
+		next;
+		clear;
+		mes .npc_name$;
+		mes "Therefore, the cathedral has decided to grant permission to those who participate in these missions to expand the limits of the warp portal,";
+		mes "allowing you to engage in missionary work in more diverse locations.";
+		next;
+		clear;
+		mes .npc_name$;
+		mes "Of course, it can't be expanded infinitely, but you will be able to remember more locations than before. This will surely aid you in your missionary work.";
+		next;
+		clear;
+		mes .npc_name$;
+		mes "When you are ready, please speak to me again. I will explain the upcoming missionary service to you.";
+		setquest 16586; // The Path of Missionary Work
+		close;
+	}
+end;
+OnInit:
+	.npc_name$ = "["+strnpcinfo(0)+"]";
+	questinfo QTYPE_QUEST2,QMARK_NONE,"((Class == JOB_CARDINAL || Class == JOB_INQUISITOR) && !EXT_MEMO_SLOTS && getskilllv(27) == 4 && isbegin_quest(16586) == 0) || isbegin_quest(16597) == 1 || isbegin_quest(16598) == 1";
+end;
+}
+
+/// ---------------------------------------------------------------
+/// ------------------------ Umbala Part --------------------------
+/// ---------------------------------------------------------------
+umbala,127,140,4	script	Tita	1_F_PRIEST,{
+
+	if(isbegin_quest(16589) == 1 || isbegin_quest(16590) == 1 || isbegin_quest(16591) == 1) // Banquet of the Dead, Guided by the Living
+	{
+		mes .npc_name$; 
+		mes "I have to go to save it, but the Umbala people are telling me it's dangerous."; //unnoficial behavior
+		close2;
+		if(isbegin_quest(16589) == 1)
+			open_quest_ui(16589); // Banquet of the Dead, Guided by the Living 1
+		else if(isbegin_quest(16590) == 1)
+			open_quest_ui(16590); // Banquet of the Dead, Guided by the Living 2
+		else
+			open_quest_ui(16591); // Banquet of the Dead, Guided by the Living 3
+	}
+		
+	if(checkquest(16592,HUNTING) == 2) //The Banquet of the Dead, the Night of Festival is Over
+	{
+		if(isbegin_quest(16599) == 1){ // Safe return after completing the mission
+			mes .npc_name$;
+			mes "Everyone has safely returned.";
+			mes "And they say the strange noise has also disappeared.";
+			mes "Thanks to that, we can continue the missionary work in Umbala without any further issues.";
+			next;
+			clear;
+			mes .npc_name$;
+			mes "Thank you so much. We can handle the situation on this side ourselves.";
+			mes "Please return to the <NAVI>[Prontera Cathedral]<INFO>prontera,225,330,0,000,0</INFO></NAVI> and report back.";
+			erasequest(16592); // The Banquet of the Dead, the Night of Festival is Over
+			erasequest(16599); // Safe return after completing the mission
+			changequest(16587,16597); // Umbala Missionary Work -> Return to the Cathedral of Prontera
+			close;
+		}
+	}
+
+	if(isbegin_quest(16587) == 1 && isbegin_quest(16592) == 0){
+		mes .npc_name$;
+		mes "I am a devoted follower of Odin, striving to spread his word in Umbala.";
+		mes "However, I am currently facing a difficult situation and am unsure what to do.";
+		next;
+		clear;
+		mes .npc_name$;
+		mes "Oh! You're a priest from Prontera who came to help with the missionary work!";
+		mes "But right now, there's something that needs to be taken care of before the missionary work.";
+		next;
+		clear;
+		mes .npc_name$;
+		mes "People are going missing.";
+		mes "And only the missionaries who came with me.";
+		mes "But I asked the Umbala people and they said that they might have been taken to the Niflheim banquet.";
+		next;
+		clear;
+		mes .npc_name$;
+		mes "They say that in the area near the Land of the Dead, they hear the sound of a banquet being held by the beings of Niflheim.";
+		mes "They are used to it, but if they were missionaries who came to Umbala for the first time, they might have been entranced and entered the banquet hall.";
+		next;
+		clear;
+		mes .npc_name$;
+		mes "I have to go to save it, but the Umbala people are telling me it's dangerous.";
+		mes "I don't know if it's an adventurer, but the average person is not even allowed to enter Niflheim.";
+		next;
+		.@continue = select("I say I'm an adventurer.:I say I'll help you as a priest.");
+		clear;
+		if(.@continue == 2){
+			mes .npc_name$;
+			mes "What? Are you here to help as a priest?";
+			next;
+			clear;
+		}
+		mes .npc_name$;
+		mes "A priest and an adventurer? Oh my god. ";
+		mes "Odin sent you talent in a timely manner!";
+		next;
+		clear;
+		mes .npc_name$;
+		mes "Please, please. ";
+		mes "Please save my colleagues. ";
+		mes "And to prevent another incident from happening,";
+		mes "I hope you can stop the noise from the banquet. ";
+		next;
+		clear;
+		mes .npc_name$;
+		mes "If you make a fuss and chase away the beings in the banquet hall, the banquet hall will be quiet for a while.";
+		mes "Can I ask you to do that too?";
+		next;
+		select("Ask him to leave as much as he can.:");
+		clear;
+		mes .npc_name$;
+		mes "Thank you very much! The banquet is being held at the <NAVI>[Dead's Banquet Hall]<INFO>nif_dun01,101,246,0,000,0</INFO></NAVI>  in Niflheim.";
+		mes "Please chase away about 100 wanderers from the Dead's Banquet Hall and rescue the 3 wandering believers.";
+		setquest 16589; // Banquet of the Dead, Guided by the Living 1
+		setquest 16590; // Banquet of the Dead, Guided by the Living 2
+		setquest 16591; // Banquet of the Dead, Guided by the Living 3
+		setquest 16592; // The Banquet of the Dead, the Night of Festival is Over
+		close;
+	}
+end;
+OnInit:
+	.npc_name$ = "["+strnpcinfo(0)+"]";
+	questinfo QTYPE_QUEST2,QMARK_NONE,"(isbegin_quest(16587) == 1  && isbegin_quest(16592) == 0) || (checkquest(16592,HUNTING) == 2 && isbegin_quest(16599) == 1)";
+end;
+}
+
+nif_dun01,101,246,6	script	Jhon	-1,5,5,{
+	if(isbegin_quest(16589) != 1) // Banquet of the Dead, Guided by the Living 1
+		end;
+
+	mes .npc_name$;
+	mes "Let's enjoy the festival of Banquet of the Dead!";
+	mes "Dance bows, play musical instruments, live";
+	mes "Hear the screams!";
+	next;
+	clear;
+	mes .npc_name$;
+	mes "Wait a minute, dead man, am I the dead man? ";
+	mes "Isn't that right? I'm the living man, I shouldn't be here!.";
+	next;
+	.@continue = select("Opens the warp portal.:Let's go back to Umbala.");
+	clear;
+	mes .npc_name$;
+	mes "Eek! Who?";
+	next;
+	clear;
+	if(.@continue == 1){
+		mes .npc_name$;
+		mes "I. You came to find me?";
+		mes "From Umbala? Thank you! Mi Warp";
+		mes "Can I take the portal??";
+		next;
+		clear;
+	}
+	mes .npc_name$;
+	mes "I'm so scared here because I'm sick of it.";
+	mes "Eek. I want to get out quickly. Get it.";
+	mes "Thank you for coming.";
+	erasequest(16589); // Banquet of the Dead, Guided by the Living 1
+	if(isbegin_quest(16589) == 0 && isbegin_quest(16590) ==  0 && isbegin_quest(16591) == 0)
+		setquest(16599); // Safe return after completing the mission
+	specialeffect EF_WARP;
+	close2;
+	cloakonnpcself(strnpcinfo(3));
+	setnpcdisplay(strnpcinfo(0), strnpcinfo(0), HIDDEN_WARP_NPC);
+end;
+OnInit:
+	.npc_name$ = "["+strnpcinfo(0)+"]";
+	questinfo QTYPE_QUEST2,QMARK_NONE,"(isbegin_quest(16589) == 1)";
+end;
+OnTouch:
+	if(isbegin_quest(16589) == 1){ // Banquet of the Dead, Guided by the Living 1
+		setnpcdisplay(strnpcinfo(0), strnpcinfo(0), 4_M_04);
+		cloakoffnpcself(strnpcinfo(3));	
+	}else
+		cloakonnpcself(strnpcinfo(3));
+end;
+}
+nif_dun01,213,148,6	script	Maria	-1,5,5,{
+	if(isbegin_quest(16590) != 1) // Banquet of the Dead, Guided by the Living 2
+		end;
+
+	mes .npc_name$;
+	mes "I've been through a lot of other adversity.";
+	mes "But I want to get out of here quickly.";
+	mes "That's it.!";
+	next;
+	select("Opens the warp portal.:Take him to Umbala.");
+	clear;
+	mes .npc_name$;
+	mes "I wanted to go back to Umbala quickly.";
+	mes "Thank you.";
+	mes "I will not forget this grace.";
+	erasequest(16590); // Banquet of the Dead, Guided by the Living 2
+	if(isbegin_quest(16589) == 0 && isbegin_quest(16590) ==  0 && isbegin_quest(16591) == 0)
+		setquest(16599); // Safe return after completing the mission
+	specialeffect EF_WARP;
+	close2;
+	cloakonnpcself(strnpcinfo(3));
+	setnpcdisplay(strnpcinfo(0), strnpcinfo(0), HIDDEN_WARP_NPC);
+end;
+OnInit:
+	.npc_name$ = "["+strnpcinfo(0)+"]";
+	questinfo QTYPE_QUEST2,QMARK_NONE,"(isbegin_quest(16590) == 1)";
+end;
+OnTouch:
+	if(isbegin_quest(16590) == 1){ // Banquet of the Dead, Guided by the Living 2
+		setnpcdisplay(strnpcinfo(0), strnpcinfo(0), 4_F_02);
+		cloakoffnpcself(strnpcinfo(3));	
+	}else
+		cloakonnpcself(strnpcinfo(3));
+end;
+}
+
+nif_dun01,160,183,4	script	Blue	-1,5,5,{
+	if(isbegin_quest(16591) != 1) // Banquet of the Dead, Guided by the Living 3
+		end;
+
+	mes .npc_name$;
+	mes "Dance, eat a banquet dinner!";
+	mes "If you eat, you can't go back.";
+	next;
+	clear;
+	mes .npc_name$;
+	mes "What the heck, I'm a little drowsy, I feel like I won't be able to wake up if I fall asleep in the middle of the night ~ Get up!";
+	next;
+	select("Take him to Umbala.:Open the warp portal.");
+	clear;
+	mes .npc_name$;
+	mes "I was just about to sleep, but the festival was going on so I couldn't sleep~";
+	erasequest(16591); // Banquet of the Dead, Guided by the Living 3
+	if(isbegin_quest(16589) == 0 && isbegin_quest(16590) ==  0 && isbegin_quest(16591) == 0)
+		setquest(16599); // Safe return after completing the mission
+	specialeffect EF_WARP;
+	close2;
+	cloakonnpcself(strnpcinfo(3));
+	setnpcdisplay(strnpcinfo(0), strnpcinfo(0), HIDDEN_WARP_NPC);
+end;
+OnInit:
+	.npc_name$ = "["+strnpcinfo(0)+"]";
+	questinfo QTYPE_QUEST2,QMARK_NONE,"(isbegin_quest(16591) == 1)";
+end;
+OnTouch:
+	if(isbegin_quest(16591) == 1){ // Banquet of the Dead, Guided by the Living 3
+		setnpcdisplay(strnpcinfo(0), strnpcinfo(0), 4_F_JOB_HUNTER);
+		cloakoffnpcself(strnpcinfo(3));	
+	}else
+		cloakonnpcself(strnpcinfo(3));
+end;
+}
+
+
+/// ---------------------------------------------------------------
+/// ------------------------ Einbroch Part ------------------------
+/// ---------------------------------------------------------------
+einbroch,178,148,4	script	Suan	1_M_PASTOR,{
+
+	if(isbegin_quest(16593) == 1 || isbegin_quest(16594) == 1 || isbegin_quest(16595) == 1) // The Hide and Seek of the Naughty, the Restlessness of the Adults
+	{
+		mes .npc_name$; 
+		mes "Please, save the children for us."; //unnoficial behavior
+		close2;
+		if(isbegin_quest(16583) == 1)
+			open_quest_ui(16583); // The Hide and Seek of the Naughty, the Restlessness of the Adults 1
+		else if(isbegin_quest(16594) == 1)
+			open_quest_ui(16594); // The Hide and Seek of the Naughty, the Restlessness of the Adults 2
+		else
+			open_quest_ui(16595); // The Hide and Seek of the Naughty, the Restlessness of the Adults 3
+	}
+	
+	if(checkquest(16596,HUNTING) == 2) // Hide and Seek of the Naughty Boys, Hand and Foot Gestures to Save
+	{
+		if(isbegin_quest(16600) == 1){ // Safe return after completing the mission (2)
+			mes .npc_name$;
+			mes "Thank you!!!!! You seem to be the one sent by Odin, you have returned safely.";
+			mes "You guys, you troublemakers!";
+			mes "But thank you for coming back.";
+			next;
+			clear;
+			mes .npc_name$;
+			mes "Thank you so much.";
+			mes "Now that the kids are back, we can run the study room ourselves as usual.";
+			next;
+			clear;
+			mes .npc_name$;
+			mes "Please return to the <NAVI>[Prontera Cathedral]<INFO>prontera,225,330,0,000,0</INFO></NAVI>";
+			mes "and report what happened.";
+			erasequest(16596); // Hide and Seek of the Naughty Boys, Hand and Foot Gestures to Save
+			erasequest(16600); // Safe return after completing the mission (2)
+			changequest(16588,16598); // Einbroch Missionary Work -> Return to the Cathedral of Prontera (2)
+			close;
+		}
+	}
+
+	if(isbegin_quest(16588) == 1  && isbegin_quest(16596) == 0){
+		mes .npc_name$;
+		mes "I have opened a study room here in Einbroch to take care of the children.";
+		mes "Their parents are busy working in the factories during the day.";
+		next;
+		clear;
+		mes .npc_name$;
+		mes "I naturally introduce the teachings of Odin and help them become familiar with it~";
+		mes "ah, this isn’t the time for explanations right now. ";
+		mes "I apologize. ~";
+		mes "Something urgent has come up, so let’s talk later.";
+		next;
+		clear;
+		mes .npc_name$;
+		mes "What? You’re a high-ranking priest sent from the Prontera Cathedral to assist me?";
+		mes "How incredibly grateful I am!";
+		next;
+		clear;
+		mes .npc_name$;
+		mes "P-Please help!";
+		mes "Something terrible has happened.";
+		mes "It seems the children have wandered into a dangerous place!";
+		next;
+		clear;
+		mes .npc_name$;
+		mes "In the brief moment I took my eyes off them, the children returned saying they had been playing deep inside the Einbech mine.";
+		next;
+		clear;
+		mes .npc_name$;
+		mes "It seems they went all the way to the deepest part and got stuck.";
+		mes "They might have even reached the third level.";
+		next;
+		clear;
+		mes .npc_name$;
+		mes "It seems the children are unable to get out right now.";
+		mes "Please go and find them.";
+		mes "Also, make sure to hunt any monsters to protect them from being attacked.";
+		next;
+		clear;
+		mes .npc_name$;
+		mes "It seems the children are unable to get out right now.";
+		mes "Please go and find them.";
+		mes "Also, make sure to hunt any monsters to protect them from being attacked.";
+		next;
+		select("I will help:It’s my duty after all.");
+		clear;
+		mes .npc_name$;
+		mes "Thank you so much.";
+		mes "If you could hunt around 100 monsters on the third level of the <NAVI>[Einbech mine]<INFO>ein_dun03,148,221,0,000,0</INFO></NAVI>";
+		mes "I would feel a bit more at ease.";
+		mes "Please, save the children for us.";
+		setquest 16593; // The Hide and Seek of the Naughty, the Restlessness of the Adults 1
+		setquest 16594; // The Hide and Seek of the Naughty, the Restlessness of the Adults 2
+		setquest 16595; // The Hide and Seek of the Naughty, the Restlessness of the Adults 3
+		setquest 16596; // Hide and Seek of the Naughty Boys, Hand and Foot Gestures to Save
+		close;
+	}
+end;
+OnInit:
+	.npc_name$ = "["+strnpcinfo(0)+"]";
+	questinfo QTYPE_QUEST2,QMARK_NONE,"(isbegin_quest(16587) == 1  && isbegin_quest(16592) == 0) || (checkquest(16592,HUNTING) == 2 && isbegin_quest(16599) == 1)";
+end;
+}
+
+ein_dun03,148,221,6	script	Las	-1,5,5,{
+	if(isbegin_quest(16593) != 1) // The Hide and Seek of the Naughty, the Restlessness of the Adults 1
+		end;
+
+	mes .npc_name$;
+	mes "I was hiding here, keeping watch, and came in secretly because it looked interesting.";
+	mes "But I don't know how to get out.";
+	mes	"I want to leave.";
+	next;
+	clear;
+	mes .npc_name$;
+	mes "I want to go home."; 
+	mes "Send me home.~";
+	next;
+	select("Opens the warp portal.:Let's go back to Einbroch.");
+	clear;
+	mes .npc_name$;
+	mes "Are you sending me home?"; 
+	mes "Thank you!";
+	mes "Can I just go through the portal?";
+	erasequest(16593); // The Hide and Seek of the Naughty, the Restlessness of the Adults 1
+	specialeffect EF_WARP;
+	if(isbegin_quest(16593) == 0 && isbegin_quest(16594) ==  0 && isbegin_quest(16595) == 0){
+		next;
+		clear;
+		setquest(16600); // Safe return after completing the mission (2)
+		mes "["+strcharinfo(0)+"]";
+		mes "I think we've found all the missing people.";
+		mes "Let's go back to Einbroch";		
+	}
+	close2;
+	cloakonnpcself(strnpcinfo(3));
+	setnpcdisplay(strnpcinfo(0), strnpcinfo(0), HIDDEN_WARP_NPC);
+end;
+OnInit:
+	.npc_name$ = "["+strnpcinfo(0)+"]";
+	questinfo QTYPE_QUEST2,QMARK_NONE,"(isbegin_quest(16593) == 1)";
+end;
+OnTouch:
+	if(isbegin_quest(16593) == 1){ // The Hide and Seek of the Naughty, the Restlessness of the Adults 1
+		setnpcdisplay(strnpcinfo(0), strnpcinfo(0), 4_F_KID2);
+		cloakoffnpcself(strnpcinfo(3));	
+	}else
+		cloakonnpcself(strnpcinfo(3));
+end;
+}
+
+ein_dun03,38,152,4	script	Minas	-1,5,5,{
+	if(isbegin_quest(16594) != 1) // The Hide and Seek of the Naughty, the Restlessness of the Adults 2
+		end;
+
+	mes .npc_name$;
+	mes "Oh no, I’m hungry.";
+	mes "I’m cold and tired, and I want to go home.";
+	next;
+	clear;
+	mes .npc_name$;
+	mes "Who are you? An adventurer?";
+	mes "Could you take me with you?";
+	next;
+	select("Opens the warp portal.:Let's go back to Einbroch.");
+	clear;
+	mes .npc_name$;
+	mes "Are you taking me home with you?";
+	mes "I miss my mom.";
+	next;
+	clear;
+	mes "My legs are sore. I want to go home and sleep~.";
+	mes "Can I go home if I go in this?";
+	erasequest(16594); // The Hide and Seek of the Naughty, the Restlessness of the Adults 2
+	specialeffect EF_WARP;
+	if(isbegin_quest(16593) == 0 && isbegin_quest(16594) ==  0 && isbegin_quest(16595) == 0){
+		next;
+		clear;
+		setquest(16600); // Safe return after completing the mission (2)
+		mes "["+strcharinfo(0)+"]";
+		mes "I think we've found all the missing people.";
+		mes "Let's go back to Einbroch";		
+	}
+	close2;
+	cloakonnpcself(strnpcinfo(3));
+	setnpcdisplay(strnpcinfo(0), strnpcinfo(0), HIDDEN_WARP_NPC);
+end;
+OnInit:
+	.npc_name$ = "["+strnpcinfo(0)+"]";
+	questinfo QTYPE_QUEST2,QMARK_NONE,"(isbegin_quest(16594) == 1)";
+end;
+OnTouch:
+	if(isbegin_quest(16594) == 1){ // The Hide and Seek of the Naughty, the Restlessness of the Adults 2
+		setnpcdisplay(strnpcinfo(0), strnpcinfo(0), 4_M_CHILD1);
+		cloakoffnpcself(strnpcinfo(3));	
+	}else
+		cloakonnpcself(strnpcinfo(3));
+end;
+}
+
+ein_dun03,234,20,4	script	Tiris	-1,5,5,{
+	if(isbegin_quest(16595) != 1) // The Hide and Seek of the Naughty, the Restlessness of the Adults 3
+		end;
+
+	mes .npc_name$;
+	mes "Have all the friends gone?";
+	mes "They were just with me a moment ago.";
+	next;
+	clear;
+	mes .npc_name$;
+	mes "Could they have lost their way? Oh no!";
+	next;
+	select("I’ll open the warp portal. :Let’s go back to Einbroch.");
+	clear;
+	mes .npc_name$;
+	mes "Oh no!! When have you been here?";
+	mes "You should have said something earlier!";
+	erasequest(16595); // The Hide and Seek of the Naughty, the Restlessness of the Adults 3
+	specialeffect EF_WARP;
+	if(isbegin_quest(16593) == 0 && isbegin_quest(16594) ==  0 && isbegin_quest(16595) == 0){
+		next;
+		clear;
+		setquest(16600); // Safe return after completing the mission (2)
+		mes "["+strcharinfo(0)+"]";
+		mes "I think we've found all the missing people.";
+		mes "Let's go back to Einbroch";		
+	}
+	close2;
+	cloakonnpcself(strnpcinfo(3));
+	setnpcdisplay(strnpcinfo(0), strnpcinfo(0), HIDDEN_WARP_NPC);
+end;
+OnInit:
+	.npc_name$ = "["+strnpcinfo(0)+"]";
+	questinfo QTYPE_QUEST2,QMARK_NONE,"(isbegin_quest(16595) == 1)";
+end;
+OnTouch:
+	if(isbegin_quest(16595) == 1){ // The Hide and Seek of the Naughty, the Restlessness of the Adults 3
+		setnpcdisplay(strnpcinfo(0), strnpcinfo(0), 4_M_RUSCHILD);
+		cloakoffnpcself(strnpcinfo(3));	
+	}else
+		cloakonnpcself(strnpcinfo(3));
+end;
+}

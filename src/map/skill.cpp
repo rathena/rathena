@@ -14038,6 +14038,23 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case AL_WARP:
 		if(sd)
 		{
+			/* This part depends of aproval of new warplist packet PRN: 8600
+#if PACKETVER_MAIN_NUM >= 20170502 || PACKETVER_RE_NUM >= 20170419 || defined(PACKETVER_ZERO)
+
+						int extended_memo = pc_readreg2(sd,EXT_MEMO_VAR);
+						if (extended_memo >= 1){
+							maps.push_back(sd->status.memo_point[3].map);
+
+							if(extended_memo >= 2){
+								maps.push_back(sd->status.memo_point[4].map);
+
+								if(extended_memo >= 3)
+									maps.push_back(sd->status.memo_point[5].map);
+								
+							}
+						}
+#endif
+			*/
 			clif_skill_warppoint(sd, skill_id, skill_lv, sd->status.save_point.map,
 				(skill_lv >= 2) ? sd->status.memo_point[0].map : "",
 				(skill_lv >= 3) ? sd->status.memo_point[1].map : "",

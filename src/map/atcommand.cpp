@@ -2591,6 +2591,10 @@ ACMD_FUNC(memo)
 		clif_displaymessage(sd->fd,  msg_txt(sd,668)); // Your actual memo positions are:
 		for( i = 0; i < MAX_MEMOPOINTS; i++ )
 		{
+#if PACKETVER_MAIN_NUM >= 20170502 || PACKETVER_RE_NUM >= 20170419 || defined(PACKETVER_ZERO)
+			if (i >= ((MAX_MEMOPOINTS / 2) + pc_readreg2(sd, EXT_MEMO_VAR)))
+				break;
+#endif
 			if( strcmp( "", sd->status.memo_point[i].map ) != 0 )
 				sprintf( atcmd_output, "%d - %s (%d,%d)", i, sd->status.memo_point[i].map, sd->status.memo_point[i].x, sd->status.memo_point[i].y );
 			else
@@ -2599,9 +2603,11 @@ ACMD_FUNC(memo)
  		}
 		return 0;
  	}
-
-	if( position < 0 || position >= MAX_MEMOPOINTS )
-	{
+#if PACKETVER_MAIN_NUM >= 20170502 || PACKETVER_RE_NUM >= 20170419 || defined(PACKETVER_ZERO)
+	if( position < 0 || position >= ((MAX_MEMOPOINTS / 2) + pc_readreg2(sd,EXT_MEMO_VAR)) ){
+#else
+	if( position < 0 || position >= MAX_MEMOPOINTS ){
+#endif
 		sprintf(atcmd_output, msg_txt(sd,1008), 0, MAX_MEMOPOINTS-1); // Please enter a valid position (usage: @memo <memo_position:%d-%d>).
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
