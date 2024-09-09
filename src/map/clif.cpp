@@ -1768,13 +1768,30 @@ void clif_homunculus_updatestatus(map_session_data& sd, _sp type) {
 		p.value = static_cast<decltype(p.value)>( std::min<decltype(sd.hd->homunculus.exp)>( sd.hd->homunculus.exp, std::numeric_limits<decltype(PACKET_ZC_PROPERTY_HOMUN::exp)>::max() ) );
 		break;
 	case SP_HP:
-		if (status->max_hp > (std::is_same<decltype(PACKET_ZC_PROPERTY_HOMUN::hp), uint16>::value ? INT16_MAX : INT32_MAX / 100))
+		// Homunculus HP and SP bars will screw up if the percentage calculation exceeds signed values
+		// Any value above will screw up the bars
+#if PACKETVER_MAIN_NUM >= 20200819 || PACKETVER_RE_NUM >= 20200723 || PACKETVER_ZERO_NUM >= 20190626
+	// Tested maximum: 2147483647 (INT32_MAX)
+		if (status->max_hp > INT32_MAX)
+#elif PACKETVER_MAIN_NUM >= 20131230 || PACKETVER_RE_NUM >= 20131230 || defined(PACKETVER_ZERO)
+	// Tested maximum: 21474836 (INT32_MAX / 100)
+		if (status->max_hp > INT32_MAX / 100)
+#else
+	// Tested maximum: 32767 (INT16_MAX)
+		if (status->max_hp > INT16_MAX)
+#endif
 			p.value = status->hp / (status->max_hp / 100);
 		else
 			p.value = static_cast<decltype(p.value)>(status->hp);
 		break;
 	case SP_SP:
-		if (status->max_sp > (std::is_same<decltype(PACKET_ZC_PROPERTY_HOMUN::sp), uint16>::value ? INT16_MAX : INT32_MAX / 100))
+#if PACKETVER_MAIN_NUM >= 20200819 || PACKETVER_RE_NUM >= 20200723 || PACKETVER_ZERO_NUM >= 20190626
+		// Tested maximum: 2147483647 (INT32_MAX)
+		if (status->max_sp > INT32_MAX)
+#else
+		// Tested maximum: 32767 (INT16_MAX)
+		if (status->max_sp > INT16_MAX)
+#endif
 			p.value = status->sp / (status->max_sp / 100);
 		else
 			p.value = static_cast<decltype(p.value)>(status->sp);
@@ -1827,15 +1844,32 @@ void clif_hominfo( map_session_data *sd, struct homun_data *hd, int flag ){
 	p.flee = status->flee;
 	p.amotion = (flag) ? 0 : status->amotion;
 	// Homunculus HP and SP bars will screw up if the percentage calculation exceeds signed values
-	// Tested maximum: 21474836(=INT32_MAX/100), any value above will screw up the bars
-	if( status->max_hp > ( std::is_same<decltype(p.hp), uint16>::value ? INT16_MAX : INT32_MAX / 100 ) ){
+	// Any value above will screw up the bars
+#if PACKETVER_MAIN_NUM >= 20200819 || PACKETVER_RE_NUM >= 20200723 || PACKETVER_ZERO_NUM >= 20190626
+	// Tested maximum: 2147483647 (INT32_MAX)
+	if (status->max_hp > INT32_MAX)
+#elif PACKETVER_MAIN_NUM >= 20131230 || PACKETVER_RE_NUM >= 20131230 || defined(PACKETVER_ZERO)
+	// Tested maximum: 21474836 (INT32_MAX / 100)
+	if (status->max_hp > INT32_MAX / 100)
+#else
+	// Tested maximum: 32767 (INT16_MAX)
+	if (status->max_hp > INT16_MAX)
+#endif
+	{
 		p.hp = status->hp / ( status->max_hp / 100 );
 		p.maxHp = 100;
 	}else{
 		p.hp = static_cast<decltype(p.hp)>(status->hp);
 		p.maxHp = static_cast<decltype(p.maxHp)>(status->max_hp);
 	}
-	if( status->max_sp > ( std::is_same<decltype(p.sp), uint16>::value ? INT16_MAX : INT32_MAX / 100 ) ){
+#if PACKETVER_MAIN_NUM >= 20200819 || PACKETVER_RE_NUM >= 20200723 || PACKETVER_ZERO_NUM >= 20190626
+	// Tested maximum: 2147483647 (INT32_MAX)
+	if (status->max_sp > INT32_MAX)
+#else
+	// Tested maximum: 32767 (INT16_MAX)
+	if (status->max_sp > INT16_MAX)
+#endif
+	{
 		p.sp = status->sp / ( status->max_sp / 100 );
 		p.maxSp = 100;
 	}else{
