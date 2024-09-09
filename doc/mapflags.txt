@@ -388,10 +388,12 @@ prtg_cas01	mapflag	skill_duration	HT_ANKLESNARE,400
 
 ---------------------------------------
 
-*invincible_time duration
+*invincible_time {<duration>}
 
 Sets the duration (in milliseconds) for when a player loads onto a map with how long they are invincible for.
 The duration is cancelled if the player walks or interacts in any fashion.
+
+Duration defaults to 5 seconds if the value is not specified.
 
 ---------------------------------------
 
@@ -407,45 +409,45 @@ Disables the damage display on a map.
 
 ---------------------------------------
 
-*weapon_damage_rate	<rate>
+*weapon_damage_rate	{<rate>}
 
 Weapon skills damage adjustments.
-<rate> is given as a percentage (i.e. 60 = 60%).
+<rate> is given as a percentage (i.e. 60 = 60%). Defaulted to 100.
 
 ---------------------------------------
 
-*magic_damage_rate	<rate>
+*magic_damage_rate	{<rate>}
 
 Magic skills damage adjustments.
-<rate> is given as a percentage (i.e. 60 = 60%).
+<rate> is given as a percentage (i.e. 60 = 60%). Defaulted to 100.
 
 ---------------------------------------
 
-*misc_damage_rate	<rate>
+*misc_damage_rate	{<rate>}
 
 Misc skills damage adjustments.
-<rate> is given as a percentage (i.e. 60 = 60%).
+<rate> is given as a percentage (i.e. 60 = 60%). Defaulted to 100.
 
 ---------------------------------------
 
-*short_damage_rate	<rate>
+*short_damage_rate	{<rate>}
 
 Melee damage adjustments (non-skill).
-<rate> is given as a percentage (i.e. 60 = 60%).
+<rate> is given as a percentage (i.e. 60 = 60%). Defaulted to 100.
 
 ---------------------------------------
 
-*long_damage_rate	<rate>
+*long_damage_rate	{<rate>}
 
 Ranged damage adjustments (non-skill).
-<rate> is given as a percentage (i.e. 60 = 60%).
+<rate> is given as a percentage (i.e. 60 = 60%). Defaulted to 100.
 
 ---------------------------------------
 
-*flee_penalty	<rate>
+*flee_penalty	{<rate>}
 
 Flee penalty applied to players.
-<rate> is given as a percentage (i.e. 60 = 60%).
+<rate> is given as a percentage (i.e. 60 = 60%). Defaulted to 20.
 
 ---------------------------------------
 

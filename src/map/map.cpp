@@ -5381,16 +5381,33 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 			mapdata->setMapFlag(mapflag, status);
 			break;
 		case MF_INVINCIBLE_TIME:
+			if (status) {
+				nullpo_retr(false, args);
+
+				// Default is 5 seconds.
+				mapdata->setMapFlag(mapflag, ((args->flag_val <= 0) ? 5000 : args->flag_val));
+			} else
+				mapdata->setMapFlag(mapflag, false);
+			break;
+		case MF_FLEE_PENALTY:
+			if (status) {
+				nullpo_retr(false, args);
+
+				// Default to 20%.
+				mapdata->setMapFlag(mapflag, ((args->flag_val <= 0) ? 20 : args->flag_val));
+			} else
+				mapdata->setMapFlag(mapflag, false);
+			break;
 		case MF_WEAPON_DAMAGE_RATE:
 		case MF_MAGIC_DAMAGE_RATE:
 		case MF_MISC_DAMAGE_RATE:
 		case MF_LONG_DAMAGE_RATE:
 		case MF_SHORT_DAMAGE_RATE:
-		case MF_FLEE_PENALTY:
 			if (status) {
 				nullpo_retr(false, args);
 
-				mapdata->setMapFlag(mapflag, ((args->flag_val < 0) ? 0 : args->flag_val));
+				// Default to 100%.
+				mapdata->setMapFlag(mapflag, ((args->flag_val <= 0) ? 100 : args->flag_val));
 			} else
 				mapdata->setMapFlag(mapflag, false);
 			break;

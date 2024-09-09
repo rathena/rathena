@@ -5574,26 +5574,8 @@ const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, const char
 			break;
 		}
 
-		case MF_INVINCIBLE_TIME: {
-				union u_mapflag_args args = {};
-
-				if (sscanf(w4, "%11d", &args.flag_val) < 1)
-					args.flag_val = 5000;
-
-				map_setmapflag_sub(m, mapflag, state, &args);
-			}
-			break;
-
-		case MF_FLEE_PENALTY: {
-				union u_mapflag_args args = {};
-
-				if (sscanf(w4, "%11d", &args.flag_val) < 1)
-					args.flag_val = 20;
-
-				map_setmapflag_sub(m, mapflag, state, &args);
-			}
-			break;
-
+		case MF_INVINCIBLE_TIME:
+		case MF_FLEE_PENALTY:
 		case MF_WEAPON_DAMAGE_RATE:
 		case MF_MAGIC_DAMAGE_RATE:
 		case MF_MISC_DAMAGE_RATE:
@@ -5601,8 +5583,8 @@ const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, const char
 		case MF_SHORT_DAMAGE_RATE: {
 				union u_mapflag_args args = {};
 
-				if (sscanf(w4, "%11d", &args.flag_val) < 1)
-					args.flag_val = 100;
+				if (state)
+					sscanf(w4, "%11d", &args.flag_val);
 
 				map_setmapflag_sub(m, mapflag, state, &args);
 			}

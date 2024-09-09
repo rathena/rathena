@@ -240,6 +240,7 @@ struct Battle_Config
 	int guild_skill_relog_type;
 	int emergency_call;
 	int guild_aura;
+	int pc_invincible_time;
 
 	int pet_catch_rate;
 	int pet_rename;
