@@ -27428,7 +27428,7 @@ BUILDIN_FUNC(force_memo) {
 		return SCRIPT_CMD_FAILURE;
 
 #if PACKETVER_MAIN_NUM >= 20170502 || PACKETVER_RE_NUM >= 20170419 || defined(PACKETVER_ZERO)
-	if(slot < 0 || slot >= ((MAX_MEMOPOINTS / 2) + pc_readreg2(sd,EXT_MEMO_VAR)))
+	if(slot < 0 || slot >= (NORMAL_MEMOPOINTS + pc_readreg2(sd,EXT_MEMO_VAR)))
 		return SCRIPT_CMD_FAILURE;
 #else
 	if(slot < 0 || slot >= MAX_MEMOPOINTS)

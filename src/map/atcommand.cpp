@@ -2592,7 +2592,7 @@ ACMD_FUNC(memo)
 		for( i = 0; i < MAX_MEMOPOINTS; i++ )
 		{
 #if PACKETVER_MAIN_NUM >= 20170502 || PACKETVER_RE_NUM >= 20170419 || defined(PACKETVER_ZERO)
-			if (i >= ((MAX_MEMOPOINTS / 2) + pc_readreg2(sd, EXT_MEMO_VAR)))
+			if (i >= (NORMAL_MEMOPOINTS + pc_readreg2(sd, EXT_MEMO_VAR)))
 				break;
 #endif
 			if( strcmp( "", sd->status.memo_point[i].map ) != 0 )
@@ -2604,7 +2604,7 @@ ACMD_FUNC(memo)
 		return 0;
  	}
 #if PACKETVER_MAIN_NUM >= 20170502 || PACKETVER_RE_NUM >= 20170419 || defined(PACKETVER_ZERO)
-	if( position < 0 || position >= ((MAX_MEMOPOINTS / 2) + pc_readreg2(sd,EXT_MEMO_VAR)) ){
+	if( position < 0 || position >= (NORMAL_MEMOPOINTS + pc_readreg2(sd,EXT_MEMO_VAR)) ){
 #else
 	if( position < 0 || position >= MAX_MEMOPOINTS ){
 #endif

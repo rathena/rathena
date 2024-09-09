@@ -7116,7 +7116,7 @@ bool pc_memo(map_session_data* sd, int pos)
 		return false; // invalid input
 
 #if PACKETVER_MAIN_NUM >= 20170502 || PACKETVER_RE_NUM >= 20170419 || defined(PACKETVER_ZERO)
-	if( pos >= ((MAX_MEMOPOINTS / 2) + pc_readreg2(sd,EXT_MEMO_VAR)) )
+	if( pos >= (NORMAL_MEMOPOINTS + pc_readreg2(sd,EXT_MEMO_VAR)) )
 		return false; // invalid input
 #endif
 
