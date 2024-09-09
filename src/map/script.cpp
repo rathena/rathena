@@ -27435,9 +27435,16 @@ BUILDIN_FUNC(force_memo) {
 		return SCRIPT_CMD_FAILURE;
 #endif
 
-	safestrncpy( sd->status.memo_point[slot].map, map_name, sizeof( sd->status.memo_point[slot].map ) );
-	sd->status.memo_point[slot].x = x;
-	sd->status.memo_point[slot].y = y;
+	for(int i = 0;i < MAX_MEMOPOINTS; i++)
+	{
+		if(strcmp( "", sd->status.memo_point[i].map ) == 0 || i == slot)
+		{
+			safestrncpy( sd->status.memo_point[i].map, map_name, sizeof( sd->status.memo_point[i].map ) );
+			sd->status.memo_point[i].x = x;
+			sd->status.memo_point[i].y = y;
+			break;
+		}
+	}
 
 	return SCRIPT_CMD_SUCCESS;
 }
