@@ -1753,4 +1753,6 @@ void pc_macro_reporter_process(map_session_data &sd, int32 reporter_account_id =
 void pc_reputation_generate();
 #endif
 
+#define PC_MAXMEMOPOINTS(sd) (NORMAL_MEMOPOINTS + pc_readreg2(sd,EXT_MEMO_VAR))
+
 #endif /* PC_HPP */
