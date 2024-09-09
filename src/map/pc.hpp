@@ -1757,7 +1757,7 @@ void pc_reputation_generate();
 #endif
 
 #if PACKETVER_MAIN_NUM >= 20170502 || PACKETVER_RE_NUM >= 20170419 || defined(PACKETVER_ZERO)
-#define PC_MAXMEMOPOINTS(sd) (NORMAL_MEMOPOINTS + pc_readreg2(sd,EXT_MEMO_VAR))
+#define PC_MAXMEMOPOINTS(sd) ((NORMAL_MEMOPOINTS + pc_readreg2(sd,EXT_MEMO_VAR) >= MAX_MEMOPOINTS)? MAX_MEMOPOINTS : NORMAL_MEMOPOINTS + pc_readreg2(sd,EXT_MEMO_VAR) )
 #endif
 
 #endif /* PC_HPP */
