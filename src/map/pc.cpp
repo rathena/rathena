@@ -9406,8 +9406,10 @@ int pc_resetskill(map_session_data* sd, int flag)
 		status_calc_pc(sd, SCO_FORCE);
 	}
 
+#if PACKETVER_MAIN_NUM >= 20170502 || PACKETVER_RE_NUM >= 20170419 || defined(PACKETVER_ZERO)
 	if(pc_readreg2(sd,EXT_MEMO_VAR))
 		pc_setreg2(sd,EXT_MEMO_VAR,0); //kro wipe your progress
+#endif
 
 	return skill_point;
 }
