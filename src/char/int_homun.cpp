@@ -175,7 +175,7 @@ bool mapif_homunculus_load(int homun_id, struct s_homunculus* hd)
 	}
 
 	hd->hom_id = homun_id;
-	Sql_GetData(sql_handle,  1, &data, nullptr); hd->char_id = atoi(data);
+	Sql_GetData(sql_handle,  1, &data, nullptr); hd->char_id = static_cast<unsigned int>(strtoul(data, nullptr, 10));
 	Sql_GetData(sql_handle,  2, &data, nullptr); hd->class_ = atoi(data);
 	Sql_GetData(sql_handle,  3, &data, nullptr); hd->prev_class = atoi(data);
 	Sql_GetData(sql_handle,  4, &data, &len); safestrncpy(hd->name, data, sizeof(hd->name));
