@@ -7122,13 +7122,15 @@ bool pc_memo(map_session_data* sd, int pos)
 
 	// check required skill level
 	skill = pc_checkskill(sd, AL_WARP);
-	if( skill < 1 ) {
-		clif_skill_memomessage( *sd, WARPPOINT_NOT_LEARNED ); // "You haven't learned Warp."
-		return false;
-	}
-	if( skill < 2 || skill - 2 < pos ) {
-		clif_skill_memomessage( *sd, WARPPOINT_LOW_LEVEL ); // "Skill Level is not high enough."
-		return false;
+	if( skill < 4 ) {
+		if (skill < 1) {
+			clif_skill_memomessage(*sd, WARPPOINT_NOT_LEARNED); // "You haven't learned Warp."
+			return false;
+		}
+		if (skill < 2 || skill - 2 < pos) {
+			clif_skill_memomessage(*sd, WARPPOINT_LOW_LEVEL); // "Skill Level is not high enough."
+			return false;
+		}
 	}
 
 	if( pos == -1 )
