@@ -14757,28 +14757,6 @@ void clif_parse_GM_Item_Monster(int fd, map_session_data *sd)
 	}
 }
 
-/// /resetcooltime 
-/// 0a88 (CZ_CMD_RESETCOOLTIME).
-void clif_parse_GMCooldownReset(int fd, map_session_data* sd) {
-#if PACKETVER >= 20160622
-	if(sd->group_id < 99)
-		return;
-	for (int i = 0; i < MAX_SKILLCOOLDOWN; i++) {
-		if( sd->scd[i] != nullptr ) {
-			std::string buf = "Found skill '" + std::string(skill_db.find(sd->scd[i]->skill_id)->name) + "', unblocking...";
-			clif_displaymessage(sd->fd, buf.c_str());
-			buf.clear();
-
-			if (battle_config.display_status_timers)
-				clif_skill_cooldown( *sd, sd->scd[i]->skill_id, 0 );
-
-			delete_timer(sd->scd[i]->timer, skill_blockpc_end);
-			aFree(sd->scd[i]);
-			sd->scd[i] = nullptr;
-		}
-	}
-#endif
-}
 
 /// /hide (CZ_CHANGE_EFFECTSTATE).
 /// 019d <effect state>.L
@@ -14790,6 +14768,18 @@ void clif_parse_GMHide(int fd, map_session_data *sd) {
 
 	safesnprintf(cmd,sizeof(cmd),"%chide",atcommand_symbol);
 	is_atcommand(fd, sd, cmd, 1);
+}
+
+
+/// /resetcooltime 
+/// 0a88 (CZ_CMD_RESETCOOLTIME).
+void clif_parse_GMCooldownReset(int fd, map_session_data* sd) {
+#if PACKETVER >= 20160622
+	char cmd[15];
+
+	safesnprintf(cmd,sizeof(cmd),"%cresetcooltime",atcommand_symbol);
+	is_atcommand(fd, sd, cmd, 1);
+#endif
 }
 
 

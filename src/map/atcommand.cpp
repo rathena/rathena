@@ -1150,6 +1150,48 @@ ACMD_FUNC(hide)
 	return 0;
 }
 
+ACMD_FUNC(resetcooltime)
+{
+
+	nullpo_retr(-1, sd);
+
+	for (int i = 0; i < MAX_SKILLCOOLDOWN; i++) {
+		if( sd->scd[i] != nullptr ) {
+			std::string buf = "Found skill '" + std::string(skill_db.find(sd->scd[i]->skill_id)->name) + "', unblocking...";
+			clif_displaymessage(sd->fd, buf.c_str());
+			buf.clear();
+
+			if (battle_config.display_status_timers)
+				clif_skill_cooldown( *sd, sd->scd[i]->skill_id, 0 );
+
+			delete_timer(sd->scd[i]->timer, skill_blockpc_end);
+			aFree(sd->scd[i]);
+			sd->scd[i] = nullptr;
+		}
+	}
+
+	if(sd->hd)
+	{
+		if(hom_is_active(sd->hd))
+		{
+			for (int i = 0; i < sd->hd->blockskill.size(); i++) {
+				if( sd->hd->blockskill[i] > 0 ) {
+					std::string buf = "Found skill '" + std::string(skill_db.find(sd->hd->blockskill[i])->name) + "', unblocking...";
+					clif_displaymessage(sd->fd, buf.c_str());
+					buf.clear();
+
+					if (battle_config.display_status_timers)
+						clif_skill_cooldown( *sd, sd->hd->blockskill[i], 0 );
+
+					sd->hd->blockskill.erase(sd->hd->blockskill.begin()+i);
+				}
+			}
+		}
+	}
+
+	return 0;
+}
+
 /*==========================================
  * Changes a character's class
  *------------------------------------------*/
@@ -11016,6 +11058,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(guildstorage),
 		ACMD_DEF(option),
 		ACMD_DEF(hide), // + /hide
+		ACMD_DEF(resetcooltime), // + /resetcooltime
 		ACMD_DEFR(jobchange, ATCMD_NOCONSOLE),
 		ACMD_DEF(kill),
 		ACMD_DEF(alive),
