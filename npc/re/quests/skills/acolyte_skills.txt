@@ -25,7 +25,7 @@ prontera,225,330,4	script	Missionary Rosetta	4_F_SISTER,{
 		next;
 		clear;
 		mes "<NAVI>[Sister Tita]<INFO>umbala,123,138,0,000,0</INFO></NAVI> is dedicated to the missionary work.";
-		mes "However, I’ve heard that she has recently encountered some significant troubles.";
+		mes "However, I've heard that she has recently encountered some significant troubles.";
 		close;
 	}
 
@@ -49,7 +49,7 @@ prontera,225,330,4	script	Missionary Rosetta	4_F_SISTER,{
 			next;
 			clear;
 			mes .npc_name$;	
-			mes "After observing, I’ve determined that you are consistently devoted to spreading the name of Odin.";
+			mes "After observing, I've determined that you are consistently devoted to spreading the name of Odin.";
 			mes "Therefore, I will allow you to remember two more locations.";
 			next;
 			clear;
@@ -92,7 +92,7 @@ prontera,225,330,4	script	Missionary Rosetta	4_F_SISTER,{
 		next;
 		clear;
 		mes .npc_name$;
-		mes "Then, please go to <NAVI>[Einbroch]<INFO>einbroch,178,148,0,000,0</INFO></NAVI> and listen to Brother Suan’s situation. ";
+		mes "Then, please go to <NAVI>[Einbroch]<INFO>einbroch,178,148,0,000,0</INFO></NAVI> and listen to Brother Suan's situation. ";
 		mes "I will pray that everything goes smoothly and that you can spread the name of Odin in this world.";
 		force_memo("einbroch",178,148,3);
 		changequest(16597,16588); // Return to the Cathedral of Prontera -> Einbroch Missionary Work
@@ -109,7 +109,7 @@ prontera,225,330,4	script	Missionary Rosetta	4_F_SISTER,{
 			next;
 			clear;
 			mes .npc_name$;	
-			mes "After observing, I’ve determined that you are consistently devoted to spreading the name of Odin.";
+			mes "After observing, I've determined that you are consistently devoted to spreading the name of Odin.";
 			mes "Therefore, I will allow you to remember two more locations.";
 			next;
 			clear;
@@ -123,7 +123,7 @@ prontera,225,330,4	script	Missionary Rosetta	4_F_SISTER,{
 			close;
 		}
 		mes .npc_name$;
-		mes "In Umbala, Sister Tita is dedicated to the missionary work. However, I’ve heard that she has recently encountered some significant troubles.";
+		mes "In Umbala, Sister Tita is dedicated to the missionary work. However, I've heard that she has recently encountered some significant troubles.";
 		next;
 		clear;
 		mes .npc_name$;
@@ -182,7 +182,7 @@ prontera,225,330,4	script	Missionary Rosetta	4_F_SISTER,{
 		clear;
 		if(.@continue == 1){
 			mes .npc_name$;
-			mes "In Umbala, Sister Tita is dedicated to the missionary work. However, I’ve heard that she has recently encountered some significant troubles.";
+			mes "In Umbala, Sister Tita is dedicated to the missionary work. However, I've heard that she has recently encountered some significant troubles.";
 			next;
 			clear;
 			mes .npc_name$;
@@ -563,13 +563,13 @@ einbroch,178,148,4	script	Suan	1_M_PASTOR,{
 		clear;
 		mes .npc_name$;
 		mes "I naturally introduce the teachings of Odin and help them become familiar with it~";
-		mes "ah, this isn’t the time for explanations right now. ";
+		mes "ah, this isn't the time for explanations right now. ";
 		mes "I apologize. ~";
-		mes "Something urgent has come up, so let’s talk later.";
+		mes "Something urgent has come up, so let's talk later.";
 		next;
 		clear;
 		mes .npc_name$;
-		mes "What? You’re a high-ranking priest sent from the Prontera Cathedral to assist me?";
+		mes "What? You're a high-ranking priest sent from the Prontera Cathedral to assist me?";
 		mes "How incredibly grateful I am!";
 		next;
 		clear;
@@ -593,13 +593,7 @@ einbroch,178,148,4	script	Suan	1_M_PASTOR,{
 		mes "Please go and find them.";
 		mes "Also, make sure to hunt any monsters to protect them from being attacked.";
 		next;
-		clear;
-		mes .npc_name$;
-		mes "It seems the children are unable to get out right now.";
-		mes "Please go and find them.";
-		mes "Also, make sure to hunt any monsters to protect them from being attacked.";
-		next;
-		select("I will help:It’s my duty after all.");
+		select("I will help:It's my duty after all.");
 		clear;
 		mes .npc_name$;
 		mes "Thank you so much.";
@@ -671,8 +665,8 @@ ein_dun03,38,152,4	script	Minas	-1,5,5,{
 		end;
 
 	mes .npc_name$;
-	mes "Oh no, I’m hungry.";
-	mes "I’m cold and tired, and I want to go home.";
+	mes "Oh no, I'm hungry.";
+	mes "I'm cold and tired, and I want to go home.";
 	next;
 	clear;
 	mes .npc_name$;
@@ -727,7 +721,7 @@ ein_dun03,234,20,4	script	Tiris	-1,5,5,{
 	mes .npc_name$;
 	mes "Could they have lost their way? Oh no!";
 	next;
-	select("I’ll open the warp portal. :Let’s go back to Einbroch.");
+	select("I'll open the warp portal. :Let's go back to Einbroch.");
 	clear;
 	mes .npc_name$;
 	mes "Oh no!! When have you been here?";
