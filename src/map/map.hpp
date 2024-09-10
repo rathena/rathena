@@ -1269,8 +1269,13 @@ typedef struct homun_data       TBL_HOM;
 typedef struct s_mercenary_data   TBL_MER;
 typedef struct s_elemental_data	TBL_ELEM;
 
-#define BL_CAST(type_, bl) \
-	( ((bl) == (struct block_list*)nullptr || (bl)->type != (type_)) ? (T ## type_ *)nullptr : (T ## type_ *)(bl) )
+template<typename T>
+T BL_CAST(bl_type type, block_list* bl) {
+	if (bl == nullptr || bl->type != type) {
+		return nullptr;
+	}
+	return reinterpret_cast<T>(bl);
+}
 
 #include <common/sql.hpp>
 

@@ -576,7 +576,7 @@ int map_count_oncell(int16 m, int16 x, int16 y, int type, int flag)
 		for( bl = mapdata->block[bx+by*mapdata->bxs] ; bl != nullptr ; bl = bl->next )
 			if(bl->x == x && bl->y == y && bl->type&type) {
 				if (bl->type == BL_NPC) {	// Don't count hidden or invisible npc. Cloaked npc are counted
-					npc_data *nd = BL_CAST(BL_NPC, bl);
+					npc_data* nd = BL_CAST<npc_data*>(BL_NPC, bl);
 					if (nd->bl.m < 0 || nd->sc.option&OPTION_HIDE || nd->dynamicnpc.owner_char_id != 0)
 						continue;
 				}
@@ -2224,32 +2224,32 @@ struct mob_data * map_id2md(int id){
 
 struct npc_data * map_id2nd(int id){
 	struct block_list* bl = map_id2bl(id);
-	return BL_CAST(BL_NPC, bl);
+	return BL_CAST<npc_data*>(BL_NPC, bl);
 }
 
 struct homun_data* map_id2hd(int id){
 	struct block_list* bl = map_id2bl(id);
-	return BL_CAST(BL_HOM, bl);
+	return BL_CAST<homun_data*>(BL_HOM, bl);
 }
 
 struct s_mercenary_data* map_id2mc(int id){
 	struct block_list* bl = map_id2bl(id);
-	return BL_CAST(BL_MER, bl);
+	return BL_CAST<s_mercenary_data*>(BL_MER, bl);
 }
 
 struct pet_data* map_id2pd(int id){
 	struct block_list* bl = map_id2bl(id);
-	return BL_CAST(BL_PET, bl);
+	return BL_CAST<pet_data*>(BL_PET, bl);
 }
 
 struct s_elemental_data* map_id2ed(int id) {
 	struct block_list* bl = map_id2bl(id);
-	return BL_CAST(BL_ELEM, bl);
+	return BL_CAST<s_elemental_data*>(BL_ELEM, bl);
 }
 
 struct chat_data* map_id2cd(int id){
 	struct block_list* bl = map_id2bl(id);
-	return BL_CAST(BL_CHAT, bl);
+	return BL_CAST<chat_data*>(BL_CHAT, bl);
 }
 
 /// Returns the nick of the target charid or nullptr if unknown (requests the nick to the char server).

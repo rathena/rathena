@@ -1240,7 +1240,7 @@ void party_exp_share(struct party_data* p, struct block_list* src, t_exp base_ex
 	map_session_data* sd[MAX_PARTY];
 	unsigned int i, c;
 #ifdef RENEWAL_EXP
-	TBL_MOB *md = BL_CAST(BL_MOB, src);
+	mob_data* md = BL_CAST<mob_data*>(BL_MOB, src);
 
 	if (!md)
 		return;
