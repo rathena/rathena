@@ -838,7 +838,7 @@ void clif_move( struct unit_data& ud ); //area
 void clif_changemap( map_session_data& sd, short m, uint16 x, uint16 y );
 void clif_changemapserver( map_session_data& sd, const char* map, uint16 x, uint16 y, uint32 ip, uint16 port );
 void clif_blown(struct block_list *bl); // area
-void clif_slide(struct block_list *bl, int x, int y); // area
+void clif_slide(block_list& bl, int x, int y); // area
 void clif_fixpos( block_list& bl );
 void clif_npcbuysell( map_session_data& sd, npc_data& nd );
 void clif_buylist( map_session_data& sd, npc_data& nd );
@@ -861,10 +861,10 @@ void clif_delitem( map_session_data& sd, int index, int amount, short reason );
 void clif_update_hp(map_session_data &sd);
 void clif_updatestatus( map_session_data& sd, _sp type );
 void clif_changemanner( map_session_data& sd );
-int clif_damage(struct block_list* src, struct block_list* dst, t_tick tick, int sdelay, int ddelay, int64 sdamage, int div, enum e_damage_type type, int64 sdamage2, bool spdamage);	// area
-void clif_takeitem(struct block_list* src, struct block_list* dst);
-void clif_sitting(struct block_list* bl);
-void clif_standing(struct block_list* bl);
+int clif_damage(block_list& src, block_list& dst, t_tick tick, int sdelay, int ddelay, int64 sdamage, int div, enum e_damage_type type, int64 sdamage2, bool spdamage);	// area
+void clif_takeitem(block_list& src, block_list& dst);
+void clif_sitting(block_list& bl);
+void clif_standing(block_list& bl);
 void clif_sprite_change(struct block_list *bl, int id, int type, int val, int val2, enum send_target target);
 void clif_changelook(struct block_list *bl,int type,int val);	// area
 void clif_changetraplook(struct block_list *bl,int val); // area
@@ -884,7 +884,7 @@ void clif_GlobalMessage( block_list& bl, const char* message, enum send_target t
 void clif_createchat( map_session_data& sd, e_create_chatroom flag );
 void clif_dispchat(struct chat_data* cd, int fd);	// area or fd
 void clif_joinchatfail( map_session_data& sd, e_refuse_enter_room result );
-void clif_joinchatok(map_session_data *sd,struct chat_data* cd);	// self
+void clif_joinchatok(map_session_data& sd,chat_data& cd);
 void clif_addchat(struct chat_data* cd,map_session_data *sd);	// chat
 void clif_changechatowner(struct chat_data* cd, map_session_data* sd);	// chat
 void clif_clearchat(struct chat_data *cd,int fd);	// area or fd
@@ -900,7 +900,7 @@ void clif_divorced(map_session_data* sd, const char* name);
 void clif_callpartner(map_session_data& sd);
 void clif_playBGM( map_session_data& sd, const char* name );
 void clif_soundeffect( struct block_list& bl, const char* name, int type, enum send_target target );
-void clif_parse_ActionRequest_sub( map_session_data& sd, int action_type, int target_id, t_tick tick );
+void clif_parse_ActionRequest_sub( map_session_data& sd, uint8 action_type, int target_id, t_tick tick );
 void clif_parse_LoadEndAck(int fd,map_session_data *sd);
 void clif_hotkeys_send(map_session_data *sd, int tab);
 
@@ -1007,7 +1007,7 @@ void clif_mvp_effect(map_session_data *sd);
 void clif_mvp_item(map_session_data *sd, t_itemid nameid);
 void clif_mvp_exp(map_session_data *sd, t_exp exp);
 void clif_mvp_noitem(map_session_data* sd);
-void clif_changed_dir(struct block_list *bl, enum send_target target);
+void clif_changed_dir(block_list& bl, enum send_target target);
 
 // vending
 void clif_openvendingreq( map_session_data& sd, uint16 num );

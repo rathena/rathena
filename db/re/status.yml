@@ -86,7 +86,7 @@ Body:
     Opt1: StoneWait
     Flags:
       SendOption: true
-      BossResist: true      
+      BossResist: true
       StopAttacking: true
     Fail:
       Whiteimprison: true
@@ -1822,6 +1822,7 @@ Body:
     Icon: EFST_ETERNALCHAOS
     DurationLookup: BD_ETERNALCHAOS
     CalcFlags:
+      Def: true
       Def2: true
     Flags:
       NoDispell: true
@@ -2618,6 +2619,9 @@ Body:
     CalcFlags:
       Batk: true
       Watk: true
+    Flags:
+      NoSave: true
+      RemoveFromHomOnMapWarp: true
   - Status: Fleet
     DurationLookup: HFLI_FLEET
     CalcFlags:
@@ -2631,7 +2635,11 @@ Body:
   - Status: Defence
     DurationLookup: HAMI_DEFENCE
     CalcFlags:
+      Def: true
       Vit: true
+    Flags:
+      NoSave: true
+      RemoveFromHomOnMapWarp: true
   - Status: Incaspdrate
     CalcFlags:
       Aspd: true
