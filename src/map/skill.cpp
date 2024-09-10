@@ -1956,7 +1956,7 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl, uint
 		sc_start(src,bl, SC_SILENCE, 5 * skill_lv + (status_get_dex(src) + status_get_lv(src)) / 10, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
 	case SR_EARTHSHAKER:
-		if( bl->type == BL_MOB )
+		if (dstmd != nullptr && dstmd->guardian_data == nullptr)    // Target is a mob and not a guardian type. [Atemo]
 			sc_start(src, bl, SC_EARTHSHAKER, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
 		sc_start(src,bl,SC_STUN, 25 + 5 * skill_lv,skill_lv,skill_get_time(skill_id,skill_lv));
 		status_change_end(bl, SC_SV_ROOTTWIST);
