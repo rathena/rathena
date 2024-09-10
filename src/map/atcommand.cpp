@@ -1152,14 +1152,12 @@ ACMD_FUNC(hide)
 
 ACMD_FUNC(resetcooltime)
 {
-
 	nullpo_retr(-1, sd);
 
-	for (int i = 0; i < MAX_SKILLCOOLDOWN; i++) {
+	for( size_t i = 0; i < ARRAYLENGTH( sd->scd ); i++ ){
 		if( sd->scd[i] != nullptr ) {
-			std::string buf = "Found skill '" + std::string(skill_db.find(sd->scd[i]->skill_id)->name) + "', unblocking...";
-			clif_displaymessage(sd->fd, buf.c_str());
-			buf.clear();
+			sprintf( atcmd_output, msg_txt( sd, 1537 ), skill_db.find( sd->scd[i]->skill_id )->name ); // Found skill '%s', unblocking...
+			clif_displaymessage( sd->fd, atcmd_output );
 
 			if (battle_config.display_status_timers)
 				clif_skill_cooldown( *sd, sd->scd[i]->skill_id, 0 );
@@ -1170,23 +1168,28 @@ ACMD_FUNC(resetcooltime)
 		}
 	}
 
-	if(sd->hd)
-	{
-		if(hom_is_active(sd->hd))
-		{
-			for (int i = 0; i < sd->hd->blockskill.size(); i++) {
-				if( sd->hd->blockskill[i] > 0 ) {
-					std::string buf = "Found skill '" + std::string(skill_db.find(sd->hd->blockskill[i])->name) + "', unblocking...";
-					clif_displaymessage(sd->fd, buf.c_str());
-					buf.clear();
+	if( sd->hd != nullptr && hom_is_active( sd->hd ) ){
+		for( const uint16& skill_id : sd->hd->blockskill ){
+			sprintf( atcmd_output, msg_txt( sd, 1537 ), skill_db.find( skill_id )->name ); // Found skill '%s', unblocking...
+			clif_displaymessage( sd->fd, atcmd_output );
 
-					if (battle_config.display_status_timers)
-						clif_skill_cooldown( *sd, sd->hd->blockskill[i], 0 );
-
-					sd->hd->blockskill.erase(sd->hd->blockskill.begin()+i);
-				}
-			}
+			if (battle_config.display_status_timers)
+				clif_skill_cooldown( *sd, skill_id, 0 );
 		}
+
+		sd->hd->blockskill.clear();
+	}
+
+	if( sd->md != nullptr ){
+		for( const uint16& skill_id : sd->md->blockskill ){
+			sprintf( atcmd_output, msg_txt( sd, 1537 ), skill_db.find( skill_id )->name ); // Found skill '%s', unblocking...
+			clif_displaymessage( sd->fd, atcmd_output );
+
+			if (battle_config.display_status_timers)
+				clif_skill_cooldown( *sd, skill_id, 0 );
+		}
+
+		sd->md->blockskill.clear();
 	}
 
 	return 0;

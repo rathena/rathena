@@ -1951,10 +1951,8 @@
 	parseable_packet( HEADER_CZ_REQ_RANDOM_COMBINE_ITEM, -1, clif_parse_laphine_synthesis, 0 );
 #endif
 
-// 2016-06-22aRagexeRE
-#if PACKETVER >= 20160622
-	packet(0x0A84,94);
-	parseable_packet(0x0a88,2,clif_parse_GMCooldownReset,0);
+#if PACKETVER_MAIN_NUM >= 20160622 || PACKETVER_RE_NUM >= 20160622 || defined(PACKETVER_ZERO)
+	parseable_packet( HEADER_CZ_CMD_RESETCOOLTIME, sizeof( PACKET_CZ_CMD_RESETCOOLTIME ), clif_parse_gm_resetcooltime, 0 );
 #endif
 
 // 2016-10-12aRagexeRE
