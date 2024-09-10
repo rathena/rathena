@@ -60,7 +60,6 @@
 	packet( useItemAckType, sizeof( struct PACKET_ZC_USE_ITEM_ACK ) );
 	parseable_packet(0x00a9,6,clif_parse_EquipItem,2,4);
 	parseable_packet(0x00ab,4,clif_parse_UnequipItem,2);
-	packet(0x00ac,7);
 	packet(0x00ae,-1);
 	parseable_packet(0x00b2,3,clif_parse_Restart,2);
 	parseable_packet(0x00b8,7,clif_parse_NpcSelectMenu,2,6);

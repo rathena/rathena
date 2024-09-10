@@ -873,7 +873,7 @@ struct PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK{
 	uint16 packetType;
 	uint16 index;
 	uint16 wearLocation;
-	uint8 flag;
+	bool flag;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_REQ_TAKEOFF_EQUIP_ACK, 0xac)
 #endif
