@@ -4332,7 +4332,7 @@ ACMD_FUNC(reload) {
 		clif_displaymessage(fd, msg_txt(sd, 830)); // Barter database has been reloaded.
 	} else if (strstr(command, "logconf") || strncmp(message, "logconf", 3) == 0) {
 		log_config_read(LOG_CONF_NAME);
-		clif_displaymessage(fd, msg_txt(sd,1536)); // Log configuration has been reloaded
+		clif_displaymessage(fd, msg_txt(sd,1536)); // Log configuration has been reloaded.
 	}
 
 	return 0;
