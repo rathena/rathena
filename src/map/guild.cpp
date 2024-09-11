@@ -541,11 +541,11 @@ std::shared_ptr<MapGuild> guild_searchname(const char* str) {
 std::shared_ptr<MapGuild> guild_searchnameid(const char *str) {
 	if (!str)
 		return nullptr;
-	
+
 	auto g = guild_searchname(str);
 	if (g)
 		return g;
-	
+
 	return guild_search(atoi(str));
 }
 
@@ -594,7 +594,7 @@ int guild_getposition(const map_session_data& sd) {
 
 	if (!sd.guild)
 		return -1;
-	
+
 	const auto &g = sd.guild->guild;
 
 	ARR_FIND( 0, g.max_member, i, g.member[i].account_id == sd.status.account_id && g.member[i].char_id == sd.status.char_id );
@@ -1924,7 +1924,7 @@ int guild_reply_reqalliance(map_session_data *sd,uint32 account_id,int flag) {
 			clif_guild_allianceack(tsd,3);
 			return 0;
 		}
-		if (!g || guild_get_alliance_count(tg->guild,0) >= battle_config.max_guild_alliance) {
+		if (!tg || guild_get_alliance_count(tg->guild,0) >= battle_config.max_guild_alliance) {
 			clif_guild_allianceack(sd,3);
 			clif_guild_allianceack(tsd,4);
 			return 0;
@@ -2192,7 +2192,7 @@ bool guild_gm_change( int guild_id, uint32 char_id, bool showMessage ){
 	int i;
 
 	ARR_FIND( 0, MAX_GUILD, i, g->guild.member[i].char_id == char_id );
-	
+
 	if( i == MAX_GUILD ){
 		// Not part of the guild
 		return false;

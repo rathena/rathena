@@ -42,7 +42,6 @@
 	parseable_packet(0x008c,-1,clif_parse_GlobalMessage,2,4);
 	packet(0x008d,-1);
 	packet(0x008e,-1);
-	//packet(0x008f,-1);
 	parseable_packet(0x0090,7,clif_parse_NpcClicked,2,6);
 	packet(0x0093,2);
 	parseable_packet(0x0094,6,clif_parse_GetCharNameRequest,2);
@@ -64,7 +63,6 @@
 	parseable_packet(0x00a9,6,clif_parse_EquipItem,2,4);
 	parseable_packet(0x00ab,4,clif_parse_UnequipItem,2);
 	packet(0x00ac,7);
-	//packet(0x00ad,-1);
 	packet(0x00ae,-1);
 	parseable_packet(0x00b2,3,clif_parse_Restart,2);
 	parseable_packet(0x00b8,7,clif_parse_NpcSelectMenu,2,6);
@@ -219,7 +217,6 @@
 	parseable_packet(0x0183,10,clif_parse_GuildDelAlliance,2,6);
 	packet(0x0184,10);
 	packet(0x0185,34);
-	//packet(0x0186,-1);
 	packet(0x0187,6);
 	parseable_packet(0x018a,4,clif_parse_QuitGame,2);
 	packet(0x018b,4);
@@ -274,7 +271,6 @@
 	packet(0x01c6,4);
 	packet(0x01c7,2);
 	packet(0x01c9,97);
-	//packet(0x01ca,-1);
 	packet(0x01cb,9);
 	packet(0x01cc,9);
 	parseable_packet(0x01ce,6,clif_parse_AutoSpell,2);
@@ -330,8 +326,6 @@
 	parseable_packet(0x0208,11,clif_parse_FriendsListReply,2,6,10);
 	packet(0x0209,36);
 	packet(0x020a,10);
-	//packet(0x020b,-1);
-	//packet(0x020c,-1);
 	packet(0x020d,-1);
 	packet(0x8b3,-1);
 
@@ -1027,7 +1021,6 @@
 
 // 2007-11-20aSakexe
 #if PACKETVER >= 20071120
-	//packet(0x01df,10 <- ???);
 	packet(0x02e2,14);
 	packet(0x02e3,25);
 	packet(0x02e4,8);
@@ -1315,15 +1308,12 @@
 
 // 2008-11-12aRagexeRE
 #if PACKETVER >= 20081112
-	//packet(0x043e,-1);
 	packet(0x043f,8);
 #endif
 
 // 2008-12-17aRagexeRE
 #if PACKETVER >= 20081217
 	packet(0x01a2,37);
-	//packet(0x0441,4);
-	//packet(0x0443,8);
 #endif
 
 // 2008-12-17bRagexeRE
@@ -1334,39 +1324,10 @@
 // 2009-01-21aRagexeRE
 #if PACKETVER >= 20090121
 	packet(0x043f,25);
-	//packet(0x0444,-1);
-	//packet(0x0445,10);
-#endif
-
-// 2009-02-18aRagexeRE
-#if PACKETVER >= 20090218
-	//packet(0x0446,14);
-#endif
-
-// 2009-02-26cRagexeRE
-#if PACKETVER >= 20090226
-	//packet(0x0448,-1);
-#endif
-
-// 2009-04-01aRagexeRE
-#if PACKETVER >= 20090401
-	//packet(0x0449,4);
-#endif
-
-// 2009-05-14aRagexeRE
-#if PACKETVER >= 20090514
-	//packet(0x044b,2);
 #endif
 
 // 2009-05-20aRagexeRE
 #if PACKETVER >= 20090520
-	//packet(0x07d0,6);
-	//packet(0x07d1,2);
-	//packet(0x07d2,-1);
-	//packet(0x07d3,4);
-	//packet(0x07d4,4);
-	//packet(0x07d5,4);
-	//packet(0x07d6,4);
 	parseable_packet( 0x0447, 2, clif_parse_blocking_playcancel, 0 );
 #endif
 
@@ -1378,29 +1339,9 @@
 	parseable_packet(0x07da,6,clif_parse_PartyChangeLeader,2);
 #endif
 
-// 2009-06-10aRagexeRE
-#if PACKETVER >= 20090610
-	//packet(0x07db,8);
-#endif
-
 // 2009-06-17aRagexeRE
 #if PACKETVER >= 20090617
 	packet(0x07d9,268);
-	//packet(0x07dc,6);
-	//packet(0x07dd,54);
-	//packet(0x07de,30);
-	//packet(0x07df,54);
-#endif
-
-// 2009-07-01aRagexeRE
-#if PACKETVER >= 20090701
-	//packet(0x0275,37);
-	//packet(0x0276,-1);
-#endif
-
-// 2009-07-08aRagexeRE
-#if PACKETVER >= 20090708
-	//packet(0x07e0,58);
 #endif
 
 // 2009-07-15aRagexeRE
@@ -1422,7 +1363,6 @@
 
 // 2009-08-25aRagexeRE
 #if PACKETVER >= 20090825
-	//packet(0x07e6,28);
 	packet(0x07e7,5);
 #endif
 
@@ -1433,30 +1373,6 @@
 	packet(0x07e7,32);
 	packet(0x07e8,-1);
 	packet(0x07e9,5);
-#endif
-
-// 2009-09-29aRagexeRE
-#if PACKETVER >= 20090929
-	//packet(0x07ea,2);
-	//packet(0x07eb,-1);
-	//packet(0x07ec,6);
-	//packet(0x07ed,8);
-	//packet(0x07ee,6);
-	//packet(0x07ef,8);
-	//packet(0x07f0,4);
-	//packet(0x07f2,4);
-	//packet(0x07f3,3);
-#endif
-
-// 2009-10-06aRagexeRE
-#if PACKETVER >= 20091006
-	//packet(0x07ec,8);
-	//packet(0x07ed,10);
-	//packet(0x07f0,8);
-	//packet(0x07f1,15);
-	//packet(0x07f2,6);
-	//packet(0x07f3,4);
-	//packet(0x07f4,3);
 #endif
 
 // 2009-10-27aRagexeRE
@@ -1490,12 +1406,7 @@
 	packet(0x0804,8); // Booking System
 	packet(0x0805,-1);
 	parseable_packet(0x0806,4,clif_parse_PartyBookingDeleteReq,2); // Booking System
-	//packet(0x0807,2);
 	packet(0x0808,4); // Booking System
-	//packet(0x0809,14);
-	//packet(0x080A,50);
-	//packet(0x080B,18);
-	//packet(0x080C,6);
 #endif
 
 // 2009-12-29aRagexeRE
@@ -1514,59 +1425,20 @@
 	parseable_packet( HEADER_CZ_PC_PURCHASE_ITEMLIST_FROMMC2, -1, clif_parse_PurchaseReq2, 0 );
 #endif
 
-// 2010-01-26aRagexeRE
-#if PACKETVER >= 20100126
-	//packet(0x080C,2);
-	//packet(0x080D,3);
-#endif
-
-// 2010-02-09aRagexeRE
-#if PACKETVER >= 20100209
-	//packet(0x07F0,6);
-#endif
-
 // 2010-03-03aRagexeRE
 #if PACKETVER >= 20100303
 	packet(0x0810,3);
 	parseable_packet(0x0811,-1,clif_parse_ReqOpenBuyingStore,2,4,8,9,89);
-	//packet(0x0812,86);
-	//packet(0x0815,-1);
-	//packet(0x0817,-1);
-	//packet(0x0819,4);
 #endif
 
 // 2010-03-09aRagexeRE
 #if PACKETVER >= 20100309
-	//packet(0x0815,6);
-	//packet(0x0819,10);
-	//packet(0x081A,4);
-	//packet(0x081B,4);
-	//packet(0x081C,6);
 	packet(0x081d,22);
-#endif
-
-// 2010-03-23aRagexeRE
-#if PACKETVER >= 20100323
-	//packet(0x081F,-1);
-#endif
-
-// 2010-04-06aRagexeRE
-#if PACKETVER >= 20100406
-	//packet(0x081A,6);
 #endif
 
 // 2010-04-13aRagexeRE
 #if PACKETVER >= 20100413
-	//packet(0x081A,10);
 	packet(0x0820,11);
-	//packet(0x0821,2);
-	//packet(0x0822,9);
-	//packet(0x0823,-1);
-#endif
-
-// 2010-04-14dRagexeRE
-#if PACKETVER >= 20100414
-	//packet(0x081B,8);
 #endif
 
 // 2010-04-20aRagexeRE
@@ -1588,44 +1460,10 @@
 	parseable_packet( HEADER_CZ_SSILIST_ITEM_CLICK, sizeof( struct PACKET_CZ_SSILIST_ITEM_CLICK ), clif_parse_SearchStoreInfoListItemClick, 0 );
 #endif
 
-// 2010-06-15aRagexeRE
-#if PACKETVER >= 20100615
-	//packet(0x083E,26);
-#endif
-
-// 2010-06-22aRagexeRE
-#if PACKETVER >= 20100622
-	//packet(0x083F,22);
-#endif
-
-// 2010-06-29aRagexeRE
-#if PACKETVER >= 20100629
-	//packet(0x07F1,18);
-	//packet(0x07F2,8);
-	//packet(0x07F3,6);
-#endif
-
 // 2010-07-06aRagexeRE
 #if PACKETVER_MAIN_NUM >= 20100817 || PACKETVER_RE_NUM >= 20100706 || defined(PACKETVER_ZERO)
 	parseable_packet(0x0835, -1, clif_parse_SearchStoreInfo, 2, 4, 5, 9, 13, 14, 15);
 	packet(HEADER_ZC_SEARCH_STORE_INFO_ACK, -1);
-#endif
-
-// 2010-07-13aRagexeRE
-#if PACKETVER >= 20100713
-	//packet(0x0827,6);
-	//packet(0x0828,14);
-	//packet(0x0829,6);
-	//packet(0x082A,10);
-	//packet(0x082B,6);
-	//packet(0x082C,14);
-	//packet(0x0840,-1);
-	//packet(0x0841,19);
-#endif
-
-// 2010-07-14aRagexeRE
-#if PACKETVER >= 20100714
-	//packet(0x0841,4);
 #endif
 
 // 2010-08-03aRagexeRE

@@ -7678,6 +7678,10 @@ static defType status_calc_def(struct block_list *bl, status_change *sc, int def
 
 	if(sc->getSCE(SC_BERSERK))
 		return 0;
+#ifdef RENEWAL
+	if(sc->getSCE(SC_ETERNALCHAOS))
+		return 0;
+#endif
 	if(sc->getSCE(SC_BARRIER))
 		return 100;
 	if(sc->getSCE(SC_KEEPING))
