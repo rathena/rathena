@@ -168,7 +168,8 @@ int chat_joinchat(map_session_data* sd, int chatid, const char* pass)
 
 	pc_setchatid(sd,cd->bl.id);
 
-	clif_joinchatok(sd, cd); //To the person who newly joined the list of all
+	// To the person who newly joined the chat
+	clif_joinchatok(*sd, *cd);
 	clif_addchat(cd, sd); //Reports To the person who already in the chat
 	clif_dispchat(cd, 0); //Reported number of changes to the people around
 

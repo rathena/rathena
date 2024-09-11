@@ -1900,8 +1900,8 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			}
 		}
 
-		if ((sce = sc->getSCE(SC_BLOODLUST)) && flag&BF_WEAPON && damage > 0 && rnd()%100 < sce->val3)
-			status_heal(src, damage * sce->val4 / 100, 0, 3);
+		if ((sce = sc->getSCE(SC_BLOODLUST)) && flag & BF_WEAPON && damage > 0 && rnd_chance(sce->val3, 100))
+			status_heal(src, damage * sce->val4 / 100, 0, 1);
 
 		if ((sce = sc->getSCE(SC_BLOODSUCKER)) && flag & BF_WEAPON && damage > 0 && rnd() % 100 < (2 * sce->val1 - 1))
 			status_heal(src, damage * sce->val1 / 100, 0, 3);
