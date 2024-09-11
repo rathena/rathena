@@ -14860,8 +14860,8 @@ int skill_castend_map (map_session_data *sd, uint16 skill_id, const char *mapnam
 
 #if PACKETVER_MAIN_NUM >= 20170502 || PACKETVER_RE_NUM >= 20170419 || defined(PACKETVER_ZERO)
 			// check if the chosen map exists in the memo list
-			int ext_size = lv + static_cast<int>(pc_readreg2(sd, EXT_MEMO_VAR));
-			if(ext_size > MAX_MEMOPOINTS+1) ext_size = 1 + MAX_MEMOPOINTS; // crash prevention
+			size_t ext_size = static_cast<size_t>(lv + pc_readreg2(sd, EXT_MEMO_VAR));
+			if(ext_size > ARRAYSIZE(p)) ext_size = ARRAYSIZE(p); // crash prevention
 			ARR_FIND( 0, ext_size, i, strncmp( p[i]->map, mapname, sizeof( p[i]->map ) ) == 0 );
 			if( i < ext_size ) {
 				x=p[i]->x;
