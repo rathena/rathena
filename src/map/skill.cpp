@@ -14041,7 +14041,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			/* This part depends of aproval of new warplist packet PRN: 8600
 #if PACKETVER_MAIN_NUM >= 20170502 || PACKETVER_RE_NUM >= 20170419 || defined(PACKETVER_ZERO)
 
-						int extended_memo = pc_readreg2(sd,EXT_MEMO_VAR);
+						int64 extended_memo = pc_readreg2(sd,EXT_MEMO_VAR);
 						if (extended_memo >= 1){
 							maps.push_back(sd->status.memo_point[3].map);
 
@@ -14817,7 +14817,7 @@ int skill_castend_map (map_session_data *sd, uint16 skill_id, const char *mapnam
 
 	case AL_WARP:
 		if( sd != nullptr ){
-			const struct s_point_str *p[4];
+			const struct s_point_str *p[MAX_MEMOPOINTS+1];
 			std::shared_ptr<s_skill_unit_group> group;
 			int i, lv, wx, wy;
 			int maxcount=0;
@@ -14835,6 +14835,12 @@ int skill_castend_map (map_session_data *sd, uint16 skill_id, const char *mapnam
 			p[2] = &sd->status.memo_point[1];
 			p[3] = &sd->status.memo_point[2];
 
+#if PACKETVER_MAIN_NUM >= 20170502 || PACKETVER_RE_NUM >= 20170419 || defined(PACKETVER_ZERO)
+			p[4] = &sd->status.memo_point[3];
+			p[5] = &sd->status.memo_point[4];
+			p[6] = &sd->status.memo_point[5];
+#endif
+
 			if((maxcount = skill_get_maxcount(skill_id, sd->menuskill_val)) > 0) {
 				unit_skillunit_maxcount(sd->ud, skill_id, maxcount);
 
@@ -14851,6 +14857,11 @@ int skill_castend_map (map_session_data *sd, uint16 skill_id, const char *mapnam
 
 			if( lv <= 0 ) return 0;
 			if( lv > 4 ) lv = 4; // crash prevention
+
+#if PACKETVER_MAIN_NUM >= 20170502 || PACKETVER_RE_NUM >= 20170419 || defined(PACKETVER_ZERO)
+			lv += static_cast<int>(pc_readreg2(sd, EXT_MEMO_VAR));
+			if(lv > MAX_MEMOPOINTS+1) lv = MAX_MEMOPOINTS+1;
+#endif
 
 			// check if the chosen map exists in the memo list
 			ARR_FIND( 0, lv, i, strncmp( p[i]->map, mapname, sizeof( p[i]->map ) ) == 0 );

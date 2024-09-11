@@ -17,6 +17,16 @@ prontera,225,330,4	script	Missionary Rosetta	4_F_SISTER,{
 	if((Class != JOB_CARDINAL && Class != JOB_INQUISITOR) || getskilllv(27) < 4)
 		end;
 
+	if(EXT_MEMO_SLOTS == 0)
+	{
+		for(.@i=16587;.@i<=16600;.@i++)
+		{ // it prevent's to player be stucked in any quest step after reset and force restart
+			if(isbegin_quest(.@i)==1)
+				erasequest(.@i);			
+		}
+		if(finished_memo_step)
+			finished_memo_step = 0;
+	}
 
 	if(isbegin_quest(16587) == 1){ // Umbala Missionary Work
 		mes .npc_name$;
@@ -24,6 +34,7 @@ prontera,225,330,4	script	Missionary Rosetta	4_F_SISTER,{
 		mes "Have you finished the task and returned?";
 		next;
 		clear;
+		mes .npc_name$;
 		mes "<NAVI>[Sister Tita]<INFO>umbala,123,138,0,000,0</INFO></NAVI> is dedicated to the missionary work.";
 		mes "However, I've heard that she has recently encountered some significant troubles.";
 		close;
@@ -35,6 +46,7 @@ prontera,225,330,4	script	Missionary Rosetta	4_F_SISTER,{
 		mes "Have you finished the task and returned?";
 		next;
 		clear;
+		mes .npc_name$;
 		mes "<NAVI>[Brother Suan]<INFO>einbroch,178,148,0,000,0</INFO></NAVI> seemed extremely busy, hardly having a moment to breathe.";
 		mes "It would be great if you could lend him a hand.";
 		close;
@@ -94,7 +106,7 @@ prontera,225,330,4	script	Missionary Rosetta	4_F_SISTER,{
 		mes .npc_name$;
 		mes "Then, please go to <NAVI>[Einbroch]<INFO>einbroch,178,148,0,000,0</INFO></NAVI> and listen to Brother Suan's situation. ";
 		mes "I will pray that everything goes smoothly and that you can spread the name of Odin in this world.";
-		force_memo("einbroch",178,148,3);
+		force_memo("einbroch",174,144,3);
 		changequest(16597,16588); // Return to the Cathedral of Prontera -> Einbroch Missionary Work
 		finished_memo_step = 1;
 		close;
@@ -227,7 +239,7 @@ prontera,225,330,4	script	Missionary Rosetta	4_F_SISTER,{
 			close2;
 			EXT_MEMO_SLOTS = 1;
 			setquest 16588; // Einbroch Missionary Work
-			warp "einbroch",178,145;
+			warp "einbroch",174,144;
 		}
 	}
 
@@ -249,8 +261,7 @@ prontera,225,330,4	script	Missionary Rosetta	4_F_SISTER,{
 		mes "Have you come to participate in the missionary work?";
 		mes "I always express my deep gratitude and respect to you, brother, for eagerly joining in the work of the cathedral.";
 		next;
-		.@continue = select("I'll participate:I won't participate");
-		if(.@continue != 1)
+		if(select("I'll participate:I won't participate") != 1)
 			end;
 		clear;
 		mes .npc_name$;
@@ -345,14 +356,13 @@ umbala,127,140,4	script	Tita	1_F_PRIEST,{
 		mes "I have to go to save it, but the Umbala people are telling me it's dangerous.";
 		mes "I don't know if it's an adventurer, but the average person is not even allowed to enter Niflheim.";
 		next;
-		.@continue = select("I say I'm an adventurer.:I say I'll help you as a priest.");
-		clear;
-		if(.@continue == 2){
+		if(select("I say I'm an adventurer.:I say I'll help you as a priest.") == 2){
+			clear;
 			mes .npc_name$;
 			mes "What? Are you here to help as a priest?";
 			next;
-			clear;
 		}
+		clear;
 		mes .npc_name$;
 		mes "A priest and an adventurer? Oh my god. ";
 		mes "Odin sent you talent in a timely manner!";
@@ -620,7 +630,7 @@ ein_dun03,148,221,6	script	Las	-1,5,5,{
 	mes .npc_name$;
 	mes "I was hiding here, keeping watch, and came in secretly because it looked interesting.";
 	mes "But I don't know how to get out.";
-	mes	"I want to leave.";
+	mes "I want to leave.";
 	next;
 	clear;
 	mes .npc_name$;
@@ -752,3 +762,4 @@ OnTouch:
 		cloakonnpcself(strnpcinfo(3));
 end;
 }
+

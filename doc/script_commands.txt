@@ -11535,3 +11535,10 @@ Set position for NPC dialog in pixels.
 Set position for NPC dialog in screen size percent.
 
 ---------------------------------------
+
+*force_memo("<mapname>", <x>, <y>, <memoslot>)
+
+Force memo slot to remember a map without being on the map. (used on AL_WARP memo quests)
+
+---------------------------------------
+
