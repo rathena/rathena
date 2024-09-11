@@ -1956,8 +1956,9 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl, uint
 		sc_start(src,bl, SC_SILENCE, 5 * skill_lv + (status_get_dex(src) + status_get_lv(src)) / 10, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
 	case SR_EARTHSHAKER:
+		if (dstmd != nullptr && dstmd->guardian_data == nullptr)    // Target is a mob (boss included) and not a guardian type. [Atemo]
+			sc_start(src, bl, SC_EARTHSHAKER, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
 		sc_start(src,bl,SC_STUN, 25 + 5 * skill_lv,skill_lv,skill_get_time(skill_id,skill_lv));
-		sc_start(src, bl, SC_EARTHSHAKER, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
 		status_change_end(bl, SC_SV_ROOTTWIST);
 		break;
 	case SO_EARTHGRAVE:
@@ -8236,8 +8237,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 	case HLIF_AVOID:
 	case HAMI_DEFENCE:
-		sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)); // Master
-		clif_skill_nodamage(src,src,skill_id,skill_lv,sc_start(src,src,type,100,skill_lv,skill_get_time(skill_id,skill_lv))); // Homunc
+		// Master
+		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		// Homunculus
+		clif_skill_nodamage(src, src, skill_id, skill_lv, sc_start(src, src, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
 		break;
 	case NJ_BUNSINJYUTSU:
 		status_change_end(bl, SC_BUNSINJYUTSU); // on official recasting cancels existing mirror image [helvetica]
@@ -9686,7 +9689,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if(blew_count > 0)
 				clif_blown(src); // Always blow, otherwise it shows a casting animation. [Lemongrass]
 #else
-			clif_slide(bl, bl->x, bl->y); //Show the casting animation on pre-re
+			clif_slide(*bl, bl->x, bl->y); //Show the casting animation on pre-re
 #endif
 		}
 		break;
@@ -10670,23 +10673,26 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case HAMI_CASTLE:	//[orn]
 		if (src != bl && rnd_chance(20 * skill_lv, 100)) {
-			int x = src->x, y = src->y;
+			// Get one of the monsters targeting the player and set the homunculus as its new target
+			if (block_list* tbl = battle_getenemy(bl, BL_MOB, AREA_SIZE); tbl != nullptr) {
+				if (unit_data* ud = unit_bl2ud(tbl); ud != nullptr)
+					unit_changetarget_sub(*ud, *src);
+			}
 
-			// Move source
-			if (unit_movepos(src,bl->x,bl->y,0,0)) {
-				clif_skill_nodamage(src,src,skill_id,skill_lv,1); // Homunc
+			int16 x = src->x, y = src->y;
+			// Move homunculus
+			if (unit_movepos(src, bl->x, bl->y, 0, false)) {
 				clif_blown(src);
-				// Move target
-				if (unit_movepos(bl,x,y,0,0)) {
-					clif_skill_nodamage(bl,bl,skill_id,skill_lv,1);
+				// Move player
+				if (unit_movepos(bl, x, y, 0, false))
 					clif_blown(bl);
-				}
-				map_foreachinallrange(unit_changetarget,src,AREA_SIZE,BL_MOB,bl,src);
+				// Show the animation on the homunculus only
+				clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
 			}
 		}
-		else if (hd && hd->master) // Failed
+		else if (hd != nullptr && hd->master != nullptr)
 			clif_skill_fail( *hd->master, skill_id );
-		else if (sd)
+		else if (sd != nullptr)
 			clif_skill_fail( *sd, skill_id );
 		break;
 	case HVAN_CHAOTIC:	//[orn]
@@ -16030,6 +16036,8 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 		case UNT_SOLIDTRAP:
 		case UNT_SWIFTTRAP:
 		case UNT_FLAMETRAP:
+		case UNT_GROUND_GRAVITATION:
+		case UNT_JACK_FROST_NOVA:
 			skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 			break;
 
