@@ -32,6 +32,12 @@
 	#pragma pack( push, 1 )
 #endif
 
+struct PACKET_ZC_USER_COUNT{
+	uint16 packetType;
+	int32 playersCount;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_USER_COUNT, 0xc2)
+
 struct PACKET_ZC_PC_PURCHASE_RESULT{
 	int16 packetType;
 	uint8 result;
@@ -629,6 +635,14 @@ struct PACKET_ZC_NOTIFY_PLAYERMOVE {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_NOTIFY_PLAYERMOVE, 0x87);
 
+struct PACKET_ZC_CHANGE_DIRECTION{
+	int16 packetType;
+	uint32 srcId;
+	uint16 headDir;
+	uint8 dir;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_CHANGE_DIRECTION, 0x9c)
+
 struct PACKET_ZC_NPCACK_MAPMOVE {
 	int16 packetType;
 	char mapName[MAP_NAME_LENGTH_EXT];
@@ -927,6 +941,19 @@ struct PACKET_ZC_REFUSE_ENTER_ROOM {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_REFUSE_ENTER_ROOM, 0xda);
 
+struct PACKET_ZC_ENTER_ROOM_sub{
+	uint32 flag;
+	char name[NAME_LENGTH];
+} __attribute__((packed));
+
+struct PACKET_ZC_ENTER_ROOM{
+	uint16 packetType;
+	uint16 packetSize;
+	uint32 chatId;
+	PACKET_ZC_ENTER_ROOM_sub members[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ENTER_ROOM, 0xdb);
+
 struct PACKET_ZC_NPC_SHOWEFST_UPDATE {
 	int16 packetType;
 	uint32 gid;
@@ -1016,6 +1043,14 @@ struct PACKET_ZC_SKILL_UPDATE {
 	uint32 GID;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_SKILL_UPDATE, 0x1ac);
+
+struct PACKET_ZC_HIGHJUMP{
+	uint16 packetType;
+	uint32 srcId;
+	uint16 x;
+	uint16 y;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_HIGHJUMP, 0x01ff);
 
 #if PACKETVER >= 20141022
 struct PACKET_ZC_RECOVERY {
@@ -1195,6 +1230,51 @@ struct PACKET_ZC_EL_PAR_CHANGE {
 	uint32 value;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_EL_PAR_CHANGE, 0x81e);
+
+#if PACKETVER >= 20131223
+struct PACKET_ZC_NOTIFY_ACT{
+	int16 packetType;
+	int32 srcID;
+	int32 targetID;
+	int32 serverTick;
+	int32 srcSpeed;
+	int32 dmgSpeed;
+	int32 damage;
+	int8 isSPDamage;
+	uint16 div;
+	uint8 type;
+	int32 damage2;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_NOTIFY_ACT, 0x8c8);
+#elif PACKETVER >= 20071113
+struct PACKET_ZC_NOTIFY_ACT{
+	int16 packetType;
+	int32 srcID;
+	int32 targetID;
+	int32 serverTick;
+	int32 srcSpeed;
+	int32 dmgSpeed;
+	int32 damage;
+	uint16 div;
+	uint8 type;
+	int32 damage2;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_NOTIFY_ACT, 0x2e1);
+#else
+struct PACKET_ZC_NOTIFY_ACT{
+	int16 packetType;
+	int32 srcID;
+	int32 targetID;
+	int32 serverTick;
+	int32 srcSpeed;
+	int32 dmgSpeed;
+	int16 damage;
+	uint16 div;
+	uint8 type;
+	int16 damage2;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_NOTIFY_ACT, 0x8a);
+#endif
 
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
