@@ -43106,7 +43106,6 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-    Hit: Single
     AfterCastWalkDelay: 1000
     Cooldown: 1000
     Requires:
@@ -43118,7 +43117,6 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-    Hit: Single
     AfterCastWalkDelay: 1000
     Duration1:
       - Level: 1
@@ -43149,8 +43147,6 @@ Body:
     Name: HAMI_SKIN
     Description: Adamantium Skin
     MaxLevel: 5
-    DamageFlags:
-      NoDamage: true
   - Id: 8008
     Name: HAMI_BLOODLUST
     Description: Bloodlust
@@ -43158,7 +43154,6 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-    Hit: Single
     AfterCastWalkDelay: 1000
     Duration1:
       - Level: 1

@@ -6686,10 +6686,8 @@ static unsigned short status_calc_vit(struct block_list *bl, status_change *sc, 
 		vit -= vit * sc->getSCE(SC_STRIPARMOR)->val2/100;
 	if(sc->getSCE(SC_FULL_THROTTLE))
 		vit += vit * sc->getSCE(SC_FULL_THROTTLE)->val3 / 100;
-#ifdef RENEWAL
-	if(sc->getSCE(SC_DEFENCE))
+	if(bl->type == BL_PC && sc->getSCE(SC_DEFENCE))
 		vit += sc->getSCE(SC_DEFENCE)->val2;
-#endif
 	if(sc->getSCE(SC_CHEERUP))
 		vit += 3;
 	if(sc->getSCE(SC_GLASTHEIM_STATE))
@@ -7685,6 +7683,10 @@ static defType status_calc_def(struct block_list *bl, status_change *sc, int def
 
 	if(sc->getSCE(SC_BERSERK))
 		return 0;
+#ifdef RENEWAL
+	if(sc->getSCE(SC_ETERNALCHAOS))
+		return 0;
+#endif
 	if(sc->getSCE(SC_BARRIER))
 		return 100;
 	if(sc->getSCE(SC_KEEPING))
@@ -7707,10 +7709,9 @@ static defType status_calc_def(struct block_list *bl, status_change *sc, int def
 #ifdef RENEWAL
 	if (sc->getSCE(SC_ASSUMPTIO))
 		def += sc->getSCE(SC_ASSUMPTIO)->val1 * 50;
-#else
-	if(sc->getSCE(SC_DEFENCE))
-		def += sc->getSCE(SC_DEFENCE)->val2;
 #endif
+	if (bl->type == BL_HOM && sc->getSCE(SC_DEFENCE))
+		def += sc->getSCE(SC_DEFENCE)->val2;
 	if(sc->getSCE(SC_INCDEFRATE))
 		def += def * sc->getSCE(SC_INCDEFRATE)->val1/100;
 	if(sc->getSCE(SC_EARTH_INSIGNIA) && sc->getSCE(SC_EARTH_INSIGNIA)->val1 == 2)
@@ -11173,7 +11174,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			if (sd) {
 				pc_setsit(sd);
 				skill_sit(sd, true);
-				clif_sitting(&sd->bl);
+				clif_sitting(sd->bl);
 			}
 			val2 = 12; // SP cost
 			tick_time = 10000; // Decrease at 10secs intervals.
@@ -11506,16 +11507,21 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				val2 = 10 * val1;
 			break;
 		case SC_DEFENCE:
+			// Vit bonus for players / Def bonus for homunculus
 #ifdef RENEWAL
-			val2 = 5 + (val1 * 5); // Vit bonus
+			val2 = 5 + (5 * val1);
 #else
-			val2 = 2*val1; // Def bonus
+			val2 = 2 * val1;
 #endif
 			break;
 		case SC_BLOODLUST:
-			val2 = 20+10*val1; // Atk rate change.
-			val3 = 3*val1; // Leech chance
-			val4 = 20; // Leech percent
+			// Atk rate change
+			val2 = 20 + (10 * val1);
+			// Leech chance
+			// It's actually 9 * level on both pre-re and renewal, despite the description
+			val3 = 9 * val1;
+			// Leech percent
+			val4 = 20;
 			break;
 		case SC_FLEET:
 			val2 = 30*val1; // Aspd change
@@ -11952,7 +11958,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			if( sd && !pc_issit(sd) ) {
 				pc_setsit(sd);
 				skill_sit(sd, true);
-				clif_sitting(bl);
+				clif_sitting(*bl);
 			}
 			break;
 		case SC_DANCEWITHWUG:
@@ -13637,7 +13643,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 				struct block_list* src = map_id2bl(sce->val2);
 				if( tid == -1 || !src)
 					break; // Terminated by Damage
-				status_fix_damage(src,bl,400*sce->val1,clif_damage(bl,bl,gettick(),0,0,400*sce->val1,0,DMG_NORMAL,0,false),WL_WHITEIMPRISON);
+				status_fix_damage(src,bl,400*sce->val1,clif_damage(*bl,*bl,gettick(),0,0,400*sce->val1,0,DMG_NORMAL,0,false),WL_WHITEIMPRISON);
 			}
 			break;
 		case SC_WUGDASH:
@@ -13710,7 +13716,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			break;
 
 		case SC_GRAVITYCONTROL:
-			status_fix_damage(bl, bl, sce->val2, clif_damage(bl, bl, gettick(), 0, 0, sce->val2, 0, DMG_NORMAL, 0, false), 0);
+			status_fix_damage(bl, bl, sce->val2, clif_damage(*bl, *bl, gettick(), 0, 0, sce->val2, 0, DMG_NORMAL, 0, false), 0);
 			clif_specialeffect(bl, 223, AREA);
 			clif_specialeffect(bl, 330, AREA);
 			break;
@@ -14064,7 +14070,7 @@ TIMER_FUNC(status_change_timer){
 			int64 damage = 1000 + (3 * status->max_hp) / 100; // Deals fixed (1000 + 3%*MaxHP)
 			map_freeblock_lock();
 			dounlock = true;
-			status_fix_damage(bl, bl, damage, clif_damage(bl, bl, tick, 0, 1, damage, 1, DMG_NORMAL, 0, false),0);
+			status_fix_damage(bl, bl, damage, clif_damage(*bl, *bl, tick, 0, 1, damage, 1, DMG_NORMAL, 0, false),0);
 		}
 		break;
 		
@@ -14073,7 +14079,7 @@ TIMER_FUNC(status_change_timer){
 			if (sce->val3 == 1) { // Target
 				map_freeblock_lock();
 				dounlock = true;
-				status_damage(bl, bl, 1, status->max_sp * 3 / 100, clif_damage(bl, bl, tick, status->amotion, status->dmotion + 500, 1, 1, DMG_NORMAL, 0, false), 0, 0);
+				status_damage(bl, bl, 1, status->max_sp * 3 / 100, clif_damage(*bl, *bl, tick, status->amotion, status->dmotion + 500, 1, 1, DMG_NORMAL, 0, false), 0, 0);
 			} else { // Caster
 				interval = 1000; // Assign here since status_get_sc_internval() contains the target interval.
 
@@ -14132,7 +14138,7 @@ TIMER_FUNC(status_change_timer){
 		if (sce->val4 >= 0) {
 			map_freeblock_lock();
 			dounlock = true;
-			status_fix_damage(bl, bl, 100, clif_damage(bl, bl, tick, status->amotion, status->dmotion + 500, 100, 1, DMG_NORMAL, 0, false),0);
+			status_fix_damage(bl, bl, 100, clif_damage(*bl, *bl, tick, status->amotion, status->dmotion + 500, 100, 1, DMG_NORMAL, 0, false),0);
 			unit_skillcastcancel(bl, 2);
 		}
 		break;
@@ -14142,7 +14148,7 @@ TIMER_FUNC(status_change_timer){
 			int64 damage = status->vit * (sce->val1 - 3) + (int)status->max_hp / 100; // {Target VIT x (New Poison Research Skill Level - 3)} + (Target HP/100)
 			map_freeblock_lock();
 			dounlock = true;
-			status_fix_damage(bl, bl, damage, clif_damage(bl, bl, tick, status->amotion, status->dmotion + 500, damage, 1, DMG_NORMAL, 0, false),0);
+			status_fix_damage(bl, bl, damage, clif_damage(*bl, *bl, tick, status->amotion, status->dmotion + 500, damage, 1, DMG_NORMAL, 0, false),0);
 			unit_skillcastcancel(bl, 2);
 		}
 		break;
@@ -14669,7 +14675,7 @@ TIMER_FUNC(status_change_timer){
 			int damage = sce->val2;
 
 			map_freeblock_lock();
-			clif_damage(bl, bl, tick, 0, 0, damage, 1, DMG_MULTI_HIT_ENDURE, 0, false);
+			clif_damage(*bl, *bl, tick, 0, 0, damage, 1, DMG_MULTI_HIT_ENDURE, 0, false);
 			status_damage(src, bl, damage,0, 0, 1, 0);
 			if( sc->getSCE(type) ) {
 				sc_timer_next(2000 + tick);
@@ -14691,7 +14697,7 @@ TIMER_FUNC(status_change_timer){
 			if( sd && !pc_issit(sd) ) { // Force to sit every 10 seconds.
 				pc_setsit(sd);
 				skill_sit(sd, true);
-				clif_sitting(bl);
+				clif_sitting(*bl);
 			}
 			sc_timer_next(10000 + tick);
 			return 0;
@@ -14788,7 +14794,7 @@ TIMER_FUNC(status_change_timer){
 				uint16 x = sce->val3 >> 16, y = sce->val3 & 0xFFFF;
 
 				if (distance_xy(x, y, bl->x, bl->y) <= skill_get_unit_range(SO_VACUUM_EXTREME, sce->val1) && unit_movepos(bl, x, y, 0, false)) {
-					clif_slide(bl, x, y);
+					clif_slide(*bl, x, y);
 					clif_fixpos( *bl );
 				}
 			}

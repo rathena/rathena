@@ -562,11 +562,11 @@ void vending_reopen( map_session_data& sd )
 		if( (fail = vending_openvending(sd, at->title, data, count, at)) == 0 ) {
 			// Make vendor look perfect
 			pc_setdir(&sd, at->dir, at->head_dir);
-			clif_changed_dir(&sd.bl, AREA_WOS);
+			clif_changed_dir(sd.bl, AREA_WOS);
 			if( at->sit ) {
 				pc_setsit(&sd);
 				skill_sit(&sd, 1);
-				clif_sitting(&sd.bl);
+				clif_sitting(sd.bl);
 			}
 
 			// Immediate save
