@@ -432,7 +432,8 @@ nif_dun01,101,246,6	script	Jhon	-1,5,5,{
 	erasequest(16589); // Banquet of the Dead, Guided by the Living 1
 	if(isbegin_quest(16589) == 0 && isbegin_quest(16590) ==  0 && isbegin_quest(16591) == 0)
 		setquest(16599); // Safe return after completing the mission
-	specialeffect EF_WARP;
+	specialeffect EF_ENTRY;
+	specialeffect EF_TELEPORTATION;
 	close2;
 	cloakonnpcself(strnpcinfo(3));
 	setnpcdisplay(strnpcinfo(0), strnpcinfo(0), HIDDEN_WARP_NPC);
@@ -467,7 +468,8 @@ nif_dun01,213,148,6	script	Maria	-1,5,5,{
 	erasequest(16590); // Banquet of the Dead, Guided by the Living 2
 	if(isbegin_quest(16589) == 0 && isbegin_quest(16590) ==  0 && isbegin_quest(16591) == 0)
 		setquest(16599); // Safe return after completing the mission
-	specialeffect EF_WARP;
+	specialeffect EF_ENTRY;
+	specialeffect EF_TELEPORTATION;
 	close2;
 	cloakonnpcself(strnpcinfo(3));
 	setnpcdisplay(strnpcinfo(0), strnpcinfo(0), HIDDEN_WARP_NPC);
@@ -504,7 +506,8 @@ nif_dun01,160,183,4	script	Blue	-1,5,5,{
 	erasequest(16591); // Banquet of the Dead, Guided by the Living 3
 	if(isbegin_quest(16589) == 0 && isbegin_quest(16590) ==  0 && isbegin_quest(16591) == 0)
 		setquest(16599); // Safe return after completing the mission
-	specialeffect EF_WARP;
+	specialeffect EF_ENTRY;
+	specialeffect EF_TELEPORTATION;
 	close2;
 	cloakonnpcself(strnpcinfo(3));
 	setnpcdisplay(strnpcinfo(0), strnpcinfo(0), HIDDEN_WARP_NPC);
@@ -644,7 +647,8 @@ ein_dun03,148,221,6	script	Las	-1,5,5,{
 	mes "Thank you!";
 	mes "Can I just go through the portal?";
 	erasequest(16593); // The Hide and Seek of the Naughty, the Restlessness of the Adults 1
-	specialeffect EF_WARP;
+	specialeffect EF_ENTRY;
+	specialeffect EF_TELEPORTATION;
 	if(isbegin_quest(16593) == 0 && isbegin_quest(16594) ==  0 && isbegin_quest(16595) == 0){
 		next;
 		clear;
@@ -693,7 +697,8 @@ ein_dun03,38,152,4	script	Minas	-1,5,5,{
 	mes "My legs are sore. I want to go home and sleep~.";
 	mes "Can I go home if I go in this?";
 	erasequest(16594); // The Hide and Seek of the Naughty, the Restlessness of the Adults 2
-	specialeffect EF_WARP;
+	specialeffect EF_ENTRY;
+	specialeffect EF_TELEPORTATION;
 	if(isbegin_quest(16593) == 0 && isbegin_quest(16594) ==  0 && isbegin_quest(16595) == 0){
 		next;
 		clear;
@@ -737,7 +742,8 @@ ein_dun03,234,20,4	script	Tiris	-1,5,5,{
 	mes "Oh no!! When have you been here?";
 	mes "You should have said something earlier!";
 	erasequest(16595); // The Hide and Seek of the Naughty, the Restlessness of the Adults 3
-	specialeffect EF_WARP;
+	specialeffect EF_ENTRY;
+	specialeffect EF_TELEPORTATION;
 	if(isbegin_quest(16593) == 0 && isbegin_quest(16594) ==  0 && isbegin_quest(16595) == 0){
 		next;
 		clear;
