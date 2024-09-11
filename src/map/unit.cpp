@@ -1132,7 +1132,7 @@ bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, boo
 
 			if( flag ) {
 				unit_movepos(pbl,sd->bl.x,sd->bl.y, 0, 0);
-				clif_slide(pbl,pbl->x,pbl->y);
+				clif_slide(*pbl,pbl->x,pbl->y);
 			}
 		}
 	}
