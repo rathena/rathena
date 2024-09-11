@@ -7022,7 +7022,9 @@ Body:
     CalcFlags:
       Regen: true
   - Status: Earthshaker
+    Icon: EFST_EARTHSHAKER
     Flags:
+      BlEffect: true
       NoWarning: true
   - Status: Weaponblock_On
     Icon: EFST_WEAPONBLOCK_ON
@@ -7037,6 +7039,7 @@ Body:
     Icon: EFST_SPORE_EXPLOSION_DEBUFF
     DurationLookup: GN_SPORE_EXPLOSION
     Flags:
+      BlEffect: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
