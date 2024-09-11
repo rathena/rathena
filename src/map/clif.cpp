@@ -4247,7 +4247,7 @@ void clif_equipitemack( map_session_data& sd, uint8 flag, int index, int pos ){
 /// 00ac <index>.W <equip location>.W <result>.B (ZC_REQ_TAKEOFF_EQUIP_ACK)
 /// 08d1 <index>.W <equip location>.W <result>.B (ZC_REQ_TAKEOFF_EQUIP_ACK2)
 /// 099a <index>.W <equip location>.L <result>.B (ZC_ACK_TAKEOFF_EQUIP_V5)
-/// @ok : //inversed for v2 v5
+/// @success : //inversed for v2 v5
 ///     0 = failure
 ///     1 = success
 void clif_unequipitemack( map_session_data& sd, uint16 server_index, int32 pos, bool success ){
