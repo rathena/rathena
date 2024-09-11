@@ -838,7 +838,7 @@ void clif_move( struct unit_data& ud ); //area
 void clif_changemap( map_session_data& sd, short m, uint16 x, uint16 y );
 void clif_changemapserver( map_session_data& sd, const char* map, uint16 x, uint16 y, uint32 ip, uint16 port );
 void clif_blown(struct block_list *bl); // area
-void clif_slide(struct block_list *bl, int x, int y); // area
+void clif_slide(block_list& bl, int x, int y); // area
 void clif_fixpos( block_list& bl );
 void clif_npcbuysell( map_session_data& sd, npc_data& nd );
 void clif_buylist( map_session_data& sd, npc_data& nd );
@@ -884,7 +884,7 @@ void clif_GlobalMessage( block_list& bl, const char* message, enum send_target t
 void clif_createchat( map_session_data& sd, e_create_chatroom flag );
 void clif_dispchat(struct chat_data* cd, int fd);	// area or fd
 void clif_joinchatfail( map_session_data& sd, e_refuse_enter_room result );
-void clif_joinchatok(map_session_data *sd,struct chat_data* cd);	// self
+void clif_joinchatok(map_session_data& sd,chat_data& cd);
 void clif_addchat(struct chat_data* cd,map_session_data *sd);	// chat
 void clif_changechatowner(struct chat_data* cd, map_session_data* sd);	// chat
 void clif_clearchat(struct chat_data *cd,int fd);	// area or fd
