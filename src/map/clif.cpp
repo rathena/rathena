@@ -2119,7 +2119,7 @@ void clif_changemapserver( map_session_data& sd, const char* map, uint16 x, uint
 /// This function combines both calls and allows to simplify the calling code
 void clif_blown(struct block_list *bl)
 {
-	clif_slide(bl, bl->x, bl->y);
+	clif_slide(*bl, bl->x, bl->y);
 	clif_fixpos( *bl );
 }
 
@@ -4558,38 +4558,42 @@ void clif_joinchatfail( map_session_data& sd, e_refuse_enter_room result ){
 /// role:
 ///     0 = owner (menu)
 ///     1 = normal
-void clif_joinchatok(map_session_data *sd,struct chat_data* cd)
-{
-	int fd;
-	int i,t;
+void clif_joinchatok(map_session_data& sd, chat_data& cd){
 
-	nullpo_retv(sd);
-	nullpo_retv(cd);
 
-	fd = sd->fd;
-	if (!session_isActive(fd))
-		return;
-	t = (int)(cd->owner->type == BL_NPC);
-	WFIFOHEAD(fd, 8 + (28*(cd->users+t)));
-	WFIFOW(fd, 0) = 0xdb;
-	WFIFOW(fd, 2) = 8 + (28*(cd->users+t));
-	WFIFOL(fd, 4) = cd->bl.id;
+	PACKET_ZC_ENTER_ROOM* p = reinterpret_cast<PACKET_ZC_ENTER_ROOM*>( packet_buffer );
 
-	if(cd->owner->type == BL_NPC){
-		WFIFOL(fd, 30) = 1;
-		WFIFOL(fd, 8) = 0;
-		safestrncpy(WFIFOCP(fd, 12), ((struct npc_data *)cd->owner)->name, NAME_LENGTH);
-		for (i = 0; i < cd->users; i++) {
-			WFIFOL(fd, 8+(i+1)*28) = 1;
-			safestrncpy(WFIFOCP(fd, 8+(i+t)*28+4), cd->usersd[i]->status.name, NAME_LENGTH);
+	p->packetType = HEADER_ZC_ENTER_ROOM;
+	p->packetSize = sizeof(*p);
+	p->chatId = cd.bl.id;
+	
+	if(cd.owner->type == BL_NPC){
+		PACKET_ZC_ENTER_ROOM_sub& owner = p->members[0];
+		owner.flag = 0;
+		safestrncpy(owner.name, reinterpret_cast<npc_data*>(cd.owner)->name, sizeof(owner.name));
+		p->packetSize += static_cast<decltype(p->packetSize)>( sizeof( owner ) );
+
+		for (size_t i = 0; i < cd.users; i++) {
+			PACKET_ZC_ENTER_ROOM_sub& member = p->members[i + 1];
+
+			member.flag = 1;
+			safestrncpy(member.name, cd.usersd[i]->status.name, sizeof(member.name));
+
+			p->packetSize += static_cast<decltype(p->packetSize)>( sizeof( member ) );
 		}
 	}else{
-		for (i = 0; i < cd->users; i++) {
-			WFIFOL(fd, 8+i*28) = (i != 0 || cd->owner->type == BL_NPC);
-			safestrncpy(WFIFOCP(fd, 8+(i+t)*28+4), cd->usersd[i]->status.name, NAME_LENGTH);
+		for (size_t i = 0; i < cd.users; i++) {
+			PACKET_ZC_ENTER_ROOM_sub& member = p->members[i];
+
+			member.flag = i > 0;
+			safestrncpy(member.name, cd.usersd[i]->status.name, sizeof(member.name));
+
+			p->packetSize += static_cast<decltype(p->packetSize)>( sizeof( member ) );
 		}
 	}
-	WFIFOSET(fd, WFIFOW(fd, 2));
+
+	clif_send(p,p->packetSize,&sd.bl,SELF);
+
 }
 
 
@@ -9770,7 +9774,7 @@ void clif_refresh(map_session_data *sd)
 	if( pc_isdead(sd) ) // When you refresh, resend the death packet.
 		clif_clearunit_single( sd->bl.id, CLR_DEAD, *sd );
 	else
-		clif_changed_dir(&sd->bl, SELF);
+		clif_changed_dir(sd->bl, SELF);
 	clif_efst_status_change_sub(&sd->bl,&sd->bl,SELF);
 
 	//Issue #2143
@@ -9975,21 +9979,20 @@ void clif_name( struct block_list* src, struct block_list *bl, send_target targe
 /// Visually moves(instant) a character to x,y. The char moves even
 /// when the target cell isn't walkable. If the char is sitting it
 /// stays that way.
-void clif_slide(struct block_list *bl, int x, int y)
-{
-	unsigned char buf[10];
-	nullpo_retv(bl);
+void clif_slide(block_list& bl, int x, int y){
 
-	WBUFW(buf, 0) = 0x01ff;
-	WBUFL(buf, 2) = bl->id;
-	WBUFW(buf, 6) = x;
-	WBUFW(buf, 8) = y;
-	clif_send(buf, packet_len(0x1ff), bl, AREA);
+	PACKET_ZC_HIGHJUMP p{};
 
-	if( disguised(bl) )
+	p.packetType = HEADER_ZC_HIGHJUMP;
+	p.srcId = bl.id;
+	p.x = x;
+	p.y = y;
+	clif_send(&p, sizeof(p), &bl, AREA);
+
+	if( disguised(&bl) )
 	{
-		WBUFL(buf,2) = disguised_bl_id(bl->id);
-		clif_send(buf, packet_len(0x1ff), bl, SELF);
+		p.srcId = disguised_bl_id(bl.id);
+		clif_send(&p, sizeof(p), &bl, SELF);
 	}
 }
 
@@ -11005,7 +11008,7 @@ void clif_parse_LoadEndAck(int fd,map_session_data *sd)
 	else {
 		skill_usave_trigger(sd);
 		if (battle_config.spawn_direction)
-			clif_changed_dir(&sd->bl, SELF);
+			clif_changed_dir(sd->bl, SELF);
 	}
 
 	// Trigger skill effects if you appear standing on them
@@ -11414,21 +11417,26 @@ void clif_parse_MapMove(int fd, map_session_data *sd)
 ///     5 = southeast
 ///     6 = east
 ///     7 = northeast
-void clif_changed_dir(struct block_list *bl, enum send_target target)
-{
-	unsigned char buf[64];
+void clif_changed_dir(block_list& bl, enum send_target target){
 
-	WBUFW(buf,0) = 0x9c;
-	WBUFL(buf,2) = bl->id;
-	WBUFW(buf,6) = bl->type==BL_PC?((TBL_PC*)bl)->head_dir:0;
-	WBUFB(buf,8) = unit_getdir(bl);
+	PACKET_ZC_CHANGE_DIRECTION p{};
 
-	clif_send(buf, packet_len(0x9c), bl, target);
+	p.packetType = HEADER_ZC_CHANGE_DIRECTION;
+	p.srcId = bl.id;
+	if( bl.type == BL_PC ){
+		p.headDir = reinterpret_cast<map_session_data*>(&bl)->head_dir;
+	}else{
+		p.headDir = 0;
+	}
+	p.dir = unit_getdir(&bl);
 
-	if (disguised(bl)) {
-		WBUFL(buf,2) = disguised_bl_id(bl->id);
-		WBUFW(buf,6) = 0;
-		clif_send(buf, packet_len(0x9c), bl, SELF);
+	clif_send(&p, sizeof(p), &bl, target);
+
+	if (disguised(&bl)) {
+		p.srcId = disguised_bl_id(bl.id);
+		p.headDir = 0;
+
+		clif_send(&p, sizeof(p), &bl, SELF);
 	}
 }
 
@@ -11446,7 +11454,7 @@ void clif_parse_ChangeDir(int fd, map_session_data *sd)
 	dir = RFIFOB(fd,info->pos[1]);
 	pc_setdir(sd, dir, headdir);
 
-	clif_changed_dir(&sd->bl, AREA_WOS);
+	clif_changed_dir(sd->bl, AREA_WOS);
 }
 
 
@@ -17002,7 +17010,7 @@ void clif_parse_CashShopReqTab(int fd, map_session_data *sd) {
 		p->items[p->count].itemId = client_nameid( item->nameid );
 		p->items[p->count].price = item->price;
 
-		p->packetLength += static_cast<decltype>(p->packetLength)>( sizeof( p->items[0] ) );
+		p->packetLength += static_cast<decltype(p->packetLength)>( sizeof( p->items[0] ) );
 		p->count++;
 	}
 

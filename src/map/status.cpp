@@ -6686,10 +6686,8 @@ static unsigned short status_calc_vit(struct block_list *bl, status_change *sc, 
 		vit -= vit * sc->getSCE(SC_STRIPARMOR)->val2/100;
 	if(sc->getSCE(SC_FULL_THROTTLE))
 		vit += vit * sc->getSCE(SC_FULL_THROTTLE)->val3 / 100;
-#ifdef RENEWAL
-	if(sc->getSCE(SC_DEFENCE))
+	if(bl->type == BL_PC && sc->getSCE(SC_DEFENCE))
 		vit += sc->getSCE(SC_DEFENCE)->val2;
-#endif
 	if(sc->getSCE(SC_CHEERUP))
 		vit += 3;
 	if(sc->getSCE(SC_GLASTHEIM_STATE))
@@ -7685,6 +7683,10 @@ static defType status_calc_def(struct block_list *bl, status_change *sc, int def
 
 	if(sc->getSCE(SC_BERSERK))
 		return 0;
+#ifdef RENEWAL
+	if(sc->getSCE(SC_ETERNALCHAOS))
+		return 0;
+#endif
 	if(sc->getSCE(SC_BARRIER))
 		return 100;
 	if(sc->getSCE(SC_KEEPING))
@@ -7707,10 +7709,9 @@ static defType status_calc_def(struct block_list *bl, status_change *sc, int def
 #ifdef RENEWAL
 	if (sc->getSCE(SC_ASSUMPTIO))
 		def += sc->getSCE(SC_ASSUMPTIO)->val1 * 50;
-#else
-	if(sc->getSCE(SC_DEFENCE))
-		def += sc->getSCE(SC_DEFENCE)->val2;
 #endif
+	if (bl->type == BL_HOM && sc->getSCE(SC_DEFENCE))
+		def += sc->getSCE(SC_DEFENCE)->val2;
 	if(sc->getSCE(SC_INCDEFRATE))
 		def += def * sc->getSCE(SC_INCDEFRATE)->val1/100;
 	if(sc->getSCE(SC_EARTH_INSIGNIA) && sc->getSCE(SC_EARTH_INSIGNIA)->val1 == 2)
@@ -11506,16 +11507,21 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				val2 = 10 * val1;
 			break;
 		case SC_DEFENCE:
+			// Vit bonus for players / Def bonus for homunculus
 #ifdef RENEWAL
-			val2 = 5 + (val1 * 5); // Vit bonus
+			val2 = 5 + (5 * val1);
 #else
-			val2 = 2*val1; // Def bonus
+			val2 = 2 * val1;
 #endif
 			break;
 		case SC_BLOODLUST:
-			val2 = 20+10*val1; // Atk rate change.
-			val3 = 3*val1; // Leech chance
-			val4 = 20; // Leech percent
+			// Atk rate change
+			val2 = 20 + (10 * val1);
+			// Leech chance
+			// It's actually 9 * level on both pre-re and renewal, despite the description
+			val3 = 9 * val1;
+			// Leech percent
+			val4 = 20;
 			break;
 		case SC_FLEET:
 			val2 = 30*val1; // Aspd change
@@ -14788,7 +14794,7 @@ TIMER_FUNC(status_change_timer){
 				uint16 x = sce->val3 >> 16, y = sce->val3 & 0xFFFF;
 
 				if (distance_xy(x, y, bl->x, bl->y) <= skill_get_unit_range(SO_VACUUM_EXTREME, sce->val1) && unit_movepos(bl, x, y, 0, false)) {
-					clif_slide(bl, x, y);
+					clif_slide(*bl, x, y);
 					clif_fixpos( *bl );
 				}
 			}
