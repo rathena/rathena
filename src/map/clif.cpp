@@ -5684,7 +5684,7 @@ void clif_skillinfoblock(map_session_data *sd)
 /// Adds new skill to the skill tree (ZC_ADD_SKILL).
 /// 0111 <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <skill name>.24B <upgradable>.B
 /// 0b31 <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <upgradable>.B <isnew>.B (ZC_ADD_SKILL2)
-void clif_addskill(map_session_data &sd, int skill_id){
+void clif_addskill(map_session_data &sd, uint16 skill_id){
 
 	uint16 idx = skill_get_index(skill_id);
 
@@ -5697,8 +5697,8 @@ void clif_addskill(map_session_data &sd, int skill_id){
 	PACKET_ZC_ADD_SKILL p{};
 
 	p.packetType = HEADER_ZC_ADD_SKILL;
-	p.skill.id = static_cast<decltype(p.skill.id)>(skill_id);
-	p.skill.inf = static_cast<decltype(p.skill.inf)>( skill_get_inf(skill_id) );
+	p.skill.id = skill_id;
+	p.skill.inf = skill_get_inf(skill_id);
 	p.skill.level = static_cast<decltype(p.skill.level)>(sd.status.skill[idx].lv);
 	p.skill.sp = static_cast<decltype(p.skill.sp)>( skill_get_sp(skill_id,sd.status.skill[idx].lv) );
 	p.skill.range2 = static_cast<decltype(p.skill.range2)>( skill_get_range2(&sd.bl,skill_id,sd.status.skill[idx].lv,false) );
@@ -5707,9 +5707,11 @@ void clif_addskill(map_session_data &sd, int skill_id){
 #else
 	safestrncpy(p.skill.name, skill_get_name(skill_id), NAME_LENGTH);
 #endif
-	p.skill.upFlag = 0;
+
 	if( sd.status.skill[idx].flag == SKILL_FLAG_PERMANENT && sd.status.skill[idx].lv < skill_tree_get_max(skill_id, sd.status.class_))
-			p.skill.upFlag = 1;
+		p.skill.upFlag = 1;
+	else
+		p.skill.upFlag = 0;
 
 	clif_send(&p,sizeof(p),&sd.bl,SELF);
 }
