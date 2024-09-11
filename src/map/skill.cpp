@@ -14859,10 +14859,17 @@ int skill_castend_map (map_session_data *sd, uint16 skill_id, const char *mapnam
 			if( lv > 4 ) lv = 4; // crash prevention
 
 #if PACKETVER_MAIN_NUM >= 20170502 || PACKETVER_RE_NUM >= 20170419 || defined(PACKETVER_ZERO)
-			lv += static_cast<int>(pc_readreg2(sd, EXT_MEMO_VAR));
-			if(lv > MAX_MEMOPOINTS+1) lv = MAX_MEMOPOINTS+1;
-#endif
-
+			// check if the chosen map exists in the memo list
+			int ext_size = lv + static_cast<int>(pc_readreg2(sd, EXT_MEMO_VAR));
+			ARR_FIND( 0, ext_size, i, strncmp( p[i]->map, mapname, sizeof( p[i]->map ) ) == 0 );
+			if( i < ext_size ) {
+				x=p[i]->x;
+				y=p[i]->y;
+			} else {
+				skill_failed(sd);
+				return 0;
+			}
+#else
 			// check if the chosen map exists in the memo list
 			ARR_FIND( 0, lv, i, strncmp( p[i]->map, mapname, sizeof( p[i]->map ) ) == 0 );
 			if( i < lv ) {
@@ -14872,7 +14879,7 @@ int skill_castend_map (map_session_data *sd, uint16 skill_id, const char *mapnam
 				skill_failed(sd);
 				return 0;
 			}
-
+#endif
 			if(!skill_check_condition_castend(*sd, sd->menuskill_id, lv))
 			{  // This checks versus skill_id/skill_lv...
 				skill_failed(sd);
