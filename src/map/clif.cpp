@@ -5628,9 +5628,10 @@ void clif_skillinfoblock(map_session_data &sd){
 
 	p->packetType = HEADER_ZC_SKILLINFO_LIST;
 	p->packetLength = sizeof(*p);
-	int id, skillcount = 0;
+	uint16 id;
+	int skillcount = 0;
 	bool haveCallPartnerSkill = false;
-	std::vector<int> remaining_skills; // workaround for bugreport:5348
+	std::vector<uint16> remaining_skills; // workaround for bugreport:5348
 	for ( int i = 0; i < MAX_SKILL; i++){
 		if( (id = sd.status.skill[i].id) != 0 ){
 			
@@ -5647,8 +5648,8 @@ void clif_skillinfoblock(map_session_data &sd){
 			}
 
 			SKILLDATA& skill = p->skills[skillcount];
-			skill.id = static_cast<decltype(skill.id)>(id);
-			skill.inf = static_cast<decltype(skill.inf)>( skill_get_inf(id) );
+			skill.id = id;
+			skill.inf = skill_get_inf(id);
 			skill.level = static_cast<decltype(skill.level)>( sd.status.skill[i].lv );
 #if PACKETVER_RE_NUM >= 20190807 || PACKETVER_ZERO_NUM >= 20190918
 			skill.level2 = skill.level;
@@ -5658,11 +5659,12 @@ void clif_skillinfoblock(map_session_data &sd){
 			skill.sp = static_cast<decltype(skill.sp)>( skill_get_sp(id,sd.status.skill[i].lv) );
 			skill.range2 = static_cast<decltype(skill.range2)>( skill_get_range2(&sd.bl, id, sd.status.skill[i].lv, false) );
 
-			skill.upFlag = 0;
 			if(sd.status.skill[i].flag == SKILL_FLAG_PERMANENT && sd.status.skill[i].lv < skill_tree_get_max(id, sd.status.class_))
 				skill.upFlag = 1;
+			else
+				skill.upFlag = 0;
 
-			p->packetLength += sizeof(skill);
+			p->packetLength += static_cast<decltype(p->packetLength)>(sizeof(skill));
 			skillcount++;
 		}
 	}
@@ -5677,7 +5679,7 @@ void clif_skillinfoblock(map_session_data &sd){
 
 	// workaround for bugreport:5348; send the remaining skills one by one to bypass packet size limit
 	if(!remaining_skills.empty()) {
-		for(int skill_remaining : remaining_skills){
+		for(uint16 skill_remaining : remaining_skills){
 			clif_addskill(&sd, skill_remaining);
 			clif_skillinfo(&sd, skill_remaining, 0);
 		}
