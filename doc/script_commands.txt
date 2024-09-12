@@ -11535,3 +11535,11 @@ Set position for NPC dialog in pixels.
 Set position for NPC dialog in screen size percent.
 
 ---------------------------------------
+
+*checknpcdialogue()
+
+Check if player is interacting with other npc
+These functions will return 1 (interacting with npc) or 0 (dialogue free)
+Used to prevent Unable to restore stack! Double Continuation!
+
+---------------------------------------

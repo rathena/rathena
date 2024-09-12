@@ -35,6 +35,8 @@
 // - Open player's storage.
 // - No arguments.
 function	script	F_CashStore	{
+	if(checknpcdialogue() == 1)
+		return;
 	cutin "kafra_01",2;
 	mes "[Kafra Employee]";
 	mes "Welcome to the Kafra Corporation.";

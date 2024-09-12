@@ -27412,6 +27412,27 @@ BUILDIN_FUNC(permission_add)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/*
+	Check if player is interacting with other npc
+	Used to prevent Unable to restore stack! Double Continuation!
+*/
+BUILDIN_FUNC(checknpcdialogue)
+{
+	map_session_data* sd = nullptr;
+
+	if ( !script_rid2sd(sd) ) {
+		script_pushint(st, 1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if(sd->state.menu_or_input || sd->state.trading || sd->state.using_fake_npc || sd->npc_id)
+		script_pushint(st, 1);
+	else
+		script_pushint(st, 0);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include <custom/script.inc>
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -28181,6 +28202,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(permission_check, "i?"),
 	BUILDIN_DEF(permission_add, "i?"),
 	BUILDIN_DEF2(permission_add, "permission_remove", "i?"),
+
+	BUILDIN_DEF(checknpcdialogue,""),
 
 #include <custom/script_def.inc>
 
