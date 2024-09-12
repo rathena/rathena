@@ -12549,7 +12549,7 @@ BUILDIN_FUNC(homunculus_evolution)
 		if (sd->hd->homunculus.intimacy >= battle_config.homunculus_evo_intimacy_need)
 			hom_evolution(sd->hd);
 		else
-			clif_emotion(&sd->hd->bl, ET_SWEAT);
+			clif_emotion(sd->hd->bl, ET_SWEAT);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -12584,9 +12584,9 @@ BUILDIN_FUNC(homunculus_mutate)
 			script_pushint(st, 1);
 			return SCRIPT_CMD_SUCCESS;
 		} else
-			clif_emotion(&sd->bl, ET_SWEAT);
+			clif_emotion(sd->bl, ET_SWEAT);
 	} else
-		clif_emotion(&sd->bl, ET_SWEAT);
+		clif_emotion(sd->bl, ET_SWEAT);
 
 	script_pushint(st, 0);
 
@@ -12616,16 +12616,16 @@ BUILDIN_FUNC(morphembryo)
 
 			if( (i = pc_additem(sd, &item_tmp, 1, LOG_TYPE_SCRIPT)) ) {
 				clif_additem(sd, 0, 0, i);
-				clif_emotion(&sd->bl, ET_SWEAT); // Fail to avoid item drop exploit.
+				clif_emotion(sd->bl, ET_SWEAT); // Fail to avoid item drop exploit.
 			} else {
 				hom_vaporize(sd, HOM_ST_MORPH);
 				script_pushint(st, 1);
 				return SCRIPT_CMD_SUCCESS;
 			}
 		} else
-			clif_emotion(&sd->hd->bl, ET_SWEAT);
+			clif_emotion(sd->hd->bl, ET_SWEAT);
 	} else
-		clif_emotion(&sd->bl, ET_SWEAT);
+		clif_emotion(sd->bl, ET_SWEAT);
 
 	script_pushint(st, 0);
 
@@ -22207,7 +22207,7 @@ static int buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 	else
 		unit_skilluse_id2(&md->bl, tbl->id, skill_id, skill_lv, casttime, cancel);
 
-	clif_emotion(&md->bl, emotion);
+	clif_emotion(md->bl, emotion);
 
 	return 1;
 }

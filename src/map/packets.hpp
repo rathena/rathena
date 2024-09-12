@@ -1266,6 +1266,13 @@ struct PACKET_ZC_EL_PAR_CHANGE {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_EL_PAR_CHANGE, 0x81e);
 
+struct PACKET_ZC_EMOTION {
+	int16 packetType;
+	int srcId;
+	uint8 emotion_type;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_EMOTION, 0xc0);
+
 #if PACKETVER >= 20131223
 struct PACKET_ZC_NOTIFY_ACT{
 	int16 packetType;

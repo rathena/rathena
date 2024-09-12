@@ -2075,7 +2075,7 @@ TIMER_FUNC(pet_recovery_timer){
 		//Detoxify is chosen for now.
 		clif_skill_nodamage(&pd->bl,&sd->bl,TF_DETOXIFY,1,1);
 		status_change_end(&sd->bl, pd->recovery->type);
-		clif_emotion(&pd->bl, ET_OK);
+		clif_emotion(pd->bl, ET_OK);
 	}
 
 	pd->recovery->timer = INVALID_TIMER;
@@ -2328,7 +2328,7 @@ void pet_evolution(map_session_data *sd, int16 pet_id) {
 	clif_send_petdata(sd, sd->pd, 5, battle_config.pet_hair_style);
 	clif_pet_equip_area(sd->pd);
 	clif_send_petstatus(sd);
-	clif_emotion(&sd->bl, ET_BEST);
+	clif_emotion(sd->bl, ET_BEST);
 	clif_specialeffect(&sd->pd->bl, EF_HO_UP, AREA);
 
 	clif_pet_evolution_result(sd, e_pet_evolution_result::SUCCESS);
