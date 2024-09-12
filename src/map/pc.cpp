@@ -8217,7 +8217,7 @@ int pc_checkjoblevelup(map_session_data *sd)
 	status_calc_pc(sd,SCO_FORCE);
 	clif_misceffect( sd->bl, NOTIFYEFFECT_JOB_LEVEL_UP );
 	if (pc_checkskill(sd, SG_DEVIL) && ((sd->class_&MAPID_THIRDMASK) == MAPID_STAR_EMPEROR || pc_is_maxjoblv(sd)) )
-		clif_status_change(&sd->bl, EFST_DEVIL1, 1, 0, 0, 0, 1); //Permanent blind effect from SG_DEVIL.
+		clif_status_change(&sd->bl, EFST_DEVIL1, true, 0, 0, 0, 1); //Permanent blind effect from SG_DEVIL.
 
 	npc_script_event( *sd, NPCE_JOBLVUP );
 
@@ -9043,7 +9043,7 @@ void pc_skillup(map_session_data *sd,uint16 skill_id)
 			if( skill_id == GN_REMODELING_CART ) /* cart weight info was updated by status_calc_pc */
 				clif_updatestatus(*sd,SP_CARTINFO);
 			if (pc_checkskill(sd, SG_DEVIL) && ((sd->class_&MAPID_THIRDMASK) == MAPID_STAR_EMPEROR || pc_is_maxjoblv(sd)))
-				clif_status_change(&sd->bl, EFST_DEVIL1, 1, 0, 0, 0, 1); //Permanent blind effect from SG_DEVIL.
+				clif_status_change(&sd->bl, EFST_DEVIL1, true, 0, 0, 0, 1); //Permanent blind effect from SG_DEVIL.
 			if (!pc_has_permission(sd, PC_PERM_ALL_SKILL)) // may skill everything at any time anyways, and this would cause a huge slowdown
 				clif_skillinfoblock(sd);
 		}
@@ -14811,7 +14811,7 @@ void pc_bonus_script(map_session_data *sd) {
 			// Only start timer for new bonus_script
 			if (entry->tid == INVALID_TIMER) {
 				if (entry->icon != EFST_BLANK) // Gives status icon if exist
-					clif_status_change(&sd->bl, entry->icon, 1, entry->tick, 1, 0, 0);
+					clif_status_change(&sd->bl, entry->icon, true, entry->tick, 1, 0, 0);
 
 				entry->tick += now;
 				entry->tid = add_timer(entry->tick, pc_bonus_script_timer, sd->bl.id, (intptr_t)entry);

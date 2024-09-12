@@ -10887,7 +10887,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			// val3 : Brings the skill_lv (merged into val1 here)
 			// val4 : Partner
 			if (val1 == CG_MOONLIT)
-				clif_status_change(bl,EFST_MOON,1,tick,0, 0, 0);
+				clif_status_change(bl,EFST_MOON,true,tick,0, 0, 0);
 			val1|= (val3<<16);
 			val3 = tick/1000; // Tick duration
 			tick_time = 1000; // [GodLesZ] tick time
@@ -12196,7 +12196,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_KYOUGAKU:
 			val2 = 2*val1 + rnd()%val1;
-			clif_status_change(bl,EFST_ACTIVE_MONSTER_TRANSFORM,1,0,1002,0,0);
+			clif_status_change(bl,EFST_ACTIVE_MONSTER_TRANSFORM,true,0,1002,0,0);
 			break;
 		case SC_KAGEMUSYA:
 			val2 = 20; // Damage increase bonus
@@ -13018,14 +13018,14 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	}*/
 
 	if (!(flag&SCSTART_NOICON) && !(flag&SCSTART_LOADED && scdb->flag[SCF_DISPLAYPC] || scdb->flag[SCF_DISPLAYNPC])) {
-		int status_icon = scdb->icon;
+		efst_type status_icon = scdb->icon;
 
 #if PACKETVER < 20151104
 		if (status_icon == EFST_WEAPONPROPERTY)
 			status_icon = EFST_ATTACK_PROPERTY_NOTHING + val1; // Assign status icon for older clients
 #endif
 
-		clif_status_change(bl, status_icon, 1, tick, scdb->flag[SCF_SENDVAL1] ? val1 : 1, scdb->flag[SCF_SENDVAL2] ? val2 : 0, scdb->flag[SCF_SENDVAL3] ? val3 : 0);
+		clif_status_change(bl, status_icon, true, tick, scdb->flag[SCF_SENDVAL1] ? val1 : 1, scdb->flag[SCF_SENDVAL2] ? val2 : 0, scdb->flag[SCF_SENDVAL3] ? val3 : 0);
 	}
 
 	// Used as temporary storage for scs with interval ticks, so that the actual duration is sent to the client first.
@@ -13164,7 +13164,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_ITEMSCRIPT: // Shows Buff Icons
 			if (sd)
-				clif_status_change(bl, (efst_type)val2, 1, tick, 0, 0, 0);
+				clif_status_change(bl, (efst_type)val2, true, tick, 0, 0, 0);
 			break;
 		case SC_GVG_GIANT:
 		case SC_GVG_GOLEM:
@@ -13475,7 +13475,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 				}
 
 				if((sce->val1&0xFFFF) == CG_MOONLIT)
-					clif_status_change(bl,EFST_MOON,0,0,0,0,0);
+					clif_status_change(bl,EFST_MOON,false,0,0,0,0);
 			}
 			break;
 		case SC_NOCHAT:
@@ -13738,7 +13738,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 		case SC_FULL_THROTTLE: {
 				int sec = skill_get_time2(scdb->skill_id, sce->val1);
 
-				clif_status_change(bl, EFST_DEC_AGI, 1, sec, 0, 0, 0);
+				clif_status_change(bl, EFST_DEC_AGI, true, sec, 0, 0, 0);
 				sc_start(bl, bl, SC_REBOUND, 100, sce->val1, sec);
 			}
 			break;
@@ -13884,14 +13884,14 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 	}*/
 
 	// On Aegis, when turning off a status change, first goes the sc packet, then the option packet.
-	int status_icon = scdb->icon;
+	efst_type status_icon = scdb->icon;
 
 #if PACKETVER < 20151104
 	if (status_icon == EFST_WEAPONPROPERTY)
 		status_icon = EFST_ATTACK_PROPERTY_NOTHING + sce->val1; // Assign status icon for older clients
 #endif
 
-	clif_status_change(bl,status_icon,0,0,0,0,0);
+	clif_status_change(bl,status_icon,false,0,0,0,0);
 
 	if( opt_flag[SCF_NONPLAYER] ) // bugreport:681
 		clif_changeoption2( *bl );

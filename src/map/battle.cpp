@@ -9756,7 +9756,7 @@ void battle_autocast_aftercast(struct block_list* src, uint16 skill_id, uint16 s
 			ud->canact_tick = i64max(tick + autocast_tick, ud->canact_tick);
 
 			if (battle_config.display_status_timers && src->type == BL_PC)
-				clif_status_change(src, EFST_POSTDELAY, 1, autocast_tick, 0, 0, 0);
+				clif_status_change(src, EFST_POSTDELAY, true, autocast_tick, 0, 0, 0);
 		}
 	}
 }
@@ -10153,7 +10153,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				if (DIFF_TICK(ud->canact_tick, tick + autospell_tick) < 0) {
 					ud->canact_tick = i64max(tick + autospell_tick, ud->canact_tick);
 					if (battle_config.display_status_timers && sd)
-						clif_status_change(src, EFST_POSTDELAY, 1, autospell_tick, 0, 0, 0);
+						clif_status_change(src, EFST_POSTDELAY, true, autospell_tick, 0, 0, 0);
 				}
 			}
 		}
@@ -10211,7 +10211,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				sd->state.autocast = 0;
 
 				sd->ud.canact_tick = i64max(tick + skill_delayfix(src, r_skill, r_lv), sd->ud.canact_tick);
-				clif_status_change(src, EFST_POSTDELAY, 1, skill_delayfix(src, r_skill, r_lv), 0, 0, 1);
+				clif_status_change(src, EFST_POSTDELAY, true, skill_delayfix(src, r_skill, r_lv), 0, 0, 1);
 			}
 		}
 		if (wd.flag&BF_WEAPON && sc && sc->getSCE(SC_FALLINGSTAR) && rand()%100 < sc->getSCE(SC_FALLINGSTAR)->val2) {
