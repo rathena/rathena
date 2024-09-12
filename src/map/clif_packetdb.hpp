@@ -207,7 +207,6 @@
 	packet(0x017b,-1);
 	parseable_packet(0x017c,6,clif_parse_InsertCard,2,4);
 	parseable_packet(0x017e,-1,clif_parse_GuildMessage,2,4);
-	packet(0x017f,-1);
 	parseable_packet(0x0180,6,clif_parse_GuildOpposition,2);
 	packet(0x0181,3);
 	packet(0x0182,106);

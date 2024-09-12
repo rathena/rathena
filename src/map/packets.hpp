@@ -767,6 +767,13 @@ struct PACKET_ZC_NOTIFY_POSITION_TO_GUILDM {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_NOTIFY_POSITION_TO_GUILDM, 0x1eb)
 
+struct PACKET_ZC_GUILD_CHAT {
+	int16 packetType;
+	int16 packetLength;
+	char message[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_GUILD_CHAT, 0x17f)
+
 struct PACKET_ZC_STATUS {
 	int16 packetType;
 	uint16 point;
