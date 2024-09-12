@@ -13672,7 +13672,7 @@ BUILDIN_FUNC(emotion)
 	if (!bl)
 		bl = map_id2bl(st->oid);
 
-	clif_emotion(bl, type);
+	clif_emotion(*bl, type);
 	return SCRIPT_CMD_SUCCESS;
 }
 
