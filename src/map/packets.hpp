@@ -767,16 +767,18 @@ struct PACKET_ZC_NOTIFY_POSITION_TO_GUILDM {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_NOTIFY_POSITION_TO_GUILDM, 0x1eb)
 
+struct PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO_sub {
+	int positionID;
+	int mode;
+	int ranking;
+	int payRate;
+	char posName[NAME_LENGTH];
+} __attribute__((packed));
+
 struct PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO {
 	int16 PacketType;
 	int16 PacketLength;
-	struct {
-		int positionID;
-		int mode;
-		int ranking;
-		int payRate;
-		char posName[NAME_LENGTH];
-	} posInfo[MAX_GUILDPOSITION];
+	struct PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO_sub posInfo[];
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_ACK_CHANGE_GUILD_POSITIONINFO, 0x174);
 
