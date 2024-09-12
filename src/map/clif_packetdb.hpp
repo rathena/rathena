@@ -176,7 +176,6 @@
 	parseable_packet(0x0153,-1,clif_parse_GuildChangeEmblem,2,4);
 	packet(0x0154,-1);
 	parseable_packet( HEADER_CZ_REQ_CHANGE_MEMBERPOS, -1, clif_parse_GuildChangeMemberPosition, 0 );
-	packet(0x0156,-1);
 	packet(0x0157,6);
 	packet(0x0158,-1);
 	parseable_packet( HEADER_CZ_REQ_LEAVE_GUILD, sizeof( PACKET_CZ_REQ_LEAVE_GUILD ), clif_parse_GuildLeave, 0 );

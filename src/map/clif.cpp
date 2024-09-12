@@ -8897,23 +8897,29 @@ void clif_guild_positionchanged(const struct mmo_guild &g,int idx)
 
 /// Notifies clients in a guild about updated member position assignments.
 /// 0156 <packet len>.W { <account id>.L <char id>.L <position id>.L }* (ZC_ACK_REQ_CHANGE_MEMBERS)
-void clif_guild_memberpositionchanged(const struct mmo_guild &g, int idx)
-{
-	// FIXME: This packet is intended to update the clients after a
-	// commit of member position assignment changes, not sending one
-	// packet per position.
-	map_session_data *sd;
-	unsigned char buf[64];
+void clif_guild_memberpositionchanged(const struct mmo_guild &g, int idx){
 
-	WBUFW(buf, 0)=0x156;
-	WBUFW(buf, 2)=16;  // packet len
-	// MEMBER_POSITION_INFO{
-	WBUFL(buf, 4)=g.member[idx].account_id;
-	WBUFL(buf, 8)=g.member[idx].char_id;
-	WBUFL(buf,12)=g.member[idx].position;
-	// }*
+	map_session_data *sd;
+	int count = 0;
+
+	PACKET_ZC_ACK_REQ_CHANGE_MEMBERS *p = reinterpret_cast<PACKET_ZC_ACK_REQ_CHANGE_MEMBERS*>( packet_buffer );
+
+	p->PacketType = HEADER_ZC_ACK_REQ_CHANGE_MEMBERS;
+	p->PacketLength = sizeof(*p);
+
+	for(auto& m : g.member){
+		if(m.char_id==0)
+			continue;
+		PACKET_ZC_ACK_REQ_CHANGE_MEMBERS_sub& member = p->members[count];
+		member.accId = m.account_id;
+		member.charId = m.char_id;
+		member.positionID = m.position;
+		p->PacketLength += sizeof(member);
+		count++;
+	}
+
 	if( (sd=guild_getavailablesd(g))!=nullptr )
-		clif_send(buf,WBUFW(buf,2),&sd->bl,GUILD);
+		clif_send(p,p->PacketLength,&sd->bl,GUILD);
 }
 
 
