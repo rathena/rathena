@@ -183,7 +183,6 @@
 	parseable_packet( HEADER_CZ_REQ_BAN_GUILD, sizeof( PACKET_CZ_REQ_BAN_GUILD ), clif_parse_GuildExpulsion, 0 );
 	parseable_packet( HEADER_CZ_REQ_DISORGANIZE_GUILD, sizeof( PACKET_CZ_REQ_DISORGANIZE_GUILD ), clif_parse_GuildBreak, 0 );
 	packet(0x015f,42);
-	packet(0x0160,-1);
 	parseable_packet(0x0161,-1,clif_parse_GuildChangePositionInfo,2,4);
 	packet(0x0163,-1);
 	packet(0x0164,-1);

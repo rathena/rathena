@@ -8835,34 +8835,33 @@ void clif_guild_positionnamelist(map_session_data *sd)
 }
 
 
-/// Guild position information (ZC_POSITION_INFO).
-/// 0160 <packet len>.W { <position id>.L <mode>.L <ranking>.L <pay rate>.L }*
+/// Guild position information 
+/// 0160 <packet len>.W { <position id>.L <mode>.L <ranking>.L <pay rate>.L }* (ZC_POSITION_INFO).
 /// mode:
 ///     &0x01 = allow invite
 ///     &0x10 = allow expel
 /// ranking:
 ///     TODO
-void clif_guild_positioninfolist(map_session_data *sd)
-{
-	int i,fd;
+static void clif_guild_positioninfolist(map_session_data& sd){
 
-	nullpo_retv(sd);
-	auto &g = sd->guild;
+	auto &g = sd.guild;
 	if (!g)
 		return;
 
-	fd = sd->fd;
-	WFIFOHEAD(fd, MAX_GUILDPOSITION * 16 + 4);
-	WFIFOW(fd, 0)=0x160;
-	for(i=0;i<MAX_GUILDPOSITION;i++){
-		struct guild_position *p=&g->guild.position[i];
-		WFIFOL(fd,i*16+ 4)=i;
-		WFIFOL(fd,i*16+ 8)=p->mode;
-		WFIFOL(fd,i*16+12)=i;
-		WFIFOL(fd,i*16+16)=p->exp_mode;
+	PACKET_ZC_POSITION_INFO p{};
+
+	p.PacketType = HEADER_ZC_POSITION_INFO;
+	p.PacketLength = sizeof(p);
+
+	for(int i=0;i<MAX_GUILDPOSITION;i++){
+		struct guild_position *gp = &g->guild.position[i];
+		p.posInfo[i].positionID = i;
+		p.posInfo[i].right = gp->mode;
+		p.posInfo[i].ranking = i;
+		p.posInfo[i].payRate = gp->exp_mode;
 	}
-	WFIFOW(fd, 2)=i*16+4;
-	WFIFOSET(fd,WFIFOW(fd,2));
+
+	clif_send(&p,p.PacketLength,&sd.bl,SELF);
 }
 
 
@@ -14084,7 +14083,7 @@ void clif_parse_GuildRequestInfo(int fd, map_session_data *sd)
 		break;
 	case 2:	// List job title, title information list
 		clif_guild_positionnamelist(sd);
-		clif_guild_positioninfolist(sd);
+		clif_guild_positioninfolist(*sd);
 		break;
 	case 3:	// Skill list
 		clif_guild_skillinfo( *sd );
