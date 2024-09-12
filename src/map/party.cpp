@@ -446,7 +446,7 @@ bool party_invite( map_session_data& sd, map_session_data *tsd ){
 		return false;
 	}
 
-	if( !battle_config.invite_request_check && ( tsd->guild_invite > 0 || tsd->trade_partner || tsd->adopt_invite ) ){
+	if( !battle_config.invite_request_check && ( tsd->guild_invite > 0 || tsd->state.trading || tsd->adopt_invite ) ){
 		clif_party_invite_reply( sd, tsd->status.name, PARTY_REPLY_JOIN_OTHER_PARTY );
 		return false;
 	}

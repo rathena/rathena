@@ -362,6 +362,38 @@ struct PACKET_ZC_ACK_OPEN_BANKING{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_ACK_OPEN_BANKING, 0x9b7)
 
+#if PACKETVER > 6
+struct PACKET_ZC_REQ_EXCHANGE_ITEM{
+	uint16 packetType;
+	char requesterName[NAME_LENGTH];
+	uint32 targetId;
+	uint16 targetLv;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_REQ_EXCHANGE_ITEM, 0x1f4)
+#else
+struct PACKET_ZC_REQ_EXCHANGE_ITEM{
+	uint16 packetType;
+	char requesterName[NAME_LENGTH];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_REQ_EXCHANGE_ITEM, 0x9a)
+#endif
+
+#if PACKETVER > 6
+struct PACKET_ZC_ACK_EXCHANGE_ITEM{
+	uint16 packetType;
+	uint8 result;
+	uint32 targetId;
+	uint16 targetLv;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_EXCHANGE_ITEM, 0x1f5)
+#else
+struct PACKET_ZC_ACK_EXCHANGE_ITEM{
+	uint16 packetType;
+	uint8 result;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_EXCHANGE_ITEM, 0xe7)
+#endif
+
 struct PACKET_ZC_ACK_ADD_EXCHANGE_ITEM {
 	int16 packetType;
 	uint16 index;
