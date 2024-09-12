@@ -4599,8 +4599,8 @@ void clif_joinchatok(map_session_data& sd, chat_data& cd){
 }
 
 
-/// Notifies clients in a chat about a new member (ZC_MEMBER_NEWENTRY).
-/// 00dc <users>.W <name>.24B
+/// Notifies clients in a chat about a new member 
+/// 00dc <users>.W <name>.24B (ZC_MEMBER_NEWENTRY).
 void clif_addchat(chat_data& cd,map_session_data &sd){
 
 	PACKET_ZC_MEMBER_NEWENTRY p{};
@@ -4613,8 +4613,8 @@ void clif_addchat(chat_data& cd,map_session_data &sd){
 }
 
 
-/// Change menus in chatbox from players who changed roles (ZC_ROLE_CHANGE).
-/// 00e1 <role>.L <nick>.24B
+/// Change menus in chatbox from players who changed roles 
+/// 00e1 <role>.L <nick>.24B (ZC_ROLE_CHANGE).
 /// role:
 ///     0 = owner (menu)
 ///     1 = normal
