@@ -1042,7 +1042,7 @@ void clif_guild_created( map_session_data& sd, int flag );
 void clif_guild_belonginfo( map_session_data& sd );
 void clif_guild_masterormember(map_session_data *sd);
 void clif_guild_basicinfo( map_session_data& sd );
-void clif_guild_allianceinfo(map_session_data *sd);
+void clif_guild_allianceinfo(map_session_data& sd);
 void clif_guild_memberlist( map_session_data& sd );
 void clif_guild_skillinfo( map_session_data& sd );
 void clif_guild_send_onlineinfo(map_session_data *sd); //[LuzZza]
