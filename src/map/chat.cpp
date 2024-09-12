@@ -326,7 +326,7 @@ int chat_changechatstatus(map_session_data* sd, const char* title, const char* p
 	cd->limit = min(limit, ARRAYLENGTH(cd->usersd));
 	cd->pub = pub;
 
-	clif_changechatstatus(cd);
+	clif_changechatstatus(*cd);
 	clif_dispchat(cd,0);
 
 	return 0;
