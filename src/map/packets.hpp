@@ -852,6 +852,32 @@ struct PACKET_ZC_EQUIP_ARROW {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_EQUIP_ARROW, 0x13c)
 
+#if PACKETVER >= 20130000
+struct PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK{
+	uint16 packetType;
+	uint16 index;
+	uint32 wearLocation;
+	uint8 flag;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_REQ_TAKEOFF_EQUIP_ACK, 0x99a)
+#elif PACKETVER >= 20110824
+struct PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK{
+	uint16 packetType;
+	uint16 index;
+	uint16 wearLocation;
+	uint8 flag;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_REQ_TAKEOFF_EQUIP_ACK, 0x8d1)
+#else
+struct PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK{
+	uint16 packetType;
+	uint16 index;
+	uint16 wearLocation;
+	bool flag;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_REQ_TAKEOFF_EQUIP_ACK, 0xac)
+#endif
+
 struct PACKET_ZC_CLOSE_STORE {
 	int16 packetType;
 } __attribute__((packed));
