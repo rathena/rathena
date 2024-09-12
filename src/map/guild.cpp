@@ -1523,7 +1523,7 @@ int guild_position_changed(int guild_id,int idx,struct guild_position *p) {
 	if(g==nullptr)
 		return 0;
 	memcpy(&g->guild.position[idx],p,sizeof(struct guild_position));
-	clif_guild_positionchanged(g->guild,idx);
+	clif_guild_positionchanged(g->guild);
 
 	// Update char name in client [LuzZza]
 	for(i=0;i<g->guild.max_member;i++)

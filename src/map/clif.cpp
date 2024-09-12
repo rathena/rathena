@@ -8873,7 +8873,7 @@ void clif_guild_positioninfolist(map_session_data *sd)
 ///     &0x10 = allow expel
 /// ranking:
 ///     TODO
-void clif_guild_positionchanged(const struct mmo_guild &g,int idx){
+void clif_guild_positionchanged(const struct mmo_guild &g){
 
 	map_session_data *sd;
 

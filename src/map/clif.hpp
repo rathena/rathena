@@ -1051,7 +1051,7 @@ void clif_guild_invite( map_session_data& sd, const struct mmo_guild& g );
 void clif_guild_inviteack( map_session_data& sd, int flag );
 void clif_guild_leave( map_session_data& sd, const char* name, uint32 char_id, const char* mes );
 void clif_guild_expulsion( map_session_data& sd, const char* name, uint32 char_id, const char* mes );
-void clif_guild_positionchanged(const struct mmo_guild &g,int idx);
+void clif_guild_positionchanged(const struct mmo_guild &g);
 void clif_guild_memberpositionchanged(const struct mmo_guild &g,int idx);
 void clif_guild_emblem(const map_session_data &sd, const struct mmo_guild &g);
 void clif_guild_emblem_area(struct block_list* bl);
