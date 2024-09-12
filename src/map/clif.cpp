@@ -9198,25 +9198,22 @@ void clif_guild_allianceack(map_session_data *sd,int flag)
 }
 
 
-/// Notifies the client that a alliance or opposition has been removed (ZC_DELETE_RELATED_GUILD).
-/// 0184 <other guild id>.L <relation>.L
+/// Notifies the client that a alliance or opposition has been removed 
+/// 0184 <other guild id>.L <relation>.L (ZC_DELETE_RELATED_GUILD).
 /// relation:
 ///     0 = Ally
 ///     1 = Enemy
-void clif_guild_delalliance(map_session_data *sd,int guild_id,int flag)
+void clif_guild_delalliance(map_session_data& sd,int guild_id,int flag)
 {
-	nullpo_retv(sd);
-
-	int fd = sd->fd;
-
-	if ( !session_isActive(fd) )
+	if ( !session_isActive(sd.fd) )
 		return;
 
-	WFIFOHEAD(fd,packet_len(0x184));
-	WFIFOW(fd,0)=0x184;
-	WFIFOL(fd,2)=guild_id;
-	WFIFOL(fd,6)=flag;
-	WFIFOSET(fd,packet_len(0x184));
+	PACKET_ZC_DELETE_RELATED_GUILD p{};
+
+	p.relationGuildId = guild_id;
+	p.relationFlag = flag;
+
+	clif_send(&p,sizeof(p),&sd.bl,SELF);
 }
 
 

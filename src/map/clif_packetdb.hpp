@@ -208,7 +208,6 @@
 	packet(0x0181,3);
 	packet(0x0182,106);
 	parseable_packet(0x0183,10,clif_parse_GuildDelAlliance,2,6);
-	packet(0x0184,10);
 	packet(0x0185,34);
 	packet(0x0187,6);
 	parseable_packet(0x018a,4,clif_parse_QuitGame,2);
