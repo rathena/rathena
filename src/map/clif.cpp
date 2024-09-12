@@ -8897,7 +8897,7 @@ void clif_guild_positionchanged(const struct mmo_guild &g,int idx)
 
 /// Notifies clients in a guild about updated member position assignments.
 /// 0156 <packet len>.W { <account id>.L <char id>.L <position id>.L }* (ZC_ACK_REQ_CHANGE_MEMBERS)
-void clif_guild_memberpositionchanged(const struct mmo_guild &g, int idx){
+void clif_guild_memberpositionchanged(const struct mmo_guild &g){
 
 	map_session_data *sd;
 	int count = 0;
