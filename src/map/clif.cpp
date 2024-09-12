@@ -4472,28 +4472,45 @@ void clif_dispchat(struct chat_data* cd, int fd)
 ///     1 = public
 ///     2 = arena (npc waiting room)
 ///     3 = PK zone (non-clickable)
-void clif_changechatstatus(struct chat_data* cd)
-{
-	unsigned char buf[128];
-	uint8 type;
+void clif_changechatstatus(chat_data& cd) {
 
-	if( cd == nullptr || cd->usersd[0] == nullptr )
+	if(cd.usersd[0] == nullptr )
 		return;
 
-	type = (cd->owner->type == BL_PC ) ? (cd->pub) ? 1 : 0
-	     : (cd->owner->type == BL_NPC) ? (cd->limit) ? 2 : 3
-	     : 1;
+	enum e_chat_flags:uint8 {
+		CHAT_PRIVATE = 0,
+		CHAT_PUBLIC,
+		CHAT_ARENA,
+		CHAT_PK
+	};
 
-	WBUFW(buf, 0) = 0xdf;
-	WBUFW(buf, 2) = (uint16)(17 + strlen(cd->title));
-	WBUFL(buf, 4) = cd->owner->id;
-	WBUFL(buf, 8) = cd->bl.id;
-	WBUFW(buf,12) = cd->limit;
-	WBUFW(buf,14) = (cd->owner->type == BL_NPC) ? cd->users+1 : cd->users;
-	WBUFB(buf,16) = type;
-	memcpy(WBUFCP(buf,17), cd->title, strlen(cd->title)); // not zero-terminated
+	PACKET_ZC_CHANGE_CHATROOM* p = reinterpret_cast<PACKET_ZC_CHANGE_CHATROOM*>( packet_buffer );
 
-	clif_send(buf,WBUFW(buf,2),cd->owner,CHAT);
+	p->packetType = HEADER_ZC_CHANGE_CHATROOM;
+	p->packetSize = static_cast<decltype(p->packetSize)>(sizeof(*p) + strlen(cd.title));
+	p->ownerId = cd.owner->id;
+	p->chatId = cd.bl.id;
+	p->limit = cd.limit;
+	p->users = cd.users;
+
+	// not zero-terminated
+	strncpy(p->title, cd.title, strlen(cd.title));
+
+	if(cd.owner->type == BL_NPC){
+		// NPC itself counts as additional chat user
+		p->users++;
+
+		if(cd.limit)
+			p->flag = CHAT_ARENA;
+		else
+			p->flag = CHAT_PK;
+	}else if(cd.owner->type == BL_PC && cd.pub == false){
+		p->flag = CHAT_PRIVATE;
+	}else{
+		p->flag = CHAT_PUBLIC;
+	}
+
+	clif_send(p,p->packetSize,cd.owner,CHAT);
 }
 
 

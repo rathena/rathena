@@ -91,7 +91,6 @@
 	packet(0x00dc,28);
 	packet(0x00dd,29);
 	parseable_packet(0x00de,-1,clif_parse_ChatRoomStatusChange,2,4,6,7,15);
-	packet(0x00df,-1);
 	parseable_packet(0x00e0,30,clif_parse_ChangeChatOwner,2,6);
 	packet(0x00e1,30);
 	parseable_packet(0x00e2,26,clif_parse_KickFromChat,2);
