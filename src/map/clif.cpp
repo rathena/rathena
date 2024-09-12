@@ -4516,6 +4516,7 @@ void clif_changechatstatus(struct chat_data* cd)
 void clif_clearchat(chat_data &cd){
 
 	PACKET_ZC_DESTROY_ROOM p{};
+
 	p.packetType = HEADER_ZC_DESTROY_ROOM;
 	p.chatId = cd.bl.id;
 
