@@ -9153,12 +9153,12 @@ void clif_guild_message( const struct mmo_guild& g, const char* mes, size_t len 
 
 	if( len == 0 ){
 		return;
-	} else if( len > CHAT_SIZE_MAX-5 ){ // packet + chatsizemax + nullptr terminate	
+	} else if( len > CHAT_SIZE_MAX-5 ){ // chatsizemax - nullptr terminate - packetsize	
 		ShowWarning("clif_guild_message: Truncated message '%s' (len=%d, max=%d, guild_id=%d).\n", mes, len, (CHAT_SIZE_MAX - 5), g.guild_id);
 		len = CHAT_SIZE_MAX-5;
 	}
 	p->packetType = HEADER_ZC_GUILD_CHAT;
-	p->packetLength = static_cast<decltype(p->packetLength)>(sizeof(*p) + len + 1); // packet + len + nullptr teminate
+	p->packetLength = static_cast<decltype(p->packetLength)>(sizeof(*p) + len + 1); // packet + msglen + nullptr teminate
 
 	safestrncpy(p->message, mes, len+1);
 
