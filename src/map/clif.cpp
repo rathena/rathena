@@ -8599,29 +8599,34 @@ void clif_guild_belonginfo( map_session_data& sd ){
 /// status:
 ///     0 = offline
 ///     1 = online
-void clif_guild_memberlogin_notice(const struct mmo_guild &g,int idx,int flag)
-{
-	unsigned char buf[64];
+void clif_guild_memberlogin_notice(const struct mmo_guild &g,int idx,int flag){
+
 	map_session_data* sd;
 
-	WBUFW(buf, 0)=0x1f2;
-	WBUFL(buf, 2)=g.member[idx].account_id;
-	WBUFL(buf, 6)=g.member[idx].char_id;
-	WBUFL(buf,10)=flag;
+	PACKET_ZC_UPDATE_CHARSTAT p{};
+
+	p.packetType = HEADER_ZC_UPDATE_CHARSTAT;
+	p.aid = g.member[idx].account_id;
+	p.cid = g.member[idx].char_id;
+	p.status = flag;
 
 	if( ( sd = g.member[idx].sd ) != nullptr )
 	{
-		WBUFW(buf,14) = sd->status.sex;
-		WBUFW(buf,16) = sd->status.hair;
-		WBUFW(buf,18) = sd->status.hair_color;
-		clif_send(buf,packet_len(0x1f2),&sd->bl,GUILD_WOS);
+#if (PACKETVER)
+		p.gender = static_cast<decltype(p.gender)>(sd->status.sex);
+		p.hairStyle = static_cast<decltype(p.hairStyle)>(sd->status.hair);
+		p.hairColor = static_cast<decltype(p.hairColor)>(sd->status.hair_color);
+#endif
+		clif_send(&p,sizeof(p),&sd->bl,GUILD_WOS);
 	}
 	else if( ( sd = guild_getavailablesd(g) ) != nullptr )
 	{
-		WBUFW(buf,14) = 0;
-		WBUFW(buf,16) = 0;
-		WBUFW(buf,18) = 0;
-		clif_send(buf,packet_len(0x1f2),&sd->bl,GUILD);
+#if (PACKETVER)
+		p.gender = 0;
+		p.hairStyle = 0;
+		p.hairColor = 0;
+#endif
+		clif_send(&p,sizeof(p),&sd->bl,GUILD);
 	}
 }
 

@@ -767,6 +767,27 @@ struct PACKET_ZC_NOTIFY_POSITION_TO_GUILDM {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_NOTIFY_POSITION_TO_GUILDM, 0x1eb)
 
+#if (PACKETVER) // no idea when it changed
+struct PACKET_ZC_UPDATE_CHARSTAT {
+	int16 packetType;
+	uint32 aid;
+	uint32 cid;
+	int status;
+	uint16 gender;
+	uint16 hairStyle;
+	uint16 hairColor;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_UPDATE_CHARSTAT, 0x01f2)
+#else
+struct PACKET_ZC_UPDATE_CHARSTAT {
+	int16 packetType;
+	uint32 aid;
+	uint32 cid;
+	int status;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_UPDATE_CHARSTAT, 0x016d)
+#endif
+
 struct PACKET_ZC_STATUS {
 	int16 packetType;
 	uint16 point;
