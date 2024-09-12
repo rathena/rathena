@@ -12334,18 +12334,18 @@ bool pc_unequipitem(map_session_data *sd, int n, int flag) {
 	nullpo_retr(false,sd);
 
 	if (n < 0 || n >= MAX_INVENTORY) {
-		clif_unequipitemack(sd,0,0,0);
+		clif_unequipitemack(*sd,0,0,false);
 		return false;
 	}
 	if (!(pos = sd->inventory.u.items_inventory[n].equip)) {
-		clif_unequipitemack(sd,n,0,0);
+		clif_unequipitemack(*sd,n,0,false);
 		return false; //Nothing to unequip
 	}
 	// status change that makes player cannot unequip equipment
 	if (!(flag&2) && sd->sc.count &&( sd->sc.cant.unequip ||
 		(sd->sc.getSCE(SC_PYROCLASTIC) &&	sd->inventory_data[n]->type == IT_WEAPON)))	// can't switch weapon
 	{
-		clif_unequipitemack(sd,n,0,0);
+		clif_unequipitemack(*sd,n,0,false);
 		return false;
 	}
 
@@ -12384,7 +12384,7 @@ bool pc_unequipitem(map_session_data *sd, int n, int flag) {
 	if(pos & EQP_SHOES)
 		clif_changelook(&sd->bl,LOOK_SHOES,0);
 
-	clif_unequipitemack(sd,n,pos,1);
+	clif_unequipitemack(*sd,n,pos,true);
 	pc_set_costume_view(sd);
 
 	status_db.removeByStatusFlag(&sd->bl, { SCF_REMOVEONUNEQUIP });
@@ -12405,7 +12405,7 @@ bool pc_unequipitem(map_session_data *sd, int n, int flag) {
 
 					if (idx >= 0) {
 						sd->equip_index[EQI_AMMO] = -1;
-						clif_unequipitemack(sd, idx, sd->inventory.u.items_inventory[idx].equip, 1);
+						clif_unequipitemack(*sd, idx, sd->inventory.u.items_inventory[idx].equip, true);
 						pc_unequipitem_sub(sd, idx, 0);
 					}
 				}

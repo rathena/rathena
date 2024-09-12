@@ -356,6 +356,26 @@ struct PACKET_ZC_ACK_OPEN_BANKING{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_ACK_OPEN_BANKING, 0x9b7)
 
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_REQ_EXCHANGE_ITEM, 0x9a)
+#endif
+
+#if PACKETVER > 6
+struct PACKET_ZC_ACK_EXCHANGE_ITEM{
+	uint16 packetType;
+	uint8 result;
+	uint32 targetId;
+	uint16 targetLv;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_EXCHANGE_ITEM, 0x1f5)
+#else
+struct PACKET_ZC_ACK_EXCHANGE_ITEM{
+	uint16 packetType;
+	uint8 result;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_EXCHANGE_ITEM, 0xe7)
+#endif
+
 struct PACKET_ZC_ACK_ADD_EXCHANGE_ITEM {
 	int16 packetType;
 	uint16 index;
@@ -832,11 +852,49 @@ struct PACKET_ZC_PAR_CHANGE_USER {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_PAR_CHANGE_USER, 0x1ab)
 
+struct PACKET_ZC_CHANGE_CHATROOM{
+	uint16 packetType;
+	uint16 packetSize;
+	uint32 ownerId;
+	uint32 chatId;
+	uint16 limit;
+	uint16 users;
+	uint8 flag;
+	char title[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_CHANGE_CHATROOM, 0xdf);
+
 struct PACKET_ZC_EQUIP_ARROW {
 	int16 packetType;
 	uint16 index;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_EQUIP_ARROW, 0x13c)
+
+#if PACKETVER >= 20130000
+struct PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK{
+	uint16 packetType;
+	uint16 index;
+	uint32 wearLocation;
+	uint8 flag;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_REQ_TAKEOFF_EQUIP_ACK, 0x99a)
+#elif PACKETVER >= 20110824
+struct PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK{
+	uint16 packetType;
+	uint16 index;
+	uint16 wearLocation;
+	uint8 flag;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_REQ_TAKEOFF_EQUIP_ACK, 0x8d1)
+#else
+struct PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK{
+	uint16 packetType;
+	uint16 index;
+	uint16 wearLocation;
+	bool flag;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_REQ_TAKEOFF_EQUIP_ACK, 0xac)
+#endif
 
 struct PACKET_ZC_CLOSE_STORE {
 	int16 packetType;

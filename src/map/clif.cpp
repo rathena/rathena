@@ -56,7 +56,6 @@
 #include "skill.hpp"
 #include "status.hpp"
 #include "storage.hpp"
-#include "trade.hpp"
 #include "unit.hpp"
 #include "vending.hpp"
 
@@ -4247,35 +4246,21 @@ void clif_equipitemack( map_session_data& sd, uint8 flag, int index, int pos ){
 /// 00ac <index>.W <equip location>.W <result>.B (ZC_REQ_TAKEOFF_EQUIP_ACK)
 /// 08d1 <index>.W <equip location>.W <result>.B (ZC_REQ_TAKEOFF_EQUIP_ACK2)
 /// 099a <index>.W <equip location>.L <result>.B (ZC_ACK_TAKEOFF_EQUIP_V5)
-/// @ok : //inversed for v2 v5
+/// @success : //inversed for v2 v5
 ///     0 = failure
 ///     1 = success
-void clif_unequipitemack(map_session_data *sd,int n,int pos,int ok)
-{
-	int fd, header, offs = 0;
-#if PACKETVER >= 20130000
-	header = 0x99a;
-	ok = ok ? 0 : 1;
-#elif PACKETVER >= 20110824
-	header = 0x8d1;
-	ok = ok ? 0 : 1;
-#else
-	header = 0xac;
+void clif_unequipitemack( map_session_data& sd, uint16 server_index, int32 pos, bool success ){
+#if PACKETVER >= 20110824
+	success = !success;
 #endif
-	nullpo_retv(sd);
+	PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK p{};
 
-	fd=sd->fd;
-	WFIFOHEAD(fd, packet_len(header));
-	WFIFOW(fd,offs+0) = header;
-	WFIFOW(fd,offs+2) = n+2;
-#if PACKETVER >= 20130000
-	WFIFOL(fd,offs+4) = pos;
-	offs += 2;
-#else
-	WFIFOW(fd,offs+4) = pos;
-#endif
-	WFIFOB(fd,offs+6) = ok;
-	WFIFOSET(fd, packet_len(header));
+	p.packetType = HEADER_ZC_REQ_TAKEOFF_EQUIP_ACK;
+	p.index = client_index(server_index);
+	p.wearLocation = static_cast<decltype(p.wearLocation)>(pos);
+	p.flag = success;
+
+	clif_send(&p,sizeof(p),&sd.bl,SELF);
 }
 
 
@@ -4486,28 +4471,45 @@ void clif_dispchat(struct chat_data* cd, int fd)
 ///     1 = public
 ///     2 = arena (npc waiting room)
 ///     3 = PK zone (non-clickable)
-void clif_changechatstatus(struct chat_data* cd)
-{
-	unsigned char buf[128];
-	uint8 type;
+void clif_changechatstatus(chat_data& cd) {
 
-	if( cd == nullptr || cd->usersd[0] == nullptr )
+	if(cd.usersd[0] == nullptr )
 		return;
 
-	type = (cd->owner->type == BL_PC ) ? (cd->pub) ? 1 : 0
-	     : (cd->owner->type == BL_NPC) ? (cd->limit) ? 2 : 3
-	     : 1;
+	enum e_chat_flags:uint8 {
+		CHAT_PRIVATE = 0,
+		CHAT_PUBLIC,
+		CHAT_ARENA,
+		CHAT_PK
+	};
 
-	WBUFW(buf, 0) = 0xdf;
-	WBUFW(buf, 2) = (uint16)(17 + strlen(cd->title));
-	WBUFL(buf, 4) = cd->owner->id;
-	WBUFL(buf, 8) = cd->bl.id;
-	WBUFW(buf,12) = cd->limit;
-	WBUFW(buf,14) = (cd->owner->type == BL_NPC) ? cd->users+1 : cd->users;
-	WBUFB(buf,16) = type;
-	memcpy(WBUFCP(buf,17), cd->title, strlen(cd->title)); // not zero-terminated
+	PACKET_ZC_CHANGE_CHATROOM* p = reinterpret_cast<PACKET_ZC_CHANGE_CHATROOM*>( packet_buffer );
 
-	clif_send(buf,WBUFW(buf,2),cd->owner,CHAT);
+	p->packetType = HEADER_ZC_CHANGE_CHATROOM;
+	p->packetSize = static_cast<decltype(p->packetSize)>(sizeof(*p) + strlen(cd.title));
+	p->ownerId = cd.owner->id;
+	p->chatId = cd.bl.id;
+	p->limit = cd.limit;
+	p->users = cd.users;
+
+	// not zero-terminated
+	strncpy(p->title, cd.title, strlen(cd.title));
+
+	if(cd.owner->type == BL_NPC){
+		// NPC itself counts as additional chat user
+		p->users++;
+
+		if(cd.limit)
+			p->flag = CHAT_ARENA;
+		else
+			p->flag = CHAT_PK;
+	}else if(cd.owner->type == BL_PC && cd.pub == false){
+		p->flag = CHAT_PRIVATE;
+	}else{
+		p->flag = CHAT_PUBLIC;
+	}
+
+	clif_send(p,p->packetSize,cd.owner,CHAT);
 }
 
 
@@ -4659,33 +4661,27 @@ void clif_leavechat(struct chat_data* cd, map_session_data* sd, bool flag)
 
 /// Opens a trade request window from char 'name'.
 /// 00e5 <nick>.24B (ZC_REQ_EXCHANGE_ITEM)
-/// 01f4 <nick>.24B <charid>.L <baselvl>.W (ZC_REQ_EXCHANGE_ITEM2)
-void clif_traderequest(map_session_data* sd, const char* name)
-{
-	int fd = sd->fd;
+/// 01f4 <nick>.24B <targetid>.L <baselvl>.W (ZC_REQ_EXCHANGE_ITEM2)
+void clif_traderequest(map_session_data& sd, const char* name){
 
-#if PACKETVER < 6
-	WFIFOHEAD(fd,packet_len(0xe5));
-	WFIFOW(fd,0) = 0xe5;
-	safestrncpy(WFIFOCP(fd,2), name, NAME_LENGTH);
-	WFIFOSET(fd,packet_len(0xe5));
-#else
-	map_session_data* tsd = map_id2sd(sd->trade_partner);
-	if( !tsd ) return;
+	PACKET_ZC_REQ_EXCHANGE_ITEM p{};
 
-	WFIFOHEAD(fd,packet_len(0x1f4));
-	WFIFOW(fd,0) = 0x1f4;
-	safestrncpy(WFIFOCP(fd,2), name, NAME_LENGTH);
-	WFIFOL(fd,26) = tsd->status.char_id;
-	WFIFOW(fd,30) = tsd->status.base_level;
-	WFIFOSET(fd,packet_len(0x1f4));
+	p.packetType = HEADER_ZC_REQ_EXCHANGE_ITEM;
+	safestrncpy(p.requesterName, name, sizeof(p.requesterName));
+
+#if PACKETVER > 6
+	p.targetId = sd.trade_partner.id; // Client generates a random char[5] with this info
+	p.targetLv = sd.trade_partner.lv;
 #endif
+
+	clif_send(&p,sizeof(p),&sd.bl,SELF);
+
 }
 
 
 /// Reply to a trade-request.
 /// 00e7 <result>.B (ZC_ACK_EXCHANGE_ITEM)
-/// 01f5 <result>.B <charid>.L <baselvl>.W (ZC_ACK_EXCHANGE_ITEM2)
+/// 01f5 <result>.B <targetid>.L <baselvl>.W (ZC_ACK_EXCHANGE_ITEM2)
 /// result:
 ///     0 = Char is too far
 ///     1 = Character does not exist
@@ -4693,23 +4689,19 @@ void clif_traderequest(map_session_data* sd, const char* name)
 ///     3 = Accept
 ///     4 = Cancel
 ///     5 = Busy
-void clif_tradestart(map_session_data* sd, uint8 type)
-{
-	int fd = sd->fd;
-	map_session_data* tsd = map_id2sd(sd->trade_partner);
-	if( PACKETVER < 6 || !tsd ) {
-		WFIFOHEAD(fd,packet_len(0xe7));
-		WFIFOW(fd,0) = 0xe7;
-		WFIFOB(fd,2) = type;
-		WFIFOSET(fd,packet_len(0xe7));
-	} else {
-		WFIFOHEAD(fd,packet_len(0x1f5));
-		WFIFOW(fd,0) = 0x1f5;
-		WFIFOB(fd,2) = type;
-		WFIFOL(fd,3) = tsd->status.char_id;
-		WFIFOW(fd,7) = tsd->status.base_level;
-		WFIFOSET(fd,packet_len(0x1f5));
-	}
+void clif_traderesponse( map_session_data& sd, e_ack_trade_response result ){
+
+	PACKET_ZC_ACK_EXCHANGE_ITEM p{};
+
+	p.packetType = HEADER_ZC_ACK_EXCHANGE_ITEM;
+	p.result = static_cast<decltype(p.result)>( result );
+
+#if PACKETVER > 6
+	p.targetId = sd.trade_partner.id; // Client generates a random char[5] with this info
+	p.targetLv = sd.trade_partner.lv;
+#endif
+
+	clif_send(&p,sizeof(p),&sd.bl,SELF);
 }
 
 
@@ -12379,13 +12371,8 @@ void clif_parse_TradeRequest(int fd,map_session_data *sd)
 		}
 
 		if (t_sd->state.mail_writing) {
-			int old = sd->trade_partner;
-
 			// Fake trading
-			sd->trade_partner = t_sd->status.account_id;
-			clif_tradestart(sd, 5);
-			// Restore old state
-			sd->trade_partner = old;
+			clif_traderesponse(*sd,TRADE_ACK_BUSY);
 
 			return;
 		}
@@ -16232,7 +16219,7 @@ void clif_parse_Mail_beginwrite( int fd, map_session_data *sd ){
 		return;
 	}
 
-	if( sd->state.storage_flag || sd->state.mail_writing || sd->trade_partner ){
+	if( sd->state.storage_flag || sd->state.mail_writing || sd->state.trading ){
 		clif_send_Mail_beginwrite_ack(sd, name, false);
 		return;
 	}

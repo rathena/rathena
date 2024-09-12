@@ -3229,7 +3229,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			if(sd->chatID)
 				chat_leavechat(sd,0);
 
-			if(sd->trade_partner)
+			if(sd->trade_partner.id > 0)
 				trade_tradecancel(sd);
 
 			searchstore_close(*sd);
