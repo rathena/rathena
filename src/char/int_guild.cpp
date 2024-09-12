@@ -487,7 +487,7 @@ std::shared_ptr<CharGuild> inter_guild_fromsql( int32 guild_id ){
 	}
 
 	//printf("- Read guild_expulsion %d from sql \n",guild_id);
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`name`,`mes` FROM `%s` WHERE `guild_id`='%d'", schema_config.guild_expulsion_db, guild_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`name`,`mes`,`char_id` FROM `%s` WHERE `guild_id`='%d'", schema_config.guild_expulsion_db, guild_id) )
 	{
 		Sql_ShowDebug(sql_handle);
 		return nullptr;
