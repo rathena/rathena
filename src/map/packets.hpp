@@ -760,6 +760,12 @@ struct PACKET_ZC_OPEN_EDITDLGSTR {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_OPEN_EDITDLGSTR, 0x1d4)
 
+struct PACKET_ZC_ACK_REQ_ALLY_GUILD {
+	int16 packetType;
+	uint8 flag;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_REQ_ALLY_GUILD, 0x173)
+
 struct PACKET_ZC_COMPASS {
 	int16 packetType;
 	uint32 npcId;

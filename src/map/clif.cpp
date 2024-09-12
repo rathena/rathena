@@ -9175,8 +9175,8 @@ void clif_guild_reqalliance(map_session_data *sd,uint32 account_id,const char *n
 }
 
 
-/// Notifies the client about the result of a alliance request (ZC_ACK_REQ_ALLY_GUILD).
-/// 0173 <answer>.B
+/// Notifies the client about the result of a alliance request 
+/// 0173 <answer>.B (ZC_ACK_REQ_ALLY_GUILD).
 /// answer:
 ///     0 = Already allied.
 ///     1 = You rejected the offer.
@@ -9184,17 +9184,14 @@ void clif_guild_reqalliance(map_session_data *sd,uint32 account_id,const char *n
 ///     3 = They have too any alliances.
 ///     4 = You have too many alliances.
 ///     5 = Alliances are disabled.
-void clif_guild_allianceack(map_session_data *sd,int flag)
-{
-	int fd;
+void clif_guild_allianceack(map_session_data& sd,int flag){
 
-	nullpo_retv(sd);
+	PACKET_ZC_ACK_REQ_ALLY_GUILD p{};
 
-	fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0x173));
-	WFIFOW(fd,0)=0x173;
-	WFIFOL(fd,2)=flag;
-	WFIFOSET(fd,packet_len(0x173));
+	p.packetType = HEADER_ZC_ACK_REQ_ALLY_GUILD;
+	p.flag = static_cast<decltype(p.flag)>(flag);
+
+	clif_send(&p,sizeof(p),&sd.bl,SELF);
 }
 
 
