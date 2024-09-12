@@ -9099,7 +9099,7 @@ void clif_guild_expulsion( map_session_data& sd, const char* name, uint32 char_i
 /// Guild expulsion list 
 /// 0163 <packet len>.W { <char name>.24B <account name>.24B <reason>.40B }* (ZC_BAN_LIST).
 /// 0163 <packet len>.W { <char name>.24B <reason>.40B }* (PACKETVER >= 20100803)
-/// 0a87 <packet len>.W { <char name>.24B <reason>.40B }* (PACKETVER >= 20161019) (ZC_BAN_LIST2).
+/// 0a87 <packet len>.W { <charid>.L <reason>.40B }* (PACKETVER >= 20161019) (ZC_BAN_LIST2).
 /// 0b7c <packet len>.W { <charid>.L <reason>.40B <char name>.24B }* (PACKETVER >= 20200902) (ZC_BAN_LIST3).
 static void clif_guild_expulsionlist(map_session_data& sd){
 
@@ -9119,12 +9119,16 @@ static void clif_guild_expulsionlist(map_session_data& sd){
 		if( e->account_id > 0 ){
 			PACKET_ZC_BAN_LIST_sub& banned = p->chars[c];
 
-#if PACKETVER > 20200902
+#if PACKETVER >= 20161019
 			banned.char_id = static_cast<decltype(banned.char_id)>(e->char_id);
 #elif PACKETVER < 20100803
 			memset(banned.account_name, 0, sizeof(banned.account_name)); // account name (not used for security reasons)
 #endif
+
+#if PACKETVER >= 20200902 || PACKETVER < 20161019
 			safestrncpy(banned.char_name, e->name, sizeof(banned.char_name));
+#endif
+
 			memcpy(banned.message, e->mes, sizeof(banned.message));
 			p->packetLen += sizeof(banned);
 			c++;
