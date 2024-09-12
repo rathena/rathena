@@ -499,7 +499,7 @@ std::shared_ptr<CharGuild> inter_guild_fromsql( int32 guild_id ){
 		Sql_GetData(sql_handle, 0, &data, nullptr); e->account_id = atoi(data);
 		Sql_GetData(sql_handle, 1, &data, &len); memcpy(e->name, data, zmin(len, NAME_LENGTH));
 		Sql_GetData(sql_handle, 2, &data, &len); memcpy(e->mes, data, zmin(len, sizeof(e->mes)));
-		Sql_GetData(sql_handle, 4, &data, nullptr); e->char_id = atoi(data);
+		Sql_GetData(sql_handle, 3, &data, nullptr); e->char_id = atoi(data);
 	}
 
 	//printf("- Read guild_skill %d from sql \n",guild_id);
