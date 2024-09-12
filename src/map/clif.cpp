@@ -4619,6 +4619,7 @@ void clif_changechatowner(chat_data& cd, map_session_data& sd){
 
 	PACKET_ZC_ROLE_CHANGE owner{};
 	PACKET_ZC_ROLE_CHANGE newowner{};
+
 	owner.packetType = newowner.packetType = HEADER_ZC_ROLE_CHANGE;
 	owner.flag = 1;
 	newowner.flag = 0;
