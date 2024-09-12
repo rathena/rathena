@@ -539,6 +539,9 @@
 	export_constant(MF_NODYNAMICNPC);
 	export_constant(MF_NOBANK);
 	export_constant(MF_SPECIALPOPUP);
+	//Any Map (map_drops) [Hyroshima]
+	export_constant(MF_MAPDROPS);
+	export_constant(MF_NOMAPDROPS);
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);

@@ -22,13 +22,14 @@
 # Map Drop Settings
 #
 ###########################################################################
-# - Map                             Name of the map.
+# - Map                             Name of the map (use ANY for all maps [Hyroshima]).
 #   GlobalDrops                     Drops for all monsters on this map. (Default: empty)
 #                                   These drops are unaffected by server drop rate and cannot be stolen.
 #     - Index                       Unique index of the drop.
 #       Item                        Item name.
 #       Rate                        Drop rate of item, n/100000.
 #       RandomOptionGroup           Random Option Group applied to item on drop. (Default: None)
+#       DirectInventory             Item will be sent directly to the player's inventory. (Default: false) [Hyroshima]
 #   SpecificDrops                   Drops for specific monsters on this map. (Default: empty)
 #     - Monster                     Monster name.
 #       Drops                       Drops for this specific monster. (Default: empty)
@@ -37,6 +38,7 @@
 #           Item                    Item name.
 #           Rate                    Drop rate of item, n/100000.
 #           RandomOptionGroup       Random Option Group applied to item on drop. (Default: None)
+#           DirectInventory         Item will be sent directly to the player's inventory. (Default: false) [Hyroshima]
 ###########################################################################
 
 Header:

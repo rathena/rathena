@@ -3000,38 +3000,92 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		}
 
 		// Process map specific drops
-		std::shared_ptr<s_map_drops> mapdrops;
+		//Any Map (map_drops) [Hyroshima]
+ 		std::shared_ptr<s_map_drops> mapdrops;
+		std::shared_ptr<s_map_drops> anymapdrops = map_drop_db.find(ANY_MAP_ID);
+		int map_drop_run = ( anymapdrops != nullptr ? 2 : 1);
+		bool on_instance = ( map[md->bl.m].instance_id > 0 ? 1 : 0);
 
 		// If it is an instance map, we check for map specific drops of the original map
-		if( map[md->bl.m].instance_id > 0 ){
+		// Now instance maps need the mapflag mapdrops [Hyroshima]
+		if( on_instance && map_getmapflag( md->bl.m, MF_MAPDROPS) )
 			mapdrops = map_drop_db.find( map[md->bl.m].instance_src_map );
-		}else{
+		else if( !on_instance && !map_getmapflag( md->bl.m, MF_NOMAPDROPS ) )
 			mapdrops = map_drop_db.find( md->bl.m );
+		for (i = 0; i < map_drop_run; i++){
+			if(i)
+			{
+				if( on_instance )
+				{
+					if( map_getmapflag( md->bl.m, MF_MAPDROPS) )
+						mapdrops = anymapdrops;
+ 				}
+				else if( !map_getmapflag(md->bl.m, MF_NOMAPDROPS) )
+					mapdrops = anymapdrops;
+			}
 		}
 
-		if( mapdrops != nullptr ){
-			// Process map wide drops
-			for( const auto& it : mapdrops->globals ){
-				if( rnd_chance( it.second->rate, 100000u ) ){
-					// 'Cheat' for autoloot command: rate is changed from n/100000 to n/10000
-					int32 map_drops_rate = max(1, (it.second->rate / 10));
-					std::shared_ptr<s_item_drop> ditem = mob_setdropitem(*it.second, 1, md->mob_id);
-					mob_item_drop( md, dlist, ditem, 0, map_drops_rate, homkillonly || merckillonly );
-				}
-			}
-
-			// Process map drops for this specific mob
-			const auto& specific = mapdrops->specific.find( md->mob_id );
-
-			if( specific != mapdrops->specific.end() ){
-				for( const auto& it : specific->second ){
+			if( mapdrops != nullptr ){
+				// Process map wide drops
+				for( const auto& it : mapdrops->globals ){
+					unsigned char flag = 0;
 					if( rnd_chance( it.second->rate, 100000u ) ){
-						// 'Cheat' for autoloot command: rate is changed from n/100000 to n/10000
-						int32 map_drops_rate = max(1, (it.second->rate / 10));
-						std::shared_ptr<s_item_drop> ditem = mob_setdropitem(*it.second, 1, md->mob_id);
-						mob_item_drop( md, dlist, ditem, 0, map_drops_rate, homkillonly || merckillonly );
+						if(it.second->direct_inventory)
+						{
+							if(!pet_create_egg(sd,it.second->nameid))
+							{
+								struct item item_tmp = {};
+								item_tmp.nameid=it.second->nameid;
+								item_tmp.identify=1;
+
+								if((flag=pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT))){
+									clif_additem(sd,0,0,flag);
+									map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
+								}
+							}
+						}
+						else
+						{
+							// 'Cheat' for autoloot command: rate is changed from n/100000 to n/10000
+							int32 map_drops_rate = max(1, (it.second->rate / 10));
+							std::shared_ptr<s_item_drop> ditem = mob_setdropitem(*it.second, 1, md->mob_id);
+							mob_item_drop( md, dlist, ditem, 0, map_drops_rate, homkillonly || merckillonly );
+						}
 					}
 				}
+
+				// Process map drops for this specific mob
+				const auto& specific = mapdrops->specific.find( md->mob_id );
+
+				if( specific != mapdrops->specific.end() ){
+					for( const auto& it : specific->second ){
+						unsigned char flag = 0;
+						if( rnd_chance( it.second->rate, 100000u ) ){
+							if(it.second->direct_inventory)
+							{
+								if(!pet_create_egg(sd,it.second->nameid))
+								{
+									struct item item_tmp = {};
+									item_tmp.nameid=it.second->nameid;
+									item_tmp.identify=1;
+
+									if((flag=pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT))){
+										clif_additem(sd,0,0,flag);
+										map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
+									}
+								}
+							}
+							else
+							{
+								// 'Cheat' for autoloot command: rate is changed from n/100000 to n/10000
+								int32 map_drops_rate = max(1, (it.second->rate / 10));
+								std::shared_ptr<s_item_drop> ditem = mob_setdropitem(*it.second, 1, md->mob_id);
+								mob_item_drop( md, dlist, ditem, 0, map_drops_rate, homkillonly || merckillonly );
+							}
+						}
+					}
+				}
+				mapdrops = nullptr;
 			}
 		}
 
@@ -6464,14 +6518,18 @@ uint64 MapDropDatabase::parseBodyNode( const ryml::NodeRef& node ){
 
 	uint16 mapindex = mapindex_name2idx( mapname.c_str(), nullptr );
 
-	if( mapindex == 0 ){
+	//Any Map (map_drops) [Hyroshima]
+	if( mapindex == 0 && strcmp(mapname.c_str(),ANY_MAP_REF)){
 		this->invalidWarning( node["Map"], "Unknown map \"%s\".\n", mapname.c_str() );
 		return 0;
 	}
 
 	int16 mapid = map_mapindex2mapid( mapindex );
 
-	if( mapid < 0 ){
+	//Any Map (map_drops) [Hyroshima]
+	if(!strcmp(mapname.c_str(),ANY_MAP_REF))
+		mapid = ANY_MAP_ID;
+	else if( mapid < 0 ){
 		// Silently ignore. Map might be on a different map-server
 		return 0;
 	}
@@ -6607,6 +6665,12 @@ bool MapDropDatabase::parseDrop( const ryml::NodeRef& node, std::unordered_map<u
 			drop->randomopt_group = 0;
 		}
 	}
+	
+	//Any Map (map_drops) [Hyroshima]
+	if( this->nodeExists( node, "DirectInventory" ) )
+		drop->direct_inventory = 1;
+	else
+		drop->direct_inventory = 0;
 
 	if( !exists ){
 		drops[index] = drop;

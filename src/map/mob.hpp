@@ -253,6 +253,7 @@ struct s_mob_drop {
 	uint32 rate;
 	uint16 randomopt_group;
 	bool steal_protected;
+	bool direct_inventory; //Any Map (map_drops) [Hyroshima]
 };
 
 struct s_mob_db {
