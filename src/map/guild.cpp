@@ -1996,14 +1996,14 @@ int guild_opposition(map_session_data *sd,map_session_data *tsd) {
 		return 0;
 
 	if( guild_get_alliance_count(g->guild,1) >= battle_config.max_guild_alliance )	{
-		clif_guild_oppositionack(sd,1);
+		clif_guild_oppositionack(*sd,1);
 		return 0;
 	}
 
 	for (i = 0; i < MAX_GUILDALLIANCE; i++) { // checking relations
 		if(g->guild.alliance[i].guild_id==tsd->status.guild_id){
 			if (g->guild.alliance[i].opposition == 1) { // check if not already hostile
-				clif_guild_oppositionack(sd,2);
+				clif_guild_oppositionack(*sd,2);
 				return 0;
 			}
 			if(is_agit_start()) // Prevent the changing of alliances to oppositions during WoE.
@@ -2082,7 +2082,7 @@ int guild_allianceack(int guild_id1,int guild_id2,uint32 account_id1,uint32 acco
 			clif_guild_allianceack(sd[1],2);
 	} else if ((flag & 0x0f) == 1) { // enemy notification
 		if( sd[0]!=nullptr )
-			clif_guild_oppositionack(sd[0],0);
+			clif_guild_oppositionack(*sd[0],0);
 	}
 
 

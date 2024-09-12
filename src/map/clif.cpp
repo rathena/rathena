@@ -9220,24 +9220,21 @@ void clif_guild_delalliance(map_session_data *sd,int guild_id,int flag)
 }
 
 
-/// Notifies the client about the result of a opposition request (ZC_ACK_REQ_HOSTILE_GUILD).
-/// 0181 <result>.B
+/// Notifies the client about the result of a opposition request 
+/// 0181 <result>.B (ZC_ACK_REQ_HOSTILE_GUILD).
 /// result:
 ///     0 = Antagonist has been set.
 ///     1 = Guild has too many Antagonists.
 ///     2 = Already set as an Antagonist.
 ///     3 = Antagonists are disabled.
-void clif_guild_oppositionack(map_session_data *sd,int flag)
-{
-	int fd;
+void clif_guild_oppositionack(map_session_data& sd,int flag){
 
-	nullpo_retv(sd);
+	PACKET_ZC_ACK_REQ_HOSTILE_GUILD p{};
 
-	fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0x181));
-	WFIFOW(fd,0)=0x181;
-	WFIFOB(fd,2)=flag;
-	WFIFOSET(fd,packet_len(0x181));
+	p.packetType = HEADER_ZC_ACK_REQ_HOSTILE_GUILD;
+	p.flag = static_cast<decltype(p.flag)>(flag);
+
+	clif_send(&p,sizeof(p),&sd.bl,SELF);
 }
 
 
