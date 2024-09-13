@@ -22280,6 +22280,11 @@ BUILDIN_FUNC(areamobuseskill)
 	int emotion = script_getnum( st, 11 );
 	int target = script_getnum( st, 12 );
 
+	if (emotion < ET_SURPRISE || emotion >= ET_MAX) {
+		ShowWarning("buildin_emotion: Unknown emotion %d (min=%d, max=%d).\n", emotion, ET_SURPRISE, (ET_MAX-1));
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	map_foreachinallrange(buildin_mobuseskill_sub, &center, range, BL_MOB, mobid, skill_id, skill_lv, casttime, cancel, emotion, target);
 	return SCRIPT_CMD_SUCCESS;
 }
