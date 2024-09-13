@@ -310,7 +310,7 @@ int hom_vaporize(map_session_data *sd, int flag)
 * @param hd
 * @param emote
 */
-int hom_delete(struct homun_data *hd, e_emotion_type emote)
+int hom_delete(struct homun_data *hd, int8 emote)
 {
 	map_session_data *sd;
 	nullpo_ret(hd);
@@ -319,7 +319,8 @@ int hom_delete(struct homun_data *hd, e_emotion_type emote)
 	if (!sd)
 		return unit_free(&hd->bl,CLR_DEAD);
 
-	clif_emotion(sd->bl, emote);
+	if(emote >= 0)
+		clif_emotion(sd->bl, static_cast<e_emotion_type>(emote));
 
 	//This makes it be deleted right away.
 	hd->homunculus.intimacy = 0;
