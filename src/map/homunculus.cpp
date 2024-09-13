@@ -310,7 +310,7 @@ int hom_vaporize(map_session_data *sd, int flag)
 * @param hd
 * @param emote
 */
-int hom_delete(struct homun_data *hd, int emote)
+int hom_delete(struct homun_data *hd, uint8 emote)
 {
 	map_session_data *sd;
 	nullpo_ret(hd);
@@ -868,7 +868,8 @@ void hom_menu(map_session_data *sd, int type)
 */
 int hom_food(map_session_data *sd, struct homun_data *hd)
 {
-	int i, foodID, emotion;
+	int i, foodID;
+	uint8 emotion;
 
 	nullpo_retr(1,sd);
 	nullpo_retr(1,hd);

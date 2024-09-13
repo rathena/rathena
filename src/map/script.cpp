@@ -13672,7 +13672,7 @@ BUILDIN_FUNC(emotion)
 	if (!bl)
 		bl = map_id2bl(st->oid);
 
-	clif_emotion(*bl, type);
+	clif_emotion(*bl, static_cast<uint8>(type));
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -22207,7 +22207,7 @@ static int buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 	else
 		unit_skilluse_id2(&md->bl, tbl->id, skill_id, skill_lv, casttime, cancel);
 
-	clif_emotion(md->bl, emotion);
+	clif_emotion(md->bl, static_cast<uint8>(emotion));
 
 	return 1;
 }

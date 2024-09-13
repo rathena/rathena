@@ -7292,7 +7292,7 @@ ACMD_FUNC(pettalk)
 			}
 			sd->emotionlasttime = time(nullptr);
 
-			clif_emotion(pd->bl, i);
+			clif_emotion(pd->bl, static_cast<uint8>(i));
 			return 0;
 		}
 	}
