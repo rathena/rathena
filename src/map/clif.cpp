@@ -9203,16 +9203,14 @@ void clif_guild_allianceack(map_session_data *sd,int flag)
 /// relation:
 ///     0 = Ally
 ///     1 = Enemy
-void clif_guild_delalliance(map_session_data& sd,int guild_id,int flag)
+void clif_guild_delalliance(map_session_data& sd,uint32 guild_id,uint32 flag)
 {
-	if ( !session_isActive(sd.fd) )
-		return;
 
 	PACKET_ZC_DELETE_RELATED_GUILD p{};
 
 	p.packetType = HEADER_ZC_DELETE_RELATED_GUILD;
-	p.allyID = static_cast<decltype(p.allyID)>(guild_id);
-	p.flag = static_cast<decltype(p.flag)>(flag);
+	p.allyID = guild_id;
+	p.flag = flag;
 
 	clif_send(&p,sizeof(p),&sd.bl,SELF);
 }

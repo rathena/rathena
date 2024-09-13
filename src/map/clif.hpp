@@ -1060,7 +1060,7 @@ void clif_guild_notice( map_session_data& sd );
 void clif_guild_message( const struct mmo_guild& g, uint32 account_id, const char* mes, size_t len );
 void clif_guild_reqalliance(map_session_data *sd,uint32 account_id,const char *name);
 void clif_guild_allianceack(map_session_data *sd,int flag);
-void clif_guild_delalliance(map_session_data& sd,int guild_id,int flag);
+void clif_guild_delalliance(map_session_data& sd,uint32 guild_id,uint32 flag);
 void clif_guild_oppositionack(map_session_data *sd,int flag);
 void clif_guild_broken( map_session_data& sd, int flag );
 void clif_guild_xy( map_session_data& sd );
