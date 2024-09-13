@@ -9195,8 +9195,8 @@ void clif_guild_allianceack(map_session_data *sd,int flag)
 }
 
 
-/// Notifies the client that a alliance or opposition has been removed 
-/// 0184 <other guild id>.L <relation>.L (ZC_DELETE_RELATED_GUILD).
+/// Notifies the client that a alliance or opposition has been removed.
+/// 0184 <other guild id>.L <relation>.L (ZC_DELETE_RELATED_GUILD)
 /// relation:
 ///     0 = Ally
 ///     1 = Enemy
