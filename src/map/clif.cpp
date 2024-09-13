@@ -9210,6 +9210,7 @@ void clif_guild_delalliance(map_session_data& sd,int guild_id,int flag)
 
 	PACKET_ZC_DELETE_RELATED_GUILD p{};
 
+	p.packetType = HEADER_ZC_DELETE_RELATED_GUILD;
 	p.allyID = static_cast<decltype(p.allyID)>(guild_id);
 	p.flag = static_cast<decltype(p.flag)>(flag);
 
