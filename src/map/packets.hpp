@@ -767,6 +767,13 @@ struct PACKET_ZC_DELETE_RELATED_GUILD {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_DELETE_RELATED_GUILD, 0x184)
 
+struct PACKET_ZC_REQ_ALLY_GUILD {
+	int16 packetType;
+	uint32 inviterId;
+	char inviterGuildName[NAME_LENGTH];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_REQ_ALLY_GUILD, 0x171)
+
 struct PACKET_ZC_COMPASS {
 	int16 packetType;
 	uint32 npcId;

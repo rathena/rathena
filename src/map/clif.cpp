@@ -9158,20 +9158,17 @@ void clif_guild_message( const struct mmo_guild& g, uint32 account_id, const cha
 		clif_send(buf, WBUFW(buf,2), &sd->bl, GUILD_NOBG);
 }
 
-/// Request for guild alliance (ZC_REQ_ALLY_GUILD).
-/// 0171 <inviter account id>.L <guild name>.24B
-void clif_guild_reqalliance(map_session_data *sd,uint32 account_id,const char *name)
+/// Request for guild alliance 
+/// 0171 <inviter account id>.L <guild name>.24B (ZC_REQ_ALLY_GUILD).
+void clif_guild_reqalliance(map_session_data& sd,uint32 account_id,const char *name)
 {
-	int fd;
+	PACKET_ZC_REQ_ALLY_GUILD p{};
 
-	nullpo_retv(sd);
+	p.packetType = HEADER_ZC_REQ_ALLY_GUILD;
+	p.inviterId = account_id;
+	safestrncpy(p.inviterGuildName,name,sizeof(p.inviterGuildName));
 
-	fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0x171));
-	WFIFOW(fd,0)=0x171;
-	WFIFOL(fd,2)=account_id;
-	safestrncpy(WFIFOCP(fd,6),name,NAME_LENGTH);
-	WFIFOSET(fd,packet_len(0x171));
+	clif_send(&p,sizeof(p),&sd.bl,SELF);
 }
 
 
