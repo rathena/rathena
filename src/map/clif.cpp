@@ -9227,12 +9227,12 @@ void clif_guild_delalliance(map_session_data *sd,int guild_id,int flag)
 ///     1 = Guild has too many Antagonists.
 ///     2 = Already set as an Antagonist.
 ///     3 = Antagonists are disabled.
-void clif_guild_oppositionack(map_session_data& sd,int flag){
+void clif_guild_oppositionack(map_session_data& sd,uint8 flag){
 
 	PACKET_ZC_ACK_REQ_HOSTILE_GUILD p{};
 
 	p.packetType = HEADER_ZC_ACK_REQ_HOSTILE_GUILD;
-	p.flag = static_cast<decltype(p.flag)>(flag);
+	p.flag = flag;
 
 	clif_send(&p,sizeof(p),&sd.bl,SELF);
 }
