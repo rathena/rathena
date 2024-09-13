@@ -306,11 +306,10 @@ int hom_vaporize(map_session_data *sd, int flag)
 
 /**
 * Delete a homunculus, completely "killing it".
-* Emote is the emotion the master should use, send ET_MAX to disable.
 * @param hd
 * @param emote
 */
-int hom_delete(struct homun_data *hd, uint8 emote)
+int hom_delete(struct homun_data *hd)
 {
 	map_session_data *sd;
 	nullpo_ret(hd);
@@ -318,9 +317,6 @@ int hom_delete(struct homun_data *hd, uint8 emote)
 
 	if (!sd)
 		return unit_free(&hd->bl,CLR_DEAD);
-
-	if(emote < ET_MAX)
-		clif_emotion(sd->bl, static_cast<e_emotion_type>(emote));
 
 	//This makes it be deleted right away.
 	hd->homunculus.intimacy = 0;
@@ -853,7 +849,7 @@ void hom_menu(map_session_data *sd, int type)
 			hom_food(sd, sd->hd);
 			break;
 		case 2:
-			hom_delete(sd->hd, ET_MAX);
+			hom_delete(sd->hd);
 			break;
 		default:
 			ShowError("hom_menu : unknown menu choice : %d\n", type);
@@ -915,7 +911,7 @@ int hom_food(map_session_data *sd, struct homun_data *hd)
 
 	// Too much food :/
 	if(hd->homunculus.intimacy == 0)
-		return hom_delete(sd->hd, ET_HUK);
+		return hom_delete(sd->hd);
 
 	return 0;
 }
@@ -958,7 +954,7 @@ static TIMER_FUNC(hom_hungry){
 		hd->homunculus.hunger = 0;
 		// Delete the homunculus if intimacy <= 100
 		if (!hom_decrease_intimacy(hd, 100))
-			return hom_delete(hd, ET_HUK);
+			return hom_delete(hd);
 		clif_send_homdata( *hd, SP_INTIMATE );
 	}
 
