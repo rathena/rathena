@@ -9175,8 +9175,8 @@ void clif_guild_reqalliance(map_session_data *sd,uint32 account_id,const char *n
 }
 
 
-/// Notifies the client about the result of a alliance request 
-/// 0173 <answer>.B (ZC_ACK_REQ_ALLY_GUILD).
+/// Notifies the client about the result of a alliance request.
+/// 0173 <answer>.B (ZC_ACK_REQ_ALLY_GUILD)
 /// answer:
 ///     0 = Already allied.
 ///     1 = You rejected the offer.
