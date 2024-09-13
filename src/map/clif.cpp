@@ -8889,7 +8889,7 @@ void clif_guild_positionchanged(const struct mmo_guild &g){
 		Info.ranking = count;
 		Info.payRate = position.exp_mode;
 		safestrncpy(Info.posName,position.name,sizeof(Info.posName));
-		p->PacketLength += sizeof(Info);
+		p->PacketLength += static_cast<decltype(p->PacketLength)>(sizeof(Info));
 		count++;
 	}
 
