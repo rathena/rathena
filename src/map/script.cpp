@@ -27424,11 +27424,20 @@ BUILDIN_FUNC(checknpcdialogue)
 		script_pushint(st, 1);
 		return SCRIPT_CMD_FAILURE;
 	}
+	bool state;
+	if(sd->state.menu_or_input || sd->state.trading || sd->state.storage_flag || sd->state.using_fake_npc || sd->npc_id){
+		if(sd->st != nullptr){
+			if(sd->st->mes_active)
+				state = true;
+		}
+		else if(sd->state.trading || sd->state.storage_flag)
+			state = true;
+		else
+			state = false;
+	}else
+		state = false;
 
-	if(sd->state.menu_or_input || sd->state.trading || sd->state.using_fake_npc || sd->npc_id)
-		script_pushint(st, 1);
-	else
-		script_pushint(st, 0);
+	script_pushint(st, state);
 
 	return SCRIPT_CMD_SUCCESS;
 }
