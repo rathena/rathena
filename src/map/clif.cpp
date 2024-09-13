@@ -8882,13 +8882,13 @@ void clif_guild_positionchanged(const struct mmo_guild &g){
 	p->PacketType = HEADER_ZC_ACK_CHANGE_GUILD_POSITIONINFO;
 	p->PacketLength = sizeof(*p);
 	int count = 0;
-	for(const guild_position& position : g.position){
+	for(const guild_position& pos : g.position){
 		PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO_sub& Info = p->posInfo[count];
 		Info.positionID = count;
-		Info.mode = position.mode;
+		Info.mode = pos.mode;
 		Info.ranking = count;
-		Info.payRate = position.exp_mode;
-		safestrncpy(Info.posName,position.name,sizeof(Info.posName));
+		Info.payRate = pos.exp_mode;
+		safestrncpy(Info.posName,pos.name,sizeof(Info.posName));
 		p->PacketLength += static_cast<decltype(p->PacketLength)>(sizeof(Info));
 		count++;
 	}
