@@ -9134,7 +9134,7 @@ void clif_guild_expulsionlist(map_session_data* sd)
 
 
 /// Guild chat message 
-/// 017f <packet len>.W <message>.?B (ZC_GUILD_CHAT).
+/// 017f <packet len>.W <message>.?B (ZC_GUILD_CHAT)
 void clif_guild_message( const struct mmo_guild& g, const char* mes, size_t len ){
 	PACKET_ZC_GUILD_CHAT *p = reinterpret_cast<PACKET_ZC_GUILD_CHAT*>( packet_buffer );
 	// -1 for null terminator
