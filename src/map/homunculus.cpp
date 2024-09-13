@@ -306,11 +306,11 @@ int hom_vaporize(map_session_data *sd, int flag)
 
 /**
 * Delete a homunculus, completely "killing it".
-* Emote is the emotion the master should use, send negative to disable.
+* Emote is the emotion the master should use, send ET_MAX to disable.
 * @param hd
 * @param emote
 */
-int hom_delete(struct homun_data *hd, int8 emote)
+int hom_delete(struct homun_data *hd, uint8 emote)
 {
 	map_session_data *sd;
 	nullpo_ret(hd);
@@ -319,7 +319,7 @@ int hom_delete(struct homun_data *hd, int8 emote)
 	if (!sd)
 		return unit_free(&hd->bl,CLR_DEAD);
 
-	if(emote >= 0)
+	if(emote < ET_MAX)
 		clif_emotion(sd->bl, static_cast<e_emotion_type>(emote));
 
 	//This makes it be deleted right away.
@@ -853,7 +853,7 @@ void hom_menu(map_session_data *sd, int type)
 			hom_food(sd, sd->hd);
 			break;
 		case 2:
-			hom_delete(sd->hd, -1);
+			hom_delete(sd->hd, ET_MAX);
 			break;
 		default:
 			ShowError("hom_menu : unknown menu choice : %d\n", type);
