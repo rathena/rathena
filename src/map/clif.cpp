@@ -8914,7 +8914,7 @@ void clif_guild_memberpositionchanged(const struct mmo_guild &g){
 		member.accId = m.account_id;
 		member.charId = m.char_id;
 		member.positionID = m.position;
-		p->PacketLength += sizeof(member);
+		p->PacketLength += static_cast<decltype(p->PacketLength)>(sizeof(member));
 		c++;
 	}
 
