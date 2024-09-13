@@ -8898,28 +8898,27 @@ void clif_guild_positionchanged(const struct mmo_guild &g,int idx)
 /// Notifies clients in a guild about updated member position assignments.
 /// 0156 <packet len>.W { <account id>.L <char id>.L <position id>.L }* (ZC_ACK_REQ_CHANGE_MEMBERS)
 void clif_guild_memberpositionchanged(const struct mmo_guild &g){
-
-	map_session_data *sd;
-	int count = 0;
+	map_session_data *sd = guild_getavailablesd(g);
+	if(sd == nullptr)
+		return;
 
 	PACKET_ZC_ACK_REQ_CHANGE_MEMBERS *p = reinterpret_cast<PACKET_ZC_ACK_REQ_CHANGE_MEMBERS*>( packet_buffer );
 
 	p->PacketType = HEADER_ZC_ACK_REQ_CHANGE_MEMBERS;
 	p->PacketLength = sizeof(*p);
-
-	for(auto& m : g.member){
+	int c = 0;
+	for(const guild_member& m : g.member){
 		if(m.char_id==0)
 			continue;
-		PACKET_ZC_ACK_REQ_CHANGE_MEMBERS_sub& member = p->members[count];
+		PACKET_ZC_ACK_REQ_CHANGE_MEMBERS_sub& member = p->members[c];
 		member.accId = m.account_id;
 		member.charId = m.char_id;
 		member.positionID = m.position;
 		p->PacketLength += sizeof(member);
-		count++;
+		c++;
 	}
 
-	if( (sd=guild_getavailablesd(g))!=nullptr )
-		clif_send(p,p->PacketLength,&sd->bl,GUILD);
+	clif_send(p,p->PacketLength,&sd->bl,GUILD);
 }
 
 
