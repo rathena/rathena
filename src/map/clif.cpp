@@ -9184,12 +9184,12 @@ void clif_guild_reqalliance(map_session_data *sd,uint32 account_id,const char *n
 ///     3 = They have too any alliances.
 ///     4 = You have too many alliances.
 ///     5 = Alliances are disabled.
-void clif_guild_allianceack(map_session_data& sd,int flag){
+void clif_guild_allianceack(map_session_data& sd,uint8 flag){
 
 	PACKET_ZC_ACK_REQ_ALLY_GUILD p{};
 
 	p.packetType = HEADER_ZC_ACK_REQ_ALLY_GUILD;
-	p.flag = static_cast<decltype(p.flag)>(flag);
+	p.flag = flag;
 
 	clif_send(&p,sizeof(p),&sd.bl,SELF);
 }
