@@ -896,6 +896,7 @@ int guild_recv_info(const struct mmo_guild &sg) {
 #if PACKETVER >= 20200902
 			// Clients after this version need this packet to show the guild name on alt+a
 			clif_guild_basicinfo( *sd );
+			clif_name_area(&sd->bl); // Clients after this version need this to show the guild name on under character name (FIXME: it's not needed if leader is online, but why?)
 #endif
 			clif_guild_belonginfo( *sd );
 			clif_guild_notice( *sd );
