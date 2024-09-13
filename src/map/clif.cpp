@@ -8843,7 +8843,6 @@ void clif_guild_positionnamelist(map_session_data *sd)
 /// ranking:
 ///     TODO
 static void clif_guild_positioninfolist(map_session_data& sd){
-
 	auto &g = sd.guild;
 	if (!g)
 		return;
@@ -8854,11 +8853,11 @@ static void clif_guild_positioninfolist(map_session_data& sd){
 	p.PacketLength = sizeof(p);
 
 	for(int i=0;i<MAX_GUILDPOSITION;i++){
-		struct guild_position *gp = &g->guild.position[i];
+		guild_position& gp = g->guild.position[i];
 		p.posInfo[i].positionID = i;
-		p.posInfo[i].right = gp->mode;
+		p.posInfo[i].right = gp.mode;
 		p.posInfo[i].ranking = i;
-		p.posInfo[i].payRate = gp->exp_mode;
+		p.posInfo[i].payRate = gp.exp_mode;
 	}
 
 	clif_send(&p,p.PacketLength,&sd.bl,SELF);
