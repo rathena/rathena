@@ -9143,24 +9143,27 @@ void clif_guild_expulsionlist(map_session_data* sd)
 /// Guild chat message 
 /// 017f <packet len>.W <message>.?B (ZC_GUILD_CHAT).
 void clif_guild_message( const struct mmo_guild& g, const char* mes, size_t len ){
-
 	PACKET_ZC_GUILD_CHAT *p = reinterpret_cast<PACKET_ZC_GUILD_CHAT*>( packet_buffer );
+	// -1 for null terminator
+	static const size_t max_len = CHAT_SIZE_MAX - sizeof( *p ) - 1;
 
-	map_session_data *sd;
+	map_session_data* sd = guild_getavailablesd(g);
 
-	if ((sd = guild_getavailablesd(g)) == nullptr) // ignore this message send because can't find any guildmember available
+	// Ignore this message, if no guildmember is available
+	if (sd == nullptr)
 		return;
 
 	if( len == 0 ){
 		return;
-	} else if( len > CHAT_SIZE_MAX-5 ){ // chatsizemax - nullptr terminate - packetsize	
-		ShowWarning("clif_guild_message: Truncated message '%s' (len=%d, max=%d, guild_id=%d).\n", mes, len, (CHAT_SIZE_MAX - 5), g.guild_id);
-		len = CHAT_SIZE_MAX-5;
+	} else if( len > max_len ){
+		ShowWarning("clif_guild_message: Truncated message '%s' (len=%" PRIuPTR ", max=%" PRIuPTR ", guild_id=%u).\n", mes, len, max_len, g.guild_id);
+		len = max_len;
 	}
 	p->packetType = HEADER_ZC_GUILD_CHAT;
-	p->packetLength = static_cast<decltype(p->packetLength)>(sizeof(*p) + len + 1); // packet + msglen + nullptr teminate
+	p->packetLength = sizeof(*p);
 
 	safestrncpy(p->message, mes, len+1);
+	p->packetLength += static_cast<decltype(p->packetLength)>( len + 1 );
 
 	clif_send(p, p->packetLength, &sd->bl, GUILD_NOBG);
 }
