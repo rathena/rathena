@@ -9217,8 +9217,8 @@ void clif_guild_delalliance(map_session_data *sd,int guild_id,int flag)
 }
 
 
-/// Notifies the client about the result of a opposition request 
-/// 0181 <result>.B (ZC_ACK_REQ_HOSTILE_GUILD).
+/// Notifies the client about the result of a opposition request. 
+/// 0181 <result>.B (ZC_ACK_REQ_HOSTILE_GUILD)
 /// result:
 ///     0 = Antagonist has been set.
 ///     1 = Guild has too many Antagonists.
