@@ -310,7 +310,7 @@ int hom_vaporize(map_session_data *sd, int flag)
 * @param hd
 * @param emote
 */
-int hom_delete(struct homun_data *hd, uint8 emote)
+int hom_delete(struct homun_data *hd, e_emotion_type emote)
 {
 	map_session_data *sd;
 	nullpo_ret(hd);
@@ -319,8 +319,7 @@ int hom_delete(struct homun_data *hd, uint8 emote)
 	if (!sd)
 		return unit_free(&hd->bl,CLR_DEAD);
 
-	if (emote >= 0)
-		clif_emotion(sd->bl, emote);
+	clif_emotion(sd->bl, emote);
 
 	//This makes it be deleted right away.
 	hd->homunculus.intimacy = 0;
@@ -869,7 +868,7 @@ void hom_menu(map_session_data *sd, int type)
 int hom_food(map_session_data *sd, struct homun_data *hd)
 {
 	int i, foodID;
-	uint8 emotion;
+	e_emotion_type emotion;
 
 	nullpo_retr(1,sd);
 	nullpo_retr(1,hd);

@@ -9273,14 +9273,12 @@ void clif_guild_broken( map_session_data& sd, int flag ){
 
 /// Displays emotion on an object 
 /// 00c0 <id>.L <type>.B (ZC_EMOTION).
-/// type:
-///     enum emotion_type
-void clif_emotion(block_list& bl,uint8 type){
+void clif_emotion(block_list& bl,e_emotion_type type){
 
 	PACKET_ZC_EMOTION p{};
 
 	p.packetType = HEADER_ZC_EMOTION;
-	p.srcId = static_cast<decltype(p.srcId)>(bl.id);
+	p.srcId = bl.id;
 	p.emotion_type = type;
 
 	clif_send(&p,sizeof(p),&bl,AREA);
@@ -11476,16 +11474,18 @@ void clif_parse_ChangeDir(int fd, map_session_data *sd)
 
 /// Request to show an emotion 
 /// 00bf <type>.B (CZ_REQ_EMOTION).
-/// type:
-///     @see enum emotion_type
 void clif_parse_Emotion(int fd, map_session_data *sd){
 	if( sd == nullptr ){
 		return;
 	}
 
-	PACKET_CZ_REQ_EMOTION* p = reinterpret_cast<PACKET_CZ_REQ_EMOTION*>( RFIFOP( fd, 0 ) );
+	const PACKET_CZ_REQ_EMOTION* p = reinterpret_cast<const PACKET_CZ_REQ_EMOTION*>( RFIFOP( fd, 0 ) );
 
-	uint8 emoticon = p->emotion_type;
+	if( p->emotion_type >= ET_MAX ){
+		return;
+	}
+	
+	e_emotion_type emoticon = static_cast<e_emotion_type>( p->emotion_type );
 
 	if (battle_config.basic_skill_check == 0 || pc_checkskill(sd, NV_BASIC) >= 2 || pc_checkskill(sd, SU_BASIC_SKILL) >= 1) {
 		if (emoticon == ET_CHAT_PROHIBIT) {// prevent use of the mute emote [Valaris]
@@ -11513,7 +11513,7 @@ void clif_parse_Emotion(int fd, map_session_data *sd){
 		}
 
 		if(battle_config.client_reshuffle_dice && emoticon>=ET_DICE1 && emoticon<=ET_DICE6) {// re-roll dice
-			emoticon = rnd()%6+ET_DICE1;
+			emoticon = static_cast<e_emotion_type>( rnd()%6+ET_DICE1 );
 		}
 
 		clif_emotion(sd->bl, emoticon);

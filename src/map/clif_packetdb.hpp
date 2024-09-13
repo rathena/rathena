@@ -65,7 +65,7 @@
 	parseable_packet(0x00b9,6,clif_parse_NpcNextClicked,2);
 	packet(0x00ba,2);
 	parseable_packet(0x00bb,5,clif_parse_StatusUp,2,4);
-	parseable_packet(0x00bf,3,clif_parse_Emotion,2);
+	parseable_packet( HEADER_CZ_REQ_EMOTION, sizeof(  PACKET_CZ_REQ_EMOTION ), clif_parse_Emotion, 0 );
 	parseable_packet(0x00c1,2,clif_parse_HowManyConnections,0);
 	packet(0x00c3,8);
 	parseable_packet(0x00c5,7,clif_parse_NpcBuySellSelected,2,6);
