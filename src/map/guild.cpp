@@ -1901,7 +1901,7 @@ int guild_reqalliance(map_session_data *sd,map_session_data *tsd) {
 	tsd->guild_alliance=sd->status.guild_id;
 	tsd->guild_alliance_account=sd->status.account_id;
 
-	clif_guild_reqalliance(tsd,sd->status.account_id,g->guild.name);
+	clif_guild_reqalliance(*tsd,sd->status.account_id,g->guild.name);
 	return 0;
 }
 
