@@ -8882,7 +8882,7 @@ void clif_guild_positionchanged(const struct mmo_guild &g){
 	p->PacketType = HEADER_ZC_ACK_CHANGE_GUILD_POSITIONINFO;
 	p->PacketLength = sizeof(*p);
 	int count = 0;
-	for(auto& position : g.position){
+	for(const guild_position& position : g.position){
 		PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO_sub& Info = p->posInfo[count];
 		Info.positionID = count;
 		Info.mode = position.mode;
