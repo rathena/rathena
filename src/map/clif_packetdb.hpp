@@ -46,7 +46,6 @@
 	parseable_packet(0x0094,6,clif_parse_GetCharNameRequest,2);
 	parseable_packet(0x0096,-1,clif_parse_WisMessage,2,4,28);
 	parseable_packet(0x0099,-1,clif_parse_Broadcast,2,4);
-	packet(0x009a,-1);
 	parseable_packet(0x009b,5,clif_parse_ChangeDir,2,4);
 	packet( HEADER_ZC_ITEM_ENTRY, sizeof( struct PACKET_ZC_ITEM_ENTRY ) );
 	packet(0x009e,17);
@@ -60,7 +59,6 @@
 	packet( useItemAckType, sizeof( struct PACKET_ZC_USE_ITEM_ACK ) );
 	parseable_packet(0x00a9,6,clif_parse_EquipItem,2,4);
 	parseable_packet(0x00ab,4,clif_parse_UnequipItem,2);
-	packet(0x00ac,7);
 	packet(0x00ae,-1);
 	parseable_packet(0x00b2,3,clif_parse_Restart,2);
 	parseable_packet(0x00b8,7,clif_parse_NpcSelectMenu,2,6);
@@ -93,7 +91,6 @@
 	packet(0x00dc,28);
 	packet(0x00dd,29);
 	parseable_packet(0x00de,-1,clif_parse_ChatRoomStatusChange,2,4,6,7,15);
-	packet(0x00df,-1);
 	parseable_packet(0x00e0,30,clif_parse_ChangeChatOwner,2,6);
 	packet(0x00e1,30);
 	parseable_packet(0x00e2,26,clif_parse_KickFromChat,2);
@@ -101,7 +98,6 @@
 	parseable_packet(0x00e4,6,clif_parse_TradeRequest,2);
 	packet(0x00e5,26);
 	parseable_packet(0x00e6,3,clif_parse_TradeAck,2);
-	packet(0x00e7,3);
 	parseable_packet(0x00e8,8,clif_parse_TradeAddItem,2,4);
 	packet(0x00ea,5);
 	parseable_packet(0x00eb,2,clif_parse_TradeOk,0);
@@ -195,7 +191,6 @@
 	packet(0x016d,14);
 	parseable_packet(0x016e,186,clif_parse_GuildChangeNotice,2,6,66);
 	parseable_packet(0x0170,14,clif_parse_GuildRequestAlliance,2,6,10);
-	packet(0x0171,30);
 	parseable_packet(0x0172,10,clif_parse_GuildReplyAlliance,2,6);
 	packet(0x0173,3);
 	packet(0x0174,-1);
@@ -301,8 +296,6 @@
 	packet(0x01f1,-1);
 	packet(0x01f2,20);
 	packet(0x01f3,10);
-	packet(0x01f4,32);
-	packet(0x01f5,9);
 	packet(0x01f6,34);
 	parseable_packet(0x01f7,14,clif_parse_Adopt_reply,2,6,10);
 	packet(0x01f8,2);
@@ -1501,7 +1494,6 @@
 	parseable_packet(0x0838,6,clif_parse_SolveCharName,2);
 	parseable_packet(0x0439,8,clif_parse_UseItem,2,4);
 	packet(0x08d2,10);
-	packet(0x08d1,7);
 #endif
 
 // 2011-11-02aRagexe
@@ -1734,7 +1726,6 @@
 	parseable_packet(0x0978,6,clif_parse_reqworldinfo,2);
 	packet(0x0979,50); //ackworldinfo
 	parseable_packet(0x0998,8,clif_parse_EquipItem,2,4); // CZ_REQ_WEAR_EQUIP_V5
-	packet(0x099a,9); // take_off_equipv5
 	packet(0x099b,8); //maptypeproperty2
 	// New Packets
 	packet(0x08ff,24); // ZC_EFST_SET_ENTER

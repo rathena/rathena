@@ -963,7 +963,7 @@ bool guild_invite( map_session_data& sd, map_session_data* tsd ){
 	}
 
 	// Checking if there no other invitation pending
-	if( !battle_config.invite_request_check && ( tsd->party_invite > 0 || tsd->trade_partner || tsd->adopt_invite ) ){
+	if( !battle_config.invite_request_check && ( tsd->party_invite > 0 || tsd->state.trading || tsd->adopt_invite ) ){
 		clif_guild_inviteack( sd, 0 );
 		return false;
 	}
@@ -1901,7 +1901,7 @@ int guild_reqalliance(map_session_data *sd,map_session_data *tsd) {
 	tsd->guild_alliance=sd->status.guild_id;
 	tsd->guild_alliance_account=sd->status.account_id;
 
-	clif_guild_reqalliance(tsd,sd->status.account_id,g->guild.name);
+	clif_guild_reqalliance(*tsd,sd->status.account_id,g->guild.name);
 	return 0;
 }
 
