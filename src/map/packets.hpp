@@ -765,6 +765,13 @@ struct PACKET_ZC_ACK_REQ_ALLY_GUILD {
 	uint8 flag;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_ACK_REQ_ALLY_GUILD, 0x173)
+  
+struct PACKET_ZC_REQ_ALLY_GUILD {
+	int16 packetType;
+	uint32 inviterId;
+	char inviterGuildName[NAME_LENGTH];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_REQ_ALLY_GUILD, 0x171)
 
 struct PACKET_ZC_COMPASS {
 	int16 packetType;
