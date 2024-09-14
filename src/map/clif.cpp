@@ -8729,27 +8729,33 @@ void clif_guild_basicinfo( map_session_data& sd ){
 
 
 /// Guild alliance and opposition list 
-/// 014c <packet len>.W { <relation>.L <guild id>.L <guild name>.24B }* (ZC_MYGUILD_BASIC_INFO).
+/// 014c <packet len>.W { <relation>.L <guild id>.L <guild name>.24B }* (ZC_MYGUILD_BASIC_INFO)
 void clif_guild_allianceinfo(map_session_data& sd){
 	auto &g = sd.guild;
-	if (!g)
-		return;
 
-	PACKET_ZC_MYGUILD_BASIC_INFO *p = reinterpret_cast<PACKET_ZC_MYGUILD_BASIC_INFO*>( packet_buffer );
+	if (g == nullptr){
+		return;
+	}
+
+	PACKET_ZC_MYGUILD_BASIC_INFO* p = reinterpret_cast<PACKET_ZC_MYGUILD_BASIC_INFO*>( packet_buffer );
 
 	p->PacketType = HEADER_ZC_MYGUILD_BASIC_INFO;
 	p->PacketLength = sizeof(*p);
 
-	for(int i=0, c = 0;i<MAX_GUILDALLIANCE;i++){
+	for(size_t i=0, c = 0;i<MAX_GUILDALLIANCE;i++){
 		guild_alliance &a = g->guild.alliance[i];
+
 		if(a.guild_id<=0){
 			continue;
 		}
-		RELATED_GUILD_INFO& Info = p->rgInfo[c];
-		Info.relation = a.opposition;
-		Info.GDID = a.guild_id;
-		safestrncpy(Info.guildname,a.name,sizeof(Info.guildname));
-		p->PacketLength += static_cast<decltype(p->PacketLength)>(sizeof(Info));
+
+		RELATED_GUILD_INFO& info = p->rgInfo[c];
+
+		info.relation = a.opposition;
+		info.GDID = a.guild_id;
+		safestrncpy(info.guildname,a.name,sizeof(info.guildname));
+
+		p->PacketLength += static_cast<decltype(p->PacketLength)>(sizeof(info));
 		c++;
 	}
 
