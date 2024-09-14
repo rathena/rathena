@@ -5841,9 +5841,6 @@ void clif_skillcasting(block_list& src, block_list* dst, uint16 dst_x, uint16 ds
 	p.skillId = skill_id;
 	p.delayTime = casttime;
 
-#if PACKETVER_MAIN_NUM >= 20091124 || PACKETVER_RE_NUM >= 20091124 || defined(PACKETVER_ZERO)
-	p.disposable = false;
-#endif
 
 	// Avoid sending unknown element
 	if(property >= ELE_NEUTRAL && property <= ELE_UNDEAD){
@@ -5853,7 +5850,7 @@ void clif_skillcasting(block_list& src, block_list* dst, uint16 dst_x, uint16 ds
 	}
 
 #if PACKETVER_MAIN_NUM >= 20091124 || PACKETVER_RE_NUM >= 20091124 || defined(PACKETVER_ZERO)
-	p.disposable = static_cast<decltype(p.disposable)>(0);
+	p.disposable = false;
 #endif
 #if PACKETVER_MAIN_NUM >= 20181212 || PACKETVER_RE_NUM >= 20181212 || PACKETVER_ZERO_NUM >= 20190130
 	p.attackMT = 0;
