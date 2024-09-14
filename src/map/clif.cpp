@@ -6083,32 +6083,34 @@ int clif_skill_damage2(struct block_list *src,struct block_list *dst,t_tick tick
 
 
 /// Non-damaging skill effect
-/// 011a <skill id>.W <heal>.W <dst id>.L <src id>.L <result>.B (ZC_USE_SKILL).
-/// 09cb <skill id>.W <heal>.L <dst id>.L <src id>.L <result>.B (ZC_USE_SKILL2).
+/// 011a <skill id>.W <heal>.W <dst id>.L <src id>.L <result>.B (ZC_USE_SKILL)
+/// 09cb <skill id>.W <heal>.L <dst id>.L <src id>.L <result>.B (ZC_USE_SKILL2)
 bool clif_skill_nodamage( block_list* src, block_list& dst, uint16 skill_id, int32 heal, bool success ){
-
 	PACKET_ZC_USE_SKILL p{};
 
 	p.PacketType = HEADER_ZC_USE_SKILL;
 	p.SKID = skill_id;
 	p.level = std::min( static_cast<decltype(p.level)>( heal ), std::numeric_limits<decltype(p.level)>::max() );
-	p.targetAID = static_cast<decltype(p.targetAID)>(dst.id);
-	p.result = static_cast<decltype(p.result)>(success);
-	p.srcAID = 0;
-	if(src != nullptr)
-		p.srcAID =static_cast<decltype(p.srcAID)>(src->id);
-
+	p.targetAID = dst.id;
+	p.result = success;
+	if(src != nullptr){
+		p.srcAID = src->id;
+	}else{
+		p.srcAID = 0;
+	}
 	if (disguised(&dst)) {
 		clif_send(&p, sizeof(p), &dst, AREA_WOS);
-		p.targetAID = static_cast<decltype(p.targetAID)>(disguised_bl_id(dst.id));
+		p.targetAID = disguised_bl_id(dst.id);
 		clif_send(&p, sizeof(p), &dst, SELF);
 	} else
 		clif_send(&p, sizeof(p), &dst, AREA);
 
 	if(src != nullptr && disguised(src)) {
-		p.srcAID = static_cast<decltype(p.srcAID)>(disguised_bl_id(src->id));
-		if (disguised(&dst))
-			p.targetAID = static_cast<decltype(p.targetAID)>(dst.id);
+		p.srcAID = disguised_bl_id(src->id);
+		if (disguised(&dst)){
+			// It is necessary to revert the changes done above for the disguised target
+			p.targetAID = dst.id;
+		}
 		clif_send(&p, sizeof(p), src, SELF);
 	}
 
