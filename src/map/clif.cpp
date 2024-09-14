@@ -9123,47 +9123,48 @@ void clif_guild_expulsion( map_session_data& sd, const char* name, uint32 char_i
 }
 
 
-/// Guild expulsion list (ZC_BAN_LIST).
-/// 0163 <packet len>.W { <char name>.24B <account name>.24B <reason>.40B }*
-/// 0163 <packet len>.W { <char name>.24B <reason>.40B }* (PACKETVER >= 20100803)
-void clif_guild_expulsionlist(map_session_data* sd)
-{
-#if PACKETVER < 20100803
-	const int offset = NAME_LENGTH*2+40;
-#else
-	const int offset = NAME_LENGTH+40;
-#endif
-	int fd, i, c = 0;
+/// Guild expulsion list 
+/// 0163 <packet len>.W { <char name>.24B <account name>.24B <reason>.40B }* (ZC_BAN_LIST)
+/// 0163 <packet len>.W { <char name>.24B <reason>.40B }* (PACKETVER >= 20100803) (ZC_BAN_LIST)
+/// 0a87 <packet len>.W { <charid>.L <reason>.40B }* (ZC_BAN_LIST2)
+/// 0b7c <packet len>.W { <charid>.L <reason>.40B <char name>.24B }* (ZC_BAN_LIST3)
+static void clif_guild_expulsionlist(map_session_data& sd){
 
-	nullpo_retv(sd);
-
-	auto &g = sd->guild;
+	auto &g = sd.guild;
 	if (!g)
 		return;
 
-	fd = sd->fd;
+	PACKET_ZC_BAN_LIST* p = reinterpret_cast<PACKET_ZC_BAN_LIST*>( packet_buffer );
 
-	WFIFOHEAD(fd,4 + MAX_GUILDEXPULSION * offset);
-	WFIFOW(fd,0) = 0x163;
+	p->packetType = HEADER_ZC_BAN_LIST;
+	p->packetLen = sizeof(*p);
 
-	for( i = 0; i < MAX_GUILDEXPULSION; i++ )
-	{
-		struct guild_expulsion* e = &g->guild.expulsion[i];
+	for( size_t i = 0, c = 0; i < MAX_GUILDEXPULSION; i++ ){
+		struct guild_expulsion& e = g->guild.expulsion[i];
 
-		if( e->account_id > 0 )
-		{
-			safestrncpy(WFIFOCP(fd,4 + c*offset), e->name, NAME_LENGTH);
-#if PACKETVER < 20100803
-			memset(WFIFOP(fd,4 + c*offset+24), 0, NAME_LENGTH); // account name (not used for security reasons)
-			memcpy(WFIFOP(fd,4 + c*offset+48), e->mes, 40);
-#else
-			memcpy(WFIFOP(fd,4 + c*offset+24), e->mes, 40);
-#endif
-			c++;
+		if( e.account_id == 0 ){
+			continue;
 		}
+
+		PACKET_ZC_BAN_LIST_sub& banned = p->chars[c];
+
+#if PACKETVER >= 20161019
+		banned.char_id = e.char_id;
+#elif PACKETVER < 20100803
+		// account name (not used for security reasons)
+		safestrncpy(banned.account_name, "", sizeof(banned.account_name)); 
+#endif
+
+#if PACKETVER >= 20200902 || PACKETVER < 20161019
+		safestrncpy(banned.char_name, e.name, sizeof(banned.char_name));
+#endif
+
+		safestrncpy(banned.message, e.mes, sizeof(banned.message));
+		p->packetLen += static_cast<decltype(p->packetLen)>(sizeof(banned));
+		c++;
 	}
-	WFIFOW(fd,2) = 4 + c*offset;
-	WFIFOSET(fd,WFIFOW(fd,2));
+
+	clif_send(p,p->packetLen,&sd.bl,SELF);
 }
 
 
@@ -14102,7 +14103,7 @@ void clif_parse_GuildRequestInfo(int fd, map_session_data *sd)
 		clif_guild_skillinfo( *sd );
 		break;
 	case 4:	// Expulsion list
-		clif_guild_expulsionlist(sd);
+		clif_guild_expulsionlist(*sd);
 		break;
 	default:
 		ShowError("clif: guild request info: unknown type %d\n", type);

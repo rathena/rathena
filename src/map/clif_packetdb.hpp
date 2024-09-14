@@ -180,7 +180,6 @@
 	packet(0x015f,42);
 	packet(0x0160,-1);
 	parseable_packet(0x0161,-1,clif_parse_GuildChangePositionInfo,2,4);
-	packet(0x0163,-1);
 	packet(0x0164,-1);
 	parseable_packet(0x0165,30,clif_parse_CreateGuild,2,6);
 	packet(0x0166,-1);
