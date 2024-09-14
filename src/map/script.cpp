@@ -22182,7 +22182,7 @@ static int buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 	uint16 skill_lv	= va_arg(ap,int);
 	int casttime	= va_arg(ap,int);
 	int cancel		= va_arg(ap,int);
-	e_emotion_type emotion = va_arg(ap,e_emotion_type);
+	int emotion		= va_arg(ap,int);
 	int target		= va_arg(ap,int);
 
 	if( md->mob_id != mobid )
@@ -22208,7 +22208,7 @@ static int buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 		unit_skilluse_id2(&md->bl, tbl->id, skill_id, skill_lv, casttime, cancel);
 
 	if(emotion >= ET_SURPRISE && emotion < ET_MAX)
-		clif_emotion(md->bl, emotion);
+		clif_emotion(md->bl, static_cast<e_emotion_type>(emotion));
 
 	return 1;
 }
@@ -22278,17 +22278,15 @@ BUILDIN_FUNC(areamobuseskill)
 
 	int casttime = script_getnum( st, 9 );
 	int cancel = script_getnum( st, 10 );
-	int temp_emotion = script_getnum( st, 11 );
+	int emotion = script_getnum( st, 11 );
 	int target = script_getnum( st, 12 );
 
-	e_emotion_type emotion;
-	if (temp_emotion >= ET_MAX) {
-		ShowWarning("buildin_areamobuseskill: Unknown emotion %d (min=%d, max=%d).\n", temp_emotion, ET_SURPRISE, (ET_MAX-1));
+	if (emotion >= ET_MAX) {
+		ShowWarning("buildin_areamobuseskill: Unknown emotion %d (min=%d, max=%d).\n", emotion, ET_SURPRISE, (ET_MAX-1));
 		return SCRIPT_CMD_FAILURE;
-	} else if(temp_emotion < ET_SURPRISE){
+	} else if(emotion < ET_SURPRISE){
 		emotion = ET_MAX;
-	} else
-		emotion = static_cast<e_emotion_type>(temp_emotion);
+	}
 
 	map_foreachinallrange(buildin_mobuseskill_sub, &center, range, BL_MOB, mobid, skill_id, skill_lv, casttime, cancel, emotion, target);
 	return SCRIPT_CMD_SUCCESS;

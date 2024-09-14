@@ -10,7 +10,7 @@
 #include <common/mmo.hpp> // struct item
 #include <common/timer.hpp>
 
-#include "clif.hpp"
+#include "clif.hpp" // e_emotion_type
 #include "status.hpp" // struct status data, struct status_change
 #include "unit.hpp" // unit_stop_walking(), unit_stop_attack()
 

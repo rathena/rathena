@@ -6110,7 +6110,7 @@ static bool mob_parse_row_mobskilldb( char** str, size_t columns, size_t current
 	if(*str[17]){
 		int temp_emotion = atoi(str[17]);
 		if (temp_emotion >= ET_MAX) {
-			ShowWarning("mob_parse_row_mobskilldb: Unknown emotion %s (min=%d, max=%d).\n", str[17], ET_SURPRISE, (ET_MAX-1));
+			ShowWarning("mob_parse_row_mobskilldb: Unknown emotion %s (min=%d, max=%d) line %d mob_id %d.\n", str[17], ET_SURPRISE, (ET_MAX-1), current, mob_id);
 			ms->emotion = ET_MAX;
 		}
 		else if(temp_emotion < ET_SURPRISE)
