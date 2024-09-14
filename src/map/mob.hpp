@@ -422,6 +422,30 @@ public:
 	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 };
 
+/// Mob skill struct for temporary storage
+struct s_mob_skill_db {
+	int32 mob_id; ///< Monster ID. -1 boss types, -2 normal types, -3 all monsters
+	std::vector<std::shared_ptr<s_mob_skill>> skill; ///< Skills
+
+	~s_mob_skill_db() {
+		this->mob_id = 0;
+		if (!this->skill.empty()){
+			this->skill.clear();
+		}
+	}
+};
+
+class MobSkillDatabase : public TypesafeYamlDatabase<int32, s_mob_skill_db> {
+public:
+	MobSkillDatabase() : TypesafeYamlDatabase("MOBSKILL_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
+};
+extern MobSkillDatabase mob_skill_db;
+
 enum e_mob_skill_target {
 	MST_TARGET	=	0,
 	MST_RANDOM,	//Random Target!

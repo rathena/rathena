@@ -1,0 +1,107 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2024 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Monster Skill Database
+###########################################################################
+#
+# Monster Skill Settings
+#
+###########################################################################
+# - MobID                   Monster ID.
+#   Name               	    Dummy Skill Name.
+#   State                   Name in English.
+#   SkillID                 SkillID.
+#   SkillLv                 Skill Level. (Default: 1)
+#   Rate                    The chance of the skill being casted when the condition is fulfilled (10000 = 100%).
+#   CastTime                Skill Casttime (ms)
+#   Delay                   The time (in milliseconds) before attempting to recast the same skill.
+#   Cancelable              Skill cancelable flag(yes/no # true/false)
+#   Target                  Target (current target) / self / friend / master / randomtarget (any enemy within skill's range)
+#   ConditionType           ConditionType
+# ----optional-----
+#   Conditionvalue          Conditionvalue(default: 0)
+#   Val1                    
+#   Val2            
+#   Val3              
+#   Val4        
+#   Val5                    
+#   Emotion                 Emotion Number
+#   Chat                    Chat Number
+#
+# STATE:
+#	Any (except dead) / Idle (in standby) / Walk (in movement) / Dead (on killed) /
+#	Loot /Attack / Angry (like attack, except player has not attacked mob yet) /
+#	Chase (following target, after being attacked) / Follow (following target,
+#	without being attacked) / Anytarget (attack+angry+chase+follow)
+#
+# TARGET:
+#	target (current target) / self / friend / master / randomtarget (any enemy within skill's range)
+#
+#	The following are for ground-skills, a random target tile is selected from the specified area:
+#	    around1 (3x3 area around self) / around2 (5x5 area around self) /
+#	    around3 (7x7 area around self) / around4 (9x9 area around self) /
+#	    around5 (3x3 area around target) / around6 (5x5 area around target) /
+#	    around7 (7x7 area around target) / around8 (9x9 area around target) /
+#	    around = around4
+#
+# CONDITION:
+#	always			Unconditional (no condition value).
+#	onspawn			When mob spawns/respawns (no condition value).
+#	myhpltmaxrate		When mob's HP drops to the specified %.
+#	myhpinrate		When mob's HP is in a certain % range (condition value = lower bound, val1 = upper bound).
+#	mystatuson		If mob has the specified abnormality in status.
+#	mystatusoff		If mob has ended the specified abnormality in status.
+#	friendhpltmaxrate	When mob's friend's HP drops to the specified %.
+#	friendhpinrate		When mob's friend's HP is in a certain % range (condition value = lower bound, val1 = upper bound).
+#	friendstatuson		If friend has the specified abnormality in status.
+#	friendstatusoff		If friend has ended the specified abnormality in status.
+#	attackpcgt		When attack PCs become greater than specified number.
+#	attackpcge		When attack PCs become greater than or equal to the specified number.
+#	slavelt			When number of slaves is less than the original specified number.
+#	slavele			When number of slaves is less than or equal to the original specified number.
+#	closedattacked		When close range melee attacked (no condition value).
+#	longrangeattacked	When long range attacked, ex. bows, guns, ranged skills (no condition value).
+#	skillused		When the specified skill is used on the mob.
+#	afterskill		After mob casts the specified skill.
+#	casttargeted		When a target is in cast range (no condition value).
+#	rudeattacked		When mob is rude attacked (no condition value).
+#	mobnearbygt		When monsters in range become greater than specified number.
+#	groundattacked		When mob is hit by ground targeted skill (no condition value).
+#	damagedgt		When single attack deals greater damage than specified number.
+#
+#	Status abnormalities specified through the statuson/statusoff system:
+#	    anybad (any type of state change) / stone / freeze / stun / sleep /
+#	    poison / curse / silence / confusion / blind / hiding / sight (unhidden)
+#
+# Note: if a negative MobID is provided, the skill will be treated as 'global':
+#	-1: added for all boss types.
+#	-2: added for all normal types.
+#	-3: added for all mobs.
+###########################################################################
+
+Header:
+  Type: MOBSKILL_DB
+  Version: 1
+
+Footer:
+  Imports:
+  - Path: db/pre-re/mob_skill_db.yml
+    Mode: Prerenewal
+  - Path: db/re/mob_skill_db.yml
+    Mode: Renewal
+  - Path: db/import/mob_skill_db.yml
