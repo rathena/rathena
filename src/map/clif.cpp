@@ -9133,29 +9133,32 @@ void clif_guild_expulsionlist(map_session_data* sd)
 }
 
 
-/// Guild chat message (ZC_GUILD_CHAT).
-/// 017f <packet len>.W <message>.?B
-void clif_guild_message( const struct mmo_guild& g, uint32 account_id, const char* mes, size_t len ){
-	// TODO: account_id is not used, candidate for deletion? [Ai4rei]
-	map_session_data *sd;
-	uint8 buf[256];
+/// Guild chat message 
+/// 017f <packet len>.W <message>.?B (ZC_GUILD_CHAT)
+void clif_guild_message( const struct mmo_guild& g, const char* mes, size_t len ){
+	PACKET_ZC_GUILD_CHAT *p = reinterpret_cast<PACKET_ZC_GUILD_CHAT*>( packet_buffer );
+	// -1 for null terminator
+	static const size_t max_len = CHAT_SIZE_MAX - sizeof( *p ) - 1;
 
-	if( len == 0 )
-	{
+	map_session_data* sd = guild_getavailablesd(g);
+
+	// Ignore this message, if no guildmember is available
+	if (sd == nullptr)
 		return;
-	}
-	else if( len > sizeof(buf)-5 )
-	{
-		ShowWarning("clif_guild_message: Truncated message '%s' (len=%d, max=%" PRIuPTR ", guild_id=%d).\n", mes, len, sizeof(buf)-5, g.guild_id);
-		len = sizeof(buf)-5;
-	}
 
-	WBUFW(buf, 0) = 0x17f;
-	WBUFW( buf, 2 ) = static_cast<int16>( len + 5 );
-	safestrncpy(WBUFCP(buf,4), mes, len+1);
+	if( len == 0 ){
+		return;
+	} else if( len > max_len ){
+		ShowWarning("clif_guild_message: Truncated message '%s' (len=%" PRIuPTR ", max=%" PRIuPTR ", guild_id=%u).\n", mes, len, max_len, g.guild_id);
+		len = max_len;
+	}
+	p->packetType = HEADER_ZC_GUILD_CHAT;
+	p->packetLength = sizeof(*p);
 
-	if ((sd = guild_getavailablesd(g)) != nullptr)
-		clif_send(buf, WBUFW(buf,2), &sd->bl, GUILD_NOBG);
+	safestrncpy(p->message, mes, len+1);
+	p->packetLength += static_cast<decltype(p->packetLength)>( len + 1 );
+
+	clif_send(p, p->packetLength, &sd->bl, GUILD_NOBG);
 }
 
 /// Request for guild alliance 

@@ -1476,7 +1476,7 @@ int guild_recv_message( int guild_id, uint32 account_id, const char *mes, size_t
 	auto g = guild_search(guild_id);
 	if (!g)
 		return 0;
-	clif_guild_message(g->guild,account_id,mes,len);
+	clif_guild_message(g->guild,mes,len);
 	return 0;
 }
 
