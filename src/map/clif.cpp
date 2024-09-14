@@ -5833,7 +5833,7 @@ void clif_skillcasting(block_list& src, block_list* dst, uint16 dst_x, uint16 ds
 	p.packetType = HEADER_ZC_USESKILL_ACK;
 	p.srcId = src.id;
 	if( dst != nullptr ){
-		p.dstId  = dst->id;
+		p.dstId = dst->id;
 	}else{
 		p.dstId = 0;
 	}
@@ -5841,8 +5841,13 @@ void clif_skillcasting(block_list& src, block_list* dst, uint16 dst_x, uint16 ds
 	p.y = dst_y;
 	p.skillId = skill_id;
 	p.delayTime = casttime;
+
+#if PACKETVER_MAIN_NUM >= 20091124 || PACKETVER_RE_NUM >= 20091124 || defined(PACKETVER_ZERO)
+	p.disposable = false;
+#endif
+
 	// Avoid sending unknown element
-	if(property >= ELE_NEUTRAL  && property <= ELE_UNDEAD){
+	if(property >= ELE_NEUTRAL && property <= ELE_UNDEAD){
 		p.element = static_cast<decltype(p.element)>(property);
 	}else{
 		p.element = ELE_NEUTRAL;
