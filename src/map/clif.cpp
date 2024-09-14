@@ -5826,40 +5826,46 @@ void clif_skill_scale( struct block_list *bl, int src_id, int x, int y, uint16 s
 /// is disposable:
 ///     0 = yellow chat text "[src name] will use skill [skill name]."
 ///     1 = no text
-void clif_skillcasting(block_list& src, int dst_id, int dst_x, int dst_y, uint16 skill_id, uint16 skill_lv, int property, int casttime){
+void clif_skillcasting(block_list& src, block_list* dst, uint16 dst_x, uint16 dst_y, uint16 skill_id, uint16 skill_lv, e_element property, int32 casttime){
 
 	PACKET_ZC_USESKILL_ACK p{};
 
 	p.packetType = HEADER_ZC_USESKILL_ACK;
 	p.srcId = src.id;
-	p.dstId  = static_cast<decltype(p.dstId)>(dst_id);
-	p.x = static_cast<decltype(p.x)>(dst_x);
-	p.y = static_cast<decltype(p.y)>(dst_y);
+	if( dst != nullptr ){
+		p.dstId  = dst->id;
+	}else{
+		p.dstId = 0;
+	}
+	p.x = dst_x;
+	p.y = dst_y;
 	p.skillId = skill_id;
-	p.delayTime = static_cast<decltype(p.delayTime)>(casttime);
-	p.element = 0;
-
-	if(property > 0  && property < 7)
-		p.element = static_cast<decltype(p.element)>(property); // Avoid sending unknow element
+	p.delayTime = casttime;
+	// Avoid sending unknown element
+	if(property >= ELE_NEUTRAL  && property <= ELE_UNDEAD){
+		p.element = static_cast<decltype(p.element)>(property);
+	}else{
+		p.element = ELE_NEUTRAL;
+	}
 
 #if PACKETVER_MAIN_NUM >= 20091124 || PACKETVER_RE_NUM >= 20091124 || defined(PACKETVER_ZERO)
 	p.disposable = static_cast<decltype(p.disposable)>(0);
-#if PACKETVER_MAIN_NUM >= 20181212 || PACKETVER_RE_NUM >= 20181212 || PACKETVER_ZERO_NUM >= 20190130
-	p.attackMT = static_cast<decltype(p.attackMT)>(0);
 #endif
+#if PACKETVER_MAIN_NUM >= 20181212 || PACKETVER_RE_NUM >= 20181212 || PACKETVER_ZERO_NUM >= 20190130
+	p.attackMT = 0;
 #endif
 
 	if (disguised(&src)) {
 		clif_send(&p,sizeof(p), &src, AREA_WOS);
-		p.srcId = static_cast<decltype(p.srcId)>(disguised_bl_id( src.id ));
+
+		p.srcId = disguised_bl_id( src.id );
 		clif_send(&p,sizeof(p), &src, SELF);
 	} else
 		clif_send(&p,sizeof(p), &src, AREA);
 
-#if PACKETVER >= 20151223
-	if( skill_get_inf2( skill_id, INF2_SHOWSCALE ) )
-		clif_skill_scale(&src, src.id, src.x, src.y, skill_id, skill_lv, casttime);
-#endif
+	if( skill_get_inf2( skill_id, INF2_SHOWSCALE ) ){
+		clif_skill_scale( bl, src_id, bl->x, bl->y, skill_id, skill_lv, casttime );
+	}
 }
 
 
