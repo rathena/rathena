@@ -817,6 +817,12 @@ struct PACKET_ZC_CARTOFF {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_CARTOFF, 0x12b)
 
+struct PACKET_ZC_ACK_GUILD_MENUINTERFACE {
+	int16 packetType;
+	int menuFlag;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_GUILD_MENUINTERFACE, 0x014e)
+
 struct PACKET_ZC_NOTIFY_POSITION_TO_GUILDM {
 	int16 packetType;
 	uint32 aid;

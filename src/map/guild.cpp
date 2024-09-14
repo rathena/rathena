@@ -847,7 +847,7 @@ int guild_recv_info(const struct mmo_guild &sg) {
 			sd->guild = g;
 			sd->state.gmaster_flag = 1;
 			clif_name_area(&sd->bl); // [LuzZza]
-			clif_guild_masterormember(sd);
+			clif_guild_masterormember(*sd);
 		}
 	} else {
 		before = g->guild;

@@ -162,7 +162,6 @@
 	packet(0x014a,6);
 	packet(0x014b,27);
 	parseable_packet(0x014d,2,clif_parse_GuildCheckMaster,0);
-	packet(0x014e,6);
 	parseable_packet(0x014f,6,clif_parse_GuildRequestInfo,2);
 	packet(0x0150,110);
 	parseable_packet(0x0151,6,clif_parse_GuildRequestEmblem,2);
