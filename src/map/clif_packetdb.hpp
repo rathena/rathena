@@ -191,7 +191,6 @@
 	packet(0x016d,14);
 	parseable_packet(0x016e,186,clif_parse_GuildChangeNotice,2,6,66);
 	parseable_packet(0x0170,14,clif_parse_GuildRequestAlliance,2,6,10);
-	packet(0x0171,30);
 	parseable_packet(0x0172,10,clif_parse_GuildReplyAlliance,2,6);
 	packet(0x0173,3);
 	packet(0x0174,-1);
@@ -205,7 +204,6 @@
 	parseable_packet(0x017e,-1,clif_parse_GuildMessage,2,4);
 	packet(0x017f,-1);
 	parseable_packet(0x0180,6,clif_parse_GuildOpposition,2);
-	packet(0x0181,3);
 	packet(0x0182,106);
 	parseable_packet(0x0183,10,clif_parse_GuildDelAlliance,2,6);
 	packet(0x0184,10);
