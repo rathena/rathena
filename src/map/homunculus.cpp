@@ -953,8 +953,10 @@ static TIMER_FUNC(hom_hungry){
 	if (hd->homunculus.hunger < 0) {
 		hd->homunculus.hunger = 0;
 		// Delete the homunculus if intimacy <= 100
-		if (!hom_decrease_intimacy(hd, 100))
+		if (!hom_decrease_intimacy(hd, 100)){
+			clif_emotion(hd->bl,ET_HUK);
 			return hom_delete(hd);
+		}
 		clif_send_homdata( *hd, SP_INTIMATE );
 	}
 
