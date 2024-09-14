@@ -2091,7 +2091,7 @@ int guild_allianceack(int guild_id1,int guild_id2,uint32 account_id1,uint32 acco
 			for(j=0;j<g[i]->max_member;j++) {
 				map_session_data *sd_mem = g[i]->member[j].sd;
 				if( sd_mem!=nullptr){
-					clif_guild_allianceinfo(sd_mem);
+					clif_guild_allianceinfo(*sd_mem);
 
 					// join ally channel
 					if( channel_config.ally_tmpl.name[0] && (channel_config.ally_tmpl.opt&CHAN_OPT_AUTOJOIN) ) {
