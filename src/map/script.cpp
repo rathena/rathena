@@ -22281,7 +22281,7 @@ BUILDIN_FUNC(areamobuseskill)
 	int target = script_getnum( st, 12 );
 
 	if (emotion < ET_SURPRISE || emotion >= ET_MAX) {
-		ShowWarning("buildin_emotion: Unknown emotion %d (min=%d, max=%d).\n", emotion, ET_SURPRISE, (ET_MAX-1));
+		ShowWarning("buildin_areamobuseskill: Unknown emotion %d (min=%d, max=%d).\n", emotion, ET_SURPRISE, (ET_MAX-1));
 		return SCRIPT_CMD_FAILURE;
 	}
 
