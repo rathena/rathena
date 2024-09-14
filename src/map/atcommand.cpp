@@ -1150,6 +1150,51 @@ ACMD_FUNC(hide)
 	return 0;
 }
 
+ACMD_FUNC(resetcooltime)
+{
+	nullpo_retr(-1, sd);
+
+	for( size_t i = 0; i < ARRAYLENGTH( sd->scd ); i++ ){
+		if( sd->scd[i] != nullptr ) {
+			sprintf( atcmd_output, msg_txt( sd, 1537 ), skill_db.find( sd->scd[i]->skill_id )->name ); // Found skill '%s', unblocking...
+			clif_displaymessage( sd->fd, atcmd_output );
+
+			if (battle_config.display_status_timers)
+				clif_skill_cooldown( *sd, sd->scd[i]->skill_id, 0 );
+
+			delete_timer(sd->scd[i]->timer, skill_blockpc_end);
+			aFree(sd->scd[i]);
+			sd->scd[i] = nullptr;
+		}
+	}
+
+	if( sd->hd != nullptr && hom_is_active( sd->hd ) ){
+		for( const uint16& skill_id : sd->hd->blockskill ){
+			sprintf( atcmd_output, msg_txt( sd, 1537 ), skill_db.find( skill_id )->name ); // Found skill '%s', unblocking...
+			clif_displaymessage( sd->fd, atcmd_output );
+
+			if (battle_config.display_status_timers)
+				clif_skill_cooldown( *sd, skill_id, 0 );
+		}
+
+		sd->hd->blockskill.clear();
+	}
+
+	if( sd->md != nullptr ){
+		for( const uint16& skill_id : sd->md->blockskill ){
+			sprintf( atcmd_output, msg_txt( sd, 1537 ), skill_db.find( skill_id )->name ); // Found skill '%s', unblocking...
+			clif_displaymessage( sd->fd, atcmd_output );
+
+			if (battle_config.display_status_timers)
+				clif_skill_cooldown( *sd, skill_id, 0 );
+		}
+
+		sd->md->blockskill.clear();
+	}
+
+	return 0;
+}
+
 /*==========================================
  * Changes a character's class
  *------------------------------------------*/
@@ -4336,6 +4381,9 @@ ACMD_FUNC(reload) {
 	}else if( strstr( command, "barterdb" ) || strncmp( message, "barterdb", 4 ) == 0 ){
 		barter_db.reload();
 		clif_displaymessage(fd, msg_txt(sd, 830)); // Barter database has been reloaded.
+	} else if (strstr(command, "logconf") || strncmp(message, "logconf", 3) == 0) {
+		log_config_read(LOG_CONF_NAME);
+		clif_displaymessage(fd, msg_txt(sd,1536)); // Log configuration has been reloaded.
 	}
 
 	return 0;
@@ -11022,6 +11070,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(guildstorage),
 		ACMD_DEF(option),
 		ACMD_DEF(hide), // + /hide
+		ACMD_DEF(resetcooltime), // + /resetcooltime
 		ACMD_DEFR(jobchange, ATCMD_NOCONSOLE),
 		ACMD_DEF(kill),
 		ACMD_DEF(alive),

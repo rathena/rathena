@@ -1956,8 +1956,9 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl, uint
 		sc_start(src,bl, SC_SILENCE, 5 * skill_lv + (status_get_dex(src) + status_get_lv(src)) / 10, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
 	case SR_EARTHSHAKER:
+		if (dstmd != nullptr && dstmd->guardian_data == nullptr)    // Target is a mob (boss included) and not a guardian type. [Atemo]
+			sc_start(src, bl, SC_EARTHSHAKER, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
 		sc_start(src,bl,SC_STUN, 25 + 5 * skill_lv,skill_lv,skill_get_time(skill_id,skill_lv));
-		sc_start(src, bl, SC_EARTHSHAKER, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
 		status_change_end(bl, SC_SV_ROOTTWIST);
 		break;
 	case SO_EARTHGRAVE:
@@ -9318,7 +9319,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case AL_TELEPORT:
 	case ALL_ODINS_RECALL:
-		if(sd)
+		if(sd != nullptr)
 		{
 			if (map_getmapflag(bl->m, MF_NOTELEPORT) && skill_lv <= 2) {
 				clif_skill_teleportmessage( *sd, NOTIFY_MAPINFO_CANT_TP );
@@ -9341,10 +9342,18 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			}
 
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-			if( skill_lv == 1 && skill_id != ALL_ODINS_RECALL )
-				clif_skill_warppoint( sd, skill_id, skill_lv, "Random" );
-			else
-				clif_skill_warppoint( sd, skill_id, skill_lv, "Random", sd->status.save_point.map );
+
+			std::vector<std::string> maps = {
+				"Random"
+			};
+
+			if( skill_lv == 1 && skill_id != ALL_ODINS_RECALL ){
+				clif_skill_warppoint( *sd, skill_id, skill_lv, maps );
+			}else{
+				maps.push_back( sd->status.save_point.map );
+
+				clif_skill_warppoint( *sd, skill_id, skill_lv, maps );
+			}
 		} else
 			unit_warp(bl,-1,-1,-1,CLR_TELEPORT);
 		break;
@@ -9688,7 +9697,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if(blew_count > 0)
 				clif_blown(src); // Always blow, otherwise it shows a casting animation. [Lemongrass]
 #else
-			clif_slide(bl, bl->x, bl->y); //Show the casting animation on pre-re
+			clif_slide(*bl, bl->x, bl->y); //Show the casting animation on pre-re
 #endif
 		}
 		break;
@@ -14036,11 +14045,21 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	break;
 
 	case AL_WARP:
-		if(sd)
-		{
-			/* This part depends of aproval of new warplist packet PRN: 8600
-#if PACKETVER_MAIN_NUM >= 20170502 || PACKETVER_RE_NUM >= 20170419 || defined(PACKETVER_ZERO)
+		if(sd != nullptr) {
+			std::vector<std::string> maps( MAX_MEMOPOINTS + 1 );
 
+			maps.push_back( sd->status.save_point.map );
+
+			if( skill_lv >= 2 ){
+				maps.push_back( sd->status.memo_point[0].map );
+
+				if( skill_lv >= 3 ){
+					maps.push_back( sd->status.memo_point[1].map );
+
+					if( skill_lv >= 4 ){
+						maps.push_back( sd->status.memo_point[2].map );
+            
+#if PACKETVER_MAIN_NUM >= 20170502 || PACKETVER_RE_NUM >= 20170419 || defined(PACKETVER_ZERO)
 						int64 extended_memo = pc_readreg2(sd,EXT_MEMO_VAR);
 						if (extended_memo >= 1){
 							maps.push_back(sd->status.memo_point[3].map);
@@ -14054,12 +14073,12 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 							}
 						}
 #endif
-			*/
-			clif_skill_warppoint(sd, skill_id, skill_lv, sd->status.save_point.map,
-				(skill_lv >= 2) ? sd->status.memo_point[0].map : "",
-				(skill_lv >= 3) ? sd->status.memo_point[1].map : "",
-				(skill_lv >= 4) ? sd->status.memo_point[2].map : ""
-			);
+            
+					}
+				}
+			}
+
+			clif_skill_warppoint( *sd, skill_id, skill_lv, maps );
 		}
 		if( sc && sc->getSCE(SC_CURSEDCIRCLE_ATKER) ) //Should only remove after the skill has been casted.
 			status_change_end(src,SC_CURSEDCIRCLE_ATKER);
@@ -16071,6 +16090,8 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 		case UNT_SOLIDTRAP:
 		case UNT_SWIFTTRAP:
 		case UNT_FLAMETRAP:
+		case UNT_GROUND_GRAVITATION:
+		case UNT_JACK_FROST_NOVA:
 			skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 			break;
 

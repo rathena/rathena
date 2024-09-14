@@ -1801,11 +1801,33 @@ uint8 pc_isequip(map_session_data *sd,int n)
 
 	if(item == nullptr)
 		return ITEM_EQUIP_ACK_FAIL;
-	if(item->elv && sd->status.base_level < (unsigned int)item->elv)
+
+	if (sd->sc.count && sd->sc.getSCE(SC_SPIRIT) && sd->sc.getSCE(SC_SPIRIT)->val2 == SL_SUPERNOVICE) {
+		//Spirit of Super Novice equip bonuses. [Skotlex]
+		if (sd->status.base_level >= 90 && item->equip & EQP_HELM)
+			return ITEM_EQUIP_ACK_OK; //Can equip all helms
+
+		if (sd->status.base_level >= 96 && item->equip & EQP_ARMS && item->type == IT_WEAPON && item->weapon_level == 4)
+			switch (item->subtype) { //In weapons, the look determines type of weapon.
+				case W_DAGGER: //All level 4 - Daggers
+				case W_1HSWORD: //All level 4 - 1H Swords
+				case W_1HAXE: //All level 4 - 1H Axes
+				case W_MACE: //All level 4 - 1H Maces
+				case W_STAFF: //All level 4 - 1H Staves
+				case W_2HSTAFF: //All level 4 - 2H Staves
+					return ITEM_EQUIP_ACK_OK;
+			}
+	}
+
+	if(item->elv && sd->status.base_level < static_cast<unsigned int>(item->elv))
 		return ITEM_EQUIP_ACK_FAILLEVEL;
-	if(item->elvmax && sd->status.base_level > (unsigned int)item->elvmax)
+	if(item->elvmax && sd->status.base_level > static_cast<unsigned int>(item->elvmax))
 		return ITEM_EQUIP_ACK_FAILLEVEL;
 	if(item->sex != SEX_BOTH && sd->status.sex != item->sex)
+		return ITEM_EQUIP_ACK_FAIL;
+
+	// Broken equip
+	if (sd->inventory.u.items_inventory[n].attribute == 1)
 		return ITEM_EQUIP_ACK_FAIL;
 
 	//fail to equip if item is restricted
@@ -1874,23 +1896,6 @@ uint8 pc_isequip(map_session_data *sd,int n)
 			return ITEM_EQUIP_ACK_FAIL;
 		if(item->equip && (sd->sc.getSCE(SC_KYOUGAKU) || sd->sc.getSCE(SC_SUHIDE)))
 			return ITEM_EQUIP_ACK_FAIL;
-
-		if (sd->sc.getSCE(SC_SPIRIT) && sd->sc.getSCE(SC_SPIRIT)->val2 == SL_SUPERNOVICE) {
-			//Spirit of Super Novice equip bonuses. [Skotlex]
-			if (sd->status.base_level > 90 && item->equip & EQP_HELM)
-				return ITEM_EQUIP_ACK_OK; //Can equip all helms
-
-			if (sd->status.base_level > 96 && item->equip & EQP_ARMS && item->type == IT_WEAPON && item->weapon_level == 4)
-				switch(item->subtype) { //In weapons, the look determines type of weapon.
-					case W_DAGGER: //All level 4 - Daggers
-					case W_1HSWORD: //All level 4 - 1H Swords
-					case W_1HAXE: //All level 4 - 1H Axes
-					case W_MACE: //All level 4 - 1H Maces
-					case W_STAFF: //All level 4 - 1H Staves
-					case W_2HSTAFF: //All level 4 - 2H Staves
-						return ITEM_EQUIP_ACK_OK;
-				}
-		}
 	}
 
 	//Not equipable by class. [Skotlex]
@@ -11928,7 +11933,7 @@ bool pc_equipitem(map_session_data *sd,short n,int req_pos,bool equipswitch)
 		return false;
 	}
 
-	if (!(pos&req_pos) || sd->inventory.u.items_inventory[n].equip != 0 || sd->inventory.u.items_inventory[n].attribute==1 ) { // [Valaris]
+	if (!(pos&req_pos) || sd->inventory.u.items_inventory[n].equip != 0) {
 		if( equipswitch ){
 			clif_equipswitch_add( sd, n, req_pos, ITEM_EQUIP_ACK_FAIL );
 		}else{
@@ -12269,18 +12274,18 @@ bool pc_unequipitem(map_session_data *sd, int n, int flag) {
 	nullpo_retr(false,sd);
 
 	if (n < 0 || n >= MAX_INVENTORY) {
-		clif_unequipitemack(sd,0,0,0);
+		clif_unequipitemack(*sd,0,0,false);
 		return false;
 	}
 	if (!(pos = sd->inventory.u.items_inventory[n].equip)) {
-		clif_unequipitemack(sd,n,0,0);
+		clif_unequipitemack(*sd,n,0,false);
 		return false; //Nothing to unequip
 	}
 	// status change that makes player cannot unequip equipment
 	if (!(flag&2) && sd->sc.count &&( sd->sc.cant.unequip ||
 		(sd->sc.getSCE(SC_PYROCLASTIC) &&	sd->inventory_data[n]->type == IT_WEAPON)))	// can't switch weapon
 	{
-		clif_unequipitemack(sd,n,0,0);
+		clif_unequipitemack(*sd,n,0,false);
 		return false;
 	}
 
@@ -12319,7 +12324,7 @@ bool pc_unequipitem(map_session_data *sd, int n, int flag) {
 	if(pos & EQP_SHOES)
 		clif_changelook(&sd->bl,LOOK_SHOES,0);
 
-	clif_unequipitemack(sd,n,pos,1);
+	clif_unequipitemack(*sd,n,pos,true);
 	pc_set_costume_view(sd);
 
 	status_db.removeByStatusFlag(&sd->bl, { SCF_REMOVEONUNEQUIP });
@@ -12340,7 +12345,7 @@ bool pc_unequipitem(map_session_data *sd, int n, int flag) {
 
 					if (idx >= 0) {
 						sd->equip_index[EQI_AMMO] = -1;
-						clif_unequipitemack(sd, idx, sd->inventory.u.items_inventory[idx].equip, 1);
+						clif_unequipitemack(*sd, idx, sd->inventory.u.items_inventory[idx].equip, true);
 						pc_unequipitem_sub(sd, idx, 0);
 					}
 				}

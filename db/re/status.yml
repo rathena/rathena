@@ -86,7 +86,7 @@ Body:
     Opt1: StoneWait
     Flags:
       SendOption: true
-      BossResist: true      
+      BossResist: true
       StopAttacking: true
     Fail:
       Whiteimprison: true
@@ -1822,6 +1822,7 @@ Body:
     Icon: EFST_ETERNALCHAOS
     DurationLookup: BD_ETERNALCHAOS
     CalcFlags:
+      Def: true
       Def2: true
     Flags:
       NoDispell: true
@@ -7021,7 +7022,9 @@ Body:
     CalcFlags:
       Regen: true
   - Status: Earthshaker
+    Icon: EFST_EARTHSHAKER
     Flags:
+      BlEffect: true
       NoWarning: true
   - Status: Weaponblock_On
     Icon: EFST_WEAPONBLOCK_ON
@@ -7036,6 +7039,7 @@ Body:
     Icon: EFST_SPORE_EXPLOSION_DEBUFF
     DurationLookup: GN_SPORE_EXPLOSION
     Flags:
+      BlEffect: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true

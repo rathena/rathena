@@ -1132,7 +1132,7 @@ bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, boo
 
 			if( flag ) {
 				unit_movepos(pbl,sd->bl.x,sd->bl.y, 0, 0);
-				clif_slide(pbl,pbl->x,pbl->y);
+				clif_slide(*pbl,pbl->x,pbl->y);
 			}
 		}
 	}
@@ -3239,7 +3239,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			if(sd->chatID)
 				chat_leavechat(sd,0);
 
-			if(sd->trade_partner)
+			if(sd->trade_partner.id > 0)
 				trade_tradecancel(sd);
 
 			searchstore_close(*sd);
