@@ -307,7 +307,6 @@ int hom_vaporize(map_session_data *sd, int flag)
 /**
 * Delete a homunculus, completely "killing it".
 * @param hd
-* @param emote
 */
 int hom_delete(struct homun_data *hd)
 {
