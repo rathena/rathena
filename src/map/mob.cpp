@@ -6113,7 +6113,7 @@ static bool mob_parse_row_mobskilldb( char** str, size_t columns, size_t current
 			ShowWarning("mob_parse_row_mobskilldb: Unknown emotion %s (min=%d, max=%d).\n", str[17], ET_SURPRISE, (ET_MAX-1));
 			ms->emotion = ET_MAX;
 		}
-		if(temp_emotion < ET_SURPRISE)
+		else if(temp_emotion < ET_SURPRISE)
 			ms->emotion = ET_MAX;
 		else
 			ms->emotion = static_cast<e_emotion_type>(temp_emotion);		
