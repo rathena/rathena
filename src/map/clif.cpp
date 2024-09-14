@@ -6151,37 +6151,71 @@ void clif_skill_poseffect(struct block_list *src,uint16 skill_id,int val,int x,i
 		clif_send(buf,packet_len(0x117),src,AREA);
 }
 
-/// Presents a list of available warp destinations (ZC_WARPLIST).
-/// 011c <skill id>.W { <map name>.16B }*4
-void clif_skill_warppoint( map_session_data* sd, uint16 skill_id, uint16 skill_lv, const char* map1, const char* map2, const char* map3, const char* map4 ){
-	int fd;
-	nullpo_retv(sd);
-	fd = sd->fd;
+/// Presents a list of available warp destinations.
+/// 011c <skill id>.W { <map name>.16B }*4 (ZC_WARPLIST)
+/// 0abe <lenght>.W <skill id>.W { <map name>.16B }*? (ZC_WARPLIST2)
+void clif_skill_warppoint( map_session_data& sd, uint16 skill_id, uint16 skill_lv, std::vector<std::string>& maps ){
+	if(maps.empty())
+		return;
 
-	WFIFOHEAD(fd,packet_len(0x11c));
-	WFIFOW(fd,0) = 0x11c;
-	WFIFOW(fd,2) = skill_id;
-	memset(WFIFOP(fd,4), 0x00, 4*MAP_NAME_LENGTH_EXT);
-	if( strcmp( "", map1 ) != 0 ){
-		mapindex_getmapname_ext( map1, WFIFOCP( fd, 4 ) );
-	}
-	if( strcmp( "", map2 ) != 0 ){
-		mapindex_getmapname_ext( map2, WFIFOCP( fd, 20 ) );
-	}
-	if( strcmp( "", map3 ) != 0 ){
-		mapindex_getmapname_ext( map3, WFIFOCP( fd, 36 ) );
-	}
-	if( strcmp( "", map4 ) != 0 ){
-		mapindex_getmapname_ext( map4, WFIFOCP( fd, 52 ) );
-	}
-	WFIFOSET(fd,packet_len(0x11c));
+#if PACKETVER_MAIN_NUM >= 20170502 || PACKETVER_RE_NUM >= 20170419 || defined(PACKETVER_ZERO)
+	PACKET_ZC_WARPLIST* p = reinterpret_cast<PACKET_ZC_WARPLIST*>( packet_buffer );
 
-	sd->menuskill_id = skill_id;
+	p->packetType = HEADER_ZC_WARPLIST;
+	p->packetLength = sizeof( *p );
+	p->skillId = skill_id;
+
+	size_t memoCount = 0;
+	for( std::string& map : maps ){
+		if( map.empty() ){
+			continue;
+		}
+
+		PACKET_ZC_WARPLIST_sub& warp = p->maps[memoCount];
+
+		mapindex_getmapname_ext( map.c_str(), warp.map );
+
+		p->packetLength += static_cast<decltype(p->packetLength)>( sizeof( warp ) );
+		memoCount++;
+	}
+
+	clif_send( p, p->packetLength, &sd.bl, SELF );
+#else
+	PACKET_ZC_WARPLIST p = {};
+
+	p.packetType = HEADER_ZC_WARPLIST;
+	p.skillId = skill_id;
+
+	size_t memoCount = 0, max = 4;
+	for( std::string& map : maps ){
+		if( map.empty() ){
+			continue;
+		}
+
+		PACKET_ZC_WARPLIST_sub& warp = p.maps[memoCount];
+
+		mapindex_getmapname_ext( map.c_str(), warp.map );
+
+		if( memoCount++ == max ){
+			break;
+		}
+	}
+
+	for( ; memoCount < max; memoCount++ ){
+		PACKET_ZC_WARPLIST_sub& warp = p.maps[memoCount];
+
+		strcpy( warp.map, "" );
+	}
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
+
+	sd.menuskill_id = skill_id;
 	if (skill_id == AL_WARP) {
-		sd->menuskill_val = (sd->ud.skillx<<16)|sd->ud.skilly; //Store warp position here.
-		sd->state.workinprogress = WIP_DISABLE_ALL;
+		sd.menuskill_val = (sd.ud.skillx<<16)|sd.ud.skilly; //Store warp position here.
+		sd.state.workinprogress = WIP_DISABLE_ALL;
 	} else
-		sd->menuskill_val = skill_lv;
+		sd.menuskill_val = skill_lv;
 }
 
 
