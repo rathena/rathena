@@ -6234,7 +6234,7 @@ static bool mob_parse_row_mobskilldb( char** str, size_t columns, size_t current
 		{ "mobnearbygt",       MSC_MOBNEARBYGT       },
 		{ "groundattacked",    MSC_GROUNDATTACKED    },
 		{ "damagedgt",         MSC_DAMAGEDGT         },
-	}, cond2[] = {
+	}, cond2[] ={
 		{	"anybad",		-1				},
 		{	"stone",		SC_STONE		},
 		{	"freeze",		SC_FREEZE		},
@@ -6248,21 +6248,21 @@ static bool mob_parse_row_mobskilldb( char** str, size_t columns, size_t current
 		{	"hiding",		SC_HIDING		},
 		{	"sight",		SC_SIGHT		},
 	}, target[] = {
-			// enum e_mob_skill_target
-			{	"target",	MST_TARGET	},
-			{	"randomtarget",	MST_RANDOM	},
-			{	"self",		MST_SELF	},
-			{	"friend",	MST_FRIEND	},
-			{	"master",	MST_MASTER	},
-			{	"around5",	MST_AROUND5	},
-			{	"around6",	MST_AROUND6	},
-			{	"around7",	MST_AROUND7	},
-			{	"around8",	MST_AROUND8	},
-			{	"around1",	MST_AROUND1	},
-			{	"around2",	MST_AROUND2	},
-			{	"around3",	MST_AROUND3	},
-			{	"around4",	MST_AROUND4	},
-			{	"around",	MST_AROUND	},
+		// enum e_mob_skill_target
+		{	"target",	MST_TARGET	},
+		{	"randomtarget",	MST_RANDOM	},
+		{	"self",		MST_SELF	},
+		{	"friend",	MST_FRIEND	},
+		{	"master",	MST_MASTER	},
+		{	"around5",	MST_AROUND5	},
+		{	"around6",	MST_AROUND6	},
+		{	"around7",	MST_AROUND7	},
+		{	"around8",	MST_AROUND8	},
+		{	"around1",	MST_AROUND1	},
+		{	"around2",	MST_AROUND2	},
+		{	"around3",	MST_AROUND3	},
+		{	"around4",	MST_AROUND4	},
+		{	"around",	MST_AROUND	},
 	};
 	static int last_mob_id = 0;  // ensures that only one error message per mob id is printed
 	int mob_id;
@@ -6289,7 +6289,7 @@ static bool mob_parse_row_mobskilldb( char** str, size_t columns, size_t current
 	if (skill == nullptr)
 		skill = std::make_shared<s_mob_skill_db>();
 
-	if (strcmp(str[1], "clear") == 0 && skill->mob_id != 0) {
+	if( strcmp(str[1],"clear") == 0 && skill->mob_id != 0 ) {
 		mob_skill_db.erase(skill->mob_id);
 		ShowInfo("Cleared skill for mob id '%d'\n", mob_id);
 		return true;
@@ -6306,8 +6306,8 @@ static bool mob_parse_row_mobskilldb( char** str, size_t columns, size_t current
 	std::shared_ptr<s_mob_skill> ms = std::make_shared<s_mob_skill>();
 
 	//State
-	ARR_FIND(0, ARRAYLENGTH(state), j, strcmp(str[2], state[j].str) == 0);
-	if (j < ARRAYLENGTH(state))
+	ARR_FIND( 0, ARRAYLENGTH(state), j, strcmp(str[2],state[j].str) == 0 );
+	if( j < ARRAYLENGTH(state) )
 		ms->state = state[j].id;
 	else {
 		ShowError("mob_parse_row_mobskilldb: Unrecognized state '%s' in line %d\n", str[2], current);
@@ -6333,7 +6333,7 @@ static bool mob_parse_row_mobskilldb( char** str, size_t columns, size_t current
 	//Apply battle_config modifiers to rate (permillage) and delay [Skotlex]
 	tmp = atoi(str[5]);
 	if (battle_config.mob_skill_rate != 100)
-		tmp = tmp * battle_config.mob_skill_rate / 100;
+		tmp = tmp*battle_config.mob_skill_rate/100;
 	if (tmp > 10000)
 		ms->permillage = 10000;
 	else if (!tmp && battle_config.mob_skill_rate)
@@ -6343,16 +6343,16 @@ static bool mob_parse_row_mobskilldb( char** str, size_t columns, size_t current
 	ms->casttime = atoi(str[6]);
 	ms->delay = atoi(str[7]);
 	if (battle_config.mob_skill_delay != 100)
-		ms->delay = ms->delay * battle_config.mob_skill_delay / 100;
+		ms->delay = ms->delay*battle_config.mob_skill_delay/100;
 	if (ms->delay < 0 || ms->delay > MOB_MAX_DELAY) //time overflow?
 		ms->delay = MOB_MAX_DELAY;
 	ms->cancel = atoi(str[8]);
-	if (strcmp(str[8], "yes") == 0)
-		ms->cancel = 1;
+	if( strcmp(str[8],"yes")==0 )
+		ms->cancel=1;
 
 	//Target
-	ARR_FIND(0, ARRAYLENGTH(target), j, strcmp(str[9], target[j].str) == 0);
-	if (j < ARRAYLENGTH(target))
+	ARR_FIND( 0, ARRAYLENGTH(target), j, strcmp(str[9],target[j].str) == 0 );
+	if( j < ARRAYLENGTH(target) )
 		ms->target = target[j].id;
 	else {
 		ShowWarning("mob_parse_row_mobskilldb: Unrecognized target %s for %d\n", str[9], mob_id);
@@ -6369,8 +6369,7 @@ static bool mob_parse_row_mobskilldb( char** str, size_t columns, size_t current
 				mob_id < 0 ? "all mobs" : mob->sprite.c_str());
 			ms->target = MST_TARGET;
 		}
-	}
-	else if (ms->target > MST_MASTER) {
+	} else if (ms->target > MST_MASTER) {
 		ShowWarning("mob_parse_row_mobskilldb: Wrong mob skill target 'around' for non-ground skill %d (%s) for %s.\n",
 			ms->skill_id, skill_get_name(ms->skill_id),
 			mob_id < 0 ? "all mobs" : mob->sprite.c_str());
@@ -6378,8 +6377,8 @@ static bool mob_parse_row_mobskilldb( char** str, size_t columns, size_t current
 	}
 
 	//Cond1
-	ARR_FIND(0, ARRAYLENGTH(cond1), j, strcmp(str[10], cond1[j].str) == 0);
-	if (j < ARRAYLENGTH(cond1))
+	ARR_FIND( 0, ARRAYLENGTH(cond1), j, strcmp(str[10],cond1[j].str) == 0 );
+	if( j < ARRAYLENGTH(cond1) )
 		ms->cond1 = cond1[j].id;
 	else {
 		ShowWarning("mob_parse_row_mobskilldb: Unrecognized condition 1 %s for %d\n", str[10], mob_id);
@@ -6390,32 +6389,32 @@ static bool mob_parse_row_mobskilldb( char** str, size_t columns, size_t current
 	// numeric value
 	ms->cond2 = atoi(str[11]);
 	// or special constant
-	ARR_FIND(0, ARRAYLENGTH(cond2), j, strcmp(str[11], cond2[j].str) == 0);
-	if (j < ARRAYLENGTH(cond2))
+	ARR_FIND( 0, ARRAYLENGTH(cond2), j, strcmp(str[11],cond2[j].str) == 0 );
+	if( j < ARRAYLENGTH(cond2) )
 		ms->cond2 = cond2[j].id;
 
-	ms->val[0] = (int)strtol(str[12], NULL, 0);
-	ms->val[1] = (int)strtol(str[13], NULL, 0);
-	ms->val[2] = (int)strtol(str[14], NULL, 0);
-	ms->val[3] = (int)strtol(str[15], NULL, 0);
-	ms->val[4] = (int)strtol(str[16], NULL, 0);
+	ms->val[0] = (int)strtol(str[12],nullptr,0);
+	ms->val[1] = (int)strtol(str[13],nullptr,0);
+	ms->val[2] = (int)strtol(str[14],nullptr,0);
+	ms->val[3] = (int)strtol(str[15],nullptr,0);
+	ms->val[4] = (int)strtol(str[16],nullptr,0);
 
-	if (ms->skill_id == NPC_EMOTION && mob_id > 0 &&
+	if(ms->skill_id == NPC_EMOTION && mob_id > 0 &&
 		ms->val[1] == mob->status.mode)
 	{
 		ms->val[1] = 0;
 		ms->val[4] = 1; //request to return mode to normal.
 	}
-	if (ms->skill_id == NPC_EMOTION_ON && mob_id > 0 && ms->val[1])
+	if(ms->skill_id == NPC_EMOTION_ON && mob_id > 0 && ms->val[1])
 	{	//Adds a mode to the mob.
 		//Remove aggressive mode when the new mob type is passive.
-		if (!(ms->val[1] & MD_AGGRESSIVE))
+		if (!(ms->val[1]&MD_AGGRESSIVE))
 			ms->val[3] |= MD_AGGRESSIVE;
 		ms->val[2] |= ms->val[1]; //Add the new mode.
 		ms->val[1] = 0; //Do not "set" it.
 	}
 
-	if (*str[17])
+	if(*str[17])
 		ms->emotion = atoi(str[17]);
 	else
 		ms->emotion = -1;
@@ -6969,9 +6968,9 @@ static void mob_skill_db_set_single(struct s_mob_skill_db *skill) {
  * Set monster skills
  **/
 static void mob_skill_db_set(void) {
-//	for (auto skill : mob_skill_db) {
-//		mob_skill_db_set_single(skill.second.get());
-//	}
+	for (auto skill : mob_skill_db) {
+		mob_skill_db_set_single(skill.second.get());
+	}
 
 	//ShowStatus("Set skills to '%d' monsters.\n", db_size(mob_skill_db));
 }
