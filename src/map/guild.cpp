@@ -2073,7 +2073,7 @@ int guild_allianceack(int guild_id1,int guild_id2,uint32 account_id1,uint32 acco
 					g[i]->alliance[j].guild_id = 0;
 			}
 		if (sd[i] != nullptr) // notify players
-				clif_guild_delalliance(sd[i],guild_id[1-i],(flag&1));
+				clif_guild_delalliance(*sd[i],guild_id[1-i],(flag&1));
 		}
 	}
 
@@ -2112,7 +2112,7 @@ int guild_broken_sub(struct mmo_guild &g, int guild_id) {
 		if (g.alliance[i].guild_id == guild_id) {
 			for (int j = 0; j < g.max_member; j++) {
 				if (g.member[j].sd)
-					clif_guild_delalliance(g.member[j].sd, guild_id, g.alliance[i].opposition);
+					clif_guild_delalliance(*g.member[j].sd, guild_id, g.alliance[i].opposition);
 			}
 			intif_guild_alliance(g.guild_id, guild_id, 0, 0, g.alliance[i].opposition | 8);
 			g.alliance[i].guild_id = 0;
