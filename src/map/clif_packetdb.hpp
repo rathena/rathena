@@ -136,7 +136,6 @@
 	packet(0x0119,13);
 	packet(0x011a,15);
 	parseable_packet(0x011b,20,clif_parse_UseSkillMap,2,4);
-	packet(0x011c,68);
 	parseable_packet(0x011d,2,clif_parse_RequestMemo,0);
 	packet(0x011f,16);
 	packet( cartlistequipType, -1 );
@@ -192,7 +191,6 @@
 	parseable_packet(0x016e,186,clif_parse_GuildChangeNotice,2,6,66);
 	parseable_packet(0x0170,14,clif_parse_GuildRequestAlliance,2,6,10);
 	parseable_packet(0x0172,10,clif_parse_GuildReplyAlliance,2,6);
-	packet(0x0173,3);
 	packet(0x0174,-1);
 	packet(0x0175,6);
 	packet(0x0176,106);
@@ -202,11 +200,9 @@
 	packet(0x017b,-1);
 	parseable_packet(0x017c,6,clif_parse_InsertCard,2,4);
 	parseable_packet(0x017e,-1,clif_parse_GuildMessage,2,4);
-	packet(0x017f,-1);
 	parseable_packet(0x0180,6,clif_parse_GuildOpposition,2);
 	packet(0x0182,106);
 	parseable_packet(0x0183,10,clif_parse_GuildDelAlliance,2,6);
-	packet(0x0184,10);
 	packet(0x0185,34);
 	packet(0x0187,6);
 	parseable_packet(0x018a,4,clif_parse_QuitGame,2);
@@ -1941,9 +1937,8 @@
 	parseable_packet( HEADER_CZ_REQ_RANDOM_COMBINE_ITEM, -1, clif_parse_laphine_synthesis, 0 );
 #endif
 
-// 2016-06-22aRagexeRE
-#if PACKETVER >= 20160622
-	packet(0x0A84,94);
+#if PACKETVER_MAIN_NUM >= 20160622 || PACKETVER_RE_NUM >= 20160622 || defined(PACKETVER_ZERO)
+	parseable_packet( HEADER_CZ_CMD_RESETCOOLTIME, sizeof( PACKET_CZ_CMD_RESETCOOLTIME ), clif_parse_gm_resetcooltime, 0 );
 #endif
 
 // 2016-10-12aRagexeRE

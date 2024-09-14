@@ -6151,37 +6151,71 @@ void clif_skill_poseffect(struct block_list *src,uint16 skill_id,int val,int x,i
 		clif_send(buf,packet_len(0x117),src,AREA);
 }
 
-/// Presents a list of available warp destinations (ZC_WARPLIST).
-/// 011c <skill id>.W { <map name>.16B }*4
-void clif_skill_warppoint( map_session_data* sd, uint16 skill_id, uint16 skill_lv, const char* map1, const char* map2, const char* map3, const char* map4 ){
-	int fd;
-	nullpo_retv(sd);
-	fd = sd->fd;
+/// Presents a list of available warp destinations.
+/// 011c <skill id>.W { <map name>.16B }*4 (ZC_WARPLIST)
+/// 0abe <lenght>.W <skill id>.W { <map name>.16B }*? (ZC_WARPLIST2)
+void clif_skill_warppoint( map_session_data& sd, uint16 skill_id, uint16 skill_lv, std::vector<std::string>& maps ){
+	if(maps.empty())
+		return;
 
-	WFIFOHEAD(fd,packet_len(0x11c));
-	WFIFOW(fd,0) = 0x11c;
-	WFIFOW(fd,2) = skill_id;
-	memset(WFIFOP(fd,4), 0x00, 4*MAP_NAME_LENGTH_EXT);
-	if( strcmp( "", map1 ) != 0 ){
-		mapindex_getmapname_ext( map1, WFIFOCP( fd, 4 ) );
-	}
-	if( strcmp( "", map2 ) != 0 ){
-		mapindex_getmapname_ext( map2, WFIFOCP( fd, 20 ) );
-	}
-	if( strcmp( "", map3 ) != 0 ){
-		mapindex_getmapname_ext( map3, WFIFOCP( fd, 36 ) );
-	}
-	if( strcmp( "", map4 ) != 0 ){
-		mapindex_getmapname_ext( map4, WFIFOCP( fd, 52 ) );
-	}
-	WFIFOSET(fd,packet_len(0x11c));
+#if PACKETVER_MAIN_NUM >= 20170502 || PACKETVER_RE_NUM >= 20170419 || defined(PACKETVER_ZERO)
+	PACKET_ZC_WARPLIST* p = reinterpret_cast<PACKET_ZC_WARPLIST*>( packet_buffer );
 
-	sd->menuskill_id = skill_id;
+	p->packetType = HEADER_ZC_WARPLIST;
+	p->packetLength = sizeof( *p );
+	p->skillId = skill_id;
+
+	size_t memoCount = 0;
+	for( std::string& map : maps ){
+		if( map.empty() ){
+			continue;
+		}
+
+		PACKET_ZC_WARPLIST_sub& warp = p->maps[memoCount];
+
+		mapindex_getmapname_ext( map.c_str(), warp.map );
+
+		p->packetLength += static_cast<decltype(p->packetLength)>( sizeof( warp ) );
+		memoCount++;
+	}
+
+	clif_send( p, p->packetLength, &sd.bl, SELF );
+#else
+	PACKET_ZC_WARPLIST p = {};
+
+	p.packetType = HEADER_ZC_WARPLIST;
+	p.skillId = skill_id;
+
+	size_t memoCount = 0, max = 4;
+	for( std::string& map : maps ){
+		if( map.empty() ){
+			continue;
+		}
+
+		PACKET_ZC_WARPLIST_sub& warp = p.maps[memoCount];
+
+		mapindex_getmapname_ext( map.c_str(), warp.map );
+
+		if( memoCount++ == max ){
+			break;
+		}
+	}
+
+	for( ; memoCount < max; memoCount++ ){
+		PACKET_ZC_WARPLIST_sub& warp = p.maps[memoCount];
+
+		strcpy( warp.map, "" );
+	}
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
+
+	sd.menuskill_id = skill_id;
 	if (skill_id == AL_WARP) {
-		sd->menuskill_val = (sd->ud.skillx<<16)|sd->ud.skilly; //Store warp position here.
-		sd->state.workinprogress = WIP_DISABLE_ALL;
+		sd.menuskill_val = (sd.ud.skillx<<16)|sd.ud.skilly; //Store warp position here.
+		sd.state.workinprogress = WIP_DISABLE_ALL;
 	} else
-		sd->menuskill_val = skill_lv;
+		sd.menuskill_val = skill_lv;
 }
 
 
@@ -9133,29 +9167,32 @@ void clif_guild_expulsionlist(map_session_data* sd)
 }
 
 
-/// Guild chat message (ZC_GUILD_CHAT).
-/// 017f <packet len>.W <message>.?B
-void clif_guild_message( const struct mmo_guild& g, uint32 account_id, const char* mes, size_t len ){
-	// TODO: account_id is not used, candidate for deletion? [Ai4rei]
-	map_session_data *sd;
-	uint8 buf[256];
+/// Guild chat message 
+/// 017f <packet len>.W <message>.?B (ZC_GUILD_CHAT)
+void clif_guild_message( const struct mmo_guild& g, const char* mes, size_t len ){
+	PACKET_ZC_GUILD_CHAT *p = reinterpret_cast<PACKET_ZC_GUILD_CHAT*>( packet_buffer );
+	// -1 for null terminator
+	static const size_t max_len = CHAT_SIZE_MAX - sizeof( *p ) - 1;
 
-	if( len == 0 )
-	{
+	map_session_data* sd = guild_getavailablesd(g);
+
+	// Ignore this message, if no guildmember is available
+	if (sd == nullptr)
 		return;
-	}
-	else if( len > sizeof(buf)-5 )
-	{
-		ShowWarning("clif_guild_message: Truncated message '%s' (len=%d, max=%" PRIuPTR ", guild_id=%d).\n", mes, len, sizeof(buf)-5, g.guild_id);
-		len = sizeof(buf)-5;
-	}
 
-	WBUFW(buf, 0) = 0x17f;
-	WBUFW( buf, 2 ) = static_cast<int16>( len + 5 );
-	safestrncpy(WBUFCP(buf,4), mes, len+1);
+	if( len == 0 ){
+		return;
+	} else if( len > max_len ){
+		ShowWarning("clif_guild_message: Truncated message '%s' (len=%" PRIuPTR ", max=%" PRIuPTR ", guild_id=%u).\n", mes, len, max_len, g.guild_id);
+		len = max_len;
+	}
+	p->packetType = HEADER_ZC_GUILD_CHAT;
+	p->packetLength = sizeof(*p);
 
-	if ((sd = guild_getavailablesd(g)) != nullptr)
-		clif_send(buf, WBUFW(buf,2), &sd->bl, GUILD_NOBG);
+	safestrncpy(p->message, mes, len+1);
+	p->packetLength += static_cast<decltype(p->packetLength)>( len + 1 );
+
+	clif_send(p, p->packetLength, &sd->bl, GUILD_NOBG);
 }
 
 /// Request for guild alliance 
@@ -9172,8 +9209,8 @@ void clif_guild_reqalliance(map_session_data& sd,uint32 account_id,const char *n
 }
 
 
-/// Notifies the client about the result of a alliance request (ZC_ACK_REQ_ALLY_GUILD).
-/// 0173 <answer>.B
+/// Notifies the client about the result of a alliance request.
+/// 0173 <answer>.B (ZC_ACK_REQ_ALLY_GUILD)
 /// answer:
 ///     0 = Already allied.
 ///     1 = You rejected the offer.
@@ -9181,39 +9218,32 @@ void clif_guild_reqalliance(map_session_data& sd,uint32 account_id,const char *n
 ///     3 = They have too any alliances.
 ///     4 = You have too many alliances.
 ///     5 = Alliances are disabled.
-void clif_guild_allianceack(map_session_data *sd,int flag)
-{
-	int fd;
+void clif_guild_allianceack(map_session_data& sd,uint8 flag){
 
-	nullpo_retv(sd);
+	PACKET_ZC_ACK_REQ_ALLY_GUILD p{};
 
-	fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0x173));
-	WFIFOW(fd,0)=0x173;
-	WFIFOL(fd,2)=flag;
-	WFIFOSET(fd,packet_len(0x173));
+	p.packetType = HEADER_ZC_ACK_REQ_ALLY_GUILD;
+	p.flag = flag;
+
+	clif_send(&p,sizeof(p),&sd.bl,SELF);
 }
 
 
-/// Notifies the client that a alliance or opposition has been removed (ZC_DELETE_RELATED_GUILD).
-/// 0184 <other guild id>.L <relation>.L
+/// Notifies the client that a alliance or opposition has been removed.
+/// 0184 <other guild id>.L <relation>.L (ZC_DELETE_RELATED_GUILD)
 /// relation:
 ///     0 = Ally
 ///     1 = Enemy
-void clif_guild_delalliance(map_session_data *sd,int guild_id,int flag)
+void clif_guild_delalliance(map_session_data& sd,uint32 guild_id,uint32 flag)
 {
-	nullpo_retv(sd);
 
-	int fd = sd->fd;
+	PACKET_ZC_DELETE_RELATED_GUILD p{};
 
-	if ( !session_isActive(fd) )
-		return;
+	p.packetType = HEADER_ZC_DELETE_RELATED_GUILD;
+	p.allyID = guild_id;
+	p.flag = flag;
 
-	WFIFOHEAD(fd,packet_len(0x184));
-	WFIFOW(fd,0)=0x184;
-	WFIFOL(fd,2)=guild_id;
-	WFIFOL(fd,6)=flag;
-	WFIFOSET(fd,packet_len(0x184));
+	clif_send(&p,sizeof(p),&sd.bl,SELF);
 }
 
 
@@ -14753,6 +14783,19 @@ void clif_parse_GMHide(int fd, map_session_data *sd) {
 
 	safesnprintf(cmd,sizeof(cmd),"%chide",atcommand_symbol);
 	is_atcommand(fd, sd, cmd, 1);
+}
+
+
+/// /resetcooltime 
+/// 0a88 (CZ_CMD_RESETCOOLTIME).
+void clif_parse_gm_resetcooltime( int fd, map_session_data* sd ){
+#if PACKETVER_MAIN_NUM >= 20160622 || PACKETVER_RE_NUM >= 20160622 || defined(PACKETVER_ZERO)
+	const PACKET_CZ_CMD_RESETCOOLTIME* p = reinterpret_cast<const PACKET_CZ_CMD_RESETCOOLTIME*>( RFIFOP( fd, 0 ) );
+	char cmd[CHAT_SIZE_MAX];
+
+	safesnprintf(cmd,sizeof(cmd),"%cresetcooltime",atcommand_symbol);
+	is_atcommand(fd, sd, cmd, 1);
+#endif
 }
 
 

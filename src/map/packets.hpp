@@ -760,6 +760,19 @@ struct PACKET_ZC_OPEN_EDITDLGSTR {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_OPEN_EDITDLGSTR, 0x1d4)
 
+struct PACKET_ZC_ACK_REQ_ALLY_GUILD {
+	int16 packetType;
+	uint8 flag;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_REQ_ALLY_GUILD, 0x173)
+  
+struct PACKET_ZC_DELETE_RELATED_GUILD {
+	int16 packetType;
+	uint32 allyID;
+	uint32 flag;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_DELETE_RELATED_GUILD, 0x184)
+
 struct PACKET_ZC_REQ_ALLY_GUILD {
 	int16 packetType;
 	uint32 inviterId;
@@ -811,6 +824,13 @@ struct PACKET_ZC_NOTIFY_POSITION_TO_GUILDM {
 	int16 yPos;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_NOTIFY_POSITION_TO_GUILDM, 0x1eb)
+
+struct PACKET_ZC_GUILD_CHAT {
+	int16 packetType;
+	int16 packetLength;
+	char message[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_GUILD_CHAT, 0x17f)
 
 struct PACKET_ZC_STATUS {
 	int16 packetType;
@@ -1369,6 +1389,12 @@ DEFINE_PACKET_HEADER(CZ_REQ_STYLE_CHANGE2, 0xafc)
 DEFINE_PACKET_HEADER(ZC_REMOVE_EFFECT, 0x0b0d)
 DEFINE_PACKET_HEADER(ZC_FEED_MER, 0x22f)
 DEFINE_PACKET_HEADER(ZC_FEED_PET, 0x1a3)
+#if PACKETVER_MAIN_NUM >= 20170502 || PACKETVER_RE_NUM >= 20170419 || defined(PACKETVER_ZERO)
+DEFINE_PACKET_HEADER(ZC_WARPLIST, 0xabe)
+#else
+DEFINE_PACKET_HEADER(ZC_WARPLIST, 0x11c)
+#endif
+
 
 const int16 MAX_INVENTORY_ITEM_PACKET_NORMAL = ( ( INT16_MAX - ( sizeof( struct packet_itemlist_normal ) - ( sizeof( struct NORMALITEM_INFO ) * MAX_ITEMLIST) ) ) / sizeof( struct NORMALITEM_INFO ) );
 const int16 MAX_INVENTORY_ITEM_PACKET_EQUIP = ( ( INT16_MAX - ( sizeof( struct packet_itemlist_equip ) - ( sizeof( struct EQUIPITEM_INFO ) * MAX_ITEMLIST ) ) ) / sizeof( struct EQUIPITEM_INFO ) );
