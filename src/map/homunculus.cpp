@@ -910,8 +910,10 @@ int hom_food(map_session_data *sd, struct homun_data *hd)
 	clif_hom_food( *sd, foodID, 1 );
 
 	// Too much food :/
-	if(hd->homunculus.intimacy == 0)
+	if(hd->homunculus.intimacy == 0){
+		clif_emotion(hd->bl,ET_HUK);
 		return hom_delete(sd->hd);
+	}
 
 	return 0;
 }
