@@ -9099,8 +9099,8 @@ void clif_guild_expulsion( map_session_data& sd, const char* name, uint32 char_i
 /// Guild expulsion list 
 /// 0163 <packet len>.W { <char name>.24B <account name>.24B <reason>.40B }* (ZC_BAN_LIST)
 /// 0163 <packet len>.W { <char name>.24B <reason>.40B }* (PACKETVER >= 20100803) (ZC_BAN_LIST)
-/// 0a87 <packet len>.W { <charid>.L <reason>.40B }* (PACKETVER >= 20161019) (ZC_BAN_LIST2)
-/// 0b7c <packet len>.W { <charid>.L <reason>.40B <char name>.24B }* (PACKETVER >= 20200902) (ZC_BAN_LIST3)
+/// 0a87 <packet len>.W { <charid>.L <reason>.40B }* (ZC_BAN_LIST2)
+/// 0b7c <packet len>.W { <charid>.L <reason>.40B <char name>.24B }* (ZC_BAN_LIST3)
 static void clif_guild_expulsionlist(map_session_data& sd){
 
 	auto &g = sd.guild;
@@ -9114,6 +9114,7 @@ static void clif_guild_expulsionlist(map_session_data& sd){
 
 	for( size_t i = 0, c = 0; i < MAX_GUILDEXPULSION; i++ ){
 		struct guild_expulsion& e = g->guild.expulsion[i];
+
 		if( e.account_id == 0 ){
 			continue;
 		}
