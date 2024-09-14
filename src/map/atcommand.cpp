@@ -1157,7 +1157,7 @@ ACMD_FUNC(resetcooltime)
 	for( size_t i = 0; i < ARRAYLENGTH( sd->scd ); i++ ){
 		if( sd->scd[i] != nullptr ) {
 			sprintf( atcmd_output, msg_txt( sd, 1537 ), skill_db.find( sd->scd[i]->skill_id )->name ); // Found skill '%s', unblocking...
-			clif_displaymessage( sd->fd, atcmd_output );
+			clif_displaymessage( *sd, atcmd_output );
 
 			if (battle_config.display_status_timers)
 				clif_skill_cooldown( *sd, sd->scd[i]->skill_id, 0 );
@@ -1171,7 +1171,7 @@ ACMD_FUNC(resetcooltime)
 	if( sd->hd != nullptr && hom_is_active( sd->hd ) ){
 		for( const uint16& skill_id : sd->hd->blockskill ){
 			sprintf( atcmd_output, msg_txt( sd, 1537 ), skill_db.find( skill_id )->name ); // Found skill '%s', unblocking...
-			clif_displaymessage( sd->fd, atcmd_output );
+			clif_displaymessage( *sd, atcmd_output );
 
 			if (battle_config.display_status_timers)
 				clif_skill_cooldown( *sd, skill_id, 0 );
@@ -1183,7 +1183,7 @@ ACMD_FUNC(resetcooltime)
 	if( sd->md != nullptr ){
 		for( const uint16& skill_id : sd->md->blockskill ){
 			sprintf( atcmd_output, msg_txt( sd, 1537 ), skill_db.find( skill_id )->name ); // Found skill '%s', unblocking...
-			clif_displaymessage( sd->fd, atcmd_output );
+			clif_displaymessage( *sd, atcmd_output );
 
 			if (battle_config.display_status_timers)
 				clif_skill_cooldown( *sd, skill_id, 0 );
