@@ -8665,7 +8665,7 @@ void clif_guild_send_onlineinfo(map_session_data *sd)
 
 
 /// Bitmask of enabled guild window tabs 
-/// 014e <menu flag>.L (ZC_ACK_GUILD_MENUINTERFACE).
+/// 014e <menu flag>.L (ZC_ACK_GUILD_MENUINTERFACE)
 /// menu flag:
 ///      0x00 = Basic Info (always on)
 ///     &0x01 = Member manager
@@ -8679,7 +8679,11 @@ void clif_guild_masterormember(map_session_data& sd){
 	PACKET_ZC_ACK_GUILD_MENUINTERFACE p{};
 
 	p.packetType = HEADER_ZC_ACK_GUILD_MENUINTERFACE;
-	p.menuFlag = (sd.state.gmaster_flag) ? 0xd7 : 0x57;
+	if(sd.state.gmaster_flag){
+		p.menuFlag = 0xd7;
+	}else{
+		p.menuFlag = 0x57;
+	}
 
 	clif_send(&p,sizeof(p),&sd.bl,SELF);
 }
@@ -14045,9 +14049,8 @@ void clif_parse_CreateGuild(int fd,map_session_data *sd){
 
 
 /// Request for guild window interface permissions 
-/// 014d (CZ_REQ_GUILD_MENUINTERFACE).
+/// 014d (CZ_REQ_GUILD_MENUINTERFACE)
 static void clif_parse_GuildCheckMaster(int fd, map_session_data *sd){
-
 	if(sd == nullptr)
 		return;
 
