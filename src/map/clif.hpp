@@ -14,6 +14,7 @@
 
 #include "packets.hpp"
 #include "script.hpp"
+#include "trade.hpp"
 
 struct Channel;
 struct clan;
@@ -874,7 +875,7 @@ void clif_arrow_fail( map_session_data& sd, e_action_failure type );
 void clif_arrow_create_list( map_session_data& sd );
 void clif_statusupack( map_session_data& sd, int32 type, bool success, int32 val = 0 );
 void clif_equipitemack( map_session_data& sd, uint8 flag, int index, int pos = 0 ); // self
-void clif_unequipitemack(map_session_data *sd,int n,int pos,int ok);	// self
+void clif_unequipitemack( map_session_data& sd, uint16 server_index, int32 pos, bool success );
 void clif_misceffect( block_list& bl, e_notify_effect type );
 void clif_changeoption_target(struct block_list* bl, struct block_list* target);
 #define clif_changeoption(bl) clif_changeoption_target(bl, nullptr)	// area
@@ -889,7 +890,7 @@ void clif_addchat(struct chat_data* cd,map_session_data *sd);	// chat
 void clif_changechatowner(struct chat_data* cd, map_session_data* sd);	// chat
 void clif_clearchat(struct chat_data *cd,int fd);	// area or fd
 void clif_leavechat(struct chat_data* cd, map_session_data* sd, bool flag);	// chat
-void clif_changechatstatus(struct chat_data* cd);	// chat
+void clif_changechatstatus(chat_data& cd);
 void clif_refresh_storagewindow(map_session_data *sd);
 void clif_refresh(map_session_data *sd);	// self
 
@@ -905,8 +906,8 @@ void clif_parse_LoadEndAck(int fd,map_session_data *sd);
 void clif_hotkeys_send(map_session_data *sd, int tab);
 
 // trade
-void clif_traderequest(map_session_data* sd, const char* name);
-void clif_tradestart(map_session_data* sd, uint8 type);
+void clif_traderequest(map_session_data& sd, const char* name);
+void clif_traderesponse( map_session_data& sd, e_ack_trade_response result );
 void clif_tradeadditem(map_session_data* sd, map_session_data* tsd, int index, int amount);
 void clif_tradeitemok(map_session_data& sd, int index, e_exitem_add_result result);
 void clif_tradedeal_lock( map_session_data& sd, bool who );
@@ -943,7 +944,7 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,t_tick tick,
 bool clif_skill_nodamage(struct block_list *src,struct block_list *dst,uint16 skill_id,int heal,t_tick tick);
 void clif_skill_poseffect(struct block_list *src,uint16 skill_id,int val,int x,int y,t_tick tick);
 void clif_skill_estimation(map_session_data *sd,struct block_list *dst);
-void clif_skill_warppoint( map_session_data* sd, uint16 skill_id, uint16 skill_lv, const char* map1, const char* map2 = "", const char* map3 = "", const char* map4 = "" );
+void clif_skill_warppoint( map_session_data& sd, uint16 skill_id, uint16 skill_lv, std::vector<std::string>& maps );
 void clif_skill_memomessage( map_session_data& sd, e_ack_remember_warppoint_result result );
 void clif_skill_teleportmessage( map_session_data& sd, e_notify_mapinfo_result result );
 void clif_skill_produce_mix_list( map_session_data& sd, int skill_id, int trigger );
@@ -1056,11 +1057,11 @@ void clif_guild_memberpositionchanged(const struct mmo_guild &g,int idx);
 void clif_guild_emblem(const map_session_data &sd, const struct mmo_guild &g);
 void clif_guild_emblem_area(struct block_list* bl);
 void clif_guild_notice( map_session_data& sd );
-void clif_guild_message( const struct mmo_guild& g, uint32 account_id, const char* mes, size_t len );
-void clif_guild_reqalliance(map_session_data *sd,uint32 account_id,const char *name);
-void clif_guild_allianceack(map_session_data *sd,int flag);
-void clif_guild_delalliance(map_session_data *sd,int guild_id,int flag);
-void clif_guild_oppositionack(map_session_data *sd,int flag);
+void clif_guild_message( const struct mmo_guild& g, const char* mes, size_t len );
+void clif_guild_reqalliance(map_session_data& sd,uint32 account_id,const char *name);
+void clif_guild_allianceack(map_session_data& sd, uint8 flag);
+void clif_guild_delalliance(map_session_data& sd,uint32 guild_id,uint32 flag);
+void clif_guild_oppositionack(map_session_data& sd,uint8 flag);
 void clif_guild_broken( map_session_data& sd, int flag );
 void clif_guild_xy( map_session_data& sd );
 void clif_guild_xy_single( map_session_data& sd, map_session_data& tsd );
