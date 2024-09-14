@@ -38,54 +38,58 @@ void trade_traderequest(map_session_data *sd, map_session_data *target_sd)
 	}
 
 	if (target_sd == nullptr || sd == target_sd) {
-		clif_tradestart(sd, 1); // character does not exist
+		clif_traderesponse(*sd, TRADE_ACK_CHARNOTEXIST);
 		return;
 	}
 
 	if (target_sd->npc_id) { // Trade fails if you are using an NPC.
-		clif_tradestart(sd, 2);
+		clif_traderesponse(*sd, TRADE_ACK_FAILED);
 		return;
 	}
 
 	if (!battle_config.invite_request_check) {
 		if (target_sd->guild_invite > 0 || target_sd->party_invite > 0 || target_sd->adopt_invite) {
-			clif_tradestart(sd, 2);
+			clif_traderesponse(*sd, TRADE_ACK_FAILED);
 			return;
 		}
 	}
 
-	if ( sd->trade_partner != 0 ) { // If a character tries to trade to another one then cancel the previous one
-		map_session_data *previous_sd = map_id2sd(sd->trade_partner);
+	if ( sd->trade_partner.id != 0 ) { // If a character tries to trade to another one then cancel the previous one
+		map_session_data *previous_sd = map_id2sd(sd->trade_partner.id);
 
 		if( previous_sd != nullptr ){
-			previous_sd->trade_partner = 0;
+			previous_sd->trade_partner = {0,0};
 			clif_tradecancelled( *previous_sd );
 		} // Once cancelled then continue to the new one.
-		sd->trade_partner = 0;
+		sd->trade_partner = {0,0};
 		clif_tradecancelled( *sd );
 	}
 
-	if (target_sd->trade_partner != 0) {
-		clif_tradestart(sd, 2); // person is in another trade
+	if (target_sd->trade_partner.id != 0) {
+		clif_traderesponse(*sd, TRADE_ACK_FAILED); // person is in another trade
 		return;
 	}
 
 	if (!pc_can_give_items(sd) || !pc_can_give_items(target_sd)) { // check if both GMs are allowed to trade
 		clif_displaymessage(sd->fd, msg_txt(sd,246));
-		clif_tradestart(sd, 2); // GM is not allowed to trade
+		clif_traderesponse(*sd, TRADE_ACK_FAILED); // GM is not allowed to trade
 		return;
 	}
 
 	// Players can not request trade from far away, unless they are allowed to use @trade.
 	if (!pc_can_use_command(sd, "trade", COMMAND_ATCOMMAND) &&
 	    (sd->bl.m != target_sd->bl.m || !check_distance_bl(&sd->bl, &target_sd->bl, TRADE_DISTANCE))) {
-		clif_tradestart(sd, 0); // too far
+		clif_traderesponse(*sd, TRADE_ACK_TOOFAR);
 		return ;
 	}
 
-	target_sd->trade_partner = sd->status.account_id;
-	sd->trade_partner = target_sd->status.account_id;
-	clif_traderequest(target_sd, sd->status.name);
+	target_sd->trade_partner.id = sd->status.account_id;
+	target_sd->trade_partner.lv = sd->status.base_level;
+
+	sd->trade_partner.id = target_sd->status.account_id;
+	sd->trade_partner.lv = target_sd->status.base_level;
+
+	clif_traderequest(*target_sd, sd->status.name);
 }
 
 
@@ -107,28 +111,28 @@ void trade_tradeack(map_session_data *sd, int type)
 
 	nullpo_retv(sd);
 
-	if (sd->state.trading || !sd->trade_partner)
+	if (sd->state.trading || !sd->trade_partner.id)
 		return; // Already trading or no partner set.
 
-	if ((tsd = map_id2sd(sd->trade_partner)) == nullptr) {
-		clif_tradestart(sd, 1); // Character does not exist
-		sd->trade_partner=0;
+	if ((tsd = map_id2sd(sd->trade_partner.id)) == nullptr) {
+		clif_traderesponse(*sd, TRADE_ACK_CHARNOTEXIST);
+		sd->trade_partner = {0,0};
 		return;
 	}
 
-	if (tsd->state.trading || tsd->trade_partner != sd->bl.id) {
-		clif_tradestart(sd, 2);
-		sd->trade_partner=0;
+	if (tsd->state.trading || tsd->trade_partner.id != sd->bl.id) {
+		clif_traderesponse(*sd, TRADE_ACK_FAILED);
+		sd->trade_partner = {0,0};
 		return; // Already trading or wrong partner.
 	}
 
 	if (type == 4) { // Cancel
-		clif_tradestart(tsd, type);
-		clif_tradestart(sd, type);
+		clif_traderesponse(*tsd, TRADE_ACK_CANCEL);
+		clif_traderesponse(*sd, TRADE_ACK_CANCEL);
 		sd->state.deal_locked = 0;
-		sd->trade_partner = 0;
+		sd->trade_partner = {0,0};
 		tsd->state.deal_locked = 0;
-		tsd->trade_partner = 0;
+		tsd->trade_partner = {0,0};
 		return;
 	}
 
@@ -139,21 +143,21 @@ void trade_tradeack(map_session_data *sd, int type)
 	// Check here as well since the original character could had warped.
 	if (!pc_can_use_command(sd, "trade", COMMAND_ATCOMMAND) &&
 	    (sd->bl.m != tsd->bl.m || !check_distance_bl(&sd->bl, &tsd->bl, TRADE_DISTANCE))) {
-		clif_tradestart(sd, 0); // too far
-		sd->trade_partner=0;
-		tsd->trade_partner = 0;
+		clif_traderesponse(*sd, TRADE_ACK_TOOFAR);
+		sd->trade_partner = {0,0};
+		tsd->trade_partner = {0,0};
 		return;
 	}
 
 	// Check if you can start trade.
 	if (sd->npc_id || sd->state.vending || sd->state.buyingstore || sd->state.storage_flag ||
 		tsd->npc_id || tsd->state.vending || tsd->state.buyingstore || tsd->state.storage_flag) { // Fail
-		clif_tradestart(sd, 2);
-		clif_tradestart(tsd, 2);
+		clif_traderesponse(*sd, TRADE_ACK_FAILED);
+		clif_traderesponse(*tsd, TRADE_ACK_FAILED);
 		sd->state.deal_locked = 0;
-		sd->trade_partner = 0;
+		sd->trade_partner = {0,0};
 		tsd->state.deal_locked = 0;
-		tsd->trade_partner = 0;
+		tsd->trade_partner = {0,0};
 		return;
 	}
 
@@ -162,8 +166,8 @@ void trade_tradeack(map_session_data *sd, int type)
 	tsd->state.trading = 1;
 	memset(&sd->deal, 0, sizeof(sd->deal));
 	memset(&tsd->deal, 0, sizeof(tsd->deal));
-	clif_tradestart(tsd, type);
-	clif_tradestart(sd, type);
+	clif_traderesponse(*tsd, static_cast<e_ack_trade_response>( type ));
+	clif_traderesponse(*sd, static_cast<e_ack_trade_response>( type ));
 }
 
 /**
@@ -356,7 +360,7 @@ void trade_tradeadditem(map_session_data *sd, short index, short amount)
 	if( !sd->state.trading || sd->state.deal_locked > 0 )
 		return; // Can't add stuff.
 
-	if( (target_sd = map_id2sd(sd->trade_partner)) == nullptr ) {
+	if( (target_sd = map_id2sd(sd->trade_partner.id)) == nullptr ) {
 		trade_tradecancel(sd);
 		return;
 	}
@@ -453,7 +457,7 @@ void trade_tradeaddzeny(map_session_data* sd, int amount)
 	if( !sd->state.trading || sd->state.deal_locked > 0 )
 		return; //Can't add stuff.
 
-	if( (target_sd = map_id2sd(sd->trade_partner)) == nullptr ) {
+	if( (target_sd = map_id2sd(sd->trade_partner.id)) == nullptr ) {
 		trade_tradecancel(sd);
 		return;
 	}
@@ -478,7 +482,7 @@ void trade_tradeok(map_session_data *sd)
 	if(sd->state.deal_locked || !sd->state.trading)
 		return;
 
-	if ((target_sd = map_id2sd(sd->trade_partner)) == nullptr) {
+	if ((target_sd = map_id2sd(sd->trade_partner.id)) == nullptr) {
 		trade_tradecancel(sd);
 		return;
 	}
@@ -500,15 +504,15 @@ void trade_tradecancel(map_session_data *sd)
 
 	nullpo_retv(sd);
 
-	target_sd = map_id2sd(sd->trade_partner);
+	target_sd = map_id2sd(sd->trade_partner.id);
 	sd->state.isBoundTrading = 0;
 
 	if(!sd->state.trading) { // Not trade accepted
 		if( target_sd != nullptr ) {
-			target_sd->trade_partner = 0;
+			target_sd->trade_partner = {0,0};
 			clif_tradecancelled( *target_sd );
 		}
-		sd->trade_partner = 0;
+		sd->trade_partner = {0,0};
 		clif_tradecancelled( *sd );
 		return;
 	}
@@ -529,7 +533,7 @@ void trade_tradecancel(map_session_data *sd)
 
 	sd->state.deal_locked = 0;
 	sd->state.trading = 0;
-	sd->trade_partner = 0;
+	sd->trade_partner = {0,0};
 	clif_tradecancelled( *sd );
 
 	if (!target_sd)
@@ -549,7 +553,7 @@ void trade_tradecancel(map_session_data *sd)
 	}
 
 	target_sd->state.deal_locked = 0;
-	target_sd->trade_partner = 0;
+	target_sd->trade_partner = {0,0};
 	target_sd->state.trading = 0;
 	clif_tradecancelled( *target_sd );
 }
@@ -569,7 +573,7 @@ void trade_tradecommit(map_session_data *sd)
 	if (!sd->state.trading || !sd->state.deal_locked) //Locked should be 1 (pressed ok) before you can press trade.
 		return;
 
-	if ((tsd = map_id2sd(sd->trade_partner)) == nullptr) {
+	if ((tsd = map_id2sd(sd->trade_partner.id)) == nullptr) {
 		trade_tradecancel(sd);
 		return;
 	}
@@ -642,12 +646,12 @@ void trade_tradecommit(map_session_data *sd)
 	}
 
 	sd->state.deal_locked = 0;
-	sd->trade_partner = 0;
+	sd->trade_partner = {0,0};
 	sd->state.trading = 0;
 	sd->state.isBoundTrading = 0;
 
 	tsd->state.deal_locked = 0;
-	tsd->trade_partner = 0;
+	tsd->trade_partner = {0,0};
 	tsd->state.trading = 0;
 	tsd->state.isBoundTrading = 0;
 
