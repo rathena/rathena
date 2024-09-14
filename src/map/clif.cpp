@@ -5716,10 +5716,9 @@ void clif_addskill(map_session_data *sd, int skill_id)
 /// 0441 <skill id>.W (ZC_SKILLINFO_DELETE)
 void clif_deleteskill(map_session_data& sd, uint16 skill_id, bool skip_infoblock){
 #if PACKETVER >= 20081126
-
 	uint16 idx = skill_get_index(skill_id);
 
-	if (idx == 0 || !session_isActive(sd.fd))
+	if (idx == 0)
 		return;
 
 	PACKET_ZC_SKILLINFO_DELETE p{};
