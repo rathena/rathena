@@ -14752,6 +14752,19 @@ void clif_parse_GMHide(int fd, map_session_data *sd) {
 }
 
 
+/// /resetcooltime 
+/// 0a88 (CZ_CMD_RESETCOOLTIME).
+void clif_parse_gm_resetcooltime( int fd, map_session_data* sd ){
+#if PACKETVER_MAIN_NUM >= 20160622 || PACKETVER_RE_NUM >= 20160622 || defined(PACKETVER_ZERO)
+	const PACKET_CZ_CMD_RESETCOOLTIME* p = reinterpret_cast<const PACKET_CZ_CMD_RESETCOOLTIME*>( RFIFOP( fd, 0 ) );
+	char cmd[CHAT_SIZE_MAX];
+
+	safesnprintf(cmd,sizeof(cmd),"%cresetcooltime",atcommand_symbol);
+	is_atcommand(fd, sd, cmd, 1);
+#endif
+}
+
+
 /// Request to adjust player's manner points (CZ_REQ_GIVE_MANNER_POINT).
 /// 0149 <account id>.L <type>.B <value>.W
 /// type:
