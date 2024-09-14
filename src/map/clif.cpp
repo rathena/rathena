@@ -4511,8 +4511,8 @@ void clif_changechatstatus(struct chat_data* cd)
 }
 
 
-/// Removes the chatroom (ZC_DESTROY_ROOM).
-/// 00d8 <chat id>.L
+/// Removes the chatroom
+/// 00d8 <chat id>.L (ZC_DESTROY_ROOM)
 void clif_clearchat(chat_data &cd){
 
 	PACKET_ZC_DESTROY_ROOM p{};
