@@ -157,36 +157,38 @@ static bool skill_check(uint16 id) {
 	return var;\
 } while(0)
 
-#define skill_get_lv(id, lv, arrvar) do {\
-	if (!skill_check(id))\
-		return 0;\
-	int lv_idx = min(lv, MAX_SKILL_LEVEL) - 1;\
-	if (lv > MAX_SKILL_LEVEL && arrvar[lv_idx] > 1 && lv_idx > 1) {\
-		int a__ = arrvar[lv_idx - 2];\
-		int b__ = arrvar[lv_idx - 1];\
-		int c__ = arrvar[lv_idx];\
-		return (c__ + ((lv - MAX_SKILL_LEVEL + 1) * (b__ - a__) / 2) + ((lv - MAX_SKILL_LEVEL) * (c__ - b__) / 2));\
-	}\
-	return arrvar[lv_idx];\
-} while(0)
+template<typename T>
+T skill_get_lv( uint16 id, uint16 lv, T arrvar[] ) {
+	if (!skill_check(id))
+		return static_cast<T>( 0 );
+
+	int lv_idx = min(lv, MAX_SKILL_LEVEL) - 1;
+	if (lv > MAX_SKILL_LEVEL && arrvar[lv_idx] > 1 && lv_idx > 1) {
+		T a__ = arrvar[lv_idx - 2];
+		T b__ = arrvar[lv_idx - 1];
+		T c__ = arrvar[lv_idx];
+		return static_cast<T>(c__ + ((lv - MAX_SKILL_LEVEL + 1) * (b__ - a__) / 2) + ((lv - MAX_SKILL_LEVEL) * (c__ - b__) / 2));
+	}
+	return arrvar[lv_idx];
+}
 
 // Skill DB
 e_damage_type skill_get_hit( uint16 skill_id )                     { if (!skill_check(skill_id)) return DMG_NORMAL; return skill_db.find(skill_id)->hit; }
 int skill_get_inf( uint16 skill_id )                               { skill_get(skill_id, skill_db.find(skill_id)->inf); }
-int skill_get_ele( uint16 skill_id , uint16 skill_lv )             { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->element); }
+e_element skill_get_ele( uint16 skill_id , uint16 skill_lv )       { return skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->element); }
 int skill_get_max( uint16 skill_id )                               { skill_get(skill_id, skill_db.find(skill_id)->max); }
-int skill_get_range( uint16 skill_id , uint16 skill_lv )           { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->range); }
-int skill_get_splash_( uint16 skill_id , uint16 skill_lv )         { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->splash);  }
-int skill_get_num( uint16 skill_id ,uint16 skill_lv )              { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->num); }
-int skill_get_cast( uint16 skill_id ,uint16 skill_lv )             { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->cast); }
-int skill_get_delay( uint16 skill_id ,uint16 skill_lv )            { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->delay); }
-int skill_get_walkdelay( uint16 skill_id ,uint16 skill_lv )        { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->walkdelay); }
-int skill_get_time( uint16 skill_id ,uint16 skill_lv )             { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->upkeep_time); }
-int skill_get_time2( uint16 skill_id ,uint16 skill_lv )            { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->upkeep_time2); }
+int skill_get_range( uint16 skill_id , uint16 skill_lv )           { return skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->range); }
+int skill_get_splash_( uint16 skill_id , uint16 skill_lv )         { return skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->splash);  }
+int skill_get_num( uint16 skill_id ,uint16 skill_lv )              { return skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->num); }
+int skill_get_cast( uint16 skill_id ,uint16 skill_lv )             { return skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->cast); }
+int skill_get_delay( uint16 skill_id ,uint16 skill_lv )            { return skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->delay); }
+int skill_get_walkdelay( uint16 skill_id ,uint16 skill_lv )        { return skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->walkdelay); }
+int skill_get_time( uint16 skill_id ,uint16 skill_lv )             { return skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->upkeep_time); }
+int skill_get_time2( uint16 skill_id ,uint16 skill_lv )            { return skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->upkeep_time2); }
 int skill_get_castdef( uint16 skill_id )                           { skill_get(skill_id, skill_db.find(skill_id)->cast_def_rate); }
 int skill_get_castcancel( uint16 skill_id )                        { skill_get(skill_id, skill_db.find(skill_id)->castcancel); }
-int skill_get_maxcount( uint16 skill_id ,uint16 skill_lv )         { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->maxcount); }
-int skill_get_blewcount( uint16 skill_id ,uint16 skill_lv )        { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->blewcount); }
+int skill_get_maxcount( uint16 skill_id ,uint16 skill_lv )         { return skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->maxcount); }
+int skill_get_blewcount( uint16 skill_id ,uint16 skill_lv )        { return skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->blewcount); }
 int skill_get_castnodex( uint16 skill_id )                         { skill_get(skill_id, skill_db.find(skill_id)->castnodex); }
 int skill_get_delaynodex( uint16 skill_id )                        { skill_get(skill_id, skill_db.find(skill_id)->delaynodex); }
 int skill_get_nocast ( uint16 skill_id )                           { skill_get(skill_id, skill_db.find(skill_id)->nocast); }
@@ -194,30 +196,30 @@ int skill_get_type( uint16 skill_id )                              { skill_get(s
 int skill_get_unit_id ( uint16 skill_id )                          { skill_get(skill_id, skill_db.find(skill_id)->unit_id); }
 int skill_get_unit_id2 ( uint16 skill_id )                         { skill_get(skill_id, skill_db.find(skill_id)->unit_id2); }
 int skill_get_unit_interval( uint16 skill_id )                     { skill_get(skill_id, skill_db.find(skill_id)->unit_interval); }
-int skill_get_unit_range( uint16 skill_id, uint16 skill_lv )       { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->unit_range); }
+int skill_get_unit_range( uint16 skill_id, uint16 skill_lv )       { return skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->unit_range); }
 int skill_get_unit_target( uint16 skill_id )                       { skill_get(skill_id, skill_db.find(skill_id)->unit_target&BCT_ALL); }
 int skill_get_unit_bl_target( uint16 skill_id )                    { skill_get(skill_id, skill_db.find(skill_id)->unit_target&BL_ALL); }
-int skill_get_unit_layout_type( uint16 skill_id ,uint16 skill_lv ) { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->unit_layout_type); }
-int skill_get_cooldown( uint16 skill_id, uint16 skill_lv )         { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->cooldown); }
-int skill_get_giveap( uint16 skill_id, uint16 skill_lv )           { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->giveap); }
+int skill_get_unit_layout_type( uint16 skill_id ,uint16 skill_lv ) { return skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->unit_layout_type); }
+int skill_get_cooldown( uint16 skill_id, uint16 skill_lv )         { return skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->cooldown); }
+int skill_get_giveap( uint16 skill_id, uint16 skill_lv )           { return skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->giveap); }
 #ifdef RENEWAL_CAST
-int skill_get_fixed_cast( uint16 skill_id ,uint16 skill_lv )       { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->fixed_cast); }
+int skill_get_fixed_cast( uint16 skill_id ,uint16 skill_lv )       { return skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->fixed_cast); }
 #endif
 // Skill requirements
-int skill_get_hp( uint16 skill_id ,uint16 skill_lv )               { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->require.hp); }
-int skill_get_mhp( uint16 skill_id ,uint16 skill_lv )              { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->require.mhp); }
-int skill_get_sp( uint16 skill_id ,uint16 skill_lv )               { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->require.sp); }
-int skill_get_ap( uint16 skill_id, uint16 skill_lv )               { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->require.ap); }
-int skill_get_hp_rate( uint16 skill_id, uint16 skill_lv )          { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->require.hp_rate); }
-int skill_get_sp_rate( uint16 skill_id, uint16 skill_lv )          { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->require.sp_rate); }
-int skill_get_ap_rate(uint16 skill_id, uint16 skill_lv)            { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->require.ap_rate); }
-int skill_get_zeny( uint16 skill_id ,uint16 skill_lv )             { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->require.zeny); }
+int skill_get_hp( uint16 skill_id ,uint16 skill_lv )               { return skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->require.hp); }
+int skill_get_mhp( uint16 skill_id ,uint16 skill_lv )              { return skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->require.mhp); }
+int skill_get_sp( uint16 skill_id ,uint16 skill_lv )               { return skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->require.sp); }
+int skill_get_ap( uint16 skill_id, uint16 skill_lv )               { return skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->require.ap); }
+int skill_get_hp_rate( uint16 skill_id, uint16 skill_lv )          { return skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->require.hp_rate); }
+int skill_get_sp_rate( uint16 skill_id, uint16 skill_lv )          { return skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->require.sp_rate); }
+int skill_get_ap_rate(uint16 skill_id, uint16 skill_lv)            { return skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->require.ap_rate); }
+int skill_get_zeny( uint16 skill_id ,uint16 skill_lv )             { return skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->require.zeny); }
 int skill_get_weapontype( uint16 skill_id )                        { skill_get(skill_id, skill_db.find(skill_id)->require.weapon); }
 int skill_get_ammotype( uint16 skill_id )                          { skill_get(skill_id, skill_db.find(skill_id)->require.ammo); }
-int skill_get_ammo_qty( uint16 skill_id, uint16 skill_lv )         { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->require.ammo_qty); }
+int skill_get_ammo_qty( uint16 skill_id, uint16 skill_lv )         { return skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->require.ammo_qty); }
 int skill_get_state( uint16 skill_id )                             { skill_get(skill_id, skill_db.find(skill_id)->require.state); }
 size_t skill_get_status_count( uint16 skill_id )                   { skill_get(skill_id, skill_db.find(skill_id)->require.status.size()); }
-int skill_get_spiritball( uint16 skill_id, uint16 skill_lv )       { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->require.spiritball); }
+int skill_get_spiritball( uint16 skill_id, uint16 skill_lv )       { return skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->require.spiritball); }
 sc_type skill_get_sc(int16 skill_id)                               { if (!skill_check(skill_id)) return SC_NONE; return skill_db.find(skill_id)->sc; }
 
 int skill_get_splash( uint16 skill_id , uint16 skill_lv ) {

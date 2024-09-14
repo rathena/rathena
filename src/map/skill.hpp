@@ -501,7 +501,7 @@ int skill_tree_get_max( uint16 skill_id, int b_class );	// Celest
 int skill_get_type( uint16 skill_id );
 e_damage_type skill_get_hit( uint16 skill_id );
 int skill_get_inf( uint16 skill_id );
-int skill_get_ele( uint16 skill_id , uint16 skill_lv );
+e_element skill_get_ele( uint16 skill_id , uint16 skill_lv );
 int skill_get_max( uint16 skill_id );
 int skill_get_range( uint16 skill_id , uint16 skill_lv );
 int skill_get_range2(struct block_list *bl, uint16 skill_id, uint16 skill_lv, bool isServer);

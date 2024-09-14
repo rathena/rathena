@@ -2122,7 +2122,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 #endif
 
 	// In official this is triggered even if no cast time.
-	clif_skillcasting(*src, target_id, 0,0, skill_id, skill_lv, skill_get_ele(skill_id, skill_lv), casttime);
+	clif_skillcasting(*src, target, 0,0, skill_id, skill_lv, skill_get_ele(skill_id, skill_lv), casttime);
 
 	if (sd && target->type == BL_MOB) {
 		TBL_MOB *md = (TBL_MOB*)target;
