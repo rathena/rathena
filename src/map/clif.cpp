@@ -5827,7 +5827,6 @@ void clif_skill_scale( struct block_list *bl, int src_id, int x, int y, uint16 s
 ///     0 = yellow chat text "[src name] will use skill [skill name]."
 ///     1 = no text
 void clif_skillcasting(block_list& src, block_list* dst, uint16 dst_x, uint16 dst_y, uint16 skill_id, uint16 skill_lv, e_element property, int32 casttime){
-
 	PACKET_ZC_USESKILL_ACK p{};
 
 	p.packetType = HEADER_ZC_USESKILL_ACK;
@@ -5869,7 +5868,7 @@ void clif_skillcasting(block_list& src, block_list* dst, uint16 dst_x, uint16 ds
 		clif_send(&p,sizeof(p), &src, AREA);
 
 	if( skill_get_inf2( skill_id, INF2_SHOWSCALE ) ){
-		clif_skill_scale( bl, src_id, bl->x, bl->y, skill_id, skill_lv, casttime );
+		clif_skill_scale( &src, src.id, src.x, src.y, skill_id, skill_lv, casttime );
 	}
 }
 
