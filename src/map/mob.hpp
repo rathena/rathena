@@ -200,7 +200,7 @@ struct s_mob_skill {
 	int64 cond2;
 	short target;
 	int val[5];
-	short emotion;
+	e_emotion_type emotion;
 	unsigned short msg_id;
 };
 

@@ -4244,7 +4244,7 @@ int mob_clone_spawn(map_session_data *sd, int16 m, int16 x, int16 y, const char 
 			ms->skill_lv = sd->status.skill[sk_idx].lv;
 			ms->state = MSS_ANY;
 			ms->permillage = 500*battle_config.mob_skill_rate/100; //Default chance of all skills: 5%
-			ms->emotion = -1;
+			ms->emotion = ET_MAX;
 			ms->cancel = 0;
 			ms->casttime = skill_castfix(&sd->bl,skill_id, ms->skill_lv);
 			ms->delay = 5000+skill_delayfix(&sd->bl,skill_id, ms->skill_lv);
@@ -6107,10 +6107,18 @@ static bool mob_parse_row_mobskilldb( char** str, size_t columns, size_t current
 		ms->val[1] = 0; //Do not "set" it.
 	}
 
-	if(*str[17])
-		ms->emotion = atoi(str[17]);
-	else
-		ms->emotion = -1;
+	if(*str[17]){
+		int temp_emotion = atoi(str[17]);
+		if (temp_emotion >= ET_MAX) {
+			ShowWarning("buildin_areamobuseskill: Unknown emotion %s (min=%d, max=%d).\n", str[17], ET_SURPRISE, (ET_MAX-1));
+			ms->emotion = ET_MAX;
+		}
+		if(temp_emotion < ET_SURPRISE)
+			ms->emotion = ET_MAX;
+		else
+			ms->emotion = static_cast<e_emotion_type>(temp_emotion);		
+	}else
+		ms->emotion = ET_MAX;
 
 	if (*str[18]) {
 		uint16 id = static_cast<uint16>(strtol(str[18], nullptr, 10));
