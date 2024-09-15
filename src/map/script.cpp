@@ -15343,7 +15343,7 @@ static inline void script_skill_effect( block_list& bl, uint16 skill_id, uint16 
 			clif_skill_poseffect(&bl, skill_id, skill_lv, x, y, gettick());
 			break;
 		case CAST_NODAMAGE:
-			clif_skill_nodamage(&bl, &bl, skill_id, skill_lv, 1);
+			clif_skill_nodamage(&bl, bl, skill_id, skill_lv);
 			break;
 		case CAST_DAMAGE:
 			clif_skill_damage(&bl, &bl, gettick(), status_get_amotion(&bl), status_get_dmotion(&bl), 0, 1, skill_id, skill_lv, skill_get_hit(skill_id));

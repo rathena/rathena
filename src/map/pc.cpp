@@ -5345,7 +5345,7 @@ bool pc_skill(map_session_data* sd, uint16 skill_id, int level, enum e_addskill_
 			sd->status.skill[idx].flag = SKILL_FLAG_PERMANENT;
 			if (level == 0) { //Remove skill.
 				sd->status.skill[idx].id = 0;
-				clif_deleteskill(sd,skill_id);
+				clif_deleteskill(*sd,skill_id);
 			} else
 				clif_addskill(sd,skill_id);
 			if (!skill_get_inf(skill_id) || pc_checkskill_summoner(sd, SUMMONER_POWER_LAND) >= 20 || pc_checkskill_summoner(sd, SUMMONER_POWER_SEA) >= 20) //Only recalculate for passive skills.
@@ -5380,7 +5380,7 @@ bool pc_skill(map_session_data* sd, uint16 skill_id, int level, enum e_addskill_
 			sd->status.skill[idx].flag = SKILL_FLAG_PERM_GRANTED;
 			if (level == 0) { //Remove skill.
 				sd->status.skill[idx].id = 0;
-				clif_deleteskill(sd,skill_id);
+				clif_deleteskill(*sd,skill_id);
 			} else
 				clif_addskill(sd,skill_id);
 			if (!skill_get_inf(skill_id) || pc_checkskill_summoner(sd, SUMMONER_POWER_LAND) >= 20 || pc_checkskill_summoner(sd, SUMMONER_POWER_SEA) >= 20) //Only recalculate for passive skills.
@@ -5462,7 +5462,7 @@ bool pc_skill_plagiarism_reset(map_session_data &sd, uint8 type)
 		sd.status.skill[idx].id = 0;
 		sd.status.skill[idx].lv = 0;
 		sd.status.skill[idx].flag = SKILL_FLAG_PERMANENT;
-		clif_deleteskill(&sd, skill_id);
+		clif_deleteskill(sd, skill_id);
 		
 		if (type == 1) {
 			sd.cloneskill_idx = 0;
@@ -10053,7 +10053,7 @@ bool pc_revive_item(map_session_data *sd) {
 	else
 		pc_delitem(sd, item_position, 1, 0, 1, LOG_TYPE_CONSUME);
 
-	clif_skill_nodamage(&sd->bl, &sd->bl, ALL_RESURRECTION, 4, 1);
+	clif_skill_nodamage(&sd->bl, sd->bl, ALL_RESURRECTION, 4);
 
 	return true;
 }

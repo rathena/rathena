@@ -888,7 +888,7 @@ void clif_joinchatfail( map_session_data& sd, e_refuse_enter_room result );
 void clif_joinchatok(map_session_data& sd,chat_data& cd);
 void clif_addchat(struct chat_data* cd,map_session_data *sd);	// chat
 void clif_changechatowner(struct chat_data* cd, map_session_data* sd);	// chat
-void clif_clearchat(struct chat_data *cd,int fd);	// area or fd
+void clif_clearchat(chat_data &cd);
 void clif_leavechat(struct chat_data* cd, map_session_data* sd, bool flag);	// chat
 void clif_changechatstatus(chat_data& cd);
 void clif_refresh_storagewindow(map_session_data *sd);
@@ -933,7 +933,7 @@ void clif_skillinfoblock(map_session_data *sd);
 void clif_skillup(map_session_data *sd, uint16 skill_id, int lv, int range, int upgradable);
 void clif_skillinfo(map_session_data *sd,int skill_id, int inf);
 void clif_addskill(map_session_data *sd, int skill_id);
-void clif_deleteskill(map_session_data *sd, int skill_id, bool skip_infoblock = false);
+void clif_deleteskill(map_session_data& sd, uint16 skill_id, bool skip_infoblock = false);
 
 void clif_skillcasting(struct block_list* bl, int src_id, int dst_id, int dst_x, int dst_y, uint16 skill_id, uint16 skill_lv, int property, int casttime);
 void clif_skillcastcancel( block_list& bl );
@@ -941,7 +941,7 @@ void clif_skill_fail( map_session_data& sd, uint16 skill_id, enum useskill_fail_
 void clif_skill_cooldown( map_session_data &sd, uint16 skill_id, t_tick tick );
 int clif_skill_damage(struct block_list *src,struct block_list *dst,t_tick tick,int sdelay,int ddelay,int64 sdamage,int div,uint16 skill_id,uint16 skill_lv,enum e_damage_type type);
 //int clif_skill_damage2(struct block_list *src,struct block_list *dst,t_tick tick,int sdelay,int ddelay,int damage,int div,uint16 skill_id,uint16 skill_lv,enum e_damage_type type);
-bool clif_skill_nodamage(struct block_list *src,struct block_list *dst,uint16 skill_id,int heal,t_tick tick);
+bool clif_skill_nodamage( block_list* src, block_list& dst, uint16 skill_id, int32 heal, bool success = true );
 void clif_skill_poseffect(struct block_list *src,uint16 skill_id,int val,int x,int y,t_tick tick);
 void clif_skill_estimation(map_session_data *sd,struct block_list *dst);
 void clif_skill_warppoint( map_session_data& sd, uint16 skill_id, uint16 skill_lv, std::vector<std::string>& maps );
@@ -1041,9 +1041,9 @@ void clif_party_dead( map_session_data& sd );
 // guild
 void clif_guild_created( map_session_data& sd, int flag );
 void clif_guild_belonginfo( map_session_data& sd );
-void clif_guild_masterormember(map_session_data *sd);
+void clif_guild_masterormember(map_session_data& sd);
 void clif_guild_basicinfo( map_session_data& sd );
-void clif_guild_allianceinfo(map_session_data *sd);
+void clif_guild_allianceinfo(map_session_data& sd);
 void clif_guild_memberlist( map_session_data& sd );
 void clif_guild_skillinfo( map_session_data& sd );
 void clif_guild_send_onlineinfo(map_session_data *sd); //[LuzZza]

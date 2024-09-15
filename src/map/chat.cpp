@@ -218,7 +218,7 @@ int chat_leavechat(map_session_data* sd, bool kicked)
 		cd->usersd[i] = cd->usersd[i+1];
 
 	if( cd->users == 0 && cd->owner->type == BL_PC ) { // Delete empty chatroom
-		clif_clearchat(cd, 0);
+		clif_clearchat(*cd);
 		db_destroy(cd->kick_list);
 		map_deliddb(&cd->bl);
 		map_delblock(&cd->bl);
@@ -235,7 +235,7 @@ int chat_leavechat(map_session_data* sd, bool kicked)
 	if( leavechar == 0 && cd->owner->type == BL_PC ) { // Set and announce new owner
 		cd->owner = (struct block_list*) cd->usersd[0];
 		clif_changechatowner(cd, cd->usersd[0]);
-		clif_clearchat(cd, 0);
+		clif_clearchat(*cd);
 
 		//Adjust Chat location after owner has been changed.
 		map_delblock( &cd->bl );
@@ -276,7 +276,7 @@ int chat_changechatowner(map_session_data* sd, const char* nextownername)
 		return -1;  // name not found
 
 	// erase temporarily
-	clif_clearchat(cd,0);
+	clif_clearchat(*cd);
 
 	// set new owner
 	cd->owner = (struct block_list*) cd->usersd[i];
@@ -437,7 +437,7 @@ int chat_deletenpcchat(struct npc_data* nd)
 		return 0;
 
 	chat_npckickall(cd);
-	clif_clearchat(cd, 0);
+	clif_clearchat(*cd);
 	map_deliddb(&cd->bl);
 	map_delblock(&cd->bl);
 	map_freeblock(&cd->bl);

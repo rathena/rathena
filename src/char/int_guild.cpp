@@ -308,8 +308,8 @@ int inter_guild_tosql( mmo_guild &g, int flag ){
 
 				Sql_EscapeStringLen(sql_handle, esc_name, e->name, strnlen(e->name, NAME_LENGTH));
 				Sql_EscapeStringLen(sql_handle, esc_mes, e->mes, strnlen(e->mes, sizeof(e->mes)));
-				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`guild_id`,`account_id`,`name`,`mes`) "
-					"VALUES ('%d','%d','%s','%s')", schema_config.guild_expulsion_db, g.guild_id, e->account_id, esc_name, esc_mes) )
+				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`guild_id`,`account_id`,`name`,`mes`,`char_id`) "
+					"VALUES ('%u','%u','%s','%s','%u')", schema_config.guild_expulsion_db, g.guild_id, e->account_id, esc_name, esc_mes, e->char_id) )
 					Sql_ShowDebug(sql_handle);
 			}
 		}
@@ -487,7 +487,7 @@ std::shared_ptr<CharGuild> inter_guild_fromsql( int32 guild_id ){
 	}
 
 	//printf("- Read guild_expulsion %d from sql \n",guild_id);
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`name`,`mes` FROM `%s` WHERE `guild_id`='%d'", schema_config.guild_expulsion_db, guild_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`name`,`mes`,`char_id` FROM `%s` WHERE `guild_id`='%d'", schema_config.guild_expulsion_db, guild_id) )
 	{
 		Sql_ShowDebug(sql_handle);
 		return nullptr;
@@ -499,6 +499,7 @@ std::shared_ptr<CharGuild> inter_guild_fromsql( int32 guild_id ){
 		Sql_GetData(sql_handle, 0, &data, nullptr); e->account_id = atoi(data);
 		Sql_GetData(sql_handle, 1, &data, &len); memcpy(e->name, data, zmin(len, NAME_LENGTH));
 		Sql_GetData(sql_handle, 2, &data, &len); memcpy(e->mes, data, zmin(len, sizeof(e->mes)));
+		Sql_GetData(sql_handle, 3, &data, nullptr); e->char_id = strtoul(data, nullptr, 10);
 	}
 
 	//printf("- Read guild_skill %d from sql \n",guild_id);
@@ -1343,6 +1344,7 @@ int mapif_parse_GuildLeave(int fd, int guild_id, uint32 account_id, uint32 char_
 		}
 		// Save the expulsion entry
 		g->guild.expulsion[j].account_id = account_id;
+		g->guild.expulsion[j].char_id = char_id;
 		safestrncpy(g->guild.expulsion[j].name, g->guild.member[i].name, NAME_LENGTH);
 		safestrncpy(g->guild.expulsion[j].mes, mes, 40);
 	}

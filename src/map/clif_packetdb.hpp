@@ -86,7 +86,6 @@
 	packet(0x00d4,-1);
 	parseable_packet(0x00d5,-1,clif_parse_CreateChatRoom,2,4,6,7,15);
 	packet(0x00d7,-1);
-	packet(0x00d8,6);
 	parseable_packet(0x00d9,14,clif_parse_ChatAddMember,2,6);
 	packet(0x00dc,28);
 	packet(0x00dd,29);
@@ -134,7 +133,6 @@
 	packet(0x0117,18);
 	parseable_packet(0x0118,2,clif_parse_StopAttack,0);
 	packet(0x0119,13);
-	packet(0x011a,15);
 	parseable_packet(0x011b,20,clif_parse_UseSkillMap,2,4);
 	parseable_packet(0x011d,2,clif_parse_RequestMemo,0);
 	packet(0x011f,16);
@@ -161,9 +159,7 @@
 	parseable_packet(0x0149,9,clif_parse_GMReqNoChat,2,6,7);
 	packet(0x014a,6);
 	packet(0x014b,27);
-	packet(0x014c,-1);
 	parseable_packet(0x014d,2,clif_parse_GuildCheckMaster,0);
-	packet(0x014e,6);
 	parseable_packet(0x014f,6,clif_parse_GuildRequestInfo,2);
 	packet(0x0150,110);
 	parseable_packet(0x0151,6,clif_parse_GuildRequestEmblem,2);
@@ -178,9 +174,7 @@
 	parseable_packet( HEADER_CZ_REQ_BAN_GUILD, sizeof( PACKET_CZ_REQ_BAN_GUILD ), clif_parse_GuildExpulsion, 0 );
 	parseable_packet( HEADER_CZ_REQ_DISORGANIZE_GUILD, sizeof( PACKET_CZ_REQ_DISORGANIZE_GUILD ), clif_parse_GuildBreak, 0 );
 	packet(0x015f,42);
-	packet(0x0160,-1);
 	parseable_packet(0x0161,-1,clif_parse_GuildChangePositionInfo,2,4);
-	packet(0x0163,-1);
 	packet(0x0164,-1);
 	parseable_packet(0x0165,30,clif_parse_CreateGuild,2,6);
 	packet(0x0166,-1);
@@ -1215,7 +1209,6 @@
 // 2008-11-26aSakexe
 #if PACKETVER >= 20081126
 	packet(0x01a2,37);
-	packet(0x0441,4);
 #endif
 
 // 2008-12-10aSakexe
@@ -1751,7 +1744,6 @@
 // 2013-07-31cRagexe
 #if PACKETVER >= 20130731
 	packet(0x09ca,23); // ZC_SKILL_ENTRY5
-	packet(0x09cb,17); // ZC_USE_SKILL2
 #endif
 
 // 2013-08-07Ragexe
