@@ -834,10 +834,10 @@ DEFINE_PACKET_HEADER(ZC_GUILD_CHAT, 0x17f)
 
 #if (PACKETVER) // no idea when it changed
 struct PACKET_ZC_UPDATE_CHARSTAT {
-	int16 packetType;
+	uint16 packetType;
 	uint32 aid;
 	uint32 cid;
-	int status;
+	uint32 status;
 	uint16 gender;
 	uint16 hairStyle;
 	uint16 hairColor;
@@ -845,10 +845,10 @@ struct PACKET_ZC_UPDATE_CHARSTAT {
 DEFINE_PACKET_HEADER(ZC_UPDATE_CHARSTAT, 0x01f2)
 #else
 struct PACKET_ZC_UPDATE_CHARSTAT {
-	int16 packetType;
+	uint16 packetType;
 	uint32 aid;
 	uint32 cid;
-	int status;
+	uint32 status;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_UPDATE_CHARSTAT, 0x016d)
 #endif

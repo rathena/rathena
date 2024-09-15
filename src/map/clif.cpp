@@ -8626,16 +8626,16 @@ void clif_guild_belonginfo( map_session_data& sd ){
 /// status:
 ///     0 = offline
 ///     1 = online
-void clif_guild_memberlogin_notice(const struct mmo_guild &g,int idx,int flag){
+void clif_guild_memberlogin_notice(const struct mmo_guild &g,int idx,int online){
 
 	map_session_data* sd;
-
+	
 	PACKET_ZC_UPDATE_CHARSTAT p{};
 
 	p.packetType = HEADER_ZC_UPDATE_CHARSTAT;
 	p.aid = g.member[idx].account_id;
 	p.cid = g.member[idx].char_id;
-	p.status = flag;
+	p.status = static_cast<decltype(p.status)>(online);
 
 	if( ( sd = g.member[idx].sd ) != nullptr )
 	{

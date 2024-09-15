@@ -1047,7 +1047,7 @@ void clif_guild_allianceinfo(map_session_data *sd);
 void clif_guild_memberlist( map_session_data& sd );
 void clif_guild_skillinfo( map_session_data& sd );
 void clif_guild_send_onlineinfo(map_session_data *sd); //[LuzZza]
-void clif_guild_memberlogin_notice(const struct mmo_guild &g,int idx,int flag);
+void clif_guild_memberlogin_notice(const struct mmo_guild &g,int idx,int online);
 void clif_guild_invite( map_session_data& sd, const struct mmo_guild& g );
 void clif_guild_inviteack( map_session_data& sd, int flag );
 void clif_guild_leave( map_session_data& sd, const char* name, uint32 char_id, const char* mes );
