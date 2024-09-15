@@ -817,6 +817,12 @@ struct PACKET_ZC_CARTOFF {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_CARTOFF, 0x12b)
 
+struct PACKET_ZC_ACK_GUILD_MENUINTERFACE {
+	int16 packetType;
+	int menuFlag;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_GUILD_MENUINTERFACE, 0x014e)
+
 struct PACKET_ZC_NOTIFY_POSITION_TO_GUILDM {
 	int16 packetType;
 	uint32 aid;
@@ -1009,6 +1015,12 @@ struct PACKET_ZC_REFUSE_ENTER_ROOM {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_REFUSE_ENTER_ROOM, 0xda);
 
+struct PACKET_ZC_DESTROY_ROOM {
+	int16 packetType;
+	uint32 chatId;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_DESTROY_ROOM, 0xd8);
+
 struct PACKET_ZC_ENTER_ROOM_sub{
 	uint32 flag;
 	char name[NAME_LENGTH];
@@ -1105,6 +1117,12 @@ struct PACKET_ZC_SKILL_DISAPPEAR {
 	uint32 GID;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_SKILL_DISAPPEAR, 0x120);
+
+struct PACKET_ZC_SKILLINFO_DELETE {
+	uint16 packetType;
+	uint16 skillID;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_SKILLINFO_DELETE, 0x441);
 
 struct PACKET_ZC_SKILL_UPDATE {
 	int16 packetType;

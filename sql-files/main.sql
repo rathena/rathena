@@ -527,6 +527,7 @@ CREATE TABLE IF NOT EXISTS `guild_expulsion` (
   `account_id` int(11) unsigned NOT NULL default '0',
   `name` varchar(24) NOT NULL default '',
   `mes` varchar(40) NOT NULL default '',
+  `char_id` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`guild_id`,`name`)
 ) ENGINE=MyISAM;
 
