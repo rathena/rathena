@@ -27,6 +27,7 @@ struct unit_data {
 	struct skill_unit_group_tickset skillunittick[MAX_SKILLUNITGROUPTICKSET];
 	short attacktarget_lv;
 	short to_x, to_y;
+	uint8 sx, sy; // Subtile position (0-15, with 8 being center of cell)
 	short skillx, skilly;
 	uint16 skill_id, skill_lv;
 	int skilltarget;
@@ -52,7 +53,6 @@ struct unit_data {
 		unsigned step_attack : 1;
 		unsigned walk_easy : 1 ;
 		unsigned running : 1;
-		unsigned speed_changed : 1;
 		unsigned walk_script : 1;
 		unsigned blockedmove : 1;
 		unsigned blockedskill : 1;
@@ -115,6 +115,7 @@ int unit_calc_pos(struct block_list *bl, int tx, int ty, uint8 dir);
 TIMER_FUNC(unit_delay_walktoxy_timer);
 TIMER_FUNC(unit_delay_walktobl_timer);
 
+void unit_stop_walking_soon(struct block_list& bl);
 // Causes the target object to stop moving.
 int unit_stop_walking(struct block_list *bl,int type);
 bool unit_can_move(struct block_list *bl);
@@ -171,8 +172,8 @@ void unit_free_pc(map_session_data *sd);
 #define unit_remove_map(bl,clrtype) unit_remove_map_(bl,clrtype,__FILE__,__LINE__,__func__)
 int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, int line, const char* func);
 int unit_free(struct block_list *bl, clr_type clrtype);
-int unit_changeviewsize(struct block_list *bl,short size);
-int unit_changetarget(struct block_list *bl,va_list ap);
+int unit_changetarget(block_list *bl,va_list ap);
+void unit_changetarget_sub(unit_data& ud, block_list& target);
 
 // Shadow Scar
 void unit_addshadowscar(unit_data &ud, int interval);

@@ -2478,13 +2478,17 @@ Body:
     DurationLookup: HLIF_AVOID
     CalcFlags:
       Speed: true
+    Flags:
+      NoSave: true
+      RemoveFromHomOnWarp: true
   - Status: Change
     DurationLookup: HLIF_CHANGE
     CalcFlags:
       Vit: true
       Int: true
     Flags:
-      RemoveOnChangeMap: true
+      NoSave: true
+      RemoveFromHomOnWarp: true
     Fail:
       Change: true
   - Status: Bloodlust
@@ -2492,6 +2496,9 @@ Body:
     CalcFlags:
       Batk: true
       Watk: true
+    Flags:
+      NoSave: true
+      RemoveFromHomOnWarp: true
   - Status: Fleet
     DurationLookup: HFLI_FLEET
     CalcFlags:
@@ -2506,6 +2513,10 @@ Body:
     DurationLookup: HAMI_DEFENCE
     CalcFlags:
       Def: true
+      Vit: true
+    Flags:
+      NoSave: true
+      RemoveFromHomOnWarp: true
   - Status: Incaspdrate
     CalcFlags:
       Aspd: true
@@ -3963,7 +3974,7 @@ Body:
       Unlimitedhummingvoice: true
       Sircleofnature: true
   - Status: Deepsleep
-    Icon: EFST_HANDICAPSTATE_DEEP_SLEEP
+    Icon: EFST_DEEP_SLEEP
     DurationLookup: WM_LULLABY_DEEPSLEEP
     States:
       NoCast: true

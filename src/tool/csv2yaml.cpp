@@ -2331,7 +2331,7 @@ static bool quest_read_db( char *split[], size_t columns, size_t current ){
 	std::string title = split[17];
 	
 	if (columns > 18) { // If the title has a comma in it, concatenate
-		int col = 18;
+		size_t col = 18;
 
 		while (col < columns) {
 			title += ',' + std::string(split[col]);
@@ -2472,7 +2472,7 @@ static bool instance_readdb_sub( char* str[], size_t columns, size_t current ){
 		body << YAML::Key << "AdditionalMaps";
 		body << YAML::BeginMap;
 
-		for (int i = 7; i < columns; i++) {
+		for( size_t i = 7; i < columns; i++ ){
 			if (!strlen(str[i]))
 				continue;
 
@@ -3110,7 +3110,8 @@ static bool itemdb_read_randomopt_group( char* str[], size_t columns, size_t cur
 	if (group == nullptr)
 		group_entry.rate.push_back((uint16)strtoul(str[1], nullptr, 10));
 
-	for (int j = 0, k = 2; k < columns && j < MAX_ITEM_RDM_OPT; k += 3) {
+	uint16 j = 0;
+	for( size_t k = 2; k < columns && j < MAX_ITEM_RDM_OPT; k += 3 ){
 		int32 randid_tmp = -1;
 
 		for (const auto &opt : rand_opt_db) {
@@ -3876,7 +3877,7 @@ static bool skill_parse_row_createarrowdb( char* split[], size_t columns, size_t
 
 	std::map<std::string, uint32> item_created;
 	
-	for (uint16 x = 1; x+1 < columns && split[x] && split[x+1]; x += 2) {
+	for( size_t x = 1; x + 1 < columns && split[x] && split[x + 1]; x += 2 ){
 		nameid = static_cast<t_itemid>(strtoul(split[x], nullptr, 10));
 		std::string* item_name = util::umap_find(aegis_itemnames, nameid);
 
@@ -4132,7 +4133,7 @@ static bool mob_readdb_itemratio( char* str[], size_t columns, size_t current ){
 	if (columns-2 > 0) {
 		body << YAML::Key << "List";
 		body << YAML::BeginMap;
-		for (int i = 0; i < columns-2; i++) {
+		for( size_t i = 0; i < columns - 2; i++ ){
 			uint16 mob_id = static_cast<uint16>(strtoul(str[i+2], nullptr, 10));
 			std::string* mob_name = util::umap_find( aegis_mobnames, mob_id );
 
@@ -4251,8 +4252,9 @@ static bool pc_readdb_job2( char* fields[], size_t columns, size_t current ){
 	stats.resize(MAX_LEVEL);
 	std::fill(stats.begin(), stats.end(), 0); // Fill with 0 so we don't produce arbitrary stats
 
-	for (int i = 1; i < columns; i++)
+	for( size_t i = 1; i < columns; i++ ){
 		stats[i - 1] = atoi(fields[i]);
+	}
 
 	job_db2.insert({ atoi(fields[0]), stats });
 	return true;

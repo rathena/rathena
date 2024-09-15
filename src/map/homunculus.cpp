@@ -279,7 +279,7 @@ int hom_vaporize(map_session_data *sd, int flag)
 	if (!hd || hd->homunculus.vaporize)
 		return 0;
 
-	if (status_isdead(&hd->bl))
+	if (status_isdead(hd->bl))
 		return 0; //Can't vaporize a dead homun.
 
 	if (flag == HOM_ST_REST && get_percentage(hd->battle_status.hp, hd->battle_status.max_hp) < 80)
@@ -289,10 +289,11 @@ int hom_vaporize(map_session_data *sd, int flag)
 	//Delete timers when vaporized.
 	hom_hungry_timer_delete(hd);
 	hd->homunculus.vaporize = flag ? flag : HOM_ST_REST;
-	if (battle_config.hom_setting&HOMSET_RESET_REUSESKILL_VAPORIZED) {
+	if (battle_config.hom_delay_reset_vaporize) {
 		hd->blockskill.clear();
 		hd->blockskill.shrink_to_fit();
 	}
+	status_change_clear(&hd->bl, 1);
 	clif_hominfo(sd, sd->hd, 0);
 	hom_save(hd);
 
@@ -1138,8 +1139,7 @@ bool hom_call(map_session_data *sd)
 		clif_hominfo(sd,hd,1);
 		clif_hominfo(sd,hd,0); // send this x2. dunno why, but kRO does that [blackhole89]
 		clif_homskillinfoblock( *hd );
-		if (battle_config.hom_setting&HOMSET_COPY_SPEED)
-			status_calc_bl(&hd->bl, { SCB_SPEED });
+		status_calc_bl(&hd->bl, { SCB_SPEED });
 		hom_save(hd);
 	} else
 		//Warp him to master.
@@ -1280,7 +1280,7 @@ int hom_ressurect(map_session_data* sd, unsigned char per, short x, short y)
 	if (hd->homunculus.vaporize == HOM_ST_REST)
 		return 0; // vaporized homunculi need to be 'called'
 
-	if (!status_isdead(&hd->bl))
+	if (!status_isdead(hd->bl))
 		return 0; // already alive
 
 	hom_init_timers(hd);

@@ -3435,6 +3435,28 @@ struct PACKET_CZ_SEARCH_STORE_INFO {
 */
 } __attribute__((packed));
 
+struct PACKET_ZC_SEARCH_STORE_INFO_FAILED {
+	int16 packetType;
+	uint8 reason;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_SEARCH_STORE_INFO_FAILED, 0x837);
+
+struct PACKET_ZC_OPEN_SEARCH_STORE_INFO {
+	int16 packetType;
+	uint16 effect;
+#if PACKETVER_MAIN_NUM >= 20100701 || PACKETVER_RE_NUM >= 20100701 || defined(PACKETVER_ZERO)
+	uint8 remainingUses;
+#endif
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_OPEN_SEARCH_STORE_INFO, 0x83a);
+
+struct PACKET_ZC_SSILIST_ITEM_CLICK_ACK {
+	int16 packetType;
+	int16 x;
+	int16 y;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_SSILIST_ITEM_CLICK_ACK, 0x83d);
+
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200723 || PACKETVER_ZERO_NUM >= 20221024
 struct PACKET_ZC_SEARCH_STORE_INFO_ACK_sub {
 	uint32 storeId;

@@ -58,6 +58,7 @@ enum e_skill_nk : uint8 {
 	NK_IGNOREDEFCARD,
 	NK_CRITICAL,
 	NK_IGNORELONGCARD,
+	NK_SIMPLEDEFENSE,
 	NK_MAX,
 };
 
@@ -534,7 +535,6 @@ int skill_get_hp( uint16 skill_id ,uint16 skill_lv );
 int skill_get_mhp( uint16 skill_id ,uint16 skill_lv );
 int skill_get_sp( uint16 skill_id ,uint16 skill_lv );
 int skill_get_ap( uint16 skill_id, uint16 skill_lv );
-int skill_get_status_count( uint16 skill_id );
 int skill_get_hp_rate( uint16 skill_id, uint16 skill_lv );
 int skill_get_sp_rate( uint16 skill_id, uint16 skill_lv );
 int skill_get_ap_rate( uint16 skill_id, uint16 skill_lv );
@@ -543,7 +543,7 @@ int skill_get_weapontype( uint16 skill_id );
 int skill_get_ammotype( uint16 skill_id );
 int skill_get_ammo_qty( uint16 skill_id, uint16 skill_lv );
 int skill_get_state(uint16 skill_id);
-int skill_get_status_count( uint16 skill_id );
+size_t skill_get_status_count( uint16 skill_id );
 int skill_get_spiritball( uint16 skill_id, uint16 skill_lv );
 unsigned short skill_dummy2skill_id(unsigned short skill_id);
 

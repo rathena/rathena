@@ -7235,6 +7235,7 @@ Body:
     TargetType: Self
     DamageFlags:
       IgnoreDefense: true
+      SimpleDefense: true
     Range: 9
     Hit: Single
     HitCount: 1
@@ -7664,6 +7665,7 @@ Body:
     TargetType: Attack
     DamageFlags:
       IgnoreFlee: true
+      SimpleDefense: true
     Flags:
       TargetTrap: true
     Range: -2
@@ -7697,7 +7699,6 @@ Body:
       - Level: 5
         Time: 1000
     Duration1: 3000
-    Duration2: 300000
     FixedCastTime:
       - Level: 1
         Time: 2000
@@ -8877,6 +8878,7 @@ Body:
     HitCount: 1
     SplashArea: -1
     AfterCastActDelay: 300
+    Duration1: 15000
     Duration2: 27000
     Cooldown: 4000
     Requires:
@@ -9134,6 +9136,7 @@ Body:
     HitCount: 1
     SplashArea: -1
     AfterCastActDelay: 300
+    Duration1: 4500
     Duration2: 4500
     Cooldown: 4000
     Requires:
@@ -9452,6 +9455,7 @@ Body:
     DamageFlags:
       IgnoreAtkCard: true
       IgnoreFlee: true
+      SimpleDefense: true
     Flags:
       IsNpc: true
       TargetSelf: true
@@ -18360,6 +18364,43 @@ Body:
     HitCount: 1
     Duration1: 60000
     Status: Relieve_off
+  - Id: 776
+    Name: NPC_DEADLYCURSE
+    Description: Deadly Curse
+    MaxLevel: 1
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IgnoreGtb: true
+      IsNpc: true
+    Range: 1
+    Duration1: 15000
+    Status: Deadly_Defeasance
+  - Id: 779
+    Name: NPC_DEADLYCURSE2
+    Description: Deadly Curse 2
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IgnoreGtb: true
+      IsNpc: true
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 3
+      - Level: 3
+        Area: 4
+      - Level: 4
+        Area: 5
+      - Level: 5
+        Area: 6
+    Duration2: 30000
+    Status: Deadly_Defeasance
   - Id: 780
     Name: NPC_CANE_OF_EVIL_EYE
     Description: Cane of evil eye
@@ -19110,6 +19151,7 @@ Body:
     DamageFlags:
       Splash: true
       IgnoreFlee: true
+      SimpleDefense: true
     Flags:
       TargetTrap: true
     Range: 9
@@ -22655,6 +22697,7 @@ Body:
     DamageFlags:
       Splash: true
       IgnoreFlee: true
+      SimpleDefense: true
     Flags:
       AllowOnMado: true
     Range: 9
@@ -28789,6 +28832,7 @@ Body:
     DamageFlags:
       Splash: true
       IgnoreFlee: true
+      SimpleDefense: true
     Range:
       - Level: 1
         Size: 7
@@ -29687,6 +29731,19 @@ Body:
         - Level: 2
           Amount: 100
     Status: Odins_Power
+  - Id: 2543
+    Name: ALL_RAY_OF_PROTECTION
+    Description: Ray of Protection
+    MaxLevel: 1
+    Type: Magic
+    TargetType: Support
+    DamageFlags:
+      NoDamage: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    Duration1: 60000
+    Status: Protection
   - Id: 2544
     Name: MC_CARTDECORATE
     Description: Decorate Cart
@@ -33145,6 +33202,7 @@ Body:
     DamageFlags:
       Splash: true
       IgnoreFlee: true
+      SimpleDefense: true
     Flags:
       TargetTrap: true
     Range: 9
@@ -42960,10 +43018,10 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-    Range: 9
-    Hit: Single
-    HitCount: 1
-    AfterCastActDelay: 2000
+    Flags:
+      IgnoreGtb: true
+    AfterCastWalkDelay: 1000
+    Cooldown: 20000
     Requires:
       SpCost:
         - Level: 1
@@ -42986,11 +43044,7 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-      Splash: true
-    Hit: Single
-    HitCount: 1
-    SplashArea: -1
-    AfterCastActDelay: 35000
+    AfterCastWalkDelay: 1000
     Duration1:
       - Level: 1
         Time: 40000
@@ -43002,6 +43056,7 @@ Body:
         Time: 25000
       - Level: 5
         Time: 20000
+    Cooldown: 35000
     Requires:
       SpCost:
         - Level: 1
@@ -43019,7 +43074,6 @@ Body:
     Name: HLIF_BRAIN
     Description: Brain Surgery
     MaxLevel: 5
-    SplashArea: 1
   - Id: 8004
     Name: HLIF_CHANGE
     Description: Change
@@ -43027,7 +43081,7 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-    Hit: Single
+    AfterCastWalkDelay: 1000
     Duration1:
       - Level: 1
         Time: 60000
@@ -43035,7 +43089,7 @@ Body:
         Time: 180000
       - Level: 3
         Time: 300000
-    Duration2:
+    Cooldown:
       - Level: 1
         Time: 600000
       - Level: 2
@@ -43052,8 +43106,8 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-    Hit: Single
-    Duration2: 1000
+    AfterCastWalkDelay: 1000
+    Cooldown: 1000
     Requires:
       SpCost: 10
   - Id: 8006
@@ -43063,8 +43117,7 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-    Hit: Single
-    AfterCastActDelay: 30000
+    AfterCastWalkDelay: 1000
     Duration1:
       - Level: 1
         Time: 40000
@@ -43076,6 +43129,7 @@ Body:
         Time: 25000
       - Level: 5
         Time: 20000
+    Cooldown: 30000
     Requires:
       SpCost:
         - Level: 1
@@ -43093,8 +43147,6 @@ Body:
     Name: HAMI_SKIN
     Description: Adamantium Skin
     MaxLevel: 5
-    DamageFlags:
-      NoDamage: true
   - Id: 8008
     Name: HAMI_BLOODLUST
     Description: Bloodlust
@@ -43102,7 +43154,7 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-    Hit: Single
+    AfterCastWalkDelay: 1000
     Duration1:
       - Level: 1
         Time: 60000
@@ -43110,7 +43162,7 @@ Body:
         Time: 180000
       - Level: 3
         Time: 300000
-    Duration2:
+    Cooldown:
       - Level: 1
         Time: 300000
       - Level: 2
@@ -43139,7 +43191,7 @@ Body:
         Count: -2
       - Level: 5
         Count: -3
-    AfterCastWalkDelay: 2000
+    Cooldown: 2000
     Requires:
       SpCost:
         - Level: 1
@@ -43160,6 +43212,7 @@ Body:
     DamageFlags:
       NoDamage: true
     Hit: Single
+    AfterCastWalkDelay: 1000
     Duration1:
       - Level: 1
         Time: 60000
@@ -43171,7 +43224,7 @@ Body:
         Time: 45000
       - Level: 5
         Time: 40000
-    Duration2:
+    Cooldown:
       - Level: 1
         Time: 60000
       - Level: 2
@@ -43205,6 +43258,7 @@ Body:
       NoDamage: true
     Hit: Single
     CastCancel: true
+    AfterCastWalkDelay: 1000
     Duration1:
       - Level: 1
         Time: 60000
@@ -43216,7 +43270,7 @@ Body:
         Time: 45000
       - Level: 5
         Time: 40000
-    Duration2:
+    Cooldown:
       - Level: 1
         Time: 60000
       - Level: 2
@@ -43249,7 +43303,7 @@ Body:
     Range: 15
     Hit: Single
     HitCount: 1
-    AfterCastActDelay: 1000
+    Cooldown: 1000
     Requires:
       SpCost: 1
   - Id: 8013
@@ -43271,7 +43325,7 @@ Body:
         Count: 4
       - Level: 5
         Count: 5
-    AfterCastActDelay:
+    Cooldown:
       - Level: 1
         Time: 2000
       - Level: 2
@@ -43302,8 +43356,8 @@ Body:
     DamageFlags:
       NoDamage: true
     Hit: Single
-    AfterCastActDelay: 3000
-    AfterCastWalkDelay: 3000
+    AfterCastWalkDelay: 1500
+    Cooldown: 3000
     Requires:
       SpCost: 40
   - Id: 8015
@@ -43327,7 +43381,8 @@ Body:
     HitCount: 1
     Element: Weapon
     SplashArea: 4
-    AfterCastWalkDelay: 1000
+    AfterCastActDelay: 5000
+    CoolDown: 1000
     Requires:
       SpCost: 1
   - Id: 8018

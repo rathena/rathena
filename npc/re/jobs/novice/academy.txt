@@ -5218,7 +5218,7 @@ new_1-3,99,169,3	script	Friendly Poring#ac	4_PORING,{
 			next;
 			mes "[Poring]";
 			mes "It may fail, but keep trying to lure way those Little Porings!";
-			close;
+			close3;
 		}
 	} else if (isbegin_quest(2297) == 1) {
 		mes "[Poring]";

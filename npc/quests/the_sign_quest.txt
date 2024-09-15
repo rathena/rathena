@@ -3093,13 +3093,11 @@ OnTouch_:
 	end;
 }
 
-/* Currently broken.
 prt_maze02,25,161,0	script	#music	-1,7,7,{
 OnTouch_:
-	soundeffect "effect\\Â¼Â®Â¾Ã§Ã€Ã‡ Â¾Ã®Â½Ã˜Â½Ã….wav",1;
+	soundeffect "effect\\¼®¾çÀÇ ¾î½Ø½Å.wav",1;
 	end;
 }
-*/
 
 prt_maze02,132,132,0	script	#skill	-1,{
 OnEnable:

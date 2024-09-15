@@ -21,6 +21,7 @@
 
 #include "navi.hpp"
 #include "script.hpp"
+#include "path.hpp"
 
 using rathena::server_core::Core;
 using rathena::server_core::e_core_type;
@@ -66,7 +67,7 @@ void map_msg_reload(void);
 #define NATURAL_HEAL_INTERVAL 500
 #define MIN_FLOORITEM 2
 #define MAX_FLOORITEM START_ACCOUNT_NUM
-#define MAX_LEVEL 260
+#define MAX_LEVEL 275
 #define MAX_DROP_PER_MAP 48
 #define MAX_IGNORE_LIST 20 	// official is 14
 #define MAX_VENDING 12
@@ -675,6 +676,7 @@ enum e_mapflag : int16 {
 	MF_NOBUYINGSTORE,
 	MF_NODYNAMICNPC,
 	MF_NOBANK,
+	MF_SPECIALPOPUP,
 	MF_MAX
 };
 
@@ -1137,7 +1139,7 @@ bool map_addnpc(int16 m,struct npc_data *);
 TIMER_FUNC(map_clearflooritem_timer);
 TIMER_FUNC(map_removemobs_timer);
 void map_clearflooritem(struct block_list* bl);
-int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id, bool canShowEffect = false);
+int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id, bool canShowEffect = false, enum directions dir = DIR_MAX, int type = BL_NUL);
 
 // instances
 int map_addinstancemap(int src_m, int instance_id, bool no_mapflag);

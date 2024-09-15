@@ -446,7 +446,8 @@ public:
 		bool barter_open;
 		bool barter_extended_open;
 		bool enchantgrade_open; // Whether the enchantgrade window is open or not
-		unsigned int block_action : 10;
+		// Bitmask of e_pcblock_action_flag values
+		uint16 block_action;
 		bool refineui_open;
 		t_itemid inventory_expansion_confirmation;
 		uint16 inventory_expansion_amount;
@@ -705,7 +706,11 @@ public:
 	int united_soul[MAX_UNITED_SOULS]; // Stores the account ID's of character's who's soul is united.
 	int servant_sign[MAX_SERVANT_SIGN]; // Stores the account ID's of character's with a servant sign.
 
-	int trade_partner;
+	struct{
+		uint32 id;
+		unsigned int lv;
+	}trade_partner;
+
 	struct s_deal {
 		struct s_item {
 			short index, amount;
@@ -1231,7 +1236,7 @@ enum e_mado_type : uint16 {
 	#define pc_rightside_def(sd) ((sd)->battle_status.def)
 	#define pc_leftside_mdef(sd) ((sd)->battle_status.mdef2)
 	#define pc_rightside_mdef(sd) ((sd)->battle_status.mdef)
-	#define pc_leftside_matk(sd) (status_base_matk_min(&(sd)->bl, status_get_status_data(&(sd)->bl), (sd)->status.base_level))
+	#define pc_leftside_matk(sd) (status_base_matk_min(&(sd)->bl, status_get_status_data((sd)->bl), (sd)->status.base_level))
 	#define pc_rightside_matk(sd) ((sd)->battle_status.rhw.matk+(sd)->battle_status.lhw.matk+(sd)->bonus.ematk)
 #else
 	#define pc_leftside_atk(sd) ((sd)->battle_status.batk + (sd)->battle_status.rhw.atk + (sd)->battle_status.lhw.atk)
@@ -1736,12 +1741,12 @@ void pc_attendance_claim_reward( map_session_data* sd );
 void pc_jail(map_session_data &sd, int32 duration = INT_MAX);
 
 // Captcha Register
-void pc_macro_captcha_register(map_session_data &sd, uint16 image_size, char captcha_answer[CAPTCHA_ANSWER_SIZE]);
-void pc_macro_captcha_register_upload(map_session_data & sd, uint16 upload_size, char *upload_data);
+void pc_macro_captcha_register(map_session_data &sd, uint16 image_size, const char captcha_answer[CAPTCHA_ANSWER_SIZE]);
+void pc_macro_captcha_register_upload(map_session_data & sd, uint16 upload_size, const char *upload_data);
 
 // Macro Detector
 TIMER_FUNC(pc_macro_detector_timeout);
-void pc_macro_detector_process_answer(map_session_data &sd, char captcha_answer[CAPTCHA_ANSWER_SIZE]);
+void pc_macro_detector_process_answer(map_session_data &sd, const char captcha_answer[CAPTCHA_ANSWER_SIZE]);
 void pc_macro_detector_disconnect(map_session_data &sd);
 
 // Macro Reporter

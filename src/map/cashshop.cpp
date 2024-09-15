@@ -438,7 +438,7 @@ static void cashshop_read_db( void ){
  * @param item_list Array of item ID
  * @return true: success, false: fail
  */
-bool cashshop_buylist( map_session_data* sd, uint32 kafrapoints, int n, struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub* item_list ){
+bool cashshop_buylist( map_session_data* sd, uint32 kafrapoints, int n, const PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub* item_list ){
 	uint32 totalcash = 0;
 	uint32 totalweight = 0;
 	int i,new_;

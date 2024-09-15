@@ -108,7 +108,7 @@ int chat_createpcchat(map_session_data* sd, const char* title, const char* pass,
 		clif_createchat( *sd, CREATEROOM_SUCCESS );
 		clif_dispchat(cd,0);
 
-		if (status_isdead(&sd->bl))
+		if (status_isdead(sd->bl))
 			achievement_update_objective(sd, AG_CHATTING_DYING, 1, 1);
 		else
 			achievement_update_objective(sd, AG_CHATTING_CREATE, 1, 1);
@@ -168,7 +168,8 @@ int chat_joinchat(map_session_data* sd, int chatid, const char* pass)
 
 	pc_setchatid(sd,cd->bl.id);
 
-	clif_joinchatok(sd, cd); //To the person who newly joined the list of all
+	// To the person who newly joined the chat
+	clif_joinchatok(*sd, *cd);
 	clif_addchat(cd, sd); //Reports To the person who already in the chat
 	clif_dispchat(cd, 0); //Reported number of changes to the people around
 
@@ -217,7 +218,7 @@ int chat_leavechat(map_session_data* sd, bool kicked)
 		cd->usersd[i] = cd->usersd[i+1];
 
 	if( cd->users == 0 && cd->owner->type == BL_PC ) { // Delete empty chatroom
-		clif_clearchat(cd, 0);
+		clif_clearchat(*cd);
 		db_destroy(cd->kick_list);
 		map_deliddb(&cd->bl);
 		map_delblock(&cd->bl);
@@ -234,7 +235,7 @@ int chat_leavechat(map_session_data* sd, bool kicked)
 	if( leavechar == 0 && cd->owner->type == BL_PC ) { // Set and announce new owner
 		cd->owner = (struct block_list*) cd->usersd[0];
 		clif_changechatowner(cd, cd->usersd[0]);
-		clif_clearchat(cd, 0);
+		clif_clearchat(*cd);
 
 		//Adjust Chat location after owner has been changed.
 		map_delblock( &cd->bl );
@@ -275,7 +276,7 @@ int chat_changechatowner(map_session_data* sd, const char* nextownername)
 		return -1;  // name not found
 
 	// erase temporarily
-	clif_clearchat(cd,0);
+	clif_clearchat(*cd);
 
 	// set new owner
 	cd->owner = (struct block_list*) cd->usersd[i];
@@ -325,7 +326,7 @@ int chat_changechatstatus(map_session_data* sd, const char* title, const char* p
 	cd->limit = min(limit, ARRAYLENGTH(cd->usersd));
 	cd->pub = pub;
 
-	clif_changechatstatus(cd);
+	clif_changechatstatus(*cd);
 	clif_dispchat(cd,0);
 
 	return 0;
@@ -436,7 +437,7 @@ int chat_deletenpcchat(struct npc_data* nd)
 		return 0;
 
 	chat_npckickall(cd);
-	clif_clearchat(cd, 0);
+	clif_clearchat(*cd);
 	map_deliddb(&cd->bl);
 	map_delblock(&cd->bl);
 	map_freeblock(&cd->bl);

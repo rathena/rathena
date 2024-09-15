@@ -5694,22 +5694,35 @@ Example:
 
 ---------------------------------------
 
-*searchstores <uses>,<effect>;
+*searchstores <uses>,<effect>{,"<map name>"};
 
 Invokes the store search window, which allows to search for both vending
-and buying stores. Parameter uses indicates, how many searches can be
-started, before the window has to be reopened. Effect value affects,
-what happens, when a result item is double-clicked and can be one of the
-following:
+and buying stores.
 
-	0 = Shows the store's position on the mini-map and highlights the
-	    shop sign with yellow color, when the store is on same map
-	    as the invoking player.
-	1 = Directly opens the shop, regardless of distance.
+Parameter <uses> indicates how many searches can be started
+before the window has to be reopened.
 
-Example:
-	// Item Universal_Catalog_Gold (10 uses, effect: open shop)
-	searchstores 10,1;
+Parameter <effect> affects what happens when a result item is double-clicked
+and can be one of the following:
+
+	SEARCHSTORE_EFFECT_NORMAL : Shows the store's position on the mini-map and highlights the
+								shop sign with yellow color, when the store is on same map
+								as the invoking player.
+	SEARCHSTORE_EFFECT_REMOTE : Directly opens the shop, regardless of distance.
+	
+Optional parameter <map name> indicates the name of map where the stores will be searched.
+If not set, the search will be on the map the invoking character is currently on.
+Special values for <map name> are:
+
+	"this" : Will search for stores on the map where the invoking character is currently on. (default)
+	"all"  : Will search for stores on all maps.
+
+Examples:
+	// Item Vending_Search_Scroll (10 uses, effect: show mark on minimap, current map)
+	searchstores 10, SEARCHSTORE_EFFECT_NORMAL;
+	
+	// Search stores (1 use, effect: open shop, all maps on the server)
+	searchstores 1, SEARCHSTORE_EFFECT_REMOTE, "all";
 
 ---------------------------------------
 
@@ -6111,11 +6124,12 @@ will always return 0.
 
 ---------------------------------------
 
-*skilleffect <skill id>,<number>;
-*skilleffect "<skill name>",<number>;
+*skilleffect <skill id>,<number>{,<game ID>};
+*skilleffect "<skill name>",<number>{,<game ID>};
 
 This command displays visual and aural effects of given skill on currently
-attached character. The number parameter is for skill whose visual effect
+attached character or, when defined, on any unit with the given ID.
+The number parameter is for skill whose visual effect
 involves displaying of a number (healing or damaging). Note, that this command
 will not actually use the skill, it is intended for scripts, which simulate
 skill usage by the NPC, such as buffs, by setting appropriate status and
@@ -6638,8 +6652,8 @@ Examples:
 
 ---------------------------------------
 
-macro_detector({<account ID>});
-macro_detector({"<character name>"});
+*macro_detector({<account ID>});
+*macro_detector({"<character name>"});
 
 This command will display the captcha UI challenge onto the invoking character or the given <account ID>/<character name>.
 
@@ -6657,6 +6671,46 @@ Example:
 	}
 	freeloop(0);
 	end;
+
+---------------------------------------
+
+*permission_check(<permission>{,<char_id>});
+
+This command will return true if the attached character has the specified permission, false otherwise.
+If <char_id> is given, it will check the permission for that character instead.
+
+A full list of the player permission constants (with the 'PC_PERM' prefix) along with the
+full permissions documentation can be found in 'doc/permissions.txt'.
+
+
+Example:
+	if (permission_check(PC_PERM_TRADE)) {
+		mes "You have permission to trade!";
+	}
+	else {
+		mes "You do not have permission to trade!";
+	}
+	end;
+
+---------------------------------------
+
+*permission_add(<permission>{,<char_id>});
+*permission_remove(<permission>{,<char_id>});
+
+These commands will temporarily add or remove the specified permission to the attached character,
+or the given <char_id> until the player logs out.
+
+A full list of the player permission constants (with the 'PC_PERM' prefix) along with the
+full permissions documentation can be found in 'doc/permissions.txt'.
+
+Examples:
+	// Adds the 'can_trade' permission to the attached character,
+	// allowing them to trade, drop, sell, store and mail items.
+	permission_add(PC_PERM_TRADE);
+
+	// Removes the 'can_party' permission from the attached character,
+	// preventing them from joining or creating parties.
+	permission_remove(PC_PERM_PARTY);
 
 ---------------------------------------
 
@@ -7962,17 +8016,15 @@ Return values:
 //
 ---------------------------------------
 
-*npcspeed <speed value>;
-*npcwalkto <x>,<y>;
-*npcstop;
+*npcspeed( <speed value> {,"<npc name>"} );
+*npcwalkto( <x>,<y> {,"<npc name>"} } );
+*npcstop( {"<npc name>", {"<flag>"}});
 
-These commands will make the NPC object in question move around the map. As they
-currently are, they are a bit buggy and are not useful for much more than making
-an NPC move randomly around the map.
+These commands will make the NPC object in question move around the map.
 
-'npcspeed' will set the NPCs walking speed to a specified value. As in the
-@speed GM command, 200 is the slowest possible speed while 0 is the fastest
-possible (instant motion). 100 is the default character walking speed.
+'npcspeed' will permanently set the NPCs walking speed to a specified value. As in the
+@speed GM command, MAX_WALK_SPEED (1000) is the slowest possible speed while MIN_WALK_SPEED (20) is the fastest
+possible (instant motion). DEFAULT_NPC_WALK_SPEED (200) is the default NPC walking speed.
 
 'npcwalkto' will start the NPC sprite moving towards the specified coordinates
 on the same map it is currently on. The script proceeds immediately after the
@@ -7980,10 +8032,17 @@ NPC begins moving.
 
 'npcstop' will stop the motion.
 
+The <flag> value in npcstop affects how the unit is stopped. The following flags are bitwise values (can be combined using the pipe operator):
+	USW_NONE = Unit will keep walking to their original destination.
+	USW_FIXPOS = Issue a fixpos packet afterwards.
+	USW_MOVE_ONCE = Force the unit to move one cell if it hasn't yet.
+	USW_MOVE_FULL_CELL = Enable moving to the next cell when unit was already half-way there (may cause on-touch/place side-effects, such as a scripted map change).
+	USW_FORCE_STOP = Force stop moving.
+Default: USW_FIXPOS | USW_MOVE_FULL_CELL | USW_FORCE_STOP
+
 While in transit, the NPC will be clickable, but invoking it will cause it to
 stop moving, which will make its coordinates different from what the client
-computed based on the speed and motion coordinates. The effect is rather
-unnerving.
+computed based on the speed and motion coordinates.
 
 Only a few NPC sprites have walking animations, and those that do, do not get
 the animation invoked when moving the NPC, due to the problem in the NPC walking
@@ -8449,6 +8508,15 @@ This command requires packet version 2021-11-03 or newer.
 Opens the tip box UI for the attached player or the given character ID.
 
 This command requires packet version 2017-11-22 or newer.
+
+---------------------------------------
+
+*specialpopup(<popup ID>);
+
+Open popup and/or show text by ID from list defined in the client spopup.lub file.
+Popup and text is only visible if the player warped from one map to another map.
+
+This command requires packet version 2022-10-05 or newer.
 
 ---------------------------------------
 \\
@@ -9798,6 +9866,7 @@ For details on the other parameters, see 'announce'.
 
 This function checks if a party meets certain requirements, returning 1 if all
 conditions are met and 0 otherwise. It will only check online characters.
+The command returns 0 is the party ID does not exist.
 
 amount - number of online party members (default is 1).
 min    - minimum level of all characters in the party (default is 1).
@@ -10622,6 +10691,7 @@ current invoking character.
 *addhomintimacy <amount>{,<char_id>};
 
 Increase or decrease a homunculus' intimacy value by the given <amount>. 100000 is full loyalty.
+Fails silently when no players are attached or if the player has no homunculus.
 
 ---------------------------------------
 

@@ -32187,6 +32187,20 @@ Body:
       Grimoire_Furious: true
       Soul_Furious: true
       SpiritStick_Furious: true
+      Lapier_Furious: true
+      SharpSword_Furious: true
+      WhiteSword_Furious: true
+      Stick_Furious: true
+      MetalVilolin_Furious: true
+      Harp_Furious: true
+      MetalWhip_Furious: true
+      Whip_Furious: true
+      Flame_Staff_Furious: true
+      Rifle_Furious: true
+      Gatling_Furious: true
+      Specter_Furious: true
+      GaleClaw_Furious: true
+      Exterminate_Furious: true
     Reset:
       Chance: 80000
       Price: 500000
@@ -32357,6 +32371,12 @@ Body:
       FuriousCirclet_MT: true
       FuriousCirclet_EM: true
       FuriousCirclet_SOA: true
+      FuriousCirclet_TR: true
+      FuriousCirclet_BO: true
+      FuriousCirclet_HN: true
+      FuriousCirclet_AG: true
+      FuriousCirclet_IQ: true
+      FuriousCirclet_NW: true
     Reset:
       Chance: 80000
       Price: 500000
