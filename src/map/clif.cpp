@@ -6548,9 +6548,9 @@ void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, 
 /// Notifies the client when a player enters the screen with an active EFST.
 /// 08ff <id>.L <index>.W <remain msec>.L { <val>.L }*3  (ZC_EFST_SET_ENTER) (PACKETVER >= 20111108)
 /// 0984 <id>.L <index>.W <total msec>.L <remain msec>.L { <val>.L }*3 (ZC_EFST_SET_ENTER2) (PACKETVER >= 20120618)
-///  @param target: Unit to send the packet
-///  @param src: Objects walking into view
-void clif_efst_status_change(block_list& target, block_list& src, enum send_target area, short type, t_tick tick, int val1, int val2, int val3) {
+///  @param bl: Unit to send the packet
+///  @param target: Objects walking into view
+void clif_efst_status_change(block_list& bl, block_list& target, enum send_target target_type, efst_type type, t_tick tick, int val1, int val2, int val3) {
 #if PACKETVER >= 20111108
 
 	if (type == EFST_BLANK)
@@ -6562,8 +6562,8 @@ void clif_efst_status_change(block_list& target, block_list& src, enum send_targ
 	PACKET_ZC_EFST_SET_ENTER p{};
 
 	p.packetType = HEADER_ZC_EFST_SET_ENTER;
-	p.srcId = src.id;
-	p.type = static_cast<decltype(p.type)>(type);
+	p.targetID = target.id;
+	p.type = type;
 	p.duration = client_tick(tick);
 #if PACKETVER >= 20120618
 	p.duration2 = p.duration; // At this point remainingms = totalms
@@ -6572,7 +6572,7 @@ void clif_efst_status_change(block_list& target, block_list& src, enum send_targ
 	p.val2 = val2;
 	p.val3 = val3;
 
-	clif_send(&p,sizeof(p),&target,area);
+	clif_send(&p,sizeof(p),&bl,target_type);
 
 #endif
 }

@@ -52,6 +52,7 @@ enum e_macro_report_status : uint8;
 enum e_hom_state2 : uint8;
 enum _sp;
 enum e_searchstore_failure : uint16;
+enum efst_type : short;
 
 enum e_PacketDBVersion { // packet DB
 	MIN_PACKET_DB  = 0x064,
@@ -969,7 +970,7 @@ void clif_changemapcell(int fd, int16 m, int x, int y, int type, enum send_targe
 
 #define clif_status_load(bl, type, flag) clif_status_change((bl), (type), (flag), 0, 0, 0, 0)
 void clif_status_change(struct block_list *bl, int type, int flag, t_tick tick, int val1, int val2, int val3);
-void clif_efst_status_change(block_list& target, block_list& src, enum send_target area, short type, t_tick tick, int val1, int val2, int val3);
+void clif_efst_status_change(block_list& bl, block_list& target, enum send_target target_type, efst_type type, t_tick tick, int val1, int val2, int val3);
 void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, enum send_target target);
 
 void clif_wis_message(map_session_data* sd, const char* nick, const char* mes, size_t mes_len, int gmlvl);
