@@ -802,7 +802,7 @@ DEFINE_PACKET_HEADER(ZC_STATUS, 0xbd)
 struct PACKET_ZC_MSG_STATE_CHANGE{
 	uint16 packetType;
 	uint16 index;
-	int srcId;
+	uint32 srcId;
 	bool state;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_MSG_STATE_CHANGE,0x196)
@@ -811,7 +811,7 @@ DEFINE_PACKET_HEADER(ZC_MSG_STATE_CHANGE,0x196)
 struct PACKET_ZC_MSG_STATE_CHANGE2{
 	uint16 packetType;
 	uint16 index;
-	int srcId;
+	uint32 srcId;
 	bool state;
 	uint32 duration;
 	uint32 duration2;
@@ -824,7 +824,7 @@ DEFINE_PACKET_HEADER(ZC_MSG_STATE_CHANGE2,0x983)
 struct PACKET_ZC_MSG_STATE_CHANGE2{
 	uint16 packetType;
 	uint16 index;
-	int srcId;
+	uint32 srcId;
 	bool state;
 	uint32 duration;
 	int val1;
