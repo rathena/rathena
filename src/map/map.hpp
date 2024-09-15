@@ -7,7 +7,6 @@
 #include <algorithm>
 #include <cstdarg>
 #include <string>
-#include <functional>
 #include <unordered_map>
 #include <vector>
 
@@ -1274,54 +1273,34 @@ template<bl_type e_Type>
 struct BLTypeMap;
 
 template<>
-struct BLTypeMap<BL_PC> {
-	using e_Type = map_session_data;
-};
+struct BLTypeMap<BL_PC> { using e_Type = map_session_data; };
 
 template<>
-struct BLTypeMap<BL_MOB> {
-	using e_Type = mob_data;
-};
+struct BLTypeMap<BL_MOB> { using e_Type = mob_data; };
 
 template<>
-struct BLTypeMap<BL_PET> {
-	using e_Type = pet_data;
-};
+struct BLTypeMap<BL_PET> { using e_Type = pet_data; };
 
 template<>
-struct BLTypeMap<BL_HOM> {
-	using e_Type = homun_data;
-};
+struct BLTypeMap<BL_HOM> { using e_Type = homun_data; };
 
 template<>
-struct BLTypeMap<BL_MER> {
-	using e_Type = s_mercenary_data;
-};
+struct BLTypeMap<BL_MER> { using e_Type = s_mercenary_data; };
 
 template<>
-struct BLTypeMap<BL_ITEM> {
-	using e_Type = item_data;
-};
+struct BLTypeMap<BL_ITEM> { using e_Type = item_data; };
 
 template<>
-struct BLTypeMap<BL_SKILL> {
-	using e_Type = skill_unit;
-};
+struct BLTypeMap<BL_SKILL> { using e_Type = skill_unit; };
 
 template<>
-struct BLTypeMap<BL_NPC> {
-	using e_Type = npc_data;
-};
+struct BLTypeMap<BL_NPC> { using e_Type = npc_data; };
 
 template<>
-struct BLTypeMap<BL_CHAT> {
-	using e_Type = chat_data;
-};
+struct BLTypeMap<BL_CHAT> { using e_Type = chat_data; };
 
 template<>
-struct BLTypeMap<BL_ELEM> {
-	using e_Type = s_elemental_data;
-};
+struct BLTypeMap<BL_ELEM> { using e_Type = s_elemental_data; };
 
 template<bl_type type>
 auto BL_CAST(block_list* bl) -> typename BLTypeMap<type>::e_Type* {
@@ -1329,7 +1308,6 @@ auto BL_CAST(block_list* bl) -> typename BLTypeMap<type>::e_Type* {
 		return nullptr;
 	}
 
-	// Use the map to cast the block_list to the correct type
 	return reinterpret_cast<typename BLTypeMap<type>::e_Type*>(bl);
 }
 
