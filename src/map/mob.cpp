@@ -3682,7 +3682,7 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,uint16 skill_id)
 		if (md2->state.copy_master_mode)
 			md->status.mode = md2->status.mode;
 
-		clif_skill_nodamage(&md->bl,&md->bl,skill_id,amount,1);
+		clif_skill_nodamage(&md->bl,md->bl,skill_id,amount);
 	}
 
 	return 0;
