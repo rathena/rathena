@@ -6358,12 +6358,12 @@ ACMD_FUNC(displayskillcast)
 ACMD_FUNC(displayskillunit)
 {
 	uint16 unit_id;
-	uint16 range = 0;
-	uint16 skill_lv = 1;
+	uint8 range = 0;
+	uint8 skill_lv = 1;
 
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message || sscanf(message, "%6hu %6hu %6hu", &unit_id, &skill_lv, &range) < 1)
+	if (!message || !*message || sscanf(message, "%6hu %3hhu %3hhu", &unit_id, &skill_lv, &range) < 1)
 	{
 		clif_displaymessage(fd, msg_txt(sd, 826));// Usage: @displayskillunit <unit ID> {<skill level> <range>}
 		return -1;

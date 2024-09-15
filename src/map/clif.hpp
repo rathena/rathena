@@ -956,7 +956,7 @@ void clif_getareachar_skillunit(block_list &bl, skill_unit &unit, enum send_targ
 void clif_skill_delunit( skill_unit& unit );
 void clif_skillunit_update( block_list& bl);
 
-void clif_skill_unit_test(block_list &bl, short x, short y, int unit_id, short range, short skill_lv);
+void clif_skill_unit_test(block_list &bl, uint16 x, uint16 y, uint16 unit_id, uint8 range, uint8 skill_lv);
 
 void clif_autospell( map_session_data& sd, uint16 skill_lv );
 void clif_devotion(struct block_list *src, map_session_data *tsd);

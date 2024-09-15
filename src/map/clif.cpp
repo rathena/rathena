@@ -5322,10 +5322,10 @@ static void clif_graffiti(block_list &bl, skill_unit &unit, enum send_target tar
 	PACKET_ZC_SKILL_ENTRY2 p = {};
 
 	p.packetType = HEADER_ZC_SKILL_ENTRY2;
-	p.unitId = static_cast<decltype(p.unitId)>(unit.bl.id);
-	p.srcId = static_cast<decltype(p.srcId)>(unit.group->src_id);
-	p.x = static_cast<decltype(p.x)>(unit.bl.x);
-	p.y = static_cast<decltype(p.y)>(unit.bl.y);
+	p.unitId = unit.bl.id;
+	p.srcId = unit.group->src_id;
+	p.x = unit.bl.x;
+	p.y = unit.bl.y;
 	p.viewId = static_cast<decltype(p.viewId)>( std::min( unit.group->unit_id, static_cast<decltype(unit.group->unit_id)>( std::numeric_limits<decltype(p.viewId)>::max() ) ) );
 	p.isVisible = true;
 	p.hasMsg = true;
@@ -5340,7 +5340,9 @@ static void clif_graffiti(block_list &bl, skill_unit &unit, enum send_target tar
 /// 099f <lenght>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.L <range>.W <visible>.B (ZC_SKILL_ENTRY4)
 /// 09ca <lenght>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.L <range>.B <visible>.B <skill level>.B (ZC_SKILL_ENTRY5)
 void clif_getareachar_skillunit(block_list &bl, skill_unit &unit, enum send_target target, bool visible) {
-	int unit_id = 0, fd = 0;
+
+	uint16 unit_id = 0;
+	int fd = 0;
 
 	if (bl.type == BL_PC)
 		fd = reinterpret_cast<TBL_PC*>(&bl)->fd;
@@ -5368,17 +5370,17 @@ void clif_getareachar_skillunit(block_list &bl, skill_unit &unit, enum send_targ
 	PACKET_ZC_SKILL_ENTRY p = {};
 
 	p.packetType = HEADER_ZC_SKILL_ENTRY;
-	p.unitId = static_cast<decltype(p.unitId)>(unit.bl.id);
-	p.srcId = static_cast<decltype(p.srcId)>(unit.group->src_id);
-	p.x = static_cast<decltype(p.x)>(unit.bl.x);
-	p.y = static_cast<decltype(p.y)>(unit.bl.y);
+	p.unitId = unit.bl.id;
+	p.srcId = unit.group->src_id;
+	p.x = unit.bl.x;
+	p.y = unit.bl.y;
 	p.viewId = static_cast<decltype(p.viewId)>( std::min( unit_id, static_cast<decltype(unit_id)>( std::numeric_limits<decltype(p.viewId)>::max() ) ) );
 	p.isVisible = visible;
 #if PACKETVER > 20120702
 	p.packetLen = sizeof(p);
 	p.range = static_cast<decltype(p.range)>( std::min( unit.range, static_cast<decltype(unit.range)>( std::numeric_limits<decltype(p.range)>::max() ) ) );
 #if PACKETVER >= 20130731
-	p.skillLv = static_cast<decltype(p.skillLv)>( std::min( unit.group->skill_lv, static_cast<decltype(unit.group->skill_lv)>( std::numeric_limits<decltype(p.skillLv)>::max() ) ) );
+	p.skillLv = unit.group->skill_lv;
 #endif
 #endif
 
@@ -5389,22 +5391,22 @@ void clif_getareachar_skillunit(block_list &bl, skill_unit &unit, enum send_targ
 }
 
 /// 09ca <lenght>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.L <range>.B <visible>.B <skill level>.B (ZC_SKILL_ENTRY5)
-void clif_skill_unit_test(block_list &bl, short x, short y, int unit_id, short range, short skill_lv) {
+void clif_skill_unit_test(block_list &bl, uint16 x, uint16 y, uint16 unit_id, uint8 range, uint8 skill_lv) {
 
 	PACKET_ZC_SKILL_ENTRY p = {};
 
 	p.packetType = HEADER_ZC_SKILL_ENTRY;
 	p.unitId = 1000;
 	p.srcId = 2000;
-	p.x = static_cast<decltype(p.x)>(x);
-	p.y = static_cast<decltype(p.y)>(y);
+	p.x = x;
+	p.y = y;
 	p.viewId = static_cast<decltype(p.viewId)>( std::min( unit_id, static_cast<decltype(unit_id)>( std::numeric_limits<decltype(p.viewId)>::max() ) ) );
 	p.isVisible = true;
 #if PACKETVER > 20120702
 	p.packetLen = sizeof(p);
-	p.range = static_cast<decltype(p.range)>( std::min( range, static_cast<decltype(range)>( std::numeric_limits<decltype(p.range)>::max() ) ) );
+	p.range = range;
 #if PACKETVER >= 20130731
-	p.skillLv = static_cast<decltype(p.skillLv)>( std::min( skill_lv, static_cast<decltype(skill_lv)>( std::numeric_limits<decltype(p.skillLv)>::max() ) ) );
+	p.skillLv = skill_lv;
 #endif
 #endif
 
