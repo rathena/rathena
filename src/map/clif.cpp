@@ -5380,7 +5380,7 @@ void clif_getareachar_skillunit(block_list &bl, skill_unit &unit, enum send_targ
 	p.packetLen = sizeof(p);
 	p.range = static_cast<decltype(p.range)>( std::min( unit.range, static_cast<decltype(unit.range)>( std::numeric_limits<decltype(p.range)>::max() ) ) );
 #if PACKETVER >= 20130731
-	p.skillLv = unit.group->skill_lv;
+	p.skillLv = static_cast<decltype(p.skillLv)>( std::min( unit.group->skill_lv, static_cast<decltype(unit.group->skill_lv)>( std::numeric_limits<decltype(p.skillLv)>::max() ) ) );
 #endif
 #endif
 

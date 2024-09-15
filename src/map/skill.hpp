@@ -383,8 +383,8 @@ struct s_skill_unit_group {
 	t_tick tick; /// Tick when skill unit initialized
 	t_tick limit; /// Life time
 	int interval; /// Timer interval
-	uint16 skill_id; /// Skill ID
-	uint8 skill_lv; /// Skill level
+	uint16 skill_id, /// Skill ID
+		skill_lv; /// Skill level
 	int val1, val2, val3; /// Values
 	char *valstr; /// String value, used for HT_TALKIEBOX & RG_GRAFFITI
 	uint16 unit_id; /// Unit ID (for client effect)
