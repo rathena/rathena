@@ -4514,23 +4514,16 @@ void clif_changechatstatus(chat_data& cd) {
 }
 
 
-/// Removes the chatroom (ZC_DESTROY_ROOM).
-/// 00d8 <chat id>.L
-void clif_clearchat(struct chat_data *cd,int fd)
-{
-	unsigned char buf[32];
+/// Removes the chatroom
+/// 00d8 <chat id>.L (ZC_DESTROY_ROOM)
+void clif_clearchat(chat_data &cd){
 
-	nullpo_retv(cd);
+	PACKET_ZC_DESTROY_ROOM p{};
 
-	WBUFW(buf,0) = 0xd8;
-	WBUFL(buf,2) = cd->bl.id;
-	if( session_isActive(fd) ) {
-		WFIFOHEAD(fd,packet_len(0xd8));
-		memcpy(WFIFOP(fd,0),buf,packet_len(0xd8));
-		WFIFOSET(fd,packet_len(0xd8));
-	} else {
-		clif_send(buf,packet_len(0xd8),cd->owner,AREA_WOSC);
-	}
+	p.packetType = HEADER_ZC_DESTROY_ROOM;
+	p.chatId = cd.bl.id;
+
+	clif_send(&p,sizeof(p),cd.owner,AREA_WOSC);
 }
 
 
@@ -5705,28 +5698,26 @@ void clif_addskill(map_session_data *sd, int skill_id)
 }
 
 
-/// Deletes a skill from the skill tree (ZC_SKILLINFO_DELETE).
-/// 0441 <skill id>.W
-void clif_deleteskill(map_session_data *sd, int skill_id, bool skip_infoblock)
-{
-#if PACKETVER >= 20081217
-	nullpo_retv(sd);
-
-	int fd = sd->fd;
+/// Deletes a skill from the skill tree.
+/// 0441 <skill id>.W (ZC_SKILLINFO_DELETE)
+void clif_deleteskill(map_session_data& sd, uint16 skill_id, bool skip_infoblock){
+#if PACKETVER >= 20081126
 	uint16 idx = skill_get_index(skill_id);
 
-	if (!session_isActive(fd) || !idx)
+	if (idx == 0)
 		return;
 
-	WFIFOHEAD(fd,packet_len(0x441));
-	WFIFOW(fd,0) = 0x441;
-	WFIFOW(fd,2) = skill_id;
-	WFIFOSET(fd,packet_len(0x441));
+	PACKET_ZC_SKILLINFO_DELETE p{};
+
+	p.packetType = HEADER_ZC_SKILLINFO_DELETE;
+	p.skillID = skill_id;
+
+	clif_send(&p,sizeof(p),&sd.bl,SELF);
 #endif
 #if PACKETVER_MAIN_NUM >= 20190807 || PACKETVER_RE_NUM >= 20190807 || PACKETVER_ZERO_NUM >= 20190918
 	if (!skip_infoblock)
 #endif
-		clif_skillinfoblock(sd);
+		clif_skillinfoblock(&sd);
 }
 
 /// Updates a skill in the skill tree (ZC_SKILLINFO_UPDATE).
@@ -6083,45 +6074,35 @@ int clif_skill_damage2(struct block_list *src,struct block_list *dst,t_tick tick
 
 
 /// Non-damaging skill effect
-/// 011a <skill id>.W <heal>.W <dst id>.L <src id>.L <result>.B (ZC_USE_SKILL).
-/// 09cb <skill id>.W <heal>.L <dst id>.L <src id>.L <result>.B (ZC_USE_SKILL2).
-bool clif_skill_nodamage(struct block_list *src,struct block_list *dst, uint16 skill_id, int heal, t_tick tick)
-{
-	unsigned char buf[17];
-#if PACKETVER < 20130731
-	const int cmd = 0x11a;
-#else
-	const int cmd = 0x9cb;
-#endif
-	int offset = 0;
-	bool success = ( tick != 0 );
+/// 011a <skill id>.W <heal>.W <dst id>.L <src id>.L <result>.B (ZC_USE_SKILL)
+/// 09cb <skill id>.W <heal>.L <dst id>.L <src id>.L <result>.B (ZC_USE_SKILL2)
+bool clif_skill_nodamage( block_list* src, block_list& dst, uint16 skill_id, int32 heal, bool success ){
+	PACKET_ZC_USE_SKILL p{};
 
-	nullpo_ret(dst);
-
-	WBUFW(buf,0) = cmd;
-	WBUFW(buf,2) = skill_id;
-#if PACKETVER < 20130731
-	WBUFW(buf,4) = min(heal, INT16_MAX);
-#else
-	WBUFL(buf,4) = min(heal, INT32_MAX);
-	offset += 2;
-#endif
-	WBUFL(buf,6+offset) = dst->id;
-	WBUFL(buf,10+offset) = src ? src->id : 0;
-	WBUFB(buf,14+offset) = success;
-
-	if (disguised(dst)) {
-		clif_send(buf, packet_len(cmd), dst, AREA_WOS);
-		WBUFL(buf,6+offset) = disguised_bl_id(dst->id);
-		clif_send(buf, packet_len(cmd), dst, SELF);
+	p.PacketType = HEADER_ZC_USE_SKILL;
+	p.SKID = skill_id;
+	p.level = std::min( static_cast<decltype(p.level)>( heal ), std::numeric_limits<decltype(p.level)>::max() );
+	p.targetAID = dst.id;
+	p.result = success;
+	if(src != nullptr){
+		p.srcAID = src->id;
+	}else{
+		p.srcAID = 0;
+	}
+	if (disguised(&dst)) {
+		clif_send(&p, sizeof(p), &dst, AREA_WOS);
+		p.targetAID = disguised_bl_id(dst.id);
+		clif_send(&p, sizeof(p), &dst, SELF);
 	} else
-		clif_send(buf, packet_len(cmd), dst, AREA);
+		clif_send(&p, sizeof(p), &dst, AREA);
 
-	if(src && disguised(src)) {
-		WBUFL(buf,10+offset) = disguised_bl_id(src->id);
-		if (disguised(dst))
-			WBUFL(buf,6+offset) = dst->id;
-		clif_send(buf, packet_len(cmd), src, SELF);
+	if(src != nullptr && disguised(src)) {
+		p.srcAID = disguised_bl_id(src->id);
+		if (disguised(&dst)){
+			// It is necessary to revert the changes done above for the disguised target
+			p.targetAID = dst.id;
+		}
+		clif_send(&p, sizeof(p), src, SELF);
 	}
 
 	return success;
@@ -6151,37 +6132,71 @@ void clif_skill_poseffect(struct block_list *src,uint16 skill_id,int val,int x,i
 		clif_send(buf,packet_len(0x117),src,AREA);
 }
 
-/// Presents a list of available warp destinations (ZC_WARPLIST).
-/// 011c <skill id>.W { <map name>.16B }*4
-void clif_skill_warppoint( map_session_data* sd, uint16 skill_id, uint16 skill_lv, const char* map1, const char* map2, const char* map3, const char* map4 ){
-	int fd;
-	nullpo_retv(sd);
-	fd = sd->fd;
+/// Presents a list of available warp destinations.
+/// 011c <skill id>.W { <map name>.16B }*4 (ZC_WARPLIST)
+/// 0abe <lenght>.W <skill id>.W { <map name>.16B }*? (ZC_WARPLIST2)
+void clif_skill_warppoint( map_session_data& sd, uint16 skill_id, uint16 skill_lv, std::vector<std::string>& maps ){
+	if(maps.empty())
+		return;
 
-	WFIFOHEAD(fd,packet_len(0x11c));
-	WFIFOW(fd,0) = 0x11c;
-	WFIFOW(fd,2) = skill_id;
-	memset(WFIFOP(fd,4), 0x00, 4*MAP_NAME_LENGTH_EXT);
-	if( strcmp( "", map1 ) != 0 ){
-		mapindex_getmapname_ext( map1, WFIFOCP( fd, 4 ) );
-	}
-	if( strcmp( "", map2 ) != 0 ){
-		mapindex_getmapname_ext( map2, WFIFOCP( fd, 20 ) );
-	}
-	if( strcmp( "", map3 ) != 0 ){
-		mapindex_getmapname_ext( map3, WFIFOCP( fd, 36 ) );
-	}
-	if( strcmp( "", map4 ) != 0 ){
-		mapindex_getmapname_ext( map4, WFIFOCP( fd, 52 ) );
-	}
-	WFIFOSET(fd,packet_len(0x11c));
+#if PACKETVER_MAIN_NUM >= 20170502 || PACKETVER_RE_NUM >= 20170419 || defined(PACKETVER_ZERO)
+	PACKET_ZC_WARPLIST* p = reinterpret_cast<PACKET_ZC_WARPLIST*>( packet_buffer );
 
-	sd->menuskill_id = skill_id;
+	p->packetType = HEADER_ZC_WARPLIST;
+	p->packetLength = sizeof( *p );
+	p->skillId = skill_id;
+
+	size_t memoCount = 0;
+	for( std::string& map : maps ){
+		if( map.empty() ){
+			continue;
+		}
+
+		PACKET_ZC_WARPLIST_sub& warp = p->maps[memoCount];
+
+		mapindex_getmapname_ext( map.c_str(), warp.map );
+
+		p->packetLength += static_cast<decltype(p->packetLength)>( sizeof( warp ) );
+		memoCount++;
+	}
+
+	clif_send( p, p->packetLength, &sd.bl, SELF );
+#else
+	PACKET_ZC_WARPLIST p = {};
+
+	p.packetType = HEADER_ZC_WARPLIST;
+	p.skillId = skill_id;
+
+	size_t memoCount = 0, max = 4;
+	for( std::string& map : maps ){
+		if( map.empty() ){
+			continue;
+		}
+
+		PACKET_ZC_WARPLIST_sub& warp = p.maps[memoCount];
+
+		mapindex_getmapname_ext( map.c_str(), warp.map );
+
+		if( memoCount++ == max ){
+			break;
+		}
+	}
+
+	for( ; memoCount < max; memoCount++ ){
+		PACKET_ZC_WARPLIST_sub& warp = p.maps[memoCount];
+
+		strcpy( warp.map, "" );
+	}
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
+
+	sd.menuskill_id = skill_id;
 	if (skill_id == AL_WARP) {
-		sd->menuskill_val = (sd->ud.skillx<<16)|sd->ud.skilly; //Store warp position here.
-		sd->state.workinprogress = WIP_DISABLE_ALL;
+		sd.menuskill_val = (sd.ud.skillx<<16)|sd.ud.skilly; //Store warp position here.
+		sd.state.workinprogress = WIP_DISABLE_ALL;
 	} else
-		sd->menuskill_val = skill_lv;
+		sd.menuskill_val = skill_lv;
 }
 
 
@@ -8657,8 +8672,8 @@ void clif_guild_send_onlineinfo(map_session_data *sd)
 }
 
 
-/// Bitmask of enabled guild window tabs (ZC_ACK_GUILD_MENUINTERFACE).
-/// 014e <menu flag>.L
+/// Bitmask of enabled guild window tabs 
+/// 014e <menu flag>.L (ZC_ACK_GUILD_MENUINTERFACE)
 /// menu flag:
 ///      0x00 = Basic Info (always on)
 ///     &0x01 = Member manager
@@ -8667,17 +8682,18 @@ void clif_guild_send_onlineinfo(map_session_data *sd)
 ///     &0x10 = Expulsion list
 ///     &0x40 = Unknown (GMENUFLAG_ALLGUILDLIST)
 ///     &0x80 = Notice
-void clif_guild_masterormember(map_session_data *sd)
-{
-	int fd;
+void clif_guild_masterormember(map_session_data& sd){
 
-	nullpo_retv(sd);
+	PACKET_ZC_ACK_GUILD_MENUINTERFACE p{};
 
-	fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0x14e));
-	WFIFOW(fd,0) = 0x14e;
-	WFIFOL(fd,2) = (sd->state.gmaster_flag) ? 0xd7 : 0x57;
-	WFIFOSET(fd,packet_len(0x14e));
+	p.packetType = HEADER_ZC_ACK_GUILD_MENUINTERFACE;
+	if(sd.state.gmaster_flag){
+		p.menuFlag = 0xd7;
+	}else{
+		p.menuFlag = 0x57;
+	}
+
+	clif_send(&p,sizeof(p),&sd.bl,SELF);
 }
 
 
@@ -8721,31 +8737,38 @@ void clif_guild_basicinfo( map_session_data& sd ){
 }
 
 
-/// Guild alliance and opposition list (ZC_MYGUILD_BASIC_INFO).
-/// 014c <packet len>.W { <relation>.L <guild id>.L <guild name>.24B }*
-void clif_guild_allianceinfo(map_session_data *sd)
-{
-	int fd,i,c;
+/// Guild alliance and opposition list 
+/// 014c <packet len>.W { <relation>.L <guild id>.L <guild name>.24B }* (ZC_MYGUILD_BASIC_INFO)
+void clif_guild_allianceinfo(map_session_data& sd){
+	auto &g = sd.guild;
 
-	nullpo_retv(sd);
-	auto &g = sd->guild;
-	if (!g)
+	if (g == nullptr){
 		return;
-
-	fd = sd->fd;
-	WFIFOHEAD(fd, MAX_GUILDALLIANCE * 32 + 4);
-	WFIFOW(fd, 0)=0x14c;
-	for(i=c=0;i<MAX_GUILDALLIANCE;i++){
-		struct guild_alliance *a=&g->guild.alliance[i];
-		if(a->guild_id>0){
-			WFIFOL(fd,c*32+4)=a->opposition;
-			WFIFOL(fd,c*32+8)=a->guild_id;
-			safestrncpy(WFIFOCP(fd,c*32+12),a->name,NAME_LENGTH);
-			c++;
-		}
 	}
-	WFIFOW(fd, 2)=c*32+4;
-	WFIFOSET(fd,WFIFOW(fd,2));
+
+	PACKET_ZC_MYGUILD_BASIC_INFO* p = reinterpret_cast<PACKET_ZC_MYGUILD_BASIC_INFO*>( packet_buffer );
+
+	p->PacketType = HEADER_ZC_MYGUILD_BASIC_INFO;
+	p->PacketLength = sizeof(*p);
+
+	for(size_t i=0, c = 0;i<MAX_GUILDALLIANCE;i++){
+		guild_alliance &a = g->guild.alliance[i];
+
+		if(a.guild_id<=0){
+			continue;
+		}
+
+		RELATED_GUILD_INFO& info = p->rgInfo[c];
+
+		info.relation = a.opposition;
+		info.GDID = a.guild_id;
+		safestrncpy(info.guildname,a.name,sizeof(info.guildname));
+
+		p->PacketLength += static_cast<decltype(p->PacketLength)>(sizeof(info));
+		c++;
+	}
+
+	clif_send(p,p->PacketLength,&sd.bl,SELF);
 }
 
 
@@ -8828,34 +8851,36 @@ void clif_guild_positionnamelist(map_session_data *sd)
 }
 
 
-/// Guild position information (ZC_POSITION_INFO).
-/// 0160 <packet len>.W { <position id>.L <mode>.L <ranking>.L <pay rate>.L }*
+/// Guild position information 
+/// 0160 <packet len>.W { <position id>.L <mode>.L <ranking>.L <pay rate>.L }* (ZC_POSITION_INFO)
 /// mode:
-///     &0x01 = allow invite
-///     &0x10 = allow expel
+///     See enum e_guild_permission
 /// ranking:
 ///     TODO
-void clif_guild_positioninfolist(map_session_data *sd)
-{
-	int i,fd;
+static void clif_guild_positioninfolist(map_session_data& sd){
+	auto &g = sd.guild;
 
-	nullpo_retv(sd);
-	auto &g = sd->guild;
-	if (!g)
+	if (g == nullptr){
 		return;
-
-	fd = sd->fd;
-	WFIFOHEAD(fd, MAX_GUILDPOSITION * 16 + 4);
-	WFIFOW(fd, 0)=0x160;
-	for(i=0;i<MAX_GUILDPOSITION;i++){
-		struct guild_position *p=&g->guild.position[i];
-		WFIFOL(fd,i*16+ 4)=i;
-		WFIFOL(fd,i*16+ 8)=p->mode;
-		WFIFOL(fd,i*16+12)=i;
-		WFIFOL(fd,i*16+16)=p->exp_mode;
 	}
-	WFIFOW(fd, 2)=i*16+4;
-	WFIFOSET(fd,WFIFOW(fd,2));
+
+	PACKET_ZC_POSITION_INFO* p = reinterpret_cast<PACKET_ZC_POSITION_INFO*>( packet_buffer );
+
+	p->PacketType = HEADER_ZC_POSITION_INFO;
+	p->PacketLength = sizeof(*p);
+
+	for(size_t i=0;i<MAX_GUILDPOSITION;i++){
+		guild_position& gp = g->guild.position[i];
+
+		p->posInfo[i].positionID = i;
+		p->posInfo[i].right = gp.mode;
+		p->posInfo[i].ranking = i;
+		p->posInfo[i].payRate = gp.exp_mode;
+
+		p->PacketLength += static_cast<decltype(p->PacketLength)>( sizeof( p->posInfo[0] ) );
+	}
+
+	clif_send(p,p->PacketLength,&sd.bl,SELF);
 }
 
 
@@ -9089,73 +9114,77 @@ void clif_guild_expulsion( map_session_data& sd, const char* name, uint32 char_i
 }
 
 
-/// Guild expulsion list (ZC_BAN_LIST).
-/// 0163 <packet len>.W { <char name>.24B <account name>.24B <reason>.40B }*
-/// 0163 <packet len>.W { <char name>.24B <reason>.40B }* (PACKETVER >= 20100803)
-void clif_guild_expulsionlist(map_session_data* sd)
-{
-#if PACKETVER < 20100803
-	const int offset = NAME_LENGTH*2+40;
-#else
-	const int offset = NAME_LENGTH+40;
-#endif
-	int fd, i, c = 0;
+/// Guild expulsion list 
+/// 0163 <packet len>.W { <char name>.24B <account name>.24B <reason>.40B }* (ZC_BAN_LIST)
+/// 0163 <packet len>.W { <char name>.24B <reason>.40B }* (PACKETVER >= 20100803) (ZC_BAN_LIST)
+/// 0a87 <packet len>.W { <charid>.L <reason>.40B }* (ZC_BAN_LIST2)
+/// 0b7c <packet len>.W { <charid>.L <reason>.40B <char name>.24B }* (ZC_BAN_LIST3)
+static void clif_guild_expulsionlist(map_session_data& sd){
 
-	nullpo_retv(sd);
-
-	auto &g = sd->guild;
+	auto &g = sd.guild;
 	if (!g)
 		return;
 
-	fd = sd->fd;
+	PACKET_ZC_BAN_LIST* p = reinterpret_cast<PACKET_ZC_BAN_LIST*>( packet_buffer );
 
-	WFIFOHEAD(fd,4 + MAX_GUILDEXPULSION * offset);
-	WFIFOW(fd,0) = 0x163;
+	p->packetType = HEADER_ZC_BAN_LIST;
+	p->packetLen = sizeof(*p);
 
-	for( i = 0; i < MAX_GUILDEXPULSION; i++ )
-	{
-		struct guild_expulsion* e = &g->guild.expulsion[i];
+	for( size_t i = 0, c = 0; i < MAX_GUILDEXPULSION; i++ ){
+		struct guild_expulsion& e = g->guild.expulsion[i];
 
-		if( e->account_id > 0 )
-		{
-			safestrncpy(WFIFOCP(fd,4 + c*offset), e->name, NAME_LENGTH);
-#if PACKETVER < 20100803
-			memset(WFIFOP(fd,4 + c*offset+24), 0, NAME_LENGTH); // account name (not used for security reasons)
-			memcpy(WFIFOP(fd,4 + c*offset+48), e->mes, 40);
-#else
-			memcpy(WFIFOP(fd,4 + c*offset+24), e->mes, 40);
-#endif
-			c++;
+		if( e.account_id == 0 ){
+			continue;
 		}
+
+		PACKET_ZC_BAN_LIST_sub& banned = p->chars[c];
+
+#if PACKETVER >= 20161019
+		banned.char_id = e.char_id;
+#elif PACKETVER < 20100803
+		// account name (not used for security reasons)
+		safestrncpy(banned.account_name, "", sizeof(banned.account_name)); 
+#endif
+
+#if PACKETVER >= 20200902 || PACKETVER < 20161019
+		safestrncpy(banned.char_name, e.name, sizeof(banned.char_name));
+#endif
+
+		safestrncpy(banned.message, e.mes, sizeof(banned.message));
+		p->packetLen += static_cast<decltype(p->packetLen)>(sizeof(banned));
+		c++;
 	}
-	WFIFOW(fd,2) = 4 + c*offset;
-	WFIFOSET(fd,WFIFOW(fd,2));
+
+	clif_send(p,p->packetLen,&sd.bl,SELF);
 }
 
 
-/// Guild chat message (ZC_GUILD_CHAT).
-/// 017f <packet len>.W <message>.?B
-void clif_guild_message( const struct mmo_guild& g, uint32 account_id, const char* mes, size_t len ){
-	// TODO: account_id is not used, candidate for deletion? [Ai4rei]
-	map_session_data *sd;
-	uint8 buf[256];
+/// Guild chat message 
+/// 017f <packet len>.W <message>.?B (ZC_GUILD_CHAT)
+void clif_guild_message( const struct mmo_guild& g, const char* mes, size_t len ){
+	PACKET_ZC_GUILD_CHAT *p = reinterpret_cast<PACKET_ZC_GUILD_CHAT*>( packet_buffer );
+	// -1 for null terminator
+	static const size_t max_len = CHAT_SIZE_MAX - sizeof( *p ) - 1;
 
-	if( len == 0 )
-	{
+	map_session_data* sd = guild_getavailablesd(g);
+
+	// Ignore this message, if no guildmember is available
+	if (sd == nullptr)
 		return;
-	}
-	else if( len > sizeof(buf)-5 )
-	{
-		ShowWarning("clif_guild_message: Truncated message '%s' (len=%d, max=%" PRIuPTR ", guild_id=%d).\n", mes, len, sizeof(buf)-5, g.guild_id);
-		len = sizeof(buf)-5;
-	}
 
-	WBUFW(buf, 0) = 0x17f;
-	WBUFW( buf, 2 ) = static_cast<int16>( len + 5 );
-	safestrncpy(WBUFCP(buf,4), mes, len+1);
+	if( len == 0 ){
+		return;
+	} else if( len > max_len ){
+		ShowWarning("clif_guild_message: Truncated message '%s' (len=%" PRIuPTR ", max=%" PRIuPTR ", guild_id=%u).\n", mes, len, max_len, g.guild_id);
+		len = max_len;
+	}
+	p->packetType = HEADER_ZC_GUILD_CHAT;
+	p->packetLength = sizeof(*p);
 
-	if ((sd = guild_getavailablesd(g)) != nullptr)
-		clif_send(buf, WBUFW(buf,2), &sd->bl, GUILD_NOBG);
+	safestrncpy(p->message, mes, len+1);
+	p->packetLength += static_cast<decltype(p->packetLength)>( len + 1 );
+
+	clif_send(p, p->packetLength, &sd->bl, GUILD_NOBG);
 }
 
 /// Request for guild alliance 
@@ -9172,8 +9201,8 @@ void clif_guild_reqalliance(map_session_data& sd,uint32 account_id,const char *n
 }
 
 
-/// Notifies the client about the result of a alliance request (ZC_ACK_REQ_ALLY_GUILD).
-/// 0173 <answer>.B
+/// Notifies the client about the result of a alliance request.
+/// 0173 <answer>.B (ZC_ACK_REQ_ALLY_GUILD)
 /// answer:
 ///     0 = Already allied.
 ///     1 = You rejected the offer.
@@ -9181,39 +9210,32 @@ void clif_guild_reqalliance(map_session_data& sd,uint32 account_id,const char *n
 ///     3 = They have too any alliances.
 ///     4 = You have too many alliances.
 ///     5 = Alliances are disabled.
-void clif_guild_allianceack(map_session_data *sd,int flag)
-{
-	int fd;
+void clif_guild_allianceack(map_session_data& sd,uint8 flag){
 
-	nullpo_retv(sd);
+	PACKET_ZC_ACK_REQ_ALLY_GUILD p{};
 
-	fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0x173));
-	WFIFOW(fd,0)=0x173;
-	WFIFOL(fd,2)=flag;
-	WFIFOSET(fd,packet_len(0x173));
+	p.packetType = HEADER_ZC_ACK_REQ_ALLY_GUILD;
+	p.flag = flag;
+
+	clif_send(&p,sizeof(p),&sd.bl,SELF);
 }
 
 
-/// Notifies the client that a alliance or opposition has been removed (ZC_DELETE_RELATED_GUILD).
-/// 0184 <other guild id>.L <relation>.L
+/// Notifies the client that a alliance or opposition has been removed.
+/// 0184 <other guild id>.L <relation>.L (ZC_DELETE_RELATED_GUILD)
 /// relation:
 ///     0 = Ally
 ///     1 = Enemy
-void clif_guild_delalliance(map_session_data *sd,int guild_id,int flag)
+void clif_guild_delalliance(map_session_data& sd,uint32 guild_id,uint32 flag)
 {
-	nullpo_retv(sd);
 
-	int fd = sd->fd;
+	PACKET_ZC_DELETE_RELATED_GUILD p{};
 
-	if ( !session_isActive(fd) )
-		return;
+	p.packetType = HEADER_ZC_DELETE_RELATED_GUILD;
+	p.allyID = guild_id;
+	p.flag = flag;
 
-	WFIFOHEAD(fd,packet_len(0x184));
-	WFIFOW(fd,0)=0x184;
-	WFIFOL(fd,2)=guild_id;
-	WFIFOL(fd,6)=flag;
-	WFIFOSET(fd,packet_len(0x184));
+	clif_send(&p,sizeof(p),&sd.bl,SELF);
 }
 
 
@@ -14029,11 +14051,13 @@ void clif_parse_CreateGuild(int fd,map_session_data *sd){
 }
 
 
-/// Request for guild window interface permissions (CZ_REQ_GUILD_MENUINTERFACE).
-/// 014d
-void clif_parse_GuildCheckMaster(int fd, map_session_data *sd)
-{
-	clif_guild_masterormember(sd);
+/// Request for guild window interface permissions 
+/// 014d (CZ_REQ_GUILD_MENUINTERFACE)
+static void clif_parse_GuildCheckMaster(int fd, map_session_data *sd){
+	if(sd == nullptr)
+		return;
+
+	clif_guild_masterormember(*sd);
 }
 
 
@@ -14057,7 +14081,7 @@ void clif_parse_GuildRequestInfo(int fd, map_session_data *sd)
 	{
 	case 0:	// Basic Information Guild, hostile alliance information
 		clif_guild_basicinfo( *sd );
-		clif_guild_allianceinfo(sd);
+		clif_guild_allianceinfo(*sd);
 		clif_guild_castle_list(*sd);
 		break;
 	case 1:	// Members list, list job title
@@ -14066,13 +14090,13 @@ void clif_parse_GuildRequestInfo(int fd, map_session_data *sd)
 		break;
 	case 2:	// List job title, title information list
 		clif_guild_positionnamelist(sd);
-		clif_guild_positioninfolist(sd);
+		clif_guild_positioninfolist(*sd);
 		break;
 	case 3:	// Skill list
 		clif_guild_skillinfo( *sd );
 		break;
 	case 4:	// Expulsion list
-		clif_guild_expulsionlist(sd);
+		clif_guild_expulsionlist(*sd);
 		break;
 	default:
 		ShowError("clif: guild request info: unknown type %d\n", type);
@@ -14756,6 +14780,19 @@ void clif_parse_GMHide(int fd, map_session_data *sd) {
 }
 
 
+/// /resetcooltime 
+/// 0a88 (CZ_CMD_RESETCOOLTIME).
+void clif_parse_gm_resetcooltime( int fd, map_session_data* sd ){
+#if PACKETVER_MAIN_NUM >= 20160622 || PACKETVER_RE_NUM >= 20160622 || defined(PACKETVER_ZERO)
+	const PACKET_CZ_CMD_RESETCOOLTIME* p = reinterpret_cast<const PACKET_CZ_CMD_RESETCOOLTIME*>( RFIFOP( fd, 0 ) );
+	char cmd[CHAT_SIZE_MAX];
+
+	safesnprintf(cmd,sizeof(cmd),"%cresetcooltime",atcommand_symbol);
+	is_atcommand(fd, sd, cmd, 1);
+#endif
+}
+
+
 /// Request to adjust player's manner points (CZ_REQ_GIVE_MANNER_POINT).
 /// 0149 <account id>.L <type>.B <value>.W
 /// type:
@@ -15014,7 +15051,7 @@ void clif_parse_NoviceExplosionSpirits(int fd, map_session_data *sd)
 
 			if( percent && ( percent%100 ) == 0 ) {// 10.0%, 20.0%, ..., 90.0%
 				sc_start(&sd->bl,&sd->bl, SC_EXPLOSIONSPIRITS, 100, 17, skill_get_time(MO_EXPLOSIONSPIRITS, 5)); //Lv17-> +50 critical (noted by Poki) [Skotlex]
-				clif_skill_nodamage(&sd->bl, &sd->bl, MO_EXPLOSIONSPIRITS, 5, 1);  // prayer always shows successful Lv5 cast and disregards noskill restrictions
+				clif_skill_nodamage(&sd->bl, sd->bl, MO_EXPLOSIONSPIRITS, 5);  // prayer always shows successful Lv5 cast and disregards noskill restrictions
 			}
 		}
 	}
