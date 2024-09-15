@@ -2652,7 +2652,7 @@ ACMD_FUNC(displaystatus)
 	if(type < EFST_BLANK || type >= EFST_MAX){
 		type = EFST_BLANK;
 	}
-	clif_status_change(&sd->bl, static_cast<efst_type>(type), flag, tick, val1, val2, val3);
+	clif_status_change(&sd->bl, static_cast<e_efst_type>(type), flag, tick, val1, val2, val3);
 
 	return 0;
 }

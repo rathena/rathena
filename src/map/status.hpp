@@ -1316,7 +1316,7 @@ enum sc_type : int16 {
 };
 
 /// Official status change ids, used to display status icons on the client.
-enum efst_type : int16{
+enum e_efst_type : int16{
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
 /// @APIHOOK_START(EFST_ENUM)
 	EFST_BLANK = -1,
@@ -3110,7 +3110,7 @@ enum e_status_change_flag : uint16 {
 /// Struct of SC configs [Cydh]
 struct s_status_change_db {
 	sc_type type;						///< SC_
-	efst_type icon;						///< EFST_
+	e_efst_type icon;						///< EFST_
 	std::bitset<SCS_MAX> state;			///< SCS_
 	std::bitset<SCB_MAX> calc_flag;		///< SCB_ flags
 	uint16 opt1;						///< OPT1_
@@ -3148,7 +3148,7 @@ public:
 	uint16 StatusRelevantBLTypes[EFST_MAX];
 
 	// Extras
-	efst_type getIcon(sc_type type);
+	e_efst_type getIcon(sc_type type);
 	std::bitset<SCB_MAX> getCalcFlag(sc_type type);
 	std::vector<sc_type> getEndOnStart(sc_type type);
 	uint16 getSkill(sc_type type);
@@ -3558,7 +3558,7 @@ unsigned short status_base_matk_max(struct block_list *bl, const struct status_d
 unsigned short status_base_atk(const struct block_list *bl, const struct status_data *status, int level);
 
 // Status changes accessors for StatusChange database
-uint16 status_efst_get_bl_type(enum efst_type efst);
+uint16 status_efst_get_bl_type(enum e_efst_type efst);
 
 void status_readdb( bool reload = false );
 void do_init_status(void);

@@ -6382,7 +6382,7 @@ void clif_cooking_list( map_session_data& sd, int trigger, uint16 skill_id, int 
 /// @param val1
 /// @param val2
 /// @param val3
-static void clif_status_change_sub(block_list &bl, block_list &src, efst_type type, bool flag, t_tick tick, int val1, int val2, int val3, enum send_target target_type) {
+static void clif_status_change_sub(block_list &bl, block_list &src, e_efst_type type, bool flag, t_tick tick, int val1, int val2, int val3, enum send_target target_type) {
 	if (type == EFST_BLANK)  //It shows nothing on the client...
 		return;
 
@@ -6429,14 +6429,14 @@ static void clif_status_change_sub(block_list &bl, block_list &src, efst_type ty
 
 /* Sends status effect to clients around the bl
  * @param bl Object that has the effect
- * @param type Status icon see enum efst_type
+ * @param type Status icon see enum e_efst_type
  * @param flag 1:Active, 0:Deactive
  * @param tick Duration in ms
  * @param val1
  * @param val2
  * @param val3
  */
-void clif_status_change(struct block_list *bl, efst_type type, bool flag, t_tick tick, int val1, int val2, int val3) {
+void clif_status_change(struct block_list *bl, e_efst_type type, bool flag, t_tick tick, int val1, int val2, int val3) {
 	map_session_data *sd = nullptr;
 
 	if (type == EFST_BLANK)  //It shows nothing on the client...

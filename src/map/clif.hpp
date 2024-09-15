@@ -28,6 +28,7 @@ struct pet_data;
 struct mob_data;
 struct npc_data;
 struct chat_data;
+enum e_efst_type : int16;
 struct flooritem_data;
 struct skill_unit;
 struct s_vending;
@@ -968,7 +969,7 @@ void clif_bladestop(struct block_list *src, int dst_id, int active);
 void clif_changemapcell(int fd, int16 m, int x, int y, int type, enum send_target target);
 
 #define clif_status_load(bl, type, flag) clif_status_change((bl), (type), (flag), 0, 0, 0, 0)
-void clif_status_change(struct block_list *bl, efst_type type, bool flag, t_tick tick, int val1, int val2, int val3);
+void clif_status_change(struct block_list *bl, e_efst_type type, bool flag, t_tick tick, int val1, int val2, int val3);
 void clif_efst_status_change(struct block_list *bl, int tid, enum send_target target, int type, t_tick tick, int val1, int val2, int val3);
 void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, enum send_target target);
 

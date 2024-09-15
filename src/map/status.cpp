@@ -996,7 +996,7 @@ EnchantgradeDatabase enchantgrade_db;
  * @param type: SC type
  * @return EFST ID
  **/
-efst_type StatusDatabase::getIcon(sc_type type) {
+e_efst_type StatusDatabase::getIcon(sc_type type) {
 	std::shared_ptr<s_status_change_db> status = status_db.find(type);
 
 	return status ? status->icon : EFST_BLANK;
@@ -1029,7 +1029,7 @@ std::vector<sc_type> StatusDatabase::getEndOnStart(sc_type type) {
  * @param efst: EFST type
  * @return BL types
  **/
-uint16 status_efst_get_bl_type(enum efst_type efst) {
+uint16 status_efst_get_bl_type(enum e_efst_type efst) {
 	if (efst <= EFST_BLANK || efst >= EFST_MAX)
 		return BL_PC;
 	return status_db.StatusRelevantBLTypes[efst];
@@ -13018,7 +13018,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	}*/
 
 	if (!(flag&SCSTART_NOICON) && !(flag&SCSTART_LOADED && scdb->flag[SCF_DISPLAYPC] || scdb->flag[SCF_DISPLAYNPC])) {
-		efst_type status_icon = scdb->icon;
+		e_efst_type status_icon = scdb->icon;
 
 #if PACKETVER < 20151104
 		if (status_icon == EFST_WEAPONPROPERTY)
@@ -13164,7 +13164,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_ITEMSCRIPT: // Shows Buff Icons
 			if (sd)
-				clif_status_change(bl, static_cast<efst_type>(val2), true, tick, 0, 0, 0);
+				clif_status_change(bl, static_cast<e_efst_type>(val2), true, tick, 0, 0, 0);
 			break;
 		case SC_GVG_GIANT:
 		case SC_GVG_GOLEM:
@@ -13747,7 +13747,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			break;
 		case SC_ITEMSCRIPT: // Removes Buff Icons
 			if (sd)
-				clif_status_load(bl, (enum efst_type)sce->val2, 0);
+				clif_status_load(bl, (enum e_efst_type)sce->val2, 0);
 			break;
 		case SC_C_MARKER:
 			{
@@ -13884,7 +13884,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 	}*/
 
 	// On Aegis, when turning off a status change, first goes the sc packet, then the option packet.
-	efst_type status_icon = scdb->icon;
+	e_efst_type status_icon = scdb->icon;
 
 #if PACKETVER < 20151104
 	if (status_icon == EFST_WEAPONPROPERTY)
@@ -15675,7 +15675,7 @@ uint64 StatusDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			constant = EFST_BLANK;
 		}
 
-		status->icon = static_cast<efst_type>(constant);
+		status->icon = static_cast<e_efst_type>(constant);
 	} else {
 		if (!exists)
 			status->icon = EFST_BLANK;

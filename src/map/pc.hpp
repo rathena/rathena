@@ -349,7 +349,7 @@ struct s_bonus_script_entry {
 	StringBuf *script_buf; //Used for comparing and storing on table
 	t_tick tick;
 	uint16 flag;
-	enum efst_type icon;
+	enum e_efst_type icon;
 	uint8 type; //0 - Ignore; 1 - Buff; 2 - Debuff
 	int tid;
 };
@@ -1705,7 +1705,7 @@ void pc_show_version(map_session_data *sd);
 
 TIMER_FUNC(pc_bonus_script_timer);
 void pc_bonus_script(map_session_data *sd);
-struct s_bonus_script_entry *pc_bonus_script_add(map_session_data *sd, const char *script_str, t_tick dur, enum efst_type icon, uint16 flag, uint8 type);
+struct s_bonus_script_entry *pc_bonus_script_add(map_session_data *sd, const char *script_str, t_tick dur, enum e_efst_type icon, uint16 flag, uint8 type);
 void pc_bonus_script_clear(map_session_data *sd, uint32 flag);
 
 void pc_cell_basilica(map_session_data *sd);
