@@ -5614,45 +5614,49 @@ void clif_skillinfoblock(map_session_data &sd){
 
 	p->packetType = HEADER_ZC_SKILLINFO_LIST;
 	p->packetLength = sizeof(*p);
-	uint16 id;
-	int skillcount = 0;
+
 	bool haveCallPartnerSkill = false;
+	unsigned int c = 0;
 	std::vector<uint16> remaining_skills; // workaround for bugreport:5348
-	for ( int i = 0; i < MAX_SKILL; i++){
-		if( (id = sd.status.skill[i].id) != 0 ){
+
+	for ( const s_skill& skill : sd.status.skill ){
+
+		if( skill.id == 0 )
+			continue;
 			
-			// skip WE_CALLPARTNER and send it in special way
-			if (id == WE_CALLPARTNER) {
-				haveCallPartnerSkill = true;
-				continue;
-			}
-
-			// workaround for bugreport:5348
-			if (p->packetLength + sizeof(SKILLDATA) > 8192){
-				remaining_skills.push_back(id);
-				continue;
-			}
-
-			SKILLDATA& skill = p->skills[skillcount];
-			skill.id = id;
-			skill.inf = skill_get_inf(id);
-			skill.level = static_cast<decltype(skill.level)>( sd.status.skill[i].lv );
-#if PACKETVER_RE_NUM >= 20190807 || PACKETVER_ZERO_NUM >= 20190918
-			skill.level2 = skill.level;
-#else
-			safestrncpy(p->skills[skillcount].name, skill_get_name(id), NAME_LENGTH);
-#endif
-			skill.sp = static_cast<decltype(skill.sp)>( skill_get_sp(id,sd.status.skill[i].lv) );
-			skill.range2 = static_cast<decltype(skill.range2)>( skill_get_range2(&sd.bl, id, sd.status.skill[i].lv, false) );
-
-			if(sd.status.skill[i].flag == SKILL_FLAG_PERMANENT && sd.status.skill[i].lv < skill_tree_get_max(id, sd.status.class_))
-				skill.upFlag = 1;
-			else
-				skill.upFlag = 0;
-
-			p->packetLength += static_cast<decltype(p->packetLength)>(sizeof(skill));
-			skillcount++;
+		// skip WE_CALLPARTNER and send it in special way
+		if (skill.id == WE_CALLPARTNER) {
+			haveCallPartnerSkill = true;
+			continue;
 		}
+
+		if (p->packetLength + sizeof(SKILLDATA) > 8192){
+			remaining_skills.push_back(skill.id); // workaround for bugreport:5348
+			continue;
+		}
+
+		SKILLDATA& data = p->skills[c];
+
+		data.id = skill.id;
+		data.inf = skill_get_inf(skill.id);
+		data.level = skill.lv;
+
+#if PACKETVER_RE_NUM >= 20190807 || PACKETVER_ZERO_NUM >= 20190918
+		data.level2 = skill.lv;
+#else
+		safestrncpy(data.name, skill_get_name(skill.id), NAME_LENGTH);
+#endif
+
+		data.sp = static_cast<decltype(data.sp)>( skill_get_sp(skill.id,skill.lv) );
+		data.range2 = static_cast<decltype(data.range2)>( skill_get_range2(&sd.bl, skill.id, skill.lv, false) );
+
+		if(skill.flag == SKILL_FLAG_PERMANENT && skill.lv < skill_tree_get_max(skill.id, sd.status.class_))
+			data.upFlag = 1;
+		else
+			data.upFlag = 0;
+
+		p->packetLength += static_cast<decltype(p->packetLength)>(sizeof(data));
+		c++;
 	}
 
 	clif_send(p,p->packetLength,&sd.bl,SELF);
