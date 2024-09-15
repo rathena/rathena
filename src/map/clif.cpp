@@ -8895,6 +8895,7 @@ static void clif_guild_positioninfolist(map_session_data& sd){
 ///     TODO
 void clif_guild_positionchanged(const struct mmo_guild &g){
 	map_session_data *sd = guild_getavailablesd(g);
+
 	if( sd == nullptr )
 		return;
 
@@ -8902,15 +8903,18 @@ void clif_guild_positionchanged(const struct mmo_guild &g){
 
 	p->PacketType = HEADER_ZC_ACK_CHANGE_GUILD_POSITIONINFO;
 	p->PacketLength = sizeof(*p);
+
 	int c = 0;
+
 	for(const guild_position& gp : g.position){
-		PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO_sub& Info = p->posInfo[c];
-		Info.positionID = c;
-		Info.mode = gp.mode;
-		Info.ranking = c;
-		Info.payRate = gp.exp_mode;
-		safestrncpy(Info.posName,gp.name,sizeof(Info.posName));
-		p->PacketLength += static_cast<decltype(p->PacketLength)>(sizeof(Info));
+		PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO_sub& info = p->posInfo[c];
+
+		info.positionID = c;
+		info.mode = gp.mode;
+		info.ranking = c;
+		info.payRate = gp.exp_mode;
+		safestrncpy(info.posName, gp.name, sizeof(info.posName));
+		p->PacketLength += static_cast<decltype(p->PacketLength)>(sizeof(info));
 		c++;
 	}
 
