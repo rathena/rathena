@@ -487,7 +487,7 @@ int clif_send(const void* buf, int len, struct block_list* bl, enum send_target 
 	if( type != ALL_CLIENT )
 		nullpo_ret(bl);
 
-	sd = BL_CAST<map_session_data*>(BL_PC, bl);
+	sd = BL_CAST<BL_PC>(bl);
 
 	switch(type) {
 
@@ -1079,7 +1079,7 @@ static int clif_setlevel(struct block_list* bl) {
 static void clif_set_unit_idle( struct block_list* bl, bool walking, send_target target, struct block_list* tbl ){
 	nullpo_retv( bl );
 
-	map_session_data* sd = BL_CAST<map_session_data*>(BL_PC, bl );
+	map_session_data* sd = BL_CAST<BL_PC>(bl );
 	status_change* sc = status_get_sc( bl );
 	struct view_data* vd = status_get_viewdata( bl );
 	int g_id = status_get_guild_id( bl );
@@ -1244,7 +1244,7 @@ static void clif_set_unit_idle( struct block_list* bl, bool walking, send_target
 static void clif_spawn_unit( struct block_list *bl, enum send_target target ){
 	nullpo_retv( bl );
 
-	map_session_data* sd = BL_CAST<map_session_data*>(BL_PC, bl );
+	map_session_data* sd = BL_CAST<BL_PC>(bl );
 	status_change* sc = status_get_sc( bl );
 	struct view_data* vd = status_get_viewdata( bl );
 	int g_id = status_get_guild_id( bl );
@@ -1401,7 +1401,7 @@ static void clif_set_unit_walking( struct block_list& bl, map_session_data* tsd,
 #if PACKETVER >= 20071106
 	p.objecttype = clif_bl_type( &bl, true );
 #endif
-	map_session_data* sd = BL_CAST<map_session_data*>(BL_PC, &bl);
+	map_session_data* sd = BL_CAST<BL_PC>(&bl);
 #if PACKETVER >= 20131223
 	p.AID = bl.id;
 	p.GID = (sd) ? sd->status.char_id : 0; // CCODE
@@ -2038,7 +2038,7 @@ void clif_move( struct unit_data& ud )
 	break;
 	case BL_PET:
 		if (vd->head_bottom) // needed to display pet equip properly
-			clif_pet_equip_area(BL_CAST<pet_data*>(BL_PET, bl));
+			clif_pet_equip_area(BL_CAST<BL_PET>(bl));
 		break;
 	}
 
@@ -3431,7 +3431,7 @@ void clif_parse_guild_castle_teleport_request(int fd, map_session_data* sd){
  *------------------------------------------*/
 static int clif_hpmeter_sub( struct block_list *bl, va_list ap ){
 	map_session_data* sd = va_arg( ap, map_session_data* );
-	map_session_data* tsd = BL_CAST<map_session_data*>(BL_PC, bl );
+	map_session_data* tsd = BL_CAST<BL_PC>(bl );
 
 	nullpo_ret(sd);
 	nullpo_ret(tsd);
@@ -3877,7 +3877,7 @@ void clif_changelook(struct block_list *bl, int type, int val) {
 	int val2 = 0;
 	nullpo_retv(bl);
 
-	sd = BL_CAST<map_session_data*>(BL_PC, bl);
+	sd = BL_CAST<BL_PC>(bl);
 	sc = status_get_sc(bl);
 	vd = status_get_viewdata(bl);
 
@@ -4316,7 +4316,7 @@ void clif_changeoption_target( struct block_list* bl, struct block_list* target 
 		return;
 	}
 
-	map_session_data* sd = BL_CAST<map_session_data*>(BL_PC, bl );
+	map_session_data* sd = BL_CAST<BL_PC>(bl );
 
 	PACKET_ZC_STATE_CHANGE p = {};
 
@@ -5531,8 +5531,8 @@ int clif_outsight(struct block_list *bl,va_list ap)
 	TBL_PC *sd, *tsd;
 	tbl=va_arg(ap,struct block_list*);
 	if(bl == tbl) return 0;
-	sd = BL_CAST<map_session_data*>(BL_PC, bl);
-	tsd = BL_CAST<map_session_data*>(BL_PC, tbl);
+	sd = BL_CAST<BL_PC>(bl);
+	tsd = BL_CAST<BL_PC>(tbl);
 
 	if (clif_session_isValid(tsd)) { //tsd has lost sight of the bl object.
 		nullpo_ret(bl);
@@ -5589,8 +5589,8 @@ int clif_insight(struct block_list *bl,va_list ap)
 
 	if (bl == tbl) return 0;
 
-	sd = BL_CAST<map_session_data*>(BL_PC, bl);
-	tsd = BL_CAST<map_session_data*>(BL_PC, tbl);
+	sd = BL_CAST<BL_PC>(bl);
+	tsd = BL_CAST<BL_PC>(tbl);
 
 	if (clif_session_isValid(tsd)) { //Tell tsd that bl entered into his view
 		switch(bl->type){
@@ -6462,7 +6462,7 @@ void clif_status_change(struct block_list *bl, int type, int flag, t_tick tick, 
 
 	nullpo_retv(bl);
 
-	sd = BL_CAST<map_session_data*>(BL_PC, bl);
+	sd = BL_CAST<BL_PC>(bl);
 
 	// Check if current bl type is in the returned bitmask and only send status changes that actually matter to the client
 	if (!(status_efst_get_bl_type(static_cast<efst_type>(type)) & bl->type))
@@ -6805,7 +6805,7 @@ void clif_map_property(struct block_list *bl, enum map_property property, enum s
 
 #if PACKETVER >= 20121010
 	struct map_data *mapdata = map_getmapdata(bl->m);
-	map_session_data *sd = BL_CAST<map_session_data*>(BL_PC, bl);
+	map_session_data *sd = BL_CAST<BL_PC>(bl);
 
 	WBUFL(buf,4) = ((mapdata->getMapFlag(MF_PVP) || (sd && sd->duel_group > 0))<<0)| // PARTY - Show attack cursor on non-party members (PvP)
 		((mapdata->getMapFlag(MF_BATTLEGROUND) || mapdata_flag_gvg2(mapdata))<<1)|// GUILD - Show attack cursor on non-guild members (GvG)
@@ -8392,7 +8392,7 @@ void clif_devotion(struct block_list *src, map_session_data *tsd)
 	WBUFL(buf,2) = src->id;
 	if( src->type == BL_MER )
 	{
-		s_mercenary_data* md = BL_CAST<s_mercenary_data*>(BL_MER,src);
+		s_mercenary_data* md = BL_CAST<BL_MER>(src);
 		if( md && md->master && md->devotion_flag )
 			WBUFL(buf,6) = md->master->bl.id;
 
@@ -8401,7 +8401,7 @@ void clif_devotion(struct block_list *src, map_session_data *tsd)
 	else
 	{
 		int i;
-		map_session_data *sd = BL_CAST<map_session_data*>(BL_PC,src);
+		map_session_data *sd = BL_CAST<BL_PC>(src);
 		if( sd == nullptr )
 			return;
 
@@ -21038,7 +21038,7 @@ void clif_hat_effects( map_session_data& sd, block_list& bl, enum send_target ta
 	block_list* tbl;
 
 	if( target == SELF ){
-		tsd = BL_CAST<map_session_data*>(BL_PC,&bl);
+		tsd = BL_CAST<BL_PC>(&bl);
 		tbl = &sd.bl;
 	}else{
 		tsd = &sd;

@@ -349,7 +349,7 @@ int elemental_action(s_elemental_data *ed, block_list *bl, t_tick tick) {
 	s_skill_condition req = elemental_skill_get_requirements(skill_id, skill_lv);
 
 	if(req.hp || req.sp){
-		map_session_data *sd = BL_CAST<map_session_data*>(BL_PC, battle_get_master(&ed->bl));
+		map_session_data *sd = BL_CAST<BL_PC>(battle_get_master(&ed->bl));
 		if( sd ){
 			if( sd->skill_id_old != SO_EL_ACTION && //regardless of remaining HP/SP it can be cast
 				(status_get_hp(&ed->bl) < req.hp || status_get_sp(&ed->bl) < req.sp) )

@@ -523,8 +523,8 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 	int hp_bonus = 0;
 	double global_bonus = 1;
 #endif
-	map_session_data *sd = BL_CAST<map_session_data*>(BL_PC, src);
-	map_session_data *tsd = BL_CAST<map_session_data*>(BL_PC, target);
+	map_session_data *sd = BL_CAST<BL_PC>(src);
+	map_session_data *tsd = BL_CAST<BL_PC>(target);
 	status_change *sc, *tsc;
 
 	sc = status_get_sc(src);
@@ -1153,7 +1153,7 @@ bool skill_isNotOk_npcRange(struct block_list *src, uint16 skill_id, uint16 skil
 	if (!src)
 		return false;
 
-	if (src->type == BL_PC && pc_has_permission(BL_CAST<map_session_data*>(BL_PC,src),PC_PERM_SKILL_UNCONDITIONAL))
+	if (src->type == BL_PC && pc_has_permission(BL_CAST<BL_PC>(src),PC_PERM_SKILL_UNCONDITIONAL))
 		return false;
 
 	//if self skill
@@ -1226,10 +1226,10 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl, uint
 	if( dmg_lv < ATK_BLOCK ) // Don't apply effect if miss.
 		return 0;
 
-	map_session_data* sd = BL_CAST<map_session_data*>( BL_PC, src );
-	mob_data* md = BL_CAST<mob_data*>( BL_MOB, src );
-	map_session_data* dstsd = BL_CAST<map_session_data*>( BL_PC, bl );
-	mob_data* dstmd = BL_CAST<mob_data*>( BL_MOB, bl );
+	map_session_data* sd = BL_CAST<BL_PC>(src);
+	mob_data* md = BL_CAST<BL_MOB>( src );
+	map_session_data* dstsd = BL_CAST<BL_PC>(bl);
+	mob_data* dstmd = BL_CAST<BL_MOB>( bl );
 
 	status_change* sc = status_get_sc( src );
 	status_change* tsc = status_get_sc( bl );
@@ -2035,7 +2035,7 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl, uint
 		break;
 	case MH_EQC:
 		{
-			homun_data *hd = BL_CAST<homun_data*>(BL_HOM, src);
+			homun_data *hd = BL_CAST<BL_HOM>(src);
 
 			if (hd) {
 				sc_start2(src, bl, SC_STUN, 100, skill_lv, bl->id, 1000 * hd->homunculus.level / 50 + 500 * skill_lv);
@@ -2558,8 +2558,8 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 
 	if(skill_id > 0 && !skill_lv) return 0;	// don't forget auto attacks! - celest
 
-	sd = BL_CAST<map_session_data*>(BL_PC, src);
-	dstsd = BL_CAST<map_session_data*>(BL_PC, bl);
+	sd = BL_CAST<BL_PC>(src);
+	dstsd = BL_CAST<BL_PC>(bl);
 
 	if(dstsd && attack_type & BF_WEAPONMASK) {	//Counter effects.
 		for (const auto &it : dstsd->addeff_atked) {
@@ -2815,7 +2815,7 @@ int skill_break_equip(struct block_list *src, struct block_list *bl, unsigned sh
 	status_change *sc = status_get_sc(bl);
 	int i;
 	TBL_PC *sd;
-	sd = BL_CAST<map_session_data*>(BL_PC, bl);
+	sd = BL_CAST<BL_PC>(bl);
 	if (sc && !sc->count)
 		sc = nullptr;
 
@@ -3138,7 +3138,7 @@ short skill_blown(struct block_list* src, struct block_list* target, char count,
 static int skill_magic_reflect(struct block_list* src, struct block_list* bl, int type)
 {
 	status_change *sc = status_get_sc(bl);
-	map_session_data* sd = BL_CAST<map_session_data*>(BL_PC, bl);
+	map_session_data* sd = BL_CAST<BL_PC>(bl);
 
 	// Deadly Projection null's all magic reflection.
 	if (sc && sc->getSCE(SC_DEADLY_DEFEASANCE))
@@ -3213,7 +3213,7 @@ int skill_is_combo(uint16 skill_id) {
  * Combo handler, start stop combo status
  */
 void skill_combo_toggle_inf(struct block_list* bl, uint16 skill_id, int inf){
-	TBL_PC *sd = BL_CAST<map_session_data*>(BL_PC, bl);
+	TBL_PC *sd = BL_CAST<BL_PC>(bl);
 	switch (skill_id) {
 		case MH_MIDNIGHT_FRENZY:
 		case MH_EQC:
@@ -3221,7 +3221,7 @@ void skill_combo_toggle_inf(struct block_list* bl, uint16 skill_id, int inf){
 				int skill_id2 = ((skill_id==MH_EQC)?MH_TINDER_BREAKER:MH_SONIC_CRAW);
 				short idx = hom_skill_get_index(skill_id2);
 				int flag = (inf?SKILL_FLAG_TMP_COMBO:SKILL_FLAG_PERMANENT);
-				homun_data* hd = BL_CAST<homun_data*>(BL_HOM, bl);
+				homun_data* hd = BL_CAST<BL_HOM>(bl);
 				if (idx == -1)
 					break;
 				hd->homunculus.hskill[idx].flag= flag;
@@ -3254,8 +3254,8 @@ void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_li
 	int nodelay = 0; //Set to 1 for no walk/attack delay, set to 2 for no walk delay
 	int target_id = bl->id; //Set to 0 if combo skill should not autotarget
 	struct status_change_entry *sce;
-	TBL_PC *sd = BL_CAST<map_session_data*>(BL_PC,src);
-	TBL_HOM *hd = BL_CAST<homun_data*>(BL_HOM,src);
+	TBL_PC *sd = BL_CAST<BL_PC>(src);
+	TBL_HOM *hd = BL_CAST<BL_HOM>(src);
 	status_change *sc = status_get_sc(src);
 
 	if(sc == nullptr) return;
@@ -3373,7 +3373,7 @@ void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_li
  */
 static void skill_do_copy(struct block_list* src,struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 {
-	TBL_PC *tsd = BL_CAST<map_session_data*>(BL_PC, bl);
+	TBL_PC *tsd = BL_CAST<BL_PC>(bl);
 
 	if (!tsd || (!pc_checkskill(tsd,RG_PLAGIARISM) && !pc_checkskill(tsd,SC_REPRODUCE)))
 		return;
@@ -3566,8 +3566,8 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 			return 0;
 	}
 
-	sd = BL_CAST<map_session_data*>(BL_PC, src);
-	tsd = BL_CAST<map_session_data*>(BL_PC, bl);
+	sd = BL_CAST<BL_PC>(src);
+	tsd = BL_CAST<BL_PC>(bl);
 
 	status_data* sstatus = status_get_status_data(*src);
 	status_data* tstatus = status_get_status_data(*bl);
@@ -3623,8 +3623,8 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 			bl = src;
 			src = tbl;
 			dsrc = tbl;
-			sd = BL_CAST<map_session_data*>(BL_PC, src);
-			tsd = BL_CAST<map_session_data*>(BL_PC, bl);
+			sd = BL_CAST<BL_PC>(src);
+			tsd = BL_CAST<BL_PC>(bl);
 			tsc = status_get_sc(bl);
 			if (tsc && !tsc->count)
 				tsc = nullptr; //Don't need it.
@@ -4013,18 +4013,18 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 		// Trigger monster skill condition for damage skills with no amotion.
 		if (bl->type == BL_MOB && src != bl && !status_isdead(*bl)) {
 			if (damage > 0)
-				mobskill_event(BL_CAST<mob_data*>(BL_MOB, bl), src, tick, dmg.flag);
+				mobskill_event(BL_CAST<BL_MOB>(bl), src, tick, dmg.flag);
 			if (skill_id > 0)
-				mobskill_event(BL_CAST<mob_data*>(BL_MOB, bl), src, tick, MSC_SKILLUSED | (skill_id << 16));
+				mobskill_event(BL_CAST<BL_MOB>(bl), src, tick, MSC_SKILLUSED | (skill_id << 16));
 		}
 	}
 
 	// Trigger monster skill condition for damage skills.
 	if (bl->type == BL_MOB && src != bl && !status_isdead(*bl)) {
 		if (damage > 0)
-			mobskill_event(BL_CAST<mob_data*>(BL_MOB, bl), src, tick, dmg.flag, damage);
+			mobskill_event(BL_CAST<BL_MOB>(bl), src, tick, dmg.flag, damage);
 		if (skill_id > 0)
-			mobskill_event(BL_CAST<mob_data*>(BL_MOB, bl), src, tick, MSC_SKILLUSED | (skill_id << 16), damage);
+			mobskill_event(BL_CAST<BL_MOB>(bl), src, tick, MSC_SKILLUSED | (skill_id << 16), damage);
 	}
 
 	if (tsc  && skill_id != NPC_EVILLAND && skill_id != SP_SOULEXPLOSION && skill_id != SJ_NOVAEXPLOSING
@@ -4507,7 +4507,7 @@ int skill_area_sub_count (struct block_list *src, struct block_list *target, uin
 	switch (skill_id) {
 		case RL_QD_SHOT:
 			{
-				if (src->type == BL_PC && BL_CAST<map_session_data*>(BL_PC,src)) {
+				if (src->type == BL_PC && BL_CAST<BL_PC>(src)) {
 					struct unit_data *ud = unit_bl2ud(src);
 					if (ud && ud->target == target->id)
 						return 1;
@@ -5117,7 +5117,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	if (bl->prev == nullptr)
 		return 1;
 
-	sd = BL_CAST<map_session_data*>(BL_PC, src);
+	sd = BL_CAST<BL_PC>(src);
 
 	if (status_isdead(*bl))
 		return 1;
@@ -6659,7 +6659,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			if (tsc && tsc->getSCE(SC__SHADOWFORM) && rnd() % 100 < 100 - tsc->getSCE(SC__SHADOWFORM)->val1 * 10) // [100 - (Skill Level x 10)] %
 				status_change_end(bl, SC__SHADOWFORM); // Should only end, no damage dealt.
 		} else {
-			skill_unit* su = BL_CAST<skill_unit*>(BL_SKILL, bl);
+			skill_unit* su = BL_CAST<BL_SKILL>(bl);
 			std::shared_ptr<s_skill_unit_group> sg;
 
 			if (su && (sg = su->group) && skill_get_inf2(sg->skill_id, INF2_ISTRAP)) {
@@ -6869,7 +6869,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 	case EL_TIDAL_WEAPON:
 		if( src->type == BL_ELEM ) {
-			s_elemental_data* ele = BL_CAST<s_elemental_data*>(BL_ELEM,src);
+			s_elemental_data* ele = BL_CAST<BL_ELEM>(src);
 			status_change *tsc_ele = status_get_sc(&ele->bl);
 			sc_type type = SC_TIDAL_WEAPON_OPTION, type2 = SC_TIDAL_WEAPON;
 
@@ -6918,7 +6918,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case MH_CBC:
 	case MH_EQC:
 		{
-			TBL_HOM *hd = BL_CAST<homun_data*>(BL_HOM,src);
+			TBL_HOM *hd = BL_CAST<BL_HOM>(src);
 			int duration = max(skill_lv, (status_get_str(src) / 7 - status_get_str(bl) / 10)) * 1000; //Yommy formula
 			sc_type type;
 
@@ -7038,8 +7038,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		}
 		break;
 	case SJ_FLASHKICK: {
-			map_session_data *tsd = BL_CAST<map_session_data*>(BL_PC, bl);
-			struct mob_data *md = BL_CAST<mob_data*>(BL_MOB, src), *tmd = BL_CAST<mob_data*>(BL_MOB, bl);
+			map_session_data *tsd = BL_CAST<BL_PC>(bl);
+			struct mob_data *md = BL_CAST<BL_MOB>(src), *tmd = BL_CAST<BL_MOB>(bl);
 
 			// Only players and monsters can be tagged....I think??? [Rytech]
 			// Lets only allow players and monsters to use this skill for safety reasons.
@@ -7230,7 +7230,7 @@ static int skill_castend_song(struct block_list* src, uint16 skill_id, uint16 sk
 		return 0;
 	}
 
-	map_session_data* sd = BL_CAST<map_session_data*>(BL_PC, src);
+	map_session_data* sd = BL_CAST<BL_PC>(src);
 	int flag = BCT_PARTY;
 
 	switch (skill_id) {
@@ -7288,13 +7288,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	if (src->m != bl->m)
 		return 1;
 
-	sd = BL_CAST<map_session_data*>(BL_PC, src);
-	hd = BL_CAST<homun_data*>(BL_HOM, src);
-	md = BL_CAST<mob_data*>(BL_MOB, src);
-	mer = BL_CAST<s_mercenary_data*>(BL_MER, src);
+	sd = BL_CAST<BL_PC>(src);
+	hd = BL_CAST<BL_HOM>(src);
+	md = BL_CAST<BL_MOB>(src);
+	mer = BL_CAST<BL_MER>(src);
 
-	dstsd = BL_CAST<map_session_data*>(BL_PC, bl);
-	dstmd = BL_CAST<mob_data*>(BL_MOB, bl);
+	dstsd = BL_CAST<BL_PC>(bl);
+	dstmd = BL_CAST<BL_MOB>(bl);
 
 	if(bl->prev == nullptr)
 		return 1;
@@ -10148,7 +10148,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case MA_REMOVETRAP:
 	case HT_REMOVETRAP:
 		{
-			skill_unit* su = BL_CAST<skill_unit*>(BL_SKILL, bl);
+			skill_unit* su = BL_CAST<BL_SKILL>(bl);
 			std::shared_ptr<s_skill_unit_group> sg;
 			std::shared_ptr<s_skill_db> skill_group;
 
@@ -12158,7 +12158,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case EM_EL_DEEP_POISONING:
 	case EM_EL_POISON_SHIELD:
 	{
-			s_elemental_data *ele = BL_CAST<s_elemental_data*>(BL_ELEM, src);
+			s_elemental_data *ele = BL_CAST<BL_ELEM>( src);
 			if( ele ) {
 				sc_type type2 = (sc_type)(type-1);
 				status_change *esc = status_get_sc(&ele->bl);
@@ -12186,7 +12186,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		skill_unitsetting(src,skill_id,skill_lv,bl->x,bl->y,0);
 		break;
 	case EL_WATER_SCREEN: {
-			s_elemental_data *ele = BL_CAST<s_elemental_data*>(BL_ELEM, src);
+			s_elemental_data *ele = BL_CAST<BL_ELEM>( src);
 			if( ele ) {
 				status_change *esc = status_get_sc(&ele->bl);
 				sc_type type2 = (sc_type)(type-1);
@@ -13181,8 +13181,8 @@ TIMER_FUNC(skill_castend_id){
 		return 0;// ???
 	}
 
-	sd = BL_CAST<map_session_data*>(BL_PC,  src);
-	md = BL_CAST<mob_data*>(BL_MOB, src);
+	sd = BL_CAST<BL_PC>( src);
+	md = BL_CAST<BL_MOB>(src);
 	status_change *sc = status_get_sc(src);
 
 	if( src->prev == nullptr ) {
@@ -13546,8 +13546,8 @@ TIMER_FUNC(skill_castend_pos){
 
 	nullpo_ret(ud);
 
-	sd = BL_CAST<map_session_data*>(BL_PC , src);
-	md = BL_CAST<mob_data*>(BL_MOB, src);
+	sd = BL_CAST<BL_PC>(src);
+	md = BL_CAST<BL_MOB>(src);
 
 	if( src->prev == nullptr ) {
 		ud->skilltimer = INVALID_TIMER;
@@ -13710,7 +13710,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	if(status_isdead(*src))
 		return 0;
 
-	sd = BL_CAST<map_session_data*>(BL_PC, src);
+	sd = BL_CAST<BL_PC>(src);
 
 	sc = status_get_sc(src);
 	type = skill_get_sc(skill_id);
@@ -15015,7 +15015,7 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(struct block_list *src, ui
 	target = skill_get_unit_target(skill_id);
 	layout = skill_get_unit_layout(skill_id,skill_lv,src,x,y);
 
-	sd = BL_CAST<map_session_data*>(BL_PC, src);
+	sd = BL_CAST<BL_PC>(src);
 	status_data* status = status_get_status_data(*src);
 	sc = status_get_sc(src);	// for traps, firewall and fogwall - celest
 	hidden = (skill->unit_flag[UF_HIDDENTRAP] && (battle_config.traps_setting == 2 || (battle_config.traps_setting == 1 && map_flag_vs(src->m))));
@@ -15959,7 +15959,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 
 	nullpo_ret(ss = map_id2bl(sg->src_id));
 
-	tsd = BL_CAST<map_session_data*>(BL_PC, bl);
+	tsd = BL_CAST<BL_PC>(bl);
 	tsc = status_get_sc(bl);
 	sc = status_get_sc(ss);
 	status_data* tstatus = status_get_status_data(*bl);
@@ -16125,7 +16125,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 					sg->val1 -= 1; // Reduce the number of targets that can still be hit
 			} else {
 				int heal = skill_calc_heal(ss,bl,sg->skill_id,sg->skill_lv,true);
-				struct mob_data *md = BL_CAST<mob_data*>(BL_MOB, bl);
+				struct mob_data *md = BL_CAST<BL_MOB>(bl);
 
 #ifdef RENEWAL
 				if (md && md->mob_id == MOBID_EMPERIUM)
@@ -16187,7 +16187,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 				sc_start(ss,bl,SC_STOP,100,0,skill_get_time2(sg->skill_id,sg->skill_lv));
 #else
 				// In pre-renewal, if target was a monster, it will unlock target and become idle
-				struct mob_data* md = BL_CAST<mob_data*>(BL_MOB, bl);
+				struct mob_data* md = BL_CAST<BL_MOB>(bl);
 				if (md)
 					mob_unlocktarget(md, tick);
 #endif
@@ -16330,7 +16330,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 		case UNT_APPLEIDUN: { //Apple of Idun [Skotlex]
 				int heal;
 #ifdef RENEWAL
-				struct mob_data *md = BL_CAST<mob_data*>(BL_MOB, bl);
+				struct mob_data *md = BL_CAST<BL_MOB>(bl);
 
 				if (md && md->mob_id == MOBID_EMPERIUM)
 					break;
@@ -19175,7 +19175,7 @@ int skill_castfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
 
 #ifndef RENEWAL_CAST
 	{
-		map_session_data *sd = BL_CAST<map_session_data*>(BL_PC, bl);
+		map_session_data *sd = BL_CAST<BL_PC>(bl);
 		status_change *sc = status_get_sc(bl);
 		int reduce_cast_rate = 0;
 		uint8 flag = skill_get_castnodex(skill_id);
@@ -19312,7 +19312,7 @@ int skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint16 
 		return (int)time;
 
 	status_change *sc = status_get_sc(bl);
-	map_session_data *sd = BL_CAST<map_session_data*>(BL_PC, bl);
+	map_session_data *sd = BL_CAST<BL_PC>(bl);
 	int fixed = skill_get_fixed_cast(skill_id, skill_lv), fixcast_r = 0, varcast_r = 0, reduce_cast_rate = 0;
 	uint8 flag = skill_get_castnodex(skill_id);
 

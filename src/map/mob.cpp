@@ -163,7 +163,7 @@ int mvptomb_setdelayspawn(struct npc_data *nd) {
  * @param data: Used for add_timer_func_list
  */
 TIMER_FUNC(mvptomb_delayspawn){
-	npc_data* nd = BL_CAST<npc_data*>(BL_NPC, map_id2bl(id));
+	npc_data* nd = BL_CAST<BL_NPC>(map_id2bl(id));
 
 	if (nd) {
 		if (nd->u.tomb.spawn_timer != tid) {
@@ -553,20 +553,20 @@ bool mob_ksprotected (struct block_list *src, struct block_list *target)
 	if( !battle_config.ksprotection )
 		return false; // KS Protection Disabled
 
-	if( !(md = BL_CAST<mob_data*>(BL_MOB,target)) )
+	if( !(md = BL_CAST<BL_MOB>(target)) )
 		return false; // Tarjet is not MOB
 
 	if( (s_bl = battle_get_master(src)) == nullptr )
 		s_bl = src;
 
-	if( !(sd = BL_CAST<map_session_data*>(BL_PC,s_bl)) )
+	if( !(sd = BL_CAST<BL_PC>(s_bl)) )
 		return false; // Master is not PC
 
 	t_bl = map_id2bl(md->target_id);
 	if( !t_bl || (s_bl = battle_get_master(t_bl)) == nullptr )
 		s_bl = t_bl;
 
-	t_sd = BL_CAST<map_session_data*>(BL_PC,s_bl);
+	t_sd = BL_CAST<BL_PC>(s_bl);
 
 	do {
 		struct status_change_entry *sce;
@@ -1035,7 +1035,7 @@ int mob_linksearch(struct block_list *bl,va_list ap)
  *------------------------------------------*/
 TIMER_FUNC(mob_delayspawn){
 	struct block_list* bl = map_id2bl(id);
-	mob_data* md = BL_CAST<mob_data*>(BL_MOB, bl);
+	mob_data* md = BL_CAST<BL_MOB>(bl);
 
 	if( md )
 	{
@@ -1092,7 +1092,7 @@ int mob_setdelayspawn(struct mob_data *md)
 int mob_count_sub(struct block_list *bl, va_list ap) {
     int mobid[10], i;
     ARR_FIND(0, 10, i, (mobid[i] = va_arg(ap, int)) == 0); //fetch till 0
-	mob_data* md = BL_CAST<mob_data*>(BL_MOB, bl);
+	mob_data* md = BL_CAST<BL_MOB>(bl);
 	if (md && mobid[0]) { //if there one let's check it otherwise go backward
         ARR_FIND(0, 10, i, md->mob_id == mobid[i]);
         return (i < 10) ? 1 : 0;
@@ -1303,7 +1303,7 @@ static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 	if(battle_check_target(&md->bl,bl,BCT_ENEMY)<=0)
 		return 0;
 
-	if (bl->type == BL_PC && BL_CAST<map_session_data*>(BL_PC, bl)->state.gangsterparadise &&
+	if (bl->type == BL_PC && BL_CAST<BL_PC>(bl)->state.gangsterparadise &&
 		!status_has_mode(&md->status,MD_STATUSIMMUNE))
 		return 0; //Gangster paradise protection.
 
@@ -2320,7 +2320,7 @@ static void mob_item_drop(struct mob_data *md, std::shared_ptr<s_item_drop_list>
 
 TIMER_FUNC(mob_timer_delete){
 	struct block_list* bl = map_id2bl(id);
-	mob_data* md = BL_CAST<mob_data*>(BL_MOB, bl);
+	mob_data* md = BL_CAST<BL_MOB>(bl);
 
 	if( md )
 	{
@@ -3179,7 +3179,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				case BL_MER:
 				case BL_ELEM:
 				case BL_MOB:
-				    sd = BL_CAST<map_session_data*>(BL_PC,battle_get_master(src));
+				    sd = BL_CAST<BL_PC>(battle_get_master(src));
 			}
 		}
 

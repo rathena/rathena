@@ -11386,7 +11386,7 @@ BUILDIN_FUNC(killmonster)
 
 static int buildin_killmonsterall_sub_strip(struct block_list *bl,va_list ap)
 { //Strips the event from the mob if it's killed the old method.
-	mob_data* md = BL_CAST<mob_data*>(BL_MOB, bl);
+	mob_data* md = BL_CAST<BL_MOB>(bl);
 
 	if( md != nullptr ){
 		strcpy( md->npc_event, "" );
@@ -15076,7 +15076,7 @@ BUILDIN_FUNC(playBGM)
 static int playBGM_sub(struct block_list* bl,va_list ap)
 {
 	const char* name = va_arg(ap,const char*);
-	clif_playBGM( *BL_CAST<map_session_data*>(BL_PC, bl ), name );
+	clif_playBGM( *BL_CAST<BL_PC>( bl ), name );
 	return 0;
 }
 

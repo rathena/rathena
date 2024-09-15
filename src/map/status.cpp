@@ -1545,7 +1545,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 		}
 
 		if (target->type == BL_PC)
-			pc_bonus_script_clear(BL_CAST<map_session_data*>(BL_PC,target),BSF_REM_ON_DAMAGED);
+			pc_bonus_script_clear(BL_CAST<BL_PC>(target),BSF_REM_ON_DAMAGED);
 		unit_skillcastcancel(target, 2);
 	}
 
@@ -1642,7 +1642,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 	if( sc && sc->getSCE(SC_KAIZEL) && !map_flag_gvg2(target->m) ) { // flag&8 = disable Kaizel
 		int time = skill_get_time2(SL_KAIZEL,sc->getSCE(SC_KAIZEL)->val1);
 		// Look for Osiris Card's bonus effect on the character and revive 100% or revive normally
-		if ( target->type == BL_PC && BL_CAST<map_session_data*>(BL_PC,target)->special_state.restart_full_recover )
+		if ( target->type == BL_PC && BL_CAST<BL_PC>(target)->special_state.restart_full_recover )
 			status_revive(target, 100, 100);
 		else
 			status_revive(target, sc->getSCE(SC_KAIZEL)->val2, 0);
@@ -1695,7 +1695,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 	//FIXME those ain't always run if a player die if he was resurrect meanwhile
 	//cf SC_REBIRTH, SC_KAIZEL, pc_dead...
 	if(target->type == BL_PC) {
-		TBL_PC *sd = BL_CAST<map_session_data*>(BL_PC,target);
+		TBL_PC *sd = BL_CAST<BL_PC>(target);
 		if( sd->bg_id ) {
 			std::shared_ptr<s_battleground_data> bg = util::umap_find(bg_team_db, sd->bg_id);
 
@@ -2900,7 +2900,7 @@ int status_calc_mob_(struct mob_data* md, uint8 opt)
 				case MT_SUMMON_ABR_DUAL_CANNON:
 				case MT_SUMMON_ABR_MOTHER_NET:
 				case MT_SUMMON_ABR_INFINITY: {
-						map_session_data *msd = BL_CAST<map_session_data*>(BL_PC, mbl);
+						map_session_data *msd = BL_CAST<BL_PC>( mbl);
 						status_data* mstatus = status_get_status_data(*mbl);
 
 						// TODO: check if mstatus is dummy_status? Can never be nullptr [Lemongrass]
@@ -2936,7 +2936,7 @@ int status_calc_mob_(struct mob_data* md, uint8 opt)
 				case BO_WOODEN_FAIRY:
 				case BO_CREEPER:
 				case BO_HELLTREE: {
-						map_session_data *msd = BL_CAST<map_session_data*>(BL_PC, mbl);
+						map_session_data *msd = BL_CAST<BL_PC>( mbl);
 						status_data* mstatus = status_get_status_data(*mbl);
 
 						// TODO: check if mstatus is dummy_status? Can never be nullptr [Lemongrass]
@@ -5206,7 +5206,7 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 	if( !(bl->type&BL_REGEN) || !regen )
 		return;
 
-	sd = BL_CAST<map_session_data*>(BL_PC,bl);
+	sd = BL_CAST<BL_PC>(bl);
 	sc = status_get_sc(bl);
 
 	val = (status->vit/5) + max(1, status->max_hp/200);
@@ -5484,7 +5484,7 @@ void status_calc_state( struct block_list *bl, status_change *sc, std::bitset<SC
 				  || (sc->getSCE(SC_CAMOUFLAGE) && sc->getSCE(SC_CAMOUFLAGE)->val1 < 3)
 				  || (sc->getSCE(SC_MAGNETICFIELD) && sc->getSCE(SC_MAGNETICFIELD)->val2 != bl->id)
 				  || (sc->getSCE(SC_FEAR) && sc->getSCE(SC_FEAR)->val2 > 0)
-				  || (sc->getSCE(SC_HIDING) && (bl->type != BL_PC || (pc_checkskill(BL_CAST<map_session_data*>(BL_PC,bl),RG_TUNNELDRIVE) <= 0)))
+				  || (sc->getSCE(SC_HIDING) && (bl->type != BL_PC || (pc_checkskill(BL_CAST<BL_PC>(bl),RG_TUNNELDRIVE) <= 0)))
 				  || (sc->getSCE(SC_DANCING) && sc->getSCE(SC_DANCING)->val4 && (
 #ifndef RENEWAL
 						!sc->getSCE(SC_LONGING) ||
@@ -5603,7 +5603,7 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 	const struct status_data *b_status = status_get_base_status(&bl); // Base Status
 	status_data* status = status_get_status_data(bl); // Battle Status
 	status_change *sc = status_get_sc(&bl);
-	TBL_PC *sd = BL_CAST<map_session_data*>(BL_PC,&bl);
+	TBL_PC *sd = BL_CAST<BL_PC>(&bl);
 	int temp;
 
 	if (!b_status || !status)
@@ -6245,7 +6245,7 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 void status_calc_bl_(struct block_list* bl, std::bitset<SCB_MAX> flag, uint8 opt)
 {
 	if (bl->type == BL_PC) {
-		map_session_data *sd = BL_CAST<map_session_data*>(BL_PC, bl);
+		map_session_data *sd = BL_CAST<BL_PC>( bl);
 
 		if (sd->delayed_damage != 0) {
 			if (opt&SCO_FORCE)
@@ -6268,13 +6268,13 @@ void status_calc_bl_(struct block_list* bl, std::bitset<SCB_MAX> flag, uint8 opt
 
 	if( flag[SCB_BASE] ) { // Calculate the object's base status too
 		switch( bl->type ) {
-		case BL_PC:  status_calc_pc_(BL_CAST<map_session_data*>(BL_PC,bl), opt);          break;
-		case BL_MOB: status_calc_mob_(BL_CAST<mob_data*>(BL_MOB,bl), opt);        break;
-		case BL_PET: status_calc_pet_(BL_CAST<pet_data*>(BL_PET,bl), opt);        break;
-		case BL_HOM: status_calc_homunculus_(BL_CAST<homun_data*>(BL_HOM,bl), opt); break;
-		case BL_MER: status_calc_mercenary_(BL_CAST<s_mercenary_data*>(BL_MER,bl), opt);  break;
-		case BL_ELEM: status_calc_elemental_(BL_CAST<s_elemental_data*>(BL_ELEM,bl), opt);  break;
-		case BL_NPC: status_calc_npc_(BL_CAST<npc_data*>(BL_NPC,bl), opt); break;
+		case BL_PC:  status_calc_pc_(BL_CAST<BL_PC>(bl), opt);          break;
+		case BL_MOB: status_calc_mob_(BL_CAST<BL_MOB>(bl), opt);        break;
+		case BL_PET: status_calc_pet_(BL_CAST<BL_PET>(bl), opt);        break;
+		case BL_HOM: status_calc_homunculus_(BL_CAST<BL_HOM>(bl), opt); break;
+		case BL_MER: status_calc_mercenary_(BL_CAST<BL_MER>(bl), opt);  break;
+		case BL_ELEM: status_calc_elemental_(BL_CAST<BL_ELEM>(bl), opt);break;
+		case BL_NPC: status_calc_npc_(BL_CAST<BL_NPC>(bl), opt);		break;
 		}
 	}
 
@@ -6291,7 +6291,7 @@ void status_calc_bl_(struct block_list* bl, std::bitset<SCB_MAX> flag, uint8 opt
 
 	// Compare against new values and send client updates
 	if( bl->type == BL_PC ) {
-		TBL_PC* sd = BL_CAST<map_session_data*>(BL_PC, bl);
+		TBL_PC* sd = BL_CAST<BL_PC>( bl);
 
 		if(b_status.str != status->str)
 			clif_updatestatus(*sd,SP_STR);
@@ -6411,12 +6411,12 @@ void status_calc_bl_(struct block_list* bl, std::bitset<SCB_MAX> flag, uint8 opt
 			clif_updatestatus(*sd, SP_AP);
 #endif
 	} else if( bl->type == BL_HOM ) {
-		homun_data* hd = BL_CAST<homun_data*>(BL_HOM, bl);
+		homun_data* hd = BL_CAST<BL_HOM>( bl);
 
 		if( hd->master && memcmp(&b_status, status, sizeof(struct status_data)) != 0 )
 			clif_hominfo(hd->master,hd,0);
 	} else if( bl->type == BL_MER ) {
-		s_mercenary_data* md = BL_CAST<s_mercenary_data*>(BL_MER, bl);
+		s_mercenary_data* md = BL_CAST<BL_MER>(bl);
 
 		if (!md->master)
 			return;
@@ -6446,7 +6446,7 @@ void status_calc_bl_(struct block_list* bl, std::bitset<SCB_MAX> flag, uint8 opt
 		if( b_status.sp != status->sp )
 			clif_mercenary_updatestatus(md->master, SP_SP);
 	} else if( bl->type == BL_ELEM ) {
-		s_elemental_data* ed = BL_CAST<s_elemental_data*>(BL_ELEM, bl);
+		s_elemental_data* ed = BL_CAST<BL_ELEM>( bl);
 
 		if (!ed->master)
 			return;
@@ -7960,7 +7960,7 @@ static signed short status_calc_mdef2(struct block_list *bl, status_change *sc, 
  */
 static unsigned short status_calc_speed(struct block_list *bl, status_change *sc, int speed)
 {
-	TBL_PC* sd = BL_CAST<map_session_data*>(BL_PC, bl);
+	TBL_PC* sd = BL_CAST<BL_PC>( bl);
 	int speed_rate = 100;
 
 	if (sc == nullptr || (sd && sd->state.permanent_speed))
@@ -8311,7 +8311,7 @@ static short status_calc_aspd(struct block_list *bl, status_change *sc, bool fix
 		if( sc->getSCE(SC_PORK_RIB_STEW) )
 			bonus += 5;
 
-		map_session_data* sd = BL_CAST<map_session_data*>(BL_PC, bl);
+		map_session_data* sd = BL_CAST<BL_PC>( bl);
 		uint8 skill_lv;
 
 		if (sd) {
@@ -9561,7 +9561,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			return 0;
 	}
 
-	sd = BL_CAST<map_session_data*>(BL_PC,bl);
+	sd = BL_CAST<BL_PC>(bl);
 	status_data* status = status_get_status_data(*bl);
 	status_data* status_src = status_get_status_data(*src);
 	sc = status_get_sc(bl);
@@ -10118,7 +10118,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 	int tick = (int)duration;
 
-	sd = BL_CAST<map_session_data*>(BL_PC, bl);
+	sd = BL_CAST<BL_PC>( bl);
 	vd = status_get_viewdata(bl);
 
 	undead_flag = battle_check_undead(status->race,status->def_ele);
@@ -11422,7 +11422,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_ADRENALINE:
 		case SC_WEAPONPERFECTION:
 			{
-				map_session_data * s_sd = BL_CAST<map_session_data*>(BL_PC, src);
+				map_session_data * s_sd = BL_CAST<BL_PC>( src);
 				if (type == SC_OVERTHRUST) {
 					// val2 holds if it was casted on self, or is bonus received from others
 #ifdef RENEWAL
@@ -12353,7 +12353,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 #ifndef RENEWAL
 		case SC_APPLEIDUN:
 		{
-			map_session_data * s_sd = BL_CAST<map_session_data*>(BL_PC, src);
+			map_session_data * s_sd = BL_CAST<BL_PC>( src);
 
 			val2 = (5 + 2 * val1) + (status_get_vit(src) / 10); //HP Rate: (5 + 2 * skill_lv) + (vit/10) + (BA_MUSICALLESSON level)
 			if (s_sd)
@@ -13275,7 +13275,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 	if(!sc || !(sce = sc->getSCE(type)) || !scdb)
 		return 0;
 
-	sd = BL_CAST<map_session_data*>(BL_PC,bl);
+	sd = BL_CAST<BL_PC>(bl);
 
 	if (sce->timer != tid && tid != INVALID_TIMER)
 		return 0;
@@ -13720,7 +13720,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 		case SC_OVERED_BOOST:
 			switch (bl->type) {
 				case BL_HOM: {
-						homun_data* hd = BL_CAST<homun_data*>(BL_HOM,bl);
+						homun_data* hd = BL_CAST<BL_HOM>(bl);
 
 						if( hd )
 							hd->homunculus.hunger = max(1,hd->homunculus.hunger - 50);
@@ -13967,7 +13967,7 @@ TIMER_FUNC(status_change_timer){
 
 	const status_data* status = status_get_status_data(*bl);
 
-	sd = BL_CAST<map_session_data*>(BL_PC, bl);
+	sd = BL_CAST<BL_PC>( bl);
 
 	std::function<void (t_tick)> sc_timer_next = [&sce, &bl, &data](t_tick t) {
 		sce->timer = add_timer(t, status_change_timer, bl->id, data);
@@ -14651,7 +14651,7 @@ TIMER_FUNC(status_change_timer){
 		if( !status_charge(bl,0,sce->val2) ) {
 			struct block_list *s_bl = battle_get_master(bl);
 			if (bl->type == BL_ELEM)
-				elemental_change_mode(BL_CAST<s_elemental_data*>(BL_ELEM, bl), EL_MODE_PASSIVE);
+				elemental_change_mode(BL_CAST<BL_ELEM>( bl), EL_MODE_PASSIVE);
 			if( s_bl )
 				status_change_end(s_bl,static_cast<sc_type>(type+1));
 			status_change_end(bl,type);
@@ -15154,7 +15154,7 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 		if (type&SCCB_DEBUFFS)  i |= BSF_REM_DEBUFF;
 		if (type&SCCB_REFRESH)  i |= BSF_REM_ON_REFRESH;
 		if (type&SCCB_LUXANIMA) i |= BSF_REM_ON_LUXANIMA;
-		pc_bonus_script_clear(BL_CAST<map_session_data*>(BL_PC,bl),i);
+		pc_bonus_script_clear(BL_CAST<BL_PC>(bl),i);
 	}
 
 	// Cleaning all extras vars
@@ -15244,7 +15244,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 	sc = status_get_sc(bl);
 	if (sc && !sc->count)
 		sc = nullptr;
-	sd = BL_CAST<map_session_data*>(BL_PC,bl);
+	sd = BL_CAST<BL_PC>(bl);
 
 	flag = regen->flag;
 	if (flag&RGN_HP && (regen->state.block&1))

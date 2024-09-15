@@ -2257,7 +2257,7 @@ int npc_click(map_session_data* sd, struct npc_data* nd)
  *------------------------------------------*/
 bool npc_scriptcont(map_session_data* sd, int id, bool closing){
 	struct block_list *target = map_id2bl(id);
-	npc_data* nd = BL_CAST<npc_data*>(BL_NPC, target);
+	npc_data* nd = BL_CAST<BL_NPC>(target);
 
 	nullpo_retr(true, sd);
 
