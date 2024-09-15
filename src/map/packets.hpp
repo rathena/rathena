@@ -944,7 +944,7 @@ DEFINE_PACKET_HEADER(ZC_NOTIFY_EFFECT, 0x19b);
 #if PACKETVER >= 20120618
 struct PACKET_ZC_EFST_SET_ENTER{
 	uint16 packetType;
-	int srcId;
+	uint32 srcId;
 	uint16 type;
 	uint32 duration;
 	uint32 duration2;
@@ -956,7 +956,7 @@ DEFINE_PACKET_HEADER(ZC_EFST_SET_ENTER, 0x984)
 #elif PACKETVER >= 20111108
 struct PACKET_ZC_EFST_SET_ENTER{
 	uint16 packetType;
-	int srcId;
+	uint32 srcId;
 	uint16 type;
 	uint32 duration;
 	int val1;
