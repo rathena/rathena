@@ -1639,9 +1639,9 @@ TIMER_FUNC(unit_resume_running){
 	TBL_PC *sd = map_id2sd(id);
 
 	if (sd && pc_isridingwug(sd))
-		clif_skill_nodamage(ud->bl,ud->bl,RA_WUGDASH,ud->skill_lv,sc_start4(ud->bl,ud->bl,SC_WUGDASH,100,ud->skill_lv,unit_getdir(ud->bl),0,0,0));
+		clif_skill_nodamage(ud->bl,*ud->bl,RA_WUGDASH,ud->skill_lv,sc_start4(ud->bl,ud->bl,SC_WUGDASH,100,ud->skill_lv,unit_getdir(ud->bl),0,0,0));
 	else
-		clif_skill_nodamage(ud->bl,ud->bl,TK_RUN,ud->skill_lv,sc_start4(ud->bl,ud->bl,SC_RUN,100,ud->skill_lv,unit_getdir(ud->bl),0,0,0));
+		clif_skill_nodamage(ud->bl,*ud->bl,TK_RUN,ud->skill_lv,sc_start4(ud->bl,ud->bl,SC_RUN,100,ud->skill_lv,unit_getdir(ud->bl),0,0,0));
 
 	if (sd)
 		clif_walkok(*sd);
@@ -3239,7 +3239,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			if(sd->chatID)
 				chat_leavechat(sd,0);
 
-			if(sd->trade_partner)
+			if(sd->trade_partner.id > 0)
 				trade_tradecancel(sd);
 
 			searchstore_close(*sd);

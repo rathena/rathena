@@ -1647,7 +1647,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 		else
 			status_revive(target, sc->getSCE(SC_KAIZEL)->val2, 0);
 		status_change_clear(target,0);
-		clif_skill_nodamage(target,target,ALL_RESURRECTION,1,1);
+		clif_skill_nodamage(target,*target,ALL_RESURRECTION,1);
 		sc_start(src,target,SC_KYRIE,100,10,time);
 
 		if( target->type == BL_MOB )
@@ -1660,7 +1660,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 	if (sc && sc->getSCE(SC_ULTIMATE_S) && !map_flag_gvg2(target->m)) {
 		status_revive(target, 100, 100);
 		status_change_clear(target, 0);
-		clif_skill_nodamage(target, target, ALL_RESURRECTION, 1, 1);
+		clif_skill_nodamage(target, *target, ALL_RESURRECTION, 1);
 
 		if (target->type == BL_MOB)
 			((TBL_MOB*)target)->state.rebirth = 1;
@@ -4914,7 +4914,7 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		// Client doesn't delete unavailable skills even if we refresh the skill tree, individually delete them.
 		for (i = 0; i < MAX_SKILL; i++) {
 			if (b_skill[i].id != 0 && sd->status.skill[i].id == 0)
-				clif_deleteskill(sd, b_skill[i].id, true);
+				clif_deleteskill(*sd, b_skill[i].id, true);
 		}
 #endif
 		clif_skillinfoblock(sd);
@@ -13137,19 +13137,19 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			switch(sce->val1) {
 			case TK_STORMKICK:
 				skill_combo_toggle_inf(bl, TK_JUMPKICK, 0);
-				clif_skill_nodamage(bl,bl,TK_READYSTORM,1,1);
+				clif_skill_nodamage(bl,*bl,TK_READYSTORM,1);
 				break;
 			case TK_DOWNKICK:
 				skill_combo_toggle_inf(bl, TK_JUMPKICK, 0);
-				clif_skill_nodamage(bl,bl,TK_READYDOWN,1,1);
+				clif_skill_nodamage(bl,*bl,TK_READYDOWN,1);
 				break;
 			case TK_TURNKICK:
 				skill_combo_toggle_inf(bl, TK_JUMPKICK, 0);
-				clif_skill_nodamage(bl,bl,TK_READYTURN,1,1);
+				clif_skill_nodamage(bl,*bl,TK_READYTURN,1);
 				break;
 			case TK_COUNTER:
 				skill_combo_toggle_inf(bl, TK_JUMPKICK, 0);
-				clif_skill_nodamage(bl,bl,TK_READYCOUNTER,1,1);
+				clif_skill_nodamage(bl,*bl,TK_READYCOUNTER,1);
 				break;
 			default: // Rest just toggle inf to enable autotarget
 				skill_combo_toggle_inf(bl,sce->val1,INF_SELF_SKILL);
