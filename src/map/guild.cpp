@@ -847,7 +847,7 @@ int guild_recv_info(const struct mmo_guild &sg) {
 			sd->guild = g;
 			sd->state.gmaster_flag = 1;
 			clif_name_area(&sd->bl); // [LuzZza]
-			clif_guild_masterormember(sd);
+			clif_guild_masterormember(*sd);
 		}
 	} else {
 		before = g->guild;
@@ -963,7 +963,7 @@ bool guild_invite( map_session_data& sd, map_session_data* tsd ){
 	}
 
 	// Checking if there no other invitation pending
-	if( !battle_config.invite_request_check && ( tsd->party_invite > 0 || tsd->trade_partner || tsd->adopt_invite ) ){
+	if( !battle_config.invite_request_check && ( tsd->party_invite > 0 || tsd->state.trading || tsd->adopt_invite ) ){
 		clif_guild_inviteack( sd, 0 );
 		return false;
 	}
@@ -1476,7 +1476,7 @@ int guild_recv_message( int guild_id, uint32 account_id, const char *mes, size_t
 	auto g = guild_search(guild_id);
 	if (!g)
 		return 0;
-	clif_guild_message(g->guild,account_id,mes,len);
+	clif_guild_message(g->guild,mes,len);
 	return 0;
 }
 
@@ -1862,7 +1862,7 @@ int guild_reqalliance(map_session_data *sd,map_session_data *tsd) {
 
 	// Check, is tsd guild master, if not - cancel alliance. [f0und3r]
 	if (battle_config.guild_alliance_onlygm && !tsd->state.gmaster_flag) {
-		clif_guild_allianceack(sd, 5);
+		clif_guild_allianceack(*sd, 5);
 		return 0;
 	}
 
@@ -1877,23 +1877,23 @@ int guild_reqalliance(map_session_data *sd,map_session_data *tsd) {
 		return 0;
 
 	if( guild_get_alliance_count(g->guild,0) >= battle_config.max_guild_alliance ) {
-		clif_guild_allianceack(sd,4);
+		clif_guild_allianceack(*sd,4);
 		return 0;
 	}
 	if( guild_get_alliance_count(tg->guild,0) >= battle_config.max_guild_alliance ) {
-		clif_guild_allianceack(sd,3);
+		clif_guild_allianceack(*sd,3);
 		return 0;
 	}
 
 	if( tsd->guild_alliance>0 ){
-		clif_guild_allianceack(sd,1);
+		clif_guild_allianceack(*sd,1);
 		return 0;
 	}
 
 	for (i = 0; i < MAX_GUILDALLIANCE; i++) { // check if already allied
 		if(	g->guild.alliance[i].guild_id==tsd->status.guild_id &&
 			g->guild.alliance[i].opposition==0){
-			clif_guild_allianceack(sd,0);
+			clif_guild_allianceack(*sd,0);
 			return 0;
 		}
 	}
@@ -1901,7 +1901,7 @@ int guild_reqalliance(map_session_data *sd,map_session_data *tsd) {
 	tsd->guild_alliance=sd->status.guild_id;
 	tsd->guild_alliance_account=sd->status.account_id;
 
-	clif_guild_reqalliance(tsd,sd->status.account_id,g->guild.name);
+	clif_guild_reqalliance(*tsd,sd->status.account_id,g->guild.name);
 	return 0;
 }
 
@@ -1914,7 +1914,7 @@ int guild_reply_reqalliance(map_session_data *sd,uint32 account_id,int flag) {
 	nullpo_ret(sd);
 	tsd= map_id2sd( account_id );
 	if (!tsd) { //Character left? Cancel alliance.
-		clif_guild_allianceack(sd,3);
+		clif_guild_allianceack(*sd,3);
 		return 0;
 	}
 
@@ -1928,13 +1928,13 @@ int guild_reply_reqalliance(map_session_data *sd,uint32 account_id,int flag) {
 		auto &tg = tsd->guild;
 
 		if (!g || guild_get_alliance_count(g->guild,0) >= battle_config.max_guild_alliance) {
-			clif_guild_allianceack(sd,4);
-			clif_guild_allianceack(tsd,3);
+			clif_guild_allianceack(*sd,4);
+			clif_guild_allianceack(*tsd,3);
 			return 0;
 		}
 		if (!tg || guild_get_alliance_count(tg->guild,0) >= battle_config.max_guild_alliance) {
-			clif_guild_allianceack(sd,3);
-			clif_guild_allianceack(tsd,4);
+			clif_guild_allianceack(*sd,3);
+			clif_guild_allianceack(*tsd,4);
 			return 0;
 		}
 
@@ -1959,7 +1959,7 @@ int guild_reply_reqalliance(map_session_data *sd,uint32 account_id,int flag) {
 		sd->guild_alliance=0;
 		sd->guild_alliance_account=0;
 		if(tsd!=nullptr)
-			clif_guild_allianceack(tsd,3);
+			clif_guild_allianceack(*tsd,3);
 	}
 	return 0;
 }
@@ -1996,14 +1996,14 @@ int guild_opposition(map_session_data *sd,map_session_data *tsd) {
 		return 0;
 
 	if( guild_get_alliance_count(g->guild,1) >= battle_config.max_guild_alliance )	{
-		clif_guild_oppositionack(sd,1);
+		clif_guild_oppositionack(*sd,1);
 		return 0;
 	}
 
 	for (i = 0; i < MAX_GUILDALLIANCE; i++) { // checking relations
 		if(g->guild.alliance[i].guild_id==tsd->status.guild_id){
 			if (g->guild.alliance[i].opposition == 1) { // check if not already hostile
-				clif_guild_oppositionack(sd,2);
+				clif_guild_oppositionack(*sd,2);
 				return 0;
 			}
 			if(is_agit_start()) // Prevent the changing of alliances to oppositions during WoE.
@@ -2049,7 +2049,7 @@ int guild_allianceack(int guild_id1,int guild_id2,uint32 account_id1,uint32 acco
 	if (flag & 0x70) { // failure
 		for(i=0;i<2-(flag&1);i++)
 			if( sd[i]!=nullptr )
-				clif_guild_allianceack(sd[i],((flag>>4)==i+1)?3:4);
+				clif_guild_allianceack(*sd[i],((flag>>4)==i+1)?3:4);
 		return 0;
 	}
 
@@ -2073,16 +2073,16 @@ int guild_allianceack(int guild_id1,int guild_id2,uint32 account_id1,uint32 acco
 					g[i]->alliance[j].guild_id = 0;
 			}
 		if (sd[i] != nullptr) // notify players
-				clif_guild_delalliance(sd[i],guild_id[1-i],(flag&1));
+				clif_guild_delalliance(*sd[i],guild_id[1-i],(flag&1));
 		}
 	}
 
 	if ((flag & 0x0f) == 0) { // alliance notification
 		if( sd[1]!=nullptr )
-			clif_guild_allianceack(sd[1],2);
+			clif_guild_allianceack(*sd[1],2);
 	} else if ((flag & 0x0f) == 1) { // enemy notification
 		if( sd[0]!=nullptr )
-			clif_guild_oppositionack(sd[0],0);
+			clif_guild_oppositionack(*sd[0],0);
 	}
 
 
@@ -2091,7 +2091,7 @@ int guild_allianceack(int guild_id1,int guild_id2,uint32 account_id1,uint32 acco
 			for(j=0;j<g[i]->max_member;j++) {
 				map_session_data *sd_mem = g[i]->member[j].sd;
 				if( sd_mem!=nullptr){
-					clif_guild_allianceinfo(sd_mem);
+					clif_guild_allianceinfo(*sd_mem);
 
 					// join ally channel
 					if( channel_config.ally_tmpl.name[0] && (channel_config.ally_tmpl.opt&CHAN_OPT_AUTOJOIN) ) {
@@ -2112,7 +2112,7 @@ int guild_broken_sub(struct mmo_guild &g, int guild_id) {
 		if (g.alliance[i].guild_id == guild_id) {
 			for (int j = 0; j < g.max_member; j++) {
 				if (g.member[j].sd)
-					clif_guild_delalliance(g.member[j].sd, guild_id, g.alliance[i].opposition);
+					clif_guild_delalliance(*g.member[j].sd, guild_id, g.alliance[i].opposition);
 			}
 			intif_guild_alliance(g.guild_id, guild_id, 0, 0, g.alliance[i].opposition | 8);
 			g.alliance[i].guild_id = 0;
