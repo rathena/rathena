@@ -847,7 +847,7 @@ int guild_recv_info(const struct mmo_guild &sg) {
 			sd->guild = g;
 			sd->state.gmaster_flag = 1;
 			clif_name_area(&sd->bl); // [LuzZza]
-			clif_guild_masterormember(sd);
+			clif_guild_masterormember(*sd);
 		}
 	} else {
 		before = g->guild;
@@ -1476,7 +1476,7 @@ int guild_recv_message( int guild_id, uint32 account_id, const char *mes, size_t
 	auto g = guild_search(guild_id);
 	if (!g)
 		return 0;
-	clif_guild_message(g->guild,account_id,mes,len);
+	clif_guild_message(g->guild,mes,len);
 	return 0;
 }
 
@@ -2073,7 +2073,7 @@ int guild_allianceack(int guild_id1,int guild_id2,uint32 account_id1,uint32 acco
 					g[i]->alliance[j].guild_id = 0;
 			}
 		if (sd[i] != nullptr) // notify players
-				clif_guild_delalliance(sd[i],guild_id[1-i],(flag&1));
+				clif_guild_delalliance(*sd[i],guild_id[1-i],(flag&1));
 		}
 	}
 
@@ -2091,7 +2091,7 @@ int guild_allianceack(int guild_id1,int guild_id2,uint32 account_id1,uint32 acco
 			for(j=0;j<g[i]->max_member;j++) {
 				map_session_data *sd_mem = g[i]->member[j].sd;
 				if( sd_mem!=nullptr){
-					clif_guild_allianceinfo(sd_mem);
+					clif_guild_allianceinfo(*sd_mem);
 
 					// join ally channel
 					if( channel_config.ally_tmpl.name[0] && (channel_config.ally_tmpl.opt&CHAN_OPT_AUTOJOIN) ) {
@@ -2112,7 +2112,7 @@ int guild_broken_sub(struct mmo_guild &g, int guild_id) {
 		if (g.alliance[i].guild_id == guild_id) {
 			for (int j = 0; j < g.max_member; j++) {
 				if (g.member[j].sd)
-					clif_guild_delalliance(g.member[j].sd, guild_id, g.alliance[i].opposition);
+					clif_guild_delalliance(*g.member[j].sd, guild_id, g.alliance[i].opposition);
 			}
 			intif_guild_alliance(g.guild_id, guild_id, 0, 0, g.alliance[i].opposition | 8);
 			g.alliance[i].guild_id = 0;

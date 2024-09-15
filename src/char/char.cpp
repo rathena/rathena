@@ -2425,7 +2425,7 @@ bool char_checkdb(void){
 		return false;
 	}
 	//checking guild_expulsion_db
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `guild_id`,`account_id`,`name`,`mes` FROM `%s` LIMIT 1;", schema_config.guild_expulsion_db) ){
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `guild_id`,`account_id`,`name`,`mes`,`char_id` FROM `%s` LIMIT 1;", schema_config.guild_expulsion_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
