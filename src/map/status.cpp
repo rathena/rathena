@@ -13164,7 +13164,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_ITEMSCRIPT: // Shows Buff Icons
 			if (sd)
-				clif_status_change(bl, (efst_type)val2, true, tick, 0, 0, 0);
+				clif_status_change(bl, static_cast<efst_type>(val2), true, tick, 0, 0, 0);
 			break;
 		case SC_GVG_GIANT:
 		case SC_GVG_GOLEM:

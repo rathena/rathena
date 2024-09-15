@@ -1316,7 +1316,7 @@ enum sc_type : int16 {
 };
 
 /// Official status change ids, used to display status icons on the client.
-enum efst_type : short{
+enum efst_type : int16{
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
 /// @APIHOOK_START(EFST_ENUM)
 	EFST_BLANK = -1,
