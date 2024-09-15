@@ -9970,7 +9970,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		//val[4] if set, asks to delete the previous mode change.
 		if(md && md->skill_idx >= 0 && tsc)
 		{
-			if(md->db->skill[md->skill_idx]->val[0] >= ET_SURPRISE && md->db->skill[md->skill_idx]->val[0] < ET_MAX)
+			if(md->db->skill[md->skill_idx]->val[0] > ET_BLANK && md->db->skill[md->skill_idx]->val[0] < ET_MAX)
 				clif_emotion(*bl, static_cast<e_emotion_type>(md->db->skill[md->skill_idx]->val[0]));
 			if(md->db->skill[md->skill_idx]->val[4] && tsce)
 				status_change_end(bl, type);
@@ -13295,7 +13295,7 @@ TIMER_FUNC(skill_castend_id){
 
 		if(md) {
 			md->last_thinktime=tick +MIN_MOBTHINKTIME;
-			if(md->skill_idx >= 0 && md->db->skill[md->skill_idx]->emotion >= ET_SURPRISE && md->db->skill[md->skill_idx]->emotion < ET_MAX)
+			if(md->skill_idx >= 0 && md->db->skill[md->skill_idx]->emotion > ET_BLANK && md->db->skill[md->skill_idx]->emotion < ET_MAX)
 				clif_emotion(*src, md->db->skill[md->skill_idx]->emotion);
 		}
 
@@ -13619,7 +13619,7 @@ TIMER_FUNC(skill_castend_pos){
 
 		if(md) {
 			md->last_thinktime=tick +MIN_MOBTHINKTIME;
-			if(md->skill_idx >= 0 && md->db->skill[md->skill_idx]->emotion >= ET_SURPRISE && md->db->skill[md->skill_idx]->emotion < ET_MAX)
+			if(md->skill_idx >= 0 && md->db->skill[md->skill_idx]->emotion > ET_BLANK && md->db->skill[md->skill_idx]->emotion < ET_MAX)
 				clif_emotion(*src, md->db->skill[md->skill_idx]->emotion);
 		}
 

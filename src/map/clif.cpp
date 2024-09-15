@@ -9275,6 +9275,9 @@ void clif_guild_broken( map_session_data& sd, int flag ){
 /// 00c0 <id>.L <type>.B (ZC_EMOTION).
 void clif_emotion(block_list& bl,e_emotion_type type){
 
+	if(type <= ET_BLANK || type >= ET_MAX)
+		return;
+
 	PACKET_ZC_EMOTION p{};
 
 	p.packetType = HEADER_ZC_EMOTION;
