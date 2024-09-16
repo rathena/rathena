@@ -242,7 +242,7 @@ uint64 QuestDatabase::parseBodyNode(const ryml::NodeRef& node) {
 					}
 
 					if (constant < SZ_SMALL || constant > SZ_ALL) {
-						this->invalidWarning(targetNode["size"], "Unsupported size %s, skipping.\n", size_.c_str());
+						this->invalidWarning(targetNode["Size"], "Unsupported size %s, skipping.\n", size_.c_str());
 						return 0;
 					}
 
@@ -385,7 +385,7 @@ uint64 QuestDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				}
 
 				if (!this->nodeExists(dropNode, "Rate")) {
-					this->invalidWarning(dropNode["Item"], "Drops has no Rate value specified, skipping.\n");
+					this->invalidWarning(dropNode["Rate"], "Drops has no Rate value specified, skipping.\n");
 					continue;
 				}
 

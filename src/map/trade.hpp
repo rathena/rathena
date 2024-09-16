@@ -4,7 +4,18 @@
 #ifndef TRADE_HPP
 #define TRADE_HPP
 
+#include <common/cbasetypes.hpp>
+
 class map_session_data;
+
+enum e_ack_trade_response : uint8 {
+	TRADE_ACK_TOOFAR = 0,
+	TRADE_ACK_CHARNOTEXIST,
+	TRADE_ACK_FAILED,
+	TRADE_ACK_ACCEPT,
+	TRADE_ACK_CANCEL,
+	TRADE_ACK_BUSY
+};
 
 void trade_traderequest(map_session_data *sd, map_session_data *target_sd);
 void trade_tradeack(map_session_data *sd,int type);
