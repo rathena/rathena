@@ -15457,7 +15457,7 @@ void clif_parse_HomMoveTo(int fd, map_session_data *sd){
 	else
 		return;
 
-	if (x < 0 || y < 0 || x == bl->x || y == bl->y)
+	if (x < 0 || y < 0 || (x == bl->x && y == bl->y))
 		return;
 
 	unit_walktoxy(bl, x, y, 4);
