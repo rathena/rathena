@@ -10700,7 +10700,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 	case HVAN_EXPLOSION:
 	{
-		clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
+		clif_skill_nodamage(src, *src, skill_id, skill_lv, 1);
 		map_foreachinshootrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR | BL_SKILL, src, skill_id, skill_lv, tick, flag | BCT_ENEMY, skill_castend_damage_id);
 
 		homun_data& hd = reinterpret_cast<homun_data&>(*src);
