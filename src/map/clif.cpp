@@ -4494,7 +4494,7 @@ void clif_changechatstatus(chat_data& cd) {
 	p->users = cd.users;
 
 	// not zero-terminated
-	strncpy(p->title, cd.title, strlen(cd.title));
+	memcpy(p->title, cd.title, strlen(cd.title));
 
 	if(cd.owner->type == BL_NPC){
 		// NPC itself counts as additional chat user
