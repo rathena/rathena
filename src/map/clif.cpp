@@ -15457,6 +15457,9 @@ void clif_parse_HomMoveTo(int fd, map_session_data *sd){
 	else
 		return;
 
+	if (x < 0 || y < 0 || x == bl->x || y == bl->y)
+		return;
+
 	unit_walktoxy(bl, x, y, 4);
 }
 
@@ -15479,7 +15482,6 @@ void clif_parse_HomAttack(int fd,map_session_data *sd)
 		bl = &sd->md->bl;
 	else return;
 
-	unit_stop_attack(bl);
 	unit_attack(bl, target_id, action_type != 0);
 }
 
