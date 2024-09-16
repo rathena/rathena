@@ -236,16 +236,12 @@ int hom_dead(struct homun_data *hd)
 	//There's no intimacy penalties on death (from Tharis)
 	map_session_data *sd = hd->master;
 
-	clif_emotion(&hd->bl, ET_KEK);
-
 	//Delete timers when dead.
 	hom_hungry_timer_delete(hd);
 	hd->homunculus.hp = 0;
 
 	if (!sd) //unit remove map will invoke unit free
 		return 3;
-
-	clif_emotion(&sd->bl, ET_CRY);
 
 #ifdef RENEWAL
 	status_change_end(&sd->bl, SC_HOMUN_TIME);
