@@ -10,6 +10,7 @@
 #include <common/database.hpp>
 #include <common/cbasetypes.hpp>
 #include <common/db.hpp>
+#include <common/malloc.hpp>
 #include <common/mmo.hpp>
 #include <common/timer.hpp>
 
@@ -102,7 +103,7 @@
 #define reference_getindex(data) ( (uint32)(int64)((reference_getuid(data) >> 32) & 0xffffffff) )
 /// Returns the name of the reference
 #define reference_getname(data) ( str_buf + str_data[reference_getid(data)].str )
-/// Returns the linked list of uid-value pairs of the reference (can be NULL)
+/// Returns the linked list of uid-value pairs of the reference (can be nullptr)
 #define reference_getref(data) ( (data)->ref )
 /// Returns the value of the constant
 #define reference_getconstant(data) ( str_data[reference_getid(data)].val )
@@ -115,8 +116,8 @@
 /// Checks whether two references point to the same variable (or array)
 #define is_same_reference(data1, data2) \
 	(  reference_getid(data1) == reference_getid(data2) \
-	&& ( (data1->ref == data2->ref && data1->ref == NULL) \
-	  || (data1->ref != NULL && data2->ref != NULL && data1->ref->vars == data2->ref->vars \
+	&& ( (data1->ref == data2->ref && data1->ref == nullptr) \
+	  || (data1->ref != nullptr && data2->ref != nullptr && data1->ref->vars == data2->ref->vars \
 	     ) ) )
 
 #define script_getvarid(var) ( (int32)(int64)(var & 0xFFFFFFFF) )
@@ -352,7 +353,7 @@ struct script_array {
 enum script_parse_options {
 	SCRIPT_USE_LABEL_DB = 0x1,// records labels in scriptlabel_db
 	SCRIPT_IGNORE_EXTERNAL_BRACKETS = 0x2,// ignores the check for {} brackets around the script
-	SCRIPT_RETURN_EMPTY_SCRIPT = 0x4// returns the script object instead of NULL for empty scripts
+	SCRIPT_RETURN_EMPTY_SCRIPT = 0x4// returns the script object instead of nullptr for empty scripts
 };
 
 enum monsterinfo_types {
@@ -2120,8 +2121,14 @@ enum e_hat_effects : int16{
 	HAT_EF_AUTUMN_FULL_MOON,
 	HAT_EF_NIFLHEIM_NIGHT_SKY,
 	HAT_EF_C_ROS2023_CAPE_1,
+	HAT_EF_BLACK_THUNDER_,
 	HAT_EF_C_ROS2023_CAPE_2,
 	HAT_EF_C_15TH_NOV_HELMET,
+	HAT_EF_COSMIC_CONNECTION,
+	HAT_EF_C_BABY_GLOOM,
+	HAT_EF_WINTERNIGHTBELLS,
+	HAT_EF_NIGHTSKYOFRUTIE,
+	HAT_EF_RAINBOW_POISON_MASTER,
 	HAT_EF_MAX
 };
 
@@ -2149,9 +2156,10 @@ enum e_pcblock_action_flag : uint16 {
 	PCBLOCK_SITSTAND = 0x040,
 	PCBLOCK_COMMANDS = 0x080,
 	PCBLOCK_NPCCLICK = 0x100,
-	PCBLOCK_NPC      = 0x18D,
 	PCBLOCK_EMOTION  = 0x200,
-	PCBLOCK_ALL      = 0x3FF,
+	PCBLOCK_EQUIP    = 0x400,
+	PCBLOCK_NPC      = 0x58D,
+	PCBLOCK_ALL      = 0x7FF,
 };
 
 /* getiteminfo/setiteminfo script commands */
@@ -2177,6 +2185,13 @@ enum e_iteminfo : uint8 {
 	ITEMINFO_AEGISNAME,	// 18
 	ITEMINFO_ARMORLEVEL,
 	ITEMINFO_SUBTYPE,
+};
+
+/* geteleminfo script command */
+enum e_eleminfo : uint8 {
+	ELEMINFO_ID = 0,
+	ELEMINFO_GAMEID,
+	ELEMINFO_CLASS,
 };
 
 class ConstantDatabase : public YamlDatabase {
@@ -2205,7 +2220,8 @@ void script_error(const char* src, const char* file, int start_line, const char*
 void script_warning(const char* src, const char* file, int start_line, const char* error_msg, const char* error_pos);
 
 bool is_number(const char *p);
-struct script_code* parse_script(const char* src,const char* file,int line,int options);
+struct script_code* parse_script_( const char *src, const char *file, int line, int options, const char* src_file, int src_line, const char* src_func );
+#define parse_script( src, file, line, options ) parse_script_( ( src ), ( file ), ( line ), ( options ), ALC_MARK )
 void run_script(struct script_code *rootscript,int pos,int rid,int oid);
 
 bool set_reg_num(struct script_state* st, map_session_data* sd, int64 num, const char* name, const int64 value, struct reg_db *ref);
@@ -2238,7 +2254,7 @@ const char* script_get_constant_str(const char* prefix, int64 value);
 bool script_get_parameter(const char* name, int64* value);
 bool script_get_constant(const char* name, int64* value);
 void script_set_constant_(const char* name, int64 value, const char* constant_name, bool isparameter, bool deprecated);
-#define script_set_constant(name, value, isparameter, deprecated) script_set_constant_(name, value, NULL, isparameter, deprecated)
+#define script_set_constant(name, value, isparameter, deprecated) script_set_constant_(name, value, nullptr, isparameter, deprecated)
 void script_hardcoded_constants(void);
 
 void script_cleararray_pc(map_session_data* sd, const char* varname);

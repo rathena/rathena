@@ -4,7 +4,7 @@
 #ifndef PARTY_HPP
 #define PARTY_HPP
 
-#include <stdarg.h>
+#include <cstdarg>
 
 #include <common/mmo.hpp> // struct party
 
@@ -62,20 +62,20 @@ struct party_data* party_searchname(const char* str);
 int party_getmemberid(struct party_data* p, map_session_data* sd);
 map_session_data* party_getavailablesd(struct party_data *p);
 
-int party_create(map_session_data *sd,char *name, int item, int item2);
+int party_create( map_session_data& sd, char *name, int item, int item2 );
 void party_created(uint32 account_id,uint32 char_id,int fail,int party_id,char *name);
 int party_request_info(int party_id, uint32 char_id);
-int party_invite(map_session_data *sd,map_session_data *tsd);
-void party_member_joined(map_session_data *sd);
+bool party_invite( map_session_data& sd, map_session_data* tsd );
+void party_member_joined( map_session_data& sd );
 int party_member_added(int party_id,uint32 account_id,uint32 char_id,int flag);
-int party_leave(map_session_data *sd);
-int party_removemember(map_session_data *sd,uint32 account_id,char *name);
+bool party_leave( map_session_data& sd, bool showMessage = false );
+bool party_removemember( map_session_data& sd, uint32 account_id, const char *name );
 int party_removemember2(map_session_data *sd,uint32 char_id,int party_id);
 int party_member_withdraw(int party_id, uint32 account_id, uint32 char_id, char *name, enum e_party_member_withdraw type);
 bool party_isleader( map_session_data* sd );
-void party_join( map_session_data* sd, int party_id );
+void party_join( map_session_data& sd, int party_id );
 bool party_booking_load( uint32 account_id, uint32 char_id, struct s_party_booking_requirement* booking );
-int party_reply_invite(map_session_data *sd,int party_id,int flag);
+bool party_reply_invite( map_session_data& sd, int party_id, int flag );
 #define party_add_member(party_id,sd) party_reply_invite(sd,party_id,1)
 int party_recv_noinfo(int party_id, uint32 char_id);
 int party_recv_info(struct party* sp, uint32 char_id);
@@ -88,8 +88,8 @@ int party_changeleader(map_session_data *sd, map_session_data *t_sd, struct part
 void party_send_movemap(map_session_data *sd);
 void party_send_levelup(map_session_data *sd);
 int party_send_logout(map_session_data *sd);
-int party_send_message(map_session_data *sd,const char *mes,int len);
-int party_recv_message(int party_id,uint32 account_id,const char *mes,int len);
+int party_send_message(map_session_data *sd,const char *mes, size_t len);
+int party_recv_message( int party_id, uint32 account_id, const char *mes, size_t len );
 int party_skill_check(map_session_data *sd, int party_id, uint16 skill_id, uint16 skill_lv);
 int party_send_xy_clear(struct party_data *p);
 void party_exp_share(struct party_data *p,struct block_list *src,t_exp base_exp,t_exp job_exp,int zeny);

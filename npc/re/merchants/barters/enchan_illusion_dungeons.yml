@@ -412,6 +412,20 @@ Body:
           - Index: 3
             Item: IllusionStone
             Amount: 120
+  - Name: resonance_stone_barter
+    Items:
+      - Index: 0
+        Item: ILL_Piece_A
+        RequiredItems:
+          - Index: 0
+            Item: IllusionStone
+            Amount: 10
+      - Index: 1
+        Item: ILL_Piece_B
+        RequiredItems:
+          - Index: 0
+            Item: IllusionStone
+            Amount: 10
   - Name: barter_ill_moonlight
     Items:
       - Index: 0
@@ -419,6 +433,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Staff_Of_Bordeaux
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 30
@@ -430,6 +445,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Moonlight_Sword
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 60
@@ -441,6 +457,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Long_Mace
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 10
@@ -452,6 +469,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Spectral_Spear
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 20
@@ -463,6 +481,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Nurse_Cap
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 10
@@ -474,6 +493,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Apple_Of_Archer
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 10
@@ -485,6 +505,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Puente_Robe
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 10
@@ -496,6 +517,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Muffler_
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 10
@@ -507,6 +529,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Shoes_
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 10
@@ -520,6 +543,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Huuma_Fluttering_Snow
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 100
@@ -531,6 +555,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Combo_Battle_Glove
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 100
@@ -542,6 +567,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Herald_Of_GOD_
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 100
@@ -553,6 +579,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Clack_Of_Servival
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 100
@@ -564,6 +591,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Cap_
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 50
@@ -577,6 +605,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Infiltrator_
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 80
@@ -588,6 +617,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Ghoul_Leg
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 10
@@ -599,6 +629,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Wizardy_Staff
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 40
@@ -610,6 +641,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Balistar_
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 50
@@ -621,6 +653,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Book_Of_The_Apocalypse
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 50
@@ -632,6 +665,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Cape_Of_Ancient_Lord_
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 30
@@ -667,6 +701,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Immaterial_Sword
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 100
@@ -678,6 +713,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: War_Axe
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 100
@@ -689,6 +725,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Pole_Axe
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 100
@@ -700,6 +737,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Huuma_Bird_Wing
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 100
@@ -711,6 +749,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Iron_Driver
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 100
@@ -735,6 +774,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Tablet
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 50
@@ -746,6 +786,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Hunter_Bow_
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 80
@@ -763,6 +804,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Goibne's_Helmet
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 120
@@ -777,6 +819,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Goibne's_Armor
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 80
@@ -791,6 +834,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Goibne's_Combat_Boots
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 80
@@ -805,6 +849,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Goibne's_Shoulder_Arms
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 120
@@ -814,3 +859,89 @@ Body:
           - Index: 3
             Item: Token_Of_Bigstone
             Amount: 150
+  - Name: barter_ill_teddy
+    Items:
+      - Index: 0
+        Item: Counter_Dagger_IL
+        RequiredItems:
+          - Index: 0
+            Item: Counter_Dagger
+            Refine: 9
+          - Index: 1
+            Item: IllusionStone
+            Amount: 95
+          - Index: 2
+            Item: Green_Bearopy
+            Amount: 75
+          - Index: 3
+            Item: Chonchon_Doll_HQ
+            Amount: 50
+      - Index: 1
+        Item: Gate_KeeperDD_IL
+        RequiredItems:
+          - Index: 0
+            Item: Gate_KeeperDD
+            Refine: 9
+          - Index: 1
+            Item: IllusionStone
+            Amount: 95
+          - Index: 2
+            Item: Gothic_China_Doll
+            Amount: 75
+          - Index: 3
+            Item: NasariansSoulstone
+            Amount: 150
+      - Index: 2
+        Item: Survival_Staff_IL
+        RequiredItems:
+          - Index: 0
+            Item: Survival_Rod_
+            Refine: 9
+          - Index: 1
+            Item: Survival_Rod2_
+            Refine: 9
+          - Index: 2
+            Item: IllusionStone
+            Amount: 125
+          - Index: 3
+            Item: Gothic_China_Doll
+            Amount: 100
+          - Index: 4
+            Item: Chonchon_Doll_HQ
+            Amount: 100
+          - Index: 5
+            Item: Clay_Doll
+            Amount: 15
+      - Index: 3
+        Item: Boots_IL
+        RequiredItems:
+          - Index: 0
+            Item: Boots_
+            Refine: 9
+          - Index: 1
+            Item: IllusionStone
+            Amount: 85
+          - Index: 2
+            Item: Green_Bearopy
+            Amount: 50
+          - Index: 3
+            Item: Gothic_China_Doll
+            Amount: 50
+      - Index: 4
+        Item: Headband_Of_Power_IL
+        RequiredItems:
+          - Index: 0
+            Item: Headband_Of_Power
+            Refine: 9
+          - Index: 1
+            Item: IllusionStone
+            Amount: 115
+          - Index: 2
+            Item: NasariansSoulstone
+            Amount: 100
+          - Index: 3
+            Item: Chonchon_Doll_HQ
+            Amount: 50
+          - Index: 4
+            Item: Clay_Doll
+            Amount: 5

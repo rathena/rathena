@@ -5,7 +5,7 @@
 
 #include <cstring>
 #include <cmath>
-#include <stdlib.h>
+#include <cstdlib>
 
 #include <common/cbasetypes.hpp>
 #include <common/malloc.hpp>
@@ -139,11 +139,11 @@ int elemental_create(map_session_data *sd, int class_, unsigned int lifetime) {
 }
 
 t_tick elemental_get_lifetime(s_elemental_data *ed) {
-	if( ed == NULL || ed->summon_timer == INVALID_TIMER )
+	if( ed == nullptr || ed->summon_timer == INVALID_TIMER )
 		return 0;
 
 	const struct TimerData * td = get_timer(ed->summon_timer);
-	return (td != NULL) ? DIFF_TICK(td->tick, gettick()) : 0;
+	return (td != nullptr) ? DIFF_TICK(td->tick, gettick()) : 0;
 }
 
 int elemental_save(s_elemental_data *ed) {
@@ -167,12 +167,12 @@ int elemental_save(s_elemental_data *ed) {
 static TIMER_FUNC(elemental_summon_end){
 	map_session_data *sd;
 
-	if( (sd = map_id2sd(id)) == NULL )
+	if( (sd = map_id2sd(id)) == nullptr )
 		return 1;
 
 	s_elemental_data *ed;
 
-	if( (ed = sd->ed) == NULL )
+	if( (ed = sd->ed) == nullptr )
 		return 1;
 
 	if( ed->summon_timer != tid ) {
@@ -205,7 +205,7 @@ int elemental_delete(s_elemental_data *ed) {
 	if( !sd )
 		return unit_free(&ed->bl, CLR_OUTSIGHT);
 
-	sd->ed = NULL;
+	sd->ed = nullptr;
 	sd->status.ele_id = 0;
 
 	return unit_remove_map(&ed->bl, CLR_OUTSIGHT);
@@ -228,7 +228,7 @@ int elemental_data_received(s_elemental *ele, bool flag) {
 	map_session_data *sd;
 	t_tick tick = gettick();
 
-	if( (sd = map_charid2sd(ele->char_id)) == NULL )
+	if( (sd = map_charid2sd(ele->char_id)) == nullptr )
 		return 0;
 
 	std::shared_ptr<s_elemental_db> db = elemental_db.find(ele->class_);
@@ -277,14 +277,14 @@ int elemental_data_received(s_elemental *ele, bool flag) {
 
 	sd->status.ele_id = ele->elemental_id;
 
-	if( ed->bl.prev == NULL && sd->bl.prev != NULL ) {
+	if( ed->bl.prev == nullptr && sd->bl.prev != nullptr ) {
 		if(map_addblock(&ed->bl))
 			return 0;
 		clif_spawn(&ed->bl);
 		clif_elemental_info(sd);
-		clif_elemental_updatestatus(sd,SP_HP);
+		clif_elemental_updatestatus(*sd, SP_HP);
 		clif_hpmeter_single( *sd, ed->bl.id, ed->battle_status.hp, ed->battle_status.max_hp );
-		clif_elemental_updatestatus(sd,SP_SP);
+		clif_elemental_updatestatus(*sd, SP_SP);
 	}
 
 	return 1;
@@ -316,7 +316,7 @@ int elemental_action(s_elemental_data *ed, block_list *bl, t_tick tick) {
 	uint16 skill_id = skill->id;
 	uint16 skill_lv = skill->lv;
 
-	if( elemental_skillnotok(skill_id, ed) )
+	if( elemental_skillnotok(skill_id, *ed) )
 		return 0;
 
 	if( ed->ud.skilltimer != INVALID_TIMER )
@@ -389,7 +389,7 @@ int elemental_change_mode_ack(s_elemental_data *ed, e_elemental_skillmode skill_
 	uint16 skill_id = skill->id;
 	uint16 skill_lv = skill->lv;
 
-	if( elemental_skillnotok(skill_id, ed) )
+	if( elemental_skillnotok(skill_id, *ed) )
 		return 0;
 
 	if( ed->ud.skilltimer != INVALID_TIMER )
@@ -438,12 +438,12 @@ int elemental_change_mode(s_elemental_data *ed, int mode) {
 }
 
 void elemental_heal(s_elemental_data *ed, int hp, int sp) {
-	if (ed->master == NULL)
+	if (ed->master == nullptr)
 		return;
 	if( hp )
-		clif_elemental_updatestatus(ed->master, SP_HP);
+		clif_elemental_updatestatus(*ed->master, SP_HP);
 	if( sp )
-		clif_elemental_updatestatus(ed->master, SP_SP);
+		clif_elemental_updatestatus(*ed->master, SP_SP);
 }
 
 int elemental_dead(s_elemental_data *ed) {
@@ -460,10 +460,19 @@ int elemental_unlocktarget(s_elemental_data *ed) {
 	return 0;
 }
 
-bool elemental_skillnotok(uint16 skill_id, s_elemental_data *ed) {
+bool elemental_skillnotok( uint16 skill_id, s_elemental_data& ed ){
 	uint16 idx = skill_get_index(skill_id);
-	nullpo_retr(1,ed);
-	return idx == 0 ? false : skill_isNotOk(skill_id,ed->master); // return false or check if it,s ok for master as well
+
+	if( idx == 0 ){
+		return false;
+	}
+
+	// Check if it's ok for master as well
+	if( ed.master != nullptr ){
+		return skill_isNotOk( skill_id, *ed.master );
+	}else{
+		return true;
+	}
 }
 
 struct s_skill_condition elemental_skill_get_requirements(uint16 skill_id, uint16 skill_lv){
@@ -514,23 +523,16 @@ static int elemental_ai_sub_timer_activesearch(block_list *bl, va_list ap) {
 	if( battle_check_target(&ed->bl,bl,BCT_ENEMY) <= 0 )
 		return 0;
 
-	int dist;
-
-	switch( bl->type ) {
-		case BL_PC:
-			if( !map_flag_vs(ed->bl.m) )
-				return 0;
-		default:
-			dist = distance_bl(&ed->bl, bl);
-			if( ((*target) == NULL || !check_distance_bl(&ed->bl, *target, dist)) && battle_check_range(&ed->bl,bl,ed->db->range2) ) { //Pick closest target?
-				(*target) = bl;
-				ed->target_id = bl->id;
-				ed->min_chase = dist + ed->db->range3;
-				if( ed->min_chase > AREA_SIZE )
-					ed->min_chase = AREA_SIZE;
-				return 1;
-			}
-			break;
+	if (bl->type == BL_PC && !map_flag_vs(ed->bl.m))
+		return 0;
+	int dist = distance_bl(&ed->bl, bl);
+	if( ((*target) == nullptr || !check_distance_bl(&ed->bl, *target, dist)) && battle_check_range(&ed->bl,bl,ed->db->range2) ) { //Pick closest target?
+		(*target) = bl;
+		ed->target_id = bl->id;
+		ed->min_chase = dist + ed->db->range3;
+		if( ed->min_chase > AREA_SIZE )
+			ed->min_chase = AREA_SIZE;
+		return 1;
 	}
 	return 0;
 }
@@ -539,7 +541,7 @@ static int elemental_ai_sub_timer(s_elemental_data *ed, map_session_data *sd, t_
 	nullpo_ret(ed);
 	nullpo_ret(sd);
 
-	if( ed->bl.prev == NULL || sd == NULL || sd->bl.prev == NULL )
+	if( ed->bl.prev == nullptr || sd == nullptr || sd->bl.prev == nullptr )
 		return 0;
 
 	// Check if caster can sustain the summoned elemental
@@ -593,8 +595,8 @@ static int elemental_ai_sub_timer(s_elemental_data *ed, map_session_data *sd, t_
 	if( master_dist > AREA_SIZE ) {	// Master out of vision range.
 		elemental_unlocktarget(ed);
 		unit_warp(&ed->bl,sd->bl.m,sd->bl.x,sd->bl.y,CLR_TELEPORT);
-		clif_elemental_updatestatus(sd,SP_HP);
-		clif_elemental_updatestatus(sd,SP_SP);
+		clif_elemental_updatestatus(*sd, SP_HP);
+		clif_elemental_updatestatus(*sd, SP_SP);
 		return 0;
 	} else if( master_dist > MAX_ELEDISTANCE ) {	// Master too far, chase.
 		short x = sd->bl.x, y = sd->bl.y;
@@ -609,7 +611,7 @@ static int elemental_ai_sub_timer(s_elemental_data *ed, map_session_data *sd, t_
 			return 0;
 	}
 
-	block_list *target = NULL;
+	block_list *target = nullptr;
 
 	if( mode == EL_MODE_AGGRESSIVE ) {
 		target = map_id2bl(ed->ud.target);
@@ -622,7 +624,7 @@ static int elemental_ai_sub_timer(s_elemental_data *ed, map_session_data *sd, t_
 			return 1;
 		}
 
-		if( battle_check_range(&ed->bl,target,view_range) && rnd()%100 < 2 ) { // 2% chance to cast attack skill.
+		if( battle_check_range(&ed->bl,target,view_range) && rnd_chance(2, 100) ) { // 2% chance to cast attack skill.
 			if(	elemental_action(ed,target,tick) )
 				return 1;
 		}

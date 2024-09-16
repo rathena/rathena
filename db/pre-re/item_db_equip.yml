@@ -20587,16 +20587,7 @@ Body:
     EquipLevelMin: 94
     Script: |
       bonus bMdef,5;
-      bonus3 bSubEle,Ele_Neutral,30,BF_SHORT;
-      bonus3 bSubEle,Ele_Water,30,BF_SHORT;
-      bonus3 bSubEle,Ele_Earth,30,BF_SHORT;
-      bonus3 bSubEle,Ele_Fire,30,BF_SHORT;
-      bonus3 bSubEle,Ele_Wind,30,BF_SHORT;
-      bonus3 bSubEle,Ele_Poison,30,BF_SHORT;
-      bonus3 bSubEle,Ele_Holy,30,BF_SHORT;
-      bonus3 bSubEle,Ele_Dark,30,BF_SHORT;
-      bonus3 bSubEle,Ele_Ghost,30,BF_SHORT;
-      bonus3 bSubEle,Ele_Undead,30,BF_SHORT;
+      bonus3 bSubEle,Ele_All,30,BF_WEAPON;
       bonus bFlee,30;
       skill "AL_TELEPORT",1;
       bonus bUnbreakableGarment;

@@ -14,6 +14,8 @@
 //= 1.5 Added Illusion of Luanda enchanter [Capuche]
 //= 1.6 Added Illusion of Underwater exchange [Capuche]
 //= 1.7 Added Illusion of Twins enchanter [Capuche]
+//= 1.8 Added Illusion Merchant [Haydrich]
+//= 1.9 Added Illusion of Teddy Bear exchange [Atemo]
 //============================================================
 
 //============================================================
@@ -844,5 +846,92 @@ OnInit:
 	setunitdata .@npc_id, UNPC_CLOTHCOLOR, 1;
 	setunitdata .@npc_id, UNPC_HAIRSTYLE, 11;
 	setunitdata .@npc_id, UNPC_HAIRCOLOR, 6;
+	end;
+}
+
+//============================================================
+//= Illusion Merchant
+//============================================================
+-	marketshop	market_resonance_stone	-1,100003:2000000:99999,100004:2000000:99999
+prontera,88,113,5	script	Illusion Merchant#0829	HIDDEN_NPC,{
+	mes "[Illusion Merchant]";
+	mes "I'm selling two random optional weapon grant scrolls that I made myself. You can choose the payment method you like.";
+	next;
+	switch( select( "Purchase with Zeny.", "Purchase with Illusion Stones" )) {
+		case 1:
+			mes "[Illusion Merchant]";
+			mes "I hope you like it.";
+			close2;
+			callshop "market_resonance_stone";
+			end;
+		case 2:
+			mes "[Illusion Merchant]";
+			mes "I hope you like it.";
+			close2;
+			callshop "resonance_stone_barter";
+			end;
+	}
+OnInit:
+	.@npc_id = getnpcid(0);
+	setunitdata .@npc_id,UNPC_CLASS, JOB_MAGE_HIGH;
+	setunitdata .@npc_id,UNPC_SEX,SEX_FEMALE;
+	setunitdata .@npc_id,UNPC_HEADTOP,142;
+	setunitdata .@npc_id,UNPC_HEADMIDDLE,92;
+	setunitdata .@npc_id,UNPC_HAIRSTYLE,2;
+	setunitdata .@npc_id,UNPC_HAIRCOLOR,2;
+
+	// Restock
+	npcshopupdate "market_resonance_stone",100003,2000000,99999;
+	npcshopupdate "market_resonance_stone",100004,2000000,99999;
+	end;
+}
+
+
+//============================================================
+//= Illusion of Teddy Bear
+//============================================================
+
+ein_d02_i,177,158,3	script	Bear Wanting Illusion Stone#ITB	4_NASARIAN,{
+	.@item_name$ = getitemname(25271); // IllusionStone
+	mes "[Bear Wanting " + .@item_name$ + "]";
+	mes "If you give me an " + .@item_name$ + ", I'll do something nice for you!";
+	next;
+	switch( select( "Reason for being here", "Good thing [Illusion equipment]", "Quit" ) ) {
+	case 1:
+		mes "[Bear Wanting " + .@item_name$ + "]";
+		mes "I don't know why...!";
+		mes "The other teddy bears were in line, so I was in line too!";
+		mes "Whoaaaaaa!!!!";
+		mes "I didn't know it was here!";
+		next;
+		mes "[Bear Wanting " + .@item_name$ + "]";
+		mes "A teddy bear with an " + .@item_name$ + "!";
+		mes "Strong!";
+		mes "I don't have any " + .@item_name$ + "s!";
+		mes "Less... stronger...";
+		next;
+		mes "[Bear Wanting " + .@item_name$ + "]";
+		mes "What are " + .@item_name$ + "s?";
+		mes "I don't know but I want some!";
+		close;
+	case 2:
+		mes "[Bear Wanting " + .@item_name$ + "]";
+		mes "Makes you good with what you have!";
+		next;
+		mes "[Bear Wanting " + .@item_name$ + "]";
+		mes "If you want to do well, bring equipment refined to ^ff0000+9 or higher. It'll all disappear... haha?^000000";
+		next;
+		mes "[Bear Wanting " + .@item_name$ + "]";
+		mes "^ff0000" + .@item_name$ + "^000000!!! " + .@item_name$ + " is the most important thing, but... other materials are also needed.";
+		mes "For every good thing you need another good thing.";
+		next;
+		close2;
+		callshop( "barter_ill_teddy" );
+		end;
+	case 3:
+		mes "[Bear Wanting " + .@item_name$ + "]";
+		mes "Okay...";
+		close;
+	}
 	end;
 }

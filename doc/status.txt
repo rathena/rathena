@@ -254,6 +254,9 @@ Flags: Various status flags for specific status change events.
 	SuperNoviceAngel      - Status that is given from Super Novice Angel.
 	TaekwonAngel          - Status that is given from Taekwon Angel.
 
+	RemoveFromHomOnWarp    - Removes the status from the Homunculus when teleporting or warping to another map.
+	RemoveFromHomOnMapWarp - Removes the status from the Homunculus when warping to another map.
+
 ---------------------------------------
 
 MinDuration: Minimum duration, in milliseconds, after reduction calculation for status resistance.

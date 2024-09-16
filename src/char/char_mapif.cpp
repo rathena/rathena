@@ -3,10 +3,9 @@
 
 #include "char_mapif.hpp"
 
+#include <cstdlib>
+#include <cstring> //memcpy
 #include <memory>
-
-#include <stdlib.h>
-#include <string.h> //memcpy
 
 #include <common/malloc.hpp>
 #include <common/showmsg.hpp>
@@ -196,7 +195,7 @@ void chmapif_send_misc(int fd) {
  * @param map_id
  * @param count Number of map from new map-server has
  **/
-void chmapif_send_maps(int fd, int map_id, int count, unsigned char *mapbuf) {
+void chmapif_send_maps( int fd, int map_id, size_t count, unsigned char* mapbuf ){
 	uint16 x;
 
 	if (count == 0) {
@@ -206,7 +205,7 @@ void chmapif_send_maps(int fd, int map_id, int count, unsigned char *mapbuf) {
 		unsigned char buf[INT16_MAX];
 		// Transmitting maps information to the other map-servers
 		WBUFW(buf,0) = 0x2b04;
-		WBUFW( buf, 2 ) = count * MAP_NAME_LENGTH_EXT + 10;
+		WBUFW( buf, 2 ) = static_cast<int16>( count * MAP_NAME_LENGTH_EXT + 10 );
 		WBUFL(buf,4) = htonl(map_server[map_id].ip);
 		WBUFW(buf,8) = htons(map_server[map_id].port);
 		memcpy( WBUFP( buf, 10 ), mapbuf, count * MAP_NAME_LENGTH_EXT );
@@ -306,19 +305,19 @@ int chmapif_parse_askscdata(int fd){
 			WFIFOL(fd,8) = cid;
 			for( count = 0; count < 50 && SQL_SUCCESS == Sql_NextRow(sql_handle); ++count )
 			{
-				Sql_GetData(sql_handle, 0, &data, NULL); scdata.type = atoi(data);
-				Sql_GetData(sql_handle, 1, &data, NULL); scdata.tick = strtoll( data, nullptr, 10 );
-				Sql_GetData(sql_handle, 2, &data, NULL); scdata.val1 = atoi(data);
-				Sql_GetData(sql_handle, 3, &data, NULL); scdata.val2 = atoi(data);
-				Sql_GetData(sql_handle, 4, &data, NULL); scdata.val3 = atoi(data);
-				Sql_GetData(sql_handle, 5, &data, NULL); scdata.val4 = atoi(data);
+				Sql_GetData(sql_handle, 0, &data, nullptr); scdata.type = atoi(data);
+				Sql_GetData(sql_handle, 1, &data, nullptr); scdata.tick = strtoll( data, nullptr, 10 );
+				Sql_GetData(sql_handle, 2, &data, nullptr); scdata.val1 = atoi(data);
+				Sql_GetData(sql_handle, 3, &data, nullptr); scdata.val2 = atoi(data);
+				Sql_GetData(sql_handle, 4, &data, nullptr); scdata.val3 = atoi(data);
+				Sql_GetData(sql_handle, 5, &data, nullptr); scdata.val4 = atoi(data);
 				memcpy(WFIFOP(fd, 14+count*sizeof(struct status_change_data)), &scdata, sizeof(struct status_change_data));
 			}
 			if (count >= 50)
 				ShowWarning("Too many status changes for %d:%d, some of them were not loaded.\n", aid, cid);
 			if (count > 0)
 			{
-				WFIFOW(fd,2) = 14 + count*sizeof(struct status_change_data);
+				WFIFOW( fd, 2 ) = static_cast<int16>( 14 + count * sizeof( struct status_change_data ) );
 				WFIFOW(fd,12) = count;
 				WFIFOSET(fd,WFIFOW(fd,2));
 			}
@@ -567,15 +566,15 @@ int chmapif_parse_req_skillcooldown(int fd){
 			WFIFOL(fd,8) = cid;
 			for( count = 0; count < MAX_SKILLCOOLDOWN && SQL_SUCCESS == Sql_NextRow(sql_handle); ++count )
 			{
-				Sql_GetData(sql_handle, 0, &data, NULL); scd.skill_id = atoi(data);
-				Sql_GetData(sql_handle, 1, &data, NULL); scd.tick = strtoll( data, nullptr, 10 );
+				Sql_GetData(sql_handle, 0, &data, nullptr); scd.skill_id = atoi(data);
+				Sql_GetData(sql_handle, 1, &data, nullptr); scd.tick = strtoll( data, nullptr, 10 );
 				memcpy(WFIFOP(fd,14+count*sizeof(struct skill_cooldown_data)), &scd, sizeof(struct skill_cooldown_data));
 			}
 			if( count >= MAX_SKILLCOOLDOWN )
 				ShowWarning("Too many skillcooldowns for %d:%d, some of them were not loaded.\n", aid, cid);
 			if( count > 0 )
 			{
-				WFIFOW(fd,2) = 14 + count * sizeof(struct skill_cooldown_data);
+				WFIFOW( fd, 2 ) = static_cast<int16>( 14 + count * sizeof( struct skill_cooldown_data ) );
 				WFIFOW(fd,12) = count;
 				WFIFOSET(fd,WFIFOW(fd,2));
 				//Clear the data once loaded.
@@ -781,8 +780,8 @@ int chmapif_parse_fwlog_changestatus(int fd){
 			int t_cid; // target char id
 			char* data;
 
-			Sql_GetData(sql_handle, 0, &data, NULL); t_aid = atoi(data);
-			Sql_GetData(sql_handle, 1, &data, NULL); t_cid = atoi(data);
+			Sql_GetData(sql_handle, 0, &data, nullptr); t_aid = atoi(data);
+			Sql_GetData(sql_handle, 1, &data, nullptr); t_cid = atoi(data);
 			Sql_FreeResult(sql_handle);
 
 			if(!chlogif_isconnected())
@@ -1050,8 +1049,8 @@ int chmapif_parse_reqauth(int fd, int id){
 
 			char_set_char_online(id, char_id, account_id);
 		} else if( global_core->is_running() &&
-			cd != NULL &&
-			node != NULL &&
+			cd != nullptr &&
+			node != nullptr &&
 			node->account_id == account_id &&
 			node->char_id == char_id &&
 			node->login_id1 == login_id1
@@ -1129,7 +1128,7 @@ int chmapif_parse_updfamelist(int fd){
 				case RANK_BLACKSMITH:	size = fame_list_size_smith;	list = smith_fame_list;		break;
 				case RANK_ALCHEMIST:	size = fame_list_size_chemist;	list = chemist_fame_list;	break;
 				case RANK_TAEKWON:		size = fame_list_size_taekwon;	list = taekwon_fame_list;	break;
-				default:				size = 0;						list = NULL;				break;
+				default:				size = 0;						list = nullptr;				break;
             }
 
             ARR_FIND(0, size, player_pos, list[player_pos].id == cid);// position of the player
@@ -1207,12 +1206,12 @@ int chmapif_parse_reqcharban(int fd){
 			int t_cid=0,t_aid=0;
 			char* data;
 			time_t unban_time;
-			time_t now = time(NULL);
+			time_t now = time(nullptr);
 			SqlStmt* stmt = SqlStmt_Malloc(sql_handle);
 
-			Sql_GetData(sql_handle, 0, &data, NULL); t_aid = atoi(data);
-			Sql_GetData(sql_handle, 1, &data, NULL); t_cid = atoi(data);
-			Sql_GetData(sql_handle, 2, &data, NULL); unban_time = atol(data);
+			Sql_GetData(sql_handle, 0, &data, nullptr); t_aid = atoi(data);
+			Sql_GetData(sql_handle, 1, &data, nullptr); t_cid = atoi(data);
+			Sql_GetData(sql_handle, 2, &data, nullptr); unban_time = atol(data);
 			Sql_FreeResult(sql_handle);
 
 			if(timediff<0 && unban_time==0) 
@@ -1293,11 +1292,11 @@ int chmapif_bonus_script_get(int fd) {
 			"SELECT `script`, `tick`, `flag`, `type`, `icon` FROM `%s` WHERE `char_id` = '%d' LIMIT %d",
 			schema_config.bonus_script_db, cid, MAX_PC_BONUS_SCRIPT) ||
 			SQL_ERROR == SqlStmt_Execute(stmt) ||
-			SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_STRING, &tmp_bsdata.script_str, sizeof(tmp_bsdata.script_str), NULL, NULL) ||
-			SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_INT64, &tmp_bsdata.tick, 0, NULL, NULL) ||
-			SQL_ERROR == SqlStmt_BindColumn(stmt, 2, SQLDT_UINT16, &tmp_bsdata.flag, 0, NULL, NULL) ||
-			SQL_ERROR == SqlStmt_BindColumn(stmt, 3, SQLDT_UINT8,  &tmp_bsdata.type, 0, NULL, NULL) ||
-			SQL_ERROR == SqlStmt_BindColumn(stmt, 4, SQLDT_INT16,  &tmp_bsdata.icon, 0, NULL, NULL)
+			SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_STRING, &tmp_bsdata.script_str, sizeof(tmp_bsdata.script_str), nullptr, nullptr) ||
+			SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_INT64, &tmp_bsdata.tick, 0, nullptr, nullptr) ||
+			SQL_ERROR == SqlStmt_BindColumn(stmt, 2, SQLDT_UINT16, &tmp_bsdata.flag, 0, nullptr, nullptr) ||
+			SQL_ERROR == SqlStmt_BindColumn(stmt, 3, SQLDT_UINT8,  &tmp_bsdata.type, 0, nullptr, nullptr) ||
+			SQL_ERROR == SqlStmt_BindColumn(stmt, 4, SQLDT_INT16,  &tmp_bsdata.icon, 0, nullptr, nullptr)
 			)
 		{
 			SqlStmt_ShowDebug(stmt);

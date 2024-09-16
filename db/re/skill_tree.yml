@@ -7864,3 +7864,178 @@ Body:
       Royal_Guard: true
       Royal_Guard_T: true
       Imperial_Guard: true
+  - Job: Night_Watch
+    Inherit:
+      Novice: true
+      Gunslinger: true
+      Rebellion: true
+    Tree:
+      - Name: NW_P_F_I
+        MaxLevel: 10
+      - Name: NW_GRENADE_MASTERY
+        MaxLevel: 10
+      - Name: NW_INTENSIVE_AIM
+        MaxLevel: 1
+        Requires:
+          - Name: NW_P_F_I
+            Level: 1
+      - Name: NW_HIDDEN_CARD
+        MaxLevel: 10
+        Requires:
+          - Name: NW_P_F_I
+            Level: 5
+          - Name: NW_INTENSIVE_AIM
+            Level: 1
+      - Name: NW_BASIC_GRENADE
+        MaxLevel: 5
+        Requires:
+          - Name: NW_GRENADE_MASTERY
+            Level: 3
+      - Name: NW_GRENADE_FRAGMENT
+        MaxLevel: 7
+        Requires:
+          - Name: NW_GRENADE_MASTERY
+            Level: 1
+      - Name: NW_THE_VIGILANTE_AT_NIGHT
+        MaxLevel: 5
+        Requires:
+          - Name: NW_P_F_I
+            Level: 3
+          - Name: NW_INTENSIVE_AIM
+            Level: 1
+      - Name: NW_ONLY_ONE_BULLET
+        MaxLevel: 5
+        Requires:
+          - Name: NW_P_F_I
+            Level: 3
+          - Name: NW_INTENSIVE_AIM
+            Level: 1
+      - Name: NW_SPIRAL_SHOOTING
+        MaxLevel: 5
+        Requires:
+          - Name: NW_P_F_I
+            Level: 3
+          - Name: NW_INTENSIVE_AIM
+            Level: 1
+      - Name: NW_MAGAZINE_FOR_ONE
+        MaxLevel: 5
+        Requires:
+          - Name: NW_P_F_I
+            Level: 3
+          - Name: NW_INTENSIVE_AIM
+            Level: 1
+      - Name: NW_WILD_FIRE
+        MaxLevel: 5
+        Requires:
+          - Name: NW_P_F_I
+            Level: 3
+          - Name: NW_INTENSIVE_AIM
+            Level: 1
+      - Name: NW_HASTY_FIRE_IN_THE_HOLE
+        MaxLevel: 5
+        Requires:
+          - Name: NW_BASIC_GRENADE
+            Level: 3
+      - Name: NW_GRENADES_DROPPING
+        MaxLevel: 5
+        Requires:
+          - Name: NW_HASTY_FIRE_IN_THE_HOLE
+            Level: 3
+      - Name: NW_AUTO_FIRING_LAUNCHER
+        MaxLevel: 5
+        Requires:
+          - Name: NW_GRENADES_DROPPING
+            Level: 3
+      - Name: NW_MISSION_BOMBARD
+        MaxLevel: 10
+        Requires:
+          - Name: NW_GRENADE_MASTERY
+            Level: 5
+          - Name: NW_GRENADES_DROPPING
+            Level: 3
+  - Job: Hyper_Novice
+    Inherit:
+      Novice: true
+      Supernovice: true
+      Super_Novice_E: true
+    Tree:
+      - Name: HN_SELFSTUDY_TATICS
+        MaxLevel: 10
+      - Name: HN_SELFSTUDY_SOCERY
+        MaxLevel: 10
+      - Name: HN_DOUBLEBOWLINGBASH
+        MaxLevel: 10
+        Requires:
+          - Name: HN_SELFSTUDY_TATICS
+            Level: 5
+      - Name: HN_SHIELD_CHAIN_RUSH
+        MaxLevel: 10
+        Requires:
+          - Name: HN_SELFSTUDY_TATICS
+            Level: 5
+      - Name: HN_METEOR_STORM_BUSTER
+        MaxLevel: 10
+        Requires:
+          - Name: HN_SELFSTUDY_SOCERY
+            Level: 5
+      - Name: HN_JUPITEL_THUNDER_STORM
+        MaxLevel: 10
+        Requires:
+          - Name: HN_SELFSTUDY_SOCERY
+            Level: 5
+      - Name: HN_JACK_FROST_NOVA
+        MaxLevel: 10
+        Requires:
+          - Name: HN_SELFSTUDY_SOCERY
+            Level: 5
+      - Name: HN_HELLS_DRIVE
+        MaxLevel: 10
+        Requires:
+          - Name: HN_SELFSTUDY_SOCERY
+            Level: 5
+      - Name: HN_MEGA_SONIC_BLOW
+        MaxLevel: 10
+        Requires:
+          - Name: HN_DOUBLEBOWLINGBASH
+            Level: 7
+      - Name: HN_SPIRAL_PIERCE_MAX
+        MaxLevel: 10
+        Requires:
+          - Name: HN_SHIELD_CHAIN_RUSH
+            Level: 7
+      - Name: HN_GROUND_GRAVITATION
+        MaxLevel: 10
+        Requires:
+          - Name: HN_SELFSTUDY_SOCERY
+            Level: 5
+      - Name: HN_NAPALM_VULCAN_STRIKE
+        MaxLevel: 10
+        Requires:
+          - Name: HN_SELFSTUDY_SOCERY
+            Level: 5
+      - Name: HN_BREAKINGLIMIT
+        MaxLevel: 1
+        Requires:
+          - Name: HN_DOUBLEBOWLINGBASH
+            Level: 7
+          - Name: HN_MEGA_SONIC_BLOW
+            Level: 7
+          - Name: HN_SHIELD_CHAIN_RUSH
+            Level: 7
+          - Name: HN_SPIRAL_PIERCE_MAX
+            Level: 7
+      - Name: HN_RULEBREAK
+        MaxLevel: 1
+        Requires:
+          - Name: HN_METEOR_STORM_BUSTER
+            Level: 5
+          - Name: HN_JUPITEL_THUNDER_STORM
+            Level: 5
+          - Name: HN_JACK_FROST_NOVA
+            Level: 5
+          - Name: HN_HELLS_DRIVE
+            Level: 5
+          - Name: HN_GROUND_GRAVITATION
+            Level: 5
+          - Name: HN_NAPALM_VULCAN_STRIKE
+            Level: 5
