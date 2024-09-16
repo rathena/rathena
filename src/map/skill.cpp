@@ -10698,7 +10698,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		hd.homunculus.intimacy = hom_intimacy_grade2intimacy(HOMGRADE_HATE_WITH_PASSION);
 		clif_send_homdata(hd, SP_INTIMATE);
 
-		// There's a delay between splash damage and the homunculus death
+		// There's a delay between the explosion and the homunculus death
 		skill_addtimerskill(src, tick + skill_get_time(skill_id, skill_lv), src->id, 0, 0, skill_id, skill_lv, 0, flag);
 		break;
 	}
