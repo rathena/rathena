@@ -113439,3 +113439,710 @@ Body:
           - Index: 2
             Item: Enchant_Stone_Box35
             Amount: 10
+  - Group: 2024ROS_BOX_1ST
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: aegis_480393
+            Amount: 1
+          - Index: 1
+            Item: C_2024ROS_Hat_1st
+            Amount: 1
+          - Index: 2
+            Item: Comp_AID_Buff_Box
+            Amount: 1
+          - Index: 3
+            Item: E_EXP_Drop_Up_7days
+            Amount: 4
+  - Group: 2024ROS_BOX_2ND
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: C_2024ROS_Hat_2nd
+            Amount: 1
+          - Index: 1
+            Item: Comp_AID_Buff_Box
+            Amount: 1
+          - Index: 2
+            Item: E_EXP_Drop_Up_7days
+            Amount: 4
+  - Group: 2024ROS_BOX_3RD
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: C_2024ROS_Hat_3rd
+            Amount: 1
+          - Index: 1
+            Item: Comp_AID_Buff_Box
+            Amount: 1
+          - Index: 2
+            Item: E_EXP_Drop_Up_7days
+            Amount: 4
+  - Group: 2024ROS_BOX_4TH
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: C_2024ROS_Hat_4th
+            Amount: 1
+          - Index: 1
+            Item: Comp_AID_Buff_Box
+            Amount: 1
+          - Index: 2
+            Item: E_EXP_Drop_Up_7days
+            Amount: 4
+  - Group: 2024ROS_BOX_5TH
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: E_Life_Potion_Pack
+            Amount: 1
+          - Index: 1
+            Item: E_DEF_Scroll_Box
+            Amount: 1
+          - Index: 2
+            Item: Comp_Battle_Manual
+            Amount: 2
+  - Group: AEGIS_103234
+    SubGroups:
+      - SubGroup: 6
+        List:
+          - Index: 0
+            Item: Range_Stone_Robe_D
+            Rate: 1
+          - Index: 1
+            Item: Melee_Stone_Robe_D
+            Rate: 1
+          - Index: 2
+            Item: Magic_Stone_Robe_D
+            Rate: 1
+          - Index: 3
+            Item: SmatkStone_Robe
+            Rate: 1
+          - Index: 4
+            Item: M_PATKStone_Robe
+            Rate: 1
+          - Index: 5
+            Item: R_PATKStone_Robe
+            Rate: 1
+          - Index: 6
+            Item: ResistDefStone_Robe
+            Rate: 1
+          - Index: 7
+            Item: StaminaWISStone_Robe_D
+            Rate: 1
+          - Index: 8
+            Item: POWStone_Robe_D
+            Rate: 1
+          - Index: 9
+            Item: SplStone_Robe_D
+            Rate: 1
+          - Index: 10
+            Item: ConStone_Robe_D
+            Rate: 1
+          - Index: 11
+            Item: CrtStone_Robe_D
+            Rate: 1
+          - Index: 12
+            Item: aegis_1001772
+            Rate: 1
+          - Index: 13
+            Item: aegis_1001787
+            Rate: 1
+          - Index: 14
+            Item: aegis_1001788
+            Rate: 1
+          - Index: 15
+            Item: aegis_1001789
+            Rate: 1
+          - Index: 16
+            Item: ReloadStone_Robe_D
+            Rate: 1
+          - Index: 17
+            Item: CriticalStone_Robe_D
+            Rate: 1
+          - Index: 18
+            Item: DoubleAttack_Stone
+            Rate: 2
+          - Index: 19
+            Item: Critical_Stone_Robe
+            Rate: 2
+          - Index: 20
+            Item: CastStone_Robe_D
+            Rate: 4
+          - Index: 21
+            Item: SPdrainStone_Robe_D
+            Rate: 4
+          - Index: 22
+            Item: HPdrainStone_Robe_D
+            Rate: 8
+          - Index: 23
+            Item: ASPDStone_Robe_D
+            Rate: 8
+          - Index: 24
+            Item: CastStone_Robe
+            Rate: 8
+          - Index: 25
+            Item: WarlockStone_Top3
+            Rate: 8
+          - Index: 26
+            Item: WarlockStone_Middle3
+            Rate: 8
+          - Index: 27
+            Item: WarlockStone_Bottom3
+            Rate: 8
+          - Index: 28
+            Item: RangerStone_Top3
+            Rate: 8
+          - Index: 29
+            Item: RangerStone_Middle3
+            Rate: 8
+          - Index: 30
+            Item: RangerStone_Bottom3
+            Rate: 8
+          - Index: 31
+            Item: ReaperStone_Top3
+            Rate: 8
+          - Index: 32
+            Item: ReaperStone_Middle3
+            Rate: 8
+          - Index: 33
+            Item: ReaperStone_Bottom3
+            Rate: 8
+          - Index: 34
+            Item: Stone_Robe_Box
+            Rate: 17
+          - Index: 35
+            Item: Stone_Robe3_Box
+            Rate: 17
+          - Index: 36
+            Item: Magic_Stone_Top
+            Rate: 20
+          - Index: 37
+            Item: Magic_Stone_Middle
+            Rate: 20
+          - Index: 38
+            Item: Magic_Stone_Bottom
+            Rate: 20
+          - Index: 39
+            Item: Range_Stone_Top
+            Rate: 20
+          - Index: 40
+            Item: Range_Stone
+            Rate: 20
+          - Index: 41
+            Item: Range_Stone_Bottom
+            Rate: 20
+          - Index: 42
+            Item: Melee_Stone_Top
+            Rate: 20
+          - Index: 43
+            Item: Melee_Stone_Middle
+            Rate: 20
+          - Index: 44
+            Item: Melee_Stone_Bottom
+            Rate: 20
+          - Index: 45
+            Item: DefenseStone_Top
+            Rate: 20
+          - Index: 46
+            Item: DefenseStone_Middle
+            Rate: 20
+          - Index: 47
+            Item: DefenseStone_Bottom
+            Rate: 20
+          - Index: 48
+            Item: ReloadStone_Top
+            Rate: 20
+          - Index: 49
+            Item: ReloadStone_Middle
+            Rate: 20
+          - Index: 50
+            Item: ReloadStone_Bottom
+            Rate: 20
+          - Index: 51
+            Item: EXPStone_Middle
+            Rate: 20
+          - Index: 52
+            Item: EXPStone_Bottom
+            Rate: 20
+          - Index: 53
+            Item: EXPStone_Top
+            Rate: 20
+          - Index: 54
+            Item: Stone_Top_Box
+            Rate: 40
+          - Index: 55
+            Item: Stone_Top2_Box
+            Rate: 40
+          - Index: 56
+            Item: Stone_Middle_Box
+            Rate: 40
+          - Index: 57
+            Item: Stone_Middle2_Box
+            Rate: 40
+          - Index: 58
+            Item: Stone_Bottom_Box
+            Rate: 40
+          - Index: 59
+            Item: Stone_Bottom2_Box
+            Rate: 40
+          - Index: 60
+            Item: CastingStone_Top
+            Rate: 40
+          - Index: 61
+            Item: CastingStone_Middle
+            Rate: 40
+          - Index: 62
+            Item: CastingStone_Bottom
+            Rate: 40
+          - Index: 63
+            Item: Critical_Stone
+            Rate: 40
+          - Index: 64
+            Item: Critical_Stone_Top
+            Rate: 40
+          - Index: 65
+            Item: Critical_Stone_Bottom
+            Rate: 40
+  - Group: 2024SPORTS_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Fire_Cracker
+            Amount: 11
+          - Index: 1
+            Item: Comp_Tyr's_Blessing
+            Amount: 22
+  - Group: 22TH_PRESENT_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: E_All_In_One_Buff
+            Amount: 3
+          - Index: 1
+            Item: E_EXP_Drop_Up_7days
+            Amount: 1
+  - Group: AEGIS_103316
+    SubGroups:
+      - SubGroup: 6
+        List:
+          - Index: 0
+            Item: S_P_Power_Weapon
+            Rate: 10
+          - Index: 1
+            Item: S_P_Power_Shield
+            Rate: 10
+          - Index: 2
+            Item: S_M_Spell_Weapon
+            Rate: 10
+          - Index: 3
+            Item: S_M_Spell_Shield
+            Rate: 10
+          - Index: 4
+            Item: S_Concentration_Weapon
+            Rate: 10
+          - Index: 5
+            Item: S_Concentration_Shield
+            Rate: 10
+          - Index: 6
+            Item: S_Wisdom_Weapon
+            Rate: 10
+          - Index: 7
+            Item: S_Wisdom_Shield
+            Rate: 10
+          - Index: 8
+            Item: S_Stamina_Weapon
+            Rate: 10
+          - Index: 9
+            Item: S_Stamina_Shield
+            Rate: 10
+          - Index: 10
+            Item: S_Creative_Weapon
+            Rate: 10
+          - Index: 11
+            Item: S_Creative_Shield
+            Rate: 10
+  - Group: SVIP_GIFT_22THANIV
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: E_CharSlot_Open_Card
+          - Index: 1
+            Item: VIP_Black_Coin
+            Amount: 50
+  - Group: VVIP_GIFT_22THANIV
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: E_CharSlot_Open_Card
+          - Index: 1
+            Item: VIP_Black_Coin
+            Amount: 30
+  - Group: VIP_GIFT_22THANIV
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: E_CharSlot_Open_Card
+          - Index: 1
+            Item: VIP_Black_Coin
+            Amount: 15
+  - Group: LI_NYANGVINE_BOX1_36
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Nyangvine_Fruit
+            Amount: 100
+          - Index: 1
+            Item: aegis_103234
+            Amount: 2
+          - Index: 2
+            Item: Comp_Bubble_Gum
+            Amount: 3
+  - Group: LI_NYANGVINE_BOX2_36
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Nyangvine_Fruit
+            Amount: 200
+          - Index: 1
+            Item: Battle_Manual100
+            Amount: 5
+          - Index: 2
+            Item: aegis_103234
+            Amount: 2
+  - Group: LI_NYANGVINE_BOX3_36
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Nyangvine_Fruit
+            Amount: 400
+          - Index: 1
+            Item: Comp_Bubble_Gum
+            Amount: 10
+          - Index: 2
+            Item: Battle_Manual100
+            Amount: 5
+          - Index: 3
+            Item: aegis_103234
+            Amount: 5
+  - Group: 2024_SUMMER_PACK_1
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Speed_Booster
+            Amount: 50
+          - Index: 1
+            Item: Force_Booster
+            Amount: 50
+          - Index: 2
+            Item: Summer_Select_Box1
+            Amount: 1
+          - Index: 3
+            Item: aegis_103234
+            Amount: 3
+  - Group: 2024_SUMMER_PACK_2
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Infinity_Drink
+            Amount: 50
+          - Index: 1
+            Item: Limit_Power_Booster
+            Amount: 50
+          - Index: 2
+            Item: Summer_Select_Box2
+            Amount: 1
+          - Index: 3
+            Item: aegis_103234
+            Amount: 3
+  - Group: 2024_SUMMER_PACK_3
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Small_Life_Potion
+            Amount: 200
+          - Index: 1
+            Item: Med_Life_Potion
+            Amount: 200
+          - Index: 2
+            Item: Mysterious_Water
+            Amount: 200
+          - Index: 3
+            Item: Small_Mana_Potion
+            Amount: 50
+          - Index: 4
+            Item: M_DEFScroll
+            Amount: 300
+          - Index: 5
+            Item: Summer_Select_Box3
+            Amount: 1
+          - Index: 6
+            Item: aegis_103234
+            Amount: 5
+  - Group: 2024_SUMMER_PACK_4
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Almighty
+            Amount: 100
+          - Index: 1
+            Item: ASPD_Potion
+            Amount: 50
+          - Index: 2
+            Item: Red_Booster
+            Amount: 100
+          - Index: 3
+            Item: Summer_Select_Box4
+            Amount: 1
+          - Index: 4
+            Item: aegis_103234
+            Amount: 5
+  - Group: LI_A_HD_CARNIUMBOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: HD_Carnium
+            Amount: 52
+          - Index: 1
+            Item: Mental_Potion
+            Amount: 12
+          - Index: 2
+            Item: K_Secret_Key
+            Amount: 20
+          - Index: 3
+            Item: Blacksmith_Blessing
+            Amount: 10
+  - Group: LI_A_HD_BRADIUMBOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: HD_Bradium
+            Amount: 52
+          - Index: 1
+            Item: Mental_Potion
+            Amount: 12
+          - Index: 2
+            Item: K_Secret_Key
+            Amount: 20
+          - Index: 3
+            Item: Blacksmith_Blessing
+            Amount: 10
+  - Group: 22TH_PACKAGE_1
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Nyangvine_Fruit
+            Amount: 6
+          - Index: 1
+            Item: Premium_Box
+            Amount: 1
+          - Index: 2
+            Item: EXP_Drop_Up_7days
+            Amount: 1
+          - Index: 3
+            Item: Battle_Manual
+            Amount: 12
+          - Index: 4
+            Item: Mental_Potion
+            Amount: 8
+          - Index: 5
+            Item: K_Secret_Key
+            Amount: 22
+  - Group: 22TH_PACKAGE_2
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Small_Life_Potion
+            Amount: 200
+          - Index: 1
+            Item: Med_Life_Potion
+            Amount: 200
+          - Index: 2
+            Item: Mysterious_Water
+            Amount: 200
+          - Index: 3
+            Item: K_Secret_Key
+            Amount: 5
+          - Index: 4
+            Item: Blacksmith_Blessing
+            Amount: 2
+          - Index: 5
+            Item: E_Speed_Booster
+            Amount: 11
+          - Index: 6
+            Item: E_Force_Booster
+            Amount: 11
+          - Index: 7
+            Item: Cachua_Coupon
+            Amount: 10
+  - Group: 22TH_PACKAGE_3
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Small_Life_Potion
+            Amount: 200
+          - Index: 1
+            Item: Med_Life_Potion
+            Amount: 200
+          - Index: 2
+            Item: Mysterious_Water
+            Amount: 200
+          - Index: 3
+            Item: K_Secret_Key
+            Amount: 10
+          - Index: 4
+            Item: Blacksmith_Blessing
+            Amount: 4
+          - Index: 5
+            Item: Cachua_Coupon
+            Amount: 20
+          - Index: 6
+            Item: Infinity_Drink
+            Amount: 33
+          - Index: 7
+            Item: Almighty
+            Amount: 33
+          - Index: 8
+            Item: E_Speed_Booster
+            Amount: 22
+          - Index: 9
+            Item: E_Force_Booster
+            Amount: 22
+          - Index: 10
+            Item: Limit_Power_Booster
+            Amount: 34
+  - Group: 22TH_PACKAGE_4
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Small_Life_Potion
+            Amount: 200
+          - Index: 1
+            Item: Med_Life_Potion
+            Amount: 200
+          - Index: 2
+            Item: Mysterious_Water
+            Amount: 200
+          - Index: 3
+            Item: K_Secret_Key
+            Amount: 15
+          - Index: 4
+            Item: Blacksmith_Blessing
+            Amount: 6
+          - Index: 5
+            Item: Cachua_Coupon
+            Amount: 30
+          - Index: 6
+            Item: Infinity_Drink
+            Amount: 33
+          - Index: 7
+            Item: Almighty
+            Amount: 33
+          - Index: 8
+            Item: Limit_Power_Booster
+            Amount: 34
+          - Index: 9
+            Item: Small_Mana_Potion
+            Amount: 50
+          - Index: 10
+            Item: E_Speed_Booster
+          - Index: 11
+            Item: E_Force_Booster
+          - Index: 12
+            Item: M_DEFScroll
+            Amount: 300
+  - Group: CLB_SS_NYANG_PACK
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Nyangvine_Fruit
+            Amount: 100
+          - Index: 1
+            Item: aegis_103234
+            Amount: 2
+          - Index: 2
+            Item: CLB_SS_Box
+            Amount: 1
+  - Group: CLB_SS_REFINE1_PACK
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Enriched_Refine_Box
+            Amount: 1
+          - Index: 1
+            Item: K_Secret_Key
+            Amount: 10
+          - Index: 2
+            Item: Shadow_Refine_Hammer
+            Amount: 5
+          - Index: 3
+            Item: CLB_SS_Box
+            Amount: 1
+  - Group: CLB_SS_REFINE2_PACK
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Henriched_Refine_Box
+          - Index: 1
+            Item: K_Secret_Key
+            Amount: 10
+          - Index: 2
+            Item: Shadow_Refine_Hammer
+            Amount: 5
+          - Index: 3
+            Item: CLB_SS_Box
+            Amount: 1
+          - Index: 4
+            Item: Mental_Potion
+            Amount: 6
+  - Group: CLB_SS_EXP_PACK
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Nyangvine_Fruit
+            Amount: 6
+          - Index: 1
+            Item: Premium_Box
+            Amount: 1
+          - Index: 2
+            Item: EXP_Drop_Up_7days
+            Amount: 2
+          - Index: 3
+            Item: Battle_Manual
+            Amount: 12
+          - Index: 4
+            Item: Mental_Potion
+            Amount: 8
+          - Index: 5
+            Item: K_Secret_Key
+            Amount: 20
+          - Index: 6
+            Item: CLB_SS_Box
+            Amount: 1

@@ -115179,6 +115179,62 @@ Body:
 #    AegisName: EV_NPC_VACATION_POPE
 #  - Id: 22380
 #    AegisName: E_WATER_M_RING
+#  - Id: 22381
+#    AegisName: CLB_SS_FC
+#  - Id: 22382
+#    AegisName: CLB_SS_TZ
+#  - Id: 22383
+#    AegisName: VIOLEN
+#  - Id: 22384
+#    AegisName: CP_VIOLEN
+#  - Id: 22385
+#    AegisName: SPIDING
+#  - Id: 22386
+#    AegisName: CP_SPIDING
+#  - Id: 22387
+#    AegisName: GARLING
+#  - Id: 22388
+#    AegisName: CP_GARLING
+#  - Id: 22389
+#    AegisName: JACKONETTE
+#  - Id: 22390
+#    AegisName: CP_JACKONETTE
+#  - Id: 22391
+#    AegisName: LIAMETTE
+#  - Id: 22392
+#    AegisName: CP_LIAMETTE
+#  - Id: 22393
+#    AegisName: G_LIAMETTE
+#  - Id: 22394
+#    AegisName: NIGHTMARE_PIAMETTE
+#  - Id: 22395
+#    AegisName: MEDJED
+#  - Id: 22396
+#    AegisName: CP_MEDJED
+#  - Id: 22397
+#    AegisName: MEDJAY
+#  - Id: 22398
+#    AegisName: CP_MEDJAY
+#  - Id: 22399
+#    AegisName: OPHOIS
+#  - Id: 22400
+#    AegisName: CP_OPHOIS
+#  - Id: 22401
+#    AegisName: HEKA
+#  - Id: 22402
+#    AegisName: CP_HEKA
+#  - Id: 22403
+#    AegisName: G_OPHOIS
+#  - Id: 22404
+#    AegisName: GUIDE_OF_DEAD
+#  - Id: 22405
+#    AegisName: MISTRESS3
+#  - Id: 22406
+#    AegisName: GIANT_HONET2
+#  - Id: 22408
+#    AegisName: E_SMART_ANDRE
+#  - Id: 22409
+#    AegisName: E_RE_PINE
 #  - Id: 23000
 #    AegisName: DARK_ILLUSION2
 #  - Id: 23001
