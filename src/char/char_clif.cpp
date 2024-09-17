@@ -309,7 +309,7 @@ int chclif_parse_pincode_setnew( int fd, struct char_session_data* sd ){
 	if( charserv_config.pincode_config.pincode_enabled==0 || RFIFOL(fd,2) != sd->account_id ) {
 		set_eof(fd);
 		return 1;
-	} else if (sd != nullptr && strnlen(sd->pincode, PINCODE_LENGTH) > 0) {
+	} else if (strnlen(sd->pincode, PINCODE_LENGTH) > 0) {
 		set_eof(fd);
 		return 1;
 	} else {
