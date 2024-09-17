@@ -703,7 +703,7 @@ t_garden,166,235,3	script(CLOAKED)	Sealing Spirit Stone#life2	HEROS_OUT_ORB,{
 		next;
 		cutin "rigel_halfeyes01.png",2;
 		mes "[Rigel]";
-		mes "Don¡¯t just stare blankly, extend your hand.";
+		mes "Don't just stare blankly, extend your hand.";
 		mes "Focus your mind by placing your thumb on the bottom right of the unfolded spirit stone and the rest of your fingers on top. ";
 		next;
 		select( "Put your hand on the guide." );
