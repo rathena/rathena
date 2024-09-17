@@ -53,7 +53,7 @@ Body:
         Zeny: 10000
         RequiredItems:
           - Index: 0
-            Item: aegis_1001433
+            Item: Contored_Agn_Wrath
             Amount: 10
           - Index: 1
             Item: Coagulated_Spell
@@ -65,7 +65,7 @@ Body:
         Zeny: 10000
         RequiredItems:
           - Index: 0
-            Item: aegis_1001434
+            Item: Contored_Aqu_Wrath
             Amount: 10
           - Index: 1
             Item: Coagulated_Spell
@@ -77,7 +77,7 @@ Body:
         Zeny: 10000
         RequiredItems:
           - Index: 0
-            Item: aegis_1001435
+            Item: Contored_Ven_Wrath
             Amount: 10
           - Index: 1
             Item: Coagulated_Spell
@@ -89,7 +89,7 @@ Body:
         Zeny: 10000
         RequiredItems:
           - Index: 0
-            Item: aegis_1001436
+            Item: Contored_Ter_Wrath
             Amount: 10
           - Index: 1
             Item: Coagulated_Spell
@@ -101,7 +101,7 @@ Body:
         Zeny: 30000
         RequiredItems:
           - Index: 0
-            Item: aegis_1001432
+            Item: Contored_Spi_Wrath
             Amount: 10
           - Index: 1
             Item: Spell_Of_Time
@@ -116,16 +116,16 @@ Body:
         Item: Energy_Of_Elemental
         RequiredItems:
           - Index: 0
-            Item: aegis_1001433
+            Item: Contored_Agn_Wrath
             Amount: 10
           - Index: 1
-            Item: aegis_1001434
+            Item: Contored_Aqu_Wrath
             Amount: 10
           - Index: 2
-            Item: aegis_1001435
+            Item: Contored_Ven_Wrath
             Amount: 10
           - Index: 3
-            Item: aegis_1001436
+            Item: Contored_Ter_Wrath
             Amount: 10
           - Index: 4
             Item: Polluted_Spell
@@ -191,7 +191,7 @@ Body:
         Zeny: 5000
         RequiredItems:
           - Index: 0
-            Item: aegis_1001414
+            Item: MD_Hol_Fragment
           - Index: 1
             Item: Etel_Dust
             Amount: 10
@@ -200,16 +200,16 @@ Body:
         Zeny: 5000
         RequiredItems:
           - Index: 0
-            Item: aegis_1001414
+            Item: MD_Hol_Fragment
           - Index: 1
             Item: Etel_Dust
             Amount: 10
       - Index: 2
-        Item: aegis_1001415
+        Item: MD_Hol_Key
         Zeny: 300000
         RequiredItems:
           - Index: 0
-            Item: aegis_1001414
+            Item: MD_Hol_Fragment
             Amount: 100
           - Index: 1
             Item: Etel_Dust
