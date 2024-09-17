@@ -2744,7 +2744,7 @@ enum e_job_types
 
 	JT_EP20_ARMOERDCOPO = 23060,
 
-	JT_NEW_NPC_4RD_END,
+	JT_NEW_NPC_4RD_END = 32001, // dynamic 4rd end
 	NPC_RANGE4_END,
 
 	// Unofficial
@@ -2761,7 +2761,7 @@ enum e_job_types
 #define MAX_NPC_CLASS3_START NPC_RANGE4_START
 #define MAX_NPC_CLASS3_END NPC_RANGE4_END
 
-//Checks if a given id is a valid npc id. [Skotlex]
+//Checks if a given id is a valid npc id.
 //Since new npcs are added all the time, the max valid value is the one before the first mob (Scorpion = 1001)
 #define npcdb_checkid(id) ( ( (id) > NPC_RANGE1_START && (id) < NPC_RANGE1_END ) || (id) == JT_HIDDEN_WARP_NPC || ( (id) > NPC_RANGE2_START && (id) < NPC_RANGE2_END ) || (id) == JT_INVISIBLE || ( (id) > NPC_RANGE3_START && (id) < NPC_RANGE3_END ) || ( (id) > NPC_RANGE4_START && (id) < NPC_RANGE4_END ) )
 
