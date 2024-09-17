@@ -1572,7 +1572,6 @@ enum e_job_types
 	JT_EP21_YOSTER_D,
 	JT_EP21_YOSTER_E,
 
-	///	to export
 	JT_EVT_BAPHOMET = 20061,
 	JT_EVT_BAPHO_JR,
 	JT_EVT_V_WOLF,
@@ -1821,7 +1820,6 @@ enum e_job_types
 	JT_JEWEL,
 	JT_JUNGOLIANT,
 
-
 	JT_ABYSSMAN = 20603,
 	JT_ANGELGOLT,
 	JT_ANGELGOLT2,
@@ -1977,7 +1975,11 @@ enum e_job_types
 	JT_G_ILL_PHEN,
 	
 	JT_WANDERING_DUCK = 21089,
-	
+
+	/// <summary>
+	/// MISSING CLEANING
+	/// </summary>
+	/// 	
 	JT_S_DUMMY_100_SMALL = 21064,
 	JT_S_DUMMY_100_MEDIUM = 21065,
 	JT_S_DUMMY_100_LARGE = 21066,
@@ -2035,9 +2037,6 @@ enum e_job_types
 	JT_SUMMON_CREEPER = 20850,
 	JT_SUMMON_HELLTREE = 20851,
 
-	/// <summary>
-	/// reorder
-	/// </summary>
 	JT_MD_MANHOLE = 20112,
 	JT_GOBLIN_KING = 20118,
 	JT_EXTRA_JOKER = 20175,
