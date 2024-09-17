@@ -88317,7 +88317,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 1001414
-    AegisName: aegis_1001414
+    AegisName: MD_Hol_Fragment
     Name: Dimensional Crystal Fragment
     Type: Etc
     Weight: 1
@@ -88325,7 +88325,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
   - Id: 1001415
-    AegisName: aegis_1001415
+    AegisName: MD_Hol_Key
     Name: Hall of Life Key
     Type: Etc
     Weight: 10
@@ -88347,63 +88347,63 @@ Body:
     Type: Etc
     Weight: 100
   - Id: 1001424
-    AegisName: aegis_1001424
+    AegisName: Hot_Water_Drop_Gem
     Name: Hot Water Droplet Gem
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 1001425
-    AegisName: aegis_1001425
+    AegisName: Ice_Water_Drop_Gem
     Name: Cold Water Droplet Gem
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 1001426
-    AegisName: aegis_1001426
+    AegisName: Dry_Wind_Leaf_Gem
     Name: Dry Wind Leaf Gem
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 1001427
-    AegisName: aegis_1001427
+    AegisName: Storm_Wind_Leaf_Gem
     Name: Strong Wind Leaf Gem
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 1001428
-    AegisName: aegis_1001428
+    AegisName: Red_Flame_Heart_Gem
     Name: Red Flame Heart Gem
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 1001429
-    AegisName: aegis_1001429
+    AegisName: Blue_Flame_Heart_Gem
     Name: Blue Flame Heart Gem
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 1001430
-    AegisName: aegis_1001430
+    AegisName: Firm_Land_Crystal
     Name: Firm Land Crystal
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 1001431
-    AegisName: aegis_1001431
+    AegisName: Green_Land_Crystal
     Name: Green Land Crystal
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 1001432
-    AegisName: aegis_1001432
+    AegisName: Contored_Spi_Wrath
     Name: Wrath of Polluted Spirit
     Type: Etc
     Weight: 10
@@ -88411,7 +88411,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
   - Id: 1001433
-    AegisName: aegis_1001433
+    AegisName: Contored_Agn_Wrath
     Name: Wrath of Polluted Agni
     Type: Etc
     Weight: 10
@@ -88419,7 +88419,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
   - Id: 1001434
-    AegisName: aegis_1001434
+    AegisName: Contored_Aqu_Wrath
     Name: Wrath of Polluted Aqua
     Type: Etc
     Weight: 10
@@ -88427,7 +88427,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
   - Id: 1001435
-    AegisName: aegis_1001435
+    AegisName: Contored_Ven_Wrath
     Name: Wrath of Polluted Ventus
     Type: Etc
     Weight: 10
@@ -88435,7 +88435,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
   - Id: 1001436
-    AegisName: aegis_1001436
+    AegisName: Contored_Ter_Wrath
     Name: Wrath of Polluted Tera
     Type: Etc
     Weight: 10
