@@ -309,8 +309,10 @@ int chclif_parse_pincode_setnew( int fd, struct char_session_data* sd ){
 	if( charserv_config.pincode_config.pincode_enabled==0 || RFIFOL(fd,2) != sd->account_id ) {
 		set_eof(fd);
 		return 1;
-	}
-	else {
+	} else if (strnlen(sd->pincode, PINCODE_LENGTH) > 0) {
+		set_eof(fd);
+		return 1;
+	} else {
 		char newpin[PINCODE_LENGTH+1];
 		memset(newpin,0,PINCODE_LENGTH+1);
 		strncpy( newpin, RFIFOCP(fd,6), PINCODE_LENGTH );
@@ -561,7 +563,7 @@ int chclif_parse_char_delete2_req(int fd, struct char_session_data* sd) {
 			chclif_char_delete2_ack(fd, char_id, 5, 0);
 			return 1;
 		}
-		
+
 		// success
 		delete_date = time(nullptr)+(charserv_config.char_config.char_del_delay);
 
@@ -985,7 +987,7 @@ void chclif_accessible_maps( int fd ){
 		}else{
 			p->maps[count].status = 0;
 		}
-		
+
 		mapindex_getmapname_ext( accessible_map.map, p->maps[count].map );
 
 		p->packetLength += sizeof( p->maps[0] );
@@ -1527,7 +1529,7 @@ void chclif_reject(int fd, uint8 errCode){
 int chclif_parse_reqcaptcha(int fd){
 	//FIFOSD_CHECK(8)
 	RFIFOSKIP(fd,8);
-	chclif_ack_captcha(fd); 
+	chclif_ack_captcha(fd);
 	return 1;
 }
 
