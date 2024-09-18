@@ -1842,11 +1842,11 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 						34
 					};
 					static const uint8 chance_master[5] = {
-						chance_homunculus[0] + 30,
-						chance_homunculus[1] + 10,
-						chance_homunculus[2] + 50,
-						chance_homunculus[3] + 4,
-						chance_homunculus[4] + 33
+						static_cast<uint8>( chance_homunculus[0] + 30 ),
+						static_cast<uint8>( chance_homunculus[1] + 10 ),
+						static_cast<uint8>( chance_homunculus[2] + 50 ),
+						static_cast<uint8>( chance_homunculus[3] + 4 ),
+						static_cast<uint8>( chance_homunculus[4] + 33 )
 					};
 
 					uint8 chance = rnd_value(1, 100);
