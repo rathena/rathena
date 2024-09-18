@@ -6198,8 +6198,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 	case HVAN_CAPRICE: //[blackhole89]
 		{
-			static const e_skill subskills[] = { MG_COLDBOLT, MG_FIREBOLT, MG_LIGHTNINGBOLT, WZ_EARTHSPIKE };
-			e_skill subskill_id = subskills[rnd()%ARRAYLENGTH(subskills)];
+			static std::vector<e_skill> subskills = { MG_COLDBOLT, MG_FIREBOLT, MG_LIGHTNINGBOLT, WZ_EARTHSPIKE };
+			e_skill subskill_id = util::vector_random( subskills );
 			skill_attack(skill_get_type(subskill_id), src, src, bl, subskill_id, skill_lv, tick, flag);
 		}
 		break;
