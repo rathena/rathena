@@ -1831,42 +1831,6 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 
 				target_id = target->id;
 				break;
-			case HVAN_CHAOTIC:
-				{
-					// Chance per skill level
-					static const uint8 chance_homunculus[5] = {
-						20,
-						50,
-						25,
-						50,
-						34
-					};
-					static const uint8 chance_master[5] = {
-						static_cast<uint8>( chance_homunculus[0] + 30 ),
-						static_cast<uint8>( chance_homunculus[1] + 10 ),
-						static_cast<uint8>( chance_homunculus[2] + 50 ),
-						static_cast<uint8>( chance_homunculus[3] + 4 ),
-						static_cast<uint8>( chance_homunculus[4] + 33 )
-					};
-
-					uint8 chance = rnd_value(1, 100);
-
-					// Homunculus
-					if (chance <= chance_homunculus[skill_lv - 1])
-						target = src;
-					// Master
-					else if (chance <= chance_master[skill_lv - 1])
-						target = battle_get_master(src);
-					// Enemy
-					else
-						target = map_id2bl(battle_gettarget(src));
-
-					// If there's no enemy the chance reverts to the homunculus
-					if (target == nullptr)
-						target = src;
-
-					target_id = target->id;
-				} break;
 			case MH_SONIC_CRAW:
 			case MH_TINDER_BREAKER: {
 				int skill_id2 = ((skill_id==MH_SONIC_CRAW)?MH_MIDNIGHT_FRENZY:MH_EQC);
