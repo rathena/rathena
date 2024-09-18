@@ -8871,13 +8871,14 @@ static void clif_guild_positioninfolist(map_session_data& sd){
 
 	for(size_t i=0;i<MAX_GUILDPOSITION;i++){
 		guild_position& gp = g->guild.position[i];
+		PACKET_ZC_POSITION_INFO_sub& position = p->posInfo[i];
 
-		p->posInfo[i].positionID = i;
-		p->posInfo[i].right = gp.mode;
-		p->posInfo[i].ranking = i;
-		p->posInfo[i].payRate = gp.exp_mode;
+		position.positionID = static_cast<decltype(position.positionID)>( i );
+		position.right = gp.mode;
+		position.ranking = static_cast<decltype(position.ranking)>( i );
+		position.payRate = gp.exp_mode;
 
-		p->PacketLength += static_cast<decltype(p->PacketLength)>( sizeof( p->posInfo[0] ) );
+		p->PacketLength += static_cast<decltype(p->PacketLength)>( sizeof( position ) );
 	}
 
 	clif_send(p,p->PacketLength,&sd.bl,SELF);
