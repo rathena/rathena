@@ -10682,7 +10682,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case HAMI_CASTLE:	//[orn]
 		if (src != bl && rnd_chance(20 * skill_lv, 100)) {
 			// Get one of the monsters targeting the player and set the homunculus as its new target
-			if (block_list* tbl = battle_getenemy(bl, BL_MOB, AREA_SIZE); tbl != nullptr) {
+			if (block_list* tbl = battle_gettargeted(bl); tbl != nullptr && tbl->type == BL_MOB) {
 				if (unit_data* ud = unit_bl2ud(tbl); ud != nullptr)
 					unit_changetarget_sub(*ud, *src);
 			}
