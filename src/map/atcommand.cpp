@@ -7293,21 +7293,21 @@ ACMD_FUNC(pettalk)
 			{"/oops", ET_OOPS}, {"/spit", ET_SPIT}, {"/ene", ET_ENE}, {"/panic", ET_PANIC},
 			{"/whisp", ET_WHISP}
 		};
-        auto emo_pos = pettalk_emo_map.find(message);
-        if (emo_pos != pettalk_emo_map.end()) {
-            e_emotion_type emotion = emo_pos->second;
+		auto emo_pos = pettalk_emo_map.find(message);
+		if (emo_pos != pettalk_emo_map.end()) {
+			e_emotion_type emotion = emo_pos->second;
 
-            if (emotion == ET_DICE1) {
+			if (emotion == ET_DICE1) {
 				emotion = static_cast<e_emotion_type>(rnd_value<int>(ET_DICE1, ET_DICE6));
-            }
+			}
 
-            time_t current_time = time(nullptr);
+			time_t current_time = time(nullptr);
 
-            if (sd->emotionlasttime + 1 >= current_time) {
-                sd->emotionlasttime = current_time;
-                return 0;
-            }
-            sd->emotionlasttime = current_time;
+			if (sd->emotionlasttime + 1 >= current_time) {
+				sd->emotionlasttime = current_time;
+				return 0;
+			}
+			sd->emotionlasttime = current_time;
 			clif_emotion(sd->bl, emotion);
 			return 0;
 		}
