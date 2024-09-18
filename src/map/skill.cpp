@@ -10690,14 +10690,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		else if (sd != nullptr)
 			clif_skill_fail( *sd, skill_id );
 		break;
-	case HVAN_CHAOTIC:	//[orn]
-		i = skill_calc_heal(src, bl, skill_id, rnd_value<uint16>(1, skill_lv), true);
+	case HVAN_CHAOTIC:
+		{
+			int32 heal = skill_calc_heal(src, bl, skill_id, rnd_value<uint16>(1, skill_lv), true);
 
-		// Official servers send the Heal skill packet with the healed amount, and then the skill packet with 1 as healed amount
-		clif_skill_nodamage(src, *bl, AL_HEAL, i);
-		clif_skill_nodamage(src, *bl, skill_id, 1);
-		status_heal(bl, i, 0, 0);
-		break;
+			// Official servers send the Heal skill packet with the healed amount, and then the skill packet with 1 as healed amount
+			clif_skill_nodamage(src, *bl, AL_HEAL, heal);
+			clif_skill_nodamage(src, *bl, skill_id, 1);
+			status_heal(bl, heal, 0, 0);
+		} break;
 	case HVAN_EXPLOSION:
 	{
 		clif_skill_nodamage(src, *src, skill_id, skill_lv, 1);
