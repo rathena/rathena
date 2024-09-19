@@ -12759,6 +12759,9 @@ void clif_parse_skill_toid( map_session_data* sd, uint16 skill_id, uint16 skill_
 			clif_msg( sd, MSI_BUSY);
 #endif
 			return;
+		} else {
+			clif_msg( sd, MSI_BUSY);
+			return;
 		}
 	}
 
