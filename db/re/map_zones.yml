@@ -198,6 +198,8 @@ Body:
       izlude_b: true
       izlude_c: true
       izlude_d: true
+      jor_albe: true
+      jor_mbase: true
       jor_nest: true
       jor_sanct: true
       jor_twig: true
@@ -545,9 +547,12 @@ Body:
       iz_ac02_d: true
       iz_ng01: true
       izlude_in: true
+      jalbe_in: true
       jawaii: true
       jawaii_in: true
       job3_gen01: true
+      jor_crk: true
+      jor_crk_p: true
       jor_safty1: true
       jor_safty2: true
       kh_mansion: true
@@ -600,6 +605,7 @@ Body:
       prt_in: true
       prt_lib: true
       prt_lib_q: true
+      prt_mk: true
       prt_pri00: true
       pub_cat: true
       que_house_s: true
@@ -843,13 +849,18 @@ Body:
       jor_back4: true
       jor_back5: true
       jor_back6: true
+      jor_raise1: true
+      jor_raise2: true
       jor_tail: true
       jor_twice: true
       lhz_fild01: true
       lhz_fild02: true
       lhz_fild03: true
+      luna_sf1: true
+      luna_sf2: true
       ma_fild01: true
       ma_fild02: true
+      mbase_in: true
       mjolnir_01: true
       mjolnir_03: true
       mjolnir_06: true
@@ -1182,6 +1193,7 @@ Body:
       iz_dun04: true
       jor_ab01: true
       jor_ab02: true
+      jor_base: true
       jor_dun01: true
       jor_dun02: true
       jor_dun03: true
@@ -1189,6 +1201,8 @@ Body:
       jor_root1: true
       jor_root2: true
       jor_root3: true
+      jor_tmple1: true
+      jor_tmple2: true
       jupe_cave: true
       jupe_core: true
       juperos_01: true
@@ -4030,6 +4044,8 @@ Body:
       1@dth3: true
       1@ecl: true
       1@eom: true
+      1@ep21a: true
+      1@ep21b: true
       1@exds: true
       1@exhn: true
       1@exnw: true
@@ -4044,7 +4060,7 @@ Body:
       1@gef: true
       1@gef_in: true
       1@ghg: true
-      #1@gl_K2: true
+      1@gl_k2: true
       1@gl_he2: true
       1@gl_he: true
       1@gl_k: true
@@ -4069,6 +4085,7 @@ Body:
       1@mcd: true
       1@md_gef: true
       1@md_pay: true
+      1@mdtem: true
       1@mir: true
       1@mist: true
       1@mjo1: true
@@ -4106,6 +4123,7 @@ Body:
       1@tre: true
       1@twas: true
       1@twbs: true
+      1@twbs2: true
       1@twig: true
       1@twsd: true
       1@uns: true
@@ -4119,14 +4137,16 @@ Body:
       1@vrpo: true
       1@vrpop: true
       1@whl: true
+      1@wtgs: true
       1@xm_d2: true
       1@xm_d: true
       2@cata: true
       2@ch_t: true
       2@exds: true
-      #2@gl_K2: true
+      2@gl_k2: true
       2@gl_k: true
       2@gl_kh: true
+      2@mdtem: true
       2@mir: true
       2@nyd: true
       2@nyr: true
