@@ -78859,9 +78859,7 @@ Body:
     AegisName: Summer_Select_Box4
     Name: Star Footprint Selection Box (Summer Beach)
     Type:  Usable
-    Weight: 1
-#   Script: |
-#     /* TODO */
+    Weight: 10
   - Id: 200000
     AegisName: IDTest_Cash
     Name: IDTest Cash

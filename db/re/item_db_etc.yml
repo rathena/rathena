@@ -89470,12 +89470,12 @@ Body:
     AegisName: aegis_1001615
     Name: Footprint Effect (Garment)
     Type: Etc
-    Weight: 10
+    Weight: 100
   - Id: 1001617
     AegisName: PurpleStar_Foot_Robe
     Name: Purple Star Footprint (Garment)
     Type: Etc
-    Weight: 10
+    Weight: 100
   - Id: 1001618
     AegisName: aegis_1001618
     Name: Wigner Premium Exchange Ticket
@@ -89749,7 +89749,7 @@ Body:
     AegisName: YellowStar_Foot_Robe
     Name: Yellow Star Footprint (Garment)
     Type: Etc
-    Weight: 10
+    Weight: 100
   - Id: 1001653
     AegisName: Ep21_Armor_E_Stone1
     Name: Turquoise Magic Stone
@@ -90367,7 +90367,7 @@ Body:
     AegisName: aegis_1001772
     Name: Puppy Footprint (Garment)
     Type: Etc
-    Weight: 10
+    Weight: 100
   - Id: 1200000
     AegisName: IDTest_arrow
     Name: IDTest arrow
