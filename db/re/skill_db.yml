@@ -43010,6 +43010,126 @@ Body:
           Amount: 84
         - Level: 10
           Amount: 86
+  - Id: 6506
+    Name: MT_RUSH_STRIKE
+    Description: Rush Strike
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 7
+    Hit: Multi_Hit
+    HitCount: 7
+    Element: Weapon
+    GiveAp: 2
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
+    Cooldown: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 85
+        - Level: 2
+          Amount: 80
+        - Level: 3
+          Amount: 75
+        - Level: 4
+          Amount: 70
+        - Level: 5
+          Amount: 65
+      Weapon:
+        2hAxe: true
+  - Id: 6507
+    Name: MT_POWERFUL_SWING
+    Description: Powerful Swing
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 2
+    Hit: Multi_Hit
+    HitCount: 5
+    Element: Weapon
+    GiveAp: 2
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 3
+    Cooldown: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 62
+        - Level: 2
+          Amount: 64
+        - Level: 3
+          Amount: 66
+        - Level: 4
+          Amount: 68
+        - Level: 5
+          Amount: 70
+      Weapon:
+        2hAxe: true
+  - Id: 6508
+    Name: MT_ENERGY_CANNONADE
+    Description: Energy Cannonade
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+      IgnoreDefense: true
+    Flags:
+      AllowOnMado: true
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: 7
+    Element: Weapon
+    GiveAp: 3
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 3
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 4
+    Cooldown: 1500 #TODO: confirm cooldown
+    FixedCastTime: 1000 #TODO: confirm fixed cast time
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 58
+        - Level: 2
+          Amount: 64
+        - Level: 3
+          Amount: 70
+        - Level: 4
+          Amount: 76
+        - Level: 5
+          Amount: 82
+      State: Mado
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch
