@@ -980,3 +980,13 @@ Body:
       - Group: 1
         Items:
           - Item: C_Chaos_Emerald
+  - Item: Summer_Select_Box4
+    Groups:
+      - Group: 0
+        Items:
+          - Item: PurpleStar_Foot_Robe
+          - Item: C_Summer_Beach
+      - Group: 1
+        Items:
+          - Item: YellowStar_Foot_Robe
+          - Item: C_Summer_Beach
