@@ -43010,6 +43010,97 @@ Body:
           Amount: 84
         - Level: 10
           Amount: 86
+  - Id: 6503
+    Name: IG_RADIANT_SPEAR
+    Description: Radiant Spear
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+      Critical: true
+    Range: 7
+    Hit: Multi_Hit
+    HitCount: 2
+    Element: Weapon
+    GiveAp: 2
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 1
+      - Level: 4
+        Area: 1
+      - Level: 5
+        Area: 2
+      - Level: 6
+        Area: 2
+      - Level: 7
+        Area: 2
+      - Level: 8
+        Area: 2
+      - Level: 9
+        Area: 3
+      - Level: 10
+        Area: 3
+    CastCancel: true
+    Cooldown: 1500 #TODO: confirm cooldown
+    FixedCastTime: 500 #TODO: confirm fixed cast time
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 67
+        - Level: 2
+          Amount: 69
+        - Level: 3
+          Amount: 71
+        - Level: 4
+          Amount: 73
+        - Level: 5
+          Amount: 75
+        - Level: 6
+          Amount: 77
+        - Level: 7
+          Amount: 79
+        - Level: 8
+          Amount: 81
+        - Level: 9
+          Amount: 83
+        - Level: 10
+          Amount: 85
+      Weapon:
+        1hSpear: true
+      Status:
+        Attack_Stance: true
+  - Id: 6504
+    Name: IG_IMPERIAL_CROSS
+    Description: Imperial Cross
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    Range: 2
+    Hit: Multi_Hit
+    HitCount: 3
+    Element: Weapon
+    GiveAp: 2
+    CastCancel: true
+    Cooldown: 1500 #TODO: confirm cooldown
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 49
+        - Level: 2
+          Amount: 53
+        - Level: 3
+          Amount: 57
+        - Level: 4
+          Amount: 61
+        - Level: 5
+          Amount: 65
+      Status:
+        Attack_Stance: true
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch
