@@ -427,9 +427,9 @@ uint64 MapZoneDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		for (const auto &it : mapNode) {
 			std::string map_name;
 			c4::from_chars(it.key(), &map_name);
-			int16 mapidx = mapindex_name2idx(map_name.c_str(), nullptr);
+			int16 map_id = map_mapname2mapid(map_name.c_str());
 
-			if (mapidx == 0) {
+			if (map_id < 0) {
 				this->invalidWarning(mapNode, "Map %s does not exist.\n", map_name.c_str());
 				continue;
 			}
@@ -438,8 +438,6 @@ uint64 MapZoneDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 			if (!this->asBool(mapNode, map_name, enabled))
 				continue;
-
-			int16 map_id = map_mapname2mapid(map_name.c_str());
 
 			if (enabled) {
 				if (util::vector_exists(zone->maps, map_id)) {

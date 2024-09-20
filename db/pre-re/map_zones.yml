@@ -77,9 +77,9 @@ Body:
       prt_monk: true
       rachel: true
       ra_temple: true
-      thief_1-1: true
-      thief_2-1: true
-      thief_3-1: true
+      #thief_1-1: true
+      #thief_2-1: true
+      #thief_3-1: true
       umbala: true
       veins: true
       xmas: true
@@ -249,10 +249,10 @@ Body:
       mjolnir_11: true
       moc_fild01: true
       moc_fild02: true
-      moc_fild05: true
-      moc_fild06: true
+      #moc_fild05: true
+      #moc_fild06: true
       moc_fild07: true
-      moc_fild10: true
+      #moc_fild10: true
       moc_fild11: true
       moc_fild12: true
       moc_fild18: true
@@ -416,12 +416,12 @@ Body:
       mjo_dun02: true
       mjo_dun03: true
       moc_fild03: true
-      moc_fild04: true
-      moc_fild08: true
-      moc_fild09: true
+      #moc_fild04: true
+      #moc_fild08: true
+      #moc_fild09: true
       moc_fild13: true
-      moc_fild14: true
-      moc_fild15: true
+      #moc_fild14: true
+      #moc_fild15: true
       moc_fild16: true
       moc_fild17: true
       moc_fild19: true
@@ -566,13 +566,13 @@ Body:
       n_castle: true
       ordeal_1-1: true
       ordeal_1-2: true
-      ordeal_1-3: true
+      #ordeal_1-3: true
       ordeal_2-1: true
       ordeal_2-2: true
-      ordeal_2-3: true
+      #ordeal_2-3: true
       ordeal_3-1: true
       ordeal_3-2: true
-      ordeal_3-3: true
+      #ordeal_3-3: true
       poring_w01: true
       #priest_1-1: true
       #priest_2-1: true
@@ -1170,8 +1170,8 @@ Body:
 
   - Id: MonsterTrack # Boss area
     Maps:
-      poring_c01: true
-      poring_c02: true
+      #poring_c01: true
+      #poring_c02: true
       thana_boss: true
     Mapflags:
       - Flag: NoMemo
