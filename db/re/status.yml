@@ -8969,3 +8969,12 @@ Body:
       Bleeding: true
       Confusion: true
       Freeze: true
+  - Status: Mystery_Powder
+    Icon: EFST_MYSTERY_POWDER
+    DurationLookup: BO_MYSTERY_POWDER
+    Flags:
+      BlEffect: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
