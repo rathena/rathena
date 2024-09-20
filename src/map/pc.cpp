@@ -1812,11 +1812,33 @@ uint8 pc_isequip(map_session_data *sd,int n)
 
 	if(item == nullptr)
 		return ITEM_EQUIP_ACK_FAIL;
-	if(item->elv && sd->status.base_level < (unsigned int)item->elv)
+
+	if (sd->sc.count && sd->sc.getSCE(SC_SPIRIT) && sd->sc.getSCE(SC_SPIRIT)->val2 == SL_SUPERNOVICE) {
+		//Spirit of Super Novice equip bonuses. [Skotlex]
+		if (sd->status.base_level >= 90 && item->equip & EQP_HELM)
+			return ITEM_EQUIP_ACK_OK; //Can equip all helms
+
+		if (sd->status.base_level >= 96 && item->equip & EQP_ARMS && item->type == IT_WEAPON && item->weapon_level == 4)
+			switch (item->subtype) { //In weapons, the look determines type of weapon.
+				case W_DAGGER: //All level 4 - Daggers
+				case W_1HSWORD: //All level 4 - 1H Swords
+				case W_1HAXE: //All level 4 - 1H Axes
+				case W_MACE: //All level 4 - 1H Maces
+				case W_STAFF: //All level 4 - 1H Staves
+				case W_2HSTAFF: //All level 4 - 2H Staves
+					return ITEM_EQUIP_ACK_OK;
+			}
+	}
+
+	if(item->elv && sd->status.base_level < static_cast<unsigned int>(item->elv))
 		return ITEM_EQUIP_ACK_FAILLEVEL;
-	if(item->elvmax && sd->status.base_level > (unsigned int)item->elvmax)
+	if(item->elvmax && sd->status.base_level > static_cast<unsigned int>(item->elvmax))
 		return ITEM_EQUIP_ACK_FAILLEVEL;
 	if(item->sex != SEX_BOTH && sd->status.sex != item->sex)
+		return ITEM_EQUIP_ACK_FAIL;
+
+	// Broken equip
+	if (sd->inventory.u.items_inventory[n].attribute == 1)
 		return ITEM_EQUIP_ACK_FAIL;
 
 	//fail to equip if item is restricted
@@ -1885,23 +1907,6 @@ uint8 pc_isequip(map_session_data *sd,int n)
 			return ITEM_EQUIP_ACK_FAIL;
 		if(item->equip && (sd->sc.getSCE(SC_KYOUGAKU) || sd->sc.getSCE(SC_SUHIDE)))
 			return ITEM_EQUIP_ACK_FAIL;
-
-		if (sd->sc.getSCE(SC_SPIRIT) && sd->sc.getSCE(SC_SPIRIT)->val2 == SL_SUPERNOVICE) {
-			//Spirit of Super Novice equip bonuses. [Skotlex]
-			if (sd->status.base_level > 90 && item->equip & EQP_HELM)
-				return ITEM_EQUIP_ACK_OK; //Can equip all helms
-
-			if (sd->status.base_level > 96 && item->equip & EQP_ARMS && item->type == IT_WEAPON && item->weapon_level == 4)
-				switch(item->subtype) { //In weapons, the look determines type of weapon.
-					case W_DAGGER: //All level 4 - Daggers
-					case W_1HSWORD: //All level 4 - 1H Swords
-					case W_1HAXE: //All level 4 - 1H Axes
-					case W_MACE: //All level 4 - 1H Maces
-					case W_STAFF: //All level 4 - 1H Staves
-					case W_2HSTAFF: //All level 4 - 2H Staves
-						return ITEM_EQUIP_ACK_OK;
-				}
-		}
 	}
 
 	//Not equipable by class. [Skotlex]
@@ -5351,7 +5356,7 @@ bool pc_skill(map_session_data* sd, uint16 skill_id, int level, enum e_addskill_
 			sd->status.skill[idx].flag = SKILL_FLAG_PERMANENT;
 			if (level == 0) { //Remove skill.
 				sd->status.skill[idx].id = 0;
-				clif_deleteskill(sd,skill_id);
+				clif_deleteskill(*sd,skill_id);
 			} else
 				clif_addskill(sd,skill_id);
 			if (!skill_get_inf(skill_id) || pc_checkskill_summoner(sd, SUMMONER_POWER_LAND) >= 20 || pc_checkskill_summoner(sd, SUMMONER_POWER_SEA) >= 20) //Only recalculate for passive skills.
@@ -5386,7 +5391,7 @@ bool pc_skill(map_session_data* sd, uint16 skill_id, int level, enum e_addskill_
 			sd->status.skill[idx].flag = SKILL_FLAG_PERM_GRANTED;
 			if (level == 0) { //Remove skill.
 				sd->status.skill[idx].id = 0;
-				clif_deleteskill(sd,skill_id);
+				clif_deleteskill(*sd,skill_id);
 			} else
 				clif_addskill(sd,skill_id);
 			if (!skill_get_inf(skill_id) || pc_checkskill_summoner(sd, SUMMONER_POWER_LAND) >= 20 || pc_checkskill_summoner(sd, SUMMONER_POWER_SEA) >= 20) //Only recalculate for passive skills.
@@ -5468,7 +5473,7 @@ bool pc_skill_plagiarism_reset(map_session_data &sd, uint8 type)
 		sd.status.skill[idx].id = 0;
 		sd.status.skill[idx].lv = 0;
 		sd.status.skill[idx].flag = SKILL_FLAG_PERMANENT;
-		clif_deleteskill(&sd, skill_id);
+		clif_deleteskill(sd, skill_id);
 		
 		if (type == 1) {
 			sd.cloneskill_idx = 0;
@@ -6139,7 +6144,7 @@ bool pc_takeitem(map_session_data *sd,struct flooritem_data *fitem)
 
 	//Display pickup animation.
 	pc_stop_attack(sd);
-	clif_takeitem(&sd->bl,&fitem->bl);
+	clif_takeitem(sd->bl,fitem->bl);
 
 	if (fitem->mob_id &&
 		(itemdb_search(fitem->item.nameid))->flag.broadcast &&
@@ -6686,7 +6691,6 @@ bool pc_steal_item(map_session_data *sd,struct block_list *bl, uint16 skill_lv)
 	t_itemid itemid;
 	double rate;
 	unsigned char flag = 0;
-	struct status_data *sd_status, *md_status;
 	struct mob_data *md;
 
 	if(!sd || !bl || bl->type!=BL_MOB)
@@ -6697,8 +6701,8 @@ bool pc_steal_item(map_session_data *sd,struct block_list *bl, uint16 skill_lv)
 	if(md->state.steal_flag == UCHAR_MAX || ( md->sc.opt1 && md->sc.opt1 != OPT1_BURNING ) ) //already stolen from / status change check
 		return false;
 
-	sd_status= status_get_status_data(&sd->bl);
-	md_status= status_get_status_data(bl);
+	status_data* sd_status = status_get_status_data(sd->bl);
+	status_data* md_status = status_get_status_data(*bl);
 
 	if (md->master_id || status_has_mode(md_status, MD_STATUSIMMUNE) || util::vector_exists(status_get_race2(&md->bl), RC2_TREASURE) ||
 		map_getmapflag(bl->m, MF_NOMOBLOOT) || // check noloot map flag [Lorky]
@@ -8246,7 +8250,7 @@ static void pc_calcexp(map_session_data *sd, t_exp *base_exp, t_exp *job_exp, st
 	int bonus = 0, vip_bonus_base = 0, vip_bonus_job = 0;
 
 	if (src) {
-		struct status_data *status = status_get_status_data(src);
+		status_data* status = status_get_status_data(*src);
 
 		if( sd->indexed_bonus.expaddrace[status->race] )
 			bonus += sd->indexed_bonus.expaddrace[status->race];
@@ -10058,7 +10062,7 @@ bool pc_revive_item(map_session_data *sd) {
 	else
 		pc_delitem(sd, item_position, 1, 0, 1, LOG_TYPE_CONSUME);
 
-	clif_skill_nodamage(&sd->bl, &sd->bl, ALL_RESURRECTION, 4, 1);
+	clif_skill_nodamage(&sd->bl, sd->bl, ALL_RESURRECTION, 4);
 
 	return true;
 }
@@ -11926,7 +11930,7 @@ bool pc_equipitem(map_session_data *sd,short n,int req_pos,bool equipswitch)
 		return false;
 	}
 
-	if (!(pos&req_pos) || sd->inventory.u.items_inventory[n].equip != 0 || sd->inventory.u.items_inventory[n].attribute==1 ) { // [Valaris]
+	if (!(pos&req_pos) || sd->inventory.u.items_inventory[n].equip != 0) {
 		if( equipswitch ){
 			clif_equipswitch_add( sd, n, req_pos, ITEM_EQUIP_ACK_FAIL );
 		}else{
@@ -12267,18 +12271,18 @@ bool pc_unequipitem(map_session_data *sd, int n, int flag) {
 	nullpo_retr(false,sd);
 
 	if (n < 0 || n >= MAX_INVENTORY) {
-		clif_unequipitemack(sd,0,0,0);
+		clif_unequipitemack(*sd,0,0,false);
 		return false;
 	}
 	if (!(pos = sd->inventory.u.items_inventory[n].equip)) {
-		clif_unequipitemack(sd,n,0,0);
+		clif_unequipitemack(*sd,n,0,false);
 		return false; //Nothing to unequip
 	}
 	// status change that makes player cannot unequip equipment
 	if (!(flag&2) && sd->sc.count &&( sd->sc.cant.unequip ||
 		(sd->sc.getSCE(SC_PYROCLASTIC) &&	sd->inventory_data[n]->type == IT_WEAPON)))	// can't switch weapon
 	{
-		clif_unequipitemack(sd,n,0,0);
+		clif_unequipitemack(*sd,n,0,false);
 		return false;
 	}
 
@@ -12317,7 +12321,7 @@ bool pc_unequipitem(map_session_data *sd, int n, int flag) {
 	if(pos & EQP_SHOES)
 		clif_changelook(&sd->bl,LOOK_SHOES,0);
 
-	clif_unequipitemack(sd,n,pos,1);
+	clif_unequipitemack(*sd,n,pos,true);
 	pc_set_costume_view(sd);
 
 	status_db.removeByStatusFlag(&sd->bl, { SCF_REMOVEONUNEQUIP });
@@ -12338,7 +12342,7 @@ bool pc_unequipitem(map_session_data *sd, int n, int flag) {
 
 					if (idx >= 0) {
 						sd->equip_index[EQI_AMMO] = -1;
-						clif_unequipitemack(sd, idx, sd->inventory.u.items_inventory[idx].equip, 1);
+						clif_unequipitemack(*sd, idx, sd->inventory.u.items_inventory[idx].equip, true);
 						pc_unequipitem_sub(sd, idx, 0);
 					}
 				}
@@ -12979,7 +12983,7 @@ bool pc_setstand(map_session_data *sd, bool force){
 
 	status_change_end(&sd->bl, SC_TENSIONRELAX);
 	clif_status_load(&sd->bl,EFST_SIT,0);
-	clif_standing(&sd->bl); //Inform area PC is standing
+	clif_standing(sd->bl); //Inform area PC is standing
 	//Reset sitting tick.
 	sd->ssregen.tick.hp = sd->ssregen.tick.sp = 0;
 	if( pc_isdead( sd ) ){

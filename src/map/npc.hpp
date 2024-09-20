@@ -1528,6 +1528,11 @@ enum e_job_types
 	JT_4_EP21_TAN_S,
 
 	JT_4_M_VACATION_MARAM = 10595,
+	JT_4_CLB_SS_FC,
+	JT_4_CLB_SS_TZ,
+	JT_4_CLB_SS_AJ,
+	JT_4_CLB_SS_LK,
+	JT_4_SMART_ANDRE,
 
 	JT_ROZ_MQ_XAVIER = 13000,
 	JT_ROZ_MQ_MOCLORD,
@@ -1547,7 +1552,7 @@ enum e_job_types
 #define MAX_NPC_CLASS2_START NPC_RANGE3_START
 #define MAX_NPC_CLASS2_END NPC_RANGE3_END
 
-//Checks if a given id is a valid npc id. [Skotlex]
+//Checks if a given id is a valid npc id.
 //Since new npcs are added all the time, the max valid value is the one before the first mob (Scorpion = 1001)
 #define npcdb_checkid(id) ( ( (id) > NPC_RANGE1_START && (id) < NPC_RANGE1_END ) || (id) == JT_HIDDEN_WARP_NPC || ( (id) > NPC_RANGE2_START && (id) < NPC_RANGE2_END ) || (id) == JT_INVISIBLE || ( (id) > NPC_RANGE3_START && (id) < NPC_RANGE3_END ) )
 

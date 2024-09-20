@@ -1150,6 +1150,51 @@ ACMD_FUNC(hide)
 	return 0;
 }
 
+ACMD_FUNC(resetcooltime)
+{
+	nullpo_retr(-1, sd);
+
+	for( size_t i = 0; i < ARRAYLENGTH( sd->scd ); i++ ){
+		if( sd->scd[i] != nullptr ) {
+			sprintf( atcmd_output, msg_txt( sd, 1537 ), skill_db.find( sd->scd[i]->skill_id )->name ); // Found skill '%s', unblocking...
+			clif_displaymessage( sd->fd, atcmd_output );
+
+			if (battle_config.display_status_timers)
+				clif_skill_cooldown( *sd, sd->scd[i]->skill_id, 0 );
+
+			delete_timer(sd->scd[i]->timer, skill_blockpc_end);
+			aFree(sd->scd[i]);
+			sd->scd[i] = nullptr;
+		}
+	}
+
+	if( sd->hd != nullptr && hom_is_active( sd->hd ) ){
+		for( const uint16& skill_id : sd->hd->blockskill ){
+			sprintf( atcmd_output, msg_txt( sd, 1537 ), skill_db.find( skill_id )->name ); // Found skill '%s', unblocking...
+			clif_displaymessage( sd->fd, atcmd_output );
+
+			if (battle_config.display_status_timers)
+				clif_skill_cooldown( *sd, skill_id, 0 );
+		}
+
+		sd->hd->blockskill.clear();
+	}
+
+	if( sd->md != nullptr ){
+		for( const uint16& skill_id : sd->md->blockskill ){
+			sprintf( atcmd_output, msg_txt( sd, 1537 ), skill_db.find( skill_id )->name ); // Found skill '%s', unblocking...
+			clif_displaymessage( sd->fd, atcmd_output );
+
+			if (battle_config.display_status_timers)
+				clif_skill_cooldown( *sd, skill_id, 0 );
+		}
+
+		sd->md->blockskill.clear();
+	}
+
+	return 0;
+}
+
 /*==========================================
  * Changes a character's class
  *------------------------------------------*/
@@ -1241,7 +1286,7 @@ ACMD_FUNC(alive)
 		clif_displaymessage(fd, msg_txt(sd,667)); // You're not dead.
 		return -1;
 	}
-	clif_skill_nodamage(&sd->bl,&sd->bl,ALL_RESURRECTION,4,1);
+	clif_skill_nodamage(&sd->bl,sd->bl,ALL_RESURRECTION,4);
 	clif_displaymessage(fd, msg_txt(sd,16)); // You've been revived! It's a miracle!
 	return 0;
 }
@@ -1314,7 +1359,7 @@ ACMD_FUNC(heal)
 
 	if ( hp < 0 && sp <= 0 ) {
 		status_damage(nullptr, &sd->bl, -hp, -sp, 0, 0, 0);
-		clif_damage(&sd->bl,&sd->bl, gettick(), 0, 0, -hp, 0, DMG_ENDURE, 0, false);
+		clif_damage(sd->bl,sd->bl, gettick(), 0, 0, -hp, 0, DMG_ENDURE, 0, false);
 		clif_displaymessage(fd, msg_txt(sd,156)); // HP or/and SP modified.
 		return 0;
 	}
@@ -1325,7 +1370,7 @@ ACMD_FUNC(heal)
 			status_heal(&sd->bl, hp, 0, 0);
 		else {
 			status_damage(nullptr, &sd->bl, -hp, 0, 0, 0, 0);
-			clif_damage(&sd->bl,&sd->bl, gettick(), 0, 0, -hp, 0, DMG_ENDURE, 0, false);
+			clif_damage(sd->bl,sd->bl, gettick(), 0, 0, -hp, 0, DMG_ENDURE, 0, false);
 		}
 	}
 
@@ -3549,7 +3594,7 @@ static void atcommand_raise_sub(map_session_data* sd) {
 
 	status_revive(&sd->bl, 100, 100);
 
-	clif_skill_nodamage(&sd->bl,&sd->bl,ALL_RESURRECTION,4,1);
+	clif_skill_nodamage(&sd->bl,sd->bl,ALL_RESURRECTION,4);
 	clif_displaymessage(sd->fd, msg_txt(sd,63)); // Mercy has been shown.
 }
 
@@ -3749,7 +3794,7 @@ ACMD_FUNC(lostskill)
 
 	sd->status.skill[sk_idx].lv = 0;
 	sd->status.skill[sk_idx].flag = SKILL_FLAG_PERMANENT;
-	clif_deleteskill(sd,skill_id);
+	clif_deleteskill(*sd,skill_id);
 	clif_displaymessage(fd, msg_txt(sd,71)); // You have forgotten the skill.
 
 	return 0;
@@ -4332,6 +4377,9 @@ ACMD_FUNC(reload) {
 	}else if( strstr( command, "barterdb" ) || strncmp( message, "barterdb", 4 ) == 0 ){
 		barter_db.reload();
 		clif_displaymessage(fd, msg_txt(sd, 830)); // Barter database has been reloaded.
+	} else if (strstr(command, "logconf") || strncmp(message, "logconf", 3) == 0) {
+		log_config_read(LOG_CONF_NAME);
+		clif_displaymessage(fd, msg_txt(sd,1536)); // Log configuration has been reloaded.
 	} else if (strstr(command, "zonedb") || strncmp(message, "zonedb", 4) == 0) {
 		map_zone_db.reload();
 		clif_displaymessage(fd, msg_txt(sd, 834)); // Map Zone database has been reloaded.
@@ -6266,7 +6314,6 @@ ACMD_FUNC(useskill)
  *------------------------------------------*/
 ACMD_FUNC(displayskill)
 {
-	struct status_data * status;
 	t_tick tick;
 	uint16 skill_id;
 	uint16 skill_lv = 1;
@@ -6279,14 +6326,15 @@ ACMD_FUNC(displayskill)
 		clif_displaymessage(fd, msg_txt(sd,825));// Effect Types: 0: All, 1: Damage, 2: Splash Dmg, 3: No Damage, 4: Ground
 		return -1;
 	}
-	status = status_get_status_data(&sd->bl);
+
+	status_data* status = status_get_status_data(sd->bl);
 	tick = gettick();
 	if (type == 0 || type == 1)
 		clif_skill_damage(&sd->bl, &sd->bl, tick, status->amotion, status->dmotion, 1, 1, skill_id, skill_lv, DMG_SINGLE);
 	if (type == 0 || type == 2)
 		clif_skill_damage(&sd->bl, &sd->bl, tick, status->amotion, status->dmotion, 1, 1, skill_id, skill_lv, DMG_SPLASH);
 	if (type == 0 || type == 3)
-		clif_skill_nodamage(&sd->bl, &sd->bl, skill_id, skill_lv, 1);
+		clif_skill_nodamage(&sd->bl, sd->bl, skill_id, skill_lv);
 	if (type == 0 || type == 4)
 		clif_skill_poseffect(&sd->bl, skill_id, skill_lv, sd->bl.x, sd->bl.y, tick);
 	return 0;
@@ -8198,7 +8246,6 @@ ACMD_FUNC(homtalk)
 ACMD_FUNC(hominfo)
 {
 	struct homun_data *hd;
-	struct status_data *status;
 	nullpo_retr(-1, sd);
 
 	if ( !hom_is_active(sd->hd) ) {
@@ -8207,7 +8254,7 @@ ACMD_FUNC(hominfo)
 	}
 
 	hd = sd->hd;
-	status = status_get_status_data(&hd->bl);
+	status_data* status = status_get_status_data(hd->bl);
 	clif_displaymessage(fd, msg_txt(sd,1261)); // Homunculus stats:
 
 	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1262), // HP: %d/%d - SP: %d/%d
@@ -11033,6 +11080,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(guildstorage),
 		ACMD_DEF(option),
 		ACMD_DEF(hide), // + /hide
+		ACMD_DEF(resetcooltime), // + /resetcooltime
 		ACMD_DEFR(jobchange, ATCMD_NOCONSOLE),
 		ACMD_DEF(kill),
 		ACMD_DEF(alive),

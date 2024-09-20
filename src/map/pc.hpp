@@ -706,7 +706,11 @@ public:
 	int united_soul[MAX_UNITED_SOULS]; // Stores the account ID's of character's who's soul is united.
 	int servant_sign[MAX_SERVANT_SIGN]; // Stores the account ID's of character's with a servant sign.
 
-	int trade_partner;
+	struct{
+		uint32 id;
+		unsigned int lv;
+	}trade_partner;
+
 	struct s_deal {
 		struct s_item {
 			short index, amount;
@@ -1228,7 +1232,7 @@ enum e_mado_type : uint16 {
 	#define pc_rightside_def(sd) ((sd)->battle_status.def)
 	#define pc_leftside_mdef(sd) ((sd)->battle_status.mdef2)
 	#define pc_rightside_mdef(sd) ((sd)->battle_status.mdef)
-	#define pc_leftside_matk(sd) (status_base_matk_min(&(sd)->bl, status_get_status_data(&(sd)->bl), (sd)->status.base_level))
+	#define pc_leftside_matk(sd) (status_base_matk_min(&(sd)->bl, status_get_status_data((sd)->bl), (sd)->status.base_level))
 	#define pc_rightside_matk(sd) ((sd)->battle_status.rhw.matk+(sd)->battle_status.lhw.matk+(sd)->bonus.ematk)
 #else
 	#define pc_leftside_atk(sd) ((sd)->battle_status.batk + (sd)->battle_status.rhw.atk + (sd)->battle_status.lhw.atk)

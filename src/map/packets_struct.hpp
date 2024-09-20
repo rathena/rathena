@@ -4998,15 +4998,17 @@ struct PACKET_ZC_POSITION_ID_NAME_INFO {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_POSITION_ID_NAME_INFO, 0x0166);
 
+struct PACKET_ZC_POSITION_INFO_sub {
+	int positionID;
+	int right;
+	int ranking;
+	int payRate;
+} __attribute__((packed));
+
 struct PACKET_ZC_POSITION_INFO {
 	int16 PacketType;
 	int16 PacketLength;
-	struct {
-		int positionID;
-		int right;
-		int ranking;
-		int payRate;
-	} posInfo[MAX_GUILDPOSITION];
+	struct PACKET_ZC_POSITION_INFO_sub posInfo[];
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_POSITION_INFO, 0x0160);
 

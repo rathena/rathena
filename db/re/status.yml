@@ -86,7 +86,7 @@ Body:
     Opt1: StoneWait
     Flags:
       SendOption: true
-      BossResist: true      
+      BossResist: true
       StopAttacking: true
     Fail:
       Whiteimprison: true
@@ -1822,6 +1822,7 @@ Body:
     Icon: EFST_ETERNALCHAOS
     DurationLookup: BD_ETERNALCHAOS
     CalcFlags:
+      Def: true
       Def2: true
     Flags:
       NoDispell: true
@@ -2618,6 +2619,9 @@ Body:
     CalcFlags:
       Batk: true
       Watk: true
+    Flags:
+      NoSave: true
+      RemoveFromHomOnMapWarp: true
   - Status: Fleet
     DurationLookup: HFLI_FLEET
     CalcFlags:
@@ -2631,7 +2635,11 @@ Body:
   - Status: Defence
     DurationLookup: HAMI_DEFENCE
     CalcFlags:
+      Def: true
       Vit: true
+    Flags:
+      NoSave: true
+      RemoveFromHomOnMapWarp: true
   - Status: Incaspdrate
     CalcFlags:
       Aspd: true
@@ -4130,7 +4138,7 @@ Body:
       Unlimitedhummingvoice: true
       Sircleofnature: true
   - Status: Deepsleep
-    Icon: EFST_HANDICAPSTATE_DEEP_SLEEP
+    Icon: EFST_DEEP_SLEEP
     DurationLookup: WM_LULLABY_DEEPSLEEP
     States:
       NoCast: true
@@ -7014,7 +7022,9 @@ Body:
     CalcFlags:
       Regen: true
   - Status: Earthshaker
+    Icon: EFST_EARTHSHAKER
     Flags:
+      BlEffect: true
       NoWarning: true
   - Status: Weaponblock_On
     Icon: EFST_WEAPONBLOCK_ON
@@ -7029,6 +7039,7 @@ Body:
     Icon: EFST_SPORE_EXPLOSION_DEBUFF
     DurationLookup: GN_SPORE_EXPLOSION
     Flags:
+      BlEffect: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
@@ -7450,7 +7461,7 @@ Body:
       NoClearance: true
       NoClearbuff: true
   - Status: Madogear
-    Icon: EFST_MADOGEAR
+    Icon: EFST_MADOGEAR_TYPE
     CalcFlags:
       Speed: true
     Flags:
@@ -7964,6 +7975,8 @@ Body:
     DurationLookup: EM_SPELL_ENCHANTING
     CalcFlags:
       Smatk: true
+    Flags:
+      DisplayPc: true
   - Status: Summon_Elemental_Ardor
     Icon: EFST_SUMMON_ELEMENTAL_ARDOR
     DurationLookup: EM_SUMMON_ELEMENTAL_ARDOR
@@ -8015,17 +8028,23 @@ Body:
     DurationLookup: TR_MUSICAL_INTERLUDE
     CalcFlags:
       Res: true
+    Flags:
+      DisplayPc: true
   - Status: Jawaii_Serenade
     Icon: EFST_JAWAII_SERENADE
     DurationLookup: TR_JAWAII_SERENADE
     CalcFlags:
       Smatk: true
       Speed: true
+    Flags:
+      DisplayPc: true
   - Status: Pron_March
     Icon: EFST_PRON_MARCH
     DurationLookup: TR_PRON_MARCH
     CalcFlags:
       Patk: true
+    Flags:
+      DisplayPc: true
   - Status: Roseblossom
     Icon: EFST_ROSEBLOSSOM
     DurationLookup: TR_ROSEBLOSSOM
@@ -8039,6 +8058,8 @@ Body:
       Powerful_Faith: true
       Firm_Faith: true
       Sincere_Faith: true
+    Flags:
+      DisplayPc: true
   - Status: Sincere_Faith
     Icon: EFST_SINCERE_FAITH
     DurationLookup: IQ_SINCERE_FAITH

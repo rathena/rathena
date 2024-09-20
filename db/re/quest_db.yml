@@ -1578,26 +1578,26 @@ Body:
   - Id: 3495
     Title: Conversation with Jeojin
   - Id: 3496
-    Title: Conversation with Squain
+    Title: Conversation with Skuain
   - Id: 3497
     Title: Conversation with Senado
   - Id: 3498
     Title: Conversation with Japer
   - Id: 3499
-    Title: Conversation with Shirouan
+    Title: Conversation with Shiroan
   - Id: 3500
-    Title: Conversation with Ishira
+    Title: Conversation with Isira
   - Id: 3501
-    Title: Conversation with Gina
+    Title: Conversation with Dina
   - Id: 3502
     Title: Conversation with Hari
   - Id: 3503
-    Title: Examine the Sky
+    Title: "[Daily] Opinion Gathering"
   - Id: 3504
-    Title: Look at the Sky - Standby
-  - Id: 3505
-    Title: Report to Junok
+    Title: "[Cooldown] Opinion Gathering"
     TimeLimit: 4h
+  - Id: 3505
+    Title: Completed Opinion Gathering
   - Id: 3507
     Title: Illusion Investigation Team - Sheshin
   - Id: 3508
@@ -3234,26 +3234,28 @@ Body:
     Title: "[Standby] Subjugation-Yanggeochon"
     TimeLimit: 4h
   - Id: 5932
-    Title: The Abused Child
+    Title: Abused Child
   - Id: 5933
-    Title: Business Plan Presentation
+    Title: Business Plan
   - Id: 5934
-    Title: Gathering Training (1)
+    Title: Foraging Practice (1)
   - Id: 5935
-    Title: Gathering Training (2)
+    Title: Foraging Practice (2)
   - Id: 5936
-    Title: Gathering Training (3)
+    Title: Foraging Practice (3)
   - Id: 5937
-    Title: "[Standby] Flower Room's work"
+    Title: "[Cooldown] Half Flower Gathering"
     TimeLimit: 4h
   - Id: 5938
-    Title: Gathering Half Flower
+    Title: "[Daily] Half Flower Gathering"
   - Id: 5939
-    Title: Gathering Half Flower
+    Title: "[Daily] Half Flower Gathering"
   - Id: 5940
-    Title: Gathering Half Flower
+    Title: "[Daily] Half Flower Gathering"
   - Id: 5941
-    Title: Gathering Half Flower
+    Title: "[Daily] Half Flower Gathering"
+  - Id: 5942
+    Title: Flower Room Opening Ceremony
   - Id: 6000
     Title: Job Change to Taekwon
   - Id: 6001
@@ -6316,55 +6318,55 @@ Body:
           DROSERA: true
           MUSCIPULAR: true
   - Id: 8681
-    Title: To Rachel (1)
+    Title: Towards Rachel (1)
   - Id: 8682
-    Title: To Rachel (2)
+    Title: Towards Rachel (2)
   - Id: 8683
-    Title: Please stop fighting
+    Title: Heated Argument
   - Id: 8684
-    Title: It's over
+    Title: State of Conflict
   - Id: 8685
-    Title: A suspicious movement detected in the temple
+    Title: Suspicious Movement
   - Id: 8686
-    Title: The Intruder of the Temple
+    Title: Intruder of the Temple
   - Id: 8687
-    Title: Did you break it?
+    Title: Staged Plot
   - Id: 8688
-    Title: Thanks for today's daily food
+    Title: Today's Daily Bread
   - Id: 8689
-    Title: Today's Daily food - Standby
+    Title: "[Cooldown] Today's Daily Bread"
     TimeLimit: 4h
   - Id: 8690
-    Title: Thanks for today's daily food
+    Title: "[Daily] Today's Daily Bread"
   - Id: 8691
-    Title: Sacred Relics for Essence (1)
+    Title: Water Purification (1)
   - Id: 8692
-    Title: Sacred Relics for Essence (2)
+    Title: Water Purification (2)
   - Id: 8693
-    Title: Sacred Relics for Essence (3)
+    Title: Water Purification (3)
   - Id: 8694
-    Title: Clean Water Procurement - Standby
+    Title: "[Cooldown] Water Purification"
     TimeLimit: 4h
   - Id: 8695
-    Title: Procurement of clean water (1)
+    Title: "[Daily] Water Purification (1)"
   - Id: 8696
-    Title: Procurement of clean water (2)
+    Title: "[Daily] Water Purification (2)"
   - Id: 8697
-    Title: Procurement of clean water (3)
+    Title: "[Daily] Water Purification (3)"
   - Id: 8698
-    Title: Late migration
+    Title: Horim's Bizarre Adventure (1)
   - Id: 8699
-    Title: First Step Out of the City
+    Title: Horim's Bizarre Adventure (2)
   - Id: 8700
-    Title: I couldn't even come halfway
+    Title: Horim's Bizarre Adventure (3)
   - Id: 8701
-    Title: Scenery I've Seen for the First Time
+    Title: Horim's Bizarre Adventure (4)
   - Id: 8702
-    Title: Smell of Volcanic Ash
+    Title: Horim's Bizarre Adventure (5)
   - Id: 8703
-    Title: The easy way to go
+    Title: Horim's Bizarre Adventure (6)
   - Id: 8718
-    Title: My friend's regards
+    Title: Greetings from a Friend
   - Id: 8719
     Title: A new area somewhere in the anthill
   - Id: 8720
@@ -8196,104 +8198,104 @@ Body:
     Title: Squirrels are rats, too? Standby
     TimeLimit: 4h
   - Id: 11696
-    Title: Niren's Request
+    Title: Niren's Request (1)
   - Id: 11697
-    Title: Niren's Request
+    Title: Niren's Request (2)
   - Id: 11698
-    Title: Niren's Request
+    Title: Niren's Request (3)
   - Id: 11699
-    Title: Niren's Request
+    Title: Niren's Request (4)
   - Id: 11700
-    Title: Niren's Request
+    Title: Niren's Request (5)
   - Id: 11701
-    Title: Niren's Request
+    Title: Niren's Request (6)
   - Id: 11702
-    Title: Niren's Request
+    Title: Niren's Request (7)
   - Id: 11703
-    Title: Niren's Request
+    Title: Niren's Request (8)
   - Id: 11704
-    Title: Niren's Request
+    Title: Gray Children (1)
   - Id: 11705
-    Title: Children of Grey
+    Title: Gray Children (2)
   - Id: 11706
-    Title: Children of Grey
+    Title: Gray Children (3)
   - Id: 11707
-    Title: Children of Grey
+    Title: Gray Children (4)
   - Id: 11708
-    Title: Children of Grey
+    Title: Gray Children (5)
   - Id: 11709
-    Title: Children of Grey
+    Title: Gray Children (6)
   - Id: 11710
-    Title: Children of Grey
+    Title: Gray Children (7)
   - Id: 11711
-    Title: Children of Grey
+    Title: Gray Children (8)
   - Id: 11712
-    Title: Children of Grey
+    Title: Gray Children (9)
   - Id: 11713
-    Title: Children of Grey
+    Title: Gray Children (10)
   - Id: 11714
-    Title: Children of Grey
+    Title: Gray Children (11)
   - Id: 11715
-    Title: Children of Grey
+    Title: Gray Children (12)
   - Id: 11716
-    Title: Children of Grey
+    Title: Gray Children (13)
   - Id: 11717
-    Title: Children of Grey
+    Title: Gray Children (14)
   - Id: 11718
-    Title: Children of Grey
+    Title: Gray Children (15)
   - Id: 11719
-    Title: Children of Grey
+    Title: Gray Children (16)
   - Id: 11720
-    Title: Children of Grey
+    Title: Gray Children (17)
   - Id: 11721
-    Title: Children of Grey
+    Title: Gray Children (18)
   - Id: 11722
-    Title: Children of Grey
+    Title: Gray Children (19)
   - Id: 11723
-    Title: Children of Grey
+    Title: Gray Children (20)
   - Id: 11724
-    Title: Children of Grey
+    Title: Gray Children (21)
   - Id: 11725
-    Title: Investigation of Oz Labyrinth
+    Title: The Labyrinth and the Merchant (1)
   - Id: 11726
-    Title: Investigation of Oz Labyrinth
+    Title: The Labyrinth and the Merchant (2)
   - Id: 11727
-    Title: Investigation of Oz Labyrinth
+    Title: The Labyrinth and the Merchant (3)
   - Id: 11728
-    Title: Investigation of Oz Labyrinth
+    Title: The Labyrinth and the Merchant (4)
   - Id: 11729
-    Title: Investigation of Oz Labyrinth
+    Title: The Labyrinth and the Merchant (5)
   - Id: 11730
-    Title: Investigation of Oz Labyrinth
+    Title: The Labyrinth and the Merchant (6)
     Targets:
       - Id: 1
         Location: oz_dun01
         Count: 10
   - Id: 11731
-    Title: Investigation of Oz Labyrinth
+    Title: The Labyrinth and the Merchant (7)
   - Id: 11732
-    Title: Investigation of Oz Labyrinth
+    Title: The Labyrinth and the Merchant (8)
   - Id: 11733
-    Title: Investigation of Oz Labyrinth
+    Title: The Labyrinth and the Merchant (9)
   - Id: 11734
-    Title: Investigation of Oz Labyrinth
+    Title: The Labyrinth and the Merchant (10)
   - Id: 11735
-    Title: Investigation of Oz Labyrinth
+    Title: The Labyrinth and the Merchant (11)
   - Id: 11736
-    Title: Maze of Oz 1st Floor (170lv)
+    Title: Oz Labyrinth 1F (170lv)
     Targets:
       - Mob: EP18_ASH_TOAD
         Count: 20
   - Id: 11737
-    Title: Maze of Oz Level 1 - Standby
+    Title: "[Cooldown] Oz Labyrinth 1F"
     TimeLimit: 4h
   - Id: 11738
-    Title: Maze of Oz Level 2 (200lv)
+    Title: Oz Labyrinth 2F (200lv)
     Targets:
       - Mob: EP18_HOT_MOLAR
         Count: 20
   - Id: 11739
-    Title: Maze of Oz Level 2 (200lv)
+    Title: "[Cooldown] Oz Labyrinth 2F"
     TimeLimit: 4h
   - Id: 12000
     Title: An old friend
@@ -9335,30 +9337,30 @@ Body:
     Title: Let's try again to seal the crack
     TimeLimit: 4h
   - Id: 12520
-    Title: Villa of Deception
+    Title: "[Normal] Villa of Deception"
   - Id: 12521
-    Title: Villa of Deception Hard
+    Title: "[Hard] Villa of Deception"
   - Id: 12522
-    Title: Cooldown: Villa of Deception
+    Title: "[Cooldown] Villa of Deception"
     TimeLimit: 4h
   - Id: 12531
-    Title: Future General Candidate
+    Title: Transporting Goods
   - Id: 12532
-    Title: Trouble at the Top
+    Title: Broken Wagon
   - Id: 12533
-    Title: The Hidden Helper
+    Title: Hidden Helper
   - Id: 12534
-    Title: The Missing Camille
+    Title: Missing Camille
   - Id: 12535
-    Title: The Governor's Decision
+    Title: Chief Decision
   - Id: 12536
-    Title: The Scattered Luggage (North)
+    Title: Scattered Goods (North)
   - Id: 12537
-    Title: Scattered Luggage (West)
+    Title: Scattered Goods (West)
   - Id: 12538
-    Title: The Scattered Luggage (East)
+    Title: Scattered Goods (East)
   - Id: 12539
-    Title: Scattered Luggage (South)
+    Title: Scattered Goods (South)
   - Id: 13000
     Title: RWC2011Card Gathering
   - Id: 13001
@@ -11512,84 +11514,84 @@ Body:
       - Mob: EP18_FIREWIND_KITE
         Count: 30
   - Id: 16549
-    Title: I can't sleep
+    Title: "[Daily] I can't sleep"
     Targets:
       - Mob: EP18_FIREWIND_KITE
         Count: 30
   - Id: 16550
-    Title: I Can't Sleep - Wait
+    Title: "[Cooldown] I can't sleep"
     TimeLimit: 4h
   - Id: 16551
-    Title: The Story of Dinar
+    Title: Collecting Folklore (1)
   - Id: 16552
-    Title: Amira's Story
+    Title: Collecting Folklore (2)
   - Id: 16553
-    Title: Shanina's Grandma's Story
+    Title: Collecting Folklore (3)
   - Id: 16554
-    Title: Please collect the stories
+    Title: Collecting Folklore (4)
   - Id: 16555
-    Title: The Story of Dinar
+    Title: "[Daily] Dinar's Story"
   - Id: 16556
-    Title: Amira's Story
+    Title: "[Daily] Amira's Story"
   - Id: 16557
-    Title: Shanina's Grandma's Story
+    Title: "[Daily] Shanina's Story"
   - Id: 16558
-    Title: Please collect the stories
+    Title: "[Daily] Collecting Folklore"
   - Id: 16559
-    Title: Please collect the stories - Standby
+    Title: "[Cooldown] Collecting Folklore"
     TimeLimit: 4h
   - Id: 16560
-    Title: This is not the place
+    Title: Ahab's Gossip (1)
   - Id: 16561
-    Title: This is not the place
+    Title: Ahab's Gossip (2)
   - Id: 16562
-    Title: This is not the place
+    Title: Ahab's Gossip (3)
   - Id: 16563
-    Title: This is not the place
+    Title: Ahab's Gossip (4)
   - Id: 16564
-    Title: This is not the place
+    Title: Ahab's Gossip (5)
   - Id: 16565
-    Title: This is not the place
+    Title: Ahab's Gossip (6)
   - Id: 16566
-    Title: This is not the place
+    Title: Ahab's Gossip (7)
   - Id: 16567
-    Title: The Contest of the Grey Wolf Forest
+    Title: Gray Wolf Forest Tournament (1)
   - Id: 16568
-    Title: Everyone's Opinion
+    Title: People's Opinion (1)
   - Id: 16569
-    Title: Everyone's Opinion
+    Title: People's Opinion (2)
   - Id: 16570
-    Title: Everyone's Opinion
+    Title: People's Opinion (3)
   - Id: 16571
-    Title: Everyone's Opinion
+    Title: People's Opinion (4)
   - Id: 16572
-    Title: The Contest of the Grey Wolf Forest
+    Title: Gray Wolf Forest Tournament (2)
   - Id: 16573
-    Title: Source of Weapon
+    Title: Source of Weapons (1)
   - Id: 16574
-    Title: Source of Weapon
+    Title: Source of Weapons (2)
   - Id: 16575
-    Title: Source of Weapon
+    Title: Source of Weapons (3)
   - Id: 16576
-    Title: Source of Weapon
+    Title: Source of Weapons (4)
   - Id: 16577
-    Title: Source of Weapon
+    Title: Source of Weapons (5)
   - Id: 16578
-    Title: Source of Weapon
+    Title: Source of Weapons (6)
   - Id: 16579
-    Title: Source of Weapon
+    Title: Source of Weapons (7)
   - Id: 16580
-    Title: Source of Weapon
+    Title: Source of Weapons (8)
   - Id: 16581
-    Title: Children Know It
+    Title: Even children know (1)
   - Id: 16582
-    Title: Children Know It
+    Title: Even children know (2)
   - Id: 16583
-    Title: Children Know It
+    Title: Even children know (3)
   - Id: 16584
-    Title: The Price of Labor
+    Title: The Price of Labor (1)
   - Id: 16585
-    Title: The Price of Labor
+    Title: The Price of Labor (2)
   - Id: 17000
     Title: Meet with Father Bamph
   - Id: 17001
@@ -11852,62 +11854,62 @@ Body:
     Title: (Standby) Thanatos Tower, 12th floor
     TimeLimit: 4h
   - Id: 17504
-    Title: Where's My Home
+    Title: Where is My Home (1)
   - Id: 17505
-    Title: Where's My Home
+    Title: Where is My Home (2)
   - Id: 17506
-    Title: Where's My Home
+    Title: Where is My Home (3)
   - Id: 17507
-    Title: Where's My Home
+    Title: Where is My Home (4)
   - Id: 17508
-    Title: Lack of Supplies
+    Title: "[Daily] Shortage of Supplies"
     Drops:
       - Mob: EP18_GREY_WOLF
         Item: Ep18_Very_Ddan_Crystal
         Rate: 5000
   - Id: 17509
-    Title: (Standby) Lack of supplies
+    Title: "[Cooldown] Shortage of Supplies"
     TimeLimit: 4h
   - Id: 17510
-    Title: There are no bad beasts in the world
+    Title: There are no evil beasts in this world (1)
   - Id: 17511
-    Title: There are no bad beasts in the world
+    Title: There are no evil beasts in this world (2)
   - Id: 17512
-    Title: There are no bad beasts in the world
+    Title: There are no evil beasts in this world (3)
   - Id: 17513
-    Title: The Unexpected Shepherd
+    Title: An Unexpected Shepherd (1)
   - Id: 17514
-    Title: The Unexpected Shepherd
+    Title: An Unexpected Shepherd (2)
     Targets:
       - Mob: EP18_ASHRING
         Count: 20
   - Id: 17515
-    Title: The Unexpected Shepherd
+    Title: An Unexpected Shepherd (3)
   - Id: 17516
-    Title: (Standby) Unexpected shepherd
+    Title: "[Cooldown] An Unexpected Shepherd"
     TimeLimit: 4h
   - Id: 17517
-    Title: The Rebels
+    Title: Rebellion (1)
   - Id: 17518
-    Title: The Rebels
+    Title: Rebellion (2)
   - Id: 17519
-    Title: The Rebels
+    Title: Rebellion (3)
   - Id: 17520
-    Title: Wolf in the Sheep
+    Title: Wolf Among Sheep (1)
   - Id: 17521
-    Title: When you need a conversation
+    Title: Wolf Among Sheep (2)
   - Id: 17522
-    Title: Cleaning the Traitors
+    Title: Wolf Among Sheep (3)
   - Id: 17523
-    Title: Purification of the Sanctuary
+    Title: Sanctuary Purification
   - Id: 17524
-    Title: Cleaning the Traitors
+    Title: "[Completed] Renegade Cleaning"
   - Id: 17525
-    Title: When you need a conversation
+    Title: Aftermath
   - Id: 17526
-    Title: Purification of the Sanctuary
+    Title: "[Completed] Sanctuary Purification"
   - Id: 17527
-    Title: (Standby) Cleaning strategy
+    Title: "[Cooldown] Sanctuary Purification"
     TimeLimit: 4h
   - Id: 17566
     Title: (Standby) Code name! Is it a star button?
@@ -12035,21 +12037,21 @@ Body:
     Title: Goseong dungeon 1st floor attack
     TimeLimit: 4h
   - Id: 18082
-    Title: Eligibility to Participate in the Competition
+    Title: Eligibility to attend the competition
   - Id: 18083
-    Title: Investigation of Daishinkan's Villa
+    Title: High Priest's Villa
   - Id: 18084
-    Title: Fact Investigation
+    Title: Fact Finding
   - Id: 18085
-    Title: The Direction of Prayer
+    Title: Direction of Prayer
   - Id: 18086
-    Title: Make the Grey Wolf Forest Safer
+    Title: "[Daily] Gray Wolf Forest Hunting"
     Targets:
       - Id: 1
         Location: gw_fild01
         Count: 30
   - Id: 18087
-    Title: Safer in the Gray Wolf Forest - Standby
+    Title: "[Cooldown] Gray Wolf Forest Hunting"
     TimeLimit: 4h
   - Id: 18100
     Title: Legends from Moscovia

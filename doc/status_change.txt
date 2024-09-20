@@ -1012,9 +1012,12 @@ SC_CHANGE	(EFST_HLIF_CHANGE)
 	val2: VIT increase (20 * val1)
 	val3: INT increase (30 * val1)
 
-SC_BLOODLUST	()
-	desc:
-	val1:
+SC_BLOODLUST	(EFST_HAMI_BLOODLUST)
+	desc: Increase the homunculus ATK and has a chance to leech HP from the target
+	val1: Skill Level
+	val2: ATK increase (20 + (10 * val1))
+	val3: Chance to leech HP (9 * val1)%
+	val4: Leeched HP percentage 20%
 
 SC_FLEET	()
 	desc:
@@ -1024,10 +1027,10 @@ SC_SPEED	()
 	desc:
 	val1:
 
-SC_DEFENCE	()
-	desc: Increase Defense, HAMI_DEFENCE effect
-	val1: (none)
-	val2: + Def(Pre-renewal) or VIT (Renewal)
+SC_DEFENCE	(EFST_HAMI_DEFENCE)
+	desc: Increase VIT and as result VIT-based DEF of the Player and plain VIT of the Homunculus
+	val1: Skill Level
+	val2: VIT increase for players, DEF increase for homunculus (5 + (5 * val1)) [Renewal], (2 * val1) [Pre-Renewal]
 
 SC_INCASPDRATE	()
 	desc: Increase ASPD
