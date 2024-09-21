@@ -2653,6 +2653,7 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 		case SHC_FATAL_SHADOW_CROW: // 9 cell cast range.
 		case MT_RUSH_QUAKE: // 9 cell cast range.
 		case ABC_UNLUCKY_RUSH: // 7 cell cast range.
+		case ABC_CHASING_BREAK: // 7 cell cast range.
 		case MH_THE_ONE_FIGHTER_RISES: // 7 cell cast range.
 		//case ABC_DEFT_STAB: // 2 cell cast range???
 		case NPC_MAXPAIN_ATK:
@@ -3017,6 +3018,7 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 			case ASC_BREAKER:
 #endif
 			case GC_CROSSIMPACT:
+			case ABC_CHASING_SHOT:
 			case SHC_SAVAGE_IMPACT:
 			case SHC_ETERNAL_SLASH:
 			case SHC_IMPACT_CRATER:
@@ -5995,6 +5997,8 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 		case ABC_UNLUCKY_RUSH:
 			skillratio += -100 + 100 + 300 * skill_lv + 5 * sstatus->pow;
+			if (sc && sc->getSCE(SC_CHASING))
+				skillratio += 2500;
 			RE_LVL_DMOD(100);
 			break;
 		case ABC_CHAIN_REACTION_SHOT:
@@ -6005,6 +6009,8 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case ABC_CHAIN_REACTION_SHOT_ATK:
 			skillratio += -100 + 800 + 2550 * skill_lv;
 			skillratio += 15 * sstatus->con;
+			if (sc && sc->getSCE(SC_CHASING))
+				skillratio += 700;
 			RE_LVL_DMOD(100);
 			break;
 		case ABC_DEFT_STAB:
@@ -7229,6 +7235,18 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 			case BO_MAYHEMIC_THORNS:
 				if (sc && sc->getSCE(SC_RESEARCHREPORT))
 					wd.div_ = 4;
+				break;
+			case ABC_CHASING_BREAK:
+				if (sc && sc->getSCE(SC_CHASING))
+					wd.div_ = 7;
+				break;
+			case ABC_CHASING_SHOT:
+				if (sc && sc->getSCE(SC_CHASING))
+					wd.div_ = 3;
+				break;
+			case ABC_HIT_AND_SLIDING:
+				if (sd && (sd->status.weapon == W_BOW))
+					wd.flag |= BF_LONG;
 				break;
 			case HN_DOUBLEBOWLINGBASH:
 				if (wd.miscflag > 1)
@@ -8552,6 +8570,25 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += -100 + 750 * skill_lv;
 						skillratio += 40 * pc_checkskill( sd, ABC_MAGIC_SWORD_M ) * skill_lv;
 						skillratio += 5 * sstatus->spl;
+						RE_LVL_DMOD(100);
+						break;
+					case ABC_HIT_AND_SLIDING:
+						skillratio += -100 + 3500 * skill_lv;
+						skillratio += 5 * sstatus->pow;
+						RE_LVL_DMOD(100);
+						break;
+					case ABC_CHASING_BREAK:
+						skillratio += -100 + 1550 + 450 * skill_lv;
+						skillratio += 5 * sstatus->pow;
+						if (sc && sc->getSCE(SC_CHASING))
+							skillratio += 200 + 50 * skill_lv;
+						RE_LVL_DMOD(100);
+						break;
+					case ABC_CHASING_SHOT:
+						skillratio += -100 + 1500 + 700 * skill_lv;
+						skillratio += 5 * sstatus->con;
+						if (sc && sc->getSCE(SC_CHASING))
+							skillratio += 250 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
 					case TR_METALIC_FURY:

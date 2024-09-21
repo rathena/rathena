@@ -8969,3 +8969,11 @@ Body:
       Bleeding: true
       Confusion: true
       Freeze: true
+  - Status: Chasing
+    Icon: EFST_CHASING
+    DurationLookup: ABC_HIT_AND_SLIDING
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true

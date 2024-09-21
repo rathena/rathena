@@ -43010,6 +43010,110 @@ Body:
           Amount: 84
         - Level: 10
           Amount: 86
+  - Id: 6512
+    Name: ABC_HIT_AND_SLIDING
+    Description: Hit And Sliding
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    Range: 2
+    Hit: Multi_Hit
+    HitCount: -5
+    Element: Weapon
+    GiveAp: 2
+    Duration1: 60000
+    Cooldown: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 43
+        - Level: 2
+          Amount: 46
+        - Level: 3
+          Amount: 49
+        - Level: 4
+          Amount: 52
+        - Level: 5
+          Amount: 55
+    Status: Chasing
+  - Id: 6513
+    Name: ABC_CHASING_BREAK
+    Description: Chasing Break
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 7
+    Hit: Multi_Hit
+    HitCount: 5
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
+    Element: Weapon
+    GiveAp: 2
+    Cooldown: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 62
+        - Level: 2
+          Amount: 66
+        - Level: 3
+          Amount: 70
+        - Level: 4
+          Amount: 74
+        - Level: 5
+          Amount: 78
+  - Id: 6514
+    Name: ABC_CHASING_SHOT
+    Description: Chasing Shot
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+      Critical: true
+    Range: 7
+    Hit: Multi_Hit
+    HitCount: 2
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
+    Element: Weapon
+    GiveAp: 2
+    Cooldown: 1500
+    FixedCastTime: 300 #TODO: confirm fixed cast time
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 85
+        - Level: 2
+          Amount: 90
+        - Level: 3
+          Amount: 95
+        - Level: 4
+          Amount: 100
+        - Level: 5
+          Amount: 105
+      Weapon:
+        Bow: true
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch
