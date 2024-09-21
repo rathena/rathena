@@ -5936,6 +5936,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					break;
 				case IG_SHIELD_SHOOTING:
 				case IG_GRAND_JUDGEMENT:
+				case SHC_CROSS_SLASH:
 					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 					sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
 					break;
@@ -8623,6 +8624,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case IQ_MASSIVE_F_BLASTER:
 	case IQ_EXPOSION_BLASTER:
 	case SHC_IMPACT_CRATER:
+	case SHC_CROSS_SLASH:
 	case MT_AXE_STOMP:
 	case MT_MIGHTY_SMASH:
 	case ABC_ABYSS_DAGGER:

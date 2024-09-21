@@ -43010,6 +43010,46 @@ Body:
           Amount: 84
         - Level: 10
           Amount: 86
+  - Id: 6511
+    Name: SHC_CROSS_SLASH
+    Description: Cross Slash
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+      Critical: true
+    Range: 3
+    Hit: Multi_Hit
+    HitCount: 3
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
+    GiveAp: 2
+    Duration1: 10000
+    Cooldown: 1000 #TODO: confirm cooldown
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 58
+        - Level: 2
+          Amount: 63
+        - Level: 3
+          Amount: 68
+        - Level: 4
+          Amount: 73
+        - Level: 5
+          Amount: 78
+    Status: WeaponBlock_On
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch
