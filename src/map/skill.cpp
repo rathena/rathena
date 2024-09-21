@@ -5882,7 +5882,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 					if (skill_check_unit_movepos(0, src, bl->x + dirx[dir], bl->y + diry[dir], 1, 1))
 						clif_blown(src);
-					clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+					clif_skill_nodamage(src, *bl, skill_id, skill_lv, 1);
 					break;
 				}
 				case AG_ROCK_DOWN:
@@ -6761,7 +6761,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 
 		// Trigger skill animation
-		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv, 1);
 		break;
 	}
 
