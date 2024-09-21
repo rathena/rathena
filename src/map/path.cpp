@@ -448,29 +448,31 @@ bool check_distance(int dx, int dy, int distance)
 unsigned int distance(int dx, int dy)
 {
 #ifdef CIRCULAR_AREA
-	unsigned int min, max;
+    unsigned int min, max;
 
-	if ( dx < 0 ) dx = -dx;
-	if ( dy < 0 ) dy = -dy;
-	//There appears to be something wrong with the approximation below when either dx/dy is 0! [Skotlex]
-	if ( dx == 0 ) return dy;
-	if ( dy == 0 ) return dx;
+    if (dx < 0) dx = -dx;
+    if (dy < 0) dy = -dy;
 
-	if ( dx < dy )
-	{
-		min = dx;
-		max = dy;
-	} else {
-		min = dy;
-		max = dx;
-	}
-   // coefficients equivalent to ( 123/128 * max ) and ( 51/128 * min )
-	return ((( max << 8 ) + ( max << 3 ) - ( max << 4 ) - ( max << 1 ) +
-		( min << 7 ) - ( min << 5 ) + ( min << 3 ) - ( min << 1 )) >> 8 );
+    if (dx == 0) return dy;  // Handle case when dx is zero
+    if (dy == 0) return dx;  // Handle case when dy is zero
+
+    if (dx < dy) {
+        min = dx;
+        max = dy;
+    } else {
+        min = dy;
+        max = dx;
+    }
+    double area = (123.0 / 128.0 * max) + (51.0 / 128.0 * min);
+    
+    double radius = static_cast<double>(max) / 2.0;
+    area = std::numbers::pi * radius * radius;
+
+    return static_cast<unsigned int>(area);
 #else
 	if (dx < 0) dx = -dx;
 	if (dy < 0) dy = -dy;
-	return (dx<dy?dy:dx);
+	return static_cast<unsigned int>(std::sqrt(dx * dx + dy * dy));
 #endif
 }
 
