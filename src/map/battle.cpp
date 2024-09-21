@@ -5956,7 +5956,8 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case SHC_CROSS_SLASH:
-			skillratio += -100 + 300 * skill_lv + 5 * sstatus->pow;	// !TODO: check POW ratio
+			skillratio += -100 + 300 * skill_lv;
+			skillratio += 5 * sstatus->pow;
 
 			if( sc != nullptr && sc->getSCE( SC_SHADOW_EXCEED ) )
 				skillratio += 60 * skill_lv;
