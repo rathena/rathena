@@ -5959,8 +5959,10 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += -100 + 300 * skill_lv;
 			skillratio += 5 * sstatus->pow;
 
-			if( sc != nullptr && sc->getSCE( SC_SHADOW_EXCEED ) )
+			if( sc != nullptr && sc->getSCE( SC_SHADOW_EXCEED ) ) {
 				skillratio += 60 * skill_lv;
+				skillratio += 2 * sstatus->pow;
+			}
 			RE_LVL_DMOD(100);
 			break;
 		case MT_AXE_STOMP:
