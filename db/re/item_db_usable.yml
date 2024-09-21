@@ -78855,6 +78855,11 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_STOVE_CHANNELING_BOX_4);
+  - Id: 103263
+    AegisName: Summer_Select_Box4
+    Name: Star Footprint Selection Box (Summer Beach)
+    Type:  Usable
+    Weight: 10
   - Id: 200000
     AegisName: IDTest_Cash
     Name: IDTest Cash
