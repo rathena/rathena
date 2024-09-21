@@ -80408,6 +80408,28 @@ Body:
     Name: Footprint Effect
     Type: Card
     SubType: Enchant
+    Script: |
+      hateffect FOOTPRINT_EF_BASE,true;
+    UnEquipScript: |
+      hateffect FOOTPRINT_EF_BASE,false;
+  - Id: 313067
+    AegisName: aegis_313067
+    Name: Purple Star Footprint
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect FOOTPRINT_EF_PURPLESTAR,true;
+    UnEquipScript: |
+      hateffect FOOTPRINT_EF_PURPLESTAR,false;
+  - Id: 313068
+    AegisName: aegis_313068
+    Name: Yellow Star Footprint
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect FOOTPRINT_EF_YELLOWSTAR,true;
+    UnEquipScript: |
+      hateffect FOOTPRINT_EF_YELLOWSTAR,false;
   - Id: 313070
     AegisName: Ep21_4_Def
     Name: Forest Magic Orb (Physical Defense)
@@ -81896,6 +81918,15 @@ Body:
     Script: |
       bonus bLongAtkRate,getskilllv("SH_HOWLING_OF_CHUL_HO");
       bonus bBaseAtk,4*getskilllv("SH_HOWLING_OF_CHUL_HO");
+  - Id: 313345
+    AegisName: aegis_313345
+    Name: Puppy Footprint
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect FOOTPRINT_EF_DOGFOOT,true;
+    UnEquipScript: |
+      hateffect FOOTPRINT_EF_DOGFOOT,false;
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event
@@ -89440,6 +89471,11 @@ Body:
     Name: Footprint Effect (Garment)
     Type: Etc
     Weight: 100
+  - Id: 1001617
+    AegisName: PurpleStar_Foot_Robe
+    Name: Purple Star Footprint (Garment)
+    Type: Etc
+    Weight: 100
   - Id: 1001618
     AegisName: aegis_1001618
     Name: Wigner Premium Exchange Ticket
@@ -89709,6 +89745,11 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+  - Id: 1001650
+    AegisName: YellowStar_Foot_Robe
+    Name: Yellow Star Footprint (Garment)
+    Type: Etc
+    Weight: 100
   - Id: 1001653
     AegisName: Ep21_Armor_E_Stone1
     Name: Turquoise Magic Stone
@@ -90322,6 +90363,11 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1001772
+    AegisName: aegis_1001772
+    Name: Puppy Footprint (Garment)
+    Type: Etc
+    Weight: 100
   - Id: 1200000
     AegisName: IDTest_arrow
     Name: IDTest arrow
