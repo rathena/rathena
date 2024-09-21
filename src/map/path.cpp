@@ -435,9 +435,7 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 bool check_distance(int dx, int dy, int distance)
 {
 #ifdef CIRCULAR_AREA
-	dx = std::abs(dx);
-	dy = std::abs(dy);
-
+	//In this case, we just do a square comparison. Add 1 tile grace for diagonal range checks.
 	return (dx * dx + dy * dy <= distance * distance + (dx && dy ? 1 : 0));
 #else
 	dx = std::abs(dx);
