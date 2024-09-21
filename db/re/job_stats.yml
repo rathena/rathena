@@ -6754,6 +6754,34 @@ Body:
         Dex: 1
       - Level: 49
         Luk: 1
+      - Level: 51
+        Str: 1
+      - Level: 52
+        Agi: 1
+      - Level: 54
+        Vit: 1
+      - Level: 56
+        Int: 1
+      - Level: 57
+        Dex: 1
+      - Level: 59
+        Luk: 1
+      - Level: 61
+        Str: 1
+      - Level: 62
+        Agi: 1
+      - Level: 63
+        Int: 1
+      - Level: 64
+        Dex: 1
+      - Level: 66
+        Str: 1
+      - Level: 67
+        Agi: 1
+      - Level: 68
+        Int: 1
+      - Level: 70
+        Dex: 1
   - Jobs:
       Super_Baby_E: true
     BonusStats:
@@ -6817,6 +6845,34 @@ Body:
         Dex: 1
       - Level: 49
         Luk: 1
+      - Level: 51
+        Str: 1
+      - Level: 52
+        Agi: 1
+      - Level: 54
+        Vit: 1
+      - Level: 56
+        Int: 1
+      - Level: 57
+        Dex: 1
+      - Level: 59
+        Luk: 1
+      - Level: 61
+        Str: 1
+      - Level: 62
+        Agi: 1
+      - Level: 63
+        Int: 1
+      - Level: 64
+        Dex: 1
+      - Level: 66
+        Str: 1
+      - Level: 67
+        Agi: 1
+      - Level: 68
+        Int: 1
+      - Level: 70
+        Dex: 1
   - Jobs:
       Kagerou: true
     MaxWeight: 26000
@@ -6893,6 +6949,22 @@ Body:
         Str: 1
       - Level: 50
         Dex: 1
+      - Level: 55
+        Agi: 1
+      - Level: 60
+        Agi: 1
+      - Level: 61
+        Agi: 1
+      - Level: 63
+        Vit: 1
+      - Level: 65
+        Luk: 1
+      - Level: 66
+        Dex: 1
+      - Level: 68
+        Agi: 1
+      - Level: 70
+        Vit: 1
   - Jobs:
       Oboro: true
     MaxWeight: 26000
@@ -6969,6 +7041,22 @@ Body:
         Str: 1
       - Level: 50
         Dex: 1
+      - Level: 55
+        Agi: 1
+      - Level: 60
+        Agi: 1
+      - Level: 61
+        Agi: 1
+      - Level: 63
+        Vit: 1
+      - Level: 65
+        Luk: 1
+      - Level: 66
+        Agi: 1
+      - Level: 68
+        Vit: 1
+      - Level: 70
+        Luk: 1
   - Jobs:
       Rebellion: true
     MaxWeight: 28000
@@ -7048,6 +7136,20 @@ Body:
         Dex: 1
       - Level: 57
         Agi: 1
+      - Level: 60
+        Dex: 1
+      - Level: 62
+        Dex: 1
+      - Level: 64
+        Luk: 1
+      - Level: 65
+        Agi: 1
+      - Level: 66
+        Dex: 1
+      - Level: 69
+        Agi: 1
+      - Level: 70
+        Luk: 1
   - Jobs:
       Summoner: true
     HpFactor: 70
@@ -7120,6 +7222,14 @@ Body:
       - Level: 48
         Agi: 1
       - Level: 50
+        Dex: 1
+      - Level: 53
+        Int: 1
+      - Level: 55
+        Dex: 1
+      - Level: 58
+        Int: 1
+      - Level: 60
         Dex: 1
   - Jobs:
       Baby_Summoner: true
@@ -7194,6 +7304,14 @@ Body:
       - Level: 48
         Agi: 1
       - Level: 50
+        Dex: 1
+      - Level: 53
+        Int: 1
+      - Level: 55
+        Dex: 1
+      - Level: 58
+        Int: 1
+      - Level: 60
         Dex: 1
   - Jobs:
       Baby_Ninja: true
@@ -7327,6 +7445,22 @@ Body:
         Str: 1
       - Level: 50
         Dex: 1
+      - Level: 55
+        Agi: 1
+      - Level: 60
+        Agi: 1
+      - Level: 61
+        Agi: 1
+      - Level: 63
+        Vit: 1
+      - Level: 65
+        Luk: 1
+      - Level: 66
+        Dex: 1
+      - Level: 68
+        Agi: 1
+      - Level: 70
+        Vit: 1
   - Jobs:
       Baby_Oboro: true
     MaxWeight: 26000
@@ -7403,6 +7537,22 @@ Body:
         Str: 1
       - Level: 50
         Dex: 1
+      - Level: 55
+        Agi: 1
+      - Level: 60
+        Agi: 1
+      - Level: 61
+        Agi: 1
+      - Level: 63
+        Vit: 1
+      - Level: 65
+        Luk: 1
+      - Level: 66
+        Agi: 1
+      - Level: 68
+        Vit: 1
+      - Level: 70
+        Luk: 1
   - Jobs:
       Baby_Taekwon: true
     MaxWeight: 28000
@@ -7713,6 +7863,20 @@ Body:
         Dex: 1
       - Level: 57
         Agi: 1
+      - Level: 60
+        Dex: 1
+      - Level: 62
+        Dex: 1
+      - Level: 64
+        Luk: 1
+      - Level: 65
+        Agi: 1
+      - Level: 66
+        Dex: 1
+      - Level: 69
+        Agi: 1
+      - Level: 70
+        Luk: 1
   - Jobs:
       Star_Emperor: true
       Star_Emperor2: true
@@ -7795,6 +7959,18 @@ Body:
         Str: 1
       - Level: 59
         Agi: 1
+      - Level: 61
+        Str: 1
+      - Level: 64
+        Vit: 1
+      - Level: 65
+        Agi: 1
+      - Level: 66
+        Vit: 1
+      - Level: 69
+        Str: 1
+      - Level: 70
+        Agi: 1
   - Jobs:
       Soul_Reaper: true
     MaxWeight: 24000
@@ -7875,6 +8051,18 @@ Body:
         Int: 1
       - Level: 59
         Int: 1
+      - Level: 62
+        Dex: 1
+      - Level: 64
+        Vit: 1
+      - Level: 65
+        Luk: 1
+      - Level: 67
+        Dex: 1
+      - Level: 69
+        Vit: 1
+      - Level: 70
+        Luk: 1
   - Jobs:
       Baby_Star_Emperor: true
       Baby_Star_Emperor2: true
@@ -7957,6 +8145,18 @@ Body:
         Str: 1
       - Level: 59
         Agi: 1
+      - Level: 61
+        Str: 1
+      - Level: 64
+        Vit: 1
+      - Level: 65
+        Agi: 1
+      - Level: 66
+        Vit: 1
+      - Level: 69
+        Str: 1
+      - Level: 70
+        Agi: 1
   - Jobs:
       Baby_Soul_Reaper: true
     MaxWeight: 24000
@@ -8037,6 +8237,18 @@ Body:
         Int: 1
       - Level: 59
         Int: 1
+      - Level: 62
+        Dex: 1
+      - Level: 64
+        Vit: 1
+      - Level: 65
+        Luk: 1
+      - Level: 67
+        Dex: 1
+      - Level: 69
+        Vit: 1
+      - Level: 70
+        Luk: 1
   - Jobs:
       Dragon_Knight: true
       Dragon_Knight2: true
