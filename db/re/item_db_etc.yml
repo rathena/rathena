@@ -80692,7 +80692,7 @@ Body:
       hateffect FOOTPRINT_EF_PURPLESTAR,false;
   - Id: 313068
     AegisName: aegis_313068
-    Name: Yellow Star Footprint    # !todo check english name
+    Name: Yellow Star Footprint
     Type: Card
     SubType: Enchant
     Script: |
@@ -82188,7 +82188,6 @@ Body:
       bonus bLongAtkRate,getskilllv("SH_HOWLING_OF_CHUL_HO");
       bonus bBaseAtk,4*getskilllv("SH_HOWLING_OF_CHUL_HO");
   - Id: 313345
-    AegisName: aegis_313345
     AegisName: aegis_313345
     Name: Puppy Footprint
     Type: Card
@@ -90977,7 +90976,7 @@ Body:
       NoAuction: true
   - Id: 1001772
     AegisName: aegis_1001772
-    Name: Puppy Footprints (Garment)
+    Name: Puppy Footprint (Garment)
     Type: Etc
     Weight: 100
   - Id: 1001787
