@@ -43063,7 +43063,8 @@ Body:
       - Level: 5
         Area: 3
     GiveAp: 2
-    Cooldown: 1500
+    AfterCastActDelay: 500
+    Cooldown: 500
     Requires:
       SpCost:
         - Level: 1
