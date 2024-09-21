@@ -436,43 +436,33 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 bool check_distance(int dx, int dy, int distance)
 {
 #ifdef CIRCULAR_AREA
-	//In this case, we just do a square comparison. Add 1 tile grace for diagonal range checks.
-	return (dx*dx + dy*dy <= distance*distance + (dx&&dy?1:0));
+	dx = std::abs(dx);
+	dy = std::abs(dy);
+
+	return (dx * dx + dy * dy <= distance * distance + (dx && dy ? 1 : 0));
 #else
-	if (dx < 0) dx = -dx;
-	if (dy < 0) dy = -dy;
-	return ((dx<dy?dy:dx) <= distance);
+	dx = std::abs(dx);
+	dy = std::abs(dy);
+
+	return (std::max(dx, dy) <= distance);
 #endif
 }
 
 unsigned int distance(int dx, int dy)
 {
 #ifdef CIRCULAR_AREA
-    unsigned int min, max;
+	dx = std::abs(dx);
+	dy = std::abs(dy);
 
-    if (dx < 0) dx = -dx;
-    if (dy < 0) dy = -dy;
+	// Calculate the approximate distance using the Chebyshev formula
+	double approx_distance = (123.0 / 128.0 * std::max(dx, dy)) + (51.0 / 128.0 * std::min(dx, dy));
 
-    if (dx == 0) return dy;  // Handle case when dx is zero
-    if (dy == 0) return dx;  // Handle case when dy is zero
-
-    if (dx < dy) {
-        min = dx;
-        max = dy;
-    } else {
-        min = dy;
-        max = dx;
-    }
-    double area = (123.0 / 128.0 * max) + (51.0 / 128.0 * min);
-    
-    double radius = static_cast<double>(max) / 2.0;
-    area = std::numbers::pi * radius * radius;
-
-    return static_cast<unsigned int>(area);
+	return static_cast<unsigned int>(std::max(approx_distance, 1.0));
 #else
-	if (dx < 0) dx = -dx;
-	if (dy < 0) dy = -dy;
-	return static_cast<unsigned int>(std::sqrt(dx * dx + dy * dy));
+	dx = std::abs(dx);
+	dy = std::abs(dy);
+
+	return std::max(dx, dy);
 #endif
 }
 
@@ -498,17 +488,15 @@ bool check_distance_client(int dx, int dy, int distance)
  * @param dy: Vertical distance
  * @return Circular distance
  */
-int distance_client(int dx, int dy)
+unsigned int distance_client(int dx, int dy)
 {
-	double temp_dist = sqrt((double)(dx*dx + dy*dy));
+	double temp_dist = std::sqrt(dx*dx + dy*dy);
 
 	//Bonus factor used by client
 	//This affects even horizontal/vertical lines so they are one cell longer than expected
 	temp_dist -= 0.1;
 
-	if(temp_dist < 0) temp_dist = 0;
-
-	return ((int)temp_dist);
+	return static_cast<unsigned int>(std::max(temp_dist,0.0));
 }
 
 bool direction_diagonal( enum directions direction ){
