@@ -7535,7 +7535,7 @@ Body:
       TargetTrap: true
     Range: 9
     Hit: Multi_Hit
-    HitCount: 5
+    HitCount: -5
     Element: Weapon
     CopyFlags:
       Skill:

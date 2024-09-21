@@ -3693,6 +3693,12 @@ static int battle_get_spiritball_damage(struct Damage& wd, struct block_list& sr
 			// These skills used as many spheres as they do hits
 			damage = (wd.div_ + sd->spiritball) * 3;
 			break;
+#ifdef RENEWAL
+		case MO_FINGEROFFENSIVE:
+			// These skills store the spheres used in spiritball_old
+			damage = (sd->spiritball_old + sd->spiritball) * 3;
+			break;
+#endif
 		case MO_EXTREMITYFIST:
 			// These skills store the number of spheres the player had before cast
 			damage = sd->spiritball_old * 3;
@@ -6803,9 +6809,9 @@ static void battle_calc_attack_plant(struct Damage* wd, struct block_list *src,s
 		return;
 	}
 
-	// Triple Attack has a special property that it does not split damage on plant mode
+	// Triple Attack and Finger Offensive have a special property, they do not split damage on plant mode
 	// In pre-renewal, it requires the monster to have exactly 100 def
-	if (skill_id == MO_TRIPLEATTACK && wd->div_ < 0
+	if ((skill_id == MO_TRIPLEATTACK || skill_id == MO_FINGEROFFENSIVE) && wd->div_ < 0
 #ifndef RENEWAL
 		&& tstatus->def == 100
 #endif

@@ -5635,6 +5635,8 @@ Body:
         Str: 1
       - Level: 60
         Int: 1
+      - Level: 61
+        Str: 1
   - Jobs:
       Genetic: true
     MaxWeight: 32000
@@ -6200,6 +6202,8 @@ Body:
         Str: 1
       - Level: 60
         Int: 1
+      - Level: 61
+        Str: 1
   - Jobs:
       Genetic_T: true
     MaxWeight: 32000
@@ -7248,6 +7252,8 @@ Body:
         Str: 1
       - Level: 60
         Int: 1
+      - Level: 61
+        Str: 1
   - Jobs:
       Baby_Genetic: true
     MaxWeight: 30000
