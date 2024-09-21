@@ -43036,7 +43036,8 @@ Body:
         Area: 3
     GiveAp: 2
     Duration1: 10000
-    Cooldown: 1000 #TODO: confirm cooldown
+    AfterCastActDelay: 700
+    Cooldown: 1000
     Requires:
       SpCost:
         - Level: 1
