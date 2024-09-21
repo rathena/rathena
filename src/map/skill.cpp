@@ -6743,7 +6743,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		uint8 dir = DIR_NORTHEAST;
 
 		// Calculate distance between the player and target
-		int distance = abs(src->x - bl->x) + abs(src->y - bl->y);
+		int distance = (int) sqrt(pow(src->x - bl->x, 2) + pow(src->y - bl->y, 2));
 		int base_backslide = skill_lv;	// Number of cells to move back based on skill level
 		int total_backslide = base_backslide + distance;	// Total backslide = base backslide + distance between player and target
 
