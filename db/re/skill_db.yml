@@ -43021,6 +43021,7 @@ Body:
     Range: 9
     Hit: Multi_Hit
     HitCount: 5
+    GiveAp: 3
     SplashArea:
       - Level: 1
         Area: 2
