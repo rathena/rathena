@@ -3020,6 +3020,7 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 			case SHC_SAVAGE_IMPACT:
 			case SHC_ETERNAL_SLASH:
 			case SHC_IMPACT_CRATER:
+			case NW_WILD_SHOT:
 				cri /= 2;
 				break;
 			case WH_GALESTORM:
@@ -6271,6 +6272,32 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				skillratio += pc_checkskill( sd, NW_GRENADE_MASTERY ) * 30;
 			}
 			skillratio += 5 * sstatus->con;
+			RE_LVL_DMOD(100);
+			break;
+		case NW_WILD_SHOT:
+			skillratio += -100 + 870 + 180 * skill_lv;
+			if (sc && sc->getSCE(SC_HIDDEN_CARD)) {
+				if (sd && sd->weapontype1 == W_REVOLVER)
+					skillratio += 60 * skill_lv;
+				else
+					skillratio += 100 * skill_lv;
+			}
+			skillratio += 5 * sstatus->con; //!TODO: check con ratio
+			RE_LVL_DMOD(100);
+			break;
+		case NW_MIDNIGHT_FALLEN:
+			skillratio += -100 + 2400 + 800 * skill_lv;
+			if (sc && sc->getSCE(SC_HIDDEN_CARD)) {
+				if (sd) {
+					if (sd->weapontype1 == W_GATLING)
+						skillratio += 200 * skill_lv;
+					else if (sd->weapontype1 == W_GRENADE)
+						skillratio += 340 * skill_lv;
+					else
+						skillratio += 400 * skill_lv;
+				}
+			}
+			skillratio += 5 * sstatus->con; //!TODO: check con ratio
 			RE_LVL_DMOD(100);
 			break;
 	}

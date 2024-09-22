@@ -5276,6 +5276,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case NW_HASTY_FIRE_IN_THE_HOLE:
 	case NW_BASIC_GRENADE:
 	case NW_WILD_FIRE:
+	case NW_MIDNIGHT_FALLEN:
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 	case DK_DRAGONIC_AURA:
@@ -5974,6 +5975,19 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			map_foreachinrange(skill_area_sub, bl, splash, BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
 			if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
 				status_change_end(src, SC_INTENSIVE_AIM_COUNT);
+		}
+		break;
+	case NW_WILD_SHOT:
+		if (flag & 1) {
+			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
+		} else {
+			int splash = skill_get_splash(skill_id, skill_lv);
+
+			if (sd && sd->weapontype1 == W_RIFLE)
+				splash += 1;
+			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+			map_foreachinrange(skill_area_sub, bl, splash, BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
+
 		}
 		break;
 
@@ -14744,6 +14758,16 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		for (i = 1; i <= (skill_get_time(skill_id, skill_lv) / skill_get_unit_interval(skill_id)); i++) {
 			skill_addtimerskill(src, tick + (t_tick)i*skill_get_unit_interval(skill_id), 0, x, y, skill_id, skill_lv, 0, flag);
 		}
+		break;
+	case NW_MIDNIGHT_FALLEN:
+		i = skill_get_splash(skill_id, skill_lv);
+		if (sd) {
+			if (sd->status.weapon == W_GATLING)
+				i += 1;
+			else if (sd->status.weapon == W_GRENADE)
+				i += 2;
+		}
+		map_foreachinallarea(skill_area_sub,src->m, x - i, y - i, x + i, y + i, BL_CHAR,src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1,skill_castend_damage_id);
 		break;
 
 	default:
