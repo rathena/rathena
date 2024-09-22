@@ -50,7 +50,6 @@ static BHEAP_STRUCT_VAR(node_heap, g_open_set);	// use static heap for all path 
 
 #define calc_index(x,y) (((x)+(y)*MAX_WALKPATH) & (MAX_WALKPATH*MAX_WALKPATH-1))
 
-/// Estimates the cost from (dx) to (dy).
 /// Manhattan distance -> Radius.DIAMOND
 #define manhattan_distance(dx, dy) \
     static_cast<unsigned short>(std::abs(dx) + std::abs(dy))
@@ -73,8 +72,8 @@ static BHEAP_STRUCT_VAR(node_heap, g_open_set);	// use static heap for all path 
 	static_cast<unsigned int>(std::max(std::abs(dx), std::abs(dy)))
 
 /*
- * 	taken from https://cplusplus.com/forum/beginner/178293/
- *  Euclidean distance -> Radius.CIRCLE
+ * taken from https://cplusplus.com/forum/beginner/178293/
+ * Euclidean distance -> Radius.CIRCLE
 */
 #define euclidean_distance(dx, dy) \
 	std::sqrt(static_cast<double>(std::pow(std::abs(dx), 2) + std::pow(std::abs(dy), 2)))
@@ -97,6 +96,7 @@ static unsigned short heuristic_walkpath_cost(int dx, int dy)
 	return MOVE_COST * manhattan_distance(dx,dy);
 }
 
+// Estimates the cost from (x0,y0) to (x1,y1).
 #define walkpath_xy_cost(x0, y0, x1, y1) heuristic_walkpath_cost((x1)-(x0), (y1)-(y0))
 
 // Translates dx,dy into walking direction

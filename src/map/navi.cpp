@@ -58,7 +58,6 @@ static BHEAP_STRUCT_VAR(node_heap, g_open_set);	// use static heap for all path 
 
 #define calc_index(x,y) (((x)+(y)*MAX_WALKPATH_NAVI) & (MAX_WALKPATH_NAVI*MAX_WALKPATH_NAVI-1))
 
-/// Estimates the cost from (dx) to (dy).
 /// Manhattan distance -> Radius.DIAMOND
 #define manhattan_distance(dx, dy) \
     static_cast<unsigned short>(std::abs(dx) + std::abs(dy))
@@ -76,6 +75,7 @@ static unsigned short heuristic_navipath_cost(int dx, int dy)
 	return MOVE_COST * manhattan_distance(dx,dy);
 }
 
+// Estimates the cost from (x0,y0) to (x1,y1).
 #define navipath_xy_cost(x0, y0, x1, y1) heuristic_navipath_cost((x1)-(x0), (y1)-(y0))
 
 // Translates dx,dy into walking direction
