@@ -7836,14 +7836,19 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
 	case SS_FOUR_CHARM:
-		switch (sd->spiritcharm_type) {
-			case CHARM_TYPE_FIRE:  type = SC_FIRE_CHARM_POWER;    break;
-			case CHARM_TYPE_WATER: type = SC_WATER_CHARM_POWER;   break;
-			case CHARM_TYPE_LAND:  type = SC_GROUND_CHARM_POWER;  break;
-			case CHARM_TYPE_WIND:  type = SC_WIND_CHARM_POWER;    break;
+		if (sd != nullptr) {
+			switch (sd->spiritcharm_type) {
+				case CHARM_TYPE_FIRE:  type = SC_FIRE_CHARM_POWER;    break;
+				case CHARM_TYPE_WATER: type = SC_WATER_CHARM_POWER;   break;
+				case CHARM_TYPE_LAND:  type = SC_GROUND_CHARM_POWER;  break;
+				case CHARM_TYPE_WIND:  type = SC_WIND_CHARM_POWER;    break;
+				default:  type = SC_NONE;    break;
+			}
+			if (type != SC_NONE) {
+				clif_skill_nodamage(src, *bl, skill_id, skill_lv,
+					sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
+			}
 		}
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv,
-			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
 		break;
 
 	case PR_KYRIE:
