@@ -52,7 +52,37 @@ static BHEAP_STRUCT_VAR(node_heap, g_open_set);	// use static heap for all path 
 
 /// Estimates the cost from (x0,y0) to (x1,y1).
 /// This is inadmissible (overestimating) heuristic used by game client.
-#define heuristic(x0, y0, x1, y1)	(MOVE_COST * (abs((x1) - (x0)) + abs((y1) - (y0)))) // Manhattan distance
+/// Manhattan distance -> Radius.DIAMOND
+#define heuristic(x0, y0, x1, y1)	(MOVE_COST * (abs((x1) - (x0)) + abs((y1) - (y0))))
+
+/*
+ * The coefficients 0.96 and 0.4 using bit operations. Since computers work with binary numbers, it is more efficient to perform bit operations (shifts, additions, and subtractions) than multiplications and divisions.
+ * 123/128 is a good approximation for 0.96. The formula uses a combination of left shifts (<<) and subtractions to approximate this multiplication.
+ * 51/128 is a good approximation for 0.4. The formula uses a similar process to approximate this multiplication using shifts and subtractions.
+ * Why use these specific coefficients?
+ * Efficiency: They allow you to calculate the Chebyshev distance using bit operations, which are faster than floating-point operations.
+ * Reasonable accuracy: Although they are not exact representations, these coefficients provide a reasonable approximation for the Chebyshev distance in many cases.
+ * taken from http://web.archive.org/web/20071003001801/http://www.flipcode.com/articles/article_fastdistance.shtml
+ * Chebyshev distance -> Radius.SQUARE
+*/
+#define chebyshev_distance(dx, dy) \
+	static_cast<unsigned int>((123.0 / 128.0 * std::max(std::abs(dx), std::abs(dy))) + (51.0 / 128.0 * std::min(std::abs(dx), std::abs(dy))))
+
+/* Chebyshev range -> Radius.SQUARE */
+#define chebyshev_range(dx, dy) \
+	static_cast<unsigned int>(std::max(std::abs(dx), std::abs(dy)))
+
+/*
+ * 	taken from https://cplusplus.com/forum/beginner/178293/
+ *  Euclidean distance -> Radius.CIRCLE
+*/
+#define euclidean_distance(dx, dy) \
+	std::sqrt(static_cast<double>(std::pow(std::abs(dx), 2) + std::pow(std::abs(dy), 2)))
+
+/* Euclidean range -> Radius.CIRCLE */
+#define euclidean_range(dx, dy) \
+	static_cast<unsigned int>(std::pow(std::abs(dx), 2) + std::pow(std::abs(dy), 2))
+
 /// @}
 
 // Translates dx,dy into walking direction
@@ -431,35 +461,22 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 	return false;
 }
 
-//Distance functions, taken from http://www.flipcode.com/articles/article_fastdistance.shtml
 bool check_distance(int dx, int dy, int distance)
 {
 #ifdef CIRCULAR_AREA
 	//In this case, we just do a square comparison. Add 1 tile grace for diagonal range checks.
-	return (dx * dx + dy * dy <= distance * distance + (dx && dy ? 1 : 0));
+	return (euclidean_range(dx,dy) <= std::pow(distance, 2) + (dx && dy ? 1 : 0));
 #else
-	dx = std::abs(dx);
-	dy = std::abs(dy);
-
-	return (std::max(dx, dy) <= distance);
+	return (chebyshev_range(dx, dy) <= distance);
 #endif
 }
 
 unsigned int distance(int dx, int dy)
 {
 #ifdef CIRCULAR_AREA
-	dx = std::abs(dx);
-	dy = std::abs(dy);
-
-	// Calculate the approximate distance using the Chebyshev formula
-	double approx_distance = (123.0 / 128.0 * std::max(dx, dy)) + (51.0 / 128.0 * std::min(dx, dy));
-
-	return static_cast<unsigned int>(std::max(approx_distance, 1.0));
+	return std::max(chebyshev_distance(dx, dy), (unsigned)1);
 #else
-	dx = std::abs(dx);
-	dy = std::abs(dy);
-
-	return std::max(dx, dy);
+	return chebyshev_range(dx, dy);
 #endif
 }
 
@@ -487,7 +504,7 @@ bool check_distance_client(int dx, int dy, int distance)
  */
 unsigned int distance_client(int dx, int dy)
 {
-	double temp_dist = std::sqrt(dx*dx + dy*dy);
+	double temp_dist = euclidean_distance(dx,dy);
 
 	//Bonus factor used by client
 	//This affects even horizontal/vertical lines so they are one cell longer than expected
