@@ -5985,7 +5985,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 			if (sd && sd->weapontype1 == W_RIFLE)
 				splash += 1;
-			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+			clif_skill_nodamage(src, *bl, skill_id, skill_lv, 1);
 			map_foreachinrange(skill_area_sub, bl, splash, BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
 
 		}
