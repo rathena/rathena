@@ -50,7 +50,14 @@ static BHEAP_STRUCT_VAR(node_heap, g_open_set);	// use static heap for all path 
 
 #define calc_index(x,y) (((x)+(y)*MAX_WALKPATH) & (MAX_WALKPATH*MAX_WALKPATH-1))
 
-/// Manhattan distance -> Radius.DIAMOND
+/// @}
+
+/// @name Distance related functions
+/// @{
+
+/// @param dx: Horizontal distance
+/// @param dy: Vertical distance
+/// @return Manhattan distance -> Radius.DIAMOND
 static inline unsigned short manhattan_distance(int dx, int dy) {
 	return static_cast<unsigned short>(std::abs(dx) + std::abs(dy));
 }
@@ -59,44 +66,42 @@ static inline unsigned short manhattan_distance(int dx, int dy) {
  * The coefficients 0.96 and 0.4 using bit operations. Since computers work with binary numbers, it is more efficient to perform bit operations (shifts, additions, and subtractions) than multiplications and divisions.
  * 123/128 is a good approximation for 0.96. The formula uses a combination of left shifts (<<) and subtractions to approximate this multiplication.
  * 51/128 is a good approximation for 0.4. The formula uses a similar process to approximate this multiplication using shifts and subtractions.
- * taken from http://web.archive.org/web/20071003001801/http://www.flipcode.com/articles/article_fastdistance.shtml
- * Chebyshev distance -> Radius.SQUARE
-*/
+ * Chebyshev distance taken from http://web.archive.org/web/20071003001801/http://www.flipcode.com/articles/article_fastdistance.shtml
+ */
+
+// @param dx: Horizontal distance
+// @param dy: Vertical distance
+// @return Chebyshev distance -> Radius.SQUARE
 static inline unsigned int chebyshev_distance(int dx, int dy) {
 	return static_cast<unsigned int>((123.0 / 128.0 * std::max(std::abs(dx), std::abs(dy))) + (51.0 / 128.0 * std::min(std::abs(dx), std::abs(dy))));
 }
 
-/* Chebyshev range -> Radius.SQUARE */
+// @param dx: Horizontal distance
+// @param dy: Vertical distance
+// @return Chebyshev range -> Radius.SQUARE
 static inline unsigned int chebyshev_range(int dx, int dy) {
 	return static_cast<unsigned int>(std::max(std::abs(dx), std::abs(dy)));
 }
 
 /*
- * taken from https://cplusplus.com/forum/beginner/178293/
- * Euclidean distance -> Radius.CIRCLE
+ * Euclidean distance taken from https://cplusplus.com/forum/beginner/178293/
 */
+
+// @param dx: Horizontal distance
+// @param dy: Vertical distance
+// @return Euclidean distance -> Radius.CIRCLE
 static inline double euclidean_distance(int dx, int dy) {
 	return std::sqrt(static_cast<double>(std::pow(std::abs(dx), 2) + std::pow(std::abs(dy), 2)));
 }
 
-/* Euclidean range -> Radius.CIRCLE */
+// @param dx: Horizontal distance
+// @param dy: Vertical distance
+// @return Euclidean range -> Radius.CIRCLE 
 static inline unsigned int euclidean_range(int dx, int dy) {
 	return static_cast<unsigned int>(std::pow(std::abs(dx), 2) + std::pow(std::abs(dy), 2));
 }
 
 /// @}
-
-/*
- * Estimates the cost from (x0,y0) to (x1,y1).
- * The walkpath uses a Diamond distance instead of the square one.
- * @param dx: Horizontal distance
- * @param dy: Vertical distance
- * @return movecost X manhattan distance
- * This is inadmissible (overestimating) heuristic used by game client.
- */
-static inline unsigned short heuristic(int x0,int y0,int x1,int y1) {
-	return MOVE_COST * manhattan_distance((x1)-(x0), (y1)-(y0));
-}
 
 // Translates dx,dy into walking direction
 static enum directions walk_choices [3][3] =
@@ -237,6 +242,17 @@ bool path_search_long(struct shootpath_data *spd,int16 m,int16 x0,int16 y0,int16
 
 /// @name A* pathfinding related functions
 /// @{
+
+// Estimates the cost from (x0,y0) to (x1,y1).
+// The walkpath uses a Diamond distance instead of the square one.
+// @param x0: Cell X
+// @param y0: Cell y
+// @param x1: Target cell X
+// @param y1: Target cell y
+// @return movecost X manhattan distance (This is inadmissible (overestimating) heuristic used by game client)
+static inline unsigned short heuristic(int x0,int y0,int x1,int y1) {
+	return MOVE_COST * manhattan_distance((x1)-(x0), (y1)-(y0));
+}
 
 /// Pushes path_node to the binary node_heap.
 /// Ensures there is enough space in array to store new element.

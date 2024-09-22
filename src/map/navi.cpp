@@ -58,25 +58,7 @@ static BHEAP_STRUCT_VAR(node_heap, g_open_set);	// use static heap for all path 
 
 #define calc_index(x,y) (((x)+(y)*MAX_WALKPATH_NAVI) & (MAX_WALKPATH_NAVI*MAX_WALKPATH_NAVI-1))
 
-/// Manhattan distance -> Radius.DIAMOND
-static inline unsigned short manhattan_distance(int dx, int dy) {
-	return static_cast<unsigned short>(std::abs(dx) + std::abs(dy));
-}
-
 /// @}
-
-/*
- * Estimates the cost from (x0,y0) to (x1,y1).
- * The navipath uses a Diamond distance instead of the square one.
- * @param dx: Horizontal distance
- * @param dy: Vertical distance
- * @return movecost X manhattan distance
- * This is inadmissible (overestimating) heuristic used by game client.
- */
-static inline unsigned short heuristic(int x0,int y0,int x1,int y1)
-{
-	return MOVE_COST * manhattan_distance((x1)-(x0), (y1)-(y0));
-}
 
 // Translates dx,dy into walking direction
 static enum directions walk_choices [3][3] =
@@ -89,6 +71,24 @@ static enum directions walk_choices [3][3] =
 
 /// @name A* pathfinding related functions
 /// @{
+
+/// @param dx: Horizontal distance
+/// @param dy: Vertical distance
+/// @return Manhattan distance -> Radius.DIAMOND
+static inline unsigned short manhattan_distance(int dx, int dy) {
+	return static_cast<unsigned short>(std::abs(dx) + std::abs(dy));
+}
+
+// Estimates the cost from (x0,y0) to (x1,y1).
+// The walkpath uses a Diamond distance instead of the square one.
+// @param x0: Cell X
+// @param y0: Cell y
+// @param x1: Target cell X
+// @param y1: Target cell y
+// @return movecost X manhattan distance (This is inadmissible (overestimating) heuristic used by game client)
+static inline unsigned short heuristic(int x0,int y0,int x1,int y1) {
+	return MOVE_COST * manhattan_distance((x1)-(x0), (y1)-(y0));
+}
 
 /// Pushes path_node to the binary node_heap.
 /// Ensures there is enough space in array to store new element.
