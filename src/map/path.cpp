@@ -70,16 +70,16 @@ static inline unsigned short manhattan_distance(int dx, int dy) {
 
 // @param dx: Horizontal distance
 // @param dy: Vertical distance
-// @return Chebyshev distance -> Radius.SQUARE
-static inline unsigned int chebyshev_distance(int dx, int dy) {
-	return static_cast<unsigned int>((123.0 / 128.0 * std::max(std::abs(dx), std::abs(dy))) + (51.0 / 128.0 * std::min(std::abs(dx), std::abs(dy))));
+// @return Chebyshev range -> Radius.SQUARE
+static inline unsigned int chebyshev_range(int dx, int dy) {
+	return static_cast<unsigned int>(std::max(std::abs(dx), std::abs(dy)));
 }
 
 // @param dx: Horizontal distance
 // @param dy: Vertical distance
-// @return Chebyshev range -> Radius.SQUARE
-static inline unsigned int chebyshev_range(int dx, int dy) {
-	return static_cast<unsigned int>(std::max(std::abs(dx), std::abs(dy)));
+// @return Chebyshev distance -> Radius.SQUARE
+static inline unsigned int chebyshev_distance(int dx, int dy) {
+	return static_cast<unsigned int>((123.0 / 128.0 * chebyshev_range(dx, dy)) + (51.0 / 128.0 * std::min(std::abs(dx), std::abs(dy))));
 }
 
 /*
