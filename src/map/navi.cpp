@@ -59,24 +59,24 @@ static BHEAP_STRUCT_VAR(node_heap, g_open_set);	// use static heap for all path 
 #define calc_index(x,y) (((x)+(y)*MAX_WALKPATH_NAVI) & (MAX_WALKPATH_NAVI*MAX_WALKPATH_NAVI-1))
 
 /// Manhattan distance -> Radius.DIAMOND
-#define manhattan_distance(dx, dy) \
-    static_cast<unsigned short>(std::abs(dx) + std::abs(dy))
+static inline unsigned short manhattan_distance(int dx, int dy) {
+	return static_cast<unsigned short>(std::abs(dx) + std::abs(dy));
+}
+
 /// @}
 
 /*
+ * Estimates the cost from (x0,y0) to (x1,y1).
  * The navipath uses a Diamond distance instead of the square one.
  * @param dx: Horizontal distance
  * @param dy: Vertical distance
  * @return movecost X manhattan distance
+ * This is inadmissible (overestimating) heuristic used by game client.
  */
-static unsigned short heuristic_navipath_cost(int dx, int dy)
+static inline unsigned short heuristic(int x0,int y0,int x1,int y1)
 {
-	/// This is inadmissible (overestimating) heuristic used by game client.
-	return MOVE_COST * manhattan_distance(dx,dy);
+	return MOVE_COST * manhattan_distance((x1)-(x0), (y1)-(y0));
 }
-
-// Estimates the cost from (x0,y0) to (x1,y1).
-#define navipath_xy_cost(x0, y0, x1, y1) heuristic_navipath_cost((x1)-(x0), (y1)-(y0))
 
 // Translates dx,dy into walking direction
 static enum directions walk_choices [3][3] =
@@ -214,7 +214,7 @@ bool navi_path_search(struct navi_walkpath_data *wpd, const struct navi_pos *fro
 	tp[i].x = from->x;
 	tp[i].y = from->y;
 	tp[i].g_cost = 0;
-	tp[i].f_cost = navipath_xy_cost(from->x, from->y, dest->x, dest->y);
+	tp[i].f_cost = heuristic(from->x, from->y, dest->x, dest->y);
 	tp[i].flag = SET_OPEN;
 	tpused[i] = 1 + (from->x << 16 | from->y);
 
@@ -258,21 +258,21 @@ bool navi_path_search(struct navi_walkpath_data *wpd, const struct navi_pos *fro
 #define chk_dir(d) ((allowed_dirs & (d)) == (d))
 		// Process neighbors of current node
 		if (chk_dir(PATH_DIR_SOUTH|PATH_DIR_EAST) && !map_getcellp(mapdata, x+1, y-1, cell))
-			e += add_path(&g_open_set, x+1, y-1, g_cost + MOVE_DIAGONAL_COST, current, navipath_xy_cost(x+1, y-1, dest->x, dest->y)); // (x+1, y-1) 5
+			e += add_path(&g_open_set, x+1, y-1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x+1, y-1, dest->x, dest->y)); // (x+1, y-1) 5
 		if (chk_dir(PATH_DIR_EAST))
-			e += add_path(&g_open_set, x+1, y, g_cost + MOVE_COST, current, navipath_xy_cost(x+1, y, dest->x, dest->y)); // (x+1, y) 6
+			e += add_path(&g_open_set, x+1, y, g_cost + MOVE_COST, current, heuristic(x+1, y, dest->x, dest->y)); // (x+1, y) 6
 		if (chk_dir(PATH_DIR_NORTH|PATH_DIR_EAST) && !map_getcellp(mapdata, x+1, y+1, cell))
-			e += add_path(&g_open_set, x+1, y+1, g_cost + MOVE_DIAGONAL_COST, current, navipath_xy_cost(x+1, y+1, dest->x, dest->y)); // (x+1, y+1) 7
+			e += add_path(&g_open_set, x+1, y+1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x+1, y+1, dest->x, dest->y)); // (x+1, y+1) 7
 		if (chk_dir(PATH_DIR_NORTH))
-			e += add_path(&g_open_set, x, y+1, g_cost + MOVE_COST, current, navipath_xy_cost(x, y+1, dest->x, dest->y)); // (x, y+1) 0
+			e += add_path(&g_open_set, x, y+1, g_cost + MOVE_COST, current, heuristic(x, y+1, dest->x, dest->y)); // (x, y+1) 0
 		if (chk_dir(PATH_DIR_NORTH|PATH_DIR_WEST) && !map_getcellp(mapdata, x-1, y+1, cell))
-			e += add_path(&g_open_set, x-1, y+1, g_cost + MOVE_DIAGONAL_COST, current, navipath_xy_cost(x-1, y+1, dest->x, dest->y)); // (x-1, y+1) 1
+			e += add_path(&g_open_set, x-1, y+1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x-1, y+1, dest->x, dest->y)); // (x-1, y+1) 1
 		if (chk_dir(PATH_DIR_WEST))
-			e += add_path(&g_open_set, x-1, y, g_cost + MOVE_COST, current, navipath_xy_cost(x-1, y, dest->x, dest->y)); // (x-1, y) 2
+			e += add_path(&g_open_set, x-1, y, g_cost + MOVE_COST, current, heuristic(x-1, y, dest->x, dest->y)); // (x-1, y) 2
 		if (chk_dir(PATH_DIR_SOUTH|PATH_DIR_WEST) && !map_getcellp(mapdata, x-1, y-1, cell))
-			e += add_path(&g_open_set, x-1, y-1, g_cost + MOVE_DIAGONAL_COST, current, navipath_xy_cost(x-1, y-1, dest->x, dest->y)); // (x-1, y-1) 3
+			e += add_path(&g_open_set, x-1, y-1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x-1, y-1, dest->x, dest->y)); // (x-1, y-1) 3
 		if (chk_dir(PATH_DIR_SOUTH))
-			e += add_path(&g_open_set, x, y-1, g_cost + MOVE_COST, current, navipath_xy_cost(x, y-1, dest->x, dest->y)); // (x, y-1) 4
+			e += add_path(&g_open_set, x, y-1, g_cost + MOVE_COST, current, heuristic(x, y-1, dest->x, dest->y)); // (x, y-1) 4
 #undef chk_dir
 		if (e) {
 			return false;

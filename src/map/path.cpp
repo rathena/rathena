@@ -51,53 +51,52 @@ static BHEAP_STRUCT_VAR(node_heap, g_open_set);	// use static heap for all path 
 #define calc_index(x,y) (((x)+(y)*MAX_WALKPATH) & (MAX_WALKPATH*MAX_WALKPATH-1))
 
 /// Manhattan distance -> Radius.DIAMOND
-#define manhattan_distance(dx, dy) \
-    static_cast<unsigned short>(std::abs(dx) + std::abs(dy))
+static inline unsigned short manhattan_distance(int dx, int dy) {
+	return static_cast<unsigned short>(std::abs(dx) + std::abs(dy));
+}
 
 /*
  * The coefficients 0.96 and 0.4 using bit operations. Since computers work with binary numbers, it is more efficient to perform bit operations (shifts, additions, and subtractions) than multiplications and divisions.
  * 123/128 is a good approximation for 0.96. The formula uses a combination of left shifts (<<) and subtractions to approximate this multiplication.
  * 51/128 is a good approximation for 0.4. The formula uses a similar process to approximate this multiplication using shifts and subtractions.
- * Why use these specific coefficients?
- * Efficiency: They allow you to calculate the Chebyshev distance using bit operations, which are faster than floating-point operations.
- * Reasonable accuracy: Although they are not exact representations, these coefficients provide a reasonable approximation for the Chebyshev distance in many cases.
  * taken from http://web.archive.org/web/20071003001801/http://www.flipcode.com/articles/article_fastdistance.shtml
  * Chebyshev distance -> Radius.SQUARE
 */
-#define chebyshev_distance(dx, dy) \
-	static_cast<unsigned int>((123.0 / 128.0 * std::max(std::abs(dx), std::abs(dy))) + (51.0 / 128.0 * std::min(std::abs(dx), std::abs(dy))))
+static inline unsigned int chebyshev_distance(int dx, int dy) {
+	return static_cast<unsigned int>((123.0 / 128.0 * std::max(std::abs(dx), std::abs(dy))) + (51.0 / 128.0 * std::min(std::abs(dx), std::abs(dy))));
+}
 
 /* Chebyshev range -> Radius.SQUARE */
-#define chebyshev_range(dx, dy) \
-	static_cast<unsigned int>(std::max(std::abs(dx), std::abs(dy)))
+static inline unsigned int chebyshev_range(int dx, int dy) {
+	return static_cast<unsigned int>(std::max(std::abs(dx), std::abs(dy)));
+}
 
 /*
  * taken from https://cplusplus.com/forum/beginner/178293/
  * Euclidean distance -> Radius.CIRCLE
 */
-#define euclidean_distance(dx, dy) \
-	std::sqrt(static_cast<double>(std::pow(std::abs(dx), 2) + std::pow(std::abs(dy), 2)))
+static inline double euclidean_distance(int dx, int dy) {
+	return std::sqrt(static_cast<double>(std::pow(std::abs(dx), 2) + std::pow(std::abs(dy), 2)));
+}
 
 /* Euclidean range -> Radius.CIRCLE */
-#define euclidean_range(dx, dy) \
-	static_cast<unsigned int>(std::pow(std::abs(dx), 2) + std::pow(std::abs(dy), 2))
+static inline unsigned int euclidean_range(int dx, int dy) {
+	return static_cast<unsigned int>(std::pow(std::abs(dx), 2) + std::pow(std::abs(dy), 2));
+}
 
 /// @}
 
 /*
+ * Estimates the cost from (x0,y0) to (x1,y1).
  * The walkpath uses a Diamond distance instead of the square one.
  * @param dx: Horizontal distance
  * @param dy: Vertical distance
  * @return movecost X manhattan distance
+ * This is inadmissible (overestimating) heuristic used by game client.
  */
-static unsigned short heuristic_walkpath_cost(int dx, int dy)
-{
-	/// This is inadmissible (overestimating) heuristic used by game client.
-	return MOVE_COST * manhattan_distance(dx,dy);
+static inline unsigned short heuristic(int x0,int y0,int x1,int y1) {
+	return MOVE_COST * manhattan_distance((x1)-(x0), (y1)-(y0));
 }
-
-// Estimates the cost from (x0,y0) to (x1,y1).
-#define walkpath_xy_cost(x0, y0, x1, y1) heuristic_walkpath_cost((x1)-(x0), (y1)-(y0))
 
 // Translates dx,dy into walking direction
 static enum directions walk_choices [3][3] =
@@ -391,7 +390,7 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 		tp[i].x      = x0;
 		tp[i].y      = y0;
 		tp[i].g_cost = 0;
-		tp[i].f_cost = walkpath_xy_cost(x0, y0, x1, y1);
+		tp[i].f_cost = heuristic(x0, y0, x1, y1);
 		tp[i].flag   = SET_OPEN;
 
 		heap_push_node(&g_open_set, &tp[i]); // Put start node to 'open' set
@@ -434,21 +433,21 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 #define chk_dir(d) ((allowed_dirs & (d)) == (d))
 			// Process neighbors of current node
 			if (chk_dir(PATH_DIR_SOUTH|PATH_DIR_EAST) && !map_getcellp(mapdata, x+1, y-1, cell))
-				e += add_path(&g_open_set, tp, x+1, y-1, g_cost + MOVE_DIAGONAL_COST, current, walkpath_xy_cost(x+1, y-1, x1, y1)); // (x+1, y-1) 5
+				e += add_path(&g_open_set, tp, x+1, y-1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x+1, y-1, x1, y1)); // (x+1, y-1) 5
 			if (chk_dir(PATH_DIR_EAST))
-				e += add_path(&g_open_set, tp, x+1, y, g_cost + MOVE_COST, current, walkpath_xy_cost(x+1, y, x1, y1)); // (x+1, y) 6
+				e += add_path(&g_open_set, tp, x+1, y, g_cost + MOVE_COST, current, heuristic(x+1, y, x1, y1)); // (x+1, y) 6
 			if (chk_dir(PATH_DIR_NORTH|PATH_DIR_EAST) && !map_getcellp(mapdata, x+1, y+1, cell))
-				e += add_path(&g_open_set, tp, x+1, y+1, g_cost + MOVE_DIAGONAL_COST, current, walkpath_xy_cost(x+1, y+1, x1, y1)); // (x+1, y+1) 7
+				e += add_path(&g_open_set, tp, x+1, y+1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x+1, y+1, x1, y1)); // (x+1, y+1) 7
 			if (chk_dir(PATH_DIR_NORTH))
-				e += add_path(&g_open_set, tp, x, y+1, g_cost + MOVE_COST, current, walkpath_xy_cost(x, y+1, x1, y1)); // (x, y+1) 0
+				e += add_path(&g_open_set, tp, x, y+1, g_cost + MOVE_COST, current, heuristic(x, y+1, x1, y1)); // (x, y+1) 0
 			if (chk_dir(PATH_DIR_NORTH|PATH_DIR_WEST) && !map_getcellp(mapdata, x-1, y+1, cell))
-				e += add_path(&g_open_set, tp, x-1, y+1, g_cost + MOVE_DIAGONAL_COST, current, walkpath_xy_cost(x-1, y+1, x1, y1)); // (x-1, y+1) 1
+				e += add_path(&g_open_set, tp, x-1, y+1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x-1, y+1, x1, y1)); // (x-1, y+1) 1
 			if (chk_dir(PATH_DIR_WEST))
-				e += add_path(&g_open_set, tp, x-1, y, g_cost + MOVE_COST, current, walkpath_xy_cost(x-1, y, x1, y1)); // (x-1, y) 2
+				e += add_path(&g_open_set, tp, x-1, y, g_cost + MOVE_COST, current, heuristic(x-1, y, x1, y1)); // (x-1, y) 2
 			if (chk_dir(PATH_DIR_SOUTH|PATH_DIR_WEST) && !map_getcellp(mapdata, x-1, y-1, cell))
-				e += add_path(&g_open_set, tp, x-1, y-1, g_cost + MOVE_DIAGONAL_COST, current, walkpath_xy_cost(x-1, y-1, x1, y1)); // (x-1, y-1) 3
+				e += add_path(&g_open_set, tp, x-1, y-1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x-1, y-1, x1, y1)); // (x-1, y-1) 3
 			if (chk_dir(PATH_DIR_SOUTH))
-				e += add_path(&g_open_set, tp, x, y-1, g_cost + MOVE_COST, current, walkpath_xy_cost(x, y-1, x1, y1)); // (x, y-1) 4
+				e += add_path(&g_open_set, tp, x, y-1, g_cost + MOVE_COST, current, heuristic(x, y-1, x1, y1)); // (x, y-1) 4
 #undef chk_dir
 			if (e) {
 				return false;
