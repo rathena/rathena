@@ -89,7 +89,7 @@ static BHEAP_STRUCT_VAR(node_heap, g_open_set);	// use static heap for all path 
  * The walkpath uses a Diamond distance instead of the square one.
  * @param dx: Horizontal distance
  * @param dy: Vertical distance
- * @return movecost + manhattan distance
+ * @return movecost X manhattan distance
  */
 static unsigned short heuristic_walkpath_cost(int dx, int dy)
 {
