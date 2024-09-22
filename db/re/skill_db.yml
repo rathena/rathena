@@ -42694,7 +42694,7 @@ Body:
     HitCount: 1
     CastCancel: true
     Duration1: 300000
-    Cooldown: 1000
+    Cooldown: 3000
     Requires:
       SpCost: 90
       ApCost: 20
