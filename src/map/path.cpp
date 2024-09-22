@@ -63,7 +63,6 @@ static inline unsigned short manhattan_distance(int dx, int dy) {
 }
 
 /*
- * The coefficients 0.96 and 0.4 using bit operations. Since computers work with binary numbers, it is more efficient to perform bit operations (shifts, additions, and subtractions) than multiplications and divisions.
  * 123/128 is a good approximation for 0.96. The formula uses a combination of left shifts (<<) and subtractions to approximate this multiplication.
  * 51/128 is a good approximation for 0.4. The formula uses a similar process to approximate this multiplication using shifts and subtractions.
  * Chebyshev distance taken from http://web.archive.org/web/20071003001801/http://www.flipcode.com/articles/article_fastdistance.shtml
@@ -89,16 +88,16 @@ static inline unsigned int chebyshev_range(int dx, int dy) {
 
 // @param dx: Horizontal distance
 // @param dy: Vertical distance
-// @return Euclidean distance -> Radius.CIRCLE
-static inline double euclidean_distance(int dx, int dy) {
-	return std::sqrt(static_cast<double>(std::pow(std::abs(dx), 2) + std::pow(std::abs(dy), 2)));
+// @return Euclidean range -> Radius.CIRCLE 
+static inline double euclidean_range(int dx, int dy) {
+	return std::pow(std::abs(dx), 2) + std::pow(std::abs(dy), 2);
 }
 
 // @param dx: Horizontal distance
 // @param dy: Vertical distance
-// @return Euclidean range -> Radius.CIRCLE 
-static inline unsigned int euclidean_range(int dx, int dy) {
-	return static_cast<unsigned int>(std::pow(std::abs(dx), 2) + std::pow(std::abs(dy), 2));
+// @return Euclidean distance -> Radius.CIRCLE
+static inline double euclidean_distance(int dx, int dy) {
+	return std::sqrt(euclidean_range(dx,dy));
 }
 
 /// @}
@@ -494,7 +493,7 @@ bool check_distance(int dx, int dy, int distance)
 {
 #ifdef CIRCULAR_AREA
 	//In this case, we just do a square comparison. Add 1 tile grace for diagonal range checks.
-	return (euclidean_range(dx,dy) <= std::pow(distance, 2) + (dx && dy ? 1 : 0));
+	return (euclidean_range(dx, dy) <= std::pow(distance, 2) + (dx && dy ? 1.0 : 0.0));
 #else
 	return (chebyshev_range(dx, dy) <= distance);
 #endif
