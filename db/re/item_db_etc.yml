@@ -53220,7 +53220,9 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus2 bMagicAtkEle,Ele_All,10;
-      bonus2 bMagicAtkEle,Ele_Neutral,15;
+      bonus2 bMagicAddRace,RC_Formless,15;
+      bonus2 bMagicAddRace,RC_DemiHuman,15;
+      bonus2 bMagicAddRace,RC_Player_Human,15;
       .@i = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
       if (.@i == W_2HSWORD || .@i == W_2HSPEAR || .@i == W_2HSTAFF || .@i == W_2HAXE || .@i == W_KATAR || .@i == W_BOW || .@i == W_HUUMA || .@i == W_REVOLVER || .@i == W_RIFLE || .@i == W_GATLING || .@i == W_SHOTGUN || .@i == W_GRENADE) {
          bonus2 bSubRace,RC_Formless,7;
@@ -53760,6 +53762,24 @@ Body:
       bonus bMaxHPrate,-15;
       bonus bPAtk,.@r;
       bonus bAtkRate,.@r;
+  - Id: 300547
+    AegisName: CLB_SS_DF_Card
+    Name: Rooker and Port City Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Trade:
+      NoSell: true
+    Script: |
+      .@max_lvl = min(200,BaseLevel);
+      bonus bDef,80+5*(.@max_lvl/10);
+      bonus bMaxHP,150*(.@max_lvl/10);
+      bonus2 bAddRace,RC_Insect,10;
+      bonus2 bMagicAddRace,RC_Insect,10;
   - Id: 300549
     AegisName: aegis_300549
     Name: Summer Vacation Pope Card
@@ -53774,6 +53794,255 @@ Body:
       bonus bShortAtkRate,3;
       bonus bLongAtkRate,3;
       bonus2 bMagicAtkEle,Ele_All,3;
+  - Id: 300550
+    AegisName: CLB_SS_EA_Card
+    Name: Peychai and Desert City Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Trade:
+      NoSell: true
+    Script: |
+      .@max_lvl = min(200,BaseLevel);
+      bonus bBaseAtk,35+5*(.@max_lvl/10);
+  - Id: 300551
+    AegisName: CLB_SS_LL_Card
+    Name: Aji and Magic City Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Trade:
+      NoSell: true
+    Script: |
+      .@max_lvl = min(200,BaseLevel);
+      bonus bMdef,35+2*(.@max_lvl/10);
+      bonus bMaxSP,50*(.@max_lvl/10);
+      bonus2 bAddRace,RC_Plant,10;
+      bonus2 bMagicAddRace,RC_Plant,10;
+  - Id: 300552
+    AegisName: CLB_SS_LT_Card
+    Name: Taiz and the Land of the Dead Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Trade:
+      NoSell: true
+    Script: |
+      .@max_lvl = min(200,BaseLevel);
+      bonus bMatk,35+5*(.@max_lvl/10);
+  - Id: 300555
+    AegisName: aegis_300555
+    Name: Violen Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,5;
+      if (.@r>=7) {
+         bonus2 bMagicAddRace,RC_DemiHuman,10;
+         if (.@r>=9) {
+            bonus2 bMagicAddRace,RC_DemiHuman,7;
+         }
+      }
+  - Id: 300556
+    AegisName: aegis_300556
+    Name: Gumming Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,5;
+      if (.@r>=7) {
+         bonus2 bMagicAddRace,RC_Plant,10;
+         if (.@r>=9) {
+            bonus2 bMagicAddRace,RC_Plant,7;
+         }
+      }
+  - Id: 300557
+    AegisName: aegis_300557
+    Name: Garling Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bCritAtkRate,7+(.@r/2);
+      bonus bCRate,3;
+      bonus bCritical,3*(.@r/2);
+  - Id: 300558
+    AegisName: aegis_300558
+    Name: Jack-O'-Nette Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bSMatk,5;
+      bonus2 bMagicAddEle,Ele_Ghost,7;
+      if (getrefine()>=10) {
+         bonus2 bMagicAddEle,Ele_Ghost,8;
+      }
+  - Id: 300559
+    AegisName: aegis_300559
+    Name: Liamett Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bAtkRate,8;
+      if (.@r>=7) {
+         bonus2 bAddRace,RC_Fish,12;
+         if (.@r>=9) {
+            bonus2 bAddRace,RC_Fish,8;
+         }
+      }
+  - Id: 300560
+    AegisName: aegis_300560
+    Name: Nightmare Fiamett Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bDelayrate,-25;
+      bonus bUseSPrate,10;
+      if (getrefine()>=10) {
+         bonus bVariableCastrate,-15;
+      }
+  - Id: 300561
+    AegisName: aegis_300561
+    Name: Medzed Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bAtkRate,8;
+      if (.@r>=7) {
+         bonus2 bAddRace,RC_Angel,12;
+         if (.@r>=9) {
+            bonus2 bAddRace,RC_Angel,8;
+         }
+      }
+  - Id: 300562
+    AegisName: aegis_300562
+    Name: Medzai Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bPAtk,7;
+      bonus2 bAddEle,Ele_Earth,12;
+      if (getrefine()>=10) {
+         bonus2 bAddEle,Ele_Earth,8;
+      }
+  - Id: 300563
+    AegisName: aegis_300563
+    Name: Opois Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bSMatk,5;
+      bonus2 bMagicAddEle,Ele_Wind,7;
+      if (getrefine()>=10) {
+         bonus2 bMagicAddEle,Ele_Wind,8;
+      }
+  - Id: 300564
+    AegisName: aegis_300564
+    Name: Heka Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bPAtk,7;
+      bonus2 bAddEle,Ele_Water,12;
+      if (getrefine()>=10) {
+         bonus2 bAddEle,Ele_Water,8;
+      }
+  - Id: 300565
+    AegisName: aegis_300565
+    Name: Lion's Guide Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bShortAtkRate,25;
+      bonus bMaxHPrate,-20;
+      if (readparam(bStr)>=70) {
+         bonus bNoSizeFix;
+      }
+      if (BaseLevel>=230) {
+         bonus bShortAtkRate,45;
+         bonus bVit,-20;
+      }
   - Id: 310000
     AegisName: Ranger_Top2
     Name: Sniper Stone II (Top)
@@ -69740,21 +70009,21 @@ Body:
       bonus2 bSkillAtk,"RL_FIREDANCE",4*getskilllv("RL_HEAT_BARREL");
       bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",4*getskilllv("RL_HEAT_BARREL");
   - Id: 311466
-    AegisName: aegis_311466
+    AegisName: Reaper_Top3
     Name: Soul Reaper Stone (Upper)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bMagicAtkEle,Ele_All,getskilllv("SP_SPA");
   - Id: 311467
-    AegisName: aegis_311467
+    AegisName: Reaper_Middle3
     Name: Soul Reaper Stone (Middle)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bMagicAddSize,Size_All,getskilllv("SP_SWHOO");
   - Id: 311468
-    AegisName: aegis_311468
+    AegisName: Reaper_Bottom3
     Name: Soul Reaper Stone (Lower)
     Type: Card
     SubType: Enchant
@@ -80414,7 +80683,7 @@ Body:
       hateffect FOOTPRINT_EF_BASE,false;
   - Id: 313067
     AegisName: aegis_313067
-    Name: Purple Star Footprint
+    Name: Purple Star Footprint    # !todo check english name
     Type: Card
     SubType: Enchant
     Script: |
@@ -81927,6 +82196,348 @@ Body:
       hateffect FOOTPRINT_EF_DOGFOOT,true;
     UnEquipScript: |
       hateffect FOOTPRINT_EF_DOGFOOT,false;
+  - Id: 313359
+    AegisName: aegis_313359
+    Name: Archmage Stone(Garment)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAddEle,Ele_All,getskilllv("AG_SOUL_VC_STRIKE");
+  - Id: 313360
+    AegisName: aegis_313360
+    Name: Windhawk Stone(Garment)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,getskilllv("WH_GALESTORM");
+  - Id: 313361
+    AegisName: aegis_313361
+    Name: Master Stone(Garment)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAddSize,Size_All,2*getskilllv("SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS");
+  - Id: 313376
+    AegisName: IG_Soul_IC
+    Name: Imperial Guard Soul(Imperial Cross)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"IG_IMPERIAL_CROSS",2+(getrefine()/2);
+  - Id: 313377
+    AegisName: IG_Soul_RS
+    Name: Imperial Guard Soul(Radiant Spear)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"IG_RADIANT_SPEAR",2+(getrefine()/2);
+  - Id: 313378
+    AegisName: MT_Soul_RS
+    Name: Meister Soul(Rush Strike)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"MT_RUSH_STRIKE",2+(getrefine()/2);
+  - Id: 313379
+    AegisName: MT_Soul_PS
+    Name: Meister Soul(Powerful Swing)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"MT_POWERFUL_SWING",2+(getrefine()/2);
+  - Id: 313380
+    AegisName: MT_Soul_EC
+    Name: Meister Soul (Energy Cannonade)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"MT_ENERGY_CANNONADE",2+(getrefine()/2);
+  - Id: 313381
+    AegisName: BO_Soul_MP
+    Name: Biolo Soul (Mystery Powder)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"BO_MYSTERY_POWDER",2+(getrefine()/2);
+  - Id: 313382
+    AegisName: BO_Soul_DE
+    Name: Biolo Soul (Dust Explosion)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"BO_DUST_EXPLOSION",2+(getrefine()/2);
+  - Id: 313383
+    AegisName: SHC_Soul_CS
+    Name: Shadow Cross Soul (Cross Slash)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SHC_CROSS_SLASH",2+(getrefine()/2);
+  - Id: 313384
+    AegisName: ABC_Soul_HAS
+    Name: Abyss Chaser Soul (Hit & Sliding)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"KN_RIDING",2+(getrefine()/2);
+  - Id: 313385
+    AegisName: ABC_Soul_CB
+    Name: Abyss Chaser Soul (Chasing Break)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"ABC_CHASING_BREAK",2+(getrefine()/2);
+  - Id: 313386
+    AegisName: ABC_Soul_CS
+    Name: Abyss Chaser Soul (Chasing Shot)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"ABC_CHASING_SHOT",2+(getrefine()/2);
+  - Id: 313387
+    AegisName: TR_Soul_RW
+    Name: Troubadour & Trouble Soul (Rhythmic Wave)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"TR_RHYTHMICAL_WAVE",2+(getrefine()/2);
+  - Id: 313388
+    AegisName: NW_Soul_WS
+    Name: Night Watch Soul (Wild Shot)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"NW_WILD_SHOT",2+(getrefine()/2);
+  - Id: 313389
+    AegisName: NW_Soul_MF
+    Name: Night Watch Soul (Midnight Fallen)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"NW_MIDNIGHT_FALLEN",2+(getrefine()/2);
+  - Id: 313391
+    AegisName: Rising_Swordman
+    Name: Rising Particle (Swordman Jobs)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bSkillAtk,"RK_IGNITIONBREAK",30;
+      bonus2 bSkillAtk,"LG_RAYOFGENESIS",30;
+      bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",30;
+      bonus2 bSkillAtk,"RK_DRAGONBREATH",30;
+      bonus2 bSkillAtk,"LG_OVERBRAND",30;
+  - Id: 313392
+    AegisName: Rising_Thief
+    Name: Rising Particle (Thief Jobs)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bSkillAtk,"SC_FATALMENACE",30;
+      bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",30;
+      bonus2 bSkillAtk,"GC_ROLLINGCUTTER",30;
+      bonus2 bSkillAtk,"GC_CROSSIMPACT",40;
+      bonus2 bSkillAtk,"WZ_METEOR",50;
+  - Id: 313393
+    AegisName: Rising_Merchant
+    Name: Rising Particle (Merchant Jobs)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bSkillAtk,"NC_AXETORNADO",30;
+      bonus2 bSkillAtk,"GN_CART_TORNADO",30;
+      bonus2 bSkillAtk,"GN_CARTCANNON",30;
+      bonus2 bSkillAtk,"NC_ARMSCANNON",30;
+  - Id: 313394
+    AegisName: Rising_Magician
+    Name: Rising Particle (Wizard Jobs)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bSkillAtk,"SO_DIAMONDDUST",30;
+      bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",30;
+      bonus2 bSkillAtk,"WL_SOULEXPANSION",30;
+      bonus2 bSkillAtk,"WL_COMET",30;
+  - Id: 313395
+    AegisName: Rising_Archer
+    Name: Rising Particle (Archer Jobs)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bSkillAtk,"RA_ARROWSTORM",30;
+      bonus2 bSkillAtk,"WM_REVERBERATION",30;
+      bonus2 bSkillAtk,"SN_SHARPSHOOTING",40;
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",50;
+  - Id: 313396
+    AegisName: Rising_Acolyte
+    Name: Rising Particle (Acolyte Jobs)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bSkillAtk,"AB_ADORAMUS",30;
+      bonus2 bSkillAtk,"SR_TIGERCANNON",30;
+      bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",30;
+      bonus2 bSkillAtk,"AB_DUPLELIGHT_MELEE",50;
+      bonus2 bSkillAtk,"AB_DUPLELIGHT_MAGIC",50;
+  - Id: 313397
+    AegisName: Rising_Ninja
+    Name: Rising Particle (Ninja Jobs)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bSkillAtk,"KO_HUUMARANKA",30;
+      bonus2 bSkillAtk,"NJ_KOUENKA",30;
+      bonus2 bSkillAtk,"NJ_HYOUSENSOU",30;
+      bonus2 bSkillAtk,"NJ_HUUJIN",30;
+  - Id: 313398
+    AegisName: Rising_Gunner
+    Name: Rising Particle (Gunslinger Jobs)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bSkillAtk,"RL_FIREDANCE",30;
+      bonus2 bSkillAtk,"RL_R_TRIP",30;
+  - Id: 313399
+    AegisName: Rising_TK_Star
+    Name: Rising Particle (Taekwon Jobs)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bSkillAtk,"SJ_SOLARBURST",30;
+      bonus2 bSkillAtk,"SJ_FULLMOONKICK",30;
+  - Id: 313400
+    AegisName: Rising_TK_Soul
+    Name: Rising Particle (Soul Linker Jobs)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bSkillAtk,"SP_CURSEEXPLOSION",30;
+      bonus2 bSkillAtk,"SP_SPA",30;
+      bonus2 bSkillAtk,"SP_SWHOO",30;
+  - Id: 313401
+    AegisName: Rising_Summoner
+    Name: Rising Particle (Summoner Jobs)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",30;
+      bonus2 bSkillAtk,"SU_CN_METEOR",30;
+  - Id: 313402
+    AegisName: Rinsing_Novice
+    Name: Rising Particle (Novice Jobs)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bSkillAtk,"MG_FIREBOLT",50;
+      bonus2 bSkillAtk,"MG_COLDBOLT",50;
+      bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",50;
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event
@@ -88348,7 +88959,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 1001414
-    AegisName: aegis_1001414
+    AegisName: MD_Hol_Fragment
     Name: Dimensional Crystal Fragment
     Type: Etc
     Weight: 1
@@ -88356,7 +88967,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
   - Id: 1001415
-    AegisName: aegis_1001415
+    AegisName: MD_Hol_Key
     Name: Hall of Life Key
     Type: Etc
     Weight: 10
@@ -88378,63 +88989,63 @@ Body:
     Type: Etc
     Weight: 100
   - Id: 1001424
-    AegisName: aegis_1001424
+    AegisName: Hot_Water_Drop_Gem
     Name: Hot Water Droplet Gem
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 1001425
-    AegisName: aegis_1001425
+    AegisName: Ice_Water_Drop_Gem
     Name: Cold Water Droplet Gem
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 1001426
-    AegisName: aegis_1001426
+    AegisName: Dry_Wind_Leaf_Gem
     Name: Dry Wind Leaf Gem
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 1001427
-    AegisName: aegis_1001427
+    AegisName: Storm_Wind_Leaf_Gem
     Name: Strong Wind Leaf Gem
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 1001428
-    AegisName: aegis_1001428
+    AegisName: Red_Flame_Heart_Gem
     Name: Red Flame Heart Gem
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 1001429
-    AegisName: aegis_1001429
+    AegisName: Blue_Flame_Heart_Gem
     Name: Blue Flame Heart Gem
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 1001430
-    AegisName: aegis_1001430
+    AegisName: Firm_Land_Crystal
     Name: Firm Land Crystal
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 1001431
-    AegisName: aegis_1001431
+    AegisName: Green_Land_Crystal
     Name: Green Land Crystal
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 1001432
-    AegisName: aegis_1001432
+    AegisName: Contored_Spi_Wrath
     Name: Wrath of Polluted Spirit
     Type: Etc
     Weight: 10
@@ -88442,7 +89053,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
   - Id: 1001433
-    AegisName: aegis_1001433
+    AegisName: Contored_Agn_Wrath
     Name: Wrath of Polluted Agni
     Type: Etc
     Weight: 10
@@ -88450,7 +89061,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
   - Id: 1001434
-    AegisName: aegis_1001434
+    AegisName: Contored_Aqu_Wrath
     Name: Wrath of Polluted Aqua
     Type: Etc
     Weight: 10
@@ -88458,7 +89069,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
   - Id: 1001435
-    AegisName: aegis_1001435
+    AegisName: Contored_Ven_Wrath
     Name: Wrath of Polluted Ventus
     Type: Etc
     Weight: 10
@@ -88466,7 +89077,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
   - Id: 1001436
-    AegisName: aegis_1001436
+    AegisName: Contored_Ter_Wrath
     Name: Wrath of Polluted Tera
     Type: Etc
     Weight: 10
@@ -90368,6 +90979,189 @@ Body:
     Name: Puppy Footprint (Garment)
     Type: Etc
     Weight: 100
+  - Id: 1001787
+    AegisName: aegis_1001787
+    Name: Archmage Stone (Garment)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1001788
+    AegisName: aegis_1001788
+    Name: Windhawk Stone (Garment)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1001789
+    AegisName: aegis_1001789
+    Name: Leader Stone (Garment)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1001795
+    AegisName: aegis_1001795
+    Name: Chained Teddy Bear    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001796
+    AegisName: aegis_1001796
+    Name: Judgement Feather    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001800
+    AegisName: Kr_B_Event05
+    Name: Sweet Pink Cream    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001801
+    AegisName: 2408_Ev_Creepy
+    Name: Creepy    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001809
+    AegisName: aegis_1001809
+    Name: Wrath Weapon Coupon    # !todo check english name
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1001810
+    AegisName: aegis_1001810
+    Name: Wrath Crown Coupon    # !todo check english name
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1001815
+    AegisName: Symposium_Card_RD
+    Name: Academic Festival Certification Card (Red)    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001816
+    AegisName: Symposium_Card_OR
+    Name: Academic Festival Certification Card (Crimson)    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001817
+    AegisName: Symposium_Card_YL
+    Name: Academic Festival Certification Card (Yellow)    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001818
+    AegisName: Symposium_Card_GR
+    Name: Academic Festival Certification Card (Green)    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001819
+    AegisName: Symposium_Card_SB
+    Name: Academic Festival Certification Card (Sky)    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001820
+    AegisName: Symposium_Card_BU
+    Name: Academic Festival Certification Card (Blue)    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001821
+    AegisName: Symposium_Card_PP
+    Name: Academic Festival Certification Card (Purple)    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001822
+    AegisName: Symposium_Card_BL
+    Name: Academic Festival Certification Card (Black)    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001823
+    AegisName: Symposium_Coin
+    Name: Academic Festival Coin    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001824
+    AegisName: aegis_1001824
+    Name: Buff Ticket    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001825
+    AegisName: 24_A_Ev_Event_1
+    Name: Treasure Note    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001826
+    AegisName: 24_A_Ev_Event_2
+    Name: Long-term Unreturned Books    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001827
+    AegisName: aegis_1001827
+    Name: Pine Needles    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001828
+    AegisName: 2409_Gift_Ticket
+    Name: Chuseok Gift Certificate    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 1200000
     AegisName: IDTest_arrow
     Name: IDTest arrow

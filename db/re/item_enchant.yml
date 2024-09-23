@@ -22382,6 +22382,14 @@ Body:
             Materials:
               - Material: S_Enchant_Essence
                 Amount: 5
+          - Item: IG_Soul_IC
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: IG_Soul_RS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
   - Id: 73
     TargetItems:
       S_SHC_Armor: true
@@ -22447,6 +22455,10 @@ Body:
               - Material: S_Enchant_Essence
                 Amount: 5
           - Item: SHC_Soul_SS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SHC_Soul_CS
             Materials:
               - Material: S_Enchant_Essence
                 Amount: 5
@@ -22523,6 +22535,18 @@ Body:
               - Material: S_Enchant_Essence
                 Amount: 5
           - Item: ABC_Soul_FA
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: ABC_Soul_HAS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: ABC_Soul_CB
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: ABC_Soul_CS
             Materials:
               - Material: S_Enchant_Essence
                 Amount: 5
@@ -22726,6 +22750,18 @@ Body:
             Materials:
               - Material: S_Enchant_Essence
                 Amount: 5
+          - Item: MT_Soul_RS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: MT_Soul_PS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: MT_Soul_EC
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
   - Id: 78
     TargetItems:
       S_BO_Armor: true
@@ -22787,6 +22823,14 @@ Body:
               - Material: S_Enchant_Essence
                 Amount: 5
           - Item: BO_Soul_EP
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: BO_Soul_MP
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: BO_Soul_DE
             Materials:
               - Material: S_Enchant_Essence
                 Amount: 5
@@ -22931,6 +22975,10 @@ Body:
               - Material: S_Enchant_Essence
                 Amount: 5
           - Item: TR_Soul_MF
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: TR_Soul_RW
             Materials:
               - Material: S_Enchant_Essence
                 Amount: 5
@@ -23171,6 +23219,14 @@ Body:
               - Material: S_Enchant_Essence
                 Amount: 5
           - Item: NW_Soul_GR
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: NW_Soul_WS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: NW_Soul_MF
             Materials:
               - Material: S_Enchant_Essence
                 Amount: 5
@@ -32780,3 +32836,210 @@ Body:
                 Amount: 30
               - Material: EP19_N_P_Crystal
                 Amount: 30
+  - Id: 150
+    TargetItems:
+      Time_Gap_Spear_IG: true
+      Time_Gap_Staff_AG: true
+      Time_Gap_Revolver_NW: true
+      Time_Gap_MT_Axe: true
+      Time_Gap_TR_Ribbon: true
+      Time_Gap_TR_Vilolin: true
+      Time_Gap_HN_Staff: true
+    Reset:
+      Chance: 100000
+      Price: 5000000
+      Materials:
+        - Material: Zelunium
+          Amount: 50
+        - Material: Shadowdecon
+          Amount: 50
+        - Material: Etel_Dust
+          Amount: 100
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Bio_Jam_Df2
+            Materials:
+              - Material: Bar_D_St_Rune
+                Amount: 15
+              - Material: Bar_D_Ic_Rune
+                Amount: 15
+              - Material: Time_D_Ma_Rune
+                Amount: 10
+          - Item: Bio_Jam_Es2
+            Materials:
+              - Material: Bar_D_Co_Rune
+                Amount: 15
+              - Material: Bar_D_Po_Rune
+                Amount: 15
+              - Material: Time_D_Ma_Rune
+                Amount: 10
+          - Item: Bio_Jam_Vl2
+            Materials:
+              - Material: Bar_D_Pu_Rune
+                Amount: 15
+              - Material: Bar_D_So_Rune
+                Amount: 15
+              - Material: Time_D_Ma_Rune
+                Amount: 10
+          - Item: Bio_Jam_Eq2
+            Materials:
+              - Material: Bar_D_Fl_Rune
+                Amount: 15
+              - Material: Bar_D_Po_Rune
+                Amount: 15
+              - Material: Time_D_Ma_Rune
+                Amount: 10
+          - Item: Bio_Jam_Hd2
+            Materials:
+              - Material: Bar_D_Ea_Rune
+                Amount: 15
+              - Material: Bar_D_So_Rune
+                Amount: 15
+              - Material: Time_D_Ma_Rune
+                Amount: 10
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Barmund_Flame3
+            Materials:
+              - Material: Energy_Of_Elemental
+                Amount: 10
+              - Material: Time_D_Ma_Rune
+                Amount: 15
+          - Item: Barmund_Ice3
+            Materials:
+              - Material: Energy_Of_Elemental
+                Amount: 10
+              - Material: Time_D_Ma_Rune
+                Amount: 15
+          - Item: Barmund_Plain3
+            Materials:
+              - Material: Energy_Of_Elemental
+                Amount: 10
+              - Material: Time_D_Ma_Rune
+                Amount: 15
+          - Item: Barmund_Death3
+            Materials:
+              - Material: Energy_Of_Elemental
+                Amount: 10
+              - Material: Time_D_Ma_Rune
+                Amount: 15
+          - Item: Barmund_Poison3
+            Materials:
+              - Material: Energy_Of_Elemental
+                Amount: 10
+              - Material: Time_D_Ma_Rune
+                Amount: 15
+  - Id: 151
+    TargetItems:
+      Rising_Circlet: true
+    Reset:
+      Chance: 100000
+      Price: 300000
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Rising_Swordman
+            Materials:
+              - Material: Symposium_Card_RD
+                Amount: 7
+              - Material: Symposium_Card_SB
+                Amount: 7
+          - Item: Rising_Thief
+            Materials:
+              - Material: Symposium_Card_RD
+                Amount: 7
+              - Material: Symposium_Card_SB
+                Amount: 7
+          - Item: Rising_Merchant
+            Materials:
+              - Material: Symposium_Card_RD
+                Amount: 7
+              - Material: Symposium_Card_SB
+                Amount: 7
+          - Item: Rising_Magician
+            Materials:
+              - Material: Symposium_Card_OR
+                Amount: 7
+              - Material: Symposium_Card_BU
+                Amount: 7
+          - Item: Rising_Archer
+            Materials:
+              - Material: Symposium_Card_OR
+                Amount: 7
+              - Material: Symposium_Card_BU
+                Amount: 7
+          - Item: Rising_Acolyte
+            Materials:
+              - Material: Symposium_Card_OR
+                Amount: 7
+              - Material: Symposium_Card_BU
+                Amount: 7
+          - Item: Rising_Ninja
+            Materials:
+              - Material: Symposium_Card_YL
+                Amount: 7
+              - Material: Symposium_Card_PP
+                Amount: 7
+          - Item: Rising_Gunner
+            Materials:
+              - Material: Symposium_Card_YL
+                Amount: 7
+              - Material: Symposium_Card_PP
+                Amount: 7
+          - Item: Rising_TK_Star
+            Materials:
+              - Material: Symposium_Card_YL
+                Amount: 7
+              - Material: Symposium_Card_PP
+                Amount: 7
+          - Item: Rising_TK_Soul
+            Materials:
+              - Material: Symposium_Card_GR
+                Amount: 7
+              - Material: Symposium_Card_BL
+                Amount: 7
+          - Item: Rising_Summoner
+            Materials:
+              - Material: Symposium_Card_GR
+                Amount: 7
+              - Material: Symposium_Card_BL
+                Amount: 7
+          - Item: Rinsing_Novice
+            Materials:
+              - Material: Symposium_Card_GR
+                Amount: 7
+              - Material: Symposium_Card_BL
+                Amount: 7
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Expert_Fighter3
+            Materials:
+              - Material: Symposium_Coin
+                Amount: 5
+          - Item: Expert_Magician3
+            Materials:
+              - Material: Symposium_Coin
+                Amount: 5
+          - Item: Attack_Delay_5
+            Materials:
+              - Material: Symposium_Coin
+                Amount: 5
+          - Item: Hit_Plus5
+            Materials:
+              - Material: Symposium_Coin
+                Amount: 5
+          - Item: Caster5
+            Materials:
+              - Material: Symposium_Coin
+                Amount: 5
+          - Item: Expert_Archer3
+            Materials:
+              - Material: Symposium_Coin
+                Amount: 5

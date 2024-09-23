@@ -3123,3 +3123,139 @@ Body:
 #         bonus bRes,5;
 #      }
 #
+  - Mob: HORNET
+    EggItem: aegis_9155
+    FoodItem: Apple_Pudding
+    Fullness: 2   # unknown
+    HungryDelay: 120   # unknown
+    IntimacyFed: 15   # unknown
+    CaptureRate: 0   # unknown
+    SpecialPerformance: false   # unknown
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if (.@i >= PET_INTIMATE_LOYAL) {
+         bonus2 bMagicAtkEle,Ele_Wind,2;
+         bonus bVariableCastrate,-2;
+      }
+      else if (.@i >= PET_INTIMATE_CORDIAL) {
+         bonus2 bMagicAtkEle,Ele_Wind,1;
+         bonus bVariableCastrate,-1;
+      }
+#   Evolution:
+#      - Target: GIANT_HONET2
+#        ItemRequirements:
+#          - Item: Honey
+#            Amount: 80
+#          - Item: Royal_Jelly
+#            Amount: 50
+#          - Item: Honey_Jar
+#            Amount: 200
+#          - Item: Sharp_Feeler
+#            Amount: 300
+#          - Item: Hornet_Card
+#            Amount: 10
+#  - Mob: CLB_SS_FC
+#    EggItem: CLB_SS_Egg01
+#    FoodItem: Pet_Food
+#    Fullness: 2   # unknown
+#    HungryDelay: 120   # unknown
+#    IntimacyFed: 15   # unknown
+#    CaptureRate: 0   # unknown
+#    SpecialPerformance: false   # unknown
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#      
+#      if (.@i >= PET_INTIMATE_LOYAL) {
+#         bonus bBaseAtk,25;
+#         bonus bLuk,3;
+#      }
+#      else if (.@i >= PET_INTIMATE_CORDIAL) {
+#         bonus bBaseAtk,15;
+#         bonus bLuk,1;
+#      }
+#
+#  - Mob: CLB_SS_TZ
+#    EggItem: CLB_SS_Egg02
+#    FoodItem: Pet_Food
+#    Fullness: 2   # unknown
+#    HungryDelay: 120   # unknown
+#    IntimacyFed: 15   # unknown
+#    CaptureRate: 0   # unknown
+#    SpecialPerformance: false   # unknown
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#      
+#      if (.@i >= PET_INTIMATE_LOYAL) {
+#         bonus bMatk,25;
+#         bonus bInt,3;
+#      }
+#      else if (.@i >= PET_INTIMATE_CORDIAL) {
+#         bonus bMatk,15;
+#         bonus bInt,1;
+#      }
+#
+#  - Mob: GIANT_HONET2
+#    EggItem: aegis_9192
+#    FoodItem: Pet_Food
+#    Fullness: 2   # unknown
+#    HungryDelay: 120   # unknown
+#    IntimacyFed: 15   # unknown
+#    CaptureRate: 0   # unknown
+#    SpecialPerformance: false   # unknown
+#    AllowAutoFeed: true
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#      
+#      if (.@i >= PET_INTIMATE_LOYAL) {
+#         bonus2 bMagicAtkEle,Ele_Wind,5;
+#         bonus bVariableCastrate,-5;
+#      }
+#      else if (.@i >= PET_INTIMATE_CORDIAL) {
+#         bonus2 bMagicAtkEle,Ele_Wind,3;
+#         bonus bVariableCastrate,-4;
+#      }
+#      else if (.@i >= PET_INTIMATE_NEUTRAL) {
+#         bonus bVariableCastrate,-3;
+#      }
+#      else if (.@i >= PET_INTIMATE_AWKWARD || .@i >= PET_INTIMATE_SHY) {
+#         bonus bVariableCastrate,-2;
+#      }
+#
+#    Evolution:
+#      - Target: MISTRESS3
+#        ItemRequirements:
+#          - Item: Driller_Card
+#            Amount: 10
+#          - Item: Mantis_Card
+#            Amount: 10
+#          - Item: Side_Winder_Card
+#            Amount: 10
+#          - Item: Mightysoul_Essence
+#            Amount: 30
+#  - Mob: MISTRESS3
+#    EggItem: aegis_9193
+#    FoodItem: High_Class_Pet_food
+#    Fullness: 2   # unknown
+#    HungryDelay: 120   # unknown
+#    IntimacyFed: 15   # unknown
+#    CaptureRate: 0   # unknown
+#    SpecialPerformance: false   # unknown
+#    AllowAutoFeed: true
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#      
+#      if (.@i >= PET_INTIMATE_LOYAL) {
+#         bonus2 bAddClass,Class_Normal,7;
+#         bonus bNoSizeFix;
+#      }
+#      else if (.@i >= PET_INTIMATE_CORDIAL) {
+#         bonus2 bAddClass,Class_Normal,5;
+#      }
+#      else if (.@i >= PET_INTIMATE_NEUTRAL) {
+#         bonus2 bAddClass,Class_Normal,3;
+#      }
+#      else if (.@i >= PET_INTIMATE_AWKWARD || .@i >= PET_INTIMATE_SHY) {
+#         bonus2 bAddClass,Class_Normal,1;
+#      }
+#
