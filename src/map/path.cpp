@@ -291,7 +291,7 @@ static bool aegis_pathfinding(walkpath_data& wpd, int16 m, uint16 x0, uint16 y0,
 
 	unsigned short i;
 	uint16 x, y;
-	short dx = 0, dy = 0;
+	char dx = 0, dy = 0;
 	struct map_data *mapdata = map_getmapdata(m);
 
 	struct path_node* current, *it;
@@ -412,7 +412,7 @@ static bool easy_pathfind(walkpath_data& wpd, int16 m, uint16 x0, uint16 y0, uin
 	struct map_data *mapdata = map_getmapdata(m);
 	unsigned char i;
 	uint16 x, y;
-	short dx = 0, dy = 0;
+	char dx = 0, dy = 0;
 
 	// Try finding direct path to target
 	// Direct path goes diagonally first, then in straight line.
