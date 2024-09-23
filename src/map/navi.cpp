@@ -27,50 +27,15 @@
 
 std::string filePrefix = "generated/clientside/data/luafiles514/lua files/navigation/";
 
-#define SET_OPEN 0
-#define SET_CLOSED 1
+/// @name A* pathfinding related functions
+/// @{
 
-#define PATH_DIR_NORTH 1
-#define PATH_DIR_WEST 2
-#define PATH_DIR_SOUTH 4
-#define PATH_DIR_EAST 8
-
-// @name Structures and defines for A* pathfinding
-// @{
-
-// Path node
-struct path_node {
-	struct path_node *parent; // pointer to parent
-	short x; // x coord
-	short y; // y coord
-	short g_cost; // Actual cost from start to this node
-	short f_cost; // g_cost + heuristic(this, goal)
-	short flag; // SET_OPEN / SET_CLOSED
-};
+#define calc_index(x,y) (((x)+(y)*MAX_WALKPATH_NAVI) & (MAX_WALKPATH_NAVI*MAX_WALKPATH_NAVI-1))
 
 /// Binary heap of path nodes
 BHEAP_STRUCT_DECL(node_heap, struct path_node*);
 static BHEAP_STRUCT_VAR(node_heap, g_open_set);	// use static heap for all path calculations
 												// it get's initialized in do_init_path, freed in do_final_path.
-
-/// Comparator for binary heap of path nodes (minimum cost at top)
-#define NODE_MINTOPCMP(i,j) ((i)->f_cost - (j)->f_cost)
-
-#define calc_index(x,y) (((x)+(y)*MAX_WALKPATH_NAVI) & (MAX_WALKPATH_NAVI*MAX_WALKPATH_NAVI-1))
-
-/// @}
-
-// Translates dx,dy into walking direction
-static enum directions walk_choices [3][3] =
-{
-	{DIR_NORTHWEST,DIR_NORTH,DIR_NORTHEAST},
-	{DIR_WEST,DIR_CENTER,DIR_EAST},
-	{DIR_SOUTHWEST,DIR_SOUTH,DIR_SOUTHEAST},
-};
-
-
-/// @name A* pathfinding related functions
-/// @{
 
 /// @param dx: Horizontal distance
 /// @param dy: Vertical distance
@@ -166,8 +131,10 @@ static int add_path(struct node_heap *heap, int16 x, int16 y, short g_cost, stru
  *
  * Note: uses global g_open_set, therefore this method can't be called in parallel or recursivly.
  *------------------------------------------*/
-bool navi_path_search(struct navi_walkpath_data *wpd, const struct navi_pos *from, const struct navi_pos *dest, cell_chk cell) {
-	int i, x, y, dx = 0, dy = 0;
+static bool navi_path_search(struct navi_walkpath_data *wpd, const struct navi_pos *from, const struct navi_pos *dest, cell_chk cell) {
+
+	unsigned short i, x, y;
+	short dx = 0, dy = 0;
 	struct map_data *mapdata = map_getmapdata(from->m);
 	struct navi_walkpath_data s_wpd;
 
@@ -196,10 +163,22 @@ bool navi_path_search(struct navi_walkpath_data *wpd, const struct navi_pos *fro
 	}
 
 	struct path_node *current, *it;
-	int xs = mapdata->xs - 1;
-	int ys = mapdata->ys - 1;
-	int len = 0;
-	int j;
+	int16 xs = mapdata->xs - 1;
+	int16 ys = mapdata->ys - 1;
+	unsigned char len = 0;
+	short j; // need to be signed
+
+	unsigned short e = 0; // error flag
+		
+	// Saves allowed directions for the current cell. Diagonal directions
+	// are only allowed if both directions around it are allowed. This is
+	// to prevent cutting corner of nearby wall.
+	// For example, you can only go NW from the current cell, if you can
+	// go N *and* you can go W. Otherwise you need to walk around the
+	// (corner of the) non-walkable cell.
+	int allowed_dirs;
+
+	unsigned short g_cost;
 
 	// A* (A-star) pathfinding
 	// We always use A* for finding walkpaths because it is what game client uses.
@@ -221,17 +200,8 @@ bool navi_path_search(struct navi_walkpath_data *wpd, const struct navi_pos *fro
 	heap_push_node(&g_open_set, &tp[i]); // Put start node to 'open' set
 	
 	for (;;) {
-		int e = 0; // error flag
-		
-		// Saves allowed directions for the current cell. Diagonal directions
-		// are only allowed if both directions around it are allowed. This is
-		// to prevent cutting corner of nearby wall.
-		// For example, you can only go NW from the current cell, if you can
-		// go N *and* you can go W. Otherwise you need to walk around the
-		// (corner of the) non-walkable cell.
-		int allowed_dirs = 0;
-
-		short g_cost;
+	
+		allowed_dirs = 0;
 
 		if (BHEAP_LENGTH(g_open_set) == 0) {
 			return false;
@@ -280,6 +250,7 @@ bool navi_path_search(struct navi_walkpath_data *wpd, const struct navi_pos *fro
 	}
 
 	for (it = current; it->parent != nullptr; it = it->parent, len++);
+
 	if (len > sizeof(wpd->path)) {
 		return false;
 	}
@@ -288,11 +259,18 @@ bool navi_path_search(struct navi_walkpath_data *wpd, const struct navi_pos *fro
 	wpd->path_len = len;
 	wpd->path_pos = 0;
 
-	for (it = current, j = len-1; j >= 0; it = it->parent, j--) {
-		dx = it->x - it->parent->x;
-		dy = it->y - it->parent->y;
-		wpd->path[j] = walk_choices[-dy + 1][dx + 1];
-	}
+	it = current;
+	j = len;
+
+	if(it->parent == nullptr)
+		return false;
+
+	while (j-- >= 0 && it->parent != nullptr){
+	    dx = it->x - it->parent->x;
+	    dy = it->y - it->parent->y;
+	    wpd->path[j] = walk_choices[-dy + 1][dx + 1];
+	    it = it->parent;
+	};
 
 	return true;
 }

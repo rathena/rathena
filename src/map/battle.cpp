@@ -3262,7 +3262,7 @@ static bool is_attack_hitting(struct Damage* wd, struct block_list *src, struct 
 				break;
 			case RL_SLUGSHOT:
 				{
-					int8 dist = distance_bl(src, target);
+					unsigned short dist = distance_bl(src, target);
 					if (dist > 3) {
 						// Reduce n hitrate for each cell after initial 3 cells. Different each level
 						// -10:-9:-8:-7:-6

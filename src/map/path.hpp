@@ -13,6 +13,30 @@ enum cell_chk : uint8;
 
 #define MAX_WALKPATH 32
 
+#define SET_OPEN false
+#define SET_CLOSED true
+
+#define PATH_DIR_NORTH 1
+#define PATH_DIR_WEST 2
+#define PATH_DIR_SOUTH 4
+#define PATH_DIR_EAST 8
+
+/// @name Structures and defines for A* pathfinding
+/// @{
+
+/// Path node
+struct path_node {
+	struct path_node *parent; ///< pointer to parent (for path reconstruction)
+	unsigned short x; ///< X-coordinate
+	unsigned short y; ///< Y-coordinate
+	unsigned short g_cost; ///< Actual cost from start to this node
+	unsigned short f_cost; ///< g_cost + heuristic(this, goal)
+	bool flag; ///< SET_OPEN / SET_CLOSED
+};
+
+/// Comparator for binary heap of path nodes (minimum cost at top)
+#define NODE_MINTOPCMP(i,j) ((i)->f_cost - (j)->f_cost)
+
 enum directions : int8 {
 	DIR_CENTER = -1,
 	DIR_NORTH = 0,
@@ -24,6 +48,14 @@ enum directions : int8 {
 	DIR_EAST = 6,
 	DIR_NORTHEAST = 7,
 	DIR_MAX
+};
+
+// Translates dx,dy into walking direction
+constexpr enum directions walk_choices [3][3] =
+{
+	{DIR_NORTHWEST,DIR_NORTH,DIR_NORTHEAST},
+	{DIR_WEST,DIR_CENTER,DIR_EAST},
+	{DIR_SOUTHWEST,DIR_SOUTH,DIR_SOUTHEAST},
 };
 
 struct walkpath_data {
@@ -57,16 +89,16 @@ struct shootpath_data {
 int path_blownpos(int16 m,int16 x0,int16 y0,int16 dx,int16 dy,int count);
 
 // tries to find a walkable path
-bool path_search(struct walkpath_data *wpd,int16 m,int16 x0,int16 y0,int16 x1,int16 y1,int flag,cell_chk cell);
+bool path_search(struct walkpath_data *wpd, int16 m, uint16 x0, uint16 y0, uint16 x1, uint16 y1, int flag, cell_chk cell);
 
 // tries to find a shootable path
 bool path_search_long(struct shootpath_data *spd,int16 m,int16 x0,int16 y0,int16 x1,int16 y1,cell_chk cell);
 
 // distance related functions
-bool check_distance(int dx, int dy, int distance);
-unsigned int distance(int dx, int dy);
-bool check_distance_client(int dx, int dy, int distance);
-unsigned int distance_client(int dx, int dy);
+bool check_distance(short dx, short dy, unsigned short distance);
+unsigned short distance(short dx, short dy);
+bool check_distance_client(short dx, short dy, unsigned short distance);
+unsigned short distance_client(short dx, short dy);
 
 bool direction_diagonal( enum directions direction );
 bool direction_opposite( enum directions direction );
