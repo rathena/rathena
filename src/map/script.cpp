@@ -19238,7 +19238,7 @@ BUILDIN_FUNC(setunitdata)
 				break;
 			case UMOB_AI: md->special_state.ai = script_setunitdata_helper<mob_ai>(value); break;
 			case UMOB_SCOPTION: md->sc.option = script_setunitdata_helper<unsigned short>(value); break;
-			case UMOB_SEX: md->vd->sex = (char)value; unit_refresh(bl); break;
+			case UMOB_SEX: md->vd->sex = script_setunitdata_helper<char>(value); unit_refresh(bl); break;
 			case UMOB_CLASS: status_set_viewdata(bl, script_setunitdata_helper<unsigned short>(value)); unit_refresh(bl); break;
 			case UMOB_HAIRSTYLE: clif_changelook(bl, LOOK_HAIR, script_setunitdata_helper<unsigned short>(value)); break;
 			case UMOB_HAIRCOLOR: clif_changelook(bl, LOOK_HAIR_COLOR, script_setunitdata_helper<unsigned short>(value)); break;
@@ -19611,7 +19611,7 @@ BUILDIN_FUNC(setunitdata)
 			case UNPC_AMOTION: nd->status.amotion = script_setunitdata_helper<short>(value); break;
 			case UNPC_ADELAY: nd->status.adelay = script_setunitdata_helper<short>(value); break;
 			case UNPC_DMOTION: nd->status.dmotion = script_setunitdata_helper<short>(value); break;
-			case UNPC_SEX: nd->vd.sex = (char)value; unit_refresh(bl); break;
+			case UNPC_SEX: nd->vd.sex = script_setunitdata_helper<char>(value); unit_refresh(bl); break;
 			case UNPC_CLASS: npc_setclass(nd, script_setunitdata_helper<short>(value)); break;
 			case UNPC_HAIRSTYLE: clif_changelook(bl, LOOK_HAIR, script_setunitdata_helper<unsigned short>(value)); break;
 			case UNPC_HAIRCOLOR: clif_changelook(bl, LOOK_HAIR_COLOR, script_setunitdata_helper<unsigned short>(value)); break;
@@ -19623,7 +19623,7 @@ BUILDIN_FUNC(setunitdata)
 			case UNPC_WEAPON: clif_changelook(bl, LOOK_WEAPON, script_setunitdata_helper<unsigned short>(value)); break;
 			case UNPC_ROBE: clif_changelook(bl, LOOK_ROBE, script_setunitdata_helper<unsigned short>(value)); break;
 			case UNPC_BODY2: clif_changelook(bl, LOOK_BODY2, script_setunitdata_helper<unsigned short>(value)); break;
-			case UNPC_DEADSIT: nd->vd.dead_sit = (char)value; unit_refresh(bl); break;
+			case UNPC_DEADSIT: nd->vd.dead_sit = script_setunitdata_helper<char>(value); unit_refresh(bl); break;
 			case UNPC_GROUP_ID: nd->ud.group_id = value; unit_refresh(bl); break;
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_NPC.\n", type);
