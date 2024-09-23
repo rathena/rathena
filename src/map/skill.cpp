@@ -5704,6 +5704,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case SHC_SAVAGE_IMPACT:
 	case SHC_IMPACT_CRATER:
 	case SHC_FATAL_SHADOW_CROW:
+	case SHC_CROSS_SLASH:
 	case MT_AXE_STOMP:
 	case MT_MIGHTY_SMASH:
 	case MT_RUSH_QUAKE:
@@ -8624,7 +8625,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case IQ_MASSIVE_F_BLASTER:
 	case IQ_EXPOSION_BLASTER:
 	case SHC_IMPACT_CRATER:
-	case SHC_CROSS_SLASH:
 	case MT_AXE_STOMP:
 	case MT_MIGHTY_SMASH:
 	case ABC_ABYSS_DAGGER:
