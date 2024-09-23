@@ -27,8 +27,8 @@ enum cell_chk : uint8;
 /// Path node
 struct path_node {
 	struct path_node *parent; ///< pointer to parent (for path reconstruction)
-	unsigned short x; ///< X-coordinate
-	unsigned short y; ///< Y-coordinate
+	uint16 x; ///< X-coordinate
+	uint16 y; ///< Y-coordinate
 	unsigned short g_cost; ///< Actual cost from start to this node
 	unsigned short f_cost; ///< g_cost + heuristic(this, goal)
 	bool flag; ///< SET_OPEN / SET_CLOSED
@@ -95,10 +95,10 @@ bool path_search(struct walkpath_data *wpd, int16 m, uint16 x0, uint16 y0, uint1
 bool path_search_long(struct shootpath_data *spd,int16 m,int16 x0,int16 y0,int16 x1,int16 y1,cell_chk cell);
 
 // distance related functions
-bool check_distance(short dx, short dy, unsigned short distance);
-unsigned short distance(short dx, short dy);
-bool check_distance_client(short dx, short dy, unsigned short distance);
-unsigned short distance_client(short dx, short dy);
+bool check_distance(char dx, char dy, unsigned char distance);
+unsigned char distance(char dx, char dy);
+bool check_distance_client(char dx, char dy, unsigned char distance);
+unsigned char distance_client(char dx, char dy);
 
 bool direction_diagonal( enum directions direction );
 bool direction_opposite( enum directions direction );

@@ -318,7 +318,7 @@ struct delay_damage {
 	int target_id;
 	int64 damage;
 	t_tick delay;
-	unsigned short distance;
+	unsigned char distance;
 	uint16 skill_lv;
 	uint16 skill_id;
 	enum damage_lv dmg_lv;
@@ -3262,7 +3262,7 @@ static bool is_attack_hitting(struct Damage* wd, struct block_list *src, struct 
 				break;
 			case RL_SLUGSHOT:
 				{
-					unsigned short dist = distance_bl(src, target);
+					unsigned char dist = distance_bl(src, target);
 					if (dist > 3) {
 						// Reduce n hitrate for each cell after initial 3 cells. Different each level
 						// -10:-9:-8:-7:-6

@@ -261,7 +261,7 @@ struct s_mob_db {
 	t_exp base_exp{};
 	t_exp job_exp{};
 	t_exp mexp{};
-	uint16 range2{}, range3{};
+	unsigned char range2{}, range3{};
 	std::vector<e_race2> race2{};	// celest
 	uint16 lv{ 1 };
 	s_mob_drop dropitem[MAX_MOB_DROP_TOTAL]{}, mvpitem[MAX_MVP_DROP_TOTAL]{};
@@ -366,7 +366,7 @@ struct mob_data {
 	t_tick next_walktime,last_thinktime,last_linktime,last_pcneartime,dmgtick,last_canmove,last_skillcheck;
 	short move_fail_count;
 	short lootitem_count;
-	short min_chase;
+	unsigned char min_chase;
 	unsigned char walktoxy_fail_count; //Pathfinding succeeds but the actual walking failed (e.g. Icewall lock)
 
 	int deletetimer;

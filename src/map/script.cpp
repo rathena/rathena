@@ -19261,7 +19261,7 @@ BUILDIN_FUNC(setunitdata)
 				calc_status = true;
 				break;
 			case UMOB_DMGIMMUNE: md->ud.immune_attack = value > 0; break;
-			case UMOB_ATKRANGE: md->base_status->rhw.range = (unsigned short)value; calc_status = true; break;
+			case UMOB_ATKRANGE: md->base_status->rhw.range = (unsigned char)value; calc_status = true; break;
 			case UMOB_ATKMIN: md->base_status->rhw.atk = (unsigned short)value; calc_status = true; break;
 			case UMOB_ATKMAX: md->base_status->rhw.atk2 = (unsigned short)value; calc_status = true; break;
 			case UMOB_MATKMIN: md->base_status->matk_min = (unsigned short)value; calc_status = true; break;
@@ -19332,7 +19332,7 @@ BUILDIN_FUNC(setunitdata)
 			case UHOM_DEX: hd->base_status.dex = (unsigned short)value; status_calc_misc(bl, &hd->base_status, hd->homunculus.level); calc_status = true; break;
 			case UHOM_LUK: hd->base_status.luk = (unsigned short)value; status_calc_misc(bl, &hd->base_status, hd->homunculus.level); calc_status = true; break;
 			case UHOM_DMGIMMUNE: hd->ud.immune_attack = value > 0; break;
-			case UHOM_ATKRANGE: hd->base_status.rhw.range = (unsigned short)value; calc_status = true; break;
+			case UHOM_ATKRANGE: hd->base_status.rhw.range = (unsigned char)value; calc_status = true; break;
 			case UHOM_ATKMIN: hd->base_status.rhw.atk = (unsigned short)value; calc_status = true; break;
 			case UHOM_ATKMAX: hd->base_status.rhw.atk2 = (unsigned short)value; calc_status = true; break;
 			case UHOM_MATKMIN: hd->base_status.matk_min = (unsigned short)value; calc_status = true; break;
@@ -19398,7 +19398,7 @@ BUILDIN_FUNC(setunitdata)
 			case UPET_DEX: pd->status.dex = (unsigned short)value; status_calc_misc(bl, &pd->status, pd->pet.level); break;
 			case UPET_LUK: pd->status.luk = (unsigned short)value; status_calc_misc(bl, &pd->status, pd->pet.level); break;
 			case UPET_DMGIMMUNE: pd->ud.immune_attack = value > 0; break;
-			case UPET_ATKRANGE: pd->status.rhw.range = (unsigned short)value; break;
+			case UPET_ATKRANGE: pd->status.rhw.range = (unsigned char)value; break;
 			case UPET_ATKMIN: pd->status.rhw.atk = (unsigned short)value; break;
 			case UPET_ATKMAX: pd->status.rhw.atk2 = (unsigned short)value; break;
 			case UPET_MATKMIN: pd->status.matk_min = (unsigned short)value; break;
@@ -19448,7 +19448,7 @@ BUILDIN_FUNC(setunitdata)
 			case UMER_DEX: mc->base_status.dex = (unsigned short)value; status_calc_misc(bl, &mc->base_status, mc->db->lv); calc_status = true; break;
 			case UMER_LUK: mc->base_status.luk = (unsigned short)value; status_calc_misc(bl, &mc->base_status, mc->db->lv); calc_status = true; break;
 			case UMER_DMGIMMUNE: mc->ud.immune_attack = value > 0; break;
-			case UMER_ATKRANGE: mc->base_status.rhw.range = (unsigned short)value; calc_status = true; break;
+			case UMER_ATKRANGE: mc->base_status.rhw.range = (unsigned char)value; calc_status = true; break;
 			case UMER_ATKMIN: mc->base_status.rhw.atk = (unsigned short)value; calc_status = true; break;
 			case UMER_ATKMAX: mc->base_status.rhw.atk2 = (unsigned short)value; calc_status = true; break;
 			case UMER_MATKMIN: mc->base_status.matk_min = (unsigned short)value; calc_status = true; break;
@@ -19518,7 +19518,7 @@ BUILDIN_FUNC(setunitdata)
 			case UELE_DEX: ed->base_status.dex = (unsigned short)value; status_calc_misc(bl, &ed->base_status, ed->db->lv); calc_status = true; break;
 			case UELE_LUK: ed->base_status.luk = (unsigned short)value; status_calc_misc(bl, &ed->base_status, ed->db->lv); calc_status = true; break;
 			case UELE_DMGIMMUNE: ed->ud.immune_attack = value > 0; break;
-			case UELE_ATKRANGE: ed->base_status.rhw.range = (unsigned short)value; calc_status = true; break;
+			case UELE_ATKRANGE: ed->base_status.rhw.range = (unsigned char)value; calc_status = true; break;
 			case UELE_ATKMIN: ed->base_status.rhw.atk = (unsigned short)value; calc_status = true; break;
 			case UELE_ATKMAX: ed->base_status.rhw.atk2 = (unsigned short)value; calc_status = true; break;
 			case UELE_MATKMIN: ed->base_status.matk_min = (unsigned short)value; calc_status = true; break;
@@ -19585,7 +19585,7 @@ BUILDIN_FUNC(setunitdata)
 			case UNPC_DEX: nd->params.dex = (unsigned short)value; status_calc_misc(bl, &nd->status, nd->level); break;
 			case UNPC_LUK: nd->params.luk = (unsigned short)value; status_calc_misc(bl, &nd->status, nd->level); break;
 			case UNPC_PLUSALLSTAT: nd->stat_point = (unsigned int)value; break;
-			case UNPC_ATKRANGE: nd->status.rhw.range = (unsigned short)value; break;
+			case UNPC_ATKRANGE: nd->status.rhw.range = (unsigned char)value; break;
 			case UNPC_ATKMIN: nd->status.rhw.atk = (unsigned short)value; break;
 			case UNPC_ATKMAX: nd->status.rhw.atk2 = (unsigned short)value; break;
 			case UNPC_MATKMIN: nd->status.matk_min = (unsigned short)value; break;

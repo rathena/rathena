@@ -3194,7 +3194,7 @@ enum e_refine_chance_type {
 * and another for their left hand weapon. */
 struct weapon_atk {
 	unsigned short atk, atk2;
-	unsigned short range;
+	unsigned char range;
 	unsigned char ele;
 #ifdef RENEWAL
 	unsigned short matk;

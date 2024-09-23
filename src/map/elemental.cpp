@@ -901,9 +901,9 @@ uint64 ElementalDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	}
 
 	if (this->nodeExists(node, "AttackRange")) {
-		uint16 range;
+		uint8 range;
 
-		if (!this->asUInt16(node, "AttackRange", range))
+		if (!this->asUInt8(node, "AttackRange", range))
 			return 0;
 
 		elemental->status.rhw.range = range;
@@ -913,9 +913,9 @@ uint64 ElementalDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	}
 
 	if (this->nodeExists(node, "SkillRange")) {
-		uint16 range;
+		uint8 range;
 
-		if (!this->asUInt16(node, "SkillRange", range))
+		if (!this->asUInt8(node, "SkillRange", range))
 			return 0;
 
 		elemental->range2 = range;
@@ -925,9 +925,9 @@ uint64 ElementalDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	}
 
 	if (this->nodeExists(node, "ChaseRange")) {
-		uint16 range;
+		uint8 range;
 
-		if (!this->asUInt16(node, "ChaseRange", range))
+		if (!this->asUInt8(node, "ChaseRange", range))
 			return 0;
 
 		elemental->range3 = range;

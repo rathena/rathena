@@ -20,7 +20,7 @@
 
 /// Binary heap of path nodes
 BHEAP_STRUCT_DECL(node_heap, struct path_node*);
-static BHEAP_STRUCT_VAR(node_heap, g_open_set);	// use static heap for all path calculations
+static BHEAP_STRUCT_VAR(node_heap, heap);	// use static heap for all path calculations
 												// it get's initialized in do_init_path, freed in do_final_path.
 
 #define calc_index(x,y) (((x)+(y)*MAX_WALKPATH) & (MAX_WALKPATH*MAX_WALKPATH-1))
@@ -33,8 +33,8 @@ static BHEAP_STRUCT_VAR(node_heap, g_open_set);	// use static heap for all path 
 /// @param dx: Horizontal distance
 /// @param dy: Vertical distance
 /// @return Manhattan distance -> Radius.DIAMOND
-static inline unsigned short manhattan_distance(short dx, short dy) {
-	return static_cast<unsigned short>(std::abs(dx) + std::abs(dy));
+static inline unsigned char manhattan_distance(char dx, char dy) {
+	return static_cast<unsigned char>(std::abs(dx) + std::abs(dy));
 }
 
 /*
@@ -46,15 +46,15 @@ static inline unsigned short manhattan_distance(short dx, short dy) {
 // @param dx: Horizontal distance
 // @param dy: Vertical distance
 // @return Chebyshev range -> Radius.SQUARE
-static inline unsigned short chebyshev_range(short dx, short dy) {
-	return static_cast<unsigned short>(std::max(std::abs(dx), std::abs(dy)));
+static inline unsigned char chebyshev_range(char dx, char dy) {
+	return static_cast<unsigned char>(std::max(std::abs(dx), std::abs(dy)));
 }
 
 // @param dx: Horizontal distance
 // @param dy: Vertical distance
 // @return Chebyshev distance -> Radius.SQUARE
-static inline unsigned short chebyshev_distance(short dx, short dy) {
-	return static_cast<unsigned short>((123.0 / 128.0 * chebyshev_range(dx, dy)) + (51.0 / 128.0 * std::min(std::abs(dx), std::abs(dy))));
+static inline unsigned char chebyshev_distance(char dx, char dy) {
+	return static_cast<unsigned char>((123.0 / 128.0 * chebyshev_range(dx, dy)) + (51.0 / 128.0 * std::min(std::abs(dx), std::abs(dy))));
 }
 
 /*
@@ -64,25 +64,25 @@ static inline unsigned short chebyshev_distance(short dx, short dy) {
 // @param dx: Horizontal distance
 // @param dy: Vertical distance
 // @return Euclidean range -> Radius.CIRCLE 
-static inline double euclidean_range(short dx, short dy) {
+static inline double euclidean_range(char dx, char dy) {
 	return std::pow(std::abs(dx), 2) + std::pow(std::abs(dy), 2);
 }
 
 // @param dx: Horizontal distance
 // @param dy: Vertical distance
 // @return Euclidean distance -> Radius.CIRCLE
-static inline double euclidean_distance(short dx, short dy) {
+static inline double euclidean_distance(char dx, char dy) {
 	return std::sqrt(euclidean_range(dx,dy));
 }
 
 /// @}
 
 void do_init_path(){
-	BHEAP_INIT(g_open_set);	// [fwi]: BHEAP_STRUCT_VAR already initialized the heap, this is rudendant & just for code-conformance/readability
+	BHEAP_INIT(heap);	// [fwi]: BHEAP_STRUCT_VAR already initialized the heap, this is rudendant & just for code-conformance/readability
 }//
 
 void do_final_path(){
-	BHEAP_CLEAR(g_open_set);
+	BHEAP_CLEAR(heap);
 }//
 
 
@@ -215,14 +215,14 @@ bool path_search_long(struct shootpath_data *spd,int16 m,int16 x0,int16 y0,int16
 // @param x1: Target cell X
 // @param y1: Target cell y
 // @return movecost X manhattan distance (This is inadmissible (overestimating) heuristic used by game client)
-static inline unsigned short heuristic(int x0,int y0,int x1,int y1) {
+static inline unsigned short heuristic(uint16 x0,uint16 y0,uint16 x1,uint16 y1) {
 	return MOVE_COST * manhattan_distance((x1)-(x0), (y1)-(y0));
 }
 
 /// Pushes path_node to the binary node_heap.
 /// Ensures there is enough space in array to store new element.
 
-static void heap_push_node(node_heap& heap, path_node* node)
+static void heap_push_node(path_node* node)
 {
 #ifndef __clang_analyzer__ // TODO: Figure out why clang's static analyzer doesn't like this
 	BHEAP_ENSURE2(heap, 1, 256, struct path_node **);
@@ -231,7 +231,7 @@ static void heap_push_node(node_heap& heap, path_node* node)
 }
 
 /// Updates path_node in the binary node_heap.
-static int heap_update_node(node_heap& heap, path_node& node)
+static int heap_update_node(path_node& node)
 {
 	int i;
 	ARR_FIND(0, BHEAP_LENGTH(heap), i, BHEAP_DATA(heap)[i] == &node);
@@ -245,7 +245,7 @@ static int heap_update_node(node_heap& heap, path_node& node)
 
 /// Path_node processing in A* pathfinding.
 /// Adds new node to heap and updates/re-adds old ones if necessary.
-static unsigned short add_path(node_heap &heap, std::vector<path_node>& tp, uint16 x, uint16 y, unsigned short g_cost, struct path_node *parent, unsigned short h_cost)
+static unsigned char add_path(std::vector<path_node>& tp, uint16 x, uint16 y, unsigned short g_cost, path_node& parent, unsigned short h_cost)
 {
 	int i = calc_index(x, y);
 
@@ -253,12 +253,12 @@ static unsigned short add_path(node_heap &heap, std::vector<path_node>& tp, uint
 		if (g_cost < tp[i].g_cost) { // New path to this node is better than old one
 			// Update costs and parent
 			tp[i].g_cost = g_cost;
-			tp[i].parent = parent;
+			tp[i].parent = &parent;
 			tp[i].f_cost = g_cost + h_cost;
 			if (tp[i].flag == SET_CLOSED) {
-				heap_push_node(heap, &tp[i]); // Put it in open set again
+				heap_push_node(&tp[i]); // Put it in open set again
 			}
-			else if (heap_update_node(heap, tp[i])) {
+			else if (heap_update_node(tp[i])) {
 				return 1;
 			}
 			tp[i].flag = SET_OPEN;
@@ -273,10 +273,10 @@ static unsigned short add_path(node_heap &heap, std::vector<path_node>& tp, uint
 	tp[i].x = x;
 	tp[i].y = y;
 	tp[i].g_cost = g_cost;
-	tp[i].parent = parent;
+	tp[i].parent = &parent;
 	tp[i].f_cost = g_cost + h_cost;
 	tp[i].flag = SET_OPEN;
-	heap_push_node(heap, &tp[i]);
+	heap_push_node(&tp[i]);
 	return 0;
 }
 ///@}
@@ -289,7 +289,8 @@ static unsigned short add_path(node_heap &heap, std::vector<path_node>& tp, uint
 // Easy pathfinding cuts corners of non-walkable cells, but client always walks around it.
 static bool aegis_pathfinding(walkpath_data& wpd, int16 m, uint16 x0, uint16 y0, uint16 x1, uint16 y1, cell_chk cell){
 
-	unsigned short i, x, y;
+	unsigned short i;
+	uint16 x, y;
 	short dx = 0, dy = 0;
 	struct map_data *mapdata = map_getmapdata(m);
 
@@ -297,9 +298,9 @@ static bool aegis_pathfinding(walkpath_data& wpd, int16 m, uint16 x0, uint16 y0,
 	int16 xs = mapdata->xs - 1;
 	int16 ys = mapdata->ys - 1;
 	unsigned char len = 0;
-	short j; // need to be signed
-
-	unsigned short e = 0; // error flag
+	char j; // need to be signed
+	unsigned char e = 0; // error flag
+	unsigned short g_cost;
 
 	// Saves allowed directions for the current cell. Diagonal directions
 	// are only allowed if both directions around it are allowed. This is
@@ -307,9 +308,7 @@ static bool aegis_pathfinding(walkpath_data& wpd, int16 m, uint16 x0, uint16 y0,
 	// For example, you can only go NW from the current cell, if you can
 	// go N *and* you can go W. Otherwise you need to walk around the
 	// (corner of the) non-walkable cell.
-	int allowed_dirs;
-
-	unsigned short g_cost;
+	char allowed_dirs;
 
 	// FIXME: This array is too small to ensure all paths shorter than MAX_WALKPATH
 	// can be found without node collision: calc_index(node1) = calc_index(node2).
@@ -317,7 +316,7 @@ static bool aegis_pathfinding(walkpath_data& wpd, int16 m, uint16 x0, uint16 y0,
 	// static struct path_node tp[MAX_WALKPATH * MAX_WALKPATH]; < old
 	std::vector<path_node> tp(MAX_WALKPATH * MAX_WALKPATH); // fix C6262.
 
-	BHEAP_RESET(g_open_set);
+	BHEAP_RESET(heap);
 
 	// Start node
 	i = calc_index(x0, y0);
@@ -328,18 +327,18 @@ static bool aegis_pathfinding(walkpath_data& wpd, int16 m, uint16 x0, uint16 y0,
 	tp[i].f_cost = heuristic(x0, y0, x1, y1);
 	tp[i].flag   = SET_OPEN;
 
-	heap_push_node(g_open_set, &tp[i]); // Put start node to 'open' set
+	heap_push_node(&tp[i]); // Put start node to 'open' set
 
 	for(;;) {
 
 		allowed_dirs = 0;
 
-		if (BHEAP_LENGTH(g_open_set) == 0) {
+		if (BHEAP_LENGTH(heap) == 0) {
 			return false;
 		}
 
-		current = BHEAP_PEEK(g_open_set); // Look for the lowest f_cost node in the 'open' set
-		BHEAP_POP2(g_open_set, NODE_MINTOPCMP); // Remove it from 'open' set
+		current = BHEAP_PEEK(heap); // Look for the lowest f_cost node in the 'open' set
+		BHEAP_POP2(heap, NODE_MINTOPCMP); // Remove it from 'open' set
 
 		x      = current->x;
 		y      = current->y;
@@ -359,21 +358,21 @@ static bool aegis_pathfinding(walkpath_data& wpd, int16 m, uint16 x0, uint16 y0,
 #define chk_dir(d) ((allowed_dirs & (d)) == (d))
 		// Process neighbors of current node
 		if (chk_dir(PATH_DIR_SOUTH|PATH_DIR_EAST) && !map_getcellp(mapdata, x+1, y-1, cell))
-			e += add_path(g_open_set, tp, x+1, y-1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x+1, y-1, x1, y1)); // (x+1, y-1) 5
+			e += add_path(tp, x+1, y-1, g_cost + MOVE_DIAGONAL_COST, *current, heuristic(x+1, y-1, x1, y1)); // (x+1, y-1) 5
 		if (chk_dir(PATH_DIR_EAST))
-			e += add_path(g_open_set, tp, x+1, y, g_cost + MOVE_COST, current, heuristic(x+1, y, x1, y1)); // (x+1, y) 6
+			e += add_path(tp, x+1, y, g_cost + MOVE_COST, *current, heuristic(x+1, y, x1, y1)); // (x+1, y) 6
 		if (chk_dir(PATH_DIR_NORTH|PATH_DIR_EAST) && !map_getcellp(mapdata, x+1, y+1, cell))
-			e += add_path(g_open_set, tp, x+1, y+1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x+1, y+1, x1, y1)); // (x+1, y+1) 7
+			e += add_path(tp, x+1, y+1, g_cost + MOVE_DIAGONAL_COST, *current, heuristic(x+1, y+1, x1, y1)); // (x+1, y+1) 7
 		if (chk_dir(PATH_DIR_NORTH))
-			e += add_path(g_open_set, tp, x, y+1, g_cost + MOVE_COST, current, heuristic(x, y+1, x1, y1)); // (x, y+1) 0
+			e += add_path(tp, x, y+1, g_cost + MOVE_COST, *current, heuristic(x, y+1, x1, y1)); // (x, y+1) 0
 		if (chk_dir(PATH_DIR_NORTH|PATH_DIR_WEST) && !map_getcellp(mapdata, x-1, y+1, cell))
-			e += add_path(g_open_set, tp, x-1, y+1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x-1, y+1, x1, y1)); // (x-1, y+1) 1
+			e += add_path(tp, x-1, y+1, g_cost + MOVE_DIAGONAL_COST, *current, heuristic(x-1, y+1, x1, y1)); // (x-1, y+1) 1
 		if (chk_dir(PATH_DIR_WEST))
-			e += add_path(g_open_set, tp, x-1, y, g_cost + MOVE_COST, current, heuristic(x-1, y, x1, y1)); // (x-1, y) 2
+			e += add_path(tp, x-1, y, g_cost + MOVE_COST, *current, heuristic(x-1, y, x1, y1)); // (x-1, y) 2
 		if (chk_dir(PATH_DIR_SOUTH|PATH_DIR_WEST) && !map_getcellp(mapdata, x-1, y-1, cell))
-			e += add_path(g_open_set, tp, x-1, y-1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x-1, y-1, x1, y1)); // (x-1, y-1) 3
+			e += add_path(tp, x-1, y-1, g_cost + MOVE_DIAGONAL_COST, *current, heuristic(x-1, y-1, x1, y1)); // (x-1, y-1) 3
 		if (chk_dir(PATH_DIR_SOUTH))
-			e += add_path(g_open_set, tp, x, y-1, g_cost + MOVE_COST, current, heuristic(x, y-1, x1, y1)); // (x, y-1) 4
+			e += add_path(tp, x, y-1, g_cost + MOVE_COST, *current, heuristic(x, y-1, x1, y1)); // (x, y-1) 4
 #undef chk_dir
 		if (e) {
 			return false;
@@ -410,8 +409,10 @@ static bool aegis_pathfinding(walkpath_data& wpd, int16 m, uint16 x0, uint16 y0,
 /// @{
 static bool easy_pathfind(walkpath_data& wpd, int16 m, uint16 x0, uint16 y0, uint16 x1, uint16 y1, cell_chk cell){
 
-	int i, x, y, dx = 0, dy = 0;
 	struct map_data *mapdata = map_getmapdata(m);
+	unsigned char i;
+	uint16 x, y;
+	short dx = 0, dy = 0;
 
 	// Try finding direct path to target
 	// Direct path goes diagonally first, then in straight line.
@@ -456,7 +457,7 @@ static bool easy_pathfind(walkpath_data& wpd, int16 m, uint16 x0, uint16 y0, uin
  * flag: &2 = call path_search_long instead
  * cell: type of obstruction to check for
  *
- * Note: uses global g_open_set, therefore this method can't be called in parallel or recursivly.
+ * Note: uses global heap, therefore this method can't be called in parallel or recursivly.
  *------------------------------------------*/
 bool path_search(struct walkpath_data *wpd, int16 m, uint16 x0, uint16 y0, uint16 x1, uint16 y1, int flag, cell_chk cell) {
 
@@ -487,7 +488,7 @@ bool path_search(struct walkpath_data *wpd, int16 m, uint16 x0, uint16 y0, uint1
 
 }
 
-bool check_distance(short dx, short dy, unsigned short distance)
+bool check_distance(char dx, char dy, unsigned char distance)
 {
 #ifdef CIRCULAR_AREA
 	//In this case, we just do a square comparison. Add 1 tile grace for diagonal range checks.
@@ -497,10 +498,10 @@ bool check_distance(short dx, short dy, unsigned short distance)
 #endif
 }
 
-unsigned short distance(short dx, short dy)
+unsigned char distance(char dx, char dy)
 {
 #ifdef CIRCULAR_AREA
-	return std::max(chebyshev_distance(dx, dy), (unsigned short)1);
+	return std::max(chebyshev_distance(dx, dy), (unsigned char)1);
 #else
 	return chebyshev_range(dx, dy);
 #endif
@@ -514,7 +515,7 @@ unsigned short distance(short dx, short dy)
  * @param distance: Distance to check against
  * @return Within distance(1); Not within distance(0);
  */
-bool check_distance_client(short dx, short dy, unsigned short distance){
+bool check_distance_client(char dx, char dy, unsigned char distance){
 	return (distance_client(dx,dy) <= distance);
 }
 
@@ -525,11 +526,11 @@ bool check_distance_client(short dx, short dy, unsigned short distance){
  * @param dy: Vertical distance
  * @return Circular distance
  */
-unsigned short distance_client(short dx, short dy) {
+unsigned char distance_client(char dx, char dy) {
 
 	// -0.1 factor used by client
 	//This affects even horizontal/vertical lines so they are one cell longer than expected
-	return static_cast<unsigned short>(std::max(euclidean_distance(dx,dy) - 0.1 ,0.0));
+	return static_cast<unsigned char>(std::max(euclidean_distance(dx,dy) - 0.1 ,0.0));
 }
 
 bool direction_diagonal( enum directions direction ){

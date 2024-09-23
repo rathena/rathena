@@ -66,7 +66,7 @@ struct s_elemental_db {
 	int32 class_;
 	std::string sprite, name;
 	uint16 lv;
-	uint16 range2, range3;
+	unsigned char range2, range3;
 	status_data status;
 	view_data vd;
 	std::unordered_map<e_elemental_skillmode, std::shared_ptr<s_elemental_skill>> skill;	/// mode, skill

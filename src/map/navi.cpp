@@ -34,14 +34,14 @@ std::string filePrefix = "generated/clientside/data/luafiles514/lua files/naviga
 
 /// Binary heap of path nodes
 BHEAP_STRUCT_DECL(node_heap, struct path_node*);
-static BHEAP_STRUCT_VAR(node_heap, g_open_set);	// use static heap for all path calculations
+static BHEAP_STRUCT_VAR(node_heap, heap);	// use static heap for all path calculations
 												// it get's initialized in do_init_path, freed in do_final_path.
 
 /// @param dx: Horizontal distance
 /// @param dy: Vertical distance
 /// @return Manhattan distance -> Radius.DIAMOND
-static inline unsigned short manhattan_distance(int dx, int dy) {
-	return static_cast<unsigned short>(std::abs(dx) + std::abs(dy));
+static inline unsigned char manhattan_distance(char dx, char dy) {
+	return static_cast<unsigned char>(std::abs(dx) + std::abs(dy));
 }
 
 // Estimates the cost from (x0,y0) to (x1,y1).
@@ -51,31 +51,31 @@ static inline unsigned short manhattan_distance(int dx, int dy) {
 // @param x1: Target cell X
 // @param y1: Target cell y
 // @return movecost X manhattan distance (This is inadmissible (overestimating) heuristic used by game client)
-static inline unsigned short heuristic(int x0,int y0,int x1,int y1) {
+static inline unsigned short heuristic(uint16 x0,uint16 y0,uint16 x1,uint16 y1) {
 	return MOVE_COST * manhattan_distance((x1)-(x0), (y1)-(y0));
 }
 
 /// Pushes path_node to the binary node_heap.
 /// Ensures there is enough space in array to store new element.
 
-static void heap_push_node(struct node_heap *heap, struct path_node *node)
+static void heap_push_node(path_node *node)
 {
 #ifndef __clang_analyzer__ // TODO: Figure out why clang's static analyzer doesn't like this
-	BHEAP_ENSURE2(*heap, 1, 256, struct path_node **);
-	BHEAP_PUSH2(*heap, node, NODE_MINTOPCMP);
+	BHEAP_ENSURE2(heap, 1, 256, struct path_node **);
+	BHEAP_PUSH2(heap, node, NODE_MINTOPCMP);
 #endif // __clang_analyzer__
 }
 
 /// Updates path_node in the binary node_heap.
-static int heap_update_node(struct node_heap *heap, struct path_node *node)
+static int heap_update_node(path_node& node)
 {
 	int i;
-	ARR_FIND(0, BHEAP_LENGTH(*heap), i, BHEAP_DATA(*heap)[i] == node);
-	if (i == BHEAP_LENGTH(*heap)) {
+	ARR_FIND(0, BHEAP_LENGTH(heap), i, BHEAP_DATA(heap)[i] == &node);
+	if (i == BHEAP_LENGTH(heap)) {
 		ShowError("heap_update_node: node not found\n");
 		return 1;
 	}
-	BHEAP_UPDATE(*heap, i, NODE_MINTOPCMP);
+	BHEAP_UPDATE(heap, i, NODE_MINTOPCMP);
 	return 0;
 }
 // end 1:1 copy of definitions from path.cpp
@@ -87,20 +87,20 @@ static int tpused[MAX_WALKPATH_NAVI * MAX_WALKPATH_NAVI + 1];
 
 /// Path_node processing in A* pathfinding.
 /// Adds new node to heap and updates/re-adds old ones if necessary.
-static int add_path(struct node_heap *heap, int16 x, int16 y, short g_cost, struct path_node *parent, short h_cost)
+static int add_path(uint16 x, uint16 y, unsigned short g_cost, path_node& parent, unsigned short h_cost)
 {
 	int i = calc_index(x, y);
 
 	if (tpused[i] && tpused[i] == 1 + (x << 16 | y)) { // We processed this node before
 		if (g_cost < tp[i].g_cost) { // New path to this node is better than old one
-									 // Update costs and parent
+			// Update costs and parent
 			tp[i].g_cost = g_cost;
-			tp[i].parent = parent;
+			tp[i].parent = &parent;
 			tp[i].f_cost = g_cost + h_cost;
 			if (tp[i].flag == SET_CLOSED) {
-				heap_push_node(heap, &tp[i]); // Put it in open set again
+				heap_push_node(&tp[i]); // Put it in open set again
 			}
-			else if (heap_update_node(heap, &tp[i])) {
+			else if (heap_update_node(tp[i])) {
 				return 1;
 			}
 			tp[i].flag = SET_OPEN;
@@ -115,11 +115,11 @@ static int add_path(struct node_heap *heap, int16 x, int16 y, short g_cost, stru
 	tp[i].x = x;
 	tp[i].y = y;
 	tp[i].g_cost = g_cost;
-	tp[i].parent = parent;
+	tp[i].parent = &parent;
 	tp[i].f_cost = g_cost + h_cost;
 	tp[i].flag = SET_OPEN;
 	tpused[i] = 1 + (x << 16 | y);
-	heap_push_node(heap, &tp[i]);
+	heap_push_node(&tp[i]);
 	return 0;
 }
 ///@}
@@ -129,7 +129,7 @@ static int add_path(struct node_heap *heap, int16 x, int16 y, short g_cost, stru
  * wpd: path info will be written here
  * cell: type of obstruction to check for
  *
- * Note: uses global g_open_set, therefore this method can't be called in parallel or recursivly.
+ * Note: uses global heap, therefore this method can't be called in parallel or recursivly.
  *------------------------------------------*/
 static bool navi_path_search(struct navi_walkpath_data *wpd, const struct navi_pos *from, const struct navi_pos *dest, cell_chk cell) {
 
@@ -183,7 +183,7 @@ static bool navi_path_search(struct navi_walkpath_data *wpd, const struct navi_p
 	// A* (A-star) pathfinding
 	// We always use A* for finding walkpaths because it is what game client uses.
 	// Easy pathfinding cuts corners of non-walkable cells, but client always walks around it.
-	BHEAP_RESET(g_open_set);
+	BHEAP_RESET(heap);
 
 	memset(tpused, 0, sizeof(tpused));
 
@@ -197,18 +197,18 @@ static bool navi_path_search(struct navi_walkpath_data *wpd, const struct navi_p
 	tp[i].flag = SET_OPEN;
 	tpused[i] = 1 + (from->x << 16 | from->y);
 
-	heap_push_node(&g_open_set, &tp[i]); // Put start node to 'open' set
+	heap_push_node(&tp[i]); // Put start node to 'open' set
 	
 	for (;;) {
 	
 		allowed_dirs = 0;
 
-		if (BHEAP_LENGTH(g_open_set) == 0) {
+		if (BHEAP_LENGTH(heap) == 0) {
 			return false;
 		}
 
-		current = BHEAP_PEEK(g_open_set); // Look for the lowest f_cost node in the 'open' set
-		BHEAP_POP2(g_open_set, NODE_MINTOPCMP); // Remove it from 'open' set
+		current = BHEAP_PEEK(heap); // Look for the lowest f_cost node in the 'open' set
+		BHEAP_POP2(heap, NODE_MINTOPCMP); // Remove it from 'open' set
 
 		x = current->x;
 		y = current->y;
@@ -228,21 +228,21 @@ static bool navi_path_search(struct navi_walkpath_data *wpd, const struct navi_p
 #define chk_dir(d) ((allowed_dirs & (d)) == (d))
 		// Process neighbors of current node
 		if (chk_dir(PATH_DIR_SOUTH|PATH_DIR_EAST) && !map_getcellp(mapdata, x+1, y-1, cell))
-			e += add_path(&g_open_set, x+1, y-1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x+1, y-1, dest->x, dest->y)); // (x+1, y-1) 5
+			e += add_path(x+1, y-1, g_cost + MOVE_DIAGONAL_COST, *current, heuristic(x+1, y-1, dest->x, dest->y)); // (x+1, y-1) 5
 		if (chk_dir(PATH_DIR_EAST))
-			e += add_path(&g_open_set, x+1, y, g_cost + MOVE_COST, current, heuristic(x+1, y, dest->x, dest->y)); // (x+1, y) 6
+			e += add_path(x+1, y, g_cost + MOVE_COST, *current, heuristic(x+1, y, dest->x, dest->y)); // (x+1, y) 6
 		if (chk_dir(PATH_DIR_NORTH|PATH_DIR_EAST) && !map_getcellp(mapdata, x+1, y+1, cell))
-			e += add_path(&g_open_set, x+1, y+1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x+1, y+1, dest->x, dest->y)); // (x+1, y+1) 7
+			e += add_path(x+1, y+1, g_cost + MOVE_DIAGONAL_COST, *current, heuristic(x+1, y+1, dest->x, dest->y)); // (x+1, y+1) 7
 		if (chk_dir(PATH_DIR_NORTH))
-			e += add_path(&g_open_set, x, y+1, g_cost + MOVE_COST, current, heuristic(x, y+1, dest->x, dest->y)); // (x, y+1) 0
+			e += add_path(x, y+1, g_cost + MOVE_COST, *current, heuristic(x, y+1, dest->x, dest->y)); // (x, y+1) 0
 		if (chk_dir(PATH_DIR_NORTH|PATH_DIR_WEST) && !map_getcellp(mapdata, x-1, y+1, cell))
-			e += add_path(&g_open_set, x-1, y+1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x-1, y+1, dest->x, dest->y)); // (x-1, y+1) 1
+			e += add_path(x-1, y+1, g_cost + MOVE_DIAGONAL_COST, *current, heuristic(x-1, y+1, dest->x, dest->y)); // (x-1, y+1) 1
 		if (chk_dir(PATH_DIR_WEST))
-			e += add_path(&g_open_set, x-1, y, g_cost + MOVE_COST, current, heuristic(x-1, y, dest->x, dest->y)); // (x-1, y) 2
+			e += add_path(x-1, y, g_cost + MOVE_COST, *current, heuristic(x-1, y, dest->x, dest->y)); // (x-1, y) 2
 		if (chk_dir(PATH_DIR_SOUTH|PATH_DIR_WEST) && !map_getcellp(mapdata, x-1, y-1, cell))
-			e += add_path(&g_open_set, x-1, y-1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x-1, y-1, dest->x, dest->y)); // (x-1, y-1) 3
+			e += add_path(x-1, y-1, g_cost + MOVE_DIAGONAL_COST, *current, heuristic(x-1, y-1, dest->x, dest->y)); // (x-1, y-1) 3
 		if (chk_dir(PATH_DIR_SOUTH))
-			e += add_path(&g_open_set, x, y-1, g_cost + MOVE_COST, current, heuristic(x, y-1, dest->x, dest->y)); // (x, y-1) 4
+			e += add_path(x, y-1, g_cost + MOVE_COST, *current, heuristic(x, y-1, dest->x, dest->y)); // (x, y-1) 4
 #undef chk_dir
 		if (e) {
 			return false;
@@ -624,7 +624,7 @@ void write_map_distances() {
 
 
 void navi_create_lists() {
-	BHEAP_INIT(g_open_set);
+	BHEAP_INIT(heap);
 
 	auto starttime = std::chrono::system_clock::now();
 
@@ -642,7 +642,7 @@ void navi_create_lists() {
 	currenttime = std::chrono::system_clock::now();
 	ShowInfo("Link Distances took %ums\n", std::chrono::duration_cast<std::chrono::milliseconds>(currenttime - starttime));
 
-	BHEAP_CLEAR(g_open_set);
+	BHEAP_CLEAR(heap);
 }
 
 #endif

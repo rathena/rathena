@@ -688,9 +688,9 @@ uint64 MercenaryDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	}
 
 	if (this->nodeExists(node, "AttackRange")) {
-		uint16 range;
+		uint8 range;
 
-		if (!this->asUInt16(node, "AttackRange", range))
+		if (!this->asUInt8(node, "AttackRange", range))
 			return 0;
 
 		mercenary->status.rhw.range = range;

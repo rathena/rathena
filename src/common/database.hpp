@@ -45,6 +45,8 @@ protected:
 
 	// Conversion functions
 	bool asBool(const ryml::NodeRef& node, const std::string &name, bool &out);
+	bool asInt8(const ryml::NodeRef& node, const std::string& name, int8& out );
+	bool asUInt8(const ryml::NodeRef& node, const std::string& name, uint8& out );
 	bool asInt16(const ryml::NodeRef& node, const std::string& name, int16& out );
 	bool asUInt16(const ryml::NodeRef& node, const std::string& name, uint16& out);
 	bool asInt32(const ryml::NodeRef& node, const std::string &name, int32 &out);
