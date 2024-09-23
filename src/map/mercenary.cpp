@@ -688,12 +688,12 @@ uint64 MercenaryDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	}
 
 	if (this->nodeExists(node, "AttackRange")) {
-		uint8 range;
+		uint16 range;
 
-		if (!this->asUInt8(node, "AttackRange", range))
+		if (!this->asUInt16(node, "AttackRange", range))
 			return 0;
 
-		mercenary->status.rhw.range = range;
+		mercenary->status.rhw.range = std::min(static_cast<decltype(mercenary->status.rhw.range)>(range), std::numeric_limits<decltype(mercenary->status.rhw.range)>::max());
 	} else {
 		if (!exists)
 			mercenary->status.rhw.range = 0;

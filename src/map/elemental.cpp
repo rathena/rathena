@@ -901,36 +901,36 @@ uint64 ElementalDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	}
 
 	if (this->nodeExists(node, "AttackRange")) {
-		uint8 range;
+		uint16 range;
 
-		if (!this->asUInt8(node, "AttackRange", range))
+		if (!this->asUInt16(node, "AttackRange", range))
 			return 0;
 
-		elemental->status.rhw.range = range;
+		elemental->status.rhw.range = std::min(static_cast<decltype(elemental->status.rhw.range)>(range), std::numeric_limits<decltype(elemental->status.rhw.range)>::max());
 	} else {
 		if (!exists)
 			elemental->status.rhw.range = 0;
 	}
 
 	if (this->nodeExists(node, "SkillRange")) {
-		uint8 range;
+		uint16 range;
 
-		if (!this->asUInt8(node, "SkillRange", range))
+		if (!this->asUInt16(node, "SkillRange", range))
 			return 0;
 
-		elemental->range2 = range;
+		elemental->range2 = std::min(static_cast<decltype(elemental->range2)>(range), std::numeric_limits<decltype(elemental->range2)>::max());
 	} else {
 		if (!exists)
 			elemental->range2 = 5;
 	}
 
 	if (this->nodeExists(node, "ChaseRange")) {
-		uint8 range;
+		uint16 range;
 
-		if (!this->asUInt8(node, "ChaseRange", range))
+		if (!this->asUInt16(node, "ChaseRange", range))
 			return 0;
 
-		elemental->range3 = range;
+		elemental->range3 = std::min(static_cast<decltype(elemental->range3)>(range), std::numeric_limits<decltype(elemental->range3)>::max());
 	} else {
 		if (!exists)
 			elemental->range3 = 12;

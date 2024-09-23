@@ -276,14 +276,6 @@ bool YamlDatabase::asBool(const ryml::NodeRef& node, const std::string &name, bo
 	}
 }
 
-bool YamlDatabase::asInt8( const ryml::NodeRef& node, const std::string& name, int8& out ){
-	return asType<int8>( node, name, out);
-}
-
-bool YamlDatabase::asUInt8( const ryml::NodeRef& node, const std::string& name, uint8& out ){
-	return asType<uint8>( node, name, out);
-}
-
 bool YamlDatabase::asInt16( const ryml::NodeRef& node, const std::string& name, int16& out ){
 	return asType<int16>( node, name, out);
 }
