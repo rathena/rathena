@@ -933,7 +933,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 			break;
 		case ALL_BUYING_STORE:
 			if( map_getmapflag(sd.bl.m, MF_NOBUYINGSTORE) ) {
-				clif_displaymessage(sd.fd, msg_txt(&sd, 276)); // "You can't open a shop on this map"
+				clif_displaymessage (sd.fd, msg_txt(&sd,276)); // "You can't open a shop on this map"
 				clif_skill_fail( sd, skill_id );
 				return true;
 			}
