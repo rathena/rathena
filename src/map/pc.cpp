@@ -13667,16 +13667,26 @@ uint64 JobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				std::fill(job->base_ap.begin(), job->base_ap.end(), 0);
 			}
 
-			if (this->nodeExists(node, "MaxWeight")) {
+			// Parse to confirm if job is a Baby to store the value in the same weight variable.
+			if (this->nodeExists(node, "MaxWeightBaby") && (pc_jobid2mapid(static_cast<uint16>(job_id)) & JOBL_BABY)) {
 				uint32 weight;
 
-				if (!this->asUInt32(node, "MaxWeight", weight))
+				if (!this->asUInt32(node, "MaxWeightBaby", weight))
 					return 0;
 
 				job->max_weight_base = weight;
 			} else {
-				if (!exists)
-					job->max_weight_base = 20000;
+				if (this->nodeExists(node, "MaxWeight")) {
+					uint32 weight;
+
+					if (!this->asUInt32(node, "MaxWeight", weight))
+						return 0;
+
+					job->max_weight_base = weight;
+				} else {
+					if (!exists)
+						job->max_weight_base = 20000;
+				}
 			}
 
 			if (this->nodeExists(node, "HpFactor")) {
