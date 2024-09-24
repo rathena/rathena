@@ -6196,10 +6196,10 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		sc_start(src,src,SC_MAGICALATTACK,100,skill_lv,skill_get_time(skill_id,skill_lv));
 		break;
 
-	case HVAN_CAPRICE: //[blackhole89]
+	case HVAN_CAPRICE:
 		{
-			static std::vector<e_skill> subskills = { MG_COLDBOLT, MG_FIREBOLT, MG_LIGHTNINGBOLT, WZ_EARTHSPIKE };
-			e_skill subskill_id = util::vector_random( subskills );
+			static const std::array<e_skill, 4> subskills = { MG_COLDBOLT, MG_FIREBOLT, MG_LIGHTNINGBOLT, WZ_EARTHSPIKE };
+			e_skill subskill_id = subskills.at(rnd() % subskills.size());
 			skill_attack(skill_get_type(subskill_id), src, src, bl, subskill_id, skill_lv, tick, flag);
 		}
 		break;
@@ -10693,14 +10693,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case HVAN_CHAOTIC:
 		{
 			// Chance per skill level
-			static const uint8 chance_homunculus[5] = {
+			static const std::array<uint8, 5> chance_homunculus = {
 				20,
 				50,
 				25,
 				50,
 				34
 			};
-			static const uint8 chance_master[5] = {
+			static const std::array<uint8, 5> chance_master = {
 				static_cast<uint8>(chance_homunculus[0] + 30),
 				static_cast<uint8>(chance_homunculus[1] + 10),
 				static_cast<uint8>(chance_homunculus[2] + 50),
