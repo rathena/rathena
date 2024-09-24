@@ -913,7 +913,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 			break;
 		case MC_VENDING:
 			if (map_getmapflag(sd.bl.m, MF_NOVENDING)) {
-				// Official kRO send this messages in the chat, there is no skill fail message. [Haydrich]
+				// Official kRO send this message in the chat, there is no skill fail message. [Haydrich]
 				// uncomment to send msg_txt.
 				//clif_displaymessage(sd.fd, msg_txt(&sd, 276)); // "You can't open a shop on this map"
 				//clif_skill_fail( sd, skill_id );
@@ -938,7 +938,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 			break;
 		case ALL_BUYING_STORE:
 			if( map_getmapflag(sd.bl.m, MF_NOBUYINGSTORE) ) {
-				// Official kRO send this messages in the chat, there is no skill fail message. [Haydrich]
+				// Official kRO send this message in the chat, there is no skill fail message. [Haydrich]
 				// uncomment to send msg_txt.
 				//clif_displaymessage(sd.fd, msg_txt(&sd, 276)); // "You can't open a shop on this map"
 				//clif_skill_fail( sd, skill_id );
