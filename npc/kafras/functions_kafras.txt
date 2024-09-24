@@ -111,7 +111,9 @@ function	script	F_Kafra	{
 		mes "service locations, you're never";
 		mes "far from home.";
 		break;
-	case 5: // Prontera Market Street specific message
+	case 5:// NPC has it's own welcome message. (Display nothing)
+		break;
+	case 6:// Prontera Market Street specific message
 		mes "[Kafra Employee]";
 		mes "Welcome to the";
 		mes "Kafra Corporation.";
@@ -119,8 +121,6 @@ function	script	F_Kafra	{
 		mes "are always on your side.";
 		mes "Kafra Points are not provided at the Prontera Market Street branch. Please note this when using.";
 		mes "How may I assist you?";
-		break;
-	case 6:// NPC has it's own welcome message. (Display nothing)
 		break;
 	}
 	next;
