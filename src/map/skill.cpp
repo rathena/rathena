@@ -917,9 +917,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 				// uncomment to send msg_txt.
 				//clif_displaymessage(sd.fd, msg_txt(&sd, 276)); // "You can't open a shop on this map"
 				//clif_skill_fail( sd, skill_id );
-				char output[128];
-				sprintf(output,"%s",msg_txt(&sd,1538)); // This skill cannot be used within this area.
-				clif_messagecolor(&sd.bl,color_table[COLOR_CYAN], output, false, SELF);
+				clif_msg(&sd, MSI_IMPOSSIBLE_SKILL_AREA); // !TODO: This message should appeared in Cyan instead of White color
 				return true;
 			}
 			if (map_getcell(sd.bl.m, sd.bl.x, sd.bl.y, CELL_CHKNOVENDING)) {
@@ -942,9 +940,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 				// uncomment to send msg_txt.
 				//clif_displaymessage(sd.fd, msg_txt(&sd, 276)); // "You can't open a shop on this map"
 				//clif_skill_fail( sd, skill_id );
-				char output[128];
-				sprintf(output,"%s",msg_txt(&sd,1538)); // This skill cannot be used within this area.
-				clif_messagecolor(&sd.bl,color_table[COLOR_CYAN], output, false, SELF);
+				clif_msg(&sd, MSI_IMPOSSIBLE_SKILL_AREA); // !TODO: This message should appeared in Cyan instead of White color
 				return true;
 			}
 			if( map_getcell(sd.bl.m,sd.bl.x,sd.bl.y,CELL_CHKNOBUYINGSTORE) ) {
