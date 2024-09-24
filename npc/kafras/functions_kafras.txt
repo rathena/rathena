@@ -161,7 +161,7 @@ function	script	F_Kafra	{
 		if (.@K_Menu0$[.@j] == "Save")
 			return;
 		else if (.@K_Menu0$[.@j] == "Use Storage") {
-			if (.@welcome == 2 || .@welcome == 5)// Do not charge for these specific Storages
+			if (.@welcome == 2)// Do not charge for Guild Storage
 				callfunc "F_KafStor",2,0,0;
 			else
 				callfunc "F_KafStor",0,getarg(3),.@welcome;
@@ -279,7 +279,8 @@ function	script	F_KafStor	{
 				return;
 			}
 			Zeny -= .@fee;
-			RESRVPTS += (.@fee/5);
+			if (getarg(2) != 5)
+				RESRVPTS += (.@fee/5);
 		}
 	}
 

@@ -1,0 +1,1 @@
+prontera	mapflag	novending
