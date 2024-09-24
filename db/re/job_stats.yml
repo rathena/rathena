@@ -3016,6 +3016,18 @@ Body:
         Vit: 1
       - Level: 60
         Str: 1
+      - Level: 61
+        Vit: 1
+      - Level: 63
+        Agi: 1
+      - Level: 65
+        Luk: 1
+      - Level: 66
+        Dex: 1
+      - Level: 68
+        Agi: 1
+      - Level: 70
+        Str: 1
   - Jobs:
       Warlock: true
       Warlock_T: true
@@ -3099,6 +3111,18 @@ Body:
         Dex: 1
       - Level: 60
         Int: 1
+      - Level: 62
+        Int: 1
+      - Level: 63
+        Luk: 1
+      - Level: 65
+        Vit: 1
+      - Level: 67
+        Int: 1
+      - Level: 68
+        Luk: 1
+      - Level: 70
+        Vit: 1
   - Jobs:
       Ranger: true
       Ranger2: true
@@ -3185,6 +3209,18 @@ Body:
         Dex: 1
       - Level: 60
         Agi: 1
+      - Level: 61
+        Agi: 1
+      - Level: 63
+        Vit: 1
+      - Level: 65
+        Luk: 1
+      - Level: 66
+        Agi: 1
+      - Level: 68
+        Vit: 1
+      - Level: 70
+        Luk: 1
   - Jobs:
       Arch_Bishop: true
       Arch_Bishop_T: true
@@ -3268,6 +3304,18 @@ Body:
         Dex: 1
       - Level: 60
         Int: 1
+      - Level: 61
+        Int: 1
+      - Level: 63
+        Luk: 1
+      - Level: 65
+        Agi: 1
+      - Level: 66
+        Int: 1
+      - Level: 68
+        Luk: 1
+      - Level: 70
+        Agi: 1
   - Jobs:
       Mechanic: true
       Mechanic2: true
@@ -3354,6 +3402,18 @@ Body:
         Dex: 1
       - Level: 60
         Str: 1
+      - Level: 61
+        Str: 1
+      - Level: 64
+        Vit: 1
+      - Level: 65
+        Agi: 1
+      - Level: 66
+        Str: 1
+      - Level: 69
+        Vit: 1
+      - Level: 70
+        Agi: 1
   - Jobs:
       Guillotine_Cross: true
       Guillotine_Cross_T: true
@@ -3436,6 +3496,18 @@ Body:
       - Level: 59
         Luk: 1
       - Level: 60
+        Agi: 1
+      - Level: 62
+        Dex: 1
+      - Level: 64
+        Luk: 1
+      - Level: 65
+        Agi: 1
+      - Level: 67
+        Dex: 1
+      - Level: 69
+        Luk: 1
+      - Level: 70
         Agi: 1
   - Jobs:
       Royal_Guard: true
@@ -3524,6 +3596,18 @@ Body:
         Vit: 1
       - Level: 60
         Int: 1
+      - Level: 62
+        Dex: 1
+      - Level: 64
+        Vit: 1
+      - Level: 65
+        Str: 1
+      - Level: 67
+        Dex: 1
+      - Level: 69
+        Vit: 1
+      - Level: 70
+        Str: 1
   - Jobs:
       Sorcerer: true
       Sorcerer_T: true
@@ -3607,6 +3691,18 @@ Body:
         Dex: 1
       - Level: 60
         Int: 1
+      - Level: 61
+        Int: 1
+      - Level: 63
+        Luk: 1
+      - Level: 65
+        Vit: 1
+      - Level: 66
+        Int: 1
+      - Level: 68
+        Luk: 1
+      - Level: 70
+        Vit: 1
   - Jobs:
       Minstrel: true
       Minstrel_T: true
@@ -3691,6 +3787,18 @@ Body:
         Int: 1
       - Level: 60
         Dex: 1
+      - Level: 61
+        Agi: 1
+      - Level: 63
+        Dex: 1
+      - Level: 65
+        Luk: 1
+      - Level: 66
+        Agi: 1
+      - Level: 68
+        Dex: 1
+      - Level: 70
+        Luk: 1
   - Jobs:
       Wanderer: true
       Wanderer_T: true
@@ -3775,6 +3883,18 @@ Body:
         Agi: 1
       - Level: 60
         Dex: 1
+      - Level: 62
+        Str: 1
+      - Level: 64
+        Luk: 1
+      - Level: 65
+        Str: 1
+      - Level: 67
+        Str: 1
+      - Level: 69
+        Luk: 1
+      - Level: 70
+        Str: 1
   - Jobs:
       Sura: true
       Sura_T: true
@@ -3861,6 +3981,16 @@ Body:
         Int: 1
       - Level: 61
         Str: 1
+      - Level: 63
+        Int: 1
+      - Level: 65
+        Agi: 1
+      - Level: 66
+        Str: 1
+      - Level: 68
+        Int: 1
+      - Level: 70
+        Agi: 1
   - Jobs:
       Genetic: true
       Genetic_T: true
@@ -3944,6 +4074,18 @@ Body:
         Dex: 1
       - Level: 60
         Int: 1
+      - Level: 61
+        Luk: 1
+      - Level: 62
+        Str: 1
+      - Level: 64
+        Vit: 1
+      - Level: 66
+        Luk: 1
+      - Level: 67
+        Str: 1
+      - Level: 69
+        Vit: 1
   - Jobs:
       Shadow_Chaser: true
       Shadow_Chaser_T: true
@@ -4027,6 +4169,18 @@ Body:
         Str: 1
       - Level: 60
         Agi: 1
+      - Level: 62
+        Dex: 1
+      - Level: 63
+        Agi: 1
+      - Level: 65
+        Agi: 1
+      - Level: 67
+        Dex: 1
+      - Level: 68
+        Agi: 1
+      - Level: 70
+        Agi: 1
   - Jobs:
       Super_Novice_E: true
     HpIncrease: 5000
@@ -4092,6 +4246,34 @@ Body:
         Dex: 1
       - Level: 49
         Luk: 1
+      - Level: 51
+        Str: 1
+      - Level: 52
+        Agi: 1
+      - Level: 54
+        Vit: 1
+      - Level: 56
+        Int: 1
+      - Level: 57
+        Dex: 1
+      - Level: 59
+        Luk: 1
+      - Level: 61
+        Str: 1
+      - Level: 62
+        Agi: 1
+      - Level: 63
+        Int: 1
+      - Level: 64
+        Dex: 1
+      - Level: 66
+        Str: 1
+      - Level: 67
+        Agi: 1
+      - Level: 68
+        Int: 1
+      - Level: 70
+        Dex: 1
   - Jobs:
       Super_Baby_E: true
     BonusStats:
@@ -4155,6 +4337,34 @@ Body:
         Dex: 1
       - Level: 49
         Luk: 1
+      - Level: 51
+        Str: 1
+      - Level: 52
+        Agi: 1
+      - Level: 54
+        Vit: 1
+      - Level: 56
+        Int: 1
+      - Level: 57
+        Dex: 1
+      - Level: 59
+        Luk: 1
+      - Level: 61
+        Str: 1
+      - Level: 62
+        Agi: 1
+      - Level: 63
+        Int: 1
+      - Level: 64
+        Dex: 1
+      - Level: 66
+        Str: 1
+      - Level: 67
+        Agi: 1
+      - Level: 68
+        Int: 1
+      - Level: 70
+        Dex: 1
   - Jobs:
       Kagerou: true
       Baby_Kagerou: true
@@ -4232,6 +4442,22 @@ Body:
         Str: 1
       - Level: 50
         Dex: 1
+      - Level: 55
+        Agi: 1
+      - Level: 60
+        Agi: 1
+      - Level: 61
+        Agi: 1
+      - Level: 63
+        Vit: 1
+      - Level: 65
+        Luk: 1
+      - Level: 66
+        Dex: 1
+      - Level: 68
+        Agi: 1
+      - Level: 70
+        Vit: 1
   - Jobs:
       Oboro: true
       Baby_Oboro: true
@@ -4309,6 +4535,22 @@ Body:
         Str: 1
       - Level: 50
         Dex: 1
+      - Level: 55
+        Agi: 1
+      - Level: 60
+        Agi: 1
+      - Level: 61
+        Agi: 1
+      - Level: 63
+        Vit: 1
+      - Level: 65
+        Luk: 1
+      - Level: 66
+        Agi: 1
+      - Level: 68
+        Vit: 1
+      - Level: 70
+        Luk: 1
   - Jobs:
       Rebellion: true
       Baby_Rebellion: true
@@ -4389,6 +4631,20 @@ Body:
         Dex: 1
       - Level: 57
         Agi: 1
+      - Level: 60
+        Dex: 1
+      - Level: 62
+        Dex: 1
+      - Level: 64
+        Luk: 1
+      - Level: 65
+        Agi: 1
+      - Level: 66
+        Dex: 1
+      - Level: 69
+        Agi: 1
+      - Level: 70
+        Luk: 1
   - Jobs:
       Summoner: true
     HpFactor: 70
@@ -4461,6 +4717,14 @@ Body:
       - Level: 48
         Agi: 1
       - Level: 50
+        Dex: 1
+      - Level: 53
+        Int: 1
+      - Level: 55
+        Dex: 1
+      - Level: 58
+        Int: 1
+      - Level: 60
         Dex: 1
   - Jobs:
       Baby_Summoner: true
@@ -4535,6 +4799,14 @@ Body:
       - Level: 48
         Agi: 1
       - Level: 50
+        Dex: 1
+      - Level: 53
+        Int: 1
+      - Level: 55
+        Dex: 1
+      - Level: 58
+        Int: 1
+      - Level: 60
         Dex: 1
   - Jobs:
       Star_Emperor: true
@@ -4620,6 +4892,18 @@ Body:
         Str: 1
       - Level: 59
         Agi: 1
+      - Level: 61
+        Str: 1
+      - Level: 64
+        Vit: 1
+      - Level: 65
+        Agi: 1
+      - Level: 66
+        Vit: 1
+      - Level: 69
+        Str: 1
+      - Level: 70
+        Agi: 1
   - Jobs:
       Soul_Reaper: true
       Baby_Soul_Reaper: true
@@ -4701,6 +4985,18 @@ Body:
         Int: 1
       - Level: 59
         Int: 1
+      - Level: 62
+        Dex: 1
+      - Level: 64
+        Vit: 1
+      - Level: 65
+        Luk: 1
+      - Level: 67
+        Dex: 1
+      - Level: 69
+        Vit: 1
+      - Level: 70
+        Luk: 1
   - Jobs:
       Dragon_Knight: true
       Dragon_Knight2: true

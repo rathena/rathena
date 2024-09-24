@@ -4403,6 +4403,38 @@ Body:
       NoAuction: true
     Script: |
       itemheal 0,180; /* average value */
+  - Id: 11638
+    AegisName: 24_A_Ev_Choco_C
+    Name: Academic Festival Choco Egg Cookie    # !todo check english name
+    Type: Healing
+    Weight: 1
+    EquipLevelMin: 100
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      itemheal 2650,0; /* average value */
+  - Id: 11639
+    AegisName: 24_A_Ev_Egg_C
+    Name: Academic Festival Egg Cookie    # !todo check english name
+    Type: Healing
+    Weight: 1
+    EquipLevelMin: 100
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      itemheal 0,260; /* average value */
   - Id: 11701
     AegisName: Girl_Bunch_Of_Flower
     Name: Girl's Bouquet
@@ -77907,6 +77939,10 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_BL_DEPTH_EV_2);
+  - Id: 102723
+    AegisName: aegis_102723
+    Name: Beehive    # !todo check english name
+    Type: Usable
   - Id: 102732
     AegisName: IsgardCrown_Box
     Name: Issgard Crown Selection Box
@@ -78771,6 +78807,17 @@ Body:
       NoAuction: true
     Script: |
       percentheal 100,100;
+  - Id: 103094
+    AegisName: CLB_SS_Box
+    Name: Shiva Seizu Costume Selection Box    # !todo check english name
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 103095
     AegisName: Kr_B_Special10
     Name: Love Cake
@@ -78855,11 +78902,387 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_STOVE_CHANNELING_BOX_4);
+  - Id: 103114
+    AegisName: 2024ROS_Box_1st
+    Name: ROS Korea Representative 1st Place Box    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_2024ROS_BOX_1ST);
+  - Id: 103115
+    AegisName: 2024ROS_Box_2nd
+    Name: ROS Korea Representative 2nd Place Box    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_2024ROS_BOX_2ND);
+  - Id: 103116
+    AegisName: 2024ROS_Box_3rd
+    Name: ROS Korea Representative 3rd Place Box    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_2024ROS_BOX_3RD);
+  - Id: 103117
+    AegisName: 2024ROS_Box_4th
+    Name: ROS Korea Participant Box    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_2024ROS_BOX_4TH);
+  - Id: 103118
+    AegisName: 2024ROS_Box_5th
+    Name: ROS Korea Applicant Box    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_2024ROS_BOX_5TH);
+  - Id: 103234
+    AegisName: aegis_103234
+    Name: Costume Enchant Stone Box36    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_AEGIS_103234);
+  - Id: 103260
+    AegisName: Summer_Select_Box1
+    Name: Summer Costume Selection Box (Pioneer)    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+  - Id: 103261
+    AegisName: Summer_Select_Box2
+    Name: Summer Costume Selection Box (Parasol)    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+  - Id: 103262
+    AegisName: Summer_Select_Box3
+    Name: Summer Costume Selection Box (Sunbed)    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
   - Id: 103263
     AegisName: Summer_Select_Box4
     Name: Star Footprint Selection Box (Summer Beach)
-    Type:  Usable
+    Type: DelayConsume
     Weight: 10
+  - Id: 103266
+    AegisName: Kr_B_Special11
+    Name: Sweet Poring Cake    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 103272
+    AegisName: E_Speed_Booster
+    Name: "[Non-Sellable] Speed ​​Booster"    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 103273
+    AegisName: E_Force_Booster
+    Name: "[Non-Sellable] Force Booster"    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 103278
+    AegisName: 2024Sports_Box
+    Name: 2024 World Sports Cheer Box    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_2024SPORTS_BOX);
+  - Id: 103307
+    AegisName: CharSlot_Open_Card
+    Name: Character Slot Expansion Card    # !todo check english name
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 103308
+    AegisName: Time_Gap_Refine_Hammer
+    Name: Time Gap Refining Hammer    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    EquipLevelMin: 250
+    Flags:
+      BuyingStore: true
+    Script: |
+      item_reform();
+  - Id: 103309
+    AegisName: Reform_4th_Skill_Shadow
+    Name: 4th Job Skill Random Option Granting Cube    # !todo check english name
+    Type: DelayConsume
+    Script: |
+      item_reform();
+  - Id: 103314
+    AegisName: 22th_Present_Box
+    Name: 22nd Anniversary Gift Box    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_22TH_PRESENT_BOX);
+  - Id: 103316
+    AegisName: aegis_103316
+    Name: Characteristic Status Shadow Cube    # !todo check english name
+    Type: Usable
+    Flags:
+      BuyingStore: true
+      Container: true
+    Script: |
+      getgroupitem(IG_AEGIS_103316);
+  - Id: 103318
+    AegisName: Enriched_Refine_Box
+    Name: Concentrated Refining Stone Selection Box    # !todo check english name
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 103319
+    AegisName: Henriched_Refine_Box
+    Name: High Concentrated Refining Stone Selection Box    # !todo check english name
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 103320
+    AegisName: E_CharSlot_Open_Card
+    Name: "[Non-sale] Character Slot Expansion Card"    # !todo check english name
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 103334
+    AegisName: SVIP_Gift_22thAniv
+    Name: SVIP 22nd Anniversary Gift    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_SVIP_GIFT_22THANIV);
+  - Id: 103428
+    AegisName: 24_A_Ev_Docu
+    Name: Secret Document    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 103429
+    AegisName: 24_A_Ev_Rice
+    Name: Academic Festival Rice Crackers    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 103430
+    AegisName: 24_A_Ev_Butter
+    Name: Academic Festival Butter Crackers    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 103431
+    AegisName: 24_A_Ev_Coffee
+    Name: Academic Festival Coffee Sticks    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 103432
+    AegisName: 24_A_Ev_Cookie
+    Name: Academic Festival Commemorative Cookies    # !todo check english name
+    Type: Usable
+    Weight: 50
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      percentheal 100,100;
+  - Id: 103461
+    AegisName: VVIP_Gift_22thAniv
+    Name: VVIP 22nd Anniversary Gift    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_VVIP_GIFT_22THANIV);
+  - Id: 103462
+    AegisName: VIP_Gift_22thAniv
+    Name: VIP 22nd Anniversary Gift    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_VIP_GIFT_22THANIV);
+  - Id: 103463
+    AegisName: 2409_Songpyeon
+    Name: Songpyeon I Made    # !todo check english name
+    Type: Usable
+    Weight: 30
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 200000
     AegisName: IDTest_Cash
     Name: IDTest Cash
@@ -81214,6 +81637,284 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_COSTUMEMILEPACK_35_3);
+  - Id: 200434
+    AegisName: LI_Nyangvine_Box1_36
+#   Name: (Account Limited) Cat's Eye Fruit Package I (Stone Box 36)
+    Name: (Account Limited) Cat's Eye Fruit Package I (Ston    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_LI_NYANGVINE_BOX1_36);
+  - Id: 200435
+    AegisName: LI_Nyangvine_Box2_36
+#   Name: (Account Limited) Cat's Eye Fruit Package II (Stone Box 36)
+    Name: (Account Limited) Cat's Eye Fruit Package II (Sto    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_LI_NYANGVINE_BOX2_36);
+  - Id: 200436
+    AegisName: LI_Nyangvine_Box3_36
+#   Name: (Account Limited) Cat's Eye Fruit Package III (Stone Box 36)
+    Name: (Account Limited) Cat's Eye Fruit Package III (St    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_LI_NYANGVINE_BOX3_36);
+  - Id: 200438
+    AegisName: 2024_Summer_Pack_1
+    Name: (Account Limited) 2024 Summer Vacation Package I    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_2024_SUMMER_PACK_1);
+  - Id: 200439
+    AegisName: 2024_Summer_Pack_2
+    Name: (Account Limited) 2024 Summer Vacation Package II    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_2024_SUMMER_PACK_2);
+  - Id: 200440
+    AegisName: 2024_Summer_Pack_3
+#   Name: (Account Limited) 2024 Summer Vacation Package III
+    Name: (Account Limited) 2024 Summer Vacation Package II    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_2024_SUMMER_PACK_3);
+  - Id: 200441
+    AegisName: 2024_Summer_Pack_4
+    Name: (Account Limited) 2024 Summer Vacation Package IV    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_2024_SUMMER_PACK_4);
+  - Id: 200442
+    AegisName: LI_A_HD_CarniumBox
+    Name: High Density Carnium Account-Limited Package    # !todo check english name
+    Type: Cash
+    Weight: 10
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_LI_A_HD_CARNIUMBOX);
+  - Id: 200443
+    AegisName: LI_A_HD_BradiumBox
+    Name: High Density Bradium Account-Limited Package    # !todo check english name
+    Type: Cash
+    Weight: 10
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_LI_A_HD_BRADIUMBOX);
+  - Id: 200445
+    AegisName: 22th_Package_1
+    Name: 22nd Anniversary Monthly Package I    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_22TH_PACKAGE_1);
+  - Id: 200446
+    AegisName: 22th_Package_2
+    Name: 22nd Anniversary Monthly Package II    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_22TH_PACKAGE_2);
+  - Id: 200447
+    AegisName: 22th_Package_3
+    Name: 22nd Anniversary Monthly Package III    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_22TH_PACKAGE_3);
+  - Id: 200448
+    AegisName: 22th_Package_4
+    Name: 22nd Anniversary Monthly Package IV    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_22TH_PACKAGE_4);
+  - Id: 200449
+    AegisName: CLB_SS_Nyang_Pack
+    Name: Shiba Seiz Nyandarae Package    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_CLB_SS_NYANG_PACK);
+  - Id: 200450
+    AegisName: CLB_SS_Refine1_Pack
+    Name: Shiba Seiz Concentrated Refining Package    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_CLB_SS_REFINE1_PACK);
+  - Id: 200451
+    AegisName: CLB_SS_Refine2_Pack
+    Name: Shiba Seiz High Concentrated Refining Package    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_CLB_SS_REFINE2_PACK);
+  - Id: 200452
+    AegisName: CLB_SS_Exp_Pack
+    Name: Shiba Seiz Experience Package    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_CLB_SS_EXP_PACK);
   - Id: 1100000
     AegisName: IDTest_heal
     Name: IDTest heal

@@ -7847,6 +7847,35 @@
 	export_constant(IG_COSTUMEMILEPACK_35_1);
 	export_constant(IG_COSTUMEMILEPACK_35_2);
 	export_constant(IG_COSTUMEMILEPACK_35_3);
+	export_constant(IG_2024ROS_BOX_1ST);
+	export_constant(IG_2024ROS_BOX_2ND);
+	export_constant(IG_2024ROS_BOX_3RD);
+	export_constant(IG_2024ROS_BOX_4TH);
+	export_constant(IG_2024ROS_BOX_5TH);
+	export_constant(IG_AEGIS_103234);
+	export_constant(IG_2024SPORTS_BOX);
+	export_constant(IG_22TH_PRESENT_BOX);
+	export_constant(IG_AEGIS_103316);
+	export_constant(IG_SVIP_GIFT_22THANIV);
+	export_constant(IG_VVIP_GIFT_22THANIV);
+	export_constant(IG_VIP_GIFT_22THANIV);
+	export_constant(IG_LI_NYANGVINE_BOX1_36);
+	export_constant(IG_LI_NYANGVINE_BOX2_36);
+	export_constant(IG_LI_NYANGVINE_BOX3_36);
+	export_constant(IG_2024_SUMMER_PACK_1);
+	export_constant(IG_2024_SUMMER_PACK_2);
+	export_constant(IG_2024_SUMMER_PACK_3);
+	export_constant(IG_2024_SUMMER_PACK_4);
+	export_constant(IG_LI_A_HD_CARNIUMBOX);
+	export_constant(IG_LI_A_HD_BRADIUMBOX);
+	export_constant(IG_22TH_PACKAGE_1);
+	export_constant(IG_22TH_PACKAGE_2);
+	export_constant(IG_22TH_PACKAGE_3);
+	export_constant(IG_22TH_PACKAGE_4);
+	export_constant(IG_CLB_SS_NYANG_PACK);
+	export_constant(IG_CLB_SS_REFINE1_PACK);
+	export_constant(IG_CLB_SS_REFINE2_PACK);
+	export_constant(IG_CLB_SS_EXP_PACK);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

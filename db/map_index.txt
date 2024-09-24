@@ -1261,6 +1261,12 @@ luna_sf1
 luna_sf2
 mbase_in
 prt_mk
+moc_akhet
+nif_fild03
+iz_in_a
+iz_in_b
+iz_in_c
+iz_in_d
 
 //======================================================================================
 // - Other/Extra maps -
