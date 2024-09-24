@@ -913,11 +913,8 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 			break;
 		case MC_VENDING:
 			if (map_getmapflag(sd.bl.m, MF_NOVENDING)) {
-				// Official kRO send this message in the chat, there is no skill fail message. [Haydrich]
-				// uncomment to send msg_txt.
-				//clif_displaymessage(sd.fd, msg_txt(&sd, 276)); // "You can't open a shop on this map"
-				//clif_skill_fail( sd, skill_id );
-				clif_msg(&sd, MSI_IMPOSSIBLE_SKILL_AREA); // !TODO: This message should appeared in Cyan instead of White color
+				clif_displaymessage(sd.fd, msg_txt(&sd, 276)); // "You can't open a shop on this map"
+				clif_skill_fail( sd, skill_id );
 				return true;
 			}
 			if (map_getcell(sd.bl.m, sd.bl.x, sd.bl.y, CELL_CHKNOVENDING)) {
@@ -936,11 +933,8 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 			break;
 		case ALL_BUYING_STORE:
 			if( map_getmapflag(sd.bl.m, MF_NOBUYINGSTORE) ) {
-				// Official kRO send this message in the chat, there is no skill fail message. [Haydrich]
-				// uncomment to send msg_txt.
-				//clif_displaymessage(sd.fd, msg_txt(&sd, 276)); // "You can't open a shop on this map"
-				//clif_skill_fail( sd, skill_id );
-				clif_msg(&sd, MSI_IMPOSSIBLE_SKILL_AREA); // !TODO: This message should appeared in Cyan instead of White color
+				clif_displaymessage(sd.fd, msg_txt(&sd, 276)); // "You can't open a shop on this map"
+				clif_skill_fail( sd, skill_id );
 				return true;
 			}
 			if( map_getcell(sd.bl.m,sd.bl.x,sd.bl.y,CELL_CHKNOBUYINGSTORE) ) {
