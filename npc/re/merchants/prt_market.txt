@@ -179,7 +179,7 @@ prt_mk,100,224,3	script	Poring#mk_prt	CLEAR_NPC,{
 
 	if (.@menu == getarraysize(.@menu$))
 		end;
-	warp "prt_mk", .warp_x[.@menu - 1], .warp_y[.@menu - 1];
+	warp "prt_mk", .@warp_x[.@menu - 1], .@warp_y[.@menu - 1];
 }
 
 prt_mk,299,67,2	duplicate(Guide#mk_prt5)	Guide#mk_prt1	8W_SOLDIER
