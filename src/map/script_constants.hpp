@@ -11451,6 +11451,7 @@
 	export_constant(MAPTYPE_UNKNOWN_BOSSNIA);
 	export_constant(MAPTYPE_UNKNOWN_BLOODY_BRANCH);
 	export_constant(MAPTYPE_UNKNOWN_RWC);
+	export_constant(MAPTYPE_UNKNOWN_VILLAGE_PRONTERA);
 
 	#undef export_constant
 	#undef export_constant2

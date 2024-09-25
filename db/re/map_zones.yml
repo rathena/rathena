@@ -217,7 +217,6 @@ Body:
       moscovia: true
       nameless_i: true
       payon: true
-      prontera: true
       prt_monk: true
       ra_temple: true
       rachel: true
@@ -5948,3 +5947,18 @@ Body:
       - Flag: NoTeleport
       - Flag: NoWarpTo
       - Flag: PvP_NoParty
+
+  - Id: Unknown_Village_Prontera
+    Inherit:
+      Village: true
+    DisabledSkills:
+#      - Skill: ALL_ASSISTANT_BUYING
+#        Pc: 100
+#      - Skill: ALL_ASSISTANT_VENDING
+#        Pc: 100
+#      - Skill: ALL_BUYINGSTORE
+#        Pc: 100
+      - Skill: MC_VENDING
+        Pc: 100
+    Maps:
+      prontera: true
