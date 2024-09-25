@@ -18,7 +18,7 @@ prt_mk,161,171,0	script	Guide#mk_prt5	8W_SOLDIER,{
 		.@menu$[1] = "Move to the South Market Street";
 		.@menu$[2] = "Move to the West Market Street";
 		.@menu$[3] = "Move to the North Market Street";
-		setarray .direction$[0], "to the Center", "to the South", "to the West", "to the North";
+		setarray .@direction$[0], "to the Center", "to the South", "to the West", "to the North";
 		setarray .@warp_x, 161, 161, 38, 161;
 		setarray .@warp_y, 143, 39, 162, 287;
 	}
