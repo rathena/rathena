@@ -4555,6 +4555,9 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		sd->indexed_bonus.magic_addrace[RC_DRAGON]+=dragon_matk;
 		sd->indexed_bonus.subrace[RC_DRAGON]+=skill;
 	}
+	if ((skill = pc_checkskill(sd, AS_KATAR) == 10)) {
+		base_status->cri += 25;
+	}
 	if ((skill = pc_checkskill(sd, AB_EUCHARISTICA)) > 0) {
 		sd->right_weapon.addrace[RC_DEMON] += skill;
 		sd->right_weapon.addele[ELE_DARK] += skill;
