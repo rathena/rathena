@@ -505,6 +505,44 @@ uint64 MapZoneDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		}
 	}
 
+	if (this->nodeExists(node, "Inherit")) {
+		const auto &inheritNode = node["Inherit"];
+		auto &inheritanceVector = this->inheritance[static_cast<e_map_type>(zone_id)];
+
+		for (const auto &it : inheritNode) {
+			std::string inherit_zone_name;
+
+			c4::from_chars(it.key(), &inherit_zone_name);
+
+			std::string inherit_zone_constant = "MAPTYPE_" + inherit_zone_name;
+			int64 inherit_zone_id_const;
+
+			if (!script_get_constant(inherit_zone_constant.c_str(), &inherit_zone_id_const)) {
+				this->invalidWarning(it, "Inherit zone %s is not valid.\n", inherit_zone_name.c_str());
+				return 0;
+			}
+
+			e_map_type inherit_zone_id = static_cast<e_map_type>(inherit_zone_id_const);
+			bool enabled;
+
+			if (!this->asBool(inheritNode, inherit_zone_name, enabled))
+				return 0;
+
+			if (enabled) {
+				if (!util::vector_exists(inheritanceVector, inherit_zone_id)) {
+					inheritanceVector.push_back(inherit_zone_id);
+				}
+			} else {
+				if (!util::vector_exists(inheritanceVector, inherit_zone_id)) {
+					this->invalidWarning(it, "Trying to remove inheritance of non-inherited map zone %s\n", inherit_zone_name.c_str());
+					return 0;
+				}
+
+				util::vector_erase_if_exists(inheritanceVector, inherit_zone_id);
+			}
+		}
+	}
+
 	if (!exists)
 		this->put(zone_id, zone);
 
@@ -515,6 +553,114 @@ uint64 MapZoneDatabase::parseBodyNode(const ryml::NodeRef& node) {
  * Initialize Map Zone data
  */
 void MapZoneDatabase::loadingFinished() {
+	static const int MAX_CYCLES = 10;
+	int i;
+
+	for (i = 0; i < MAX_CYCLES; i++) {
+		auto inheritanceIt = this->inheritance.begin();
+
+		while (inheritanceIt != this->inheritance.end()) {
+			auto &entry = *inheritanceIt;
+
+			if (entry.second.empty()) {
+				inheritanceIt = this->inheritance.erase(inheritanceIt);
+				continue;
+			}
+
+			std::shared_ptr<c_map_zone> zone = this->find(entry.first);
+			auto it = entry.second.begin();
+
+			while (it != entry.second.end()) {
+				e_map_type &otherId = *it;
+				bool found = false;
+				bool inherited = false;
+
+				for (const auto &it : *this) {
+					std::shared_ptr<c_map_zone> otherZone = it.second;
+					e_map_type otherZoneId = otherZone->id;
+
+					if (otherId == otherZoneId) {
+						found = true;
+
+						auto otherZoneInheritance = util::map_find(this->inheritance, otherZone->id);
+
+						if (otherZoneInheritance != nullptr && !otherZoneInheritance->empty()) {
+							// Try it again in the next cycle
+							break;
+						}
+
+						// Inherit atcommands
+						for (auto &command : otherZone->disabled_commands) {
+							if (!util::umap_exists(zone->disabled_commands, command.first)) {
+								zone->disabled_commands.insert(command);
+							}
+						}
+
+						// Inherit skills
+						for (auto &skill : otherZone->disabled_skills) {
+							if (!util::umap_exists(zone->disabled_skills, skill.first)) {
+								zone->disabled_skills.insert(skill);
+							}
+						}
+
+						// Inherit items
+						for (auto &item : otherZone->disabled_items) {
+							if (!util::umap_exists(zone->disabled_items, item.first)) {
+								zone->disabled_items.insert(item);
+							}
+						}
+
+						// Inherit statuses
+						for (auto &status : otherZone->disabled_statuses) {
+							if (!util::umap_exists(zone->disabled_statuses, status.first)) {
+								zone->disabled_statuses.insert(status);
+							}
+						}
+
+						// Inherit jobs
+						for (auto &job : otherZone->restricted_jobs) {
+							if (!util::umap_exists(zone->restricted_jobs, job.first)) {
+								zone->restricted_jobs.insert(job);
+							}
+						}
+
+						// Inherit mapflags
+						for (auto &mapflag : otherZone->mapflags) {
+							if (!util::mmap_exists(zone->mapflags, mapflag.first)) {
+								zone->mapflags.insert(mapflag);
+							}
+						}
+
+						inherited = true;
+						break;
+					}
+				}
+
+				if (inherited) {
+					it = entry.second.erase(it);
+					continue;
+				} else if (!found) {
+					ShowError("MapZoneDatabase::loadingFinished: Inherited map zone ID %u does not exist.\n", zone->id);
+					it = entry.second.erase(it);
+					continue;
+				} else {
+					it++;
+				}
+			}
+		}
+
+		if (this->inheritance.empty()) {
+			break;
+		}
+	}
+
+	if (i == MAX_CYCLES && !this->inheritance.empty()) {
+		ShowError("MapZoneDatabase::loadingFinished: Could not process inheritance rules, check your config for cycles...\n");
+	}
+
+	// Not needed anymore
+	this->inheritance.clear();
+
 	// Intialization and configuration-dependent adjustments of mapflags
 	map_flags_init();
 

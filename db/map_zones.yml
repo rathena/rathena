@@ -23,6 +23,8 @@
 #
 ###########################################################################
 # - Id                        Zone ID.
+#   Inherit:                  List of zones that will be inherited. (Default: none)
+#     <zone ID>: <bool>       Whether this zone will be inherited or not.
 #   DisabledCommands:         List of disabled @commands. (Default: null)
 #   DisabledSkills:           List of disabled skills. (Default: null)
 #   DisabledItems:            List of disabled items. (Default: null)

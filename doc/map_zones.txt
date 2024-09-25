@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20240112
+//= 20240925
 //===== Description: =========================================
 //= This file describes the functions of map zones, which
 //= determine the behavior of a map in various situations.
@@ -12,6 +12,13 @@
 ---------------------------------------
 
 Id: Zone ID (constant). These are defined in e_map_type::clif.hpp.
+
+---------------------------------------
+
+Inherit: Zones that will be inherited. Useful for imports.
+Disabled commands, disabled skills, disabled items, disabled statuses, restricted jobs, and mapflags can be inherited from other zones.
+
+	Village: true # Inherit the town zone
 
 ---------------------------------------
 

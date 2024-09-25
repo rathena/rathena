@@ -175,6 +175,16 @@ namespace rathena {
 		}
 
 		/**
+		 * Determine if a value exists in the multimap
+		 * @param map: Multimap to search through
+		 * @param key: Key wanted
+		 * @return True on success or false on failure
+		 */
+		template <typename K, typename V> bool mmap_exists(std::multimap<K, V> &map, K key) {
+			return map.find(key) != map.end();
+		}
+
+		/**
 		 * Get a random value from the given vector
 		 * @param vec: Vector to search through
 		 * @return A random value by reference

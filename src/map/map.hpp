@@ -897,6 +897,9 @@ public:
 };
 
 class MapZoneDatabase : public TypesafeYamlDatabase<uint16, c_map_zone> {
+private:
+	std::map<e_map_type, std::vector<e_map_type>> inheritance;
+
 public:
 	MapZoneDatabase() : TypesafeYamlDatabase("MAP_ZONES", 1) {
 
