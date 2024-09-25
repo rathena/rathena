@@ -4988,9 +4988,6 @@ Body:
     Duration2: 60000
     Requires:
       SpCost: 20
-      ItemCost:
-        - Item: Red_Gemstone
-          Amount: 1
     Unit:
       Id: Venomdust
       Layout: -1
@@ -5086,9 +5083,6 @@ Body:
           Amount: 28
         - Level: 10
           Amount: 30
-      ItemCost:
-        - Item: Red_Gemstone
-          Amount: 1
     Status: Splasher
   - Id: 142
     Name: NV_FIRSTAID

@@ -5943,8 +5943,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			// if skill damage should be split among targets, count them
 			//SD_LEVEL -> Forced splash damage for Auto Blitz-Beat -> count targets
 			//special case: Venom Splasher uses a different range for searching than for splashing
-			if( flag&SD_LEVEL || skill_get_nk(skill_id, NK_SPLASHSPLIT) )
-				skill_area_temp[0] = map_foreachinallrange(skill_area_sub, bl, (skill_id == AS_SPLASHER)?1:splash_size, BL_CHAR, src, skill_id, skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
+			//if( flag&SD_LEVEL || skill_get_nk(skill_id, NK_SPLASHSPLIT) )
+				//skill_area_temp[0] = map_foreachinallrange(skill_area_sub, bl, (skill_id == AS_SPLASHER)?1:splash_size, BL_CHAR, src, skill_id, skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
 
 			// recursive invocation of skill_castend_damage_id() with flag|1
 			map_foreachinrange(skill_area_sub, bl, splash_size, starget, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
@@ -10244,7 +10244,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if( status_has_mode(tstatus,MD_STATUSIMMUNE)
 		// Renewal dropped the 3/4 hp requirement
 #ifndef RENEWAL
-			|| tstatus-> hp > tstatus->max_hp*3/4
+		//	|| tstatus-> hp > tstatus->max_hp*3/4
 #endif
 				) {
 			if (sd) clif_skill_fail( *sd, skill_id );
