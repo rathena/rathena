@@ -279,7 +279,7 @@ function	script	F_KafStor	{
 				return;
 			}
 			Zeny -= .@fee;
-			if (getarg(2) != 5)
+			if (getarg(2) != 6)
 				RESRVPTS += (.@fee/5);
 		}
 	}
@@ -415,7 +415,7 @@ function	script	F_KafCart	{
 			return 1;
 		}
 		Zeny -= .@rental_fee;
-		if (getarg(0) != 5)
+		if (getarg(0) != 6)
 			RESRVPTS += 48;
 	}
 	setcart;
