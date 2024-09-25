@@ -6139,22 +6139,20 @@ bool npc_unloadfile( const char* path ) {
 		}
 	}
 	mapit_free(iter2);
-	if( battle_config.dynamic_mobs ){
-
-		for (int i = 0; i < map_num; i++) {
-			map_data* mapdata = map_getmapdata(i);
-			for (int16 j = 0; j < MAX_MOB_LIST_PER_MAP; j++) {
-				spawn_data* mob = mapdata->moblist[j];
-				if (mob != nullptr && !strcmp(mob->filepath, path)) {
-					auto& spawn_list = mob_spawn_data[mob->id];
-					spawn_list.erase(std::remove_if(spawn_list.begin(), spawn_list.end(), [&](spawn_info& s) {
-						if (map_mapindex2mapid(s.mapindex) == mob->m) {
-							s.qty -= mob->num;
-							return s.qty == 0;
-						}
-						return false;
-						}), spawn_list.end());
-
+	for (int i = 0; i < map_num; i++) {
+		map_data* mapdata = map_getmapdata(i);
+		for (int16 j = 0; j < MAX_MOB_LIST_PER_MAP; j++) {
+			spawn_data* mob = mapdata->moblist[j];
+			if (mob != nullptr && !strcmp(mob->filepath, path)) {
+				auto& spawn_list = mob_spawn_data[mob->id];
+				spawn_list.erase(std::remove_if(spawn_list.begin(), spawn_list.end(), [&](spawn_info& s) {
+					if (map_mapindex2mapid(s.mapindex) == mob->m) {
+						s.qty -= mob->num;
+						return s.qty == 0;
+					}
+					return false;
+					}), spawn_list.end());
+				if (battle_config.dynamic_mobs) {
 					aFree(mapdata->moblist[j]);
 					mapdata->moblist[j] = nullptr;
 				}
