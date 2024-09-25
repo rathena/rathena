@@ -10755,7 +10755,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick = INFINITE_TICK;
 			break;
 		case SC_ENCPOISON:
-			val2= 250+50*val1; // Poisoning Chance (2.5+0.5%) in 1/10000 rate
+			val2= 500+50*val1; // Poisoning Chance (2.5+0.5%) in 1/10000 rate
 			break;
 		case SC_ELEMENTALCHANGE:
 			// val1 : Element Lvl (if called by skill lvl 1, takes random value between 1 and 4)

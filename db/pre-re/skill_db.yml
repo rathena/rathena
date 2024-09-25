@@ -4857,46 +4857,46 @@ Body:
     Element: Poison
     Duration1:
       - Level: 1
-        Time: 30000
+        Time: 300000
       - Level: 2
-        Time: 45000
+        Time: 300000
       - Level: 3
-        Time: 60000
+        Time: 300000
       - Level: 4
-        Time: 75000
+        Time: 300000
       - Level: 5
-        Time: 90000
+        Time: 300000
       - Level: 6
-        Time: 105000
+        Time: 300000
       - Level: 7
-        Time: 120000
+        Time: 300000
       - Level: 8
-        Time: 135000
+        Time: 300000
       - Level: 9
-        Time: 150000
+        Time: 300000
       - Level: 10
-        Time: 165000
+        Time: 300000
     Duration2:
       - Level: 1
-        Time: 10000
+        Time: 300000
       - Level: 2
-        Time: 20000
+        Time: 300000
       - Level: 3
-        Time: 30000
+        Time: 300000
       - Level: 4
-        Time: 40000
+        Time: 300000
       - Level: 5
-        Time: 50000
+        Time: 300000
       - Level: 6
-        Time: 60000
+        Time: 300000
       - Level: 7
-        Time: 70000
+        Time: 300000
       - Level: 8
-        Time: 80000
+        Time: 300000
       - Level: 9
-        Time: 90000
+        Time: 300000
       - Level: 10
-        Time: 100000
+        Time: 300000
     Requires:
       SpCost: 20
     Status: EncPoison
