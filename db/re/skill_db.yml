@@ -43088,7 +43088,8 @@ Body:
     Element: Weapon
     GiveAp: 2
     CastCancel: true
-    Cooldown: 1500 #TODO: confirm cooldown
+    AfterCastActDelay: 700
+    Cooldown: 400
     Requires:
       SpCost:
         - Level: 1
