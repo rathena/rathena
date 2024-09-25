@@ -754,7 +754,7 @@ bool c_map_zone_data::isCommandDisabled(std::string name, map_session_data &sd) 
 	if (cmd_lv == nullptr)
 		return false;
 
-	if (sd.group->level < *cmd_lv)
+	if (sd.group->level > *cmd_lv)
 		return false;
 
 	return true;
@@ -763,10 +763,10 @@ bool c_map_zone_data::isCommandDisabled(std::string name, map_session_data &sd) 
 /**
  * Check if a skill is disabled on a map based on group level.
  * @param skill_id: Skill ID
- * @param bl: Block list data
+ * @param sd: Player data
  * @return True when skill is disabled or false otherwise
  */
-bool c_map_zone_data::isSkillDisabled(uint16 skill_id, block_list &bl) {
+bool c_map_zone_data::isSkillDisabled(uint16 skill_id, map_session_data &sd) {
 	if (this->disabled_skills.empty())
 		return false;
 
@@ -775,12 +775,7 @@ bool c_map_zone_data::isSkillDisabled(uint16 skill_id, block_list &bl) {
 	if (skill_lv == nullptr)
 		return false;
 
-	map_session_data *sd = BL_CAST(BL_PC, &bl);
-
-	if (sd == nullptr)
-		return false;
-
-	if (sd->group->level < skill_lv->second)
+	if (sd.group->level > skill_lv->second)
 		return false;
 
 	return true;
@@ -801,7 +796,7 @@ bool c_map_zone_data::isItemDisabled(t_itemid nameid, map_session_data &sd) {
 	if (item_lv == nullptr)
 		return false;
 
-	if (sd.group->level < *item_lv)
+	if (sd.group->level > *item_lv)
 		return false;
 
 	return true;
@@ -827,7 +822,7 @@ bool c_map_zone_data::isStatusDisabled(sc_type sc, block_list &bl) {
 	if (sd == nullptr)
 		return false;
 
-	if (sd->group->level < *status_lv)
+	if (sd->group->level > *status_lv)
 		return false;
 
 	return true;
@@ -848,7 +843,7 @@ bool c_map_zone_data::isJobRestricted(int32 job_id, uint16 group_lv) {
 	if (job_lv == nullptr)
 		return false;
 
-	if (group_lv < *job_lv)
+	if (group_lv > *job_lv)
 		return false;
 
 	return true;
@@ -856,17 +851,15 @@ bool c_map_zone_data::isJobRestricted(int32 job_id, uint16 group_lv) {
 
 /**
  * Clear all statuses that are disabled on a map.
- * @param bl: Block list data
+ * @param sd: Player data
  */
-void c_map_zone_data::clear_all_disabled_status(block_list &bl) {
+void c_map_zone_data::clear_all_disabled_status(map_session_data &sd) {
 	if (this->disabled_statuses.empty())
 		return;
 
-	map_session_data *sd = BL_CAST(BL_PC, &bl);
-
 	for (const auto &sc : this->disabled_statuses) {
-		if (sd == nullptr || sd->group->level < sc.second)
-			status_change_end(&bl, sc.first);
+		if (sd.group->level < sc.second)
+			status_change_end(&sd.bl, sc.first);
 	}
 }
 

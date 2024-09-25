@@ -1979,7 +1979,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		map_data *mapdata = map_getmapdata(src->m);
 		map_session_data *sd = BL_CAST(BL_PC, src);
 
-		if (mapdata != nullptr && mapdata->zone->isSkillDisabled(skill_id, sd->bl)) {
+		if (mapdata != nullptr && mapdata->zone->isSkillDisabled(skill_id, *sd)) {
 			if (sd != nullptr)
 				clif_msg(sd, MSI_IMPOSSIBLE_SKILL_AREA); // This skill cannot be used within this area
 			return false;

@@ -825,11 +825,11 @@ public:
 
 	e_map_type getMapZone(int16 map_id);
 	bool isCommandDisabled(std::string name, map_session_data &sd);
-	bool isSkillDisabled(uint16 skill_id, block_list &bl);
+	bool isSkillDisabled(uint16 skill_id, map_session_data &sd);
 	bool isItemDisabled(t_itemid nameid, map_session_data &sd);
 	bool isStatusDisabled(sc_type sc, block_list &bl);
 	bool isJobRestricted(int32 job_id, uint16 group_lv);
-	void clear_all_disabled_status(block_list &bl);
+	void clear_all_disabled_status(map_session_data &sd);
 };
 
 struct map_data {

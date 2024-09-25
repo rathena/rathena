@@ -866,7 +866,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 
 	uint32 skill_nocast = skill_get_nocast(skill_id);
 	// Check skill restrictions [Celest]
-	if (mapdata != nullptr && mapdata->zone->isSkillDisabled(skill_id, sd.bl)) {
+	if (mapdata != nullptr && mapdata->zone->isSkillDisabled(skill_id, sd)) {
 		clif_msg(&sd, MSI_IMPOSSIBLE_SKILL_AREA); // This skill cannot be used within this area
 		return true;
 	}

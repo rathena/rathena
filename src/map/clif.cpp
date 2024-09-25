@@ -10962,7 +10962,7 @@ void clif_parse_LoadEndAck(int fd,map_session_data *sd)
 		}
 
 		if (mapdata->zone != nullptr)
-			mapdata->zone->clear_all_disabled_status(sd->bl);
+			mapdata->zone->clear_all_disabled_status(*sd);
 		map_iwall_get(sd); // Updates Walls Info on this Map to Client
 		status_calc_pc(sd, sd->state.autotrade ? SCO_FIRST : SCO_NONE); // Some conditions are map-dependent so we must recalculate
 
