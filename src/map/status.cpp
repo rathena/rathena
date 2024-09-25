@@ -15325,7 +15325,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 		if(!vd)
 			vd = status_get_viewdata(bl);
 		if(vd && vd->dead_sit == 2)
-			multi += 1; //This causes the interval to be halved
+			multi += 6; //This causes the interval to be halved (updated to be 5x faster)
 		if(regen->state.gc)
 			multi += 1; //This causes the interval to be halved
 	}

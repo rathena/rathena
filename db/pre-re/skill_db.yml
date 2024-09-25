@@ -1466,48 +1466,48 @@ Body:
     AfterCastActDelay: 1000
     Duration1:
       - Level: 1
-        Time: 60000
-      - Level: 2
-        Time: 80000
-      - Level: 3
         Time: 100000
-      - Level: 4
+      - Level: 2
         Time: 120000
-      - Level: 5
-        Time: 140000
-      - Level: 6
+      - Level: 3
         Time: 160000
-      - Level: 7
+      - Level: 4
         Time: 180000
-      - Level: 8
+      - Level: 5
         Time: 200000
-      - Level: 9
+      - Level: 6
         Time: 220000
-      - Level: 10
+      - Level: 7
         Time: 240000
+      - Level: 8
+        Time: 260000
+      - Level: 9
+        Time: 280000
+      - Level: 10
+        Time: 300000
     Requires:
       HpCost: 15
       SpCost:
         - Level: 1
-          Amount: 18
+          Amount: 19
         - Level: 2
-          Amount: 21
+          Amount: 23
         - Level: 3
-          Amount: 24
-        - Level: 4
           Amount: 27
+        - Level: 4
+          Amount: 31
         - Level: 5
-          Amount: 30
+          Amount: 35
         - Level: 6
-          Amount: 33
-        - Level: 7
-          Amount: 36
-        - Level: 8
           Amount: 39
+        - Level: 7
+          Amount: 43
+        - Level: 8
+          Amount: 51
         - Level: 9
-          Amount: 42
+          Amount: 60
         - Level: 10
-          Amount: 45
+          Amount: 70
     Status: IncreaseAgi
   - Id: 30
     Name: AL_DECAGI
@@ -1678,47 +1678,47 @@ Body:
     CastCancel: true
     Duration1:
       - Level: 1
-        Time: 60000
-      - Level: 2
-        Time: 80000
-      - Level: 3
         Time: 100000
-      - Level: 4
+      - Level: 2
         Time: 120000
-      - Level: 5
-        Time: 140000
-      - Level: 6
+      - Level: 3
         Time: 160000
-      - Level: 7
+      - Level: 4
         Time: 180000
-      - Level: 8
+      - Level: 5
         Time: 200000
-      - Level: 9
+      - Level: 6
         Time: 220000
-      - Level: 10
+      - Level: 7
         Time: 240000
+      - Level: 8
+        Time: 260000
+      - Level: 9
+        Time: 280000
+      - Level: 10
+        Time: 300000
     Requires:
       SpCost:
         - Level: 1
-          Amount: 28
+          Amount: 29
         - Level: 2
-          Amount: 32
+          Amount: 34
         - Level: 3
-          Amount: 36
+          Amount: 39
         - Level: 4
-          Amount: 40
-        - Level: 5
           Amount: 44
+        - Level: 5
+          Amount: 49
         - Level: 6
-          Amount: 48
+          Amount: 54
         - Level: 7
-          Amount: 52
+          Amount: 59
         - Level: 8
-          Amount: 56
-        - Level: 9
-          Amount: 60
-        - Level: 10
           Amount: 64
+        - Level: 9
+          Amount: 69
+        - Level: 10
+          Amount: 74
     Status: Blessing
   - Id: 35
     Name: AL_CURE
@@ -1843,47 +1843,47 @@ Body:
     SplashArea: 3
     Duration1:
       - Level: 1
-        Time: 60000
+        Time: 240000
       - Level: 2
-        Time: 80000
+        Time: 240000
       - Level: 3
-        Time: 100000
+        Time: 240000
       - Level: 4
-        Time: 120000
+        Time: 240000
       - Level: 5
-        Time: 140000
+        Time: 240000
       - Level: 6
-        Time: 160000
+        Time: 240000
       - Level: 7
-        Time: 180000
+        Time: 240000
       - Level: 8
-        Time: 200000
+        Time: 240000
       - Level: 9
-        Time: 220000
+        Time: 240000
       - Level: 10
         Time: 240000
     Requires:
       SpCost:
         - Level: 1
-          Amount: 25
+          Amount: 26
         - Level: 2
-          Amount: 30
+          Amount: 32
         - Level: 3
-          Amount: 35
+          Amount: 38
         - Level: 4
-          Amount: 40
+          Amount: 44
         - Level: 5
-          Amount: 45
-        - Level: 6
           Amount: 50
+        - Level: 6
+          Amount: 56
         - Level: 7
-          Amount: 55
+          Amount: 62
         - Level: 8
-          Amount: 60
+          Amount: 68
         - Level: 9
-          Amount: 65
+          Amount: 74
         - Level: 10
-          Amount: 70
+          Amount: 80
     Status: Concentrate
   - Id: 46
     Name: AC_DOUBLE
@@ -2022,7 +2022,7 @@ Body:
         Reproduce: true
     Duration2: 60000
     Requires:
-      SpCost: 12
+      SpCost: 8
     Status: Poison
   - Id: 53
     Name: TF_DETOXIFY
@@ -2668,15 +2668,15 @@ Body:
     AfterCastActDelay: 2000
     Duration1:
       - Level: 1
-        Time: 10000
-      - Level: 2
-        Time: 15000
-      - Level: 3
         Time: 20000
-      - Level: 4
-        Time: 25000
-      - Level: 5
+      - Level: 2
         Time: 30000
+      - Level: 3
+        Time: 40000
+      - Level: 4
+        Time: 50000
+      - Level: 5
+        Time: 60000
     Requires:
       SpCost: 20
     Status: Gloria

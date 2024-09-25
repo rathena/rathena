@@ -2349,7 +2349,7 @@ int64 battle_addmastery(map_session_data *sd,struct block_list *target,int64 dmg
 			break;
 		case W_KATAR:
 			if((skill = pc_checkskill(sd,AS_KATAR)) > 0)
-				damage += (skill * 3);
+				damage += (skill * 4);
 			break;
 	}
 
@@ -3789,7 +3789,8 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 		// Skill-specific bonuses
 		switch(skill_id) {
 			case TF_POISON:
-				ATK_ADD(wd->damage, wd->damage2, 15 * skill_lv);
+				//ATK_ADD(wd->damage, wd->damage2, 15 * skill_lv);
+				ATK_ADDRATE(wd->damage, wd->damage2, 15 * skill_lv);
 				// Envenom applies the attribute table to the base damage and then again to the final damage
 				wd->damage = battle_attr_fix(src, target, wd->damage, right_element, tstatus->def_ele, tstatus->ele_lv, 1);
 				break;
@@ -4381,7 +4382,7 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 #ifdef RENEWAL
 				max_rate = max(7 * skill_lv, sd->bonus.double_rate);
 #else
-				max_rate = max(5 * skill_lv, sd->bonus.double_rate);
+				max_rate = max(7 * skill_lv, sd->bonus.double_rate);
 #endif
 
 			if( rnd()%100 < max_rate ) {
@@ -6849,7 +6850,7 @@ static void battle_calc_attack_left_right_hands(struct Damage* wd, struct block_
 			if (is_attack_right_handed(src, skill_id) && wd->damage) {
 				if( (sd->class_&MAPID_BASEMASK) == MAPID_THIEF ) {
 					skill = pc_checkskill(sd,AS_RIGHT);
-					ATK_RATER(wd->damage, 50 + (skill * 10))
+					ATK_RATER(wd->damage, 50 + (skill * 20))
 				}
 				else if(sd->class_ == MAPID_KAGEROUOBORO) {
 					skill = pc_checkskill(sd,KO_RIGHT);
@@ -6862,7 +6863,7 @@ static void battle_calc_attack_left_right_hands(struct Damage* wd, struct block_
 			if (wd->damage2) {
 				if( (sd->class_&MAPID_BASEMASK) == MAPID_THIEF) {
 					skill = pc_checkskill(sd,AS_LEFT);
-					ATK_RATEL(wd->damage2, 30 + (skill * 10))
+					ATK_RATEL(wd->damage2, 30 + (skill * 20))
 				}
 				else if(sd->class_ == MAPID_KAGEROUOBORO) {
 					skill = pc_checkskill(sd,KO_LEFT);
@@ -7355,8 +7356,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 	// crit check is next since crits always hit on official [helvetica]
 	if (is_attack_critical(&wd, src, target, skill_id, skill_lv, true)) {
 #if PACKETVER >= 20161207
-		if (wd.type&DMG_MULTI_HIT)
-			wd.type = DMG_MULTI_HIT_CRITICAL;
+		if (wd.type & DMG_MULTI_HIT)
+			ShowInfo("Is multi-hit crit!");
 		else
 			wd.type = DMG_CRITICAL;
 #else
@@ -9042,9 +9043,11 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 				md.damage = (sstatus->dex / 10 + sstatus->agi / 2 + skill * 3 + 40) * 2;
 				RE_LVL_MDMOD(100);
 #else
-				md.damage = (sstatus->dex / 10 + sstatus->int_ / 2 + skill * 3 + 40) * 2;
-				if(mflag > 1) //Autocasted Blitz
-					nk.set(NK_SPLASHSPLIT);
+				//md.damage = (sstatus->dex / 10 + sstatus->int_ / 2 + skill * 3 + 40) * 2;
+				md.damage = (sstatus->luk + sstatus->int_ / 2 + skill + 20) * 2;
+
+				//if(mflag > 1) //Autocasted Blitz
+					//nk.set(NK_SPLASHSPLIT);
 #endif
 				if (skill_id == SN_FALCONASSAULT) {
 					//Div fix of Blitzbeat
