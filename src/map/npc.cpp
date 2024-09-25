@@ -5197,7 +5197,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	int ai = AI_NONE; // mob_ai
 
 	memset(&mob, 0, sizeof(struct spawn_data));
-
+	strcpy(mob.filepath,filepath);
 	mob.state.boss = !strcmpi(w2,"boss_monster");
 
 	// w1=<map name>{,<x>,<y>{,<xs>,<ys>}}
@@ -6129,6 +6129,38 @@ bool npc_unloadfile( const char* path ) {
 
 	npc_delsrcfile(path);
 
+
+	s_mapiterator* iter2 = mapit_geteachiddb();
+	for (block_list* bl = (struct block_list*)mapit_first(iter2); mapit_exists(iter2); bl = (struct block_list*)mapit_next(iter2)) {
+		if (bl->type == BL_MOB) {
+			auto* md = reinterpret_cast<mob_data*>(bl);
+			if(md->spawn && !strcmp(md->spawn->filepath,path))
+				unit_free(bl, CLR_OUTSIGHT);
+		}
+	}
+	mapit_free(iter2);
+	if( battle_config.dynamic_mobs ){
+
+		for (int i = 0; i < map_num; i++) {
+			map_data* mapdata = map_getmapdata(i);
+			for (int16 j = 0; j < MAX_MOB_LIST_PER_MAP; j++) {
+				spawn_data* mob = mapdata->moblist[j];
+				if (mob != nullptr && !strcmp(mob->filepath, path)) {
+					auto& spawn_list = mob_spawn_data[mob->id];
+					spawn_list.erase(std::remove_if(spawn_list.begin(), spawn_list.end(), [&](spawn_info& s) {
+						if (map_mapindex2mapid(s.mapindex) == mob->m) {
+							s.qty -= mob->num;
+							return s.qty == 0;
+						}
+						return false;
+						}), spawn_list.end());
+
+					aFree(mapdata->moblist[j]);
+					mapdata->moblist[j] = nullptr;
+				}
+			}
+		}
+	}
 	return found;
 }
 

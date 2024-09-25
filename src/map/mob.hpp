@@ -290,6 +290,7 @@ public:
 };
 
 extern MobDatabase mob_db;
+extern std::unordered_map<uint16, std::vector<spawn_info>> mob_spawn_data;
 
 struct s_map_mob_drop{
 	uint16 mob_id;

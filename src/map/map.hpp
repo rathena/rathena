@@ -469,6 +469,7 @@ struct spawn_data {
 		unsigned int boss : 1; //0: Non-boss monster | 1: Boss monster
 	} state;
 	char name[NAME_LENGTH], eventname[EVENT_NAME_LENGTH]; //Name/event
+	char filepath[200];
 };
 
 struct flooritem_data {
