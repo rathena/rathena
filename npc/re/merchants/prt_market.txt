@@ -71,7 +71,7 @@ prt_mk,161,171,0	script	Guide#mk_prt5	8W_SOLDIER,{
 		close3;
 	} else {
 		mes "[Guide]";
-		mes "I will guide you " + .direction$[.@menu - 1] + ".";
+		mes "I will guide you " + .@direction$[.@menu - 1] + ".";
 		close2;
 		warp "prt_mk", .@warp_x[.@menu - 1], .@warp_y[.@menu - 1];
 		end;
