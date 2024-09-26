@@ -40,6 +40,31 @@ Body:
   - ID: 0
     Name: "Storage"
     Table: storage
+    Max: 300
+  - ID: 1
+    Name: "Storage 2"
+    Table: storage2
+    Max: 300
+  - ID: 2
+    Name: "Storage 3"
+    Table: storage3
+    Max: 300
+  - ID: 3
+    Name: "Cat's Hand Storage"
+    Table: storagecat
+    Max: 300
+  - ID: 4
+    Name: "Storage 1"
+    Table: storage
+  - ID: 5
+    Name: "Storage 2"
+    Table: storage2
+  - ID: 6
+    Name: "Storage 3"
+    Table: storage3
+  - ID: 7
+    Name: "Cat's Hand Storage"
+    Table: storagecat
 
 Footer:
   Imports:

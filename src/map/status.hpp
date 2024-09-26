@@ -1311,6 +1311,7 @@ enum sc_type : int16 {
 	SC_POWERUP = 951,
 	SC_AGIUP,
 	SC_PROTECTION,
+	SC_PREMIUM_STORAGEBOOST,
 
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };

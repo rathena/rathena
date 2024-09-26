@@ -66,3 +66,16 @@ function	script	F_queststatus	{
 	}
 	end;
 }	
+
+// Cat Hand Ticket
+function	script	F_CatStore	{
+	mes "[Cat's Hand Storage]";
+	mes "Cat's Hand Top Storage Call Service.";
+	mes "I will open the Storage as requested.";
+	close2;
+	if(getstatus(SC_PREMIUM_STORAGEBOOST))
+		openstorage2 7,STOR_MODE_GET|STOR_MODE_PUT;
+	else
+		openstorage2 3,STOR_MODE_GET|STOR_MODE_PUT;
+	return;
+}

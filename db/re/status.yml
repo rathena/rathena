@@ -8969,3 +8969,12 @@ Body:
       Bleeding: true
       Confusion: true
       Freeze: true
+  - Status: Premium_Storageboost
+    Icon: EFST_AID_PERIOD_ADDSTOREITEMCOUNT
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true

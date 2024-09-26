@@ -267,16 +267,51 @@ function	script	F_KafStor	{
 		}
 		// Normal message
 		else {
-			mes "[Kafra Employee]";
-			mes "Here, let me open";
-			mes "your Storage for you.";
-			mes "Thank you for using";
-			mes "the Kafra Service.";
+			if (!checkre(RENEWAL)) {
+				mes "[Kafra Employee]";
+				mes "Here, let me open";
+				mes "your Storage for you.";
+				mes "Thank you for using";
+				mes "the Kafra Service.";
+			} else {
+				mes "[Kafra Employee]";
+				mes "Please select the Storage you would like to open";
+				next;
+				.@storage = select("Storage 1:Storage 2:Storage 3");
+				mes "[Kafra Employee]";
+				mes "Here, let me open";
+				mes "your Storage for you.";
+				mes "Thank you for using";
+				mes "the Kafra Service.";
+			}
 		}
 	}
 	callfunc("F_CheckKafCode");	//check your storage password, if set
 	close2;
-	openstorage;
+	if (!checkre(RENEWAL)) {
+		openstorage;
+	} else {
+		switch (.@storage) {
+			case 1:
+				if(getstatus(SC_PREMIUM_STORAGEBOOST))
+					openstorage2 4,STOR_MODE_GET|STOR_MODE_PUT;
+				else
+					openstorage;
+				break;
+			case 2:
+				if(getstatus(SC_PREMIUM_STORAGEBOOST))
+					openstorage2 5,STOR_MODE_GET|STOR_MODE_PUT;
+				else
+					openstorage2 1,STOR_MODE_GET|STOR_MODE_PUT;
+				break;
+			case 3:
+				if(getstatus(SC_PREMIUM_STORAGEBOOST))
+					openstorage2 6,STOR_MODE_GET|STOR_MODE_PUT;
+				else
+					openstorage2 2,STOR_MODE_GET|STOR_MODE_PUT;
+				break;
+		}
+	}
 	cutin "", 255;
 	end;
 }
