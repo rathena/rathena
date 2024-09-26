@@ -4726,7 +4726,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += 30 * skill_lv;
 			break;
 		case CR_SHIELDCHARGE:
-			skillratio += 20 * skill_lv;
+			skillratio += 100 + 20 * skill_lv;
 			break;
 		case CR_SHIELDBOOMERANG:
 #ifdef RENEWAL
