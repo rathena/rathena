@@ -11452,6 +11452,9 @@
 	export_constant(MAPTYPE_UNKNOWN_BLOODY_BRANCH);
 	export_constant(MAPTYPE_UNKNOWN_RWC);
 	export_constant(MAPTYPE_UNKNOWN_VILLAGE_PRONTERA);
+	export_constant(MAPTYPE_RATHENA_SIEGE);
+	export_constant(MAPTYPE_RATHENA_TE);
+	export_constant(MAPTYPE_RATHENA_VELUM);
 
 	#undef export_constant
 	#undef export_constant2

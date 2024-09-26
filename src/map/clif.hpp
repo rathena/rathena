@@ -403,7 +403,10 @@ enum e_map_type : uint8_t
 	MAPTYPE_UNKNOWN_BLOODY_BRANCH,
 	MAPTYPE_UNKNOWN_RWC,
 	MAPTYPE_UNKNOWN_VILLAGE_PRONTERA,
-	MAPTYPE_UNUSED,
+	MAPTYPE_UNUSED,						///< Used to signify map without a zone.
+	MAPTYPE_RATHENA_SIEGE = 200,		///< Custom zone for Siege items.
+	MAPTYPE_RATHENA_TE,					///< Custom zone for WoE:TE items.
+	MAPTYPE_RATHENA_VELUM,				///< Custom zone for Velum items.
 };
 
 enum useskill_fail_cause : uint8_t 

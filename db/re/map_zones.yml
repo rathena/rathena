@@ -41,7 +41,92 @@ Header:
   Version: 1
 
 Body:
+  # Custom zone used for inheritance to disable Siege items.
+  - Id: rAthena_Siege
+    DisabledItems:
+      Siege_Arrow_A: 100
+      Siege_Arrow_S: 100
+      Siege_Boots: 100
+      Siege_Greave: 100
+      Siege_Manteau: 100
+      Siege_Muffler: 100
+      Siege_Plate: 100
+      Siege_Robe: 100
+      Siege_Shoes: 100
+      Siege_Suits: 100
+
+  # Custom zone used for inheritance to disable WoE:TE items.
+  - Id: rAthena_TE
+    DisabledItems:
+      TE_Ring_Of_Defiance: 100
+      TE_Ring_Of_Protection: 100
+      TE_Ring_Of_Rage: 100
+      TE_White_Potion: 100
+      TE_White_Slim_Potion: 100
+      TE_Woe_Axe: 100
+      TE_Woe_Bone_Helm: 100
+      TE_Woe_Book: 100
+      TE_Woe_Boots: 100
+      TE_Woe_Bow: 100
+      TE_Woe_Buckler: 100
+      TE_Woe_Cap: 100
+      TE_Woe_Chain_Mail: 100
+      TE_Woe_Coat: 100
+      TE_Woe_Fist: 100
+      TE_Woe_Gatling: 100
+      TE_Woe_Grenade: 100
+      TE_Woe_Guitar: 100
+      TE_Woe_Huuma: 100
+      TE_Woe_Katar: 100
+      TE_Woe_Knife: 100
+      TE_Woe_Lance: 100
+      TE_Woe_Mace: 100
+      TE_Woe_Mage_Coat: 100
+      TE_Woe_Magic_Eyes: 100
+      TE_Woe_Magic_Guard: 100
+      TE_Woe_Magic_Manteau: 100
+      TE_Woe_Magic_Sandal: 100
+      TE_Woe_Manteau: 100
+      TE_Woe_Muffler: 100
+      TE_Woe_Pike: 100
+      TE_Woe_Pistol: 100
+      TE_Woe_Rifle: 100
+      TE_Woe_Rope: 100
+      TE_Woe_Shield: 100
+      TE_Woe_Shoes: 100
+      TE_Woe_Shotgun: 100
+      TE_Woe_Staff: 100
+      TE_Woe_Sword: 100
+      TE_Woe_Two_Handed_Axe: 100
+      TE_Woe_Two_Hand_Staff: 100
+      TE_Woe_Two_Hand_Sword: 100
+
+  # Custom zone used for inheritance to disable Velum items.
+  - Id: rAthena_Velum
+    DisabledItems:
+      Velum_Arbalest: 100
+      Velum_Arc_Wand: 100
+      Velum_Bible: 100
+      Velum_Buster: 100
+      Velum_Claw: 100
+      Velum_Claymore: 100
+      Velum_CrossBow: 100
+      Velum_Damascus: 100
+      Velum_Encyclopedia: 100
+      Velum_Flail: 100
+      Velum_Glaive: 100
+      Velum_Guillotine: 100
+      Velum_Jamadhar: 100
+      Velum_Katzbalger: 100
+      Velum_Scare: 100
+      Velum_Spear: 100
+      Velum_Stunner: 100
+
   - Id: Village
+    Inherit:
+      rAthena_Siege: true
+      rAthena_TE: true
+      rAthena_Velum: true
     DisabledSkills:
       - Skill: AM_CANNIBALIZE
         Pc: 100
@@ -107,76 +192,7 @@ Body:
       Runstone_Crush: 100
       Runstone_Millennium: 100
       Runstone_Storm: 100
-      Siege_Arrow_A: 100
-      Siege_Arrow_S: 100
-      Siege_Boots: 100
-      Siege_Greave: 100
-      Siege_Manteau: 100
-      Siege_Muffler: 100
-      Siege_Plate: 100
-      Siege_Robe: 100
-      Siege_Shoes: 100
-      Siege_Suits: 100
-      TE_Ring_Of_Defiance: 100
-      TE_Ring_Of_Protection: 100
-      TE_Ring_Of_Rage: 100
-      TE_White_Potion: 100
-      TE_White_Slim_Potion: 100
-      TE_Woe_Axe: 100
-      TE_Woe_Bone_Helm: 100
-      TE_Woe_Book: 100
-      TE_Woe_Boots: 100
-      TE_Woe_Bow: 100
-      TE_Woe_Buckler: 100
-      TE_Woe_Cap: 100
-      TE_Woe_Chain_Mail: 100
-      TE_Woe_Coat: 100
-      TE_Woe_Fist: 100
-      TE_Woe_Gatling: 100
-      TE_Woe_Grenade: 100
-      TE_Woe_Guitar: 100
-      TE_Woe_Huuma: 100
-      TE_Woe_Katar: 100
-      TE_Woe_Knife: 100
-      TE_Woe_Lance: 100
-      TE_Woe_Mace: 100
-      TE_Woe_Mage_Coat: 100
-      TE_Woe_Magic_Eyes: 100
-      TE_Woe_Magic_Guard: 100
-      TE_Woe_Magic_Manteau: 100
-      TE_Woe_Magic_Sandal: 100
-      TE_Woe_Manteau: 100
-      TE_Woe_Muffler: 100
-      TE_Woe_Pike: 100
-      TE_Woe_Pistol: 100
-      TE_Woe_Rifle: 100
-      TE_Woe_Rope: 100
-      TE_Woe_Shield: 100
-      TE_Woe_Shoes: 100
-      TE_Woe_Shotgun: 100
-      TE_Woe_Staff: 100
-      TE_Woe_Sword: 100
-      TE_Woe_Two_Handed_Axe: 100
-      TE_Woe_Two_Hand_Staff: 100
-      TE_Woe_Two_Hand_Sword: 100
       Treasure_Box_Scroll: 100
-      Velum_Arbalest: 100
-      Velum_Arc_Wand: 100
-      Velum_Bible: 100
-      Velum_Buster: 100
-      Velum_Claw: 100
-      Velum_Claymore: 100
-      Velum_CrossBow: 100
-      Velum_Damascus: 100
-      Velum_Encyclopedia: 100
-      Velum_Flail: 100
-      Velum_Glaive: 100
-      Velum_Guillotine: 100
-      Velum_Jamadhar: 100
-      Velum_Katzbalger: 100
-      Velum_Scare: 100
-      Velum_Spear: 100
-      Velum_Stunner: 100
     Maps:
       alberta: true
       aldebaran: true
@@ -241,6 +257,10 @@ Body:
       - Flag: Reset
 
   - Id: Village_In # Indoor
+    Inherit:
+      rAthena_Siege: true
+      rAthena_TE: true
+      rAthena_Velum: true
     DisabledSkills:
       - Skill: AM_CANNIBALIZE
         Pc: 100
@@ -388,16 +408,6 @@ Body:
       Sg_Blue_Potion_Box: 100
       Sg_Violet_Potion_Box: 100
       Sg_White_Potion_Box: 100
-      Siege_Arrow_A: 100
-      Siege_Arrow_S: 100
-      Siege_Boots: 100
-      Siege_Greave: 100
-      Siege_Manteau: 100
-      Siege_Muffler: 100
-      Siege_Plate: 100
-      Siege_Robe: 100
-      Siege_Shoes: 100
-      Siege_Suits: 100
       Sleeper_Card: 100
       Snowier_Card: 100
       Snowman_Hat: 100
@@ -408,70 +418,11 @@ Body:
       Stem_Worm_Card: 100
       Stretched_Nose_M: 100
       Tengu_Card: 100
-      TE_Ring_Of_Defiance: 100
-      TE_Ring_Of_Protection: 100
-      TE_Ring_Of_Rage: 100
-      TE_White_Potion: 100
-      TE_White_Slim_Potion: 100
-      TE_Woe_Axe: 100
-      TE_Woe_Bone_Helm: 100
-      TE_Woe_Book: 100
-      TE_Woe_Boots: 100
-      TE_Woe_Bow: 100
-      TE_Woe_Buckler: 100
-      TE_Woe_Cap: 100
-      TE_Woe_Chain_Mail: 100
-      TE_Woe_Coat: 100
-      TE_Woe_Fist: 100
-      TE_Woe_Gatling: 100
-      TE_Woe_Grenade: 100
-      TE_Woe_Guitar: 100
-      TE_Woe_Huuma: 100
-      TE_Woe_Katar: 100
-      TE_Woe_Knife: 100
-      TE_Woe_Lance: 100
-      TE_Woe_Mace: 100
-      TE_Woe_Mage_Coat: 100
-      TE_Woe_Magic_Eyes: 100
-      TE_Woe_Magic_Guard: 100
-      TE_Woe_Magic_Manteau: 100
-      TE_Woe_Magic_Sandal: 100
-      TE_Woe_Manteau: 100
-      TE_Woe_Muffler: 100
-      TE_Woe_Pike: 100
-      TE_Woe_Pistol: 100
-      TE_Woe_Rifle: 100
-      TE_Woe_Rope: 100
-      TE_Woe_Shield: 100
-      TE_Woe_Shoes: 100
-      TE_Woe_Shotgun: 100
-      TE_Woe_Staff: 100
-      TE_Woe_Sword: 100
-      TE_Woe_Two_Handed_Axe: 100
-      TE_Woe_Two_Hand_Staff: 100
-      TE_Woe_Two_Hand_Sword: 100
       Toast_C: 100
       Treasure_Box_Scroll: 100
       Tw_Rice_Ball: 100
       Umbala_Spirit: 100
       Uni_Catalog_Bz: 100
-      Velum_Arbalest: 100
-      Velum_Arc_Wand: 100
-      Velum_Bible: 100
-      Velum_Buster: 100
-      Velum_Claw: 100
-      Velum_Claymore: 100
-      Velum_CrossBow: 100
-      Velum_Damascus: 100
-      Velum_Encyclopedia: 100
-      Velum_Flail: 100
-      Velum_Glaive: 100
-      Velum_Guillotine: 100
-      Velum_Jamadhar: 100
-      Velum_Katzbalger: 100
-      Velum_Scare: 100
-      Velum_Spear: 100
-      Velum_Stunner: 100
       Vending_Search_Scroll2: 100
       Vending_Search_Scroll: 100
       Weird_Pumpkin_Hat: 100
@@ -650,6 +601,10 @@ Body:
       - Flag: NoWarpTo
 
   - Id: Field
+    Inherit:
+      rAthena_Siege: true
+      rAthena_TE: true
+      rAthena_Velum: true
     DisabledSkills:
       - Skill: BD_ETERNALCHAOS
         Pc: 100
@@ -697,76 +652,7 @@ Body:
       Sg_Blue_Potion_Box: 100
       Sg_Violet_Potion_Box: 100
       Sg_White_Potion_Box: 100
-      Siege_Arrow_A: 100
-      Siege_Arrow_S: 100
-      Siege_Boots: 100
-      Siege_Greave: 100
-      Siege_Manteau: 100
-      Siege_Muffler: 100
-      Siege_Plate: 100
-      Siege_Robe: 100
-      Siege_Shoes: 100
-      Siege_Suits: 100
-      TE_Ring_Of_Defiance: 100
-      TE_Ring_Of_Protection: 100
-      TE_Ring_Of_Rage: 100
-      TE_White_Potion: 100
-      TE_White_Slim_Potion: 100
-      TE_Woe_Axe: 100
-      TE_Woe_Bone_Helm: 100
-      TE_Woe_Book: 100
-      TE_Woe_Boots: 100
-      TE_Woe_Bow: 100
-      TE_Woe_Buckler: 100
-      TE_Woe_Cap: 100
-      TE_Woe_Chain_Mail: 100
-      TE_Woe_Coat: 100
-      TE_Woe_Fist: 100
-      TE_Woe_Gatling: 100
-      TE_Woe_Grenade: 100
-      TE_Woe_Guitar: 100
-      TE_Woe_Huuma: 100
-      TE_Woe_Katar: 100
-      TE_Woe_Knife: 100
-      TE_Woe_Lance: 100
-      TE_Woe_Mace: 100
-      TE_Woe_Mage_Coat: 100
-      TE_Woe_Magic_Eyes: 100
-      TE_Woe_Magic_Guard: 100
-      TE_Woe_Magic_Manteau: 100
-      TE_Woe_Magic_Sandal: 100
-      TE_Woe_Manteau: 100
-      TE_Woe_Muffler: 100
-      TE_Woe_Pike: 100
-      TE_Woe_Pistol: 100
-      TE_Woe_Rifle: 100
-      TE_Woe_Rope: 100
-      TE_Woe_Shield: 100
-      TE_Woe_Shoes: 100
-      TE_Woe_Shotgun: 100
-      TE_Woe_Staff: 100
-      TE_Woe_Sword: 100
-      TE_Woe_Two_Handed_Axe: 100
-      TE_Woe_Two_Hand_Staff: 100
-      TE_Woe_Two_Hand_Sword: 100
       Uni_Catalog_Bz: 100
-      Velum_Arbalest: 100
-      Velum_Arc_Wand: 100
-      Velum_Bible: 100
-      Velum_Buster: 100
-      Velum_Claw: 100
-      Velum_Claymore: 100
-      Velum_CrossBow: 100
-      Velum_Damascus: 100
-      Velum_Encyclopedia: 100
-      Velum_Flail: 100
-      Velum_Glaive: 100
-      Velum_Guillotine: 100
-      Velum_Jamadhar: 100
-      Velum_Katzbalger: 100
-      Velum_Scare: 100
-      Velum_Spear: 100
-      Velum_Stunner: 100
       Vending_Search_Scroll2: 100
       Vending_Search_Scroll: 100
       Woe_Blue_Potion: 100
@@ -951,6 +837,10 @@ Body:
       - Flag: PrivateAirship_Source
 
   - Id: Dungeon
+    Inherit:
+      rAthena_Siege: true
+      rAthena_TE: true
+      rAthena_Velum: true
     DisabledSkills:
       - Skill: BD_ETERNALCHAOS
         Pc: 100
@@ -998,76 +888,7 @@ Body:
       Sg_Blue_Potion_Box: 100
       Sg_Violet_Potion_Box: 100
       Sg_White_Potion_Box: 100
-      Siege_Arrow_A: 100
-      Siege_Arrow_S: 100
-      Siege_Boots: 100
-      Siege_Greave: 100
-      Siege_Manteau: 100
-      Siege_Muffler: 100
-      Siege_Plate: 100
-      Siege_Robe: 100
-      Siege_Shoes: 100
-      Siege_Suits: 100
-      TE_Ring_Of_Defiance: 100
-      TE_Ring_Of_Protection: 100
-      TE_Ring_Of_Rage: 100
-      TE_White_Potion: 100
-      TE_White_Slim_Potion: 100
-      TE_Woe_Axe: 100
-      TE_Woe_Bone_Helm: 100
-      TE_Woe_Book: 100
-      TE_Woe_Boots: 100
-      TE_Woe_Bow: 100
-      TE_Woe_Buckler: 100
-      TE_Woe_Cap: 100
-      TE_Woe_Chain_Mail: 100
-      TE_Woe_Coat: 100
-      TE_Woe_Fist: 100
-      TE_Woe_Gatling: 100
-      TE_Woe_Grenade: 100
-      TE_Woe_Guitar: 100
-      TE_Woe_Huuma: 100
-      TE_Woe_Katar: 100
-      TE_Woe_Knife: 100
-      TE_Woe_Lance: 100
-      TE_Woe_Mace: 100
-      TE_Woe_Mage_Coat: 100
-      TE_Woe_Magic_Eyes: 100
-      TE_Woe_Magic_Guard: 100
-      TE_Woe_Magic_Manteau: 100
-      TE_Woe_Magic_Sandal: 100
-      TE_Woe_Manteau: 100
-      TE_Woe_Muffler: 100
-      TE_Woe_Pike: 100
-      TE_Woe_Pistol: 100
-      TE_Woe_Rifle: 100
-      TE_Woe_Rope: 100
-      TE_Woe_Shield: 100
-      TE_Woe_Shoes: 100
-      TE_Woe_Shotgun: 100
-      TE_Woe_Staff: 100
-      TE_Woe_Sword: 100
-      TE_Woe_Two_Handed_Axe: 100
-      TE_Woe_Two_Hand_Staff: 100
-      TE_Woe_Two_Hand_Sword: 100
       Uni_Catalog_Bz: 100
-      Velum_Arbalest: 100
-      Velum_Arc_Wand: 100
-      Velum_Bible: 100
-      Velum_Buster: 100
-      Velum_Claw: 100
-      Velum_Claymore: 100
-      Velum_CrossBow: 100
-      Velum_Damascus: 100
-      Velum_Encyclopedia: 100
-      Velum_Flail: 100
-      Velum_Glaive: 100
-      Velum_Guillotine: 100
-      Velum_Jamadhar: 100
-      Velum_Katzbalger: 100
-      Velum_Scare: 100
-      Velum_Spear: 100
-      Velum_Stunner: 100
       Vending_Search_Scroll2: 100
       Vending_Search_Scroll: 100
       Woe_Blue_Potion: 100
@@ -1358,6 +1179,10 @@ Body:
       - Flag: PrivateAirship_Source
 
   - Id: Quest
+    Inherit:
+      rAthena_Siege: true
+      rAthena_TE: true
+      rAthena_Velum: true
     DisabledSkills:
       - Skill: AL_WARP
         Pc: 100
@@ -1499,16 +1324,6 @@ Body:
       Sg_Blue_Potion_Box: 100
       Sg_Violet_Potion_Box: 100
       Sg_White_Potion_Box: 100
-      Siege_Arrow_A: 100
-      Siege_Arrow_S: 100
-      Siege_Boots: 100
-      Siege_Greave: 100
-      Siege_Manteau: 100
-      Siege_Muffler: 100
-      Siege_Plate: 100
-      Siege_Robe: 100
-      Siege_Shoes: 100
-      Siege_Suits: 100
       Sleeper_Card: 100
       Snowier_Card: 100
       Snowman_Hat: 100
@@ -1519,70 +1334,11 @@ Body:
       Stem_Worm_Card: 100
       Stretched_Nose_M: 100
       Tengu_Card: 100
-      TE_Ring_Of_Defiance: 100
-      TE_Ring_Of_Protection: 100
-      TE_Ring_Of_Rage: 100
-      TE_White_Potion: 100
-      TE_White_Slim_Potion: 100
-      TE_Woe_Axe: 100
-      TE_Woe_Bone_Helm: 100
-      TE_Woe_Book: 100
-      TE_Woe_Boots: 100
-      TE_Woe_Bow: 100
-      TE_Woe_Buckler: 100
-      TE_Woe_Cap: 100
-      TE_Woe_Chain_Mail: 100
-      TE_Woe_Coat: 100
-      TE_Woe_Fist: 100
-      TE_Woe_Gatling: 100
-      TE_Woe_Grenade: 100
-      TE_Woe_Guitar: 100
-      TE_Woe_Huuma: 100
-      TE_Woe_Katar: 100
-      TE_Woe_Knife: 100
-      TE_Woe_Lance: 100
-      TE_Woe_Mace: 100
-      TE_Woe_Mage_Coat: 100
-      TE_Woe_Magic_Eyes: 100
-      TE_Woe_Magic_Guard: 100
-      TE_Woe_Magic_Manteau: 100
-      TE_Woe_Magic_Sandal: 100
-      TE_Woe_Manteau: 100
-      TE_Woe_Muffler: 100
-      TE_Woe_Pike: 100
-      TE_Woe_Pistol: 100
-      TE_Woe_Rifle: 100
-      TE_Woe_Rope: 100
-      TE_Woe_Shield: 100
-      TE_Woe_Shoes: 100
-      TE_Woe_Shotgun: 100
-      TE_Woe_Staff: 100
-      TE_Woe_Sword: 100
-      TE_Woe_Two_Handed_Axe: 100
-      TE_Woe_Two_Hand_Staff: 100
-      TE_Woe_Two_Hand_Sword: 100
       Toast_C: 100
       Treasure_Box_Scroll: 100
       Tw_Rice_Ball: 100
       Umbala_Spirit: 100
       Uni_Catalog_Bz: 100
-      Velum_Arbalest: 100
-      Velum_Arc_Wand: 100
-      Velum_Bible: 100
-      Velum_Buster: 100
-      Velum_Claw: 100
-      Velum_Claymore: 100
-      Velum_CrossBow: 100
-      Velum_Damascus: 100
-      Velum_Encyclopedia: 100
-      Velum_Flail: 100
-      Velum_Glaive: 100
-      Velum_Guillotine: 100
-      Velum_Jamadhar: 100
-      Velum_Katzbalger: 100
-      Velum_Scare: 100
-      Velum_Spear: 100
-      Velum_Stunner: 100
       Vending_Search_Scroll2: 100
       Vending_Search_Scroll: 100
       Weird_Pumpkin_Hat: 100
@@ -1754,6 +1510,8 @@ Body:
       - Flag: NoWarpTo
 
   - Id: Penalty_FreePkZone # Nightmare Mode
+    Inherit:
+      rAthena_TE: true
     DisabledSkills:
       - Skill: AB_CONVENIO
         Pc: 100
@@ -1771,48 +1529,6 @@ Body:
       Runstone_Crush: 100
       Runstone_Millennium: 100
       Runstone_Storm: 100
-      TE_Ring_Of_Defiance: 100
-      TE_Ring_Of_Protection: 100
-      TE_Ring_Of_Rage: 100
-      TE_White_Potion: 100
-      TE_White_Slim_Potion: 100
-      TE_Woe_Axe: 100
-      TE_Woe_Bone_Helm: 100
-      TE_Woe_Book: 100
-      TE_Woe_Boots: 100
-      TE_Woe_Bow: 100
-      TE_Woe_Buckler: 100
-      TE_Woe_Cap: 100
-      TE_Woe_Chain_Mail: 100
-      TE_Woe_Coat: 100
-      TE_Woe_Fist: 100
-      TE_Woe_Gatling: 100
-      TE_Woe_Grenade: 100
-      TE_Woe_Guitar: 100
-      TE_Woe_Huuma: 100
-      TE_Woe_Katar: 100
-      TE_Woe_Knife: 100
-      TE_Woe_Lance: 100
-      TE_Woe_Mace: 100
-      TE_Woe_Mage_Coat: 100
-      TE_Woe_Magic_Eyes: 100
-      TE_Woe_Magic_Guard: 100
-      TE_Woe_Magic_Manteau: 100
-      TE_Woe_Magic_Sandal: 100
-      TE_Woe_Manteau: 100
-      TE_Woe_Muffler: 100
-      TE_Woe_Pike: 100
-      TE_Woe_Pistol: 100
-      TE_Woe_Rifle: 100
-      TE_Woe_Rope: 100
-      TE_Woe_Shield: 100
-      TE_Woe_Shoes: 100
-      TE_Woe_Shotgun: 100
-      TE_Woe_Staff: 100
-      TE_Woe_Sword: 100
-      TE_Woe_Two_Handed_Axe: 100
-      TE_Woe_Two_Hand_Staff: 100
-      TE_Woe_Two_Hand_Sword: 100
       Treasure_Box_Scroll: 100
       Uni_Catalog_Bz: 100
       Vending_Search_Scroll2: 100
@@ -1868,6 +1584,8 @@ Body:
       - Flag: PvP_NoParty
 
   - Id: NoPenalty_FreePkZone # Yoyo Mode
+    Inherit:
+      rAthena_TE: true
     DisabledSkills:
       - Skill: SC_DIMENSIONDOOR
         Pc: 100
@@ -1893,48 +1611,6 @@ Body:
       Runstone_Crush: 100
       Runstone_Millennium: 100
       Runstone_Storm: 100
-      TE_Ring_Of_Defiance: 100
-      TE_Ring_Of_Protection: 100
-      TE_Ring_Of_Rage: 100
-      TE_White_Potion: 100
-      TE_White_Slim_Potion: 100
-      TE_Woe_Axe: 100
-      TE_Woe_Bone_Helm: 100
-      TE_Woe_Book: 100
-      TE_Woe_Boots: 100
-      TE_Woe_Bow: 100
-      TE_Woe_Buckler: 100
-      TE_Woe_Cap: 100
-      TE_Woe_Chain_Mail: 100
-      TE_Woe_Coat: 100
-      TE_Woe_Fist: 100
-      TE_Woe_Gatling: 100
-      TE_Woe_Grenade: 100
-      TE_Woe_Guitar: 100
-      TE_Woe_Huuma: 100
-      TE_Woe_Katar: 100
-      TE_Woe_Knife: 100
-      TE_Woe_Lance: 100
-      TE_Woe_Mace: 100
-      TE_Woe_Mage_Coat: 100
-      TE_Woe_Magic_Eyes: 100
-      TE_Woe_Magic_Guard: 100
-      TE_Woe_Magic_Manteau: 100
-      TE_Woe_Magic_Sandal: 100
-      TE_Woe_Manteau: 100
-      TE_Woe_Muffler: 100
-      TE_Woe_Pike: 100
-      TE_Woe_Pistol: 100
-      TE_Woe_Rifle: 100
-      TE_Woe_Rope: 100
-      TE_Woe_Shield: 100
-      TE_Woe_Shoes: 100
-      TE_Woe_Shotgun: 100
-      TE_Woe_Staff: 100
-      TE_Woe_Sword: 100
-      TE_Woe_Two_Handed_Axe: 100
-      TE_Woe_Two_Hand_Staff: 100
-      TE_Woe_Two_Hand_Sword: 100
       Uni_Catalog_Bz: 100
       Vending_Search_Scroll2: 100
       Vending_Search_Scroll: 100
@@ -2001,6 +1677,8 @@ Body:
       - Flag: PvP_NoParty
 
   - Id: Event_GuildWar
+    Inherit:
+      rAthena_TE: true
     DisabledSkills:
       - Skill: TF_BACKSLIDING
         Pc: 100
@@ -2050,48 +1728,6 @@ Body:
       Runstone_Millennium: 100
       Runstone_Storm: 100
       Sg_Blue_Potion_Box: 100
-      TE_Ring_Of_Defiance: 100
-      TE_Ring_Of_Protection: 100
-      TE_Ring_Of_Rage: 100
-      TE_White_Potion: 100
-      TE_White_Slim_Potion: 100
-      TE_Woe_Axe: 100
-      TE_Woe_Bone_Helm: 100
-      TE_Woe_Book: 100
-      TE_Woe_Boots: 100
-      TE_Woe_Bow: 100
-      TE_Woe_Buckler: 100
-      TE_Woe_Cap: 100
-      TE_Woe_Chain_Mail: 100
-      TE_Woe_Coat: 100
-      TE_Woe_Fist: 100
-      TE_Woe_Gatling: 100
-      TE_Woe_Grenade: 100
-      TE_Woe_Guitar: 100
-      TE_Woe_Huuma: 100
-      TE_Woe_Katar: 100
-      TE_Woe_Knife: 100
-      TE_Woe_Lance: 100
-      TE_Woe_Mace: 100
-      TE_Woe_Mage_Coat: 100
-      TE_Woe_Magic_Eyes: 100
-      TE_Woe_Magic_Guard: 100
-      TE_Woe_Magic_Manteau: 100
-      TE_Woe_Magic_Sandal: 100
-      TE_Woe_Manteau: 100
-      TE_Woe_Muffler: 100
-      TE_Woe_Pike: 100
-      TE_Woe_Pistol: 100
-      TE_Woe_Rifle: 100
-      TE_Woe_Rope: 100
-      TE_Woe_Shield: 100
-      TE_Woe_Shoes: 100
-      TE_Woe_Shotgun: 100
-      TE_Woe_Staff: 100
-      TE_Woe_Sword: 100
-      TE_Woe_Two_Handed_Axe: 100
-      TE_Woe_Two_Hand_Staff: 100
-      TE_Woe_Two_Hand_Sword: 100
       Treasure_Box_Scroll: 100
       Uni_Catalog_Bz: 100
       Vending_Search_Scroll2: 100
@@ -2157,6 +1793,8 @@ Body:
         Value: 60
 
   - Id: Agit # WoE:FE
+    Inherit:
+      rAthena_TE: true
     DisabledSkills:
       - Skill: TF_BACKSLIDING
         Pc: 100
@@ -2210,48 +1848,6 @@ Body:
       Runstone_Crush: 100
       Runstone_Millennium: 100
       Runstone_Storm: 100
-      TE_Ring_Of_Defiance: 100
-      TE_Ring_Of_Protection: 100
-      TE_Ring_Of_Rage: 100
-      TE_White_Potion: 100
-      TE_White_Slim_Potion: 100
-      TE_Woe_Axe: 100
-      TE_Woe_Bone_Helm: 100
-      TE_Woe_Book: 100
-      TE_Woe_Boots: 100
-      TE_Woe_Bow: 100
-      TE_Woe_Buckler: 100
-      TE_Woe_Cap: 100
-      TE_Woe_Chain_Mail: 100
-      TE_Woe_Coat: 100
-      TE_Woe_Fist: 100
-      TE_Woe_Gatling: 100
-      TE_Woe_Grenade: 100
-      TE_Woe_Guitar: 100
-      TE_Woe_Huuma: 100
-      TE_Woe_Katar: 100
-      TE_Woe_Knife: 100
-      TE_Woe_Lance: 100
-      TE_Woe_Mace: 100
-      TE_Woe_Mage_Coat: 100
-      TE_Woe_Magic_Eyes: 100
-      TE_Woe_Magic_Guard: 100
-      TE_Woe_Magic_Manteau: 100
-      TE_Woe_Magic_Sandal: 100
-      TE_Woe_Manteau: 100
-      TE_Woe_Muffler: 100
-      TE_Woe_Pike: 100
-      TE_Woe_Pistol: 100
-      TE_Woe_Rifle: 100
-      TE_Woe_Rope: 100
-      TE_Woe_Shield: 100
-      TE_Woe_Shoes: 100
-      TE_Woe_Shotgun: 100
-      TE_Woe_Staff: 100
-      TE_Woe_Sword: 100
-      TE_Woe_Two_Handed_Axe: 100
-      TE_Woe_Two_Hand_Staff: 100
-      TE_Woe_Two_Hand_Sword: 100
       Treasure_Box_Scroll: 100
       Uni_Catalog_Bz: 100
       Vending_Search_Scroll2: 100
@@ -2336,6 +1932,8 @@ Body:
         Value: 60
 
   - Id: Dungeon2 # Guild Dungeon (PK Enabled)
+    Inherit:
+      rAthena_TE: true
     DisabledItems:
       Minus_Agi: 100
       Minus_Dex: 100
@@ -2347,48 +1945,6 @@ Body:
       Runstone_Crush: 100
       Runstone_Millennium: 100
       Runstone_Storm: 100
-      TE_Ring_Of_Defiance: 100
-      TE_Ring_Of_Protection: 100
-      TE_Ring_Of_Rage: 100
-      TE_White_Potion: 100
-      TE_White_Slim_Potion: 100
-      TE_Woe_Axe: 100
-      TE_Woe_Bone_Helm: 100
-      TE_Woe_Book: 100
-      TE_Woe_Boots: 100
-      TE_Woe_Bow: 100
-      TE_Woe_Buckler: 100
-      TE_Woe_Cap: 100
-      TE_Woe_Chain_Mail: 100
-      TE_Woe_Coat: 100
-      TE_Woe_Fist: 100
-      TE_Woe_Gatling: 100
-      TE_Woe_Grenade: 100
-      TE_Woe_Guitar: 100
-      TE_Woe_Huuma: 100
-      TE_Woe_Katar: 100
-      TE_Woe_Knife: 100
-      TE_Woe_Lance: 100
-      TE_Woe_Mace: 100
-      TE_Woe_Mage_Coat: 100
-      TE_Woe_Magic_Eyes: 100
-      TE_Woe_Magic_Guard: 100
-      TE_Woe_Magic_Manteau: 100
-      TE_Woe_Magic_Sandal: 100
-      TE_Woe_Manteau: 100
-      TE_Woe_Muffler: 100
-      TE_Woe_Pike: 100
-      TE_Woe_Pistol: 100
-      TE_Woe_Rifle: 100
-      TE_Woe_Rope: 100
-      TE_Woe_Shield: 100
-      TE_Woe_Shoes: 100
-      TE_Woe_Shotgun: 100
-      TE_Woe_Staff: 100
-      TE_Woe_Sword: 100
-      TE_Woe_Two_Handed_Axe: 100
-      TE_Woe_Two_Hand_Staff: 100
-      TE_Woe_Two_Hand_Sword: 100
       Uni_Catalog_Bz: 100
       Vending_Search_Scroll2: 100
       Vending_Search_Scroll: 100
@@ -2415,6 +1971,10 @@ Body:
       - Flag: PvP_NoParty
 
   - Id: Dungeon3 # Teleport Disabled
+    Inherit:
+      rAthena_Siege: true
+      rAthena_TE: true
+      rAthena_Velum: true
     DisabledSkills:
       - Skill: BD_ETERNALCHAOS
         Pc: 100
@@ -2469,76 +2029,7 @@ Body:
       Sg_Blue_Potion_Box: 100
       Sg_Violet_Potion_Box: 100
       Sg_White_Potion_Box: 100
-      Siege_Arrow_A: 100
-      Siege_Arrow_S: 100
-      Siege_Boots: 100
-      Siege_Greave: 100
-      Siege_Manteau: 100
-      Siege_Muffler: 100
-      Siege_Plate: 100
-      Siege_Robe: 100
-      Siege_Shoes: 100
-      Siege_Suits: 100
-      TE_Ring_Of_Defiance: 100
-      TE_Ring_Of_Protection: 100
-      TE_Ring_Of_Rage: 100
-      TE_White_Potion: 100
-      TE_White_Slim_Potion: 100
-      TE_Woe_Axe: 100
-      TE_Woe_Bone_Helm: 100
-      TE_Woe_Book: 100
-      TE_Woe_Boots: 100
-      TE_Woe_Bow: 100
-      TE_Woe_Buckler: 100
-      TE_Woe_Cap: 100
-      TE_Woe_Chain_Mail: 100
-      TE_Woe_Coat: 100
-      TE_Woe_Fist: 100
-      TE_Woe_Gatling: 100
-      TE_Woe_Grenade: 100
-      TE_Woe_Guitar: 100
-      TE_Woe_Huuma: 100
-      TE_Woe_Katar: 100
-      TE_Woe_Knife: 100
-      TE_Woe_Lance: 100
-      TE_Woe_Mace: 100
-      TE_Woe_Mage_Coat: 100
-      TE_Woe_Magic_Eyes: 100
-      TE_Woe_Magic_Guard: 100
-      TE_Woe_Magic_Manteau: 100
-      TE_Woe_Magic_Sandal: 100
-      TE_Woe_Manteau: 100
-      TE_Woe_Muffler: 100
-      TE_Woe_Pike: 100
-      TE_Woe_Pistol: 100
-      TE_Woe_Rifle: 100
-      TE_Woe_Rope: 100
-      TE_Woe_Shield: 100
-      TE_Woe_Shoes: 100
-      TE_Woe_Shotgun: 100
-      TE_Woe_Staff: 100
-      TE_Woe_Sword: 100
-      TE_Woe_Two_Handed_Axe: 100
-      TE_Woe_Two_Hand_Staff: 100
-      TE_Woe_Two_Hand_Sword: 100
       Uni_Catalog_Bz: 100
-      Velum_Arbalest: 100
-      Velum_Arc_Wand: 100
-      Velum_Bible: 100
-      Velum_Buster: 100
-      Velum_Claw: 100
-      Velum_Claymore: 100
-      Velum_CrossBow: 100
-      Velum_Damascus: 100
-      Velum_Encyclopedia: 100
-      Velum_Flail: 100
-      Velum_Glaive: 100
-      Velum_Guillotine: 100
-      Velum_Jamadhar: 100
-      Velum_Katzbalger: 100
-      Velum_Scare: 100
-      Velum_Spear: 100
-      Velum_Stunner: 100
       Vending_Search_Scroll2: 100
       Vending_Search_Scroll: 100
       Woe_Blue_Potion: 100
@@ -2563,6 +2054,8 @@ Body:
   - Id: PkServer
     # PK Mode zone is only used when the server has pk_mode (battle.conf) enabled
     # This applies to all PvP maps that don't have their own zone
+    Inherit:
+      rAthena_TE: true
     DisabledSkills:
       - Skill: AB_CONVENIO
         Pc: 100
@@ -2577,48 +2070,6 @@ Body:
       Runstone_Crush: 100
       Runstone_Millennium: 100
       Runstone_Storm: 100
-      TE_Ring_Of_Defiance: 100
-      TE_Ring_Of_Protection: 100
-      TE_Ring_Of_Rage: 100
-      TE_White_Potion: 100
-      TE_White_Slim_Potion: 100
-      TE_Woe_Axe: 100
-      TE_Woe_Bone_Helm: 100
-      TE_Woe_Book: 100
-      TE_Woe_Boots: 100
-      TE_Woe_Bow: 100
-      TE_Woe_Buckler: 100
-      TE_Woe_Cap: 100
-      TE_Woe_Chain_Mail: 100
-      TE_Woe_Coat: 100
-      TE_Woe_Fist: 100
-      TE_Woe_Gatling: 100
-      TE_Woe_Grenade: 100
-      TE_Woe_Guitar: 100
-      TE_Woe_Huuma: 100
-      TE_Woe_Katar: 100
-      TE_Woe_Knife: 100
-      TE_Woe_Lance: 100
-      TE_Woe_Mace: 100
-      TE_Woe_Mage_Coat: 100
-      TE_Woe_Magic_Eyes: 100
-      TE_Woe_Magic_Guard: 100
-      TE_Woe_Magic_Manteau: 100
-      TE_Woe_Magic_Sandal: 100
-      TE_Woe_Manteau: 100
-      TE_Woe_Muffler: 100
-      TE_Woe_Pike: 100
-      TE_Woe_Pistol: 100
-      TE_Woe_Rifle: 100
-      TE_Woe_Rope: 100
-      TE_Woe_Shield: 100
-      TE_Woe_Shoes: 100
-      TE_Woe_Shotgun: 100
-      TE_Woe_Staff: 100
-      TE_Woe_Sword: 100
-      TE_Woe_Two_Handed_Axe: 100
-      TE_Woe_Two_Hand_Staff: 100
-      TE_Woe_Two_Hand_Sword: 100
       Uni_Catalog_Bz: 100
       Vending_Search_Scroll2: 100
       Vending_Search_Scroll: 100
@@ -2647,6 +2098,10 @@ Body:
         Value: 60
 
   - Id: PvPServer # Turbo Track
+    Inherit:
+      rAthena_Siege: true
+      rAthena_TE: true
+      rAthena_Velum: true
     DisabledSkills:
       - Skill: SM_ENDURE
         Pc: 100
@@ -2730,77 +2185,8 @@ Body:
       Sg_Blue_Potion_Box: 100
       Sg_Violet_Potion_Box: 100
       Sg_White_Potion_Box: 100
-      Siege_Arrow_A: 100
-      Siege_Arrow_S: 100
-      Siege_Boots: 100
-      Siege_Greave: 100
-      Siege_Manteau: 100
-      Siege_Muffler: 100
-      Siege_Plate: 100
-      Siege_Robe: 100
-      Siege_Shoes: 100
-      Siege_Suits: 100
-      TE_Ring_Of_Defiance: 100
-      TE_Ring_Of_Protection: 100
-      TE_Ring_Of_Rage: 100
-      TE_White_Potion: 100
-      TE_White_Slim_Potion: 100
-      TE_Woe_Axe: 100
-      TE_Woe_Bone_Helm: 100
-      TE_Woe_Book: 100
-      TE_Woe_Boots: 100
-      TE_Woe_Bow: 100
-      TE_Woe_Buckler: 100
-      TE_Woe_Cap: 100
-      TE_Woe_Chain_Mail: 100
-      TE_Woe_Coat: 100
-      TE_Woe_Fist: 100
-      TE_Woe_Gatling: 100
-      TE_Woe_Grenade: 100
-      TE_Woe_Guitar: 100
-      TE_Woe_Huuma: 100
-      TE_Woe_Katar: 100
-      TE_Woe_Knife: 100
-      TE_Woe_Lance: 100
-      TE_Woe_Mace: 100
-      TE_Woe_Mage_Coat: 100
-      TE_Woe_Magic_Eyes: 100
-      TE_Woe_Magic_Guard: 100
-      TE_Woe_Magic_Manteau: 100
-      TE_Woe_Magic_Sandal: 100
-      TE_Woe_Manteau: 100
-      TE_Woe_Muffler: 100
-      TE_Woe_Pike: 100
-      TE_Woe_Pistol: 100
-      TE_Woe_Rifle: 100
-      TE_Woe_Rope: 100
-      TE_Woe_Shield: 100
-      TE_Woe_Shoes: 100
-      TE_Woe_Shotgun: 100
-      TE_Woe_Staff: 100
-      TE_Woe_Sword: 100
-      TE_Woe_Two_Handed_Axe: 100
-      TE_Woe_Two_Hand_Staff: 100
-      TE_Woe_Two_Hand_Sword: 100
       Treasure_Box_Scroll: 100
       Uni_Catalog_Bz: 100
-      Velum_Arbalest: 100
-      Velum_Arc_Wand: 100
-      Velum_Bible: 100
-      Velum_Buster: 100
-      Velum_Claw: 100
-      Velum_Claymore: 100
-      Velum_CrossBow: 100
-      Velum_Damascus: 100
-      Velum_Encyclopedia: 100
-      Velum_Flail: 100
-      Velum_Glaive: 100
-      Velum_Guillotine: 100
-      Velum_Jamadhar: 100
-      Velum_Katzbalger: 100
-      Velum_Scare: 100
-      Velum_Spear: 100
-      Velum_Stunner: 100
       Vending_Search_Scroll2: 100
       Vending_Search_Scroll: 100
       Woe_Blue_Potion: 100
@@ -2839,6 +2225,10 @@ Body:
         Value: 60
 
   - Id: DenySkill # For the Korean quiz event and similar things
+    Inherit:
+      rAthena_Siege: true
+      rAthena_TE: true
+      rAthena_Velum: true
     DisabledSkills: # !TODO: Are these skill blocks needed since MF_NOSKILL is active?
       - Skill: WM_GLOOMYDAY
         Pc: 100
@@ -2882,77 +2272,8 @@ Body:
       Sg_Blue_Potion_Box: 100
       Sg_Violet_Potion_Box: 100
       Sg_White_Potion_Box: 100
-      Siege_Arrow_A: 100
-      Siege_Arrow_S: 100
-      Siege_Boots: 100
-      Siege_Greave: 100
-      Siege_Manteau: 100
-      Siege_Muffler: 100
-      Siege_Plate: 100
-      Siege_Robe: 100
-      Siege_Shoes: 100
-      Siege_Suits: 100
-      TE_Ring_Of_Defiance: 100
-      TE_Ring_Of_Protection: 100
-      TE_Ring_Of_Rage: 100
-      TE_White_Potion: 100
-      TE_White_Slim_Potion: 100
-      TE_Woe_Axe: 100
-      TE_Woe_Bone_Helm: 100
-      TE_Woe_Book: 100
-      TE_Woe_Boots: 100
-      TE_Woe_Bow: 100
-      TE_Woe_Buckler: 100
-      TE_Woe_Cap: 100
-      TE_Woe_Chain_Mail: 100
-      TE_Woe_Coat: 100
-      TE_Woe_Fist: 100
-      TE_Woe_Gatling: 100
-      TE_Woe_Grenade: 100
-      TE_Woe_Guitar: 100
-      TE_Woe_Huuma: 100
-      TE_Woe_Katar: 100
-      TE_Woe_Knife: 100
-      TE_Woe_Lance: 100
-      TE_Woe_Mace: 100
-      TE_Woe_Mage_Coat: 100
-      TE_Woe_Magic_Eyes: 100
-      TE_Woe_Magic_Guard: 100
-      TE_Woe_Magic_Manteau: 100
-      TE_Woe_Magic_Sandal: 100
-      TE_Woe_Manteau: 100
-      TE_Woe_Muffler: 100
-      TE_Woe_Pike: 100
-      TE_Woe_Pistol: 100
-      TE_Woe_Rifle: 100
-      TE_Woe_Rope: 100
-      TE_Woe_Shield: 100
-      TE_Woe_Shoes: 100
-      TE_Woe_Shotgun: 100
-      TE_Woe_Staff: 100
-      TE_Woe_Sword: 100
-      TE_Woe_Two_Handed_Axe: 100
-      TE_Woe_Two_Hand_Staff: 100
-      TE_Woe_Two_Hand_Sword: 100
       Treasure_Box_Scroll: 100
       Uni_Catalog_Bz: 100
-      Velum_Arbalest: 100
-      Velum_Arc_Wand: 100
-      Velum_Bible: 100
-      Velum_Buster: 100
-      Velum_Claw: 100
-      Velum_Claymore: 100
-      Velum_CrossBow: 100
-      Velum_Damascus: 100
-      Velum_Encyclopedia: 100
-      Velum_Flail: 100
-      Velum_Glaive: 100
-      Velum_Guillotine: 100
-      Velum_Jamadhar: 100
-      Velum_Katzbalger: 100
-      Velum_Scare: 100
-      Velum_Spear: 100
-      Velum_Stunner: 100
       Vending_Search_Scroll2: 100
       Vending_Search_Scroll: 100
       Woe_Blue_Potion: 100
@@ -2977,6 +2298,8 @@ Body:
       - Flag: PvP_NoParty
 
   - Id: TurboTrack # Turbo Track (PK Mode)
+    Inherit:
+      rAthena_TE: true
     DisabledSkills:
       - Skill: SM_ENDURE
         Pc: 100
@@ -3035,48 +2358,6 @@ Body:
       Runstone_Crush: 100
       Runstone_Millennium: 100
       Runstone_Storm: 100
-      TE_Ring_Of_Defiance: 100
-      TE_Ring_Of_Protection: 100
-      TE_Ring_Of_Rage: 100
-      TE_White_Potion: 100
-      TE_White_Slim_Potion: 100
-      TE_Woe_Axe: 100
-      TE_Woe_Bone_Helm: 100
-      TE_Woe_Book: 100
-      TE_Woe_Boots: 100
-      TE_Woe_Bow: 100
-      TE_Woe_Buckler: 100
-      TE_Woe_Cap: 100
-      TE_Woe_Chain_Mail: 100
-      TE_Woe_Coat: 100
-      TE_Woe_Fist: 100
-      TE_Woe_Gatling: 100
-      TE_Woe_Grenade: 100
-      TE_Woe_Guitar: 100
-      TE_Woe_Huuma: 100
-      TE_Woe_Katar: 100
-      TE_Woe_Knife: 100
-      TE_Woe_Lance: 100
-      TE_Woe_Mace: 100
-      TE_Woe_Mage_Coat: 100
-      TE_Woe_Magic_Eyes: 100
-      TE_Woe_Magic_Guard: 100
-      TE_Woe_Magic_Manteau: 100
-      TE_Woe_Magic_Sandal: 100
-      TE_Woe_Manteau: 100
-      TE_Woe_Muffler: 100
-      TE_Woe_Pike: 100
-      TE_Woe_Pistol: 100
-      TE_Woe_Rifle: 100
-      TE_Woe_Rope: 100
-      TE_Woe_Shield: 100
-      TE_Woe_Shoes: 100
-      TE_Woe_Shotgun: 100
-      TE_Woe_Staff: 100
-      TE_Woe_Sword: 100
-      TE_Woe_Two_Handed_Axe: 100
-      TE_Woe_Two_Hand_Staff: 100
-      TE_Woe_Two_Hand_Sword: 100
       Treasure_Box_Scroll: 100
       Uni_Catalog_Bz: 100
       Vending_Search_Scroll2: 100
@@ -3116,6 +2397,10 @@ Body:
         Value: 60
 
   - Id: Jail
+    Inherit:
+      rAthena_Siege: true
+      rAthena_TE: true
+      rAthena_Velum: true
     DisabledSkills:
       - Skill: BD_ETERNALCHAOS
         Pc: 100
@@ -3175,77 +2460,8 @@ Body:
       Sg_Blue_Potion_Box: 100
       Sg_Violet_Potion_Box: 100
       Sg_White_Potion_Box: 100
-      Siege_Arrow_A: 100
-      Siege_Arrow_S: 100
-      Siege_Boots: 100
-      Siege_Greave: 100
-      Siege_Manteau: 100
-      Siege_Muffler: 100
-      Siege_Plate: 100
-      Siege_Robe: 100
-      Siege_Shoes: 100
-      Siege_Suits: 100
-      TE_Ring_Of_Defiance: 100
-      TE_Ring_Of_Protection: 100
-      TE_Ring_Of_Rage: 100
-      TE_White_Potion: 100
-      TE_White_Slim_Potion: 100
-      TE_Woe_Axe: 100
-      TE_Woe_Bone_Helm: 100
-      TE_Woe_Book: 100
-      TE_Woe_Boots: 100
-      TE_Woe_Bow: 100
-      TE_Woe_Buckler: 100
-      TE_Woe_Cap: 100
-      TE_Woe_Chain_Mail: 100
-      TE_Woe_Coat: 100
-      TE_Woe_Fist: 100
-      TE_Woe_Gatling: 100
-      TE_Woe_Grenade: 100
-      TE_Woe_Guitar: 100
-      TE_Woe_Huuma: 100
-      TE_Woe_Katar: 100
-      TE_Woe_Knife: 100
-      TE_Woe_Lance: 100
-      TE_Woe_Mace: 100
-      TE_Woe_Mage_Coat: 100
-      TE_Woe_Magic_Eyes: 100
-      TE_Woe_Magic_Guard: 100
-      TE_Woe_Magic_Manteau: 100
-      TE_Woe_Magic_Sandal: 100
-      TE_Woe_Manteau: 100
-      TE_Woe_Muffler: 100
-      TE_Woe_Pike: 100
-      TE_Woe_Pistol: 100
-      TE_Woe_Rifle: 100
-      TE_Woe_Rope: 100
-      TE_Woe_Shield: 100
-      TE_Woe_Shoes: 100
-      TE_Woe_Shotgun: 100
-      TE_Woe_Staff: 100
-      TE_Woe_Sword: 100
-      TE_Woe_Two_Handed_Axe: 100
-      TE_Woe_Two_Hand_Staff: 100
-      TE_Woe_Two_Hand_Sword: 100
       Treasure_Box_Scroll: 100
       Uni_Catalog_Bz: 100
-      Velum_Arbalest: 100
-      Velum_Arc_Wand: 100
-      Velum_Bible: 100
-      Velum_Buster: 100
-      Velum_Claw: 100
-      Velum_Claymore: 100
-      Velum_CrossBow: 100
-      Velum_Damascus: 100
-      Velum_Encyclopedia: 100
-      Velum_Flail: 100
-      Velum_Glaive: 100
-      Velum_Guillotine: 100
-      Velum_Jamadhar: 100
-      Velum_Katzbalger: 100
-      Velum_Scare: 100
-      Velum_Spear: 100
-      Velum_Stunner: 100
       Vending_Search_Scroll2: 100
       Vending_Search_Scroll: 100
       Wing_Of_Butterfly: 100
@@ -3273,6 +2489,10 @@ Body:
       - Flag: PvP_NoParty
 
   - Id: MonsterTrack # Boss area
+    Inherit:
+      rAthena_Siege: true
+      rAthena_TE: true
+      rAthena_Velum: true
     DisabledSkills:
       - Skill: BD_ETERNALCHAOS
         Pc: 100
@@ -3322,77 +2542,8 @@ Body:
       Sg_Blue_Potion_Box: 100
       Sg_Violet_Potion_Box: 100
       Sg_White_Potion_Box: 100
-      Siege_Arrow_A: 100
-      Siege_Arrow_S: 100
-      Siege_Boots: 100
-      Siege_Greave: 100
-      Siege_Manteau: 100
-      Siege_Muffler: 100
-      Siege_Plate: 100
-      Siege_Robe: 100
-      Siege_Shoes: 100
-      Siege_Suits: 100
-      TE_Ring_Of_Defiance: 100
-      TE_Ring_Of_Protection: 100
-      TE_Ring_Of_Rage: 100
-      TE_White_Potion: 100
-      TE_White_Slim_Potion: 100
-      TE_Woe_Axe: 100
-      TE_Woe_Bone_Helm: 100
-      TE_Woe_Book: 100
-      TE_Woe_Boots: 100
-      TE_Woe_Bow: 100
-      TE_Woe_Buckler: 100
-      TE_Woe_Cap: 100
-      TE_Woe_Chain_Mail: 100
-      TE_Woe_Coat: 100
-      TE_Woe_Fist: 100
-      TE_Woe_Gatling: 100
-      TE_Woe_Grenade: 100
-      TE_Woe_Guitar: 100
-      TE_Woe_Huuma: 100
-      TE_Woe_Katar: 100
-      TE_Woe_Knife: 100
-      TE_Woe_Lance: 100
-      TE_Woe_Mace: 100
-      TE_Woe_Mage_Coat: 100
-      TE_Woe_Magic_Eyes: 100
-      TE_Woe_Magic_Guard: 100
-      TE_Woe_Magic_Manteau: 100
-      TE_Woe_Magic_Sandal: 100
-      TE_Woe_Manteau: 100
-      TE_Woe_Muffler: 100
-      TE_Woe_Pike: 100
-      TE_Woe_Pistol: 100
-      TE_Woe_Rifle: 100
-      TE_Woe_Rope: 100
-      TE_Woe_Shield: 100
-      TE_Woe_Shoes: 100
-      TE_Woe_Shotgun: 100
-      TE_Woe_Staff: 100
-      TE_Woe_Sword: 100
-      TE_Woe_Two_Handed_Axe: 100
-      TE_Woe_Two_Hand_Staff: 100
-      TE_Woe_Two_Hand_Sword: 100
       Treasure_Box_Scroll: 100
       Uni_Catalog_Bz: 100
-      Velum_Arbalest: 100
-      Velum_Arc_Wand: 100
-      Velum_Bible: 100
-      Velum_Buster: 100
-      Velum_Claw: 100
-      Velum_Claymore: 100
-      Velum_CrossBow: 100
-      Velum_Damascus: 100
-      Velum_Encyclopedia: 100
-      Velum_Flail: 100
-      Velum_Glaive: 100
-      Velum_Guillotine: 100
-      Velum_Jamadhar: 100
-      Velum_Katzbalger: 100
-      Velum_Scare: 100
-      Velum_Spear: 100
-      Velum_Stunner: 100
       Vending_Search_Scroll2: 100
       Vending_Search_Scroll: 100
       Woe_Blue_Potion: 100
@@ -3415,6 +2566,8 @@ Body:
       - Flag: PvP_NoParty
 
   - Id: PoringBattle
+    Inherit:
+      rAthena_TE: true
     DisabledSkills:
       - Skill: SM_ENDURE
         Pc: 100
@@ -3462,48 +2615,6 @@ Body:
       Runstone_Millennium: 100
       Runstone_Storm: 100
       Sg_Blue_Potion_Box: 100
-      TE_Ring_Of_Defiance: 100
-      TE_Ring_Of_Protection: 100
-      TE_Ring_Of_Rage: 100
-      TE_White_Potion: 100
-      TE_White_Slim_Potion: 100
-      TE_Woe_Axe: 100
-      TE_Woe_Bone_Helm: 100
-      TE_Woe_Book: 100
-      TE_Woe_Boots: 100
-      TE_Woe_Bow: 100
-      TE_Woe_Buckler: 100
-      TE_Woe_Cap: 100
-      TE_Woe_Chain_Mail: 100
-      TE_Woe_Coat: 100
-      TE_Woe_Fist: 100
-      TE_Woe_Gatling: 100
-      TE_Woe_Grenade: 100
-      TE_Woe_Guitar: 100
-      TE_Woe_Huuma: 100
-      TE_Woe_Katar: 100
-      TE_Woe_Knife: 100
-      TE_Woe_Lance: 100
-      TE_Woe_Mace: 100
-      TE_Woe_Mage_Coat: 100
-      TE_Woe_Magic_Eyes: 100
-      TE_Woe_Magic_Guard: 100
-      TE_Woe_Magic_Manteau: 100
-      TE_Woe_Magic_Sandal: 100
-      TE_Woe_Manteau: 100
-      TE_Woe_Muffler: 100
-      TE_Woe_Pike: 100
-      TE_Woe_Pistol: 100
-      TE_Woe_Rifle: 100
-      TE_Woe_Rope: 100
-      TE_Woe_Shield: 100
-      TE_Woe_Shoes: 100
-      TE_Woe_Shotgun: 100
-      TE_Woe_Staff: 100
-      TE_Woe_Sword: 100
-      TE_Woe_Two_Handed_Axe: 100
-      TE_Woe_Two_Hand_Staff: 100
-      TE_Woe_Two_Hand_Sword: 100
       Treasure_Box_Scroll: 100
       Uni_Catalog_Bz: 100
       Vending_Search_Scroll2: 100
@@ -3542,6 +2653,8 @@ Body:
         Value: 60
 
   - Id: Agit_Siegev15 # WoE:SE
+    Inherit:
+      rAthena_TE: true
     DisabledSkills:
       - Skill: TF_BACKSLIDING
         Pc: 100
@@ -3597,48 +2710,6 @@ Body:
       Runstone_Crush: 100
       Runstone_Millennium: 100
       Runstone_Storm: 100
-      TE_Ring_Of_Defiance: 100
-      TE_Ring_Of_Protection: 100
-      TE_Ring_Of_Rage: 100
-      TE_White_Potion: 100
-      TE_White_Slim_Potion: 100
-      TE_Woe_Axe: 100
-      TE_Woe_Bone_Helm: 100
-      TE_Woe_Book: 100
-      TE_Woe_Boots: 100
-      TE_Woe_Bow: 100
-      TE_Woe_Buckler: 100
-      TE_Woe_Cap: 100
-      TE_Woe_Chain_Mail: 100
-      TE_Woe_Coat: 100
-      TE_Woe_Fist: 100
-      TE_Woe_Gatling: 100
-      TE_Woe_Grenade: 100
-      TE_Woe_Guitar: 100
-      TE_Woe_Huuma: 100
-      TE_Woe_Katar: 100
-      TE_Woe_Knife: 100
-      TE_Woe_Lance: 100
-      TE_Woe_Mace: 100
-      TE_Woe_Mage_Coat: 100
-      TE_Woe_Magic_Eyes: 100
-      TE_Woe_Magic_Guard: 100
-      TE_Woe_Magic_Manteau: 100
-      TE_Woe_Magic_Sandal: 100
-      TE_Woe_Manteau: 100
-      TE_Woe_Muffler: 100
-      TE_Woe_Pike: 100
-      TE_Woe_Pistol: 100
-      TE_Woe_Rifle: 100
-      TE_Woe_Rope: 100
-      TE_Woe_Shield: 100
-      TE_Woe_Shoes: 100
-      TE_Woe_Shotgun: 100
-      TE_Woe_Staff: 100
-      TE_Woe_Sword: 100
-      TE_Woe_Two_Handed_Axe: 100
-      TE_Woe_Two_Hand_Staff: 100
-      TE_Woe_Two_Hand_Sword: 100
       Treasure_Box_Scroll: 100
       Uni_Catalog_Bz: 100
       Vending_Search_Scroll2: 100
@@ -3711,6 +2782,8 @@ Body:
         Value: 60
 
   - Id: Battlefield
+    Inherit:
+      rAthena_TE: true
     DisabledSkills:
       - Skill: TF_BACKSLIDING
         Pc: 100
@@ -3770,48 +2843,6 @@ Body:
       Runstone_Crush: 100
       Runstone_Millennium: 100
       Runstone_Storm: 100
-      TE_Ring_Of_Defiance: 100
-      TE_Ring_Of_Protection: 100
-      TE_Ring_Of_Rage: 100
-      TE_White_Potion: 100
-      TE_White_Slim_Potion: 100
-      TE_Woe_Axe: 100
-      TE_Woe_Bone_Helm: 100
-      TE_Woe_Book: 100
-      TE_Woe_Boots: 100
-      TE_Woe_Bow: 100
-      TE_Woe_Buckler: 100
-      TE_Woe_Cap: 100
-      TE_Woe_Chain_Mail: 100
-      TE_Woe_Coat: 100
-      TE_Woe_Fist: 100
-      TE_Woe_Gatling: 100
-      TE_Woe_Grenade: 100
-      TE_Woe_Guitar: 100
-      TE_Woe_Huuma: 100
-      TE_Woe_Katar: 100
-      TE_Woe_Knife: 100
-      TE_Woe_Lance: 100
-      TE_Woe_Mace: 100
-      TE_Woe_Mage_Coat: 100
-      TE_Woe_Magic_Eyes: 100
-      TE_Woe_Magic_Guard: 100
-      TE_Woe_Magic_Manteau: 100
-      TE_Woe_Magic_Sandal: 100
-      TE_Woe_Manteau: 100
-      TE_Woe_Muffler: 100
-      TE_Woe_Pike: 100
-      TE_Woe_Pistol: 100
-      TE_Woe_Rifle: 100
-      TE_Woe_Rope: 100
-      TE_Woe_Shield: 100
-      TE_Woe_Shoes: 100
-      TE_Woe_Shotgun: 100
-      TE_Woe_Staff: 100
-      TE_Woe_Sword: 100
-      TE_Woe_Two_Handed_Axe: 100
-      TE_Woe_Two_Hand_Staff: 100
-      TE_Woe_Two_Hand_Sword: 100
       Treasure_Box_Scroll: 100
       Uni_Catalog_Bz: 100
       Vending_Search_Scroll2: 100
@@ -3876,6 +2907,10 @@ Body:
         Value: 70
 
   - Id: PvP_Tournament # Instances
+    Inherit:
+      rAthena_Siege: true
+      rAthena_TE: true
+      rAthena_Velum: true
     DisabledSkills:
       - Skill: AL_TELEPORT
         Mob: 100
@@ -3936,77 +2971,8 @@ Body:
       Sg_Blue_Potion_Box: 100
       Sg_Violet_Potion_Box: 100
       Sg_White_Potion_Box: 100
-      Siege_Arrow_A: 100
-      Siege_Arrow_S: 100
-      Siege_Boots: 100
-      Siege_Greave: 100
-      Siege_Manteau: 100
-      Siege_Muffler: 100
-      Siege_Plate: 100
-      Siege_Robe: 100
-      Siege_Shoes: 100
-      Siege_Suits: 100
-      TE_Ring_Of_Defiance: 100
-      TE_Ring_Of_Protection: 100
-      TE_Ring_Of_Rage: 100
-      TE_White_Potion: 100
-      TE_White_Slim_Potion: 100
-      TE_Woe_Axe: 100
-      TE_Woe_Bone_Helm: 100
-      TE_Woe_Book: 100
-      TE_Woe_Boots: 100
-      TE_Woe_Bow: 100
-      TE_Woe_Buckler: 100
-      TE_Woe_Cap: 100
-      TE_Woe_Chain_Mail: 100
-      TE_Woe_Coat: 100
-      TE_Woe_Fist: 100
-      TE_Woe_Gatling: 100
-      TE_Woe_Grenade: 100
-      TE_Woe_Guitar: 100
-      TE_Woe_Huuma: 100
-      TE_Woe_Katar: 100
-      TE_Woe_Knife: 100
-      TE_Woe_Lance: 100
-      TE_Woe_Mace: 100
-      TE_Woe_Mage_Coat: 100
-      TE_Woe_Magic_Eyes: 100
-      TE_Woe_Magic_Guard: 100
-      TE_Woe_Magic_Manteau: 100
-      TE_Woe_Magic_Sandal: 100
-      TE_Woe_Manteau: 100
-      TE_Woe_Muffler: 100
-      TE_Woe_Pike: 100
-      TE_Woe_Pistol: 100
-      TE_Woe_Rifle: 100
-      TE_Woe_Rope: 100
-      TE_Woe_Shield: 100
-      TE_Woe_Shoes: 100
-      TE_Woe_Shotgun: 100
-      TE_Woe_Staff: 100
-      TE_Woe_Sword: 100
-      TE_Woe_Two_Handed_Axe: 100
-      TE_Woe_Two_Hand_Staff: 100
-      TE_Woe_Two_Hand_Sword: 100
       Treasure_Box_Scroll: 100
       Uni_Catalog_Bz: 100
-      Velum_Arbalest: 100
-      Velum_Arc_Wand: 100
-      Velum_Bible: 100
-      Velum_Buster: 100
-      Velum_Claw: 100
-      Velum_Claymore: 100
-      Velum_CrossBow: 100
-      Velum_Damascus: 100
-      Velum_Encyclopedia: 100
-      Velum_Flail: 100
-      Velum_Glaive: 100
-      Velum_Guillotine: 100
-      Velum_Jamadhar: 100
-      Velum_Katzbalger: 100
-      Velum_Scare: 100
-      Velum_Spear: 100
-      Velum_Stunner: 100
       Vending_Search_Scroll2: 100
       Vending_Search_Scroll: 100
       Woe_Blue_Potion: 100
@@ -4264,6 +3230,8 @@ Body:
       - Flag: PartyLock
 
   - Id: Unknown_FrancePvP # EuRO Style PvP
+    Inherit:
+      rAthena_TE: true
     DisabledSkills:
       - Skill: TF_BACKSLIDING
         Pc: 100
@@ -4311,48 +3279,6 @@ Body:
       Runstone_Crush: 100
       Runstone_Millennium: 100
       Runstone_Storm: 100
-      TE_Ring_Of_Defiance: 100
-      TE_Ring_Of_Protection: 100
-      TE_Ring_Of_Rage: 100
-      TE_White_Potion: 100
-      TE_White_Slim_Potion: 100
-      TE_Woe_Axe: 100
-      TE_Woe_Bone_Helm: 100
-      TE_Woe_Book: 100
-      TE_Woe_Boots: 100
-      TE_Woe_Bow: 100
-      TE_Woe_Buckler: 100
-      TE_Woe_Cap: 100
-      TE_Woe_Chain_Mail: 100
-      TE_Woe_Coat: 100
-      TE_Woe_Fist: 100
-      TE_Woe_Gatling: 100
-      TE_Woe_Grenade: 100
-      TE_Woe_Guitar: 100
-      TE_Woe_Huuma: 100
-      TE_Woe_Katar: 100
-      TE_Woe_Knife: 100
-      TE_Woe_Lance: 100
-      TE_Woe_Mace: 100
-      TE_Woe_Mage_Coat: 100
-      TE_Woe_Magic_Eyes: 100
-      TE_Woe_Magic_Guard: 100
-      TE_Woe_Magic_Manteau: 100
-      TE_Woe_Magic_Sandal: 100
-      TE_Woe_Manteau: 100
-      TE_Woe_Muffler: 100
-      TE_Woe_Pike: 100
-      TE_Woe_Pistol: 100
-      TE_Woe_Rifle: 100
-      TE_Woe_Rope: 100
-      TE_Woe_Shield: 100
-      TE_Woe_Shoes: 100
-      TE_Woe_Shotgun: 100
-      TE_Woe_Staff: 100
-      TE_Woe_Sword: 100
-      TE_Woe_Two_Handed_Axe: 100
-      TE_Woe_Two_Hand_Staff: 100
-      TE_Woe_Two_Hand_Sword: 100
       Treasure_Box_Scroll: 100
       Uni_Catalog_Bz: 100
       Vending_Search_Scroll2: 100
@@ -4389,6 +3315,10 @@ Body:
         Value: 60
 
   - Id: Unknown_Town2 # Another World Village
+    Inherit:
+      rAthena_Siege: true
+      rAthena_TE: true
+      rAthena_Velum: true
     DisabledSkills:
       - Skill: BS_GREED
         Pc: 100
@@ -4437,77 +3367,8 @@ Body:
       Runstone_Millennium: 100
       Runstone_Storm: 100
       Sg_Blue_Potion_Box: 100
-      Siege_Arrow_A: 100
-      Siege_Arrow_S: 100
-      Siege_Boots: 100
-      Siege_Greave: 100
-      Siege_Manteau: 100
-      Siege_Muffler: 100
-      Siege_Plate: 100
-      Siege_Robe: 100
-      Siege_Shoes: 100
-      Siege_Suits: 100
-      TE_Ring_Of_Defiance: 100
-      TE_Ring_Of_Protection: 100
-      TE_Ring_Of_Rage: 100
-      TE_White_Potion: 100
-      TE_White_Slim_Potion: 100
-      TE_Woe_Axe: 100
-      TE_Woe_Bone_Helm: 100
-      TE_Woe_Book: 100
-      TE_Woe_Boots: 100
-      TE_Woe_Bow: 100
-      TE_Woe_Buckler: 100
-      TE_Woe_Cap: 100
-      TE_Woe_Chain_Mail: 100
-      TE_Woe_Coat: 100
-      TE_Woe_Fist: 100
-      TE_Woe_Gatling: 100
-      TE_Woe_Grenade: 100
-      TE_Woe_Guitar: 100
-      TE_Woe_Huuma: 100
-      TE_Woe_Katar: 100
-      TE_Woe_Knife: 100
-      TE_Woe_Lance: 100
-      TE_Woe_Mace: 100
-      TE_Woe_Mage_Coat: 100
-      TE_Woe_Magic_Eyes: 100
-      TE_Woe_Magic_Guard: 100
-      TE_Woe_Magic_Manteau: 100
-      TE_Woe_Magic_Sandal: 100
-      TE_Woe_Manteau: 100
-      TE_Woe_Muffler: 100
-      TE_Woe_Pike: 100
-      TE_Woe_Pistol: 100
-      TE_Woe_Rifle: 100
-      TE_Woe_Rope: 100
-      TE_Woe_Shield: 100
-      TE_Woe_Shoes: 100
-      TE_Woe_Shotgun: 100
-      TE_Woe_Staff: 100
-      TE_Woe_Sword: 100
-      TE_Woe_Two_Handed_Axe: 100
-      TE_Woe_Two_Hand_Staff: 100
-      TE_Woe_Two_Hand_Sword: 100
       Treasure_Box_Scroll: 100
       Uni_Catalog_Bz: 100
-      Velum_Arbalest: 100
-      Velum_Arc_Wand: 100
-      Velum_Bible: 100
-      Velum_Buster: 100
-      Velum_Claw: 100
-      Velum_Claymore: 100
-      Velum_CrossBow: 100
-      Velum_Damascus: 100
-      Velum_Encyclopedia: 100
-      Velum_Flail: 100
-      Velum_Glaive: 100
-      Velum_Guillotine: 100
-      Velum_Jamadhar: 100
-      Velum_Katzbalger: 100
-      Velum_Scare: 100
-      Velum_Spear: 100
-      Velum_Stunner: 100
       Vending_Search_Scroll2: 100
       Vending_Search_Scroll: 100
       Woe_Blue_Potion: 100
@@ -4530,6 +3391,10 @@ Body:
       - Flag: PvP_NoParty
 
   - Id: Unknown_Training_Grounds # Novice Training Grounds
+    Inherit:
+      rAthena_Siege: true
+      rAthena_TE: true
+      rAthena_Velum: true
     DisabledSkills:
       - Skill: AM_CANNIBALIZE
         Pc: 100
@@ -4587,77 +3452,8 @@ Body:
       Runstone_Millennium: 100
       Runstone_Storm: 100
       Sg_Blue_Potion_Box: 100
-      Siege_Arrow_A: 100
-      Siege_Arrow_S: 100
-      Siege_Boots: 100
-      Siege_Greave: 100
-      Siege_Manteau: 100
-      Siege_Muffler: 100
-      Siege_Plate: 100
-      Siege_Robe: 100
-      Siege_Shoes: 100
-      Siege_Suits: 100
-      TE_Ring_Of_Defiance: 100
-      TE_Ring_Of_Protection: 100
-      TE_Ring_Of_Rage: 100
-      TE_White_Potion: 100
-      TE_White_Slim_Potion: 100
-      TE_Woe_Axe: 100
-      TE_Woe_Bone_Helm: 100
-      TE_Woe_Book: 100
-      TE_Woe_Boots: 100
-      TE_Woe_Bow: 100
-      TE_Woe_Buckler: 100
-      TE_Woe_Cap: 100
-      TE_Woe_Chain_Mail: 100
-      TE_Woe_Coat: 100
-      TE_Woe_Fist: 100
-      TE_Woe_Gatling: 100
-      TE_Woe_Grenade: 100
-      TE_Woe_Guitar: 100
-      TE_Woe_Huuma: 100
-      TE_Woe_Katar: 100
-      TE_Woe_Knife: 100
-      TE_Woe_Lance: 100
-      TE_Woe_Mace: 100
-      TE_Woe_Mage_Coat: 100
-      TE_Woe_Magic_Eyes: 100
-      TE_Woe_Magic_Guard: 100
-      TE_Woe_Magic_Manteau: 100
-      TE_Woe_Magic_Sandal: 100
-      TE_Woe_Manteau: 100
-      TE_Woe_Muffler: 100
-      TE_Woe_Pike: 100
-      TE_Woe_Pistol: 100
-      TE_Woe_Rifle: 100
-      TE_Woe_Rope: 100
-      TE_Woe_Shield: 100
-      TE_Woe_Shoes: 100
-      TE_Woe_Shotgun: 100
-      TE_Woe_Staff: 100
-      TE_Woe_Sword: 100
-      TE_Woe_Two_Handed_Axe: 100
-      TE_Woe_Two_Hand_Staff: 100
-      TE_Woe_Two_Hand_Sword: 100
       Treasure_Box_Scroll: 100
       Uni_Catalog_Bz: 100
-      Velum_Arbalest: 100
-      Velum_Arc_Wand: 100
-      Velum_Bible: 100
-      Velum_Buster: 100
-      Velum_Claw: 100
-      Velum_Claymore: 100
-      Velum_CrossBow: 100
-      Velum_Damascus: 100
-      Velum_Encyclopedia: 100
-      Velum_Flail: 100
-      Velum_Glaive: 100
-      Velum_Guillotine: 100
-      Velum_Jamadhar: 100
-      Velum_Katzbalger: 100
-      Velum_Scare: 100
-      Velum_Spear: 100
-      Velum_Stunner: 100
       Vending_Search_Scroll2: 100
       Vending_Search_Scroll: 100
       Woe_Blue_Potion: 100
@@ -4698,6 +3494,9 @@ Body:
       - Flag: PvP_NoParty
 
   - Id: Siege_LowLevel # WoE:TE
+    Inherit:
+      rAthena_Siege: true
+      rAthena_Velum: true
     DisabledSkills:
       - Skill: TF_BACKSLIDING
         Pc: 100
@@ -4817,38 +3616,11 @@ Body:
       Runstone_Crush: 100
       Runstone_Millennium: 100
       Runstone_Storm: 100
-      Siege_Arrow_A: 100
-      Siege_Arrow_S: 100
-      Siege_Boots: 100
-      Siege_Greave: 100
-      Siege_Manteau: 100
-      Siege_Muffler: 100
-      Siege_Plate: 100
-      Siege_Robe: 100
-      Siege_Shoes: 100
-      Siege_Suits: 100
       Sleipnir: 100
       Sleipnir_C: 100
       Treasure_Box_Scroll: 100
       Uni_Catalog_Bz: 100
       Upd_Maya_Puple_Card: 100
-      Velum_Arbalest: 100
-      Velum_Arc_Wand: 100
-      Velum_Bible: 100
-      Velum_Buster: 100
-      Velum_Claw: 100
-      Velum_Claymore: 100
-      Velum_CrossBow: 100
-      Velum_Damascus: 100
-      Velum_Encyclopedia: 100
-      Velum_Flail: 100
-      Velum_Glaive: 100
-      Velum_Guillotine: 100
-      Velum_Jamadhar: 100
-      Velum_Katzbalger: 100
-      Velum_Scare: 100
-      Velum_Spear: 100
-      Velum_Stunner: 100
       Vending_Search_Scroll2: 100
       Vending_Search_Scroll: 100
       Woe_Blue_Potion: 100
@@ -5455,6 +4227,10 @@ Body:
         Value: 60
 
   - Id: 2012_Rwc_Battle_Field
+    Inherit:
+      rAthena_Siege: true
+      rAthena_TE: true
+      rAthena_Velum: true
     DisabledSkills:
       - Skill: WZ_ICEWALL
         Pc: 100
@@ -5493,77 +4269,8 @@ Body:
       Runstone_Crush: 100
       Runstone_Millennium: 100
       Runstone_Storm: 100
-      Siege_Arrow_A: 100
-      Siege_Arrow_S: 100
-      Siege_Boots: 100
-      Siege_Greave: 100
-      Siege_Manteau: 100
-      Siege_Muffler: 100
-      Siege_Plate: 100
-      Siege_Robe: 100
-      Siege_Shoes: 100
-      Siege_Suits: 100
-      TE_Ring_Of_Defiance: 100
-      TE_Ring_Of_Protection: 100
-      TE_Ring_Of_Rage: 100
-      TE_White_Potion: 100
-      TE_White_Slim_Potion: 100
-      TE_Woe_Axe: 100
-      TE_Woe_Bone_Helm: 100
-      TE_Woe_Book: 100
-      TE_Woe_Boots: 100
-      TE_Woe_Bow: 100
-      TE_Woe_Buckler: 100
-      TE_Woe_Cap: 100
-      TE_Woe_Chain_Mail: 100
-      TE_Woe_Coat: 100
-      TE_Woe_Fist: 100
-      TE_Woe_Gatling: 100
-      TE_Woe_Grenade: 100
-      TE_Woe_Guitar: 100
-      TE_Woe_Huuma: 100
-      TE_Woe_Katar: 100
-      TE_Woe_Knife: 100
-      TE_Woe_Lance: 100
-      TE_Woe_Mace: 100
-      TE_Woe_Mage_Coat: 100
-      TE_Woe_Magic_Eyes: 100
-      TE_Woe_Magic_Guard: 100
-      TE_Woe_Magic_Manteau: 100
-      TE_Woe_Magic_Sandal: 100
-      TE_Woe_Manteau: 100
-      TE_Woe_Muffler: 100
-      TE_Woe_Pike: 100
-      TE_Woe_Pistol: 100
-      TE_Woe_Rifle: 100
-      TE_Woe_Rope: 100
-      TE_Woe_Shield: 100
-      TE_Woe_Shoes: 100
-      TE_Woe_Shotgun: 100
-      TE_Woe_Staff: 100
-      TE_Woe_Sword: 100
-      TE_Woe_Two_Handed_Axe: 100
-      TE_Woe_Two_Hand_Staff: 100
-      TE_Woe_Two_Hand_Sword: 100
       Treasure_Box_Scroll: 100
       Uni_Catalog_Bz: 100
-      Velum_Arbalest: 100
-      Velum_Arc_Wand: 100
-      Velum_Bible: 100
-      Velum_Buster: 100
-      Velum_Claw: 100
-      Velum_Claymore: 100
-      Velum_CrossBow: 100
-      Velum_Damascus: 100
-      Velum_Encyclopedia: 100
-      Velum_Flail: 100
-      Velum_Glaive: 100
-      Velum_Guillotine: 100
-      Velum_Jamadhar: 100
-      Velum_Katzbalger: 100
-      Velum_Scare: 100
-      Velum_Spear: 100
-      Velum_Stunner: 100
       Vending_Search_Scroll2: 100
       Vending_Search_Scroll: 100
       Woe_Blue_Potion: 100
@@ -5600,6 +4307,10 @@ Body:
       - Flag: PvP_NoParty
 
   - Id: Unknown_Bossnia # Bossnia Event
+    Inherit:
+      rAthena_Siege: true
+      rAthena_TE: true
+      rAthena_Velum: true
     DisabledSkills:
       - Skill: BD_ETERNALCHAOS
         Pc: 100
@@ -5654,76 +4365,7 @@ Body:
       Sg_Blue_Potion_Box: 100
       Sg_Violet_Potion_Box: 100
       Sg_White_Potion_Box: 100
-      Siege_Arrow_A: 100
-      Siege_Arrow_S: 100
-      Siege_Boots: 100
-      Siege_Greave: 100
-      Siege_Manteau: 100
-      Siege_Muffler: 100
-      Siege_Plate: 100
-      Siege_Robe: 100
-      Siege_Shoes: 100
-      Siege_Suits: 100
-      TE_Ring_Of_Defiance: 100
-      TE_Ring_Of_Protection: 100
-      TE_Ring_Of_Rage: 100
-      TE_White_Potion: 100
-      TE_White_Slim_Potion: 100
-      TE_Woe_Axe: 100
-      TE_Woe_Bone_Helm: 100
-      TE_Woe_Book: 100
-      TE_Woe_Boots: 100
-      TE_Woe_Bow: 100
-      TE_Woe_Buckler: 100
-      TE_Woe_Cap: 100
-      TE_Woe_Chain_Mail: 100
-      TE_Woe_Coat: 100
-      TE_Woe_Fist: 100
-      TE_Woe_Gatling: 100
-      TE_Woe_Grenade: 100
-      TE_Woe_Guitar: 100
-      TE_Woe_Huuma: 100
-      TE_Woe_Katar: 100
-      TE_Woe_Knife: 100
-      TE_Woe_Lance: 100
-      TE_Woe_Mace: 100
-      TE_Woe_Mage_Coat: 100
-      TE_Woe_Magic_Eyes: 100
-      TE_Woe_Magic_Guard: 100
-      TE_Woe_Magic_Manteau: 100
-      TE_Woe_Magic_Sandal: 100
-      TE_Woe_Manteau: 100
-      TE_Woe_Muffler: 100
-      TE_Woe_Pike: 100
-      TE_Woe_Pistol: 100
-      TE_Woe_Rifle: 100
-      TE_Woe_Rope: 100
-      TE_Woe_Shield: 100
-      TE_Woe_Shoes: 100
-      TE_Woe_Shotgun: 100
-      TE_Woe_Staff: 100
-      TE_Woe_Sword: 100
-      TE_Woe_Two_Handed_Axe: 100
-      TE_Woe_Two_Hand_Staff: 100
-      TE_Woe_Two_Hand_Sword: 100
       Uni_Catalog_Bz: 100
-      Velum_Arbalest: 100
-      Velum_Arc_Wand: 100
-      Velum_Bible: 100
-      Velum_Buster: 100
-      Velum_Claw: 100
-      Velum_Claymore: 100
-      Velum_CrossBow: 100
-      Velum_Damascus: 100
-      Velum_Encyclopedia: 100
-      Velum_Flail: 100
-      Velum_Glaive: 100
-      Velum_Guillotine: 100
-      Velum_Jamadhar: 100
-      Velum_Katzbalger: 100
-      Velum_Scare: 100
-      Velum_Spear: 100
-      Velum_Stunner: 100
       Vending_Search_Scroll2: 100
       Vending_Search_Scroll: 100
       Woe_Blue_Potion: 100
@@ -5738,6 +4380,10 @@ Body:
       - Flag: NoWarpTo
 
   - Id: Unknown_Bloody_Branch # Bloody Dead Branch
+    Inherit:
+      rAthena_Siege: true
+      rAthena_TE: true
+      rAthena_Velum: true
     DisabledSkills:
       - Skill: BD_ETERNALCHAOS
         Pc: 100
@@ -5785,76 +4431,7 @@ Body:
       Sg_Blue_Potion_Box: 100
       Sg_Violet_Potion_Box: 100
       Sg_White_Potion_Box: 100
-      Siege_Arrow_A: 100
-      Siege_Arrow_S: 100
-      Siege_Boots: 100
-      Siege_Greave: 100
-      Siege_Manteau: 100
-      Siege_Muffler: 100
-      Siege_Plate: 100
-      Siege_Robe: 100
-      Siege_Shoes: 100
-      Siege_Suits: 100
-      TE_Ring_Of_Defiance: 100
-      TE_Ring_Of_Protection: 100
-      TE_Ring_Of_Rage: 100
-      TE_White_Potion: 100
-      TE_White_Slim_Potion: 100
-      TE_Woe_Axe: 100
-      TE_Woe_Bone_Helm: 100
-      TE_Woe_Book: 100
-      TE_Woe_Boots: 100
-      TE_Woe_Bow: 100
-      TE_Woe_Buckler: 100
-      TE_Woe_Cap: 100
-      TE_Woe_Chain_Mail: 100
-      TE_Woe_Coat: 100
-      TE_Woe_Fist: 100
-      TE_Woe_Gatling: 100
-      TE_Woe_Grenade: 100
-      TE_Woe_Guitar: 100
-      TE_Woe_Huuma: 100
-      TE_Woe_Katar: 100
-      TE_Woe_Knife: 100
-      TE_Woe_Lance: 100
-      TE_Woe_Mace: 100
-      TE_Woe_Mage_Coat: 100
-      TE_Woe_Magic_Eyes: 100
-      TE_Woe_Magic_Guard: 100
-      TE_Woe_Magic_Manteau: 100
-      TE_Woe_Magic_Sandal: 100
-      TE_Woe_Manteau: 100
-      TE_Woe_Muffler: 100
-      TE_Woe_Pike: 100
-      TE_Woe_Pistol: 100
-      TE_Woe_Rifle: 100
-      TE_Woe_Rope: 100
-      TE_Woe_Shield: 100
-      TE_Woe_Shoes: 100
-      TE_Woe_Shotgun: 100
-      TE_Woe_Staff: 100
-      TE_Woe_Sword: 100
-      TE_Woe_Two_Handed_Axe: 100
-      TE_Woe_Two_Hand_Staff: 100
-      TE_Woe_Two_Hand_Sword: 100
       Uni_Catalog_Bz: 100
-      Velum_Arbalest: 100
-      Velum_Arc_Wand: 100
-      Velum_Bible: 100
-      Velum_Buster: 100
-      Velum_Claw: 100
-      Velum_Claymore: 100
-      Velum_CrossBow: 100
-      Velum_Damascus: 100
-      Velum_Encyclopedia: 100
-      Velum_Flail: 100
-      Velum_Glaive: 100
-      Velum_Guillotine: 100
-      Velum_Jamadhar: 100
-      Velum_Katzbalger: 100
-      Velum_Scare: 100
-      Velum_Spear: 100
-      Velum_Stunner: 100
       Vending_Search_Scroll2: 100
       Vending_Search_Scroll: 100
       Woe_Blue_Potion: 100
