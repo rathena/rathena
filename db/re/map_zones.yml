@@ -4533,8 +4533,8 @@ Body:
 #        Pc: 100
 #      - Skill: ALL_ASSISTANT_VENDING
 #        Pc: 100
-#      - Skill: ALL_BUYINGSTORE
-#        Pc: 100
+      - Skill: ALL_BUYING_STORE
+        Pc: 100
       - Skill: MC_VENDING
         Pc: 100
     Maps:
