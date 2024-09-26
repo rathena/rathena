@@ -211,6 +211,10 @@ Body:
       hero_lb: true
       hugel: true
       icecastle: true
+      iz_in_a: true
+      iz_in_b: true
+      iz_in_c: true
+      iz_in_d: true
       izlude: true
       izlude_a: true
       izlude_b: true
@@ -722,6 +726,9 @@ Body:
       gw_fild01: true
       gw_fild02: true
       harboro2: true
+      hero_dun1: true
+      hero_ent1: true
+      herosria: true
       hu_fild02: true
       hu_fild03: true
       hu_fild04: true
@@ -1020,6 +1027,7 @@ Body:
       jor_dun02: true
       jor_dun03: true
       jor_maze: true
+      jor_que: true
       jor_root1: true
       jor_root2: true
       jor_root3: true
@@ -1064,6 +1072,7 @@ Body:
       mjolnir_10: true
       mjolnir_11: true
       mjolnir_12: true
+      moc_akhet: true
       moc_fild19: true
       moc_fild20: true
       moc_fild21: true
@@ -1086,6 +1095,7 @@ Body:
       nif_dun02: true
       nif_fild01: true
       nif_fild02: true
+      nif_fild03: true
       niflheim: true
       nyd_dun01: true
       odin_past: true
@@ -1166,6 +1176,7 @@ Body:
       verus02_a: true
       verus02_b: true
       verus03: true
+      vr_bob: true
       xmas_dun01: true
       xmas_dun02: true
       yuno_fild05: true
@@ -2556,6 +2567,7 @@ Body:
       iz_dun05: true
       lasa_dun_q: true
       ra_fild04: true
+      vis_h01: true
     Mapflags:
       - Flag: NoMemo
       - Flag: NoSave
@@ -3103,6 +3115,7 @@ Body:
       1@vrhha: true
       1@vrpo: true
       1@vrpop: true
+      1@vrsn: true
       1@whl: true
       1@wtgs: true
       1@xm_d2: true
