@@ -1751,6 +1751,7 @@ Body:
       NoSave: true
       NoRemoveOnDead: true
       RemoveOnChangeMap: true
+      BossResist: true
   - Status: Closeconfine2
     Icon: EFST_RG_CCONFINE_S
     DurationLookup: RG_CLOSECONFINE
@@ -1764,6 +1765,7 @@ Body:
       NoSave: true
       NoRemoveOnDead: true
       RemoveOnChangeMap: true
+      BossResist: true
     Fail:
       Closeconfine2: true
   - Status: Dancing
