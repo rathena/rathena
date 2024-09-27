@@ -81,7 +81,7 @@ prt_mk,161,171,0	script	Guide#mk_prt5	8W_SOLDIER,{
 			set .@warp_x, 155;
 			set .@warp_y, 323;
 		} else {
-			set .@direction$, "to the Central Fountain";
+			set .@direction$, "to the Central Fountain at";
 			set .@warp_x, 155;
 			set .@warp_y, 183;
 		}
