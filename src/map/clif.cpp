@@ -10849,6 +10849,30 @@ void clif_parse_LoadEndAck(int fd,map_session_data *sd)
 		// Notify everyone that this char logged in [Skotlex].
 		map_foreachpc(clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, 1);
 
+			clif_partyinvitationstate(*sd);
+#if PACKETVER >= 20070918
+			clif_equipcheckbox(sd);
+#endif
+			clif_pet_autofeed_status(sd, false);
+			clif_configuration(sd, CONFIG_CALL, sd->status.disable_call);
+#if PACKETVER >= 20170920
+			if (battle_config.homunculus_autofeed_always) {
+				// Always send ON or OFF
+				if (sd->hd && battle_config.feature_homunculus_autofeed) {
+					clif_configuration(sd, CONFIG_HOMUNCULUS_AUTOFEED, sd->hd->homunculus.autofeed);
+				}
+				else {
+					clif_configuration(sd, CONFIG_HOMUNCULUS_AUTOFEED, false);
+				}
+			}
+			else {
+				// Only send when enabled
+				if (sd->hd && battle_config.feature_homunculus_autofeed && sd->hd->homunculus.autofeed) {
+					clif_configuration(sd, CONFIG_HOMUNCULUS_AUTOFEED, true);
+				}
+			}
+#endif
+
 		if (!sd->state.autotrade) { // Don't trigger NPC event or opening vending/buyingstore will be failed
 			npc_script_event( *sd, NPCE_LOGIN );
 		}
@@ -10883,27 +10907,6 @@ void clif_parse_LoadEndAck(int fd,map_session_data *sd)
 	}
 
 	if( sd->state.changemap ) {// restore information that gets lost on map-change
-		clif_partyinvitationstate( *sd );
-#if PACKETVER >= 20070918
-		clif_equipcheckbox(sd);
-#endif
-		clif_pet_autofeed_status(sd,false);
-		clif_configuration( sd, CONFIG_CALL, sd->status.disable_call );
-#if PACKETVER >= 20170920
-		if( battle_config.homunculus_autofeed_always ){
-			// Always send ON or OFF
-			if( sd->hd && battle_config.feature_homunculus_autofeed ){
-				clif_configuration( sd, CONFIG_HOMUNCULUS_AUTOFEED, sd->hd->homunculus.autofeed );
-			}else{
-				clif_configuration( sd, CONFIG_HOMUNCULUS_AUTOFEED, false );
-			}
-		}else{
-			// Only send when enabled
-			if( sd->hd && battle_config.feature_homunculus_autofeed && sd->hd->homunculus.autofeed ){
-				clif_configuration( sd, CONFIG_HOMUNCULUS_AUTOFEED, true );
-			}
-		}
-#endif
 		clif_reputation_list( *sd );
 
 		if (sd->guild && battle_config.guild_notice_changemap == 1){
