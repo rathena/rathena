@@ -101,9 +101,13 @@ prt_mk,161,171,0	script	Guide#mk_prt5	8W_SOLDIER,{
 		end;
 	}
 }
-prt_mk,255,304,3	script	Unmanned Storage Box 1#mk_prt1-1	4_STEELBOX,{
+function	script	F_Box_Store	{
+	.@store_number = getarg(0);
+	.@store_id = getarg(1);
+	.@vip_store_id = getarg(2);
+
 	mes "This is an Unmanned Storage Box.";
-	mes "It is connected to Kafra Service's Storage 1.";
+	mes "It is connected to Kafra Service's Storage " + .@store_number + ".";
 	mes "Please insert 50z to use the Storage.";
 	if (!callfunc("F_CanOpenStorage")) {
 		mes "^4d4dffTo use the Storage Service, you need to raise the Novice's Basic Skill to 6.^000000";
@@ -118,66 +122,23 @@ prt_mk,255,304,3	script	Unmanned Storage Box 1#mk_prt1-1	4_STEELBOX,{
 		case 1:
 			Zeny = Zeny - 50;
 			if(getstatus(SC_PREMIUM_STORAGEBOOST))
-				openstorage2 4,STOR_MODE_GET|STOR_MODE_PUT;
+				openstorage2 .@vip_store_id,STOR_MODE_GET|STOR_MODE_PUT;
 			else
-				openstorage;
+				openstorage2 .@store_id,STOR_MODE_GET|STOR_MODE_PUT;
 			close;
 		case 2:
 			mes "Thank you for using our service.";
 			close;
 	}
+}
+prt_mk,255,304,3	script	Unmanned Storage Box 1#mk_prt1-1	4_STEELBOX,{
+	callfunc "F_Box_Store", 1, 0, 4;
 }
 prt_mk,258,304,3	script	Unmanned Storage Box 2#mk_prt1-2	4_STEELBOX,{
-	mes "This is an Unmanned Storage Box.";
-	mes "It is connected to Kafra Service's Storage 2.";
-	mes "Please insert 50z to use the Storage.";
-	if (!callfunc("F_CanOpenStorage")) {
-		mes "^4d4dffTo use the Storage Service, you need to raise the Novice's Basic Skill to 6.^000000";
-		close;
-	}
-	if (Zeny < 50) {
-		mes "The Storage access fee is 50z.";
-		close;
-	}
-	next;
-	switch( select( "Insert 50z", "Cancel" )) {
-		case 1:
-			Zeny = Zeny - 50;
-			if(getstatus(SC_PREMIUM_STORAGEBOOST))
-				openstorage2 5,STOR_MODE_GET|STOR_MODE_PUT;
-			else
-				openstorage2 1,STOR_MODE_GET|STOR_MODE_PUT;
-			close;
-		case 2:
-			mes "Thank you for using our service.";
-			close;
-	}
+	callfunc "F_Box_Store", 2, 1, 5;
 }
 prt_mk,261,304,3	script	Unmanned Storage Box 3#mk_prt1-3	4_STEELBOX,{
-	mes "This is an Unmanned Storage Box.";
-	mes "It is connected to Kafra Service's Storage 3.";
-	mes "Please insert 50z to use the Storage.";
-	if (!callfunc("F_CanOpenStorage")) {
-		mes "^4d4dffTo use the Storage Service, you need to raise the Novice's Basic Skill to 6.^000000";
-		close;
-	}
-	if (Zeny < 50) {
-		mes "The Storage access fee is 50z.";
-		close;
-	}
-	next;
-	switch( select( "Insert 50z", "Cancel" )) {
-		case 1:
-			Zeny = Zeny - 50;
-			if(getstatus(SC_PREMIUM_STORAGEBOOST))
-				openstorage2 6,STOR_MODE_GET|STOR_MODE_PUT;
-			else
-				openstorage2 2,STOR_MODE_GET|STOR_MODE_PUT;
-			close;
-		case 2:
-			mes "Thank you for using our service.";
-			close;
-	}
+	callfunc "F_Box_Store", 3, 2, 6;
 }
 -	marketshop	market_shop_prt_mk	-1,12580:300:-1,23368:4000:-1
 prt_mk,264,304,3	script	Catalog Device Machine#mk_prt1	4_MACHINE_DEVICE,{
