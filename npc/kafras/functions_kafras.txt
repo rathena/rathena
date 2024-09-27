@@ -150,7 +150,7 @@ function	script	F_Kafra	{
 			case 10: setarray .@K_Menu0$[0],"Use Storage","Save","Rent a Pushcart","Cancel"; break;
 			// Prontera
 			case 11: setarray .@K_Menu0$[0],"Save","Use Storage","Use Teleport Service","Rent a Pushcart","Check Other Information","~ Prontera Market ~","Cancel"; break;
-			// Prontera New Market Shop
+			// Prontera New Market Street
 			case 12: setarray .@K_Menu0$[0],"Use Storage 1","Use Storage 2","Use Storage 3","Rent a Pushcart","Move to The Center of Prontera","Cancel"; break;
 			case 13: setarray .@K_Menu0$[0],"Use Storage 1","Use Storage 2","Use Storage 3","Rent a Pushcart","Move to The South of Prontera","Cancel"; break;
 			case 14: setarray .@K_Menu0$[0],"Use Storage 1","Use Storage 2","Use Storage 3","Rent a Pushcart","Move to The East of Prontera","Cancel"; break;
