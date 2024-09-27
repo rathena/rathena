@@ -27,6 +27,7 @@
 //= 1.5 Added Glastheim Kafra [Ridley8819]
 //= 1.6 Added Lutie [Lemongrass]
 //= 1.7 Added Rock Ridge Kafra. [Capuche]
+//= 1.8 Added Prontera Market Street Kafra. [Haydrich]
 //============================================================ 
 
 // Dewata
@@ -108,26 +109,26 @@ harboro1,291,207,5	script	Kafra Employee::kaf_rock	4_F_KAFRA1,{
 
 // Prontera Market
 //============================================================
-prt_mk,162,153,3	script	Kafra Employee::kaf_market2	4_F_KAFRA1,{
+prt_mk,162,153,3	script	Kafra Employee#mk2::kaf_market2	4_F_KAFRA1,{
 	cutin "kafra_01",2;
 	callfunc "F_Kafra",6,12,0,50,800;
 }
 
-prt_mk,172,24,0	script	Kafra Employee::kaf_market3	4_F_KAFRA3,{
+prt_mk,172,24,0	script	Kafra Employee#mk3::kaf_market3	4_F_KAFRA3,{
 	cutin "kafra_03",2;
-	callfunc "F_Kafra",6,12,0,50,800;
+	callfunc "F_Kafra",6,13,0,50,800;
 }
 
-prt_mk,295,171,3	script	Kafra Employee::kaf_market4	4_F_KAFRA4,{
+prt_mk,295,171,3	script	Kafra Employee#mk4::kaf_market4	4_F_KAFRA4,{
 	cutin "kafra_04",2;
-	callfunc "F_Kafra",6,12,0,50,800;
+	callfunc "F_Kafra",6,14,0,50,800;
 }
-prt_mk,28,154,6	script	Kafra Employee::kaf_market5	4_F_KAFRA5,{
+prt_mk,28,154,6	script	Kafra Employee#mk5::kaf_market5	4_F_KAFRA5,{
 	cutin "kafra_05",2;
-	callfunc "F_Kafra",6,12,0,50,800;
+	callfunc "F_Kafra",6,15,0,50,800;
 }
 
-prt_mk,152,299,4	script	Kafra Employee::kaf_market6	4_F_KAFRA6,{
+prt_mk,152,299,4	script	Kafra Employee#mk6::kaf_market6	4_F_KAFRA6,{
 	cutin "kafra_06",2;
-	callfunc "F_Kafra",6,12,0,50,800;
+	callfunc "F_Kafra",6,16,0,50,800;
 }

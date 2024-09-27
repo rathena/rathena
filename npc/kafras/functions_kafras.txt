@@ -63,6 +63,7 @@
 //= 6.6 Added Warp Points / View Points Function. [Joseph]
 //= 6.7 Added Rune Knight Kafra. [Euphy]
 //= 6.8 Updated some functions and added VIP features. [Euphy]
+//= 6.9 Updated Prontera Market Street. [Haydrich]
 //============================================================
 
 //=== Main Function ========================================================
@@ -147,10 +148,14 @@ function	script	F_Kafra	{
 			case 9: setarray .@K_Menu0$[0],"Use Storage","Rent a Pushcart","Use Teleport Service","Check Other Information","Cancel"; break;
 			// Storage, Save, and Pushcart (Dewata, reorder of case 7)
 			case 10: setarray .@K_Menu0$[0],"Use Storage","Save","Rent a Pushcart","Cancel"; break;
-			// Prontera New Market Shop
+			// Prontera
 			case 11: setarray .@K_Menu0$[0],"Save","Use Storage","Use Teleport Service","Rent a Pushcart","Check Other Information","~ Prontera Market ~","Cancel"; break;
-			// Use Storage is Incorrect. Should be Use Storage 1,2 and 3. Waiting for the release of it.
-			case 12: setarray .@K_Menu0$[0],"Use Storage","Rent a Pushcart","Move to The Center of Prontera","Cancel"; break;
+			// Prontera New Market Shop
+			case 12: setarray .@K_Menu0$[0],"Use Storage 1","Use Storage 2","Use Storage 3","Rent a Pushcart","Move to The Center of Prontera","Cancel"; break;
+			case 13: setarray .@K_Menu0$[0],"Use Storage 1","Use Storage 2","Use Storage 3","Rent a Pushcart","Move to The South of Prontera","Cancel"; break;
+			case 14: setarray .@K_Menu0$[0],"Use Storage 1","Use Storage 2","Use Storage 3","Rent a Pushcart","Move to The East of Prontera","Cancel"; break;
+			case 15: setarray .@K_Menu0$[0],"Use Storage 1","Use Storage 2","Use Storage 3","Rent a Pushcart","Move to The West of Prontera","Cancel"; break;
+			case 16: setarray .@K_Menu0$[0],"Use Storage 1","Use Storage 2","Use Storage 3","Rent a Pushcart","Move to The North of Prontera","Cancel"; break;
 			// Default message (obsolete)
 			default: setarray .@K_Menu0$[0],"Save","Use Storage","Use Teleport Service","Rent a Pushcart","Check Other Information","Cancel"; break;
 		}
@@ -195,10 +200,20 @@ function	script	F_Kafra	{
 			next;
 		}
 		else if (.@K_Menu0$[.@j] == "~ Prontera Market ~") {
+			.@npc_name$ = strnpcinfo(0);
 			mes "[Kafra Employee]";
 			mes "I will guide you to Prontera Market.";
 			close2;
-			warp "prt_mk",161,143;
+			if (.@npc_name$ == "Kafra Employee#6")
+				warp "prt_mk",161,287;
+			else if (.@npc_name$ == "Kafra Employee#3")
+				warp "prt_mk",161,39;
+			else if (.@npc_name$ == "Kafra Employee#5")
+				warp "prt_mk",38,162;
+			else if (.@npc_name$ == "Kafra Employee#4")
+				warp "prt_mk",285,162;
+			else
+				warp "prt_mk",161,143;
 			end;
 		}
 		else if (.@K_Menu0$[.@j] == "Move to The Center of Prontera") {
@@ -206,6 +221,34 @@ function	script	F_Kafra	{
 			mes "I will guide you to the Center of Prontera.";
 			close2;
 			warp "prontera",155,183;
+			end;
+		}
+		else if (.@K_Menu0$[.@j] == "Move to The South of Prontera") {
+			mes "[Kafra Employee]";
+			mes "I will guide you to the South of Prontera.";
+			close2;
+			warp "prontera",155,35;
+			end;
+		}
+		else if (.@K_Menu0$[.@j] == "Move to The East of Prontera") {
+			mes "[Kafra Employee]";
+			mes "I will guide you to the East of Prontera.";
+			close2;
+			warp "prontera",275,204;
+			end;
+		}
+		else if (.@K_Menu0$[.@j] == "Move to The West of Prontera") {
+			mes "[Kafra Employee]";
+			mes "I will guide you to the West of Prontera.";
+			close2;
+			warp "prontera",36,204;
+			end;
+		}
+		else if (.@K_Menu0$[.@j] == "Move to The North of Prontera") {
+			mes "[Kafra Employee]";
+			mes "I will guide you to the North of Prontera.";
+			close2;
+			warp "prontera",155,323;
 			end;
 		}
 		else if (.@K_Menu0$[.@j] == "Cancel") {
