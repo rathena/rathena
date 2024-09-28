@@ -40,7 +40,6 @@ Body:
   - ID: 0
     Name: "Storage"
     Table: storage
-    Max: 300
   - ID: 1
     Name: "Storage 2"
     Table: storage2
@@ -56,6 +55,7 @@ Body:
   - ID: 4
     Name: "Storage 1"
     Table: storage
+    Max: 300
   - ID: 5
     Name: "Storage 2"
     Table: storage2

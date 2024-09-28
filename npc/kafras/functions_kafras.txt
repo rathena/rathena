@@ -193,6 +193,51 @@ function	script	F_Kafra	{
 }
 
 //===================================================
+// Storage Number Function
+//===================================================
+function	script	F_Storage	{
+	.@store_id = getarg(0);
+	.@vip_store_id = getarg(1);
+
+	if (!callfunc("F_CanOpenStorage")) {
+		mes "[Kafra Employee]";
+		mes "I'm sorry, but you";
+		mes "need the Novice's";
+		mes "Basic Skill Level 6 to";
+		mes "use the Storage Service.";
+		close;
+	}
+	mes "[Kafra Employee]";
+	mes "Here, let me open";
+	mes "your Storage for you.";
+	mes "Thank you for using";
+	mes "the Kafra Service.";
+	Zeny -= 50;
+	close2;
+	callfunc "F_CallStorage", .@store_id, .@vip_store_id;
+	cutin "", 255;
+	end;
+}
+
+//===================================================
+// Call Storage Function
+//===================================================
+function	script	F_CallStorage	{
+	.@id = getarg(0);
+	.@vip_id = getarg(1);
+
+	if(!getstatus(SC_PREMIUM_STORAGEBOOST))
+		openstorage2 .@id,STOR_MODE_GET|STOR_MODE_PUT;
+	else {
+		if (.@vip_id < 1)
+			openstorage;
+		else
+			openstorage2 .@vip_id,STOR_MODE_GET|STOR_MODE_PUT;
+	}
+    return;
+}
+
+//===================================================
 // Storage Function
 //===================================================
 function	script	F_KafStor	{
@@ -251,8 +296,6 @@ function	script	F_KafStor	{
 				mes "Storage access fee is " + .@fee + " zeny.";
 				return;
 			}
-			Zeny -= .@fee;
-			RESRVPTS += (.@fee/5);
 		}
 	}
 
@@ -278,6 +321,9 @@ function	script	F_KafStor	{
 				mes "Please select the Storage you would like to open";
 				next;
 				.@storage = select("Storage 1:Storage 2:Storage 3");
+				Zeny -= .@fee;
+				if (getarg(2) != 6)
+					RESRVPTS += (.@fee/5);
 				mes "[Kafra Employee]";
 				mes "Here, let me open";
 				mes "your Storage for you.";
@@ -293,22 +339,13 @@ function	script	F_KafStor	{
 	} else {
 		switch (.@storage) {
 			case 1:
-				if(getstatus(SC_PREMIUM_STORAGEBOOST))
-					openstorage2 4,STOR_MODE_GET|STOR_MODE_PUT;
-				else
-					openstorage;
+				callfunc "F_CallStorage", 4, 0;
 				break;
 			case 2:
-				if(getstatus(SC_PREMIUM_STORAGEBOOST))
-					openstorage2 5,STOR_MODE_GET|STOR_MODE_PUT;
-				else
-					openstorage2 1,STOR_MODE_GET|STOR_MODE_PUT;
+				callfunc "F_CallStorage", 1, 5;
 				break;
 			case 3:
-				if(getstatus(SC_PREMIUM_STORAGEBOOST))
-					openstorage2 6,STOR_MODE_GET|STOR_MODE_PUT;
-				else
-					openstorage2 2,STOR_MODE_GET|STOR_MODE_PUT;
+				callfunc "F_CallStorage", 2, 6;
 				break;
 		}
 	}
