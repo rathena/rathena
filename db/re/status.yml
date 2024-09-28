@@ -7773,6 +7773,7 @@ Body:
     Flags:
       BlEffect: true
       DisplayPc: true
+      OverlapIgnoreLevel: true
       SendVal1: true
   - Status: Climax_Earth
     Icon: EFST_CLIMAX_EARTH
