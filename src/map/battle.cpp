@@ -7826,6 +7826,10 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 
 	if (!flag.infdef) { //No need to do the math for plants
 		unsigned int skillratio = 100; //Skill dmg modifiers.
+#ifdef RENEWAL
+		// Some skills do not use S.MATK and skillratio
+		bool has_skillratio = false;
+#endif
 		//Damage was set to 1 to simulate plant damage; if not plant, need to reinitialize damage with 0
 		ad.damage = 0;
 //MATK_RATE scales the damage. 100 = no change. 50 is halved, 200 is doubled, etc
@@ -8736,12 +8740,10 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += 25;
 				}
 #ifdef RENEWAL
-				// S.MATK needs to be applied before the skill ratio to prevent rounding issues
-				if (sd && sstatus->smatk > 0)
-					ad.damage += ad.damage * sstatus->smatk / 100;
-#endif
+				has_skillratio = true;
+#else
 				MATK_RATE(skillratio);
-
+#endif
 				//Constant/misc additions from skills
 				if (skill_id == WZ_FIREPILLAR)
 					MATK_ADD(100 + 50 * skill_lv);
@@ -8749,7 +8751,16 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			}
 		}
 #ifdef RENEWAL
+		// Damage modifier need to be applied before SMATK
 		ad.damage += battle_calc_cardfix(BF_MAGIC, src, target, nk, s_ele, 0, ad.damage, 0, ad.flag);
+
+		if (has_skillratio) {
+			// S.MATK needs to be applied before the skill ratio to prevent rounding issues
+			if (sd && sstatus->smatk > 0)
+				ad.damage += ad.damage * sstatus->smatk / 100;
+
+			MATK_RATE(skillratio);
+		}
 #endif
 
 		if(sd) {
