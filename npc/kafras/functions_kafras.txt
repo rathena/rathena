@@ -200,17 +200,17 @@ function	script	F_Kafra	{
 			next;
 		}
 		else if (.@K_Menu0$[.@j] == "~ Prontera Market ~") {
-			.@npc_name$ = strnpcinfo(0);
+			.@npc_name$ = strnpcinfo(3);
 			mes "[Kafra Employee]";
 			mes "I will guide you to Prontera Market.";
 			close2;
-			if (.@npc_name$ == "Kafra Employee#6")
+			if (.@npc_name$ == "kaf_prontera")
 				warp "prt_mk",161,287;
-			else if (.@npc_name$ == "Kafra Employee#3")
+			else if (.@npc_name$ == "kaf_prontera3")
 				warp "prt_mk",161,39;
-			else if (.@npc_name$ == "Kafra Employee#5")
+			else if (.@npc_name$ == "kaf_prontera5")
 				warp "prt_mk",38,162;
-			else if (.@npc_name$ == "Kafra Employee#4")
+			else if (.@npc_name$ == "kaf_prontera4")
 				warp "prt_mk",285,162;
 			else
 				warp "prt_mk",161,143;
@@ -257,6 +257,18 @@ function	script	F_Kafra	{
 		}
 		else if (.@K_Menu0$[.@j] == "Use Guild Storage") {
 			callfunc "F_KafStor",1,0;
+			next;
+		}
+		else if (.@K_Menu0$[.@j] == "Use Storage 1") {
+			callfunc "F_Storage",4,0;
+			next;
+		}
+		else if (.@K_Menu0$[.@j] == "Use Storage 2") {
+			callfunc "F_Storage",1,5;
+			next;
+		}
+		else if (.@K_Menu0$[.@j] == "Use Storage 3") {
+			callfunc "F_Storage",2,6;
 			next;
 		}
 	}

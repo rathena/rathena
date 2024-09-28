@@ -121,9 +121,12 @@ function	script	F_Box_Store	{
 	switch( select( "Insert 50z", "Cancel" )) {
 		case 1:
 			Zeny = Zeny - 50;
-			if(getstatus(SC_PREMIUM_STORAGEBOOST))
-				openstorage2 .@vip_store_id,STOR_MODE_GET|STOR_MODE_PUT;
-			else
+			if(getstatus(SC_PREMIUM_STORAGEBOOST)) {
+				if (.@vip_store_id < 1)
+					openstorage;
+				else
+					openstorage2 .@vip_store_id,STOR_MODE_GET|STOR_MODE_PUT;
+			} else
 				openstorage2 .@store_id,STOR_MODE_GET|STOR_MODE_PUT;
 			close;
 		case 2:
@@ -132,7 +135,7 @@ function	script	F_Box_Store	{
 	}
 }
 prt_mk,255,304,3	script	Unmanned Storage Box 1#mk_prt1-1	4_STEELBOX,{
-	callfunc "F_Box_Store", 1, 0, 4;
+	callfunc "F_Box_Store", 1, 4, 0;
 }
 prt_mk,258,304,3	script	Unmanned Storage Box 2#mk_prt1-2	4_STEELBOX,{
 	callfunc "F_Box_Store", 2, 1, 5;
