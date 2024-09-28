@@ -2848,3 +2848,15 @@ SC_AGIUP
 	desc: Increase Speed and Flee.
 	val1: +% Walkspeed
 	val2: +% Flee
+
+SC_BATH_FOAM_A	()
+	desc: Increases physical and magical damage against Meditathio Dungeon Monsters by 5%.
+	val1: +% damage
+
+SC_BATH_FOAM_B	()
+	desc: Increases physical and magical damage against Meditathio Dungeon Monsters by 10%.
+	val1: +% damage
+
+SC_BATH_FOAM_C	()
+	desc: Increases physical and magical damage against Meditathio Dungeon Monsters by 15%.
+	val1: +% damage

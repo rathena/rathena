@@ -8969,3 +8969,30 @@ Body:
       Bleeding: true
       Confusion: true
       Freeze: true
+  - Status: Bath_foam_a
+    Icon: EFST_BATH_FOAM_A
+    CalcFlags:
+      All: true
+    Flags:
+      NoBanishingBuster: true
+      NoClearance: true
+      NoClearbuff: true
+      NoDispell: true
+  - Status: Bath_foam_b
+    Icon: EFST_BATH_FOAM_B
+    CalcFlags:
+      All: true
+    Flags:
+      NoBanishingBuster: true
+      NoClearance: true
+      NoClearbuff: true
+      NoDispell: true
+  - Status: Bath_foam_c
+    Icon: EFST_BATH_FOAM_C
+    CalcFlags:
+      All: true
+    Flags:
+      NoBanishingBuster: true
+      NoClearance: true
+      NoClearbuff: true
+      NoDispell: true
