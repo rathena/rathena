@@ -7422,12 +7422,12 @@ static signed short status_calc_critical(struct block_list *bl, status_change *s
 		critical += sc->getSCE(SC_TRUESIGHT)->val2;
 	if (sc->getSCE(SC_CLOAKING))
 		critical += critical;
-#ifdef RENEWAL
+//#ifdef RENEWAL
 	if (sc->getSCE(SC_SPEARQUICKEN))
 		critical += 3*sc->getSCE(SC_SPEARQUICKEN)->val1*10;
 	if (sc->getSCE(SC_TWOHANDQUICKEN))
 		critical += (2 + sc->getSCE(SC_TWOHANDQUICKEN)->val1) * 10;
-#endif
+//#endif
 	if (sc->getSCE(SC__INVISIBILITY))
 		critical += sc->getSCE(SC__INVISIBILITY)->val3 * 10;
 	if (sc->getSCE(SC__UNLUCKY))
@@ -7588,9 +7588,9 @@ static signed short status_calc_flee(struct block_list *bl, status_change *sc, i
 		flee -= sc->getSCE(SC_WATER_BARRIER)->val2;
 	if( sc->getSCE(SC_C_MARKER) )
 		flee -= sc->getSCE(SC_C_MARKER)->val3;
-#ifdef RENEWAL
 	if( sc->getSCE(SC_SPEARQUICKEN) )
 		flee += 2 * sc->getSCE(SC_SPEARQUICKEN)->val1;
+#ifdef RENEWAL
 	if (sc->getSCE(SC_NIBELUNGEN) && sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_FLEE)
 		flee += 50;
 #endif
@@ -7730,7 +7730,7 @@ static defType status_calc_def(struct block_list *bl, status_change *sc, int def
 	if(sc->getSCE(SC_FREEZE))
 		def /= 2;
 	if(sc->getSCE(SC_POISON) || sc->getSCE(SC_DPOISON) && bl->type != BL_PC)
-		def = def * 75 / 100; //Should round down
+		def = def * 50 / 100; //Should round down
 	if(sc->getSCE(SC_SIGNUMCRUCIS))
 		def -= def * sc->getSCE(SC_SIGNUMCRUCIS)->val2/100;
 	if(sc->getSCE(SC_CONCENTRATION))
@@ -7827,7 +7827,7 @@ static signed short status_calc_def2(struct block_list *bl, status_change *sc, i
 		def2 -= def2 * sc->getSCE(SC_CONCENTRATION)->val4/100;
 #endif
 	if(sc->getSCE(SC_POISON) || sc->getSCE(SC_DPOISON))
-		def2 = def2 * 75 / 100; //Should round down
+		def2 = def2 * 50 / 100; //Should round down
 	if(sc->getSCE(SC_SKE))
 		def2 -= def2 * 50/100;
 	if(sc->getSCE(SC_PROVOKE))
@@ -9587,7 +9587,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
 			if (sd) {
 				// For players: 60000 - 450*vit - 100*luk
-				tick_def = status->vit*75;
+				tick_def = status->vit*50;
 				tick_def2 = status->luk*100;
 			} else {
 				// For monsters: 30000 - 200*vit
@@ -14051,9 +14051,9 @@ TIMER_FUNC(status_change_timer){
 			if (sd)
 				damage = (type == SC_DPOISON) ? 2 + status->max_hp / 50 : 2 + status->max_hp * 3 / 200;
 			else
-				damage = (type == SC_DPOISON) ? 2 + status->max_hp / 100 : 2 + status->max_hp / 200;
-			if (status->hp > umax(status->max_hp / 4, damage)) // Stop damaging after 25% HP left.
-				status_zap(bl, damage, 0);
+				damage = (type == SC_DPOISON) ? 2 + status->max_hp / 50 : 2 + status->max_hp / 50;
+			//if (status->hp > umax(status->max_hp / 4, damage)) // Stop damaging after 25% HP left.
+			status_zap(bl, damage, 0);
 		}
 		break;
 

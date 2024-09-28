@@ -325,11 +325,11 @@ OnInit:
 
 
 	//Add Hunting Quests here (You can add as many required mobs as you want)
-	AddHunting("Clear the Zombies",10,30,0,0,0,2500,1650,1015,50);
-	AddHunting("Clear the Soldier Skeletons",24,44,0,0,0,18600,11300,1028,50);
-	AddHunting("Clear the Munaks",25,45,0,0,0,30050,15900,1026,50);
-	AddHunting("Clear the Sohees",28,48,0,0,0,36950,22750,1170,50);
-	AddHunting("Clear the Nine Tails",46,66,0,0,0,140600,41250,1180,50);
+	AddHunting("Clear the Zombies",10,99,0,0,0,2500,1650,1015,50);
+	AddHunting("Clear the Soldier Skeletons",24,99,0,0,0,18600,11300,1028,50);
+	AddHunting("Clear the Munaks",25,99,0,0,0,30050,15900,1026,50);
+	AddHunting("Clear the Sohees",28,99,0,0,0,36950,22750,1170,50);
+	AddHunting("Clear the Nine Tails",46,99,0,0,0,140600,41250,1180,50);
 	//AddHunting("Kill Zombies",12,40,<Reward|Item ID>,<Reward|Item Amount>,<Zeny Reward>,<Base EXP>,<Job EXP>,<Monster ID>,<Monster Amount>,...);
 	end;
 

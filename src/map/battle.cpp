@@ -2305,9 +2305,9 @@ int64 battle_addmastery(map_session_data *sd,struct block_list *target,int64 dmg
 		case W_2HSPEAR:
 			if((skill = pc_checkskill(sd,KN_SPEARMASTERY)) > 0) {
 				if(!pc_isriding(sd) && !pc_isridingdragon(sd))
-					damage += (skill * 4);
-				else
 					damage += (skill * 5);
+				else
+					damage += (skill * 7);
 				// Increase damage by level of KN_SPEARMASTERY * 10
 				if(pc_checkskill(sd,RK_DRAGONTRAINING) > 0)
 					damage += (skill * 10);
