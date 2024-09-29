@@ -8754,6 +8754,12 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		// Damage modifier need to be applied before SMATK
 		ad.damage += battle_calc_cardfix(BF_MAGIC, src, target, nk, s_ele, 0, ad.damage, 0, ad.flag);
 
+		// Additionnal damage from W_2HSTAFF
+		// Must be before smatk and after battle_calc_cardfix
+		if (sd != nullptr && sd->status.weapon == W_2HSTAFF && (i = pc_checkskill(sd, AG_TWOHANDSTAFF)) > 0) {
+			ad.damage += ad.damage * i / 100;
+		}
+
 		if (has_skillratio) {
 			// S.MATK needs to be applied before the skill ratio to prevent rounding issues
 			if (sd && sstatus->smatk > 0)
