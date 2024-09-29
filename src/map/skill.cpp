@@ -5731,6 +5731,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case EM_EL_DEADLY_POISON:
 	case BO_EXPLOSIVE_POWDER:
 	case BO_MAYHEMIC_THORNS:
+	case BO_MYSTERY_POWDER:
+	case BO_DUST_EXPLOSION:
 	case NPC_WIDECRITICALWOUND:
 	case IG_SHIELD_SHOOTING:
 	case TR_METALIC_FURY:
@@ -5875,6 +5877,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				case IQ_SECOND_JUDGEMENT:
 				case CD_PETITIO:
 				case CD_FRAMEN:
+				case BO_DUST_EXPLOSION:
 				case ABC_DEFT_STAB:
 				case EM_EL_FLAMEROCK:
 				case EM_EL_AGE_OF_ICE:
@@ -5934,6 +5937,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					// TODO: does this buff start before or after dealing damage? [Muh]
 					sc_start( src, src, SC_RUSH_QUAKE2, 100, skill_lv, skill_get_time2( skill_id, skill_lv ) );
 					break;
+				case BO_MYSTERY_POWDER:
 				case IG_SHIELD_SHOOTING:
 				case IG_GRAND_JUDGEMENT:
 					clif_skill_nodamage(src, *bl, skill_id, skill_lv);

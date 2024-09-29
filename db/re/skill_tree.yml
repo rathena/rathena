@@ -7348,6 +7348,16 @@ Body:
             Level: 5
           - Name: BO_EXPLOSIVE_POWDER
             Level: 3
+      - Name: BO_MYSTERY_POWDER
+        MaxLevel: 5
+        Requires:
+          - Name: BO_EXPLOSIVE_POWDER
+            Level: 5
+      - Name: BO_DUST_EXPLOSION
+        MaxLevel: 5
+        Requires:
+          - Name: BO_MYSTERY_POWDER
+            Level: 3
   - Job: Abyss_Chaser
     Inherit:
       Novice: true
