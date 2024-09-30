@@ -47248,7 +47248,7 @@ Body:
          .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
          bonus2 bSkillAtk,"SN_SHARPSHOOTING",2*.@sum;
          if (getskilllv("SN_SHARPSHOOTING") > 0) {
-            bonus4 bAutoSpellOnSkill,"WH_CRESCIVE_BOLT","SN_SHARPSHOOTING",getskilllv("SN_SHARPSHOOTING"),500;
+            bonus4 bAutoSpellOnSkill,"WH_CRESCIVE_BOLT","SN_SHARPSHOOTING",getskilllv("SN_SHARPSHOOTING"),1000;
          }
       }
   - Combos:
