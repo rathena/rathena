@@ -9975,34 +9975,66 @@ Body:
     AegisName: F_B_Mdef_Potion
     Name: F B Mdef Potion
     Type: Usable
-    Weight: 10
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
-      specialeffect EF_SPELLBREAKER;
-      bonus_script "{ bonus3 bSubEle,Ele_All,3,BF_MAGIC; }",180,0,0,EFST_PROTECT_MDEF;
+      specialeffect2 EF_SPELLBREAKER;
+      sc_start SC_MDEF_RATE,180000,3;
   - Id: 12463
     AegisName: F_S_Mdef_Potion
     Name: F S Mdef Potion
     Type: Usable
-    Weight: 10
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
-      specialeffect EF_SPELLBREAKER;
-      bonus_script "{ bonus3 bSubEle,Ele_All,3,BF_MAGIC; }",60,0,0,EFST_PROTECT_MDEF;
+      specialeffect2 EF_SPELLBREAKER;
+      sc_start SC_MDEF_RATE,60000,3;
   - Id: 12464
     AegisName: F_B_Def_Potion
     Name: F B Def Potion
     Type: Usable
-    Weight: 10
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
-      specialeffect EF_GUARD;
-      bonus_script "{ bonus3 bSubEle,Ele_All,3,BF_SHORT; }",180,0,0,EFST_PROTECT_DEF;
+      specialeffect2 EF_GUARD;
+      sc_start SC_DEF_RATE,180000,3;
   - Id: 12465
     AegisName: F_S_Def_Potion
     Name: F S Def Potion
     Type: Usable
-    Weight: 10
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
-      specialeffect EF_GUARD;
-      bonus_script "{ bonus3 bSubEle,Ele_All,3,BF_SHORT; }",60,0,0,EFST_PROTECT_DEF;
+      specialeffect2 EF_GUARD;
+      sc_start SC_DEF_RATE,60000,3;
   - Id: 12466
     AegisName: F_Blessing_10_Scroll
     Name: F Blessing 10 Scroll
