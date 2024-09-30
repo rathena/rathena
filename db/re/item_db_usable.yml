@@ -58584,7 +58584,7 @@ Body:
     Buy: 2
     Weight: 10
     Script: |
-      callfunc "F_CashStore";
+      callfunc "F_CatStore";
   - Id: 22816
     AegisName: G_Mysterious_Water
     Name: True Mysterious Life Potion
@@ -60075,7 +60075,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      callfunc "F_CashStore";
+      callfunc "F_CatStore";
   - Id: 22999
     AegisName: Comp_Trans_Scroll
     Name: "[Event] Transformation Pack"
