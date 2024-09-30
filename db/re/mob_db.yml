@@ -101395,7 +101395,7 @@ Body:
     Luk: 61
     AttackRange: 2
     SkillRange: 10
-    ChaseRange: 12432
+    ChaseRange: 12
     Size: Medium
     Race: Fish
     Element: Water
