@@ -15460,24 +15460,28 @@ void clif_parse_HomMoveToMaster(int fd, map_session_data *sd){
 }
 
 
-/// Request to move homunculus/mercenary (CZ_REQUEST_MOVENPC).
-/// 0232 <id>.L <position data>.3B
+/// Request to move homunculus/mercenary.
+/// 0232 <id>.L <position data>.3B (CZ_REQUEST_MOVENPC)
 void clif_parse_HomMoveTo(int fd, map_session_data *sd){
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	int id = RFIFOL(fd,info->pos[0]); // Mercenary or Homunculus
+#if PACKETVER >= 20050425
+	const PACKET_CZ_REQUEST_MOVENPC* p = reinterpret_cast<const PACKET_CZ_REQUEST_MOVENPC*>( RFIFOP( fd, 0 ) );
 	struct block_list *bl = nullptr;
 	short x, y;
 
-	RFIFOPOS(fd, info->pos[1], &x, &y, nullptr);
+	RBUFPOS( p->PosDir, 0, &x, &y, nullptr );
 
-	if( sd->md && sd->md->bl.id == id )
+	if( sd->md && sd->md->bl.id == p->GID )
 		bl = &sd->md->bl; // Moving Mercenary
-	else if( hom_is_active(sd->hd) && sd->hd->bl.id == id )
+	else if( hom_is_active(sd->hd) && sd->hd->bl.id == p->GID )
 		bl = &sd->hd->bl; // Moving Homunculus
 	else
 		return;
 
+	if (x < 0 || y < 0 || (x == bl->x && y == bl->y))
+		return;
+
 	unit_walktoxy(bl, x, y, 4);
+#endif
 }
 
 
@@ -15499,7 +15503,6 @@ void clif_parse_HomAttack(int fd,map_session_data *sd)
 		bl = &sd->md->bl;
 	else return;
 
-	unit_stop_attack(bl);
 	unit_attack(bl, target_id, action_type != 0);
 }
 

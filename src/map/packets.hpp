@@ -1362,6 +1362,13 @@ struct PACKET_ZC_NOTIFY_ACT{
 DEFINE_PACKET_HEADER(ZC_NOTIFY_ACT, 0x8a);
 #endif
 
+struct PACKET_CZ_REQUEST_MOVENPC{
+	int16 packetType;
+	uint32 GID;
+	uint8 PosDir[3];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQUEST_MOVENPC, 0x232);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )

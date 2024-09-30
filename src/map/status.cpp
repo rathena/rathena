@@ -5067,8 +5067,10 @@ int status_calc_homunculus_(struct homun_data *hd, uint8 opt)
 		status->def += skill_lv * 4;
 
 	if((skill_lv = hom_checkskill(hd, HVAN_INSTRUCT)) > 0) {
-		status->int_ += 1 + skill_lv / 2 + skill_lv / 4 + skill_lv / 5;
-		status->str += 1 + skill_lv / 3 + skill_lv / 3 + skill_lv / 4;
+		static const uint8 bonus_int[] = { 1, 2, 2, 4, 5 };
+		static const uint8 bonus_str[] = { 1, 1, 3, 4, 4 };
+		status->int_ += bonus_int[skill_lv - 1];
+		status->str += bonus_str[skill_lv - 1];
 	}
 
 	if((skill_lv = hom_checkskill(hd, HAMI_SKIN)) > 0)
