@@ -1916,6 +1916,9 @@
 	export_constant(SC_POWERUP);
 	export_constant(SC_AGIUP);
 	export_constant(SC_PROTECTION);
+	export_constant(SC_BATH_FOAM_A);
+	export_constant(SC_BATH_FOAM_B);
+	export_constant(SC_BATH_FOAM_C);
 
 	/* status icons */
 	export_deprecated_constant2("SI_BLANK",-1);

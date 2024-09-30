@@ -4900,6 +4900,27 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		}
 		if (sc->getSCE(SC_PORK_RIB_STEW))
 			sd->dsprate -= 2;
+		if (sc->getSCE(SC_BATH_FOAM_A)) {
+			sd->right_weapon.addrace2[RC2_EP172BATH] += sc->getSCE(SC_BATH_FOAM_A)->val1;
+			sd->indexed_bonus.magic_addrace2[RC2_EP172BATH] += sc->getSCE(SC_BATH_FOAM_A)->val1;
+			if( !battle_config.left_cardfix_to_right ){
+				sd->left_weapon.addrace2[RC2_EP172BATH] += sc->getSCE(SC_BATH_FOAM_A)->val1;
+			}
+		}
+		if (sc->getSCE(SC_BATH_FOAM_B)) {
+			sd->right_weapon.addrace2[RC2_EP172BATH] += sc->getSCE(SC_BATH_FOAM_B)->val1;
+			sd->indexed_bonus.magic_addrace2[RC2_EP172BATH] += sc->getSCE(SC_BATH_FOAM_B)->val1;
+			if( !battle_config.left_cardfix_to_right ){
+				sd->left_weapon.addrace2[RC2_EP172BATH] += sc->getSCE(SC_BATH_FOAM_B)->val1;
+			}
+		}
+		if (sc->getSCE(SC_BATH_FOAM_C)) {
+			sd->right_weapon.addrace2[RC2_EP172BATH] += sc->getSCE(SC_BATH_FOAM_C)->val1;
+			sd->indexed_bonus.magic_addrace2[RC2_EP172BATH] += sc->getSCE(SC_BATH_FOAM_C)->val1;
+			if( !battle_config.left_cardfix_to_right ){
+				sd->left_weapon.addrace2[RC2_EP172BATH] += sc->getSCE(SC_BATH_FOAM_C)->val1;
+			}
+		}
 	}
 	status_cpy(&sd->battle_status, base_status);
 
