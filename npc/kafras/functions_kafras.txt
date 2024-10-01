@@ -207,6 +207,14 @@ function	script	F_Storage	{
 		mes "use the Storage Service.";
 		close;
 	}
+	if (Zeny < 50) {
+		mes "[Kafra Employee]";
+		mes "I'm sorry, but you don't";
+		mes "have enough zeny to use";
+		mes "the Storage Service. Our";
+		mes "Storage access fee is 50 zeny.";
+		close;
+	}
 	mes "[Kafra Employee]";
 	mes "Here, let me open";
 	mes "your Storage for you.";
