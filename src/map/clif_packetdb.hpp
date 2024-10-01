@@ -563,7 +563,7 @@
 // 2005-04-25aSakexe
 #if PACKETVER >= 20050425
 	parseable_packet(0x022d,5,clif_parse_HomMenu,2,4);
-	parseable_packet(0x0232,9,clif_parse_HomMoveTo,2,6);
+	parseable_packet( HEADER_CZ_REQUEST_MOVENPC, sizeof( PACKET_CZ_REQUEST_MOVENPC ), clif_parse_HomMoveTo, 0 );
 	parseable_packet(0x0233,11,clif_parse_HomAttack,2,6,10);
 	parseable_packet(0x0234,6,clif_parse_HomMoveToMaster,2);
 #endif
