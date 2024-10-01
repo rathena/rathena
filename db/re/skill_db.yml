@@ -36171,7 +36171,7 @@ Body:
     TargetType: Attack
     Range: 9
     Hit: Single
-    HitCount: 1
+    HitCount: -2
     Element: Wind
     SplashArea: 1
     ActiveInstance: 14
@@ -36253,7 +36253,7 @@ Body:
       Splash: true
     Range: 9
     Hit: Multi_Hit
-    HitCount: 1
+    HitCount: -2
     Element: Fire
     SplashArea:
       - Level: 1
