@@ -53,7 +53,7 @@ Body:
     Table: storagecat
     Max: 300
   - ID: 4
-    Name: "Storage 1"
+    Name: "Storage"
     Table: storage
     Max: 300
   - ID: 5
