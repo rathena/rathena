@@ -3452,6 +3452,7 @@ void mob_remove_spawns(const char* path) {
 	//remove wanted spawn from mob_spawn_data
 	auto remove_spawn_info = [](int mobid, const auto& rs) {
 		auto& spawns = mob_spawn_data[mobid];
+
 		spawns.erase(std::remove_if(spawns.begin(), spawns.end(), [&](spawn_info& spawninfo) {
 			if (spawninfo.mapindex == rs.mapindex) {
 				spawninfo.qty -= rs.qty;
