@@ -3428,10 +3428,10 @@ void mob_add_spawn(uint16 mob_id, const struct spawn_info& new_spawn)
 }
 
 void mob_remove_spawns(const char* path) {
-
 	//cache spawn infos of each freed unit
 	std::map<int,std::vector<spawn_info>> removed_mob_spawn_data{};
-	s_mapiterator* iter = mapit_geteachiddb();
+	s_mapiterator* iter = mapit_geteachmob();
+
 	for (block_list* bl = (struct block_list*)mapit_first(iter); mapit_exists(iter); bl = (struct block_list*)mapit_next(iter)) {
 		if (bl->type == BL_MOB) {
 			auto* md = reinterpret_cast<mob_data*>(bl);
