@@ -3432,19 +3432,19 @@ void mob_remove_spawns(const char* path) {
 	std::map<int,std::vector<spawn_info>> removed_mob_spawn_data{};
 	s_mapiterator* iter = mapit_geteachmob();
 
-	for (block_list* bl = (struct block_list*)mapit_first(iter); mapit_exists(iter); bl = (struct block_list*)mapit_next(iter)) {
-		if (bl->type == BL_MOB) {
-			auto* md = reinterpret_cast<mob_data*>(bl);
-			if (md->spawn && !strcmp(md->spawn->filepath, path)) {
-				auto& removedspawns = removed_mob_spawn_data[md->db->id];
-				auto itSameMap = std::find_if(removedspawns.begin(), removedspawns.end(),
-					[&md](const spawn_info& s) { return (s.mapindex == map_id2index(md->bl.m)); });
-				if (itSameMap != removedspawns.end())
-					itSameMap->qty++; //add the found monster being deleted
-				else
-					removedspawns.push_back(spawn_info{map_id2index(md->bl.m),1}); //else create a new spawn_info
-				unit_free(bl, CLR_OUTSIGHT);
-			}
+	for (block_list* bl = (block_list*)mapit_first(iter); mapit_exists(iter); bl = (block_list*)mapit_next(iter)) {
+		auto* md = reinterpret_cast<mob_data*>(bl);
+
+		if (md != nullptr && md->spawn && !strcmp(md->spawn->filepath, path)) {
+			auto& removedspawns = removed_mob_spawn_data[md->db->id];
+			auto itSameMap = std::find_if(removedspawns.begin(), removedspawns.end(),
+				[&md](const spawn_info& s) { return (s.mapindex == map_id2index(md->bl.m)); });
+
+			if (itSameMap != removedspawns.end())
+				itSameMap->qty++; //add the found monster being deleted
+			else
+				removedspawns.push_back(spawn_info{map_id2index(md->bl.m),1}); //else create a new spawn_info
+			unit_free(bl, CLR_OUTSIGHT);
 		}
 	}
 	mapit_free(iter);
