@@ -3205,7 +3205,7 @@ bool CharacterServer::initialize( int argc, char *argv[] ){
 	}
 #endif
 
-	inter_init_sql((argc > 2) ? argv[2] : SQL_CONF_NAME); // inter server configuration
+	inter_init_sql((argc > 2 && strstr(argv[2], "inter") != nullptr) ? argv[2] : SQL_CONF_NAME); // inter server configuration
 
 	char_mmo_sql_init();
 	char_read_fame_list(); //Read fame lists.
