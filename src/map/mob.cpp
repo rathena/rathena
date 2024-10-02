@@ -3476,6 +3476,7 @@ void mob_remove_spawns(const char* path) {
 
 			for (int16 j = 0; j < MAX_MOB_LIST_PER_MAP; j++) {
 				spawn_data* mob = mapdata->moblist[j];
+
 				if (mob != nullptr && !strcmp(mob->filepath, path)) {
 					aFree(mapdata->moblist[j]);
 					mapdata->moblist[j] = nullptr;
