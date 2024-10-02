@@ -3473,6 +3473,7 @@ void mob_remove_spawns(const char* path) {
 	if (battle_config.dynamic_mobs) {
 		for (int i = 0; i < map_num; i++) {
 			map_data* mapdata = map_getmapdata(i);
+
 			for (int16 j = 0; j < MAX_MOB_LIST_PER_MAP; j++) {
 				spawn_data* mob = mapdata->moblist[j];
 				if (mob != nullptr && !strcmp(mob->filepath, path)) {
