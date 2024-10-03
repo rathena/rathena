@@ -21,7 +21,7 @@
 using namespace rathena::server_core;
 
 //map confs
-const char* MAP_CONF_NAME = "conf/log_athena.conf";
+const char* MAP_CONF_NAME = "conf/map_athena.conf";
 const char* INTER_CONF_NAME = "conf/inter_athena.conf";
 const char* LOG_CONF_NAME = "conf/log_athena.conf";
 const char* BATTLE_CONF_FILENAME = "conf/battle_athena.conf";
