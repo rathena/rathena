@@ -4107,15 +4107,17 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	sd->bonus.splash_range += sd->bonus.splash_add_range;
 
 	// Damage modifiers from weapon type
-	std::shared_ptr<s_sizefix_db> right_weapon = size_fix_db.find(sd->weapontype1);
-	std::shared_ptr<s_sizefix_db> left_weapon = size_fix_db.find(sd->weapontype2);
+	if( std::shared_ptr<s_sizefix_db> right_weapon = size_fix_db.find(sd->weapontype1); right_weapon != nullptr ){
+		sd->right_weapon.atkmods[SZ_SMALL] = right_weapon->small;
+		sd->right_weapon.atkmods[SZ_MEDIUM] = right_weapon->medium;
+		sd->right_weapon.atkmods[SZ_BIG] = right_weapon->large;
+	}
 
-	sd->right_weapon.atkmods[SZ_SMALL] = right_weapon->small;
-	sd->right_weapon.atkmods[SZ_MEDIUM] = right_weapon->medium;
-	sd->right_weapon.atkmods[SZ_BIG] = right_weapon->large;
-	sd->left_weapon.atkmods[SZ_SMALL] = left_weapon->small;
-	sd->left_weapon.atkmods[SZ_MEDIUM] = left_weapon->medium;
-	sd->left_weapon.atkmods[SZ_BIG] = left_weapon->large;
+	if( std::shared_ptr<s_sizefix_db> left_weapon = size_fix_db.find(sd->weapontype2); left_weapon != nullptr ){
+		sd->left_weapon.atkmods[SZ_SMALL] = left_weapon->small;
+		sd->left_weapon.atkmods[SZ_MEDIUM] = left_weapon->medium;
+		sd->left_weapon.atkmods[SZ_BIG] = left_weapon->large;
+	}
 
 	if((pc_isriding(sd) || pc_isridingdragon(sd)) &&
 		(sd->status.weapon==W_1HSPEAR || sd->status.weapon==W_2HSPEAR))
