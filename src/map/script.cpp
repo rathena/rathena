@@ -24791,7 +24791,7 @@ BUILDIN_FUNC(openstorage2) {
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	int stor_id = script_getnum(st, 2);
+	int32 stor_id = script_getnum(st, 2);
 
 	if (!storage_exists(stor_id)) {
 		ShowError("buildin_openstorage2: Invalid storage_id '%d'!\n", stor_id);
@@ -24799,7 +24799,7 @@ BUILDIN_FUNC(openstorage2) {
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	int mode;
+	int32 mode;
 
 	if (!script_hasdata(st, 3))
 		mode = STOR_MODE_ALL;
