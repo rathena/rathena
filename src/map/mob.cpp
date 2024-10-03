@@ -3427,47 +3427,39 @@ void mob_add_spawn(uint16 mob_id, const struct spawn_info& new_spawn)
 */
 }
 
-void mob_remove_spawns(const char* path) {
-	//cache spawn infos of each freed unit
-	std::map<int,std::vector<spawn_info>> removed_mob_spawn_data{};
+bool mob_remove_spawns(const char* path) {
+	bool found = false;
+	auto remove_spawn_info = []( spawn_data& spawn, uint16 qty ){
+		auto it = mob_spawn_data.find( spawn.id );
+
+		if( it != mob_spawn_data.end() ){
+			uint16 mapindex = map_id2index( spawn.m );
+
+			it->second.erase( std::remove_if( it->second.begin(), it->second.end(), [&]( spawn_info& spawninfo ){
+				if( spawninfo.mapindex == mapindex ){
+					spawninfo.qty -= qty;
+					return spawninfo.qty == 0;
+				}
+
+				return false;
+			} ), it->second.end() );
+		}
+	};
+
+	// Remove spawned mobs
 	s_mapiterator* iter = mapit_geteachmob();
 
-	for (block_list* bl = (block_list*)mapit_first(iter); mapit_exists(iter); bl = (block_list*)mapit_next(iter)) {
-		auto* md = reinterpret_cast<mob_data*>(bl);
+	for( block_list* bl = mapit_first( iter ); mapit_exists( iter ); bl = mapit_next( iter ) ){
+		mob_data* md = reinterpret_cast<mob_data*>( bl );
 
-		if (md != nullptr && md->spawn && !strcmp(md->spawn->filepath, path)) {
-			auto& removedspawns = removed_mob_spawn_data[md->db->id];
-			auto itSameMap = std::find_if(removedspawns.begin(), removedspawns.end(),
-				[&md](const spawn_info& s) { return (s.mapindex == map_id2index(md->bl.m)); });
-
-			if (itSameMap != removedspawns.end())
-				itSameMap->qty++; //add the found monster being deleted
-			else
-				removedspawns.push_back(spawn_info{map_id2index(md->bl.m),1}); //else create a new spawn_info
+		if( md->spawn != nullptr && !strcmp( md->spawn->filepath, path ) ){
+			remove_spawn_info( *md->spawn, 1 );
 			unit_free(bl, CLR_OUTSIGHT);
+			found = true;
 		}
 	}
+
 	mapit_free(iter);
-
-	//remove wanted spawn from mob_spawn_data
-	auto remove_spawn_info = [](int mobid, const auto& rs) {
-		auto& spawns = mob_spawn_data[mobid];
-
-		spawns.erase(std::remove_if(spawns.begin(), spawns.end(), [&](spawn_info& spawninfo) {
-			if (spawninfo.mapindex == rs.mapindex) {
-				spawninfo.qty -= rs.qty;
-				return spawninfo.qty == 0;
-			}
-			return false;
-			}), spawns.end());
-		};
-
-	//loop on cached spawns and delete them from mob_spawn_data
-	for (auto& [mobid, removedspawns] : removed_mob_spawn_data) {
-		for (const auto& rs : removedspawns) {
-			remove_spawn_info(mobid,rs);
-		}
-	}
 
 	//dynamic mobs cleaning
 	if (battle_config.dynamic_mobs) {
@@ -3478,12 +3470,23 @@ void mob_remove_spawns(const char* path) {
 				spawn_data* mob = mapdata->moblist[j];
 
 				if (mob != nullptr && !strcmp(mob->filepath, path)) {
+					remove_spawn_info( *mob, mob->num );
 					aFree(mapdata->moblist[j]);
 					mapdata->moblist[j] = nullptr;
+					found = true;
 				}
 			}
 		}
 	}
+
+	// Sort spawns by spawn quantity
+	for( auto& pair : mob_spawn_data ){
+		std::sort( pair.second.begin(), pair.second.end(), []( const spawn_info& a, const spawn_info& b ) -> bool{
+			return a.qty > b.qty;
+		} );
+	}
+
+	return found;
 }
 /*==========================================
  * Change mob base class

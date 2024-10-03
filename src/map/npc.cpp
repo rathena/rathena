@@ -5197,7 +5197,6 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	int ai = AI_NONE; // mob_ai
 
 	memset(&mob, 0, sizeof(struct spawn_data));
-	strcpy(mob.filepath,filepath);
 	mob.state.boss = !strcmpi(w2,"boss_monster");
 
 	// w1=<map name>{,<x>,<y>{,<xs>,<ys>}}
@@ -5349,6 +5348,9 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 		ShowError("npc_parse_mob: Invalid dataset for monster ID %d (file '%s', line '%d').\n", mob_id, filepath, strline(buffer,start-buffer));
 		return strchr(start,'\n');// skip and continue
 	}
+
+	// Store filepath for possible unloading
+	strcpy( mob.filepath, filepath );
 
 	//Update mob spawn lookup database
 	struct spawn_info spawn = { mapdata->index, mob.num };
@@ -6124,12 +6126,14 @@ bool npc_unloadfile( const char* path ) {
 
 	dbi_destroy(iter);
 
+	if( mob_remove_spawns( path ) ){
+		found = true;
+	}
+
 	if( found ) /* refresh event cache */
 		npc_read_event_script();
 
 	npc_delsrcfile(path);
-
-	mob_remove_spawns(path);
 
 	return found;
 }
