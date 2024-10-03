@@ -6033,9 +6033,11 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 			status->matk_min = status->matk_min * sd->matk_rate/100;
 		}
 
-		if ((bl.type == BL_HOM && battle_config.hom_setting&HOMSET_SAME_MATK)  /// Hom Min Matk is always the same as Max Matk
-				|| (sc && sc->getSCE(SC_RECOGNIZEDSPELL)))
-			status->matk_min = status->matk_max;
+		// Apply Recognized Spell buff
+		// Also update homunculus MATK, hom Min Matk is always the same as Max Matk
+		if ((bl.type == BL_HOM && battle_config.hom_setting&HOMSET_SAME_MATK) || (sc && sc->getSCE(SC_RECOGNIZEDSPELL))) {
+			status->matk_min = std::max( status->matk_min, status->matk_max );
+		}
 
 		status->matk_max = status_calc_matk(&bl, sc, status->matk_max);
 		status->matk_min = status_calc_matk(&bl, sc, status->matk_min);
@@ -6055,9 +6057,7 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 			// Adds weapon magic attack (wMATK) modifications
 			// This is the only portion in MATK that varies depending on the weapon level and refinement rate.
 			if (b_status->lhw.matk) {
-				//sd->state.lr_flag = 1; //?? why was that set here
 				status->lhw.matk = b_status->lhw.matk;
-				sd->state.lr_flag = 0;
 			}
 
 			if (b_status->rhw.matk) {
