@@ -6064,8 +6064,8 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 				status->rhw.matk = b_status->rhw.matk;
 			}
 
-			int wMatk = 0;
-			int variance = 0;
+			int32 wMatk = 0;
+			int32 variance = 0;
 
 			if (status->rhw.matk) {
 				wMatk = status->rhw.matk;
@@ -6088,8 +6088,6 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 		}
 
 		if (sd != nullptr) {
-			uint16 skill_lv;
-
 			if (sd->bonus.ematk > 0) {
 				status->matk_min += sd->bonus.ematk;
 				status->matk_max += sd->bonus.ematk;
@@ -6099,7 +6097,8 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 				status->matk_min += status->matk_min * 20 / 100;
 				status->matk_max += status->matk_max * 20 / 100;
 			}
-			if ((skill_lv = pc_checkskill(sd, NV_TRANSCENDENCE)) > 0) {
+
+			if (uint16 skill_lv = pc_checkskill(sd, NV_TRANSCENDENCE); skill_lv > 0) {
 				status->matk_min += 15 * skill_lv + (skill_lv > 4 ? 25 : 0);
 				status->matk_max += 15 * skill_lv + (skill_lv > 4 ? 25 : 0);
 			}
