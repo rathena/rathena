@@ -6127,7 +6127,7 @@ bool npc_unloadfile( const char* path ) {
 
 	dbi_destroy(iter);
 
-	if( mob_remove_spawns( path ) ){
+	if(npc_remove_mob_spawns( path )){
 		found = true;
 	}
 
@@ -6138,6 +6138,72 @@ bool npc_unloadfile( const char* path ) {
 
 	return found;
 }
+
+bool npc_remove_mob_spawns(const char* path) {
+	int spawn_count{};
+	int unit_count{};
+	auto remove_spawn_info = [&]( spawn_data& spawn, uint16 qty ){
+		auto it = mob_spawn_data.find( spawn.id );
+
+		if( it != mob_spawn_data.end() ){
+			uint16 mapindex = map_id2index( spawn.m );
+
+			it->second.erase( std::remove_if( it->second.begin(), it->second.end(), [&]( spawn_info& spawninfo ){
+				if( spawninfo.mapindex == mapindex ){
+					spawninfo.qty -= qty;
+					spawn_count += qty;
+					return spawninfo.qty == 0;
+				}
+
+				return false;
+			} ), it->second.end() );
+		}
+	};
+
+	// Remove spawned mobs
+	s_mapiterator* iter = mapit_geteachmob();
+
+	for( block_list* bl = mapit_first( iter ); mapit_exists( iter ); bl = mapit_next( iter ) ){
+		mob_data* md = reinterpret_cast<mob_data*>( bl );
+
+		if( md->spawn != nullptr && !strcmp( md->spawn->filepath, path ) ){
+			remove_spawn_info( *md->spawn, 1 );
+			unit_free(bl, CLR_OUTSIGHT);
+			unit_count++;
+		}
+	}
+
+	mapit_free(iter);
+
+	//dynamic mobs cleaning
+	if (battle_config.dynamic_mobs) {
+		for (int i = 0; i < map_num; i++) {
+			map_data* mapdata = map_getmapdata(i);
+
+			for (int16 j = 0; j < MAX_MOB_LIST_PER_MAP; j++) {
+				spawn_data* mob = mapdata->moblist[j];
+
+				if (mob != nullptr && !strcmp(mob->filepath, path)) {
+					npc_cache_mob -= mob->num;
+					remove_spawn_info( *mob, mob->num );
+					aFree(mapdata->moblist[j]);
+					mapdata->moblist[j] = nullptr;
+				}
+			}
+		}
+	}
+
+	// Sort spawns by spawn quantity
+	for( auto& pair : mob_spawn_data ){
+		std::sort( pair.second.begin(), pair.second.end(), []( const spawn_info& a, const spawn_info& b ) -> bool{
+			return a.qty > b.qty;
+		} );
+	}
+	if(spawn_count || unit_count)
+		ShowInfo("%d mobs and %d spawns removed.\n",unit_count,spawn_count);
+	return spawn_count > 0 || unit_count > 0;
+}
+
 
 void do_clear_npc(void) {
 	db_clear(npcname_db);

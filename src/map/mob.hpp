@@ -316,6 +316,7 @@ private:
 };
 
 extern MapDropDatabase map_drop_db;
+extern std::unordered_map<uint16, std::vector<spawn_info>> mob_spawn_data;
 
 struct mob_data {
 	struct block_list bl;
@@ -552,7 +553,7 @@ int mob_clone_delete(struct mob_data *md);
 void mob_reload_itemmob_data(void);
 void mob_reload(void);
 void mob_add_spawn(uint16 mob_id, const struct spawn_info& new_spawn);
-bool mob_remove_spawns(const char* path);
+
 const std::vector<spawn_info> mob_get_spawns(uint16 mob_id);
 bool mob_has_spawn(uint16 mob_id);
 
