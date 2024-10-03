@@ -6186,11 +6186,18 @@ bool npc_remove_mob_spawns(const char* path) {
 				if (mob != nullptr && !strcmp(mob->filepath, path)) {
 					npc_cache_mob -= mob->num;
 					remove_spawn_info( *mob, mob->num );
+
 					aFree(mapdata->moblist[j]);
 					mapdata->moblist[j] = nullptr;
+
+					if (mapdata->mob_delete_timer != INVALID_TIMER) {
+						delete_timer(mapdata->mob_delete_timer, map_removemobs_timer);
+						mapdata->mob_delete_timer = INVALID_TIMER;
+					}
 				}
 			}
 		}
+
 	}
 
 	// Sort spawns by spawn quantity
@@ -6199,6 +6206,7 @@ bool npc_remove_mob_spawns(const char* path) {
 			return a.qty > b.qty;
 		} );
 	}
+
 	if(spawn_count || unit_count)
 		ShowInfo("%d mobs and %d spawns removed.\n",unit_count,spawn_count);
 	return spawn_count > 0 || unit_count > 0;
