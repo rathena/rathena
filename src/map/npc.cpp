@@ -6140,8 +6140,10 @@ bool npc_unloadfile( const char* path ) {
 }
 
 bool npc_remove_mob_spawns(const char* path) {
+
 	int spawn_count{};
 	int unit_count{};
+
 	auto remove_spawn_info = [&]( spawn_data& spawn, uint16 qty ){
 		auto it = mob_spawn_data.find( spawn.id );
 
@@ -6167,8 +6169,9 @@ bool npc_remove_mob_spawns(const char* path) {
 		mob_data* md = reinterpret_cast<mob_data*>( bl );
 
 		if( md->spawn != nullptr && !strcmp( md->spawn->filepath, path ) ){
-			remove_spawn_info( *md->spawn, 1 );
-			unit_free(bl, CLR_OUTSIGHT);
+			if( !battle_config.dynamic_mobs )
+				remove_spawn_info( *md->spawn, 1 );
+			unit_free( bl, CLR_OUTSIGHT );
 			unit_count++;
 		}
 	}
@@ -6208,7 +6211,7 @@ bool npc_remove_mob_spawns(const char* path) {
 	}
 
 	if(spawn_count || unit_count)
-		ShowInfo("%d mobs and %d spawns removed.\n",unit_count,spawn_count);
+		ShowInfo("%d mobs and %d spawns were removed.\n",unit_count,spawn_count);
 	return spawn_count > 0 || unit_count > 0;
 }
 
