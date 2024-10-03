@@ -29,7 +29,6 @@ const char* SCRIPT_CONF_NAME;
 const char* GRF_PATH_FILENAME;
 //char confs
 const char* CHAR_CONF_NAME;
-const char* SQL_CONF_NAME;
 //login confs
 const char* LOGIN_CONF_NAME;
 //common conf (used by multiple serv)

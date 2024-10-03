@@ -19,7 +19,6 @@
  extern const char* GRF_PATH_FILENAME;
 //char
  extern const char* CHAR_CONF_NAME;
- extern const char* SQL_CONF_NAME;
 //login
  extern const char* LOGIN_CONF_NAME;
 //common
