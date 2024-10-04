@@ -1172,7 +1172,7 @@ static bool pc_cant_act( map_session_data* sd ){
 #define pc_isinvisible(sd)    ( (sd)->sc.option&OPTION_INVISIBLE )
 #define pc_is50overweight(sd) ( (sd)->weight * 100 >= (sd)->max_weight * battle_config.natural_heal_weight_rate )
 #define pc_is70overweight(sd) ( (sd)->weight * 100 >= (sd)->max_weight * battle_config.natural_heal_weight_rate_renewal )
-#define pc_is90overweight(sd) ( (sd)->weight * 10 >= (sd)->max_weight * 10 )
+#define pc_is90overweight(sd) ( (sd)->weight * 9 >= (sd)->max_weight * 9 )
 
 static inline bool pc_hasprogress(map_session_data *sd, enum e_wip_block progress) {
 	return sd == nullptr || (sd->state.workinprogress&progress) == progress;
