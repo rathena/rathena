@@ -34,23 +34,19 @@ moc_ruins,118,99,5	script	Roberto	88,{
 			mes "Then byebye~";
 			close;
 		}
-		else if (JobLevel >= 30 || (BaseJob == Job_Hunter || BaseJob == Job_Bard || BaseJob == Job_Dancer)) {
+		else if (JobLevel >= 15 || (BaseJob == Job_Hunter || BaseJob == Job_Bard || BaseJob == Job_Dancer)) {
 			mes "[Roberto]";
 			mes "Eh!";
 			mes " ";
 			mes "You are...";
 			next;
-			if ((countitem(907) > 19) && (countitem(921) > 6) && (countitem(906) > 40) && (countitem(1019) > 12) && (countitem(501) > 0)) {
+			if (countitem(1019) > 12) {
 				mes "[Roberto]";
 				mes "You brought them!";
 				mes "Thank you very much.";
 				mes "Then, as I promised, I will teach you the skill.";
 				next;
-				delitem 907,20; //Resin
-				delitem 921,7; //Mushroom_Spore
-				delitem 906,41; //Pointed_Scale
 				delitem 1019,13; //Wooden_Block
-				delitem 501,1; //Red_Potion
 				skill "AC_MAKINGARROW",1,SKILL_PERM;
 				mes "[Roberto]";
 				mes "No need to worry about arrows now.";
@@ -102,15 +98,7 @@ moc_ruins,118,99,5	script	Roberto	88,{
 				mes "I've been very lonely since I left my hometown.";
 				mes "I would like to treat my homesickness";
 				mes "with things from there.";
-				mes "Bring me 20 Resins from the trees in the ";
-				mes "Payon forest, and 1 Red Potion";
-				mes "sold in the store.";
-				next;
-				mes "[Roberto]";
-				mes "Also, 13 Trunks from the Willows that";
-				mes "live near the Payon Forest,";
-				mes "41 Pointed Scale,";
-				mes "7 Mushroom Spores.";
+				mes "Bring me 13 Trunks from the Willows that";
 				mes "If you bring me all of these,";
 				next;
 				mes "[Roberto]";

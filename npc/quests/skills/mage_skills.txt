@@ -58,17 +58,15 @@ geffen_in,151,119,4	script	Great Wizard	64,{
 		mes "be used during the process.";
 		next;
 		mes "[BLIZZARDRISS]";
-		mes "three ^3355FFGlass Bead^000000 ";
-		mes "one ^3355FF1 carat Diamond^000000 ";
+		mes "one ^3355FFGlass Bead^000000 ";
 		mes "five ^3355FFShell^000000 ";
-		mes "one ^3355FFSolid Shell^000000 ";
 		mes "Bring me these items.";
 		next;
 		mes "[BLIZZARDRISS]";
 		mes "Also, one more thing. . .";
 		mes "You must be sufficiently experienced";
 		mes "in the magical arts. This means you must";
-		mes "either be a wizard or mage job level 35+.";
+		mes "either be a wizard or mage job level 15+.";
 		next;
 		mes "[BLIZZARDRISS]";
 		mes "Wizards already have already";
@@ -93,7 +91,7 @@ geffen_in,151,119,4	script	Great Wizard	64,{
 			mes "I have nothing more to teach you ...";
 			close;
 		}
-		if ((countitem(746) > 2) && (countitem(730) > 0) && (countitem(935) > 4) && (countitem(943) > 0) && (JobLevel > 34 || (BaseJob == Job_Wizard || BaseJob == Job_Sage)) && (BaseClass == Job_Mage)) {
+		if ((countitem(746) > 0) && (countitem(935) > 4) && (JobLevel > 14 || (BaseJob == Job_Wizard || BaseJob == Job_Sage)) && (BaseClass == Job_Mage)) {
 			mes "[BLIZZARDRISS]";
 			mes "Okay, I have received your request.";
 			mes "I will now awaken your hidden energies . .";
@@ -115,10 +113,8 @@ geffen_in,151,119,4	script	Great Wizard	64,{
 			mes ". . . . . . . . . . . .";
 			mes "ENERGY COAT! ! !";
 			next;
-			delitem 746,3; //Glass_Bead
-			delitem 730,1; //Crystal_Jewel
+			delitem 746,1; //Glass_Bead
 			delitem 935,5; //Shell
-			delitem 943,1; //Solid_Shell
 			skill "MG_ENERGYCOAT",1,SKILL_PERM;
 			mes "[BLIZZARDRISS]";
 			mes ". . . . .";
