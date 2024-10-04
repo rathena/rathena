@@ -327,6 +327,10 @@ function	script	F_KafTele	{
 	else if (@wrpD$[.@j] == "Payon") warp "payon", 161, 58;
 	else if (@wrpD$[.@j] == "Prontera") warp "prontera", 116, 72;
 	else if (@wrpD$[.@j] == "Umbala") warp "umbala", 100, 154;
+	else if (@wrpD$[.@j] == "Rachel") warp "rachel", 130, 137;
+	else if (@wrpD$[.@j] == "Hugel") warp "hugel", 96, 145;
+	else if (@wrpD$[.@j] == "Einbech") warp "einbech", 70, 95;
+	else if (@wrpD$[.@j] == "Lighthalzen") warp "lighthalzen", 158, 92;
 	end;
 }
 
@@ -635,8 +639,8 @@ function	script	F_KafSet	{
 		setarray @viewpX[0], 120, 203;
 		setarray @viewpY[0], 62, 123;
 	} else if (.@map$ == "izlude") {
-		setarray @wrpD$[0], "Geffen", "Payon", "Morocc", "Al De Baran";
-		setarray @wrpP[0], 120, 120, 100, 180;
+		setarray @wrpD$[0], "Geffen", "Payon", "Morocc", "Al De Baran", "Rachel";
+		setarray @wrpP[0], 120, 120, 100, 180, 250;
 	} else if (.@map$ == "morocc") {
 		setarray @wrpD$[0], "Prontera", "Payon", "Alberta", "Comodo", "Comodo Pharos Beacon";
 		setarray @wrpP[0], 120, 120, 180, 180, 120;
@@ -649,8 +653,8 @@ function	script	F_KafSet	{
 		setarray @wrpD$[0], "Prontera", "Alberta", "Morocc";
 		setarray @wrpP[0], 120, 120, 120;
 	} else if (.@map$ == "yuno") {
-		setarray @wrpD$[0], "Al De Baran";
-		setarray @wrpP[0], 120;
+		setarray @wrpD$[0], "Al De Baran", "Hugel", "Einbech", "Lighthalzen";
+		setarray @wrpP[0], 120, 350, 250, 300;
 		setarray @viewpX[0], 328, 278, 153, 0;
 		setarray @viewpY[0], 108, 221, 187, 0;
 	} else if (.@map$ == "job3_rune01") {
