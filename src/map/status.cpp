@@ -2403,7 +2403,7 @@ unsigned short status_base_atk(const struct block_list *bl, const struct status_
 #else
 			mult = str / 10.0;
 			str += (int)(mult * mult);
-			str += dex / 5 + status->luk / 5;
+			str += dex / 5 + status->luk / 3;
 #endif
 			break;
 		default:// Others
@@ -2412,7 +2412,7 @@ unsigned short status_base_atk(const struct block_list *bl, const struct status_
 #else
 			mult = str / 10.0;
 			str += (int)(mult * mult);
-			str += dex / 5 + status->luk / 5;
+			str += dex / 5 + status->luk / 3;
 #endif
 			break;
 	}
@@ -2436,11 +2436,11 @@ unsigned int status_weapon_atk(weapon_atk &wa)
 #ifndef RENEWAL
 unsigned short status_base_matk_min(const struct status_data* status) {
 	double multi = status->int_ / 7;
-	return status->int_ + int(multi * multi);
+	return status->int_ + int(multi * multi) + (status->luk / 3);
 }
 unsigned short status_base_matk_max(const struct status_data* status) {
 	double multi = status->int_ / 5;
-	return status->int_ + (int)(multi * multi);
+	return status->int_ + (int)(multi * multi) + (status->luk / 3);
 }
 #else
 /*
@@ -2631,11 +2631,11 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 	status->matk_max = status_base_matk_max(status);
 	// Hit
 	stat = status->hit;
-	stat += level + status->dex;
+	stat += level + status->dex + (bl->type == BL_PC ? status->luk / 3 : 0);
 	status->hit = cap_value(stat, 1, SHRT_MAX);
 	// Flee
 	stat = status->flee;
-	stat += level + status->agi;
+	stat += level + status->agi + (bl->type == BL_PC ? status->luk / 3 : 0);
 	status->flee = cap_value(stat, 1, SHRT_MAX);
 	// Def2
 	stat = status->def2;
