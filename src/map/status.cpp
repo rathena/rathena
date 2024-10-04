@@ -6025,12 +6025,12 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 
 	if(flag[SCB_MATK]) {
 #ifndef RENEWAL
-		status->matk_min = status_base_matk_min(status) + (sd?sd->bonus.ematk:0);
-		status->matk_max = status_base_matk_max(status) + (sd?sd->bonus.ematk:0);
+		status->matk_min = status_base_matk_min(status) + (sd != nullptr ? sd->bonus.ematk : 0);
+		status->matk_max = status_base_matk_max(status) + (sd != nullptr ? sd->bonus.ematk : 0);
 
 		if (sd != nullptr && sd->matk_rate != 100) {
-			status->matk_max = status->matk_max * sd->matk_rate/100;
-			status->matk_min = status->matk_min * sd->matk_rate/100;
+			status->matk_min = status->matk_min * sd->matk_rate / 100;
+			status->matk_max = status->matk_max * sd->matk_rate / 100;
 		}
 
 		// Apply Recognized Spell buff
@@ -6039,8 +6039,8 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 			status->matk_min = std::max( status->matk_min, status->matk_max );
 		}
 
-		status->matk_max = status_calc_matk(&bl, sc, status->matk_max);
 		status->matk_min = status_calc_matk(&bl, sc, status->matk_min);
+		status->matk_max = status_calc_matk(&bl, sc, status->matk_max);
 #else
 		/**
 		 * RE MATK Formula (from irowiki:http:// irowiki.org/wiki/MATK)
@@ -6056,23 +6056,19 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 
 			// Adds weapon magic attack (wMATK) modifications
 			// This is the only portion in MATK that varies depending on the weapon level and refinement rate.
-			if (b_status->lhw.matk) {
+			if (b_status->lhw.matk > 0)
 				status->lhw.matk = b_status->lhw.matk;
-			}
-
-			if (b_status->rhw.matk) {
+			if (b_status->rhw.matk > 0)
 				status->rhw.matk = b_status->rhw.matk;
-			}
 
 			int32 wMatk = 0;
 			int32 variance = 0;
 
-			if (status->rhw.matk) {
+			if (status->rhw.matk > 0) {
 				wMatk = status->rhw.matk;
 				variance = status->rhw.matk * status->rhw.wlv / 10;
 			}
-
-			if (status->lhw.matk) {
+			if (status->lhw.matk > 0) {
 				wMatk += status->lhw.matk;
 				variance += status->lhw.matk * status->lhw.wlv / 10;
 			}
@@ -6083,8 +6079,8 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 
 		// Apply MATK % from skill Mystical Amplification
 		if (sc && sc->getSCE(SC_MAGICPOWER)) {
-			status->matk_min += status->matk_min * sc->getSCE(SC_MAGICPOWER)->val3/100;
-			status->matk_max += status->matk_max * sc->getSCE(SC_MAGICPOWER)->val3/100;
+			status->matk_min += status->matk_min * sc->getSCE(SC_MAGICPOWER)->val3 / 100;
+			status->matk_max += status->matk_max * sc->getSCE(SC_MAGICPOWER)->val3 / 100;
 		}
 
 		if (sd != nullptr) {
@@ -6111,8 +6107,8 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 		if (sd != nullptr) {
 			// Apply MATK % from equipments / usable items
 			if (sd->matk_rate != 100) {
-				status->matk_max = status->matk_max * sd->matk_rate/100;
-				status->matk_min = status->matk_min * sd->matk_rate/100;
+				status->matk_min = status->matk_min * sd->matk_rate / 100;
+				status->matk_max = status->matk_max * sd->matk_rate / 100;
 			}
 
 			// Apply overrefine (unknown if this is the right place)
