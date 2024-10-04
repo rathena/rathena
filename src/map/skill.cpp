@@ -13279,10 +13279,7 @@ TIMER_FUNC(skill_castend_id){
 				if (sd) {
 					map_session_data *c_sd = pc_get_child(sd);
 
-					if(c_sd && c_sd->status.disable_call )
-						continue;
-
-					if (c_sd && c_sd->state.autotrade) {
+					if (c_sd != nullptr && (c_sd->state.autotrade || c_sd->status.disable_call)) {
 						fail = true;
 						break;
 					}
