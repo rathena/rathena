@@ -6027,8 +6027,22 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 
 	if(flag[SCB_MATK]) {
 #ifndef RENEWAL
-		status->matk_min = status_base_matk_min(status) + (sd?sd->bonus.ematk:0);
-		status->matk_max = status_base_matk_max(status) + (sd?sd->bonus.ematk:0);
+		status->matk_min = status_base_matk_min(status) + (sd != nullptr ? sd->bonus.ematk : 0);
+		status->matk_max = status_base_matk_max(status) + (sd != nullptr ? sd->bonus.ematk : 0);
+
+		if (sd != nullptr && sd->matk_rate != 100) {
+			status->matk_min = status->matk_min * sd->matk_rate / 100;
+			status->matk_max = status->matk_max * sd->matk_rate / 100;
+		}
+
+		// Apply Recognized Spell buff
+		// Also update homunculus MATK, hom Min Matk is always the same as Max Matk
+		if ((bl.type == BL_HOM && battle_config.hom_setting&HOMSET_SAME_MATK) || (sc && sc->getSCE(SC_RECOGNIZEDSPELL))) {
+			status->matk_min = std::max( status->matk_min, status->matk_max );
+		}
+
+		status->matk_min = status_calc_matk(&bl, sc, status->matk_min);
+		status->matk_max = status_calc_matk(&bl, sc, status->matk_max);
 #else
 		/**
 		 * RE MATK Formula (from irowiki:http:// irowiki.org/wiki/MATK)
@@ -6038,76 +6052,77 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 		status->matk_min = status_base_matk_min(&bl, status, lv);
 		status->matk_max = status_base_matk_max(&bl, status, lv);
 
-		switch( bl.type ) {
-			case BL_PC: {
-				int wMatk = 0;
-				int variance = 0;
+		if (sd != nullptr) {
+			status->matk_min = status_calc_ematk(&bl, sc, status->matk_min);
+			status->matk_max = status->matk_min;
 
-				// Any +MATK you get from skills and cards, including cards in weapon, is added here.
-				if (sd) {
-					uint16 skill_lv;
+			// Adds weapon magic attack (wMATK) modifications
+			// This is the only portion in MATK that varies depending on the weapon level and refinement rate.
+			if (b_status->lhw.matk > 0)
+				status->lhw.matk = b_status->lhw.matk;
+			if (b_status->rhw.matk > 0)
+				status->rhw.matk = b_status->rhw.matk;
 
-					if (sd->bonus.ematk > 0)
-						status->matk_min += sd->bonus.ematk;
-					if (pc_checkskill(sd, SU_POWEROFLAND) > 0 && pc_checkskill_summoner(sd, SUMMONER_POWER_LAND) >= 20)
-						status->matk_min += status->matk_min * 20 / 100;
-					if ((skill_lv = pc_checkskill(sd, NV_TRANSCENDENCE)) > 0)
-						status->matk_min += 15 * skill_lv + (skill_lv > 4 ? 25 : 0);
-				}
+			int32 wMatk = 0;
+			int32 variance = 0;
 
-				status->matk_min = status_calc_ematk(&bl, sc, status->matk_min);
-				status->matk_max = status->matk_min;
+			if (status->rhw.matk > 0) {
+				wMatk = status->rhw.matk;
+				variance = status->rhw.matk * status->rhw.wlv / 10;
+			}
+			if (status->lhw.matk > 0) {
+				wMatk += status->lhw.matk;
+				variance += status->lhw.matk * status->lhw.wlv / 10;
+			}
 
-				// This is the only portion in MATK that varies depending on the weapon level and refinement rate.
-				if (b_status->lhw.matk) {
-					if (sd) {
-						//sd->state.lr_flag = 1; //?? why was that set here
-						status->lhw.matk = b_status->lhw.matk;
-						sd->state.lr_flag = 0;
-					} else {
-						status->lhw.matk = b_status->lhw.matk;
-					}
-				}
-
-				if (b_status->rhw.matk) {
-					status->rhw.matk = b_status->rhw.matk;
-				}
-
-				if (status->rhw.matk) {
-					wMatk += status->rhw.matk;
-					variance += wMatk * status->rhw.wlv / 10;
-				}
-
-				if (status->lhw.matk) {
-					wMatk += status->lhw.matk;
-					variance += status->lhw.matk * status->lhw.wlv / 10;
-				}
-
-				status->matk_min += wMatk - variance;
-				status->matk_max += wMatk + variance;
-				}
-				break;
-		}
-#endif
-
-		if (bl.type == BL_PC && sd->matk_rate != 100) {
-			status->matk_max = status->matk_max * sd->matk_rate/100;
-			status->matk_min = status->matk_min * sd->matk_rate/100;
+			status->matk_min += wMatk - variance;
+			status->matk_max += wMatk + variance;
 		}
 
-		if ((bl.type == BL_HOM && battle_config.hom_setting&HOMSET_SAME_MATK)  /// Hom Min Matk is always the same as Max Matk
-				|| (sc && sc->getSCE(SC_RECOGNIZEDSPELL)))
-			status->matk_min = status->matk_max;
+		// Apply Recognized Spell buff
+		// Also update homunculus MATK, hom Min Matk is always the same as Max Matk
+		if ((bl.type == BL_HOM && battle_config.hom_setting&HOMSET_SAME_MATK) || (sc && sc->getSCE(SC_RECOGNIZEDSPELL))) {
+			status->matk_min = std::max( status->matk_min, status->matk_max );
+		}
 
-#ifdef RENEWAL
-		if( sd && sd->right_weapon.overrefine > 0) {
+		if (sd != nullptr && sd->right_weapon.overrefine > 0) {
 			status->matk_min++;
 			status->matk_max += sd->right_weapon.overrefine - 1;
 		}
-#endif
 
+		// Apply MATK % from skill Mystical Amplification
+		if (sc && sc->getSCE(SC_MAGICPOWER)) {
+			status->matk_min += status->matk_min * sc->getSCE(SC_MAGICPOWER)->val3 / 100;
+			status->matk_max += status->matk_max * sc->getSCE(SC_MAGICPOWER)->val3 / 100;
+		}
+
+		if (sd != nullptr) {
+			if (sd->bonus.ematk > 0) {
+				status->matk_min += sd->bonus.ematk;
+				status->matk_max += sd->bonus.ematk;
+			}
+
+			if (pc_checkskill(sd, SU_POWEROFLAND) > 0 && pc_checkskill_summoner(sd, SUMMONER_POWER_LAND) >= 20) {
+				status->matk_min += status->matk_min * 20 / 100;
+				status->matk_max += status->matk_max * 20 / 100;
+			}
+
+			if (uint16 skill_lv = pc_checkskill(sd, NV_TRANSCENDENCE); skill_lv > 0) {
+				status->matk_min += 15 * skill_lv + (skill_lv > 4 ? 25 : 0);
+				status->matk_max += 15 * skill_lv + (skill_lv > 4 ? 25 : 0);
+			}
+		}
+
+		// Adds other magic attack modifications - usually buffs from usable items
 		status->matk_max = status_calc_matk(&bl, sc, status->matk_max);
 		status->matk_min = status_calc_matk(&bl, sc, status->matk_min);
+
+		// Apply MATK % from equipments / usable items
+		if (sd != nullptr && sd->matk_rate != 100) {
+			status->matk_min = status->matk_min * sd->matk_rate / 100;
+			status->matk_max = status->matk_max * sd->matk_rate / 100;
+		}
+#endif
 	}
 
 	if(flag[SCB_ASPD]) {
@@ -7273,8 +7288,6 @@ static unsigned short status_calc_ematk(struct block_list *bl, status_change *sc
 
 	if (sc->getSCE(SC_IMPOSITIO))
 		matk += sc->getSCE(SC_IMPOSITIO)->val2;
-	if (sc->getSCE(SC_MATKPOTION))
-		matk += sc->getSCE(SC_MATKPOTION)->val1;
 	if (sc->getSCE(SC_MATKFOOD))
 		matk += sc->getSCE(SC_MATKFOOD)->val1;
 	if(sc->getSCE(SC_MANA_PLUS))
@@ -7303,8 +7316,6 @@ static unsigned short status_calc_ematk(struct block_list *bl, status_change *sc
 		matk += sc->getSCE(SC_QUEST_BUFF3)->val1;
 	if(sc->getSCE(SC_MTF_MATK2))
 		matk += sc->getSCE(SC_MTF_MATK2)->val1;
-	if(sc->getSCE(SC_2011RWC_SCROLL))
-		matk += 30;
 	if (sc->getSCE(SC_CATNIPPOWDER))
 		matk -= matk * sc->getSCE(SC_CATNIPPOWDER)->val2 / 100;
 	if (sc->getSCE(SC_CHATTERING))
@@ -7319,12 +7330,8 @@ static unsigned short status_calc_ematk(struct block_list *bl, status_change *sc
 		matk += sc->getSCE(SC_INSPIRATION)->val2;
 	if (sc->getSCE(SC_PACKING_ENVELOPE2))
 		matk += sc->getSCE(SC_PACKING_ENVELOPE2)->val1;
-	if(sc->getSCE(SC_ALMIGHTY))
-		matk += 30;
 	if(sc->getSCE(SC_ULTIMATECOOK))
 		matk += 30;
-	if (sc->getSCE(SC_LIMIT_POWER_BOOSTER))
-		matk += sc->getSCE(SC_LIMIT_POWER_BOOSTER)->val1;
 	if (sc->getSCE(SC_MAGICCANDY))
 		matk += 30;
 	if (sc->getSCE(SC_SKF_MATK))
@@ -7347,8 +7354,6 @@ static unsigned short status_calc_matk(struct block_list *bl, status_change *sc,
 		return cap_value(matk,0,USHRT_MAX);
 #ifndef RENEWAL
 	/// Take note fixed value first before % modifiers [PRE-RENEWAL]
-	if (sc->getSCE(SC_MATKPOTION))
-		matk += sc->getSCE(SC_MATKPOTION)->val1;
 	if (sc->getSCE(SC_MATKFOOD))
 		matk += sc->getSCE(SC_MATKFOOD)->val1;
 	if (sc->getSCE(SC_MANA_PLUS))
@@ -7367,19 +7372,21 @@ static unsigned short status_calc_matk(struct block_list *bl, status_change *sc,
 		matk += 25 * sc->getSCE(SC_IZAYOI)->val1;
 	if (sc->getSCE(SC_MTF_MATK2))
 		matk += sc->getSCE(SC_MTF_MATK2)->val1;
-	if (sc->getSCE(SC_2011RWC_SCROLL))
-		matk += 30;
-	if (sc->getSCE(SC_ALMIGHTY))
-		matk += 30;
 	if (sc->getSCE(SC_ULTIMATECOOK))
 		matk += 30;
-	if (sc->getSCE(SC_LIMIT_POWER_BOOSTER))
-		matk += sc->getSCE(SC_LIMIT_POWER_BOOSTER)->val1;
 	if (sc->getSCE(SC_MAGICCANDY))
 		matk += 30;
 	if (sc->getSCE(SC_SKF_MATK))
 		matk += sc->getSCE(SC_SKF_MATK)->val1;
 #endif
+	if (sc->getSCE(SC_MATKPOTION))
+		matk += sc->getSCE(SC_MATKPOTION)->val1;
+	if (sc->getSCE(SC_LIMIT_POWER_BOOSTER))
+		matk += sc->getSCE(SC_LIMIT_POWER_BOOSTER)->val1;
+	if (sc->getSCE(SC_ALMIGHTY))
+		matk += 30;
+	if (sc->getSCE(SC_2011RWC_SCROLL))
+		matk += 30;
 	if (sc->getSCE(SC_ZANGETSU))
 		matk += sc->getSCE(SC_ZANGETSU)->val3;
 	if (sc->getSCE(SC_QUEST_BUFF1))
@@ -7388,12 +7395,10 @@ static unsigned short status_calc_matk(struct block_list *bl, status_change *sc,
 		matk += sc->getSCE(SC_QUEST_BUFF2)->val1;
 	if (sc->getSCE(SC_QUEST_BUFF3))
 		matk += sc->getSCE(SC_QUEST_BUFF3)->val1;
-	if (sc->getSCE(SC_MAGICPOWER)
 #ifndef RENEWAL
-		&& sc->getSCE(SC_MAGICPOWER)->val4
-#endif
-		)
+	if (sc->getSCE(SC_MAGICPOWER) && sc->getSCE(SC_MAGICPOWER)->val4)
 		matk += matk * sc->getSCE(SC_MAGICPOWER)->val3/100;
+#endif
 	if (sc->getSCE(SC_MINDBREAKER))
 		matk += matk * sc->getSCE(SC_MINDBREAKER)->val2/100;
 	if (sc->getSCE(SC_INCMATKRATE))
