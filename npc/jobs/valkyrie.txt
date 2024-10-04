@@ -163,7 +163,7 @@ valkyrie,48,86,4	script	Valkyrie#	811,{
 			mes "in preparation for your new adventures.";
 			getitem 1202,1; //Knife_
 			getitem 2302,1; //Cotton_Shirt_
-			getitem 12622, 1; //Custom Mount
+			getitem 12622, 1; //Epic Mount
 			next;
 			mes "[Valkyrie]";
 			mes "I wish that the release the goddess Urd has granted you proves to be a blessing. I hope that the memories Verdandi has recorded will always honor you.";
