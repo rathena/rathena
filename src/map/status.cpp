@@ -2348,6 +2348,7 @@ int status_base_amotion_pc(map_session_data* sd, struct status_data* status)
 unsigned short status_base_atk(const struct block_list *bl, const struct status_data *status, int level)
 {
 	int flag = 0, str, dex, dstr;
+	double mult = 0;
 
 #ifdef RENEWAL
 	if (!(bl->type&battle_config.enable_baseatk_renewal))
@@ -2392,16 +2393,16 @@ unsigned short status_base_atk(const struct block_list *bl, const struct status_
 #ifdef RENEWAL
 			str = 2 * level + status_get_homstr(bl);
 #else
-			dstr = str / 10;
-			str += dstr*dstr;
+			mult = str / 10.0;
+			str += (int)(mult * mult);
 #endif
 			break;
 		case BL_PC:
 #ifdef RENEWAL
 			str = (dstr * 10 + dex * 10 / 5 + status->luk * 10 / 3 + level * 10 / 4) / 10 + 5 * status->pow;
 #else
-			dstr = str / 10;
-			str += dstr*dstr;
+			mult = str / 10.0;
+			str += (int)(mult * mult);
 			str += dex / 5 + status->luk / 5;
 #endif
 			break;
@@ -2409,8 +2410,8 @@ unsigned short status_base_atk(const struct block_list *bl, const struct status_
 #ifdef RENEWAL
 			str = dstr + level;
 #else
-			dstr = str / 10;
-			str += dstr*dstr;
+			mult = str / 10.0;
+			str += (int)(mult * mult);
 			str += dex / 5 + status->luk / 5;
 #endif
 			break;
@@ -2433,8 +2434,14 @@ unsigned int status_weapon_atk(weapon_atk &wa)
 #endif
 
 #ifndef RENEWAL
-unsigned short status_base_matk_min(const struct status_data* status) { return status->int_ + (status->int_ / 7) * (status->int_ / 7); }
-unsigned short status_base_matk_max(const struct status_data* status) { return status->int_ + (status->int_ / 5) * (status->int_ / 5); }
+unsigned short status_base_matk_min(const struct status_data* status) {
+	double multi = status->int_ / 7;
+	return status->int_ + int(multi * multi);
+}
+unsigned short status_base_matk_max(const struct status_data* status) {
+	double multi = status->int_ / 5;
+	return status->int_ + (int)(multi * multi);
+}
 #else
 /*
 * Calculates minimum attack variance 80% from db's ATK1 for non BL_PC
@@ -3875,6 +3882,7 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 #endif
 			// Overrefine bonus.
 			if( info != nullptr ){
+				ShowMessage(std::to_string(wd->overrefine).c_str());
 				wd->overrefine = info->randombonus_max / 100;
 			}
 
@@ -5241,7 +5249,7 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 
 		val = 0;
 		if( (skill=pc_checkskill(sd,SM_RECOVERY)) > 0 )
-			val += skill*5 + skill*status->max_hp/500;
+			val += skill*5 + skill*status->max_hp/200;
 
 		if (sc && sc->count) {
 			if (sc->getSCE(SC_INCREASE_MAXHP))
@@ -7422,6 +7430,8 @@ static signed short status_calc_critical(struct block_list *bl, status_change *s
 		critical += sc->getSCE(SC_TRUESIGHT)->val2;
 	if (sc->getSCE(SC_CLOAKING))
 		critical += critical;
+	if (sc->getSCE(KN_TWOHANDQUICKEN))
+		critical += sc->getSCE(KN_TWOHANDQUICKEN)->val1 * 80 / 100;
 //#ifdef RENEWAL
 	if (sc->getSCE(SC_SPEARQUICKEN))
 		critical += 3*sc->getSCE(SC_SPEARQUICKEN)->val1*10;
