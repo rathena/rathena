@@ -65,9 +65,9 @@
 					next;
 					switch(select("Trident:Rope:Violin"))
 					{
-						case 1: callfunc "Func_Socket",1460,1461,40,66,200,1010,10;
-						case 2: callfunc "Func_Socket",1950,1951,40,66,200,1010,10;
-						case 3: callfunc "Func_Socket",1901,1902,40,66,200,1010,10;
+						case 1: callfunc "Func_Socket",1460,1461,40,66,400,1010,10;
+						case 2: callfunc "Func_Socket",1950,1951,40,66,400,1010,10;
+						case 3: callfunc "Func_Socket",1901,1902,40,66,400,1010,10;
 					}
 				case 2:
 					mes "[Seiyablem]";
@@ -77,15 +77,15 @@
 					next;
 					switch(select("Chain:Gladius:Gakkung Bow:Pike:Haedonggum:Lute:Wire:Waghnakh:Arbalest Bow"))
 					{
-						case 1: callfunc "Func_Socket",1519,1520,40,61,300,1010,10;
-						case 2: callfunc "Func_Socket",1219,1220,40,61,300, 984, 1,999,5;
-						case 3: callfunc "Func_Socket",1714,1716,40,61,300, 984, 2,999,5;
-						case 4: callfunc "Func_Socket",1407,1408,40,61,200,1010,10;
-						case 5: callfunc "Func_Socket",1123,1128,40,61,300, 984, 2,999,5;
-						case 6: callfunc "Func_Socket",1905,1906,40,61,300,1011,10;
-						case 7: callfunc "Func_Socket",1954,1955,40,61,300,1011,10;
-						case 8: callfunc "Func_Socket",1801,1802,40,61,300,1010,10;
-						case 9: callfunc "Func_Socket",1713,1715,40,61,300, 984, 2,999,5;
+						case 1: callfunc "Func_Socket",1519,1520,40,61,600,1010,10;
+						case 2: callfunc "Func_Socket",1219,1220,40,61,600, 984, 1,999,5;
+						case 3: callfunc "Func_Socket",1714,1716,40,61,600, 984, 2,999,5;
+						case 4: callfunc "Func_Socket",1407,1408,40,61,400,1010,10;
+						case 5: callfunc "Func_Socket",1123,1128,40,61,600, 984, 2,999,5;
+						case 6: callfunc "Func_Socket",1905,1906,40,61,600,1011,10;
+						case 7: callfunc "Func_Socket",1954,1955,40,61,600,1011,10;
+						case 8: callfunc "Func_Socket",1801,1802,40,61,600,1010,10;
+						case 9: callfunc "Func_Socket",1713,1715,40,61,600, 984, 2,999,5;
 					}
 				case 3:
 					mes "[Seiyablem]";
@@ -95,15 +95,15 @@
 					next;
 					switch(select("Hunter Bow:Survivor's Rod(INT):Zweihander:Flamberge:Infiltrator:Ballista:Stunner:Berserk:Claymore"))
 					{
-						case 1: callfunc "Func_Socket",1718,1726,40,61,500,984,2,999,10;
-						case 2: callfunc "Func_Socket",1619,1620,40,61,500,984,5,999,10;
-						case 3: callfunc "Func_Socket",1168,1171,40,61,800,984,5,999,10;
-						case 4: callfunc "Func_Socket",1129,1149,40,61,500,984,2,999,10;
-						case 5: callfunc "Func_Socket",1261,1266,40,61,700,984,5,999,10;
-						case 6: callfunc "Func_Socket",1722,1727,40,61,500,984,5,999,10;
-						case 7: callfunc "Func_Socket",1522,1532,40,61,500,984,2,999,10;
-						case 8: callfunc "Func_Socket",1814,1816,40,61,500,984,5,999,10;
-						case 9: callfunc "Func_Socket",1163,1172,40,61,500,984,2,999,10; // NPC says "5 Oridecon" (Aegis) but takes only 2
+						case 1: callfunc "Func_Socket",1718,1726,40,61,1000,984,2,999,10;
+						case 2: callfunc "Func_Socket",1619,1620,40,61,1000,984,5,999,10;
+						case 3: callfunc "Func_Socket",1168,1171,40,61,1600,984,5,999,10;
+						case 4: callfunc "Func_Socket",1129,1149,40,61,1000,984,2,999,10;
+						case 5: callfunc "Func_Socket",1261,1266,40,61,1400,984,5,999,10;
+						case 6: callfunc "Func_Socket",1722,1727,40,61,1000,984,5,999,10;
+						case 7: callfunc "Func_Socket",1522,1532,40,61,1000,984,2,999,10;
+						case 8: callfunc "Func_Socket",1814,1816,40,61,1000,984,5,999,10;
+						case 9: callfunc "Func_Socket",1163,1172,40,61,1000,984,2,999,10; // NPC says "5 Oridecon" (Aegis) but takes only 2
 					}
 				case 4:
 					mes "[Seiyablem]";
@@ -114,14 +114,14 @@
 					next;
 					switch(select("Gungnir:Poison Knife:Ice Pick:Sucsamad:Ginnungagap:Cutlas:Crescent Scythe:Survivor's Rod(DEX)"))
 					{
-						case 1: callfunc "Func_Socket", 1413, 1418,40,51,1000,984,5,999,10;
-						case 2: callfunc "Func_Socket", 1239,13016,40,51,1000,984,5,999,10;
-						case 3: callfunc "Func_Socket", 1230,13017,40,51,2000,984,5,999,10;
-						case 4: callfunc "Func_Socket", 1236,13018,40,51,1000,984,5,999,10;
-						case 5: callfunc "Func_Socket",13002,13019,40,51,1000,984,5,999,10;
-						case 6: callfunc "Func_Socket", 1135,13400,40,51,1000,984,5,999,10;
-						case 7: callfunc "Func_Socket", 1466, 1476,40,51,1000,984,5,999,10;
-						case 8: callfunc "Func_Socket", 1617, 1618,40,51,2000,984,5,999,10;
+						case 1: callfunc "Func_Socket", 1413, 1418,40,51,2000,984,5,999,10;
+						case 2: callfunc "Func_Socket", 1239,13016,40,51,2000,984,5,999,10;
+						case 3: callfunc "Func_Socket", 1230,13017,40,51,4000,984,5,999,10;
+						case 4: callfunc "Func_Socket", 1236,13018,40,51,2000,984,5,999,10;
+						case 5: callfunc "Func_Socket",13002,13019,40,51,2000,984,5,999,10;
+						case 6: callfunc "Func_Socket", 1135,13400,40,51,2000,984,5,999,10;
+						case 7: callfunc "Func_Socket", 1466, 1476,40,51,2000,984,5,999,10;
+						case 8: callfunc "Func_Socket", 1617, 1618,40,51,4000,984,5,999,10;
 					}
 			}
 		case 2:
@@ -142,10 +142,10 @@
 					next;
 					switch(select("Mantle:Coat:Circlet:Biretta"))
 					{
-						case 1: callfunc "Func_Socket",2307,2308,40,66,200,999,3;
-						case 2: callfunc "Func_Socket",2309,2310,40,66,200,999,3;
-						case 3: callfunc "Func_Socket",2232,2233,40,66,200,999,3;
-						case 4: callfunc "Func_Socket",2216,2217,40,66,200,999,3;
+						case 1: callfunc "Func_Socket",2307,2308,40,66,400,999,3;
+						case 2: callfunc "Func_Socket",2309,2310,40,66,400,999,3;
+						case 3: callfunc "Func_Socket",2232,2233,40,66,400,999,3;
+						case 4: callfunc "Func_Socket",2216,2217,40,66,400,999,3;
 					}
 				case 2:
 					mes "[Seiyablem]";
@@ -154,17 +154,17 @@
 					next;
 					switch(select("Mirror Shield:Chain Mail:Saint Robe:Silk Robe:Boots:Shoes:Muffler:Guard:Buckler:Shield:Bongun Hat"))
 					{
-						case 1:  callfunc "Func_Socket",2107,2108,40,61,250,999,5;
-						case 2:  callfunc "Func_Socket",2314,2315,40,61,250,999,5;
-						case 3:  callfunc "Func_Socket",2325,2326,40,61,300,999,5;
-						case 4:  callfunc "Func_Socket",2321,2322,40,61,300,999,5;
-						case 5:  callfunc "Func_Socket",2405,2406,40,61,300,999,5;
-						case 6:  callfunc "Func_Socket",2403,2404,40,61,300,999,5;
-						case 7:  callfunc "Func_Socket",2503,2504,40,61,300,999,5;
-						case 8:  callfunc "Func_Socket",2101,2102,40,61,300,999,5;
-						case 9:  callfunc "Func_Socket",2103,2104,40,61,300,999,5;
-						case 10: callfunc "Func_Socket",2105,2106,40,61,250,999,5;
-						case 11: callfunc "Func_Socket",5046,5168,40,61,250,999,5;
+						case 1:  callfunc "Func_Socket",2107,2108,40,61,650,999,5;
+						case 2:  callfunc "Func_Socket",2314,2315,40,61,650,999,5;
+						case 3:  callfunc "Func_Socket",2325,2326,40,61,600,999,5;
+						case 4:  callfunc "Func_Socket",2321,2322,40,61,600,999,5;
+						case 5:  callfunc "Func_Socket",2405,2406,40,61,600,999,5;
+						case 6:  callfunc "Func_Socket",2403,2404,40,61,600,999,5;
+						case 7:  callfunc "Func_Socket",2503,2504,40,61,600,999,5;
+						case 8:  callfunc "Func_Socket",2101,2102,40,61,600,999,5;
+						case 9:  callfunc "Func_Socket",2103,2104,40,61,600,999,5;
+						case 10: callfunc "Func_Socket",2105,2106,40,61,500,999,5;
+						case 11: callfunc "Func_Socket",5046,5168,40,61,500,999,5;
 					}
 				case 3:
 					mes "[Seiyablem]";
@@ -174,24 +174,24 @@
 					next;
 					switch(select("Gemmed Sallet:Bucket Hat:Memory Book:Tights:Legion Plate Armor:Full Plate:Thief Clothes:Greaves:Coif:Manteau:Helm:Ninja Suit:Orc Helm:Ancient Cape:Monk Hat:Golden Gear:Brooch:Munak Hat"))
 					{
-						case 1:  callfunc "Func_Socket",2230,2231,40,61,400,985,1;
-						case 2:  callfunc "Func_Socket",5114,5120,40,61,400,985,1;
-						case 3:  callfunc "Func_Socket",2109,2121,40,61,400,985,1;
-						case 4:  callfunc "Func_Socket",2330,2331,40,61,400,985,1;
-						case 5:  callfunc "Func_Socket",2341,2342,40,61,400,985,1;
-						case 6:  callfunc "Func_Socket",2316,2317,40,61,400,985,1;
-						case 7:  callfunc "Func_Socket",2335,2336,40,61,400,985,1;
-						case 8:  callfunc "Func_Socket",2411,2412,40,61,400,985,1;
-						case 9:  callfunc "Func_Socket",5092,5093,40,61,400,985,1;
-						case 10: callfunc "Func_Socket",2505,2506,40,61,400,985,1;
-						case 11: callfunc "Func_Socket",2228,2229,40,61,400,985,1;
-						case 12: callfunc "Func_Socket",2337,2359,40,61,400,985,1;
-						case 13: callfunc "Func_Socket",2299,5157,40,61,400,985,1;
-						case 14: callfunc "Func_Socket",2507,2525,40,61,400,985,1;
-						case 15: callfunc "Func_Socket",2251,5158,40,61,400,985,1;
-						case 16: callfunc "Func_Socket",2246,5159,40,61,400,985,1;
-						case 17: callfunc "Func_Socket",2605,2625,40,61,400,985,1;
-						case 18: callfunc "Func_Socket",2264,5167,40,61,300,985,1;
+						case 1:  callfunc "Func_Socket",2230,2231,40,61,800,985,1;
+						case 2:  callfunc "Func_Socket",5114,5120,40,61,800,985,1;
+						case 3:  callfunc "Func_Socket",2109,2121,40,61,800,985,1;
+						case 4:  callfunc "Func_Socket",2330,2331,40,61,800,985,1;
+						case 5:  callfunc "Func_Socket",2341,2342,40,61,800,985,1;
+						case 6:  callfunc "Func_Socket",2316,2317,40,61,800,985,1;
+						case 7:  callfunc "Func_Socket",2335,2336,40,61,800,985,1;
+						case 8:  callfunc "Func_Socket",2411,2412,40,61,800,985,1;
+						case 9:  callfunc "Func_Socket",5092,5093,40,61,800,985,1;
+						case 10: callfunc "Func_Socket",2505,2506,40,61,800,985,1;
+						case 11: callfunc "Func_Socket",2228,2229,40,61,800,985,1;
+						case 12: callfunc "Func_Socket",2337,2359,40,61,800,985,1;
+						case 13: callfunc "Func_Socket",2299,5157,40,61,800,985,1;
+						case 14: callfunc "Func_Socket",2507,2525,40,61,800,985,1;
+						case 15: callfunc "Func_Socket",2251,5158,40,61,800,985,1;
+						case 16: callfunc "Func_Socket",2246,5159,40,61,800,985,1;
+						case 17: callfunc "Func_Socket",2605,2625,40,61,800,985,1;
+						case 18: callfunc "Func_Socket",2264,5167,40,61,600,985,1;
 					}
 				case 4:
 					mes "[Seiyablem]";
@@ -199,19 +199,24 @@
 					mes "You sure about this?";
 					mes "Alright... Let me know the Armor to which you'd like to add a Slot, and I'll tell what I need to try it.";
 					next;
-					switch(select("Majestic Goat:Spiky Band:Bone Helm:Corsair:Crown:Tiara:Sphinx Hat:Robe of Cast:Earring:Ring:Bow Thimble"))
+					switch(select("Majestic Goat:Spiky Band:Bone Helm:Corsair:Crown:Tiara:Sphinx Hat:Robe of Cast:Earring:Ring:Bow Thimble:Mage Coat:Holy Robe:Sacred Mission:Undershirt:Pantie"))
 					{
-						case 1:  callfunc "Func_Socket",2256,5160,40,51,2000,985,2;
-						case 2:  callfunc "Func_Socket",2258,5161,40,51,2000,985,2;
-						case 3:  callfunc "Func_Socket",5017,5162,40,51,2000,985,2;
-						case 4:  callfunc "Func_Socket",5019,5163,40,51,2000,985,2;
-						case 5:  callfunc "Func_Socket",2235,5165,40,51,2000,985,2;
-						case 6:  callfunc "Func_Socket",2234,5164,40,51,2000,985,2;
-						case 7:  callfunc "Func_Socket",5053,5166,40,51,1000,985,2;
-						case 8:  callfunc "Func_Socket",2343,2360,40,51,1000,985,2;
-						case 9:  callfunc "Func_Socket",2602,2622,40,51,1000,985,2;
-						case 10: callfunc "Func_Socket",2601,2621,40,51,1000,985,2;
-						case 11: callfunc "Func_Socket",2619,2671,40,51,1000,985,2;
+						case 1:  callfunc "Func_Socket",2256,5160,40,51,4000,985,2;
+						case 2:  callfunc "Func_Socket",2258,5161,40,51,4000,985,2;
+						case 3:  callfunc "Func_Socket",5017,5162,40,51,4000,985,2;
+						case 4:  callfunc "Func_Socket",5019,5163,40,51,4000,985,2;
+						case 5:  callfunc "Func_Socket",2235,5165,40,51,4000,985,2;
+						case 6:  callfunc "Func_Socket",2234,5164,40,51,4000,985,2;
+						case 7:  callfunc "Func_Socket",5053,5166,40,51,2000,985,2;
+						case 8:  callfunc "Func_Socket",2343,2360,40,51,2000,985,2;
+						case 9:  callfunc "Func_Socket",2602,2622,40,51,2000,985,2;
+						case 10: callfunc "Func_Socket",2601,2621,40,51,2000,985,2;
+						case 11: callfunc "Func_Socket",2619,2671,40,51,2000,985,2;
+						case 12: callfunc "Func_Socket",2334,2372,40,51,2000,985,2;
+						case 13: callfunc "Func_Socket",2327,2373,40,51,2000,985,2;
+						case 14: callfunc "Func_Socket",2111,2128,40,51,2000,985,2;
+						case 15: callfunc "Func_Socket",2522,2523,40,51,2000,985,2;
+						case 16: callfunc "Func_Socket",2339,2371,40,51,2000,985,2;
 					}
 			}
 		case 3:
@@ -263,18 +268,18 @@ function	script	Func_Socket	{
 	{
 		mes "I can try to add a slot now if you have the required items and zeny.";
 		mes "However, you should know that there's a chance that I might fail.";
-		mes "Therefore, I need to give you a fair warning...";
+		//mes "Therefore, I need to give you a fair warning...";
 		next;
-		mes "[Seiyablem]";
-		mes "If this attempt to add a Slot to your Weapon fails, then the ^FF0000Weapon^000000, ^FF0000and any Cards compounded to it will be destroyed^000000.";
+		//mes "[Seiyablem]";
+		//mes "If this attempt to add a Slot to your Weapon fails, then the ^FF0000Weapon^000000, ^FF0000and any Cards compounded to it will be destroyed^000000.";
 	}
 	else // armor
 	{
 		mes "If you have all the required materials, my zeny service fee and the Armor, then we can go ahead with the Slot Addition attempt.";
-		mes "But before that, I must warn you of the risk.";
-		next;
-		mes "[Seiyablem]";
-		mes "If this attempt to add a Slot to your Armor fails, then the ^FF0000Armor^000000, ^FF0000it's upgrades^000000 ^FF0000and any Cards compounded to it will be destroyed^000000.";
+		//mes "But before that, I must warn you of the risk.";
+		//next;
+		//mes "[Seiyablem]";
+		//mes "If this attempt to add a Slot to your Armor fails, then the ^FF0000Armor^000000, ^FF0000it's upgrades^000000 ^FF0000and any Cards compounded to it will be destroyed^000000.";
 	}
 	mes "Do you still want to try to add a Slot?";
 	next;
@@ -313,7 +318,7 @@ function	script	Func_Socket	{
 					mes "However, I am completely innocent.";
 					mes "This is your luck, and it is destined by god, okay?";
 					mes "Don't be so disappointed, and try next time.";
-					delitem .@item_id,1;
+					//delitem .@item_id,1;
 					delitem .@item_req[0],.@req_amount[0];
 					if (.@item_req[1] != 0 && .@req_amount[1] != 0)
 						delitem .@item_req[1],.@req_amount[1];
