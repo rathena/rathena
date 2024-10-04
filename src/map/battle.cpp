@@ -8839,7 +8839,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 
 #ifdef RENEWAL
 		// pc_skillatk_bonus must be after def reduction and before the damages applied when the target is hit (at least on renewal)
-		if ((i = pc_skillatk_bonus(sd, skill_id)) > 0) {
+		if (sd != nullptr && (i = pc_skillatk_bonus(sd, skill_id)) > 0) {
 			ad.damage += (int64)ad.damage*i/100;
 		}
 #endif
