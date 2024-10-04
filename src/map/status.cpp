@@ -2635,7 +2635,7 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 	status->hit = cap_value(stat, 1, SHRT_MAX);
 	// Flee
 	stat = status->flee;
-	stat += level + status->agi + (bl->type == BL_PC ? status->luk / 3 : 0);
+	stat += level + status->agi + (bl->type == BL_PC ? status->luk / 5 : 0);
 	status->flee = cap_value(stat, 1, SHRT_MAX);
 	// Def2
 	stat = status->def2;
