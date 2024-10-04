@@ -6077,6 +6077,17 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 			status->matk_max += wMatk + variance;
 		}
 
+		// Apply Recognized Spell buff
+		// Also update homunculus MATK, hom Min Matk is always the same as Max Matk
+		if ((bl.type == BL_HOM && battle_config.hom_setting&HOMSET_SAME_MATK) || (sc && sc->getSCE(SC_RECOGNIZEDSPELL))) {
+			status->matk_min = std::max( status->matk_min, status->matk_max );
+		}
+
+		if (sd != nullptr && sd->right_weapon.overrefine > 0) {
+			status->matk_min++;
+			status->matk_max += sd->right_weapon.overrefine - 1;
+		}
+
 		// Apply MATK % from skill Mystical Amplification
 		if (sc && sc->getSCE(SC_MAGICPOWER)) {
 			status->matk_min += status->matk_min * sc->getSCE(SC_MAGICPOWER)->val3 / 100;
@@ -6104,24 +6115,10 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 		status->matk_max = status_calc_matk(&bl, sc, status->matk_max);
 		status->matk_min = status_calc_matk(&bl, sc, status->matk_min);
 
-		if (sd != nullptr) {
-			// Apply MATK % from equipments / usable items
-			if (sd->matk_rate != 100) {
-				status->matk_min = status->matk_min * sd->matk_rate / 100;
-				status->matk_max = status->matk_max * sd->matk_rate / 100;
-			}
-
-			// Apply overrefine (unknown if this is the right place)
-			if (sd->right_weapon.overrefine > 0) {
-				status->matk_min++;
-				status->matk_max += sd->right_weapon.overrefine - 1;
-			}
-		}
-
-		// Apply Recognized Spell buff
-		// Also update homunculus MATK, hom Min Matk is always the same as Max Matk
-		if ((bl.type == BL_HOM && battle_config.hom_setting&HOMSET_SAME_MATK) || (sc && sc->getSCE(SC_RECOGNIZEDSPELL))) {
-			status->matk_min = std::max( status->matk_min, status->matk_max );
+		// Apply MATK % from equipments / usable items
+		if (sd != nullptr && sd->matk_rate != 100) {
+			status->matk_min = status->matk_min * sd->matk_rate / 100;
+			status->matk_max = status->matk_max * sd->matk_rate / 100;
 		}
 #endif
 	}
