@@ -13269,10 +13269,7 @@ TIMER_FUNC(skill_castend_id){
 					map_session_data *f_sd = pc_get_father(sd);
 					map_session_data *m_sd = pc_get_mother(sd);
 
-					if((f_sd && f_sd->status.disable_call) || (m_sd && m_sd->status.disable_call))
-						continue;
-
-					if ((f_sd && f_sd->state.autotrade) || (m_sd && m_sd->state.autotrade)) {
+					if ((f_sd != nullptr && (f_sd->state.autotrade || f_sd->status.disable_call)) || (m_sd != nullptr && (m_sd->state.autotrade || m_sd->status.disable_call))) {
 						fail = true;
 						break;
 					}
