@@ -655,7 +655,7 @@ CREATE TABLE IF NOT EXISTS `guild_storage_log` (
 
 CREATE TABLE IF NOT EXISTS `homunculus` (
   `homun_id` int(11) NOT NULL auto_increment,
-  `char_id` int(11) unsigned NOT NULL,
+  `char_id` int(11) NOT NULL,
   `class` mediumint(9) unsigned NOT NULL default '0',
   `prev_class` mediumint(9) NOT NULL default '0',
   `name` varchar(24) NOT NULL default '',

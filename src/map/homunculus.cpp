@@ -1121,8 +1121,9 @@ bool hom_call(map_session_data *sd)
 			return false;
 		clif_spawn(&hd->bl);
 		clif_send_homdata( *hd, SP_ACK );
-		clif_hominfo(sd,hd,1);
-		clif_hominfo(sd,hd,0); // send this x2. dunno why, but kRO does that [blackhole89]
+		// For some reason, official servers send the homunculus info twice, then update the HP/SP again.
+		clif_hominfo(sd, hd, 1);
+		clif_hominfo(sd, hd, 0);
 		clif_homunculus_updatestatus(*sd, SP_HP);
 		clif_homunculus_updatestatus(*sd, SP_SP);
 		clif_homskillinfoblock( *hd );
@@ -1186,8 +1187,9 @@ int hom_recv_data(uint32 account_id, struct s_homunculus *sh, int flag)
 			return 0;
 		clif_spawn(&hd->bl);
 		clif_send_homdata( *hd, SP_ACK );
-		clif_hominfo(sd,hd,1);
-		clif_hominfo(sd,hd,0); // send this x2. dunno why, but kRO does that [blackhole89]
+		// For some reason, official servers send the homunculus info twice, then update the HP/SP again.
+		clif_hominfo(sd, hd, 1);
+		clif_hominfo(sd, hd, 0);
 		clif_homunculus_updatestatus(*sd, SP_HP);
 		clif_homunculus_updatestatus(*sd, SP_SP);
 		clif_homskillinfoblock( *hd );
@@ -1306,8 +1308,9 @@ void hom_revive(struct homun_data *hd, unsigned int hp, unsigned int sp)
 	if (!sd)
 		return;
 	clif_send_homdata( *hd, SP_ACK );
-	clif_hominfo(sd,hd,1);
-	clif_hominfo(sd,hd,0);
+	// For some reason, official servers send the homunculus info twice, then update the HP/SP again.
+	clif_hominfo(sd, hd, 1);
+	clif_hominfo(sd, hd, 0);
 	clif_homunculus_updatestatus(*sd, SP_HP);
  	clif_homunculus_updatestatus(*sd, SP_SP);
 	clif_homskillinfoblock( *hd );
