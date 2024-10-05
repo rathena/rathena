@@ -5667,14 +5667,14 @@ void clif_skillinfoblock(map_session_data *sd)
  * Server tells client 'sd' to add skill of id 'id' to it's skill tree (e.g. with Ice Falcion item)
  **/
 
-/// Adds new skill to the skill tree (ZC_ADD_SKILL).
-/// 0111 <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <skill name>.24B <upgradable>.B
+/// Adds new skill to the skill tree.
+/// 0111 <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <skill name>.24B <upgradable>.B (ZC_ADD_SKILL)
 /// 0b31 <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <upgradable>.B <isnew>.B (ZC_ADD_SKILL2)
 void clif_addskill(map_session_data &sd, uint16 skill_id){
 
 	uint16 idx = skill_get_index(skill_id);
 
-	if (!session_isActive(sd.fd) || idx == 0)
+	if (idx == 0)
 		return;
 
 	if( sd.status.skill[idx].id <= 0 || sd.status.skill[idx].id > MAX_SKILL)
@@ -5685,13 +5685,14 @@ void clif_addskill(map_session_data &sd, uint16 skill_id){
 	p.packetType = HEADER_ZC_ADD_SKILL;
 	p.skill.id = skill_id;
 	p.skill.inf = skill_get_inf(skill_id);
-	p.skill.level = static_cast<decltype(p.skill.level)>(sd.status.skill[idx].lv);
+	p.skill.level = sd.status.skill[idx].lv;
 	p.skill.sp = static_cast<decltype(p.skill.sp)>( skill_get_sp(skill_id,sd.status.skill[idx].lv) );
 	p.skill.range2 = static_cast<decltype(p.skill.range2)>( skill_get_range2(&sd.bl,skill_id,sd.status.skill[idx].lv,false) );
 #if PACKETVER_RE_NUM >= 20190807 || PACKETVER_ZERO_NUM >= 20190918
-	p.skill.level2 = static_cast<decltype(p.skill.level2)>( pc_checkskill(&sd,skill_id) ); //new skillflag = 0, if pc have skill, not add lv on this, just for safe call
+	// new skillflag = 0, if pc have skill, not add lv on this, just for safe call
+	p.skill.level2 = pc_checkskill(&sd,skill_id);
 #else
-	safestrncpy(p.skill.name, skill_get_name(skill_id), NAME_LENGTH);
+	safestrncpy(p.skill.name, skill_get_name(skill_id), sizeof(p.skill.name));
 #endif
 
 	if( sd.status.skill[idx].flag == SKILL_FLAG_PERMANENT && sd.status.skill[idx].lv < skill_tree_get_max(skill_id, sd.status.class_))
