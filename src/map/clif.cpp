@@ -5677,7 +5677,7 @@ void clif_addskill(map_session_data &sd, uint16 skill_id){
 	if (idx == 0)
 		return;
 
-	if( sd.status.skill[idx].id <= 0 || sd.status.skill[idx].id > MAX_SKILL)
+	if( sd.status.skill[idx].id <= 0 )
 		return;
 
 	PACKET_ZC_ADD_SKILL p{};
@@ -5689,7 +5689,6 @@ void clif_addskill(map_session_data &sd, uint16 skill_id){
 	p.skill.sp = static_cast<decltype(p.skill.sp)>( skill_get_sp(skill_id,sd.status.skill[idx].lv) );
 	p.skill.range2 = static_cast<decltype(p.skill.range2)>( skill_get_range2(&sd.bl,skill_id,sd.status.skill[idx].lv,false) );
 #if PACKETVER_RE_NUM >= 20190807 || PACKETVER_ZERO_NUM >= 20190918
-	// new skillflag = 0, if pc have skill, not add lv on this, just for safe call
 	p.skill.level2 = pc_checkskill(&sd,skill_id);
 #else
 	safestrncpy(p.skill.name, skill_get_name(skill_id), sizeof(p.skill.name));
