@@ -1310,6 +1310,23 @@ struct PACKET_CZ_PARTY_JOIN_REQ_ACK{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_PARTY_JOIN_REQ_ACK, 0x2c7);
 
+#if PACKETVER_MAIN_NUM >= 20210000 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20210217
+// PACKET_ZC_HO_PAR_CHANGE2
+struct PACKET_ZC_HO_PAR_CHANGE {
+	int16 packetType;
+	uint16 type;
+	uint64 value;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_HO_PAR_CHANGE, 0xba5);
+#else
+struct PACKET_ZC_HO_PAR_CHANGE {
+	int16 packetType;
+	uint16 type;
+	int32 value;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_HO_PAR_CHANGE, 0x7db);
+#endif
+
 struct PACKET_ZC_EL_PAR_CHANGE {
 	int16 packetType;
 	uint16 type;

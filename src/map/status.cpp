@@ -1584,11 +1584,20 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 	// Need to pass original HP damage for the mob damage log
 	dhp = cap_value(dhp, INT_MIN, INT_MAX);
 	switch (target->type) {
-		case BL_PC:  pc_damage((TBL_PC*)target,src,hp,sp,ap); break;
-		case BL_MOB: mob_damage((TBL_MOB*)target, src, (int)dhp); break;
-		case BL_HOM: hom_damage((TBL_HOM*)target); break;
-		case BL_MER: mercenary_heal((TBL_MER*)target,hp,sp); break;
-		case BL_ELEM: elemental_heal((TBL_ELEM*)target,hp,sp); break;
+	case BL_PC:
+		pc_damage(reinterpret_cast<map_session_data*>(target), src, hp, sp, ap); break;
+	case BL_MOB:
+		mob_damage(reinterpret_cast<mob_data*>(target), src, (int)dhp);
+		break;
+	case BL_HOM:
+		hom_heal(reinterpret_cast<homun_data&>(*target), hp != 0, sp != 0);
+		break;
+	case BL_MER:
+		mercenary_heal(reinterpret_cast<s_mercenary_data*>(target), hp, sp);
+		break;
+	case BL_ELEM:
+		elemental_heal(reinterpret_cast<s_elemental_data*>(target), hp, sp);
+		break;
 	}
 
 	if( src && target->type == BL_PC && ((TBL_PC*)target)->disguise ) { // Stop walking when attacked in disguise to prevent walk-delay bug
@@ -1796,11 +1805,21 @@ int status_heal(struct block_list *bl,int64 hhp,int64 hsp, int64 hap, int flag)
 
 	// Send HP update to client
 	switch(bl->type) {
-		case BL_PC:  pc_heal((TBL_PC*)bl,hp,sp,ap,flag); break;
-		case BL_MOB: mob_heal((TBL_MOB*)bl,hp); break;
-		case BL_HOM: hom_heal((TBL_HOM*)bl); break;
-		case BL_MER: mercenary_heal((TBL_MER*)bl,hp,sp); break;
-		case BL_ELEM: elemental_heal((TBL_ELEM*)bl,hp,sp); break;
+	case BL_PC:
+		pc_heal(reinterpret_cast<map_session_data*>(bl), hp, sp, ap, flag);
+		break;
+	case BL_MOB:
+		mob_heal(reinterpret_cast<mob_data*>(bl), hp);
+		break;
+	case BL_HOM:
+		hom_heal(reinterpret_cast<homun_data&>(*bl), hp != 0, sp != 0);
+		break;
+	case BL_MER:
+		mercenary_heal(reinterpret_cast<s_mercenary_data*>(bl), hp, sp);
+		break;
+	case BL_ELEM:
+		elemental_heal(reinterpret_cast<s_elemental_data*>(bl), hp, sp);
+		break;
 	}
 
 	return (int)hp+sp+ap;

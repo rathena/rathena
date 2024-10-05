@@ -1748,6 +1748,63 @@ int clif_spawn( struct block_list *bl, bool walking ){
 	return 0;
 }
 
+/// Notifies client of a change in an homunculus' status parameter.
+/// 0x7db <type>.W <value>.L (ZC_HO_PAR_CHANGE)
+/// 0xba5 <type>.W <value>.Q (ZC_HO_PAR_CHANGE2)
+void clif_homunculus_updatestatus(map_session_data& sd, _sp type) {
+#if PACKETVER >= 20090610
+	if( !hom_is_active(sd.hd) )
+		return;
+
+	PACKET_ZC_HO_PAR_CHANGE p = {};
+
+	p.packetType = HEADER_ZC_HO_PAR_CHANGE;
+	p.type = static_cast<decltype(p.type)>(type);
+	status_data* status = &sd.hd->battle_status;
+
+	switch (type) {
+	case SP_BASEEXP:
+		p.value = static_cast<decltype(p.value)>( std::min<decltype(sd.hd->homunculus.exp)>( sd.hd->homunculus.exp, std::numeric_limits<decltype(p.value)>::max() ) );
+		break;
+	case SP_HP:
+		// Homunculus HP and SP bars will screw up if the percentage calculation exceeds signed values
+		// Any value above will screw up the bars
+		// Since max values depend on PACKET_ZC_PROPERTY_HOMUN we check for each version of that packet
+#if PACKETVER_MAIN_NUM >= 20200819 || PACKETVER_RE_NUM >= 20200723 || PACKETVER_ZERO_NUM >= 20190626
+		// Tested maximum: 2147483647 (INT32_MAX)
+		if (status->max_hp > INT32_MAX)
+#elif PACKETVER_MAIN_NUM >= 20131230 || PACKETVER_RE_NUM >= 20131230 || defined(PACKETVER_ZERO)
+		// Tested maximum: 21474836 (INT32_MAX / 100)
+		if (status->max_hp > INT32_MAX / 100)
+#else
+		// Tested maximum: 32767 (INT16_MAX)
+		if (status->max_hp > INT16_MAX)
+#endif
+			p.value = status->hp / (status->max_hp / 100);
+		else
+			p.value = static_cast<decltype(p.value)>(status->hp);
+		break;
+	case SP_SP:
+#if PACKETVER_MAIN_NUM >= 20200819 || PACKETVER_RE_NUM >= 20200723 || PACKETVER_ZERO_NUM >= 20190626
+		// Tested maximum: 2147483647 (INT32_MAX)
+		if (status->max_sp > INT32_MAX)
+#else
+		// Tested maximum: 32767 (INT16_MAX)
+		if (status->max_sp > INT16_MAX)
+#endif
+			p.value = status->sp / (status->max_sp / 100);
+		else
+			p.value = static_cast<decltype(p.value)>(status->sp);
+		break;
+	default:
+		ShowError("clif_homunculus_updatestatus: Unsupported type %d.\n", type);
+		return;
+	}
+
+	clif_send(&p, sizeof(p), &sd.bl, SELF);
+#endif
+}
+
 /// Sends information about owned homunculus to the client . [orn]
 /// 022e <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <equip id>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.W <max hp>.W <sp>.W <max sp>.W <exp>.L <max exp>.L <skill points>.W <atk range>.W	(ZC_PROPERTY_HOMUN)
 /// 09f7 <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <equip id>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.L <max hp>.L <sp>.W <max sp>.W <exp>.L <max exp>.L <skill points>.W <atk range>.W (ZC_PROPERTY_HOMUN_2)
@@ -1786,39 +1843,42 @@ void clif_hominfo( map_session_data *sd, struct homun_data *hd, int flag ){
 #endif
 	p.flee = status->flee;
 	p.amotion = (flag) ? 0 : status->amotion;
-#if PACKETVER >= 20141016
-	// Homunculus HP bar will screw up if the percentage calculation exceeds signed values
-	// Tested maximum: 21474836(=INT32_MAX/100), any value above will screw up the HP bar
-	if( status->max_hp > ( INT32_MAX / 100 ) ){
-		p.hp = status->hp / ( status->max_hp / 100 );
-		p.maxHp = 100;
-	}else{
-		p.hp = status->hp;
-		p.maxHp = status->max_hp;
-	}
+	// Homunculus HP and SP bars will screw up if the percentage calculation exceeds signed values
+	// Any value above will screw up the bars
+#if PACKETVER_MAIN_NUM >= 20200819 || PACKETVER_RE_NUM >= 20200723 || PACKETVER_ZERO_NUM >= 20190626
+	// Tested maximum: 2147483647 (INT32_MAX)
+	if (status->max_hp > INT32_MAX)
+#elif PACKETVER_MAIN_NUM >= 20131230 || PACKETVER_RE_NUM >= 20131230 || defined(PACKETVER_ZERO)
+	// Tested maximum: 21474836 (INT32_MAX / 100)
+	if (status->max_hp > INT32_MAX / 100)
 #else
-	if( status->max_hp > INT16_MAX ){
+	// Tested maximum: 32767 (INT16_MAX)
+	if (status->max_hp > INT16_MAX)
+#endif
+	{
 		p.hp = status->hp / ( status->max_hp / 100 );
 		p.maxHp = 100;
 	}else{
-		p.hp = status->hp;
-		p.maxHp = status->max_hp;
+		p.hp = static_cast<decltype(p.hp)>(status->hp);
+		p.maxHp = static_cast<decltype(p.maxHp)>(status->max_hp);
 	}
+#if PACKETVER_MAIN_NUM >= 20200819 || PACKETVER_RE_NUM >= 20200723 || PACKETVER_ZERO_NUM >= 20190626
+	// Tested maximum: 2147483647 (INT32_MAX)
+	if (status->max_sp > INT32_MAX)
+#else
+	// Tested maximum: 32767 (INT16_MAX)
+	if (status->max_sp > INT16_MAX)
 #endif
-	if( status->max_sp > INT16_MAX ){
+	{
 		p.sp = status->sp / ( status->max_sp / 100 );
 		p.maxSp = 100;
 	}else{
-		p.sp = status->sp;
-		p.maxSp = status->max_sp;
+		p.sp = static_cast<decltype(p.sp)>(status->sp);
+		p.maxSp = static_cast<decltype(p.maxSp)>(status->max_sp);
 	}
-#if PACKETVER_MAIN_NUM >= 20210303 || PACKETVER_RE_NUM >= 20211103
-	p.exp = hd->homunculus.exp;
-	p.expNext = hd->exp_next;
-#else
-	p.exp = (uint32)hd->homunculus.exp;
-	p.expNext = (uint32)hd->exp_next;
-#endif
+	p.exp = static_cast<decltype(p.exp)>( std::min<decltype(hd->homunculus.exp)>( hd->homunculus.exp, std::numeric_limits<decltype(p.exp)>::max() ) );
+	p.expNext = static_cast<decltype(p.expNext)>( std::min<decltype(hd->exp_next)>( hd->exp_next, std::numeric_limits<decltype(p.expNext)>::max() ) );
+
 	switch( hom_class2type( hd->homunculus.class_ ) ){
 		case HT_REG:
 		case HT_EVO:
@@ -10782,8 +10842,11 @@ void clif_parse_LoadEndAck(int fd,map_session_data *sd)
 			return;
 		clif_spawn(&sd->hd->bl);
 		clif_send_homdata( *sd->hd, SP_ACK );
-		clif_hominfo(sd,sd->hd,1);
-		clif_hominfo(sd,sd->hd,0); //for some reason, at least older clients want this sent twice
+		// For some reason, official servers send the homunculus info twice, then update the HP/SP again.
+		clif_hominfo(sd, sd->hd, 1);
+		clif_hominfo(sd, sd->hd, 0);
+		clif_homunculus_updatestatus(*sd, SP_HP);
+		clif_homunculus_updatestatus(*sd, SP_SP);
 		clif_homskillinfoblock( *sd->hd );
 		status_calc_bl(&sd->hd->bl, { SCB_SPEED });
 		if( !(battle_config.hom_setting&HOMSET_NO_INSTANT_LAND_SKILL) )

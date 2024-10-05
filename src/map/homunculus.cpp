@@ -227,15 +227,6 @@ void hom_delspiritball(TBL_HOM *hd, int count, int type) {
 }
 
 /**
-* Update homunculus info to its master after receiving damage
-* @param hd
-*/
-void hom_damage(struct homun_data *hd) {
-	if (hd->master)
-		clif_hominfo(hd->master,hd,0);
-}
-
-/**
 * Set homunculus's dead status
 * @param hd
 * @return flag &1 - Standard dead, &2 - Remove object from map, &4 - Delete object from memory
@@ -245,16 +236,12 @@ int hom_dead(struct homun_data *hd)
 	//There's no intimacy penalties on death (from Tharis)
 	map_session_data *sd = hd->master;
 
-	clif_emotion(&hd->bl, ET_KEK);
-
 	//Delete timers when dead.
 	hom_hungry_timer_delete(hd);
 	hd->homunculus.hp = 0;
 
 	if (!sd) //unit remove map will invoke unit free
 		return 3;
-
-	clif_emotion(&sd->bl, ET_CRY);
 
 #ifdef RENEWAL
 	status_change_end(&sd->bl, SC_HOMUN_TIME);
@@ -306,11 +293,9 @@ int hom_vaporize(map_session_data *sd, int flag)
 
 /**
 * Delete a homunculus, completely "killing it".
-* Emote is the emotion the master should use, send negative to disable.
 * @param hd
-* @param emote
 */
-int hom_delete(struct homun_data *hd, int emote)
+int hom_delete(struct homun_data *hd)
 {
 	map_session_data *sd;
 	nullpo_ret(hd);
@@ -318,9 +303,6 @@ int hom_delete(struct homun_data *hd, int emote)
 
 	if (!sd)
 		return unit_free(&hd->bl,CLR_DEAD);
-
-	if (emote >= 0)
-		clif_emotion(&sd->bl, emote);
 
 	//This makes it be deleted right away.
 	hd->homunculus.intimacy = 0;
@@ -573,6 +555,7 @@ int hom_levelup(struct homun_data *hd)
 	// Needed to update skill list for mutated homunculus so unlocked skills will appear when the needed level is reached.
 	status_calc_homunculus(hd,SCO_NONE);
 	clif_hominfo(hd->master,hd,0);
+	clif_homunculus_updatestatus(*hd->master, SP_BASEEXP);
 	clif_homskillinfoblock( *hd );
 
 	if ( hd->master && battle_config.homunculus_show_growth ) {
@@ -615,7 +598,7 @@ int hom_evolution(struct homun_data *hd)
 	nullpo_ret(hd);
 
 	if(!hd->homunculusDB->evo_class || hd->homunculus.class_ == hd->homunculusDB->evo_class) {
-		clif_emotion(&hd->bl, ET_SWEAT);
+		clif_emotion(&hd->bl, ET_SCRATCH);
 		return 0 ;
 	}
 
@@ -629,7 +612,7 @@ int hom_evolution(struct homun_data *hd)
 		return 0;
 	}
 
-	//Apply evolution bonuses
+	// Apply evolution bonuses
 	s_homunculus *hom = &hd->homunculus;
 	s_hom_stats *max = &hd->homunculusDB->emax;
 	s_hom_stats *min = &hd->homunculusDB->emin;
@@ -644,20 +627,17 @@ int hom_evolution(struct homun_data *hd)
 	hom->luk += 10*rnd_value(min->luk, max->luk);
 	hom->intimacy = battle_config.homunculus_evo_intimacy_reset;
 
-	hom_calc_skilltree(hd);
+	clif_class_change(&hd->bl, hd->homunculusDB->evo_class, 0);
 
-	unit_remove_map(&hd->bl, CLR_OUTSIGHT);
-	if (map_addblock(&hd->bl))
-		return 0;
-
-	clif_spawn(&hd->bl);
-	clif_emotion(&sd->bl, ET_BEST);
-	clif_specialeffect(&hd->bl,EF_HO_UP,AREA);
-
-	//status_Calc flag&1 will make current HP/SP be reloaded from hom structure
+	// status_Calc flag&1 will make current HP/SP be reloaded from hom structure
 	hom->hp = hd->battle_status.hp;
 	hom->sp = hd->battle_status.sp;
 	status_calc_homunculus(hd, SCO_FIRST);
+
+	clif_hominfo(sd, hd, 0);
+	// Official servers don't recaculate the skill tree after evolution
+	// but we do it for convenience
+	hom_calc_skilltree(hd);
 
 	if (!(battle_config.hom_setting&HOMSET_NO_INSTANT_LAND_SKILL))
 		skill_unit_move(&sd->hd->bl,gettick(),1); // apply land skills immediately
@@ -682,7 +662,7 @@ int hom_mutate(struct homun_data *hd, int homun_id)
 	m_id    = hom_class2mapid(homun_id);
 
 	if( m_class == -1 || m_id == -1 || !(m_class&HOM_EVO) || !(m_id&HOM_S) ) {
-		clif_emotion(&hd->bl, ET_SWEAT);
+		clif_emotion(&hd->bl, ET_SCRATCH);
 		return 0;
 	}
 
@@ -697,22 +677,19 @@ int hom_mutate(struct homun_data *hd, int homun_id)
 		return 0;
 	}
 
-	hom_calc_skilltree(hd);
+	clif_class_change(&hd->bl, homun_id, 0);
 
-	unit_remove_map(&hd->bl, CLR_OUTSIGHT);
-	if(map_addblock(&hd->bl))
-		return 0;
-
-	clif_spawn(&hd->bl);
-	clif_emotion(&sd->bl, ET_BEST);
-	clif_specialeffect(&hd->bl,EF_HO_UP,AREA);
-
-	//status_Calc flag&1 will make current HP/SP be reloaded from hom structure
+	// status_Calc flag&1 will make current HP/SP be reloaded from hom structure
 	hom = &hd->homunculus;
 	hom->hp = hd->battle_status.hp;
 	hom->sp = hd->battle_status.sp;
 	hom->prev_class = prev_class;
 	status_calc_homunculus(hd, SCO_FIRST);
+
+	clif_hominfo(sd, hd, 0);
+	// Official servers don't recaculate the skill tree after evolution
+	// but we do it for convenience
+	hom_calc_skilltree(hd);
 
 	if (!(battle_config.hom_setting&HOMSET_NO_INSTANT_LAND_SKILL))
 		skill_unit_move(&sd->hd->bl,gettick(),1); // apply land skills immediately
@@ -750,7 +727,7 @@ void hom_gainexp(struct homun_data *hd,t_exp exp)
 	hd->homunculus.exp += exp;
 
 	if (hd->master && hd->homunculus.exp < hd->exp_next) {
-		clif_hominfo(hd->master,hd,0);
+		clif_homunculus_updatestatus(*hd->master, SP_BASEEXP);
 		return;
 	}
 
@@ -807,12 +784,19 @@ int hom_decrease_intimacy(struct homun_data * hd, unsigned int value)
 }
 
 /**
-* Update homunculus info to master after healing
-* @param hd
+* Update homunculus status after healing/damage
+* @param hd Homunculus data
+* @param hp HP amount
+* @param sp SP amount
 */
-void hom_heal(struct homun_data *hd) {
-	if (hd->master)
-		clif_hominfo(hd->master,hd,0);
+void hom_heal(homun_data& hd, bool hp, bool sp) {
+	if (hd.master == nullptr)
+		return;
+
+	if (hp)
+		clif_homunculus_updatestatus(*hd.master, SP_HP);
+	if (sp)
+		clif_homunculus_updatestatus(*hd.master, SP_SP);
 }
 
 /**
@@ -853,7 +837,7 @@ void hom_menu(map_session_data *sd, int type)
 			hom_food(sd, sd->hd);
 			break;
 		case 2:
-			hom_delete(sd->hd, -1);
+			hom_delete(sd->hd);
 			break;
 		default:
 			ShowError("hom_menu : unknown menu choice : %d\n", type);
@@ -914,7 +898,7 @@ int hom_food(map_session_data *sd, struct homun_data *hd)
 
 	// Too much food :/
 	if(hd->homunculus.intimacy == 0)
-		return hom_delete(sd->hd, ET_HUK);
+		return hom_delete(sd->hd);
 
 	return 0;
 }
@@ -957,7 +941,7 @@ static TIMER_FUNC(hom_hungry){
 		hd->homunculus.hunger = 0;
 		// Delete the homunculus if intimacy <= 100
 		if (!hom_decrease_intimacy(hd, 100))
-			return hom_delete(hd, ET_HUK);
+			return hom_delete(hd);
 		clif_send_homdata( *hd, SP_INTIMATE );
 	}
 
@@ -1025,8 +1009,9 @@ void hom_change_name_ack(map_session_data *sd, char* name, int flag)
 		return;
 	}
 	safestrncpy(hd->homunculus.name,name,NAME_LENGTH);
-	clif_name_area(&hd->bl);
 	hd->homunculus.rename_flag = 1;
+	clif_hominfo(sd,hd,1);
+	clif_name_area(&hd->bl);
 	clif_hominfo(sd,hd,0);
 }
 
@@ -1136,8 +1121,11 @@ bool hom_call(map_session_data *sd)
 			return false;
 		clif_spawn(&hd->bl);
 		clif_send_homdata( *hd, SP_ACK );
-		clif_hominfo(sd,hd,1);
-		clif_hominfo(sd,hd,0); // send this x2. dunno why, but kRO does that [blackhole89]
+		// For some reason, official servers send the homunculus info twice, then update the HP/SP again.
+		clif_hominfo(sd, hd, 1);
+		clif_hominfo(sd, hd, 0);
+		clif_homunculus_updatestatus(*sd, SP_HP);
+		clif_homunculus_updatestatus(*sd, SP_SP);
 		clif_homskillinfoblock( *hd );
 		status_calc_bl(&hd->bl, { SCB_SPEED });
 		hom_save(hd);
@@ -1199,8 +1187,11 @@ int hom_recv_data(uint32 account_id, struct s_homunculus *sh, int flag)
 			return 0;
 		clif_spawn(&hd->bl);
 		clif_send_homdata( *hd, SP_ACK );
-		clif_hominfo(sd,hd,1);
-		clif_hominfo(sd,hd,0); // send this x2. dunno why, but kRO does that [blackhole89]
+		// For some reason, official servers send the homunculus info twice, then update the HP/SP again.
+		clif_hominfo(sd, hd, 1);
+		clif_hominfo(sd, hd, 0);
+		clif_homunculus_updatestatus(*sd, SP_HP);
+		clif_homunculus_updatestatus(*sd, SP_SP);
 		clif_homskillinfoblock( *hd );
 		hom_init_timers(hd);
 
@@ -1317,8 +1308,11 @@ void hom_revive(struct homun_data *hd, unsigned int hp, unsigned int sp)
 	if (!sd)
 		return;
 	clif_send_homdata( *hd, SP_ACK );
-	clif_hominfo(sd,hd,1);
-	clif_hominfo(sd,hd,0);
+	// For some reason, official servers send the homunculus info twice, then update the HP/SP again.
+	clif_hominfo(sd, hd, 1);
+	clif_hominfo(sd, hd, 0);
+	clif_homunculus_updatestatus(*sd, SP_HP);
+ 	clif_homunculus_updatestatus(*sd, SP_SP);
 	clif_homskillinfoblock( *hd );
 
 	if( hd->homunculus.class_ == MER_ELEANOR ){
