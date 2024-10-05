@@ -6200,7 +6200,6 @@ bool npc_remove_mob_spawns(const char* path) {
 				}
 			}
 		}
-
 	}
 
 	// Sort spawns by spawn quantity
