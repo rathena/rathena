@@ -59155,7 +59155,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      RouletteBronze++;
+      RouletteBronze += 10;
   - Id: 22870
     AegisName: Xmas_Package_14
     Name: Christmas Package
