@@ -1369,6 +1369,20 @@ struct PACKET_CZ_REQUEST_MOVENPC{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_REQUEST_MOVENPC, 0x232);
 
+struct PACKET_ZC_ROOM_NEWENTRY {
+	int16 packetType;
+	// packet size using title's actual occupied size instead of (CHATROOM_TITLE_SIZE - 1)
+	uint16 packetSize; 
+	int32 owner;
+	int32 id;
+	uint16 limit;
+	uint16 users;
+	uint8 type;
+	// CHATROOM_TITLE_SIZE - 1 (not zero-terminated)
+	char title[36];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ROOM_NEWENTRY, 0xd7);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )

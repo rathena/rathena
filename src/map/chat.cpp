@@ -106,7 +106,7 @@ int chat_createpcchat(map_session_data* sd, const char* title, const char* pass,
 		pc_setchatid(sd,cd->bl.id);
 		pc_stop_attack(sd);
 		clif_createchat( *sd, CREATEROOM_SUCCESS );
-		clif_dispchat(cd,0);
+		clif_dispchat(*cd);
 
 		if (status_isdead(sd->bl))
 			achievement_update_objective(sd, AG_CHATTING_DYING, 1, 1);
@@ -171,7 +171,7 @@ int chat_joinchat(map_session_data* sd, int chatid, const char* pass)
 	// To the person who newly joined the chat
 	clif_joinchatok(*sd, *cd);
 	clif_addchat(cd, sd); //Reports To the person who already in the chat
-	clif_dispchat(cd, 0); //Reported number of changes to the people around
+	clif_dispchat(*cd); //Reported number of changes to the people around
 
 	if (cd->owner->type == BL_PC)
 		achievement_update_objective(map_id2sd(cd->owner->id), AG_CHATTING_COUNT, 1, cd->users);
@@ -245,9 +245,9 @@ int chat_leavechat(map_session_data* sd, bool kicked)
 		if(map_addblock( &cd->bl ))
 			return 1;
 
-		clif_dispchat(cd,0);
+		clif_dispchat(*cd);
 	} else
-		clif_dispchat(cd,0); // refresh chatroom
+		clif_dispchat(*cd); // refresh chatroom
 
 	return 0;
 }
@@ -296,7 +296,7 @@ int chat_changechatowner(map_session_data* sd, const char* nextownername)
 		return 1;
 
 	// and display again
-	clif_dispchat(cd,0);
+	clif_dispchat(*cd);
 
 	return 0;
 }
@@ -327,7 +327,7 @@ int chat_changechatstatus(map_session_data* sd, const char* title, const char* p
 	cd->pub = pub;
 
 	clif_changechatstatus(*cd);
-	clif_dispchat(cd,0);
+	clif_dispchat(*cd);
 
 	return 0;
 }
@@ -415,7 +415,7 @@ int chat_createnpcchat(struct npc_data* nd, const char* title, int limit, bool p
 
 	if( cd ) {
 		nd->chat_id = cd->bl.id;
-		clif_dispchat(cd,0);
+		clif_dispchat(*cd);
 	}
 
 	return 0;

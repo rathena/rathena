@@ -3030,7 +3030,7 @@ int pc_disguise(map_session_data *sd, int class_)
 		if (sd->chatID) {
 			struct chat_data* cd;
 			if ((cd = (struct chat_data*)map_id2bl(sd->chatID)) != nullptr)
-				clif_dispchat(cd,0);
+				clif_dispchat(*cd);
 		}
 	}
 	return 1;
