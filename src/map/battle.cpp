@@ -494,8 +494,15 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 #endif
 				break;
 			case ELE_GHOST:
-				if (sc->getSCE(SC_TELEKINESIS_INTENSE))
-					ratio += sc->getSCE(SC_TELEKINESIS_INTENSE)->val3;
+				if (sc->getSCE(SC_TELEKINESIS_INTENSE)) {
+					// At least for SC_TELEKINESIS_INTENSE:
+					// damage after elemental_attribute_db should be calculated first to avoid rounding issues
+					damage = damage - (int64)((damage * (100 - ratio)) / 100);
+					// Initialize ratio to 100 (default)
+					ratio = 100;
+
+					ratio += ratio * sc->getSCE(SC_TELEKINESIS_INTENSE)->val3 / 100;
+				}
 				break;
 		}
 	}
