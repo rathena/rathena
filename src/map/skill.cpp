@@ -9827,7 +9827,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case BS_GREED:
 		if (sd != nullptr && pc_inventoryblank(sd) >= 5) { // Greed skill should be disabled if the character have less than 5 slots [Haydrich]
-			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+			clif_skill_nodamage(src, *bl, skill_id, skill_lv, 1);
 			map_foreachinallrange(skill_greed, bl,
 				skill_get_splash(skill_id, skill_lv), BL_ITEM, bl);
 		} else
