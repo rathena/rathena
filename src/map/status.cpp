@@ -2435,11 +2435,11 @@ unsigned int status_weapon_atk(weapon_atk &wa)
 
 #ifndef RENEWAL
 unsigned short status_base_matk_min(const struct status_data* status) {
-	double multi = status->int_ / 7;
+	double multi = status->int_ / 7.0;
 	return status->int_ + int(multi * multi) + (status->luk / 3);
 }
 unsigned short status_base_matk_max(const struct status_data* status) {
-	double multi = status->int_ / 5;
+	double multi = status->int_ / 5.0;
 	return status->int_ + (int)(multi * multi) + (status->luk / 3);
 }
 #else
@@ -3882,7 +3882,6 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 #endif
 			// Overrefine bonus.
 			if( info != nullptr ){
-				ShowMessage(std::to_string(wd->overrefine).c_str());
 				wd->overrefine = info->randombonus_max / 100;
 			}
 
