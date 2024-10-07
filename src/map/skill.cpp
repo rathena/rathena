@@ -9833,7 +9833,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				break;
 			}
 #else
-			if (pc_inventoryblank(sd) >= MAX_INVENTORY) // Greed skill should show a message if the character inventory is full on Pre-Re [Daegaladh]
+			if (!pc_inventoryblank(sd)) // Greed skill should show a message if the character inventory is full on Pre-Re [Daegaladh]
 				clif_msg_color(sd, MSI_CANT_GET_ITEM_BECAUSE_COUNT, color_table[COLOR_RED]);
 #endif
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
