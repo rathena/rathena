@@ -7628,9 +7628,6 @@ Body:
         Time: 1800000
     Requires:
       SpCost: 40
-      ItemCost:
-        - Item: Boody_Red
-          Amount: 1
     Status: FireWeapon
   - Id: 281
     Name: SA_FROSTWEAPON
@@ -7662,9 +7659,6 @@ Body:
         Time: 1800000
     Requires:
       SpCost: 40
-      ItemCost:
-        - Item: Crystal_Blue
-          Amount: 1
     Status: WaterWeapon
   - Id: 282
     Name: SA_LIGHTNINGLOADER
@@ -7696,9 +7690,6 @@ Body:
         Time: 1800000
     Requires:
       SpCost: 40
-      ItemCost:
-        - Item: Wind_Of_Verdure
-          Amount: 1
     Status: WindWeapon
   - Id: 283
     Name: SA_SEISMICWEAPON
@@ -7730,9 +7721,6 @@ Body:
         Time: 1800000
     Requires:
       SpCost: 40
-      ItemCost:
-        - Item: Yellow_Live
-          Amount: 1
     Status: EarthWeapon
   - Id: 284
     Name: SA_DRAGONOLOGY
