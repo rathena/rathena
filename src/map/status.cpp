@@ -6017,7 +6017,6 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 		int skill_level = pc_checkskill(sd, SA_ADVANCEDBOOK);
 
 		if (skill_level > 0 && sd->status.weapon == W_BOOK) {
-			ShowMessage(std::to_string(skill_level).c_str());
 			status->matk_max += status->matk_max * skill_level / (double)100;
 			status->matk_min += status->matk_min * skill_level / (double)100;
 		}

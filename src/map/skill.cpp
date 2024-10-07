@@ -19772,24 +19772,24 @@ int skill_autospell(map_session_data *sd, uint16 skill_id)
 	else
 		maxlv = skill_lv / 2; // Half of Autospell's level unless player learned a lower level (capped below)
 #else
-	if(skill_id==MG_NAPALMBEAT)	maxlv=3;
+	if(skill_id==MG_NAPALMBEAT)	maxlv=5;
 	else if(skill_id==MG_COLDBOLT || skill_id==MG_FIREBOLT || skill_id==MG_LIGHTNINGBOLT){
 		if (sd->sc.getSCE(SC_SPIRIT) && sd->sc.getSCE(SC_SPIRIT)->val2 == SL_SAGE)
 			maxlv = 10; //Soul Linker bonus. [Skotlex]
-		else if(skill_lv==2) maxlv=1;
-		else if(skill_lv==3) maxlv=2;
-		else if(skill_lv>=4) maxlv=3;
+		else if(skill_lv==2) maxlv=3;
+		else if(skill_lv==3) maxlv=4;
+		else if(skill_lv>=4) maxlv=5;
 	}
 	else if(skill_id==MG_SOULSTRIKE){
-		if(skill_lv==5) maxlv=1;
-		else if(skill_lv==6) maxlv=2;
-		else if(skill_lv>=7) maxlv=3;
+		if(skill_lv==5) maxlv=3;
+		else if(skill_lv==6) maxlv=4;
+		else if(skill_lv>=7) maxlv=5;
 	}
 	else if(skill_id==MG_FIREBALL){
-		if(skill_lv==8) maxlv=1;
-		else if(skill_lv>=9) maxlv=2;
+		if(skill_lv==8) maxlv=5;
+		else if(skill_lv>=9) maxlv=5;
 	}
-	else if(skill_id==MG_FROSTDIVER) maxlv=1;
+	else if(skill_id==MG_FROSTDIVER) maxlv=5;
 	else return 0;
 #endif
 
