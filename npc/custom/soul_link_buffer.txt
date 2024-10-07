@@ -1,0 +1,78 @@
+-	script	SoulBuffer	-1,{
+        
+
+        //mes "[Soul Linker]";
+        //mes "I can provide additional power for you, for a price of 5000 zeny.";
+
+	set .@i,select( "Blessing & Agility - 1000z","Soul Link - 1000z","Both - 1500z" );
+	set .@cost,( ( .@i == 3 )? 1500:1000 );
+	if( Zeny < .@cost ){
+		mes "You dont have enough "+.@cost+" zeny.";
+	}else{
+		set Zeny,Zeny - .@cost;
+		if( .@i & 1 ){
+			percentheal 100,100;
+			skilleffect 34,0; sc_start SC_BLESSING,1800000,10;
+			skilleffect 29,0; sc_start SC_INCREASEAGI,1800000,10;
+		}
+		if( .@i & 2 ){
+			switch ( basejob ) {
+			  case Job_Alchemist:	set .@spirit, 445; break;
+			  case Job_Monk:	 set .@spirit, 447; break;
+			  case Job_Star_Gladiator:  set .@spirit, 448; break;
+			  case Job_Sage:	 set .@spirit, 449; break;
+			  case Job_Crusader:	set .@spirit, 450; break;
+			  case Job_SuperNovice:   set .@spirit, 451; break;
+			  case Job_Knight:	set .@spirit, 452; break;
+			  case Job_Wizard:	set .@spirit, 453; break;
+			  case Job_Priest:	set .@spirit, 454; break;
+			  case Job_Bard: case Job_Dancer: set .@spirit, 455; break;
+			  case Job_Rogue:	 set .@spirit, 456; break;
+			  case Job_Assassin:	set .@spirit, 457; break;
+			  case Job_Blacksmith:   set .@spirit, 458; break;
+			  case Job_Hunter:	set .@spirit, 460; break;
+			  case Job_Soul_Linker:   set .@spirit, 461; break;
+			  default:
+			   if ( upper == 1 && baselevel < 70 )
+				set .@spirit, 494;
+			}
+			if ( .@spirit ) {
+			  sc_start4 sc_spirit, 1800000, 5, .@spirit,0,0;
+			  skilleffect .@spirit, 5;
+			}
+		}
+	}
+end;
+}
+
+
+
+alberta,25,240,6	duplicate(SoulBuffer)	Buffer#alb	51
+aldebaran,135,118,6	duplicate(SoulBuffer)	Buffer#alde	51
+amatsu,200,79,4	duplicate(SoulBuffer)	Buffer#ama	51
+ayothaya,207,169,6	duplicate(SoulBuffer)	Buffer#ayo	51
+comodo,184,158,6	duplicate(SoulBuffer)	Buffer#com	51
+einbech,57,36,6	duplicate(SoulBuffer)	Buffer#einbe	51
+einbroch,57,202,6	duplicate(SoulBuffer)	Buffer#einbr	51
+geffen,115,72,6	duplicate(SoulBuffer)	Buffer#gef	51
+gonryun,156,122,6	duplicate(SoulBuffer)	Buffer#gon	51
+hugel,89,150,6	duplicate(SoulBuffer)	Buffer#hug	51
+izlude,125,118,6	duplicate(SoulBuffer)	Buffer#izl	51
+jawaii,250,139,4	duplicate(SoulBuffer)	Buffer#jaw	51
+lighthalzen,152,100,6	duplicate(SoulBuffer)	Buffer#lhz	51
+louyang,226,103,4	duplicate(SoulBuffer)	Buffer#lou	51
+manuk,272,144,6	duplicate(SoulBuffer)	Buffer#man	51
+mid_camp,203,289,6	duplicate(SoulBuffer)	Buffer#mid	51
+moc_ruins,72,164,4	duplicate(SoulBuffer)	Buffer#moc	51
+morocc,153,97,6	duplicate(SoulBuffer)	Buffer#mor	51
+moscovia,220,191,4	duplicate(SoulBuffer)	Buffer#mos	51
+niflheim,212,182,5	duplicate(SoulBuffer)	Buffer#nif	51
+payon,179,106,4	duplicate(SoulBuffer)	Buffer#pay	51
+prontera,162,193,4	duplicate(SoulBuffer)	Buffer#prt	51
+rachel,125,116,6	duplicate(SoulBuffer)	Buffer#rac	51
+splendide,201,153,4	duplicate(SoulBuffer)	Buffer#spl	51
+thor_camp,249,74,4	duplicate(SoulBuffer)	Buffer#thor	51
+umbala,105,148,3	duplicate(SoulBuffer)	Buffer#umb	51
+veins,217,121,4	duplicate(SoulBuffer)	Buffer#ve	51
+xmas,143,136,4	duplicate(SoulBuffer)	Buffer#xmas	51
+yuno,164,45,4	duplicate(SoulBuffer)	Buffer#yuno	51
