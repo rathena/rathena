@@ -9826,12 +9826,18 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case BS_GREED:
-		if (sd != nullptr && pc_inventoryblank(sd) >= 5) { // Greed skill should be disabled if the character have less than 5 slots [Haydrich]
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv, 1);
-			map_foreachinallrange(skill_greed, bl,
-				skill_get_splash(skill_id, skill_lv), BL_ITEM, bl);
-		} else
-			clif_msg_color(sd, MSI_SKILL_INVENTORY_KINDCNT_OVER, color_table[COLOR_RED]);
+		if (sd != nullptr) {
+#ifdef	RENEWAL
+			if (pc_inventoryblank(sd) >= 5) { // Greed skill should be disabled if the character have less than 5 slots [Haydrich]
+				clif_skill_nodamage(src, *bl, skill_id, skill_lv, 1);
+				map_foreachinallrange(skill_greed, bl, skill_get_splash(skill_id, skill_lv), BL_ITEM, bl);
+			} else
+				clif_msg_color(sd, MSI_SKILL_INVENTORY_KINDCNT_OVER, color_table[COLOR_RED]);
+#else
+			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+			map_foreachinallrange(skill_greed, bl, skill_get_splash(skill_id, skill_lv), BL_ITEM, bl);
+#endif
+		}
 		break;
 
 	case SA_ELEMENTWATER:
