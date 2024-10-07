@@ -1068,6 +1068,8 @@ void clif_guild_xy_single( map_session_data& sd, map_session_data& tsd );
 void clif_guild_xy_remove( map_session_data& sd );
 void clif_guild_castle_list(map_session_data& sd);
 void clif_guild_castle_teleport_res(map_session_data& sd, enum e_siege_teleport_result result);
+void clif_guild_position_selected(map_session_data& sd);
+void clif_guild_set_position(map_session_data& sd);
 
 // Battleground
 void clif_bg_hp(map_session_data *sd);

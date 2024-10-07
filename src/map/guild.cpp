@@ -1497,7 +1497,7 @@ int guild_memberposition_changed(struct mmo_guild &g,int idx,int pos) {
 
 	// Update char position in client [LuzZza]
 	if(g.member[idx].sd != nullptr)
-		clif_name_area(&g.member[idx].sd->bl);
+		clif_guild_position_selected(*g.member[idx].sd);
 	return 0;
 }
 
@@ -1528,7 +1528,7 @@ int guild_position_changed(int guild_id,int idx,struct guild_position *p) {
 	// Update char name in client [LuzZza]
 	for(i=0;i<g->guild.max_member;i++)
 		if(g->guild.member[i].position == idx && g->guild.member[i].sd != nullptr)
-			clif_name_area(&g->guild.member[i].sd->bl);
+			clif_guild_position_selected(*g->guild.member[i].sd);
 	return 0;
 }
 

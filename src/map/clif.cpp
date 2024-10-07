@@ -9347,6 +9347,45 @@ void clif_guild_broken( map_session_data& sd, int flag ){
 	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 }
 
+void clif_guild_position_selected(map_session_data& sd)
+{
+#if PACKETVER >= 20180801
+	clif_guild_set_position(sd);
+#else
+	clif_name_area(&sd.bl);
+#endif
+}
+
+void clif_guild_set_position(map_session_data& sd)
+{
+	int len = sizeof(PACKET_ZC_GUILD_POSITION);
+	const char* name = nullptr;
+	if (sd.status.guild_id > 0) {
+		const auto& g = sd.guild->guild;
+
+		int i = 0;
+		int ps = -1;
+		ARR_FIND(0, g.max_member, i, g.member[i].account_id == sd.status.account_id && g.member[i].char_id == sd.status.char_id);
+		if (i < g.max_member)
+			ps = g.member[i].position;
+
+		if (ps >= 0 && ps < MAX_GUILDPOSITION) {
+			len += 24;
+			name = g.position[ps].name;
+		}
+	}
+
+	PACKET_ZC_GUILD_POSITION* p = (PACKET_ZC_GUILD_POSITION*)packet_buffer;
+
+	p->packetType = HEADER_ZC_GUILD_POSITION;
+	p->packetLength = static_cast<int16>(len);
+	p->AID = sd.bl.id;
+	if (name != nullptr)
+		safestrncpy(p->position, name, 24);
+
+	clif_send(p, len, &sd.bl, AREA);
+}
+
 
 /// Displays emotion on an object (ZC_EMOTION).
 /// 00c0 <id>.L <type>.B
