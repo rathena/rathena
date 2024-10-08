@@ -8988,6 +8988,13 @@ Body:
     Flags:
       NoBanishingBuster: true
       NoClearance: true
+  - Status: Buchedenoel
+    Icon: EFST_BUCHEDENOEL
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
       NoClearbuff: true
       NoDispell: true
   - Status: Bath_foam_c
