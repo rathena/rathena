@@ -6427,20 +6427,7 @@ static void mob_drop_ratio_adjust(void){
 					id->maxchance = rate; // item has bigger drop chance or sold in shops
 				}
 
-				for( k = 0; k < MAX_SEARCH; k++ ){
-					if( id->mob[k].chance <= rate ){
-						break;
-					}
-				}
-
-				if( k != MAX_SEARCH ){
-					if( id->mob[k].id != mob_id ){
-						memmove( &id->mob[k+1], &id->mob[k], (MAX_SEARCH-k-1)*sizeof(id->mob[0]) );
-					}
-
-					id->mob[k].chance = rate;
-					id->mob[k].id = mob_id;
-				}
+				id->addMonsterDrop(mob_id, rate);
 			}
 
 			mob->dropitem[j].rate = rate;
@@ -6746,30 +6733,18 @@ void mob_db_load(bool is_reload){
  */
 void mob_reload_itemmob_data(void) {
 	for( auto const &pair : mob_db ){
-		int d, k;
 
 		if( mob_is_clone( pair.first ) ){
 			continue;
 		}
 
-		for(d = 0; d < MAX_MOB_DROP_TOTAL; d++) {
-			struct item_data *id;
+		for(int d = 0; d < MAX_MOB_DROP_TOTAL; d++) {
 			if( !pair.second->dropitem[d].nameid )
 				continue;
-			id = itemdb_search(pair.second->dropitem[d].nameid);
-
-			for (k = 0; k < MAX_SEARCH; k++) {
-				if (id->mob[k].chance <= pair.second->dropitem[d].rate)
-					break;
-			}
-
-			if (k == MAX_SEARCH)
+			struct item_data *id = itemdb_search(pair.second->dropitem[d].nameid);
+			if (!id)
 				continue;
-
-			if (id->mob[k].id != pair.first)
-				memmove(&id->mob[k+1], &id->mob[k], (MAX_SEARCH-k-1)*sizeof(id->mob[0]));
-			id->mob[k].chance = pair.second->dropitem[d].rate;
-			id->mob[k].id = pair.first;
+			id->addMonsterDrop(pair.second->id, pair.second->dropitem[d].rate);
 		}
 	}
 }
