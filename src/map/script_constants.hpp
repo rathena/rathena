@@ -4287,6 +4287,7 @@
 	export_constant(RC2_ILLUSION_LUANDA);
 	export_constant(RC2_ILLUSION_FROZEN);
 	export_constant(RC2_ILLUSION_MOONLIGHT);
+	export_constant(RC2_EP16_DEF);
 	export_constant(RC2_MAX);
 
 	/* monster ai */

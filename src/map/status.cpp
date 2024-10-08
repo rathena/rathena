@@ -4942,6 +4942,9 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 				sd->left_weapon.addrace2[RC2_EP172BATH] += sc->getSCE(SC_BATH_FOAM_C)->val1;
 			}
 		}
+		if (sc->getSCE(SC_EP16_DEF)) {
+			sd->indexed_bonus.subrace2[RC2_EP16_DEF] += sc->getSCE(SC_EP16_DEF)->val1;
+		}
 	}
 	status_cpy(&sd->battle_status, base_status);
 
@@ -12902,6 +12905,12 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_BUCHEDENOEL:
 			val2 = 3;	// HP & SP restoration by 3%, Hit +3
 			val3 = 7;	// Critical +7
+			break;
+		case SC_EP16_DEF:
+			status_heal(bl, 1000, 0, 1);
+			status_change_end(bl, SC_SILENCE);
+			status_change_end(bl, SC_POISON);
+			status_change_end(bl, SC_CURSE);
 			break;
 
 		default:
