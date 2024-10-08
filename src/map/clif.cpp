@@ -9350,14 +9350,6 @@ void clif_guild_broken( map_session_data& sd, int flag ){
 void clif_guild_position_selected(map_session_data& sd)
 {
 #if PACKETVER >= 20180801
-	clif_guild_set_position(sd);
-#else
-	clif_name_area(&sd.bl);
-#endif
-}
-
-void clif_guild_set_position(map_session_data& sd)
-{
 	int len = sizeof(PACKET_ZC_GUILD_POSITION);
 	const char* name = nullptr;
 	if (sd.status.guild_id > 0) {
@@ -9384,6 +9376,9 @@ void clif_guild_set_position(map_session_data& sd)
 		safestrncpy(p->position, name, 24);
 
 	clif_send(p, len, &sd.bl, AREA);
+#else
+	clif_name_area(&sd.bl);
+#endif
 }
 
 
