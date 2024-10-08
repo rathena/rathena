@@ -8941,7 +8941,7 @@ static int status_calc_mode(struct block_list *bl, status_change *sc, int mode)
  * Changes the mode of a slave mob
  * @param md: Slave mob whose mode to change
  */
-void status_calc_slave_mode(mob_data &md)
+void status_calc_slave_mode(mob_data& md)
 {
 	switch (battle_config.slaves_inherit_mode) {
 		case 1: //Always aggressive
@@ -8956,7 +8956,7 @@ void status_calc_slave_mode(mob_data &md)
 			sc_start4(nullptr, &md.bl, SC_MODECHANGE, 100, 1, MD_CANMOVE|MD_NORANDOMWALK|MD_CANATTACK, 0, 0, 0);
 			break;
 		default: //Copy master
-			if (md.master_id > 0 && status_has_mode(status_get_status_data(*map_id2bl(md.master_id)), MD_AGGRESSIVE))
+			if (block_list* mbl = map_id2bl(md.master_id); mbl != nullptr && status_has_mode(status_get_status_data(*mbl), MD_AGGRESSIVE))
 				sc_start4(nullptr, &md.bl, SC_MODECHANGE, 100, 1, 0, MD_AGGRESSIVE, 0, 0);
 			else
 				sc_start4(nullptr, &md.bl, SC_MODECHANGE, 100, 1, 0, 0, MD_AGGRESSIVE, 0);
