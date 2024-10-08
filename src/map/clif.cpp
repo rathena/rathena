@@ -9349,7 +9349,7 @@ void clif_guild_broken( map_session_data& sd, int flag ){
 
 void clif_guild_position_selected(map_session_data& sd)
 {
-#if PACKETVER >= 20180801
+#if PACKETVER_MAIN_NUM >= 20180605 || PACKETVER_RE_NUM >= 20180605 || PACKETVER_ZERO_NUM >= 20180605
 	PACKET_ZC_GUILD_POSITION* p = reinterpret_cast<PACKET_ZC_GUILD_POSITION*>(packet_buffer);
 
 	p->packetType = HEADER_ZC_GUILD_POSITION;
