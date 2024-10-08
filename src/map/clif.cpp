@@ -9350,32 +9350,22 @@ void clif_guild_broken( map_session_data& sd, int flag ){
 void clif_guild_position_selected(map_session_data& sd)
 {
 #if PACKETVER >= 20180801
-	int len = sizeof(PACKET_ZC_GUILD_POSITION);
-	const char* name = nullptr;
-	if (sd.status.guild_id > 0) {
+	PACKET_ZC_GUILD_POSITION* p = reinterpret_cast<PACKET_ZC_GUILD_POSITION*>(packet_buffer);
+
+	p->packetType = HEADER_ZC_GUILD_POSITION;
+	p->packetLength = sizeof( PACKET_ZC_GUILD_POSITION );
+	p->AID = sd.bl.id;
+
+	if( sd.guild != nullptr ){
 		const auto& g = sd.guild->guild;
 
-		int i = 0;
-		int ps = -1;
-		ARR_FIND(0, g.max_member, i, g.member[i].account_id == sd.status.account_id && g.member[i].char_id == sd.status.char_id);
-		if (i < g.max_member)
-			ps = g.member[i].position;
-
-		if (ps >= 0 && ps < MAX_GUILDPOSITION) {
-			len += 24;
-			name = g.position[ps].name;
+		if( int ps = guild_getposition( sd ); ps != -1 ){
+			safestrncpy( p->position, g.position[ps].name, 24 );
+			p->packetLength += static_cast<decltype(p->packetLength)>( 24 );
 		}
 	}
 
-	PACKET_ZC_GUILD_POSITION* p = (PACKET_ZC_GUILD_POSITION*)packet_buffer;
-
-	p->packetType = HEADER_ZC_GUILD_POSITION;
-	p->packetLength = static_cast<int16>(len);
-	p->AID = sd.bl.id;
-	if (name != nullptr)
-		safestrncpy(p->position, name, 24);
-
-	clif_send(p, len, &sd.bl, AREA);
+	clif_send( p, p->packetLength, &sd.bl, AREA );
 #else
 	clif_name_area(&sd.bl);
 #endif
