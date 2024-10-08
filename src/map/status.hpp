@@ -3540,7 +3540,7 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, status_change *sc);
 void status_calc_state(struct block_list *bl, status_change *sc, std::bitset<SCS_MAX> flag, bool start);
 
-void status_calc_slave_mode(struct mob_data *md, struct mob_data *mmd);
+void status_calc_slave_mode(mob_data& md);
 
 bool status_check_skilluse(struct block_list *src, struct block_list *target, uint16 skill_id, int flag);
 int status_check_visibility(struct block_list *src, struct block_list *target);
