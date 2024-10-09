@@ -15666,7 +15666,7 @@ int16 AttributeDatabase::getAttribute(uint16 level, uint16 atk_ele, uint16 def_e
 	if (!CHK_ELEMENT(atk_ele) || !CHK_ELEMENT(def_ele) || !CHK_ELEMENT_LEVEL(level))
 		return 100;
 
-	return this->attr_fix_table[level][atk_ele][def_ele];
+	return this->attr_fix_table[level-1][atk_ele][def_ele];
 }
 
 const std::string StatusDatabase::getDefaultLocation() {
