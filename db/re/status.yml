@@ -9019,3 +9019,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    EndOnStart:
+      Curse: true
+      Silence: true
+      Poison: true

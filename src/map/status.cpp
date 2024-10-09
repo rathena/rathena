@@ -12908,9 +12908,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_EP16_DEF:
 			status_heal(bl, 1000, 0, 1);
-			status_change_end(bl, SC_SILENCE);
-			status_change_end(bl, SC_POISON);
-			status_change_end(bl, SC_CURSE);
 			break;
 
 		default:
