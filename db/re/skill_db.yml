@@ -18490,6 +18490,8 @@ Body:
     Flags:
       AllowOnMado: true
     Cooldown: 3000
+    Requires:
+      SpCost: 1
   - Id: 1001
     Name: KN_CHARGEATK
     Description: Charge Attack
