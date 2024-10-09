@@ -862,7 +862,6 @@ int guild_recv_info(const struct mmo_guild &sg) {
 	for(i=bm=m=0;i<g->guild.max_member;i++){
 		if(g->guild.member[i].account_id>0){
 			sd = g->guild.member[i].sd = guild_sd_check(g->guild.guild_id, g->guild.member[i].account_id, g->guild.member[i].char_id);
-			if (sd) clif_name_area(&sd->bl); // [LuzZza]
 			m++;
 		}else
 			g->guild.member[i].sd=nullptr;
@@ -874,7 +873,12 @@ int guild_recv_info(const struct mmo_guild &sg) {
 		sd = g->guild.member[i].sd;
 		if( sd==nullptr )
 			continue;
-		sd->guild = g;
+		if( sd->guild == nullptr ){
+			sd->guild = g;
+			clif_name_area(&sd->bl);
+		}else{
+			sd->guild = g;
+		}
 		if(channel_config.ally_tmpl.name[0] && (channel_config.ally_tmpl.opt&CHAN_OPT_AUTOJOIN)) {
 			channel_gjoin(sd,3); //make all member join guildchan+allieschan
 		}
