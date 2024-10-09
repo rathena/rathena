@@ -286,7 +286,8 @@ enum e_autospell_flags{
 	AUTOSPELL_FORCE_SELF = 0x0,
 	AUTOSPELL_FORCE_TARGET = 0x1,
 	AUTOSPELL_FORCE_RANDOM_LEVEL = 0x2,
-	AUTOSPELL_FORCE_ALL = 0x3
+	AUTOSPELL_FORCE_CONSUME = 0x4,
+	AUTOSPELL_FORCE_ALL = 0x7
 };
 
 /// AutoSpell bonus struct
@@ -397,7 +398,7 @@ public:
 		unsigned int storage_flag : 3; //0: closed, 1: Normal Storage open, 2: guild storage open [Skotlex], 3: Premium Storage
 		unsigned int snovice_dead_flag : 1; //Explosion spirits on death: 0 off, 1 used.
 		unsigned int abra_flag : 2; // Abracadabra bugfix by Aru
-		unsigned int autocast : 1; // Autospell flag [Inkfish]
+		unsigned int autocast : 2; // Autospell flag [Inkfish]
 		unsigned int autotrade : 3;	//By Fantik. &2 Requested by vending autotrade; &4 Requested by buyingstore autotrade
 		unsigned int showdelay :1;
 		unsigned int showexp :1;
