@@ -18482,7 +18482,7 @@ Body:
     Status: Killing_Aura
   - Id: 784
     Name: ALL_EVENT_20TH_ANNIVERSARY
-    Description: 20th Event Anniversary
+    Description: RO 20th Anniversary Firecracker
     MaxLevel: 1
     TargetType: Self
     DamageFlags:
