@@ -1920,6 +1920,7 @@
 	export_constant(SC_BATH_FOAM_B);
 	export_constant(SC_BATH_FOAM_C);
 	export_constant(SC_BUCHEDENOEL);
+	export_constant(SC_EP16_DEF);
 
 	/* status icons */
 	export_deprecated_constant2("SI_BLANK",-1);
