@@ -8999,3 +8999,14 @@ Body:
       NoClearance: true
       NoClearbuff: true
       NoDispell: true
+  - Status: Buchedenoel
+    Icon: EFST_BUCHEDENOEL
+    CalcFlags:
+      Cri: true
+      Hit: true
+      Regen: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true

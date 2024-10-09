@@ -2860,3 +2860,6 @@ SC_BATH_FOAM_B	()
 SC_BATH_FOAM_C	()
 	desc: Increases physical and magical damage against Meditathio Dungeon Monsters by 15%.
 	val1: +% damage
+
+SC_BUCHEDENOEL ()
+	desc: Increases HP & SP restoration by 3%, Hit +3, and Critical +7.
