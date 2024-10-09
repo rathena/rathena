@@ -18489,8 +18489,6 @@ Body:
       NoDamage: true
     Flags:
       AllowOnMado: true
-    Range: 1
-    HitCount: 1
     Cooldown: 3000
   - Id: 1001
     Name: KN_CHARGEATK
