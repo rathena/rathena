@@ -18481,7 +18481,7 @@ Body:
     Duration1: 30000
     Status: Killing_Aura
   - Id: 784
-    Name: All_EVENT_20TH_ANNIVERSARY
+    Name: ALL_EVENT_20TH_ANNIVERSARY
     Description: 20th Event Anniversary
     MaxLevel: 1
     TargetType: Self
