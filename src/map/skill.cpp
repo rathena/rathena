@@ -12997,7 +12997,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		clif_skill_nodamage(src, *src, skill_id, skill_lv);
 		break;
 	case All_EVENT_20TH_ANNIVERSARY:
-		clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
+		clif_skill_nodamage(src, *src, skill_id, skill_lv);
 		break;
 
 	default: {
