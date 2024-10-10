@@ -6875,7 +6875,7 @@ Body:
       NoAuction: true
     Script: |
       specialeffect2 EF_STEAL;
-      bonus_script "{ bonus bHit,5; bonus bAspdRate,10; }",1200,0,0,EFST_ACARAJE;
+      sc_start SC_ACARAJE,1200000,0;
   - Id: 12376
     AegisName: Mysterious_Can2
     Name: Mysterious Can2

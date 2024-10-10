@@ -9010,3 +9010,16 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+  - Status: Ep16_def
+    Icon: EFST_EP16_DEF
+    CalcFlags:
+      All: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    EndOnStart:
+      Curse: true
+      Silence: true
+      Poison: true
