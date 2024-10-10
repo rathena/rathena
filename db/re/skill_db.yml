@@ -25690,12 +25690,22 @@ Body:
       - Level: 1
         Amount: 2
       - Level: 2
-        Amount: 3
+        Amount: 2
       - Level: 3
-        Amount: 4
+        Amount: 3
       - Level: 4
-        Amount: 5
+        Amount: 3
       - Level: 5
+        Amount: 4
+      - Level: 6
+        Amount: 4
+      - Level: 7
+        Amount: 5
+      - Level: 8
+        Amount: 5
+      - Level: 9
+        Amount: 6
+      - Level: 10
         Amount: 6
     CopyFlags:
       Skill:
