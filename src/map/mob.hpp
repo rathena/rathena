@@ -316,6 +316,7 @@ private:
 };
 
 extern MapDropDatabase map_drop_db;
+extern std::unordered_map<uint16, std::vector<spawn_info>> mob_spawn_data;
 
 struct mob_data {
 	struct block_list bl;
