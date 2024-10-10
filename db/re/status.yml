@@ -9023,3 +9023,23 @@ Body:
       Curse: true
       Silence: true
       Poison: true
+  - Status: Str_Scroll
+    Icon: EFST_STR_SCROLL
+    CalcFlags:
+      Str: true
+    Flags:
+      NoBanishingBuster: true
+      NoClearbuff: true
+      NoClearance: true
+      NoDispell: true
+      NoRemoveOnDead: true
+  - Status: Int_Scroll
+    Icon: EFST_INT_SCROLL
+    CalcFlags:
+      Int: true
+    Flags:
+      NoBanishingBuster: true
+      NoClearbuff: true
+      NoClearance: true
+      NoDispell: true
+      NoRemoveOnDead: true
