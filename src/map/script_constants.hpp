@@ -1921,6 +1921,8 @@
 	export_constant(SC_BATH_FOAM_C);
 	export_constant(SC_BUCHEDENOEL);
 	export_constant(SC_EP16_DEF);
+	export_constant(SC_STR_SCROLL);
+	export_constant(SC_INT_SCROLL);
 
 	/* status icons */
 	export_deprecated_constant2("SI_BLANK",-1);

@@ -2849,21 +2849,29 @@ SC_AGIUP
 	val1: +% Walkspeed
 	val2: +% Flee
 
-SC_BATH_FOAM_A	()
+SC_BATH_FOAM_A	(EFST_BATH_FOAM_A)
 	desc: Increases physical and magical damage against Meditathio Dungeon Monsters.
 	val1: +% damage
 
-SC_BATH_FOAM_B	()
+SC_BATH_FOAM_B	(EFST_BATH_FOAM_B)
 	desc: Increases physical and magical damage against Meditathio Dungeon Monsters.
 	val1: +% damage
 
-SC_BATH_FOAM_C	()
+SC_BATH_FOAM_C	(EFST_BATH_FOAM_C)
 	desc: Increases physical and magical damage against Meditathio Dungeon Monsters.
 	val1: +% damage
 
-SC_BUCHEDENOEL ()
+SC_BUCHEDENOEL (EFST_BUCHEDENOEL)
 	desc: Increases HP & SP restoration by 3%, Hit +3, and Critical +7.
 
-SC_EP16_DEF	()
+SC_EP16_DEF	(EFST_EP16_DEF)
 	desc: Decrease physical and magical damage against monsters in the Room of Consciousness and Prontera Invasion Dungeon. Restores 1000 HP. Cures Curse, Poison and Silence.
 	val1: +% reduction
+
+SC_STR_SCROLL	(EFST_STR_SCROLL)
+	desc: Increases STR.
+	val1: + STR
+
+SC_INT_SCROLL	(EFST_INT_SCROLL)
+	desc: Increases INT.
+	val1: + INT
