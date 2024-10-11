@@ -112,7 +112,7 @@ typedef uint32 t_itemid;
 #define MAX_PC_BONUS_SCRIPT 50 ///Max bonus script can be fetched from `bonus_script` table on player load [Cydh]
 #define MAX_ITEM_RDM_OPT 5	 /// Max item random option [Napster]
 #define DB_NAME_LEN 256 //max len of dbs
-#define MAX_CLAN_NUM 7
+#define MAX_CLAN_NUM 15
 #define MAX_CLAN_MEMBER 500
 #define MAX_CLANALLIANCE 6
 #ifndef MAX_BARTER_REQUIREMENTS
