@@ -1135,7 +1135,7 @@ int guild_member_added(int guild_id,uint32 account_id,uint32 char_id,int flag) {
 	clif_guild_belonginfo( *sd );
 	clif_guild_notice( *sd );
 
-	//TODO: send new emblem info to others
+	clif_guild_emblem_area(&sd->bl);
 
 	if( sd2!=nullptr )
 		clif_guild_inviteack( *sd2, 2 );
@@ -1302,7 +1302,7 @@ int guild_member_withdraw(int guild_id, uint32 account_id, uint32 char_id, int f
 		status_change_end(&sd->bl,SC_SOULCOLD);
 		status_change_end(&sd->bl,SC_HAWKEYES);
 		status_change_end(&sd->bl,SC_EMERGENCY_MOVE);
-		//@TODO: Send emblem update to self and people around
+		clif_guild_emblem_area(&sd->bl);
 	}
 	return 0;
 }
