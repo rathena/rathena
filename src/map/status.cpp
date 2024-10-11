@@ -6610,6 +6610,8 @@ static unsigned short status_calc_str(struct block_list *bl, status_change *sc, 
 		str += sc->getSCE(SC_ULTIMATECOOK)->val1;
 	if (sc->getSCE(SC_ALL_STAT_DOWN))
 		str -= sc->getSCE(SC_ALL_STAT_DOWN)->val2;
+	if (sc->getSCE(SC_STR_SCROLL))
+		str += sc->getSCE(SC_STR_SCROLL)->val1;
 
 	//TODO: Stat points should be able to be decreased below 0
 	return (unsigned short)cap_value(str,0,USHRT_MAX);
@@ -6860,6 +6862,8 @@ static unsigned short status_calc_int(struct block_list *bl, status_change *sc, 
 		int_ += sc->getSCE(SC_ULTIMATECOOK)->val1;
 	if (sc->getSCE(SC_ALL_STAT_DOWN))
 		int_ -= sc->getSCE(SC_ALL_STAT_DOWN)->val2;
+	if (sc->getSCE(SC_INT_SCROLL))
+		int_ += sc->getSCE(SC_INT_SCROLL)->val1;
 
 	//TODO: Stat points should be able to be decreased below 0
 	return (unsigned short)cap_value(int_,0,USHRT_MAX);
