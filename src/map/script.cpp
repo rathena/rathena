@@ -21961,7 +21961,7 @@ BUILDIN_FUNC(instance_check_clan)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	for(i = 0; i < MAX_CLAN; i++) {
+	for(i = 0; i < MAX_CLAN_MEMBER; i++) {
 		map_session_data *pl_sd;
 
 		if ((pl_sd = cd->members[i])) {

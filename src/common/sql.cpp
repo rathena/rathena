@@ -433,6 +433,11 @@ int Sql_GetData(Sql* self, size_t col, char** out_buf, size_t* out_len)
 /// Frees the result of the query.
 void Sql_FreeResult(Sql* self)
 {
+	/* mysql procedure behaves like multi-statement query and requires mysql_next_result to consume
+	 * all queries */
+	while (mysql_next_result(&self->handle) == 0) {
+	}
+
 	if( self && self->result )
 	{
 		mysql_free_result(self->result);

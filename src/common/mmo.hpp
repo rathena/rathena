@@ -112,7 +112,8 @@ typedef uint32 t_itemid;
 #define MAX_PC_BONUS_SCRIPT 50 ///Max bonus script can be fetched from `bonus_script` table on player load [Cydh]
 #define MAX_ITEM_RDM_OPT 5	 /// Max item random option [Napster]
 #define DB_NAME_LEN 256 //max len of dbs
-#define MAX_CLAN 500
+#define MAX_CLAN_NUM 7
+#define MAX_CLAN_MEMBER 500
 #define MAX_CLANALLIANCE 6
 #ifndef MAX_BARTER_REQUIREMENTS
 	#define MAX_BARTER_REQUIREMENTS 6
@@ -1148,7 +1149,7 @@ struct clan{
 	char master[NAME_LENGTH];
 	char map[MAP_NAME_LENGTH_EXT];
 	short max_member, connect_member;
-	map_session_data *members[MAX_CLAN];
+	map_session_data *members[MAX_CLAN_MEMBER];
 	struct clan_alliance alliance[MAX_CLANALLIANCE];
 	unsigned short instance_id;
 };
