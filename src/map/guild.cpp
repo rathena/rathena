@@ -844,9 +844,7 @@ int guild_recv_info(const struct mmo_guild &sg) {
 #endif
 
 			//Also set the guild master flag.
-			sd->guild = g;
 			sd->state.gmaster_flag = 1;
-			clif_name_area(&sd->bl); // [LuzZza]
 			clif_guild_masterormember(*sd);
 		}
 	} else {
@@ -873,11 +871,9 @@ int guild_recv_info(const struct mmo_guild &sg) {
 		sd = g->guild.member[i].sd;
 		if( sd==nullptr )
 			continue;
-		if( sd->guild == nullptr ){
+		if( sd->guild == nullptr || sd->guild != g ){
 			sd->guild = g;
 			clif_name_area(&sd->bl);
-		}else{
-			sd->guild = g;
 		}
 		if(channel_config.ally_tmpl.name[0] && (channel_config.ally_tmpl.opt&CHAN_OPT_AUTOJOIN)) {
 			channel_gjoin(sd,3); //make all member join guildchan+allieschan
@@ -1095,6 +1091,7 @@ void guild_member_joined(map_session_data *sd) {
 	else {
 		g->guild.member[i].sd = sd;
 		sd->guild = g;
+		clif_name_area(&sd->bl);
 
 		if( channel_config.ally_tmpl.name[0] && (channel_config.ally_tmpl.opt&CHAN_OPT_AUTOJOIN) ) {
 			channel_gjoin(sd,3);
@@ -1143,8 +1140,7 @@ int guild_member_added(int guild_id,uint32 account_id,uint32 char_id,int flag) {
 	if( sd2!=nullptr )
 		clif_guild_inviteack( *sd2, 2 );
 
-	//Next line commented because it do nothing, look at guild_recv_info [LuzZza]
-	//clif_charnameupdate(sd); //Update display name [Skotlex]
+	clif_name_area(&sd->bl); //Update display name [Skotlex]
 
 	if (g->instance_id > 0)
 		instance_reqinfo(sd, g->instance_id);
