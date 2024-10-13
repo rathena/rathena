@@ -2630,7 +2630,7 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 	status->matk_min = status_base_matk_min(status);
 	status->matk_max = status_base_matk_max(status);
 	// Hit
-	stat = status->hit;
+	stat = status->hit + (level / 2);
 	stat += level + status->dex + (bl->type == BL_PC ? status->luk / 3 : 0);
 	status->hit = cap_value(stat, 1, SHRT_MAX);
 	// Flee
@@ -3882,7 +3882,6 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 #endif
 			// Overrefine bonus.
 			if( info != nullptr ){
-				ShowMessage(std::to_string(wd->overrefine).c_str());
 				wd->overrefine = info->randombonus_max / 100;
 			}
 
