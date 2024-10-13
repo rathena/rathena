@@ -2435,11 +2435,11 @@ unsigned int status_weapon_atk(weapon_atk &wa)
 
 #ifndef RENEWAL
 unsigned short status_base_matk_min(const struct status_data* status) {
-	double multi = status->int_ / 7;
+	double multi = status->int_ / 7.0;
 	return status->int_ + int(multi * multi) + (status->luk / 3);
 }
 unsigned short status_base_matk_max(const struct status_data* status) {
-	double multi = status->int_ / 5;
+	double multi = status->int_ / 5.0;
 	return status->int_ + (int)(multi * multi) + (status->luk / 3);
 }
 #else
@@ -4491,7 +4491,7 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	// Renewal modifiers are handled in status_base_amotion_pc
 #ifndef RENEWAL_ASPD
 	if((skill=pc_checkskill(sd,SA_ADVANCEDBOOK))>0 && sd->status.weapon == W_BOOK)
-		base_status->aspd_rate -= 5*skill;
+		base_status->aspd_rate -= 7*skill;
 	if ((skill = pc_checkskill(sd,SG_DEVIL)) > 0 && ((sd->class_&MAPID_THIRDMASK) == MAPID_STAR_EMPEROR || pc_is_maxjoblv(sd)))
 		base_status->aspd_rate -= 30*skill;
 	if((skill=pc_checkskill(sd,GS_SINGLEACTION))>0 &&
@@ -6014,6 +6014,12 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 #ifndef RENEWAL
 		status->matk_min = status_base_matk_min(status) + (sd?sd->bonus.ematk:0);
 		status->matk_max = status_base_matk_max(status) + (sd?sd->bonus.ematk:0);
+		int skill_level = pc_checkskill(sd, SA_ADVANCEDBOOK);
+
+		if (skill_level > 0 && sd->status.weapon == W_BOOK) {
+			status->matk_max += status->matk_max * skill_level / (double)100;
+			status->matk_min += status->matk_min * skill_level / (double)100;
+		}
 #else
 		/**
 		 * RE MATK Formula (from irowiki:http:// irowiki.org/wiki/MATK)
