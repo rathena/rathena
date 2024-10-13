@@ -639,8 +639,8 @@ function	script	F_KafSet	{
 		setarray @viewpX[0], 120, 203;
 		setarray @viewpY[0], 62, 123;
 	} else if (.@map$ == "izlude") {
-		setarray @wrpD$[0], "Geffen", "Payon", "Morocc", "Al De Baran", "Rachel";
-		setarray @wrpP[0], 120, 120, 100, 180, 250;
+		setarray @wrpD$[0], "Prontera", "Geffen", "Payon", "Morocc", "Al De Baran", "Rachel";
+		setarray @wrpP[0], 60, 120, 120, 100, 180, 250;
 	} else if (.@map$ == "morocc") {
 		setarray @wrpD$[0], "Prontera", "Payon", "Alberta", "Comodo", "Comodo Pharos Beacon";
 		setarray @wrpP[0], 120, 120, 180, 180, 120;
