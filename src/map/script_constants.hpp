@@ -1917,6 +1917,13 @@
 	export_constant(SC_AGIUP);
 	export_constant(SC_PROTECTION);
 	export_constant(SC_PREMIUM_STORAGEBOOST);
+	export_constant(SC_BATH_FOAM_A);
+	export_constant(SC_BATH_FOAM_B);
+	export_constant(SC_BATH_FOAM_C);
+	export_constant(SC_BUCHEDENOEL);
+	export_constant(SC_EP16_DEF);
+	export_constant(SC_STR_SCROLL);
+	export_constant(SC_INT_SCROLL);
 
 	/* status icons */
 	export_deprecated_constant2("SI_BLANK",-1);
@@ -4284,6 +4291,7 @@
 	export_constant(RC2_ILLUSION_LUANDA);
 	export_constant(RC2_ILLUSION_FROZEN);
 	export_constant(RC2_ILLUSION_MOONLIGHT);
+	export_constant(RC2_EP16_DEF);
 	export_constant(RC2_MAX);
 
 	/* monster ai */
@@ -5178,7 +5186,8 @@
 	export_constant(STOR_MODE_NONE);
 	export_constant(STOR_MODE_GET);
 	export_constant(STOR_MODE_PUT);
-	
+	export_constant(STOR_MODE_ALL);
+
 	/* instance enter */
 	export_constant(IE_OK);
 	export_constant(IE_NOMEMBER);

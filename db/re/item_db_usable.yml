@@ -3997,14 +3997,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      if (strcharinfo(3) == "prt_q") {
-         specialeffect2 EF_GUARD;
-         bonus_script "{ bonus2 bSubSize,Size_All,10; }",600;
-         sc_end SC_SILENCE;
-         sc_end SC_POISON;
-         sc_end SC_CURSE;
-         heal 1000,0;
-      }
+      specialeffect2 EF_GUARD;
+      sc_start SC_EP16_DEF,180000,10;
   - Id: 11601
     AegisName: Tasty_Anchovy
     Name: Delicious Anchovy
@@ -8776,7 +8770,7 @@ Body:
       BuyingStore: true
     Script: |
       specialeffect2 EF_ANGELUS;
-      bonus_script "{ bonus bHPrecovRate,3; bonus bSPrecovRate,3; bonus bHit,3; bonus bCritical,7; }",600,0,0,EFST_BUCHEDENOEL;
+      sc_start SC_BUCHEDENOEL,600000,1;
   - Id: 12355
     AegisName: Xmas_Gift
     Name: Xmas Gift
@@ -9975,34 +9969,66 @@ Body:
     AegisName: F_B_Mdef_Potion
     Name: F B Mdef Potion
     Type: Usable
-    Weight: 10
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
-      specialeffect EF_SPELLBREAKER;
-      bonus_script "{ bonus3 bSubEle,Ele_All,3,BF_MAGIC; }",180,0,0,EFST_PROTECT_MDEF;
+      specialeffect2 EF_SPELLBREAKER;
+      sc_start SC_MDEF_RATE,180000,3;
   - Id: 12463
     AegisName: F_S_Mdef_Potion
     Name: F S Mdef Potion
     Type: Usable
-    Weight: 10
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
-      specialeffect EF_SPELLBREAKER;
-      bonus_script "{ bonus3 bSubEle,Ele_All,3,BF_MAGIC; }",60,0,0,EFST_PROTECT_MDEF;
+      specialeffect2 EF_SPELLBREAKER;
+      sc_start SC_MDEF_RATE,60000,3;
   - Id: 12464
     AegisName: F_B_Def_Potion
     Name: F B Def Potion
     Type: Usable
-    Weight: 10
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
-      specialeffect EF_GUARD;
-      bonus_script "{ bonus3 bSubEle,Ele_All,3,BF_SHORT; }",180,0,0,EFST_PROTECT_DEF;
+      specialeffect2 EF_GUARD;
+      sc_start SC_DEF_RATE,180000,3;
   - Id: 12465
     AegisName: F_S_Def_Potion
     Name: F S Def Potion
     Type: Usable
-    Weight: 10
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
-      specialeffect EF_GUARD;
-      bonus_script "{ bonus3 bSubEle,Ele_All,3,BF_SHORT; }",60,0,0,EFST_PROTECT_DEF;
+      specialeffect2 EF_GUARD;
+      sc_start SC_DEF_RATE,60000,3;
   - Id: 12466
     AegisName: F_Blessing_10_Scroll
     Name: F Blessing 10 Scroll
@@ -13311,7 +13337,7 @@ Body:
       NoAuction: true
     Script: |
       specialeffect2 EF_POTION_BERSERK;
-      bonus_script "{ bonus bStr,20; }",60,0,0,EFST_STR_SCROLL;
+      sc_start SC_STR_SCROLL,60000,20;
   - Id: 12741
     AegisName: Inc_Int_Scroll
     Name: Intellect Amplification Scroll
@@ -13328,7 +13354,7 @@ Body:
       NoAuction: true
     Script: |
       specialeffect2 EF_SPELLBREAKER;
-      bonus_script "{ bonus bInt,20; }",60,0,0,EFST_INT_SCROLL;
+      sc_start SC_INT_SCROLL,60000,20;
   - Id: 12742
     AegisName: Valentine_Gift_Box1
     Name: Valentine Gift Box
@@ -59123,7 +59149,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      RouletteBronze++;
+      RouletteBronze += 10;
   - Id: 22870
     AegisName: Xmas_Package_14
     Name: Christmas Package
@@ -67439,7 +67465,7 @@ Body:
       NoAuction: true
       NoGuildStorage: true
     Script: |
-      bonus_script "{ bonus2 bAddRace2,RC2_EP172BATH,5; }",900,1,0,EFST_BATH_FOAM_A;
+      sc_start SC_BATH_FOAM_A,900000,5;
   - Id: 100148
     AegisName: Bath_Foam_B
     Name: Bath Foam B
@@ -67454,7 +67480,7 @@ Body:
       NoAuction: true
       NoGuildStorage: true
     Script: |
-      bonus_script "{ bonus2 bAddRace2,RC2_EP172BATH,10; }",900,1,0,EFST_BATH_FOAM_B;
+      sc_start SC_BATH_FOAM_B,900000,10;
   - Id: 100149
     AegisName: Bath_Foam_C
     Name: Bath Foam C
@@ -67469,7 +67495,7 @@ Body:
       NoAuction: true
       NoGuildStorage: true
     Script: |
-      bonus_script "{ bonus2 bAddRace2,RC2_EP172BATH,15; }",900,1,0,EFST_BATH_FOAM_C;
+      sc_start SC_BATH_FOAM_C,900000,15;
   - Id: 100150
     AegisName: Aroma_Oil
     Name: Aromatherapy Oil

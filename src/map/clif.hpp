@@ -1161,6 +1161,7 @@ void clif_homskillinfoblock( homun_data& hd );
 void clif_homskillup( homun_data& hd, uint16 skill_id );
 void clif_hom_food( map_session_data& sd, int32 foodid, bool success );
 void clif_send_homdata( homun_data& hd, e_hom_state2 state );
+void clif_homunculus_updatestatus(map_session_data& sd, _sp type);
 
 void clif_configuration( map_session_data* sd, enum e_config_type type, bool enabled );
 void clif_viewequip_ack( map_session_data& sd, map_session_data& tsd );

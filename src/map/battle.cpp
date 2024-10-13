@@ -466,7 +466,7 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 		return damage;
 	}
 
-	ratio = elemental_attribute_db.getAttribute(def_lv-1, atk_elem, def_type);
+	ratio = elemental_attribute_db.getAttribute(def_lv, atk_elem, def_type);
 	if (sc && sc->count) { //increase dmg by src status
 		switch(atk_elem){
 			case ELE_FIRE:
@@ -494,8 +494,15 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 #endif
 				break;
 			case ELE_GHOST:
-				if (sc->getSCE(SC_TELEKINESIS_INTENSE))
-					ratio += sc->getSCE(SC_TELEKINESIS_INTENSE)->val3;
+				if (sc->getSCE(SC_TELEKINESIS_INTENSE)) {
+					// At least for SC_TELEKINESIS_INTENSE:
+					// damage after elemental_attribute_db should be calculated first to avoid rounding issues
+					damage = damage - (int64)((damage * (100 - ratio)) / 100);
+					// Initialize ratio to 100 (default)
+					ratio = 100;
+
+					ratio += ratio * sc->getSCE(SC_TELEKINESIS_INTENSE)->val3 / 100;
+				}
 				break;
 		}
 	}
@@ -7826,6 +7833,10 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 
 	if (!flag.infdef) { //No need to do the math for plants
 		unsigned int skillratio = 100; //Skill dmg modifiers.
+#ifdef RENEWAL
+		// Some skills do not use S.MATK and skillratio
+		bool has_skillratio = false;
+#endif
 		//Damage was set to 1 to simulate plant damage; if not plant, need to reinitialize damage with 0
 		ad.damage = 0;
 //MATK_RATE scales the damage. 100 = no change. 50 is halved, 200 is doubled, etc
@@ -8383,14 +8394,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case AG_DESTRUCTIVE_HURRICANE:
 						skillratio += -100 + 600 + 2850 * skill_lv + 5 * sstatus->spl;
+						// (climax buff applied when hit)
 						RE_LVL_DMOD(100);
-						if (sc && sc->getSCE(SC_CLIMAX))
-						{
-							if (sc->getSCE(SC_CLIMAX)->val1 == 3)
-								skillratio += skillratio * 150 / 100;
-							else if (sc->getSCE(SC_CLIMAX)->val1 == 5)
-								skillratio -= skillratio * 20 / 100;
-						}
 						break;
 					case AG_RAIN_OF_CRYSTAL:
 						skillratio += -100 + 180 + 760 * skill_lv + 5 * sstatus->spl;
@@ -8402,13 +8407,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case AG_VIOLENT_QUAKE_ATK:
 						skillratio += -100 + 200 + 1200 * skill_lv + 5 * sstatus->spl;
+						// (climax buff applied when hit)
 						RE_LVL_DMOD(100);
-						if (sc && sc->getSCE(SC_CLIMAX)) {
-							if (sc->getSCE(SC_CLIMAX)->val1 == 1)
-								skillratio /= 2;
-							else if (sc->getSCE(SC_CLIMAX)->val1 == 3)
-								skillratio *= 3;
-						}
 						break;
 					case AG_SOUL_VC_STRIKE:
 						skillratio += -100 + 300 * skill_lv + 3 * sstatus->spl;
@@ -8420,31 +8420,22 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case AG_ALL_BLOOM_ATK:
 						skillratio += -100 + 200 + 1200 * skill_lv + 5 * sstatus->spl;
+						// (climax buff applied when hit)
 						RE_LVL_DMOD(100);
-						if (sc && sc->getSCE(SC_CLIMAX)) {
-							if (sc->getSCE(SC_CLIMAX)->val1 == 3)
-								skillratio *= 4;
-						}
 						break;
-					case AG_ALL_BLOOM_ATK2:// Is this affected by BaseLV and SPL too??? [Rytech]
-						skillratio += -100 + 85000 + 5 * sstatus->spl;
-						RE_LVL_DMOD(100);
+					case AG_ALL_BLOOM_ATK2:
+						skillratio += -100 + 85000;
+						// Skill not affected by Baselevel and SPL
 						break;
 					case AG_CRYSTAL_IMPACT:
 						skillratio += -100 + 250 + 1300 * skill_lv + 5 * sstatus->spl;
+						// (climax buff applied when hit)
 						RE_LVL_DMOD(100);
-						if (sc && sc->getSCE(SC_CLIMAX)) {
-							if (sc->getSCE(SC_CLIMAX)->val1 == 3)
-								skillratio += skillratio * 50 / 100;
-							else if (sc->getSCE(SC_CLIMAX)->val1 == 4)
-								skillratio /= 2;
-						}
 						break;
-					case AG_CRYSTAL_IMPACT_ATK:// Said to deal the same damage as the main attack.
-						skillratio += -100 + 800 * skill_lv + 5 * sstatus->spl;
+					case AG_CRYSTAL_IMPACT_ATK:
+						skillratio += -100 + 250 + 1300 * skill_lv + 5 * sstatus->spl;
+						// (climax buff applied when hit)
 						RE_LVL_DMOD(100);
-						if (sc && sc->getSCE(SC_CLIMAX) && sc->getSCE(SC_CLIMAX)->val1 == 4)
-							skillratio += skillratio * 150 / 100;
 						break;
 					case AG_TORNADO_STORM:
 						skillratio += -100 + 100 + 760 * skill_lv + 5 * sstatus->spl;
@@ -8455,9 +8446,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case AG_ASTRAL_STRIKE:
-						skillratio += -100 + 1800 * skill_lv + 10 * sstatus->spl;
+						skillratio += -100 + 300 + 1800 * skill_lv + 10 * sstatus->spl;
 						if (tstatus->race == RC_UNDEAD || tstatus->race == RC_DRAGON)
-							skillratio += 340 * skill_lv;
+							skillratio += 400 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
 					case AG_ASTRAL_STRIKE_ATK:
@@ -8483,7 +8474,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case AG_CRIMSON_ARROW:
-						skillratio += -100 + 400 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 400 * skill_lv + 3 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						break;
 					case AG_CRIMSON_ARROW_ATK:
@@ -8543,9 +8534,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 							skillratio += 50 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
-					case AG_DESTRUCTIVE_HURRICANE_CLIMAX:// Is this affected by BaseLV and SPL too??? [Rytech]
-						skillratio += -100 + 500 + 5 * sstatus->spl;
-						RE_LVL_DMOD(100);
+					case AG_DESTRUCTIVE_HURRICANE_CLIMAX:
+						skillratio += -100 + 12500;
+						// Skill not affected by Baselevel and SPL
 						break;
 					case ABC_ABYSS_STRIKE:
 						skillratio += -100 + 2650 * skill_lv;
@@ -8736,12 +8727,10 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += 25;
 				}
 #ifdef RENEWAL
-				// S.MATK needs to be applied before the skill ratio to prevent rounding issues
-				if (sd && sstatus->smatk > 0)
-					ad.damage += ad.damage * sstatus->smatk / 100;
-#endif
+				has_skillratio = true;
+#else
 				MATK_RATE(skillratio);
-
+#endif
 				//Constant/misc additions from skills
 				if (skill_id == WZ_FIREPILLAR)
 					MATK_ADD(100 + 50 * skill_lv);
@@ -8749,13 +8738,30 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			}
 		}
 #ifdef RENEWAL
+		// Damage modifier need to be applied before SMATK
 		ad.damage += battle_calc_cardfix(BF_MAGIC, src, target, nk, s_ele, 0, ad.damage, 0, ad.flag);
+
+		// Additionnal damage from W_2HSTAFF
+		// Must be before smatk and after battle_calc_cardfix
+		if (sd != nullptr && sd->status.weapon == W_2HSTAFF && (i = pc_checkskill(sd, AG_TWOHANDSTAFF)) > 0) {
+			ad.damage += ad.damage * i / 100;
+		}
+
+		if (has_skillratio) {
+			// S.MATK needs to be applied before the skill ratio to prevent rounding issues
+			if (sd && sstatus->smatk > 0)
+				ad.damage += ad.damage * sstatus->smatk / 100;
+
+			MATK_RATE(skillratio);
+		}
 #endif
 
 		if(sd) {
+#ifndef RENEWAL
 			//Damage bonuses
 			if ((i = pc_skillatk_bonus(sd, skill_id)))
 				ad.damage += (int64)ad.damage*i/100;
+#endif
 
 			//Ignore Defense?
 			if (!flag.imdef && (
@@ -8838,6 +8844,13 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 #endif
 		}
 
+#ifdef RENEWAL
+		// pc_skillatk_bonus must be after def reduction and before the damages applied when the target is hit (at least on renewal)
+		if (sd != nullptr && (i = pc_skillatk_bonus(sd, skill_id)) > 0) {
+			ad.damage += (int64)ad.damage*i/100;
+		}
+#endif
+
 		//Apply the physical part of the skill's damage. [Skotlex]
 		switch (skill_id) {
 			case CR_GRANDCROSS:
@@ -8900,6 +8913,40 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				case WZ_HEAVENDRIVE:
 					if(sc->getSCE(SC_PETROLOGY_OPTION))
 						ad.damage += (6 + sstatus->int_ / 4) + max(sstatus->dex - 10, 0) / 30;
+					break;
+
+				// Buff applied after def reduction and before battle_attr_fix
+				case AG_DESTRUCTIVE_HURRICANE:
+					if (sc->getSCE(SC_CLIMAX)) {
+						if (sc->getSCE(SC_CLIMAX)->val1 == 3)
+							ad.damage += ad.damage * 150 / 100;
+						else if (sc->getSCE(SC_CLIMAX)->val1 == 5)
+							ad.damage = (int64)( ad.damage - std::ceil( ad.damage * 20 / 100. ) );	// Damage rounded down after final calculation
+					}
+					break;
+				case AG_VIOLENT_QUAKE_ATK:
+					if (sc->getSCE(SC_CLIMAX)) {
+						if (sc->getSCE(SC_CLIMAX)->val1 == 1)
+							ad.damage /= 2;
+						else if (sc->getSCE(SC_CLIMAX)->val1 == 3)
+							ad.damage *= 3;
+					}
+					break;
+				case AG_ALL_BLOOM_ATK:
+					if (sc->getSCE(SC_CLIMAX) && sc->getSCE(SC_CLIMAX)->val1 == 3)
+						ad.damage *= 4;
+					break;
+				case AG_CRYSTAL_IMPACT:
+					if (sc->getSCE(SC_CLIMAX)) {
+						if (sc->getSCE(SC_CLIMAX)->val1 == 3)
+							ad.damage += ad.damage * 50 / 100;
+						else if (sc->getSCE(SC_CLIMAX)->val1 == 4)
+							ad.damage /= 2;
+					}
+					break;
+				case AG_CRYSTAL_IMPACT_ATK:
+					if (sc->getSCE(SC_CLIMAX) && sc->getSCE(SC_CLIMAX)->val1 == 4)
+						ad.damage += ad.damage * 150 / 100;
 					break;
 			}
 		}
