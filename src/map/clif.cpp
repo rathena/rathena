@@ -9029,7 +9029,7 @@ void clif_guild_emblem_area(struct block_list* bl)
 	p.emblem_id = status_get_emblem_id(bl);
 	p.AID = bl->id;
 
-	clif_send(&p, sizeof(p), bl, AREA_WOS);
+	clif_send(&p, sizeof(p), bl, AREA);
 }
 
 
