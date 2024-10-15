@@ -4,6 +4,8 @@
 #ifndef PACKETS_HPP
 #define PACKETS_HPP
 
+#include <vector>
+
 #include <common/mmo.hpp>
 
 #pragma warning( push )
@@ -13,6 +15,8 @@
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( push, 1 )
 #endif
+
+struct clan;
 
 struct CHARACTER_INFO{
 	uint32 GID;
@@ -107,7 +111,66 @@ struct PACKET_CH_SELECT_ACCESSIBLE_MAPNAME{
 	int8 mapnumber;
 } __attribute__((packed));
 
-#define DEFINE_PACKET_HEADER(name, id) const int16 HEADER_##name = id;
+#define DEFINE_PACKET_HEADER(name, id) constexpr int16 HEADER_##name = id;
+
+DEFINE_PACKET_HEADER(ZI_REQUEST_CLAN_INFO, 0x30A0)
+DEFINE_PACKET_HEADER(ZI_REQUEST_RELAY_CLAN_MESSAGE, 0x30A1)
+struct PACKET_ZI_REQUEST_RELAY_CLAN_MESSAGE {
+	int16 packetType;
+	uint16 length;
+	uint32 clan_id;
+	uint32 account_id;
+	uint8 message[12];
+} __attribute__((packed));
+
+DEFINE_PACKET_HEADER(ZI_CLAN_MEMBER_JOINED, 0x30A2)
+struct PACKET_ZI_CLAN_MEMBER_JOINED {
+	int16 packetType;
+	uint64 clan_id;
+} __attribute__((packed));
+
+DEFINE_PACKET_HEADER(ZI_CLAN_MEMBER_LEFT, 0x30A3)
+struct PACKET_ZI_CLAN_MEMBER_LEFT {
+	int16 packetType;
+	uint64 clan_id;
+} __attribute__((packed));
+
+DEFINE_PACKET_HEADER(IZ_SEND_CLAN_INFO, 0x38A0)
+struct PACKET_IZ_SEND_CLAN_INFO {
+	int16 packetType;
+	uint16 length;
+	clan clans[MAX_CLAN_NUM];
+
+	PACKET_IZ_SEND_CLAN_INFO(uint16 length, std::vector<clan*>& src)
+		: length(length), packetType(HEADER_IZ_SEND_CLAN_INFO) {
+		for (size_t i = 0; (i < MAX_CLAN_NUM) && (i < src.size()); ++i) {
+			clans[i] = *src[i];
+		}
+	}
+} __attribute__((packed));
+
+DEFINE_PACKET_HEADER(IZ_CLAN_REFRESH_ONLINE_COUNT, 0x30A2)
+struct PACKET_IZ_CLAN_REFRESH_ONLINE_COUNT {
+	int16 packetType;
+	uint16 clan_id;
+	uint32 online_members;
+
+	PACKET_IZ_CLAN_REFRESH_ONLINE_COUNT(uint16 clan_id, uint32 online_members)
+		: packetType(HEADER_IZ_CLAN_REFRESH_ONLINE_COUNT),
+		  clan_id(clan_id),
+		  online_members(online_members) {
+	}
+} __attribute__((packed));
+
+DEFINE_PACKET_HEADER(IZ_RELAY_CLAN_MESSAGE, 0x38A1)
+struct PACKET_IZ_RELAY_CLAN_MESSAGE {
+	int16 packetType;
+	uint16 length;
+	uint32 clan_id;
+	uint32 account_id;
+	uint8 message[12];
+} __attribute__((packed));
+
 
 #if PACKETVER_MAIN_NUM >= 20201007 || PACKETVER_RE_NUM >= 20211103
 	DEFINE_PACKET_HEADER( HC_ACK_CHANGE_CHARACTER_SLOT, 0xb70 )

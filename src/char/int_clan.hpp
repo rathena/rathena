@@ -4,8 +4,18 @@
 #ifndef INT_CLAN_HPP
 #define INT_CLAN_HPP
 
-int inter_clan_parse_frommap( int fd );
-int inter_clan_init(void);
-void inter_clan_final(void);
+namespace Clan {
+
+enum e_clan_error : int {
+	SUCCESS = 0,
+	FAILURE = 1,
+	INITIALIZATION_FAIULIRE = 2,
+	NOT_FOUND_ERROR = 3,
+};
+
+e_clan_error handle_request(int fd);
+e_clan_error init(void);
+
+} // namespace Clan
 
 #endif /* INT_CLAN_HPP */

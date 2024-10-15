@@ -364,6 +364,32 @@ INSERT INTO `clan` VALUES ('2', 'Arcwand Clan', 'Devon Aire', 'geffen', '500');
 INSERT INTO `clan` VALUES ('3', 'Golden Mace Clan', 'Berman Aire', 'prontera', '500');
 INSERT INTO `clan` VALUES ('4', 'Crossbow Clan', 'Shaam Rumi', 'payon', '500');
 
+DELIMITER //
+DROP PROCEDURE IF EXISTS GetClanAndClanAlliance //
+CREATE PROCEDURE GetClanAndClanAlliance()
+BEGIN
+    SELECT 
+        c.clan_id, 
+        c.name AS clan_name, 
+        c.master, 
+        c.mapname, 
+        c.max_member, 
+        GROUP_CONCAT(ca.alliance_id) AS alliance_ids,
+        GROUP_CONCAT(ca.opposition) AS oppositions,
+        GROUP_CONCAT(ca.name) AS alliance_names
+    FROM 
+        clan c
+    LEFT JOIN 
+        clan_alliance ca
+    ON 
+        c.clan_id = ca.clan_id
+    GROUP BY 
+        c.clan_id
+    ORDER BY
+        c.clan_id;
+END //
+DELIMITER ;
+
 --
 -- Table structure for `clan_alliance`
 --
