@@ -329,3 +329,92 @@ itemmall,19,74,5	script	Stylist#cash	91,{
 	mes "to see you again. Take care!";
 	close;
 }
+
+itemmall,35,63,3	script	Mysterious Clown	4_M_PIERROT,{
+	mes "[Mysterious Clown]";
+	mes "Welcome~";
+	mes "I'm the world's greatest clown and wizard~ I'm the only person in the world who can completely reset your status~";
+	next;
+	mes "[Mysterious Clown]";
+	mes "If you bring me 1 Status Reset Ticket, I will reset your status.";
+	next;
+	mes "[Mysterious Clown]";
+	mes "However, be aware that you cannot receive the status reset service if your weight is more than 0 or if you are using a Cart, Peco Peco, Falcon, Warg, Dragon, or Mado Gear.";
+	next;
+	if(Weight > 0) {
+		mes "[Mysterious Clown]";
+		mes "Oh~ If your weight is not 0, I can't reset your status.";
+		next;
+		mes "[Mysterious Clown]";
+		mes "Please come back to me after you have stored everything you have.";
+		close;
+	}
+	if (checkriding() || checkfalcon() || checkcart() || ismounting() || checkdragon() || checkwug() || checkmadogear()) {
+		mes "[Mysterious Clown]";
+		mes "It seems like you are riding a creature... That could be troublesome.";
+		next;
+		mes "[Mysterious Clown]";
+		mes "Again, please note that you cannot receive the status reset service if you are using a Cart, Peco Peco, Falcon, Warg, Dragon or Mado Gear.";
+		close;
+	}
+	if(isbegin_quest(12332) == 1) {
+		if(checkquest(12332,PLAYTIME) == 0 || checkquest(12332,PLAYTIME) == 1) {
+			if(resetstat > 0) {
+				mes "[Mysterious Clown]";
+				mes "The number of resets remaining during the time limit is " + resetstat + " times. Would you like to continue resetting? Anyway, you can't use the status reset until some time passes.";
+			} else { //custom dialog
+				mes "[Mysterious Clown]";
+				mes "You have used up all the reset attempts. You won't be able to receive the status reset service anymore until the time limit expires.";
+				close;
+			}
+		} else if(checkquest(12332,PLAYTIME) == 2) {
+			mes "[Mysterious Clown]";
+			mes "Oh~ It seems like time has run out. I'll be preparing for a moment, so if you want to reset your status, please talk to me again.";
+			if(resetstat > 0 && countitem(6721)) {
+				mes "[Mysterious Clown]";
+				mes "It appears you still have a Status Reset Ticket that should be disposed of. I will collect it.";
+				delitem 6721,1;
+			}
+			erasequest 12332;
+			close;
+		}
+	} else {
+		mes "[Mysterious Clown]";
+		mes "Alright. If you wish, I can perform the trick where your status is reset. The admission fee is just one Status Reset Ticket.";
+	}
+	next;
+	if( select( "I will do it next time!", "Reset status!" ) == 1) {
+		mes "[Mysterious Clown]";
+		mes "Yes, if you change your mind, come back to me";
+		close;
+	}
+	if((!isbegin_quest(12332) && countitem(6720) < 1) || (isbegin_quest(12332) && countitem(6721) < 1)) {
+		mes "[Mysterious Clown]";
+		mes "This trick isn't free; you should have 1 ^ff0000Status Reset Ticket^000000 to proceed.";
+		next;
+		mes "[Mysterious Clown]";
+		mes "Furthermore, after the initial status reset, we also offer ^ff00002 additional status reset opportunities^000000 within the first hour.";
+		next;
+		mes "[Mysterious Clown]";
+		mes "Of course, please be aware that even if you have the Status Reset Tickets, you won't be able to perform additional status reset beyond the initial 2 if you've already used them within the first hour.";
+		close;
+	}
+	specialeffect2 EF_LORD;
+	resetstatus;
+	mes "[Mysterious Clown]";
+	mes "Great~~ It's all done now. Can't believe it happened so quickly, right? Go ahead and open your status window to check; everything should have changed...";
+	if(!isbegin_quest(12332)) {
+		delitem 6720,1;
+		getitem 6721,1;
+		setquest 12332;
+		set resetstat,2;
+	} else
+		resetstat = resetstat - 1;
+	if(resetstat == 0) {//custom dialog
+		next;
+		mes "[Mysterious Clown]";
+		mes "I will collect the Status Reset Tickets since you have used up all the reset attempts.";
+		delitem 6721,1;
+	}
+	close;
+}
