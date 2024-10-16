@@ -6891,6 +6891,13 @@ Body:
             Level: 5
           - Name: SHC_SHADOW_STAB
             Level: 5
+      - Name: SHC_CROSS_SLASH
+        MaxLevel: 5
+        Requires:
+          - Name: GC_WEAPONBLOCKING
+            Level: 3
+          - Name: SHC_DANCING_KNIFE
+            Level: 3
   - Job: Arch_Mage
     Inherit:
       Novice: true
