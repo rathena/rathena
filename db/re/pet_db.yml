@@ -3142,7 +3142,7 @@ Body:
          bonus2 bMagicAtkEle,Ele_Wind,1;
          bonus bVariableCastrate,-1;
       }
-#   Evolution:
+#    Evolution:
 #      - Target: GIANT_HONET2
 #        ItemRequirements:
 #          - Item: Honey

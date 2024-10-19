@@ -9390,12 +9390,12 @@ Body:
         RandomOptionGroup: Group_0
         ClearSlots: true
         RemoveEnchantgrade: true
-      - BaseItem: Card_Coin
-        MaximumRefine: 0
-        ResultItem: R_Recycle_Card
-        RandomOptionGroup: Group_0
-        ClearSlots: true
-        RemoveEnchantgrade: true
+#     - BaseItem: Card_Coin   # mistake ?
+#       MaximumRefine: 0
+#       ResultItem: R_Recycle_Card
+#       RandomOptionGroup: Group_0
+#       ClearSlots: true
+#       RemoveEnchantgrade: true
       - BaseItem: Adulter_F_A_Bow
         Materials:
           - Material: Imperfect_Rune
@@ -11889,6 +11889,90 @@ Body:
             Amount: 2
         ResultItem: S_NW_WB_Shoes
         #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_MT_MS_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_MT_MS_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_MT_MS_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_MT_MS_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_MT_PR_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_MT_PR_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_MT_PR_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_MT_PR_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_BO_EP_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_BO_EP_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_BO_EP_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_BO_EP_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_BO_MD_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_BO_MD_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_BO_MD_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_BO_MD_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_HN_VJ_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_HN_VJ_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_HN_VJ_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_HN_VJ_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_HN_TB_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_HN_TB_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_HN_TB_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_HN_TB_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
   - Item: Time_Gap_Refine_Hammer
     BaseItems:
       - BaseItem: Time_Gap_Spear_IG
@@ -11961,3 +12045,269 @@ Body:
             Amount: 2
         ResultItem: Time_Gap_HN_Staff
         ChangeRefine: 1
+      - BaseItem: Time_Gap_BO_Blade
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 12
+          - Material: Time_D_Ma_Rune
+            Amount: 2
+        ResultItem: Time_Gap_BO_Blade
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_SHC_Dagger1
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 12
+          - Material: Time_D_Ma_Rune
+            Amount: 2
+        ResultItem: Time_Gap_SHC_Dagger1
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_SHC_Dagger2
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 12
+          - Material: Time_D_Ma_Rune
+            Amount: 2
+        ResultItem: Time_Gap_SHC_Dagger2
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_SOA_Rod
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 12
+          - Material: Time_D_Ma_Rune
+            Amount: 2
+        ResultItem: Time_Gap_SOA_Rod
+        ChangeRefine: 1
+  - Item: Yorscalp_Refin_Hammer
+    BaseItems:
+      - BaseItem: Yorscalp_Armor
+        MinimumRefine: 10
+        MaximumRefine: 10
+        Materials:
+          - Material: Zelunium
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 100
+        ResultItem: Yorscalp_Armor
+        ChangeRefine: 1
+      - BaseItem: Yorscalp_Robe
+        MinimumRefine: 10
+        MaximumRefine: 10
+        Materials:
+          - Material: Zelunium
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 100
+        ResultItem: Yorscalp_Robe
+        ChangeRefine: 1
+      - BaseItem: Yorscalp_Manteau
+        MinimumRefine: 10
+        MaximumRefine: 10
+        Materials:
+          - Material: Zelunium
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 100
+        ResultItem: Yorscalp_Manteau
+        ChangeRefine: 1
+      - BaseItem: Yorscalp_Muffler
+        MinimumRefine: 10
+        MaximumRefine: 10
+        Materials:
+          - Material: Zelunium
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 100
+        ResultItem: Yorscalp_Muffler
+        ChangeRefine: 1
+      - BaseItem: Yorscalp_Boots
+        MinimumRefine: 10
+        MaximumRefine: 10
+        Materials:
+          - Material: Zelunium
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 100
+        ResultItem: Yorscalp_Boots
+        ChangeRefine: 1
+      - BaseItem: Yorscalp_Shoes
+        MinimumRefine: 10
+        MaximumRefine: 10
+        Materials:
+          - Material: Zelunium
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 100
+        ResultItem: Yorscalp_Shoes
+        ChangeRefine: 1
+      - BaseItem: Yorscalp_P_Circlet
+        MinimumRefine: 10
+        MaximumRefine: 10
+        Materials:
+          - Material: Zelunium
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 100
+        ResultItem: Yorscalp_P_Circlet
+        ChangeRefine: 1
+      - BaseItem: Yorscalp_M_Circlet
+        MinimumRefine: 10
+        MaximumRefine: 10
+        Materials:
+          - Material: Zelunium
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 100
+        ResultItem: Yorscalp_M_Circlet
+        ChangeRefine: 1
+  - Item: Yorscalp_Scroll_A
+    BaseItems:
+      - BaseItem: Gaebolg_Armor
+        Materials:
+          - Material: Ep21_Wigner_Ticket
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 200
+        ResultItem: Yorscalp_Armor
+      - BaseItem: Gaebolg_Robe
+        Materials:
+          - Material: Ep21_Wigner_Ticket
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 200
+        ResultItem: Yorscalp_Robe
+      - BaseItem: Gaebolg_Manteau
+        Materials:
+          - Material: Ep21_Wigner_Ticket
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 200
+        ResultItem: Yorscalp_Manteau
+      - BaseItem: Gaebolg_Muffler
+        Materials:
+          - Material: Ep21_Wigner_Ticket
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 200
+        ResultItem: Yorscalp_Muffler
+      - BaseItem: Gaebolg_Boots
+        Materials:
+          - Material: Ep21_Wigner_Ticket
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 200
+        ResultItem: Yorscalp_Boots
+      - BaseItem: Gaebolg_Shoes
+        Materials:
+          - Material: Ep21_Wigner_Ticket
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 200
+        ResultItem: Yorscalp_Shoes
+      - BaseItem: Gaebolg_Earring
+        Materials:
+          - Material: Ep21_Wigner_Ticket
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 200
+        ResultItem: Yorscalp_Earring
+      - BaseItem: Gaebolg_Glove
+        Materials:
+          - Material: Ep21_Wigner_Ticket
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 200
+        ResultItem: Yorscalp_Glove
+      - BaseItem: Gaebolg_Ring
+        Materials:
+          - Material: Ep21_Wigner_Ticket
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 200
+        ResultItem: Yorscalp_Ring
+      - BaseItem: Gaebolg_Necklace
+        Materials:
+          - Material: Ep21_Wigner_Ticket
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 200
+        ResultItem: Yorscalp_Necklace
