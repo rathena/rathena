@@ -86,7 +86,10 @@ ayothaya,152,68,1	script	Aibakthing#ayo2	843,{
 		mes "[Aibakthing]";
 		mes "You will be welcome to come back whenever you please. I hope that we will see each other again sometime soon. Thank you~";
 		close2;
-		warp "alberta",235,45;
+		if (checkre(0))
+			warp "alberta",235,45;
+		else
+			warp "alberta",238,32;
 		end;
 	}
 	mes "[Aibakthing]";
