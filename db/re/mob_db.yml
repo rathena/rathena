@@ -91467,6 +91467,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Undead
+    RaceGroups:
+      Ep16_def: true
     Element: Undead
     ElementLevel: 3
     WalkSpeed: 300
@@ -91509,6 +91511,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Undead
+    RaceGroups:
+      Ep16_def: true
     Element: Undead
     ElementLevel: 3
     WalkSpeed: 250
@@ -91551,6 +91555,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Undead
+    RaceGroups:
+      Ep16_def: true
     Element: Undead
     ElementLevel: 3
     WalkSpeed: 250
@@ -91591,6 +91597,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Undead
+    RaceGroups:
+      Ep16_def: true
     Element: Undead
     ElementLevel: 1
     WalkSpeed: 200
@@ -91633,6 +91641,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Undead
+    RaceGroups:
+      Ep16_def: true
     Element: Undead
     ElementLevel: 1
     WalkSpeed: 200
@@ -91667,6 +91677,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Undead
+    RaceGroups:
+      Ep16_def: true
     Element: Undead
     ElementLevel: 4
     WalkSpeed: 200
@@ -91722,6 +91734,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demon
+    RaceGroups:
+      Ep16_def: true
     Element: Undead
     ElementLevel: 4
     WalkSpeed: 150
@@ -91772,6 +91786,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Undead
+    RaceGroups:
+      Ep16_def: true
     Element: Undead
     ElementLevel: 4
     WalkSpeed: 400

@@ -69516,9 +69516,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-       /* TODO implement skill
-       skill "All_EVENT_20TH_ANNIVERSARY",1;
-       */
+       skill "ALL_EVENT_20TH_ANNIVERSARY",1;
   - Id: 311442
     AegisName: aegis_311442
     Name: Perfect Ripe

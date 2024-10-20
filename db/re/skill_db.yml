@@ -18480,6 +18480,18 @@ Body:
     SplashArea: 5
     Duration1: 30000
     Status: Killing_Aura
+  - Id: 784
+    Name: ALL_EVENT_20TH_ANNIVERSARY
+    Description: RO 20th Anniversary Firecracker
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      AllowOnMado: true
+    Cooldown: 3000
+    Requires:
+      SpCost: 1
   - Id: 1001
     Name: KN_CHARGEATK
     Description: Charge Attack
@@ -25678,12 +25690,22 @@ Body:
       - Level: 1
         Amount: 2
       - Level: 2
-        Amount: 3
+        Amount: 2
       - Level: 3
-        Amount: 4
+        Amount: 3
       - Level: 4
-        Amount: 5
+        Amount: 3
       - Level: 5
+        Amount: 4
+      - Level: 6
+        Amount: 4
+      - Level: 7
+        Amount: 5
+      - Level: 8
+        Amount: 5
+      - Level: 9
+        Amount: 6
+      - Level: 10
         Amount: 6
     CopyFlags:
       Skill:
