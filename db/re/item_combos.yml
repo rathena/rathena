@@ -30363,7 +30363,7 @@ Body:
       bonus bMatk,80;
       bonus2 bSkillAtk,"CD_FRAMEN",5*(.@r/2);
       bonus2 bSkillAtk,"AB_ADORAMUS",10*(.@r/3);
-      bonus2 bSkillAtk,"2038 AB_JUDEX",10*(.@r/3);
+      bonus2 bSkillAtk,"AB_JUDEX",10*(.@r/3);
   - Combos:
       - Combo:
           - LightOfCardinal   # 490269
@@ -52966,7 +52966,7 @@ Body:
       if (getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A && .@sum>=10) {
          bonus2 bSkillAtk,"CD_ARBITRIUM",(.@sum-10)*12;
          bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",(.@sum-10)*12;
-         bonus2 bSkillAtk,"6518",(.@sum-10)*12;
+         bonus2 bSkillAtk,"CD_DIVINUS_FLOS",(.@sum-10)*12;
       }
   - Combos:
       - Combo:
@@ -53263,12 +53263,14 @@ Body:
           - Time_DM_R_Crown_SHC   # 400533
           - Time_Gap_SHC_Dagger2   # 510166
     Script: |
-      bonus bShortAtkRate,15;
-      bonus2 bSkillAtk,"SHC_ETERNAL_SLASH",25;
-      if (getequipid(EQI_HAND_L) == 510165 && getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getenchantgrade(EQI_HAND_L)>=ENCHANTGRADE_A && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
-         .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HAND_L)+getequiprefinerycnt(EQI_HEAD_TOP);
-         bonus2 bSkillAtk,"SHC_ETERNAL_SLASH",.@sum;
-         bonus bCritical,15;
+      if (getequipid(EQI_HAND_L) == 510166) {
+         bonus bShortAtkRate,15;
+         bonus2 bSkillAtk,"SHC_ETERNAL_SLASH",25;
+         if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getenchantgrade(EQI_HAND_L)>=ENCHANTGRADE_A && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+            .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HAND_L)+getequiprefinerycnt(EQI_HEAD_TOP);
+            bonus2 bSkillAtk,"SHC_ETERNAL_SLASH",.@sum;
+            bonus bCritical,15;
+         }
       }
   - Combos:
       - Combo:
