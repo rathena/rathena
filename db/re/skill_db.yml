@@ -42088,7 +42088,7 @@ Body:
           Size: 3
         - Level: 5
           Size: 4
-      Interval: 1000
+      Interval: 2000
       Flag:
         NoOverlap: true
         PathCheck: true

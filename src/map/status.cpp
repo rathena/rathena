@@ -4875,7 +4875,7 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 			int bonus = sc->getSCE(SC_TALISMAN_OF_FIVE_ELEMENTS)->val2;
 
 			for( const auto &element : elements ){
-				sd->indexed_bonus.magic_atk_ele[element] += bonus;
+				sd->indexed_bonus.magic_addele[element] += bonus;
 				sd->right_weapon.addele[element] += bonus;
 				if( !battle_config.left_cardfix_to_right ){
 					sd->left_weapon.addele[element] += bonus;
@@ -4884,10 +4884,6 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		}
 		if( sc->getSCE(SC_HEAVEN_AND_EARTH) ) {
 			i = sc->getSCE(SC_HEAVEN_AND_EARTH)->val2;
-			sd->right_weapon.addele[ELE_ALL] += i;
-			if( !battle_config.left_cardfix_to_right ){
-				sd->left_weapon.addele[ELE_ALL] += i;
-			}
 			sd->indexed_bonus.magic_atk_ele[ELE_ALL] += i;
 			sd->bonus.short_attack_atk_rate += i;
 			sd->bonus.long_attack_atk_rate += i;
@@ -9474,7 +9470,6 @@ static int status_get_sc_interval(enum sc_type type)
 			return 1000;
 		case SC_BURNING:
 		case SC_PYREXIA:
-		case SC_TALISMAN_OF_PROTECTION:
 			return 3000;
 		case SC_MAGICMUSHROOM:
 			return 4000;
@@ -12800,8 +12795,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val3 = 10 * val1;
 			break;
 		case SC_TALISMAN_OF_PROTECTION:
-			tick_time = status_get_sc_interval(type);
-			val4 = tick - tick_time; // Remaining time
+			//heal value is static per cast of skill [munkrej]
+			val3 = skill_calc_heal(src, bl, SOA_TALISMAN_OF_PROTECTION, val1, true);
+			val4 = tick / 3000;
+			//first heal tick applies on cast [munkrej]
+			tick_time = 100;
 			break;
 		case SC_TALISMAN_OF_WARRIOR:
 		case SC_TALISMAN_OF_MAGICIAN:
@@ -14976,7 +14974,7 @@ TIMER_FUNC(status_change_timer){
 		sc_timer_next(500 + tick);
 		return 0;
 	case SC_TALISMAN_OF_PROTECTION:
-		if( sce->val4 >= 0 ){
+		if(--(sce->val4) >= 0){
 			// Get the original caster
 			map_session_data* ssd = map_id2sd( sce->val2 );
 
@@ -14988,9 +14986,11 @@ TIMER_FUNC(status_change_timer){
 				break;
 			}
 
-			int hp = skill_calc_heal( &ssd->bl, bl, SOA_TALISMAN_OF_PROTECTION, sce->val1, true );
+			int hp = sc->getSCE(SC_TALISMAN_OF_PROTECTION)->val3;
 
 			status_heal( bl, hp, 0, 0, 2 );
+			sc_timer_next(3000 + tick);
+			return 0;
 		}
 		break;
 	}
