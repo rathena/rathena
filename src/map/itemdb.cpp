@@ -4,11 +4,11 @@
 #include "itemdb.hpp"
 
 #include <chrono>
+#include <cmath>
+#include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <map>
-#include <stdlib.h>
-#include <math.h>
 #include <unordered_map>
 
 #include <common/nullpo.hpp>
@@ -1155,6 +1155,29 @@ void ItemDatabase::loadingFinished(){
 			if( item->armor_level != 0 ){
 				ShowWarning( "Item %s is not an armor, but has an armor level. Defaulting to 0.\n", item->name.c_str() );
 				item->armor_level = 0;
+			}
+		}
+
+		if (item->type != IT_ARMOR && item->type != IT_SHADOWGEAR && item->def > 0) {
+			ShowWarning( "Item %s is not a armor or shadowgear. Defaulting Defense to 0.\n", item->name.c_str() );
+			item->def = 0;
+		}
+
+		if (item->type != IT_WEAPON && item->type != IT_AMMO && item->atk > 0) {
+			ShowWarning( "Item %s is not a weapon or ammo. Defaulting Attack to 0.\n", item->name.c_str() );
+			item->atk = 0;
+		}
+
+		if (item->type != IT_WEAPON) {
+#ifdef RENEWAL
+			if (item->matk > 0) {
+				ShowWarning( "Item %s is not a weapon. Defaulting MagicAttack to 0.\n", item->name.c_str() );
+				item->matk = 0;
+			}
+#endif
+			if (item->range > 0) {
+				ShowWarning( "Item %s is not a weapon. Defaulting Range to 0.\n", item->name.c_str() );
+				item->range = 0;
 			}
 		}
 
@@ -2883,7 +2906,7 @@ std::shared_ptr<s_item_group_entry> get_random_itemsubgroup(std::shared_ptr<s_it
 * Return a random group entry from Item Group
 * @param group_id
 * @param sub_group: 0 is 'must' item group, random groups start from 1
-* @return Item group entry or NULL on fail
+* @return Item group entry or nullptr on fail
 */
 std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_entry(uint16 group_id, uint8 sub_group) {
 	std::shared_ptr<s_item_group_db> group = this->find(group_id);
@@ -2921,7 +2944,7 @@ t_itemid ItemGroupDatabase::get_random_item_id(uint16 group_id, uint8 sub_group)
 * @param group_id: The group ID of item that obtained by player
 * @param *group: struct s_item_group from itemgroup_db[group_id].random[idx] or itemgroup_db[group_id].must[sub_group][idx]
 */
-static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std::shared_ptr<s_item_group_entry> data) {
+void ItemGroupDatabase::pc_get_itemgroup_sub( map_session_data& sd, bool identify, std::shared_ptr<s_item_group_entry> data ){
 	if (data == nullptr)
 		return;
 
@@ -2930,12 +2953,12 @@ static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std
 	tmp.nameid = data->nameid;
 	tmp.bound = data->bound;
 	tmp.identify = identify ? identify : itemdb_isidentified(data->nameid);
-	tmp.expire_time = (data->duration) ? (unsigned int)(time(NULL) + data->duration*60) : 0;
+	tmp.expire_time = (data->duration) ? (unsigned int)(time(nullptr) + data->duration*60) : 0;
 	if (data->isNamed) {
 		tmp.card[0] = itemdb_isequip(data->nameid) ? CARD0_FORGE : CARD0_CREATE;
 		tmp.card[1] = 0;
-		tmp.card[2] = GetWord(sd->status.char_id, 0);
-		tmp.card[3] = GetWord(sd->status.char_id, 1);
+		tmp.card[2] = GetWord( sd.status.char_id, 0 );
+		tmp.card[3] = GetWord( sd.status.char_id, 1 );
 	}
 
 	uint16 get_amt = 0;
@@ -2949,8 +2972,7 @@ static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std
 
 	// Do loop for non-stackable item
 	for (uint16 i = 0; i < data->amount; i += get_amt) {
-		char flag = 0;
-		tmp.unique_id = data->GUID ? pc_generate_unique_id(sd) : 0; // Generate GUID
+		tmp.unique_id = data->GUID ? pc_generate_unique_id( &sd ) : 0; // Generate GUID
 
 		if( itemdb_isequip( data->nameid ) ){
 			if( data->refineMinimum > 0 && data->refineMaximum > 0 ){
@@ -2970,13 +2992,15 @@ static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std
 			}
 		}
 
-		if ((flag = pc_additem(sd, &tmp, get_amt, LOG_TYPE_SCRIPT))) {
-			clif_additem(sd, 0, 0, flag);
-			if (pc_candrop(sd, &tmp))
-				map_addflooritem(&tmp, tmp.amount, sd->bl.m, sd->bl.x,sd->bl.y, 0, 0, 0, 0, 0);
+		e_additem_result flag = pc_additem( &sd, &tmp, get_amt, LOG_TYPE_SCRIPT );
+
+		if( flag == ADDITEM_SUCCESS ){
+			if( data->isAnnounced ){
+				intif_broadcast_obtain_special_item( &sd, data->nameid, sd.itemid, ITEMOBTAIN_TYPE_BOXITEM );
+			}
+		}else{
+			clif_additem( &sd, 0, 0, flag );
 		}
-		else if (!flag && data->isAnnounced)
-			intif_broadcast_obtain_special_item(sd, data->nameid, sd->itemid, ITEMOBTAIN_TYPE_BOXITEM);
 	}
 }
 
@@ -2984,11 +3008,9 @@ static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std
 * Find item(s) that will be obtained by player based on Item Group
 * @param group_id: The group ID that will be gained by player
 * @param nameid: The item that trigger this item group
-* @return val: 0:success, 1:no sd, 2:invalid item group
+* @return val: 0:success, 2:invalid item group
 */
-uint8 ItemGroupDatabase::pc_get_itemgroup(uint16 group_id, bool identify, map_session_data *sd) {
-	nullpo_retr(1,sd);
-
+uint8 ItemGroupDatabase::pc_get_itemgroup( uint16 group_id, bool identify, map_session_data& sd ){
 	std::shared_ptr<s_item_group_db> group = this->find(group_id);
 
 	if (group == nullptr) {
@@ -2997,21 +3019,22 @@ uint8 ItemGroupDatabase::pc_get_itemgroup(uint16 group_id, bool identify, map_se
 	}
 	if (group->random.empty())
 		return 0;
-	
-	// Get all the 'must' item(s) (subgroup 0)
-	uint16 subgroup = 0;
-	std::shared_ptr<s_item_group_random> random = util::umap_find(group->random, subgroup);
 
-	if (random != nullptr && !random->data.empty()) {
-		for (const auto &it : random->data)
-			itemdb_pc_get_itemgroup_sub(sd, identify, it.second);
+	// Get all the 'must' item(s) (subgroup 0)
+	std::shared_ptr<s_item_group_random> must = util::umap_find(group->random, static_cast<uint16>(0));
+	if( must != nullptr ){
+		for (const auto &it : must->data)
+			this->pc_get_itemgroup_sub( sd, identify, it.second );
 	}
 
 	// Get 1 'random' item from each subgroup
 	for (const auto &random : group->random) {
-		if (random.first == 0 || random.second->data.empty())
+		// Skip the 'must' group
+		if( random.first == 0 ){
 			continue;
-		itemdb_pc_get_itemgroup_sub(sd, identify, get_random_itemsubgroup(random.second));
+		}
+
+		this->pc_get_itemgroup_sub( sd, identify, get_random_itemsubgroup( random.second ) );
 	}
 
 	return 0;
@@ -3019,7 +3042,7 @@ uint8 ItemGroupDatabase::pc_get_itemgroup(uint16 group_id, bool identify, map_se
 
 /** Searches for the item_data. Use this to check if item exists or not.
 * @param nameid
-* @return *item_data if item is exist, or NULL if not
+* @return *item_data if item is exist, or nullptr if not
 */
 std::shared_ptr<item_data> itemdb_exists(t_itemid nameid) {
 	return item_db.find(nameid);
@@ -3538,6 +3561,19 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 }
 
 void ItemGroupDatabase::loadingFinished() {
+	// Delete empty sub groups
+	for( const auto &group : *this ){
+		for( auto it = group.second->random.begin(); it != group.second->random.end(); ){
+			if( it->second->data.empty() ){
+				ShowDebug( "Deleting empty subgroup %u from item group %hu.\n", it->first, group.first );
+				it = group.second->random.erase( it );
+			}else{
+				it++;
+			}
+		}
+	}
+
+	// Calculate rates
 	for (const auto &group : *this) {
 		for (const auto &random : group.second->random) {
 			random.second->total_rate = 0;
@@ -3757,10 +3793,10 @@ bool itemdb_parse_roulette_db(void)
 			unsigned short amount;
 			int level, flag;
 
-			Sql_GetData(mmysql_handle, 1, &data, NULL); level = atoi(data);
-			Sql_GetData(mmysql_handle, 2, &data, NULL); item_id = strtoul(data, nullptr, 10);
-			Sql_GetData(mmysql_handle, 3, &data, NULL); amount = atoi(data);
-			Sql_GetData(mmysql_handle, 4, &data, NULL); flag = atoi(data);
+			Sql_GetData(mmysql_handle, 1, &data, nullptr); level = atoi(data);
+			Sql_GetData(mmysql_handle, 2, &data, nullptr); item_id = strtoul(data, nullptr, 10);
+			Sql_GetData(mmysql_handle, 3, &data, nullptr); amount = atoi(data);
+			Sql_GetData(mmysql_handle, 4, &data, nullptr); flag = atoi(data);
 
 			if (!item_db.exists(item_id)) {
 				ShowWarning("itemdb_parse_roulette_db: Unknown item ID '%u' in level '%d'\n", item_id, level);
@@ -3839,9 +3875,9 @@ static void itemdb_roulette_free(void) {
 			aFree(rd.qty[i]);
 		if (rd.flag[i])
 			aFree(rd.flag[i]);
-		rd.nameid[i] = NULL;
-		rd.qty[i] = NULL;
-		rd.flag[i] = NULL;
+		rd.nameid[i] = nullptr;
+		rd.qty[i] = nullptr;
+		rd.flag[i] = nullptr;
 		rd.items[i] = 0;
 	}
 }

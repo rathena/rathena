@@ -3,8 +3,8 @@
 
 #include "int_mercenary.hpp"
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 
 #include <common/mmo.hpp>
 #include <common/showmsg.hpp>
@@ -31,13 +31,13 @@ bool mercenary_owner_fromsql(uint32 char_id, struct mmo_charstatus *status)
 		return false;
 	}
 
-	Sql_GetData(sql_handle,  0, &data, NULL); status->mer_id = atoi(data);
-	Sql_GetData(sql_handle,  1, &data, NULL); status->arch_calls = atoi(data);
-	Sql_GetData(sql_handle,  2, &data, NULL); status->arch_faith = atoi(data);
-	Sql_GetData(sql_handle,  3, &data, NULL); status->spear_calls = atoi(data);
-	Sql_GetData(sql_handle,  4, &data, NULL); status->spear_faith = atoi(data);
-	Sql_GetData(sql_handle,  5, &data, NULL); status->sword_calls = atoi(data);
-	Sql_GetData(sql_handle,  6, &data, NULL); status->sword_faith = atoi(data);
+	Sql_GetData(sql_handle,  0, &data, nullptr); status->mer_id = atoi(data);
+	Sql_GetData(sql_handle,  1, &data, nullptr); status->arch_calls = atoi(data);
+	Sql_GetData(sql_handle,  2, &data, nullptr); status->arch_faith = atoi(data);
+	Sql_GetData(sql_handle,  3, &data, nullptr); status->spear_calls = atoi(data);
+	Sql_GetData(sql_handle,  4, &data, nullptr); status->spear_faith = atoi(data);
+	Sql_GetData(sql_handle,  5, &data, nullptr); status->sword_calls = atoi(data);
+	Sql_GetData(sql_handle,  6, &data, nullptr); status->sword_faith = atoi(data);
 	Sql_FreeResult(sql_handle);
 
 	return true;
@@ -113,11 +113,11 @@ bool mapif_mercenary_load(int merc_id, uint32 char_id, struct s_mercenary *merc)
 		return false;
 	}
 
-	Sql_GetData(sql_handle,  0, &data, NULL); merc->class_ = atoi(data);
-	Sql_GetData(sql_handle,  1, &data, NULL); merc->hp = atoi(data);
-	Sql_GetData(sql_handle,  2, &data, NULL); merc->sp = atoi(data);
-	Sql_GetData(sql_handle,  3, &data, NULL); merc->kill_count = atoi(data);
-	Sql_GetData(sql_handle,  4, &data, NULL); merc->life_time = strtoll( data, nullptr, 10 );
+	Sql_GetData(sql_handle,  0, &data, nullptr); merc->class_ = atoi(data);
+	Sql_GetData(sql_handle,  1, &data, nullptr); merc->hp = atoi(data);
+	Sql_GetData(sql_handle,  2, &data, nullptr); merc->sp = atoi(data);
+	Sql_GetData(sql_handle,  3, &data, nullptr); merc->kill_count = atoi(data);
+	Sql_GetData(sql_handle,  4, &data, nullptr); merc->life_time = strtoll( data, nullptr, 10 );
 	Sql_FreeResult(sql_handle);
 	if( charserv_config.save_log )
 		ShowInfo("Mercenary loaded (ID: %d / Class: %d / CID: %d).\n", merc->mercenary_id, merc->class_, merc->char_id);

@@ -1,19 +1,13 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Brasilis Guide
-//===== By: ================================================== 
-//= L0ne_W0lf
-//===== Current Version: ===================================== 
-//= 1.2
-//===== Compatible With: ===================================== 
-//= rAthena Project
-//===== Description: ========================================= 
-//= [Official Conversion]
+//===== Description: =========================================
+//= [Official Conversion based on bRO & jRO servers]
 //= Guide for the city of Brasilis.
-//===== Additional Comments: ================================= 
-//= 1.0 First Version, Renewal guide.
-//= 1.1 Added a missing close.
+//===== Changelog: ===========================================
+//= 1.0 First Version, Renewal guide. [L0ne_W0lf]
+//= 1.1 Added a missing close. [L0ne_W0lf]
 //= 1.2 Navigation system update. [Euphy]
-//============================================================ 
+//============================================================
 
 brasilis,219,97,3	script	Brasilis Guide	478,{
 	mes "[Brasilis Guide]";
@@ -59,6 +53,7 @@ brasilis,219,97,3	script	Brasilis Guide	478,{
 			viewpoint 1,195,235,6,0x3355FF;
 			close;
 		}
+		end;
 	case 2:
 		mes "[Brasilis Guide]";
 		mes "I'll remove all marks from your mini-map.";

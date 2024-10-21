@@ -88,7 +88,9 @@ struct Login_Config {
 	bool log_login;                                 /// whether to log login server actions or not
 	char date_format[32];                           /// date format used in messages
 	bool console;                                   /// console input system enabled?
-	bool new_account_flag,new_acc_length_limit;     /// autoregistration via _M/_F ? / if yes minimum length is 4?
+	bool new_account_flag;                          /// autoregistration via _M/_F ?
+	uint8 acc_name_min_length;                      /// minimum account name length
+	uint8 password_min_length;                      /// minimum password length
 	int start_limited_time;                         /// new account expiration time (-1: unlimited)
 	bool use_md5_passwds;                           /// work with password hashes instead of plaintext passwords?
 	int group_id_to_connect;                        /// required group id to connect
@@ -107,9 +109,6 @@ struct Login_Config {
 
 	int client_hash_check;							/// flags for checking client md5
 	struct client_hash_node *client_hash_nodes;		/// linked list containing md5 hash for each gm group
-	char loginconf_name[256];						/// name of main config file
-	char msgconf_name[256];							/// name of msg_conf config file
-	char lanconf_name[256];							/// name of lan config file
 
 	bool usercount_disable;							/// Disable colorization and description in general?
 	int usercount_low;								/// Amount of users that will display in green
@@ -134,7 +133,7 @@ extern struct Login_Config login_config;
 #define msg_config_read(cfgName) login_msg_config_read(cfgName)
 #define msg_txt(msg_number) login_msg_txt(msg_number)
 #define do_final_msg() login_do_final_msg()
-int login_msg_config_read(char *cfgName);
+int login_msg_config_read(const char *cfgName);
 const char* login_msg_txt(int msg_number);
 void login_do_final_msg(void);
 bool login_config_read(const char* cfgName, bool normal);

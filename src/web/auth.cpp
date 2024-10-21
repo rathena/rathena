@@ -3,7 +3,7 @@
 
 #include "auth.hpp"
 
-#include <string.h>
+#include <cstring>
 
 #include <common/showmsg.hpp>
 #include <common/sql.hpp>

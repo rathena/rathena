@@ -168,8 +168,6 @@ enum homun_setting : uint8 {
 	HOMSET_COPY_SPEED					= 0x08, /// Copy their master's speed on spawn/map-change
 	HOMSET_DISPLAY_LUK					= 0x10, /// They display luk/3+1 instead of their actual critical in the stat window, by default they don't crit
 	HOMSET_SAME_MATK					= 0x20, /// Their Min-Matk is always the same as their max
-	HOMSET_RESET_REUSESKILL_VAPORIZED	= 0x40, /// Skill re-use delay is reset when they are vaporized.
-	HOMSET_RESET_REUSESKILL_TELEPORTED	= 0x80, /// Skill re-use delay is reset when they are warped (by skill or item) with player.
 };
 
 enum e_homun_grade : uint8 {
@@ -209,7 +207,6 @@ int hom_recv_data(uint32 account_id, struct s_homunculus *sh, int flag); //albat
 struct view_data* hom_get_viewdata(int class_);
 int hom_class2mapid(int hom_class);
 enum homun_type hom_class2type(int class_);
-void hom_damage(struct homun_data *hd);
 int hom_dead(struct homun_data *hd);
 void hom_skillup(struct homun_data *hd,uint16 skill_id);
 void hom_calc_skilltree(homun_data *hd);
@@ -219,7 +216,7 @@ void hom_gainexp(struct homun_data *hd,t_exp exp);
 int hom_levelup(struct homun_data *hd);
 int hom_evolution(struct homun_data *hd);
 int hom_mutate(struct homun_data *hd,int homun_id);
-void hom_heal(struct homun_data *hd);
+void hom_heal(homun_data& hd, bool hp, bool sp);
 int hom_vaporize(map_session_data *sd, int flag);
 int hom_ressurect(map_session_data *sd, unsigned char per, short x, short y);
 void hom_revive(struct homun_data *hd, unsigned int hp, unsigned int sp);

@@ -3,8 +3,8 @@
 
 #include "instance.hpp"
 
-#include <stdlib.h>
-#include <math.h>
+#include <cstdlib>
+#include <cmath>
 
 #include <common/cbasetypes.hpp>
 #include <common/db.hpp>
@@ -317,7 +317,7 @@ void instance_getsd(int instance_id, map_session_data *&sd, enum send_target *ta
 			(*target) = SELF;
 			break;
 		case IM_CLAN:
-			sd = clan_getavailablesd(clan_search(idata->owner_id));
+			sd = clan_getavailablesd( *clan_search( idata->owner_id ) );
 			(*target) = CLAN;
 	}
 	return;
@@ -351,7 +351,9 @@ static TIMER_FUNC(instance_subscription_timer){
 	std::shared_ptr<MapGuild> gd;
 	struct clan *cd;
 	e_instance_mode mode = idata->mode;
-	int ret = instance_addmap(instance_id); // Check that maps have been added
+
+	// Check that maps have been added
+	size_t ret = instance_addmap( instance_id );
 
 	switch(mode) {
 		case IM_NONE:
@@ -710,7 +712,7 @@ int instance_create(int owner_id, const char *name, e_instance_mode mode) {
  * @param instance_id: Instance ID to add map to
  * @return 0 on failure or map count on success
  */
-int instance_addmap(int instance_id) {
+size_t instance_addmap( int instance_id ){
 	if (instance_id <= 0)
 		return 0;
 
@@ -1024,7 +1026,7 @@ bool instance_destroy(int instance_id)
 
 	if( idata->regs.vars ) {
 		db_destroy(idata->regs.vars);
-		idata->regs.vars = NULL;
+		idata->regs.vars = nullptr;
 	}
 
 	if( idata->regs.arrays )

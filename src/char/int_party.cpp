@@ -3,11 +3,10 @@
 
 #include "int_party.hpp"
 
+#include <cstdlib>
+#include <cstring>
 #include <memory>
 #include <unordered_map>
-
-#include <stdlib.h>
-#include <string.h>
 
 #include <common/cbasetypes.hpp>
 #include <common/malloc.hpp>
@@ -122,7 +121,7 @@ int inter_party_tosql(struct party *p, int flag, int index)
 	char esc_name[NAME_LENGTH*2+1];// escaped party name
 	int32 party_id;
 
-	if( p == NULL || p->party_id == 0 )
+	if( p == nullptr || p->party_id == 0 )
 		return 0;
 	party_id = p->party_id;
 
@@ -202,7 +201,7 @@ std::shared_ptr<struct party_data> inter_party_fromsql( int party_id ){
 	ShowInfo("Load party request (" CL_BOLD "%d" CL_RESET ")\n", party_id);
 #endif
 	if( party_id <= 0 )
-		return NULL;
+		return nullptr;
 
 	//Load from memory
 	std::shared_ptr<struct party_data> p = util::umap_find( party_db, party_id );
@@ -214,38 +213,38 @@ std::shared_ptr<struct party_data> inter_party_fromsql( int party_id ){
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `party_id`, `name`,`exp`,`item`, `leader_id`, `leader_char` FROM `%s` WHERE `party_id`='%d'", schema_config.party_db, party_id) )
 	{
 		Sql_ShowDebug(sql_handle);
-		return NULL;
+		return nullptr;
 	}
 
 	if( SQL_SUCCESS != Sql_NextRow(sql_handle) )
-		return NULL;
+		return nullptr;
 
 	p = std::make_shared<struct party_data>();
 
 	p->party.party_id = party_id;
 	Sql_GetData(sql_handle, 1, &data, &len); memcpy(p->party.name, data, zmin(len, NAME_LENGTH));
-	Sql_GetData(sql_handle, 2, &data, NULL); p->party.exp = (atoi(data) ? 1 : 0);
-	Sql_GetData(sql_handle, 3, &data, NULL); p->party.item = atoi(data);
-	Sql_GetData(sql_handle, 4, &data, NULL); leader_id = atoi(data);
-	Sql_GetData(sql_handle, 5, &data, NULL); leader_char = atoi(data);
+	Sql_GetData(sql_handle, 2, &data, nullptr); p->party.exp = (atoi(data) ? 1 : 0);
+	Sql_GetData(sql_handle, 3, &data, nullptr); p->party.item = atoi(data);
+	Sql_GetData(sql_handle, 4, &data, nullptr); leader_id = atoi(data);
+	Sql_GetData(sql_handle, 5, &data, nullptr); leader_char = atoi(data);
 	Sql_FreeResult(sql_handle);
 
 	// Load members
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`char_id`,`name`,`base_level`,`last_map`,`online`,`class` FROM `%s` WHERE `party_id`='%d'", schema_config.char_db, party_id) )
 	{
 		Sql_ShowDebug(sql_handle);
-		return NULL;
+		return nullptr;
 	}
 	for( i = 0; i < MAX_PARTY && SQL_SUCCESS == Sql_NextRow(sql_handle); ++i )
 	{
 		m = &p->party.member[i];
-		Sql_GetData(sql_handle, 0, &data, NULL); m->account_id = atoi(data);
-		Sql_GetData(sql_handle, 1, &data, NULL); m->char_id = atoi(data);
+		Sql_GetData(sql_handle, 0, &data, nullptr); m->account_id = atoi(data);
+		Sql_GetData(sql_handle, 1, &data, nullptr); m->char_id = atoi(data);
 		Sql_GetData(sql_handle, 2, &data, &len); memcpy(m->name, data, zmin(len, NAME_LENGTH));
-		Sql_GetData(sql_handle, 3, &data, NULL); m->lv = atoi(data);
+		Sql_GetData(sql_handle, 3, &data, nullptr); m->lv = atoi(data);
 		Sql_GetData(sql_handle, 4, &data, &len); memcpy(m->map, data, zmin(len, sizeof(m->map)));
-		Sql_GetData(sql_handle, 5, &data, NULL); m->online = (atoi(data) ? 1 : 0);
-		Sql_GetData(sql_handle, 6, &data, NULL); m->class_ = atoi(data);
+		Sql_GetData(sql_handle, 5, &data, nullptr); m->online = (atoi(data) ? 1 : 0);
+		Sql_GetData(sql_handle, 6, &data, nullptr); m->class_ = atoi(data);
 		m->leader = (m->account_id == leader_id && m->char_id == leader_char ? 1 : 0);
 	}
 	Sql_FreeResult(sql_handle);
@@ -290,7 +289,7 @@ std::shared_ptr<struct party_data> search_partyname( char* str ){
 		Sql_ShowDebug(sql_handle);
 	else if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
 	{
-		Sql_GetData(sql_handle, 0, &data, NULL);
+		Sql_GetData(sql_handle, 0, &data, nullptr);
 		p = inter_party_fromsql(atoi(data));
 	}
 	Sql_FreeResult(sql_handle);
@@ -369,7 +368,7 @@ int mapif_party_created(int fd,uint32 account_id,uint32 char_id,struct party *p)
 	WFIFOW(fd,0)=0x3820;
 	WFIFOL(fd,2)=account_id;
 	WFIFOL(fd,6)=char_id;
-	if(p!=NULL){
+	if(p!=nullptr){
 		WFIFOB(fd,10)=0;
 		WFIFOL(fd,11)=p->party_id;
 		memcpy(WFIFOP(fd,15),p->name,NAME_LENGTH);
@@ -508,27 +507,27 @@ int mapif_parse_CreateParty(int fd, char *name, int item, int item2, struct part
 	std::shared_ptr<struct party_data> p = search_partyname( name );
 
 	if( p != nullptr ){
-		mapif_party_created(fd,leader->account_id,leader->char_id,NULL);
+		mapif_party_created(fd,leader->account_id,leader->char_id,nullptr);
 		return 0;
 	}
 
 	// Check Authorised letters/symbols in the name of the character
 	if (charserv_config.char_config.char_name_option == 1) { // only letters/symbols in char_name_letters are authorised
 		for( int i = 0; i < NAME_LENGTH && name[i]; i++ ){
-			if (strchr(charserv_config.char_config.char_name_letters, name[i]) == NULL) {
+			if (strchr(charserv_config.char_config.char_name_letters, name[i]) == nullptr) {
 				if( name[i] == '"' ) { /* client-special-char */
 					normalize_name(name,"\"");
 					mapif_parse_CreateParty(fd,name,item,item2,leader);
 					return 0;
 				}
-				mapif_party_created(fd,leader->account_id,leader->char_id,NULL);
+				mapif_party_created(fd,leader->account_id,leader->char_id,nullptr);
 				return 0;
 			}
 		}
 	} else if (charserv_config.char_config.char_name_option == 2) { // letters/symbols in char_name_letters are forbidden
 		for( int i = 0; i < NAME_LENGTH && name[i]; i++ ){
-			if (strchr(charserv_config.char_config.char_name_letters, name[i]) != NULL) {
-				mapif_party_created(fd,leader->account_id,leader->char_id,NULL);
+			if (strchr(charserv_config.char_config.char_name_letters, name[i]) != nullptr) {
+				mapif_party_created(fd,leader->account_id,leader->char_id,nullptr);
 				return 0;
 			}
 		}
@@ -553,7 +552,7 @@ int mapif_parse_CreateParty(int fd, char *name, int item, int item2, struct part
 		mapif_party_created(fd,leader->account_id,leader->char_id,&p->party);
 	}else{
 		// Failed to create party.
-		mapif_party_created(fd,leader->account_id,leader->char_id,NULL);
+		mapif_party_created(fd,leader->account_id,leader->char_id,nullptr);
 	}
 
 	return 0;
@@ -852,7 +851,7 @@ int inter_party_CharOnline(uint32 char_id, int party_id)
 		if( SQL_SUCCESS != Sql_NextRow(sql_handle) )
 			return 0; //Eh? No party?
 
-		Sql_GetData(sql_handle, 0, &data, NULL);
+		Sql_GetData(sql_handle, 0, &data, nullptr);
 		party_id = atoi(data);
 		Sql_FreeResult(sql_handle);
 	}
@@ -898,7 +897,7 @@ int inter_party_CharOffline(uint32 char_id, int party_id) {
 		if( SQL_SUCCESS != Sql_NextRow(sql_handle) )
 			return 0; //Eh? No party?
 
-		Sql_GetData(sql_handle, 0, &data, NULL);
+		Sql_GetData(sql_handle, 0, &data, nullptr);
 		party_id = atoi(data);
 		Sql_FreeResult(sql_handle);
 	}

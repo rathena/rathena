@@ -866,3 +866,14 @@ Body:
         bonus2 bSubEle,Ele_Fire,2;
         bonus2 bAddEle,Ele_Fire,2;
       }
+  - Mob: E_HYDRA
+    TameItem: Leaf_Cat_Ball
+    EggItem: Mystic_Leaf_Cat_Ball
+    Fullness: 0
+    HungryDelay: 0
+    IntimacyStart: 0
+    IntimacyFed: 0
+    IntimacyOverfed: 0
+    IntimacyOwnerDie: 0
+    CaptureRate: 50
+    SpecialPerformance: false

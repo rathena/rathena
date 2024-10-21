@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # rAthena Monster Mode Converter
 # Upgrades monster's mode to the new structure.
-# 
+#
 
 use strict;
 use warnings;
@@ -102,15 +102,15 @@ sub Main {
 			next;
 		}
 		unless(open FHOUT,">$sFileouttmp"){
-		   print "ERROR: Can't write or locate $aFileout[$sI].\n";
-		   next;
+			print "ERROR: Can't write or locate $aFileout[$sI].\n";
+			next;
 		}
 		$sI++;
 		while (<FHIN>){
 			if( $_ =~ /^\s*$/) {  #ignore empty line
-				print FHOUT $_; 
-				next;  
-			} 
+				print FHOUT $_;
+				next;
+			}
 			my @champ = split(",",$_);
 			my $sDoconvertion=0; #should this comment be converted
 			if( $_ =~ /^\/\// ) { # // line
@@ -121,7 +121,7 @@ sub Main {
 				}
 				if($sDoconvertion==0) {
 					print FHOUT $_;
-					next; 
+					next;
 				}
 			}
 			if(scalar(@champ>0)){

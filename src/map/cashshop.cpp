@@ -3,8 +3,8 @@
 
 #include "cashshop.hpp"
 
-#include <stdlib.h> // atoi
-#include <string.h> // memset
+#include <cstdlib> // atoi
+#include <cstring> // memset
 
 #include <common/cbasetypes.hpp> // uint16, uint32
 #include <common/malloc.hpp> // CREATE, RECREATE, aFree
@@ -141,8 +141,8 @@ CashShopDatabase cash_shop_db;
 static bool sale_parse_dbrow( char* fields[], int columns, int current ){
 	t_itemid nameid = strtoul(fields[0], nullptr, 10);
 	int start = atoi(fields[1]), end = atoi(fields[2]), amount = atoi(fields[3]);
-	time_t now = time(NULL);
-	struct sale_item_data* sale_item = NULL;
+	time_t now = time(nullptr);
+	struct sale_item_data* sale_item = nullptr;
 
 	if( !item_db.exists(nameid) ){
 		ShowWarning( "sale_parse_dbrow: Invalid ID %u in line '%d', skipping...\n", nameid, current );
@@ -170,7 +170,7 @@ static bool sale_parse_dbrow( char* fields[], int columns, int current ){
 	// Check if there is already an entry
 	sale_item = sale_find_item(nameid,false);
 
-	if( sale_item == NULL ){
+	if( sale_item == nullptr ){
 		RECREATE(sale_items.item, struct sale_item_data *, ++sale_items.count);
 		CREATE(sale_items.item[sale_items.count - 1], struct sale_item_data, 1);
 		sale_item = sale_items.item[sale_items.count - 1];
@@ -202,9 +202,9 @@ static void sale_read_db_sql( void ){
 		lines++;
 
 		for( i = 0; i < 4; i++ ){
-			Sql_GetData( mmysql_handle, i, &str[i], NULL );
+			Sql_GetData( mmysql_handle, i, &str[i], nullptr );
 
-			if( str[i] == NULL ){
+			if( str[i] == nullptr ){
 				str[i] = dummy;
 			}
 		}
@@ -229,7 +229,7 @@ static TIMER_FUNC(sale_end_timer){
 	delete_timer( sale_item->timer_end, sale_end_timer );
 	sale_item->timer_end = INVALID_TIMER;
 	
-	clif_sale_end( sale_item, NULL, ALL_CLIENT );
+	clif_sale_end( sale_item, nullptr, ALL_CLIENT );
 
 	sale_remove_item( sale_item->nameid );
 
@@ -239,8 +239,8 @@ static TIMER_FUNC(sale_end_timer){
 static TIMER_FUNC(sale_start_timer){
 	struct sale_item_data* sale_item = (struct sale_item_data*)data;
 
-	clif_sale_start( sale_item, NULL, ALL_CLIENT );
-	clif_sale_amount( sale_item, NULL, ALL_CLIENT );
+	clif_sale_start( sale_item, nullptr, ALL_CLIENT );
+	clif_sale_amount( sale_item, nullptr, ALL_CLIENT );
 
 	// Clear the start timer
 	if( sale_item->timer_start != INVALID_TIMER ){
@@ -249,7 +249,7 @@ static TIMER_FUNC(sale_start_timer){
 	}
 
 	// Init sale end
-	sale_item->timer_end = add_timer( gettick() + (unsigned int)( sale_item->end - time(NULL) ) * 1000, sale_end_timer, 0, (intptr_t)sale_item );
+	sale_item->timer_end = add_timer( gettick() + (unsigned int)( sale_item->end - time(nullptr) ) * 1000, sale_end_timer, 0, (intptr_t)sale_item );
 
 	return 1;
 }
@@ -261,7 +261,7 @@ enum e_sale_add_result sale_add_item( t_itemid nameid, int32 count, time_t from,
 	}
 
 	// Adding a sale in the past is not possible
-	if( from < time(NULL) ){
+	if( from < time(nullptr) ){
 		return SALE_ADD_FAILED;
 	}
 
@@ -293,7 +293,7 @@ enum e_sale_add_result sale_add_item( t_itemid nameid, int32 count, time_t from,
 	sale_item->start = from;
 	sale_item->end = to;
 	sale_item->amount = count;
-	sale_item->timer_start = add_timer( gettick() + (unsigned int)(from - time(NULL)) * 1000, sale_start_timer, 0, (intptr_t)sale_item );
+	sale_item->timer_start = add_timer( gettick() + (unsigned int)(from - time(nullptr)) * 1000, sale_start_timer, 0, (intptr_t)sale_item );
 	sale_item->timer_end = INVALID_TIMER;
 
 	return SALE_ADD_SUCCESS;
@@ -306,7 +306,7 @@ bool sale_remove_item( t_itemid nameid ){
 	// Check if there is an entry for this item id
 	sale_item = sale_find_item(nameid, false);
 
-	if( sale_item == NULL ){
+	if( sale_item == nullptr ){
 		return false;
 	}
 
@@ -327,7 +327,7 @@ bool sale_remove_item( t_itemid nameid ){
 		sale_item->timer_end = INVALID_TIMER;
 
 		// Notify all clients that the sale has ended
-		clif_sale_end(sale_item, NULL, ALL_CLIENT);
+		clif_sale_end(sale_item, nullptr, ALL_CLIENT);
 	}
 
 	// Find the original pointer in the array
@@ -346,7 +346,7 @@ bool sale_remove_item( t_itemid nameid ){
 	}else{
 		aFree(sale_items.item[0]);
 		aFree(sale_items.item);
-		sale_items.item = NULL;
+		sale_items.item = nullptr;
 	}
 
 	return true;
@@ -355,13 +355,13 @@ bool sale_remove_item( t_itemid nameid ){
 struct sale_item_data* sale_find_item( t_itemid nameid, bool onsale ){
 	int i;
 	struct sale_item_data* sale_item;
-	time_t now = time(NULL);
+	time_t now = time(nullptr);
 
 	ARR_FIND( 0, sale_items.count, i, sale_items.item[i]->nameid == nameid );
 
 	// No item with the specified item id was found
 	if( i == sale_items.count ){
-		return NULL;
+		return nullptr;
 	}
 
 	sale_item = sale_items.item[i];
@@ -373,17 +373,17 @@ struct sale_item_data* sale_find_item( t_itemid nameid, bool onsale ){
 
 	// The sale is in the future
 	if( sale_items.item[i]->start > now ){
-		return NULL;
+		return nullptr;
 	}
 
 	// The sale was in the past
 	if( sale_items.item[i]->end < now ){
-		return NULL;
+		return nullptr;
 	}
 
 	// The amount has been used up already
 	if( sale_items.item[i]->amount == 0 ){
-		return NULL;
+		return nullptr;
 	}
 
 	// Return the sale item
@@ -407,7 +407,7 @@ static void cashshop_read_db( void ){
 
 #if PACKETVER_SUPPORTS_SALES
 	int i;
-	time_t now = time(NULL);
+	time_t now = time(nullptr);
 
 	sale_read_db_sql();
 
@@ -421,7 +421,7 @@ static void cashshop_read_db( void ){
 		struct sale_item_data* it = sale_items.item[i];
 
 		if( it->start > now ){
-			it->timer_start = add_timer( gettick() + (unsigned int)( it->start - time(NULL) ) * 1000, sale_start_timer, 0, (intptr_t)it );
+			it->timer_start = add_timer( gettick() + (unsigned int)( it->start - time(nullptr) ) * 1000, sale_start_timer, 0, (intptr_t)it );
 		}else{
 			sale_start_timer( 0, gettick(), 0, (intptr_t)it );
 		}
@@ -438,12 +438,12 @@ static void cashshop_read_db( void ){
  * @param item_list Array of item ID
  * @return true: success, false: fail
  */
-bool cashshop_buylist( map_session_data* sd, uint32 kafrapoints, int n, struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub* item_list ){
+bool cashshop_buylist( map_session_data* sd, uint32 kafrapoints, int n, const PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub* item_list ){
 	uint32 totalcash = 0;
 	uint32 totalweight = 0;
 	int i,new_;
 
-	if( sd == NULL || item_list == NULL ){
+	if( sd == nullptr || item_list == nullptr ){
 		clif_cashshop_result( sd, 0, CASHSHOP_RESULT_ERROR_UNKNOWN );
 		return false;
 	}else if( sd->state.trading ){
@@ -488,7 +488,7 @@ bool cashshop_buylist( map_session_data* sd, uint32 kafrapoints, int n, struct P
 #if PACKETVER_SUPPORTS_SALES
 			struct sale_item_data* sale = sale_find_item( nameid, true );
 
-			if( sale == NULL ){
+			if( sale == nullptr ){
 				// Client tried to buy an item from sale that was not even on sale
 				clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_UNKNOWN );
 				return false;
@@ -613,7 +613,7 @@ bool cashshop_buylist( map_session_data* sd, uint32 kafrapoints, int n, struct P
 
 					sale->amount = new_amount;
 
-					clif_sale_amount(sale, NULL, ALL_CLIENT);
+					clif_sale_amount(sale, nullptr, ALL_CLIENT);
 				}
 			}
 #endif
@@ -658,7 +658,7 @@ void do_final_cashshop( void ){
 
 		aFree(sale_items.item);
 
-		sale_items.item = NULL;
+		sale_items.item = nullptr;
 		sale_items.count = 0;
 	}
 #endif

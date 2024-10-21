@@ -3,8 +3,8 @@
 
 #include "loginclif.hpp"
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 
 #include <common/malloc.hpp>
 #include <common/md5calc.hpp>
@@ -103,7 +103,7 @@ static void logclif_auth_ok(struct login_session_data* sd) {
 				// wipe previous session
 				login_remove_auth_node(sd->account_id);
 				login_remove_online_user(sd->account_id);
-				data = NULL;
+				data = nullptr;
 			}
 		}
 	}
@@ -111,7 +111,7 @@ static void logclif_auth_ok(struct login_session_data* sd) {
 	login_log(ip, sd->userid, 100, "login ok");
 	ShowStatus("Connection of the account '%s' accepted.\n", sd->userid);
 
-	PACKET_AC_ACCEPT_LOGIN* p = (PACKET_AC_ACCEPT_LOGIN*)packet_buffer;
+	PACKET_AC_ACCEPT_LOGIN* p = reinterpret_cast<PACKET_AC_ACCEPT_LOGIN*>( packet_buffer );
 
 	p->packetType = HEADER_AC_ACCEPT_LOGIN;
 	p->packetLength = sizeof( *p );

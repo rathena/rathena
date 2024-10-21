@@ -3,10 +3,9 @@
 
 #include "char_logif.hpp"
 
+#include <cstdlib>
+#include <cstring>
 #include <memory>
-
-#include <stdlib.h>
-#include <string.h>
 
 #include <common/showmsg.hpp>
 #include <common/socket.hpp>
@@ -63,7 +62,7 @@ void chlogif_pincode_start(int fd, struct char_session_data* sd){
 			}
 		}else{
 			if( !(charserv_config.pincode_config.pincode_changetime)
-			|| ( sd->pincode_change + charserv_config.pincode_config.pincode_changetime ) > time(NULL) ){
+			|| ( sd->pincode_change + charserv_config.pincode_config.pincode_changetime ) > time(nullptr) ){
 				std::shared_ptr<struct online_char_data> node = util::umap_find( char_get_onlinedb(), sd->account_id );
 
 				if( node != nullptr && node->pincode_success ){
@@ -92,12 +91,12 @@ void chlogif_pincode_start(int fd, struct char_session_data* sd){
  * @param tick : Scheduled tick
  * @param id : GID linked to that timered call
  * @param data : data transmited for delayed function
- * @return 
+ * @return
  */
 TIMER_FUNC(chlogif_send_acc_tologin){
 	if ( chlogif_isconnected() ){
 		// send account list to login server
-		int users = char_get_onlinedb().size();
+		size_t users = char_get_onlinedb().size();
 		int i = 0;
 
 		WFIFOHEAD(login_fd,8+users*4);
@@ -177,7 +176,7 @@ void chlogif_send_global_accreg(const char *key, unsigned int index, int64 int_v
 	if (!chlogif_isconnected())
 		return;
 
-	int nlen = WFIFOW(login_fd, 2);
+	int16 nlen = WFIFOW( login_fd, 2 );
 	size_t len;
 
 	len = strlen(key)+1;
@@ -186,7 +185,7 @@ void chlogif_send_global_accreg(const char *key, unsigned int index, int64 int_v
 	nlen += 1;
 
 	safestrncpy(WFIFOCP(login_fd,nlen), key, len);
-	nlen += len;
+	nlen += static_cast<decltype(nlen)>( len );
 
 	WFIFOL(login_fd, nlen) = index;
 	nlen += 4;
@@ -202,7 +201,7 @@ void chlogif_send_global_accreg(const char *key, unsigned int index, int64 int_v
 			nlen += 1;
 
 			safestrncpy(WFIFOCP(login_fd,nlen), string_value, len);
-			nlen += len;
+			nlen += static_cast<decltype(nlen)>( len );
 		}
 	} else {
 		WFIFOB(login_fd, nlen) = int_value ? 0 : 1;
@@ -392,27 +391,70 @@ int chlogif_parse_keepalive(int fd){
  */
 void chlogif_parse_change_sex_sub(int sex, int acc, int char_id, int class_, int guild_id)
 {
-	// job modification //@TODO switch would be faster
-	if (class_ == JOB_BARD || class_ == JOB_DANCER)
-		class_ = (sex == SEX_MALE ? JOB_BARD : JOB_DANCER);
-	else if (class_ == JOB_CLOWN || class_ == JOB_GYPSY)
-		class_ = (sex == SEX_MALE ? JOB_CLOWN : JOB_GYPSY);
-	else if (class_ == JOB_BABY_BARD || class_ == JOB_BABY_DANCER)
-		class_ = (sex == SEX_MALE ? JOB_BABY_BARD : JOB_BABY_DANCER);
-	else if (class_ == JOB_MINSTREL || class_ == JOB_WANDERER)
-		class_ = (sex == SEX_MALE ? JOB_MINSTREL : JOB_WANDERER);
-	else if (class_ == JOB_MINSTREL_T || class_ == JOB_WANDERER_T)
-		class_ = (sex == SEX_MALE ? JOB_MINSTREL_T : JOB_WANDERER_T);
-	else if (class_ == JOB_BABY_MINSTREL || class_ == JOB_BABY_WANDERER)
-		class_ = (sex == SEX_MALE ? JOB_BABY_MINSTREL : JOB_BABY_WANDERER);
-	else if (class_ == JOB_KAGEROU || class_ == JOB_OBORO)
-		class_ = (sex == SEX_MALE ? JOB_KAGEROU : JOB_OBORO);
-	else if (class_ == JOB_BABY_KAGEROU || class_ == JOB_BABY_OBORO)
-		class_ = (sex == SEX_MALE ? JOB_BABY_KAGEROU : JOB_BABY_OBORO);
-	else if (class_ == JOB_TROUBADOUR || class_ == JOB_TROUVERE)
-		class_ = (sex == SEX_MALE ? JOB_TROUBADOUR : JOB_TROUVERE);
-	else if (class_ == JOB_SHINKIRO || class_ == JOB_SHIRANUI)
-		class_ = (sex == SEX_MALE ? JOB_SHINKIRO : JOB_SHIRANUI);
+	// job modification
+	switch (class_)
+	{
+	case JOB_BARD:
+		class_ = JOB_DANCER;
+		break;
+	case JOB_DANCER:
+		class_ = JOB_BARD;
+		break;
+	case JOB_CLOWN:
+		class_ = JOB_GYPSY;
+		break;
+	case JOB_GYPSY:
+		class_ = JOB_CLOWN;
+		break;
+	case JOB_BABY_BARD:
+		class_ = JOB_BABY_DANCER;
+		break;
+	case JOB_BABY_DANCER:
+		class_ = JOB_BABY_BARD;
+		break;
+	case JOB_MINSTREL:
+		class_ = JOB_WANDERER;
+		break;
+	case JOB_WANDERER:
+		class_ = JOB_MINSTREL;
+		break;
+	case JOB_MINSTREL_T:
+		class_ = JOB_WANDERER_T;
+		break;
+	case JOB_WANDERER_T:
+		class_ = JOB_MINSTREL_T;
+		break;
+	case JOB_BABY_MINSTREL:
+		class_ = JOB_BABY_WANDERER;
+		break;
+	case JOB_BABY_WANDERER:
+		class_ = JOB_BABY_MINSTREL;
+		break;
+	case JOB_KAGEROU:
+		class_ = JOB_OBORO;
+		break;
+	case JOB_OBORO:
+		class_ = JOB_KAGEROU;
+		break;
+	case JOB_BABY_KAGEROU:
+		class_ = JOB_BABY_OBORO;
+		break;
+	case JOB_BABY_OBORO:
+		class_ = JOB_BABY_KAGEROU;
+		break;
+	case JOB_TROUBADOUR:
+		class_ = JOB_TROUVERE;
+		break;
+	case JOB_TROUVERE:
+		class_ = JOB_TROUBADOUR;
+		break;
+	case JOB_SHINKIRO:
+		class_ = JOB_SHIRANUI;
+		break;
+	case JOB_SHIRANUI:
+		class_ = JOB_SHINKIRO;
+		break;
+	}
 
 	if (SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `equip` = '0' WHERE `char_id` = '%d'", schema_config.inventory_db, char_id))
 		Sql_ShowDebug(sql_handle);
@@ -449,9 +491,9 @@ int chlogif_parse_ackchangesex(int fd)
 				SqlStmt_Free(stmt);
 			}
 
-			SqlStmt_BindColumn(stmt, 0, SQLDT_INT,   &char_id,  0, NULL, NULL);
-			SqlStmt_BindColumn(stmt, 1, SQLDT_SHORT, &class_,   0, NULL, NULL);
-			SqlStmt_BindColumn(stmt, 2, SQLDT_INT,   &guild_id, 0, NULL, NULL);
+			SqlStmt_BindColumn(stmt, 0, SQLDT_INT,   &char_id,  0, nullptr, nullptr);
+			SqlStmt_BindColumn(stmt, 1, SQLDT_SHORT, &class_,   0, nullptr, nullptr);
+			SqlStmt_BindColumn(stmt, 2, SQLDT_INT,   &guild_id, 0, nullptr, nullptr);
 
 			for (i = 0; i < MAX_CHARS && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i) {
 				chlogif_parse_change_sex_sub(sex, acc, char_id, class_, guild_id);
@@ -494,9 +536,9 @@ int chlogif_parse_ackchangecharsex(int char_id, int sex)
 		return 1;
 	}
 
-	Sql_GetData(sql_handle, 0, &data, NULL); account_id = atoi(data);
-	Sql_GetData(sql_handle, 1, &data, NULL); class_ = atoi(data);
-	Sql_GetData(sql_handle, 2, &data, NULL); guild_id = atoi(data);
+	Sql_GetData(sql_handle, 0, &data, nullptr); account_id = atoi(data);
+	Sql_GetData(sql_handle, 1, &data, nullptr); class_ = atoi(data);
+	Sql_GetData(sql_handle, 2, &data, nullptr); guild_id = atoi(data);
 	Sql_FreeResult(sql_handle);
 
 	chlogif_parse_change_sex_sub(sex, account_id, char_id, class_, guild_id);
@@ -680,7 +722,7 @@ int chlogif_parse_AccInfoAck(int fd) {
 	else {
 		int8 type = RFIFOB(fd, 18);
 		if (type == 0 || RFIFOREST(fd) < 122+NAME_LENGTH) {
-			mapif_accinfo_ack(false, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10), RFIFOL(fd,14), 0, -1, 0, 0, NULL, NULL, NULL, NULL, NULL);
+			mapif_accinfo_ack(false, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10), RFIFOL(fd,14), 0, -1, 0, 0, nullptr, nullptr, nullptr, nullptr, nullptr);
 			RFIFOSKIP(fd,19);
 			return 1;
 		}

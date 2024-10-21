@@ -3,7 +3,7 @@
 
 #include "csv2yaml.hpp"
 
-#include <math.h>
+#include <cmath>
 
 using namespace rathena::tool_csv2yaml;
 
@@ -241,6 +241,9 @@ bool Csv2YamlTool::initialize( int argc, char* argv[] ){
 	#define export_constant_npc(a) export_constant(a)
 	init_random_option_constants();
 	#include <map/script_constants.hpp>
+	// Constants that are deprecated but still needed for conversion
+	script_set_constant(QUOTE(RC2_GUARDIAN), RC2_GUARDIAN, false, false);
+	script_set_constant(QUOTE(RC2_BATTLEFIELD), RC2_BATTLEFIELD, false, false);
 
 	std::vector<std::string> root_paths = {
 		path_db,
@@ -657,14 +660,14 @@ static bool pet_read_db( const char* file ){
 			str[k] = p;
 			p = strchr(p,',');
 
-			if( p == NULL )
+			if( p == nullptr )
 				break; // comma not found
 
 			*p = '\0';
 			++p;
 		}
 
-		if( p == NULL ) {
+		if( p == nullptr ) {
 			ShowError("read_petdb: Insufficient columns in line %d, skipping.\n", lines);
 			continue;
 		}
@@ -678,7 +681,7 @@ static bool pet_read_db( const char* file ){
 		str[20] = p;
 		p = strstr(p+1,"},");
 
-		if( p == NULL ) {
+		if( p == nullptr ) {
 			ShowError("read_petdb: Invalid format (Pet Script column) in line %d, skipping.\n", lines);
 			continue;
 		}
@@ -1269,13 +1272,13 @@ static bool skill_parse_row_castnodexdb( char* split[], size_t columns, size_t c
 static bool skill_parse_row_unitdb( char* split[], size_t columns, size_t current ){
 	s_skill_unit_csv entry = {};
 
-	entry.unit_id = (uint16)strtol(split[1], NULL, 16);
-	entry.unit_id2 = (uint16)strtol(split[2], NULL, 16);
+	entry.unit_id = (uint16)strtol(split[1], nullptr, 16);
+	entry.unit_id2 = (uint16)strtol(split[2], nullptr, 16);
 	skill_split_atoi(split[3], entry.unit_layout_type);
 	skill_split_atoi(split[4], entry.unit_range);
 	entry.unit_interval = atoi(split[5]);
 	entry.target_str = trim(split[6]);
-	entry.unit_flag_csv = strtol(split[7], NULL, 16);
+	entry.unit_flag_csv = strtol(split[7], nullptr, 16);
 
 	skill_unit.insert({ atoi(split[0]), entry });
 
@@ -1366,7 +1369,7 @@ static bool skill_parse_row_skilldb( char* split[], size_t columns, size_t curre
 		body << YAML::Key << "TargetType" << YAML::Value << name2Upper(constant);
 	}
 
-	uint64 nk_val = strtol(split[5], NULL, 0);
+	uint64 nk_val = strtol(split[5], nullptr, 0);
 
 	if (nk_val) {
 		body << YAML::Key << "DamageFlags";
@@ -2328,7 +2331,7 @@ static bool quest_read_db( char *split[], size_t columns, size_t current ){
 	std::string title = split[17];
 	
 	if (columns > 18) { // If the title has a comma in it, concatenate
-		int col = 18;
+		size_t col = 18;
 
 		while (col < columns) {
 			title += ',' + std::string(split[col]);
@@ -2339,7 +2342,7 @@ static bool quest_read_db( char *split[], size_t columns, size_t current ){
 	title.erase(std::remove(title.begin(), title.end(), '"'), title.end()); // Strip double quotes out
 	body << YAML::Key << "Title" << YAML::Value << title;
 
-	if (strchr(split[1], ':') == NULL) {
+	if (strchr(split[1], ':') == nullptr) {
 		uint32 time = atoi(split[1]);
 
 		if (time > 0) {
@@ -2469,7 +2472,7 @@ static bool instance_readdb_sub( char* str[], size_t columns, size_t current ){
 		body << YAML::Key << "AdditionalMaps";
 		body << YAML::BeginMap;
 
-		for (int i = 7; i < columns; i++) {
+		for( size_t i = 7; i < columns; i++ ){
 			if (!strlen(str[i]))
 				continue;
 
@@ -2557,7 +2560,7 @@ static bool itemdb_read_stack( char* fields[], size_t columns, size_t current ){
 
 	item.amount = atoi(fields[1]);
 
-	int type = strtoul(fields[2], NULL, 10);
+	int type = strtoul(fields[2], nullptr, 10);
 
 	if (type & 1)
 		item.inventory = true;
@@ -2653,13 +2656,13 @@ static bool itemdb_read_db(const char* file) {
 		for (i = 0; i < 19; ++i) {
 			str[i] = p;
 			p = strchr(p, ',');
-			if (p == NULL)
+			if (p == nullptr)
 				break;// comma not found
 			*p = '\0';
 			++p;
 		}
 
-		if (p == NULL) {
+		if (p == nullptr) {
 			ShowError("itemdb_read_db: Insufficient columns in line %d (item with id %lu), skipping.\n", lines, strtoul(str[0], nullptr, 10));
 			continue;
 		}
@@ -2671,7 +2674,7 @@ static bool itemdb_read_db(const char* file) {
 		}
 		str[19] = p + 1;
 		p = strstr(p + 1, "},");
-		if (p == NULL) {
+		if (p == nullptr) {
 			ShowError("itemdb_read_db: Invalid format (Script column) in line %d (item with id %lu), skipping.\n", lines, strtoul(str[0], nullptr, 10));
 			continue;
 		}
@@ -2685,7 +2688,7 @@ static bool itemdb_read_db(const char* file) {
 		}
 		str[20] = p + 1;
 		p = strstr(p + 1, "},");
-		if (p == NULL) {
+		if (p == nullptr) {
 			ShowError("itemdb_read_db: Invalid format (OnEquip_Script column) in line %d (item with id %lu), skipping.\n", lines, strtoul(str[0], nullptr, 10));
 			continue;
 		}
@@ -2789,7 +2792,7 @@ static bool itemdb_read_db(const char* file) {
 		bool equippable = type == IT_UNKNOWN ? false : type == IT_ETC ? false : type == IT_CARD ? false : type == IT_PETEGG ? false : type == IT_PETARMOR ? false : type == IT_UNKNOWN2 ? false : true;
 
 		if (equippable) {
-			uint64 temp_mask = strtoull(str[11], NULL, 0);
+			uint64 temp_mask = strtoull(str[11], nullptr, 0);
 
 			if (temp_mask == 0) {
 				//body << YAML::Key << "Jobs";
@@ -3107,7 +3110,8 @@ static bool itemdb_read_randomopt_group( char* str[], size_t columns, size_t cur
 	if (group == nullptr)
 		group_entry.rate.push_back((uint16)strtoul(str[1], nullptr, 10));
 
-	for (int j = 0, k = 2; k < columns && j < MAX_ITEM_RDM_OPT; k += 3) {
+	uint16 j = 0;
+	for( size_t k = 2; k < columns && j < MAX_ITEM_RDM_OPT; k += 3 ){
 		int32 randid_tmp = -1;
 
 		for (const auto &opt : rand_opt_db) {
@@ -3367,17 +3371,17 @@ static bool mob_readdb_sub( char *fields[], size_t columns, size_t current ){
 		body << YAML::Key << "Defense" << YAML::Value << cap_value(std::stoi(fields[12]), DEFTYPE_MIN, DEFTYPE_MAX);
 	if (strtol(fields[13], nullptr, 10) > 0)
 		body << YAML::Key << "MagicDefense" << YAML::Value << cap_value(std::stoi(fields[13]), DEFTYPE_MIN, DEFTYPE_MAX);
-	if (strtol(fields[14], nullptr, 10) > 1)
+	if (strtol(fields[14], nullptr, 10) != 1)
 		body << YAML::Key << "Str" << YAML::Value << fields[14];
-	if (strtol(fields[15], nullptr, 10) > 1)
+	if (strtol(fields[15], nullptr, 10) != 1)
 		body << YAML::Key << "Agi" << YAML::Value << fields[15];
-	if (strtol(fields[16], nullptr, 10) > 1)
+	if (strtol(fields[16], nullptr, 10) != 1)
 		body << YAML::Key << "Vit" << YAML::Value << fields[16];
-	if (strtol(fields[17], nullptr, 10) > 1)
+	if (strtol(fields[17], nullptr, 10) != 1)
 		body << YAML::Key << "Int" << YAML::Value << fields[17];
-	if (strtol(fields[18], nullptr, 10) > 1)
+	if (strtol(fields[18], nullptr, 10) != 1)
 		body << YAML::Key << "Dex" << YAML::Value << fields[18];
-	if (strtol(fields[19], nullptr, 10) > 1)
+	if (strtol(fields[19], nullptr, 10) != 1)
 		body << YAML::Key << "Luk" << YAML::Value << fields[19];
 	if (strtol(fields[9], nullptr, 10) > 0)
 		body << YAML::Key << "AttackRange" << YAML::Value << fields[9];
@@ -3873,7 +3877,7 @@ static bool skill_parse_row_createarrowdb( char* split[], size_t columns, size_t
 
 	std::map<std::string, uint32> item_created;
 	
-	for (uint16 x = 1; x+1 < columns && split[x] && split[x+1]; x += 2) {
+	for( size_t x = 1; x + 1 < columns && split[x] && split[x + 1]; x += 2 ){
 		nameid = static_cast<t_itemid>(strtoul(split[x], nullptr, 10));
 		std::string* item_name = util::umap_find(aegis_itemnames, nameid);
 
@@ -4129,7 +4133,7 @@ static bool mob_readdb_itemratio( char* str[], size_t columns, size_t current ){
 	if (columns-2 > 0) {
 		body << YAML::Key << "List";
 		body << YAML::BeginMap;
-		for (int i = 0; i < columns-2; i++) {
+		for( size_t i = 0; i < columns - 2; i++ ){
 			uint16 mob_id = static_cast<uint16>(strtoul(str[i+2], nullptr, 10));
 			std::string* mob_name = util::umap_find( aegis_mobnames, mob_id );
 
@@ -4248,8 +4252,9 @@ static bool pc_readdb_job2( char* fields[], size_t columns, size_t current ){
 	stats.resize(MAX_LEVEL);
 	std::fill(stats.begin(), stats.end(), 0); // Fill with 0 so we don't produce arbitrary stats
 
-	for (int i = 1; i < columns; i++)
+	for( size_t i = 1; i < columns; i++ ){
 		stats[i - 1] = atoi(fields[i]);
+	}
 
 	job_db2.insert({ atoi(fields[0]), stats });
 	return true;

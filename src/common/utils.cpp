@@ -3,9 +3,9 @@
 
 #include "utils.hpp"
 
-#include <math.h> // floor()
-#include <stdlib.h>
-#include <string.h>
+#include <cmath> // floor()
+#include <cstdlib>
+#include <cstring>
 
 #ifdef WIN32
 	#include "winapi.hpp"
@@ -87,7 +87,7 @@ void ShowDump(const void* buffer, size_t length)
 static char* checkpath(char *path, const char *srcpath)
 {	// just make sure the char*path is not const
 	char *p=path;
-	if(NULL!=path && NULL!=srcpath)
+	if(nullptr!=path && nullptr!=srcpath)
 	while(*srcpath) {
 		if (*srcpath=='/') {
 			*p++ = '\\';
@@ -106,8 +106,8 @@ void findfile(const char *p, const char *pat, void (func)(const char*))
 	HANDLE hFind;
 	char tmppath[MAX_PATH+1];
 
-	const char *path    = (p  ==NULL)? "." : p;
-	const char *pattern = (pat==NULL)? "" : pat;
+	const char *path    = (p  ==nullptr)? "." : p;
+	const char *pattern = (pat==nullptr)? "" : pat;
 
 	checkpath(tmppath,path);
 	if( PATHSEP != tmppath[strlen(tmppath)-1])
@@ -198,7 +198,7 @@ int check_filepath(const char* filepath)
 static char* checkpath(char *path, const char*srcpath)
 {	// just make sure the char*path is not const
 	char *p=path;
-	if(NULL!=path && NULL!=srcpath)
+	if(nullptr!=path && nullptr!=srcpath)
 	while(*srcpath) {
 		if (*srcpath=='\\') {
 			*p++ = '/';
@@ -218,8 +218,8 @@ void findfile(const char *p, const char *pat, void (func)(const char*))
 	struct stat dir_stat;       // used by stat().
 	char tmppath[MAX_DIR_PATH * 2];
 	char path[MAX_DIR_PATH+1]= ".";
-	const char *pattern = (pat==NULL)? "" : pat;
-	if(p!=NULL) strcpy(path,p);
+	const char *pattern = (pat==nullptr)? "" : pat;
+	if(p!=nullptr) strcpy(path,p);
 
 	// open the directory for reading
 	dir = opendir( checkpath(path, path) );

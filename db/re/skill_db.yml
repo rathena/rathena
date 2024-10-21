@@ -5243,7 +5243,7 @@ Body:
     TargetType: Attack
     DamageFlags:
       NoDamage: true
-      IgnoreElement: true
+      IgnoreAtkCard: true
       IgnoreFlee: true
     Range: 1
     Hit: Single
@@ -5277,7 +5277,7 @@ Body:
         Time: 3000
       - Level: 10
         Time: 2000
-    Duration2: 20000
+    Duration2: 18000
     Cooldown:
       - Level: 1
         Time: 7500
@@ -6076,8 +6076,8 @@ Body:
   - Id: 192
     Name: NPC_MAGICALATTACK
     Description: Demon Shock Attack
-    MaxLevel: 10
-    Type: Weapon
+    MaxLevel: 1
+    Type: Magic
     TargetType: Attack
     Flags:
       IsNpc: true
@@ -6183,34 +6183,13 @@ Body:
     Name: NPC_KEEPING
     Description: Keeping
     MaxLevel: 1
-    Type: Weapon
     TargetType: Self
     DamageFlags:
       NoDamage: true
     Flags:
       IsNpc: true
     HitCount: 1
-    Duration1:
-      - Level: 1
-        Time: 60000
-      - Level: 2
-        Time: 70000
-      - Level: 3
-        Time: 80000
-      - Level: 4
-        Time: 90000
-      - Level: 5
-        Time: 100000
-      - Level: 6
-        Time: 110000
-      - Level: 7
-        Time: 120000
-      - Level: 8
-        Time: 130000
-      - Level: 9
-        Time: 140000
-      - Level: 10
-        Time: 150000
+    Duration1: 30000
     Status: Keeping
   - Id: 202
     Name: NPC_DARKBREATH
@@ -6250,60 +6229,19 @@ Body:
     Flags:
       IsNpc: true
     HitCount: 1
-    Duration1:
-      - Level: 1
-        Time: 60000
-      - Level: 2
-        Time: 70000
-      - Level: 3
-        Time: 80000
-      - Level: 4
-        Time: 90000
-      - Level: 5
-        Time: 100000
-      - Level: 6
-        Time: 110000
-      - Level: 7
-        Time: 120000
-      - Level: 8
-        Time: 130000
-      - Level: 9
-        Time: 140000
-      - Level: 10
-        Time: 150000
+    Duration1: 15000
     Status: Barrier
   - Id: 205
     Name: NPC_DEFENDER
     Description: Defender
     MaxLevel: 1
-    Type: Weapon
     TargetType: Self
     DamageFlags:
       NoDamage: true
     Flags:
       IsNpc: true
     HitCount: 1
-    Duration1:
-      - Level: 1
-        Time: 60000
-      - Level: 2
-        Time: 70000
-      - Level: 3
-        Time: 80000
-      - Level: 4
-        Time: 90000
-      - Level: 5
-        Time: 100000
-      - Level: 6
-        Time: 110000
-      - Level: 7
-        Time: 120000
-      - Level: 8
-        Time: 130000
-      - Level: 9
-        Time: 140000
-      - Level: 10
-        Time: 150000
+    Duration1: 15000
     Status: Armor
   - Id: 206
     Name: NPC_LICK
@@ -7296,9 +7234,9 @@ Body:
     Type: Magic
     TargetType: Self
     DamageFlags:
-      IgnoreAtkCard: true
-      IgnoreFlee: true
-    Range: 5
+      IgnoreDefense: true
+      SimpleDefense: true
+    Range: 9
     Hit: Single
     HitCount: 1
     Element: Holy
@@ -7597,7 +7535,7 @@ Body:
       TargetTrap: true
     Range: 9
     Hit: Multi_Hit
-    HitCount: 5
+    HitCount: -5
     Element: Weapon
     CopyFlags:
       Skill:
@@ -7726,8 +7664,8 @@ Body:
     Type: Weapon
     TargetType: Attack
     DamageFlags:
-      IgnoreDefense: true
       IgnoreFlee: true
+      SimpleDefense: true
     Flags:
       TargetTrap: true
     Range: -2
@@ -7761,7 +7699,6 @@ Body:
       - Level: 5
         Time: 1000
     Duration1: 3000
-    Duration2: 300000
     FixedCastTime:
       - Level: 1
         Time: 2000
@@ -8941,6 +8878,7 @@ Body:
     HitCount: 1
     SplashArea: -1
     AfterCastActDelay: 300
+    Duration1: 15000
     Duration2: 27000
     Cooldown: 4000
     Requires:
@@ -9198,6 +9136,7 @@ Body:
     HitCount: 1
     SplashArea: -1
     AfterCastActDelay: 300
+    Duration1: 4500
     Duration2: 4500
     Cooldown: 4000
     Requires:
@@ -9516,6 +9455,7 @@ Body:
     DamageFlags:
       IgnoreAtkCard: true
       IgnoreFlee: true
+      SimpleDefense: true
     Flags:
       IsNpc: true
       TargetSelf: true
@@ -9708,8 +9648,7 @@ Body:
   - Id: 349
     Name: NPC_POWERUP
     Description: Power Up
-    MaxLevel: 10
-    Type: Weapon
+    MaxLevel: 5
     TargetType: Self
     DamageFlags:
       NoDamage: true
@@ -9718,19 +9657,19 @@ Body:
     Hit: Single
     Duration1:
       - Level: 1
-        Time: 10000
+        Time: 5000
       - Level: 2
-        Time: 15000
+        Time: 10000
       - Level: 3
-        Time: 20000
+        Time: 15000
       - Level: 4
-        Time: 25000
+        Time: 20000
       - Level: 5
-        Time: 30000
-    Status: IncHitRate
+        Time: 25000
+    Status: Powerup
   - Id: 350
     Name: NPC_AGIUP
-    Description: Agility UP
+    Description: Agility Up
     MaxLevel: 10
     TargetType: Self
     DamageFlags:
@@ -9742,14 +9681,24 @@ Body:
       - Level: 1
         Time: 10000
       - Level: 2
-        Time: 15000
-      - Level: 3
         Time: 20000
-      - Level: 4
-        Time: 25000
-      - Level: 5
+      - Level: 3
         Time: 30000
-    Status: IncFleeRate
+      - Level: 4
+        Time: 40000
+      - Level: 5
+        Time: 50000
+      - Level: 6
+        Time: 60000
+      - Level: 7
+        Time: 70000
+      - Level: 8
+        Time: 80000
+      - Level: 9
+        Time: 90000
+      - Level: 10
+        Time: 100000
+    Status: Agiup
   - Id: 351
     Name: NPC_SIEGEMODE
     Description: Siege Mode
@@ -9940,7 +9889,7 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: 300000
-    Duration2: 15000
+    Duration2: 10000
     Requires:
       SpCost: 200
     Status: Berserk
@@ -10303,15 +10252,15 @@ Body:
     Element: Weapon
     Duration1:
       - Level: 1
-        Time: 4000
+        Time: 2000
       - Level: 2
-        Time: 8000
+        Time: 4000
       - Level: 3
-        Time: 12000
+        Time: 6000
       - Level: 4
-        Time: 16000
+        Time: 8000
       - Level: 5
-        Time: 24000
+        Time: 10000
     CastDelayFlags:
       IgnoreStatus: true
     Requires:
@@ -10327,7 +10276,7 @@ Body:
         - Level: 5
           Amount: 12
       SpiritSphereCost: 1
-    Status: Stop
+    Status: Ankle
   - Id: 372
     Name: CH_CHAINCRUSH
     Description: Chain Crush Combo
@@ -10486,11 +10435,11 @@ Body:
       - Level: 1
         Time: 40000
       - Level: 2
-        Time: 45000
+        Time: 60000
       - Level: 3
-        Time: 50000
+        Time: 80000
       - Level: 4
-        Time: 55000
+        Time: 100000
       - Level: 5
         Time: 120000
     Duration2:
@@ -11101,7 +11050,7 @@ Body:
     TargetType: Attack
     Flags:
       TargetTrap: true
-    Range: 5
+    Range: 4
     Hit: Multi_Hit
     HitCount: 5
     Element: Weapon
@@ -11156,7 +11105,7 @@ Body:
         2hSword: true
         1hSpear: true
         2hSpear: true
-    Status: Stop
+    Status: Ankle
   - Id: 398
     Name: LK_HEADCRUSH
     Description: Traumatic Blow
@@ -11366,7 +11315,7 @@ Body:
     TargetType: Attack
     DamageFlags:
       NoDamage: true
-    Range: 7
+    Range: 9
     Hit: Single
     HitCount: 1
     ActiveInstance: 3
@@ -16762,7 +16711,7 @@ Body:
     Flags:
       IsNpc: true
     HitCount: 1
-    Duration1: -1
+    Duration1: 300000
     Status: Invincible
   - Id: 686
     Name: NPC_INVINCIBLEOFF
@@ -16774,8 +16723,6 @@ Body:
     Flags:
       IsNpc: true
     HitCount: 1
-    Duration1: 60000
-    Status: InvincibleOff
   - Id: 687
     Name: NPC_ALLHEAL
     Description: Full Heal
@@ -18417,6 +18364,105 @@ Body:
     HitCount: 1
     Duration1: 60000
     Status: Relieve_off
+  - Id: 776
+    Name: NPC_DEADLYCURSE
+    Description: Deadly Curse
+    MaxLevel: 1
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IgnoreGtb: true
+      IsNpc: true
+    Range: 1
+    Duration1: 15000
+    Status: Deadly_Defeasance
+  - Id: 779
+    Name: NPC_DEADLYCURSE2
+    Description: Deadly Curse 2
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IgnoreGtb: true
+      IsNpc: true
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 3
+      - Level: 3
+        Area: 4
+      - Level: 4
+        Area: 5
+      - Level: 5
+        Area: 6
+    Duration2: 30000
+    Status: Deadly_Defeasance
+  - Id: 780
+    Name: NPC_CANE_OF_EVIL_EYE
+    Description: Cane of evil eye
+    MaxLevel: 10
+    Type: Misc
+    TargetType: Ground
+    DamageFlags:
+      IgnoreFlee: true
+    Flags:
+      IsNpc: true
+    Hit: Single
+    Range: 11  # unknown
+    HitCount:
+      - Level: 1
+        Count: 1
+      - Level: 2
+        Count: 2
+      - Level: 3
+        Count: 3
+      - Level: 4
+        Count: 4
+      - Level: 5
+        Count: 5
+      - Level: 6
+        Count: 6
+      - Level: 7
+        Count: 7
+      - Level: 8
+        Count: 8
+      - Level: 9
+        Count: 9
+      - Level: 10
+        Count: 10
+    CastTime: 500
+    Duration1:
+      - Level: 1
+        Time: 1000
+      - Level: 2
+        Time: 2000
+      - Level: 3
+        Time: 3000
+      - Level: 4
+        Time: 4000
+      - Level: 5
+        Time: 5000
+      - Level: 6
+        Time: 6000
+      - Level: 7
+        Time: 7000
+      - Level: 8
+        Time: 8000
+      - Level: 9
+        Time: 9000
+      - Level: 10
+        Time: 10000
+    Unit:
+      Id: Cane_of_evil_eye
+      Interval: 3000
+      Target: Enemy
+      Flag:
+        NoReiteration: true
+        NoOverlap: true
   - Id: 783
     Name: NPC_KILLING_AURA
     Description: Killing Aura
@@ -18434,6 +18480,18 @@ Body:
     SplashArea: 5
     Duration1: 30000
     Status: Killing_Aura
+  - Id: 784
+    Name: ALL_EVENT_20TH_ANNIVERSARY
+    Description: RO 20th Anniversary Firecracker
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      AllowOnMado: true
+    Cooldown: 3000
+    Requires:
+      SpCost: 1
   - Id: 1001
     Name: KN_CHARGEATK
     Description: Charge Attack
@@ -18498,32 +18556,13 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    Duration2:
-      - Level: 1
-        Time: 15000
-      - Level: 2
-        Time: 20000
-      - Level: 3
-        Time: 25000
-      - Level: 4
-        Time: 30000
-      - Level: 5
-        Time: 35000
-      - Level: 6
-        Time: 40000
-      - Level: 7
-        Time: 45000
-      - Level: 8
-        Time: 50000
-      - Level: 9
-        Time: 55000
-      - Level: 10
-        Time: 60000
+    Duration2: 18000
     Requires:
       SpCost: 35
       Ammo:
         Dagger: true
       AmmoAmount: 1
+    Status: Poison
   - Id: 1005
     Name: RG_CLOSECONFINE
     Description: Close Confine
@@ -19124,6 +19163,7 @@ Body:
     DamageFlags:
       Splash: true
       IgnoreFlee: true
+      SimpleDefense: true
     Flags:
       TargetTrap: true
     Range: 9
@@ -22669,6 +22709,7 @@ Body:
     DamageFlags:
       Splash: true
       IgnoreFlee: true
+      SimpleDefense: true
     Flags:
       AllowOnMado: true
     Range: 9
@@ -24533,7 +24574,7 @@ Body:
     TargetType: Attack
     Range: 1
     Hit: Single
-    HitCount: 5
+    HitCount: -5
     CopyFlags:
       Skill:
         Reproduce: true
@@ -25649,12 +25690,22 @@ Body:
       - Level: 1
         Amount: 2
       - Level: 2
-        Amount: 3
+        Amount: 2
       - Level: 3
-        Amount: 4
+        Amount: 3
       - Level: 4
-        Amount: 5
+        Amount: 3
       - Level: 5
+        Amount: 4
+      - Level: 6
+        Amount: 4
+      - Level: 7
+        Amount: 5
+      - Level: 8
+        Amount: 5
+      - Level: 9
+        Amount: 6
+      - Level: 10
         Amount: 6
     CopyFlags:
       Skill:
@@ -28803,6 +28854,7 @@ Body:
     DamageFlags:
       Splash: true
       IgnoreFlee: true
+      SimpleDefense: true
     Range:
       - Level: 1
         Size: 7
@@ -29701,6 +29753,19 @@ Body:
         - Level: 2
           Amount: 100
     Status: Odins_Power
+  - Id: 2543
+    Name: ALL_RAY_OF_PROTECTION
+    Description: Ray of Protection
+    MaxLevel: 1
+    Type: Magic
+    TargetType: Support
+    DamageFlags:
+      NoDamage: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    Duration1: 60000
+    Status: Protection
   - Id: 2544
     Name: MC_CARTDECORATE
     Description: Decorate Cart
@@ -33159,6 +33224,7 @@ Body:
     DamageFlags:
       Splash: true
       IgnoreFlee: true
+      SimpleDefense: true
     Flags:
       TargetTrap: true
     Range: 9
@@ -36127,7 +36193,7 @@ Body:
     TargetType: Attack
     Range: 9
     Hit: Single
-    HitCount: 1
+    HitCount: -2
     Element: Wind
     SplashArea: 1
     ActiveInstance: 14
@@ -36209,7 +36275,7 @@ Body:
       Splash: true
     Range: 9
     Hit: Multi_Hit
-    HitCount: 1
+    HitCount: -2
     Element: Fire
     SplashArea:
       - Level: 1
@@ -43693,10 +43759,10 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-    Range: 9
-    Hit: Single
-    HitCount: 1
-    AfterCastActDelay: 2000
+    Flags:
+      IgnoreGtb: true
+    AfterCastWalkDelay: 1000
+    Cooldown: 20000
     Requires:
       SpCost:
         - Level: 1
@@ -43719,11 +43785,7 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-      Splash: true
-    Hit: Single
-    HitCount: 1
-    SplashArea: -1
-    AfterCastActDelay: 35000
+    AfterCastWalkDelay: 1000
     Duration1:
       - Level: 1
         Time: 40000
@@ -43735,6 +43797,7 @@ Body:
         Time: 25000
       - Level: 5
         Time: 20000
+    Cooldown: 35000
     Requires:
       SpCost:
         - Level: 1
@@ -43752,7 +43815,6 @@ Body:
     Name: HLIF_BRAIN
     Description: Brain Surgery
     MaxLevel: 5
-    SplashArea: 1
   - Id: 8004
     Name: HLIF_CHANGE
     Description: Change
@@ -43760,7 +43822,7 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-    Hit: Single
+    AfterCastWalkDelay: 1000
     Duration1:
       - Level: 1
         Time: 60000
@@ -43768,7 +43830,7 @@ Body:
         Time: 180000
       - Level: 3
         Time: 300000
-    Duration2:
+    Cooldown:
       - Level: 1
         Time: 600000
       - Level: 2
@@ -43785,8 +43847,8 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-    Hit: Single
-    Duration2: 1000
+    AfterCastWalkDelay: 1000
+    Cooldown: 1000
     Requires:
       SpCost: 10
   - Id: 8006
@@ -43796,8 +43858,7 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-    Hit: Single
-    AfterCastActDelay: 30000
+    AfterCastWalkDelay: 1000
     Duration1:
       - Level: 1
         Time: 40000
@@ -43809,6 +43870,7 @@ Body:
         Time: 25000
       - Level: 5
         Time: 20000
+    Cooldown: 30000
     Requires:
       SpCost:
         - Level: 1
@@ -43826,8 +43888,6 @@ Body:
     Name: HAMI_SKIN
     Description: Adamantium Skin
     MaxLevel: 5
-    DamageFlags:
-      NoDamage: true
   - Id: 8008
     Name: HAMI_BLOODLUST
     Description: Bloodlust
@@ -43835,7 +43895,7 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-    Hit: Single
+    AfterCastWalkDelay: 1000
     Duration1:
       - Level: 1
         Time: 60000
@@ -43843,7 +43903,7 @@ Body:
         Time: 180000
       - Level: 3
         Time: 300000
-    Duration2:
+    Cooldown:
       - Level: 1
         Time: 300000
       - Level: 2
@@ -43872,7 +43932,7 @@ Body:
         Count: -2
       - Level: 5
         Count: -3
-    AfterCastWalkDelay: 2000
+    Cooldown: 2000
     Requires:
       SpCost:
         - Level: 1
@@ -43893,6 +43953,7 @@ Body:
     DamageFlags:
       NoDamage: true
     Hit: Single
+    AfterCastWalkDelay: 1000
     Duration1:
       - Level: 1
         Time: 60000
@@ -43904,7 +43965,7 @@ Body:
         Time: 45000
       - Level: 5
         Time: 40000
-    Duration2:
+    Cooldown:
       - Level: 1
         Time: 60000
       - Level: 2
@@ -43938,6 +43999,7 @@ Body:
       NoDamage: true
     Hit: Single
     CastCancel: true
+    AfterCastWalkDelay: 1000
     Duration1:
       - Level: 1
         Time: 60000
@@ -43949,7 +44011,7 @@ Body:
         Time: 45000
       - Level: 5
         Time: 40000
-    Duration2:
+    Cooldown:
       - Level: 1
         Time: 60000
       - Level: 2
@@ -43982,7 +44044,7 @@ Body:
     Range: 15
     Hit: Single
     HitCount: 1
-    AfterCastActDelay: 1000
+    Cooldown: 1000
     Requires:
       SpCost: 1
   - Id: 8013
@@ -43991,20 +44053,8 @@ Body:
     MaxLevel: 5
     Type: Magic
     TargetType: Attack
-    Range: 15
-    Hit: Single
-    HitCount:
-      - Level: 1
-        Count: 1
-      - Level: 2
-        Count: 2
-      - Level: 3
-        Count: 3
-      - Level: 4
-        Count: 4
-      - Level: 5
-        Count: 5
-    AfterCastActDelay:
+    Range: 9
+    Cooldown:
       - Level: 1
         Time: 2000
       - Level: 2
@@ -44031,20 +44081,18 @@ Body:
     Name: HVAN_CHAOTIC
     Description: Benediction of Chaos
     MaxLevel: 5
+    Type: Magic
     TargetType: Self
     DamageFlags:
       NoDamage: true
-    Hit: Single
-    AfterCastActDelay: 3000
-    AfterCastWalkDelay: 3000
+    AfterCastWalkDelay: 1500
+    Cooldown: 3000
     Requires:
       SpCost: 40
   - Id: 8015
     Name: HVAN_INSTRUCT
     Description: Instruct
     MaxLevel: 5
-    DamageFlags:
-      NoDamage: true
   - Id: 8016
     Name: HVAN_EXPLOSION
     Description: Bio Explosion
@@ -44056,11 +44104,14 @@ Body:
       IgnoreElement: true
       IgnoreFlee: true
       IgnoreDefCard: true
+    Flags:
+      TargetTrap: true
     Hit: Single
     HitCount: 1
-    Element: Weapon
-    SplashArea: 4
-    AfterCastWalkDelay: 1000
+    Element: Neutral
+    SplashArea: 5
+    Duration1: 1500
+    CoolDown: 1000
     Requires:
       SpCost: 1
   - Id: 8018
@@ -46576,7 +46627,7 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: 300000
-    Duration2: 15000
+    Duration2: 10000
     Requires:
       SpCost: 200
     Status: Berserk
@@ -46953,7 +47004,7 @@ Body:
     TargetType: Attack
     Flags:
       TargetTrap: true
-    Range: 5
+    Range: 4
     Hit: Multi_Hit
     HitCount: 5
     Element: Weapon
@@ -46997,7 +47048,7 @@ Body:
           Amount: 27
         - Level: 5
           Amount: 30
-    Status: Stop
+    Status: Ankle
   - Id: 8219
     Name: ML_DEFENDER
     Description: Defending_Aura
@@ -47209,9 +47260,10 @@ Body:
     Type: Weapon
     TargetType: Attack
     Range: 1
-    Hit: Multi_Hit
-    HitCount: 3
+    Hit: Single
+    HitCount: 1
     Element: Weapon
+    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 2000
     Duration2: 4500
@@ -47687,9 +47739,7 @@ Body:
     Range: 2
     Hit: Single
     HitCount: 1
-    Duration1: 10000
     Cooldown: 30000
-    Status: InvincibleOff
   - Id: 8401
     Name: EL_CIRCLE_OF_FIRE
     Description: Circle of Fire
