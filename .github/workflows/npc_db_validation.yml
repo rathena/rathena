@@ -21,6 +21,8 @@ on:
       # This workflow should run when a file in either the db/ or npc/ directory has been modified.
       - 'db/**'
       - 'npc/**'
+      # This workflow should run whenever a CMake related file has been modified
+      - '**/CMakeLists.txt'
 
 jobs:
   build:
@@ -33,8 +35,6 @@ jobs:
           # The ubuntu-latest label currently points to ubuntu-22.04.
           # Available: ubuntu-22.04, ubuntu-20.04
           os: [ubuntu-latest]
-          # Only a single version of GCC is required for validating NPC scripts and database changes.
-          gcc: ['11']
           # We run build checks for both Renewal and PRE-Renewal
           mode: ['PRE', 'RE']
 
@@ -43,45 +43,41 @@ jobs:
       
       # A simple 'yes' and 'no' can be confusing, so we use names to display in the current job then convert them for use in the compiler.
       - name: Variable Parsing - PRE
-        if: ${{ matrix.mode == 'PRE' }} 
+        if: ${{ matrix.mode == 'PRE' }}
         run: |
-          echo "PRERE=yes" >> $GITHUB_ENV
+          echo "PRERE=ON" >> $GITHUB_ENV
       - name: Variable Parsing - RE
-        if: ${{ matrix.mode == 'RE' }} 
+        if: ${{ matrix.mode == 'RE' }}
         run: |
-          echo "PRERE=no" >> $GITHUB_ENV
+          echo "PRERE=OFF" >> $GITHUB_ENV
 
       - name: Update & Install packages
         # Ubuntu runners already have most of the packages rAthena requires to build.
-        # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-Readme.md
+        # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2204-Readme.md
         run: |
           sudo apt update
-          sudo apt install zlib1g-dev libpcre3-dev gcc-${{ matrix.gcc }} g++-${{ matrix.gcc }}
+          sudo apt install zlib1g-dev libpcre3-dev
           
       - name: Start MySQL
         run: sudo systemctl start mysql.service
 
       - name: Setup Database and import table data
         run: ./tools/ci/sql.sh
-          
-      - name: Command - configure
-        env:
-            CONFIGURE_FLAGS: 'CC=gcc-${{ matrix.gcc }} CXX=g++-${{ matrix.gcc }} --enable-prere=${{ env.PRERE }} --enable-buildbot=yes'
-        run: ./configure $CONFIGURE_FLAGS
-      
+
+      - name: Create build directory
+        run: cmake -E make_directory ${{github.workspace}}/build
+
+      - name: Configure CMake
+        working-directory: ${{github.workspace}}/build
+        run: cmake .. -DENABLE_PRERENEWAL=${{env.PRERE}} -DENABLE_EXTRA_BUILDBOT_CODE=ON
+
+      - name: Build
+        working-directory: ${{github.workspace}}/build
+        run: cmake --build . -j2 --target map-server
+
       # npc.sh enables all NPC scripts in the custom and test folders.
       - name: Enable All NPCs for Testing
         run: ./tools/ci/npc.sh
-
-      - name: Command - make clean
-        run: make clean
-
-      # Create import directories
-      - name: Command - make import
-        run: make import
-
-      - name: Command - make map
-        run: make map
 
       - name: Run Once - map-server
         run: ./map-server --run-once
