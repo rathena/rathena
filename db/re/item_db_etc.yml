@@ -251,7 +251,7 @@ Body:
     AegisName: Blue_Gemstone
     Name: Blue Gemstone
     Type: Etc
-    Buy: 1500
+    Buy: 450
     Weight: 1
     Flags:
       BuyingStore: true
