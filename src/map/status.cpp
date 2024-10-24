@@ -4945,6 +4945,79 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		if (sc->getSCE(SC_EP16_DEF)) {
 			sd->indexed_bonus.subrace2[RC2_EP16_DEF] += sc->getSCE(SC_EP16_DEF)->val1;
 		}
+		if (sc->getSCE(SC_CONTENTS_1)) {
+			sd->right_weapon.addele[ELE_ALL] += sc->getSCE(SC_CONTENTS_1)->val1;
+			if( !battle_config.left_cardfix_to_right ){
+				sd->left_weapon.addele[ELE_ALL] += sc->getSCE(SC_CONTENTS_1)->val1;
+			}
+			sd->indexed_bonus.magic_addele_script[ELE_ALL] += sc->getSCE(SC_CONTENTS_1)->val1;
+		}
+		if (sc->getSCE(SC_CONTENTS_2)) {
+			sd->bonus.short_attack_atk_rate += sc->getSCE(SC_CONTENTS_2)->val1;
+			sd->bonus.long_attack_atk_rate += sc->getSCE(SC_CONTENTS_2)->val1;
+			sd->indexed_bonus.magic_atk_ele[ELE_ALL] += sc->getSCE(SC_CONTENTS_2)->val1;
+		}
+		if (sc->getSCE(SC_CONTENTS_3)) {
+			pc_bonus(sd, SP_ATK_RATE, sc->getSCE(SC_CONTENTS_3)->val1);
+			pc_bonus(sd, SP_MATK_RATE, sc->getSCE(SC_CONTENTS_3)->val1);
+		}
+		if (sc->getSCE(SC_CONTENTS_4)) {
+			pc_bonus(sd, SP_ATK_RATE, sc->getSCE(SC_CONTENTS_4)->val1);
+			pc_bonus(sd, SP_MATK_RATE, sc->getSCE(SC_CONTENTS_4)->val1);
+		}
+		if (sc->getSCE(SC_CONTENTS_5)) {
+			sd->bonus.varcastrate -= sc->getSCE(SC_CONTENTS_5)->val1;
+		}
+		if (sc->getSCE(SC_CONTENTS_6)) {
+			sd->right_weapon.addrace[RC_DRAGON] += sc->getSCE(SC_CONTENTS_6)->val1;
+			sd->right_weapon.addrace[RC_PLANT] += sc->getSCE(SC_CONTENTS_6)->val1;
+			if( !battle_config.left_cardfix_to_right ){
+				sd->left_weapon.addrace[RC_DRAGON] += sc->getSCE(SC_CONTENTS_6)->val1;
+				sd->left_weapon.addrace[RC_PLANT] += sc->getSCE(SC_CONTENTS_6)->val1;
+			}
+			sd->indexed_bonus.magic_addrace[RC_DRAGON] += sc->getSCE(SC_CONTENTS_6)->val1;
+			sd->indexed_bonus.magic_addrace[RC_PLANT] += sc->getSCE(SC_CONTENTS_6)->val1;
+		}
+		if (sc->getSCE(SC_CONTENTS_7)) {
+			sd->right_weapon.addrace[RC_DEMON] += sc->getSCE(SC_CONTENTS_7)->val1;
+			sd->right_weapon.addrace[RC_UNDEAD] += sc->getSCE(SC_CONTENTS_7)->val1;
+			if( !battle_config.left_cardfix_to_right ){
+				sd->left_weapon.addrace[RC_DEMON] += sc->getSCE(SC_CONTENTS_7)->val1;
+				sd->left_weapon.addrace[RC_UNDEAD] += sc->getSCE(SC_CONTENTS_7)->val1;
+			}
+			sd->indexed_bonus.magic_addrace[RC_DEMON] += sc->getSCE(SC_CONTENTS_7)->val1;
+			sd->indexed_bonus.magic_addrace[RC_UNDEAD] += sc->getSCE(SC_CONTENTS_7)->val1;
+		}
+		if (sc->getSCE(SC_CONTENTS_8)) {
+			sd->right_weapon.addrace[RC_FORMLESS] += sc->getSCE(SC_CONTENTS_8)->val1;
+			sd->right_weapon.addrace[RC_FISH] += sc->getSCE(SC_CONTENTS_8)->val1;
+			if( !battle_config.left_cardfix_to_right ){
+				sd->left_weapon.addrace[RC_FORMLESS] += sc->getSCE(SC_CONTENTS_8)->val1;
+				sd->left_weapon.addrace[RC_FISH] += sc->getSCE(SC_CONTENTS_8)->val1;
+			}
+			sd->indexed_bonus.magic_addrace[RC_FORMLESS] += sc->getSCE(SC_CONTENTS_8)->val1;
+			sd->indexed_bonus.magic_addrace[RC_FISH] += sc->getSCE(SC_CONTENTS_8)->val1;
+		}
+		if (sc->getSCE(SC_CONTENTS_9)) {
+			sd->right_weapon.addrace[RC_ANGEL] += sc->getSCE(SC_CONTENTS_9)->val1;
+			sd->right_weapon.addrace[RC_BRUTE] += sc->getSCE(SC_CONTENTS_9)->val1;
+			if( !battle_config.left_cardfix_to_right ){
+				sd->left_weapon.addrace[RC_ANGEL] += sc->getSCE(SC_CONTENTS_9)->val1;
+				sd->left_weapon.addrace[RC_BRUTE] += sc->getSCE(SC_CONTENTS_9)->val1;
+			}
+			sd->indexed_bonus.magic_addrace[RC_ANGEL] += sc->getSCE(SC_CONTENTS_9)->val1;
+			sd->indexed_bonus.magic_addrace[RC_BRUTE] += sc->getSCE(SC_CONTENTS_9)->val1;
+		}
+		if (sc->getSCE(SC_CONTENTS_10)) {
+			sd->right_weapon.addrace[RC_DEMIHUMAN] += sc->getSCE(SC_CONTENTS_10)->val1;
+			sd->right_weapon.addrace[RC_INSECT] += sc->getSCE(SC_CONTENTS_10)->val1;
+			if( !battle_config.left_cardfix_to_right ){
+				sd->left_weapon.addrace[RC_DEMIHUMAN] += sc->getSCE(SC_CONTENTS_10)->val1;
+				sd->left_weapon.addrace[RC_INSECT] += sc->getSCE(SC_CONTENTS_10)->val1;
+			}
+			sd->indexed_bonus.magic_addrace[RC_DEMIHUMAN] += sc->getSCE(SC_CONTENTS_10)->val1;
+			sd->indexed_bonus.magic_addrace[RC_INSECT] += sc->getSCE(SC_CONTENTS_10)->val1;
+		}
 	}
 	status_cpy(&sd->battle_status, base_status);
 
@@ -8378,6 +8451,8 @@ static short status_calc_aspd(struct block_list *bl, status_change *sc, bool fix
 			bonus += sc->getSCE(SC_SKF_ASPD)->val1;
 		if( sc->getSCE(SC_PORK_RIB_STEW) )
 			bonus += 5;
+		if( sc->getSCE(SC_CONTENTS_5) )
+			bonus += sc->getSCE(SC_CONTENTS_5)->val1;
 
 		map_session_data* sd = BL_CAST(BL_PC, bl);
 		uint8 skill_lv;
@@ -8593,6 +8668,8 @@ static short status_calc_aspd_rate(struct block_list *bl, status_change *sc, int
 		aspd_rate -= sc->getSCE(SC_SKF_ASPD)->val1 * 10;
 	if( sc->getSCE(SC_PORK_RIB_STEW) )
 		aspd_rate -= 50;
+	if ( sc->getSCE(SC_CONTENTS_5) )
+		aspd_rate -= sc->getSCE(SC_CONTENTS_5)->val1 * 10;
 
 	return (short)cap_value(aspd_rate,0,SHRT_MAX);
 }

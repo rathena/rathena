@@ -1318,6 +1318,16 @@ enum sc_type : int16 {
 	SC_EP16_DEF,
 	SC_STR_SCROLL,
 	SC_INT_SCROLL,
+	SC_CONTENTS_1,
+	SC_CONTENTS_2,
+	SC_CONTENTS_3,
+	SC_CONTENTS_4,
+	SC_CONTENTS_5,
+	SC_CONTENTS_6,
+	SC_CONTENTS_7,
+	SC_CONTENTS_8,
+	SC_CONTENTS_9,
+	SC_CONTENTS_10,
 
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };

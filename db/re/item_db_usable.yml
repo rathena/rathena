@@ -78155,6 +78155,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Script: |
+      sc_start SC_CONTENTS_1,900000,10;
   - Id: 102781
     AegisName: 2401_ev_Galbi
     Name: New Year Galbi-jjim
@@ -78168,6 +78170,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Script: |
+      sc_start SC_CONTENTS_2,900000,10;
   - Id: 102782
     AegisName: 2401_ev_Rice_Soup
     Name: New Year Rice Cake Soup
@@ -78181,6 +78185,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Script: |
+      sc_start SC_CONTENTS_3,900000,15;
   - Id: 102783
     AegisName: 2401_ev_Lunch_Box
     Name: Sulki's Lunch Box
