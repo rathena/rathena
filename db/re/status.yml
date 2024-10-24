@@ -7330,6 +7330,8 @@ Body:
   - Status: Soulcurse
     Icon: EFST_SOULCURSE
     DurationLookup: SP_SOULCURSE
+    Flags:
+      BlEffect: true
   - Status: Hells_Plant
     Icon: EFST_HELLS_PLANT_ARMOR
     DurationLookup: GN_HELLS_PLANT

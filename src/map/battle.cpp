@@ -8383,9 +8383,10 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case SP_CURSEEXPLOSION:
 						if (tsc && tsc->getSCE(SC_SOULCURSE))
-							skillratio += 1400 + 200 * skill_lv;
+							skillratio += -100 + 1200 + 300 * skill_lv;
 						else
-							skillratio += 300 + 100 * skill_lv;
+							skillratio += -100 + 400 + 100 * skill_lv;
+						RE_LVL_DMOD(100);
 						break;
 					case SP_SPA:
 						skillratio += 400 + 250 * skill_lv;
