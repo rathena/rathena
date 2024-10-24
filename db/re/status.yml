@@ -9112,6 +9112,10 @@ Body:
     DurationLookup: SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS
     CalcFlags:
       Smatk: true
+    Flags:
+      NoBanishingBuster: true
+      NoClearance: true
+      NoDispell: true
     EndOnStart:
       T_Fourth_God: true
   - Status: Heaven_and_Earth

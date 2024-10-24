@@ -42268,7 +42268,7 @@ Body:
     MaxLevel: 5
     Type: Magic
     TargetType: Attack
-    Range: 9
+    Range: 11
     Hit: Single
     HitCount: 1
     Element: Endowed
@@ -42345,15 +42345,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 80
+          Amount: 110
         - Level: 2
-          Amount: 83
+          Amount: 112
         - Level: 3
-          Amount: 86
+          Amount: 114
         - Level: 4
-          Amount: 89
+          Amount: 116
         - Level: 5
-          Amount: 92
+          Amount: 118
       ItemCost:
         - Item: Soa_Charm
           Amount: 1
@@ -42569,7 +42569,7 @@ Body:
           Amount: 180
         - Level: 5
           Amount: 200
-      ApCost: 25
+      ApCost: 35
     Status: T_Fifth_God
   - Id: 5432
     Name: SOA_SOUL_OF_HEAVEN_AND_EARTH

@@ -8801,15 +8801,15 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case SOA_TALISMAN_OF_BLUE_DRAGON:
-						skillratio += -100 + 250 + 1450 * skill_lv;
+						skillratio += -100 + 850 + 2250 * skill_lv;
 						skillratio += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 15 * skill_lv;
 						skillratio += 5 * sstatus->spl;
 						if (sc && sc->getSCE(SC_T_FIFTH_GOD) )
-							skillratio += 100 + 200 * skill_lv;
+							skillratio += 100 + 700 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
 					case SOA_TALISMAN_OF_WHITE_TIGER:
-						skillratio += -100 + 350 + 950 * skill_lv;
+						skillratio += -100 + 400 + 1000 * skill_lv;
 						skillratio += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 15 * skill_lv;
 						skillratio += 5 * sstatus->spl;
 						if (sc && sc->getSCE(SC_T_FIFTH_GOD))
@@ -8817,7 +8817,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case SOA_TALISMAN_OF_RED_PHOENIX:
-						skillratio += -100 + 1000 + 900 * skill_lv;
+						skillratio += -100 + 1400 + 1450 * skill_lv;
 						skillratio += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 15 * skill_lv;
 						skillratio += 5 * sstatus->spl;
 						if (sc && sc->getSCE(SC_T_FIFTH_GOD))
@@ -8825,11 +8825,11 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case SOA_TALISMAN_OF_BLACK_TORTOISE:
-						skillratio += -100 + 2150 + 1450 * skill_lv;
+						skillratio += -100 + 2150 + 1600 * skill_lv;
 						skillratio += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 15 * skill_lv;
 						skillratio += 5 * sstatus->spl;
 						if (sc && sc->getSCE(SC_T_FIFTH_GOD))
-							skillratio += 150 + 400 * skill_lv;
+							skillratio += 150 + 500 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
 					case SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS:
