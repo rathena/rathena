@@ -42423,7 +42423,7 @@ Body:
       Splash: true
     Range: 9
     Hit: Multi_Hit
-    HitCount: -4
+    HitCount: -3
     Element: Endowed
     GiveAp: 3
     Duration1: 100
