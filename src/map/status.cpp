@@ -15131,7 +15131,8 @@ TIMER_FUNC(status_change_timer){
 
 			int hp = sc->getSCE(SC_TALISMAN_OF_PROTECTION)->val3;
 
-			status_heal( bl, hp, 0, 0, 2 );
+			status_heal( bl, hp, 0, 0, 0 );
+			clif_skill_nodamage( nullptr, *bl, AL_HEAL, hp );
 			sc_timer_next(3000 + tick);
 			return 0;
 		}
