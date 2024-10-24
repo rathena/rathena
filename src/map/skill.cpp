@@ -7171,9 +7171,10 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case SOA_TALISMAN_OF_SOUL_STEALING:
 		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		if( bl->type != BL_SKILL ){
-			int64 sp = 100 * skill_lv + status_get_lv(src);
+			int32 sp = (100 + status_get_lv(src) / 50) * skill_lv;
 
-			status_heal(src, 0, sp, 0, 2);
+			status_heal(src, 0, sp, 0, 0);
+			clif_skill_nodamage( src, *src, skill_id, sp );
 		}
 		break;
 
