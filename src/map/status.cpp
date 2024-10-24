@@ -15123,7 +15123,7 @@ TIMER_FUNC(status_change_timer){
 
 			// If the caster is offline, dead, on another map or
 			// if the target is not a player or is in another party
-			if( ssd == nullptr || status_isdead( &ssd->bl ) || ssd->bl.m != bl->m || sd == nullptr || ssd->status.party_id != sd->status.party_id ){
+			if( ssd == nullptr || status_isdead( ssd->bl ) || ssd->bl.m != bl->m || sd == nullptr || ssd->status.party_id != sd->status.party_id ){
 				// End the status change
 				sce->val4 = 0;
 				break;
