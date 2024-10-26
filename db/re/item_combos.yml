@@ -25133,7 +25133,7 @@ Body:
           - Hawkeye     # 4879
     Script: |
       bonus bMaxSPrate,50;
-      bonus bAtkRate,-10;
+      bonus2 bAddRace,RC_All,-10;
       bonus2 bAddRace,RC_DemiHuman,-50;
       bonus2 bAddRace,RC_Dragon,-50;
   - Combos:
@@ -53534,7 +53534,7 @@ Body:
           - Signet_Of_Wis_Star    # 490137
     Script: |
       bonus bAllStats,30;
-      bonus bAtkRate,30;
+      bonus2 bAddClass,Class_All,30;
       bonus bMatkRate,30;
       autobonus "{}",30,20000,BF_WEAPON|BF_MAGIC,"{ sc_start SC_REFRESH,20000,1; specialeffect2 EF_ENHANCE; }";
   - Combos:
@@ -53824,7 +53824,7 @@ Body:
           - PlayingPere_Card    # 27107
           - aegis_570070    # 570070
     Script: |
-      bonus bAtkRate,7;
+      bonus2 bAddClass,Class_All,7;
       bonus bLongAtkRate,20;
       bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-2000;
   - Combos:
@@ -54533,7 +54533,7 @@ Body:
       bonus2 bSkillAtk,"SR_TIGERCANNON",15*(.@r/2);
       bonus2 bAddSize,Size_All,4*(.@r/3);
       if (.@r>=11)
-         autobonus "{ bonus bVit,100; bonus bAtkRate,20; }",30,10000,BF_WEAPON;
+         autobonus "{ bonus bVit,100; bonus2 bAddClass,Class_All,20; }",30,10000,BF_WEAPON;
   - Combos:
       - Combo:
           - aegis_15982    # 15982
@@ -54932,7 +54932,7 @@ Body:
       bonus2 bSkillAtk,"SC_TRIANGLESHOT",15*(.@r/2);
       bonus2 bAddSize,Size_All,4*(.@r/3);
       if (.@r>=11)
-         autobonus "{ bonus bAtkRate,20; bonus bAgi,100; }",30,10000,BF_WEAPON;
+         autobonus "{ bonus2 bAddClass,Class_All,20; bonus bAgi,100; }",30,10000,BF_WEAPON;
   - Combos:
       - Combo:
           - aegis_15982    # 15982
@@ -55005,7 +55005,7 @@ Body:
       bonus2 bSkillAtk,"LG_CANNONSPEAR",15*(.@r/2);
       bonus2 bAddSize,Size_All,4*(.@r/3);
       if (.@r>=11)
-         autobonus "{ bonus bAtkRate,20; bonus bStr,100; }",30,10000,BF_WEAPON;
+         autobonus "{ bonus2 bAddClass,Class_All,20; bonus bStr,100; }",30,10000,BF_WEAPON;
   - Combos:
       - Combo:
           - aegis_15982    # 15982

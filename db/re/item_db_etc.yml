@@ -39233,7 +39233,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bMaxSPrate,-50;
-      bonus bAtkRate,10;
+      bonus2 bAddRace,RC_All,10;
       bonus2 bAddRace,RC_DemiHuman,50;
       bonus2 bAddRace,RC_Dragon,50;
   - Id: 27128
@@ -83529,7 +83529,7 @@ Body:
     Script: |
       bonus bBaseAtk,20;
       bonus bHit,25;
-      bonus bAtkRate,4;
+      bonus2 bAddClass,Class_All,4;
   - Id: 313348
     AegisName: aegis_313348
     Name: Time Jewel (Str) Lv.3
@@ -83538,7 +83538,7 @@ Body:
     Script: |
       bonus bBaseAtk,35;
       bonus bHit,35;
-      bonus bAtkRate,6;
+      bonus2 bAddClass,Class_All,6;
   - Id: 313349
     AegisName: aegis_313349
     Name: Time Jewel (Agi) Lv.2
@@ -83601,7 +83601,7 @@ Body:
     Script: |
       bonus2 bWeaponDamageRate,W_BOW,10;
       bonus bHit,25;
-      bonus bAtkRate,4;
+      bonus2 bAddClass,Class_All,4;
   - Id: 313356
     AegisName: aegis_313356
     Name: Time Jewel (Dex) Lv.3
@@ -83610,7 +83610,7 @@ Body:
     Script: |
       bonus2 bWeaponDamageRate,W_BOW,15;
       bonus bHit,35;
-      bonus bAtkRate,6;
+      bonus2 bAddClass,Class_All,6;
   - Id: 313357
     AegisName: aegis_313357
     Name: Time Jewel (Luk) Lv.2
@@ -83619,7 +83619,7 @@ Body:
     Script: |
       bonus bCritAtkRate,30;
       bonus bCritical,10;
-      bonus bAtkRate,4;
+      bonus2 bAddClass,Class_All,4;
   - Id: 313358
     AegisName: aegis_313358
     Name: Time Jewel (Luk) Lv.3
@@ -83628,7 +83628,7 @@ Body:
     Script: |
       bonus bCritAtkRate,45;
       bonus bCritical,15;
-      bonus bAtkRate,6;
+      bonus2 bAddClass,Class_All,6;
   - Id: 313359
     AegisName: aegis_313359
     Name: Archmage Stone(Garment)    # !todo check english name
