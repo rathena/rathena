@@ -93441,6 +93441,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Edda_Arunafeltz: true
     Element: Neutral
     ElementLevel: 2
     WalkSpeed: 150
@@ -93482,6 +93484,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Edda_Arunafeltz: true
     Element: Neutral
     ElementLevel: 2
     WalkSpeed: 200
@@ -93525,6 +93529,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Edda_Arunafeltz: true
     Element: Neutral
     ElementLevel: 2
     WalkSpeed: 200
@@ -93568,6 +93574,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Brute
+    RaceGroups:
+      Edda_Arunafeltz: true
     Element: Fire
     ElementLevel: 2
     WalkSpeed: 140
@@ -93611,6 +93619,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Edda_Arunafeltz: true
     Element: Neutral
     ElementLevel: 3
     WalkSpeed: 180
@@ -93651,6 +93661,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Formless
+    RaceGroups:
+      Edda_Arunafeltz: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 1000
@@ -93679,6 +93691,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Edda_Arunafeltz: true
     Element: Water
     ElementLevel: 3
     WalkSpeed: 180
@@ -93757,6 +93771,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Edda_Arunafeltz: true
     Element: Neutral
     ElementLevel: 2
     WalkSpeed: 180
@@ -93798,6 +93814,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Edda_Arunafeltz: true
     Element: Neutral
     ElementLevel: 2
     WalkSpeed: 200
@@ -93841,6 +93859,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Edda_Arunafeltz: true
     Element: Neutral
     ElementLevel: 2
     WalkSpeed: 200
@@ -93884,6 +93904,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Brute
+    RaceGroups:
+      Edda_Arunafeltz: true
     Element: Fire
     ElementLevel: 2
     WalkSpeed: 140
@@ -93927,6 +93949,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Edda_Arunafeltz: true
     Element: Neutral
     ElementLevel: 3
     WalkSpeed: 180
@@ -93967,6 +93991,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Formless
+    RaceGroups:
+      Edda_Arunafeltz: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 1000
@@ -93995,6 +94021,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Edda_Arunafeltz: true
     Element: Neutral
     ElementLevel: 3
     WalkSpeed: 180
@@ -94042,6 +94070,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Formless
+    RaceGroups:
+      Edda_Arunafeltz: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 150
@@ -94072,6 +94102,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Formless
+    RaceGroups:
+      Edda_Arunafeltz: true
     Element: Water
     ElementLevel: 3
     WalkSpeed: 400
@@ -104937,7 +104969,7 @@ Body:
         Rate: 10
       - Item: Iron
         Rate: 500
-      - Item: Ep172_Bh_knuck
+      - Item: Ep172_Bh_Knuck
         Rate: 3
         RandomOptionGroup: AUTO_IMP_MELEE_2
       - Item: Ep172_Bh_Bow3
@@ -105282,7 +105314,7 @@ Body:
       - Item: Ep172_Bh_Staff
         Rate: 5
         RandomOptionGroup: AUTO_IMP_MAGIC_2
-      - Item: Ep172_Bh_knuck
+      - Item: Ep172_Bh_Knuck
         Rate: 5
         RandomOptionGroup: AUTO_IMP_MELEE_2
       - Item: Old_Violet_Box
