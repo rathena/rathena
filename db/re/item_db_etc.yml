@@ -12639,7 +12639,7 @@ Body:
       bonus2 bSkillAtk,"SO_VARETYR_SPEAR",20+.@b;
   - Id: 4693
     AegisName: Real_Chen_Card
-    Name: True Chen Lio Card
+    Name: True Chen Liu Card
     Type: Card
     Buy: 20
     Weight: 10
@@ -55301,7 +55301,7 @@ Body:
       bonus2 bSkillAtk,"AB_JUDEX",15;
   - Id: 310012
     AegisName: DesireOfDeath
-    Name: Death Drive
+    Name: Death's Desire
     Type: Card
     SubType: Enchant
     Script: |
@@ -65816,7 +65816,7 @@ Body:
       bonus bMaxSP,250;
   - Id: 311073
     AegisName: Goddess_of_Abundance
-    Name: Goddess Harvest
+    Name: Goddess of Abundance
     Type: Card
     SubType: Enchant
     Script: |
@@ -70081,7 +70081,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bAspdRate,25;
+      bonus bSpeedRate,25;
   - Id: 311367
     AegisName: Gray_Melee1
     Name: Earth Magic (Warrior) Lv. 1
@@ -72602,7 +72602,7 @@ Body:
       bonus bMdef,10;
   - Id: 311890
     AegisName: aegis_311890
-    Name: Breaking the Limit
+    Name: Limit Break
     Type: Card
     SubType: Enchant
     Script: |
@@ -77509,7 +77509,7 @@ Body:
       bonus5 bAutoSpell,"IG_ULTIMATE_SACRIFICE",2,100,BF_WEAPON|BF_MAGIC,0;
   - Id: 312421
     AegisName: aegis_312421
-    Name: Ruler of The Extremes
+    Name: Ruler of the End
     Type: Card
     SubType: Enchant
     Script: |
