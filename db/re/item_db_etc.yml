@@ -54043,6 +54043,263 @@ Body:
          bonus bShortAtkRate,45;
          bonus bVit,-20;
       }
+  - Id: 300585
+    AegisName: aegis_300585
+    Name: Tris Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"DK_HACKANDSLASHER",.@r;
+      bonus2 bSkillAtk,"DK_STORMSLASH",.@r;
+  - Id: 300586
+    AegisName: aegis_300586
+    Name: Tan Cards    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"IG_IMPERIAL_CROSS",.@r;
+      bonus2 bSkillAtk,"IG_OVERSLASH",.@r;
+  - Id: 300587
+    AegisName: aegis_300587
+    Name: Wilhelm Roegenburg Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"IQ_EXPOSION_BLASTER",.@r;
+      bonus2 bSkillAtk,"IQ_BLAZING_FLAME_BLAST",.@r;
+  - Id: 300588
+    AegisName: aegis_300588
+    Name: Reinhard Roegenburg Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"CD_DIVINUS_FLOS",.@r;
+      bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",.@r;
+      bonus2 bSkillAtk,"CD_ARBITRIUM",.@r;
+  - Id: 300589
+    AegisName: aegis_300589
+    Name: Ivan Wigner Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"MT_ENERGY_CANNONADE",.@r;
+      bonus2 bSkillAtk,"MT_SPARK_BLASTER",.@r;
+  - Id: 300590
+    AegisName: aegis_300590
+    Name: Laraira Nazar Wigner Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"BO_DUST_EXPLOSION",.@r;
+      bonus2 bSkillAtk,"BO_MYSTERY_POWDER",.@r;
+  - Id: 300591
+    AegisName: aegis_300591
+    Name: Richard Richard Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"SHC_ETERNAL_SLASH",.@r;
+      bonus2 bSkillAtk,"SHC_CROSS_SLASH",.@r;
+  - Id: 300592
+    AegisName: aegis_300592
+    Name: Laura Baldaris Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"ABC_ABYSS_SQUARE",.@r;
+      bonus2 bSkillAtk,"ABC_ABYSS_FLAME",.@r;
+      bonus2 bSkillAtk,"ABC_ABYSS_FLAME_ATK",.@r;
+  - Id: 300593
+    AegisName: aegis_300593
+    Name: Aurelie Petit Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"AG_DESTRUCTIVE_HURRICANE",.@r;
+      bonus2 bSkillAtk,"AG_ALL_BLOOM",.@r;
+      bonus2 bSkillAtk,"AG_ALL_BLOOM_ATK",.@r;
+      bonus2 bSkillAtk,"AG_ALL_BLOOM_ATK2",.@r;
+  - Id: 300594
+    AegisName: aegis_300594
+    Name: Ilje El Heine Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"EM_LIGHTNING_LAND",.@r;
+      bonus2 bSkillAtk,"EM_TERRA_DRIVE",.@r;
+  - Id: 300595
+    AegisName: aegis_300595
+    Name: Ephesto Walter Megas Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"WH_CRESCIVE_BOLT",.@r;
+      bonus2 bSkillAtk,"WH_WILD_WALK",.@r;
+  - Id: 300596
+    AegisName: aegis_300596
+    Name: Maristella Walter Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"TR_ROSEBLOSSOM",.@r;
+      bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",.@r;
+      bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",.@r;
+  - Id: 300597
+    AegisName: aegis_300597
+    Name: Johan Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"SKE_NOON_BLAST",.@r;
+      bonus2 bSkillAtk,"SKE_ALL_IN_THE_SKY",.@r;
+  - Id: 300598
+    AegisName: aegis_300598
+    Name: Günther Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",.@r;
+      bonus2 bSkillAtk,"NW_WILD_SHOT",.@r;
+  - Id: 300599
+    AegisName: aegis_300599
+    Name: Galasia Nerius Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"SS_ANKOKURYUUAKUMU",.@r;
+      bonus2 bSkillAtk,"SS_ANTENPOU",.@r;
+  - Id: 300600
+    AegisName: aegis_300600
+    Name: Iana Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"SOA_TALISMAN_OF_FOUR_BEARING_GOD",.@r;
+      bonus2 bSkillAtk,"SOA_TALISMAN_OF_RED_PHOENIX",.@r;
+  - Id: 300601
+    AegisName: aegis_300601
+    Name: Lee Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"HN_JUPITEL_THUNDER_STORM",.@r;
+      bonus2 bSkillAtk,"HN_JACK_FROST_NOVA",.@r;
+  - Id: 300602
+    AegisName: aegis_300602
+    Name: Nadoyo Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"SH_HYUN_ROK_SPIRIT_POWER",.@r;
+      bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",.@r;
   - Id: 310000
     AegisName: Ranger_Top2
     Name: Sniper Stone II (Top)
@@ -69516,9 +69773,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-       /* TODO implement skill
-       skill "All_EVENT_20TH_ANNIVERSARY",1;
-       */
+       skill "ALL_EVENT_20TH_ANNIVERSARY",1;
   - Id: 311442
     AegisName: aegis_311442
     Name: Perfect Ripe
@@ -80699,6 +80954,15 @@ Body:
       hateffect FOOTPRINT_EF_YELLOWSTAR,true;
     UnEquipScript: |
       hateffect FOOTPRINT_EF_YELLOWSTAR,false;
+  - Id: 313069
+    AegisName: aegis_313069
+    Name: Red Star Footprints    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect FOOTPRINT_EF_REDSTAR,true;
+    UnEquipScript: |
+      hateffect FOOTPRINT_EF_REDSTAR,false;
   - Id: 313070
     AegisName: Ep21_4_Def
     Name: Forest Magic Orb (Physical Defense)
@@ -82538,6 +82802,220 @@ Body:
       bonus2 bSkillAtk,"MG_FIREBOLT",50;
       bonus2 bSkillAtk,"MG_COLDBOLT",50;
       bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",50;
+  - Id: 313406
+    AegisName: Yorscalp_Str1
+    Name: The Power of Jorskalp 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bBaseAtk,3*(.@r/2);
+      bonus bPAtk,(.@r/4);
+  - Id: 313407
+    AegisName: Yorscalp_Str2
+    Name: Yorskalp's Power 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bBaseAtk,5*(.@r/2);
+      bonus bPAtk,2*(.@r/4);
+  - Id: 313408
+    AegisName: Yorscalp_Str3
+    Name: Yorskalp's Power 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bBaseAtk,10*(.@r/2);
+      bonus bPAtk,3*(.@r/4);
+  - Id: 313409
+    AegisName: Yorscalp_Str4
+    Name: Yorskalp's Power 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bBaseAtk,15*(.@r/2);
+      bonus bPAtk,5*(.@r/4);
+  - Id: 313410
+    AegisName: Yorscalp_Int1
+    Name: Yorskalp's Intelligence 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bMatk,3*(.@r/2);
+      bonus bSMatk,(.@r/4);
+  - Id: 313411
+    AegisName: Yorscalp_Int2
+    Name: Yorskalp's Intelligence 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bMatk,5*(.@r/2);
+      bonus bSMatk,2*(.@r/4);
+  - Id: 313412
+    AegisName: Yorscalp_Int3
+    Name: Yorskalp's Intelligence 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bMatk,10*(.@r/2);
+      bonus bSMatk,3*(.@r/4);
+  - Id: 313413
+    AegisName: Yorscalp_Int4
+    Name: Yorskalp's Intelligence 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bMatk,15*(.@r/2);
+      bonus bSMatk,5*(.@r/4);
+  - Id: 313414
+    AegisName: Yorscalp_Smart1
+    Name: Yorskalp's Intelligence 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bMatk,3*(.@r/2);
+      bonus bBaseAtk,3*(.@r/2);
+      bonus bDelayrate,-(.@r/4);
+      bonus bVariableCastrate,-(.@r/4);
+  - Id: 313415
+    AegisName: Yorscalp_Smart3
+    Name: Yorskalp's Intelligence 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bMatk,10*(.@r/2);
+      bonus bBaseAtk,10*(.@r/2);
+      bonus bDelayrate,-3*(.@r/4);
+      bonus bVariableCastrate,-3*(.@r/4);
+  - Id: 313416
+    AegisName: Yorscalp_Smart2
+    Name: Yorskalp's Intelligence 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bMatk,5*(.@r/2);
+      bonus bBaseAtk,5*(.@r/2);
+      bonus bDelayrate,-2*(.@r/4);
+      bonus bVariableCastrate,-2*(.@r/4);
+  - Id: 313417
+    AegisName: Yorscalp_Smart4
+    Name: Yorskalp's Intelligence 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bMatk,15*(.@r/2);
+      bonus bBaseAtk,15*(.@r/2);
+      bonus bDelayrate,-4*(.@r/4);
+      bonus bVariableCastrate,-4*(.@r/4);
+  - Id: 313418
+    AegisName: Yorscalp_Speed1
+    Name: Yorskalp's Speed ​​1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bMatk,3*(.@r/2);
+      bonus bBaseAtk,3*(.@r/2);
+      bonus bDelayrate,-(.@r/4);
+      bonus bAspdRate,(.@r/4);
+  - Id: 313419
+    AegisName: Yorscalp_Speed2
+    Name: Yorskalp's Speed 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bMatk,5*(.@r/2);
+      bonus bBaseAtk,5*(.@r/2);
+      bonus bDelayrate,-2*(.@r/4);
+      bonus bAspdRate,2*(.@r/4);
+  - Id: 313420
+    AegisName: Yorscalp_Speed3
+    Name: Yorskalp's Speed ​​3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bMatk,10*(.@r/2);
+      bonus bBaseAtk,10*(.@r/2);
+      bonus bDelayrate,-3*(.@r/4);
+      bonus bAspdRate,3*(.@r/4);
+  - Id: 313421
+    AegisName: Yorscalp_Speed4
+    Name: Yorskalp's Speed ​​4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bMatk,15*(.@r/2);
+      bonus bBaseAtk,15*(.@r/2);
+      bonus bDelayrate,-4*(.@r/4);
+      bonus bAspdRate,4*(.@r/4);
+  - Id: 313422
+    AegisName: Yorscalp_Def1
+    Name: Yorskalp's Defense 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bMRes,5*(.@r/2);
+      bonus bRes,5*(.@r/2);
+      bonus bMaxHPrate,(.@r/4);
+  - Id: 313423
+    AegisName: Yorscalp_Def2
+    Name: Yorskalp's Defense 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bMRes,10*(.@r/2);
+      bonus bRes,10*(.@r/2);
+      bonus bMaxHPrate,2*(.@r/4);
+  - Id: 313424
+    AegisName: Yorscalp_Def3
+    Name: Yorskalp's Defense 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bMRes,20*(.@r/2);
+      bonus bRes,20*(.@r/2);
+      bonus bMaxHPrate,3*(.@r/4);
+  - Id: 313425
+    AegisName: Yorscalp_Def4
+    Name: Yorskalp's Defense 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bMRes,25*(.@r/2);
+      bonus bRes,25*(.@r/2);
+      bonus bMaxHPrate,5*(.@r/4);
+  - Id: 313426
+    AegisName: Arbiter_Warrant
+    Name: Judge's Authority    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      autobonus "{ bonus2 bAddRace,RC_All,20; bonus2 bAddSize,Size_All,20; bonus2 bAddEle,Ele_All,20; bonus2 bAddClass,Class_Normal,20; bonus2 bAddClass,Class_Boss,20; }",50,10000,BF_WEAPON;
+  - Id: 313427
+    AegisName: Bailiff_Warrant
+    Name: Executor's Authority    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      autobonus "{ bonus2 bMagicAddRace,RC_All,20; bonus2 bMagicAddSize,Size_All,20; bonus2 bMagicAddEle,Ele_All,20; bonus2 bMagicAddClass,Class_Normal,20; bonus2 bMagicAddClass,Class_Boss,20; }",50,10000,BF_MAGIC;
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event
@@ -90088,7 +90566,7 @@ Body:
     Type: Etc
     Weight: 100
   - Id: 1001618
-    AegisName: aegis_1001618
+    AegisName: Ep21_Wigner_Ticket
     Name: Wigner Premium Exchange Ticket
     Type: Etc
     Flags:
@@ -90359,6 +90837,11 @@ Body:
   - Id: 1001650
     AegisName: YellowStar_Foot_Robe
     Name: Yellow Star Footprint (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1001651
+    AegisName: aegis_1001651
+    Name: Red Star Footprints(Wear)    # !todo check english name
     Type: Etc
     Weight: 100
   - Id: 1001653
@@ -91162,6 +91645,174 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1001834
+    AegisName: Yorscalp_Serpent
+    Name: Corrupted Serpent Form    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001835
+    AegisName: Yorscalp_Symbol
+    Name: Symbol of Curse    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001836
+    AegisName: Yorscalp_Spirit
+    Name: Spirit of Yorskalp    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001837
+    AegisName: aegis_1001837
+    Name: Triss Card Fragment    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001838
+    AegisName: aegis_1001838
+    Name: Tan Card Fragment    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001839
+    AegisName: aegis_1001839
+    Name: Wilhelm Roegenburg Card Fragment    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001840
+    AegisName: aegis_1001840
+    Name: Reinhard Roegenburg Card Fragment    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001841
+    AegisName: aegis_1001841
+    Name: Ivan Wigner Card Fragment    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001842
+    AegisName: aegis_1001842
+    Name: Lalira Nazar Wigner Card Fragment    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001843
+    AegisName: aegis_1001843
+    Name: Richard Richard Card Fragment    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001844
+    AegisName: aegis_1001844
+    Name: Laura Baldaris Card Fragment    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001845
+    AegisName: aegis_1001845
+    Name: Aurelie Petit Card Fragment    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001846
+    AegisName: aegis_1001846
+    Name: Ilje El Heine Card Fragment    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001847
+    AegisName: aegis_1001847
+    Name: Ephesto Walter Megas Card Fragment    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001848
+    AegisName: aegis_1001848
+    Name: Maristella Walter Card Fragment    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001849
+    AegisName: aegis_1001849
+    Name: Yohan Card Fragment    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001850
+    AegisName: aegis_1001850
+    Name: Gunther Card Fragment    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001851
+    AegisName: aegis_1001851
+    Name: Galasia Nerius Card Fragment    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001852
+    AegisName: aegis_1001852
+    Name: Iana Card Fragment    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001853
+    AegisName: aegis_1001853
+    Name: Lee Card Fragment    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001854
+    AegisName: aegis_1001854
+    Name: Nadoyo Card Fragment    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1200000
     AegisName: IDTest_arrow
     Name: IDTest arrow

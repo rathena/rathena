@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20171207
+//= 20241024
 //===== Description: =========================================
 //= List of all Status Changes and theirs val1, val2, val3, and
 //= val4 usage in source. Providing easier guide to use
@@ -2849,14 +2849,69 @@ SC_AGIUP
 	val1: +% Walkspeed
 	val2: +% Flee
 
-SC_BATH_FOAM_A	()
-	desc: Increases physical and magical damage against Meditathio Dungeon Monsters by 5%.
+SC_BATH_FOAM_A	(EFST_BATH_FOAM_A)
+	desc: Increases physical and magical damage against Meditathio Dungeon Monsters.
 	val1: +% damage
 
-SC_BATH_FOAM_B	()
-	desc: Increases physical and magical damage against Meditathio Dungeon Monsters by 10%.
+SC_BATH_FOAM_B	(EFST_BATH_FOAM_B)
+	desc: Increases physical and magical damage against Meditathio Dungeon Monsters.
 	val1: +% damage
 
-SC_BATH_FOAM_C	()
-	desc: Increases physical and magical damage against Meditathio Dungeon Monsters by 15%.
+SC_BATH_FOAM_C	(EFST_BATH_FOAM_C)
+	desc: Increases physical and magical damage against Meditathio Dungeon Monsters.
+	val1: +% damage
+
+SC_BUCHEDENOEL (EFST_BUCHEDENOEL)
+	desc: Increases HP & SP restoration by 3%, Hit +3, and Critical +7.
+
+SC_EP16_DEF	(EFST_EP16_DEF)
+	desc: Decrease physical and magical damage against monsters in the Room of Consciousness and Prontera Invasion Dungeon. Restores 1000 HP. Cures Curse, Poison and Silence.
+	val1: +% reduction
+
+SC_STR_SCROLL	(EFST_STR_SCROLL)
+	desc: Increases STR.
+	val1: + STR
+
+SC_INT_SCROLL	(EFST_INT_SCROLL)
+	desc: Increases INT.
+	val1: + INT
+
+SC_CONTENTS_1	(EFST_CONTENTS_1)
+	desc: Increase physical and magical damage to all element enemies
+	val1: +% damage
+	
+SC_CONTENTS_2	(EFST_CONTENTS_2)
+	desc: Increase melee physical damage, range physical damage, and all elemental magic damage.
+	val1: +% damage
+	
+SC_CONTENTS_3	(EFST_CONTENTS_3)
+	desc: Increase ATK and MATK
+	val1: +% damage
+	
+SC_CONTENTS_4	(EFST_CONTENTS_4)
+	desc: Increase ATK and MATK
+	val1: +% damage
+	
+SC_CONTENTS_5	(EFST_CONTENTS_5)
+	desc: Increase ASPD and reduce variable casttime
+	val1: +% increase ASPD, -% reduce variable casttime
+	
+SC_CONTENTS_6	(EFST_CONTENTS_6)
+	desc: Increase physical and magical damage to Dragon and Plant race.
+	val1: +% damage
+	
+SC_CONTENTS_7	(EFST_CONTENTS_7)
+	desc: Increase physical and magical damage to Demon and Undead race.
+	val1: +% damage
+	
+SC_CONTENTS_8	(EFST_CONTENTS_8)
+	desc: Increase physical and magical damage to Formless and Fish race.
+	val1: +% damage
+	
+SC_CONTENTS_9	(EFST_CONTENTS_9)
+	desc: Increase physical and magical damage to Angel and Brute race.
+	val1: +% damage
+	
+SC_CONTENTS_10	(EFST_CONTENTS10)
+	desc: Increase physical and magical damage to Insect and Demihuman race.
 	val1: +% damage

@@ -1919,7 +1919,21 @@
 	export_constant(SC_BATH_FOAM_A);
 	export_constant(SC_BATH_FOAM_B);
 	export_constant(SC_BATH_FOAM_C);
-
+	export_constant(SC_BUCHEDENOEL);
+	export_constant(SC_EP16_DEF);
+	export_constant(SC_STR_SCROLL);
+	export_constant(SC_INT_SCROLL);
+	export_constant(SC_CONTENTS_1);
+	export_constant(SC_CONTENTS_2);
+	export_constant(SC_CONTENTS_3);
+	export_constant(SC_CONTENTS_4);
+	export_constant(SC_CONTENTS_5);
+	export_constant(SC_CONTENTS_6);
+	export_constant(SC_CONTENTS_7);
+	export_constant(SC_CONTENTS_8);
+	export_constant(SC_CONTENTS_9);
+	export_constant(SC_CONTENTS_10);
+	
 	/* status icons */
 	export_deprecated_constant2("SI_BLANK",-1);
 	export_deprecated_constant2("SI_PROVOKE",0);
@@ -4286,6 +4300,7 @@
 	export_constant(RC2_ILLUSION_LUANDA);
 	export_constant(RC2_ILLUSION_FROZEN);
 	export_constant(RC2_ILLUSION_MOONLIGHT);
+	export_constant(RC2_EP16_DEF);
 	export_constant(RC2_MAX);
 
 	/* monster ai */
@@ -7880,6 +7895,92 @@
 	export_constant(IG_CLB_SS_REFINE1_PACK);
 	export_constant(IG_CLB_SS_REFINE2_PACK);
 	export_constant(IG_CLB_SS_EXP_PACK);
+	export_constant(IG_RT_EP17_DOUBT_A);
+	export_constant(IG_RT_EP17_DOUBT_3);
+	export_constant(IG_RT_EP17_DOUBT_C);
+	export_constant(IG_RT_EP17_AUTO_A);
+	export_constant(IG_RT_EP17_AUTO_C);
+	export_constant(IG_RT_EP17_SECRET_A);
+	export_constant(IG_RT_EP17_SECRET_C);
+	export_constant(IG_RT_EP17_MUTANT_A);
+	export_constant(IG_RT_EP17_MUTANT_C);
+	export_constant(IG_RT_EP17_MIGUEL_A);
+	export_constant(IG_RT_EP17_MIGUEL_C);
+	export_constant(IG_RT_EP17_MIGUEL_2);
+	export_constant(IG_RT_EP17_OVERLOAD_A);
+	export_constant(IG_RT_EP17_OVERLOAD_C);
+	export_constant(IG_RT_EP17_OVERLOAD_3);
+	export_constant(IG_RT_EP17_BATH_A);
+	export_constant(IG_RT_EP17_BATH_C);
+	export_constant(IG_RT_EP17_GARDEN_A);
+	export_constant(IG_RT_EP17_GARDEN_C);
+	export_constant(IG_RT_EP17_GARDEN_3);
+	export_constant(IG_RT_EP17_GARDEN_5);
+	export_constant(IG_RT_EP17_GREEN_A);
+	export_constant(IG_RT_EP17_GREEN_C);
+	export_constant(IG_RT_EP17_GREEN_2);
+	export_constant(IG_RT_EP17_GREEN_4);
+	export_constant(IG_RT_EP17_WING_A);
+	export_constant(IG_RT_EP17_WING_C);
+	export_constant(IG_RT_EP17_WING_2);
+	export_constant(IG_RT_EP17_WING_4);
+	export_constant(IG_RT_EP17_HARMFUL_A);
+	export_constant(IG_RT_EP17_HARMFUL_C);
+	export_constant(IG_RT_EP17_HARMFUL_2);
+	export_constant(IG_RT_EP17_HARMFUL_4);
+	export_constant(IG_RT_EP17_BOSS_A);
+	export_constant(IG_RT_EP17_BOSS_C);
+	export_constant(IG_RT_EP17_BOSS_3);
+	export_constant(IG_RT_EP17_BOSS_5);
+	export_constant(IG_RT_EP17_MALFUN_A);
+	export_constant(IG_RT_EP17_MALFUN_C);
+	export_constant(IG_RT_EP17_MALFUN_3);
+	export_constant(IG_RT_EP18_ARMOR_A);
+	export_constant(IG_RT_EP18_ARMOR_C);
+	export_constant(IG_RT_EP18_MELEE_A);
+	export_constant(IG_RT_EP18_MAGIC_C);
+	export_constant(IG_RT_EP18_MELEE_C);
+	export_constant(IG_RT_EP18_MAGIC_A);
+	export_constant(IG_RT_EP18_RANGE_A);
+	export_constant(IG_RT_EP18_RANGE_C);
+	export_constant(IG_RT_EP18_FIELD_A);
+	export_constant(IG_RT_EP18_FIELD_C);
+	export_constant(IG_RT_EP18_FIELD_3);
+	export_constant(IG_RT_EP18_LAVA_A);
+	export_constant(IG_RT_EP18_LAVA_C);
+	export_constant(IG_RT_EP18_LAVA_2);
+	export_constant(IG_RT_EP18_TOTAL_A);
+	export_constant(IG_RT_EP18_TOTAL_C);
+	export_constant(IG_RT_EP18_TOTAL_3);
+	export_constant(IG_RT_EP18_TOTAL_6);
+	export_constant(IG_RT_EP18_FANG_A);
+	export_constant(IG_RT_EP18_FANG_C);
+	export_constant(IG_RT_EP18_DEMI_A);
+	export_constant(IG_RT_EP18_DEMI_C);
+	export_constant(IG_RT_EP18_DEMI_2);
+	export_constant(IG_YOR_CARD_P_BOX);
+	export_constant(IG_EP21_COSTUME_BOX1);
+	export_constant(IG_EP21_COSTUME_BOX2);
+	export_constant(IG_AEGIS_103537);
+	export_constant(IG_AEGIS_103582);
+	export_constant(IG_AEGIS_103617);
+	export_constant(IG_IFIRIT_PROMOTION_PACK);
+	export_constant(IG_AEGIS_103622);
+	export_constant(IG_AEGIS_103623);
+	export_constant(IG_AEGIS_103624);
+	export_constant(IG_AEGIS_103625);
+	export_constant(IG_AEGIS_103626);
+	export_constant(IG_AEGIS_103627);
+	export_constant(IG_C_CHARSLOT_OPEN_BOX);
+	export_constant(IG_COSTUMEMILEPACK_36_1);
+	export_constant(IG_COSTUMEMILEPACK_36_2);
+	export_constant(IG_COSTUMEMILEPACK_36_3);
+	export_constant(IG_NYANGVINE_SPECIAL_PACK1);
+	export_constant(IG_NYANGVINE_SPECIAL_PACK2);
+	export_constant(IG_NYANGVINE_SPECIAL_PACK3);
+	export_constant(IG_LI_NYANGVINE_BOX1_37);
+	export_constant(IG_LI_NYANGVINE_BOX2_37);
+	export_constant(IG_LI_NYANGVINE_BOX3_37);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
@@ -10603,6 +10704,8 @@
 	export_constant(HAT_EF_VACATION);
 	export_constant(HAT_EF_C_FH_LOSTWING);
 	export_constant(FOOTPRINT_EF_DOGFOOT);
+	export_constant(HAT_EF_C_AUSPICLOUD);
+	export_constant(HAT_EF_AURA_OF_GHOST_S);
 
 	/* pet catch */
 	export_constant(PET_CATCH_UNIVERSAL);
