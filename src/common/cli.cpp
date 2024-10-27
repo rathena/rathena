@@ -21,20 +21,20 @@
 using namespace rathena::server_core;
 
 //map confs
-const char* MAP_CONF_NAME;
-const char* INTER_CONF_NAME;
-const char* LOG_CONF_NAME;
-const char* BATTLE_CONF_FILENAME;
-const char* SCRIPT_CONF_NAME;
-const char* GRF_PATH_FILENAME;
+const char* MAP_CONF_NAME = "conf/map_athena.conf";
+const char* INTER_CONF_NAME = "conf/inter_athena.conf";
+const char* LOG_CONF_NAME = "conf/log_athena.conf";
+const char* BATTLE_CONF_FILENAME = "conf/battle_athena.conf";
+const char* SCRIPT_CONF_NAME = "conf/script_athena.conf";
+const char* GRF_PATH_FILENAME = "conf/grf-files.txt";
 //char confs
-const char* CHAR_CONF_NAME;
-const char* SQL_CONF_NAME;
+const char* CHAR_CONF_NAME = "conf/char_athena.conf";
 //login confs
-const char* LOGIN_CONF_NAME;
+const char* LOGIN_CONF_NAME = "conf/login_athena.conf";
+const char *LOGIN_MSG_CONF_NAME = "conf/msg_conf/login_msg.conf";
 //common conf (used by multiple serv)
-const char* LAN_CONF_NAME; //char-login
-const char* MSG_CONF_NAME_EN; //all
+const char* LAN_CONF_NAME = "conf/subnet_athena.conf"; //char-login
+const char* MSG_CONF_NAME_EN = "conf/msg_conf/char_msg.conf"; //all
 
 /**
  * Function to check if the specified option has an argument following it.

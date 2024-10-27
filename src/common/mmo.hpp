@@ -497,7 +497,7 @@ struct s_homunculus {	//[orn]
 	uint32 char_id;
 	short class_;
 	short prev_class;
-	int hp,max_hp,sp,max_sp;
+	uint32 hp,max_hp,sp,max_sp;
 	unsigned int intimacy;	//[orn]
 	short hunger;
 	struct s_skill hskill[MAX_HOMUNSKILL]; //albator
@@ -741,6 +741,7 @@ struct guild_expulsion {
 	char name[NAME_LENGTH];
 	char mes[40];
 	uint32 account_id;
+	uint32 char_id;
 };
 
 struct guild_skill {

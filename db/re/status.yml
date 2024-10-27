@@ -1758,6 +1758,7 @@ Body:
       NoSave: true
       NoRemoveOnDead: true
       RemoveOnChangeMap: true
+      BossResist: true
   - Status: Closeconfine2
     Icon: EFST_RG_CCONFINE_S
     DurationLookup: RG_CLOSECONFINE
@@ -1771,6 +1772,7 @@ Body:
       NoSave: true
       NoRemoveOnDead: true
       RemoveOnChangeMap: true
+      BossResist: true
     Fail:
       Closeconfine2: true
   - Status: Dancing
@@ -7022,7 +7024,9 @@ Body:
     CalcFlags:
       Regen: true
   - Status: Earthshaker
+    Icon: EFST_EARTHSHAKER
     Flags:
+      BlEffect: true
       NoWarning: true
   - Status: Weaponblock_On
     Icon: EFST_WEAPONBLOCK_ON
@@ -7037,6 +7041,7 @@ Body:
     Icon: EFST_SPORE_EXPLOSION_DEBUFF
     DurationLookup: GN_SPORE_EXPLOSION
     Flags:
+      BlEffect: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
@@ -7325,6 +7330,8 @@ Body:
   - Status: Soulcurse
     Icon: EFST_SOULCURSE
     DurationLookup: SP_SOULCURSE
+    Flags:
+      BlEffect: true
   - Status: Hells_Plant
     Icon: EFST_HELLS_PLANT_ARMOR
     DurationLookup: GN_HELLS_PLANT
@@ -7770,6 +7777,7 @@ Body:
     Flags:
       BlEffect: true
       DisplayPc: true
+      OverlapIgnoreLevel: true
       SendVal1: true
   - Status: Climax_Earth
     Icon: EFST_CLIMAX_EARTH
@@ -8966,3 +8974,164 @@ Body:
       Bleeding: true
       Confusion: true
       Freeze: true
+  - Status: Bath_foam_a
+    Icon: EFST_BATH_FOAM_A
+    CalcFlags:
+      All: true
+    Flags:
+      NoBanishingBuster: true
+      NoClearance: true
+      NoClearbuff: true
+      NoDispell: true
+  - Status: Bath_foam_b
+    Icon: EFST_BATH_FOAM_B
+    CalcFlags:
+      All: true
+    Flags:
+      NoBanishingBuster: true
+      NoClearance: true
+      NoClearbuff: true
+      NoDispell: true
+  - Status: Bath_foam_c
+    Icon: EFST_BATH_FOAM_C
+    CalcFlags:
+      All: true
+    Flags:
+      NoBanishingBuster: true
+      NoClearance: true
+      NoClearbuff: true
+      NoDispell: true
+  - Status: Buchedenoel
+    Icon: EFST_BUCHEDENOEL
+    CalcFlags:
+      Cri: true
+      Hit: true
+      Regen: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Ep16_def
+    Icon: EFST_EP16_DEF
+    CalcFlags:
+      All: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    EndOnStart:
+      Curse: true
+      Silence: true
+      Poison: true
+  - Status: Str_Scroll
+    Icon: EFST_STR_SCROLL
+    CalcFlags:
+      Str: true
+    Flags:
+      NoBanishingBuster: true
+      NoClearbuff: true
+      NoClearance: true
+      NoDispell: true
+      NoRemoveOnDead: true
+  - Status: Int_Scroll
+    Icon: EFST_INT_SCROLL
+    CalcFlags:
+      Int: true
+    Flags:
+      NoBanishingBuster: true
+      NoClearbuff: true
+      NoClearance: true
+      NoDispell: true
+      NoRemoveOnDead: true
+  - Status: Contents_1
+    Icon: EFST_CONTENTS_1
+    CalcFlags:
+      All: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Contents_2
+    Icon: EFST_CONTENTS_2
+    CalcFlags:
+      All: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Contents_3
+    Icon: EFST_CONTENTS_3
+    CalcFlags:
+      All: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Contents_4
+    Icon: EFST_CONTENTS_4
+    CalcFlags:
+      All: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Contents_5
+    Icon: EFST_CONTENTS_5
+    CalcFlags:
+      All: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Contents_6
+    Icon: EFST_CONTENTS_6
+    CalcFlags:
+      All: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Contents_7
+    Icon: EFST_CONTENTS_7
+    CalcFlags:
+      All: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Contents_8
+    Icon: EFST_CONTENTS_8
+    CalcFlags:
+      All: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Contents_9
+    Icon: EFST_CONTENTS_9
+    CalcFlags:
+      All: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Contents_10
+    Icon: EFST_CONTENTS_10
+    CalcFlags:
+      All: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true

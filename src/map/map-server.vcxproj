@@ -373,6 +373,7 @@
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\quest_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\quest_db.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\refine.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\refine.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\reputation.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\reputation.yml')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\reputation_group.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\reputation_group.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\size_fix.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\size_fix.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_changematerial_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_changematerial_db.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_damage_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_damage_db.txt')" />

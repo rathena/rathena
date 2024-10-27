@@ -5345,7 +5345,7 @@ bool pc_skill(map_session_data* sd, uint16 skill_id, int level, enum e_addskill_
 			sd->status.skill[idx].flag = SKILL_FLAG_PERMANENT;
 			if (level == 0) { //Remove skill.
 				sd->status.skill[idx].id = 0;
-				clif_deleteskill(sd,skill_id);
+				clif_deleteskill(*sd,skill_id);
 			} else
 				clif_addskill(sd,skill_id);
 			if (!skill_get_inf(skill_id) || pc_checkskill_summoner(sd, SUMMONER_POWER_LAND) >= 20 || pc_checkskill_summoner(sd, SUMMONER_POWER_SEA) >= 20) //Only recalculate for passive skills.
@@ -5380,7 +5380,7 @@ bool pc_skill(map_session_data* sd, uint16 skill_id, int level, enum e_addskill_
 			sd->status.skill[idx].flag = SKILL_FLAG_PERM_GRANTED;
 			if (level == 0) { //Remove skill.
 				sd->status.skill[idx].id = 0;
-				clif_deleteskill(sd,skill_id);
+				clif_deleteskill(*sd,skill_id);
 			} else
 				clif_addskill(sd,skill_id);
 			if (!skill_get_inf(skill_id) || pc_checkskill_summoner(sd, SUMMONER_POWER_LAND) >= 20 || pc_checkskill_summoner(sd, SUMMONER_POWER_SEA) >= 20) //Only recalculate for passive skills.
@@ -5462,7 +5462,7 @@ bool pc_skill_plagiarism_reset(map_session_data &sd, uint8 type)
 		sd.status.skill[idx].id = 0;
 		sd.status.skill[idx].lv = 0;
 		sd.status.skill[idx].flag = SKILL_FLAG_PERMANENT;
-		clif_deleteskill(&sd, skill_id);
+		clif_deleteskill(sd, skill_id);
 		
 		if (type == 1) {
 			sd.cloneskill_idx = 0;
@@ -9625,7 +9625,7 @@ void pc_close_npc(map_session_data *sd,int flag)
 		if (sd->st) {
 			if (sd->st->state == CLOSE) {
 				clif_scriptclose( *sd, sd->npc_id );
-				clif_scriptclear( *sd, sd->npc_id ); // [Ind/Hercules]
+				clif_cutin( *sd, "", 255); // Force to end cutin [Haydrich]
 				sd->st->state = END; // Force to end now
 			}
 			if (sd->st->state == END) { // free attached scripts that are waiting
@@ -10053,7 +10053,7 @@ bool pc_revive_item(map_session_data *sd) {
 	else
 		pc_delitem(sd, item_position, 1, 0, 1, LOG_TYPE_CONSUME);
 
-	clif_skill_nodamage(&sd->bl, &sd->bl, ALL_RESURRECTION, 4, 1);
+	clif_skill_nodamage(&sd->bl, sd->bl, ALL_RESURRECTION, 4);
 
 	return true;
 }
@@ -12262,18 +12262,18 @@ bool pc_unequipitem(map_session_data *sd, int n, int flag) {
 	nullpo_retr(false,sd);
 
 	if (n < 0 || n >= MAX_INVENTORY) {
-		clif_unequipitemack(sd,0,0,0);
+		clif_unequipitemack(*sd,0,0,false);
 		return false;
 	}
 	if (!(pos = sd->inventory.u.items_inventory[n].equip)) {
-		clif_unequipitemack(sd,n,0,0);
+		clif_unequipitemack(*sd,n,0,false);
 		return false; //Nothing to unequip
 	}
 	// status change that makes player cannot unequip equipment
 	if (!(flag&2) && sd->sc.count &&( sd->sc.cant.unequip ||
 		(sd->sc.getSCE(SC_PYROCLASTIC) &&	sd->inventory_data[n]->type == IT_WEAPON)))	// can't switch weapon
 	{
-		clif_unequipitemack(sd,n,0,0);
+		clif_unequipitemack(*sd,n,0,false);
 		return false;
 	}
 
@@ -12312,7 +12312,7 @@ bool pc_unequipitem(map_session_data *sd, int n, int flag) {
 	if(pos & EQP_SHOES)
 		clif_changelook(&sd->bl,LOOK_SHOES,0);
 
-	clif_unequipitemack(sd,n,pos,1);
+	clif_unequipitemack(*sd,n,pos,true);
 	pc_set_costume_view(sd);
 
 	status_db.removeByStatusFlag(&sd->bl, { SCF_REMOVEONUNEQUIP });
@@ -12333,7 +12333,7 @@ bool pc_unequipitem(map_session_data *sd, int n, int flag) {
 
 					if (idx >= 0) {
 						sd->equip_index[EQI_AMMO] = -1;
-						clif_unequipitemack(sd, idx, sd->inventory.u.items_inventory[idx].equip, 1);
+						clif_unequipitemack(*sd, idx, sd->inventory.u.items_inventory[idx].equip, true);
 						pc_unequipitem_sub(sd, idx, 0);
 					}
 				}
