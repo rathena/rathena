@@ -9122,4 +9122,4 @@ Body:
     Icon: EFST_HEAVEN_AND_EARTH
     DurationLookup: SOA_SOUL_OF_HEAVEN_AND_EARTH
     CalcFlags:
-      Base: true
+      All: true
