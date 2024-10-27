@@ -6517,8 +6517,7 @@ Body:
     Icon: EFST_SHRIMP
     DurationLookup: SU_BUNCHOFSHRIMP
     CalcFlags:
-      Batk: true
-      Matk: true
+      All: true
   - Status: Freshshrimp
     Icon: EFST_FRESHSHRIMP
     DurationLookup: SU_FRESHSHRIMP
