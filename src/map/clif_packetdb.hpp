@@ -46,7 +46,6 @@
 	parseable_packet(0x0094,6,clif_parse_GetCharNameRequest,2);
 	parseable_packet(0x0096,-1,clif_parse_WisMessage,2,4,28);
 	parseable_packet(0x0099,-1,clif_parse_Broadcast,2,4);
-	packet(0x009a,-1);
 	parseable_packet(0x009b,5,clif_parse_ChangeDir,2,4);
 	packet( HEADER_ZC_ITEM_ENTRY, sizeof( struct PACKET_ZC_ITEM_ENTRY ) );
 	packet(0x009e,17);
@@ -60,7 +59,6 @@
 	packet( useItemAckType, sizeof( struct PACKET_ZC_USE_ITEM_ACK ) );
 	parseable_packet(0x00a9,6,clif_parse_EquipItem,2,4);
 	parseable_packet(0x00ab,4,clif_parse_UnequipItem,2);
-	packet(0x00ac,7);
 	packet(0x00ae,-1);
 	parseable_packet(0x00b2,3,clif_parse_Restart,2);
 	parseable_packet(0x00b8,7,clif_parse_NpcSelectMenu,2,6);
@@ -88,12 +86,10 @@
 	packet(0x00d4,-1);
 	parseable_packet(0x00d5,-1,clif_parse_CreateChatRoom,2,4,6,7,15);
 	packet(0x00d7,-1);
-	packet(0x00d8,6);
 	parseable_packet(0x00d9,14,clif_parse_ChatAddMember,2,6);
 	packet(0x00dc,28);
 	packet(0x00dd,29);
 	parseable_packet(0x00de,-1,clif_parse_ChatRoomStatusChange,2,4,6,7,15);
-	packet(0x00df,-1);
 	parseable_packet(0x00e0,30,clif_parse_ChangeChatOwner,2,6);
 	packet(0x00e1,30);
 	parseable_packet(0x00e2,26,clif_parse_KickFromChat,2);
@@ -101,7 +97,6 @@
 	parseable_packet(0x00e4,6,clif_parse_TradeRequest,2);
 	packet(0x00e5,26);
 	parseable_packet(0x00e6,3,clif_parse_TradeAck,2);
-	packet(0x00e7,3);
 	parseable_packet(0x00e8,8,clif_parse_TradeAddItem,2,4);
 	packet(0x00ea,5);
 	parseable_packet(0x00eb,2,clif_parse_TradeOk,0);
@@ -138,9 +133,7 @@
 	packet(0x0117,18);
 	parseable_packet(0x0118,2,clif_parse_StopAttack,0);
 	packet(0x0119,13);
-	packet(0x011a,15);
 	parseable_packet(0x011b,20,clif_parse_UseSkillMap,2,4);
-	packet(0x011c,68);
 	parseable_packet(0x011d,2,clif_parse_RequestMemo,0);
 	packet(0x011f,16);
 	packet( cartlistequipType, -1 );
@@ -166,9 +159,7 @@
 	parseable_packet(0x0149,9,clif_parse_GMReqNoChat,2,6,7);
 	packet(0x014a,6);
 	packet(0x014b,27);
-	packet(0x014c,-1);
 	parseable_packet(0x014d,2,clif_parse_GuildCheckMaster,0);
-	packet(0x014e,6);
 	parseable_packet(0x014f,6,clif_parse_GuildRequestInfo,2);
 	packet(0x0150,110);
 	parseable_packet(0x0151,6,clif_parse_GuildRequestEmblem,2);
@@ -183,9 +174,7 @@
 	parseable_packet( HEADER_CZ_REQ_BAN_GUILD, sizeof( PACKET_CZ_REQ_BAN_GUILD ), clif_parse_GuildExpulsion, 0 );
 	parseable_packet( HEADER_CZ_REQ_DISORGANIZE_GUILD, sizeof( PACKET_CZ_REQ_DISORGANIZE_GUILD ), clif_parse_GuildBreak, 0 );
 	packet(0x015f,42);
-	packet(0x0160,-1);
 	parseable_packet(0x0161,-1,clif_parse_GuildChangePositionInfo,2,4);
-	packet(0x0163,-1);
 	packet(0x0164,-1);
 	parseable_packet(0x0165,30,clif_parse_CreateGuild,2,6);
 	packet(0x0166,-1);
@@ -195,9 +184,7 @@
 	packet(0x016d,14);
 	parseable_packet(0x016e,186,clif_parse_GuildChangeNotice,2,6,66);
 	parseable_packet(0x0170,14,clif_parse_GuildRequestAlliance,2,6,10);
-	packet(0x0171,30);
 	parseable_packet(0x0172,10,clif_parse_GuildReplyAlliance,2,6);
-	packet(0x0173,3);
 	packet(0x0174,-1);
 	packet(0x0175,6);
 	packet(0x0176,106);
@@ -207,12 +194,9 @@
 	packet(0x017b,-1);
 	parseable_packet(0x017c,6,clif_parse_InsertCard,2,4);
 	parseable_packet(0x017e,-1,clif_parse_GuildMessage,2,4);
-	packet(0x017f,-1);
 	parseable_packet(0x0180,6,clif_parse_GuildOpposition,2);
-	packet(0x0181,3);
 	packet(0x0182,106);
 	parseable_packet(0x0183,10,clif_parse_GuildDelAlliance,2,6);
-	packet(0x0184,10);
 	packet(0x0185,34);
 	packet(0x0187,6);
 	parseable_packet(0x018a,4,clif_parse_QuitGame,2);
@@ -301,8 +285,6 @@
 	packet(0x01f1,-1);
 	packet(0x01f2,20);
 	packet(0x01f3,10);
-	packet(0x01f4,32);
-	packet(0x01f5,9);
 	packet(0x01f6,34);
 	parseable_packet(0x01f7,14,clif_parse_Adopt_reply,2,6,10);
 	packet(0x01f8,2);
@@ -581,7 +563,7 @@
 // 2005-04-25aSakexe
 #if PACKETVER >= 20050425
 	parseable_packet(0x022d,5,clif_parse_HomMenu,2,4);
-	parseable_packet(0x0232,9,clif_parse_HomMoveTo,2,6);
+	parseable_packet( HEADER_CZ_REQUEST_MOVENPC, sizeof( PACKET_CZ_REQUEST_MOVENPC ), clif_parse_HomMoveTo, 0 );
 	parseable_packet(0x0233,11,clif_parse_HomAttack,2,6,10);
 	parseable_packet(0x0234,6,clif_parse_HomMoveToMaster,2);
 #endif
@@ -1227,7 +1209,6 @@
 // 2008-11-26aSakexe
 #if PACKETVER >= 20081126
 	packet(0x01a2,37);
-	packet(0x0441,4);
 #endif
 
 // 2008-12-10aSakexe
@@ -1501,7 +1482,6 @@
 	parseable_packet(0x0838,6,clif_parse_SolveCharName,2);
 	parseable_packet(0x0439,8,clif_parse_UseItem,2,4);
 	packet(0x08d2,10);
-	packet(0x08d1,7);
 #endif
 
 // 2011-11-02aRagexe
@@ -1734,7 +1714,6 @@
 	parseable_packet(0x0978,6,clif_parse_reqworldinfo,2);
 	packet(0x0979,50); //ackworldinfo
 	parseable_packet(0x0998,8,clif_parse_EquipItem,2,4); // CZ_REQ_WEAR_EQUIP_V5
-	packet(0x099a,9); // take_off_equipv5
 	packet(0x099b,8); //maptypeproperty2
 	// New Packets
 	packet(0x08ff,24); // ZC_EFST_SET_ENTER
@@ -1765,7 +1744,6 @@
 // 2013-07-31cRagexe
 #if PACKETVER >= 20130731
 	packet(0x09ca,23); // ZC_SKILL_ENTRY5
-	packet(0x09cb,17); // ZC_USE_SKILL2
 #endif
 
 // 2013-08-07Ragexe
@@ -1951,9 +1929,8 @@
 	parseable_packet( HEADER_CZ_REQ_RANDOM_COMBINE_ITEM, -1, clif_parse_laphine_synthesis, 0 );
 #endif
 
-// 2016-06-22aRagexeRE
-#if PACKETVER >= 20160622
-	packet(0x0A84,94);
+#if PACKETVER_MAIN_NUM >= 20160622 || PACKETVER_RE_NUM >= 20160622 || defined(PACKETVER_ZERO)
+	parseable_packet( HEADER_CZ_CMD_RESETCOOLTIME, sizeof( PACKET_CZ_CMD_RESETCOOLTIME ), clif_parse_gm_resetcooltime, 0 );
 #endif
 
 // 2016-10-12aRagexeRE

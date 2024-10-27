@@ -1311,6 +1311,23 @@ enum sc_type : int16 {
 	SC_POWERUP = 951,
 	SC_AGIUP,
 	SC_PROTECTION,
+	SC_BATH_FOAM_A,
+	SC_BATH_FOAM_B,
+	SC_BATH_FOAM_C,
+	SC_BUCHEDENOEL,
+	SC_EP16_DEF,
+	SC_STR_SCROLL,
+	SC_INT_SCROLL,
+	SC_CONTENTS_1,
+	SC_CONTENTS_2,
+	SC_CONTENTS_3,
+	SC_CONTENTS_4,
+	SC_CONTENTS_5,
+	SC_CONTENTS_6,
+	SC_CONTENTS_7,
+	SC_CONTENTS_8,
+	SC_CONTENTS_9,
+	SC_CONTENTS_10,
 
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
@@ -3537,7 +3554,7 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, status_change *sc);
 void status_calc_state(struct block_list *bl, status_change *sc, std::bitset<SCS_MAX> flag, bool start);
 
-void status_calc_slave_mode(struct mob_data *md, struct mob_data *mmd);
+void status_calc_slave_mode(mob_data& md);
 
 bool status_check_skilluse(struct block_list *src, struct block_list *target, uint16 skill_id, int flag);
 int status_check_visibility(struct block_list *src, struct block_list *target);

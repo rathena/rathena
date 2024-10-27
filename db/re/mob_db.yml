@@ -91467,6 +91467,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Undead
+    RaceGroups:
+      Ep16_def: true
     Element: Undead
     ElementLevel: 3
     WalkSpeed: 300
@@ -91509,6 +91511,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Undead
+    RaceGroups:
+      Ep16_def: true
     Element: Undead
     ElementLevel: 3
     WalkSpeed: 250
@@ -91551,6 +91555,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Undead
+    RaceGroups:
+      Ep16_def: true
     Element: Undead
     ElementLevel: 3
     WalkSpeed: 250
@@ -91591,6 +91597,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Undead
+    RaceGroups:
+      Ep16_def: true
     Element: Undead
     ElementLevel: 1
     WalkSpeed: 200
@@ -91633,6 +91641,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Undead
+    RaceGroups:
+      Ep16_def: true
     Element: Undead
     ElementLevel: 1
     WalkSpeed: 200
@@ -91667,6 +91677,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Undead
+    RaceGroups:
+      Ep16_def: true
     Element: Undead
     ElementLevel: 4
     WalkSpeed: 200
@@ -91722,6 +91734,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demon
+    RaceGroups:
+      Ep16_def: true
     Element: Undead
     ElementLevel: 4
     WalkSpeed: 150
@@ -91772,6 +91786,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Undead
+    RaceGroups:
+      Ep16_def: true
     Element: Undead
     ElementLevel: 4
     WalkSpeed: 400
@@ -101395,7 +101411,7 @@ Body:
     Luk: 61
     AttackRange: 2
     SkillRange: 10
-    ChaseRange: 12432
+    ChaseRange: 12
     Size: Medium
     Race: Fish
     Element: Water
@@ -115179,6 +115195,88 @@ Body:
 #    AegisName: EV_NPC_VACATION_POPE
 #  - Id: 22380
 #    AegisName: E_WATER_M_RING
+#  - Id: 22381
+#    AegisName: CLB_SS_FC
+#  - Id: 22382
+#    AegisName: CLB_SS_TZ
+#  - Id: 22383
+#    AegisName: VIOLEN
+#  - Id: 22384
+#    AegisName: CP_VIOLEN
+#  - Id: 22385
+#    AegisName: SPIDING
+#  - Id: 22386
+#    AegisName: CP_SPIDING
+#  - Id: 22387
+#    AegisName: GARLING
+#  - Id: 22388
+#    AegisName: CP_GARLING
+#  - Id: 22389
+#    AegisName: JACKONETTE
+#  - Id: 22390
+#    AegisName: CP_JACKONETTE
+#  - Id: 22391
+#    AegisName: LIAMETTE
+#  - Id: 22392
+#    AegisName: CP_LIAMETTE
+#  - Id: 22393
+#    AegisName: G_LIAMETTE
+#  - Id: 22394
+#    AegisName: NIGHTMARE_PIAMETTE
+#  - Id: 22395
+#    AegisName: MEDJED
+#  - Id: 22396
+#    AegisName: CP_MEDJED
+#  - Id: 22397
+#    AegisName: MEDJAY
+#  - Id: 22398
+#    AegisName: CP_MEDJAY
+#  - Id: 22399
+#    AegisName: OPHOIS
+#  - Id: 22400
+#    AegisName: CP_OPHOIS
+#  - Id: 22401
+#    AegisName: HEKA
+#  - Id: 22402
+#    AegisName: CP_HEKA
+#  - Id: 22403
+#    AegisName: G_OPHOIS
+#  - Id: 22404
+#    AegisName: GUIDE_OF_DEAD
+#  - Id: 22405
+#    AegisName: MISTRESS3
+#  - Id: 22406
+#    AegisName: GIANT_HONET2
+#  - Id: 22408
+#    AegisName: E_SMART_ANDRE
+#  - Id: 22409
+#    AegisName: E_RE_PINE
+#  - Id: 22410
+#    AegisName: EP21_YOR_TAN_H
+#  - Id: 22411
+#    AegisName: EP21_MD_BOX2
+#  - Id: 22412
+#    AegisName: EP21_YORTUS_A_H
+#  - Id: 22413
+#    AegisName: EP21_YORTUS_B_H
+#  - Id: 22414
+#    AegisName: EP21_YORDOS_C_H
+#  - Id: 22415
+#    AegisName: EP21_YORDOS_B_H
+#  - Id: 22416
+#    AegisName: EP21_YORDOS_A_H
+#  - Id: 22417
+#    AegisName: EP21_YORMI_A_H
+#  - Id: 22418
+#    AegisName: EP21_YORMI_B_H
+#  - Id: 22419
+#    AegisName: EP21_YOSCOPUS_A_H
+#  - Id: 22420
+#    AegisName: EP21_YOSCOPUS_B_H
+#  - Id: 22421
+#    AegisName: EP21_B_YORTUS_A_H
+#  - Id: 22422
+#    AegisName: EP21_B_YORTUS_B_H
 #  - Id: 23000
 #    AegisName: DARK_ILLUSION2
 #  - Id: 23001

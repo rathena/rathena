@@ -511,7 +511,7 @@ int lan_subnetcheck(uint32 ip) {
 
 
 /// Msg_conf tayloring
-int login_msg_config_read(char *cfgName){
+int login_msg_config_read(const char *cfgName){
 	return _msg_config_read(cfgName,LOGIN_MAX_MSG,msg_table);
 }
 const char* login_msg_txt(int msg_number){
@@ -787,11 +787,6 @@ void login_set_defaults() {
 #endif
 	login_config.use_web_auth_token = true;
 	login_config.disable_webtoken_delay = 10000;
-
-	//other default conf
-	safestrncpy(login_config.loginconf_name, "conf/login_athena.conf", sizeof(login_config.loginconf_name));
-	safestrncpy(login_config.lanconf_name, "conf/subnet_athena.conf", sizeof(login_config.lanconf_name));
-	safestrncpy(login_config.msgconf_name, "conf/msg_conf/login_msg.conf", sizeof(login_config.msgconf_name));
 }
 
 
@@ -861,11 +856,11 @@ bool LoginServer::initialize( int argc, char* argv[] ){
 
 	// read login-server configuration
 	login_set_defaults();
-	logcnslif_get_options(argc,argv);
+	cli_get_options(argc,argv);
 
-	login_config_read(login_config.loginconf_name, true);
-	msg_config_read(login_config.msgconf_name);
-	login_lan_config_read(login_config.lanconf_name);
+	login_config_read(LOGIN_CONF_NAME, true);
+	msg_config_read(LOGIN_MSG_CONF_NAME);
+	login_lan_config_read(LAN_CONF_NAME);
 	//end config
 
 	do_init_loginclif();
