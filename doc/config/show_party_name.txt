@@ -1,0 +1,14 @@
+How to show party name after player name ?
+1. Config server
+rathena\conf\battle\party.conf
+display_party_name: yes
+
+2. Create party
+/organize name_of_party
+
+3. Create guild
+Emperium    Item ID# 714 (Emperium)
+/guild guild_name
+
+Reference
+https://rathena.org/board/topic/114174-help-party-name-cant-see/
