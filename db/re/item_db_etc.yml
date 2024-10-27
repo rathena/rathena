@@ -44776,8 +44776,8 @@ Body:
       .@r = getequiprefinerycnt(EQI_GARMENT);
       bonus bNoCastCancel;
       bonus bVariableCastrate,15;
-      bonus bMdef,.@r-5;
-      bonus bMaxSPrate,.@r-5;
+      bonus bMdef,(.@r < 5 ? 0 : .@r);
+      bonus bMaxSPrate,(.@r < 5 ? 0 : .@r);
   - Id: 29234
     AegisName: Energy_Drop7
     Name: Energy (Fatal Blow)
@@ -44786,8 +44786,8 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
       bonus bBaseAtk,3+(.@r*5);
-      bonus bCritical,5+(.@r-5);
-      bonus bFlee2,4+(.@r-5);
+      bonus bCritical,5+(.@r < 5 ? 0 : .@r);
+      bonus bFlee2,4+(.@r < 5 ? 0 : .@r);
       bonus bLuk,3*.@r;
   - Id: 29235
     AegisName: Dodge1_J
