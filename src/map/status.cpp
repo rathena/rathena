@@ -2452,8 +2452,8 @@ unsigned int status_weapon_atk(weapon_atk &wa)
 #endif
 
 #ifndef RENEWAL
-unsigned short status_base_matk_min(const struct status_data* status) { return status->int_ + (status->int_ / 7) * (status->int_ / 7); }
-unsigned short status_base_matk_max(const struct status_data* status) { return status->int_ + (status->int_ / 5) * (status->int_ / 5); }
+unsigned short status_base_matk_min(const struct status_data* status) { return status->int_ + (status->int_ / 7.0) * (status->int_ / 7.0); }
+unsigned short status_base_matk_max(const struct status_data* status) { return status->int_ + (status->int_ / 5.0) * (status->int_ / 5.0); }
 #else
 /*
 * Calculates minimum attack variance 80% from db's ATK1 for non BL_PC
