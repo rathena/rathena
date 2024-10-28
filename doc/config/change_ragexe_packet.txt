@@ -1,0 +1,14 @@
+rathena\src\config\packets.hpp
+#define PACKETVER 20211103
+
+-------------------------------------
+
+Ragexe 20211103
+Year = 2021 
+Month = 11
+Day = 03
+
+Data Client 20211105
+Year = 2021 
+Month = 11
+Day = 05
