@@ -1648,8 +1648,8 @@ void pc_delinvincibletimer(map_session_data* sd);
 
 void pc_addspiritball(map_session_data *sd,int interval,int max);
 void pc_delspiritball(map_session_data *sd,int count,int type);
-int pc_addsoulball(map_session_data *sd, int max);
-int pc_delsoulball(map_session_data *sd, int count, bool type);
+void pc_addsoulball( map_session_data& sd, int32 number, int32 max = MAX_SOUL_BALL );
+void pc_delsoulball( map_session_data& sd, int32 count, bool no_client_effect = false );
 void pc_addservantball( map_session_data& sd, int count = 1 );
 void pc_delservantball( map_session_data& sd, int count = 1 );
 void pc_addabyssball( map_session_data& sd, int count = 1 );

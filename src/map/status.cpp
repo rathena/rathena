@@ -6159,6 +6159,9 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 
 		if (sd != nullptr) {
 			status->matk_min = status_calc_ematk(&bl, sc, status->matk_min);
+			// Soul energy spheres increase MATK (not displayed in status window).
+			status->matk_min += 3 * sd->soulball;
+
 			status->matk_max = status->matk_min;
 
 			// Adds weapon magic attack (wMATK) modifications
@@ -12792,7 +12795,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 5 + 3 * val2; // Max Soul Sphere's.
 			val3 = tick > 0 ? tick : 60000;
 			tick_time = tick;
-			tick = INFINITE_TICK;
+			tick = INFINITE_TICK; // Duration sent to the client should be infinite
 			break;
 		case SC_SP_SHA:
 			val2 = 50; // Move speed reduction
@@ -13940,8 +13943,13 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 				pc_delspiritball(sd, 1, 0);
 			break;
 		case SC_SOULENERGY:
-			if (sd)
-				pc_delsoulball(sd, sd->soulball, false);
+			if (sd != nullptr && sd->soulball > 0) {
+				// Removes all soulball when SC_SOULCOLLECT is active, 1 otherwise
+				if (sc->getSCE(SC_SOULCOLLECT))
+					pc_delsoulball( *sd, sd->soulball );
+				else
+					pc_delsoulball( *sd, 1 );
+			}
 			break;
 		case SC_MADOGEAR:
 			status_db.removeByStatusFlag(bl, { SCF_MADOENDCANCEL });
@@ -15055,12 +15063,9 @@ TIMER_FUNC(status_change_timer){
 		}
 		break;
 	case SC_SOULCOLLECT:
-		pc_addsoulball(sd, sce->val2);
-		if (sd->soulball < sce->val2) {
-			sc_timer_next(sce->val3 + tick);
-			return 0;
-		}
-		break;
+		pc_addsoulball( *sd, 1, sce->val2 );
+		sc_timer_next(sce->val3 + tick);
+		return 0;
 	case SC_HELPANGEL:
 		if (--(sce->val4) >= 0) {
 			status_heal(bl, 1000, 350, 0);	// Heal amount not displayed

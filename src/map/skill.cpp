@@ -18749,7 +18749,7 @@ void skill_consume_requirement(map_session_data *sd, uint16 skill_id, uint16 ski
 				case SP_SOULREAPER:
 				case SP_SOULEXPLOSION:
 				case SP_KAUTE:
-					pc_delsoulball(sd, require.spiritball, false);
+					pc_delsoulball( *sd, require.spiritball );
 					break;
 
 				// Skills that require servants.
