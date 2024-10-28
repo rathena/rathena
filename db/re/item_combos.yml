@@ -49574,18 +49574,26 @@ Body:
           - aegis_300519   # 300519
           - aegis_300506   # 300506
     Script: |
+      bonus2 bAddSize,Size_All,15;
       if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_WEAPONLEVEL)==5) {
-         bonus2 bAddSize,Size_All,25+15;
-         bonus bPAtk,5;
+         .@i = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
+         if (.@i == W_2HSWORD || .@i == W_2HSPEAR || .@i == W_2HSTAFF || .@i == W_2HAXE || .@i == W_KATAR || .@i == W_BOW || .@i == W_HUUMA || .@i == W_REVOLVER || .@i == W_RIFLE || .@i == W_GATLING || .@i == W_SHOTGUN || .@i == W_GRENADE) {
+            bonus2 bAddSize,Size_All,25;
+            bonus bPAtk,5;
+         }
       }
   - Combos:
       - Combo:
           - aegis_300520   # 300520
           - aegis_300507   # 300507
     Script: |
+      bonus2 bMagicAddSize,Size_All,15;
       if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_WEAPONLEVEL)==5) {
-         bonus2 bMagicAddSize,Size_All,25+15;
-         bonus bSMatk,5;
+         .@i = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
+         if (.@i == W_2HSWORD || .@i == W_2HSPEAR || .@i == W_2HSTAFF || .@i == W_2HAXE || .@i == W_KATAR || .@i == W_BOW || .@i == W_HUUMA || .@i == W_REVOLVER || .@i == W_RIFLE || .@i == W_GATLING || .@i == W_SHOTGUN || .@i == W_GRENADE) {
+            bonus2 bMagicAddSize,Size_All,25;
+            bonus bSMatk,5;
+         }
       }
   - Combos:
       - Combo:
