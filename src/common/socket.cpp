@@ -7,6 +7,10 @@
 
 #ifdef WIN32
 	#include "winapi.hpp"
+#ifdef SOCKET_WEPOLL
+	#include "wepoll.hpp"
+	#define SOCKET_EPOLL
+#endif
 #else
 	#include <cerrno>
 	#include <arpa/inet.h>
@@ -57,6 +61,7 @@ int8 packet_buffer[UINT16_MAX];
 // windows portability layer
 
 typedef int socklen_t;
+typedef SOCKET sock_t;
 
 #define sErrno WSAGetLastError()
 #define S_ENOTSOCK WSAENOTSOCK
@@ -183,6 +188,7 @@ char* sErr(int code)
 #else
 /////////////////////////////////////////////////////////////////////
 // nix portability layer
+typedef int sock_t;
 
 #define SOCKET_ERROR (-1)
 
@@ -225,7 +231,11 @@ char* sErr(int code)
 #else
 	// Epoll based Event Dispatcher
 	static int epoll_maxevents = (MAXCONN / 2);
+#ifdef SOCKET_WEPOLL
+	static HANDLE epfd = NULL;
+#else
 	static int epfd = SOCKET_ERROR;
+#endif
 	static struct epoll_event epevent;
 	static struct epoll_event *epevents = nullptr;
 #endif
@@ -511,10 +521,16 @@ int connect_client(int listen_fd)
 	sFD_SET(fd,&readfds);
 #else
 	// Epoll based Event Dispatcher
+#ifdef SOCKET_WEPOLL
+	epevent.data.sock = fd2sock(fd);
+	sock_t _fd = epevent.data.sock;
+#else
 	epevent.data.fd = fd;
+	sock_t _fd = fd;
+#endif
 	epevent.events = EPOLLIN;
 
-	if( epoll_ctl( epfd, EPOLL_CTL_ADD, fd, &epevent ) == SOCKET_ERROR ){
+	if( epoll_ctl( epfd, EPOLL_CTL_ADD, _fd, &epevent ) == SOCKET_ERROR ){
 		ShowError( "connect_client: Failed to add to epoll event dispatcher for new socket #%d: %s\n", fd, error_msg() );
 		sClose( fd );
 		return -1;
@@ -578,10 +594,15 @@ int make_listen_bind(uint32 ip, uint16 port)
 	sFD_SET(fd, &readfds);
 #else
 	// Epoll based Event Dispatcher
+#ifdef SOCKET_WEPOLL
+	epevent.data.sock = fd2sock(fd);
+	sock_t _fd = epevent.data.sock;
+#else
 	epevent.data.fd = fd;
+	sock_t _fd = fd;
+#endif
 	epevent.events = EPOLLIN;
-
-	if( epoll_ctl( epfd, EPOLL_CTL_ADD, fd, &epevent ) == SOCKET_ERROR ){
+	if( epoll_ctl( epfd, EPOLL_CTL_ADD, _fd, &epevent ) == SOCKET_ERROR ){
 		ShowError( "make_listen_bind: failed to add listener socket #%d to epoll event dispatcher: %s\n", fd, error_msg() );
 		sClose(fd);
 		exit(EXIT_FAILURE);
@@ -705,10 +726,16 @@ int make_connection(uint32 ip, uint16 port, bool silent,int timeout) {
 	sFD_SET(fd,&readfds);
 #else
 	// Epoll based Event Dispatcher
+#ifdef SOCKET_WEPOLL
+	epevent.data.sock = fd2sock(fd);
+	sock_t _fd = epevent.data.sock;
+#else
 	epevent.data.fd = fd;
+	sock_t _fd = fd;
+#endif
 	epevent.events = EPOLLIN;
 
-	if( epoll_ctl( epfd, EPOLL_CTL_ADD, fd, &epevent ) == SOCKET_ERROR ){
+	if( epoll_ctl( epfd, EPOLL_CTL_ADD, _fd, &epevent ) == SOCKET_ERROR ){
 		ShowError( "make_connection: failed to add socket #%d to epoll event dispatcher: %s\n", fd, error_msg() );
 		sClose(fd);
 		return -1;
@@ -948,7 +975,7 @@ int do_sockets(t_tick next)
 
 	last_tick = time(nullptr);
 
-#if defined(WIN32)
+#if defined(WIN32) && !defined(SOCKET_WEPOLL)
 	// on windows, enumerating all members of the fd_set is way faster if we access the internals
 	for( i = 0; i < (int)rfd.fd_count; ++i )
 	{
@@ -961,7 +988,11 @@ int do_sockets(t_tick next)
 
 	for( i = 0; i < ret; i++ ){
 		struct epoll_event *it = &epevents[i];
+#ifdef SOCKET_WEPOLL
+		int fd = sock2fd(it->data.sock);
+#else
 		int fd = it->data.fd;
+#endif
 		struct socket_data *sock = session[fd];
 
 		if( !sock ){
@@ -1402,16 +1433,24 @@ void socket_final(void)
 	aFree(session[0]);
 	session[0] = nullptr;
 
-#ifdef WIN32
+#if defined(WIN32) && !defined(SOCKET_WEPOLL)
 	// Shut down windows networking
 	if( WSACleanup() != 0 ){
 		ShowError("socket_final: WinSock could not be cleaned up! %s\n", error_msg() );
 	}
 #elif defined(SOCKET_EPOLL)
+
+#ifdef SOCKET_WEPOLL
+	if (epfd != NULL) {
+		epoll_close(epfd);
+		epfd = NULL;
+	}
+#else
 	if( epfd != SOCKET_ERROR ){
 		sClose(epfd);
 		epfd = SOCKET_ERROR;
 	}
+#endif
 
 	if( epevents != nullptr ){
 		aFree( epevents );
@@ -1433,9 +1472,15 @@ void do_close(int fd)
 	sFD_CLR(fd, &readfds);// this needs to be done before closing the socket
 #else
 	// Epoll based Event Dispatcher
+#ifdef SOCKET_WEPOLL
+	epevent.data.sock = fd2sock(fd);
+	sock_t _fd = epevent.data.sock;
+#else
 	epevent.data.fd = fd;
+	sock_t _fd = fd;
+#endif
 	epevent.events = EPOLLIN;
-	epoll_ctl( epfd, EPOLL_CTL_DEL, fd, &epevent ); // removing the socket from epoll when it's being closed is not required but recommended
+	epoll_ctl( epfd, EPOLL_CTL_DEL, _fd, &epevent ); // removing the socket from epoll when it's being closed is not required but recommended
 #endif
 
 	sShutdown(fd, SHUT_RDWR); // Disallow further reads/writes
@@ -1588,13 +1633,21 @@ void socket_init(void)
 	ShowInfo( "Server uses '" CL_WHITE "select" CL_RESET "' as event dispatcher\n" );
 #else
 	// Epoll based Event Dispatcher
+#if defined(WIN32)
+	epfd = epoll_create1(0); // 2.6.8 or newer ignores the expected socket amount argument
+
+	if (epfd == NULL) {
+		ShowError("Failed to create epoll event dispatcher: %s\n", error_msg());
+		exit(EXIT_FAILURE);
+	}
+#else
 	epfd = epoll_create( MAXCONN ); // 2.6.8 or newer ignores the expected socket amount argument
 
 	if( epfd == SOCKET_ERROR ){
 		ShowError( "Failed to create epoll event dispatcher: %s\n", error_msg() );
 		exit( EXIT_FAILURE );
 	}
-
+#endif
 	memset( &epevent, 0x00, sizeof( struct epoll_event ) );
 	epevents = (struct epoll_event *)aCalloc( epoll_maxevents, sizeof( struct epoll_event ) );
 
