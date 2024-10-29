@@ -2690,7 +2690,7 @@ Body:
       bonus2 bVariableCastrate,"PR_MAGNUS",-25;
       bonus bHealPower,10;
       bonus bAddItemHealRate,10;
-      autobonus2 "{ bonus bIgnoreMDefRace,RC_All; }",getequiprefinerycnt(EQI_HAND_R)*20,2000,BF_SHORT|BF_NORMAL;
+      autobonus2 "{ bonus2 bIgnoreMdefRaceRate,RC_All,100; }",getequiprefinerycnt(EQI_HAND_R)*20,2000,BF_SHORT|BF_NORMAL;
       /* Confirm: Success rate and duration */
   - Combos:
       - Combo:
@@ -11739,7 +11739,7 @@ Body:
           - S2_Spirit_M_E_Weapon
     Script: |
       if (getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L) >= 25) {
-         bonus bIgnoreMDefRace,RC_DemiHuman;
+         bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,100;
       }
   - Combos:
       - Combo:
@@ -11749,7 +11749,7 @@ Body:
     Script: |
       bonus bMatk,5;
       if (getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L) >= 25)
-         bonus bIgnoreMDefRace,RC_DemiHuman;
+         bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,100;
   - Combos:
       - Combo:
           - S_Tempest_Earring
@@ -11758,7 +11758,7 @@ Body:
     Script: |
       bonus bMatk,5;
       if (getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L) >= 25)
-         bonus bIgnoreMDefRace,RC_Demon;
+         bonus2 bIgnoreMdefRaceRate,RC_Demon,100;
   - Combos:
       - Combo:
           - S_Tempest_Earring
@@ -11767,8 +11767,8 @@ Body:
     Script: |
       bonus bMatk,5;
       if (getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L) >= 25) {
-         bonus bIgnoreMDefRace,RC_Brute;
-         bonus bIgnoreMDefRace,RC_Player_Doram;
+         bonus2 bIgnoreMdefRaceRate,RC_Brute,100;
+         bonus2 bIgnoreMdefRaceRate,RC_Player_Doram,100;
       }
   - Combos:
       - Combo:
@@ -11778,7 +11778,7 @@ Body:
     Script: |
       bonus bMatk,5;
       if (getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L) >= 25)
-         bonus bIgnoreMDefRace,RC_Insect;
+         bonus2 bIgnoreMdefRaceRate,RC_Insect,100;
   - Combos:
       - Combo:
           - S_Tempest_Earring
@@ -11787,7 +11787,7 @@ Body:
     Script: |
       bonus bMatk,5;
       if (getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L) >= 25)
-         bonus bIgnoreMDefRace,RC_Fish;
+         bonus2 bIgnoreMdefRaceRate,RC_Fish,100;
   - Combos:
       - Combo:
           - S_Tempest_Earring
@@ -11796,7 +11796,7 @@ Body:
     Script: |
       bonus bMatk,5;
       if (getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L) >= 25)
-         bonus bIgnoreMDefRace,RC_Dragon;
+         bonus2 bIgnoreMdefRaceRate,RC_Dragon,100;
   - Combos:
       - Combo:
           - S_Tempest_Earring
@@ -11805,7 +11805,7 @@ Body:
     Script: |
       bonus bMatk,5;
       if (getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L) >= 25)
-         bonus bIgnoreMDefRace,RC_Angel;
+         bonus2 bIgnoreMdefRaceRate,RC_Angel,100;
   - Combos:
       - Combo:
           - S_Tempest_Earring
@@ -11814,7 +11814,7 @@ Body:
     Script: |
       bonus bMatk,5;
       if (getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L) >= 25)
-         bonus bIgnoreMDefRace,RC_Formless;
+         bonus2 bIgnoreMdefRaceRate,RC_Formless,100;
   - Combos:
       - Combo:
           - S_Tempest_Earring
@@ -11823,7 +11823,7 @@ Body:
     Script: |
       bonus bMatk,5;
       if (getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L) >= 25)
-         bonus bIgnoreMDefRace,RC_Undead;
+         bonus2 bIgnoreMdefRaceRate,RC_Undead,100;
   - Combos:
       - Combo:
           - S_Tempest_Earring
@@ -11832,7 +11832,7 @@ Body:
     Script: |
       bonus bMatk,5;
       if (getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L) >= 25)
-         bonus bIgnoreMDefRace,RC_Plant;
+         bonus2 bIgnoreMdefRaceRate,RC_Plant,100;
   - Combos:
       - Combo:
           - S_Tempest_Earring
@@ -12260,8 +12260,8 @@ Body:
       .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_SHOES) + getequiprefinerycnt(EQI_SHADOW_ARMOR);
       bonus bMdef,5;
       if (.@r >= 25) {
-         bonus bIgnoreMDefRace,RC_DemiHuman;
-         bonus bIgnoreMDefRace,RC_Undead;
+         bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,100;
+         bonus2 bIgnoreMdefRaceRate,RC_Undead,100;
       }
   - Combos:
       - Combo:
@@ -12272,8 +12272,8 @@ Body:
       .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_SHOES) + getequiprefinerycnt(EQI_SHADOW_ARMOR);
       bonus bMdef,5;
       if (.@r >= 25) {
-         bonus bIgnoreMDefRace,RC_Demon;
-         bonus bIgnoreMDefRace,RC_Angel;
+         bonus2 bIgnoreMdefRaceRate,RC_Demon,100;
+         bonus2 bIgnoreMdefRaceRate,RC_Angel,100;
       }
   - Combos:
       - Combo:
@@ -12284,8 +12284,8 @@ Body:
       .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_SHOES) + getequiprefinerycnt(EQI_SHADOW_ARMOR);
       bonus bMdef,5;
       if (.@r >= 25) {
-         bonus bIgnoreMDefRace,RC_Formless;
-         bonus bIgnoreMDefRace,RC_Dragon;
+         bonus2 bIgnoreMdefRaceRate,RC_Formless,100;
+         bonus2 bIgnoreMdefRaceRate,RC_Dragon,100;
       }
   - Combos:
       - Combo:
@@ -12296,8 +12296,8 @@ Body:
       .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_SHOES) + getequiprefinerycnt(EQI_SHADOW_ARMOR);
       bonus bMdef,5;
       if (.@r >= 25) {
-         bonus bIgnoreMDefRace,RC_Plant;
-         bonus bIgnoreMDefRace,RC_Brute;
+         bonus2 bIgnoreMdefRaceRate,RC_Plant,100;
+         bonus2 bIgnoreMdefRaceRate,RC_Brute,100;
       }
   - Combos:
       - Combo:
@@ -12308,8 +12308,8 @@ Body:
       .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_SHOES) + getequiprefinerycnt(EQI_SHADOW_ARMOR);
       bonus bMdef,5;
       if (.@r >= 25) {
-         bonus bIgnoreMDefRace,RC_Fish;
-         bonus bIgnoreMDefRace,RC_Insect;
+         bonus2 bIgnoreMdefRaceRate,RC_Fish,100;
+         bonus2 bIgnoreMdefRaceRate,RC_Insect,100;
       }
   - Combos:
       - Combo:
@@ -12551,8 +12551,8 @@ Body:
       bonus bMatk,5;
       .@r = getequiprefinerycnt(EQI_SHADOW_WEAPON) + getequiprefinerycnt(EQI_SHADOW_ACC_R) + getequiprefinerycnt(EQI_SHADOW_ACC_L);
       if (.@r >= 25) {
-         bonus bIgnoreMDefRace,RC_Demon;
-         bonus bIgnoreMDefRace,RC_Angel;
+         bonus2 bIgnoreMdefRaceRate,RC_Demon,100;
+         bonus2 bIgnoreMdefRaceRate,RC_Angel,100;
       }
   - Combos:
       - Combo:
@@ -12563,8 +12563,8 @@ Body:
       bonus bMatk,5;
       .@r = getequiprefinerycnt(EQI_SHADOW_WEAPON) + getequiprefinerycnt(EQI_SHADOW_ACC_R) + getequiprefinerycnt(EQI_SHADOW_ACC_L);
       if (.@r >= 25) {
-         bonus bIgnoreMDefRace,RC_Formless;
-         bonus bIgnoreMDefRace,RC_Dragon;
+         bonus2 bIgnoreMdefRaceRate,RC_Formless,100;
+         bonus2 bIgnoreMdefRaceRate,RC_Dragon,100;
       }
   - Combos:
       - Combo:
@@ -12575,8 +12575,8 @@ Body:
       bonus bMatk,5;
       .@r = getequiprefinerycnt(EQI_SHADOW_WEAPON) + getequiprefinerycnt(EQI_SHADOW_ACC_R) + getequiprefinerycnt(EQI_SHADOW_ACC_L);
       if (.@r >= 25) {
-         bonus bIgnoreMDefRace,RC_Brute;
-         bonus bIgnoreMDefRace,RC_Plant;
+         bonus2 bIgnoreMdefRaceRate,RC_Brute,100;
+         bonus2 bIgnoreMdefRaceRate,RC_Plant,100;
       }
   - Combos:
       - Combo:
@@ -12587,8 +12587,8 @@ Body:
       bonus bMatk,5;
       .@r = getequiprefinerycnt(EQI_SHADOW_WEAPON) + getequiprefinerycnt(EQI_SHADOW_ACC_R) + getequiprefinerycnt(EQI_SHADOW_ACC_L);
       if (.@r >= 25) {
-         bonus bIgnoreMDefRace,RC_Fish;
-         bonus bIgnoreMDefRace,RC_Insect;
+         bonus2 bIgnoreMdefRaceRate,RC_Fish,100;
+         bonus2 bIgnoreMdefRaceRate,RC_Insect,100;
       }
   - Combos:
       - Combo:
@@ -12599,8 +12599,8 @@ Body:
       bonus bMatk,5;
       .@r = getequiprefinerycnt(EQI_SHADOW_WEAPON) + getequiprefinerycnt(EQI_SHADOW_ACC_R) + getequiprefinerycnt(EQI_SHADOW_ACC_L);
       if (.@r >= 25) {
-         bonus bIgnoreMDefRace,RC_DemiHuman;
-         bonus bIgnoreMDefRace,RC_Undead;
+         bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,100;
+         bonus2 bIgnoreMdefRaceRate,RC_Undead,100;
       }
   - Combos:
       - Combo:
@@ -19245,7 +19245,7 @@ Body:
       .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L);
       bonus bMatkRate,2;
       if (.@sum >= 18) {
-         bonus bIgnoreMDefRace,RC_All;
+         bonus2 bIgnoreMdefRaceRate,RC_All,100;
          bonus2 bIgnoreMdefRaceRate,RC_Player_Human,-100;
          bonus2 bIgnoreMdefRaceRate,RC_Player_Doram,-100;
       }
@@ -19257,7 +19257,7 @@ Body:
       .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES);
       bonus bMatkRate,2;
       if (.@sum >= 18) {
-         bonus bIgnoreMDefRace,RC_All;
+         bonus2 bIgnoreMdefRaceRate,RC_All,100;
          bonus2 bIgnoreMdefRaceRate,RC_Player_Human,-100;
          bonus2 bIgnoreMdefRaceRate,RC_Player_Doram,-100;
       }
@@ -21587,7 +21587,7 @@ Body:
           - Release_Of_Magic
     Script: |
       if (eaclass()&EAJL_THIRD && BaseJob == Job_Sage) {
-         bonus bIgnoreMDefRace,RC_All;
+         bonus2 bIgnoreMdefRaceRate,RC_All,100;
       }
   - Combos:
       - Combo:
@@ -21618,7 +21618,7 @@ Body:
           - Release_Of_Magic
     Script: |
       if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard) {
-         bonus bIgnoreMDefRace,RC_All;
+         bonus2 bIgnoreMdefRaceRate,RC_All,100;
       }
   - Combos:
       - Combo:
@@ -21634,7 +21634,7 @@ Body:
     Script: |
       if (eaclass()&EAJL_THIRD && BaseJob == Job_Soul_Linker) {
          skill "MG_FIREWALL",10;
-         bonus bIgnoreMDefRace,RC_All;
+         bonus2 bIgnoreMdefRaceRate,RC_All,100;
       }
   - Combos:
       - Combo:
@@ -21649,7 +21649,7 @@ Body:
           - Release_Of_Magic
     Script: |
       if (eaclass()&EAJL_THIRD && BaseJob == Job_Priest) {
-         bonus bIgnoreMDefRace,RC_All;
+         bonus2 bIgnoreMdefRaceRate,RC_All,100;
       }
   - Combos:
       - Combo:
@@ -25426,7 +25426,7 @@ Body:
     Script: |
       bonus bAtkRate,5;
       bonus bMatkRate,5;
-      autobonus "{ bonus bIgnoreDefClass,Class_All; bonus bIgnoreMdefRace,RC_All; }",30,7000,BF_WEAPON|BF_MAGIC,"{ active_transform 3658,7000; }";
+      autobonus "{ bonus bIgnoreDefClass,Class_All; bonus2 bIgnoreMdefRaceRate,RC_All,100; }",30,7000,BF_WEAPON|BF_MAGIC,"{ active_transform 3658,7000; }";
   - Combos:
       - Combo:
           - Ring_Of_Hunter     # 490096
@@ -30284,7 +30284,7 @@ Body:
     Script: |
       bonus bAllStats,(getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_SHOES));
       bonus bIgnoreDefRace,RC_All;
-      bonus bIgnoreMDefRace,RC_All;
+      bonus2 bIgnoreMdefRaceRate,RC_All,100;
   - Combos:
       - Combo:
           - Garm_Card   # 4324
@@ -35963,7 +35963,7 @@ Body:
           - aegis_300387    # 300387
           - Inteligence10    # 4719
     Script: |
-      bonus bIgnoreMDefRace,RC_All;
+      bonus2 bIgnoreMdefRaceRate,RC_All,100;
   - Combos:
       - Combo:
           - aegis_300386    # 300386
@@ -49292,7 +49292,7 @@ Body:
           - aegis_490459    # 490459
           - aegis_490461    # 490461
     Script: |
-      bonus bIgnoreMDefRace,RC_All;
+      bonus2 bIgnoreMdefRaceRate,RC_All,100;
   - Combos:
       - Combo:
           - Wild_Beast    # 400409
@@ -51416,7 +51416,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_All,8;
       if ((getequiprefinerycnt(EQI_ARMOR) + getequiprefinerycnt(EQI_GARMENT) + getequiprefinerycnt(EQI_SHOES)) >= 39) {
          bonus bIgnoreDefRace,RC_All;
-         bonus bIgnoreMDefRace,RC_All;
+         bonus2 bIgnoreMdefRaceRate,RC_All,100;
       }
   - Combos:
       - Combo:
