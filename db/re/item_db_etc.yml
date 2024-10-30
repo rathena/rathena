@@ -44299,7 +44299,7 @@ Body:
       bonus2 bAddEle,Ele_Earth,15;
       bonus2 bMagicAddEle,Ele_Wind,15;
       bonus2 bMagicAddEle,Ele_Earth,15;
-      autobonus "{ bonus bVariableCastrate,-70;bonus bDelayrate,-70; bonus bIgnoreDefRace,RC_All; bonus bIgnoreMDefRace,RC_All; }",5,10000;
+      autobonus "{ bonus bVariableCastrate,-70;bonus bDelayrate,-70; bonus bIgnoreDefRace,RC_All; bonus2 bIgnoreMdefRaceRate,RC_All,100; }",5,10000;
   - Id: 29208
     AegisName: SPdrain2_Top
     Name: SPabsorp2
