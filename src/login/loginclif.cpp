@@ -136,7 +136,19 @@ static void logclif_auth_ok(struct login_session_data* sd) {
 
 		char_server.ip = htonl( ( subnet_char_ip ) ? subnet_char_ip : ch_server[i].ip );
 		char_server.port = ntows( htons( ch_server[i].port ) ); // [!] LE byte order here [!]
-		safestrncpy( char_server.name, ch_server[i].name, sizeof( char_server.name ) );
+		const int buffer_size = sizeof(char_server.name); // Show user online [Chayo-Cypall]
+		char buffer[buffer_size];
+		int num_user_online = ch_server[i].users;
+		float num_user_online_f;
+		if (num_user_online < 1000) {
+			snprintf(buffer, buffer_size, "%s (%d)", ch_server[i].name, num_user_online);
+			safestrncpy( char_server.name, buffer, sizeof( char_server.name ) );
+		}
+		else if( num_user_online >= 1000 ) {
+			num_user_online_f = static_cast<float>(num_user_online) / 1000;
+			snprintf(buffer, buffer_size, "%s (%.1fk)", ch_server[i].name, num_user_online_f);
+			safestrncpy( char_server.name, buffer, sizeof( char_server.name ) );
+		}
 		char_server.users = login_get_usercount( ch_server[i].users );
 		char_server.type = ch_server[i].type;
 		char_server.new_ = ch_server[i].new_;
