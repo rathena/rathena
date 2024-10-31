@@ -5018,6 +5018,12 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 			sd->indexed_bonus.magic_addrace[RC_DEMIHUMAN] += sc->getSCE(SC_CONTENTS_10)->val1;
 			sd->indexed_bonus.magic_addrace[RC_INSECT] += sc->getSCE(SC_CONTENTS_10)->val1;
 		}
+		if (pc_checkskill(sd, SU_POWEROFLAND) > 0 && pc_checkskill_summoner(sd, SUMMONER_POWER_LAND) >= 20)
+			pc_bonus(sd, SP_MATK_RATE, 20);
+		if (sc->getSCE(SC_SHRIMP)) {
+			pc_bonus(sd, SP_ATK_RATE, sc->getSCE(SC_SHRIMP)->val2);
+			pc_bonus(sd, SP_MATK_RATE, sc->getSCE(SC_SHRIMP)->val2);
+		}
 	}
 	status_cpy(&sd->battle_status, base_status);
 
@@ -6201,11 +6207,6 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 				status->matk_max += sd->bonus.ematk;
 			}
 
-			if (pc_checkskill(sd, SU_POWEROFLAND) > 0 && pc_checkskill_summoner(sd, SUMMONER_POWER_LAND) >= 20) {
-				status->matk_min += status->matk_min * 20 / 100;
-				status->matk_max += status->matk_max * 20 / 100;
-			}
-
 			if (uint16 skill_lv = pc_checkskill(sd, NV_TRANSCENDENCE); skill_lv > 0) {
 				status->matk_min += 15 * skill_lv + (skill_lv > 4 ? 25 : 0);
 				status->matk_max += 15 * skill_lv + (skill_lv > 4 ? 25 : 0);
@@ -7256,8 +7257,6 @@ static unsigned short status_calc_batk(struct block_list *bl, status_change *sc,
 		batk += sc->getSCE(SC_QUEST_BUFF2)->val1;
 	if(sc->getSCE(SC_QUEST_BUFF3))
 		batk += sc->getSCE(SC_QUEST_BUFF3)->val1;
-	if (sc->getSCE(SC_SHRIMP))
-		batk += batk * sc->getSCE(SC_SHRIMP)->val2 / 100;
 #ifdef RENEWAL
 	if (sc->getSCE(SC_LOUD))
 		batk += 30;
@@ -7510,8 +7509,6 @@ static unsigned short status_calc_matk(struct block_list *bl, status_change *sc,
 		matk += sc->getSCE(SC_MOONLITSERENADE)->val3/100;
 	if (sc->getSCE(SC_MTF_MATK))
 		matk += matk * sc->getSCE(SC_MTF_MATK)->val1 / 100;
-	if (sc->getSCE(SC_SHRIMP))
-		matk += matk * sc->getSCE(SC_SHRIMP)->val2 / 100;
 #ifdef RENEWAL
 	if (sc->getSCE(SC_VOLCANO))
 		matk += sc->getSCE(SC_VOLCANO)->val2;
