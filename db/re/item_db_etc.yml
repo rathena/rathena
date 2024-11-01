@@ -10821,7 +10821,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bCritical,(readparam(bStr)>=110)?40:20;
-      bonus5 bAutoSpellWhenHit,"AM_ACIDTERROR",5,100,BF_WEAPON,1;
+      bonus5 bAutoSpellWhenHit,"AM_ACIDTERROR",5,100,BF_WEAPON,5;
   - Id: 4564
     AegisName: Stalker_Card
     Name: Stalker Gertie Card
