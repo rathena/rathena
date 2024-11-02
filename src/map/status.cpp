@@ -2366,7 +2366,8 @@ int status_base_amotion_pc(map_session_data* sd, struct status_data* status)
  */
 unsigned short status_base_atk(const struct block_list *bl, const struct status_data *status, int level)
 {
-	int flag = 0, str, dex, dstr;
+	int flag = 0, str, dex;
+	double dstr;
 
 #ifdef RENEWAL
 	if (!(bl->type&battle_config.enable_baseatk_renewal))
@@ -2411,7 +2412,7 @@ unsigned short status_base_atk(const struct block_list *bl, const struct status_
 #ifdef RENEWAL
 			str = 2 * level + status_get_homstr(bl);
 #else
-			dstr = str / 10;
+			dstr = str / 10.0;
 			str += dstr*dstr;
 #endif
 			break;
@@ -2419,18 +2420,18 @@ unsigned short status_base_atk(const struct block_list *bl, const struct status_
 #ifdef RENEWAL
 			str = (dstr * 10 + dex * 10 / 5 + status->luk * 10 / 3 + level * 10 / 4) / 10 + 5 * status->pow;
 #else
-			dstr = str / 10;
+			dstr = str / 10.0;
 			str += dstr*dstr;
-			str += dex / 5 + status->luk / 5;
+			str += dex / 5.0 + status->luk / 3.0;
 #endif
 			break;
 		default:// Others
 #ifdef RENEWAL
 			str = dstr + level;
 #else
-			dstr = str / 10;
+			dstr = str / 10.0;
 			str += dstr*dstr;
-			str += dex / 5 + status->luk / 5;
+			str += dex / 5.0 + status->luk / 3.0;
 #endif
 			break;
 	}
@@ -2452,7 +2453,7 @@ unsigned int status_weapon_atk(weapon_atk &wa)
 #endif
 
 #ifndef RENEWAL
-unsigned short status_base_matk_min(const struct status_data* status) { return status->int_ + (status->int_ / 7.0) * (status->int_ / 7.0); }
+unsigned short status_base_matk_min(const struct status_data* status) { return status->int_ + (status->int_ / 7.0) * (status->int_ / 7.0) + (status->luk / 3.0); }
 unsigned short status_base_matk_max(const struct status_data* status) { return status->int_ + (status->int_ / 5.0) * (status->int_ / 5.0); }
 #else
 /*
@@ -2643,11 +2644,11 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 	status->matk_max = status_base_matk_max(status);
 	// Hit
 	stat = status->hit;
-	stat += level + status->dex;
+	stat += level + (level / 2) + status->dex + (bl->type == BL_PC ? status->luk / 3 : 0);
 	status->hit = cap_value(stat, 1, SHRT_MAX);
 	// Flee
 	stat = status->flee;
-	stat += level + status->agi;
+	stat += level + status->agi + +(bl->type == BL_PC ? status->luk / 3 : 0);
 	status->flee = cap_value(stat, 1, SHRT_MAX);
 	// Def2
 	stat = status->def2;
@@ -4505,7 +4506,7 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	// Renewal modifiers are handled in status_base_amotion_pc
 #ifndef RENEWAL_ASPD
 	if((skill=pc_checkskill(sd,SA_ADVANCEDBOOK))>0 && sd->status.weapon == W_BOOK)
-		base_status->aspd_rate -= 5*skill;
+		base_status->aspd_rate -= 7*skill;
 	if ((skill = pc_checkskill(sd,SG_DEVIL)) > 0 && ((sd->class_&MAPID_THIRDMASK) == MAPID_STAR_EMPEROR || pc_is_maxjoblv(sd)))
 		base_status->aspd_rate -= 30*skill;
 	if((skill=pc_checkskill(sd,GS_SINGLEACTION))>0 &&
@@ -4575,6 +4576,9 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		}
 		sd->indexed_bonus.magic_addrace[RC_DRAGON]+=dragon_matk;
 		sd->indexed_bonus.subrace[RC_DRAGON]+=skill;
+	}
+	if ((skill = pc_checkskill(sd, AS_KATAR) == 10)) {
+		base_status->cri += 25;
 	}
 	if ((skill = pc_checkskill(sd, AB_EUCHARISTICA)) > 0) {
 		sd->right_weapon.addrace[RC_DEMON] += skill;
@@ -5358,7 +5362,7 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 
 		val = 0;
 		if( (skill=pc_checkskill(sd,SM_RECOVERY)) > 0 )
-			val += skill*5 + skill*status->max_hp/500;
+			val += skill*5 + skill*status->max_hp/200;
 
 		if (sc && sc->count) {
 			if (sc->getSCE(SC_INCREASE_MAXHP))
@@ -6142,6 +6146,12 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 
 		status->matk_min = status_calc_matk(&bl, sc, status->matk_min);
 		status->matk_max = status_calc_matk(&bl, sc, status->matk_max);
+
+		int skill_level = pc_checkskill(sd, SA_ADVANCEDBOOK);
+		if (skill_level > 0 && sd->status.weapon == W_BOOK) {
+			status->matk_max += status->matk_max * skill_level / 100.0;
+			status->matk_min += status->matk_min * skill_level / 100.0;
+		}
 #else
 		/**
 		 * RE MATK Formula (from irowiki:http:// irowiki.org/wiki/MATK)
@@ -7552,12 +7562,12 @@ static signed short status_calc_critical(struct block_list *bl, status_change *s
 		critical += sc->getSCE(SC_TRUESIGHT)->val2;
 	if (sc->getSCE(SC_CLOAKING))
 		critical += critical;
-#ifdef RENEWAL
 	if (sc->getSCE(SC_SPEARQUICKEN))
 		critical += 3*sc->getSCE(SC_SPEARQUICKEN)->val1*10;
 	if (sc->getSCE(SC_TWOHANDQUICKEN))
 		critical += (2 + sc->getSCE(SC_TWOHANDQUICKEN)->val1) * 10;
-#endif
+	if (sc->getSCE(KN_TWOHANDQUICKEN))
+		critical += sc->getSCE(KN_TWOHANDQUICKEN)->val1 * 80 / 100;
 	if (sc->getSCE(SC__INVISIBILITY))
 		critical += sc->getSCE(SC__INVISIBILITY)->val3 * 10;
 	if (sc->getSCE(SC__UNLUCKY))
@@ -7630,11 +7640,11 @@ static signed short status_calc_hit(struct block_list *bl, status_change *sc, in
 		hit -= sc->getSCE(SC_ILLUSIONDOPING)->val2;
 	if (sc->getSCE(SC_MTF_ASPD))
 		hit += sc->getSCE(SC_MTF_ASPD)->val2;
+	if (sc->getSCE(SC_TWOHANDQUICKEN))
+		hit += sc->getSCE(SC_TWOHANDQUICKEN)->val1 * 2;
 #ifdef RENEWAL
 	if (sc->getSCE(SC_BLESSING))
 		hit += sc->getSCE(SC_BLESSING)->val1 * 2;
-	if (sc->getSCE(SC_TWOHANDQUICKEN))
-		hit += sc->getSCE(SC_TWOHANDQUICKEN)->val1 * 2;
 	if (sc->getSCE(SC_ADRENALINE))
 		hit += sc->getSCE(SC_ADRENALINE)->val1 * 3 + 5;
 	if (sc->getSCE(SC_NIBELUNGEN) && sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_HIT)
@@ -15476,7 +15486,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 		if(!vd)
 			vd = status_get_viewdata(bl);
 		if(vd && vd->dead_sit == 2)
-			multi += 1; //This causes the interval to be halved
+			multi += 6; // Interval decreased by half 6 times
 		if(regen->state.gc)
 			multi += 1; //This causes the interval to be halved
 	}
