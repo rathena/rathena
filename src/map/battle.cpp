@@ -4398,7 +4398,8 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 		if( wd->div_ == 1 && ( ( skill_lv = pc_checkskill(sd,TF_DOUBLE) ) > 0 && sd->weapontype1 == W_DAGGER )
 			|| ( pc_checkskill_flag(*sd, TF_DOUBLE) > SKILL_FLAG_PERMANENT && sd->weapontype1 != W_FIST )
 			|| ( sd->bonus.double_rate > 0 && sd->weapontype1 != W_FIST ) // Will fail bare-handed
-			|| ( sc && sc->getSCE(SC_KAGEMUSYA) && sd->weapontype1 != W_FIST )) // Will fail bare-handed
+			|| ( sc && sc->getSCE(SC_KAGEMUSYA) && sd->weapontype1 != W_FIST ) // Will fail bare-handed
+			|| ( ( skill_lv = pc_checkskill(sd, SM_SWORD) ) > 0 && sd->weapontype1 == W_1HSWORD && sd->class_ == MAPID_ROGUE ) ) // Rogue Sword Masteryd
 		{	//Success chance is not added, the higher one is used [Skotlex]
 			int max_rate = 0;
 

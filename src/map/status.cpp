@@ -8051,6 +8051,8 @@ static defType status_calc_mdef(struct block_list *bl, status_change *sc, int md
 		mdef += 100;
 	if (sc->getSCE(SC_M_DEFSCROLL))
 		mdef += sc->getSCE(SC_M_DEFSCROLL)->val2;
+	if (sc->getSCE(SC_STRIPHELM))
+		mdef -= mdef * sc->getSCE(SC_M_DEFSCROLL)->val3 / 100;
 
 	return (defType)cap_value(mdef,DEFTYPE_MIN,DEFTYPE_MAX);
 }
@@ -10926,20 +10928,22 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			}
 			break;
 		case SC_STRIPWEAPON:
-			if (!sd) // Watk reduction
-				val2 = 25;
+			if (!sd) // Watk % reduction
+				val2 = 40;
 			break;
 		case SC_STRIPSHIELD:
-			if (!sd) // Def reduction
-				val2 = 15;
+			if (!sd) // Def % reduction
+				val2 = 30;
 			break;
 		case SC_STRIPARMOR:
-			if (!sd) // Vit reduction
-				val2 = 40;
+			if (!sd) // Vit % reduction
+				val2 = 70;
 			break;
 		case SC_STRIPHELM:
-			if (!sd) // Int reduction
-				val2 = 40;
+			if (!sd) {
+				val2 = 30; // Int % reduction
+				val3 = 20; // MDEF % reduction
+			}
 			break;
 		case SC_AUTOSPELL:
 			// Val1 Skill LV of Autospell
