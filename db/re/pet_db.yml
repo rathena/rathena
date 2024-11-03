@@ -2035,24 +2035,24 @@ Body:
       .@i = getpetinfo(PETINFO_INTIMATE);
 
       if (.@i >= PET_INTIMATE_LOYAL) {
-        bonus bAtkRate,2;
+        bonus2 bAddClass,Class_All,2;
         bonus bMatkRate,2;
         bonus bMaxHPrate,2;
         bonus bMaxSPrate,2;
         bonus5 bAutoSpell,"MG_FIREBOLT",3,50,BF_WEAPON|BF_SHORT,1;
       } else if (.@i >= PET_INTIMATE_CORDIAL) {
-        bonus bAtkRate,2;
+        bonus2 bAddClass,Class_All,2;
         bonus bMatkRate,2;
         bonus bMaxHPrate,1;
         bonus bMaxSPrate,1;
         bonus5 bAutoSpell,"MG_FIREBOLT",3,50,BF_WEAPON|BF_SHORT,1;
       } else if (.@i >= PET_INTIMATE_NEUTRAL) {
-        bonus bAtkRate,1;
+        bonus2 bAddClass,Class_All,1;
         bonus bMatkRate,1;
         bonus bMaxHPrate,1;
         bonus bMaxSPrate,1;
       } else {
-        bonus bAtkRate,1;
+        bonus2 bAddClass,Class_All,1;
         bonus bMatkRate,1;
       }
   - Mob: DELETER_2
@@ -2286,17 +2286,17 @@ Body:
 #      
 #      if (.@i >= PET_INTIMATE_LOYAL) {
 #         bonus bCritAtkRate,3;
-#         bonus bAtkRate,7;
+#         bonus2 bAddClass,Class_All,7;
 #      }
 #      else if (.@i >= PET_INTIMATE_CORDIAL) {
 #         bonus bCritAtkRate,1;
-#         bonus bAtkRate,4;
+#         bonus2 bAddClass,Class_All,4;
 #      }
 #      else if (.@i >= PET_INTIMATE_NEUTRAL) {
-#         bonus bAtkRate,2;
+#         bonus2 bAddClass,Class_All,2;
 #      }
 #      else if (.@i >= PET_INTIMATE_AWKWARD || .@i >= PET_INTIMATE_SHY) {
-#         bonus bAtkRate,1;
+#         bonus2 bAddClass,Class_All,1;
 #      }
 #
 #  - Mob: PHREEONI2
@@ -2672,18 +2672,18 @@ Body:
 #      if (.@i >= PET_INTIMATE_LOYAL) {
 #         bonus2 bAddClass,Class_Boss,5;
 #         bonus bPAtk,2;
-#         bonus bAtkRate,5;
+#         bonus2 bAddClass,Class_All,5;
 #      }
 #      else if (.@i >= PET_INTIMATE_CORDIAL) {
 #         bonus2 bAddClass,Class_Boss,3;
 #         bonus bPAtk,1;
-#         bonus bAtkRate,4;
+#         bonus2 bAddClass,Class_All,4;
 #      }
 #      else if (.@i >= PET_INTIMATE_NEUTRAL) {
-#         bonus bAtkRate,3;
+#         bonus2 bAddClass,Class_All,3;
 #      }
 #      else if (.@i >= PET_INTIMATE_AWKWARD || .@i >= PET_INTIMATE_SHY) {
-#         bonus bAtkRate,2;
+#         bonus2 bAddClass,Class_All,2;
 #      }
 #
 #  - Mob: CWHITEKNIGHT
@@ -2699,11 +2699,11 @@ Body:
 #      
 #      if (.@i >= PET_INTIMATE_LOYAL) {
 #         bonus bMatkRate,2;
-#         bonus bAtkRate,2;
+#         bonus2 bAddClass,Class_All,2;
 #      }
 #      else if (.@i >= PET_INTIMATE_CORDIAL) {
 #         bonus bMatkRate,1;
-#         bonus bAtkRate,1;
+#         bonus2 bAddClass,Class_All,1;
 #      }
 #
 #    Evolution:
@@ -2974,11 +2974,11 @@ Body:
 #      
 #      if (.@i >= PET_INTIMATE_LOYAL) {
 #         bonus bMatkRate,2;
-#         bonus bAtkRate,2;
+#         bonus2 bAddClass,Class_All,2;
 #      }
 #      else if (.@i >= PET_INTIMATE_CORDIAL) {
 #         bonus bMatkRate,1;
-#         bonus bAtkRate,1;
+#         bonus2 bAddClass,Class_All,1;
 #      }
 #
 #    Evolution:
@@ -3015,18 +3015,18 @@ Body:
 #      .@i = getpetinfo(PETINFO_INTIMATE);
 #      
 #      if (.@i >= PET_INTIMATE_LOYAL) {
-#         bonus bAtkRate,3;
+#         bonus2 bAddClass,Class_All,3;
 #         bonus bPow,2;
 #      }
 #      else if (.@i >= PET_INTIMATE_CORDIAL) {
-#         bonus bAtkRate,2;
+#         bonus2 bAddClass,Class_All,2;
 #         bonus bPow,1;
 #      }
 #      else if (.@i >= PET_INTIMATE_NEUTRAL) {
-#         bonus bAtkRate,2;
+#         bonus2 bAddClass,Class_All,2;
 #      }
 #      else if (.@i >= PET_INTIMATE_AWKWARD || .@i >= PET_INTIMATE_SHY) {
-#         bonus bAtkRate,1;
+#         bonus2 bAddClass,Class_All,1;
 #      }
 #
 #  - Mob: EP20_ICEWIND2
