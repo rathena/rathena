@@ -72,7 +72,6 @@ static unsigned short status_calc_con(struct block_list *, status_change *, int)
 static unsigned short status_calc_crt(struct block_list *, status_change *, int);
 static unsigned short status_calc_batk(struct block_list *,status_change *,int);
 static unsigned short status_calc_watk(struct block_list *,status_change *,int);
-static unsigned short status_calc_matk(struct block_list *,status_change *,int);
 static signed short status_calc_hit(struct block_list *,status_change *,int);
 static signed short status_calc_critical(struct block_list *,status_change *,int);
 static signed short status_calc_flee(struct block_list *,status_change *,int);
@@ -100,9 +99,6 @@ static unsigned int status_calc_maxap(struct block_list *bl, uint64 maxap);
 static unsigned char status_calc_element(struct block_list *bl, status_change *sc, int element);
 static unsigned char status_calc_element_lv(struct block_list *bl, status_change *sc, int lv);
 static int status_calc_mode(struct block_list *bl, status_change *sc, int mode);
-#ifdef RENEWAL
-static unsigned short status_calc_ematk(struct block_list *,status_change *,int);
-#endif
 static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type);
 static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type);
 static int status_get_apbonus(struct block_list *bl, enum e_status_bonus type);
@@ -5024,6 +5020,14 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 			pc_bonus(sd, SP_ATK_RATE, sc->getSCE(SC_SHRIMP)->val2);
 			pc_bonus(sd, SP_MATK_RATE, sc->getSCE(SC_SHRIMP)->val2);
 		}
+		if (sc->getSCE(SC_INCMATKRATE))
+			pc_bonus(sd, SP_MATK_RATE, sc->getSCE(SC_INCMATKRATE)->val1);
+		if (sc->getSCE(SC_MINDBREAKER))
+			pc_bonus(sd, SP_MATK_RATE, sc->getSCE(SC_MINDBREAKER)->val2);
+		if (sc->getSCE(SC_CATNIPPOWDER))
+			pc_bonus(sd, SP_MATK_RATE, sc->getSCE(SC_CATNIPPOWDER)->val2);
+		if (sc->getSCE(SC_NIBELUNGEN) && sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_MATKRATE)
+			pc_bonus(sd, SP_MATK_RATE, 20);
 	}
 	status_cpy(&sd->battle_status, base_status);
 
@@ -6132,37 +6136,48 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 
 	if(flag[SCB_MATK]) {
 #ifndef RENEWAL
-		status->matk_min = status_base_matk_min(status) + (sd != nullptr ? sd->bonus.ematk : 0);
-		status->matk_max = status_base_matk_max(status) + (sd != nullptr ? sd->bonus.ematk : 0);
+		int32 matk_min = status_base_matk_min(status);
+		int32 matk_max = status_base_matk_max(status);
+	
+		matk_min += (sd != nullptr ? sd->bonus.ematk : 0);
+		matk_max += (sd != nullptr ? sd->bonus.ematk : 0);
 
 		if (sd != nullptr && sd->matk_rate != 100) {
-			status->matk_min = status->matk_min * sd->matk_rate / 100;
-			status->matk_max = status->matk_max * sd->matk_rate / 100;
+			matk_min = matk_min * sd->matk_rate / 100;
+			matk_max = matk_max * sd->matk_rate / 100;
 		}
 
 		// Apply Recognized Spell buff
 		// Also update homunculus MATK, hom Min Matk is always the same as Max Matk
 		if ((bl.type == BL_HOM && battle_config.hom_setting&HOMSET_SAME_MATK) || (sc && sc->getSCE(SC_RECOGNIZEDSPELL))) {
-			status->matk_min = std::max( status->matk_min, status->matk_max );
+			matk_min = std::max( matk_min, matk_max );
 		}
 
-		status->matk_min = status_calc_matk(&bl, sc, status->matk_min);
-		status->matk_max = status_calc_matk(&bl, sc, status->matk_max);
+		matk_min = status_calc_pseudobuff_matk( sd, sc, matk_min );
+		matk_max = status_calc_pseudobuff_matk( sd, sc, matk_max );
+
+		matk_min = status_calc_consumablematk( sc, matk_min );
+		matk_max = status_calc_consumablematk( sc, matk_max );
+
+		if (sc && sc->getSCE(SC_MAGICPOWER) && sc->getSCE(SC_MAGICPOWER)->val4) {
+			matk_min += matk_min * sc->getSCE(SC_MAGICPOWER)->val3 / 100;
+			matk_max += matk_max * sc->getSCE(SC_MAGICPOWER)->val3 / 100;
+		}
+
+		status->matk_min = static_cast<uint16>( cap_value(matk_min,0,USHRT_MAX) );
+		status->matk_max = static_cast<uint16>( cap_value(matk_max,0,USHRT_MAX) );
 #else
-		/**
-		 * RE MATK Formula (from irowiki:http:// irowiki.org/wiki/MATK)
-		 * MATK = (sMATK + wMATK + eMATK) * Multiplicative Modifiers
-		 **/
+		// MATK = StatusMATK + WeaponMATK + ExtraMATK
 		int lv = status_get_lv(&bl);
-		status->matk_min = status_base_matk_min(&bl, status, lv);
-		status->matk_max = status_base_matk_max(&bl, status, lv);
+
+		// StatusMATK
+		int32 matk_min = status_base_matk_min(&bl, status, lv);
+		int32 matk_max = status_base_matk_max(&bl, status, lv);
 
 		if (sd != nullptr) {
-			status->matk_min = status_calc_ematk(&bl, sc, status->matk_min);
-			status->matk_max = status->matk_min;
-
-			// Adds weapon magic attack (wMATK) modifications
-			// This is the only portion in MATK that varies depending on the weapon level and refinement rate.
+			// Weapon magic attack modifiers. WeaponMATK = BaseWeaponDamage + Variance + RefinementBonus
+			// RefinementBonus is currently included with BaseWeaponDamage in status->lhw.matk and status->rhw.matk
+			// BaseWeaponDamage and RefinementBonus are visible on the player status window.
 			if (b_status->lhw.matk > 0)
 				status->lhw.matk = b_status->lhw.matk;
 			if (b_status->rhw.matk > 0)
@@ -6180,48 +6195,53 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 				variance += status->lhw.matk * status->lhw.wlv / 10;
 			}
 
-			status->matk_min += wMatk - variance;
-			status->matk_max += wMatk + variance;
+			matk_min += wMatk - variance;
+			matk_max += wMatk + variance;
 		}
 
 		// Apply Recognized Spell buff
 		// Also update homunculus MATK, hom Min Matk is always the same as Max Matk
 		if ((bl.type == BL_HOM && battle_config.hom_setting&HOMSET_SAME_MATK) || (sc && sc->getSCE(SC_RECOGNIZEDSPELL))) {
-			status->matk_min = std::max( status->matk_min, status->matk_max );
+			matk_min = std::max( matk_min, matk_max );
 		}
 
 		if (sd != nullptr && sd->right_weapon.overrefine > 0) {
-			status->matk_min++;
-			status->matk_max += sd->right_weapon.overrefine - 1;
+			matk_min++;
+			matk_max += sd->right_weapon.overrefine - 1;
 		}
 
 		// Apply MATK % from skill Mystical Amplification
 		if (sc && sc->getSCE(SC_MAGICPOWER)) {
-			status->matk_min += status->matk_min * sc->getSCE(SC_MAGICPOWER)->val3 / 100;
-			status->matk_max += status->matk_max * sc->getSCE(SC_MAGICPOWER)->val3 / 100;
+			matk_min += matk_min * sc->getSCE(SC_MAGICPOWER)->val3 / 100;
+			matk_max += matk_max * sc->getSCE(SC_MAGICPOWER)->val3 / 100;
 		}
 
+		// ExtraMATK = EquipMATK + ConsumableMATK + PseudoBuffMATK
+		// Bonuses from ExtraMATK are separated in order to order them (order has no impact)
 		if (sd != nullptr) {
+			// EquipMATK (flat MATK from equipments)
 			if (sd->bonus.ematk > 0) {
-				status->matk_min += sd->bonus.ematk;
-				status->matk_max += sd->bonus.ematk;
+				matk_min += sd->bonus.ematk;
+				matk_max += sd->bonus.ematk;
 			}
 
-			if (uint16 skill_lv = pc_checkskill(sd, NV_TRANSCENDENCE); skill_lv > 0) {
-				status->matk_min += 15 * skill_lv + (skill_lv > 4 ? 25 : 0);
-				status->matk_max += 15 * skill_lv + (skill_lv > 4 ? 25 : 0);
-			}
+			// PseudoBuffMATK (flat MATK from skills)
+			matk_min = status_calc_pseudobuff_matk( sd, sc, matk_min );
+			matk_max = status_calc_pseudobuff_matk( sd, sc, matk_max );
 		}
 
-		// Adds other magic attack modifications - usually buffs from usable items
-		status->matk_max = status_calc_matk(&bl, sc, status->matk_max);
-		status->matk_min = status_calc_matk(&bl, sc, status->matk_min);
+		// ConsumableMATK (flat MATK from consumables)
+		matk_min = status_calc_consumablematk( sc, matk_min );
+		matk_max = status_calc_consumablematk( sc, matk_max );
 
-		// Apply MATK % from equipments / usable items
+		// Apply MATK % (from equipments, usable items...)
 		if (sd != nullptr && sd->matk_rate != 100) {
-			status->matk_min = status->matk_min * sd->matk_rate / 100;
-			status->matk_max = status->matk_max * sd->matk_rate / 100;
+			matk_min = matk_min * sd->matk_rate / 100;
+			matk_max = matk_max * sd->matk_rate / 100;
 		}
+
+		status->matk_min = static_cast<uint16>( cap_value(matk_min,0,USHRT_MAX) );
+		status->matk_max = static_cast<uint16>( cap_value(matk_max,0,USHRT_MAX) );
 #endif
 	}
 
@@ -7358,7 +7378,7 @@ static unsigned short status_calc_watk(struct block_list *bl, status_change *sc,
 	if (sc->getSCE(SC_FLASHCOMBO))
 		watk += sc->getSCE(SC_FLASHCOMBO)->val2;
 	if (sc->getSCE(SC_CATNIPPOWDER))
-		watk -= watk * sc->getSCE(SC_CATNIPPOWDER)->val2 / 100;
+		watk += watk * sc->getSCE(SC_CATNIPPOWDER)->val2 / 100;
 	if (sc->getSCE(SC_CHATTERING))
 		watk += sc->getSCE(SC_CHATTERING)->val2;
 	if (sc->getSCE(SC_SUNSTANCE))
@@ -7375,152 +7395,108 @@ static unsigned short status_calc_watk(struct block_list *bl, status_change *sc,
 	return (unsigned short)cap_value(watk,0,USHRT_MAX);
 }
 
-#ifdef RENEWAL
 /**
- * Adds equip magic attack modifications based on status changes [RENEWAL]
- * @param bl: Object to change matk [PC]
+ * Adds flat magic attack modifications from skills
+ * @param sd: Object to change matk [PC]
  * @param sc: Object's status change information
  * @param matk: Initial matk
  * @return modified matk with cap_value(matk,0,USHRT_MAX)
  */
-static unsigned short status_calc_ematk(struct block_list *bl, status_change *sc, int matk)
-{
+uint16 status_calc_pseudobuff_matk( map_session_data* sd, status_change *sc, int32 matk ){
+	// Flat MATK bonus from skills without sc
+	if (uint16 skill_lv = pc_checkskill(sd, NV_TRANSCENDENCE); skill_lv > 0) {
+		matk += 15 * skill_lv + (skill_lv > 4 ? 25 : 0);
+	}
+
 	if (!sc || !sc->count)
-		return cap_value(matk,0,USHRT_MAX);
+		return static_cast<uint16>( cap_value(matk,0,USHRT_MAX) );
 
-	if (sc->getSCE(SC_IMPOSITIO))
-		matk += sc->getSCE(SC_IMPOSITIO)->val2;
-	if (sc->getSCE(SC_MATKFOOD))
-		matk += sc->getSCE(SC_MATKFOOD)->val1;
-	if(sc->getSCE(SC_MANA_PLUS))
-		matk += sc->getSCE(SC_MANA_PLUS)->val1;
-	if(sc->getSCE(SC_COOLER_OPTION))
-		matk += sc->getSCE(SC_COOLER_OPTION)->val2;
-	if(sc->getSCE(SC_AQUAPLAY_OPTION))
-		matk += sc->getSCE(SC_AQUAPLAY_OPTION)->val2;
-	if(sc->getSCE(SC_CHILLY_AIR_OPTION))
-		matk += sc->getSCE(SC_CHILLY_AIR_OPTION)->val2;
-	if(sc->getSCE(SC_FIRE_INSIGNIA) && sc->getSCE(SC_FIRE_INSIGNIA)->val1 == 3)
-		matk += 50;
-	if(sc->getSCE(SC_ODINS_POWER))
-		matk += 40 + 30 * sc->getSCE(SC_ODINS_POWER)->val1; // 70 lvl1, 100lvl2
-	if(sc->getSCE(SC_MOONLITSERENADE))
-		matk += sc->getSCE(SC_MOONLITSERENADE)->val3;
-	if(sc->getSCE(SC_IZAYOI))
-		matk += 25 * sc->getSCE(SC_IZAYOI)->val1;
-	if(sc->getSCE(SC_ZANGETSU))
-		matk += sc->getSCE(SC_ZANGETSU)->val3;
-	if(sc->getSCE(SC_QUEST_BUFF1))
-		matk += sc->getSCE(SC_QUEST_BUFF1)->val1;
-	if(sc->getSCE(SC_QUEST_BUFF2))
-		matk += sc->getSCE(SC_QUEST_BUFF2)->val1;
-	if(sc->getSCE(SC_QUEST_BUFF3))
-		matk += sc->getSCE(SC_QUEST_BUFF3)->val1;
-	if(sc->getSCE(SC_MTF_MATK2))
-		matk += sc->getSCE(SC_MTF_MATK2)->val1;
-	if (sc->getSCE(SC_CATNIPPOWDER))
-		matk -= matk * sc->getSCE(SC_CATNIPPOWDER)->val2 / 100;
-	if (sc->getSCE(SC_CHATTERING))
-		matk += sc->getSCE(SC_CHATTERING)->val2;
-	if (sc->getSCE(SC_DORAM_MATK))
-		matk += sc->getSCE(SC_DORAM_MATK)->val1;
-	if (sc->getSCE(SC_SOULFAIRY))
-		matk += sc->getSCE(SC_SOULFAIRY)->val2;
-	if (sc->getSCE(SC__AUTOSHADOWSPELL))
-		matk += sc->getSCE(SC__AUTOSHADOWSPELL)->val4 * 5;
-	if (sc->getSCE(SC_INSPIRATION))
-		matk += sc->getSCE(SC_INSPIRATION)->val2;
-	if (sc->getSCE(SC_PACKING_ENVELOPE2))
-		matk += sc->getSCE(SC_PACKING_ENVELOPE2)->val1;
-	if(sc->getSCE(SC_ULTIMATECOOK))
-		matk += 30;
-	if (sc->getSCE(SC_MAGICCANDY))
-		matk += 30;
-	if (sc->getSCE(SC_SKF_MATK))
-		matk += sc->getSCE(SC_SKF_MATK)->val1;
+	struct status_change_entry* sce;
 
-	return (unsigned short)cap_value(matk,0,USHRT_MAX);
-}
+	// Flat MATK bonus from skills with sc
+#ifdef RENEWAL
+	// Bonuses only in renewal
+	if (sce = sc->getSCE(SC_IMPOSITIO))
+		matk += sce->val2;
+	if (sce = sc->getSCE(SC_VOLCANO))
+		matk += sce->val2;
 #endif
+	if (sce = sc->getSCE(SC_DORAM_MATK))
+		matk += sce->val1;
+	if (sce = sc->getSCE(SC_AQUAPLAY_OPTION))
+		matk += sce->val2;
+	if (sce = sc->getSCE(SC_CHILLY_AIR_OPTION))
+		matk += sce->val2;
+	if (sce = sc->getSCE(SC_COOLER_OPTION))
+		matk += sce->val2;
+	if (sce = sc->getSCE(SC_SOULFAIRY))
+		matk += sce->val2;
+	if (sce = sc->getSCE(SC_INSPIRATION))
+		matk += sce->val2;
+	if (sce = sc->getSCE(SC_SHIELDSPELL_ATK))
+		matk += sce->val2;
+	if (sce = sc->getSCE(SC_ZANGETSU))
+		matk += sce->val3;
+	if (sce = sc->getSCE(SC_MOONLITSERENADE))
+		matk += sce->val3;
+	if (sce = sc->getSCE(SC__AUTOSHADOWSPELL))
+		matk += sce->val4;
+	if (sce = sc->getSCE(SC_ODINS_POWER))
+		matk += 40 + 30 * sce->val1;
+	if (sce = sc->getSCE(SC_IZAYOI))
+		matk += 25 * sce->val1;
+	if ((sce = sc->getSCE(SC_FIRE_INSIGNIA)) && sce->val1 == 3)
+		matk += 50;
+	if (sc->getSCE(SC_CLIMAX_DES_HU))
+		matk += 100;
+
+	return static_cast<uint16>( cap_value(matk,0,USHRT_MAX) );
+}
 
 /**
- * Adds magic attack modifications based on status changes
- * @param bl: Object to change matk [PC|MOB|HOM|MER|ELEM]
+ * Adds flat magic attack modifications from consumables based on status changes
  * @param sc: Object's status change information
  * @param matk: Initial matk
  * @return modified matk with cap_value(matk,0,USHRT_MAX)
  */
-static unsigned short status_calc_matk(struct block_list *bl, status_change *sc, int matk)
-{
-	if(!sc || !sc->count)
-		return cap_value(matk,0,USHRT_MAX);
-#ifndef RENEWAL
-	/// Take note fixed value first before % modifiers [PRE-RENEWAL]
-	if (sc->getSCE(SC_MATKFOOD))
-		matk += sc->getSCE(SC_MATKFOOD)->val1;
-	if (sc->getSCE(SC_MANA_PLUS))
-		matk += sc->getSCE(SC_MANA_PLUS)->val1;
-	if (sc->getSCE(SC_AQUAPLAY_OPTION))
-		matk += sc->getSCE(SC_AQUAPLAY_OPTION)->val2;
-	if (sc->getSCE(SC_CHILLY_AIR_OPTION))
-		matk += sc->getSCE(SC_CHILLY_AIR_OPTION)->val2;
-	if (sc->getSCE(SC_COOLER_OPTION))
-		matk += sc->getSCE(SC_COOLER_OPTION)->val2;
-	if (sc->getSCE(SC_FIRE_INSIGNIA) && sc->getSCE(SC_FIRE_INSIGNIA)->val1 == 3)
-		matk += 50;
-	if (sc->getSCE(SC_ODINS_POWER))
-		matk += 40 + 30 * sc->getSCE(SC_ODINS_POWER)->val1; // 70 lvl1, 100lvl2
-	if (sc->getSCE(SC_IZAYOI))
-		matk += 25 * sc->getSCE(SC_IZAYOI)->val1;
-	if (sc->getSCE(SC_MTF_MATK2))
-		matk += sc->getSCE(SC_MTF_MATK2)->val1;
+uint16 status_calc_consumablematk( status_change *sc, int32 matk ){
+	if (!sc || !sc->count)
+		return static_cast<uint16>( cap_value(matk,0,USHRT_MAX) );
+
+	struct status_change_entry* sce;
+
+	if (sce = sc->getSCE(SC_MATKFOOD))
+		matk += sce->val1;
+	if (sce = sc->getSCE(SC_MANA_PLUS))
+		matk += sce->val1;
+	if (sce = sc->getSCE(SC_MATKPOTION))
+		matk += sce->val1;
+	if (sce = sc->getSCE(SC_LIMIT_POWER_BOOSTER))
+		matk += sce->val1;
+	if (sce = sc->getSCE(SC_SKF_MATK))
+		matk += sce->val1;
+	if (sce = sc->getSCE(SC_MTF_MATK))
+		matk += sce->val1;
+	if (sce = sc->getSCE(SC_MTF_MATK2))
+		matk += sce->val1;
+	if (sce = sc->getSCE(SC_PACKING_ENVELOPE2))
+		matk += sce->val1;
+	if (sce = sc->getSCE(SC_QUEST_BUFF1))
+		matk += sce->val1;
+	if (sce = sc->getSCE(SC_QUEST_BUFF2))
+		matk += sce->val1;
+	if (sce = sc->getSCE(SC_QUEST_BUFF3))
+		matk += sce->val1;
 	if (sc->getSCE(SC_ULTIMATECOOK))
 		matk += 30;
 	if (sc->getSCE(SC_MAGICCANDY))
 		matk += 30;
-	if (sc->getSCE(SC_SKF_MATK))
-		matk += sc->getSCE(SC_SKF_MATK)->val1;
-#endif
-	if (sc->getSCE(SC_MATKPOTION))
-		matk += sc->getSCE(SC_MATKPOTION)->val1;
-	if (sc->getSCE(SC_LIMIT_POWER_BOOSTER))
-		matk += sc->getSCE(SC_LIMIT_POWER_BOOSTER)->val1;
 	if (sc->getSCE(SC_ALMIGHTY))
 		matk += 30;
 	if (sc->getSCE(SC_2011RWC_SCROLL))
 		matk += 30;
-	if (sc->getSCE(SC_ZANGETSU))
-		matk += sc->getSCE(SC_ZANGETSU)->val3;
-	if (sc->getSCE(SC_QUEST_BUFF1))
-		matk += sc->getSCE(SC_QUEST_BUFF1)->val1;
-	if (sc->getSCE(SC_QUEST_BUFF2))
-		matk += sc->getSCE(SC_QUEST_BUFF2)->val1;
-	if (sc->getSCE(SC_QUEST_BUFF3))
-		matk += sc->getSCE(SC_QUEST_BUFF3)->val1;
-#ifndef RENEWAL
-	if (sc->getSCE(SC_MAGICPOWER) && sc->getSCE(SC_MAGICPOWER)->val4)
-		matk += matk * sc->getSCE(SC_MAGICPOWER)->val3/100;
-#endif
-	if (sc->getSCE(SC_MINDBREAKER))
-		matk += matk * sc->getSCE(SC_MINDBREAKER)->val2/100;
-	if (sc->getSCE(SC_INCMATKRATE))
-		matk += matk * sc->getSCE(SC_INCMATKRATE)->val1/100;
-	if (sc->getSCE(SC_MOONLITSERENADE))
-		matk += sc->getSCE(SC_MOONLITSERENADE)->val3/100;
-	if (sc->getSCE(SC_MTF_MATK))
-		matk += matk * sc->getSCE(SC_MTF_MATK)->val1 / 100;
-#ifdef RENEWAL
-	if (sc->getSCE(SC_VOLCANO))
-		matk += sc->getSCE(SC_VOLCANO)->val2;
-	if (sc->getSCE(SC_NIBELUNGEN) && sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_MATKRATE)
-		matk += matk * 20 / 100;
-#endif
-	if (sc->getSCE(SC_SHIELDSPELL_ATK))
-		matk += sc->getSCE(SC_SHIELDSPELL_ATK)->val2;
-	if (sc->getSCE(SC_CLIMAX_DES_HU))
-		matk += 100;
 
-	return (unsigned short)cap_value(matk,0,USHRT_MAX);
+	return static_cast<uint16>( cap_value(matk,0,USHRT_MAX) );
 }
 
 /**
@@ -12590,7 +12566,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = val1 * 10;
 			break;
 		case SC_CATNIPPOWDER:
-			val2 = 50; // WATK%, MATK%
+			val2 = -50; // WATK%, MATK%
 			val3 = 25 * val1; // Move speed reduction
 			if (bl->type == BL_PC && pc_checkskill(sd, SU_SPIRITOFLAND))
 				val4 = status_get_lv(src) / 12;
