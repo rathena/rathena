@@ -1641,7 +1641,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 #endif
 
 		if (tsc->getSCE(SC_GROUNDGRAVITY) && flag&(BF_MAGIC|BF_WEAPON))
-			damage += damage * 15 / 100;
+			damage += damage * 10 / 100;
 		if (tsc->getSCE(SC_SHIELDCHAINRUSH))
 			damage += damage / 10;
 
