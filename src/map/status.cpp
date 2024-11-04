@@ -6164,12 +6164,14 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 			matk_max += matk_max * sc->getSCE(SC_MAGICPOWER)->val3 / 100;
 		}
 
+		// Custom since JOB_SOUL_REAPER does not exist in pre-renewal
+		if (sd != nullptr) {
+			matk_min += 3 * sd->soulball;
+			matk_max += 3 * sd->soulball;
+		}
+
 		status->matk_min = static_cast<uint16>( cap_value(matk_min,0,USHRT_MAX) );
 		status->matk_max = static_cast<uint16>( cap_value(matk_max,0,USHRT_MAX) );
-
-		// Custom since JOB_SOUL_REAPER does not exist in pre-renewal
-		status->matk_min += 3 * sd->soulball;
-		status->matk_max += 3 * sd->soulball;
 #else
 		// MATK = StatusMATK + WeaponMATK + ExtraMATK
 		int lv = status_get_lv(&bl);
@@ -6186,9 +6188,6 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 			// Weapon magic attack modifiers. WeaponMATK = BaseWeaponDamage + Variance + RefinementBonus
 			// RefinementBonus is currently included with BaseWeaponDamage in status->lhw.matk and status->rhw.matk
 			// BaseWeaponDamage and RefinementBonus are visible on the player status window.
-
-
-
 			if (b_status->lhw.matk > 0)
 				status->lhw.matk = b_status->lhw.matk;
 			if (b_status->rhw.matk > 0)
