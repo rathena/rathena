@@ -1456,8 +1456,7 @@ Body:
     Icon: EFST_MINDBREAKER
     DurationLookup: PF_MINDBREAKER
     CalcFlags:
-      Matk: true
-      MDef2: true
+      All: true
     Flags:
       NoSave: true
       Debuff: true
@@ -2243,7 +2242,7 @@ Body:
       NoClearance: true
   - Status: Incmatkrate
     CalcFlags:
-      Matk: true
+      All: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
@@ -6479,10 +6478,7 @@ Body:
     Icon: EFST_CATNIPPOWDER
     DurationLookup: SU_CN_POWDERING
     CalcFlags:
-      Watk: true
-      Matk: true
-      Speed: true
-      Regen: true
+      All: true
     Flags:
       BossResist: true
   - Status: Sv_Roottwist

@@ -3571,6 +3571,8 @@ unsigned short status_base_atk_max(struct block_list *bl, const struct status_da
 unsigned short status_base_matk_min(struct block_list *bl, const struct status_data* status, int level);
 unsigned short status_base_matk_max(struct block_list *bl, const struct status_data* status, int level);
 #endif
+uint16 status_calc_consumablematk( status_change *sc, int32 matk );
+uint16 status_calc_pseudobuff_matk( map_session_data *sd, status_change *sc, int32 matk );
 
 unsigned short status_base_atk(const struct block_list *bl, const struct status_data *status, int level);
 
