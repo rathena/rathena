@@ -6948,6 +6948,8 @@ Body:
     DurationLookup: SP_SOULDIVISION
   - Status: Soulenergy
     Icon: EFST_SOULENERGY
+    CalcFlags:
+      Matk: true
   - Status: Use_Skill_Sp_Spa
     Icon: EFST_USE_SKILL_SP_SPA
     Flags:

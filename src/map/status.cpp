@@ -6148,6 +6148,10 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 
 		status->matk_min = status_calc_matk(&bl, sc, status->matk_min);
 		status->matk_max = status_calc_matk(&bl, sc, status->matk_max);
+
+		// Custom since JOB_SOUL_REAPER does not exist in pre-renewal
+		status->matk_min += 3 * sd->soulball;
+		status->matk_max += 3 * sd->soulball;
 #else
 		/**
 		 * RE MATK Formula (from irowiki:http:// irowiki.org/wiki/MATK)
@@ -13944,7 +13948,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			break;
 		case SC_SOULENERGY:
 			if (sd != nullptr && sd->soulball > 0) {
-				// Removes all soulball when SC_SOULCOLLECT is active, 1 otherwise
+				// When SC_SOULENERGY ends, removes all soulball if SC_SOULCOLLECT is active otherwise 1
 				if (sc->getSCE(SC_SOULCOLLECT))
 					pc_delsoulball( *sd, sd->soulball );
 				else
