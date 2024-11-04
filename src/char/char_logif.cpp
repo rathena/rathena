@@ -172,7 +172,7 @@ void chlogif_prepsend_global_accreg(void) {
 	}
 }
 
-void chlogif_send_global_accreg(const char *key, unsigned int index, int64 int_value, const char* string_value, bool is_string) {
+void chlogif_send_global_accreg(const char *key, uint32 index, int64 int_value, const char* string_value, bool is_string) {
 	if (!chlogif_isconnected())
 		return;
 

@@ -128,7 +128,7 @@ uint32 auction_create( std::shared_ptr<struct auction_data> auction ){
 		auction->item.identify = 1;
 		auction->item.expire_time = 0;
 
-		auction->auction_id = (unsigned int)SqlStmt_LastInsertId(stmt);
+		auction->auction_id = (uint32)SqlStmt_LastInsertId(stmt);
 		auction->auction_end_timer = add_timer( gettick() + tick , auction_end_timer, auction->auction_id, 0);
 		ShowInfo("New Auction %u | time left %" PRtf " ms | By %s.\n", auction->auction_id, tick, auction->seller_name);
 
@@ -174,7 +174,7 @@ TIMER_FUNC(auction_end_timer){
 }
 
 void auction_delete( std::shared_ptr<struct auction_data> auction ){
-	unsigned int auction_id = auction->auction_id;
+	uint32 auction_id = auction->auction_id;
 
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `auction_id` = '%d'", schema_config.auction_db, auction_id) )
 		Sql_ShowDebug(sql_handle);
@@ -255,7 +255,7 @@ void inter_auctions_fromsql(void)
 		}
 
 		if( auction->timestamp > now )
-			endtick = ((unsigned int)(auction->timestamp - now) * 1000) + tick;
+			endtick = ((uint32)(auction->timestamp - now) * 1000) + tick;
 		else
 			endtick = tick + 10000; // 10 Second's to process ended auctions
 

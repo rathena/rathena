@@ -146,7 +146,7 @@ static t_tick tick(void)
 #endif
 #elif defined(ENABLE_RDTSC)
 	//
-		return (unsigned int)((_rdtsc() - RDTSC_BEGINTICK) / RDTSC_CLOCK);
+		return (uint32)((_rdtsc() - RDTSC_BEGINTICK) / RDTSC_CLOCK);
 	//
 #elif defined(HAVE_MONOTONIC_CLOCK)
 	struct timespec tval;
@@ -166,7 +166,7 @@ static t_tick tick(void)
 static t_tick gettick_cache;
 static int gettick_count = 1;
 
-unsigned int gettick_nocache(void)
+uint32 gettick_nocache(void)
 {
 	gettick_count = TICK_CACHE;
 	gettick_cache = tick();

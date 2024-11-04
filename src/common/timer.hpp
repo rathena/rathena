@@ -38,7 +38,7 @@ typedef TIMER_FUNC((*TimerFunc));
 struct TimerData {
 	t_tick tick;
 	TimerFunc func;
-	unsigned int type;
+	uint32 type;
 	int interval;
 
 	// general-purpose storage

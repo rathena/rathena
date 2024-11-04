@@ -40,14 +40,14 @@ void WriteDump(FILE* fp, const void* buffer, size_t length)
 
 		if( (i%16) == 15 )
 		{
-			fprintf(fp, "%03X %s  %s\n", (unsigned int)(i/16), hex, ascii);
+			fprintf(fp, "%03X %s  %s\n", (uint32)(i/16), hex, ascii);
 		}
 	}
 
 	if( (i%16) != 0 )
 	{
 		ascii[i%16] = 0;
-		fprintf(fp, "%03X %-48s  %-16s\n", (unsigned int)(i/16), hex, ascii);
+		fprintf(fp, "%03X %-48s  %-16s\n", (uint32)(i/16), hex, ascii);
 	}
 }
 
@@ -359,7 +359,7 @@ float GetFloat(const unsigned char* buf)
 }
 
 /// calculates the value of A / B, in percent (rounded down)
-unsigned int get_percentage(const unsigned int A, const unsigned int B)
+uint32 get_percentage(const uint32 A, const uint32 B)
 {
 	double result;
 
@@ -377,7 +377,7 @@ unsigned int get_percentage(const unsigned int A, const unsigned int B)
 		return UINT_MAX;
 	}
 
-	return (unsigned int)floor(result);
+	return (uint32)floor(result);
 }
 
 uint32 get_percentage_exp(const uint64 a, const uint64 b)

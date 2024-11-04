@@ -269,7 +269,7 @@ struct char_session_data {
 	uint16 pincode_try;
 	bool pincode_correct;
 	// Addon system
-	unsigned int char_moves[MAX_CHARS]; // character moves left
+	uint32 char_moves[MAX_CHARS]; // character moves left
 	uint8 isvip;
 	time_t unban_time[MAX_CHARS];
 	int charblock_timer;

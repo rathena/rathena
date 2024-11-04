@@ -65,7 +65,7 @@ std::unordered_map<uint16, s_skill_db> skill_nearnpc;
 
 std::unordered_map<int32, std::vector<s_homun_skill_tree_entry>> hom_skill_tree;
 
-static unsigned int level_penalty[3][CLASS_MAX][MAX_LEVEL * 2 + 1];
+static uint32 level_penalty[3][CLASS_MAX][MAX_LEVEL * 2 + 1];
 
 struct s_item_flag_csv2yaml {
 	bool buyingstore, dead_branch, group, guid, broadcast, bindOnEquip, delay_consume;

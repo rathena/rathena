@@ -256,7 +256,7 @@ static inline bool disguised(struct block_list* bl) {
 
 
 //Guarantees that the given string does not exceeds the allowed size, as well as making sure it's null terminated. [Skotlex]
-static inline unsigned int mes_len_check(char* mes, unsigned int len, unsigned int max) {
+static inline uint32 mes_len_check(char* mes, uint32 len, uint32 max) {
 	if( len > max )
 		len = max;
 
@@ -5027,7 +5027,7 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 	struct unit_data *ud;
 	struct view_data *vd;
 	bool option = false;
-	unsigned int option_val = 0;
+	uint32 option_val = 0;
 
 	vd = status_get_viewdata(bl);
 	if (!vd || vd->class_ == JT_INVISIBLE)
@@ -10223,7 +10223,7 @@ void clif_hate_info(map_session_data *sd, unsigned char hate_level,int class_, u
 	} else if( mobdb_checkid(class_) ) {
 		clif_starskill(sd, mob_db.find(class_)->jname.c_str(), class_, hate_level, type ? 10 : 11);
 	} else {
-		ShowWarning("clif_hate_info: Received invalid class %d for this packet (char_id=%d, hate_level=%u, type=%u).\n", class_, sd->status.char_id, (unsigned int)hate_level, (unsigned int)type);
+		ShowWarning("clif_hate_info: Received invalid class %d for this packet (char_id=%d, hate_level=%u, type=%u).\n", class_, sd->status.char_id, (uint32)hate_level, (uint32)type);
 	}
 }
 
@@ -11232,7 +11232,7 @@ void clif_parse_Hotkey(int fd, map_session_data *sd) {
 
 /// Displays cast-like progress bar (ZC_PROGRESS).
 /// 02f0 <color>.L <time>.L
-void clif_progressbar(map_session_data * sd, unsigned long color, unsigned int second)
+void clif_progressbar(map_session_data * sd, unsigned long color, uint32 second)
 {
 	int fd = sd->fd;
 
@@ -11912,7 +11912,7 @@ void clif_parse_WisMessage(int fd, map_session_data* sd)
 void clif_parse_Broadcast(int fd, map_session_data* sd) {
 	char command[CHAT_SIZE_MAX+11];
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	unsigned int len = RFIFOW(fd,info->pos[0])-4;
+	uint32 len = RFIFOW(fd,info->pos[0])-4;
 	char* msg = RFIFOCP(fd,info->pos[1]);
 
 	// as the length varies depending on the command used, just block unreasonably long strings
@@ -13447,7 +13447,7 @@ void clif_parse_LocalBroadcast(int fd, map_session_data* sd)
 {
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
 	char command[CHAT_SIZE_MAX+16];
-	unsigned int len = RFIFOW(fd,info->pos[0])-4;
+	uint32 len = RFIFOW(fd,info->pos[0])-4;
 	char* msg = RFIFOCP(fd,info->pos[1]);
 
 	// as the length varies depending on the command used, just block unreasonably long strings
@@ -16949,7 +16949,7 @@ void clif_parse_Auction_register(int fd, map_session_data *sd)
 /// Cancels an auction (CZ_AUCTION_ADD_CANCEL).
 /// 024e <auction id>.L
 void clif_parse_Auction_cancel(int fd, map_session_data *sd){
-	unsigned int auction_id = RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[0]);
+	uint32 auction_id = RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[0]);
 	intif_Auction_cancel(sd->status.char_id, auction_id);
 }
 
@@ -16957,7 +16957,7 @@ void clif_parse_Auction_cancel(int fd, map_session_data *sd){
 /// Closes an auction (CZ_AUCTION_REQ_MY_SELL_STOP).
 /// 025d <auction id>.L
 void clif_parse_Auction_close(int fd, map_session_data *sd){
-	unsigned int auction_id = RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[0]);
+	uint32 auction_id = RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[0]);
 	intif_Auction_close(sd->status.char_id, auction_id);
 }
 
@@ -16966,7 +16966,7 @@ void clif_parse_Auction_close(int fd, map_session_data *sd){
 /// 024f <auction id>.L <money>.L
 void clif_parse_Auction_bid(int fd, map_session_data *sd){
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	unsigned int auction_id = RFIFOL(fd,info->pos[0]);
+	uint32 auction_id = RFIFOL(fd,info->pos[0]);
 	int bid = RFIFOL(fd,info->pos[1]);
 
 	if( !pc_can_give_items(sd) ) { //They aren't supposed to give zeny [Inkfish]
@@ -17451,10 +17451,10 @@ void clif_bossmapinfo( map_session_data& sd, mob_data* md, e_bossmap_info flag )
 			break;
 		case BOSS_INFO_DEAD: {
 			const struct TimerData * timer_data = get_timer(md->spawn_timer);
-			unsigned int seconds;
+			uint32 seconds;
 			int hours, minutes;
 
-			seconds = (unsigned int)(DIFF_TICK(timer_data->tick, gettick()) / 1000 + 60);
+			seconds = (uint32)(DIFF_TICK(timer_data->tick, gettick()) / 1000 + 60);
 			hours = seconds / (60 * 60);
 			seconds = seconds - (60 * 60 * hours);
 			minutes = seconds / 60;
@@ -18609,7 +18609,7 @@ void clif_instance_changewait(int instance_id, int num)
 
 /// Notify the current status to members
 /// S 0x2cd <Instance Name>.61B <Instance Remaining Time>.L <Instance Noplayers close time>.L
-void clif_instance_status(int instance_id, unsigned int limit1, unsigned int limit2)
+void clif_instance_status(int instance_id, uint32 limit1, uint32 limit2)
 {
 #if PACKETVER >= 20071128
 	map_session_data *sd = nullptr;
@@ -18643,7 +18643,7 @@ void clif_instance_status(int instance_id, unsigned int limit1, unsigned int lim
 /// 2 = The Memorial Dungeon's entry time limit expired; it has been destroyed
 /// 3 = The Memorial Dungeon has been removed.
 /// 4 = Create failure (removes the instance window)
-void clif_instance_changestatus(int instance_id, e_instance_notify type, unsigned int limit)
+void clif_instance_changestatus(int instance_id, e_instance_notify type, uint32 limit)
 {
 #if PACKETVER >= 20071128
 	map_session_data *sd = nullptr;
@@ -18969,7 +18969,7 @@ static void clif_parse_ReqOpenBuyingStore( int fd, map_session_data* sd ){
 ///     2 = "Total amount of then possessed items exceeds the weight limit by <weight/10-maxweight*90%>. Please re-enter." (0x6ce, MSI_BUYINGSTORE_OVERWEIGHT)
 ///     8 = "No sale (purchase) information available." (0x705)
 ///     ? = nothing
-void clif_buyingstore_open_failed(map_session_data* sd, unsigned short result, unsigned int weight)
+void clif_buyingstore_open_failed(map_session_data* sd, unsigned short result, uint32 weight)
 {
 	int fd = sd->fd;
 

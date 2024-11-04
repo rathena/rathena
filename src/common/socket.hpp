@@ -136,7 +136,7 @@ int make_listen_bind(uint32 ip, uint16 port);
 int make_connection(uint32 ip, uint16 port, bool silent, int timeout);
 #define realloc_fifo( fd, rfifo_size, wfifo_size ) _realloc_fifo( ( fd ), ( rfifo_size ), ( wfifo_size ), ALC_MARK )
 #define realloc_writefifo( fd, addition ) _realloc_writefifo( ( fd ), ( addition ), ALC_MARK )
-int _realloc_fifo( int fd, unsigned int rfifo_size, unsigned int wfifo_size, const char* file, int line, const char* func );
+int _realloc_fifo( int fd, uint32 rfifo_size, uint32 wfifo_size, const char* file, int line, const char* func );
 int _realloc_writefifo( int fd, size_t addition, const char* file, int line, const char* func );
 int WFIFOSET(int fd, size_t len);
 int RFIFOSKIP(int fd, size_t len);

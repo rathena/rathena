@@ -65,7 +65,7 @@ static char* msg_table[CHAR_MAX_MSG]; // Login Server messages_conf
 // check for exit signal
 // 0 is saving complete
 // other is char_id
-unsigned int save_flag = 0;
+uint32 save_flag = 0;
 
 // Advanced subnet check [LuzZza]
 struct s_subnet {
@@ -504,7 +504,7 @@ int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 		{
 			if( diff )
 				StringBuf_AppendStr(&buf, ",");// not the first hotkey
-			StringBuf_Printf(&buf, "('%d','%u','%u','%u','%u')", char_id, (unsigned int)i, (unsigned int)p->hotkeys[i].type, p->hotkeys[i].id , (unsigned int)p->hotkeys[i].lv);
+			StringBuf_Printf(&buf, "('%d','%u','%u','%u','%u')", char_id, (uint32)i, (uint32)p->hotkeys[i].type, p->hotkeys[i].id , (uint32)p->hotkeys[i].lv);
 			diff = 1;
 		}
 	}

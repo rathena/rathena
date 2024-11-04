@@ -71,7 +71,7 @@ struct s_packet_db {
 #ifdef PACKET_OBFUSCATION
 /// Keys based on packet versions
 struct s_packet_keys {
-	unsigned int keys[3]; ///< 3-Keys
+	uint32 keys[3]; ///< 3-Keys
 };
 #endif
 
@@ -1089,8 +1089,8 @@ void clif_bg_queue_ack_lobby(bool result, const char *name, const char *lobbynam
 // Instancing
 void clif_instance_create( int instance_id, size_t num );
 void clif_instance_changewait(int instance_id, int num);
-void clif_instance_status(int instance_id, unsigned int limit1, unsigned int limit2);
-void clif_instance_changestatus(int instance_id, e_instance_notify type, unsigned int limit);
+void clif_instance_status(int instance_id, uint32 limit1, uint32 limit2);
+void clif_instance_changestatus(int instance_id, e_instance_notify type, uint32 limit);
 void clif_parse_MemorialDungeonCommand(int fd, map_session_data *sd);
 void clif_instance_info( map_session_data& sd );
 
@@ -1236,7 +1236,7 @@ void clif_readbook(int fd, int book_id, int page);
 void clif_party_show_picker(map_session_data * sd, struct item * item_data);
 
 // Progress Bar [Inkfish]
-void clif_progressbar(map_session_data * sd, unsigned long color, unsigned int second);
+void clif_progressbar(map_session_data * sd, unsigned long color, uint32 second);
 void clif_progressbar_abort(map_session_data * sd);
 void clif_progressbar_npc(struct npc_data *nd, map_session_data* sd);
 #define clif_progressbar_npc_area(nd) clif_progressbar_npc((nd),nullptr)
@@ -1259,7 +1259,7 @@ void clif_showdigit(map_session_data* sd, unsigned char type, int value);
 
 /// Buying Store System
 void clif_buyingstore_open(map_session_data* sd);
-void clif_buyingstore_open_failed(map_session_data* sd, unsigned short result, unsigned int weight);
+void clif_buyingstore_open_failed(map_session_data* sd, unsigned short result, uint32 weight);
 void clif_buyingstore_myitemlist( map_session_data& sd );
 void clif_buyingstore_entry( map_session_data& sd, struct block_list* tbl = nullptr );
 void clif_buyingstore_disappear_entry( map_session_data& sd, struct block_list* tbl = nullptr );

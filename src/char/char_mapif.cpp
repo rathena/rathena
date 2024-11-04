@@ -27,7 +27,7 @@ using namespace rathena;
  * @param len: size of packet
  * @return : the number of map-serv the packet was sent to
  */
-int chmapif_sendall(unsigned char *buf, unsigned int len){
+int chmapif_sendall(unsigned char *buf, uint32 len){
 	int i, c;
 
 	c = 0;
@@ -51,7 +51,7 @@ int chmapif_sendall(unsigned char *buf, unsigned int len){
  * @param len: size of packet
  * @return : the number of map-serv the packet was sent to
  */
-int chmapif_sendallwos(int sfd, unsigned char *buf, unsigned int len){
+int chmapif_sendallwos(int sfd, unsigned char *buf, uint32 len){
 	int i, c;
 
 	c = 0;
@@ -75,7 +75,7 @@ int chmapif_sendallwos(int sfd, unsigned char *buf, unsigned int len){
  * @param len: size of packet
  * @return : the number of map-serv the packet was sent to (O|1)
  */
-int chmapif_send(int fd, unsigned char *buf, unsigned int len){
+int chmapif_send(int fd, unsigned char *buf, uint32 len){
 	if (session_isValid(fd)) {
 		int i;
 		ARR_FIND( 0, ARRAYLENGTH(map_server), i, fd == map_server[i].fd );
@@ -1241,7 +1241,7 @@ int chmapif_parse_reqcharban(int fd){
 					WBUFW(buf,0) = 0x2b14;
 					WBUFL(buf,2) = t_cid;
 					WBUFB(buf,6) = 2;
-					WBUFL(buf,7) = (unsigned int)unban_time;
+					WBUFL(buf,7) = (uint32)unban_time;
 					chmapif_sendall(buf, 11);
 					// disconnect player if online on char-server
 					char_disconnect_player(t_aid);

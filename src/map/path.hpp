@@ -64,7 +64,7 @@ bool path_search_long(struct shootpath_data *spd,int16 m,int16 x0,int16 y0,int16
 
 // distance related functions
 bool check_distance(int dx, int dy, int distance);
-unsigned int distance(int dx, int dy);
+uint32 distance(int dx, int dy);
 bool check_distance_client(int dx, int dy, int distance);
 int distance_client(int dx, int dy);
 

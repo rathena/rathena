@@ -1009,7 +1009,7 @@ bool npc_enable_target(npc_data& nd, uint32 char_id, e_npcv_status flag)
 			return false;
 		}
 
-		unsigned int option = nd.sc.option;
+		uint32 option = nd.sc.option;
 		if (flag & NPCVIEW_CLOAKOFF)
 			nd.sc.option &= ~OPTION_CLOAK;
 		else
@@ -1100,7 +1100,7 @@ struct npc_data* npc_name2id(const char* name)
  **/
 TIMER_FUNC(npc_secure_timeout_timer){
 	map_session_data* sd = nullptr;
-	unsigned int timeout = NPC_SECURE_TIMEOUT_NEXT;
+	uint32 timeout = NPC_SECURE_TIMEOUT_NEXT;
 	t_tick cur_tick = gettick(); //ensure we are on last tick
 
 	if ((sd = map_id2sd(id)) == nullptr || !sd->npc_id || sd->state.ignoretimeout) {
@@ -3641,7 +3641,7 @@ static void npc_parsename(struct npc_data* nd, const char* name, const char* sta
 	if( p ) { // <Display name>::<Unique name>
 		size_t len = p-name;
 		if( len > NPC_NAME_LENGTH ) {
-			ShowWarning("npc_parsename: Display name of '%s' is too long (len=%u) in file '%s', line'%d'. Truncating to %u characters.\n", name, (unsigned int)len, filepath, strline(buffer,start-buffer), NPC_NAME_LENGTH);
+			ShowWarning("npc_parsename: Display name of '%s' is too long (len=%u) in file '%s', line'%d'. Truncating to %u characters.\n", name, (uint32)len, filepath, strline(buffer,start-buffer), NPC_NAME_LENGTH);
 			safestrncpy(nd->name, name, sizeof(nd->name));
 		} else {
 			memcpy(nd->name, name, len);
@@ -3649,12 +3649,12 @@ static void npc_parsename(struct npc_data* nd, const char* name, const char* sta
 		}
 		len = strlen(p+2);
 		if( len > NPC_NAME_LENGTH )
-			ShowWarning("npc_parsename: Unique name of '%s' is too long (len=%u) in file '%s', line'%d'. Truncating to %u characters.\n", name, (unsigned int)len, filepath, strline(buffer,start-buffer), NPC_NAME_LENGTH);
+			ShowWarning("npc_parsename: Unique name of '%s' is too long (len=%u) in file '%s', line'%d'. Truncating to %u characters.\n", name, (uint32)len, filepath, strline(buffer,start-buffer), NPC_NAME_LENGTH);
 		safestrncpy(nd->exname, p+2, sizeof(nd->exname));
 	} else {// <Display name>
 		size_t len = strlen(name);
 		if( len > NPC_NAME_LENGTH )
-			ShowWarning("npc_parsename: Name '%s' is too long (len=%u) in file '%s', line'%d'. Truncating to %u characters.\n", name, (unsigned int)len, filepath, strline(buffer,start-buffer), NPC_NAME_LENGTH);
+			ShowWarning("npc_parsename: Name '%s' is too long (len=%u) in file '%s', line'%d'. Truncating to %u characters.\n", name, (uint32)len, filepath, strline(buffer,start-buffer), NPC_NAME_LENGTH);
 		safestrncpy(nd->name, name, sizeof(nd->name));
 		safestrncpy(nd->exname, name, sizeof(nd->exname));
 	}

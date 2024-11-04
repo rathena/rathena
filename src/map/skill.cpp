@@ -1027,7 +1027,7 @@ bool skill_isNotOk_hom(struct homun_data *hd, uint16 skill_id, uint16 skill_lv)
 			}
 			break;
 		case HVAN_EXPLOSION:
-			if (hd->homunculus.intimacy < (unsigned int)battle_config.hvan_explosion_intimate) {
+			if (hd->homunculus.intimacy < (uint32)battle_config.hvan_explosion_intimate) {
 				clif_skill_fail( *sd, skill_id, USESKILL_FAIL_RELATIONGRADE );
 				return true;
 			}
@@ -4443,12 +4443,12 @@ static int skill_check_condition_mercenary(struct block_list *bl, uint16 skill_i
 
 	if( !(type&2) )
 	{
-		if( hp > 0 && status->hp <= (unsigned int)hp )
+		if( hp > 0 && status->hp <= (uint32)hp )
 		{
 			clif_skill_fail( *sd, skill_id, USESKILL_FAIL_HP_INSUFFICIENT );
 			return 0;
 		}
-		if( sp > 0 && status->sp <= (unsigned int)sp )
+		if( sp > 0 && status->sp <= (uint32)sp )
 		{
 			clif_skill_fail( *sd, skill_id, USESKILL_FAIL_SP_INSUFFICIENT );
 			return 0;
@@ -5378,7 +5378,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 #ifdef RENEWAL
 		int dist = skill_get_blewcount(skill_id, skill_lv);
 #else
-		unsigned int dist = distance_bl(src, bl);
+		uint32 dist = distance_bl(src, bl);
 #endif
 		uint8 dir = map_calc_dir(bl, src->x, src->y);
 
@@ -9442,7 +9442,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					return 1;
 				}
 				if( skill_id == AM_BERSERKPITCHER ) {
-					if( dstsd && dstsd->status.base_level < (unsigned int)sd->inventory_data[j]->elv ) {
+					if( dstsd && dstsd->status.base_level < (uint32)sd->inventory_data[j]->elv ) {
 						clif_skill_fail( *sd, skill_id );
 						map_freeblock_unlock();
 						return 1;
@@ -9560,7 +9560,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case AM_CP_ARMOR:
 	case AM_CP_HELM:
 		{
-			unsigned int equip[] = {EQP_WEAPON, EQP_SHIELD, EQP_ARMOR, EQP_HEAD_TOP};
+			uint32 equip[] = {EQP_WEAPON, EQP_SHIELD, EQP_ARMOR, EQP_HEAD_TOP};
 
 			if( sd && ( bl->type != BL_PC || ( dstsd && pc_checkequip(dstsd,equip[skill_id - AM_CP_WEAPON]) < 0 ) ) ){
 				clif_skill_fail( *sd, skill_id );
@@ -10280,7 +10280,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case PF_SOULCHANGE:
 		{
-			unsigned int sp1 = 0, sp2 = 0;
+			uint32 sp1 = 0, sp2 = 0;
 			if (dstmd) {
 				if (dstmd->state.soul_change_flag) {
 					if(sd) clif_skill_fail( *sd, skill_id );
@@ -10351,7 +10351,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	// Full Chemical Protection
 	case CR_FULLPROTECTION:
 		{
-			unsigned int equip[] = {EQP_WEAPON, EQP_SHIELD, EQP_ARMOR, EQP_HEAD_TOP};
+			uint32 equip[] = {EQP_WEAPON, EQP_SHIELD, EQP_ARMOR, EQP_HEAD_TOP};
 			int i_eqp, s = 0, skilltime = skill_get_time(skill_id,skill_lv);
 
 			for (i_eqp = 0; i_eqp < 4; i_eqp++) {
@@ -11667,7 +11667,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case SR_GENTLETOUCH_CURE:
 		{
-			unsigned int heal;
+			uint32 heal;
 
 			if (dstmd && (dstmd->mob_id == MOBID_EMPERIUM || status_get_class_(bl) == CLASS_BATTLEFIELD))
 				heal = 0;
@@ -12580,7 +12580,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case SU_TUNABELLY:
 	{
-		unsigned int heal = 0;
+		uint32 heal = 0;
 
 		if (dstmd && (dstmd->mob_id == MOBID_EMPERIUM || status_get_class_(bl) == CLASS_BATTLEFIELD))
 			heal = 0;
@@ -12699,7 +12699,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case BO_THE_WHOLE_PROTECTION:
 		if (sd == nullptr || sd->status.party_id == 0 || (flag & 1)) {
-			unsigned int equip[] = { EQP_WEAPON, EQP_SHIELD, EQP_ARMOR, EQP_HEAD_TOP };
+			uint32 equip[] = { EQP_WEAPON, EQP_SHIELD, EQP_ARMOR, EQP_HEAD_TOP };
 
 			for (uint8 i_eqp = 0; i_eqp < 4; i_eqp++) {
 				if (bl->type != BL_PC || (dstsd && pc_checkequip(dstsd, equip[i_eqp]) < 0))
@@ -17006,7 +17006,7 @@ static int skill_unit_effect(struct block_list* bl, va_list ap)
 {
 	struct skill_unit* unit = va_arg(ap,struct skill_unit*);
 	t_tick tick = va_arg(ap,t_tick);
-	unsigned int flag = va_arg(ap,unsigned int);
+	uint32 flag = va_arg(ap,uint32);
 	uint16 skill_id;
 	bool dissonance = false;
 	bool isTarget = false;
@@ -17828,7 +17828,7 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 			//Auron insists we should implement SP consumption when you are not Soul Linked. [Skotlex]
 			//Only invoke on skill begin cast (instant cast skill). [Kevin]
 			if( require.sp > 0 ) {
-				if (status->sp < (unsigned int)require.sp)
+				if (status->sp < (uint32)require.sp)
 					clif_skill_fail( sd, skill_id, USESKILL_FAIL_SP_INSUFFICIENT );
 				else
 					status_zap(&sd.bl, 0, require.sp);
@@ -18368,7 +18368,7 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 			case RA_AIMEDBOLT:
 				break;
 			default:
-				switch((unsigned int)log2(require.weapon)) {
+				switch((uint32)log2(require.weapon)) {
 					case W_REVOLVER:
 						clif_msg(&sd, MSI_FAIL_NEED_EQUIPPED_GUN_HANDGUN);
 						break;
@@ -18392,12 +18392,12 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 		}
 	}
 
-	if( require.sp > 0 && status->sp < (unsigned int)require.sp) {
+	if( require.sp > 0 && status->sp < (uint32)require.sp) {
 		clif_skill_fail( sd, skill_id, USESKILL_FAIL_SP_INSUFFICIENT );
 		return false;
 	}
 
-	if (require.ap > 0 && status->ap < (unsigned int)require.ap) {
+	if (require.ap > 0 && status->ap < (uint32)require.ap) {
 		clif_skill_fail( sd, skill_id, USESKILL_FAIL_AP_INSUFFICIENT );
 		return false;
 	}
@@ -18611,7 +18611,7 @@ bool skill_check_condition_castend( map_session_data& sd, uint16 skill_id, uint1
 
 	require = skill_get_requirement(&sd,skill_id,skill_lv);
 
-	if( require.hp > 0 && status->hp <= (unsigned int)require.hp) {
+	if( require.hp > 0 && status->hp <= (uint32)require.hp) {
 		clif_skill_fail( sd, skill_id, USESKILL_FAIL_HP_INSUFFICIENT );
 		return false;
 	}
@@ -20713,16 +20713,15 @@ bool skill_check_camouflage(struct block_list *bl, struct status_change_entry *s
 int skill_getareachar_skillunit_visibilty_sub(struct block_list *bl, va_list ap) {
 	struct skill_unit *su = nullptr;
 	struct block_list *src = nullptr;
-	unsigned int party1 = 0;
 	bool visible = true;
 
 	nullpo_ret(bl);
 	nullpo_ret((su = va_arg(ap, struct skill_unit*)));
 	nullpo_ret((src = va_arg(ap, struct block_list*)));
-	party1 = va_arg(ap, unsigned int);
+	uint32 party1 = va_arg(ap, uint32);
 
 	if (src != bl) {
-		unsigned int party2 = status_get_party_id(bl);
+		uint32 party2 = status_get_party_id(bl);
 		if (!party1 || !party2 || party1 != party2)
 			visible = false;
 	}
@@ -20766,8 +20765,8 @@ void skill_getareachar_skillunit_visibilty_single(struct skill_unit *su, struct 
 	nullpo_retv((src = battle_get_master(&su->bl)));
 
 	if (su->hidden && src != bl) {
-		unsigned int party1 = status_get_party_id(src);
-		unsigned int party2 = status_get_party_id(bl);
+		uint32 party1 = status_get_party_id(src);
+		uint32 party2 = status_get_party_id(bl);
 		if (!party1 || !party2 || party1 != party2)
 			visible = false;
 	}

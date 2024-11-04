@@ -51,7 +51,7 @@ static struct eri *sc_data_ers; /// For sc_data entries
 static struct status_data dummy_status;
 
 short current_equip_item_index; /// Contains inventory index of an equipped item. To pass it into the EQUP_SCRIPT [Lupus]
-unsigned int current_equip_combo_pos; /// For combo items we need to save the position of all involved items here
+uint32 current_equip_combo_pos; /// For combo items we need to save the position of all involved items here
 int current_equip_card_id; /// To prevent card-stacking (from jA) [Skotlex]
 // We need it for new cards 15 Feb 2005, to check if the combo cards are insrerted into the CURRENT weapon only to avoid cards exploits
 short current_equip_opt_index; /// Contains random option index of an equipped item. [Secret]
@@ -94,9 +94,9 @@ static signed short status_calc_res(struct block_list *, status_change *, int);
 static signed short status_calc_mres(struct block_list *, status_change *, int);
 static signed short status_calc_hplus(struct block_list *, status_change *, int);
 static signed short status_calc_crate(struct block_list *, status_change *, int);
-static unsigned int status_calc_maxhp(struct block_list *bl, uint64 maxhp);
-static unsigned int status_calc_maxsp(struct block_list *bl, uint64 maxsp);
-static unsigned int status_calc_maxap(struct block_list *bl, uint64 maxap);
+static uint32 status_calc_maxhp(struct block_list *bl, uint64 maxhp);
+static uint32 status_calc_maxsp(struct block_list *bl, uint64 maxsp);
+static uint32 status_calc_maxap(struct block_list *bl, uint64 maxap);
 static unsigned char status_calc_element(struct block_list *bl, status_change *sc, int element);
 static unsigned char status_calc_element_lv(struct block_list *bl, status_change *sc, int lv);
 static int status_calc_mode(struct block_list *bl, status_change *sc, int mode);
@@ -106,11 +106,11 @@ static unsigned short status_calc_ematk(struct block_list *,status_change *,int)
 static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type);
 static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type);
 static int status_get_apbonus(struct block_list *bl, enum e_status_bonus type);
-static unsigned int status_calc_maxhpsp_pc(map_session_data* sd, unsigned int stat, bool isHP);
-static unsigned int status_calc_maxap_pc(map_session_data* sd);
+static uint32 status_calc_maxhpsp_pc(map_session_data* sd, uint32 stat, bool isHP);
+static uint32 status_calc_maxap_pc(map_session_data* sd);
 static int status_get_sc_interval(enum sc_type type);
 
-static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone, bool mapIsTE);
+static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, uint32 mapZone, bool mapIsTE);
 #define status_change_isDisabledOnMap(type, m) ( status_change_isDisabledOnMap_((type), mapdata_flag_vs2((m)), m->getMapFlag(MF_PVP) != 0, mapdata_flag_gvg2_no_te((m)), m->getMapFlag(MF_BATTLEGROUND) != 0, (m->zone << 3) != 0, mapdata_flag_gvg2_te((m))) )
 
 const std::string RefineDatabase::getDefaultLocation(){
@@ -1241,7 +1241,7 @@ static inline void status_cpy(struct status_data* a, const struct status_data* b
  *		Use 2 to display healing effect
  * @return heal or zapped HP if valid
  */
-int status_set_hp(struct block_list *bl, unsigned int hp, int flag)
+int status_set_hp(struct block_list *bl, uint32 hp, int flag)
 {
 	if (hp < 1)
 		return 0;
@@ -1268,7 +1268,7 @@ int status_set_hp(struct block_list *bl, unsigned int hp, int flag)
  *		Use 2 to display healing effect
  * @return heal or zapped HP if valid
  */
-int status_set_maxhp(struct block_list *bl, unsigned int maxhp, int flag)
+int status_set_maxhp(struct block_list *bl, uint32 maxhp, int flag)
 {
 	int64 heal;
 
@@ -1302,7 +1302,7 @@ int status_set_maxhp(struct block_list *bl, unsigned int maxhp, int flag)
  *		Use 2 to display healing effect		
  * @return heal or zapped SP if valid
  */
-int status_set_sp(struct block_list *bl, unsigned int sp, int flag)
+int status_set_sp(struct block_list *bl, uint32 sp, int flag)
 {
 	status_data* status = status_get_status_data(*bl);
 
@@ -1326,7 +1326,7 @@ int status_set_sp(struct block_list *bl, unsigned int sp, int flag)
  *		Use 2 to display healing effect
  * @return heal or zapped HP if valid
  */
-int status_set_maxsp(struct block_list *bl, unsigned int maxsp, int flag)
+int status_set_maxsp(struct block_list *bl, uint32 maxsp, int flag)
 {
 	if (maxsp < 1)
 		return 0;
@@ -1355,7 +1355,7 @@ int status_set_maxsp(struct block_list *bl, unsigned int maxsp, int flag)
 *		Use 2 to display healing effect
 * @return heal or zapped AP if valid
 */
-int status_set_ap(struct block_list *bl, unsigned int ap, int flag)
+int status_set_ap(struct block_list *bl, uint32 ap, int flag)
 {
 	status_data *status = status_get_status_data(*bl);
 
@@ -1379,7 +1379,7 @@ int status_set_ap(struct block_list *bl, unsigned int ap, int flag)
 *		Use 2 to display healing effect
 * @return heal or zapped AP if valid
 */
-int status_set_maxap(struct block_list *bl, unsigned int maxap, int flag)
+int status_set_maxap(struct block_list *bl, uint32 maxap, int flag)
 {
 	if (maxap < 1)
 		return 0;
@@ -1475,17 +1475,17 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 	if( status == &dummy_status )
 		return 0;
 
-	if ((unsigned int)hp >= status->hp) {
+	if ((uint32)hp >= status->hp) {
 		if (flag&2) return 0;
 		hp = status->hp;
 	}
 
-	if ((unsigned int)sp > status->sp) {
+	if ((uint32)sp > status->sp) {
 		if (flag&2) return 0;
 		sp = status->sp;
 	}
 
-	if ((unsigned int)ap > status->ap) {
+	if ((uint32)ap > status->ap) {
 		if (flag & 2) return 0;
 		ap = status->ap;
 	}
@@ -1760,7 +1760,7 @@ int status_heal(struct block_list *bl,int64 hhp,int64 hsp, int64 hap, int flag)
 				hp = 0;
 		}
 
-		if((unsigned int)hp > status->max_hp - status->hp)
+		if((uint32)hp > status->max_hp - status->hp)
 			hp = status->max_hp - status->hp;
 	}
 
@@ -1772,7 +1772,7 @@ int status_heal(struct block_list *bl,int64 hhp,int64 hsp, int64 hap, int flag)
 	}
 
 	if(sp) {
-		if((unsigned int)sp > status->max_sp - status->sp)
+		if((uint32)sp > status->max_sp - status->sp)
 			sp = status->max_sp - status->sp;
 	}
 
@@ -1784,7 +1784,7 @@ int status_heal(struct block_list *bl,int64 hhp,int64 hsp, int64 hap, int flag)
 	}
 
 	if (ap) {
-		if ((unsigned int)ap > status->max_ap - status->ap)
+		if ((uint32)ap > status->max_ap - status->ap)
 			ap = status->max_ap - status->ap;
 	}
 
@@ -1841,7 +1841,7 @@ int status_heal(struct block_list *bl,int64 hhp,int64 hsp, int64 hap, int flag)
  */
 int status_percent_change(struct block_list *src, struct block_list *target, int8 hp_rate, int8 sp_rate, int8 ap_rate, uint8 flag)
 {
-	unsigned int hp = 0, sp = 0, ap = 0;
+	uint32 hp = 0, sp = 0, ap = 0;
 	status_data* status = status_get_status_data(*target);
 
 	// It's safe now [MarkZD]
@@ -1919,7 +1919,7 @@ int status_percent_change(struct block_list *src, struct block_list *target, int
  */
 int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per_sp, unsigned char per_ap)
 {
-	unsigned int hp, sp, ap;
+	uint32 hp, sp, ap;
 	if (!status_isdead(*bl)) return 0;
 
 	status_data* status = status_get_status_data(*bl);
@@ -2445,7 +2445,7 @@ unsigned short status_base_atk(const struct block_list *bl, const struct status_
  * @param status: Player status
  * @return weapon attack
  */
-unsigned int status_weapon_atk(weapon_atk &wa)
+uint32 status_weapon_atk(weapon_atk &wa)
 {
 	return wa.atk + wa.atk2;
 }
@@ -3494,7 +3494,7 @@ static int status_get_apbonus_item(block_list *bl) {
  * @param isHP true - calculates Max HP, false - calculated Max SP
  * @return max The max value of HP or SP
  */
-static unsigned int status_calc_maxhpsp_pc(map_session_data* sd, unsigned int stat, bool isHP) {
+static uint32 status_calc_maxhpsp_pc(map_session_data* sd, uint32 stat, bool isHP) {
 	nullpo_ret(sd);
 
 	double dmax = 0;
@@ -3525,10 +3525,10 @@ static unsigned int status_calc_maxhpsp_pc(map_session_data* sd, unsigned int st
 		dmax += (int64)(dmax * status_get_spbonus(&sd->bl,STATUS_BONUS_RATE) / 100); //Aegis accuracy
 	}
 
-	//Make sure it's not negative before casting to unsigned int
+	//Make sure it's not negative before casting to uint32
 	if(dmax < 1) dmax = 1;
 
-	return cap_value((unsigned int)dmax,1,UINT_MAX);
+	return cap_value((uint32)dmax,1,UINT_MAX);
 }
 
 /**
@@ -3536,7 +3536,7 @@ static unsigned int status_calc_maxhpsp_pc(map_session_data* sd, unsigned int st
  * @param sd: Player data
  * @return AP amount
  */
-static unsigned int status_calc_maxap_pc(map_session_data* sd) {
+static uint32 status_calc_maxap_pc(map_session_data* sd) {
 	double dmax = 0, equip_bonus = 0, item_bonus = 0;
 
 	nullpo_ret(sd);
@@ -3548,10 +3548,10 @@ static unsigned int status_calc_maxap_pc(map_session_data* sd) {
 	dmax += equip_bonus + item_bonus;
 	dmax += (int64)(dmax * status_get_apbonus(&sd->bl, STATUS_BONUS_RATE) / 100);// Aegis accuracy
 
-	//Make sure it's not negative before casting to unsigned int
+	//Make sure it's not negative before casting to uint32
 	if (dmax < 0) dmax = 0;
 
-	return cap_value((unsigned int)dmax, 0, UINT_MAX);
+	return cap_value((uint32)dmax, 0, UINT_MAX);
 }
 
 /**
@@ -4250,30 +4250,30 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	base_status->max_hp = sd->status.max_hp = status_calc_maxhpsp_pc(sd,base_status->vit,true);
 
 	if(battle_config.hp_rate != 100)
-		base_status->max_hp = (unsigned int)(battle_config.hp_rate * (base_status->max_hp/100.));
+		base_status->max_hp = (uint32)(battle_config.hp_rate * (base_status->max_hp/100.));
 
 	if (sd->status.base_level < 100)
-		base_status->max_hp = cap_value(base_status->max_hp,1,(unsigned int)battle_config.max_hp_lv99);
+		base_status->max_hp = cap_value(base_status->max_hp,1,(uint32)battle_config.max_hp_lv99);
 	else if (sd->status.base_level < 151)
-		base_status->max_hp = cap_value(base_status->max_hp,1,(unsigned int)battle_config.max_hp_lv150);
+		base_status->max_hp = cap_value(base_status->max_hp,1,(uint32)battle_config.max_hp_lv150);
 	else
-		base_status->max_hp = cap_value(base_status->max_hp,1,(unsigned int)battle_config.max_hp);
+		base_status->max_hp = cap_value(base_status->max_hp,1,(uint32)battle_config.max_hp);
 
 // ----- SP MAX CALCULATION -----
 	base_status->max_sp = sd->status.max_sp = status_calc_maxhpsp_pc(sd,base_status->int_,false);
 
 	if(battle_config.sp_rate != 100)
-		base_status->max_sp = (unsigned int)(battle_config.sp_rate * (base_status->max_sp/100.));
+		base_status->max_sp = (uint32)(battle_config.sp_rate * (base_status->max_sp/100.));
 
-	base_status->max_sp = cap_value(base_status->max_sp,1,(unsigned int)battle_config.max_sp);
+	base_status->max_sp = cap_value(base_status->max_sp,1,(uint32)battle_config.max_sp);
 
 // ----- AP MAX CALCULATION -----
 	base_status->max_ap = sd->status.max_ap = status_calc_maxap_pc(sd);
 
 	if (battle_config.ap_rate != 100)
-		base_status->max_ap = (unsigned int)(battle_config.ap_rate * (base_status->max_ap / 100.));
+		base_status->max_ap = (uint32)(battle_config.ap_rate * (base_status->max_ap / 100.));
 
-	base_status->max_ap = cap_value(base_status->max_ap, 0, (unsigned int)battle_config.max_ap);
+	base_status->max_ap = cap_value(base_status->max_ap, 0, (uint32)battle_config.max_ap);
 
 // ----- RESPAWN HP/SP/AP -----
 
@@ -6094,14 +6094,14 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 			status->max_hp = status_calc_maxhpsp_pc(sd,status->vit,true);
 
 			if(battle_config.hp_rate != 100)
-				status->max_hp = (unsigned int)(battle_config.hp_rate * (status->max_hp/100.));
+				status->max_hp = (uint32)(battle_config.hp_rate * (status->max_hp/100.));
 
 			if (sd->status.base_level < 100)
-				status->max_hp = umin(status->max_hp,(unsigned int)battle_config.max_hp_lv99);
+				status->max_hp = umin(status->max_hp,(uint32)battle_config.max_hp_lv99);
 			else if (sd->status.base_level < 151)
-				status->max_hp = umin(status->max_hp,(unsigned int)battle_config.max_hp_lv150);
+				status->max_hp = umin(status->max_hp,(uint32)battle_config.max_hp_lv150);
 			else
-				status->max_hp = umin(status->max_hp,(unsigned int)battle_config.max_hp);
+				status->max_hp = umin(status->max_hp,(uint32)battle_config.max_hp);
 		}
 		else
 			status->max_hp = status_calc_maxhp(&bl, b_status->max_hp);
@@ -6117,9 +6117,9 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 			status->max_sp = status_calc_maxhpsp_pc(sd,status->int_,false);
 
 			if(battle_config.sp_rate != 100)
-				status->max_sp = (unsigned int)(battle_config.sp_rate * (status->max_sp/100.));
+				status->max_sp = (uint32)(battle_config.sp_rate * (status->max_sp/100.));
 
-			status->max_sp = umin(status->max_sp,(unsigned int)battle_config.max_sp);
+			status->max_sp = umin(status->max_sp,(uint32)battle_config.max_sp);
 		}
 		else
 			status->max_sp = status_calc_maxsp(&bl, b_status->max_sp);
@@ -6354,9 +6354,9 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 			status->max_ap = status_calc_maxap_pc(sd);
 
 			if (battle_config.ap_rate != 100)
-				status->max_ap = (unsigned int)(battle_config.ap_rate * (status->max_ap / 100.));
+				status->max_ap = (uint32)(battle_config.ap_rate * (status->max_ap / 100.));
 
-			status->max_ap = umin(status->max_ap, (unsigned int)battle_config.max_ap);
+			status->max_ap = umin(status->max_ap, (uint32)battle_config.max_ap);
 		} else
 			status->max_ap = status_calc_maxap(&bl, b_status->max_ap);
 
@@ -8849,7 +8849,7 @@ static signed short status_calc_crate(struct block_list *bl, status_change *sc, 
  * @param maxhp: Object's current max HP
  * @return modified maxhp
  */
-static unsigned int status_calc_maxhp(struct block_list *bl, uint64 maxhp)
+static uint32 status_calc_maxhp(struct block_list *bl, uint64 maxhp)
 {
 	int rate = 100;
 
@@ -8858,7 +8858,7 @@ static unsigned int status_calc_maxhp(struct block_list *bl, uint64 maxhp)
 	if ((rate += status_get_hpbonus(bl,STATUS_BONUS_RATE)) != 100)
 		maxhp = maxhp * rate / 100;
 
-	return (unsigned int)cap_value(maxhp,1,UINT_MAX);
+	return (uint32)cap_value(maxhp,1,UINT_MAX);
 }
 
 /**
@@ -8868,7 +8868,7 @@ static unsigned int status_calc_maxhp(struct block_list *bl, uint64 maxhp)
  * @param maxsp: Object's current max SP
  * @return modified maxsp
  */
-static unsigned int status_calc_maxsp(struct block_list *bl, uint64 maxsp)
+static uint32 status_calc_maxsp(struct block_list *bl, uint64 maxsp)
 {
 	int rate = 100;
 
@@ -8877,7 +8877,7 @@ static unsigned int status_calc_maxsp(struct block_list *bl, uint64 maxsp)
 	if ((rate += status_get_spbonus(bl,STATUS_BONUS_RATE)) != 100)
 		maxsp = maxsp * rate / 100;
 	
-	return (unsigned int)cap_value(maxsp,1,UINT_MAX);
+	return (uint32)cap_value(maxsp,1,UINT_MAX);
 }
 
 /**
@@ -8887,7 +8887,7 @@ static unsigned int status_calc_maxsp(struct block_list *bl, uint64 maxsp)
 * @param maxap: Object's current max AP
 * @return modified maxap
 */
-static unsigned int status_calc_maxap(struct block_list *bl, uint64 maxap)
+static uint32 status_calc_maxap(struct block_list *bl, uint64 maxap)
 {
 	int rate = 100;
 
@@ -8896,7 +8896,7 @@ static unsigned int status_calc_maxap(struct block_list *bl, uint64 maxap)
 	if ((rate += status_get_apbonus(bl, STATUS_BONUS_RATE)) != 100)
 		maxap = maxap * rate / 100;
 
-	return (unsigned int)cap_value(maxap, 0, UINT_MAX);
+	return (uint32)cap_value(maxap, 0, UINT_MAX);
 }
 
 /**
@@ -14188,7 +14188,7 @@ TIMER_FUNC(status_change_timer){
 	case SC_POISON:
 	case SC_DPOISON:
 		if (sce->val4 >= 0 && !sc->getSCE(SC_SLOWPOISON)) {
-			unsigned int damage = 0;
+			uint32 damage = 0;
 			if (sd)
 				damage = (type == SC_DPOISON) ? 2 + status->max_hp / 50 : 2 + status->max_hp * 3 / 200;
 			else
@@ -15427,7 +15427,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 			if (regen->state.overweight)
 				rate /= 2; // Half as fast when overweight.
 			sregen->tick.hp += rate;
-			while(sregen->tick.hp >= (unsigned int)battle_config.natural_heal_skill_interval) {
+			while(sregen->tick.hp >= (uint32)battle_config.natural_heal_skill_interval) {
 				sregen->tick.hp -= battle_config.natural_heal_skill_interval;
 				if(status_heal(bl, sregen->hp, 0, 3) < sregen->hp) { // Full
 					flag &= ~RGN_SHP;
@@ -15440,7 +15440,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 			if (regen->state.overweight)
 				rate /= 2; // Half as fast when overweight.
 			sregen->tick.sp += rate;
-			while(sregen->tick.sp >= (unsigned int)battle_config.natural_heal_skill_interval) {
+			while(sregen->tick.sp >= (uint32)battle_config.natural_heal_skill_interval) {
 				sregen->tick.sp -= battle_config.natural_heal_skill_interval;
 				if(status_heal(bl, 0, sregen->sp, 3) < sregen->sp) { // Full
 					flag &= ~RGN_SSP;
@@ -15543,7 +15543,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 	if(flag&RGN_SHP) { // Skill HP regen
 		sregen->tick.hp += (int)(natural_heal_diff_tick * (sregen->rate.hp / 100.));
 
-		while(sregen->tick.hp >= (unsigned int)battle_config.natural_heal_skill_interval) {
+		while(sregen->tick.hp >= (uint32)battle_config.natural_heal_skill_interval) {
 			sregen->tick.hp -= battle_config.natural_heal_skill_interval;
 			if(status_heal(bl, sregen->hp, 0, 3) < sregen->hp)
 				break; // Full
@@ -15551,7 +15551,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 	}
 	if(flag&RGN_SSP) { // Skill SP regen
 		sregen->tick.sp += (int)(natural_heal_diff_tick * (sregen->rate.sp /100.));
-		while(sregen->tick.sp >= (unsigned int)battle_config.natural_heal_skill_interval) {
+		while(sregen->tick.sp >= (uint32)battle_config.natural_heal_skill_interval) {
 			int val = sregen->sp;
 			if (sd && sd->state.doridori) {
 				val *= 2;
@@ -15625,7 +15625,7 @@ TIMER_FUNC(status_clear_lastEffect_timer) {
  * @param mapIsTE: If the map us WOE TE
  * @return True - SC disabled on map; False - SC not disabled on map/Invalid SC
  */
-static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone, bool mapIsTE)
+static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, uint32 mapZone, bool mapIsTE)
 {
 	if (!status_db.validateStatus(type))
 		return false;
@@ -15694,7 +15694,7 @@ static bool status_readdb_status_disabled( char **str, size_t columns, size_t cu
 		return false;
 	}
 
-	SCDisabled[type] = (unsigned int)atol(str[1]);
+	SCDisabled[type] = (uint32)atol(str[1]);
 	return true;
 }
 

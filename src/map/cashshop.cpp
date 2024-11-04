@@ -249,7 +249,7 @@ static TIMER_FUNC(sale_start_timer){
 	}
 
 	// Init sale end
-	sale_item->timer_end = add_timer( gettick() + (unsigned int)( sale_item->end - time(nullptr) ) * 1000, sale_end_timer, 0, (intptr_t)sale_item );
+	sale_item->timer_end = add_timer( gettick() + (uint32)( sale_item->end - time(nullptr) ) * 1000, sale_end_timer, 0, (intptr_t)sale_item );
 
 	return 1;
 }
@@ -293,7 +293,7 @@ enum e_sale_add_result sale_add_item( t_itemid nameid, int32 count, time_t from,
 	sale_item->start = from;
 	sale_item->end = to;
 	sale_item->amount = count;
-	sale_item->timer_start = add_timer( gettick() + (unsigned int)(from - time(nullptr)) * 1000, sale_start_timer, 0, (intptr_t)sale_item );
+	sale_item->timer_start = add_timer( gettick() + (uint32)(from - time(nullptr)) * 1000, sale_start_timer, 0, (intptr_t)sale_item );
 	sale_item->timer_end = INVALID_TIMER;
 
 	return SALE_ADD_SUCCESS;
@@ -421,7 +421,7 @@ static void cashshop_read_db( void ){
 		struct sale_item_data* it = sale_items.item[i];
 
 		if( it->start > now ){
-			it->timer_start = add_timer( gettick() + (unsigned int)( it->start - time(nullptr) ) * 1000, sale_start_timer, 0, (intptr_t)it );
+			it->timer_start = add_timer( gettick() + (uint32)( it->start - time(nullptr) ) * 1000, sale_start_timer, 0, (intptr_t)it );
 		}else{
 			sale_start_timer( 0, gettick(), 0, (intptr_t)it );
 		}

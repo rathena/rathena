@@ -53,7 +53,7 @@ struct view_data *mercenary_get_viewdata( uint16 class_ ){
 * @param lifetime Contract duration
 * @return false if failed, true otherwise
 **/
-bool mercenary_create(map_session_data *sd, uint16 class_, unsigned int lifetime) {
+bool mercenary_create(map_session_data *sd, uint16 class_, uint32 lifetime) {
 	nullpo_retr(false,sd);
 
 	std::shared_ptr<s_mercenary_db> db = mercenary_db.find(class_);

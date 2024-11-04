@@ -86,7 +86,7 @@ struct Channel* channel_create(struct Channel *tmp_chan) {
  * @param owner: Owner ID
  * @return nullptr on failure or Channel on success
  */
-struct Channel* channel_create_simple(char *name, char *pass, enum Channel_Type chantype, unsigned int owner) {
+struct Channel* channel_create_simple(char *name, char *pass, enum Channel_Type chantype, uint32 owner) {
 	struct Channel tmp_chan;
 	memset(&tmp_chan, 0, sizeof(struct Channel));
 
