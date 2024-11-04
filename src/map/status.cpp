@@ -6218,17 +6218,16 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 
 		// ExtraMATK = EquipMATK + ConsumableMATK + PseudoBuffMATK
 		// Bonuses from ExtraMATK are separated in order to order them (order has no impact)
-		if (sd != nullptr) {
-			// EquipMATK (flat MATK from equipments)
-			if (sd->bonus.ematk > 0) {
-				matk_min += sd->bonus.ematk;
-				matk_max += sd->bonus.ematk;
-			}
 
-			// PseudoBuffMATK (flat MATK from skills)
-			matk_min = status_calc_pseudobuff_matk( sd, sc, matk_min );
-			matk_max = status_calc_pseudobuff_matk( sd, sc, matk_max );
+		// EquipMATK (flat MATK from equipments)
+		if (sd != nullptr && sd->bonus.ematk > 0) {
+			matk_min += sd->bonus.ematk;
+			matk_max += sd->bonus.ematk;
 		}
+
+		// PseudoBuffMATK (flat MATK from skills)
+		matk_min = status_calc_pseudobuff_matk( sd, sc, matk_min );
+		matk_max = status_calc_pseudobuff_matk( sd, sc, matk_max );
 
 		// ConsumableMATK (flat MATK from consumables)
 		matk_min = status_calc_consumablematk( sc, matk_min );
