@@ -1858,7 +1858,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 
 	if ((mode&MD_AGGRESSIVE && (!tbl || slave_lost_target)) || md->state.skillstate == MSS_FOLLOW)
 	{
-		int prev_id = md->target_id;
+		int32 prev_id = md->target_id;
 		map_foreachinallrange (mob_ai_sub_hard_activesearch, &md->bl, view_range, DEFAULT_ENEMY_TYPE(md), md, &tbl, mode);
 		// If a monster finds a target through search that is already in attack range it immediately switches to berserk mode
 		// This behavior overrides even angry mode and other mode-specific behavior
