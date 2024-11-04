@@ -9360,8 +9360,8 @@ void clif_guild_position_selected(map_session_data& sd)
 		const auto& g = sd.guild->guild;
 
 		if( int ps = guild_getposition( sd ); ps != -1 ){
-			safestrncpy( p->position, g.position[ps].name, sizeof(g.position[ps].name) );
-			p->packetLength += static_cast<decltype(p->packetLength)>( sizeof(g.position[ps].name) );
+			safestrncpy( p->position, g.position[ps].name, NAME_LENGTH );
+			p->packetLength += static_cast<decltype(p->packetLength)>( NAME_LENGTH );
 		}
 	}
 
