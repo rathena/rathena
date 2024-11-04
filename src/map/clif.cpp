@@ -4473,7 +4473,6 @@ void clif_dispchat(struct chat_data* cd, int fd)
 ///     2 = arena (npc waiting room)
 ///     3 = PK zone (non-clickable)
 void clif_changechatstatus(chat_data& cd) {
-
 	if(cd.usersd[0] == nullptr )
 		return;
 
@@ -4487,14 +4486,16 @@ void clif_changechatstatus(chat_data& cd) {
 	PACKET_ZC_CHANGE_CHATROOM* p = reinterpret_cast<PACKET_ZC_CHANGE_CHATROOM*>( packet_buffer );
 
 	p->packetType = HEADER_ZC_CHANGE_CHATROOM;
-	p->packetSize = static_cast<decltype(p->packetSize)>(sizeof(*p) + strlen(cd.title));
+	p->packetSize = sizeof(*p);
 	p->ownerId = cd.owner->id;
 	p->chatId = cd.bl.id;
 	p->limit = cd.limit;
 	p->users = cd.users;
 
 	// not zero-terminated
-	strncpy(p->title, cd.title, strlen(cd.title));
+	size_t max = safestrnlen( cd.title, CHATROOM_TITLE_SIZE );
+	strncpy( p->title, cd.title, max );
+	p->packetSize += static_cast<decltype(p->packetSize)>( max );
 
 	if(cd.owner->type == BL_NPC){
 		// NPC itself counts as additional chat user

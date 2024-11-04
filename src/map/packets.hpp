@@ -925,7 +925,7 @@ struct PACKET_ZC_CHANGE_CHATROOM{
 	uint16 limit;
 	uint16 users;
 	uint8 flag;
-	char title[CHATROOM_TITLE_SIZE];
+	char title[];
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_CHANGE_CHATROOM, 0xdf);
 
