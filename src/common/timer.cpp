@@ -166,7 +166,7 @@ static t_tick tick(void)
 static t_tick gettick_cache;
 static int gettick_count = 1;
 
-unsigned int gettick_nocache(void)
+t_tick gettick_nocache(void)
 {
 	gettick_count = TICK_CACHE;
 	gettick_cache = tick();
