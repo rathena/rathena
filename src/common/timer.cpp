@@ -99,9 +99,13 @@ const char* search_timer_func_list(TimerFunc func)
  *----------------------------*/
 
 #if defined(ENABLE_RDTSC)
-static uint64 RDTSC_BEGINTICK = 0,   RDTSC_CLOCK = 0;
+#include <chrono>
+#include <thread>
 
-static __inline uint64 _rdtsc(){
+static t_tick rdtsc_begintick = 0, rdtsc_clock = 0;
+
+#ifdef DEPRECATED_COMPILER_SUPPORT
+static __inline uint64 __rdtsc(){
 	register union{
 		uint64	qw;
 		uint32 	dw[2];
@@ -111,26 +115,30 @@ static __inline uint64 _rdtsc(){
 
 	return t.qw;
 }
+#elif defined(WIN32)
+	#include <intrin.h>
+#else
+	#include <x86intrin.h>
+#endif
 
 static void rdtsc_calibrate(){
-	uint64 t1, t2;
-	int32 i;
-
 	ShowStatus("Calibrating Timer Source, please wait... ");
 
-	RDTSC_CLOCK = 0;
+	t_tick total = 0, delay = 1000;
+	size_t calibrating_rounds = 5;
 
-	for(i = 0; i < 5; i++){
-		t1 = _rdtsc();
-		usleep(1000000); //1000 MS
-		t2 = _rdtsc();
-		RDTSC_CLOCK += (t2 - t1) / 1000;
+	for(size_t i = 0; i < calibrating_rounds; i++){
+		t_tick t1 = __rdtsc();
+		std::this_thread::sleep_for(std::chrono::milliseconds(delay));
+		t_tick t2 = __rdtsc();
+		total += (t2 - t1) / delay;
 	}
-	RDTSC_CLOCK /= 5;
 
-	RDTSC_BEGINTICK = _rdtsc();
+	rdtsc_clock = total / calibrating_rounds;
 
-	ShowMessage(" done. (Frequency: %u Mhz)\n", (uint32)(RDTSC_CLOCK/1000) );
+	rdtsc_begintick = __rdtsc();
+
+	ShowMessage(" done. (Frequency: %u Mhz)\n", (uint32)(rdtsc_clock/1000) );
 }
 
 #endif
@@ -138,16 +146,15 @@ static void rdtsc_calibrate(){
 /// platform-abstracted tick retrieval
 static t_tick tick(void)
 {
-#if defined(WIN32)
+#if defined(ENABLE_RDTSC)
+	// RDTSC: Returns the number of CPU cycles since reset. Unreliable if the CPU frequency is variable.
+	return static_cast<t_tick>( ( __rdtsc() - rdtsc_begintick ) / rdtsc_clock );
+#elif defined(WIN32)
 #ifdef DEPRECATED_WINDOWS_SUPPORT
 	return GetTickCount();
 #else
 	return GetTickCount64();
 #endif
-#elif defined(ENABLE_RDTSC)
-	//
-		return (unsigned int)((_rdtsc() - RDTSC_BEGINTICK) / RDTSC_CLOCK);
-	//
 #elif defined(HAVE_MONOTONIC_CLOCK)
 	struct timespec tval;
 	clock_gettime(CLOCK_MONOTONIC, &tval);
