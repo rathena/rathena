@@ -4092,11 +4092,21 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		current_equip_opt_index = -1;
 	}
 
-	if (sc->count && sc->getSCE(SC_ITEMSCRIPT)) {
-		std::shared_ptr<item_data> data = item_db.find(sc->getSCE(SC_ITEMSCRIPT)->val1);
+	if (sc->count){
+		if( status_change_entry* sce = sc->getSCE(SC_ITEMSCRIPT); sce != nullptr ){
+			std::shared_ptr<item_data> data = item_db.find(sc->getSCE(SC_ITEMSCRIPT)->val1);
 
-		if (data && data->script)
-			run_script(data->script, 0, sd->bl.id, 0);
+			if (data && data->script)
+				run_script(data->script, 0, sd->bl.id, 0);
+		}
+
+		for( sc_type type = SC_NONE; type < SC_MAX; type = static_cast<sc_type>( type + 1 ) ){
+			if( status_change_entry* sce = sc->getSCE( type ); sce != nullptr ){
+				if( std::shared_ptr<s_status_change_db> scdb = status_db.find( type ); scdb != nullptr && scdb->script != nullptr ){
+					run_script( scdb->script, 0, sd->bl.id, 0 );
+				}
+			}
+		}
 	}
 
 	pc_bonus_script(sd);
@@ -10171,6 +10181,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	if( !sc )
 		return 0; // Unable to receive status changes
 
+	// Scripted status changes only work for players for the time being
+	if( scdb->script != nullptr && bl->type != BL_PC ){
+		return 0;
+	}
+
 	if( bl->type != BL_NPC && status_isdead(*bl) && ( type != SC_NOCHAT && type != SC_JAILED ) ) // SC_NOCHAT and SC_JAILED should work even on dead characters
 		return 0;
 
@@ -15739,6 +15754,33 @@ int16 AttributeDatabase::getAttribute(uint16 level, uint16 atk_ele, uint16 def_e
 	return this->attr_fix_table[level-1][atk_ele][def_ele];
 }
 
+s_status_change_db::s_status_change_db(){
+	this->type = SC_NONE;
+	this->icon = EFST_BLANK;
+	this->state = {};
+	this->calc_flag = {};
+	this->opt1 = OPT1_NONE;
+	this->opt2 = OPT2_NONE;
+	this->opt3 = OPT3_NORMAL;
+	this->look = OPTION_NOTHING;
+	this->flag = {};
+	this->skill_id = 0;
+	this->endonstart = {};
+	this->fail = {};
+	this->endreturn = {};
+	this->endonend = {};
+	this->min_duration = 1;
+	this->min_rate = 0;
+	this->script = nullptr;
+}
+
+s_status_change_db::~s_status_change_db(){
+	if( this->script != nullptr ){
+		script_free_code( this->script );
+		this->script = nullptr;
+	}
+}
+
 const std::string StatusDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/status.yml";
 }
@@ -16220,6 +16262,25 @@ uint64 StatusDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		}
 	}
 
+	if( this->nodeExists( node, "Script" ) ){
+		std::string script;
+
+		if( !this->asString( node, "Script", script ) ){
+			return 0;
+		}
+
+		if( status->script ){
+			script_free_code( status->script );
+			status->script = nullptr;
+		}
+
+		status->script = parse_script( script.c_str(), this->getCurrentFile().c_str(), this->getLineNumber(node["Script"]), SCRIPT_IGNORE_EXTERNAL_BRACKETS );
+	}else{
+		if( !exists ){
+			status->script = nullptr;
+		}
+	}
+
 	if (!exists) {
 		this->put(status_id, status);
 	}
@@ -16232,6 +16293,11 @@ void StatusDatabase::loadingFinished(){
 
 	for( auto& entry : *this ){
 		auto& status = entry.second;
+
+		if( status->script != nullptr ){
+			// Maybe some have already been set in the database, but just to be sure, trigger recalculation for everything battle relevant
+			status->calc_flag |= this->SCB_BATTLE;
+		}
 
 		if (status->type == SC_HALLUCINATION && !battle_config.display_hallucination) // Disable Hallucination.
 			status->icon = EFST_BLANK;
