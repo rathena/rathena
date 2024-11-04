@@ -1862,7 +1862,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 		map_foreachinallrange (mob_ai_sub_hard_activesearch, &md->bl, view_range, DEFAULT_ENEMY_TYPE(md), md, &tbl, mode);
 		// If a monster finds a target through search that is already in attack range it immediately switches to berserk mode
 		// This behavior overrides even angry mode and other mode-specific behavior
-		if (tbl && prev_id != md->target_id && battle_check_range(&md->bl, tbl, md->status.rhw.range)) {
+		if (tbl != nullptr && prev_id != md->target_id && battle_check_range(&md->bl, tbl, md->status.rhw.range)) {
 			md->state.aggressive = 0;
 			md->state.skillstate = MSS_BERSERK;
 		}
@@ -1982,7 +1982,8 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 				else { // Attack once and find a new random target
 					int search_size = (view_range < md->status.rhw.range) ? view_range : md->status.rhw.range;
 					unit_attack(&md->bl, tbl->id, 0);
-					if ((tbl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md), search_size))) {
+					tbl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md), search_size);
+					if (tbl != nullptr) {
 						md->target_id = tbl->id;
 						md->min_chase = md->db->range3;
 					}
