@@ -5995,7 +5995,8 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case MT_POWERFUL_SWING:
-			skillratio += -100 + 300 + 850 * skill_lv + 5 * sstatus->pow;	// !TODO: check POW ratio
+			skillratio += -100 + 300 + 850 * skill_lv;
+			skillratio += 5 * sstatus->pow; // !TODO: check POW ratio
 			if (sc && sc->getSCE(SC_AXE_STOMP))
 				skillratio += 100 + 100 * skill_lv;
 			RE_LVL_DMOD(100);
