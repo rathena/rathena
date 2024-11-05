@@ -1,0 +1,13 @@
+izlude,124,149,4	script	PlayerOnline	857,{
+	end;
+OnInit:
+	while (1) {
+		waitingroom "Player Online : "+ getusers(1) +" People", 0;
+		sleep 2000; // updates every 2 sec
+		delwaitingroom;
+	}
+OnPCLogoutEvent:
+		delwaitingroom;
+		waitingroom "Player Online : "+ getusers(1) +" People", 0;
+		end;
+}
