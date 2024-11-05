@@ -3836,8 +3836,8 @@ ACMD_FUNC(soulball)
 	}
 
 	if (sd->soulball > 0)
-		pc_delsoulball(sd, sd->soulball, true);
-	sd->soulball = number;
+		pc_delsoulball( *sd, sd->soulball, true );
+	pc_addsoulball( *sd, number );
 	clif_soulball(sd);
 
 	return 0;

@@ -5704,6 +5704,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case SHC_SAVAGE_IMPACT:
 	case SHC_IMPACT_CRATER:
 	case SHC_FATAL_SHADOW_CROW:
+	case SHC_CROSS_SLASH:
 	case MT_AXE_STOMP:
 	case MT_MIGHTY_SMASH:
 	case MT_RUSH_QUAKE:
@@ -5936,6 +5937,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					break;
 				case IG_SHIELD_SHOOTING:
 				case IG_GRAND_JUDGEMENT:
+				case SHC_CROSS_SLASH:
 					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 					sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
 					break;
@@ -18749,7 +18751,7 @@ void skill_consume_requirement(map_session_data *sd, uint16 skill_id, uint16 ski
 				case SP_SOULREAPER:
 				case SP_SOULEXPLOSION:
 				case SP_KAUTE:
-					pc_delsoulball(sd, require.spiritball, false);
+					pc_delsoulball( *sd, require.spiritball );
 					break;
 
 				// Skills that require servants.
@@ -22826,7 +22828,7 @@ void skill_select_menu( map_session_data& sd, uint16 skill_id ){
 	lv = (aslvl + 5) / 2; // The level the skill will be autocasted
 	lv = min(lv,sd.status.skill[sk_idx].lv);
 	prob = (aslvl >= 10) ? 15 : (30 - 2 * aslvl); // Probability at level 10 was increased to 15.
-	sc_start4(&sd.bl,&sd.bl,SC__AUTOSHADOWSPELL,100,id,lv,prob,aslvl,skill_get_time(SC_AUTOSHADOWSPELL,aslvl));
+	sc_start4(&sd.bl,&sd.bl,SC__AUTOSHADOWSPELL,100,id,lv,prob,(aslvl*5),skill_get_time(SC_AUTOSHADOWSPELL,aslvl));
 }
 
 int skill_elementalanalysis( map_session_data& sd, int n, uint16 skill_lv, unsigned short* item_list ){
