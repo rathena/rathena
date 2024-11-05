@@ -5990,7 +5990,8 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case MT_RUSH_STRIKE:
-			skillratio += -100 + 3500 * skill_lv + 5 * sstatus->pow;	// !TODO: check POW ratio
+			skillratio += -100 + 3500 * skill_lv;
+			skillratio += 5 * sstatus->pow; // !TODO: check POW ratio
 			RE_LVL_DMOD(100);
 			break;
 		case MT_POWERFUL_SWING:
