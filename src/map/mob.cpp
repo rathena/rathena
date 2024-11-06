@@ -1970,8 +1970,10 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 	// Normal attack / berserk skill is only used when target is in range
 	if (battle_check_range(&md->bl, tbl, md->status.rhw.range))
 	{
+		// Hiding is a special case because it prevents normal attacks but allows skill usage
+		// TODO: Some other states also have this behavior and should be investigated (e.g. NPC_SR_CURSEDCIRCLE)
 		if (!(md->sc.option&OPTION_HIDE)) {
-			// Target within range and able to use normal attack, engage
+			// Target within range and potentially able to use normal attack, engage
 			if (md->ud.target != tbl->id || md->ud.attacktimer == INVALID_TIMER)
 			{ //Only attack if no more attack delay left
 				if (tbl->type == BL_PC)
