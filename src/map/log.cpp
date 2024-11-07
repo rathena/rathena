@@ -540,7 +540,7 @@ void log_cash( map_session_data* sd, e_log_pick_type type, e_log_cash_type cash_
  * @param nameid Item used as food
  **/
 void log_feeding(map_session_data *sd, e_log_feeding_type type, t_itemid nameid) {
-	unsigned int target_id = 0, intimacy = 0;
+	uint32 target_id = 0, intimacy = 0;
 	unsigned short target_class = 0;
 
 	nullpo_retv( sd );

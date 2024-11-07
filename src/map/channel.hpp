@@ -46,7 +46,7 @@ struct Channel {
 	unsigned long color;		  ///< Channel color in BGR
 	unsigned char opt;			  ///< Channel options @see enum Channel_Opt
 	unsigned short msg_delay;	  ///< Chat delay in miliseconds
-	unsigned int char_id;		  ///< If CHAN_TYPE_PRIVATE, owner is char_id of channel creator
+	uint32 char_id;		  ///< If CHAN_TYPE_PRIVATE, owner is char_id of channel creator
 	uint16 m;					  ///< If CHAN_TYPE_MAP, owner is map id
 	int gid;					  ///< If CHAN_TYPE_ALLY, owner is first logged guild_id
 	DBMap *users;				  ///< List of users
@@ -70,7 +70,7 @@ struct Channel_Config {
 	struct {
 		unsigned char opt;			 ///< Options @see enum Channel_Opt
 		unsigned long color;		 ///< Default color
-		unsigned int delay;			 ///< Message delay
+		uint32 delay;			 ///< Message delay
 		unsigned short max_member;	 ///< Max member for each channel
 		unsigned allow : 1;			 ///< Allow private channel creation?
 		unsigned ban : 1;			 ///< Allow player to ban
@@ -89,7 +89,7 @@ extern struct Channel_Config channel_config;
 DBMap* channel_get_db(void);
 
 struct Channel* channel_create(struct Channel *tmp_chan);
-struct Channel* channel_create_simple(char *name, char *pass, enum Channel_Type chantype, unsigned int owner);
+struct Channel* channel_create_simple(char *name, char *pass, enum Channel_Type chantype, uint32 owner);
 int channel_delete(struct Channel *channel, bool force);
 
 int channel_join(struct Channel *channel, map_session_data *sd);

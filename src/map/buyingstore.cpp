@@ -50,12 +50,12 @@ enum e_buyingstore_failure
 };
 
 
-static unsigned int buyingstore_nextid = 0;
+static uint32 buyingstore_nextid = 0;
 static const t_itemid buyingstore_blankslots[MAX_SLOTS] = { 0 };  // used when checking whether or not an item's card slots are blank
 
 
 /// Returns unique buying store id
-static unsigned int buyingstore_getuid(void)
+static uint32 buyingstore_getuid(void)
 {
 	return ++buyingstore_nextid;
 }
@@ -113,8 +113,8 @@ int8 buyingstore_setup(map_session_data* sd, unsigned char slots){
 * @param at Autotrader info, or nullptr if requetsed not from autotrade persistance
 * @return 0 If success, 1 - Cannot open, 2 - Manner penalty, 3 - Mapflag restiction, 4 - Cell restriction, 5 - Invalid count/result, 6 - Cannot give item, 7 - Will be overweight
 */
-int8 buyingstore_create( map_session_data* sd, int zenylimit, unsigned char result, const char* storename, const struct PACKET_CZ_REQ_OPEN_BUYING_STORE_sub* itemlist, unsigned int count, struct s_autotrader *at ){
-	unsigned int i, weight, listidx;
+int8 buyingstore_create( map_session_data* sd, int zenylimit, unsigned char result, const char* storename, const struct PACKET_CZ_REQ_OPEN_BUYING_STORE_sub* itemlist, uint32 count, struct s_autotrader *at ){
+	uint32 i, weight, listidx;
 	char message_sql[MESSAGE_SIZE*2];
 	StringBuf buf;
 
@@ -323,9 +323,9 @@ void buyingstore_open(map_session_data* sd, uint32 account_id)
 * @param *itemlist List of sold items { <index>.W, <nameid>.W, <amount>.W }*
 * @param count Number of item on the itemlist
 */
-void buyingstore_trade( map_session_data* sd, uint32 account_id, unsigned int buyer_id, const struct PACKET_CZ_REQ_TRADE_BUYING_STORE_sub* itemlist, unsigned int count ){
+void buyingstore_trade( map_session_data* sd, uint32 account_id, uint32 buyer_id, const struct PACKET_CZ_REQ_TRADE_BUYING_STORE_sub* itemlist, uint32 count ){
 	int zeny = 0;
-	unsigned int weight;
+	uint32 weight;
 	map_session_data* pl_sd;
 
 	nullpo_retv(sd);
@@ -420,7 +420,7 @@ void buyingstore_trade( map_session_data* sd, uint32 account_id, unsigned int bu
 
 		// normally this is not supposed to happen, as the total weight is
 		// checked upon creation, but the buyer could have gained items
-		if( item->amount * (unsigned int)sd->inventory_data[index]->weight > pl_sd->max_weight - weight ){
+		if( item->amount * (uint32)sd->inventory_data[index]->weight > pl_sd->max_weight - weight ){
 			clif_buyingstore_trade_failed_seller( sd, BUYINGSTORE_TRADE_SELLER_FAILED, item->itemId );
 			return;
 		}
@@ -510,7 +510,7 @@ void buyingstore_trade( map_session_data* sd, uint32 account_id, unsigned int bu
 /// Checks if an item is being bought in given player's buying store.
 bool buyingstore_search(map_session_data* sd, t_itemid nameid)
 {
-	unsigned int i;
+	uint32 i;
 
 	nullpo_ret(sd);
 
@@ -533,7 +533,7 @@ bool buyingstore_search(map_session_data* sd, t_itemid nameid)
 /// @return Whether or not the search should be continued.
 bool buyingstore_searchall(map_session_data* sd, const struct s_search_store_search* s)
 {
-	unsigned int i, idx;
+	uint32 i, idx;
 	struct s_buyingstore_item* it;
 
 	nullpo_ret(sd);
@@ -552,12 +552,12 @@ bool buyingstore_searchall(map_session_data* sd, const struct s_search_store_sea
 		}
 		it = &sd->buyingstore.items[i];
 
-		if( s->min_price && s->min_price > (unsigned int)it->price )
+		if( s->min_price && s->min_price > (uint32)it->price )
 		{// too low price
 			continue;
 		}
 
-		if( s->max_price && s->max_price < (unsigned int)it->price )
+		if( s->max_price && s->max_price < (uint32)it->price )
 		{// too high price
 			continue;
 		}
@@ -568,7 +568,7 @@ bool buyingstore_searchall(map_session_data* sd, const struct s_search_store_sea
 		}
 
 		// Check if the result set is full
-		if( s->search_sd->searchstore.items.size() >= (unsigned int)battle_config.searchstore_maxresults ){
+		if( s->search_sd->searchstore.items.size() >= (uint32)battle_config.searchstore_maxresults ){
 			return false;
 		}
 

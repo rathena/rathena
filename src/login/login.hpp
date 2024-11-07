@@ -75,7 +75,7 @@ struct mmo_char_server {
 extern struct mmo_char_server ch_server[MAX_SERVERS];
 
 struct client_hash_node {
-	unsigned int group_id;			//inferior or egal group to apply restriction
+	uint32 group_id;				//inferior or egal group to apply restriction
 	uint8 hash[16];					///hash required for that groupid or below
 	struct client_hash_node *next;	///next entry
 };
@@ -83,8 +83,8 @@ struct client_hash_node {
 struct Login_Config {
 	uint32 login_ip;                                /// the address to bind to
 	uint16 login_port;                              /// the port to bind to
-	unsigned int ipban_cleanup_interval;            /// interval (in seconds) to clean up expired IP bans
-	unsigned int ip_sync_interval;                  /// interval (in minutes) to execute a DNS/IP update (for dynamic IPs)
+	uint32 ipban_cleanup_interval;                  /// interval (in seconds) to clean up expired IP bans
+	uint32 ip_sync_interval;                        /// interval (in minutes) to execute a DNS/IP update (for dynamic IPs)
 	bool log_login;                                 /// whether to log login server actions or not
 	char date_format[32];                           /// date format used in messages
 	bool console;                                   /// console input system enabled?
@@ -98,9 +98,9 @@ struct Login_Config {
 
 	bool ipban;                                     /// perform IP blocking (via contents of `ipbanlist`) ?
 	bool dynamic_pass_failure_ban;                  /// automatic IP blocking due to failed login attempts ?
-	unsigned int dynamic_pass_failure_ban_interval; /// how far to scan the loginlog for password failures in minutes
-	unsigned int dynamic_pass_failure_ban_limit;    /// number of failures needed to trigger the ipban
-	unsigned int dynamic_pass_failure_ban_duration; /// duration of the ipban in minutes
+	uint32 dynamic_pass_failure_ban_interval;       /// how far to scan the loginlog for password failures in minutes
+	uint32 dynamic_pass_failure_ban_limit;          /// number of failures needed to trigger the ipban
+	uint32 dynamic_pass_failure_ban_duration;       /// duration of the ipban in minutes
 	bool use_dnsbl;                                 /// dns blacklist blocking ?
 	char dnsbl_servs[1024];                         /// comma-separated list of dnsbl servers
 
@@ -109,9 +109,6 @@ struct Login_Config {
 
 	int client_hash_check;							/// flags for checking client md5
 	struct client_hash_node *client_hash_nodes;		/// linked list containing md5 hash for each gm group
-	char loginconf_name[256];						/// name of main config file
-	char msgconf_name[256];							/// name of msg_conf config file
-	char lanconf_name[256];							/// name of lan config file
 
 	bool usercount_disable;							/// Disable colorization and description in general?
 	int usercount_low;								/// Amount of users that will display in green
@@ -121,8 +118,8 @@ struct Login_Config {
 	int char_per_account;							/// number of characters an account can have
 #ifdef VIP_ENABLE
 	struct {
-		unsigned int group;							/// VIP group ID
-		unsigned int char_increase;					/// number of char-slot to increase in VIP state
+		uint32 group;								/// VIP group ID
+		uint32 char_increase;						/// number of char-slot to increase in VIP state
 	} vip_sys;
 #endif
 	bool use_web_auth_token;						/// Enable web authentication token system
@@ -136,7 +133,7 @@ extern struct Login_Config login_config;
 #define msg_config_read(cfgName) login_msg_config_read(cfgName)
 #define msg_txt(msg_number) login_msg_txt(msg_number)
 #define do_final_msg() login_do_final_msg()
-int login_msg_config_read(char *cfgName);
+int login_msg_config_read(const char *cfgName);
 const char* login_msg_txt(int msg_number);
 void login_do_final_msg(void);
 bool login_config_read(const char* cfgName, bool normal);

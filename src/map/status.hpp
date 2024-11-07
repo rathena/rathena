@@ -1311,6 +1311,23 @@ enum sc_type : int16 {
 	SC_POWERUP = 951,
 	SC_AGIUP,
 	SC_PROTECTION,
+	SC_BATH_FOAM_A,
+	SC_BATH_FOAM_B,
+	SC_BATH_FOAM_C,
+	SC_BUCHEDENOEL,
+	SC_EP16_DEF,
+	SC_STR_SCROLL,
+	SC_INT_SCROLL,
+	SC_CONTENTS_1,
+	SC_CONTENTS_2,
+	SC_CONTENTS_3,
+	SC_CONTENTS_4,
+	SC_CONTENTS_5,
+	SC_CONTENTS_6,
+	SC_CONTENTS_7,
+	SC_CONTENTS_8,
+	SC_CONTENTS_9,
+	SC_CONTENTS_10,
 
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
@@ -2797,7 +2814,7 @@ enum e_joint_break : uint8 {
 };
 
 extern short current_equip_item_index;
-extern unsigned int current_equip_combo_pos;
+extern uint32 current_equip_combo_pos;
 extern int current_equip_card_id;
 extern short current_equip_opt_index;
 
@@ -3204,9 +3221,13 @@ struct weapon_atk {
 
 ///For holding basic status (which can be modified by status changes)
 struct status_data {
-	unsigned int
-		hp, sp, ap, // see status_cpy before adding members before hp and sp
-		max_hp, max_sp, max_ap;
+	// see status_cpy before adding members before hp and sp
+	uint32 hp;
+	uint32 sp;
+	uint32 ap;
+	uint32 max_hp;
+	uint32 max_sp;
+	uint32 max_ap;
 	short
 		str, agi, vit, int_, dex, luk,
 		pow, sta, wis, spl, con, crt,
@@ -3252,7 +3273,8 @@ struct regen_data_sub {
 
 	//tick accumulation before healing.
 	struct {
-		unsigned int hp,sp;
+		uint32 hp;
+		uint32 sp;
 	} tick;
 
 	//Regen rates. n/100
@@ -3269,7 +3291,8 @@ struct regen_data {
 	//tick accumulation before healing.
 	struct {
 		t_tick hp, sp; //time of last natural recovery
-		unsigned int shp,ssp;
+		uint32 shp;
+		uint32 ssp;
 	} tick;
 
 	//Regen rates. n/100
@@ -3303,8 +3326,8 @@ struct status_change_entry {
 ///Status change
 class status_change {
 public:
-	unsigned int option;// effect state (bitfield)
-	unsigned int opt3;// skill state (bitfield)
+	uint32 option;// effect state (bitfield)
+	uint32 opt3;// skill state (bitfield)
 	unsigned short opt1;// body state
 	unsigned short opt2;// health state (bitfield)
 	unsigned char count;
@@ -3386,12 +3409,12 @@ static int status_kill( struct block_list* bl ){
 	return status_percent_damage( nullptr, bl, 100, 0, 0, true );
 }
 //Used to set the hp/sp/ap of an object to an absolute value (can't kill)
-int status_set_hp(struct block_list *bl, unsigned int hp, int flag);
-int status_set_maxhp(struct block_list *bl, unsigned int hp, int flag);
-int status_set_sp(struct block_list *bl, unsigned int sp, int flag);
-int status_set_maxsp(struct block_list *bl, unsigned int hp, int flag);
-int status_set_ap(struct block_list *bl, unsigned int ap, int flag);
-int status_set_maxap(struct block_list *bl, unsigned int ap, int flag);
+int status_set_hp(struct block_list *bl, uint32 hp, int flag);
+int status_set_maxhp(struct block_list *bl, uint32 hp, int flag);
+int status_set_sp(struct block_list *bl, uint32 sp, int flag);
+int status_set_maxsp(struct block_list *bl, uint32 hp, int flag);
+int status_set_ap(struct block_list *bl, uint32 ap, int flag);
+int status_set_maxap(struct block_list *bl, uint32 ap, int flag);
 int status_heal( struct block_list *bl,int64 hhp,int64 hsp, int64 hap, int flag );
 static int status_heal( struct block_list *bl,int64 hhp,int64 hsp, int flag ){
 	return status_heal( bl, hhp, hsp, 0, flag );
@@ -3537,7 +3560,7 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, status_change *sc);
 void status_calc_state(struct block_list *bl, status_change *sc, std::bitset<SCS_MAX> flag, bool start);
 
-void status_calc_slave_mode(struct mob_data *md, struct mob_data *mmd);
+void status_calc_slave_mode(mob_data& md);
 
 bool status_check_skilluse(struct block_list *src, struct block_list *target, uint16 skill_id, int flag);
 int status_check_visibility(struct block_list *src, struct block_list *target);
@@ -3548,12 +3571,14 @@ int status_change_spread(block_list *src, block_list *bl);
 unsigned short status_base_matk_min(const struct status_data* status);
 unsigned short status_base_matk_max(const struct status_data* status);
 #else
-unsigned int status_weapon_atk(struct weapon_atk wa, map_session_data *sd);
+uint32 status_weapon_atk(struct weapon_atk wa, map_session_data *sd);
 unsigned short status_base_atk_min(struct block_list *bl, const struct status_data* status, int level);
 unsigned short status_base_atk_max(struct block_list *bl, const struct status_data* status, int level);
 unsigned short status_base_matk_min(struct block_list *bl, const struct status_data* status, int level);
 unsigned short status_base_matk_max(struct block_list *bl, const struct status_data* status, int level);
 #endif
+uint16 status_calc_consumablematk( status_change *sc, int32 matk );
+uint16 status_calc_pseudobuff_matk( map_session_data *sd, status_change *sc, int32 matk );
 
 unsigned short status_base_atk(const struct block_list *bl, const struct status_data *status, int level);
 

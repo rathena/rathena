@@ -65,7 +65,7 @@ static char* msg_table[CHAR_MAX_MSG]; // Login Server messages_conf
 // check for exit signal
 // 0 is saving complete
 // other is char_id
-unsigned int save_flag = 0;
+uint32 save_flag = 0;
 
 // Advanced subnet check [LuzZza]
 struct s_subnet {
@@ -504,7 +504,7 @@ int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 		{
 			if( diff )
 				StringBuf_AppendStr(&buf, ",");// not the first hotkey
-			StringBuf_Printf(&buf, "('%d','%u','%u','%u','%u')", char_id, (unsigned int)i, (unsigned int)p->hotkeys[i].type, p->hotkeys[i].id , (unsigned int)p->hotkeys[i].lv);
+			StringBuf_Printf(&buf, "('%d','%u','%u','%u','%u')", char_id, (uint32)i, (uint32)p->hotkeys[i].type, p->hotkeys[i].id , (uint32)p->hotkeys[i].lv);
 			diff = 1;
 		}
 	}
@@ -3181,10 +3181,6 @@ void CharacterServer::handle_shutdown(){
 
 bool CharacterServer::initialize( int argc, char *argv[] ){
 	// Init default value
-	CHAR_CONF_NAME =   "conf/char_athena.conf";
-	LAN_CONF_NAME =    "conf/subnet_athena.conf";
-	SQL_CONF_NAME =    "conf/inter_athena.conf";
-	MSG_CONF_NAME_EN = "conf/msg_conf/char_msg.conf";
 	safestrncpy(console_log_filepath, "./log/char-msg_log.log", sizeof(console_log_filepath));
 
 	cli_get_options(argc,argv);
@@ -3194,7 +3190,7 @@ bool CharacterServer::initialize( int argc, char *argv[] ){
 	char_config_adjust();
 	char_lan_config_read(LAN_CONF_NAME);
 	char_set_default_sql();
-	char_sql_config_read(SQL_CONF_NAME);
+	char_sql_config_read(INTER_CONF_NAME);
 	msg_config_read(MSG_CONF_NAME_EN);
 
 #if !defined(BUILDBOT)
@@ -3205,7 +3201,7 @@ bool CharacterServer::initialize( int argc, char *argv[] ){
 	}
 #endif
 
-	inter_init_sql((argc > 2) ? argv[2] : SQL_CONF_NAME); // inter server configuration
+	inter_init_sql(INTER_CONF_NAME); // inter server configuration
 
 	char_mmo_sql_init();
 	char_read_fame_list(); //Read fame lists.

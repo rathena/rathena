@@ -2091,7 +2091,7 @@ TIMER_FUNC(pet_recovery_timer){
 TIMER_FUNC(pet_heal_timer){
 	map_session_data *sd = map_id2sd(id);
 	struct pet_data *pd;
-	unsigned int rate = 100;
+	uint32 rate = 100;
 
 	if(sd == nullptr || sd->pd == nullptr || sd->pd->s_skill == nullptr)
 		return 1;

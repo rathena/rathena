@@ -35,56 +35,6 @@ void display_helpscreen(bool do_exit) {
 }
 
 /**
- * Read the option specified in command line
- *  and assign the confs used by the different server.
- * @param argc:
- * @param argv:
- * @return true or Exit on failure.
- */
-int logcnslif_get_options(int argc, char ** argv) {
-	int i = 0;
-	for (i = 1; i < argc; i++) {
-		const char* arg = argv[i];
-
-		if (arg[0] != '-' && (arg[0] != '/' || arg[1] == '-')) {// -, -- and /
-			ShowError("Unknown option '%s'.\n", argv[i]);
-			exit(EXIT_FAILURE);
-		} else if ((++arg)[0] == '-') {// long option
-			arg++;
-
-			if (strcmp(arg, "help") == 0) {
-				display_helpscreen(true);
-			} else if (strcmp(arg, "version") == 0) {
-				display_versionscreen(true);
-			} else if (strcmp(arg, "run-once") == 0){ // close the map-server as soon as its done.. for testing [Celest]
-				global_core->set_run_once( true );
-			} else if (strcmp(arg, "lan-config") == 0) {
-				if (opt_has_next_value(arg, i, argc)) safestrncpy(login_config.lanconf_name, argv[++i], sizeof(login_config.lanconf_name));
-			} else if (strcmp(arg, "login-config") == 0) {
-				if (opt_has_next_value(arg, i, argc)) safestrncpy(login_config.loginconf_name, argv[++i], sizeof(login_config.loginconf_name));
-			} else if (strcmp(arg, "msg-config") == 0) {
-				if (opt_has_next_value(arg, i, argc)) safestrncpy(login_config.msgconf_name, argv[++i], sizeof(login_config.msgconf_name));
-			} else {
-				ShowError("Unknown option '%s'.\n", argv[i]);
-				exit(EXIT_FAILURE);
-			}
-		} else switch (arg[0]) {// short option
-			case '?':
-			case 'h':
-				display_helpscreen(true);
-				break;
-			case 'v':
-				display_versionscreen(true);
-				break;
-			default:
-				ShowError("Unknown option '%s'.\n", argv[i]);
-				exit(EXIT_FAILURE);
-		}
-	}
-	return 1;
-}
-
-/**
  * Console Command Parser
  * Transmited from command cli.cpp
  * note common name for all serv do not rename (extern in cli)
@@ -115,8 +65,8 @@ int cnslif_parse(const char* buf){
 			else if( strcmpi("alive", command) == 0 || strcmpi("status", command) == 0 )
 				ShowInfo(CL_CYAN "Console: " CL_BOLD "I'm Alive." CL_RESET"\n");
 			else if( strcmpi("reloadconf", command) == 0 ) {
-				ShowInfo("Reloading config file \"%s\"\n", login_config.loginconf_name);
-				login_config_read(login_config.loginconf_name, false);
+				ShowInfo("Reloading config file \"%s\"\n", LOGIN_CONF_NAME);
+				login_config_read(LOGIN_CONF_NAME, false);
 			}
 		}
 		if( strcmpi("create",type) == 0 )
@@ -142,7 +92,7 @@ int cnslif_parse(const char* buf){
 		ShowInfo("Available commands:\n");
 		ShowInfo("\t server:shutdown => Stops the server.\n");
 		ShowInfo("\t server:alive => Checks if the server is running.\n");
-		ShowInfo("\t server:reloadconf => Reload config file: \"%s\"\n", login_config.loginconf_name);
+		ShowInfo("\t server:reloadconf => Reload config file: \"%s\"\n", LOGIN_CONF_NAME);
 		ShowInfo("\t create:<username> <password> <sex:M|F> => Creates a new account.\n");
 	}
 	return 1;

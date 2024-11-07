@@ -626,7 +626,7 @@ bool mob_ksprotected (struct block_list *src, struct block_list *target)
 	return false;
 }
 
-struct mob_data *mob_once_spawn_sub(struct block_list *bl, int16 m, int16 x, int16 y, const char *mobname, int mob_id, const char *event, unsigned int size, enum mob_ai ai)
+struct mob_data *mob_once_spawn_sub(struct block_list *bl, int16 m, int16 x, int16 y, const char *mobname, int mob_id, const char *event, uint32 size, enum mob_ai ai)
 {
 	struct spawn_data data;
 
@@ -669,7 +669,7 @@ struct mob_data *mob_once_spawn_sub(struct block_list *bl, int16 m, int16 x, int
 /*==========================================
  * Spawn a single mob on the specified coordinates.
  *------------------------------------------*/
-int mob_once_spawn(map_session_data* sd, int16 m, int16 x, int16 y, const char* mobname, int mob_id, int amount, const char* event, unsigned int size, enum mob_ai ai)
+int mob_once_spawn(map_session_data* sd, int16 m, int16 x, int16 y, const char* mobname, int mob_id, int amount, const char* event, uint32 size, enum mob_ai ai)
 {
 	struct mob_data* md = nullptr;
 	int count, lv;
@@ -722,7 +722,7 @@ int mob_once_spawn(map_session_data* sd, int16 m, int16 x, int16 y, const char* 
 /*==========================================
  * Spawn mobs in the specified area.
  *------------------------------------------*/
-int mob_once_spawn_area(map_session_data* sd, int16 m, int16 x0, int16 y0, int16 x1, int16 y1, const char* mobname, int mob_id, int amount, const char* event, unsigned int size, enum mob_ai ai)
+int mob_once_spawn_area(map_session_data* sd, int16 m, int16 x0, int16 y0, int16 x1, int16 y1, const char* mobname, int mob_id, int amount, const char* event, uint32 size, enum mob_ai ai)
 {
 	int i, max, id = 0;
 	int lx = -1, ly = -1;
@@ -931,7 +931,7 @@ int mob_spawn_guardian(const char* mapname, int16 x, int16 y, const char* mobnam
 /*==========================================
  * Summoning BattleGround [Zephyrus]
  *------------------------------------------*/
-int mob_spawn_bg(const char* mapname, int16 x, int16 y, const char* mobname, int mob_id, const char* event, unsigned int bg_id)
+int mob_spawn_bg(const char* mapname, int16 x, int16 y, const char* mobname, int mob_id, const char* event, uint32 bg_id)
 {
 	struct mob_data *md = nullptr;
 	struct spawn_data data;
@@ -1055,7 +1055,7 @@ TIMER_FUNC(mob_delayspawn){
  *------------------------------------------*/
 int mob_setdelayspawn(struct mob_data *md)
 {
-	unsigned int spawntime;
+	uint32 spawntime;
 
 	if (!md->spawn) //Doesn't has respawn data!
 		return unit_free(&md->bl,CLR_DEAD);
@@ -1858,7 +1858,14 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 
 	if ((mode&MD_AGGRESSIVE && (!tbl || slave_lost_target)) || md->state.skillstate == MSS_FOLLOW)
 	{
+		int32 prev_id = md->target_id;
 		map_foreachinallrange (mob_ai_sub_hard_activesearch, &md->bl, view_range, DEFAULT_ENEMY_TYPE(md), md, &tbl, mode);
+		// If a monster finds a target through search that is already in attack range it immediately switches to berserk mode
+		// This behavior overrides even angry mode and other mode-specific behavior
+		if (tbl != nullptr && prev_id != md->target_id && battle_check_range(&md->bl, tbl, md->status.rhw.range)) {
+			md->state.aggressive = 0;
+			md->state.skillstate = MSS_BERSERK;
+		}
 	}
 	else
 	if (mode&MD_CHANGECHASE && (md->state.skillstate == MSS_RUSH || md->state.skillstate == MSS_FOLLOW))
@@ -1961,22 +1968,37 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 	}
 
 	// Normal attack / berserk skill is only used when target is in range
-	if (battle_check_range(&md->bl, tbl, md->status.rhw.range) && !(md->sc.option&OPTION_HIDE))
-	{	//Target within range and able to use normal attack, engage
-		if (md->ud.target != tbl->id || md->ud.attacktimer == INVALID_TIMER) 
-		{ //Only attack if no more attack delay left
-			if(tbl->type == BL_PC)
-				mob_log_damage(md, tbl, 0); //Log interaction (counts as 'attacker' for the exp bonus)
+	if (battle_check_range(&md->bl, tbl, md->status.rhw.range))
+	{
+		// Hiding is a special case because it prevents normal attacks but allows skill usage
+		// TODO: Some other states also have this behavior and should be investigated (e.g. NPC_SR_CURSEDCIRCLE)
+		if (!(md->sc.option&OPTION_HIDE)) {
+			// Target within range and potentially able to use normal attack, engage
+			if (md->ud.target != tbl->id || md->ud.attacktimer == INVALID_TIMER)
+			{ //Only attack if no more attack delay left
+				if (tbl->type == BL_PC)
+					mob_log_damage(md, tbl, 0); //Log interaction (counts as 'attacker' for the exp bonus)
 
-			if( !(mode&MD_RANDOMTARGET) )
-				unit_attack(&md->bl,tbl->id,1);
-			else { // Attack once and find a new random target
-				int search_size = (view_range < md->status.rhw.range) ? view_range : md->status.rhw.range;
-				unit_attack(&md->bl, tbl->id, 0);
-				if ((tbl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md), search_size))) {
-					md->target_id = tbl->id;
-					md->min_chase = md->db->range3;
+				if (!(mode&MD_RANDOMTARGET))
+					unit_attack(&md->bl,tbl->id,1);
+				else { // Attack once and find a new random target
+					int search_size = (view_range < md->status.rhw.range) ? view_range : md->status.rhw.range;
+					unit_attack(&md->bl, tbl->id, 0);
+					tbl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md), search_size);
+					if (tbl != nullptr) {
+						md->target_id = tbl->id;
+						md->min_chase = md->db->range3;
+					}
 				}
+			}
+		}
+		else if (md->state.skillstate == MSS_BERSERK && DIFF_TICK(md->ud.attackabletime, tick) <= 0) {
+			// Target within range and no attack delay, but unable to use normal attack, check for skill
+			// On official servers this check happens every 20ms
+			// If you want fully official behavior you will need to set MIN_MOBTHINKTIME to 20
+			if (mobskill_use(md, tick, -1)) {
+				// When a skill was used, the attack delay is applied
+				md->ud.attackabletime = tick + md->status.adelay;
 			}
 		}
 		return true;
@@ -2463,7 +2485,7 @@ void mob_log_damage(struct mob_data *md, struct block_list *src, int damage)
 	if( char_id )
 	{ //Log damage...
 		int i,minpos;
-		unsigned int mindmg;
+		uint32 mindmg;
 		for(i=0,minpos=DAMAGELOG_SIZE-1,mindmg=UINT_MAX;i<DAMAGELOG_SIZE;i++){
 			if(md->dmglog[i].id==char_id &&
 				md->dmglog[i].flag==flag)
@@ -2503,7 +2525,7 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 	}
 
 	if (src && damage > 0) { //Store total damage...
-		if (UINT_MAX - (unsigned int)damage > md->tdmg)
+		if (UINT_MAX - (uint32)damage > md->tdmg)
 			md->tdmg += damage;
 		else if (md->tdmg == UINT_MAX)
 			damage = 0; //Stop recording damage once the cap has been reached.
@@ -2549,7 +2571,7 @@ int mob_getdroprate(struct block_list *src, std::shared_ptr<s_mob_db> mob, int b
 	int drop_rate = base_rate;
 
 	if (md && battle_config.mob_size_influence) {  // Change drops depending on monsters size [Valaris]
-		unsigned int mob_size = md->special_state.size;
+		uint32 mob_size = md->special_state.size;
 		if (mob_size == SZ_MEDIUM && drop_rate >= 2)
 			drop_rate /= 2; // SZ_MEDIUM actually is small size modification... this is not a bug!
 		else if (mob_size == SZ_BIG)
@@ -2634,7 +2656,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	} pt[DAMAGELOG_SIZE];
 	int i, temp, count, m = md->bl.m;
 	int dmgbltypes = 0;  // bitfield of all bl types, that caused damage to the mob and are elligible for exp distribution
-	unsigned int mvp_damage;
+	uint32 mvp_damage;
 	t_tick tick = gettick();
 	bool rebirth, homkillonly, merckillonly;
 
@@ -3286,7 +3308,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
  * @param md : mob pointer
  * @param hp : hp to resurrect it with (only used for exp calculation)
  */
-void mob_revive(struct mob_data *md, unsigned int hp)
+void mob_revive(struct mob_data *md, uint32 hp)
 {
 	t_tick tick = gettick();
 	md->state.skillstate = MSS_IDLE;
@@ -3503,7 +3525,7 @@ int mob_class_change (struct mob_data *md, int mob_id)
 /*==========================================
  * mob heal, update display hp info of mob for players
  *------------------------------------------*/
-void mob_heal(struct mob_data *md,unsigned int heal)
+void mob_heal(struct mob_data *md,uint32 heal)
 {
 	if (battle_config.show_mob_info&3)
 		clif_name_area(&md->bl);
@@ -3677,7 +3699,7 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,uint16 skill_id)
 			md->status.hp = md->status.max_hp*hp_rate/100;
 
 		if (skill_id == NPC_SUMMONSLAVE) // Only appies to NPC_SUMMONSLAVE
-			status_calc_slave_mode(md, md2); // Inherit the aggressive mode of the master.
+			status_calc_slave_mode(*md); // Inherit the aggressive mode of the master.
 
 		if (md2->state.copy_master_mode)
 			md->status.mode = md2->status.mode;
@@ -4153,7 +4175,7 @@ static bool mob_clone_disabled_skills(uint16 skill_id) {
 //If mode is not passed, a default aggressive mode is used.
 //If master_id is passed, clone is attached to him.
 //Returns: ID of newly crafted copy.
-int mob_clone_spawn(map_session_data *sd, int16 m, int16 x, int16 y, const char *event, int master_id, enum e_mode mode, int flag, unsigned int duration)
+int mob_clone_spawn(map_session_data *sd, int16 m, int16 x, int16 y, const char *event, int master_id, enum e_mode mode, int flag, uint32 duration)
 {
 	int mob_id;
 	int inf, fd;
@@ -4376,7 +4398,7 @@ int mob_clone_delete(struct mob_data *md){
 }
 
 //Adjusts the drop rate of item according to the criteria given. [Skotlex]
-static unsigned int mob_drop_adjust(int baserate, int rate_adjust, unsigned short rate_min, unsigned short rate_max)
+static uint32 mob_drop_adjust(int baserate, int rate_adjust, unsigned short rate_min, unsigned short rate_max)
 {
 	double rate = baserate;
 
@@ -4388,7 +4410,7 @@ static unsigned int mob_drop_adjust(int baserate, int rate_adjust, unsigned shor
 		//Classical linear rate adjustment.
 		rate = rate * rate_adjust/100;
 
-	return (unsigned int)cap_value(rate,rate_min,rate_max);
+	return (uint32)cap_value(rate,rate_min,rate_max);
 }
 
 /**
@@ -5338,7 +5360,7 @@ static int mob_read_sqldb(void)
 	for( uint8 fi = 0; fi < ARRAYLENGTH(mob_db_name); ++fi ) {
 		// retrieve all rows from the mob database
 		if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT `id`,`name_aegis`,`name_english`,`name_japanese`,`level`,`hp`,`sp`,`base_exp`,`job_exp`,`mvp_exp`,`attack`,`attack2`,`defense`,`magic_defense`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,`attack_range`,`skill_range`,`chase_range`,`size`,`race`,"
-			"`racegroup_goblin`,`racegroup_kobold`,`racegroup_orc`,`racegroup_golem`,`racegroup_guardian`,`racegroup_ninja`,`racegroup_gvg`,`racegroup_battlefield`,`racegroup_treasure`,`racegroup_biolab`,`racegroup_manuk`,`racegroup_splendide`,`racegroup_scaraba`,`racegroup_ogh_atk_def`,`racegroup_ogh_hidden`,`racegroup_bio5_swordman_thief`,`racegroup_bio5_acolyte_merchant`,`racegroup_bio5_mage_archer`,`racegroup_bio5_mvp`,`racegroup_clocktower`,`racegroup_thanatos`,`racegroup_faceworm`,`racegroup_hearthunter`,`racegroup_rockridge`,`racegroup_werner_lab`,`racegroup_temple_demon`,`racegroup_illusion_vampire`,`racegroup_malangdo`,`racegroup_ep172alpha`,`racegroup_ep172beta`,`racegroup_ep172bath`,`racegroup_illusion_turtle`,`racegroup_rachel_sanctuary`,`racegroup_illusion_luanda`,`racegroup_illusion_frozen`,`racegroup_illusion_moonlight`,"
+			"`racegroup_goblin`,`racegroup_kobold`,`racegroup_orc`,`racegroup_golem`,`racegroup_guardian`,`racegroup_ninja`,`racegroup_gvg`,`racegroup_battlefield`,`racegroup_treasure`,`racegroup_biolab`,`racegroup_manuk`,`racegroup_splendide`,`racegroup_scaraba`,`racegroup_ogh_atk_def`,`racegroup_ogh_hidden`,`racegroup_bio5_swordman_thief`,`racegroup_bio5_acolyte_merchant`,`racegroup_bio5_mage_archer`,`racegroup_bio5_mvp`,`racegroup_clocktower`,`racegroup_thanatos`,`racegroup_faceworm`,`racegroup_hearthunter`,`racegroup_rockridge`,`racegroup_werner_lab`,`racegroup_temple_demon`,`racegroup_illusion_vampire`,`racegroup_malangdo`,`racegroup_ep172alpha`,`racegroup_ep172beta`,`racegroup_ep172bath`,`racegroup_illusion_turtle`,`racegroup_rachel_sanctuary`,`racegroup_illusion_luanda`,`racegroup_illusion_frozen`,`racegroup_illusion_moonlight`,`racegroup_ep16_def`,`racegroup_edda_arunafeltz`,"
 			"`element`,`element_level`,`walk_speed`,`attack_delay`,`attack_motion`,`damage_motion`,`damage_taken`,`ai`,`class`,"
 			"`mode_canmove`,`mode_looter`,`mode_aggressive`,`mode_assist`,`mode_castsensoridle`,`mode_norandomwalk`,`mode_nocast`,`mode_canattack`,`mode_castsensorchase`,`mode_changechase`,`mode_angry`,`mode_changetargetmelee`,`mode_changetargetchase`,`mode_targetweak`,`mode_randomtarget`,`mode_ignoremelee`,`mode_ignoremagic`,`mode_ignoreranged`,`mode_mvp`,`mode_ignoremisc`,`mode_knockbackimmune`,`mode_teleportblock`,`mode_fixeditemdrop`,`mode_detector`,`mode_statusimmune`,`mode_skillimmune`,"
 			"`mvpdrop1_item`,`mvpdrop1_rate`,`mvpdrop1_option`,`mvpdrop1_index`,`mvpdrop2_item`,`mvpdrop2_rate`,`mvpdrop2_option`,`mvpdrop2_index`,`mvpdrop3_item`,`mvpdrop3_rate`,`mvpdrop3_option`,`mvpdrop3_index`,"

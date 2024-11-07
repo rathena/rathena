@@ -12,6 +12,7 @@
 #include <mysql.h>
 
 #include "cbasetypes.hpp"
+#include "cli.hpp"
 #include "malloc.hpp"
 #include "showmsg.hpp"
 #include "strlib.hpp"
@@ -24,12 +25,10 @@
 #define my_bool bool
 #endif
 
-#define SQL_CONF_NAME "conf/inter_athena.conf"
-
-void ra_mysql_error_handler(unsigned int ecode);
+void ra_mysql_error_handler(uint32 ecode);
 
 int mysql_reconnect_type;
-unsigned int mysql_reconnect_count;
+uint32 mysql_reconnect_count;
 
 /// Sql handle
 struct Sql
@@ -99,7 +98,7 @@ Sql* Sql_Malloc(void)
  * @param self : sql handle
  * @return last error number
  */
-unsigned int Sql_GetError( Sql* self ){
+uint32 Sql_GetError( Sql* self ){
 	return mysql_errno( &self->handle );
 }
 
@@ -123,14 +122,14 @@ int Sql_Connect(Sql* self, const char* user, const char* passwd, const char* hos
 	StringBuf_Clear(&self->buf);
 
 #if !defined(MARIADB_BASE_VERSION) && !defined(MARIADB_VERSION_ID) && MYSQL_VERSION_ID >= 50710
-	unsigned int md = SSL_MODE_DISABLED;
+	uint32 md = SSL_MODE_DISABLED;
 
 	if( mysql_options( &self->handle, MYSQL_OPT_SSL_MODE, &md ) ){
 		ShowSQL( "Your MySQL version does not understand \"MYSQL_OPT_SSL_MODE\" yet. Please consider upgrading - especially if you encounter SSL related error messages from your MySQL server.\n" );
 	}
 #endif
 
-	if( !mysql_real_connect(&self->handle, host, user, passwd, db, (unsigned int)port, nullptr/*unix_socket*/, 0/*clientflag*/) )
+	if( !mysql_real_connect(&self->handle, host, user, passwd, db, (uint32)port, nullptr/*unix_socket*/, 0/*clientflag*/) )
 	{
 		ShowSQL("%s\n", mysql_error(&self->handle));
 		return SQL_ERROR;
@@ -660,7 +659,7 @@ static void SqlStmt_P_ShowDebugTruncatedColumn(SqlStmt* self, size_t i)
 	MYSQL_BIND* column;
 
 	meta = mysql_stmt_result_metadata(self->stmt);
-	field = mysql_fetch_field_direct(meta, (unsigned int)i);
+	field = mysql_fetch_field_direct(meta, (uint32)i);
 	ShowSQL("DB error - data of field '%s' was truncated.\n", field->name);
 	ShowDebug("column - %lu\n", (unsigned long)i);
 	Sql_P_ShowDebugMysqlFieldInfo("data   - ", field->type, field->flags&UNSIGNED_FLAG, self->column_lengths[i].length, "");
@@ -948,7 +947,7 @@ int SqlStmt_NextRow(SqlStmt* self)
 		{
 			MYSQL_BIND* column = &self->columns[i];
 			column->error = &truncated;
-			mysql_stmt_fetch_column(self->stmt, column, (unsigned int)i, 0);
+			mysql_stmt_fetch_column(self->stmt, column, (uint32)i, 0);
 			column->error = nullptr;
 			if( truncated )
 			{// report truncated column
@@ -1046,11 +1045,11 @@ void SqlStmt_Free(SqlStmt* self)
 
 
 /// Receives MySQL error codes during runtime (not on first-time-connects).
-void ra_mysql_error_handler(unsigned int ecode) {
+void ra_mysql_error_handler(uint32 ecode) {
 	switch( ecode ) {
 		case 2003:// Can't connect to MySQL (this error only happens here when failing to reconnect)
 			if( mysql_reconnect_type == 1 ) {
-				static unsigned int retry = 1;
+				static uint32 retry = 1;
 				if( ++retry > mysql_reconnect_count ) {
 					ShowFatalError("MySQL has been unreachable for too long, %d reconnects were attempted. Shutting Down\n", retry);
 					exit(EXIT_FAILURE);
@@ -1103,7 +1102,7 @@ void Sql_inter_server_read(const char* cfgName, bool first) {
 }
 
 void Sql_Init(void) {
-	Sql_inter_server_read(SQL_CONF_NAME,true);
+	Sql_inter_server_read(INTER_CONF_NAME,true);
 }
 
 #ifdef my_bool

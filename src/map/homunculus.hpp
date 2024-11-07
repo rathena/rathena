@@ -43,7 +43,7 @@ public:
 };
 
 struct s_hom_stats {
-	unsigned int HP, SP;
+	uint32 HP, SP;
 	unsigned short str, agi, vit, int_, dex, luk;
 };
 
@@ -207,7 +207,6 @@ int hom_recv_data(uint32 account_id, struct s_homunculus *sh, int flag); //albat
 struct view_data* hom_get_viewdata(int class_);
 int hom_class2mapid(int hom_class);
 enum homun_type hom_class2type(int class_);
-void hom_damage(struct homun_data *hd);
 int hom_dead(struct homun_data *hd);
 void hom_skillup(struct homun_data *hd,uint16 skill_id);
 void hom_calc_skilltree(homun_data *hd);
@@ -217,10 +216,10 @@ void hom_gainexp(struct homun_data *hd,t_exp exp);
 int hom_levelup(struct homun_data *hd);
 int hom_evolution(struct homun_data *hd);
 int hom_mutate(struct homun_data *hd,int homun_id);
-void hom_heal(struct homun_data *hd);
+void hom_heal(homun_data& hd, bool hp, bool sp);
 int hom_vaporize(map_session_data *sd, int flag);
 int hom_ressurect(map_session_data *sd, unsigned char per, short x, short y);
-void hom_revive(struct homun_data *hd, unsigned int hp, unsigned int sp);
+void hom_revive(struct homun_data *hd, uint32 hp, uint32 sp);
 void hom_reset_stats(struct homun_data *hd);
 int hom_shuffle(struct homun_data *hd); // [Zephyrus]
 void hom_save(struct homun_data *hd);
@@ -233,8 +232,8 @@ int hom_change_name(map_session_data *sd,char *name);
 void hom_change_name_ack(map_session_data *sd, char* name, int flag);
 #define hom_stop_walking(hd, type) unit_stop_walking(&(hd)->bl, type)
 #define hom_stop_attack(hd) unit_stop_attack(&(hd)->bl)
-int hom_increase_intimacy(struct homun_data * hd, unsigned int value);
-int hom_decrease_intimacy(struct homun_data * hd, unsigned int value);
+int hom_increase_intimacy(struct homun_data * hd, uint32 value);
+int hom_decrease_intimacy(struct homun_data * hd, uint32 value);
 int hom_skill_tree_get_max(int skill_id, int b_class);
 void hom_init_timers(struct homun_data * hd);
 void hom_reload(void);

@@ -58,7 +58,7 @@ char data_dir[1024] = "";
 
 
 // little endian char array to uint conversion
-static unsigned int getlong(unsigned char* p)
+static uint32 getlong(unsigned char* p)
 {
 	return (p[0] << 0 | p[1] << 8 | p[2] << 16 | p[3] << 24);
 }
@@ -235,7 +235,7 @@ static void grf_decode(unsigned char* buf, size_t len, char entry_type, int entr
  ******************************************************/
 
 /// zlib crc32
-unsigned long grfio_crc32(const unsigned char* buf, unsigned int len)
+unsigned long grfio_crc32(const unsigned char* buf, uint32 len)
 {
 	return crc32(crc32(0L, Z_NULL, 0), buf, len);
 }
@@ -272,7 +272,7 @@ static void hashinit(void)
 // hashes a filename string into a number from {0..255}
 static int filehash(const char* fname)
 {
-	unsigned int hash = 0;
+	uint32 hash = 0;
 	while(*fname) {
 		hash = (hash<<1) + (hash>>7)*9 + TOLOWER(*fname);
 		fname++;
@@ -363,7 +363,7 @@ static void filelist_compact(void)
 /// Combines are resource path with the data folder location to create local resource path.
 static void grfio_localpath_create(char* buffer, size_t size, const char* filename)
 {
-	unsigned int i;
+	uint32 i;
 	size_t len;
 
 	len = strlen(data_dir);

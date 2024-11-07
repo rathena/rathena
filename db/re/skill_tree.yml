@@ -6807,6 +6807,21 @@ Body:
             Level: 4
           - Name: MT_SUMMON_ABR_MOTHER_NET
             Level: 4
+      - Name: MT_RUSH_STRIKE
+        MaxLevel: 5
+        Requires:
+          - Name: MT_RUSH_QUAKE
+            Level: 5
+      - Name: MT_POWERFUL_SWING
+        MaxLevel: 5
+        Requires:
+          - Name: MT_RUSH_STRIKE
+            Level: 3
+      - Name: MT_ENERGY_CANNONADE
+        MaxLevel: 5
+        Requires:
+          - Name: MT_TRIPLE_LASER
+            Level: 3
   - Job: Shadow_Cross
     Inherit:
       Novice: true
@@ -6891,6 +6906,13 @@ Body:
             Level: 5
           - Name: SHC_SHADOW_STAB
             Level: 5
+      - Name: SHC_CROSS_SLASH
+        MaxLevel: 5
+        Requires:
+          - Name: GC_WEAPONBLOCKING
+            Level: 3
+          - Name: SHC_DANCING_KNIFE
+            Level: 3
   - Job: Arch_Mage
     Inherit:
       Novice: true

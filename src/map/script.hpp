@@ -147,8 +147,8 @@ struct eri;
 extern int potion_flag; //For use on Alchemist improved potions/Potion Pitcher. [Skotlex]
 extern int potion_hp, potion_per_hp, potion_sp, potion_per_sp;
 extern int potion_target;
-extern unsigned int *generic_ui_array;
-extern unsigned int generic_ui_array_size;
+extern uint32 *generic_ui_array;
+extern uint32 generic_ui_array_size;
 
 struct Script_Config {
 	unsigned warn_func_mismatch_argtypes : 1;
@@ -331,7 +331,7 @@ struct script_state {
 	unsigned mes_active : 1;  // Store if invoking character has a NPC dialog box open.
 	unsigned clear_cutin : 1;
 	char* funcname; // Stores the current running function name
-	unsigned int id;
+	uint32 id;
 };
 
 struct script_reg {
@@ -345,9 +345,9 @@ struct script_regstr {
 };
 
 struct script_array {
-	unsigned int id;       ///< the first 32b of the 64b uid, aka the id
-	unsigned int size;     ///< how many members
-	unsigned int *members; ///< member list
+	uint32 id;       ///< the first 32b of the 64b uid, aka the id
+	uint32 size;     ///< how many members
+	uint32 *members; ///< member list
 };
 
 enum script_parse_options {
@@ -2143,6 +2143,8 @@ enum e_hat_effects : int16{
 	HAT_EF_VACATION,
 	HAT_EF_C_FH_LOSTWING,
 	FOOTPRINT_EF_DOGFOOT,
+	HAT_EF_C_AUSPICLOUD,
+	HAT_EF_AURA_OF_GHOST_S,
 	HAT_EF_MAX
 };
 
@@ -2224,8 +2226,8 @@ public:
  **/
 extern struct eri *array_ers;
 extern DBMap *st_db;
-extern unsigned int active_scripts;
-extern unsigned int next_id;
+extern uint32 active_scripts;
+extern uint32 next_id;
 extern struct eri *st_ers;
 extern struct eri *stack_ers;
 
@@ -2261,7 +2263,7 @@ void script_free_state(struct script_state* st);
 
 struct DBMap* script_get_label_db(void);
 struct DBMap* script_get_userfunc_db(void);
-void script_run_autobonus(const char *autobonus, map_session_data *sd, unsigned int pos);
+void script_run_autobonus(const char *autobonus, map_session_data *sd, uint32 pos);
 void script_run_petautobonus(const std::string &autobonus, map_session_data &sd);
 
 const char* script_get_constant_str(const char* prefix, int64 value);
@@ -2290,18 +2292,18 @@ void setd_sub_str( struct script_state* st, map_session_data* sd, const char* va
 struct reg_db *script_array_src(struct script_state *st, map_session_data *sd, const char *name, struct reg_db *ref);
 void script_array_update(struct reg_db *src, int64 num, bool empty);
 void script_array_delete(struct reg_db *src, struct script_array *sa);
-void script_array_remove_member(struct reg_db *src, struct script_array *sa, unsigned int idx);
-void script_array_add_member(struct script_array *sa, unsigned int idx);
-unsigned int script_array_size(struct script_state *st, map_session_data *sd, const char *name, struct reg_db *ref);
-unsigned int script_array_highest_key(struct script_state *st, map_session_data *sd, const char *name, struct reg_db *ref);
+void script_array_remove_member(struct reg_db *src, struct script_array *sa, uint32 idx);
+void script_array_add_member(struct script_array *sa, uint32 idx);
+uint32 script_array_size(struct script_state *st, map_session_data *sd, const char *name, struct reg_db *ref);
+uint32 script_array_highest_key(struct script_state *st, map_session_data *sd, const char *name, struct reg_db *ref);
 void script_array_ensure_zero(struct script_state *st, map_session_data *sd, int64 uid, struct reg_db *ref);
 int script_free_array_db(DBKey key, DBData *data, va_list ap);
 /* */
 void script_reg_destroy_single(map_session_data *sd, int64 reg, struct script_reg_state *data);
 int script_reg_destroy(DBKey key, DBData *data, va_list ap);
 /* */
-void script_generic_ui_array_expand(unsigned int plus);
-unsigned int *script_array_cpy_list(struct script_array *sa);
+void script_generic_ui_array_expand(uint32 plus);
+uint32 *script_array_cpy_list(struct script_array *sa);
 
 bool script_check_RegistryVariableLength(int pType, const char *val, size_t* vlen);
 

@@ -844,9 +844,7 @@ int guild_recv_info(const struct mmo_guild &sg) {
 #endif
 
 			//Also set the guild master flag.
-			sd->guild = g;
 			sd->state.gmaster_flag = 1;
-			clif_name_area(&sd->bl); // [LuzZza]
 			clif_guild_masterormember(*sd);
 		}
 	} else {
@@ -862,7 +860,6 @@ int guild_recv_info(const struct mmo_guild &sg) {
 	for(i=bm=m=0;i<g->guild.max_member;i++){
 		if(g->guild.member[i].account_id>0){
 			sd = g->guild.member[i].sd = guild_sd_check(g->guild.guild_id, g->guild.member[i].account_id, g->guild.member[i].char_id);
-			if (sd) clif_name_area(&sd->bl); // [LuzZza]
 			m++;
 		}else
 			g->guild.member[i].sd=nullptr;
@@ -874,7 +871,10 @@ int guild_recv_info(const struct mmo_guild &sg) {
 		sd = g->guild.member[i].sd;
 		if( sd==nullptr )
 			continue;
-		sd->guild = g;
+		if( sd->guild == nullptr || sd->guild != g ){
+			sd->guild = g;
+			clif_name_area(&sd->bl);
+		}
 		if(channel_config.ally_tmpl.name[0] && (channel_config.ally_tmpl.opt&CHAN_OPT_AUTOJOIN)) {
 			channel_gjoin(sd,3); //make all member join guildchan+allieschan
 		}
@@ -1091,6 +1091,7 @@ void guild_member_joined(map_session_data *sd) {
 	else {
 		g->guild.member[i].sd = sd;
 		sd->guild = g;
+		clif_name_area(&sd->bl);
 
 		if( channel_config.ally_tmpl.name[0] && (channel_config.ally_tmpl.opt&CHAN_OPT_AUTOJOIN) ) {
 			channel_gjoin(sd,3);
@@ -1134,13 +1135,14 @@ int guild_member_added(int guild_id,uint32 account_id,uint32 char_id,int flag) {
 	clif_guild_belonginfo( *sd );
 	clif_guild_notice( *sd );
 
-	//TODO: send new emblem info to others
+	// Send emblem update to self and people around
+	clif_guild_emblem_area(&sd->bl);
 
 	if( sd2!=nullptr )
 		clif_guild_inviteack( *sd2, 2 );
 
-	//Next line commented because it do nothing, look at guild_recv_info [LuzZza]
-	//clif_charnameupdate(sd); //Update display name [Skotlex]
+	// Update display name
+	clif_name_area(&sd->bl);
 
 	if (g->instance_id > 0)
 		instance_reqinfo(sd, g->instance_id);
@@ -1302,7 +1304,9 @@ int guild_member_withdraw(int guild_id, uint32 account_id, uint32 char_id, int f
 		status_change_end(&sd->bl,SC_SOULCOLD);
 		status_change_end(&sd->bl,SC_HAWKEYES);
 		status_change_end(&sd->bl,SC_EMERGENCY_MOVE);
-		//@TODO: Send emblem update to self and people around
+
+		// Send emblem update to self and people around
+		clif_guild_emblem_area(&sd->bl);
 	}
 	return 0;
 }
@@ -1497,7 +1501,7 @@ int guild_memberposition_changed(struct mmo_guild &g,int idx,int pos) {
 
 	// Update char position in client [LuzZza]
 	if(g.member[idx].sd != nullptr)
-		clif_name_area(&g.member[idx].sd->bl);
+		clif_guild_position_selected(*g.member[idx].sd);
 	return 0;
 }
 
@@ -1528,7 +1532,7 @@ int guild_position_changed(int guild_id,int idx,struct guild_position *p) {
 	// Update char name in client [LuzZza]
 	for(i=0;i<g->guild.max_member;i++)
 		if(g->guild.member[i].position == idx && g->guild.member[i].sd != nullptr)
-			clif_name_area(&g->guild.member[i].sd->bl);
+			clif_guild_position_selected(*g->guild.member[i].sd);
 	return 0;
 }
 

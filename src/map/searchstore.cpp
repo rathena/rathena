@@ -112,9 +112,9 @@ bool searchstore_open(map_session_data& sd, uint16 uses, e_searchstore_effecttyp
  * @param cardlist : list with stored cards (cards attached to items)
  * @param card_count : amount of items in cardlist
  */
-void searchstore_query(map_session_data& sd, e_searchstore_searchtype type, unsigned int min_price, unsigned int max_price, const struct PACKET_CZ_SEARCH_STORE_INFO_item* itemlist, unsigned int item_count, const struct PACKET_CZ_SEARCH_STORE_INFO_item* cardlist, unsigned int card_count)
+void searchstore_query(map_session_data& sd, e_searchstore_searchtype type, uint32 min_price, uint32 max_price, const struct PACKET_CZ_SEARCH_STORE_INFO_item* itemlist, uint32 item_count, const struct PACKET_CZ_SEARCH_STORE_INFO_item* cardlist, uint32 card_count)
 {
-	unsigned int i;
+	uint32 i;
 	map_session_data* pl_sd;
 	struct DBIterator *iter;
 	struct s_search_store_search s;
@@ -283,7 +283,7 @@ void searchstore_close(map_session_data& sd)
  */
 void searchstore_click(map_session_data& sd, uint32 account_id, int store_id, t_itemid nameid)
 {
-	unsigned int i;
+	uint32 i;
 	map_session_data* pl_sd;
 	searchstore_search_t store_search;
 
