@@ -909,7 +909,7 @@ int quest_check(map_session_data *sd, int quest_id, e_quest_check_type type)
 				return 1;
 			return sd->quest_log[i].state;
 		case PLAYTIME:
-			return (sd->quest_log[i].time < (unsigned int)time(nullptr) ? 2 : sd->quest_log[i].state == Q_COMPLETE ? 1 : 0);
+			return (sd->quest_log[i].time < (uint32)time(nullptr) ? 2 : sd->quest_log[i].state == Q_COMPLETE ? 1 : 0);
 		case HUNTING:
 			if (sd->quest_log[i].state == Q_INACTIVE || sd->quest_log[i].state == Q_ACTIVE) {
 				int j;
@@ -918,7 +918,7 @@ int quest_check(map_session_data *sd, int quest_id, e_quest_check_type type)
 				ARR_FIND(0, qi->objectives.size(), j, sd->quest_log[i].count[j] < qi->objectives[j]->count);
 				if (j == qi->objectives.size())
 					return 2;
-				if (sd->quest_log[i].time < (unsigned int)time(nullptr))
+				if (sd->quest_log[i].time < (uint32)time(nullptr))
 					return 1;
 			}
 			return 0;

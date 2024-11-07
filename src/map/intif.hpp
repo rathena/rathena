@@ -25,7 +25,7 @@ int intif_parse(int fd);
 
 int intif_broadcast( const char* mes, size_t len, int type );
 int intif_broadcast2( const char* mes, size_t len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY );
-int intif_broadcast_obtain_special_item(map_session_data *sd, t_itemid nameid, unsigned int sourceid, unsigned char type);
+int intif_broadcast_obtain_special_item(map_session_data *sd, t_itemid nameid, uint32 sourceid, unsigned char type);
 int intif_broadcast_obtain_special_item_npc(map_session_data *sd, t_itemid nameid);
 int intif_main_message(map_session_data* sd, const char* message);
 
@@ -48,7 +48,7 @@ int intif_party_changemap(map_session_data *sd, int online);
 int intif_break_party(int party_id);
 int intif_party_message(int party_id, uint32 account_id, const char *mes, size_t len);
 int intif_party_leaderchange(int party_id,uint32 account_id,uint32 char_id);
-int intif_party_sharelvlupdate(unsigned int share_lvl);
+int intif_party_sharelvlupdate(uint32 share_lvl);
 
 int intif_guild_create(const char *name, const struct guild_member *master);
 int intif_guild_request_info(int guild_id);
@@ -106,9 +106,9 @@ bool intif_mail_checkreceiver(map_session_data* sd, char* name);
 // AUCTION SYSTEM
 int intif_Auction_requestlist(uint32 char_id, short type, int price, const char* searchtext, short page);
 int intif_Auction_register(struct auction_data *auction);
-int intif_Auction_cancel(uint32 char_id, unsigned int auction_id);
-int intif_Auction_close(uint32 char_id, unsigned int auction_id);
-int intif_Auction_bid(uint32 char_id, const char* name, unsigned int auction_id, int bid);
+int intif_Auction_cancel(uint32 char_id, uint32 auction_id);
+int intif_Auction_close(uint32 char_id, uint32 auction_id);
+int intif_Auction_bid(uint32 char_id, const char* name, uint32 auction_id, int bid);
 // ELEMENTAL SYSTEM
 int intif_elemental_create(struct s_elemental *ele);
 int intif_elemental_request(int ele_id, uint32 char_id);

@@ -656,9 +656,9 @@ bool login_config_read(const char* cfgName, bool normal) {
 		else if(!strcmpi(w1, "dnsbl_servers"))
 			safestrncpy(login_config.dnsbl_servs, w2, sizeof(login_config.dnsbl_servs));
 		else if(!strcmpi(w1, "ipban_cleanup_interval"))
-			login_config.ipban_cleanup_interval = (unsigned int)atoi(w2);
+			login_config.ipban_cleanup_interval = (uint32)atoi(w2);
 		else if(!strcmpi(w1, "ip_sync_interval"))
-			login_config.ip_sync_interval = (unsigned int)1000*60*atoi(w2); //w2 comes in minutes.
+			login_config.ip_sync_interval = (uint32)1000*60*atoi(w2); //w2 comes in minutes.
 		else if(!strcmpi(w1, "client_hash_check"))
 			login_config.client_hash_check = config_switch(w2);
 		else if(!strcmpi(w1, "use_web_auth_token"))
@@ -678,7 +678,7 @@ bool login_config_read(const char* cfgName, bool normal) {
 					int i;
 					for (i = 0; i < 32; i += 2) {
 						char buf[3];
-						unsigned int byte;
+						uint32 byte;
 
 						memcpy(buf, &md5[i], 2);
 						buf[2] = 0;
@@ -717,7 +717,7 @@ bool login_config_read(const char* cfgName, bool normal) {
 				login_config.vip_sys.char_increase = MAX_CHAR_VIP;
 			else
 				login_config.vip_sys.char_increase = atoi(w2);
-			if (login_config.vip_sys.char_increase > (unsigned int) MAX_CHARS-login_config.char_per_account) {
+			if (login_config.vip_sys.char_increase > (uint32)MAX_CHARS-login_config.char_per_account) {
 				ShowWarning("vip_char_increase too high, can only go up to %d, according to your char_per_account config %d\n",
 					MAX_CHARS-login_config.char_per_account,login_config.char_per_account);
 				login_config.vip_sys.char_increase = MAX_CHARS-login_config.char_per_account;

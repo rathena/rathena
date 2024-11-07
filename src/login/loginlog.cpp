@@ -32,7 +32,7 @@ static bool enabled = false;
  * @param minutes: intervall to search
  * @return number of failed attempts
  */
-unsigned long loginlog_failedattempts(uint32 ip, unsigned int minutes) {
+unsigned long loginlog_failedattempts(uint32 ip, uint32 minutes) {
 	unsigned long failures = 0;
 
 	if( !enabled )

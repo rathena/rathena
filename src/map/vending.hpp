@@ -15,7 +15,7 @@ struct s_autotrader;
 struct s_vending {
 	short index; /// cart index (return item data)
 	short amount; ///amout of the item for vending
-	unsigned int value; ///at wich price
+	uint32 value; ///at which price
 };
 
 DBMap * vending_getdb();

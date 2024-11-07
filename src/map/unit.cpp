@@ -2063,7 +2063,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 #ifndef RENEWAL_CAST
 		case KN_CHARGEATK:
 		{
-			unsigned int k = (distance_bl(src,target)-1)/3; //Range 0-3: 500ms, Range 4-6: 1000ms, Range 7+: 1500ms
+			uint32 k = (distance_bl(src,target)-1)/3; //Range 0-3: 500ms, Range 4-6: 1000ms, Range 7+: 1500ms
 			if(k > 2)
 				k = 2;
 			casttime += casttime * k;

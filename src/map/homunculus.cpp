@@ -753,7 +753,7 @@ void hom_gainexp(struct homun_data *hd,t_exp exp)
 * @param value Added intimacy
 * @return New intimacy value
 */
-int hom_increase_intimacy(struct homun_data * hd, unsigned int value)
+int hom_increase_intimacy(struct homun_data * hd, uint32 value)
 {
 	nullpo_ret(hd);
 	if (battle_config.homunculus_friendly_rate != 100)
@@ -772,7 +772,7 @@ int hom_increase_intimacy(struct homun_data * hd, unsigned int value)
 * @param value Reduced intimacy
 * @return New intimacy value
 */
-int hom_decrease_intimacy(struct homun_data * hd, unsigned int value)
+int hom_decrease_intimacy(struct homun_data * hd, uint32 value)
 {
 	nullpo_ret(hd);
 	if (hd->homunculus.intimacy >= value)
@@ -1301,7 +1301,7 @@ int hom_ressurect(map_session_data* sd, unsigned char per, short x, short y)
 * @param hp
 * @param sp
 */
-void hom_revive(struct homun_data *hd, unsigned int hp, unsigned int sp)
+void hom_revive(struct homun_data *hd, uint32 hp, uint32 sp)
 {
 	map_session_data *sd = hd->master;
 	hd->homunculus.hp = hd->battle_status.hp;

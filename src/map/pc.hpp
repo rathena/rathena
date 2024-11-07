@@ -183,7 +183,7 @@ struct skill_cooldown_entry {
 
 #ifdef VIP_ENABLE
 struct vip_info {
-	unsigned int enabled : 1;
+	uint32 enabled : 1;
 	time_t time;
 	bool disableshowrate; //State to disable clif_display_pinfo(). [Cydh]
 };
@@ -227,7 +227,7 @@ static const char* parameter_names[PARAM_MAX] = {
 	"Crt"
 };
 
-extern unsigned int equip_bitmask[EQI_MAX];
+extern uint32 equip_bitmask[EQI_MAX];
 
 #define equip_index_check(i) ( (i) >= EQI_ACC_L && (i) < EQI_MAX )
 
@@ -304,7 +304,7 @@ struct s_addeffect {
 	int rate; /// Rate
 	short arrow_rate; /// Arrow rate
 	unsigned char flag; /// Flag
-	unsigned int duration; /// Duration the effect applied
+	uint32 duration; /// Duration the effect applied
 };
 
 /// AddEffOnSkill bonus struct
@@ -313,7 +313,7 @@ struct s_addeffectonskill {
 	int rate; /// Rate
 	short skill_id; /// Skill ID
 	unsigned char target; /// Target
-	unsigned int duration; /// Duration the effect applied
+	uint32 duration; /// Duration the effect applied
 };
 
 ///Struct of add drop item/group rate
@@ -335,10 +335,10 @@ struct s_vanish_bonus {
 struct s_autobonus {
 	short rate;
 	uint16 atk_type;
-	unsigned int duration;
+	uint32 duration;
 	char *bonus_script, *other_script;
 	int active;
-	unsigned int pos;
+	uint32 pos;
 
 	~s_autobonus();
 };
@@ -386,57 +386,57 @@ public:
 	//NOTE: When deciding to add a flag to state or special_state, take into consideration that state is preserved in
 	//status_calc_pc, while special_state is recalculated in each call. [Skotlex]
 	struct s_state {
-		unsigned int active : 1; //Marks active player (not active is logging in/out, or changing map servers)
-		unsigned int menu_or_input : 1;// if a script is waiting for feedback from the player
-		unsigned int dead_sit : 2;
-		unsigned int lr_flag : 3;//1: left h. weapon; 2: arrow; 3: shield
-		unsigned int connect_new : 1;
-		unsigned int arrow_atk : 1;
-		unsigned int gangsterparadise : 1;
-		unsigned int rest : 1;
-		unsigned int storage_flag : 3; //0: closed, 1: Normal Storage open, 2: guild storage open [Skotlex], 3: Premium Storage
-		unsigned int snovice_dead_flag : 1; //Explosion spirits on death: 0 off, 1 used.
-		unsigned int abra_flag : 2; // Abracadabra bugfix by Aru
-		unsigned int autocast : 1; // Autospell flag [Inkfish]
-		unsigned int autotrade : 3;	//By Fantik. &2 Requested by vending autotrade; &4 Requested by buyingstore autotrade
-		unsigned int showdelay :1;
-		unsigned int showexp :1;
-		unsigned int showzeny :1;
-		unsigned int noask :1; // [LuzZza]
-		unsigned int trading :1; //[Skotlex] is 1 only after a trade has started.
-		unsigned int deal_locked :2; //1: Clicked on OK. 2: Clicked on TRADE
-		unsigned int size :2; // for tiny/large types
-		unsigned int night :1; //Holds whether or not the player currently has the SI_NIGHT effect on. [Skotlex]
-		unsigned int using_fake_npc :1;
-		unsigned int rewarp :1; //Signals that a player should warp as soon as he is done loading a map. [Skotlex]
-		unsigned int killer : 1;
-		unsigned int killable : 1;
-		unsigned int doridori : 1;
-		unsigned int ignoreAll : 1;
-		unsigned int debug_remove_map : 1; // temporary state to track double remove_map's [FlavioJS]
-		unsigned int buyingstore : 1;
-		unsigned int lesseffect : 1;
-		unsigned int vending : 1;
-		unsigned int noks : 3; // [Zeph Kill Steal Protection]
-		unsigned int changemap : 1;
-		unsigned int callshop : 1; // flag to indicate that a script used callshop; on a shop
+		uint32 active : 1; //Marks active player (not active is logging in/out, or changing map servers)
+		uint32 menu_or_input : 1;// if a script is waiting for feedback from the player
+		uint32 dead_sit : 2;
+		uint32 lr_flag : 3;//1: left h. weapon; 2: arrow; 3: shield
+		uint32 connect_new : 1;
+		uint32 arrow_atk : 1;
+		uint32 gangsterparadise : 1;
+		uint32 rest : 1;
+		uint32 storage_flag : 3; //0: closed, 1: Normal Storage open, 2: guild storage open [Skotlex], 3: Premium Storage
+		uint32 snovice_dead_flag : 1; //Explosion spirits on death: 0 off, 1 used.
+		uint32 abra_flag : 2; // Abracadabra bugfix by Aru
+		uint32 autocast : 1; // Autospell flag [Inkfish]
+		uint32 autotrade : 3;	//By Fantik. &2 Requested by vending autotrade; &4 Requested by buyingstore autotrade
+		uint32 showdelay :1;
+		uint32 showexp :1;
+		uint32 showzeny :1;
+		uint32 noask :1; // [LuzZza]
+		uint32 trading :1; //[Skotlex] is 1 only after a trade has started.
+		uint32 deal_locked :2; //1: Clicked on OK. 2: Clicked on TRADE
+		uint32 size :2; // for tiny/large types
+		uint32 night :1; //Holds whether or not the player currently has the SI_NIGHT effect on. [Skotlex]
+		uint32 using_fake_npc :1;
+		uint32 rewarp :1; //Signals that a player should warp as soon as he is done loading a map. [Skotlex]
+		uint32 killer : 1;
+		uint32 killable : 1;
+		uint32 doridori : 1;
+		uint32 ignoreAll : 1;
+		uint32 debug_remove_map : 1; // temporary state to track double remove_map's [FlavioJS]
+		uint32 buyingstore : 1;
+		uint32 lesseffect : 1;
+		uint32 vending : 1;
+		uint32 noks : 3; // [Zeph Kill Steal Protection]
+		uint32 changemap : 1;
+		uint32 callshop : 1; // flag to indicate that a script used callshop; on a shop
 		short pmap; // Previous map on Map Change
 		unsigned short autoloot;
 		t_itemid autolootid[AUTOLOOTITEM_SIZE]; // [Zephyrus]
 		unsigned short autoloottype;
-		unsigned int autolooting : 1; //performance-saver, autolooting state for @alootid
-		unsigned int gmaster_flag : 1;
-		unsigned int prevend : 1;//used to flag wheather you've spent 40sp to open the vending or not.
+		uint32 autolooting : 1; //performance-saver, autolooting state for @alootid
+		uint32 gmaster_flag : 1;
+		uint32 prevend : 1;//used to flag wheather you've spent 40sp to open the vending or not.
 		bool pending_vending_ui; // flag whether the vending packet should still be sent to this player or not
-		unsigned int warping : 1;//states whether you're in the middle of a warp processing
-		unsigned int permanent_speed : 1; // When 1, speed cannot be changed through status_calc_pc().
+		uint32 warping : 1;//states whether you're in the middle of a warp processing
+		uint32 permanent_speed : 1; // When 1, speed cannot be changed through status_calc_pc().
 		bool hold_recalc;
-		unsigned int banking : 1; //1 when we using the banking system 0 when closed
-		unsigned int hpmeter_visible : 1;
+		uint32 banking : 1; //1 when we using the banking system 0 when closed
+		uint32 hpmeter_visible : 1;
 		unsigned disable_atcommand_on_npc : 1; //Prevent to use atcommand while talking with NPC [Kichi]
 		uint8 isBoundTrading; // Player is currently add bound item to trade list [Cydh]
 		bool ignoretimeout; // Prevent the SECURE_NPCTIMEOUT function from closing current script.
-		unsigned int workinprogress : 2; // See clif.hpp::e_workinprogress
+		uint32 workinprogress : 2; // See clif.hpp::e_workinprogress
 		bool pc_loaded; // Ensure inventory data and status data is loaded before we calculate player stats
 		bool keepshop; // Whether shop data should be removed when the player disconnects
 		bool mail_writing; // Whether the player is currently writing a mail in RODEX or not
@@ -459,17 +459,17 @@ public:
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
-		unsigned int restart_full_recover : 1;
-		unsigned int no_castcancel : 1;
-		unsigned int no_castcancel2 : 1;
-		unsigned int no_sizefix : 1;
-		unsigned int no_gemstone : 2;
-		unsigned int intravision : 1; // Maya Purple Card effect [DracoRPG]
-		unsigned int perfect_hiding : 1; // [Valaris]
-		unsigned int no_knockback : 1;
-		unsigned int bonus_coma : 1;
-		unsigned int no_mado_fuel : 1; // Disable Magic_Gear_Fuel consumption [Secret]
-		unsigned int no_walk_delay : 1;
+		uint32 restart_full_recover : 1;
+		uint32 no_castcancel : 1;
+		uint32 no_castcancel2 : 1;
+		uint32 no_sizefix : 1;
+		uint32 no_gemstone : 2;
+		uint32 intravision : 1; // Maya Purple Card effect [DracoRPG]
+		uint32 perfect_hiding : 1; // [Valaris]
+		uint32 no_knockback : 1;
+		uint32 bonus_coma : 1;
+		uint32 no_mado_fuel : 1; // Disable Magic_Gear_Fuel consumption [Secret]
+		uint32 no_walk_delay : 1;
 	} special_state;
 	uint32 login_id1, login_id2;
 	uint64 class_;	//This is the internal job ID used by the map server to simplify comparisons/queries/etc. [Skotlex]
@@ -489,7 +489,7 @@ public:
 	struct item_data* inventory_data[MAX_INVENTORY]; // direct pointers to itemdb entries (faster than doing item_id lookups)
 	short equip_index[EQI_MAX];
 	short equip_switch_index[EQI_MAX];
-	unsigned int weight,max_weight,add_max_weight;
+	uint32 weight,max_weight,add_max_weight;
 	int cart_weight,cart_num,cart_weight_max;
 	int fd;
 	unsigned short mapindex;
@@ -504,7 +504,7 @@ public:
 	struct script_state *st;
 	char npc_str[CHATBOX_SIZE]; // for passing npc input box text to script engine
 	int npc_timer_id; //For player attached npc timers. [Skotlex]
-	unsigned int chatID;
+	uint32 chatID;
 	time_t idletime;
 	time_t idletime_hom;
 	time_t idletime_mer;
@@ -657,7 +657,7 @@ public:
 		int itemhealrate2; // [Epoque] Increase heal rate of all healing items.
 		int itemsphealrate2;
 		int shieldmdef;//royal guard's
-		unsigned int setitem_hash, setitem_hash2; //Split in 2 because shift operations only work on int ranges. [Skotlex]
+		uint32 setitem_hash, setitem_hash2; //Split in 2 because shift operations only work on int ranges. [Skotlex]
 
 		short splash_range, splash_add_range;
 		short add_steal_rate;
@@ -708,7 +708,7 @@ public:
 
 	struct{
 		uint32 id;
-		unsigned int lv;
+		uint32 lv;
 	}trade_partner;
 
 	struct s_deal {
@@ -740,7 +740,7 @@ public:
 	char message[MESSAGE_SIZE];
 	struct s_vending vending[MAX_VENDING];
 
-	unsigned int buyer_id;  // uid of open buying store
+	uint32 buyer_id;  // uid of open buying store
 	struct s_buyingstore buyingstore;
 
 	struct s_search_store_info searchstore;
@@ -906,7 +906,7 @@ public:
 	int bank_vault; ///< Bank Vault
 
 #ifdef PACKET_OBFUSCATION
-	unsigned int cryptKey; ///< Packet obfuscation key to be used for the next received packet
+	uint32 cryptKey; ///< Packet obfuscation key to be used for the next received packet
 #endif
 
 	struct {
@@ -1226,7 +1226,7 @@ enum e_mado_type : uint16 {
 	( (class_) >= JOB_SKY_EMPEROR			&& (class_) <= JOB_SPIRIT_HANDLER ) || \
 	  (class_) == JOB_SKY_EMPEROR2 \
 )
-#define pcdb_checkid(class_) pcdb_checkid_sub((unsigned int)class_)
+#define pcdb_checkid(class_) pcdb_checkid_sub((uint32)class_)
 
 // clientside display macros (values to the left/right of the "+")
 #ifdef RENEWAL
@@ -1462,7 +1462,7 @@ bool pc_adoption(map_session_data *p1_sd, map_session_data *p2_sd, map_session_d
 
 void pc_updateweightstatus(map_session_data *sd);
 
-bool pc_addautobonus(std::vector<std::shared_ptr<s_autobonus>> &bonus, const char *script, short rate, unsigned int dur, uint16 atk_type, const char *o_script, unsigned int pos, bool onskill);
+bool pc_addautobonus(std::vector<std::shared_ptr<s_autobonus>> &bonus, const char *script, short rate, uint32 dur, uint16 atk_type, const char *o_script, uint32 pos, bool onskill);
 void pc_exeautobonus(map_session_data &sd, std::vector<std::shared_ptr<s_autobonus>> *bonus, std::shared_ptr<s_autobonus> autobonus);
 TIMER_FUNC(pc_endautobonus);
 void pc_delautobonus(map_session_data &sd, std::vector<std::shared_ptr<s_autobonus>> &bonus, bool restore);
@@ -1497,8 +1497,8 @@ int pc_modifysellvalue(map_session_data*,int);
 int pc_follow(map_session_data*, int); // [MouseJstr]
 int pc_stop_following(map_session_data*);
 
-unsigned int pc_maxbaselv(map_session_data *sd);
-unsigned int pc_maxjoblv(map_session_data *sd);
+uint32 pc_maxbaselv(map_session_data *sd);
+uint32 pc_maxjoblv(map_session_data *sd);
 bool pc_is_maxbaselv(map_session_data *sd);
 bool pc_is_maxjoblv(map_session_data *sd);
 int pc_checkbaselevelup(map_session_data *sd);
@@ -1538,11 +1538,11 @@ int pc_sub_skillatk_bonus(map_session_data *sd, uint16 skill_id);
 int pc_skillheal_bonus(map_session_data *sd, uint16 skill_id);
 int pc_skillheal2_bonus(map_session_data *sd, uint16 skill_id);
 
-void pc_damage(map_session_data *sd,struct block_list *src,unsigned int hp, unsigned int sp, unsigned int ap);
+void pc_damage(map_session_data *sd,struct block_list *src,uint32 hp, uint32 sp, uint32 ap);
 int pc_dead(map_session_data *sd,struct block_list *src);
-void pc_revive(map_session_data *sd,unsigned int hp, unsigned int sp, unsigned int ap = 0);
+void pc_revive(map_session_data *sd,uint32 hp, uint32 sp, uint32 ap = 0);
 bool pc_revive_item(map_session_data *sd);
-void pc_heal(map_session_data *sd,unsigned int hp,unsigned int sp, unsigned int ap, int type);
+void pc_heal(map_session_data *sd,uint32 hp,uint32 sp, uint32 ap, int type);
 int pc_itemheal(map_session_data *sd, t_itemid itemid, int hp,int sp);
 int pc_percentheal(map_session_data *sd,int,int);
 bool pc_jobchange(map_session_data *sd, int job, char upper);
@@ -1683,7 +1683,7 @@ TIMER_FUNC(map_night_timer); // by [yor]
 // Rental System
 void pc_inventory_rentals(map_session_data *sd);
 void pc_inventory_rental_clear(map_session_data *sd);
-void pc_inventory_rental_add(map_session_data *sd, unsigned int seconds);
+void pc_inventory_rental_add(map_session_data *sd, uint32 seconds);
 
 int pc_read_motd(void); // [Valaris]
 int pc_disguise(map_session_data *sd, int class_);
