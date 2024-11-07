@@ -27,7 +27,7 @@ class cScopeTimer {
 	cScopeTimer();
 };
 
-int levenshtein( const std::string &s1, const std::string &s2 );
+int32 levenshtein( const std::string &s1, const std::string &s2 );
 
 namespace rathena {
 	namespace util {

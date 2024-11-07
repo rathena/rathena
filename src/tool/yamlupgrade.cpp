@@ -75,7 +75,7 @@ bool process(const std::string &type, uint32 version, const std::vector<std::str
 	return true;
 }
 
-bool YamlUpgradeTool::initialize( int argc, char* argv[] ){
+bool YamlUpgradeTool::initialize( int32 argc, char* argv[] ){
 	const std::string path_db = std::string(db_path);
 	const std::string path_db_mode = path_db + "/" + DBPATH;
 	const std::string path_db_import = path_db + "/" + DBIMPORT;
@@ -405,7 +405,7 @@ static bool upgrade_enchantgrade_db( std::string file, const uint32 source_versi
 
 							auto chancesNode = gradeNode["Chances"];
 
-							for( int i = refine, j = 0; i <= MAX_REFINE; i++, j++ ){
+							for( int32 i = refine, j = 0; i <= MAX_REFINE; i++, j++ ){
 								auto chanceNode = chancesNode[j];
 
 								chanceNode["Refine"] = i;
@@ -517,6 +517,6 @@ static bool upgrade_item_group_db( std::string file, const uint32 source_version
 }
 
 
-int main( int argc, char *argv[] ){
+int32 main( int32 argc, char *argv[] ){
 	return main_core<YamlUpgradeTool>( argc, argv );
 }

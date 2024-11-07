@@ -284,19 +284,19 @@ enum e_quest_state : uint8 {
 
 /// Questlog entry
 struct quest {
-	int quest_id;                    ///< Quest ID
+	int32 quest_id;                    ///< Quest ID
 	uint32 time;                     ///< Expiration time
-	int count[MAX_QUEST_OBJECTIVES]; ///< Kill counters of each quest objective
+	int32 count[MAX_QUEST_OBJECTIVES]; ///< Kill counters of each quest objective
 	e_quest_state state;             ///< Current quest state
 };
 
 /// Achievement log entry
 struct achievement {
-	int achievement_id;                    ///< Achievement ID
-	int count[MAX_ACHIEVEMENT_OBJECTIVES]; ///< Counters of each achievement objective
+	int32 achievement_id;                    ///< Achievement ID
+	int32 count[MAX_ACHIEVEMENT_OBJECTIVES]; ///< Counters of each achievement objective
 	time_t completed;                      ///< Date completed
 	time_t rewarded;                       ///< Received reward?
-	int score;                             ///< Amount of points achievement is worth
+	int32 score;                             ///< Amount of points achievement is worth
 };
 
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
@@ -311,7 +311,7 @@ struct s_item_randomoption {
 } __attribute__((packed));
 
 struct item {
-	int id;
+	int32 id;
 	t_itemid nameid;
 	short amount;
 	uint32 equip; // location(s) where item is equipped (using enum equip_pos for bitmasking)
@@ -478,7 +478,7 @@ struct s_storage_table {
 struct s_pet {
 	uint32 account_id;
 	uint32 char_id;
-	int pet_id;
+	int32 pet_id;
 	short class_;
 	short level;
 	t_itemid egg_id;//pet egg id
@@ -493,7 +493,7 @@ struct s_pet {
 
 struct s_homunculus {	//[orn]
 	char name[NAME_LENGTH];
-	int hom_id;
+	int32 hom_id;
 	uint32 char_id;
 	short class_;
 	short prev_class;
@@ -506,39 +506,39 @@ struct s_homunculus {	//[orn]
 	t_exp exp;
 	short rename_flag;
 	short vaporize; //albator
-	int str;
-	int agi;
-	int vit;
-	int int_;
-	int dex;
-	int luk;
+	int32 str;
+	int32 agi;
+	int32 vit;
+	int32 int_;
+	int32 dex;
+	int32 luk;
 
-	int str_value;
-	int agi_value;
-	int vit_value;
-	int int_value;
-	int dex_value;
-	int luk_value;
+	int32 str_value;
+	int32 agi_value;
+	int32 vit_value;
+	int32 int_value;
+	int32 dex_value;
+	int32 luk_value;
 
 	char spiritball; //for homun S [lighta]
 	bool autofeed;
 };
 
 struct s_mercenary {
-	int mercenary_id;
+	int32 mercenary_id;
 	uint32 char_id;
 	short class_;
-	int hp, sp;
+	int32 hp, sp;
 	uint32 kill_count;
 	t_tick life_time;
 };
 
 struct s_elemental {
-	int elemental_id;
+	int32 elemental_id;
 	uint32 char_id;
 	short class_;
-	int mode;
-	int hp, sp, max_hp, max_sp, matk, atk, atk2;
+	int32 mode;
+	int32 hp, sp, max_hp, max_sp, matk, atk, atk2;
 	short hit, flee, amotion, def, mdef;
 	t_tick life_time;
 };
@@ -566,22 +566,22 @@ struct mmo_charstatus {
 	uint32 child;
 
 	t_exp base_exp,job_exp;
-	int zeny;
+	int32 zeny;
 
 	short class_; ///< Player's JobID
 	uint32 status_point,skill_point,trait_point;
-	int hp,max_hp,sp,max_sp,ap,max_ap;
+	int32 hp,max_hp,sp,max_sp,ap,max_ap;
 	uint32 option;
 	short manner; // Defines how many minutes a char will be muted, each negative point is equivalent to a minute.
 	unsigned char karma;
 	short hair,hair_color,clothes_color,body;
-	int party_id,guild_id,pet_id,hom_id,mer_id,ele_id,clan_id;
-	int fame;
+	int32 party_id,guild_id,pet_id,hom_id,mer_id,ele_id,clan_id;
+	int32 fame;
 
 	// Mercenary Guilds Rank
-	int arch_faith, arch_calls;
-	int spear_faith, spear_calls;
-	int sword_faith, sword_calls;
+	int32 arch_faith, arch_calls;
+	int32 spear_faith, spear_calls;
+	int32 sword_faith, sword_calls;
 
 	short weapon; // enum weapon_type
 	short shield; // view-id
@@ -650,7 +650,7 @@ enum mail_attachment_type {
 };
 
 struct mail_message {
-	int id;
+	int32 id;
 	uint32 send_id;                 //hold char_id of sender
 	char send_name[NAME_LENGTH];    //sender nickname
 	uint32 dest_id;                 //hold char_id of receiver
@@ -676,9 +676,9 @@ struct mail_data {
 
 struct auction_data {
 	uint32 auction_id;
-	int seller_id;
+	int32 seller_id;
 	char seller_name[NAME_LENGTH];
-	int buyer_id;
+	int32 buyer_id;
 	char buyer_name[NAME_LENGTH];
 
 	struct item item;
@@ -687,9 +687,9 @@ struct auction_data {
 	short type;
 
 	unsigned short hours;
-	int price, buynow;
+	int32 price, buynow;
 	time_t timestamp; // auction's end time
-	int auction_end_timer;
+	int32 auction_end_timer;
 };
 
 struct party_member {
@@ -704,7 +704,7 @@ struct party_member {
 };
 
 struct party {
-	int party_id;
+	int32 party_id;
 	char name[NAME_LENGTH];
 	unsigned char count; //Count of online characters.
 	unsigned exp : 1,
@@ -726,14 +726,14 @@ struct guild_member {
 
 struct guild_position {
 	char name[NAME_LENGTH];
-	int mode;
-	int exp_mode;
+	int32 mode;
+	int32 exp_mode;
 	unsigned char modified;
 };
 
 struct guild_alliance {
-	int opposition;
-	int guild_id;
+	int32 opposition;
+	int32 guild_id;
 	char name[NAME_LENGTH];
 };
 
@@ -745,21 +745,21 @@ struct guild_expulsion {
 };
 
 struct guild_skill {
-	int id,lv;
+	int32 id,lv;
 };
 
 struct Channel;
 struct mmo_guild {
-	int guild_id;
+	int32 guild_id;
 	short guild_lv, connect_member, max_member, average_lv;
 	t_exp exp;
 	t_exp next_exp;
-	int skill_point;
+	int32 skill_point;
 	char name[NAME_LENGTH],master[NAME_LENGTH];
 	struct guild_member member[MAX_GUILD];
 	struct guild_position position[MAX_GUILDPOSITION];
 	char mes1[MAX_GUILDMES1],mes2[MAX_GUILDMES2];
-	int emblem_len,emblem_id;
+	int32 emblem_len,emblem_id;
 	char emblem_data[2048];
 	struct guild_alliance alliance[MAX_GUILDALLIANCE];
 	struct guild_expulsion expulsion[MAX_GUILDEXPULSION];
@@ -775,8 +775,8 @@ enum e_woe_type{
 };
 
 struct guild_castle {
-	int castle_id;
-	int mapindex;
+	int32 castle_id;
+	int32 mapindex;
 	char castle_name[NAME_LENGTH];
 	char castle_event[NPC_NAME_LENGTH];
 	e_woe_type type;
@@ -786,21 +786,21 @@ struct guild_castle {
 	uint16 warp_y;
 	uint32 zeny;
 	uint32 zeny_siege;
-	int guild_id;
-	int economy;
-	int defense;
-	int triggerE;
-	int triggerD;
-	int nextTime;
-	int payTime;
-	int createTime;
-	int visibleC;
+	int32 guild_id;
+	int32 economy;
+	int32 defense;
+	int32 triggerE;
+	int32 triggerD;
+	int32 nextTime;
+	int32 payTime;
+	int32 createTime;
+	int32 visibleC;
 	struct {
 		unsigned visible : 1;
-		int id; // object id
+		int32 id; // object id
 	} guardian[MAX_GUARDIANS];
 	int* temp_guardians; // ids of temporary guardians (mobs)
-	int temp_guardians_max;
+	int32 temp_guardians_max;
 };
 
 /// Enum for guild castle data script commands
@@ -834,8 +834,8 @@ enum e_guild_permission {
 };
 
 struct fame_list {
-	int id;
-	int fame;
+	int32 id;
+	int32 fame;
 	char name[NAME_LENGTH];
 };
 
@@ -1137,13 +1137,13 @@ enum e_rank {
 };
 
 struct clan_alliance {
-	int opposition;
-	int clan_id;
+	int32 opposition;
+	int32 clan_id;
 	char name[NAME_LENGTH];
 };
 
 struct clan{
-	int id;
+	int32 id;
 	char name[NAME_LENGTH];
 	char master[NAME_LENGTH];
 	char map[MAP_NAME_LENGTH_EXT];

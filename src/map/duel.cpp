@@ -90,10 +90,10 @@ bool duel_check_player_limit(struct duel& pDuel)
 /*
  * Display opponents name of sd
  */
-static int duel_showinfo_sub(map_session_data* sd, va_list va)
+static int32 duel_showinfo_sub(map_session_data* sd, va_list va)
 {
 	map_session_data *ssd = va_arg(va, map_session_data*);
-	int *p = va_arg(va, int*);
+	int32 *p = va_arg(va, int*);
 
 	if (sd->duel_group != ssd->duel_group) 
 		return 0;
@@ -114,7 +114,7 @@ void duel_showinfo(const size_t did, map_session_data* sd)
 	if ( !duel_exist( did ) )
 		return;
 
-	int p=0;
+	int32 p=0;
 	char output[256];
 
 	if(duel_list[did].max_players_limit > 0)
@@ -208,7 +208,7 @@ bool duel_invite(const size_t did, map_session_data* sd, map_session_data* targe
  * @sd = leaving player
  * @va = list(only contain duel_id atm)
  */
-static int duel_leave_sub(map_session_data* sd, va_list va)
+static int32 duel_leave_sub(map_session_data* sd, va_list va)
 {
 	size_t did = va_arg(va, size_t);
 	if (sd->duel_invite == did)

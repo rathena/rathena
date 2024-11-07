@@ -149,7 +149,7 @@ typedef enum DBOptions {
  * @see DBMap#remove
  */
 typedef union DBKey {
-	int i;
+	int32 i;
 	uint32 ui;
 	const char *str;
 	int64 i64;
@@ -175,7 +175,7 @@ typedef enum DBDataType {
  * Struct for data types used by the database.
  * @param type Type of data
  * @param u Union of available data types
- * @param u.i Data of int type
+ * @param u.i Data of int32 type
  * @param u.ui Data of uint32 type
  * @param u.ptr Data of void* type
  * @param u.i64 Data of int64 type
@@ -184,7 +184,7 @@ typedef enum DBDataType {
 typedef struct DBData {
 	DBDataType type;
 	union {
-		int i;
+		int32 i;
 		uint32 ui;
 		void *ptr;
 		int64 i64;
@@ -218,7 +218,7 @@ typedef DBData (*DBCreateData)(DBKey key, va_list args);
  * @see DBMap#vdestroy
  * @see DBMap#destroy
  */
-typedef int (*DBApply)(DBKey key, DBData *data, va_list args);
+typedef int32 (*DBApply)(DBKey key, DBData *data, va_list args);
 
 /**
  * Format of functions that match database entries.
@@ -231,7 +231,7 @@ typedef int (*DBApply)(DBKey key, DBData *data, va_list args);
  * @public
  * @see DBMap#getall
  */
-typedef int (*DBMatcher)(DBKey key, DBData data, va_list args);
+typedef int32 (*DBMatcher)(DBKey key, DBData data, va_list args);
 
 /**
  * Format of the comparators used internally by the database system.
@@ -245,7 +245,7 @@ typedef int (*DBMatcher)(DBKey key, DBData data, va_list args);
  * @public
  * @see #db_default_cmp(DBType)
  */
-typedef int (*DBComparator)(DBKey key1, DBKey key2, unsigned short maxlen);
+typedef int32 (*DBComparator)(DBKey key1, DBKey key2, unsigned short maxlen);
 
 /**
  * Format of the hashers used internally by the database system.
@@ -357,7 +357,7 @@ struct DBIterator
 	 * @protected
 	 * @see DBMap#remove
 	 */
-	int (*remove)(DBIterator* self, DBData *out_data);
+	int32 (*remove)(DBIterator* self, DBData *out_data);
 
 	/**
 	 * Destroys this iterator and unlocks the database.
@@ -482,7 +482,7 @@ struct DBMap {
 	 * @return 1 if if the entry already exists, 0 otherwise
 	 * @protected
 	 */
-	int (*put)(DBMap* self, DBKey key, DBData data, DBData *out_data);
+	int32 (*put)(DBMap* self, DBKey key, DBData data, DBData *out_data);
 
 	/**
 	 * Remove an entry from the database.
@@ -494,7 +494,7 @@ struct DBMap {
 	 * @return 1 if if the entry already exists, 0 otherwise
 	 * @protected
 	 */
-	int (*remove)(DBMap* self, DBKey key, DBData *out_data);
+	int32 (*remove)(DBMap* self, DBKey key, DBData *out_data);
 
 	/**
 	 * Just calls {@link DBMap#vforeach}.
@@ -507,7 +507,7 @@ struct DBMap {
 	 * @protected
 	 * @see DBMap#vforeach(DBMap*,DBApply,va_list)
 	 */
-	int (*foreach)(DBMap* self, DBApply func, ...);
+	int32 (*foreach)(DBMap* self, DBApply func, ...);
 
 	/**
 	 * Apply <code>func</code> to every entry in the database.
@@ -519,7 +519,7 @@ struct DBMap {
 	 * @protected
 	 * @see DBMap#foreach(DBMap*,DBApply,...)
 	 */
-	int (*vforeach)(DBMap* self, DBApply func, va_list args);
+	int32 (*vforeach)(DBMap* self, DBApply func, va_list args);
 
 	/**
 	 * Just calls {@link DBMap#vclear}.
@@ -534,7 +534,7 @@ struct DBMap {
 	 * @protected
 	 * @see DBMap#vclear(DBMap*,DBApply,va_list)
 	 */
-	int (*clear)(DBMap* self, DBApply func, ...);
+	int32 (*clear)(DBMap* self, DBApply func, ...);
 
 	/**
 	 * Removes all entries from the database.
@@ -548,7 +548,7 @@ struct DBMap {
 	 * @protected
 	 * @see DBMap#clear(DBMap*,DBApply,...)
 	 */
-	int (*vclear)(DBMap* self, DBApply func, va_list args);
+	int32 (*vclear)(DBMap* self, DBApply func, va_list args);
 
 	/**
 	 * Just calls {@link DBMap#vdestroy}.
@@ -565,7 +565,7 @@ struct DBMap {
 	 * @protected
 	 * @see DBMap#vdestroy(DBMap*,DBApply,va_list)
 	 */
-	int (*destroy)(DBMap* self, DBApply func, ...);
+	int32 (*destroy)(DBMap* self, DBApply func, ...);
 
 	/**
 	 * Finalize the database, feeing all the memory it uses.
@@ -580,7 +580,7 @@ struct DBMap {
 	 * @protected
 	 * @see DBMap#destroy(DBMap*,DBApply,...)
 	 */
-	int (*vdestroy)(DBMap* self, DBApply func, va_list args);
+	int32 (*vdestroy)(DBMap* self, DBApply func, va_list args);
 
 	/**
 	 * Return the size of the database (number of items in the database).
@@ -826,7 +826,7 @@ DBReleaser db_custom_release(DBRelease which);
  * @see #db_default_release(DBType,DBOptions)
  * @see #db_fix_options(DBType,DBOptions)
  */
-DBMap* db_alloc(const char *file, const char *func, int line, DBType type, DBOptions options, unsigned short maxlen);
+DBMap* db_alloc(const char *file, const char *func, int32 line, DBType type, DBOptions options, unsigned short maxlen);
 
 /**
  * Manual cast from 'int' to the union DBKey.
@@ -834,7 +834,7 @@ DBMap* db_alloc(const char *file, const char *func, int line, DBType type, DBOpt
  * @return The key as a DBKey union
  * @public
  */
-DBKey db_i2key(int key);
+DBKey db_i2key(int32 key);
 
 /**
  * Manual cast from 'uint32' to the union DBKey.
@@ -874,7 +874,7 @@ DBKey db_ui642key(uint64 key);
  * @return The data as a DBData struct
  * @public
  */
-DBData db_i2data(int data);
+DBData db_i2data(int32 data);
 
 /**
  * Manual cast from 'uint32' to the struct DBData.
@@ -901,13 +901,13 @@ DBData db_ptr2data(void *data);
 DBData db_i642data(int64 data);
 
 /**
- * Gets int type data from struct DBData.
- * If data is not int type, returns 0.
+ * Gets int32 type data from struct DBData.
+ * If data is not int32 type, returns 0.
  * @param data Data
  * @return Integer value of the data.
  * @public
  */
-int db_data2i(DBData *data);
+int32 db_data2i(DBData *data);
 
 /**
  * Gets uint32 type data from struct DBData.
