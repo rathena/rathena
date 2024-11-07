@@ -2020,10 +2020,12 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 			else if (!status_isdead(*target))
 				return 0; // Can't cast on non-dead characters.
 		break;
+#ifndef RENEWAL
 		case MO_FINGEROFFENSIVE:
 			if(sd)
 				casttime += casttime * min(skill_lv, sd->spiritball);
 		break;
+#endif
 		case MO_EXTREMITYFIST:
 			if (sc && sc->getSCE(SC_COMBO) &&
 			   (sc->getSCE(SC_COMBO)->val1 == MO_COMBOFINISH ||
@@ -3363,7 +3365,6 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 
 			if( !hd->homunculus.intimacy && !(hd->master && !hd->master->state.active) ) {
 				// If logging out, this is deleted on unit_free
-				clif_emotion(bl, ET_CRY);
 				clif_clearunit_area( *bl, clrtype );
 				map_delblock(bl);
 				unit_free(bl,CLR_OUTSIGHT);

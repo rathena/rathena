@@ -913,7 +913,7 @@ struct PACKET_ZC_PAR_CHANGE_USER {
 	int16 packetType;
 	uint32 gid;
 	int16 type;
-	uint16 value;
+	uint32 value;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_PAR_CHANGE_USER, 0x1ab)
 
@@ -1310,6 +1310,23 @@ struct PACKET_CZ_PARTY_JOIN_REQ_ACK{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_PARTY_JOIN_REQ_ACK, 0x2c7);
 
+#if PACKETVER_MAIN_NUM >= 20210000 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20210217
+// PACKET_ZC_HO_PAR_CHANGE2
+struct PACKET_ZC_HO_PAR_CHANGE {
+	int16 packetType;
+	uint16 type;
+	uint64 value;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_HO_PAR_CHANGE, 0xba5);
+#else
+struct PACKET_ZC_HO_PAR_CHANGE {
+	int16 packetType;
+	uint16 type;
+	int32 value;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_HO_PAR_CHANGE, 0x7db);
+#endif
+
 struct PACKET_ZC_EL_PAR_CHANGE {
 	int16 packetType;
 	uint16 type;
@@ -1362,6 +1379,13 @@ struct PACKET_ZC_NOTIFY_ACT{
 DEFINE_PACKET_HEADER(ZC_NOTIFY_ACT, 0x8a);
 #endif
 
+struct PACKET_CZ_REQUEST_MOVENPC{
+	int16 packetType;
+	uint32 GID;
+	uint8 PosDir[3];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQUEST_MOVENPC, 0x232);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
@@ -1404,6 +1428,7 @@ DEFINE_PACKET_HEADER(CZ_REQ_STYLE_CHANGE, 0xa46)
 DEFINE_PACKET_HEADER(ZC_STYLE_CHANGE_RES, 0xa47)
 DEFINE_PACKET_HEADER(ZC_GROUP_ISALIVE, 0xab2)
 DEFINE_PACKET_HEADER(CZ_REQ_STYLE_CHANGE2, 0xafc)
+DEFINE_PACKET_HEADER(ZC_GUILD_POSITION, 0x0afd)
 DEFINE_PACKET_HEADER(ZC_REMOVE_EFFECT, 0x0b0d)
 DEFINE_PACKET_HEADER(ZC_FEED_MER, 0x22f)
 DEFINE_PACKET_HEADER(ZC_FEED_PET, 0x1a3)

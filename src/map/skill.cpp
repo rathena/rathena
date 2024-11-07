@@ -872,7 +872,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 		(skill_nocast&8 && mapdata->getMapFlag(MF_BATTLEGROUND)) ||
 		(skill_nocast&16 && mapdata_flag_gvg2_te(mapdata)) || // WOE:TE
 		(mapdata->zone && skill_nocast&(mapdata->zone) && mapdata->getMapFlag(MF_RESTRICTED)) ){
-			clif_msg(&sd, MSI_IMPOSSIBLE_SKILL_AREA); // This skill cannot be used within this area
+			clif_msg_color(&sd, MSI_IMPOSSIBLE_SKILL_AREA, color_table[COLOR_CYAN]); // This skill cannot be used within this area.
 			return true;
 	}
 
@@ -2149,9 +2149,6 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl, uint
 		break;
 	case SJ_STAREMPEROR:
 		sc_start(src, bl, SC_SILENCE, 50 + 10 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
-		break;
-	case SP_CURSEEXPLOSION:
-		status_change_end(bl, SC_SOULCURSE);
 		break;
 	case SP_SHA:
 		sc_start(src, bl, SC_SP_SHA, 100, skill_lv, skill_get_time(skill_id, skill_lv));
@@ -3437,7 +3434,7 @@ static void skill_do_copy(struct block_list* src,struct block_list *bl, uint16 s
 		tsd->status.skill[idx].id = skill_id;
 		tsd->status.skill[idx].lv = lv;
 		tsd->status.skill[idx].flag = SKILL_FLAG_PLAGIARIZED;
-		clif_addskill(tsd,skill_id);
+		clif_addskill(*tsd,skill_id);
 	}
 }
 
@@ -3812,12 +3809,12 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 			dmg.dmotion = clif_skill_damage(src,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, CR_HOLYCROSS, -1, DMG_SPLASH);
 			break;
 		//Skills that need be passed as a normal attack for the client to display correctly.
-		case HVAN_EXPLOSION:
 		case NPC_SELFDESTRUCTION:
 			if(src->type == BL_PC)
 				dmg.blewcount = 10;
 			dmg.amotion = 0; //Disable delay or attack will do no damage since source is dead by the time it takes effect. [Skotlex]
 			[[fallthrough]];
+		case HVAN_EXPLOSION:
 		case KN_AUTOCOUNTER:
 		case NPC_CRITICALSLASH:
 		case TF_DOUBLE:
@@ -4762,6 +4759,9 @@ static TIMER_FUNC(skill_timerskill){
 				case ABC_FRENZY_SHOT:
 					skill_castend_damage_id(src, target, skl->skill_id, skl->skill_lv, tick, skl->flag);
 					break;
+				case HVAN_EXPLOSION:
+					status_kill(src);
+					break;
 				default:
 					skill_attack(skl->type,src,src,target,skl->skill_id,skl->skill_lv,tick,skl->flag);
 					break;
@@ -5704,6 +5704,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case SHC_SAVAGE_IMPACT:
 	case SHC_IMPACT_CRATER:
 	case SHC_FATAL_SHADOW_CROW:
+	case SHC_CROSS_SLASH:
 	case MT_AXE_STOMP:
 	case MT_MIGHTY_SMASH:
 	case MT_RUSH_QUAKE:
@@ -5944,6 +5945,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					break;
 				case IG_SHIELD_SHOOTING:
 				case IG_GRAND_JUDGEMENT:
+				case SHC_CROSS_SLASH:
 					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 					sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
 					break;
@@ -6201,18 +6203,11 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		sc_start(src,src,SC_MAGICALATTACK,100,skill_lv,skill_get_time(skill_id,skill_lv));
 		break;
 
-	case HVAN_CAPRICE: //[blackhole89]
+	case HVAN_CAPRICE:
 		{
-			int ran=rnd()%4;
-			int sid = 0;
-			switch(ran)
-			{
-			case 0: sid=MG_COLDBOLT; break;
-			case 1: sid=MG_FIREBOLT; break;
-			case 2: sid=MG_LIGHTNINGBOLT; break;
-			case 3: sid=WZ_EARTHSPIKE; break;
-			}
-			skill_attack(BF_MAGIC,src,src,bl,sid,skill_lv,tick,flag|SD_LEVEL);
+			static const std::array<e_skill, 4> subskills = { MG_COLDBOLT, MG_FIREBOLT, MG_LIGHTNINGBOLT, WZ_EARTHSPIKE };
+			e_skill subskill_id = subskills.at(rnd() % subskills.size());
+			skill_attack(skill_get_type(subskill_id), src, src, bl, subskill_id, skill_lv, tick, flag);
 		}
 		break;
 
@@ -6332,7 +6327,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		[[fallthrough]];
 	case HVAN_EXPLOSION:
 		if (src != bl)
-			skill_attack(BF_MISC,src,src,bl,skill_id,skill_lv,tick,flag);
+			skill_attack(skill_get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 
 	// Celest
@@ -8825,13 +8820,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			BF_MAGIC, src, src, skill_id, skill_lv, tick, flag, BCT_ENEMY);
 		break;
 
-	case HVAN_EXPLOSION:	//[orn]
 	case NPC_SELFDESTRUCTION:
 		//Self Destruction hits everyone in range (allies+enemies)
 		//Except for Summoned Marine spheres on non-versus maps, where it's just enemy.
 		i = ((!md || md->special_state.ai == AI_SPHERE) && !map_flag_vs(src->m))?
 			BCT_ENEMY:BCT_ALL;
-		clif_skill_nodamage(src, *src, skill_id, -1);
 		map_delblock(src); //Required to prevent chain-self-destructions hitting back.
 		map_foreachinshootrange(skill_area_sub, bl,
 			skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL,
@@ -8841,14 +8834,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			map_freeblock_unlock();
 			return 1;
 		}
-		status_damage(src, src, sstatus->max_hp,0,0,1, skill_id);
-		if(skill_id == HVAN_EXPLOSION && src->type == BL_HOM) {
-			homun_data& hd = reinterpret_cast<homun_data&>( *src );
-
-			hd.homunculus.intimacy = hom_intimacy_grade2intimacy(HOMGRADE_HATE_WITH_PASSION);
-
-			clif_send_homdata( hd, SP_INTIMATE );
-		}
+		status_kill(src);
 		break;
 	case AL_ANGELUS:
 #ifdef RENEWAL
@@ -10567,6 +10553,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				if (j > 8)
 					j = 0;
 				if ((dstsd = g->guild.member[i].sd) != nullptr && sd != dstsd && !dstsd->state.autotrade && !pc_isdead(dstsd)) {
+					if (dstsd->status.disable_call)
+						continue;
 					if (map_getmapflag(dstsd->bl.m, MF_NOWARP) && !map_flag_gvg2(dstsd->bl.m))
 						continue;
 					if (!pc_job_can_entermap((enum e_job)dstsd->status.class_, src->m, pc_get_group_level(dstsd)))
@@ -10711,26 +10699,58 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		else if (sd != nullptr)
 			clif_skill_fail( *sd, skill_id );
 		break;
-	case HVAN_CHAOTIC:	//[orn]
+	case HVAN_CHAOTIC:
 		{
-			static const int per[5][2]={{20,50},{50,60},{25,75},{60,64},{34,67}};
-			int r = rnd()%100;
-			i = (skill_lv-1)%5;
-			if(r<per[i][0]) //Self
-				bl = src;
-			else if(r<per[i][1]) //Master
-				bl = battle_get_master(src);
-			else //Enemy
-				bl = map_id2bl(battle_gettarget(src));
+			// Chance per skill level
+			static const std::array<uint8, 5> chance_homunculus = {
+				20,
+				50,
+				25,
+				50,
+				34
+			};
+			static const std::array<uint8, 5> chance_master = {
+				static_cast<uint8>(chance_homunculus[0] + 30),
+				static_cast<uint8>(chance_homunculus[1] + 10),
+				static_cast<uint8>(chance_homunculus[2] + 50),
+				static_cast<uint8>(chance_homunculus[3] + 4),
+				static_cast<uint8>(chance_homunculus[4] + 33)
+			};
 
-			if (!bl) bl = src;
-			i = skill_calc_heal(src, bl, skill_id, 1+rnd()%skill_lv, true);
-			//Eh? why double skill packet?
-			clif_skill_nodamage(src,*bl,AL_HEAL,i);
-			clif_skill_nodamage(src,*bl,skill_id,i);
-			status_heal(bl, i, 0, 0);
-		}
-		break;
+			uint8 chance = rnd_value(1, 100);
+
+			// Homunculus
+			if (chance <= chance_homunculus[skill_lv - 1])
+				bl = src;
+			// Master
+			else if (chance <= chance_master[skill_lv - 1])
+				bl = battle_get_master(src);
+			// Enemy (A random enemy targeting the master)
+			else
+				bl = battle_gettargeted(battle_get_master(src));
+
+			// If there's no enemy the chance reverts to the homunculus
+			if (bl == nullptr)
+				bl = src;
+
+			int32 heal = skill_calc_heal(src, bl, skill_id, rnd_value<uint16>(1, skill_lv), true);
+
+			// Official servers send the Heal skill packet with the healed amount, and then the skill packet with 1 as healed amount
+			clif_skill_nodamage(src, *bl, AL_HEAL, heal);
+			clif_skill_nodamage(src, *bl, skill_id, 1);
+			status_heal(bl, heal, 0, 0);
+		} break;
+	case HVAN_EXPLOSION:
+		if( hd != nullptr ){
+			clif_skill_nodamage(src, *src, skill_id, skill_lv, 1);
+			map_foreachinshootrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR | BL_SKILL, src, skill_id, skill_lv, tick, flag | BCT_ENEMY, skill_castend_damage_id);
+
+			hd->homunculus.intimacy = hom_intimacy_grade2intimacy(HOMGRADE_HATE_WITH_PASSION);
+			clif_send_homdata(*hd, SP_INTIMATE);
+
+			// There's a delay between the explosion and the homunculus death
+			skill_addtimerskill(src, tick + skill_get_time(skill_id, skill_lv), src->id, 0, 0, skill_id, skill_lv, 0, flag);
+		} break;
 	// Homun single-target support skills [orn]
 	case HLIF_CHANGE:
 #ifndef RENEWAL
@@ -12983,6 +13003,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		clif_skill_nodamage(src, *src, skill_id, skill_lv);
 		break;
+	case ALL_EVENT_20TH_ANNIVERSARY:
+		clif_skill_nodamage(src, *src, skill_id, skill_lv);
+		break;
 
 	default: {
 		std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
@@ -13164,8 +13187,8 @@ TIMER_FUNC( skill_keep_using ){
 	map_session_data* sd = map_id2sd( id );
 
 	if( sd && sd->skill_keep_using.skill_id ){
-		clif_parse_skill_toid( sd, sd->skill_keep_using.skill_id, sd->skill_keep_using.level, sd->skill_keep_using.target );
 		sd->skill_keep_using.tid = INVALID_TIMER;
+		clif_parse_skill_toid( sd, sd->skill_keep_using.skill_id, sd->skill_keep_using.level, sd->skill_keep_using.target );
 	}
 
 	return 0;
@@ -13244,7 +13267,7 @@ TIMER_FUNC(skill_castend_id){
 				if (sd) {
 					map_session_data *p_sd = pc_get_partner(sd);
 
-					if (p_sd && p_sd->state.autotrade) {
+					if (p_sd != nullptr && (p_sd->state.autotrade || p_sd->status.disable_call)) {
 						fail = true;
 						break;
 					} else
@@ -13256,7 +13279,7 @@ TIMER_FUNC(skill_castend_id){
 					map_session_data *f_sd = pc_get_father(sd);
 					map_session_data *m_sd = pc_get_mother(sd);
 
-					if ((f_sd && f_sd->state.autotrade) || (m_sd && m_sd->state.autotrade)) {
+					if ((f_sd != nullptr && (f_sd->state.autotrade || f_sd->status.disable_call)) || (m_sd != nullptr && (m_sd->state.autotrade || m_sd->status.disable_call))) {
 						fail = true;
 						break;
 					}
@@ -13266,7 +13289,7 @@ TIMER_FUNC(skill_castend_id){
 				if (sd) {
 					map_session_data *c_sd = pc_get_child(sd);
 
-					if (c_sd && c_sd->state.autotrade) {
+					if (c_sd != nullptr && (c_sd->state.autotrade || c_sd->status.disable_call)) {
 						fail = true;
 						break;
 					}
@@ -16063,9 +16086,11 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 		case UNT_SOLIDTRAP:
 		case UNT_SWIFTTRAP:
 		case UNT_FLAMETRAP:
+			skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
+			break;
 		case UNT_GROUND_GRAVITATION:
 		case UNT_JACK_FROST_NOVA:
-			skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
+			skill_attack( skill_get_type(sg->skill_id), ss, ss, bl, sg->skill_id, sg->skill_lv, tick, 0 );
 			break;
 
 		case UNT_DUMMYSKILL:
@@ -16124,6 +16149,9 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 					if(!battle_config.gx_allhit)
 						unit->val1--;
 					skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
+					break;
+				case HN_METEOR_STORM_BUSTER:
+					skill_attack( skill_get_type(sg->skill_id), ss, ss, bl, sg->skill_id, sg->skill_lv, tick, 0 );
 					break;
 				default:
 					skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
@@ -18731,7 +18759,7 @@ void skill_consume_requirement(map_session_data *sd, uint16 skill_id, uint16 ski
 				case SP_SOULREAPER:
 				case SP_SOULEXPLOSION:
 				case SP_KAUTE:
-					pc_delsoulball(sd, require.spiritball, false);
+					pc_delsoulball( *sd, require.spiritball );
 					break;
 
 				// Skills that require servants.
@@ -22809,7 +22837,7 @@ void skill_select_menu( map_session_data& sd, uint16 skill_id ){
 	lv = (aslvl + 5) / 2; // The level the skill will be autocasted
 	lv = min(lv,sd.status.skill[sk_idx].lv);
 	prob = (aslvl >= 10) ? 15 : (30 - 2 * aslvl); // Probability at level 10 was increased to 15.
-	sc_start4(&sd.bl,&sd.bl,SC__AUTOSHADOWSPELL,100,id,lv,prob,aslvl,skill_get_time(SC_AUTOSHADOWSPELL,aslvl));
+	sc_start4(&sd.bl,&sd.bl,SC__AUTOSHADOWSPELL,100,id,lv,prob,(aslvl*5),skill_get_time(SC_AUTOSHADOWSPELL,aslvl));
 }
 
 int skill_elementalanalysis( map_session_data& sd, int n, uint16 skill_lv, unsigned short* item_list ){

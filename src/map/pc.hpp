@@ -1237,7 +1237,14 @@ enum e_mado_type : uint16 {
 	#define pc_leftside_mdef(sd) ((sd)->battle_status.mdef2)
 	#define pc_rightside_mdef(sd) ((sd)->battle_status.mdef)
 	#define pc_leftside_matk(sd) (status_base_matk_min(&(sd)->bl, status_get_status_data((sd)->bl), (sd)->status.base_level))
-	#define pc_rightside_matk(sd) ((sd)->battle_status.rhw.matk+(sd)->battle_status.lhw.matk+(sd)->bonus.ematk)
+#define pc_rightside_matk(sd) \
+	(\
+	(sd)->battle_status.rhw.matk + \
+	(sd)->battle_status.lhw.matk + \
+	(sd)->bonus.ematk + \
+	status_calc_consumablematk(&(sd)->sc, 0) + \
+	status_calc_pseudobuff_matk((sd), &(sd)->sc, 0) \
+	)
 #else
 	#define pc_leftside_atk(sd) ((sd)->battle_status.batk + (sd)->battle_status.rhw.atk + (sd)->battle_status.lhw.atk)
 	#define pc_rightside_atk(sd) ((sd)->battle_status.rhw.atk2 + (sd)->battle_status.lhw.atk2)
@@ -1648,8 +1655,8 @@ void pc_delinvincibletimer(map_session_data* sd);
 
 void pc_addspiritball(map_session_data *sd,int interval,int max);
 void pc_delspiritball(map_session_data *sd,int count,int type);
-int pc_addsoulball(map_session_data *sd, int max);
-int pc_delsoulball(map_session_data *sd, int count, bool type);
+void pc_addsoulball( map_session_data& sd, int32 number, int32 max = MAX_SOUL_BALL );
+void pc_delsoulball( map_session_data& sd, int32 count, bool no_client_effect = false );
 void pc_addservantball( map_session_data& sd, int count = 1 );
 void pc_delservantball( map_session_data& sd, int count = 1 );
 void pc_addabyssball( map_session_data& sd, int count = 1 );

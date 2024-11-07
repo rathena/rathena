@@ -907,61 +907,53 @@ void pc_delspiritball(map_session_data *sd,int count,int type)
 /**
  * Adds a soulball to player
  * @param sd: Player data
+ * @param number: Amount to give
  * @param max: Max amount of soulballs
  */
-int pc_addsoulball(map_session_data *sd, int max)
-{
-	nullpo_ret(sd);
+void pc_addsoulball( map_session_data& sd, int32 number, int32 max ) {
+	status_change *sc = status_get_sc(&sd.bl);
 
-	status_change *sc = status_get_sc(&sd->bl);
+	// Save previous soulball number
+	int32 val = sd.soulball;
 
-	if (sc == nullptr || sc->getSCE(SC_SOULENERGY) == nullptr) {
-		sc_start(&sd->bl, &sd->bl, SC_SOULENERGY, 100, 0, skill_get_time2(SP_SOULCOLLECT, 1));
-		sd->soulball = 0;
-	}
+	if (sc == nullptr || sc->getSCE(SC_SOULENERGY) == nullptr)
+		sd.soulball = 0;
 
 	max = min(max, MAX_SOUL_BALL);
-	sd->soulball = cap_value(sd->soulball, 0, MAX_SOUL_BALL);
+	sd.soulball += number;
+	sd.soulball = cap_value(sd.soulball, 0, max);
 
-	if (sd->soulball && sd->soulball >= max)
-		sd->soulball--;
+	// Refresh the SC_SOULENERGY timer (which is 10 minutes by default) if the number has changed. The soul is removed when the timer expire.
+	if (sd.soulball != val)
+		sc_start( &sd.bl, &sd.bl, SC_SOULENERGY, 100, sd.soulball, skill_get_time2(SP_SOULCOLLECT, 1));
 
-	sd->soulball++;
-	sc_start(&sd->bl, &sd->bl, SC_SOULENERGY, 100, sd->soulball, skill_get_time2(SP_SOULCOLLECT, 1));
-	clif_soulball(sd);
-
-	return 0;
+	clif_soulball(&sd);
 }
 
 /**
  * Removes number of soulball from player
  * @param sd: Player data
  * @param count: Amount to remove
- * @param type: true = doesn't give client effect
+ * @param no_client_effect: true = doesn't give client effect
  */
-int pc_delsoulball(map_session_data *sd, int count, bool type)
-{
-	nullpo_ret(sd);
-
+void pc_delsoulball( map_session_data& sd, int32 count, bool no_client_effect ) {
 	if (count <= 0)
-		return 0;
+		return;
 
-	status_change *sc = status_get_sc(&sd->bl);
+	status_change *sc = status_get_sc(&sd.bl);
 
-	if (sd->soulball <= 0 || sc == nullptr || sc->getSCE(SC_SOULENERGY) == nullptr) {
-		sd->soulball = 0;
-	}else{
-		sd->soulball -= cap_value(count, 0, sd->soulball);
-		if (sd->soulball == 0)
-			status_change_end(&sd->bl, SC_SOULENERGY);
+	if (sd.soulball <= 0)
+		sd.soulball = 0;
+	else {
+		sd.soulball -= cap_value(count, 0, sd.soulball);
+		if (sd.soulball == 0)
+			status_change_end(&sd.bl, SC_SOULENERGY);
 		else
-			sc->getSCE(SC_SOULENERGY)->val1 = sd->soulball;
+			sc_start( &sd.bl, &sd.bl, SC_SOULENERGY, 100, sd.soulball, skill_get_time2(SP_SOULCOLLECT, 1));	// refresh val1 and status MATK
 	}
 
-	if (!type)
-		clif_soulball(sd);
-
-	return 0;
+	if (!no_client_effect)
+		clif_soulball(&sd);
 }
 
 /**
@@ -5347,7 +5339,7 @@ bool pc_skill(map_session_data* sd, uint16 skill_id, int level, enum e_addskill_
 				sd->status.skill[idx].id = 0;
 				clif_deleteskill(*sd,skill_id);
 			} else
-				clif_addskill(sd,skill_id);
+				clif_addskill(*sd,skill_id);
 			if (!skill_get_inf(skill_id) || pc_checkskill_summoner(sd, SUMMONER_POWER_LAND) >= 20 || pc_checkskill_summoner(sd, SUMMONER_POWER_SEA) >= 20) //Only recalculate for passive skills.
 				status_calc_pc(sd, SCO_NONE);
 			break;
@@ -5382,7 +5374,7 @@ bool pc_skill(map_session_data* sd, uint16 skill_id, int level, enum e_addskill_
 				sd->status.skill[idx].id = 0;
 				clif_deleteskill(*sd,skill_id);
 			} else
-				clif_addskill(sd,skill_id);
+				clif_addskill(*sd,skill_id);
 			if (!skill_get_inf(skill_id) || pc_checkskill_summoner(sd, SUMMONER_POWER_LAND) >= 20 || pc_checkskill_summoner(sd, SUMMONER_POWER_SEA) >= 20) //Only recalculate for passive skills.
 				status_calc_pc(sd, SCO_NONE);
 			break;
@@ -5434,7 +5426,7 @@ bool pc_skill_plagiarism(map_session_data &sd, uint16 skill_id, uint16 skill_lv)
 	sd.status.skill[idx].id = skill_id;
 	sd.status.skill[idx].lv = static_cast<uint8>(skill_lv);
 	sd.status.skill[idx].flag = SKILL_FLAG_PLAGIARIZED;
-	clif_addskill(&sd, skill_id);
+	clif_addskill(sd, skill_id);
 
 	return true;
 }
@@ -9625,7 +9617,7 @@ void pc_close_npc(map_session_data *sd,int flag)
 		if (sd->st) {
 			if (sd->st->state == CLOSE) {
 				clif_scriptclose( *sd, sd->npc_id );
-				clif_scriptclear( *sd, sd->npc_id ); // [Ind/Hercules]
+				clif_cutin( *sd, "", 255); // Force to end cutin [Haydrich]
 				sd->st->state = END; // Force to end now
 			}
 			if (sd->st->state == END) { // free attached scripts that are waiting
@@ -9769,7 +9761,7 @@ int pc_dead(map_session_data *sd,struct block_list *src)
 	if ( sd->spiritball !=0 )
 		pc_delspiritball(sd,sd->spiritball,0);
 	if (sd->soulball != 0)
-		pc_delsoulball(sd, sd->soulball, false);
+		pc_delsoulball( *sd, sd->soulball );
 	if (sd->servantball != 0)
 		pc_delservantball( *sd, sd->servantball );
 	if (sd->abyssball != 0)

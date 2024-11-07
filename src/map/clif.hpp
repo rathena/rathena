@@ -932,7 +932,7 @@ void clif_class_change_target(struct block_list *bl,int class_, int type, enum s
 void clif_skillinfoblock(map_session_data *sd);
 void clif_skillup(map_session_data *sd, uint16 skill_id, int lv, int range, int upgradable);
 void clif_skillinfo(map_session_data *sd,int skill_id, int inf);
-void clif_addskill(map_session_data *sd, int skill_id);
+void clif_addskill(map_session_data& sd, uint16 skill_id);
 void clif_deleteskill(map_session_data& sd, uint16 skill_id, bool skip_infoblock = false);
 
 void clif_skillcasting(struct block_list* bl, int src_id, int dst_id, int dst_x, int dst_y, uint16 skill_id, uint16 skill_lv, int property, int casttime);
@@ -1068,6 +1068,7 @@ void clif_guild_xy_single( map_session_data& sd, map_session_data& tsd );
 void clif_guild_xy_remove( map_session_data& sd );
 void clif_guild_castle_list(map_session_data& sd);
 void clif_guild_castle_teleport_res(map_session_data& sd, enum e_siege_teleport_result result);
+void clif_guild_position_selected(map_session_data& sd);
 
 // Battleground
 void clif_bg_hp(map_session_data *sd);
@@ -1161,6 +1162,7 @@ void clif_homskillinfoblock( homun_data& hd );
 void clif_homskillup( homun_data& hd, uint16 skill_id );
 void clif_hom_food( map_session_data& sd, int32 foodid, bool success );
 void clif_send_homdata( homun_data& hd, e_hom_state2 state );
+void clif_homunculus_updatestatus(map_session_data& sd, _sp type);
 
 void clif_configuration( map_session_data* sd, enum e_config_type type, bool enabled );
 void clif_viewequip_ack( map_session_data& sd, map_session_data& tsd );

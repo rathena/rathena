@@ -466,7 +466,7 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 		return damage;
 	}
 
-	ratio = elemental_attribute_db.getAttribute(def_lv-1, atk_elem, def_type);
+	ratio = elemental_attribute_db.getAttribute(def_lv, atk_elem, def_type);
 	if (sc && sc->count) { //increase dmg by src status
 		switch(atk_elem){
 			case ELE_FIRE:
@@ -494,8 +494,15 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 #endif
 				break;
 			case ELE_GHOST:
-				if (sc->getSCE(SC_TELEKINESIS_INTENSE))
-					ratio += sc->getSCE(SC_TELEKINESIS_INTENSE)->val3;
+				if (sc->getSCE(SC_TELEKINESIS_INTENSE)) {
+					// At least for SC_TELEKINESIS_INTENSE:
+					// damage after elemental_attribute_db should be calculated first to avoid rounding issues
+					damage = damage - (int64)((damage * (100 - ratio)) / 100);
+					// Initialize ratio to 100 (default)
+					ratio = 100;
+
+					ratio += ratio * sc->getSCE(SC_TELEKINESIS_INTENSE)->val3 / 100;
+				}
 				break;
 		}
 	}
@@ -730,7 +737,36 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 			// Affected by attacker ATK bonuses
 			if( sd && !nk[NK_IGNOREATKCARD] ) {
 				int32 race2_val = 0;
+#ifdef RENEWAL
 
+// Simplified formula to round down the damage
+#define APPLY_CARDFIX_RE(damage, fix) { (damage) = (damage) - (int64)(((damage) * (100 - max(0, 100+(fix)))) / 100); }
+				// On (at least) BF_MAGIC, damages are calculated consecutively and rounded down in the following order to match official damage :
+				// size, race2, ele, atk_ele, race, class
+				APPLY_CARDFIX_RE( damage, sd->indexed_bonus.magic_addsize[tstatus->size] + sd->indexed_bonus.magic_addsize[SZ_ALL] );
+
+				// race2 is the same as the bonus per class ID
+				for (const auto &raceit : t_race2)
+					race2_val += sd->indexed_bonus.magic_addrace2[raceit];
+				for (const auto &it : sd->add_mdmg) {
+					if (it.id == t_class) {
+						race2_val += it.val;
+						break;
+					}
+				}
+				APPLY_CARDFIX_RE( damage, race2_val );
+
+				if( !nk[NK_IGNOREELEMENT] ) { // Affected by Element modifier bonuses
+					APPLY_CARDFIX_RE( damage, sd->indexed_bonus.magic_addele[tstatus->def_ele] + sd->indexed_bonus.magic_addele[ELE_ALL] +
+						sd->indexed_bonus.magic_addele_script[tstatus->def_ele] + sd->indexed_bonus.magic_addele_script[ELE_ALL] );
+					APPLY_CARDFIX_RE( damage, sd->indexed_bonus.magic_atk_ele[rh_ele] + sd->indexed_bonus.magic_atk_ele[ELE_ALL] );
+				}
+				APPLY_CARDFIX_RE( damage, sd->indexed_bonus.magic_addrace[tstatus->race] + sd->indexed_bonus.magic_addrace[RC_ALL] );
+				APPLY_CARDFIX_RE( damage, sd->indexed_bonus.magic_addclass[tstatus->class_] + sd->indexed_bonus.magic_addclass[CLASS_ALL] );
+#undef APPLY_CARDFIX_RE
+
+// Pre-renewal / old renewal behaviour
+#else
 				for (const auto &raceit : t_race2)
 					race2_val += sd->indexed_bonus.magic_addrace2[raceit];
 				cardfix = cardfix * (100 + sd->indexed_bonus.magic_addrace[tstatus->race] + sd->indexed_bonus.magic_addrace[RC_ALL] + race2_val) / 100;
@@ -748,6 +784,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 					}
 				}
 				APPLY_CARDFIX(damage, cardfix);
+#endif
 			}
 
 			// Affected by target DEF bonuses
@@ -1604,7 +1641,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 #endif
 
 		if (tsc->getSCE(SC_GROUNDGRAVITY) && flag&(BF_MAGIC|BF_WEAPON))
-			damage += damage * 15 / 100;
+			damage += damage * 10 / 100;
 		if (tsc->getSCE(SC_SHIELDCHAINRUSH))
 			damage += damage / 10;
 
@@ -1883,23 +1920,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			}
 		}
 
-		if (sc->getSCE(SC_RULEBREAK)) {
-			switch (skill_id) {
-				case HN_METEOR_STORM_BUSTER:
-				case HN_GROUND_GRAVITATION:
-					damage += damage / 2;
-					break;
-				case HN_JUPITEL_THUNDER_STORM:
-				case HN_JACK_FROST_NOVA:
-				case HN_HELLS_DRIVE:
-					damage += damage * 70 / 100;
-					break;
-				case HN_NAPALM_VULCAN_STRIKE:
-					damage += damage * 40 / 100;
-					break;
-			}
-		}
-
 		if ((sce = sc->getSCE(SC_BLOODLUST)) && flag & BF_WEAPON && damage > 0 && rnd_chance(sce->val3, 100))
 			status_heal(src, damage * sce->val4 / 100, 0, 1);
 
@@ -1976,7 +1996,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		if (tsd && (sce = sc->getSCE(SC_SOULREAPER))) {
 			if (rnd()%100 < sce->val2 && tsd->soulball < MAX_SOUL_BALL) {
 				clif_specialeffect(src, 1208, AREA);
-				pc_addsoulball(tsd, 5 + 3 * pc_checkskill(tsd, SP_SOULENERGY));
+				pc_addsoulball( *tsd, 1, 5 + 3 * pc_checkskill(tsd, SP_SOULENERGY) );
 			}
 		}
 	} //End of caster SC_ check
@@ -3021,6 +3041,7 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 			case SHC_SAVAGE_IMPACT:
 			case SHC_ETERNAL_SLASH:
 			case SHC_IMPACT_CRATER:
+			case SHC_CROSS_SLASH:
 				cri /= 2;
 				break;
 			case WH_GALESTORM:
@@ -3694,6 +3715,12 @@ static int battle_get_spiritball_damage(struct Damage& wd, struct block_list& sr
 			// These skills used as many spheres as they do hits
 			damage = (wd.div_ + sd->spiritball) * 3;
 			break;
+#ifdef RENEWAL
+		case MO_FINGEROFFENSIVE:
+			// These skills store the spheres used in spiritball_old
+			damage = (sd->spiritball_old + sd->spiritball) * 3;
+			break;
+#endif
 		case MO_EXTREMITYFIST:
 			// These skills store the number of spheres the player had before cast
 			damage = sd->spiritball_old * 3;
@@ -3758,6 +3785,7 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 		switch (skill_id) {
 #ifdef RENEWAL
 			case MO_INVESTIGATE:
+			case MO_EXTREMITYFIST:
 			case CR_SHIELDBOOMERANG:
 			case PA_SHIELDCHAIN:
 #endif
@@ -3972,8 +4000,8 @@ static void battle_calc_damage_parts(struct Damage* wd, struct block_list *src,s
 	wd->statusAtk2 += sstatus->batk;
 
 	if (sd && sd->sc.getSCE(SC_SEVENWIND)) { // Mild Wind applies element to status ATK as well as weapon ATK [helvetica]
-		wd->statusAtk = battle_attr_fix(src, target, wd->statusAtk, right_element, tstatus->def_ele, tstatus->ele_lv);
-		wd->statusAtk2 = battle_attr_fix(src, target, wd->statusAtk2, left_element, tstatus->def_ele, tstatus->ele_lv);
+		wd->statusAtk = battle_attr_fix(src, target, wd->statusAtk, sstatus->rhw.ele, tstatus->def_ele, tstatus->ele_lv);
+		wd->statusAtk2 = battle_attr_fix(src, target, wd->statusAtk2, sstatus->lhw.ele, tstatus->def_ele, tstatus->ele_lv);
 	} else { // status atk is considered neutral on normal attacks [helvetica]
 		wd->statusAtk = battle_attr_fix(src, target, wd->statusAtk, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 		wd->statusAtk2 = battle_attr_fix(src, target, wd->statusAtk2, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
@@ -5955,6 +5983,16 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				skillratio += 150 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
+		case SHC_CROSS_SLASH:
+			skillratio += -100 + 300 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+
+			if( sc != nullptr && sc->getSCE( SC_SHADOW_EXCEED ) ) {
+				skillratio += 60 * skill_lv;
+				skillratio += 2 * sstatus->pow;
+			}
+			RE_LVL_DMOD(100);
+			break;
 		case MT_AXE_STOMP:
 			skillratio += -100 + 450 + 1150 * skill_lv;
 			skillratio += 5 * sstatus->pow;
@@ -6821,9 +6859,9 @@ static void battle_calc_attack_plant(struct Damage* wd, struct block_list *src,s
 		return;
 	}
 
-	// Triple Attack has a special property that it does not split damage on plant mode
+	// Triple Attack and Finger Offensive have a special property, they do not split damage on plant mode
 	// In pre-renewal, it requires the monster to have exactly 100 def
-	if (skill_id == MO_TRIPLEATTACK && wd->div_ < 0
+	if ((skill_id == MO_TRIPLEATTACK || skill_id == MO_FINGEROFFENSIVE) && wd->div_ < 0
 #ifndef RENEWAL
 		&& tstatus->def == 100
 #endif
@@ -7838,6 +7876,10 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 
 	if (!flag.infdef) { //No need to do the math for plants
 		unsigned int skillratio = 100; //Skill dmg modifiers.
+#ifdef RENEWAL
+		// Some skills do not use S.MATK and skillratio
+		bool has_skillratio = false;
+#endif
 		//Damage was set to 1 to simulate plant damage; if not plant, need to reinitialize damage with 0
 		ad.damage = 0;
 //MATK_RATE scales the damage. 100 = no change. 50 is halved, 200 is doubled, etc
@@ -7919,10 +7961,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					MATK_ADD(sstatus->matk_min+rnd()%(sstatus->matk_max-sstatus->matk_min));
 				} else {
 					MATK_ADD(sstatus->matk_min);
-				}
-
-				if (sd) { // Soul energy spheres adds MATK.
-					MATK_ADD(3*sd->soulball);
 				}
 
 				if (nk[NK_SPLASHSPLIT]) { // Divide MATK in case of multiple targets skill
@@ -8371,9 +8409,10 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case SP_CURSEEXPLOSION:
 						if (tsc && tsc->getSCE(SC_SOULCURSE))
-							skillratio += 1400 + 200 * skill_lv;
+							skillratio += -100 + 1200 + 300 * skill_lv;
 						else
-							skillratio += 300 + 100 * skill_lv;
+							skillratio += -100 + 400 + 100 * skill_lv;
+						RE_LVL_DMOD(100);
 						break;
 					case SP_SPA:
 						skillratio += 400 + 250 * skill_lv;
@@ -8395,14 +8434,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case AG_DESTRUCTIVE_HURRICANE:
 						skillratio += -100 + 600 + 2850 * skill_lv + 5 * sstatus->spl;
+						// (climax buff applied when hit)
 						RE_LVL_DMOD(100);
-						if (sc && sc->getSCE(SC_CLIMAX))
-						{
-							if (sc->getSCE(SC_CLIMAX)->val1 == 3)
-								skillratio += skillratio * 150 / 100;
-							else if (sc->getSCE(SC_CLIMAX)->val1 == 5)
-								skillratio -= skillratio * 20 / 100;
-						}
 						break;
 					case AG_RAIN_OF_CRYSTAL:
 						skillratio += -100 + 180 + 760 * skill_lv + 5 * sstatus->spl;
@@ -8414,13 +8447,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case AG_VIOLENT_QUAKE_ATK:
 						skillratio += -100 + 200 + 1200 * skill_lv + 5 * sstatus->spl;
+						// (climax buff applied when hit)
 						RE_LVL_DMOD(100);
-						if (sc && sc->getSCE(SC_CLIMAX)) {
-							if (sc->getSCE(SC_CLIMAX)->val1 == 1)
-								skillratio /= 2;
-							else if (sc->getSCE(SC_CLIMAX)->val1 == 3)
-								skillratio *= 3;
-						}
 						break;
 					case AG_SOUL_VC_STRIKE:
 						skillratio += -100 + 300 * skill_lv + 3 * sstatus->spl;
@@ -8432,31 +8460,22 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case AG_ALL_BLOOM_ATK:
 						skillratio += -100 + 200 + 1200 * skill_lv + 5 * sstatus->spl;
+						// (climax buff applied when hit)
 						RE_LVL_DMOD(100);
-						if (sc && sc->getSCE(SC_CLIMAX)) {
-							if (sc->getSCE(SC_CLIMAX)->val1 == 3)
-								skillratio *= 4;
-						}
 						break;
-					case AG_ALL_BLOOM_ATK2:// Is this affected by BaseLV and SPL too??? [Rytech]
-						skillratio += -100 + 85000 + 5 * sstatus->spl;
-						RE_LVL_DMOD(100);
+					case AG_ALL_BLOOM_ATK2:
+						skillratio += -100 + 85000;
+						// Skill not affected by Baselevel and SPL
 						break;
 					case AG_CRYSTAL_IMPACT:
 						skillratio += -100 + 250 + 1300 * skill_lv + 5 * sstatus->spl;
+						// (climax buff applied when hit)
 						RE_LVL_DMOD(100);
-						if (sc && sc->getSCE(SC_CLIMAX)) {
-							if (sc->getSCE(SC_CLIMAX)->val1 == 3)
-								skillratio += skillratio * 50 / 100;
-							else if (sc->getSCE(SC_CLIMAX)->val1 == 4)
-								skillratio /= 2;
-						}
 						break;
-					case AG_CRYSTAL_IMPACT_ATK:// Said to deal the same damage as the main attack.
-						skillratio += -100 + 800 * skill_lv + 5 * sstatus->spl;
+					case AG_CRYSTAL_IMPACT_ATK:
+						skillratio += -100 + 250 + 1300 * skill_lv + 5 * sstatus->spl;
+						// (climax buff applied when hit)
 						RE_LVL_DMOD(100);
-						if (sc && sc->getSCE(SC_CLIMAX) && sc->getSCE(SC_CLIMAX)->val1 == 4)
-							skillratio += skillratio * 150 / 100;
 						break;
 					case AG_TORNADO_STORM:
 						skillratio += -100 + 100 + 760 * skill_lv + 5 * sstatus->spl;
@@ -8467,9 +8486,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case AG_ASTRAL_STRIKE:
-						skillratio += -100 + 1800 * skill_lv + 10 * sstatus->spl;
+						skillratio += -100 + 300 + 1800 * skill_lv + 10 * sstatus->spl;
 						if (tstatus->race == RC_UNDEAD || tstatus->race == RC_DRAGON)
-							skillratio += 340 * skill_lv;
+							skillratio += 400 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
 					case AG_ASTRAL_STRIKE_ATK:
@@ -8495,7 +8514,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case AG_CRIMSON_ARROW:
-						skillratio += -100 + 400 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 400 * skill_lv + 3 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						break;
 					case AG_CRIMSON_ARROW_ATK:
@@ -8555,9 +8574,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 							skillratio += 50 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
-					case AG_DESTRUCTIVE_HURRICANE_CLIMAX:// Is this affected by BaseLV and SPL too??? [Rytech]
-						skillratio += -100 + 500 + 5 * sstatus->spl;
-						RE_LVL_DMOD(100);
+					case AG_DESTRUCTIVE_HURRICANE_CLIMAX:
+						skillratio += -100 + 12500;
+						// Skill not affected by Baselevel and SPL
 						break;
 					case ABC_ABYSS_STRIKE:
 						skillratio += -100 + 2650 * skill_lv;
@@ -8690,53 +8709,95 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case HN_NAPALM_VULCAN_STRIKE:
 						skillratio += -100 + 350 + 650 * skill_lv;
 						skillratio += pc_checkskill(sd, HN_SELFSTUDY_SOCERY) * 4 * skill_lv;
-						skillratio += 5 * sstatus->spl;
+						skillratio += 3 * sstatus->spl;
 						RE_LVL_DMOD(100);
+						// After RE_LVL_DMOD calculation, HN_SELFSTUDY_SOCERY amplifies the skill ratio of HN_NAPALM_VULCAN_STRIKE by (2x skill level)%
+						skillratio += skillratio * 2 * pc_checkskill(sd, HN_SELFSTUDY_SOCERY) / 100;
+						// SC_RULEBREAK increases the skill ratio after HN_SELFSTUDY_SOCERY
+						if (sc && sc->getSCE(SC_RULEBREAK))
+							skillratio += skillratio * 40 / 100;
 						break;
 					case HN_JUPITEL_THUNDER_STORM:
 						skillratio += -100 + 1800 * skill_lv;
 						skillratio += pc_checkskill(sd, HN_SELFSTUDY_SOCERY) * 3 * skill_lv;
-						skillratio += 5 * sstatus->spl;
+						skillratio += 3 * sstatus->spl;
 						RE_LVL_DMOD(100);
+						// After RE_LVL_DMOD calculation, HN_SELFSTUDY_SOCERY amplifies the skill ratio of HN_JUPITEL_THUNDER_STORM by (skill level)%
+						skillratio += skillratio * pc_checkskill(sd, HN_SELFSTUDY_SOCERY) / 100;
+						// SC_RULEBREAK increases the skill ratio after HN_SELFSTUDY_SOCERY
+						if (sc && sc->getSCE(SC_RULEBREAK))
+							skillratio += skillratio * 70 / 100;
 						break;
 					case HN_HELLS_DRIVE:
 						skillratio += -100 + 1700 + 900 * skill_lv;
 						skillratio += pc_checkskill(sd, HN_SELFSTUDY_SOCERY) * 4 * skill_lv;
-						skillratio += 5 * sstatus->spl;
+						skillratio += 3 * sstatus->spl;
 						RE_LVL_DMOD(100);
+						// After RE_LVL_DMOD calculation, HN_SELFSTUDY_SOCERY amplifies the skill ratio of HN_HELLS_DRIVE by (skill level)%
+						skillratio += skillratio * pc_checkskill(sd, HN_SELFSTUDY_SOCERY) / 100;
+						// SC_RULEBREAK increases the skill ratio after HN_SELFSTUDY_SOCERY
+						if (sc && sc->getSCE(SC_RULEBREAK))
+							skillratio += skillratio * 70 / 100;
 						break;
 					case HN_GROUND_GRAVITATION:
 						if (mflag & SKILL_ALTDMG_FLAG) {
+							// Initial damage
 							skillratio += -100 + 3000 + 1500 * skill_lv;
 							skillratio += pc_checkskill(sd, HN_SELFSTUDY_SOCERY) * 4 * skill_lv;
+							skillratio += 5 * sstatus->spl;
 							ad.div_ = -2;
 						} else {
+							// Gravitational field damage
 							skillratio += -100 + 800 + 700 * skill_lv;
 							skillratio += pc_checkskill(sd, HN_SELFSTUDY_SOCERY) * 2 * skill_lv;
+							skillratio += 2 * sstatus->spl;
 						}
-						skillratio += 5 * sstatus->spl;
 						RE_LVL_DMOD(100);
+						// After RE_LVL_DMOD calculation, HN_SELFSTUDY_SOCERY amplifies the skill ratio of HN_GROUND_GRAVITATION (gravity field damage) by (skill level)%
+						if (!(mflag & SKILL_ALTDMG_FLAG))
+							skillratio += skillratio * pc_checkskill(sd, HN_SELFSTUDY_SOCERY) / 100;
+						// SC_RULEBREAK increases the skill ratio after HN_SELFSTUDY_SOCERY
+						if (sc && sc->getSCE(SC_RULEBREAK))
+							skillratio += skillratio * 50 / 100;
 						break;
 					case HN_JACK_FROST_NOVA:
 						if (mflag & SKILL_ALTDMG_FLAG) {
+							// Initial damage
 							skillratio += -100 + 200 * skill_lv;
+							skillratio += 2 * sstatus->spl;
+							ad.div_ = 1;	// 1 hit
 						} else {
+							// Explosion damage
 							skillratio += -100 + 400 + 500 * skill_lv;
+							skillratio += 4 * sstatus->spl;
 						}
 						skillratio += pc_checkskill(sd, HN_SELFSTUDY_SOCERY) * 3 * skill_lv;
-						skillratio += 5 * sstatus->spl;
 						RE_LVL_DMOD(100);
+						// After RE_LVL_DMOD calculation, HN_SELFSTUDY_SOCERY amplifies the skill ratio of HN_JACK_FROST_NOVA (explosion damage) by (skill level)%
+						if (!(mflag & SKILL_ALTDMG_FLAG))
+							skillratio += skillratio * pc_checkskill(sd, HN_SELFSTUDY_SOCERY) / 100;
+						// SC_RULEBREAK increases the skill ratio after HN_SELFSTUDY_SOCERY
+						if (sc && sc->getSCE(SC_RULEBREAK))
+							skillratio += skillratio * 70 / 100;
 						break;
 					case HN_METEOR_STORM_BUSTER:
 						if (mflag & SKILL_ALTDMG_FLAG) {
-							skillratio += -100 + 300 + 160 * skill_lv * 2;
+							// Fall damage
+							skillratio += -100 + 300 + 320 * skill_lv;
 							ad.div_ = -3;
 						} else {
+							// Explosion damage
 							skillratio += -100 + 450 + 160 * skill_lv;
 						}
 						skillratio += pc_checkskill(sd, HN_SELFSTUDY_SOCERY) * 5 * skill_lv;
-						skillratio += 5 * sstatus->spl;
+						skillratio += 3 * sstatus->spl;
 						RE_LVL_DMOD(100);
+						// After RE_LVL_DMOD calculation, HN_SELFSTUDY_SOCERY amplifies the skill ratio of HN_METEOR_STORM_BUSTER (fall damage) by (skill level)%
+						if (mflag & SKILL_ALTDMG_FLAG)
+							skillratio += skillratio * pc_checkskill(sd, HN_SELFSTUDY_SOCERY) / 100;
+						// SC_RULEBREAK increases the skill ratio after HN_SELFSTUDY_SOCERY
+						if (sc && sc->getSCE(SC_RULEBREAK))
+							skillratio += skillratio * 50 / 100;
 						break;
 				}
 
@@ -8748,12 +8809,10 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += 25;
 				}
 #ifdef RENEWAL
-				// S.MATK needs to be applied before the skill ratio to prevent rounding issues
-				if (sd && sstatus->smatk > 0)
-					ad.damage += ad.damage * sstatus->smatk / 100;
-#endif
+				has_skillratio = true;
+#else
 				MATK_RATE(skillratio);
-
+#endif
 				//Constant/misc additions from skills
 				if (skill_id == WZ_FIREPILLAR)
 					MATK_ADD(100 + 50 * skill_lv);
@@ -8761,13 +8820,30 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			}
 		}
 #ifdef RENEWAL
+		// Damage modifier need to be applied before SMATK
 		ad.damage += battle_calc_cardfix(BF_MAGIC, src, target, nk, s_ele, 0, ad.damage, 0, ad.flag);
+
+		// Additionnal damage from W_2HSTAFF
+		// Must be before smatk and after battle_calc_cardfix
+		if (sd != nullptr && sd->status.weapon == W_2HSTAFF && (i = pc_checkskill(sd, AG_TWOHANDSTAFF)) > 0) {
+			ad.damage += ad.damage * i / 100;
+		}
+
+		if (has_skillratio) {
+			// S.MATK needs to be applied before the skill ratio to prevent rounding issues
+			if (sd && sstatus->smatk > 0)
+				ad.damage += ad.damage * sstatus->smatk / 100;
+
+			MATK_RATE(skillratio);
+		}
 #endif
 
 		if(sd) {
+#ifndef RENEWAL
 			//Damage bonuses
 			if ((i = pc_skillatk_bonus(sd, skill_id)))
 				ad.damage += (int64)ad.damage*i/100;
+#endif
 
 			//Ignore Defense?
 			if (!flag.imdef && (
@@ -8850,6 +8926,13 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 #endif
 		}
 
+#ifdef RENEWAL
+		// pc_skillatk_bonus must be after def reduction and before the damages applied when the target is hit (at least on renewal)
+		if (sd != nullptr && (i = pc_skillatk_bonus(sd, skill_id)) > 0) {
+			ad.damage += (int64)ad.damage*i/100;
+		}
+#endif
+
 		//Apply the physical part of the skill's damage. [Skotlex]
 		switch (skill_id) {
 			case CR_GRANDCROSS:
@@ -8912,6 +8995,40 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				case WZ_HEAVENDRIVE:
 					if(sc->getSCE(SC_PETROLOGY_OPTION))
 						ad.damage += (6 + sstatus->int_ / 4) + max(sstatus->dex - 10, 0) / 30;
+					break;
+
+				// Buff applied after def reduction and before battle_attr_fix
+				case AG_DESTRUCTIVE_HURRICANE:
+					if (sc->getSCE(SC_CLIMAX)) {
+						if (sc->getSCE(SC_CLIMAX)->val1 == 3)
+							ad.damage += ad.damage * 150 / 100;
+						else if (sc->getSCE(SC_CLIMAX)->val1 == 5)
+							ad.damage = (int64)( ad.damage - std::ceil( ad.damage * 20 / 100. ) );	// Damage rounded down after final calculation
+					}
+					break;
+				case AG_VIOLENT_QUAKE_ATK:
+					if (sc->getSCE(SC_CLIMAX)) {
+						if (sc->getSCE(SC_CLIMAX)->val1 == 1)
+							ad.damage /= 2;
+						else if (sc->getSCE(SC_CLIMAX)->val1 == 3)
+							ad.damage *= 3;
+					}
+					break;
+				case AG_ALL_BLOOM_ATK:
+					if (sc->getSCE(SC_CLIMAX) && sc->getSCE(SC_CLIMAX)->val1 == 3)
+						ad.damage *= 4;
+					break;
+				case AG_CRYSTAL_IMPACT:
+					if (sc->getSCE(SC_CLIMAX)) {
+						if (sc->getSCE(SC_CLIMAX)->val1 == 3)
+							ad.damage += ad.damage * 50 / 100;
+						else if (sc->getSCE(SC_CLIMAX)->val1 == 4)
+							ad.damage /= 2;
+					}
+					break;
+				case AG_CRYSTAL_IMPACT_ATK:
+					if (sc->getSCE(SC_CLIMAX) && sc->getSCE(SC_CLIMAX)->val1 == 4)
+						ad.damage += ad.damage * 150 / 100;
 					break;
 			}
 		}

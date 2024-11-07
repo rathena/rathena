@@ -24780,24 +24780,40 @@ BUILDIN_FUNC(getguildalliance)
 }
 
 /*
- * openstorage2 <storage_id>,<mode>{,<account_id>}
+ * openstorage2 <storage_id>{,<mode>{,<account_id>}}
  * mode @see enum e_storage_mode
  **/
 BUILDIN_FUNC(openstorage2) {
-	int stor_id = script_getnum(st, 2);
-	TBL_PC *sd = nullptr;
+	map_session_data *sd = nullptr;
 
 	if (!script_accid2sd(4, sd)) {
-		script_pushint(st, 0);
+		st->state = END;
 		return SCRIPT_CMD_FAILURE;
 	}
+
+	int32 stor_id = script_getnum(st, 2);
 
 	if (!storage_exists(stor_id)) {
 		ShowError("buildin_openstorage2: Invalid storage_id '%d'!\n", stor_id);
+		st->state = END;
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	script_pushint(st, storage_premiumStorage_load(sd, stor_id, script_getnum(st, 3)));
+	int32 mode;
+
+	if (!script_hasdata(st, 3))
+		mode = STOR_MODE_ALL;
+	else {
+		mode = script_getnum(st, 3);
+
+		if (mode < STOR_MODE_NONE || mode > STOR_MODE_ALL) {
+			ShowError("buildin_openstorage2: Invalid mode '%d'!\n", mode);
+			st->state = END;
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
+
+	script_pushint(st, storage_premiumStorage_load(sd, stor_id, mode));
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -28059,7 +28075,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(needed_status_point,"ii?"),
 	BUILDIN_DEF(needed_trait_point, "ii?"),
 	BUILDIN_DEF(jobcanentermap,"s?"),
-	BUILDIN_DEF(openstorage2,"ii?"),
+	BUILDIN_DEF(openstorage2,"i??"),
 	BUILDIN_DEF(unloadnpc, "s"),
 	BUILDIN_DEF(duplicate, "ssii?????"),
 	BUILDIN_DEF(duplicate_dynamic, "s?"),
