@@ -41,7 +41,7 @@
 	parseable_packet(0x008c,-1,clif_parse_GlobalMessage,2,4);
 	packet(0x008d,-1);
 	packet(0x008e,-1);
-	parseable_packet(0x0090,7,clif_parse_NpcClicked,2,6);
+	parseable_packet( HEADER_CZ_CONTACTNPC, sizeof( PACKET_CZ_CONTACTNPC ), clif_parse_NpcClicked, 0 );
 	packet(0x0093,2);
 	parseable_packet(0x0094,6,clif_parse_GetCharNameRequest,2);
 	parseable_packet(0x0096,-1,clif_parse_WisMessage,2,4,28);
