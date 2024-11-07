@@ -4657,19 +4657,16 @@ void clif_joinchatok(map_session_data& sd, chat_data& cd){
 }
 
 
-/// Notifies clients in a chat about a new member (ZC_MEMBER_NEWENTRY).
-/// 00dc <users>.W <name>.24B
-void clif_addchat(struct chat_data* cd,map_session_data *sd)
-{
-	unsigned char buf[29];
+/// Notifies clients in a chat about a new member.
+/// 00dc <users>.W <name>.24B (ZC_MEMBER_NEWENTRY)
+void clif_addchat( chat_data& cd, map_session_data& sd ){
+	PACKET_ZC_MEMBER_NEWENTRY p = {};
 
-	nullpo_retv(sd);
-	nullpo_retv(cd);
+	p.packetType = HEADER_ZC_MEMBER_NEWENTRY;
+	p.count = cd.users;
+	safestrncpy( p.name, sd.status.name, sizeof( p.name ) );
 
-	WBUFW(buf, 0) = 0xdc;
-	WBUFW(buf, 2) = cd->users;
-	safestrncpy(WBUFCP(buf, 4),sd->status.name,NAME_LENGTH);
-	clif_send(buf,packet_len(0xdc),&sd->bl,CHAT_WOS);
+	clif_send( &p, sizeof( p ), &sd.bl, CHAT_WOS );
 }
 
 
