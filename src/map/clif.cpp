@@ -11519,7 +11519,7 @@ void clif_parse_GlobalMessage(int fd, map_session_data* sd)
 /// Request to warp to a map on given coordinates.
 /// 0140 <map name>.16B <x>.W <y>.W (CZ_MOVETO_MAP)
 void clif_parse_MapMove( int fd, map_session_data* sd){
-	PACKET_CZ_MOVETO_MAP* p = reinterpret_cast<PACKET_CZ_MOVETO_MAP*>( RFIFOP( fd, 0 ) );
+	const PACKET_CZ_MOVETO_MAP* p = reinterpret_cast<PACKET_CZ_MOVETO_MAP*>( RFIFOP( fd, 0 ) );
 
 	char map_name[MAP_NAME_LENGTH_EXT];
 
