@@ -6140,9 +6140,8 @@ bool npc_unloadfile( const char* path ) {
 }
 
 bool npc_remove_mob_spawns(const char* path) {
-
-	int spawn_count{};
-	int unit_count{};
+	int32 spawn_count = {};
+	int32 unit_count = {};
 
 	auto remove_spawn_info = [&]( spawn_data& spawn, uint16 qty ){
 		auto it = mob_spawn_data.find( spawn.id );
@@ -6180,7 +6179,7 @@ bool npc_remove_mob_spawns(const char* path) {
 
 	//dynamic mobs cleaning
 	if (battle_config.dynamic_mobs) {
-		for (int i = 0; i < map_num; i++) {
+		for (int32 i = 0; i < map_num; i++) {
 			map_data* mapdata = map_getmapdata(i);
 
 			for (int16 j = 0; j < MAX_MOB_LIST_PER_MAP; j++) {
@@ -6209,11 +6208,11 @@ bool npc_remove_mob_spawns(const char* path) {
 		} );
 	}
 
-	if(spawn_count || unit_count)
+	if(spawn_count > 0 || unit_count > 0)
 		ShowInfo("%d mobs and %d spawns were removed.\n",unit_count,spawn_count);
+
 	return spawn_count > 0 || unit_count > 0;
 }
-
 
 void do_clear_npc(void) {
 	db_clear(npcname_db);
