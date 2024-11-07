@@ -40,7 +40,7 @@ int party_create_byscript;
  * Fills the given party_member structure according to the sd provided.
  * Used when creating/adding people to a party. [Skotlex]
  *------------------------------------------*/
-static void party_fill_member( struct party_member& member, map_session_data& sd, unsigned int leader ){
+static void party_fill_member( struct party_member& member, map_session_data& sd, uint32 leader ){
 	member.account_id = sd.status.account_id;
 	member.char_id = sd.status.char_id;
 	safestrncpy(member.name, sd.status.name, NAME_LENGTH);
@@ -1238,7 +1238,7 @@ int party_send_xy_clear(struct party_data *p)
 void party_exp_share(struct party_data* p, struct block_list* src, t_exp base_exp, t_exp job_exp, int zeny)
 {
 	map_session_data* sd[MAX_PARTY];
-	unsigned int i, c;
+	uint32 i, c;
 #ifdef RENEWAL_EXP
 	TBL_MOB *md = BL_CAST(BL_MOB, src);
 
@@ -1269,7 +1269,7 @@ void party_exp_share(struct party_data* p, struct block_list* src, t_exp base_ex
 		if (job_exp)
 			job_exp = (t_exp) cap_value(job_exp * bonus/100, 0, MAX_EXP);
 		if (zeny)
-			zeny = (unsigned int) cap_value(zeny * bonus/100, INT_MIN, INT_MAX);
+			zeny = (uint32)cap_value(zeny * bonus/100, INT_MIN, INT_MAX);
 	}
 
 	for (i = 0; i < c; i++) {
@@ -1398,8 +1398,8 @@ int party_sub_count(struct block_list *bl, va_list ap)
 int party_sub_count_class(struct block_list *bl, va_list ap)
 {
 	map_session_data *sd = (TBL_PC *)bl;
-	unsigned int mask = va_arg(ap, unsigned int);
-	unsigned int mapid_class = va_arg(ap, unsigned int);
+	uint32 mask = va_arg(ap, uint32);
+	uint32 mapid_class = va_arg(ap, uint32);
 
 	if( !party_sub_count(bl, ap) )
 		return 0;

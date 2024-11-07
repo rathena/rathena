@@ -69,7 +69,7 @@ struct Sql* Sql_Malloc(void);
 
 
 /// Retrieves the last error number.
-unsigned int Sql_GetError( Sql* self );
+uint32 Sql_GetError( Sql* self );
 
 
 

@@ -25,7 +25,7 @@ using namespace rathena;
 
 struct party_data {
 	struct party party;
-	unsigned int min_lv, max_lv;
+	uint32 min_lv, max_lv;
 	int family; //Is this party a family? if so, this holds the child id.
 	unsigned char size; //Total size of party.
 };
@@ -43,7 +43,7 @@ int party_check_family_share( std::shared_ptr<struct party_data> p );
 //Updates party's level range and unsets even share if broken.
 static int int_party_check_lv( std::shared_ptr<struct party_data> p ){
 	int i;
-	unsigned int lv;
+	uint32 lv;
 	p->min_lv = UINT_MAX;
 	p->max_lv = 0;
 	for(i=0;i<MAX_PARTY;i++){
@@ -98,7 +98,7 @@ void int_party_calc_state( std::shared_ptr<struct party_data> p ){
 	}
 	//max/min levels.
 	for(i=0;i<MAX_PARTY;i++){
-		unsigned int lv=p->party.member[i].lv;
+		uint32 lv=p->party.member[i].lv;
 		if (!lv) 
 			continue;
 		if (p->party.member[i].online) {
@@ -683,7 +683,7 @@ int mapif_parse_PartyLeave(int fd, int party_id, uint32 account_id, uint32 char_
 	return 0;
 }
 // When member goes to other map or levels up.
-int mapif_parse_PartyChangeMap( int fd, int party_id, uint32 account_id, uint32 char_id, int online, unsigned int lv, const char* map ){
+int mapif_parse_PartyChangeMap( int fd, int party_id, uint32 account_id, uint32 char_id, int online, uint32 lv, const char* map ){
 	int i;
 
 	std::shared_ptr<struct party_data> p = inter_party_fromsql( party_id );
@@ -784,7 +784,7 @@ int mapif_parse_PartyLeaderChange(int fd,int party_id,uint32 account_id,uint32 c
  * @param share_lvl : Max level number of difference to share exp
  * @return 
  */
-int mapif_parse_PartyShareLevel(int fd,unsigned int share_lvl)
+int mapif_parse_PartyShareLevel(int fd,uint32 share_lvl)
 {
 	party_share_level = share_lvl;
 

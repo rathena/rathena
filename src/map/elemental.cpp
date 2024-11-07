@@ -39,7 +39,7 @@ struct view_data * elemental_get_viewdata(int class_) {
 	return &db->vd;
 }
 
-int elemental_create(map_session_data *sd, int class_, unsigned int lifetime) {
+int elemental_create(map_session_data *sd, int class_, uint32 lifetime) {
 	nullpo_retr(1,sd);
 
 	std::shared_ptr<s_elemental_db> db = elemental_db.find(class_);

@@ -70,8 +70,8 @@ const int64 SCRIPT_INT_MAX = INT64_MAX;
 
 struct eri *array_ers;
 DBMap *st_db;
-unsigned int active_scripts;
-unsigned int next_id;
+uint32 active_scripts;
+uint32 next_id;
 struct eri *st_ers;
 struct eri *stack_ers;
 
@@ -358,13 +358,13 @@ const char* parse_syntax(const char* p);
 static int parse_syntax_for_flag = 0;
 
 extern short current_equip_item_index; //for New CARDS Scripts. It contains Inventory Index of the EQUIP_SCRIPT caller item. [Lupus]
-extern unsigned int current_equip_combo_pos;
+extern uint32 current_equip_combo_pos;
 
 int potion_flag=0; //For use on Alchemist improved potions/Potion Pitcher. [Skotlex]
 int potion_hp=0, potion_per_hp=0, potion_sp=0, potion_per_sp=0;
 int potion_target = 0;
-unsigned int *generic_ui_array = nullptr;
-unsigned int generic_ui_array_size = 0;
+uint32 *generic_ui_array = nullptr;
+uint32 generic_ui_array_size = 0;
 
 
 c_op get_com(unsigned char *script,int *pos);
@@ -624,9 +624,9 @@ static void check_event(struct script_state *st, const char *evt)
 /*==========================================
  * Hashes the input string
  *------------------------------------------*/
-static unsigned int calc_hash(const char* p)
+static uint32 calc_hash(const char* p)
 {
-	unsigned int h;
+	uint32 h;
 
 #if defined(SCRIPT_HASH_DJB2)
 	h = 5381;
@@ -639,7 +639,7 @@ static unsigned int calc_hash(const char* p)
 #elif defined(SCRIPT_HASH_ELF) // UNIX ELF hash
 	h = 0;
 	while( *p ){
-		unsigned int g;
+		uint32 g;
 		h = ( h << 4 ) + ((unsigned char)TOLOWER(*p++));
 		g = h & 0xF0000000;
 		if( g )
@@ -2913,7 +2913,7 @@ void script_array_ensure_zero(struct script_state *st, map_session_data *sd, int
 	if (src && src->arrays) {
 		struct script_array *sa = static_cast<script_array *>(idb_get(src->arrays, script_getvarid(uid)));
 		if (sa) {
-			unsigned int i;
+			uint32 i;
 
 			ARR_FIND(0, sa->size, i, sa->members[i] == 0);
 			if( i != sa->size ) {
@@ -2932,7 +2932,7 @@ void script_array_ensure_zero(struct script_state *st, map_session_data *sd, int
 /**
  * Returns array size by ID
  **/
-unsigned int script_array_size(struct script_state *st, map_session_data *sd, const char *name, struct reg_db *ref)
+uint32 script_array_size(struct script_state *st, map_session_data *sd, const char *name, struct reg_db *ref)
 {
 	struct script_array *sa = nullptr;
 	struct reg_db *src = script_array_src(st, sd, name, ref);
@@ -2946,7 +2946,7 @@ unsigned int script_array_size(struct script_state *st, map_session_data *sd, co
 /**
  * Returns array's highest key (for that awful getarraysize implementation that doesn't really gets the array size)
  **/
-unsigned int script_array_highest_key(struct script_state *st, map_session_data *sd, const char *name, struct reg_db *ref)
+uint32 script_array_highest_key(struct script_state *st, map_session_data *sd, const char *name, struct reg_db *ref)
 {
 	struct script_array *sa = nullptr;
 	struct reg_db *src = script_array_src(st, sd, name, ref);
@@ -2957,7 +2957,7 @@ unsigned int script_array_highest_key(struct script_state *st, map_session_data 
 		script_array_ensure_zero(st,sd,reference_uid(key, 0), ref);
 
 		if( ( sa = static_cast<script_array *>(idb_get(src->arrays, key)) ) ) {
-			unsigned int i, highest_key = 0;
+			uint32 i, highest_key = 0;
 
 			for(i = 0; i < sa->size; i++) {
 				if( sa->members[i] > highest_key )
@@ -2994,9 +2994,9 @@ void script_array_delete(struct reg_db *src, struct script_array *sa)
  *
  * @param idx the index of the member in script_array struct list, not of the actual array member
  **/
-void script_array_remove_member(struct reg_db *src, struct script_array *sa, unsigned int idx)
+void script_array_remove_member(struct reg_db *src, struct script_array *sa, uint32 idx)
 {
-	unsigned int i, cursor;
+	uint32 i, cursor;
 
 	// it's the only member left, no need to do anything other than delete the array data
 	if( sa->size == 1 ) {
@@ -3022,9 +3022,9 @@ void script_array_remove_member(struct reg_db *src, struct script_array *sa, uns
  *
  * @param idx the index of the array member being inserted
  **/
-void script_array_add_member(struct script_array *sa, unsigned int idx)
+void script_array_add_member(struct script_array *sa, uint32 idx)
 {
-	RECREATE(sa->members, unsigned int, ++sa->size);
+	RECREATE(sa->members, uint32, ++sa->size);
 
 	sa->members[sa->size - 1] = idx;
 }
@@ -3087,7 +3087,7 @@ void script_array_update(struct reg_db *src, int64 num, bool empty)
 {
 	struct script_array *sa = nullptr;
 	int id = script_getvarid(num);
-	unsigned int index = script_getvaridx(num);
+	uint32 index = script_getvaridx(num);
 
 	if (!src->arrays) {
 		src->arrays = idb_alloc(DB_OPT_BASE);
@@ -3096,7 +3096,7 @@ void script_array_update(struct reg_db *src, int64 num, bool empty)
 	}
 
 	if( sa ) {
-		unsigned int i;
+		uint32 i;
 
 		// search
 		for(i = 0; i < sa->size; i++) {
@@ -4584,7 +4584,7 @@ static int db_script_free_code_sub(DBKey key, DBData *data, va_list ap)
 	return 0;
 }
 
-void script_run_autobonus(const char *autobonus, map_session_data *sd, unsigned int pos)
+void script_run_autobonus(const char *autobonus, map_session_data *sd, uint32 pos)
 {
 	struct script_code *script = (struct script_code *)strdb_get(autobonus_db, autobonus);
 
@@ -4642,7 +4642,7 @@ void script_add_petautobonus(const std::string &autobonus) {
 void script_cleararray_pc( map_session_data* sd, const char* varname ){
 	struct script_array *sa = nullptr;
 	struct reg_db *src = nullptr;
-	unsigned int i, *list = nullptr, size = 0;
+	uint32 i, *list = nullptr, size = 0;
 	int key;
 
 	key = add_str(varname);
@@ -4728,18 +4728,18 @@ void script_reg_destroy_single(map_session_data *sd, int64 reg, struct script_re
 	}
 }
 
-unsigned int *script_array_cpy_list(struct script_array *sa)
+uint32 *script_array_cpy_list(struct script_array *sa)
 {
 	if( sa->size > generic_ui_array_size )
 		script_generic_ui_array_expand(sa->size);
-	memcpy(generic_ui_array, sa->members, sizeof(unsigned int)*sa->size);
+	memcpy(generic_ui_array, sa->members, sizeof(uint32)*sa->size);
 	return generic_ui_array;
 }
 
-void script_generic_ui_array_expand (unsigned int plus)
+void script_generic_ui_array_expand (uint32 plus)
 {
 	generic_ui_array_size += plus + 100;
-	RECREATE(generic_ui_array, unsigned int, generic_ui_array_size);
+	RECREATE(generic_ui_array, uint32, generic_ui_array_size);
 }
 
 /*==========================================
@@ -4767,7 +4767,7 @@ void do_final_script() {
 			fprintf(fp,"num : hash : data_name\n");
 			fprintf(fp,"---------------------------------------------------------------\n");
 			for(i=LABEL_START; i<str_num; i++) {
-				unsigned int h = calc_hash(get_str(i));
+				uint32 h = calc_hash(get_str(i));
 				fprintf(fp,"%04d : %4u : %s\n",i,h, get_str(i));
 				++count[h];
 			}
@@ -5653,9 +5653,8 @@ BUILDIN_FUNC(warp)
 static int buildin_areawarp_sub(struct block_list *bl,va_list ap)
 {
 	int x2,y2,x3,y3;
-	unsigned int index;
 
-	index = va_arg(ap,unsigned int);
+	uint32 index = va_arg(ap,uint32);
 	x2 = va_arg(ap,int);
 	y2 = va_arg(ap,int);
 	x3 = va_arg(ap,int);
@@ -5690,7 +5689,7 @@ static int buildin_areawarp_sub(struct block_list *bl,va_list ap)
 BUILDIN_FUNC(areawarp)
 {
 	int16 m, x0,y0,x1,y1, x2,y2,x3=0,y3=0;
-	unsigned int index;
+	uint32 index;
 	const char *str;
 	const char *mapname;
 
@@ -6503,7 +6502,7 @@ BUILDIN_FUNC(getarraysize)
 }
 
 int script_array_index_cmp(const void *a, const void *b) {
-	return ( *(unsigned int*)a - *(unsigned int*)b );
+	return ( *(uint32*)a - *(uint32*)b );
 }
 
 /// Deletes count or all the elements in an array, from the starting index.
@@ -6515,7 +6514,7 @@ BUILDIN_FUNC(deletearray)
 {
 	struct script_data* data;
 	const char* name;
-	unsigned int start, end, i;
+	uint32 start, end, i;
 	int id;
 	TBL_PC *sd = nullptr;
 	struct script_array *sa = nullptr;
@@ -6557,7 +6556,7 @@ BUILDIN_FUNC(deletearray)
 		return SCRIPT_CMD_SUCCESS;// nothing to free
 
 	if( script_hasdata(st,3) ) {
-		unsigned int count = script_getnum(st, 3);
+		uint32 count = script_getnum(st, 3);
 		if( count > end - start )
 			count = end - start;
 		if( count <= 0 )
@@ -6585,10 +6584,10 @@ BUILDIN_FUNC(deletearray)
 			}
 		} else {
 			// using sa to speed up
-			unsigned int *list = nullptr, size = 0;
+			uint32 *list = nullptr, size = 0;
 			list = script_array_cpy_list(sa);
 			size = sa->size;
-			qsort(list, size, sizeof(unsigned int), script_array_index_cmp);
+			qsort(list, size, sizeof(uint32), script_array_index_cmp);
 			
 			ARR_FIND(0, size, i, list[i] >= start);
 			
@@ -6614,7 +6613,7 @@ BUILDIN_FUNC(deletearray)
 			}
 		}
 	} else {
-		unsigned int *list = nullptr, size = 0;
+		uint32 *list = nullptr, size = 0;
 		list = script_array_cpy_list(sa);
 		size = sa->size;
 		
@@ -7426,7 +7425,7 @@ BUILDIN_FUNC(checkweight)
 {
 	int slots = 0;
 	unsigned short amount2 = 0;
-	unsigned int weight = 0, i, nbargs;
+	uint32 weight = 0, i, nbargs;
 	std::shared_ptr<item_data> id;
 	map_session_data* sd;
 
@@ -7898,7 +7897,7 @@ BUILDIN_FUNC(rentitem) {
 
 	it.nameid = nameid;
 	it.identify = 1;
-	it.expire_time = (unsigned int)(time(nullptr) + seconds);
+	it.expire_time = (uint32)(time(nullptr) + seconds);
 	it.bound = BOUND_NONE;
 
 	if( (flag = pc_additem(sd, &it, 1, LOG_TYPE_SCRIPT)) )
@@ -7990,7 +7989,7 @@ BUILDIN_FUNC(rentitem2) {
 	it.card[1] = c2;
 	it.card[2] = c3;
 	it.card[3] = c4;
-	it.expire_time = (unsigned int)(time(nullptr) + seconds);
+	it.expire_time = (uint32)(time(nullptr) + seconds);
 	it.bound = BOUND_NONE;
 
 	if (funcname[strlen(funcname)-1] == '3') {
@@ -9620,7 +9619,7 @@ BUILDIN_FUNC(successrefitem) {
 	if (equip_index_check(pos))
 		i = pc_checkequip(sd,equip_bitmask[pos]);
 	if (i >= 0) {
-		unsigned int ep = sd->inventory.u.items_inventory[i].equip;
+		uint32 ep = sd->inventory.u.items_inventory[i].equip;
 
 		//Logs items, got from (N)PC scripts [Lupus]
 		log_pick_pc(sd, LOG_TYPE_SCRIPT, -1, &sd->inventory.u.items_inventory[i]);
@@ -9727,7 +9726,7 @@ BUILDIN_FUNC(downrefitem) {
 	if (equip_index_check(pos))
 		i = pc_checkequip(sd,equip_bitmask[pos]);
 	if (i >= 0) {
-		unsigned int ep = sd->inventory.u.items_inventory[i].equip;
+		uint32 ep = sd->inventory.u.items_inventory[i].equip;
 
 		//Logs items, got from (N)PC scripts [Lupus]
 		log_pick_pc(sd, LOG_TYPE_SCRIPT, -1, &sd->inventory.u.items_inventory[i]);
@@ -10004,7 +10003,7 @@ BUILDIN_FUNC(bonus)
 
 BUILDIN_FUNC(autobonus)
 {
-	unsigned int dur, pos;
+	uint32 dur, pos;
 	short rate;
 	uint16 atk_type = 0;
 	TBL_PC* sd;
@@ -10041,7 +10040,7 @@ BUILDIN_FUNC(autobonus)
 
 BUILDIN_FUNC(autobonus2)
 {
-	unsigned int dur, pos;
+	uint32 dur, pos;
 	short rate;
 	uint16 atk_type = 0;
 	TBL_PC* sd;
@@ -10078,7 +10077,7 @@ BUILDIN_FUNC(autobonus2)
 
 BUILDIN_FUNC(autobonus3)
 {
-	unsigned int dur, pos;
+	uint32 dur, pos;
 	short rate;
 	uint16 skill_id = 0;
 	TBL_PC* sd;
@@ -11123,7 +11122,7 @@ BUILDIN_FUNC(monster)
 	int class_;
 	int amount			= script_getnum(st,7);
 	const char* event	= "";
-	unsigned int size	= SZ_SMALL;
+	uint32 size	= SZ_SMALL;
 	enum mob_ai ai		= AI_NONE;
 
 	map_session_data* sd;
@@ -11247,7 +11246,7 @@ BUILDIN_FUNC(areamonster)
 	int class_;
 	int amount			= script_getnum(st,9);
 	const char* event	= "";
-	unsigned int size	= SZ_SMALL;
+	uint32 size	= SZ_SMALL;
 	enum mob_ai ai		= AI_NONE;
 
 	map_session_data* sd;
@@ -11431,7 +11430,7 @@ BUILDIN_FUNC(clone)
 	int16 m;
 	enum e_mode mode = MD_NONE;
 
-	unsigned int duration = 0;
+	uint32 duration = 0;
 	const char *mapname,*event;
 
 	mapname=script_getstr(st,2);
@@ -14161,7 +14160,7 @@ BUILDIN_FUNC(mapwarp)	// Added by RoVeRT
 	struct party_data *p = nullptr;
 	const char *str;
 	const char *mapname;
-	unsigned int index;
+	uint32 index;
 	mapname=script_getstr(st,2);
 	str=script_getstr(st,3);
 	x=script_getnum(st,4);
@@ -15002,7 +15001,7 @@ BUILDIN_FUNC(undisguise)
  */
 BUILDIN_FUNC(classchange)
 {
-	int _class, type = 1;
+	int32 _class;
 	struct npc_data* nd = nullptr;
 	TBL_PC *sd = map_id2sd(st->rid);
 	send_target target = AREA;
@@ -15025,11 +15024,11 @@ BUILDIN_FUNC(classchange)
 		}
 	}
 	if (target != SELF)
-		clif_class_change(&nd->bl,_class,type);
+		clif_class_change( nd->bl, _class );
 	else if (sd == nullptr)
 		return SCRIPT_CMD_FAILURE;
 	else
-		clif_class_change_target(&nd->bl,_class,type,target,sd);
+		clif_class_change( nd->bl, _class, target, sd );
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -16586,7 +16585,7 @@ BUILDIN_FUNC(isequipped)
 	int i, id = 1;
 	int ret = -1;
 	//Original hash to reverse it when full check fails.
-	unsigned int setitem_hash = 0, setitem_hash2 = 0;
+	uint32 setitem_hash = 0, setitem_hash2 = 0;
 
 	if (!script_rid2sd(sd)) { //If the player is not attached it is a script error anyway... but better prevent the map server from crashing...
 		script_pushint(st,0);
@@ -16623,7 +16622,7 @@ BUILDIN_FUNC(isequipped)
 
 				for (k = 0; k < MAX_SLOTS; k++)
 				{	//New hash system which should support up to 4 slots on any equipment. [Skotlex]
-					unsigned int hash = 0;
+					uint32 hash = 0;
 					if (sd->inventory.u.items_inventory[index].card[k] != id)
 						continue;
 
@@ -16885,7 +16884,7 @@ BUILDIN_FUNC(charisalpha)
 	const char *str=script_getstr(st,2);
 	int pos=script_getnum(st,3);
 
-	int val = ( str && pos >= 0 && (unsigned int)pos < strlen(str) ) ? ISALPHA( str[pos] ) != 0 : 0;
+	int val = ( str && pos >= 0 && (uint32)pos < strlen(str) ) ? ISALPHA( str[pos] ) != 0 : 0;
 
 	script_pushint(st,val);
 	return SCRIPT_CMD_SUCCESS;
@@ -16899,7 +16898,7 @@ BUILDIN_FUNC(charisupper)
 	const char *str = script_getstr(st,2);
 	int pos = script_getnum(st,3);
 
-	int val = ( str && pos >= 0 && (unsigned int)pos < strlen(str) ) ? ISUPPER( str[pos] ) : 0;
+	int val = ( str && pos >= 0 && (uint32)pos < strlen(str) ) ? ISUPPER( str[pos] ) : 0;
 
 	script_pushint(st,val);
 	return SCRIPT_CMD_SUCCESS;
@@ -16913,7 +16912,7 @@ BUILDIN_FUNC(charislower)
 	const char *str = script_getstr(st,2);
 	int pos = script_getnum(st,3);
 
-	int val = ( str && pos >= 0 && (unsigned int)pos < strlen(str) ) ? ISLOWER( str[pos] ) : 0;
+	int val = ( str && pos >= 0 && (uint32)pos < strlen(str) ) ? ISLOWER( str[pos] ) : 0;
 
 	script_pushint(st,val);
 	return SCRIPT_CMD_SUCCESS;
@@ -16926,7 +16925,7 @@ BUILDIN_FUNC(charat) {
 	const char *str = script_getstr(st,2);
 	int pos = script_getnum(st,3);
 
-	if( pos >= 0 && (unsigned int)pos < strlen(str) ) {
+	if( pos >= 0 && (uint32)pos < strlen(str) ) {
 		char output[2];
 		output[0] = str[pos];
 		output[1] = '\0';
@@ -17220,7 +17219,7 @@ BUILDIN_FUNC(implode)
 //-------------------------------------------------------
 BUILDIN_FUNC(sprintf)
 {
-	unsigned int argc = 0, arg = 0;
+	uint32 argc = 0, arg = 0;
 	size_t buf2_len = 0;
 	const char* format;
 	char* p;
@@ -17362,7 +17361,7 @@ BUILDIN_FUNC(sprintf)
 // Implements C sscanf.
 //-------------------------------------------------------
 BUILDIN_FUNC(sscanf){
-	unsigned int argc, arg = 0;
+	uint32 argc, arg = 0;
 	struct script_data* data;
 	map_session_data* sd = nullptr;
 	const char* str;
@@ -17838,7 +17837,7 @@ int buildin_query_sql_sub(struct script_state* st, Sql* handle)
 	const char* query;
 	struct script_data* data;
 	const char* name;
-	unsigned int max_rows = SCRIPT_MAX_ARRAYSIZE; // maximum number of rows
+	uint32 max_rows = SCRIPT_MAX_ARRAYSIZE; // maximum number of rows
 	int num_vars;
 	int num_cols;
 
@@ -17881,10 +17880,10 @@ int buildin_query_sql_sub(struct script_state* st, Sql* handle)
 	// Count the number of columns to store
 	num_cols = Sql_NumColumns(handle);
 	if( num_vars < num_cols ) {
-		ShowWarning("script:query_sql: Too many columns, discarding last %u columns.\n", (unsigned int)(num_cols-num_vars));
+		ShowWarning("script:query_sql: Too many columns, discarding last %u columns.\n", (uint32)(num_cols-num_vars));
 		script_reportsrc(st);
 	} else if( num_vars > num_cols ) {
-		ShowWarning("script:query_sql: Too many variables (%u extra).\n", (unsigned int)(num_vars-num_cols));
+		ShowWarning("script:query_sql: Too many variables (%u extra).\n", (uint32)(num_vars-num_cols));
 		script_reportsrc(st);
 	}
 
@@ -17906,7 +17905,7 @@ int buildin_query_sql_sub(struct script_state* st, Sql* handle)
 		}
 	}
 	if( i == max_rows && max_rows < Sql_NumRows(handle) ) {
-		ShowWarning("script:query_sql: Only %d/%u rows have been stored.\n", max_rows, (unsigned int)Sql_NumRows(handle));
+		ShowWarning("script:query_sql: Only %d/%u rows have been stored.\n", max_rows, (uint32)Sql_NumRows(handle));
 		script_reportsrc(st);
 	}
 
@@ -19214,8 +19213,8 @@ BUILDIN_FUNC(setunitdata)
 		switch (type) {
 			case UMOB_SIZE: md->status.size = md->base_status->size = (unsigned char)value; break;
 			case UMOB_LEVEL: md->level = (unsigned short)value; clif_name_area(&md->bl); break;
-			case UMOB_HP: md->base_status->hp = (unsigned int)value; status_set_hp(bl, (unsigned int)value, 0); clif_name_area(&md->bl); break;
-			case UMOB_MAXHP: md->base_status->hp = md->base_status->max_hp = (unsigned int)value; status_set_maxhp(bl, (unsigned int)value, 0); clif_name_area(&md->bl); break;
+			case UMOB_HP: md->base_status->hp = (uint32)value; status_set_hp(bl, (uint32)value, 0); clif_name_area(&md->bl); break;
+			case UMOB_MAXHP: md->base_status->hp = md->base_status->max_hp = (uint32)value; status_set_maxhp(bl, (uint32)value, 0); clif_name_area(&md->bl); break;
 			case UMOB_MASTERAID: md->master_id = value; break;
 			case UMOB_MAPID: if (mapname) value = map_mapname2mapid(mapname); unit_warp(bl, (short)value, 0, 0, CLR_TELEPORT); break;
 			case UMOB_X: if (!unit_walktoxy(bl, (short)value, md->bl.y, 2)) unit_movepos(bl, (short)value, md->bl.y, 0, 0); break;
@@ -19240,7 +19239,7 @@ BUILDIN_FUNC(setunitdata)
 			case UMOB_SHIELD: clif_changelook(bl, LOOK_SHIELD, (unsigned short)value); break;
 			case UMOB_WEAPON: clif_changelook(bl, LOOK_WEAPON, (unsigned short)value); break;
 			case UMOB_LOOKDIR: unit_setdir(bl, (uint8)value); break;
-			case UMOB_CANMOVETICK: md->ud.canmove_tick = value > 0 ? (unsigned int)value : 0; break;
+			case UMOB_CANMOVETICK: md->ud.canmove_tick = value > 0 ? (uint32)value : 0; break;
 			case UMOB_STR: md->base_status->str = (unsigned short)value; status_calc_misc(bl, &md->status, md->level); calc_status = true; break;
 			case UMOB_AGI: md->base_status->agi = (unsigned short)value; status_calc_misc(bl, &md->status, md->level); calc_status = true; break;
 			case UMOB_VIT: md->base_status->vit = (unsigned short)value; status_calc_misc(bl, &md->status, md->level); calc_status = true; break;
@@ -19312,19 +19311,19 @@ BUILDIN_FUNC(setunitdata)
 		switch (type) {
 			case UHOM_SIZE: hd->battle_status.size = hd->base_status.size = (unsigned char)value; break;
 			case UHOM_LEVEL: hd->homunculus.level = (unsigned short)value; break;
-			case UHOM_HP: hd->base_status.hp = (unsigned int)value; status_set_hp(bl, (unsigned int)value, 0); break;
-			case UHOM_MAXHP: hd->base_status.hp = hd->base_status.max_hp = (unsigned int)value; status_set_maxhp(bl, (unsigned int)value, 0); break;
-			case UHOM_SP: hd->base_status.sp = (unsigned int)value; status_set_sp(bl, (unsigned int)value, 0); break;
-			case UHOM_MAXSP: hd->base_status.sp = hd->base_status.max_sp = (unsigned int)value; status_set_maxsp(bl, (unsigned int)value, 0); break;
+			case UHOM_HP: hd->base_status.hp = (uint32)value; status_set_hp(bl, (uint32)value, 0); break;
+			case UHOM_MAXHP: hd->base_status.hp = hd->base_status.max_hp = (uint32)value; status_set_maxhp(bl, (uint32)value, 0); break;
+			case UHOM_SP: hd->base_status.sp = (uint32)value; status_set_sp(bl, (uint32)value, 0); break;
+			case UHOM_MAXSP: hd->base_status.sp = hd->base_status.max_sp = (uint32)value; status_set_maxsp(bl, (uint32)value, 0); break;
 			case UHOM_MASTERCID: hd->homunculus.char_id = (uint32)value; break;
 			case UHOM_MAPID: if (mapname) value = map_mapname2mapid(mapname); unit_warp(bl, (short)value, 0, 0, CLR_TELEPORT); break;
 			case UHOM_X: if (!unit_walktoxy(bl, (short)value, hd->bl.y, 2)) unit_movepos(bl, (short)value, hd->bl.y, 0, 0); break;
 			case UHOM_Y: if (!unit_walktoxy(bl, hd->bl.x, (short)value, 2)) unit_movepos(bl, hd->bl.x, (short)value, 0, 0); break;
 			case UHOM_HUNGER: hd->homunculus.hunger = (short)value; clif_send_homdata(*hd, SP_HUNGRY); break;
-			case UHOM_INTIMACY: hom_increase_intimacy(hd, (unsigned int)value); clif_send_homdata(*hd, SP_INTIMATE); break;
+			case UHOM_INTIMACY: hom_increase_intimacy(hd, (uint32)value); clif_send_homdata(*hd, SP_INTIMATE); break;
 			case UHOM_SPEED: hd->base_status.speed = (unsigned short)value; status_calc_misc(bl, &hd->base_status, hd->homunculus.level); calc_status = true; break;
 			case UHOM_LOOKDIR: unit_setdir(bl, (uint8)value); break;
-			case UHOM_CANMOVETICK: hd->ud.canmove_tick = value > 0 ? (unsigned int)value : 0; break;
+			case UHOM_CANMOVETICK: hd->ud.canmove_tick = value > 0 ? (uint32)value : 0; break;
 			case UHOM_STR: hd->base_status.str = (unsigned short)value; status_calc_misc(bl, &hd->base_status, hd->homunculus.level); calc_status = true; break;
 			case UHOM_AGI: hd->base_status.agi = (unsigned short)value; status_calc_misc(bl, &hd->base_status, hd->homunculus.level); calc_status = true; break;
 			case UHOM_VIT: hd->base_status.vit = (unsigned short)value; status_calc_misc(bl, &hd->base_status, hd->homunculus.level); calc_status = true; break;
@@ -19380,17 +19379,17 @@ BUILDIN_FUNC(setunitdata)
 		switch (type) {
 			case UPET_SIZE: pd->status.size = (unsigned char)value; break;
 			case UPET_LEVEL: pd->pet.level = (unsigned short)value; break;
-			case UPET_HP: pd->status.hp = pd->status.max_hp = (unsigned int)value; status_set_hp(bl, (unsigned int)value, 0); break;
-			case UPET_MAXHP: pd->status.hp = pd->status.max_hp = (unsigned int)value; status_set_maxhp(bl, (unsigned int)value, 0); break;
-			case UPET_MASTERAID: pd->pet.account_id = (unsigned int)value; break;
+			case UPET_HP: pd->status.hp = pd->status.max_hp = (uint32)value; status_set_hp(bl, (uint32)value, 0); break;
+			case UPET_MAXHP: pd->status.hp = pd->status.max_hp = (uint32)value; status_set_maxhp(bl, (uint32)value, 0); break;
+			case UPET_MASTERAID: pd->pet.account_id = (uint32)value; break;
 			case UPET_MAPID: if (mapname) value = map_mapname2mapid(mapname); unit_warp(bl, (short)value, 0, 0, CLR_TELEPORT); break;
 			case UPET_X: if (!unit_walktoxy(bl, (short)value, pd->bl.y, 2)) unit_movepos(bl, (short)value, pd->bl.y, 0, 0); break;
 			case UPET_Y: if (!unit_walktoxy(bl, pd->bl.x, (short)value, 2)) unit_movepos(bl, pd->bl.x, (short)value, 0, 0); break;
 			case UPET_HUNGER: pd->pet.hungry = cap_value((short)value, 0, 100); clif_send_petdata(map_id2sd(pd->pet.account_id), pd, 2, pd->pet.hungry); break;
-			case UPET_INTIMACY: pet_set_intimate(pd, (unsigned int)value); clif_send_petdata(map_id2sd(pd->pet.account_id), pd, 1, pd->pet.intimate); break;
+			case UPET_INTIMACY: pet_set_intimate(pd, (uint32)value); clif_send_petdata(map_id2sd(pd->pet.account_id), pd, 1, pd->pet.intimate); break;
 			case UPET_SPEED: pd->status.speed = (unsigned short)value; status_calc_misc(bl, &pd->status, pd->pet.level); break;
 			case UPET_LOOKDIR: unit_setdir(bl, (uint8)value); break;
-			case UPET_CANMOVETICK: pd->ud.canmove_tick = value > 0 ? (unsigned int)value : 0; break;
+			case UPET_CANMOVETICK: pd->ud.canmove_tick = value > 0 ? (uint32)value : 0; break;
 			case UPET_STR: pd->status.str = (unsigned short)value; status_calc_misc(bl, &pd->status, pd->pet.level); break;
 			case UPET_AGI: pd->status.agi = (unsigned short)value; status_calc_misc(bl, &pd->status, pd->pet.level); break;
 			case UPET_VIT: pd->status.vit = (unsigned short)value; status_calc_misc(bl, &pd->status, pd->pet.level); break;
@@ -19430,17 +19429,17 @@ BUILDIN_FUNC(setunitdata)
 
 		switch (type) {
 			case UMER_SIZE: mc->battle_status.size = mc->base_status.size = (unsigned char)value; break;
-			case UMER_HP: mc->base_status.hp = (unsigned int)value; status_set_hp(bl, (unsigned int)value, 0); break;
-			case UMER_MAXHP: mc->base_status.hp = mc->base_status.max_hp = (unsigned int)value; status_set_maxhp(bl, (unsigned int)value, 0); break;
+			case UMER_HP: mc->base_status.hp = (uint32)value; status_set_hp(bl, (uint32)value, 0); break;
+			case UMER_MAXHP: mc->base_status.hp = mc->base_status.max_hp = (uint32)value; status_set_maxhp(bl, (uint32)value, 0); break;
 			case UMER_MASTERCID: mc->mercenary.char_id = (uint32)value; break;
 			case UMER_MAPID: if (mapname) value = map_mapname2mapid(mapname); unit_warp(bl, (short)value, 0, 0, CLR_TELEPORT); break;
 			case UMER_X: if (!unit_walktoxy(bl, (short)value, mc->bl.y, 2)) unit_movepos(bl, (short)value, mc->bl.y, 0, 0); break;
 			case UMER_Y: if (!unit_walktoxy(bl, mc->bl.x, (short)value, 2)) unit_movepos(bl, mc->bl.x, (short)value, 0, 0); break;
-			case UMER_KILLCOUNT: mc->mercenary.kill_count = (unsigned int)value; break;
-			case UMER_LIFETIME: mc->mercenary.life_time = (unsigned int)value; break;
+			case UMER_KILLCOUNT: mc->mercenary.kill_count = (uint32)value; break;
+			case UMER_LIFETIME: mc->mercenary.life_time = (uint32)value; break;
 			case UMER_SPEED: mc->base_status.speed = (unsigned short)value; status_calc_misc(bl, &mc->base_status, mc->db->lv); calc_status = true; break;
 			case UMER_LOOKDIR: unit_setdir(bl, (uint8)value); break;
-			case UMER_CANMOVETICK: mc->ud.canmove_tick = value > 0 ? (unsigned int)value : 0; break;
+			case UMER_CANMOVETICK: mc->ud.canmove_tick = value > 0 ? (uint32)value : 0; break;
 			case UMER_STR: mc->base_status.str = (unsigned short)value; status_calc_misc(bl, &mc->base_status, mc->db->lv); calc_status = true; break;
 			case UMER_AGI: mc->base_status.agi = (unsigned short)value; status_calc_misc(bl, &mc->base_status, mc->db->lv); calc_status = true; break;
 			case UMER_VIT: mc->base_status.vit = (unsigned short)value; status_calc_misc(bl, &mc->base_status, mc->db->lv); calc_status = true; break;
@@ -19498,19 +19497,19 @@ BUILDIN_FUNC(setunitdata)
 
 		switch (type) {
 			case UELE_SIZE: ed->battle_status.size = ed->base_status.size = (unsigned char)value; break;
-			case UELE_HP: ed->base_status.hp = (unsigned int)value; status_set_hp(bl, (unsigned int)value, 0); break;
-			case UELE_MAXHP: ed->base_status.hp = ed->base_status.max_hp = (unsigned int)value; status_set_maxhp(bl, (unsigned int)value, 0); break;
-			case UELE_SP: ed->base_status.sp = (unsigned int)value; status_set_sp(bl, (unsigned int)value, 0); break;
-			case UELE_MAXSP: ed->base_status.sp = ed->base_status.max_sp = (unsigned int)value; status_set_maxsp(bl, (unsigned int)value, 0); break;
+			case UELE_HP: ed->base_status.hp = (uint32)value; status_set_hp(bl, (uint32)value, 0); break;
+			case UELE_MAXHP: ed->base_status.hp = ed->base_status.max_hp = (uint32)value; status_set_maxhp(bl, (uint32)value, 0); break;
+			case UELE_SP: ed->base_status.sp = (uint32)value; status_set_sp(bl, (uint32)value, 0); break;
+			case UELE_MAXSP: ed->base_status.sp = ed->base_status.max_sp = (uint32)value; status_set_maxsp(bl, (uint32)value, 0); break;
 			case UELE_MASTERCID: ed->elemental.char_id = (uint32)value; break;
 			case UELE_MAPID: if (mapname) value = map_mapname2mapid(mapname); unit_warp(bl, (short)value, 0, 0, CLR_TELEPORT); break;
 			case UELE_X: if (!unit_walktoxy(bl, (short)value, ed->bl.y, 2)) unit_movepos(bl, (short)value, ed->bl.y, 0, 0); break;
 			case UELE_Y: if (!unit_walktoxy(bl, ed->bl.x, (short)value, 2)) unit_movepos(bl, ed->bl.x, (short)value, 0, 0); break;
-			case UELE_LIFETIME: ed->elemental.life_time = (unsigned int)value; break;
+			case UELE_LIFETIME: ed->elemental.life_time = (uint32)value; break;
 			case UELE_MODE: ed->elemental.mode = (enum e_mode)value; calc_status = true; break;
 			case UELE_SPEED: ed->base_status.speed = (unsigned short)value; status_calc_misc(bl, &ed->base_status, ed->db->lv); calc_status = true; break;
 			case UELE_LOOKDIR: unit_setdir(bl, (uint8)value); break;
-			case UELE_CANMOVETICK: ed->ud.canmove_tick = value > 0 ? (unsigned int)value : 0; break;
+			case UELE_CANMOVETICK: ed->ud.canmove_tick = value > 0 ? (uint32)value : 0; break;
 			case UELE_STR: ed->base_status.str = (unsigned short)value; status_calc_misc(bl, &ed->base_status, ed->db->lv); calc_status = true; break;
 			case UELE_AGI: ed->base_status.agi = (unsigned short)value; status_calc_misc(bl, &ed->base_status, ed->db->lv); calc_status = true; break;
 			case UELE_VIT: ed->base_status.vit = (unsigned short)value; status_calc_misc(bl, &ed->base_status, ed->db->lv); calc_status = true; break;
@@ -19571,9 +19570,9 @@ BUILDIN_FUNC(setunitdata)
 		}
 
 		switch (type) {
-			case UNPC_LEVEL: nd->level = (unsigned int)value; break;
-			case UNPC_HP: nd->status.hp = (unsigned int)value; status_set_hp(bl, (unsigned int)value, 0); break;
-			case UNPC_MAXHP: nd->status.hp = nd->status.max_hp = (unsigned int)value; status_set_maxhp(bl, (unsigned int)value, 0); break;
+			case UNPC_LEVEL: nd->level = (uint32)value; break;
+			case UNPC_HP: nd->status.hp = (uint32)value; status_set_hp(bl, (uint32)value, 0); break;
+			case UNPC_MAXHP: nd->status.hp = nd->status.max_hp = (uint32)value; status_set_maxhp(bl, (uint32)value, 0); break;
 			case UNPC_MAPID: if (mapname) value = map_mapname2mapid(mapname); unit_warp(bl, (short)value, 0, 0, CLR_TELEPORT); break;
 			case UNPC_X: if (!unit_walktoxy(bl, (short)value, nd->bl.y, 2)) unit_movepos(bl, (short)value, nd->bl.x, 0, 0); break;
 			case UNPC_Y: if (!unit_walktoxy(bl, nd->bl.x, (short)value, 2)) unit_movepos(bl, nd->bl.x, (short)value, 0, 0); break;
@@ -19584,7 +19583,7 @@ BUILDIN_FUNC(setunitdata)
 			case UNPC_INT: nd->params.int_ = (unsigned short)value; status_calc_misc(bl, &nd->status, nd->level); break;
 			case UNPC_DEX: nd->params.dex = (unsigned short)value; status_calc_misc(bl, &nd->status, nd->level); break;
 			case UNPC_LUK: nd->params.luk = (unsigned short)value; status_calc_misc(bl, &nd->status, nd->level); break;
-			case UNPC_PLUSALLSTAT: nd->stat_point = (unsigned int)value; break;
+			case UNPC_PLUSALLSTAT: nd->stat_point = (uint32)value; break;
 			case UNPC_ATKRANGE: nd->status.rhw.range = (unsigned short)value; break;
 			case UNPC_ATKMIN: nd->status.rhw.atk = (unsigned short)value; break;
 			case UNPC_ATKMAX: nd->status.rhw.atk2 = (unsigned short)value; break;
@@ -21657,7 +21656,7 @@ BUILDIN_FUNC(instance_id)
  *------------------------------------------*/
 static int buildin_instance_warpall_sub(struct block_list *bl, va_list ap)
 {
-	unsigned int m = va_arg(ap,unsigned int);
+	uint32 m = va_arg(ap,uint32);
 	int x = va_arg(ap,int);
 	int y = va_arg(ap,int);
 	int instance_id = va_arg(ap, int);
@@ -22292,7 +22291,7 @@ BUILDIN_FUNC(progressbar)
 {
 	map_session_data * sd;
 	const char * color;
-	unsigned int second;
+	uint32 second;
 
 	if( !script_rid2sd(sd) )
 		return SCRIPT_CMD_SUCCESS;
@@ -22498,7 +22497,7 @@ BUILDIN_FUNC(searchstores)
 /// showdigit <value>[,<type>];
 BUILDIN_FUNC(showdigit)
 {
-	unsigned int type = 0;
+	uint32 type = 0;
 	int value;
 	map_session_data* sd;
 
@@ -22587,7 +22586,7 @@ BUILDIN_FUNC(setdragon) {
 		pc_setoption(sd, sd->sc.option&~OPTION_DRAGON);
 		script_pushint(st,1);
 	} else {//Not mounted; Mount now.
-		unsigned int option = OPTION_DRAGON1;
+		uint32 option = OPTION_DRAGON1;
 		if( color ) {
 			option = ( color == 1 ? OPTION_DRAGON1 :
 					   color == 2 ? OPTION_DRAGON2 :
@@ -23041,8 +23040,8 @@ BUILDIN_FUNC(npcskill)
 {
 	uint16 skill_id;
 	unsigned short skill_level;
-	unsigned int stat_point;
-	unsigned int npc_level;
+	uint32 stat_point;
+	uint32 npc_level;
 	struct npc_data *nd;
 	map_session_data *sd;
 
@@ -24317,7 +24316,7 @@ BUILDIN_FUNC(adopt)
 */
 BUILDIN_FUNC(minmax){
 	char *functionname;
-	unsigned int i;
+	uint32 i;
 	int64 value;
 	// Function pointer for our comparison function (either min or max at the moment)
 	int64 (*func)(int64, int64);
@@ -24360,7 +24359,7 @@ BUILDIN_FUNC(minmax){
 		}else if( data_isreference( data ) ){
 			const char *name;
 			map_session_data* sd;
-			unsigned int start, end;
+			uint32 start, end;
 
 			// Get the name of the variable
 			name = reference_getname(data);
@@ -24780,24 +24779,40 @@ BUILDIN_FUNC(getguildalliance)
 }
 
 /*
- * openstorage2 <storage_id>,<mode>{,<account_id>}
+ * openstorage2 <storage_id>{,<mode>{,<account_id>}}
  * mode @see enum e_storage_mode
  **/
 BUILDIN_FUNC(openstorage2) {
-	int stor_id = script_getnum(st, 2);
-	TBL_PC *sd = nullptr;
+	map_session_data *sd = nullptr;
 
 	if (!script_accid2sd(4, sd)) {
-		script_pushint(st, 0);
+		st->state = END;
 		return SCRIPT_CMD_FAILURE;
 	}
+
+	int32 stor_id = script_getnum(st, 2);
 
 	if (!storage_exists(stor_id)) {
 		ShowError("buildin_openstorage2: Invalid storage_id '%d'!\n", stor_id);
+		st->state = END;
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	script_pushint(st, storage_premiumStorage_load(sd, stor_id, script_getnum(st, 3)));
+	int32 mode;
+
+	if (!script_hasdata(st, 3))
+		mode = STOR_MODE_ALL;
+	else {
+		mode = script_getnum(st, 3);
+
+		if (mode < STOR_MODE_NONE || mode > STOR_MODE_ALL) {
+			ShowError("buildin_openstorage2: Invalid mode '%d'!\n", mode);
+			st->state = END;
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
+
+	script_pushint(st, storage_premiumStorage_load(sd, stor_id, mode));
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -25176,7 +25191,7 @@ BUILDIN_FUNC(channel_chat) {
 BUILDIN_FUNC(channel_ban) {
 	struct Channel *ch = nullptr;
 	const char *chname = script_getstr(st,2);
-	unsigned int char_id = script_getnum(st,3);
+	uint32 char_id = script_getnum(st,3);
 	TBL_PC *tsd;
 
 	if (!(ch = channel_name2channel((char *)chname, nullptr, 0))) {
@@ -25225,7 +25240,7 @@ BUILDIN_FUNC(channel_ban) {
 BUILDIN_FUNC(channel_unban) {
 	struct Channel *ch = nullptr;
 	const char *chname = script_getstr(st,2);
-	unsigned int char_id = script_getnum(st,3);
+	uint32 char_id = script_getnum(st,3);
 
 	if (!(ch = channel_name2channel((char *)chname, nullptr, 0))) {
 		ShowError("buildin_channel_unban: Channel name '%s' is invalid.\n", chname);
@@ -25822,7 +25837,7 @@ BUILDIN_FUNC(getequiptradability) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
-static inline bool mail_sub( struct script_state *st, struct script_data *data, map_session_data *sd, int i, const char **out_name, unsigned int *start, unsigned int *end, int32 *id ){
+static inline bool mail_sub( struct script_state *st, struct script_data *data, map_session_data *sd, int i, const char **out_name, uint32 *start, uint32 *end, int32 *id ){
 	const char *name;
 
 	// Check if it is a variable
@@ -25872,7 +25887,7 @@ BUILDIN_FUNC(mail){
 	struct mail_message msg;
 	struct script_data *data;
 	map_session_data *sd = nullptr;
-	unsigned int i, j, k, num_items, start, end;
+	uint32 i, j, k, num_items, start, end;
 	int32 id;
 
 	memset(&msg, 0, sizeof(struct mail_message));
@@ -28059,7 +28074,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(needed_status_point,"ii?"),
 	BUILDIN_DEF(needed_trait_point, "ii?"),
 	BUILDIN_DEF(jobcanentermap,"s?"),
-	BUILDIN_DEF(openstorage2,"ii?"),
+	BUILDIN_DEF(openstorage2,"i??"),
 	BUILDIN_DEF(unloadnpc, "s"),
 	BUILDIN_DEF(duplicate, "ssii?????"),
 	BUILDIN_DEF(duplicate_dynamic, "s?"),

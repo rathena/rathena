@@ -181,7 +181,7 @@ bool mapif_homunculus_load(int homun_id, struct s_homunculus* hd)
 	Sql_GetData(sql_handle,  4, &data, &len); safestrncpy(hd->name, data, sizeof(hd->name));
 	Sql_GetData(sql_handle,  5, &data, nullptr); hd->level = atoi(data);
 	Sql_GetData(sql_handle,  6, &data, nullptr); hd->exp = strtoull( data, nullptr, 10 );
-	Sql_GetData(sql_handle,  7, &data, nullptr); hd->intimacy = (unsigned int)strtoul(data, nullptr, 10);
+	Sql_GetData(sql_handle,  7, &data, nullptr); hd->intimacy = (uint32)strtoul(data, nullptr, 10);
 	Sql_GetData(sql_handle,  8, &data, nullptr); hd->hunger = atoi(data);
 	Sql_GetData(sql_handle,  9, &data, nullptr); hd->str = atoi(data);
 	Sql_GetData(sql_handle, 10, &data, nullptr); hd->agi = atoi(data);
@@ -189,10 +189,10 @@ bool mapif_homunculus_load(int homun_id, struct s_homunculus* hd)
 	Sql_GetData(sql_handle, 12, &data, nullptr); hd->int_ = atoi(data);
 	Sql_GetData(sql_handle, 13, &data, nullptr); hd->dex = atoi(data);
 	Sql_GetData(sql_handle, 14, &data, nullptr); hd->luk = atoi(data);
-	Sql_GetData(sql_handle, 15, &data, nullptr); hd->hp = atoi(data);
-	Sql_GetData(sql_handle, 16, &data, nullptr); hd->max_hp = atoi(data);
-	Sql_GetData(sql_handle, 17, &data, nullptr); hd->sp = atoi(data);
-	Sql_GetData(sql_handle, 18, &data, nullptr); hd->max_sp = atoi(data);
+	Sql_GetData(sql_handle, 15, &data, nullptr); hd->hp = strtoul(data, nullptr, 10);
+	Sql_GetData(sql_handle, 16, &data, nullptr); hd->max_hp = strtoul(data, nullptr, 10);
+	Sql_GetData(sql_handle, 17, &data, nullptr); hd->sp = strtoul(data, nullptr, 10);
+	Sql_GetData(sql_handle, 18, &data, nullptr); hd->max_sp = strtoul(data, nullptr, 10);
 	Sql_GetData(sql_handle, 19, &data, nullptr); hd->skillpts = atoi(data);
 	Sql_GetData(sql_handle, 20, &data, nullptr); hd->rename_flag = atoi(data);
 	Sql_GetData(sql_handle, 21, &data, nullptr); hd->vaporize = atoi(data);

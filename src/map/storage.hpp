@@ -60,7 +60,7 @@ void storage_storageaddfromcart(map_session_data *sd, struct s_storage *stor, in
 void storage_storagegettocart(map_session_data *sd, struct s_storage *stor, int index, int amount);
 void storage_storagesave(map_session_data *sd);
 void storage_storageclose(map_session_data *sd);
-void storage_sortitem(struct item* items, unsigned int size);
+void storage_sortitem(struct item* items, uint32 size);
 void do_init_storage(void);
 void do_final_storage(void);
 void do_reconnect_storage(void);

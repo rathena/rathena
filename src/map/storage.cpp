@@ -83,7 +83,7 @@ static int storage_comp_item(const void *_i1, const void *_i2)
  * @param items : list of items to sort
  * @param size : number of item in list
  */
-void storage_sortitem(struct item* items, unsigned int size)
+void storage_sortitem(struct item* items, uint32 size)
 {
 	nullpo_retv(items);
 

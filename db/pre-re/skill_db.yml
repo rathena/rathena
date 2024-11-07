@@ -31026,19 +31026,7 @@ Body:
     MaxLevel: 5
     Type: Magic
     TargetType: Attack
-    Range: 15
-    Hit: Single
-    HitCount:
-      - Level: 1
-        Count: 1
-      - Level: 2
-        Count: 2
-      - Level: 3
-        Count: 3
-      - Level: 4
-        Count: 4
-      - Level: 5
-        Count: 5
+    Range: 9
     Requires:
       SpCost:
         - Level: 1
@@ -31055,10 +31043,10 @@ Body:
     Name: HVAN_CHAOTIC
     Description: Benediction of Chaos
     MaxLevel: 5
+    Type: Magic
     TargetType: Self
     DamageFlags:
       NoDamage: true
-    Hit: Single
     AfterCastWalkDelay: 1500
     Requires:
       SpCost: 40
@@ -31066,8 +31054,6 @@ Body:
     Name: HVAN_INSTRUCT
     Description: Instruct
     MaxLevel: 5
-    DamageFlags:
-      NoDamage: true
   - Id: 8016
     Name: HVAN_EXPLOSION
     Description: Bio Explosion
@@ -31079,10 +31065,13 @@ Body:
       IgnoreElement: true
       IgnoreFlee: true
       IgnoreDefCard: true
+    Flags:
+      TargetTrap: true
     Hit: Single
     HitCount: 1
-    Element: Weapon
-    SplashArea: 4
+    Element: Neutral
+    SplashArea: 5
+    Duration1: 1500
     Requires:
       SpCost: 1
   - Id: 8018
