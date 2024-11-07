@@ -11944,7 +11944,7 @@ void clif_parse_WisMessage(int fd, map_session_data* sd)
 /// Request to broadcast a message on whole server.
 /// 0099 <packet len>.W <text>.?B 00 (CZ_BROADCAST)
 void clif_parse_Broadcast(int fd, map_session_data* sd) {
-	PACKET_CZ_BROADCAST* p = reinterpret_cast<PACKET_CZ_BROADCAST*>( RFIFOP( fd, 0 ) );
+	const PACKET_CZ_BROADCAST* p = reinterpret_cast<PACKET_CZ_BROADCAST*>( RFIFOP( fd, 0 ) );
 
 	if( p->packetSize < sizeof( *p ) ){
 		return;
