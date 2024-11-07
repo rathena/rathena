@@ -1394,6 +1394,14 @@ struct PACKET_ZC_NPCSPRITE_CHANGE{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_NPCSPRITE_CHANGE, 0x1b0);
 
+struct PACKET_ZC_MEMBER_EXIT{
+	int16 packetType;
+	uint16 count;
+	char name[NAME_LENGTH];
+	uint8 kicked;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_MEMBER_EXIT, 0xdd);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )

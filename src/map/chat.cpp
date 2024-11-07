@@ -208,7 +208,7 @@ int chat_leavechat(map_session_data* sd, bool kicked)
 		return -1;
 	}
 
-	clif_leavechat(cd, sd, kicked);
+	clif_chat_leave( *cd, *sd, kicked );
 	pc_setchatid(sd, 0);
 	cd->users--;
 

@@ -4697,24 +4697,20 @@ void clif_changechatowner(struct chat_data* cd, map_session_data* sd)
 }
 
 
-/// Notify about user leaving the chatroom (ZC_MEMBER_EXIT).
-/// 00dd <users>.W <nick>.24B <flag>.B
+/// Notify about user leaving the chatroom.
+/// 00dd <users>.W <nick>.24B <flag>.B (ZC_MEMBER_EXIT)
 /// flag:
 ///     0 = left
 ///     1 = kicked
-void clif_leavechat(struct chat_data* cd, map_session_data* sd, bool flag)
-{
-	unsigned char buf[32];
+void clif_chat_leave( chat_data& cd, map_session_data& sd, bool kicked ){
+	PACKET_ZC_MEMBER_EXIT p = {};
 
-	nullpo_retv(sd);
-	nullpo_retv(cd);
+	p.packetType = HEADER_ZC_MEMBER_EXIT;
+	p.count = cd.users - 1;
+	safestrncpy( p.name, sd.status.name, sizeof( p.name ) );
+	p.kicked = kicked;
 
-	WBUFW(buf, 0) = 0xdd;
-	WBUFW(buf, 2) = cd->users-1;
-	safestrncpy(WBUFCP(buf,4),sd->status.name,NAME_LENGTH);
-	WBUFB(buf,28) = flag;
-
-	clif_send(buf,packet_len(0xdd),&sd->bl,CHAT);
+	clif_send( &p, sizeof( p ), &sd.bl, CHAT );
 }
 
 
