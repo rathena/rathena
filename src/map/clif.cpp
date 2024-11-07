@@ -12213,17 +12213,22 @@ void clif_parse_NpcClicked(int fd,map_session_data *sd)
 }
 
 
-/// Selection between buy/sell was made (CZ_ACK_SELECT_DEALTYPE).
-/// 00c5 <id>.L <type>.B
+/// Selection between buy/sell was made.
+/// 00c5 <id>.L <type>.B (CZ_ACK_SELECT_DEALTYPE)
 /// type:
 ///     0 = buy
 ///     1 = sell
-void clif_parse_NpcBuySellSelected(int fd,map_session_data *sd)
-{
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
+void clif_parse_NpcBuySellSelected( int fd, map_session_data* sd ){
+	const PACKET_CZ_ACK_SELECT_DEALTYPE* p = reinterpret_cast<PACKET_CZ_ACK_SELECT_DEALTYPE*>( RFIFOP( fd, 0 ) );
+
+	if( sd == nullptr ){
+		return;
+	}
+
 	if (sd->state.trading)
 		return;
-	npc_buysellsel(sd,RFIFOL(fd,info->pos[0]),RFIFOB(fd,info->pos[1]));
+
+	npc_buysellsel( sd, p->GID, p->type );
 }
 
 

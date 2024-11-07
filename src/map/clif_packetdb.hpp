@@ -69,7 +69,7 @@
 	packet(0x00c0,7);
 	parseable_packet(0x00c1,2,clif_parse_HowManyConnections,0);
 	packet(0x00c3,8);
-	parseable_packet(0x00c5,7,clif_parse_NpcBuySellSelected,2,6);
+	parseable_packet( HEADER_CZ_ACK_SELECT_DEALTYPE, sizeof( PACKET_CZ_ACK_SELECT_DEALTYPE ), clif_parse_NpcBuySellSelected, 0 );
 	packet(0x00c6,-1);
 	parseable_packet(0x00c8,-1,clif_parse_NpcBuyListSend,2,4);
 	parseable_packet(HEADER_CZ_PC_SELL_ITEMLIST,-1,clif_parse_NpcSellListSend,2,4);
