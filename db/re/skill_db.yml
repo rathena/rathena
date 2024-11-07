@@ -20035,7 +20035,7 @@ Body:
           Amount: 150
     Unit:
       Id: Dummyskill
-      Range: 9
+      Range: 6
       Interval: 1000
       Target: Enemy
       Flag:
