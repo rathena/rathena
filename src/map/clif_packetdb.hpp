@@ -45,7 +45,7 @@
 	packet(0x0093,2);
 	parseable_packet(0x0094,6,clif_parse_GetCharNameRequest,2);
 	parseable_packet(0x0096,-1,clif_parse_WisMessage,2,4,28);
-	parseable_packet(0x0099,-1,clif_parse_Broadcast,2,4);
+	parseable_packet( HEADER_CZ_BROADCAST, -1, clif_parse_Broadcast, 0 );
 	parseable_packet(0x009b,5,clif_parse_ChangeDir,2,4);
 	packet( HEADER_ZC_ITEM_ENTRY, sizeof( struct PACKET_ZC_ITEM_ENTRY ) );
 	packet(0x009e,17);

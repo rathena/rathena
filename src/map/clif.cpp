@@ -11940,19 +11940,24 @@ void clif_parse_WisMessage(int fd, map_session_data* sd)
 }
 
 
-/// /b /nb (CZ_BROADCAST).
+/// /b /nb.
 /// Request to broadcast a message on whole server.
-/// 0099 <packet len>.W <text>.?B 00
+/// 0099 <packet len>.W <text>.?B 00 (CZ_BROADCAST)
 void clif_parse_Broadcast(int fd, map_session_data* sd) {
-	char command[CHAT_SIZE_MAX+11];
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	uint32 len = RFIFOW(fd,info->pos[0])-4;
-	char* msg = RFIFOCP(fd,info->pos[1]);
+	PACKET_CZ_BROADCAST* p = reinterpret_cast<PACKET_CZ_BROADCAST*>( RFIFOP( fd, 0 ) );
 
-	// as the length varies depending on the command used, just block unreasonably long strings
-	mes_len_check(msg, len, CHAT_SIZE_MAX);
+	if( p->packetSize < sizeof( *p ) ){
+		return;
+	}
 
-	safesnprintf(command,sizeof(command),"%ckami %s", atcommand_symbol, msg);
+	char message[CHAT_SIZE_MAX];
+
+	safestrncpy( message, p->message, sizeof( message ) );
+
+	char command[CHAT_SIZE_MAX];
+
+	safesnprintf( command, sizeof( command ),"%ckami %s", atcommand_symbol, message );
+
 	is_atcommand(fd, sd, command, 1);
 }
 
