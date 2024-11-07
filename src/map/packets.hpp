@@ -1394,6 +1394,23 @@ struct PACKET_ZC_NPCSPRITE_CHANGE{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_NPCSPRITE_CHANGE, 0x1b0);
 
+#if PACKETVER >= 20120925
+// CZ_REQ_WEAR_EQUIP_V5
+struct PACKET_CZ_REQ_WEAR_EQUIP{
+	int16 packetType;
+	uint16 index;
+	uint32 position;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_WEAR_EQUIP, 0x998);
+#else
+struct PACKET_CZ_REQ_WEAR_EQUIP{
+	int16 packetType;
+	uint16 index;
+	uint16 position;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_WEAR_EQUIP, 0xa9);
+#endif
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
