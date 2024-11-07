@@ -7279,6 +7279,18 @@ Body:
         Requires:
           - Name: IG_SHIELD_MASTERY
             Level: 1
+      - Name: IG_IMPERIAL_CROSS
+        MaxLevel: 5
+        Requires:
+          - Name: IG_OVERSLASH
+            Level: 5
+      - Name: IG_RADIANT_SPEAR
+        MaxLevel: 10
+        Requires:
+          - Name: IG_OVERSLASH
+            Level: 3
+          - Name: IG_SHIELD_SHOOTING
+            Level: 3
   - Job: Biolo
     Inherit:
       Novice: true
