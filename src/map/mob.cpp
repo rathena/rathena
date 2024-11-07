@@ -3495,7 +3495,7 @@ int mob_class_change (struct mob_data *md, int mob_id)
 	mob_stop_walking(md, 0);
 	unit_skillcastcancel(&md->bl, 0);
 	status_set_viewdata(&md->bl, mob_id);
-	clif_mob_class_change(md,md->vd->class_);
+	clif_class_change( md->bl, md->vd->class_ );
 	status_calc_mob(md,SCO_FIRST);
 
 	if (battle_config.monster_class_change_recover) {

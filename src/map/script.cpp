@@ -15001,7 +15001,7 @@ BUILDIN_FUNC(undisguise)
  */
 BUILDIN_FUNC(classchange)
 {
-	int _class, type = 1;
+	int32 _class;
 	struct npc_data* nd = nullptr;
 	TBL_PC *sd = map_id2sd(st->rid);
 	send_target target = AREA;
@@ -15024,11 +15024,11 @@ BUILDIN_FUNC(classchange)
 		}
 	}
 	if (target != SELF)
-		clif_class_change(&nd->bl,_class,type);
+		clif_class_change( nd->bl, _class );
 	else if (sd == nullptr)
 		return SCRIPT_CMD_FAILURE;
 	else
-		clif_class_change_target(&nd->bl,_class,type,target,sd);
+		clif_class_change( nd->bl, _class, target, sd );
 
 	return SCRIPT_CMD_SUCCESS;
 }
