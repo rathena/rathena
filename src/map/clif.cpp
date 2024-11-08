@@ -5352,25 +5352,22 @@ void clif_changemapcell(int fd, int16 m, int x, int y, int type, enum send_targe
 }
 
 
-/// Notifies the client about an item on floor (ZC_ITEM_ENTRY).
-/// 009d <id>.L <name id>.W <identified>.B <x>.W <y>.W <amount>.W <subX>.B <subY>.B
-void clif_getareachar_item( map_session_data* sd,struct flooritem_data* fitem ){
-	nullpo_retv( sd );
-	nullpo_retv( fitem );
-
+/// Notifies the client about an item on floor.
+/// 009d <id>.L <name id>.W <identified>.B <x>.W <y>.W <amount>.W <subX>.B <subY>.B (ZC_ITEM_ENTRY)
+void clif_getareachar_item( map_session_data& sd, flooritem_data& fitem ){
 	PACKET_ZC_ITEM_ENTRY p = {};
 
 	p.packetType = HEADER_ZC_ITEM_ENTRY;
-	p.AID = fitem->bl.id;
-	p.itemId = client_nameid( fitem->item.nameid );
-	p.identify = fitem->item.identify;
-	p.x = fitem->bl.x;
-	p.y = fitem->bl.y;
-	p.amount = fitem->item.amount;
-	p.subX = fitem->subx;
-	p.subY = fitem->suby;
+	p.AID = fitem.bl.id;
+	p.itemId = client_nameid( fitem.item.nameid );
+	p.identify = fitem.item.identify;
+	p.x = fitem.bl.x;
+	p.y = fitem.bl.y;
+	p.amount = fitem.item.amount;
+	p.subX = fitem.subx;
+	p.subY = fitem.suby;
 
-	clif_send( &p, sizeof( p ), &sd->bl, SELF );
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 }
 
 /// Notifes client about Graffiti
@@ -5555,7 +5552,7 @@ static int clif_getareachar(struct block_list* bl,va_list ap)
 
 	switch(bl->type){
 	case BL_ITEM:
-		clif_getareachar_item(sd,(struct flooritem_data*) bl);
+		clif_getareachar_item( *sd, *reinterpret_cast<flooritem_data*>( bl ) );
 		break;
 	case BL_SKILL:
 		skill_getareachar_skillunit_visibilty_single((TBL_SKILL*)bl, &sd->bl);
@@ -5643,7 +5640,7 @@ int clif_insight(struct block_list *bl,va_list ap)
 	if (clif_session_isValid(tsd)) { //Tell tsd that bl entered into his view
 		switch(bl->type){
 		case BL_ITEM:
-			clif_getareachar_item(tsd,(struct flooritem_data*)bl);
+			clif_getareachar_item( *tsd, *reinterpret_cast<flooritem_data*>( bl ) );
 			break;
 		case BL_SKILL:
 			skill_getareachar_skillunit_visibilty_single((TBL_SKILL*)bl, &tsd->bl);
