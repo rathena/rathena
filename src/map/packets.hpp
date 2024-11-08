@@ -1394,6 +1394,21 @@ struct PACKET_ZC_NPCSPRITE_CHANGE{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_NPCSPRITE_CHANGE, 0x1b0);
 
+struct PACKET_ZC_MEMBER_NEWENTRY{
+	int16 packetType;
+	uint16 count;
+	char name[NAME_LENGTH];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_MEMBER_NEWENTRY, 0xdc);
+
+struct PACKET_ZC_MEMBER_EXIT{
+	int16 packetType;
+	uint16 count;
+	char name[NAME_LENGTH];
+	uint8 kicked;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_MEMBER_EXIT, 0xdd);
+
 struct PACKET_CZ_MOVETO_MAP{
 	int16 packetType;
 	char map[MAP_NAME_LENGTH_EXT];
