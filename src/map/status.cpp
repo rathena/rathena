@@ -10904,7 +10904,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick = INFINITE_TICK;
 			break;
 		case SC_ENCPOISON:
-			val2= 250+50*val1; // Poisoning Chance (2.5+0.5%) in 1/10000 rate
+			val2= 500+50*val1; // Poisoning Chance (5+0.5%) in 1/10000 rate
 			break;
 		case SC_ELEMENTALCHANGE:
 			// val1 : Element Lvl (if called by skill lvl 1, takes random value between 1 and 4)
@@ -14206,13 +14206,13 @@ TIMER_FUNC(status_change_timer){
 	case SC_DPOISON:
 		if (sce->val4 >= 0 && !sc->getSCE(SC_SLOWPOISON)) {
 			unsigned int damage = 0;
-			if (sd)
-				damage = (type == SC_DPOISON) ? 2 + status->max_hp / 50 : 2 + status->max_hp * 3 / 200;
+			if (sd) 
+				damage = (type == SC_DPOISON) ? 2 + status->max_hp / 50 : 2 + status->max_hp * 4 / 200;
 			else
-				damage = (type == SC_DPOISON) ? 2 + status->max_hp / 100 : 2 + status->max_hp / 200;
-			if (status->hp > umax(status->max_hp / 4, damage)) // Stop damaging after 25% HP left.
+				damage = (type == SC_DPOISON) ? 2 + status->max_hp / 100 : 2 + status->max_hp / 100;
+			if (status->hp > umax(status->max_hp / 1, damage)) // Stop damaging after 1% HP left.
 				status_zap(bl, damage, 0);
-		}
+			}
 		break;
 
 	case SC_BLEEDING:
