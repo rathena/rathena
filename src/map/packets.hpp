@@ -1394,6 +1394,18 @@ struct PACKET_ZC_NPCSPRITE_CHANGE{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_NPCSPRITE_CHANGE, 0x1b0);
 
+struct PACKET_CZ_CREATE_CHATROOM{
+	int16 packetType;
+	uint16 packetSize;
+	uint16 limit;
+	uint8 type;
+	char password[8];
+	char title[];
+
+	/// 00d5 <packet len>.W <limit>.W <type>.B <passwd>.8B <title>.?B
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_CREATE_CHATROOM, 0xd5);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
