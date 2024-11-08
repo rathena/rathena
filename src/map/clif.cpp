@@ -11952,7 +11952,7 @@ void clif_parse_Broadcast(int fd, map_session_data* sd) {
 
 	char message[CHAT_SIZE_MAX];
 
-	safestrncpy( message, p->message, sizeof( message ) );
+	safestrncpy( message, p->message, std::min<size_t>( sizeof( message ), p->packetSize - sizeof( *p ) + 1 ) );
 
 	char command[CHAT_SIZE_MAX];
 
