@@ -11505,20 +11505,20 @@ void clif_parse_GlobalMessage(int fd, map_session_data* sd)
 }
 
 
-/// /mm /mapmove (as @rura GM command) (CZ_MOVETO_MAP).
+/// /mm /mapmove (as @rura GM command).
 /// Request to warp to a map on given coordinates.
-/// 0140 <map name>.16B <x>.W <y>.W
-void clif_parse_MapMove(int fd, map_session_data *sd)
-{
-	char command[MAP_NAME_LENGTH_EXT+25];
-	char* map_name;
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
+/// 0140 <map name>.16B <x>.W <y>.W (CZ_MOVETO_MAP)
+void clif_parse_MapMove( int fd, map_session_data* sd){
+	const PACKET_CZ_MOVETO_MAP* p = reinterpret_cast<PACKET_CZ_MOVETO_MAP*>( RFIFOP( fd, 0 ) );
 
-	map_name = RFIFOCP(fd,info->pos[0]);
-	map_name[MAP_NAME_LENGTH_EXT-1]='\0';
-	safesnprintf(command,sizeof(command),"%cmapmove %s %d %d", atcommand_symbol, map_name,
-	    RFIFOW(fd,info->pos[1]), //x
-	    RFIFOW(fd,info->pos[2])); //y
+	char map_name[MAP_NAME_LENGTH_EXT];
+
+	safestrncpy( map_name, p->map, sizeof( map_name ) );
+
+	char command[CHAT_SIZE_MAX];
+
+	safesnprintf( command, sizeof( command ),"%cmapmove %s %hu %hu", atcommand_symbol, map_name, p->x, p->y );
+
 	is_atcommand(fd, sd, command, 1);
 }
 
