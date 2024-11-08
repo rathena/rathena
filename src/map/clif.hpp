@@ -889,7 +889,7 @@ void clif_joinchatok(map_session_data& sd,chat_data& cd);
 void clif_addchat( chat_data& cd, map_session_data& sd );
 void clif_changechatowner(struct chat_data* cd, map_session_data* sd);	// chat
 void clif_clearchat(chat_data &cd);
-void clif_leavechat(struct chat_data* cd, map_session_data* sd, bool flag);	// chat
+void clif_chat_leave( chat_data& cd, map_session_data& sd, bool kicked );
 void clif_changechatstatus(chat_data& cd);
 void clif_refresh_storagewindow(map_session_data *sd);
 void clif_refresh(map_session_data *sd);	// self
