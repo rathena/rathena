@@ -87,8 +87,6 @@
 	parseable_packet(0x00d5,-1,clif_parse_CreateChatRoom,2,4,6,7,15);
 	packet(0x00d7,-1);
 	parseable_packet(0x00d9,14,clif_parse_ChatAddMember,2,6);
-	packet(0x00dc,28);
-	packet(0x00dd,29);
 	parseable_packet(0x00de,-1,clif_parse_ChatRoomStatusChange,2,4,6,7,15);
 	parseable_packet(0x00e0,30,clif_parse_ChangeChatOwner,2,6);
 	packet(0x00e1,30);
@@ -150,7 +148,7 @@
 	packet(0x0138,3);
 	packet(0x013e,24);
 	parseable_packet(0x013f,26,clif_parse_GM_Item_Monster,2);
-	parseable_packet(0x0140,22,clif_parse_MapMove,2,18,20);
+	parseable_packet( HEADER_CZ_MOVETO_MAP, sizeof( PACKET_CZ_MOVETO_MAP ), clif_parse_MapMove, 0 );
 	parseable_packet(0x0143,10,clif_parse_NpcAmountInput,2,6);
 	packet(0x0145,19);
 	parseable_packet(0x0146,6,clif_parse_NpcCloseClicked,2);
