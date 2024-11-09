@@ -12144,18 +12144,16 @@ void clif_parse_UnequipItem(int fd,map_session_data *sd)
 }
 
 
-/// Request to start a conversation with an NPC (CZ_CONTACTNPC).
-/// 0090 <id>.L <type>.B
+/// Request to start a conversation with an NPC.
+/// 0090 <id>.L <type>.B (CZ_CONTACTNPC)
 /// type:
 ///     1 = click
-void clif_parse_NpcClicked(int fd,map_session_data *sd)
-{
+void clif_parse_NpcClicked( int fd, map_session_data* sd ){
+	const PACKET_CZ_CONTACTNPC* p = reinterpret_cast<PACKET_CZ_CONTACTNPC*>( RFIFOP( fd, 0 ) );
+
 	if( sd == nullptr ){
 		return;
 	}
-
-	struct block_list *bl;
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
 
 	if(pc_isdead(sd)) {
 		clif_clearunit_area( sd->bl, CLR_DEAD );
@@ -12172,9 +12170,12 @@ void clif_parse_NpcClicked(int fd,map_session_data *sd)
 	if( sd->state.mail_writing )
 		return;
 
-	bl = map_id2bl(RFIFOL(fd,info->pos[0]));
-	//type = RFIFOB(fd,info->pos[1]);
-	if (!bl) return;
+	block_list* bl = map_id2bl( p->AID );
+
+	if( bl == nullptr ){
+		return;
+	}
+
 	switch (bl->type) {
 		case BL_MOB:
 		case BL_PC:
