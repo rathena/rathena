@@ -10183,6 +10183,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 	// Scripted status changes only work for players for the time being
 	if( scdb->script != nullptr && bl->type != BL_PC ){
+		ShowError( "status_change_start: Failed to start the scripted status change %d on a non player.\n", type );
 		return 0;
 	}
 
