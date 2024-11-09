@@ -170,7 +170,8 @@ int chat_joinchat(map_session_data* sd, int chatid, const char* pass)
 
 	// To the person who newly joined the chat
 	clif_joinchatok(*sd, *cd);
-	clif_addchat(cd, sd); //Reports To the person who already in the chat
+	// Reports to the persons, who already are in the chat
+	clif_addchat( *cd, *sd );
 	clif_dispchat(cd, 0); //Reported number of changes to the people around
 
 	if (cd->owner->type == BL_PC)
@@ -208,7 +209,7 @@ int chat_leavechat(map_session_data* sd, bool kicked)
 		return -1;
 	}
 
-	clif_leavechat(cd, sd, kicked);
+	clif_chat_leave( *cd, *sd, kicked );
 	pc_setchatid(sd, 0);
 	cd->users--;
 
