@@ -655,13 +655,6 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 				}
 				break;
 		}
-
-		if (tsc->getSCE(SC_MAGIC_POISON))
-#ifdef RENEWAL
-			ratio += 50;
-#else
-			damage += (int64)(damage * 50 / 100);
-#endif
 	}
 
 	if (battle_config.attr_recover == 0 && !(flag & 1) && ratio < 0)
@@ -718,6 +711,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 	status_data* sstatus = status_get_status_data(*src);
 	///< Target status data
 	status_data* tstatus = status_get_status_data(*target);
+	status_change *tsc = status_get_sc(target);
 	s_race2 = status_get_race2(src);
 	t_race2 = status_get_race2(target);
 	s_defele = (tsd) ? (enum e_element)status_get_element(src) : ELE_NONE;
@@ -759,6 +753,15 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 				if( !nk[NK_IGNOREELEMENT] ) { // Affected by Element modifier bonuses
 					APPLY_CARDFIX_RE( damage, sd->indexed_bonus.magic_addele[tstatus->def_ele] + sd->indexed_bonus.magic_addele[ELE_ALL] +
 						sd->indexed_bonus.magic_addele_script[tstatus->def_ele] + sd->indexed_bonus.magic_addele_script[ELE_ALL] );
+				}
+			}
+			// Statuses that affect the target's element and should be calculated right after magic_addele, independently of it
+			if (tsc != nullptr && !nk[NK_IGNOREDEFCARD] && !nk[NK_IGNOREELEMENT]) {
+				if (tsc->getSCE(SC_MAGIC_POISON))
+					APPLY_CARDFIX_RE( damage, 50 );
+			}
+			if( sd && !nk[NK_IGNOREATKCARD] ) {
+				if( !nk[NK_IGNOREELEMENT] ) {
 					APPLY_CARDFIX_RE( damage, sd->indexed_bonus.magic_atk_ele[rh_ele] + sd->indexed_bonus.magic_atk_ele[ELE_ALL] );
 				}
 				APPLY_CARDFIX_RE( damage, sd->indexed_bonus.magic_addrace[tstatus->race] + sd->indexed_bonus.magic_addrace[RC_ALL] );
@@ -805,6 +808,11 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 					}
 					if (s_defele != ELE_NONE)
 						ele_fix += tsd->indexed_bonus.magic_subdefele[s_defele] + tsd->indexed_bonus.magic_subdefele[ELE_ALL];
+#ifndef RENEWAL
+					// Custom to follow SC_MAGIC_POISON renewal behavior
+					if (tsc != nullptr && tsc->getSCE(SC_MAGIC_POISON))
+						ele_fix += 50;
+#endif
 					cardfix = cardfix * (100 - ele_fix) / 100;
 				}
 				cardfix = cardfix * (100 - tsd->indexed_bonus.subsize[sstatus->size] - tsd->indexed_bonus.subsize[SZ_ALL]) / 100;
@@ -843,8 +851,8 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 #endif
 				cardfix = cardfix * (100 - tsd->bonus.magic_def_rate) / 100;
 
-				if( tsd->sc.getSCE(SC_MDEF_RATE) )
-					cardfix = cardfix * (100 - tsd->sc.getSCE(SC_MDEF_RATE)->val1) / 100;
+				if( tsc->getSCE(SC_MDEF_RATE) )
+					cardfix = cardfix * (100 - tsc->getSCE(SC_MDEF_RATE)->val1) / 100;
 				APPLY_CARDFIX(damage, cardfix);
 			}
 			break;
@@ -1062,8 +1070,15 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 					cardfix = cardfix * (100 - tsd->bonus.near_attack_def_rate) / 100;
 				else if (!nk[NK_IGNORELONGCARD])	// BF_LONG (there's no other choice)
 					cardfix = cardfix * (100 - tsd->bonus.long_attack_def_rate) / 100;
-				if( tsd->sc.getSCE(SC_DEF_RATE) )
-					cardfix = cardfix * (100 - tsd->sc.getSCE(SC_DEF_RATE)->val1) / 100;
+				if( tsc->getSCE(SC_DEF_RATE) )
+					cardfix = cardfix * (100 - tsc->getSCE(SC_DEF_RATE)->val1) / 100;
+				APPLY_CARDFIX(damage, cardfix);
+			}
+			// Custom on BF_WEAPON to follow SC_MAGIC_POISON BF_MAGIC renewal behavior
+			if (tsc != nullptr && !nk[NK_IGNOREDEFCARD] && !nk[NK_IGNOREELEMENT]) {
+				cardfix = 1000;
+				if (tsc->getSCE(SC_MAGIC_POISON))
+					cardfix = cardfix * (100 + 50) / 100;
 				APPLY_CARDFIX(damage, cardfix);
 			}
 			break;
@@ -1109,6 +1124,13 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 					cardfix = cardfix * (100 - tsd->bonus.near_attack_def_rate) / 100;
 				else if (!nk[NK_IGNORELONGCARD])	// BF_LONG (there's no other choice)
 					cardfix = cardfix * (100 - tsd->bonus.long_attack_def_rate) / 100;
+				APPLY_CARDFIX(damage, cardfix);
+			}
+			// Custom on BF_MISC to follow SC_MAGIC_POISON BF_MAGIC renewal behavior
+			if (tsc != nullptr && !nk[NK_IGNOREDEFCARD] && !nk[NK_IGNOREELEMENT]) {
+				cardfix = 1000;
+				if (tsc->getSCE(SC_MAGIC_POISON))
+					cardfix = cardfix * (100 + 50) / 100;
 				APPLY_CARDFIX(damage, cardfix);
 			}
 			break;
