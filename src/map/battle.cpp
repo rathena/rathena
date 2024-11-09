@@ -7233,7 +7233,7 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 			case SG_SUN_WARM:
 			case SG_MOON_WARM:
 			case SG_STAR_WARM:
-				// Knockback is random
+				// A random 0~3 knockback bonus is added to the base knockback
 				wd.blewcount += rnd_value(0, 3);
 				break;
 #ifdef RENEWAL

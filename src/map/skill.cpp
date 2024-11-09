@@ -16109,7 +16109,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 						if( bl->type == BL_PC )
 							status_zap(bl, 0, 10); // sp damage to players
 						else { // mobs
-							// Bosses have a 80% chance to not trigger the effect
+							// Bosses trigger the effect only 1 out of 5 times
 							if (status_get_class_(bl) == CLASS_BOSS && rnd_chance(4, 5))
 								continue;
 							// costs 2 SP per hit
@@ -16118,7 +16118,6 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 								sg->limit = DIFF_TICK(tick, sg->tick);
 								break;
 							}
-	
 							skill_attack(BF_WEAPON, ss, &unit->bl, bl, sg->skill_id, sg->skill_lv, tick + (t_tick)count * sg->interval, 0);
 						}
 					} while(sg->interval > 0 && x == bl->x && y == bl->y &&
@@ -18557,7 +18556,6 @@ bool skill_check_condition_castend( map_session_data& sd, uint16 skill_id, uint1
 				if (sc->getSCE(SC_MIRACLE))
 					break;
 			}
-
 			if (sd.bl.m == sd.feel_map[skill_id - SG_SUN_WARM].m)
 				break;
 			clif_skill_nodamage(&sd.bl, sd.bl, skill_id, skill_lv, 0);
