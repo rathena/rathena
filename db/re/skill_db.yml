@@ -11904,7 +11904,7 @@ Body:
     Unit:
       Id: Dummyskill
       Range: 1
-      Interval: 100
+      Interval: 20
       Target: Enemy
     Status: Warm
   - Id: 429
@@ -11937,7 +11937,7 @@ Body:
     Unit:
       Id: Dummyskill
       Range: 1
-      Interval: 100
+      Interval: 20
       Target: Enemy
     Status: Warm
   - Id: 430
@@ -11970,7 +11970,7 @@ Body:
     Unit:
       Id: Dummyskill
       Range: 1
-      Interval: 100
+      Interval: 20
       Target: Enemy
     Status: Warm
   - Id: 431
