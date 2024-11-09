@@ -1417,6 +1417,13 @@ struct PACKET_CZ_MOVETO_MAP{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_MOVETO_MAP, 0x140);
 
+struct PACKET_CZ_BROADCAST{
+	int16 packetType;
+	uint16 packetSize;
+	char message[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_BROADCAST, 0x99);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
