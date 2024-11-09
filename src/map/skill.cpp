@@ -16112,12 +16112,14 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 							// Bosses have a 80% chance to not trigger the effect
 							if (status_get_class_(bl) == CLASS_BOSS && rnd_chance(4, 5))
 								continue;
-							if (status_charge(ss, 0, 2)) // costs 2 SP per hit
-								skill_attack(BF_WEAPON, ss, &unit->bl, bl, sg->skill_id, sg->skill_lv, tick + (t_tick)count * sg->interval, 0);
-							else { //should end when out of sp.
+							// costs 2 SP per hit
+							if (!status_charge(ss, 0, 2)) {
+								//should end when out of sp.
 								sg->limit = DIFF_TICK(tick, sg->tick);
 								break;
 							}
+	
+							skill_attack(BF_WEAPON, ss, &unit->bl, bl, sg->skill_id, sg->skill_lv, tick + (t_tick)count * sg->interval, 0);
 						}
 					} while(sg->interval > 0 && x == bl->x && y == bl->y &&
 						++count < SKILLUNITTIMER_INTERVAL/sg->interval && !status_isdead(*bl) );
@@ -18555,8 +18557,8 @@ bool skill_check_condition_castend( map_session_data& sd, uint16 skill_id, uint1
 				if (sc->getSCE(SC_MIRACLE))
 					break;
 			}
-			i = skill_id - SG_SUN_WARM;
-			if (sd.bl.m == sd.feel_map[i].m)
+
+			if (sd.bl.m == sd.feel_map[skill_id - SG_SUN_WARM].m)
 				break;
 			clif_skill_nodamage(&sd.bl, sd.bl, skill_id, skill_lv, 0);
 			return false;
