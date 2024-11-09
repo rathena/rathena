@@ -16107,14 +16107,17 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 					//If target isn't knocked back it should hit every "interval" ms [Playtester]
 					do {
 						if( bl->type == BL_PC )
-							status_zap(bl, 0, 15); // sp damage to players
-						else // mobs
-						if( status_charge(ss, 0, 2) ) { // costs 2 SP per hit
-							if( !skill_attack(BF_WEAPON,ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick+(t_tick)count*sg->interval,0) )
-								status_charge(ss, 0, 8); //costs additional 8 SP if miss
-						} else { //should end when out of sp.
-							sg->limit = DIFF_TICK(tick,sg->tick);
-							break;
+							status_zap(bl, 0, 10); // sp damage to players
+						else { // mobs
+							// Bosses have a 80% chance to not trigger the effect
+							if (status_get_class_(bl) == CLASS_BOSS && rnd_chance(4, 5))
+								continue;
+							if (status_charge(ss, 0, 2)) // costs 2 SP per hit
+								skill_attack(BF_WEAPON, ss, &unit->bl, bl, sg->skill_id, sg->skill_lv, tick + (t_tick)count * sg->interval, 0);
+							else { //should end when out of sp.
+								sg->limit = DIFF_TICK(tick, sg->tick);
+								break;
+							}
 						}
 					} while(sg->interval > 0 && x == bl->x && y == bl->y &&
 						++count < SKILLUNITTIMER_INTERVAL/sg->interval && !status_isdead(*bl) );
@@ -17813,17 +17816,6 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 				return false;
 			}
 			break;
-		case SG_SUN_WARM:
-		case SG_MOON_WARM:
-		case SG_STAR_WARM:
-			if (sc && sc->getSCE(SC_MIRACLE))
-				break;
-			i = skill_id-SG_SUN_WARM;
-			if (sd.bl.m == sd.feel_map[i].m)
-				break;
-			clif_skill_fail( sd, skill_id );
-			return false;
-			break;
 		case SG_SUN_COMFORT:
 		case SG_MOON_COMFORT:
 		case SG_STAR_COMFORT:
@@ -18524,6 +18516,10 @@ bool skill_check_condition_castend( map_session_data& sd, uint16 skill_id, uint1
 		return false;
 	}
 
+	status_change* sc = &sd.sc;
+	if (!sc->count)
+		sc = nullptr;
+
 	// perform skill-specific checks (and actions)
 	switch( skill_id ) {
 		case PR_BENEDICTIO:
@@ -18546,6 +18542,24 @@ bool skill_check_condition_castend( map_session_data& sd, uint16 skill_id, uint1
 			}
 			break;
 		}
+		case SG_SUN_WARM:
+		case SG_MOON_WARM:
+		case SG_STAR_WARM:
+			if (sc != nullptr) {
+				// Skill fails when already active
+				if (sc->getSCE(SC_WARM)) {
+					clif_skill_nodamage(&sd.bl, sd.bl, skill_id, skill_lv, 0);
+					return false;
+				}
+				// When having Miracle, skill succeeds regardless of map
+				if (sc->getSCE(SC_MIRACLE))
+					break;
+			}
+			i = skill_id - SG_SUN_WARM;
+			if (sd.bl.m == sd.feel_map[i].m)
+				break;
+			clif_skill_nodamage(&sd.bl, sd.bl, skill_id, skill_lv, 0);
+			return false;
 		case NC_SILVERSNIPER:
 		case NC_MAGICDECOY: {
 				int c = 0;

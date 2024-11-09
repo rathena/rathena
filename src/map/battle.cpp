@@ -7230,6 +7230,12 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 			case TK_TURNKICK:
 				wd.blewcount = 0;
 				break;
+			case SG_SUN_WARM:
+			case SG_MOON_WARM:
+			case SG_STAR_WARM:
+				// Knockback is random
+				wd.blewcount += rnd_value(0, 3);
+				break;
 #ifdef RENEWAL
 			case KN_BOWLINGBASH:
 				if (sd && sd->status.weapon == W_2HSWORD) {
