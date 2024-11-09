@@ -1448,6 +1448,16 @@ struct PACKET_CZ_ACK_SELECT_DEALTYPE{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_ACK_SELECT_DEALTYPE, 0xc5);
 
+struct PACKET_CZ_CREATE_CHATROOM{
+	int16 packetType;
+	uint16 packetSize;
+	uint16 limit;
+	uint8 type;
+	char password[8];
+	char title[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_CREATE_CHATROOM, 0xd5);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )

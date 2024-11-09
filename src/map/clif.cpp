@@ -12312,28 +12312,22 @@ void clif_parse_NpcSellListSend(int fd,map_session_data *sd)
 }
 
 
-/// Chatroom creation request (CZ_CREATE_CHATROOM).
-/// 00d5 <packet len>.W <limit>.W <type>.B <passwd>.8B <title>.?B
+/// Chatroom creation request.
+/// 00d5 <packet len>.W <limit>.W <type>.B <passwd>.8B <title>.?B (CZ_CREATE_CHATROOM)
 /// type:
 ///     0 = private
 ///     1 = public
-void clif_parse_CreateChatRoom(int fd, map_session_data* sd)
-{
+void clif_parse_CreateChatRoom( int fd, map_session_data* sd){
+	const PACKET_CZ_CREATE_CHATROOM* p = reinterpret_cast<PACKET_CZ_CREATE_CHATROOM*>( RFIFOP( fd, 0 ) );
+
 	if( sd == nullptr ){
 		return;
 	}
 
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	int len = RFIFOW(fd,info->pos[0])-15;
-	int limit = RFIFOW(fd,info->pos[1]);
-	bool pub = (RFIFOB(fd,info->pos[2]) != 0);
-	const char* password = RFIFOCP(fd,info->pos[3]); //not zero-terminated
-	const char* title = RFIFOCP(fd,info->pos[4]); // not zero-terminated
-	char s_password[CHATROOM_PASS_SIZE];
-	char s_title[CHATROOM_TITLE_SIZE];
-
-	if (sd->sc.getSCE(SC_NOCHAT) && sd->sc.getSCE(SC_NOCHAT)->val1&MANNER_NOROOM)
+	if( sd->sc.getSCE( SC_NOCHAT ) && sd->sc.getSCE( SC_NOCHAT )->val1&MANNER_NOROOM ){
 		return;
+	}
+
 	if(battle_config.basic_skill_check && pc_checkskill(sd,NV_BASIC) < 4 && pc_checkskill(sd, SU_BASIC_SKILL) < 1) {
 		clif_skill_fail( *sd, 1, USESKILL_FAIL_LEVEL, 3 );
 		return;
@@ -12348,13 +12342,20 @@ void clif_parse_CreateChatRoom(int fd, map_session_data* sd)
 		return;
 	}
 
-	if( len <= 0 )
-		return; // invalid input
+	if( p->packetSize < sizeof( *p ) ){
+		// invalid input
+		return;
+	}
 
-	safestrncpy(s_password, password, CHATROOM_PASS_SIZE);
-	safestrncpy(s_title, title, min(len+1,CHATROOM_TITLE_SIZE)); //NOTE: assumes that safestrncpy will not access the len+1'th byte
+	char password[CHATROOM_PASS_SIZE];
 
-	chat_createpcchat(sd, s_title, s_password, limit, pub);
+	safestrncpy( password, p->password, sizeof( password ) );
+
+	char title[CHATROOM_TITLE_SIZE];
+
+	safestrncpy( title, p->title, std::min<size_t>( sizeof( title ), p->packetSize - sizeof( *p ) + 1 ) );
+
+	chat_createpcchat( sd, title, password, p->limit, p->type != 0 );
 }
 
 
