@@ -109,7 +109,7 @@ static DBMap* id_db=nullptr; /// int id -> struct block_list*
 static DBMap* pc_db=nullptr; /// int id -> map_session_data*
 static DBMap* mobid_db=nullptr; /// int id -> struct mob_data*
 static DBMap* bossid_db=nullptr; /// int id -> struct mob_data* (MVP db)
-static DBMap* map_db=nullptr; /// unsigned int mapindex -> struct map_data*
+static DBMap* map_db=nullptr; /// uint32 mapindex -> struct map_data*
 static DBMap* nick_db=nullptr; /// uint32 char_id -> struct charid2nick* (requested names of offline characters)
 static DBMap* charid_db=nullptr; /// uint32 char_id -> map_session_data*
 static DBMap* regen_db=nullptr; /// int id -> struct block_list* (status_natural_heal processing)
@@ -3024,7 +3024,7 @@ int16 map_mapindex2mapid(unsigned short mapindex)
 	if (!mapindex)
 		return -1;
 
-	md = (struct map_data*)uidb_get(map_db,(unsigned int)mapindex);
+	md = (struct map_data*)uidb_get(map_db,(uint32)mapindex);
 	if(md==nullptr || md->cell==nullptr)
 		return -1;
 	return md->m;
@@ -3037,7 +3037,7 @@ int map_mapname2ipport(unsigned short name, uint32* ip, uint16* port)
 {
 	struct map_data_other_server *mdos;
 
-	mdos = (struct map_data_other_server*)uidb_get(map_db,(unsigned int)name);
+	mdos = (struct map_data_other_server*)uidb_get(map_db,(uint32)name);
 	if(mdos==nullptr || mdos->cell) //If gat isn't null, this is a local map.
 		return -1;
 	*ip=mdos->ip;
@@ -3459,7 +3459,7 @@ int map_setipport(unsigned short mapindex, uint32 ip, uint16 port)
 {
 	struct map_data_other_server *mdos;
 
-	mdos= (struct map_data_other_server *)uidb_ensure(map_db,(unsigned int)mapindex, create_map_data_other_server);
+	mdos= (struct map_data_other_server *)uidb_ensure(map_db,(uint32)mapindex, create_map_data_other_server);
 
 	if(mdos->cell) //Local map,Do nothing. Give priority to our own local maps over ones from another server. [Skotlex]
 		return 0;
@@ -3500,12 +3500,12 @@ int map_eraseipport(unsigned short mapindex, uint32 ip, uint16 port)
 {
 	struct map_data_other_server *mdos;
 
-	mdos = (struct map_data_other_server*)uidb_get(map_db,(unsigned int)mapindex);
+	mdos = (struct map_data_other_server*)uidb_get(map_db,(uint32)mapindex);
 	if(!mdos || mdos->cell) //Map either does not exists or is a local map.
 		return 0;
 
 	if(mdos->ip==ip && mdos->port == port) {
-		uidb_remove(map_db,(unsigned int)mapindex);
+		uidb_remove(map_db,(uint32)mapindex);
 		aFree(mdos);
 		return 1;
 	}
@@ -3775,12 +3775,12 @@ int map_readgat (struct map_data* m)
  *--------------------------------------*/
 void map_addmap2db(struct map_data *m)
 {
-	uidb_put(map_db, (unsigned int)m->index, m);
+	uidb_put(map_db, (uint32)m->index, m);
 }
 
 void map_removemapdb(struct map_data *m)
 {
-	uidb_remove(map_db, (unsigned int)m->index);
+	uidb_remove(map_db, (uint32)m->index);
 }
 
 /*======================================
@@ -3859,7 +3859,7 @@ int map_readallmaps (void)
 
 		mapdata->index = idx;
 
-		if (uidb_get(map_db,(unsigned int)mapdata->index) != nullptr) {
+		if (uidb_get(map_db,(uint32)mapdata->index) != nullptr) {
 			ShowWarning("Map %s already loaded!" CL_CLL "\n", mapdata->name);
 			if (mapdata->cell) {
 				aFree(mapdata->cell);

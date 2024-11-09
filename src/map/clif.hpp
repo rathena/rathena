@@ -71,7 +71,7 @@ struct s_packet_db {
 #ifdef PACKET_OBFUSCATION
 /// Keys based on packet versions
 struct s_packet_keys {
-	unsigned int keys[3]; ///< 3-Keys
+	uint32 keys[3]; ///< 3-Keys
 };
 #endif
 
@@ -886,10 +886,10 @@ void clif_createchat( map_session_data& sd, e_create_chatroom flag );
 void clif_dispchat(struct chat_data* cd, int fd);	// area or fd
 void clif_joinchatfail( map_session_data& sd, e_refuse_enter_room result );
 void clif_joinchatok(map_session_data& sd,chat_data& cd);
-void clif_addchat(struct chat_data* cd,map_session_data *sd);	// chat
+void clif_addchat( chat_data& cd, map_session_data& sd );
 void clif_changechatowner(struct chat_data* cd, map_session_data* sd);	// chat
 void clif_clearchat(chat_data &cd);
-void clif_leavechat(struct chat_data* cd, map_session_data* sd, bool flag);	// chat
+void clif_chat_leave( chat_data& cd, map_session_data& sd, bool kicked );
 void clif_changechatstatus(chat_data& cd);
 void clif_refresh_storagewindow(map_session_data *sd);
 void clif_refresh(map_session_data *sd);	// self
@@ -925,14 +925,12 @@ void clif_storageclose( map_session_data& sd );
 int clif_insight(struct block_list *bl,va_list ap);	// map_forallinmovearea callback
 int clif_outsight(struct block_list *bl,va_list ap);	// map_forallinmovearea callback
 
-void clif_class_change_target(struct block_list *bl,int class_, int type, enum send_target target, map_session_data *sd);
-#define clif_class_change(bl, class_, type) clif_class_change_target(bl, class_, type, AREA, nullptr)
-#define clif_mob_class_change(md, class_) clif_class_change(&md->bl, class_, 1)
+void clif_class_change( block_list& bl, int32 class_, enum send_target target = AREA, map_session_data* sd = nullptr );
 
 void clif_skillinfoblock(map_session_data *sd);
 void clif_skillup(map_session_data *sd, uint16 skill_id, int lv, int range, int upgradable);
 void clif_skillinfo(map_session_data *sd,int skill_id, int inf);
-void clif_addskill(map_session_data *sd, int skill_id);
+void clif_addskill(map_session_data& sd, uint16 skill_id);
 void clif_deleteskill(map_session_data& sd, uint16 skill_id, bool skip_infoblock = false);
 
 void clif_skillcasting(struct block_list* bl, int src_id, int dst_id, int dst_x, int dst_y, uint16 skill_id, uint16 skill_lv, int property, int casttime);
@@ -1068,6 +1066,7 @@ void clif_guild_xy_single( map_session_data& sd, map_session_data& tsd );
 void clif_guild_xy_remove( map_session_data& sd );
 void clif_guild_castle_list(map_session_data& sd);
 void clif_guild_castle_teleport_res(map_session_data& sd, enum e_siege_teleport_result result);
+void clif_guild_position_selected(map_session_data& sd);
 
 // Battleground
 void clif_bg_hp(map_session_data *sd);
@@ -1089,8 +1088,8 @@ void clif_bg_queue_ack_lobby(bool result, const char *name, const char *lobbynam
 // Instancing
 void clif_instance_create( int instance_id, size_t num );
 void clif_instance_changewait(int instance_id, int num);
-void clif_instance_status(int instance_id, unsigned int limit1, unsigned int limit2);
-void clif_instance_changestatus(int instance_id, e_instance_notify type, unsigned int limit);
+void clif_instance_status(int instance_id, uint32 limit1, uint32 limit2);
+void clif_instance_changestatus(int instance_id, e_instance_notify type, uint32 limit);
 void clif_parse_MemorialDungeonCommand(int fd, map_session_data *sd);
 void clif_instance_info( map_session_data& sd );
 
@@ -1236,7 +1235,7 @@ void clif_readbook(int fd, int book_id, int page);
 void clif_party_show_picker(map_session_data * sd, struct item * item_data);
 
 // Progress Bar [Inkfish]
-void clif_progressbar(map_session_data * sd, unsigned long color, unsigned int second);
+void clif_progressbar(map_session_data * sd, unsigned long color, uint32 second);
 void clif_progressbar_abort(map_session_data * sd);
 void clif_progressbar_npc(struct npc_data *nd, map_session_data* sd);
 #define clif_progressbar_npc_area(nd) clif_progressbar_npc((nd),nullptr)
@@ -1259,7 +1258,7 @@ void clif_showdigit(map_session_data* sd, unsigned char type, int value);
 
 /// Buying Store System
 void clif_buyingstore_open(map_session_data* sd);
-void clif_buyingstore_open_failed(map_session_data* sd, unsigned short result, unsigned int weight);
+void clif_buyingstore_open_failed(map_session_data* sd, unsigned short result, uint32 weight);
 void clif_buyingstore_myitemlist( map_session_data& sd );
 void clif_buyingstore_entry( map_session_data& sd, struct block_list* tbl = nullptr );
 void clif_buyingstore_disappear_entry( map_session_data& sd, struct block_list* tbl = nullptr );

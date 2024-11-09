@@ -33,7 +33,7 @@ struct npc_label_list {
 /// Item list for NPC sell/buy list
 struct npc_item_list {
 	t_itemid nameid;
-	unsigned int value;
+	uint32 value;
 #if PACKETVER >= 20131223
 	int32 qty; ///< Stock counter (Market shop)
 	uint8 flag; ///< 1: Item added by npcshopitem/npcshopadditem, force load! (Market shop)
@@ -164,14 +164,14 @@ struct npc_data {
 	char name[NPC_NAME_LENGTH+1];// display name
 	char exname[NPC_NAME_LENGTH+1];// unique npc name
 	int chat_id,touching_id;
-	unsigned int next_walktime;
+	uint32 next_walktime;
 	int instance_id;
 	e_npcv_status state{NPCVIEW_ENABLE};
 
 	unsigned size : 2;
 
 	struct status_data status;
-	unsigned int level,stat_point;
+	uint32 level,stat_point;
 	struct s_npc_params {
 		unsigned short str, agi, vit, int_, dex, luk;
 	} params;
@@ -1664,5 +1664,6 @@ void npc_market_delfromsql_(const char *exname, t_itemid nameid, bool clear);
 int npc_do_atcmd_event(map_session_data* sd, const char* command, const char* message, const char* eventname);
 
 bool npc_unloadfile( const char* path );
+bool npc_remove_mob_spawns(const char* path);
 
 #endif /* NPC_HPP */

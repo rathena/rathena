@@ -51,7 +51,7 @@ static struct eri *sc_data_ers; /// For sc_data entries
 static struct status_data dummy_status;
 
 short current_equip_item_index; /// Contains inventory index of an equipped item. To pass it into the EQUP_SCRIPT [Lupus]
-unsigned int current_equip_combo_pos; /// For combo items we need to save the position of all involved items here
+uint32 current_equip_combo_pos; /// For combo items we need to save the position of all involved items here
 int current_equip_card_id; /// To prevent card-stacking (from jA) [Skotlex]
 // We need it for new cards 15 Feb 2005, to check if the combo cards are insrerted into the CURRENT weapon only to avoid cards exploits
 short current_equip_opt_index; /// Contains random option index of an equipped item. [Secret]
@@ -72,7 +72,6 @@ static unsigned short status_calc_con(struct block_list *, status_change *, int)
 static unsigned short status_calc_crt(struct block_list *, status_change *, int);
 static unsigned short status_calc_batk(struct block_list *,status_change *,int);
 static unsigned short status_calc_watk(struct block_list *,status_change *,int);
-static unsigned short status_calc_matk(struct block_list *,status_change *,int);
 static signed short status_calc_hit(struct block_list *,status_change *,int);
 static signed short status_calc_critical(struct block_list *,status_change *,int);
 static signed short status_calc_flee(struct block_list *,status_change *,int);
@@ -94,23 +93,20 @@ static signed short status_calc_res(struct block_list *, status_change *, int);
 static signed short status_calc_mres(struct block_list *, status_change *, int);
 static signed short status_calc_hplus(struct block_list *, status_change *, int);
 static signed short status_calc_crate(struct block_list *, status_change *, int);
-static unsigned int status_calc_maxhp(struct block_list *bl, uint64 maxhp);
-static unsigned int status_calc_maxsp(struct block_list *bl, uint64 maxsp);
-static unsigned int status_calc_maxap(struct block_list *bl, uint64 maxap);
+static uint32 status_calc_maxhp(struct block_list *bl, uint64 maxhp);
+static uint32 status_calc_maxsp(struct block_list *bl, uint64 maxsp);
+static uint32 status_calc_maxap(struct block_list *bl, uint64 maxap);
 static unsigned char status_calc_element(struct block_list *bl, status_change *sc, int element);
 static unsigned char status_calc_element_lv(struct block_list *bl, status_change *sc, int lv);
 static int status_calc_mode(struct block_list *bl, status_change *sc, int mode);
-#ifdef RENEWAL
-static unsigned short status_calc_ematk(struct block_list *,status_change *,int);
-#endif
 static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type);
 static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type);
 static int status_get_apbonus(struct block_list *bl, enum e_status_bonus type);
-static unsigned int status_calc_maxhpsp_pc(map_session_data* sd, unsigned int stat, bool isHP);
-static unsigned int status_calc_maxap_pc(map_session_data* sd);
+static uint32 status_calc_maxhpsp_pc(map_session_data* sd, uint32 stat, bool isHP);
+static uint32 status_calc_maxap_pc(map_session_data* sd);
 static int status_get_sc_interval(enum sc_type type);
 
-static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone, bool mapIsTE);
+static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, uint32 mapZone, bool mapIsTE);
 #define status_change_isDisabledOnMap(type, m) ( status_change_isDisabledOnMap_((type), mapdata_flag_vs2((m)), m->getMapFlag(MF_PVP) != 0, mapdata_flag_gvg2_no_te((m)), m->getMapFlag(MF_BATTLEGROUND) != 0, (m->zone << 3) != 0, mapdata_flag_gvg2_te((m))) )
 
 const std::string RefineDatabase::getDefaultLocation(){
@@ -1241,7 +1237,7 @@ static inline void status_cpy(struct status_data* a, const struct status_data* b
  *		Use 2 to display healing effect
  * @return heal or zapped HP if valid
  */
-int status_set_hp(struct block_list *bl, unsigned int hp, int flag)
+int status_set_hp(struct block_list *bl, uint32 hp, int flag)
 {
 	if (hp < 1)
 		return 0;
@@ -1268,7 +1264,7 @@ int status_set_hp(struct block_list *bl, unsigned int hp, int flag)
  *		Use 2 to display healing effect
  * @return heal or zapped HP if valid
  */
-int status_set_maxhp(struct block_list *bl, unsigned int maxhp, int flag)
+int status_set_maxhp(struct block_list *bl, uint32 maxhp, int flag)
 {
 	int64 heal;
 
@@ -1302,7 +1298,7 @@ int status_set_maxhp(struct block_list *bl, unsigned int maxhp, int flag)
  *		Use 2 to display healing effect		
  * @return heal or zapped SP if valid
  */
-int status_set_sp(struct block_list *bl, unsigned int sp, int flag)
+int status_set_sp(struct block_list *bl, uint32 sp, int flag)
 {
 	status_data* status = status_get_status_data(*bl);
 
@@ -1326,7 +1322,7 @@ int status_set_sp(struct block_list *bl, unsigned int sp, int flag)
  *		Use 2 to display healing effect
  * @return heal or zapped HP if valid
  */
-int status_set_maxsp(struct block_list *bl, unsigned int maxsp, int flag)
+int status_set_maxsp(struct block_list *bl, uint32 maxsp, int flag)
 {
 	if (maxsp < 1)
 		return 0;
@@ -1355,7 +1351,7 @@ int status_set_maxsp(struct block_list *bl, unsigned int maxsp, int flag)
 *		Use 2 to display healing effect
 * @return heal or zapped AP if valid
 */
-int status_set_ap(struct block_list *bl, unsigned int ap, int flag)
+int status_set_ap(struct block_list *bl, uint32 ap, int flag)
 {
 	status_data *status = status_get_status_data(*bl);
 
@@ -1379,7 +1375,7 @@ int status_set_ap(struct block_list *bl, unsigned int ap, int flag)
 *		Use 2 to display healing effect
 * @return heal or zapped AP if valid
 */
-int status_set_maxap(struct block_list *bl, unsigned int maxap, int flag)
+int status_set_maxap(struct block_list *bl, uint32 maxap, int flag)
 {
 	if (maxap < 1)
 		return 0;
@@ -1475,17 +1471,17 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 	if( status == &dummy_status )
 		return 0;
 
-	if ((unsigned int)hp >= status->hp) {
+	if ((uint32)hp >= status->hp) {
 		if (flag&2) return 0;
 		hp = status->hp;
 	}
 
-	if ((unsigned int)sp > status->sp) {
+	if ((uint32)sp > status->sp) {
 		if (flag&2) return 0;
 		sp = status->sp;
 	}
 
-	if ((unsigned int)ap > status->ap) {
+	if ((uint32)ap > status->ap) {
 		if (flag & 2) return 0;
 		ap = status->ap;
 	}
@@ -1760,7 +1756,7 @@ int status_heal(struct block_list *bl,int64 hhp,int64 hsp, int64 hap, int flag)
 				hp = 0;
 		}
 
-		if((unsigned int)hp > status->max_hp - status->hp)
+		if((uint32)hp > status->max_hp - status->hp)
 			hp = status->max_hp - status->hp;
 	}
 
@@ -1772,7 +1768,7 @@ int status_heal(struct block_list *bl,int64 hhp,int64 hsp, int64 hap, int flag)
 	}
 
 	if(sp) {
-		if((unsigned int)sp > status->max_sp - status->sp)
+		if((uint32)sp > status->max_sp - status->sp)
 			sp = status->max_sp - status->sp;
 	}
 
@@ -1784,7 +1780,7 @@ int status_heal(struct block_list *bl,int64 hhp,int64 hsp, int64 hap, int flag)
 	}
 
 	if (ap) {
-		if ((unsigned int)ap > status->max_ap - status->ap)
+		if ((uint32)ap > status->max_ap - status->ap)
 			ap = status->max_ap - status->ap;
 	}
 
@@ -1841,7 +1837,7 @@ int status_heal(struct block_list *bl,int64 hhp,int64 hsp, int64 hap, int flag)
  */
 int status_percent_change(struct block_list *src, struct block_list *target, int8 hp_rate, int8 sp_rate, int8 ap_rate, uint8 flag)
 {
-	unsigned int hp = 0, sp = 0, ap = 0;
+	uint32 hp = 0, sp = 0, ap = 0;
 	status_data* status = status_get_status_data(*target);
 
 	// It's safe now [MarkZD]
@@ -1919,7 +1915,7 @@ int status_percent_change(struct block_list *src, struct block_list *target, int
  */
 int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per_sp, unsigned char per_ap)
 {
-	unsigned int hp, sp, ap;
+	uint32 hp, sp, ap;
 	if (!status_isdead(*bl)) return 0;
 
 	status_data* status = status_get_status_data(*bl);
@@ -2445,7 +2441,7 @@ unsigned short status_base_atk(const struct block_list *bl, const struct status_
  * @param status: Player status
  * @return weapon attack
  */
-unsigned int status_weapon_atk(weapon_atk &wa)
+uint32 status_weapon_atk(weapon_atk &wa)
 {
 	return wa.atk + wa.atk2;
 }
@@ -3494,7 +3490,7 @@ static int status_get_apbonus_item(block_list *bl) {
  * @param isHP true - calculates Max HP, false - calculated Max SP
  * @return max The max value of HP or SP
  */
-static unsigned int status_calc_maxhpsp_pc(map_session_data* sd, unsigned int stat, bool isHP) {
+static uint32 status_calc_maxhpsp_pc(map_session_data* sd, uint32 stat, bool isHP) {
 	nullpo_ret(sd);
 
 	double dmax = 0;
@@ -3525,10 +3521,10 @@ static unsigned int status_calc_maxhpsp_pc(map_session_data* sd, unsigned int st
 		dmax += (int64)(dmax * status_get_spbonus(&sd->bl,STATUS_BONUS_RATE) / 100); //Aegis accuracy
 	}
 
-	//Make sure it's not negative before casting to unsigned int
+	//Make sure it's not negative before casting to uint32
 	if(dmax < 1) dmax = 1;
 
-	return cap_value((unsigned int)dmax,1,UINT_MAX);
+	return cap_value((uint32)dmax,1,UINT_MAX);
 }
 
 /**
@@ -3536,7 +3532,7 @@ static unsigned int status_calc_maxhpsp_pc(map_session_data* sd, unsigned int st
  * @param sd: Player data
  * @return AP amount
  */
-static unsigned int status_calc_maxap_pc(map_session_data* sd) {
+static uint32 status_calc_maxap_pc(map_session_data* sd) {
 	double dmax = 0, equip_bonus = 0, item_bonus = 0;
 
 	nullpo_ret(sd);
@@ -3548,10 +3544,10 @@ static unsigned int status_calc_maxap_pc(map_session_data* sd) {
 	dmax += equip_bonus + item_bonus;
 	dmax += (int64)(dmax * status_get_apbonus(&sd->bl, STATUS_BONUS_RATE) / 100);// Aegis accuracy
 
-	//Make sure it's not negative before casting to unsigned int
+	//Make sure it's not negative before casting to uint32
 	if (dmax < 0) dmax = 0;
 
-	return cap_value((unsigned int)dmax, 0, UINT_MAX);
+	return cap_value((uint32)dmax, 0, UINT_MAX);
 }
 
 /**
@@ -4250,30 +4246,30 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	base_status->max_hp = sd->status.max_hp = status_calc_maxhpsp_pc(sd,base_status->vit,true);
 
 	if(battle_config.hp_rate != 100)
-		base_status->max_hp = (unsigned int)(battle_config.hp_rate * (base_status->max_hp/100.));
+		base_status->max_hp = (uint32)(battle_config.hp_rate * (base_status->max_hp/100.));
 
 	if (sd->status.base_level < 100)
-		base_status->max_hp = cap_value(base_status->max_hp,1,(unsigned int)battle_config.max_hp_lv99);
+		base_status->max_hp = cap_value(base_status->max_hp,1,(uint32)battle_config.max_hp_lv99);
 	else if (sd->status.base_level < 151)
-		base_status->max_hp = cap_value(base_status->max_hp,1,(unsigned int)battle_config.max_hp_lv150);
+		base_status->max_hp = cap_value(base_status->max_hp,1,(uint32)battle_config.max_hp_lv150);
 	else
-		base_status->max_hp = cap_value(base_status->max_hp,1,(unsigned int)battle_config.max_hp);
+		base_status->max_hp = cap_value(base_status->max_hp,1,(uint32)battle_config.max_hp);
 
 // ----- SP MAX CALCULATION -----
 	base_status->max_sp = sd->status.max_sp = status_calc_maxhpsp_pc(sd,base_status->int_,false);
 
 	if(battle_config.sp_rate != 100)
-		base_status->max_sp = (unsigned int)(battle_config.sp_rate * (base_status->max_sp/100.));
+		base_status->max_sp = (uint32)(battle_config.sp_rate * (base_status->max_sp/100.));
 
-	base_status->max_sp = cap_value(base_status->max_sp,1,(unsigned int)battle_config.max_sp);
+	base_status->max_sp = cap_value(base_status->max_sp,1,(uint32)battle_config.max_sp);
 
 // ----- AP MAX CALCULATION -----
 	base_status->max_ap = sd->status.max_ap = status_calc_maxap_pc(sd);
 
 	if (battle_config.ap_rate != 100)
-		base_status->max_ap = (unsigned int)(battle_config.ap_rate * (base_status->max_ap / 100.));
+		base_status->max_ap = (uint32)(battle_config.ap_rate * (base_status->max_ap / 100.));
 
-	base_status->max_ap = cap_value(base_status->max_ap, 0, (unsigned int)battle_config.max_ap);
+	base_status->max_ap = cap_value(base_status->max_ap, 0, (uint32)battle_config.max_ap);
 
 // ----- RESPAWN HP/SP/AP -----
 
@@ -5024,6 +5020,14 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 			pc_bonus(sd, SP_ATK_RATE, sc->getSCE(SC_SHRIMP)->val2);
 			pc_bonus(sd, SP_MATK_RATE, sc->getSCE(SC_SHRIMP)->val2);
 		}
+		if (sc->getSCE(SC_INCMATKRATE))
+			pc_bonus(sd, SP_MATK_RATE, sc->getSCE(SC_INCMATKRATE)->val1);
+		if (sc->getSCE(SC_MINDBREAKER))
+			pc_bonus(sd, SP_MATK_RATE, sc->getSCE(SC_MINDBREAKER)->val2);
+		if (sc->getSCE(SC_CATNIPPOWDER))
+			pc_bonus(sd, SP_MATK_RATE, sc->getSCE(SC_CATNIPPOWDER)->val2);
+		if (sc->getSCE(SC_NIBELUNGEN) && sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_MATKRATE)
+			pc_bonus(sd, SP_MATK_RATE, 20);
 	}
 	status_cpy(&sd->battle_status, base_status);
 
@@ -6094,14 +6098,14 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 			status->max_hp = status_calc_maxhpsp_pc(sd,status->vit,true);
 
 			if(battle_config.hp_rate != 100)
-				status->max_hp = (unsigned int)(battle_config.hp_rate * (status->max_hp/100.));
+				status->max_hp = (uint32)(battle_config.hp_rate * (status->max_hp/100.));
 
 			if (sd->status.base_level < 100)
-				status->max_hp = umin(status->max_hp,(unsigned int)battle_config.max_hp_lv99);
+				status->max_hp = umin(status->max_hp,(uint32)battle_config.max_hp_lv99);
 			else if (sd->status.base_level < 151)
-				status->max_hp = umin(status->max_hp,(unsigned int)battle_config.max_hp_lv150);
+				status->max_hp = umin(status->max_hp,(uint32)battle_config.max_hp_lv150);
 			else
-				status->max_hp = umin(status->max_hp,(unsigned int)battle_config.max_hp);
+				status->max_hp = umin(status->max_hp,(uint32)battle_config.max_hp);
 		}
 		else
 			status->max_hp = status_calc_maxhp(&bl, b_status->max_hp);
@@ -6117,9 +6121,9 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 			status->max_sp = status_calc_maxhpsp_pc(sd,status->int_,false);
 
 			if(battle_config.sp_rate != 100)
-				status->max_sp = (unsigned int)(battle_config.sp_rate * (status->max_sp/100.));
+				status->max_sp = (uint32)(battle_config.sp_rate * (status->max_sp/100.));
 
-			status->max_sp = umin(status->max_sp,(unsigned int)battle_config.max_sp);
+			status->max_sp = umin(status->max_sp,(uint32)battle_config.max_sp);
 		}
 		else
 			status->max_sp = status_calc_maxsp(&bl, b_status->max_sp);
@@ -6132,37 +6136,58 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 
 	if(flag[SCB_MATK]) {
 #ifndef RENEWAL
-		status->matk_min = status_base_matk_min(status) + (sd != nullptr ? sd->bonus.ematk : 0);
-		status->matk_max = status_base_matk_max(status) + (sd != nullptr ? sd->bonus.ematk : 0);
+		int32 matk_min = status_base_matk_min(status);
+		int32 matk_max = status_base_matk_max(status);
+	
+		matk_min += (sd != nullptr ? sd->bonus.ematk : 0);
+		matk_max += (sd != nullptr ? sd->bonus.ematk : 0);
 
 		if (sd != nullptr && sd->matk_rate != 100) {
-			status->matk_min = status->matk_min * sd->matk_rate / 100;
-			status->matk_max = status->matk_max * sd->matk_rate / 100;
+			matk_min = matk_min * sd->matk_rate / 100;
+			matk_max = matk_max * sd->matk_rate / 100;
 		}
 
 		// Apply Recognized Spell buff
 		// Also update homunculus MATK, hom Min Matk is always the same as Max Matk
 		if ((bl.type == BL_HOM && battle_config.hom_setting&HOMSET_SAME_MATK) || (sc && sc->getSCE(SC_RECOGNIZEDSPELL))) {
-			status->matk_min = std::max( status->matk_min, status->matk_max );
+			matk_min = std::max( matk_min, matk_max );
 		}
 
-		status->matk_min = status_calc_matk(&bl, sc, status->matk_min);
-		status->matk_max = status_calc_matk(&bl, sc, status->matk_max);
+		matk_min = status_calc_pseudobuff_matk( sd, sc, matk_min );
+		matk_max = status_calc_pseudobuff_matk( sd, sc, matk_max );
+
+		matk_min = status_calc_consumablematk( sc, matk_min );
+		matk_max = status_calc_consumablematk( sc, matk_max );
+
+		if (sc && sc->getSCE(SC_MAGICPOWER) && sc->getSCE(SC_MAGICPOWER)->val4) {
+			matk_min += matk_min * sc->getSCE(SC_MAGICPOWER)->val3 / 100;
+			matk_max += matk_max * sc->getSCE(SC_MAGICPOWER)->val3 / 100;
+		}
+
+		// Custom since JOB_SOUL_REAPER does not exist in pre-renewal
+		if (sd != nullptr) {
+			matk_min += 3 * sd->soulball;
+			matk_max += 3 * sd->soulball;
+		}
+
+		status->matk_min = static_cast<uint16>( cap_value(matk_min,0,USHRT_MAX) );
+		status->matk_max = static_cast<uint16>( cap_value(matk_max,0,USHRT_MAX) );
 #else
-		/**
-		 * RE MATK Formula (from irowiki:http:// irowiki.org/wiki/MATK)
-		 * MATK = (sMATK + wMATK + eMATK) * Multiplicative Modifiers
-		 **/
+		// MATK = StatusMATK + WeaponMATK + ExtraMATK
 		int lv = status_get_lv(&bl);
-		status->matk_min = status_base_matk_min(&bl, status, lv);
-		status->matk_max = status_base_matk_max(&bl, status, lv);
+
+		// StatusMATK
+		int32 matk_min = status_base_matk_min(&bl, status, lv);
+		int32 matk_max = status_base_matk_max(&bl, status, lv);
 
 		if (sd != nullptr) {
-			status->matk_min = status_calc_ematk(&bl, sc, status->matk_min);
-			status->matk_max = status->matk_min;
+			// Soul energy spheres increase MATK (not displayed in status window).
+			matk_min += 3 * sd->soulball;
+			matk_max += 3 * sd->soulball;
 
-			// Adds weapon magic attack (wMATK) modifications
-			// This is the only portion in MATK that varies depending on the weapon level and refinement rate.
+			// Weapon magic attack modifiers. WeaponMATK = BaseWeaponDamage + Variance + RefinementBonus
+			// RefinementBonus is currently included with BaseWeaponDamage in status->lhw.matk and status->rhw.matk
+			// BaseWeaponDamage and RefinementBonus are visible on the player status window.
 			if (b_status->lhw.matk > 0)
 				status->lhw.matk = b_status->lhw.matk;
 			if (b_status->rhw.matk > 0)
@@ -6180,48 +6205,52 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 				variance += status->lhw.matk * status->lhw.wlv / 10;
 			}
 
-			status->matk_min += wMatk - variance;
-			status->matk_max += wMatk + variance;
+			matk_min += wMatk - variance;
+			matk_max += wMatk + variance;
 		}
 
 		// Apply Recognized Spell buff
 		// Also update homunculus MATK, hom Min Matk is always the same as Max Matk
 		if ((bl.type == BL_HOM && battle_config.hom_setting&HOMSET_SAME_MATK) || (sc && sc->getSCE(SC_RECOGNIZEDSPELL))) {
-			status->matk_min = std::max( status->matk_min, status->matk_max );
+			matk_min = std::max( matk_min, matk_max );
 		}
 
 		if (sd != nullptr && sd->right_weapon.overrefine > 0) {
-			status->matk_min++;
-			status->matk_max += sd->right_weapon.overrefine - 1;
+			matk_min++;
+			matk_max += sd->right_weapon.overrefine - 1;
 		}
 
 		// Apply MATK % from skill Mystical Amplification
 		if (sc && sc->getSCE(SC_MAGICPOWER)) {
-			status->matk_min += status->matk_min * sc->getSCE(SC_MAGICPOWER)->val3 / 100;
-			status->matk_max += status->matk_max * sc->getSCE(SC_MAGICPOWER)->val3 / 100;
+			matk_min += matk_min * sc->getSCE(SC_MAGICPOWER)->val3 / 100;
+			matk_max += matk_max * sc->getSCE(SC_MAGICPOWER)->val3 / 100;
 		}
 
-		if (sd != nullptr) {
-			if (sd->bonus.ematk > 0) {
-				status->matk_min += sd->bonus.ematk;
-				status->matk_max += sd->bonus.ematk;
-			}
+		// ExtraMATK = EquipMATK + ConsumableMATK + PseudoBuffMATK
+		// Bonuses from ExtraMATK are separated in order to order them (order has no impact)
 
-			if (uint16 skill_lv = pc_checkskill(sd, NV_TRANSCENDENCE); skill_lv > 0) {
-				status->matk_min += 15 * skill_lv + (skill_lv > 4 ? 25 : 0);
-				status->matk_max += 15 * skill_lv + (skill_lv > 4 ? 25 : 0);
-			}
+		// EquipMATK (flat MATK from equipments)
+		if (sd != nullptr && sd->bonus.ematk > 0) {
+			matk_min += sd->bonus.ematk;
+			matk_max += sd->bonus.ematk;
 		}
 
-		// Adds other magic attack modifications - usually buffs from usable items
-		status->matk_max = status_calc_matk(&bl, sc, status->matk_max);
-		status->matk_min = status_calc_matk(&bl, sc, status->matk_min);
+		// PseudoBuffMATK (flat MATK from skills)
+		matk_min = status_calc_pseudobuff_matk( sd, sc, matk_min );
+		matk_max = status_calc_pseudobuff_matk( sd, sc, matk_max );
 
-		// Apply MATK % from equipments / usable items
+		// ConsumableMATK (flat MATK from consumables)
+		matk_min = status_calc_consumablematk( sc, matk_min );
+		matk_max = status_calc_consumablematk( sc, matk_max );
+
+		// Apply MATK % (from equipments, usable items...)
 		if (sd != nullptr && sd->matk_rate != 100) {
-			status->matk_min = status->matk_min * sd->matk_rate / 100;
-			status->matk_max = status->matk_max * sd->matk_rate / 100;
+			matk_min = matk_min * sd->matk_rate / 100;
+			matk_max = matk_max * sd->matk_rate / 100;
 		}
+
+		status->matk_min = static_cast<uint16>( cap_value(matk_min,0,USHRT_MAX) );
+		status->matk_max = static_cast<uint16>( cap_value(matk_max,0,USHRT_MAX) );
 #endif
 	}
 
@@ -6354,9 +6383,9 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 			status->max_ap = status_calc_maxap_pc(sd);
 
 			if (battle_config.ap_rate != 100)
-				status->max_ap = (unsigned int)(battle_config.ap_rate * (status->max_ap / 100.));
+				status->max_ap = (uint32)(battle_config.ap_rate * (status->max_ap / 100.));
 
-			status->max_ap = umin(status->max_ap, (unsigned int)battle_config.max_ap);
+			status->max_ap = umin(status->max_ap, (uint32)battle_config.max_ap);
 		} else
 			status->max_ap = status_calc_maxap(&bl, b_status->max_ap);
 
@@ -7358,7 +7387,7 @@ static unsigned short status_calc_watk(struct block_list *bl, status_change *sc,
 	if (sc->getSCE(SC_FLASHCOMBO))
 		watk += sc->getSCE(SC_FLASHCOMBO)->val2;
 	if (sc->getSCE(SC_CATNIPPOWDER))
-		watk -= watk * sc->getSCE(SC_CATNIPPOWDER)->val2 / 100;
+		watk += watk * sc->getSCE(SC_CATNIPPOWDER)->val2 / 100;
 	if (sc->getSCE(SC_CHATTERING))
 		watk += sc->getSCE(SC_CHATTERING)->val2;
 	if (sc->getSCE(SC_SUNSTANCE))
@@ -7375,152 +7404,108 @@ static unsigned short status_calc_watk(struct block_list *bl, status_change *sc,
 	return (unsigned short)cap_value(watk,0,USHRT_MAX);
 }
 
-#ifdef RENEWAL
 /**
- * Adds equip magic attack modifications based on status changes [RENEWAL]
- * @param bl: Object to change matk [PC]
+ * Adds flat magic attack modifications from skills
+ * @param sd: Object to change matk [PC]
  * @param sc: Object's status change information
  * @param matk: Initial matk
  * @return modified matk with cap_value(matk,0,USHRT_MAX)
  */
-static unsigned short status_calc_ematk(struct block_list *bl, status_change *sc, int matk)
-{
+uint16 status_calc_pseudobuff_matk( map_session_data* sd, status_change *sc, int32 matk ){
+	// Flat MATK bonus from skills without sc
+	if (uint16 skill_lv = pc_checkskill(sd, NV_TRANSCENDENCE); skill_lv > 0) {
+		matk += 15 * skill_lv + (skill_lv > 4 ? 25 : 0);
+	}
+
 	if (!sc || !sc->count)
-		return cap_value(matk,0,USHRT_MAX);
+		return static_cast<uint16>( cap_value(matk,0,USHRT_MAX) );
 
-	if (sc->getSCE(SC_IMPOSITIO))
-		matk += sc->getSCE(SC_IMPOSITIO)->val2;
-	if (sc->getSCE(SC_MATKFOOD))
-		matk += sc->getSCE(SC_MATKFOOD)->val1;
-	if(sc->getSCE(SC_MANA_PLUS))
-		matk += sc->getSCE(SC_MANA_PLUS)->val1;
-	if(sc->getSCE(SC_COOLER_OPTION))
-		matk += sc->getSCE(SC_COOLER_OPTION)->val2;
-	if(sc->getSCE(SC_AQUAPLAY_OPTION))
-		matk += sc->getSCE(SC_AQUAPLAY_OPTION)->val2;
-	if(sc->getSCE(SC_CHILLY_AIR_OPTION))
-		matk += sc->getSCE(SC_CHILLY_AIR_OPTION)->val2;
-	if(sc->getSCE(SC_FIRE_INSIGNIA) && sc->getSCE(SC_FIRE_INSIGNIA)->val1 == 3)
-		matk += 50;
-	if(sc->getSCE(SC_ODINS_POWER))
-		matk += 40 + 30 * sc->getSCE(SC_ODINS_POWER)->val1; // 70 lvl1, 100lvl2
-	if(sc->getSCE(SC_MOONLITSERENADE))
-		matk += sc->getSCE(SC_MOONLITSERENADE)->val3;
-	if(sc->getSCE(SC_IZAYOI))
-		matk += 25 * sc->getSCE(SC_IZAYOI)->val1;
-	if(sc->getSCE(SC_ZANGETSU))
-		matk += sc->getSCE(SC_ZANGETSU)->val3;
-	if(sc->getSCE(SC_QUEST_BUFF1))
-		matk += sc->getSCE(SC_QUEST_BUFF1)->val1;
-	if(sc->getSCE(SC_QUEST_BUFF2))
-		matk += sc->getSCE(SC_QUEST_BUFF2)->val1;
-	if(sc->getSCE(SC_QUEST_BUFF3))
-		matk += sc->getSCE(SC_QUEST_BUFF3)->val1;
-	if(sc->getSCE(SC_MTF_MATK2))
-		matk += sc->getSCE(SC_MTF_MATK2)->val1;
-	if (sc->getSCE(SC_CATNIPPOWDER))
-		matk -= matk * sc->getSCE(SC_CATNIPPOWDER)->val2 / 100;
-	if (sc->getSCE(SC_CHATTERING))
-		matk += sc->getSCE(SC_CHATTERING)->val2;
-	if (sc->getSCE(SC_DORAM_MATK))
-		matk += sc->getSCE(SC_DORAM_MATK)->val1;
-	if (sc->getSCE(SC_SOULFAIRY))
-		matk += sc->getSCE(SC_SOULFAIRY)->val2;
-	if (sc->getSCE(SC__AUTOSHADOWSPELL))
-		matk += sc->getSCE(SC__AUTOSHADOWSPELL)->val4 * 5;
-	if (sc->getSCE(SC_INSPIRATION))
-		matk += sc->getSCE(SC_INSPIRATION)->val2;
-	if (sc->getSCE(SC_PACKING_ENVELOPE2))
-		matk += sc->getSCE(SC_PACKING_ENVELOPE2)->val1;
-	if(sc->getSCE(SC_ULTIMATECOOK))
-		matk += 30;
-	if (sc->getSCE(SC_MAGICCANDY))
-		matk += 30;
-	if (sc->getSCE(SC_SKF_MATK))
-		matk += sc->getSCE(SC_SKF_MATK)->val1;
+	struct status_change_entry* sce;
 
-	return (unsigned short)cap_value(matk,0,USHRT_MAX);
-}
+	// Flat MATK bonus from skills with sc
+#ifdef RENEWAL
+	// Bonuses only in renewal
+	if (sce = sc->getSCE(SC_IMPOSITIO))
+		matk += sce->val2;
+	if (sce = sc->getSCE(SC_VOLCANO))
+		matk += sce->val2;
 #endif
+	if (sce = sc->getSCE(SC_DORAM_MATK))
+		matk += sce->val1;
+	if (sce = sc->getSCE(SC_AQUAPLAY_OPTION))
+		matk += sce->val2;
+	if (sce = sc->getSCE(SC_CHILLY_AIR_OPTION))
+		matk += sce->val2;
+	if (sce = sc->getSCE(SC_COOLER_OPTION))
+		matk += sce->val2;
+	if (sce = sc->getSCE(SC_SOULFAIRY))
+		matk += sce->val2;
+	if (sce = sc->getSCE(SC_INSPIRATION))
+		matk += sce->val2;
+	if (sce = sc->getSCE(SC_SHIELDSPELL_ATK))
+		matk += sce->val2;
+	if (sce = sc->getSCE(SC_ZANGETSU))
+		matk += sce->val3;
+	if (sce = sc->getSCE(SC_MOONLITSERENADE))
+		matk += sce->val3;
+	if (sce = sc->getSCE(SC__AUTOSHADOWSPELL))
+		matk += sce->val4;
+	if (sce = sc->getSCE(SC_ODINS_POWER))
+		matk += 40 + 30 * sce->val1;
+	if (sce = sc->getSCE(SC_IZAYOI))
+		matk += 25 * sce->val1;
+	if ((sce = sc->getSCE(SC_FIRE_INSIGNIA)) && sce->val1 == 3)
+		matk += 50;
+	if (sc->getSCE(SC_CLIMAX_DES_HU))
+		matk += 100;
+
+	return static_cast<uint16>( cap_value(matk,0,USHRT_MAX) );
+}
 
 /**
- * Adds magic attack modifications based on status changes
- * @param bl: Object to change matk [PC|MOB|HOM|MER|ELEM]
+ * Adds flat magic attack modifications from consumables based on status changes
  * @param sc: Object's status change information
  * @param matk: Initial matk
  * @return modified matk with cap_value(matk,0,USHRT_MAX)
  */
-static unsigned short status_calc_matk(struct block_list *bl, status_change *sc, int matk)
-{
-	if(!sc || !sc->count)
-		return cap_value(matk,0,USHRT_MAX);
-#ifndef RENEWAL
-	/// Take note fixed value first before % modifiers [PRE-RENEWAL]
-	if (sc->getSCE(SC_MATKFOOD))
-		matk += sc->getSCE(SC_MATKFOOD)->val1;
-	if (sc->getSCE(SC_MANA_PLUS))
-		matk += sc->getSCE(SC_MANA_PLUS)->val1;
-	if (sc->getSCE(SC_AQUAPLAY_OPTION))
-		matk += sc->getSCE(SC_AQUAPLAY_OPTION)->val2;
-	if (sc->getSCE(SC_CHILLY_AIR_OPTION))
-		matk += sc->getSCE(SC_CHILLY_AIR_OPTION)->val2;
-	if (sc->getSCE(SC_COOLER_OPTION))
-		matk += sc->getSCE(SC_COOLER_OPTION)->val2;
-	if (sc->getSCE(SC_FIRE_INSIGNIA) && sc->getSCE(SC_FIRE_INSIGNIA)->val1 == 3)
-		matk += 50;
-	if (sc->getSCE(SC_ODINS_POWER))
-		matk += 40 + 30 * sc->getSCE(SC_ODINS_POWER)->val1; // 70 lvl1, 100lvl2
-	if (sc->getSCE(SC_IZAYOI))
-		matk += 25 * sc->getSCE(SC_IZAYOI)->val1;
-	if (sc->getSCE(SC_MTF_MATK2))
-		matk += sc->getSCE(SC_MTF_MATK2)->val1;
+uint16 status_calc_consumablematk( status_change *sc, int32 matk ){
+	if (!sc || !sc->count)
+		return static_cast<uint16>( cap_value(matk,0,USHRT_MAX) );
+
+	struct status_change_entry* sce;
+
+	if (sce = sc->getSCE(SC_MATKFOOD))
+		matk += sce->val1;
+	if (sce = sc->getSCE(SC_MANA_PLUS))
+		matk += sce->val1;
+	if (sce = sc->getSCE(SC_MATKPOTION))
+		matk += sce->val1;
+	if (sce = sc->getSCE(SC_LIMIT_POWER_BOOSTER))
+		matk += sce->val1;
+	if (sce = sc->getSCE(SC_SKF_MATK))
+		matk += sce->val1;
+	if (sce = sc->getSCE(SC_MTF_MATK))
+		matk += sce->val1;
+	if (sce = sc->getSCE(SC_MTF_MATK2))
+		matk += sce->val1;
+	if (sce = sc->getSCE(SC_PACKING_ENVELOPE2))
+		matk += sce->val1;
+	if (sce = sc->getSCE(SC_QUEST_BUFF1))
+		matk += sce->val1;
+	if (sce = sc->getSCE(SC_QUEST_BUFF2))
+		matk += sce->val1;
+	if (sce = sc->getSCE(SC_QUEST_BUFF3))
+		matk += sce->val1;
 	if (sc->getSCE(SC_ULTIMATECOOK))
 		matk += 30;
 	if (sc->getSCE(SC_MAGICCANDY))
 		matk += 30;
-	if (sc->getSCE(SC_SKF_MATK))
-		matk += sc->getSCE(SC_SKF_MATK)->val1;
-#endif
-	if (sc->getSCE(SC_MATKPOTION))
-		matk += sc->getSCE(SC_MATKPOTION)->val1;
-	if (sc->getSCE(SC_LIMIT_POWER_BOOSTER))
-		matk += sc->getSCE(SC_LIMIT_POWER_BOOSTER)->val1;
 	if (sc->getSCE(SC_ALMIGHTY))
 		matk += 30;
 	if (sc->getSCE(SC_2011RWC_SCROLL))
 		matk += 30;
-	if (sc->getSCE(SC_ZANGETSU))
-		matk += sc->getSCE(SC_ZANGETSU)->val3;
-	if (sc->getSCE(SC_QUEST_BUFF1))
-		matk += sc->getSCE(SC_QUEST_BUFF1)->val1;
-	if (sc->getSCE(SC_QUEST_BUFF2))
-		matk += sc->getSCE(SC_QUEST_BUFF2)->val1;
-	if (sc->getSCE(SC_QUEST_BUFF3))
-		matk += sc->getSCE(SC_QUEST_BUFF3)->val1;
-#ifndef RENEWAL
-	if (sc->getSCE(SC_MAGICPOWER) && sc->getSCE(SC_MAGICPOWER)->val4)
-		matk += matk * sc->getSCE(SC_MAGICPOWER)->val3/100;
-#endif
-	if (sc->getSCE(SC_MINDBREAKER))
-		matk += matk * sc->getSCE(SC_MINDBREAKER)->val2/100;
-	if (sc->getSCE(SC_INCMATKRATE))
-		matk += matk * sc->getSCE(SC_INCMATKRATE)->val1/100;
-	if (sc->getSCE(SC_MOONLITSERENADE))
-		matk += sc->getSCE(SC_MOONLITSERENADE)->val3/100;
-	if (sc->getSCE(SC_MTF_MATK))
-		matk += matk * sc->getSCE(SC_MTF_MATK)->val1 / 100;
-#ifdef RENEWAL
-	if (sc->getSCE(SC_VOLCANO))
-		matk += sc->getSCE(SC_VOLCANO)->val2;
-	if (sc->getSCE(SC_NIBELUNGEN) && sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_MATKRATE)
-		matk += matk * 20 / 100;
-#endif
-	if (sc->getSCE(SC_SHIELDSPELL_ATK))
-		matk += sc->getSCE(SC_SHIELDSPELL_ATK)->val2;
-	if (sc->getSCE(SC_CLIMAX_DES_HU))
-		matk += 100;
 
-	return (unsigned short)cap_value(matk,0,USHRT_MAX);
+	return static_cast<uint16>( cap_value(matk,0,USHRT_MAX) );
 }
 
 /**
@@ -8849,7 +8834,7 @@ static signed short status_calc_crate(struct block_list *bl, status_change *sc, 
  * @param maxhp: Object's current max HP
  * @return modified maxhp
  */
-static unsigned int status_calc_maxhp(struct block_list *bl, uint64 maxhp)
+static uint32 status_calc_maxhp(struct block_list *bl, uint64 maxhp)
 {
 	int rate = 100;
 
@@ -8858,7 +8843,7 @@ static unsigned int status_calc_maxhp(struct block_list *bl, uint64 maxhp)
 	if ((rate += status_get_hpbonus(bl,STATUS_BONUS_RATE)) != 100)
 		maxhp = maxhp * rate / 100;
 
-	return (unsigned int)cap_value(maxhp,1,UINT_MAX);
+	return (uint32)cap_value(maxhp,1,UINT_MAX);
 }
 
 /**
@@ -8868,7 +8853,7 @@ static unsigned int status_calc_maxhp(struct block_list *bl, uint64 maxhp)
  * @param maxsp: Object's current max SP
  * @return modified maxsp
  */
-static unsigned int status_calc_maxsp(struct block_list *bl, uint64 maxsp)
+static uint32 status_calc_maxsp(struct block_list *bl, uint64 maxsp)
 {
 	int rate = 100;
 
@@ -8877,7 +8862,7 @@ static unsigned int status_calc_maxsp(struct block_list *bl, uint64 maxsp)
 	if ((rate += status_get_spbonus(bl,STATUS_BONUS_RATE)) != 100)
 		maxsp = maxsp * rate / 100;
 	
-	return (unsigned int)cap_value(maxsp,1,UINT_MAX);
+	return (uint32)cap_value(maxsp,1,UINT_MAX);
 }
 
 /**
@@ -8887,7 +8872,7 @@ static unsigned int status_calc_maxsp(struct block_list *bl, uint64 maxsp)
 * @param maxap: Object's current max AP
 * @return modified maxap
 */
-static unsigned int status_calc_maxap(struct block_list *bl, uint64 maxap)
+static uint32 status_calc_maxap(struct block_list *bl, uint64 maxap)
 {
 	int rate = 100;
 
@@ -8896,7 +8881,7 @@ static unsigned int status_calc_maxap(struct block_list *bl, uint64 maxap)
 	if ((rate += status_get_apbonus(bl, STATUS_BONUS_RATE)) != 100)
 		maxap = maxap * rate / 100;
 
-	return (unsigned int)cap_value(maxap, 0, UINT_MAX);
+	return (uint32)cap_value(maxap, 0, UINT_MAX);
 }
 
 /**
@@ -12590,7 +12575,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = val1 * 10;
 			break;
 		case SC_CATNIPPOWDER:
-			val2 = 50; // WATK%, MATK%
+			val2 = -50; // WATK%, MATK%
 			val3 = 25 * val1; // Move speed reduction
 			if (bl->type == BL_PC && pc_checkskill(sd, SU_SPIRITOFLAND))
 				val4 = status_get_lv(src) / 12;
@@ -12792,7 +12777,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 5 + 3 * val2; // Max Soul Sphere's.
 			val3 = tick > 0 ? tick : 60000;
 			tick_time = tick;
-			tick = INFINITE_TICK;
+			tick = INFINITE_TICK; // Duration sent to the client should be infinite
 			break;
 		case SC_SP_SHA:
 			val2 = 50; // Move speed reduction
@@ -13940,8 +13925,13 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 				pc_delspiritball(sd, 1, 0);
 			break;
 		case SC_SOULENERGY:
-			if (sd)
-				pc_delsoulball(sd, sd->soulball, false);
+			if (sd != nullptr && sd->soulball > 0) {
+				// When SC_SOULENERGY ends, removes all soulball if SC_SOULCOLLECT is active otherwise 1
+				if (sc->getSCE(SC_SOULCOLLECT))
+					pc_delsoulball( *sd, sd->soulball );
+				else
+					pc_delsoulball( *sd, 1 );
+			}
 			break;
 		case SC_MADOGEAR:
 			status_db.removeByStatusFlag(bl, { SCF_MADOENDCANCEL });
@@ -14188,7 +14178,7 @@ TIMER_FUNC(status_change_timer){
 	case SC_POISON:
 	case SC_DPOISON:
 		if (sce->val4 >= 0 && !sc->getSCE(SC_SLOWPOISON)) {
-			unsigned int damage = 0;
+			uint32 damage = 0;
 			if (sd)
 				damage = (type == SC_DPOISON) ? 2 + status->max_hp / 50 : 2 + status->max_hp * 3 / 200;
 			else
@@ -15055,12 +15045,9 @@ TIMER_FUNC(status_change_timer){
 		}
 		break;
 	case SC_SOULCOLLECT:
-		pc_addsoulball(sd, sce->val2);
-		if (sd->soulball < sce->val2) {
-			sc_timer_next(sce->val3 + tick);
-			return 0;
-		}
-		break;
+		pc_addsoulball( *sd, 1, sce->val2 );
+		sc_timer_next(sce->val3 + tick);
+		return 0;
 	case SC_HELPANGEL:
 		if (--(sce->val4) >= 0) {
 			status_heal(bl, 1000, 350, 0);	// Heal amount not displayed
@@ -15427,7 +15414,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 			if (regen->state.overweight)
 				rate /= 2; // Half as fast when overweight.
 			sregen->tick.hp += rate;
-			while(sregen->tick.hp >= (unsigned int)battle_config.natural_heal_skill_interval) {
+			while(sregen->tick.hp >= (uint32)battle_config.natural_heal_skill_interval) {
 				sregen->tick.hp -= battle_config.natural_heal_skill_interval;
 				if(status_heal(bl, sregen->hp, 0, 3) < sregen->hp) { // Full
 					flag &= ~RGN_SHP;
@@ -15440,7 +15427,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 			if (regen->state.overweight)
 				rate /= 2; // Half as fast when overweight.
 			sregen->tick.sp += rate;
-			while(sregen->tick.sp >= (unsigned int)battle_config.natural_heal_skill_interval) {
+			while(sregen->tick.sp >= (uint32)battle_config.natural_heal_skill_interval) {
 				sregen->tick.sp -= battle_config.natural_heal_skill_interval;
 				if(status_heal(bl, 0, sregen->sp, 3) < sregen->sp) { // Full
 					flag &= ~RGN_SSP;
@@ -15543,7 +15530,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 	if(flag&RGN_SHP) { // Skill HP regen
 		sregen->tick.hp += (int)(natural_heal_diff_tick * (sregen->rate.hp / 100.));
 
-		while(sregen->tick.hp >= (unsigned int)battle_config.natural_heal_skill_interval) {
+		while(sregen->tick.hp >= (uint32)battle_config.natural_heal_skill_interval) {
 			sregen->tick.hp -= battle_config.natural_heal_skill_interval;
 			if(status_heal(bl, sregen->hp, 0, 3) < sregen->hp)
 				break; // Full
@@ -15551,7 +15538,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 	}
 	if(flag&RGN_SSP) { // Skill SP regen
 		sregen->tick.sp += (int)(natural_heal_diff_tick * (sregen->rate.sp /100.));
-		while(sregen->tick.sp >= (unsigned int)battle_config.natural_heal_skill_interval) {
+		while(sregen->tick.sp >= (uint32)battle_config.natural_heal_skill_interval) {
 			int val = sregen->sp;
 			if (sd && sd->state.doridori) {
 				val *= 2;
@@ -15625,7 +15612,7 @@ TIMER_FUNC(status_clear_lastEffect_timer) {
  * @param mapIsTE: If the map us WOE TE
  * @return True - SC disabled on map; False - SC not disabled on map/Invalid SC
  */
-static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone, bool mapIsTE)
+static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, uint32 mapZone, bool mapIsTE)
 {
 	if (!status_db.validateStatus(type))
 		return false;
@@ -15694,7 +15681,7 @@ static bool status_readdb_status_disabled( char **str, size_t columns, size_t cu
 		return false;
 	}
 
-	SCDisabled[type] = (unsigned int)atol(str[1]);
+	SCDisabled[type] = (uint32)atol(str[1]);
 	return true;
 }
 

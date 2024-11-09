@@ -315,7 +315,7 @@ int logchrif_parse_requpdaccstate(int fd, int id, char* ip){
 		struct mmo_account acc;
 
 		uint32 account_id = RFIFOL(fd,2);
-		unsigned int state = RFIFOL(fd,6);
+		uint32 state = RFIFOL(fd,6);
 		AccountDB* accounts = login_get_accounts_db();
 
 		RFIFOSKIP(fd,10);

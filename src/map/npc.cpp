@@ -1009,7 +1009,7 @@ bool npc_enable_target(npc_data& nd, uint32 char_id, e_npcv_status flag)
 			return false;
 		}
 
-		unsigned int option = nd.sc.option;
+		uint32 option = nd.sc.option;
 		if (flag & NPCVIEW_CLOAKOFF)
 			nd.sc.option &= ~OPTION_CLOAK;
 		else
@@ -1100,7 +1100,7 @@ struct npc_data* npc_name2id(const char* name)
  **/
 TIMER_FUNC(npc_secure_timeout_timer){
 	map_session_data* sd = nullptr;
-	unsigned int timeout = NPC_SECURE_TIMEOUT_NEXT;
+	uint32 timeout = NPC_SECURE_TIMEOUT_NEXT;
 	t_tick cur_tick = gettick(); //ensure we are on last tick
 
 	if ((sd = map_id2sd(id)) == nullptr || !sd->npc_id || sd->state.ignoretimeout) {
@@ -3641,7 +3641,7 @@ static void npc_parsename(struct npc_data* nd, const char* name, const char* sta
 	if( p ) { // <Display name>::<Unique name>
 		size_t len = p-name;
 		if( len > NPC_NAME_LENGTH ) {
-			ShowWarning("npc_parsename: Display name of '%s' is too long (len=%u) in file '%s', line'%d'. Truncating to %u characters.\n", name, (unsigned int)len, filepath, strline(buffer,start-buffer), NPC_NAME_LENGTH);
+			ShowWarning("npc_parsename: Display name of '%s' is too long (len=%u) in file '%s', line'%d'. Truncating to %u characters.\n", name, (uint32)len, filepath, strline(buffer,start-buffer), NPC_NAME_LENGTH);
 			safestrncpy(nd->name, name, sizeof(nd->name));
 		} else {
 			memcpy(nd->name, name, len);
@@ -3649,12 +3649,12 @@ static void npc_parsename(struct npc_data* nd, const char* name, const char* sta
 		}
 		len = strlen(p+2);
 		if( len > NPC_NAME_LENGTH )
-			ShowWarning("npc_parsename: Unique name of '%s' is too long (len=%u) in file '%s', line'%d'. Truncating to %u characters.\n", name, (unsigned int)len, filepath, strline(buffer,start-buffer), NPC_NAME_LENGTH);
+			ShowWarning("npc_parsename: Unique name of '%s' is too long (len=%u) in file '%s', line'%d'. Truncating to %u characters.\n", name, (uint32)len, filepath, strline(buffer,start-buffer), NPC_NAME_LENGTH);
 		safestrncpy(nd->exname, p+2, sizeof(nd->exname));
 	} else {// <Display name>
 		size_t len = strlen(name);
 		if( len > NPC_NAME_LENGTH )
-			ShowWarning("npc_parsename: Name '%s' is too long (len=%u) in file '%s', line'%d'. Truncating to %u characters.\n", name, (unsigned int)len, filepath, strline(buffer,start-buffer), NPC_NAME_LENGTH);
+			ShowWarning("npc_parsename: Name '%s' is too long (len=%u) in file '%s', line'%d'. Truncating to %u characters.\n", name, (uint32)len, filepath, strline(buffer,start-buffer), NPC_NAME_LENGTH);
 		safestrncpy(nd->name, name, sizeof(nd->name));
 		safestrncpy(nd->exname, name, sizeof(nd->exname));
 	}
@@ -5350,6 +5350,9 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 		return strchr(start,'\n');// skip and continue
 	}
 
+	// Store filepath for possible unloading
+	strcpy( mob.filepath, filepath );
+
 	//Update mob spawn lookup database
 	struct spawn_info spawn = { mapdata->index, mob.num };
 	mob_add_spawn(mob_id, spawn);
@@ -6124,12 +6127,91 @@ bool npc_unloadfile( const char* path ) {
 
 	dbi_destroy(iter);
 
+	if(npc_remove_mob_spawns( path )){
+		found = true;
+	}
+
 	if( found ) /* refresh event cache */
 		npc_read_event_script();
 
 	npc_delsrcfile(path);
 
 	return found;
+}
+
+bool npc_remove_mob_spawns(const char* path) {
+	int32 spawn_count = {};
+	int32 unit_count = {};
+
+	auto remove_spawn_info = [&]( spawn_data& spawn, uint16 qty ){
+		auto it = mob_spawn_data.find( spawn.id );
+
+		if( it != mob_spawn_data.end() ){
+			uint16 mapindex = map_id2index( spawn.m );
+
+			it->second.erase( std::remove_if( it->second.begin(), it->second.end(), [&]( spawn_info& spawninfo ){
+				if( spawninfo.mapindex == mapindex ){
+					spawninfo.qty -= qty;
+					spawn_count += qty;
+					return spawninfo.qty == 0;
+				}
+
+				return false;
+			} ), it->second.end() );
+		}
+	};
+
+	// Remove spawned mobs
+	s_mapiterator* iter = mapit_geteachmob();
+
+	for( block_list* bl = mapit_first( iter ); mapit_exists( iter ); bl = mapit_next( iter ) ){
+		mob_data* md = reinterpret_cast<mob_data*>( bl );
+
+		if( md->spawn != nullptr && !strcmp( md->spawn->filepath, path ) ){
+			if( !battle_config.dynamic_mobs )
+				remove_spawn_info( *md->spawn, 1 );
+			unit_free( bl, CLR_OUTSIGHT );
+			unit_count++;
+		}
+	}
+
+	mapit_free(iter);
+
+	//dynamic mobs cleaning
+	if (battle_config.dynamic_mobs) {
+		for (int32 i = 0; i < map_num; i++) {
+			map_data* mapdata = map_getmapdata(i);
+
+			for (int16 j = 0; j < MAX_MOB_LIST_PER_MAP; j++) {
+				spawn_data* mob = mapdata->moblist[j];
+
+				if (mob != nullptr && !strcmp(mob->filepath, path)) {
+					npc_cache_mob -= mob->num;
+					remove_spawn_info( *mob, mob->num );
+
+					aFree(mapdata->moblist[j]);
+					mapdata->moblist[j] = nullptr;
+
+					if (mapdata->mob_delete_timer != INVALID_TIMER) {
+						delete_timer(mapdata->mob_delete_timer, map_removemobs_timer);
+						mapdata->mob_delete_timer = INVALID_TIMER;
+					}
+				}
+			}
+		}
+	}
+
+	// Sort spawns by spawn quantity
+	for( auto& pair : mob_spawn_data ){
+		std::sort( pair.second.begin(), pair.second.end(), []( const spawn_info& a, const spawn_info& b ) -> bool{
+			return a.qty > b.qty;
+		} );
+	}
+
+	if(spawn_count > 0 || unit_count > 0)
+		ShowInfo("%d mobs and %d spawns were removed.\n",unit_count,spawn_count);
+
+	return spawn_count > 0 || unit_count > 0;
 }
 
 void do_clear_npc(void) {

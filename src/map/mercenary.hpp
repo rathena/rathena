@@ -71,7 +71,7 @@ public:
 
 extern MercenaryDatabase mercenary_db;
 
-bool mercenary_create(map_session_data *sd, uint16 class_, unsigned int lifetime);
+bool mercenary_create(map_session_data *sd, uint16 class_, uint32 lifetime);
 bool mercenary_recv_data(s_mercenary *merc, bool flag);
 void mercenary_save(s_mercenary_data *md);
 

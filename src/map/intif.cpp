@@ -791,7 +791,7 @@ int intif_party_leaderchange(int party_id,uint32 account_id,uint32 char_id)
  * @param share_lvl : Max level number of difference to share exp
  * @return  0=error, 1=msg sent
  */
-int intif_party_sharelvlupdate(unsigned int share_lvl)
+int intif_party_sharelvlupdate(uint32 share_lvl)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -2800,7 +2800,7 @@ static void intif_parse_Auction_register(int fd)
  * @param auction_id : auction to cancel
  * @return 0=error, 1=msg sent
  */
-int intif_Auction_cancel(uint32 char_id, unsigned int auction_id)
+int intif_Auction_cancel(uint32 char_id, uint32 auction_id)
 {
 	if( CheckForCharServer() )
 		return 0;
@@ -2841,7 +2841,7 @@ static void intif_parse_Auction_cancel(int fd)
  * @param auction_id : auction to stop
  * @return 0=error, 1=msg sent
  */
-int intif_Auction_close(uint32 char_id, unsigned int auction_id)
+int intif_Auction_close(uint32 char_id, uint32 auction_id)
 {
 	if( CheckForCharServer() )
 		return 0;
@@ -2884,7 +2884,7 @@ static void intif_parse_Auction_close(int fd)
  * @param bid
  * @return 0=error, 1=msg sent
  */
-int intif_Auction_bid(uint32 char_id, const char* name, unsigned int auction_id, int bid)
+int intif_Auction_bid(uint32 char_id, const char* name, uint32 auction_id, int bid)
 {
 	int len = 16 + NAME_LENGTH;
 

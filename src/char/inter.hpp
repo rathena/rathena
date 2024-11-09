@@ -37,7 +37,7 @@ void mapif_accinfo_ack(bool success, int map_fd, int u_fd, int u_aid, int accoun
 
 int inter_log(const char *fmt,...);
 
-extern unsigned int party_share_level;
+extern uint32 party_share_level;
 
 extern Sql* sql_handle;
 extern Sql* lsql_handle;

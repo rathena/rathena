@@ -61,10 +61,10 @@ struct s_search_store_search {
 	map_session_data* search_sd;  // sd of the searching player
 	const struct PACKET_CZ_SEARCH_STORE_INFO_item* itemlist;
 	const struct PACKET_CZ_SEARCH_STORE_INFO_item* cardlist;
-	unsigned int item_count;
-	unsigned int card_count;
-	unsigned int min_price;
-	unsigned int max_price;
+	uint32 item_count;
+	uint32 card_count;
+	uint32 min_price;
+	uint32 max_price;
 };
 
 struct s_search_store_info_item {
@@ -73,7 +73,7 @@ struct s_search_store_info_item {
 	char store_name[MESSAGE_SIZE];
 	t_itemid nameid;
 	unsigned short amount;
-	unsigned int price;
+	uint32 price;
 	t_itemid card[MAX_SLOTS];
 	unsigned char refine;
 	uint8 enchantgrade;
@@ -81,7 +81,7 @@ struct s_search_store_info_item {
 
 struct s_search_store_info {
 	std::vector<std::shared_ptr<s_search_store_info_item>> items;
-	unsigned int pages;  // amount of pages already sent to client
+	uint32 pages;  // amount of pages already sent to client
 	uint16 uses;
 	int remote_id;
 	time_t nextquerytime;
@@ -92,7 +92,7 @@ struct s_search_store_info {
 };
 
 bool searchstore_open(map_session_data& sd, uint16 uses, e_searchstore_effecttype effect, int16 mapid);
-void searchstore_query(map_session_data& sd, e_searchstore_searchtype type, unsigned int min_price, unsigned int max_price, const struct PACKET_CZ_SEARCH_STORE_INFO_item* itemlist, unsigned int item_count, const struct PACKET_CZ_SEARCH_STORE_INFO_item* cardlist, unsigned int card_count);
+void searchstore_query(map_session_data& sd, e_searchstore_searchtype type, uint32 min_price, uint32 max_price, const struct PACKET_CZ_SEARCH_STORE_INFO_item* itemlist, uint32 item_count, const struct PACKET_CZ_SEARCH_STORE_INFO_item* cardlist, uint32 card_count);
 bool searchstore_querynext(map_session_data& sd);
 void searchstore_next(map_session_data& sd);
 void searchstore_clear(map_session_data& sd);

@@ -89,7 +89,7 @@ typedef uint32 t_itemid;
 #endif
 #define MAX_FAME 1000000000 ///Max fame points
 #define MAX_CART 100 ///Maximum item in cart
-#define MAX_SKILL 1623 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
+#define MAX_SKILL 1629 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
 #define DEFAULT_WALK_SPEED 150 ///Default walk speed (other than NPC)
 #define DEFAULT_NPC_WALK_SPEED 200 ///Default NPC walk speed
 #define MIN_WALK_SPEED 20 ///Min walk speed
@@ -314,16 +314,16 @@ struct item {
 	int id;
 	t_itemid nameid;
 	short amount;
-	unsigned int equip; // location(s) where item is equipped (using enum equip_pos for bitmasking)
+	uint32 equip; // location(s) where item is equipped (using enum equip_pos for bitmasking)
 	char identify;
 	char refine;
 	char attribute;
 	t_itemid card[MAX_SLOTS];
 	struct s_item_randomoption option[MAX_ITEM_RDM_OPT];		// max of 5 random options can be supported.
-	unsigned int expire_time;
+	uint32 expire_time;
 	char favorite, bound;
 	uint64 unique_id;
-	unsigned int equipSwitch; // location(s) where item is equipped for equip switching (using enum equip_pos for bitmasking)
+	uint32 equipSwitch; // location(s) where item is equipped for equip switching (using enum equip_pos for bitmasking)
 	uint8 enchantgrade;
 } __attribute__((packed));
 
@@ -398,8 +398,8 @@ struct s_skill {
 };
 
 struct script_reg_state {
-	unsigned int type : 1; // because I'm a memory hoarder and having them in the same struct would be a 8-byte/instance waste while ints outnumber str on a 10000-to-1 ratio.
-	unsigned int update : 1; // whether it needs to be sent to char server for insertion/update/delete
+	uint32 type : 1; // because I'm a memory hoarder and having them in the same struct would be a 8-byte/instance waste while ints outnumber str on a 10000-to-1 ratio.
+	uint32 update : 1; // whether it needs to be sent to char server for insertion/update/delete
 };
 
 struct script_reg_num {
@@ -498,7 +498,7 @@ struct s_homunculus {	//[orn]
 	short class_;
 	short prev_class;
 	uint32 hp,max_hp,sp,max_sp;
-	unsigned int intimacy;	//[orn]
+	uint32 intimacy;	//[orn]
 	short hunger;
 	struct s_skill hskill[MAX_HOMUNSKILL]; //albator
 	short skillpts;
@@ -529,7 +529,7 @@ struct s_mercenary {
 	uint32 char_id;
 	short class_;
 	int hp, sp;
-	unsigned int kill_count;
+	uint32 kill_count;
 	t_tick life_time;
 };
 
@@ -551,7 +551,7 @@ struct s_friend {
 
 #ifdef HOTKEY_SAVING
 struct hotkey {
-	unsigned int id;
+	uint32 id;
 	unsigned short lv;
 	unsigned char type; // 0: item, 1: skill
 };
@@ -569,9 +569,9 @@ struct mmo_charstatus {
 	int zeny;
 
 	short class_; ///< Player's JobID
-	unsigned int status_point,skill_point,trait_point;
+	uint32 status_point,skill_point,trait_point;
 	int hp,max_hp,sp,max_sp,ap,max_ap;
-	unsigned int option;
+	uint32 option;
 	short manner; // Defines how many minutes a char will be muted, each negative point is equivalent to a minute.
 	unsigned char karma;
 	short hair,hair_color,clothes_color,body;
@@ -590,7 +590,7 @@ struct mmo_charstatus {
 	uint8 body_direction;
 
 	char name[NAME_LENGTH];
-	unsigned int base_level,job_level;
+	uint32 base_level,job_level;
 	unsigned short str,agi,vit,int_,dex,luk;
 	unsigned short pow,sta,wis,spl,con,crt;
 	unsigned char slot,sex;
@@ -616,7 +616,7 @@ struct mmo_charstatus {
 	time_t unban_time;
 
 	// Char server addon system
-	unsigned int character_moves;
+	uint32 character_moves;
 
 	unsigned char font;
 
@@ -675,7 +675,7 @@ struct mail_data {
 };
 
 struct auction_data {
-	unsigned int auction_id;
+	uint32 auction_id;
 	int seller_id;
 	char seller_name[NAME_LENGTH];
 	int buyer_id;

@@ -83,7 +83,7 @@ typedef enum DBRelease {
  * See {@link #db_fix_options(DBType,DBOptions)} for restrictions of the
  * types of databases.
  * @param DB_INT Uses int's for keys
- * @param DB_UINT Uses unsigned int's for keys
+ * @param DB_UINT Uses uint32's for keys
  * @param DB_STRING Uses strings for keys.
  * @param DB_ISTRING Uses case insensitive strings for keys.
  * @param DB_INT64 Uses int64's for keys
@@ -150,7 +150,7 @@ typedef enum DBOptions {
  */
 typedef union DBKey {
 	int i;
-	unsigned int ui;
+	uint32 ui;
 	const char *str;
 	int64 i64;
 	uint64 ui64;
@@ -158,8 +158,8 @@ typedef union DBKey {
 
 /**
  * Supported types of database data.
- * @param DB_DATA_INT Uses ints for data.
- * @param DB_DATA_UINT Uses unsigned ints for data.
+ * @param DB_DATA_INT Uses int's for data.
+ * @param DB_DATA_UINT Uses uint32's for data.
  * @param DB_DATA_PTR Uses void pointers for data.
  * @public
  * @see #DBData
@@ -176,7 +176,7 @@ typedef enum DBDataType {
  * @param type Type of data
  * @param u Union of available data types
  * @param u.i Data of int type
- * @param u.ui Data of unsigned int type
+ * @param u.ui Data of uint32 type
  * @param u.ptr Data of void* type
  * @param u.i64 Data of int64 type
  * @public
@@ -185,7 +185,7 @@ typedef struct DBData {
 	DBDataType type;
 	union {
 		int i;
-		unsigned int ui;
+		uint32 ui;
 		void *ptr;
 		int64 i64;
 	} u;
@@ -420,9 +420,9 @@ struct DBMap {
 	 * @param ... Extra arguments for match
 	 * @return The number of entries that matched
 	 * @protected
-	 * @see DBMap#vgetall(DBMap*,void **,unsigned int,DBMatcher,va_list)
+	 * @see DBMap#vgetall(DBMap*,void **,uint32,DBMatcher,va_list)
 	 */
-	unsigned int (*getall)(DBMap* self, DBData** buf, unsigned int max, DBMatcher match, ...);
+	uint32 (*getall)(DBMap* self, DBData** buf, uint32 max, DBMatcher match, ...);
 
 	/**
 	 * Get the data of the entries matched by <code>match</code>.
@@ -438,9 +438,9 @@ struct DBMap {
 	 * @param ... Extra arguments for match
 	 * @return The number of entries that matched
 	 * @protected
-	 * @see DBMap#getall(DBMap*,void **,unsigned int,DBMatcher,...)
+	 * @see DBMap#getall(DBMap*,void **,uint32,DBMatcher,...)
 	 */
-	unsigned int (*vgetall)(DBMap* self, DBData** buf, unsigned int max, DBMatcher match, va_list args);
+	uint32 (*vgetall)(DBMap* self, DBData** buf, uint32 max, DBMatcher match, va_list args);
 
 	/**
 	 * Just calls {@link DBMap#vensure}.
@@ -588,7 +588,7 @@ struct DBMap {
 	 * @return Size of the database
 	 * @protected
 	 */
-	unsigned int (*size)(DBMap* self);
+	uint32 (*size)(DBMap* self);
 
 	/**
 	 * Return the type of the database.
@@ -701,7 +701,7 @@ struct DBMap {
 
 // Database creation and destruction macros
 #define idb_alloc(opt)            db_alloc(__FILE__,__func__,__LINE__,DB_INT,(opt),sizeof(int))
-#define uidb_alloc(opt)           db_alloc(__FILE__,__func__,__LINE__,DB_UINT,(opt),sizeof(unsigned int))
+#define uidb_alloc(opt)           db_alloc(__FILE__,__func__,__LINE__,DB_UINT,(opt),sizeof(uint32))
 #define strdb_alloc(opt,maxlen)   db_alloc(__FILE__,__func__,__LINE__,DB_STRING,(opt),(maxlen))
 #define stridb_alloc(opt,maxlen)  db_alloc(__FILE__,__func__,__LINE__,DB_ISTRING,(opt),(maxlen))
 #define i64db_alloc(opt)          db_alloc(__FILE__,__func__,__LINE__,DB_INT64,(opt),sizeof(int64))
@@ -729,15 +729,15 @@ struct DBMap {
  *  db_custom_release  - Get the releaser that behaves as specified.         *
  *  db_alloc           - Allocate a new database.                            *
  *  db_i2key           - Manual cast from 'int' to 'DBKey'.                  *
- *  db_ui2key          - Manual cast from 'unsigned int' to 'DBKey'.         *
+ *  db_ui2key          - Manual cast from 'uint32' to 'DBKey'.               *
  *  db_str2key         - Manual cast from 'unsigned char *' to 'DBKey'.      *
  *  db_i642key         - Manual cast from 'int64' to 'DBKey'.                *
  *  db_ui642key        - Manual cast from 'uint64' to 'DBKey'.               *
  *  db_i2data          - Manual cast from 'int' to 'DBData'.                 *
- *  db_ui2data         - Manual cast from 'unsigned int' to 'DBData'.        *
+ *  db_ui2data         - Manual cast from 'uint32' to 'DBData'.              *
  *  db_ptr2data        - Manual cast from 'void*' to 'DBData'.               *
  *  db_data2i          - Gets 'int' value from 'DBData'.                     *
- *  db_data2ui         - Gets 'unsigned int' value from 'DBData'.            *
+ *  db_data2ui         - Gets 'uint32' value from 'DBData'.                  *
  *  db_data2ptr        - Gets 'void*' value from 'DBData'.                   *
  *  db_init            - Initializes the database system.                    *
  *  db_final           - Finalizes the database system.                      *
@@ -837,12 +837,12 @@ DBMap* db_alloc(const char *file, const char *func, int line, DBType type, DBOpt
 DBKey db_i2key(int key);
 
 /**
- * Manual cast from 'unsigned int' to the union DBKey.
+ * Manual cast from 'uint32' to the union DBKey.
  * @param key Key to be casted
  * @return The key as a DBKey union
  * @public
  */
-DBKey db_ui2key(unsigned int key);
+DBKey db_ui2key(uint32 key);
 
 /**
  * Manual cast from 'unsigned char *' to the union DBKey.
@@ -877,12 +877,12 @@ DBKey db_ui642key(uint64 key);
 DBData db_i2data(int data);
 
 /**
- * Manual cast from 'unsigned int' to the struct DBData.
+ * Manual cast from 'uint32' to the struct DBData.
  * @param data Data to be casted
  * @return The data as a DBData struct
  * @public
  */
-DBData db_ui2data(unsigned int data);
+DBData db_ui2data(uint32 data);
 
 /**
  * Manual cast from 'void *' to the struct DBData.
@@ -910,13 +910,13 @@ DBData db_i642data(int64 data);
 int db_data2i(DBData *data);
 
 /**
- * Gets unsigned int type data from struct DBData.
- * If data is not unsigned int type, returns 0.
+ * Gets uint32 type data from struct DBData.
+ * If data is not uint32 type, returns 0.
  * @param data Data
- * @return Unsigned int value of the data.
+ * @return uint32 value of the data.
  * @public
  */
-unsigned int db_data2ui(DBData *data);
+uint32 db_data2ui(DBData *data);
 
 /**
  * Gets void* type data from struct DBData.

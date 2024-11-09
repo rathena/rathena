@@ -754,7 +754,7 @@ static void delete_session(int fd)
 	}
 }
 
-int _realloc_fifo( int fd, unsigned int rfifo_size, unsigned int wfifo_size, const char* file, int line, const char* func ){
+int _realloc_fifo( int fd, uint32 rfifo_size, uint32 wfifo_size, const char* file, int line, const char* func ){
 	if( !session_isValid(fd) )
 		return 0;
 
@@ -831,7 +831,7 @@ int WFIFOSET(int fd, size_t len)
 	if(s->wdata_size+len > s->max_wdata)
 	{	// actually there was a buffer overflow already
 		uint32 ip = s->client_addr;
-		ShowFatalError("WFIFOSET: Write Buffer Overflow. Connection %d (%d.%d.%d.%d) has written %u bytes on a %u/%u bytes buffer.\n", fd, CONVIP(ip), (unsigned int)len, (unsigned int)s->wdata_size, (unsigned int)s->max_wdata);
+		ShowFatalError("WFIFOSET: Write Buffer Overflow. Connection %d (%d.%d.%d.%d) has written %u bytes on a %u/%u bytes buffer.\n", fd, CONVIP(ip), (uint32)len, (uint32)s->wdata_size, (uint32)s->max_wdata);
 		ShowDebug("Likely command that caused it: 0x%x\n", (*(uint16*)(s->wdata + s->wdata_size)));
 		// no other chance, make a better fifo model
 		exit(EXIT_FAILURE);
@@ -841,7 +841,7 @@ int WFIFOSET(int fd, size_t len)
 	{
 		// dynamic packets allow up to UINT16_MAX bytes (<packet_id>.W <packet_len>.W ...)
 		// all known fixed-size packets are within this limit, so use the same limit
-		ShowFatalError("WFIFOSET: Packet 0x%x is too big. (len=%u, max=%u)\n", (*(uint16*)(s->wdata + s->wdata_size)), (unsigned int)len, 0xFFFF);
+		ShowFatalError("WFIFOSET: Packet 0x%x is too big. (len=%u, max=%u)\n", (*(uint16*)(s->wdata + s->wdata_size)), (uint32)len, 0xFFFF);
 		exit(EXIT_FAILURE);
 	}
 	else if( len == 0 )
@@ -1255,8 +1255,8 @@ int access_ipmask(const char* str, AccessControl* acc)
 		ip   = 0;
 		mask = 0;
 	} else {
-		unsigned int a[4];
-		unsigned int m[4];
+		uint32 a[4];
+		uint32 m[4];
 		int n;
 		if( ((n=sscanf(str,"%3u.%3u.%3u.%3u/%3u.%3u.%3u.%3u",a,a+1,a+2,a+3,m,m+1,m+2,m+3)) != 8 && // not an ip + standard mask
 				(n=sscanf(str,"%3u.%3u.%3u.%3u/%3u",a,a+1,a+2,a+3,m)) != 5 && // not an ip + bit mask
@@ -1532,7 +1532,7 @@ int socket_getips(uint32* ips, int max)
 void socket_init(void)
 {
 	const char *SOCKET_CONF_FILENAME = "conf/packet_athena.conf";
-	unsigned int rlim_cur = MAXCONN;
+	uint32 rlim_cur = MAXCONN;
 
 #ifdef WIN32
 	{// Start up windows networking

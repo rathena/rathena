@@ -462,15 +462,16 @@ struct spawn_data {
 	signed short xs, ys;
 	unsigned short num; //Number of mobs using this structure
 	unsigned short active;//Number of mobs that are already spawned (for mob_remove_damaged: no)
-	unsigned int delay1, delay2; //Spawn delay (fixed base + random variance)
-	unsigned int level;
+	uint32 delay1, delay2; //Spawn delay (fixed base + random variance)
+	uint32 level;
 	struct {
-		unsigned int size : 2; //Holds if mob has to be tiny/large
+		uint32 size : 2; //Holds if mob has to be tiny/large
 		enum mob_ai ai; //Special ai for summoned monsters.
-		unsigned int dynamic : 1; //Whether this data is indexed by a map's dynamic mob list
-		unsigned int boss : 1; //0: Non-boss monster | 1: Boss monster
+		uint32 dynamic : 1; //Whether this data is indexed by a map's dynamic mob list
+		uint32 boss : 1; //0: Non-boss monster | 1: Boss monster
 	} state;
 	char name[NAME_LENGTH], eventname[EVENT_NAME_LENGTH]; //Name/event
+	char filepath[256];
 };
 
 struct flooritem_data {
@@ -694,7 +695,7 @@ enum e_skill_damage_type : uint8 {
 
 /// Struct for MF_SKILL_DAMAGE
 struct s_skill_damage {
-	unsigned int map; ///< Maps (used for skill_damage_db.txt)
+	uint32 map; ///< Maps (used for skill_damage_db.txt)
 	uint16 caster; ///< Caster type
 	int rate[SKILLDMG_MAX]; ///< Used for when all skills are adjusted
 };

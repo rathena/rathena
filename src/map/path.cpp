@@ -445,10 +445,10 @@ bool check_distance(int dx, int dy, int distance)
 #endif
 }
 
-unsigned int distance(int dx, int dy)
+uint32 distance(int dx, int dy)
 {
 #ifdef CIRCULAR_AREA
-	unsigned int min, max;
+	uint32 min, max;
 
 	if ( dx < 0 ) dx = -dx;
 	if ( dy < 0 ) dy = -dy;
