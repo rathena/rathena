@@ -12061,18 +12061,19 @@ void clif_parse_UseItem(int fd, map_session_data *sd)
 /// Request to equip an item
 /// 00a9 <index>.W <position>.W (CZ_REQ_WEAR_EQUIP).
 /// 0998 <index>.W <position>.L (CZ_REQ_WEAR_EQUIP_V5)
-void clif_parse_EquipItem(int fd,map_session_data *sd)
-{
-	int index;
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
+void clif_parse_EquipItem( int fd, map_session_data* sd ){
+	const PACKET_CZ_REQ_WEAR_EQUIP* p = reinterpret_cast<PACKET_CZ_REQ_WEAR_EQUIP*>( RFIFOP( fd, 0 ) );
 
 	if(pc_isdead(sd)) {
 		clif_clearunit_area( sd->bl, CLR_DEAD );
 		return;
 	}
-	index = RFIFOW(fd,info->pos[0])-2;
-	if (index < 0 || index >= MAX_INVENTORY)
-		return; //Out of bounds check.
+
+	uint16 index = server_index( p->index );
+
+	if( index >= MAX_INVENTORY ){
+		return;
+	}
 
 	if((sd->npc_id && !sd->npc_item_flag) || (sd->state.block_action & PCBLOCK_EQUIP)) {
 		clif_msg_color( sd, MSI_CAN_NOT_EQUIP_ITEM, color_table[COLOR_RED] );
@@ -12105,15 +12106,8 @@ void clif_parse_EquipItem(int fd,map_session_data *sd)
 	//Client doesn't send the position for ammo.
 	if(sd->inventory_data[index]->type == IT_AMMO)
 		pc_equipitem(sd,index,EQP_AMMO);
-	else {
-	int req_pos;
-
-#if PACKETVER  >= 20120925
-		req_pos = RFIFOL(fd,info->pos[1]);
-#else
-		req_pos = (int)RFIFOW(fd,info->pos[1]);
-#endif
-		pc_equipitem(sd,index,req_pos);
+	else{
+		pc_equipitem( sd, index, p->position );
 	}
 }
 

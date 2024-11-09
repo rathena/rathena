@@ -57,7 +57,7 @@
 	packet( storageListEquipType, -1 );
 	parseable_packet(0x00a7,8,clif_parse_UseItem,2,4);
 	packet( useItemAckType, sizeof( struct PACKET_ZC_USE_ITEM_ACK ) );
-	parseable_packet(0x00a9,6,clif_parse_EquipItem,2,4);
+	parseable_packet( HEADER_CZ_REQ_WEAR_EQUIP, sizeof( PACKET_CZ_REQ_WEAR_EQUIP ), clif_parse_EquipItem, 0 );
 	parseable_packet(0x00ab,4,clif_parse_UnequipItem,2);
 	packet(0x00ae,-1);
 	parseable_packet(0x00b2,3,clif_parse_Restart,2);
@@ -1710,7 +1710,6 @@
 	packet(0x0977,14); //Monster HP Bar
 	parseable_packet(0x0978,6,clif_parse_reqworldinfo,2);
 	packet(0x0979,50); //ackworldinfo
-	parseable_packet(0x0998,8,clif_parse_EquipItem,2,4); // CZ_REQ_WEAR_EQUIP_V5
 	packet(0x099b,8); //maptypeproperty2
 	// New Packets
 	packet(0x08ff,24); // ZC_EFST_SET_ENTER
