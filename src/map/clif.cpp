@@ -12062,7 +12062,7 @@ void clif_parse_UseItem(int fd, map_session_data *sd)
 /// 00a9 <index>.W <position>.W (CZ_REQ_WEAR_EQUIP).
 /// 0998 <index>.W <position>.L (CZ_REQ_WEAR_EQUIP_V5)
 void clif_parse_EquipItem( int fd, map_session_data* sd ){
-	PACKET_CZ_REQ_WEAR_EQUIP* p = reinterpret_cast<PACKET_CZ_REQ_WEAR_EQUIP*>( RFIFOP( fd, 0 ) );
+	const PACKET_CZ_REQ_WEAR_EQUIP* p = reinterpret_cast<PACKET_CZ_REQ_WEAR_EQUIP*>( RFIFOP( fd, 0 ) );
 
 	if(pc_isdead(sd)) {
 		clif_clearunit_area( sd->bl, CLR_DEAD );
