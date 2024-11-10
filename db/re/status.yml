@@ -9136,7 +9136,6 @@ Body:
     Icon: EFST_MYSTERY_POWDER
     DurationLookup: BO_MYSTERY_POWDER
     Flags:
-      BlEffect: true
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
