@@ -4834,10 +4834,6 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 			sd->special_state.no_magic_damage = 0;
 		if (sc->getSCE(SC_CLIMAX_DES_HU))
 			sd->indexed_bonus.magic_atk_ele[ELE_WIND] += 30;
-		if (sc->getSCE(SC_CLIMAX_EARTH))
-			sd->indexed_bonus.subele[ELE_EARTH] -= 100;
-		if (sc->getSCE(SC_CLIMAX_BLOOM))
-			sd->indexed_bonus.subele[ELE_FIRE] -= 100;
 		if (sc->getSCE(SC_CLIMAX_CRYIMP)) {
 			sd->indexed_bonus.subele[ELE_WATER] += 30;
 			sd->indexed_bonus.magic_atk_ele[ELE_WATER] += 30;
