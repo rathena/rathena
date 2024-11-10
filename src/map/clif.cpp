@@ -19828,70 +19828,59 @@ void clif_parse_client_version(int fd, map_session_data *sd) {
 /// Ranking list
 
 /// ranking pointlist  { <name>.24B <point>.L }*10
-void clif_sub_ranklist(unsigned char *buf,int idx,map_session_data* sd, enum e_rank rankingtype){
+void clif_sub_ranklist( RANKLIST& ranklist, e_rank rankingtype ){
 	struct fame_list* list;
-	int i, size = MAX_FAME_LIST;
+	size_t i;
+	size_t size = std::min<size_t>( ARRAYLENGTH( ranklist.names ), MAX_FAME_LIST );
 
-	switch(rankingtype) {
-		case RANK_BLACKSMITH:	list = smith_fame_list; break;
-		case RANK_ALCHEMIST:	list = chemist_fame_list; break;
-		case RANK_TAEKWON:		list = taekwon_fame_list; break;
-		// PK currently unsupported
-		case RANK_KILLER:		list = nullptr; size = 0; break;
+	switch( rankingtype ){
+		case RANK_BLACKSMITH:
+			list = smith_fame_list;
+			break;
+		case RANK_ALCHEMIST:
+			list = chemist_fame_list;
+			break;
+		case RANK_TAEKWON:
+			list = taekwon_fame_list;
+			break;
+		case RANK_KILLER:
+			// Currently not supported
+			list = nullptr;
+			size = 0;
+			break;
 		default:
 			ShowError( "clif_sub_ranklist: Unsupported ranking type '%d'. Please report this.\n", rankingtype );
 			return;
 	}
 
-	//Packet size limits this list to 10 elements. [Skotlex]
-	for (i = 0; i < min(10,size); i++) {
-		if (list[i].id > 0) {
-			const char* name;
-			if (strcmp(list[i].name, "-") == 0 &&
-				(name = map_charid2nick(list[i].id)) != nullptr)
-			{
-				safestrncpy(WBUFCP(buf,idx + NAME_LENGTH * i), name, NAME_LENGTH);
-			} else {
-				safestrncpy(WBUFCP(buf,idx + NAME_LENGTH * i), list[i].name, NAME_LENGTH);
-			}
-		} else {
-			safestrncpy(WBUFCP(buf, idx + NAME_LENGTH * i), "None", NAME_LENGTH);
+	for( i = 0; i < size; i++ ){
+		ranklist.points[i] = list[i].fame;
+
+		if( list[i].id == 0 ){
+			safestrncpy( ranklist.names[i], "None", sizeof( ranklist.names[0] ) );
+			continue;
 		}
-		WBUFL(buf, idx+NAME_LENGTH*10 + i * 4) = list[i].fame; //points
+
+		if( strcmp( list[i].name, "-" ) != 0 ){
+			safestrncpy( ranklist.names[i], list[i].name, sizeof( ranklist.names[0] ) );
+			continue;
+		}
+
+		const char* name = map_charid2nick( list[i].id );
+
+		if( name != nullptr ){
+			safestrncpy( ranklist.names[i], name, sizeof( ranklist.names[0] ) );
+		}else{
+			safestrncpy( ranklist.names[i], list[i].name, sizeof( ranklist.names[0] ) );
+		}
 	}
 
-	for(;i < 10; i++) { //In case the MAX is less than 10.
-		safestrncpy(WBUFCP(buf, idx + NAME_LENGTH * i), "Unavailable", NAME_LENGTH);
-		WBUFL(buf, idx+NAME_LENGTH*10 + i * 4) = 0;
+	size = ARRAYLENGTH( ranklist.names );
+
+	for( ; i < size; i++ ){
+		safestrncpy( ranklist.names[i], "Unavailable", sizeof( ranklist.names[0] ) );
+		ranklist.points[i] = 0;
 	}
-}
-
-/// Request for the blacksmith ranklist.
-/// /blacksmith command sends this packet to the server.
-/// 0217 (CZ_BLACKSMITH_RANK)
-void clif_parse_Blacksmith( int fd, map_session_data *sd ){
-	clif_ranklist(sd,RANK_BLACKSMITH);
-}
-
-/// Request for the alchemist ranklist.
-/// /alchemist command sends this packet to the server.
-/// 0218 (CZ_ALCHEMIST_RANK)
-void clif_parse_Alchemist( int fd, map_session_data *sd ){
-	clif_ranklist(sd,RANK_ALCHEMIST);
-}
-
-/// Request for the taekwon ranklist.
-/// /taekwon command sends this packet to the server.
-/// 0225 (CZ_TAEKWON_RANK)
-void clif_parse_Taekwon( int fd, map_session_data *sd ){
-	clif_ranklist(sd,RANK_TAEKWON);
-}
-
-/// Request for the killer ranklist.
-/// /pk command sends this packet to the server.
-/// 0237 (CZ_KILLER_RANK)
-void clif_parse_RankingPk( int fd, map_session_data *sd ){
-	clif_ranklist(sd,RANK_KILLER);
 }
 
 /// 0219 { <name>.24B }*10 { <point>.L }*10 (ZC_BLACKSMITH_RANK)
@@ -19899,108 +19888,265 @@ void clif_parse_RankingPk( int fd, map_session_data *sd ){
 /// 0226 { <name>.24B }*10 { <point>.L }*10 (ZC_TAEKWON_RANK)
 /// 0238 { <name>.24B }*10 { <point>.L }*10 (ZC_KILLER_RANK)
 /// 097d <RankingType>.W {<CharName>.24B <point>L}*10 <mypoint>L (ZC_ACK_RANKING)
-void clif_ranklist(map_session_data *sd, int16 rankingType) {
-	enum e_rank rank;
+/// 0af6 <RankingType>.W { <name>.24B }*10 { <point>.L }*10 <mypoint>L (ZC_ACK_RANKING2)
+void clif_ranklist( map_session_data& sd, e_rank rankingtype ){
+#if PACKETVER_MAIN_NUM >= 20190731 || PACKETVER_RE_NUM >= 20190703 || PACKETVER_ZERO_NUM >= 20190724
+	PACKET_ZC_ACK_RANKING2 p = {};
 
-#if PACKETVER < 20130710
-	unsigned char buf[MAX_FAME_LIST * sizeof(struct fame_list)+2];
-	short cmd;
+	p.packetType = HEADER_ZC_ACK_RANKING2;
+	p.type = rankingtype;
 
-	switch( rankingType ){
-		case RANK_BLACKSMITH:	cmd = 0x219; break;
-		case RANK_ALCHEMIST:	cmd = 0x21a; break;
-		case RANK_TAEKWON:		cmd = 0x226; break;
-		case RANK_KILLER:		cmd = 0x238; break;
+	struct fame_list* list;
+	size_t i;
+	size_t size = std::min<size_t>( ARRAYLENGTH( p.CIDs ), MAX_FAME_LIST );
+
+	switch( rankingtype ){
+		case RANK_BLACKSMITH:
+			list = smith_fame_list;
+			break;
+		case RANK_ALCHEMIST:
+			list = chemist_fame_list;
+			break;
+		case RANK_TAEKWON:
+			list = taekwon_fame_list;
+			break;
+		case RANK_KILLER:
+			// Currently not supported
+			list = nullptr;
+			size = 0;
+			break;
 		default:
-			ShowError( "clif_ranklist: Unsupported ranking type '%d'. Please report this.\n", rankingType );
+			ShowError( "clif_sub_ranklist: Unsupported ranking type '%d'. Please report this.\n", rankingtype );
 			return;
 	}
 
-	// Can be safely casted here, since we validated it before
-	rank = (enum e_rank)rankingType;
+	for( i = 0; i < size; i++ ){
+		p.CIDs[i] = list[i].id;
+		p.points[i] = list[i].fame;
+	}
 
-	WBUFW(buf,0) = cmd;
-	clif_sub_ranklist(buf,2,sd,rank);
+	size = ARRAYLENGTH( p.CIDs );
 
-	clif_send(buf, packet_len(cmd), &sd->bl, SELF);
+	for( ; i < size; i++ ){
+		p.CIDs[i] = 0;
+		p.points[i] = 0;
+	}
+
+	switch( sd.class_&MAPID_UPPERMASK ){
+		case MAPID_BLACKSMITH:
+		case MAPID_ALCHEMIST:
+		case MAPID_TAEKWON:
+			p.mypoints = sd.status.fame;
+			break;
+		default:
+			p.mypoints = 0;
+			break;			
+	}
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#elif PACKETVER_MAIN_NUM >= 20130605 || PACKETVER_RE_NUM >= 20130529 || defined(PACKETVER_ZERO)
+	PACKET_ZC_ACK_RANKING p = {};
+
+	p.packetType = HEADER_ZC_ACK_RANKING;
+	p.type = rankingtype;
+	clif_sub_ranklist( p.list, rankingtype );
+
+	switch( sd.class_&MAPID_UPPERMASK ){
+		case MAPID_BLACKSMITH:
+		case MAPID_ALCHEMIST:
+		case MAPID_TAEKWON:
+			p.mypoints = sd.status.fame;
+			break;
+		default:
+			p.mypoints = 0;
+			break;			
+	}
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 #else
-	unsigned char buf[MAX_FAME_LIST * sizeof(struct fame_list)+8];
-	int mypoint = 0;
+	switch( rankingtype ){
+		case RANK_BLACKSMITH: {
+#if PACKETVER >= 20041108
+			PACKET_ZC_BLACKSMITH_RANK p = {};
 
-	switch( rankingType ){
+			p.packetType = HEADER_ZC_BLACKSMITH_RANK;
+			clif_sub_ranklist( p.list, RANK_BLACKSMITH );
+
+			clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
+			} break;
+		case RANK_ALCHEMIST: {
+#if PACKETVER >= 20041108
+			PACKET_ZC_ALCHEMIST_RANK p = {};
+
+			p.packetType = HEADER_ZC_ALCHEMIST_RANK;
+			clif_sub_ranklist( p.list, RANK_ALCHEMIST );
+
+			clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
+			} break;
+		case RANK_TAEKWON: {
+#if PACKETVER >= 20050328
+			PACKET_ZC_TAEKWON_RANK p = {};
+
+			p.packetType = HEADER_ZC_TAEKWON_RANK;
+			clif_sub_ranklist( p.list, RANK_TAEKWON );
+
+			clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
+			} break;
+		case RANK_KILLER: {
+#if PACKETVER >= 20050328
+			PACKET_ZC_KILLER_RANK p = {};
+
+			p.packetType = HEADER_ZC_KILLER_RANK;
+			clif_sub_ranklist( p.list, RANK_KILLER );
+
+			clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
+			} break;
+		default:
+			ShowError( "clif_ranklist: Unsupported ranking type '%d'. Please report this.\n", rankingtype );
+			return;
+	}
+#endif
+}
+
+/// Request for the blacksmith ranklist.
+/// /blacksmith command sends this packet to the server.
+/// 0217 (CZ_BLACKSMITH_RANK)
+void clif_parse_ranklist_blacksmith( int fd, map_session_data* sd ){
+#if PACKETVER >= 20041108
+	const PACKET_CZ_BLACKSMITH_RANK* p = reinterpret_cast<PACKET_CZ_BLACKSMITH_RANK*>( RFIFOP( fd, 0 ) );
+
+	clif_ranklist( *sd, RANK_BLACKSMITH );
+#endif
+}
+
+/// Request for the alchemist ranklist.
+/// /alchemist command sends this packet to the server.
+/// 0218 (CZ_ALCHEMIST_RANK)
+void clif_parse_ranklist_alchemist( int fd, map_session_data* sd ){
+#if PACKETVER >= 20041108
+	const PACKET_CZ_ALCHEMIST_RANK* p = reinterpret_cast<PACKET_CZ_ALCHEMIST_RANK*>( RFIFOP( fd, 0 ) );
+
+	clif_ranklist( *sd, RANK_ALCHEMIST );
+#endif
+}
+
+/// Request for the taekwon ranklist.
+/// /taekwon command sends this packet to the server.
+/// 0225 (CZ_TAEKWON_RANK)
+void clif_parse_ranklist_taekwon( int fd, map_session_data* sd ){
+#if PACKETVER >= 20050328
+	const PACKET_CZ_TAEKWON_RANK* p = reinterpret_cast<PACKET_CZ_TAEKWON_RANK*>( RFIFOP( fd, 0 ) );
+
+	clif_ranklist( *sd, RANK_TAEKWON );
+#endif
+}
+
+/// Request for the killer ranklist.
+/// /pk command sends this packet to the server.
+/// 0237 (CZ_KILLER_RANK)
+void clif_parse_ranklist_killer( int fd, map_session_data* sd ){
+#if PACKETVER >= 20050530
+	const PACKET_CZ_KILLER_RANK* p = reinterpret_cast<PACKET_CZ_KILLER_RANK*>( RFIFOP( fd, 0 ) );
+
+	clif_ranklist( *sd, RANK_KILLER );
+#endif
+}
+
+///
+/// 097c <type>.W (CZ_REQ_RANKING)
+/// type
+///		0: /blacksmith
+///		1: /alchemist
+///		2: /taekwon
+///		3: /pk
+void clif_parse_ranklist( int fd, map_session_data* sd ){
+#if PACKETVER_MAIN_NUM >= 20120503 || PACKETVER_RE_NUM >= 20120502
+	const PACKET_CZ_REQ_RANKING* p = reinterpret_cast<PACKET_CZ_REQ_RANKING*>( RFIFOP( fd, 0 ) );
+
+	switch( p->type ){
 		case RANK_BLACKSMITH:
 		case RANK_ALCHEMIST:
 		case RANK_TAEKWON:
 		case RANK_KILLER:
 			break;
 		default:
-			ShowError( "clif_ranklist: Unsupported ranking type '%d'. Please report this.\n", rankingType );
 			return;
 	}
 
-	// Can be safely casted here, since we validated it before
-	rank = (enum e_rank)rankingType;
-
-	WBUFW(buf,0) = 0x97d;
-	WBUFW(buf,2) = rank;
-	clif_sub_ranklist(buf,4,sd,rank);
-
-	switch(sd->class_&MAPID_UPPERMASK){ //mypoint (checking if valid type)
-		case MAPID_BLACKSMITH:
-		case MAPID_ALCHEMIST:
-		case MAPID_TAEKWON:
-			mypoint = sd->status.fame;
-	}
-	WBUFL(buf,284) = mypoint; //mypoint
-	clif_send(buf, 288, &sd->bl, SELF);
+	clif_ranklist( *sd, static_cast<e_rank>( p->type ) );
 #endif
-}
-
-/*
- *  097c <type> (CZ_REQ_RANKING)
- * type
- *  0: /blacksmith
- *  1: /alchemist
- *  2: /taekwon
- *  3: /pk
- * */
-void clif_parse_ranklist(int fd,map_session_data *sd) {
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	int16 rankingtype = RFIFOW(fd,info->pos[0]); //type
-
-	clif_ranklist(sd,rankingtype);
 }
 
 /// Updates the fame rank points for the given ranking.
 /// 021b <points>.L <total points>.L (ZC_BLACKSMITH_POINT)
 /// 021c <points>.L <total points>.L (ZC_ALCHEMIST_POINT)
 /// 0224 <points>.L <total points>.L (ZC_TAEKWON_POINT)
+/// 0236 <points>.L <total points>.L (ZC_KILLER_POINT)
 /// 097e <RankingType>.W <point>.L <TotalPoint>.L (ZC_UPDATE_RANKING_POINT)
-void clif_update_rankingpoint(map_session_data &sd, int rankingtype, int point) {
-	int fd = sd.fd;
-#if PACKETVER < 20130710
-	short cmd;
+void clif_update_rankingpoint( map_session_data& sd, e_rank rankingtype, uint32 point ){
+#if PACKETVER_MAIN_NUM >= 20120503 || PACKETVER_RE_NUM >= 20120502
+	PACKET_ZC_UPDATE_RANKING_POINT p = {};
+
+	p.packetType = HEADER_ZC_UPDATE_RANKING_POINT;
+	p.type = rankingtype;
+	p.points = point;
+	p.points_total = sd.status.fame;
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#else
 	switch(rankingtype){
-		case RANK_BLACKSMITH:	cmd = 0x21b; break;
-		case RANK_ALCHEMIST:	cmd = 0x21c; break;
-		case RANK_TAEKWON:		cmd = 0x224; break;
+		case RANK_BLACKSMITH: {
+#if PACKETVER >= 20041108
+			PACKET_ZC_BLACKSMITH_POINT p = {};
+
+			p.packetType = HEADER_ZC_BLACKSMITH_POINT;
+			p.points = point;
+			p.points_total = sd.status.fame;
+
+			clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
+			} break;
+		case RANK_ALCHEMIST: {
+#if PACKETVER >= 20041108
+			PACKET_ZC_ALCHEMIST_POINT p = {};
+
+			p.packetType = HEADER_ZC_ALCHEMIST_POINT;
+			p.points = point;
+			p.points_total = sd.status.fame;
+
+			clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
+			} break;
+		case RANK_TAEKWON: {
+#if PACKETVER >= 20050328
+			PACKET_ZC_TAEKWON_POINT p = {};
+
+			p.packetType = HEADER_ZC_TAEKWON_POINT;
+			p.points = point;
+			p.points_total = sd.status.fame;
+
+			clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
+			} break;
+		case RANK_KILLER: {
+#if PACKETVER >= 20050530
+			PACKET_ZC_KILLER_POINT p = {};
+
+			p.packetType = HEADER_ZC_KILLER_POINT;
+			p.points = point;
+			p.points_total = sd.status.fame;
+
+			clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
+			} break;
 		default:
 			ShowError( "clif_update_rankingpoint: Unsupported ranking type '%d'. Please report this.\n", rankingtype );
 			return;
 	}
-
-	WFIFOHEAD(fd,packet_len(cmd));
-	WFIFOW(fd,0) = cmd;
-	WFIFOL(fd,2) = point;
-	WFIFOL(fd,6) = sd.status.fame;
-	WFIFOSET(fd, packet_len(cmd));
-#else
-	WFIFOHEAD(fd,packet_len(0x97e));
-	WFIFOW(fd,0) = 0x97e;
-	WFIFOW(fd,2) = rankingtype;
-	WFIFOL(fd,4) = point;
-	WFIFOL(fd,8) = sd.status.fame;
-	WFIFOSET(fd,packet_len(0x97e));
 #endif
 }
 
