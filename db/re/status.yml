@@ -9133,3 +9133,11 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+  - Status: Mystery_Powder
+    Icon: EFST_MYSTERY_POWDER
+    DurationLookup: BO_MYSTERY_POWDER
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true

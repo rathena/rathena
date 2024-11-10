@@ -43267,6 +43267,75 @@ Body:
         - Level: 5
           Amount: 82
       State: Mado
+  - Id: 6509
+    Name: BO_MYSTERY_POWDER
+    Description: Mystery Powder
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 3
+    Hit: Multi_Hit
+    HitCount: -5
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
+    Duration1: 60000
+    AfterCastActDelay: 500
+    Cooldown: 1500
+    Requires:
+      SpCost: 82
+    Status: Mystery_Powder
+  - Id: 6510
+    Name: BO_DUST_EXPLOSION
+    Description: Dust Explosion
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 3
+    Hit: Multi_Hit
+    HitCount: 5
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
+    GiveAp: 2
+    AfterCastActDelay: 500
+    Cooldown: 500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 64
+        - Level: 2
+          Amount: 67
+        - Level: 3
+          Amount: 70
+        - Level: 4
+          Amount: 73
+        - Level: 5
+          Amount: 76
+      Status:
+        Mystery_Powder: true
   - Id: 6511
     Name: SHC_CROSS_SLASH
     Description: Cross Slash

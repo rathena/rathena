@@ -6216,6 +6216,18 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				skillratio += 150;
 			RE_LVL_DMOD(100);
 			break;
+		case BO_MYSTERY_POWDER:
+			skillratio += -100 + 1500 + 4000 * skill_lv;
+			skillratio += 5 * sstatus->pow;	// !TODO: check POW ratio
+			RE_LVL_DMOD(100);
+			break;
+		case BO_DUST_EXPLOSION:
+			skillratio += -100 + 450 + 600 * skill_lv;
+			skillratio += 5 * sstatus->pow;	// !TODO: check POW ratio
+			if (sc && sc->getSCE(SC_RESEARCHREPORT))
+				skillratio += 200 * skill_lv;
+			RE_LVL_DMOD(100);
+			break;
 		case TR_ROSEBLOSSOM:
 			skillratio += -100 + 200 + 2000 * skill_lv;
 
