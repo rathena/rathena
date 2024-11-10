@@ -78222,8 +78222,10 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
-#   Script: |
-#     /* TODO */
+    Script: |
+      if(strcharinfo(3) == "for_dun01"){
+        warp strcharinfo(3),0,0;
+      }
   - Id: 102796
     AegisName: Forgotten_Crystal_2
     Name: Crystal of Forgotten Time (Area 2)
@@ -78236,8 +78238,10 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
-#   Script: |
-#     /* TODO */
+    Script: |
+      if(strcharinfo(3) == "for_dun02"){
+        warp strcharinfo(3),0,0;
+      }
   - Id: 102797
     AegisName: Super_Sonic_pack
     Name: Super Sonic Package
