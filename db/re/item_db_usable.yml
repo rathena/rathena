@@ -2422,7 +2422,7 @@ Body:
       NoAuction: true
     Script: |
       specialeffect2 EF_POTION_BERSERK;
-      sc_start SC_LIMIT_POWER_BOOSTER,1800000,30;
+      sc_start4 SC_LIMIT_POWER_BOOSTER,1800000,30,1,5,0;
   - Id: 9897
     AegisName: E_Glittering_Doll_B
     Name: Shiny Doll Button
@@ -9024,7 +9024,7 @@ Body:
     Weight: 80
     Script: |
       specialeffect2 EF_STEAL;
-      sc_start SC_ACARAJE,1200000,0;
+      sc_start2 SC_ACARAJE,1200000,10,5;
   - Id: 12376
     AegisName: Mysterious_Can2
     Name: Mysterious Can2
@@ -36822,7 +36822,7 @@ Body:
       NoAuction: true
     Script: |
       specialeffect2 EF_POTION_BERSERK;
-      sc_start SC_LIMIT_POWER_BOOSTER,1800000,30;
+      sc_start4 SC_LIMIT_POWER_BOOSTER,1800000,30,1,5,0;
   - Id: 14780
     AegisName: Pump_Of_Spirit_Scroll
     Name: Soul Plunger Scroll
@@ -64434,7 +64434,7 @@ Body:
       BuyingStore: true
     Script: |
       specialeffect2 EF_POTION_BERSERK;
-      sc_start SC_LIMIT_POWER_BOOSTER,1800000,30;
+      sc_start4 SC_LIMIT_POWER_BOOSTER,1800000,30,1,5,0;
   - Id: 23606
     AegisName: Power_Drink
     Name: Power Drink
@@ -64889,7 +64889,7 @@ Body:
       NoAuction: true
     Script: |
       specialeffect2 EF_POTION_BERSERK;
-      sc_start SC_LIMIT_POWER_BOOSTER,1800000,30;
+      sc_start4 SC_LIMIT_POWER_BOOSTER,1800000,30,1,5,0;
   - Id: 23727
     AegisName: E_Unlimited_Drink
     Name: "[Event] Unlimited Drink"
@@ -66048,7 +66048,7 @@ Body:
       NoAuction: true
     Script: |
       specialeffect2 EF_POTION_BERSERK;
-      sc_start SC_LIMIT_POWER_BOOSTER,1800000,30;
+      sc_start4 SC_LIMIT_POWER_BOOSTER,1800000,30,1,5,0;
   - Id: 23899
     AegisName: Comp_Almighty
     Name: "[Not For Sale] Almighty"
@@ -66436,7 +66436,7 @@ Body:
       Sitting: true
     Script: |
       specialeffect2 EF_POTION_BERSERK;
-      sc_start SC_LIMIT_POWER_BOOSTER,3600000,30;
+      sc_start4 SC_LIMIT_POWER_BOOSTER,3600000,30,1,5,0;
       sc_start SC_SPEEDUP0,600000,25;
   - Id: 100008
     AegisName: G_Infinity_Drink
@@ -70780,7 +70780,7 @@ Body:
       sc_start SC_HITFOOD,3600000,30;
       sc_start SC_ATKPOTION,3600000,20;
       sc_start SC_MATKPOTION,3600000,20;
-      sc_start SC_LIMIT_POWER_BOOSTER,3600000,30;
+      sc_start4 SC_LIMIT_POWER_BOOSTER,3600000,30,1,5,0;
       sc_start SC_SPEEDUP0,3600000,25;
   - Id: 100908
     AegisName: S_M_Piercing_Box
@@ -76767,7 +76767,7 @@ Body:
     Script: |
       specialeffect2 EF_POTION_BERSERK;
       sc_start SC_M_DEFSCROLL,3600000,0;
-      sc_start SC_LIMIT_POWER_BOOSTER,3600000,30;
+      sc_start4 SC_LIMIT_POWER_BOOSTER,3600000,30,1,5,0;
       sc_start SC_INFINITY_DRINK,3600000,0;
       sc_start SC_SPEEDUP0,600000,25;
   - Id: 102129
