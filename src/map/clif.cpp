@@ -4670,27 +4670,19 @@ void clif_addchat( chat_data& cd, map_session_data& sd ){
 }
 
 
-/// Announce the new owner (ZC_ROLE_CHANGE).
-/// 00e1 <role>.L <nick>.24B
+/// Announce the new owner.
+/// 00e1 <role>.L <nick>.24B (ZC_ROLE_CHANGE)
 /// role:
 ///     0 = owner (menu)
 ///     1 = normal
-void clif_changechatowner(struct chat_data* cd, map_session_data* sd)
-{
-	unsigned char buf[64];
+void clif_chat_role( chat_data& cd, map_session_data& sd ){
+	PACKET_ZC_ROLE_CHANGE p = {};
 
-	nullpo_retv(sd);
-	nullpo_retv(cd);
+	p.packetType = HEADER_ZC_ROLE_CHANGE;
+	p.flag = cd.usersd[0] != &sd;
+	safestrncpy( p.name, sd.status.name, sizeof( p.name ) );
 
-	WBUFW(buf, 0) = 0xe1;
-	WBUFL(buf, 2) = 1;
-	safestrncpy(WBUFCP(buf,6),cd->usersd[0]->status.name,NAME_LENGTH);
-
-	WBUFW(buf,30) = 0xe1;
-	WBUFL(buf,32) = 0;
-	safestrncpy(WBUFCP(buf,36),sd->status.name,NAME_LENGTH);
-
-	clif_send(buf,packet_len(0xe1)*2,&sd->bl,CHAT);
+	clif_send( &p, sizeof( p ), &sd.bl, CHAT );
 }
 
 
