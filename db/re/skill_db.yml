@@ -43306,7 +43306,7 @@ Body:
       Splash: true
     Range: 3
     Hit: Multi_Hit
-    HitCount: -5
+    HitCount: 5
     Element: Weapon
     SplashArea:
       - Level: 1
