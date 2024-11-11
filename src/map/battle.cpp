@@ -614,12 +614,6 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 #else
 					damage += (int64)(damage * 50 / 100);
 #endif
-				if (tsc->getSCE(SC_MISTYFROST))
-#ifdef RENEWAL
-					ratio += 15;
-#else
-					damage += (int64)(damage * 15 / 100);
-#endif
 				break;
 			case ELE_EARTH:
 				if (tsc->getSCE(SC_WIND_INSIGNIA))
@@ -692,6 +686,10 @@ static int32 battle_calc_cardfix_debuff( status_change& tsc, int32 rh_ele ){
 		case ELE_EARTH:
 			if (tsc.getSCE(SC_CLIMAX_EARTH))
 				ele_fix += 100;
+			break;
+		case ELE_WATER:
+			if (tsc.getSCE(SC_MISTYFROST))
+				ele_fix += 15;
 			break;
 	}
 	return ele_fix;
