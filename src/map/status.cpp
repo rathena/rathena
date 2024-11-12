@@ -16048,8 +16048,8 @@ void StatusDatabase::loadingFinished(){
 		auto& status = entry.second;
 
 		if( status->script != nullptr ){
-			// Maybe some have already been set in the database, but just to be sure, trigger recalculation for everything battle relevant
-			status->calc_flag |= this->SCB_BATTLE;
+			// Trigger recalculation for everything for now
+			status->calc_flag |= this->SCB_ALL;
 		}
 
 		if (status->type == SC_HALLUCINATION && !battle_config.display_hallucination) // Disable Hallucination.

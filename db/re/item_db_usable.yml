@@ -14695,7 +14695,7 @@ Body:
       NoAuction: true
     Script: |
       specialeffect2 EF_BASH3D;
-      sc_start SC_ALMIGHTY,1800000,10;
+      sc_start SC_ALMIGHTY,1800000,30;
       sc_start SC_FOOD_STR_CASH,1800000,10;
       sc_start SC_FOOD_AGI_CASH,1800000,10;
       sc_start SC_FOOD_INT_CASH,1800000,10;
@@ -36189,7 +36189,7 @@ Body:
       NoAuction: true
     Script: |
       specialeffect2 EF_BASH3D;
-      sc_start SC_ALMIGHTY,1800000,10;
+      sc_start SC_ALMIGHTY,1800000,30;
   - Id: 14663
     AegisName: Sealed_D_Lord_Scroll
     Name: Sealed Dark Lord Scroll
@@ -58659,7 +58659,7 @@ Body:
       BuyingStore: true
     Script: |
       specialeffect2 EF_BASH3D;
-      sc_start SC_ALMIGHTY,3600000,10;
+      sc_start SC_ALMIGHTY,3600000,30;
       sc_start SC_FOOD_STR_CASH,3600000,10;
       sc_start SC_FOOD_AGI_CASH,3600000,10;
       sc_start SC_FOOD_INT_CASH,3600000,10;
@@ -64424,7 +64424,7 @@ Body:
       BuyingStore: true
     Script: |
       specialeffect2 EF_BASH3D;
-      sc_start SC_ALMIGHTY,1800000,10;
+      sc_start SC_ALMIGHTY,1800000,30;
   - Id: 23605
     AegisName: Challenge_Drink
     Name: Challenger Drink
@@ -64875,7 +64875,7 @@ Body:
       NoAuction: true
     Script: |
       specialeffect2 EF_BASH3D;
-      sc_start SC_ALMIGHTY,1800000,10;
+      sc_start SC_ALMIGHTY,1800000,30;
   - Id: 23726
     AegisName: E_Challenge_Drink
     Name: "[Event] Challenger Drink"
@@ -66064,7 +66064,7 @@ Body:
       NoAuction: true
     Script: |
       specialeffect2 EF_BASH3D;
-      sc_start SC_ALMIGHTY,1800000,10;
+      sc_start SC_ALMIGHTY,1800000,30;
       sc_start SC_FOOD_STR_CASH,1800000,10;
       sc_start SC_FOOD_AGI_CASH,1800000,10;
       sc_start SC_FOOD_INT_CASH,1800000,10;
@@ -70768,7 +70768,7 @@ Body:
       sc_start2 SC_M_LIFEPOTION,3600000,-4,3;
       sc_start2 SC_M_DEFSCROLL,3600000,500,200;
       sc_start2 SC_S_MANAPOTION,3600000,-5,5;
-      sc_start SC_ALMIGHTY,3600000,10;
+      sc_start SC_ALMIGHTY,3600000,30;
       sc_start SC_INFINITY_DRINK,3600000,0;
       sc_start SC_FOOD_STR_CASH,3600000,20;
       sc_start SC_FOOD_AGI_CASH,3600000,20;
