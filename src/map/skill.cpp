@@ -16067,7 +16067,9 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 
 	switch (sg->unit_id) {
 		// Units that deals simple attack
-		case UNT_GRAVITATION:
+#ifndef RENEWAL
+ 		case UNT_GRAVITATION:
+#endif
 		case UNT_EARTHSTRAIN:
 		case UNT_FIREWALK:
 		case UNT_ELECTRICWALK:
@@ -16095,6 +16097,9 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 		case UNT_FLAMETRAP:
 			skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 			break;
+#ifdef RENEWAL
+ 		case UNT_GRAVITATION:
+#endif
 		case UNT_GROUND_GRAVITATION:
 		case UNT_JACK_FROST_NOVA:
 			skill_attack( skill_get_type(sg->skill_id), ss, ss, bl, sg->skill_id, sg->skill_lv, tick, 0 );

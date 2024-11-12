@@ -7905,7 +7905,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	switch(skill_id) {
 		case WL_HELLINFERNO:
 			if (mflag & 2) { // ELE_DARK
-				ad.div_ = 3;
+				ad.div_ = -3;
 			}
 			break;
 		case NPC_PSYCHIC_WAVE:
@@ -8255,7 +8255,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += 300 + 40 * skill_lv;
 						break;
 					case WL_SOULEXPANSION:
-						skillratio += -100 + 1000 + skill_lv * 200 + sstatus->int_ / 6; // !TODO: Confirm INT bonus
+						skillratio += -100 + 1000 + skill_lv * 200;
+						skillratio += sstatus->int_;
 						RE_LVL_DMOD(100);
 						break;
 					case WL_FROSTMISTY:
@@ -8289,7 +8290,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case WL_HELLINFERNO:
 						skillratio += -100 + 400 * skill_lv;
 						if (mflag & 2) // ELE_DARK
-							skillratio += 200;
+							skillratio += 200 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
 					case WL_COMET:
