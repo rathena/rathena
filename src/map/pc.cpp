@@ -10575,8 +10575,6 @@ int pc_itemheal(map_session_data *sd, t_itemid itemid, int hp, int sp)
 			else if (itemid == ITEMID_COOKIE_BAT)
 				bonus += sd->sc.getSCE(SC_MTF_PUMPKIN)->val2;
 		}
-		if (sd->sc.getSCE(SC_VITALIZE_POTION))
-			bonus += bonus * 10 / 100;
 
 		tmp = hp * bonus / 100; // Overflow check
 		if (bonus != 100 && tmp > hp)
