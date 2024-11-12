@@ -59,7 +59,7 @@ struct chan_banentry {
 	uint32 char_id;
 	char char_name[NAME_LENGTH];
 };
-extern chan_banentry chan_banentry;
+extern struct chan_banentry chan_banentry;
 
 struct Channel_Config {
 	unsigned long *colors;		///< List of available colors
