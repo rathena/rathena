@@ -3998,6 +3998,7 @@ Body:
       BuyingStore: true
     Script: |
       specialeffect2 EF_GUARD;
+      heal 1000,0;
       sc_start SC_EP16_DEF,180000,10;
   - Id: 11601
     AegisName: Tasty_Anchovy

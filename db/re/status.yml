@@ -756,7 +756,7 @@ Body:
       OverlapIgnoreLevel: true
       RemoveOnHermode: true
     Script: |
-      bonus bBaseAtk, getstatus(SC_ATKPOTION, 1);
+      bonus bBaseAtk, getstatus(SC_ATKPOTION, 1);  /* TODO: hidden in status window */
   - Status: Matkpotion
     Icon: EFST_PLUSMAGICPOWER
     CalcFlags:
@@ -9067,7 +9067,6 @@ Body:
       Silence: true
       Poison: true
     Script: |
-      heal 1000,0;
       bonus2 bSubRace2,RC2_EP16_DEF, getstatus(SC_EP16_DEF, 1);
   - Status: Str_Scroll
     Icon: EFST_STR_SCROLL
@@ -9138,13 +9137,15 @@ Body:
       bonus bMatkRate, .@val1;
   - Status: Contents_5
     Icon: EFST_CONTENTS_5
-    CalcFlags:
-      All: true
     Flags:
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_CONTENTS_5, 1);
+      bonus bVariableCastrate, -.@val1;
+      bonus bAspdRate, .@val1;
   - Status: Contents_6
     Icon: EFST_CONTENTS_6
     Flags:
