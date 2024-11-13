@@ -1832,14 +1832,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 						if (sce = tsc->getSCE(SC_SPL_DEF))
 							damage -= damage * sce->val1 / 100;
 						break;
-					case RC2_OGH_ATK_DEF:
-						if (tsc->getSCE(SC_GLASTHEIM_DEF))
-							return 0;
-						break;
-					case RC2_OGH_HIDDEN:
-						if (sce = tsc->getSCE(SC_GLASTHEIM_HIDDEN))
-							damage -= damage * sce->val1 / 100;
-						break;
 					case RC2_BIO5_ACOLYTE_MERCHANT:
 						if (sce = tsc->getSCE(SC_LHZ_DUN_N1))
 							damage -= damage * sce->val2 / 100;
@@ -1986,10 +1978,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 						case RC2_SPLENDIDE:
 							if (sce = sc->getSCE(SC_SPL_ATK))
 								damage += damage * sce->val1 / 100;
-							break;
-						case RC2_OGH_ATK_DEF:
-							if (sc->getSCE(SC_GLASTHEIM_ATK))
-								damage *= 2;
 							break;
 						case RC2_BIO5_SWORDMAN_THIEF:
 							if (sce = sc->getSCE(SC_LHZ_DUN_N1))
