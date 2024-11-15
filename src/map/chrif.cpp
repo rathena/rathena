@@ -284,7 +284,7 @@ int chrif_save(map_session_data *sd, int flag) {
 	if ( (flag&CSAVE_QUITTING) && sd->state.active) { //Store player data which is quitting
 		if (chrif_isconnected()) {
 			chrif_save_scdata(sd);
-			chrif_skillcooldown_save(sd);
+			chrif_skillcooldown_save(*sd);
 		}
 		if ( !(flag&CSAVE_AUTOTRADE) && !chrif_auth_logout(sd, (flag&CSAVE_QUIT) ? ST_LOGOUT : ST_MAPCHANGE) )
 			ShowError("chrif_save: Failed to set up player %d:%d for proper quitting!\n", sd->status.account_id, sd->status.char_id);
@@ -1318,45 +1318,6 @@ int chrif_save_scdata(map_session_data *sd) { //parses the sc_data of the player
 	return 0;
 }
 
-int chrif_skillcooldown_save(map_session_data *sd) {
-	int i, count = 0;
-	struct skill_cooldown_data data;
-	t_tick tick;
-	const struct TimerData *timer;
-
-	chrif_check(-1);
-	tick = gettick();
-
-	WFIFOHEAD(char_fd, 14 + MAX_SKILLCOOLDOWN * sizeof (struct skill_cooldown_data));
-	WFIFOW(char_fd, 0) = 0x2b15;
-	WFIFOL(char_fd, 4) = sd->status.account_id;
-	WFIFOL(char_fd, 8) = sd->status.char_id;
-	for (i = 0; i < MAX_SKILLCOOLDOWN; i++) {
-		if (!sd->scd[i])
-			continue;
-
-		if (battle_config.guild_skill_relog_type == 1 && SKILL_CHK_GUILD(sd->scd[i]->skill_id))
-			continue;
-
-		timer = get_timer(sd->scd[i]->timer);
-		if (timer == nullptr || timer->func != skill_blockpc_end || DIFF_TICK(timer->tick, tick) < 0)
-			continue;
-
-		data.tick = DIFF_TICK(timer->tick, tick);
-		data.skill_id = sd->scd[i]->skill_id;
-		memcpy(WFIFOP(char_fd, 14 + count * sizeof (struct skill_cooldown_data)), &data, sizeof (struct skill_cooldown_data));
-		count++;
-	}
-	if (count == 0)
-		return 0;
-
-	WFIFOW(char_fd, 12) = count;
-	WFIFOW( char_fd, 2 ) = static_cast<int16>( 14 + count * sizeof( struct skill_cooldown_data ) );
-	WFIFOSET(char_fd, WFIFOW(char_fd, 2));
-
-	return 0;
-}
-
 //Retrieve and load sc_data for a player. [Skotlex]
 int chrif_load_scdata(int fd) {
 
@@ -1392,29 +1353,77 @@ int chrif_load_scdata(int fd) {
 	return 0;
 }
 
-//Retrieve and load skillcooldown for a player
+/**
+ * Save player cooldown data.
+ * @param sd: Player object
+ * @return -1 on failure or 0 otherwise
+ */
+int chrif_skillcooldown_save(map_session_data &sd) {
+	chrif_check(-1);
 
+	if (sd.scd.empty())
+		return 0;
+
+	t_tick tick = gettick();
+
+	WFIFOHEAD(char_fd, 14 + MAX_SKILLCOOLDOWN * sizeof (s_skill_cooldown_data));
+	WFIFOW(char_fd, 0) = 0x2b15;
+	WFIFOL(char_fd, 4) = sd.status.account_id;
+	WFIFOL(char_fd, 8) = sd.status.char_id;
+
+	int32 count = 0;
+
+	for (auto entry : sd.scd) {
+		if (battle_config.guild_skill_relog_type == 1 && SKILL_CHK_GUILD(entry.first))
+			continue;
+
+		const TimerData *timer = get_timer(entry.second);
+
+		if (timer == nullptr || timer->func != skill_blockpc_end || DIFF_TICK(timer->tick, tick) < 0)
+			continue;
+
+		s_skill_cooldown_data data = {};
+
+		data.tick = DIFF_TICK(timer->tick, tick);
+		data.skill_id = entry.first;
+		memcpy(WFIFOP(char_fd, 14 + count * sizeof (s_skill_cooldown_data)), &data, sizeof (s_skill_cooldown_data));
+		count++;
+	}
+
+	if (count == 0)
+		return 0;
+
+	WFIFOW(char_fd, 12) = count;
+	WFIFOW( char_fd, 2 ) = static_cast<int16>( 14 + count * sizeof( s_skill_cooldown_data ) );
+	WFIFOSET(char_fd, WFIFOW(char_fd, 2));
+
+	return 0;
+}
+
+/**
+ * Retrieve and load skillcooldown for a player.
+ * @param fd
+ * @return -1 on failure or 0 otherwise
+ */
 int chrif_skillcooldown_load(int fd) {
-	map_session_data *sd;
-	int aid, cid, i, count;
+	uint32 aid = RFIFOL(fd, 4);
+	map_session_data *sd = map_id2sd(aid);
 
-	aid = RFIFOL(fd, 4);
-	cid = RFIFOL(fd, 8);
-
-	sd = map_id2sd(aid);
-	if (!sd) {
+	// Player not found
+	if (sd == nullptr) {
 		ShowError("chrif_skillcooldown_load: Player of AID %d not found!\n", aid);
 		return -1;
 	}
-	if (sd->status.char_id != cid) {
-		ShowError("chrif_skillcooldown_load: Receiving data for account %d, char id does not matches (%d != %d)!\n", aid, sd->status.char_id, cid);
-		return -1;
+
+	uint32 cid = RFIFOL(fd, 8);
+	int32 count = RFIFOW(fd, 12); //sc_count
+
+	for (int32 i = 0; i < count; i++) {
+		s_skill_cooldown_data *data = (s_skill_cooldown_data*) RFIFOP(fd, 14 + i * sizeof (s_skill_cooldown_data));
+
+		skill_blockpc_start(*sd, data->skill_id, data->tick);
 	}
-	count = RFIFOW(fd, 12); //sc_count
-	for (i = 0; i < count; i++) {
-		struct skill_cooldown_data *data = (struct skill_cooldown_data*) RFIFOP(fd, 14 + i * sizeof (struct skill_cooldown_data));
-			skill_blockpc_start(sd, data->skill_id, data->tick);
-	}
+
 	return 0;
 }
 

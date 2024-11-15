@@ -277,8 +277,7 @@ int hom_vaporize(map_session_data *sd, int flag)
 	hom_hungry_timer_delete(hd);
 	hd->homunculus.vaporize = flag ? flag : HOM_ST_REST;
 	if (battle_config.hom_delay_reset_vaporize) {
-		hd->blockskill.clear();
-		hd->blockskill.shrink_to_fit();
+		skill_blockhomun_clear(*hd);
 	}
 	status_change_clear(&hd->bl, 1);
 	clif_hominfo(sd, sd->hd, 0);
@@ -816,6 +815,31 @@ void hom_save(struct homun_data *hd)
 	//calculation on login)
 	hd->homunculus.hp = hd->battle_status.hp;
 	hd->homunculus.sp = hd->battle_status.sp;
+
+	// Clear skill cooldown array.
+	for (uint16 i = 0; i < MAX_SKILLCOOLDOWN; i++)
+		hd->homunculus.scd[i] = {};
+
+	// Store current cooldown entries.
+	uint16 count = 0;
+	t_tick tick = gettick();
+
+	for (const auto &entry : hd->scd) {
+		const TimerData *timer = get_timer(entry.second);
+
+		if (timer == nullptr || timer->func != skill_blockhomun_end || DIFF_TICK(timer->tick, tick) < 0)
+			continue;
+
+		s_skill_cooldown_data data;
+
+		data.tick = DIFF_TICK(timer->tick, tick);
+		data.skill_id = entry.first;
+
+		hd->homunculus.scd[count] = data;
+
+		count++;
+	}
+
 	intif_homunculus_requestsave(sd->status.account_id, &hd->homunculus);
 }
 
@@ -1039,6 +1063,8 @@ void hom_alloc(map_session_data *sd, struct s_homunculus *hom)
 	t_tick tick = gettick();
 
 	sd->hd = hd = (struct homun_data*)aCalloc(1,sizeof(struct homun_data));
+	new (sd->hd) homun_data();
+
 	hd->bl.type = BL_HOM;
 	hd->bl.id = npc_get_new_npc_id();
 
@@ -1133,6 +1159,11 @@ bool hom_call(map_session_data *sd)
 		//Warp him to master.
 		unit_warp(&hd->bl,sd->bl.m, sd->bl.x, sd->bl.y,CLR_OUTSIGHT);
 
+	// Apply any active skill cooldowns.
+	for (const auto &entry : hd->scd) {
+		skill_blockhomun_start(*hd, entry.first, entry.second);
+	}
+
 #ifdef RENEWAL
 	sc_start(&sd->bl, &sd->bl, SC_HOMUN_TIME, 100, 1, skill_get_time(AM_CALLHOMUN, 1));
 #endif
@@ -1198,6 +1229,11 @@ int hom_recv_data(uint32 account_id, struct s_homunculus *sh, int flag)
 #ifdef RENEWAL
 		sc_start(&sd->bl, &sd->bl, SC_HOMUN_TIME, 100, 1, skill_get_time(AM_CALLHOMUN, 1));
 #endif
+	}
+
+	// Apply any active skill cooldowns.
+	for (uint16 i = 0; i < ARRAYLENGTH(hd->homunculus.scd); i++) {
+		skill_blockhomun_start(*hd, hd->homunculus.scd[i].skill_id, hd->homunculus.scd[i].tick);
 	}
 
 	return 1;
@@ -1287,6 +1323,11 @@ int hom_ressurect(map_session_data* sd, unsigned char per, short x, short y)
 	}
 
 	hd->ud.state.blockedmove = false;
+
+	// Apply any active skill cooldowns.
+	for (const auto &entry : hd->scd) {
+		skill_blockhomun_start(*hd, entry.first, entry.second);
+	}
 
 #ifdef RENEWAL
 	sc_start(&sd->bl, &sd->bl, SC_HOMUN_TIME, 100, 1, skill_get_time(AM_CALLHOMUN, 1));

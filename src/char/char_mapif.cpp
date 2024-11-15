@@ -517,7 +517,7 @@ int chmapif_parse_req_saveskillcooldown(int fd){
 		count = RFIFOW(fd,12);
 		if( count > 0 )
 		{
-			struct skill_cooldown_data data;
+			struct s_skill_cooldown_data data;
 			StringBuf buf;
 			int i;
 
@@ -525,7 +525,7 @@ int chmapif_parse_req_saveskillcooldown(int fd){
 			StringBuf_Printf(&buf, "INSERT INTO `%s` (`account_id`, `char_id`, `skill`, `tick`) VALUES ", schema_config.skillcooldown_db);
 			for( i = 0; i < count; ++i )
 			{
-				memcpy(&data,RFIFOP(fd,14+i*sizeof(struct skill_cooldown_data)),sizeof(struct skill_cooldown_data));
+				memcpy(&data,RFIFOP(fd,14+i*sizeof(struct s_skill_cooldown_data)),sizeof(struct s_skill_cooldown_data));
 				if( i > 0 )
 					StringBuf_AppendStr(&buf, ", ");
 				StringBuf_Printf(&buf, "('%d','%d','%d','%" PRtf "')", aid, cid, data.skill_id, data.tick);
@@ -558,9 +558,9 @@ int chmapif_parse_req_skillcooldown(int fd){
 		{
 			int count;
 			char* data;
-			struct skill_cooldown_data scd;
+			struct s_skill_cooldown_data scd;
 
-			WFIFOHEAD(fd,14 + MAX_SKILLCOOLDOWN * sizeof(struct skill_cooldown_data));
+			WFIFOHEAD(fd,14 + MAX_SKILLCOOLDOWN * sizeof(struct s_skill_cooldown_data));
 			WFIFOW(fd,0) = 0x2b0b;
 			WFIFOL(fd,4) = aid;
 			WFIFOL(fd,8) = cid;
@@ -568,13 +568,13 @@ int chmapif_parse_req_skillcooldown(int fd){
 			{
 				Sql_GetData(sql_handle, 0, &data, nullptr); scd.skill_id = atoi(data);
 				Sql_GetData(sql_handle, 1, &data, nullptr); scd.tick = strtoll( data, nullptr, 10 );
-				memcpy(WFIFOP(fd,14+count*sizeof(struct skill_cooldown_data)), &scd, sizeof(struct skill_cooldown_data));
+				memcpy(WFIFOP(fd,14+count*sizeof(struct s_skill_cooldown_data)), &scd, sizeof(struct s_skill_cooldown_data));
 			}
 			if( count >= MAX_SKILLCOOLDOWN )
 				ShowWarning("Too many skillcooldowns for %d:%d, some of them were not loaded.\n", aid, cid);
 			if( count > 0 )
 			{
-				WFIFOW( fd, 2 ) = static_cast<int16>( 14 + count * sizeof( struct skill_cooldown_data ) );
+				WFIFOW( fd, 2 ) = static_cast<int16>( 14 + count * sizeof( struct s_skill_cooldown_data ) );
 				WFIFOW(fd,12) = count;
 				WFIFOSET(fd,WFIFOW(fd,2));
 				//Clear the data once loaded.

@@ -176,11 +176,6 @@ public:
 
 extern CaptchaDatabase captcha_db;
 
-struct skill_cooldown_entry {
-	unsigned short skill_id;
-	int timer;
-};
-
 #ifdef VIP_ENABLE
 struct vip_info {
 	uint32 enabled : 1;
@@ -529,7 +524,7 @@ public:
 	uint16 skill_id_dance,skill_lv_dance;
 	uint16 skill_id_song, skill_lv_song;
 	short cook_mastery; // range: [0,1999] [Inkfish]
-	struct skill_cooldown_entry * scd[MAX_SKILLCOOLDOWN]; // Skill Cooldown
+	std::unordered_map<uint16, int32> scd; // Skill Cooldown
 	uint16 cloneskill_idx, ///Stores index of copied skill by Intimidate/Plagiarism
 		reproduceskill_idx; ///Stores index of copied skill by Reproduce
 	int menuskill_id, menuskill_val, menuskill_val2;

@@ -57,7 +57,7 @@ void chrif_authreq(map_session_data* sd, bool autotrade);
 void chrif_authok(int fd);
 int chrif_scdata_request(uint32 account_id, uint32 char_id);
 int chrif_skillcooldown_request(uint32 account_id, uint32 char_id);
-int chrif_skillcooldown_save(map_session_data *sd);
+int chrif_skillcooldown_save(map_session_data &sd);
 int chrif_skillcooldown_load(int fd);
 
 int chrif_save(map_session_data* sd, int flag);

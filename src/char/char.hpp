@@ -93,8 +93,10 @@ struct Schema_Config {
 	char quest_db[DB_NAME_LEN];
 	char homunculus_db[DB_NAME_LEN];
 	char skill_homunculus_db[DB_NAME_LEN];
+	char skillcooldown_homunculus_db[DB_NAME_LEN];
 	char mercenary_db[DB_NAME_LEN];
 	char mercenary_owner_db[DB_NAME_LEN];
+	char skillcooldown_mercenary_db[DB_NAME_LEN];
 	char elemental_db[DB_NAME_LEN];
 	char bonus_script_db[DB_NAME_LEN];
 	char acc_reg_num_table[DB_NAME_LEN];

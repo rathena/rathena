@@ -48,7 +48,7 @@ struct s_mercenary_data {
 
 	std::shared_ptr<s_mercenary_db> db;
 	s_mercenary mercenary;
-	std::vector<uint16> blockskill;
+	std::unordered_map<uint16, int32> scd;
 
 	int masterteleport_timer;
 	map_session_data *master;

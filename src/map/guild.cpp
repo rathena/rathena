@@ -1826,7 +1826,7 @@ void guild_block_skill(map_session_data *sd, int time) {
 	uint16 skill_id[] = { GD_BATTLEORDER, GD_REGENERATION, GD_RESTORE, GD_EMERGENCYCALL };
 	int i;
 	for (i = 0; i < 4; i++)
-		skill_blockpc_start(sd, skill_id[i], time);
+		skill_blockpc_start(*sd, skill_id[i], time);
 }
 
 /*====================================================
