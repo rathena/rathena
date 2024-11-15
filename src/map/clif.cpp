@@ -17432,8 +17432,6 @@ void clif_parse_Adopt_reply(int fd, map_session_data *sd){
 		return;
 	}
 
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	int result = RFIFOL(fd,info->pos[2]);
 	map_session_data* father_sd = map_id2sd( p->father_AID );
 
 	// The father has to be online
