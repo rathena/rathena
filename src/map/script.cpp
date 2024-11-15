@@ -3907,24 +3907,50 @@ void op_2(struct script_state *st, int op)
 	}
 
 	get_val(st, left);
-	get_val(st, right);
+
+	bool right_is_int;
+	bool right_is_string;
+
+	// Delay the access for short-circuiting
+	if( op == C_LAND ){
+		// If it is a reference
+		if( data_isreference( right ) ){
+			// Check the type by using the variable name
+			right_is_string = is_string_variable( reference_getname( right ) );
+			right_is_int = !right_is_string;
+		}else{
+			// Otherwise just check the type of the data
+			right_is_int = data_isint( right );
+			right_is_string = data_isstring( right );
+		}
+	}else{
+		// Convert to a value instantly
+		get_val( st, right );
+
+		right_is_int = data_isint( right );
+		right_is_string = data_isstring( right );
+	}
 
 	// automatic conversions
 	switch( op )
 	{
 		case C_ADD:
-			if( data_isint(left) && data_isstring(right) )
+			if( data_isint(left) && right_is_string )
 			{// convert int-string to string-string
 				conv_str(st, left);
+				right_is_string = false;
+				right_is_int = true;
 			}
-			else if( data_isstring(left) && data_isint(right) )
+			else if( data_isstring(left) && right_is_int )
 			{// convert string-int to string-string
 				conv_str(st, right);
+				right_is_int = false;
+				right_is_string = true;
 			}
 			break;
 	}
 
-	if( data_isstring(left) && data_isstring(right) )
+	if( data_isstring(left) && right_is_string )
 	{// ss => op_2str
 		op_2str(st, op, left->u.str, right->u.str);
 		script_removetop(st, leftref.type == C_NOP ? -3 : -2, -1);// pop the two values before the top one
@@ -3936,10 +3962,26 @@ void op_2(struct script_state *st, int op)
 			*left = leftref;
 		}
 	}
-	else if( data_isint(left) && data_isint(right) )
+	else if( data_isint(left) && right_is_int )
 	{// ii => op_2num
 		int64 i1 = left->u.num;
-		int64 i2 = right->u.num;
+		int64 i2;
+
+		// Special checks for short-circuiting
+		if( op == C_LAND ){
+			// Only access the second parameter of the logical and, if the first is not zero
+			if( i1 != 0 ){
+				// Convert to a value now
+				get_val( st, right );
+				i2 = right->u.num;
+			}else{
+				// Still run the operator, but make it fail for sure
+				i2 = 0;
+			}
+		}else{
+			// Store the value, so that it can be used inside the operator logic
+			i2 = right->u.num;
+		}
 
 		script_removetop(st, leftref.type == C_NOP ? -2 : -1, 0);
 		op_2num(st, op, i1, i2);
