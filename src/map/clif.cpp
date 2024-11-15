@@ -16881,19 +16881,20 @@ void clif_Auction_close(int fd, unsigned char flag)
 }
 
 
-/// Request to add an auction (CZ_AUCTION_ADD).
-/// 024d <now money>.L <max money>.L <delete hour>.W
-void clif_parse_Auction_register(int fd, map_session_data *sd)
-{
+/// Request to add an auction.
+/// 024d <now money>.L <max money>.L <delete hour>.W (CZ_AUCTION_ADD)
+void clif_parse_Auction_register( int fd, map_session_data* sd ){
+#if PACKETVER >= 20050808
+	const PACKET_CZ_AUCTION_ADD* p = reinterpret_cast<PACKET_CZ_AUCTION_ADD*>( RFIFOP( fd, 0 ) );
+
 	struct auction_data auction;
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
 
 	if( !battle_config.feature_auction )
 		return;
 
-	auction.price = RFIFOL(fd,info->pos[0]);
-	auction.buynow = RFIFOL(fd,info->pos[1]);
-	auction.hours = RFIFOW(fd,info->pos[2]);
+	auction.price = p->now_money;
+	auction.buynow = p->max_money;
+	auction.hours = p->hours;
 
 	// Invalid Situations...
 	if( sd->auction.amount < 1 ) {
@@ -16965,6 +16966,7 @@ void clif_parse_Auction_register(int fd, map_session_data *sd)
 
 		pc_payzeny(sd, zeny, LOG_TYPE_AUCTION);
 	}
+#endif
 }
 
 
