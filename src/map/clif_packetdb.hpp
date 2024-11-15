@@ -761,7 +761,7 @@
 // 2005-11-07aSakexe
 #if PACKETVER >= 20051107
 	parseable_packet(0x024e,6,clif_parse_Auction_cancel,2);
-	parseable_packet(0x0251,34,clif_parse_Auction_search,2,4,8,32);
+	parseable_packet( HEADER_CZ_AUCTION_ITEM_SEARCH, sizeof( PACKET_CZ_AUCTION_ITEM_SEARCH ), clif_parse_Auction_search, 0 );
 #endif
 
 // 2006-01-09aSakexe

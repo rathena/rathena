@@ -17009,8 +17009,8 @@ void clif_parse_Auction_bid(int fd, map_session_data *sd){
 }
 
 
-/// Auction Search (CZ_AUCTION_ITEM_SEARCH).
-/// 0251 <search type>.W <auction id>.L <search text>.24B <page number>.W
+/// Auction Search.
+/// 0251 <search type>.W <auction id>.L <search text>.24B <page number>.W (CZ_AUCTION_ITEM_SEARCH)
 /// search type:
 ///     0 = armor
 ///     1 = weapon
@@ -17019,19 +17019,20 @@ void clif_parse_Auction_bid(int fd, map_session_data *sd){
 ///     4 = name search
 ///     5 = auction id search
 void clif_parse_Auction_search(int fd, map_session_data* sd){
-	char search_text[NAME_LENGTH];
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	short type = RFIFOW(fd,info->pos[0]);
-	int price = RFIFOL(fd,info->pos[1]);  // FIXME: bug #5071
-	int page = RFIFOW(fd,info->pos[3]);
+#if PACKETVER >= 20051107
+	const PACKET_CZ_AUCTION_ITEM_SEARCH* p = reinterpret_cast<PACKET_CZ_AUCTION_ITEM_SEARCH*>( RFIFOP( fd, 0 ) );
 
 	if( !battle_config.feature_auction )
-		return; 
+		return;
 
 	clif_parse_Auction_cancelreg(fd, sd);
 
-	safestrncpy(search_text, RFIFOCP(fd,info->pos[2]), sizeof(search_text));
-	intif_Auction_requestlist(sd->status.char_id, type, price, search_text, page);
+	char search_text[NAME_LENGTH];
+
+	safestrncpy( search_text, p->text, sizeof( search_text ) );
+
+	intif_Auction_requestlist( sd->status.char_id, p->type, p->auction_id, search_text, p->page );
+#endif
 }
 
 
