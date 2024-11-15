@@ -12515,14 +12515,17 @@ BUILDIN_FUNC( errormes ){
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/*==========================================
- *------------------------------------------*/
+/**
+ * Attempts to catch a pet given a list of pet IDs.
+ * pet <pet_id>{,...,<pet_id>}
+ * catchpet <pet_id>{,...,<pet_id>}
+*/
 BUILDIN_FUNC(catchpet)
 {
 	map_session_data* sd = nullptr;
 
 	if( !script_rid2sd(sd) )
-		return SCRIPT_CMD_FAILURE;;
+		return SCRIPT_CMD_FAILURE;
 
 	int total = script_lastdata(st);
 	std::vector<uint32> pet_list = {};
