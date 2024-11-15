@@ -19827,7 +19827,7 @@ void clif_parse_client_version(int fd, map_session_data *sd) {
 
 /// Ranking list
 
-/// ranking pointlist  { <name>.24B <point>.L }*10
+/// ranking pointlist  { <name>.24B }*10 { <point>.L }*10
 void clif_sub_ranklist( RANKLIST& ranklist, e_rank rankingtype ){
 	struct fame_list* list;
 	size_t i;
@@ -19887,8 +19887,8 @@ void clif_sub_ranklist( RANKLIST& ranklist, e_rank rankingtype ){
 /// 021a { <name>.24B }*10 { <point>.L }*10 (ZC_ALCHEMIST_RANK)
 /// 0226 { <name>.24B }*10 { <point>.L }*10 (ZC_TAEKWON_RANK)
 /// 0238 { <name>.24B }*10 { <point>.L }*10 (ZC_KILLER_RANK)
-/// 097d <RankingType>.W {<CharName>.24B <point>L}*10 <mypoint>L (ZC_ACK_RANKING)
-/// 0af6 <RankingType>.W { <name>.24B }*10 { <point>.L }*10 <mypoint>L (ZC_ACK_RANKING2)
+/// 097d <RankingType>.W { <name>.24B }*10 { <point>.L }*10 <mypoint>L (ZC_ACK_RANKING)
+/// 0af6 <RankingType>.W { <CID>.L }*10 { <point>.L }*10 <mypoint>L (ZC_ACK_RANKING2)
 void clif_ranklist( map_session_data& sd, e_rank rankingtype ){
 #if PACKETVER_MAIN_NUM >= 20190731 || PACKETVER_RE_NUM >= 20190703 || PACKETVER_ZERO_NUM >= 20190724
 	PACKET_ZC_ACK_RANKING2 p = {};
