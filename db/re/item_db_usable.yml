@@ -9314,7 +9314,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      pet 1631;
+      pet 1519, 1631;
   - Id: 12396
     AegisName: Fools_Day_Box
     Name: Gift Box?

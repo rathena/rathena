@@ -7683,8 +7683,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 	case SA_TAMINGMONSTER:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		if (sd && dstmd && pet_db.find(dstmd->mob_id)) {
-			pet_catch_process1(sd, dstmd->mob_id);
+		if (sd != nullptr && dstmd != nullptr) {
+			std::vector<uint32> pet_list = { dstmd->mob_id };
+			pet_catch_process1(*sd, pet_list);
 		}
 		break;
 

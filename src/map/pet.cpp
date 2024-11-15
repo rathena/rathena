@@ -674,7 +674,6 @@ bool pet_create_egg(map_session_data *sd, t_itemid item_id)
 	if (!pc_inventoryblank(sd))
 		return false; // Inventory full
 
-	sd->catch_target_class = pet->class_;
 	intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->jname.c_str());
 
 	return true;
@@ -1212,22 +1211,17 @@ int pet_select_egg(map_session_data *sd,short egg_index)
 /**
  * Display the success/failure roulette wheel when trying to catch monster.
  * @param sd : player requesting
- * @param target_class : monster ID of pet to catch
- * @return 0
+ * @param target_list : list of monster IDs of pets to catch
  */
-int pet_catch_process1(map_session_data *sd,int target_class)
+void pet_catch_process1(map_session_data& sd, std::vector<uint32> target_list)
 {
-	nullpo_ret(sd);
-
-	if (map_getmapflag(sd->bl.m, MF_NOPETCAPTURE)) {
-		clif_displaymessage(sd->fd, msg_txt(sd, 669)); // You can't catch any pet on this map.
-		return 0;
+	if (map_getmapflag(sd.bl.m, MF_NOPETCAPTURE)) {
+		clif_displaymessage(sd.fd, msg_txt(&sd, 669)); // You can't catch any pet on this map.
+		return;
 	}
 
-	sd->catch_target_class = target_class;
-	clif_catch_process( *sd );
-
-	return 0;
+	sd.catch_target_list = target_list;
+	clif_catch_process(sd);
 }
 
 /**
@@ -1247,7 +1241,7 @@ int pet_catch_process2(map_session_data* sd, int target_id)
 
 	if(!md || md->bl.type != BL_MOB || md->bl.prev == nullptr) { // Invalid inputs/state, abort capture.
 		clif_pet_roulette( *sd, false );
-		sd->catch_target_class = PET_CATCH_FAIL;
+		sd->catch_target_list.clear();
 		sd->itemid = 0;
 		sd->itemindex = -1;
 		return 1;
@@ -1255,7 +1249,7 @@ int pet_catch_process2(map_session_data* sd, int target_id)
 
 	if (map_getmapflag(sd->bl.m, MF_NOPETCAPTURE)) {
 		clif_pet_roulette( *sd, false );
-		sd->catch_target_class = PET_CATCH_FAIL;
+		sd->catch_target_list.clear();
 		sd->itemid = 0;
 		sd->itemindex = -1;
 		clif_displaymessage(sd->fd, msg_txt(sd, 669)); // You can't catch any pet on this map.
@@ -1266,34 +1260,39 @@ int pet_catch_process2(map_session_data* sd, int target_id)
 
 	std::shared_ptr<s_pet_db> pet = pet_db.find(md->mob_id);
 
-	// If the target is a valid pet, we have a few exceptions
-	if( pet ){
-		//catch_target_class == PET_CATCH_UNIVERSAL is used for universal lures (except bosses for now). [Skotlex]
-		if (sd->catch_target_class == PET_CATCH_UNIVERSAL && !status_has_mode(&md->status,MD_STATUSIMMUNE)){
-			sd->catch_target_class = md->mob_id;
-		//catch_target_class == PET_CATCH_UNIVERSAL_ITEM is used for catching any monster required the lure item used
-		}else if (sd->catch_target_class == PET_CATCH_UNIVERSAL_ITEM && sd->itemid == pet->itemID){
-			sd->catch_target_class = md->mob_id;
-		}
+	if (pet == nullptr) {
+		clif_pet_roulette(*sd, false);
+		sd->catch_target_list.clear();
+
+		return 1;
 	}
 
-	if(sd->catch_target_class != md->mob_id || !pet) {
-		clif_pet_roulette( *sd, false );
-		sd->catch_target_class = PET_CATCH_FAIL;
+	// If the target is a valid pet, we have a few exceptions
+	//PET_CATCH_UNIVERSAL is used for universal lures (except bosses for now). [Skotlex]
+	if (sd->catch_target_list.front() == PET_CATCH_UNIVERSAL && !status_has_mode(&md->status, MD_STATUSIMMUNE)) {
+		sd->catch_target_list.front() = md->mob_id;
+	//PET_CATCH_UNIVERSAL_ITEM is used for catching any monster required the lure item used
+	}else if (sd->catch_target_list.front() == PET_CATCH_UNIVERSAL_ITEM && sd->itemid == pet->itemID){
+		sd->catch_target_list.front() = md->mob_id;
+	}
+
+	if (!util::vector_exists(sd->catch_target_list, md->mob_id)) {
+		clif_pet_roulette(*sd, false);
+		sd->catch_target_list.clear();
 
 		return 1;
 	}
 
 	if( battle_config.pet_distance_check && distance_bl( &sd->bl, &md->bl ) > battle_config.pet_distance_check ){
 		clif_pet_roulette( *sd, false );
-		sd->catch_target_class = PET_CATCH_FAIL;
+		sd->catch_target_list.clear();
 
 		return 1;
 	}
 
 	if (!pc_inventoryblank(sd)) {
 		clif_pet_roulette(*sd, false);
-		sd->catch_target_class = PET_CATCH_FAIL;
+		sd->catch_target_list.clear();
 		clif_msg_color(sd, MSI_CANT_GET_ITEM_BECAUSE_COUNT, color_table[COLOR_RED]);
 
 		return 1;
@@ -1303,7 +1302,7 @@ int pet_catch_process2(map_session_data* sd, int target_id)
 
 	if( battle_config.pet_hide_check && tsc && ( tsc->getSCE(SC_HIDING) || tsc->getSCE(SC_CLOAKING) || tsc->getSCE(SC_CAMOUFLAGE) || tsc->getSCE(SC_NEWMOON) || tsc->getSCE(SC_CLOAKINGEXCEED) ) ){
 		clif_pet_roulette( *sd, false );
-		sd->catch_target_class = PET_CATCH_FAIL;
+		sd->catch_target_list.clear();
 
 		return 1;
 	}
@@ -1331,7 +1330,7 @@ int pet_catch_process2(map_session_data* sd, int target_id)
 		intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->jname.c_str());
 	} else {
 		clif_pet_roulette( *sd, false );
-		sd->catch_target_class = PET_CATCH_FAIL;
+		sd->catch_target_list.clear();
 	}
 
 	return 0;
@@ -1365,7 +1364,7 @@ bool pet_get_egg(uint32 account_id, short pet_class, int pet_id ) {
 	// period of time it wasn't possible to know which kind of egg was being requested after
 	// the first request. [Panikon]
 	std::shared_ptr<s_pet_db> pet = pet_db.find(pet_class);
-	sd->catch_target_class = PET_CATCH_FAIL;
+	sd->catch_target_list.clear();
 
 	if(!pet) {
 		intif_delete_petdata(pet_id);

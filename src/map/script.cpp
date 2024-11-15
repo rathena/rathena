@@ -11004,8 +11004,6 @@ BUILDIN_FUNC(makepet)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	sd->catch_target_class = mob_id;
-
 	std::shared_ptr<s_mob_db> mdb = mob_db.find(pet->class_);
 
 	intif_create_pet( sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->jname.c_str() );
@@ -12521,15 +12519,34 @@ BUILDIN_FUNC( errormes ){
  *------------------------------------------*/
 BUILDIN_FUNC(catchpet)
 {
-	int pet_id;
-	TBL_PC *sd;
+	map_session_data* sd = nullptr;
 
 	if( !script_rid2sd(sd) )
-		return SCRIPT_CMD_SUCCESS;
+		return SCRIPT_CMD_FAILURE;;
 
-	pet_id= script_getnum(st,2);
+	int total = script_lastdata(st);
+	std::vector<uint32> pet_list = {};
 
-	pet_catch_process1(sd,pet_id);
+	for (int i = 2; i <= total; i++) {
+		int pet_id = script_getnum(st, i);
+
+		if (pet_id == PET_CATCH_UNIVERSAL || pet_id == PET_CATCH_UNIVERSAL_ITEM) {
+			if (total > 2) {
+				ShowError("buildin_catchpet: Universal pet ID must be the first and only argument.\n");
+				return SCRIPT_CMD_FAILURE;
+			}
+			pet_list.push_back(pet_id);
+			break;
+		}
+
+		if (pet_db.find(pet_id) == nullptr) {
+			ShowError("buildin_catchpet: Invalid pet ID %d.\n", pet_id);
+			return SCRIPT_CMD_FAILURE;
+		}
+		pet_list.push_back(pet_id);
+	}
+
+	pet_catch_process1(*sd, pet_list);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -27674,9 +27691,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getscrate,"ii?"),
 	BUILDIN_DEF(debugmes,"s"),
 	BUILDIN_DEF(errormes,"s"),
-	BUILDIN_DEF2(catchpet,"pet","i"),
+	BUILDIN_DEF2(catchpet,"pet","*"),
 	BUILDIN_DEF2(birthpet,"bpet",""),
-	BUILDIN_DEF(catchpet,"i"),
+	BUILDIN_DEF(catchpet,"*"),
 	BUILDIN_DEF(birthpet,""),
 	BUILDIN_DEF(resetlvl,"i?"),
 	BUILDIN_DEF(resetstatus,"?"),
