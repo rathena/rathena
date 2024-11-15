@@ -7140,7 +7140,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      pet 1519, 1631; # On official pre-renewal servers, only CHUNG_E (1519) was tameable, uncomment the CHUNG_E_ pet entry in pet_db.yml to enable both.
+      pet 1519, 1631;
+# On official pre-renewal servers, only CHUNG_E (1519) was tameable, uncomment the CHUNG_E_ pet entry in pet_db.yml to enable both.
   - Id: 12396
     AegisName: Fools_Day_Box
     Name: Gift Box?
