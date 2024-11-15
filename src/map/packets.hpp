@@ -1458,6 +1458,14 @@ struct PACKET_CZ_CREATE_CHATROOM{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_CREATE_CHATROOM, 0xd5);
 
+struct PACKET_CZ_JOIN_BABY{
+	int16 packetType;
+	uint32 father_AID;
+	uint32 mother_AID;
+	uint32 accepted;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_JOIN_BABY, 0x1f7);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )

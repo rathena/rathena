@@ -17418,32 +17418,46 @@ void clif_parse_Adopt_request(int fd, map_session_data *sd)
 }
 
 
-/// Answer to adopt confirmation (CZ_JOIN_BABY).
-/// 01f7 <account id>.L <char id>.L <answer>.L
+/// Answer to adopt confirmation.
+/// 01f7 <account id>.L <char id>.L <answer>.L (CZ_JOIN_BABY)
 /// answer:
 ///     0 = rejected
 ///     1 = accepted
 void clif_parse_Adopt_reply(int fd, map_session_data *sd){
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	int p1_id = RFIFOL(fd,info->pos[0]);
-	int p2_id = RFIFOL(fd,info->pos[1]);
-	int result = RFIFOL(fd,info->pos[2]);
-	map_session_data* p1_sd = map_id2sd(p1_id);
-	map_session_data* p2_sd = map_id2sd(p2_id);
+	const PACKET_CZ_JOIN_BABY* p = reinterpret_cast<PACKET_CZ_JOIN_BABY*>( RFIFOP( fd, 0 ) );
 
-	int pid = sd->adopt_invite;
+	// Check if the adoption was accepted
+	if( p->accepted == 0 ){
+		sd->adopt_invite = 0;
+		return;
+	}
+
+	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
+	int result = RFIFOL(fd,info->pos[2]);
+	map_session_data* father_sd = map_id2sd( p->father_AID );
+
+	// The father has to be online
+	if( father_sd == nullptr ){
+		sd->adopt_invite = 0;
+		return;
+	}
+
+	map_session_data* mother_sd = map_id2sd( p->mother_AID );
+
+	// The mother has to be online
+	if( mother_sd == nullptr ){
+		sd->adopt_invite = 0;
+		return;
+	}
+
+	if( sd->adopt_invite != father_sd->status.account_id ){
+		sd->adopt_invite = 0;
+		return;
+	}
+
 	sd->adopt_invite = 0;
 
-	if( p1_sd == nullptr || p2_sd == nullptr )
-		return; // Both players need to be online
-
-	if( pid != p1_sd->status.account_id )
-		return; // Incorrect values
-
-	if( result == 0 )
-		return; // Rejected
-
-	pc_adoption(p1_sd, p2_sd, sd);
+	pc_adoption( father_sd, mother_sd, sd );
 }
 
 
