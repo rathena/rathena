@@ -1329,6 +1329,9 @@ enum sc_type : int16 {
 	SC_CONTENTS_9,
 	SC_CONTENTS_10,
 
+	// Level 275 New Skills
+	SC_MYSTERY_POWDER,
+
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 
@@ -3135,7 +3138,6 @@ struct s_status_change_db {
 	uint32 opt3;						///< OPT3_
 	uint32 look;						///< OPTION_ Changelook
 	std::bitset<SCF_MAX> flag;			///< SCF_ Flags, enum e_status_change_flag
-	bool display;						///< Display status effect/icon (for certain state)
 	uint16 skill_id;					///< Associated skill for (addeff) duration lookups
 	std::vector<sc_type> endonstart;	///< List of SC that will be ended when this SC is activated
 	std::vector<sc_type> fail;			///< List of SC that causing this SC cannot be activated
@@ -3143,11 +3145,15 @@ struct s_status_change_db {
 	std::vector<sc_type> endonend;		///< List of SC that will be ended when this SC ends
 	t_tick min_duration;				///< Minimum duration effect (after all status reduction)
 	uint16 min_rate;					///< Minimum rate to be applied (after all status reduction)
+	struct script_code* script;			///< Script to execute, when starting the status change.
+
+	s_status_change_db();
+	~s_status_change_db();
 };
 
 class StatusDatabase : public TypesafeCachedYamlDatabase<uint16, s_status_change_db> {
 public:
-	StatusDatabase() : TypesafeCachedYamlDatabase("STATUS_DB", 3) {
+	StatusDatabase() : TypesafeCachedYamlDatabase("STATUS_DB", 4, 3) {
 		// All except BASE and extra flags.
 		SCB_BATTLE.set();
 		SCB_BATTLE.reset(SCB_BASE);

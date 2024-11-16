@@ -1664,5 +1664,6 @@ void npc_market_delfromsql_(const char *exname, t_itemid nameid, bool clear);
 int32 npc_do_atcmd_event(map_session_data* sd, const char* command, const char* message, const char* eventname);
 
 bool npc_unloadfile( const char* path );
+bool npc_remove_mob_spawns(const char* path);
 
 #endif /* NPC_HPP */

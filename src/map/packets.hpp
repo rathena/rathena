@@ -1386,6 +1386,191 @@ struct PACKET_CZ_REQUEST_MOVENPC{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_REQUEST_MOVENPC, 0x232);
 
+struct PACKET_ZC_NPCSPRITE_CHANGE{
+	int16 packetType;
+	uint32 GID;
+	uint8 type;
+	uint32 class_;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_NPCSPRITE_CHANGE, 0x1b0);
+
+struct PACKET_ZC_MEMBER_NEWENTRY{
+	int16 packetType;
+	uint16 count;
+	char name[NAME_LENGTH];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_MEMBER_NEWENTRY, 0xdc);
+
+struct PACKET_ZC_MEMBER_EXIT{
+	int16 packetType;
+	uint16 count;
+	char name[NAME_LENGTH];
+	uint8 kicked;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_MEMBER_EXIT, 0xdd);
+
+struct PACKET_CZ_MOVETO_MAP{
+	int16 packetType;
+	char map[MAP_NAME_LENGTH_EXT];
+	uint16 x;
+	uint16 y;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_MOVETO_MAP, 0x140);
+
+struct PACKET_CZ_BROADCAST{
+	int16 packetType;
+	uint16 packetSize;
+	char message[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_BROADCAST, 0x99);
+
+#if PACKETVER >= 20120925
+// CZ_REQ_WEAR_EQUIP_V5
+struct PACKET_CZ_REQ_WEAR_EQUIP{
+	int16 packetType;
+	uint16 index;
+	uint32 position;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_WEAR_EQUIP, 0x998);
+#else
+struct PACKET_CZ_REQ_WEAR_EQUIP{
+	int16 packetType;
+	uint16 index;
+	uint16 position;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_WEAR_EQUIP, 0xa9);
+#endif
+
+struct PACKET_CZ_ACK_SELECT_DEALTYPE{
+	int16 packetType;
+	uint32 GID;
+	uint8 type;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_ACK_SELECT_DEALTYPE, 0xc5);
+
+struct PACKET_CZ_CREATE_CHATROOM{
+	int16 packetType;
+	uint16 packetSize;
+	uint16 limit;
+	uint8 type;
+	char password[8];
+	char title[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_CREATE_CHATROOM, 0xd5);
+
+struct PACKET_CZ_BLACKSMITH_RANK{
+	int16 packetType;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_BLACKSMITH_RANK, 0x217);
+
+struct PACKET_CZ_ALCHEMIST_RANK{
+	int16 packetType;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_ALCHEMIST_RANK, 0x218);
+
+struct RANKLIST{
+	char names[10][NAME_LENGTH];
+	uint32 points[10];
+} __attribute__((packed));
+
+struct PACKET_ZC_BLACKSMITH_RANK{
+	int16 packetType;
+	RANKLIST list;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_BLACKSMITH_RANK, 0x219);
+
+struct PACKET_ZC_ALCHEMIST_RANK{
+	int16 packetType;
+	RANKLIST list;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ALCHEMIST_RANK, 0x21a);
+
+struct PACKET_ZC_BLACKSMITH_POINT{
+	int16 packetType;
+	uint32 points;
+	uint32 points_total;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_BLACKSMITH_POINT, 0x21b);
+
+struct PACKET_ZC_ALCHEMIST_POINT{
+	int16 packetType;
+	uint32 points;
+	uint32 points_total;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ALCHEMIST_POINT, 0x21c);
+
+struct PACKET_ZC_TAEKWON_POINT{
+	int16 packetType;
+	uint32 points;
+	uint32 points_total;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_TAEKWON_POINT, 0x224);
+
+struct PACKET_CZ_TAEKWON_RANK{
+	int16 packetType;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_TAEKWON_RANK, 0x225);
+
+struct PACKET_ZC_TAEKWON_RANK{
+	int16 packetType;
+	RANKLIST list;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_TAEKWON_RANK, 0x226);
+
+struct PACKET_ZC_KILLER_POINT{
+	int16 packetType;
+	uint32 points;
+	uint32 points_total;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_KILLER_POINT, 0x236);
+
+struct PACKET_CZ_KILLER_RANK{
+	int16 packetType;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_KILLER_RANK, 0x237);
+
+struct PACKET_ZC_KILLER_RANK{
+	int16 packetType;
+	RANKLIST list;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_KILLER_RANK, 0x238);
+
+struct PACKET_CZ_REQ_RANKING{
+	int16 packetType;
+	uint16 type;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_RANKING, 0x97c);
+
+struct PACKET_ZC_ACK_RANKING_sub{
+	char name[NAME_LENGTH];
+	uint32 points;
+} __attribute__((packed));
+
+struct PACKET_ZC_ACK_RANKING{
+	int16 packetType;
+	uint16 type;
+	RANKLIST list;
+	uint32 mypoints;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_RANKING, 0x97d);
+
+struct PACKET_ZC_UPDATE_RANKING_POINT{
+	int16 packetType;
+	uint16 type;
+	uint32 points;
+	uint32 points_total;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_UPDATE_RANKING_POINT, 0x97e);
+
+struct PACKET_ZC_ACK_RANKING2{
+	int16 packetType;
+	uint16 type;
+	uint32 CIDs[10];
+	uint32 points[10];
+	uint32 mypoints;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_RANKING2, 0xaf6);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )

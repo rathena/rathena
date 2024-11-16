@@ -627,7 +627,7 @@ int32 hom_evolution(struct homun_data *hd)
 	hom->luk += 10*rnd_value(min->luk, max->luk);
 	hom->intimacy = battle_config.homunculus_evo_intimacy_reset;
 
-	clif_class_change(&hd->bl, hd->homunculusDB->evo_class, 0);
+	clif_class_change( hd->bl, hd->homunculusDB->evo_class );
 
 	// status_Calc flag&1 will make current HP/SP be reloaded from hom structure
 	hom->hp = hd->battle_status.hp;
@@ -677,7 +677,7 @@ int32 hom_mutate(struct homun_data *hd, int32 homun_id)
 		return 0;
 	}
 
-	clif_class_change(&hd->bl, homun_id, 0);
+	clif_class_change( hd->bl, homun_id );
 
 	// status_Calc flag&1 will make current HP/SP be reloaded from hom structure
 	hom = &hd->homunculus;

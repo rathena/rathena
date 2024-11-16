@@ -656,12 +656,6 @@ int32 skill_calc_heal(struct block_list *src, struct block_list *target, uint16 
 #else
 			hp += hp * sc->getSCE(SC_OFFERTORIUM)->val2 / 100;
 #endif
-		if (sc->getSCE(SC_GLASTHEIM_HEAL) && skill_id != NPC_EVILLAND && skill_id != BA_APPLEIDUN)
-#ifdef RENEWAL
-			hp_bonus += sc->getSCE(SC_GLASTHEIM_HEAL)->val1;
-#else
-			hp += hp * sc->getSCE(SC_GLASTHEIM_HEAL)->val1 / 100;
-#endif
 #ifdef RENEWAL
 		if (sc->getSCE(SC_MEDIALE) && skill_id == CD_MEDIALE_VOTUM)
 			hp_bonus += sc->getSCE(SC_MEDIALE)->val2;
@@ -675,12 +669,6 @@ int32 skill_calc_heal(struct block_list *src, struct block_list *target, uint16 
 				hp_bonus += tsc->getSCE(SC_INCHEALRATE)->val1; //Only affects Heal, Sanctuary and PotionPitcher.(like bHealPower) [Inkfish]
 #else
 				hp += hp * tsc->getSCE(SC_INCHEALRATE)->val1 / 100;
-#endif
-			if (tsc->getSCE(SC_GLASTHEIM_HEAL))
-#ifdef RENEWAL
-				hp_bonus += tsc->getSCE(SC_GLASTHEIM_HEAL)->val2;
-#else
-				hp += hp * tsc->getSCE(SC_GLASTHEIM_HEAL)->val2 / 100;
 #endif
 			if (tsc->getSCE(SC_ANCILLA))
 #ifdef RENEWAL
@@ -5280,6 +5268,7 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 		break;
 	case DK_DRAGONIC_AURA:
 	case DK_STORMSLASH:
+	case IG_IMPERIAL_CROSS:
 	case CD_EFFLIGO:
 	case ABC_FRENZY_SHOT:
 	case WH_HAWKRUSH:
@@ -5697,6 +5686,7 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 	case IQ_THIRD_FLAME_BOMB:
 	case IQ_THIRD_CONSECRATION:
 	case IG_OVERSLASH:
+	case IG_RADIANT_SPEAR:
 	case CD_ARBITRIUM_ATK:
 	case CD_PETITIO:
 	case CD_FRAMEN:
@@ -5710,6 +5700,9 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 	case MT_RUSH_QUAKE:
 	case MT_A_MACHINE:
 	case MT_SPARK_BLASTER:
+	case MT_RUSH_STRIKE:
+	case MT_POWERFUL_SWING:
+	case MT_ENERGY_CANNONADE:
 	case ABC_ABYSS_DAGGER:
 	case ABC_CHAIN_REACTION_SHOT:
 	case ABC_DEFT_STAB:
@@ -5732,6 +5725,8 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 	case EM_EL_DEADLY_POISON:
 	case BO_EXPLOSIVE_POWDER:
 	case BO_MAYHEMIC_THORNS:
+	case BO_MYSTERY_POWDER:
+	case BO_DUST_EXPLOSION:
 	case NPC_WIDECRITICALWOUND:
 	case IG_SHIELD_SHOOTING:
 	case TR_METALIC_FURY:
@@ -5874,8 +5869,12 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 				case IQ_SECOND_FLAME:
 				case IQ_SECOND_FAITH:
 				case IQ_SECOND_JUDGEMENT:
+				case IG_RADIANT_SPEAR:
 				case CD_PETITIO:
 				case CD_FRAMEN:
+				case MT_POWERFUL_SWING:
+				case MT_ENERGY_CANNONADE:
+				case BO_DUST_EXPLOSION:
 				case ABC_DEFT_STAB:
 				case EM_EL_FLAMEROCK:
 				case EM_EL_AGE_OF_ICE:
@@ -5925,6 +5924,7 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 					if (bl->type == BL_PC)// Place single cell AoE if hitting a player.
 						skill_castend_pos2(src, bl->x, bl->y, skill_id, skill_lv, tick, 0);
 					break;
+				case MT_RUSH_STRIKE:
 				case MT_RUSH_QUAKE:
 					// Jump to the target before attacking.
 					if( skill_check_unit_movepos( 5, src, bl->x, bl->y, 0, 1 ) ){
@@ -5932,9 +5932,12 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 					}
 					clif_skill_nodamage( src, *bl, skill_id, skill_lv); // Trigger animation
 					clif_blown( src );
-					// TODO: does this buff start before or after dealing damage? [Muh]
-					sc_start( src, src, SC_RUSH_QUAKE2, 100, skill_lv, skill_get_time2( skill_id, skill_lv ) );
+					if (skill_id == MT_RUSH_QUAKE){
+						// TODO: does this buff start before or after dealing damage? [Muh]
+						sc_start( src, src, SC_RUSH_QUAKE2, 100, skill_lv, skill_get_time2( skill_id, skill_lv ) );
+					}
 					break;
+				case BO_MYSTERY_POWDER:
 				case IG_SHIELD_SHOOTING:
 				case IG_GRAND_JUDGEMENT:
 				case SHC_CROSS_SLASH:
@@ -16052,7 +16055,9 @@ int32 skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t
 
 	switch (sg->unit_id) {
 		// Units that deals simple attack
-		case UNT_GRAVITATION:
+#ifndef RENEWAL
+ 		case UNT_GRAVITATION:
+#endif
 		case UNT_EARTHSTRAIN:
 		case UNT_FIREWALK:
 		case UNT_ELECTRICWALK:
@@ -16080,6 +16085,9 @@ int32 skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t
 		case UNT_FLAMETRAP:
 			skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 			break;
+#ifdef RENEWAL
+ 		case UNT_GRAVITATION:
+#endif
 		case UNT_GROUND_GRAVITATION:
 		case UNT_JACK_FROST_NOVA:
 			skill_attack( skill_get_type(sg->skill_id), ss, ss, bl, sg->skill_id, sg->skill_lv, tick, 0 );
@@ -16096,14 +16104,18 @@ int32 skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t
 					//If target isn't knocked back it should hit every "interval" ms [Playtester]
 					do {
 						if( bl->type == BL_PC )
-							status_zap(bl, 0, 15); // sp damage to players
-						else // mobs
-						if( status_charge(ss, 0, 2) ) { // costs 2 SP per hit
-							if( !skill_attack(BF_WEAPON,ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick+(t_tick)count*sg->interval,0) )
-								status_charge(ss, 0, 8); //costs additional 8 SP if miss
-						} else { //should end when out of sp.
-							sg->limit = DIFF_TICK(tick,sg->tick);
-							break;
+							status_zap(bl, 0, 10); // sp damage to players
+						else { // mobs
+							// Bosses trigger the effect only 1 out of 5 times
+							if (status_get_class_(bl) == CLASS_BOSS && rnd_chance(4, 5))
+								continue;
+							// costs 2 SP per hit
+							if (!status_charge(ss, 0, 2)) {
+								//should end when out of sp.
+								sg->limit = DIFF_TICK(tick, sg->tick);
+								break;
+							}
+							skill_attack(BF_WEAPON, ss, &unit->bl, bl, sg->skill_id, sg->skill_lv, tick + (t_tick)count * sg->interval, 0);
 						}
 					} while(sg->interval > 0 && x == bl->x && y == bl->y &&
 						++count < SKILLUNITTIMER_INTERVAL/sg->interval && !status_isdead(*bl) );
@@ -17802,17 +17814,6 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 				return false;
 			}
 			break;
-		case SG_SUN_WARM:
-		case SG_MOON_WARM:
-		case SG_STAR_WARM:
-			if (sc && sc->getSCE(SC_MIRACLE))
-				break;
-			i = skill_id-SG_SUN_WARM;
-			if (sd.bl.m == sd.feel_map[i].m)
-				break;
-			clif_skill_fail( sd, skill_id );
-			return false;
-			break;
 		case SG_SUN_COMFORT:
 		case SG_MOON_COMFORT:
 		case SG_STAR_COMFORT:
@@ -18513,6 +18514,10 @@ bool skill_check_condition_castend( map_session_data& sd, uint16 skill_id, uint1
 		return false;
 	}
 
+	status_change* sc = &sd.sc;
+	if (!sc->count)
+		sc = nullptr;
+
 	// perform skill-specific checks (and actions)
 	switch( skill_id ) {
 		case PR_BENEDICTIO:
@@ -18535,6 +18540,23 @@ bool skill_check_condition_castend( map_session_data& sd, uint16 skill_id, uint1
 			}
 			break;
 		}
+		case SG_SUN_WARM:
+		case SG_MOON_WARM:
+		case SG_STAR_WARM:
+			if (sc != nullptr) {
+				// Skill fails when already active
+				if (sc->getSCE(SC_WARM)) {
+					clif_skill_nodamage(&sd.bl, sd.bl, skill_id, skill_lv, 0);
+					return false;
+				}
+				// When having Miracle, skill succeeds regardless of map
+				if (sc->getSCE(SC_MIRACLE))
+					break;
+			}
+			if (sd.bl.m == sd.feel_map[skill_id - SG_SUN_WARM].m)
+				break;
+			clif_skill_nodamage(&sd.bl, sd.bl, skill_id, skill_lv, 0);
+			return false;
 		case NC_SILVERSNIPER:
 		case NC_MAGICDECOY: {
 				int32 c = 0;

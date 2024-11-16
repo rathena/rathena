@@ -886,10 +886,10 @@ void clif_createchat( map_session_data& sd, e_create_chatroom flag );
 void clif_dispchat(struct chat_data* cd, int32 fd);	// area or fd
 void clif_joinchatfail( map_session_data& sd, e_refuse_enter_room result );
 void clif_joinchatok(map_session_data& sd,chat_data& cd);
-void clif_addchat(struct chat_data* cd,map_session_data *sd);	// chat
-void clif_changechatowner(struct chat_data* cd, map_session_data* sd);	// chat
+void clif_addchat( chat_data& cd, map_session_data& sd );
+void clif_chat_role( chat_data& cd, map_session_data& sd );
 void clif_clearchat(chat_data &cd);
-void clif_leavechat(struct chat_data* cd, map_session_data* sd, bool flag);	// chat
+void clif_chat_leave( chat_data& cd, map_session_data& sd, bool kicked );
 void clif_changechatstatus(chat_data& cd);
 void clif_refresh_storagewindow(map_session_data *sd);
 void clif_refresh(map_session_data *sd);	// self
@@ -925,9 +925,7 @@ void clif_storageclose( map_session_data& sd );
 int32 clif_insight(struct block_list *bl,va_list ap);	// map_forallinmovearea callback
 int32 clif_outsight(struct block_list *bl,va_list ap);	// map_forallinmovearea callback
 
-void clif_class_change_target(struct block_list *bl,int32 class_, int32 type, enum send_target target, map_session_data *sd);
-#define clif_class_change(bl, class_, type) clif_class_change_target(bl, class_, type, AREA, nullptr)
-#define clif_mob_class_change(md, class_) clif_class_change(&md->bl, class_, 1)
+void clif_class_change( block_list& bl, int32 class_, enum send_target target = AREA, map_session_data* sd = nullptr );
 
 void clif_skillinfoblock(map_session_data *sd);
 void clif_skillup(map_session_data *sd, uint16 skill_id, int32 lv, int32 range, int32 upgradable);
@@ -1343,8 +1341,7 @@ void clif_channel_msg(struct Channel *channel, const char *msg, unsigned long co
 
 #define clif_menuskill_clear(sd) (sd)->menuskill_id = (sd)->menuskill_val = (sd)->menuskill_val2 = 0;
 
-void clif_ranklist(map_session_data *sd, int16 rankingType);
-void clif_update_rankingpoint(map_session_data &sd, int32 rankingtype, int32 point);
+void clif_update_rankingpoint( map_session_data& sd, e_rank rankingtype, uint32 point );
 
 void clif_crimson_marker( map_session_data& sd, struct block_list& bl, bool remove );
 

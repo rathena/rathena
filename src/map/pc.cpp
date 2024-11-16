@@ -9925,21 +9925,25 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 				int32 eq_num=0,eq_n[MAX_INVENTORY];
 				memset(eq_n,0,sizeof(eq_n));
 				for(i=0;i<MAX_INVENTORY;i++) {
+					if( sd->inventory.u.items_inventory[i].nameid == 0 ){
+						continue;
+					}
+
+					if( !pc_candrop( sd, &sd->inventory.u.items_inventory[i] ) ){
+						continue;
+					}
+
 					if( (type&NMDT_INVENTORY && !sd->inventory.u.items_inventory[i].equip)
 						|| (type&NMDT_EQUIP && sd->inventory.u.items_inventory[i].equip)
-						||  type&NMDT_ALL)
+						||  type == NMDT_ALL)
 					{
-						int32 l;
-						ARR_FIND( 0, MAX_INVENTORY, l, eq_n[l] <= 0 );
-						if( l < MAX_INVENTORY )
-							eq_n[l] = i;
-
-						eq_num++;
+						eq_n[eq_num++] = i;
 					}
 				}
 				if(eq_num > 0){
-					int32 n = eq_n[rnd()%eq_num];
 					if(rnd()%10000 < per) {
+						int32 n = eq_n[rnd() % eq_num];
+
 						if(sd->inventory.u.items_inventory[n].equip)
 							pc_unequipitem(sd,n,3);
 						pc_dropitem(sd,n,1);
@@ -9949,10 +9953,11 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 			else if(id > 0) {
 				for(i=0;i<MAX_INVENTORY;i++){
 					if(sd->inventory.u.items_inventory[i].nameid == id
+						&& pc_candrop( sd, &sd->inventory.u.items_inventory[i] )
 						&& rnd()%10000 < per
 						&& ((type&NMDT_INVENTORY && !sd->inventory.u.items_inventory[i].equip)
 							|| (type&NMDT_EQUIP && sd->inventory.u.items_inventory[i].equip)
-							|| type&NMDT_ALL) ){
+							|| type == NMDT_ALL) ){
 						if(sd->inventory.u.items_inventory[i].equip)
 							pc_unequipitem(sd,i,3);
 						pc_dropitem(sd,i,1);

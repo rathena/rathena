@@ -1484,23 +1484,27 @@ static void clif_set_unit_walking( struct block_list& bl, map_session_data* tsd,
 	}
 }
 
-/// Changes sprite of an NPC object (ZC_NPCSPRITE_CHANGE).
-/// 01b0 <id>.L <type>.B <value>.L
-/// type:
-///     unused
-void clif_class_change_target(struct block_list *bl,int32 class_,int32 type, enum send_target target, map_session_data *sd)
-{
-	nullpo_retv(bl);
-
-	if(!pcdb_checkid(class_))
-	{// player classes yield missing sprites
-		unsigned char buf[16];
-		WBUFW(buf,0)=0x1b0;
-		WBUFL(buf,2)=bl->id;
-		WBUFB(buf,6)=type;
-		WBUFL(buf,7)=class_;
-		clif_send(buf,packet_len(0x1b0),(sd == nullptr ? bl : &(sd->bl)),target);
+/// Changes sprite of a non player object.
+/// 01b0 <id>.L <type>.B <value>.L (ZC_NPCSPRITE_CHANGE)
+void clif_class_change( block_list& bl, int32 class_, enum send_target target, map_session_data* sd ){
+	if( pcdb_checkid( class_ ) ){
+		// player classes yield missing sprites
+		return;
 	}
+
+	PACKET_ZC_NPCSPRITE_CHANGE p = {};
+
+	p.packetType = HEADER_ZC_NPCSPRITE_CHANGE;
+	p.GID = bl.id;
+	// Unused
+	p.type = 0;
+	p.class_ = class_;
+
+	if( sd != nullptr ){
+		bl = sd->bl;
+	}
+
+	clif_send( &p, sizeof( p ), &bl, target );
 }
 
 void clif_servantball( map_session_data& sd, struct block_list* target, enum send_target send_target ){
@@ -4653,64 +4657,49 @@ void clif_joinchatok(map_session_data& sd, chat_data& cd){
 }
 
 
-/// Notifies clients in a chat about a new member (ZC_MEMBER_NEWENTRY).
-/// 00dc <users>.W <name>.24B
-void clif_addchat(struct chat_data* cd,map_session_data *sd)
-{
-	unsigned char buf[29];
+/// Notifies clients in a chat about a new member.
+/// 00dc <users>.W <name>.24B (ZC_MEMBER_NEWENTRY)
+void clif_addchat( chat_data& cd, map_session_data& sd ){
+	PACKET_ZC_MEMBER_NEWENTRY p = {};
 
-	nullpo_retv(sd);
-	nullpo_retv(cd);
+	p.packetType = HEADER_ZC_MEMBER_NEWENTRY;
+	p.count = cd.users;
+	safestrncpy( p.name, sd.status.name, sizeof( p.name ) );
 
-	WBUFW(buf, 0) = 0xdc;
-	WBUFW(buf, 2) = cd->users;
-	safestrncpy(WBUFCP(buf, 4),sd->status.name,NAME_LENGTH);
-	clif_send(buf,packet_len(0xdc),&sd->bl,CHAT_WOS);
+	clif_send( &p, sizeof( p ), &sd.bl, CHAT_WOS );
 }
 
 
-/// Announce the new owner (ZC_ROLE_CHANGE).
-/// 00e1 <role>.L <nick>.24B
+/// Announce the new owner.
+/// 00e1 <role>.L <nick>.24B (ZC_ROLE_CHANGE)
 /// role:
 ///     0 = owner (menu)
 ///     1 = normal
-void clif_changechatowner(struct chat_data* cd, map_session_data* sd)
-{
-	unsigned char buf[64];
+void clif_chat_role( chat_data& cd, map_session_data& sd ){
+	PACKET_ZC_ROLE_CHANGE p = {};
 
-	nullpo_retv(sd);
-	nullpo_retv(cd);
+	p.packetType = HEADER_ZC_ROLE_CHANGE;
+	p.flag = cd.usersd[0] != &sd;
+	safestrncpy( p.name, sd.status.name, sizeof( p.name ) );
 
-	WBUFW(buf, 0) = 0xe1;
-	WBUFL(buf, 2) = 1;
-	safestrncpy(WBUFCP(buf,6),cd->usersd[0]->status.name,NAME_LENGTH);
-
-	WBUFW(buf,30) = 0xe1;
-	WBUFL(buf,32) = 0;
-	safestrncpy(WBUFCP(buf,36),sd->status.name,NAME_LENGTH);
-
-	clif_send(buf,packet_len(0xe1)*2,&sd->bl,CHAT);
+	clif_send( &p, sizeof( p ), &sd.bl, CHAT );
 }
 
 
-/// Notify about user leaving the chatroom (ZC_MEMBER_EXIT).
-/// 00dd <users>.W <nick>.24B <flag>.B
+/// Notify about user leaving the chatroom.
+/// 00dd <users>.W <nick>.24B <flag>.B (ZC_MEMBER_EXIT)
 /// flag:
 ///     0 = left
 ///     1 = kicked
-void clif_leavechat(struct chat_data* cd, map_session_data* sd, bool flag)
-{
-	unsigned char buf[32];
+void clif_chat_leave( chat_data& cd, map_session_data& sd, bool kicked ){
+	PACKET_ZC_MEMBER_EXIT p = {};
 
-	nullpo_retv(sd);
-	nullpo_retv(cd);
+	p.packetType = HEADER_ZC_MEMBER_EXIT;
+	p.count = cd.users - 1;
+	safestrncpy( p.name, sd.status.name, sizeof( p.name ) );
+	p.kicked = kicked;
 
-	WBUFW(buf, 0) = 0xdd;
-	WBUFW(buf, 2) = cd->users-1;
-	safestrncpy(WBUFCP(buf,4),sd->status.name,NAME_LENGTH);
-	WBUFB(buf,28) = flag;
-
-	clif_send(buf,packet_len(0xdd),&sd->bl,CHAT);
+	clif_send( &p, sizeof( p ), &sd.bl, CHAT );
 }
 
 
@@ -5355,25 +5344,22 @@ void clif_changemapcell(int32 fd, int16 m, int32 x, int32 y, int32 type, enum se
 }
 
 
-/// Notifies the client about an item on floor (ZC_ITEM_ENTRY).
-/// 009d <id>.L <name id>.W <identified>.B <x>.W <y>.W <amount>.W <subX>.B <subY>.B
-void clif_getareachar_item( map_session_data* sd,struct flooritem_data* fitem ){
-	nullpo_retv( sd );
-	nullpo_retv( fitem );
-
+/// Notifies the client about an item on floor.
+/// 009d <id>.L <name id>.W <identified>.B <x>.W <y>.W <amount>.W <subX>.B <subY>.B (ZC_ITEM_ENTRY)
+void clif_getareachar_item( map_session_data& sd, flooritem_data& fitem ){
 	PACKET_ZC_ITEM_ENTRY p = {};
 
 	p.packetType = HEADER_ZC_ITEM_ENTRY;
-	p.AID = fitem->bl.id;
-	p.itemId = client_nameid( fitem->item.nameid );
-	p.identify = fitem->item.identify;
-	p.x = fitem->bl.x;
-	p.y = fitem->bl.y;
-	p.amount = fitem->item.amount;
-	p.subX = fitem->subx;
-	p.subY = fitem->suby;
+	p.AID = fitem.bl.id;
+	p.itemId = client_nameid( fitem.item.nameid );
+	p.identify = fitem.item.identify;
+	p.x = fitem.bl.x;
+	p.y = fitem.bl.y;
+	p.amount = fitem.item.amount;
+	p.subX = fitem.subx;
+	p.subY = fitem.suby;
 
-	clif_send( &p, sizeof( p ), &sd->bl, SELF );
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 }
 
 /// Notifes client about Graffiti
@@ -5558,7 +5544,7 @@ static int32 clif_getareachar(struct block_list* bl,va_list ap)
 
 	switch(bl->type){
 	case BL_ITEM:
-		clif_getareachar_item(sd,(struct flooritem_data*) bl);
+		clif_getareachar_item( *sd, *reinterpret_cast<flooritem_data*>( bl ) );
 		break;
 	case BL_SKILL:
 		skill_getareachar_skillunit_visibilty_single((TBL_SKILL*)bl, &sd->bl);
@@ -5646,7 +5632,7 @@ int32 clif_insight(struct block_list *bl,va_list ap)
 	if (clif_session_isValid(tsd)) { //Tell tsd that bl entered into his view
 		switch(bl->type){
 		case BL_ITEM:
-			clif_getareachar_item(tsd,(struct flooritem_data*)bl);
+			clif_getareachar_item( *tsd, *reinterpret_cast<flooritem_data*>( bl ) );
 			break;
 		case BL_SKILL:
 			skill_getareachar_skillunit_visibilty_single((TBL_SKILL*)bl, &tsd->bl);
@@ -11511,20 +11497,20 @@ void clif_parse_GlobalMessage(int32 fd, map_session_data* sd)
 }
 
 
-/// /mm /mapmove (as @rura GM command) (CZ_MOVETO_MAP).
+/// /mm /mapmove (as @rura GM command).
 /// Request to warp to a map on given coordinates.
-/// 0140 <map name>.16B <x>.W <y>.W
-void clif_parse_MapMove(int32 fd, map_session_data *sd)
-{
-	char command[MAP_NAME_LENGTH_EXT+25];
-	char* map_name;
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
+/// 0140 <map name>.16B <x>.W <y>.W (CZ_MOVETO_MAP)
+void clif_parse_MapMove( int32 fd, map_session_data* sd){
+	const PACKET_CZ_MOVETO_MAP* p = reinterpret_cast<PACKET_CZ_MOVETO_MAP*>( RFIFOP( fd, 0 ) );
 
-	map_name = RFIFOCP(fd,info->pos[0]);
-	map_name[MAP_NAME_LENGTH_EXT-1]='\0';
-	safesnprintf(command,sizeof(command),"%cmapmove %s %d %d", atcommand_symbol, map_name,
-	    RFIFOW(fd,info->pos[1]), //x
-	    RFIFOW(fd,info->pos[2])); //y
+	char map_name[MAP_NAME_LENGTH_EXT];
+
+	safestrncpy( map_name, p->map, sizeof( map_name ) );
+
+	char command[CHAT_SIZE_MAX];
+
+	safesnprintf( command, sizeof( command ),"%cmapmove %s %hu %hu", atcommand_symbol, map_name, p->x, p->y );
+
 	is_atcommand(fd, sd, command, 1);
 }
 
@@ -11936,19 +11922,24 @@ void clif_parse_WisMessage(int32 fd, map_session_data* sd)
 }
 
 
-/// /b /nb (CZ_BROADCAST).
+/// /b /nb.
 /// Request to broadcast a message on whole server.
-/// 0099 <packet len>.W <text>.?B 00
+/// 0099 <packet len>.W <text>.?B 00 (CZ_BROADCAST)
 void clif_parse_Broadcast(int32 fd, map_session_data* sd) {
-	char command[CHAT_SIZE_MAX+11];
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	uint32 len = RFIFOW(fd,info->pos[0])-4;
-	char* msg = RFIFOCP(fd,info->pos[1]);
+	const PACKET_CZ_BROADCAST* p = reinterpret_cast<PACKET_CZ_BROADCAST*>( RFIFOP( fd, 0 ) );
 
-	// as the length varies depending on the command used, just block unreasonably long strings
-	mes_len_check(msg, len, CHAT_SIZE_MAX);
+	if( p->packetSize < sizeof( *p ) ){
+		return;
+	}
 
-	safesnprintf(command,sizeof(command),"%ckami %s", atcommand_symbol, msg);
+	char message[CHAT_SIZE_MAX];
+
+	safestrncpy( message, p->message, std::min<size_t>( sizeof( message ), p->packetSize - sizeof( *p ) + 1 ) );
+
+	char command[CHAT_SIZE_MAX];
+
+	safesnprintf( command, sizeof( command ),"%ckami %s", atcommand_symbol, message );
+
 	is_atcommand(fd, sd, command, 1);
 }
 
@@ -12062,18 +12053,19 @@ void clif_parse_UseItem(int32 fd, map_session_data *sd)
 /// Request to equip an item
 /// 00a9 <index>.W <position>.W (CZ_REQ_WEAR_EQUIP).
 /// 0998 <index>.W <position>.L (CZ_REQ_WEAR_EQUIP_V5)
-void clif_parse_EquipItem(int32 fd,map_session_data *sd)
-{
-	int32 index;
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
+void clif_parse_EquipItem( int32 fd, map_session_data* sd ){
+	const PACKET_CZ_REQ_WEAR_EQUIP* p = reinterpret_cast<PACKET_CZ_REQ_WEAR_EQUIP*>( RFIFOP( fd, 0 ) );
 
 	if(pc_isdead(sd)) {
 		clif_clearunit_area( sd->bl, CLR_DEAD );
 		return;
 	}
-	index = RFIFOW(fd,info->pos[0])-2;
-	if (index < 0 || index >= MAX_INVENTORY)
-		return; //Out of bounds check.
+
+	uint16 index = server_index( p->index );
+
+	if( index >= MAX_INVENTORY ){
+		return;
+	}
 
 	if((sd->npc_id && !sd->npc_item_flag) || (sd->state.block_action & PCBLOCK_EQUIP)) {
 		clif_msg_color( sd, MSI_CAN_NOT_EQUIP_ITEM, color_table[COLOR_RED] );
@@ -12106,15 +12098,8 @@ void clif_parse_EquipItem(int32 fd,map_session_data *sd)
 	//Client doesn't send the position for ammo.
 	if(sd->inventory_data[index]->type == IT_AMMO)
 		pc_equipitem(sd,index,EQP_AMMO);
-	else {
-	int32 req_pos;
-
-#if PACKETVER  >= 20120925
-		req_pos = RFIFOL(fd,info->pos[1]);
-#else
-		req_pos = (int)RFIFOW(fd,info->pos[1]);
-#endif
-		pc_equipitem(sd,index,req_pos);
+	else{
+		pc_equipitem( sd, index, p->position );
 	}
 }
 
@@ -12151,18 +12136,16 @@ void clif_parse_UnequipItem(int32 fd,map_session_data *sd)
 }
 
 
-/// Request to start a conversation with an NPC (CZ_CONTACTNPC).
-/// 0090 <id>.L <type>.B
+/// Request to start a conversation with an NPC.
+/// 0090 <id>.L <type>.B (CZ_CONTACTNPC)
 /// type:
 ///     1 = click
-void clif_parse_NpcClicked(int32 fd,map_session_data *sd)
-{
+void clif_parse_NpcClicked( int32 fd, map_session_data* sd ){
+	const PACKET_CZ_CONTACTNPC* p = reinterpret_cast<PACKET_CZ_CONTACTNPC*>( RFIFOP( fd, 0 ) );
+
 	if( sd == nullptr ){
 		return;
 	}
-
-	struct block_list *bl;
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
 
 	if(pc_isdead(sd)) {
 		clif_clearunit_area( sd->bl, CLR_DEAD );
@@ -12179,9 +12162,12 @@ void clif_parse_NpcClicked(int32 fd,map_session_data *sd)
 	if( sd->state.mail_writing )
 		return;
 
-	bl = map_id2bl(RFIFOL(fd,info->pos[0]));
-	//type = RFIFOB(fd,info->pos[1]);
-	if (!bl) return;
+	block_list* bl = map_id2bl( p->AID );
+
+	if( bl == nullptr ){
+		return;
+	}
+
 	switch (bl->type) {
 		case BL_MOB:
 		case BL_PC:
@@ -12209,17 +12195,22 @@ void clif_parse_NpcClicked(int32 fd,map_session_data *sd)
 }
 
 
-/// Selection between buy/sell was made (CZ_ACK_SELECT_DEALTYPE).
-/// 00c5 <id>.L <type>.B
+/// Selection between buy/sell was made.
+/// 00c5 <id>.L <type>.B (CZ_ACK_SELECT_DEALTYPE)
 /// type:
 ///     0 = buy
 ///     1 = sell
-void clif_parse_NpcBuySellSelected(int32 fd,map_session_data *sd)
-{
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
+void clif_parse_NpcBuySellSelected( int32 fd, map_session_data* sd ){
+	const PACKET_CZ_ACK_SELECT_DEALTYPE* p = reinterpret_cast<PACKET_CZ_ACK_SELECT_DEALTYPE*>( RFIFOP( fd, 0 ) );
+
+	if( sd == nullptr ){
+		return;
+	}
+
 	if (sd->state.trading)
 		return;
-	npc_buysellsel(sd,RFIFOL(fd,info->pos[0]),RFIFOB(fd,info->pos[1]));
+
+	npc_buysellsel( sd, p->GID, p->type );
 }
 
 
@@ -12313,28 +12304,22 @@ void clif_parse_NpcSellListSend(int32 fd,map_session_data *sd)
 }
 
 
-/// Chatroom creation request (CZ_CREATE_CHATROOM).
-/// 00d5 <packet len>.W <limit>.W <type>.B <passwd>.8B <title>.?B
+/// Chatroom creation request.
+/// 00d5 <packet len>.W <limit>.W <type>.B <passwd>.8B <title>.?B (CZ_CREATE_CHATROOM)
 /// type:
 ///     0 = private
 ///     1 = public
-void clif_parse_CreateChatRoom(int32 fd, map_session_data* sd)
-{
+void clif_parse_CreateChatRoom( int32 fd, map_session_data* sd){
+	const PACKET_CZ_CREATE_CHATROOM* p = reinterpret_cast<PACKET_CZ_CREATE_CHATROOM*>( RFIFOP( fd, 0 ) );
+
 	if( sd == nullptr ){
 		return;
 	}
 
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	int32 len = RFIFOW(fd,info->pos[0])-15;
-	int32 limit = RFIFOW(fd,info->pos[1]);
-	bool pub = (RFIFOB(fd,info->pos[2]) != 0);
-	const char* password = RFIFOCP(fd,info->pos[3]); //not zero-terminated
-	const char* title = RFIFOCP(fd,info->pos[4]); // not zero-terminated
-	char s_password[CHATROOM_PASS_SIZE];
-	char s_title[CHATROOM_TITLE_SIZE];
-
-	if (sd->sc.getSCE(SC_NOCHAT) && sd->sc.getSCE(SC_NOCHAT)->val1&MANNER_NOROOM)
+	if( sd->sc.getSCE( SC_NOCHAT ) && sd->sc.getSCE( SC_NOCHAT )->val1&MANNER_NOROOM ){
 		return;
+	}
+
 	if(battle_config.basic_skill_check && pc_checkskill(sd,NV_BASIC) < 4 && pc_checkskill(sd, SU_BASIC_SKILL) < 1) {
 		clif_skill_fail( *sd, 1, USESKILL_FAIL_LEVEL, 3 );
 		return;
@@ -12349,13 +12334,20 @@ void clif_parse_CreateChatRoom(int32 fd, map_session_data* sd)
 		return;
 	}
 
-	if( len <= 0 )
-		return; // invalid input
+	if( p->packetSize < sizeof( *p ) ){
+		// invalid input
+		return;
+	}
 
-	safestrncpy(s_password, password, CHATROOM_PASS_SIZE);
-	safestrncpy(s_title, title, min(len+1,CHATROOM_TITLE_SIZE)); //NOTE: assumes that safestrncpy will not access the len+1'th byte
+	char password[CHATROOM_PASS_SIZE];
 
-	chat_createpcchat(sd, s_title, s_password, limit, pub);
+	safestrncpy( password, p->password, sizeof( password ) );
+
+	char title[CHATROOM_TITLE_SIZE];
+
+	safestrncpy( title, p->title, std::min<size_t>( sizeof( title ), p->packetSize - sizeof( *p ) + 1 ) );
+
+	chat_createpcchat( sd, title, password, p->limit, p->type != 0 );
 }
 
 
@@ -19827,180 +19819,326 @@ void clif_parse_client_version(int32 fd, map_session_data *sd) {
 
 /// Ranking list
 
-/// ranking pointlist  { <name>.24B <point>.L }*10
-void clif_sub_ranklist(unsigned char *buf,int32 idx,map_session_data* sd, enum e_rank rankingtype){
+/// ranking pointlist  { <name>.24B }*10 { <point>.L }*10
+void clif_sub_ranklist( RANKLIST& ranklist, e_rank rankingtype ){
 	struct fame_list* list;
-	int32 i, size = MAX_FAME_LIST;
+	size_t i;
+	size_t size = std::min<size_t>( ARRAYLENGTH( ranklist.names ), MAX_FAME_LIST );
 
-	switch(rankingtype) {
-		case RANK_BLACKSMITH:	list = smith_fame_list; break;
-		case RANK_ALCHEMIST:	list = chemist_fame_list; break;
-		case RANK_TAEKWON:		list = taekwon_fame_list; break;
-		// PK currently unsupported
-		case RANK_KILLER:		list = nullptr; size = 0; break;
+	switch( rankingtype ){
+		case RANK_BLACKSMITH:
+			list = smith_fame_list;
+			break;
+		case RANK_ALCHEMIST:
+			list = chemist_fame_list;
+			break;
+		case RANK_TAEKWON:
+			list = taekwon_fame_list;
+			break;
+		case RANK_KILLER:
+			// Currently not supported
+			list = nullptr;
+			size = 0;
+			break;
 		default:
 			ShowError( "clif_sub_ranklist: Unsupported ranking type '%d'. Please report this.\n", rankingtype );
 			return;
 	}
 
-	//Packet size limits this list to 10 elements. [Skotlex]
-	for (i = 0; i < min(10,size); i++) {
-		if (list[i].id > 0) {
-			const char* name;
-			if (strcmp(list[i].name, "-") == 0 &&
-				(name = map_charid2nick(list[i].id)) != nullptr)
-			{
-				safestrncpy(WBUFCP(buf,idx + NAME_LENGTH * i), name, NAME_LENGTH);
-			} else {
-				safestrncpy(WBUFCP(buf,idx + NAME_LENGTH * i), list[i].name, NAME_LENGTH);
-			}
-		} else {
-			safestrncpy(WBUFCP(buf, idx + NAME_LENGTH * i), "None", NAME_LENGTH);
+	for( i = 0; i < size; i++ ){
+		ranklist.points[i] = list[i].fame;
+
+		if( list[i].id == 0 ){
+			safestrncpy( ranklist.names[i], "None", sizeof( ranklist.names[0] ) );
+			continue;
 		}
-		WBUFL(buf, idx+NAME_LENGTH*10 + i * 4) = list[i].fame; //points
+
+		if( strcmp( list[i].name, "-" ) != 0 ){
+			safestrncpy( ranklist.names[i], list[i].name, sizeof( ranklist.names[0] ) );
+			continue;
+		}
+
+		const char* name = map_charid2nick( list[i].id );
+
+		if( name != nullptr ){
+			safestrncpy( ranklist.names[i], name, sizeof( ranklist.names[0] ) );
+		}else{
+			safestrncpy( ranklist.names[i], list[i].name, sizeof( ranklist.names[0] ) );
+		}
 	}
 
-	for(;i < 10; i++) { //In case the MAX is less than 10.
-		safestrncpy(WBUFCP(buf, idx + NAME_LENGTH * i), "Unavailable", NAME_LENGTH);
-		WBUFL(buf, idx+NAME_LENGTH*10 + i * 4) = 0;
+	size = ARRAYLENGTH( ranklist.names );
+
+	for( ; i < size; i++ ){
+		safestrncpy( ranklist.names[i], "Unavailable", sizeof( ranklist.names[0] ) );
+		ranklist.points[i] = 0;
 	}
-}
-
-/// Request for the blacksmith ranklist.
-/// /blacksmith command sends this packet to the server.
-/// 0217 (CZ_BLACKSMITH_RANK)
-void clif_parse_Blacksmith( int32 fd, map_session_data *sd ){
-	clif_ranklist(sd,RANK_BLACKSMITH);
-}
-
-/// Request for the alchemist ranklist.
-/// /alchemist command sends this packet to the server.
-/// 0218 (CZ_ALCHEMIST_RANK)
-void clif_parse_Alchemist( int32 fd, map_session_data *sd ){
-	clif_ranklist(sd,RANK_ALCHEMIST);
-}
-
-/// Request for the taekwon ranklist.
-/// /taekwon command sends this packet to the server.
-/// 0225 (CZ_TAEKWON_RANK)
-void clif_parse_Taekwon( int32 fd, map_session_data *sd ){
-	clif_ranklist(sd,RANK_TAEKWON);
-}
-
-/// Request for the killer ranklist.
-/// /pk command sends this packet to the server.
-/// 0237 (CZ_KILLER_RANK)
-void clif_parse_RankingPk( int32 fd, map_session_data *sd ){
-	clif_ranklist(sd,RANK_KILLER);
 }
 
 /// 0219 { <name>.24B }*10 { <point>.L }*10 (ZC_BLACKSMITH_RANK)
 /// 021a { <name>.24B }*10 { <point>.L }*10 (ZC_ALCHEMIST_RANK)
 /// 0226 { <name>.24B }*10 { <point>.L }*10 (ZC_TAEKWON_RANK)
 /// 0238 { <name>.24B }*10 { <point>.L }*10 (ZC_KILLER_RANK)
-/// 097d <RankingType>.W {<CharName>.24B <point>L}*10 <mypoint>L (ZC_ACK_RANKING)
-void clif_ranklist(map_session_data *sd, int16 rankingType) {
-	enum e_rank rank;
+/// 097d <RankingType>.W { <name>.24B }*10 { <point>.L }*10 <mypoint>L (ZC_ACK_RANKING)
+/// 0af6 <RankingType>.W { <CID>.L }*10 { <point>.L }*10 <mypoint>L (ZC_ACK_RANKING2)
+void clif_ranklist( map_session_data& sd, e_rank rankingtype ){
+#if PACKETVER_MAIN_NUM >= 20190731 || PACKETVER_RE_NUM >= 20190703 || PACKETVER_ZERO_NUM >= 20190724
+	PACKET_ZC_ACK_RANKING2 p = {};
 
-#if PACKETVER < 20130710
-	unsigned char buf[MAX_FAME_LIST * sizeof(struct fame_list)+2];
-	short cmd;
+	p.packetType = HEADER_ZC_ACK_RANKING2;
+	p.type = rankingtype;
 
-	switch( rankingType ){
-		case RANK_BLACKSMITH:	cmd = 0x219; break;
-		case RANK_ALCHEMIST:	cmd = 0x21a; break;
-		case RANK_TAEKWON:		cmd = 0x226; break;
-		case RANK_KILLER:		cmd = 0x238; break;
+	struct fame_list* list;
+	size_t i;
+	size_t size = std::min<size_t>( ARRAYLENGTH( p.CIDs ), MAX_FAME_LIST );
+
+	switch( rankingtype ){
+		case RANK_BLACKSMITH:
+			list = smith_fame_list;
+			break;
+		case RANK_ALCHEMIST:
+			list = chemist_fame_list;
+			break;
+		case RANK_TAEKWON:
+			list = taekwon_fame_list;
+			break;
+		case RANK_KILLER:
+			// Currently not supported
+			list = nullptr;
+			size = 0;
+			break;
 		default:
-			ShowError( "clif_ranklist: Unsupported ranking type '%d'. Please report this.\n", rankingType );
+			ShowError( "clif_sub_ranklist: Unsupported ranking type '%d'. Please report this.\n", rankingtype );
 			return;
 	}
 
-	// Can be safely casted here, since we validated it before
-	rank = (enum e_rank)rankingType;
+	for( i = 0; i < size; i++ ){
+		p.CIDs[i] = list[i].id;
+		p.points[i] = list[i].fame;
+	}
 
-	WBUFW(buf,0) = cmd;
-	clif_sub_ranklist(buf,2,sd,rank);
+	size = ARRAYLENGTH( p.CIDs );
 
-	clif_send(buf, packet_len(cmd), &sd->bl, SELF);
+	for( ; i < size; i++ ){
+		p.CIDs[i] = 0;
+		p.points[i] = 0;
+	}
+
+	switch( sd.class_&MAPID_UPPERMASK ){
+		case MAPID_BLACKSMITH:
+		case MAPID_ALCHEMIST:
+		case MAPID_TAEKWON:
+			p.mypoints = sd.status.fame;
+			break;
+		default:
+			p.mypoints = 0;
+			break;			
+	}
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#elif PACKETVER_MAIN_NUM >= 20130605 || PACKETVER_RE_NUM >= 20130529 || defined(PACKETVER_ZERO)
+	PACKET_ZC_ACK_RANKING p = {};
+
+	p.packetType = HEADER_ZC_ACK_RANKING;
+	p.type = rankingtype;
+	clif_sub_ranklist( p.list, rankingtype );
+
+	switch( sd.class_&MAPID_UPPERMASK ){
+		case MAPID_BLACKSMITH:
+		case MAPID_ALCHEMIST:
+		case MAPID_TAEKWON:
+			p.mypoints = sd.status.fame;
+			break;
+		default:
+			p.mypoints = 0;
+			break;			
+	}
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 #else
-	unsigned char buf[MAX_FAME_LIST * sizeof(struct fame_list)+8];
-	int32 mypoint = 0;
+	switch( rankingtype ){
+		case RANK_BLACKSMITH: {
+#if PACKETVER >= 20041108
+			PACKET_ZC_BLACKSMITH_RANK p = {};
 
-	switch( rankingType ){
+			p.packetType = HEADER_ZC_BLACKSMITH_RANK;
+			clif_sub_ranklist( p.list, RANK_BLACKSMITH );
+
+			clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
+			} break;
+		case RANK_ALCHEMIST: {
+#if PACKETVER >= 20041108
+			PACKET_ZC_ALCHEMIST_RANK p = {};
+
+			p.packetType = HEADER_ZC_ALCHEMIST_RANK;
+			clif_sub_ranklist( p.list, RANK_ALCHEMIST );
+
+			clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
+			} break;
+		case RANK_TAEKWON: {
+#if PACKETVER >= 20050328
+			PACKET_ZC_TAEKWON_RANK p = {};
+
+			p.packetType = HEADER_ZC_TAEKWON_RANK;
+			clif_sub_ranklist( p.list, RANK_TAEKWON );
+
+			clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
+			} break;
+		case RANK_KILLER: {
+#if PACKETVER >= 20050328
+			PACKET_ZC_KILLER_RANK p = {};
+
+			p.packetType = HEADER_ZC_KILLER_RANK;
+			clif_sub_ranklist( p.list, RANK_KILLER );
+
+			clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
+			} break;
+		default:
+			ShowError( "clif_ranklist: Unsupported ranking type '%d'. Please report this.\n", rankingtype );
+			return;
+	}
+#endif
+}
+
+/// Request for the blacksmith ranklist.
+/// /blacksmith command sends this packet to the server.
+/// 0217 (CZ_BLACKSMITH_RANK)
+void clif_parse_ranklist_blacksmith( int32 fd, map_session_data* sd ){
+#if PACKETVER >= 20041108
+	const PACKET_CZ_BLACKSMITH_RANK* p = reinterpret_cast<PACKET_CZ_BLACKSMITH_RANK*>( RFIFOP( fd, 0 ) );
+
+	clif_ranklist( *sd, RANK_BLACKSMITH );
+#endif
+}
+
+/// Request for the alchemist ranklist.
+/// /alchemist command sends this packet to the server.
+/// 0218 (CZ_ALCHEMIST_RANK)
+void clif_parse_ranklist_alchemist( int32 fd, map_session_data* sd ){
+#if PACKETVER >= 20041108
+	const PACKET_CZ_ALCHEMIST_RANK* p = reinterpret_cast<PACKET_CZ_ALCHEMIST_RANK*>( RFIFOP( fd, 0 ) );
+
+	clif_ranklist( *sd, RANK_ALCHEMIST );
+#endif
+}
+
+/// Request for the taekwon ranklist.
+/// /taekwon command sends this packet to the server.
+/// 0225 (CZ_TAEKWON_RANK)
+void clif_parse_ranklist_taekwon( int32 fd, map_session_data* sd ){
+#if PACKETVER >= 20050328
+	const PACKET_CZ_TAEKWON_RANK* p = reinterpret_cast<PACKET_CZ_TAEKWON_RANK*>( RFIFOP( fd, 0 ) );
+
+	clif_ranklist( *sd, RANK_TAEKWON );
+#endif
+}
+
+/// Request for the killer ranklist.
+/// /pk command sends this packet to the server.
+/// 0237 (CZ_KILLER_RANK)
+void clif_parse_ranklist_killer( int32 fd, map_session_data* sd ){
+#if PACKETVER >= 20050530
+	const PACKET_CZ_KILLER_RANK* p = reinterpret_cast<PACKET_CZ_KILLER_RANK*>( RFIFOP( fd, 0 ) );
+
+	clif_ranklist( *sd, RANK_KILLER );
+#endif
+}
+
+///
+/// 097c <type>.W (CZ_REQ_RANKING)
+/// type
+///		0: /blacksmith
+///		1: /alchemist
+///		2: /taekwon
+///		3: /pk
+void clif_parse_ranklist( int fd, map_session_data* sd ){
+#if PACKETVER_MAIN_NUM >= 20120503 || PACKETVER_RE_NUM >= 20120502
+	const PACKET_CZ_REQ_RANKING* p = reinterpret_cast<PACKET_CZ_REQ_RANKING*>( RFIFOP( fd, 0 ) );
+
+	switch( p->type ){
 		case RANK_BLACKSMITH:
 		case RANK_ALCHEMIST:
 		case RANK_TAEKWON:
 		case RANK_KILLER:
 			break;
 		default:
-			ShowError( "clif_ranklist: Unsupported ranking type '%d'. Please report this.\n", rankingType );
 			return;
 	}
 
-	// Can be safely casted here, since we validated it before
-	rank = (enum e_rank)rankingType;
-
-	WBUFW(buf,0) = 0x97d;
-	WBUFW(buf,2) = rank;
-	clif_sub_ranklist(buf,4,sd,rank);
-
-	switch(sd->class_&MAPID_UPPERMASK){ //mypoint32 (checking if valid type)
-		case MAPID_BLACKSMITH:
-		case MAPID_ALCHEMIST:
-		case MAPID_TAEKWON:
-			mypoint = sd->status.fame;
-	}
-	WBUFL(buf,284) = mypoint; //mypoint
-	clif_send(buf, 288, &sd->bl, SELF);
+	clif_ranklist( *sd, static_cast<e_rank>( p->type ) );
 #endif
-}
-
-/*
- *  097c <type> (CZ_REQ_RANKING)
- * type
- *  0: /blacksmith
- *  1: /alchemist
- *  2: /taekwon
- *  3: /pk
- * */
-void clif_parse_ranklist(int32 fd,map_session_data *sd) {
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	int16 rankingtype = RFIFOW(fd,info->pos[0]); //type
-
-	clif_ranklist(sd,rankingtype);
 }
 
 /// Updates the fame rank points for the given ranking.
 /// 021b <points>.L <total points>.L (ZC_BLACKSMITH_POINT)
 /// 021c <points>.L <total points>.L (ZC_ALCHEMIST_POINT)
 /// 0224 <points>.L <total points>.L (ZC_TAEKWON_POINT)
+/// 0236 <points>.L <total points>.L (ZC_KILLER_POINT)
 /// 097e <RankingType>.W <point>.L <TotalPoint>.L (ZC_UPDATE_RANKING_POINT)
-void clif_update_rankingpoint(map_session_data &sd, int32 rankingtype, int32 point) {
-	int32 fd = sd.fd;
-#if PACKETVER < 20130710
-	short cmd;
+void clif_update_rankingpoint( map_session_data& sd, e_rank rankingtype, uint32 point ){
+#if PACKETVER_MAIN_NUM >= 20120503 || PACKETVER_RE_NUM >= 20120502
+	PACKET_ZC_UPDATE_RANKING_POINT p = {};
+
+	p.packetType = HEADER_ZC_UPDATE_RANKING_POINT;
+	p.type = rankingtype;
+	p.points = point;
+	p.points_total = sd.status.fame;
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#else
 	switch(rankingtype){
-		case RANK_BLACKSMITH:	cmd = 0x21b; break;
-		case RANK_ALCHEMIST:	cmd = 0x21c; break;
-		case RANK_TAEKWON:		cmd = 0x224; break;
+		case RANK_BLACKSMITH: {
+#if PACKETVER >= 20041108
+			PACKET_ZC_BLACKSMITH_POINT p = {};
+
+			p.packetType = HEADER_ZC_BLACKSMITH_POINT;
+			p.points = point;
+			p.points_total = sd.status.fame;
+
+			clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
+			} break;
+		case RANK_ALCHEMIST: {
+#if PACKETVER >= 20041108
+			PACKET_ZC_ALCHEMIST_POINT p = {};
+
+			p.packetType = HEADER_ZC_ALCHEMIST_POINT;
+			p.points = point;
+			p.points_total = sd.status.fame;
+
+			clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
+			} break;
+		case RANK_TAEKWON: {
+#if PACKETVER >= 20050328
+			PACKET_ZC_TAEKWON_POINT p = {};
+
+			p.packetType = HEADER_ZC_TAEKWON_POINT;
+			p.points = point;
+			p.points_total = sd.status.fame;
+
+			clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
+			} break;
+		case RANK_KILLER: {
+#if PACKETVER >= 20050530
+			PACKET_ZC_KILLER_POINT p = {};
+
+			p.packetType = HEADER_ZC_KILLER_POINT;
+			p.points = point;
+			p.points_total = sd.status.fame;
+
+			clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
+			} break;
 		default:
 			ShowError( "clif_update_rankingpoint: Unsupported ranking type '%d'. Please report this.\n", rankingtype );
 			return;
 	}
-
-	WFIFOHEAD(fd,packet_len(cmd));
-	WFIFOW(fd,0) = cmd;
-	WFIFOL(fd,2) = point;
-	WFIFOL(fd,6) = sd.status.fame;
-	WFIFOSET(fd, packet_len(cmd));
-#else
-	WFIFOHEAD(fd,packet_len(0x97e));
-	WFIFOW(fd,0) = 0x97e;
-	WFIFOW(fd,2) = rankingtype;
-	WFIFOL(fd,4) = point;
-	WFIFOL(fd,8) = sd.status.fame;
-	WFIFOSET(fd,packet_len(0x97e));
 #endif
 }
 

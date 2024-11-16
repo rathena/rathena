@@ -17930,7 +17930,7 @@ Body:
     Weight: 10
   - Id: 7773
     AegisName: War_Badge
-    Name: Wat Badge
+    Name: War Badge
     Type: Etc
     Trade:
       NoDrop: true
