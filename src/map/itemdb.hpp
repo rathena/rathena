@@ -3187,10 +3187,11 @@ struct item_data
 //		some script commands should be revised as well...
 	uint64 class_base[3];	//Specifies if the base can wear this item (split in 3 indexes per type: 1-1, 2-1, 2-2)
 	uint16 class_upper; //Specifies if the class-type can equip it (See e_item_job)
-	struct {
-		int chance;
-		int id;
-	} mob[MAX_SEARCH]; //Holds the mobs that have the highest drop rate for this item. [Skotlex]
+	struct drop_chance {
+		uint32 chance;
+		uint32 mob_id;
+	};
+	std::vector<drop_chance> mobs; // Sorted vector of mobs that drop this item.
 	struct script_code *script;	//Default script for everything.
 	struct script_code *equip_script;	//Script executed once when equipping.
 	struct script_code *unequip_script;//Script executed once when unequipping.
@@ -3248,6 +3249,8 @@ struct item_data
 
 	bool isStackable();
 	int inventorySlotNeeded(int quantity);
+	void addMonsterDrop(uint32 mob_id, uint32 chance);
+	int removeMonsterDrop(uint32 mob_id, uint32 chance);
 };
 
 class ItemDatabase : public TypesafeCachedYamlDatabase<t_itemid, item_data> {
