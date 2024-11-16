@@ -171,15 +171,6 @@
 	export_constant(JOB_MECHANIC2);
 	export_constant(JOB_MECHANIC_T2);
 
-	export_deprecated_constant3("JOB_BABY_RUNE", JOB_BABY_RUNE_KNIGHT, "JOB_BABY_RUNE_KNIGHT");
-	export_deprecated_constant3("JOB_BABY_BISHOP", JOB_BABY_ARCH_BISHOP, "JOB_BABY_ARCH_BISHOP");
-	export_deprecated_constant3("JOB_BABY_CROSS", JOB_BABY_GUILLOTINE_CROSS, "JOB_BABY_GUILLOTINE_CROSS");
-	export_deprecated_constant3("JOB_BABY_GUARD", JOB_BABY_ROYAL_GUARD, "JOB_BABY_ROYAL_GUARD");
-	export_deprecated_constant3("JOB_BABY_CHASER", JOB_BABY_SHADOW_CHASER, "JOB_BABY_SHADOW_CHASER");
-
-	export_deprecated_constant3("JOB_BABY_RUNE2", JOB_BABY_RUNE_KNIGHT2, "JOB_BABY_RUNE_KNIGHT2");
-	export_deprecated_constant3("JOB_BABY_GUARD2", JOB_BABY_ROYAL_GUARD2, "JOB_BABY_ROYAL_GUARD2");
-
 	export_constant(JOB_BABY_RUNE_KNIGHT);
 	export_constant(JOB_BABY_WARLOCK);
 	export_constant(JOB_BABY_RANGER);
@@ -390,12 +381,6 @@
 	export_constant2("EAJ_GENETIC_T",MAPID_GENETIC_T);
 	export_constant2("EAJ_SHADOW_CHASER_T",MAPID_SHADOW_CHASER_T);
 
-	export_deprecated_constant3("EAJ_BABY_RUNE", MAPID_BABY_RUNE_KNIGHT, "EAJ_BABY_RUNE_KNIGHT");
-	export_deprecated_constant3("EAJ_BABY_CROSS", MAPID_BABY_GUILLOTINE_CROSS, "EAJ_BABY_GUILLOTINE_CROSS");
-	export_deprecated_constant3("EAJ_BABY_BISHOP", MAPID_BABY_ARCH_BISHOP, "EAJ_BABY_ARCH_BISHOP");
-	export_deprecated_constant3("EAJ_BABY_GUARD", MAPID_BABY_ROYAL_GUARD, "EAJ_BABY_ROYAL_GUARD");
-	export_deprecated_constant3("EAJ_BABY_CHASER", MAPID_BABY_SHADOW_CHASER, "EAJ_BABY_SHADOW_CHASER");
-
 	export_constant2("EAJ_BABY_RUNE_KNIGHT",MAPID_BABY_RUNE_KNIGHT);
 	export_constant2("EAJ_BABY_WARLOCK",MAPID_BABY_WARLOCK);
 	export_constant2("EAJ_BABY_RANGER",MAPID_BABY_RANGER);
@@ -493,7 +478,6 @@
 	export_constant(MF_NORETURN);
 	export_constant(MF_NOWARPTO);
 	export_constant(MF_PVP_NIGHTMAREDROP);
-	export_deprecated_constant3("mf_nightmaredrop", MF_PVP_NIGHTMAREDROP, "MF_PVP_NIGHTMAREDROP");
 	export_constant(MF_RESTRICTED);
 	export_constant(MF_NOCOMMAND);
 	export_constant(MF_NODROP);
@@ -515,9 +499,7 @@
 	export_constant(MF_NOUSECART);
 	export_constant(MF_NOITEMCONSUMPTION);
 	export_constant(MF_NOSUNMOONSTARMIRACLE);
-	export_deprecated_constant3("mf_sumstarmiracle", MF_NOSUNMOONSTARMIRACLE, "MF_NOSUNMOONSTARMIRACLE");
 	export_constant(MF_FORCEMINEFFECT);
-	export_deprecated_constant3("mf_nomineeffect", MF_FORCEMINEFFECT, "MF_FORCEMINEFFECT");
 	export_constant(MF_NOLOCKON);
 	export_constant(MF_NOTOMB);
 	export_constant(MF_SKILL_DAMAGE);
@@ -1070,7 +1052,6 @@
 	export_constant(SC_ARMOR_ELEMENT_WATER);
 	export_constant(SC_NOCHAT);
 	export_constant(SC_PROTECTEXP);
-	export_deprecated_constant3("SC_BABY", SC_PROTECTEXP, "SC_PROTECTEXP");
 	export_constant(SC_AURABLADE);
 	export_constant(SC_PARRYING);
 	export_constant(SC_CONCENTRATION);
@@ -1602,7 +1583,6 @@
 	export_constant(SC_SHRIMP);
 	export_constant(SC_FRESHSHRIMP);
 	export_constant(SC_ACTIVE_MONSTER_TRANSFORM);
-	export_deprecated_constant(SC_CLOUD_KILL);
 	export_constant(SC_LJOSALFAR);
 	export_constant(SC_MERMAID_LONGING);
 	export_constant(SC_HAT_EFFECT);
@@ -3413,7 +3393,6 @@
 	export_constant(RC_DRAGON);
 	export_constant(RC_PLAYER_HUMAN);
 	export_constant(RC_PLAYER_DORAM);
-	export_deprecated_constant3("RC_PLAYER", RC_PLAYER_HUMAN, "RC_PLAYER_HUMAN");
 	export_constant(RC_ALL);
 
 	export_constant(RC2_NONE);
@@ -3421,10 +3400,8 @@
 	export_constant(RC2_KOBOLD);
 	export_constant(RC2_ORC);
 	export_constant(RC2_GOLEM);
-	export_deprecated_constant(RC2_GUARDIAN);
 	export_constant(RC2_NINJA);
 	export_constant(RC2_GVG);
-	export_deprecated_constant(RC2_BATTLEFIELD);
 	export_constant(RC2_TREASURE);
 	export_constant(RC2_BIOLAB);
 	export_constant(RC2_MANUK);
@@ -3709,17 +3686,6 @@
 	export_constant(W_SHIELD);
 
 	/* ammunition types */
-	/* Send deprecation notice and temporarily replace with new constant value. */
-	export_deprecated_constant3("A_ARROW", AMMO_ARROW, "AMMO_ARROW");
-	export_deprecated_constant3("A_DAGGER", AMMO_DAGGER, "AMMO_DAGGER");
-	export_deprecated_constant3("A_BULLET", AMMO_BULLET, "AMMO_BULLET");
-	export_deprecated_constant3("A_SHELL", AMMO_SHELL, "AMMO_SHELL");
-	export_deprecated_constant3("A_GRENADE", AMMO_GRENADE, "AMMO_GRENADE");
-	export_deprecated_constant3("A_SHURIKEN", AMMO_SHURIKEN, "AMMO_SHURIKEN");
-	export_deprecated_constant3("A_KUNAI", AMMO_KUNAI, "AMMO_KUNAI");
-	export_deprecated_constant3("A_CANNONBALL", AMMO_CANNONBALL, "AMMO_CANNONBALL");
-	export_deprecated_constant3("A_THROWWEAPON", AMMO_THROWWEAPON, "AMMO_THROWWEAPON");
-
 	export_constant(AMMO_ARROW);
 	export_constant(AMMO_DAGGER);
 	export_constant(AMMO_BULLET);
@@ -4120,7 +4086,6 @@
 	export_constant(UELE_GROUP_ID);
 
 	/* unit control - NPC */
-	export_deprecated_constant3("UNPC_DISPLAY", UNPC_CLASS, "UNPC_CLASS");
 	export_constant(UNPC_LEVEL);
 	export_constant(UNPC_HP);
 	export_constant(UNPC_MAXHP);
@@ -7088,13 +7053,8 @@
 
 	/* refine cost types */
 	export_constant(REFINE_COST_NORMAL);
-	export_deprecated_constant3("REFINE_COST_OVER10", REFINE_COST_NORMAL, "REFINE_COST_NORMAL");
 	export_constant(REFINE_COST_HD);
 	export_constant(REFINE_COST_ENRICHED);
-	export_deprecated_constant3("REFINE_COST_OVER10_HD", REFINE_COST_HD, "REFINE_COST_HD");
-	// These two have been re-hardcoded, but better default to normal than provide nothing
-	export_deprecated_constant3("REFINE_COST_HOLINK", REFINE_COST_NORMAL, "REFINE_COST_NORMAL");
-	export_deprecated_constant3("REFINE_COST_WAGJAK", REFINE_COST_NORMAL, "REFINE_COST_NORMAL");
 	export_constant(REFINE_COST_MAX);
 
 	/* refine information types */
@@ -9572,7 +9532,7 @@
 	export_constant(HAT_EF_QSCARABA);
 	export_constant(HAT_EF_FSTONE);
 	export_constant(HAT_EF_MAGICCIRCLE);
-	export_deprecated_constant2("HAT_EF_GODCLASS",HAT_EF_BRYSINGGAMEN);
+	export_deprecated_constant2("HAT_EF_GODCLASS",HAT_EF_BRYSINGGAMEN);	// Feb 3, 2023
 	export_deprecated_constant2("HAT_EF_GODCLASS2",HAT_EF_MAGINGIORDE);
 	export_constant(HAT_EF_BRYSINGGAMEN);
 	export_constant(HAT_EF_MAGINGIORDE);
@@ -9810,18 +9770,6 @@
 	export_constant(MD_DETECTOR);
 	export_constant(MD_STATUSIMMUNE);
 	export_constant(MD_SKILLIMMUNE);
-
-	export_deprecated_constant3("MD_CASTSENSOR_IDLE", MD_CASTSENSORIDLE, "MD_CASTSENSORIDLE");
-	export_deprecated_constant3("MD_NORANDOM_WALK", MD_NORANDOMWALK, "MD_NORANDOMWALK");
-	export_deprecated_constant3("MD_NOCAST_SKILL", MD_NOCAST, "MD_NOCAST");
-	export_deprecated_constant3("MD_CASTSENSOR_CHASE", MD_CASTSENSORCHASE, "MD_CASTSENSORCHASE");
-	export_deprecated_constant3("MD_CHANGETARGET_MELEE", MD_CHANGETARGETMELEE, "MD_CHANGETARGETMELEE");
-	export_deprecated_constant3("MD_CHANGETARGET_CHASE", MD_CHANGETARGETCHASE, "MD_CHANGETARGETCHASE");
-	export_deprecated_constant3("MD_KNOCKBACK_IMMUNE", MD_KNOCKBACKIMMUNE, "MD_KNOCKBACKIMMUNE");
-	export_deprecated_constant3("MD_TELEPORT_BLOCK", MD_TELEPORTBLOCK, "MD_TELEPORTBLOCK");
-	export_deprecated_constant3("MD_FIXED_ITEMDROP", MD_FIXEDITEMDROP, "MD_FIXEDITEMDROP");
-	export_deprecated_constant3("MD_STATUS_IMMUNE", MD_STATUSIMMUNE, "MD_STATUSIMMUNE");
-	export_deprecated_constant3("MD_SKILL_IMMUNE", MD_SKILLIMMUNE, "MD_SKILLIMMUNE");
 
 	/* guild storage flags */
 	export_constant(GSTORAGE_OPEN);
