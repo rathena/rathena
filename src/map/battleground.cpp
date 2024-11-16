@@ -884,7 +884,7 @@ static bool bg_queue_check_status(map_session_data* sd, const char *name)
 {
 	nullpo_retr(false, sd);
 
-	if (sd->sc.count) {
+	if (!sd->sc.empty()) {
 		if (sd->sc.getSCE(SC_ENTRY_QUEUE_APPLY_DELAY)) { // Exclude any player who's recently left a battleground queue
 			char buf[CHAT_SIZE_MAX];
 

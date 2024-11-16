@@ -12469,21 +12469,31 @@ BUILDIN_FUNC(getstatus)
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	if( sd->sc.count == 0 || !sd->sc.getSCE(id) )
-	{// no status is active
+	status_change_entry* sce = sd->sc.getSCE( id );
+
+	// Check if the status is active
+	if( sce == nullptr ){
 		script_pushint(st, 0);
 		return SCRIPT_CMD_SUCCESS;
 	}
 
 	switch( type )
 	{
-		case 1:	 script_pushint(st, sd->sc.getSCE(id)->val1);	break;
-		case 2:  script_pushint(st, sd->sc.getSCE(id)->val2);	break;
-		case 3:  script_pushint(st, sd->sc.getSCE(id)->val3);	break;
-		case 4:  script_pushint(st, sd->sc.getSCE(id)->val4);	break;
+		case 1:
+			script_pushint( st, sce->val1 );
+			break;
+		case 2:
+			script_pushint( st, sce->val2 );
+			break;
+		case 3:
+			script_pushint( st, sce->val3 );
+			break;
+		case 4:
+			script_pushint( st, sce->val4 );
+			break;
 		case 5:
 			{
-				struct TimerData* timer = (struct TimerData*)get_timer(sd->sc.getSCE(id)->timer);
+				const struct TimerData* timer = get_timer( sce->timer );
 
 				if( timer )
 				{// return the amount of time remaining
