@@ -91,7 +91,7 @@ static void MD5_Round_Calculate(const unsigned char *block,
 {
 	//create X It is since it is required.
 	uint32 X[16]; //512bit 64byte
-	int j,k;
+	int32 j,k;
 
 	//Save A as AA, B as BB, C as CC, and and D as DD (saving of A, B, C, and D)
 	uint32 A=*A2, B=*B2, C=*C2, D=*D2;
@@ -158,7 +158,7 @@ static void MD5_String2binary(const char * string, unsigned char * output)
                 *B = &msg_digest[1],
                 *C = &msg_digest[2],
                 *D = &msg_digest[3];
-	int i;
+	int32 i;
 
 //prog
    //Step 3.Initialize MD Buffer (although it is the initialization; step 3 of A, B, C, and D -- unavoidable -- a head)
