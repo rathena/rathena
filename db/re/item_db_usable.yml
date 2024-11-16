@@ -9781,7 +9781,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_VITATA_500,500000,0;
+      sc_start2 SC_VITATA_500,500000,20,5;
       itemheal 0,200;
   - Id: 12437
     AegisName: Enrich_Celermine_Juice
@@ -11398,7 +11398,7 @@ Body:
       NoAuction: true
     Script: |
       specialeffect2 EF_HEAL3;
-      sc_start2 SC_G_LIFEPOTION,600000,-6,3;
+      sc_start4 SC_G_LIFEPOTION,600000,-6,3,0,0;
   - Id: 12579
     AegisName: Ring_Of_Valkyrie_Box
     Name: Valkyrie Ring Box
@@ -34721,7 +34721,7 @@ Body:
       NoAuction: true
     Script: |
       specialeffect2 EF_HEAL3;
-      sc_start4 SC_S_LIFEPOTION,600000,-5,5,0,0;
+      sc_start2 SC_S_LIFEPOTION,600000,-5,5;
   - Id: 14535
     AegisName: Med_Life_Potion
     Name: Medium Life Potion
@@ -34737,7 +34737,7 @@ Body:
       NoAuction: true
     Script: |
       specialeffect2 EF_HEAL3;
-      sc_start4 SC_L_LIFEPOTION,600000,-7,4,0,0;
+      sc_start2 SC_L_LIFEPOTION,600000,-7,4;
   - Id: 14536
     AegisName: Abrasive
     Name: Abrasive
@@ -61841,7 +61841,7 @@ Body:
       NoAuction: true
     Script: |
       specialeffect2 EF_HEAL3;
-      sc_start2 SC_M_DEFSCROLL,3600000,500,200;
+      sc_start2 SC_M_DEFSCROLL,600000,500,200;
   - Id: 23205
     AegisName: New_Hat_Scroll2
     Name: New Hat Scroll II
