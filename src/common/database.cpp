@@ -363,7 +363,7 @@ void YamlDatabase::invalidWarning( const ryml::NodeRef& node, const char* fmt, .
 
 	// Remove any remaining garbage of a previous loading line
 	ShowMessage( CL_CLL );
-	// Print the actual error
+	// Print32 the actual error
 	_vShowMessage( MSG_ERROR, fmt, ap );
 
 	va_end(ap);

@@ -8,9 +8,9 @@
 
 class map_session_data;
 struct duel {
-	int members_count;
-	int invites_count;
-	int max_players_limit;
+	int32 members_count;
+	int32 invites_count;
+	int32 max_players_limit;
 };
 
 duel& duel_get_duelid( size_t did );
