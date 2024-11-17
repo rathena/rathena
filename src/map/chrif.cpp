@@ -1272,7 +1272,7 @@ int32 chrif_updatefamelist_ack(int32 fd) {
 
 int32 chrif_save_scdata(map_session_data *sd) { //parses the sc_data of the player and sends it to the char-server for saving. [Skotlex]
 #ifdef ENABLE_SC_SAVING
-	int32 i, count=0;
+	int32 count=0;
 	t_tick tick;
 	struct status_change_data data;
 	status_change *sc = &sd->sc;
@@ -1286,12 +1286,11 @@ int32 chrif_save_scdata(map_session_data *sd) { //parses the sc_data of the play
 	WFIFOL(char_fd,4) = sd->status.account_id;
 	WFIFOL(char_fd,8) = sd->status.char_id;
 
-	for (i = 0; i < SC_MAX; i++) {
-		auto sce = sc->getSCE(static_cast<sc_type>(i));
-		if (!sce)
-			continue;
-		if (sce->timer != INVALID_TIMER) {
-			timer = get_timer(sce->timer);
+	for( const auto& it : *sc ){
+		const status_change_entry& sce = it.second;
+
+		if (sce.timer != INVALID_TIMER) {
+			timer = get_timer(sce.timer);
 			if (timer == nullptr || timer->func != status_change_timer)
 				continue;
 			if (DIFF_TICK(timer->tick,tick) > 0)
@@ -1300,11 +1299,11 @@ int32 chrif_save_scdata(map_session_data *sd) { //parses the sc_data of the play
 				data.tick = 0; //Negative tick does not necessarily mean that sc has expired
 		} else
 			data.tick = INFINITE_TICK; //Infinite duration
-		data.type = i;
-		data.val1 = sce->val1;
-		data.val2 = sce->val2;
-		data.val3 = sce->val3;
-		data.val4 = sce->val4;
+		data.type = it.first;
+		data.val1 = sce.val1;
+		data.val2 = sce.val2;
+		data.val3 = sce.val3;
+		data.val4 = sce.val4;
 		memcpy(WFIFOP(char_fd,14 +count*sizeof(struct status_change_data)),
 			&data, sizeof(struct status_change_data));
 		count++;

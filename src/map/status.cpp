@@ -47,7 +47,6 @@ enum e_regen {
 	RGN_SSP  = 0x08,
 };
 
-static struct eri *sc_data_ers; /// For sc_data entries
 static struct status_data dummy_status;
 
 short current_equip_item_index; /// Contains inventory index of an equipped item. To pass it into the EQUP_SCRIPT [Lupus]
@@ -1140,12 +1139,26 @@ void StatusDatabase::removeByStatusFlag(block_list *bl, std::vector<e_status_cha
 	}
 }
 
+status_change_entry::status_change_entry(){
+	this->timer = INVALID_TIMER;
+	this->val1 = 0;
+	this->val2 = 0;
+	this->val3 = 0;
+	this->val4 = 0;
+}
+
+status_change_entry::~status_change_entry(){
+	if( this->timer != INVALID_TIMER ){
+		delete_timer( this->timer, status_change_timer );
+		this->timer = INVALID_TIMER;
+	}
+}
+
 status_change::status_change(){
 	this->option = OPTION_NOTHING;
 	this->opt3 = OPT3_NORMAL;
 	this->opt1 = OPT1_NONE;
 	this->opt2 = OPT2_NONE;
-	this->count = 0;
 	this->lastEffect = SC_NONE;
 	this->lastEffectTimer = INVALID_TIMER;
 	this->cant = {};
@@ -1154,51 +1167,63 @@ status_change::status_change(){
 #ifndef RENEWAL
 	this->sg_counter = 0;
 #endif
-	std::fill( std::begin( this->data ), std::end( this->data ), nullptr );
+	this->data = {};
 	this->lastStatus = { SC_NONE, nullptr };
 }
 
 /**
  * Accessor for a status_change_entry in a status_change
  */
-status_change_entry * status_change::getSCE(enum sc_type type) {
-	// TODO: bounds check
-	if (type == lastStatus.first)
-		return lastStatus.second;
+status_change_entry* status_change::getSCE( enum sc_type type ){
+	if( type == this->lastStatus.first ){
+		return this->lastStatus.second;
+	}
+
+	status_change_entry* sc = util::umap_find( this->data, type );
+
+	this->lastStatus.first = type;
+	this->lastStatus.second = sc;
 	
-	lastStatus = {type, data[type]};
-	return lastStatus.second;
+	return this->lastStatus.second;
 }
 
-status_change_entry * status_change::getSCE(uint32 type) {
-	return getSCE(static_cast<sc_type>(type));
+status_change_entry* status_change::getSCE( uint32 type ){
+	return this->getSCE( static_cast<sc_type>( type ) );
 }
 
-status_change_entry * status_change::createSCE(enum sc_type type) {
-	data[type] = ers_alloc(sc_data_ers, struct status_change_entry);
-	lastStatus = {type, data[type]};
-	return data[type];
+status_change_entry* status_change::createSCE( enum sc_type type ){
+	status_change_entry& sc = this->data[type];
+
+	this->lastStatus.first = type;
+	this->lastStatus.second = &sc;
+
+	return this->lastStatus.second;
 }
 
 /**
  * free the sce, then clear it
  */
 void status_change::deleteSCE(enum sc_type type) {
-	ers_free(sc_data_ers, data[type]);
-	data[type] = nullptr;
-	lastStatus = {type, data[type]};
-}
+	this->data.erase( type );
 
-/**
- * For when we only want to clear the sce without freeing.
- */
-void status_change::clearSCE(enum sc_type type) {
-	data[type] = nullptr;
-	lastStatus = {type, data[type]};
+	this->lastStatus.first = type;
+	this->lastStatus.second = nullptr;
 }
 
 bool status_change::empty(){
-	return this->count == 0;
+	return this->data.empty();
+}
+
+size_t status_change::size(){
+	return this->data.size();
+}
+
+std::unordered_map<enum sc_type, status_change_entry>::iterator status_change::begin(){
+	return this->data.begin();
+}
+
+std::unordered_map<enum sc_type, status_change_entry>::iterator status_change::end(){
+	return this->data.end();
 }
 
 /** Creates dummy status */
@@ -4100,11 +4125,9 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 				run_script(data->script, 0, sd->bl.id, 0);
 		}
 
-		for( sc_type type = SC_NONE; type < SC_MAX; type = static_cast<sc_type>( type + 1 ) ){
-			if( status_change_entry* sce = sc->getSCE( type ); sce != nullptr ){
-				if( std::shared_ptr<s_status_change_db> scdb = status_db.find( type ); scdb != nullptr && scdb->script != nullptr ){
-					run_script( scdb->script, 0, sd->bl.id, 0 );
-				}
+		for( const auto& it : *sc ){
+			if( std::shared_ptr<s_status_change_db> scdb = status_db.find( it.first ); scdb != nullptr && scdb->script != nullptr ){
+				run_script( scdb->script, 0, sd->bl.id, 0 );
 			}
 		}
 	}
@@ -12931,8 +12954,8 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 		if( sce->timer != INVALID_TIMER )
 			delete_timer(sce->timer, status_change_timer);
 		sc_isnew = false;
-	} else { // New sc
-		++(sc->count);
+	} else {
+		// New sc
 		sce = sc->createSCE(type);
 	}
 	sce->val1 = val1;
@@ -13132,9 +13155,6 @@ int32 status_change_clear(struct block_list* bl, int32 type)
 
 		status_change_end(bl, status);
 		if( type == 1 && sc->getSCE(status) ) { // If for some reason status_change_end decides to still keep the status when quitting. [Skotlex]
-			(sc->count)--;
-			if (sc->getSCE(status)->timer != INVALID_TIMER)
-				delete_timer(sc->getSCE(status)->timer, status_change_timer);
 			sc->deleteSCE(status);
 		}
 	}
@@ -13158,80 +13178,91 @@ int32 status_change_clear(struct block_list* bl, int32 type)
  * @param line: Used for dancing save
  * @return 1: Success 0: Fail
  */
-int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid)
-{
-	map_session_data *sd;
-	status_change *sc;
-	struct status_change_entry *sce;
-	struct view_data *vd;
-	std::shared_ptr<s_status_change_db> scdb = status_db.find(type);
-
+int32 status_change_end( struct block_list* bl, enum sc_type type, int32 tid ){
 	nullpo_ret(bl);
 
-	sc = status_get_sc(bl);
+	status_change* sc = status_get_sc( bl );
 
-	if(!sc || !(sce = sc->getSCE(type)) || !scdb)
+	if( sc == nullptr ){
 		return 0;
-
-	sd = BL_CAST(BL_PC,bl);
-
-	if (sce->timer != tid && tid != INVALID_TIMER)
-		return 0;
-
-	if (tid == INVALID_TIMER) {
-		if (type == SC_ENDURE && sce->val4)
-			// Do not end infinite endure.
-			return 0;
-		if (type == SC_SPIDERWEB) {
-			//Delete the unit group first to expire found in the status change
-			std::shared_ptr<s_skill_unit_group> group, group2;
-			t_tick tick = gettick();
-			int32 pos = 1;
-			if (sce->val2)
-				if (!(group = skill_id2group(sce->val2)))
-					sce->val2 = 0;
-			if (sce->val3) {
-				if (!(group2 = skill_id2group(sce->val3)))
-					sce->val3 = 0;
-				else if (!group || ((group->limit - DIFF_TICK(tick, group->tick)) > (group2->limit - DIFF_TICK(tick, group2->tick)))) {
-					group = group2;
-					pos = 2;
-				}
-			}
-			if (sce->val4) {
-				if (!(group2 = skill_id2group(sce->val4)))
-					sce->val4 = 0;
-				else if (!group || ((group->limit - DIFF_TICK(tick, group->tick)) > (group2->limit - DIFF_TICK(tick, group2->tick)))) {
-					group = group2;
-					pos = 3;
-				}
-			}
-			if (pos == 1)
-				sce->val2 = 0;
-			else if (pos == 2)
-				sce->val3 = 0;
-			else if (pos == 3)
-				sce->val4 = 0;
-			if (group)
-				skill_delunitgroup(group);
-			if (!status_isdead(*bl) && (sce->val2 || sce->val3 || sce->val4))
-				return 0; //Don't end the status change yet as there are still unit groups associated with it
-		}
-		if (sce->timer != INVALID_TIMER) // Could be a SC with infinite duration
-			delete_timer(sce->timer,status_change_timer);
 	}
 
-	(sc->count)--;
+	// To be able to store a copy of the already freed status change
+	int32 val1;
+	int32 val2;
+	int32 val3;
+	int32 val4;
+
+	if( status_change_entry* sce = sc->getSCE( type ); sce != nullptr ){
+		if (sce->timer != tid && tid != INVALID_TIMER)
+			return 0;
+
+		if (tid == INVALID_TIMER) {
+			if (type == SC_ENDURE && sce->val4)
+				// Do not end infinite endure.
+				return 0;
+			if (type == SC_SPIDERWEB) {
+				//Delete the unit group first to expire found in the status change
+				std::shared_ptr<s_skill_unit_group> group, group2;
+				t_tick tick = gettick();
+				int32 pos = 1;
+				if (sce->val2)
+					if (!(group = skill_id2group(sce->val2)))
+						sce->val2 = 0;
+				if (sce->val3) {
+					if (!(group2 = skill_id2group(sce->val3)))
+						sce->val3 = 0;
+					else if (!group || ((group->limit - DIFF_TICK(tick, group->tick)) > (group2->limit - DIFF_TICK(tick, group2->tick)))) {
+						group = group2;
+						pos = 2;
+					}
+				}
+				if (sce->val4) {
+					if (!(group2 = skill_id2group(sce->val4)))
+						sce->val4 = 0;
+					else if (!group || ((group->limit - DIFF_TICK(tick, group->tick)) > (group2->limit - DIFF_TICK(tick, group2->tick)))) {
+						group = group2;
+						pos = 3;
+					}
+				}
+				if (pos == 1)
+					sce->val2 = 0;
+				else if (pos == 2)
+					sce->val3 = 0;
+				else if (pos == 3)
+					sce->val4 = 0;
+				if (group)
+					skill_delunitgroup(group);
+				if (!status_isdead(*bl) && (sce->val2 || sce->val3 || sce->val4))
+					return 0; //Don't end the status change yet as there are still unit groups associated with it
+			}
+		}
+
+		// Store a copy, if access is required later
+		val1 = sce->val1;
+		val2 = sce->val2;
+		val3 = sce->val3;
+		val4 = sce->val4;
+
+		sc->deleteSCE( type );
+	}else{
+		return 0;
+	}
+
+	std::shared_ptr<s_status_change_db> scdb = status_db.find( type );
+
+	if( scdb == nullptr ){
+		return 0;
+	}
 
 	if (scdb->state.any())
 		status_calc_state(bl,sc,scdb->state,false);
 
-	sc->clearSCE(type);
-
 	if (scdb->flag[SCF_DISPLAYPC] || scdb->flag[SCF_DISPLAYNPC])
 		status_display_remove(bl,type);
 
-	vd = status_get_viewdata(bl);
+	map_session_data* sd = BL_CAST( BL_PC, bl );
+	view_data* vd = status_get_viewdata( bl );
 	std::bitset<SCB_MAX> calc_flag = scdb->calc_flag;
 	status_data* status = status_get_status_data(*bl);
 
@@ -13246,7 +13277,7 @@ int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid)
 			break;
 		case SC_GRANITIC_ARMOR:
 			{
-				int32 damage = status->max_hp*sce->val3/100;
+				int32 damage = status->max_hp*val3/100;
 				if(status->hp < damage) // to not kill him
 					damage = status->hp-1;
 				status_damage(nullptr,bl,damage,0,0,1,0);
@@ -13257,8 +13288,8 @@ int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid)
 			struct unit_data *ud = unit_bl2ud(bl);
 			bool begin_spurt = true;
 			// Note: this int64 value is stored in two separate int32 variables (FIXME)
-			t_tick starttick  = (t_tick)sce->val3&0x00000000ffffffffLL;
-			starttick |= ((t_tick)sce->val4<<32)&0xffffffff00000000LL;
+			t_tick starttick  = (t_tick)val3&0x00000000ffffffffLL;
+			starttick |= ((t_tick)val4<<32)&0xffffffff00000000LL;
 
 			if (ud) {
 				if(!ud->state.running)
@@ -13267,11 +13298,11 @@ int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid)
 				if (ud->walktimer != INVALID_TIMER)
 					unit_stop_walking(bl,1);
 			}
-			if (begin_spurt && sce->val1 >= 7 &&
+			if (begin_spurt && val1 >= 7 &&
 				DIFF_TICK(gettick(), starttick) <= 1000 &&
 				(!sd || (sd->weapontype1 == W_FIST && sd->weapontype2 == W_FIST))
 			)
-				sc_start(bl,bl,SC_SPURT,100,sce->val1,skill_get_time2(scdb->skill_id, sce->val1));
+				sc_start(bl,bl,SC_SPURT,100,val1,skill_get_time2(scdb->skill_id, val1));
 		}
 		break;
 		case SC_AUTOBERSERK:
@@ -13301,10 +13332,10 @@ int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid)
 			break;
 		case SC_DEVOTION:
 			{
-				struct block_list *d_bl = map_id2bl(sce->val1);
+				struct block_list *d_bl = map_id2bl(val1);
 				if( d_bl ) {
 					if( d_bl->type == BL_PC )
-						((TBL_PC*)d_bl)->devotion[sce->val2] = 0;
+						((TBL_PC*)d_bl)->devotion[val2] = 0;
 					else if( d_bl->type == BL_MER )
 						((TBL_MER*)d_bl)->devotion_flag = 0;
 					clif_devotion(d_bl, nullptr);
@@ -13315,41 +13346,41 @@ int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid)
 		case SC_FLASHKICK: {
 				map_session_data *tsd;
 
-				if (!(tsd = map_id2sd(sce->val1)))
+				if (!(tsd = map_id2sd(val1)))
 					break;
 
-				tsd->stellar_mark[sce->val2] = 0;
+				tsd->stellar_mark[val2] = 0;
 			}
 			break;
 
 		case SC_SOULUNITY: {
 				map_session_data *tsd;
 
-				if (!(tsd = map_id2sd(sce->val2)))
+				if (!(tsd = map_id2sd(val2)))
 					break;
 
-				tsd->united_soul[sce->val3] = 0;
+				tsd->united_soul[val3] = 0;
 			}
 			break;
 
 		case SC_BLADESTOP:
-			if(sce->val4) {
-				int32 tid2 = sce->val4; //stop the status for the other guy of bladestop as well
-				struct block_list *tbl = map_id2bl(tid2);
+			if(val4) {
+				// Stop the status for the other guy of bladestop as well
+				struct block_list *tbl = map_id2bl(val4);
 				status_change *tsc = status_get_sc(tbl);
-				sce->val4 = 0;
+
 				if(tbl && tsc && tsc->getSCE(SC_BLADESTOP)) {
 					tsc->getSCE(SC_BLADESTOP)->val4 = 0;
 					status_change_end(tbl, SC_BLADESTOP);
 				}
-				clif_bladestop(bl, tid2, 0);
+				clif_bladestop(bl, val4, 0);
 			}
 			break;
 		case SC_DANCING:
 			{
 				map_session_data *dsd;
 
-				if(sce->val4 && sce->val4 != BCT_SELF && (dsd=map_id2sd(sce->val4))) { // End status on partner as well
+				if(val4 && val4 != BCT_SELF && (dsd=map_id2sd(val4))) { // End status on partner as well
 					status_change_entry *dsc = dsd->sc.getSCE(SC_DANCING);
 
 					if(dsc) {
@@ -13360,15 +13391,15 @@ int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid)
 					}
 				}
 
-				if(sce->val2) { // Erase associated land skill
-					std::shared_ptr<s_skill_unit_group> group = skill_id2group(sce->val2);
+				if(val2) { // Erase associated land skill
+					std::shared_ptr<s_skill_unit_group> group = skill_id2group(val2);
 
-					sce->val2 = 0;
+					val2 = 0;
 					if (group)
 						skill_delunitgroup(group);
 				}
 
-				if((sce->val1&0xFFFF) == CG_MOONLIT)
+				if((val1&0xFFFF) == CG_MOONLIT)
 					clif_status_change(bl,EFST_MOON,0,0,0,0,0);
 			}
 			break;
@@ -13383,15 +13414,15 @@ int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid)
 		case SC_SPLASHER:
 		case SC_ROSEBLOSSOM:
 			{
-				struct block_list *src=map_id2bl(sce->val3);
+				struct block_list *src=map_id2bl(val3);
 
 				if(src && tid != INVALID_TIMER)
-					skill_castend_damage_id(src, bl, sce->val2, sce->val1, gettick(), SD_LEVEL );
+					skill_castend_damage_id(src, bl, val2, val1, gettick(), SD_LEVEL );
 			}
 			break;
 		case SC_CLOSECONFINE2:
 			{
-				struct block_list *src = sce->val2?map_id2bl(sce->val2):nullptr;
+				struct block_list *src = val2?map_id2bl(val2):nullptr;
 				status_change *sc2 = src?status_get_sc(src):nullptr;
 				if (src && sc2 && sc2->getSCE(SC_CLOSECONFINE)) {
 					// If status was already ended, do nothing.
@@ -13402,23 +13433,23 @@ int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid)
 			}
 			[[fallthrough]];
 		case SC_CLOSECONFINE:
-			if (sce->val2 > 0) {
+			if (val2 > 0) {
 				// Caster has been unlocked... nearby chars need to be unlocked.
 				int32 range = 1
-					+ skill_get_range2(bl, scdb->skill_id, sce->val1, true)
+					+ skill_get_range2(bl, scdb->skill_id, val1, true)
 					+ skill_get_range2(bl, TF_BACKSLIDING, 1, true); // Since most people use this to escape the hold....
 				map_foreachinallarea(status_change_timer_sub,
-					bl->m, bl->x-range, bl->y-range, bl->x+range,bl->y+range,BL_CHAR,bl,sce,type,gettick());
+					bl->m, bl->x-range, bl->y-range, bl->x+range,bl->y+range,BL_CHAR,bl,nullptr,type,gettick());
 			}
 			break;
 		case SC_COMBO:
-			skill_combo_toggle_inf(bl,sce->val1,0);
+			skill_combo_toggle_inf(bl,val1,0);
 			break;
 		case SC_MARIONETTE:
 		case SC_MARIONETTE2: // Marionette target
-			if (sce->val1) { // Check for partner and end their marionette status as well
+			if (val1) { // Check for partner and end their marionette status as well
 				enum sc_type type2 = (type == SC_MARIONETTE) ? SC_MARIONETTE2 : SC_MARIONETTE;
-				struct block_list *pbl = map_id2bl(sce->val1);
+				struct block_list *pbl = map_id2bl(val1);
 				status_change* sc2 = pbl?status_get_sc(pbl):nullptr;
 
 				if (sc2 && sc2->getSCE(type2)) {
@@ -13436,33 +13467,31 @@ int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid)
 			if(status->hp > 200 && sc && sc->getSCE(SC__BLOODYLUST)) {
 				status_percent_heal(bl, 100, 0);
 				status_change_end(bl, SC__BLOODYLUST);
-			} else if (status->hp > 100 && sce->val2) // If val2 is removed, no HP penalty (dispelled?) [Skotlex]
+			} else if (status->hp > 100 && val2) // If val2 is removed, no HP penalty (dispelled?) [Skotlex]
 				status_set_hp(bl, 100, 0);
 			if(sc->getSCE(SC_ENDURE) && sc->getSCE(SC_ENDURE)->val4) {
 				sc->getSCE(SC_ENDURE)->val4 = 0;
 				status_change_end(bl, SC_ENDURE);
 			}
-			sc_start4(bl, bl, SC_REGENERATION, 100, 10,0,0,(RGN_HP|RGN_SP), skill_get_time(LK_BERSERK, sce->val1));
+			sc_start4(bl, bl, SC_REGENERATION, 100, 10,0,0,(RGN_HP|RGN_SP), skill_get_time(LK_BERSERK, val1));
 			break;
 		case SC_GOSPEL:
-			if (sce->val3) { // Clear the group.
-				std::shared_ptr<s_skill_unit_group> group = skill_id2group(sce->val3);
+			if (val3) { // Clear the group.
+				std::shared_ptr<s_skill_unit_group> group = skill_id2group(val3);
 
-				sce->val3 = 0;
 				if (group)
 					skill_delunitgroup(group);
 			}
 			break;
 #ifndef RENEWAL
 		case SC_HERMODE:
-			if(sce->val3 == BCT_SELF)
+			if(val3 == BCT_SELF)
 				skill_clear_unitgroup(bl);
 			break;
 		case SC_BASILICA: // Clear the skill area. [Skotlex]
-				if (sce->val3 && sce->val4 == bl->id) {
-					std::shared_ptr<s_skill_unit_group> group = skill_id2group(sce->val3);
+				if (val3 && val4 == bl->id) {
+					std::shared_ptr<s_skill_unit_group> group = skill_id2group(val3);
 
-					sce->val3 = 0;
 					if (group)
 						skill_delunitgroup(group);
 				}
@@ -13478,17 +13507,16 @@ int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid)
 		case SC_GLORYWOUNDS:
 		case SC_SOULCOLD:
 		case SC_HAWKEYES:
-			if (sce->val4) { // Clear the group.
-				std::shared_ptr<s_skill_unit_group> group = skill_id2group(sce->val4);
+			if (val4) { // Clear the group.
+				std::shared_ptr<s_skill_unit_group> group = skill_id2group(val4);
 
-				sce->val4 = 0;
 				if( group ) // Might have been cleared before status ended, e.g. land protector
 					skill_delunitgroup(group);
 			}
 			break;
 		case SC_JAILED:
-			if(sd && sd->mapindex == sce->val2)
-				pc_setpos(sd,(unsigned short)sce->val3,sce->val4&0xFFFF, sce->val4>>16, CLR_TELEPORT);
+			if(sd && sd->mapindex == val2)
+				pc_setpos(sd,(unsigned short)val3,val4&0xFFFF, val4>>16, CLR_TELEPORT);
 			break; // Guess hes not in jail :P
 		case SC_CHANGE:
 			if (tid == INVALID_TIMER)
@@ -13508,11 +13536,18 @@ int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid)
 			return 1;
 			break;
 		case SC_STOP:
-			if( sce->val2 ) {
-				struct block_list* tbl = map_id2bl(sce->val2);
-				sce->val2 = 0;
-				if( tbl && (sc = status_get_sc(tbl)) && sc->getSCE(SC_STOP) && sc->getSCE(SC_STOP)->val2 == bl->id )
-					status_change_end(tbl, SC_STOP);
+			if( val2 ) {
+				struct block_list* tbl = map_id2bl(val2);
+
+				if( tbl == nullptr ){
+					break;
+				}
+
+				status_change* tsc = status_get_sc( tbl );
+
+				if( tsc != nullptr && tsc->getSCE( SC_STOP ) && tsc->getSCE( SC_STOP )->val2 == bl->id ){
+					status_change_end( tbl, SC_STOP );
+				}
 			}
 			break;
 		case SC_TENSIONRELAX:
@@ -13521,8 +13556,8 @@ int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid)
 			break;
 		case SC_MONSTER_TRANSFORM:
 		case SC_ACTIVE_MONSTER_TRANSFORM:
-			if (sce->val2)
-				status_change_end(bl, (sc_type)sce->val2);
+			if (val2)
+				status_change_end(bl, (sc_type)val2);
 			break;
 
 		/* 3rd Stuff */
@@ -13530,14 +13565,14 @@ int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid)
 			clif_millenniumshield( *bl, 0 );
 			break;
 		case SC_HALLUCINATIONWALK:
-			sc_start(bl,bl,SC_HALLUCINATIONWALK_POSTDELAY,100,sce->val1,skill_get_time2(GC_HALLUCINATIONWALK,sce->val1));
+			sc_start(bl,bl,SC_HALLUCINATIONWALK_POSTDELAY,100,val1,skill_get_time2(GC_HALLUCINATIONWALK,val1));
 			break;
 		case SC_WHITEIMPRISON:
 			{
-				struct block_list* src = map_id2bl(sce->val2);
+				struct block_list* src = map_id2bl(val2);
 				if( tid == -1 || !src)
 					break; // Terminated by Damage
-				status_fix_damage(src,bl,400*sce->val1,clif_damage(*bl,*bl,gettick(),0,0,400*sce->val1,0,DMG_NORMAL,0,false),WL_WHITEIMPRISON);
+				status_fix_damage(src,bl,400*val1,clif_damage(*bl,*bl,gettick(),0,0,400*val1,0,DMG_NORMAL,0,false),WL_WHITEIMPRISON);
 			}
 			break;
 		case SC_WUGDASH:
@@ -13552,27 +13587,26 @@ int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid)
 			break;
 		case SC__SHADOWFORM:
 			{
-				map_session_data *s_sd = map_id2sd(sce->val2);
+				map_session_data *s_sd = map_id2sd(val2);
 
 				if (s_sd) s_sd->shadowform_id = 0;
 			}
 			break;
 		case SC_SATURDAYNIGHTFEVER: // Sit down force of Saturday Night Fever has the duration of only 3 seconds.
-			sc_start(bl, bl,SC_SITDOWN_FORCE,100,sce->val1,skill_get_time2(WM_SATURDAY_NIGHT_FEVER,sce->val1));
+			sc_start(bl, bl,SC_SITDOWN_FORCE,100,val1,skill_get_time2(WM_SATURDAY_NIGHT_FEVER,val1));
 			break;
 		case SC_NEUTRALBARRIER_MASTER:
 		case SC_STEALTHFIELD_MASTER:
-			if( sce->val2 ) {
-				std::shared_ptr<s_skill_unit_group> group = skill_id2group(sce->val2);
+			if( val2 ) {
+				std::shared_ptr<s_skill_unit_group> group = skill_id2group(val2);
 
-				sce->val2 = 0;
 				if( group ) // Might have been cleared before status ended, e.g. land protector
 					skill_delunitgroup(group);
 			}
 			break;
 		case SC_CURSEDCIRCLE_ATKER:
-			if( sce->val2 ) // Used the default area size cause there is a chance the caster could knock back and can't clear the target.
-				map_foreachinallrange(status_change_timer_sub, bl, AREA_SIZE + 3, BL_CHAR, bl, sce, SC_CURSEDCIRCLE_TARGET, gettick());
+			if( val2 ) // Used the default area size cause there is a chance the caster could knock back and can't clear the target.
+				map_foreachinallrange(status_change_timer_sub, bl, AREA_SIZE + 3, BL_CHAR, bl, nullptr, SC_CURSEDCIRCLE_TARGET, gettick());
 			break;
 		case SC_RAISINGDRAGON:
 			if( sd && !pc_isdead(sd) ) {
@@ -13587,11 +13621,11 @@ int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid)
 			break;
 		case SC_CURSEDCIRCLE_TARGET:
 			{
-				struct block_list *src = map_id2bl(sce->val2);
+				struct block_list *src = map_id2bl(val2);
 				status_change *sc2 = status_get_sc(src);
 
 				if( sc2 && sc2->getSCE(SC_CURSEDCIRCLE_ATKER) && --(sc2->getSCE(SC_CURSEDCIRCLE_ATKER)->val2) == 0 ) {
-					clif_bladestop(bl, sce->val2, 0);
+					clif_bladestop(bl, val2, 0);
 					status_change_end(src, SC_CURSEDCIRCLE_ATKER);
 				}
 			}
@@ -13610,7 +13644,7 @@ int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid)
 			break;
 
 		case SC_GRAVITYCONTROL:
-			status_fix_damage(bl, bl, sce->val2, clif_damage(*bl, *bl, gettick(), 0, 0, sce->val2, 0, DMG_NORMAL, 0, false), 0);
+			status_fix_damage(bl, bl, val2, clif_damage(*bl, *bl, gettick(), 0, 0, val2, 0, DMG_NORMAL, 0, false), 0);
 			clif_specialeffect(bl, 223, AREA);
 			clif_specialeffect(bl, 330, AREA);
 			break;
@@ -13630,10 +13664,10 @@ int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid)
 			}
 			break;
 		case SC_FULL_THROTTLE: {
-				int32 sec = skill_get_time2(scdb->skill_id, sce->val1);
+				int32 sec = skill_get_time2(scdb->skill_id, val1);
 
 				clif_status_change(bl, EFST_DEC_AGI, 1, sec, 0, 0, 0);
-				sc_start(bl, bl, SC_REBOUND, 100, sce->val1, sec);
+				sc_start(bl, bl, SC_REBOUND, 100, val1, sec);
 			}
 			break;
 		case SC_REBOUND:
@@ -13641,12 +13675,12 @@ int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid)
 			break;
 		case SC_ITEMSCRIPT: // Removes Buff Icons
 			if (sd)
-				clif_status_load(bl, (enum efst_type)sce->val2, 0);
+				clif_status_load(bl, (enum efst_type)val2, 0);
 			break;
 		case SC_C_MARKER:
 			{
 				// Remove mark data from caster
-				map_session_data *caster = map_id2sd(sce->val2);
+				map_session_data *caster = map_id2sd(val2);
 				uint8 i = 0;
 
 				if (!caster)
@@ -13663,7 +13697,7 @@ int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid)
 			if( tid != INVALID_TIMER ){
 				map_session_data *caster = nullptr;
 
-				if (status_isdead(*bl) || !(caster = map_id2sd(sce->val2)))
+				if (status_isdead(*bl) || !(caster = map_id2sd(val2)))
 					break;
 
 				std::shared_ptr<s_skill_db> skill = skill_db.find(RL_H_MINE);
@@ -13682,7 +13716,7 @@ int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid)
 			break;
 		case SC_VACUUM_EXTREME:
 			///< !CHECKME: Seems on official, there's delay before same target can be vacuumed in same area again [Cydh]
-			sc_start2(bl, bl, SC_VACUUM_EXTREME_POSTDELAY, 100, sce->val1, sce->val2, skill_get_time2(SO_VACUUM_EXTREME,sce->val1));
+			sc_start2(bl, bl, SC_VACUUM_EXTREME_POSTDELAY, 100, val1, val2, skill_get_time2(SO_VACUUM_EXTREME,val1));
 			break;
 		case SC_DIMENSION1:
 		case SC_DIMENSION2:
@@ -13708,17 +13742,17 @@ int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid)
 				hom_vaporize(sd, HOM_ST_REST);
 			break;
 		case SC_SERVANT_SIGN: {
-				map_session_data *tsd = map_id2sd(sce->val1);
+				map_session_data *tsd = map_id2sd(val1);
 
 				if( tsd != nullptr )
-					tsd->servant_sign[sce->val2] = 0;
+					tsd->servant_sign[val2] = 0;
 			}
 			break;
 		case SC_SOUNDBLEND: {
-				block_list *src = map_id2bl(sce->val2);
+				block_list *src = map_id2bl(val2);
 
 				if (src && tid != INVALID_TIMER)
-					skill_castend_damage_id(src, bl, TR_SOUNDBLEND, sce->val1, gettick(), SD_LEVEL|SD_ANIMATION);
+					skill_castend_damage_id(src, bl, TR_SOUNDBLEND, val1, gettick(), SD_LEVEL|SD_ANIMATION);
 			}
 			break;
 		case SC_SERVANTWEAPON:
@@ -13746,7 +13780,7 @@ int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid)
 
 	switch (type) {
 		case SC_DANCING:
-			if ((sce->val1&0xFFFF) == CG_MOONLIT)
+			if ((val1&0xFFFF) == CG_MOONLIT)
 				sc->opt3 &= ~OPT3_MOONLIT;
 			break;
 		case SC_INCATKRATE: // Simulated Explosion spirits effect.
@@ -13770,15 +13804,15 @@ int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid)
 		sc->option &= ~scdb->look;
 
 	if (calc_flag[SCB_DYE]) { // Restore DYE color
-		if (vd && !vd->cloth_color && sce->val4)
-			clif_changelook(bl,LOOK_CLOTHES_COLOR,sce->val4);
+		if (vd && !vd->cloth_color && val4)
+			clif_changelook(bl,LOOK_CLOTHES_COLOR,val4);
 		calc_flag.reset(SCB_DYE);
 	}
 
 	/*if (calc_flag[SCB_BODY])// Might be needed in the future. [Rytech]
 	{	//Restore body style
-		if (vd && !vd->body_style && sce->val4)
-			clif_changelook(bl,LOOK_BODY2,sce->val4);
+		if (vd && !vd->body_style && val4)
+			clif_changelook(bl,LOOK_BODY2,val4);
 		calc_flag.reset(SCB_BODY);
 	}*/
 
@@ -13787,7 +13821,7 @@ int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid)
 
 #if PACKETVER < 20151104
 	if (status_icon == EFST_WEAPONPROPERTY)
-		status_icon = EFST_ATTACK_PROPERTY_NOTHING + sce->val1; // Assign status icon for older clients
+		status_icon = EFST_ATTACK_PROPERTY_NOTHING + val1; // Assign status icon for older clients
 #endif
 
 	clif_status_change(bl,status_icon,0,0,0,0,0);
@@ -13823,9 +13857,8 @@ int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid)
 
 	// Needed to be here to make sure OPT1_STONEWAIT has been cleared from the target (only on natural expiration of the stone wait timer)
 	if (type == SC_STONEWAIT && tid != INVALID_TIMER)
-		status_change_start(bl, bl, SC_STONE, 100, sce->val1, sce->val2, 0, 0, sce->val3, SCSTART_NOAVOID);
+		status_change_start(bl, bl, SC_STONE, 100, val1, val2, 0, 0, val3, SCSTART_NOAVOID);
 
-	ers_free(sc_data_ers, sce);
 	return 1;
 }
 
@@ -16145,13 +16178,11 @@ void do_init_status(void) {
 	initDummyData();
 	status_readdb();
 	natural_heal_prev_tick = gettick();
-	sc_data_ers = ers_new(sizeof(struct status_change_entry),"status.cpp::sc_data_ers",ERS_OPT_NONE);
 	add_timer_interval(natural_heal_prev_tick + NATURAL_HEAL_INTERVAL, status_natural_heal_timer, 0, 0, NATURAL_HEAL_INTERVAL);
 }
 
 /** Destroy status data */
 void do_final_status(void) {
-	ers_destroy(sc_data_ers);
 	enchantgrade_db.clear();
 	size_fix_db.clear();
 	refine_db.clear();
