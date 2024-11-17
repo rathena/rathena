@@ -9636,7 +9636,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			else if (dstmd)
 				mob_unlocktarget(dstmd, tick);
 
-			if(tsc != nullptr || tsc->empty())
+			if(tsc == nullptr || tsc->empty())
 				break;
 
 			//Statuses that can't be Dispelled
@@ -11164,7 +11164,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			if (dstsd)
 				pc_bonus_script_clear(dstsd,BSF_REM_ON_CLEARANCE);
 
-			if(tsc != nullptr || tsc->empty())
+			if(tsc == nullptr || tsc->empty())
 				break;
 
 			//Statuses change that can't be removed by Cleareance

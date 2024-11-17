@@ -1794,7 +1794,7 @@ uint8 pc_isequip(map_session_data *sd,int32 n)
 	if(item == nullptr)
 		return ITEM_EQUIP_ACK_FAIL;
 
-	if (!sd->sc.empty() && sd->sc.getSCE(SC_SPIRIT) && sd->sc.getSCE(SC_SPIRIT)->val2 == SL_SUPERNOVICE) {
+	if (sd->sc.getSCE(SC_SPIRIT) && sd->sc.getSCE(SC_SPIRIT)->val2 == SL_SUPERNOVICE) {
 		//Spirit of Super Novice equip bonuses. [Skotlex]
 		if (sd->status.base_level >= 90 && item->equip & EQP_HELM)
 			return ITEM_EQUIP_ACK_OK; //Can equip all helms

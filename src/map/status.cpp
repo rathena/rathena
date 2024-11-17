@@ -11215,6 +11215,10 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 		case SC_DEVOTION:
 		{
 			block_list* d_bl = map_id2bl( val1 );
+
+			if( d_bl == nullptr ){
+				break;
+			}
 			status_change* d_sc = status_get_sc( d_bl );
 
 			if( d_sc != nullptr && !d_sc->empty() ){
