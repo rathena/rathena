@@ -1927,7 +1927,6 @@ int32 mapif_parse_GuildEmblemVersion(int32 fd, int32 guild_id, int32 version)
 //  0 : error
 int32 inter_guild_parse_frommap(int32 fd)
 {
-	RFIFOHEAD(fd);
 	switch(RFIFOW(fd,0)) {
 	case 0x3030: mapif_parse_CreateGuild(fd,RFIFOL(fd,4),RFIFOCP(fd,8),(struct guild_member *)RFIFOP(fd,32)); break;
 	case 0x3031: mapif_parse_GuildInfo(fd,RFIFOL(fd,2)); break;
