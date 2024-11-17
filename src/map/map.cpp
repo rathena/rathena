@@ -456,7 +456,7 @@ int32 map_moveblock(struct block_list *bl, int32 x1, int32 y1, t_tick tick)
 		sc = status_get_sc(bl);
 
 		skill_unit_move(bl,tick,2);
-		if ( sc && sc->count ) //at least one to cancel
+		if ( sc != nullptr && !sc->empty() ) //at least one to cancel
 		{
 			status_change_end(bl, SC_CLOSECONFINE);
 			status_change_end(bl, SC_CLOSECONFINE2);
@@ -501,7 +501,7 @@ int32 map_moveblock(struct block_list *bl, int32 x1, int32 y1, t_tick tick)
 			}
 		}
 
-		if (sc && sc->count) {
+		if (sc != nullptr && !sc->empty()) {
 			if (sc->getSCE(SC_DANCING))
 				skill_unit_move_unit_group(skill_id2group(sc->getSCE(SC_DANCING)->val2), bl->m, x1-x0, y1-y0);
 			else {
@@ -2143,7 +2143,7 @@ int32 map_quit(map_session_data *sd) {
 	//Unit_free handles clearing the player related data,
 	//map_quit handles extra specific data which is related to quitting normally
 	//(changing map-servers invokes unit_free but bypasses map_quit)
-	if( sd->sc.count ) {
+	if( !sd->sc.empty() ) {
 		for (const auto &it : status_db) {
 			std::bitset<SCF_MAX> &flag = it.second->flag;
 

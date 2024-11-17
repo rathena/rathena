@@ -1746,7 +1746,7 @@ int32 unit_skilluse_id2(struct block_list *src, int32 target_id, uint16 skill_id
 
 	sc = status_get_sc(src);
 
-	if (sc && !sc->count)
+	if (sc != nullptr && sc->empty())
 		sc = nullptr; // Unneeded
 
 	int32 inf = skill_get_inf(skill_id);
@@ -2269,7 +2269,7 @@ int32 unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, 
 
 	sc = status_get_sc(src);
 
-	if (sc && !sc->count)
+	if (sc != nullptr && sc->empty())
 		sc = nullptr;
 
 	if (!skill_db.find(skill_id))
@@ -3212,7 +3212,7 @@ int32 unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file
 	// Do not reset can-act delay. [Skotlex]
 	ud->attackabletime = ud->canmove_tick /*= ud->canact_tick*/ = gettick();
 
-	if(sc && sc->count ) { // map-change/warp dispells.
+	if(sc != nullptr && !sc->empty() ) { // map-change/warp dispells.
 		status_db.removeByStatusFlag(bl, { SCF_REMOVEONCHANGEMAP });
 
 		// Ensure the bl is a PC; if so, we'll handle the removal of cloaking and cloaking exceed later

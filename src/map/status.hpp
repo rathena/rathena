@@ -3374,6 +3374,7 @@ public:
 	status_change_entry * createSCE(enum sc_type type);
 	void deleteSCE(enum sc_type type);
 	void clearSCE(enum sc_type type);
+	bool empty();
 };
 #ifndef ONLY_CONSTANTS
 int32 status_damage( struct block_list *src, struct block_list *target, int64 dhp, int64 dsp, int64 dap, t_tick walkdelay, int32 flag, uint16 skill_id );

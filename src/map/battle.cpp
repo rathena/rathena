@@ -467,7 +467,7 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 	}
 
 	ratio = elemental_attribute_db.getAttribute(def_lv, atk_elem, def_type);
-	if (sc && sc->count) { //increase dmg by src status
+	if (sc != nullptr && !sc->empty()) { //increase dmg by src status
 		switch(atk_elem){
 			case ELE_FIRE:
 				if (sc->getSCE(SC_VOLCANO))
@@ -528,7 +528,7 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 		}
 	}
 
-	if (tsc && tsc->count) { //increase dmg by target status
+	if (tsc != nullptr && !tsc->empty()) { //increase dmg by target status
 		switch(atk_elem) {
 			case ELE_FIRE:
 				if (tsc->getSCE(SC_SPIDERWEB)) { //Double damage
@@ -1676,7 +1676,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		return damage;
 	}
 
-	if( tsc && tsc->count ) {
+	if( tsc != nullptr && !tsc->empty() ) {
 		// Damage increasing effects
 #ifdef RENEWAL // Flat +400% damage from melee
 		if (tsc->getSCE(SC_KAITE) && (flag&(BF_SHORT|BF_MAGIC)) == BF_SHORT)
@@ -1941,7 +1941,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	//SC effects from caster side.
 	status_change* sc = status_get_sc(src);
 
-	if (sc && sc->count) {
+	if (sc != nullptr && !sc->empty()) {
 		if (sc->getSCE(SC_BREAKINGLIMIT)) {
 			switch (skill_id) {
 				case HN_SHIELD_CHAIN_RUSH:
@@ -2052,7 +2052,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	sc = status_get_sc(bl);
 
 	// !TODO: Should RELIEVE needed to be down here or after some other check? Should the skill be independent of damagetaken from mob_db.yml?
-	if (sc && sc->count) {
+	if (sc != nullptr && !sc->empty()) {
 		if ((sce = sc->getSCE(SC_RELIEVE_ON)) && !sc->getSCE(SC_RELIEVE_OFF))
 			damage = i64max((damage - damage * sce->val2 / 100), 1);
 	}
@@ -2064,7 +2064,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			damage = i64max(damage * md->damagetaken / 100, 1);
 	}
 	
-	if (tsc && tsc->count) {
+	if (tsc != nullptr && !tsc->empty()) {
 		if (!battle_status_block_damage(src, bl, tsc, d, damage, skill_id, skill_lv)) // Statuses that reduce damage to 0.
 			return 0;
 	}
@@ -3624,7 +3624,7 @@ int32 battle_get_magic_element(struct block_list* src, struct block_list* target
 			break;
 		case NPC_PSYCHIC_WAVE:
 		case SO_PSYCHIC_WAVE:
-			if( sc && sc->count ) {
+			if( sc != nullptr && !sc->empty() ) {
 				static const std::vector<sc_type> types = {
 					SC_HEATER_OPTION,
 					SC_COOLER_OPTION,
@@ -4450,7 +4450,7 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 			}
 		}
 		if( wd->div_ == 1 && ((sd->weapontype1 == W_REVOLVER && (skill_lv = pc_checkskill(sd,GS_CHAINACTION)) > 0) //Normal Chain Action effect
-			|| (sc && sc->count && sc->getSCE(SC_E_CHAIN) && (skill_lv = sc->getSCE(SC_E_CHAIN)->val1) > 0)) //Chain Action of ETERNAL_CHAIN
+			|| (sc != nullptr && !sc->empty() && sc->getSCE(SC_E_CHAIN) && (skill_lv = sc->getSCE(SC_E_CHAIN)->val1) > 0)) //Chain Action of ETERNAL_CHAIN
 			&& rnd()%100 < 5*skill_lv ) //Success rate
 		{
 			wd->div_ = skill_get_num(GS_CHAINACTION,skill_lv);
@@ -7457,9 +7457,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 	right_element = battle_get_weapon_element(&wd, src, target, skill_id, skill_lv, EQI_HAND_R, false);
 	left_element = battle_get_weapon_element(&wd, src, target, skill_id, skill_lv, EQI_HAND_L, false);
 
-	if (sc && !sc->count)
+	if (sc != nullptr && sc->empty())
 		sc = nullptr; //Skip checking as there are no status changes active.
-	if (tsc && !tsc->count)
+	if (tsc != nullptr && tsc->empty())
 		tsc = nullptr; //Skip checking as there are no status changes active.
 
 	sd = BL_CAST(BL_PC, src);
@@ -9684,7 +9684,7 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 	if (flag & BF_SHORT) {//Bounces back part of the damage.
 		if ( (skill_get_inf2(skill_id, INF2_ISTRAP) || !status_reflect) && tsd && tsd->bonus.short_weapon_damage_return ) {
 			rdamage += damage * tsd->bonus.short_weapon_damage_return / 100;
-		} else if( status_reflect && tsc && tsc->count ) {
+		} else if( status_reflect && tsc != nullptr && !tsc->empty() ) {
 			if( tsc->getSCE(SC_REFLECTSHIELD) ) {
 				status_change_entry *sce_d;
 				block_list *d_bl;
@@ -10014,9 +10014,9 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	sc = status_get_sc(src);
 	tsc = status_get_sc(target);
 
-	if (sc && !sc->count) //Avoid sc checks when there's none to check for. [Skotlex]
+	if (sc != nullptr && sc->empty()) //Avoid sc checks when there's none to check for. [Skotlex]
 		sc = nullptr;
-	if (tsc && !tsc->count)
+	if (tsc != nullptr && tsc->empty())
 		tsc = nullptr;
 
 	if (sd)
@@ -10065,7 +10065,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			}
 		}
 	}
-	if (sc && sc->count) {
+	if (sc != nullptr && !sc->empty()) {
 		if (sc->getSCE(SC_CLOAKING) && !(sc->getSCE(SC_CLOAKING)->val4 & 2))
 			status_change_end(src, SC_CLOAKING);
 		else if (sc->getSCE(SC_CLOAKINGEXCEED) && !(sc->getSCE(SC_CLOAKINGEXCEED)->val4 & 2))
@@ -10193,7 +10193,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	if (sd && wd.damage + wd.damage2 > 0 && battle_vellum_damage(sd, target, &wd))
 		vellum_damage = true;
 
-	if( sc && sc->count ) {
+	if( sc != nullptr && !sc->empty() ) {
 		if (sc->getSCE(SC_EXEEDBREAK))
 			status_change_end(src, SC_EXEEDBREAK);
 		if( sc->getSCE(SC_SPELLFIST) && !vellum_damage ){
@@ -10767,7 +10767,7 @@ int32 battle_check_target( struct block_list *src, struct block_list *target,int
 
 				if (((TBL_PC*)target)->invincible_timer != INVALID_TIMER || pc_isinvisible((TBL_PC*)target))
 					return -1; //Cannot be targeted yet.
-				if( sc && sc->count ) {
+				if( sc != nullptr && !sc->empty() ) {
 					if( sc->getSCE(SC_VOICEOFSIREN) && sc->getSCE(SC_VOICEOFSIREN)->val2 == target->id )
 						return -1;
 				}
@@ -10910,7 +10910,7 @@ int32 battle_check_target( struct block_list *src, struct block_list *target,int
 						return 1;
 				}
 				//Status changes that prevent traps from triggering
-				if (sc && sc->count && inf2[INF2_ISTRAP]) {
+				if (sc != nullptr && !sc->empty() && inf2[INF2_ISTRAP]) {
 					if( sc->getSCE(SC_SIGHTBLASTER) && sc->getSCE(SC_SIGHTBLASTER)->val2 > 0 && sc->getSCE(SC_SIGHTBLASTER)->val4%2 == 0)
 						return -1;
 				}
