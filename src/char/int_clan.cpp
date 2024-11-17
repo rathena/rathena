@@ -184,7 +184,6 @@ static void mapif_parse_clan_member_joined( int32 fd ){
 //	1 : ok
 //  0 : error
 int32 inter_clan_parse_frommap( int32 fd ){
-	RFIFOHEAD(fd);
 	switch(RFIFOW(fd,0)) {
 		case 0x30A0:
 			mapif_parse_clan_request( fd );

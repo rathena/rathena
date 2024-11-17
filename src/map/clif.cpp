@@ -5183,7 +5183,7 @@ int32 clif_damage(block_list& src, block_list& dst, t_tick tick, int32 sdelay, i
 
 	status_change *sc = status_get_sc(&dst);
 
-	if(sc && sc->count) {
+	if(sc != nullptr && !sc->empty()) {
 		if(sc->getSCE(SC_HALLUCINATION)) {
 			damage = clif_hallucination_damage();
 			if(damage2)
@@ -5976,7 +5976,6 @@ void clif_skill_cooldown( map_session_data &sd, uint16 skill_id, t_tick tick ){
 int32 clif_skill_damage(struct block_list *src,struct block_list *dst,t_tick tick,int32 sdelay,int32 ddelay,int64 sdamage,int32 div,uint16 skill_id,uint16 skill_lv,enum e_damage_type type)
 {
 	unsigned char buf[64];
-	status_change *sc;
 	int32 damage = (int)cap_value(sdamage,INT_MIN,INT_MAX);
 
 	nullpo_ret(src);
@@ -5984,7 +5983,9 @@ int32 clif_skill_damage(struct block_list *src,struct block_list *dst,t_tick tic
 
 	type = clif_calc_delay(type,div,damage,ddelay);
 
-	if( ( sc = status_get_sc(dst) ) && sc->count ) {
+	status_change* sc = status_get_sc( dst );
+
+	if( sc != nullptr && !sc->empty() ) {
 		if(sc->getSCE(SC_HALLUCINATION) && damage)
 			damage = clif_hallucination_damage();
 	}
@@ -11697,7 +11698,7 @@ void clif_parse_ActionRequest_sub( map_session_data& sd, uint8 action_type, int3
 		if (sd.ud.skilltimer != INVALID_TIMER || (sd.sc.opt1 && sd.sc.opt1 != OPT1_STONEWAIT && sd.sc.opt1 != OPT1_BURNING))
 			break;
 
-		if (sd.sc.count && (
+		if (!sd.sc.empty() && (
 			sd.sc.getSCE(SC_DANCING) ||
 			(sd.sc.getSCE(SC_GRAVITATION) && sd.sc.getSCE(SC_GRAVITATION)->val3 == BCT_SELF)
 		)) //No sitting during these states either.

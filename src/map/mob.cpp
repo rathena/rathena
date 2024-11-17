@@ -1739,7 +1739,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 		return false;
 	}
 
-	if (md->sc.count && md->sc.getSCE(SC_BLIND))
+	if (md->sc.getSCE(SC_BLIND))
 		view_range = 3;
 	else
 		view_range = md->db->range2;
@@ -3943,7 +3943,7 @@ int32 mobskill_use(struct mob_data *md, t_tick tick, int32 event, int64 damage)
 					break;
 				case MSC_MYSTATUSON:		// status[num] on
 				case MSC_MYSTATUSOFF:		// status[num] off
-					if( !md->sc.count ){
+					if( md->sc.empty() ){
 						flag = 0;
 					}else if( mob_getstatus_sub( *md, static_cast<e_mob_skill_condition>( ms[i]->cond1 ), static_cast<sc_type>( ms[i]->cond2 ) ) ){
 						flag = 1;

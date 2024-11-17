@@ -235,7 +235,6 @@ void mapif_save_guild_storage_ack(int32 fd,uint32 account_id,int32 guild_id,int3
 
 void mapif_parse_LoadGuildStorage(int32 fd)
 {
-	RFIFOHEAD(fd);
 	mapif_load_guild_storage(fd,RFIFOL(fd,2),RFIFOL(fd,6),1);
 }
 
@@ -249,7 +248,6 @@ bool mapif_parse_SaveGuildStorage(int32 fd)
 	int32 guild_id;
 	int32 len;
 
-	RFIFOHEAD(fd);
 	guild_id = RFIFOL(fd,8);
 	len = RFIFOW(fd,2);
 
@@ -555,7 +553,6 @@ bool mapif_parse_StorageSave(int32 fd) {
 	int32 aid, cid, type;
 	struct s_storage stor;
 
-	RFIFOHEAD(fd);
 	type = RFIFOB(fd, 4);
 	aid = RFIFOL(fd, 5);
 	cid = RFIFOL(fd, 9);
@@ -587,7 +584,6 @@ bool mapif_parse_StorageSave(int32 fd) {
  *------------------------------------------*/
 bool inter_storage_parse_frommap(int32 fd)
 {
-	RFIFOHEAD(fd);
 	switch(RFIFOW(fd,0)){
 		case 0x3018: mapif_parse_LoadGuildStorage(fd); break;
 		case 0x3019: mapif_parse_SaveGuildStorage(fd); break;

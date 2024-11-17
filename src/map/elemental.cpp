@@ -584,7 +584,7 @@ static int32 elemental_ai_sub_timer(s_elemental_data *ed, map_session_data *sd, 
 
 	int32 master_dist, view_range;
 
-	if( ed->sc.count && ed->sc.getSCE(SC_BLIND) )
+	if( ed->sc.getSCE(SC_BLIND) )
 		view_range = 3;
 	else
 		view_range = ed->db->range2;

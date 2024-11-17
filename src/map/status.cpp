@@ -1050,7 +1050,7 @@ uint16 StatusDatabase::getSkill(sc_type type) {
  * @return True if flag is set or false otherwise
  */
 bool StatusDatabase::hasSCF(status_change *sc, e_status_change_flag flag) {
-	if (sc == nullptr || sc->count == 0 || flag == SCF_NONE)
+	if (sc == nullptr || sc->empty() || flag == SCF_NONE)
 		return false;
 
 	for (const auto &status_it : *this) {
@@ -1124,7 +1124,7 @@ void StatusDatabase::removeByStatusFlag(block_list *bl, std::vector<e_status_cha
 
 	status_change *sc = status_get_sc(bl);
 
-	if (sc == nullptr || sc->count == 0)
+	if (sc == nullptr || sc->empty())
 		return;
 
 	for (const auto &status_it : *this) {
@@ -1195,6 +1195,10 @@ void status_change::deleteSCE(enum sc_type type) {
 void status_change::clearSCE(enum sc_type type) {
 	data[type] = nullptr;
 	lastStatus = {type, data[type]};
+}
+
+bool status_change::empty(){
+	return this->count == 0;
 }
 
 /** Creates dummy status */
@@ -1738,7 +1742,7 @@ int32 status_heal(struct block_list *bl,int64 hhp,int64 hsp, int64 hap, int32 fl
 		return 0;
 
 	sc = status_get_sc(bl);
-	if (sc && !sc->count)
+	if (sc != nullptr && sc->empty())
 		sc = nullptr;
 
 	if (hp < 0) {
@@ -2024,7 +2028,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 			break;
 	}
 
-	if( sc && sc->count ) {
+	if( sc != nullptr && !sc->empty() ) {
 		if (sc->getSCE(SC_ALL_RIDING))
 			return false; //You can't use skills while in the new mounts (The client doesn't let you, this is to make cheat-safe)
 
@@ -2159,7 +2163,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 	if (target == nullptr || target == src) // No further checking needed.
 		return true;
 
-	if (tsc && tsc->count) {
+	if (tsc != nullptr && !tsc->empty()) {
 		if(!skill_id && tsc->getSCE(SC_TRICKDEAD))
 			return false;
 		if((skill_id == WZ_STORMGUST || skill_id == WZ_FROSTNOVA || skill_id == NJ_HYOUSYOURAKU || skill_id == NPC_STORMGUST2)
@@ -4057,7 +4061,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		current_equip_opt_index = -1;
 	}
 
-	if (sc->count){
+	if (!sc->empty()){
 		if( status_change_entry* sce = sc->getSCE(SC_ITEMSCRIPT); sce != nullptr ){
 			std::shared_ptr<item_data> data = item_db.find(sc->getSCE(SC_ITEMSCRIPT)->val1);
 
@@ -4648,7 +4652,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		sd->indexed_bonus.magic_atk_ele[ELE_POISON] += skill;
 	}
 
-	if(sc->count) {
+	if(!sc->empty()) {
 		if(sc->getSCE(SC_CONCENTRATE)) { // Update the card-bonus data
 			sc->getSCE(SC_CONCENTRATE)->val3 = sd->indexed_bonus.param_bonus[1]; // Agi
 			sc->getSCE(SC_CONCENTRATE)->val4 = sd->indexed_bonus.param_bonus[4]; // Dex
@@ -5149,7 +5153,7 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 		if( (skill=pc_checkskill(sd,WM_LESSON)) > 0 )
 			val += 3 + 3 * skill;
 
-		if (sc && sc->count) {
+		if (sc != nullptr && !sc->empty()) {
 			if (sc->getSCE(SC_ANCILLA))
 				val += sc->getSCE(SC_ANCILLA)->val2 / 100;
 		}
@@ -5233,7 +5237,7 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, sta
 	}
 	regen->rate.hp = regen->rate.sp = 100;
 
-	if (!sc || !sc->count)
+	if (sc == nullptr || sc->empty())
 		return;
 
 	// No HP or SP regen
@@ -5354,7 +5358,7 @@ void status_calc_state( struct block_list *bl, status_change *sc, std::bitset<SC
 {
 
 	/// No sc at all, we can zero without any extra weight over our conciousness
-	if( !sc->count ) {
+	if( sc->empty() ) {
 		sc->cant = {};
 		return;
 	}
@@ -6394,7 +6398,7 @@ void status_calc_bl_(struct block_list* bl, std::bitset<SCB_MAX> flag, uint8 opt
  */
 static unsigned short status_calc_str(struct block_list *bl, status_change *sc, int32 str)
 {
-	if(!sc || !sc->count)
+	if(sc == nullptr || sc->empty())
 		return cap_value(str,0,USHRT_MAX);
 
 	if(sc->getSCE(SC_HARMONIZE)) {
@@ -6473,7 +6477,7 @@ static unsigned short status_calc_str(struct block_list *bl, status_change *sc, 
  */
 static unsigned short status_calc_agi(struct block_list *bl, status_change *sc, int32 agi)
 {
-	if(!sc || !sc->count)
+	if(sc == nullptr || sc->empty())
 		return cap_value(agi,0,USHRT_MAX);
 
 	if(sc->getSCE(SC_HARMONIZE)) {
@@ -6550,7 +6554,7 @@ static unsigned short status_calc_agi(struct block_list *bl, status_change *sc, 
  */
 static unsigned short status_calc_vit(struct block_list *bl, status_change *sc, int32 vit)
 {
-	if(!sc || !sc->count)
+	if(sc == nullptr || sc->empty())
 		return cap_value(vit,0,USHRT_MAX);
 
 	if(sc->getSCE(SC_HARMONIZE)) {
@@ -6615,7 +6619,7 @@ static unsigned short status_calc_vit(struct block_list *bl, status_change *sc, 
  */
 static unsigned short status_calc_int(struct block_list *bl, status_change *sc, int32 int_)
 {
-	if(!sc || !sc->count)
+	if(sc == nullptr || sc->empty())
 		return cap_value(int_,0,USHRT_MAX);
 
 	if(sc->getSCE(SC_HARMONIZE)) {
@@ -6697,7 +6701,7 @@ static unsigned short status_calc_int(struct block_list *bl, status_change *sc, 
  */
 static unsigned short status_calc_dex(struct block_list *bl, status_change *sc, int32 dex)
 {
-	if(!sc || !sc->count)
+	if(sc == nullptr || sc->empty())
 		return cap_value(dex,0,USHRT_MAX);
 
 	if(sc->getSCE(SC_HARMONIZE)) {
@@ -6776,7 +6780,7 @@ static unsigned short status_calc_dex(struct block_list *bl, status_change *sc, 
  */
 static unsigned short status_calc_luk(struct block_list *bl, status_change *sc, int32 luk)
 {
-	if(!sc || !sc->count)
+	if(sc == nullptr || sc->empty())
 		return cap_value(luk,0,USHRT_MAX);
 
 	if(sc->getSCE(SC_HARMONIZE)) {
@@ -6841,7 +6845,7 @@ static unsigned short status_calc_luk(struct block_list *bl, status_change *sc, 
 */
 static unsigned short status_calc_pow(struct block_list *bl, status_change *sc, int32 pow)
 {
-	if (!sc || !sc->count)
+	if (sc == nullptr || sc->empty())
 		return cap_value(pow, 0, USHRT_MAX);
 
 	if (sc->getSCE(SC_BENEDICTUM))
@@ -6859,7 +6863,7 @@ static unsigned short status_calc_pow(struct block_list *bl, status_change *sc, 
 */
 static unsigned short status_calc_sta(struct block_list *bl, status_change *sc, int32 sta)
 {
-	if (!sc || !sc->count)
+	if (sc == nullptr || sc->empty())
 		return cap_value(sta, 0, USHRT_MAX);
 
 	if (sc->getSCE(SC_RELIGIO))
@@ -6877,7 +6881,7 @@ static unsigned short status_calc_sta(struct block_list *bl, status_change *sc, 
 */
 static unsigned short status_calc_wis(struct block_list *bl, status_change *sc, int32 wis)
 {
-	if (!sc || !sc->count)
+	if (sc == nullptr || sc->empty())
 		return cap_value(wis, 0, USHRT_MAX);
 
 	if (sc->getSCE(SC_RELIGIO))
@@ -6895,7 +6899,7 @@ static unsigned short status_calc_wis(struct block_list *bl, status_change *sc, 
 */
 static unsigned short status_calc_spl(struct block_list *bl, status_change *sc, int32 spl)
 {
-	if (!sc || !sc->count)
+	if (sc == nullptr || sc->empty())
 		return cap_value(spl, 0, USHRT_MAX);
 
 	if (sc->getSCE(SC_RELIGIO))
@@ -6913,7 +6917,7 @@ static unsigned short status_calc_spl(struct block_list *bl, status_change *sc, 
 */
 static unsigned short status_calc_con(struct block_list *bl, status_change *sc, int32 con)
 {
-	if (!sc || !sc->count)
+	if (sc == nullptr || sc->empty())
 		return cap_value(con, 0, USHRT_MAX);
 
 	if (sc->getSCE(SC_BENEDICTUM))
@@ -6931,7 +6935,7 @@ static unsigned short status_calc_con(struct block_list *bl, status_change *sc, 
 */
 static unsigned short status_calc_crt(struct block_list *bl, status_change *sc, int32 crt)
 {
-	if (!sc || !sc->count)
+	if (sc == nullptr || sc->empty())
 		return cap_value(crt, 0, USHRT_MAX);
 
 	if (sc->getSCE(SC_BENEDICTUM))
@@ -6949,7 +6953,7 @@ static unsigned short status_calc_crt(struct block_list *bl, status_change *sc, 
  */
 static unsigned short status_calc_batk(struct block_list *bl, status_change *sc, int32 batk)
 {
-	if(!sc || !sc->count)
+	if(sc == nullptr || sc->empty())
 		return cap_value(batk,0,USHRT_MAX);
 
 	if(sc->getSCE(SC_ATKPOTION))
@@ -6999,7 +7003,7 @@ static unsigned short status_calc_batk(struct block_list *bl, status_change *sc,
  */
 static unsigned short status_calc_watk(struct block_list *bl, status_change *sc, int32 watk)
 {
-	if(!sc || !sc->count)
+	if(sc == nullptr || sc->empty())
 		return cap_value(watk,0,USHRT_MAX);
 
 #ifndef RENEWAL
@@ -7095,7 +7099,7 @@ uint16 status_calc_pseudobuff_matk( map_session_data* sd, status_change *sc, int
 		matk += 15 * skill_lv + (skill_lv > 4 ? 25 : 0);
 	}
 
-	if (!sc || !sc->count)
+	if (sc == nullptr || sc->empty())
 		return static_cast<uint16>( cap_value(matk,0,USHRT_MAX) );
 
 	struct status_change_entry* sce;
@@ -7147,7 +7151,7 @@ uint16 status_calc_pseudobuff_matk( map_session_data* sd, status_change *sc, int
  * @return modified matk with cap_value(matk,0,USHRT_MAX)
  */
 uint16 status_calc_consumablematk( status_change *sc, int32 matk ){
-	if (!sc || !sc->count)
+	if (sc == nullptr || sc->empty())
 		return static_cast<uint16>( cap_value(matk,0,USHRT_MAX) );
 
 	struct status_change_entry* sce;
@@ -7171,7 +7175,7 @@ uint16 status_calc_consumablematk( status_change *sc, int32 matk ){
  */
 static signed short status_calc_critical(struct block_list *bl, status_change *sc, int32 critical)
 {
-	if(!sc || !sc->count)
+	if(sc == nullptr || sc->empty())
 		return cap_value(critical,10,SHRT_MAX);
 
 	if (sc->getSCE(SC_CRIFOOD))
@@ -7213,7 +7217,7 @@ static signed short status_calc_critical(struct block_list *bl, status_change *s
  */
 static signed short status_calc_hit(struct block_list *bl, status_change *sc, int32 hit)
 {
-	if(!sc || !sc->count)
+	if(sc == nullptr || sc->empty())
 		return cap_value(hit,1,SHRT_MAX);
 
 	if(sc->getSCE(SC_INCHIT))
@@ -7290,7 +7294,7 @@ static signed short status_calc_flee(struct block_list *bl, status_change *sc, i
 			flee -= flee * battle_config.bg_flee_penalty/100;
 	}
 
-	if(!sc || !sc->count)
+	if(sc == nullptr || sc->empty())
 		return cap_value(flee,1,SHRT_MAX);
 	if (sc->getSCE(SC_POISON_MIST))
 		return 0;
@@ -7391,7 +7395,7 @@ static signed short status_calc_flee(struct block_list *bl, status_change *sc, i
  */
 static signed short status_calc_flee2(struct block_list *bl, status_change *sc, int32 flee2)
 {
-	if(!sc || !sc->count)
+	if(sc == nullptr || sc->empty())
 		return cap_value(flee2,10,SHRT_MAX);
 
 	if(sc->getSCE(SC_WHISTLE))
@@ -7415,7 +7419,7 @@ static signed short status_calc_flee2(struct block_list *bl, status_change *sc, 
  */
 static defType status_calc_def(struct block_list *bl, status_change *sc, int32 def)
 {
-	if(!sc || !sc->count)
+	if(sc == nullptr || sc->empty())
 		return (defType)cap_value(def,DEFTYPE_MIN,DEFTYPE_MAX);
 
 	if(sc->getSCE(SC_BERSERK))
@@ -7526,7 +7530,7 @@ static defType status_calc_def(struct block_list *bl, status_change *sc, int32 d
  */
 static signed short status_calc_def2(struct block_list *bl, status_change *sc, int32 def2)
 {
-	if(!sc || !sc->count)
+	if(sc == nullptr || sc->empty())
 #ifdef RENEWAL
 		return (short)cap_value(def2,SHRT_MIN,SHRT_MAX);
 #else
@@ -7592,7 +7596,7 @@ static signed short status_calc_def2(struct block_list *bl, status_change *sc, i
  */
 static defType status_calc_mdef(struct block_list *bl, status_change *sc, int32 mdef)
 {
-	if(!sc || !sc->count)
+	if(sc == nullptr || sc->empty())
 		return (defType)cap_value(mdef,DEFTYPE_MIN,DEFTYPE_MAX);
 
 	if(sc->getSCE(SC_BERSERK))
@@ -7652,7 +7656,7 @@ static defType status_calc_mdef(struct block_list *bl, status_change *sc, int32 
  */
 static signed short status_calc_mdef2(struct block_list *bl, status_change *sc, int32 mdef2)
 {
-	if(!sc || !sc->count)
+	if(sc == nullptr || sc->empty())
 #ifdef RENEWAL
 		return (short)cap_value(mdef2,SHRT_MIN,SHRT_MAX);
 #else
@@ -7907,7 +7911,7 @@ static short status_calc_aspd(struct block_list *bl, status_change *sc, bool fix
 {
 	int32 bonus = 0;
 
-	if (!sc || !sc->count)
+	if (sc == nullptr || sc->empty())
 		return 0;
 
 	if (fixed) {
@@ -8048,7 +8052,7 @@ static short status_calc_aspd(struct block_list *bl, status_change *sc, bool fix
  */
 static short status_calc_fix_aspd(struct block_list *bl, status_change *sc, int32 aspd)
 {
-	if (!sc || !sc->count)
+	if (sc == nullptr || sc->empty())
 		return cap_value(aspd, 0, 2000);
 	if (sc->getSCE(SC_OVERED_BOOST))
 		return cap_value(2000 - sc->getSCE(SC_OVERED_BOOST)->val3 * 10, 0, 2000);
@@ -8080,7 +8084,7 @@ static short status_calc_aspd_rate(struct block_list *bl, status_change *sc, int
 {
 	int32 i;
 
-	if(!sc || !sc->count)
+	if(sc == nullptr || sc->empty())
 		return cap_value(aspd_rate,0,SHRT_MAX);
 
 	int32 max = 0;
@@ -8237,7 +8241,7 @@ static unsigned short status_calc_dmotion(struct block_list *bl, status_change *
 			return 0;
 	}
 
-	if (sc && sc->count > 0 && (sc->getSCE(SC_ENDURE) || sc->getSCE(SC_RUN) || sc->getSCE(SC_WUGDASH)))
+	if (sc != nullptr && !sc->empty() && (sc->getSCE(SC_ENDURE) || sc->getSCE(SC_RUN) || sc->getSCE(SC_WUGDASH)))
 		return 0;
 
 	return (unsigned short)cap_value(dmotion,0,USHRT_MAX);
@@ -8252,7 +8256,7 @@ static unsigned short status_calc_dmotion(struct block_list *bl, status_change *
 */
 static signed short status_calc_patk(struct block_list *bl, status_change *sc, int32 patk)
 {
-	if (!sc || !sc->count)
+	if (sc == nullptr || sc->empty())
 		return cap_value(patk, 0, SHRT_MAX);
 
 	if (sc->getSCE(SC_POWERFUL_FAITH))
@@ -8283,7 +8287,7 @@ static signed short status_calc_patk(struct block_list *bl, status_change *sc, i
 */
 static signed short status_calc_smatk(struct block_list *bl, status_change *sc, int32 smatk)
 {
-	if (!sc || !sc->count)
+	if (sc == nullptr || sc->empty())
 		return cap_value(smatk, 0, SHRT_MAX);
 
 	if (sc->getSCE(SC_COMPETENTIA))
@@ -8310,7 +8314,7 @@ static signed short status_calc_smatk(struct block_list *bl, status_change *sc, 
 */
 static signed short status_calc_res(struct block_list *bl, status_change *sc, int32 res)
 {
-	if (!sc || !sc->count)
+	if (sc == nullptr || sc->empty())
 		return cap_value(res, 0, SHRT_MAX);
 
 	if (sc->getSCE(SC_FIRM_FAITH))
@@ -8340,7 +8344,7 @@ static signed short status_calc_res(struct block_list *bl, status_change *sc, in
 */
 static signed short status_calc_mres(struct block_list *bl, status_change *sc, int32 mres)
 {
-	if (!sc || !sc->count)
+	if (sc == nullptr || sc->empty())
 		return cap_value(mres, 0, SHRT_MAX);
 
 	if (sc->getSCE(SC_GOLDENE_TONE))
@@ -8362,7 +8366,7 @@ static signed short status_calc_mres(struct block_list *bl, status_change *sc, i
 */
 static signed short status_calc_hplus(struct block_list *bl, status_change *sc, int32 hplus)
 {
-	if (!sc || !sc->count)
+	if (sc == nullptr || sc->empty())
 		return cap_value(hplus, 0, SHRT_MAX);
 
 	return (short)cap_value(hplus, 0, SHRT_MAX);
@@ -8377,7 +8381,7 @@ static signed short status_calc_hplus(struct block_list *bl, status_change *sc, 
 */
 static signed short status_calc_crate(struct block_list *bl, status_change *sc, int32 crate)
 {
-	if (!sc || !sc->count)
+	if (sc == nullptr || sc->empty())
 		return cap_value(crate, 0, SHRT_MAX);
 
 	if (sc->getSCE(SC_PRE_ACIES))
@@ -8452,7 +8456,7 @@ static uint32 status_calc_maxap(struct block_list *bl, uint64 maxap)
  */
 static unsigned char status_calc_element(struct block_list *bl, status_change *sc, int32 element)
 {
-	if(!sc || !sc->count)
+	if(sc == nullptr || sc->empty())
 		return cap_value(element, 0, UCHAR_MAX);
 
 	if(sc->getSCE(SC_FREEZE) || sc->getSCE(SC_CRYSTAL_ARMOR_OPTION))
@@ -8486,7 +8490,7 @@ static unsigned char status_calc_element(struct block_list *bl, status_change *s
  */
 static unsigned char status_calc_element_lv(struct block_list *bl, status_change *sc, int32 lv)
 {
-	if(!sc || !sc->count)
+	if(sc == nullptr || sc->empty())
 		return cap_value(lv, 1, 4);
 
 	if(sc->getSCE(SC_FREEZE))
@@ -8519,7 +8523,7 @@ static unsigned char status_calc_element_lv(struct block_list *bl, status_change
  */
 unsigned char status_calc_attack_element(struct block_list *bl, status_change *sc, int32 element)
 {
-	if(!sc || !sc->count)
+	if(sc == nullptr || sc->empty())
 		return cap_value(element, 0, UCHAR_MAX);
 	if(sc->getSCE(SC_ENCHANTARMS))
 		return sc->getSCE(SC_ENCHANTARMS)->val1;
@@ -8557,7 +8561,7 @@ unsigned char status_calc_attack_element(struct block_list *bl, status_change *s
  */
 static int32 status_calc_mode(struct block_list *bl, status_change *sc, int32 mode)
 {
-	if(!sc || !sc->count)
+	if(sc == nullptr || sc->empty())
 		return cap_value(mode, MD_NONE,INT_MAX);
 	if(sc->getSCE(SC_MODECHANGE)) {
 		if (sc->getSCE(SC_MODECHANGE)->val2)
@@ -9250,7 +9254,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 	status_data* status = status_get_status_data(*bl);
 	status_data* status_src = status_get_status_data(*src);
 	sc = status_get_sc(bl);
-	if( sc && !sc->count )
+	if( sc != nullptr && sc->empty() )
 		sc = nullptr;
 
 #ifdef RENEWAL
@@ -10965,10 +10969,15 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 
 		case SC_DEVOTION:
 		{
-			struct block_list *d_bl;
-			status_change *d_sc;
+			block_list* d_bl = map_id2bl( val1 );
 
-			if( (d_bl = map_id2bl(val1)) && (d_sc = status_get_sc(d_bl)) && d_sc->count ) { // Inherits Status From Source
+			if( d_bl == nullptr ){
+				break;
+			}
+			status_change* d_sc = status_get_sc( d_bl );
+
+			if( d_sc != nullptr && !d_sc->empty() ){
+				// Inherits status from source
 				const enum sc_type types[] = { SC_AUTOGUARD, SC_DEFENDER, SC_REFLECTSHIELD, SC_ENDURE };
 				int32 i = (map_flag_gvg2(bl->m) || map_getmapflag(bl->m, MF_BATTLEGROUND))?2:3;
 				while( i >= 0 ) {
@@ -12827,7 +12836,7 @@ int32 status_change_clear(struct block_list* bl, int32 type)
 	sc->sg_counter = 0;
 #endif
 
-	if (!sc->count)
+	if (sc->empty())
 		return 0;
 
 	for (const auto &it : status_db) {
@@ -14698,7 +14707,7 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 {
 	status_change *sc= status_get_sc(bl);
 
-	if (!sc || !sc->count)
+	if (sc == nullptr || sc->empty())
 		return;
 
 	//Clears buffs with specified flag and type
@@ -14773,7 +14782,7 @@ int32 status_change_spread(block_list *src, block_list *bl)
 
 	status_change *sc = status_get_sc(src);
 
-	if (sc == nullptr || sc->count == 0)
+	if (sc == nullptr || sc->empty())
 		return 0;
 
 	bool hasSpread = false;
@@ -14831,7 +14840,7 @@ static int32 status_natural_heal(struct block_list* bl, va_list args)
 	status_data* status = status_get_status_data(*bl);
 
 	sc = status_get_sc(bl);
-	if (sc && !sc->count)
+	if (sc != nullptr && sc->empty())
 		sc = nullptr;
 	sd = BL_CAST(BL_PC,bl);
 
@@ -15093,7 +15102,7 @@ void status_change_clear_onChangeMap(struct block_list *bl, status_change *sc)
 {
 	nullpo_retv(bl);
 
-	if (sc && sc->count) {
+	if (sc != nullptr && !sc->empty()) {
 		struct map_data *mapdata = map_getmapdata(bl->m);
 		bool mapIsVS = mapdata_flag_vs2(mapdata);
 		bool mapIsPVP = mapdata->getMapFlag(MF_PVP) != 0;
