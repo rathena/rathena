@@ -45,15 +45,15 @@ using namespace rathena;
 using namespace rathena::server_character;
 
 //definition of exported var declared in header
-int login_fd=-1; //login file descriptor
-int char_fd=-1; //char file descriptor
+int32 login_fd=-1; //login file descriptor
+int32 char_fd=-1; //char file descriptor
 struct Schema_Config schema_config;
 struct CharServ_Config charserv_config;
 struct mmo_map_server map_server[MAX_MAP_SERVERS];
 //Custom limits for the fame lists. [Skotlex]
-int fame_list_size_chemist = MAX_FAME_LIST;
-int fame_list_size_smith = MAX_FAME_LIST;
-int fame_list_size_taekwon = MAX_FAME_LIST;
+int32 fame_list_size_chemist = MAX_FAME_LIST;
+int32 fame_list_size_smith = MAX_FAME_LIST;
+int32 fame_list_size_taekwon = MAX_FAME_LIST;
 // Char-server-side stored fame lists [DracoRPG]
 struct fame_list smith_fame_list[MAX_FAME_LIST];
 struct fame_list chemist_fame_list[MAX_FAME_LIST];
@@ -73,7 +73,7 @@ struct s_subnet {
 	uint32 char_ip;
 	uint32 map_ip;
 } subnet[16];
-int subnet_count = 0;
+int32 subnet_count = 0;
 
 // uint32 account_id -> struct auth_node*
 std::unordered_map<uint32, std::shared_ptr<struct auth_node>> auth_db;
@@ -118,7 +118,7 @@ void char_set_charselect(uint32 account_id) {
 
 }
 
-void char_set_char_online(int map_id, uint32 char_id, uint32 account_id) {
+void char_set_char_online(int32 map_id, uint32 char_id, uint32 account_id) {
 	//Update DB
 	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `online`='1', `last_login`=NOW() WHERE `char_id`='%d' LIMIT 1", schema_config.char_db, char_id) )
 		Sql_ShowDebug(sql_handle);
@@ -207,7 +207,7 @@ void char_set_char_offline(uint32 char_id, uint32 account_id){
 	}
 }
 
-void char_db_setoffline( std::shared_ptr<struct online_char_data> character, int server ){
+void char_db_setoffline( std::shared_ptr<struct online_char_data> character, int32 server ){
 	if (server == -1) {
 		character->char_id = -1;
 		character->server = -1;
@@ -219,7 +219,7 @@ void char_db_setoffline( std::shared_ptr<struct online_char_data> character, int
 		character->server = -2; //In some map server that we aren't connected to.
 }
 
-void char_db_kickoffline( std::shared_ptr<struct online_char_data> character, int server_id ){
+void char_db_kickoffline( std::shared_ptr<struct online_char_data> character, int32 server_id ){
 	if (server_id > -1 && character->server != server_id)
 		return;
 
@@ -230,7 +230,7 @@ void char_db_kickoffline( std::shared_ptr<struct online_char_data> character, in
 		char_set_char_offline(character->char_id, character->account_id);
 }
 
-void char_set_all_offline(int id){
+void char_set_all_offline(int32 id){
 	if (id < 0)
 		ShowNotice("Sending all users offline.\n");
 	else
@@ -254,12 +254,12 @@ void char_set_all_offline_sql(void){
 		Sql_ShowDebug(sql_handle);
 }
 
-int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
-	int i = 0;
-	int count = 0;
-	int diff = 0;
+int32 char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
+	int32 i = 0;
+	int32 count = 0;
+	int32 diff = 0;
 	char save_status[128]; //For displaying save information. [Skotlex]
-	int errors = 0; //If there are any errors while saving, "cp" will not be updated at the end.
+	int32 errors = 0; //If there are any errors while saving, "cp" will not be updated at the end.
 	StringBuf buf;
 
 	if (char_id!=p->char_id) return 0;
@@ -529,10 +529,10 @@ int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 }
 
 /// Saves an array of 'item' entries into the specified table.
-int char_memitemdata_to_sql(const struct item items[], int max, int id, enum storage_type tableswitch, uint8 stor_id) {
+int32 char_memitemdata_to_sql(const struct item items[], int32 max, int32 id, enum storage_type tableswitch, uint8 stor_id) {
 	StringBuf buf;
 	SqlStmt* stmt;
-	int i, j, offset = 0, errors = 0;
+	int32 i, j, offset = 0, errors = 0;
 	const char *tablename, *selectoption, *printname;
 	struct item item; // temp storage variable
 	bool* flag; // bit array for inventory matching
@@ -636,7 +636,7 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 			&&  items[i].card[3] == item.card[3]
 			&&  items[i].unique_id == item.unique_id
 			) {	//They are the same item.
-				int k;
+				int32 k;
 				
 				ARR_FIND( 0, MAX_SLOTS, j, items[i].card[j] != item.card[j] );
 				ARR_FIND( 0, MAX_ITEM_RDM_OPT, k, items[i].option[k].id != item.option[k].id || items[i].option[k].value != item.option[k].value || items[i].option[k].param != item.option[k].param );
@@ -745,10 +745,10 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 	return errors;
 }
 
-bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storage_type tableswitch, uint8 stor_id) {
+bool char_memitemdata_from_sql(struct s_storage* p, int32 max, int32 id, enum storage_type tableswitch, uint8 stor_id) {
 	StringBuf buf;
 	SqlStmt* stmt;
-	int i,j, offset = 0, max2;
+	int32 i,j, offset = 0, max2;
 	struct item item, *storage;
 	const char *tablename, *selectoption, *printname;
 
@@ -871,7 +871,7 @@ bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storag
  * @retval SEX_MALE if the per-character sex is male
  * @retval SEX_FEMALE if the per-character sex is female
  */
-int char_mmo_gender( const struct char_session_data *sd, const struct mmo_charstatus *p, char sex ){
+int32 char_mmo_gender( const struct char_session_data *sd, const struct mmo_charstatus *p, char sex ){
 #if PACKETVER >= 20141016
 	switch( sex ){
 		case 'M':
@@ -885,7 +885,7 @@ int char_mmo_gender( const struct char_session_data *sd, const struct mmo_charst
 #endif
 			// There are calls to this function that do not contain the session
 			if( sd == nullptr ){
-				int i;
+				int32 i;
 
 				// Find player session
 				ARR_FIND( 0, fd_max, i, session[i] && ( sd = (struct char_session_data*)session[i]->session_data ) && sd->account_id == p->account_id );
@@ -906,14 +906,14 @@ int char_mmo_gender( const struct char_session_data *sd, const struct mmo_charst
 #endif
 }
 
-int char_mmo_char_tobuf(uint8* buf, struct mmo_charstatus* p);
+int32 char_mmo_char_tobuf(uint8* buf, struct mmo_charstatus* p);
 
 //=====================================================================================================
 // Loads the basic character rooster for the given account. Returns total buffer used.
-int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf, uint8* count ) {
+int32 char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf, uint8* count ) {
 	SqlStmt* stmt;
 	struct mmo_charstatus p;
-	int j = 0, i;
+	int32 j = 0, i;
 	char sex[2];
 
 	stmt = SqlStmt_Malloc(sql_handle);
@@ -1028,8 +1028,8 @@ int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf, uint8* coun
 }
 
 //=====================================================================================================
-int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_everything) {
-	int i;
+int32 char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_everything) {
+	int32 i;
 	SqlStmt* stmt;
 	struct s_point_str tmp_point;
 	struct s_skill tmp_skill;
@@ -1037,7 +1037,7 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 	struct s_friend tmp_friend;
 #ifdef HOTKEY_SAVING
 	struct hotkey tmp_hotkey;
-	int hotkey_num;
+	int32 hotkey_num;
 #endif
 	StringBuf msg_buf;
 	char sex[2];
@@ -1265,7 +1265,7 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 }
 
 //==========================================================================================================
-int char_mmo_sql_init(void) {
+int32 char_mmo_sql_init(void) {
 	ShowStatus("Characters per Account: '%d'.\n", charserv_config.char_config.char_per_account);
 
 	//the 'set offline' part is now in check_login_conn ...
@@ -1283,7 +1283,7 @@ int char_mmo_sql_init(void) {
 //-----------------------------------
 // Function to change chararcter's names
 //-----------------------------------
-int char_rename_char_sql(struct char_session_data *sd, uint32 char_id)
+int32 char_rename_char_sql(struct char_session_data *sd, uint32 char_id)
 {
 	struct mmo_charstatus char_dat;
 	char esc_name[NAME_LENGTH*2+1];
@@ -1350,9 +1350,9 @@ int char_rename_char_sql(struct char_session_data *sd, uint32 char_id)
 	return 0;
 }
 
-int char_check_char_name(char * name, char * esc_name)
+int32 char_check_char_name(char * name, char * esc_name)
 {
-	int i;
+	int32 i;
 
 	// check length of character name
 	if( name[0] == '\0' )
@@ -1410,14 +1410,14 @@ int char_check_char_name(char * name, char * esc_name)
 //-----------------------------------
 // Function to create a new character
 //-----------------------------------
-int char_make_new_char( struct char_session_data* sd, char* name_, int str, int agi, int vit, int int_, int dex, int luk, int slot, int hair_color, int hair_style, short start_job, int sex ){
+int32 char_make_new_char( struct char_session_data* sd, char* name_, int32 str, int32 agi, int32 vit, int32 int_, int32 dex, int32 luk, int32 slot, int32 hair_color, int32 hair_style, short start_job, int32 sex ){
 	char name[NAME_LENGTH];
 	char esc_name[NAME_LENGTH*2+1];
 	struct s_point_str tmp_start_point[MAX_STARTPOINT];
 	struct startitem tmp_start_items[MAX_STARTITEM];
 	uint32 char_id;
-	int flag, k, start_point_idx = rnd() % charserv_config.start_point_count;
-	int status_points;
+	int32 flag, k, start_point_idx = rnd() % charserv_config.start_point_count;
+	int32 status_points;
 
 	safestrncpy(name, name_, NAME_LENGTH);
 	normalize_name(name,TRIM_CHARS);
@@ -1546,7 +1546,7 @@ int char_make_new_char( struct char_session_data* sd, char* name_, int str, int 
 /*----------------------------------------------------------------------------------------------------------*/
 /* Divorce Players */
 /*----------------------------------------------------------------------------------------------------------*/
-int char_divorce_char_sql(int partner_id1, int partner_id2){
+int32 char_divorce_char_sql(int32 partner_id1, int32 partner_id2){
 	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `partner_id`='0' WHERE `char_id`='%d' OR `char_id`='%d' LIMIT 2", schema_config.char_db, partner_id1, partner_id2) )
 		Sql_ShowDebug(sql_handle);
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE (`nameid`='%u' OR `nameid`='%u') AND (`char_id`='%d' OR `char_id`='%d') LIMIT 2", schema_config.inventory_db, WEDDING_RING_M, WEDDING_RING_F, partner_id1, partner_id2) )
@@ -1565,11 +1565,11 @@ enum e_char_del_response char_delete(struct char_session_data* sd, uint32 char_i
 	char name[NAME_LENGTH];
 	char esc_name[NAME_LENGTH*2+1]; //Name needs be escaped.
 	uint32 account_id;
-	int party_id, guild_id, hom_id, base_level, partner_id, father_id, mother_id, elemental_id;
+	int32 party_id, guild_id, hom_id, base_level, partner_id, father_id, mother_id, elemental_id;
 	time_t delete_date;
 	char *data;
 	size_t len;
-	int i;
+	int32 i;
 
 	ARR_FIND(0, MAX_CHARS, i, sd->found_char[i] == char_id);
 
@@ -1778,9 +1778,9 @@ enum e_char_del_response char_delete(struct char_session_data* sd, uint32 char_i
  * This function parse all map-serv attached to this char-serv and increase user count
  * @return numbers of total users
  */
-int char_count_users(void)
+int32 char_count_users(void)
 {
-	int i, users;
+	int32 i, users;
 
 	users = 0;
 	for(i = 0; i < ARRAYLENGTH(map_server); i++) {
@@ -1794,7 +1794,7 @@ int char_count_users(void)
 // Writes char data to the buffer in the format used by the client.
 // Used in packets 0x6b (chars info) and 0x6d (new char info)
 // Returns the size
-int char_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p){
+int32 char_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p){
 	if( buffer == nullptr || p == nullptr )
 		return 0;
 
@@ -1882,7 +1882,7 @@ int char_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p){
 }
 
 
-int char_married(int pl1, int pl2)
+int32 char_married(int32 pl1, int32 pl2)
 {
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `partner_id` FROM `%s` WHERE `char_id` = '%d'", schema_config.char_db, pl1) )
 		Sql_ShowDebug(sql_handle);
@@ -1901,7 +1901,7 @@ int char_married(int pl1, int pl2)
 	return 0;
 }
 
-int char_child(int parent_id, int child_id)
+int32 char_child(int32 parent_id, int32 child_id)
 {
 	if( parent_id == 0 || child_id == 0) //Failsafe, avoild querys and fix EXP bug dividing with lower level chars
 		return 0;
@@ -1922,7 +1922,7 @@ int char_child(int parent_id, int child_id)
 	return 0;
 }
 
-int char_family(int cid1, int cid2, int cid3)
+int32 char_family(int32 cid1, int32 cid2, int32 cid3)
 {
 	if ( cid1 == 0 || cid2 == 0 || cid3 == 0 ) //Failsafe, and avoid querys where there is no sense to keep executing if any of the inputs are 0
 		return 0;
@@ -1930,9 +1930,9 @@ int char_family(int cid1, int cid2, int cid3)
 		Sql_ShowDebug(sql_handle);
 	else while( SQL_SUCCESS == Sql_NextRow(sql_handle) )
 	{
-		int charid;
-		int partnerid;
-		int childid;
+		int32 charid;
+		int32 partnerid;
+		int32 childid;
 		char* data;
 
 		Sql_GetData(sql_handle, 0, &data, nullptr); charid = atoi(data);
@@ -1956,7 +1956,7 @@ int char_family(int cid1, int cid2, int cid3)
 //----------------------------------------------------------------------
 void char_disconnect_player(uint32 account_id)
 {
-	int i;
+	int32 i;
 	struct char_session_data* sd;
 
 	// disconnect player if online on char-server
@@ -1971,8 +1971,8 @@ void char_disconnect_player(uint32 account_id)
 * @param value
 * @param set True: set the value by using '|= val', False: unset the value by using '&= ~val'
 **/
-void char_set_session_flag_(int account_id, int val, bool set) {
-	int i;
+void char_set_session_flag_(int32 account_id, int32 val, bool set) {
+	int32 i;
 	struct char_session_data* sd;
 
 	ARR_FIND(0, fd_max, i, session[i] && (sd = (struct char_session_data*)session[i]->session_data) && sd->account_id == account_id);
@@ -1984,7 +1984,7 @@ void char_set_session_flag_(int account_id, int val, bool set) {
 	}
 }
 
-void char_auth_ok(int fd, struct char_session_data *sd) {
+void char_auth_ok(int32 fd, struct char_session_data *sd) {
 	std::shared_ptr<struct online_char_data> character = util::umap_find( char_get_onlinedb(), sd->account_id );
 
 	// Check if character is not online already. [Skotlex]
@@ -2018,7 +2018,7 @@ void char_auth_ok(int fd, struct char_session_data *sd) {
 
 void char_read_fame_list(void)
 {
-	int i;
+	int32 i;
 	char* data;
 	size_t len;
 
@@ -2076,7 +2076,7 @@ void char_read_fame_list(void)
 
 //Loads a character's name and stores it in the buffer given (must be NAME_LENGTH in size)
 //Returns 1 on found, 0 on not found (buffer is filled with Unknown char name)
-int char_loadName(uint32 char_id, char* name){
+int32 char_loadName(uint32 char_id, char* name){
 	char* data;
 	size_t len;
 
@@ -2101,8 +2101,8 @@ int char_loadName(uint32 char_id, char* name){
 
 // Searches for the mapserver that has a given map (and optionally ip/port, if not -1).
 // If found, returns the server's index in the 'server' array (otherwise returns -1).
-int char_search_mapserver( const std::string& map, uint32 ip, uint16 port ){
-	for(int i = 0; i < ARRAYLENGTH(map_server); i++)
+int32 char_search_mapserver( const std::string& map, uint32 ip, uint16 port ){
+	for(int32 i = 0; i < ARRAYLENGTH(map_server); i++)
 	{
 		if (session_isValid(map_server[i].fd)
 		&& (ip == (uint32)-1 || map_server[i].ip == ip)
@@ -2124,8 +2124,8 @@ int char_search_mapserver( const std::string& map, uint32 ip, uint16 port ){
  * @param ip: ip to check if in auth network
  * @return 0 if from wan, or subnet_map_ip if lan
  **/
-int char_lan_subnetcheck(uint32 ip){
-	int i;
+int32 char_lan_subnetcheck(uint32 ip){
+	int32 i;
 	ARR_FIND( 0, subnet_count, i, (subnet[i].char_ip & subnet[i].mask) == (ip & subnet[i].mask) );
 	if( i < subnet_count ) {
 		ShowInfo("Subnet check [%u.%u.%u.%u]: Matches " CL_CYAN "%u.%u.%u.%u/%u.%u.%u.%u" CL_RESET"\n", CONVIP(ip), CONVIP(subnet[i].char_ip & subnet[i].mask), CONVIP(subnet[i].mask));
@@ -2138,7 +2138,7 @@ int char_lan_subnetcheck(uint32 ip){
 
 // Console Command Parser [Wizputer]
 //FIXME to be remove (moved to cnslif / will be done once map/char/login, all have their cnslif interface ready)
-int parse_console(const char* buf){
+int32 parse_console(const char* buf){
 	return cnslif_parse(buf);
 }
 
@@ -2146,7 +2146,7 @@ int parse_console(const char* buf){
 //------------------------------------------------
 //Pincode system
 //------------------------------------------------
-int char_pincode_compare( int fd, struct char_session_data* sd, char* pin ){
+int32 char_pincode_compare( int32 fd, struct char_session_data* sd, char* pin ){
 	if( strcmp( sd->pincode, pin ) == 0 ){
 		sd->pincode_try = 0;
 		return 1;
@@ -2162,7 +2162,7 @@ int char_pincode_compare( int fd, struct char_session_data* sd, char* pin ){
 }
 
 bool char_pincode_decrypt( uint32 userSeed, char* pin ){
-	int i;
+	int32 i;
 	char tab[10] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 	char *buf;
 
@@ -2175,7 +2175,7 @@ bool char_pincode_decrypt( uint32 userSeed, char* pin ){
 	}
 
 	for( i = 1; i < 10; i++ ){
-		int pos;
+		int32 pos;
 		uint32 multiplier = 0x3498, baseSeed = 0x881234;
 
 		userSeed = baseSeed + userSeed * multiplier;
@@ -2256,9 +2256,9 @@ TIMER_FUNC(char_clan_member_cleanup){
 // Reading Lan Support configuration
 // Rewrote: Anvanced subnet check [LuzZza]
 //----------------------------------
-int char_lan_config_read(const char *lancfgName) {
+int32 char_lan_config_read(const char *lancfgName) {
 	FILE *fp;
-	int line_num = 0, s_subnet=ARRAYLENGTH(subnet);
+	int32 line_num = 0, s_subnet=ARRAYLENGTH(subnet);
 	char line[1024], w1[64], w2[64], w3[64], w4[64];
 
 	if((fp = fopen(lancfgName, "r")) == nullptr) {
@@ -2312,7 +2312,7 @@ int char_lan_config_read(const char *lancfgName) {
  * @return 0:fail, 1:success
  */
 bool char_checkdb(void){
-	int i;
+	int32 i;
 	const char* sqltable[] = {
 		schema_config.char_db, schema_config.hotkey_db, schema_config.scdata_db, schema_config.cart_db, 
                 schema_config.inventory_db, schema_config.charlog_db,
@@ -2833,7 +2833,7 @@ void char_set_defaults(){
  */
 void char_config_split_startpoint( char* w1_value, char* w2_value, struct s_point_str start_point[MAX_STARTPOINT], short* count ){
 	char *lineitem, **fields;
-	int i = 0;
+	int32 i = 0;
 	size_t fields_length = 3 + 1;
 
 	(*count) = 0; // Reset to begin reading
@@ -2874,7 +2874,7 @@ void char_config_split_startpoint( char* w1_value, char* w2_value, struct s_poin
 void char_config_split_startitem(char *w1_value, char *w2_value, struct startitem start_items[MAX_STARTITEM])
 {
 	char *lineitem, **fields;
-	int i = 0;
+	int32 i = 0;
 	size_t fields_length = 3 + 1;
 
 	memset(start_items, 0, sizeof(struct startitem) * MAX_STARTITEM);
@@ -3131,10 +3131,10 @@ void char_config_adjust() {
 /*
  * Message conf function
  */
-int char_msg_config_read(const char *cfgName){
+int32 char_msg_config_read(const char *cfgName){
 	return _msg_config_read(cfgName,CHAR_MAX_MSG,msg_table);
 }
-const char* char_msg_txt(int msg_number){
+const char* char_msg_txt(int32 msg_number){
 	return _msg_txt(msg_number,CHAR_MAX_MSG,msg_table);
 }
 void char_do_final_msg(void){
@@ -3174,12 +3174,12 @@ void CharacterServer::finalize(){
 void CharacterServer::handle_shutdown(){
 	ShowStatus("Shutting down...\n");
 	// TODO proper shutdown procedure; wait for acks?, kick all characters, ... [FlavoJS]
-	for( int id = 0; id < ARRAYLENGTH(map_server); ++id )
+	for( int32 id = 0; id < ARRAYLENGTH(map_server); ++id )
 		chmapif_server_reset(id);
 	flush_fifos();
 }
 
-bool CharacterServer::initialize( int argc, char *argv[] ){
+bool CharacterServer::initialize( int32 argc, char *argv[] ){
 	// Init default value
 	safestrncpy(console_log_filepath, "./log/char-msg_log.log", sizeof(console_log_filepath));
 
@@ -3283,6 +3283,6 @@ bool CharacterServer::initialize( int argc, char *argv[] ){
 	return true;
 }
 
-int main( int argc, char *argv[] ){
+int32 main( int32 argc, char *argv[] ){
 	return main_core<CharacterServer>( argc, argv );
 }

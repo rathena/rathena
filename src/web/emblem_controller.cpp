@@ -208,9 +208,9 @@ HANDLER_FUNC(emblem_upload) {
 
 		if (inter_config.emblem_transparency_limit < 100) {
 			uint32 offset = RBUFL(img_cstr, 0x0A);
-			int i, transcount = 1, tmp[3];
+			int32 i, transcount = 1, tmp[3];
 			for (i = offset; i < length - 1; i++) {
-				int j = i % 3;
+				int32 j = i % 3;
 				tmp[j] = RBUFL(img_cstr, i);
 				if (j == 2 && (tmp[0] == 0xFFFF00FF) && (tmp[1] == 0xFFFF00) && (tmp[2] == 0xFF00FFFF)) //if pixel is transparent
 					transcount++;
