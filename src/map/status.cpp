@@ -6451,16 +6451,12 @@ static unsigned short status_calc_str(struct block_list *bl, status_change *sc, 
 		str += str * sc->getSCE(SC_FULL_THROTTLE)->val3 / 100;
 	if(sc->getSCE(SC_CHEERUP))
 		str += 3;
-	if(sc->getSCE(SC_GLASTHEIM_STATE))
-		str += sc->getSCE(SC_GLASTHEIM_STATE)->val1;
 #ifdef RENEWAL
 	if (sc->getSCE(SC_NIBELUNGEN) && sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_ALLSTAT)
 		str += 15;
 #endif
 	if (sc->getSCE(SC_UNIVERSESTANCE))
 		str += sc->getSCE(SC_UNIVERSESTANCE)->val2;
-	if (sc->getSCE(SC_ULTIMATECOOK))
-		str += sc->getSCE(SC_ULTIMATECOOK)->val1;
 	if (sc->getSCE(SC_ALL_STAT_DOWN))
 		str -= sc->getSCE(SC_ALL_STAT_DOWN)->val2;
 
@@ -6528,16 +6524,12 @@ static unsigned short status_calc_agi(struct block_list *bl, status_change *sc, 
 		agi += sc->getSCE(SC_ARCLOUSEDASH)->val2;
 	if(sc->getSCE(SC_CHEERUP))
 		agi += 3;
-	if(sc->getSCE(SC_GLASTHEIM_STATE))
-		agi += sc->getSCE(SC_GLASTHEIM_STATE)->val1;
 #ifdef RENEWAL
 	if (sc->getSCE(SC_NIBELUNGEN) && sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_ALLSTAT)
 		agi += 15;
 #endif
 	if (sc->getSCE(SC_UNIVERSESTANCE))
 		agi += sc->getSCE(SC_UNIVERSESTANCE)->val2;
-	if (sc->getSCE(SC_ULTIMATECOOK))
-		agi += sc->getSCE(SC_ULTIMATECOOK)->val1;
 	if (sc->getSCE(SC_ALL_STAT_DOWN))
 		agi -= sc->getSCE(SC_ALL_STAT_DOWN)->val2;
 
@@ -6593,16 +6585,12 @@ static unsigned short status_calc_vit(struct block_list *bl, status_change *sc, 
 		vit += sc->getSCE(SC_DEFENCE)->val2;
 	if(sc->getSCE(SC_CHEERUP))
 		vit += 3;
-	if(sc->getSCE(SC_GLASTHEIM_STATE))
-		vit += sc->getSCE(SC_GLASTHEIM_STATE)->val1;
 #ifdef RENEWAL
 	if (sc->getSCE(SC_NIBELUNGEN) && sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_ALLSTAT)
 		vit += 15;
 #endif
 	if (sc->getSCE(SC_UNIVERSESTANCE))
 		vit += sc->getSCE(SC_UNIVERSESTANCE)->val2;
-	if (sc->getSCE(SC_ULTIMATECOOK))
-		vit += sc->getSCE(SC_ULTIMATECOOK)->val1;
 	if (sc->getSCE(SC_ALL_STAT_DOWN))
 		vit -= sc->getSCE(SC_ALL_STAT_DOWN)->val2;
 
@@ -6668,8 +6656,6 @@ static unsigned short status_calc_int(struct block_list *bl, status_change *sc, 
 		int_ += int_ * sc->getSCE(SC_FULL_THROTTLE)->val3 / 100;
 	if(sc->getSCE(SC_CHEERUP))
 		int_ += 3;
-	if(sc->getSCE(SC_GLASTHEIM_STATE))
-		int_ += sc->getSCE(SC_GLASTHEIM_STATE)->val1;
 	if (sc->getSCE(SC_UNIVERSESTANCE))
 		int_ += sc->getSCE(SC_UNIVERSESTANCE)->val2;
 
@@ -6683,8 +6669,6 @@ static unsigned short status_calc_int(struct block_list *bl, status_change *sc, 
 	if (sc->getSCE(SC_NIBELUNGEN) && sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_ALLSTAT)
 		int_ += 15;
 #endif
-	if (sc->getSCE(SC_ULTIMATECOOK))
-		int_ += sc->getSCE(SC_ULTIMATECOOK)->val1;
 	if (sc->getSCE(SC_ALL_STAT_DOWN))
 		int_ -= sc->getSCE(SC_ALL_STAT_DOWN)->val2;
 
@@ -6754,16 +6738,12 @@ static unsigned short status_calc_dex(struct block_list *bl, status_change *sc, 
 		dex += dex * sc->getSCE(SC_FULL_THROTTLE)->val3 / 100;
 	if(sc->getSCE(SC_CHEERUP))
 		dex += 3;
-	if(sc->getSCE(SC_GLASTHEIM_STATE))
-		dex += sc->getSCE(SC_GLASTHEIM_STATE)->val1;
 #ifdef RENEWAL
 	if (sc->getSCE(SC_NIBELUNGEN) && sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_ALLSTAT)
 		dex += 15;
 #endif
 	if (sc->getSCE(SC_UNIVERSESTANCE))
 		dex += sc->getSCE(SC_UNIVERSESTANCE)->val2;
-	if (sc->getSCE(SC_ULTIMATECOOK))
-		dex += sc->getSCE(SC_ULTIMATECOOK)->val1;
 	if (sc->getSCE(SC_ALL_STAT_DOWN))
 		dex -= sc->getSCE(SC_ALL_STAT_DOWN)->val2;
 
@@ -6819,16 +6799,12 @@ static unsigned short status_calc_luk(struct block_list *bl, status_change *sc, 
 		luk += luk * sc->getSCE(SC_FULL_THROTTLE)->val3 / 100;
 	if(sc->getSCE(SC_CHEERUP))
 		luk += 3;
-	if(sc->getSCE(SC_GLASTHEIM_STATE))
-		luk += sc->getSCE(SC_GLASTHEIM_STATE)->val1;
 #ifdef RENEWAL
 	if (sc->getSCE(SC_NIBELUNGEN) && sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_ALLSTAT)
 		luk += 15;
 #endif
 	if (sc->getSCE(SC_UNIVERSESTANCE))
 		luk += sc->getSCE(SC_UNIVERSESTANCE)->val2;
-	if (sc->getSCE(SC_ULTIMATECOOK))
-		luk += sc->getSCE(SC_ULTIMATECOOK)->val1;
 	if (sc->getSCE(SC_ALL_STAT_DOWN))
 		luk -= sc->getSCE(SC_ALL_STAT_DOWN)->val2;
 
@@ -6956,8 +6932,6 @@ static unsigned short status_calc_batk(struct block_list *bl, status_change *sc,
 	if(sc == nullptr || sc->empty())
 		return cap_value(batk,0,USHRT_MAX);
 
-	if(sc->getSCE(SC_ATKPOTION))
-		batk += sc->getSCE(SC_ATKPOTION)->val1;
 	if (sc->getSCE(SC_VOLCANO))
 		batk += sc->getSCE(SC_VOLCANO)->val2;
 #ifndef RENEWAL
@@ -6986,8 +6960,6 @@ static unsigned short status_calc_batk(struct block_list *bl, status_change *sc,
 #endif
 	if (sc->getSCE(SC_SUNSTANCE))
 		batk += batk * sc->getSCE(SC_SUNSTANCE)->val2 / 100;
-	if (sc->getSCE(SC_ULTIMATECOOK))
-		batk += 30;
 	if (sc->getSCE(SC_INTENSIVE_AIM))
 		batk += 150;
 
@@ -7156,10 +7128,6 @@ uint16 status_calc_consumablematk( status_change *sc, int32 matk ){
 
 	struct status_change_entry* sce;
 
-	if (sce = sc->getSCE(SC_SKF_MATK))
-		matk += sce->val1;
-	if (sc->getSCE(SC_ULTIMATECOOK))
-		matk += 30;
 	if (sc->getSCE(SC_2011RWC_SCROLL))
 		matk += 30;
 
@@ -7178,8 +7146,6 @@ static signed short status_calc_critical(struct block_list *bl, status_change *s
 	if(sc == nullptr || sc->empty())
 		return cap_value(critical,10,SHRT_MAX);
 
-	if (sc->getSCE(SC_CRIFOOD))
-		critical += sc->getSCE(SC_CRIFOOD)->val1;
 	if (sc->getSCE(SC_EXPLOSIONSPIRITS))
 		critical += sc->getSCE(SC_EXPLOSIONSPIRITS)->val2;
 	if (sc->getSCE(SC_FORTUNE))

@@ -6095,7 +6095,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       BlEffect: true
-  - Status: QUEST_BUFF1
+  - Status: Quest_Buff1
     Icon: EFST_QUEST_BUFF1
     Flags:
       NoRemoveOnDead: true
@@ -6107,7 +6107,7 @@ Body:
       .@val1 = getstatus(SC_QUEST_BUFF1, 1);
       bonus bMatk, .@val1;
       bonus bBaseAtk, .@val1;
-  - Status: QUEST_BUFF2
+  - Status: Quest_Buff2
     Icon: EFST_QUEST_BUFF2
     Flags:
       NoRemoveOnDead: true
@@ -6119,7 +6119,7 @@ Body:
       .@val1 = getstatus(SC_QUEST_BUFF2, 1);
       bonus bMatk, .@val1;
       bonus bBaseAtk, .@val1;
-  - Status: QUEST_BUFF3
+  - Status: Quest_Buff3
     Icon: EFST_QUEST_BUFF3
     Flags:
       NoRemoveOnDead: true
@@ -7581,14 +7581,14 @@ Body:
       Magneticfield: true
       Neutralbarrier_Master: true
       Stealthfield_Master: true
-  - Status: Npc_HallucinationWalk
+  - Status: Npc_Hallucinationwalk
     Icon: EFST_NPC_HALLUCINATIONWALK
     DurationLookup: NPC_HALLUCINATIONWALK
     CalcFlags:
       Flee: true
     Flags:
       SendVal3: true
-  - Status: PACKING_ENVELOPE1
+  - Status: Packing_Envelope1
     Icon: EFST_PACKING_ENVELOPE1
     Flags:
       NoRemoveOnDead: true
@@ -7597,7 +7597,7 @@ Body:
       NoClearance: true
     Script: |
       bonus bBaseAtk, getstatus(SC_PACKING_ENVELOPE1, 1);
-  - Status: PACKING_ENVELOPE2
+  - Status: Packing_Envelope2
     Icon: EFST_PACKING_ENVELOPE2
     Flags:
       NoRemoveOnDead: true
@@ -7606,7 +7606,7 @@ Body:
       NoClearance: true
     Script: |
       bonus bMatk, getstatus(SC_PACKING_ENVELOPE2, 1);
-  - Status: PACKING_ENVELOPE3
+  - Status: Packing_Envelope3
     Icon: EFST_PACKING_ENVELOPE3
     Flags:
       NoRemoveOnDead: true
@@ -7615,7 +7615,7 @@ Body:
       NoClearance: true
     Script: |
       bonus bMaxHPrate, getstatus(SC_PACKING_ENVELOPE3, 1);
-  - Status: PACKING_ENVELOPE4
+  - Status: Packing_Envelope4
     Icon: EFST_PACKING_ENVELOPE4
     Flags:
       NoRemoveOnDead: true
@@ -7624,7 +7624,7 @@ Body:
       NoClearance: true
     Script: |
       bonus bMaxSPrate, getstatus(SC_PACKING_ENVELOPE4, 1);
-  - Status: PACKING_ENVELOPE5
+  - Status: Packing_Envelope5
     Icon: EFST_PACKING_ENVELOPE5
     Flags:
       NoRemoveOnDead: true
@@ -7633,7 +7633,7 @@ Body:
       NoClearance: true
     Script: |
       bonus bFlee, getstatus(SC_PACKING_ENVELOPE5, 1);
-  - Status: PACKING_ENVELOPE6
+  - Status: Packing_Envelope6
     Icon: EFST_PACKING_ENVELOPE6
     Flags:
       NoRemoveOnDead: true
@@ -7642,7 +7642,7 @@ Body:
       NoClearance: true
     Script: |
       bonus bAspd, getstatus(SC_PACKING_ENVELOPE6, 1);
-  - Status: PACKING_ENVELOPE7
+  - Status: Packing_Envelope7
     Icon: EFST_PACKING_ENVELOPE7
     Flags:
       NoRemoveOnDead: true
@@ -7651,7 +7651,7 @@ Body:
       NoClearance: true
     Script: |
       bonus bDef, getstatus(SC_PACKING_ENVELOPE7, 1);
-  - Status: PACKING_ENVELOPE8
+  - Status: Packing_Envelope8
     Icon: EFST_PACKING_ENVELOPE8
     Flags:
       NoRemoveOnDead: true
@@ -7660,7 +7660,7 @@ Body:
       NoClearance: true
     Script: |
       bonus bMdef, getstatus(SC_PACKING_ENVELOPE8, 1);
-  - Status: PACKING_ENVELOPE9
+  - Status: Packing_Envelope9
     Icon: EFST_PACKING_ENVELOPE9
     Flags:
       NoRemoveOnDead: true
@@ -7669,7 +7669,7 @@ Body:
       NoClearance: true
     Script: |
       bonus bCritical, getstatus(SC_PACKING_ENVELOPE9, 1);
-  - Status: PACKING_ENVELOPE10
+  - Status: Packing_Envelope10
     Icon: EFST_PACKING_ENVELOPE10
     Flags:
       NoRemoveOnDead: true
@@ -8617,7 +8617,7 @@ Body:
     Script: |
       bonus bVit,10;
       bonus2 bSubEle,Ele_Fire,5;
-  - Status: SKF_MATK
+  - Status: Skf_Matk
     Icon: EFST_SKF_MATK
     Flags:
       NoRemoveOnDead: true
@@ -8627,7 +8627,7 @@ Body:
       NoClearance: true
     Script: |
       bonus bMatk, getstatus(SC_SKF_MATK, 1);
-  - Status: SKF_ATK
+  - Status: Skf_Atk
     Icon: EFST_SKF_ATK
     Flags:
       NoRemoveOnDead: true
@@ -8637,7 +8637,7 @@ Body:
       NoClearance: true
     Script: |
       bonus bBaseAtk, getstatus(SC_SKF_ATK, 1);
-  - Status: SKF_ASPD
+  - Status: Skf_Aspd
     Icon: EFST_SKF_ASPD
     Flags:
       NoRemoveOnDead: true
@@ -8647,7 +8647,7 @@ Body:
       NoClearance: true
     Script: |
       bonus bAspdRate, getstatus(SC_SKF_ASPD, 1);
-  - Status: SKF_CAST
+  - Status: Skf_Cast
     Icon: EFST_SKF_CAST
     Flags:
       NoRemoveOnDead: true
@@ -8692,14 +8692,14 @@ Body:
     CalcFlags:
       Res: true
       Mres: true
-  - Status: Toxin_of_Mandara
+  - Status: Toxin_Of_Mandara
     Icon: EFST_TOXIN_OF_MANDARA
     DurationLookup: MH_TOXIN_OF_MANDARA
     Flags:
       Debuff: true
     CalcFlags:
       Res: true
-  - Status: GRADUAL_GRAVITY
+  - Status: Gradual_Gravity
     Icon: EFST_GRADUAL_GRAVITY
     DurationLookup: NPC_GRADUAL_GRAVITY
     Flags:
@@ -8707,7 +8707,7 @@ Body:
       DisplayPc: true
       NoDispell: true
       NoClearance: true
-  - Status: ALL_STAT_DOWN
+  - Status: All_Stat_Down
     Icon: EFST_ALL_STAT_DOWN
     DurationLookup: NPC_ALL_STAT_DOWN
     CalcFlags:
@@ -8729,12 +8729,12 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-  - Status: DAMAGE_HEAL
+  - Status: Damage_Heal
     Icon: EFST_DAMAGE_HEAL
     DurationLookup: NPC_DAMAGE_HEAL
     Flags:
       NoDispell: true
-  - Status: IMMUNE_PROPERTY_NOTHING
+  - Status: Immune_Property_Nothing
     Icon: EFST_IMMUNE_PROPERTY_NOTHING
     DurationLookup: NPC_IMMUNE_PROPERTY
     Flags:
@@ -8750,7 +8750,7 @@ Body:
       IMMUNE_PROPERTY_DARKNESS: true
       IMMUNE_PROPERTY_TELEKINESIS: true
       IMMUNE_PROPERTY_UNDEAD: true
-  - Status: IMMUNE_PROPERTY_WATER
+  - Status: Immune_Property_Water
     Icon: EFST_IMMUNE_PROPERTY_WATER
     DurationLookup: NPC_IMMUNE_PROPERTY
     Flags:
@@ -8766,7 +8766,7 @@ Body:
       IMMUNE_PROPERTY_DARKNESS: true
       IMMUNE_PROPERTY_TELEKINESIS: true
       IMMUNE_PROPERTY_UNDEAD: true
-  - Status: IMMUNE_PROPERTY_GROUND
+  - Status: Immune_Property_Ground
     Icon: EFST_IMMUNE_PROPERTY_GROUND
     DurationLookup: NPC_IMMUNE_PROPERTY
     Flags:
@@ -8782,7 +8782,7 @@ Body:
       IMMUNE_PROPERTY_DARKNESS: true
       IMMUNE_PROPERTY_TELEKINESIS: true
       IMMUNE_PROPERTY_UNDEAD: true
-  - Status: IMMUNE_PROPERTY_FIRE
+  - Status: Immune_Property_Fire
     Icon: EFST_IMMUNE_PROPERTY_FIRE
     DurationLookup: NPC_IMMUNE_PROPERTY
     Flags:
@@ -8798,7 +8798,7 @@ Body:
       IMMUNE_PROPERTY_DARKNESS: true
       IMMUNE_PROPERTY_TELEKINESIS: true
       IMMUNE_PROPERTY_UNDEAD: true
-  - Status: IMMUNE_PROPERTY_WIND
+  - Status: Immune_Property_Wind
     Icon: EFST_IMMUNE_PROPERTY_WIND
     DurationLookup: NPC_IMMUNE_PROPERTY
     Flags:
@@ -8814,7 +8814,7 @@ Body:
       IMMUNE_PROPERTY_DARKNESS: true
       IMMUNE_PROPERTY_TELEKINESIS: true
       IMMUNE_PROPERTY_UNDEAD: true
-  - Status: IMMUNE_PROPERTY_POISON
+  - Status: Immune_Property_Poison
     Icon: EFST_IMMUNE_PROPERTY_POISON
     DurationLookup: NPC_IMMUNE_PROPERTY
     Flags:
@@ -8830,7 +8830,7 @@ Body:
       IMMUNE_PROPERTY_DARKNESS: true
       IMMUNE_PROPERTY_TELEKINESIS: true
       IMMUNE_PROPERTY_UNDEAD: true
-  - Status: IMMUNE_PROPERTY_SAINT
+  - Status: Immune_Property_Saint
     Icon: EFST_IMMUNE_PROPERTY_SAINT
     DurationLookup: NPC_IMMUNE_PROPERTY
     Flags:
@@ -8846,7 +8846,7 @@ Body:
       IMMUNE_PROPERTY_DARKNESS: true
       IMMUNE_PROPERTY_TELEKINESIS: true
       IMMUNE_PROPERTY_UNDEAD: true
-  - Status: IMMUNE_PROPERTY_DARKNESS
+  - Status: Immune_Property_Darkness
     Icon: EFST_IMMUNE_PROPERTY_DARKNESS
     DurationLookup: NPC_IMMUNE_PROPERTY
     Flags:
@@ -8862,7 +8862,7 @@ Body:
       IMMUNE_PROPERTY_SAINT: true
       IMMUNE_PROPERTY_TELEKINESIS: true
       IMMUNE_PROPERTY_UNDEAD: true
-  - Status: IMMUNE_PROPERTY_TELEKINESIS
+  - Status: Immune_Property_Telekinesis
     Icon: EFST_IMMUNE_PROPERTY_TELEKINESIS
     DurationLookup: NPC_IMMUNE_PROPERTY
     Flags:
@@ -8878,7 +8878,7 @@ Body:
       IMMUNE_PROPERTY_SAINT: true
       IMMUNE_PROPERTY_DARKNESS: true
       IMMUNE_PROPERTY_UNDEAD: true
-  - Status: IMMUNE_PROPERTY_UNDEAD
+  - Status: Immune_Property_Undead
     Icon: EFST_IMMUNE_PROPERTY_UNDEAD
     DurationLookup: NPC_IMMUNE_PROPERTY
     Flags:
@@ -8894,7 +8894,7 @@ Body:
       IMMUNE_PROPERTY_SAINT: true
       IMMUNE_PROPERTY_DARKNESS: true
       IMMUNE_PROPERTY_TELEKINESIS: true
-  - Status: RELIEVE_ON
+  - Status: Relieve_On
     Icon: EFST_RELIEVE_DAMAGE
     DurationLookup: NPC_RELIEVE_ON
     Flags:
@@ -8905,7 +8905,7 @@ Body:
       NoClearance: true
     EndOnStart:
       Relieve_off: true
-  - Status: Relieve_off
+  - Status: Relieve_Off
     DurationLookup: NPC_RELIEVE_OFF
     Flags:
       NoDispell: true
@@ -9162,7 +9162,7 @@ Body:
       bonus bSPrecovRate,3;
       bonus bHit,3;
       bonus bCritical,7;
-  - Status: Ep16_def
+  - Status: Ep16_Def
     Icon: EFST_EP16_DEF
     Flags:
       NoClearbuff: true
