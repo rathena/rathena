@@ -94,27 +94,30 @@ bool mapif_mercenary_save(struct s_mercenary* merc)
 	}
 
 	// Save skill cooldowns
-	SqlStmt *stmt = SqlStmt_Malloc(sql_handle);
+	if (SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`mer_id`, `skill`, `tick`) VALUES (%d, ?, ?)", schema_config.skillcooldown_mercenary_db, merc->mercenary_id)) {
+		Sql_ShowDebug(sql_handle);
+		flag = false;
+	} else {
+		SqlStmt *stmt = SqlStmt_Malloc(sql_handle);
 
-	if (SQL_ERROR == SqlStmt_Prepare(stmt, "REPLACE INTO `%s` (`mer_id`, `skill`, `tick`) VALUES (%d, ?, ?)", schema_config.skillcooldown_mercenary_db, merc->mercenary_id))
-		SqlStmt_ShowDebug(stmt);
-	for (uint16 i = 0; i < MAX_SKILLCOOLDOWN; ++i) {
-		if (merc->scd[i].skill_id == 0) {
-			continue;
-		}
+		for (uint16 i = 0; i < MAX_SKILLCOOLDOWN; ++i) {
+			if (merc->scd[i].skill_id == 0) {
+				continue;
+			}
 
-		if (merc->scd[i].tick == 0) {
-			continue;
+			if (merc->scd[i].tick == 0) {
+				continue;
+			}
+			if (SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_USHORT, &merc->scd[i].skill_id, 0)
+				|| SQL_ERROR == SqlStmt_BindParam(stmt, 1, SQLDT_LONGLONG, &merc->scd[i].tick, 0)
+				|| SQL_ERROR == SqlStmt_Execute(stmt)) {
+				SqlStmt_ShowDebug(stmt);
+				flag = false;
+				break;
+			}
 		}
-		if ( SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_USHORT, &merc->scd[i].skill_id, 0)
-		|| SQL_ERROR == SqlStmt_BindParam(stmt, 1, SQLDT_LONGLONG, &merc->scd[i].tick, 0)
-		|| SQL_ERROR == SqlStmt_Execute(stmt)) {
-			SqlStmt_ShowDebug(stmt);
-			flag = false;
-			break;
-		}
+		SqlStmt_Free(stmt);
 	}
-	SqlStmt_Free(stmt);
 
 	return flag;
 }
