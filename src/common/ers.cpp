@@ -67,7 +67,7 @@ typedef struct ers_cache
 	uint32 ObjectSize;
 
 	// Number of ers_instances referencing this
-	int ReferenceCount;
+	int32 ReferenceCount;
 
 	// Reuse linked list
 	struct ers_list *ReuseList;

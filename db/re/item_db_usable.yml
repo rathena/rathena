@@ -2422,7 +2422,7 @@ Body:
       NoAuction: true
     Script: |
       specialeffect2 EF_POTION_BERSERK;
-      sc_start SC_LIMIT_POWER_BOOSTER,1800000,30;
+      sc_start4 SC_LIMIT_POWER_BOOSTER,1800000,30,1,5,0;
   - Id: 9897
     AegisName: E_Glittering_Doll_B
     Name: Shiny Doll Button
@@ -3998,6 +3998,7 @@ Body:
       BuyingStore: true
     Script: |
       specialeffect2 EF_GUARD;
+      heal 1000,0;
       sc_start SC_EP16_DEF,180000,10;
   - Id: 11601
     AegisName: Tasty_Anchovy
@@ -9024,7 +9025,7 @@ Body:
     Weight: 80
     Script: |
       specialeffect2 EF_STEAL;
-      sc_start SC_ACARAJE,1200000,0;
+      sc_start2 SC_ACARAJE,1200000,10,5;
   - Id: 12376
     AegisName: Mysterious_Can2
     Name: Mysterious Can2
@@ -14695,7 +14696,7 @@ Body:
       NoAuction: true
     Script: |
       specialeffect2 EF_BASH3D;
-      sc_start SC_ALMIGHTY,1800000,10;
+      sc_start SC_ALMIGHTY,1800000,30;
       sc_start SC_FOOD_STR_CASH,1800000,10;
       sc_start SC_FOOD_AGI_CASH,1800000,10;
       sc_start SC_FOOD_INT_CASH,1800000,10;
@@ -36189,7 +36190,7 @@ Body:
       NoAuction: true
     Script: |
       specialeffect2 EF_BASH3D;
-      sc_start SC_ALMIGHTY,1800000,10;
+      sc_start SC_ALMIGHTY,1800000,30;
   - Id: 14663
     AegisName: Sealed_D_Lord_Scroll
     Name: Sealed Dark Lord Scroll
@@ -36822,7 +36823,7 @@ Body:
       NoAuction: true
     Script: |
       specialeffect2 EF_POTION_BERSERK;
-      sc_start SC_LIMIT_POWER_BOOSTER,1800000,30;
+      sc_start4 SC_LIMIT_POWER_BOOSTER,1800000,30,1,5,0;
   - Id: 14780
     AegisName: Pump_Of_Spirit_Scroll
     Name: Soul Plunger Scroll
@@ -58659,7 +58660,7 @@ Body:
       BuyingStore: true
     Script: |
       specialeffect2 EF_BASH3D;
-      sc_start SC_ALMIGHTY,3600000,10;
+      sc_start SC_ALMIGHTY,3600000,30;
       sc_start SC_FOOD_STR_CASH,3600000,10;
       sc_start SC_FOOD_AGI_CASH,3600000,10;
       sc_start SC_FOOD_INT_CASH,3600000,10;
@@ -64424,7 +64425,7 @@ Body:
       BuyingStore: true
     Script: |
       specialeffect2 EF_BASH3D;
-      sc_start SC_ALMIGHTY,1800000,10;
+      sc_start SC_ALMIGHTY,1800000,30;
   - Id: 23605
     AegisName: Challenge_Drink
     Name: Challenger Drink
@@ -64434,7 +64435,7 @@ Body:
       BuyingStore: true
     Script: |
       specialeffect2 EF_POTION_BERSERK;
-      sc_start SC_LIMIT_POWER_BOOSTER,1800000,30;
+      sc_start4 SC_LIMIT_POWER_BOOSTER,1800000,30,1,5,0;
   - Id: 23606
     AegisName: Power_Drink
     Name: Power Drink
@@ -64875,7 +64876,7 @@ Body:
       NoAuction: true
     Script: |
       specialeffect2 EF_BASH3D;
-      sc_start SC_ALMIGHTY,1800000,10;
+      sc_start SC_ALMIGHTY,1800000,30;
   - Id: 23726
     AegisName: E_Challenge_Drink
     Name: "[Event] Challenger Drink"
@@ -64889,7 +64890,7 @@ Body:
       NoAuction: true
     Script: |
       specialeffect2 EF_POTION_BERSERK;
-      sc_start SC_LIMIT_POWER_BOOSTER,1800000,30;
+      sc_start4 SC_LIMIT_POWER_BOOSTER,1800000,30,1,5,0;
   - Id: 23727
     AegisName: E_Unlimited_Drink
     Name: "[Event] Unlimited Drink"
@@ -66048,7 +66049,7 @@ Body:
       NoAuction: true
     Script: |
       specialeffect2 EF_POTION_BERSERK;
-      sc_start SC_LIMIT_POWER_BOOSTER,1800000,30;
+      sc_start4 SC_LIMIT_POWER_BOOSTER,1800000,30,1,5,0;
   - Id: 23899
     AegisName: Comp_Almighty
     Name: "[Not For Sale] Almighty"
@@ -66064,7 +66065,7 @@ Body:
       NoAuction: true
     Script: |
       specialeffect2 EF_BASH3D;
-      sc_start SC_ALMIGHTY,1800000,10;
+      sc_start SC_ALMIGHTY,1800000,30;
       sc_start SC_FOOD_STR_CASH,1800000,10;
       sc_start SC_FOOD_AGI_CASH,1800000,10;
       sc_start SC_FOOD_INT_CASH,1800000,10;
@@ -66436,7 +66437,7 @@ Body:
       Sitting: true
     Script: |
       specialeffect2 EF_POTION_BERSERK;
-      sc_start SC_LIMIT_POWER_BOOSTER,3600000,30;
+      sc_start4 SC_LIMIT_POWER_BOOSTER,3600000,30,1,5,0;
       sc_start SC_SPEEDUP0,600000,25;
   - Id: 100008
     AegisName: G_Infinity_Drink
@@ -70768,7 +70769,7 @@ Body:
       sc_start2 SC_M_LIFEPOTION,3600000,-4,3;
       sc_start2 SC_M_DEFSCROLL,3600000,500,200;
       sc_start2 SC_S_MANAPOTION,3600000,-5,5;
-      sc_start SC_ALMIGHTY,3600000,10;
+      sc_start SC_ALMIGHTY,3600000,30;
       sc_start SC_INFINITY_DRINK,3600000,0;
       sc_start SC_FOOD_STR_CASH,3600000,20;
       sc_start SC_FOOD_AGI_CASH,3600000,20;
@@ -70780,7 +70781,7 @@ Body:
       sc_start SC_HITFOOD,3600000,30;
       sc_start SC_ATKPOTION,3600000,20;
       sc_start SC_MATKPOTION,3600000,20;
-      sc_start SC_LIMIT_POWER_BOOSTER,3600000,30;
+      sc_start4 SC_LIMIT_POWER_BOOSTER,3600000,30,1,5,0;
       sc_start SC_SPEEDUP0,3600000,25;
   - Id: 100908
     AegisName: S_M_Piercing_Box
@@ -76767,7 +76768,7 @@ Body:
     Script: |
       specialeffect2 EF_POTION_BERSERK;
       sc_start SC_M_DEFSCROLL,3600000,0;
-      sc_start SC_LIMIT_POWER_BOOSTER,3600000,30;
+      sc_start4 SC_LIMIT_POWER_BOOSTER,3600000,30,1,5,0;
       sc_start SC_INFINITY_DRINK,3600000,0;
       sc_start SC_SPEEDUP0,600000,25;
   - Id: 102129

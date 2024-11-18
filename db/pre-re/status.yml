@@ -723,13 +723,13 @@ Body:
       RemoveOnHermode: true
   - Status: Atkpotion
     Icon: EFST_PLUSATTACKPOWER
-    CalcFlags:
-      Batk: true
     Flags:
       NoRemoveOnDead: true
       NoClearance: true
       OverlapIgnoreLevel: true
       RemoveOnHermode: true
+    Script: |
+      bonus bBaseAtk, getstatus(SC_ATKPOTION, 1);
   - Status: Matkpotion
     Icon: EFST_PLUSMAGICPOWER
     CalcFlags:
@@ -1134,11 +1134,14 @@ Body:
       Speed: true
   - Status: Armor_Element_Water
     Icon: EFST_RESIST_PROPERTY_WATER
-    CalcFlags:
-      All: true
     Flags:
       NoDispell: true
       OverlapIgnoreLevel: true
+    Script: |
+      bonus2 bSubEle,Ele_Water, getstatus(SC_ARMOR_ELEMENT_WATER, 1);
+      bonus2 bSubEle,Ele_Earth, getstatus(SC_ARMOR_ELEMENT_WATER, 2);
+      bonus2 bSubEle,Ele_Fire, getstatus(SC_ARMOR_ELEMENT_WATER, 3);
+      bonus2 bSubEle,Ele_Wind, getstatus(SC_ARMOR_ELEMENT_WATER, 4);
   - Status: Nochat
     States:
       NoPickItem: true
@@ -2147,8 +2150,6 @@ Body:
       Food_Str_Cash: true
   - Status: Agifood
     Icon: EFST_FOOD_AGI
-    CalcFlags:
-      Agi: true
     Flags:
       NoClearbuff: true
       NoDispell: true
@@ -2156,6 +2157,8 @@ Body:
       NoClearance: true
     EndOnStart:
       Food_Agi_Cash: true
+    Script: |
+      bonus bAgi, getstatus(SC_AGIFOOD, 1);
   - Status: Vitfood
     Icon: EFST_FOOD_VIT
     CalcFlags:
@@ -2219,13 +2222,13 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
   - Status: Batkfood
-    CalcFlags:
-      Batk: true
     Flags:
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      bonus bBaseAtk, getstatus(SC_BATKFOOD, 1);
   - Status: Watkfood
     CalcFlags:
       Watk: true
@@ -2235,13 +2238,13 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
   - Status: Matkfood
-    CalcFlags:
-      Matk: true
     Flags:
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      bonus bMatk, getstatus(SC_MATKFOOD, 1);
   - Status: Scresist
     DurationLookup: PA_GOSPEL
   - Status: Xmas
@@ -2688,11 +2691,14 @@ Body:
     Flags:
       NoWarning: true
   - Status: Armor_Resist
-    CalcFlags:
-      All: true
     Flags:
       OverlapIgnoreLevel: true
       RemoveOnUnequipArmor: true
+    Script: |
+      bonus2 bSubEle,Ele_Water, getstatus(SC_ARMOR_RESIST, 1);
+      bonus2 bSubEle,Ele_Earth, getstatus(SC_ARMOR_RESIST, 2);
+      bonus2 bSubEle,Ele_Fire, getstatus(SC_ARMOR_RESIST, 3);
+      bonus2 bSubEle,Ele_Wind, getstatus(SC_ARMOR_RESIST, 4);
   - Status: Spcost_Rate
     Icon: EFST_ATKER_BLOOD
     CalcFlags:
@@ -5974,15 +5980,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-  - Status: Crifood
-    Icon: EFST_FOOD_CRITICALSUCCESSVALUE
-    CalcFlags:
-      Cri: true
-    Flags:
-      NoClearbuff: true
-      NoDispell: true
-      NoBanishingBuster: true
-      NoClearance: true
   - Status: Atthaste_Cash
     Icon: EFST_ATTHASTE_CASH
     CalcFlags:
@@ -6479,25 +6476,34 @@ Body:
       BlEffect: true
   - Status: Armor_Element_Earth
     Icon: EFST_RESIST_PROPERTY_GROUND
-    CalcFlags:
-      All: true
     Flags:
       NoDispell: true
       OverlapIgnoreLevel: true
+    Script: |
+      bonus2 bSubEle,Ele_Water, getstatus(SC_ARMOR_ELEMENT_EARTH, 1);
+      bonus2 bSubEle,Ele_Earth, getstatus(SC_ARMOR_ELEMENT_EARTH, 2);
+      bonus2 bSubEle,Ele_Fire, getstatus(SC_ARMOR_ELEMENT_EARTH, 3);
+      bonus2 bSubEle,Ele_Wind, getstatus(SC_ARMOR_ELEMENT_EARTH, 4);
   - Status: Armor_Element_Fire
     Icon: EFST_RESIST_PROPERTY_FIRE
-    CalcFlags:
-      All: true
     Flags:
       NoDispell: true
       OverlapIgnoreLevel: true
+    Script: |
+      bonus2 bSubEle,Ele_Water, getstatus(SC_ARMOR_ELEMENT_FIRE, 1);
+      bonus2 bSubEle,Ele_Earth, getstatus(SC_ARMOR_ELEMENT_FIRE, 2);
+      bonus2 bSubEle,Ele_Fire, getstatus(SC_ARMOR_ELEMENT_FIRE, 3);
+      bonus2 bSubEle,Ele_Wind, getstatus(SC_ARMOR_ELEMENT_FIRE, 4);
   - Status: Armor_Element_Wind
     Icon: EFST_RESIST_PROPERTY_WIND
-    CalcFlags:
-      All: true
     Flags:
       NoDispell: true
       OverlapIgnoreLevel: true
+    Script: |
+      bonus2 bSubEle,Ele_Water, getstatus(SC_ARMOR_ELEMENT_WIND, 1);
+      bonus2 bSubEle,Ele_Earth, getstatus(SC_ARMOR_ELEMENT_WIND, 2);
+      bonus2 bSubEle,Ele_Fire, getstatus(SC_ARMOR_ELEMENT_WIND, 3);
+      bonus2 bSubEle,Ele_Wind, getstatus(SC_ARMOR_ELEMENT_WIND, 4);
   - Status: Dailysendmailcnt
     Icon: EFST_DAILYSENDMAILCNT
     Flags:
@@ -6615,81 +6621,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-  - Status: Glastheim_Atk
-    Icon: EFST_GLASTHEIM_ATK
-    CalcFlags:
-      All: true
-    Flags:
-      NoSave: true
-  - Status: Glastheim_Def
-    Icon: EFST_GLASTHEIM_DEF
-    Flags:
-      NoSave: true
-  - Status: Glastheim_Heal
-    Icon: EFST_GLASTHEIM_HEAL
-    Flags:
-      NoSave: true
-  - Status: Glastheim_Hidden
-    Icon: EFST_GLASTHEIM_HIDDEN
-    Flags:
-      NoSave: true
-  - Status: Glastheim_State
-    Icon: EFST_GLASTHEIM_STATE
-    CalcFlags:
-      Str: true
-      Agi: true
-      Vit: true
-      Dex: true
-      Int: true
-      Luk: true
-    Flags:
-      NoSave: true
-  - Status: Glastheim_Itemdef
-    Icon: EFST_GLASTHEIM_ITEMDEF
-    CalcFlags:
-      Def: true
-      Mdef: true
-    Flags:
-      NoSave: true
-  - Status: Glastheim_Hpsp
-    Icon: EFST_GLASTHEIM_HPSP
-    CalcFlags:
-      MaxHp: true
-      MaxSp: true
-    Flags:
-      NoSave: true
-  - Status: Lhz_Dun_N1
-    Icon: EFST_LHZ_DUN_N1
-    Flags:
-      NoClearbuff: true
-      NoClearance: true
-      NoRemoveOnDead: true
-      NoBanishingBuster: true
-      NoDispell: true
-  - Status: Lhz_Dun_N2
-    Icon: EFST_LHZ_DUN_N2
-    Flags:
-      NoClearbuff: true
-      NoClearance: true
-      NoRemoveOnDead: true
-      NoBanishingBuster: true
-      NoDispell: true
-  - Status: Lhz_Dun_N3
-    Icon: EFST_LHZ_DUN_N3
-    Flags:
-      NoClearbuff: true
-      NoClearance: true
-      NoRemoveOnDead: true
-      NoBanishingBuster: true
-      NoDispell: true
-  - Status: Lhz_Dun_N4
-    Icon: EFST_LHZ_DUN_N4
-    Flags:
-      NoClearbuff: true
-      NoClearance: true
-      NoRemoveOnDead: true
-      NoBanishingBuster: true
-      NoDispell: true
   - Status: Ancilla
     Icon: EFST_ANCILLA
     Flags:
@@ -7081,3 +7012,14 @@ Body:
       NoClearance: true
     EndOnStart:
       Decreaseagi: true
+  - Status: Acaraje
+    Icon: EFST_ACARAJE
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      bonus bAspdRate, getstatus(SC_ACARAJE, 1);
+      bonus bHit, getstatus(SC_ACARAJE, 2);

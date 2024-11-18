@@ -750,13 +750,13 @@ Body:
       RemoveOnHermode: true
   - Status: Atkpotion
     Icon: EFST_PLUSATTACKPOWER
-    CalcFlags:
-      Batk: true
     Flags:
       NoRemoveOnDead: true
       NoClearance: true
       OverlapIgnoreLevel: true
       RemoveOnHermode: true
+    Script: |
+      bonus bBaseAtk, getstatus(SC_ATKPOTION, 1);  /* TODO: hidden in status window */
   - Status: Matkpotion
     Icon: EFST_PLUSMAGICPOWER
     CalcFlags:
@@ -1163,11 +1163,14 @@ Body:
       Speed: true
   - Status: Armor_Element_Water
     Icon: EFST_RESIST_PROPERTY_WATER
-    CalcFlags:
-      All: true
     Flags:
       NoDispell: true
       OverlapIgnoreLevel: true
+    Script: |
+      bonus2 bSubEle,Ele_Water, getstatus(SC_ARMOR_ELEMENT_WATER, 1);
+      bonus2 bSubEle,Ele_Earth, getstatus(SC_ARMOR_ELEMENT_WATER, 2);
+      bonus2 bSubEle,Ele_Fire, getstatus(SC_ARMOR_ELEMENT_WATER, 3);
+      bonus2 bSubEle,Ele_Wind, getstatus(SC_ARMOR_ELEMENT_WATER, 4);
   - Status: Nochat
     States:
       NoPickItem: true
@@ -2123,58 +2126,58 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
   - Status: Incstr
-    CalcFlags:
-      Str: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
+    Script: |
+      bonus bStr, getstatus(SC_INCSTR, 1);
   - Status: Incagi
-    CalcFlags:
-      Agi: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      bonus bAgi, getstatus(SC_INCAGI, 1);
   - Status: Incvit
-    CalcFlags:
-      Vit: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      bonus bVit, getstatus(SC_INCVIT, 1);
   - Status: Incint
-    CalcFlags:
-      Int: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      bonus bInt, getstatus(SC_INCINT, 1);
   - Status: Incdex
-    CalcFlags:
-      Dex: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      bonus bDex, getstatus(SC_INCDEX, 1);
   - Status: Incluk
-    CalcFlags:
-      Luk: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      bonus bLuk, getstatus(SC_INCLUK, 1);
   - Status: Inchit
     CalcFlags:
       Hit: true
@@ -2272,8 +2275,6 @@ Body:
       Food_Str_Cash: true
   - Status: Agifood
     Icon: EFST_FOOD_AGI
-    CalcFlags:
-      Agi: true
     Flags:
       NoClearbuff: true
       NoDispell: true
@@ -2281,6 +2282,8 @@ Body:
       NoClearance: true
     EndOnStart:
       Food_Agi_Cash: true
+    Script: |
+      bonus bAgi, getstatus(SC_AGIFOOD, 1);
   - Status: Vitfood
     Icon: EFST_FOOD_VIT
     CalcFlags:
@@ -2344,13 +2347,13 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
   - Status: Batkfood
-    CalcFlags:
-      Batk: true
     Flags:
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      bonus bBaseAtk, getstatus(SC_BATKFOOD, 1);
   - Status: Watkfood
     CalcFlags:
       Watk: true
@@ -2360,13 +2363,13 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
   - Status: Matkfood
-    CalcFlags:
-      Matk: true
     Flags:
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      bonus bMatk, getstatus(SC_MATKFOOD, 1);
   - Status: Scresist
     DurationLookup: PA_GOSPEL
   - Status: Xmas
@@ -2810,11 +2813,14 @@ Body:
     Flags:
       NoWarning: true
   - Status: Armor_Resist
-    CalcFlags:
-      All: true
     Flags:
       OverlapIgnoreLevel: true
       RemoveOnUnequipArmor: true
+    Script: |
+      bonus2 bSubEle,Ele_Water, getstatus(SC_ARMOR_RESIST, 1);
+      bonus2 bSubEle,Ele_Earth, getstatus(SC_ARMOR_RESIST, 2);
+      bonus2 bSubEle,Ele_Fire, getstatus(SC_ARMOR_RESIST, 3);
+      bonus2 bSubEle,Ele_Wind, getstatus(SC_ARMOR_RESIST, 4);
   - Status: Spcost_Rate
     Icon: EFST_ATKER_BLOOD
     CalcFlags:
@@ -3002,8 +3008,6 @@ Body:
       NoClearance: true
   - Status: Food_Str_Cash
     Icon: EFST_FOOD_STR_CASH
-    CalcFlags:
-      Str: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
@@ -3012,10 +3016,10 @@ Body:
       NoClearance: true
     EndOnStart:
       Strfood: true
+    Script: |
+      bonus bStr, getstatus(SC_FOOD_STR_CASH, 1);
   - Status: Food_Agi_Cash
     Icon: EFST_FOOD_AGI_CASH
-    CalcFlags:
-      Agi: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
@@ -3024,10 +3028,10 @@ Body:
       NoClearance: true
     EndOnStart:
       Agifood: true
+    Script: |
+      bonus bAgi, getstatus(SC_FOOD_AGI_CASH, 1);
   - Status: Food_Vit_Cash
     Icon: EFST_FOOD_VIT_CASH
-    CalcFlags:
-      Vit: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
@@ -3036,10 +3040,10 @@ Body:
       NoClearance: true
     EndOnStart:
       Vitfood: true
+    Script: |
+      bonus bVit, getstatus(SC_FOOD_VIT_CASH, 1);
   - Status: Food_Dex_Cash
     Icon: EFST_FOOD_DEX_CASH
-    CalcFlags:
-      Dex: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
@@ -3048,10 +3052,10 @@ Body:
       NoClearance: true
     EndOnStart:
       Intfood: true
+    Script: |
+      bonus bDex, getstatus(SC_FOOD_DEX_CASH, 1);
   - Status: Food_Int_Cash
     Icon: EFST_FOOD_INT_CASH
-    CalcFlags:
-      Int: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
@@ -3060,10 +3064,10 @@ Body:
       NoClearance: true
     EndOnStart:
       Dexfood: true
+    Script: |
+      bonus bInt, getstatus(SC_FOOD_INT_CASH, 1);
   - Status: Food_Luk_Cash
     Icon: EFST_FOOD_LUK_CASH
-    CalcFlags:
-      Luk: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
@@ -3072,6 +3076,8 @@ Body:
       NoClearance: true
     EndOnStart:
       Lukfood: true
+    Script: |
+      bonus bLuk, getstatus(SC_FOOD_LUK_CASH, 1);
   - Status: Fear
     DurationLookup: RK_WINDCUTTER
     States:
@@ -6241,17 +6247,15 @@ Body:
       NoClearance: true
   - Status: Crifood
     Icon: EFST_FOOD_CRITICALSUCCESSVALUE
-    CalcFlags:
-      Cri: true
     Flags:
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      bonus bCritical, getstatus(SC_CRIFOOD, 1);
   - Status: Atthaste_Cash
     Icon: EFST_ATTHASTE_CASH
-    CalcFlags:
-      Aspd: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
@@ -6260,6 +6264,8 @@ Body:
       NoClearance: true
       OverlapIgnoreLevel: true
       NoForcedEnd: true
+    Script: |
+      bonus bAspdRate, getstatus(SC_ATTHASTE_CASH, 1);
   - Status: Reuse_Limit_A
     Icon: EFST_REUSE_LIMIT_A
     Flags:
@@ -6761,26 +6767,32 @@ Body:
     DurationLookup: CG_TAROTCARD
   - Status: Geffen_Magic1
     Icon: EFST_GEFFEN_MAGIC1
-    CalcFlags:
-      All: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
       RemoveOnHermode: true
+    Script: |
+      .@val1 = getstatus(SC_GEFFEN_MAGIC1, 1);
+      bonus2 bAddRace,RC_Player_Human, .@val1;
+      bonus2 bAddRace,RC_DemiHuman, .@val1;
   - Status: Geffen_Magic2
     Icon: EFST_GEFFEN_MAGIC2
-    CalcFlags:
-      All: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
+    Script: |
+      .@val1 = getstatus(SC_GEFFEN_MAGIC2, 1);
+      bonus2 bMagicAddRace,RC_Player_Human, .@val1;
+      bonus2 bMagicAddRace,RC_DemiHuman, .@val1;
   - Status: Geffen_Magic3
     Icon: EFST_GEFFEN_MAGIC3
-    CalcFlags:
-      All: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
+    Script: |
+      .@val1 = getstatus(SC_GEFFEN_MAGIC3, 1);
+      bonus2 bSubRace,RC_Player_Human, .@val1;
+      bonus2 bSubRace,RC_DemiHuman, .@val1;
   - Status: Maxpain
     Icon: EFST_MAXPAIN
     DurationLookup: NPC_MAXPAIN
@@ -6788,25 +6800,34 @@ Body:
       BlEffect: true
   - Status: Armor_Element_Earth
     Icon: EFST_RESIST_PROPERTY_GROUND
-    CalcFlags:
-      All: true
     Flags:
       NoDispell: true
       OverlapIgnoreLevel: true
+    Script: |
+      bonus2 bSubEle,Ele_Water, getstatus(SC_ARMOR_ELEMENT_EARTH, 1);
+      bonus2 bSubEle,Ele_Earth, getstatus(SC_ARMOR_ELEMENT_EARTH, 2);
+      bonus2 bSubEle,Ele_Fire, getstatus(SC_ARMOR_ELEMENT_EARTH, 3);
+      bonus2 bSubEle,Ele_Wind, getstatus(SC_ARMOR_ELEMENT_EARTH, 4);
   - Status: Armor_Element_Fire
     Icon: EFST_RESIST_PROPERTY_FIRE
-    CalcFlags:
-      All: true
     Flags:
       NoDispell: true
       OverlapIgnoreLevel: true
+    Script: |
+      bonus2 bSubEle,Ele_Water, getstatus(SC_ARMOR_ELEMENT_FIRE, 1);
+      bonus2 bSubEle,Ele_Earth, getstatus(SC_ARMOR_ELEMENT_FIRE, 2);
+      bonus2 bSubEle,Ele_Fire, getstatus(SC_ARMOR_ELEMENT_FIRE, 3);
+      bonus2 bSubEle,Ele_Wind, getstatus(SC_ARMOR_ELEMENT_FIRE, 4);
   - Status: Armor_Element_Wind
     Icon: EFST_RESIST_PROPERTY_WIND
-    CalcFlags:
-      All: true
     Flags:
       NoDispell: true
       OverlapIgnoreLevel: true
+    Script: |
+      bonus2 bSubEle,Ele_Water, getstatus(SC_ARMOR_ELEMENT_WIND, 1);
+      bonus2 bSubEle,Ele_Earth, getstatus(SC_ARMOR_ELEMENT_WIND, 2);
+      bonus2 bSubEle,Ele_Fire, getstatus(SC_ARMOR_ELEMENT_WIND, 3);
+      bonus2 bSubEle,Ele_Wind, getstatus(SC_ARMOR_ELEMENT_WIND, 4);
   - Status: Dailysendmailcnt
     Icon: EFST_DAILYSENDMAILCNT
     Flags:
@@ -6936,47 +6957,53 @@ Body:
       SendVal1: true
   - Status: Glastheim_Atk
     Icon: EFST_GLASTHEIM_ATK
-    CalcFlags:
-      All: true
     Flags:
       NoSave: true
+    Script: |
+      .@val1 = getstatus(SC_GLASTHEIM_ATK, 1);
+      bonus2 bAddRace2,RC2_OGH_ATK_DEF, .@val1;
+      bonus2 bMagicAddRace2,RC2_OGH_ATK_DEF, .@val1;
+      bonus2 bIgnoreDefRaceRate,RC_Undead, .@val1;
+      bonus2 bIgnoreDefRaceRate,RC_Demon, .@val1;
   - Status: Glastheim_Def
     Icon: EFST_GLASTHEIM_DEF
     Flags:
       NoSave: true
+    Script: |
+      bonus2 bSubRace2,RC2_OGH_ATK_DEF, getstatus(SC_GLASTHEIM_DEF, 1);
   - Status: Glastheim_Heal
     Icon: EFST_GLASTHEIM_HEAL
     Flags:
       NoSave: true
+    Script: |
+      bonus bHealPower, getstatus(SC_GLASTHEIM_HEAL, 1);
+      bonus bHealPower2, getstatus(SC_GLASTHEIM_HEAL, 2);
   - Status: Glastheim_Hidden
     Icon: EFST_GLASTHEIM_HIDDEN
     Flags:
       NoSave: true
+    Script: |
+      bonus2 bSubRace2,RC2_OGH_HIDDEN, getstatus(SC_GLASTHEIM_HIDDEN, 1);
   - Status: Glastheim_State
     Icon: EFST_GLASTHEIM_STATE
-    CalcFlags:
-      Str: true
-      Agi: true
-      Vit: true
-      Dex: true
-      Int: true
-      Luk: true
     Flags:
       NoSave: true
+    Script: |
+      bonus bAllStats, getstatus(SC_GLASTHEIM_STATE, 1);
   - Status: Glastheim_Itemdef
     Icon: EFST_GLASTHEIM_ITEMDEF
-    CalcFlags:
-      Def: true
-      Mdef: true
     Flags:
       NoSave: true
+    Script: |
+      bonus bDef, getstatus(SC_GLASTHEIM_ITEMDEF, 1);
+      bonus bMdef, getstatus(SC_GLASTHEIM_ITEMDEF, 2);
   - Status: Glastheim_Hpsp
     Icon: EFST_GLASTHEIM_HPSP
-    CalcFlags:
-      MaxHp: true
-      MaxSp: true
     Flags:
       NoSave: true
+    Script: |
+      bonus bMaxHP, getstatus(SC_GLASTHEIM_HPSP, 1);
+      bonus bMaxSP, getstatus(SC_GLASTHEIM_HPSP, 2);
   - Status: Lhz_Dun_N1
     Icon: EFST_LHZ_DUN_N1
     Flags:
@@ -8316,9 +8343,6 @@ Body:
       Sub_Weaponproperty: true
   - Status: Almighty
     Icon: EFST_ALMIGHTY
-    CalcFlags:
-      Batk: true
-      Matk: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
@@ -8327,6 +8351,10 @@ Body:
       NoClearance: true
     EndOnStart:
       UltimateCook: true
+    Script: |
+      .@val1 = getstatus(SC_ALMIGHTY, 1);
+      bonus bMatk, .@val1;
+      bonus bBaseAtk, .@val1;
   - Status: UltimateCook
     Icon: EFST_ULTIMATECOOK
     CalcFlags:
@@ -8381,13 +8409,24 @@ Body:
       NoClearance: true
   - Status: Limit_Power_Booster
     Icon: EFST_LIMIT_POWER_BOOSTER
-    CalcFlags:
-      All: true
     Flags:
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_LIMIT_POWER_BOOSTER, 1);
+      .@val2 = getstatus(SC_LIMIT_POWER_BOOSTER, 2);
+      .@val3 = getstatus(SC_LIMIT_POWER_BOOSTER, 3);
+      bonus bBaseAtk, .@val1;
+      bonus bMatk, .@val1;
+      bonus bHit, .@val1;
+      bonus bFlee, .@val1;
+      bonus bFixedCastrate, -.@val1;
+      bonus bAtkRate, .@val2;
+      bonus bMatkRate, .@val2;
+      bonus bAspd, .@val2;
+      bonus bUseSPrate, .@val3;
   - Status: Combat_Pill
     Icon: EFST_GM_BATTLE
     CalcFlags:
@@ -8441,15 +8480,15 @@ Body:
       NoClearance: true
   - Status: Acaraje
     Icon: EFST_ACARAJE
-    CalcFlags:
-      Hit: true
-      Aspd: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      bonus bAspdRate, getstatus(SC_ACARAJE, 1);
+      bonus bHit, getstatus(SC_ACARAJE, 2);
   - Status: PopeCookie
     Icon: EFST_POPECOOKIE
     CalcFlags:
@@ -8974,31 +9013,37 @@ Body:
       Freeze: true
   - Status: Bath_foam_a
     Icon: EFST_BATH_FOAM_A
-    CalcFlags:
-      All: true
     Flags:
       NoBanishingBuster: true
       NoClearance: true
       NoClearbuff: true
       NoDispell: true
+    Script: |
+      .@val1 = getstatus(SC_BATH_FOAM_A, 1);
+      bonus2 bAddRace2, RC2_EP172BATH, .@val1;
+      bonus2 bMagicAddRace2, RC2_EP172BATH, .@val1;
   - Status: Bath_foam_b
     Icon: EFST_BATH_FOAM_B
-    CalcFlags:
-      All: true
     Flags:
       NoBanishingBuster: true
       NoClearance: true
       NoClearbuff: true
       NoDispell: true
+    Script: |
+      .@val1 = getstatus(SC_BATH_FOAM_B, 1);
+      bonus2 bAddRace2, RC2_EP172BATH, .@val1;
+      bonus2 bMagicAddRace2, RC2_EP172BATH, .@val1;
   - Status: Bath_foam_c
     Icon: EFST_BATH_FOAM_C
-    CalcFlags:
-      All: true
     Flags:
       NoBanishingBuster: true
       NoClearance: true
       NoClearbuff: true
       NoDispell: true
+    Script: |
+      .@val1 = getstatus(SC_BATH_FOAM_C, 1);
+      bonus2 bAddRace2, RC2_EP172BATH, .@val1;
+      bonus2 bMagicAddRace2, RC2_EP172BATH, .@val1;
   - Status: Buchedenoel
     Icon: EFST_BUCHEDENOEL
     CalcFlags:
@@ -9012,8 +9057,6 @@ Body:
       NoClearance: true
   - Status: Ep16_def
     Icon: EFST_EP16_DEF
-    CalcFlags:
-      All: true
     Flags:
       NoClearbuff: true
       NoDispell: true
@@ -9023,6 +9066,8 @@ Body:
       Curse: true
       Silence: true
       Poison: true
+    Script: |
+      bonus2 bSubRace2,RC2_EP16_DEF, getstatus(SC_EP16_DEF, 1);
   - Status: Str_Scroll
     Icon: EFST_STR_SCROLL
     CalcFlags:
@@ -9045,31 +9090,38 @@ Body:
       NoRemoveOnDead: true
   - Status: Contents_1
     Icon: EFST_CONTENTS_1
-    CalcFlags:
-      All: true
     Flags:
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_CONTENTS_1, 1);
+      bonus2 bAddEle,Ele_All, .@val1;
+      bonus2 bMagicAddEle,Ele_All, .@val1;
   - Status: Contents_2
     Icon: EFST_CONTENTS_2
-    CalcFlags:
-      All: true
     Flags:
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_CONTENTS_2, 1);
+      bonus bShortAtkRate, .@val1;
+      bonus bLongAtkRate, .@val1;
+      bonus2 bMagicAtkEle,Ele_All, .@val1;
   - Status: Contents_3
     Icon: EFST_CONTENTS_3
-    CalcFlags:
-      All: true
     Flags:
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_CONTENTS_3, 1);
+      bonus bAtkRate, .@val1;
+      bonus bMatkRate, .@val1;
   - Status: Contents_4
     Icon: EFST_CONTENTS_4
     CalcFlags:
@@ -9079,60 +9131,86 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_CONTENTS_4, 1);
+      bonus bAtkRate, .@val1;
+      bonus bMatkRate, .@val1;
   - Status: Contents_5
     Icon: EFST_CONTENTS_5
-    CalcFlags:
-      All: true
     Flags:
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_CONTENTS_5, 1);
+      bonus bVariableCastrate, -.@val1;
+      bonus bAspdRate, .@val1;
   - Status: Contents_6
     Icon: EFST_CONTENTS_6
-    CalcFlags:
-      All: true
     Flags:
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_CONTENTS_6, 1);
+      bonus2 bAddRace,RC_Dragon, .@val1;
+      bonus2 bAddRace,RC_Plant, .@val1;
+      bonus2 bMagicAddRace,RC_Dragon, .@val1;
+      bonus2 bMagicAddRace,RC_Plant, .@val1;
   - Status: Contents_7
     Icon: EFST_CONTENTS_7
-    CalcFlags:
-      All: true
     Flags:
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_CONTENTS_7, 1);
+      bonus2 bAddRace,RC_Demon, .@val1;
+      bonus2 bAddRace,RC_Undead, .@val1;
+      bonus2 bMagicAddRace,RC_Demon, .@val1;
+      bonus2 bMagicAddRace,RC_Undead, .@val1;
   - Status: Contents_8
     Icon: EFST_CONTENTS_8
-    CalcFlags:
-      All: true
     Flags:
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_CONTENTS_8, 1);
+      bonus2 bAddRace,RC_Fish, .@val1;
+      bonus2 bAddRace,RC_Formless, .@val1;
+      bonus2 bMagicAddRace,RC_Fish, .@val1;
+      bonus2 bMagicAddRace,RC_Formless, .@val1;
   - Status: Contents_9
     Icon: EFST_CONTENTS_9
-    CalcFlags:
-      All: true
     Flags:
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_CONTENTS_9, 1);
+      bonus2 bAddRace,RC_Angel, .@val1;
+      bonus2 bAddRace,RC_Brute, .@val1;
+      bonus2 bMagicAddRace,RC_Angel, .@val1;
+      bonus2 bMagicAddRace,RC_Brute, .@val1;
   - Status: Contents_10
     Icon: EFST_CONTENTS_10
-    CalcFlags:
-      All: true
     Flags:
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_CONTENTS_10, 1);
+      bonus2 bAddRace,RC_DemiHuman, .@val1;
+      bonus2 bAddRace,RC_Insect, .@val1;
+      bonus2 bMagicAddRace,RC_DemiHuman, .@val1;
+      bonus2 bMagicAddRace,RC_Insect, .@val1;
   - Status: Mystery_Powder
     Icon: EFST_MYSTERY_POWDER
     DurationLookup: BO_MYSTERY_POWDER

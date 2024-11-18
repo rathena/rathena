@@ -466,17 +466,24 @@
 #if PACKETVER >= 20041108
 	packet(0x0084,2);
 	packet(0x0216,6);
-	parseable_packet(0x0217,2,clif_parse_Blacksmith,0);
-	parseable_packet(0x0218,2,clif_parse_Alchemist,0);
-	packet(0x0219,282);
-	packet(0x021a,282);
-	packet(0x021b,10);
-	packet(0x021c,10);
+#endif
+
+#if PACKETVER_MAIN_NUM >= 20120503 || PACKETVER_RE_NUM >= 20120502
+	parseable_packet( HEADER_CZ_REQ_RANKING, sizeof( PACKET_CZ_REQ_RANKING ), clif_parse_ranklist, 0 );
+#elif PACKETVER >= 20041108
+	parseable_packet( HEADER_CZ_BLACKSMITH_RANK, sizeof( PACKET_CZ_BLACKSMITH_RANK ), clif_parse_ranklist_blacksmith, 0 );
+	parseable_packet( HEADER_CZ_ALCHEMIST_RANK, sizeof( PACKET_CZ_ALCHEMIST_RANK ), clif_parse_ranklist_alchemist, 0 );
+#if PACKETVER >= 20050328
+	parseable_packet( HEADER_CZ_TAEKWON_RANK, sizeof( PACKET_CZ_TAEKWON_RANK ), clif_parse_ranklist_taekwon, 0 );
+#endif
+#if PACKETVER >= 20050530
+	parseable_packet( HEADER_CZ_KILLER_RANK, sizeof( PACKET_CZ_KILLER_RANK ), clif_parse_ranklist_killer, 0 );
+#endif
 #endif
 
 // 2004-11-15aSakexe
 #if PACKETVER >= 20041115
-	parseable_packet(0x021d,6,clif_parse_LessEffect,2);
+	parseable_packet( HEADER_CZ_LESSEFFECT, sizeof( PACKET_CZ_LESSEFFECT ), clif_parse_LessEffect, 0 );
 #endif
 
 // 2004-11-29aSakexe
@@ -535,13 +542,6 @@
 	parseable_packet(0x0193,2,clif_parse_CloseKafra,0);
 #endif
 
-// 2005-03-28aSakexe
-#if PACKETVER >= 20050328
-	packet(0x0224,10);
-	parseable_packet(0x0225,2,clif_parse_Taekwon,0);
-	packet(0x0226,282);
-#endif
-
 // 2005-04-04aSakexe
 #if PACKETVER >= 20050404
 	packet(0x0227,18);
@@ -591,9 +591,6 @@
 // 2005-05-30aSakexe
 #if PACKETVER >= 20050530
 	packet(0x022e,71);
-	packet(0x0236,10);
-	parseable_packet(0x0237,2,clif_parse_RankingPk,0);
-	packet(0x0238,282);
 #endif
 
 // 2005-05-31aSakexe
@@ -604,7 +601,6 @@
 // 2005-06-08aSakexe
 #if PACKETVER >= 20050608
 	packet(0x0216,6);
-	parseable_packet(0x0217,2,clif_parse_Blacksmith,0);
 	packet(0x022f,5);
 	parseable_packet(0x0231,26,clif_parse_ChangeHomunculusName,2);
 	packet(0x023a,4);
@@ -1714,17 +1710,6 @@
 	packet(0x08ff,24); // ZC_EFST_SET_ENTER
 	packet(0x0984,28); // ZC_EFST_SET_ENTER2
 	packet(0x099f,22); // ZC_SKILL_ENTRY4
-#endif
-
-// 2013-06-05Ragexe
-#if PACKETVER >= 20130605
-	parseable_packet(0x097C,4,clif_parse_ranklist,2);
-#endif
-
-// 2013-07-10Ragexe
-#if PACKETVER >= 20130710
-	packet(0x097D,288); //ZC_ACK_RANKING
-	packet(0x097E,12); //ZC_UPDATE_RANKING_POINT
 #endif
 
 // 2013-07-17Ragexe
