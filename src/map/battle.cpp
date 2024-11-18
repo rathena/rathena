@@ -8959,10 +8959,10 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			i = 0;	// Bonus ratio that ignores Mdef
 
 			if (sc != nullptr && sc->getSCE(SC_EXPIATIO))
-				i = 5 * sc->getSCE(SC_EXPIATIO)->val1;
+				i += 5 * sc->getSCE(SC_EXPIATIO)->val1;
 
 			if (sd != nullptr) {
-				i = sd->indexed_bonus.ignore_mdef_by_race[tstatus->race] + sd->indexed_bonus.ignore_mdef_by_race[RC_ALL] +
+				i += sd->indexed_bonus.ignore_mdef_by_race[tstatus->race] + sd->indexed_bonus.ignore_mdef_by_race[RC_ALL] +
 					sd->indexed_bonus.ignore_mdef_by_class[tstatus->class_] + sd->indexed_bonus.ignore_mdef_by_class[CLASS_ALL];
 
 				std::vector<e_race2> race2 = status_get_race2(target);
