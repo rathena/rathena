@@ -483,7 +483,7 @@
 
 // 2004-11-15aSakexe
 #if PACKETVER >= 20041115
-	parseable_packet(0x021d,6,clif_parse_LessEffect,2);
+	parseable_packet( HEADER_CZ_LESSEFFECT, sizeof( PACKET_CZ_LESSEFFECT ), clif_parse_LessEffect, 0 );
 #endif
 
 // 2004-11-29aSakexe

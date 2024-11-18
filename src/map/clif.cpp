@@ -18816,8 +18816,8 @@ void clif_showdigit(map_session_data* sd, unsigned char type, int32 value)
 }
 
 
-/// Notification of the state of client command /effect (CZ_LESSEFFECT).
-/// 021d <state>.L
+/// Notification of the state of client command /effect.
+/// 021d <state>.L (CZ_LESSEFFECT)
 /// state:
 ///     0 = Full effects
 ///     1 = Reduced effects
@@ -18829,8 +18829,11 @@ void clif_showdigit(map_session_data* sd, unsigned char type, int32 value)
 ///         as the only skill unit, that is sent with 0x1c9 is
 ///         Graffiti.
 void clif_parse_LessEffect(int32 fd, map_session_data* sd){
-	int32 isLess = RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[0]);
-	sd->state.lesseffect = ( isLess != 0 );
+#if PACKETVER >= 20041115
+	const PACKET_CZ_LESSEFFECT* p = reinterpret_cast<PACKET_CZ_LESSEFFECT*>( RFIFOP( fd, 0 ) );
+
+	sd->state.lesseffect = p->state != 0;
+#endif
 }
 
 /// 07e4 <length>.w <option>.l <val>.l {<index>.w <amount>.w).4b* (CZ_ITEMLISTWIN_RES)

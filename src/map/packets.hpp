@@ -1571,6 +1571,12 @@ struct PACKET_ZC_ACK_RANKING2{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_ACK_RANKING2, 0xaf6);
 
+struct PACKET_CZ_LESSEFFECT{
+	int16 packetType;
+	int32 state;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_LESSEFFECT, 0x21d);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
