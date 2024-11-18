@@ -60,10 +60,10 @@ unsigned long loginlog_failedattempts(uint32 ip, uint32 minutes) {
  * @param rcode:
  * @param message:
  */
-void login_log(uint32 ip, const char* username, int rcode, const char* message) {
+void login_log(uint32 ip, const char* username, int32 rcode, const char* message) {
 	char esc_username[NAME_LENGTH*2+1];
 	char esc_message[255*2+1];
-	int retcode;
+	int32 retcode;
 
 	if( !enabled )
 		return;
