@@ -17946,13 +17946,14 @@ void clif_quest_update_objective(map_session_data *sd, struct quest *qd)
 }
 
 
-/// Request to change the state of a quest (CZ_ACTIVE_QUEST).
-/// 02b6 <quest id>.L <active>.B
-void clif_parse_questStateAck(int32 fd, map_session_data *sd)
-{
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	quest_update_status(sd, RFIFOL(fd,info->pos[0]),
-	    RFIFOB(fd,info->pos[1])?Q_ACTIVE:Q_INACTIVE);
+/// Request to change the state of a quest.
+/// 02b6 <quest id>.L <active>.B (CZ_ACTIVE_QUEST)
+void clif_parse_questStateAck( int32 fd, map_session_data* sd ){
+#if PACKETVER >= 20070622
+	const PACKET_CZ_ACTIVE_QUEST* p = reinterpret_cast<PACKET_CZ_ACTIVE_QUEST*>( RFIFOP( fd, 0 ) );
+
+	quest_update_status( sd, p->quest_id, ( p->active != 0 ) ? Q_ACTIVE : Q_INACTIVE );
+#endif
 }
 
 

@@ -938,7 +938,6 @@
 	packet(0x02b3,107);
 	packet(0x02b4,6);
 	packet(0x02b5,-1);
-	parseable_packet(0x02b6,7,clif_parse_questStateAck,2,6);
 	packet(0x02b7,7);
 	packet( HEADER_ZC_ITEM_PICKUP_PARTY, sizeof( struct PACKET_ZC_ITEM_PICKUP_PARTY ) );
 	packet(0x02b9,191);
@@ -969,6 +968,10 @@
 	packet(0x02de,6);
 	packet(0x02df,36);
 	packet(0x02e0,34);
+#endif
+
+#if PACKETVER >= 20070622
+	parseable_packet( HEADER_CZ_ACTIVE_QUEST, sizeof( PACKET_CZ_ACTIVE_QUEST ), clif_parse_questStateAck, 0 );
 #endif
 
 // 2007-10-23aSakexe
