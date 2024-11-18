@@ -34,7 +34,7 @@ struct mmo_account {
 	time_t pincode_change;	// (timestamp): last time of pincode change
 	char web_auth_token[WEB_AUTH_TOKEN_LENGTH]; // web authentication token (randomized on each login)
 #ifdef VIP_ENABLE
-	int old_group;
+	int32 old_group;
 	time_t vip_time;
 #endif
 };
@@ -143,7 +143,7 @@ struct AccountDB {
 	AccountDBIterator* (*iterator)(AccountDB* self);
 };
 
-void mmo_send_global_accreg(AccountDB* self, int fd, uint32 account_id, uint32 char_id);
-void mmo_save_global_accreg(AccountDB* self, int fd, uint32 account_id, uint32 char_id);
+void mmo_send_global_accreg(AccountDB* self, int32 fd, uint32 account_id, uint32 char_id);
+void mmo_save_global_accreg(AccountDB* self, int32 fd, uint32 account_id, uint32 char_id);
 
 #endif /* ACCOUNT_HPP */

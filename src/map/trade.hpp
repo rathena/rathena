@@ -18,9 +18,9 @@ enum e_ack_trade_response : uint8 {
 };
 
 void trade_traderequest(map_session_data *sd, map_session_data *target_sd);
-void trade_tradeack(map_session_data *sd,int type);
+void trade_tradeack(map_session_data *sd,int32 type);
 void trade_tradeadditem(map_session_data *sd,short index,short amount);
-void trade_tradeaddzeny(map_session_data *sd,int amount);
+void trade_tradeaddzeny(map_session_data *sd,int32 amount);
 void trade_tradeok(map_session_data *sd);
 void trade_tradecancel(map_session_data *sd);
 void trade_tradecommit(map_session_data *sd);

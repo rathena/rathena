@@ -9,6 +9,8 @@
 #include <numeric> //iota
 #include <string>
 
+#include "cbasetypes.hpp"
+
 #ifndef __has_builtin
 	#define __has_builtin(x) 0
 #endif
@@ -38,12 +40,12 @@ cScopeTimer::cScopeTimer()
  * @author http://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#C.2B.2B
  * comparison test was done here http://cpp.sh/2o7w
  */
-int levenshtein(const std::string &s1, const std::string &s2)
+int32 levenshtein(const std::string &s1, const std::string &s2)
 {
 	// To change the type this function manipulates and returns, change
 	// the return type and the types of the two variables below.
-	int s1len = static_cast<int>(s1.size());
-	int s2len = static_cast<int>(s2.size());
+	int32 s1len = static_cast<int>(s1.size());
+	int32 s2len = static_cast<int>(s2.size());
 	
 	auto column_start = (decltype(s1len))1;
 	
