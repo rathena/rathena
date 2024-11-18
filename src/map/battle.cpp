@@ -8504,7 +8504,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case AG_DESTRUCTIVE_HURRICANE:
 						skillratio += -100 + 600 + 2850 * skill_lv + 5 * sstatus->spl;
-						// (climax buff applied when hit)
+						// (climax buff applied with pc_skillatk_bonus)
 						RE_LVL_DMOD(100);
 						break;
 					case AG_RAIN_OF_CRYSTAL:
@@ -8517,7 +8517,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case AG_VIOLENT_QUAKE_ATK:
 						skillratio += -100 + 200 + 1200 * skill_lv + 5 * sstatus->spl;
-						// (climax buff applied when hit)
+						// (climax buff applied with pc_skillatk_bonus)
 						RE_LVL_DMOD(100);
 						break;
 					case AG_SOUL_VC_STRIKE:
@@ -8530,7 +8530,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case AG_ALL_BLOOM_ATK:
 						skillratio += -100 + 200 + 1200 * skill_lv + 5 * sstatus->spl;
-						// (climax buff applied when hit)
+						// (climax buff applied with pc_skillatk_bonus)
 						RE_LVL_DMOD(100);
 						break;
 					case AG_ALL_BLOOM_ATK2:
@@ -8539,12 +8539,12 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case AG_CRYSTAL_IMPACT:
 						skillratio += -100 + 250 + 1300 * skill_lv + 5 * sstatus->spl;
-						// (climax buff applied when hit)
+						// (climax buff applied with pc_skillatk_bonus)
 						RE_LVL_DMOD(100);
 						break;
 					case AG_CRYSTAL_IMPACT_ATK:
 						skillratio += -100 + 250 + 1300 * skill_lv + 5 * sstatus->spl;
-						// (climax buff applied when hit)
+						// (climax buff applied with pc_skillatk_bonus)
 						RE_LVL_DMOD(100);
 						break;
 					case AG_TORNADO_STORM:
@@ -8996,12 +8996,52 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 #endif
 		}
 
+		i = 0;	// pc_skillatk_bonus ratio
+
 #ifdef RENEWAL
 		// pc_skillatk_bonus must be after def reduction and before the damages applied when the target is hit (at least on renewal)
-		if (sd != nullptr && (i = pc_skillatk_bonus(sd, skill_id)) > 0) {
-			ad.damage += (int64)ad.damage*i/100;
-		}
+		if (sd != nullptr)
+			i += pc_skillatk_bonus(sd, skill_id);
 #endif
+
+		// Buffs added to pc_skillatk_bonus (renewal) ratio
+		switch (skill_id) {
+			case AG_DESTRUCTIVE_HURRICANE:
+				if (sc->getSCE(SC_CLIMAX)) {
+					if (sc->getSCE(SC_CLIMAX)->val1 == 3)
+						i += 150;
+					else if (sc->getSCE(SC_CLIMAX)->val1 == 5)
+						i -= 20;
+				}
+				break;
+			case AG_VIOLENT_QUAKE_ATK:
+				if (sc->getSCE(SC_CLIMAX)) {
+					if (sc->getSCE(SC_CLIMAX)->val1 == 1)
+						i -= 50;
+					else if (sc->getSCE(SC_CLIMAX)->val1 == 3)
+						i += 200;
+				}
+				break;
+			case AG_ALL_BLOOM_ATK:
+				if (sc->getSCE(SC_CLIMAX) && sc->getSCE(SC_CLIMAX)->val1 == 3)
+					i += 300;
+				break;
+			case AG_CRYSTAL_IMPACT:
+				if (sc->getSCE(SC_CLIMAX)) {
+					if (sc->getSCE(SC_CLIMAX)->val1 == 3)
+						i += 50;
+					else if (sc->getSCE(SC_CLIMAX)->val1 == 4)
+						i -= 50;
+				}
+				break;
+			case AG_CRYSTAL_IMPACT_ATK:
+				if (sc->getSCE(SC_CLIMAX) && sc->getSCE(SC_CLIMAX)->val1 == 4)
+					i += 150;
+				break;
+		}
+
+		if (i != 0)
+			ad.damage = (int64)( (double)( ad.damage + ad.damage * i / 100. ) );
 
 		//Apply the physical part of the skill's damage. [Skotlex]
 		switch (skill_id) {
@@ -9045,6 +9085,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		if(ad.damage<1)
 			ad.damage=1;
 		else if(sc) { //only applies when hit
+			// !TODO: shouldn't they be with pc_skillatk_bonus?
 			switch(skill_id) {
 				case MG_LIGHTNINGBOLT:
 				case MG_THUNDERSTORM:
@@ -9065,40 +9106,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				case WZ_HEAVENDRIVE:
 					if(sc->getSCE(SC_PETROLOGY_OPTION))
 						ad.damage += (6 + sstatus->int_ / 4) + max(sstatus->dex - 10, 0) / 30;
-					break;
-
-				// Buff applied after def reduction and before battle_attr_fix
-				case AG_DESTRUCTIVE_HURRICANE:
-					if (sc->getSCE(SC_CLIMAX)) {
-						if (sc->getSCE(SC_CLIMAX)->val1 == 3)
-							ad.damage += ad.damage * 150 / 100;
-						else if (sc->getSCE(SC_CLIMAX)->val1 == 5)
-							ad.damage = (int64)( ad.damage - std::ceil( ad.damage * 20 / 100. ) );	// Damage rounded down after final calculation
-					}
-					break;
-				case AG_VIOLENT_QUAKE_ATK:
-					if (sc->getSCE(SC_CLIMAX)) {
-						if (sc->getSCE(SC_CLIMAX)->val1 == 1)
-							ad.damage /= 2;
-						else if (sc->getSCE(SC_CLIMAX)->val1 == 3)
-							ad.damage *= 3;
-					}
-					break;
-				case AG_ALL_BLOOM_ATK:
-					if (sc->getSCE(SC_CLIMAX) && sc->getSCE(SC_CLIMAX)->val1 == 3)
-						ad.damage *= 4;
-					break;
-				case AG_CRYSTAL_IMPACT:
-					if (sc->getSCE(SC_CLIMAX)) {
-						if (sc->getSCE(SC_CLIMAX)->val1 == 3)
-							ad.damage += ad.damage * 50 / 100;
-						else if (sc->getSCE(SC_CLIMAX)->val1 == 4)
-							ad.damage /= 2;
-					}
-					break;
-				case AG_CRYSTAL_IMPACT_ATK:
-					if (sc->getSCE(SC_CLIMAX) && sc->getSCE(SC_CLIMAX)->val1 == 4)
-						ad.damage += ad.damage * 150 / 100;
 					break;
 			}
 		}
