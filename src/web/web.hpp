@@ -19,7 +19,7 @@ namespace rathena{
 	namespace server_web{
 		class WebServer : public Core{
 			protected:
-				bool initialize( int argc, char* argv[] ) override;
+				bool initialize( int32 argc, char* argv[] ) override;
 				void handle_main( t_tick next ) override;
 				void finalize() override;
 				void handle_crash() override;
@@ -39,7 +39,7 @@ namespace rathena{
 struct Web_Config {
 	std::string web_ip;								// the address to bind to
 	uint16 web_port;								// the port to bind to
-	bool print_req_res;								// Whether or not to print requests/responses
+	bool print_req_res;								// Whether or not to print32 requests/responses
 
 	char webconf_name[256];						/// name of main config file
 	char msgconf_name[256];							/// name of msg_conf config file
@@ -47,7 +47,7 @@ struct Web_Config {
 };
 
 struct Inter_Config {
-	int emblem_transparency_limit;					// Emblem transparency limit
+	int32 emblem_transparency_limit;					// Emblem transparency limit
 	bool emblem_woe_change;							// allow emblem change during woe
 };
 
@@ -72,8 +72,8 @@ extern char partybookings_table[32];
 #define msg_config_read(cfgName) web_msg_config_read(cfgName)
 #define msg_txt(msg_number) web_msg_txt(msg_number)
 #define do_final_msg() web_do_final_msg()
-int web_msg_config_read(char *cfgName);
-const char* web_msg_txt(int msg_number);
+int32 web_msg_config_read(char *cfgName);
+const char* web_msg_txt(int32 msg_number);
 void web_do_final_msg(void);
 bool web_config_read(const char* cfgName, bool normal);
 

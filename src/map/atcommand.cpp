@@ -58,11 +58,11 @@
 using namespace rathena;
 
 #define ATCOMMAND_LENGTH 50
-#define ACMD_FUNC(x) static int atcommand_ ## x (const int fd, map_session_data* sd, const char* command, const char* message)
+#define ACMD_FUNC(x) static int32 atcommand_ ## x (const int32 fd, map_session_data* sd, const char* command, const char* message)
 
 typedef struct AtCommandInfo AtCommandInfo;
 
-int atcmd_binding_count = 0;
+int32 atcmd_binding_count = 0;
 
 /// Atcommand restriction usage
 enum e_atcmd_restict {
@@ -200,7 +200,7 @@ static void warp_get_suggestions(map_session_data* sd, const char *name); // @ru
 
 // @commands (script-based)
 struct atcmd_binding_data* get_atcommandbind_byname(const char* name) {
-	int i = 0;
+	int32 i = 0;
 
 	if( *name == atcommand_symbol || *name == charcommand_symbol )
 		name++; // for backwards compatibility
@@ -243,13 +243,13 @@ static const char* atcommand_help_string( const char* command ){
  *------------------------------------------*/
 ACMD_FUNC(send)
 {
-	int len=0,type;
+	int32 len=0,type;
 	// read message type as hex number (without the 0x)
 	if(!message || !*message ||
 			!((sscanf(message, "len %8x", &type)==1 && (len=1))
 			|| sscanf(message, "%8x", &type)==1) )
 	{
-		int i;
+		int32 i;
 		for (i = 900; i <= 903; ++i)
 			clif_displaymessage(fd, msg_txt(sd,i));
 		return -1;
@@ -286,7 +286,7 @@ ACMD_FUNC(send)
 	}
 //define GET_VALUE
 	if (type > 0 && type < MAX_PACKET_DB) {
-		int off,end;
+		int32 off,end;
 		long num;
 		if(len)
 		{// show packet length
@@ -472,7 +472,7 @@ ACMD_FUNC(send)
 /**
  * Retrieves map name suggestions for a given string.
  * This will first check if any map names contain the given string, and will
- *   print out MAX_SUGGESTIONS results if any maps are found.
+ *   print32 out MAX_SUGGESTIONS results if any maps are found.
  * Otherwise, suggestions will be calculated through Levenshtein distance,
  *   and up to 5 of the closest matches will be printed.
  *
@@ -489,7 +489,7 @@ static void warp_get_suggestions(map_session_data* sd, const char *name) {
 	suggestions.reserve( MAX_SUGGESTIONS );
 
 	// check for maps that contain string
-	for (int i = 0; i < map_num; i++) {
+	for (int32 i = 0; i < map_num; i++) {
 		struct map_data *mapdata = map_getmapdata(i);
 
 		// Prevent suggestion of instance mapnames
@@ -509,11 +509,11 @@ static void warp_get_suggestions(map_session_data* sd, const char *name) {
 	// if no maps found, search by edit distance
 	if( suggestions.empty() ){
 		// Levenshtein > 4 is bad
-		const int LEVENSHTEIN_MAX = 4;
+		const int32 LEVENSHTEIN_MAX = 4;
 
 		std::unordered_map<int, std::vector<const char*>> maps;
 
-		for (int i = 0; i < map_num; i++) {
+		for (int32 i = 0; i < map_num; i++) {
 			struct map_data *mapdata = map_getmapdata(i);
 
 			// Prevent suggestion of instance mapnames
@@ -522,7 +522,7 @@ static void warp_get_suggestions(map_session_data* sd, const char *name) {
 			}
 
 			// Calculate the levenshtein distance of the two strings
-			int distance = levenshtein(mapdata->name, name);
+			int32 distance = levenshtein(mapdata->name, name);
 
 			// Check if it is above the maximum defined distance
 			if( distance > LEVENSHTEIN_MAX ){
@@ -539,7 +539,7 @@ static void warp_get_suggestions(map_session_data* sd, const char *name) {
 			vector.push_back(mapdata->name);
 		}
 
-		for( int distance = 0; distance <= LEVENSHTEIN_MAX; distance++ ){
+		for( int32 distance = 0; distance <= LEVENSHTEIN_MAX; distance++ ){
 			std::vector<const char*>& vector = maps[distance];
 
 			for( const char* found_map : vector ){
@@ -754,16 +754,16 @@ ACMD_FUNC(who) {
 	map_session_data* pl_sd = nullptr;;
 	struct s_mapiterator *iter = nullptr;	
 	char player_name[NAME_LENGTH] = "";
-	int count = 0;
-	int level = 0;
+	int32 count = 0;
+	int32 level = 0;
 	StringBuf buf;
 	/**
 	 * 1 = @who  : Player name, [Title], [Party name], [Guild name]
 	 * 2 = @who2 : Player name, [Title], BLvl, JLvl, Job
 	 * 3 = @who3 : [CID/AID] Player name [Title], Map, X, Y
 	 */
-	int display_type = 1;
-	int map_id = -1;
+	int32 display_type = 1;
+	int32 map_id = -1;
 
 	nullpo_retr(-1, sd);
 
@@ -857,8 +857,8 @@ ACMD_FUNC(whogm)
 {
 	map_session_data* pl_sd;
 	struct s_mapiterator* iter;
-	int j, count;
-	int level;
+	int32 j, count;
+	int32 level;
 	char match_text[CHAT_SIZE_MAX];
 	char player_name[NAME_LENGTH];
 	struct party_data *p;
@@ -880,7 +880,7 @@ ACMD_FUNC(whogm)
 	iter = mapit_getallusers();
 	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
 	{
-		int pl_level = pc_get_group_level(pl_sd);
+		int32 pl_level = pc_get_group_level(pl_sd);
 		if (!pl_level)
 			continue;
 
@@ -1078,7 +1078,7 @@ ACMD_FUNC(guildstorage)
  *------------------------------------------*/
 ACMD_FUNC(option)
 {
-	int param1 = 0, param2 = 0, param3 = 0;
+	int32 param1 = 0, param2 = 0, param3 = 0;
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message || sscanf(message, "%11d %11d %11d", &param1, &param2, &param3) < 1 || param1 < 0 || param2 < 0 || param3 < 0)
@@ -1200,12 +1200,12 @@ ACMD_FUNC(resetcooltime)
  *------------------------------------------*/
 ACMD_FUNC(jobchange)
 {
-	int job = 0, upper = 0;
+	int32 job = 0, upper = 0;
 	const char* text;
 	nullpo_retr(-1, sd);
 
     if (!message || !*message || sscanf(message, "%11d %11d", &job, &upper) < 1) {
-		int i;
+		int32 i;
 		bool found = false;
 
 		upper = 0;
@@ -1332,7 +1332,7 @@ ACMD_FUNC(kami)
  *------------------------------------------*/
 ACMD_FUNC(heal)
 {
-	int hp = 0, sp = 0; // [Valaris] thanks to fov
+	int32 hp = 0, sp = 0; // [Valaris] thanks to fov
 	nullpo_retr(-1, sd);
 
 	sscanf(message, "%11d %11d", &hp, &sp);
@@ -1390,7 +1390,7 @@ ACMD_FUNC(heal)
 *------------------------------------------*/
 ACMD_FUNC(healap)
 {
-	int ap = 0;
+	int32 ap = 0;
 	nullpo_retr(-1, sd);
 
 	sscanf(message, "%11d", &ap);
@@ -1424,7 +1424,7 @@ ACMD_FUNC(healap)
 ACMD_FUNC(item)
 {
 	char item_name[100];
-	int number = 0, bound = BOUND_NONE;
+	int32 number = 0, bound = BOUND_NONE;
 	char flag = 0;
 	char *itemlist;
 
@@ -1475,7 +1475,7 @@ ACMD_FUNC(item)
 
 	if (number <= 0)
 		number = 1;
-	int get_count = number;
+	int32 get_count = number;
 
 	// Produce items in list
 	for( const auto& item : items ){
@@ -1486,7 +1486,7 @@ ACMD_FUNC(item)
 			get_count = 1;
 		}
 
-		for( int i = 0; i < number; i += get_count ){
+		for( int32 i = 0; i < number; i += get_count ){
 			// if not pet egg
 			if (!pet_create_egg(sd, item_id)) {
 				struct item item_tmp = {};
@@ -1511,9 +1511,9 @@ ACMD_FUNC(item)
 ACMD_FUNC(item2)
 {
 	char item_name[100];
-	int number = 0, bound = BOUND_NONE;
-	int identify = 0, refine = 0, attr = 0;
-	int c1 = 0, c2 = 0, c3 = 0, c4 = 0;
+	int32 number = 0, bound = BOUND_NONE;
+	int32 identify = 0, refine = 0, attr = 0;
+	int32 c1 = 0, c2 = 0, c3 = 0, c4 = 0;
 	nullpo_retr(-1, sd);
 
 	memset(item_name, '\0', sizeof(item_name));
@@ -1553,7 +1553,7 @@ ACMD_FUNC(item2)
 	}
 
 	if( item_data != nullptr ){
-		int loop, get_count, i;
+		int32 loop, get_count, i;
 		char flag = 0;
 
 		//Check if it's stackable.
@@ -1607,7 +1607,7 @@ ACMD_FUNC(item2)
  *------------------------------------------*/
 ACMD_FUNC(itemreset)
 {
-	int i;
+	int32 i;
 	nullpo_retr(-1, sd);
 
 	for (i = 0; i < MAX_INVENTORY; i++) {
@@ -1625,7 +1625,7 @@ ACMD_FUNC(itemreset)
  *------------------------------------------*/
 ACMD_FUNC(baselevelup)
 {
-	int level=0, i=0, status_point=0, trait_point=0;
+	int32 level=0, i=0, status_point=0, trait_point=0;
 	nullpo_retr(-1, sd);
 	level = atoi(message);
 
@@ -1706,7 +1706,7 @@ ACMD_FUNC(baselevelup)
  *------------------------------------------*/
 ACMD_FUNC(joblevelup)
 {
-	int level=0;
+	int32 level=0;
 	nullpo_retr(-1, sd);
 
 	level = atoi(message);
@@ -1897,7 +1897,7 @@ ACMD_FUNC(gvgon)
  *------------------------------------------*/
 ACMD_FUNC(model)
 {
-	int hair_style = 0, hair_color = 0, cloth_color = 0;
+	int32 hair_style = 0, hair_color = 0, cloth_color = 0;
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
@@ -1929,7 +1929,7 @@ ACMD_FUNC(model)
  *------------------------------------------*/
 ACMD_FUNC(bodystyle)
 {
-	int body_style = 0;
+	int32 body_style = 0;
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
@@ -1961,7 +1961,7 @@ ACMD_FUNC(bodystyle)
  *------------------------------------------*/
 ACMD_FUNC(dye)
 {
-	int cloth_color = 0;
+	int32 cloth_color = 0;
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
@@ -1988,7 +1988,7 @@ ACMD_FUNC(dye)
  *------------------------------------------*/
 ACMD_FUNC(hair_style)
 {
-	int hair_style = 0;
+	int32 hair_style = 0;
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
@@ -2015,7 +2015,7 @@ ACMD_FUNC(hair_style)
  *------------------------------------------*/
 ACMD_FUNC(hair_color)
 {
-	int hair_color = 0;
+	int32 hair_color = 0;
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
@@ -2042,13 +2042,13 @@ ACMD_FUNC(hair_color)
  *------------------------------------------*/
 ACMD_FUNC(go)
 {
-	int i;
-	int town;
+	int32 i;
+	int32 town;
 	char map_name[MAP_NAME_LENGTH];
 
 	const struct {
 		char map[MAP_NAME_LENGTH];
-		int x, y;
+		int32 x, y;
 	} data[] = {
 		{ MAP_PRONTERA,    156, 191 }, //  0=Prontera
 		{ MAP_MORROC,      156,  93 }, //  1=Morroc
@@ -2251,10 +2251,10 @@ ACMD_FUNC(monster)
 	char name[NAME_LENGTH];
 	char monster[NAME_LENGTH];
 	char eventname[EVENT_NAME_LENGTH] = "";
-	int mob_id;
-	int number = 0;
-	int count;
-	int i, range;
+	int32 mob_id;
+	int32 number = 0;
+	int32 count;
+	int32 i, range;
 	short mx, my;
 	uint32 size;
 	nullpo_retr(-1, sd);
@@ -2322,7 +2322,7 @@ ACMD_FUNC(monster)
 	count = 0;
 	range = (int)sqrt((float)number) +2; // calculation of an odd number (+ 4 area around)
 	for (i = 0; i < number; i++) {
-		int k;
+		int32 k;
 		map_search_freecell(&sd->bl, 0, &mx,  &my, range, range, 0);
 		k = mob_once_spawn(sd, sd->bl.m, mx, my, name, mob_id, 1, eventname, size, AI_NONE);
 		if(k) {
@@ -2349,10 +2349,10 @@ ACMD_FUNC(monster)
 /*==========================================
  *
  *------------------------------------------*/
-static int atkillmonster_sub(struct block_list *bl, va_list ap)
+static int32 atkillmonster_sub(struct block_list *bl, va_list ap)
 {
 	struct mob_data *md;
-	int flag;
+	int32 flag;
 
 	nullpo_ret(md=(struct mob_data *)bl);
 	flag = va_arg(ap, int);
@@ -2369,7 +2369,7 @@ static int atkillmonster_sub(struct block_list *bl, va_list ap)
 
 ACMD_FUNC(killmonster)
 {
-	int map_id, drop_flag;
+	int32 map_id, drop_flag;
 	char map_name[MAP_NAME_LENGTH_EXT];
 	nullpo_retr(-1, sd);
 
@@ -2398,8 +2398,8 @@ ACMD_FUNC(killmonster)
  *------------------------------------------*/
 ACMD_FUNC(refine)
 {
-	int j, position = 0, refine = 0, current_position, final_refine;
-	int count;
+	int32 j, position = 0, refine = 0, current_position, final_refine;
+	int32 count;
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
@@ -2445,7 +2445,7 @@ ACMD_FUNC(refine)
 
 	count = 0;
 	for (j = 0; j < EQI_MAX; j++) {
-		int i;
+		int32 i;
 		if ((i = sd->equip_index[j]) < 0)
 			continue;
 		if(j == EQI_AMMO)
@@ -2490,8 +2490,8 @@ ACMD_FUNC(refine)
  *------------------------------------------*/
 ACMD_FUNC(grade)
 {
-	int j, position = 0, grade = 0, current_position, final_grade;
-	int count;
+	int32 j, position = 0, grade = 0, current_position, final_grade;
+	int32 count;
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
@@ -2525,7 +2525,7 @@ ACMD_FUNC(grade)
 
 	count = 0;
 	for (j = 0; j < EQI_MAX; j++) {
-		int i;
+		int32 i;
 		if ((i = sd->equip_index[j]) < 0)
 			continue;
 		if(j == EQI_AMMO)
@@ -2562,7 +2562,7 @@ ACMD_FUNC(produce)
 {
 	char item_name[100];
 	t_itemid item_id;
-	int attribute = 0, star = 0;
+	int32 attribute = 0, star = 0;
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
@@ -2625,14 +2625,14 @@ ACMD_FUNC(produce)
  *------------------------------------------*/
 ACMD_FUNC(memo)
 {
-	int position = 0;
+	int32 position = 0;
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if( !message || !*message || sscanf(message, "%11d", &position) < 1 )
 	{
-		int i;
+		int32 i;
 		clif_displaymessage(sd->fd,  msg_txt(sd,668)); // Your actual memo positions are:
 		for( i = 0; i < MAX_MEMOPOINTS; i++ )
 		{
@@ -2660,7 +2660,7 @@ ACMD_FUNC(memo)
  *------------------------------------------*/
 ACMD_FUNC(gat)
 {
-	int y;
+	int32 y;
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
@@ -2685,7 +2685,7 @@ ACMD_FUNC(gat)
  *------------------------------------------*/
 ACMD_FUNC(displaystatus)
 {
-	int i, type, flag, tick, val1 = 0, val2 = 0, val3 = 0;
+	int32 i, type, flag, tick, val1 = 0, val2 = 0, val3 = 0;
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message || (i = sscanf(message, "%11d %11d %11d %11d %11d %11d", &type, &flag, &tick, &val1, &val2, &val3)) < 1) {
@@ -2705,7 +2705,7 @@ ACMD_FUNC(displaystatus)
  *------------------------------------------*/
 ACMD_FUNC(statuspoint)
 {
-	int point;
+	int32 point;
 	uint32 new_status_point;
 
 	if (!message || !*message || (point = atoi(message)) == 0) {
@@ -2753,7 +2753,7 @@ ACMD_FUNC(statuspoint)
 *------------------------------------------*/
 ACMD_FUNC(traitpoint)
 {
-	int point;
+	int32 point;
 	uint32 new_trait_point;
 
 	if (!message || !*message || (point = atoi(message)) == 0) {
@@ -2802,7 +2802,7 @@ ACMD_FUNC(traitpoint)
  *------------------------------------------*/
 ACMD_FUNC(skillpoint)
 {
-	int point;
+	int32 point;
 	uint32 new_skill_point;
 	nullpo_retr(-1, sd);
 
@@ -2851,7 +2851,7 @@ ACMD_FUNC(skillpoint)
  *------------------------------------------*/
 ACMD_FUNC(zeny)
 {
-	int zeny=0, ret=-1;
+	int32 zeny=0, ret=-1;
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message || (zeny = atoi(message)) == 0) {
@@ -2880,7 +2880,7 @@ ACMD_FUNC(param)
 	nullpo_retr(-1, sd);
 
 	uint8 stat;
-	int value = 0;
+	int32 value = 0;
 	uint16 new_value, status, max_status;
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
@@ -2958,7 +2958,7 @@ ACMD_FUNC(stat_all)
 {
 	nullpo_retr(-1, sd);
 
-	int value = 0;
+	int32 value = 0;
 	uint8 count, i;
 	uint16 status[PARAM_MAX] = {}, max_status[PARAM_MAX] = {};
 
@@ -3031,7 +3031,7 @@ ACMD_FUNC(trait_all) {
 		return -1;
 	}
 
-	int value = 0;
+	int32 value = 0;
 	uint8 i;
 	uint16 status[PARAM_MAX] = {}, max_status[PARAM_MAX] = {};
 
@@ -3092,7 +3092,7 @@ ACMD_FUNC(trait_all) {
  *
  *------------------------------------------*/
 ACMD_FUNC(guildlevelup) {
-	int level = 0;
+	int32 level = 0;
 	short added_level;
 	nullpo_retr(-1, sd);
 
@@ -3133,7 +3133,7 @@ ACMD_FUNC(guildlevelup) {
  *
  *------------------------------------------*/
 ACMD_FUNC(makeegg) {
-	int id;
+	int32 id;
 
 	nullpo_retr(-1, sd);
 
@@ -3166,7 +3166,7 @@ ACMD_FUNC(makeegg) {
 		pet = pet_db_search( nameid, PET_EGG );
 	}
 
-	int res(-1);
+	int32 res(-1);
 	if (pet != nullptr) {
 		std::shared_ptr<s_mob_db> mdb = mob_db.find(pet->class_);
 		if(mdb){
@@ -3210,7 +3210,7 @@ ACMD_FUNC(hatch) {
  *
  *------------------------------------------*/
 ACMD_FUNC(petfriendly) {
-	int friendly;
+	int32 friendly;
 	struct pet_data *pd;
 	nullpo_retr(-1, sd);
 
@@ -3247,7 +3247,7 @@ ACMD_FUNC(petfriendly) {
  *------------------------------------------*/
 ACMD_FUNC(pethungry)
 {
-	int hungry;
+	int32 hungry;
 	struct pet_data *pd;
 	nullpo_retr(-1, sd);
 
@@ -3382,7 +3382,7 @@ ACMD_FUNC(char_block)
 ACMD_FUNC(char_ban)
 {
 	char *modif_p, output[CHAT_SIZE_MAX];
-	int32 timediff = 0; //don't set this as uint as we may want to decrease banned time
+	int32 timediff = 0; //don't set this as uint32 as we may want to decrease banned time
 	enum chrif_req_op bantype;
 
 	nullpo_retr(-1, sd);
@@ -3803,7 +3803,7 @@ ACMD_FUNC(lostskill)
  *------------------------------------------*/
 ACMD_FUNC(spiritball)
 {
-	int number;
+	int32 number;
 	nullpo_retr(-1, sd);
 
 	if( !message || !*message || ( number = atoi( message ) ) < 0 || number > MAX_SPIRITBALL ){
@@ -3824,7 +3824,7 @@ ACMD_FUNC(spiritball)
 
 ACMD_FUNC(soulball)
 {
-	int number;
+	int32 number;
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message || (number = atoi(message)) < 0 || number > MAX_SOUL_BALL) {
@@ -3869,7 +3869,7 @@ ACMD_FUNC(party)
 ACMD_FUNC(guild)
 {
 	char guild[NAME_LENGTH];
-	int prev;
+	int32 prev;
 	nullpo_retr(-1, sd);
 
 	memset(guild, '\0', sizeof(guild));
@@ -3900,7 +3900,7 @@ ACMD_FUNC(breakguild)
 		if (sd->guild) { // Check if guild was found
 			if (sd->state.gmaster_flag) { // Check if player is guild master
 				// Break guild
-				int ret = guild_break( *sd, sd->guild->guild.name );
+				int32 ret = guild_break( *sd, sd->guild->guild.name );
 
 				if (ret) { // Check if anything went wrong
 					return 0; // Guild was broken
@@ -4076,7 +4076,7 @@ ACMD_FUNC(recallall)
 {
 	map_session_data* pl_sd;
 	struct s_mapiterator* iter;
-	int count;
+	int32 count;
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
@@ -4121,7 +4121,7 @@ ACMD_FUNC(guildrecall)
 {
 	map_session_data* pl_sd;
 	struct s_mapiterator* iter;
-	int count;
+	int32 count;
 	char guild_name[NAME_LENGTH];
 	nullpo_retr(-1, sd);
 
@@ -4183,7 +4183,7 @@ ACMD_FUNC(partyrecall)
 	struct s_mapiterator* iter;
 	char party_name[NAME_LENGTH];
 	struct party_data *p;
-	int count;
+	int32 count;
 	nullpo_retr(-1, sd);
 
 	memset(party_name, '\0', sizeof(party_name));
@@ -4420,7 +4420,7 @@ ACMD_FUNC(mapinfo) {
 	struct s_mapiterator* iter;
 	struct chat_data *cd = nullptr;
 	char direction[12];
-	int i, m_id, chat_num = 0, list = 0, vend_num = 0;
+	int32 i, m_id, chat_num = 0, list = 0, vend_num = 0;
 	unsigned short m_index;
 	char mapname[MAP_NAME_LENGTH];
 
@@ -4761,7 +4761,7 @@ ACMD_FUNC(mount_peco)
 		if( !(sd->sc.option&OPTION_DRAGON) ) {
 			uint32 option = OPTION_DRAGON1;
 			if( message[0] ) {
-				int color = atoi(message);
+				int32 color = atoi(message);
 				option = ( color == 2 ? OPTION_DRAGON2 :
 				           color == 3 ? OPTION_DRAGON3 :
 				           color == 4 ? OPTION_DRAGON4 :
@@ -4791,7 +4791,7 @@ ACMD_FUNC(mount_peco)
 			e_mado_type type = MADO_ROBOT;
 
 			if (message[0]) {
-				int tmp = strtol(message, nullptr, 10);
+				int32 tmp = strtol(message, nullptr, 10);
 
 				switch (tmp) {
 					case MADO_ROBOT:
@@ -4955,7 +4955,7 @@ ACMD_FUNC(clanspy){
  *------------------------------------------*/
 ACMD_FUNC(repairall)
 {
-	int count, i;
+	int32 count, i;
 	nullpo_retr(-1, sd);
 
 	count = 0;
@@ -5169,7 +5169,7 @@ ACMD_FUNC(reloadnpcfile) {
  *------------------------------------------*/
 char* txt_time(t_tick duration_)
 {
-	int days, hours, minutes, seconds;
+	int32 days, hours, minutes, seconds;
 	char temp[CHAT_SIZE_MAX];
 	static char temp1[CHAT_SIZE_MAX];
 
@@ -5177,7 +5177,7 @@ char* txt_time(t_tick duration_)
 	memset(temp1, '\0', sizeof(temp1));
 
 	// Cap it
-	int duration = (int)duration_;
+	int32 duration = (int)duration_;
 
 	days = duration / (60 * 60 * 24);
 	duration = duration - (60 * 60 * 24 * days);
@@ -5364,7 +5364,7 @@ ACMD_FUNC(unjail)
 ACMD_FUNC(jailfor) {
 	map_session_data* pl_sd = nullptr;;
 	char * modif_p;
-	int jailtime = 0;
+	int32 jailtime = 0;
 
 	nullpo_retr(-1, sd);
 
@@ -5404,7 +5404,7 @@ ACMD_FUNC(jailfor) {
 			clif_displaymessage(pl_sd->fd, msg_txt(sd,120)); // GM has discharge you.
 			clif_displaymessage(fd, msg_txt(sd,121)); // Player unjailed
 		} else {
-			int year = 0, month = 0, day = 0, hour = 0, minute = 0, second = 0;
+			int32 year = 0, month = 0, day = 0, hour = 0, minute = 0, second = 0;
 			char timestr[21];
 			time_t now=time(nullptr);
 			split_time(jailtime*60,&year,&month,&day,&hour,&minute,&second);
@@ -5429,7 +5429,7 @@ ACMD_FUNC(jailfor) {
 
 //By Coltaro
 ACMD_FUNC(jailtime){
-	int year, month, day, hour, minute, second;
+	int32 year, month, day, hour, minute, second;
 	char timestr[21];
 	time_t now = time(nullptr);
 
@@ -5466,7 +5466,7 @@ ACMD_FUNC(jailtime){
  *------------------------------------------*/
 ACMD_FUNC(disguise)
 {
-	int id = 0;
+	int32 id = 0;
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message) {
@@ -5515,7 +5515,7 @@ ACMD_FUNC(disguise)
  *------------------------------------------*/
 ACMD_FUNC(disguiseall)
 {
-	int mob_id=0;
+	int32 mob_id=0;
 	map_session_data *pl_sd;
 	struct s_mapiterator* iter;
 	nullpo_retr(-1, sd);
@@ -5547,7 +5547,7 @@ ACMD_FUNC(disguiseall)
  *------------------------------------------*/
 ACMD_FUNC(disguiseguild)
 {
-	int id = 0, i;
+	int32 id = 0, i;
 	char monster[NAME_LENGTH], guild[NAME_LENGTH];
 
 	memset(monster, '\0', sizeof(monster));
@@ -5634,7 +5634,7 @@ ACMD_FUNC(undisguiseall)
 ACMD_FUNC(undisguiseguild)
 {
 	char guild_name[NAME_LENGTH];
-	int i;
+	int32 i;
 	nullpo_retr(-1, sd);
 
 	memset(guild_name, '\0', sizeof(guild_name));
@@ -5767,7 +5767,7 @@ ACMD_FUNC(email)
  *------------------------------------------*/
 ACMD_FUNC(effect)
 {
-	int type = EF_NONE;
+	int32 type = EF_NONE;
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message || sscanf(message, "%11d", &type) < 1) {
@@ -5995,7 +5995,7 @@ ACMD_FUNC(dropall)
 				}
 				pc_equipswitch_remove(sd, i);
 
-				int amount = sd->inventory.u.items_inventory[i].amount;
+				int32 amount = sd->inventory.u.items_inventory[i].amount;
 
 				if(pc_dropitem(sd, i, amount))
 					count += amount;
@@ -6070,7 +6070,7 @@ ACMD_FUNC(stockall)
  *------------------------------------------*/
 ACMD_FUNC(storeall)
 {
-	int i;
+	int32 i;
 	nullpo_retr(-1, sd);
 
 	if (sd->state.storage_flag != 1)
@@ -6100,7 +6100,7 @@ ACMD_FUNC(storeall)
 
 ACMD_FUNC(clearstorage)
 {
-	int i, j;
+	int32 i, j;
 	nullpo_retr(-1, sd);
 
 	if (sd->state.storage_flag == 1) {
@@ -6125,7 +6125,7 @@ ACMD_FUNC(clearstorage)
 
 ACMD_FUNC(cleargstorage)
 {
-	int i, j;
+	int32 i, j;
 	struct s_storage *gstorage;
 	nullpo_retr(-1, sd);
 
@@ -6168,7 +6168,7 @@ ACMD_FUNC(cleargstorage)
 
 ACMD_FUNC(clearcart)
 {
-	int i;
+	int32 i;
 	nullpo_retr(-1, sd);
 
 	if (pc_iscarton(sd) == 0) {
@@ -6199,7 +6199,7 @@ ACMD_FUNC(clearcart)
 #define MAX_SKILLID_PARTIAL_RESULTS 5
 #define MAX_SKILLID_PARTIAL_RESULTS_LEN 74 // "skill " (6) + "%d:" (up to 5) + "%s" (up to 30) + " (%s)" (up to 33)
 ACMD_FUNC(skillid) {
-	int i, found = 0;
+	int32 i, found = 0;
 	char partials[MAX_SKILLID_PARTIAL_RESULTS][MAX_SKILLID_PARTIAL_RESULTS_LEN];
 
 	nullpo_retr(-1, sd);
@@ -6397,7 +6397,7 @@ ACMD_FUNC(skilltree)
 		return -1;
 	}
 
-	int c = pc_mapid2jobid( pc_calc_skilltree_normalize_job( pl_sd ), pl_sd->status.sex );
+	int32 c = pc_mapid2jobid( pc_calc_skilltree_normalize_job( pl_sd ), pl_sd->status.sex );
 
 	sprintf(atcmd_output, msg_txt(sd,1168), job_name(c), pc_checkskill(pl_sd, NV_BASIC)); // Player is using %s skill tree (%d basic points).
 	clif_displaymessage(fd, atcmd_output);
@@ -6528,8 +6528,8 @@ ACMD_FUNC(divorce)
  *------------------------------------------*/
 ACMD_FUNC(changelook)
 {
-	int i, j = 0, k = 0;
-	int pos[8] = { LOOK_HEAD_TOP,LOOK_HEAD_MID,LOOK_HEAD_BOTTOM,LOOK_WEAPON,LOOK_SHIELD,LOOK_SHOES,LOOK_ROBE, LOOK_BODY2 };
+	int32 i, j = 0, k = 0;
+	int32 pos[8] = { LOOK_HEAD_TOP,LOOK_HEAD_MID,LOOK_HEAD_BOTTOM,LOOK_WEAPON,LOOK_SHIELD,LOOK_SHOES,LOOK_ROBE, LOOK_BODY2 };
 
 	if((i = sscanf(message, "%11d %11d", &j, &k)) < 1) {
 		clif_displaymessage(fd, msg_txt(sd,1177)); // Usage: @changelook {<position>} <view id>
@@ -6582,7 +6582,7 @@ ACMD_FUNC(autotrade) {
 	}
 
 	if( battle_config.at_timeout ) {
-		int timeout = atoi(message);
+		int32 timeout = atoi(message);
 		status_change_start(nullptr,&sd->bl, SC_AUTOTRADE, 10000, 0, 0, 0, 0, ((timeout > 0) ? min(timeout,battle_config.at_timeout) : battle_config.at_timeout) * 60000, SCSTART_NONE);
 	}
 
@@ -6676,7 +6676,7 @@ ACMD_FUNC(changeleader)
 ACMD_FUNC(partyoption)
 {
 	struct party_data *p;
-	int mi, option;
+	int32 mi, option;
 	char w1[16], w2[16];
 	nullpo_retr(-1, sd);
 
@@ -6719,7 +6719,7 @@ ACMD_FUNC(partyoption)
  *------------------------------------------*/
 ACMD_FUNC(autoloot)
 {
-	int rate;
+	int32 rate;
 	nullpo_retr(-1, sd);
 	// autoloot command without value
 	if(!message || !*message)
@@ -6752,8 +6752,8 @@ ACMD_FUNC(autoloot)
 ACMD_FUNC(autolootitem)
 {
 	std::shared_ptr<item_data> item_data;
-	int i;
-	int action = 3; // 1=add, 2=remove, 3=help+list (default), 4=reset
+	int32 i;
+	int32 action = 3; // 1=add, 2=remove, 3=help+list (default), 4=reset
 
 	nullpo_retr(-1, sd);
 
@@ -6867,7 +6867,7 @@ ACMD_FUNC(autoloottype)
 {
 	uint8 action = 3; // 1=add, 2=remove, 3=help+list (default), 4=reset
 	enum item_types type= IT_UNKNOWN;
-	int ITEM_MAX = 1533;
+	int32 ITEM_MAX = 1533;
 
 	nullpo_retr(-1, sd);
 
@@ -7164,7 +7164,7 @@ ACMD_FUNC(mobsearch)
 		return -1;
 	}
 
-	int mob_id = strtol(mob_name, nullptr, 10);
+	int32 mob_id = strtol(mob_name, nullptr, 10);
 
 	if (mob_id == 0)
 		 mob_id = mobdb_searchname(mob_name);
@@ -7184,7 +7184,7 @@ ACMD_FUNC(mobsearch)
 	clif_displaymessage(fd, atcmd_output);
 
 	s_mapiterator* it = mapit_geteachmob();
-	int number = 0;
+	int32 number = 0;
 	for(;;)
 	{
 		TBL_MOB* md = (TBL_MOB*)mapit_next(it);
@@ -7212,7 +7212,7 @@ ACMD_FUNC(mobsearch)
  * @cleanmap - cleans items on the ground
  * @cleanarea - cleans items on the ground within an specified area
  *------------------------------------------*/
-static int atcommand_cleanfloor_sub(struct block_list *bl, va_list ap)
+static int32 atcommand_cleanfloor_sub(struct block_list *bl, va_list ap)
 {
 	nullpo_ret(bl);
 	map_clearflooritem(bl);
@@ -7326,7 +7326,7 @@ ACMD_FUNC(pettalk)
 			"/chinese", "/antenna1", "/antenna2", "/antenna3", "/hum", "/abs", "/oops", "/spit", "/ene", "/panic",
 			"/whisp"
 		};
-		int i;
+		int32 i;
 		ARR_FIND( 0, ARRAYLENGTH(emo), i, stricmp(message, emo[i]) == 0 );
 		if( i == ET_DICE1 ) i = rnd_value<int>(ET_DICE1, ET_DICE6); // randomize /dice
 		if( i < ARRAYLENGTH(emo) )
@@ -7353,9 +7353,9 @@ ACMD_FUNC(pettalk)
 ACMD_FUNC(users)
 {
 	char buf[CHAT_SIZE_MAX];
-	int i;
-	int users[MAX_MAPINDEX];
-	int users_all;
+	int32 i;
+	int32 users[MAX_MAPINDEX];
+	int32 users_all;
 	struct s_mapiterator* iter;
 
 	memset(users, 0, sizeof(users));
@@ -7412,8 +7412,8 @@ ACMD_FUNC(reset)
 ACMD_FUNC(summon)
 {
 	char name[NAME_LENGTH];
-	int mob_id = 0;
-	int duration = 0;
+	int32 mob_id = 0;
+	int32 duration = 0;
 	struct mob_data *md;
 	t_tick tick=gettick();
 
@@ -7462,7 +7462,7 @@ ACMD_FUNC(summon)
  *------------------------------------------*/
 ACMD_FUNC(adjgroup)
 {
-	int new_group = 0;
+	int32 new_group = 0;
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message || sscanf(message, "%11d", &new_group) != 1) {
@@ -7515,7 +7515,7 @@ ACMD_FUNC(trade)
 ACMD_FUNC(setbattleflag)
 {
 	char flag[128], value[128];
-	int reload = 0;
+	int32 reload = 0;
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message || sscanf(message, "%127s %127s %11d", flag, value, &reload) < 2) {
@@ -7599,7 +7599,7 @@ ACMD_FUNC(uptime)
  *------------------------------------------*/
 ACMD_FUNC(changesex)
 {
-	int i;
+	int32 i;
 
 	nullpo_retr(-1, sd);
 
@@ -7620,7 +7620,7 @@ ACMD_FUNC(changesex)
  *------------------------------------------*/
 ACMD_FUNC(changecharsex)
 {
-	int i;
+	int32 i;
 
 	nullpo_retr(-1, sd);
 
@@ -7641,7 +7641,7 @@ ACMD_FUNC(changecharsex)
 ACMD_FUNC(mute)
 {
 	map_session_data* pl_sd = nullptr;;
-	int manner;
+	int32 manner;
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
@@ -7708,7 +7708,7 @@ ACMD_FUNC(refreshall)
  *------------------------------------------*/
 ACMD_FUNC(identify)
 {
-	int i,num;
+	int32 i,num;
 
 	nullpo_retr(-1, sd);
 
@@ -7777,7 +7777,7 @@ ACMD_FUNC(gmotd)
 
 ACMD_FUNC(misceffect)
 {
-	int effect = 0;
+	int32 effect = 0;
 	nullpo_retr(-1, sd);
 	if (!message || !*message)
 		return -1;
@@ -7854,7 +7854,7 @@ ACMD_FUNC(mobinfo)
 		}
 #ifdef RENEWAL_EXP
 		if( battle_config.atcommand_mobinfo_type ) {
-			int penalty = pc_level_penalty_mod( sd, PENALTY_EXP, mob );
+			int32 penalty = pc_level_penalty_mod( sd, PENALTY_EXP, mob );
 
 			base_exp = base_exp * penalty / 100;
 			job_exp = job_exp * penalty / 100;
@@ -7886,7 +7886,7 @@ ACMD_FUNC(mobinfo)
 		clif_displaymessage(fd, msg_txt(sd,1245)); //  Drops:
 		strcpy(atcmd_output, " ");
 		uint32 j = 0;
-		int drop_modifier = 100;
+		int32 drop_modifier = 100;
 #ifdef RENEWAL_DROP
 		if( battle_config.atcommand_mobinfo_type ){
 			drop_modifier = pc_level_penalty_mod( sd, PENALTY_DROP, mob );
@@ -7903,7 +7903,7 @@ ACMD_FUNC(mobinfo)
 			if (id == nullptr)
 				continue;
 
-			int droprate = mob_getdroprate( &sd->bl, mob, mob->dropitem[i].rate, drop_modifier );
+			int32 droprate = mob_getdroprate( &sd->bl, mob, mob->dropitem[i].rate, drop_modifier );
 
 			sprintf(atcmd_output2, " - %s  %02.02f%%", item_db.create_item_link( id ).c_str(), (float)droprate / 100);
 			strcat(atcmd_output, atcmd_output2);
@@ -7965,8 +7965,8 @@ ACMD_FUNC(mobinfo)
 ACMD_FUNC(showmobs)
 {
 	char mob_name[100];
-	int mob_id;
-	int number = 0;
+	int32 mob_id;
+	int32 number = 0;
 	struct s_mapiterator* it;
 
 	nullpo_retr(-1, sd);
@@ -8028,7 +8028,7 @@ ACMD_FUNC(showmobs)
 ACMD_FUNC(homlevel)
 {
 	TBL_HOM * hd;
-	int level = 0, i = 0;
+	int32 level = 0, i = 0;
 
 	nullpo_retr(-1, sd);
 
@@ -8081,7 +8081,7 @@ ACMD_FUNC(homevolution)
 
 ACMD_FUNC(hommutate)
 {
-	int homun_id, m_class = 0, m_id;
+	int32 homun_id, m_class = 0, m_id;
 	nullpo_retr(-1, sd);
 
 	if (!hom_is_active(sd->hd)) {
@@ -8111,7 +8111,7 @@ ACMD_FUNC(hommutate)
  *------------------------------------------*/
 ACMD_FUNC(makehomun)
 {
-	int homunid;
+	int32 homunid;
 	nullpo_retr(-1, sd);
 
 	if ( sd->status.hom_id ) {
@@ -8140,7 +8140,7 @@ ACMD_FUNC(makehomun)
  *------------------------------------------*/
 ACMD_FUNC(homfriendly)
 {
-	int friendly = 0;
+	int32 friendly = 0;
 
 	nullpo_retr(-1, sd);
 
@@ -8167,7 +8167,7 @@ ACMD_FUNC(homfriendly)
  *------------------------------------------*/
 ACMD_FUNC(homhungry)
 {
-	int hungry = 0;
+	int32 hungry = 0;
 
 	nullpo_retr(-1, sd);
 
@@ -8266,7 +8266,7 @@ ACMD_FUNC(homstats)
 	struct homun_data *hd;
 	std::shared_ptr<s_homunculus_db> db;
 	struct s_homunculus *hom;
-	int lv, min, max, evo;
+	int32 lv, min, max, evo;
 
 	nullpo_retr(-1, sd);
 
@@ -8341,7 +8341,7 @@ ACMD_FUNC(homshuffle)
 		return -1;
 
 	clif_displaymessage(sd->fd, msg_txt(sd,1275)); // Homunculus stats altered.
-	atcommand_homstats(fd, sd, command, message); //Print out the new stats
+	atcommand_homstats(fd, sd, command, message); //Print32 out the new stats
 	return 0;
 }
 
@@ -8449,7 +8449,7 @@ ACMD_FUNC(whodrops)
 
 			for (uint16 j=0; j < MAX_SEARCH && id->mob[j].chance > 0; j++)
 			{
-				int dropchance = id->mob[j].chance;
+				int32 dropchance = id->mob[j].chance;
 				std::shared_ptr<s_mob_db> mob = mob_db.find(id->mob[j].id);
 				if(!mob) continue;
 
@@ -8479,7 +8479,7 @@ ACMD_FUNC(whereis)
 		return -1;
 	}
 	
-	int i_message = atoi(message);
+	int32 i_message = atoi(message);
 	if (mobdb_checkid(i_message)) {
 		// ID given
 		mob_ids[0] = i_message;
@@ -8500,7 +8500,7 @@ ACMD_FUNC(whereis)
 		count = MAX_SEARCH;
 	}
 
-	for (int i = 0; i < count; i++) {
+	for (int32 i = 0; i < count; i++) {
 		uint16 mob_id = mob_ids[i];
 		std::shared_ptr<s_mob_db> mob = mob_db.find(mob_id);
 
@@ -8536,10 +8536,10 @@ ACMD_FUNC(version)
 /*==========================================
  * @mutearea by MouseJstr
  *------------------------------------------*/
-static int atcommand_mutearea_sub(struct block_list *bl,va_list ap)
+static int32 atcommand_mutearea_sub(struct block_list *bl,va_list ap)
 {
 
-	int time, id;
+	int32 time, id;
 	map_session_data *pl_sd = (map_session_data *)bl;
 	if (pl_sd == nullptr)
 		return 0;
@@ -8559,7 +8559,7 @@ static int atcommand_mutearea_sub(struct block_list *bl,va_list ap)
 
 ACMD_FUNC(mutearea)
 {
-	int time;
+	int32 time;
 	nullpo_ret(sd);
 
 	if (!message || !*message) {
@@ -8651,7 +8651,7 @@ ACMD_FUNC(me)
  *------------------------------------------*/
 ACMD_FUNC(size)
 {
-	int size = SZ_SMALL;
+	int32 size = SZ_SMALL;
 	nullpo_retr(-1, sd);
 
 	size = cap_value(atoi(message),SZ_SMALL,SZ_BIG);
@@ -8673,7 +8673,7 @@ ACMD_FUNC(size)
 
 ACMD_FUNC(sizeall)
 {
-	int size;
+	int32 size;
 	map_session_data *pl_sd;
 	struct s_mapiterator* iter;
 
@@ -8703,7 +8703,7 @@ ACMD_FUNC(sizeall)
 
 ACMD_FUNC(sizeguild)
 {
-	int size = SZ_SMALL, i;
+	int32 size = SZ_SMALL, i;
 	char guild[NAME_LENGTH];
 	map_session_data *pl_sd;
 	nullpo_retr(-1, sd);
@@ -9100,8 +9100,8 @@ ACMD_FUNC(reject)
 ACMD_FUNC(cash)
 {
 	char output[128];
-	int value;
-	int ret=0;
+	int32 value;
+	int32 ret=0;
 	nullpo_retr(-1, sd);
 
 	// Since there is no cashpoint update packet we need to force updating like this
@@ -9166,7 +9166,7 @@ ACMD_FUNC(cash)
 // @clone/@slaveclone/@evilclone <playername> [Valaris]
 ACMD_FUNC(clone)
 {
-	int x=0,y=0,flag=0,master=0,i=0;
+	int32 x=0,y=0,flag=0,master=0,i=0;
 	map_session_data *pl_sd=nullptr;
 
 	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
@@ -9383,10 +9383,10 @@ ACMD_FUNC(resetskill)
  *------------------------------------------*/
 ACMD_FUNC(itemlist)
 {
-	int i, j, count, counter;
+	int32 i, j, count, counter;
 	const char* location;
 	struct item* items;
-	int size;
+	int32 size;
 	StringBuf buf;
 
 	nullpo_retr(-1, sd);
@@ -9516,7 +9516,7 @@ ACMD_FUNC(itemlist)
 		} else if(it->card[0] == CARD0_CREATE) { // created item
 			StringBuf_Printf(&buf, msg_txt(sd,1351), (uint32)MakeDWord(it->card[2], it->card[3])); //  -> (produced item, creator id: %u)
 		} else { // normal item
-			int counter2 = 0;
+			int32 counter2 = 0;
 
 			for( j = 0; j < itd->slots; ++j ) {
 				if( it->card[j] == 0 )
@@ -9564,10 +9564,10 @@ ACMD_FUNC(stats)
 {
 	char job_jobname[100];
 	char output[CHAT_SIZE_MAX];
-	int i;
+	int32 i;
 	struct {
 		const char* format;
-		int value;
+		int32 value;
 	} output_table[] = {
 		{ "Base Level - %d", 0 },
 		{ nullptr, 0 },
@@ -9648,7 +9648,7 @@ ACMD_FUNC(stats)
 ACMD_FUNC(delitem)
 {
 	char item_name[100];
-	int amount = 0, idx;
+	int32 amount = 0, idx;
 
 	nullpo_retr(-1, sd);
 
@@ -9670,12 +9670,12 @@ ACMD_FUNC(delitem)
 	}
 
 	t_itemid nameid = id->nameid;
-	int total = amount;
+	int32 total = amount;
 
 	// delete items
 	while( amount && ( idx = pc_search_inventory(sd, nameid) ) != -1 )
 	{
-		int delamount = ( amount < sd->inventory.u.items_inventory[idx].amount ) ? amount : sd->inventory.u.items_inventory[idx].amount;
+		int32 delamount = ( amount < sd->inventory.u.items_inventory[idx].amount ) ? amount : sd->inventory.u.items_inventory[idx].amount;
 
 		if( sd->inventory_data[idx]->type == IT_PETEGG && sd->inventory.u.items_inventory[idx].card[0] == CARD0_PET )
 		{// delete pet
@@ -9714,7 +9714,7 @@ ACMD_FUNC(delitem)
  *------------------------------------------*/
 ACMD_FUNC(font)
 {
-	int font_id;
+	int32 font_id;
 	nullpo_retr(-1,sd);
 
 	font_id = atoi(message);
@@ -9742,13 +9742,13 @@ ACMD_FUNC(font)
 /*==========================================
  * type: 1 = commands (@), 2 = charcommands (#)
  *------------------------------------------*/
-static void atcommand_commands_sub(map_session_data* sd, const int fd, AtCommandType type)
+static void atcommand_commands_sub(map_session_data* sd, const int32 fd, AtCommandType type)
 {
 	char line_buff[CHATBOX_SIZE];
 	char* cur = line_buff;
 	AtCommandInfo* cmd;
 	DBIterator *iter = db_iterator(atcommand_db);
-	int count = 0;
+	int32 count = 0;
 
 	memset(line_buff,' ',CHATBOX_SIZE);
 	line_buff[CHATBOX_SIZE-1] = 0;
@@ -9789,7 +9789,7 @@ static void atcommand_commands_sub(map_session_data* sd, const int fd, AtCommand
 	clif_displaymessage(fd,line_buff);
 
 	if ( atcmd_binding_count ) {
-		int i, count_bind, gm_lvl = pc_get_group_level(sd);
+		int32 i, count_bind, gm_lvl = pc_get_group_level(sd);
 		for( i = count_bind = 0; i < atcmd_binding_count; i++ ) {
 			if ( gm_lvl >= ( (type - 1) ? atcmd_binding[i]->level2 : atcmd_binding[i]->level ) ) {
 				size_t slen = strlen( atcmd_binding[i]->command );
@@ -9864,7 +9864,7 @@ ACMD_FUNC(accinfo) {
 		clif_displaymessage(fd, msg_txt(sd,1366)); // You may search partial name by making use of '%' in the search, ex. "@accinfo %Mario%" lists all characters whose name contains "Mario".
 		return -1;
 	} else if (type != 0) {
-		type = type-'0'; //make it int
+		type = type-'0'; //make it int32
 		if (type != 1) {
 			clif_displaymessage(fd, "accinfo : Unknow type specified\n");
 			return -1;
@@ -9887,7 +9887,7 @@ ACMD_FUNC(accinfo) {
 */
 ACMD_FUNC(set) {
 	char reg[46], val[128], name[32];
-	int toset = 0;
+	int32 toset = 0;
 	size_t len;
 	uint32 index;
 	bool is_str = false;
@@ -9991,9 +9991,9 @@ ACMD_FUNC(set) {
 	return 0;
 }
 ACMD_FUNC(addperm) {
-	int perm_size = ARRAYLENGTH(pc_g_permission_name);
+	int32 perm_size = ARRAYLENGTH(pc_g_permission_name);
 	bool add;
-	int i;
+	int32 i;
 
 	parent_cmd = atcommand_alias_db.checkAlias(command+1);
 
@@ -10075,7 +10075,7 @@ ACMD_FUNC(cart) {
 	sd->status.skill[(idx)].lv = (x)?1:0; \
 	sd->status.skill[(idx)].flag = (x)?SKILL_FLAG_TEMPORARY:SKILL_FLAG_PERMANENT;
 
-	int val = atoi(message);
+	int32 val = atoi(message);
 	bool need_skill = (pc_checkskill(sd, MC_PUSHCART) == 0);
 	uint16 sk_idx = 0;
 
@@ -10131,7 +10131,7 @@ ACMD_FUNC(join){
  */
 static inline void atcmd_channel_help(map_session_data *sd, const char *command)
 {
-	int fd = sd->fd;
+	int32 fd = sd->fd;
 	bool can_delete = pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN);
 	bool can_create = (can_delete || channel_config.private_channel.allow);
 	clif_displaymessage(fd, msg_txt(sd,1414));// ---- Available options:
@@ -10297,12 +10297,12 @@ ACMD_FUNC(fontcolor)
 ACMD_FUNC(langtype)
 {
 	char langstr[8];
-	int i=0, fail=0;
+	int32 i=0, fail=0;
 
 	memset(langstr, '\0', sizeof(langstr));
 
 	if(sscanf(message, "%3s", langstr) >= 1){
-		int lang=0;
+		int32 lang=0;
 		lang = msg_langstr2langtype(langstr); //Switch langstr to associated langtype
 		if( msg_checklangtype(lang,false) == 1 ){ //Verify it's enabled and set it
 			char output[100];
@@ -10371,7 +10371,7 @@ ACMD_FUNC(vip) {
 		clif_displaymessage(pl_sd->fd, msg_txt(pl_sd,703)); // GM has removed your VIP time.
 		clif_displaymessage(fd, msg_txt(sd,704)); // Player is no longer VIP.
 	} else {
-		int year,month,day,hour,minute,second;
+		int32 year,month,day,hour,minute,second;
 		char timestr[21];
 		
 		split_time((int)(pl_sd->vip.time-now),&year,&month,&day,&hour,&minute,&second);
@@ -10408,7 +10408,7 @@ ACMD_FUNC(showrate) {
 #endif
 
 ACMD_FUNC(fullstrip) {
-	int i;
+	int32 i;
 	TBL_PC *tsd;
 	
 	nullpo_retr(-1,sd);
@@ -10462,7 +10462,7 @@ ACMD_FUNC(costume) {
 		"Hanbok",
 		"Oktoberfest"
 	};
-	const int name2id[] = {
+	const int32 name2id[] = {
 		SC_WEDDING,
 		SC_XMAS,
 		SC_SUMMER,
@@ -10782,7 +10782,7 @@ ACMD_FUNC(resurrect) {
 
 ACMD_FUNC(quest) {
 	uint8 i;
-	int quest_id = 0;
+	int32 quest_id = 0;
 	nullpo_retr(-1, sd);
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
@@ -10897,7 +10897,7 @@ ACMD_FUNC(addfame)
 {
 	nullpo_retr(-1, sd);
 
-	int famepoint = 0;
+	int32 famepoint = 0;
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
@@ -10962,7 +10962,7 @@ ACMD_FUNC(setcard)
 {
 	nullpo_retr(-1, sd);
 
-	int position = 0, slot, card_id;
+	int32 position = 0, slot, card_id;
 
 	if (!message || !*message || sscanf(message, "%11d %11d %11d", &position, &slot, &card_id) < 3) {
 		memset(atcmd_output, '\0', sizeof(atcmd_output));
@@ -11017,7 +11017,7 @@ ACMD_FUNC(setcard)
 		return -1;
 	}
 
-	int current_position = sd->inventory.u.items_inventory[i].equip;
+	int32 current_position = sd->inventory.u.items_inventory[i].equip;
 
 	pc_unequipitem(sd, i, 3);
 	log_pick_pc( sd, LOG_TYPE_COMMAND, -1, &sd->inventory.u.items_inventory[i] );
@@ -11361,7 +11361,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(setcard),
 	};
 	AtCommandInfo* atcommand;
-	int i;
+	int32 i;
 
 	for( i = 0; i < ARRAYLENGTH(atcommand_base); i++ ) {
 		if(atcommand_exists(atcommand_base[i].command)) { // Should not happen if atcommand_base[] array is OK
@@ -11400,7 +11400,7 @@ static void atcommand_get_suggestions(map_session_data* sd, const char *name, bo
 	char* full_match[MAX_SUGGESTIONS];
 	char* suggestions[MAX_SUGGESTIONS];
 	char* match;
-	int prefix_count = 0, full_count = 0;
+	int32 prefix_count = 0, full_count = 0;
 	bool can_use;
 
 	if (!battle_config.atcommand_suggestions_enabled)
@@ -11446,7 +11446,7 @@ static void atcommand_get_suggestions(map_session_data* sd, const char *name, bo
 
 	if ((full_count+prefix_count) > 0) {
 		char buffer[512];
-		int i;
+		int32 i;
 
 		// Merge full match and prefix match results
 		if (prefix_count < MAX_SUGGESTIONS) {
@@ -11480,7 +11480,7 @@ static void atcommand_get_suggestions(map_session_data* sd, const char *name, bo
  *  2 : console (admin:@atcommand)
  *  3 : script call (useatcmd)
  */
-bool is_atcommand(const int fd, map_session_data* sd, const char* message, int type)
+bool is_atcommand(const int32 fd, map_session_data* sd, const char* message, int32 type)
 {
 	char command[CHAT_SIZE_MAX], params[CHAT_SIZE_MAX];
 	char output[CHAT_SIZE_MAX];
@@ -11532,7 +11532,7 @@ bool is_atcommand(const int fd, map_session_data* sd, const char* message, int t
 		ssd = sd;
 	} else { // #command
 		char charname[NAME_LENGTH];
-		int n;
+		int32 n;
 
 		//Checks to see if #command has a name or a name + parameters.
 		if ((n = sscanf(message, "%255s \"%23[^\"]\" %255[^\n]", command, charname, params)) < 2

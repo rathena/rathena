@@ -15,7 +15,7 @@ struct _indexes {
 	char name[MAP_NAME_LENGTH]; //Stores map name
 } indexes[MAX_MAPINDEX];
 
-int max_index = 0;
+int32 max_index = 0;
 
 #define mapindex_exists(id) (indexes[id].name[0] != '\0')
 
@@ -71,7 +71,7 @@ const char* mapindex_getmapname_ext(const char* string, char* output) {
 
 /// Adds a map to the specified index
 /// Returns 1 if successful, 0 oherwise
-int mapindex_addmap(int index, const char* name) {
+int32 mapindex_addmap(int32 index, const char* name) {
 	char map_name[MAP_NAME_LENGTH];
 	if (index == -1){ //autogive index
 		ARR_FIND(1,max_index,index,(indexes[index].name[0] == '\0'));
@@ -108,7 +108,7 @@ int mapindex_addmap(int index, const char* name) {
 }
 
 unsigned short mapindex_name2idx(const char* name, const char *func) {
-	int i;
+	int32 i;
 	char map_name[MAP_NAME_LENGTH];
 	mapindex_getmapname(name, map_name);
 
@@ -131,8 +131,8 @@ const char* mapindex_idx2name(unsigned short id, const char *func) {
 void mapindex_init(void) {
 	FILE *fp;
 	char line[1024];
-	int last_index = -1;
-	int index;
+	int32 last_index = -1;
+	int32 index;
 	char map_name[MAP_NAME_LENGTH];
 	char path[255];
 	const char* mapindex_cfgfile[] = {
@@ -188,7 +188,7 @@ void mapindex_check_mapdefault(const char *mapname) {
 	}
 }
 
-int mapindex_removemap(int index){
+int32 mapindex_removemap(int32 index){
 	indexes[index].name[0] = '\0';
 	return 0;
 }

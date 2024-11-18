@@ -54,16 +54,16 @@ public:
 	unsigned short save_flag;
 };
 
-int inter_guild_parse_frommap(int fd);
+int32 inter_guild_parse_frommap(int32 fd);
 void inter_guild_sql_init(void);
 void inter_guild_sql_final(void);
-int inter_guild_leave(int guild_id,uint32 account_id,uint32 char_id);
-int mapif_parse_BreakGuild(int fd,int guild_id);
-int inter_guild_broken(int guild_id);
-int inter_guild_sex_changed(int guild_id,uint32 account_id,uint32 char_id, short gender);
-int inter_guild_charname_changed(int guild_id,uint32 account_id, uint32 char_id, char *name);
-int inter_guild_CharOnline(uint32 char_id, int guild_id);
-int inter_guild_CharOffline(uint32 char_id, int guild_id);
-uint16 inter_guild_storagemax(int guild_id);
+int32 inter_guild_leave(int32 guild_id,uint32 account_id,uint32 char_id);
+int32 mapif_parse_BreakGuild(int32 fd,int32 guild_id);
+int32 inter_guild_broken(int32 guild_id);
+int32 inter_guild_sex_changed(int32 guild_id,uint32 account_id,uint32 char_id, short gender);
+int32 inter_guild_charname_changed(int32 guild_id,uint32 account_id, uint32 char_id, char *name);
+int32 inter_guild_CharOnline(uint32 char_id, int32 guild_id);
+int32 inter_guild_CharOffline(uint32 char_id, int32 guild_id);
+uint16 inter_guild_storagemax(int32 guild_id);
 
 #endif /* INT_GUILD_HPP */
