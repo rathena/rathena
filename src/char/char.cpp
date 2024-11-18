@@ -2322,7 +2322,8 @@ bool char_checkdb(void){
                 schema_config.guild_expulsion_db, schema_config.guild_member_db, 
                 schema_config.guild_skill_db, schema_config.guild_position_db, schema_config.guild_storage_db,
 		schema_config.party_db, schema_config.pet_db, schema_config.friend_db, schema_config.mail_db, 
-                schema_config.auction_db, schema_config.quest_db, schema_config.homunculus_db, schema_config.skill_homunculus_db, schema_config.skillcooldown_homunculus_db,
+                schema_config.auction_db, schema_config.quest_db,
+                schema_config.homunculus_db, schema_config.skill_homunculus_db, schema_config.skillcooldown_homunculus_db,
                 schema_config.mercenary_db, schema_config.mercenary_owner_db, schema_config.skillcooldown_mercenary_db,
 		schema_config.elemental_db, schema_config.skillcooldown_db, schema_config.bonus_script_db,
 		schema_config.clan_table, schema_config.clan_alliance_table, schema_config.mail_attachment_db, schema_config.achievement_table

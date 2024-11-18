@@ -251,12 +251,10 @@ void mercenary_save(s_mercenary_data *md) {
 		if (timer == nullptr || timer->func != skill_blockmerc_end || DIFF_TICK(timer->tick, tick) < 0)
 			continue;
 
-		s_skill_cooldown_data data = {};
+		s_skill_cooldown_data& data = md->mercenary.scd[count];
 
 		data.tick = DIFF_TICK(timer->tick, tick);
 		data.skill_id = entry.first;
-
-		md->mercenary.scd[count] = data;
 
 		count++;
 	}
