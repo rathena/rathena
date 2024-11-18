@@ -1216,15 +1216,7 @@ Body:
       NoUnEquipItem: true
       NoConsumeItem: true
     CalcFlags:
-      Def: true
-      Def2: true
-      Mdef: true
-      MDef2: true
-      Flee: true
-      Speed: true
-      Aspd: true
-      MaxHp: true
-      Regen: true
+      All: true
     Opt3:
       Berserk: true
     Flags:
@@ -2812,9 +2804,11 @@ Body:
     Fail:
       S_Lifepotion: true
     Script: |
-      .@val1 = -getstatus(SC_S_LIFEPOTION, 1);
-      .@val2 = getstatus(SC_S_LIFEPOTION, 2);
-      bonus2 bRegenPercentHP, .@val1, 1000*.@val2;
+      if (!getstatus(SC_BERSERK)) {
+         .@val1 = -getstatus(SC_S_LIFEPOTION, 1);
+         .@val2 = getstatus(SC_S_LIFEPOTION, 2) * 1000;
+         bonus2 bRegenPercentHP, .@val1, .@val2;
+      }
   - Status: L_Lifepotion
     Icon: EFST_L_LIFEPOTION
     Flags:
@@ -2825,9 +2819,11 @@ Body:
     Fail:
       L_Lifepotion: true
     Script: |
-      .@val1 = -getstatus(SC_L_LIFEPOTION, 1);
-      .@val2 = getstatus(SC_L_LIFEPOTION, 2);
-      bonus2 bRegenPercentHP, .@val1, 1000*.@val2;
+      if (!getstatus(SC_BERSERK)) {
+         .@val1 = -getstatus(SC_L_LIFEPOTION, 1);
+         .@val2 = getstatus(SC_L_LIFEPOTION, 2) * 1000;
+         bonus2 bRegenPercentHP, .@val1, .@val2;
+      }
   - Status: Jexpboost
     Icon: EFST_CASH_PLUSONLYJOBEXP
     Flags:
