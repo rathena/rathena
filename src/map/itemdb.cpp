@@ -2411,7 +2411,7 @@ uint64 ItemEnchantDatabase::parseBodyNode( const ryml::NodeRef& node ){
 				enchant_slot = std::make_shared<s_item_enchant_slot>();
 				enchant_slot->slot = slot;
 
-				for( int i = 0; i <= MAX_ENCHANTGRADE; i++ ){
+				for( int32 i = 0; i <= MAX_ENCHANTGRADE; i++ ){
 					enchant_slot->normal.enchantgradeChanceIncrease[i] = 0;
 				}
 			}
@@ -3115,7 +3115,7 @@ static void itemdb_jobid2mapid(uint64 bclass[3], e_mapid jobmask, bool active)
 		temp_mask[0] = temp_mask[1] = temp_mask[2] = MAPID_ALL;
 	}
 
-	for (int i = 0; i < ARRAYLENGTH(temp_mask); i++) {
+	for (int32 i = 0; i < ARRAYLENGTH(temp_mask); i++) {
 		if (temp_mask[i] == 0)
 			continue;
 
@@ -3171,46 +3171,46 @@ bool itemdb_isstackable2(struct item_data *id)
 /*==========================================
  * Trade Restriction functions [Skotlex]
  *------------------------------------------*/
-bool itemdb_isdropable_sub(struct item_data *item, int gmlv, int unused) {
+bool itemdb_isdropable_sub(struct item_data *item, int32 gmlv, int32 unused) {
 	return (item && (!(item->flag.trade_restriction.drop) || gmlv >= item->gm_lv_trade_override));
 }
 
-bool itemdb_cantrade_sub(struct item_data* item, int gmlv, int gmlv2) {
+bool itemdb_cantrade_sub(struct item_data* item, int32 gmlv, int32 gmlv2) {
 	return (item && (!(item->flag.trade_restriction.trade) || gmlv >= item->gm_lv_trade_override || gmlv2 >= item->gm_lv_trade_override));
 }
 
-bool itemdb_canpartnertrade_sub(struct item_data* item, int gmlv, int gmlv2) {
+bool itemdb_canpartnertrade_sub(struct item_data* item, int32 gmlv, int32 gmlv2) {
 	return (item && (item->flag.trade_restriction.trade_partner || gmlv >= item->gm_lv_trade_override || gmlv2 >= item->gm_lv_trade_override));
 }
 
-bool itemdb_cansell_sub(struct item_data* item, int gmlv, int unused) {
+bool itemdb_cansell_sub(struct item_data* item, int32 gmlv, int32 unused) {
 	return (item && (!(item->flag.trade_restriction.sell) || gmlv >= item->gm_lv_trade_override));
 }
 
-bool itemdb_cancartstore_sub(struct item_data* item, int gmlv, int unused) {
+bool itemdb_cancartstore_sub(struct item_data* item, int32 gmlv, int32 unused) {
 	return (item && (!(item->flag.trade_restriction.cart) || gmlv >= item->gm_lv_trade_override));
 }
 
-bool itemdb_canstore_sub(struct item_data* item, int gmlv, int unused) {
+bool itemdb_canstore_sub(struct item_data* item, int32 gmlv, int32 unused) {
 	return (item && (!(item->flag.trade_restriction.storage) || gmlv >= item->gm_lv_trade_override));
 }
 
-bool itemdb_canguildstore_sub(struct item_data* item, int gmlv, int unused) {
+bool itemdb_canguildstore_sub(struct item_data* item, int32 gmlv, int32 unused) {
 	return (item && (!(item->flag.trade_restriction.guild_storage) || gmlv >= item->gm_lv_trade_override));
 }
 
-bool itemdb_canmail_sub(struct item_data* item, int gmlv, int unused) {
+bool itemdb_canmail_sub(struct item_data* item, int32 gmlv, int32 unused) {
 	return (item && (!(item->flag.trade_restriction.mail) || gmlv >= item->gm_lv_trade_override));
 }
 
-bool itemdb_canauction_sub(struct item_data* item, int gmlv, int unused) {
+bool itemdb_canauction_sub(struct item_data* item, int32 gmlv, int32 unused) {
 	return (item && (!(item->flag.trade_restriction.auction) || gmlv >= item->gm_lv_trade_override));
 }
 
-bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, bool (*func)(struct item_data*, int, int))
+bool itemdb_isrestricted(struct item* item, int32 gmlv, int32 gmlv2, bool (*func)(struct item_data*, int, int))
 {
 	struct item_data* item_data = itemdb_search(item->nameid);
-	int i;
+	int32 i;
 
 	if (!func(item_data, gmlv, gmlv2))
 		return false;
@@ -3236,7 +3236,7 @@ bool itemdb_ishatched_egg(struct item* item) {
 * @param nameid ID of item
 */
 char itemdb_isidentified(t_itemid nameid) {
-	int type=itemdb_type(nameid);
+	int32 type=itemdb_type(nameid);
 	switch (type) {
 		case IT_WEAPON:
 		case IT_ARMOR:
@@ -3591,7 +3591,7 @@ void ItemGroupDatabase::loadingFinished() {
 */
 static bool itemdb_read_noequip( char* str[], size_t columns, size_t current ){
 	t_itemid nameid;
-	int flag;
+	int32 flag;
 
 	nameid = strtoul(str[0], nullptr, 10);
 	flag = atoi(str[1]);
@@ -3772,7 +3772,7 @@ void ComboDatabase::loadingFinished() {
  */
 bool itemdb_parse_roulette_db(void)
 {
-	int i, j;
+	int32 i, j;
 	uint32 count = 0;
 
 	// retrieve all rows from the item database
@@ -3785,13 +3785,13 @@ bool itemdb_parse_roulette_db(void)
 		rd.items[i] = 0;
 
 	for (i = 0; i < MAX_ROULETTE_LEVEL; i++) {
-		int k, limit = MAX_ROULETTE_COLUMNS - i;
+		int32 k, limit = MAX_ROULETTE_COLUMNS - i;
 
 		for (k = 0; k < limit && SQL_SUCCESS == Sql_NextRow(mmysql_handle); k++) {
 			char* data;
 			t_itemid item_id;
 			unsigned short amount;
-			int level, flag;
+			int32 level, flag;
 
 			Sql_GetData(mmysql_handle, 1, &data, nullptr); level = atoi(data);
 			Sql_GetData(mmysql_handle, 2, &data, nullptr); item_id = strtoul(data, nullptr, 10);
@@ -3828,7 +3828,7 @@ bool itemdb_parse_roulette_db(void)
 	Sql_FreeResult(mmysql_handle);
 
 	for (i = 0; i < MAX_ROULETTE_LEVEL; i++) {
-		int limit = MAX_ROULETTE_COLUMNS - i;
+		int32 limit = MAX_ROULETTE_COLUMNS - i;
 
 		if (rd.items[i] == limit)
 			continue;
@@ -3866,7 +3866,7 @@ bool itemdb_parse_roulette_db(void)
  * Free Roulette items
  */
 static void itemdb_roulette_free(void) {
-	int i;
+	int32 i;
 
 	for (i = 0; i < MAX_ROULETTE_LEVEL; i++) {
 		if (rd.nameid[i])
@@ -4193,7 +4193,7 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 /**
  * Read SQL item_db table
  */
-static int itemdb_read_sqldb(void) {
+static int32 itemdb_read_sqldb(void) {
 	const char* item_db_name[] = {
 		item_table,
 		item2_table
@@ -4702,7 +4702,7 @@ bool RandomOptionGroupDatabase::option_get_id(std::string name, uint16 &id) {
 * Read all item-related databases
 */
 static void itemdb_read(void) {
-	int i;
+	int32 i;
 	const char* dbsubpath[] = {
 		"",
 		"/" DBIMPORT,
@@ -4765,7 +4765,7 @@ bool item_data::isStackable()
 	return true;
 }
 
-int item_data::inventorySlotNeeded(int quantity)
+int32 item_data::inventorySlotNeeded(int32 quantity)
 {
 	return (this->flag.guid || !this->isStackable()) ? quantity : 1;
 }

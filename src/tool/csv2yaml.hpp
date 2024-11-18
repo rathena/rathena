@@ -15,7 +15,7 @@ namespace rathena{
 	namespace tool_csv2yaml{
 		class Csv2YamlTool : public Core{
 			protected:
-				bool initialize( int argc, char* argv[] ) override;
+				bool initialize( int32 argc, char* argv[] ) override;
 
 			public:
 				Csv2YamlTool() : Core( e_core_type::TOOL ){
@@ -53,7 +53,7 @@ std::map<uint16, std::vector<s_skill_tree_entry_csv>> skill_tree;	/// job id (fo
 // Database to memory maps
 struct s_skill_unit_csv : s_skill_db {
 	std::string target_str;
-	int unit_flag_csv;
+	int32 unit_flag_csv;
 };
 
 std::unordered_map<uint16, s_skill_require> skill_require;

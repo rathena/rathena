@@ -45,7 +45,7 @@ const char* MSG_CONF_NAME_EN = "conf/msg_conf/char_msg.conf"; //all
  *   false : no other args found, and throw a warning
  *   true : something following us
  */
-bool opt_has_next_value(const char* option, int i, int argc){
+bool opt_has_next_value(const char* option, int32 i, int32 argc){
 	if (i >= argc - 1) {
 		ShowWarning("Missing value for option '%s'.\n", option);
 		return false;
@@ -85,8 +85,8 @@ void display_versionscreen(bool do_exit)
  * @param argv: arguments values (from main)
  * @return true or exit on failure
  */
-int cli_get_options(int argc, char ** argv) {
-	int i = 0;
+int32 cli_get_options(int32 argc, char ** argv) {
+	int32 i = 0;
 	for (i = 1; i < argc; i++) {
 		const char* arg = argv[i];
 
