@@ -10436,7 +10436,8 @@ This command is used in all the item scripts for taming items.
 Running this command will make the pet catching cursor appear on the client connected to the invoking character,
 and the player can then attempt to catch a monster.
 
-It will still work outside an item script if the item ID is specified.
+If the item ID is not specified, the command will use the item ID from the invoking item script.
+It will also work outside an item script if the item ID is provided.
 
 You can also use the following constants as special <item_id> parameters:
 
