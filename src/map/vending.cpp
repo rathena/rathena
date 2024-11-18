@@ -88,7 +88,7 @@ void vending_vendinglistreq(map_session_data* sd, int32 id)
 		return; // not vending
 
 	if (!pc_can_give_items(sd) || !pc_can_give_items(vsd)) { //check if both GMs are allowed to trade
-		clif_displaymessage(sd->fd, msg_txt(sd,246));
+		clif_displaymessage( sd->fd, msg_txt( sd, 246 ) ); // Your GM level doesn't authorize you to perform this action.
 		return;
 	}
 

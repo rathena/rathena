@@ -16985,28 +16985,30 @@ void clif_parse_Auction_close(int32 fd, map_session_data *sd){
 }
 
 
-/// Places a bid on an auction (CZ_AUCTION_BUY).
-/// 024f <auction id>.L <money>.L
-void clif_parse_Auction_bid(int32 fd, map_session_data *sd){
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	uint32 auction_id = RFIFOL(fd,info->pos[0]);
-	int32 bid = RFIFOL(fd,info->pos[1]);
+/// Places a bid on an auction.
+/// 024f <auction id>.L <money>.L (CZ_AUCTION_BUY)
+void clif_parse_Auction_bid( int32 fd, map_session_data* sd ){
+#if PACKETVER >= 20050718
+	const PACKET_CZ_AUCTION_BUY* p = reinterpret_cast<PACKET_CZ_AUCTION_BUY*>( RFIFOP( fd, 0 ) );
 
-	if( !pc_can_give_items(sd) ) { //They aren't supposed to give zeny [Inkfish]
-		clif_displaymessage(sd->fd, msg_txt(sd,246));
+	if( !pc_can_give_items(sd) ){
+		clif_displaymessage( sd->fd, msg_txt( sd, 246 ) ); // Your GM level doesn't authorize you to perform this action.
+		return;
+	}
+		
+	// Check if char server is down (bugreport:1138)
+	if( CheckForCharServer() ){
+		clif_Auction_message(fd, 0); // You have failed to bid into the auction
 		return;
 	}
 
-	if( bid <= 0 )
-		clif_Auction_message(fd, 0); // You have failed to bid into the auction
-	else if( bid > sd->status.zeny )
-		clif_Auction_message(fd, 8); // You do not have enough zeny
-	else if ( CheckForCharServer() ) // char server is down (bugreport:1138)
-		clif_Auction_message(fd, 0); // You have failed to bid into the auction
-	else {
-		pc_payzeny(sd, bid, LOG_TYPE_AUCTION);
-		intif_Auction_bid(sd->status.char_id, sd->status.name, auction_id, bid);
+	if( pc_payzeny( sd, p->money, LOG_TYPE_AUCTION ) != 0 ){
+		clif_Auction_message( fd, 8 ); // You do not have enough zeny
+		return;
 	}
+
+	intif_Auction_bid( sd->status.char_id, sd->status.name, p->auction_id, p->money );
+#endif
 }
 
 
