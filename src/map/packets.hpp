@@ -1458,6 +1458,119 @@ struct PACKET_CZ_CREATE_CHATROOM{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_CREATE_CHATROOM, 0xd5);
 
+struct PACKET_CZ_BLACKSMITH_RANK{
+	int16 packetType;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_BLACKSMITH_RANK, 0x217);
+
+struct PACKET_CZ_ALCHEMIST_RANK{
+	int16 packetType;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_ALCHEMIST_RANK, 0x218);
+
+struct RANKLIST{
+	char names[10][NAME_LENGTH];
+	uint32 points[10];
+} __attribute__((packed));
+
+struct PACKET_ZC_BLACKSMITH_RANK{
+	int16 packetType;
+	RANKLIST list;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_BLACKSMITH_RANK, 0x219);
+
+struct PACKET_ZC_ALCHEMIST_RANK{
+	int16 packetType;
+	RANKLIST list;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ALCHEMIST_RANK, 0x21a);
+
+struct PACKET_ZC_BLACKSMITH_POINT{
+	int16 packetType;
+	uint32 points;
+	uint32 points_total;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_BLACKSMITH_POINT, 0x21b);
+
+struct PACKET_ZC_ALCHEMIST_POINT{
+	int16 packetType;
+	uint32 points;
+	uint32 points_total;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ALCHEMIST_POINT, 0x21c);
+
+struct PACKET_ZC_TAEKWON_POINT{
+	int16 packetType;
+	uint32 points;
+	uint32 points_total;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_TAEKWON_POINT, 0x224);
+
+struct PACKET_CZ_TAEKWON_RANK{
+	int16 packetType;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_TAEKWON_RANK, 0x225);
+
+struct PACKET_ZC_TAEKWON_RANK{
+	int16 packetType;
+	RANKLIST list;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_TAEKWON_RANK, 0x226);
+
+struct PACKET_ZC_KILLER_POINT{
+	int16 packetType;
+	uint32 points;
+	uint32 points_total;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_KILLER_POINT, 0x236);
+
+struct PACKET_CZ_KILLER_RANK{
+	int16 packetType;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_KILLER_RANK, 0x237);
+
+struct PACKET_ZC_KILLER_RANK{
+	int16 packetType;
+	RANKLIST list;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_KILLER_RANK, 0x238);
+
+struct PACKET_CZ_REQ_RANKING{
+	int16 packetType;
+	uint16 type;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_RANKING, 0x97c);
+
+struct PACKET_ZC_ACK_RANKING_sub{
+	char name[NAME_LENGTH];
+	uint32 points;
+} __attribute__((packed));
+
+struct PACKET_ZC_ACK_RANKING{
+	int16 packetType;
+	uint16 type;
+	RANKLIST list;
+	uint32 mypoints;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_RANKING, 0x97d);
+
+struct PACKET_ZC_UPDATE_RANKING_POINT{
+	int16 packetType;
+	uint16 type;
+	uint32 points;
+	uint32 points_total;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_UPDATE_RANKING_POINT, 0x97e);
+
+struct PACKET_ZC_ACK_RANKING2{
+	int16 packetType;
+	uint16 type;
+	uint32 CIDs[10];
+	uint32 points[10];
+	uint32 mypoints;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_RANKING2, 0xaf6);
+
 struct PACKET_CZ_LESSEFFECT{
 	int16 packetType;
 	int32 state;

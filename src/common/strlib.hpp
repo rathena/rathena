@@ -18,7 +18,7 @@
 #include "cbasetypes.hpp"
 #include "malloc.hpp"
 
-int remove_control_chars(char* str);
+int32 remove_control_chars(char* str);
 char* trim(char* str);
 char* normalize_name(char* str,const char* delims);
 const char *stristr(const char *haystack, const char *needle);
@@ -34,11 +34,11 @@ size_t strnlen (const char* string, size_t maxlen);
 #endif
 
 #if defined(WIN32) && defined(_MSC_VER) && _MSC_VER <= 1200
-uint64 strtoull(const char* str, char** endptr, int base);
+uint64 strtoull(const char* str, char** endptr, int32 base);
 #endif
 
-int e_mail_check(char* email);
-int config_switch(const char* str);
+int32 e_mail_check(char* email);
+int32 config_switch(const char* str);
 
 /// strncpy that always nul-terminates the string
 char* safestrncpy(char* dst, const char* src, size_t n);
@@ -49,11 +49,11 @@ size_t safestrnlen(const char* string, size_t maxlen);
 /// Works like snprintf, but always nul-terminates the buffer.
 /// Returns the size of the string (without nul-terminator)
 /// or -1 if the buffer is too small.
-int safesnprintf(char* buf, size_t sz, const char* fmt, ...);
+int32 safesnprintf(char* buf, size_t sz, const char* fmt, ...);
 
 /// Returns the line of the target position in the string.
 /// Lines start at 1.
-int strline(const char* str, size_t pos);
+int32 strline(const char* str, size_t pos);
 
 /// Produces the hexadecimal representation of the given input.
 /// The output buffer must be at least count*2+1 in size.
@@ -88,7 +88,7 @@ struct s_svstate
 	size_t off; //< current offset in the string
 	size_t start; //< where the field starts
 	size_t end; //< where the field ends
-	int opt; //< parse options
+	int32 opt; //< parse options
 	char delim; //< field delimiter
 	bool done; //< if all the text has been parsed
 };
@@ -98,14 +98,14 @@ struct s_svstate
 ///
 /// @param sv Parse state
 /// @return 1 if a field was parsed, 0 if done, -1 on error.
-int sv_parse_next( s_svstate& sv );
+int32 sv_parse_next( s_svstate& sv );
 
 /// Parses a delim-separated string.
 /// Starts parsing at startoff and fills the pos array with position pairs.
 /// out_pos[0] and out_pos[1] are the start and end of line.
 /// Other position pairs are the start and end of fields.
 /// Returns the number of fields found or -1 if an error occurs.
-size_t sv_parse( const char* str, size_t len, size_t startoff, char delim, size_t* out_pos, size_t npos, int opt, bool& error );
+size_t sv_parse( const char* str, size_t len, size_t startoff, char delim, size_t* out_pos, size_t npos, int32 opt, bool& error );
 
 /// Splits a delim-separated string.
 /// WARNING: this function modifies the input string
@@ -113,7 +113,7 @@ size_t sv_parse( const char* str, size_t len, size_t startoff, char delim, size_
 /// out_fields[0] is the start of the next line.
 /// Other entries are the start of fields (nul-teminated).
 /// Returns the number of fields found or -1 if an error occurs.
-size_t sv_split( char* str, size_t len, size_t startoff, char delim, char** out_fields, size_t nfields, int opt, bool& error );
+size_t sv_split( char* str, size_t len, size_t startoff, char delim, char** out_fields, size_t nfields, int32 opt, bool& error );
 
 /// Escapes src to out_dest according to the format of the C compiler.
 /// Returns the length of the escaped string.
@@ -143,19 +143,19 @@ struct StringBuf
 };
 typedef struct StringBuf StringBuf;
 
-StringBuf* _StringBuf_Malloc(const char *file, int line, const char *func);
+StringBuf* _StringBuf_Malloc(const char *file, int32 line, const char *func);
 #define StringBuf_Malloc() _StringBuf_Malloc(ALC_MARK)
-void _StringBuf_Init(const char *file, int line, const char *func, StringBuf* self);
+void _StringBuf_Init(const char *file, int32 line, const char *func, StringBuf* self);
 #define StringBuf_Init(self) _StringBuf_Init(ALC_MARK,self)
-size_t _StringBuf_Printf( const char* file, int line, const char* func, StringBuf* self, const char* fmt, ... );
+size_t _StringBuf_Printf( const char* file, int32 line, const char* func, StringBuf* self, const char* fmt, ... );
 #define StringBuf_Printf(self,fmt,...) _StringBuf_Printf(ALC_MARK,self,fmt, ## __VA_ARGS__)
-size_t _StringBuf_Vprintf( const char* file, int line, const char* func, StringBuf* self, const char* fmt, va_list args );
+size_t _StringBuf_Vprintf( const char* file, int32 line, const char* func, StringBuf* self, const char* fmt, va_list args );
 #define StringBuf_Vprintf(self,fmt,args) _StringBuf_Vprintf(ALC_MARK,self,fmt,args)
-size_t _StringBuf_Append(const char *file, int line, const char *func, StringBuf* self, const StringBuf *sbuf);
+size_t _StringBuf_Append(const char *file, int32 line, const char *func, StringBuf* self, const StringBuf *sbuf);
 #define StringBuf_Append(self,sbuf) _StringBuf_Append(ALC_MARK,self,sbuf)
-size_t _StringBuf_AppendStr(const char *file, int line, const char *func, StringBuf* self, const char* str);
+size_t _StringBuf_AppendStr(const char *file, int32 line, const char *func, StringBuf* self, const char* str);
 #define StringBuf_AppendStr(self,str) _StringBuf_AppendStr(ALC_MARK,self,str)
-int StringBuf_Length(StringBuf* self);
+int32 StringBuf_Length(StringBuf* self);
 char* StringBuf_Value(StringBuf* self);
 void StringBuf_Clear(StringBuf* self);
 void StringBuf_Destroy(StringBuf* self);
