@@ -282,7 +282,7 @@
 	packet(0x01f2,20);
 	packet(0x01f3,10);
 	packet(0x01f6,34);
-	parseable_packet(0x01f7,14,clif_parse_Adopt_reply,2,6,10);
+	parseable_packet( HEADER_CZ_JOIN_BABY, sizeof( PACKET_CZ_JOIN_BABY ), clif_parse_Adopt_reply, 0 );
 	packet(0x01f8,2);
 	parseable_packet(0x01f9,6,clif_parse_Adopt_request,2);
 	packet(0x01fa,48);
