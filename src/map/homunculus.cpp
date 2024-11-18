@@ -830,10 +830,7 @@ void hom_save(struct homun_data *hd)
 		if (timer == nullptr || timer->func != skill_blockhomun_end || DIFF_TICK(timer->tick, tick) < 0)
 			continue;
 
-		s_skill_cooldown_data& data = hd->homunculus.scd[count];
-
-		data.tick = DIFF_TICK(timer->tick, tick);
-		data.skill_id = entry.first;
+		hd->homunculus.scd[count] = { entry.first, DIFF_TICK(timer->tick, tick) };
 
 		count++;
 	}
