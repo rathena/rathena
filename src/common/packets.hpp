@@ -224,13 +224,13 @@ private:
 	struct s_packet_info{
 		bool fixed;
 		int16 size;
-		std::function<bool ( int fd, sessiontype& sd )> func;
+		std::function<bool ( int32 fd, sessiontype& sd )> func;
 	};
 
 	std::unordered_map<int16, s_packet_info> infos;
 
 public:
-	void add( int16 packetType, bool fixed, int16 size, std::function<bool ( int fd, sessiontype& sd )> func ){
+	void add( int16 packetType, bool fixed, int16 size, std::function<bool ( int32 fd, sessiontype& sd )> func ){
 		if( fixed ){
 			if( size < 2 ){
 				ShowError( "Definition for packet 0x%04x is invalid. Minimum size for a fixed length packet is 2 bytes.\n", packetType );
@@ -250,7 +250,7 @@ public:
 		info.func = func;
 	}
 
-	bool handle( int fd, sessiontype& sd ){
+	bool handle( int32 fd, sessiontype& sd ){
 		int16 remaining =  static_cast<int16>( RFIFOREST( fd ) );
 
 		if( remaining < 2 ){

@@ -12,7 +12,7 @@
 void WriteDump(FILE* fp, const void* buffer, size_t length);
 void ShowDump(const void* buffer, size_t length);
 
-int check_filepath(const char* filepath);
+int32 check_filepath(const char* filepath);
 void findfile(const char *p, const char *pat, void (func)(const char*));
 bool exists(const char* filename);
 
@@ -33,8 +33,8 @@ uint32 get_percentage_exp(const uint64 a, const uint64 b);
 // byte word dword access [Shinomori]
 //////////////////////////////////////////////////////////////////////////
 
-extern uint8 GetByte(uint32 val, int idx);
-extern uint16 GetWord(uint32 val, int idx);
+extern uint8 GetByte(uint32 val, int32 idx);
+extern uint16 GetWord(uint32 val, int32 idx);
 extern uint16 MakeWord(uint8 byte0, uint8 byte1);
 extern uint32 MakeDWord(uint16 word0, uint16 word1);
 

@@ -25,15 +25,15 @@
 
 using namespace rathena;
 
-// int auction_id -> struct auction_data*
+// int32 auction_id -> struct auction_data*
 static std::unordered_map<uint32, std::shared_ptr<struct auction_data>> auction_db;
 
 void auction_delete( std::shared_ptr<struct auction_data> auction );
 TIMER_FUNC(auction_end_timer);
 
-int auction_count(uint32 char_id, bool buy)
+int32 auction_count(uint32 char_id, bool buy)
 {
-	int i = 0;
+	int32 i = 0;
 
 	for( const auto& pair : auction_db ){
 		std::shared_ptr<struct auction_data> auction = pair.second;
@@ -47,7 +47,7 @@ int auction_count(uint32 char_id, bool buy)
 }
 
 void auction_save( std::shared_ptr<struct auction_data> auction ){
-	int j;
+	int32 j;
 	StringBuf buf;
 	SqlStmt* stmt;
 
@@ -81,7 +81,7 @@ void auction_save( std::shared_ptr<struct auction_data> auction ){
 }
 
 uint32 auction_create( std::shared_ptr<struct auction_data> auction ){
-	int j;
+	int32 j;
 	StringBuf buf;
 	SqlStmt* stmt;
 
@@ -187,7 +187,7 @@ void auction_delete( std::shared_ptr<struct auction_data> auction ){
 
 void inter_auctions_fromsql(void)
 {
-	int i;
+	int32 i;
 	char *data;
 	StringBuf buf;
 	t_tick tick = gettick(), endtick;
@@ -267,9 +267,9 @@ void inter_auctions_fromsql(void)
 	Sql_FreeResult(sql_handle);
 }
 
-void mapif_Auction_sendlist(int fd, uint32 char_id, short count, short pages, unsigned char *buf)
+void mapif_Auction_sendlist(int32 fd, uint32 char_id, short count, short pages, unsigned char *buf)
 {
-	int len = (sizeof(struct auction_data) * count) + 12;
+	int32 len = (sizeof(struct auction_data) * count) + 12;
 
 	WFIFOHEAD(fd, len);
 	WFIFOW(fd,0) = 0x3850;
@@ -281,11 +281,11 @@ void mapif_Auction_sendlist(int fd, uint32 char_id, short count, short pages, un
 	WFIFOSET(fd,len);
 }
 
-void mapif_parse_Auction_requestlist(int fd)
+void mapif_parse_Auction_requestlist(int32 fd)
 {
 	char searchtext[NAME_LENGTH];
 	uint32 char_id = RFIFOL(fd,4), len = sizeof(struct auction_data);
-	int price = RFIFOL(fd,10);
+	int32 price = RFIFOL(fd,10);
 	short type = RFIFOW(fd,8), page = max(1,RFIFOW(fd,14));
 	unsigned char buf[5 * sizeof(struct auction_data)];
 	short i = 0, j = 0, pages = 1;
@@ -322,9 +322,9 @@ void mapif_parse_Auction_requestlist(int fd)
 	mapif_Auction_sendlist(fd, char_id, j, pages, buf);
 }
 
-void mapif_Auction_register(int fd, struct auction_data *auction)
+void mapif_Auction_register(int32 fd, struct auction_data *auction)
 {
-	int len = sizeof(struct auction_data) + 4;
+	int32 len = sizeof(struct auction_data) + 4;
 
 	WFIFOHEAD(fd,len);
 	WFIFOW(fd,0) = 0x3851;
@@ -333,7 +333,7 @@ void mapif_Auction_register(int fd, struct auction_data *auction)
 	WFIFOSET(fd,len);
 }
 
-void mapif_parse_Auction_register(int fd)
+void mapif_parse_Auction_register(int32 fd)
 {
 	if( RFIFOW(fd,2) != sizeof(struct auction_data) + 4 )
 		return;
@@ -353,7 +353,7 @@ void mapif_parse_Auction_register(int fd)
 	mapif_Auction_register( fd, auction );
 }
 
-void mapif_Auction_cancel(int fd, uint32 char_id, unsigned char result)
+void mapif_Auction_cancel(int32 fd, uint32 char_id, unsigned char result)
 {
 	WFIFOHEAD(fd,7);
 	WFIFOW(fd,0) = 0x3852;
@@ -362,7 +362,7 @@ void mapif_Auction_cancel(int fd, uint32 char_id, unsigned char result)
 	WFIFOSET(fd,7);
 }
 
-void mapif_parse_Auction_cancel(int fd)
+void mapif_parse_Auction_cancel(int32 fd)
 {
 	uint32 char_id = RFIFOL(fd,2), auction_id = RFIFOL(fd,6);
 
@@ -391,7 +391,7 @@ void mapif_parse_Auction_cancel(int fd)
 	mapif_Auction_cancel(fd, char_id, 0); // The auction has been canceled
 }
 
-void mapif_Auction_close(int fd, uint32 char_id, unsigned char result)
+void mapif_Auction_close(int32 fd, uint32 char_id, unsigned char result)
 {
 	WFIFOHEAD(fd,7);
 	WFIFOW(fd,0) = 0x3853;
@@ -400,7 +400,7 @@ void mapif_Auction_close(int fd, uint32 char_id, unsigned char result)
 	WFIFOSET(fd,7);
 }
 
-void mapif_parse_Auction_close(int fd)
+void mapif_parse_Auction_close(int32 fd)
 {
 	uint32 char_id = RFIFOL(fd,2), auction_id = RFIFOL(fd,6);
 	std::shared_ptr<struct auction_data> auction = util::umap_find( auction_db, auction_id );
@@ -432,7 +432,7 @@ void mapif_parse_Auction_close(int fd)
 	mapif_Auction_close(fd, char_id, 0); // You have ended the auction
 }
 
-void mapif_Auction_bid(int fd, uint32 char_id, int bid, unsigned char result)
+void mapif_Auction_bid(int32 fd, uint32 char_id, int32 bid, unsigned char result)
 {
 	WFIFOHEAD(fd,11);
 	WFIFOW(fd,0) = 0x3855;
@@ -442,10 +442,10 @@ void mapif_Auction_bid(int fd, uint32 char_id, int bid, unsigned char result)
 	WFIFOSET(fd,11);
 }
 
-void mapif_parse_Auction_bid(int fd)
+void mapif_parse_Auction_bid(int32 fd)
 {
 	uint32 char_id = RFIFOL(fd,4), auction_id = RFIFOL(fd,8);
-	int bid = RFIFOL(fd,12);
+	int32 bid = RFIFOL(fd,12);
 	std::shared_ptr<struct auction_data> auction = util::umap_find( auction_db, auction_id );
 
 	if( auction == nullptr || auction->price >= bid || auction->seller_id == char_id ){
@@ -494,7 +494,7 @@ void mapif_parse_Auction_bid(int fd)
 /*==========================================
  * Packets From Map Server
  *------------------------------------------*/
-int inter_auction_parse_frommap(int fd)
+int32 inter_auction_parse_frommap(int32 fd)
 {
 	switch(RFIFOW(fd,0))
 	{
@@ -509,7 +509,7 @@ int inter_auction_parse_frommap(int fd)
 	return 1;
 }
 
-int inter_auction_sql_init(void)
+int32 inter_auction_sql_init(void)
 {
 	inter_auctions_fromsql();
 

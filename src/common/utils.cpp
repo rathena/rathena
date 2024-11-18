@@ -150,7 +150,7 @@ void findfile(const char *p, const char *pat, void (func)(const char*))
  *         2 = File
  *         3 = File but doesn't exist
  */
-int check_filepath(const char* filepath)
+int32 check_filepath(const char* filepath)
 {
 	DWORD Attribute;
 
@@ -179,7 +179,7 @@ int check_filepath(const char* filepath)
  *         2 = File
  *         3 = Neither a file or directory
  */
-int check_filepath(const char* filepath)
+int32 check_filepath(const char* filepath)
 {
 	struct stat s;
 
@@ -264,7 +264,7 @@ bool exists(const char* filename)
 	return !access(filename, F_OK);
 }
 
-uint8 GetByte(uint32 val, int idx)
+uint8 GetByte(uint32 val, int32 idx)
 {
 	switch( idx )
 	{
@@ -280,7 +280,7 @@ uint8 GetByte(uint32 val, int idx)
 	}
 }
 
-uint16 GetWord(uint32 val, int idx)
+uint16 GetWord(uint32 val, int32 idx)
 {
 	switch( idx )
 	{
