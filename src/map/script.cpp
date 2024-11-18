@@ -24202,21 +24202,22 @@ BUILDIN_FUNC(geteleminfo) {
  */
 BUILDIN_FUNC(opendressroom)
 {
-#if PACKETVER >= 20150513
+#if PACKETVER >= 20140212
 	int32 flag = 1;
-    TBL_PC* sd;
+	map_session_data* sd;
 
 	if( script_hasdata(st,2) )
 		flag = script_getnum(st,2);
 
-    if (!script_charid2sd(3, sd))
-        return SCRIPT_CMD_FAILURE;
+	if (!script_charid2sd(3, sd))
+		return SCRIPT_CMD_FAILURE;
 
-    clif_dressing_room(sd, flag);
+	clif_dressing_room( *sd, flag );
 
-    return SCRIPT_CMD_SUCCESS;
+	return SCRIPT_CMD_SUCCESS;
 #else
-    return SCRIPT_CMD_FAILURE;
+	ShowError( "buildin_opendressroom: This command requires PACKETVER 2014-02-12 or newer.\n" );
+	return SCRIPT_CMD_FAILURE;
 #endif
 }
 
