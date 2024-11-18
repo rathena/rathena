@@ -10568,13 +10568,6 @@ int32 pc_itemheal(map_session_data *sd, t_itemid itemid, int32 hp, int32 sp)
 		// Recovery Potion
 		if (sd->sc.getSCE(SC_INCHEALRATE))
 			bonus += bonus * sd->sc.getSCE(SC_INCHEALRATE)->val1 / 100;
-		// 2014 Halloween Event : Pumpkin Bonus
-		if (sd->sc.getSCE(SC_MTF_PUMPKIN)) {
-			if (itemid == ITEMID_PUMPKIN)
-				bonus += bonus * sd->sc.getSCE(SC_MTF_PUMPKIN)->val1 / 100;
-			else if (itemid == ITEMID_COOKIE_BAT)
-				bonus += sd->sc.getSCE(SC_MTF_PUMPKIN)->val2;
-		}
 
 		tmp = hp * bonus / 100; // Overflow check
 		if (bonus != 100 && tmp > hp)

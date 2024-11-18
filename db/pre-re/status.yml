@@ -5793,39 +5793,6 @@ Body:
       NoBanishingBuster: true
       NoDispell: true
       RemoveOnHermode: true
-  - Status: 2011rwc_Scroll
-    Icon: EFST_2011RWC_SCROLL
-    CalcFlags:
-      Str: true
-      Agi: true
-      Vit: true
-      Int: true
-      Dex: true
-      Luk: true
-      Batk: true
-      Matk: true
-    Flags:
-      NoRemoveOnDead: true
-      NoClearbuff: true
-      NoDispell: true
-      NoBanishingBuster: true
-      NoClearance: true
-    EndOnStart:
-      Food_Str_Cash: true
-      Food_Agi_Cash: true
-      Food_Vit_Cash: true
-      Food_Int_Cash: true
-      Food_Dex_Cash: true
-      Food_Luk_Cash: true
-  - Status: Mtf_Pumpkin
-    Icon: EFST_MTF_PUMPKIN
-    Flags:
-      NoRemoveOnDead: true
-      NoClearbuff: true
-      NoDispell: true
-      NoBanishingBuster: true
-      NoClearance: true
-      NoForcedEnd: true
   - Status: Vacuum_Extreme_Postdelay
     DurationLookup: SO_VACUUM_EXTREME
     Flags:

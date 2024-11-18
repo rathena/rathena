@@ -3199,8 +3199,6 @@ static int32 status_get_hpbonus(struct block_list *bl, enum e_status_bonus type)
 				bonus -= sc->getSCE(SC__WEAKNESS)->val2;
 			if(sc->getSCE(SC_EQC))
 				bonus -= sc->getSCE(SC_EQC)->val3;
-			if(sc->getSCE(SC_2011RWC_SCROLL))
-				bonus -= 10;
 		}
 		// Max rate reduce is -100%
 		bonus = cap_value(bonus,-100,INT_MAX);
@@ -3328,8 +3326,6 @@ static int32 status_get_spbonus(struct block_list *bl, enum e_status_bonus type)
 			//Decreasing
 			if (sc->getSCE(SC_MELODYOFSINK))
 				bonus -= sc->getSCE(SC_MELODYOFSINK)->val3;
-			if (sc->getSCE(SC_2011RWC_SCROLL))
-				bonus -= 10;
 		}
 		// Max rate reduce is -100%
 		bonus = cap_value(bonus,-100,INT_MAX);
@@ -6946,8 +6942,6 @@ static unsigned short status_calc_batk(struct block_list *bl, status_change *sc,
 		batk += sc->getSCE(SC_PYROCLASTIC)->val2;
 	if (sc->getSCE(SC_ANGRIFFS_MODUS))
 		batk += sc->getSCE(SC_ANGRIFFS_MODUS)->val2;
-	if(sc->getSCE(SC_2011RWC_SCROLL))
-		batk += 30;
 	if(sc->getSCE(SC__ENERVATION))
 		batk -= batk * sc->getSCE(SC__ENERVATION)->val2 / 100;
 	if( sc->getSCE(SC_ZANGETSU) )
@@ -7126,10 +7120,7 @@ uint16 status_calc_consumablematk( status_change *sc, int32 matk ){
 	if (sc == nullptr || sc->empty())
 		return static_cast<uint16>( cap_value(matk,0,USHRT_MAX) );
 
-	struct status_change_entry* sce;
-
-	if (sc->getSCE(SC_2011RWC_SCROLL))
-		matk += 30;
+	// struct status_change_entry* sce;
 
 	return static_cast<uint16>( cap_value(matk,0,USHRT_MAX) );
 }
@@ -7989,8 +7980,6 @@ static short status_calc_aspd(struct block_list *bl, status_change *sc, bool fix
 			bonus += 20;
 		if (sc->getSCE(SC_STARSTANCE))
 			bonus += sc->getSCE(SC_STARSTANCE)->val2;
-		if( sc->getSCE(SC_2011RWC_SCROLL) )
-			bonus += 5;
 
 		map_session_data* sd = BL_CAST(BL_PC, bl);
 		uint8 skill_lv;
@@ -8179,8 +8168,6 @@ static short status_calc_aspd_rate(struct block_list *bl, status_change *sc, int
 		aspd_rate -= 100;
 	if (sc->getSCE(SC_STARSTANCE))
 		aspd_rate -= 10 * sc->getSCE(SC_STARSTANCE)->val2;
-	if( sc->getSCE(SC_2011RWC_SCROLL) )
-		aspd_rate -= 50;
 
 	return (short)cap_value(aspd_rate,0,SHRT_MAX);
 }
@@ -13772,18 +13759,6 @@ TIMER_FUNC(status_change_timer){
 		}
 		break;
 
-	case SC_S_MANAPOTION:
-		if( --(sce->val4) >= 0 ) {
-			// val1 < 0 = per max% | val1 > 0 = exact amount
-			int32 sp = 0;
-			if( status->sp < status->max_sp && !sc->getSCE(SC_BERSERK) )
-				sp = (sce->val1 < 0) ? (int)(status->max_sp * -1 * sce->val1 / 100.) : sce->val1;
-			status_heal(bl, 0, sp, 0);
-			sc_timer_next((sce->val2 * 1000) + tick);
-			return 0;
-		}
-		break;
-		
 	case SC_GRADUAL_GRAVITY:
 		if (sce->val4 >= 0) {
 			status_zap(bl, status->max_hp * sce->val2 / 100, 0);

@@ -6215,17 +6215,20 @@ Body:
       bonus bMatk, getstatus(SC_MTF_MATK2, 1);
   - Status: 2011rwc_Scroll
     Icon: EFST_2011RWC_SCROLL
-    CalcFlags:
-      Batk: true
-      Matk: true
-      Aspd: true
-      MaxHp: true
-      MaxSp: true
     Flags:
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      .@level = max(3, getskilllv("AC_CONCENTRATION"));
+      bonus bBaseAtk,30;
+      bonus bMatk,30;
+      bonus bAspdRate,5;
+      bonus bVariableCastrate,-5;
+      bonus bMaxHPrate,-10;
+      bonus bMaxSPrate,-10;
+      bonus3 bAutoSpell,"AC_CONCENTRATION",.@level,10;   /* TODO: unknown rate */
   - Status: Jp_Event04
     Icon: EFST_JP_EVENT04
     Flags:
@@ -6268,6 +6271,9 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       NoForcedEnd: true
+    Script: |
+      bonus2 bAddItemHealRate,535,2000;
+      bonus2 bAddItemHealRate,11605, getstatus(SC_MTF_PUMPKIN, 1);
   - Status: Mtf_Hitflee
     Icon: EFST_MTF_HITFLEE
     Flags:
@@ -8407,6 +8413,10 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      .@val1 = -getstatus(SC_S_MANAPOTION, 1);
+      .@val2 = getstatus(SC_S_MANAPOTION, 2);
+      bonus2 bRegenPercentSP, .@val1, 1000*.@val2;
   - Status: Sub_Weaponproperty
     Flags:
       NoBanishingBuster: true
