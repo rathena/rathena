@@ -9722,8 +9722,11 @@
 	export_constant(HAT_EF_AURA_OF_GHOST_S);
 
 	/* pet catch */
-	export_constant(PET_CATCH_UNIVERSAL);
-	export_constant(PET_CATCH_UNIVERSAL_ITEM);
+	export_constant(PET_CATCH_UNIVERSAL_NO_BOSS);
+	export_constant(PET_CATCH_UNIVERSAL_ALL);
+
+	export_deprecated_constant3("PET_CATCH_UNIVERSAL", PET_CATCH_UNIVERSAL_NO_BOSS, "PET_CATCH_UNIVERSAL_NO_BOSS");
+	export_deprecated_constant3("PET_CATCH_UNIVERSAL_ITEM", PET_CATCH_UNIVERSAL_ALL, "PET_CATCH_UNIVERSAL_ALL");
 
 	/* pet intimacy levels */
 	export_constant(PET_INTIMATE_NONE);

@@ -14583,7 +14583,7 @@ void clif_parse_PetMenu(int32 fd, map_session_data *sd){
 /// Attempt to tame a monster (CZ_TRYCAPTURE_MONSTER).
 /// 019f <id>.L
 void clif_parse_CatchPet(int32 fd, map_session_data *sd){
-	pet_catch_process2(sd,RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[0]));
+	pet_catch_process2(*sd,RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[0]));
 }
 
 

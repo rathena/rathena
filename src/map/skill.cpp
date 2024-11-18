@@ -7684,8 +7684,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 	case SA_TAMINGMONSTER:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 		if (sd != nullptr && dstmd != nullptr) {
-			std::vector<uint32> pet_list = { static_cast<uint32>(dstmd->mob_id) };
-			pet_catch_process1(*sd, pet_list);
+			pet_catch_process1(*sd, PET_CATCH_UNIVERSAL_ALL);
 		}
 		break;
 

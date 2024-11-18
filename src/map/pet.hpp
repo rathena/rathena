@@ -66,8 +66,10 @@ struct s_pet_db {
 enum e_pet_itemtype : uint8 { PET_CATCH,PET_EGG,PET_EQUIP,PET_FOOD };
 
 enum e_pet_catch : uint8 {
-	PET_CATCH_UNIVERSAL = 1, ///< The catch attempt is universal (ignoring MD_STATUS_IMMUNE/Boss)
-	PET_CATCH_UNIVERSAL_ITEM = 2,
+	PET_CATCH_FAIL = 0, // Failed to catch the pet
+	PET_CATCH_UNIVERSAL_NO_BOSS = 1, // The catch attempt is universal (ignoring MD_STATUS_IMMUNE/Boss)
+	PET_CATCH_UNIVERSAL_ALL = 2,
+	PET_CATCH_MAX
 };
 
 enum e_pet_intimate_level : uint16 {
@@ -235,8 +237,8 @@ bool pet_return_egg( map_session_data *sd, struct pet_data *pd );
 int32 pet_birth_process(map_session_data *sd, struct s_pet *pet);
 int32 pet_recv_petdata(uint32 account_id,struct s_pet *p,int32 flag);
 int32 pet_select_egg(map_session_data *sd,short egg_index);
-void pet_catch_process1(map_session_data& sd, std::vector<uint32> target_list);
-int32 pet_catch_process2(map_session_data *sd,int32 target_id);
+void pet_catch_process1(map_session_data& sd, t_itemid item_id);
+void pet_catch_process2(map_session_data& sd, int32 target_id);
 bool pet_get_egg(uint32 account_id, short pet_class, int32 pet_id);
 int32 pet_menu(map_session_data *sd,int32 menunum);
 int32 pet_change_name(map_session_data *sd,char *name);

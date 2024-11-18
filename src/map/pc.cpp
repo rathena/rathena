@@ -2225,7 +2225,7 @@ bool pc_authok(map_session_data *sd, uint32 login_id2, time_t expiration_time, i
 	sd->hatEffects = {};
 #endif
 
-	sd->catch_target_list.clear();
+	sd->taming_item = PET_CATCH_FAIL;
 
 	// Check EXP overflow, since in previous revision EXP on Max Level can be more than 'official' Max EXP
 	if (pc_is_maxbaselv(sd) && sd->status.base_exp > MAX_LEVEL_BASE_EXP) {
@@ -6399,8 +6399,6 @@ int32 pc_useitem(map_session_data *sd,int32 n)
 
 	sd->itemid = item.nameid;
 	sd->itemindex = n;
-	sd->catch_target_list.clear(); //Abort pet catching.
-
 	amount = item.amount;
 	script = id->script;
 	//Check if the item is to be consumed immediately [Skotlex]

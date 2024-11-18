@@ -686,7 +686,7 @@ public:
 	t_itemid itemid;
 	short itemindex;	//Used item's index in sd->inventory [Skotlex]
 
-	std::vector<uint32> catch_target_list; // pet catching, stores a list of pet classes to catch
+	t_itemid taming_item; // pet catching, stores the taming item used
 
 	int8 spiritball, spiritball_old;
 	int32 spirit_timer[MAX_SPIRITBALL];

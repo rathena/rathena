@@ -12526,9 +12526,9 @@ BUILDIN_FUNC( errormes ){
 }
 
 /**
- * Attempts to catch a pet given a list of pet IDs.
- * pet <pet_id>{,...,<pet_id>}
- * catchpet <pet_id>{,...,<pet_id>}
+ * Attempts to catch a pet with the lure item.
+ * pet {<item_id>}
+ * catchpet {<item_id>}
 */
 BUILDIN_FUNC(catchpet)
 {
@@ -12537,29 +12537,26 @@ BUILDIN_FUNC(catchpet)
 	if( !script_rid2sd(sd) )
 		return SCRIPT_CMD_FAILURE;
 
-	int32 total = script_lastdata(st);
-	std::vector<uint32> pet_list = {};
+	int32 lure_id;
+	if (script_hasdata(st, 2))
+		lure_id = script_getnum(st, 2);
+	else
+		lure_id = sd->itemid;
 
-	for (int32 i = 2; i <= total; i++) {
-		int pet_id = script_getnum(st, i);
+	if (lure_id <= PET_CATCH_FAIL) {
+		ShowError("catchpet: Invalid lure item ID %d.\n", lure_id);
+		return SCRIPT_CMD_FAILURE;
+	}
+	else if (lure_id > PET_CATCH_MAX) {
+		std::shared_ptr<item_data> id = item_db.find(lure_id);
 
-		if (pet_id == PET_CATCH_UNIVERSAL || pet_id == PET_CATCH_UNIVERSAL_ITEM) {
-			if (total > 2) {
-				ShowError("buildin_catchpet: Universal pet ID must be the first and only argument.\n");
-				return SCRIPT_CMD_FAILURE;
-			}
-			pet_list.push_back(pet_id);
-			break;
-		}
-
-		if (pet_db.find(pet_id) == nullptr) {
-			ShowError("buildin_catchpet: Invalid pet ID %d.\n", pet_id);
+		if (id == nullptr) {
+			ShowError("catchpet: Invalid lure item ID %d.\n", lure_id);
 			return SCRIPT_CMD_FAILURE;
 		}
-		pet_list.push_back(pet_id);
 	}
 
-	pet_catch_process1(*sd, pet_list);
+	pet_catch_process1(*sd, static_cast<t_itemid>(lure_id));
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -27704,9 +27701,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getscrate,"ii?"),
 	BUILDIN_DEF(debugmes,"s"),
 	BUILDIN_DEF(errormes,"s"),
-	BUILDIN_DEF2(catchpet,"pet","*"),
+	BUILDIN_DEF2(catchpet,"pet","?"),
 	BUILDIN_DEF2(birthpet,"bpet",""),
-	BUILDIN_DEF(catchpet,"*"),
+	BUILDIN_DEF(catchpet,"?"),
 	BUILDIN_DEF(birthpet,""),
 	BUILDIN_DEF(resetlvl,"i?"),
 	BUILDIN_DEF(resetstatus,"?"),
