@@ -8974,8 +8974,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			i = cap_value(i, 0, 100);
 
 #ifdef RENEWAL
+			// On renewal, Mdef is rounded after calculation
 			if (i > 0) {
-				// On renewal, Mdef is rounded after calculation (unknown for pre-renewal)
 				mdef = (defType)( (float)(mdef - mdef * i / 100.) );
 			}
 
@@ -8988,8 +8988,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 
 			ad.damage = ad.damage * (1000 + mdef) / (1000 + mdef * 10) - mdef2;
 #else
+			// On pre-renewal, Mdef reduction is rounded down before being subtracted from Mdef
 			if (i > 0)
-				mdef -= mdef * i/100;
+				mdef -= mdef * i / 100;
 
 			if(battle_config.magic_defense_type)
 				ad.damage = ad.damage - mdef*battle_config.magic_defense_type - mdef2;
