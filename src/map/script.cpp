@@ -12537,13 +12537,13 @@ BUILDIN_FUNC(catchpet)
 	if( !script_rid2sd(sd) )
 		return SCRIPT_CMD_FAILURE;
 
-	int32 lure_id;
+	t_itemid lure_id;
 	if (script_hasdata(st, 2))
-		lure_id = script_getnum(st, 2);
+		lure_id = static_cast<t_itemid>(script_getnum(st, 2));
 	else
 		lure_id = sd->itemid;
 
-	if (lure_id <= PET_CATCH_FAIL) {
+	if (lure_id == PET_CATCH_FAIL) {
 		ShowError("catchpet: Invalid lure item ID %d.\n", lure_id);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -12556,7 +12556,7 @@ BUILDIN_FUNC(catchpet)
 		}
 	}
 
-	pet_catch_process1(*sd, static_cast<t_itemid>(lure_id));
+	pet_catch_process1(*sd, lure_id);
 	return SCRIPT_CMD_SUCCESS;
 }
 
