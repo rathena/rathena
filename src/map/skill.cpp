@@ -682,12 +682,6 @@ int32 skill_calc_heal(struct block_list *src, struct block_list *target, uint16 
 			if (tsc->getSCE(SC_ASSUMPTIO))
 				hp_bonus += tsc->getSCE(SC_ASSUMPTIO)->val1 * 2;
 #endif
-			if (tsc->getSCE(SC_VITALIZE_POTION))
-#ifdef RENEWAL
-				hp_bonus += 10;
-#else
-				hp += hp * 10 / 100;
-#endif
 		}
 	}
 
@@ -2420,12 +2414,6 @@ int32 skill_additional_effect( struct block_list* src, struct block_list *bl, ui
 		int32 class_ = mob_get_random_id(MOBG_BRANCH_OF_DEAD_TREE, RMF_DB_RATE, 0);
 		if (class_ != 0 && mobdb_checkid(class_))
 			mob_class_change(dstmd,class_);
-	}
-
-	if (sd && sc) {
-		struct status_change_entry *sce;
-		if ((sce = sc->getSCE(SC_2011RWC_SCROLL)) && rnd() % 1000 <= 10)
-			skill_castend_nodamage_id(src, src, AC_CONCENTRATION, max(3, pc_checkskill(sd,AC_CONCENTRATION)), tick, 0);
 	}
 
 	return 0;
@@ -19341,8 +19329,6 @@ int32 skill_castfix_sc(struct block_list *bl, double time, uint8 flag)
 				time += sc->getSCE(SC_PARALYSIS)->val3;
 			if (sc->getSCE(SC_IZAYOI))
 				time -= time * 50 / 100;
-			if (sc->getSCE(SC_2011RWC_SCROLL))
-				time -= time * 5 / 100;
 		}
 		if (sc->getSCE(SC_SUFFRAGIUM)) {
 			if(!(flag&2))
@@ -19462,8 +19448,6 @@ int32 skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint1
 			VARCAST_REDUCTION(sc->getSCE(SC_TELEKINESIS_INTENSE)->val2);
 		if (sc->getSCE(SC_SOULFAIRY))
 			VARCAST_REDUCTION(sc->getSCE(SC_SOULFAIRY)->val3);
-		if (sc->getSCE(SC_EP16_2_BUFF_AC))
-			VARCAST_REDUCTION(80);
 		// Multiplicative Fixed CastTime values
 		if (sc->getSCE(SC_SECRAMENT))
 			fixcast_r = max(fixcast_r, sc->getSCE(SC_SECRAMENT)->val2);
@@ -19486,8 +19470,6 @@ int32 skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint1
 			fixed = 0;
 		if (sc->getSCE(SC_GLOOMYDAY))
 			fixed += skill_lv * 500;
-		if (sc->getSCE(SC_2011RWC_SCROLL))
-			VARCAST_REDUCTION(5);
 	}
 	if (sc && sc->getSCE(SC_SECRAMENT) && skill_id == HW_MAGICPOWER && (flag&2)) // Sacrament lowers Mystical Amplification cast time
 		fixcast_r = max(fixcast_r, sc->getSCE(SC_SECRAMENT)->val2);
