@@ -210,8 +210,8 @@ uint64 PlayerGroupDatabase::parseBodyNode( const ryml::NodeRef& node ){
 }
 
 void PlayerGroupDatabase::loadingFinished(){
-	static const int MAX_CYCLES = 10;
-	int i;
+	static const int32 MAX_CYCLES = 10;
+	int32 i;
 
 	for( i = 0; i < MAX_CYCLES; i++ ){
 		auto inheritanceIt = this->inheritance.begin();

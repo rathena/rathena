@@ -2,7 +2,7 @@
 //= Instance Villa of Deception.
 //===== Description: =========================================
 //- [Walkthrough conversion]
-//- Require to complete the episode 18.1 main quest.
+//- Require to complete the Episode 18 main quest.
 //- The function to drop an item with random option is defined in re/other/glocal_npc2.txt
 // Notes:
 //   Some of the setting can be modified in 'Optional settings'.
@@ -16,14 +16,14 @@
 wolfvill,79,260,0	script	#con_wp11	HIDDEN_WARP_NPC,4,4,{
 	end;
 OnTouch:
-	if (ep18_1_main < 57)
+	if (ep18_main < 57)
 		end;
 	cloakoffnpcself( "Aira#con" );
 	end;
 }
 
 wolfvill,79,260,4	script(CLOAKED)	Aira#con	4_M_BRZ_JACI,{
-	if (ep18_1_main < 57)
+	if (ep18_main < 57)
 		end;
 	switch( checkquest(12522,PLAYTIME) ) {
 	case -1:

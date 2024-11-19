@@ -41,7 +41,7 @@ typedef struct AccountDB_SQL {
 typedef struct AccountDBIterator_SQL {
 	AccountDBIterator vtable;    // public interface
 	AccountDB_SQL* db;
-	int last_account_id;
+	int32 last_account_id;
 } AccountDBIterator_SQL;
 
 /// internal functions
@@ -514,11 +514,11 @@ static bool mmo_auth_fromsql(AccountDB_SQL* db, struct mmo_account* acc, uint32 
 	Sql_GetData(sql_handle,  2, &data, nullptr); safestrncpy(acc->pass, data, sizeof(acc->pass));
 	Sql_GetData(sql_handle,  3, &data, nullptr); acc->sex = data[0];
 	Sql_GetData(sql_handle,  4, &data, nullptr); safestrncpy(acc->email, data, sizeof(acc->email));
-	Sql_GetData(sql_handle,  5, &data, nullptr); acc->group_id = (unsigned int) atoi(data);
-	Sql_GetData(sql_handle,  6, &data, nullptr); acc->state = (unsigned int) strtoul(data, nullptr, 10);
+	Sql_GetData(sql_handle,  5, &data, nullptr); acc->group_id = (uint32)atoi(data);
+	Sql_GetData(sql_handle,  6, &data, nullptr); acc->state = (uint32)strtoul(data, nullptr, 10);
 	Sql_GetData(sql_handle,  7, &data, nullptr); acc->unban_time = atol(data);
 	Sql_GetData(sql_handle,  8, &data, nullptr); acc->expiration_time = atol(data);
-	Sql_GetData(sql_handle,  9, &data, nullptr); acc->logincount = (unsigned int) strtoul(data, nullptr, 10);
+	Sql_GetData(sql_handle,  9, &data, nullptr); acc->logincount = (uint32)strtoul(data, nullptr, 10);
 	Sql_GetData(sql_handle, 10, &data, nullptr); safestrncpy(acc->lastlogin, data==nullptr?"":data, sizeof(acc->lastlogin));
 	Sql_GetData(sql_handle, 11, &data, nullptr); safestrncpy(acc->last_ip, data, sizeof(acc->last_ip));
 	Sql_GetData(sql_handle, 12, &data, nullptr); safestrncpy(acc->birthdate, data==nullptr?"":data, sizeof(acc->birthdate));
@@ -657,8 +657,8 @@ static bool mmo_auth_tosql(AccountDB_SQL* db, const struct mmo_account* acc, boo
 			break;
 		}
 
-		const int MAX_RETRIES = 20;
-		int i = 0;
+		const int32 MAX_RETRIES = 20;
+		int32 i = 0;
 		bool success = false;
 
 		// Retry it for a maximum number of retries
@@ -707,13 +707,13 @@ static bool mmo_auth_tosql(AccountDB_SQL* db, const struct mmo_account* acc, boo
 	return result;
 }
 
-void mmo_save_global_accreg(AccountDB* self, int fd, uint32 account_id, uint32 char_id) {
+void mmo_save_global_accreg(AccountDB* self, int32 fd, uint32 account_id, uint32 char_id) {
 	Sql* sql_handle = ((AccountDB_SQL*)self)->accounts;
 	AccountDB_SQL* db = (AccountDB_SQL*)self;
 	uint16 count = RFIFOW(fd, 12);
 
 	if (count) {
-		int cursor = 14, i;
+		int32 cursor = 14, i;
 		char key[32], sval[254], esc_key[32*2+1], esc_sval[254*2+1];
 
 		for (i = 0; i < count; i++) {
@@ -726,7 +726,7 @@ void mmo_save_global_accreg(AccountDB* self, int fd, uint32 account_id, uint32 c
 			cursor += 4;
 
 			switch (RFIFOB(fd, cursor++)) {
-				// int
+				// int32
 				case 0:
 					if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`account_id`,`key`,`index`,`value`) VALUES ('%" PRIu32 "','%s','%" PRIu32 "','%" PRId64 "')", db->global_acc_reg_num_table, account_id, esc_key, index, RFIFOQ(fd, cursor)) )
 						Sql_ShowDebug(sql_handle);
@@ -756,11 +756,11 @@ void mmo_save_global_accreg(AccountDB* self, int fd, uint32 account_id, uint32 c
 	}
 }
 
-void mmo_send_global_accreg(AccountDB* self, int fd, uint32 account_id, uint32 char_id) {
+void mmo_send_global_accreg(AccountDB* self, int32 fd, uint32 account_id, uint32 char_id) {
 	Sql* sql_handle = ((AccountDB_SQL*)self)->accounts;
 	AccountDB_SQL* db = (AccountDB_SQL*)self;
 	char* data;
-	int plen = 0;
+	int16 plen = 0;
 	size_t len;
 
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `account_id`='%" PRIu32 "'", db->global_acc_reg_str_table, account_id) )
@@ -790,7 +790,7 @@ void mmo_send_global_accreg(AccountDB* self, int fd, uint32 account_id, uint32 c
 		plen += 1;
 
 		safestrncpy(WFIFOCP(fd,plen), data, len);
-		plen += len;
+		plen += static_cast<decltype(plen)>( len );
 
 		Sql_GetData(sql_handle, 1, &data, nullptr);
 
@@ -804,7 +804,7 @@ void mmo_send_global_accreg(AccountDB* self, int fd, uint32 account_id, uint32 c
 		plen += 1;
 
 		safestrncpy(WFIFOCP(fd,plen), data, len);
-		plen += len;
+		plen += static_cast<decltype(plen)>( len );
 
 		WFIFOW(fd, 14) += 1;
 
@@ -839,14 +839,14 @@ void mmo_send_global_accreg(AccountDB* self, int fd, uint32 account_id, uint32 c
 	WFIFOL(fd, 4) = account_id;
 	WFIFOL(fd, 8) = char_id;
 	WFIFOB(fd, 12) = 0; // var type (only set when all vars have been sent, regardless of type)
-	WFIFOB(fd, 13) = 0; // is int type
+	WFIFOB(fd, 13) = 0; // is int32 type
 	WFIFOW(fd, 14) = 0; // count
 	plen = 16;
 
 	/**
 	 * Vessel!
 	 *
-	 * int type
+	 * int32 type
 	 * { keyLength(B), key(<keyLength>), index(L), value(L) }
 	 **/
 	while ( SQL_SUCCESS == Sql_NextRow(sql_handle) ) {
@@ -857,7 +857,7 @@ void mmo_send_global_accreg(AccountDB* self, int fd, uint32 account_id, uint32 c
 		plen += 1;
 
 		safestrncpy(WFIFOCP(fd,plen), data, len);
-		plen += len;
+		plen += static_cast<decltype(plen)>( len );
 
 		Sql_GetData(sql_handle, 1, &data, nullptr);
 
@@ -882,7 +882,7 @@ void mmo_send_global_accreg(AccountDB* self, int fd, uint32 account_id, uint32 c
 			WFIFOL(fd, 4) = account_id;
 			WFIFOL(fd, 8) = char_id;
 			WFIFOB(fd, 12) = 0; // var type (only set when all vars have been sent, regardless of type)
-			WFIFOB(fd, 13) = 0; // is int type
+			WFIFOB(fd, 13) = 0; // is int32 type
 			WFIFOW(fd, 14) = 0; // count
 
 			plen = 16;

@@ -2824,6 +2824,140 @@ enum e_random_item_group {
 	IG_AEGIS_103034,
 	IG_P_BOOSTER_CALL_PACKAGE,
 	IG_P_COMPENSATION_BOX,
+	IG_ENCHANT_STONE_BOX35,
+	IG_STOVE_CHANNELING_BOX_1,
+	IG_STOVE_CHANNELING_BOX_2,
+	IG_STOVE_CHANNELING_BOX_3,
+	IG_STOVE_CHANNELING_BOX_4,
+	IG_LI_NYANGVINE_BOX1_35,
+	IG_LI_NYANGVINE_BOX2_35,
+	IG_LI_NYANGVINE_BOX3_35,
+	IG_A_SPEED_BOOSTER_BOX,
+	IG_A_SPEED_BOOSTER_10_BOX,
+	IG_L_INFINITY_POWER_PACK,
+	IG_L_ALL_RED_PACK,
+	IG_L_DEFENSE_POTION_PACK,
+	IG_L_SPEED_FORCE_PACK,
+	IG_L_SPECIAL_SPEED_PACK,
+	IG_L_SPECIAL_FORCE_PACK,
+	IG_COSTUMEMILEPACK_35_1,
+	IG_COSTUMEMILEPACK_35_2,
+	IG_COSTUMEMILEPACK_35_3,
+	IG_2024ROS_BOX_1ST,
+	IG_2024ROS_BOX_2ND,
+	IG_2024ROS_BOX_3RD,
+	IG_2024ROS_BOX_4TH,
+	IG_2024ROS_BOX_5TH,
+	IG_AEGIS_103234,
+	IG_2024SPORTS_BOX,
+	IG_22TH_PRESENT_BOX,
+	IG_AEGIS_103316,
+	IG_SVIP_GIFT_22THANIV,
+	IG_VVIP_GIFT_22THANIV,
+	IG_VIP_GIFT_22THANIV,
+	IG_LI_NYANGVINE_BOX1_36,
+	IG_LI_NYANGVINE_BOX2_36,
+	IG_LI_NYANGVINE_BOX3_36,
+	IG_2024_SUMMER_PACK_1,
+	IG_2024_SUMMER_PACK_2,
+	IG_2024_SUMMER_PACK_3,
+	IG_2024_SUMMER_PACK_4,
+	IG_LI_A_HD_CARNIUMBOX,
+	IG_LI_A_HD_BRADIUMBOX,
+	IG_22TH_PACKAGE_1,
+	IG_22TH_PACKAGE_2,
+	IG_22TH_PACKAGE_3,
+	IG_22TH_PACKAGE_4,
+	IG_CLB_SS_NYANG_PACK,
+	IG_CLB_SS_REFINE1_PACK,
+	IG_CLB_SS_REFINE2_PACK,
+	IG_CLB_SS_EXP_PACK,
+	IG_RT_EP17_DOUBT_A,
+	IG_RT_EP17_DOUBT_3,
+	IG_RT_EP17_DOUBT_C,
+	IG_RT_EP17_AUTO_A,
+	IG_RT_EP17_AUTO_C,
+	IG_RT_EP17_SECRET_A,
+	IG_RT_EP17_SECRET_C,
+	IG_RT_EP17_MUTANT_A,
+	IG_RT_EP17_MUTANT_C,
+	IG_RT_EP17_MIGUEL_A,
+	IG_RT_EP17_MIGUEL_C,
+	IG_RT_EP17_MIGUEL_2,
+	IG_RT_EP17_OVERLOAD_A,
+	IG_RT_EP17_OVERLOAD_C,
+	IG_RT_EP17_OVERLOAD_3,
+	IG_RT_EP17_BATH_A,
+	IG_RT_EP17_BATH_C,
+	IG_RT_EP17_GARDEN_A,
+	IG_RT_EP17_GARDEN_C,
+	IG_RT_EP17_GARDEN_3,
+	IG_RT_EP17_GARDEN_5,
+	IG_RT_EP17_GREEN_A,
+	IG_RT_EP17_GREEN_C,
+	IG_RT_EP17_GREEN_2,
+	IG_RT_EP17_GREEN_4,
+	IG_RT_EP17_WING_A,
+	IG_RT_EP17_WING_C,
+	IG_RT_EP17_WING_2,
+	IG_RT_EP17_WING_4,
+	IG_RT_EP17_HARMFUL_A,
+	IG_RT_EP17_HARMFUL_C,
+	IG_RT_EP17_HARMFUL_2,
+	IG_RT_EP17_HARMFUL_4,
+	IG_RT_EP17_BOSS_A,
+	IG_RT_EP17_BOSS_C,
+	IG_RT_EP17_BOSS_3,
+	IG_RT_EP17_BOSS_5,
+	IG_RT_EP17_MALFUN_A,
+	IG_RT_EP17_MALFUN_C,
+	IG_RT_EP17_MALFUN_3,
+	IG_RT_EP18_ARMOR_A,
+	IG_RT_EP18_ARMOR_C,
+	IG_RT_EP18_MELEE_A,
+	IG_RT_EP18_MAGIC_C,
+	IG_RT_EP18_MELEE_C,
+	IG_RT_EP18_MAGIC_A,
+	IG_RT_EP18_RANGE_A,
+	IG_RT_EP18_RANGE_C,
+	IG_RT_EP18_FIELD_A,
+	IG_RT_EP18_FIELD_C,
+	IG_RT_EP18_FIELD_3,
+	IG_RT_EP18_LAVA_A,
+	IG_RT_EP18_LAVA_C,
+	IG_RT_EP18_LAVA_2,
+	IG_RT_EP18_TOTAL_A,
+	IG_RT_EP18_TOTAL_C,
+	IG_RT_EP18_TOTAL_3,
+	IG_RT_EP18_TOTAL_6,
+	IG_RT_EP18_FANG_A,
+	IG_RT_EP18_FANG_C,
+	IG_RT_EP18_DEMI_A,
+	IG_RT_EP18_DEMI_C,
+	IG_RT_EP18_DEMI_2,
+	IG_YOR_CARD_P_BOX,
+	IG_EP21_COSTUME_BOX1,
+	IG_EP21_COSTUME_BOX2,
+	IG_AEGIS_103537,
+	IG_AEGIS_103582,
+	IG_AEGIS_103617,
+	IG_IFIRIT_PROMOTION_PACK,
+	IG_AEGIS_103622,
+	IG_AEGIS_103623,
+	IG_AEGIS_103624,
+	IG_AEGIS_103625,
+	IG_AEGIS_103626,
+	IG_AEGIS_103627,
+	IG_C_CHARSLOT_OPEN_BOX,
+	IG_COSTUMEMILEPACK_36_1,
+	IG_COSTUMEMILEPACK_36_2,
+	IG_COSTUMEMILEPACK_36_3,
+	IG_NYANGVINE_SPECIAL_PACK1,
+	IG_NYANGVINE_SPECIAL_PACK2,
+	IG_NYANGVINE_SPECIAL_PACK3,
+	IG_LI_NYANGVINE_BOX1_37,
+	IG_LI_NYANGVINE_BOX2_37,
+	IG_LI_NYANGVINE_BOX3_37,
 
 	IG_MAX,
 };
@@ -3016,8 +3150,8 @@ struct s_item_group_db
 struct s_roulette_db {
 	t_itemid *nameid[MAX_ROULETTE_LEVEL]; /// Item ID
 	unsigned short *qty[MAX_ROULETTE_LEVEL]; /// Amount of Item ID
-	int *flag[MAX_ROULETTE_LEVEL]; /// Whether the item is for loss or win
-	int items[MAX_ROULETTE_LEVEL]; /// Number of items in the list for each
+	int32 *flag[MAX_ROULETTE_LEVEL]; /// Whether the item is for loss or win
+	int32 items[MAX_ROULETTE_LEVEL]; /// Number of items in the list for each
 };
 extern struct s_roulette_db rd;
 
@@ -3031,7 +3165,7 @@ struct item_data
 	uint32 value_sell;
 	item_types type;
 	uint8 subtype;
-	int maxchance; //For logs, for external game info, for scripts: Max drop chance of this item (e.g. 0.01% , etc.. if it = 0, then monsters don't drop it, -1 denotes items sold in shops only) [Lupus]
+	int32 maxchance; //For logs, for external game info, for scripts: Max drop chance of this item (e.g. 0.01% , etc.. if it = 0, then monsters don't drop it, -1 denotes items sold in shops only) [Lupus]
 	uint8 sex;
 	uint32 equip;
 	uint32 weight;
@@ -3054,8 +3188,8 @@ struct item_data
 	uint64 class_base[3];	//Specifies if the base can wear this item (split in 3 indexes per type: 1-1, 2-1, 2-2)
 	uint16 class_upper; //Specifies if the class-type can equip it (See e_item_job)
 	struct {
-		int chance;
-		int id;
+		int32 chance;
+		int32 id;
 	} mob[MAX_SEARCH]; //Holds the mobs that have the highest drop rate for this item. [Skotlex]
 	struct script_code *script;	//Default script for everything.
 	struct script_code *equip_script;	//Script executed once when equipping.
@@ -3113,7 +3247,7 @@ struct item_data
 	}
 
 	bool isStackable();
-	int inventorySlotNeeded(int quantity);
+	int32 inventorySlotNeeded(int32 quantity);
 };
 
 class ItemDatabase : public TypesafeCachedYamlDatabase<t_itemid, item_data> {
@@ -3172,7 +3306,10 @@ public:
 	int16 item_exists_pc(map_session_data *sd, uint16 group_id);
 	t_itemid get_random_item_id(uint16 group_id, uint8 sub_group);
 	std::shared_ptr<s_item_group_entry> get_random_entry(uint16 group_id, uint8 sub_group);
-	uint8 pc_get_itemgroup(uint16 group_id, bool identify, map_session_data *sd);
+	uint8 pc_get_itemgroup( uint16 group_id, bool identify, map_session_data& sd );
+
+private:
+	void pc_get_itemgroup_sub( map_session_data& sd, bool identify, std::shared_ptr<s_item_group_entry> data );
 };
 
 extern ItemGroupDatabase itemdb_group;
@@ -3390,16 +3527,16 @@ const char *itemdb_typename_ammo (e_ammo_type ammo);
 #define itemdb_value_buy(n) itemdb_search(n)->value_buy
 #define itemdb_value_sell(n) itemdb_search(n)->value_sell
 //Item trade restrictions [Skotlex]
-bool itemdb_isdropable_sub(struct item_data *itd, int gmlv, int unused);
-bool itemdb_cantrade_sub(struct item_data *itd, int gmlv, int gmlv2);
-bool itemdb_canpartnertrade_sub(struct item_data *itd, int gmlv, int gmlv2);
-bool itemdb_cansell_sub(struct item_data *itd, int gmlv, int unused);
-bool itemdb_cancartstore_sub(struct item_data *itd, int gmlv, int unused);
-bool itemdb_canstore_sub(struct item_data *itd, int gmlv, int unused);
-bool itemdb_canguildstore_sub(struct item_data *itd, int gmlv, int unused);
-bool itemdb_canmail_sub(struct item_data *itd, int gmlv, int unused);
-bool itemdb_canauction_sub(struct item_data *itd, int gmlv, int unused);
-bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, bool (*func)(struct item_data*, int, int));
+bool itemdb_isdropable_sub(struct item_data *itd, int32 gmlv, int32 unused);
+bool itemdb_cantrade_sub(struct item_data *itd, int32 gmlv, int32 gmlv2);
+bool itemdb_canpartnertrade_sub(struct item_data *itd, int32 gmlv, int32 gmlv2);
+bool itemdb_cansell_sub(struct item_data *itd, int32 gmlv, int32 unused);
+bool itemdb_cancartstore_sub(struct item_data *itd, int32 gmlv, int32 unused);
+bool itemdb_canstore_sub(struct item_data *itd, int32 gmlv, int32 unused);
+bool itemdb_canguildstore_sub(struct item_data *itd, int32 gmlv, int32 unused);
+bool itemdb_canmail_sub(struct item_data *itd, int32 gmlv, int32 unused);
+bool itemdb_canauction_sub(struct item_data *itd, int32 gmlv, int32 unused);
+bool itemdb_isrestricted(struct item* item, int32 gmlv, int32 gmlv2, bool (*func)(struct item_data*, int, int));
 bool itemdb_ishatched_egg(struct item* item);
 #define itemdb_isdropable(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_isdropable_sub)
 #define itemdb_cantrade(item, gmlv, gmlv2) itemdb_isrestricted(item, gmlv, gmlv2, itemdb_cantrade_sub)

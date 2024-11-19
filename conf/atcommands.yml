@@ -1032,6 +1032,11 @@ Body:
   - Command: setcard 
     Help: |
       Adds a card or enchant to the specific slot of the equipment.
+  - Command: resetcooltime
+    Aliases:
+      - resetcooldown
+    Help: |
+      Resets the cooldown of all skills of the player and if active also of the homunculus or the mercenary.
 
 Footer:
   Imports:

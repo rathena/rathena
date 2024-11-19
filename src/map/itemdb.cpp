@@ -1158,6 +1158,29 @@ void ItemDatabase::loadingFinished(){
 			}
 		}
 
+		if (item->type != IT_ARMOR && item->type != IT_SHADOWGEAR && item->def > 0) {
+			ShowWarning( "Item %s is not a armor or shadowgear. Defaulting Defense to 0.\n", item->name.c_str() );
+			item->def = 0;
+		}
+
+		if (item->type != IT_WEAPON && item->type != IT_AMMO && item->atk > 0) {
+			ShowWarning( "Item %s is not a weapon or ammo. Defaulting Attack to 0.\n", item->name.c_str() );
+			item->atk = 0;
+		}
+
+		if (item->type != IT_WEAPON) {
+#ifdef RENEWAL
+			if (item->matk > 0) {
+				ShowWarning( "Item %s is not a weapon. Defaulting MagicAttack to 0.\n", item->name.c_str() );
+				item->matk = 0;
+			}
+#endif
+			if (item->range > 0) {
+				ShowWarning( "Item %s is not a weapon. Defaulting Range to 0.\n", item->name.c_str() );
+				item->range = 0;
+			}
+		}
+
 		// When a particular price is not given, we should base it off the other one
 		if (!hasPriceValue[item->nameid].has_buy && hasPriceValue[item->nameid].has_sell)
 			item->value_buy = item->value_sell * 2;
@@ -2388,7 +2411,7 @@ uint64 ItemEnchantDatabase::parseBodyNode( const ryml::NodeRef& node ){
 				enchant_slot = std::make_shared<s_item_enchant_slot>();
 				enchant_slot->slot = slot;
 
-				for( int i = 0; i <= MAX_ENCHANTGRADE; i++ ){
+				for( int32 i = 0; i <= MAX_ENCHANTGRADE; i++ ){
 					enchant_slot->normal.enchantgradeChanceIncrease[i] = 0;
 				}
 			}
@@ -2921,7 +2944,7 @@ t_itemid ItemGroupDatabase::get_random_item_id(uint16 group_id, uint8 sub_group)
 * @param group_id: The group ID of item that obtained by player
 * @param *group: struct s_item_group from itemgroup_db[group_id].random[idx] or itemgroup_db[group_id].must[sub_group][idx]
 */
-static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std::shared_ptr<s_item_group_entry> data) {
+void ItemGroupDatabase::pc_get_itemgroup_sub( map_session_data& sd, bool identify, std::shared_ptr<s_item_group_entry> data ){
 	if (data == nullptr)
 		return;
 
@@ -2930,12 +2953,12 @@ static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std
 	tmp.nameid = data->nameid;
 	tmp.bound = data->bound;
 	tmp.identify = identify ? identify : itemdb_isidentified(data->nameid);
-	tmp.expire_time = (data->duration) ? (unsigned int)(time(nullptr) + data->duration*60) : 0;
+	tmp.expire_time = (data->duration) ? (uint32)(time(nullptr) + data->duration*60) : 0;
 	if (data->isNamed) {
 		tmp.card[0] = itemdb_isequip(data->nameid) ? CARD0_FORGE : CARD0_CREATE;
 		tmp.card[1] = 0;
-		tmp.card[2] = GetWord(sd->status.char_id, 0);
-		tmp.card[3] = GetWord(sd->status.char_id, 1);
+		tmp.card[2] = GetWord( sd.status.char_id, 0 );
+		tmp.card[3] = GetWord( sd.status.char_id, 1 );
 	}
 
 	uint16 get_amt = 0;
@@ -2949,8 +2972,7 @@ static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std
 
 	// Do loop for non-stackable item
 	for (uint16 i = 0; i < data->amount; i += get_amt) {
-		char flag = 0;
-		tmp.unique_id = data->GUID ? pc_generate_unique_id(sd) : 0; // Generate GUID
+		tmp.unique_id = data->GUID ? pc_generate_unique_id( &sd ) : 0; // Generate GUID
 
 		if( itemdb_isequip( data->nameid ) ){
 			if( data->refineMinimum > 0 && data->refineMaximum > 0 ){
@@ -2970,13 +2992,15 @@ static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std
 			}
 		}
 
-		if ((flag = pc_additem(sd, &tmp, get_amt, LOG_TYPE_SCRIPT))) {
-			clif_additem(sd, 0, 0, flag);
-			if (pc_candrop(sd, &tmp))
-				map_addflooritem(&tmp, tmp.amount, sd->bl.m, sd->bl.x,sd->bl.y, 0, 0, 0, 0, 0);
+		e_additem_result flag = pc_additem( &sd, &tmp, get_amt, LOG_TYPE_SCRIPT );
+
+		if( flag == ADDITEM_SUCCESS ){
+			if( data->isAnnounced ){
+				intif_broadcast_obtain_special_item( &sd, data->nameid, sd.itemid, ITEMOBTAIN_TYPE_BOXITEM );
+			}
+		}else{
+			clif_additem( &sd, 0, 0, flag );
 		}
-		else if (!flag && data->isAnnounced)
-			intif_broadcast_obtain_special_item(sd, data->nameid, sd->itemid, ITEMOBTAIN_TYPE_BOXITEM);
 	}
 }
 
@@ -2984,11 +3008,9 @@ static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std
 * Find item(s) that will be obtained by player based on Item Group
 * @param group_id: The group ID that will be gained by player
 * @param nameid: The item that trigger this item group
-* @return val: 0:success, 1:no sd, 2:invalid item group
+* @return val: 0:success, 2:invalid item group
 */
-uint8 ItemGroupDatabase::pc_get_itemgroup(uint16 group_id, bool identify, map_session_data *sd) {
-	nullpo_retr(1,sd);
-
+uint8 ItemGroupDatabase::pc_get_itemgroup( uint16 group_id, bool identify, map_session_data& sd ){
 	std::shared_ptr<s_item_group_db> group = this->find(group_id);
 
 	if (group == nullptr) {
@@ -2997,21 +3019,22 @@ uint8 ItemGroupDatabase::pc_get_itemgroup(uint16 group_id, bool identify, map_se
 	}
 	if (group->random.empty())
 		return 0;
-	
-	// Get all the 'must' item(s) (subgroup 0)
-	uint16 subgroup = 0;
-	std::shared_ptr<s_item_group_random> random = util::umap_find(group->random, subgroup);
 
-	if (random != nullptr && !random->data.empty()) {
-		for (const auto &it : random->data)
-			itemdb_pc_get_itemgroup_sub(sd, identify, it.second);
+	// Get all the 'must' item(s) (subgroup 0)
+	std::shared_ptr<s_item_group_random> must = util::umap_find(group->random, static_cast<uint16>(0));
+	if( must != nullptr ){
+		for (const auto &it : must->data)
+			this->pc_get_itemgroup_sub( sd, identify, it.second );
 	}
 
 	// Get 1 'random' item from each subgroup
 	for (const auto &random : group->random) {
-		if (random.first == 0 || random.second->data.empty())
+		// Skip the 'must' group
+		if( random.first == 0 ){
 			continue;
-		itemdb_pc_get_itemgroup_sub(sd, identify, get_random_itemsubgroup(random.second));
+		}
+
+		this->pc_get_itemgroup_sub( sd, identify, get_random_itemsubgroup( random.second ) );
 	}
 
 	return 0;
@@ -3092,7 +3115,7 @@ static void itemdb_jobid2mapid(uint64 bclass[3], e_mapid jobmask, bool active)
 		temp_mask[0] = temp_mask[1] = temp_mask[2] = MAPID_ALL;
 	}
 
-	for (int i = 0; i < ARRAYLENGTH(temp_mask); i++) {
+	for (int32 i = 0; i < ARRAYLENGTH(temp_mask); i++) {
 		if (temp_mask[i] == 0)
 			continue;
 
@@ -3148,46 +3171,46 @@ bool itemdb_isstackable2(struct item_data *id)
 /*==========================================
  * Trade Restriction functions [Skotlex]
  *------------------------------------------*/
-bool itemdb_isdropable_sub(struct item_data *item, int gmlv, int unused) {
+bool itemdb_isdropable_sub(struct item_data *item, int32 gmlv, int32 unused) {
 	return (item && (!(item->flag.trade_restriction.drop) || gmlv >= item->gm_lv_trade_override));
 }
 
-bool itemdb_cantrade_sub(struct item_data* item, int gmlv, int gmlv2) {
+bool itemdb_cantrade_sub(struct item_data* item, int32 gmlv, int32 gmlv2) {
 	return (item && (!(item->flag.trade_restriction.trade) || gmlv >= item->gm_lv_trade_override || gmlv2 >= item->gm_lv_trade_override));
 }
 
-bool itemdb_canpartnertrade_sub(struct item_data* item, int gmlv, int gmlv2) {
+bool itemdb_canpartnertrade_sub(struct item_data* item, int32 gmlv, int32 gmlv2) {
 	return (item && (item->flag.trade_restriction.trade_partner || gmlv >= item->gm_lv_trade_override || gmlv2 >= item->gm_lv_trade_override));
 }
 
-bool itemdb_cansell_sub(struct item_data* item, int gmlv, int unused) {
+bool itemdb_cansell_sub(struct item_data* item, int32 gmlv, int32 unused) {
 	return (item && (!(item->flag.trade_restriction.sell) || gmlv >= item->gm_lv_trade_override));
 }
 
-bool itemdb_cancartstore_sub(struct item_data* item, int gmlv, int unused) {
+bool itemdb_cancartstore_sub(struct item_data* item, int32 gmlv, int32 unused) {
 	return (item && (!(item->flag.trade_restriction.cart) || gmlv >= item->gm_lv_trade_override));
 }
 
-bool itemdb_canstore_sub(struct item_data* item, int gmlv, int unused) {
+bool itemdb_canstore_sub(struct item_data* item, int32 gmlv, int32 unused) {
 	return (item && (!(item->flag.trade_restriction.storage) || gmlv >= item->gm_lv_trade_override));
 }
 
-bool itemdb_canguildstore_sub(struct item_data* item, int gmlv, int unused) {
+bool itemdb_canguildstore_sub(struct item_data* item, int32 gmlv, int32 unused) {
 	return (item && (!(item->flag.trade_restriction.guild_storage) || gmlv >= item->gm_lv_trade_override));
 }
 
-bool itemdb_canmail_sub(struct item_data* item, int gmlv, int unused) {
+bool itemdb_canmail_sub(struct item_data* item, int32 gmlv, int32 unused) {
 	return (item && (!(item->flag.trade_restriction.mail) || gmlv >= item->gm_lv_trade_override));
 }
 
-bool itemdb_canauction_sub(struct item_data* item, int gmlv, int unused) {
+bool itemdb_canauction_sub(struct item_data* item, int32 gmlv, int32 unused) {
 	return (item && (!(item->flag.trade_restriction.auction) || gmlv >= item->gm_lv_trade_override));
 }
 
-bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, bool (*func)(struct item_data*, int, int))
+bool itemdb_isrestricted(struct item* item, int32 gmlv, int32 gmlv2, bool (*func)(struct item_data*, int, int))
 {
 	struct item_data* item_data = itemdb_search(item->nameid);
-	int i;
+	int32 i;
 
 	if (!func(item_data, gmlv, gmlv2))
 		return false;
@@ -3213,7 +3236,7 @@ bool itemdb_ishatched_egg(struct item* item) {
 * @param nameid ID of item
 */
 char itemdb_isidentified(t_itemid nameid) {
-	int type=itemdb_type(nameid);
+	int32 type=itemdb_type(nameid);
 	switch (type) {
 		case IT_WEAPON:
 		case IT_ARMOR:
@@ -3538,6 +3561,19 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 }
 
 void ItemGroupDatabase::loadingFinished() {
+	// Delete empty sub groups
+	for( const auto &group : *this ){
+		for( auto it = group.second->random.begin(); it != group.second->random.end(); ){
+			if( it->second->data.empty() ){
+				ShowDebug( "Deleting empty subgroup %u from item group %hu.\n", it->first, group.first );
+				it = group.second->random.erase( it );
+			}else{
+				it++;
+			}
+		}
+	}
+
+	// Calculate rates
 	for (const auto &group : *this) {
 		for (const auto &random : group.second->random) {
 			random.second->total_rate = 0;
@@ -3555,7 +3591,7 @@ void ItemGroupDatabase::loadingFinished() {
 */
 static bool itemdb_read_noequip( char* str[], size_t columns, size_t current ){
 	t_itemid nameid;
-	int flag;
+	int32 flag;
 
 	nameid = strtoul(str[0], nullptr, 10);
 	flag = atoi(str[1]);
@@ -3736,7 +3772,7 @@ void ComboDatabase::loadingFinished() {
  */
 bool itemdb_parse_roulette_db(void)
 {
-	int i, j;
+	int32 i, j;
 	uint32 count = 0;
 
 	// retrieve all rows from the item database
@@ -3749,13 +3785,13 @@ bool itemdb_parse_roulette_db(void)
 		rd.items[i] = 0;
 
 	for (i = 0; i < MAX_ROULETTE_LEVEL; i++) {
-		int k, limit = MAX_ROULETTE_COLUMNS - i;
+		int32 k, limit = MAX_ROULETTE_COLUMNS - i;
 
 		for (k = 0; k < limit && SQL_SUCCESS == Sql_NextRow(mmysql_handle); k++) {
 			char* data;
 			t_itemid item_id;
 			unsigned short amount;
-			int level, flag;
+			int32 level, flag;
 
 			Sql_GetData(mmysql_handle, 1, &data, nullptr); level = atoi(data);
 			Sql_GetData(mmysql_handle, 2, &data, nullptr); item_id = strtoul(data, nullptr, 10);
@@ -3792,7 +3828,7 @@ bool itemdb_parse_roulette_db(void)
 	Sql_FreeResult(mmysql_handle);
 
 	for (i = 0; i < MAX_ROULETTE_LEVEL; i++) {
-		int limit = MAX_ROULETTE_COLUMNS - i;
+		int32 limit = MAX_ROULETTE_COLUMNS - i;
 
 		if (rd.items[i] == limit)
 			continue;
@@ -3830,7 +3866,7 @@ bool itemdb_parse_roulette_db(void)
  * Free Roulette items
  */
 static void itemdb_roulette_free(void) {
-	int i;
+	int32 i;
 
 	for (i = 0; i < MAX_ROULETTE_LEVEL; i++) {
 		if (rd.nameid[i])
@@ -4157,7 +4193,7 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 /**
  * Read SQL item_db table
  */
-static int itemdb_read_sqldb(void) {
+static int32 itemdb_read_sqldb(void) {
 	const char* item_db_name[] = {
 		item_table,
 		item2_table
@@ -4666,7 +4702,7 @@ bool RandomOptionGroupDatabase::option_get_id(std::string name, uint16 &id) {
 * Read all item-related databases
 */
 static void itemdb_read(void) {
-	int i;
+	int32 i;
 	const char* dbsubpath[] = {
 		"",
 		"/" DBIMPORT,
@@ -4729,7 +4765,7 @@ bool item_data::isStackable()
 	return true;
 }
 
-int item_data::inventorySlotNeeded(int quantity)
+int32 item_data::inventorySlotNeeded(int32 quantity)
 {
 	return (this->flag.guid || !this->isStackable()) ? quantity : 1;
 }

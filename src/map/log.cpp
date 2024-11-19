@@ -142,9 +142,9 @@ static char log_feedingtype2char(e_log_feeding_type type) {
 }
 
 /// check if this item should be logged according the settings
-static bool should_log_item(t_itemid nameid, int amount, int refine)
+static bool should_log_item(t_itemid nameid, int32 amount, int32 refine)
 {
-	int filter = log_config.filter;
+	int32 filter = log_config.filter;
 	std::shared_ptr<item_data> id = item_db.find(nameid);
 
 	if( id == nullptr )
@@ -206,7 +206,7 @@ void log_branch(map_session_data* sd)
 }
 
 /// logs item transactions (generic)
-void log_pick(int id, int16 m, e_log_pick_type type, int amount, struct item* itm)
+void log_pick(int32 id, int16 m, e_log_pick_type type, int32 amount, struct item* itm)
 {
 	nullpo_retv(itm);
 	if( ( log_config.enable_logs&type ) == 0 )
@@ -219,7 +219,7 @@ void log_pick(int id, int16 m, e_log_pick_type type, int amount, struct item* it
 
 	if( log_config.sql_logs )
 	{
-		int i;
+		int32 i;
 		SqlStmt* stmt = SqlStmt_Malloc(logmysql_handle);
 		StringBuf buf;
 		StringBuf_Init(&buf);
@@ -263,7 +263,7 @@ void log_pick(int id, int16 m, e_log_pick_type type, int amount, struct item* it
 }
 
 /// logs item transactions (players)
-void log_pick_pc(map_session_data* sd, e_log_pick_type type, int amount, struct item* itm)
+void log_pick_pc(map_session_data* sd, e_log_pick_type type, int32 amount, struct item* itm)
 {
 	nullpo_retv(sd);
 	log_pick(sd->status.char_id, sd->bl.m, type, amount, itm);
@@ -271,7 +271,7 @@ void log_pick_pc(map_session_data* sd, e_log_pick_type type, int amount, struct 
 
 
 /// logs item transactions (monsters)
-void log_pick_mob(struct mob_data* md, e_log_pick_type type, int amount, struct item* itm)
+void log_pick_mob(struct mob_data* md, e_log_pick_type type, int32 amount, struct item* itm)
 {
 	nullpo_retv(md);
 	log_pick(md->mob_id, md->bl.m, type, amount, itm);
@@ -279,7 +279,7 @@ void log_pick_mob(struct mob_data* md, e_log_pick_type type, int amount, struct 
 
 /// logs zeny transactions
 // ids are char_ids
-void log_zeny(const map_session_data &target_sd, e_log_pick_type type, uint32 src_id, int amount)
+void log_zeny(const map_session_data &target_sd, e_log_pick_type type, uint32 src_id, int32 amount)
 {
 	if( !log_config.zeny || ( log_config.zeny != 1 && abs(amount) < log_config.zeny ) )
 		return;
@@ -310,7 +310,7 @@ void log_zeny(const map_session_data &target_sd, e_log_pick_type type, uint32 sr
 
 
 /// logs MVP monster rewards
-void log_mvpdrop(map_session_data* sd, int monster_id, t_itemid nameid, t_exp exp )
+void log_mvpdrop(map_session_data* sd, int32 monster_id, t_itemid nameid, t_exp exp )
 {
 	nullpo_retv(sd);
 
@@ -459,7 +459,7 @@ void log_npc(map_session_data* sd, const char* message)
 
 
 /// logs chat
-void log_chat(e_log_chat_type type, int type_id, int src_charid, int src_accid, const char* mapname, int x, int y, const char* dst_charname, const char* message)
+void log_chat(e_log_chat_type type, int32 type_id, int32 src_charid, int32 src_accid, const char* mapname, int32 x, int32 y, const char* dst_charname, const char* message)
 {
 	if( ( log_config.chat&type ) == 0 )
 	{// disabled
@@ -506,7 +506,7 @@ void log_chat(e_log_chat_type type, int type_id, int src_charid, int src_accid, 
 }
 
 /// logs cash transactions
-void log_cash( map_session_data* sd, e_log_pick_type type, e_log_cash_type cash_type, int amount ){
+void log_cash( map_session_data* sd, e_log_pick_type type, e_log_cash_type cash_type, int32 amount ){
 	nullpo_retv( sd );
 
 	if( !log_config.cash )
@@ -540,7 +540,7 @@ void log_cash( map_session_data* sd, e_log_pick_type type, e_log_cash_type cash_
  * @param nameid Item used as food
  **/
 void log_feeding(map_session_data *sd, e_log_feeding_type type, t_itemid nameid) {
-	unsigned int target_id = 0, intimacy = 0;
+	uint32 target_id = 0, intimacy = 0;
 	unsigned short target_class = 0;
 
 	nullpo_retv( sd );
@@ -600,9 +600,9 @@ void log_set_defaults(void)
 }
 
 
-int log_config_read(const char* cfgName)
+int32 log_config_read(const char* cfgName)
 {
-	static int count = 0;
+	static int32 count = 0;
 	char line[1024], w1[1024], w2[1024];
 	FILE *fp;
 

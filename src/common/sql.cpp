@@ -12,6 +12,7 @@
 #include <mysql.h>
 
 #include "cbasetypes.hpp"
+#include "cli.hpp"
 #include "malloc.hpp"
 #include "showmsg.hpp"
 #include "strlib.hpp"
@@ -24,12 +25,10 @@
 #define my_bool bool
 #endif
 
-#define SQL_CONF_NAME "conf/inter_athena.conf"
+void ra_mysql_error_handler(uint32 ecode);
 
-void ra_mysql_error_handler(unsigned int ecode);
-
-int mysql_reconnect_type;
-unsigned int mysql_reconnect_count;
+int32 mysql_reconnect_type;
+uint32 mysql_reconnect_count;
 
 /// Sql handle
 struct Sql
@@ -39,7 +38,7 @@ struct Sql
 	MYSQL_RES* result;
 	MYSQL_ROW row;
 	unsigned long* lengths;
-	int keepalive;
+	int32 keepalive;
 };
 
 
@@ -99,11 +98,11 @@ Sql* Sql_Malloc(void)
  * @param self : sql handle
  * @return last error number
  */
-unsigned int Sql_GetError( Sql* self ){
+uint32 Sql_GetError( Sql* self ){
 	return mysql_errno( &self->handle );
 }
 
-static int Sql_P_Keepalive(Sql* self);
+static int32 Sql_P_Keepalive(Sql* self);
 
 /**
  * Establishes a connection to schema
@@ -115,7 +114,7 @@ static int Sql_P_Keepalive(Sql* self);
  * @param db : schema name
  * @return 
  */
-int Sql_Connect(Sql* self, const char* user, const char* passwd, const char* host, uint16 port, const char* db)
+int32 Sql_Connect(Sql* self, const char* user, const char* passwd, const char* host, uint16 port, const char* db)
 {
 	if( self == nullptr )
 		return SQL_ERROR;
@@ -123,14 +122,14 @@ int Sql_Connect(Sql* self, const char* user, const char* passwd, const char* hos
 	StringBuf_Clear(&self->buf);
 
 #if !defined(MARIADB_BASE_VERSION) && !defined(MARIADB_VERSION_ID) && MYSQL_VERSION_ID >= 50710
-	unsigned int md = SSL_MODE_DISABLED;
+	uint32 md = SSL_MODE_DISABLED;
 
 	if( mysql_options( &self->handle, MYSQL_OPT_SSL_MODE, &md ) ){
 		ShowSQL( "Your MySQL version does not understand \"MYSQL_OPT_SSL_MODE\" yet. Please consider upgrading - especially if you encounter SSL related error messages from your MySQL server.\n" );
 	}
 #endif
 
-	if( !mysql_real_connect(&self->handle, host, user, passwd, db, (unsigned int)port, nullptr/*unix_socket*/, 0/*clientflag*/) )
+	if( !mysql_real_connect(&self->handle, host, user, passwd, db, (uint32)port, nullptr/*unix_socket*/, 0/*clientflag*/) )
 	{
 		ShowSQL("%s\n", mysql_error(&self->handle));
 		return SQL_ERROR;
@@ -149,7 +148,7 @@ int Sql_Connect(Sql* self, const char* user, const char* passwd, const char* hos
 
 
 /// Retrieves the timeout of the connection.
-int Sql_GetTimeout(Sql* self, uint32* out_timeout)
+int32 Sql_GetTimeout(Sql* self, uint32* out_timeout)
 {
 	if( self && out_timeout && SQL_SUCCESS == Sql_Query(self, "SHOW VARIABLES LIKE 'wait_timeout'") )
 	{
@@ -170,7 +169,7 @@ int Sql_GetTimeout(Sql* self, uint32* out_timeout)
 
 
 /// Retrieves the name of the columns of a table into out_buf, with the separator after each name.
-int Sql_GetColumnNames(Sql* self, const char* table, char* out_buf, size_t buf_len, char sep)
+int32 Sql_GetColumnNames(Sql* self, const char* table, char* out_buf, size_t buf_len, char sep)
 {
 	char* data;
 	size_t len;
@@ -201,7 +200,7 @@ int Sql_GetColumnNames(Sql* self, const char* table, char* out_buf, size_t buf_l
 
 
 /// Changes the encoding of the connection.
-int Sql_SetEncoding(Sql* self, const char* encoding)
+int32 Sql_SetEncoding(Sql* self, const char* encoding)
 {
 	if( self && Sql_Query(self, "SET NAMES %s", encoding) == 0 )
 		return SQL_SUCCESS;
@@ -211,7 +210,7 @@ int Sql_SetEncoding(Sql* self, const char* encoding)
 
 
 /// Pings the connection.
-int Sql_Ping(Sql* self)
+int32 Sql_Ping(Sql* self)
 {
 	if( self && mysql_ping(&self->handle) == 0 )
 		return SQL_SUCCESS;
@@ -236,7 +235,7 @@ static TIMER_FUNC(Sql_P_KeepaliveTimer){
 ///
 /// @return the keepalive timer id, or INVALID_TIMER
 /// @private
-static int Sql_P_Keepalive(Sql* self)
+static int32 Sql_P_Keepalive(Sql* self)
 {
 	uint32 timeout, ping_interval;
 
@@ -280,9 +279,9 @@ size_t Sql_EscapeStringLen(Sql* self, char *out_to, const char *from, size_t fro
 
 
 /// Executes a query.
-int Sql_Query(Sql* self, const char* query, ...)
+int32 Sql_Query(Sql* self, const char* query, ...)
 {
-	int res;
+	int32 res;
 	va_list args;
 
 	va_start(args, query);
@@ -295,7 +294,7 @@ int Sql_Query(Sql* self, const char* query, ...)
 
 
 /// Executes a query.
-int Sql_QueryV(Sql* self, const char* query, va_list args)
+int32 Sql_QueryV(Sql* self, const char* query, va_list args)
 {
 	if( self == nullptr )
 		return SQL_ERROR;
@@ -322,7 +321,7 @@ int Sql_QueryV(Sql* self, const char* query, va_list args)
 
 
 /// Executes a query.
-int Sql_QueryStr(Sql* self, const char* query)
+int32 Sql_QueryStr(Sql* self, const char* query)
 {
 	if( self == nullptr )
 		return SQL_ERROR;
@@ -390,7 +389,7 @@ uint64 Sql_NumRowsAffected(Sql* self)
 
 
 /// Fetches the next row.
-int Sql_NextRow(Sql* self)
+int32 Sql_NextRow(Sql* self)
 {
 	if( self && self->result )
 	{
@@ -410,7 +409,7 @@ int Sql_NextRow(Sql* self)
 
 
 /// Gets the data of a column.
-int Sql_GetData(Sql* self, size_t col, char** out_buf, size_t* out_len)
+int32 Sql_GetData(Sql* self, size_t col, char** out_buf, size_t* out_len)
 {
 	if( self && self->row )
 	{
@@ -488,7 +487,7 @@ void Sql_Free(Sql* self)
 /// Returns the mysql integer type for the target size.
 ///
 /// @private
-static enum enum_field_types Sql_P_SizeToMysqlIntType(int sz)
+static enum enum_field_types Sql_P_SizeToMysqlIntType(int32 sz)
 {
 	switch( sz )
 	{
@@ -507,7 +506,7 @@ static enum enum_field_types Sql_P_SizeToMysqlIntType(int sz)
 /// Binds a parameter/result.
 ///
 /// @private
-static int Sql_P_BindSqlDataType(MYSQL_BIND* bind, enum SqlDataType buffer_type, void* buffer, size_t buffer_len, unsigned long* out_length, int8* out_is_null)
+static int32 Sql_P_BindSqlDataType(MYSQL_BIND* bind, enum SqlDataType buffer_type, void* buffer, size_t buffer_len, unsigned long* out_length, int8* out_is_null)
 {
 	memset(bind, 0, sizeof(MYSQL_BIND));
 	switch( buffer_type )
@@ -614,7 +613,7 @@ static int Sql_P_BindSqlDataType(MYSQL_BIND* bind, enum SqlDataType buffer_type,
 /// Prints debug information about a field (type and length).
 ///
 /// @private
-static void Sql_P_ShowDebugMysqlFieldInfo(const char* prefix, enum enum_field_types type, int is_unsigned, unsigned long length, const char* length_postfix)
+static void Sql_P_ShowDebugMysqlFieldInfo(const char* prefix, enum enum_field_types type, int32 is_unsigned, unsigned long length, const char* length_postfix)
 {
 	const char* sign = (is_unsigned ? "UNSIGNED " : "");
 	const char* type_string;
@@ -660,7 +659,7 @@ static void SqlStmt_P_ShowDebugTruncatedColumn(SqlStmt* self, size_t i)
 	MYSQL_BIND* column;
 
 	meta = mysql_stmt_result_metadata(self->stmt);
-	field = mysql_fetch_field_direct(meta, (unsigned int)i);
+	field = mysql_fetch_field_direct(meta, (uint32)i);
 	ShowSQL("DB error - data of field '%s' was truncated.\n", field->name);
 	ShowDebug("column - %lu\n", (unsigned long)i);
 	Sql_P_ShowDebugMysqlFieldInfo("data   - ", field->type, field->flags&UNSIGNED_FLAG, self->column_lengths[i].length, "");
@@ -706,9 +705,9 @@ SqlStmt* SqlStmt_Malloc(Sql* sql)
 
 
 /// Prepares the statement.
-int SqlStmt_Prepare(SqlStmt* self, const char* query, ...)
+int32 SqlStmt_Prepare(SqlStmt* self, const char* query, ...)
 {
-	int res;
+	int32 res;
 	va_list args;
 
 	va_start(args, query);
@@ -721,7 +720,7 @@ int SqlStmt_Prepare(SqlStmt* self, const char* query, ...)
 
 
 /// Prepares the statement.
-int SqlStmt_PrepareV(SqlStmt* self, const char* query, va_list args)
+int32 SqlStmt_PrepareV(SqlStmt* self, const char* query, va_list args)
 {
 	if( self == nullptr )
 		return SQL_ERROR;
@@ -743,7 +742,7 @@ int SqlStmt_PrepareV(SqlStmt* self, const char* query, va_list args)
 
 
 /// Prepares the statement.
-int SqlStmt_PrepareStr(SqlStmt* self, const char* query)
+int32 SqlStmt_PrepareStr(SqlStmt* self, const char* query)
 {
 	if( self == nullptr )
 		return SQL_ERROR;
@@ -776,7 +775,7 @@ size_t SqlStmt_NumParams(SqlStmt* self)
 
 
 /// Binds a parameter to a buffer.
-int SqlStmt_BindParam(SqlStmt* self, size_t idx, enum SqlDataType buffer_type, void* buffer, size_t buffer_len)
+int32 SqlStmt_BindParam(SqlStmt* self, size_t idx, enum SqlDataType buffer_type, void* buffer, size_t buffer_len)
 {
 	if( self == nullptr )
 		return SQL_ERROR;
@@ -806,7 +805,7 @@ int SqlStmt_BindParam(SqlStmt* self, size_t idx, enum SqlDataType buffer_type, v
 
 
 /// Executes the prepared statement.
-int SqlStmt_Execute(SqlStmt* self)
+int32 SqlStmt_Execute(SqlStmt* self)
 {
 	if( self == nullptr )
 		return SQL_ERROR;
@@ -855,7 +854,7 @@ size_t SqlStmt_NumColumns(SqlStmt* self)
 
 
 /// Binds the result of a column to a buffer.
-int SqlStmt_BindColumn(SqlStmt* self, size_t idx, enum SqlDataType buffer_type, void* buffer, size_t buffer_len, uint32* out_length, int8* out_is_null)
+int32 SqlStmt_BindColumn(SqlStmt* self, size_t idx, enum SqlDataType buffer_type, void* buffer, size_t buffer_len, uint32* out_length, int8* out_is_null)
 {
 	if( self == nullptr )
 		return SQL_ERROR;
@@ -912,9 +911,9 @@ uint64 SqlStmt_NumRows(SqlStmt* self)
 
 
 /// Fetches the next row.
-int SqlStmt_NextRow(SqlStmt* self)
+int32 SqlStmt_NextRow(SqlStmt* self)
 {
-	int err;
+	int32 err;
 	size_t i;
 	size_t cols;
 
@@ -948,7 +947,7 @@ int SqlStmt_NextRow(SqlStmt* self)
 		{
 			MYSQL_BIND* column = &self->columns[i];
 			column->error = &truncated;
-			mysql_stmt_fetch_column(self->stmt, column, (unsigned int)i, 0);
+			mysql_stmt_fetch_column(self->stmt, column, (uint32)i, 0);
 			column->error = nullptr;
 			if( truncated )
 			{// report truncated column
@@ -1046,11 +1045,11 @@ void SqlStmt_Free(SqlStmt* self)
 
 
 /// Receives MySQL error codes during runtime (not on first-time-connects).
-void ra_mysql_error_handler(unsigned int ecode) {
+void ra_mysql_error_handler(uint32 ecode) {
 	switch( ecode ) {
 		case 2003:// Can't connect to MySQL (this error only happens here when failing to reconnect)
 			if( mysql_reconnect_type == 1 ) {
-				static unsigned int retry = 1;
+				static uint32 retry = 1;
 				if( ++retry > mysql_reconnect_count ) {
 					ShowFatalError("MySQL has been unreachable for too long, %d reconnects were attempted. Shutting Down\n", retry);
 					exit(EXIT_FAILURE);
@@ -1075,7 +1074,7 @@ void Sql_inter_server_read(const char* cfgName, bool first) {
 	}
 
 	while(fgets(line, sizeof(line), fp)) {
-		int i = sscanf(line, "%1023[^:]: %1023[^\r\n]", w1, w2);
+		int32 i = sscanf(line, "%1023[^:]: %1023[^\r\n]", w1, w2);
 		if(i != 2)
 			continue;
 
@@ -1103,7 +1102,7 @@ void Sql_inter_server_read(const char* cfgName, bool first) {
 }
 
 void Sql_Init(void) {
-	Sql_inter_server_read(SQL_CONF_NAME,true);
+	Sql_inter_server_read(INTER_CONF_NAME,true);
 }
 
 #ifdef my_bool
