@@ -79860,6 +79860,10 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Script: |
+      specialeffect2 EF_POTION_BERSERK;
+      specialeffect2 EF_PROVIDENCE;
+      sc_start2 SC_CONTENTS_26,900000,30,10;
   - Id: 103429
     AegisName: 24_A_Ev_Rice
     Name: Academic Festival Rice Crackers    # !todo check english name
@@ -79873,6 +79877,9 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Script: |
+      specialeffect2 EF_SPELLBREAKER;
+      sc_start2 SC_CONTENTS_27,900000,15,10;
   - Id: 103430
     AegisName: 24_A_Ev_Butter
     Name: Academic Festival Butter Crackers    # !todo check english name
@@ -79886,6 +79893,9 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Script: |
+      specialeffect2 EF_HASTEUP;
+      sc_start2 SC_CONTENTS_28,900000,15,12;
   - Id: 103431
     AegisName: 24_A_Ev_Coffee
     Name: Academic Festival Coffee Sticks    # !todo check english name
@@ -79899,11 +79909,17 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Script: |
+      specialeffect2 EF_STEAL;
+      sc_start2 SC_CONTENTS_29,900000,15,-10;
   - Id: 103432
     AegisName: 24_A_Ev_Cookie
     Name: Academic Festival Commemorative Cookies    # !todo check english name
     Type: Usable
     Weight: 50
+    Delay:
+      Duration: 3000
+      Status: Reuse_Limit_H
     Trade:
       NoDrop: true
       NoTrade: true
@@ -79913,6 +79929,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
+      specialeffect2 EF_POTION4;
       percentheal 100,100;
   - Id: 103437
     AegisName: Rt_Ep18_Armor_A
