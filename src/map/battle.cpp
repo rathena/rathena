@@ -8953,33 +8953,32 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 #endif
 
 		if(!flag.imdef){
+			// Bonuses ignoring Mdef are added together
 			defType mdef = tstatus->mdef;
-			int32 mdef2= tstatus->mdef2;
+			int32 mdef2 = tstatus->mdef2;
+			i = 0;	// Bonus ratio that ignores Mdef
 
-			if (sc && sc->getSCE(SC_EXPIATIO)) {
-				i = 5 * sc->getSCE(SC_EXPIATIO)->val1; // 5% per level
+			if (sc != nullptr && sc->getSCE(SC_EXPIATIO))
+				i += 5 * sc->getSCE(SC_EXPIATIO)->val1;
 
-				i = min(i, 100); //cap it to 100 for 5 mdef min
-				mdef -= mdef * i / 100;
-				//mdef2 -= mdef2 * i / 100;
-			}
-
-			if(sd) {
-				i = sd->indexed_bonus.ignore_mdef_by_race[tstatus->race] + sd->indexed_bonus.ignore_mdef_by_race[RC_ALL];
-				i += sd->indexed_bonus.ignore_mdef_by_class[tstatus->class_] + sd->indexed_bonus.ignore_mdef_by_class[CLASS_ALL];
+			if (sd != nullptr) {
+				i += sd->indexed_bonus.ignore_mdef_by_race[tstatus->race] + sd->indexed_bonus.ignore_mdef_by_race[RC_ALL] +
+					sd->indexed_bonus.ignore_mdef_by_class[tstatus->class_] + sd->indexed_bonus.ignore_mdef_by_class[CLASS_ALL];
 
 				std::vector<e_race2> race2 = status_get_race2(target);
 
 				for (const auto &raceit : race2)
 					i += sd->indexed_bonus.ignore_mdef_by_race2[raceit];
-				if (i)
-				{
-					if (i > 100) i = 100;
-					mdef -= mdef * i/100;
-					//mdef2-= mdef2* i/100;
-				}
 			}
+
+			i = cap_value(i, 0, 100);
+
 #ifdef RENEWAL
+			// On renewal, Mdef is rounded after calculation
+			if (i > 0) {
+				mdef = (defType)( (float)(mdef - mdef * i / 100.) );
+			}
+
 			/**
 			 * RE MDEF Reduction
 			 * Damage = Magic Attack * (1000+eMDEF)/(1000+eMDEF) - sMDEF
@@ -8989,6 +8988,10 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 
 			ad.damage = ad.damage * (1000 + mdef) / (1000 + mdef * 10) - mdef2;
 #else
+			// On pre-renewal, Mdef reduction is rounded down before being subtracted from Mdef
+			if (i > 0)
+				mdef -= mdef * i / 100;
+
 			if(battle_config.magic_defense_type)
 				ad.damage = ad.damage - mdef*battle_config.magic_defense_type - mdef2;
 			else

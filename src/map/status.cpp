@@ -6000,7 +6000,7 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 			matk_max = matk_max * sd->matk_rate / 100;
 		}
 
-		// Apply Recognized Spell buff
+		// Apply Recognized Spell buff - custom support (renewal status change)
 		// Also update homunculus MATK, hom Min Matk is always the same as Max Matk
 		if ((bl.type == BL_HOM && battle_config.hom_setting&HOMSET_SAME_MATK) || (sc && sc->getSCE(SC_RECOGNIZEDSPELL))) {
 			matk_min = std::max( matk_min, matk_max );
