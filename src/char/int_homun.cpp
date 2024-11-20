@@ -85,7 +85,6 @@ void mapif_homunculus_renamed(int32 fd, uint32 account_id, uint32 char_id, unsig
 
 bool mapif_homunculus_save(struct s_homunculus* hd)
 {
-	bool flag = true;
 	char esc_name[NAME_LENGTH*2+1];
 
 	Sql_EscapeStringLen(sql_handle, esc_name, hd->name, strnlen(hd->name, NAME_LENGTH));
@@ -99,7 +98,7 @@ bool mapif_homunculus_save(struct s_homunculus* hd)
 			hd->hp, hd->max_hp, hd->sp, hd->max_sp, hd->skillpts, hd->rename_flag, hd->vaporize, hd->autofeed) )
 		{
 			Sql_ShowDebug(sql_handle);
-			flag = false;
+			return false;
 		}
 		else
 		{
@@ -113,61 +112,61 @@ bool mapif_homunculus_save(struct s_homunculus* hd)
 			hd->hp, hd->max_hp, hd->sp, hd->max_sp, hd->skillpts, hd->rename_flag, hd->vaporize, hd->autofeed, hd->hom_id) )
 		{
 			Sql_ShowDebug(sql_handle);
-			flag = false;
+			return false;
 		}
 		else
 		{
 			SqlStmt* stmt = SqlStmt_Malloc(sql_handle);
 
 			// Save skills
-			if( SQL_ERROR == SqlStmt_Prepare(stmt, "REPLACE INTO `%s` (`homun_id`, `id`, `lv`) VALUES (%d, ?, ?)", schema_config.skill_homunculus_db, hd->hom_id) )
+			if (SQL_ERROR == SqlStmt_Prepare(stmt, "REPLACE INTO `%s` (`homun_id`, `id`, `lv`) VALUES (%d, ?, ?)", schema_config.skill_homunculus_db, hd->hom_id)) {
 				SqlStmt_ShowDebug(stmt);
-			for( uint16 i = 0; i < MAX_HOMUNSKILL; ++i )
-			{
-				if( hd->hskill[i].id > 0 && hd->hskill[i].lv != 0 )
-				{
-					SqlStmt_BindParam(stmt, 0, SQLDT_USHORT, &hd->hskill[i].id, 0);
-					SqlStmt_BindParam(stmt, 1, SQLDT_USHORT, &hd->hskill[i].lv, 0);
-					if( SQL_ERROR == SqlStmt_Execute(stmt) )
-					{
-						SqlStmt_ShowDebug(stmt);
-						SqlStmt_Free(stmt);
-						flag = false;
-						break;
+				SqlStmt_Free(stmt);
+				return false;
+			} else {
+				for (uint16 i = 0; i < MAX_HOMUNSKILL; ++i) {
+					if (hd->hskill[i].id > 0 && hd->hskill[i].lv != 0) {
+						SqlStmt_BindParam(stmt, 0, SQLDT_USHORT, &hd->hskill[i].id, 0);
+						SqlStmt_BindParam(stmt, 1, SQLDT_USHORT, &hd->hskill[i].lv, 0);
+						if (SQL_ERROR == SqlStmt_Execute(stmt)) {
+							SqlStmt_ShowDebug(stmt);
+							SqlStmt_Free(stmt);
+							return false;
+						}
 					}
 				}
 			}
+
+			// Save skill cooldowns
+			if (SQL_ERROR == SqlStmt_Prepare(stmt, "REPLACE INTO `%s` (`homun_id`, `skill`, `tick`) VALUES (%d, ?, ?)", schema_config.skillcooldown_homunculus_db, hd->hom_id)) {
+				SqlStmt_ShowDebug(stmt);
+				SqlStmt_Free(stmt);
+				return false;
+			} else {
+				for (uint16 i = 0; i < MAX_SKILLCOOLDOWN; ++i) {
+					if (hd->scd[i].skill_id == 0) {
+						continue;
+					}
+
+					if (hd->scd[i].tick == 0) {
+						continue;
+					}
+
+					if (SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_USHORT, &hd->scd[i].skill_id, 0)
+						|| SQL_ERROR == SqlStmt_BindParam(stmt, 1, SQLDT_LONGLONG, &hd->scd[i].tick, 0)
+						|| SQL_ERROR == SqlStmt_Execute(stmt)) {
+						SqlStmt_ShowDebug(stmt);
+						SqlStmt_Free(stmt);
+						return false;
+					}
+				}
+			}
+
 			SqlStmt_Free(stmt);
 		}
 	}
 
-	// Save skill cooldowns
-	if (SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`homun_id`, `skill`, `tick`) VALUES (%d, ?, ?)", schema_config.skillcooldown_homunculus_db, hd->hom_id)) {
-		Sql_ShowDebug(sql_handle);
-		flag = false;
-	} else {
-		SqlStmt *stmt = SqlStmt_Malloc(sql_handle);
-
-		for (uint16 i = 0; i < MAX_SKILLCOOLDOWN; ++i) {
-			if (hd->scd[i].skill_id == 0) {
-				continue;
-			}
-
-			if (hd->scd[i].tick == 0) {
-				continue;
-			}
-			if (SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_USHORT, &hd->scd[i].skill_id, 0)
-				|| SQL_ERROR == SqlStmt_BindParam(stmt, 1, SQLDT_LONGLONG, &hd->scd[i].tick, 0)
-				|| SQL_ERROR == SqlStmt_Execute(stmt)) {
-				SqlStmt_ShowDebug(stmt);
-				flag = false;
-				break;
-			}
-		}
-		SqlStmt_Free(stmt);
-	}
-
-	return flag;
+	return true;
 }
 
 

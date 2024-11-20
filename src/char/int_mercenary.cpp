@@ -71,8 +71,6 @@ bool mercenary_owner_delete(uint32 char_id)
 
 bool mapif_mercenary_save(struct s_mercenary* merc)
 {
-	bool flag = true;
-
 	if( merc->mercenary_id == 0 )
 	{ // Create new DB entry
 		if( SQL_ERROR == Sql_Query(sql_handle,
@@ -80,7 +78,7 @@ bool mapif_mercenary_save(struct s_mercenary* merc)
 			schema_config.mercenary_db, merc->char_id, merc->class_, merc->hp, merc->sp, merc->kill_count, merc->life_time) )
 		{
 			Sql_ShowDebug(sql_handle);
-			flag = false;
+			return false;
 		}
 		else
 			merc->mercenary_id = (int)Sql_LastInsertId(sql_handle);
@@ -90,16 +88,17 @@ bool mapif_mercenary_save(struct s_mercenary* merc)
 		schema_config.mercenary_db, merc->char_id, merc->class_, merc->hp, merc->sp, merc->kill_count, merc->life_time, merc->mercenary_id) )
 	{ // Update DB entry
 		Sql_ShowDebug(sql_handle);
-		flag = false;
+		return false;
 	}
 
 	// Save skill cooldowns
-	if (SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`mer_id`, `skill`, `tick`) VALUES (%d, ?, ?)", schema_config.skillcooldown_mercenary_db, merc->mercenary_id)) {
-		Sql_ShowDebug(sql_handle);
-		flag = false;
-	} else {
-		SqlStmt *stmt = SqlStmt_Malloc(sql_handle);
+	SqlStmt *stmt = SqlStmt_Malloc(sql_handle);
 
+	if (SQL_ERROR == SqlStmt_Prepare(stmt, "REPLACE INTO `%s` (`mer_id`, `skill`, `tick`) VALUES (%d, ?, ?)", schema_config.skillcooldown_mercenary_db, merc->mercenary_id)) {
+		SqlStmt_ShowDebug(stmt);
+		SqlStmt_Free(stmt);
+		return false;
+	} else {
 		for (uint16 i = 0; i < MAX_SKILLCOOLDOWN; ++i) {
 			if (merc->scd[i].skill_id == 0) {
 				continue;
@@ -108,18 +107,20 @@ bool mapif_mercenary_save(struct s_mercenary* merc)
 			if (merc->scd[i].tick == 0) {
 				continue;
 			}
+
 			if (SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_USHORT, &merc->scd[i].skill_id, 0)
 				|| SQL_ERROR == SqlStmt_BindParam(stmt, 1, SQLDT_LONGLONG, &merc->scd[i].tick, 0)
 				|| SQL_ERROR == SqlStmt_Execute(stmt)) {
 				SqlStmt_ShowDebug(stmt);
-				flag = false;
-				break;
+				SqlStmt_Free(stmt);
+				return false;
 			}
 		}
-		SqlStmt_Free(stmt);
 	}
 
-	return flag;
+	SqlStmt_Free(stmt);
+
+	return true;
 }
 
 bool mapif_mercenary_load(int32 merc_id, uint32 char_id, struct s_mercenary *merc)
