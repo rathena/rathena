@@ -5892,24 +5892,23 @@ BUILDIN_FUNC(warpparty)
 			[[fallthrough]];
 		case WARPPARTY_RANDOMALLAREA:
 			if(!mapdata->getMapFlag(MF_NORETURN) && !mapdata->getMapFlag(MF_NOWARP) && pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pc_get_group_level(pl_sd))){
+				int nx = x;
+				int ny = y;
 				if (rx || ry) {
-					int32 x1 = x + rx, y1 = y + ry,
-						x0 = x - rx, y0 = y - ry,
-						nx, ny;
 					uint8 attempts = 10;
 
 					do {
-						nx = x0 + rnd_value(x0, x1);
-						ny = y0 + rnd_value(y0, y1);
+						nx = x + rnd_value(-rx, rx);
+						ny = y + rnd_value(-rx, rx);
 					} while ((--attempts) > 0 && !map_getcell(m, nx, ny, CELL_CHKPASS));
 
-					if (attempts != 0) { //Keep the original coordinates if fails to find a valid cell within the range
-						x = nx;
-						y = ny;
+					if (attempts == 0) { //Keep the original coordinates if fails to find a valid cell within the range
+						nx = x;
+						ny = y;
 					}
 				}
 
-				ret = pc_setpos(pl_sd, mapindex, x, y, CLR_TELEPORT);
+				ret = pc_setpos(pl_sd, mapindex, nx, ny, CLR_TELEPORT);
 			}
 			break;
 		}
