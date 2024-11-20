@@ -702,7 +702,7 @@
 
 // 2005-08-08aSakexe
 #if PACKETVER >= 20050808
-	parseable_packet(0x024d,12,clif_parse_Auction_register,2,6,10);
+	parseable_packet( HEADER_CZ_AUCTION_ADD, sizeof( PACKET_CZ_AUCTION_ADD ), clif_parse_Auction_register, 0 );
 	packet(0x024e,4);
 #endif
 
