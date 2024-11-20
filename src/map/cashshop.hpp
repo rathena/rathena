@@ -21,7 +21,7 @@ class map_session_data;
 void do_init_cashshop( void );
 void do_final_cashshop( void );
 void cashshop_reloaddb( void );
-bool cashshop_buylist( map_session_data* sd, uint32 kafrapoints, int n, const PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub* item_list );
+bool cashshop_buylist( map_session_data* sd, uint32 kafrapoints, int32 n, const PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub* item_list );
 
 // Taken from AEGIS (CASH_SHOP_TAB_CODE)
 enum e_cash_shop_tab : uint16{
@@ -94,8 +94,8 @@ struct sale_item_data{
 	uint32 amount;
 
 	// Timers
-	int timer_start;
-	int timer_end;
+	int32 timer_start;
+	int32 timer_end;
 };
 
 struct sale_item_db{

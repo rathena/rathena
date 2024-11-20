@@ -3150,8 +3150,8 @@ struct s_item_group_db
 struct s_roulette_db {
 	t_itemid *nameid[MAX_ROULETTE_LEVEL]; /// Item ID
 	unsigned short *qty[MAX_ROULETTE_LEVEL]; /// Amount of Item ID
-	int *flag[MAX_ROULETTE_LEVEL]; /// Whether the item is for loss or win
-	int items[MAX_ROULETTE_LEVEL]; /// Number of items in the list for each
+	int32 *flag[MAX_ROULETTE_LEVEL]; /// Whether the item is for loss or win
+	int32 items[MAX_ROULETTE_LEVEL]; /// Number of items in the list for each
 };
 extern struct s_roulette_db rd;
 
@@ -3165,7 +3165,7 @@ struct item_data
 	uint32 value_sell;
 	item_types type;
 	uint8 subtype;
-	int maxchance; //For logs, for external game info, for scripts: Max drop chance of this item (e.g. 0.01% , etc.. if it = 0, then monsters don't drop it, -1 denotes items sold in shops only) [Lupus]
+	int32 maxchance; //For logs, for external game info, for scripts: Max drop chance of this item (e.g. 0.01% , etc.. if it = 0, then monsters don't drop it, -1 denotes items sold in shops only) [Lupus]
 	uint8 sex;
 	uint32 equip;
 	uint32 weight;
@@ -3188,8 +3188,8 @@ struct item_data
 	uint64 class_base[3];	//Specifies if the base can wear this item (split in 3 indexes per type: 1-1, 2-1, 2-2)
 	uint16 class_upper; //Specifies if the class-type can equip it (See e_item_job)
 	struct {
-		int chance;
-		int id;
+		int32 chance;
+		int32 id;
 	} mob[MAX_SEARCH]; //Holds the mobs that have the highest drop rate for this item. [Skotlex]
 	struct script_code *script;	//Default script for everything.
 	struct script_code *equip_script;	//Script executed once when equipping.
@@ -3247,7 +3247,7 @@ struct item_data
 	}
 
 	bool isStackable();
-	int inventorySlotNeeded(int quantity);
+	int32 inventorySlotNeeded(int32 quantity);
 };
 
 class ItemDatabase : public TypesafeCachedYamlDatabase<t_itemid, item_data> {
@@ -3527,16 +3527,16 @@ const char *itemdb_typename_ammo (e_ammo_type ammo);
 #define itemdb_value_buy(n) itemdb_search(n)->value_buy
 #define itemdb_value_sell(n) itemdb_search(n)->value_sell
 //Item trade restrictions [Skotlex]
-bool itemdb_isdropable_sub(struct item_data *itd, int gmlv, int unused);
-bool itemdb_cantrade_sub(struct item_data *itd, int gmlv, int gmlv2);
-bool itemdb_canpartnertrade_sub(struct item_data *itd, int gmlv, int gmlv2);
-bool itemdb_cansell_sub(struct item_data *itd, int gmlv, int unused);
-bool itemdb_cancartstore_sub(struct item_data *itd, int gmlv, int unused);
-bool itemdb_canstore_sub(struct item_data *itd, int gmlv, int unused);
-bool itemdb_canguildstore_sub(struct item_data *itd, int gmlv, int unused);
-bool itemdb_canmail_sub(struct item_data *itd, int gmlv, int unused);
-bool itemdb_canauction_sub(struct item_data *itd, int gmlv, int unused);
-bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, bool (*func)(struct item_data*, int, int));
+bool itemdb_isdropable_sub(struct item_data *itd, int32 gmlv, int32 unused);
+bool itemdb_cantrade_sub(struct item_data *itd, int32 gmlv, int32 gmlv2);
+bool itemdb_canpartnertrade_sub(struct item_data *itd, int32 gmlv, int32 gmlv2);
+bool itemdb_cansell_sub(struct item_data *itd, int32 gmlv, int32 unused);
+bool itemdb_cancartstore_sub(struct item_data *itd, int32 gmlv, int32 unused);
+bool itemdb_canstore_sub(struct item_data *itd, int32 gmlv, int32 unused);
+bool itemdb_canguildstore_sub(struct item_data *itd, int32 gmlv, int32 unused);
+bool itemdb_canmail_sub(struct item_data *itd, int32 gmlv, int32 unused);
+bool itemdb_canauction_sub(struct item_data *itd, int32 gmlv, int32 unused);
+bool itemdb_isrestricted(struct item* item, int32 gmlv, int32 gmlv2, bool (*func)(struct item_data*, int, int));
 bool itemdb_ishatched_egg(struct item* item);
 #define itemdb_isdropable(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_isdropable_sub)
 #define itemdb_cantrade(item, gmlv, gmlv2) itemdb_isrestricted(item, gmlv, gmlv2, itemdb_cantrade_sub)

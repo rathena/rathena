@@ -3958,7 +3958,7 @@ Body:
     Weight: 30
     Script: |
       itemheal 45,0;
-      transform 1508,600000,SC_MTF_HITFLEE,10,20;
+      transform 1508,600000,SC_MTF_HITFLEE,20,30;
       specialeffect2 EF_CLOAKING;
       showscript "Trans-Form-!! Cube Fo-rm!!";
   - Id: 11596
@@ -9440,7 +9440,7 @@ Body:
       NoAuction: true
     Script: |
       specialeffect2 EF_STEAL;
-      sc_start SC_VITALIZE_POTION,120000,3;
+      sc_start SC_VITALIZE_POTION,120000,2;
   - Id: 12405
     AegisName: Underripe_Yggseed
     Name: Underripe Yggseed
@@ -36286,8 +36286,7 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      sc_start SC_Cup_Of_Boza,120000,0;
-      /*aegis data 2 Minutes*/
+      sc_start SC_CUP_OF_BOZA,120000,0;
   - Id: 14675
     AegisName: Shadow_Box2
     Name: Shadow Stat Box
@@ -57715,7 +57714,6 @@ Body:
     Script: |
       specialeffect2 EF_ENHANCE;
       sc_start SC_BEEF_RIB_STEW,180000,0;
-      /*aegis data 3 Minutes*/
   - Id: 22659
     AegisName: BraisedSpareribs
     Name: Pig Steamed Ribs
@@ -57725,7 +57723,6 @@ Body:
     Script: |
       specialeffect2 EF_ENHANCE;
       sc_start SC_PORK_RIB_STEW,180000,0;
-      /*aegis data 3 Minutes*/
   - Id: 22660
     AegisName: Sealed_Letter
     Name: Sealed Envelope
@@ -76767,7 +76764,7 @@ Body:
       BuyingStore: true
     Script: |
       specialeffect2 EF_POTION_BERSERK;
-      sc_start SC_M_DEFSCROLL,3600000,0;
+      sc_start2 SC_M_DEFSCROLL,3600000,500,200;
       sc_start4 SC_LIMIT_POWER_BOOSTER,3600000,30,1,5,0;
       sc_start SC_INFINITY_DRINK,3600000,0;
       sc_start SC_SPEEDUP0,600000,25;

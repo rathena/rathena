@@ -31,7 +31,7 @@ static DBMap *vending_db; ///DB holder the vender : charid -> map_session_data
 //Autotrader
 static DBMap *vending_autotrader_db; /// Holds autotrader info: char_id -> struct s_autotrader
 static void vending_autotrader_remove(struct s_autotrader *at, bool remove);
-static int vending_autotrader_free(DBKey key, DBData *data, va_list ap);
+static int32 vending_autotrader_free(DBKey key, DBData *data, va_list ap);
 
 /**
  * Lookup to get the vending_db outside module
@@ -46,7 +46,7 @@ DBMap * vending_getdb()
  * Create an unique vending shop id.
  * @return the next vending_id
  */
-static int vending_getuid(void)
+static int32 vending_getuid(void)
 {
 	return ++vending_nextid;
 }
@@ -77,7 +77,7 @@ void vending_closevending(map_session_data* sd)
  * @param sd : player requestion the list
  * @param id : vender account id (gid)
  */
-void vending_vendinglistreq(map_session_data* sd, int id)
+void vending_vendinglistreq(map_session_data* sd, int32 id)
 {
 	map_session_data* vsd;
 	nullpo_retv(sd);
@@ -88,7 +88,7 @@ void vending_vendinglistreq(map_session_data* sd, int id)
 		return; // not vending
 
 	if (!pc_can_give_items(sd) || !pc_can_give_items(vsd)) { //check if both GMs are allowed to trade
-		clif_displaymessage(sd->fd, msg_txt(sd,246));
+		clif_displaymessage( sd->fd, msg_txt( sd, 246 ) ); // Your GM level doesn't authorize you to perform this action.
 		return;
 	}
 
@@ -120,9 +120,9 @@ static double vending_calc_tax(map_session_data *sd, double zeny)
  *	data := {<index>.w <amount>.w }[count]
  * @param count : number of different items he's trying to buy
  */
-void vending_purchasereq(map_session_data* sd, int aid, int uid, const uint8* data, int count)
+void vending_purchasereq(map_session_data* sd, int32 aid, int32 uid, const uint8* data, int32 count)
 {
-	int i, j, cursor, w, new_ = 0, blank, vend_list[MAX_VENDING];
+	int32 i, j, cursor, w, new_ = 0, blank, vend_list[MAX_VENDING];
 	double z;
 	struct s_vending vending[MAX_VENDING]; // against duplicate packets
 	map_session_data* vsd = map_id2sd(aid);
@@ -243,7 +243,7 @@ void vending_purchasereq(map_session_data* sd, int aid, int uid, const uint8* da
 		z = vending_calc_tax(sd, z);
 		clif_vendingreport( *vsd, idx, amount, sd->status.char_id, (int)z );
 
-		//print buyer's name
+		//print32 buyer's name
 		if( battle_config.buyer_name ) {
 			char temp[256];
 			sprintf(temp, msg_txt(sd,265), sd->status.name);
@@ -295,9 +295,9 @@ void vending_purchasereq(map_session_data* sd, int aid, int uid, const uint8* da
  * @param at Autotrader info, or nullptr if requetsed not from autotrade persistance
  * @return 0 If success, 1 - Cannot open (die, not state.prevend, trading), 2 - No cart, 3 - Count issue, 4 - Cart data isn't saved yet, 5 - No valid item found
  */
-int8 vending_openvending( map_session_data& sd, const char* message, const uint8* data, int count, struct s_autotrader *at ){
-	int i, j;
-	int vending_skill_lvl;
+int8 vending_openvending( map_session_data& sd, const char* message, const uint8* data, int32 count, struct s_autotrader *at ){
+	int32 i, j;
+	int32 vending_skill_lvl;
 	char message_sql[MESSAGE_SIZE*2];
 	StringBuf buf;
 
@@ -426,7 +426,7 @@ int8 vending_openvending( map_session_data& sd, const char* message, const uint8
  */
 bool vending_search(map_session_data* sd, t_itemid nameid)
 {
-	int i;
+	int32 i;
 
 	if( !sd->state.vending ) { // not vending
 		return false;
@@ -448,7 +448,7 @@ bool vending_search(map_session_data* sd, t_itemid nameid)
  */
 bool vending_searchall(map_session_data* sd, const struct s_search_store_search* s)
 {
-	int i, c, slot;
+	int32 i, c, slot;
 	uint32 idx, cidx;
 	struct item* it;
 
@@ -501,7 +501,7 @@ bool vending_searchall(map_session_data* sd, const struct s_search_store_search*
 		ssitem->nameid = it->nameid;
 		ssitem->amount = sd->vending[i].amount;
 		ssitem->price = sd->vending[i].value;
-		for( int j = 0; j < MAX_SLOTS; j++ ){
+		for( int32 j = 0; j < MAX_SLOTS; j++ ){
 			ssitem->card[j] = it->card[j];
 		}
 		ssitem->refine = it->refine;
@@ -725,7 +725,7 @@ static void vending_autotrader_remove(struct s_autotrader *at, bool remove) {
 * Clear all autotraders
 * @author [Cydh]
 */
-static int vending_autotrader_free(DBKey key, DBData *data, va_list ap) {
+static int32 vending_autotrader_free(DBKey key, DBData *data, va_list ap) {
 	struct s_autotrader *at = (struct s_autotrader *)db_data2ptr(data);
 	if (at)
 		vending_autotrader_remove(at, false);

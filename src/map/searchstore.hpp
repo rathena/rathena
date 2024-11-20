@@ -68,7 +68,7 @@ struct s_search_store_search {
 };
 
 struct s_search_store_info_item {
-	int store_id;
+	int32 store_id;
 	uint32 account_id;
 	char store_name[MESSAGE_SIZE];
 	t_itemid nameid;
@@ -83,7 +83,7 @@ struct s_search_store_info {
 	std::vector<std::shared_ptr<s_search_store_info_item>> items;
 	uint32 pages;  // amount of pages already sent to client
 	uint16 uses;
-	int remote_id;
+	int32 remote_id;
 	time_t nextquerytime;
 	e_searchstore_effecttype effect;
 	e_searchstore_searchtype type;
@@ -97,7 +97,7 @@ bool searchstore_querynext(map_session_data& sd);
 void searchstore_next(map_session_data& sd);
 void searchstore_clear(map_session_data& sd);
 void searchstore_close(map_session_data& sd);
-void searchstore_click(map_session_data& sd, uint32 account_id, int store_id, t_itemid nameid);
+void searchstore_click(map_session_data& sd, uint32 account_id, int32 store_id, t_itemid nameid);
 bool searchstore_queryremote(map_session_data& sd, uint32 account_id);
 void searchstore_clearremote(map_session_data& sd);
 
