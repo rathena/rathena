@@ -5892,8 +5892,8 @@ BUILDIN_FUNC(warpparty)
 			[[fallthrough]];
 		case WARPPARTY_RANDOMALLAREA:
 			if(!mapdata->getMapFlag(MF_NORETURN) && !mapdata->getMapFlag(MF_NOWARP) && pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pc_get_group_level(pl_sd))){
-				int nx = x;
-				int ny = y;
+				int32 nx = x;
+				int32 ny = y;
 				if (rx || ry) {
 					uint8 attempts = 10;
 
