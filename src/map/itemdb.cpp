@@ -2888,27 +2888,38 @@ uint16 itemdb_searchname_array(std::map<t_itemid, std::shared_ptr<item_data>> &d
 	return static_cast<uint16>(data.size());
 }
 
-std::shared_ptr<s_item_group_entry> get_random_itemsubgroup(std::shared_ptr<s_item_group_random> random) {
+std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_itemsubgroup(std::shared_ptr<s_item_group_random> random, e_group_search_type search_type) {
 	if (random == nullptr)
 		return nullptr;
 
-	for (size_t j = 0, max = random->data.size() * 3; j < max; j++) {
+	if (search_type == GROUP_SEARCH_DROP) {
+		// We pick a random item from the group and then do a drop check based on the rate
 		std::shared_ptr<s_item_group_entry> entry = util::umap_random(random->data);
-
-		if (entry->rate == 0 || rnd_chance<uint32>(entry->rate, random->total_rate))	// always return entry for rate 0 ('must' item)
-			return entry;
+		if (rnd_chance_official<uint16>(entry->rate, 10000)) return entry;
+		// Return nullptr on fail
+		return nullptr;
 	}
+	else {
+		// This method will always return an item
+		for (size_t j = 0, max = random->data.size() * 3; j < max; j++) {
+			std::shared_ptr<s_item_group_entry> entry = util::umap_random(random->data);
 
-	return util::umap_random(random->data);
+			if (entry->rate == 0 || rnd_chance<uint32>(entry->rate, random->total_rate))	// always return entry for rate 0 ('must' item)
+				return entry;
+		}
+
+		return util::umap_random(random->data);
+	}
 }
 
 /**
 * Return a random group entry from Item Group
 * @param group_id
 * @param sub_group: 0 is 'must' item group, random groups start from 1
+* @param search_type: see e_group_search_type
 * @return Item group entry or nullptr on fail
 */
-std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_entry(uint16 group_id, uint8 sub_group) {
+std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_entry(uint16 group_id, uint8 sub_group, e_group_search_type search_type) {
 	std::shared_ptr<s_item_group_db> group = this->find(group_id);
 
 	if (group == nullptr) {
@@ -2924,18 +2935,7 @@ std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_entry(uint16 g
 		return nullptr;
 	}
 
-	return get_random_itemsubgroup(group->random[sub_group]);
-}
-
-/**
-* Return a random Item ID from Item Group
-* @param group_id
-* @param sub_group: 0 is 'must' item group, random groups start from 1
-* @return Item ID or UNKNOWN_ITEM_ID on fail
-*/
-t_itemid ItemGroupDatabase::get_random_item_id(uint16 group_id, uint8 sub_group) {
-	std::shared_ptr<s_item_group_entry> entry = this->get_random_entry(group_id, sub_group);
-	return entry != nullptr ? entry->nameid : UNKNOWN_ITEM_ID;
+	return this->get_random_itemsubgroup(group->random[sub_group], search_type);
 }
 
 /** [Cydh]
@@ -3034,7 +3034,7 @@ uint8 ItemGroupDatabase::pc_get_itemgroup( uint16 group_id, bool identify, map_s
 			continue;
 		}
 
-		this->pc_get_itemgroup_sub( sd, identify, get_random_itemsubgroup( random.second ) );
+		this->pc_get_itemgroup_sub( sd, identify, this->get_random_itemsubgroup( random.second ) );
 	}
 
 	return 0;
@@ -3398,6 +3398,12 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				if (subgroup != 0 && entry->rate == 0) {
 					this->invalidWarning(listit["Item"], "Entry must have a Rate for group above 0, skipping.\n");
 					continue;
+				}
+
+				// Rate adjustment
+				if (battle_config.item_group_rate != 100) {
+					entry->rate = (entry->rate * battle_config.item_group_rate) / 100;
+					entry->rate = cap_value(entry->rate, battle_config.item_group_drop_min, battle_config.item_group_drop_max);
 				}
 
 				if (this->nodeExists(listit, "Amount")) {
