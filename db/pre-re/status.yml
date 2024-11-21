@@ -2908,8 +2908,6 @@ Body:
       bonus2 bMagicAddRace2,RC2_SPLENDIDE, getstatus(SC_SPL_MATK, 1);
   - Status: Food_Str_Cash
     Icon: EFST_FOOD_STR_CASH
-    CalcFlags:
-      Str: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
@@ -2918,10 +2916,10 @@ Body:
       NoClearance: true
     EndOnStart:
       Strfood: true
+    Script: |
+      bonus bStr, getstatus(SC_FOOD_STR_CASH, 1);
   - Status: Food_Agi_Cash
     Icon: EFST_FOOD_AGI_CASH
-    CalcFlags:
-      Agi: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
@@ -2930,10 +2928,10 @@ Body:
       NoClearance: true
     EndOnStart:
       Agifood: true
+    Script: |
+      bonus bAgi, getstatus(SC_FOOD_AGI_CASH, 1);
   - Status: Food_Vit_Cash
     Icon: EFST_FOOD_VIT_CASH
-    CalcFlags:
-      Vit: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
@@ -2942,10 +2940,10 @@ Body:
       NoClearance: true
     EndOnStart:
       Vitfood: true
+    Script: |
+      bonus bVit, getstatus(SC_FOOD_VIT_CASH, 1);
   - Status: Food_Dex_Cash
     Icon: EFST_FOOD_DEX_CASH
-    CalcFlags:
-      Dex: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
@@ -2954,10 +2952,10 @@ Body:
       NoClearance: true
     EndOnStart:
       Intfood: true
+    Script: |
+      bonus bDex, getstatus(SC_FOOD_DEX_CASH, 1);
   - Status: Food_Int_Cash
     Icon: EFST_FOOD_INT_CASH
-    CalcFlags:
-      Int: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
@@ -2966,10 +2964,10 @@ Body:
       NoClearance: true
     EndOnStart:
       Dexfood: true
+    Script: |
+      bonus bInt, getstatus(SC_FOOD_INT_CASH, 1);
   - Status: Food_Luk_Cash
     Icon: EFST_FOOD_LUK_CASH
-    CalcFlags:
-      Luk: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
@@ -2978,6 +2976,8 @@ Body:
       NoClearance: true
     EndOnStart:
       Lukfood: true
+    Script: |
+      bonus bLuk, getstatus(SC_FOOD_LUK_CASH, 1);
   - Status: Fear
     DurationLookup: RK_WINDCUTTER
     States:
