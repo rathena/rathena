@@ -2895,21 +2895,30 @@ std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_itemsubgroup(s
 	if (search_type == GROUP_SEARCH_DROP) {
 		// We pick a random item from the group and then do a drop check based on the rate
 		std::shared_ptr<s_item_group_entry> entry = util::umap_random(random->data);
-		if (rnd_chance_official<uint16>(entry->rate, 10000)) return entry;
-		// Return nullptr on fail
-		return nullptr;
+		if (rnd_chance_official<uint16>(entry->rate, 10000))
+			return entry;
 	}
 	else {
-		// This method will always return an item
-		for (size_t j = 0, max = random->data.size() * 3; j < max; j++) {
-			std::shared_ptr<s_item_group_entry> entry = util::umap_random(random->data);
-
-			if (entry->rate == 0 || rnd_chance<uint32>(entry->rate, random->total_rate))	// always return entry for rate 0 ('must' item)
+		// Each item has x positions whereas x is the rate defined for the item in the umap
+		// We pick a random position and find the item that is at this position
+		uint32 pos = rnd_value<uint32>(1, random->total_rate);
+		uint32 current_pos = 1;
+		// Iterate through each item in the umap
+		for (const auto& [index, entry] : random->data) {
+			if (entry == nullptr)
+				return nullptr;
+			// If rate is 0 it means that this is SubGroup 0 which should just return any random item
+			if (entry->rate == 0)
+				return util::umap_random(random->data);
+			// We move "rate" positions
+			current_pos += entry->rate;
+			// If we passed the target position, entry is the item we are looking for
+			if (current_pos > pos)
 				return entry;
 		}
-
-		return util::umap_random(random->data);
 	}
+	// Return nullptr on fail
+	return nullptr;
 }
 
 /**
