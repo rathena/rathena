@@ -1993,58 +1993,58 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
   - Status: Incstr
-    CalcFlags:
-      Str: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
+    Script: |
+      bonus bStr, getstatus(SC_INCSTR, 1);
   - Status: Incagi
-    CalcFlags:
-      Agi: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      bonus bAgi, getstatus(SC_INCAGI, 1);
   - Status: Incvit
-    CalcFlags:
-      Vit: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      bonus bVit, getstatus(SC_INCVIT, 1);
   - Status: Incint
-    CalcFlags:
-      Int: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      bonus bInt, getstatus(SC_INCINT, 1);
   - Status: Incdex
-    CalcFlags:
-      Dex: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      bonus bDex, getstatus(SC_INCDEX, 1);
   - Status: Incluk
-    CalcFlags:
-      Luk: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      bonus bLuk, getstatus(SC_INCLUK, 1);
   - Status: Inchit
     CalcFlags:
       Hit: true
@@ -2705,6 +2705,18 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_COMMONSC_RESIST, 1);
+      bonus2 bResEff,Eff_Stun,.@val1;
+      bonus2 bResEff,Eff_Freeze,.@val1;
+      bonus2 bResEff,Eff_Stone,.@val1;
+      bonus2 bResEff,Eff_Curse,.@val1;
+      bonus2 bResEff,Eff_Poison,.@val1;
+      bonus2 bResEff,Eff_Silence,.@val1;
+      bonus2 bResEff,Eff_Blind,.@val1;
+      bonus2 bResEff,Eff_Sleep,.@val1;
+      bonus2 bResEff,Eff_Bleeding,.@val1;
+      bonus2 bResEff,Eff_Confusion,.@val1;
   - Status: Sevenwind
     DurationLookup: TK_SEVENWIND
     Flags:
@@ -2908,8 +2920,6 @@ Body:
       bonus2 bMagicAddRace2,RC2_SPLENDIDE, getstatus(SC_SPL_MATK, 1);
   - Status: Food_Str_Cash
     Icon: EFST_FOOD_STR_CASH
-    CalcFlags:
-      Str: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
@@ -2918,10 +2928,10 @@ Body:
       NoClearance: true
     EndOnStart:
       Strfood: true
+    Script: |
+      bonus bStr, getstatus(SC_FOOD_STR_CASH, 1);
   - Status: Food_Agi_Cash
     Icon: EFST_FOOD_AGI_CASH
-    CalcFlags:
-      Agi: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
@@ -2930,10 +2940,10 @@ Body:
       NoClearance: true
     EndOnStart:
       Agifood: true
+    Script: |
+      bonus bAgi, getstatus(SC_FOOD_AGI_CASH, 1);
   - Status: Food_Vit_Cash
     Icon: EFST_FOOD_VIT_CASH
-    CalcFlags:
-      Vit: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
@@ -2942,10 +2952,10 @@ Body:
       NoClearance: true
     EndOnStart:
       Vitfood: true
+    Script: |
+      bonus bVit, getstatus(SC_FOOD_VIT_CASH, 1);
   - Status: Food_Dex_Cash
     Icon: EFST_FOOD_DEX_CASH
-    CalcFlags:
-      Dex: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
@@ -2954,10 +2964,10 @@ Body:
       NoClearance: true
     EndOnStart:
       Intfood: true
+    Script: |
+      bonus bDex, getstatus(SC_FOOD_DEX_CASH, 1);
   - Status: Food_Int_Cash
     Icon: EFST_FOOD_INT_CASH
-    CalcFlags:
-      Int: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
@@ -2966,10 +2976,10 @@ Body:
       NoClearance: true
     EndOnStart:
       Dexfood: true
+    Script: |
+      bonus bInt, getstatus(SC_FOOD_INT_CASH, 1);
   - Status: Food_Luk_Cash
     Icon: EFST_FOOD_LUK_CASH
-    CalcFlags:
-      Luk: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
@@ -2978,6 +2988,8 @@ Body:
       NoClearance: true
     EndOnStart:
       Lukfood: true
+    Script: |
+      bonus bLuk, getstatus(SC_FOOD_LUK_CASH, 1);
   - Status: Fear
     DurationLookup: RK_WINDCUTTER
     States:
@@ -5798,8 +5810,6 @@ Body:
       NoClearance: true
   - Status: Atthaste_Cash
     Icon: EFST_ATTHASTE_CASH
-    CalcFlags:
-      Aspd: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
@@ -5808,6 +5818,8 @@ Body:
       NoClearance: true
       OverlapIgnoreLevel: true
       NoForcedEnd: true
+    Script: |
+      bonus bAspdRate, getstatus(SC_ATTHASTE_CASH, 1);
   - Status: Reuse_Limit_A
     Icon: EFST_REUSE_LIMIT_A
     Flags:
@@ -6265,26 +6277,32 @@ Body:
     DurationLookup: CG_TAROTCARD
   - Status: Geffen_Magic1
     Icon: EFST_GEFFEN_MAGIC1
-    CalcFlags:
-      All: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
       RemoveOnHermode: true
+    Script: |
+      .@val1 = getstatus(SC_GEFFEN_MAGIC1, 1);
+      bonus2 bAddRace,RC_Player_Human, .@val1;
+      bonus2 bAddRace,RC_DemiHuman, .@val1;
   - Status: Geffen_Magic2
     Icon: EFST_GEFFEN_MAGIC2
-    CalcFlags:
-      All: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
+    Script: |
+      .@val1 = getstatus(SC_GEFFEN_MAGIC2, 1);
+      bonus2 bMagicAddRace,RC_Player_Human, .@val1;
+      bonus2 bMagicAddRace,RC_DemiHuman, .@val1;
   - Status: Geffen_Magic3
     Icon: EFST_GEFFEN_MAGIC3
-    CalcFlags:
-      All: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
+    Script: |
+      .@val1 = getstatus(SC_GEFFEN_MAGIC3, 1);
+      bonus2 bSubRace,RC_Player_Human, .@val1;
+      bonus2 bSubRace,RC_DemiHuman, .@val1;
   - Status: Maxpain
     Icon: EFST_MAXPAIN
     DurationLookup: NPC_MAXPAIN
@@ -6330,24 +6348,24 @@ Body:
       NoBanishingBuster: true
   - Status: Doram_Buf_01
     Icon: EFST_DORAM_BUF_01
-    CalcFlags:
-      Regen: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
       NoBanishingBuster: true
       NoDispell: true
       NoClearance: true
+    Script: |
+      bonus2 bHPRegenRate,10,10000;
   - Status: Doram_Buf_02
     Icon: EFST_DORAM_BUF_02
-    CalcFlags:
-      Regen: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
       NoBanishingBuster: true
       NoDispell: true
       NoClearance: true
+    Script: |
+      bonus2 bSPRegenRate,5,10000;
   - Status: Hiss
     Icon: EFST_HISS
     DurationLookup: SU_HISS
