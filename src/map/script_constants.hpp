@@ -4293,7 +4293,6 @@
 	export_constant(IG_CARDALBUM);
 	export_constant(IG_GIFTBOX);
 	export_constant(IG_SCROLLBOX);
-	export_constant(IG_FINDINGORE);
 	export_constant(IG_COOKIEBAG);
 	export_constant(IG_FIRSTAID);
 	export_constant(IG_HERB);

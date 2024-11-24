@@ -352,7 +352,7 @@ struct Battle_Config
 	int32 attack_attr_none;
 	int32 item_rate_mvp, item_rate_common, item_rate_common_boss, item_rate_card, item_rate_card_boss,
 		item_rate_equip, item_rate_equip_boss, item_rate_heal, item_rate_heal_boss, item_rate_use,
-		item_rate_use_boss, item_rate_treasure, item_rate_adddrop;
+		item_rate_use_boss, item_rate_treasure, item_rate_adddrop, item_group_rate;
 	int32 item_rate_common_mvp, item_rate_heal_mvp, item_rate_use_mvp, item_rate_equip_mvp, item_rate_card_mvp;
 
 	int32 logarithmic_drops;
@@ -365,6 +365,7 @@ struct Battle_Config
 	int32 item_drop_use_min,item_drop_use_max;	//End
 	int32 item_drop_treasure_min,item_drop_treasure_max; //by [Skotlex]
 	int32 item_drop_adddrop_min,item_drop_adddrop_max; //[Skotlex]
+	int32 item_group_drop_min,item_group_drop_max;
 
 	int32 prevent_logout;	// Added by RoVeRT
 	int32 prevent_logout_trigger;
@@ -429,7 +430,6 @@ struct Battle_Config
 	int32 skill_steal_max_tries; //max steal skill tries on a mob. if 0, then w/o limit [Lupus]
 	int32 skill_steal_random_options;
 	int32 motd_type; // [celest]
-	int32 finding_ore_rate; // orn
 	int32 exp_calc_type;
 	int32 exp_bonus_attacker;
 	int32 exp_bonus_max_attacker;
