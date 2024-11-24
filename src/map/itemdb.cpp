@@ -2895,8 +2895,39 @@ std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_itemsubgroup(s
 	if (search_type == GROUP_SEARCH_DROP) {
 		// We pick a random item from the group and then do a drop check based on the rate
 		std::shared_ptr<s_item_group_entry> entry = util::umap_random(random->data);
-		if (rnd_chance_official<uint16>(entry->rate, 10000))
+		if (rnd_chance_official<uint16>(entry->adj_rate, 10000))
 			return entry;
+	}
+	else if (search_type == GROUP_SEARCH_PICK) {
+		// By default, each item has x positions whereas x is the rate defined for the item in the umap
+		// Each time an item is picked, it has one of its positions removed until no positions remain in the group
+		// We pick a random position from all remaining positions and find the item that is at this position
+		uint32 pos = rnd_value<uint32>(1, random->total_rate - random->total_given);
+		uint32 current_pos = 1;
+		// Iterate through each item in the umap
+		for (const auto& [index, entry] : random->data) {
+			if (entry == nullptr)
+				return nullptr;
+			// If rate is 0 it means that this is SubGroup 0 which should just return any random item
+			if (entry->rate == 0)
+				return util::umap_random(random->data);
+			// We move as many positions as this item has left
+			current_pos += (entry->rate - entry->given);
+			// If we passed the target position, entry is the item we are looking for
+			if (current_pos > pos) {
+				// Increase amount item has been given out
+				entry->given++;
+				random->total_given++;
+				// All items have been given out, reset all entries in the group
+				if (random->total_given >= random->total_rate) {
+					random->total_given = 0;
+					for (const auto& [reset_index, reset_entry] : random->data) {
+						reset_entry->given = 0;
+					}
+				}
+				return entry;
+			}
+		}
 	}
 	else {
 		// Each item has x positions whereas x is the rate defined for the item in the umap
@@ -3042,8 +3073,10 @@ uint8 ItemGroupDatabase::pc_get_itemgroup( uint16 group_id, bool identify, map_s
 		if( random.first == 0 ){
 			continue;
 		}
-
-		this->pc_get_itemgroup_sub( sd, identify, this->get_random_itemsubgroup( random.second ) );
+		// Only subgroup 6 uses a "natural random" distribution, 1-5 pick and remove an item from the group
+		std::shared_ptr<s_item_group_entry> entry = nullptr;
+		entry = this->get_random_itemsubgroup(random.second, (random.first == 6) ? GROUP_SEARCH_BOX : GROUP_SEARCH_PICK);
+		this->pc_get_itemgroup_sub(sd, identify, entry);
 	}
 
 	return 0;
@@ -3409,11 +3442,12 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 					continue;
 				}
 
-				// Rate adjustment
-				if (battle_config.item_group_rate != 100) {
-					entry->rate = (entry->rate * battle_config.item_group_rate) / 100;
-					entry->rate = cap_value(entry->rate, battle_config.item_group_drop_min, battle_config.item_group_drop_max);
-				}
+				// Adjusted rate
+				entry->adj_rate = (entry->rate * battle_config.item_group_rate) / 100;
+				entry->adj_rate = cap_value(entry->adj_rate, battle_config.item_group_drop_min, battle_config.item_group_drop_max);
+
+				// Reset amount given
+				entry->given = 0;
 
 				if (this->nodeExists(listit, "Amount")) {
 					uint16 amount;
@@ -3592,6 +3626,7 @@ void ItemGroupDatabase::loadingFinished() {
 	for (const auto &group : *this) {
 		for (const auto &random : group.second->random) {
 			random.second->total_rate = 0;
+			random.second->total_given = 0;
 			for (const auto &it : random.second->data) {
 				random.second->total_rate += it.second->rate;
 			}

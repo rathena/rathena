@@ -3011,7 +3011,8 @@ enum e_delay_consume : uint8 {
 /// Enum for different ways to search an item group
 enum e_group_search_type : uint8 {
 	GROUP_SEARCH_BOX = 0, // Always return an item from the group, rate determines which item is more likely to be returned
-	GROUP_SEARCH_DROP = 1, // Pick one item from the group and check use rate as drop rate, on fail, do not return any item
+	GROUP_SEARCH_PICK = 1, // Rate is the amount of items in the group, return a random item and remove it from the group
+	GROUP_SEARCH_DROP = 2, // Pick one item from the group and check use rate as drop rate, on fail, do not return any item
 };
 
 /// Item combo struct
@@ -3123,6 +3124,8 @@ struct s_item_group_entry
 {
 	t_itemid nameid; /// Item ID
 	uint16 rate;
+	uint16 adj_rate; /// Rate adjusted by the battle_config.item_group_rate
+	uint16 given; /// Amount of times this item has already been given out
 	uint16 duration, /// Duration if item as rental item (in minutes)
 		amount; /// Amount of item will be obtained
 	bool isAnnounced, /// Broadcast if player get this item
@@ -3139,6 +3142,7 @@ struct s_item_group_entry
 struct s_item_group_random
 {
 	uint32 total_rate;
+	uint32 total_given; /// Amount of times an item from this group has been given out
 	std::unordered_map<uint32, std::shared_ptr<s_item_group_entry>> data; /// index, s_item_group_entry
 };
 

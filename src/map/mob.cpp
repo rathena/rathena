@@ -2964,7 +2964,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 						std::shared_ptr<s_item_group_entry> entry = itemdb_group.get_random_entry(it.group, 1, GROUP_SEARCH_DROP);
 						if (entry == nullptr) continue;
 						mobdrop.nameid = entry->nameid;
-						mobdrop.rate = entry->rate * drop_rate / 10000;
+						mobdrop.rate = entry->adj_rate * drop_rate / 10000;
 					}
 
 					std::shared_ptr<s_item_drop> ditem = mob_setdropitem(mobdrop, 1, md->mob_id);
@@ -3022,7 +3022,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 			if (entry != nullptr) {
 				s_mob_drop mobdrop = {};
 				mobdrop.nameid = entry->nameid;
-				mobdrop.rate = entry->rate;
+				mobdrop.rate = entry->adj_rate;
 
 				std::shared_ptr<s_item_drop> ditem = mob_setdropitem(mobdrop, 1, md->mob_id);
 
