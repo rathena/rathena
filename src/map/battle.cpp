@@ -1436,7 +1436,6 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 		if (skill_id == MG_NAPALMBEAT ||
 			skill_id == MG_SOULSTRIKE ||
 			skill_id == WL_SOULEXPANSION ||
-			skill_id == AG_SOUL_VC_STRIKE ||
 			(skill_id && skill_get_ele(skill_id, skill_lv) == ELE_GHOST) ||
 			(skill_id == 0 && (status_get_status_data(*src))->rhw.ele == ELE_GHOST))
 		{
@@ -8009,7 +8008,12 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += 45;
 						break;
 					case WZ_FROSTNOVA:
+#ifndef RENEWAL
 						skillratio += -100 + (100 + skill_lv * 10) * 2 / 3;
+#else
+						// In renewal the damage formula is identical to MG_FROSTDIVER
+						skillratio += 10 * skill_lv;
+#endif
 						break;
 					case WZ_FIREPILLAR:
 						if (sd && ad.div_ > 0)
