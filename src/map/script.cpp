@@ -5899,7 +5899,7 @@ BUILDIN_FUNC(warpparty)
 
 					do {
 						nx = x + rnd_value(-rx, rx);
-						ny = y + rnd_value(-rx, rx);
+						ny = y + rnd_value(-ry, ry);
 					} while ((--attempts) > 0 && !map_getcell(m, nx, ny, CELL_CHKPASS));
 
 					if (attempts == 0) { //Keep the original coordinates if fails to find a valid cell within the range
