@@ -2027,7 +2027,7 @@ Body:
             UniqueId: true
   - Group: BLUEBOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Red_Potion
@@ -15352,7 +15352,7 @@ Body:
             Rate: 1
   - Group: GIFTBOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Red_Potion
@@ -16362,7 +16362,7 @@ Body:
             Rate: 2
   - Group: GIFTBOX_1
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Red_Potion
@@ -16576,7 +16576,7 @@ Body:
             Rate: 1
   - Group: GIFTBOX_2
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Red_Potion
@@ -16790,7 +16790,7 @@ Body:
             Rate: 1
   - Group: GIFTBOX_3
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Red_Potion
@@ -17004,7 +17004,7 @@ Body:
             Rate: 1
   - Group: GIFTBOX_4
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Red_Potion
@@ -29091,6 +29091,310 @@ Body:
           - Index: 49
             Item: Tantanmen
             Rate: 1
+      - SubGroup: 2
+        List:
+          - Index: 0
+            Item: Unripe_Apple
+            Rate: 1
+          - Index: 1
+            Item: Orange_Juice
+            Rate: 1
+          - Index: 2
+            Item: Bitter_Herb
+            Rate: 1
+          - Index: 3
+            Item: Rainbow_Carrot
+            Rate: 1
+          - Index: 4
+            Item: Earthworm_The_Dude
+            Rate: 1
+          - Index: 5
+            Item: Rotten_Fish
+            Rate: 1
+          - Index: 6
+            Item: Lusty_Iron
+            Rate: 1
+          - Index: 7
+            Item: Monster_Juice
+            Rate: 1
+          - Index: 8
+            Item: Sweet_Milk
+            Rate: 1
+          - Index: 9
+            Item: Well_Dried_Bone
+            Rate: 1
+          - Index: 10
+            Item: Singing_Flower
+            Rate: 1
+          - Index: 11
+            Item: Dew_Laden_Moss
+            Rate: 1
+          - Index: 12
+            Item: Deadly_Noxious_Herb
+            Rate: 1
+          - Index: 13
+            Item: Fatty_Chubby_Earthworm
+            Rate: 1
+          - Index: 14
+            Item: Baked_Yam
+            Rate: 1
+          - Index: 15
+            Item: Tropical_Banana
+            Rate: 1
+          - Index: 16
+            Item: Horror_Of_Tribe
+            Rate: 1
+          - Index: 17
+            Item: No_Recipient
+            Rate: 1
+          - Index: 18
+            Item: Old_Broom
+            Rate: 1
+          - Index: 19
+            Item: Silver_Knife_Of_Chaste
+            Rate: 1
+          - Index: 20
+            Item: Armlet_Of_Obedience
+            Rate: 1
+          - Index: 21
+            Item: Shining_Stone
+            Rate: 1
+          - Index: 22
+            Item: Contracts_In_Shadow
+            Rate: 1
+          - Index: 23
+            Item: Book_Of_Devil
+            Rate: 1
+          - Index: 24
+            Item: Heart_Of_Her
+            Rate: 1
+          - Index: 25
+            Item: Prohibition_Red_Candle
+            Rate: 1
+          - Index: 26
+            Item: Sway_Apron
+            Rate: 1
+          - Index: 27
+            Item: Skull_Helm
+            Rate: 1
+          - Index: 28
+            Item: Monster_Oxygen_Mask
+            Rate: 1
+          - Index: 29
+            Item: Transparent_Headgear
+            Rate: 1
+          - Index: 30
+            Item: Pacifier
+            Rate: 1
+          - Index: 31
+            Item: Wig
+            Rate: 1
+          - Index: 32
+            Item: Queen's_Hair_Ornament
+            Rate: 1
+          - Index: 33
+            Item: Silk_Ribbon
+            Rate: 1
+          - Index: 34
+            Item: Punisher
+            Rate: 1
+          - Index: 35
+            Item: Wild_Flower
+            Rate: 1
+          - Index: 36
+            Item: Battered_Pot
+            Rate: 1
+          - Index: 37
+            Item: Stellar_Hairpin
+            Rate: 1
+          - Index: 38
+            Item: Tiny_Egg_Shell
+            Rate: 1
+          - Index: 39
+            Item: Backpack
+            Rate: 1
+          - Index: 40
+            Item: Rocker_Glasses
+            Rate: 1
+          - Index: 41
+            Item: Green_Lace
+            Rate: 1
+          - Index: 42
+            Item: Golden_Bell
+            Rate: 1
+          - Index: 43
+            Item: Bark_Shorts
+            Rate: 1
+          - Index: 44
+            Item: Monkey_Circlet
+            Rate: 1
+          - Index: 45
+            Item: Red_Muffler
+            Rate: 1
+          - Index: 46
+            Item: Sword_Of_Grave_Keeper
+            Rate: 1
+          - Index: 47
+            Item: Boy's_Naivety
+            Rate: 1
+          - Index: 48
+            Item: Flaming_Ice
+            Rate: 1
+          - Index: 49
+            Item: Tantanmen
+            Rate: 1
+      - SubGroup: 6
+        List:
+          - Index: 0
+            Item: Unripe_Apple
+            Rate: 1
+          - Index: 1
+            Item: Orange_Juice
+            Rate: 1
+          - Index: 2
+            Item: Bitter_Herb
+            Rate: 1
+          - Index: 3
+            Item: Rainbow_Carrot
+            Rate: 1
+          - Index: 4
+            Item: Earthworm_The_Dude
+            Rate: 1
+          - Index: 5
+            Item: Rotten_Fish
+            Rate: 1
+          - Index: 6
+            Item: Lusty_Iron
+            Rate: 1
+          - Index: 7
+            Item: Monster_Juice
+            Rate: 1
+          - Index: 8
+            Item: Sweet_Milk
+            Rate: 1
+          - Index: 9
+            Item: Well_Dried_Bone
+            Rate: 1
+          - Index: 10
+            Item: Singing_Flower
+            Rate: 1
+          - Index: 11
+            Item: Dew_Laden_Moss
+            Rate: 1
+          - Index: 12
+            Item: Deadly_Noxious_Herb
+            Rate: 1
+          - Index: 13
+            Item: Fatty_Chubby_Earthworm
+            Rate: 1
+          - Index: 14
+            Item: Baked_Yam
+            Rate: 1
+          - Index: 15
+            Item: Tropical_Banana
+            Rate: 1
+          - Index: 16
+            Item: Horror_Of_Tribe
+            Rate: 1
+          - Index: 17
+            Item: No_Recipient
+            Rate: 1
+          - Index: 18
+            Item: Old_Broom
+            Rate: 1
+          - Index: 19
+            Item: Silver_Knife_Of_Chaste
+            Rate: 1
+          - Index: 20
+            Item: Armlet_Of_Obedience
+            Rate: 1
+          - Index: 21
+            Item: Shining_Stone
+            Rate: 1
+          - Index: 22
+            Item: Contracts_In_Shadow
+            Rate: 1
+          - Index: 23
+            Item: Book_Of_Devil
+            Rate: 1
+          - Index: 24
+            Item: Heart_Of_Her
+            Rate: 1
+          - Index: 25
+            Item: Prohibition_Red_Candle
+            Rate: 1
+          - Index: 26
+            Item: Sway_Apron
+            Rate: 1
+          - Index: 27
+            Item: Skull_Helm
+            Rate: 1
+          - Index: 28
+            Item: Monster_Oxygen_Mask
+            Rate: 1
+          - Index: 29
+            Item: Transparent_Headgear
+            Rate: 1
+          - Index: 30
+            Item: Pacifier
+            Rate: 1
+          - Index: 31
+            Item: Wig
+            Rate: 1
+          - Index: 32
+            Item: Queen's_Hair_Ornament
+            Rate: 1
+          - Index: 33
+            Item: Silk_Ribbon
+            Rate: 1
+          - Index: 34
+            Item: Punisher
+            Rate: 1
+          - Index: 35
+            Item: Wild_Flower
+            Rate: 1
+          - Index: 36
+            Item: Battered_Pot
+            Rate: 1
+          - Index: 37
+            Item: Stellar_Hairpin
+            Rate: 1
+          - Index: 38
+            Item: Tiny_Egg_Shell
+            Rate: 1
+          - Index: 39
+            Item: Backpack
+            Rate: 1
+          - Index: 40
+            Item: Rocker_Glasses
+            Rate: 1
+          - Index: 41
+            Item: Green_Lace
+            Rate: 1
+          - Index: 42
+            Item: Golden_Bell
+            Rate: 1
+          - Index: 43
+            Item: Bark_Shorts
+            Rate: 1
+          - Index: 44
+            Item: Monkey_Circlet
+            Rate: 1
+          - Index: 45
+            Item: Red_Muffler
+            Rate: 1
+          - Index: 46
+            Item: Sword_Of_Grave_Keeper
+            Rate: 1
+          - Index: 47
+            Item: Boy's_Naivety
+            Rate: 1
+          - Index: 48
+            Item: Flaming_Ice
+            Rate: 1
+          - Index: 49
+            Item: Tantanmen
+            Rate: 1
   - Group: TAURUS_CROWN_SCROLL
     SubGroups:
       - SubGroup: 1
@@ -31202,7 +31506,7 @@ Body:
             UniqueId: true
   - Group: VIOLETBOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Red_Potion
@@ -59267,7 +59571,7 @@ Body:
             Rate: 1
   - Group: MYSTERIOUS_MEDAL_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Mysterious_Medal
@@ -112913,7 +113217,7 @@ Body:
             Item: Comp_AID_Buff_Box
   - Group: ENCHANT_STONE_BOX35
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Range_Stone_Robe_D
