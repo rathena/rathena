@@ -8,6 +8,10 @@
 //= rAthena Project
 //===== Description: ========================================= 
 //= Rachel Airport NPCs
+//===== Translator By: =======================================
+//= Athena Studio
+//= FB: https://www.facebook.com/AthenaStudioINC/
+//= DISCORD: katherine.2534
 //===== Additional Comments: ================================= 
 //= 1.0 First version.
 //============================================================ 
@@ -15,10 +19,10 @@
 ra_fild12,295,208,0	script	toairplane#rachel	45,1,1,{
 	end;
 OnTouch:
-	mes "To use the airship, you are required to pay 1,200 zeny or a Free Airship Ticket.";
-	mes "Would you like to use the service?";
+	mes "หากต้องการใช้เรือเหาะ, คุณจะต้องจ่ายค่าธรรมเนียมจำนวน 1,200 เซนี หรือ คุณจะต้องมี Free Airship Ticket เพื่อโดยสารฟรี.";
+	mes "ต้องการที่จะใช้บริการเลยไหม ?";
 	next;
-	if (select("Yes:No") == 1) {
+	if (select("ใช่:ไม่") == 1) {
 		if (countitem(7311) > 0) {
 			delitem 7311,1; //Free_Flying_Ship_Ticket
 			warp "airplane_01",245,60;
@@ -29,10 +33,10 @@ OnTouch:
 			warp "airplane_01",245,60;
 			end;
 		}
-		mes "I am sorry, but you do not have enough money.";
-		mes "Please remember, you are required to pay 1,200 zeny to use the service.";
+		mes "ขอโทษด้วยนะ, แต่ดูเหมือนว่าคุณมีจำนวนเงินไม่เพียงพอต่อค่าบริการ.";
+		mes "โปรดจำไว้ว่า, คุณจะต้องจ่ายค่าธรรมเนียมจำนวน 1,200 เซนี เพื่อใช้บริการ.";
 		close;
 	}
-	mes "Thank you, please come again.";
+	mes "ไว้เจอกันใหม่.";
 	close;
 }
