@@ -145,7 +145,7 @@ bool YamlUpgradeTool::initialize( int32 argc, char* argv[] ){
 		} ) ){
 		return false;
 	}
-	if( !process( "ITEM_GROUP_DB", 3, root_paths, "item_group_db", []( const std::string& path, const std::string& name_ext, uint32 source_version ) -> bool {
+	if( !process( "ITEM_GROUP_DB", 4, root_paths, "item_group_db", []( const std::string& path, const std::string& name_ext, uint32 source_version ) -> bool {
 		return upgrade_item_group_db( path + name_ext, source_version );
 		} ) ){
 		return false;
@@ -450,6 +450,86 @@ static bool upgrade_item_group_db( std::string file, const uint32 source_version
 					if( it["SubGroup"].IsDefined() ){
 						body << YAML::Key << "SubGroup" << YAML::Value << it["SubGroup"];
 					}
+
+					if( it["List"].IsDefined() )
+						body << YAML::Key << "List";{
+						body << YAML::BeginSeq;
+
+						uint32 index = 0;
+
+						for( auto ListNode : it["List"] ){
+							if( !ListNode["Item"].IsDefined() ){
+								ShowError( "Cannot upgrade automatically, Item is missing" );
+								return false;
+							}
+							body << YAML::BeginMap;
+
+							body << YAML::Key << "Index" << YAML::Value << index;
+							body << YAML::Key << "Item" << YAML::Value << ListNode["Item"];
+
+							if( ListNode["Rate"].IsDefined() )
+								body << YAML::Key << "Rate" << YAML::Value << ListNode["Rate"];
+							if( ListNode["Amount"].IsDefined() )
+								body << YAML::Key << "Amount" << YAML::Value << ListNode["Amount"];
+							if( ListNode["Duration"].IsDefined() )
+								body << YAML::Key << "Duration" << YAML::Value << ListNode["Duration"];
+							if( ListNode["Announced"].IsDefined() )
+								body << YAML::Key << "Announced" << YAML::Value << ListNode["Announced"];
+							if( ListNode["UniqueId"].IsDefined() )
+								body << YAML::Key << "UniqueId" << YAML::Value << ListNode["UniqueId"];
+							if( ListNode["Stacked"].IsDefined() )
+								body << YAML::Key << "Stacked" << YAML::Value << ListNode["Stacked"];
+							if( ListNode["Named"].IsDefined() )
+								body << YAML::Key << "Named" << YAML::Value << ListNode["Named"];
+							if( ListNode["Bound"].IsDefined() )
+								body << YAML::Key << "Bound" << YAML::Value << ListNode["Bound"];
+							if( ListNode["RandomOptionGroup"].IsDefined() )
+								body << YAML::Key << "RandomOptionGroup" << YAML::Value << ListNode["RandomOptionGroup"];
+							if( ListNode["RefineMinimum"].IsDefined() )
+								body << YAML::Key << "RefineMinimum" << YAML::Value << ListNode["RefineMinimum"];
+							if( ListNode["RefineMaximum"].IsDefined() )
+								body << YAML::Key << "RefineMaximum" << YAML::Value << ListNode["RefineMaximum"];
+							if( ListNode["Clear"].IsDefined() )
+								body << YAML::Key << "Clear" << YAML::Value << ListNode["Clear"];
+
+							index++;
+							body << YAML::EndMap;
+						}
+
+						body << YAML::EndSeq;
+					}
+					if( it["Clear"].IsDefined() )
+						body << YAML::Key << "Clear" << YAML::Value << it["Clear"];
+
+					body << YAML::EndMap;
+				}
+				body << YAML::EndSeq;
+			}
+			body << YAML::EndMap;
+		}
+
+		if( source_version == 3 ){
+			body << YAML::BeginMap;
+			body << YAML::Key << "Group" << YAML::Value << input["Group"];
+
+			if( input["SubGroups"].IsDefined() ){
+				body << YAML::Key << "SubGroups";
+				body << YAML::BeginSeq;
+
+				for (const auto &it : input["SubGroups"]) {
+					body << YAML::BeginMap;
+					if( !it["SubGroup"].IsDefined() ){
+						ShowError( "Cannot upgrade automatically, SubGroup is missing." );
+						return false;
+					}
+					body << YAML::Key << "SubGroup" << YAML::Value << it["SubGroup"];
+
+					if (it["SubGroup"].as<uint16>() == 0)
+						body << YAML::Key << "Algorithm" << YAML::Value << "Must";
+					else if (it["SubGroup"].as<uint16>() == 6)
+						body << YAML::Key << "Algorithm" << YAML::Value << "NaturalRandom";
+					// else
+						// body << YAML::Key << "Algorithm" << YAML::Value << "Random";
 
 					if( it["List"].IsDefined() )
 						body << YAML::Key << "List";{

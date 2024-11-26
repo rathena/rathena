@@ -75,19 +75,29 @@ Amount: Amount of item that will be obtained.
 
 ---------------------------------------
 
-SubGroup: Setting this to '0' makes the item always obtainable ("must" item).
-		  SubGroup value will allocate where the item will be stored at random group.
+SubGroup: Unique number to create a list of item.
 
+---------------------------------------
+
+Algorithm: Type of algorithm associated with SubGroup.
+
+Random             - Random item.
+Must               - Makes the item(s) always obtainable ("must" item).
+NaturalRandom      - Random item. (same result as "Random" for now)
+
+Example:
 	Item Group:
       - Group: MyItemGroup
         SubGroups:
           - SubGroup: 0
+            Algorithm: Must
             List:
               - Index: 0
                 Item: Knife       # "must" item(s)
               - Index: 1
                 Item: Dagger      # "must" item(s)
           - SubGroup: 1
+            Algorithm: Random
             List:
               - Index: 0
                 Item: Stiletto    # random at SubGroup 1
@@ -96,6 +106,7 @@ SubGroup: Setting this to '0' makes the item always obtainable ("must" item).
                 Item: Stiletto_   # random at SubGroup 1
                 Rate: 2
           - SubGroup: 2
+            Algorithm: Random
             List:
               - Index: 0
                 Item: Stiletto    # random at SubGroup 2

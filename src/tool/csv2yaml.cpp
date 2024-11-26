@@ -440,14 +440,14 @@ bool Csv2YamlTool::initialize( int32 argc, char* argv[] ){
 	}
 
 	item_group_txt_data(path_db_mode, path_db);
-	if (!process("ITEM_GROUP_DB", 2, { path_db_mode }, "item_group_db", [](const std::string &path, const std::string &name_ext) -> bool {
+	if (!process("ITEM_GROUP_DB", 4, { path_db_mode }, "item_group_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return itemdb_read_group_yaml();
 	})) {
 		return false;
 	}
 
 	item_group_txt_data(path_db_import, path_db_import);
-	if (!process("ITEM_GROUP_DB", 2, { path_db_import }, "item_group_db", [](const std::string &path, const std::string &name_ext) -> bool {
+	if (!process("ITEM_GROUP_DB", 4, { path_db_import }, "item_group_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return itemdb_read_group_yaml();
 	})) {
 		return false;
@@ -4084,6 +4084,10 @@ static bool itemdb_read_group_yaml(void) {
 		for (const auto &item : it.second.item) {	// subgroup
 			body << YAML::BeginMap;
 			body << YAML::Key << "SubGroup" << YAML::Value << item.first;
+			if (item.first == 0)
+				body << YAML::Key << "Algorithm" << YAML::Value << "Must";
+			else if (item.first == 6)
+				body << YAML::Key << "Algorithm" << YAML::Value << "NaturalRandom";
 			body << YAML::Key << "List";
 			body << YAML::BeginSeq;
 			for (const auto &listit : item.second) {

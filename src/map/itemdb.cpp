@@ -3029,21 +3029,13 @@ uint8 ItemGroupDatabase::pc_get_itemgroup( uint16 group_id, bool identify, map_s
 	if (group->random.empty())
 		return 0;
 
-	// Get all the 'must' item(s) (subgroup 0)
-	std::shared_ptr<s_item_group_random> must = util::umap_find(group->random, static_cast<uint16>(0));
-	if( must != nullptr ){
-		for (const auto &it : must->data)
-			this->pc_get_itemgroup_sub( sd, identify, it.second );
-	}
-
-	// Get 1 'random' item from each subgroup
 	for (const auto &random : group->random) {
-		// Skip the 'must' group
-		if( random.first == 0 ){
-			continue;
+		if( random.second->algorithm != SUBGROUP_ALGO_MUST )
+			this->pc_get_itemgroup_sub( sd, identify, this->get_random_itemsubgroup( random.second ) );
+		else {
+			for (const auto &it : random.second->data)
+				this->pc_get_itemgroup_sub( sd, identify, it.second );
 		}
-
-		this->pc_get_itemgroup_sub( sd, identify, this->get_random_itemsubgroup( random.second ) );
 	}
 
 	return 0;
@@ -3315,18 +3307,36 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 			uint16 subgroup;
 
-			if (this->nodeExists(subit, "SubGroup")) {
-				if (!this->asUInt16(subit, "SubGroup", subgroup))
-					continue;
-			} else {
-				subgroup = 1;
-			}
+			if (!this->asUInt16(subit, "SubGroup", subgroup))
+				continue;
 
 			std::shared_ptr<s_item_group_random> random = util::umap_find(group->random, subgroup);
+			bool random_exists = random != nullptr;
 
-			if (random == nullptr) {
+			if (!random_exists) {
 				random = std::make_shared<s_item_group_random>();
 				group->random[subgroup] = random;
+			}
+
+			if (this->nodeExists(subit, "Algorithm")) {
+				std::string sub_algo;
+
+				if (!this->asString(subit, "Algorithm", sub_algo))
+					return 0;
+
+				std::string sub_algo_constant = "SUBGROUP_ALGO_" + sub_algo;
+				int64 constant_algo;
+
+				if (!script_get_constant(sub_algo_constant.c_str(), &constant_algo)) {
+					this->invalidWarning(subit["Algorithm"], "Invalid Algorithm %s.\n", sub_algo.c_str());
+					continue;
+				}
+
+				random->algorithm = static_cast<uint16>(constant_algo);
+			} else {
+				if (!random_exists) {
+					random->algorithm = SUBGROUP_ALGO_RANDOM;
+				}
 			}
 
 			const auto& listNode = subit["List"];

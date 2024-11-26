@@ -16,6 +16,10 @@
 	export_constant(INT_MIN);
 	export_constant(INT_MAX);
 
+	export_constant(SUBGROUP_ALGO_RANDOM);
+	export_constant(SUBGROUP_ALGO_NATURALRANDOM);
+	export_constant(SUBGROUP_ALGO_MUST);
+
 	/* server defines */
 	export_constant(PACKETVER);
 	export_constant(MAX_LEVEL);

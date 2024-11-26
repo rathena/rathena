@@ -2961,6 +2961,12 @@ enum e_random_item_group {
 	IG_MAX,
 };
 
+enum e_item_subgroup_algorithm : uint16 {
+	SUBGROUP_ALGO_RANDOM,
+	SUBGROUP_ALGO_NATURALRANDOM,
+	SUBGROUP_ALGO_MUST,
+};
+
 /// Enum for bound/sell restricted selling
 enum e_itemshop_restrictions {
 	ISR_NONE = 0x0,
@@ -3139,6 +3145,7 @@ struct s_item_group_entry
 struct s_item_group_random
 {
 	uint32 total_rate;
+	uint16 algorithm;
 	std::unordered_map<uint32, std::shared_ptr<s_item_group_entry>> data; /// index, s_item_group_entry
 };
 
@@ -3296,7 +3303,7 @@ extern ItemDatabase item_db;
 
 class ItemGroupDatabase : public TypesafeCachedYamlDatabase<uint16, s_item_group_db> {
 public:
-	ItemGroupDatabase() : TypesafeCachedYamlDatabase("ITEM_GROUP_DB", 3, 1) {
+	ItemGroupDatabase() : TypesafeCachedYamlDatabase("ITEM_GROUP_DB", 4, 1) {
 
 	}
 
