@@ -2924,7 +2924,7 @@ std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_itemsubgroup(s
 /**
 * Return a random group entry from Item Group
 * @param group_id
-* @param sub_group: 0 is 'must' item group, random groups start from 1
+* @param sub_group
 * @param search_type: see e_group_search_type
 * @return Item group entry or nullptr on fail
 */
@@ -2950,8 +2950,8 @@ std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_entry(uint16 g
 /** [Cydh]
 * Gives item(s) to the player based on item group
 * @param sd: Player that obtains item from item group
-* @param group_id: The group ID of item that obtained by player
-* @param *group: struct s_item_group from itemgroup_db[group_id].random[idx] or itemgroup_db[group_id].must[sub_group][idx]
+* @param identify
+* @param data: item data selected in a subgroup
 */
 void ItemGroupDatabase::pc_get_itemgroup_sub( map_session_data& sd, bool identify, std::shared_ptr<s_item_group_entry> data ){
 	if (data == nullptr)
@@ -3410,12 +3410,12 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 						entry->rate = 0;
 				}
 
-				if (subgroup == 0 && entry->rate > 0) {
-					this->invalidWarning(listit["Item"], "SubGroup 0 is reserved for item without Rate ('must' item). Defaulting Rate to 0.\n");
+				if (random->algorithm == SUBGROUP_ALGO_MUST && entry->rate > 0) {
+					this->invalidWarning(listit["Item"], "Item cannot have a rate with \"Must\" algorithm. Defaulting Rate to 0.\n");
 					entry->rate = 0;
 				}
-				if (subgroup != 0 && entry->rate == 0) {
-					this->invalidWarning(listit["Item"], "Entry must have a Rate for group above 0, skipping.\n");
+				if (random->algorithm != SUBGROUP_ALGO_MUST && entry->rate == 0) {
+					this->invalidWarning(listit["Item"], "Item must have a Rate for algorithms other than \"Must\", item skipped.\n");
 					continue;
 				}
 
