@@ -5981,7 +5981,7 @@ BUILDIN_FUNC(warpguild)
 			if(!map_getmapflag(pl_sd->bl.m, MF_NORETURN))
 				pc_setpos( pl_sd, mapindex_name2id( pl_sd->status.save_point.map ), pl_sd->status.save_point.x, pl_sd->status.save_point.y, CLR_TELEPORT );
 		break;
-		case 2: // SavePoint32
+		case 2: // SavePoint
 			if(!map_getmapflag(pl_sd->bl.m, MF_NORETURN))
 				pc_setpos( pl_sd, mapindex_name2id( sd->status.save_point.map ),sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT );
 		break;

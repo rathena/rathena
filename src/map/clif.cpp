@@ -6256,7 +6256,7 @@ void clif_skill_warppoint( map_session_data& sd, uint16 skill_id, uint16 skill_l
 /// Memo message.
 /// 011e <type>.B (ZC_ACK_REMEMBER_WARPPOINT)
 /// type:
-///     0 = "Saved location as a Memo Point32 for Warp skill." in color 0xFFFF00 (cyan)
+///     0 = "Saved location as a Memo Point for Warp skill." in color 0xFFFF00 (cyan)
 ///     1 = "Skill Level is not high enough." in color 0x0000FF (red)
 ///     2 = "You haven't learned Warp." in color 0x0000FF (red)
 ///
@@ -6276,7 +6276,7 @@ void clif_skill_memomessage( map_session_data& sd, e_ack_remember_warppoint_resu
 /// 0189 <type>.W (ZC_NOTIFY_MAPINFO)
 /// type:
 ///     0 = "Unable to Teleport in this area" in color 0xFFFF00 (cyan)
-///     1 = "Saved point32 cannot be memorized." in color 0x0000FF (red)
+///     1 = "Saved point cannot be memorized." in color 0x0000FF (red)
 ///     2 = "This skill cannot be used in this area"
 ///     3 = "This item cannot be used in this area"
 ///
@@ -9545,12 +9545,12 @@ void clif_GM_kick(map_session_data *sd, map_session_data *tsd)
 /// Displays various manner-related status messages (ZC_ACK_GIVE_MANNER_POINT).
 /// 014a <result>.L
 /// result:
-///     0 = "A manner point32 has been successfully aligned."
+///     0 = "A manner point has been successfully aligned."
 ///     1 = MP_FAILURE_EXHAUST
 ///     2 = MP_FAILURE_ALREADY_GIVING
 ///     3 = "Chat Block has been applied by GM due to your ill-mannerous action."
 ///     4 = "Automated Chat Block has been applied due to Anti-Spam System."
-///     5 = "You got a good point32 from %s."
+///     5 = "You got a good point from %s."
 void clif_manner_message(map_session_data* sd, uint32 type)
 {
 	int32 fd;
@@ -11108,7 +11108,7 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 	else
 		sd->areanpc.clear();
 
-	/* it broke at some point32 (e.g. during a crash), so we make it visibly dead again. */
+	/* it broke at some point (e.g. during a crash), so we make it visibly dead again. */
 	if( !sd->status.hp && !pc_isdead(sd) && status_isdead(sd->bl) )
 		pc_setdead(sd);
 

@@ -197,7 +197,7 @@ struct npc_data {
 			struct npc_item_list *shop_item;
 			uint16 count;
 			t_itemid itemshop_nameid; // Item Shop cost item ID
-			char pointshop_str[32]; // Point32 Shop cost variable name
+			char pointshop_str[32]; // Point Shop cost variable name
 			bool discount;
 		} shop;
 		struct {

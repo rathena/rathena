@@ -2622,7 +2622,7 @@ void npc_shop_currency_type(map_session_data *sd, struct npc_data *nd, int32 cos
 
 				memset(output, '\0', sizeof(output));
 
-				sprintf(output, msg_txt(sd, 715), nd->u.shop.pointshop_str); // Point32 Shop List: '%s'
+				sprintf(output, msg_txt(sd, 715), nd->u.shop.pointshop_str); // Point Shop List: '%s'
 				clif_broadcast(&sd->bl, output, strlen(output) + 1, BC_BLUE,SELF);
 			}
 			
@@ -4168,7 +4168,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		// Item shop currency
 		nd->u.shop.itemshop_nameid = nameid;
 	}else if( type == NPCTYPE_POINTSHOP ){
-		// Point32 shop currency
+		// Point shop currency
 		safestrncpy( nd->u.shop.pointshop_str, point_str, strlen( point_str ) + 1 );
 	}
 

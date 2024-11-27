@@ -3363,7 +3363,7 @@ public:
 		uint8 interact;
 	} cant;/* status change state flags */
 	//int32 sg_id; //ID of the previous Storm gust that hit you
-	short comet_x, comet_y; // Point32 where src casted Comet - required to calculate damage from this point
+	short comet_x, comet_y; // Point where src casted Comet - required to calculate damage from this point
 /**
  * The Storm Gust counter was dropped in renewal
  **/
