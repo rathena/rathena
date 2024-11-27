@@ -5465,141 +5465,289 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, sta
 	}
 }
 
+void status_calc_state_sub( block_list& bl, status_change& sc, bool start, std::shared_ptr<s_status_change_db> scdb_main, bool& restriction, e_scs_flag flag, e_scs_flag flag_conditional, std::function<bool ( block_list&, status_change&, bool&, const sc_type, const status_change_entry& )> func_switch ){
+	// If starting and unconditional no further checks are needed
+	if( start && !scdb_main->state[flag_conditional] ){
+		restriction = true;
+		return;
+	}
+
+	// Otherwise remove the restriction
+	restriction = false;
+
+	// And check all remaining active status changes, if the restriction should still be active
+	for( const auto& it : sc ){
+		std::shared_ptr<s_status_change_db> scdb_other = status_db.find( it.first );
+
+		if( scdb_other == nullptr ){
+			continue;
+		}
+
+		// If there is no restriction, skip the status change
+		if( !scdb_other->state[flag] ){
+			continue;
+		}
+
+		// If it is unconditional we can already restore the restriction and return early
+		if( !scdb_other->state[flag_conditional] ){
+			restriction = true;
+			return;
+		}
+
+		if( !func_switch( bl, sc, restriction, it.first, it.second ) ){
+			const char* constant_sc = script_get_constant_str( "SC_", it.first );
+
+			if( constant_sc == nullptr ){
+				constant_sc = "Unknown";
+			}
+
+			const char* constant_scs = script_get_constant_str( "SCS_", flag_conditional );
+
+			if( constant_scs == nullptr ){
+				constant_scs = "Unknown";
+			}
+
+			ShowError( "status_calc_state_sub: status \"%s\" is defined with \"%s\", but the condition is not implemented.\n", constant_sc, constant_scs );
+			continue;
+		}
+
+		// Cancel the loop as soon as possible and return early
+		if( restriction ){
+			return;
+		}
+	}
+}
+
 /**
  * Applies a state to a unit - See [StatusChangeStateTable]
  * @param bl: Object to change state on [PC|MOB|HOM|MER|ELEM]
  * @param sc: Object's status change data
- * @param flag: Which state to apply to bl
- * @param start: (1) start state, (0) remove state
+ * @param scdb: Database information of the status change
+ * @param start: (true) start state, (false) remove state
  */
-void status_calc_state( struct block_list *bl, status_change *sc, std::bitset<SCS_MAX> flag, bool start )
-{
-
+void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_status_change_db> scdb, bool start ){
 	/// No sc at all, we can zero without any extra weight over our conciousness
-	if( sc->empty() ) {
-		sc->cant = {};
+	if( sc.empty() ) {
+		sc.cant = {};
 		return;
 	}
 
+	static std::function<bool ( block_list&, status_change&, bool&, const sc_type, const status_change_entry& )> func_not_impl = []( block_list& bl, status_change& sc, bool& restriction, const sc_type type, const status_change_entry& sce ) -> bool {
+		// No conditional restrictions implemented yet
+		return false;
+	};
+
 	// Can't move
-	if( flag[SCS_NOMOVE] ) {
-		if( !flag[SCS_NOMOVECOND] )
-			sc->cant.move += (start ? 1 : ((sc->cant.move) ? -1 : 0));
-		else if(
-				     (sc->getSCE(SC_GOSPEL) && sc->getSCE(SC_GOSPEL)->val4 == BCT_SELF)	// cannot move while gospel is in effect
+	if( scdb->state[SCS_NOMOVE] ){
+		status_calc_state_sub( bl, sc, start, scdb, sc.cant.move, SCS_NOMOVE, SCS_NOMOVECOND, []( block_list& bl, status_change& sc, bool& restriction, const sc_type type, const status_change_entry& sce ) -> bool {
+			// Check the specific conditions
+			switch( type ){
+				case SC_GOSPEL:
+					if( sce.val4 == BCT_SELF ){
+						// Cannot move while gospel is in effect
+						restriction = true;
+					}
+					break;
+
 #ifndef RENEWAL
-				  || (sc->getSCE(SC_BASILICA) && sc->getSCE(SC_BASILICA)->val4 == bl->id) // Basilica caster cannot move
-				  || (sc->getSCE(SC_GRAVITATION) && sc->getSCE(SC_GRAVITATION)->val3 == BCT_SELF)
+				case SC_BASILICA:
+					if( sce.val4 == bl.id ){
+						// Basilica caster cannot move
+						restriction = true;
+					}
+					break;
+
+				case SC_GRAVITATION:
+					if( sce.val3 == BCT_SELF ){
+						restriction = true;
+					}
+					break;
 #endif
-				  || (sc->getSCE(SC_CAMOUFLAGE) && sc->getSCE(SC_CAMOUFLAGE)->val1 < 3)
-				  || (sc->getSCE(SC_MAGNETICFIELD) && sc->getSCE(SC_MAGNETICFIELD)->val2 != bl->id)
-				  || (sc->getSCE(SC_FEAR) && sc->getSCE(SC_FEAR)->val2 > 0)
-				  || (sc->getSCE(SC_HIDING) && (bl->type != BL_PC || (pc_checkskill(BL_CAST(BL_PC,bl),RG_TUNNELDRIVE) <= 0)))
-				  || (sc->getSCE(SC_DANCING) && sc->getSCE(SC_DANCING)->val4 && (
+
+				case SC_CAMOUFLAGE:
+					if( sce.val1 < 3 ){
+						restriction = true;
+					}
+					break;
+
+				case SC_MAGNETICFIELD:
+					if( sce.val2 != bl.id ){
+						restriction = true;
+					}
+					break;
+
+				case SC_FEAR:
+					if( sce.val2 > 0 ){
+						restriction = true;
+					}
+					break;
+
+				case SC_HIDING:
+					if( bl.type != BL_PC ){
+						restriction = true;
+					}else if( pc_checkskill( (map_session_data*)( &bl ), RG_TUNNELDRIVE ) <= 0 ){
+						restriction = true;
+					}
+					break;
+
+				case SC_DANCING:
+					if( sce.val4 != 0 && ( ( sce.val1 & 0xFFFF ) == CG_MOONLIT || ( sce.val1 & 0xFFFF ) == CG_HERMODE ) ){
 #ifndef RENEWAL
-						!sc->getSCE(SC_LONGING) ||
+						if( sc.getSCE( SC_LONGING ) != nullptr ){
+							break;
+						}
 #endif
-						(sc->getSCE(SC_DANCING)->val1&0xFFFF) == CG_MOONLIT ||
-						(sc->getSCE(SC_DANCING)->val1&0xFFFF) == CG_HERMODE
-						))
-				  || (sc->getSCE(SC_CRYSTALIZE) && bl->type != BL_MOB)
- 				 )
-				 sc->cant.move += (start ? 1 : ((sc->cant.move) ? -1 : 0));
+						restriction = true;
+					}
+					break;
+
+				case SC_CRYSTALIZE:
+					if( bl.type != BL_MOB ){
+						restriction = true;
+					}
+					break;
+
+				default:
+					return false;
+			}
+
+			return true;
+		} );
 	}
 
 	// Can't use skills
-	if( flag[SCS_NOCAST] ) {
-		if( !flag[SCS_NOCASTCOND] )
-			sc->cant.cast += (start ? 1 : ((sc->cant.cast) ? -1 : 0));
-		else if (sc->getSCE(SC_OBLIVIONCURSE) && sc->getSCE(SC_OBLIVIONCURSE)->val3 == 1)
-			sc->cant.cast += (start ? 1 : ((sc->cant.cast) ? -1 : 0));
+	if( scdb->state[SCS_NOCAST] ){
+		status_calc_state_sub( bl, sc, start, scdb, sc.cant.cast, SCS_NOCAST, SCS_NOCASTCOND, []( block_list& bl, status_change& sc, bool& restriction, const sc_type type, const status_change_entry& sce ) -> bool {
+			// Check the specific conditions
+			switch( type ){
+				case SC_OBLIVIONCURSE:
+					if( sce.val3 == 1 ){
+						restriction = true;
+					}
+					break;
+
+				default:
+					return false;
+			}
+
+			return true;
+		} );
 	}
 
 	// Can't chat
-	if( flag[SCS_NOCHAT] ) {
-		if( !flag[SCS_NOCHATCOND] )
-			sc->cant.chat += (start ? 1 : ((sc->cant.chat) ? -1 : 0));
-		else if(sc->getSCE(SC_NOCHAT) && sc->getSCE(SC_NOCHAT)->val1&MANNER_NOCHAT)
-			sc->cant.chat += (start ? 1 : ((sc->cant.chat) ? -1 : 0));
+	if( scdb->state[SCS_NOCHAT] ) {
+		status_calc_state_sub( bl, sc, start, scdb, sc.cant.cast, SCS_NOCHAT, SCS_NOCHATCOND, []( block_list& bl, status_change& sc, bool& restriction, const sc_type type, const status_change_entry& sce ) -> bool {
+			// Check the specific conditions
+			switch( type ){
+				case SC_NOCHAT:
+					if( ( sce.val1&MANNER_NOCHAT ) != 0 ){
+						restriction = true;
+					}
+					break;
+
+				default:
+					return false;
+			}
+
+			return true;
+		} );
 	}
 
 	// Can't attack
-	if( flag[SCS_NOATTACK] ) {
-		if( !flag[SCS_NOATTACKCOND] )
-			sc->cant.attack += (start ? 1 : ((sc->cant.attack) ? -1 : 0));
-		/*else if( )
-			sc->cant.attack += ( start ? 1 : ((sc->cant.attack)? -1:0) );*/
+	if( scdb->state[SCS_NOATTACK] ){
+		status_calc_state_sub( bl, sc, start, scdb, sc.cant.attack, SCS_NOATTACK, SCS_NOATTACKCOND, func_not_impl );
 	}
 
 	// Can't warp
-	if (flag[SCS_NOWARP]) {
-		if (!flag[SCS_NOWARPCOND])
-			sc->cant.warp += (start ? 1 : ((sc->cant.warp) ? -1 : 0));
-		/*else if (sc->getSCE())
-			sc->cant.warp += ( start ? 1 : ((sc->cant.warp)? -1:0) );*/
+	if( scdb->state[SCS_NOWARP] ){
+		status_calc_state_sub( bl, sc, start, scdb, sc.cant.warp, SCS_NOWARP, SCS_NOWARPCOND, func_not_impl );
 	}
 
 	// Player-only states
-	if( bl->type == BL_PC ) {
+	if( bl.type == BL_PC ) {
 		// Can't pick-up items
-		if( flag[SCS_NOPICKITEM] ) {
-			if( !flag[SCS_NOPICKITEMCOND] )
-				sc->cant.pickup += (start ? 1 : ((sc->cant.pickup) ? -1 : 0));
-			else if( (sc->getSCE(SC_NOCHAT) && sc->getSCE(SC_NOCHAT)->val1&MANNER_NOITEM) )
-				sc->cant.pickup += (start ? 1 : ((sc->cant.pickup) ? -1 : 0));
+		if( scdb->state[SCS_NOPICKITEM] ){
+			status_calc_state_sub( bl, sc, start, scdb, sc.cant.cast, SCS_NOPICKITEM, SCS_NOPICKITEMCOND, []( block_list& bl, status_change& sc, bool& restriction, const sc_type type, const status_change_entry& sce ) -> bool {
+				// Check the specific conditions
+				switch( type ){
+					case SC_NOCHAT:
+						if( ( sce.val1&MANNER_NOITEM ) != 0 ){
+							restriction = true;
+						}
+						break;
+
+					default:
+						return false;
+				}
+
+				return true;
+			} );
 		}
 
 		// Can't drop items
-		if( flag[SCS_NODROPITEM] ) {
-			if( !flag[SCS_NODROPITEMCOND] )
-				sc->cant.drop += (start ? 1 : ((sc->cant.drop) ? -1 : 0));
-			else if( (sc->getSCE(SC_NOCHAT) && sc->getSCE(SC_NOCHAT)->val1&MANNER_NOITEM) )
-				sc->cant.drop += (start ? 1 : ((sc->cant.drop) ? -1 : 0));
+		if( scdb->state[SCS_NODROPITEM] ){
+			status_calc_state_sub( bl, sc, start, scdb, sc.cant.cast, SCS_NODROPITEM, SCS_NODROPITEMCOND, []( block_list& bl, status_change& sc, bool& restriction, const sc_type type, const status_change_entry& sce ) -> bool {
+				// Check the specific conditions
+				switch( type ){
+					case SC_NOCHAT:
+						if( ( sce.val1&MANNER_NOITEM ) != 0 ){
+							restriction = true;
+						}
+						break;
+
+					default:
+						return false;
+				}
+
+				return true;
+			} );
 		}
 
 		// Can't equip item
-		if( flag[SCS_NOEQUIPITEM] ) {
-			if( !flag[SCS_NOEQUIPITEMCOND] )
-				sc->cant.equip += (start ? 1 : ((sc->cant.equip) ? -1 : 0));
-			/*else if(  )
-				sc->cant.equip += ( start ? 1 : ((sc->cant.equip)? -1:0) );*/
+		if( scdb->state[SCS_NOEQUIPITEM] ){
+			status_calc_state_sub( bl, sc, start, scdb, sc.cant.warp, SCS_NOEQUIPITEM, SCS_NOEQUIPITEMCOND, func_not_impl );
 		}
 
 		// Can't unequip item
-		if( flag[SCS_NOUNEQUIPITEM]) {
-			if( !flag[SCS_NOUNEQUIPITEMCOND] )
-				sc->cant.unequip += (start ? 1 : ((sc->cant.unequip) ? -1 : 0));
-			/*else if(  )
-				sc->cant.unequip += ( start ? 1 : ((sc->cant.unequip)? -1:0) );*/
+		if( scdb->state[SCS_NOUNEQUIPITEM] ){
+			status_calc_state_sub( bl, sc, start, scdb, sc.cant.warp, SCS_NOUNEQUIPITEM, SCS_NOUNEQUIPITEMCOND, func_not_impl );
 		}
 
 		// Can't consume item
-		if( flag[SCS_NOCONSUMEITEM]) {
-			if( !flag[SCS_NOCONSUMEITEMCOND] )
-				sc->cant.consume += (start ? 1 : ((sc->cant.consume) ? -1 : 0));
-			else if( (sc->getSCE(SC_GRAVITATION) && sc->getSCE(SC_GRAVITATION)->val3 == BCT_SELF) ||
-				 (sc->getSCE(SC_NOCHAT) && sc->getSCE(SC_NOCHAT)->val1&MANNER_NOITEM) )
-				sc->cant.consume += (start ? 1 : ((sc->cant.consume) ? -1 : 0));
+		if( scdb->state[SCS_NOCONSUMEITEM] ){
+			status_calc_state_sub( bl, sc, start, scdb, sc.cant.cast, SCS_NOCONSUMEITEM, SCS_NOCONSUMEITEMCOND, []( block_list& bl, status_change& sc, bool& restriction, const sc_type type, const status_change_entry& sce ) -> bool {
+				// Check the specific conditions
+				switch( type ){
+					case SC_GRAVITATION:
+						if( sce.val3 == BCT_SELF ){
+							restriction = true;
+						}
+						break;
+
+					case SC_NOCHAT:
+						if( ( sce.val1&MANNER_NOITEM ) != 0 ){
+							restriction = true;
+						}
+						break;
+
+					default:
+						return false;
+				}
+
+				return true;
+			} );
 		}
 
 		// Can't lose exp
-		if (flag[SCS_NODEATHPENALTY]) {
-			if (!flag[SCS_NODEATHPENALTYCOND])
-				sc->cant.deathpenalty += (start ? 1 : ((sc->cant.deathpenalty) ? -1 : 0));
-			/*else if (sc->getSCE())
-				sc->cant.deathpenalty += ( start ? 1 : ((sc->cant.deathpenalty)? -1:0) );*/
+		if( scdb->state[SCS_NODEATHPENALTY] ){
+			status_calc_state_sub( bl, sc, start, scdb, sc.cant.warp, SCS_NODEATHPENALTY, SCS_NODEATHPENALTYCOND, func_not_impl );
 		}
 
 		// Can't sit/stand/talk to NPC
-		if (flag[SCS_NOINTERACT]) {
-			if (!flag[SCS_NOINTERACTCOND])
-				sc->cant.interact += (start ? 1 : ((sc->cant.interact) ? -1 : 0));
-			/*else if (sc->getSCE())
-				sc->cant.interact += ( start ? 1 : ((sc->cant.interact)? -1:0) );*/
+		if( scdb->state[SCS_NOINTERACT] ){
+			status_calc_state_sub( bl, sc, start, scdb, sc.cant.warp, SCS_NOINTERACT, SCS_NOINTERACTCOND, func_not_impl );
 		}
 	}
-
-	return;
 }
 
 /**
@@ -12988,8 +13136,9 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 	}
 
 	// Non-zero
-	if (sc_isnew && scdb->state.any())
-		status_calc_state(bl, sc, scdb->state, true);
+	if( sc_isnew && scdb->state.any() ){
+		status_calc_state( *bl, *sc, scdb, true );
+	}
 
 	if (sd != nullptr && sd->pd != nullptr)
 		pet_sc_check(sd, type); // Skotlex: Pet Status Effect Healing
@@ -13255,8 +13404,9 @@ int32 status_change_end( struct block_list* bl, enum sc_type type, int32 tid ){
 		return 0;
 	}
 
-	if (scdb->state.any())
-		status_calc_state(bl,sc,scdb->state,false);
+	if( scdb->state.any() ){
+		status_calc_state( *bl, *sc, scdb, false );
+	}
 
 	if (scdb->flag[SCF_DISPLAYPC] || scdb->flag[SCF_DISPLAYNPC])
 		status_display_remove(bl,type);

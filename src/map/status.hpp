@@ -3343,18 +3343,18 @@ public:
 	int32 lastEffectTimer; // Timer for lastEffect
 	//! TODO: See if it is possible to implement the following SC's without requiring extra parameters while the SC is inactive.
 	struct {
-		uint8 move;
-		uint8 pickup;
-		uint8 drop;
-		uint8 cast;
-		uint8 chat;
-		uint8 equip;
-		uint8 unequip;
-		uint8 consume;
-		uint8 attack;
-		uint8 warp;
-		uint8 deathpenalty;
-		uint8 interact;
+		bool move;
+		bool pickup;
+		bool drop;
+		bool cast;
+		bool chat;
+		bool equip;
+		bool unequip;
+		bool consume;
+		bool attack;
+		bool warp;
+		bool deathpenalty;
+		bool interact;
 	} cant;/* status change state flags */
 	//int32 sg_id; //ID of the previous Storm gust that hit you
 	short comet_x, comet_y; // Point32 where src casted Comet - required to calculate damage from this point
