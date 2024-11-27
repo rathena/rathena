@@ -1065,6 +1065,13 @@ enum e_penalty_type : uint16{
 	PENALTY_MAX
 };
 
+enum e_lr_flag : uint8{
+	LR_FLAG_NONE = 0,
+	LR_FLAG_WEAPON,
+	LR_FLAG_ARROW,
+	LR_FLAG_SHIELD,
+};
+	
 struct s_penalty{
 	e_penalty_type type;
 	uint16 rate[MAX_LEVEL * 2 - 1];
