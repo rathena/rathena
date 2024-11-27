@@ -479,26 +479,23 @@ int32 chlogif_parse_ackchangesex(int32 fd)
 			unsigned char i;
 			int32 char_id = 0, class_ = 0, guild_id = 0;
 			std::shared_ptr<struct auth_node> node = util::umap_find( char_get_authdb(), acc );
-			SqlStmt *stmt;
+			SqlStmt stmt = { *sql_handle };
 
 			if (node != nullptr)
 				node->sex = sex;
 
 			// get characters
-			stmt = SqlStmt_Malloc(sql_handle);
-			if (SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `char_id`, `class`, `guild_id` FROM `%s` WHERE `account_id` = '%d'", schema_config.char_db, acc) || SqlStmt_Execute(stmt)) {
+			if (SQL_ERROR == stmt.Prepare( "SELECT `char_id`, `class`, `guild_id` FROM `%s` WHERE `account_id` = '%d'", schema_config.char_db, acc) || stmt.Execute()) {
 				SqlStmt_ShowDebug(stmt);
-				SqlStmt_Free(stmt);
 			}
 
-			SqlStmt_BindColumn(stmt, 0, SQLDT_INT,   &char_id,  0, nullptr, nullptr);
-			SqlStmt_BindColumn(stmt, 1, SQLDT_SHORT, &class_,   0, nullptr, nullptr);
-			SqlStmt_BindColumn(stmt, 2, SQLDT_INT,   &guild_id, 0, nullptr, nullptr);
+			stmt.BindColumn(0, SQLDT_INT,   &char_id,  0, nullptr, nullptr);
+			stmt.BindColumn(1, SQLDT_SHORT, &class_,   0, nullptr, nullptr);
+			stmt.BindColumn(2, SQLDT_INT,   &guild_id, 0, nullptr, nullptr);
 
-			for (i = 0; i < MAX_CHARS && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i) {
+			for (i = 0; i < MAX_CHARS && SQL_SUCCESS == stmt.NextRow(); ++i) {
 				chlogif_parse_change_sex_sub(sex, acc, char_id, class_, guild_id);
 			}
-			SqlStmt_Free(stmt);
 		}
 
 		// notify all mapservers about this change

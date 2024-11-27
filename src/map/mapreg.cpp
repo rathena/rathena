@@ -186,27 +186,26 @@ static void script_load_mapreg(void)
 	   | varname | index | value |
 	   +-------------------------+
 	                                */
-	SqlStmt* stmt = SqlStmt_Malloc(mmysql_handle);
+	SqlStmt stmt = { *mmysql_handle };
 	char varname[32+1];
 	uint32 index;
 	char value[255+1];
 	uint32 length;
 
-	if ( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `varname`, `index`, `value` FROM `%s`", mapreg_table)
-	  || SQL_ERROR == SqlStmt_Execute(stmt)
+	if ( SQL_ERROR == stmt.Prepare("SELECT `varname`, `index`, `value` FROM `%s`", mapreg_table)
+	  || SQL_ERROR == stmt.Execute()
 	  ) {
 		SqlStmt_ShowDebug(stmt);
-		SqlStmt_Free(stmt);
 		return;
 	}
 
 	skip_insert = true;
 
-	SqlStmt_BindColumn(stmt, 0, SQLDT_STRING, &varname[0], sizeof(varname), &length, nullptr);
-	SqlStmt_BindColumn(stmt, 1, SQLDT_UINT32, &index, 0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 2, SQLDT_STRING, &value[0], sizeof(value), nullptr, nullptr);
+	stmt.BindColumn(0, SQLDT_STRING, &varname[0], sizeof(varname), &length, nullptr);
+	stmt.BindColumn(1, SQLDT_UINT32, &index, 0, nullptr, nullptr);
+	stmt.BindColumn(2, SQLDT_STRING, &value[0], sizeof(value), nullptr, nullptr);
 
-	while ( SQL_SUCCESS == SqlStmt_NextRow(stmt) ) {
+	while ( SQL_SUCCESS == stmt.NextRow() ) {
 		int32 s = add_str(varname);
 		int64 uid = reference_uid(s, index);
 
@@ -220,8 +219,6 @@ static void script_load_mapreg(void)
 			mapreg_setreg(uid, strtoll(value,nullptr,10));
 		}
 	}
-
-	SqlStmt_Free(stmt);
 
 	skip_insert = false;
 	mapreg_dirty = false;
