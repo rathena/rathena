@@ -4311,6 +4311,10 @@ void pc_bonus(map_session_data *sd,int32 type,int32 val)
 			if (sd->state.lr_flag != LR_FLAG_ARROW)
 				sd->bonus.ematk += val;
 			break;
+		case SP_EMATK_HIDDEN:
+			if (sd->state.lr_flag != LR_FLAG_ARROW)
+				sd->bonus.ematk_hidden += val;
+			break;
 		case SP_ADD_VARIABLECAST:
 			if (sd->state.lr_flag != LR_FLAG_ARROW)
 				sd->bonus.add_varcast += val;
@@ -10230,6 +10234,7 @@ int64 pc_readparam(map_session_data* sd,int64 type)
 		case SP_ADD_HEAL2_RATE:  val = sd->bonus.add_heal2_rate; break;
 		case SP_ADD_ITEM_HEAL_RATE: val = sd->bonus.itemhealrate2; break;
 		case SP_EMATK:           val = sd->bonus.ematk; break;
+		case SP_EMATK_HIDDEN:    val = sd->bonus.ematk_hidden; break;
 		case SP_FIXCASTRATE:     val = sd->bonus.fixcastrate; break;
 		case SP_ADD_FIXEDCAST:   val = sd->bonus.add_fixcast; break;
 		case SP_ADD_VARIABLECAST:  val = sd->bonus.add_varcast; break;
