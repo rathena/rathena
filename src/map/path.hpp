@@ -32,9 +32,9 @@ struct walkpath_data {
 };
 
 struct shootpath_data {
-	int rx,ry,len;
-	int x[MAX_WALKPATH];
-	int y[MAX_WALKPATH];
+	int32 rx,ry,len;
+	int32 x[MAX_WALKPATH];
+	int32 y[MAX_WALKPATH];
 };
 
 #define check_distance_bl(bl1, bl2, distance) check_distance((bl1)->x - (bl2)->x, (bl1)->y - (bl2)->y, distance)
@@ -54,19 +54,19 @@ struct shootpath_data {
 #define distance_client_xy(x0, y0, x1, y1) distance_client((x0)-(x1), (y0)-(y1))
 
 // calculates destination cell for knockback
-int path_blownpos(int16 m,int16 x0,int16 y0,int16 dx,int16 dy,int count);
+int32 path_blownpos(int16 m,int16 x0,int16 y0,int16 dx,int16 dy,int32 count);
 
 // tries to find a walkable path
-bool path_search(struct walkpath_data *wpd,int16 m,int16 x0,int16 y0,int16 x1,int16 y1,int flag,cell_chk cell);
+bool path_search(struct walkpath_data *wpd,int16 m,int16 x0,int16 y0,int16 x1,int16 y1,int32 flag,cell_chk cell);
 
 // tries to find a shootable path
 bool path_search_long(struct shootpath_data *spd,int16 m,int16 x0,int16 y0,int16 x1,int16 y1,cell_chk cell);
 
 // distance related functions
-bool check_distance(int dx, int dy, int distance);
-unsigned int distance(int dx, int dy);
-bool check_distance_client(int dx, int dy, int distance);
-int distance_client(int dx, int dy);
+bool check_distance(int32 dx, int32 dy, int32 distance);
+uint32 distance(int32 dx, int32 dy);
+bool check_distance_client(int32 dx, int32 dy, int32 distance);
+int32 distance_client(int32 dx, int32 dy);
 
 bool direction_diagonal( enum directions direction );
 bool direction_opposite( enum directions direction );

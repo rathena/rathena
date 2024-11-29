@@ -474,3 +474,9 @@ Hides monster's HP bar on a map.
 Ignores config value of 'monster_hp_bars_info'.
 
 ---------------------------------------
+
+*specialpopup	<popup ID>
+
+Displays a special popup when a player enters the map. See script command "specialpopup" for details on different popup types.
+
+---------------------------------------

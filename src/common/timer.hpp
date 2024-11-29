@@ -30,7 +30,7 @@ enum {
 	TIMER_REMOVE_HEAP = 0x10,
 };
 
-#define TIMER_FUNC(x) int x ( int tid, t_tick tick, int id, intptr_t data )
+#define TIMER_FUNC(x) int32 x ( int32 tid, t_tick tick, int32 id, intptr_t data )
 
 // Struct declaration
 typedef TIMER_FUNC((*TimerFunc));
@@ -38,11 +38,11 @@ typedef TIMER_FUNC((*TimerFunc));
 struct TimerData {
 	t_tick tick;
 	TimerFunc func;
-	unsigned int type;
-	int interval;
+	uint32 type;
+	int32 interval;
 
 	// general-purpose storage
-	int id;
+	int32 id;
 	intptr_t data;
 };
 
@@ -51,21 +51,21 @@ struct TimerData {
 t_tick gettick(void);
 t_tick gettick_nocache(void);
 
-int add_timer(t_tick tick, TimerFunc func, int id, intptr_t data);
-int add_timer_interval(t_tick tick, TimerFunc func, int id, intptr_t data, int interval);
-const struct TimerData* get_timer(int tid);
-int delete_timer(int tid, TimerFunc func);
+int32 add_timer(t_tick tick, TimerFunc func, int32 id, intptr_t data);
+int32 add_timer_interval(t_tick tick, TimerFunc func, int32 id, intptr_t data, int32 interval);
+const struct TimerData* get_timer(int32 tid);
+int32 delete_timer(int32 tid, TimerFunc func);
 
-t_tick addtick_timer(int tid, t_tick tick);
-t_tick settick_timer(int tid, t_tick tick);
+t_tick addtick_timer(int32 tid, t_tick tick);
+t_tick settick_timer(int32 tid, t_tick tick);
 
-int add_timer_func_list(TimerFunc func, const char* name);
+int32 add_timer_func_list(TimerFunc func, const char* name);
 
 unsigned long get_uptime(void);
 
 //transform a timestamp to string
 const char* timestamp2string(char* str, size_t size, time_t timestamp, const char* format);
-void split_time(int time, int* year, int* month, int* day, int* hour, int* minute, int* second);
+void split_time(int32 time, int* year, int* month, int* day, int* hour, int* minute, int* second);
 double solve_time(char* modif_p);
 
 t_tick do_timer(t_tick tick);

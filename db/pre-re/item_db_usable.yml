@@ -2613,7 +2613,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_SlowDown,5000,0;
+      sc_start SC_SLOWDOWN,5000,100;
   - Id: 12018
     AegisName: Fire_Cracker
     Name: Firecracker
@@ -6875,7 +6875,7 @@ Body:
       NoAuction: true
     Script: |
       specialeffect2 EF_STEAL;
-      bonus_script "{ bonus bHit,5; bonus bAspdRate,10; }",1200,0,0,EFST_ACARAJE;
+      sc_start2 SC_ACARAJE,1200000,10,5;
   - Id: 12376
     AegisName: Mysterious_Can2
     Name: Mysterious Can2

@@ -29,15 +29,6 @@
 //= 1.7 Added Rock Ridge Kafra. [Capuche]
 //============================================================ 
 
-// Brasilis
-//============================================================
-brasilis,197,221,4	script	Kafra Employee::kaf_bra	4_F_KAFRA1,{
-	cutin "kafra_01",2;
-	callfunc "F_Kafra",0,3,0,80,700;
-	savepoint "brasilis",195,259,1,1;
-	callfunc "F_KafEnd",0,1,"in the city of Brasilis";
-}
-
 // Dewata
 //============================================================
 dewata,202,184,6	script	Kafra Employee::kaf_dewata	4_F_KAFRA1,{

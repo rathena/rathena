@@ -501,19 +501,19 @@ Body:
       7@thts: true
       8@thts: true
   - Id: 67
-    Name: The Maze of Oz
+    Name: Oz Labyrinth
     Enter:
       Map: 1@oz
       X: 284
       Y: 167
   - Id: 68
-    Name: Thor Gunsu Base
+    Name: Thor Military Base
     Enter:
       Map: 1@tcamp
       X: 103
       Y: 237
   - Id: 69
-    Name: A Gathering Place of Wolves
+    Name: Wolves Gathering Place
     Enter:
       Map: 1@nyr
       X: 194
@@ -529,7 +529,7 @@ Body:
     AdditionalMaps:
       2@nyr: true
   - Id: 71
-    Name: Villa of High Priest
+    Name: High Priest's Villa
     Enter:
       Map: 1@adv
       X: 123
