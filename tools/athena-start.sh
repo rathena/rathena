@@ -224,5 +224,4 @@ case $1 in
 	;;
 esac
 
-echo "Using the configure scripts and ./athena-start is deprecated. Use CMake and ./athena-start.sh" 1>&2
-exit 1
+

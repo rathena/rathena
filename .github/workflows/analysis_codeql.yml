@@ -18,6 +18,8 @@ on:
       # This workflow should run when a file in a source directory has been modified.
       - 'src/**'
       - '3rdparty/**'
+      # This workflow should run whenever a CMake related file has been modified
+      - '**/CMakeLists.txt'
 
 jobs:
   analyze:
@@ -31,8 +33,6 @@ jobs:
           # The ubuntu-latest label currently points to ubuntu-20.04.
           # Available: ubuntu-22.04, ubuntu-20.04
           os: [ubuntu-latest]
-          # Older versions of GCC are not available via unaltered aptitude repo lists.
-          gcc: ['10']
           # We run build checks for both Renewal and PRE-Renewal
           mode: ['PRE','RE']
 
@@ -64,10 +64,10 @@ jobs:
 
       - name: Update & Install packages
         # Ubuntu runners already have most of the packages rAthena requires to build.
-        # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-Readme.md
+        # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2204-Readme.md
         run: |
           sudo apt update
-          sudo apt install zlib1g-dev libpcre3-dev gcc-${{ matrix.gcc }} g++-${{ matrix.gcc }}
+          sudo apt install zlib1g-dev libpcre3-dev
 
       # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
       # If this step fails, then you should remove it and run the build manually (see below)
@@ -77,16 +77,16 @@ jobs:
       # ?? If the Autobuild fails above, remove it and uncomment the following
       #    three lines and modify them (or add more) to build your code if your
       #    project uses a compiled language
-      - name: Command - configure
-        env:
-            CONFIGURE_FLAGS: 'CC=gcc-${{ matrix.gcc }} CXX=g++-${{ matrix.gcc }} --enable-prere=${{ env.PRERE }} --enable-buildbot=yes'
-        run: ./configure $CONFIGURE_FLAGS
+      - name: Create build directory
+        run: cmake -E make_directory ${{github.workspace}}/build
 
-      - name: Command - make clean
-        run: make clean
+      - name: Configure CMake
+        working-directory: ${{github.workspace}}/build
+        run: cmake .. -DENABLE_PRERENEWAL=${{env.PRERE}} -DENABLE_EXTRA_BUILDBOT_CODE=ON
 
-      - name: Command - make server
-        run: make server
+      - name: Build
+        working-directory: ${{github.workspace}}/build
+        run: cmake --build . -j2 --target server
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
