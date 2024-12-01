@@ -8818,7 +8818,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			return 1;
 		}
 		// Won't display the damage, but drop items and give exp
-		status_zap(src, sstatus->max_hp, 0, 0);
+		status_zap(src, sstatus->hp, 0, 0);
 		break;
 	case AL_ANGELUS:
 #ifdef RENEWAL
