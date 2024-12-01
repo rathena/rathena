@@ -29,7 +29,7 @@
 using namespace rathena;
 
 BattlegroundDatabase battleground_db;
-std::unordered_map<int, std::shared_ptr<s_battleground_data>> bg_team_db;
+std::unordered_map<int32, std::shared_ptr<s_battleground_data>> bg_team_db;
 std::vector<std::shared_ptr<s_battleground_queue>> bg_queues;
 int32 bg_queue_count = 1;
 
@@ -780,7 +780,7 @@ TIMER_FUNC(bg_send_xy_timer)
  */
 static TIMER_FUNC(bg_on_ready_loopback)
 {
-	int32 queue_id = (int)data;
+	int32 queue_id = (int32)data;
 	std::shared_ptr<s_battleground_queue> queue = bg_search_queue(queue_id);
 
 	if (queue == nullptr) {
@@ -808,7 +808,7 @@ static TIMER_FUNC(bg_on_ready_loopback)
  */
 static TIMER_FUNC(bg_on_ready_expire)
 {
-	int32 queue_id = (int)data;
+	int32 queue_id = (int32)data;
 	std::shared_ptr<s_battleground_queue> queue = bg_search_queue(queue_id);
 
 	if (queue == nullptr) {
@@ -841,7 +841,7 @@ static TIMER_FUNC(bg_on_ready_expire)
  */
 static TIMER_FUNC(bg_on_ready_start)
 {
-	int32 queue_id = (int)data;
+	int32 queue_id = (int32)data;
 	std::shared_ptr<s_battleground_queue> queue = bg_search_queue(queue_id);
 
 	if (queue == nullptr) {

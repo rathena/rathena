@@ -634,12 +634,12 @@ int32 skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,u
 int32 skill_castend_damage_id( struct block_list* src, struct block_list *bl,uint16 skill_id,uint16 skill_lv,t_tick tick,int32 flag );
 int32 skill_castend_pos2( struct block_list *src, int32 x,int32 y,uint16 skill_id,uint16 skill_lv,t_tick tick,int32 flag);
 
-int32 skill_blockpc_start(map_session_data*, int, t_tick);
+int32 skill_blockpc_start(map_session_data*, int32, t_tick);
 int32 skill_blockpc_get(map_session_data *sd, int32 skillid);
 int32 skill_blockpc_clear(map_session_data *sd);
 TIMER_FUNC(skill_blockpc_end);
-int32 skill_blockhomun_start (struct homun_data*,uint16 skill_id,int);
-int32 skill_blockmerc_start (s_mercenary_data*,uint16 skill_id,int);
+int32 skill_blockhomun_start (struct homun_data*,uint16 skill_id,int32);
+int32 skill_blockmerc_start (s_mercenary_data*,uint16 skill_id,int32);
 
 
 // (Epoque:) To-do: replace this macro with some sort of skill tree check (rather than hard-coded skill names)

@@ -715,7 +715,7 @@ int32 chmapif_parse_reqcharname(int32 fd){
 	WFIFOHEAD(fd,30);
 	WFIFOW(fd,0) = 0x2b09;
 	WFIFOL(fd,2) = RFIFOL(fd,2);
-	char_loadName((int)RFIFOL(fd,2), WFIFOCP(fd,6));
+	char_loadName((int32)RFIFOL(fd,2), WFIFOCP(fd,6));
 	WFIFOSET(fd,30);
 
 	RFIFOSKIP(fd,6);

@@ -1532,7 +1532,7 @@ int32 char_make_new_char( struct char_session_data* sd, char* name_, int32 str, 
 	}
 
 	//Retrieve the newly auto-generated char id
-	char_id = (int)Sql_LastInsertId(sql_handle);
+	char_id = (int32)Sql_LastInsertId(sql_handle);
 	//Give the char the default items
 	for (k = 0; k <= MAX_STARTITEM && tmp_start_items[k].nameid != 0; k++) {
 		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`char_id`,`nameid`, `amount`, `equip`, `identify`) VALUES ('%d', '%u', '%hu', '%u', '%d')", schema_config.inventory_db, char_id, tmp_start_items[k].nameid, tmp_start_items[k].amount, tmp_start_items[k].pos, 1) )
@@ -1869,7 +1869,7 @@ int32 char_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p){
 	else if( charserv_config.charmove_config.char_moves_unlimited )
 		info->chr_slot_changeCnt = 1;
 	else
-		info->chr_slot_changeCnt = max( 0, (int)p->character_moves );
+		info->chr_slot_changeCnt = max( 0, (int32)p->character_moves );
 #endif
 #if PACKETVER >= 20111025
 	info->chr_name_changeCnt = ( p->rename > 0 ) ? 1 : 0; // (0 = disabled, otherwise displays "Add-Ons" sidebar)

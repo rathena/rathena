@@ -29,7 +29,7 @@ using namespace rathena;
 std::unordered_map<uint16, std::shared_ptr<struct s_storage_table>> storage_db;
 
 ///Databases of guild_storage : int32 guild_id -> struct guild_storage
-std::map<int, struct s_storage> guild_storage_db;
+std::map<int32, struct s_storage> guild_storage_db;
 
 /**
  * Get storage name

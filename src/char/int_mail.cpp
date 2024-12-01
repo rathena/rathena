@@ -111,7 +111,7 @@ int32 mail_savemessage(struct mail_message* msg)
 		Sql_QueryStr( sql_handle, "ROLLBACK" );
 		return msg->id = 0;
 	} else
-		msg->id = (int)SqlStmt_LastInsertId(stmt);
+		msg->id = (int32)SqlStmt_LastInsertId(stmt);
 
 	SqlStmt_Free(stmt);
 	

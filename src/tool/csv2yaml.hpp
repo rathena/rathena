@@ -150,10 +150,10 @@ struct s_job_param {
 	int32 str, agi, vit, int_, dex, luk;
 };
 
-std::unordered_map<int, std::vector<int>> job_db2;
-std::unordered_map<int, std::vector<int64>> job_hp, job_sp;
-std::unordered_map<int, s_job_param> job_param;
-std::unordered_map<int, int> exp_base_level, exp_job_level;
+std::unordered_map<int32, std::vector<int32>> job_db2;
+std::unordered_map<int32, std::vector<int64>> job_hp, job_sp;
+std::unordered_map<int32, s_job_param> job_param;
+std::unordered_map<int32, int32> exp_base_level, exp_job_level;
 
 struct s_elemental_skill_csv {
 	std::string skill_name,

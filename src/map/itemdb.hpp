@@ -3539,7 +3539,7 @@ bool itemdb_canstore_sub(struct item_data *itd, int32 gmlv, int32 unused);
 bool itemdb_canguildstore_sub(struct item_data *itd, int32 gmlv, int32 unused);
 bool itemdb_canmail_sub(struct item_data *itd, int32 gmlv, int32 unused);
 bool itemdb_canauction_sub(struct item_data *itd, int32 gmlv, int32 unused);
-bool itemdb_isrestricted(struct item* item, int32 gmlv, int32 gmlv2, bool (*func)(struct item_data*, int, int));
+bool itemdb_isrestricted(struct item* item, int32 gmlv, int32 gmlv2, bool (*func)(struct item_data*, int32, int32));
 bool itemdb_ishatched_egg(struct item* item);
 #define itemdb_isdropable(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_isdropable_sub)
 #define itemdb_cantrade(item, gmlv, gmlv2) itemdb_isrestricted(item, gmlv, gmlv2, itemdb_cantrade_sub)

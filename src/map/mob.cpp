@@ -793,11 +793,11 @@ static TIMER_FUNC(mob_spawn_guardian_sub){
 
 	md = (struct mob_data*)bl;
 	nullpo_ret(md->guardian_data);
-	auto g = guild_search((int)data);
+	auto g = guild_search((int32)data);
 
 	if (g == nullptr)
 	{	//Liberate castle, if the guild is not found this is an error! [Skotlex]
-		ShowError("mob_spawn_guardian_sub: Couldn't load guild %d!\n", (int)data);
+		ShowError("mob_spawn_guardian_sub: Couldn't load guild %d!\n", (int32)data);
 		if (md->mob_id == MOBID_EMPERIUM)
 		{	//Not sure this is the best way, but otherwise we'd be invoking this for ALL guardians spawned later on.
 			md->guardian_data->guild_id = 0;
@@ -912,7 +912,7 @@ int32 mob_spawn_guardian(const char* mapname, int16 x, int16 y, const char* mobn
 		if( i == gc->temp_guardians_max )
 		{
 			++(gc->temp_guardians_max);
-			RECREATE(gc->temp_guardians, int, gc->temp_guardians_max);
+			RECREATE(gc->temp_guardians, int32, gc->temp_guardians_max);
 		}
 		gc->temp_guardians[i] = md->bl.id;
 	}
@@ -1012,7 +1012,7 @@ int32 mob_linksearch(struct block_list *bl,va_list ap)
 
 	nullpo_ret(bl);
 	md=(struct mob_data *)bl;
-	mob_id = va_arg(ap, int);
+	mob_id = va_arg(ap, int32);
 	target = va_arg(ap, struct block_list *);
 	tick=va_arg(ap, t_tick);
 
@@ -1091,7 +1091,7 @@ int32 mob_setdelayspawn(struct mob_data *md)
 
 int32 mob_count_sub(struct block_list *bl, va_list ap) {
     int32 mobid[10], i;
-    ARR_FIND(0, 10, i, (mobid[i] = va_arg(ap, int)) == 0); //fetch till 0
+    ARR_FIND(0, 10, i, (mobid[i] = va_arg(ap, int32)) == 0); //fetch till 0
 	mob_data* md = BL_CAST(BL_MOB, bl);
 	if (md && mobid[0]) { //if there one let's check it otherwise go backward
         ARR_FIND(0, 10, i, md->mob_id == mobid[i]);
@@ -1291,7 +1291,7 @@ static int32 mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 	nullpo_ret(bl);
 	md=va_arg(ap,struct mob_data *);
 	target= va_arg(ap,struct block_list**);
-	mode= static_cast<enum e_mode>(va_arg(ap, int));
+	mode= static_cast<enum e_mode>(va_arg(ap, int32));
 
 	//If can't seek yet, not an enemy, or you can't attack it, skip.
 	if ((*target) == bl || !status_check_skilluse(&md->bl, bl, 0, 0))
@@ -2103,7 +2103,7 @@ static int32 mob_ai_sub_lazy(struct mob_data *md, va_list args)
 	t_tick tick = va_arg(args,t_tick);
 
 	if (battle_config.mob_ai&0x20 && map_getmapdata(md->bl.m)->users>0)
-		return (int)mob_ai_sub_hard(md, tick);
+		return (int32)mob_ai_sub_hard(md, tick);
 
 	if (md->bl.prev==nullptr || md->status.hp == 0)
 		return 1;
@@ -2114,7 +2114,7 @@ static int32 mob_ai_sub_lazy(struct mob_data *md, va_list args)
 		DIFF_TICK(tick,md->last_thinktime) > MIN_MOBTHINKTIME)
 	{
 		if (DIFF_TICK(tick,md->last_pcneartime) < battle_config.mob_active_time)
-			return (int)mob_ai_sub_hard(md, tick);
+			return (int32)mob_ai_sub_hard(md, tick);
 		md->last_pcneartime = 0;
 	}
 
@@ -2124,7 +2124,7 @@ static int32 mob_ai_sub_lazy(struct mob_data *md, va_list args)
 		DIFF_TICK(tick,md->last_thinktime) > MIN_MOBTHINKTIME)
 	{
 		if (DIFF_TICK(tick,md->last_pcneartime) < battle_config.boss_active_time)
-			return (int)mob_ai_sub_hard(md, tick);
+			return (int32)mob_ai_sub_hard(md, tick);
 		md->last_pcneartime = 0;
 	}
 
@@ -2369,7 +2369,7 @@ int32 mob_deleteslave_sub(struct block_list *bl,va_list ap)
 	nullpo_ret(bl);
 	nullpo_ret(md = (struct mob_data *)bl);
 
-	id=va_arg(ap,int);
+	id=va_arg(ap,int32);
 	if(md->master_id > 0 && md->master_id == id )
 		status_kill(bl);
 	return 0;
@@ -2530,7 +2530,7 @@ void mob_damage(struct mob_data *md, struct block_list *src, int32 damage)
 		else if (md->tdmg == UINT_MAX)
 			damage = 0; //Stop recording damage once the cap has been reached.
 		else { //Cap damage log...
-			damage = (int)(UINT_MAX - md->tdmg);
+			damage = (int32)(UINT_MAX - md->tdmg);
 			md->tdmg = UINT_MAX;
 		}
 		if ((src != &md->bl) && md->state.aggressive) //No longer aggressive, change to retaliate AI.
@@ -2582,14 +2582,14 @@ int32 mob_getdroprate(struct block_list *src, std::shared_ptr<s_mob_db> mob, int
 		if (battle_config.drops_by_luk) // Drops affected by luk as a fixed increase [Valaris]
 			drop_rate += status_get_luk(src) * battle_config.drops_by_luk / 100;
 		if (battle_config.drops_by_luk2) // Drops affected by luk as a % increase [Skotlex]
-			drop_rate += (int)(0.5 + drop_rate * status_get_luk(src) * battle_config.drops_by_luk2 / 10000.);
+			drop_rate += (int32)(0.5 + drop_rate * status_get_luk(src) * battle_config.drops_by_luk2 / 10000.);
 
 		if (src->type == BL_PC) { // Player specific drop rate adjustments
 			map_session_data *sd = (map_session_data*)src;
 			int32 drop_rate_bonus = 100;
 
 			// In PK mode players get an additional drop chance bonus of 25% if there is a 20 level difference
-			if( battle_config.pk_mode && (int)(mob->lv - sd->status.base_level) >= 20 ){
+			if( battle_config.pk_mode && (int32)(mob->lv - sd->status.base_level) >= 20 ){
 				drop_rate_bonus += 25;
 			}
 
@@ -2611,7 +2611,7 @@ int32 mob_getdroprate(struct block_list *src, std::shared_ptr<s_mob_db> mob, int
 			} else
 				cap = battle_config.drop_rate_cap;
 
-			drop_rate = (int)( 0.5 + drop_rate * drop_rate_bonus / 100. );
+			drop_rate = (int32)( 0.5 + drop_rate * drop_rate_bonus / 100. );
 
 			// Now limit the drop rate to never be exceed the cap (default: 90%), unless it is originally above it already.
 			if( drop_rate > cap && base_rate < cap ){
@@ -2807,7 +2807,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 
 			if(battle_config.zeny_from_mobs && md->level) {
 				 // zeny calculation moblv + random moblv [Valaris]
-				zeny=(int) ((md->level+rnd()%md->level)*per*bonus/100.);
+				zeny=(int32) ((md->level+rnd()%md->level)*per*bonus/100.);
 				if( md->get_bosstype() == BOSSTYPE_MVP )
 					zeny*=rnd()%250;
 			}
@@ -3563,7 +3563,7 @@ int32 mob_warpslave_sub(struct block_list *bl,va_list ap)
 	struct block_list *master;
 	short x,y,range=0;
 	master = va_arg(ap, struct block_list*);
-	range = va_arg(ap, int);
+	range = va_arg(ap, int32);
 
 	if(md->master_id!=master->id)
 		return 0;
@@ -3593,7 +3593,7 @@ int32 mob_countslave_sub(struct block_list *bl,va_list ap)
 {
 	int32 id;
 	struct mob_data *md;
-	id=va_arg(ap,int);
+	id=va_arg(ap,int32);
 
 	md = (struct mob_data *)bl;
 	if( md->master_id==id )
@@ -3616,7 +3616,7 @@ int32 mob_countslave(struct block_list *bl)
  * @return 1 on removal, otherwise 0
  */
 int32 mob_removeslaves_sub(block_list *bl, va_list ap) {
-	int32 id = va_arg(ap, int);
+	int32 id = va_arg(ap, int32);
 	mob_data *md = (mob_data *)bl;
 
 	if (md != nullptr && md->master_id == id) {
@@ -6117,11 +6117,11 @@ static bool mob_parse_row_mobskilldb( char** str, size_t columns, size_t current
 	if( j < ARRAYLENGTH(cond2) )
 		ms->cond2 = cond2[j].id;
 
-	ms->val[0] = (int)strtol(str[12],nullptr,0);
-	ms->val[1] = (int)strtol(str[13],nullptr,0);
-	ms->val[2] = (int)strtol(str[14],nullptr,0);
-	ms->val[3] = (int)strtol(str[15],nullptr,0);
-	ms->val[4] = (int)strtol(str[16],nullptr,0);
+	ms->val[0] = (int32)strtol(str[12],nullptr,0);
+	ms->val[1] = (int32)strtol(str[13],nullptr,0);
+	ms->val[2] = (int32)strtol(str[14],nullptr,0);
+	ms->val[3] = (int32)strtol(str[15],nullptr,0);
+	ms->val[4] = (int32)strtol(str[16],nullptr,0);
 
 	if(ms->skill_id == NPC_EMOTION && mob_id > 0 &&
 		ms->val[1] == mob->status.mode)

@@ -152,7 +152,7 @@ int32 inter_party_tosql(struct party *p, int32 flag, int32 index)
 			Sql_ShowDebug(sql_handle);
 			return 0;
 		}
-		party_id = p->party_id = (int)Sql_LastInsertId(sql_handle);
+		party_id = p->party_id = (int32)Sql_LastInsertId(sql_handle);
 	}
 
 	if( flag & PS_BASIC )

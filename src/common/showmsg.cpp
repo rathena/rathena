@@ -549,7 +549,7 @@ int32	VFPRINTF(FILE *file, const char *fmt, va_list argptr)
 	p = BUFVAL(tempbuf);
 	while ((q = strchr(p, 0x1b)) != nullptr)
 	{	// find the escape character
-		fprintf(file, "%.*s", (int)(q-p), p); // write up to the escape
+		fprintf(file, "%.*s", (int32)(q-p), p); // write up to the escape
 		if( q[1]!='[' )
 		{	// write the escape char (whatever purpose it has) 
 			fprintf(file, "%.*s", 1, q);

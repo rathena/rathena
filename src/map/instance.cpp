@@ -38,7 +38,7 @@ struct s_instance_wait {
 int16 instance_start = 0; // Instance MapID start
 int32 instance_count = 1; // Total created instances
 
-std::unordered_map<int, std::shared_ptr<s_instance_data>> instances;
+std::unordered_map<int32, std::shared_ptr<s_instance_data>> instances;
 
 const std::string InstanceDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/instance_db.yml";
@@ -574,7 +574,7 @@ static int32 instance_addnpc_sub(struct block_list *bl, va_list ap)
 	nullpo_retr(0, bl);
 	nullpo_retr(0, nd = (struct npc_data *)bl);
 
-	return npc_duplicate4instance(nd, va_arg(ap, int));
+	return npc_duplicate4instance(nd, va_arg(ap, int32));
 }
 
 /**

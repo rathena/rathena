@@ -434,7 +434,7 @@ void* grfio_reads(const char* fname, size_t* size)
 				len = entry->declen;
 				decode_zip(buf2, &len, buf, entry->srclen);
 				if (len != (uLong)entry->declen) {
-					ShowError("decode_zip size mismatch err: %d != %d\n", (int)len, entry->declen);
+					ShowError("decode_zip size mismatch err: %d != %d\n", (int32)len, entry->declen);
 					aFree(buf);
 					aFree(buf2);
 					return nullptr;
@@ -626,7 +626,7 @@ static int32 grfio_entryread(const char* grfname, int32 gentry)
 			FILELIST aentry;
 
 			char* fname = (char*)(grf_filelist+ofs);
-			int32 ofs2 = ofs + (int)strlen(fname)+1;
+			int32 ofs2 = ofs + (int32)strlen(fname)+1;
 			int32 type = grf_filelist[ofs2+12];
 
 			if( strlen(fname) > sizeof(aentry.fn)-1 ) {

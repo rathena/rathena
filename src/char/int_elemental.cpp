@@ -28,7 +28,7 @@ bool mapif_elemental_save(struct s_elemental* ele) {
 			flag = false;
 		}
 		else
-			ele->elemental_id = (int)Sql_LastInsertId(sql_handle);
+			ele->elemental_id = (int32)Sql_LastInsertId(sql_handle);
 	} else if( SQL_ERROR == Sql_Query(sql_handle,
 									"UPDATE `%s` SET `char_id` = '%d', `class` = '%d', `mode` = '%d', `hp` = '%u', `sp` = '%u',"
 									"`max_hp` = '%u', `max_sp` = '%u', `atk1` = '%d', `atk2` = '%d', `matk` = '%d', `aspd` = '%d', `def` = '%d',"
@@ -153,8 +153,8 @@ int32 inter_elemental_parse_frommap(int32 fd) {
 
 	switch( cmd ) {
 		case 0x307c: mapif_parse_elemental_create(fd, (struct s_elemental*)RFIFOP(fd,4)); break;
-		case 0x307d: mapif_parse_elemental_load(fd, (int)RFIFOL(fd,2), (int)RFIFOL(fd,6)); break;
-		case 0x307e: mapif_parse_elemental_delete(fd, (int)RFIFOL(fd,2)); break;
+		case 0x307d: mapif_parse_elemental_load(fd, (int32)RFIFOL(fd,2), (int32)RFIFOL(fd,6)); break;
+		case 0x307e: mapif_parse_elemental_delete(fd, (int32)RFIFOL(fd,2)); break;
 		case 0x307f: mapif_parse_elemental_save(fd, (struct s_elemental*)RFIFOP(fd,4)); break;
 		default:
 			return 0;

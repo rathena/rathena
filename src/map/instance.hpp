@@ -114,7 +114,7 @@ public:
 
 extern InstanceDatabase instance_db;
 
-extern std::unordered_map<int, std::shared_ptr<s_instance_data>> instances;
+extern std::unordered_map<int32, std::shared_ptr<s_instance_data>> instances;
 
 std::shared_ptr<s_instance_db> instance_search_db_name(const char* name);
 void instance_getsd(int32 instance_id, map_session_data *&sd, enum send_target *target);

@@ -796,7 +796,7 @@ int32 achievement_check_progress(map_session_data *sd, int32 achievement_id, int
 	else if (type == ACHIEVEINFO_COMPLETE)
 		return sd->achievement_data.achievements[i].completed > 0;
 	else if (type == ACHIEVEINFO_COMPLETEDATE)
-		return (int)sd->achievement_data.achievements[i].completed;
+		return (int32)sd->achievement_data.achievements[i].completed;
 	else if (type == ACHIEVEINFO_GOTREWARD)
 		return sd->achievement_data.achievements[i].rewarded > 0;
 	return -2;
@@ -912,7 +912,7 @@ bool achievement_check_condition( struct script_code* condition, map_session_dat
  * @param current_count: Current target data
  * @return True if all target values meet the requirements or false otherwise
  */
-static bool achievement_target_complete(std::shared_ptr<s_achievement_db> ad, std::array<int, MAX_ACHIEVEMENT_OBJECTIVES> current_count) {
+static bool achievement_target_complete(std::shared_ptr<s_achievement_db> ad, std::array<int32, MAX_ACHIEVEMENT_OBJECTIVES> current_count) {
 	return std::find_if(ad->targets.begin(), ad->targets.end(),
 		[current_count](const std::pair<uint16, std::shared_ptr<achievement_target>> &target) -> bool {
 		return current_count[target.first] < target.second->count;
@@ -927,7 +927,7 @@ static bool achievement_target_complete(std::shared_ptr<s_achievement_db> ad, st
  * @param update_count: Objective values from event
  * @return 1 on success and false on failure
  */
-static bool achievement_update_objectives(map_session_data *sd, std::shared_ptr<struct s_achievement_db> ad, enum e_achievement_group group, const std::array<int, MAX_ACHIEVEMENT_OBJECTIVES> &update_count)
+static bool achievement_update_objectives(map_session_data *sd, std::shared_ptr<struct s_achievement_db> ad, enum e_achievement_group group, const std::array<int32, MAX_ACHIEVEMENT_OBJECTIVES> &update_count)
 {
 	if (!ad || !sd)
 		return false;
@@ -940,7 +940,7 @@ static bool achievement_update_objectives(map_session_data *sd, std::shared_ptr<
 
 	struct achievement *entry = nullptr;
 	bool isNew = false, changed = false, complete = false;
-	std::array<int, MAX_ACHIEVEMENT_OBJECTIVES> current_count = {}; // Player's current objective values
+	std::array<int32, MAX_ACHIEVEMENT_OBJECTIVES> current_count = {}; // Player's current objective values
 	int32 i;
 
 	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == ad->achievement_id);
@@ -1094,15 +1094,15 @@ void achievement_update_objective(map_session_data *sd, enum e_achievement_group
 
 	if (sd) {
 		va_list ap;
-		std::array<int, MAX_ACHIEVEMENT_OBJECTIVES> count = {};
+		std::array<int32, MAX_ACHIEVEMENT_OBJECTIVES> count = {};
 
 		va_start(ap, arg_count);
 		for (int32 i = 0; i < arg_count; i++){
 			std::string name = "ARG" + std::to_string(i);
 
-			count[i] = va_arg(ap, int);
+			count[i] = va_arg(ap, int32);
 
-			pc_setglobalreg( sd, add_str( name.c_str() ), (int)count[i] );
+			pc_setglobalreg( sd, add_str( name.c_str() ), (int32)count[i] );
 		}
 		va_end(ap);
 
@@ -1133,8 +1133,8 @@ int32 achievement_update_objective_sub(block_list *bl, va_list ap)
 	nullpo_ret(bl);
 	nullpo_ret(sd = (map_session_data *)bl);
 
-	party_id = va_arg(ap, int);
-	mob_id = va_arg(ap, int);
+	party_id = va_arg(ap, int32);
+	mob_id = va_arg(ap, int32);
 
 	if (sd->achievement_data.achievements == nullptr)
 		return 0;

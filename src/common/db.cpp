@@ -49,7 +49,7 @@
  *  HISTORY:
  *    2013/08/25 - Added int64/uint64 support for keys [Ind/Hercules]
  *    2013/04/27 - Added ERS to speed up iterator memory allocation [Ind/Hercules]
- *    2012/03/09 - Added enum for data types (int, uint, void*)
+ *    2012/03/09 - Added enum for data types (int32, uint32, void*)
  *    2008/02/19 - Fixed db_obj_get not handling deleted entries correctly.
  *    2007/11/09 - Added an iterator to the database.
  *    2006/12/21 - Added 1-node cache to the database.
@@ -178,7 +178,7 @@ struct db_free {
  * @param maxlen Maximum length of strings in DB_STRING and DB_ISTRING databases
  * @param global_lock Global lock of the database
  * @private
- * @see #db_alloc(const char*,int,DBType,DBOptions,unsigned short)
+ * @see #db_alloc(const char*,int32,DBType,DBOptions,unsigned short)
  */
 typedef struct DBMap_impl {
 	// Database interface
@@ -2373,7 +2373,7 @@ static DBOptions db_obj_options(DBMap* self)
  * @return Fixed options of the database
  * @private
  * @see #db_default_release(DBType,DBOptions)
- * @see #db_alloc(const char *,int,DBType,DBOptions,unsigned short)
+ * @see #db_alloc(const char *,int32,DBType,DBOptions,unsigned short)
  */
 DBOptions db_fix_options(DBType type, DBOptions options)
 {

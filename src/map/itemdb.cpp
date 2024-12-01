@@ -3216,7 +3216,7 @@ bool itemdb_canauction_sub(struct item_data* item, int32 gmlv, int32 unused) {
 	return (item && (!(item->flag.trade_restriction.auction) || gmlv >= item->gm_lv_trade_override));
 }
 
-bool itemdb_isrestricted(struct item* item, int32 gmlv, int32 gmlv2, bool (*func)(struct item_data*, int, int))
+bool itemdb_isrestricted(struct item* item, int32 gmlv, int32 gmlv2, bool (*func)(struct item_data*, int32, int32))
 {
 	struct item_data* item_data = itemdb_search(item->nameid);
 	int32 i;
@@ -3829,7 +3829,7 @@ bool itemdb_parse_roulette_db(void)
 			j = rd.items[i];
 			RECREATE(rd.nameid[i], t_itemid, ++rd.items[i]);
 			RECREATE(rd.qty[i], unsigned short, rd.items[i]);
-			RECREATE(rd.flag[i], int, rd.items[i]);
+			RECREATE(rd.flag[i], int32, rd.items[i]);
 
 			rd.nameid[i][j] = item_id;
 			rd.qty[i][j] = amount;
@@ -3860,7 +3860,7 @@ bool itemdb_parse_roulette_db(void)
 		rd.items[i] = limit;
 		RECREATE(rd.nameid[i], t_itemid, rd.items[i]);
 		RECREATE(rd.qty[i], unsigned short, rd.items[i]);
-		RECREATE(rd.flag[i], int, rd.items[i]);
+		RECREATE(rd.flag[i], int32, rd.items[i]);
 
 		for (j = 0; j < MAX_ROULETTE_COLUMNS - i; j++) {
 			if (rd.qty[i][j])

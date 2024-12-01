@@ -149,7 +149,7 @@ int32 inter_guild_tosql( mmo_guild &g, int32 flag ){
 		}
 		else
 		{
-			g.guild_id = (int)Sql_LastInsertId(sql_handle);
+			g.guild_id = (int32)Sql_LastInsertId(sql_handle);
 			new_guild = 1;
 		}
 	}
@@ -1166,7 +1166,7 @@ int32 mapif_guild_master_changed( const struct mmo_guild &g, int32 aid, int32 ci
 
 int32 mapif_guild_castle_dataload(int32 fd, int32 sz, int32 *castle_ids)
 {
-	int32 num = (sz - 4) / sizeof(int);
+	int32 num = (sz - 4) / sizeof(int32);
 	int32 len = 4 + num * sizeof( struct guild_castle );
 	int32 i;
 

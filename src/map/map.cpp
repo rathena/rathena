@@ -757,7 +757,7 @@ int32 map_foreachinshootrange(int32 (*func)(struct block_list*,va_list),struct b
  * @param y1: North end of area
  * @param type: Type of bl to search for
 *------------------------------------------*/
-int32 map_foreachinareaV(int(*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int32 type, va_list ap, bool wall_check)
+int32 map_foreachinareaV(int32 (*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int32 type, va_list ap, bool wall_check)
 {
 	int32 bx, by, cx, cy;
 	int32 returnCount = 0;	//total sum of returned values of func()
@@ -845,7 +845,7 @@ int32 map_foreachinallarea(int32 (*func)(struct block_list*,va_list), int16 m, i
 	return returnCount;
 }
 
-int32 map_foreachinshootarea(int(*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int32 type, ...)
+int32 map_foreachinshootarea(int32 (*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int32 type, ...)
 {
 	int32 returnCount = 0;
 	va_list ap;
@@ -854,7 +854,7 @@ int32 map_foreachinshootarea(int(*func)(struct block_list*, va_list), int16 m, i
  	va_end(ap);
 	return returnCount;
 }
-int32 map_foreachinarea(int(*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int32 type, ...)
+int32 map_foreachinarea(int32 (*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int32 type, ...)
 {
 	int32 returnCount = 0;
 	va_list ap;
@@ -1237,7 +1237,7 @@ int32 map_foreachinpath(int32 (*func)(struct block_list*,va_list),int16 m,int16 
 
 	if ( length ) { //Adjust final position to fit in the given area.
 		//TODO: Find an alternate method which does not requires a square root calculation.
-		k = (int)sqrt((float)magnitude2);
+		k = (int32)sqrt((float)magnitude2);
 		mx1 = x0 + (x1 - x0) * length / k;
 		my1 = y0 + (y1 - y0) * length / k;
 		len_limit = MAGNITUDE2(x0, y0, mx1, my1);
@@ -1377,7 +1377,7 @@ int32 map_foreachinpath(int32 (*func)(struct block_list*,va_list),int16 m,int16 
 * @param offset: Moves the whole path, half-length for diagonal paths
 * @param type: Type of bl to search for
 *------------------------------------------*/
-int32 map_foreachindir(int(*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int16 range, int32 length, int32 offset, int32 type, ...)
+int32 map_foreachindir(int32 (*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int16 range, int32 length, int32 offset, int32 type, ...)
 {
 	int32 returnCount = 0;  //Total sum of returned values of func()
 
@@ -3301,7 +3301,7 @@ void map_setcell(int16 m, int16 x, int16 y, cell_t cell, bool flag)
 		case CELL_ICEWALL:		 mapdata->cell[j].icewall = flag;		  break;
 		case CELL_NOBUYINGSTORE: mapdata->cell[j].nobuyingstore = flag; break;
 		default:
-			ShowWarning("map_setcell: invalid cell type '%d'\n", (int)cell);
+			ShowWarning("map_setcell: invalid cell type '%d'\n", (int32)cell);
 			break;
 	}
 }

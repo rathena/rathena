@@ -61,7 +61,7 @@ struct achievement *mapif_achievements_fromsql(uint32 char_id, int32 *count)
 	for (i = 0; i < MAX_ACHIEVEMENT_OBJECTIVES; ++i)
 		SqlStmt_BindColumn(stmt, 3 + i, SQLDT_INT, &tmp_achieve.count[i], 0, nullptr, nullptr);
 
-	*count = (int)SqlStmt_NumRows(stmt);
+	*count = (int32)SqlStmt_NumRows(stmt);
 	if (*count > 0) {
 		i = 0;
 

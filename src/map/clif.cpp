@@ -414,9 +414,9 @@ static int32 clif_send_sub(struct block_list *bl, va_list ap)
 	}
 
 	buf = va_arg(ap,unsigned char*);
-	len = va_arg(ap,int);
+	len = va_arg(ap,int32);
 	nullpo_ret(src_bl = va_arg(ap,struct block_list*));
-	type = va_arg(ap,int);
+	type = va_arg(ap,int32);
 
 	switch(type) {
 	case AREA_WOS:
@@ -1006,7 +1006,7 @@ void clif_clearunit_delayed(struct block_list* bl, clr_type type, t_tick tick)
 	tbl->x = bl->x;
 	tbl->y = bl->y;
 	tbl->type = BL_NUL;
-	add_timer(tick, clif_clearunit_delayed_sub, (int)type, (intptr_t)tbl);
+	add_timer(tick, clif_clearunit_delayed_sub, (int32)type, (intptr_t)tbl);
 }
 
 void clif_get_weapon_view(map_session_data* sd, t_itemid *rhand, t_itemid *lhand)
@@ -3018,7 +3018,7 @@ static void clif_inventoryStart( map_session_data*sd, e_inventory_type type, con
 	p->invType = type;
 #endif
 #if PACKETVER_RE_NUM >= 20180919 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
-	int32 strLen = (int)safestrnlen(name, 24) + 1;
+	int32 strLen = (int32)safestrnlen(name, 24) + 1;
 	if (strLen > 24)
 		strLen = 24;
 	const int32 len = sizeof(PACKET_ZC_INVENTORY_START) + strLen;
@@ -5175,8 +5175,8 @@ static int32 clif_hallucination_damage()
 ///     12 = (touch skill?)
 ///     13 = multi-hit critical
 int32 clif_damage(block_list& src, block_list& dst, t_tick tick, int32 sdelay, int32 ddelay, int64 sdamage, int32 div, enum e_damage_type type, int64 sdamage2, bool spdamage){
-	int32 damage = (int)cap_value(sdamage,INT_MIN,INT_MAX);
-	int32 damage2 = (int)cap_value(sdamage2,INT_MIN,INT_MAX);
+	int32 damage = (int32)cap_value(sdamage,INT_MIN,INT_MAX);
+	int32 damage2 = (int32)cap_value(sdamage2,INT_MIN,INT_MAX);
 
 	if (type != DMG_MULTI_HIT_CRITICAL)
 		type = clif_calc_delay(type,div,damage+damage2,ddelay);
@@ -5976,7 +5976,7 @@ void clif_skill_cooldown( map_session_data &sd, uint16 skill_id, t_tick tick ){
 int32 clif_skill_damage(struct block_list *src,struct block_list *dst,t_tick tick,int32 sdelay,int32 ddelay,int64 sdamage,int32 div,uint16 skill_id,uint16 skill_lv,enum e_damage_type type)
 {
 	unsigned char buf[64];
-	int32 damage = (int)cap_value(sdamage,INT_MIN,INT_MAX);
+	int32 damage = (int32)cap_value(sdamage,INT_MIN,INT_MAX);
 
 	nullpo_ret(src);
 	nullpo_ret(dst);
@@ -10567,7 +10567,7 @@ inline void clif_pk_mode_message(map_session_data * sd)
 {
 	if (battle_config.pk_mode && battle_config.pk_mode_mes &&
 		sd && map_getmapflag(sd->bl.m, MF_PVP)) {
-		if( (int)sd->status.base_level < battle_config.pk_min_level ) {
+		if( (int32)sd->status.base_level < battle_config.pk_min_level ) {
 			char output[CHAT_SIZE_MAX];
 			// 1504: You've entered a PK Zone (safe until level %d).
 			safesnprintf(output, CHAT_SIZE_MAX, msg_txt(sd,1504), 
@@ -10610,13 +10610,13 @@ static int32 clif_parse_WantToConnection_sub(int32 fd)
 	// case.
 	if( packet_len != packet_db[cmd].len )
 		return 1; /* wrong length */
-	else if( (value=(int)RFIFOL(fd, packet_db[cmd].pos[0])) < START_ACCOUNT_NUM || value > END_ACCOUNT_NUM )
+	else if( (value=(int32)RFIFOL(fd, packet_db[cmd].pos[0])) < START_ACCOUNT_NUM || value > END_ACCOUNT_NUM )
 		return 2; /* invalid account_id */
-	else if( (value=(int)RFIFOL(fd, packet_db[cmd].pos[1])) <= 0 )
+	else if( (value=(int32)RFIFOL(fd, packet_db[cmd].pos[1])) <= 0 )
 		return 3; /* invalid char_id */
 	/*                   RFIFOL(fd, packet_db[cmd].pos[2]) - don't care about login_id1 */
 	/*                   RFIFOL(fd, packet_db[cmd].pos[3]) - don't care about client_tick */
-	else if( (value=(int)RFIFOB(fd, packet_db[cmd].pos[4])) != 0 && value != 1 )
+	else if( (value=(int32)RFIFOB(fd, packet_db[cmd].pos[4])) != 0 && value != 1 )
 		return 6; /* invalid sex */
 	else
 		return 0;
@@ -12596,7 +12596,7 @@ void clif_parse_SelectCart(int32 fd,map_session_data *sd) {
 	if( !sd || pc_checkskill(sd,MC_CARTDECORATE) < 1 || RFIFOL(fd,2) != sd->status.account_id )
 	return;
 
-	type = (int)RFIFOB(fd,6);
+	type = (int32)RFIFOB(fd,6);
 
 	// Check type
 	if( type < 10 || type > 12 ) 
@@ -12623,7 +12623,7 @@ void clif_parse_ChangeCart(int32 fd,map_session_data *sd)
 	}
 #endif
 
-	type = (int)RFIFOW(fd,packet_db[RFIFOW(fd,0)].pos[0]);
+	type = (int32)RFIFOW(fd,packet_db[RFIFOW(fd,0)].pos[0]);
 
 	if( 
 #ifdef NEW_CARTS
@@ -13285,7 +13285,7 @@ void clif_parse_NpcNextClicked(int32 fd,map_session_data *sd)
 void clif_parse_NpcAmountInput(int32 fd,map_session_data *sd){
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
 	int32 npcid = RFIFOL(fd,info->pos[0]);
-	int32 amount = (int)RFIFOL(fd,info->pos[1]);
+	int32 amount = (int32)RFIFOL(fd,info->pos[1]);
 
 	sd->npc_amount = amount;
 
@@ -15134,7 +15134,7 @@ void clif_parse_NoviceExplosionSpirits(int32 fd, map_session_data *sd)
 		t_exp next = pc_nextbaseexp(sd);
 
 		if( next ) {
-			int32 percent = (int)( ( (double)sd->status.base_exp/(double)next )*1000. );
+			int32 percent = (int32)( ( (double)sd->status.base_exp/(double)next )*1000. );
 
 			if( percent && ( percent%100 ) == 0 ) {// 10.0%, 20.0%, ..., 90.0%
 				sc_start(&sd->bl,&sd->bl, SC_EXPLOSIONSPIRITS, 100, 17, skill_get_time(MO_EXPLOSIONSPIRITS, 5)); //Lv17-> +50 critical (noted by Poki) [Skotlex]
@@ -15181,9 +15181,9 @@ void clif_friendslist_toggle(map_session_data *sd,uint32 account_id, uint32 char
 int32 clif_friendslist_toggle_sub(map_session_data *sd,va_list ap)
 {
 	uint32 account_id, char_id, online;
-	account_id = va_arg(ap, int);
-	char_id = va_arg(ap, int);
-	online = va_arg(ap, int);
+	account_id = va_arg(ap, int32);
+	char_id = va_arg(ap, int32);
+	online = va_arg(ap, int32);
 	clif_friendslist_toggle(sd, account_id, char_id, online);
 	return 0;
 }
@@ -16280,7 +16280,7 @@ void clif_parse_Mail_read(int32 fd, map_session_data *sd){
 	int32 mail_id = RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[0]);
 #else
 	//uint8 openType = RFIFOB(fd, 2);
-	int32 mail_id = (int)RFIFOQ(fd, 3);
+	int32 mail_id = (int32)RFIFOQ(fd, 3);
 #endif
 
 	if( mail_id <= 0 )
@@ -16381,7 +16381,7 @@ void clif_parse_Mail_getattach( int32 fd, map_session_data *sd ){
 	int32 attachment = MAIL_ATT_ALL;
 #else
 	uint16 packet_id = RFIFOW(fd, 0);
-	int32 mail_id = (int)RFIFOQ(fd, 2);
+	int32 mail_id = (int32)RFIFOQ(fd, 2);
 	//int32 openType = RFIFOB(fd, 10);
 	int32 attachment = packet_id == 0x9f1 ? MAIL_ATT_ZENY : packet_id == 0x9f3 ? MAIL_ATT_ITEM : MAIL_ATT_NONE;
 #endif
@@ -16484,7 +16484,7 @@ void clif_parse_Mail_delete(int32 fd, map_session_data *sd){
 	int32 mail_id = RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[0]);
 #else
 	//int32 openType = RFIFOB(fd, 2);
-	int32 mail_id = (int)RFIFOQ(fd, 3);
+	int32 mail_id = (int32)RFIFOQ(fd, 3);
 #endif
 	int32 i, j;
 
@@ -19198,7 +19198,7 @@ void clif_buyingstore_update_item( map_session_data* sd, t_itemid nameid, unsign
 #if PACKETVER >= 20141016
 	p.zeny = zeny;
 	p.charId = char_id;  // GID
-	p.updateTime = (int)time(nullptr);
+	p.updateTime = (int32)time(nullptr);
 #endif
 
 	clif_send( &p, sizeof( p ), &sd->bl, SELF );
@@ -25505,7 +25505,7 @@ static int32 clif_parse(int32 fd)
 			return 0;
 		}
 	}
-	if ((int)RFIFOREST(fd) < packet_len){
+	if ((int32)RFIFOREST(fd) < packet_len){
 		ShowWarning( "clif_parse: Received packet 0x%04x with expected packet length %d, but only %d bytes remaining, disconnecting session #%d.\n", cmd, packet_len, RFIFOREST( fd ), fd );
 #ifdef DUMP_INVALID_PACKET
 		ShowDump( RFIFOP( fd, 0 ), RFIFOREST( fd ) );
@@ -25540,7 +25540,7 @@ static int32 clif_parse(int32 fd)
 	return 0;
 }
 
-void packetdb_addpacket( uint16 cmd, uint16 length, void (*func)(int, map_session_data *), ... ){
+void packetdb_addpacket( uint16 cmd, uint16 length, void (*func)(int32, map_session_data *), ... ){
 	va_list argp;
 	int32 i;
 
@@ -25553,7 +25553,7 @@ void packetdb_addpacket( uint16 cmd, uint16 length, void (*func)(int, map_sessio
 	va_start(argp, func);
 
 	for( i = 0; i < MAX_PACKET_POS; i++ ){
-		int32 offset = va_arg(argp, int);
+		int32 offset = va_arg(argp, int32);
 
 		if( offset == 0 ){
 			break;
