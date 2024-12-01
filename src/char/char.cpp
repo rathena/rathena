@@ -531,7 +531,7 @@ int32 char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 /// Saves an array of 'item' entries into the specified table.
 int32 char_memitemdata_to_sql(const struct item items[], int32 max, int32 id, enum storage_type tableswitch, uint8 stor_id) {
 	StringBuf buf;
-	SqlStmt* stmt;
+	SqlStmt stmt{ *sql_handle };
 	int32 i, j, offset = 0, errors = 0;
 	const char *tablename, *selectoption, *printname;
 	struct item item; // temp storage variable
@@ -585,42 +585,40 @@ int32 char_memitemdata_to_sql(const struct item items[], int32 max, int32 id, en
 	}
 	StringBuf_Printf(&buf, " FROM `%s` WHERE `%s`='%d'", tablename, selectoption, id);
 
-	stmt = SqlStmt_Malloc(sql_handle);
-	if( SQL_ERROR == SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf))
-	||  SQL_ERROR == SqlStmt_Execute(stmt) )
+	if( SQL_ERROR == stmt.PrepareStr( StringBuf_Value(&buf))
+	||  SQL_ERROR == stmt.Execute() )
 	{
 		SqlStmt_ShowDebug(stmt);
-		SqlStmt_Free(stmt);
 		StringBuf_Destroy(&buf);
 		return 1;
 	}
 
-	SqlStmt_BindColumn(stmt, 0, SQLDT_INT,       &item.id,          0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 1, SQLDT_UINT,      &item.nameid,      0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 2, SQLDT_SHORT,     &item.amount,      0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 3, SQLDT_UINT,      &item.equip,       0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 4, SQLDT_CHAR,      &item.identify,    0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 5, SQLDT_CHAR,      &item.refine,      0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 6, SQLDT_CHAR,      &item.attribute,   0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 7, SQLDT_UINT,      &item.expire_time, 0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 8, SQLDT_UINT,      &item.bound,       0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 9, SQLDT_UINT64,    &item.unique_id,   0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt,10, SQLDT_INT8,      &item.enchantgrade,0, nullptr, nullptr);
+	stmt.BindColumn( 0, SQLDT_INT,       &item.id,          0, nullptr, nullptr);
+	stmt.BindColumn( 1, SQLDT_UINT,      &item.nameid,      0, nullptr, nullptr);
+	stmt.BindColumn( 2, SQLDT_SHORT,     &item.amount,      0, nullptr, nullptr);
+	stmt.BindColumn( 3, SQLDT_UINT,      &item.equip,       0, nullptr, nullptr);
+	stmt.BindColumn( 4, SQLDT_CHAR,      &item.identify,    0, nullptr, nullptr);
+	stmt.BindColumn( 5, SQLDT_CHAR,      &item.refine,      0, nullptr, nullptr);
+	stmt.BindColumn( 6, SQLDT_CHAR,      &item.attribute,   0, nullptr, nullptr);
+	stmt.BindColumn( 7, SQLDT_UINT,      &item.expire_time, 0, nullptr, nullptr);
+	stmt.BindColumn( 8, SQLDT_UINT,      &item.bound,       0, nullptr, nullptr);
+	stmt.BindColumn( 9, SQLDT_UINT64,    &item.unique_id,   0, nullptr, nullptr);
+	stmt.BindColumn(10, SQLDT_INT8,      &item.enchantgrade,0, nullptr, nullptr);
 	if (tableswitch == TABLE_INVENTORY){
-		SqlStmt_BindColumn(stmt, 11, SQLDT_CHAR, &item.favorite,    0, nullptr, nullptr);
-		SqlStmt_BindColumn(stmt, 12, SQLDT_UINT, &item.equipSwitch, 0, nullptr, nullptr);
+		stmt.BindColumn(11, SQLDT_CHAR, &item.favorite,    0, nullptr, nullptr);
+		stmt.BindColumn(12, SQLDT_UINT, &item.equipSwitch, 0, nullptr, nullptr);
 	}
 	for( i = 0; i < MAX_SLOTS; ++i )
-		SqlStmt_BindColumn(stmt, 11+offset+i, SQLDT_UINT, &item.card[i], 0, nullptr, nullptr);
+		stmt.BindColumn(11+offset+i, SQLDT_UINT, &item.card[i], 0, nullptr, nullptr);
 	for( i = 0; i < MAX_ITEM_RDM_OPT; ++i ) {
-		SqlStmt_BindColumn(stmt, 11+offset+MAX_SLOTS+i*3, SQLDT_SHORT, &item.option[i].id, 0, nullptr, nullptr);
-		SqlStmt_BindColumn(stmt, 12+offset+MAX_SLOTS+i*3, SQLDT_SHORT, &item.option[i].value, 0, nullptr, nullptr);
-		SqlStmt_BindColumn(stmt, 13+offset+MAX_SLOTS+i*3, SQLDT_CHAR, &item.option[i].param, 0, nullptr, nullptr);
+		stmt.BindColumn(11+offset+MAX_SLOTS+i*3, SQLDT_SHORT, &item.option[i].id, 0, nullptr, nullptr);
+		stmt.BindColumn(12+offset+MAX_SLOTS+i*3, SQLDT_SHORT, &item.option[i].value, 0, nullptr, nullptr);
+		stmt.BindColumn(13+offset+MAX_SLOTS+i*3, SQLDT_CHAR, &item.option[i].param, 0, nullptr, nullptr);
 	}
 	// bit array indicating which inventory items have already been matched
 	flag = (bool*) aCalloc(max, sizeof(bool));
 
-	while( SQL_SUCCESS == SqlStmt_NextRow(stmt) )
+	while( SQL_SUCCESS == stmt.NextRow() )
 	{
 		found = false;
 		// search for the presence of the item in the char's inventory
@@ -690,7 +688,6 @@ int32 char_memitemdata_to_sql(const struct item items[], int32 max, int32 id, en
 			}
 		}
 	}
-	SqlStmt_Free(stmt);
 
 	StringBuf_Clear(&buf);
 	StringBuf_Printf(&buf, "INSERT INTO `%s`(`%s`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`, `expire_time`, `bound`, `unique_id`, `enchantgrade`", tablename, selectoption);
@@ -747,7 +744,7 @@ int32 char_memitemdata_to_sql(const struct item items[], int32 max, int32 id, en
 
 bool char_memitemdata_from_sql(struct s_storage* p, int32 max, int32 id, enum storage_type tableswitch, uint8 stor_id) {
 	StringBuf buf;
-	SqlStmt* stmt;
+	SqlStmt stmt{ *sql_handle };
 	int32 i,j, offset = 0, max2;
 	struct item item, *storage;
 	const char *tablename, *selectoption, *printname;
@@ -792,11 +789,6 @@ bool char_memitemdata_from_sql(struct s_storage* p, int32 max, int32 id, enum st
 	p->stor_id = stor_id;
 	p->max_amount = max2;
 
-	stmt = SqlStmt_Malloc(sql_handle);
-	if (stmt == nullptr) {
-		SqlStmt_ShowDebug(stmt);
-		return false;
-	}
 
 	StringBuf_Init(&buf);
 	StringBuf_AppendStr(&buf, "SELECT `id`,`nameid`,`amount`,`equip`,`identify`,`refine`,`attribute`,`expire_time`,`bound`,`unique_id`,`enchantgrade`");
@@ -813,47 +805,44 @@ bool char_memitemdata_from_sql(struct s_storage* p, int32 max, int32 id, enum st
 	}
 	StringBuf_Printf(&buf, " FROM `%s` WHERE `%s`=? ORDER BY `nameid`", tablename, selectoption );
 
-	if( SQL_ERROR == SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf))
-		||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &id, 0)
-		||	SQL_ERROR == SqlStmt_Execute(stmt) )
+	if( SQL_ERROR == stmt.PrepareStr(StringBuf_Value(&buf))
+		||	SQL_ERROR == stmt.BindParam(0, SQLDT_INT, &id, 0)
+		||	SQL_ERROR == stmt.Execute() )
 	{
 		SqlStmt_ShowDebug(stmt);
-		SqlStmt_Free(stmt);
 		StringBuf_Destroy(&buf);
 		return false;
 	}
 
-	SqlStmt_BindColumn(stmt, 0, SQLDT_INT,          &item.id,        0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 1, SQLDT_UINT,         &item.nameid,    0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 2, SQLDT_SHORT,        &item.amount,    0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 3, SQLDT_UINT,         &item.equip,     0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 4, SQLDT_CHAR,         &item.identify,  0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 5, SQLDT_CHAR,         &item.refine,    0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 6, SQLDT_CHAR,         &item.attribute, 0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 7, SQLDT_UINT,         &item.expire_time, 0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 8, SQLDT_CHAR,         &item.bound,     0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 9, SQLDT_ULONGLONG,    &item.unique_id, 0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt,10, SQLDT_INT8,         &item.enchantgrade, 0, nullptr, nullptr);
+	stmt.BindColumn( 0, SQLDT_INT,          &item.id,        0, nullptr, nullptr);
+	stmt.BindColumn( 1, SQLDT_UINT,         &item.nameid,    0, nullptr, nullptr);
+	stmt.BindColumn( 2, SQLDT_SHORT,        &item.amount,    0, nullptr, nullptr);
+	stmt.BindColumn( 3, SQLDT_UINT,         &item.equip,     0, nullptr, nullptr);
+	stmt.BindColumn( 4, SQLDT_CHAR,         &item.identify,  0, nullptr, nullptr);
+	stmt.BindColumn( 5, SQLDT_CHAR,         &item.refine,    0, nullptr, nullptr);
+	stmt.BindColumn( 6, SQLDT_CHAR,         &item.attribute, 0, nullptr, nullptr);
+	stmt.BindColumn( 7, SQLDT_UINT,         &item.expire_time, 0, nullptr, nullptr);
+	stmt.BindColumn( 8, SQLDT_CHAR,         &item.bound,     0, nullptr, nullptr);
+	stmt.BindColumn( 9, SQLDT_ULONGLONG,    &item.unique_id, 0, nullptr, nullptr);
+	stmt.BindColumn(10, SQLDT_INT8,         &item.enchantgrade, 0, nullptr, nullptr);
 	if (tableswitch == TABLE_INVENTORY){
-		SqlStmt_BindColumn(stmt, 11, SQLDT_CHAR, &item.favorite,    0, nullptr, nullptr);
-		SqlStmt_BindColumn(stmt, 12, SQLDT_UINT, &item.equipSwitch, 0, nullptr, nullptr);
+		stmt.BindColumn(11, SQLDT_CHAR, &item.favorite,    0, nullptr, nullptr);
+		stmt.BindColumn(12, SQLDT_UINT, &item.equipSwitch, 0, nullptr, nullptr);
 	}
 	for( i = 0; i < MAX_SLOTS; ++i )
-		SqlStmt_BindColumn(stmt, 11+offset+i, SQLDT_UINT, &item.card[i],   0, nullptr, nullptr);
+		stmt.BindColumn(11+offset+i, SQLDT_UINT, &item.card[i],   0, nullptr, nullptr);
  	for( i = 0; i < MAX_ITEM_RDM_OPT; ++i ) {
-		SqlStmt_BindColumn(stmt, 11+offset+MAX_SLOTS+i*3, SQLDT_SHORT, &item.option[i].id, 0, nullptr, nullptr);
-		SqlStmt_BindColumn(stmt, 12+offset+MAX_SLOTS+i*3, SQLDT_SHORT, &item.option[i].value, 0, nullptr, nullptr);
-		SqlStmt_BindColumn(stmt, 13+offset+MAX_SLOTS+i*3, SQLDT_CHAR, &item.option[i].param, 0, nullptr, nullptr);
+		stmt.BindColumn(11+offset+MAX_SLOTS+i*3, SQLDT_SHORT, &item.option[i].id, 0, nullptr, nullptr);
+		stmt.BindColumn(12+offset+MAX_SLOTS+i*3, SQLDT_SHORT, &item.option[i].value, 0, nullptr, nullptr);
+		stmt.BindColumn(13+offset+MAX_SLOTS+i*3, SQLDT_CHAR, &item.option[i].param, 0, nullptr, nullptr);
  	}
 
-	for( i = 0; i < max && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )
+	for( i = 0; i < max && SQL_SUCCESS == stmt.NextRow(); ++i )
 		memcpy(&storage[i], &item, sizeof(item));
 
 	p->amount = i;
 	ShowInfo("Loaded %s data from table %s for %s: %d (total: %d)\n", printname, tablename, selectoption, id, p->amount);
 
-	SqlStmt_FreeResult(stmt);
-	SqlStmt_Free(stmt);
 	StringBuf_Destroy(&buf);
 
 	return true;
@@ -911,16 +900,11 @@ int32 char_mmo_char_tobuf(uint8* buf, struct mmo_charstatus* p);
 //=====================================================================================================
 // Loads the basic character rooster for the given account. Returns total buffer used.
 int32 char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf, uint8* count ) {
-	SqlStmt* stmt;
+	SqlStmt stmt{ *sql_handle };
 	struct mmo_charstatus p;
 	int32 j = 0, i;
 	char sex[2];
 
-	stmt = SqlStmt_Malloc(sql_handle);
-	if( stmt == nullptr ) {
-		SqlStmt_ShowDebug(stmt);
-		return 0;
-	}
 	memset(&p, 0, sizeof(p));
 
 	for( i = 0; i < MAX_CHARS; i++ ) {
@@ -929,7 +913,7 @@ int32 char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf, uint8* co
 	}
 
 	// read char data
-	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT "
+	if( SQL_ERROR == stmt.Prepare( "SELECT "
 		"`char_id`,`char_num`,`name`,`class`,`base_level`,`job_level`,`base_exp`,`job_exp`,`zeny`,"
 		"`str`,`agi`,`vit`,`int`,`dex`,`luk`,`max_hp`,`hp`,`max_sp`,`sp`,"
 		"`status_point`,`skill_point`,`option`,`karma`,`manner`,`hair`,`hair_color`,"
@@ -939,73 +923,72 @@ int32 char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf, uint8* co
 		"`max_ap`,`ap`,`trait_point`,`pow`,`sta`,`wis`,`spl`,`con`,`crt`,"
 		"`inventory_slots`,`body_direction`,`disable_call`"
 		" FROM `%s` WHERE `account_id`='%d' AND `char_num` < '%d'", schema_config.char_db, sd->account_id, MAX_CHARS)
-	||	SQL_ERROR == SqlStmt_Execute(stmt)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0,  SQLDT_INT,    &p.char_id, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 1,  SQLDT_UCHAR,  &p.slot, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 2,  SQLDT_STRING, &p.name, sizeof(p.name), nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 3,  SQLDT_SHORT,  &p.class_, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 4,  SQLDT_UINT,   &p.base_level, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 5,  SQLDT_UINT,   &p.job_level, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 6,  SQLDT_UINT64, &p.base_exp, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 7,  SQLDT_UINT64, &p.job_exp, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 8,  SQLDT_INT,    &p.zeny, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 9,  SQLDT_SHORT,  &p.str, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 10, SQLDT_SHORT,  &p.agi, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 11, SQLDT_SHORT,  &p.vit, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 12, SQLDT_SHORT,  &p.int_, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 13, SQLDT_SHORT,  &p.dex, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 14, SQLDT_SHORT,  &p.luk, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 15, SQLDT_UINT,   &p.max_hp, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 16, SQLDT_UINT,   &p.hp, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 17, SQLDT_UINT,   &p.max_sp, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 18, SQLDT_UINT,   &p.sp, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 19, SQLDT_UINT,   &p.status_point, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 20, SQLDT_UINT,   &p.skill_point, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 21, SQLDT_UINT,   &p.option, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 22, SQLDT_UCHAR,  &p.karma, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 23, SQLDT_SHORT,  &p.manner, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 24, SQLDT_SHORT,  &p.hair, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 25, SQLDT_SHORT,  &p.hair_color, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 26, SQLDT_SHORT,  &p.clothes_color, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 27, SQLDT_SHORT,  &p.body, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 28, SQLDT_SHORT,  &p.weapon, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 29, SQLDT_SHORT,  &p.shield, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 30, SQLDT_SHORT,  &p.head_top, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 31, SQLDT_SHORT,  &p.head_mid, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 32, SQLDT_SHORT,  &p.head_bottom, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 33, SQLDT_STRING, &p.last_point.map, sizeof(p.last_point.map), nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 34, SQLDT_SHORT,	&p.rename, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 35, SQLDT_UINT32, &p.delete_date, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 36, SQLDT_SHORT,  &p.robe, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 37, SQLDT_UINT,   &p.character_moves, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 38, SQLDT_LONG,   &p.unban_time, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 39, SQLDT_UCHAR,  &p.font, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 40, SQLDT_UINT,   &p.uniqueitem_counter, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 41, SQLDT_ENUM,   &sex, sizeof(sex), nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 42, SQLDT_UCHAR,  &p.hotkey_rowshift, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 43, SQLDT_ULONG,  &p.title_id, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 44, SQLDT_UINT16, &p.show_equip, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 45, SQLDT_UCHAR,  &p.hotkey_rowshift2, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 46, SQLDT_UINT,   &p.max_ap, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 47, SQLDT_UINT,   &p.ap, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 48, SQLDT_UINT,   &p.trait_point, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 49, SQLDT_SHORT,  &p.pow, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 50, SQLDT_SHORT,  &p.sta, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 51, SQLDT_SHORT,  &p.wis, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 52, SQLDT_SHORT,  &p.spl, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 53, SQLDT_SHORT,  &p.con, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 54, SQLDT_SHORT,  &p.crt, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 55, SQLDT_UINT16, &p.inventory_slots, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 56, SQLDT_UINT8,  &p.body_direction, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 57, SQLDT_UINT16, &p.disable_call, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.Execute()
+	||	SQL_ERROR == stmt.BindColumn( 0,  SQLDT_INT,    &p.char_id, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 1,  SQLDT_UCHAR,  &p.slot, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 2,  SQLDT_STRING, &p.name, sizeof(p.name), nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 3,  SQLDT_SHORT,  &p.class_, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 4,  SQLDT_UINT,   &p.base_level, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 5,  SQLDT_UINT,   &p.job_level, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 6,  SQLDT_UINT64, &p.base_exp, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 7,  SQLDT_UINT64, &p.job_exp, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 8,  SQLDT_INT,    &p.zeny, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 9,  SQLDT_SHORT,  &p.str, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 10, SQLDT_SHORT,  &p.agi, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 11, SQLDT_SHORT,  &p.vit, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 12, SQLDT_SHORT,  &p.int_, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 13, SQLDT_SHORT,  &p.dex, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 14, SQLDT_SHORT,  &p.luk, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 15, SQLDT_UINT,   &p.max_hp, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 16, SQLDT_UINT,   &p.hp, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 17, SQLDT_UINT,   &p.max_sp, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 18, SQLDT_UINT,   &p.sp, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 19, SQLDT_UINT,   &p.status_point, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 20, SQLDT_UINT,   &p.skill_point, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 21, SQLDT_UINT,   &p.option, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 22, SQLDT_UCHAR,  &p.karma, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 23, SQLDT_SHORT,  &p.manner, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 24, SQLDT_SHORT,  &p.hair, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 25, SQLDT_SHORT,  &p.hair_color, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 26, SQLDT_SHORT,  &p.clothes_color, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 27, SQLDT_SHORT,  &p.body, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 28, SQLDT_SHORT,  &p.weapon, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 29, SQLDT_SHORT,  &p.shield, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 30, SQLDT_SHORT,  &p.head_top, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 31, SQLDT_SHORT,  &p.head_mid, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 32, SQLDT_SHORT,  &p.head_bottom, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 33, SQLDT_STRING, &p.last_point.map, sizeof(p.last_point.map), nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 34, SQLDT_SHORT,	&p.rename, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 35, SQLDT_UINT32, &p.delete_date, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 36, SQLDT_SHORT,  &p.robe, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 37, SQLDT_UINT,   &p.character_moves, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 38, SQLDT_LONG,   &p.unban_time, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 39, SQLDT_UCHAR,  &p.font, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 40, SQLDT_UINT,   &p.uniqueitem_counter, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 41, SQLDT_ENUM,   &sex, sizeof(sex), nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 42, SQLDT_UCHAR,  &p.hotkey_rowshift, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 43, SQLDT_ULONG,  &p.title_id, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 44, SQLDT_UINT16, &p.show_equip, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 45, SQLDT_UCHAR,  &p.hotkey_rowshift2, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 46, SQLDT_UINT,   &p.max_ap, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 47, SQLDT_UINT,   &p.ap, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 48, SQLDT_UINT,   &p.trait_point, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 49, SQLDT_SHORT,  &p.pow, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 50, SQLDT_SHORT,  &p.sta, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 51, SQLDT_SHORT,  &p.wis, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 52, SQLDT_SHORT,  &p.spl, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 53, SQLDT_SHORT,  &p.con, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 54, SQLDT_SHORT,  &p.crt, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 55, SQLDT_UINT16, &p.inventory_slots, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 56, SQLDT_UINT8,  &p.body_direction, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 57, SQLDT_UINT16, &p.disable_call, 0, nullptr, nullptr)
 	)
 	{
 		SqlStmt_ShowDebug(stmt);
-		SqlStmt_Free(stmt);
 		return 0;
 	}
 
-	for( i = 0; i < MAX_CHARS && SQL_SUCCESS == SqlStmt_NextRow(stmt); i++ )
+	for( i = 0; i < MAX_CHARS && SQL_SUCCESS == stmt.NextRow(); i++ )
 	{
 		sd->found_char[p.slot] = p.char_id;
 		sd->unban_time[p.slot] = p.unban_time;
@@ -1023,14 +1006,13 @@ int32 char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf, uint8* co
 
 	memset(sd->new_name,0,sizeof(sd->new_name));
 
-	SqlStmt_Free(stmt);
 	return j;
 }
 
 //=====================================================================================================
 int32 char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_everything) {
 	int32 i;
-	SqlStmt* stmt;
+	SqlStmt stmt{ *sql_handle };
 	struct s_point_str tmp_point;
 	struct s_skill tmp_skill;
 	uint16 skill_count = 0;
@@ -1046,15 +1028,8 @@ int32 char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_
 
 	if (charserv_config.save_log) ShowInfo("Char load request (%d)\n", char_id);
 
-	stmt = SqlStmt_Malloc(sql_handle);
-	if( stmt == nullptr )
-	{
-		SqlStmt_ShowDebug(stmt);
-		return 0;
-	}
-
 	// read char data
-	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT "
+	if( SQL_ERROR == stmt.Prepare( "SELECT "
 		"`char_id`,`account_id`,`char_num`,`name`,`class`,`base_level`,`job_level`,`base_exp`,`job_exp`,`zeny`,"
 		"`str`,`agi`,`vit`,`int`,`dex`,`luk`,`max_hp`,`hp`,`max_sp`,`sp`,"
 		"`status_point`,`skill_point`,`option`,`karma`,`manner`,`party_id`,`guild_id`,`pet_id`,`homun_id`,`elemental_id`,`hair`,"
@@ -1064,94 +1039,92 @@ int32 char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_
 		"`max_ap`,`ap`,`trait_point`,`pow`,`sta`,`wis`,`spl`,`con`,`crt`,"
 		"`inventory_slots`,`body_direction`,`disable_call`,`last_instanceid`"
 		" FROM `%s` WHERE `char_id`=? LIMIT 1", schema_config.char_db)
-	||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
-	||	SQL_ERROR == SqlStmt_Execute(stmt)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0,  SQLDT_INT,    &p->char_id, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 1,  SQLDT_INT,    &p->account_id, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 2,  SQLDT_UCHAR,  &p->slot, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 3,  SQLDT_STRING, &p->name, sizeof(p->name), nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 4,  SQLDT_SHORT,  &p->class_, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 5,  SQLDT_UINT,   &p->base_level, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 6,  SQLDT_UINT,   &p->job_level, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 7,  SQLDT_UINT64, &p->base_exp, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 8,  SQLDT_UINT64, &p->job_exp, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 9,  SQLDT_INT,    &p->zeny, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 10, SQLDT_SHORT,  &p->str, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 11, SQLDT_SHORT,  &p->agi, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 12, SQLDT_SHORT,  &p->vit, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 13, SQLDT_SHORT,  &p->int_, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 14, SQLDT_SHORT,  &p->dex, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 15, SQLDT_SHORT,  &p->luk, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 16, SQLDT_UINT,   &p->max_hp, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 17, SQLDT_UINT,   &p->hp, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 18, SQLDT_UINT,   &p->max_sp, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 19, SQLDT_UINT,   &p->sp, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 20, SQLDT_UINT,   &p->status_point, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 21, SQLDT_UINT,   &p->skill_point, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 22, SQLDT_UINT,   &p->option, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 23, SQLDT_UCHAR,  &p->karma, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 24, SQLDT_SHORT,  &p->manner, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 25, SQLDT_INT,    &p->party_id, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 26, SQLDT_INT,    &p->guild_id, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 27, SQLDT_INT,    &p->pet_id, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 28, SQLDT_INT,    &p->hom_id, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 29, SQLDT_INT,    &p->ele_id, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 30, SQLDT_SHORT,  &p->hair, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 31, SQLDT_SHORT,  &p->hair_color, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 32, SQLDT_SHORT,  &p->clothes_color, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 33, SQLDT_SHORT,  &p->body, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 34, SQLDT_SHORT,  &p->weapon, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 35, SQLDT_SHORT,  &p->shield, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 36, SQLDT_SHORT,  &p->head_top, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 37, SQLDT_SHORT,  &p->head_mid, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 38, SQLDT_SHORT,  &p->head_bottom, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 39, SQLDT_STRING, &p->last_point.map, sizeof(p->last_point.map), nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 40, SQLDT_SHORT,  &p->last_point.x, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 41, SQLDT_SHORT,  &p->last_point.y, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 42, SQLDT_STRING, &p->save_point.map, sizeof(p->save_point.map), nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 43, SQLDT_SHORT,  &p->save_point.x, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 44, SQLDT_SHORT,  &p->save_point.y, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 45, SQLDT_UINT32,    &p->partner_id, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 46, SQLDT_UINT32,    &p->father, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 47, SQLDT_UINT32,    &p->mother, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 48, SQLDT_UINT32,    &p->child, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 49, SQLDT_INT,    &p->fame, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 50, SQLDT_SHORT,  &p->rename, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 51, SQLDT_UINT32, &p->delete_date, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 52, SQLDT_SHORT,  &p->robe, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 53, SQLDT_UINT32, &p->character_moves, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 54, SQLDT_LONG,   &p->unban_time, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 55, SQLDT_UCHAR,  &p->font, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 56, SQLDT_UINT,   &p->uniqueitem_counter, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 57, SQLDT_ENUM,   &sex, sizeof(sex), nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 58, SQLDT_UCHAR,  &p->hotkey_rowshift, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 59, SQLDT_INT,    &p->clan_id, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 60, SQLDT_ULONG,  &p->title_id, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 61, SQLDT_UINT16, &p->show_equip, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 62, SQLDT_UCHAR,  &p->hotkey_rowshift2, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 63, SQLDT_UINT,   &p->max_ap, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 64, SQLDT_UINT,   &p->ap, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 65, SQLDT_UINT,   &p->trait_point, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 66, SQLDT_SHORT,  &p->pow, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 67, SQLDT_SHORT,  &p->sta, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 68, SQLDT_SHORT,  &p->wis, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 69, SQLDT_SHORT,  &p->spl, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 70, SQLDT_SHORT,  &p->con, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 71, SQLDT_SHORT,  &p->crt, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 72, SQLDT_UINT16, &p->inventory_slots, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 73, SQLDT_UINT8,  &p->body_direction, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 74, SQLDT_UINT8,	&p->disable_call, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 75, SQLDT_INT,    &p->last_point_instanceid, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindParam(0, SQLDT_INT, &char_id, 0)
+	||	SQL_ERROR == stmt.Execute()
+	||	SQL_ERROR == stmt.BindColumn(0,  SQLDT_INT,    &p->char_id, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(1,  SQLDT_INT,    &p->account_id, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(2,  SQLDT_UCHAR,  &p->slot, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(3,  SQLDT_STRING, &p->name, sizeof(p->name), nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(4,  SQLDT_SHORT,  &p->class_, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(5,  SQLDT_UINT,   &p->base_level, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(6,  SQLDT_UINT,   &p->job_level, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(7,  SQLDT_UINT64, &p->base_exp, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(8,  SQLDT_UINT64, &p->job_exp, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(9,  SQLDT_INT,    &p->zeny, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(10, SQLDT_SHORT,  &p->str, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(11, SQLDT_SHORT,  &p->agi, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(12, SQLDT_SHORT,  &p->vit, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(13, SQLDT_SHORT,  &p->int_, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(14, SQLDT_SHORT,  &p->dex, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(15, SQLDT_SHORT,  &p->luk, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(16, SQLDT_UINT,   &p->max_hp, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(17, SQLDT_UINT,   &p->hp, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(18, SQLDT_UINT,   &p->max_sp, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(19, SQLDT_UINT,   &p->sp, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(20, SQLDT_UINT,   &p->status_point, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(21, SQLDT_UINT,   &p->skill_point, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(22, SQLDT_UINT,   &p->option, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(23, SQLDT_UCHAR,  &p->karma, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(24, SQLDT_SHORT,  &p->manner, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(25, SQLDT_INT,    &p->party_id, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(26, SQLDT_INT,    &p->guild_id, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(27, SQLDT_INT,    &p->pet_id, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(28, SQLDT_INT,    &p->hom_id, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(29, SQLDT_INT,    &p->ele_id, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(30, SQLDT_SHORT,  &p->hair, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(31, SQLDT_SHORT,  &p->hair_color, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(32, SQLDT_SHORT,  &p->clothes_color, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(33, SQLDT_SHORT,  &p->body, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(34, SQLDT_SHORT,  &p->weapon, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(35, SQLDT_SHORT,  &p->shield, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(36, SQLDT_SHORT,  &p->head_top, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(37, SQLDT_SHORT,  &p->head_mid, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(38, SQLDT_SHORT,  &p->head_bottom, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(39, SQLDT_STRING, &p->last_point.map, sizeof(p->last_point.map), nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(40, SQLDT_SHORT,  &p->last_point.x, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(41, SQLDT_SHORT,  &p->last_point.y, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(42, SQLDT_STRING, &p->save_point.map, sizeof(p->save_point.map), nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(43, SQLDT_SHORT,  &p->save_point.x, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(44, SQLDT_SHORT,  &p->save_point.y, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(45, SQLDT_UINT32,    &p->partner_id, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(46, SQLDT_UINT32,    &p->father, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(47, SQLDT_UINT32,    &p->mother, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(48, SQLDT_UINT32,    &p->child, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(49, SQLDT_INT,    &p->fame, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(50, SQLDT_SHORT,  &p->rename, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(51, SQLDT_UINT32, &p->delete_date, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(52, SQLDT_SHORT,  &p->robe, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(53, SQLDT_UINT32, &p->character_moves, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(54, SQLDT_LONG,   &p->unban_time, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(55, SQLDT_UCHAR,  &p->font, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(56, SQLDT_UINT,   &p->uniqueitem_counter, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(57, SQLDT_ENUM,   &sex, sizeof(sex), nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(58, SQLDT_UCHAR,  &p->hotkey_rowshift, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(59, SQLDT_INT,    &p->clan_id, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(60, SQLDT_ULONG,  &p->title_id, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(61, SQLDT_UINT16, &p->show_equip, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(62, SQLDT_UCHAR,  &p->hotkey_rowshift2, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(63, SQLDT_UINT,   &p->max_ap, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(64, SQLDT_UINT,   &p->ap, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(65, SQLDT_UINT,   &p->trait_point, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(66, SQLDT_SHORT,  &p->pow, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(67, SQLDT_SHORT,  &p->sta, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(68, SQLDT_SHORT,  &p->wis, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(69, SQLDT_SHORT,  &p->spl, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(70, SQLDT_SHORT,  &p->con, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(71, SQLDT_SHORT,  &p->crt, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(72, SQLDT_UINT16, &p->inventory_slots, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(73, SQLDT_UINT8,  &p->body_direction, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(74, SQLDT_UINT8,	&p->disable_call, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(75, SQLDT_INT,    &p->last_point_instanceid, 0, nullptr, nullptr)
 	)
 	{
 		SqlStmt_ShowDebug(stmt);
-		SqlStmt_Free(stmt);
 		return 0;
 	}
-	if( SQL_ERROR == SqlStmt_NextRow(stmt) )
+	if( SQL_ERROR == stmt.NextRow() )
 	{
 		ShowError("Requested non-existant character id: %d!\n", char_id);
-		SqlStmt_Free(stmt);
 		return 0;
 	}
 	p->sex = char_mmo_gender(nullptr, p, sex[0]);
@@ -1161,22 +1134,21 @@ int32 char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_
 
 	if (!load_everything) // For quick selection of data when displaying the char menu
 	{
-		SqlStmt_Free(stmt);
 		StringBuf_Destroy(&msg_buf);
 		return 1;
 	}
 
 	//read memo data
 	//`memo` (`memo_id`,`char_id`,`map`,`x`,`y`)
-	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `map`,`x`,`y` FROM `%s` WHERE `char_id`=? ORDER by `memo_id` LIMIT %d", schema_config.memo_db, MAX_MEMOPOINTS)
-	||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
-	||	SQL_ERROR == SqlStmt_Execute(stmt)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_STRING, &tmp_point.map, sizeof(tmp_point.map), nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_SHORT,  &tmp_point.x, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 2, SQLDT_SHORT,  &tmp_point.y, 0, nullptr, nullptr) )
+	if( SQL_ERROR == stmt.Prepare("SELECT `map`,`x`,`y` FROM `%s` WHERE `char_id`=? ORDER by `memo_id` LIMIT %d", schema_config.memo_db, MAX_MEMOPOINTS)
+	||	SQL_ERROR == stmt.BindParam(0, SQLDT_INT, &char_id, 0)
+	||	SQL_ERROR == stmt.Execute()
+	||	SQL_ERROR == stmt.BindColumn(0, SQLDT_STRING, &tmp_point.map, sizeof(tmp_point.map), nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(1, SQLDT_SHORT,  &tmp_point.x, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(2, SQLDT_SHORT,  &tmp_point.y, 0, nullptr, nullptr) )
 		SqlStmt_ShowDebug(stmt);
 
-	for( i = 0; i < MAX_MEMOPOINTS && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )
+	for( i = 0; i < MAX_MEMOPOINTS && SQL_SUCCESS == stmt.NextRow(); ++i )
 	{
 		memcpy(&p->memo_point[i], &tmp_point, sizeof(tmp_point));
 	}
@@ -1184,18 +1156,18 @@ int32 char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_
 
 	//read skill
 	//`skill` (`char_id`, `id`, `lv`)
-	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `id`, `lv`,`flag` FROM `%s` WHERE `char_id`=? LIMIT %d", schema_config.skill_db, MAX_SKILL)
-		||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
-		||	SQL_ERROR == SqlStmt_Execute(stmt)
-		||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_UINT16, &tmp_skill.id  , 0, nullptr, nullptr)
-		||	SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_UINT8 , &tmp_skill.lv  , 0, nullptr, nullptr)
-		||	SQL_ERROR == SqlStmt_BindColumn(stmt, 2, SQLDT_UINT8 , &tmp_skill.flag, 0, nullptr, nullptr) )
+	if( SQL_ERROR == stmt.Prepare("SELECT `id`, `lv`,`flag` FROM `%s` WHERE `char_id`=? LIMIT %d", schema_config.skill_db, MAX_SKILL)
+		||	SQL_ERROR == stmt.BindParam(0, SQLDT_INT, &char_id, 0)
+		||	SQL_ERROR == stmt.Execute()
+		||	SQL_ERROR == stmt.BindColumn(0, SQLDT_UINT16, &tmp_skill.id  , 0, nullptr, nullptr)
+		||	SQL_ERROR == stmt.BindColumn(1, SQLDT_UINT8 , &tmp_skill.lv  , 0, nullptr, nullptr)
+		||	SQL_ERROR == stmt.BindColumn(2, SQLDT_UINT8 , &tmp_skill.flag, 0, nullptr, nullptr) )
 		SqlStmt_ShowDebug(stmt);
 
 	if( tmp_skill.flag != SKILL_FLAG_PERM_GRANTED )
 		tmp_skill.flag = SKILL_FLAG_PERMANENT;
 
-	for( i = 0; skill_count < MAX_SKILL && SQL_SUCCESS == SqlStmt_NextRow(stmt); i++ ) {
+	for( i = 0; skill_count < MAX_SKILL && SQL_SUCCESS == stmt.NextRow(); i++ ) {
 		if( tmp_skill.id > 0 && tmp_skill.id < MAX_SKILL_ID ) {
 			memcpy(&p->skill[i], &tmp_skill, sizeof(tmp_skill));
 			skill_count++;
@@ -1207,31 +1179,31 @@ int32 char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_
 
 	//read friends
 	//`friends` (`char_id`, `friend_id`)
-	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT c.`account_id`, c.`char_id`, c.`name` FROM `%s` c LEFT JOIN `%s` f ON f.`friend_id` = c.`char_id` WHERE f.`char_id`=? LIMIT %d", schema_config.char_db, schema_config.friend_db, MAX_FRIENDS)
-	||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
-	||	SQL_ERROR == SqlStmt_Execute(stmt)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_INT,    &tmp_friend.account_id, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_INT,    &tmp_friend.char_id, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 2, SQLDT_STRING, &tmp_friend.name, sizeof(tmp_friend.name), nullptr, nullptr) )
+	if( SQL_ERROR == stmt.Prepare("SELECT c.`account_id`, c.`char_id`, c.`name` FROM `%s` c LEFT JOIN `%s` f ON f.`friend_id` = c.`char_id` WHERE f.`char_id`=? LIMIT %d", schema_config.char_db, schema_config.friend_db, MAX_FRIENDS)
+	||	SQL_ERROR == stmt.BindParam(0, SQLDT_INT, &char_id, 0)
+	||	SQL_ERROR == stmt.Execute()
+	||	SQL_ERROR == stmt.BindColumn(0, SQLDT_INT,    &tmp_friend.account_id, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(1, SQLDT_INT,    &tmp_friend.char_id, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(2, SQLDT_STRING, &tmp_friend.name, sizeof(tmp_friend.name), nullptr, nullptr) )
 		SqlStmt_ShowDebug(stmt);
 
-	for( i = 0; i < MAX_FRIENDS && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )
+	for( i = 0; i < MAX_FRIENDS && SQL_SUCCESS == stmt.NextRow(); ++i )
 		memcpy(&p->friends[i], &tmp_friend, sizeof(tmp_friend));
 	StringBuf_AppendStr(&msg_buf, " friends");
 
 #ifdef HOTKEY_SAVING
 	//read hotkeys
 	//`hotkey` (`char_id`, `hotkey`, `type`, `itemskill_id`, `skill_lvl`
-	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `hotkey`, `type`, `itemskill_id`, `skill_lvl` FROM `%s` WHERE `char_id`=?", schema_config.hotkey_db)
-	||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
-	||	SQL_ERROR == SqlStmt_Execute(stmt)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_INT,    &hotkey_num, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_UCHAR,  &tmp_hotkey.type, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 2, SQLDT_UINT,   &tmp_hotkey.id, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 3, SQLDT_USHORT, &tmp_hotkey.lv, 0, nullptr, nullptr) )
+	if( SQL_ERROR == stmt.Prepare("SELECT `hotkey`, `type`, `itemskill_id`, `skill_lvl` FROM `%s` WHERE `char_id`=?", schema_config.hotkey_db)
+	||	SQL_ERROR == stmt.BindParam(0, SQLDT_INT, &char_id, 0)
+	||	SQL_ERROR == stmt.Execute()
+	||	SQL_ERROR == stmt.BindColumn(0, SQLDT_INT,    &hotkey_num, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(1, SQLDT_UCHAR,  &tmp_hotkey.type, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(2, SQLDT_UINT,   &tmp_hotkey.id, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(3, SQLDT_USHORT, &tmp_hotkey.lv, 0, nullptr, nullptr) )
 		SqlStmt_ShowDebug(stmt);
 
-	while( SQL_SUCCESS == SqlStmt_NextRow(stmt) )
+	while( SQL_SUCCESS == stmt.NextRow() )
 	{
 		if( hotkey_num >= 0 && hotkey_num < MAX_HOTKEYS_DB )
 			memcpy(&p->hotkeys[hotkey_num], &tmp_hotkey, sizeof(tmp_hotkey));
@@ -1248,7 +1220,6 @@ int32 char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_
 
 	if (charserv_config.save_log)
 		ShowInfo("Loaded char (%d - %s): %s\n", char_id, p->name, StringBuf_Value(&msg_buf)); //ok. all data load successfully!
-	SqlStmt_Free(stmt);
 
 	std::shared_ptr<struct mmo_charstatus> cp = util::umap_find( char_get_chardb(), char_id );
 

@@ -3,19 +3,12 @@
 
 #include "sql.hpp"
 
-#ifdef WIN32
-#include "winapi.hpp"
-#endif
-
 #include <cstdlib>// strtoul
-
-#include <mysql.h>
 
 #include "cbasetypes.hpp"
 #include "cli.hpp"
 #include "malloc.hpp"
 #include "showmsg.hpp"
-#include "strlib.hpp"
 #include "timer.hpp"
 
 // MySQL 8.0 or later removed my_bool typedef.
@@ -40,35 +33,6 @@ struct Sql
 	unsigned long* lengths;
 	int32 keepalive;
 };
-
-
-
-// Column length receiver.
-// Takes care of the possible size missmatch between uint32 and unsigned long.
-struct s_column_length
-{
-	uint32* out_length;
-	unsigned long length;
-};
-typedef struct s_column_length s_column_length;
-
-
-
-/// Sql statement
-struct SqlStmt
-{
-	StringBuf buf;
-	MYSQL_STMT* stmt;
-	MYSQL_BIND* params;
-	MYSQL_BIND* columns;
-	s_column_length* column_lengths;
-	size_t max_params;
-	size_t max_columns;
-	bool bind_params;
-	bool bind_columns;
-};
-
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Sql Handle
@@ -652,18 +616,17 @@ static void Sql_P_ShowDebugMysqlFieldInfo(const char* prefix, enum enum_field_ty
 /// Reports debug information about a truncated column.
 ///
 /// @private
-static void SqlStmt_P_ShowDebugTruncatedColumn(SqlStmt* self, size_t i)
-{
+void SqlStmt::ShowDebugTruncatedColumn( size_t i ){
 	MYSQL_RES* meta;
 	MYSQL_FIELD* field;
 	MYSQL_BIND* column;
 
-	meta = mysql_stmt_result_metadata(self->stmt);
+	meta = mysql_stmt_result_metadata(this->stmt);
 	field = mysql_fetch_field_direct(meta, (uint32)i);
 	ShowSQL("DB error - data of field '%s' was truncated.\n", field->name);
 	ShowDebug("column - %lu\n", (unsigned long)i);
-	Sql_P_ShowDebugMysqlFieldInfo("data   - ", field->type, field->flags&UNSIGNED_FLAG, self->column_lengths[i].length, "");
-	column = &self->columns[i];
+	Sql_P_ShowDebugMysqlFieldInfo("data   - ", field->type, field->flags&UNSIGNED_FLAG, this->column_lengths[i].length, "");
+	column = &this->columns[i];
 	if( column->buffer_type == MYSQL_TYPE_STRING )
 		Sql_P_ShowDebugMysqlFieldInfo("buffer - ", column->buffer_type, column->is_unsigned, column->buffer_length, "+1(nul-terminator)");
 	else
@@ -674,44 +637,33 @@ static void SqlStmt_P_ShowDebugTruncatedColumn(SqlStmt* self, size_t i)
 
 
 /// Allocates and initializes a new SqlStmt handle.
-SqlStmt* SqlStmt_Malloc(Sql* sql)
-{
-	SqlStmt* self;
-	MYSQL_STMT* stmt;
+SqlStmt::SqlStmt( Sql& sql ){
+	this->stmt = mysql_stmt_init( &sql.handle );
 
-	if( sql == nullptr )
-		return nullptr;
-
-	stmt = mysql_stmt_init(&sql->handle);
-	if( stmt == nullptr )
-	{
-		ShowSQL("DB error - %s\n", mysql_error(&sql->handle));
-		return nullptr;
+	if( this->stmt == nullptr ){
+		ShowSQL( "DB error - %s\n", mysql_error( &sql.handle ) );
+		throw std::runtime_error( "Out of memory" );
 	}
-	CREATE(self, SqlStmt, 1);
-	StringBuf_Init(&self->buf);
-	self->stmt = stmt;
-	self->params = nullptr;
-	self->columns = nullptr;
-	self->column_lengths = nullptr;
-	self->max_params = 0;
-	self->max_columns = 0;
-	self->bind_params = false;
-	self->bind_columns = false;
 
-	return self;
+	StringBuf_Init( &this->buf );
+	this->params = nullptr;
+	this->columns = nullptr;
+	this->column_lengths = nullptr;
+	this->max_params = 0;
+	this->max_columns = 0;
+	this->bind_params = false;
+	this->bind_columns = false;
 }
 
 
 
 /// Prepares the statement.
-int32 SqlStmt_Prepare(SqlStmt* self, const char* query, ...)
-{
+int32 SqlStmt::Prepare(const char* query, ...){
 	int32 res;
 	va_list args;
 
 	va_start(args, query);
-	res = SqlStmt_PrepareV(self, query, args);
+	res = this->PrepareV(query, args);
 	va_end(args);
 
 	return res;
@@ -720,21 +672,18 @@ int32 SqlStmt_Prepare(SqlStmt* self, const char* query, ...)
 
 
 /// Prepares the statement.
-int32 SqlStmt_PrepareV(SqlStmt* self, const char* query, va_list args)
-{
-	if( self == nullptr )
-		return SQL_ERROR;
+int32 SqlStmt::PrepareV(const char* query, va_list args){
+	this->FreeResult();
+	StringBuf_Clear( &this->buf );
+	StringBuf_Vprintf( &this->buf, query, args );
 
-	SqlStmt_FreeResult(self);
-	StringBuf_Clear(&self->buf);
-	StringBuf_Vprintf(&self->buf, query, args);
-	if( mysql_stmt_prepare(self->stmt, StringBuf_Value(&self->buf), (unsigned long)StringBuf_Length(&self->buf)) )
-	{
-		ShowSQL("DB error - %s\n", mysql_stmt_error(self->stmt));
-		ra_mysql_error_handler(mysql_stmt_errno(self->stmt));
+	if( mysql_stmt_prepare( this->stmt, StringBuf_Value( &this->buf ), (unsigned long)StringBuf_Length( &this->buf ) ) ){
+		ShowSQL( "DB error - %s\n", mysql_stmt_error( this->stmt ) );
+		ra_mysql_error_handler( mysql_stmt_errno( this->stmt ) );
 		return SQL_ERROR;
 	}
-	self->bind_params = false;
+
+	this->bind_params = false;
 
 	return SQL_SUCCESS;
 }
@@ -742,21 +691,18 @@ int32 SqlStmt_PrepareV(SqlStmt* self, const char* query, va_list args)
 
 
 /// Prepares the statement.
-int32 SqlStmt_PrepareStr(SqlStmt* self, const char* query)
-{
-	if( self == nullptr )
-		return SQL_ERROR;
+int32 SqlStmt::PrepareStr(const char* query){
+	this->FreeResult();
+	StringBuf_Clear( &this->buf );
+	StringBuf_AppendStr( &this->buf, query );
 
-	SqlStmt_FreeResult(self);
-	StringBuf_Clear(&self->buf);
-	StringBuf_AppendStr(&self->buf, query);
-	if( mysql_stmt_prepare(self->stmt, StringBuf_Value(&self->buf), (unsigned long)StringBuf_Length(&self->buf)) )
-	{
-		ShowSQL("DB error - %s\n", mysql_stmt_error(self->stmt));
-		ra_mysql_error_handler(mysql_stmt_errno(self->stmt));
+	if( mysql_stmt_prepare( this->stmt, StringBuf_Value( &this->buf ), (unsigned long)StringBuf_Length( &this->buf ) ) ){
+		ShowSQL( "DB error - %s\n", mysql_stmt_error( this->stmt ) );
+		ra_mysql_error_handler( mysql_stmt_errno( this->stmt ) );
 		return SQL_ERROR;
 	}
-	self->bind_params = false;
+
+	this->bind_params = false;
 
 	return SQL_SUCCESS;
 }
@@ -764,65 +710,60 @@ int32 SqlStmt_PrepareStr(SqlStmt* self, const char* query)
 
 
 /// Returns the number of parameters in the prepared statement.
-size_t SqlStmt_NumParams(SqlStmt* self)
-{
-	if( self )
-		return (size_t)mysql_stmt_param_count(self->stmt);
-	else
-		return 0;
+size_t SqlStmt::NumParams(){
+	return (size_t)mysql_stmt_param_count( this->stmt );
 }
 
 
 
 /// Binds a parameter to a buffer.
-int32 SqlStmt_BindParam(SqlStmt* self, size_t idx, enum SqlDataType buffer_type, void* buffer, size_t buffer_len)
-{
-	if( self == nullptr )
-		return SQL_ERROR;
+int32 SqlStmt::BindParam(size_t idx, enum SqlDataType buffer_type, void* buffer, size_t buffer_len){
+	if( !this->bind_params ){
+		// initialize the bindings
+		size_t count = this->NumParams();
 
-	if( !self->bind_params )
-	{// initialize the bindings
-		size_t i;
-		size_t count;
-
-		count = SqlStmt_NumParams(self);
-		if( self->max_params < count )
-		{
-			self->max_params = count;
-			RECREATE(self->params, MYSQL_BIND, count);
+		if( this->max_params < count ){
+			this->max_params = count;
+			RECREATE( this->params, MYSQL_BIND, count );
 		}
-		memset(self->params, 0, count*sizeof(MYSQL_BIND));
-		for( i = 0; i < count; ++i )
-			self->params[i].buffer_type = MYSQL_TYPE_NULL;
-		self->bind_params = true;
+
+		memset( this->params, 0, count * sizeof( MYSQL_BIND ) );
+
+		for( size_t i = 0; i < count; ++i ){
+			this->params[i].buffer_type = MYSQL_TYPE_NULL;
+		}
+
+		this->bind_params = true;
 	}
-	if( idx < self->max_params )
-		return Sql_P_BindSqlDataType(self->params+idx, buffer_type, buffer, buffer_len, nullptr, nullptr);
-	else
+
+	if( idx < this->max_params ){
+		return Sql_P_BindSqlDataType( this->params + idx, buffer_type, buffer, buffer_len, nullptr, nullptr );
+	}else{
+		// TODO: for real...? Check this! [Lemongrass]
 		return SQL_SUCCESS;// out of range - ignore
+	}
 }
 
 
 
 /// Executes the prepared statement.
-int32 SqlStmt_Execute(SqlStmt* self)
-{
-	if( self == nullptr )
-		return SQL_ERROR;
+int32 SqlStmt::Execute(){
+	this->FreeResult();
 
-	SqlStmt_FreeResult(self);
-	if( (self->bind_params && mysql_stmt_bind_param(self->stmt, self->params)) ||
-		mysql_stmt_execute(self->stmt) )
+	if( ( this->bind_params && mysql_stmt_bind_param( this->stmt, this->params ) ) ||
+		mysql_stmt_execute( this->stmt ) )
 	{
-		ShowSQL("DB error - %s\n", mysql_stmt_error(self->stmt));
-		ra_mysql_error_handler(mysql_stmt_errno(self->stmt));
+		ShowSQL("DB error - %s\n", mysql_stmt_error(this->stmt));
+		ra_mysql_error_handler(mysql_stmt_errno(this->stmt));
 		return SQL_ERROR;
 	}
-	self->bind_columns = false;
-	if( mysql_stmt_store_result(self->stmt) )// store all the data
-	{
-		ShowSQL("DB error - %s\n", mysql_stmt_error(self->stmt));
-		ra_mysql_error_handler(mysql_stmt_errno(self->stmt));
+
+	this->bind_columns = false;
+
+	// store all the data
+	if( mysql_stmt_store_result( this->stmt ) ){
+		ShowSQL( "DB error - %s\n", mysql_stmt_error( this->stmt ) );
+		ra_mysql_error_handler( mysql_stmt_errno( this->stmt ) );
 		return SQL_ERROR;
 	}
 
@@ -832,67 +773,55 @@ int32 SqlStmt_Execute(SqlStmt* self)
 
 
 /// Returns the number of the AUTO_INCREMENT column of the last INSERT/UPDATE statement.
-uint64 SqlStmt_LastInsertId(SqlStmt* self)
-{
-	if( self )
-		return (uint64)mysql_stmt_insert_id(self->stmt);
-	else
-		return 0;
+uint64 SqlStmt::LastInsertId(){
+	return (uint64)mysql_stmt_insert_id( this->stmt );
 }
 
 
 
 /// Returns the number of columns in each row of the result.
-size_t SqlStmt_NumColumns(SqlStmt* self)
-{
-	if( self )
-		return (size_t)mysql_stmt_field_count(self->stmt);
-	else
-		return 0;
+size_t SqlStmt::NumColumns(){
+	return (size_t)mysql_stmt_field_count( this->stmt );
 }
 
 
 
 /// Binds the result of a column to a buffer.
-int32 SqlStmt_BindColumn(SqlStmt* self, size_t idx, enum SqlDataType buffer_type, void* buffer, size_t buffer_len, uint32* out_length, int8* out_is_null)
-{
-	if( self == nullptr )
-		return SQL_ERROR;
-
+int32 SqlStmt::BindColumn(size_t idx, enum SqlDataType buffer_type, void* buffer, size_t buffer_len, uint32* out_length, int8* out_is_null){
 	if( buffer_type == SQLDT_STRING || buffer_type == SQLDT_ENUM )
 	{
 		if( buffer_len < 1 )
 		{
-			ShowDebug("SqlStmt_BindColumn: buffer_len(%" PRIuPTR ") is too small, no room for the nul-terminator\n", buffer_len);
+			ShowDebug("SqlStmt::BindColumn: buffer_len(%" PRIuPTR ") is too small, no room for the nul-terminator\n", buffer_len);
 			return SQL_ERROR;
 		}
 		--buffer_len;// nul-terminator
 	}
-	if( !self->bind_columns )
-	{// initialize the bindings
-		size_t i;
-		size_t cols;
 
-		cols = SqlStmt_NumColumns(self);
-		if( self->max_columns < cols )
-		{
-			self->max_columns = cols;
-			RECREATE(self->columns, MYSQL_BIND, cols);
-			RECREATE(self->column_lengths, s_column_length, cols);
+	if( !this->bind_columns ){
+		// initialize the bindings
+		size_t cols = this->NumColumns();
+
+		if( this->max_columns < cols ){
+			this->max_columns = cols;
+			RECREATE( this->columns, MYSQL_BIND, cols );
+			RECREATE( this->column_lengths, s_column_length, cols );
 		}
-		memset(self->columns, 0, cols*sizeof(MYSQL_BIND));
-		memset(self->column_lengths, 0, cols*sizeof(s_column_length));
-		for( i = 0; i < cols; ++i )
-			self->columns[i].buffer_type = MYSQL_TYPE_NULL;
-		self->bind_columns = true;
+		memset( this->columns, 0, cols * sizeof( MYSQL_BIND ) );
+		memset( this->column_lengths, 0, cols * sizeof( s_column_length ) );
+
+		for( size_t i = 0; i < cols; ++i ){
+			this->columns[i].buffer_type = MYSQL_TYPE_NULL;
+		}
+
+		this->bind_columns = true;
 	}
-	if( idx < self->max_columns )
-	{
-		self->column_lengths[idx].out_length = out_length;
-		return Sql_P_BindSqlDataType(self->columns+idx, buffer_type, buffer, buffer_len, &self->column_lengths[idx].length, out_is_null);
-	}
-	else
-	{
+
+	if( idx < this->max_columns ){
+		this->column_lengths[idx].out_length = out_length;
+		return Sql_P_BindSqlDataType( this->columns + idx, buffer_type, buffer, buffer_len, &this->column_lengths[idx].length, out_is_null );
+	}else{
+		// TODO: for real...? Check this! [Lemongrass]
 		return SQL_SUCCESS;// out of range - ignore
 	}
 }
@@ -900,31 +829,23 @@ int32 SqlStmt_BindColumn(SqlStmt* self, size_t idx, enum SqlDataType buffer_type
 
 
 /// Returns the number of rows in the result.
-uint64 SqlStmt_NumRows(SqlStmt* self)
-{
-	if( self )
-		return (uint64)mysql_stmt_num_rows(self->stmt);
-	else
-		return 0;
+uint64 SqlStmt::NumRows(){
+	return (uint64)mysql_stmt_num_rows( this->stmt );
 }
 
 
 
 /// Fetches the next row.
-int32 SqlStmt_NextRow(SqlStmt* self)
-{
+int32 SqlStmt::NextRow(){
 	int32 err;
-	size_t i;
-	size_t cols;
-
-	if( self == nullptr )
-		return SQL_ERROR;
 
 	// bind columns
-	if( self->bind_columns && mysql_stmt_bind_result(self->stmt, self->columns) )
+	if( this->bind_columns && mysql_stmt_bind_result(this->stmt, this->columns) ){
 		err = 1;// error binding columns
-	else
-		err = mysql_stmt_fetch(self->stmt);// fetch row
+	}else{
+		// fetch row
+		err = mysql_stmt_fetch( this->stmt );
+	}
 
 	// check for errors
 	if( err == MYSQL_NO_DATA )
@@ -935,23 +856,22 @@ int32 SqlStmt_NextRow(SqlStmt* self)
 	{
 		my_bool truncated;
 
-		if( !self->bind_columns )
-		{
+		if( !this->bind_columns ){
 			ShowSQL("DB error - data truncated (unknown source, columns are not bound)\n");
 			return SQL_ERROR;
 		}
 
 		// find truncated column
-		cols = SqlStmt_NumColumns(self);
-		for( i = 0; i < cols; ++i )
-		{
-			MYSQL_BIND* column = &self->columns[i];
+		size_t cols = this->NumColumns();
+
+		for( size_t i = 0; i < cols; ++i ){
+			MYSQL_BIND* column = &this->columns[i];
 			column->error = &truncated;
-			mysql_stmt_fetch_column(self->stmt, column, (uint32)i, 0);
+			mysql_stmt_fetch_column( this->stmt, column, (uint32)i, 0 );
 			column->error = nullptr;
 			if( truncated )
 			{// report truncated column
-				SqlStmt_P_ShowDebugTruncatedColumn(self, i);
+				this->ShowDebugTruncatedColumn( i );
 				return SQL_ERROR;
 			}
 		}
@@ -961,31 +881,35 @@ int32 SqlStmt_NextRow(SqlStmt* self)
 #endif
 	if( err )
 	{
-		ShowSQL("DB error - %s\n", mysql_stmt_error(self->stmt));
-		ra_mysql_error_handler(mysql_stmt_errno(self->stmt));
+		ShowSQL("DB error - %s\n", mysql_stmt_error(this->stmt));
+		ra_mysql_error_handler(mysql_stmt_errno(this->stmt));
 		return SQL_ERROR;
 	}
 
 	// propagate column lengths and clear unused parts of string/enum/blob buffers
-	cols = SqlStmt_NumColumns(self);
-	for( i = 0; i < cols; ++i )
-	{
-		unsigned long length = self->column_lengths[i].length;
-		MYSQL_BIND* column = &self->columns[i];
+	size_t cols = this->NumColumns();
+
+	for( size_t i = 0; i < cols; ++i ){
+		unsigned long length = this->column_lengths[i].length;
+		MYSQL_BIND* column = &this->columns[i];
+
 #if !defined(MYSQL_DATA_TRUNCATED)
 		// MySQL 4.1/(below?) returns success even if data is truncated, so we test truncation manually [FlavioJS]
 		if( column->buffer_length < length )
 		{// report truncated column
 			if( column->buffer_type == MYSQL_TYPE_STRING || column->buffer_type == MYSQL_TYPE_BLOB )
 			{// string/enum/blob column
-				SqlStmt_P_ShowDebugTruncatedColumn(self, i);
+				this->ShowDebugTruncatedColumn( i );
 				return SQL_ERROR;
 			}
 			// FIXME numeric types and null [FlavioJS]
 		}
 #endif
-		if( self->column_lengths[i].out_length )
-			*self->column_lengths[i].out_length = (uint32)length;
+
+		if( this->column_lengths[i].out_length ){
+			*this->column_lengths[i].out_length = (uint32)length;
+		}
+
 		if( column->buffer_type == MYSQL_TYPE_STRING )
 		{// clear unused part of the string/enum buffer (and nul-terminate)
 			memset((char*)column->buffer + length, 0, column->buffer_length - length + 1);
@@ -1002,43 +926,47 @@ int32 SqlStmt_NextRow(SqlStmt* self)
 
 
 /// Frees the result of the statement execution.
-void SqlStmt_FreeResult(SqlStmt* self)
-{
-	if( self )
-		mysql_stmt_free_result(self->stmt);
+void SqlStmt::FreeResult(){
+	mysql_stmt_free_result( this->stmt );
 }
 
 
 
 /// Shows debug information (with statement).
-void SqlStmt_ShowDebug_(SqlStmt* self, const char* debug_file, const unsigned long debug_line)
-{
-	if( self == nullptr )
-		ShowDebug("at %s:%lu -  self is nullptr\n", debug_file, debug_line);
-	else if( StringBuf_Length(&self->buf) > 0 )
-		ShowDebug("at %s:%lu - %s\n", debug_file, debug_line, StringBuf_Value(&self->buf));
-	else
+void SqlStmt::ShowDebug_(const char* debug_file, const unsigned long debug_line){
+#if !defined(SQL_REMOVE_SHOWDEBUG)
+	if( StringBuf_Length( &this->buf ) > 0 ){
+		ShowDebug("at %s:%lu - %s\n", debug_file, debug_line, StringBuf_Value(&this->buf));
+	}else{
 		ShowDebug("at %s:%lu\n", debug_file, debug_line);
+	}
+#endif
 }
 
 
 
-/// Frees a SqlStmt returned by SqlStmt_Malloc.
-void SqlStmt_Free(SqlStmt* self)
-{
-	if( self )
-	{
-		SqlStmt_FreeResult(self);
-		StringBuf_Destroy(&self->buf);
-		mysql_stmt_close(self->stmt);
-		if( self->params )
-			aFree(self->params);
-		if( self->columns )
-		{
-			aFree(self->columns);
-			aFree(self->column_lengths);
-		}
-		aFree(self);
+/// Frees a SqlStmt.
+SqlStmt::~SqlStmt(){
+	this->FreeResult();
+	StringBuf_Destroy( &this->buf );
+	if( this->stmt != nullptr ){
+		mysql_stmt_close( this->stmt );
+		this->stmt = nullptr;
+	}
+
+	if( this->params != nullptr ){
+		aFree( this->params );
+		this->params = nullptr;
+	}
+
+	if( this->columns != nullptr ){
+		aFree( this->columns );
+		this->columns = nullptr;
+	}
+
+	if( this->column_lengths != nullptr ){
+		aFree( this->column_lengths );
+		this->column_lengths = nullptr;
 	}
 }
 
