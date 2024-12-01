@@ -428,8 +428,8 @@ struct bonus_script_data {
 	uint8 type; ///< 0 - None, 1 - Buff, 2 - Debuff
 };
 
-struct skill_cooldown_data {
-	unsigned short skill_id;
+struct s_skill_cooldown_data {
+	uint16 skill_id;
 	t_tick tick;
 };
 
@@ -501,6 +501,7 @@ struct s_homunculus {	//[orn]
 	uint32 intimacy;	//[orn]
 	short hunger;
 	struct s_skill hskill[MAX_HOMUNSKILL]; //albator
+	s_skill_cooldown_data scd[MAX_SKILLCOOLDOWN];
 	short skillpts;
 	short level;
 	t_exp exp;
@@ -531,6 +532,7 @@ struct s_mercenary {
 	int32 hp, sp;
 	uint32 kill_count;
 	t_tick life_time;
+	s_skill_cooldown_data scd[MAX_SKILLCOOLDOWN];
 };
 
 struct s_elemental {

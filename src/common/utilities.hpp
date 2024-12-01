@@ -31,6 +31,12 @@ int32 levenshtein( const std::string &s1, const std::string &s2 );
 
 namespace rathena {
 	namespace util {
+		/**
+		 * Determine if a key-value pair exists in the map
+		 * @param map: Map to search through
+		 * @param key: Key wanted
+		 * @return True on success or false otherwise
+		 */
 		template <typename K, typename V> bool map_exists( std::map<K,V>& map, K key ){
 			return map.find( key ) != map.end();
 		}
@@ -94,6 +100,16 @@ namespace rathena {
 			std::advance(it, size);
 
 			map.erase(it, map.end());
+		}
+
+		/**
+		 * Determine if a key-value pair exists in the unordered map
+		 * @param map: Unordered Map to search through
+		 * @param key: Key wanted
+		 * @return True on success or false otherwise
+		 */
+		template <typename K, typename V> bool umap_exists(std::unordered_map<K, V> &map, K key) {
+			return map.find(key) != map.end();
 		}
 
 		/**
