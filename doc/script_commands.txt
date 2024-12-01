@@ -7562,6 +7562,22 @@ NOTES:
 
 ---------------------------------------
 
+*npcshopchange "<name>",<item array>,<price array>{,qty array};
+
+This command works like 'npcshopitem', it wipes the whole sell list and replace it
+with the declared item and price array (and quantity if marketshop).
+
+This function returns 1 if the shop was successfully changed or 0 if failed to change.
+
+NOTES:
+ - That you cannot use -1 to specify default selling price!
+ - If attached shop type is market shop, need an extra param after price, it's <qty array>
+   and make sure don't add duplication item!
+
+A sample script can be found at doc/sample/npcshopchange.txt
+   
+---------------------------------------
+
 *npcshopadditem "<name>",<item id>,<price>{,<item id>,<price>{,<item id>,<price>{,...}}};
 *npcshopadditem "<name>",<item id>,<price>,<stock>{,<item id>,<price>,<stock>{,<item id>,<price>,<stock>{,...}}};
 
