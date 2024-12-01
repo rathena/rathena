@@ -92,7 +92,7 @@ int8 buyingstore_setup(map_session_data* sd, unsigned char slots){
 
 	if( slots > MAX_BUYINGSTORE_SLOTS )
 	{
-		ShowWarning("buyingstore_setup: Requested %d slots, but server supports only %d slots.\n", (int)slots, MAX_BUYINGSTORE_SLOTS);
+		ShowWarning("buyingstore_setup: Requested %d slots, but server supports only %d slots.\n", (int32)slots, MAX_BUYINGSTORE_SLOTS);
 		slots = MAX_BUYINGSTORE_SLOTS;
 	}
 

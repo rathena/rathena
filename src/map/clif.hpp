@@ -64,7 +64,7 @@ enum e_PacketDBVersion { // packet DB
 
 struct s_packet_db {
 	short len;
-	void (*func)(int, map_session_data *);
+	void (*func)(int32, map_session_data *);
 	short pos[MAX_PACKET_POS];
 };
 

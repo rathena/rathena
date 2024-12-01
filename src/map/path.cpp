@@ -506,7 +506,7 @@ int32 distance_client(int32 dx, int32 dy)
 
 	if(temp_dist < 0) temp_dist = 0;
 
-	return ((int)temp_dist);
+	return ((int32)temp_dist);
 }
 
 bool direction_diagonal( enum directions direction ){

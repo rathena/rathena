@@ -737,7 +737,7 @@ int32 quest_update_objective_sub(struct block_list *bl, va_list ap)
 	if( !sd->avail_quests )
 		return 0;
 	
-	if( sd->status.party_id != va_arg(ap, int))
+	if( sd->status.party_id != va_arg(ap, int32))
 		return 0;
 
 	quest_update_objective(sd, va_arg(ap, struct mob_data*));
