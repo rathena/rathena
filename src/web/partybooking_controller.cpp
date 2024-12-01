@@ -66,7 +66,7 @@ bool party_booking_read( std::string& world_name, std::vector<s_party_booking_en
 	SQLLock sl(MAP_SQL_LOCK);
 	sl.lock();
 	auto handle = sl.getHandle();
-	SqlStmt stmt = { *handle };
+	SqlStmt stmt{ *handle };
 	s_party_booking_entry entry;
 	char world_name_escaped[WORLD_NAME_LENGTH * 2 + 1];
 	char char_name[NAME_LENGTH ];
@@ -121,7 +121,7 @@ HANDLER_FUNC(partybooking_add){
 	SQLLock csl( CHAR_SQL_LOCK );
 	csl.lock();
 	auto chandle = csl.getHandle();
-	SqlStmt stmt = { *chandle };
+	SqlStmt stmt{ *chandle };
 	if( SQL_SUCCESS != stmt.Prepare( "SELECT 1 FROM `%s` WHERE `leader_id` = ? AND `leader_char` = ?", party_table, aid, cid )
 		|| SQL_SUCCESS != stmt.BindParam( 0, SQLDT_UINT32, &aid, sizeof( aid ) )
 		|| SQL_SUCCESS != stmt.BindParam( 1, SQLDT_UINT32, &cid, sizeof( cid ) )

@@ -549,7 +549,7 @@ static bool mmo_auth_fromsql(AccountDB_SQL* db, struct mmo_account* acc, uint32 
  */
 static bool mmo_auth_tosql(AccountDB_SQL* db, const struct mmo_account* acc, bool is_new, bool refresh_token) {
 	Sql* sql_handle = db->accounts;
-	SqlStmt stmt = { *sql_handle };
+	SqlStmt stmt{ *sql_handle };
 	bool result = false;
 
 	// try

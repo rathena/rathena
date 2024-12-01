@@ -33,7 +33,7 @@ HANDLER_FUNC(userconfig_save) {
 	SQLLock sl(WEB_SQL_LOCK);
 	sl.lock();
 	auto handle = sl.getHandle();
-	SqlStmt stmt = { *handle };
+	SqlStmt stmt{ *handle };
 	if (SQL_SUCCESS != stmt.Prepare(
 			"SELECT `data` FROM `%s` WHERE (`account_id` = ? AND `world_name` = ?) LIMIT 1",
 			user_configs_table)
@@ -108,7 +108,7 @@ HANDLER_FUNC(userconfig_load) {
 	SQLLock sl(WEB_SQL_LOCK);
 	sl.lock();
 	auto handle = sl.getHandle();
-	SqlStmt stmt = { *handle };
+	SqlStmt stmt{ *handle };
 	if (SQL_SUCCESS != stmt.Prepare(
 			"SELECT `data` FROM `%s` WHERE (`account_id` = ? AND `world_name` = ?) LIMIT 1",
 			user_configs_table)

@@ -531,7 +531,7 @@ int32 char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 /// Saves an array of 'item' entries into the specified table.
 int32 char_memitemdata_to_sql(const struct item items[], int32 max, int32 id, enum storage_type tableswitch, uint8 stor_id) {
 	StringBuf buf;
-	SqlStmt stmt = { *sql_handle };
+	SqlStmt stmt{ *sql_handle };
 	int32 i, j, offset = 0, errors = 0;
 	const char *tablename, *selectoption, *printname;
 	struct item item; // temp storage variable
@@ -744,7 +744,7 @@ int32 char_memitemdata_to_sql(const struct item items[], int32 max, int32 id, en
 
 bool char_memitemdata_from_sql(struct s_storage* p, int32 max, int32 id, enum storage_type tableswitch, uint8 stor_id) {
 	StringBuf buf;
-	SqlStmt stmt = { *sql_handle };
+	SqlStmt stmt{ *sql_handle };
 	int32 i,j, offset = 0, max2;
 	struct item item, *storage;
 	const char *tablename, *selectoption, *printname;
@@ -900,7 +900,7 @@ int32 char_mmo_char_tobuf(uint8* buf, struct mmo_charstatus* p);
 //=====================================================================================================
 // Loads the basic character rooster for the given account. Returns total buffer used.
 int32 char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf, uint8* count ) {
-	SqlStmt stmt = { *sql_handle };
+	SqlStmt stmt{ *sql_handle };
 	struct mmo_charstatus p;
 	int32 j = 0, i;
 	char sex[2];
@@ -1012,7 +1012,7 @@ int32 char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf, uint8* co
 //=====================================================================================================
 int32 char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_everything) {
 	int32 i;
-	SqlStmt stmt = { *sql_handle };
+	SqlStmt stmt{ *sql_handle };
 	struct s_point_str tmp_point;
 	struct s_skill tmp_skill;
 	uint16 skill_count = 0;

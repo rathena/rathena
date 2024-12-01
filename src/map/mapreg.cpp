@@ -186,7 +186,7 @@ static void script_load_mapreg(void)
 	   | varname | index | value |
 	   +-------------------------+
 	                                */
-	SqlStmt stmt = { *mmysql_handle };
+	SqlStmt stmt{ *mmysql_handle };
 	char varname[32+1];
 	uint32 index;
 	char value[255+1];

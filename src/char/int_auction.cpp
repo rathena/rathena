@@ -49,7 +49,7 @@ int32 auction_count(uint32 char_id, bool buy)
 void auction_save( std::shared_ptr<struct auction_data> auction ){
 	int32 j;
 	StringBuf buf;
-	SqlStmt stmt = { *sql_handle };
+	SqlStmt stmt{ *sql_handle };
 
 	if( !auction )
 		return;
@@ -81,7 +81,7 @@ void auction_save( std::shared_ptr<struct auction_data> auction ){
 uint32 auction_create( std::shared_ptr<struct auction_data> auction ){
 	int32 j;
 	StringBuf buf;
-	SqlStmt stmt = { *sql_handle };
+	SqlStmt stmt{ *sql_handle };
 
 	if( !auction )
 		return false;

@@ -4764,7 +4764,7 @@ int32 npc_instancedestroy(struct npc_data* nd)
  * @param qty Stock
  **/
 void npc_market_tosql(const char *exname, struct npc_item_list *list) {
-	SqlStmt stmt = { *mmysql_handle };
+	SqlStmt stmt{ *mmysql_handle };
 	if (SQL_ERROR == stmt.Prepare("REPLACE INTO `%s` (`name`,`nameid`,`price`,`amount`,`flag`) VALUES ('%s','%u','%d','%d','%" PRIu8 "')",
 		market_table, exname, list->nameid, list->value, list->qty, list->flag) ||
 		SQL_ERROR == stmt.Execute())
@@ -4778,7 +4778,7 @@ void npc_market_tosql(const char *exname, struct npc_item_list *list) {
  * @param clear True: will removes all records related with the NPC
  **/
 void npc_market_delfromsql_(const char *exname, t_itemid nameid, bool clear) {
-	SqlStmt stmt = { *mmysql_handle };
+	SqlStmt stmt{ *mmysql_handle };
 	if (clear) {
 		if( SQL_ERROR == stmt.Prepare("DELETE FROM `%s` WHERE `name`='%s'", market_table, exname) ||
 			SQL_ERROR == stmt.Execute())

@@ -36,7 +36,7 @@ HANDLER_FUNC(merchantstore_save) {
 	SQLLock sl(WEB_SQL_LOCK);
 	sl.lock();
 	auto handle = sl.getHandle();
-	SqlStmt stmt = { *handle };
+	SqlStmt stmt{ *handle };
 	if (SQL_SUCCESS != stmt.Prepare(
 			"SELECT `account_id` FROM `%s` WHERE (`account_id` = ? AND `char_id` = ? AND `world_name` = ? AND `store_type` = ?) LIMIT 1",
 			merchant_configs_table)
@@ -117,7 +117,7 @@ HANDLER_FUNC(merchantstore_load) {
 	SQLLock sl(WEB_SQL_LOCK);
 	sl.lock();
 	auto handle = sl.getHandle();
-	SqlStmt stmt = { *handle };
+	SqlStmt stmt{ *handle };
 	if (SQL_SUCCESS != stmt.Prepare(
 			"SELECT `data` FROM `%s` WHERE (`account_id` = ? AND `char_id` = ? AND `world_name` = ? AND `store_type` = ?) LIMIT 1",
 			merchant_configs_table)

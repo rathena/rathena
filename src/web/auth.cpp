@@ -30,7 +30,7 @@ bool isAuthorized(const Request &request, bool checkGuildLeader) {
 
 	auto handle = loginlock.getHandle();
 
-	SqlStmt stmt = { *handle };
+	SqlStmt stmt{ *handle };
 
 	if (SQL_SUCCESS != stmt.Prepare(
 			"SELECT `account_id` FROM `%s` WHERE (`account_id` = ? AND `web_auth_token` = ? AND `web_auth_token_enabled` = '1')",
@@ -61,7 +61,7 @@ bool isAuthorized(const Request &request, bool checkGuildLeader) {
 	SQLLock charlock(CHAR_SQL_LOCK);
 	charlock.lock();
 	handle = charlock.getHandle();
-	SqlStmt stmt2 = { *handle };
+	SqlStmt stmt2{ *handle };
 
 	if (SQL_SUCCESS != stmt2.Prepare(
 		"SELECT `account_id` FROM `%s` LEFT JOIN `%s` using (`char_id`) WHERE (`%s`.`account_id` = ? AND `%s`.`guild_id` = ?) LIMIT 1",

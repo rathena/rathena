@@ -259,7 +259,7 @@ private:
 	void ShowDebugTruncatedColumn( size_t i );
 
 public:
-	SqlStmt( Sql& sql ) noexcept(false);
+	explicit SqlStmt( Sql& sql ) noexcept(false);
 	~SqlStmt();
 
 	/// Prepares the statement.

@@ -82,7 +82,7 @@ int32 mail_fromsql(uint32 char_id, struct mail_data* md)
 int32 mail_savemessage(struct mail_message* msg)
 {
 	StringBuf buf;
-	SqlStmt stmt = { *sql_handle };
+	SqlStmt stmt{ *sql_handle };
 	int32 i, j;
 	bool found = false;
 

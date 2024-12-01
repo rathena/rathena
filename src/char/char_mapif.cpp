@@ -1207,7 +1207,7 @@ int32 chmapif_parse_reqcharban(int32 fd){
 			char* data;
 			time_t unban_time;
 			time_t now = time(nullptr);
-			SqlStmt stmt = { *sql_handle };
+			SqlStmt stmt{ *sql_handle };
 
 			Sql_GetData(sql_handle, 0, &data, nullptr); t_aid = atoi(data);
 			Sql_GetData(sql_handle, 1, &data, nullptr); t_cid = atoi(data);
@@ -1282,7 +1282,7 @@ int32 chmapif_bonus_script_get(int32 fd) {
 		uint8 num_rows = 0;
 		uint32 cid = RFIFOL(fd,2);
 		struct bonus_script_data tmp_bsdata;
-		SqlStmt stmt = { *sql_handle };
+		SqlStmt stmt{ *sql_handle };
 
 		RFIFOSKIP(fd,6);
 

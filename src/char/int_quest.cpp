@@ -26,7 +26,7 @@
 struct quest *mapif_quests_fromsql( uint32 char_id, size_t& count ){
 	struct quest *questlog = nullptr;
 	struct quest tmp_quest;
-	SqlStmt stmt = { *sql_handle };
+	SqlStmt stmt{ *sql_handle };
 
 	memset(&tmp_quest, 0, sizeof(struct quest));
 

@@ -479,7 +479,7 @@ int32 chlogif_parse_ackchangesex(int32 fd)
 			unsigned char i;
 			int32 char_id = 0, class_ = 0, guild_id = 0;
 			std::shared_ptr<struct auth_node> node = util::umap_find( char_get_authdb(), acc );
-			SqlStmt stmt = { *sql_handle };
+			SqlStmt stmt{ *sql_handle };
 
 			if (node != nullptr)
 				node->sex = sex;

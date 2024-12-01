@@ -34,7 +34,7 @@ HANDLER_FUNC(charconfig_save) {
 	SQLLock sl(WEB_SQL_LOCK);
 	sl.lock();
 	auto handle = sl.getHandle();
-	SqlStmt stmt = { *handle };
+	SqlStmt stmt{ *handle };
 	if (SQL_SUCCESS != stmt.Prepare(
 			"SELECT `data` FROM `%s` WHERE (`account_id` = ? AND `char_id` = ? AND `world_name` = ?) LIMIT 1",
 			char_configs_table)
@@ -111,7 +111,7 @@ HANDLER_FUNC(charconfig_load) {
 	SQLLock sl(WEB_SQL_LOCK);
 	sl.lock();
 	auto handle = sl.getHandle();
-	SqlStmt stmt = { *handle };
+	SqlStmt stmt{ *handle };
 	if (SQL_SUCCESS != stmt.Prepare(
 			"SELECT `data` FROM `%s` WHERE (`account_id` = ? AND `char_id` = ? AND `world_name` = ?) LIMIT 1",
 			char_configs_table)

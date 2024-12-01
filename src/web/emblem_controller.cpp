@@ -48,7 +48,7 @@ HANDLER_FUNC(emblem_download) {
 	SQLLock sl(WEB_SQL_LOCK);
 	sl.lock();
 	auto handle = sl.getHandle();
-	SqlStmt stmt = { *handle };
+	SqlStmt stmt{ *handle };
 	if (SQL_SUCCESS != stmt.Prepare(
 			"SELECT `version`, `file_type`, `file_data` FROM `%s` WHERE (`guild_id` = ? AND `world_name` = ?)",
 			guild_emblems_table)
@@ -223,7 +223,7 @@ HANDLER_FUNC(emblem_upload) {
 	SQLLock sl(WEB_SQL_LOCK);
 	sl.lock();
 	auto handle = sl.getHandle();
-	SqlStmt stmt = { *handle };
+	SqlStmt stmt{ *handle };
 	if (SQL_SUCCESS != stmt.Prepare(
 			"SELECT `version` FROM `%s` WHERE (`guild_id` = ? AND `world_name` = ?)",
 			guild_emblems_table)

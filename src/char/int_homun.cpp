@@ -117,7 +117,7 @@ bool mapif_homunculus_save(struct s_homunculus* hd)
 		}
 		else
 		{
-			SqlStmt stmt = { *sql_handle };
+			SqlStmt stmt{ *sql_handle };
 			int32 i;
 
 			if( SQL_ERROR == stmt.Prepare("REPLACE INTO `%s` (`homun_id`, `id`, `lv`) VALUES (%d, ?, ?)", schema_config.skill_homunculus_db, hd->hom_id) )
