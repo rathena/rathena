@@ -8983,6 +8983,32 @@ BUILDIN_FUNC(getpartymember)
 }
 
 /*==========================================
+ * Set arrays with mob info of a quest:
+ * .@quest_mob - MOB ID array
+ * .@quest_hunt - HUNT AMOUNT array
+ * .@quest_mobcount - MOB amount
+ *------------------------------------------
+ * * by buraquera
+ *------------------------------------------*/
+
+BUILDIN_FUNC(getquest_mob)
+{
+	int j = 0;
+
+	std::shared_ptr<s_quest_db> qi = quest_search(script_getnum(st, 2));
+	if (qi) {
+		for (int i = 0; i < qi->objectives.size(); i++) {
+			setd_sub_num(st, NULL, ".@quest_mob", i, qi->objectives[i]->mob_id, NULL);
+			setd_sub_num(st, NULL, ".@quest_hunt", i, qi->objectives[i]->count, NULL);
+			j++;
+		}
+	}
+	setd_sub_num(st, NULL, ".@quest_mobcount", 0, j, NULL);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+
+/*==========================================
  * Retrieves party leader. if flag is specified,
  * return some of the leader data. Otherwise, return name.
  *------------------------------------------*/
@@ -27566,6 +27592,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getnpcid,"i?"),
 	BUILDIN_DEF(getpartyname,"i"),
 	BUILDIN_DEF(getpartymember,"i??"),
+	BUILDIN_DEF(getquest_mob,"i"),
 	BUILDIN_DEF(getpartyleader,"i?"),
 	BUILDIN_DEF(getguildname,"i"),
 	BUILDIN_DEF(getguildmaster,"i"),
