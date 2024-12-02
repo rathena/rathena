@@ -8477,11 +8477,11 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
     Script: |
-      bonus bCritAtkRate,,5;
-      bonus bLongAtkRate,,5;
-      bonus2 bMagicAtkEle,Ele_All,,5;
-      bonus bMaxHPrate,,5;
-      bonus bMaxSPrate,,5;
+      bonus bCritAtkRate,5;
+      bonus bLongAtkRate,5;
+      bonus2 bMagicAtkEle,Ele_All,5;
+      bonus bMaxHPrate,5;
+      bonus bMaxSPrate,5;
       bonus bNoCastCancel;
   - Status: Mental_Potion
     Icon: EFST_TARGET_ASPD
