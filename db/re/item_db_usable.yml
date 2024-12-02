@@ -62359,7 +62359,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      /* TODO pet; */
+      /* TODO pet 2019; */
   - Id: 23258
     AegisName: Foul_Rotten_Meat
     Name: Stinky Rotten Meat
@@ -62369,7 +62369,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      /* TODO pet; */
+      /* TODO pet 1782; */
   - Id: 23259
     AegisName: St_Cupcake
     Name: Strawberry Cream Cupcake
@@ -73679,7 +73679,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* TODO : pet; */
+      /* TODO : pet 21632; */
       pet;
   - Id: 101336
     AegisName: aegis_101336
