@@ -4637,17 +4637,23 @@ static TIMER_FUNC(skill_timerskill){
 #ifndef RENEWAL
 						skill_toggle_magicpower(src, skl->skill_id); // Only the first hit will be amplified
 #endif
-						skill_attack(BF_MAGIC,src,src,target,skl->skill_id,skl->skill_lv,tick,9 - skl->type); // Hit a Lightning on the current Target
-						if( skl->type < (4 + skl->skill_lv - 1) && skl->x < 3  )
-						{ // Remaining Chains Hit
-							struct block_list *nbl = nullptr; // Next Target of Chain
-							nbl = battle_getenemyarea(src, target->x, target->y, (skl->type>2)?2:3, // After 2 bounces, it will bounce to other targets in 7x7 range.
-									splash_target(src), target->id); // Search for a new Target around current one...
-							if( nbl == nullptr )
-								skl->x++;
-							else
-								skl->x = 0;
-							skill_addtimerskill(src, tick + 650, (nbl?nbl:target)->id, skl->x, 0, WL_CHAINLIGHTNING_ATK, skl->skill_lv, skl->type + 1, 0);
+						skl->type++;
+
+						// Hit a Lightning on the current Target (start with mflag = 9 - skl->type = 8)
+						skill_attack(BF_MAGIC, src, src, target, skl->skill_id, skl->skill_lv, tick, 9 - skl->type);
+
+						if (skl->type < (4 + skl->skill_lv)) { // Remaining Chains Hit
+							block_list *nbl = nullptr; // Next Target of Chain
+
+							// After 1 hit, search for other targets in 7x7 range around current target.
+							nbl = battle_getenemyarea(src, target->x, target->y, 3,
+									splash_target(src), target->id);
+
+							// The skill hits at least 4 times. Before 4 hits the skill can bounce on the last target again and again.
+							// After 4 hits, the next hit must bounce to a new target. If no new target is within the skill range the skill ends.
+							if (nbl == nullptr && skl->type > 3)
+								break;
+							skill_addtimerskill(src, tick + 650, (nbl != nullptr ? nbl : target)->id, 0, 0, WL_CHAINLIGHTNING_ATK, skl->skill_lv, skl->type, 0);
 						}
 					}
 					break;
