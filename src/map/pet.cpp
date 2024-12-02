@@ -30,6 +30,13 @@
 
 using namespace rathena;
 
+struct s_pet_catch_process{
+	uint32 char_id;
+	t_itemid taming_item;
+	e_pet_catch_flag flag;
+};
+
+std::unordered_map<uint32, std::shared_ptr<s_pet_catch_process>> pet_catchprocesses;
 std::unordered_map<std::string, std::shared_ptr<s_pet_autobonus_wrapper>> pet_autobonuses;
 const t_tick MIN_PETTHINKTIME = 100;
 
@@ -1213,14 +1220,26 @@ int32 pet_select_egg(map_session_data *sd,short egg_index)
  * @param sd : player requesting
  * @param item_id : item ID of the taming item used
  */
-void pet_catch_process1(map_session_data& sd, t_itemid item_id)
-{
+void pet_catch_process_start( map_session_data& sd, t_itemid item_id, e_pet_catch_flag flag ){
 	if (map_getmapflag(sd.bl.m, MF_NOPETCAPTURE)) {
 		clif_displaymessage(sd.fd, msg_txt(&sd, 669)); // You can't catch any pet on this map.
 		return;
 	}
 
-	sd.taming_item = item_id;
+	std::shared_ptr<s_pet_catch_process> process = util::umap_find( pet_catchprocesses, sd.status.char_id );
+
+	if( process != nullptr ){
+		// TODO: Just delete?
+	}
+
+	process = std::make_shared<s_pet_catch_process>();
+
+	process->char_id = sd.status.char_id;
+	process->taming_item = item_id;
+	process->flag = flag;
+
+	pet_catchprocesses[process->char_id] = process;
+
 	clif_catch_process(sd);
 }
 
@@ -1229,13 +1248,19 @@ void pet_catch_process1(map_session_data& sd, t_itemid item_id)
  * @param sd : player requesting
  * @param target_id : monster ID of pet to catch
  */
-void pet_catch_process2(map_session_data& sd, int32 target_id)
-{
-	mob_data* md = reinterpret_cast<mob_data*>(map_id2bl(target_id));
+void pet_catch_process_end( map_session_data& sd, int32 target_id ){
+	std::shared_ptr<s_pet_catch_process> process = util::umap_find( pet_catchprocesses, sd.status.char_id );
 
-	if(md == nullptr || md->bl.type != BL_MOB || md->bl.prev == nullptr) { // Invalid inputs/state, abort capture.
+	if( process == nullptr ){
+		return;
+	}
+
+	mob_data* md = map_id2md( target_id );
+
+	if(md == nullptr || md->bl.prev == nullptr) { // Invalid inputs/state, abort capture.
 		clif_pet_roulette( sd, false );
-		sd.taming_item = PET_CATCH_FAIL;
+		pet_catchprocesses.erase( sd.status.char_id );
+		// TODO: Why do we reset this here, but not anywhere else in this function? [Lemongrass]
 		sd.itemid = 0;
 		sd.itemindex = -1;
 		return;
@@ -1243,7 +1268,7 @@ void pet_catch_process2(map_session_data& sd, int32 target_id)
 
 	if (map_getmapflag(sd.bl.m, MF_NOPETCAPTURE)) {
 		clif_pet_roulette( sd, false );
-		sd.taming_item = PET_CATCH_FAIL;
+		pet_catchprocesses.erase( sd.status.char_id );
 		clif_displaymessage(sd.fd, msg_txt(&sd, 669)); // You can't catch any pet on this map.
 
 		return;
@@ -1255,34 +1280,43 @@ void pet_catch_process2(map_session_data& sd, int32 target_id)
 
 	if (pet == nullptr) {
 		clif_pet_roulette(sd, false);
-		sd.taming_item = PET_CATCH_FAIL;
+		pet_catchprocesses.erase( sd.status.char_id );
 
 		return;
 	}
 
 	// If the taming item used is different from the pet's, we have a few exceptions
-	if (sd.taming_item != pet->itemID &&
-		// PET_CATCH_UNIVERSAL_NO_BOSS is used for universal lures (except bosses for now). [Skotlex]
-		!(sd.taming_item == PET_CATCH_UNIVERSAL_NO_BOSS && !status_has_mode(&md->status, MD_STATUSIMMUNE)) &&
-		// PET_CATCH_UNIVERSAL_ALL is used for catching any monster
-		sd.taming_item != PET_CATCH_UNIVERSAL_ALL)
-	{
-		clif_pet_roulette(sd, false);
-		sd.taming_item = PET_CATCH_FAIL;
+	switch( process->flag ){
+		case PET_CATCH_NORMAL:
+			if( process->taming_item != pet->itemID ){
+				clif_pet_roulette( sd, false );
+				pet_catchprocesses.erase( sd.status.char_id );
+			}
+			break;
 
-		return;
+		case PET_CATCH_UNIVERSAL_NO_BOSS:
+			// PET_CATCH_UNIVERSAL_NO_BOSS is used for universal lures (except bosses for now).
+			if( status_has_mode( &md->status, MD_STATUSIMMUNE ) ){
+				clif_pet_roulette( sd, false );
+				pet_catchprocesses.erase( sd.status.char_id );
+			}
+			break;
+
+		case PET_CATCH_UNIVERSAL_ALL:
+			// No checks, catch anything.
+			break;
 	}
 
 	if( battle_config.pet_distance_check && distance_bl( &sd.bl, &md->bl ) > battle_config.pet_distance_check ){
 		clif_pet_roulette(sd, false);
-		sd.taming_item = PET_CATCH_FAIL;
+		pet_catchprocesses.erase( sd.status.char_id );
 
 		return;
 	}
 
 	if (!pc_inventoryblank(&sd)) {
 		clif_pet_roulette(sd, false);
-		sd.taming_item = PET_CATCH_FAIL;
+		pet_catchprocesses.erase( sd.status.char_id );
 		clif_msg_color(&sd, MSI_CANT_GET_ITEM_BECAUSE_COUNT, color_table[COLOR_RED]);
 
 		return;
@@ -1292,7 +1326,7 @@ void pet_catch_process2(map_session_data& sd, int32 target_id)
 
 	if( battle_config.pet_hide_check && tsc && ( tsc->getSCE(SC_HIDING) || tsc->getSCE(SC_CLOAKING) || tsc->getSCE(SC_CAMOUFLAGE) || tsc->getSCE(SC_NEWMOON) || tsc->getSCE(SC_CLOAKINGEXCEED) ) ){
 		clif_pet_roulette( sd, false );
-		sd.taming_item = PET_CATCH_FAIL;
+		pet_catchprocesses.erase( sd.status.char_id );
 
 		return;
 	}
@@ -1323,7 +1357,7 @@ void pet_catch_process2(map_session_data& sd, int32 target_id)
 		clif_pet_roulette( sd, false );
 	}
 
-	sd.taming_item = PET_CATCH_FAIL;
+	pet_catchprocesses.erase( sd.status.char_id );
 
 	return;
 }

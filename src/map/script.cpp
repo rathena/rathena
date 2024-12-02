@@ -12527,36 +12527,49 @@ BUILDIN_FUNC( errormes ){
 
 /**
  * Attempts to catch a pet with the lure item.
- * pet {<item_id>}
- * catchpet {<item_id>}
+ * pet {<item_id>{,flag}}
+ * catchpet {<item_id>{,flag}}
 */
 BUILDIN_FUNC(catchpet)
 {
-	map_session_data* sd = nullptr;
+	const char* command = script_getfuncname(st);
+	map_session_data* sd;
 
 	if( !script_rid2sd(sd) )
 		return SCRIPT_CMD_FAILURE;
 
 	t_itemid lure_id;
-	if (script_hasdata(st, 2))
-		lure_id = static_cast<t_itemid>(script_getnum(st, 2));
-	else
-		lure_id = sd->itemid;
+	if( script_hasdata( st, 2 ) ){
+		lure_id = script_getnum( st, 2 );
 
-	if (lure_id == PET_CATCH_FAIL) {
-		ShowError("catchpet: Invalid lure item ID %d.\n", lure_id);
-		return SCRIPT_CMD_FAILURE;
-	}
-	else if (lure_id > PET_CATCH_MAX) {
-		std::shared_ptr<item_data> id = item_db.find(lure_id);
+		std::shared_ptr<item_data> id = item_db.find( lure_id );
 
 		if (id == nullptr) {
-			ShowError("catchpet: Invalid lure item ID %d.\n", lure_id);
+			ShowError( "buildin_%s: Invalid lure item ID %d.\n", command, lure_id );
 			return SCRIPT_CMD_FAILURE;
 		}
+	}else{
+		if( sd->itemid == 0 ){
+			ShowError( "buildin_%s: Called outside of an item script without item id.\n", command );
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		lure_id = sd->itemid;
 	}
 
-	pet_catch_process1(*sd, lure_id);
+	e_pet_catch_flag flag = PET_CATCH_NORMAL;
+
+	if( script_hasdata( st, 3 ) ){
+		int32 val = script_getnum( st, 3 );
+
+		if( val < PET_CATCH_NORMAL || val >= PET_CATCH_MAX ){
+			ShowError( "buildin_%s: Invalid value '%d' for flag.\n", command, val );
+		}
+
+		flag = static_cast<e_pet_catch_flag>( val );
+	}
+
+	pet_catch_process_start( *sd, lure_id, flag );
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -27701,9 +27714,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getscrate,"ii?"),
 	BUILDIN_DEF(debugmes,"s"),
 	BUILDIN_DEF(errormes,"s"),
-	BUILDIN_DEF2(catchpet,"pet","?"),
+	BUILDIN_DEF2(catchpet,"pet","??"),
 	BUILDIN_DEF2(birthpet,"bpet",""),
-	BUILDIN_DEF(catchpet,"?"),
+	BUILDIN_DEF(catchpet,"??"),
 	BUILDIN_DEF(birthpet,""),
 	BUILDIN_DEF(resetlvl,"i?"),
 	BUILDIN_DEF(resetstatus,"?"),

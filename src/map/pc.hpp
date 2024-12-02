@@ -686,8 +686,6 @@ public:
 	t_itemid itemid;
 	short itemindex;	//Used item's index in sd->inventory [Skotlex]
 
-	t_itemid taming_item; // pet catching, stores the taming item used
-
 	int8 spiritball, spiritball_old;
 	int32 spirit_timer[MAX_SPIRITBALL];
 	short spiritcharm; //No. of spirit
