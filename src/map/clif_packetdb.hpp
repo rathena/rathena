@@ -669,7 +669,7 @@
 	parseable_packet(0x024c,8,clif_parse_Auction_setitem,2,4);
 	packet(0x024d,14);
 	parseable_packet(0x024e,6,clif_parse_Auction_cancel,2);
-	parseable_packet(0x024f,10,clif_parse_Auction_bid,2,6);
+	parseable_packet( HEADER_CZ_AUCTION_BUY, sizeof( PACKET_CZ_AUCTION_BUY ), clif_parse_Auction_bid, 0 );
 	packet(0x0250,3);
 	packet(0x0251,2);
 	packet(0x0252,-1);
@@ -702,7 +702,7 @@
 
 // 2005-08-08aSakexe
 #if PACKETVER >= 20050808
-	parseable_packet(0x024d,12,clif_parse_Auction_register,2,6,10);
+	parseable_packet( HEADER_CZ_AUCTION_ADD, sizeof( PACKET_CZ_AUCTION_ADD ), clif_parse_Auction_register, 0 );
 	packet(0x024e,4);
 #endif
 

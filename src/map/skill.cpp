@@ -368,7 +368,7 @@ int32 skill_get_range2(struct block_list *bl, uint16 skill_id, uint16 skill_lv, 
 	return range;
 }
 
-/** Copy Referral: dummy skills should point32 to their source.
+/** Copy Referral: dummy skills should point to their source.
  * @param skill_id Dummy skill ID
  * @return Real skill id if found
  **/
@@ -681,12 +681,6 @@ int32 skill_calc_heal(struct block_list *src, struct block_list *target, uint16 
 #ifdef RENEWAL
 			if (tsc->getSCE(SC_ASSUMPTIO))
 				hp_bonus += tsc->getSCE(SC_ASSUMPTIO)->val1 * 2;
-#endif
-			if (tsc->getSCE(SC_VITALIZE_POTION))
-#ifdef RENEWAL
-				hp_bonus += 10;
-#else
-				hp += hp * 10 / 100;
 #endif
 		}
 	}
@@ -2420,12 +2414,6 @@ int32 skill_additional_effect( struct block_list* src, struct block_list *bl, ui
 		int32 class_ = mob_get_random_id(MOBG_BRANCH_OF_DEAD_TREE, RMF_DB_RATE, 0);
 		if (class_ != 0 && mobdb_checkid(class_))
 			mob_class_change(dstmd,class_);
-	}
-
-	if (sd && sc) {
-		struct status_change_entry *sce;
-		if ((sce = sc->getSCE(SC_2011RWC_SCROLL)) && rnd() % 1000 <= 10)
-			skill_castend_nodamage_id(src, src, AC_CONCENTRATION, max(3, pc_checkskill(sd,AC_CONCENTRATION)), tick, 0);
 	}
 
 	return 0;
@@ -8829,7 +8817,8 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			map_freeblock_unlock();
 			return 1;
 		}
-		status_kill(src);
+		// Won't display the damage, but drop items and give exp
+		status_zap(src, sstatus->hp, 0, 0);
 		break;
 	case AL_ANGELUS:
 #ifdef RENEWAL
@@ -19341,8 +19330,6 @@ int32 skill_castfix_sc(struct block_list *bl, double time, uint8 flag)
 				time += sc->getSCE(SC_PARALYSIS)->val3;
 			if (sc->getSCE(SC_IZAYOI))
 				time -= time * 50 / 100;
-			if (sc->getSCE(SC_2011RWC_SCROLL))
-				time -= time * 5 / 100;
 		}
 		if (sc->getSCE(SC_SUFFRAGIUM)) {
 			if(!(flag&2))
@@ -19462,8 +19449,6 @@ int32 skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint1
 			VARCAST_REDUCTION(sc->getSCE(SC_TELEKINESIS_INTENSE)->val2);
 		if (sc->getSCE(SC_SOULFAIRY))
 			VARCAST_REDUCTION(sc->getSCE(SC_SOULFAIRY)->val3);
-		if (sc->getSCE(SC_EP16_2_BUFF_AC))
-			VARCAST_REDUCTION(80);
 		// Multiplicative Fixed CastTime values
 		if (sc->getSCE(SC_SECRAMENT))
 			fixcast_r = max(fixcast_r, sc->getSCE(SC_SECRAMENT)->val2);
@@ -19486,8 +19471,6 @@ int32 skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint1
 			fixed = 0;
 		if (sc->getSCE(SC_GLOOMYDAY))
 			fixed += skill_lv * 500;
-		if (sc->getSCE(SC_2011RWC_SCROLL))
-			VARCAST_REDUCTION(5);
 	}
 	if (sc && sc->getSCE(SC_SECRAMENT) && skill_id == HW_MAGICPOWER && (flag&2)) // Sacrament lowers Mystical Amplification cast time
 		fixcast_r = max(fixcast_r, sc->getSCE(SC_SECRAMENT)->val2);
@@ -19794,16 +19777,16 @@ void skill_weaponrefine( map_session_data& sd, int32 idx ){
 				if(item->refine == 10 &&
 					item->card[0] == CARD0_FORGE &&
 					(int)MakeDWord(item->card[2],item->card[3]) == sd.status.char_id)
-				{ // Fame point32 system [DracoRPG]
+				{ // Fame point system [DracoRPG]
 					switch(ditem->weapon_level){
 						case 1:
-							pc_addfame(sd, battle_config.fame_refine_lv1); // Success to refine to +10 a lv1 weapon you forged = +1 fame point32
+							pc_addfame(sd, battle_config.fame_refine_lv1); // Success to refine to +10 a lv1 weapon you forged = +1 fame point
 							break;
 						case 2:
-							pc_addfame(sd, battle_config.fame_refine_lv2); // Success to refine to +10 a lv2 weapon you forged = +25 fame point32
+							pc_addfame(sd, battle_config.fame_refine_lv2); // Success to refine to +10 a lv2 weapon you forged = +25 fame point
 							break;
 						case 3:
-							pc_addfame(sd, battle_config.fame_refine_lv3); // Success to refine to +10 a lv3 weapon you forged = +1000 fame point32
+							pc_addfame(sd, battle_config.fame_refine_lv3); // Success to refine to +10 a lv3 weapon you forged = +1000 fame point
 							break;
 					}
 				}
@@ -22376,8 +22359,8 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 		if (equip) {
 			clif_produceeffect(sd,0,nameid);
 			clif_misceffect( sd->bl, NOTIFYEFFECT_REFINE_SUCCESS );
-			if (wlv >= 3 && ((ele? 1 : 0) + sc) >= 3) // Fame point32 system [DracoRPG]
-				pc_addfame(*sd, battle_config.fame_forge); // Success to forge a lv3 weapon with 3 additional ingredients = +10 fame point32
+			if (wlv >= 3 && ((ele? 1 : 0) + sc) >= 3) // Fame point system [DracoRPG]
+				pc_addfame(*sd, battle_config.fame_forge); // Success to forge a lv3 weapon with 3 additional ingredients = +10 fame point
 		} else {
 			int32 fame = 0;
 			tmp_item.amount = 0;
@@ -22528,7 +22511,7 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 			case GC_CREATENEWPOISON:
 				clif_produceeffect(sd,3,nameid);
 				clif_misceffect( sd->bl, NOTIFYEFFECT_PHARMACY_FAILURE );
-				sd->potion_success_counter = 0; // Fame point32 system [DracoRPG]
+				sd->potion_success_counter = 0; // Fame point system [DracoRPG]
 				break;
 			case BS_IRON:
 			case BS_STEEL:

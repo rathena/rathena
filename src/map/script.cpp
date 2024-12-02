@@ -5981,7 +5981,7 @@ BUILDIN_FUNC(warpguild)
 			if(!map_getmapflag(pl_sd->bl.m, MF_NORETURN))
 				pc_setpos( pl_sd, mapindex_name2id( pl_sd->status.save_point.map ), pl_sd->status.save_point.x, pl_sd->status.save_point.y, CLR_TELEPORT );
 		break;
-		case 2: // SavePoint32
+		case 2: // SavePoint
 			if(!map_getmapflag(pl_sd->bl.m, MF_NORETURN))
 				pc_setpos( pl_sd, mapindex_name2id( sd->status.save_point.map ),sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT );
 		break;
@@ -16481,12 +16481,11 @@ BUILDIN_FUNC(summon)
 {
 	int32 _class, timeout=0;
 	const char *str,*event="";
-	TBL_PC *sd;
-	struct mob_data *md;
+	map_session_data* sd;
 	t_tick tick = gettick();
 
 	if (!script_rid2sd(sd))
-		return SCRIPT_CMD_SUCCESS;
+		return SCRIPT_CMD_FAILURE;
 
 	str	=script_getstr(st,2);
 	_class=script_getnum(st,3);
@@ -16497,20 +16496,29 @@ BUILDIN_FUNC(summon)
 		check_event(st, event);
 	}
 
-	clif_skill_poseffect(&sd->bl,AM_CALLHOMUN,1,sd->bl.x,sd->bl.y,tick);
+	mob_data* md = mob_once_spawn_sub( &sd->bl, sd->bl.m, sd->bl.x, sd->bl.y, str, _class, event, SZ_SMALL, AI_NONE );
 
-	md = mob_once_spawn_sub(&sd->bl, sd->bl.m, sd->bl.x, sd->bl.y, str, _class, event, SZ_SMALL, AI_NONE);
-	if (md) {
-		md->master_id=sd->bl.id;
-		md->special_state.ai = AI_ATTACK;
-		if( md->deletetimer != INVALID_TIMER )
-			delete_timer(md->deletetimer, mob_timer_delete);
-		md->deletetimer = add_timer(tick+(timeout>0?timeout:60000),mob_timer_delete,md->bl.id,0);
-		mob_spawn (md); //Now it is ready for spawning.
-		clif_specialeffect(&md->bl,EF_ENTRY2,AREA);
-		sc_start4(nullptr,&md->bl, SC_MODECHANGE, 100, 1, 0, MD_AGGRESSIVE, 0, 60000);
+	if( md == nullptr ){
+		ShowError( "buildin_summon: Invalid mob ID %d.\n", _class );
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
 	}
-	script_pushint(st, md->bl.id);
+
+	clif_skill_poseffect( &sd->bl, AM_CALLHOMUN, 1, sd->bl.x, sd->bl.y, tick );
+
+	md->master_id = sd->bl.id;
+	md->special_state.ai = AI_ATTACK;
+	if( md->deletetimer != INVALID_TIMER ){
+		delete_timer( md->deletetimer, mob_timer_delete );
+	}
+	md->deletetimer = add_timer( tick + ( timeout > 0 ? timeout : 60000 ), mob_timer_delete, md->bl.id, 0 );
+
+	// Now it is ready for spawning.
+	mob_spawn( md );
+	clif_specialeffect( &md->bl,EF_ENTRY2,AREA );
+	sc_start4( nullptr,&md->bl, SC_MODECHANGE, 100, 1, 0, MD_AGGRESSIVE, 0, 60000 );
+
+	script_pushint( st, md->bl.id );
 
 	return SCRIPT_CMD_SUCCESS;
 }

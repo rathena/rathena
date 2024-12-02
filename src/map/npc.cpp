@@ -2622,7 +2622,7 @@ void npc_shop_currency_type(map_session_data *sd, struct npc_data *nd, int32 cos
 
 				memset(output, '\0', sizeof(output));
 
-				sprintf(output, msg_txt(sd, 715), nd->u.shop.pointshop_str); // Point32 Shop List: '%s'
+				sprintf(output, msg_txt(sd, 715), nd->u.shop.pointshop_str); // Point Shop List: '%s'
 				clif_broadcast(&sd->bl, output, strlen(output) + 1, BC_BLUE,SELF);
 			}
 			
@@ -4168,7 +4168,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		// Item shop currency
 		nd->u.shop.itemshop_nameid = nameid;
 	}else if( type == NPCTYPE_POINTSHOP ){
-		// Point32 shop currency
+		// Point shop currency
 		safestrncpy( nd->u.shop.pointshop_str, point_str, strlen( point_str ) + 1 );
 	}
 
@@ -4764,12 +4764,11 @@ int32 npc_instancedestroy(struct npc_data* nd)
  * @param qty Stock
  **/
 void npc_market_tosql(const char *exname, struct npc_item_list *list) {
-	SqlStmt* stmt = SqlStmt_Malloc(mmysql_handle);
-	if (SQL_ERROR == SqlStmt_Prepare(stmt, "REPLACE INTO `%s` (`name`,`nameid`,`price`,`amount`,`flag`) VALUES ('%s','%u','%d','%d','%" PRIu8 "')",
+	SqlStmt stmt{ *mmysql_handle };
+	if (SQL_ERROR == stmt.Prepare("REPLACE INTO `%s` (`name`,`nameid`,`price`,`amount`,`flag`) VALUES ('%s','%u','%d','%d','%" PRIu8 "')",
 		market_table, exname, list->nameid, list->value, list->qty, list->flag) ||
-		SQL_ERROR == SqlStmt_Execute(stmt))
+		SQL_ERROR == stmt.Execute())
 		SqlStmt_ShowDebug(stmt);
-	SqlStmt_Free(stmt);
 }
 
 /**
@@ -4779,17 +4778,16 @@ void npc_market_tosql(const char *exname, struct npc_item_list *list) {
  * @param clear True: will removes all records related with the NPC
  **/
 void npc_market_delfromsql_(const char *exname, t_itemid nameid, bool clear) {
-	SqlStmt* stmt = SqlStmt_Malloc(mmysql_handle);
+	SqlStmt stmt{ *mmysql_handle };
 	if (clear) {
-		if( SQL_ERROR == SqlStmt_Prepare(stmt, "DELETE FROM `%s` WHERE `name`='%s'", market_table, exname) ||
-			SQL_ERROR == SqlStmt_Execute(stmt))
+		if( SQL_ERROR == stmt.Prepare("DELETE FROM `%s` WHERE `name`='%s'", market_table, exname) ||
+			SQL_ERROR == stmt.Execute())
 			SqlStmt_ShowDebug(stmt);
 	} else {
-		if (SQL_ERROR == SqlStmt_Prepare(stmt, "DELETE FROM `%s` WHERE `name`='%s' AND `nameid`='%u' LIMIT 1", market_table, exname, nameid) ||
-			SQL_ERROR == SqlStmt_Execute(stmt))
+		if (SQL_ERROR == stmt.Prepare("DELETE FROM `%s` WHERE `name`='%s' AND `nameid`='%u' LIMIT 1", market_table, exname, nameid) ||
+			SQL_ERROR == stmt.Execute())
 			SqlStmt_ShowDebug(stmt);
 	}
-	SqlStmt_Free(stmt);
 }
 
 /**

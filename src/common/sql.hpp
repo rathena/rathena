@@ -5,8 +5,16 @@
 #define SQL_HPP
 
 #include <cstdarg>// va_list
+#include <stdexcept>
+
+#ifdef WIN32
+#include "winapi.hpp"
+#endif
+
+#include <mysql.h>
 
 #include "cbasetypes.hpp"
+#include "strlib.hpp"
 
 // Return codes
 #define SQL_ERROR -1
@@ -56,11 +64,9 @@ enum SqlDataType
 };
 
 struct Sql;// Sql handle (private access)
-struct SqlStmt;// Sql statement (private access)
 
 typedef enum SqlDataType SqlDataType;
 typedef struct Sql Sql;
-typedef struct SqlStmt SqlStmt;
 
 
 /// Allocates and initializes a new Sql handle.
@@ -216,6 +222,14 @@ void Sql_ShowDebug_(Sql* self, const char* debug_file, const unsigned long debug
 /// Frees a Sql handle returned by Sql_Malloc.
 void Sql_Free(Sql* self);
 
+// Column length receiver.
+// Takes care of the possible size missmatch between uint32 and unsigned long.
+struct s_column_length
+{
+	uint32* out_length;
+	unsigned long length;
+};
+typedef struct s_column_length s_column_length;
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -230,125 +244,104 @@ void Sql_Free(Sql* self);
 // example queries with parameters:
 // 1) SELECT col FROM table WHERE id=?
 // 2) INSERT INTO table(col1,col2) VALUES(?,?)
+class SqlStmt{
+private:
+	StringBuf buf;
+	MYSQL_STMT* stmt;
+	MYSQL_BIND* params;
+	MYSQL_BIND* columns;
+	s_column_length* column_lengths;
+	size_t max_params;
+	size_t max_columns;
+	bool bind_params;
+	bool bind_columns;
 
+	void ShowDebugTruncatedColumn( size_t i );
 
+public:
+	explicit SqlStmt( Sql& sql ) noexcept(false);
+	~SqlStmt();
 
-/// Allocates and initializes a new SqlStmt handle.
-/// It uses the connection of the parent Sql handle.
-/// Queries in Sql and SqlStmt are independent and don't affect each other.
-///
-/// @return SqlStmt handle or nullptr if an error occured
-struct SqlStmt* SqlStmt_Malloc(Sql* sql);
+	/// Prepares the statement.
+	/// Any previous result is freed and all parameter bindings are removed.
+	/// The query is constructed as if it was sprintf.
+	///
+	/// @return SQL_SUCCESS or SQL_ERROR
+	int32 Prepare( const char* query, ... );
 
+	/// Prepares the statement.
+	/// Any previous result is freed and all parameter bindings are removed.
+	/// The query is constructed as if it was svprintf.
+	///
+	/// @return SQL_SUCCESS or SQL_ERROR
+	int32 PrepareV( const char* query, va_list args );
 
+	/// Prepares the statement.
+	/// Any previous result is freed and all parameter bindings are removed.
+	/// The query is used directly.
+	///
+	/// @return SQL_SUCCESS or SQL_ERROR
+	int32 PrepareStr( const char* query );
 
-/// Prepares the statement.
-/// Any previous result is freed and all parameter bindings are removed.
-/// The query is constructed as if it was sprintf.
-///
-/// @return SQL_SUCCESS or SQL_ERROR
-int32 SqlStmt_Prepare(SqlStmt* self, const char* query, ...);
+	/// Returns the number of parameters in the prepared statement.
+	///
+	/// @return Number or paramenters
+	size_t NumParams();
 
+	/// Binds a parameter to a buffer.
+	/// The buffer data will be used when the statement is executed.
+	/// All parameters should have bindings.
+	///
+	/// @return SQL_SUCCESS or SQL_ERROR
+	int32 BindParam( size_t idx, SqlDataType buffer_type, void* buffer, size_t buffer_len );
 
+	/// Executes the prepared statement.
+	/// Any previous result is freed and all column bindings are removed.
+	///
+	/// @return SQL_SUCCESS or SQL_ERROR
+	int32 Execute();
 
-/// Prepares the statement.
-/// Any previous result is freed and all parameter bindings are removed.
-/// The query is constructed as if it was svprintf.
-///
-/// @return SQL_SUCCESS or SQL_ERROR
-int32 SqlStmt_PrepareV(SqlStmt* self, const char* query, va_list args);
+	/// Returns the number of the AUTO_INCREMENT column of the last INSERT/UPDATE statement.
+	///
+	/// @return Value of the auto-increment column
+	uint64 LastInsertId();
 
+	/// Returns the number of columns in each row of the result.
+	///
+	/// @return Number of columns
+	size_t NumColumns();
 
+	/// Binds the result of a column to a buffer.
+	/// The buffer will be filled with data when the next row is fetched.
+	/// For string/enum buffer types there has to be enough space for the data 
+	/// and the nul-terminator (an extra byte).
+	///
+	/// @return SQL_SUCCESS or SQL_ERROR
+	int32 BindColumn( size_t idx, SqlDataType buffer_type, void* buffer, size_t buffer_len, uint32* out_length, int8* out_is_null );
 
-/// Prepares the statement.
-/// Any previous result is freed and all parameter bindings are removed.
-/// The query is used directly.
-///
-/// @return SQL_SUCCESS or SQL_ERROR
-int32 SqlStmt_PrepareStr(SqlStmt* self, const char* query);
+	/// Returns the number of rows in the result.
+	///
+	/// @return Number of rows
+	uint64 NumRows();
 
+	/// Fetches the next row.
+	/// All column bindings will be filled with data.
+	///
+	/// @return SQL_SUCCESS, SQL_ERROR or SQL_NO_DATA
+	int32 NextRow();
 
+	/// Frees the result of the statement execution.
+	void FreeResult();
 
-/// Returns the number of parameters in the prepared statement.
-///
-/// @return Number or paramenters
-size_t SqlStmt_NumParams(SqlStmt* self);
-
-
-
-/// Binds a parameter to a buffer.
-/// The buffer data will be used when the statement is executed.
-/// All parameters should have bindings.
-///
-/// @return SQL_SUCCESS or SQL_ERROR
-int32 SqlStmt_BindParam(SqlStmt* self, size_t idx, SqlDataType buffer_type, void* buffer, size_t buffer_len);
-
-
-
-/// Executes the prepared statement.
-/// Any previous result is freed and all column bindings are removed.
-///
-/// @return SQL_SUCCESS or SQL_ERROR
-int32 SqlStmt_Execute(SqlStmt* self);
-
-
-
-/// Returns the number of the AUTO_INCREMENT column of the last INSERT/UPDATE statement.
-///
-/// @return Value of the auto-increment column
-uint64 SqlStmt_LastInsertId(SqlStmt* self);
-
-
-
-/// Returns the number of columns in each row of the result.
-///
-/// @return Number of columns
-size_t SqlStmt_NumColumns(SqlStmt* self);
-
-
-
-/// Binds the result of a column to a buffer.
-/// The buffer will be filled with data when the next row is fetched.
-/// For string/enum buffer types there has to be enough space for the data 
-/// and the nul-terminator (an extra byte).
-///
-/// @return SQL_SUCCESS or SQL_ERROR
-int32 SqlStmt_BindColumn(SqlStmt* self, size_t idx, SqlDataType buffer_type, void* buffer, size_t buffer_len, uint32* out_length, int8* out_is_null);
-
-
-
-/// Returns the number of rows in the result.
-///
-/// @return Number of rows
-uint64 SqlStmt_NumRows(SqlStmt* self);
-
-
-
-/// Fetches the next row.
-/// All column bindings will be filled with data.
-///
-/// @return SQL_SUCCESS, SQL_ERROR or SQL_NO_DATA
-int32 SqlStmt_NextRow(SqlStmt* self);
-
-
-
-/// Frees the result of the statement execution.
-void SqlStmt_FreeResult(SqlStmt* self);
-
-
+	void ShowDebug_( const char* file, const unsigned long line );
+};
 
 #if defined(SQL_REMOVE_SHOWDEBUG)
 #define SqlStmt_ShowDebug(self) (void)0
 #else
-#define SqlStmt_ShowDebug(self) SqlStmt_ShowDebug_(self, __FILE__, __LINE__)
+// TODO: we have to keep this until C++20 and std::source_location is available [Lemongrass]
+#define SqlStmt_ShowDebug(self) (self).ShowDebug_( __FILE__, __LINE__ )
 #endif
-/// Shows debug information (with statement).
-void SqlStmt_ShowDebug_(SqlStmt* self, const char* debug_file, const unsigned long debug_line);
-
-
-
-/// Frees a SqlStmt returned by SqlStmt_Malloc.
-void SqlStmt_Free(SqlStmt* self);
 
 void Sql_Init(void);
 

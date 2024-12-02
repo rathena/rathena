@@ -6256,7 +6256,7 @@ void clif_skill_warppoint( map_session_data& sd, uint16 skill_id, uint16 skill_l
 /// Memo message.
 /// 011e <type>.B (ZC_ACK_REMEMBER_WARPPOINT)
 /// type:
-///     0 = "Saved location as a Memo Point32 for Warp skill." in color 0xFFFF00 (cyan)
+///     0 = "Saved location as a Memo Point for Warp skill." in color 0xFFFF00 (cyan)
 ///     1 = "Skill Level is not high enough." in color 0x0000FF (red)
 ///     2 = "You haven't learned Warp." in color 0x0000FF (red)
 ///
@@ -6276,7 +6276,7 @@ void clif_skill_memomessage( map_session_data& sd, e_ack_remember_warppoint_resu
 /// 0189 <type>.W (ZC_NOTIFY_MAPINFO)
 /// type:
 ///     0 = "Unable to Teleport in this area" in color 0xFFFF00 (cyan)
-///     1 = "Saved point32 cannot be memorized." in color 0x0000FF (red)
+///     1 = "Saved point cannot be memorized." in color 0x0000FF (red)
 ///     2 = "This skill cannot be used in this area"
 ///     3 = "This item cannot be used in this area"
 ///
@@ -9545,12 +9545,12 @@ void clif_GM_kick(map_session_data *sd, map_session_data *tsd)
 /// Displays various manner-related status messages (ZC_ACK_GIVE_MANNER_POINT).
 /// 014a <result>.L
 /// result:
-///     0 = "A manner point32 has been successfully aligned."
+///     0 = "A manner point has been successfully aligned."
 ///     1 = MP_FAILURE_EXHAUST
 ///     2 = MP_FAILURE_ALREADY_GIVING
 ///     3 = "Chat Block has been applied by GM due to your ill-mannerous action."
 ///     4 = "Automated Chat Block has been applied due to Anti-Spam System."
-///     5 = "You got a good point32 from %s."
+///     5 = "You got a good point from %s."
 void clif_manner_message(map_session_data* sd, uint32 type)
 {
 	int32 fd;
@@ -11108,7 +11108,7 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 	else
 		sd->areanpc.clear();
 
-	/* it broke at some point32 (e.g. during a crash), so we make it visibly dead again. */
+	/* it broke at some point (e.g. during a crash), so we make it visibly dead again. */
 	if( !sd->status.hp && !pc_isdead(sd) && status_isdead(sd->bl) )
 		pc_setdead(sd);
 
@@ -16882,19 +16882,20 @@ void clif_Auction_close(int32 fd, unsigned char flag)
 }
 
 
-/// Request to add an auction (CZ_AUCTION_ADD).
-/// 024d <now money>.L <max money>.L <delete hour>.W
-void clif_parse_Auction_register(int32 fd, map_session_data *sd)
-{
+/// Request to add an auction.
+/// 024d <now money>.L <max money>.L <delete hour>.W (CZ_AUCTION_ADD)
+void clif_parse_Auction_register( int32 fd, map_session_data* sd ){
+#if PACKETVER >= 20050808
+	const PACKET_CZ_AUCTION_ADD* p = reinterpret_cast<PACKET_CZ_AUCTION_ADD*>( RFIFOP( fd, 0 ) );
+
 	struct auction_data auction;
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
 
 	if( !battle_config.feature_auction )
 		return;
 
-	auction.price = RFIFOL(fd,info->pos[0]);
-	auction.buynow = RFIFOL(fd,info->pos[1]);
-	auction.hours = RFIFOW(fd,info->pos[2]);
+	auction.price = p->now_money;
+	auction.buynow = p->max_money;
+	auction.hours = p->hours;
 
 	// Invalid Situations...
 	if( sd->auction.amount < 1 ) {
@@ -16966,6 +16967,7 @@ void clif_parse_Auction_register(int32 fd, map_session_data *sd)
 
 		pc_payzeny(sd, zeny, LOG_TYPE_AUCTION);
 	}
+#endif
 }
 
 
@@ -16985,28 +16987,30 @@ void clif_parse_Auction_close(int32 fd, map_session_data *sd){
 }
 
 
-/// Places a bid on an auction (CZ_AUCTION_BUY).
-/// 024f <auction id>.L <money>.L
-void clif_parse_Auction_bid(int32 fd, map_session_data *sd){
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	uint32 auction_id = RFIFOL(fd,info->pos[0]);
-	int32 bid = RFIFOL(fd,info->pos[1]);
+/// Places a bid on an auction.
+/// 024f <auction id>.L <money>.L (CZ_AUCTION_BUY)
+void clif_parse_Auction_bid( int32 fd, map_session_data* sd ){
+#if PACKETVER >= 20050718
+	const PACKET_CZ_AUCTION_BUY* p = reinterpret_cast<PACKET_CZ_AUCTION_BUY*>( RFIFOP( fd, 0 ) );
 
-	if( !pc_can_give_items(sd) ) { //They aren't supposed to give zeny [Inkfish]
-		clif_displaymessage(sd->fd, msg_txt(sd,246));
+	if( !pc_can_give_items(sd) ){
+		clif_displaymessage( sd->fd, msg_txt( sd, 246 ) ); // Your GM level doesn't authorize you to perform this action.
+		return;
+	}
+		
+	// Check if char server is down (bugreport:1138)
+	if( CheckForCharServer() ){
+		clif_Auction_message(fd, 0); // You have failed to bid into the auction
 		return;
 	}
 
-	if( bid <= 0 )
-		clif_Auction_message(fd, 0); // You have failed to bid into the auction
-	else if( bid > sd->status.zeny )
-		clif_Auction_message(fd, 8); // You do not have enough zeny
-	else if ( CheckForCharServer() ) // char server is down (bugreport:1138)
-		clif_Auction_message(fd, 0); // You have failed to bid into the auction
-	else {
-		pc_payzeny(sd, bid, LOG_TYPE_AUCTION);
-		intif_Auction_bid(sd->status.char_id, sd->status.name, auction_id, bid);
+	if( pc_payzeny( sd, p->money, LOG_TYPE_AUCTION ) != 0 ){
+		clif_Auction_message( fd, 8 ); // You do not have enough zeny
+		return;
 	}
+
+	intif_Auction_bid( sd->status.char_id, sd->status.name, p->auction_id, p->money );
+#endif
 }
 
 

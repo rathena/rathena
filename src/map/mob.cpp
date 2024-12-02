@@ -2931,21 +2931,9 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 		dlist->second_charid = (second_sd ? second_sd->status.char_id : 0);
 		dlist->third_charid = (third_sd ? third_sd->status.char_id : 0);
 
-		// Ore Discovery [Celest]
-		if (sd == mvp_sd && pc_checkskill(sd,BS_FINDINGORE)>0 && battle_config.finding_ore_rate/10 >= rnd()%10000) {
-			s_mob_drop mobdrop = {};
-
-			mobdrop.nameid = itemdb_group.get_random_item_id(IG_FINDINGORE,1);
-
-			std::shared_ptr<s_item_drop> ditem = mob_setdropitem( mobdrop, 1, md->mob_id );
-
-			mob_item_drop(md, dlist, ditem, 0, battle_config.finding_ore_rate/10, homkillonly || merckillonly);
-		}
-
+		// These trigger for the killer of the monster
 		if(sd) {
 			// process script-granted extra drop bonuses
-			t_itemid dropid = 0;
-
 			for (const auto &it : sd->add_drop) {
 				if (!&it || (!it.nameid && !it.group))
 					continue;
@@ -2966,15 +2954,22 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 
 					if (rnd()%10000 >= drop_rate)
 						continue;
-					dropid = (it.nameid > 0) ? it.nameid : itemdb_group.get_random_item_id(it.group,1);
 
 					s_mob_drop mobdrop = {};
-
-					mobdrop.nameid = dropid;
+					if (it.nameid > 0) {
+						mobdrop.nameid = it.nameid;
+						mobdrop.rate = drop_rate;
+					}
+					else {
+						std::shared_ptr<s_item_group_entry> entry = itemdb_group.get_random_entry(it.group, 1, GROUP_SEARCH_DROP);
+						if (entry == nullptr) continue;
+						mobdrop.nameid = entry->nameid;
+						mobdrop.rate = entry->rate * drop_rate / 10000;
+					}
 
 					std::shared_ptr<s_item_drop> ditem = mob_setdropitem(mobdrop, 1, md->mob_id);
 
-					mob_item_drop( md, dlist, ditem, 0, drop_rate, homkillonly || merckillonly );
+					mob_item_drop(md, dlist, ditem, 0, mobdrop.rate, homkillonly || merckillonly);
 				}
 			}
 
@@ -3019,6 +3014,20 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 			// Announce first, or else ditem will be freed. [Lance]
 			// By popular demand, use base drop rate for autoloot code. [Skotlex]
 			mob_item_drop(md, dlist, ditem, 0, battle_config.autoloot_adjust ? drop_rate : md->db->dropitem[i].rate, homkillonly || merckillonly);
+		}
+
+		// Ore Discovery (triggers if owner has loot priority, does not require to be the killer)
+		if (mvp_sd && pc_checkskill(mvp_sd, BS_FINDINGORE) > 0) {
+			std::shared_ptr<s_item_group_entry> entry = itemdb_group.get_random_entry(IG_ORE, 1, GROUP_SEARCH_DROP);
+			if (entry != nullptr) {
+				s_mob_drop mobdrop = {};
+				mobdrop.nameid = entry->nameid;
+				mobdrop.rate = entry->rate;
+
+				std::shared_ptr<s_item_drop> ditem = mob_setdropitem(mobdrop, 1, md->mob_id);
+
+				mob_item_drop(md, dlist, ditem, 0, mobdrop.rate, homkillonly || merckillonly);
+			}
 		}
 
 		// Process map specific drops
