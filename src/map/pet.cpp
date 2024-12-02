@@ -1228,17 +1228,16 @@ void pet_catch_process_start( map_session_data& sd, t_itemid item_id, e_pet_catc
 
 	std::shared_ptr<s_pet_catch_process> process = util::umap_find( pet_catchprocesses, sd.status.char_id );
 
-	if( process != nullptr ){
-		// TODO: Just delete?
+	if( process == nullptr ){
+		process = std::make_shared<s_pet_catch_process>();
+		pet_catchprocesses[process->char_id] = process;
+	}else{
+		// Reuse previously allocated memory and restart the process
 	}
-
-	process = std::make_shared<s_pet_catch_process>();
 
 	process->char_id = sd.status.char_id;
 	process->taming_item = item_id;
 	process->flag = flag;
-
-	pet_catchprocesses[process->char_id] = process;
 
 	clif_catch_process(sd);
 }
@@ -1260,9 +1259,7 @@ void pet_catch_process_end( map_session_data& sd, int32 target_id ){
 	if(md == nullptr || md->bl.prev == nullptr) { // Invalid inputs/state, abort capture.
 		clif_pet_roulette( sd, false );
 		pet_catchprocesses.erase( sd.status.char_id );
-		// TODO: Why do we reset this here, but not anywhere else in this function? [Lemongrass]
-		sd.itemid = 0;
-		sd.itemindex = -1;
+
 		return;
 	}
 
@@ -1285,12 +1282,14 @@ void pet_catch_process_end( map_session_data& sd, int32 target_id ){
 		return;
 	}
 
-	// If the taming item used is different from the pet's, we have a few exceptions
 	switch( process->flag ){
 		case PET_CATCH_NORMAL:
+			// If the taming item used is different from the taming item according to the pet database
 			if( process->taming_item != pet->itemID ){
 				clif_pet_roulette( sd, false );
 				pet_catchprocesses.erase( sd.status.char_id );
+
+				return;
 			}
 			break;
 
@@ -1299,6 +1298,8 @@ void pet_catch_process_end( map_session_data& sd, int32 target_id ){
 			if( status_has_mode( &md->status, MD_STATUSIMMUNE ) ){
 				clif_pet_roulette( sd, false );
 				pet_catchprocesses.erase( sd.status.char_id );
+
+				return;
 			}
 			break;
 
