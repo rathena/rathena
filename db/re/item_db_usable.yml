@@ -4895,7 +4895,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      sc_start SC_Intravision,30000,0;
+      sc_start SC_INTRAVISION,30000,0;
   - Id: 12034
     AegisName: Painting_Box
     Name: Box of Panting
@@ -60006,7 +60006,7 @@ Body:
     Buy: 6
     Weight: 10
     Script: |
-      sc_start SC_DORAM_BUF_01, 180000, 0;
+      sc_start SC_DORAM_BUF_01,180000,0;
   - Id: 22985
     AegisName: Dr_Life_Potion_02
     Name: Basil
@@ -60014,7 +60014,7 @@ Body:
     Buy: 10
     Weight: 10
     Script: |
-      sc_start SC_DORAM_BUF_02, 180000, 0;
+      sc_start SC_DORAM_BUF_02,180000,0;
   - Id: 22988
     AegisName: Sealed_Hat_Box2
     Name: Sealed Hat Box II
@@ -77200,7 +77200,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      sc_start SC_Intravision,60000,0;
+      sc_start SC_INTRAVISION,60000,0;
   - Id: 102413
     AegisName: aegis_102413
     Name: Ancient Hero Box 2
