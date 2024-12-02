@@ -76,15 +76,15 @@ Body:
               - Refine: 15
                 Chance: 7000
               - Refine: 16
-                Chance: 7000
+                Chance: 8000
               - Refine: 17
-                Chance: 7000
+                Chance: 8000
               - Refine: 18
-                Chance: 7000
+                Chance: 8000
               - Refine: 19
-                Chance: 7000
+                Chance: 8000
               - Refine: 20
-                Chance: 7000
+                Chance: 8000
             Bonus: 10
             Catalyst:
                 Item: Blessed_Etel_Dust
@@ -116,15 +116,15 @@ Body:
               - Refine: 15
                 Chance: 6000
               - Refine: 16
-                Chance: 6000
+                Chance: 7000
               - Refine: 17
-                Chance: 6000
+                Chance: 7000
               - Refine: 18
-                Chance: 6000
+                Chance: 7000
               - Refine: 19
-                Chance: 6000
+                Chance: 7000
               - Refine: 20
-                Chance: 6000
+                Chance: 7000
             Bonus: 30
             Catalyst:
                 Item: Blessed_Etel_Dust
@@ -154,15 +154,15 @@ Body:
               - Refine: 15
                 Chance: 5000
               - Refine: 16
-                Chance: 5000
+                Chance: 6000
               - Refine: 17
-                Chance: 5000
+                Chance: 6000
               - Refine: 18
-                Chance: 5000
+                Chance: 6000
               - Refine: 19
-                Chance: 5000
+                Chance: 6000
               - Refine: 20
-                Chance: 5000
+                Chance: 6000
             Bonus: 50
             AnnounceFail: true
             Catalyst:
@@ -193,15 +193,15 @@ Body:
               - Refine: 15
                 Chance: 4000
               - Refine: 16
-                Chance: 4000
+                Chance: 5000
               - Refine: 17
-                Chance: 4000
+                Chance: 5000
               - Refine: 18
-                Chance: 4000
+                Chance: 5000
               - Refine: 19
-                Chance: 4000
+                Chance: 5000
               - Refine: 20
-                Chance: 4000
+                Chance: 5000
             Bonus: 100
             AnnounceFail: true
             Catalyst:
@@ -240,15 +240,15 @@ Body:
               - Refine: 15
                 Chance: 7000
               - Refine: 16
-                Chance: 7000
+                Chance: 8000
               - Refine: 17
-                Chance: 7000
+                Chance: 8000
               - Refine: 18
-                Chance: 7000
+                Chance: 8000
               - Refine: 19
-                Chance: 7000
+                Chance: 8000
               - Refine: 20
-                Chance: 7000
+                Chance: 8000
             Bonus: 10
             Catalyst:
                 Item: Blessed_Etel_Dust
@@ -280,15 +280,15 @@ Body:
               - Refine: 15
                 Chance: 6000
               - Refine: 16
-                Chance: 6000
+                Chance: 7000
               - Refine: 17
-                Chance: 6000
+                Chance: 7000
               - Refine: 18
-                Chance: 6000
+                Chance: 7000
               - Refine: 19
-                Chance: 6000
+                Chance: 7000
               - Refine: 20
-                Chance: 6000
+                Chance: 7000
             Bonus: 30
             Catalyst:
                 Item: Blessed_Etel_Dust
@@ -318,15 +318,15 @@ Body:
               - Refine: 15
                 Chance: 5000
               - Refine: 16
-                Chance: 5000
+                Chance: 6000
               - Refine: 17
-                Chance: 5000
+                Chance: 6000
               - Refine: 18
-                Chance: 5000
+                Chance: 6000
               - Refine: 19
-                Chance: 5000
+                Chance: 6000
               - Refine: 20
-                Chance: 5000
+                Chance: 6000
             Bonus: 50
             AnnounceFail: true
             Catalyst:
@@ -357,15 +357,15 @@ Body:
               - Refine: 15
                 Chance: 4000
               - Refine: 16
-                Chance: 4000
+                Chance: 5000
               - Refine: 17
-                Chance: 4000
+                Chance: 5000
               - Refine: 18
-                Chance: 4000
+                Chance: 5000
               - Refine: 19
-                Chance: 4000
+                Chance: 5000
               - Refine: 20
-                Chance: 4000
+                Chance: 5000
             Bonus: 100
             AnnounceFail: true
             Catalyst:

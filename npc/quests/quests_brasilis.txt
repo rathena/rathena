@@ -1,12 +1,6 @@
 //===== rAthena Script =======================================
 //= Brasilis Quests
-//===== By ===================================================
-//= L0ne_W0lf
-//===== Version ==============================================
-//= 1.3
-//===== Compatible With ======================================
-//= rAthena Project
-//===== Description ==========================================
+//===== Description: =========================================
 //= [Official Conversion]
 //= Lost Puppies (Repeatable, 24 hours.)
 //= Suspicious Beach (Repeatable, 24 hours. iRO/cRO version.)
@@ -14,13 +8,14 @@
 //= Brasilis Water Lily Quest
 //= Brasilis Dungeon Access Quest
 //= Iara (Buff reward. Repeatable, 24 hours.)
-//===== Comments =============================================
-//= 1.0 First version.
-//= 1.1 Hydra Ball (12408)
+//===== Changelog: ===========================================
+//= 1.0 First version. [L0ne_W0lf]
+//= 1.1 Hydra Ball (12408). [og2]
 //= 1.2 Optimization. [Euphy]
 //= 1.2a Added 'consumeitem' command. [Euphy]
 //= 1.3 Added VIP features and fixed some EXP values. [Euphy]
 //= 1.3a Clean-up. [Capuche]
+//= 1.4 Added pre-renewal differences [Daegaladh]
 //============================================================
 
 // Lost Puppies :: dogdog.sc
@@ -59,10 +54,12 @@ brasilis,297,307,5	script	Angelo#br	1_M_04,{
 		erasequest 9031;
 		setquest 9032;
 		specialeffect2 EF_ASSUMPTIO;
-		consumeitem 607; //Yggdrasilberry
-		.@rand = rand(1,10);
-		if (.@rand > 4 && .@rand < 9) getitem 504,2; //White_Potion
-		else if (.@rand > 8) getitem 608,1; //Seed_Of_Yggdrasil
+		if (checkre(0)) {
+			consumeitem 607; //Yggdrasilberry
+			.@rand = rand(1,10);
+			if (.@rand > 4 && .@rand < 9) getitem 504,2; //White_Potion
+			else if (.@rand > 8) getitem 608,1; //Seed_Of_Yggdrasil
+		}
 		close;
 	}
 	mes "[Angelo]";
@@ -229,11 +226,15 @@ brasilis,192,133,6	script	Lucia#brasilis	4_F_BRZ_WOMAN,{
 				//recall_completequest 9029;
 				if (.@nQState2 > -1) erasequest 9029;
 				setquest 9029;
-				consumeitem 607; //Yggdrasilberry
+				if (checkre(0))
+					consumeitem 607; //Yggdrasilberry
 				consumeitem 12070; //Luk_Dish05
 				consumeitem 12055; //Vit_Dish05
 				consumeitem 12065; //Dex_Dish05
-				getitem 11502,3; //Light_Blue_Pot
+				if (checkre(0))
+					getitem 11502,3; //Light_Blue_Pot
+				else
+					getitem 505,5; //Blue_Potion
 				close;
 			}
 			else {
@@ -410,10 +411,12 @@ brasilis,187,162,5	script	Candy Maker	4_M_BRZ_MAN1,{
 		brazil_gua = 11;
 		completequest 2200;
 		getitem 12414,1; //Guarana_Candy
-		if (VIP_SCRIPT && vip_status(VIP_STATUS_ACTIVE))
-			getexp 105000,15000;
-		else
-			getexp 70000,10000;
+		if (checkre(0)) {
+			if (VIP_SCRIPT && vip_status(VIP_STATUS_ACTIVE))
+				getexp 105000,15000;
+			else
+				getexp 70000,10000;
+		}
 		close;
 	}
 	else if (brazil_gua == 11) {
@@ -1030,9 +1033,9 @@ brasilis,203,286,3	script	Botanist Karmen#bra	4_F_HUWOMAN,{
 		brazil_regia = 10;
 		completequest 2207;
 		if (VIP_SCRIPT && vip_status(VIP_STATUS_ACTIVE))
-			getexp 75000,15000;
+			getexp 75000, checkre(0)?15000:0;
 		else
-			getexp 50000,10000;
+			getexp 50000, checkre(0)?10000:0;
 		close;
 	}
 	else {
@@ -2855,9 +2858,13 @@ bra_dun02,157,74,5	script	Iara#nk	4_F_BRZ_WOMAN,2,2,{
 			mes "But... I think that the curse has been with me too long.";
 			mes "Get away from me quickly.";
 			delitem 11517,1; //Puri_Potion
-			percentheal 100,100;
-			sc_start SC_INCFLEE,3600000,20;
-			sc_start SC_INCCRI,3600000,10;
+			if (checkre(0)) {
+				percentheal 100,100;
+				sc_start SC_INCFLEE,3600000,20;
+				sc_start SC_INCCRI,3600000,10;
+			}
+			else
+				sc_start SC_INCCRI,3600000,7;
 			consumeitem 12043; //Str_Dish03
 			consumeitem 12063; //Dex_Dish03
 			consumeitem 12058; //Agi_Dish03

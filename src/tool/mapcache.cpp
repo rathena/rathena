@@ -1,9 +1,9 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 #include <string>
 #ifndef _WIN32
 #include <unistd.h>
@@ -23,7 +23,7 @@ namespace rathena{
 	namespace tool_mapcache{
 		class MapcacheTool : public Core{
 			protected:
-				bool initialize( int argc, char* argv[] ) override;
+				bool initialize( int32 argc, char* argv[] ) override;
 
 			public:
 				MapcacheTool() : Core( e_core_type::TOOL ){
@@ -38,7 +38,7 @@ using namespace rathena::tool_mapcache;
 std::string grf_list_file = "conf/grf-files.txt";
 std::string map_list_file = "map_index.txt";
 std::string map_cache_file;
-int rebuild = 0;
+int32 rebuild = 0;
 
 FILE *map_cache_fp;
 
@@ -67,17 +67,17 @@ struct map_info {
 
 
 // Reads a map from GRF's GAT and RSW files
-int read_map(char *name, struct map_data *m)
+int32 read_map(char *name, struct map_data *m)
 {
 	char filename[256];
 	unsigned char *gat;
-	int water_height;
+	int32 water_height;
 	size_t xy, off, num_cells;
 
 	// Open map GAT
 	sprintf(filename,"data\\%s.gat", name);
-	gat = (unsigned char *)grfio_read(filename);
-	if (gat == NULL)
+	gat = (unsigned char *)grfio_reads(filename);
+	if (gat == nullptr)
 		return 0;
 
 	// Open map RSW
@@ -152,9 +152,9 @@ void cache_map(char *name, struct map_data *m)
 }
 
 // Checks whether a map is already is the cache
-int find_map(char *name)
+int32 find_map(char *name)
 {
-	int i;
+	int32 i;
 	struct map_info info;
 
 	fseek(map_cache_fp, sizeof(struct main_header), SEEK_SET);
@@ -185,9 +185,9 @@ char *remove_extension(char *mapname)
 }
 
 // Processes command-line arguments
-void process_args(int argc, char *argv[])
+void process_args(int32 argc, char *argv[])
 {
-	for(int i = 0; i < argc; i++) {
+	for(int32 i = 0; i < argc; i++) {
 		if(strcmp(argv[i], "-grf") == 0) {
 			if(++i < argc)
 				grf_list_file = argv[i];
@@ -203,7 +203,7 @@ void process_args(int argc, char *argv[])
 
 }
 
-bool MapcacheTool::initialize( int argc, char* argv[] ){
+bool MapcacheTool::initialize( int32 argc, char* argv[] ){
 	/* setup pre-defined, #define-dependant */
 	map_cache_file = std::string(db_path) + "/" + std::string(DBPATH) + "map_cache.dat";
 
@@ -217,7 +217,7 @@ bool MapcacheTool::initialize( int argc, char* argv[] ){
 	ShowStatus("Opening map cache: %s\n", map_cache_file.c_str());
 	if(!rebuild) {
 		map_cache_fp = fopen(map_cache_file.c_str(), "rb");
-		if(map_cache_fp == NULL) {
+		if(map_cache_fp == nullptr) {
 			ShowNotice("Existing map cache not found, forcing rebuild mode\n");
 			rebuild = 1;
 		} else
@@ -227,7 +227,7 @@ bool MapcacheTool::initialize( int argc, char* argv[] ){
 		map_cache_fp = fopen(map_cache_file.c_str(), "w+b");
 	else
 		map_cache_fp = fopen(map_cache_file.c_str(), "r+b");
-	if(map_cache_fp == NULL) {
+	if(map_cache_fp == nullptr) {
 		ShowError("Failure when opening map cache file %s\n", map_cache_file.c_str());
 		return false;
 	}
@@ -241,7 +241,7 @@ bool MapcacheTool::initialize( int argc, char* argv[] ){
 
 		ShowStatus("Opening map list: %s\n", filename.c_str());
 		list = fopen(filename.c_str(), "r");
-		if (list == NULL) {
+		if (list == nullptr) {
 			ShowError("Failure when opening maps list file %s\n", filename.c_str());
 			return false;
 		}
@@ -305,6 +305,6 @@ bool MapcacheTool::initialize( int argc, char* argv[] ){
 	return true;
 }
 
-int main( int argc, char *argv[] ){
+int32 main( int32 argc, char *argv[] ){
 	return main_core<MapcacheTool>( argc, argv );
 }

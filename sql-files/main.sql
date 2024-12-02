@@ -527,6 +527,7 @@ CREATE TABLE IF NOT EXISTS `guild_expulsion` (
   `account_id` int(11) unsigned NOT NULL default '0',
   `name` varchar(24) NOT NULL default '',
   `mes` varchar(40) NOT NULL default '',
+  `char_id` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`guild_id`,`name`)
 ) ENGINE=MyISAM;
 
@@ -671,8 +672,8 @@ CREATE TABLE IF NOT EXISTS `homunculus` (
   `luk` smallint(4) unsigned NOT NULL default '0',
   `hp` int(11) unsigned NOT NULL default '0',
   `max_hp` int(11) unsigned NOT NULL default '0',
-  `sp` int(11) NOT NULL default '0',
-  `max_sp` int(11) NOT NULL default '0',
+  `sp` int(11) unsigned NOT NULL default '0',
+  `max_sp` int(11) unsigned NOT NULL default '0',
   `skill_point` smallint(4) unsigned NOT NULL default '0',
   `alive` tinyint(2) NOT NULL default '1',
   `rename_flag` tinyint(2) NOT NULL default '0',

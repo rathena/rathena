@@ -4,6 +4,7 @@
 #ifndef MAPINDEX_HPP
 #define MAPINDEX_HPP
 
+#include "cbasetypes.hpp"
 #include "mmo.hpp"
 
 #define MAX_MAPINDEX 2000
@@ -51,6 +52,8 @@
 #define MAP_ECLAGE "eclage"
 #define MAP_ECLAGE_IN "ecl_in01"
 #define MAP_LASAGNA "lasagna"
+#define MAP_GLASTHEIM "glast_01"
+#define MAP_THANATOS "hu_fild01"
 
 const char* mapindex_getmapname(const char* string, char* output);
 const char* mapindex_getmapname_ext(const char* string, char* output);
@@ -61,8 +64,8 @@ unsigned short mapindex_name2idx(const char* name, const char *func);
 const char* mapindex_idx2name(unsigned short id, const char *func);
 #define mapindex_id2name(mapindex) mapindex_idx2name((mapindex), __FUNCTION__)
 
-int mapindex_addmap(int index, const char* name);
-int mapindex_removemap(int index);
+int32 mapindex_addmap(int32 index, const char* name);
+int32 mapindex_removemap(int32 index);
 
 void mapindex_check_mapdefault(const char *mapname);
 

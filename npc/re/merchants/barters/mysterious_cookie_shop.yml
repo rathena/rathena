@@ -1,0 +1,2018 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2022 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Barter Database
+###########################################################################
+#
+# Barter Settings
+#
+###########################################################################
+#  - Name               NPC name.
+#    Map                Map name. (Default: not on a map)
+#    X                  Map x coordinate. (Default: 0)
+#    Y                  Map y coordinate. (Default: 0)
+#    Direction          Direction the NPC is looking. (Default: North)
+#    Sprite             Sprite name of the NPC. (Default: FakeNpc)
+#    Items:             List of sold items.
+#      - Index          Index of the item inside the shop. (0-...)
+#                       Maximum index depends on client.
+#        Item           Aegis name of the item.
+#        Stock          Amount of item in stock. 0 means unlimited. (Default: 0)
+#        Zeny           Cost of them item in Zeny. (Default: 0)
+#        RequiredItems: List of required items (Optional)
+#          - Index      Index of the required item. (0-4)
+#            Item       Aegis name of required item.
+#            Amount     Amount of required item. (Default: 1)
+#            Refine     Refine level of required item. (Default: 0)
+###########################################################################
+
+Header:
+  Type: BARTER_DB
+  Version: 1
+
+Body:
+  - Name: barter_stone_top
+    Items:
+      - Index: 0
+        Item: Magic_Stone_Top
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 1
+        Item: Range_Stone_Top
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 2
+        Item: Melee_Stone_Top
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 3
+        Item: RuneknightStone_Top2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 4
+        Item: GeneticStone_Top2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 5
+        Item: WanderMinsStone_Top2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 6
+        Item: WarlockStone_Top2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 7
+        Item: PaladinStone_Top2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 8
+        Item: AssacrossStone_Top2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 9
+        Item: RangerStone_Top2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 10
+        Item: MechanicStone_Top2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 11
+        Item: HighpriestStone_Top2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 12
+        Item: SoullinkerStone_Top
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 13
+        Item: GladiatorStone_Top
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 14
+        Item: NinjaStone_Top
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 15
+        Item: GunslingerStone_Top
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 16
+        Item: DoramStone_Top
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 17
+        Item: SuraStone_Top2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 18
+        Item: SorcererStone_Top2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 19
+        Item: ShadowchaserStone_Top2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 20
+        Item: HighpriestStone_Top
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 21
+        Item: PaladinStone_Top
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 22
+        Item: AssacrossStone_Top
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 23
+        Item: ShadowchaserStone_Top
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 24
+        Item: MechanicStone_Top
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 25
+        Item: WanderMinstrelStone_Top
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 26
+        Item: RuneknightStone_Top
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 27
+        Item: GeneticStone_Top
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 28
+        Item: WarlockStone_Top
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 29
+        Item: SuraStone_Top
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 30
+        Item: RangerStone_Top
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 31
+        Item: SorcererStone_Top
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 32
+        Item: Critical_Stone_Top
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 33
+        Item: EXPStone_Top
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 34
+        Item: CastingStone_Top
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 35
+        Item: ASPDStone_Top
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 36
+        Item: ReloadStone_Top
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 37
+        Item: HPdrainStone_Top
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 38
+        Item: SPdrainStone_Top
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 39
+        Item: DefenseStone_Top
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 40
+        Item: RuneknightStone_Top3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 41
+        Item: WarlockStone_Top3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 42
+        Item: RoyalguardStone_Top3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 43
+        Item: WanderMinsStone_Top3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 44
+        Item: GeneticStone_Top3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 45
+        Item: SorcererStone_Top3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 46
+        Item: ArchbishopStone_Top3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 47
+        Item: RangerStone_Top3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 48
+        Item: ShadowchasStone_Top3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 49
+        Item: SuraStone_Top3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 50
+        Item: MechanicStone_Top3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 51
+        Item: GuillcrossStone_Top3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 52
+        Item: StarStone_Top3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 53
+        Item: RebelStone_Top3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 54
+        Item: ReaperStone_Top3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 55
+        Item: KagerouStone_Top3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 56
+        Item: OboroStone_Top3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 57
+        Item: DoramStone_Top3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 58
+        Item: SuNoviceStone_Top
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+  - Name: barter_stone_mid
+    Items:
+      - Index: 0
+        Item: Magic_Stone_Middle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 1
+        Item: Melee_Stone_Middle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 2
+        Item: RuneknightStone_Middle2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 3
+        Item: GeneticStone_Middle2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 4
+        Item: WanderMinsStone_Middle2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 5
+        Item: WarlockStone_Middle2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 6
+        Item: PaladinStone_Middle2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 7
+        Item: AssacrossStone_Middle2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 8
+        Item: RangerStone_Middle2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 9
+        Item: MechanicStone_Middle2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 10
+        Item: HighpriestStone_Middle2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 11
+        Item: SoullinkerStone_Middle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 12
+        Item: GladiatorStone_Middle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 13
+        Item: NinjaStone_Middle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 14
+        Item: GunslingerStone_Middle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 15
+        Item: DoramStone_Middle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 16
+        Item: SuraStone_Middle2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 17
+        Item: SorcererStone_Middle2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 18
+        Item: ShadowchasStone_Middle2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 19
+        Item: HighpriestStone_Middle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 20
+        Item: PaladinStone_Middle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 21
+        Item: AssacrossStone_Middle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 22
+        Item: ShadowchaseStone_Middle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 23
+        Item: MechanicStone_Middle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 24
+        Item: WanderMinstStone_Middle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 25
+        Item: RuneknightStone_Middle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 26
+        Item: GeneticStone_Middle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 27
+        Item: WarlockStone_Middle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 28
+        Item: SuraStone_Middle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 29
+        Item: RangerStone_Middle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 30
+        Item: SorcererStone_Middle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 31
+        Item: CastingStone_Middle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 32
+        Item: LexAeternaStone_Middle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 33
+        Item: EXPStone_Middle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 34
+        Item: Critical_Stone
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 35
+        Item: Range_Stone
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 36
+        Item: ReloadStone_Middle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 37
+        Item: DefenseStone_Middle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 38
+        Item: RuneknightStone_Middle3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 39
+        Item: WarlockStone_Middle3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 40
+        Item: RoyalguardStone_Middle3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 41
+        Item: WanderMinsStone_Middle3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 42
+        Item: GeneticStone_Middle3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 43
+        Item: SorcererStone_Middle3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 44
+        Item: ArchbishopStone_Middle3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 45
+        Item: RangerStone_Middle3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 46
+        Item: ShadowchasStone_Middle3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 47
+        Item: SuraStone_Middle3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 48
+        Item: MechanicStone_Middle3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 49
+        Item: GuillcrossStone_Middle3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 50
+        Item: StarStone_Middle3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 51
+        Item: RebelStone_Middle3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 52
+        Item: ReaperStone_Middle3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 53
+        Item: KagerouStone_Middle3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 54
+        Item: OboroStone_Middle3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 55
+        Item: DoramStone_Middle3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 56
+        Item: SuNoviceStone_Middle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+  - Name: barter_stone_low
+    Items:
+      - Index: 0
+        Item: Magic_Stone_Bottom
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 1
+        Item: Range_Stone_Bottom
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 2
+        Item: Melee_Stone_Bottom
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 3
+        Item: RuneknightStone_Bottom2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 4
+        Item: GeneticStone_Bottom2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 5
+        Item: WanderMinsStone_Bottom2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 6
+        Item: WarlockStone_Bottom2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 7
+        Item: PaladinStone_Bottom2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 8
+        Item: AssacrossStone_Bottom2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 9
+        Item: RangerStone_Bottom2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 10
+        Item: MechanicStone_Bottom2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 11
+        Item: HighpriestStone_Bottom2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 12
+        Item: SoullinkerStone_Bottom
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 13
+        Item: GladiatorStone_Bottom
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 14
+        Item: NinjaStone_Bottom
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 15
+        Item: GunslingerStone_Bottom
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 16
+        Item: DoramStone_Bottom
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 17
+        Item: SuraStone_Bottom2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 18
+        Item: SorcererStone_Bottom2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 19
+        Item: ShadowchasStone_Bottom2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 20
+        Item: HighpriestStone_Bottom
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 21
+        Item: PaladinStone_Bottom
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 22
+        Item: AssacrossStone_Bottom
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 23
+        Item: ShadowchaseStone_Bottom
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 24
+        Item: MechanicStone_Bottom
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 25
+        Item: WanderMinstStone_Bottom
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 26
+        Item: RuneknightStone_Bottom
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 27
+        Item: GeneticStone_Bottom
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 28
+        Item: WarlockStone_Bottom
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 29
+        Item: SuraStone_Bottom
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 30
+        Item: RangerStone_Bottom
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 31
+        Item: SorcererStone_Bottom
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 32
+        Item: Critical_Stone_Bottom
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 33
+        Item: CastingStone_Bottom
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 34
+        Item: ReloadStone_Bottom
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 35
+        Item: EXPStone_Bottom
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 36
+        Item: DefenseStone_Bottom
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 10
+      - Index: 37
+        Item: RuneknightStone_Bottom3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 38
+        Item: WarlockStone_Bottom3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 39
+        Item: RoyalguardStone_Bottom3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 40
+        Item: WanderMinsStone_Bottom3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 41
+        Item: GeneticStone_Bottom3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 42
+        Item: SorcererStone_Bottom3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 43
+        Item: ArchbishopStone_Bottom3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 44
+        Item: RangerStone_Bottom3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 45
+        Item: ShadowchasStone_Bottom3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 46
+        Item: SuraStone_Bottom3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 47
+        Item: MechanicStone_Bottom3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 48
+        Item: GuillcrossStone_Bottom3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 49
+        Item: StarStone_Bottom3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 50
+        Item: RebelStone_Bottom3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 51
+        Item: ReaperStone_Bottom3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 52
+        Item: KagerouStone_Bottom3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 53
+        Item: OboroStone_Bottom3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 54
+        Item: DoramStone_Bottom3
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+      - Index: 55
+        Item: SuNoviceStone_Bottom
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 25
+  - Name: barter_stone_garment
+    Items:
+      - Index: 0
+        Item: RuneknightStone_Robe2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 1
+        Item: GeneticStone_Robe2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 2
+        Item: WanderMinsStone_Robe2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 3
+        Item: WarlockStone_Robe2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 4
+        Item: RoyalguardStone_Robe2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 5
+        Item: GuillcrossStone_Robe2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 6
+        Item: RangerStone_Robe2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 7
+        Item: MechanicStone_Robe2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 8
+        Item: ArchbishopStone_Robe2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 9
+        Item: SoulreaperStone_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 10
+        Item: StaremperorStone_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 11
+        Item: KagerouStone_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 12
+        Item: OboroStone_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 13
+        Item: RebellionStone_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 14
+        Item: DoramStone_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 15
+        Item: SuraStone_Robe2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 16
+        Item: SorcererStone_Robe2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 17
+        Item: ShadowchaserStone_Robe2
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 18
+        Item: ArchbishopStone_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 19
+        Item: RoyalguardStone_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 20
+        Item: GuillcrossStone_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 21
+        Item: ShadowchaserStone_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 22
+        Item: MechanicStone_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 23
+        Item: WanderMinstreStone_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 24
+        Item: RuneknightStone_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 25
+        Item: GeneticStone_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 26
+        Item: WarlockStone_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 27
+        Item: SuraStone_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 28
+        Item: RangerStone_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 29
+        Item: SorcererStone_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 30
+        Item: DoubleAttack_Stone
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 31
+        Item: Critical_Stone_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 32
+        Item: CastStone_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 33
+        Item: MinorCastingStone_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 34
+        Item: CastingStone_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 35
+        Item: HPdrainStone_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 36
+        Item: SPdrainStone_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 37
+        Item: ASPDStone_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 38
+        Item: SuNoviceStone_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 39
+        Item: SmatkStone_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 40
+        Item: M_PATKStone_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 41
+        Item: R_PATKStone_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 42
+        Item: ResistDefStone_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+  - Name: barter_stone_dual
+    Items:
+      - Index: 0
+        Item: MinorCastStone_Robe_D
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 1
+        Item: Range_Stone_Robe_D
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 2
+        Item: SPdrainStone_Robe_D
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 3
+        Item: ASPDStone_Robe_D
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 4
+        Item: CastStone_Robe_D
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 5
+        Item: Melee_Stone_Robe_D
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 6
+        Item: HPdrainStone_Robe_D
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 7
+        Item: Magic_Stone_Robe_D
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 8
+        Item: ReloadStone_Robe_D
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 9
+        Item: CrtStone_Robe_D
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 10
+        Item: CriticalStone_Robe_D
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 11
+        Item: ConStone_Robe_D
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 12
+        Item: SplStone_Robe_D
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 13
+        Item: POWStone_Robe_D
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 14
+        Item: StaminaWISStone_Robe_D
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 15
+        Item: WaterFieldEffect_Bottom
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 15
+      - Index: 16
+        Item: GreenFloor_Bottom
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 15
+      - Index: 17
+        Item: WhiteBodyEffect_Middle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 15
+      - Index: 18
+        Item: ExplodingEffect_Middle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 15
+      - Index: 19
+        Item: BlueAuraEffect_Middle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 15
+      - Index: 20
+        Item: ShadowEffect_Middle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 15
+      - Index: 21
+        Item: PinkGlowEffect_Middle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 15
+      - Index: 22
+        Item: ElectricEffect_Middle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 15
+      - Index: 23
+        Item: ShrinkEffect_Middle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 15
+      - Index: 24
+        Item: GhostEffect_Middle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 15
+      - Index: 25
+        Item: TwinkleEffect_Top
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 15
+  - Name: barter_costume_1
+    Items:
+      - Index: 0
+        Item: C_Subject_Aura
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 1
+        Item: C_Angel_Fluttering
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 2
+        Item: C_FlyingGalapago
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 3
+        Item: C_Blessing_Of_Angels
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 4
+        Item: C_Eremes_Scarf
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 5
+        Item: C_Morocc_Kid_Servant
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 6
+        Item: C_Magical_Feather
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 7
+        Item: C_Eremes_Scarf_Black
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 8
+        Item: C_Eleanor_Wig
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 9
+        Item: C_QueenAnzRevenge
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 10
+        Item: C_Black_Cat
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 11
+        Item: C_Flame_Muffler
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 12
+        Item: C_Pope_Sitting_Head
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 13
+        Item: C_Alice_Wig
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 14
+        Item: C_Shiba_Inu
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 15
+        Item: C_Magic_Circle
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 16
+        Item: C_Blinking_Thin_Eyes
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 17
+        Item: C_White_Cat
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 18
+        Item: C_Digital_Space
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 19
+        Item: C_Protect_Cloth
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 20
+        Item: C_Sleep_Sheep_TW
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 21
+        Item: C_Smiling_Eyes
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 22
+        Item: C_Mobile_Pursuit_System
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 23
+        Item: C_Pigtail_Red_Hood
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 24
+        Item: C_SharkHead
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 25
+        Item: C_ManyStars_TW
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 26
+        Item: C_Blinking_Eyes_RD
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 27
+        Item: C_Mike_Stand
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 28
+        Item: C_Blink_Eyes_Sakura
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 29
+        Item: C_Gift_Of_Snow
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 30
+        Item: C_Katashiro_Flying
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 31
+        Item: C_Poulet_TW
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 32
+        Item: C_Avenger
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 33
+        Item: C_Teardrop
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 34
+        Item: C_Fluffy_Rabbit_Cape
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 35
+        Item: C_Astra_Blessing
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+      - Index: 36
+        Item: C_Omega_Golf_Bag
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 20
+  - Name: barter_costume_2
+    Items:
+      - Index: 0
+        Item: C_Rudra_Wing
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 1
+        Item: C_Wing_Of_Happiness
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 2
+        Item: C_GreatDevilWing
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 3
+        Item: C_Cupid_Wing_Pink
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 4
+        Item: C_Devil_Wing
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 5
+        Item: C_Poring_Bag
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 6
+        Item: C_SwordWing
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 7
+        Item: C_Wings_of_Uriel
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 8
+        Item: C_Thanatos_Sword
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 9
+        Item: C_Archangel_Wing
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 10
+        Item: C_Blue_Fairy_Wing
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 11
+        Item: C_Wings_of_Michael
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 12
+        Item: C_GiantCatBag_TW
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 13
+        Item: C_PinkButterfly_Wing_T
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 14
+        Item: C_Halloween_Poring_Bag
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 15
+        Item: C_HeartChocoBag
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 16
+        Item: C_WingOfHeart
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 17
+        Item: C_Full_BloomCherry_Tree
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 18
+        Item: C_Cat_Fork
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 19
+        Item: C_Big_Foxtail
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 20
+        Item: C_T_Bear_Bag
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 21
+        Item: C_Nifl_Bloom
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 22
+        Item: C_Santa_Backpack
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 23
+        Item: C_Ice_Wing
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 24
+        Item: C_Gimmick_One_Feather
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 25
+        Item: C_Sakura_Wing
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 26
+        Item: C_GiantCatBag_JP_BL
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 27
+        Item: C_P_Ulysses_Feather
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 28
+        Item: C_Leaf_Umbrella
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 29
+        Item: C_Blessings_Of_Soul
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 30
+        Item: C_Blessed_Veil
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 31
+        Item: C_Snow_Powder
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 32
+        Item: C_Giant_White_Rabbit
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 33
+        Item: C_Baldr_Wing_TW
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 34
+        Item: C_Adventure_Cat_Bag
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 35
+        Item: C_Samba_Carnival
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 36
+        Item: C_Giant_Shark
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 37
+        Item: C_Triple_Ice_Cream
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 38
+        Item: C_G_DaeHyon_Sword_TW
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 39
+        Item: C_Put_On_Coat
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 40
+        Item: C_Heart_Stick_Choco
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 41
+        Item: C_Spoon_Fork_Set
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 42
+        Item: C_Clutch_Bouquet
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 43
+        Item: C_Flower_Wing
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 44
+        Item: C_Beer_Server
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 45
+        Item: C_Poring_Basket
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 46
+        Item: C_Diabolic_Rock_Guitar
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30
+      - Index: 47
+        Item: C_Chrismas_Tree
+        RequiredItems:
+          - Index: 0
+            Item: Evt_Cos_Coin
+            Amount: 30

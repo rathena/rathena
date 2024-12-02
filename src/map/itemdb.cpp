@@ -4,11 +4,11 @@
 #include "itemdb.hpp"
 
 #include <chrono>
+#include <cmath>
+#include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <map>
-#include <stdlib.h>
-#include <math.h>
 #include <unordered_map>
 
 #include <common/nullpo.hpp>
@@ -196,6 +196,8 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			item->subtype = 0;
 	}
 
+	bool has_buy = false, has_sell = false;
+
 	if (this->nodeExists(node, "Buy")) {
 		uint32 buy;
 
@@ -207,6 +209,7 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			buy = MAX_ZENY;
 		}
 
+		has_buy = true;
 		item->value_buy = buy;
 	} else {
 		if (!exists) {
@@ -225,12 +228,15 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			sell = MAX_ZENY;
 		}
 
+		has_sell = true;
 		item->value_sell = sell;
 	} else {
 		if (!exists) {
 			item->value_sell = 0;
 		}
 	}
+
+	hasPriceValue[item->nameid] = { has_buy, has_sell };
 
 	if (this->nodeExists(node, "Weight")) {
 		uint32 weight;
@@ -1152,10 +1158,33 @@ void ItemDatabase::loadingFinished(){
 			}
 		}
 
+		if (item->type != IT_ARMOR && item->type != IT_SHADOWGEAR && item->def > 0) {
+			ShowWarning( "Item %s is not a armor or shadowgear. Defaulting Defense to 0.\n", item->name.c_str() );
+			item->def = 0;
+		}
+
+		if (item->type != IT_WEAPON && item->type != IT_AMMO && item->atk > 0) {
+			ShowWarning( "Item %s is not a weapon or ammo. Defaulting Attack to 0.\n", item->name.c_str() );
+			item->atk = 0;
+		}
+
+		if (item->type != IT_WEAPON) {
+#ifdef RENEWAL
+			if (item->matk > 0) {
+				ShowWarning( "Item %s is not a weapon. Defaulting MagicAttack to 0.\n", item->name.c_str() );
+				item->matk = 0;
+			}
+#endif
+			if (item->range > 0) {
+				ShowWarning( "Item %s is not a weapon. Defaulting Range to 0.\n", item->name.c_str() );
+				item->range = 0;
+			}
+		}
+
 		// When a particular price is not given, we should base it off the other one
-		if (item->value_buy == 0 && item->value_sell > 0)
+		if (!hasPriceValue[item->nameid].has_buy && hasPriceValue[item->nameid].has_sell)
 			item->value_buy = item->value_sell * 2;
-		else if (item->value_buy > 0 && item->value_sell == 0)
+		else if (hasPriceValue[item->nameid].has_buy && !hasPriceValue[item->nameid].has_sell)
 			item->value_sell = item->value_buy / 2;
 
 		if (item->value_buy / 124. < item->value_sell / 75.) {
@@ -1186,6 +1215,7 @@ void ItemDatabase::loadingFinished(){
 	}
 
 	TypesafeCachedYamlDatabase::loadingFinished();
+	hasPriceValue.clear();
 }
 
 /**
@@ -2381,7 +2411,7 @@ uint64 ItemEnchantDatabase::parseBodyNode( const ryml::NodeRef& node ){
 				enchant_slot = std::make_shared<s_item_enchant_slot>();
 				enchant_slot->slot = slot;
 
-				for( int i = 0; i <= MAX_ENCHANTGRADE; i++ ){
+				for( int32 i = 0; i <= MAX_ENCHANTGRADE; i++ ){
 					enchant_slot->normal.enchantgradeChanceIncrease[i] = 0;
 				}
 			}
@@ -2858,27 +2888,47 @@ uint16 itemdb_searchname_array(std::map<t_itemid, std::shared_ptr<item_data>> &d
 	return static_cast<uint16>(data.size());
 }
 
-std::shared_ptr<s_item_group_entry> get_random_itemsubgroup(std::shared_ptr<s_item_group_random> random) {
+std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_itemsubgroup(std::shared_ptr<s_item_group_random> random, e_group_search_type search_type) {
 	if (random == nullptr)
 		return nullptr;
 
-	for (size_t j = 0, max = random->data.size() * 3; j < max; j++) {
+	if (search_type == GROUP_SEARCH_DROP) {
+		// We pick a random item from the group and then do a drop check based on the rate
 		std::shared_ptr<s_item_group_entry> entry = util::umap_random(random->data);
-
-		if (entry->rate == 0 || rnd() % random->total_rate < entry->rate)	// always return entry for rate 0 ('must' item)
+		if (rnd_chance_official<uint16>(entry->rate, 10000))
 			return entry;
 	}
-
-	return util::umap_random(random->data);
+	else {
+		// Each item has x positions whereas x is the rate defined for the item in the umap
+		// We pick a random position and find the item that is at this position
+		uint32 pos = rnd_value<uint32>(1, random->total_rate);
+		uint32 current_pos = 1;
+		// Iterate through each item in the umap
+		for (const auto& [index, entry] : random->data) {
+			if (entry == nullptr)
+				return nullptr;
+			// If rate is 0 it means that this is SubGroup 0 which should just return any random item
+			if (entry->rate == 0)
+				return util::umap_random(random->data);
+			// We move "rate" positions
+			current_pos += entry->rate;
+			// If we passed the target position, entry is the item we are looking for
+			if (current_pos > pos)
+				return entry;
+		}
+	}
+	// Return nullptr on fail
+	return nullptr;
 }
 
 /**
 * Return a random group entry from Item Group
 * @param group_id
 * @param sub_group: 0 is 'must' item group, random groups start from 1
-* @return Item group entry or NULL on fail
+* @param search_type: see e_group_search_type
+* @return Item group entry or nullptr on fail
 */
-std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_entry(uint16 group_id, uint8 sub_group) {
+std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_entry(uint16 group_id, uint8 sub_group, e_group_search_type search_type) {
 	std::shared_ptr<s_item_group_db> group = this->find(group_id);
 
 	if (group == nullptr) {
@@ -2894,18 +2944,7 @@ std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_entry(uint16 g
 		return nullptr;
 	}
 
-	return get_random_itemsubgroup(group->random[sub_group]);
-}
-
-/**
-* Return a random Item ID from Item Group
-* @param group_id
-* @param sub_group: 0 is 'must' item group, random groups start from 1
-* @return Item ID or UNKNOWN_ITEM_ID on fail
-*/
-t_itemid ItemGroupDatabase::get_random_item_id(uint16 group_id, uint8 sub_group) {
-	std::shared_ptr<s_item_group_entry> entry = this->get_random_entry(group_id, sub_group);
-	return entry != nullptr ? entry->nameid : UNKNOWN_ITEM_ID;
+	return this->get_random_itemsubgroup(group->random[sub_group], search_type);
 }
 
 /** [Cydh]
@@ -2914,7 +2953,7 @@ t_itemid ItemGroupDatabase::get_random_item_id(uint16 group_id, uint8 sub_group)
 * @param group_id: The group ID of item that obtained by player
 * @param *group: struct s_item_group from itemgroup_db[group_id].random[idx] or itemgroup_db[group_id].must[sub_group][idx]
 */
-static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std::shared_ptr<s_item_group_entry> data) {
+void ItemGroupDatabase::pc_get_itemgroup_sub( map_session_data& sd, bool identify, std::shared_ptr<s_item_group_entry> data ){
 	if (data == nullptr)
 		return;
 
@@ -2923,12 +2962,12 @@ static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std
 	tmp.nameid = data->nameid;
 	tmp.bound = data->bound;
 	tmp.identify = identify ? identify : itemdb_isidentified(data->nameid);
-	tmp.expire_time = (data->duration) ? (unsigned int)(time(NULL) + data->duration*60) : 0;
+	tmp.expire_time = (data->duration) ? (uint32)(time(nullptr) + data->duration*60) : 0;
 	if (data->isNamed) {
 		tmp.card[0] = itemdb_isequip(data->nameid) ? CARD0_FORGE : CARD0_CREATE;
 		tmp.card[1] = 0;
-		tmp.card[2] = GetWord(sd->status.char_id, 0);
-		tmp.card[3] = GetWord(sd->status.char_id, 1);
+		tmp.card[2] = GetWord( sd.status.char_id, 0 );
+		tmp.card[3] = GetWord( sd.status.char_id, 1 );
 	}
 
 	uint16 get_amt = 0;
@@ -2942,16 +2981,15 @@ static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std
 
 	// Do loop for non-stackable item
 	for (uint16 i = 0; i < data->amount; i += get_amt) {
-		char flag = 0;
-		tmp.unique_id = data->GUID ? pc_generate_unique_id(sd) : 0; // Generate GUID
+		tmp.unique_id = data->GUID ? pc_generate_unique_id( &sd ) : 0; // Generate GUID
 
 		if( itemdb_isequip( data->nameid ) ){
 			if( data->refineMinimum > 0 && data->refineMaximum > 0 ){
-				tmp.refine = rnd_value( data->refineMinimum, data->refineMaximum );
+				tmp.refine = static_cast<uint8>( rnd_value<uint16>( data->refineMinimum, data->refineMaximum ) );
 			}else if( data->refineMinimum > 0 ){
-				tmp.refine = rnd_value( data->refineMinimum, MAX_REFINE );
+				tmp.refine = static_cast<uint8>( rnd_value<uint16>( data->refineMinimum, MAX_REFINE ) );
 			}else if( data->refineMaximum > 0 ){
-				tmp.refine = rnd_value( 1, data->refineMaximum );
+				tmp.refine = static_cast<uint8>( rnd_value<uint16>( 1, data->refineMaximum ) );
 			}else{
 				tmp.refine = 0;
 			}
@@ -2963,13 +3001,15 @@ static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std
 			}
 		}
 
-		if ((flag = pc_additem(sd, &tmp, get_amt, LOG_TYPE_SCRIPT))) {
-			clif_additem(sd, 0, 0, flag);
-			if (pc_candrop(sd, &tmp))
-				map_addflooritem(&tmp, tmp.amount, sd->bl.m, sd->bl.x,sd->bl.y, 0, 0, 0, 0, 0);
+		e_additem_result flag = pc_additem( &sd, &tmp, get_amt, LOG_TYPE_SCRIPT );
+
+		if( flag == ADDITEM_SUCCESS ){
+			if( data->isAnnounced ){
+				intif_broadcast_obtain_special_item( &sd, data->nameid, sd.itemid, ITEMOBTAIN_TYPE_BOXITEM );
+			}
+		}else{
+			clif_additem( &sd, 0, 0, flag );
 		}
-		else if (!flag && data->isAnnounced)
-			intif_broadcast_obtain_special_item(sd, data->nameid, sd->itemid, ITEMOBTAIN_TYPE_BOXITEM);
 	}
 }
 
@@ -2977,11 +3017,9 @@ static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std
 * Find item(s) that will be obtained by player based on Item Group
 * @param group_id: The group ID that will be gained by player
 * @param nameid: The item that trigger this item group
-* @return val: 0:success, 1:no sd, 2:invalid item group
+* @return val: 0:success, 2:invalid item group
 */
-uint8 ItemGroupDatabase::pc_get_itemgroup(uint16 group_id, bool identify, map_session_data *sd) {
-	nullpo_retr(1,sd);
-
+uint8 ItemGroupDatabase::pc_get_itemgroup( uint16 group_id, bool identify, map_session_data& sd ){
 	std::shared_ptr<s_item_group_db> group = this->find(group_id);
 
 	if (group == nullptr) {
@@ -2990,21 +3028,22 @@ uint8 ItemGroupDatabase::pc_get_itemgroup(uint16 group_id, bool identify, map_se
 	}
 	if (group->random.empty())
 		return 0;
-	
-	// Get all the 'must' item(s) (subgroup 0)
-	uint16 subgroup = 0;
-	std::shared_ptr<s_item_group_random> random = util::umap_find(group->random, subgroup);
 
-	if (random != nullptr && !random->data.empty()) {
-		for (const auto &it : random->data)
-			itemdb_pc_get_itemgroup_sub(sd, identify, it.second);
+	// Get all the 'must' item(s) (subgroup 0)
+	std::shared_ptr<s_item_group_random> must = util::umap_find(group->random, static_cast<uint16>(0));
+	if( must != nullptr ){
+		for (const auto &it : must->data)
+			this->pc_get_itemgroup_sub( sd, identify, it.second );
 	}
 
 	// Get 1 'random' item from each subgroup
 	for (const auto &random : group->random) {
-		if (random.first == 0 || random.second->data.empty())
+		// Skip the 'must' group
+		if( random.first == 0 ){
 			continue;
-		itemdb_pc_get_itemgroup_sub(sd, identify, get_random_itemsubgroup(random.second));
+		}
+
+		this->pc_get_itemgroup_sub( sd, identify, this->get_random_itemsubgroup( random.second ) );
 	}
 
 	return 0;
@@ -3012,7 +3051,7 @@ uint8 ItemGroupDatabase::pc_get_itemgroup(uint16 group_id, bool identify, map_se
 
 /** Searches for the item_data. Use this to check if item exists or not.
 * @param nameid
-* @return *item_data if item is exist, or NULL if not
+* @return *item_data if item is exist, or nullptr if not
 */
 std::shared_ptr<item_data> itemdb_exists(t_itemid nameid) {
 	return item_db.find(nameid);
@@ -3085,7 +3124,7 @@ static void itemdb_jobid2mapid(uint64 bclass[3], e_mapid jobmask, bool active)
 		temp_mask[0] = temp_mask[1] = temp_mask[2] = MAPID_ALL;
 	}
 
-	for (int i = 0; i < ARRAYLENGTH(temp_mask); i++) {
+	for (int32 i = 0; i < ARRAYLENGTH(temp_mask); i++) {
 		if (temp_mask[i] == 0)
 			continue;
 
@@ -3141,46 +3180,46 @@ bool itemdb_isstackable2(struct item_data *id)
 /*==========================================
  * Trade Restriction functions [Skotlex]
  *------------------------------------------*/
-bool itemdb_isdropable_sub(struct item_data *item, int gmlv, int unused) {
+bool itemdb_isdropable_sub(struct item_data *item, int32 gmlv, int32 unused) {
 	return (item && (!(item->flag.trade_restriction.drop) || gmlv >= item->gm_lv_trade_override));
 }
 
-bool itemdb_cantrade_sub(struct item_data* item, int gmlv, int gmlv2) {
+bool itemdb_cantrade_sub(struct item_data* item, int32 gmlv, int32 gmlv2) {
 	return (item && (!(item->flag.trade_restriction.trade) || gmlv >= item->gm_lv_trade_override || gmlv2 >= item->gm_lv_trade_override));
 }
 
-bool itemdb_canpartnertrade_sub(struct item_data* item, int gmlv, int gmlv2) {
+bool itemdb_canpartnertrade_sub(struct item_data* item, int32 gmlv, int32 gmlv2) {
 	return (item && (item->flag.trade_restriction.trade_partner || gmlv >= item->gm_lv_trade_override || gmlv2 >= item->gm_lv_trade_override));
 }
 
-bool itemdb_cansell_sub(struct item_data* item, int gmlv, int unused) {
+bool itemdb_cansell_sub(struct item_data* item, int32 gmlv, int32 unused) {
 	return (item && (!(item->flag.trade_restriction.sell) || gmlv >= item->gm_lv_trade_override));
 }
 
-bool itemdb_cancartstore_sub(struct item_data* item, int gmlv, int unused) {
+bool itemdb_cancartstore_sub(struct item_data* item, int32 gmlv, int32 unused) {
 	return (item && (!(item->flag.trade_restriction.cart) || gmlv >= item->gm_lv_trade_override));
 }
 
-bool itemdb_canstore_sub(struct item_data* item, int gmlv, int unused) {
+bool itemdb_canstore_sub(struct item_data* item, int32 gmlv, int32 unused) {
 	return (item && (!(item->flag.trade_restriction.storage) || gmlv >= item->gm_lv_trade_override));
 }
 
-bool itemdb_canguildstore_sub(struct item_data* item, int gmlv, int unused) {
+bool itemdb_canguildstore_sub(struct item_data* item, int32 gmlv, int32 unused) {
 	return (item && (!(item->flag.trade_restriction.guild_storage) || gmlv >= item->gm_lv_trade_override));
 }
 
-bool itemdb_canmail_sub(struct item_data* item, int gmlv, int unused) {
+bool itemdb_canmail_sub(struct item_data* item, int32 gmlv, int32 unused) {
 	return (item && (!(item->flag.trade_restriction.mail) || gmlv >= item->gm_lv_trade_override));
 }
 
-bool itemdb_canauction_sub(struct item_data* item, int gmlv, int unused) {
+bool itemdb_canauction_sub(struct item_data* item, int32 gmlv, int32 unused) {
 	return (item && (!(item->flag.trade_restriction.auction) || gmlv >= item->gm_lv_trade_override));
 }
 
-bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, bool (*func)(struct item_data*, int, int))
+bool itemdb_isrestricted(struct item* item, int32 gmlv, int32 gmlv2, bool (*func)(struct item_data*, int, int))
 {
 	struct item_data* item_data = itemdb_search(item->nameid);
-	int i;
+	int32 i;
 
 	if (!func(item_data, gmlv, gmlv2))
 		return false;
@@ -3206,7 +3245,7 @@ bool itemdb_ishatched_egg(struct item* item) {
 * @param nameid ID of item
 */
 char itemdb_isidentified(t_itemid nameid) {
-	int type=itemdb_type(nameid);
+	int32 type=itemdb_type(nameid);
 	switch (type) {
 		case IT_WEAPON:
 		case IT_ARMOR:
@@ -3293,43 +3332,58 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			const auto& listNode = subit["List"];
 
 			for (const auto& listit : listNode) {
+				uint32 index;
+
+				if (!this->asUInt32(listit, "Index", index))
+					continue;
+
 				if (this->nodeExists(listit, "Clear")) {
-					std::string item_name;
+					bool active;
 
-					if (!this->asString(listit, "Clear", item_name))
+					if (!this->asBool(listit, "Clear", active) || !active)
 						continue;
 
-					std::shared_ptr<item_data> item = item_db.search_aegisname( item_name.c_str() );
-
-					if (item == nullptr) {
-						this->invalidWarning(listit["Clear"], "Unknown Item %s. Clear failed.\n", item_name.c_str());
-						continue;
-					}
-
-					if (random->data.erase(item->nameid) == 0)
-						this->invalidWarning(listit["Clear"], "Item %hu doesn't exist in the SubGroup %hu (group %s). Clear failed.\n", item->nameid, subgroup, group_name.c_str());
+					if (random->data.erase(index) == 0)
+						this->invalidWarning(listit["Clear"], "Index %u doesn't exist in the SubGroup %hu (group %s). Clear failed.\n", index, subgroup, group_name.c_str());
 
 					continue;
 				}
 
-				std::string item_name;
-
-				if (!this->asString(listit, "Item", item_name))
-					continue;
-
-				std::shared_ptr<item_data> item = item_db.search_aegisname( item_name.c_str() );
-
-				if (item == nullptr) {
-					this->invalidWarning(listit["Item"], "Unknown Item %s.\n", item_name.c_str());
-					continue;
-				}
-
-				std::shared_ptr<s_item_group_entry> entry = util::umap_find(random->data, item->nameid);
+				std::shared_ptr<s_item_group_entry> entry = util::umap_find(random->data, index);
 				bool entry_exists = entry != nullptr;
 
 				if (!entry_exists) {
+					if (!this->nodesExist(listit, { "Item" }))
+						return 0;
+
 					entry = std::make_shared<s_item_group_entry>();
-					random->data[item->nameid] = entry;
+					random->data[index] = entry;
+				}
+
+				std::shared_ptr<item_data> item = nullptr;
+
+				if (this->nodeExists(listit, "Item")) {
+					std::string item_name;
+
+					if (!this->asString(listit, "Item", item_name))
+						continue;
+
+					item = item_db.search_aegisname( item_name.c_str() );
+
+					if (item == nullptr) {
+						this->invalidWarning(listit["Item"], "Unknown Item %s.\n", item_name.c_str());
+						continue;
+					}
+				} else {
+					if (!entry_exists) {
+						item = item_db.find( entry->nameid );
+					}
+				}
+
+				// (shouldn't happen)
+				if (item == nullptr) {
+					this->invalidWarning(listit["index"], "Missing Item definition for Index %u.\n", index);
+					continue;
 				}
 
 				entry->nameid = item->nameid;
@@ -3353,6 +3407,12 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				if (subgroup != 0 && entry->rate == 0) {
 					this->invalidWarning(listit["Item"], "Entry must have a Rate for group above 0, skipping.\n");
 					continue;
+				}
+
+				// Rate adjustment
+				if (battle_config.item_group_rate != 100) {
+					entry->rate = (entry->rate * battle_config.item_group_rate) / 100;
+					entry->rate = cap_value(entry->rate, battle_config.item_group_drop_min, battle_config.item_group_drop_max);
 				}
 
 				if (this->nodeExists(listit, "Amount")) {
@@ -3516,6 +3576,19 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 }
 
 void ItemGroupDatabase::loadingFinished() {
+	// Delete empty sub groups
+	for( const auto &group : *this ){
+		for( auto it = group.second->random.begin(); it != group.second->random.end(); ){
+			if( it->second->data.empty() ){
+				ShowDebug( "Deleting empty subgroup %u from item group %hu.\n", it->first, group.first );
+				it = group.second->random.erase( it );
+			}else{
+				it++;
+			}
+		}
+	}
+
+	// Calculate rates
 	for (const auto &group : *this) {
 		for (const auto &random : group.second->random) {
 			random.second->total_rate = 0;
@@ -3531,9 +3604,9 @@ void ItemGroupDatabase::loadingFinished() {
 /** Read item forbidden by mapflag (can't equip item)
 * Structure: <nameid>,<mode>
 */
-static bool itemdb_read_noequip(char* str[], int columns, int current) {
+static bool itemdb_read_noequip( char* str[], size_t columns, size_t current ){
 	t_itemid nameid;
-	int flag;
+	int32 flag;
 
 	nameid = strtoul(str[0], nullptr, 10);
 	flag = atoi(str[1]);
@@ -3714,7 +3787,7 @@ void ComboDatabase::loadingFinished() {
  */
 bool itemdb_parse_roulette_db(void)
 {
-	int i, j;
+	int32 i, j;
 	uint32 count = 0;
 
 	// retrieve all rows from the item database
@@ -3727,18 +3800,18 @@ bool itemdb_parse_roulette_db(void)
 		rd.items[i] = 0;
 
 	for (i = 0; i < MAX_ROULETTE_LEVEL; i++) {
-		int k, limit = MAX_ROULETTE_COLUMNS - i;
+		int32 k, limit = MAX_ROULETTE_COLUMNS - i;
 
 		for (k = 0; k < limit && SQL_SUCCESS == Sql_NextRow(mmysql_handle); k++) {
 			char* data;
 			t_itemid item_id;
 			unsigned short amount;
-			int level, flag;
+			int32 level, flag;
 
-			Sql_GetData(mmysql_handle, 1, &data, NULL); level = atoi(data);
-			Sql_GetData(mmysql_handle, 2, &data, NULL); item_id = strtoul(data, nullptr, 10);
-			Sql_GetData(mmysql_handle, 3, &data, NULL); amount = atoi(data);
-			Sql_GetData(mmysql_handle, 4, &data, NULL); flag = atoi(data);
+			Sql_GetData(mmysql_handle, 1, &data, nullptr); level = atoi(data);
+			Sql_GetData(mmysql_handle, 2, &data, nullptr); item_id = strtoul(data, nullptr, 10);
+			Sql_GetData(mmysql_handle, 3, &data, nullptr); amount = atoi(data);
+			Sql_GetData(mmysql_handle, 4, &data, nullptr); flag = atoi(data);
 
 			if (!item_db.exists(item_id)) {
 				ShowWarning("itemdb_parse_roulette_db: Unknown item ID '%u' in level '%d'\n", item_id, level);
@@ -3770,7 +3843,7 @@ bool itemdb_parse_roulette_db(void)
 	Sql_FreeResult(mmysql_handle);
 
 	for (i = 0; i < MAX_ROULETTE_LEVEL; i++) {
-		int limit = MAX_ROULETTE_COLUMNS - i;
+		int32 limit = MAX_ROULETTE_COLUMNS - i;
 
 		if (rd.items[i] == limit)
 			continue;
@@ -3808,7 +3881,7 @@ bool itemdb_parse_roulette_db(void)
  * Free Roulette items
  */
 static void itemdb_roulette_free(void) {
-	int i;
+	int32 i;
 
 	for (i = 0; i < MAX_ROULETTE_LEVEL; i++) {
 		if (rd.nameid[i])
@@ -3817,9 +3890,9 @@ static void itemdb_roulette_free(void) {
 			aFree(rd.qty[i]);
 		if (rd.flag[i])
 			aFree(rd.flag[i]);
-		rd.nameid[i] = NULL;
-		rd.qty[i] = NULL;
-		rd.flag[i] = NULL;
+		rd.nameid[i] = nullptr;
+		rd.qty[i] = nullptr;
+		rd.flag[i] = nullptr;
 		rd.items[i] = 0;
 	}
 }
@@ -4135,7 +4208,7 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 /**
  * Read SQL item_db table
  */
-static int itemdb_read_sqldb(void) {
+static int32 itemdb_read_sqldb(void) {
 	const char* item_db_name[] = {
 		item_table,
 		item2_table
@@ -4211,11 +4284,11 @@ bool itemdb_isNoEquip(struct item_data *id, uint16 m) {
 	struct map_data *mapdata = map_getmapdata(m);
 
 	if ((id->flag.no_equip&1 && !mapdata_flag_vs2(mapdata)) || // Normal
-		(id->flag.no_equip&2 && mapdata->flag[MF_PVP]) || // PVP
+		(id->flag.no_equip&2 && mapdata->getMapFlag(MF_PVP)) || // PVP
 		(id->flag.no_equip&4 && mapdata_flag_gvg2_no_te(mapdata)) || // GVG
-		(id->flag.no_equip&8 && mapdata->flag[MF_BATTLEGROUND]) || // Battleground
+		(id->flag.no_equip&8 && mapdata->getMapFlag(MF_BATTLEGROUND)) || // Battleground
 		(id->flag.no_equip&16 && mapdata_flag_gvg2_te(mapdata)) || // WOE:TE
-		(id->flag.no_equip&(mapdata->zone) && mapdata->flag[MF_RESTRICTED]) // Zone restriction
+		(id->flag.no_equip&(mapdata->zone) && mapdata->getMapFlag(MF_RESTRICTED)) // Zone restriction
 		)
 		return true;
 	return false;
@@ -4268,7 +4341,7 @@ uint64 RandomOptionDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			return 0;
 
 		if (randopt->script) {
-			aFree(randopt->script);
+			script_free_code( randopt->script );
 			randopt->script = nullptr;
 		}
 
@@ -4434,7 +4507,7 @@ void s_random_opt_group::apply( struct item& item ){
 		for( size_t j = 0, max = this->slots[static_cast<uint16>(i)].size() * 3; j < max; j++ ){
 			std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( this->slots[static_cast<uint16>(i)] );
 
-			if( rnd() % 10000 < option->chance ){
+			if ( rnd_chance<uint16>(option->chance, 10000) ) {
 				apply_sub( item.option[i], option );
 				break;
 			}
@@ -4459,7 +4532,7 @@ void s_random_opt_group::apply( struct item& item ){
 
 			std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( this->random_options );
 
-			if( rnd() % 10000 < option->chance ){
+			if ( rnd_chance<uint16>(option->chance, 10000) ){
 				apply_sub( item.option[i], option );
 			}
 		}
@@ -4644,7 +4717,7 @@ bool RandomOptionGroupDatabase::option_get_id(std::string name, uint16 &id) {
 * Read all item-related databases
 */
 static void itemdb_read(void) {
-	int i;
+	int32 i;
 	const char* dbsubpath[] = {
 		"",
 		"/" DBIMPORT,
@@ -4707,7 +4780,7 @@ bool item_data::isStackable()
 	return true;
 }
 
-int item_data::inventorySlotNeeded(int quantity)
+int32 item_data::inventorySlotNeeded(int32 quantity)
 {
 	return (this->flag.guid || !this->isStackable()) ? quantity : 1;
 }

@@ -3,13 +3,13 @@
 
 #include "inter.hpp"
 
+#include <cstdlib>
+#include <cstring>
+#include <cstring>
 #include <memory>
 #include <unordered_map>
 #include <vector>
 
-#include <stdlib.h>
-#include <string.h>
-#include <string>
 #include <sys/stat.h> // for stat/lstat/fstat - [Dekamaster/Ultimate GM Tool]
 
 #include <common/cbasetypes.hpp>
@@ -44,18 +44,18 @@ InterServerDatabase interServerDb;
 
 #define WISDATA_TTL (60*1000)	//Wis data Time To Live (60 seconds)
 
-Sql* sql_handle = NULL;	///Link to mysql db, connection FD
+Sql* sql_handle = nullptr;	///Link to mysql db, connection FD
 
-int char_server_port = 3306;
+int32 char_server_port = 3306;
 std::string char_server_ip = "127.0.0.1";
 std::string char_server_id = "ragnarok";
 std::string char_server_pw = ""; // Allow user to send empty password (bugreport:7787)
 std::string char_server_db = "ragnarok";
 std::string default_codepage = ""; //Feature by irmin.
-unsigned int party_share_level = 10;
+uint32 party_share_level = 10;
 
 /// Received packet Lengths from map-server
-int inter_recv_packet_length[] = {
+int32 inter_recv_packet_length[] = {
 	-1,-1, 7,-1, -1,13,36, (2+4+4+4+1+NAME_LENGTH),  0,-1, 0, 0,  0, 0,  0, 0,	// 3000-
 	 6,-1, 0, 0,  0, 0, 0, 0, 10,-1, 0, 0,  0, 0,  0, 0,	// 3010-
 	-1,10,-1,14, 15+NAME_LENGTH,17+MAP_NAME_LENGTH_EXT, 6,-1, 14,14, 6, 0,  0, 0,  0, 0,	// 3020- Party
@@ -74,16 +74,16 @@ int inter_recv_packet_length[] = {
 #endif
 
 struct WisData {
-	int id, fd, count, len, gmlvl;
+	int32 id, fd, count, len, gmlvl;
 	t_tick tick;
 	char src[NAME_LENGTH], dst[NAME_LENGTH], msg[WHISPER_MESSAGE_SIZE];
 };
 
-// int wis_id -> struct WisData*
+// int32 wis_id -> struct WisData*
 static std::unordered_map<int32, std::shared_ptr<struct WisData>> wis_db;
 
 /* from pc.cpp due to @accinfo. any ideas to replace this crap are more than welcome. */
-const char* job_name(int class_) {
+const char* job_name(int32 class_) {
 	switch (class_) {
 		case JOB_NOVICE:
 		case JOB_SWORDMAN:
@@ -387,21 +387,21 @@ const char * geoip_countryname[253] = {"Unknown","Asia/Pacific Region","Europe",
 		"Ghana","Gibraltar","Greenland","Gambia","Guinea","Guadeloupe","Equatorial Guinea","Greece","South Georgia and the South Sandwich Islands","Guatemala",
 		"Guam","Guinea-Bissau","Guyana","Hong Kong","Heard Island and McDonald Islands","Honduras","Croatia","Haiti","Hungary","Indonesia",
 		"Ireland","Israel","India","British Indian Ocean Territory","Iraq","Iran, Islamic Republic of","Iceland","Italy","Jamaica","Jordan",
-		"Japan","Kenya","Kyrgyzstan","Cambodia","Kiribati","Comoros","Saint Kitts and Nevis","Korea, Democratic People's Republic of","Korea, Republic of","Kuwait",
-		"Cayman Islands","Kazakhstan","Lao People's Democratic Republic","Lebanon","Saint Lucia","Liechtenstein","Sri Lanka","Liberia","Lesotho","Lithuania",
+		"Japan","Kenya","Kyrgyzstan","Cambodia","Kiribati","Comoros","Saint32 Kitts and Nevis","Korea, Democratic People's Republic of","Korea, Republic of","Kuwait",
+		"Cayman Islands","Kazakhstan","Lao People's Democratic Republic","Lebanon","Saint32 Lucia","Liechtenstein","Sri Lanka","Liberia","Lesotho","Lithuania",
 		"Luxembourg","Latvia","Libyan Arab Jamahiriya","Morocco","Monaco","Moldova, Republic of","Madagascar","Marshall Islands","Macedonia","Mali",
 		"Myanmar","Mongolia","Macau","Northern Mariana Islands","Martinique","Mauritania","Montserrat","Malta","Mauritius","Maldives",
 		"Malawi","Mexico","Malaysia","Mozambique","Namibia","New Caledonia","Niger","Norfolk Island","Nigeria","Nicaragua",
 		"Netherlands","Norway","Nepal","Nauru","Niue","New Zealand","Oman","Panama","Peru","French Polynesia",
-		"Papua New Guinea","Philippines","Pakistan","Poland","Saint Pierre and Miquelon","Pitcairn Islands","Puerto Rico","Palestinian Territory","Portugal","Palau",
+		"Papua New Guinea","Philippines","Pakistan","Poland","Saint32 Pierre and Miquelon","Pitcairn Islands","Puerto Rico","Palestinian Territory","Portugal","Palau",
 		"Paraguay","Qatar","Reunion","Romania","Russian Federation","Rwanda","Saudi Arabia","Solomon Islands","Seychelles","Sudan",
-		"Sweden","Singapore","Saint Helena","Slovenia","Svalbard and Jan Mayen","Slovakia","Sierra Leone","San Marino","Senegal","Somalia","Suriname",
+		"Sweden","Singapore","Saint32 Helena","Slovenia","Svalbard and Jan Mayen","Slovakia","Sierra Leone","San Marino","Senegal","Somalia","Suriname",
 		"Sao Tome and Principe","El Salvador","Syrian Arab Republic","Swaziland","Turks and Caicos Islands","Chad","French Southern Territories","Togo","Thailand",
 		"Tajikistan","Tokelau","Turkmenistan","Tunisia","Tonga","Timor-Leste","Turkey","Trinidad and Tobago","Tuvalu","Taiwan",
-		"Tanzania, United Republic of","Ukraine","Uganda","United States Minor Outlying Islands","United States","Uruguay","Uzbekistan","Holy See (Vatican City State)","Saint Vincent and the Grenadines","Venezuela",
+		"Tanzania, United Republic of","Ukraine","Uganda","United States Minor Outlying Islands","United States","Uruguay","Uzbekistan","Holy See (Vatican City State)","Saint32 Vincent and the Grenadines","Venezuela",
 		"Virgin Islands, British","Virgin Islands, U.S.","Vietnam","Vanuatu","Wallis and Futuna","Samoa","Yemen","Mayotte","Serbia","South Africa",
 		"Zambia","Montenegro","Zimbabwe","Anonymous Proxy","Satellite Provider","Other","Aland Islands","Guernsey","Isle of Man","Jersey",
-		"Saint Barthelemy","Saint Martin"};
+		"Saint32 Barthelemy","Saint32 Martin"};
 unsigned char *geoip_cache;
 void geoip_readdb(void){
 	struct stat bufa;
@@ -415,9 +415,9 @@ void geoip_readdb(void){
 /* [Dekamaster/Nightroad] */
 /* There are millions of entries in GeoIP and it has its own algorithm to go quickly through them */
 const char* geoip_getcountry(uint32 ipnum){
-	int depth;
-	unsigned int x;
-	unsigned int offset = 0;
+	int32 depth;
+	uint32 x;
+	uint32 offset = 0;
 
 	for (depth = 31; depth >= 0; depth--) {
 		const unsigned char *buf;
@@ -443,10 +443,10 @@ const char* geoip_getcountry(uint32 ipnum){
 }
 /* sends a mesasge to map server (fd) to a user (u_fd) although we use fd we keep aid for safe-check */
 /* extremely handy I believe it will serve other uses in the near future */
-void inter_to_fd(int fd, int u_fd, int aid, char* msg, ...) {
+void inter_to_fd(int32 fd, int32 u_fd, int32 aid, char* msg, ...) {
 	char msg_out[512];
 	va_list ap;
-	int len = 1;/* yes we start at 1 */
+	int32 len = 1;/* yes we start at 1 */
 
 	va_start(ap,msg);
 		len += vsnprintf(msg_out, 512, msg, ap);
@@ -472,7 +472,7 @@ void inter_to_fd(int fd, int u_fd, int aid, char* msg, ...) {
  * @param acc_id : id of player found
  * @param acc_name : name of player found
  */
-void mapif_acc_info_ack(int fd, int u_fd, int acc_id, const char* acc_name){
+void mapif_acc_info_ack(int32 fd, int32 u_fd, int32 acc_id, const char* acc_name){
 	WFIFOHEAD(fd,10 + NAME_LENGTH);
 	WFIFOW(fd,0) = 0x3808;
 	WFIFOL(fd,2) = u_fd;
@@ -486,8 +486,8 @@ void mapif_acc_info_ack(int fd, int u_fd, int acc_id, const char* acc_name){
  * @author : [Dekamaster/Nightroad]
  * @param fd : map-serv link
  */
-void mapif_parse_accinfo(int fd) {
-	int u_fd = RFIFOL(fd,2), u_aid = RFIFOL(fd,6), u_group = RFIFOL(fd,10);
+void mapif_parse_accinfo(int32 fd) {
+	int32 u_fd = RFIFOL(fd,2), u_aid = RFIFOL(fd,6), u_group = RFIFOL(fd,10);
 	char type= RFIFOB(fd,14);
 	char query[NAME_LENGTH], query_esq[NAME_LENGTH*2+1];
 	uint32 account_id = 0;
@@ -512,21 +512,21 @@ void mapif_parse_accinfo(int fd) {
 		} else {
 			if( Sql_NumRows(sql_handle) == 1 ) {//we found a perfect match
 				Sql_NextRow(sql_handle);
-				Sql_GetData(sql_handle, 0, &data, NULL); account_id = atoi(data);
+				Sql_GetData(sql_handle, 0, &data, nullptr); account_id = atoi(data);
 				Sql_FreeResult(sql_handle);
 			} else {// more than one, listing... [Dekamaster/Nightroad]
 				inter_to_fd(fd, u_fd, u_aid, (char *)msg_txt(214),(int)Sql_NumRows(sql_handle));
 				while ( SQL_SUCCESS == Sql_NextRow(sql_handle) ) {
-					int class_;
+					int32 class_;
 					short base_level, job_level, online;
 					char name[NAME_LENGTH];
 
-					Sql_GetData(sql_handle, 0, &data, NULL); account_id = atoi(data);
-					Sql_GetData(sql_handle, 1, &data, NULL); safestrncpy(name, data, sizeof(name));
-					Sql_GetData(sql_handle, 2, &data, NULL); class_ = atoi(data);
-					Sql_GetData(sql_handle, 3, &data, NULL); base_level = atoi(data);
-					Sql_GetData(sql_handle, 4, &data, NULL); job_level = atoi(data);
-					Sql_GetData(sql_handle, 5, &data, NULL); online = atoi(data);
+					Sql_GetData(sql_handle, 0, &data, nullptr); account_id = atoi(data);
+					Sql_GetData(sql_handle, 1, &data, nullptr); safestrncpy(name, data, sizeof(name));
+					Sql_GetData(sql_handle, 2, &data, nullptr); class_ = atoi(data);
+					Sql_GetData(sql_handle, 3, &data, nullptr); base_level = atoi(data);
+					Sql_GetData(sql_handle, 4, &data, nullptr); job_level = atoi(data);
+					Sql_GetData(sql_handle, 5, &data, nullptr); online = atoi(data);
 
 					inter_to_fd(fd, u_fd, u_aid, (char *)msg_txt(215), account_id, name, job_name(class_), base_level, job_level, online?"Online":"Offline");
 				}
@@ -546,8 +546,8 @@ void mapif_parse_accinfo(int fd) {
 /**
  * Show account info from login-server to user
  */
-void mapif_accinfo_ack(bool success, int map_fd, int u_fd, int u_aid, int account_id, int8 type,
-	int group_id, int logincount, int state, const char *email, const char *last_ip, const char *lastlogin,
+void mapif_accinfo_ack(bool success, int32 map_fd, int32 u_fd, int32 u_aid, int32 account_id, int8 type,
+	int32 group_id, int32 logincount, int32 state, const char *email, const char *last_ip, const char *lastlogin,
 	const char *birthdate, const char *userid)
 {
 	
@@ -587,13 +587,13 @@ void mapif_accinfo_ack(bool success, int map_fd, int u_fd, int u_aid, int accoun
 			char name[NAME_LENGTH];
 			char *data;
 
-			Sql_GetData(sql_handle, 0, &data, NULL); char_id = atoi(data);
-			Sql_GetData(sql_handle, 1, &data, NULL); safestrncpy(name, data, sizeof(name));
-			Sql_GetData(sql_handle, 2, &data, NULL); char_num = atoi(data);
-			Sql_GetData(sql_handle, 3, &data, NULL); class_ = atoi(data);
-			Sql_GetData(sql_handle, 4, &data, NULL); base_level = atoi(data);
-			Sql_GetData(sql_handle, 5, &data, NULL); job_level = atoi(data);
-			Sql_GetData(sql_handle, 6, &data, NULL); online = atoi(data);
+			Sql_GetData(sql_handle, 0, &data, nullptr); char_id = atoi(data);
+			Sql_GetData(sql_handle, 1, &data, nullptr); safestrncpy(name, data, sizeof(name));
+			Sql_GetData(sql_handle, 2, &data, nullptr); char_num = atoi(data);
+			Sql_GetData(sql_handle, 3, &data, nullptr); class_ = atoi(data);
+			Sql_GetData(sql_handle, 4, &data, nullptr); base_level = atoi(data);
+			Sql_GetData(sql_handle, 5, &data, nullptr); job_level = atoi(data);
+			Sql_GetData(sql_handle, 6, &data, nullptr); online = atoi(data);
 
 			inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(225), char_num, char_id, name, job_name(class_), base_level, job_level, online?"Online":"Offline");
 		}
@@ -662,11 +662,11 @@ void inter_savereg(uint32 account_id, uint32 char_id, const char *key, uint32 in
 }
 
 // Load account_reg from sql (type=2)
-int inter_accreg_fromsql(uint32 account_id, uint32 char_id, int fd, int type)
+int32 inter_accreg_fromsql(uint32 account_id, uint32 char_id, int32 fd, int32 type)
 {
 	char* data;
 	size_t len;
-	unsigned int plen = 0;
+	uint32 plen = 0;
 
 	switch( type ) {
 		case 3: //char reg
@@ -702,28 +702,28 @@ int inter_accreg_fromsql(uint32 account_id, uint32 char_id, int fd, int type)
 	 * { keyLength(B), key(<keyLength>), index(L), valLength(B), val(<valLength>) }
 	 **/
 	while ( SQL_SUCCESS == Sql_NextRow(sql_handle) ) {
-		Sql_GetData(sql_handle, 0, &data, NULL);
+		Sql_GetData(sql_handle, 0, &data, nullptr);
 		len = strlen(data)+1;
 
 		WFIFOB(fd, plen) = (unsigned char)len; // won't be higher; the column size is 32
 		plen += 1;
 
 		safestrncpy(WFIFOCP(fd,plen), data, len);
-		plen += len;
+		plen += static_cast<decltype(plen)>( len );
 
-		Sql_GetData(sql_handle, 1, &data, NULL);
+		Sql_GetData(sql_handle, 1, &data, nullptr);
 
 		WFIFOL(fd, plen) = (uint32)atol(data);
 		plen += 4;
 
-		Sql_GetData(sql_handle, 2, &data, NULL);
+		Sql_GetData(sql_handle, 2, &data, nullptr);
 		len = strlen(data)+1;
 
 		WFIFOB(fd, plen) = (unsigned char)len; // won't be higher; the column size is 254
 		plen += 1;
 
 		safestrncpy(WFIFOCP(fd,plen), data, len);
-		plen += len;
+		plen += static_cast<decltype(plen)>( len );
 
 		WFIFOW(fd, 14) += 1;
 
@@ -771,34 +771,34 @@ int inter_accreg_fromsql(uint32 account_id, uint32 char_id, int fd, int type)
 	WFIFOL(fd, 4) = account_id;
 	WFIFOL(fd, 8) = char_id;
 	WFIFOB(fd, 12) = 0; // var type (only set when all vars have been sent, regardless of type)
-	WFIFOB(fd, 13) = 0; // is int type
+	WFIFOB(fd, 13) = 0; // is int32 type
 	WFIFOW(fd, 14) = 0; // count
 	plen = 16;
 
 	/**
 	 * Vessel!
 	 *
-	 * int type
+	 * int32 type
 	 * { keyLength(B), key(<keyLength>), index(L), value(L) }
 	 **/
 	while ( SQL_SUCCESS == Sql_NextRow(sql_handle) ) {
-		Sql_GetData(sql_handle, 0, &data, NULL);
+		Sql_GetData(sql_handle, 0, &data, nullptr);
 		len = strlen(data)+1;
 
 		WFIFOB(fd, plen) = (unsigned char)len;/* won't be higher; the column size is 32 */
 		plen += 1;
 
 		safestrncpy(WFIFOCP(fd,plen), data, len);
-		plen += len;
+		plen += static_cast<decltype(plen)>( len );
 
-		Sql_GetData(sql_handle, 1, &data, NULL);
+		Sql_GetData(sql_handle, 1, &data, nullptr);
 
 		WFIFOL(fd, plen) = (uint32)atol(data);
 		plen += 4;
 
-		Sql_GetData(sql_handle, 2, &data, NULL);
+		Sql_GetData(sql_handle, 2, &data, nullptr);
 
-		WFIFOQ(fd, plen) = strtoll(data,NULL,10);
+		WFIFOQ(fd, plen) = strtoll(data,nullptr,10);
 		plen += 8;
 
 		WFIFOW(fd, 14) += 1;
@@ -814,7 +814,7 @@ int inter_accreg_fromsql(uint32 account_id, uint32 char_id, int fd, int type)
 			WFIFOL(fd, 4) = account_id;
 			WFIFOL(fd, 8) = char_id;
 			WFIFOB(fd, 12) = 0;/* var type (only set when all vars have been sent, regardless of type) */
-			WFIFOB(fd, 13) = 0;/* is int type */
+			WFIFOB(fd, 13) = 0;/* is int32 type */
 			WFIFOW(fd, 14) = 0;/* count */
 			plen = 16;
 		}
@@ -831,13 +831,13 @@ int inter_accreg_fromsql(uint32 account_id, uint32 char_id, int fd, int type)
 /*==========================================
  * read config file
  *------------------------------------------*/
-int inter_config_read(const char* cfgName)
+int32 inter_config_read(const char* cfgName)
 {
 	char line[1024];
 	FILE* fp;
 
 	fp = fopen(cfgName, "r");
-	if(fp == NULL) {
+	if(fp == nullptr) {
 		ShowError("File not found: %s\n", cfgName);
 		return 1;
 	}
@@ -864,7 +864,7 @@ int inter_config_read(const char* cfgName)
 		else if(!strcmpi(w1,"default_codepage"))
 			default_codepage = w2;
 		else if(!strcmpi(w1,"party_share_level"))
-			party_share_level = (unsigned int)atof(w2);
+			party_share_level = (uint32)atof(w2);
 		else if(!strcmpi(w1,"log_inter"))
 			charserv_config.log_inter = atoi(w2);
 		else if(!strcmpi(w1,"inter_server_conf"))
@@ -880,7 +880,7 @@ int inter_config_read(const char* cfgName)
 }
 
 // Save interlog into sql
-int inter_log(const char* fmt, ...)
+int32 inter_log(const char* fmt, ...)
 {
 	char str[255];
 	char esc_str[sizeof(str)*2+1];// escaped str
@@ -974,7 +974,7 @@ uint64 InterServerDatabase::parseBodyNode( const ryml::NodeRef& node ){
 }
 
 // initialize
-int inter_init_sql(const char *file)
+int32 inter_init_sql(const char *file)
 {
 	inter_config_read(file);
 
@@ -1037,12 +1037,15 @@ void inter_final(void)
  * Sends storage information to map-server
  * @param fd
  **/
-void inter_Storage_sendInfo(int fd) {
-	int size = sizeof(struct s_storage_table), len = 4 + interServerDb.size() * size, offset;
+void inter_Storage_sendInfo(int32 fd) {
+	size_t offset = 4;
+	size_t size = sizeof( struct s_storage_table );
+	size_t len = offset + interServerDb.size() * size;
+
 	// Send storage table information
 	WFIFOHEAD(fd, len);
 	WFIFOW(fd, 0) = 0x388c;
-	WFIFOW(fd, 2) = len;
+	WFIFOW( fd, 2 ) = static_cast<int16>( len );
 	offset = 4;
 	for( auto storage : interServerDb ){
 		memcpy(WFIFOP(fd, offset), storage.second.get(), size);
@@ -1051,7 +1054,7 @@ void inter_Storage_sendInfo(int fd) {
 	WFIFOSET(fd, len);
 }
 
-int inter_mapif_init(int fd)
+int32 inter_mapif_init(int32 fd)
 {
 	inter_Storage_sendInfo(fd);
 	return 0;
@@ -1061,7 +1064,7 @@ int inter_mapif_init(int fd)
 //--------------------------------------------------------
 
 // broadcast sending
-int mapif_broadcast(unsigned char *mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY, int sfd)
+int32 mapif_broadcast(unsigned char *mes, int32 len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY, int32 sfd)
 {
 	unsigned char *buf = (unsigned char*)aMalloc((len)*sizeof(unsigned char));
 
@@ -1080,9 +1083,9 @@ int mapif_broadcast(unsigned char *mes, int len, unsigned long fontColor, short 
 }
 
 // Wis sending
-int mapif_wis_message( std::shared_ptr<struct WisData> wd ){
+int32 mapif_wis_message( std::shared_ptr<struct WisData> wd ){
 	unsigned char buf[2048];
-	int headersize = 12 + 2 * NAME_LENGTH;
+	int32 headersize = 12 + 2 * NAME_LENGTH;
 
 	if (wd->len > 2047-headersize) wd->len = 2047-headersize; //Force it to fit to avoid crashes. [Skotlex]
 
@@ -1099,14 +1102,14 @@ int mapif_wis_message( std::shared_ptr<struct WisData> wd ){
 }
 
 // Send the requested account_reg
-int mapif_account_reg_reply(int fd, uint32 account_id, uint32 char_id, int type)
+int32 mapif_account_reg_reply(int32 fd, uint32 account_id, uint32 char_id, int32 type)
 {
 	inter_accreg_fromsql(account_id,char_id,fd,type);
 	return 0;
 }
 
 //Request to kick char from a certain map server. [Skotlex]
-int mapif_disconnectplayer(int fd, uint32 account_id, uint32 char_id, int reason)
+int32 mapif_disconnectplayer(int32 fd, uint32 account_id, uint32 char_id, int32 reason)
 {
 	if (session_isValid(fd))
 	{
@@ -1140,7 +1143,7 @@ void check_ttl_wisdata(){
 //--------------------------------------------------------
 
 // broadcast sending
-int mapif_parse_broadcast(int fd)
+int32 mapif_parse_broadcast(int32 fd)
 {
 	mapif_broadcast(RFIFOP(fd,16), RFIFOW(fd,2), RFIFOL(fd,4), RFIFOW(fd,8), RFIFOW(fd,10), RFIFOW(fd,12), RFIFOW(fd,14), fd);
 	return 0;
@@ -1153,7 +1156,7 @@ int mapif_parse_broadcast(int fd)
  * @param fd
  * @return
  **/
-int mapif_parse_broadcast_item(int fd) {
+int32 mapif_parse_broadcast_item(int32 fd) {
 	unsigned char buf[11 + NAME_LENGTH*2];
 
 	memcpy(WBUFP(buf, 0), RFIFOP(fd, 0), RFIFOW(fd,2));
@@ -1165,7 +1168,7 @@ int mapif_parse_broadcast_item(int fd) {
 
 // Wis sending result
 // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
-int mapif_wis_reply( int mapserver_fd, char* target, uint8 flag ){
+int32 mapif_wis_reply( int32 mapserver_fd, char* target, uint8 flag ){
 	unsigned char buf[27];
 
 	WBUFW(buf, 0) = 0x3802;
@@ -1176,13 +1179,13 @@ int mapif_wis_reply( int mapserver_fd, char* target, uint8 flag ){
 }
 
 // Wisp/page request to send
-int mapif_parse_WisRequest(int fd)
+int32 mapif_parse_WisRequest(int32 fd)
 {
 	char name[NAME_LENGTH];
 	char esc_name[NAME_LENGTH*2+1];// escaped name
 	char* data;
 	size_t len;
-	int headersize = 8+2*NAME_LENGTH;
+	int32 headersize = 8+2*NAME_LENGTH;
 
 
 	if ( fd <= 0 ) {return 0;} // check if we have a valid fd
@@ -1219,7 +1222,7 @@ int mapif_parse_WisRequest(int fd)
 		}
 		else
 		{
-			static int wisid = 0;
+			static int32 wisid = 0;
 
 			// Whether the failure of previous wisp/page transmission (timeout)
 			check_ttl_wisdata();
@@ -1247,7 +1250,7 @@ int mapif_parse_WisRequest(int fd)
 
 
 // Wisp/page transmission result
-int mapif_parse_WisReply(int fd)
+int32 mapif_parse_WisReply(int32 fd)
 {
 	int32 id;
 	uint8 flag;
@@ -1269,7 +1272,7 @@ int mapif_parse_WisReply(int fd)
 }
 
 // Received wisp message from map-server for ALL gm (just copy the message and resends it to ALL map-servers)
-int mapif_parse_WisToGM(int fd)
+int32 mapif_parse_WisToGM(int32 fd)
 {
 	unsigned char buf[2048]; // 0x3003/0x3803 <packet_len>.w <wispname>.24B <permission>.L <message>.?B
 
@@ -1281,13 +1284,13 @@ int mapif_parse_WisToGM(int fd)
 }
 
 // Save account_reg into sql (type=2)
-int mapif_parse_Registry(int fd)
+int32 mapif_parse_Registry(int32 fd)
 {
 	uint32 account_id = RFIFOL(fd, 4), char_id = RFIFOL(fd, 8);
 	uint16 count = RFIFOW(fd, 12);
 
 	if( count ) {
-		int cursor = 14, i;
+		int32 cursor = 14, i;
 		bool isLoginActive = session_isActive(login_fd);
 
 		if( isLoginActive )
@@ -1297,13 +1300,13 @@ int mapif_parse_Registry(int fd)
 			size_t lenkey = RFIFOB( fd, cursor );
 			const char* src_key= RFIFOCP(fd, cursor + 1);
 			std::string key( src_key, lenkey );
-			cursor += lenkey + 1;
+			cursor += static_cast<decltype(cursor)>( lenkey + 1 );
 
 			uint32  index = RFIFOL(fd, cursor);
 			cursor += 4;
 
 			switch (RFIFOB(fd, cursor++)) {
-				// int
+				// int32
 				case 0:
 					inter_savereg( account_id, char_id, key.c_str(), index, RFIFOQ( fd, cursor ), nullptr, false );
 					cursor += 8;
@@ -1317,7 +1320,7 @@ int mapif_parse_Registry(int fd)
 					size_t len_val = RFIFOB( fd, cursor );
 					const char* src_val= RFIFOCP(fd, cursor + 1);
 					std::string sval( src_val, len_val );
-					cursor += len_val + 1;
+					cursor += static_cast<decltype(cursor)>( len_val + 1 );
 					inter_savereg( account_id, char_id, key.c_str(), index, 0, sval.c_str(), true );
 					break;
 				}
@@ -1338,7 +1341,7 @@ int mapif_parse_Registry(int fd)
 }
 
 // Request the value of all registries.
-int mapif_parse_RegistryRequest(int fd)
+int32 mapif_parse_RegistryRequest(int32 fd)
 {
 	//Load Char Registry
 	if (RFIFOB(fd,12)) mapif_account_reg_reply(fd,RFIFOL(fd,2),RFIFOL(fd,6),3);
@@ -1349,7 +1352,7 @@ int mapif_parse_RegistryRequest(int fd)
 	return 1;
 }
 
-void mapif_namechange_ack(int fd, uint32 account_id, uint32 char_id, int type, int flag, char *name)
+void mapif_namechange_ack(int32 fd, uint32 account_id, uint32 char_id, int32 type, int32 flag, char *name)
 {
 	WFIFOHEAD(fd, NAME_LENGTH+13);
 	WFIFOW(fd, 0) = 0x3806;
@@ -1361,12 +1364,12 @@ void mapif_namechange_ack(int fd, uint32 account_id, uint32 char_id, int type, i
 	WFIFOSET(fd, NAME_LENGTH+13);
 }
 
-int mapif_parse_NameChangeRequest(int fd)
+int32 mapif_parse_NameChangeRequest(int32 fd)
 {
 	uint32 account_id, char_id;
-	int type;
+	int32 type;
 	char* name;
-	int i;
+	int32 i;
 
 	account_id = RFIFOL(fd,2);
 	char_id = RFIFOL(fd,6);
@@ -1376,13 +1379,13 @@ int mapif_parse_NameChangeRequest(int fd)
 	// Check Authorised letters/symbols in the name
 	if (charserv_config.char_config.char_name_option == 1) { // only letters/symbols in char_name_letters are authorised
 		for (i = 0; i < NAME_LENGTH && name[i]; i++)
-		if (strchr(charserv_config.char_config.char_name_letters, name[i]) == NULL) {
+		if (strchr(charserv_config.char_config.char_name_letters, name[i]) == nullptr) {
 			mapif_namechange_ack(fd, account_id, char_id, type, 0, name);
 			return 0;
 		}
 	} else if (charserv_config.char_config.char_name_option == 2) { // letters/symbols in char_name_letters are forbidden
 		for (i = 0; i < NAME_LENGTH && name[i]; i++)
-		if (strchr(charserv_config.char_config.char_name_letters, name[i]) != NULL) {
+		if (strchr(charserv_config.char_config.char_name_letters, name[i]) != nullptr) {
 			mapif_namechange_ack(fd, account_id, char_id, type, 0, name);
 			return 0;
 		}
@@ -1402,7 +1405,7 @@ int mapif_parse_NameChangeRequest(int fd)
 /// or 0 if no complete packet exists in the queue.
 ///
 /// @param length The minimum allowed length, or -1 for dynamic lookup
-int inter_check_length(int fd, int length)
+int32 inter_check_length(int32 fd, int32 length)
 {
 	if( length == -1 )
 	{// variable-length packet
@@ -1417,10 +1420,10 @@ int inter_check_length(int fd, int length)
 	return length;
 }
 
-int inter_parse_frommap(int fd)
+int32 inter_parse_frommap(int32 fd)
 {
-	int cmd;
-	int len = 0;
+	int32 cmd;
+	int32 len = 0;
 	cmd = RFIFOW(fd,0);
 	// Check is valid packet entry
 	if(cmd < 0x3000 || cmd >= 0x3000 + ARRAYLENGTH(inter_recv_packet_length) || inter_recv_packet_length[cmd - 0x3000] == 0)

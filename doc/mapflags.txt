@@ -288,6 +288,18 @@ Disable the ability to capture pets on a map.
 
 ---------------------------------------
 
+*nobank
+
+Disable Bank on a map.
+
+---------------------------------------
+
+*norodex
+
+Disable RODex on a map.
+
+---------------------------------------
+
 =====================
 | 2. Battle-related |
 =====================
@@ -460,5 +472,11 @@ atcommand is enabled on all maps by default.
 
 Hides monster's HP bar on a map.
 Ignores config value of 'monster_hp_bars_info'.
+
+---------------------------------------
+
+*specialpopup	<popup ID>
+
+Displays a special popup when a player enters the map. See script command "specialpopup" for details on different popup types.
 
 ---------------------------------------

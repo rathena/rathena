@@ -72,17 +72,6 @@ function	script	F_Pieces_Of_Sentiment	{	// 22687
 	return;
 }
 
-function	script	F_Cursed_Crystal	{	// 23080
-	// custom rates
-	.@r = rand(500);
-	if (.@r < 10)		getitem 23016,100;// Cursed_Fragment
-	else if (.@r < 352)	getitem 23016,200;// Cursed_Fragment
-	else if (.@r < 469)	getitem 23016,300;// Cursed_Fragment
-	else if (.@r < 498)	getitem 23016,400;// Cursed_Fragment
-	else				getitem 23016,500;// Cursed_Fragment
-	return;
-}
-
 function	script	F_Cursed_Fragment	{	// 23016
 	.@r = rand(1,12);
 	if (.@r == 1) {

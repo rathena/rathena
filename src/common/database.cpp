@@ -196,6 +196,12 @@ void YamlDatabase::parseImports( const ryml::Tree& rootNode ){
 
 #ifdef RENEWAL
 					std::string compiledMode = "Renewal";
+
+					// RENEWAL mode with RENEWAL_ASPD off, load pre-re ASPD
+#ifndef RENEWAL_ASPD
+					if (importFile.find("job_aspd.yml") != std::string::npos)
+						compiledMode = "Prerenewal";
+#endif
 #else
 					std::string compiledMode = "Prerenewal";
 #endif
@@ -357,7 +363,7 @@ void YamlDatabase::invalidWarning( const ryml::NodeRef& node, const char* fmt, .
 
 	// Remove any remaining garbage of a previous loading line
 	ShowMessage( CL_CLL );
-	// Print the actual error
+	// Print32 the actual error
 	_vShowMessage( MSG_ERROR, fmt, ap );
 
 	va_end(ap);
