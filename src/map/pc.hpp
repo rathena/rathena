@@ -122,6 +122,13 @@ enum e_additem_result : uint8 {
 	ADDITEM_STACKLIMIT
 };
 
+enum e_lr_flag : uint8 {
+	LR_FLAG_NONE = 0,
+	LR_FLAG_WEAPON,
+	LR_FLAG_ARROW,
+	LR_FLAG_SHIELD
+};
+
 #ifndef CAPTCHA_ANSWER_SIZE
 	#define CAPTCHA_ANSWER_SIZE 16
 #endif
@@ -389,7 +396,7 @@ public:
 		uint32 active : 1; //Marks active player (not active is logging in/out, or changing map servers)
 		uint32 menu_or_input : 1;// if a script is waiting for feedback from the player
 		uint32 dead_sit : 2;
-		uint32 lr_flag : 3;//1: left h. weapon; 2: arrow; 3: shield
+		e_lr_flag lr_flag;
 		uint32 connect_new : 1;
 		uint32 arrow_atk : 1;
 		uint32 gangsterparadise : 1;
