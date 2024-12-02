@@ -16500,6 +16500,7 @@ BUILDIN_FUNC(summon)
 
 	if( md == nullptr ){
 		ShowError( "buildin_summon: Invalid mob ID %d.\n", _class );
+		st->state = END;
 		return SCRIPT_CMD_FAILURE;
 	}
 
