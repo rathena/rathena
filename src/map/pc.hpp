@@ -1071,6 +1071,7 @@ enum e_penalty_type : uint16{
 	PENALTY_MVP_DROP,
 	PENALTY_MAX
 };
+
 struct s_penalty{
 	e_penalty_type type;
 	uint16 rate[MAX_LEVEL * 2 - 1];
