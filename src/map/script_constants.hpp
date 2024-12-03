@@ -16,10 +16,6 @@
 	export_constant(INT_MIN);
 	export_constant(INT_MAX);
 
-	export_constant(SUBGROUP_ALGO_RANDOM);
-	export_constant(SUBGROUP_ALGO_NATURALRANDOM);
-	export_constant(SUBGROUP_ALGO_MUST);
-
 	/* server defines */
 	export_constant(PACKETVER);
 	export_constant(MAX_LEVEL);
@@ -10560,6 +10556,10 @@
 	/* searchstore constants */
 	export_constant(SEARCHSTORE_EFFECT_NORMAL);
 	export_constant(SEARCHSTORE_EFFECT_REMOTE);
+
+	export_constant(GROUP_DRAWS_REPLACEMENT);
+	export_constant(GROUP_DRAWS_NOREPLACEMENT);
+	export_constant(GROUP_DRAWS_MUST);
 
 	#undef export_constant
 	#undef export_constant2

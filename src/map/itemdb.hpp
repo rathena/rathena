@@ -2961,12 +2961,6 @@ enum e_random_item_group {
 	IG_MAX,
 };
 
-enum e_item_subgroup_algorithm : uint16 {
-	SUBGROUP_ALGO_RANDOM,
-	SUBGROUP_ALGO_NATURALRANDOM,
-	SUBGROUP_ALGO_MUST,
-};
-
 /// Enum for bound/sell restricted selling
 enum e_itemshop_restrictions {
 	ISR_NONE = 0x0,
@@ -3015,9 +3009,11 @@ enum e_delay_consume : uint8 {
 };
 
 /// Enum for different ways to search an item group
-enum e_group_search_type : uint8 {
-	GROUP_SEARCH_BOX = 0, // Always return an item from the group, rate determines which item is more likely to be returned
-	GROUP_SEARCH_DROP = 1, // Pick one item from the group and check use rate as drop rate, on fail, do not return any item
+enum e_group_draws_type : uint8 {
+	GROUP_DRAWS_REPLACEMENT, // Draws with replacement. Always return an item from the group, rate determines which item is more likely to be returned
+	GROUP_DRAWS_DROP, // Draws with replacement. Pick one item from the group and check use rate as drop rate, on fail, do not return any item
+	GROUP_DRAWS_NOREPLACEMENT, // Draws without replacement. Always return an item from the group, rate determines which item is more likely to be returned
+	GROUP_DRAWS_MUST, // Give all items of a subgroup without using rates
 };
 
 /// Item combo struct
@@ -3145,7 +3141,7 @@ struct s_item_group_entry
 struct s_item_group_random
 {
 	uint32 total_rate;
-	uint16 algorithm;
+	e_group_draws_type draws;
 	std::unordered_map<uint32, std::shared_ptr<s_item_group_entry>> data; /// index, s_item_group_entry
 };
 
@@ -3314,11 +3310,12 @@ public:
 	// Additional
 	bool item_exists(uint16 group_id, t_itemid nameid);
 	int16 item_exists_pc(map_session_data *sd, uint16 group_id);
-	std::shared_ptr<s_item_group_entry> get_random_entry(uint16 group_id, uint8 sub_group, e_group_search_type search_type = GROUP_SEARCH_BOX);
+	std::shared_ptr<s_item_group_entry> get_random_entry(uint16 group_id, uint8 sub_group, e_group_draws_type search_type);
+	std::shared_ptr<s_item_group_entry> get_random_entry(uint16 group_id, uint8 sub_group);
 	uint8 pc_get_itemgroup( uint16 group_id, bool identify, map_session_data& sd );
 
 private:
-	std::shared_ptr<s_item_group_entry> get_random_itemsubgroup(std::shared_ptr<s_item_group_random> random, e_group_search_type search_type = GROUP_SEARCH_BOX);
+	std::shared_ptr<s_item_group_entry> get_random_itemsubgroup(std::shared_ptr<s_item_group_random> random, e_group_draws_type search_type = GROUP_DRAWS_REPLACEMENT);
 	void pc_get_itemgroup_sub( map_session_data& sd, bool identify, std::shared_ptr<s_item_group_entry> data );
 };
 

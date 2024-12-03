@@ -79,25 +79,25 @@ SubGroup: Unique number to create a list of item.
 
 ---------------------------------------
 
-Algorithm: Type of algorithm associated with SubGroup.
+Draws: Type of draws associated with SubGroup.
 
-Random             - Random item.
+Replacement        - Draws with replacement. An item selected in the draw can still be selected in the next draws.
 Must               - Makes the item(s) always obtainable ("must" item).
-NaturalRandom      - Random item. (same result as "Random" for now)
+NoReplacement      - Draws without replacement. An item selected in the draw can't be selected in the next draws. Only when the group is completely empty or the server restarts, the group refills.
 
 Example:
 	Item Group:
       - Group: MyItemGroup
         SubGroups:
           - SubGroup: 0
-            Algorithm: Must
+            Draws: Must
             List:
               - Index: 0
                 Item: Knife       # "must" item(s)
               - Index: 1
                 Item: Dagger      # "must" item(s)
           - SubGroup: 1
-            Algorithm: Random
+            Draws: Replacement
             List:
               - Index: 0
                 Item: Stiletto    # random at SubGroup 1
@@ -106,7 +106,7 @@ Example:
                 Item: Stiletto_   # random at SubGroup 1
                 Rate: 2
           - SubGroup: 2
-            Algorithm: Random
+            Draws: Replacement
             List:
               - Index: 0
                 Item: Stiletto    # random at SubGroup 2

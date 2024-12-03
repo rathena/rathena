@@ -2961,7 +2961,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 						mobdrop.rate = drop_rate;
 					}
 					else {
-						std::shared_ptr<s_item_group_entry> entry = itemdb_group.get_random_entry(it.group, 1, GROUP_SEARCH_DROP);
+						std::shared_ptr<s_item_group_entry> entry = itemdb_group.get_random_entry(it.group, 1, GROUP_DRAWS_DROP);
 						if (entry == nullptr) continue;
 						mobdrop.nameid = entry->nameid;
 						mobdrop.rate = entry->rate * drop_rate / 10000;
@@ -3018,7 +3018,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 
 		// Ore Discovery (triggers if owner has loot priority, does not require to be the killer)
 		if (mvp_sd && pc_checkskill(mvp_sd, BS_FINDINGORE) > 0) {
-			std::shared_ptr<s_item_group_entry> entry = itemdb_group.get_random_entry(IG_ORE, 1, GROUP_SEARCH_DROP);
+			std::shared_ptr<s_item_group_entry> entry = itemdb_group.get_random_entry(IG_ORE, 1, GROUP_DRAWS_DROP);
 			if (entry != nullptr) {
 				s_mob_drop mobdrop = {};
 				mobdrop.nameid = entry->nameid;

@@ -2888,33 +2888,38 @@ uint16 itemdb_searchname_array(std::map<t_itemid, std::shared_ptr<item_data>> &d
 	return static_cast<uint16>(data.size());
 }
 
-std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_itemsubgroup(std::shared_ptr<s_item_group_random> random, e_group_search_type search_type) {
+std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_itemsubgroup(std::shared_ptr<s_item_group_random> random, e_group_draws_type search_type) {
 	if (random == nullptr)
 		return nullptr;
 
-	if (search_type == GROUP_SEARCH_DROP) {
-		// We pick a random item from the group and then do a drop check based on the rate
-		std::shared_ptr<s_item_group_entry> entry = util::umap_random(random->data);
-		if (rnd_chance_official<uint16>(entry->rate, 10000))
-			return entry;
-	}
-	else {
-		// Each item has x positions whereas x is the rate defined for the item in the umap
-		// We pick a random position and find the item that is at this position
-		uint32 pos = rnd_value<uint32>(1, random->total_rate);
-		uint32 current_pos = 1;
-		// Iterate through each item in the umap
-		for (const auto& [index, entry] : random->data) {
-			if (entry == nullptr)
-				return nullptr;
-			// If rate is 0 it means that this is SubGroup 0 which should just return any random item
-			if (entry->rate == 0)
-				return util::umap_random(random->data);
-			// We move "rate" positions
-			current_pos += entry->rate;
-			// If we passed the target position, entry is the item we are looking for
-			if (current_pos > pos)
+	switch( search_type ) {
+		case GROUP_DRAWS_DROP: {
+			// We pick a random item from the group and then do a drop check based on the rate. On fail, do not return any item
+			std::shared_ptr<s_item_group_entry> entry = util::umap_random(random->data);
+			if (rnd_chance_official<uint16>(entry->rate, 10000))
 				return entry;
+			break;
+		}
+		case GROUP_DRAWS_NOREPLACEMENT:	// placeholder
+		case GROUP_DRAWS_REPLACEMENT: {
+			// Each item has x positions whereas x is the rate defined for the item in the umap
+			// We pick a random position and find the item that is at this position
+			uint32 pos = rnd_value<uint32>(1, random->total_rate);
+			uint32 current_pos = 1;
+			// Iterate through each item in the umap
+			for (const auto& [index, entry] : random->data) {
+				if (entry == nullptr)
+					return nullptr;
+				// Return any random item if rate is 0
+				if (entry->rate == 0)
+					return util::umap_random(random->data);
+				// We move "rate" positions
+				current_pos += entry->rate;
+				// If we passed the target position, entry is the item we are looking for
+				if (current_pos > pos)
+					return entry;
+			}
+			break;
 		}
 	}
 	// Return nullptr on fail
@@ -2925,10 +2930,10 @@ std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_itemsubgroup(s
 * Return a random group entry from Item Group
 * @param group_id
 * @param sub_group
-* @param search_type: see e_group_search_type
+* @param search_type: see e_group_draws_type
 * @return Item group entry or nullptr on fail
 */
-std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_entry(uint16 group_id, uint8 sub_group, e_group_search_type search_type) {
+std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_entry(uint16 group_id, uint8 sub_group, e_group_draws_type search_type) {
 	std::shared_ptr<s_item_group_db> group = this->find(group_id);
 
 	if (group == nullptr) {
@@ -2941,6 +2946,36 @@ std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_entry(uint16 g
 	}
 	if (group->random.count(sub_group) == 0) {
 		ShowError("get_random_entry: No item entries for group id %hu and sub group %hu.\n", group_id, sub_group);
+		return nullptr;
+	}
+	if (search_type > GROUP_DRAWS_MUST) {
+		ShowError("get_random_entry: Invalid search_type %hu for group id %hu, sub group %hu.\n", search_type, group_id, sub_group);
+		return nullptr;
+	}
+
+	return this->get_random_itemsubgroup(group->random[sub_group], search_type);
+}
+
+std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_entry(uint16 group_id, uint8 sub_group) {
+	std::shared_ptr<s_item_group_db> group = this->find(group_id);
+
+	if (group == nullptr) {
+		ShowError("get_random_entry: Invalid group id %hu.\n", group_id);
+		return nullptr;
+	}
+	if (group->random.empty()) {
+		ShowError("get_random_entry: No item entries for group id %hu.\n", group_id);
+		return nullptr;
+	}
+	if (group->random.count(sub_group) == 0) {
+		ShowError("get_random_entry: No item entries for group id %hu and sub group %hu.\n", group_id, sub_group);
+		return nullptr;
+	}
+
+	e_group_draws_type search_type = group->random[sub_group]->draws;
+
+	if (search_type > GROUP_DRAWS_MUST) {
+		ShowError("get_random_entry: Invalid search_type %hu for group id %hu, sub group %hu.\n", search_type, group_id, sub_group);
 		return nullptr;
 	}
 
@@ -3030,11 +3065,17 @@ uint8 ItemGroupDatabase::pc_get_itemgroup( uint16 group_id, bool identify, map_s
 		return 0;
 
 	for (const auto &random : group->random) {
-		if( random.second->algorithm != SUBGROUP_ALGO_MUST )
-			this->pc_get_itemgroup_sub( sd, identify, this->get_random_itemsubgroup( random.second ) );
-		else {
-			for (const auto &it : random.second->data)
-				this->pc_get_itemgroup_sub( sd, identify, it.second );
+		switch( random.second->draws ) {
+			case GROUP_DRAWS_REPLACEMENT:
+				this->pc_get_itemgroup_sub( sd, identify, this->get_random_itemsubgroup( random.second, GROUP_DRAWS_REPLACEMENT ) );
+				break;
+			case GROUP_DRAWS_NOREPLACEMENT:
+				this->pc_get_itemgroup_sub( sd, identify, this->get_random_itemsubgroup( random.second, GROUP_DRAWS_NOREPLACEMENT ) );
+				break;
+			case GROUP_DRAWS_MUST:
+				for (const auto &it : random.second->data)
+					this->pc_get_itemgroup_sub( sd, identify, it.second );
+				break;
 		}
 	}
 
@@ -3318,24 +3359,24 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				group->random[subgroup] = random;
 			}
 
-			if (this->nodeExists(subit, "Algorithm")) {
-				std::string sub_algo;
+			if (this->nodeExists(subit, "Draws")) {
+				std::string sub_str;
 
-				if (!this->asString(subit, "Algorithm", sub_algo))
+				if (!this->asString(subit, "Draws", sub_str))
 					return 0;
 
-				std::string sub_algo_constant = "SUBGROUP_ALGO_" + sub_algo;
-				int64 constant_algo;
+				std::string sub_constant_str = "GROUP_DRAWS_" + sub_str;
+				int64 constant_str;
 
-				if (!script_get_constant(sub_algo_constant.c_str(), &constant_algo)) {
-					this->invalidWarning(subit["Algorithm"], "Invalid Algorithm %s.\n", sub_algo.c_str());
+				if (!script_get_constant(sub_constant_str.c_str(), &constant_str)) {
+					this->invalidWarning(subit["Draws"], "Invalid Draws %s.\n", sub_str.c_str());
 					continue;
 				}
 
-				random->algorithm = static_cast<uint16>(constant_algo);
+				random->draws = static_cast<e_group_draws_type>(constant_str);
 			} else {
 				if (!random_exists) {
-					random->algorithm = SUBGROUP_ALGO_RANDOM;
+					random->draws = GROUP_DRAWS_REPLACEMENT;
 				}
 			}
 
@@ -3410,12 +3451,12 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 						entry->rate = 0;
 				}
 
-				if (random->algorithm == SUBGROUP_ALGO_MUST && entry->rate > 0) {
-					this->invalidWarning(listit["Item"], "Item cannot have a rate with \"Must\" algorithm. Defaulting Rate to 0.\n");
+				if (random->draws == GROUP_DRAWS_MUST && entry->rate > 0) {
+					this->invalidWarning(listit["Item"], "Item cannot have a rate with \"Must\" draws. Defaulting Rate to 0.\n");
 					entry->rate = 0;
 				}
-				if (random->algorithm != SUBGROUP_ALGO_MUST && entry->rate == 0) {
-					this->invalidWarning(listit["Item"], "Item must have a Rate for algorithms other than \"Must\", item skipped.\n");
+				if (random->draws != GROUP_DRAWS_MUST && entry->rate == 0) {
+					this->invalidWarning(listit["Item"], "Item must have a Rate for draws other than \"Must\", item skipped.\n");
 					continue;
 				}
 
