@@ -4467,7 +4467,6 @@ you have maximum. Like 'heal', this will not call up any animations or effects.
 *recovery <type>{,<option>,<revive_flag>{,<map name>}};
 
 This command will revive and fully restore the HP/SP of the selected characters.
-It returns 1 upon successful use.
 
 <type> is the target, and determines the <option> parameter:
  0: Player  -> Character ID number
@@ -6520,8 +6519,7 @@ the invoking character. Example can be found in the wedding script.
 
 This function will "un-marry" the invoking character from whoever they were
 married to. Both will no longer be each other's marriage partner, (at least in
-current SVN, which prevents the cases of multi-spouse problems). It will return
-1 upon success or 0 if the character was not married at all.
+current SVN, which prevents the cases of multi-spouse problems).
 
 This function will also destroy both wedding rings and send a message to both
 players, telling them they are now divorced.
@@ -7147,17 +7145,12 @@ the invoking NPC's actions, such as using an emotion or talking.
 Whichever of the both NPCs is talked to, both will show a random emotion at the
 same time.
 
-As of r16564, command now returns 1 or 0 on success and failure.
-A debug message also shows on the console when no events are triggered.
-
 ---------------------------------------
 
 *cmdothernpc "<npc name>","<command>";
 
 This is simply "donpcevent <npc name>::OnCommand<command>".
 It is an approximation of official server script language's 'cmdothernpc'.
-
-Returns true if the command was executed on the other NPC successfully, false if not.
 
 ---------------------------------------
 

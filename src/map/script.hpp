@@ -135,7 +135,7 @@
 
 enum script_cmd_result {
 	SCRIPT_CMD_SUCCESS = 0, ///when a buildin cmd was correctly done
-	SCRIPT_CMD_FAILURE = 1, ///when an errors appear in cmd, show_debug will follow
+	SCRIPT_CMD_FAILURE = 1, ///when an errors appear in cmd, show_debug will follow and the script terminate
 };
 
 #define SCRIPT_BLOCK_SIZE 512
