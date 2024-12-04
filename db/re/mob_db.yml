@@ -117610,6 +117610,34 @@ Body:
 #    AegisName: EP21_B_YORTUS_A_H
 #  - Id: 22422
 #    AegisName: EP21_B_YORTUS_B_H
+#  - Id: 22425
+#    AegisName: E_LEADER_SHEEP
+#  - Id: 22426
+#    AegisName: E_WINTER_SAVAGE
+#  - Id: 22431
+#    AegisName: TATSI
+#  - Id: 22432
+#    AegisName: G_TATSI
+#  - Id: 22433
+#    AegisName: CP_TATSI
+#  - Id: 22434
+#    AegisName: GUERRERO
+#  - Id: 22435
+#    AegisName: HANOM
+#  - Id: 22436
+#    AegisName: SIRENA
+#  - Id: 22437
+#    AegisName: DIOSA
+#  - Id: 22438
+#    AegisName: PESKA
+#  - Id: 22439
+#    AegisName: CP_GUERRERO
+#  - Id: 22440
+#    AegisName: CP_HANOM
+#  - Id: 22441
+#    AegisName: CP_SIRENA
+#  - Id: 22442
+#    AegisName: CP_DIOSA
 #  - Id: 23000
 #    AegisName: DARK_ILLUSION2
 #  - Id: 23001
