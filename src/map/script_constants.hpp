@@ -10557,6 +10557,10 @@
 	export_constant(SEARCHSTORE_EFFECT_NORMAL);
 	export_constant(SEARCHSTORE_EFFECT_REMOTE);
 
+	export_constant(GROUP_DRAWS_REPLACEMENT);
+	export_constant(GROUP_DRAWS_NOREPLACEMENT);
+	export_constant(GROUP_DRAWS_MUST);
+
 	#undef export_constant
 	#undef export_constant2
 	#undef export_parameter
