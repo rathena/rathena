@@ -2900,6 +2900,7 @@ std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_itemsubgroup(s
 				return entry;
 			break;
 		}
+		case GROUP_DRAWS_MUST:	// Must item is GROUP_DRAWS_REPLACEMENT with rate 0
 		case GROUP_DRAWS_REPLACEMENT: {
 			// Each item has x positions whereas x is the rate defined for the item in the umap
 			// We pick a random position and find the item that is at this position
@@ -3098,11 +3099,8 @@ uint8 ItemGroupDatabase::pc_get_itemgroup( uint16 group_id, bool identify, map_s
 	for (const auto &random : group->random) {
 		switch( random.second->draws ) {
 			case GROUP_DRAWS_REPLACEMENT:
-				this->pc_get_itemgroup_sub( sd, identify, this->get_random_itemsubgroup( random.second, GROUP_DRAWS_REPLACEMENT ) );
-				break;
 			case GROUP_DRAWS_NOREPLACEMENT:
-				// "natural random" distribution, pick an item and remove it from the group
-				this->pc_get_itemgroup_sub( sd, identify, this->get_random_itemsubgroup( random.second, GROUP_DRAWS_NOREPLACEMENT ) );
+				this->pc_get_itemgroup_sub( sd, identify, this->get_random_itemsubgroup( random.second ) );
 				break;
 			case GROUP_DRAWS_MUST:
 				for (const auto &it : random.second->data)
