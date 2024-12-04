@@ -2901,6 +2901,7 @@ std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_itemsubgroup(s
 			break;
 		}
 		case GROUP_DRAWS_MUST:	// Must item is GROUP_DRAWS_REPLACEMENT with rate 0
+			return util::umap_random(random->data);
 		case GROUP_DRAWS_REPLACEMENT: {
 			// Each item has x positions whereas x is the rate defined for the item in the umap
 			// We pick a random position and find the item that is at this position
@@ -2910,7 +2911,7 @@ std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_itemsubgroup(s
 			for (const auto& [index, entry] : random->data) {
 				if (entry == nullptr)
 					return nullptr;
-				// Return any random item if rate is 0
+				// Return any random item if rate is 0 (shouldn't happen)
 				if (entry->rate == 0)
 					return util::umap_random(random->data);
 				// We move "rate" positions
@@ -2931,7 +2932,7 @@ std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_itemsubgroup(s
 			for (const auto& [index, entry] : random->data) {
 				if (entry == nullptr)
 					return nullptr;
-				// If rate is 0 it means that this is SubGroup 0 which should just return any random item
+				// Return any random item if rate is 0 (shouldn't happen)
 				if (entry->rate == 0)
 					return util::umap_random(random->data);
 				// We move as many positions as this item has left
@@ -3406,7 +3407,7 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				random->draws = static_cast<e_group_draws_type>(constant_str);
 			} else {
 				if (!random_exists) {
-					random->draws = GROUP_DRAWS_REPLACEMENT;
+					random->draws = GROUP_DRAWS_NOREPLACEMENT;
 				}
 			}
 

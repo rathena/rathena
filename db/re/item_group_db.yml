@@ -25,7 +25,7 @@
 # - Group                      Group name of the item.
 #   SubGroups:
 #     - SubGroup:              SubGroup number associated with the list of item. See doc/item_group.txt for more information.
-#       Draws:                 Type of draws associated with SubGroup. (Default: Replacement)
+#       Draws:                 Type of draws associated with SubGroup. (Default: NoReplacement)
 #       List:                  List of item(s) for the SubGroup.
 #        - Index               Unique number that can be used to add the same Item with different data in the list.
 #          Item                AegisName of item that will be obtained from this item group.
@@ -2048,7 +2048,7 @@ Body:
   - Group: BLUEBOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Red_Potion
@@ -5962,7 +5962,7 @@ Body:
   - Group: CARDALBUM
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Poring_Card
@@ -8211,7 +8211,7 @@ Body:
   - Group: CARDALBUM_ACC
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Spore_Card
@@ -8651,7 +8651,7 @@ Body:
   - Group: CARDALBUM_ARMOR
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Poring_Card
@@ -8959,7 +8959,7 @@ Body:
   - Group: CARDALBUM_GARMENT
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Condor_Card
@@ -9189,7 +9189,7 @@ Body:
   - Group: CARDALBUM_HELM
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Wilow_Card
@@ -9461,7 +9461,7 @@ Body:
   - Group: CARDALBUM_SHIELD
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Thief_Bug_Egg_Card
@@ -9664,7 +9664,7 @@ Body:
   - Group: CARDALBUM_SHOES
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Chonchon_Card
@@ -9912,7 +9912,7 @@ Body:
   - Group: CARDALBUM_WEAPON
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Fabre_Card
@@ -12177,7 +12177,7 @@ Body:
   - Group: ENCHANT_STONE_BOX14
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: DoubleAttack_Stone
@@ -12305,7 +12305,7 @@ Body:
   - Group: ENCHANT_STONE_BOX15
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: DoubleAttack_Stone
@@ -12433,7 +12433,7 @@ Body:
   - Group: ENCHANT_STONE_BOX16
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: DoubleAttack_Stone
@@ -12688,7 +12688,7 @@ Body:
   - Group: ENCHANT_STONE_BOX18
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: DoubleAttack_Stone
@@ -15443,7 +15443,7 @@ Body:
   - Group: GIFTBOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Red_Potion
@@ -16454,7 +16454,7 @@ Body:
   - Group: GIFTBOX_1
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Red_Potion
@@ -16669,7 +16669,7 @@ Body:
   - Group: GIFTBOX_2
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Red_Potion
@@ -16884,7 +16884,7 @@ Body:
   - Group: GIFTBOX_3
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Red_Potion
@@ -17099,7 +17099,7 @@ Body:
   - Group: GIFTBOX_4
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Red_Potion
@@ -20998,7 +20998,7 @@ Body:
   - Group: MAGICCARDALBUM
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Ghostring_Card
@@ -29432,7 +29432,7 @@ Body:
             Item: Tantanmen
             Rate: 1
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Unripe_Apple
@@ -31727,7 +31727,7 @@ Body:
   - Group: VIOLETBOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Red_Potion
@@ -35631,7 +35631,7 @@ Body:
   - Group: CLASS_SHADOW_CUBE
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_Swordman_earring
@@ -36024,7 +36024,7 @@ Body:
   - Group: ENCHANT_STONE_BOX26
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: CriticalStone_Robe_D
@@ -36236,7 +36236,7 @@ Body:
   - Group: THIRD_JOB_STONE_GARMENT_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: ArchbishopStone_Robe
@@ -36289,7 +36289,7 @@ Body:
   - Group: THIRD_JOB_STONE_GARMENT_BOX2
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: SuraStone_Robe2
@@ -36336,7 +36336,7 @@ Body:
   - Group: THIRD_JOB_STONE_TOP_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: HighpriestStone_Top
@@ -36386,7 +36386,7 @@ Body:
   - Group: THIRD_JOB_STONE_TOP_BOX2
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: SuraStone_Top2
@@ -36433,7 +36433,7 @@ Body:
   - Group: THIRD_JOB_STONE_MIDDLE_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: HighpriestStone_Middle
@@ -36483,7 +36483,7 @@ Body:
   - Group: THIRD_JOB_STONE_MIDDLE_BOX2
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: SuraStone_Middle2
@@ -36530,7 +36530,7 @@ Body:
   - Group: THIRD_JOB_STONE_BOTTOM_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: HighpriestStone_Bottom
@@ -36580,7 +36580,7 @@ Body:
   - Group: THIRD_JOB_STONE_BOTTOM_BOX2
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: SuraStone_Bottom2
@@ -41920,7 +41920,7 @@ Body:
   - Group: HELM_OF_FAITH_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Viva_Adul_Hat_WL1
@@ -42111,7 +42111,7 @@ Body:
   - Group: EP17_1_SPC01
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Cannon_Rapier_OS
@@ -42190,7 +42190,7 @@ Body:
   - Group: EP17_1_SPC04
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: EP17_1_EVT38
@@ -43883,7 +43883,7 @@ Body:
   - Group: EPIC_MODULE_MIX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Magical_Igni_Stone
@@ -44060,7 +44060,7 @@ Body:
   - Group: AUTOMATIC_MODULE_MIX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: EP17_2_NO1
@@ -44459,7 +44459,7 @@ Body:
   - Group: ENCHANT_STONE_BOX23
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Melee_Stone_Robe_D
@@ -44636,7 +44636,7 @@ Body:
   - Group: ENCHANT_STONE_BOX24
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Range_Stone_Robe_D
@@ -44848,7 +44848,7 @@ Body:
   - Group: ENCHANT_STONE_BOX25
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: ReloadStone_Robe_D
@@ -45060,7 +45060,7 @@ Body:
   - Group: ENCHANT_STONE_BOX27
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: SmatkStone_Robe
@@ -45399,7 +45399,7 @@ Body:
   - Group: ENCHANT_STONE_BOX28
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: M_PATKStone_Robe
@@ -45597,7 +45597,7 @@ Body:
   - Group: S_FULLPENE_EARRING
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_FullPene_Earring
@@ -45622,7 +45622,7 @@ Body:
   - Group: S_FULLPENE_PENDANT
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_FullPene_Pendant
@@ -45647,7 +45647,7 @@ Body:
   - Group: S_FULLPENE_ARMOR
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_FullPene_Armor
@@ -45672,7 +45672,7 @@ Body:
   - Group: S_FULLPENE_SHOES
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_FullPene_Shoes
@@ -45697,7 +45697,7 @@ Body:
   - Group: S_FULLTEMP_EARRING
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_FullTemp_Earring
@@ -45722,7 +45722,7 @@ Body:
   - Group: S_FULLTEMP_PENDANT
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_FullTemp_Pendant
@@ -45747,7 +45747,7 @@ Body:
   - Group: S_FULLTEMP_ARMOR
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_FullTemp_Armor
@@ -45772,7 +45772,7 @@ Body:
   - Group: S_FULLTEMP_SHOES
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_FullTemp_Shoes
@@ -45797,7 +45797,7 @@ Body:
   - Group: S_DURABLE_WEAPON
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_Durable_Weapon
@@ -45822,7 +45822,7 @@ Body:
   - Group: S_DURABLE_SHIELD
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_Durable_Shield
@@ -45847,7 +45847,7 @@ Body:
   - Group: S_CLEVER_WEAPON
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_Clever_Weapon
@@ -45872,7 +45872,7 @@ Body:
   - Group: S_CLEVER_SHIELD
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_Clever_Shield
@@ -45897,7 +45897,7 @@ Body:
   - Group: S_ALLMIGHTY_EARRING
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_AllMighty_Earring
@@ -45922,7 +45922,7 @@ Body:
   - Group: S_ALLMIGHTY_PENDANT
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_AllMighty_Pendant
@@ -45947,7 +45947,7 @@ Body:
   - Group: S_TRUEGEM_EARRING
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_TrueGem_Earring
@@ -45972,7 +45972,7 @@ Body:
   - Group: S_TRUEGEM_PENDANT
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_TrueGem_Pendant
@@ -45997,7 +45997,7 @@ Body:
   - Group: S_TRUEGEM_SHOES
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_TrueGem_Shoes
@@ -46022,7 +46022,7 @@ Body:
   - Group: S_TRUEGEM_ARMOR
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_TrueGem_Armor
@@ -46047,7 +46047,7 @@ Body:
   - Group: S_PERFECTSIZE_WEAPON
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_PerfectSize_Weapon
@@ -46072,7 +46072,7 @@ Body:
   - Group: S_PERFECTSIZE_ARMOR
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_PerfectSize_Armor
@@ -46097,7 +46097,7 @@ Body:
   - Group: S_M_MAMMOTH_EARRING
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_M_Mammoth_Earring
@@ -46122,7 +46122,7 @@ Body:
   - Group: S_M_MAMMOTH_PENDANT
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_M_Mammoth_Pendant
@@ -46147,7 +46147,7 @@ Body:
   - Group: S_M_MAMMOTH_ARMOR
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_M_Mammoth_Armor
@@ -46172,7 +46172,7 @@ Body:
   - Group: S_M_MAMMOTH_SHOES
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_M_Mammoth_Shoes
@@ -46197,7 +46197,7 @@ Body:
   - Group: S_SPELLCASTER_EARRING
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_SpellCaster_Earring
@@ -46222,7 +46222,7 @@ Body:
   - Group: S_SPELLCASTER_PENDANT
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_SpellCaster_Pendant
@@ -46247,7 +46247,7 @@ Body:
   - Group: S_SPELLCASTER_ARMOR
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_SpellCaster_Armor
@@ -46272,7 +46272,7 @@ Body:
   - Group: S_SPELLCASTER_SHOES
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_SpellCaster_Shoes
@@ -46297,7 +46297,7 @@ Body:
   - Group: S_ABSORB_WEAPON
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_Absorb_Weapon
@@ -46322,7 +46322,7 @@ Body:
   - Group: S_ABSORB_SHIELD
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_Absorb_Shield
@@ -46364,7 +46364,7 @@ Body:
   - Group: ENCHANT_STONE_BOX29
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: SmatkStone_Robe
@@ -46562,7 +46562,7 @@ Body:
   - Group: EIN_1HITEMBOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Ein_1HKNUCK
@@ -46621,7 +46621,7 @@ Body:
   - Group: EIN_UNDIUM
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Ein_REDIUM
@@ -46652,7 +46652,7 @@ Body:
   - Group: WET_SEALED_CARD
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Sealed_Card
@@ -46663,7 +46663,7 @@ Body:
   - Group: 2019_SSTARR_TBOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: 2019_SStarR_Ticket
@@ -46745,7 +46745,7 @@ Body:
   - Group: ROYAL_SECRET_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Mightysoul_Essence
@@ -47016,7 +47016,7 @@ Body:
   - Group: SEASON_EVT_REWARD_2
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Crepe
@@ -52052,7 +52052,7 @@ Body:
   - Group: 2017_GSTAR_COSTUMEBOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: C_Vampire_Familiar
@@ -52785,7 +52785,7 @@ Body:
           - Index: 0
             Item: Evt_Cos_Coin
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: C_Blink_Eyes_Frozen
@@ -55002,7 +55002,7 @@ Body:
   - Group: CACHUA_WEAPON
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: God_Material_Box
@@ -55758,7 +55758,7 @@ Body:
   - Group: CACHUA_ROBE
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: God_Material_Box
@@ -56024,7 +56024,7 @@ Body:
   - Group: CACHUA_MAIL
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: God_Material_Box
@@ -56347,7 +56347,7 @@ Body:
   - Group: CACHUA_SHOES
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: God_Material_Box
@@ -56607,7 +56607,7 @@ Body:
   - Group: CACHUA_SHIELD
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: God_Material_Box
@@ -56855,7 +56855,7 @@ Body:
   - Group: CACHUA_HELM
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: God_Material_Box
@@ -58852,7 +58852,7 @@ Body:
   - Group: LI_LAPINE_DDUKDDAKBOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Shadow_Mix_Recipe
@@ -60028,7 +60028,7 @@ Body:
   - Group: EXSHADOW_DDUKDDAKBOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: RaceShadow_Mix
@@ -60396,7 +60396,7 @@ Body:
   - Group: MYSTERIOUS_MEDAL_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Mysterious_Medal
@@ -62509,7 +62509,7 @@ Body:
   - Group: 2018_LAPINE_DDUKDDAKBOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Shadow_Mix_Recipe
@@ -62675,7 +62675,7 @@ Body:
   - Group: SWEETS_EVT_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Crepe
@@ -62767,7 +62767,7 @@ Body:
   - Group: 2018_VISIONARY_CARD
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Golden_Bug_Card
@@ -63546,7 +63546,7 @@ Body:
   - Group: CELEBRATE_EGG
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Guarantee_Weapon_7Up
@@ -63679,7 +63679,7 @@ Body:
   - Group: NOODLE_FESTA_CAN
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Magic_Card_Album
@@ -64272,7 +64272,7 @@ Body:
   - Group: HERO_WEAPON_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Royal_Bow_K
@@ -64594,7 +64594,7 @@ Body:
   - Group: SEASON_EVT_REWARD_3
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Yummy_Cookie_Egg
@@ -64704,7 +64704,7 @@ Body:
   - Group: SEASON_EVT_REWARD_4
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Cherry_Blossom_Cake
@@ -64763,7 +64763,7 @@ Body:
   - Group: SEASON_EVT_REWARD_5
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Magic_Card_Album
@@ -64849,7 +64849,7 @@ Body:
   - Group: JOB_ENCHANT_STONE_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: ArchbishopStone_Robe
@@ -65003,7 +65003,7 @@ Body:
           - Index: 0
             Item: Cachua_Coupon
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Sillit_Pong_Box
@@ -65202,7 +65202,7 @@ Body:
   - Group: SEASON_EVT_REWARD
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: K_Secret_Key
@@ -65257,7 +65257,7 @@ Body:
   - Group: CANDY_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Candy_Box_Melee
@@ -65271,7 +65271,7 @@ Body:
   - Group: PORING_SUNGLASSES_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Poring_Sunglasses_K
@@ -65282,7 +65282,7 @@ Body:
   - Group: SIGRUN_SHADOW_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_Sigrun_Shield
@@ -65293,7 +65293,7 @@ Body:
   - Group: MAD_BUNNY_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Mad_Bunny_K
@@ -65317,7 +65317,7 @@ Body:
   - Group: ABYSS_ITEMBOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Drabone_L
@@ -65377,7 +65377,7 @@ Body:
   - Group: ODIN_ITEMBOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: CassockA_STR
@@ -65418,7 +65418,7 @@ Body:
   - Group: BIO_W_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Volar
@@ -65540,7 +65540,7 @@ Body:
   - Group: BIO_DOCU_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Bio_Test_Fragment
@@ -65575,7 +65575,7 @@ Body:
   - Group: BIO_REACTANT_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Soul_Of_Swordman
@@ -65607,7 +65607,7 @@ Body:
   - Group: PAYPROMOTION_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: C_Fairy_Long_BD
@@ -65633,7 +65633,7 @@ Body:
   - Group: E_BCRYSTAL_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: C_PoringBeret_TW
@@ -65671,7 +65671,7 @@ Body:
   - Group: E_MCRYSTAL_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: C_Heart_Hair_Pin
@@ -65706,7 +65706,7 @@ Body:
   - Group: E_SCRYSTAL_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: C_Heart_Hair_Pin
@@ -66277,7 +66277,7 @@ Body:
   - Group: TEMPORAL_MANTEAU_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Temporal_M_Luk
@@ -66300,7 +66300,7 @@ Body:
   - Group: LAPINE_DDUKDDAKBOX2
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Shadow_Mix_Recipe
@@ -66406,7 +66406,7 @@ Body:
   - Group: GOLDPCBANG_SHIELDBOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Sharel_Shield
@@ -67016,7 +67016,7 @@ Body:
   - Group: GOLDPCBANG_MILEAGEBOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: C_Over_Protector
@@ -67075,7 +67075,7 @@ Body:
   - Group: SKILL_SHADOW_CUBE
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_Sonic_Armor
@@ -67512,7 +67512,7 @@ Body:
   - Group: SHADOWDECON_ORE_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Shadowdecon_Ore
@@ -67549,7 +67549,7 @@ Body:
   - Group: ZELUNIUM_ORE_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Zelunium_Ore
@@ -67600,7 +67600,7 @@ Body:
   - Group: EXOTIC_BOB_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: C_Exotic_Bob_R_BW
@@ -67881,7 +67881,7 @@ Body:
   - Group: 2020_GOAL_GIFT_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: C_Seraphim_Wing_TW
@@ -67904,7 +67904,7 @@ Body:
   - Group: RANGER_S_CUBE
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_Cluster_Armor
@@ -67945,7 +67945,7 @@ Body:
   - Group: WARLOCK_S_CUBE
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_Jack_Armor
@@ -67986,7 +67986,7 @@ Body:
   - Group: SORCERER_S_CUBE
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_Dust_Armor
@@ -68027,7 +68027,7 @@ Body:
   - Group: WANDERMINS_S_CUBE
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_Rainstorm_Armor
@@ -68068,7 +68068,7 @@ Body:
   - Group: ROYALGUARD_S_CUBE
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_Brand_Armor
@@ -68109,7 +68109,7 @@ Body:
   - Group: SHADOWCHASER_S_CUBE
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_Triangle_Armor
@@ -68150,7 +68150,7 @@ Body:
   - Group: MECHANIC_S_CUBE
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_Tornado_Armor
@@ -68191,7 +68191,7 @@ Body:
   - Group: GENETIC_S_CUBE
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_Cart_Tornado_Armor
@@ -68232,7 +68232,7 @@ Body:
   - Group: SIGNON_PRIN_WAVE_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: C_Signon_Princ_Wave_BU
@@ -68261,7 +68261,7 @@ Body:
   - Group: HERO_WEAPON_CUBE
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Barb_Wire_K_Cube
@@ -68548,7 +68548,7 @@ Body:
   - Group: MD_AIRBOAT_REWARD
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: MD_Airboat_Card
@@ -68574,7 +68574,7 @@ Body:
   - Group: OS_HELM_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Ignis_CapK
@@ -68600,7 +68600,7 @@ Body:
   - Group: FAMOUS_HAT_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: New_Wave_Sunglasses
@@ -68671,7 +68671,7 @@ Body:
   - Group: EX_SKILL_SHADOW_CUBE
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_Tail_Dragon_Weapon
@@ -68856,7 +68856,7 @@ Body:
   - Group: CACHUA_COSTUME_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: C_Cons_Of_Water
@@ -68965,7 +68965,7 @@ Body:
   - Group: BIOWEAPON_HELM_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: BioWeapon_Helm_RK
@@ -69006,7 +69006,7 @@ Body:
   - Group: TREE_OF_SPROUT_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Tree_Of_Sprout_DEX
@@ -69029,7 +69029,7 @@ Body:
   - Group: SPECIAL_COSTUME_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: C_Over_Protector
@@ -69124,7 +69124,7 @@ Body:
   - Group: SPECIAL_COSTUME_BOX_
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: C_Cons_Of_Water
@@ -69238,7 +69238,7 @@ Body:
             Item: Illusion_Module_Mix
             Rate: 14
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: EnchantStone_Recipe
@@ -70251,7 +70251,7 @@ Body:
   - Group: ANCIENT_HERO_WILL
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Ancient_Hero_Wisdom
@@ -70268,7 +70268,7 @@ Body:
   - Group: MAMMOTH_SHADOW_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_Mammoth_Armor
@@ -70291,7 +70291,7 @@ Body:
   - Group: SHADOW_R_M_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Class_Sha_R_M_Melee
@@ -70308,7 +70308,7 @@ Body:
   - Group: ALL_SHADOW_CUBE
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_Physical_Earring
@@ -72446,7 +72446,7 @@ Body:
   - Group: FLUFFY_SEMI_LONG_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: C_Fluffy_Semi_Long
@@ -72557,7 +72557,7 @@ Body:
   - Group: UP_HERO_WEAPON_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Up_Royal_Bow_K
@@ -72673,7 +72673,7 @@ Body:
   - Group: HIGH_REFINE_GUARANTEE
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Guarantee_Weapon_11Up
@@ -72702,7 +72702,7 @@ Body:
   - Group: REFINE_GUARANTEE
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Guarantee_Weapon_7Up
@@ -72735,7 +72735,7 @@ Body:
   - Group: SPECIAL_REFINE_CUBE
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Temporal_Refine_Cube
@@ -72776,7 +72776,7 @@ Body:
   - Group: AUTOSPELL_SHADOW_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_AutoSpell_Armor
@@ -72814,7 +72814,7 @@ Body:
   - Group: S_ENCHANT_STONE_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Melee_Stone_Robe_D
@@ -73353,7 +73353,7 @@ Body:
   - Group: PHYMAG_SHADOW_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_Physical_Earring
@@ -73376,7 +73376,7 @@ Body:
   - Group: S_DUAL_STONE_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Melee_Stone_Robe_D
@@ -73409,7 +73409,7 @@ Body:
   - Group: GM_LOST_BAGPACK
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Exotic_Bob_Box
@@ -73474,7 +73474,7 @@ Body:
   - Group: SEASON_EVT_REWARD_9
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Comp_Small_Mana_Potion
@@ -75824,7 +75824,7 @@ Body:
   - Group: ENCHANT_STONE_BOX30
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Range_Stone_Robe_D
@@ -76176,7 +76176,7 @@ Body:
   - Group: ENCHANT_STONE_BOX31
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Range_Stone_Robe_D
@@ -76392,7 +76392,7 @@ Body:
   - Group: ENCHANT_STONE_BOX32
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Range_Stone_Robe_D
@@ -77402,7 +77402,7 @@ Body:
   - Group: CLOSEDMIND_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Hurt_Mind
@@ -80236,7 +80236,7 @@ Body:
   - Group: ENCHANT_STONE_BOX33
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Range_Stone_Robe_D
@@ -80473,7 +80473,7 @@ Body:
   - Group: LUXURIOUS_BLUE_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Queen_Wing_Piece
@@ -80672,7 +80672,7 @@ Body:
   - Group: C_BRAID_HALF_UP_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: C_Braid_Half_Up_BL_K
@@ -80701,7 +80701,7 @@ Body:
   - Group: SLD_BOSS_CARD_ALBUM
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Sealed_D_Lord_Card
@@ -80882,7 +80882,7 @@ Body:
   - Group: M_ARMOR_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_IG_Armor
@@ -80941,7 +80941,7 @@ Body:
   - Group: M_SHOES_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_IG_Shoes
@@ -81000,7 +81000,7 @@ Body:
   - Group: M_PENDANT_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_IG_Pendant
@@ -81059,7 +81059,7 @@ Body:
   - Group: M_EARRING_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_IG_Earring
@@ -81126,7 +81126,7 @@ Body:
   - Group: SHADOW_UP_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: AllMighty_Up
@@ -81182,7 +81182,7 @@ Body:
   - Group: EIN_ORE_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Ein_WHIDIUM
@@ -81590,7 +81590,7 @@ Body:
   - Group: FATE_FRAGMENT_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Fate_Shard_A
@@ -81934,7 +81934,7 @@ Body:
   - Group: SIN_FRAGMENT_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Sin_Shard_A
@@ -82278,7 +82278,7 @@ Body:
   - Group: AMETHYST_FRAGMENT_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Ep18_Amethyst_Fragment
@@ -82387,7 +82387,7 @@ Body:
   - Group: SNOW_F_ORE_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Snow_F_Ore
@@ -82482,7 +82482,7 @@ Body:
   - Group: BROWN_DIA_BOX_3_7
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: aegis_1001480
@@ -92316,7 +92316,7 @@ Body:
   - Group: LAPINE_DDUKDDAKBOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Shadow_Mix_Recipe
@@ -92632,7 +92632,7 @@ Body:
   - Group: MYSTERIOUS_PLASTIC
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Comp_M_DEFScroll
@@ -92770,7 +92770,7 @@ Body:
   - Group: MAIN_LUCKY_BOX_
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Sillit_Pong_Box
@@ -93354,7 +93354,7 @@ Body:
   - Group: SEALED_CARD3
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Sealed_D_Lord_Card
@@ -93536,7 +93536,7 @@ Body:
   - Group: SEASON_EVT_REWARD_11
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Royal_Secret_Box
@@ -93790,7 +93790,7 @@ Body:
   - Group: PAYMENT_COSTUME_BOX1
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: C_B_EarWitchHat
@@ -93900,7 +93900,7 @@ Body:
   - Group: EVT_RAGFES_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Blacksmith_Blessing
@@ -94028,7 +94028,7 @@ Body:
   - Group: SEASON_EVT_REWARD_12
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Shadow_Refine_Hammer
@@ -94150,7 +94150,7 @@ Body:
   - Group: HERO_TOKEN_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Hero_Token_AG
@@ -94339,7 +94339,7 @@ Body:
   - Group: SEASON_EVT_REWARD_1
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: C_bullhead
@@ -94394,7 +94394,7 @@ Body:
   - Group: 2021_WINTER_EVENT_BOX1
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: C_Filir_Bag
@@ -94419,7 +94419,7 @@ Body:
   - Group: ICE_F_STONE_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Ice_F_Stone_Str
@@ -94724,7 +94724,7 @@ Body:
   - Group: BS_MAKING_S
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Bs_Item_M_S_2
@@ -95134,7 +95134,7 @@ Body:
   - Group: MD_AIRBOAT_EXPBOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: MD_Airboat_Bexp
@@ -95218,7 +95218,7 @@ Body:
   - Group: P_BOOSTER230_GIFT
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: C_Cons_Of_Light_Dark
@@ -95370,7 +95370,7 @@ Body:
   - Group: VIVA_ADUL_HAT_BOX_11
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Viva_Adul_Hat_WL1
@@ -95545,7 +95545,7 @@ Body:
   - Group: EVT_MAKINGMATERIALS_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Death_Barmund_Rune
@@ -95912,7 +95912,7 @@ Body:
   - Group: R_BEARERS_EARRING_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_R_Bearers_Earring
@@ -95937,7 +95937,7 @@ Body:
   - Group: R_BEARERS_PENDANT_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_R_Bearers_Pendant
@@ -95962,7 +95962,7 @@ Body:
   - Group: R_BEARERS_ARMOR_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_R_Bearers_Armor
@@ -95987,7 +95987,7 @@ Body:
   - Group: R_BEARERS_SHOES_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_R_Bearers_Shoes
@@ -96012,7 +96012,7 @@ Body:
   - Group: HASTY_WEAPON_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_Hasty_Weapon
@@ -96037,7 +96037,7 @@ Body:
   - Group: HASTY_SHIELD_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_Hasty_Shield
@@ -96062,7 +96062,7 @@ Body:
   - Group: S_RELOAD_SHIELD_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_S_Reload_Shield
@@ -96135,7 +96135,7 @@ Body:
   - Group: HEROSRIA_GIFT
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: C_Fire_Giant_Gold
@@ -96442,7 +96442,7 @@ Body:
   - Group: MAUTOSPELL_EARRING_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_M_AutoSpell_Earring
@@ -96467,7 +96467,7 @@ Body:
   - Group: MAUTOSPELL_PENDANT_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_M_AutoSpell_Pendant
@@ -96492,7 +96492,7 @@ Body:
   - Group: MAUTOSPELL_ARMOR_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_M_AutoSpell_Armor
@@ -96517,7 +96517,7 @@ Body:
   - Group: MAUTOSPELL_SHOES_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_M_AutoSpell_Shoes
@@ -96542,7 +96542,7 @@ Body:
   - Group: INFINITY_WEAPON_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_Infinity_Weapon
@@ -96567,7 +96567,7 @@ Body:
   - Group: INFINITY_SHIELD_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_Infinity_Shield
@@ -96592,7 +96592,7 @@ Body:
   - Group: VR_BOOK_EVENT
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: VR_Reading_Card
@@ -96738,7 +96738,7 @@ Body:
   - Group: EXP_WEAPON_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_EXP_Weapon
@@ -96763,7 +96763,7 @@ Body:
   - Group: EXP_SHIELD_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_EXP_Shield
@@ -96788,7 +96788,7 @@ Body:
   - Group: M_BLITZ_WEAPON_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_Mega_Blitz_Weapon
@@ -96813,7 +96813,7 @@ Body:
   - Group: M_BLITZ_SHIELD_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_Mega_Blitz_Shield
@@ -96838,7 +96838,7 @@ Body:
   - Group: CVT_WING_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Cvt_Magical_Wing
@@ -97068,7 +97068,7 @@ Body:
   - Group: JUSTICE_WEAPON_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Punish_Hall
@@ -97142,7 +97142,7 @@ Body:
   - Group: INJUSTICE_WEAPON_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Demonic_Claw
@@ -97216,7 +97216,7 @@ Body:
   - Group: GOODNEVIL_HELM_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: GoodnEvil_Circlet_DK
@@ -97275,7 +97275,7 @@ Body:
   - Group: F_EIN_1HDAGGER_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: F_Ein_1HDAGGER
@@ -97477,7 +97477,7 @@ Body:
   - Group: STONE_ROBE3_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: SuraStone_Robe2
@@ -97690,7 +97690,7 @@ Body:
   - Group: SEASON_EVT_REWARD_8
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: C_Indomitable_Crown
@@ -97876,7 +97876,7 @@ Body:
   - Group: SCHMIDT_ANTIQUITY
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: aegis_1001478
@@ -98113,7 +98113,7 @@ Body:
   - Group: SCHMIDT_ANTIQUITY2
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: aegis_1001478
@@ -98312,7 +98312,7 @@ Body:
   - Group: AMDARAIS_ANTIQUITY
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: aegis_1001478
@@ -98637,7 +98637,7 @@ Body:
   - Group: AMDARAIS_ANTIQUITY2
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: aegis_1001478
@@ -98986,7 +98986,7 @@ Body:
   - Group: C_AMDARAIS_ANTIQUITY
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: aegis_1001478
@@ -99431,7 +99431,7 @@ Body:
   - Group: C_HIMEL_ANTIQUITY
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: aegis_1001478
@@ -99876,7 +99876,7 @@ Body:
   - Group: UNKNOWN_ANTIQUITY
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: aegis_1001478
@@ -101081,7 +101081,7 @@ Body:
   - Group: SAKRAY_ANTIQUITY
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: aegis_1001480
@@ -102135,7 +102135,7 @@ Body:
   - Group: AIRBOAT_ANTIQUITY
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: aegis_1001480
@@ -102357,7 +102357,7 @@ Body:
   - Group: CELINE_KIMI_ANTIQUITY
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: aegis_1001478
@@ -102504,7 +102504,7 @@ Body:
   - Group: MIGUEL_ANTIQUITY
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: aegis_1001478
@@ -102703,7 +102703,7 @@ Body:
   - Group: EL_A17T_ANTIQUITY
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: aegis_1001478
@@ -103052,7 +103052,7 @@ Body:
   - Group: PITAYA_BOSS_ANTIQUITY
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: aegis_1001478
@@ -103230,7 +103230,7 @@ Body:
   - Group: SWEETY_ANTIQUITY
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: aegis_1001478
@@ -103956,7 +103956,7 @@ Body:
   - Group: REDPEPPER_ANTIQUITY
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: aegis_1001478
@@ -104829,7 +104829,7 @@ Body:
   - Group: REDPEPPER_ANTIQUITY2
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: aegis_1001479
@@ -105386,7 +105386,7 @@ Body:
   - Group: DEMI_FREYJA_ANTIQUITY
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: aegis_1001478
@@ -107925,7 +107925,7 @@ Body:
   - Group: JUNCEA_ANTIQUITY
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: aegis_1001479
@@ -108680,7 +108680,7 @@ Body:
   - Group: AQUILA_ANTIQUITY
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: aegis_1001479
@@ -109027,7 +109027,7 @@ Body:
   - Group: AQUILA_ANTIQUITY2
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: aegis_1001479
@@ -110138,7 +110138,7 @@ Body:
   - Group: F_ICESLUG_ANTIQUIY
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: aegis_1001480
@@ -110412,7 +110412,7 @@ Body:
   - Group: LASGAND_ANTIQUITY
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: aegis_1001480
@@ -110791,7 +110791,7 @@ Body:
   - Group: LASGAND_ANTIQUITY2
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: aegis_1001480
@@ -111116,7 +111116,7 @@ Body:
   - Group: THANATOS_ANTIQUITY
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: aegis_1001479
@@ -111470,7 +111470,7 @@ Body:
   - Group: BL_DEPTH_EV_1
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Bar_D_Fl_Rune
@@ -111859,7 +111859,7 @@ Body:
   - Group: R_EP17_ALBUM
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Bellare_Card
@@ -112124,7 +112124,7 @@ Body:
   - Group: SHADOW_SELECT_BOX_SET
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: M_Blitz_Select_Box
@@ -112180,7 +112180,7 @@ Body:
   - Group: REFINE_HAMMER_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Helm_Of_Faith_Hammer
@@ -112432,7 +112432,7 @@ Body:
             Item: TwinkleEffect_Top
             Rate: 909
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: RuneknightStone_Top3
@@ -112825,7 +112825,7 @@ Body:
             Item: TwinkleEffect_Top
             Rate: 909
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: RuneknightStone_Middle3
@@ -113212,7 +113212,7 @@ Body:
             Item: TwinkleEffect_Top
             Rate: 909
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: RuneknightStone_Bottom3
@@ -113385,7 +113385,7 @@ Body:
   - Group: ENCHANT_STONE_BOX34
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Range_Stone_Robe_D
@@ -113622,7 +113622,7 @@ Body:
   - Group: R_EP178_BOSS
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: R48_85_Bestia_Card
@@ -114067,7 +114067,7 @@ Body:
   - Group: PETTRADETICKET_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Succu_Pet_Coupon
@@ -114319,7 +114319,7 @@ Body:
             Item: Staff_Of_Leader
             Rate: 1
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: No_Recipient
@@ -114478,7 +114478,7 @@ Body:
             Item: Hell_Horn
             Rate: 1
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Very_Red_Juice
@@ -114581,7 +114581,7 @@ Body:
   - Group: AEGIS_102947
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: aegis_1001480
@@ -114868,7 +114868,7 @@ Body:
   - Group: AEGIS_102948
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: aegis_1001480
@@ -115205,7 +115205,7 @@ Body:
   - Group: ENCHANT_STONE_BOX35
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Range_Stone_Robe_D
@@ -115761,7 +115761,7 @@ Body:
   - Group: AEGIS_103234
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Range_Stone_Robe_D
@@ -115986,7 +115986,7 @@ Body:
   - Group: AEGIS_103316
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: S_P_Power_Weapon
@@ -117154,7 +117154,7 @@ Body:
   - Group: YOR_CARD_P_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: aegis_1001837
@@ -117235,7 +117235,7 @@ Body:
   - Group: AEGIS_103537
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: aegis_1001480
@@ -117404,7 +117404,7 @@ Body:
   - Group: AEGIS_103617
     SubGroups:
       - SubGroup: 6
-        Draws: NoReplacement
+        Draws: Replacement
         List:
           - Index: 0
             Item: Range_Stone_Robe_D
