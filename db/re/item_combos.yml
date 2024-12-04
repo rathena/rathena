@@ -43357,6 +43357,7 @@ Body:
     Script: |
       bonus2 bMagicAddEle,Ele_All,20;
       bonus bDelayrate,-5;
+      bonus2 bSkillAtk,"CD_ARBITRIUM",40;
       bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",40;
       bonus2 bSkillAtk,"CD_FRAMEN",20;
   - Combos:
@@ -52706,6 +52707,7 @@ Body:
       bonus bLongAtkRate,20;
       bonus2 bSkillAtk,"LG_CANNONSPEAR",45;
       if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
          bonus2 bSkillAtk,"LG_CANNONSPEAR",2*.@sum;
          if (getskilllv("LG_CANNONSPEAR") > 0) {
             bonus4 bAutoSpellOnSkill,"IG_RADIANT_SPEAR","LG_CANNONSPEAR",getskilllv("LG_CANNONSPEAR"),1000;
@@ -52719,6 +52721,7 @@ Body:
       bonus2 bMagicAddEle,Ele_All,10;
       bonus2 bSkillAtk,"HN_NAPALM_VULCAN_STRIKE",45;
       if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
          bonus2 bSkillAtk,"HN_NAPALM_VULCAN_STRIKE",.@sum;
          bonus2 bSkillAtk,"HN_JACK_FROST_NOVA",.@sum;
          bonus2 bSkillCooldown,"HN_JUPITEL_THUNDER_STORM",-300;
@@ -52731,6 +52734,7 @@ Body:
       bonus2 bMagicAddEle,Ele_All,10;
       bonus2 bSkillAtk,"TR_METALIC_FURY",15;
       if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
          bonus bDelayrate,-10;
          bonus2 bSkillAtk,"TR_METALIC_FURY",.@sum;
       }
@@ -52742,6 +52746,7 @@ Body:
       bonus2 bMagicAddEle,Ele_All,10;
       bonus2 bSkillAtk,"TR_METALIC_FURY",15;
       if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
          bonus bDelayrate,-10;
          bonus2 bSkillAtk,"TR_METALIC_FURY",.@sum;
       }
@@ -52753,6 +52758,7 @@ Body:
       bonus2 bSubEle,Ele_All,15;
       bonus2 bSkillAtk,"MT_RUSH_STRIKE",40;
       if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
          bonus2 bAddEle,Ele_All,15;
          bonus2 bSkillAtk,"MT_MIGHTY_SMASH",.@sum;
       }
@@ -52765,6 +52771,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Dark,20;
       bonus2 bMagicAtkEle,Ele_Ghost,15;
       if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
          bonus2 bSkillAtk,"AG_MYSTERY_ILLUSION",.@sum;
          bonus2 bSkillCooldown,"AG_SOUL_VC_STRIKE",-200;
       }
@@ -52776,6 +52783,7 @@ Body:
       bonus bLongAtkRate,15;
       bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",25;
       if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
          bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",.@sum;
          bonus2 bSkillCooldown,"NW_WILD_SHOT",-200;
       }
@@ -55342,4 +55350,552 @@ Body:
          bonus bFixedCast,-500;
          autobonus3 "{ bonus2 bSkillAtk,\"NC_ARMSCANNON\",30; bonus2 bSkillAtk,\"MT_SPARK_BLASTER\",20; bonus2 bSkillAtk,\"MT_AXE_STOMP\",30; bonus2 bSkillAtk,\"MT_MIGHTY_SMASH\",20; }",1000,120000,"MT_D_MACHINE";
       }
-      
+  - Combos:
+      - Combo:
+          - S_IG_OC_Earring   # 24948
+          - S_Master_Weapon   # 24792
+          - S_IG_OC_Pendant   # 24949
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_L);
+      bonus2 bAddEle,Ele_All,3;
+      bonus bPAtk,2;
+      if (.@sum>=27) {
+         bonus2 bIgnoreResRaceRate,RC_All,10;
+         bonus2 bIgnoreResRaceRate,RC_Player_Human,-10;
+         bonus2 bIgnoreResRaceRate,RC_Player_Doram,-10;
+      }
+  - Combos:
+      - Combo:
+          - S_IG_OC_Earring   # 24948
+          - S_IG_OC_Pendant   # 24949
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L);
+      bonus bPAtk,2;
+      bonus bAtkRate,2;
+      if (.@sum>=15) {
+         bonus2 bAddSize,Size_All,7;
+         if (.@sum>=18) {
+            bonus2 bIgnoreDefRaceRate,RC_All,50;
+            bonus2 bIgnoreDefRaceRate,RC_Player_Human,-50;
+            bonus2 bIgnoreDefRaceRate,RC_Player_Doram,-50;
+         }
+      }
+  - Combos:
+      - Combo:
+          - S_IG_RF_Armor   # 24950
+          - S_Master_Shield   # 24793
+          - S_IG_RF_Shoes   # 24951
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_SHOES);
+      bonus2 bMagicAddEle,Ele_All,3;
+      bonus bSMatk,2;
+      if (.@sum>=27) {
+         bonus2 bIgnoreMResRaceRate,RC_All,10;
+         bonus2 bIgnoreMResRaceRate,RC_Player_Human,-10;
+         bonus2 bIgnoreMResRaceRate,RC_Player_Doram,-10;
+      }
+  - Combos:
+      - Combo:
+          - S_IG_RF_Armor   # 24950
+          - S_IG_RF_Shoes   # 24951
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES);
+      bonus bSMatk,2;
+      bonus bMatkRate,2;
+      if (.@sum>=15) {
+         bonus2 bMagicAddSize,Size_All,7;
+         if (.@sum>=18) {
+            bonus2 bIgnoreMdefRaceRate,RC_All,50;
+            bonus2 bIgnoreMdefRaceRate,RC_Player_Human,-50;
+            bonus2 bIgnoreMdefRaceRate,RC_Player_Doram,-50;
+         }
+      }
+  - Combos:
+      - Combo:
+          - S_IQ_EB_Earring   # 24952
+          - S_Master_Weapon   # 24792
+          - S_IQ_EB_Pendant   # 24953
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_L);
+      bonus bCRate,1;
+      bonus bCritical,3;
+      if (.@sum>=27) {
+         bonus2 bIgnoreResRaceRate,RC_All,10;
+         bonus2 bIgnoreResRaceRate,RC_Player_Human,-10;
+         bonus2 bIgnoreResRaceRate,RC_Player_Doram,-10;
+      }
+  - Combos:
+      - Combo:
+          - S_IQ_EB_Earring   # 24952
+          - S_IQ_EB_Pendant   # 24953
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L);
+      bonus bPAtk,2;
+      bonus bAtkRate,2;
+      if (.@sum>=15) {
+         bonus2 bAddSize,Size_All,7;
+         if (.@sum>=18) {
+            bonus2 bIgnoreDefRaceRate,RC_All,50;
+            bonus2 bIgnoreDefRaceRate,RC_Player_Human,-50;
+            bonus2 bIgnoreDefRaceRate,RC_Player_Doram,-50;
+         }
+      }
+  - Combos:
+      - Combo:
+          - S_IQ_BFB_Armor   # 24954
+          - S_Master_Shield   # 24793
+          - S_IQ_BFB_Shoes   # 24955
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_SHOES);
+      bonus bCRate,1;
+      bonus bCritical,3;
+      if (.@sum>=27) {
+         bonus2 bIgnoreResRaceRate,RC_All,10;
+         bonus2 bIgnoreResRaceRate,RC_Player_Human,-10;
+         bonus2 bIgnoreResRaceRate,RC_Player_Doram,-10;
+      }
+  - Combos:
+      - Combo:
+          - S_IQ_BFB_Armor   # 24954
+          - S_IQ_BFB_Shoes   # 24955
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES);
+      bonus bPAtk,2;
+      bonus bAtkRate,2;
+      if (.@sum>=15) {
+         bonus2 bAddSize,Size_All,7;
+         if (.@sum>=18) {
+            bonus2 bIgnoreDefRaceRate,RC_All,50;
+            bonus2 bIgnoreDefRaceRate,RC_Player_Human,-50;
+            bonus2 bIgnoreDefRaceRate,RC_Player_Doram,-50;
+         }
+      }
+  - Combos:
+      - Combo:
+          - S_SU_CS_Earring   # 24956
+          - S_Master_Weapon   # 24792
+          - S_SU_CS_Pendant   # 24957
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_L);
+      bonus bCRate,1;
+      bonus bCritical,3;
+      if (.@sum>=27) {
+         bonus2 bIgnoreResRaceRate,RC_All,10;
+         bonus2 bIgnoreResRaceRate,RC_Player_Human,-10;
+         bonus2 bIgnoreResRaceRate,RC_Player_Doram,-10;
+      }
+  - Combos:
+      - Combo:
+          - S_SU_CS_Earring   # 24956
+          - S_SU_CS_Pendant   # 24957
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L);
+      bonus bPAtk,2;
+      bonus bAtkRate,2;
+      if (.@sum>=15) {
+         bonus2 bAddSize,Size_All,7;
+         if (.@sum>=18) {
+            bonus2 bIgnoreDefRaceRate,RC_All,50;
+            bonus2 bIgnoreDefRaceRate,RC_Player_Human,-50;
+            bonus2 bIgnoreDefRaceRate,RC_Player_Doram,-50;
+         }
+      }
+  - Combos:
+      - Combo:
+          - S_SU_HB_Armor   # 24958
+          - S_Master_Shield   # 24793
+          - S_SU_HB_Shoes   # 24959
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_SHOES);
+      bonus bCRate,1;
+      bonus bCritical,3;
+      if (.@sum>=27) {
+         bonus2 bIgnoreResRaceRate,RC_All,10;
+         bonus2 bIgnoreResRaceRate,RC_Player_Human,-10;
+         bonus2 bIgnoreResRaceRate,RC_Player_Doram,-10;
+      }
+  - Combos:
+      - Combo:
+          - S_SU_HB_Armor   # 24958
+          - S_SU_HB_Shoes   # 24959
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES);
+      bonus bPAtk,2;
+      bonus bAtkRate,2;
+      if (.@sum>=15) {
+         bonus2 bAddSize,Size_All,7;
+         if (.@sum>=18) {
+            bonus2 bIgnoreDefRaceRate,RC_All,50;
+            bonus2 bIgnoreDefRaceRate,RC_Player_Human,-50;
+            bonus2 bIgnoreDefRaceRate,RC_Player_Doram,-50;
+         }
+      }
+  - Combos:
+      - Combo:
+          - S_CD_AR_Earring   # 24967
+          - S_Master_Weapon   # 24792
+          - S_CD_AR_Pendant   # 24968
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_L);
+      bonus2 bMagicAddEle,Ele_All,3;
+      bonus bSMatk,2;
+      if (.@sum>=27) {
+         bonus2 bIgnoreMResRaceRate,RC_All,10;
+         bonus2 bIgnoreMResRaceRate,RC_Player_Human,-10;
+         bonus2 bIgnoreMResRaceRate,RC_Player_Doram,-10;
+      }
+  - Combos:
+      - Combo:
+          - S_CD_AR_Earring   # 24967
+          - S_CD_AR_Pendant   # 24968
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L);
+      bonus bSMatk,2;
+      bonus bMatkRate,2;
+      if (.@sum>=15) {
+         bonus2 bMagicAddSize,Size_All,7;
+         if (.@sum>=18) {
+            bonus2 bIgnoreMdefRaceRate,RC_All,50;
+            bonus2 bIgnoreMdefRaceRate,RC_Player_Human,-50;
+            bonus2 bIgnoreMdefRaceRate,RC_Player_Doram,-50;
+         }
+      }
+  - Combos:
+      - Combo:
+          - S_CD_DF_Armor   # 24969
+          - S_Master_Shield   # 24793
+          - S_CD_DF_Shoes   # 24970
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_SHOES);
+      bonus2 bMagicAddEle,Ele_All,3;
+      bonus bSMatk,2;
+      if (.@sum>=27) {
+         bonus2 bIgnoreMResRaceRate,RC_All,10;
+         bonus2 bIgnoreMResRaceRate,RC_Player_Human,-10;
+         bonus2 bIgnoreMResRaceRate,RC_Player_Doram,-10;
+      }
+  - Combos:
+      - Combo:
+          - S_CD_DF_Armor   # 24969
+          - S_CD_DF_Shoes   # 24970
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES);
+      bonus bSMatk,2;
+      bonus bMatkRate,2;
+      if (.@sum>=15) {
+         bonus2 bMagicAddSize,Size_All,7;
+         if (.@sum>=18) {
+            bonus2 bIgnoreMdefRaceRate,RC_All,50;
+            bonus2 bIgnoreMdefRaceRate,RC_Player_Human,-50;
+            bonus2 bIgnoreMdefRaceRate,RC_Player_Doram,-50;
+         }
+      }
+  - Combos:
+      - Combo:
+          - S_AG_FB_Earring   # 24971
+          - S_Master_Weapon   # 24792
+          - S_AG_FB_Pendant   # 24972
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_L);
+      bonus2 bMagicAddEle,Ele_All,3;
+      bonus bSMatk,2;
+      if (.@sum>=27) {
+         bonus2 bIgnoreMResRaceRate,RC_All,10;
+         bonus2 bIgnoreMResRaceRate,RC_Player_Human,-10;
+         bonus2 bIgnoreMResRaceRate,RC_Player_Doram,-10;
+      }
+  - Combos:
+      - Combo:
+          - S_AG_FB_Earring   # 24971
+          - S_AG_FB_Pendant   # 24972
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L);
+      bonus bSMatk,2;
+      bonus bMatkRate,2;
+      if (.@sum>=15) {
+         bonus2 bMagicAddSize,Size_All,7;
+         if (.@sum>=18) {
+            bonus2 bIgnoreMdefRaceRate,RC_All,50;
+            bonus2 bIgnoreMdefRaceRate,RC_Player_Human,-50;
+            bonus2 bIgnoreMdefRaceRate,RC_Player_Doram,-50;
+         }
+      }
+  - Combos:
+      - Combo:
+          - S_AG_SH_Armor   # 24973
+          - S_Master_Shield   # 24793
+          - S_AG_SH_Shoes   # 24974
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_SHOES);
+      bonus2 bMagicAddEle,Ele_All,3;
+      bonus bSMatk,2;
+      if (.@sum>=27) {
+         bonus2 bIgnoreMResRaceRate,RC_All,10;
+         bonus2 bIgnoreMResRaceRate,RC_Player_Human,-10;
+         bonus2 bIgnoreMResRaceRate,RC_Player_Doram,-10;
+      }
+  - Combos:
+      - Combo:
+          - S_AG_SH_Armor   # 24973
+          - S_AG_SH_Shoes   # 24974
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES);
+      bonus bSMatk,2;
+      bonus bMatkRate,2;
+      if (.@sum>=15) {
+         bonus2 bMagicAddSize,Size_All,7;
+         if (.@sum>=18) {
+            bonus2 bIgnoreMdefRaceRate,RC_All,50;
+            bonus2 bIgnoreMdefRaceRate,RC_Player_Human,-50;
+            bonus2 bIgnoreMdefRaceRate,RC_Player_Doram,-50;
+         }
+      }
+  - Combos:
+      - Combo:
+          - S_SKE_NS_Earring   # 24975
+          - S_Master_Weapon   # 24792
+          - S_SKE_NS_Pendant   # 24976
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_L);
+      bonus bCRate,1;
+      bonus bCritical,3;
+      if (.@sum>=27) {
+         bonus2 bIgnoreResRaceRate,RC_All,10;
+         bonus2 bIgnoreResRaceRate,RC_Player_Human,-10;
+         bonus2 bIgnoreResRaceRate,RC_Player_Doram,-10;
+      }
+  - Combos:
+      - Combo:
+          - S_SKE_NS_Earring   # 24975
+          - S_SKE_NS_Pendant   # 24976
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L);
+      bonus bPAtk,2;
+      bonus bAtkRate,2;
+      if (.@sum>=15) {
+         bonus2 bAddSize,Size_All,7;
+         if (.@sum>=18) {
+            bonus2 bIgnoreDefRaceRate,RC_All,50;
+            bonus2 bIgnoreDefRaceRate,RC_Player_Human,-50;
+            bonus2 bIgnoreDefRaceRate,RC_Player_Doram,-50;
+         }
+      }
+  - Combos:
+      - Combo:
+          - S_SKE_SB_Armor   # 24977
+          - S_Master_Shield   # 24793
+          - S_SKE_SB_Shoes   # 24978
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_SHOES);
+      bonus bCRate,1;
+      bonus bCritical,3;
+      if (.@sum>=27) {
+         bonus2 bIgnoreResRaceRate,RC_All,10;
+         bonus2 bIgnoreResRaceRate,RC_Player_Human,-10;
+         bonus2 bIgnoreResRaceRate,RC_Player_Doram,-10;
+      }
+  - Combos:
+      - Combo:
+          - S_SKE_SB_Armor   # 24977
+          - S_SKE_SB_Shoes   # 24978
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES);
+      bonus bPAtk,2;
+      bonus bAtkRate,2;
+      if (.@sum>=15) {
+         bonus2 bAddSize,Size_All,7;
+         if (.@sum>=18) {
+            bonus2 bIgnoreDefRaceRate,RC_All,50;
+            bonus2 bIgnoreDefRaceRate,RC_Player_Human,-50;
+            bonus2 bIgnoreDefRaceRate,RC_Player_Doram,-50;
+         }
+      }
+  - Combos:
+      - Combo:
+          - Time_Gap_ABC_Dagger   # 28785
+          - Time_DM_R_Crown_ABC   # 400534
+    Script: |
+      bonus2 bMagicAddSize,Size_All,15;
+      bonus2 bSkillAtk,"ABC_ABYSS_SQUARE",25;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus2 bMagicAddEle,Ele_All,15;
+         bonus bMatkRate,7;
+         bonus2 bSkillAtk,"ABC_ABYSS_FLAME",15;
+         bonus2 bSkillAtk,"ABC_ABYSS_FLAME_ATK",15;
+      }
+  - Combos:
+      - Combo:
+          - aegis_300606   # 300606
+          - aegis_300495   # 300495
+    Script: |
+      bonus2 bMagicAddSize,Size_Medium,10;
+  - Combos:
+      - Combo:
+          - aegis_300606   # 300606
+          - aegis_300495   # 300495
+          - aegis_300497   # 300497
+    Script: |
+      bonus2 bMagicAddSize,Size_Medium,20;
+      bonus2 bMagicAddRace,RC_Dragon,15;
+  - Combos:
+      - Combo:
+          - aegis_300606   # 300606
+          - aegis_300497   # 300497
+    Script: |
+      bonus2 bMagicAddRace,RC_Brute,15;
+      bonus2 bMagicAddRace,RC_Player_Doram,15;
+  - Combos:
+      - Combo:
+          - aegis_300607   # 300607
+          - aegis_300491   # 300491
+    Script: |
+      bonus2 bAddSize,Size_Medium,10;
+  - Combos:
+      - Combo:
+          - aegis_300607   # 300607
+          - aegis_300491   # 300491
+          - aegis_300493   # 300493
+    Script: |
+      bonus2 bAddRace,RC_Dragon,15;
+      bonus2 bAddSize,Size_Medium,20;
+  - Combos:
+      - Combo:
+          - aegis_300607   # 300607
+          - aegis_300493   # 300493
+    Script: |
+      bonus2 bAddRace,RC_Brute,15;
+      bonus2 bAddRace,RC_Player_Doram,15;
+  - Combos:
+      - Combo:
+          - aegis_300608   # 300608
+          - aegis_300487   # 300487
+    Script: |
+      bonus2 bAddSize,Size_Medium,10;
+  - Combos:
+      - Combo:
+          - aegis_300608   # 300608
+          - aegis_300487   # 300487
+          - aegis_300489   # 300489
+    Script: |
+      bonus2 bAddRace,RC_Dragon,15;
+      bonus2 bAddSize,Size_Medium,20;
+  - Combos:
+      - Combo:
+          - aegis_300608   # 300608
+          - aegis_300489   # 300489
+    Script: |
+      bonus2 bAddRace,RC_Brute,15;
+      bonus2 bAddRace,RC_Player_Doram,15;
+  - Combos:
+      - Combo:
+          - Royal_H_Mail_A   # 450421
+          - Royal_H_Manteau_A   # 480510
+    Script: |
+      bonus bDelayrate,-10;
+      bonus bBaseAtk,50;
+  - Combos:
+      - Combo:
+          - Royal_H_Mail_B   # 450422
+          - Royal_H_Manteau_B   # 480511
+    Script: |
+      bonus bAspdRate,10;
+      bonus bMatk,50;
+  - Combos:
+      - Combo:
+          - Royal_H_Boots_A   # 470313
+          - Royal_H_Mail_A   # 450421
+    Script: |
+      bonus bAtkRate,5;
+      bonus bMaxHPrate,5;
+  - Combos:
+      - Combo:
+          - Royal_H_Boots_B   # 470314
+          - Royal_H_Mail_B   # 450422
+    Script: |
+      bonus bMatkRate,5;
+      bonus bMaxSPrate,5;
+  - Combos:
+      - Combo:
+          - Royal_H_Manteau_A   # 480510
+          - Royal_H_Boots_A   # 470313
+    Script: |
+      bonus bShortAtkRate,10;
+      bonus bLongAtkRate,10;
+      bonus bVariableCastrate,-10;
+  - Combos:
+      - Combo:
+          - Royal_H_Manteau_B   # 480511
+          - Royal_H_Boots_B   # 470314
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,10;
+      bonus bDelayrate,-10;
+  - Combos:
+      - Combo:
+          - Time_Gap_SKE_Book   # 540094
+          - Time_DM_R_Crown_SKE   # 400543
+    Script: |
+      bonus bShortAtkRate,10;
+      bonus2 bSkillAtk,"SKE_SKY_SUN",30;
+      bonus2 bSkillAtk,"SKE_SKY_MOON",30;
+      if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
+         bonus2 bSkillAtk,"SKE_STAR_LIGHT_KICK",15;
+         bonus2 bSkillAtk,"SKE_SKY_SUN",.@sum;
+         bonus2 bSkillAtk,"SKE_SKY_MOON",.@sum;
+      }
+  - Combos:
+      - Combo:
+          - Time_Gap_CD_Staff   # 550156
+          - Time_DM_R_Crown_CD   # 400537
+    Script: |
+      bonus2 bSkillAtk,"CD_PNEUMATICUS_PROCELLA",15;
+      bonus2 bSkillAtk,"CD_ARBITRIUM",20;
+      bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",20;
+      if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
+         bonus2 bSkillAtk,"CD_PNEUMATICUS_PROCELLA",.@sum;
+         bonus2 bSkillAtk,"CD_ARBITRIUM",.@sum;
+         bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",.@sum;
+      }
+  - Combos:
+      - Combo:
+          - Time_Gap_SH_Foxtail   # 550159
+          - Time_DM_R_Crown_SH   # 400546
+    Script: |
+      bonus bLongAtkRate,15;
+      bonus2 bSkillAtk,"SH_CHUL_HO_SONIC_CLAW",45;
+      if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
+         bonus2 bSkillAtk,"SH_CHUL_HO_BATTERING",.@sum;
+         bonus2 bSkillCooldown,"SH_CHUL_HO_SONIC_CLAW",150;
+         if (getskilllv("SH_CHUL_HO_BATTERING") > 0) {
+            bonus4 bAutoSpellOnSkill,"SH_CHUL_HO_SONIC_CLAW","SH_CHUL_HO_BATTERING",getskilllv("SH_CHUL_HO_BATTERING"),1000;
+         }
+      }
+  - Combos:
+      - Combo:
+          - Time_Gap_IQ_Knuckle   # 560072
+          - Time_DM_R_Crown_IQ   # 400538
+    Script: |
+      bonus bLongAtkRate,15;
+      bonus2 bSkillAtk,"IQ_EXPOSION_BLASTER",25;
+      if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
+         bonus2 bSkillCooldown,"IQ_EXPOSION_BLASTER",-300;
+         bonus2 bSkillCooldown,"IQ_BLAZING_FLAME_BLAST",-300;
+         bonus2 bSkillAtk,"IQ_EXPOSION_BLASTER",.@sum;
+         bonus2 bSkillAtk,"IQ_BLAZING_FLAME_BLAST",.@sum;
+      }
+  - Combos:
+      - Combo:
+          - Time_Gap_DK_Spear   # 630049
+          - Time_DM_R_Crown_DK   # 400529
+    Script: |
+      bonus bLongAtkRate,15;
+      bonus2 bSkillAtk,"DK_HACKANDSLASHER",20;
+      if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
+         bonus2 bSkillAtk,"DK_HACKANDSLASHER",.@sum;
+         bonus2 bSkillAtk,"DK_DRAGONIC_PIERCE",15;
+         bonus bCritical,10;
+      }

@@ -55215,6 +55215,185 @@ Body:
       .@r = getequiprefinerycnt(EQI_HAND_R);
       bonus2 bSkillAtk,"SH_HYUN_ROK_SPIRIT_POWER",.@r;
       bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",.@r;
+  - Id: 300603
+    AegisName: aegis_300603
+    Name: Dien Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 300604
+    AegisName: aegis_300604
+    Name: Reedsh Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 300605
+    AegisName: aegis_300605
+    Name: Courtness Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 300606
+    AegisName: aegis_300606
+    Name: Rebellion Dien Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,3;
+  - Id: 300607
+    AegisName: aegis_300607
+    Name: Rebellion Reedsh Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bLongAtkRate,3;
+  - Id: 300608
+    AegisName: aegis_300608
+    Name: Rebellion Courtness Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bShortAtkRate,3;
+  - Id: 300609
+    AegisName: aegis_300609
+    Name: Sirena Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,5;
+      if (.@r>=7) {
+         bonus2 bMagicAddRace,RC_Fish,10;
+         if (.@r>=9) {
+            bonus2 bMagicAddRace,RC_Fish,7;
+         }
+      }
+  - Id: 300610
+    AegisName: aegis_300610
+    Name: Guerrero Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bCritical,7+2*(getrefine()/3);
+      if (getenchantgrade()>=ENCHANTGRADE_A)
+         bonus2 bAddSize,Size_All,10;
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_WEAPONLEVEL)==5) {
+         bonus2 bSubEle,Ele_All,5;
+         bonus2 bAddEle,Ele_All,15;
+      }
+  - Id: 300611
+    AegisName: aegis_300611
+    Name: Tassie Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bSMatk,5;
+      bonus2 bMagicAddEle,Ele_Fire,7;
+      if (getrefine()>=10) {
+         bonus2 bMagicAddEle,Ele_Fire,8;
+      }
+  - Id: 300612
+    AegisName: aegis_300612
+    Name: Hanom Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bPAtk,7;
+      bonus2 bAddEle,Ele_Dark,12;
+      if (getrefine()>=10) {
+         bonus2 bAddEle,Ele_Dark,8;
+      }
+  - Id: 300613
+    AegisName: aegis_300613
+    Name: Pesca Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Left_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bAddRace,RC_Angel,25;
+      bonus2 bAddRace,RC_Formless,25;
+      bonus2 bAddEle,Ele_Neutral,25;
+      bonus2 bAddEle,Ele_Holy,25;
+      bonus bMaxHPrate,-20;
+  - Id: 300614
+    AegisName: aegis_300614
+    Name: Diosa Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bSMatk,1;
+      bonus bMatk,10;
+      bonus2 bMagicAtkEle,Ele_Wind,4;
+      bonus bUseSPrate,7;
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_Wind,3;
+         if (.@r>=11) {
+            bonus bVariableCastrate,-5;
+         }
+      }
   - Id: 310000
     AegisName: Ranger_Top2
     Name: Sniper Stone II (Top)
@@ -84192,6 +84371,284 @@ Body:
     SubType: Enchant
     Script: |
       autobonus "{ bonus2 bMagicAddRace,RC_All,20; bonus2 bMagicAddSize,Size_All,20; bonus2 bMagicAddEle,Ele_All,20; bonus2 bMagicAddClass,Class_Normal,20; bonus2 bMagicAddClass,Class_Boss,20; }",50,10000,BF_MAGIC;
+  - Id: 313527
+    AegisName: Hunt_Ev_State
+    Name: Hunting Seal (Ability)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAllStats,5;
+  - Id: 313528
+    AegisName: Hunt_Ev_Atk
+    Name: Hunting Seal (Attack power)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAtkRate,5;
+      bonus bBaseAtk,15;
+      if (getrefine()>=7) {
+         bonus bBaseAtk,25;
+      }
+  - Id: 313529
+    AegisName: Hunt_Ev_Matk
+    Name: Hunting Seal (Magic power)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,5;
+      bonus bMatk,15;
+      if (getrefine()>=7) {
+         bonus bMatk,25;
+      }
+  - Id: 313530
+    AegisName: Hunt_Ev_Warrior
+    Name: Hunting Seal (Warrior)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,3;
+      bonus bBaseAtk,15;
+      if (getrefine()>=7) {
+         bonus bShortAtkRate,3;
+      }
+  - Id: 313531
+    AegisName: Hunt_Ev_Archer
+    Name: Hunting Seal (Shooter)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,3;
+      bonus bBaseAtk,15;
+      if (getrefine()>=7) {
+         bonus bLongAtkRate,3;
+      }
+  - Id: 313532
+    AegisName: Hunt_Ev_Assassin
+    Name: Hunting Seal (Assassin)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,3;
+      bonus bCritical,5;
+      if (getrefine()>=7) {
+         bonus bCritAtkRate,3;
+      }
+  - Id: 313533
+    AegisName: Hunt_Ev_Magician
+    Name: Hunting Seal (Mage)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,3;
+      bonus bMatk,15;
+      if (getrefine()>=7) {
+         bonus2 bMagicAtkEle,Ele_All,3;
+      }
+  - Id: 313534
+    AegisName: Hunt_Ev_Speed
+    Name: Hunting Seal (Speed)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAspdRate,5;
+      bonus bAspd,1;
+      if (getrefine()>=7) {
+         bonus bAspdRate,3;
+      }
+  - Id: 313535
+    AegisName: Hunt_Ev_Caster
+    Name: Hunting Seal (Caster)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-7;
+      if (getrefine()>=7) {
+         bonus bVariableCastrate,-3;
+      }
+  - Id: 313536
+    AegisName: Hunt_Ev_Melee
+    Name: Hunting Seal (Melee)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,3;
+      bonus bHit,35;
+      if (getrefine()>=7) {
+         bonus bShortAtkRate,3;
+      }
+  - Id: 313537
+    AegisName: Hunt_Ev_Range
+    Name: Hunting Seal (Range)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,3;
+      bonus bHit,35;
+      if (getrefine()>=7) {
+         bonus bLongAtkRate,3;
+      }
+  - Id: 313538
+    AegisName: Hunt_Ev_Critical
+    Name: Hunting Seal (Critical)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,3;
+      bonus bCritical,10;
+      if (getrefine()>=7) {
+         bonus bCritAtkRate,3;
+      }
+  - Id: 313539
+    AegisName: Hunt_Ev_Spell
+    Name: Hunting Seal (Spell)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,3;
+      bonus bFlee,50;
+      if (getrefine()>=7) {
+         bonus2 bMagicAtkEle,Ele_All,3;
+      }
+  - Id: 313540
+    AegisName: Hunt_Ev_Hp
+    Name: Hunting Seal (Health)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bHPrecovRate,15;
+      bonus bDef,35;
+      if (getrefine()>=7) {
+         bonus bMaxHPrate,2;
+         bonus bDef,25;
+      }
+  - Id: 313541
+    AegisName: Hunt_Ev_Sp
+    Name: Hunting Seal (Mental power)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSPrecovRate,15;
+      bonus bMdef,15;
+      if (getrefine()>=7) {
+         bonus bMaxSPrate,2;
+         bonus bMdef,10;
+      }
+  - Id: 313542
+    AegisName: Hunt_Ev_P_Force
+    Name: Hunting Seal (Physical force)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAtkRate,5;
+      if (getrefine()>=7) {
+         bonus bShortAtkRate,5;
+         bonus bLongAtkRate,5;
+      }
+  - Id: 313543
+    AegisName: Hunt_Ev_M_Force
+    Name: Hunting Seal (Magical Force)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,5;
+      if (getrefine()>=7) {
+         bonus2 bMagicAtkEle,Ele_All,5;
+      }
+  - Id: 313544
+    AegisName: Hunt_Ev_Robust
+    Name: Hunting Seal (Robust)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxHPrate,5;
+      bonus bMaxSPrate,5;
+      if (getrefine()>=7) {
+         bonus bMaxHPrate,3;
+         bonus bMaxSPrate,3;
+      }
+  - Id: 313545
+    AegisName: Hunt_Ev_F_Cast
+    Name: Hunting Seal (Fixed Casting)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bFixedCast,-300;
+      if (getrefine()>=7) {
+         bonus bFixedCast,-200;
+      }
+  - Id: 313561
+    AegisName: DK_Soul_DP
+    Name: Dragon Knight Soul (Dragonic Pierce)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"DK_DRAGONIC_PIERCE",2+(getrefine()/2);
+  - Id: 313562
+    AegisName: IG_Soul_IP
+    Name: Imperial Guard Soul (Imperial Pressure)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"IG_IMPERIAL_PRESSURE",2+(getrefine()/2);
+  - Id: 313563
+    AegisName: ABC_Soul_AF
+    Name: Abyss Chaser Soul (Abyss Flame)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"ABC_ABYSS_FLAME",2+(.@r/2);
+      bonus2 bSkillAtk,"ABC_ABYSS_FLAME_ATK",2+(.@r/2);
+  - Id: 313564
+    AegisName: CD_Soul_DF
+    Name: Cardinal Soul (Divinus Floss)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"CD_DIVINUS_FLOS",2+(getrefine()/2);
+  - Id: 313566
+    AegisName: IQ_Soul_BFB
+    Name: Inquisitor Soul (Heat Bomb)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"IQ_BLAZING_FLAME_BLAST",2+(getrefine()/2);
+  - Id: 313568
+    AegisName: SKE_Soul_SS
+    Name: Heavenly Soul (Heavenly Spirit Yang)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SKE_SKY_SUN",2+(getrefine()/2);
+  - Id: 313569
+    AegisName: SKE_Soul_SM
+    Name: Heavenly Soul (Heavenly Spirit Moon)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SKE_SKY_MOON",2+(getrefine()/2);
+  - Id: 313570
+    AegisName: SKE_Soul_SLK
+    Name: Heavenly Soul (Heavenly Spirituality)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SKE_STAR_LIGHT_KICK",2+(getrefine()/2);
+  - Id: 313571
+    AegisName: SH_Soul_CHB
+    Name: Soul of the Soul Master (Iron Tiger Rampage)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SH_CHUL_HO_BATTERING",2+(getrefine()/2);
+  - Id: 313572
+    AegisName: SH_Soul_HRSP
+#   Name: Soul of the Soul Master (Hyunrok's Spiritual Power Unleashed)
+    Name: Soul of the Soul Master (Hyunrok's Spiritual Powe    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SH_HYUN_ROK_SPIRIT_POWER",2+(getrefine()/2);
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event
@@ -92989,6 +93446,74 @@ Body:
     Flags:
       BuyingStore: true
       DropEffect: CLIENT
+  - Id: 1001865
+    AegisName: Mysterious_Fruit
+    Name: Mysterious Fruit    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001880
+    AegisName: E_Hunter_Bdg
+    Name: Brave Hunter's Proof    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001881
+    AegisName: E_Hunting_Tag
+    Name: Mark of the Hunt    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001882
+    AegisName: E_Leader_Study
+    Name: Action Record    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001883
+    AegisName: E_Good_Meat
+    Name: Quality Meat    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001884
+    AegisName: E_Strong_Trap
+    Name: Sturdy Trap    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 1200000
     AegisName: IDTest_arrow
     Name: IDTest arrow

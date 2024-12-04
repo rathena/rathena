@@ -4430,6 +4430,36 @@ Body:
       NoAuction: true
     Script: |
       itemheal 0,260; /* average value */
+  - Id: 11640
+    AegisName: E_Deli_BBQ
+    Name: Well-cooked Meat    # !todo check english name
+    Type: Healing
+    Weight: 1
+    EquipLevelMin: 70
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      itemheal 1750,0; /* average value */
+  - Id: 11641
+    AegisName: E_Leather_Bottle
+    Name: Leather Canteen    # !todo check english name
+    Type: Healing
+    Weight: 1
+    EquipLevelMin: 70
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      itemheal 0,160; /* average value */
   - Id: 11701
     AegisName: Girl_Bunch_Of_Flower
     Name: Girl's Bouquet
@@ -58930,8 +58960,8 @@ Body:
     AegisName: JanuaryGiftBox
     Name: January Gift Box
     Type: Usable
-    Buy: 10
-    Weight: 100
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -58941,13 +58971,13 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 19052,604800;
+      getgroupitem(IG_JANUARYGIFTBOX);
   - Id: 22851
     AegisName: FebruaryGiftBox
     Name: February Gift Box
     Type: Usable
-    Buy: 10
-    Weight: 100
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -58957,13 +58987,13 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12105,2;
+      getgroupitem(IG_FEBRUARYGIFTBOX);
   - Id: 22852
     AegisName: MarchGiftBox
     Name: March Gift Box
     Type: Usable
-    Buy: 10
-    Weight: 100
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -58973,7 +59003,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /*2 Lucky Eggs*/
+      getgroupitem(IG_MARCHGIFTBOX);
   - Id: 22853
     AegisName: AprilGiftBox
     Name: April Gift Box
@@ -58995,8 +59025,8 @@ Body:
     AegisName: MayGiftBox
     Name: May Gift Box
     Type: Usable
-    Buy: 10
-    Weight: 100
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -59006,13 +59036,13 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 22777,2;
+      getgroupitem(IG_MAYGIFTBOX);
   - Id: 22855
     AegisName: JuneGiftBox
     Name: June Gift Box
     Type: Usable
-    Buy: 10
-    Weight: 100
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -59022,13 +59052,13 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /*1 Potion Box*/
+      getgroupitem(IG_JUNEGIFTBOX);
   - Id: 22856
     AegisName: JulyGiftBox
     Name: July Gift Box
     Type: Usable
-    Buy: 10
-    Weight: 100
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -59038,13 +59068,13 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 20212,1;
+      getgroupitem(IG_JULYGIFTBOX);
   - Id: 22857
     AegisName: AugustGiftBox
     Name: August Gift Box
     Type: Usable
-    Buy: 10
-    Weight: 100
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -59054,7 +59084,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12246,1;
+      getgroupitem(IG_AUGUSTGIFTBOX);
   - Id: 22858
     AegisName: SeptemberGiftBox
     Name: September Gift Box
@@ -59076,8 +59106,8 @@ Body:
     AegisName: OctoberGiftBox
     Name: October Gift Box
     Type: Usable
-    Buy: 10
-    Weight: 100
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -59087,7 +59117,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12529,5;
+      getgroupitem(IG_OCTOBERGIFTBOX);
   - Id: 22860
     AegisName: NovemberGiftBox
     Name: November Gift Box
@@ -59109,8 +59139,8 @@ Body:
     AegisName: DecemberGiftBox
     Name: December Gift Box
     Type: Usable
-    Buy: 10
-    Weight: 100
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -59120,7 +59150,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 22869,10;
+      getgroupitem(IG_DECEMBERGIFTBOX);
   - Id: 22868
     AegisName: Enchant_Stone_Box5
     Name: Costume Enchant Stone Box 5
@@ -78751,6 +78781,19 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 103061
+    AegisName: Change_Gender_Card
+    Name: Gender Change Card    # !todo check english name
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 103063
     AegisName: Enchant_Stone_Box35
     Name: Costume Enchant Stone Box 35
@@ -80465,6 +80508,44 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_AEGIS_103582);
+  - Id: 103597
+    AegisName: Calender_Costume_Box
+    Name: Box    # !todo check english name
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 103608
+    AegisName: Zonda_Support
+    Name: Zonda Support    # !todo check english name
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 103609
+    AegisName: Battle_Buff
+    Name: Battle Buff    # !todo check english name
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 103617
     AegisName: aegis_103617
     Name: Costume Enchant Stone Box 37    # !todo check english name
@@ -80546,6 +80627,159 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_AEGIS_103627);
+  - Id: 103634
+    AegisName: 2024GoldPcBox
+    Name: Gold PC Room Box    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_2024GOLDPCBOX);
+  - Id: 103635
+    AegisName: Plus7_Refine_NPC
+    Name: +7 Refining Hammer for NPC    # !todo check english name
+    Type: DelayConsume
+    Script: |
+      item_reform();
+  - Id: 103653
+    AegisName: E_Meat_Sandwich
+    Name: Thick Meat Sandwich    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      specialeffect2 EF_POTION_BERSERK;
+      sc_start SC_CONTENTS_31,900000,10;
+  - Id: 103654
+    AegisName: E_Vin_Chaud
+    Name: Warm Bang Show    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      specialeffect2 EF_ASPERSIO;
+      sc_start SC_CONTENTS_32,900000,10;
+  - Id: 103655
+    AegisName: E_Egg_Nog
+    Name: Smooth Eggnog    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      specialeffect2 EF_HASTEUP;
+      specialeffect2 EF_PROVIDENCE;
+      sc_start SC_CONTENTS_33,900000,10;
+  - Id: 103656
+    AegisName: E_Winter_Stew
+    Name: Deep-flavored Meat Stew    # !todo check english name
+    Type: Usable
+    Weight: 50
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      percentheal 100,100;
+  - Id: 103657
+    AegisName: E_Card_Pack
+    Name: Celebrity Card Pack    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_E_CARD_PACK);
+  - Id: 103658
+    AegisName: True_Hunting_Set
+    Name: Troua Hunting Armor Box    # !todo check english name
+    Type: Usable
+    Weight: 2500
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_TRUE_HUNTING_SET);
+  - Id: 103659
+    AegisName: Regia_Hunting_Set
+    Name: Regia Hunting Armor Box    # !todo check english name
+    Type: Usable
+    Weight: 2500
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_REGIA_HUNTING_SET);
+  - Id: 103675
+    AegisName: Mysterious_Fruit_Box
+    Name: Mysterious Fruit 5-piece Basket    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_MYSTERIOUS_FRUIT_BOX);
   - Id: 200000
     AegisName: IDTest_Cash
     Name: IDTest Cash
@@ -83293,6 +83527,22 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_NYANGVINE_SPECIAL_PACK3);
+  - Id: 200476
+    AegisName: Zonda_Support_Package
+    Name: Zonda Support Package    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_ZONDA_SUPPORT_PACKAGE);
   - Id: 200481
     AegisName: LI_Nyangvine_Box1_37
 #   Name: (Account Limited) Nyangdare Fruit Package I (Stone Box 37)
