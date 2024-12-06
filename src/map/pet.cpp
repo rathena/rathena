@@ -1230,7 +1230,7 @@ void pet_catch_process_start( map_session_data& sd, t_itemid item_id, e_pet_catc
 
 	if( process == nullptr ){
 		process = std::make_shared<s_pet_catch_process>();
-		pet_catchprocesses[process->char_id] = process;
+		pet_catchprocesses[sd.status.char_id] = process;
 	}else{
 		// Reuse previously allocated memory and restart the process
 	}
@@ -1251,6 +1251,8 @@ void pet_catch_process_end( map_session_data& sd, int32 target_id ){
 	std::shared_ptr<s_pet_catch_process> process = util::umap_find( pet_catchprocesses, sd.status.char_id );
 
 	if( process == nullptr ){
+		clif_pet_roulette(sd, false);
+
 		return;
 	}
 
