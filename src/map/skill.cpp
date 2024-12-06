@@ -7671,8 +7671,8 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		break;
 	case SA_TAMINGMONSTER:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		if (sd && dstmd && pet_db.find(dstmd->mob_id)) {
-			pet_catch_process1(sd, dstmd->mob_id);
+		if (sd != nullptr && dstmd != nullptr) {
+			pet_catch_process_start( *sd, 0, PET_CATCH_UNIVERSAL_ALL );
 		}
 		break;
 

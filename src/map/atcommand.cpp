@@ -3170,7 +3170,6 @@ ACMD_FUNC(makeegg) {
 	if (pet != nullptr) {
 		std::shared_ptr<s_mob_db> mdb = mob_db.find(pet->class_);
 		if(mdb){
-			sd->catch_target_class = pet->class_;
 			if(intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->jname.c_str())){
 				res = 0;
 			} else {

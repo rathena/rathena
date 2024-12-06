@@ -693,8 +693,6 @@ public:
 	t_itemid itemid;
 	short itemindex;	//Used item's index in sd->inventory [Skotlex]
 
-	uint16 catch_target_class; // pet catching, stores a pet class to catch [zzo]
-
 	int8 spiritball, spiritball_old;
 	int32 spirit_timer[MAX_SPIRITBALL];
 	short spiritcharm; //No. of spirit
