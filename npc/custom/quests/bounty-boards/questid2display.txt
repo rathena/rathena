@@ -1,0 +1,751 @@
+62556#Bounty Board Goat#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Goat monsters and return to the Bounty Board next to the Juno Tool Shop#
+#
+
+62557#Bounty Board Harpy#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Harpy monsters and return to the Bounty Board next to the Juno Tool Shop#
+#
+
+62558#Bounty Board Sleeper#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Sleeper monsters and return to the Bounty Board next to the Juno Tool Shop#
+#
+
+62559#Bounty Board Grand Peco#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Grand Peco monsters and return to the Bounty Board next to the Juno Tool Shop#
+#
+
+62599#Bounty Board Cornus#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Cornus monsters and return to the Bounty Board at the Rune Midgards Alliance Camp#
+#
+
+62600#Bounty Board Naga#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Naga monsters and return to the Bounty Board at the Rune Midgards Alliance Camp#
+#
+
+62601#Bounty Board Pinguicula#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Pinguicula monsters and return to the Bounty Board at the Rune Midgards Alliance Camp#
+#
+
+62602#Bounty Board Luciola Vespa#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Luciola Vespa monsters and return to the Bounty Board at the Rune Midgards Alliance Camp#
+#
+
+62603#Bounty Board Curupira#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Curupira monsters and return to the Bounty Board at the center of Brasilis#
+#
+
+62604#Bounty Board Headless Mule#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Headless Mule monsters and return to the Bounty Board at the center of Brasilis#
+#
+
+62605#Bounty Board Jaguar#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Jaguar monsters and return to the Bounty Board at the center of Brasilis#
+#
+
+62606#Bounty Board Toucan#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Toucan monsters and return to the Bounty Board at the center of Brasilis#
+#
+
+62607#Bounty Board Piranha#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Piranha monsters and return to the Bounty Board at the center of Brasilis#
+#
+
+62608#Bounty Board Iara#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Iara monsters and return to the Bounty Board at the center of Brasilis#
+#
+
+62609#Bounty Board Wild Rose#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Wild Rose monsters and return to the Bounty Board at Umbala#
+#
+
+62610#Bounty Board Dryad#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Dryad monsters and return to the Bounty Board at Umbala#
+#
+
+62611#Bounty Board Wootan Fighter#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Wootan Fighter monsters and return to the Bounty Board at Umbala#
+#
+
+62612#Bounty Board Parasite#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Parasite monsters and return to the Bounty Board at Umbala#
+#
+
+62613#Bounty Board Centipede#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Centipede monsters and return to the Bounty Board at El Dicastes#
+#
+
+62614#Bounty Board Centipede Larva#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Centipede Larva monsters and return to the Bounty Board at El Dicastes#
+#
+
+62615#Bounty Board Tatacho#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Tatacho monsters and return to the Bounty Board at El Dicastes#
+#
+
+62616#Bounty Board Dolomedes#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Dolomedes monsters and return to the Bounty Board at El Dicastes#
+#
+
+62560#Bounty Board Skeleton#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Skeleton monsters and return to the Bounty Board at Archer Village#
+#
+
+62561#Bounty Board Soldier Skeleton#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Soldier Skeleton monsters and return to the Bounty Board at Archer Village#
+#
+
+62562#Bounty Board Archer Skeleton#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Archer Skeleton monsters and return to the Bounty Board at Archer Village#
+#
+
+62563#Bounty Board Munak#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Munak monsters and return to the Bounty Board at Archer Village#
+#
+
+62564#Bounty Board Bongun#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Bongun monsters and return to the Bounty Board at Archer Village#
+#
+
+62565#Bounty Board Spore#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Spore monsters and return to the Bounty Board at Archer Village#
+#
+
+62566#Bounty Board Snake#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Snake monsters and return to the Bounty Board at Archer Village#
+#
+
+62567#Bounty Board Bigfoot#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Bigfoot monsters and return to the Bounty Board at Archer Village#
+#
+
+62568#Bounty Board Elder Willow#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Elder Willow monsters and return to the Bounty Board at Archer Village#
+#
+
+62569#Bounty Board Greatest General#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Elder Greatest General monsters and return to the Bounty Board at Archer Village#
+#
+
+62617#Bounty Board Thara Frog#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Thara Frog monsters and return to the Bounty Board at Comodo#
+#
+
+62618#Bounty Board Sea Otter#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Sea Otter monsters and return to the Bounty Board at Comodo#
+#
+
+62619#Bounty Board Seal#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Seal monsters and return to the Bounty Board at Comodo#
+#
+
+62620#Bounty Board Raggler#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Raggler monsters and return to the Bounty Board at Comodo#
+#
+
+62621#Bounty Board Grove#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Grove monsters and return to the Bounty Board at Comodo#
+#
+
+62622#Bounty Board Alligator#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Alligator monsters and return to the Bounty Board at Comodo#
+#
+
+62623#Bounty Board Golem#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Golem monsters and return to the Bounty Board at Comodo#
+#
+
+62624#Bounty Board Stalactic Golem#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Stalactic Golem monsters and return to the Bounty Board at Comodo#
+#
+
+62625#Bounty Board Medusa#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Medusa monsters and return to the Bounty Board at Comodo#
+#
+
+62644#Bounty Board Willow#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Willow monsters and return to the Bounty Board at Payon#
+#
+
+62645#Bounty Board Wolf#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Wolf monsters and return to the Bounty Board at Payon#
+#
+
+62646#Bounty Board Munak#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Munak monsters and return to the Bounty Board at Payon#
+#
+
+62647#Bounty Board Bongun#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Bongun monsters and return to the Bounty Board at Payon#
+#
+
+62648#Bounty Board Sohee#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Sohee monsters and return to the Bounty Board at Payon#
+#
+
+62649#Bounty Board Dokebi#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Dokebi monsters and return to the Bounty Board at Payon#
+#
+
+62650#Bounty Board Nine Tail#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nine Tail monsters and return to the Bounty Board at Payon#
+#
+
+62660#Bounty Board Chonchon#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Chonchon monsters and return to the Bounty Board at Geffen#
+#
+
+62661#Bounty Board Roda Frog#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Roda Frog monsters and return to the Bounty Board at Geffen#
+#
+
+62662#Bounty Board Mandragora#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Mandragora monsters and return to the Bounty Board at Geffen#
+#
+
+62663#Bounty Board Ambernite#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Ambernite monsters and return to the Bounty Board at Geffen#
+#
+
+62664#Bounty Board Creamy#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Creamy monsters and return to the Bounty Board at Geffen#
+#
+
+62665#Bounty Board Caramel#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Caramel monsters and return to the Bounty Board at Geffen#
+#
+
+62666#Bounty Board Horn#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Horn monsters and return to the Bounty Board at Geffen#
+#
+
+62667#Bounty Board Poison Spore#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Poison Spore monsters and return to the Bounty Board at Geffen#
+#
+
+62668#Bounty Board Orc Warrior#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Orc Warrior monsters and return to the Bounty Board at Geffen#
+#
+
+62669#Bounty Board Orc Lady#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Orc Lady monsters and return to the Bounty Board at Geffen#
+#
+
+62670#Bounty Board Knife Goblin#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Knife Goblin monsters and return to the Bounty Board at Geffen#
+#
+
+62671#Bounty Board Goblin Archer#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Goblin Archer monsters and return to the Bounty Board at Geffen#
+#
+
+62672#Bounty Board Ghoul#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Ghoul monsters and return to the Bounty Board at Geffen#
+#
+
+62673#Bounty Board Jakk#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Jakk monsters and return to the Bounty Board at Geffen#
+#
+
+62674#Bounty Board Nightmare#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare monsters and return to the Bounty Board at Geffen#
+#
+
+62675#Bounty Board Deviruchi#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Deviruchi monsters and return to the Bounty Board at Geffen#
+#
+
+62676#Bounty Board Marionette#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Marionette monsters and return to the Bounty Board at Geffen#
+#
+
+62677#Bounty Board Wraith#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Wraith monsters and return to the Bounty Board at Geffen#
+#
+
+62678#Bounty Board Dark Priest#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Dark Priest monsters and return to the Bounty Board at Geffen#
+#
+
+62679#Bounty Board Gargoyle#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Gargoyle monsters and return to the Bounty Board at Geffen#
+#
+
+62680#Bounty Board Flying Petite#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Flying Petite monsters and return to the Bounty Board at Geffen#
+#
+
+62681#Bounty Board Ground Petite#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Ground Petite monsters and return to the Bounty Board at Geffen#
+#
+
+62682#Bounty Board Evil Druid#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Evil Druid monsters and return to the Bounty Board at Geffen#
+#
+
+62683#Bounty Board Wind Ghost#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Wind Ghost monsters and return to the Bounty Board at Geffen#
+#
+
+62684#Bounty Board Carat#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Carat monsters and return to the Bounty Board at Geffen#
+#
+
+62685#Bounty Board Wanderer#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Wanderer monsters and return to the Bounty Board at Geffen#
+#
+
+62686#Bounty Board Sting#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Sting monsters and return to the Bounty Board at Geffen#
+#
+
+62687#Bounty Board Arclouse#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Arclouse monsters and return to the Bounty Board at Geffen#
+#
+
+62688#Bounty Board Raydric#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Raydric monsters and return to the Bounty Board at Geffen#
+#
+
+62689#Bounty Board Khalitzburg#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Khalitzburg monsters and return to the Bounty Board at Geffen#
+#
+
+62690#Bounty Board Anolian#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Anolian monsters and return to the Bounty Board at Geffen#
+#
+
+62691#Bounty Board False Angel#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 False Angel monsters and return to the Bounty Board at Geffen#
+#
+
+62692#Bounty Board Violy#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Violy monsters and return to the Bounty Board at Geffen#
+#
+
+62693#Bounty Board Mini Demon#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Mini Demon monsters and return to the Bounty Board at Geffen#
+#
+
+62710#Bounty Board Ground Deleter#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Ground Deleter monsters and return to the Bounty Board at Juno#
+#
+
+62711#Bounty Board Flying Deleter#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Flying Deleter monsters and return to the Bounty Board at Juno#
+#
+
+62712#Bounty Board Nightmare Terror#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Terror monsters and return to the Bounty Board at Juno#
+#
+
+62713#Bounty Board Purple Venatu#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Purple Venatu monsters and return to the Bounty Board at Juno#
+#
+
+62714#Bounty Board Green Venatu#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Green Venatu monsters and return to the Bounty Board at Juno#
+#
+
+62715#Bounty Board Orange Venatu#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Orange Venatu monsters and return to the Bounty Board at Juno#
+#
+
+62716#Bounty Board Blue Venatu#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Blue Venatu monsters and return to the Bounty Board at Juno#
+#
+
+62717#Bounty Board Apocalypse#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Apocalypse monsters and return to the Bounty Board at Juno#
+#
+
+62722#Bounty Board Hornet#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Hornet monsters and return to the Bounty Board near the Prontera Center Fountain#
+#
+
+62723#Bounty Board Roda Frog#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Roda Frog monsters and return to the Bounty Board near the Prontera Center Fountain#
+#
+
+62724#Bounty Board Rocker#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Rocker monsters and return to the Bounty Board near the Prontera Center Fountain#
+#
+
+62725#Bounty Board Savage Babe#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Savage Babe monsters and return to the Bounty Board near the Prontera Center Fountain#
+#
+
+62726#Bounty Board Thief Bug Egg#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Thief Bug Egg monsters and return to the Bounty Board near the Prontera Center Fountain#
+#
+
+62727#Bounty Board Thief Bug#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Thief Bug monsters and return to the Bounty Board near the Prontera Center Fountain#
+#
+
+62728#Bounty Board Tarou#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Tarou monsters and return to the Bounty Board near the Prontera Center Fountain#
+#
+
+62729#Bounty Board Stainer#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Stainer monsters and return to the Bounty Board near the Prontera Center Fountain#
+#
+
+62730#Bounty Board Peco Peco#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Peco Peco monsters and return to the Bounty Board near the Prontera Center Fountain#
+#
+
+62731#Bounty Board Coco#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Coco monsters and return to the Bounty Board near the Prontera Center Fountain#
+#
+
+62732#Bounty Board Yoyo#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Yoyo monsters and return to the Bounty Board near the Prontera Center Fountain#
+#
+
+62733#Bounty Board Female Thief Bug#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Female Thief Bug monsters and return to the Bounty Board near the Prontera Center Fountain#
+#
+
+62734#Bounty Board Male Thief Bug#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Male Thief Bug monsters and return to the Bounty Board near the Prontera Center Fountain#
+#
+
+62735#Bounty Board Poporing#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Poporing monsters and return to the Bounty Board near the Prontera Center Fountain#
+#
+
+62736#Bounty Board Elder Willow#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Elder Willow monsters and return to the Bounty Board near the Prontera Center Fountain#
+#
+
+62737#Bounty Board Argos#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Argos monsters and return to the Bounty Board near the Prontera Center Fountain#
+#
+
+62738#Bounty Board Beetle King#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Beetle King monsters and return to the Bounty Board near the Prontera Center Fountain#
+#
+
+62739#Bounty Board Savage#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Savage monsters and return to the Bounty Board near the Prontera Center Fountain#
+#
+
+62740#Bounty Board Driller#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Driller monsters and return to the Bounty Board near the Prontera Center Fountain#
+#
+
+62741#Bounty Board Hunter Fly#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Hunter Fly monsters and return to the Bounty Board near the Prontera Center Fountain#
+#
+
+62742#Bounty Board Mantis#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Mantis monsters and return to the Bounty Board near the Prontera Center Fountain#
+#
+
+62743#Bounty Board Sidewinder#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Sidewinder monsters and return to the Bounty Board near the Prontera Center Fountain#
+#
+
+62744#Bounty Board Argiope#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Argiope monsters and return to the Bounty Board near the Prontera Center Fountain#
+#
+
+62745#Bounty Board Metaling#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Metaling monsters and return to the Bounty Board at Lighthalzen#
+#
+
+62746#Bounty Board Rafflesia#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Rafflesia monsters and return to the Bounty Board at Lighthalzen#
+#
+
+62747#Bounty Board Stem Worm#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Stem Worm monsters and return to the Bounty Board at Lighthalzen#
+#
+
+62748#Bounty Board Breeze#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Breeze monsters and return to the Bounty Board at Lighthalzen#
+#
+
+62749#Bounty Board Anopheles#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Anopheles monsters and return to the Bounty Board at Lighthalzen#
+#
+
+62750#Bounty Board Axe Kobold#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Axe Kobold monsters and return to the Bounty Board at Lighthalzen#
+#
+
+62751#Bounty Board Hammer Kobold#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Hammer Kobold monsters and return to the Bounty Board at Lighthalzen#
+#
+
+62752#Bounty Board Mace Kobold#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Mace Kobold monsters and return to the Bounty Board at Lighthalzen#
+#
+
+62753#Bounty Board Kobold Archer#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Kobold Archer monsters and return to the Bounty Board at Lighthalzen#
+#
+
+62754#Bounty Board Remover#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Remover monsters and return to the Bounty Board at Lighthalzen#
+#
+
+62755#Bounty Board Laurell Weinder#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Laurell Weinder monsters and return to the Bounty Board at Lighthalzen#
+#
+
+62756#Bounty Board Errende Ebecee#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Errende Ebecee monsters and return to the Bounty Board at Lighthalzen#
+#
+
+62757#Bounty Board Armeyer Dinze#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Armeyer Dinze monsters and return to the Bounty Board at Lighthalzen#
+#
+
+62758#Bounty Board Wickbine Tres#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Wickbine Tres monsters and return to the Bounty Board at Lighthalzen#
+#
+
+62759#Bounty Board Kavach Icarus#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Kavach Icarus monsters and return to the Bounty Board at Lighthalzen#
+#
+
+62760#Bounty Board Egnigem Cenia#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Egnigem Cenia monsters and return to the Bounty Board at Lighthalzen#
+#
+
+62761#Bounty Board Kathryne Keyron#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Kathryne Keyron monsters and return to the Bounty Board at Lighthalzen#
+#
+
+62762#Bounty Board Margaretha Sorin#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Margaretha Sorin monsters and return to the Bounty Board at Lighthalzen#
+#
+
+62763#Bounty Board Cecil Damon#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Cecil Damon monsters and return to the Bounty Board at Lighthalzen#
+#
+
+62764#Bounty Board Eremes Guile#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Eremes Guile monsters and return to the Bounty Board at Lighthalzen#
+#
+
+62765#Bounty Board Seyren Windsor#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Seyren Windsor monsters and return to the Bounty Board at Lighthalzen#
+#
+
+62766#Bounty Board Howard Alt-Eisen#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Howard Alt-Eisen monsters and return to the Bounty Board at Lighthalzen#
+#
+
+62767#Bounty Board Trentini#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Trentini monsters and return to the Bounty Board at Lighthalzen#
+#
+
+62768#Bounty Board Celia Alde#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Celia Alde monsters and return to the Bounty Board at Lighthalzen#
+#
+
+62769#Bounty Board Alphoccio#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Alphoccio monsters and return to the Bounty Board at Lighthalzen#
+#
+
+62770#Bounty Board Gertie#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Gertie monsters and return to the Bounty Board at Lighthalzen#
+#
+
+62771#Bounty Board Chen Lio#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Chen Lio monsters and return to the Bounty Board at Lighthalzen#
+#
+
+62772#Bounty Board Flamel Emure#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Flamel Emure monsters and return to the Bounty Board at Lighthalzen#
+#
+
+62773#Bounty Board Randel Lawrence#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Randel Lawrence monsters and return to the Bounty Board at Lighthalzen#
+#
+
+62789#Bounty Board Red Novus#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Red Novus monsters and return to the Bounty Board at Hugel#
+#
+
+62790#Bounty Board Yellow Novus#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Yellow Novus monsters and return to the Bounty Board at Hugel#
+#
+
+62791#Bounty Board Ancient Mimic#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Ancient Mimic monsters and return to the Bounty Board at Hugel#
+#
+
+62792#Bounty Board Death Word#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Death Word monsters and return to the Bounty Board at Hugel#
+#
+
+62793#Bounty Board Ferus#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Ferus monsters and return to the Bounty Board at Hugel#
+#
+
+62794#Bounty Board Bewler#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Bewler monsters and return to the Bounty Board at Hugel#
+#
+
+62795#Bounty Board Skogul#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Skogul monsters and return to the Bounty Board at Hugel#
+#
+
+62796#Bounty Board Frus#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Frus monsters and return to the Bounty Board at Hugel#
+#
+
+62797#Bounty Board Horn#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Horn monsters and return to the Bounty Board at Payon#
+#
+
+62798#Bounty Board Blue Acidus#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Blue Acidus monsters and return to the Bounty Board at Hugel#
+#
+
+62799#Bounty Board Gold Acidus#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Gold Acidus monsters and return to the Bounty Board at Hugel#
+#
+
+62802#Bounty Board Antler Scaraba#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Antler Scaraba monsters and return to the Bounty Board at El Dicastes#
+#
+
+62803#Bounty Board Horn Scaraba#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Horn Scaraba monsters and return to the Bounty Board at El Dicastes#
+#
+
+62804#Bounty Board Rake Horn Scaraba#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Rake Horn Scaraba monsters and return to the Bounty Board at El Dicastes#
+#
+
+62805#Bounty Board Uni-Horn Scaraba#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Uni-Horn Scaraba monsters and return to the Bounty Board at El Dicastes#
+#
+
+62806#Bounty Board Pinguicula#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Pinguicula monsters and return to the Bounty Board at the Rune Midgards Alliance Camp#
+#
+
+62807#Bounty Board Dark Pinguicula#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Dark Pinguicula monsters and return to the Bounty Board at the Rune Midgard Alliance Camp#
+#
+
+62808#Bounty Board Nepenthes#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nepenthes monsters and return to the Bounty Board at the Rune Midgard Alliance Camp#
+#
+
+62809#Bounty Board Flora#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Flora monsters and return to the Bounty Board at Comodo#
+#
+
+62810#Bounty Board Coco#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Coco monsters and return to the Bounty Board at Geffen#
+#
+
+62811#Bounty Board Smokie#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Smokie monsters and return to the Bounty Board at Geffen#
+#
+
+62812#Bounty Board Martin#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Martin monsters and return to the Bounty Board at Geffen#
+#
+
+62813#Bounty Board Elder Willow#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Elder Willow monsters and return to the Bounty Board at Geffen#
+#
+
+62814#Bounty Board Soldier Skeleton#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Soldier Skeleton monsters and return to the Bounty Board at Geffen#
+#
+
+62815#Bounty Board Majoruros#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Majoruros monsters and return to the Bounty Board at Geffen#
+#
+
+62816#Bounty Board Lunatic#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Lunatic monsters and return to the Bounty Board at Prontera#
+#
+
+62817#Bounty Board Ambernite#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Ambernite monsters and return to the Bounty Board at Prontera#
+#
+
+62818#Bounty Board Muka#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Muka monsters and return to the Bounty Board at Prontera#
+#
+
+62819#Bounty Board Magnolia#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Magnolia monsters and return to the Bounty Board at Prontera#
+#
+
+62820#Bounty Board Skel Worker#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Skel Worker monsters and return to the Bounty Board at Geffen#
+#
+
+62821#Bounty Board Miming#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Miming monsters and return to the Bounty Board at Mora#
+#
+
+62822#Bounty Board Little Fatum#SG_FEEL#QUE_NOIMAGE#
+Hunt 150  Little Fatum monsters and return to the Bounty Board at Mora#
+#
+
+62823#Bounty Board Cenere#SG_FEEL#QUE_NOIMAGE#
+Hunt 150  Cenere monsters and return to the Bounty Board at Mora#
+#
+
+62824#Bounty Board Menblatt#SG_FEEL#QUE_NOIMAGE#
+Hunt 150  Menblatt monsters and return to the Bounty Board at Mora#
+#
+
+62825#Bounty Board Petal#SG_FEEL#QUE_NOIMAGE#
+Hunt 150  Petal monsters and return to the Bounty Board at Mora#
+#
+
+62826#Bounty Board Angra Mantis#SG_FEEL#QUE_NOIMAGE#
+Hunt 150  Angra Mantis monsters and return to the Bounty Board at Mora#
+#
+
+62827#Bounty Board Antique Book#SG_FEEL#QUE_NOIMAGE#
+Hunt 150  Antique Book monsters and return to the Bounty Board at Mora#
+#
+
+62828#Bounty Board Yellow Lichtern#SG_FEEL#QUE_NOIMAGE#
+Hunt 150  Yellow Lichtern monsters and return to the Bounty Board at Mora#
+#
+
+62829#Bounty Board Blue Lichtern#SG_FEEL#QUE_NOIMAGE#
+Hunt 150  Blue Lichtern monsters and return to the Bounty Board at Mora#
+#
+
+62830#Bounty Board Red Lichtern#SG_FEEL#QUE_NOIMAGE#
+Hunt 150  Red Lichtern monsters and return to the Bounty Board at Mora#
+#
+
+62831#Bounty Board Green Lichtern#SG_FEEL#QUE_NOIMAGE#
+Hunt 150  Green Lichtern monsters and return to the Bounty Board at Mora#
+#
+
+62890#Bounty Board Cursed Box#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 of the monster below and return to the Bounty Board at Aldebaran#
+#
+
+62891#Bounty Board Cursed Book#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 of the monster below and return to the Bounty Board at Aldebaran#
+#
+
+62892#Bounty Board Big Bell#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 of the monster below and return to the Bounty Board at Aldebaran#
+#
+
+62893#Bounty Board Big Ben#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 of the monster below and return to the Bounty Board at Aldebaran#
+#
+
+62894#Bounty Board Neo Punk#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 of the monster below and return to the Bounty Board at Aldebaran#
+#

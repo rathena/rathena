@@ -66,7 +66,11 @@ prt_in,70,143,0	warp	prt20	2,1,prt_in,70,165
 prt_in,70,162,0	warp	prt20-1	2,1,prt_in,70,140
 prt_in,80,113,0	warp	prt11-1	2,1,prontera,48,343
 prt_in,82,65,0	warp	prt19b	1,3,prt_in,66,65
-prt_in,227,15,0	warp	prt20-2	2,2,prontera,263,275
+prontera,125,251,0	warp	prt900	2,2,prt_sewb1,131,248
+
+//= Custom =================================================
+prontera,263,279,0	warp	prt19	2,2,prt_in,227,18
+prt_in,227,14,0	warp	prt901	2,2,prontera,263,275
 
 //= Prontera Church ==========================================
 prt_church,100,56,0	warp	prtch001	7,1,prontera,234,314

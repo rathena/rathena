@@ -571,66 +571,7 @@ prt_in,227,45,0	script	Archeologist#sign	804,{
 	}
 	else if (sign_q == 138) {
 		set .@stime_s1,gettime(DT_HOUR);
-		if (.@stime_s1 < 1) {
-			if (sign_sq == 11) {
-				set .@pass_s,1;
-			}
-		}
-		else if (.@stime_s1 < 3) {
-			if (sign_sq == 12) {
-				set .@pass_s,1;
-			}
-		}
-		else if (.@stime_s1 < 5) {
-			if (sign_sq == 1) {
-				set .@pass_s,1;
-			}
-		}
-		else if (.@stime_s1 < 7) {
-			if (sign_sq == 2) {
-				set .@pass_s,1;
-			}
-		}
-		else if (.@stime_s1 < 9) {
-			if (sign_sq == 3) {
-				set .@pass_s,1;
-			}
-		}
-		else if (.@stime_s1 < 11) {
-			if (sign_sq == 4) {
-				set .@pass_s,1;
-			}
-		}
-		else if (.@stime_s1 < 13) {
-			if (sign_sq == 5) {
-				set .@pass_s,1;
-			}
-		}
-		else if (.@stime_s1 < 15) {
-			if (sign_sq == 6) {
-				set .@pass_s,1;
-			}
-		}
-		else if (.@stime_s1 < 17) {
-			if (sign_sq == 7) {
-				set .@pass_s,1;
-			}
-		}
-		else if (.@stime_s1 < 19) {
-			if (sign_sq == 8) {
-				set .@pass_s,1;
-			}
-		}
-		else if (.@stime_s1 < 21) {
-			if (sign_sq == 9) {
-				set .@pass_s,1;
-			}
-		}
-		else {
-			if (sign_sq == 10) {
-				set .@pass_s,1;
-			}
-		}
+		set .@pass_s,1;
 		if (.@pass_s == 1) {
 			mes "Fascinating...";
 			mes "This was made with";
@@ -1259,7 +1200,7 @@ morocc_in,115,154,5	script	Rogue#sign	810,{
 			next;
 			mes "[Arian]";
 			mes "The first item?";
-			mes "Gimme ^FF0000100 Fluff^000000.";
+			mes "Gimme ^FF000010 Fluff^000000.";
 			mes "Bring that and I'll";
 			mes "tell you what to";
 			mes "bring next.";
@@ -1286,16 +1227,16 @@ morocc_in,115,154,5	script	Rogue#sign	810,{
 		case 4:
 			mes "[Arian]";
 			mes "...";
-			if (countitem(914) > 99) {
-				delitem 914,100; //Fluff
-				if (countitem(7033) > 49) {
-					delitem 7033,50; //Poison_Spore
-					if (countitem(904) > 29) {
-						delitem 904,30; //Scorpion's_Tail
-						if (countitem(930) > 19) {
-							delitem 930,20; //Rotten_Bandage
-							if (countitem(1038) > 14) {
-								delitem 1038,15; //Petite_DiablOfs_Horn
+			if (countitem(914) > 9) {
+				delitem 914,10; //Fluff
+				if (countitem(7033) > 9) {
+					delitem 7033,10; //Poison_Spore
+					if (countitem(904) > 9) {
+						delitem 904,10; //Scorpion's_Tail
+						if (countitem(930) > 9) {
+							delitem 930,10; //Rotten_Bandage
+							if (countitem(1038) > 4) {
+								delitem 1038,5; //Petite_DiablOfs_Horn
 								if (countitem(7013) > 9) {
 									delitem 7013,10; //Coral_Reef
 								}
@@ -1307,25 +1248,25 @@ morocc_in,115,154,5	script	Rogue#sign	810,{
 			else {
 				mes "Hey. What the hell's wrong";
 				mes "with you? Hurry and get me";
-				mes "^FF0000100 Fluff^000000, ya slacker.";
+				mes "^FF000010 Fluff^000000, ya slacker.";
 				close;
 			}
 			mes "Alright, that looks like";
 			mes "enough Fluff. Now, go and";
-			mes "get me ^FF000050 Poison Spores^000000.";
+			mes "get me ^FF000010 Poison Spores^000000.";
 			set sign_q,5;
 			close;
 		case 5:
 			mes "[Arian]";
 			mes "...";
-			if (countitem(7033) > 49) {
-				delitem 7033,50; //Poison_Spore
-				if (countitem(904) > 29) {
-					delitem 904,30; //Scorpion's_Tail
-					if (countitem(930) > 19) {
-						delitem 930,20; //Rotten_Bandage
-						if (countitem(1038) > 14) {
-							delitem 1038,15; //Petite_DiablOfs_Horn
+			if (countitem(7033) > 9) {
+				delitem 7033,10; //Poison_Spore
+				if (countitem(904) > 9) {
+					delitem 9041,10; //Scorpion's_Tail
+					if (countitem(930) > 9) {
+						delitem 930,10; //Rotten_Bandage
+						if (countitem(1038) > 4) {
+							delitem 1038,5; //Petite_DiablOfs_Horn
 							if (countitem(7013) > 9) {
 								delitem 7013,10; //Coral_Reef
 							}
@@ -1335,7 +1276,7 @@ morocc_in,115,154,5	script	Rogue#sign	810,{
 			}
 			else {
 				mes "Hey. What part of 'Get me";
-				mes "^FF000050 Poison Spores^000000 or I'll";
+				mes "^FF000010 Poison Spores^000000 or I'll";
 				mes "kick your ass,' don't";
 				mes "you understand?";
 				close;
@@ -1343,18 +1284,18 @@ morocc_in,115,154,5	script	Rogue#sign	810,{
 			mes "It's about time you";
 			mes "got here with those";
 			mes "Poison Spores. Now, go";
-			mes "and get ^FF000030 Scorpion Tails^000000.";
+			mes "and get ^FF000010 Scorpion Tails^000000.";
 			set sign_q,6;
 			close;
 		case 6:
 			mes "[Arian]";
 			mes "...";
-			if (countitem(904) > 29) {
-				delitem 904,30; //Scorpion's_Tail
+			if (countitem(904) > 9) {
+				delitem 904,10; //Scorpion's_Tail
 				if (countitem(930) > 19) {
-					delitem 930,20; //Rotten_Bandage
-					if (countitem(1038) > 14) {
-						delitem 1038,15; //Petite_DiablOfs_Horn
+					delitem 930,10; //Rotten_Bandage
+					if (countitem(1038) > 4) {
+						delitem 1038,5; //Petite_DiablOfs_Horn
 						if (countitem(7013) > 9) {
 							delitem 7013,10; //Coral_Reef
 						}
@@ -1365,22 +1306,22 @@ morocc_in,115,154,5	script	Rogue#sign	810,{
 				mes "What, your mom drop you on the";
 				mes "head right after you were born?";
 				mes "Stop bein' stupid and get me";
-				mes "^FF000030 Scorpion Tails^000000, nimrod.";
+				mes "^FF000010 Scorpion Tails^000000, nimrod.";
 				close;
 			}
 			mes "Damn, you sure took your";
 			mes "sweet time bringing over this";
 			mes "over this crap. Okay, now bring";
-			mes "^FF000020 Rotten Bandages^000000.";
+			mes "^FF000010 Rotten Bandages^000000.";
 			set sign_q,7;
 			close;
 		case 7:
 			mes "[Arian]";
 			mes "...";
-			if (countitem(930) > 19) {
-				delitem 930,20; //Rotten_Bandage
-				if (countitem(1038) > 14) {
-					delitem 1038,15; //Petite_DiablOfs_Horn
+			if (countitem(930) > 9) {
+				delitem 930,10; //Rotten_Bandage
+				if (countitem(1038) > 4) {
+					delitem 1038,5; //Petite_DiablOfs_Horn
 					if (countitem(7013) > 9) {
 						delitem 7013,10; //Coral_Reef
 					}
@@ -1388,14 +1329,14 @@ morocc_in,115,154,5	script	Rogue#sign	810,{
 			}
 			else {
 				mes "Is it really that hard to get";
-				mes "^FF000020 Rotten Bandages^000000? Cuz if it";
+				mes "^FF000010 Rotten Bandages^000000? Cuz if it";
 				mes "is, then you must really blow.";
 				mes "Now hustle it up, punk!";
 				close;
 			}
 			mes "You brought the bandages.";
 			mes "Okay short stuff, go and get";
-			mes "me ^FF000015 Little Evil Horn^000000. What";
+			mes "me ^FF00005 Little Evil Horn^000000. What";
 			mes "are you waiting for, a memo?";
 			mes "Get outta here~!";
 			set sign_q,8;
@@ -1403,8 +1344,8 @@ morocc_in,115,154,5	script	Rogue#sign	810,{
 		case 8:
 			mes "[Arian]";
 			mes "...";
-			if (countitem(1038) > 14) {
-				delitem 1038,15; //Petite_DiablOfs_Horn
+			if (countitem(1038) > 4) {
+				delitem 1038,5; //Petite_DiablOfs_Horn
 				if (countitem(7013) > 9) {
 					delitem 7013,10; //Coral_Reef
 				}
@@ -1412,15 +1353,15 @@ morocc_in,115,154,5	script	Rogue#sign	810,{
 			else {
 				mes "I don't get it.";
 				mes "You don't have the";
-				mes "^FF000015 Little Evil Horn^000000";
+				mes "^FF00005 Little Evil Horn^000000";
 				mes "I told you to get.";
 				next;
 				mes "[Arian]";
 				mes "I see, so it's my";
 				mes "fault for not telling you";
-				mes "not to bring your crap face";
+				mes "not to bring your crap face";	
 				mes "back without 'em. ^333333*A-hem*^000000";
-				mes "Don't bring your crap face here without 15 Little Evil Horns!!";
+				mes "Don't bring your crap face here without 5 Little Evil Horns!!";
 				close;
 			}
 			mes "My grandma coulda grown";
@@ -3095,7 +3036,7 @@ OnTouch_:
 
 prt_maze02,25,161,0	script	#music	-1,7,7,{
 OnTouch_:
-	soundeffect "effect\\¼®¾çÀÇ ¾î½Ø½Å.wav",1;
+	soundeffect "effect\\         Ø½ .wav",1;
 	end;
 }
 
@@ -4535,7 +4476,7 @@ cmd_in02,88,51,4	script	Strange Guy#sign	806,{
 		}
 	}
 	else if (sign_q == 27) {
-		if ((gettime(DT_HOUR) > 18) && (gettime(DT_HOUR) < 23)) {
+		if ((gettime(DT_HOUR) > 0) && (gettime(DT_HOUR) < 24)) {
 			mes "Nice, you're here";
 			mes "just in time. Well,";
 			mes "all that matters is that";
@@ -6208,11 +6149,8 @@ alde_alche,169,162,7	script	Alchemist#sign	749,{
 				mes "make a bottle of Vigorgra.";
 				next;
 				mes "[Melkaba]";
-				mes "^ff00001 Ment";
-				mes "20 Honey";
-				mes "10 Royal Jelly";
+				mes "^ff00005 Honey";
 				mes "30 Bear's Footskin";
-				mes "1 Hinalle Leaflet";
 				mes "1 Empty Bottle.^000000";
 				next;
 				mes "[Melkaba]";
@@ -6251,11 +6189,8 @@ alde_alche,169,162,7	script	Alchemist#sign	749,{
 			mes "you forgot already...";
 			next;
 			mes "[Melkaba]";
-			mes "^ff00001 Ment";
-			mes "20 Honey";
-			mes "10 Royal Jelly";
+			mes "^ff00005 Honey";
 			mes "30 Bear's Footskin";
-			mes "1 Hinalle Leaflet";
 			mes "1 Empty Bottle.^000000";
 			next;
 			mes "[Melkaba]";
@@ -6272,18 +6207,15 @@ alde_alche,169,162,7	script	Alchemist#sign	749,{
 			mes "everything ready...";
 			next;
 			mes "[Melkaba]";
-			if ((countitem(526) < 10) || (countitem(518) < 20) || (countitem(948) < 30) || (countitem(520) < 1) || (countitem(708) < 1) || (countitem(713) < 1)) {
+			if ((countitem(518) < 5) || (countitem(948) < 30) || (countitem(713) < 1)) {
 				mes "Hmm, you're still";
 				mes "missing some of the";
 				mes "ingredients. Now, listen";
 				mes "carefully. I need you to get...";
 				next;
 				mes "[Melkaba]";
-				mes "^ff00001 Ment";
-				mes "20 Honey";
-				mes "10 Royal Jelly";
+				mes "^ff00005 Honey";
 				mes "30 Bear's Footskin";
-				mes "1 Hinalle Leaflet";
 				mes "1 Empty Bottle.^000000";
 				close;
 			}
@@ -6332,7 +6264,7 @@ alde_alche,169,162,7	script	Alchemist#sign	749,{
 					mes ".........";
 					next;
 					mes "[Melkaba]";
-					if (rand(1,100) < 98) {
+					if (rand(1,100) < 100) {
 						specialeffect EF_PHARMACY_OK;
 						mes "Ah! Success!";
 						mes "A lifetime's supply";
@@ -6341,11 +6273,8 @@ alde_alche,169,162,7	script	Alchemist#sign	749,{
 						mes "stuff is extremely potent!";
 						next;
 						set Zeny, Zeny-10000;
-						delitem 526,10; //Royal_Jelly
-						delitem 518,20; //Honey
+						delitem 518,5; //Honey
 						delitem 948,30; //Bear's_Foot
-						delitem 520,1; //Leaflet_Of_Hinal
-						delitem 708,1; //Ment
 						delitem 713,1; //Empty_Bottle
 						set sign_q,48;
 						getitem 7044,1; //Vigorgra
@@ -6359,11 +6288,8 @@ alde_alche,169,162,7	script	Alchemist#sign	749,{
 					}
 					else {
 						specialeffect EF_PHARMACY_FAIL;
-						delitem 526,10; //Royal_Jelly
-						delitem 518,20; //Honey
+						delitem 518,5; //Honey
 						delitem 948,30; //Bear's_Foot
-						delitem 520,1; //Leaflet_Of_Hinal
-						delitem 708,1; //Ment
 						delitem 713,1; //Empty_Bottle
 						mes "It failed?!";
 						mes "Of course, the mixture";
@@ -7569,66 +7495,7 @@ mjo_dun02,88,295,4	script	Flaming Spirit Man	85,{
 	}
 	else if (sign_q == 140) {
 		set .@stime_e1,gettime(DT_HOUR);
-		if (.@stime_e1 < 2) {
-			if (sign_sq == 11) {
-				set .@pass_s1,1;
-			}
-		}
-		else if (.@stime_e1 < 4) {
-			if (sign_sq == 12) {
-				set .@pass_s1,1;
-			}
-		}
-		else if (.@stime_e1 < 6) {
-			if (sign_sq == 1) {
-				set .@pass_s1,1;
-			}
-		}
-		else if (.@stime_e1 < 8) {
-			if (sign_sq == 2) {
-				set .@pass_s1,1;
-			}
-		}
-		else if (.@stime_e1 < 10) {
-			if (sign_sq == 3) {
-				set .@pass_s1,1;
-			}
-		}
-		else if (.@stime_e1 < 12) {
-			if (sign_sq == 4) {
-				set .@pass_s1,1;
-			}
-		}
-		else if (.@stime_e1 < 14) {
-			if (sign_sq == 5) {
-				set .@pass_s1,1;
-			}
-		}
-		else if (.@stime_e1 < 16) {
-			if (sign_sq == 6) {
-				set .@pass_s1,1;
-			}
-		}
-		else if (.@stime_e1 < 18) {
-			if (sign_sq == 7) {
-				set .@pass_s1,1;
-			}
-		}
-		else if (.@stime_e1 < 20) {
-			if (sign_sq == 8) {
-				set .@pass_s1,1;
-			}
-		}
-		else if (.@stime_e1 < 22) {
-			if (sign_sq == 9) {
-				set .@pass_s1,1;
-			}
-		}
-		else {
-			if (sign_sq == 10) {
-				set .@pass_s1,1;
-			}
-		}
+		set .@pass_s1,1;
 		if (.@pass_s1 == 1) {
 			mes "It's so...";
 			mes "Beautiful! I don't know";
@@ -8111,7 +7978,7 @@ alberta,165,83,4	script	Fastidious Old Man	755,{
 		}
 	}
 	else if (sign_q == 79) {
-		if (rand(1,50) == 9) {
+		if (rand(1,50) < 50) {
 			mes "I've finally completed the translation. It was a challenge deciphering the meaning of some";
 			mes "of these words. Even translated in our own language, this contents of this text are fairly ambiguous.";
 			next;
@@ -8148,7 +8015,7 @@ gef_fild07,182,241,0	script	#Valkyrie Warp	111,1,1,{
 	}
 
 OnTouch_:
-	if ((sign_q == 80) && (countitem(907) > 3) && (countitem(953) > 11) && (countitem(7013) > 364)) {
+	if (sign_q == 80) {
 		mes "["+strcharinfo(0)+"]";
 		mes "What the...?";
 		mes "What's happening?!";
@@ -8157,22 +8024,17 @@ OnTouch_:
 		mes "^3355FFFor some reason, in";
 		mes "this particular spot, the";
 		mes "Sobbing Starlight is reacting";
-		mes "with the Resin, Stone Hearts";
-		mes "and Coral Reefs that you're";
-		mes "holding. All the objects are";
+		mes "with you. The object is";
 		mes "violently resonating...^000000";
 		specialeffect2 EF_ENHANCE;
 		next;
-		mes "^3355FFAll of a sudden these";
-		mes "objects emit a bright flash";
+		mes "^3355FFAll of a sudden the";
+		mes "stone emits a bright flash";
 		mes "of light that envelops your";
 		mes "entire body, then you gently";
 		mes "fall into unconsciousness...^000000";
 		specialeffect2 EF_FLASHER;
 		next;
-		delitem 907,4; //Resin
-		delitem 953,12; //Stone_Heart
-		delitem 7013,365; //Coral_Reef
 		set sign_q,81;
 		warp "himinn",49,10;
 		end;
@@ -8508,7 +8370,7 @@ que_sign01,196,39,4	script	Serin#serin	90,{
 			mes "my sake? You do understand";
 			mes "that you'll be failing the ordeals set before you by the gods...";
 			next;
-			switch(select("I changed my mind for Midgard.:I do, and it's alright...")) {
+			switch(select("I changed my mind for Midgard.")) {
 			case 1:
 				mes "[Serin]";
 				mes "...";
@@ -8528,20 +8390,6 @@ que_sign01,196,39,4	script	Serin#serin	90,{
 				donpcevent "Dark Lord#serin::OnDisable";
 				donpcevent "CallMonster#serin::Oncall";
 				close;
-			case 2:
-				mes "[Serin]";
-				mes "The least I can";
-				mes "do is send you back";
-				mes "to Midgard and";
-				mes "ask the Dark Lord to spare";
-				mes "you. Thank you so much...";
-				set sign_q,200;
-				getexp (checkre(3))?20000:200000,0;
-				set $@sign_w2,0;
-				donpcevent "Dark Lord#serin::OnDisable";
-				close2;
-				warp "umbala",132,203;
-				end;
 			}
 		case 2:
 			mes "[Serin]";
@@ -11967,48 +11815,6 @@ function	script	F_SignSeal	{
 		close;
 	}
 	.@r = getarg(0);
-	if (countitem(1558) || countitem(1963)) {
-		if (.@r < 980) F_SealFail; }
-	else if (countitem(1227) || countitem(1228) || countitem(1240) || countitem(1241) || countitem(1962) || countitem(1813)) {
-		if (.@r < 960) F_SealFail; }
-	else if (countitem(1719) || countitem(1130) || countitem(1133) || countitem(1223) || countitem(1229) || countitem(1231) || countitem(1413) || countitem(1814) || countitem(1242)) {
-		if (.@r < 940) F_SealFail; }
-	else if (countitem(1131) || countitem(1230) || countitem(1232)) {
-		if (.@r < 920) F_SealFail; }
-	else if (countitem(1132) || countitem(1134) || countitem(1233) || countitem(1234) || countitem(1235) || countitem(1414) || countitem(1523) || countitem(1236)) {
-		if (.@r < 900) F_SealFail; }
-	else if (countitem(1237) || countitem(1524) || countitem(1525) || countitem(1557) || countitem(1415) || countitem(1964)) {
-		if (.@r < 880) F_SealFail; }
-	else if (countitem(1135) || countitem(1140) || countitem(1141) || countitem(1527)) {
-		if (.@r < 860) F_SealFail; }
-	else if (countitem(1164) || countitem(1165) || countitem(1467) || countitem(1138) || countitem(1139) || countitem(1224) || countitem(1225) || countitem(1416) || countitem(1526)) {
-		if (.@r < 840) F_SealFail; }
-	else if (countitem(1305) || countitem(1720) || countitem(1136) || countitem(1137) || countitem(1166)) {
-		if (.@r < 820) F_SealFail; }
-	else if (countitem(1261) || countitem(1528) || countitem(1167)) {
-		if (.@r < 800) F_SealFail; }
-	else if (countitem(1364) || countitem(1913)) {
-		if (.@r < 780) F_SealFail; }
-	else if (countitem(1170) || countitem(1468) || countitem(1168) || countitem(1169)) {
-		if (.@r < 760) F_SealFail; }
-	else if (countitem(1365) || countitem(1366) || countitem(1473)) {
-		if (.@r < 740) F_SealFail; }
-	else if (countitem(1367) || countitem(1368) || countitem(1466) || countitem(1469)) {
-		if (.@r < 720) F_SealFail; }
-	else if (countitem(1369) || countitem(1470)) {
-		if (.@r < 700) F_SealFail; }
-	else if (countitem(1722) || countitem(1471)) {
-		if (.@r < 680) F_SealFail; }
-	else if (countitem(1363)) {
-		if (.@r < 660) F_SealFail; }
-	else if (countitem(1530)) {
-		if (.@r < 500) F_SealFail; }
-	else {
-		mes "^3355FFThe weapon you're holding";
-		mes "right now doesn't look like it has any chance of breaking this seal. You'll definitely need something";
-		mes "more powerful...^000000";
-		close;
-	}
 	if (getarg(1,0)) {
 		mes "^3355FFUpon obtaining the last piece";
 		mes "of Agrboda's soul, all four soul pieces emitted a strange light, rose to the air and combined into";

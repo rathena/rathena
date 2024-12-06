@@ -69,11 +69,12 @@
 //========================Function=&=Script========================
 
 function	script	Q_Warpra	{
-	mes "[Warpra]";
+	cutin "kh_elly01",2;
+	mes "[Kafra Adventure Corp]";
 	mes "Hello,";
 	mes "I can warp you to any town or dungeon, but you need to unlock them first by visiting us.";
 	mes "What do you need?";
-	
+
 	if(getarg(0) == 0) callfunc "QWS_MMarray",0;
 	if(getarg(0) == 1) callfunc "QWS_MMarray",1;
 	
@@ -141,7 +142,8 @@ GM_Menu:
 	case 9: set $QW_KPoint,($QW_KPoint)?0:1; goto GM_Menu;
 	case 10: goto Setprice;
 	case 11: goto SpecialWarpMenu;
-	default:
+	default:	
+		cutin "", 255;
 		close;
 		end;
 	}
@@ -348,7 +350,7 @@ L_dungeon:
 	callfunc "QWS_DLarray";
 
 	next;
-	mes "[Warpra]";
+	mes "[Kafra Adventure Corp]";
 	mes "Please select where you want to go:";
 	freeloop(1);
 	set .@menu$,"";
@@ -378,7 +380,7 @@ L_heal_Full:
 	set Zeny, Zeny-@healfee;
 	if ($QW_KPoint == 1) set RESRVPTS, RESRVPTS + (@healfee/500);
 	next;
-	mes "[Warpra]";
+	mes "[Kafra Adventure Corp]";
 	mes "Close this window and I will heal you.";
 	close2;
 	percentheal 100,100;
@@ -397,7 +399,7 @@ PHeal:
 	set @Sp, MaxSp-Sp;
 	set @HpPrice, @hp*$QW_HP_H_PRICE;
 	set @SpPrice, @sp*$QW_HP_S_PRICE;
-	mes "[Warpra]";
+	mes "[Kafra Adventure Corp]";
 	if(getarg(0) == 1) mes ""+@HpPrice+" Zeny for "+@Hp+" health points";
 	if(getarg(1) == 1) mes ""+@SpPrice+" Zeny for "+@Sp+" skill points";
 	set @total, @HpPrice+@SpPrice;
@@ -418,14 +420,14 @@ PHeal:
 	end;
 
 Zeny_Short_Both:
-	mes "[Warpra]";
+	mes "[Kafra Adventure Corp]";
 	mes "Choose another option, you can afford both.";
 	mes "I can heal as much as you can afford, too.";
 	if (select("OK","Exit") == 2) goto L_end;
 	goto PHeal;
 
 Zeny_short_HP:
-	mes "[Warpra]";
+	mes "[Kafra Adventure Corp]";
 	mes "Do you want me to partly heal your HP?";
 	if (select("Yes","No") == 2) goto L_end;
 	set @Hp, Zeny/$QW_HP_H_PRICE;
@@ -438,7 +440,7 @@ Zeny_short_HP:
 	end;
 
 Zeny_short_SP:
-	mes "[Warpra]";
+	mes "[Kafra Adventure Corp]";
 	mes "Do you want me to partly heal your SP?";
 	if (select("Yes","No") == 2) goto L_end;
 	set @Sp, Zeny/$QW_HP_S_PRICE;
@@ -462,7 +464,7 @@ L_Storage:
 	set Zeny, Zeny-@fee;
 	if ($QW_KPoint == 1) set RESRVPTS, RESRVPTS + (@fee/5);
 
-	mes "[Warpra]";
+	mes "[Kafra Adventure Corp]";
 	if(#kafra_code) {
 		mes "Enter your storage password:";
 		set @code_,0;
@@ -480,14 +482,14 @@ L_Storage:
 	end;
 
 L_StorageJBlow:
-	mes "[Warpra]";
+	mes "[Kafra Adventure Corp]";
 	mes "I am sorry but you have to be at least Novice level 6 if you want to use the storage.";
 	return;
 
 L_GStorage:
 	if (!@GID) {
 		next;
-		mes "[Warpra]";
+		mes "[Kafra Adventure Corp]";
 		mes "You are not a part of a guild I can't help you.";
 		close;
 		end;
@@ -496,20 +498,21 @@ L_GStorage:
 	set Zeny, Zeny-$QW_GS_PRICE;
 	if ($QW_KPoint == 1) set RESRVPTS, RESRVPTS + ($QW_GS_PRICE/5);
 	next;
-	mes "[Warpra]";
+	mes "[Kafra Adventure Corp]";
 	mes "Close this window and I will open the ^5533FF" + GetGuildName(@GID) + "^000000 storage.";
 	close2;
 	guildopenstorage;
 	end;
 	
 L_end:
+	cutin "",255;
 	close;
 	end;
 
 //============================Few=Warp=============================
 L_FewWarps:
 	next;
-	mes "[Warpra]";
+	mes "[Kafra Adventure Corp]";
 	mes "You need to unlock locations before they come available to you.";
 	mes "To unlock a location talk to my colleagues all over the world.";
 	mes "Each account has its own stamp card.";
@@ -521,7 +524,7 @@ L_FewWarps:
 //============================No=Unlock============================
 L_NoUnlock:
 	next;
-	mes "[Warpra]";
+	mes "[Kafra Adventure Corp]";
 	mes "I don't unlock this location, my assistant deeper in the dungeon will unlock this place.";
 	close;
 	end;
@@ -682,7 +685,7 @@ function	script	QWS_MMarray	{
 //	QWS_Make_Town_Menu 0;	// Use a free number (last used is 30, Eclage)
 //
 // Adding a warpra:
-//	map,x,y,facing	script	Warpra#example	113,{
+//	map,x,y,facing	script	Kafra Adventure Corpexample	895,{
 //		callfunc "QWS_Town_Warpra",<town number>,"Your Town";
 //		close;
 //	}
@@ -1026,7 +1029,7 @@ menu_item:
 //	QWS_Make_Dungeon_Menu 0;	// Use a free number (last used is 28, Kiel Dungeon)
 //
 // Adding a warpra:
-//	map,x,y,facing	script	Warpra Helper#example	112,{
+//	map,x,y,facing	script	Kafra Adventure Corp#example	895,{
 //		callfunc "QWS_Dungeon_Warpra",<dungeon number>,"Your Dungeon";
 //		close;
 //	}
@@ -1236,6 +1239,21 @@ function	script	QWS_Darray	{
 
 	QWS_Make_Dungeon_Menu 13;
 
+
+//----------------ICE DUNGEON
+	setarray @pDmenuitems$[@Di], "Ice Dungeon";
+	setarray @pDprice[@Di], $QW_BW_PRICE;
+	setarray @pDfee$[@Di], "$QW_BW_FEE";
+	setarray @DLevels[@Di], 3;
+
+	setarray @DGat$[@Dref], "ice_dun01", "ice_dun02", "ice_dun03";
+	setarray @DLevelName$[@Dref], "Level 1", "Level 2", "Level 3";
+	setarray @DXcoords[@Dref], 157, 151, 149;
+	setarray @DYcoords[@Dref], 19, 139, 24;
+	setarray @DDepth[@Dref], 0, 1, 2;
+
+	QWS_Make_Dungeon_Menu 28;
+
 //----------------JUPEROS CAVE
 	setarray @pDmenuitems$[@Di], "Juperos Cave";
 	setarray @pDprice[@Di], $QW_AW_PRICE;
@@ -1272,8 +1290,8 @@ function	script	QWS_Darray	{
 
 	setarray @DGat$[@Dref], "lhz_dun01", "lhz_dun02", "lhz_dun03";
 	setarray @DLevelName$[@Dref], "Level 1", "Level 2", "Level 3";
-	setarray @DXcoords[@Dref], 150, 150, 140;
-	setarray @DYcoords[@Dref], 287, 18, 137;
+	setarray @DXcoords[@Dref], 150, 150, 139;
+	setarray @DYcoords[@Dref], 287, 18, 134;
 	setarray @DDepth[@Dref], 0, 1, 2;
 
 	QWS_Make_Dungeon_Menu 15;
@@ -1531,13 +1549,14 @@ function	script	QWS_Dungeon_Warpra	{
 	function QWS_D_setbin;
 	
 	if ((QWS_D_getbin(getarg(0)) == 0) && (getarg(1) != "")) {
-		mes "[Warpra]";
-		mes getarg(1)+" unlocked!";
+		mes "[Kafra Adventurer]";
+		mes "Nice work. " + getarg(1) + " is now unlocked!";
 		QWS_D_setbin(getarg(0));
 		return;
 	} else if (QWS_D_getbin(getarg(0)) == 1) {
-		mes "[Warpra]";
-		mes "Sorry, I can only unlock this location.";
+		mes "[Kafra Adventurer]";
+		mes "Sorry kid, I can only unlock this location.";
+
 	} else
 		debugmes "QWS_Dungeon_Warpra error, improper syntax?";
 	return;
@@ -1575,9 +1594,10 @@ binget:
 function	script	QWS_Town_Warpra	{
 	function QWS_T_getbin;
 	function QWS_T_setbin;
-	
+
 	if ((QWS_T_getbin(getarg(0)) == 0) && (getarg(1) != "")) {
-		mes "[Warpra]";
+		cutin "kh_elly02",2;
+		mes "[Kafra Adventure Corp]";
 		mes getarg(1)+" unlocked!";
 		QWS_T_setbin(getarg(0));
 		return;
@@ -1615,80 +1635,81 @@ binget:
 }
 //============================Warpras==============================
 
--	script	Warpra#0	-1,{ callfunc "Q_Warpra",1; }
-alb2trea,73,101,4	duplicate(Warpra#0)	Warpra#1	113
-ama_fild01,178,325,1	duplicate(Warpra#0)	Warpra#2	113
-gef_fild10,71,339,4	duplicate(Warpra#0)	Warpra#3	113
-izlu2dun,104,82,4	duplicate(Warpra#0)	Warpra#4	113
-mjolnir_02,85,363,4	duplicate(Warpra#0)	Warpra#5	113
-moc_fild04,207,331,4	duplicate(Warpra#0)	Warpra#6	113
-moc_fild19,106,97,4	duplicate(Warpra#0)	Warpra#7	113
-moc_ruins,64,166,4	duplicate(Warpra#0)	Warpra#8	113
-niflheim,197,192,3	duplicate(Warpra#0)	Warpra#9	113
-pay_arche,39,135,4	duplicate(Warpra#0)	Warpra#10	113
-prt_fild05,273,215,4	duplicate(Warpra#0)	Warpra#11	113
-tur_dun01,148,239,4	duplicate(Warpra#0)	Warpra#12	113
-valkyrie,48,35,8	duplicate(Warpra#0)	Warpra#13	113
-yuno_fild03,37,135,4	duplicate(Warpra#0)	Warpra#14	113
+-	script	Kafra Adventure Corp#0	-1,{ callfunc "Q_Warpra",1; }
+alb2trea,73,101,4	duplicate(Kafra Adventure Corp#0)	Kafra Adventure Corp#1	895
+ama_fild01,178,325,1	duplicate(Kafra Adventure Corp#0)	Kafra Adventure Corp#2	895
+gef_fild10,71,339,4	duplicate(Kafra Adventure Corp#0)	Kafra Adventure Corp#3	895
+izlu2dun,104,82,4	duplicate(Kafra Adventure Corp#0)	Kafra Adventure Corp#4	895
+mjolnir_02,85,363,4	duplicate(Kafra Adventure Corp#0)	Kafra Adventure Corp#5	895
+moc_fild04,207,331,4	duplicate(Kafra Adventure Corp#0)	Kafra Adventure Corp#6	895
+moc_fild19,106,97,4	duplicate(Kafra Adventure Corp#0)	Kafra Adventure Corp#7	895
+moc_ruins,64,166,4	duplicate(Kafra Adventure Corp#0)	Kafra Adventure Corp#8	895
+niflheim,197,192,3	duplicate(Kafra Adventure Corp#0)	Kafra Adventure Corp#9	895
+pay_arche,39,135,4	duplicate(Kafra Adventure Corp#0)	Kafra Adventure Corp#10	895
+prt_fild05,273,215,4	duplicate(Kafra Adventure Corp#0)	Kafra Adventure Corp#11	895
+tur_dun01,148,239,4	duplicate(Kafra Adventure Corp#0)	Kafra Adventure Corp#12	895
+valkyrie,48,35,8	duplicate(Kafra Adventure Corp#0)	Kafra Adventure Corp#13	895
+yuno_fild03,37,135,4	duplicate(Kafra Adventure Corp#0)	Kafra Adventure Corp#14	895
 
-alberta,32,240,4	script	Warpra#15	113,{ callfunc "QWS_Town_Warpra",1,"Alberta Town"; close; }
-aldebaran,146,118,4	script	Warpra#16	113,{ callfunc "QWS_Town_Warpra",2,"Aldebaran Town"; close; }
-ayothaya,216,171,5	script	Warpra#17	113,{ callfunc "QWS_Town_Warpra",4,"Ayothaya Town"; close; }
-amatsu,193,81,1	script	Warpra#18	113,{ callfunc "QWS_Town_Warpra",3,"Amatsu Town"; close; }
-comodo,195,158,4	script	Warpra#19	113,{ callfunc "QWS_Town_Warpra",5,"Comodo Town"; close; }
-einbroch,229,196,5	script	Warpra#20	113,{ callfunc "QWS_Town_Warpra",7,"Einbroch Town"; close; }
-einbech,173,131,5	script	Warpra#21	113,{ callfunc "QWS_Town_Warpra",6,"Einbech Town"; close; }
-geffen,116,66,4	script	Warpra#22	113,{ callfunc "QWS_Town_Warpra",8,"Geffen Town"; close; }
-gonryun,152,130,4	script	Warpra#23	113,{ callfunc "QWS_Town_Warpra",9,"Kunlun Town"; close; }
-hugel,90,127,5	script	Warpra#24	113,{ callfunc "QWS_Town_Warpra",10,"Hugel Town"; close; }
-jawaii,107,182,5	script	Warpra#25	113,{ callfunc "QWS_Town_Warpra",12,"Jawaii Town"; close; }
-izlude,132,116,4	script	Warpra#26	113,{ callfunc "QWS_Town_Warpra",11,"Izlude Town"; close; }
-lighthalzen,153,100,5	script	Warpra#27	113,{ callfunc "QWS_Town_Warpra",13,"Lighthalzen Town"; close; }
-louyang,211,106,4	script	Warpra#28	113,{ callfunc "QWS_Town_Warpra",14,"Luoyang Town"; close; }
-morocc,157,95,4	script	Warpra#29	113,{ callfunc "QWS_Town_Warpra",16,"Morocc Town"; close; }
-nif_fild01,319,77,1	script	Warpra#30	113,{ callfunc "QWS_Town_Warpra",17,"Niflheim Town"; close; }
-payon,183,110,4	script	Warpra#31	113,{ callfunc "QWS_Town_Warpra",18,"Payon Town"; close; }
-prontera,147,172,5	script	Warpra#32	113,{ callfunc "QWS_Town_Warpra",0,"Prontera Town"; close; }
-umbala,133,130,4	script	Warpra#33	113,{ callfunc "QWS_Town_Warpra",19,"Umbala Town"; close; }
-xmas,151,136,4	script	Warpra#34	113,{ callfunc "QWS_Town_Warpra",15,"Lutie Town"; close; }
-yuno,138,162,4	script	Warpra#35	113,{ callfunc "QWS_Town_Warpra",20,"Juno Town"; close; }
-brasilis,201,222,4	script	Warpra#36	113,{ callfunc "QWS_Town_Warpra",21,"Brasilis Town"; close; }
-dicastes01,194,194,6	script	Warpra#37	113,{ callfunc "QWS_Town_Warpra",22,"El Dicastes Town"; close; }
-manuk,262,177,4	script	Warpra#38	113,{ callfunc "QWS_Town_Warpra",23,"Manuk Town"; close; }
-mora,110,100,4	script	Warpra#39	113,{ callfunc "QWS_Town_Warpra",24,"Mora Town"; close; }
-moscovia,216,196,6	script	Warpra#40	113,{ callfunc "QWS_Town_Warpra",25,"Moscovia Town"; close; }
-rachel,135,116,4	script	Warpra#41	113,{ callfunc "QWS_Town_Warpra",26,"Rachel Town"; close; }
-splendide,205,153,4	script	Warpra#42	113,{ callfunc "QWS_Town_Warpra",27,"Splendide Town"; close; }
-veins,214,123,4	script	Warpra#43	113,{ callfunc "QWS_Town_Warpra",28,"Veins Town"; close; }
-dewata,194,178,6	script	Warpra#44	113,{ callfunc "QWS_Town_Warpra",29,"Dewata Town"; close; }
-eclage,107,37,4	script	Warpra#45	113,{ callfunc "QWS_Town_Warpra",30,"Eclage Town"; close; }
+alberta,32,240,4	script	Kafra Adventure Corp#15	895,{ callfunc "QWS_Town_Warpra",1,"Alberta Town"; close; }
+aldebaran,146,118,4	script	Kafra Adventure Corp#16	895,{ callfunc "QWS_Town_Warpra",2,"Aldebaran Town"; close; }
+ayothaya,216,171,5	script	Kafra Adventure Corp#17	895,{ callfunc "QWS_Town_Warpra",4,"Ayothaya Town"; close; }
+amatsu,193,81,1	script	Kafra Adventure Corp#18	895,{ callfunc "QWS_Town_Warpra",3,"Amatsu Town"; close; }
+comodo,195,158,4	script	Kafra Adventure Corp#19	895,{ callfunc "QWS_Town_Warpra",5,"Comodo Town"; close; }
+einbroch,229,196,5	script	Kafra Adventure Corp#20	895,{ callfunc "QWS_Town_Warpra",7,"Einbroch Town"; close; }
+einbech,173,131,5	script	Kafra Adventure Corp#21	895,{ callfunc "QWS_Town_Warpra",6,"Einbech Town"; close; }
+geffen,116,66,4	script	Kafra Adventure Corp#22	895,{ callfunc "QWS_Town_Warpra",8,"Geffen Town"; close; }
+gonryun,152,130,4	script	Kafra Adventure Corp#23	895,{ callfunc "QWS_Town_Warpra",9,"Kunlun Town"; close; }
+hugel,90,127,5	script	Kafra Adventure Corp#24	895,{ callfunc "QWS_Town_Warpra",10,"Hugel Town"; close; }
+jawaii,107,182,5	script	Kafra Adventure Corp#25	895,{ callfunc "QWS_Town_Warpra",12,"Jawaii Town"; close; }
+izlude,132,116,4	script	Kafra Adventure Corp#26	895,{ callfunc "QWS_Town_Warpra",11,"Izlude Town"; close; }
+lighthalzen,153,100,5	script	Kafra Adventure Corp#27	895,{ callfunc "QWS_Town_Warpra",13,"Lighthalzen Town"; close; }
+louyang,211,106,4	script	Kafra Adventure Corp#28	895,{ callfunc "QWS_Town_Warpra",14,"Luoyang Town"; close; }
+morocc,157,95,4	script	Kafra Adventure Corp#29	895,{ callfunc "QWS_Town_Warpra",16,"Morocc Town"; close; }
+nif_fild01,319,77,1	script	Kafra Adventure Corp#30	895,{ callfunc "QWS_Town_Warpra",17,"Niflheim Town"; close; }
+payon,183,110,4	script	Kafra Adventure Corp#31	895,{ callfunc "QWS_Town_Warpra",18,"Payon Town"; close; }
+prontera,147,172,5	script	Kafra Adventure Corp#32	895,{ callfunc "QWS_Town_Warpra",0,"Prontera Town"; close; }
+umbala,133,130,4	script	Kafra Adventure Corp33	895,{ callfunc "QWS_Town_Warpra",19,"Umbala Town"; close; }
+xmas,151,136,4	script	Kafra Adventure Corp#34	895,{ callfunc "QWS_Town_Warpra",15,"Lutie Town"; close; }
+yuno,138,162,4	script	Kafra Adventure Corp#35	895,{ callfunc "QWS_Town_Warpra",20,"Juno Town"; close; }
+brasilis,201,222,4	script	Kafra Adventure Corp#36	895,{ callfunc "QWS_Town_Warpra",21,"Brasilis Town"; close; }
+dicastes01,194,194,6	script	Kafra Adventure Corp#37	895,{ callfunc "QWS_Town_Warpra",22,"El Dicastes Town"; close; }
+manuk,262,177,4	script	Kafra Adventure Corp#38	895,{ callfunc "QWS_Town_Warpra",23,"Manuk Town"; close; }
+mora,110,100,4	script	Kafra Adventure Corp#39	895,{ callfunc "QWS_Town_Warpra",24,"Mora Town"; close; }
+moscovia,216,196,6	script	Kafra Adventure Corp#40	895,{ callfunc "QWS_Town_Warpra",25,"Moscovia Town"; close; }
+rachel,135,116,4	script	Kafra Adventure Corp#41	895,{ callfunc "QWS_Town_Warpra",26,"Rachel Town"; close; }
+splendide,205,153,4	script	Kafra Adventure Corp#42	895,{ callfunc "QWS_Town_Warpra",27,"Splendide Town"; close; }
+veins,214,123,4	script	Kafra Adventure Corp#43	895,{ callfunc "QWS_Town_Warpra",28,"Veins Town"; close; }
+dewata,194,178,6	script	Kafra Adventure Corp#44	895,{ callfunc "QWS_Town_Warpra",29,"Dewata Town"; close; }
+eclage,107,37,4	script	Kafra Adventure Corp#45	895,{ callfunc "QWS_Town_Warpra",30,"Eclage Town"; close; }
 
-abyss_02,274,266,1	script	Warpra Helper#0	112,{ callfunc "QWS_Dungeon_Warpra",0,"Abyss Lake"; close; }
-ama_dun02,192,118,5	script	Warpra Helper#1	112,{ callfunc "QWS_Dungeon_Warpra",1,"Amatsu Dungeon"; close; }
-anthell02,170,165,3	script	Warpra Helper#2	112,{ callfunc "QWS_Dungeon_Warpra",2,"Ant Hell Dungeon"; close; }
-ayo_dun02,258,193,5	script	Warpra Helper#3	112,{ callfunc "QWS_Dungeon_Warpra",3,"Ayothaya Dungeon"; close; }
-ein_dun02,292,282,1	script	Warpra Helper#4	112,{ callfunc "QWS_Dungeon_Warpra",8,"Einbech Dungeon"; close; }
-iz_dun03,202,47,2	script	Warpra Helper#5	112,{ callfunc "QWS_Dungeon_Warpra",4,"Byalan Dungeon"; close; }
-c_tower3,129,106,4	script	Warpra Helper#6	112,{ callfunc "QWS_Dungeon_Warpra",5,"Clock Tower Dungeon"; close; }
-mjo_dun02,39,25,4	script	Warpra Helper#7	112,{ callfunc "QWS_Dungeon_Warpra",6,"Coal Mine Dungeon"; close; }
-prt_sewb2,176,30,3	script	Warpra Helper#8	112,{ callfunc "QWS_Dungeon_Warpra",7,"Culvert Dungeon"; close; }
-gefenia03,137,34,0	script	Warpra Helper#9	112,{ callfunc "QWS_Dungeon_Warpra",9,"Gefenia Dungeon"; close; }
-gef_dun02,218,61,2	script	Warpra Helper#10	112,{ callfunc "QWS_Dungeon_Warpra",10,"Gefen Dungeon"; close; }
-glast_01,371,308,3	script	Warpra Helper#11	112,{ callfunc "QWS_Dungeon_Warpra",11,"Glast Heim Dungeon"; close; }
-gon_dun01,167,273,4	script	Warpra Helper#12	112,{ callfunc "QWS_Dungeon_Warpra",12,"Kunlun Dungeon"; close; }
-juperos_02,127,154,5	script	Warpra Helper#13	112,{ callfunc "QWS_Dungeon_Warpra",14,"Juperos Cave"; close; }
-kh_dun01,14,224,3	script	Warpra Helper#14	112,{ callfunc "QWS_Dungeon_Warpra",28,"Kiel Dungeon"; close; }
-lhz_dun02,156,151,5	script	Warpra Helper#15	112,{ callfunc "QWS_Dungeon_Warpra",15,"Lighthalzen Bio Lab"; close; }
-lou_dun02,168,264,4	script	Warpra Helper#16	112,{ callfunc "QWS_Dungeon_Warpra",16,"Luoyang Dungeon"; close; }
-mag_dun02,46,41,3	script	Warpra Helper#17	112,{ callfunc "QWS_Dungeon_Warpra",17,"Magma Dungeon"; close; }
-odin_tem01,115,148,3	script	Warpra Helper#18	112,{ callfunc "QWS_Dungeon_Warpra",18,"Odin Temple"; close; }
-orcsdun01,185,11,3	script	Warpra Helper#19	112,{ callfunc "QWS_Dungeon_Warpra",19,"Orc Dungeon"; close; }
-pay_dun03,162,143,3	script	Warpra Helper#20	112,{ callfunc "QWS_Dungeon_Warpra",20,"Payon Dungeon"; close; }
-moc_pryd02,101,95,3	script	Warpra Helper#21	112,{ callfunc "QWS_Dungeon_Warpra",21,"Pyramides Dungeon"; close; }
-in_sphinx2,274,268,1	script	Warpra Helper#22	112,{ callfunc "QWS_Dungeon_Warpra",22,"Sphinx Dungeon"; close; }
-tha_t07,111,162,3	script	Warpra Helper#23	112,{ callfunc "QWS_Dungeon_Warpra",24,"Thanatos Tower"; close; }
-treasure02,104,40,3	script	Warpra Helper#24	112,{ callfunc "QWS_Dungeon_Warpra",23,"Sunken Ship Dungeon"; close; }
-xmas_dun02,124,131,3	script	Warpra Helper#25	112,{ callfunc "QWS_Dungeon_Warpra",25,"Toy Factory Dungeon"; close; }
-um_dun02,44,28,3	script	Warpra Helper#26	112,{ callfunc "QWS_Dungeon_Warpra",27,"Umbala Dungeon"; close; }
-tur_dun02,162,23,3	script	Warpra Helper#27	112,{ callfunc "QWS_Dungeon_Warpra",26,"Turtle Island Dungeon"; close; }
-prt_maze02,102,69,4	script	Warpra Helper#28	112,{ callfunc "QWS_Dungeon_Warpra",13,"Hidden Dungeon"; close; }
+abyss_02,274,266,1	script	Kafra Adventurer#0	900,{ callfunc "QWS_Dungeon_Warpra",0,"Abyss Lake"; close; }
+ama_dun02,192,118,5	script	Kafra Adventurer#1	900,{ callfunc "QWS_Dungeon_Warpra",1,"Amatsu Dungeon"; close; }
+anthell02,170,165,3	script	Kafra Adventurer#2	900,{ callfunc "QWS_Dungeon_Warpra",2,"Ant Hell Dungeon"; close; }
+ayo_dun02,258,193,5	script	Kafra Adventurer#3	900,{ callfunc "QWS_Dungeon_Warpra",3,"Ayothaya Dungeon"; close; }
+ein_dun02,292,282,1	script	Kafra Adventurer#4	900,{ callfunc "QWS_Dungeon_Warpra",8,"Einbech Dungeon"; close; }
+iz_dun03,202,47,2	script	Kafra Adventurer#5	900,{ callfunc "QWS_Dungeon_Warpra",4,"Byalan Dungeon"; close; }
+c_tower3,129,106,4	script	Kafra Adventurer#6	900,{ callfunc "QWS_Dungeon_Warpra",5,"Clock Tower Dungeon"; close; }
+mjo_dun02,39,25,4	script	Kafra Adventurer#7	900,{ callfunc "QWS_Dungeon_Warpra",6,"Coal Mine Dungeon"; close; }
+prt_sewb2,176,30,3	script	Kafra Adventurer#8	900,{ callfunc "QWS_Dungeon_Warpra",7,"Culvert Dungeon"; close; }
+gefenia03,137,34,0	script	Kafra Adventurer#9	900,{ callfunc "QWS_Dungeon_Warpra",9,"Gefenia Dungeon"; close; }
+gef_dun02,218,61,2	script	Kafra Adventurer#10	900,{ callfunc "QWS_Dungeon_Warpra",10,"Gefen Dungeon"; close; }
+glast_01,371,308,3	script	Kafra Adventurer#11	900,{ callfunc "QWS_Dungeon_Warpra",11,"Glast Heim Dungeon"; close; }
+gon_dun01,167,273,4	script	Kafra Adventurer#12	900,{ callfunc "QWS_Dungeon_Warpra",12,"Kunlun Dungeon"; close; }
+juperos_02,127,154,5	script	Kafra Adventurer#13	900,{ callfunc "QWS_Dungeon_Warpra",14,"Juperos Cave"; close; }
+kh_dun01,14,224,3	script	Kafra Adventurer#14	900,{ callfunc "QWS_Dungeon_Warpra",28,"Kiel Dungeon"; close; }
+lhz_dun02,156,151,5	script	Kafra Adventurer#15	900,{ callfunc "QWS_Dungeon_Warpra",15,"Lighthalzen Bio Lab"; close; }
+lou_dun02,168,264,4	script	Kafra Adventurer#16	900,{ callfunc "QWS_Dungeon_Warpra",16,"Luoyang Dungeon"; close; }
+mag_dun02,46,41,3	script	Kafra Adventurer#17	900,{ callfunc "QWS_Dungeon_Warpra",17,"Magma Dungeon"; close; }
+odin_tem01,115,148,3	script	Kafra Adventurer#18	900,{ callfunc "QWS_Dungeon_Warpra",18,"Odin Temple"; close; }
+orcsdun01,185,11,3	script	Kafra Adventurer#19	900,{ callfunc "QWS_Dungeon_Warpra",19,"Orc Dungeon"; close; }
+pay_dun03,162,143,3	script	Kafra Adventurer#20	900,{ callfunc "QWS_Dungeon_Warpra",20,"Payon Dungeon"; close; }
+moc_pryd02,101,95,3	script	Kafra Adventurer#21	900,{ callfunc "QWS_Dungeon_Warpra",21,"Pyramides Dungeon"; close; }
+in_sphinx2,274,268,1	script	Kafra Adventurer#22	900,{ callfunc "QWS_Dungeon_Warpra",22,"Sphinx Dungeon"; close; }
+tha_t07,111,162,3	script	Kafra Adventurer#23	900,{ callfunc "QWS_Dungeon_Warpra",24,"Thanatos Tower"; close; }
+treasure02,104,40,3	script	Kafra Adventurer#24	900,{ callfunc "QWS_Dungeon_Warpra",23,"Sunken Ship Dungeon"; close; }
+xmas_dun02,124,131,3	script	Kafra Adventurer#25	900,{ callfunc "QWS_Dungeon_Warpra",25,"Toy Factory Dungeon"; close; }
+um_dun02,44,28,3	script	Kafra Adventurer#26	900,{ callfunc "QWS_Dungeon_Warpra",27,"Umbala Dungeon"; close; }
+tur_dun02,162,23,3	script	Kafra Adventurer#27	900,{ callfunc "QWS_Dungeon_Warpra",26,"Turtle Island Dungeon"; close; }
+prt_maze02,102,69,4	script	Kafra Adventurer#28	900,{ callfunc "QWS_Dungeon_Warpra",13,"Hidden Dungeon"; close; }
+ice_dun02,150,153,4	script	Kafra Adventurer#28	900,{ callfunc "QWS_Dungeon_Warpra",28,"Ice Dungeon"; close; }
