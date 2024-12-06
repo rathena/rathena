@@ -2644,7 +2644,7 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 	status->matk_max = status_base_matk_max(status);
 	// Hit
 	stat = status->hit;
-	stat += level + status->dex + (bl->type == BL_PC ? status->luk / 3 + level / 2 : 0);
+	stat += level + (level / 2) + status->dex + (bl->type == BL_PC ? status->luk / 3 : 0);
 	status->hit = cap_value(stat, 1, SHRT_MAX);
 	// Flee
 	stat = status->flee;
