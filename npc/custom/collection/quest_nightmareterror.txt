@@ -1,0 +1,140 @@
+mag_dun02,46,40,3	script	Nightmare Terror Hunter#Lava Golem	481,{
+	if (checkquest(60429) != -1) {
+		if (checkquest(60429,HUNTING) != 2 ) {
+			mes "[Nightmare Terror Hunter]";
+			mes "Have you finished hunting 100 Nightmare Terrors?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Nightmare Terror Hunter]";
+				mes "Hmm, I don't think you've hunted 100 yet.";
+				close;
+			case 2:
+				mes "[Nightmare Terror Hunter]";
+				mes "Remember, I need help hunting Nightmare Terrors so go and hunt 100 of them.";
+				close;
+			case 3:
+				mes "[Nightmare Terror Hunter]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Nightmare Terror Hunter]";
+					mes "Return to me when you change your mind.";
+					erasequest 60429;
+					close;
+				case 2:
+					mes "[Nightmare Terror Hunter]";
+					mes "Kill 100 Nightmare Terrors and rid the world of their evil.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Nightmare Terror Hunter]";
+			mes "Excellent work.";
+			getexp 668300,435900;
+			erasequest 60429;
+			close;
+		}
+	}
+	if (checkquest(60430) != -1) {
+		if (checkquest(60430,HUNTING) != 2) {
+			mes "[Nightmare Terror Hunter]";
+			mes "Have you finished hunting 200 Nightmare Terrors?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Nightmare Terror Hunter]";
+				mes "Hmm, I don't think you've hunted 200 yet.";
+				close;
+			case 2:
+				mes "[Nightmare Terror Hunter]";
+				mes "Remember, I need help hunting Night Terrors so go and hunt 200 of them.";
+				close;
+			case 3:
+				mes "[Nightmare Terror Hunter]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Nightmare Terror Hunter]";
+					mes "Return to me when you change your mind.";
+					erasequest 60430;
+					close;
+				case 2:
+					mes "[Nightmare Terror Hunter]";
+					mes "Kill 100 Nightmare Terrors and rid the world of their evil.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Nightmare Terror Hunter]";
+			mes "Excellent work.";
+			getexp 668300,435900;
+			getexp 668300,435900;
+			erasequest 60430;
+			close;
+		}
+	}
+	
+	//for minimum level
+	if (BaseLevel > 75) {
+		//for maximum level
+		if (BaseLevel < 95) {
+			mes "[Nightmare Terror Hunter]";
+			mes "Wow, another adventure.";
+			mes "Do you want to help me cleanse this place?";
+			next;
+			switch(select("Sure:No")) {
+			case 1:
+				mes "[Nightmare Terror Hunter]";
+				mes "These Nightmare Terrors are a horrible sight.";
+				mes "Can you do what you can to help me?";
+				next;
+				switch(select("Hunt Nightmare Terrors:Cancel")) {
+				case 1:
+					// Kill Count Quest
+					mes "[Nightmare Terror Hunter]";
+					mes "Good.";
+					mes "How many Nightmare Terrors would you like to hunt?";
+					next;
+					switch(select("100 Nightmare Terrors:200 Nightmare Terrors")) {
+					case 1:
+						mes "[Nightmare Terror Hunter]";
+						mes "Kill 100 of those Nightmare Terrors and let me know when you're done. I will reward you for your efforts.";
+						setquest 60429;
+						close;
+					case 2:
+						mes "[Nightmare Terror Hunter]";
+						mes "Kill 200 of those Nightmare Terrors and let me know when you're done. I will reward you for your efforts.";
+						setquest 60430;
+						close;
+					}
+				case 2:
+					mes "[Nightmare Terror Hunter]";
+					mes "Fine. I'll be here if you change your mind.";
+					close;
+				}
+			case 2:
+				mes "[Nightmare Terror Hunter]";
+				mes "Fine. I'll be here if you change your mind.";
+				close;
+			}
+		}
+		else {
+			mes "[Nightmare Terror Hunter]";
+			mes "Sorry I can't talk right now.";
+			close;
+		}
+	}
+	else {
+		mes "[Nightmare Terror Hunter]";
+		mes "Bah, I need to focus.";
+		close;
+	}
+}
+

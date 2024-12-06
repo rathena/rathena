@@ -1,0 +1,246 @@
+//===== rAthena Script ======================================= 
+//= Enchant Master
+//===== By: ==================================================
+//= Balferian
+//===== Current Version: ===================================== 
+//= 3.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: =========================================
+//= 1.0 Initial Commit
+//============================================================ 
+
+prt_in,58,56,1	script	Enchant Master	47,{ 
+	mes "[Enchant Master]";
+	mes "Which equipment would you like to upgrade?";
+	next;
+	for(.@i = 1; .@i <= getarraysize(.indices); .@i++)
+		.@menu$ = .@menu$ + ((getequipisequiped(.indices[.@i])) ? getequipname(.indices[.@i]) : "") + ":";
+	.@part = .indices[ select(.@menu$,"Cancel") ];
+	if(!.@part) {
+		mes "[Enchant Master]";
+		mes "Okay.";
+		mes "You can come again later.";
+		close;
+	}
+	if (!getequipisequiped(.@part)) {
+		mes "[Enchant Master]";
+		mes "You have to equip the item you want to enchant.";
+		close;
+	}
+	.@itemid = getequipid(.@part);
+	.@refine = getequiprefinerycnt(.@part);
+	setarray .@card[1], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
+	setarray .@OptID[0], getequiprandomoption(.@part,0,ROA_ID), getequiprandomoption(.@part,1,ROA_ID), getequiprandomoption(.@part,2,ROA_ID), getequiprandomoption(.@part,3,ROA_ID), getequiprandomoption(.@part,4,ROA_ID);
+	setarray .@OptVal[0], getequiprandomoption(.@part,0,ROA_VALUE), getequiprandomoption(.@part,1,ROA_VALUE), getequiprandomoption(.@part,2,ROA_VALUE), getequiprandomoption(.@part,3,ROA_VALUE), getequiprandomoption(.@part,4,ROA_VALUE);
+	setarray .@OptParam[0], 0, 0, 0, 0, 0;	
+	
+	// If item doesn't have free slots
+	if(4 - getiteminfo(.@itemid, ITEMINFO_SLOT) < 1) {
+		mes "[Enchant Master]";
+		mes "Sorry, i can't enchant this item.";
+		close;
+	}
+
+	mes "[Enchant Master]";
+	mes "Which slot would you like to enchant?";
+	next;
+	.@menu$ = "";
+	for(.@i = 0; .@i < MAX_SLOTS + 1; .@i++)
+		.@menu$ = .@menu$ + (.@i >= getiteminfo(.@itemid, ITEMINFO_SLOT) ? .slots$[.@i] + (.@card[.@i+1] ? " - " + getitemname(.@card[.@i+1]) : "" ) : "") + ":";
+	.@selected_slot = select(.@menu$);
+	if(.@selected_slot == 5) {
+		mes "[Enchant Master]";
+		mes "Okay.";
+		mes "You can come again later.";
+		close;
+	}
+
+	// If there are no enchants - add new
+	if(!.@card[.@selected_slot]) {
+		mes "[Enchant Master]";
+		mes "Which enchant would you like to implant?";
+		mes "Success chance: "+.success[0]+"%";
+		if(.zeny[0]) mes "It will cost "+.zeny[0]+" zeny.";
+		if(.items$[0] != "") {
+			mes "Needed items:";
+			explode(.@list$, .items$[0], ",");
+			for(.@i = 0; .@i < getarraysize(.@list$); .@i++) {
+				explode(.@item$, .@list$[.@i], ":");
+				mes .@item$[1]+" ea. - ^0000FF"+getitemname(atoi(.@item$[0]))+"^000000";
+				if(countitem(atoi(.@item$[0])) < atoi(.@item$[1])) .@check_items++;
+			}
+		}
+		next;
+		.@menu$ = "Cancel:";
+		for(.@i = 1; .@i < getarraysize(.enchants); .@i++)
+			.@menu$ = .@menu$ + getitemname(.enchants[.@i]) + ":";
+		.@selected_enchant = select(.@menu$) - 1;
+		if(select("Add enchant:Cancel") == 2 || !.@selected_enchant) {
+			mes "[Enchant Master]";
+			mes "Okay.";
+			mes "You can come again later.";
+			close;
+		}
+		.@card[.@selected_slot] = .enchants[.@selected_enchant];
+		if(zeny < .zeny[0]) {
+			mes "[Enchant Master]";
+			mes "You don't have enough zeny.";
+			close;
+		}
+		if(.@check_items) {
+			mes "[Enchant Master]";
+			mes "You don't have enough items.";
+			close;
+		}
+		if(.zeny[0])
+			zeny -= .zeny[0];
+		if(.items$[0] != "") {
+			explode(.@list$, .items$[0], ",");
+			for(.@i = 0; .@i < getarraysize(.@list$); .@i++) {
+				explode(.@item$, .@list$[.@i], ":");
+				delitem atoi(.@item$[0]), atoi(.@item$[1]);
+			}
+		}
+		delequip .@part;
+		if(rand(100) > .success[0]) {
+			specialeffect2 EF_REFINEFAIL;
+			mes "[Enchant Master]";
+			mes "Oh! Sorry!";
+			mes "It's broken...";
+			close;
+		}
+		specialeffect2 EF_REFINEOK;
+		getitem3 .@itemid,1,1,.@refine,0,.@card[1],.@card[2],.@card[3],.@card[4],.@OptID,.@OptVal,.@OptParam;
+		mes "[Enchant Master]";
+		mes "Success!";
+		mes "Here your item.";
+		close;
+	}
+	// If item have enchant than upgrade it
+	else {
+		.@upgrade_id = .@card[.@selected_slot];
+		.@next_id = .enchants_upgrade[inarray(.enchants_upgrade[0], .@upgrade_id)+1];
+		.@card[.@selected_slot] = .@next_id;
+		.@index = (inarray(.enchants_upgrade[0], .@next_id) % 10);
+		mes "[Enchant Master]";
+		// If enchant have 10 lv or not found
+		if(inarray(.enchants_upgrade[0], .@next_id) == -1 || !.@next_id) {
+			mes "Sorry, i can't upgrade this enchant.";
+			close;
+		}
+		// If enchant have 10 lv or not found
+		if(inarray(.enchants_upgrade[0], .@next_id) % 10 == 0) {
+			mes "This enchant already have a max level.";
+			close;
+		}
+		mes "Do you want to upgrade this enchant?";
+		mes "Upgrade to: ^0000FF"+getitemname(.@card[.@selected_slot])+"^000000";
+		mes "Success chance: "+.success[.@index]+"%";
+		if(.zeny[.@index]) mes "It will cost "+.zeny[.@index]+" zeny.";
+		if(.items$[.@index] != "") {
+			mes "Needed items:";
+			explode(.@list$, .items$[.@index], ",");
+			for(.@i = 0; .@i < getarraysize(.@list$); .@i++) {
+				explode(.@item$, .@list$[.@i], ":");
+				mes .@item$[1]+" ea. - ^0000FF"+getitemname(atoi(.@item$[0]))+"^000000";
+				if(countitem(atoi(.@item$[0])) < atoi(.@item$[1])) .@check_items++;
+			}
+		}
+		next;
+		if(select("Upgrade enchant:Cancel") == 2) {
+			mes "[Enchant Master]";
+			mes "Okay.";
+			mes "You can come again later.";
+			close;
+		}
+		if(zeny < .zeny[.@index]) {
+			mes "[Enchant Master]";
+			mes "You don't have enough zeny.";
+			close;
+		}
+		if(.@check_items) {
+			mes "[Enchant Master]";
+			mes "You don't have enough items.";
+			close;
+		}
+		if(.zeny[.@index])
+			zeny -= .zeny[.@index];
+		if(.items$[.@index] != "") {
+			explode(.@list$, .items$[.@index], ",");
+			for(.@i = 0; .@i < getarraysize(.@list$); .@i++) {
+				explode(.@item$, .@list$[.@i], ":");
+				delitem atoi(.@item$[0]), atoi(.@item$[1]);
+			}
+		}
+		delequip .@part;
+		if(rand(100) > .success[.@index]) {
+			specialeffect2 EF_REFINEFAIL;
+			mes "[Enchant Master]";
+			mes "Oh! Sorry!";
+			mes "It's broken...";
+			close;
+		}
+		specialeffect2 EF_REFINEOK;
+		getitem3 .@itemid,1,1,.@refine,0,.@card[1],.@card[2],.@card[3],.@card[4],.@OptID,.@OptVal,.@OptParam;
+		mes "[Enchant Master]";
+		mes "Success!";
+		mes "Here your item.";
+		close;
+	}
+	close;
+	
+OnInit:
+	setarray .indices[1], EQI_HEAD_TOP, EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_SHOES, EQI_ACC_L, EQI_ACC_R, EQI_HEAD_MID, EQI_HEAD_LOW;
+	setarray .slots$[0], "Slot 1", "Slot 2", "Slot 3", "Slot 4", "Cancel";
+
+	//avaliable enchant list
+	setarray .enchants[1],
+		4700,	// Str
+		4730,	// Agi
+		4740,	// Vit
+		4710,	// Int
+		4720,	// Dex
+		4750;	// Luk
+
+	// Enchant level
+	setarray .enchants_upgrade[0],
+	//	1lv		2lv		3lv		4lv		5lv		6lv		7lv		8lv		9lv		10lv
+		4700,	4701,	4702,	4703,	4704,	4705,	4706,	4707,	4708,	4709,	// Str
+		4730,	4731,	4732,	4733,	4734,	4735,	4736,	4737,	4738,	4739,	// Agi
+		4740,	4741,	4742,	4743,	4744,	4745,	4746,	4747,	4748,	4749,	// Vit
+		4710,	4711,	4712,	4713,	4714,	4715,	4716,	4717,	4718,	4719,	// Int
+		4720,	4721,	4722,	4723,	4724,	4725,	4726,	4727,	4728,	4729,	// Dex
+		4750,	4751,	4752,	4753,	4754,	4755,	4756,	4757,	4758,	4759;	// Luk
+
+	// Enchant success chance
+	setarray .success[0],
+	//	1lv		2lv		3lv		4lv		5lv		6lv		7lv		8lv		9lv		10lv
+		100,	90,		80,		70,		60,		50,		40,		30,		20,		10;
+
+	// Enchant price - zeny
+	setarray .zeny[0],
+		10000,	// 1 lv
+		20000,	// 2 lv
+		30000,	// 3 lv
+		40000,	// 4 lv
+		50000,	// 5 lv
+		60000,	// 6 lv
+		70000,	// 7 lv
+		80000,	// 8 lv
+		90000,	// 9 lv
+		100000;	// 10 lv
+		
+	// Enchant price - items
+	setarray .items$[0],
+		"1000:1",			// 1 lv
+		"1000:2",			// 2 lv
+		"1000:3",		// 3 lv
+		"1000:4",	// 4 lv
+		"1000:5",	// 5 lv
+		"1000:6",	// 6 lv
+		"1000:7",	// 7 lv
+		"1000:8",	// 8 lv
+		"1000:9",	// 9 lv
+		"1000:10";	// 10 lv
+}

@@ -1,0 +1,42 @@
+//===== Atlantis Script ======================================
+//= iRO Bounty Boards : Juno
+//===== By: ==================================================
+//= Ragno / AtlantisRO
+//===== Actual Version: ======================================
+//= 1.0.2 Removed += operations with strings.
+//= 1.0.1 Changed npc and monsters constants to numerical ids
+//= 1.0 Starting Release
+//===== General Description: =================================
+//= Hunting Quest designed by iRO:
+//=    http://irowiki.org/wiki/Bounty_Board_Quests
+//===== How to Use: ==========================================
+//= Uses function "F_Bounty_Board" to manage the Bounty Boards
+//= npc on cities.
+//= The function arguments are this:
+//= 	callfunc "F_Bounty_Board", MinLevel, MaxLevel, MsgHuntPlace, MsgOutLevel,
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp{, 
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp};
+//============================================================
+
+yuno,180,145,0	script	Bounty Board 70-110#jn1	837,{
+	callfunc "F_Bounty_Board", 70, 110, 7, 1,
+		1372,	62556,	119812,		134662,	// GOAT
+		1376,	62557,	135112,		151762,	// HARPY
+		1386,	62558,	116325,		130500,	// SLEEPER
+		1369,	62559,	 99787,		112275;	// GRAND_PECO
+	end;
+}
+
+yuno,182,145,0	script	Bounty Board 101-150#jn2	837,{
+	callfunc "F_Bounty_Board", 101, 150, 7, 1,
+		1385,	62710,	236025,		177075,	// DELETER_
+		1384,	62711,	236025,		177075,	// DELETER
+		1379,	62712,	274725,		206100,	// NIGHTMARE_TERROR
+		1676,	62713,	275400,		206550,	// VENATU_1
+		1677,	62714,	296550,		222750,	// VENATU_2
+		1678,	62715,	297225,		222975,	// VENATU_3
+		1679,	62716,	297225,		222975,	// VENATU_4
+		1365,	62717,	342225,		256725;	// APOCALIPS
+	end;
+}
+

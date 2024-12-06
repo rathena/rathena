@@ -1,0 +1,65 @@
+
+-	script	IP_EntranceNPC::IP_EntranceNPC	-1,{
+	.@instance$ = "Invaded Prontera";
+
+	if (instance_live_info(ILI_NAME, instance_id(IM_PARTY)) == .@instance$) {
+		mes "[Schmidt]";
+		mes "You are already part of an instance.";
+		next;
+		switch(select("Enter Instance.:Cancel.")) {
+		case 1:
+			break;
+		case 2:
+			mes "[Schmidt]";
+			mes "You don't want to try again?";
+			close;
+		}
+	}
+	else if (instance_id(IM_PARTY)) {	// another instance is running
+		mes "[Schmidt]";
+		mes "You are part of the instance " + instance_live_info(ILI_NAME, instance_id(IM_PARTY)) + ".";
+		close;
+	}
+	else {
+		mes "[Schmidt]";
+		mes "Let's get back to Prontera and see what's going on.";
+		next;
+		switch(select("Create Instance.:Cancel.")) {
+		case 1:
+			.@create = instance_create(.@instance$);
+			if (.@create < 0) {
+				mes "[Schmidt]";
+				switch (.@create) {
+					case -1: mes "ERROR: Invalid type."; break;
+					case -2: mes "ERROR: Party not found."; break;
+					case -3: mes "ERROR: Instance already exists."; break;
+					case -4: mes "ERROR: No free instances."; break;
+				}
+				mes " ";
+				mes "Instance creation ^FF0000failed^000000.";
+				close;
+			}
+			mes "[Schmidt]";
+			mes "Instance created.";
+			mes " ";
+			mes "Now entering the instance...";
+			next;
+			break;
+		case 2:
+			close;
+		}
+	}
+	.@enter = instance_enter(.@instance$);
+	if (.@enter != 0) {
+		mes "[Schmidt]";
+		switch (.@enter) {
+			case 1: mes "ERROR: Party not found."; break;
+			case 2: mes "ERROR: Party does not have an instance."; break;
+			case 3: mes "ERROR: Unknown error."; break;
+		}
+		mes " ";
+		mes "Instance entry ^FF0000failed^000000.";
+		close;
+	}
+	close;
+}

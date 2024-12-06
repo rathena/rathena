@@ -42,7 +42,7 @@
 #define MAX_MAP_PER_SERVER 1500 /// Maximum amount of maps available on a server
 
 #ifndef INVENTORY_BASE_SIZE
-	#define INVENTORY_BASE_SIZE 100 // Amount of inventory slots each player has
+	#define INVENTORY_BASE_SIZE 200 // Amount of inventory slots each player has
 #endif
 
 #ifndef INVENTORY_EXPANSION_SIZE

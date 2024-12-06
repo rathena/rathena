@@ -1,0 +1,108 @@
+// Instance Creation NPC
+//============================================================
+prontera,146,186,5	duplicate(IP_EntranceNPC)	Schmidt#pront	10306
+
+// Instance NPCs
+//============================================================
+prt_q,218,50,6	duplicate(IP_SchmidtPrtQ)	Schmidt#pront_q	657
+prt_lib_q,10,30,6	duplicate(IP_SchmidtPrtLibQ)	Schmidt#pront_lib_q	10306
+prt_lib_q,88,85,5	duplicate(IP_SakrayPrtLibQ)	Sakray#pront_lib_q	685
+
+// Instance Warps
+//============================================================
+prt_q,155,360,5	duplicate(IP_WarpPrtLibQ)	#prt_lib_q_warp	45,5,5
+prt_lib_q,88,91,5	duplicate(IP_Warp1@mir)	#1@mir_warp	45,5,5
+
+// Instance Mobs
+//============================================================
+prt_q,0,0,0	script	#ins_ptr_q_mobs	-1,{
+	set .mobkillcount,0;
+    set .bossspawncount,20;
+	end;
+OnEnable:
+	callfunc "PrtQ_SpawnMobs";
+	end;
+OnMyMobDead:
+	.mobkillcount = .mobkillcount + 1;
+	if (.mobkillcount >= .bossspawncount) {
+		callfunc "PrtQ_SpawnBoss";
+	}
+	else {
+		dispbottom .killcount + "/2 killed.";
+	}
+	end;
+OnMyBossDead:
+	callfunc "PrtQ_OnBossKilled";
+	end;
+}
+
+prt_lib_q,0,0,0	script	#ins_ptr_lib_q_mobs	-1,{
+	end;
+OnEnable:
+	callfunc "PrtLibQ_SpawnBoss";
+	end;
+OnMyBossDead:
+	callfunc "PrtLibQ_OnBossKilled";
+	end;
+}
+
+
+// Functions
+//============================================================
+function	script	PrtQ_SpawnMobs	{
+	.mapname$ = instance_mapname("prt_q");
+	monster .mapname$,0,0,"Agent of Evil",1257,60,instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+}
+
+function	script	PrtQ_SpawnBoss	{
+	.mapname$ = instance_mapname("prt_q");
+	monster .mapname$,155,195,"Captain of Evil",1002,1,instance_npcname(strnpcinfo(0))+"::OnMyBossDead",2,1;
+	mapannounce .mapname$,"Captain of Evil: Who is killing my army?!",bc_map, "0xff8888";
+}
+
+function	script	PrtQ_OnBossKilled	{
+	.mapname$ = instance_mapname("prt_q");
+	killmonster .mapname$,.@label$;
+	dispbottom "Schmidt: Good work! I'm heading to the castle. Go north and meet me there!";
+	donpcevent instance_npcname("#prt_lib_q_warp")+"::OnEnable";
+	donpcevent instance_npcname("IP_SchmidtPrtLibQ")+"::OnEnable";
+}
+
+function	script	PrtLibQ_SpawnBoss	{
+	.mapname$ = instance_mapname("prt_lib_q");
+	monster .mapname$,88,88,"General of Evil",1507,1,instance_npcname(strnpcinfo(0))+"::OnMyBossDead",2,1;
+	mapannounce .mapname$,"General of Evil: You shall not pass!",bc_map, "0xff8888";
+	donpcevent instance_npcname("P_Sakray")+"::OnEnable";
+}
+
+function	script	PrtLibQ_OnBossKilled	{
+	.mapname$ = instance_mapname("prt_lib_q");
+	killmonster .mapname$,.@label$;
+	donpcevent instance_npcname("#1@mir_warp")+"::OnEnable";
+	//donpcevent instance_npcname("IP_SchmidtPrtLibQ")+"::OnEnable";
+}
+
+
+//===========etc
+
+prt_q,155,191,4	script	Instance NPC#finish	101,{
+	mes "[Instance NPC]";
+	mes "Congratulations! You've finished the instance.";
+	mes "I'll send you back to town now.";
+	emotion ET_BEST;
+	close;
+	warp "prontera",156,191;
+	instance_destroy();
+	end;
+
+OnInit:
+	disablenpc strnpcinfo(0);
+	end;
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+OnEnable:
+	enablenpc instance_npcname(strnpcinfo(0));
+	specialeffect EF_HIDING;
+	end;
+}

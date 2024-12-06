@@ -1,0 +1,30 @@
+//===== Atlantis Script ======================================
+//= iRO Bounty Boards : Brasilis
+//===== By: ==================================================
+//= Ragno / AtlantisRO
+//===== Actual Version: ======================================
+//= 1.0.2 Removed += operations with strings.
+//= 1.0.1 Changed npc and monsters constants to numerical ids
+//= 1.0 Starting Release
+//===== General Description: =================================
+//= Hunting Quest designed by iRO:
+//=    http://irowiki.org/wiki/Bounty_Board_Quests
+//===== How to Use: ==========================================
+//= Uses function "F_Bounty_Board" to manage the Bounty Boards
+//= npc on cities.
+//= The function arguments are this:
+//= 	callfunc "F_Bounty_Board", MinLevel, MaxLevel, MsgHuntPlace, MsgOutLevel,
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp{, 
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp};
+//============================================================
+
+brasilis,190,224,0	script	Bounty Board 70-175#bra1	837,{
+	callfunc "F_Bounty_Board", 70, 0, 8, 3,
+		2074,	62603,	 93300,		 67500,	// CURUPIRA
+		2071,	62604,	151650,		168000,	// HEADLESS_MULE
+		2072,	62605,	108000,		 76800,	// JAGUAR
+		2073,	62606,	 98850,		 81600,	// TOUCAN
+		2070,	62607,	 89850,		153450,	// PIRANHA
+		2069,	62608,	160500,		133500;	// IARA
+	end;
+}

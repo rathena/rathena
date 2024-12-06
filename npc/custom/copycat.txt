@@ -1,0 +1,60 @@
+//===== rAthena Script =======================================
+//= Plagiarism NPC
+//===== By: ==================================================
+//= Easycore
+//===== Last Updated: ========================================
+//= 20210905
+//===== Description: ========================================= 
+//= Simple Plagiarism Skill
+//= Require 'getskillname' script command:
+//=    https://rathena.org/board/files/file/4307-script-command-getskillname/
+//============================================================
+
+prontera,150,150,3	script	Plagiarism NPC	747,{
+	mes "[ ^FF0000Plagiarism Master^000000 ]";
+	if (.plag_skill && !getskilllv("RG_PLAGIARISM")) {
+		mes "You must have Plagiarism learned.";
+		close;
+	}
+	mes "Heya ^FFA500"+strcharinfo(0)+"^000000!";
+	mes "Do you want to copy a skill?";
+	if (.zeny)
+		mes "My service costs ^FF0000"+.zeny+" Zeny^000000.";
+	if (select("~ Proceed","Cancel") == 2) close;
+	if (.zeny > 0 && Zeny < .zeny) {
+		message(strcharinfo(0),"Not enough Zeny.");
+		close;
+	}
+	.@menu$ = "";
+	.@f = getarraysize(.SkillID);
+	for(.@i = 0; .@i < .@f; .@i++)
+		.@menu$ += getskillname(.SkillID[.@i])+(.@i==.@f?"":":");
+	.@s = select(.@menu$) - 1;
+	close2;
+	if (.zeny > 0 && Zeny < .zeny)
+		end;
+	if (.zeny > 0)
+		Zeny -= .zeny;
+	npcskill .SkillID[.@s],.SkillLV[.@s],20,200;
+	sleep2 1500;
+	unitwarp getnpcid(0),.map$,.x,.y;
+	end;
+
+	OnInit:
+		//Default NPC Data Values
+		setunitdata(getnpcid(0),UNPC_DEX,300);
+		setunitdata(getnpcid(0),UNPC_ATKMIN,100);
+		setunitdata(getnpcid(0),UNPC_ATKMAX,200);
+		getmapxy(.map$,.x,.y,BL_NPC);
+
+		//Configuration
+		//Zeny required? Set 0 to disable it
+		.zeny = 25000;
+		//Must Plagiarism skil be learned? (1. Yes | 0. No)
+		.plag_skill = 1;
+		//Skill ID Array
+		setarray .SkillID[0],263,13, 7,14,19,20,21,83,84,85,86,89,90,91,421,534,536,537,540,542;
+		//Skill LV Array
+		setarray .SkillLV[0], 10,10,10,10,10,10,10,10,10,10,10,10,10,5,   7, 10,  5, 10, 19,  5;
+		end;
+}

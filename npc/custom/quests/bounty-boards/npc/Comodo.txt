@@ -1,0 +1,39 @@
+//===== Atlantis Script ======================================
+//= iRO Bounty Boards : 
+//===== By: ==================================================
+//= Ragno / AtlantisRO
+//===== Actual Version: ======================================
+//= 1.0.2 Removed += operations with strings.
+//= 1.0.1 Changed npc and monsters constants to numerical ids
+//= 1.0 Starting Release
+//===== General Description: =================================
+//= Hunting Quest designed by iRO:
+//=    http://irowiki.org/wiki/Bounty_Board_Quests
+//===== How to Use: ==========================================
+//= Uses function "F_Bounty_Board" to manage the Bounty Boards
+//= npc on cities.
+//= The function arguments are this:
+//= 	callfunc "F_Bounty_Board", MinLevel, MaxLevel, MsgHuntPlace, MsgOutLevel,
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp{, 
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp};
+//============================================================
+
+comodo,104,136,3	script	Bounty Board 40-60#cmd1	837,{
+	callfunc "F_Bounty_Board", 40, 60, 1, 1,
+		1034,	62617,	 52312,		 59062,	// THARA_FROG
+		1323,	62618,	 72225,		 81000,	// SEE_OTTER
+		1317,	62619,	 60750,		 68287,	// FUR_SEAL
+		1254,	62620,	 62212,		 69862,	// RAGGLER
+		1687,	62621,	164025,		184950,	// GREEN_IGUANA
+		1271,	62622,	 82012,		 92475,	// ALLIGATOR
+		1118,	62809,	 59140,		 66491;	// FLORA
+	end;
+}
+
+comodo,106,136,3	script	Bounty Board 60-105#cmd2	837,{
+	callfunc "F_Bounty_Board", 60, 105, 6, 1,
+		1040,	62623,	 91125,		102600,	// GOLEM
+		1278,	62624,	113850,		128025,	// STALACTIC_GOLEM
+		1148,	62625,	293062,		219712;	// MEDUSA
+	end;
+}

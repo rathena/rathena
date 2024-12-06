@@ -1,0 +1,37 @@
+//===== Atlantis Script ======================================
+//= iRO Bounty Boards : Dicastes
+//===== By: ==================================================
+//= Ragno / AtlantisRO
+//===== Actual Version: ======================================
+//= 1.0.2 Removed += operations with strings.
+//= 1.0.1 Changed npc and monsters constants to numerical ids
+//= 1.0 Starting Release
+//===== General Description: =================================
+//= Hunting Quest designed by iRO:
+//=    http://irowiki.org/wiki/Bounty_Board_Quests
+//===== How to Use: ==========================================
+//= Uses function "F_Bounty_Board" to manage the Bounty Boards
+//= npc on cities.
+//= The function arguments are this:
+//= 	callfunc "F_Bounty_Board", MinLevel, MaxLevel, MsgHuntPlace, MsgOutLevel,
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp{, 
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp};
+//============================================================
+
+dicastes01,196,48,0	script	Bounty Board 101-140#dc1	837,{
+	callfunc "F_Bounty_Board", 101, 140, 12, 2,
+		1987,	62613,		360112,		304987,	// CENTIPEDE
+		1999,	62614,		329625,		225225,	// CENTIPEDE_LARVA
+		1986,	62615,		423225,		347850,	// TATACHO
+		2092,	62616,		579937,		579937;	// DOLOMEDES
+	end;
+}
+
+dicastes01,196,46,0	script	Bounty Board 120-175#dc2	837,{
+	callfunc "F_Bounty_Board", 120, 0, 12, 2,
+		2085,	62802,		712125,		591187,	// ANTLER_SCARABA
+		2084,	62803,		650250,		511762,	// HORN_SCARABA2
+		2086,	62804,		786375,		674437,	// RAKE_SCARABA
+		2083,	62805,		587250,		451237;	// HORN_SCARABA
+	end;
+}

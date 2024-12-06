@@ -1,0 +1,159 @@
+-	script	IP_EntranceNPC::IP_EntranceNPC	-1,{
+	.@instance$ = "Invaded Prontera";
+
+	if (instance_live_info(ILI_NAME, instance_id(IM_PARTY)) == .@instance$) {
+		mes "[Schmidt]";
+		mes "You are already part of an instance.";
+		next;
+		switch(select("Enter Instance.:Cancel.")) {
+		case 1:
+			break;
+		case 2:
+			mes "[Schmidt]";
+			mes "You don't want to try again?";
+			close;
+		}
+	}
+	else if (instance_id(IM_PARTY)) {	// another instance is running
+		mes "[Schmidt]";
+		mes "You are part of the instance " + instance_live_info(ILI_NAME, instance_id(IM_PARTY)) + ".";
+		close;
+	}
+	else {
+		mes "[Schmidt]";
+		mes "Let's get back to Prontera and see what's going on.";
+		next;
+		switch(select("Create Instance.:Cancel.")) {
+		case 1:
+			.@create = instance_create(.@instance$);
+			if (.@create < 0) {
+				mes "[Schmidt]";
+				switch (.@create) {
+					case -1: mes "ERROR: Invalid type."; break;
+					case -2: mes "ERROR: Party not found."; break;
+					case -3: mes "ERROR: Instance already exists."; break;
+					case -4: mes "ERROR: No free instances."; break;
+				}
+				mes " ";
+				mes "Instance creation ^FF0000failed^000000.";
+				close;
+			}
+			mes "[Schmidt]";
+			mes "Instance created.";
+			mes " ";
+			mes "Now entering the instance...";
+			next;
+			break;
+		case 2:
+			close;
+		}
+	}
+	.@enter = instance_enter(.@instance$);
+	if (.@enter != 0) {
+		mes "[Schmidt]";
+		switch (.@enter) {
+			case 1: mes "ERROR: Party not found."; break;
+			case 2: mes "ERROR: Party does not have an instance."; break;
+			case 3: mes "ERROR: Unknown error."; break;
+		}
+		mes " ";
+		mes "Instance entry ^FF0000failed^000000.";
+		close;
+	}
+	close;
+}
+
+-	script	IP_SchmidtPrtQ::IP_SchmidtPrtQ	-1,{
+ 	mes "[Schmidt]";
+    npctalk "Heinrich: Thank you for the help. But we don't even have our king with us right now.";
+	mes "Fuck.";
+	cutin "schmidt07",1;
+	next;
+	mes "[Schmidt]";
+	mes "We need to get to the king, now. Can you clear a path?";
+	cutin "schmidt06",1;
+	next;
+	switch(select("Yes.:I need a minute.")) {
+	case 1:
+		mes "[Schmidt]";
+		mes "Get to the middle of the city. I'll meet you there.";
+		cutin "",255;
+		close2;
+		donpcevent instance_npcname("#ins_ptr_q_mobs")+"::OnEnable";
+		disablenpc instance_npcname(strnpcinfo(0));
+        summon strcharinfo(0) + "Halfdan",20390, "OnPoringKilled";
+		end;
+	case 2:
+		mes "[Schmidt]";
+		mes "Take your time.";
+		cutin "",255;
+		close;
+	}
+	
+	end;
+
+OnInit:
+	disablenpc strnpcinfo(0);
+	end;
+OnInstanceInit:
+	end;
+}
+
+-	script	IP_WarpPrtLibQ::IP_WarpPrtLibQ	-1,{
+OnTouch:
+    warp instance_mapname("prt_lib_q"),9,28;
+	close;
+OnInit:
+	disablenpc strnpcinfo(0);
+	end;
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+OnEnable:
+	enablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+
+-	script	IP_SchmidtPrtLibQ::IP_SchmidtPrtLibQ	-1,{
+ 	mes "[Schmidt]";
+    mes "yo. boss again.";
+    donpcevent instance_npcname("#ins_ptr_lib_q_mobs")+"::OnEnable";
+	end;
+
+OnInit:  // hide the NPC on the normal map
+	disablenpc strnpcinfo(0);
+	end;
+OnInstanceInit:  // initialize the NPC when the instance is created
+	end;
+OnEnable:
+	enablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+-	script	IP_Warp1@mir::IP_Warp1@mir	-1,{
+OnTouch:
+    warp instance_mapname("1@mir"),101,11;
+	end;
+OnInit:
+	disablenpc strnpcinfo(0);
+	end;
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+OnEnable:
+	enablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+-	script	IP_SakrayPrtLibQ::IP_SakrayPrtLibQ	-1,{
+OnInit:
+	disablenpc strnpcinfo(0);
+	end;
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+OnEnable:
+	enablenpc instance_npcname(strnpcinfo(0));
+	end;
+}

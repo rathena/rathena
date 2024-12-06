@@ -1,0 +1,221 @@
+//===== rAthena Script =======================================
+//= Sample: Instancing
+//===== By: ==================================================
+//= Euphy
+//===== Last Updated: ========================================
+//= 20140129
+//===== Description: ========================================= 
+//= Contains elements of a basic instance script.
+//============================================================
+
+// Before running this script, add the entry below to
+// 'db/(pre-)re/instance_db.txt':
+// 100,Abyss Lake Instance,3600,300,abyss_03,160,155
+
+// Instance Creation
+//============================================================
+prontera,238,46,6	script	Sample Instance	101,{
+	.@instance$ = "Invaded Prontera";
+
+	if (instance_live_info(ILI_NAME, instance_id(IM_PARTY)) == .@instance$) {  // the instance "Abyss Lake Instance" is running
+		mes "[Sample Instance]";
+		mes "You are already part of an instance.";
+		next;
+		switch(select("Enter Instance.:Cancel.")) {
+		case 1:
+			break;
+		case 2:
+			mes "[Sample Instance]";
+			mes "You don't want to try again?";
+			emotion ET_CRY;
+			close;
+		}
+	}
+	else if (instance_id(IM_PARTY)) {	// another instance is running
+		mes "[Sample Instance]";
+		mes "You are part of the instance " + instance_live_info(ILI_NAME, instance_id(IM_PARTY)) + ".";
+		close;
+	}
+	else {
+		mes "[Sample Instance]";
+		mes "Would you like to try the sample instance in Abyss Lake 3?";
+		next;
+		switch(select("Create Instance.:Cancel.")) {
+		case 1:
+			.@create = instance_create(.@instance$);
+			if (.@create < 0) {
+				mes "[Sample Instance]";
+				switch (.@create) {
+					case -1: mes "ERROR: Invalid type."; break;
+					case -2: mes "ERROR: Party not found."; break;
+					case -3: mes "ERROR: Instance already exists."; break;
+					case -4: mes "ERROR: No free instances."; break;
+				}
+				mes " ";
+				mes "Instance creation ^FF0000failed^000000.";
+				emotion ET_HUK;
+				close;
+			}
+			mes "[Sample Instance]";
+			mes "Instance created.";
+			mes " ";
+			mes "Now entering the instance...";
+			next;
+			break;
+		case 2:
+			mes "[Sample Instance]";
+			mes "Okay. Maybe next time!";
+			close;
+		}
+	}
+	.@enter = instance_enter(.@instance$);
+	if (.@enter != 0) {
+		mes "[Sample Instance]";
+		switch (.@enter) {
+			case 1: mes "ERROR: Party not found."; break;
+			case 2: mes "ERROR: Party does not have an instance."; break;
+			case 3: mes "ERROR: Unknown error."; break;
+		}
+		mes " ";
+		mes "Instance entry ^FF0000failed^000000.";
+		emotion ET_HUK;
+		close;
+	}
+	close;
+}
+
+// Instance Scripts 10018
+//============================================================
+prt_q,155,360,0	warp	PoringWarp	1,1,prt_lib_q,9,28
+prt_lib_q,9,24,0	warp	PoringWarpz	1,1,prt_q,155,355
+prt_lib_q,88,91,0	warp	PoringWarpzz	1,1,1@mir,101,11
+1@mir,101,8,0	warp	PoringWarpzzz	1,1,prt_lib_q,88,88
+
+prt_q,218,50,6	script	Schmidt#start	10306 ,{
+ 	mes "[Schmidt]";
+	mes "Fuck.";
+	cutin "schmidt07",2;
+	next;
+	mes "[Schmidt]";
+	mes "We need to get to the king, now. Can you clear a path?";
+	cutin "schmidt06",2;
+	next;
+	switch(select("Yes.:No.")) {
+	case 1:
+		mes "[Schmidt]";
+		mes "Get to the middle of the city. I'll meet you there.";
+		cutin "",255;
+		close2;
+		donpcevent instance_npcname("#ins_ptr_q_mobs")+"::OnEnable";
+		delwaitingroom;
+		disablenpc instance_npcname(strnpcinfo(0));
+		end;
+	case 2:
+		mes "[Instance NPC]";
+		mes "Take your time.";
+		cutin "",255;
+		close;
+	}
+	
+	end;
+
+OnInit:  // hide the NPC on the normal map
+	disablenpc strnpcinfo(0);
+	end;
+OnInstanceInit:  // initialize the NPC when the instance is created
+	// waitingroom "Click here to start!",0;
+	end;
+}
+
+prt_q,0,0,0	script	#ins_ptr_q_mobs	-1,{
+	end;
+OnEnable:
+	initnpctimer;
+	end;
+OnTimer1000:  //strnpcinfo(4) will retrieve the instanced map name
+	mapannounce strnpcinfo(4),"Instance NPC: The Abyss Lake instance has begun.",bc_all;
+	end;
+OnTimer4000:
+	mapannounce strnpcinfo(4),"Instance NPC: Smash the Treasure Chest in the center of the map for a prize.",bc_all;
+	end;
+OnTimer5000:
+	stopnpctimer;
+
+	// spawn mobs
+	.@map$        = instance_mapname("prt_q");
+	.@label$      = instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+	.@label_boss$ = instance_npcname(strnpcinfo(0))+"::OnCaptainDead";
+	monster .@map$,155,195,strnpcinfo(0),1117;
+	monster .@map$,0,0,"Evil Druid",1118,30,.@label$;
+	monster .@map$,0,0,"Injustice",1257,30,.@label$;
+	monster .@map$,0,0,"Huge Poporing",1031,30,.@label$;
+	monster .@map$,0,0,"Quve",1508,30,.@label$;
+	monster .@map$,0,0,"Goul",1036,30,.@label$;
+	monster .@map$,0,0,"Wraith",1192,2,.@label$;
+	//monster .@map$,155,195,"Treasure Chest",2473,1,.@label_boss$,2;//1732
+	end;
+OnMyMobDead:  // normal mobs
+	dispbottom "What am I doing? I should be attacking the Treasure Chest!";
+	viewpoint 0,97,102,0,0xFF0000;
+	switch (rand(6)) {  // for fun (:
+		case 0: sc_start SC_STONE,5000,0; break;
+		case 1: sc_start SC_FREEZE,5000,0; break;
+		case 2: sc_start SC_STUN,5000,0; break;
+		case 3: sc_start SC_SLEEP,5000,0; break;
+		case 4: sc_start SC_CONFUSION,5000,0; break;
+		case 5: sc_start SC_BLIND,5000,0; break;
+	}
+	end;
+OnCaptainDead:  // treasure chest
+	specialeffect2 EF_MVP;
+	getitem 512,1; //Apple
+
+	// trigger other events
+	.@map$   = instance_mapname("prt_q");
+	.@label$ = instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+	killmonster .@map$,.@label$;
+	mapannounce .@map$,"Instance NPC: Good work! Please speak to me as soon as possible.",bc_all;
+	donpcevent instance_npcname("Instance NPC#finish")+"::OnEnable";
+	end;
+}
+
+prt_q,155,191,4	script	Instance NPC#finish	101,{
+	mes "[Instance NPC]";
+	mes "Congratulations! You've finished the instance.";
+	mes "I'll send you back to town now.";
+	emotion ET_BEST;
+	close2;
+	warp "prontera",156,191;
+	instance_destroy();
+	end;
+
+OnInit:
+	disablenpc strnpcinfo(0);
+	end;
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+OnEnable:
+	enablenpc instance_npcname(strnpcinfo(0));
+	specialeffect EF_HIDING;
+	end;
+}
+
+prt_q,155,180,0	script	#ins_abyss03_warp	45,5,5,{
+	end;
+OnTouch:
+	mes "Are you sure you want to leave?";
+	next;
+	switch(select("Leave.:Stay.")) {
+	case 1:
+		warp "prontera",156,191;
+		break;
+	case 2:
+		warp strnpcinfo(4),160,155;
+		break;
+	}
+	close;
+OnInit:
+	disablenpc strnpcinfo(0);
+	end;
+}

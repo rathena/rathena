@@ -1,0 +1,30 @@
+//===== Atlantis Script ======================================
+//= iRO Bounty Boards : Rune Midgard Camp
+//===== By: ==================================================
+//= Ragno / AtlantisRO
+//===== Actual Version: ======================================
+//= 1.0.2 Removed += operations with strings.
+//= 1.0.1 Changed npc and monsters constants to numerical ids
+//= 1.0 Starting Release
+//===== General Description: =================================
+//= Hunting Quest designed by iRO:
+//=    http://irowiki.org/wiki/Bounty_Board_Quests
+//===== How to Use: ==========================================
+//= Uses function "F_Bounty_Board" to manage the Bounty Boards
+//= npc on cities.
+//= The function arguments are this:
+//= 	callfunc "F_Bounty_Board", MinLevel, MaxLevel, MsgHuntPlace, MsgOutLevel,
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp{, 
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp};
+//============================================================
+
+mid_camp,182,253,0	script	Bounty Board 100-150#mc1	837,{
+	callfunc "F_Bounty_Board", 100, 150, 11, 2,
+		1995,	62806,		249750,		186975,	// PINGUICULA
+		2015,	62807,		236250,		272100,	// PINGUICULA_D
+		1988,	62808,		292275,		201600,	// NEPENTHES
+		1992,	62599,		702000,		450450,	// CORNUS
+		1993,	62600,		331200,		248850,	// NAGA
+		1994,	62602,		182475,		203175;	// LUCIOLA_VESPA
+	end;
+}

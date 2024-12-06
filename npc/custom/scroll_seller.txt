@@ -11,4 +11,4 @@
 //=	Changed set -> setarray, Improved text with F_InsertPlural
 //= 1.5 Added sc_end_class to reset related status changes [sader1992]
 //============================================================
-prontera,161,193,4	shop	Scroll Seller#prt	935,12114:-1,12115:-1,12116:-1,12117:-1,12215:-1,12216:-1,12217:-1
+prontera,161,193,4	shop	Scroll Seller#prt	935,12114:-1,12115:-1,12116:-1,12117:-1,12217:-1,12215:-1,12216:-1
