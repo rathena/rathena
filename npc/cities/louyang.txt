@@ -110,7 +110,7 @@ lou_fild01,190,100,7	script	Girl#1lou	815,{
 		mes "Bye bye!";
 		close2;
 		if (checkre(0))
-			warp "alberta",236,40;
+			warp "alberta",245,87;
 		else
 			warp "alberta",235,45;
 		end;

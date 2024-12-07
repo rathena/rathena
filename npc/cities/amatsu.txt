@@ -138,7 +138,7 @@ amatsu,194,79,5	script	Sea Captain#ama2	709,{
 		mes "right? All aboard now.";
 		close2;
 		if (checkre(0))
-			warp "alberta",244,72;
+			warp "alberta",245,87;
 		else
 			warp "alberta",243,91;
 		end;

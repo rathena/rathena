@@ -66,7 +66,7 @@ dewata,229,49,6	script	Alberta Sailor#dewata	536,{
 		mes "your trip to ^8B4513Dewata^000000 Island.";
 		mes "Please come again!";
 		close2;
-		warp "alberta",210,198;
+		warp "alberta",192,215;
 		end;
 	case 2:
 		mes "[Alberta Sailor]";
