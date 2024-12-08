@@ -1333,6 +1333,9 @@ enum sc_type : int16 {
 	SC_CONTENTS_27,
 	SC_CONTENTS_28,
 	SC_CONTENTS_29,
+	SC_CONTENTS_31,
+	SC_CONTENTS_32,
+	SC_CONTENTS_33,
 
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
@@ -2794,7 +2797,10 @@ enum efst_type : short{
 	EFST_CONTENTS_27,
 	EFST_CONTENTS_28,
 	EFST_CONTENTS_29,
-	EFST_CONTENTS_30,	//1488
+	EFST_CONTENTS_30,
+	EFST_CONTENTS_31,
+	EFST_CONTENTS_32,
+	EFST_CONTENTS_33,	//1491
 
 	EFST_C_BUFF_1 = 1509,
 	EFST_C_BUFF_2,
