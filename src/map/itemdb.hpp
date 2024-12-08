@@ -3009,9 +3009,11 @@ enum e_delay_consume : uint8 {
 };
 
 /// Enum for different ways to search an item group
-enum e_group_search_type : uint8 {
-	GROUP_SEARCH_BOX = 0, // Always return an item from the group, rate determines which item is more likely to be returned
-	GROUP_SEARCH_DROP = 1, // Pick one item from the group and check use rate as drop rate, on fail, do not return any item
+enum e_group_draws_type : uint8 {
+	GROUP_DRAWS_REPLACEMENT, // Draws with replacement. Always return an item from the group, rate determines which item is more likely to be returned
+	GROUP_DRAWS_DROP, // Draws with replacement. Pick one item from the group and check use rate as drop rate, on fail, do not return any item
+	GROUP_DRAWS_NOREPLACEMENT, // Draws without replacement. Always return an item from the group, rate determines which item is more likely to be returned
+	GROUP_DRAWS_MUST, // Give all items of a subgroup without using rates
 };
 
 /// Item combo struct
@@ -3123,6 +3125,8 @@ struct s_item_group_entry
 {
 	t_itemid nameid; /// Item ID
 	uint16 rate;
+	uint16 adj_rate; /// Rate adjusted by the battle_config.item_group_rate
+	uint16 given; /// Amount of times this item has already been given out
 	uint16 duration, /// Duration if item as rental item (in minutes)
 		amount; /// Amount of item will be obtained
 	bool isAnnounced, /// Broadcast if player get this item
@@ -3139,6 +3143,8 @@ struct s_item_group_entry
 struct s_item_group_random
 {
 	uint32 total_rate;
+	e_group_draws_type draws;
+	uint32 total_given; /// Amount of times an item from this group has been given out
 	std::unordered_map<uint32, std::shared_ptr<s_item_group_entry>> data; /// index, s_item_group_entry
 };
 
@@ -3296,7 +3302,7 @@ extern ItemDatabase item_db;
 
 class ItemGroupDatabase : public TypesafeCachedYamlDatabase<uint16, s_item_group_db> {
 public:
-	ItemGroupDatabase() : TypesafeCachedYamlDatabase("ITEM_GROUP_DB", 3, 1) {
+	ItemGroupDatabase() : TypesafeCachedYamlDatabase("ITEM_GROUP_DB", 4, 1) {
 
 	}
 
@@ -3307,11 +3313,12 @@ public:
 	// Additional
 	bool item_exists(uint16 group_id, t_itemid nameid);
 	int16 item_exists_pc(map_session_data *sd, uint16 group_id);
-	std::shared_ptr<s_item_group_entry> get_random_entry(uint16 group_id, uint8 sub_group, e_group_search_type search_type = GROUP_SEARCH_BOX);
+	std::shared_ptr<s_item_group_entry> get_random_entry(uint16 group_id, uint8 sub_group, e_group_draws_type search_type);
+	std::shared_ptr<s_item_group_entry> get_random_entry(uint16 group_id, uint8 sub_group);
 	uint8 pc_get_itemgroup( uint16 group_id, bool identify, map_session_data& sd );
 
 private:
-	std::shared_ptr<s_item_group_entry> get_random_itemsubgroup(std::shared_ptr<s_item_group_random> random, e_group_search_type search_type = GROUP_SEARCH_BOX);
+	std::shared_ptr<s_item_group_entry> get_random_itemsubgroup(std::shared_ptr<s_item_group_random> random, e_group_draws_type search_type = GROUP_DRAWS_NOREPLACEMENT);
 	void pc_get_itemgroup_sub( map_session_data& sd, bool identify, std::shared_ptr<s_item_group_entry> data );
 };
 

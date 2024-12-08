@@ -1,5 +1,5 @@
 # This file is a part of rAthena.
-#   Copyright(C) 2023 rAthena Development Team
+#   Copyright(C) 2024 rAthena Development Team
 #   https://rathena.org - https://github.com/rathena
 #
 # This program is free software: you can redistribute it and/or modify
@@ -25,6 +25,7 @@
 # - Group                      Group name of the item.
 #   SubGroups:
 #     - SubGroup:              SubGroup number associated with the list of item. See doc/item_group.txt for more information.
+#       Draws:                 Type of draws associated with SubGroup. (Default: NoReplacement)
 #       List:                  List of item(s) for the SubGroup.
 #        - Index               Unique number that can be used to add the same Item with different data in the list.
 #          Item                AegisName of item that will be obtained from this item group.
@@ -45,12 +46,13 @@
 
 Header:
   Type: ITEM_GROUP_DB
-  Version: 3
+  Version: 4
 
 Body:
   - Group: ACCESORY
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Ring
@@ -180,7 +182,8 @@ Body:
             Rate: 1
   - Group: BLEUBOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Milk
@@ -217,7 +220,8 @@ Body:
             Rate: 1
   - Group: BLUEBOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Red_Potion
@@ -3287,7 +3291,8 @@ Body:
             Rate: 1
   - Group: BOMB
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Apple_Bomb
@@ -3315,7 +3320,8 @@ Body:
             Rate: 1
   - Group: BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Old_Blue_Box
@@ -3328,7 +3334,8 @@ Body:
             Rate: 1
   - Group: CANDY
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Candy
@@ -3338,7 +3345,8 @@ Body:
             Rate: 1
   - Group: CARDALBUM
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Poring_Card
@@ -4428,7 +4436,8 @@ Body:
             Rate: 1
   - Group: CASH_FOOD
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Str_Dish10_
@@ -4450,7 +4459,8 @@ Body:
             Rate: 1
   - Group: CHERISH_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Dog_Cap_
@@ -4463,7 +4473,8 @@ Body:
             Rate: 5
   - Group: CHERISH_BOX_ORI
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Ragnarok_Limited_Ed
@@ -4482,7 +4493,8 @@ Body:
             Rate: 2
   - Group: COOKIEBAG
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Candy
@@ -4534,7 +4546,8 @@ Body:
             Rate: 1
   - Group: EASTER_SCROLL
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: No_Recipient
@@ -4580,7 +4593,8 @@ Body:
             Rate: 1
   - Group: EGGBOY
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Grape
@@ -4605,7 +4619,8 @@ Body:
             Rate: 2
   - Group: EGGGIRL
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Grape
@@ -4630,7 +4645,8 @@ Body:
             Rate: 2
   - Group: ELEMENT
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Scarlet_Pts
@@ -4646,7 +4662,8 @@ Body:
             Rate: 1
   - Group: FIRSTAID
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Red_Potion
@@ -4704,7 +4721,8 @@ Body:
             Rate: 5
   - Group: FISH
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Fish_Slice
@@ -4714,7 +4732,8 @@ Body:
             Rate: 1
   - Group: FOOD
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Royal_Jelly
@@ -4784,7 +4803,8 @@ Body:
             Rate: 600
   - Group: FOODBAG
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Apple
@@ -4920,7 +4940,8 @@ Body:
             Rate: 1
   - Group: FRUIT
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Apple
@@ -4939,7 +4960,8 @@ Body:
             Rate: 1
   - Group: GEMSTONE
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Yellow_Gemstone
@@ -4952,7 +4974,8 @@ Body:
             Rate: 1
   - Group: GIFTBOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Red_Potion
@@ -5166,7 +5189,8 @@ Body:
             Rate: 1
   - Group: GIFTBOXCHINA
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Red_Potion
@@ -5962,7 +5986,8 @@ Body:
             Rate: 2
   - Group: GIFTBOX_1
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Red_Potion
@@ -6176,7 +6201,8 @@ Body:
             Rate: 1
   - Group: GIFTBOX_2
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Red_Potion
@@ -6390,7 +6416,8 @@ Body:
             Rate: 1
   - Group: GIFTBOX_3
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Red_Potion
@@ -6604,7 +6631,8 @@ Body:
             Rate: 1
   - Group: GIFTBOX_4
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Red_Potion
@@ -6818,7 +6846,8 @@ Body:
             Rate: 1
   - Group: GREENBOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Chocolate_Drink
@@ -6855,7 +6884,8 @@ Body:
             Rate: 100
   - Group: HERB
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Red_Herb
@@ -6868,7 +6898,8 @@ Body:
             Rate: 1
   - Group: HOMETOWNGIFT
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Korea_Rice_Cake
@@ -6896,7 +6927,8 @@ Body:
             Rate: 1
   - Group: JEWEL
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Yellow_Gemstone
@@ -6960,7 +6992,8 @@ Body:
             Rate: 50
   - Group: JUICE
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Apple_Juice
@@ -6973,7 +7006,8 @@ Body:
             Rate: 1
   - Group: LOTTOBOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Lotto31
@@ -7007,7 +7041,8 @@ Body:
             Rate: 1
   - Group: LOUISE_COSTUME_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Red_Bag
@@ -7017,7 +7052,8 @@ Body:
             Rate: 2
   - Group: MAGICCARDALBUM
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Ghostring_Card
@@ -7114,7 +7150,8 @@ Body:
             Rate: 3
   - Group: MASK
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Mr_Smile
@@ -7157,7 +7194,8 @@ Body:
             Rate: 2
   - Group: MASQUERADE
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Drooping_Nine_Tail_
@@ -7173,7 +7211,8 @@ Body:
             Rate: 10
   - Group: MASQUERADE_2
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Dress_Hat
@@ -7189,7 +7228,8 @@ Body:
             Rate: 10
   - Group: MEAT
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Meat
@@ -7199,7 +7239,8 @@ Body:
             Rate: 1
   - Group: MERCENARY
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Bow_Mercenary_Scroll1
@@ -7293,7 +7334,8 @@ Body:
             Rate: 1
   - Group: MINERAL
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Emperium
@@ -7357,7 +7399,8 @@ Body:
             Rate: 1
   - Group: OLDGIFTBOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Fallen_Leaves_
@@ -7370,7 +7413,8 @@ Body:
             Rate: 40
   - Group: ORE
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Iron_Ore
@@ -7434,7 +7478,8 @@ Body:
             Rate: 1
   - Group: PIERRE_TREASUREBOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Old_Blue_Box
@@ -7522,7 +7567,8 @@ Body:
             Rate: 1
   - Group: POISON
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Poison_Paralysis
@@ -7550,7 +7596,8 @@ Body:
             Rate: 1
   - Group: POTION
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Red_Potion
@@ -7566,7 +7613,8 @@ Body:
             Rate: 1
   - Group: QUIVER
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Arrow_Container
@@ -7609,7 +7657,8 @@ Body:
             Rate: 2
   - Group: RECOVERY
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Fruit_Of_Mastela
@@ -7655,7 +7704,8 @@ Body:
             Rate: 600
   - Group: REDBOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Cat_Hat
@@ -7701,7 +7751,8 @@ Body:
             Rate: 10
   - Group: REDBOX_2
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Alice_Doll
@@ -7717,7 +7768,8 @@ Body:
             Rate: 10
   - Group: RESIST
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Resist_Fire
@@ -7733,7 +7785,8 @@ Body:
             Rate: 1
   - Group: SCROLL
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Earth_Scroll_1_3
@@ -7791,7 +7844,8 @@ Body:
             Rate: 1
   - Group: TAMING
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Unripe_Apple
@@ -7945,7 +7999,8 @@ Body:
             Rate: 1
   - Group: THROWABLE
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Mysterious_Powder
@@ -8018,7 +8073,8 @@ Body:
             Rate: 1
   - Group: TOKEN_OF_SIEGFRIED
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: F_Token_Of_Siegfried
@@ -8031,7 +8087,8 @@ Body:
             Rate: 1
   - Group: TRESURE_BOX_WOE
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Old_Blue_Box
@@ -8095,7 +8152,8 @@ Body:
             Rate: 8
   - Group: VIOLETBOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Red_Potion
@@ -10868,7 +10926,8 @@ Body:
             Rate: 1
   - Group: XMAS_GIFT
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: HandMade_Chocolate
@@ -10929,7 +10988,8 @@ Body:
             Rate: 6
   - Group: YELLOWBOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
+        Draws: Replacement
         List:
           - Index: 0
             Item: Elephant_Hat_
@@ -10946,6 +11006,7 @@ Body:
   - Group: MF_NOTELEPORT
     SubGroups:
       - SubGroup: 0
+        Draws: Must
         List:
           - Index: 0
             Item: Wing_Of_Fly
@@ -10960,6 +11021,7 @@ Body:
   - Group: MF_NORETURN
     SubGroups:
       - SubGroup: 0
+        Draws: Must
         List:
           - Index: 0
             Item: Wing_Of_Butterfly
@@ -11008,6 +11070,7 @@ Body:
   - Group: GIANT_FLY_WING
     SubGroups:
       - SubGroup: 0
+        Draws: Must
         List:
           - Index: 0
             Item: Giant_Fly_Wing

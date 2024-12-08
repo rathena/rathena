@@ -75,19 +75,29 @@ Amount: Amount of item that will be obtained.
 
 ---------------------------------------
 
-SubGroup: Setting this to '0' makes the item always obtainable ("must" item).
-		  SubGroup value will allocate where the item will be stored at random group.
+SubGroup: Unique number to create a list of item.
 
+---------------------------------------
+
+Draws: Type of draws associated with SubGroup.
+
+Replacement        - Draws with replacement. An item selected in the draw can still be selected in the next draws.
+Must               - Makes the item(s) always obtainable ("must" item).
+NoReplacement      - Draws without replacement. An item selected in the draw can't be selected in the next draws. Only when the group is completely empty or the server restarts, the group refills.
+
+Example:
 	Item Group:
       - Group: MyItemGroup
         SubGroups:
           - SubGroup: 0
+            Draws: Must
             List:
               - Index: 0
                 Item: Knife       # "must" item(s)
               - Index: 1
                 Item: Dagger      # "must" item(s)
           - SubGroup: 1
+            Draws: Replacement
             List:
               - Index: 0
                 Item: Stiletto    # random at SubGroup 1
@@ -96,6 +106,7 @@ SubGroup: Setting this to '0' makes the item always obtainable ("must" item).
                 Item: Stiletto_   # random at SubGroup 1
                 Rate: 2
           - SubGroup: 2
+            Draws: Replacement
             List:
               - Index: 0
                 Item: Stiletto    # random at SubGroup 2
