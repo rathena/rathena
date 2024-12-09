@@ -7025,12 +7025,6 @@
 	export_constant(IG_AUGUSTGIFTBOX);
 	export_constant(IG_OCTOBERGIFTBOX);
 	export_constant(IG_DECEMBERGIFTBOX);
-	export_constant(IG_AEGIS_103622);
-	export_constant(IG_AEGIS_103623);
-	export_constant(IG_AEGIS_103624);
-	export_constant(IG_AEGIS_103625);
-	export_constant(IG_AEGIS_103626);
-	export_constant(IG_AEGIS_103627);
 	export_constant(IG_2024GOLDPCBOX);
 	export_constant(IG_E_CARD_PACK);
 	export_constant(IG_TRUE_HUNTING_SET);
