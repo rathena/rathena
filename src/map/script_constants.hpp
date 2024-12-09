@@ -1918,6 +1918,9 @@
 	export_constant(SC_CONTENTS_27);
 	export_constant(SC_CONTENTS_28);
 	export_constant(SC_CONTENTS_29);
+	export_constant(SC_CONTENTS_31);
+	export_constant(SC_CONTENTS_32);
+	export_constant(SC_CONTENTS_33);
 
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
 /// @APIHOOK_START(EFST_CONST)
@@ -3361,6 +3364,9 @@
 	export_constant(EFST_CONTENTS_28);
 	export_constant(EFST_CONTENTS_29);
 	export_constant(EFST_CONTENTS_30);
+	export_constant(EFST_CONTENTS_31);
+	export_constant(EFST_CONTENTS_32);
+	export_constant(EFST_CONTENTS_33);
 	export_constant(EFST_C_BUFF_1);
 	export_constant(EFST_C_BUFF_2);
 	export_constant(EFST_CHASING);
@@ -7010,6 +7016,21 @@
 	export_constant(IG_LI_NYANGVINE_BOX1_37);
 	export_constant(IG_LI_NYANGVINE_BOX2_37);
 	export_constant(IG_LI_NYANGVINE_BOX3_37);
+	export_constant(IG_JANUARYGIFTBOX);
+	export_constant(IG_FEBRUARYGIFTBOX);
+	export_constant(IG_MARCHGIFTBOX);
+	export_constant(IG_MAYGIFTBOX);
+	export_constant(IG_JUNEGIFTBOX);
+	export_constant(IG_JULYGIFTBOX);
+	export_constant(IG_AUGUSTGIFTBOX);
+	export_constant(IG_OCTOBERGIFTBOX);
+	export_constant(IG_DECEMBERGIFTBOX);
+	export_constant(IG_2024GOLDPCBOX);
+	export_constant(IG_E_CARD_PACK);
+	export_constant(IG_TRUE_HUNTING_SET);
+	export_constant(IG_REGIA_HUNTING_SET);
+	export_constant(IG_MYSTERIOUS_FRUIT_BOX);
+	export_constant(IG_ZONDA_SUPPORT_PACKAGE);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
