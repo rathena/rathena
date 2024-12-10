@@ -1,5 +1,5 @@
 # This file is a part of rAthena.
-#   Copyright(C) 2021 rAthena Development Team
+#   Copyright(C) 2024 rAthena Development Team
 #   https://rathena.org - https://github.com/rathena
 #
 # This program is free software: you can redistribute it and/or modify
@@ -25,6 +25,7 @@
 # - Group                      Group name of the item.
 #   SubGroups:
 #     - SubGroup:              SubGroup number associated with the list of item. See doc/item_group.txt for more information.
+#       Algorithm:             Type of algorithm associated with SubGroup. (Default: SharedPool)
 #       List:                  List of item(s) for the SubGroup.
 #        - Index               Unique number that can be used to add the same Item with different data in the list.
 #          Item                AegisName of item that will be obtained from this item group.
@@ -45,4 +46,4 @@
 
 Header:
   Type: ITEM_GROUP_DB
-  Version: 3
+  Version: 4

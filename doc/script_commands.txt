@@ -5389,7 +5389,7 @@ example, for a random pet lure:
 getitem groupranditem(IG_Taming),1;
 
 'sub_group' is used to get the available random items of item group from specified random
-group. 0 for 'must' item group, and random item group is 1 until 5 (MAX_ITEMGROUP_RANDGROUP+1).
+group.
 
 More info, see doc/item_group.txt.
 
@@ -5403,8 +5403,7 @@ their group number are specified in db/(pre-)re/item_group_db.yml
 
 If 'quantity' is not defined or 0, it will uses defined amount from Item Group list.
 
-If 'sub_group' is not defined the value will be 1 (since random group is 1 ~ 5, and 0 is
-'must' item group).
+If 'sub_group' is not defined the value will be 1.
 
 For item with type IT_WEAPON, IT_ARMOR, IT_PETARMOR, and IT_SHADOWGEAR will be given
 as unidentified item (as defined by itemdb_isidentified in src/map/itemdb.cpp) except
