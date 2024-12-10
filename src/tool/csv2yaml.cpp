@@ -4085,9 +4085,9 @@ static bool itemdb_read_group_yaml(void) {
 			body << YAML::BeginMap;
 			body << YAML::Key << "SubGroup" << YAML::Value << item.first;
 			if (item.first == 0)
-				body << YAML::Key << "Algorithm" << YAML::Value << "Must";
+				body << YAML::Key << "Algorithm" << YAML::Value << "All";
 			else if (item.first == 6)
-				body << YAML::Key << "Algorithm" << YAML::Value << "NaturalRandom";
+				body << YAML::Key << "Algorithm" << YAML::Value << "Random";
 			body << YAML::Key << "List";
 			body << YAML::BeginSeq;
 			for (const auto &listit : item.second) {

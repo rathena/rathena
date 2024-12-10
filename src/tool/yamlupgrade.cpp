@@ -453,11 +453,11 @@ static bool upgrade_item_group_db( std::string file, const uint32 source_version
 					body << YAML::Key << "SubGroup" << YAML::Value << it["SubGroup"];
 
 					if (it["SubGroup"].as<uint16>() == 0)
-						body << YAML::Key << "Draws" << YAML::Value << "Must";
+						body << YAML::Key << "Algorithm" << YAML::Value << "All";
 					else if (it["SubGroup"].as<uint16>() == 6)
-						body << YAML::Key << "Draws" << YAML::Value << "Replacement";
+						body << YAML::Key << "Algorithm" << YAML::Value << "Random";
 					// else
-						// body << YAML::Key << "Draws" << YAML::Value << "NoReplacement";
+						// body << YAML::Key << "Algorithm" << YAML::Value << "SharedPool";
 
 					if( it["List"].IsDefined() )
 						body << YAML::Key << "List";{

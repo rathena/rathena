@@ -25,7 +25,7 @@
 # - Group                      Group name of the item.
 #   SubGroups:
 #     - SubGroup:              SubGroup number associated with the list of item. See doc/item_group.txt for more information.
-#       Draws:                 Type of draws associated with SubGroup. (Default: NoReplacement)
+#       Algorithm:             Type of algorithm associated with SubGroup. (Default: SharedPool)
 #       List:                  List of item(s) for the SubGroup.
 #        - Index               Unique number that can be used to add the same Item with different data in the list.
 #          Item                AegisName of item that will be obtained from this item group.
@@ -52,7 +52,7 @@ Body:
   - Group: ACCESORY
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Ring
@@ -183,7 +183,7 @@ Body:
   - Group: BLEUBOX
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Milk
@@ -221,7 +221,7 @@ Body:
   - Group: BLUEBOX
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Red_Potion
@@ -3292,7 +3292,7 @@ Body:
   - Group: BOMB
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Apple_Bomb
@@ -3321,7 +3321,7 @@ Body:
   - Group: BOX
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Old_Blue_Box
@@ -3335,7 +3335,7 @@ Body:
   - Group: CANDY
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Candy
@@ -3346,7 +3346,7 @@ Body:
   - Group: CARDALBUM
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Poring_Card
@@ -4437,7 +4437,7 @@ Body:
   - Group: CASH_FOOD
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Str_Dish10_
@@ -4460,7 +4460,7 @@ Body:
   - Group: CHERISH_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Dog_Cap_
@@ -4474,7 +4474,7 @@ Body:
   - Group: CHERISH_BOX_ORI
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Ragnarok_Limited_Ed
@@ -4494,7 +4494,7 @@ Body:
   - Group: COOKIEBAG
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Candy
@@ -4547,7 +4547,7 @@ Body:
   - Group: EASTER_SCROLL
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: No_Recipient
@@ -4594,7 +4594,7 @@ Body:
   - Group: EGGBOY
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Grape
@@ -4620,7 +4620,7 @@ Body:
   - Group: EGGGIRL
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Grape
@@ -4646,7 +4646,7 @@ Body:
   - Group: ELEMENT
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Scarlet_Pts
@@ -4663,7 +4663,7 @@ Body:
   - Group: FIRSTAID
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Red_Potion
@@ -4722,7 +4722,7 @@ Body:
   - Group: FISH
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Fish_Slice
@@ -4733,7 +4733,7 @@ Body:
   - Group: FOOD
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Royal_Jelly
@@ -4804,7 +4804,7 @@ Body:
   - Group: FOODBAG
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Apple
@@ -4941,7 +4941,7 @@ Body:
   - Group: FRUIT
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Apple
@@ -4961,7 +4961,7 @@ Body:
   - Group: GEMSTONE
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Yellow_Gemstone
@@ -4975,7 +4975,7 @@ Body:
   - Group: GIFTBOX
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Red_Potion
@@ -5190,7 +5190,7 @@ Body:
   - Group: GIFTBOXCHINA
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Red_Potion
@@ -5987,7 +5987,7 @@ Body:
   - Group: GIFTBOX_1
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Red_Potion
@@ -6202,7 +6202,7 @@ Body:
   - Group: GIFTBOX_2
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Red_Potion
@@ -6417,7 +6417,7 @@ Body:
   - Group: GIFTBOX_3
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Red_Potion
@@ -6632,7 +6632,7 @@ Body:
   - Group: GIFTBOX_4
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Red_Potion
@@ -6847,7 +6847,7 @@ Body:
   - Group: GREENBOX
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Chocolate_Drink
@@ -6885,7 +6885,7 @@ Body:
   - Group: HERB
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Red_Herb
@@ -6899,7 +6899,7 @@ Body:
   - Group: HOMETOWNGIFT
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Korea_Rice_Cake
@@ -6928,7 +6928,7 @@ Body:
   - Group: JEWEL
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Yellow_Gemstone
@@ -6993,7 +6993,7 @@ Body:
   - Group: JUICE
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Apple_Juice
@@ -7007,7 +7007,7 @@ Body:
   - Group: LOTTOBOX
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Lotto31
@@ -7042,7 +7042,7 @@ Body:
   - Group: LOUISE_COSTUME_BOX
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Red_Bag
@@ -7053,7 +7053,7 @@ Body:
   - Group: MAGICCARDALBUM
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Ghostring_Card
@@ -7151,7 +7151,7 @@ Body:
   - Group: MASK
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Mr_Smile
@@ -7195,7 +7195,7 @@ Body:
   - Group: MASQUERADE
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Drooping_Nine_Tail_
@@ -7212,7 +7212,7 @@ Body:
   - Group: MASQUERADE_2
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Dress_Hat
@@ -7229,7 +7229,7 @@ Body:
   - Group: MEAT
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Meat
@@ -7240,7 +7240,7 @@ Body:
   - Group: MERCENARY
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Bow_Mercenary_Scroll1
@@ -7335,7 +7335,7 @@ Body:
   - Group: MINERAL
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Emperium
@@ -7400,7 +7400,7 @@ Body:
   - Group: OLDGIFTBOX
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Fallen_Leaves_
@@ -7414,7 +7414,7 @@ Body:
   - Group: ORE
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Iron_Ore
@@ -7479,7 +7479,7 @@ Body:
   - Group: PIERRE_TREASUREBOX
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Old_Blue_Box
@@ -7568,7 +7568,7 @@ Body:
   - Group: POISON
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Poison_Paralysis
@@ -7597,7 +7597,7 @@ Body:
   - Group: POTION
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Red_Potion
@@ -7614,7 +7614,7 @@ Body:
   - Group: QUIVER
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Arrow_Container
@@ -7658,7 +7658,7 @@ Body:
   - Group: RECOVERY
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Fruit_Of_Mastela
@@ -7705,7 +7705,7 @@ Body:
   - Group: REDBOX
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Cat_Hat
@@ -7752,7 +7752,7 @@ Body:
   - Group: REDBOX_2
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Alice_Doll
@@ -7769,7 +7769,7 @@ Body:
   - Group: RESIST
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Resist_Fire
@@ -7786,7 +7786,7 @@ Body:
   - Group: SCROLL
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Earth_Scroll_1_3
@@ -7845,7 +7845,7 @@ Body:
   - Group: TAMING
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Unripe_Apple
@@ -8000,7 +8000,7 @@ Body:
   - Group: THROWABLE
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Mysterious_Powder
@@ -8074,7 +8074,7 @@ Body:
   - Group: TOKEN_OF_SIEGFRIED
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: F_Token_Of_Siegfried
@@ -8088,7 +8088,7 @@ Body:
   - Group: TRESURE_BOX_WOE
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Old_Blue_Box
@@ -8153,7 +8153,7 @@ Body:
   - Group: VIOLETBOX
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Red_Potion
@@ -10927,7 +10927,7 @@ Body:
   - Group: XMAS_GIFT
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: HandMade_Chocolate
@@ -10989,7 +10989,7 @@ Body:
   - Group: YELLOWBOX
     SubGroups:
       - SubGroup: 6
-        Draws: Replacement
+        Algorithm: Random
         List:
           - Index: 0
             Item: Elephant_Hat_
@@ -11006,7 +11006,7 @@ Body:
   - Group: MF_NOTELEPORT
     SubGroups:
       - SubGroup: 0
-        Draws: Must
+        Algorithm: All
         List:
           - Index: 0
             Item: Wing_Of_Fly
@@ -11021,7 +11021,7 @@ Body:
   - Group: MF_NORETURN
     SubGroups:
       - SubGroup: 0
-        Draws: Must
+        Algorithm: All
         List:
           - Index: 0
             Item: Wing_Of_Butterfly
@@ -11070,7 +11070,7 @@ Body:
   - Group: GIANT_FLY_WING
     SubGroups:
       - SubGroup: 0
-        Draws: Must
+        Algorithm: All
         List:
           - Index: 0
             Item: Giant_Fly_Wing
