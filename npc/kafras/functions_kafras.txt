@@ -193,6 +193,59 @@ function	script	F_Kafra	{
 }
 
 //===================================================
+// Storage Number Function
+//===================================================
+function	script	F_Storage	{
+	.@store_id = getarg(0);
+	.@vip_store_id = getarg(1);
+
+	if (!callfunc("F_CanOpenStorage")) {
+		mes "[Kafra Employee]";
+		mes "I'm sorry, but you";
+		mes "need the Novice's";
+		mes "Basic Skill Level 6 to";
+		mes "use the Storage Service.";
+		close;
+	}
+	if (Zeny < 50) {
+		mes "[Kafra Employee]";
+		mes "I'm sorry, but you don't";
+		mes "have enough zeny to use";
+		mes "the Storage Service. Our";
+		mes "Storage access fee is 50 zeny.";
+		close;
+	}
+	mes "[Kafra Employee]";
+	mes "Here, let me open";
+	mes "your Storage for you.";
+	mes "Thank you for using";
+	mes "the Kafra Service.";
+	Zeny -= 50;
+	close2;
+	callfunc "F_CallStorage", .@store_id, .@vip_store_id;
+	cutin "", 255;
+	end;
+}
+
+//===================================================
+// Call Storage Function
+//===================================================
+function	script	F_CallStorage	{
+	.@id = getarg(0);
+	.@vip_id = getarg(1);
+
+	if(!getstatus(SC_PREMIUM_STORAGEBOOST))
+		openstorage2 .@id,STOR_MODE_GET|STOR_MODE_PUT;
+	else {
+		if (.@vip_id < 1)
+			openstorage;
+		else
+			openstorage2 .@vip_id,STOR_MODE_GET|STOR_MODE_PUT;
+	}
+    return;
+}
+
+//===================================================
 // Storage Function
 //===================================================
 function	script	F_KafStor	{
@@ -251,8 +304,6 @@ function	script	F_KafStor	{
 				mes "Storage access fee is " + .@fee + " zeny.";
 				return;
 			}
-			Zeny -= .@fee;
-			RESRVPTS += (.@fee/5);
 		}
 	}
 
@@ -267,16 +318,44 @@ function	script	F_KafStor	{
 		}
 		// Normal message
 		else {
-			mes "[Kafra Employee]";
-			mes "Here, let me open";
-			mes "your Storage for you.";
-			mes "Thank you for using";
-			mes "the Kafra Service.";
+			if (!checkre(RENEWAL)) {
+				mes "[Kafra Employee]";
+				mes "Here, let me open";
+				mes "your Storage for you.";
+				mes "Thank you for using";
+				mes "the Kafra Service.";
+			} else {
+				mes "[Kafra Employee]";
+				mes "Please select the Storage you would like to open";
+				next;
+				.@storage = select("Storage 1:Storage 2:Storage 3");
+				Zeny -= .@fee;
+				RESRVPTS += (.@fee/5);
+				mes "[Kafra Employee]";
+				mes "Here, let me open";
+				mes "your Storage for you.";
+				mes "Thank you for using";
+				mes "the Kafra Service.";
+			}
 		}
 	}
 	callfunc("F_CheckKafCode");	//check your storage password, if set
 	close2;
-	openstorage;
+	if (!checkre(RENEWAL)) {
+		openstorage;
+	} else {
+		switch (.@storage) {
+			case 1:
+				callfunc "F_CallStorage", 4, 0;
+				break;
+			case 2:
+				callfunc "F_CallStorage", 1, 5;
+				break;
+			case 3:
+				callfunc "F_CallStorage", 2, 6;
+				break;
+		}
+	}
 	cutin "", 255;
 	end;
 }
