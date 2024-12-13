@@ -24206,21 +24206,17 @@ BUILDIN_FUNC(geteleminfo) {
 }
 
 /**
- * opendressroom(<flag>{,<char_id>});
+ * opendressroom({<char_id>});
  */
 BUILDIN_FUNC(opendressroom)
 {
 #if PACKETVER >= 20140212
-	int32 flag = 1;
 	map_session_data* sd;
 
-	if( script_hasdata(st,2) )
-		flag = script_getnum(st,2);
-
-	if (!script_charid2sd(3, sd))
+	if (!script_charid2sd(2, sd))
 		return SCRIPT_CMD_FAILURE;
 
-	clif_dressing_room( *sd, flag );
+	clif_dressing_room( *sd );
 
 	return SCRIPT_CMD_SUCCESS;
 #else
@@ -28080,7 +28076,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(showscript,"s??"),
 	BUILDIN_DEF(ignoretimeout,"i?"),
 	BUILDIN_DEF(geteleminfo,"i?"),
-	BUILDIN_DEF(opendressroom,"i?"),
+	BUILDIN_DEF(opendressroom,"?"),
 	BUILDIN_DEF(navigateto,"s???????"),
 	BUILDIN_DEF(getguildalliance,"ii"),
 	BUILDIN_DEF(adopt,"vv"),
