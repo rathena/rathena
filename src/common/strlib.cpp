@@ -1005,7 +1005,7 @@ size_t _StringBuf_Vprintf( const char* file, int32 line, const char* func, Strin
 	for(;;)
 	{
 		va_list apcopy;
-		/* Try to print32 in the allocated space. */
+		/* Try to print in the allocated space. */
 		size_t size = self->max_ - (self->ptr_ - self->buf_);
 		va_copy(apcopy, ap);
 		int32 n = vsnprintf( self->ptr_, size, fmt, apcopy );

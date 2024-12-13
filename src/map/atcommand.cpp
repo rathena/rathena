@@ -472,7 +472,7 @@ ACMD_FUNC(send)
 /**
  * Retrieves map name suggestions for a given string.
  * This will first check if any map names contain the given string, and will
- *   print32 out MAX_SUGGESTIONS results if any maps are found.
+ *   print out MAX_SUGGESTIONS results if any maps are found.
  * Otherwise, suggestions will be calculated through Levenshtein distance,
  *   and up to 5 of the closest matches will be printed.
  *
@@ -8344,7 +8344,7 @@ ACMD_FUNC(homshuffle)
 		return -1;
 
 	clif_displaymessage(sd->fd, msg_txt(sd,1275)); // Homunculus stats altered.
-	atcommand_homstats(fd, sd, command, message); //Print32 out the new stats
+	atcommand_homstats(fd, sd, command, message); //Print out the new stats
 	return 0;
 }
 

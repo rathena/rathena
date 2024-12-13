@@ -243,7 +243,7 @@ void vending_purchasereq(map_session_data* sd, int32 aid, int32 uid, const uint8
 		z = vending_calc_tax(sd, z);
 		clif_vendingreport( *vsd, idx, amount, sd->status.char_id, (int32)z );
 
-		//print32 buyer's name
+		//print buyer's name
 		if( battle_config.buyer_name ) {
 			char temp[256];
 			sprintf(temp, msg_txt(sd,265), sd->status.name);

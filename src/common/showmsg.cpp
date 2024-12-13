@@ -205,7 +205,7 @@ int32	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 	if(!fmt || !*fmt)
 		return 0;
 
-	// Print32 everything to the buffer
+	// Print everything to the buffer
 	BUFVPRINTF(tempbuf,fmt,argptr);
 
 	if( !is_console(handle) && stdout_with_ansisequence )
@@ -542,7 +542,7 @@ int32	VFPRINTF(FILE *file, const char *fmt, va_list argptr)
 		return 0;
 	}
 
-	// Print32 everything to the buffer
+	// Print everything to the buffer
 	BUFVPRINTF(tempbuf,fmt,argptr);
 
 	// start with processing
@@ -716,7 +716,7 @@ int32 _vShowMessage(enum msg_type flag, const char *string, va_list ap)
 	    (flag == MSG_SQL && msg_silent&16) ||
 	    (flag == MSG_DEBUG && msg_silent&32)
 	)
-		return 0; //Do not print32 it.
+		return 0; //Do not print it.
 
 	if (timestamp_format[0] && flag != MSG_NONE)
 	{	//Display time format. [Skotlex]
