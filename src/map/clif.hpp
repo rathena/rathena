@@ -1355,7 +1355,7 @@ void clif_merge_item_open( map_session_data& sd );
 
 void clif_broadcast_obtain_special_item(const char *char_name, t_itemid nameid, t_itemid container, enum BROADCASTING_SPECIAL_ITEM_OBTAIN type);
 
-void clif_dressing_room( map_session_data& sd, int16 flag );
+void clif_dressing_room( map_session_data& sd );
 void clif_navigateTo(map_session_data *sd, const char* mapname, uint16 x, uint16 y, uint8 flag, bool hideWindow, uint16 mob_id );
 void clif_SelectCart(map_session_data *sd);
 
