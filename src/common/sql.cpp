@@ -527,8 +527,8 @@ static int32 Sql_P_BindSqlDataType(MYSQL_BIND* bind, enum SqlDataType buffer_typ
 		bind->is_unsigned = 1;
 		[[fallthrough]];
 	case SQLDT_INT:
-		bind->buffer_type = Sql_P_SizeToMysqlIntType(sizeof(int));
-		buffer_len = sizeof(int);
+		bind->buffer_type = Sql_P_SizeToMysqlIntType(sizeof(int32));
+		buffer_len = sizeof(int32);
 		break;
 	case SQLDT_ULONG:
 		bind->is_unsigned = 1;

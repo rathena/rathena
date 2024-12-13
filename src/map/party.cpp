@@ -1490,7 +1490,7 @@ void party_booking_register(map_session_data *sd, short level, short mapid, shor
 	}
 
 	memcpy(pb_ad->charname,sd->status.name,NAME_LENGTH);
-	pb_ad->starttime = (int)time(nullptr);
+	pb_ad->starttime = (int32)time(nullptr);
 	pb_ad->p_detail.level = level;
 	pb_ad->p_detail.mapid = mapid;
 
@@ -1513,7 +1513,7 @@ void party_booking_update(map_session_data *sd, short* job)
 	if( pb_ad == nullptr )
 		return;
 
-	pb_ad->starttime = (int)time(nullptr);// Update time.
+	pb_ad->starttime = (int32)time(nullptr);// Update time.
 
 	for(i = 0; i < MAX_PARTY_BOOKING_JOBS; i++)
 		if(job[i] != 0xFF)

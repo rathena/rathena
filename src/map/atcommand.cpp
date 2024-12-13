@@ -357,7 +357,7 @@ ACMD_FUNC(send)
 				// parse string
 				++message;
 				CHECK_EOS(message);
-				end=(num<=0? 0: min(off+((int)num),len));
+				end=(num<=0? 0: min(off+((int32)num),len));
 				for(; *message != '"' && (off < end || end == 0); ++off){
 					if(*message == '\\'){
 						++message;
@@ -472,7 +472,7 @@ ACMD_FUNC(send)
 /**
  * Retrieves map name suggestions for a given string.
  * This will first check if any map names contain the given string, and will
- *   print32 out MAX_SUGGESTIONS results if any maps are found.
+ *   print out MAX_SUGGESTIONS results if any maps are found.
  * Otherwise, suggestions will be calculated through Levenshtein distance,
  *   and up to 5 of the closest matches will be printed.
  *
@@ -511,7 +511,7 @@ static void warp_get_suggestions(map_session_data* sd, const char *name) {
 		// Levenshtein > 4 is bad
 		const int32 LEVENSHTEIN_MAX = 4;
 
-		std::unordered_map<int, std::vector<const char*>> maps;
+		std::unordered_map<int32, std::vector<const char*>> maps;
 
 		for (int32 i = 0; i < map_num; i++) {
 			struct map_data *mapdata = map_getmapdata(i);
@@ -2320,7 +2320,7 @@ ACMD_FUNC(monster)
 		ShowInfo("%s monster='%s' name='%s' id=%d count=%d (%d,%d)\n", command, monster, name, mob_id, number, sd->bl.x, sd->bl.y);
 
 	count = 0;
-	range = (int)sqrt((float)number) +2; // calculation of an odd number (+ 4 area around)
+	range = (int32)sqrt((float)number) +2; // calculation of an odd number (+ 4 area around)
 	for (i = 0; i < number; i++) {
 		int32 k;
 		map_search_freecell(&sd->bl, 0, &mx,  &my, range, range, 0);
@@ -2355,7 +2355,7 @@ static int32 atkillmonster_sub(struct block_list *bl, va_list ap)
 	int32 flag;
 
 	nullpo_ret(md=(struct mob_data *)bl);
-	flag = va_arg(ap, int);
+	flag = va_arg(ap, int32);
 
 	if (md->guardian_data)
 		return 0; //Do not touch WoE mobs!
@@ -5176,7 +5176,7 @@ char* txt_time(t_tick duration_)
 	memset(temp1, '\0', sizeof(temp1));
 
 	// Cap it
-	int32 duration = (int)duration_;
+	int32 duration = (int32)duration_;
 
 	days = duration / (60 * 60 * 24);
 	duration = duration - (60 * 60 * 24 * days);
@@ -5377,7 +5377,7 @@ ACMD_FUNC(jailfor) {
 	atcmd_output[sizeof(atcmd_output)-1] = '\0';
 
 	modif_p = atcmd_output;
-	jailtime = (int)solve_time(modif_p)/60; // Change to minutes
+	jailtime = (int32)solve_time(modif_p)/60; // Change to minutes
 
 	if (jailtime == 0) {
 		clif_displaymessage(fd, msg_txt(sd,1136)); // Invalid time for jail command.
@@ -6734,7 +6734,7 @@ ACMD_FUNC(autoloot)
 	} else {
 		double drate;
 		drate = atof(message);
-		rate = (int)(drate*100);
+		rate = (int32)(drate*100);
 	}
 	if (rate < 0) rate = 0;
 	if (rate > 10000) rate = 10000;
@@ -8344,7 +8344,7 @@ ACMD_FUNC(homshuffle)
 		return -1;
 
 	clif_displaymessage(sd->fd, msg_txt(sd,1275)); // Homunculus stats altered.
-	atcommand_homstats(fd, sd, command, message); //Print32 out the new stats
+	atcommand_homstats(fd, sd, command, message); //Print out the new stats
 	return 0;
 }
 
@@ -8547,8 +8547,8 @@ static int32 atcommand_mutearea_sub(struct block_list *bl,va_list ap)
 	if (pl_sd == nullptr)
 		return 0;
 
-	id = va_arg(ap, int);
-	time = va_arg(ap, int);
+	id = va_arg(ap, int32);
+	time = va_arg(ap, int32);
 
 	if (id != bl->id && !pc_get_group_level(pl_sd)) {
 		pl_sd->status.manner -= time;
@@ -10377,7 +10377,7 @@ ACMD_FUNC(vip) {
 		int32 year,month,day,hour,minute,second;
 		char timestr[21];
 		
-		split_time((int)(pl_sd->vip.time-now),&year,&month,&day,&hour,&minute,&second);
+		split_time((int32)(pl_sd->vip.time-now),&year,&month,&day,&hour,&minute,&second);
 		sprintf(atcmd_output,msg_txt(pl_sd,705),year,month,day,hour,minute); // Your VIP status is valid for %d years, %d months, %d days, %d hours and %d minutes.
 		clif_displaymessage(pl_sd->fd,atcmd_output);
 		timestamp2string(timestr,20,pl_sd->vip.time,"%Y-%m-%d %H:%M");

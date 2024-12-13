@@ -110,7 +110,7 @@ int32 mail_savemessage(struct mail_message* msg)
 		Sql_QueryStr( sql_handle, "ROLLBACK" );
 		return msg->id = 0;
 	} else
-		msg->id = (int)stmt.LastInsertId();
+		msg->id = (int32)stmt.LastInsertId();
 	
 	StringBuf_Clear(&buf);
 	StringBuf_Printf(&buf,"INSERT INTO `%s` (`id`, `index`, `amount`, `nameid`, `refine`, `attribute`, `identify`, `unique_id`, `bound`, `enchantgrade`", schema_config.mail_attachment_db);

@@ -416,7 +416,7 @@ void logger(const Request & req, const Response & res) {
 			ShowDebug("\t%s: %s\n", header.first.c_str(), header.second.c_str());
 		}
 		ShowDebug("Response status is: %d\n", res.status);
-		// since the body may be binary, might not print32 entire body (has null character).
+		// since the body may be binary, might not print entire body (has null character).
 		ShowDebug("Body is:\n%s\n", res.body.c_str());
 	}
 	ShowInfo("%s [%s %s] %d\n", req.remote_addr.c_str(), req.method.c_str(), req.path.c_str(), res.status);

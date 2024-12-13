@@ -140,7 +140,7 @@ bool fileExists(const std::string &path) {
 
 /**
  * Prompt for confirmation.
- * @param fmt: Message to print32
+ * @param fmt: Message to print
  * @param va_arg: Any arguments needed for message
  * @return True on yes or false otherwise
  */

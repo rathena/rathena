@@ -44,7 +44,7 @@ static int32 free_timer_list_pos = 0;
 #define DIFFTICK_MINTOPCMP(tid1,tid2) DIFF_TICK(timer_data[tid1].tick,timer_data[tid2].tick)
 
 // timer heap (binary heap of tid's)
-static BHEAP_VAR(int, timer_heap);
+static BHEAP_VAR(int32, timer_heap);
 
 
 // server startup time
@@ -392,8 +392,8 @@ t_tick do_timer(t_tick tick)
 				timer_data[tid].type = 0;
 				if (free_timer_list_pos >= free_timer_list_max) {
 					free_timer_list_max += 256;
-					RECREATE(free_timer_list,int,free_timer_list_max);
-					memset(free_timer_list + (free_timer_list_max - 256), 0, 256 * sizeof(int));
+					RECREATE(free_timer_list,int32,free_timer_list_max);
+					memset(free_timer_list + (free_timer_list_max - 256), 0, 256 * sizeof(int32));
 				}
 				free_timer_list[free_timer_list_pos++] = tid;
 			break;

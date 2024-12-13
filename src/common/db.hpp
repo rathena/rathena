@@ -21,7 +21,7 @@
  *                                                                           *
  *  HISTORY:                                                                 *
  *    2013/08/25 - Added int64/uint64 support for keys                       *
- *    2012/03/09 - Added enum for data types (int, uint, void*)              *
+ *    2012/03/09 - Added enum for data types (int32, uint32, void*)          *
  *    2007/11/09 - Added an iterator to the database.                        *
  *    2.1 (Athena build #???#) - Portability fix                             *
  *      - Fixed the portability of casting to union and added the functions  *
@@ -95,7 +95,7 @@ typedef enum DBRelease {
  * @see #db_default_cmp(DBType)
  * @see #db_default_hash(DBType)
  * @see #db_default_release(DBType,DBOptions)
- * @see #db_alloc(const char *,int,DBType,DBOptions,unsigned short)
+ * @see #db_alloc(const char *,int32,DBType,DBOptions,unsigned short)
  */
 typedef enum DBType {
 	DB_INT,
@@ -125,7 +125,7 @@ typedef enum DBType {
  * @public
  * @see #db_fix_options(DBType,DBOptions)
  * @see #db_default_release(DBType,DBOptions)
- * @see #db_alloc(const char *,int,DBType,DBOptions,unsigned short)
+ * @see #db_alloc(const char *,int32,DBType,DBOptions,unsigned short)
  */
 typedef enum DBOptions {
 	DB_OPT_BASE            = 0x00,
@@ -372,7 +372,7 @@ struct DBIterator
  * Public interface of a database. Only contains functions.
  * All the functions take the interface as the first argument.
  * @public
- * @see #db_alloc(const char*,int,DBType,DBOptions,unsigned short)
+ * @see #db_alloc(const char*,int32,DBType,DBOptions,unsigned short)
  */
 struct DBMap {
 
@@ -700,7 +700,7 @@ struct DBMap {
 #define ui64db_ensure(db,k,f) ( db_data2ptr((db)->ensure((db),db_ui642key(k),(f))) )
 
 // Database creation and destruction macros
-#define idb_alloc(opt)            db_alloc(__FILE__,__func__,__LINE__,DB_INT,(opt),sizeof(int))
+#define idb_alloc(opt)            db_alloc(__FILE__,__func__,__LINE__,DB_INT,(opt),sizeof(int32))
 #define uidb_alloc(opt)           db_alloc(__FILE__,__func__,__LINE__,DB_UINT,(opt),sizeof(uint32))
 #define strdb_alloc(opt,maxlen)   db_alloc(__FILE__,__func__,__LINE__,DB_STRING,(opt),(maxlen))
 #define stridb_alloc(opt,maxlen)  db_alloc(__FILE__,__func__,__LINE__,DB_ISTRING,(opt),(maxlen))
@@ -989,7 +989,7 @@ void  linkdb_foreach (struct linkdb_node** head, LinkDBFunc func, ...);
 
 /// Moves an entry of the array.
 /// Use ARR_MOVERIGHT/ARR_MOVELEFT if __from and __to are direct numbers.
-/// ex: ARR_MOVE(i, 0, list, int);// move index i to index 0
+/// ex: ARR_MOVE(i, 0, list, int32);// move index i to index 0
 ///
 ///
 /// @param __from   Initial index of the entry
@@ -1013,7 +1013,7 @@ void  linkdb_foreach (struct linkdb_node** head, LinkDBFunc func, ...);
 
 
 /// Moves an entry of the array to the right.
-/// ex: ARR_MOVERIGHT(1, 4, list, int);// move index 1 to index 4
+/// ex: ARR_MOVERIGHT(1, 4, list, int32);// move index 1 to index 4
 ///
 /// @param __from   Initial index of the entry
 /// @param __to     Target index of the entry
@@ -1030,7 +1030,7 @@ void  linkdb_foreach (struct linkdb_node** head, LinkDBFunc func, ...);
 
 
 /// Moves an entry of the array to the left.
-/// ex: ARR_MOVELEFT(3, 0, list, int);// move index 3 to index 0
+/// ex: ARR_MOVELEFT(3, 0, list, int32);// move index 3 to index 0
 ///
 /// @param __from   Initial index of the entry
 /// @param __end    Target index of the entry

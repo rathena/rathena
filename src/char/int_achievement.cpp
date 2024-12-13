@@ -59,7 +59,7 @@ struct achievement *mapif_achievements_fromsql(uint32 char_id, int32 *count)
 	for (i = 0; i < MAX_ACHIEVEMENT_OBJECTIVES; ++i)
 		stmt.BindColumn(3 + i, SQLDT_INT, &tmp_achieve.count[i], 0, nullptr, nullptr);
 
-	*count = (int)stmt.NumRows();
+	*count = (int32)stmt.NumRows();
 	if (*count > 0) {
 		i = 0;
 

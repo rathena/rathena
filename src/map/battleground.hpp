@@ -123,7 +123,7 @@ public:
 };
 
 extern BattlegroundDatabase battleground_db;
-extern std::unordered_map<int, std::shared_ptr<s_battleground_data>> bg_team_db;
+extern std::unordered_map<int32, std::shared_ptr<s_battleground_data>> bg_team_db;
 extern std::vector<std::shared_ptr<s_battleground_queue>> bg_queues;
 
 std::shared_ptr<s_battleground_type> bg_search_name(const char *name);

@@ -198,7 +198,7 @@ static int32 script_pos = 0, script_size = 0;
 
 static inline int32 GETVALUE(const unsigned char* buf, int32 i)
 {
-	return (int)MakeDWord(MakeWord(buf[i], buf[i+1]), MakeWord(buf[i+2], 0));
+	return (int32)MakeDWord(MakeWord(buf[i], buf[i+1]), MakeWord(buf[i+2], 0));
 }
 static inline void SETVALUE(unsigned char* buf, int32 i, int32 n)
 {
@@ -732,7 +732,7 @@ int32 add_str(const char* p)
 		memset(str_data + (str_data_size - 128), '\0', 128);
 	}
 
-	len=(int)strlen(p);
+	len=(int32)strlen(p);
 
 	// grow string buffer if neccessary
 	while( str_pos+len+1 >= str_size )
@@ -1343,7 +1343,7 @@ const char* parse_simpleexpr(const char *p)
 				size_t len = skip_escaped_c(p) - p;
 				size_t n = sv_unescape_c(buf, p, len);
 				if( n != 1 )
-					ShowDebug("parse_simpleexpr: unexpected length %d after unescape (\"%.*s\" -> %.*s)\n", (int)n, (int)len, p, (int)n, buf);
+					ShowDebug("parse_simpleexpr: unexpected length %d after unescape (\"%.*s\" -> %.*s)\n", (int32)n, (int32)len, p, (int32)n, buf);
 				p += len;
 				add_scriptb(*buf);
 				continue;
@@ -1678,7 +1678,7 @@ const char* parse_syntax(const char* p)
 				// check whether case label is integer or not
 				if(is_number(p)) {
 					//Numeric value
-					v = (int)strtol(p,&np,0);
+					v = (int32)strtol(p,&np,0);
 					if((*p == '-' || *p == '+') && ISDIGIT(p[1])) // pre-skip because '-' can not skip_word
 						p++;
 					p = skip_word(p);
@@ -1687,7 +1687,7 @@ const char* parse_syntax(const char* p)
 				} else {
 					//Check for constants
 					p2 = skip_word(p);
-					v = (int)(size_t) (p2-p); // length of word at p2
+					v = (int32)(size_t) (p2-p); // length of word at p2
 					memcpy(label,p,static_cast<int>(v));
 					label[v]='\0';
 					if( !script_get_constant(label, &v) )
@@ -4108,7 +4108,7 @@ int32 run_func(struct script_state *st)
 
 	data = &st->stack->stack_data[st->start];
 	if( data->type == C_NAME && str_data[data->u.num].type == C_FUNC ) {
-		func = (int)data->u.num;
+		func = (int32)data->u.num;
 		st->funcname = reference_getname(data);
 	} else {
 		ShowError("script:run_func: not a buildin command.\n");
@@ -4243,7 +4243,7 @@ TIMER_FUNC(run_script_timer){
 	}
 
 	while (node && st->sleep.timer != INVALID_TIMER) {
-		if ((int)__64BPRTSIZE(node->key) == st->oid && ((struct script_state *)node->data)->sleep.timer == st->sleep.timer) {
+		if ((int32)__64BPRTSIZE(node->key) == st->oid && ((struct script_state *)node->data)->sleep.timer == st->sleep.timer) {
 			script_erase_sleepdb(node);
 			st->sleep.timer = INVALID_TIMER;
 			break;
@@ -5655,10 +5655,10 @@ static int32 buildin_areawarp_sub(struct block_list *bl,va_list ap)
 	int32 x2,y2,x3,y3;
 
 	uint32 index = va_arg(ap,uint32);
-	x2 = va_arg(ap,int);
-	y2 = va_arg(ap,int);
-	x3 = va_arg(ap,int);
-	y3 = va_arg(ap,int);
+	x2 = va_arg(ap,int32);
+	y2 = va_arg(ap,int32);
+	x3 = va_arg(ap,int32);
+	y3 = va_arg(ap,int32);
 
 	if(index == 0)
 		pc_randomwarp((TBL_PC *)bl,CLR_TELEPORT,true);
@@ -5731,8 +5731,8 @@ BUILDIN_FUNC(areawarp)
 static int32 buildin_areapercentheal_sub(struct block_list *bl,va_list ap)
 {
 	int32 hp, sp;
-	hp = va_arg(ap, int);
-	sp = va_arg(ap, int);
+	hp = va_arg(ap, int32);
+	sp = va_arg(ap, int32);
 	pc_percentheal((TBL_PC *)bl,hp,sp);
 	return 0;
 }
@@ -6170,7 +6170,7 @@ BUILDIN_FUNC(input)
 		sd->state.menu_or_input = 0;
 		if( is_string_variable(name) )
 		{
-			int32 len = (int)strlen(sd->npc_str);
+			int32 len = (int32)strlen(sd->npc_str);
 			set_reg_str(st, sd, uid, name, sd->npc_str, script_getref(st,2));
 			script_pushint(st, (len > max ? 1 : len < min ? -1 : 0));
 		}
@@ -6941,12 +6941,12 @@ BUILDIN_FUNC(viewpoint)
 static int32 buildin_viewpointmap_sub(block_list *bl, va_list ap) {
 	int32 oid, type, x, y, id, color;
 
-	oid = va_arg(ap, int);
-	type = va_arg(ap, int);
-	x = va_arg(ap, int);
-	y = va_arg(ap, int);
-	id = va_arg(ap, int);
-	color = va_arg(ap, int);
+	oid = va_arg(ap, int32);
+	type = va_arg(ap, int32);
+	x = va_arg(ap, int32);
+	y = va_arg(ap, int32);
+	id = va_arg(ap, int32);
+	color = va_arg(ap, int32);
 
 	clif_viewpoint( *reinterpret_cast<map_session_data*>( bl ), oid, type, x, y, id, color );
 
@@ -8805,7 +8805,7 @@ BUILDIN_FUNC(readparam)
 	// If you use a parameter, return the value behind it
 	if( reference_toparam(data) ){
 		get_val_(st, data, sd);
-		value = (int)data->u.num;
+		value = (int32)data->u.num;
 	}else{
 		value = static_cast<int>(pc_readparam(sd,script_getnum(st, 2)));
 	}
@@ -9646,7 +9646,7 @@ BUILDIN_FUNC(successrefitem) {
 		}
 		if (sd->inventory.u.items_inventory[i].refine == battle_config.blacksmith_fame_refine_threshold &&
 			sd->inventory.u.items_inventory[i].card[0] == CARD0_FORGE &&
-			sd->status.char_id == (int)MakeDWord(sd->inventory.u.items_inventory[i].card[2],sd->inventory.u.items_inventory[i].card[3]) &&
+			sd->status.char_id == (int32)MakeDWord(sd->inventory.u.items_inventory[i].card[2],sd->inventory.u.items_inventory[i].card[3]) &&
 			sd->inventory_data[i]->type == IT_WEAPON )
 		{ // Fame point system [DracoRPG]
 			switch( sd->inventory_data[i]->weapon_level ){
@@ -10746,7 +10746,7 @@ BUILDIN_FUNC(gettimetick)	/* Asgard Version */
 	case 2:
 		//type 2:(Get the number of seconds elapsed since 00:00 hours, Jan 1, 1970 UTC
 		//        from the system clock.)
-		script_pushint(st,(int)time(nullptr));
+		script_pushint(st,(int32)time(nullptr));
 		break;
 	case 1:
 		//type 1:(Second Ticks: 0-86399, 00:00:00-23:59:59)
@@ -11322,7 +11322,7 @@ BUILDIN_FUNC(areamonster)
 { //same fix but with killmonster instead - stripping events from mobs.
 	TBL_MOB* md = (TBL_MOB*)bl;
 	char *event=va_arg(ap,char *);
-	int32 allflag=va_arg(ap,int);
+	int32 allflag=va_arg(ap,int32);
 
 	md->state.npc_killmonster = 1;
 
@@ -11341,7 +11341,7 @@ static int32 buildin_killmonster_sub(struct block_list *bl,va_list ap)
 {
 	TBL_MOB* md = (TBL_MOB*)bl;
 	char *event=va_arg(ap,char *);
-	int32 allflag=va_arg(ap,int);
+	int32 allflag=va_arg(ap,int32);
 
 	if(!allflag){
 		if(strcmp(event,md->npc_event)==0)
@@ -11870,16 +11870,16 @@ BUILDIN_FUNC(announce)
 		}
 
 		if (fontColor)
-			clif_broadcast2(bl, mes, (int)strlen(mes)+1, strtol(fontColor, (char **)nullptr, 0), fontType, fontSize, fontAlign, fontY, target);
+			clif_broadcast2(bl, mes, (int32)strlen(mes)+1, strtol(fontColor, (char **)nullptr, 0), fontType, fontSize, fontAlign, fontY, target);
 		else
-			clif_broadcast(bl, mes, (int)strlen(mes)+1, flag&BC_COLOR_MASK, target);
+			clif_broadcast(bl, mes, (int32)strlen(mes)+1, flag&BC_COLOR_MASK, target);
 	}
 	else
 	{
 		if (fontColor)
-			intif_broadcast2(mes, (int)strlen(mes)+1, strtol(fontColor, (char **)nullptr, 0), fontType, fontSize, fontAlign, fontY);
+			intif_broadcast2(mes, (int32)strlen(mes)+1, strtol(fontColor, (char **)nullptr, 0), fontType, fontSize, fontAlign, fontY);
 		else
-			intif_broadcast(mes, (int)strlen(mes)+1, flag&BC_COLOR_MASK);
+			intif_broadcast(mes, (int32)strlen(mes)+1, flag&BC_COLOR_MASK);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -11889,13 +11889,13 @@ BUILDIN_FUNC(announce)
 static int32 buildin_announce_sub(struct block_list *bl, va_list ap)
 {
 	char *mes       = va_arg(ap, char *);
-	int32   len       = va_arg(ap, int);
-	int32   type      = va_arg(ap, int);
+	int32   len       = va_arg(ap, int32);
+	int32   type      = va_arg(ap, int32);
 	char *fontColor = va_arg(ap, char *);
-	short fontType  = (short)va_arg(ap, int);
-	short fontSize  = (short)va_arg(ap, int);
-	short fontAlign = (short)va_arg(ap, int);
-	short fontY     = (short)va_arg(ap, int);
+	short fontType  = (short)va_arg(ap, int32);
+	short fontSize  = (short)va_arg(ap, int32);
+	short fontAlign = (short)va_arg(ap, int32);
+	short fontY     = (short)va_arg(ap, int32);
 	if (fontColor)
 		clif_broadcast2(bl, mes, len, strtol(fontColor, (char **)nullptr, 0), fontType, fontSize, fontAlign, fontY, SELF);
 	else
@@ -13257,7 +13257,7 @@ static int32 buildin_addrid_sub(struct block_list *bl,va_list ap)
 	struct script_state* st;
 
 	st = va_arg(ap,struct script_state*);
-	forceflag = va_arg(ap,int);
+	forceflag = va_arg(ap,int32);
 
 	if(!forceflag || !sd->st)
 		if(sd->status.account_id != st->rid)
@@ -13717,9 +13717,9 @@ BUILDIN_FUNC(emotion)
 
 static int32 buildin_maprespawnguildid_sub_pc(map_session_data* sd, va_list ap)
 {
-	int16 m=va_arg(ap,int);
-	int32 g_id=va_arg(ap,int);
-	int32 flag=va_arg(ap,int);
+	int16 m=va_arg(ap,int32);
+	int32 g_id=va_arg(ap,int32);
+	int32 flag=va_arg(ap,int32);
 
 	if(!sd || sd->bl.m != m)
 		return 0;
@@ -15172,7 +15172,7 @@ BUILDIN_FUNC(soundeffect)
 int32 soundeffect_sub(struct block_list* bl,va_list ap)
 {
 	char* name = va_arg(ap,char*);
-	int32 type = va_arg(ap,int);
+	int32 type = va_arg(ap,int32);
 
 	clif_soundeffect( *bl, name, type, SELF );
 
@@ -15846,7 +15846,7 @@ BUILDIN_FUNC(getpetinfo)
 		case PETINFO_INTIMATE:	script_pushint(st,pd->pet.intimate); break;
 		case PETINFO_HUNGRY:	script_pushint(st,pd->pet.hungry); break;
 		case PETINFO_RENAMED:	script_pushint(st,pd->pet.rename_flag); break;
-		case PETINFO_LEVEL:		script_pushint(st,(int)pd->pet.level); break;
+		case PETINFO_LEVEL:		script_pushint(st,(int32)pd->pet.level); break;
 		case PETINFO_BLOCKID:	script_pushint(st,pd->bl.id); break;
 		case PETINFO_EGGID:		script_pushint(st,pd->pet.egg_id); break;
 		case PETINFO_FOODID:	script_pushint(st,pd->get_pet_db()->FoodID); break;
@@ -16917,7 +16917,7 @@ BUILDIN_FUNC(getstrlen)
 {
 
 	const char *str = script_getstr(st,2);
-	int32 len = (str) ? (int)strlen(str) : 0;
+	int32 len = (str) ? (int32)strlen(str) : 0;
 
 	script_pushint(st,len);
 	return SCRIPT_CMD_SUCCESS;
@@ -17735,7 +17735,7 @@ BUILDIN_FUNC(setnpcdisplay)
 	if( newname )
 		npc_setdisplayname(nd, newname);
 
-	if( size != -1 && size != (int)nd->size )
+	if( size != -1 && size != (int32)nd->size )
 		nd->size = size;
 	else
 		size = -1;
@@ -17764,7 +17764,7 @@ BUILDIN_FUNC(axtoi)
 #if LONG_MAX > INT_MAX || LONG_MIN < INT_MIN
 	value = cap_value(value, INT_MIN, INT_MAX);
 #endif
-	script_pushint(st, (int)value);
+	script_pushint(st, (int32)value);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -17776,7 +17776,7 @@ BUILDIN_FUNC(strtol)
 #if LONG_MAX > INT_MAX || LONG_MIN < INT_MIN
 	value = cap_value(value, INT_MIN, INT_MAX);
 #endif
-	script_pushint(st, (int)value);
+	script_pushint(st, (int32)value);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -17807,7 +17807,7 @@ BUILDIN_FUNC(sqrt)
 	double i, a;
 	i = script_getnum(st,2);
 	a = sqrt(i);
-	script_pushint(st,(int)a);
+	script_pushint(st,(int32)a);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -17817,7 +17817,7 @@ BUILDIN_FUNC(pow)
 	a = script_getnum(st,2);
 	b = script_getnum(st,3);
 	i = pow(a,b);
-	script_pushint(st,(int)i);
+	script_pushint(st,(int32)i);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -21704,10 +21704,10 @@ BUILDIN_FUNC(instance_id)
 static int32 buildin_instance_warpall_sub(struct block_list *bl, va_list ap)
 {
 	uint32 m = va_arg(ap,uint32);
-	int32 x = va_arg(ap,int);
-	int32 y = va_arg(ap,int);
-	int32 instance_id = va_arg(ap, int);
-	int32 flag = va_arg(ap, int);
+	int32 x = va_arg(ap,int32);
+	int32 y = va_arg(ap,int32);
+	int32 instance_id = va_arg(ap, int32);
+	int32 flag = va_arg(ap, int32);
 	map_session_data *sd;
 
 	nullpo_retr(0, bl);
@@ -22223,13 +22223,13 @@ static int32 buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 {
 	TBL_MOB* md		= (TBL_MOB*)bl;
 	struct block_list *tbl;
-	int32 mobid		= va_arg(ap,int);
-	uint16 skill_id	= va_arg(ap,int);
-	uint16 skill_lv	= va_arg(ap,int);
-	int32 casttime	= va_arg(ap,int);
-	int32 cancel		= va_arg(ap,int);
-	int32 emotion		= va_arg(ap,int);
-	int32 target		= va_arg(ap,int);
+	int32 mobid		= va_arg(ap,int32);
+	uint16 skill_id	= va_arg(ap,int32);
+	uint16 skill_lv	= va_arg(ap,int32);
+	int32 casttime	= va_arg(ap,int32);
+	int32 cancel		= va_arg(ap,int32);
+	int32 emotion		= va_arg(ap,int32);
+	int32 target		= va_arg(ap,int32);
 
 	if( md->mob_id != mobid )
 		return 0;
@@ -25853,7 +25853,7 @@ BUILDIN_FUNC(round) {
 		script_pushint(st, num + precision - (num % precision));
 	}
 	else {
-		script_pushint(st, (int)(round(num / (precision * 1.))) * precision);
+		script_pushint(st, (int32)(round(num / (precision * 1.))) * precision);
 	}
 
 	return SCRIPT_CMD_SUCCESS;
@@ -27503,7 +27503,7 @@ BUILDIN_FUNC(preg_match) {
 	re = pcre_compile(pattern, 0, &error, &erroffset, nullptr);
 	pcreExtra = pcre_study(re, 0, &error);
 
-	r = pcre_exec(re, pcreExtra, subject, (int)strlen(subject), offset, 0, subStrVec, 30);
+	r = pcre_exec(re, pcreExtra, subject, (int32)strlen(subject), offset, 0, subStrVec, 30);
 
 	pcre_free(re);
 	if (pcreExtra != nullptr)

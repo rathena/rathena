@@ -80,7 +80,7 @@ bool mapif_mercenary_save(struct s_mercenary* merc)
 			flag = false;
 		}
 		else
-			merc->mercenary_id = (int)Sql_LastInsertId(sql_handle);
+			merc->mercenary_id = (int32)Sql_LastInsertId(sql_handle);
 	}
 	else if( SQL_ERROR == Sql_Query(sql_handle,
 		"UPDATE `%s` SET `char_id` = '%d', `class` = '%d', `hp` = '%u', `sp` = '%u', `kill_counter` = '%u', `life_time` = '%" PRtf "' WHERE `mer_id` = '%d'",
@@ -208,8 +208,8 @@ int32 inter_mercenary_parse_frommap(int32 fd)
 	switch( cmd )
 	{
 		case 0x3070: mapif_parse_mercenary_create(fd, (struct s_mercenary*)RFIFOP(fd,4)); break;
-		case 0x3071: mapif_parse_mercenary_load(fd, (int)RFIFOL(fd,2), (int)RFIFOL(fd,6)); break;
-		case 0x3072: mapif_parse_mercenary_delete(fd, (int)RFIFOL(fd,2)); break;
+		case 0x3071: mapif_parse_mercenary_load(fd, (int32)RFIFOL(fd,2), (int32)RFIFOL(fd,6)); break;
+		case 0x3072: mapif_parse_mercenary_delete(fd, (int32)RFIFOL(fd,2)); break;
 		case 0x3073: mapif_parse_mercenary_save(fd, (struct s_mercenary*)RFIFOP(fd,4)); break;
 		default:
 			return 0;
