@@ -29,7 +29,7 @@ struct achievement *mapif_achievements_fromsql(uint32 char_id, int32 *count)
 {
 	struct achievement *achievelog = nullptr;
 	struct achievement tmp_achieve;
-	SqlStmt *stmt;
+	SqlStmt stmt{ *sql_handle };
 	StringBuf buf;
 	int32 i;
 
@@ -44,29 +44,27 @@ struct achievement *mapif_achievements_fromsql(uint32 char_id, int32 *count)
 		StringBuf_Printf(&buf, ", `count%d`", i + 1);
 	StringBuf_Printf(&buf, " FROM `%s` WHERE `char_id` = '%u'", schema_config.achievement_table, char_id);
 
-	stmt = SqlStmt_Malloc(sql_handle);
-	if( SQL_ERROR == SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf))
-	||  SQL_ERROR == SqlStmt_Execute(stmt) )
+	if( SQL_ERROR == stmt.PrepareStr(StringBuf_Value(&buf))
+	||  SQL_ERROR == stmt.Execute() )
 	{
 		SqlStmt_ShowDebug(stmt);
-		SqlStmt_Free(stmt);
 		StringBuf_Destroy(&buf);
 		*count = 0;
 		return nullptr;
 	}
 
-	SqlStmt_BindColumn(stmt, 0, SQLDT_INT,  &tmp_achieve.achievement_id, 0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 1, SQLDT_INT,  &tmp_achieve.completed, 0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 2, SQLDT_INT,  &tmp_achieve.rewarded, 0, nullptr, nullptr);
+	stmt.BindColumn(0, SQLDT_INT,  &tmp_achieve.achievement_id, 0, nullptr, nullptr);
+	stmt.BindColumn(1, SQLDT_INT,  &tmp_achieve.completed, 0, nullptr, nullptr);
+	stmt.BindColumn(2, SQLDT_INT,  &tmp_achieve.rewarded, 0, nullptr, nullptr);
 	for (i = 0; i < MAX_ACHIEVEMENT_OBJECTIVES; ++i)
-		SqlStmt_BindColumn(stmt, 3 + i, SQLDT_INT, &tmp_achieve.count[i], 0, nullptr, nullptr);
+		stmt.BindColumn(3 + i, SQLDT_INT, &tmp_achieve.count[i], 0, nullptr, nullptr);
 
-	*count = (int32)SqlStmt_NumRows(stmt);
+	*count = (int32)stmt.NumRows();
 	if (*count > 0) {
 		i = 0;
 
 		achievelog = (struct achievement *)aCalloc(*count, sizeof(struct achievement));
-		while (SQL_SUCCESS == SqlStmt_NextRow(stmt)) {
+		while (SQL_SUCCESS == stmt.NextRow()) {
 			if (i >= *count) // Sanity check, should never happen
 				break;
 			memcpy(&achievelog[i++], &tmp_achieve, sizeof(tmp_achieve));
@@ -78,7 +76,6 @@ struct achievement *mapif_achievements_fromsql(uint32 char_id, int32 *count)
 		}
 	}
 
-	SqlStmt_Free(stmt);
 	StringBuf_Destroy(&buf);
 
 	ShowInfo("achievement load complete from DB - id: %d (total: %d)\n", char_id, *count);

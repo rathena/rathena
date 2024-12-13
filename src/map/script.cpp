@@ -5892,24 +5892,23 @@ BUILDIN_FUNC(warpparty)
 			[[fallthrough]];
 		case WARPPARTY_RANDOMALLAREA:
 			if(!mapdata->getMapFlag(MF_NORETURN) && !mapdata->getMapFlag(MF_NOWARP) && pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pc_get_group_level(pl_sd))){
+				int32 nx = x;
+				int32 ny = y;
 				if (rx || ry) {
-					int32 x1 = x + rx, y1 = y + ry,
-						x0 = x - rx, y0 = y - ry,
-						nx, ny;
 					uint8 attempts = 10;
 
 					do {
-						nx = x0 + rnd_value(x0, x1);
-						ny = y0 + rnd_value(y0, y1);
+						nx = x + rnd_value(-rx, rx);
+						ny = y + rnd_value(-ry, ry);
 					} while ((--attempts) > 0 && !map_getcell(m, nx, ny, CELL_CHKPASS));
 
-					if (attempts != 0) { //Keep the original coordinates if fails to find a valid cell within the range
-						x = nx;
-						y = ny;
+					if (attempts == 0) { //Keep the original coordinates if fails to find a valid cell within the range
+						nx = x;
+						ny = y;
 					}
 				}
 
-				ret = pc_setpos(pl_sd, mapindex, x, y, CLR_TELEPORT);
+				ret = pc_setpos(pl_sd, mapindex, nx, ny, CLR_TELEPORT);
 			}
 			break;
 		}
@@ -11004,8 +11003,6 @@ BUILDIN_FUNC(makepet)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	sd->catch_target_class = mob_id;
-
 	std::shared_ptr<s_mob_db> mdb = mob_db.find(pet->class_);
 
 	intif_create_pet( sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->jname.c_str() );
@@ -12527,19 +12524,51 @@ BUILDIN_FUNC( errormes ){
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/*==========================================
- *------------------------------------------*/
+/**
+ * Attempts to catch a pet with the lure item.
+ * pet {<item_id>{,flag}}
+ * catchpet {<item_id>{,flag}}
+*/
 BUILDIN_FUNC(catchpet)
 {
-	int32 pet_id;
-	TBL_PC *sd;
+	const char* command = script_getfuncname(st);
+	map_session_data* sd;
 
 	if( !script_rid2sd(sd) )
-		return SCRIPT_CMD_SUCCESS;
+		return SCRIPT_CMD_FAILURE;
 
-	pet_id= script_getnum(st,2);
+	t_itemid lure_id;
+	if( script_hasdata( st, 2 ) ){
+		lure_id = script_getnum( st, 2 );
 
-	pet_catch_process1(sd,pet_id);
+		std::shared_ptr<item_data> id = item_db.find( lure_id );
+
+		if (id == nullptr) {
+			ShowError( "buildin_%s: Invalid lure item ID %d.\n", command, lure_id );
+			return SCRIPT_CMD_FAILURE;
+		}
+	}else{
+		if( sd->itemid == 0 ){
+			ShowError( "buildin_%s: Called outside of an item script without item id.\n", command );
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		lure_id = sd->itemid;
+	}
+
+	e_pet_catch_flag flag = PET_CATCH_NORMAL;
+
+	if( script_hasdata( st, 3 ) ){
+		int32 val = script_getnum( st, 3 );
+
+		if( val < PET_CATCH_NORMAL || val >= PET_CATCH_MAX ){
+			ShowError( "buildin_%s: Invalid value '%d' for flag.\n", command, val );
+		}
+
+		flag = static_cast<e_pet_catch_flag>( val );
+	}
+
+	pet_catch_process_start( *sd, lure_id, flag );
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -16481,12 +16510,11 @@ BUILDIN_FUNC(summon)
 {
 	int32 _class, timeout=0;
 	const char *str,*event="";
-	TBL_PC *sd;
-	struct mob_data *md;
+	map_session_data* sd;
 	t_tick tick = gettick();
 
 	if (!script_rid2sd(sd))
-		return SCRIPT_CMD_SUCCESS;
+		return SCRIPT_CMD_FAILURE;
 
 	str	=script_getstr(st,2);
 	_class=script_getnum(st,3);
@@ -16497,20 +16525,29 @@ BUILDIN_FUNC(summon)
 		check_event(st, event);
 	}
 
-	clif_skill_poseffect(&sd->bl,AM_CALLHOMUN,1,sd->bl.x,sd->bl.y,tick);
+	mob_data* md = mob_once_spawn_sub( &sd->bl, sd->bl.m, sd->bl.x, sd->bl.y, str, _class, event, SZ_SMALL, AI_NONE );
 
-	md = mob_once_spawn_sub(&sd->bl, sd->bl.m, sd->bl.x, sd->bl.y, str, _class, event, SZ_SMALL, AI_NONE);
-	if (md) {
-		md->master_id=sd->bl.id;
-		md->special_state.ai = AI_ATTACK;
-		if( md->deletetimer != INVALID_TIMER )
-			delete_timer(md->deletetimer, mob_timer_delete);
-		md->deletetimer = add_timer(tick+(timeout>0?timeout:60000),mob_timer_delete,md->bl.id,0);
-		mob_spawn (md); //Now it is ready for spawning.
-		clif_specialeffect(&md->bl,EF_ENTRY2,AREA);
-		sc_start4(nullptr,&md->bl, SC_MODECHANGE, 100, 1, 0, MD_AGGRESSIVE, 0, 60000);
+	if( md == nullptr ){
+		ShowError( "buildin_summon: Invalid mob ID %d.\n", _class );
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
 	}
-	script_pushint(st, md->bl.id);
+
+	clif_skill_poseffect( &sd->bl, AM_CALLHOMUN, 1, sd->bl.x, sd->bl.y, tick );
+
+	md->master_id = sd->bl.id;
+	md->special_state.ai = AI_ATTACK;
+	if( md->deletetimer != INVALID_TIMER ){
+		delete_timer( md->deletetimer, mob_timer_delete );
+	}
+	md->deletetimer = add_timer( tick + ( timeout > 0 ? timeout : 60000 ), mob_timer_delete, md->bl.id, 0 );
+
+	// Now it is ready for spawning.
+	mob_spawn( md );
+	clif_specialeffect( &md->bl,EF_ENTRY2,AREA );
+	sc_start4( nullptr,&md->bl, SC_MODECHANGE, 100, 1, 0, MD_AGGRESSIVE, 0, 60000 );
+
+	script_pushint( st, md->bl.id );
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -27684,9 +27721,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getscrate,"ii?"),
 	BUILDIN_DEF(debugmes,"s"),
 	BUILDIN_DEF(errormes,"s"),
-	BUILDIN_DEF2(catchpet,"pet","i"),
+	BUILDIN_DEF2(catchpet,"pet","??"),
 	BUILDIN_DEF2(birthpet,"bpet",""),
-	BUILDIN_DEF(catchpet,"i"),
+	BUILDIN_DEF(catchpet,"??"),
 	BUILDIN_DEF(birthpet,""),
 	BUILDIN_DEF(resetlvl,"i?"),
 	BUILDIN_DEF(resetstatus,"?"),

@@ -1275,13 +1275,15 @@ typedef struct s_elemental_data	TBL_ELEM;
 #define BL_CAST(type_, bl) \
 	( ((bl) == (struct block_list*)nullptr || (bl)->type != (type_)) ? (T ## type_ *)nullptr : (T ## type_ *)(bl) )
 
-#include <common/sql.hpp>
-
 extern int32 db_use_sqldbs;
+
+#ifndef ONLY_CONSTANTS
+#include <common/sql.hpp>
 
 extern Sql* mmysql_handle;
 extern Sql* qsmysql_handle;
 extern Sql* logmysql_handle;
+#endif
 
 extern char barter_table[32];
 extern char buyingstores_table[32];

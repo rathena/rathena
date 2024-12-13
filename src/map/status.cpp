@@ -3861,9 +3861,9 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 			wa->range += sd->inventory_data[index]->range;
 			if(sd->inventory_data[index]->script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(sd->inventory_data[index],sd->bl.m))) {
 				if (wd == &sd->left_weapon) {
-					sd->state.lr_flag = 1;
+					sd->state.lr_flag = LR_FLAG_WEAPON;
 					run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
-					sd->state.lr_flag = 0;
+					sd->state.lr_flag = LR_FLAG_NONE;
 				} else
 					run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
 				if (!calculating) // Abort, run_script retriggered this. [Skotlex]
@@ -3895,10 +3895,10 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 
 			if(sd->inventory_data[index]->script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(sd->inventory_data[index],sd->bl.m))) {
 				if( i == EQI_HAND_L ) // Shield
-					sd->state.lr_flag = 3;
+					sd->state.lr_flag = LR_FLAG_SHIELD;
 				run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
 				if( i == EQI_HAND_L ) // Shield
-					sd->state.lr_flag = 0;
+					sd->state.lr_flag = LR_FLAG_NONE;
 				if (!calculating) // Abort, run_script retriggered this. [Skotlex]
 					return 1;
 			}
@@ -3915,10 +3915,10 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		index = sd->equip_index[EQI_AMMO];
 		if(sd->inventory_data[index]) { // Arrows
 			sd->bonus.arrow_atk += sd->inventory_data[index]->atk;
-			sd->state.lr_flag = 2;
+			sd->state.lr_flag = LR_FLAG_ARROW;
 			if( !itemdb_group.item_exists(IG_THROWABLE, sd->inventory_data[index]->nameid) ) // Don't run scripts on throwable items
 				run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
-			sd->state.lr_flag = 0;
+			sd->state.lr_flag = LR_FLAG_NONE;
 			if (!calculating) // Abort, run_script retriggered status_calc_pc. [Skotlex]
 				return 1;
 		}
@@ -4004,9 +4004,9 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 				if(!pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) && itemdb_isNoEquip(data.get(), sd->bl.m)) // Card restriction checks.
 					continue;
 				if(i == EQI_HAND_L && sd->inventory.u.items_inventory[index].equip == EQP_HAND_L) { // Left hand status.
-					sd->state.lr_flag = 1;
+					sd->state.lr_flag = LR_FLAG_WEAPON;
 					run_script(data->script,0,sd->bl.id,0);
-					sd->state.lr_flag = 0;
+					sd->state.lr_flag = LR_FLAG_NONE;
 				} else
 					run_script(data->script,0,sd->bl.id,0);
 				if (!calculating) // Abort, run_script his function. [Skotlex]
@@ -4044,9 +4044,9 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 				if (!pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && itemdb_isNoEquip(sd->inventory_data[index], sd->bl.m))
 					continue;
 				if (i == EQI_HAND_L && sd->inventory.u.items_inventory[index].equip == EQP_HAND_L) { // Left hand status.
-					sd->state.lr_flag = 1;
+					sd->state.lr_flag = LR_FLAG_WEAPON;
 					run_script(data->script, 0, sd->bl.id, 0);
-					sd->state.lr_flag = 0;
+					sd->state.lr_flag = LR_FLAG_NONE;
 				}
 				else
 					run_script(data->script, 0, sd->bl.id, 0);
@@ -5636,9 +5636,9 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 			status->rhw.atk += status->rhw.atk * sd->bonus.weapon_atk_rate / 100;
 		if(b_status->lhw.atk) {
 			if (sd) {
-				sd->state.lr_flag = 1;
+				sd->state.lr_flag = LR_FLAG_WEAPON;
 				status->lhw.atk = status_calc_watk(&bl, sc, b_status->lhw.atk);
-				sd->state.lr_flag = 0;
+				sd->state.lr_flag = LR_FLAG_NONE;
 			} else {
 				status->lhw.atk = status_calc_watk(&bl, sc, b_status->lhw.atk);
 				status->lhw.atk2= status_calc_watk(&bl, sc, b_status->lhw.atk2);
@@ -5811,9 +5811,9 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 
 	if(flag[SCB_ATK_ELE]) {
 		status->rhw.ele = status_calc_attack_element(&bl, sc, b_status->rhw.ele);
-		if (sd) sd->state.lr_flag = 1;
+		if (sd) sd->state.lr_flag = LR_FLAG_WEAPON;
 		status->lhw.ele = status_calc_attack_element(&bl, sc, b_status->lhw.ele);
-		if (sd) sd->state.lr_flag = 0;
+		if (sd) sd->state.lr_flag = LR_FLAG_NONE;
 	}
 
 	if(flag[SCB_DEF_ELE]) {
@@ -6992,7 +6992,7 @@ static unsigned short status_calc_watk(struct block_list *bl, status_change *sc,
 			watk += sc->getSCE(SC_NIBELUNGEN)->val2;
 		else {
 			TBL_PC *sd = (TBL_PC*)bl;
-			short index = sd->equip_index[sd->state.lr_flag?EQI_HAND_L:EQI_HAND_R];
+			short index = sd->equip_index[sd->state.lr_flag != LR_FLAG_NONE ? EQI_HAND_L : EQI_HAND_R];
 
 			if(index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_WEAPON && sd->inventory_data[index]->weapon_level == 4)
 				watk += sc->getSCE(SC_NIBELUNGEN)->val2;

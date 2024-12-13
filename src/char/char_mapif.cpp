@@ -1207,7 +1207,7 @@ int32 chmapif_parse_reqcharban(int32 fd){
 			char* data;
 			time_t unban_time;
 			time_t now = time(nullptr);
-			SqlStmt* stmt = SqlStmt_Malloc(sql_handle);
+			SqlStmt stmt{ *sql_handle };
 
 			Sql_GetData(sql_handle, 0, &data, nullptr); t_aid = atoi(data);
 			Sql_GetData(sql_handle, 1, &data, nullptr); t_cid = atoi(data);
@@ -1220,20 +1220,18 @@ int32 chmapif_parse_reqcharban(int32 fd){
 			unban_time += timediff; //alterate the time
 			if( unban_time < now ) unban_time=0; //we have totally reduce the time
 
-			if( SQL_SUCCESS != SqlStmt_Prepare(stmt,
+			if( SQL_SUCCESS != stmt.Prepare(
 					  "UPDATE `%s` SET `unban_time` = ? WHERE `char_id` = ? LIMIT 1",
 					  schema_config.char_db)
-				|| SQL_SUCCESS != SqlStmt_BindParam(stmt,  0, SQLDT_LONG,   (void*)&unban_time,   sizeof(unban_time))
-				|| SQL_SUCCESS != SqlStmt_BindParam(stmt,  1, SQLDT_INT,    (void*)&t_cid,     sizeof(t_cid))
-				|| SQL_SUCCESS != SqlStmt_Execute(stmt)
+				|| SQL_SUCCESS != stmt.BindParam(0, SQLDT_LONG,   (void*)&unban_time,   sizeof(unban_time))
+				|| SQL_SUCCESS != stmt.BindParam(1, SQLDT_INT,    (void*)&t_cid,     sizeof(t_cid))
+				|| SQL_SUCCESS != stmt.Execute()
 
 				)
 			{
 				SqlStmt_ShowDebug(stmt);
-				SqlStmt_Free(stmt);
 				return 1;
 			}
-			SqlStmt_Free(stmt);
 
 			// condition applies; send to all map-servers to disconnect the player
 			if( unban_time > now ) {
@@ -1284,27 +1282,26 @@ int32 chmapif_bonus_script_get(int32 fd) {
 		uint8 num_rows = 0;
 		uint32 cid = RFIFOL(fd,2);
 		struct bonus_script_data tmp_bsdata;
-		SqlStmt* stmt = SqlStmt_Malloc(sql_handle);
+		SqlStmt stmt{ *sql_handle };
 
 		RFIFOSKIP(fd,6);
 
-		if (SQL_ERROR == SqlStmt_Prepare(stmt,
+		if (SQL_ERROR == stmt.Prepare(
 			"SELECT `script`, `tick`, `flag`, `type`, `icon` FROM `%s` WHERE `char_id` = '%d' LIMIT %d",
 			schema_config.bonus_script_db, cid, MAX_PC_BONUS_SCRIPT) ||
-			SQL_ERROR == SqlStmt_Execute(stmt) ||
-			SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_STRING, &tmp_bsdata.script_str, sizeof(tmp_bsdata.script_str), nullptr, nullptr) ||
-			SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_INT64, &tmp_bsdata.tick, 0, nullptr, nullptr) ||
-			SQL_ERROR == SqlStmt_BindColumn(stmt, 2, SQLDT_UINT16, &tmp_bsdata.flag, 0, nullptr, nullptr) ||
-			SQL_ERROR == SqlStmt_BindColumn(stmt, 3, SQLDT_UINT8,  &tmp_bsdata.type, 0, nullptr, nullptr) ||
-			SQL_ERROR == SqlStmt_BindColumn(stmt, 4, SQLDT_INT16,  &tmp_bsdata.icon, 0, nullptr, nullptr)
+			SQL_ERROR == stmt.Execute() ||
+			SQL_ERROR == stmt.BindColumn(0, SQLDT_STRING, &tmp_bsdata.script_str, sizeof(tmp_bsdata.script_str), nullptr, nullptr) ||
+			SQL_ERROR == stmt.BindColumn(1, SQLDT_INT64, &tmp_bsdata.tick, 0, nullptr, nullptr) ||
+			SQL_ERROR == stmt.BindColumn(2, SQLDT_UINT16, &tmp_bsdata.flag, 0, nullptr, nullptr) ||
+			SQL_ERROR == stmt.BindColumn(3, SQLDT_UINT8,  &tmp_bsdata.type, 0, nullptr, nullptr) ||
+			SQL_ERROR == stmt.BindColumn(4, SQLDT_INT16,  &tmp_bsdata.icon, 0, nullptr, nullptr)
 			)
 		{
 			SqlStmt_ShowDebug(stmt);
-			SqlStmt_Free(stmt);
 			return 1;
 		}
 
-		if ((num_rows = (uint8)SqlStmt_NumRows(stmt)) > 0) {
+		if ((num_rows = (uint8)stmt.NumRows()) > 0) {
 			uint8 i;
 			uint32 size = 9 + num_rows * sizeof(struct bonus_script_data);
 
@@ -1314,7 +1311,7 @@ int32 chmapif_bonus_script_get(int32 fd) {
 			WFIFOL(fd, 4) = cid;
 			WFIFOB(fd, 8) = num_rows;
 
-			for (i = 0; i < num_rows && SQL_SUCCESS == SqlStmt_NextRow(stmt); i++) {
+			for (i = 0; i < num_rows && SQL_SUCCESS == stmt.NextRow(); i++) {
 				struct bonus_script_data bsdata;
 				memset(&bsdata, 0, sizeof(bsdata));
 				memset(bsdata.script_str, '\0', sizeof(bsdata.script_str));
@@ -1331,11 +1328,10 @@ int32 chmapif_bonus_script_get(int32 fd) {
 
 			ShowInfo("Bonus Script loaded for CID=%d. Total: %d.\n", cid, i);
 
-			if (SQL_ERROR == SqlStmt_Prepare(stmt,"DELETE FROM `%s` WHERE `char_id`='%d'",schema_config.bonus_script_db,cid) ||
-				SQL_ERROR == SqlStmt_Execute(stmt))
+			if (SQL_ERROR == stmt.Prepare("DELETE FROM `%s` WHERE `char_id`='%d'",schema_config.bonus_script_db,cid) ||
+				SQL_ERROR == stmt.Execute())
 				SqlStmt_ShowDebug(stmt);
 		}
-		SqlStmt_Free(stmt);
 	}
 	return 1;
 }

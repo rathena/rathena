@@ -1,4 +1,4 @@
-﻿//===== rAthena Documentation================================
+//===== rAthena Documentation================================
 //= rAthena Script Commands
 //===== By:==================================================
 //= rAthena Dev Team
@@ -10429,19 +10429,25 @@ This is still usable outside item scripts.
 
 ---------------------------------------
 
-*pet <pet id>;
-*catchpet <pet id>;
+*pet {<item_id>{,flag}};
+*catchpet {<item_id>{,flag}};
 
-This command is used in all the item scripts for taming items. Running this
-command will make the pet catching cursor appear on the client connected to the
-invoking character, usable on the monsters with the specified pet ID number. It
-will still work outside an item script.
-If the <pet id> is PET_CATCH_UNIVERSAL the item will attempt to catch the targeted
-monster as long as it is in the pet database and does not have the MD_STATUS_IMMUNE
-monster mode.
-If the <pet id> is PET_CATCH_UNIVERSAL_ITEM the item will attempt to catch the targeted
-monster as long as it is in the pet database and the targeted monster requires the lure
-item used.
+This command is used in all the item scripts for taming items.
+Running this command will make the pet catching cursor appear on the client of the invoking character
+and the player can then attempt to catch a monster.
+
+If the item ID is not specified, the command will use the item ID from the invoking item script.
+It will also work outside of an item script, if the item ID is provided.
+
+The following constants can be used as <flag> parameter:
+
+	PET_CATCH_NORMAL:				Will attempt to catch the targeted monster as long as it is in the pet database and
+									the taming item corresponds with the required taming item in the pet database.
+									This is the default if <flag> is not specified.
+	PET_CATCH_UNIVERSAL_NO_BOSS:	Will attempt to catch the targeted monster as long as it is in the pet database and
+									does not have the MD_STATUS_IMMUNE monster mode.
+	PET_CATCH_UNIVERSAL_ALL:		Will attempt to catch the targeted monster as long as it is in the pet database.
+
 See 'doc/mob_db_mode_list.txt' for more information about monster modes.
 
 A full list of pet IDs can be found inside 'db/(pre-)re/pet_db.yml'.

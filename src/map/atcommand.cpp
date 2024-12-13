@@ -3170,7 +3170,6 @@ ACMD_FUNC(makeegg) {
 	if (pet != nullptr) {
 		std::shared_ptr<s_mob_db> mdb = mob_db.find(pet->class_);
 		if(mdb){
-			sd->catch_target_class = pet->class_;
 			if(intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->jname.c_str())){
 				res = 0;
 			} else {
@@ -6043,7 +6042,8 @@ ACMD_FUNC(stockall)
 				return -1;
 		}
 	}
-	uint16 count = 0, count2 = 0;
+
+	int32 count = 0, count2 = 0;
 	for ( uint16 i = 0; i < MAX_CART; i++ ) {
 		if ( sd->cart.u.items_cart[i].amount > 0 ) {
 			std::shared_ptr<item_data> id = item_db.find(sd->cart.u.items_cart[i].nameid);
@@ -6052,10 +6052,13 @@ ACMD_FUNC(stockall)
 				continue;
 			}
 			if ( type == -1 || static_cast<item_types>(type) == id->type ) {
-				if (pc_getitemfromcart(sd, i, sd->cart.u.items_cart[i].amount))
-					count += sd->cart.u.items_cart[i].amount;
-				else
-					count2 += sd->cart.u.items_cart[i].amount;
+				int32 amount = sd->cart.u.items_cart[i].amount;
+
+				if( pc_getitemfromcart( sd, i, amount ) ){
+					count += amount;
+				}else{
+					count2 += amount;
+				}
 			}
 		}
 	}
