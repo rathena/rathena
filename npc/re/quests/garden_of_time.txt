@@ -1,0 +1,1595 @@
+//===== rAthena Script =======================================
+//= Hall of Life
+//===== Description: =========================================
+//= [Walkthrough Conversion]
+//= Quest NPCs - Hall of Life
+//===== Changelog: ===========================================
+//= 1.0 Initial release [Atemo]
+//============================================================
+
+function	script	F_mesnavi	{
+	return "<NAVI>[" + getarg(0) + "]<INFO>" + getarg(1) + "," + getarg(2) + "," + getarg(3) + ",0,101,0</INFO></NAVI>";
+}
+
+// Warps
+xmas_fild01,158,246,2	script	Dimensional barrier#got1	GATE_SKYBLUE,2,2,{
+	// Fallthrough
+OnTouch:
+	warp "t_garden",116,47;
+	end;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 250 && isbegin_quest(12592) == 0" );
+	end;
+}
+
+t_garden,111,36,2	script	Dimensional Barrier#got2	GATE_SKYBLUE,2,2,{
+	// Fallthrough
+OnTouch:
+	warp "xmas_fild01",150,240;
+	end;
+}
+
+// t_garden,118,66,0	script	#wp01	HIDDEN_WARP_NPC,3,1,{	// (NPC name is not unique)
+t_garden,118,66,0	script	#wp01_t_garden	HIDDEN_WARP_NPC,3,1,{
+	end;
+OnTouch:
+	specialeffect2 EF_FLOWERCAST;
+	setpcblock PCBLOCK_NPC, true;
+	sleep2 500;
+	setpcblock PCBLOCK_NPC, false;
+	if (BaseLevel < 250)
+		warp "xmas_fild01",150,240;
+	else
+		warp "t_garden",118,79;
+	end;
+}
+
+// t_garden,118,72,0	script	#wp02	HIDDEN_WARP_NPC,3,1,{	// (NPC name is not unique)
+t_garden,118,72,0	script	#wp02_t_garden	HIDDEN_WARP_NPC,3,1,{
+	end;
+OnTouch:
+	specialeffect2 EF_FLOWERCAST;
+	setpcblock PCBLOCK_NPC, true;
+	sleep2 500;
+	setpcblock PCBLOCK_NPC, false;
+	if (BaseLevel < 250)
+		warp "xmas_fild01",150,240;
+	else
+		warp "t_garden",118,61;
+	end;
+}
+
+
+// Quest starter
+t_garden,116,47,0	script	#life_wp11	HIDDEN_WARP_NPC,2,2,{
+	end;
+OnTouch:
+	if (BaseLevel < 250)
+		end;
+	if (isbegin_quest(12592) == 0) {
+		removespecialeffect 1145, AREA, "Oscar#life";
+		cloakoffnpcself( "Oscar#life" );
+		cloakoffnpcself( "Leticia#life" );
+		cloakoffnpcself( "Rigel#life" );
+		specialeffect 1145, AREA, "Oscar#life";
+		end;
+	}
+	end;
+}
+	
+t_garden,114,49,6	script(CLOAKED)	Leticia#life	4_4JOB_LETICIA,{
+	mes "^0000ffShe is not paying attention to you because she is explaining something to Oscar.^000007";
+	close;
+}
+
+t_garden,118,49,3	script(CLOAKED)	Rigel#life	4_CS_RIGEL,{
+	mes "^0000ffIt seems like they are focusing on the story of Oscar and Leticia.^000007";
+	close;
+}
+
+t_garden,119,46,2	script(CLOAKED)	Oscar#life	4_ED_OSCAR,{
+	if (BaseLevel < 250)
+		end;
+	if (isbegin_quest(12592) == 0) {
+		emotion ET_THROB;
+		mes "^0000ffOscar appears to be talking to someone.^000000";
+		next;
+		if (select( "Quit and step away", "Eavesdrop from the side." ) == 1) {
+			mes "^0000ffOf course, eavesdropping is a bit like that.^000000";
+			close;
+		}
+		cutin "OSCAR03.bmp",2;
+		mes "[Oscar]";
+		mes "So, is your claim that I happened to find a crack near Lutie and came in and found this garden?";
+		next;
+		cutin "4job_leticia_01.png",2;
+		mes "[Leticia]";
+		mes "That's right!";
+		next;
+		cutin "OSCAR03.bmp",2;
+		mes "[Oscar]";
+		mes "Why did you do that, Leticia?";
+		next;
+		cutin "4job_leticia_04.png",2;
+		mes "[Leticia]";
+		mes "Why! Doesn't this place look really useful? A nice garden and an unidentifiable mansion! This is perfect, Oscar!";
+		next;
+		cutin "OSCAR03.bmp",2;
+		mes "[Oscar]";
+		mes "You don't understand, Leticia. You found a crack, but I'm asking why you called me here without extinguishing it.";
+		next;
+		cutin "4job_leticia_05.png",2;
+		mes "[Leticia]";
+		mes "Well... that's right, it would be a waste to destroy it.";
+		next;
+		cutin "OSCAR03.bmp",2;
+		mes "[Oscar]";
+		mes "You didn't destroy it because it was a waste~ and what?";
+		next;
+		cutin "4job_leticia_02.png",2;
+		mes "[Leticia]";
+		mes "Oscar, you've been wandering around without a proper place to live. No matter how good a person you are, you shouldn't just volunteer like this!";
+		next;
+		cutin "OSCAR09.bmp",2;
+		mes "[Oscar]";
+		mes "Huh?";
+		next;
+		cutin "rigel_halfeyes02.png",2;
+		mes "[Rigel]";
+		mes "Leticia is begging you to stop acting like a homeless person, buy a decent house, and live like a constellation. It's not good to keep ignoring what others say.";
+		next;
+		cutin "OSCAR07.bmp",2;
+		mes "[Oscar]";
+		mes "Homeless..., am I not that bad? Are you looking at me like that, Leticia?";
+		next;
+		cutin "4job_leticia_02.png",2;
+		mes "[Leticia]";
+		mes "Even Betelgeuse, who came to this continent a long time ago, already has a decent home of his own! I think it's unreasonable for Oscar to wander around like this without a place to live!";
+		next;
+		cutin "OSCAR04.bmp",2;
+		mes "[Oscar]";
+		mes "Okay, I understand your intentions. I still have to think about how to handle this in the right way...";
+		next;
+		cutin "rigel05.png",2;
+		mes "[Rigel]";
+		mes "From what I've looked at, there are a few unstable dimensional passages, but they don't seem to be very dangerous. Leticia has a point.";
+		next;
+		cutin "rigel_halfeyes02.png",2;
+		mes "[Rigel]";
+		mes "I think I and Leticia could find an appropriate use for the unstable dimensional passages. What do you think, Leticia?";
+		next;
+		cutin "4job_leticia_05.png",2;
+		mes "[Leticia]";
+		mes "I agree, Rigel! I think the unstable area near the center of the garden can be stabilized by imposing restrictions in the form of a dungeon. I'll take care of that!";
+		next;
+		cutin "rigel_halfeyes02.png",2;
+		mes "[Rigel]";
+		mes "The flower garden to the north of the garden is unstable and connected to another dimension. I'll do some work there.";
+		next;
+		cutin "OSCAR05.bmp",2;
+		mes "[Oscar]";
+		mes "Wow, I didn't know these two would get along so well. It's not like they planned it in advance or anything, right?";
+		next;
+		cutin "rigel_halfeyes01.png",2;
+		mes "[Rigel]";
+		mes "That's not important, Oscar. Do you feel anything about the central mansion?";
+		next;
+		cutin "OSCAR01.bmp",2;
+		mes "[Oscar]";
+		mes "Oh, you mean 'that'? I feel it very well.";
+		next;
+		cutin "rigel_halfeyes02.png",2;
+		mes "[Rigel]";
+		mes "It seems like it's an issue involving ^0000fftime^000000, so I don't think Leticia or me can do anything about it. Oscar, you can do it, right?";
+		next;
+		cutin "OSCAR07.bmp",2;
+		mes "[Oscar]";
+		mes "Ugh... that's my responsibility, so it's right for me to go regardless of whether it works or not.";
+		next;
+		cutin "4job_leticia_05.png",2;
+		mes "[Leticia]";
+		mes "Then, let's go do some garden maintenance first. There's an adventurer who's eavesdropping nearby, so it would be perfect if we go together!";
+		next;
+		select( "Yes? Me too?" );
+		cutin "4job_leticia_04.png",2;
+		mes "[Leticia]";
+		mes "You're saying the obvious. If you've heard the story up to this point, you probably already know what's going on. Don't talk nonsense and just follow me into the garden.";
+		setquest 12592;
+		completequest 12592;
+		setquest 12593;
+		setquest 12594;
+		setquest 12618;
+		close2;
+		cutin "",255;
+		cloakonnpcself( "Oscar#life" );
+		cloakonnpcself( "Leticia#life" );
+		cloakonnpcself( "Rigel#life" );
+		end;
+	}
+	end;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 250 && isbegin_quest(12592) == 0" );
+	end;
+}
+
+
+// A. Quests to access dungeons
+// t_garden,118,91,0	script	#wp01	HIDDEN_WARP_NPC,2,2,{	// (NPC name is not unique)
+t_garden,118,91,0	script	#wp01_t_garden_1	HIDDEN_WARP_NPC,2,2,{
+	end;
+OnTouch:
+	if (isbegin_quest(12592) == 2) {
+		cloakoffnpcself( "Leticia#life2" );	// note: always uncloaked at this point
+		end;
+	}
+	end;
+}
+
+t_garden,118,91,6	script(CLOAKED)	Leticia#life2	4_4JOB_LETICIA,{
+	if (isbegin_quest(12593) == 1) {
+		cutin "4job_leticia_02.png",2;
+		mes "[Leticia]";
+		mes "The flow of time inside that mansion is different from our current time. So, we don't know when Oscar will fully restore the mansion.";
+		next;
+		cutin "4job_leticia_01.png",2;
+		mes "[Leticia]";
+		mes "But we can't just bite our fingers. Moreover, from what the spirits who came here say, it seems like there is something else we need to do.";
+		next;
+		cutin "4job_leticia_05.png",2;
+		mes "[Leticia]";
+		mes "And I heard that the spirits that originally guarded this space were driven out by their compatriots who became fierce for some reason.";
+		next;
+		cutin "4job_leticia_04.png",2;
+		mes "[Leticia]";
+		mes "Perhaps due to the unstable energy flow, the attributes of nature were twisted and transformed and the spirits became fierce. They were told to rest for a while in the northwest of the garden.";
+		next;
+		cutin "4job_leticia_04.png",2;
+		mes "[Leticia]";
+		mes "According to their words, it seems that the cause is foreign spirits from the dimension connected to this place, so it would be better to reduce the number of those foreign things.";
+		next;
+		cutin "4job_leticia_01.png",2;
+		mes "[Leticia]";
+		mes "I'm going to need your help here. I need to gather energy flows to the east and west to create a gate, so let's move.";
+		completequest 12593;
+		setquest 12595;
+		setquest 12596;
+		close3;
+	}
+	if (isbegin_quest(12595) == 1 || isbegin_quest(12596) == 1) {
+		cutin "4job_leticia_01.png",2;
+		mes "[Leticia]";
+		mes "Not all exits are activated. Activate both the east and west exits and then come find me.";
+		close3;
+	}
+	if (isbegin_quest(12620) == 0) {
+		cutin "4job_leticia_01.png",2;
+		setpcblock PCBLOCK_NPC, true;
+		sleep2 500;
+		setpcblock PCBLOCK_NPC, false;
+		cutin "4job_leticia_05.png",2;
+		mes "[Leticia]";
+		mes "We gathered all the spirits that were asking for help around here and concentrated them in the northwest of the central square. They are really noisy.";
+		next;
+		cutin "4job_leticia_03.png",2;
+		mes "[Leticia]";
+		mes "They're probably just waiting for you to arrive. It's up to you whether you help them or not, but it wouldn't be a loss to help the spirits. I recommend going at least once.";
+		setquest 12620;
+		close3;
+	}
+	cutin "4job_leticia_01.png",2;
+	mes "[Leticia]";
+	mes "Have you tried talking to the spirits? There won't be any harm in becoming friends with them.";
+	close3;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(12593) == 1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(12620) == 0 && isbegin_quest(12595) == 2 && isbegin_quest(12596) == 2" );
+	end;
+}
+
+t_garden,82,92,0	script	#life_wp2	HIDDEN_WARP_NPC,3,3,{
+	end;
+OnTouch:
+	switch( isbegin_quest(12595) ) {
+	case 0:
+		end;
+	case 1:
+		cutin "4job_leticia_01.png",2;
+		mes "[Leticia]";
+		mes "Okay, that's enough. It will open a passage to the place where the unholy energy is on the time seal seen there.";
+		next;
+		cutin "4job_leticia_02.png",2;
+		mes "[Leticia]";
+		mes "Are you ready? Then extend your hand forward and keep your eyes on the seal as if you are focusing the power I'm giving you onto the seal.";
+		// close2;
+		next;
+		select( "Reach out hand and watch the seal" );
+		setpcblock PCBLOCK_NPC, true;
+		cutin "",255;
+		specialeffect2 EF_BEGINSPELL_N3;
+		sleep2 2500;
+		specialeffect EF_LORD, AREA, "Passage of Time#1";
+		sleep2 1500;
+		specialeffect EF_BAKU, AREA, "Passage of Time#1";
+		sleep2 1000;
+		specialeffect EF_THUNDERSTORM2, AREA, "Passage of Time#1";
+		cloakoffnpcself( "Passage of Time#1" );
+		sleep2 1000;
+		setpcblock PCBLOCK_NPC, false;
+		if (isbegin_quest(12596) == 1) {
+			cutin "4job_leticia_04.png",2;
+			mes "[Leticia]";
+			mes "Now then, let's open the other one as well. Move to the site opposite this gate.";
+			completequest 12595;
+			close3;
+		}
+		cutin "4job_leticia_04.png",2;
+		mes "[Leticia]";
+		mes "It's simpler than you think, isn't it?. With this, we'll be able to stop strange guys from flooding the garden until Oscar completes the mansion, so it's a relief.";
+		next;
+		cutin "4job_leticia_01.png",2;
+		mes "[Leticia]";
+		mes "And since you've already helped me, from now on you'll have to work with me every day. It's no big deal. Reduce the number of unholy things in the dungeon under the passage created here.";
+		next;
+		select( "I think I've heard this before" );
+		cutin "4job_leticia_03.png",2;
+		mes "[Leticia]";
+		mes "Why are you muttering? Do you have any complaints?";
+		next;
+		select( "No." );
+		cutin "4job_leticia_05.png",2;
+		mes "[Leticia]";
+		mes "I think it's finished. Let's come to the central square for a moment and talk about the next thing.";
+		completequest 12595;
+		close3;
+	case 2:
+		cloakoffnpcself( "Passage of Time#1" );
+		end;
+	}
+	end;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(12595) == 1" );
+	end;
+}
+
+// t_garden,78,92,2	script(CLOAKED)	Passage of Time#1	GATE_SKYBLUE,2,2,{	// unknown OnTouch effect (NPC unreachable)
+t_garden,78,92,2	script(CLOAKED)	Passage of Time#1	GATE_SKYBLUE,{
+	if (isbegin_quest(12595) != 2)
+		end;
+	if (isbegin_quest(12596) != 2) {
+		cutin "4job_leticia_01.png",2;
+		mes "[Leticia]";
+		mes "Not all exits are activated. Activate both the east and west exits and then come find me.";
+		close3;
+	}
+	switch( select( "Forgotten memories, Zone 1, 6 o'clock", "Forgotten memories, Zone 1, Center", "Forgotten memories, Zone 1, 10 o'clock" ) ) {
+	case 1:
+		warp "for_dun01",159,35;
+		break;
+	case 2:
+		warp "for_dun01",101,136;
+		break;
+	case 3:
+		warp "for_dun01",62,266;
+		break;
+	}
+	end;
+}
+
+t_garden,151,92,0	script	#life_wp3	HIDDEN_WARP_NPC,3,3,{
+	end;
+OnTouch:
+	switch( isbegin_quest(12596) ) {
+	case 0:
+		end;
+	case 1:
+		cutin "4job_leticia_01.png",2;
+		mes "[Leticia]";
+		mes "Okay, that's enough. It will open a passage to the place where the unholy energy is on the time seal seen there.";
+		next;
+		cutin "4job_leticia_02.png",2;
+		mes "[Leticia]";
+		mes "Are you ready? Then extend your hand forward and keep your eyes on the seal as if you are focusing the power I'm giving you onto the seal.";
+		// close2;
+		next;
+		select( "Reach out hand and watch the seal" );
+		setpcblock PCBLOCK_NPC, true;
+		cutin "",255;
+		specialeffect2 EF_BEGINSPELL_N3;
+		sleep2 2000;
+		specialeffect EF_LORD, AREA, "Passage of Time#2";
+		sleep2 2000;
+		specialeffect EF_BAKU, AREA, "Passage of Time#2";
+		sleep2 1000;
+		specialeffect EF_THUNDERSTORM2, AREA, "Passage of Time#2";
+		cloakoffnpcself( "Passage of Time#2" );
+		sleep2 1000;
+		setpcblock PCBLOCK_NPC, false;
+		if (isbegin_quest(12595) == 1) {
+			cutin "4job_leticia_04.png",2;
+			mes "[Leticia]";
+			mes "Now then, let's open the other one as well. Move to the site opposite this gate.";
+			completequest 12596;
+			close3;
+		}
+		cutin "4job_leticia_04.png",2;
+		mes "[Leticia]";
+		mes "It's simpler than you think, isn't it?. With this, we'll be able to stop strange guys from flooding the garden until Oscar completes the mansion, so it's a relief.";
+		next;
+		cutin "4job_leticia_01.png",2;
+		mes "[Leticia]";
+		mes "And since you've already helped me, from now on you'll have to work with me every day. It's no big deal. Reduce the number of unholy things in the dungeon under the passage created here.";
+		next;
+		select( "I think I've heard this before" );
+		cutin "4job_leticia_03.png",2;
+		mes "[Leticia]";
+		mes "Why are you muttering? Do you have any complaints?";
+		next;
+		select( "No." );
+		cutin "4job_leticia_05.png",2;
+		mes "[Leticia]";
+		mes "I think it's finished. Let's come to the central square for a moment and talk about the next thing.";
+		completequest 12596;
+		close3;
+	case 2:
+		cloakoffnpcself( "Passage of Time#2" );
+		end;
+	}
+	end;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(12596) == 1" );
+	end;
+}
+
+// t_garden,157,92,2	script(CLOAKED)	Passage of Time#2	GATE_SKYBLUE,2,2,{	// unknown OnTouch effect (NPC unreachable)
+t_garden,157,92,2	script(CLOAKED)	Passage of Time#2	GATE_SKYBLUE,{
+	if (isbegin_quest(12596) != 2)
+		end;
+	if (isbegin_quest(12595) != 2) {
+		cutin "4job_leticia_01.png",2;
+		mes "[Leticia]";
+		mes "Not all exits are activated. Activate both the east and west exits and then come find me.";
+		close3;
+	}
+	switch( select( "Forgotten Memories, Zone 2, 7 o'clock", "Forgotten Memories, Zone 2, 1 o'clock", "Forgotten Memories, Zone 2, 5 o'clock" ) ) {
+	case 1:
+		warp "for_dun02",33,55;
+		break;
+	case 2:
+		warp "for_dun02",211,269;
+		break;
+	case 3:
+		warp "for_dun02",271,38;
+		break;
+	}
+	end;
+}
+
+
+for_dun01,100,146,2	script	Spatial coordinate probe#1	4_SYSTEM_BOX,{
+	mes "Would you like to go back to the Garden of Time?";
+	next;
+	if (select( "Cancel", "Return" ) == 1)
+		end;
+	warp "t_garden",83,92;
+	end;
+
+OnInit:
+	questinfo( QTYPE_CLICKME, QMARK_YELLOW, "isbegin_quest(12595) == 2" );
+	end;
+}
+for_dun01,128,282,2	duplicate(Spatial coordinate probe#1)	Spatial coordinate probe#2	4_SYSTEM_BOX
+for_dun01,55,142,2	duplicate(Spatial coordinate probe#1)	Spatial coordinate probe#3	4_SYSTEM_BOX
+for_dun01,262,167,2	duplicate(Spatial coordinate probe#1)	Spatial coordinate probe#4	4_SYSTEM_BOX
+for_dun01,204,67,2	duplicate(Spatial coordinate probe#1)	Spatial coordinate probe#5	4_SYSTEM_BOX
+for_dun01,57,270,2	duplicate(Spatial coordinate probe#1)	Spatial coordinate probe#6	4_SYSTEM_BOX
+for_dun01,65,34,2	duplicate(Spatial coordinate probe#1)	Spatial coordinate probe#7	4_SYSTEM_BOX
+for_dun01,146,27,2	duplicate(Spatial coordinate probe#1)	Spatial coordinate probe#8	4_SYSTEM_BOX
+for_dun01,154,139,2	duplicate(Spatial coordinate probe#1)	Spatial coordinate probe#9	4_SYSTEM_BOX
+for_dun01,124,203,2	duplicate(Spatial coordinate probe#1)	Spatial coordinate probe#10	4_SYSTEM_BOX
+for_dun01,267,265,2	duplicate(Spatial coordinate probe#1)	Spatial coordinate probe#11	4_SYSTEM_BOX
+
+
+for_dun02,190,147,2	script	Spatial coordinate probe#12	4_SYSTEM_BOX,{
+	mes "Would you like to go back to the Garden of Time?";
+	next;
+	if (select( "Cancel", "Return" ) == 1)
+		end;
+	warp "t_garden",152,92;
+	end;
+
+OnInit:
+	questinfo( QTYPE_CLICKME, QMARK_YELLOW, "isbegin_quest(12596) == 2" );
+	end;
+}
+for_dun02,143,149,2	duplicate(Spatial coordinate probe#12)	Spatial coordinate probe#13	4_SYSTEM_BOX
+for_dun02,276,29,2	duplicate(Spatial coordinate probe#12)	Spatial coordinate probe#14	4_SYSTEM_BOX
+for_dun02,106,34,2	duplicate(Spatial coordinate probe#12)	Spatial coordinate probe#15	4_SYSTEM_BOX
+for_dun02,216,271,2	duplicate(Spatial coordinate probe#12)	Spatial coordinate probe#16	4_SYSTEM_BOX
+for_dun02,64,268,2	duplicate(Spatial coordinate probe#12)	Spatial coordinate probe#17	4_SYSTEM_BOX
+for_dun02,18,170,2	duplicate(Spatial coordinate probe#12)	Spatial coordinate probe#18	4_SYSTEM_BOX
+for_dun02,16,92,2	duplicate(Spatial coordinate probe#12)	Spatial coordinate probe#19	4_SYSTEM_BOX
+for_dun02,29,52,2	duplicate(Spatial coordinate probe#12)	Spatial coordinate probe#20	4_SYSTEM_BOX
+for_dun02,276,255,2	duplicate(Spatial coordinate probe#12)	Spatial coordinate probe#21	4_SYSTEM_BOX
+for_dun02,283,197,2	duplicate(Spatial coordinate probe#12)	Spatial coordinate probe#22	4_SYSTEM_BOX
+
+
+// B. Event with Oscar
+t_garden,118,141,0	script	#life_wp4	HIDDEN_WARP_NPC,3,3,{
+	end;
+OnTouch:
+	if (isbegin_quest(12618) == 1) {
+		cloakoffnpcself( "Oscar#life2" );
+		end;
+	}
+	end;
+}
+
+// t_garden,118,142,3	script(CLOAKED)	Oscar#life2	4_ED_OSCAR,2,2,{	// unknown OnTouch effect
+t_garden,118,142,3	script(CLOAKED)	Oscar#life2	4_ED_OSCAR,{
+	if (isbegin_quest(12618) == 1) {
+		cutin "OSCAR01.bmp",2;
+		mes "[Oscar]";
+		mes "Ah " + strcharinfo(0) + ".";
+		next;
+		cutin "OSCAR09.bmp",2;
+		mes "[Oscar]";
+		mes "This is true. I'm really sorry for unintentionally getting you involved in our work.";
+		next;
+		select( "Are you going into the mansion?" );
+		cutin "OSCAR01.bmp",2;
+		mes "[Oscar]";
+		mes "I guess that's the way it is. This mansion is a space where multiple timelines are intricately intertwined, so I don't think anyone else can touch it.";
+		next;
+		select( "Is there anything I can do to help in the mansion?" );
+		cutin "OSCAR05.bmp",2;
+		mes "[Oscar]";
+		mes "" + strcharinfo(0) + " I've worked with you many times, so I'd like to ask you to come with me, but I don't think I can do that this time.";
+		next;
+		cutin "OSCAR09.bmp",2;
+		mes "[Oscar]";
+		mes "It seems like the speed of time inside this mansion is very different from the outside world. My guess is about... 1/1000? Maybe even more.";
+		next;
+		select( "That means..." );
+		cutin "OSCAR07.bmp",2;
+		mes "[Oscar]";
+		mes "This means that even if you only spend a few days inside the mansion, years or even decades may pass by in the outside world. It will probably be difficult for a human like " + strcharinfo(0) + " to endure it";
+		next;
+		cutin "OSCAR01.bmp",2;
+		mes "[Oscar]";
+		mes "There is a high probability that quite a long time will pass by the time the interior of the mansion is cleaned up. It must end quickly...";
+		next;
+		cloakoffnpcself( "Leticia#life3" );
+		cutin "4job_leticia_01.png",2;
+		mes "[Leticia]";
+		mes "Oh, are you going in now?";
+		next;
+		cutin "OSCAR01.bmp",2;
+		mes "[Oscar]";
+		mes "Yes, I have to go in. Leticia, I hope you don't cause any trouble and take good care of the garden until I come out after cleaning up the mansion.";
+		next;
+		cutin "4job_leticia_05.png",2;
+		mes "[Leticia]";
+		mes "Oh, don't worry about that. I'll make sure you're isolated from the real world.";
+		next;
+		cutin "OSCAR01.bmp",2;
+		mes "[Oscar]";
+		mes "Okay. Then, please take care of me. Oh, and " + strcharinfo(0) + ", if you have the time, I would appreciate it if you could help Leticia. She's so lazy...";
+		next;
+		cutin "4job_leticia_04.png",2;
+		mes "[Leticia]";
+		mes "I'll take care of the adventurer here, so let's leave it at that and go in.";
+		next;
+		cutin "OSCAR03.bmp",2;
+		mes "[Oscar]";
+		mes "Okay, I'll finish the work and come out as soon as possible. See you then.";
+		close2;
+		cutin "",255;
+		specialeffect EF_BEGINSPELL_N4;
+		setpcblock PCBLOCK_NPC, true;
+		sleep2 2000;
+		cloakonnpcself( "Oscar#life2" );
+		setpcblock PCBLOCK_NPC, false;
+		cutin "4job_leticia_02.png",2;
+		mes "[Leticia]";
+		mes "Well, I'm sure Oscar will take care of it... Don't just stand there and help out with Rigel and my work.";
+		close2;
+		cutin "",255;
+		cloakonnpcself( "Leticia#life3" );
+		completequest 12618;
+		end;
+	}
+	end;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(12618) == 1" );
+	end;
+}
+
+t_garden,115,139,7	duplicate(dummy_cloaked_npc)	Leticia#life3	4_4JOB_LETICIA
+
+
+// C. Instances
+// t_garden,166,217,0	script	#wp11	HIDDEN_WARP_NPC,2,2,{	// (NPC name is not unique)
+t_garden,166,217,0	script	#wp11_t_garden	HIDDEN_WARP_NPC,2,2,{
+	end;
+OnTouch:
+	if (isbegin_quest(12594) == 1) {
+		cloakoffnpcself( "Rigel#life2" );
+		end;
+	}
+	end;
+}
+
+t_garden,166,217,3	script(CLOAKED)	Rigel#life2	4_CS_RIGEL,{
+	if (isbegin_quest(12594) == 1) {
+		cutin "rigel01.png",2;
+		mes "[Rigel]";
+		mes "You're here " + strcharinfo(0) + ".";
+		mes "It would be very appropriate to be this far away from the mansion without disturbing Oscar, right?";
+		next;
+		select( "What are you going to do here?" );
+		cutin "rigel02.png",2;
+		mes "[Rigel]";
+		mes "From now on, we will build a prison. A prison to hold very dangerous and unstable prisoners.";
+		next;
+		select( "You're making a prison in the flower garden?" );
+		cutin "rigel01.png",2;
+		mes "[Rigel]";
+		mes "Anyway, this place will only serve as a passage, and the prison itself is connected to another dimension. I will leave them. I have no intention of ruining the flower garden.";
+		next;
+		mes "[Rigel]";
+		mes "We have created a prison access list a little further north. Only those registered on the list can enter the prison, so let's go and register first.";
+		close2;
+		completequest 12594;
+		setquest 12597;
+		cutin "",255;
+		end;
+	}
+	cutin "rigel01.png",2;
+	mes "[Rigel]";
+	mes "Let's start by looking for the sealing spirit stone I installed a little further north.";
+	close3;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(12594) == 1" );
+	end;
+}
+
+
+// t_garden,162,222,5	script	#lank_board	4_4JOB_PHANTOMBOOK1,{
+	// mes "--- Strategy ranking ---";
+	// mes "1st place - none";
+	// mes "2nd place - none";
+	// mes "3rd place - none";
+	// mes "4th place - none";
+	// mes "5th place - none";
+	// mes "-----------------";
+	// mes "¡Ø The strategy record is updated every 5 minutes.";
+	// mes "If recording does not occur immediately, please wait for a while and check.";
+	// close;
+// }
+
+// t_garden,166,235,0	script	#wp12	HIDDEN_WARP_NPC,3,3,{	// (NPC name is not unique)
+t_garden,166,235,0	script	#wp12_t_garden	HIDDEN_WARP_NPC,3,3,{
+	end;
+OnTouch:
+	switch( isbegin_quest(12597) ) {
+	case 0:
+		end;
+	case 1:
+		cloakoffnpcself( "Sealing Spirit Stone#life2" );
+		end;
+	case 2:
+		cloakoffnpcself( "Sealing Spirit Stone#life2" );
+		cloakoffnpcself( "Dimensional Prison#1" );
+		cloakoffnpcself( "Dimensional Prison#2" );
+		end;
+	}
+	end;
+}
+
+t_garden,166,235,3	script(CLOAKED)	Sealing Spirit Stone#life2	HEROS_OUT_ORB,{
+	switch( isbegin_quest(12597) ) {
+	case 0:
+		end;
+	case 1:
+		mes "[Sealing Spirit Stone]";
+		mes "^ff0000Unauthenticated user.^000000";
+		next;
+		cutin "rigel_halfeyes01.png",2;
+		mes "[Rigel]";
+		mes "Don't just stare blankly, extend your hand.";
+		mes "Focus your mind by placing your thumb on the bottom right of the unfolded spirit stone and the rest of your fingers on top. ";
+		next;
+		select( "Put your hand on the guide." );
+		setpcblock PCBLOCK_NPC, true;
+		cutin "",255;
+		specialeffect2 EF_BEGINSPELL_N5;
+		sleep2 2000;
+		specialeffect EF_LORD, AREA, "Dimension Prison#1";
+		sleep2 500;
+		specialeffect EF_LORD, AREA, "Dimension Prison#2";
+		sleep2 1500;
+		specialeffect EF_BAKU, AREA, "Dimension Prison#1";
+		sleep2 500;
+		specialeffect EF_BAKU, AREA, "Dimension Prison#2";
+		sleep2 500;
+		specialeffect EF_THUNDERSTORM2, AREA, "Dimension Prison#1";
+		sleep2 500;
+		setpcblock PCBLOCK_NPC, false;
+		specialeffect EF_THUNDERSTORM2, AREA, "Dimension Prison#2";
+		cloakoffnpcself( "Dimension Prison#1" );
+		cloakoffnpcself( "Dimension Prison#2" );
+		sleep2 1500;
+		cutin "rigel_halfeyes01.png",2;
+		mes "[Rigel]";
+		mes "It looks like it's registered well. Now you've completed the basic preparations to recognize the prison and enter and exit it. For any further questions, please refer to this guide.";
+		next;
+		select( "Who are you going to put in that prison?" );
+		cutin "rigel_annoying01.png",2;
+		mes "[Rigel]";
+		mes "^bb0000Doppelganger.^000000";
+		next;
+		cutin "rigel_halfeyes01.png",2;
+		mes "[Rigel]";
+		mes "Well, you might think it's just a doppelganger and a fuss, but the one you'll be imprisoning here is on a different level than the doppelganger you think of.";
+		next;
+		mes "[Rigel]";
+		mes "It's the worst kind of being that doesn't just mimic abilities or appearances, but devours the soul of the target being and turns into that being itself.";
+		next;
+		select( "Whose image do it take on now?" );
+		cutin "rigel_annoying01.png",2;
+		mes "[Rigel]";
+		mes "It's me.";
+		next;
+		select( "What does that mean?" );
+		cutin "rigel_halfeyes01.png",2;
+		mes "[Rigel]";
+		mes "This prisoner swallowed me, Rigel, from the 326th dimension and became a being that called itself the Constellation of Life.";
+		next;
+		mes "[Rigel]";
+		mes "When I ran to save myself there, it was already too late. I knew as soon as I saw the unconscious person who looked exactly like me. This wasn't me.";
+		next;
+		cutin "rigel_annoying01.png",2;
+		mes "[Rigel]";
+		mes "Although we succeeded in sealing the guy who couldn't use it power properly. It might succeed in breaking the seal someday.";
+		next;
+		select( "Why don't you take down the criminal yourself?" );
+		cutin "rigel01.png",2;
+		mes "[Rigel]";
+		mes "I don't know what the error is, but the world recognizes it as another constellation of life. If a constellation attacks the same constellation, it violates the rules of the dimension and immediately loses it powers.";
+		next;
+		mes "[Rigel]";
+		mes "And, if by any chance it takes over my existence, then it will be in an irreversible situation.";
+		next;
+		select( "Is there any possibility that the prisoner will take over our bodies?" );
+		cutin "rigel_close02.png",2;
+		mes "[Rigel]";
+		mes "This is truly one of the funniest jokes I've heard in hundreds of years.";
+		next;
+		cutin "rigel_halfeyes02.png",2;
+		mes "[Rigel]";
+		mes "Would you ever abandon the immortal body you worked so hard to occupy and return to your mortal body?";
+		next;
+		select( "Maybe if your life is threatened." );
+		cutin "rigel_halfeyes01.png",2;
+		mes "[Rigel]";
+		mes "Well, I don't agree with that opinion at all, but I'll ease your worries. It's surrounded by layers of seals I've placed on it.";
+		next;
+		mes "[Rigel]";
+		mes "Even if it wanted to take over your and it friends' bodies, it wouldn't be able to exert that kind of power.";
+		next;
+		cutin "rigel_close01.png",2;
+		mes "[Rigel]";
+		mes "It's a long story. Prison information will be posted separately at the prison entrance, so check it regularly.";
+		next;
+		mes "[Rigel]";
+		mes "I look forward to seeing you and your colleagues do a great job here.";
+		close2;
+		cutin "",255;
+		completequest 12597;
+		cloakonnpcself( "Rigel#life2" );
+		end;
+	case 2:
+		break;
+	}
+	mes "[Sealing Spirit Stone]";
+	mes "Guidelines for correct prison management. What would you like to see?";
+	next;
+	while(1) {
+		switch( select( "Stop viewing", "Reissue of the Constellation's protection", "Information on imprisoned prisoners", "Information on prison entry", "Information on barriers", "Information on traps", "Information on sanctuaries ", "Information on the underworld", "Information on dangerous omens", "Information on the resilience of prisoners" ) ) {
+		case 1:
+			end;
+		case 2:
+			if (countitem(420231) - isequippedcnt(420231) < 1) {
+				mes "[Sealing Spirit Stone]";
+				mes "Please check again whether it is registered in ^ff0000equipment set setting^000000 and whether it is already installed.";
+				mes " ";
+				mes "Even if you have two or more blessings, the record engraved in the adventurer's ^ff0000soul takes priority^000000, so we recommend that you dispose of any excess blessings at the store.";
+				next;
+				if (select( "Cancel", "Reissue" ) == 1)
+					continue;
+				mes "[Sealing Spirit Stone]";
+				mes "Based on the records engraved in the adventurer's soul";
+				mes "We have reissued a protection engraved with a barrier ^0000fflevel 1^000000.";
+				getitem2 420231,1,1,0,0,0,0,0,312453;	// MD_Hol_Protection
+				close;
+			}
+			mes "[Sealing Spirit Stone]";
+			mes "You have the protection issued in your inventory. Re-issuing it is only possible if you do not have the constellation's protection in your inventory.";
+			close;
+		case 3:
+			mes "[Prisoner Information Guide]";
+			mes "Based on this book, on the left is a lava lake where the guards who managed dimensional criminals are imprisoned. On the right is the Hall of Life where dimensional managers are imprisoned.";
+			mes " ";
+			mes "The guards were originally meant to monitor dimensional criminals, but at some point, they showed an intention to protect the dimensional criminals.";
+			next;
+			mes "[Prisoner Information Guide]";
+			mes "Accordingly, the Constellation of Life imprisoned the 4 divine prisoners, who were guards, in a dimension completely separate from the dimensional criminals.";
+			mes " ";
+			mes "The main prisoner, a dimensional criminal, is a doppelganger-type monster who stole the appearance and abilities of the 326th dimension's constellation of life. Currently, its level of danger has never been measured, so it is not recorded.";
+			next;
+			mes "[Prisoner Information Guide]";
+			mes "One thing is certain: the dimensional criminals have hijacked the bodies and powers of the dimensional life constellations.";
+			mes " ";
+			mes "Due to this series of events, not only the Constellation of Life but also the 4 Divine Beasts are vacant in the 326th dimension. Therefore, the user must manage this prison with two main goals.";
+			next;
+			mes "-First-";
+			mes "You must attack dimension criminals periodically to prevent them from hoarding power.";
+			mes " ";
+			mes "Even now, it is accumulating vast amounts of life energy, which could pose a serious danger to the dimensional world.";
+			next;
+			mes "-Second-";
+			mes "The level of power that dimensional criminals exert must be measured and recorded.";
+			mes " ";
+			mes "Relatedly, when entering a prison, you can equip yourself with the protection touched by the constellation and measure and record the level of risk based on the level of the barrier attached to it.";
+			next;
+			mes "-Third-";
+			mes "It may be of lesser importance, but it is necessary to visit the jailers' prisons periodically to weaken their power.";
+			mes " ";
+			mes "The currently imprisoned guards are a dangerous force potentially sympathizing with the escape of dimensional criminals. Periodically suppress them by force and confiscate the prison keys they are managing/producing.";
+			next;
+			mes "[Prisoner Information Guide]";
+			mes "This is information about prisoners held in prison. Do you need any additional information?";
+			break;
+		case 4:
+			mes "[Access information information]";
+			mes "The prison is divided into an area where the guards are confined and an area where the dimension criminals are confined.";
+			mes " ";
+			mes "First, you can enter the lava lake where the guards are imprisoned once a day. There is no additional seal, so as long as you stick to the once a day time, there will be no particular restrictions on entry.";
+			next;
+			mes "[Access information information]";
+			mes "The Hall of Life where dimensional criminals are imprisoned";
+			mes "Only accessible while holding " + mesitemlink(1001415) + ".";
+			mes " ";
+			mes "Remember that, with the exception of the one-hour dungeon time limit, you can enter as many times as you want as long as you have the key.";
+			next;
+			mes "[Access information information]";
+			mes "However, if you receive the reward once, you will not be able to receive the reward again in the Hall of Life for ^ff0000one week.^000000 Of course, even in that case, entry is free.";
+			mes " ";
+			mes "Do you need any additional information?";
+			break;
+		case 5:
+			mes "[Barrier information information]";
+			mes "The power of dimensional criminals is sealed by a barrier tightly bound by Rigel, the constellation of life.";
+			mes " ";
+			mes "Therefore, when you enter to manage the prison, the first dimensional criminal you encounter is the barrier adjusted so that only the lowest level of strength is exerted.";
+			next;
+			mes "[Barrier information information]";
+			mes "However, if you apply appropriate corrections to the dimensional criminal and make him submit, you will either receive appropriate ^ff0000compensation,^000000, or delay the reward and get a chance to unlock the next ^ff0000barrier ^000000level.";
+			next;
+			mes "[Barrier information information]";
+			mes "If you want a higher reward level, remember that it is advantageous to level up quickly by clearing barriers rather than selecting rewards.";
+			next;
+			mes "[Barrier information information]";
+			mes "However, it is not advantageous to simply raise the level of the barrier.";
+			mes " ";
+			mes "If you fail to correct a dimensional criminal, the level of barrier you can handle will be lowered by 1 level the next time you enter prison.^000000";
+			next;
+			mes "[Barrier information information]";
+			mes "I recommend that you do not pay undue attention to barriers that you cannot handle and that you strive for stable correction.";
+			mes " ";
+			mes "Do you need any additional information?";
+			break;
+		case 6:
+			mes "[Trap Information Guide]";
+			mes "The dimensional criminal used his power to cause time-moving traps to appear in his space to prevent outside intruders.";
+			mes " ";
+			mes "The danger of this trap varies depending on the level of the barrier, and its destructive power becomes more powerful the further away you are from the center of the prison.";
+			next;
+			mes "[Trap Information Guide]";
+			mes "Additionally, ^ff0000each time you or an ally is damaged by a trap, the Warp Criminal's attack power will become more powerful.^000000";
+			next;
+			mes "[Trap Information Guide]";
+			mes "If the prison is full of traps, you can reset the traps using the other side of the world. Please refer to the information on the other side of the world for this part.";
+			mes " ";
+			mes "Do you need any additional information?";
+			break;
+		case 7:
+			mes "[Sanctuary Information Guide]";
+			mes "Dimensional criminals can periodically establish a sanctuary around themselves that makes them immune to physical and magical attacks.";
+			mes " ";
+			mes "This appears to be a duplicate of an ability available to high-ranking constellations and cannot be disarmed by any means.";
+			next;
+			mes "[Sanctuary Information Guide]";
+			mes "However, if you pull a dimensional criminal who has declared sanctuary out of the sanctuary, the sanctuary will be canceled. If the dimensional criminal uses the sanctuary to go on a rampage, pull him out of the sanctuary.";
+			mes " ";
+			mes "Do you need any additional information?";
+			break;
+		case 8:
+			mes "[Information Guide to the Secret World]";
+			mes "When the number of traps in the prison exceeds a certain number, a portal to the other world will be created on the north side of the prison.";
+			mes " ";
+			mes "In the underworld, there are imperfect illusions of dimensional criminals, and those illusions are imperfectly connected to the dimensional criminals.";
+			next;
+			mes "[Information Guide to the Secret World]";
+			mes "The moment all the illusions of the other world are defeated, the dimensional criminals of the original world will receive a strong blow and fall into a groggy state for a certain period of time.";
+			mes " ";
+			mes "At this moment, traps within the prison are reset, all attack power built up by the warp criminal is returned to its original state, and all defenses of the warp criminal are drastically lowered for a brief period of time.";
+			next;
+			mes "[Information Guide to the Secret World]";
+			mes "However, the portal to the underworld should not be used by too many people.";
+			mes " ";
+			mes "This is because each time a person passes through the portal, the dimensional criminal's recovery per second increases by a certain amount, and if this number overlaps, he or she can recover health in an instant.";
+			next;
+			mes "[Information Guide to the Secret World]";
+			mes "Remember that in order to kill the illusions of the other world, it is advisable to have a small number of party members with strong attack power and mobility.";
+			mes " ";
+			mes "Do you need any additional information?";
+			break;
+		case 9:
+			mes "[Guide to dangerous omens]";
+			mes "If you see any unusual effects on the ground while correcting dimensional criminals, quickly leave the area.";
+			mes " ";
+			mes "This effect is a precursor to the dimensional offender's widespread and powerful influence.";
+			next;
+			mes "[Guide to dangerous omens]";
+			mes "The influence of a dimensional criminal can result in confinement effects, serious lacerations and frostbite, and sometimes even death.";
+			mes " ";
+			mes "Do not take your eyes off the ground even for a moment and be alert in all directions.";
+			mes " ";
+			mes "Do you need any additional information?";
+			break;
+		case 10:
+			mes "[Recovery information information]";
+			mes "Dimensional criminals have the ability to regenerate health in real time. Therefore, normal correction may not be possible unless a blow exceeds this recovery ability.";
+			mes " ";
+			mes "The moment the inner world is purified, the recovery rate decreases sharply during the time the dimensional criminal is in a groggy state.";
+			next;
+			mes "[Recovery information information]";
+			mes "However, do not forget that ^ff0000recovery also increases in proportion to the number of people who use the portal^000000 to purify the Underworld.";
+			mes "If too many portal users occur, normal correction may fail due to a rapid increase in resilience.";
+			mes " ";
+			mes "Do you need any additional information?";
+			break;
+		}
+		next;
+	}
+	end;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(12597) == 1" );
+	end;
+}
+
+
+// t_garden,158,235,2	script(CLOAKED)	Dimension Prison#1	GATE_SKYBLUE,2,2,{	// unknown OnTouch effect
+t_garden,158,235,2	script(CLOAKED)	Dimension Prison#1	GATE_SKYBLUE,{
+	if (isbegin_quest(12597) != 2)
+		end;
+	if (checkweight(1201,1) == 0) {
+		mes "^ff0000It seems that there are too many types and weights of items. Please organize your inventory.^000000";
+		close;
+	}
+	if (getcharid(1) < 1) {
+		mes "^0000ffPlease organize a party of at least one person and proceed.^000000";
+		close;
+	}
+	// ...
+			end;
+	}
+
+// t_garden,173,235,2	script(CLOAKED)	Dimension Prison#2	GATE_SKYBLUE,2,2,{	// unknown OnTouch effect
+t_garden,173,235,2	script(CLOAKED)	Dimension Prison#2	GATE_SKYBLUE,{
+	if (isbegin_quest(12597) != 2)
+		end;
+	if (checkweight(1201,1) == 0) {
+		mes "^ff0000It seems that there are too many types and weights of items. Please organize your inventory.^000000";
+		close;
+	}
+	// ...
+	end;
+}
+
+
+
+// Daily Quests
+// t_garden,105,118,0	script	#wp01	HIDDEN_WARP_NPC,6,5,{	// (NPC name is not unique)
+t_garden,105,118,0	script	#wp01_t_garden_2	HIDDEN_WARP_NPC,6,5,{
+	end;
+OnTouch:
+	.@state = isbegin_quest(12620);
+	if (.@state == 0)
+		end;
+	cloakoffnpcself( "Ardor#life2" );
+	cloakoffnpcself( "Diluvio#life2" );
+	cloakoffnpcself( "Procella#life2" );
+	cloakoffnpcself( "Terremotus#life2" );
+	cloakoffnpcself( "Serpens#life2" );
+
+	if (.@state == 1) {
+		mes "[Terremotus]";
+		mes "^777700Oh, the adventurer Leticia sent has finally arrived.";
+		next;
+		mes "[Ardor]";
+		mes "^aa0000Adventurer! Are you willing to fight? We don't need a weakling!";
+		next;
+		mes "[Diluvio]";
+		mes "^0000ffArdor! Have you forgotten what Leticia told you to be at least polite?";
+		next;
+		mes "[Procella]";
+		mes "^00cc00Diluvio is right. It would be good to show some courtesy to the humans who come to help us.";
+		next;
+		select( "I'm fine, please tell me what to do" );
+		mes "[Serpens]";
+		mes "^aa00aaWe are ancient spirits from a world connected to this garden. It is an instinct engraved in our spirit bodies to help each natural element remain harmonious.";
+		next;
+		mes "[Serpens]";
+		mes "^aa00aaHowever, after being swept away by a strange dimensional storm, the elements of the world connected to this garden began to run wild, and eventually began to turn into spirits.";
+		next;
+		mes "[Terremotus]";
+		mes "^777700If the elements continue to become elementals, eventually the material world that makes up this world will collapse. That must be prevented.";
+		next;
+		mes "[Diluvio]";
+		mes "^0000ffAdventurer, you must no longer allow the elements to turn into spirits. Use your power to send them back to nature.";
+		next;
+		mes "[Terremotus]";
+		mes "^777700This is not an act of destroying nature. It is a matter of returning the disappearing elements that have been transformed into spirits back to their original positions. Will you listen to our request?";
+		next;
+		select( "I will." );
+		mes "[Ardor]";
+		mes "^aa0000You're a good communicator! Okay then, I'll tell you what to do every day!^000000";
+		next;
+		mes "[Ardor]";
+		mes "^aa0000Let's place the sacred items prepared by the constellations across from us. In human language, it's called a vending machine.^000000";
+		next;
+		mes "[Ardor]";
+		mes "^aa0000The reward for helping us and the constellations' work here will be received through that sacred item.^000000";
+		next;
+		completequest 12620;
+		navigateto("t_garden",126,117);
+		end;
+	}
+	end;
+}
+
+t_garden,97,114,5	script(CLOAKED)	Diluvio#life2	4_EM_DILUVIO,{
+	if (isbegin_quest(12620) != 2)
+		end;
+	if (checkweight(1201,1) == 0) {	// Useless check ?
+		mes "I am unable to communicate with spirits because I have too many items or weights.";
+		close;
+	}
+	switch( checkquest(12598,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "^ff0000Today's request has already been received. You can't receive any more.^000000";
+		close;
+	case 2:
+		erasequest 12598;
+		break;
+	}
+	if (F_queststatus( HAVEQUEST,12633,12634,12635,12636 ) == -1) {
+		mes "^0000ffThere are still uncompleted quests. You cannot receive additional requests or reset until all requests are completed at the " + F_mesnavi("Spirit Vending Machine", "t_garden",128,122) + ".^000000";
+		close;
+	}
+	mes "[Diluvio]";
+	mes "My goal is to return the water spirits, who are gradually materializing within forgotten memories, back to their elements. I would like your help.";
+	next;
+	if (select( "I will help you next time.", "I will help you" ) == 1)
+		end;
+	mes "[Diluvio]";
+	mes "This is a list of requests for you. Thank you very much.";
+	close2;
+	.@quest_id[0] = rand(12633,12634);
+	.@quest_id[1] = rand(12635,12636);
+	setquest .@quest_id[0];
+	setquest .@quest_id[1];
+	setquest 12598;
+	open_quest_ui(.@quest_id[0]);
+	end;
+
+OnInit:
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(12620) == 2 && (checkquest(12598,PLAYTIME) == -1 || checkquest(12598,PLAYTIME) == 2) && F_queststatus( HAVEQUEST,12633,12634,12635,12636 ) == 0" );
+	end;
+}
+
+t_garden,100,117,5	script(CLOAKED)	Terremotus#life2	4_EM_TERREMOTUS,{
+	if (isbegin_quest(12620) != 2)
+		end;
+	if (checkweight(1201,1) == 0) {
+		mes "I am unable to communicate with spirits because I have too many items or weights.";
+		close;
+	}
+	switch( checkquest(12599,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "^ff0000Today's request has already been received. You can't receive any more.^000000";
+		close;
+	case 2:
+		erasequest 12599;
+		break;
+	}
+	if (F_queststatus( HAVEQUEST,12621,12622,12623,12624 ) == -1) {
+		mes "^0000ffThere are still uncompleted quests. You cannot receive additional requests or reset until all requests are completed at the " + F_mesnavi("Spirit Vending Machine", "t_garden",128,122) + ".^000000";
+		close;
+	}
+	mes "[Terremotus]";
+	mes "The elements of the earth must remain in their elemental state. If they continue to become elementals, eventually there will not be a single ounce of dirt left. Will you help me?";
+	next;
+	if (select( "I will help you next time.", "I will help you" ) == 1)
+		end;
+	mes "[Terremotus]";
+	mes "That's all I ask of you today. Take your time and take a look.";
+	close2;
+	.@quest_id[0] = rand(12621,12622);
+	.@quest_id[1] = rand(12623,12624);
+	setquest .@quest_id[0];
+	setquest .@quest_id[1];
+	setquest 12599;
+	open_quest_ui(.@quest_id[0]);
+	end;
+
+OnInit:
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(12620) == 2 && (checkquest(12599,PLAYTIME) == -1 || checkquest(12599,PLAYTIME) == 2) && F_queststatus( HAVEQUEST,12621,12622,12623,12624 ) == 0" );
+	end;
+}
+
+t_garden,103,120,5	script(CLOAKED)	Serpens#life2	4_EM_SERPENS,{
+	if (isbegin_quest(12620) != 2)
+		end;
+	if (checkweight(1201,1) == 0) {
+		mes "I am unable to communicate with spirits because I have too many items or weights.";
+		close;
+	}
+	switch( checkquest(12600,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "^ff0000Today's request has already been received. You can't receive any more.^000000";
+		close;
+	case 2:
+		erasequest 12600;
+		break;
+	}
+	if (F_queststatus( HAVEQUEST,12637,12638,12639,12640,12641,12642,12643 ) == -1) {
+		mes "^0000ffThere are still uncompleted quests. You cannot receive additional requests or reset until all requests are completed at the " + F_mesnavi("Spirit Vending Machine", "t_garden",128,122) + ".^000000";
+		close;
+	}
+	mes "[Serpens]";
+	mes "I can't stand to see healthy elements becoming corrupted as I can't turn them into spirits. I need your power to prevent them from falling into anger and becoming polluted.";
+	next;
+	if (select( "I will help you next time.", "I will help you" ) == 1)
+		end;
+	mes "[Serpens]";
+	mes "I'm sorry to ask you this kind of favor again today. Thank you very much.";
+	close2;
+	.@quest_id[0] = rand(12637,12638);
+	.@quest_id[1] = rand(12639,12643);
+	setquest .@quest_id[0];
+	setquest .@quest_id[1];
+	setquest 12600;
+	open_quest_ui(.@quest_id[0]);
+	end;
+
+OnInit:
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(12620) == 2 && (checkquest(12600,PLAYTIME) == -1 || checkquest(12600,PLAYTIME) == 2) && F_queststatus( HAVEQUEST,12637,12638,12639,12640,12641,12642,12643 ) == 0" );
+	end;
+}
+
+t_garden,106,123,5	script(CLOAKED)	Procella#life2	4_EM_PROCELLA,{
+	if (isbegin_quest(12620) != 2)
+		end;
+	if (checkweight(1201,1) == 0) {
+		mes "I am unable to communicate with spirits because I have too many items or weights.";
+		close;
+	}
+	switch( checkquest(12601,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "^ff0000Today's request has already been received. You can't receive any more.^000000";
+		close;
+	case 2:
+		erasequest 12601;
+		break;
+	}
+	if (F_queststatus( HAVEQUEST,12629,12630,12631,12632 ) == -1) {
+		mes "^0000ffThere are still uncompleted quests. You cannot receive additional requests or reset until all requests are completed at the " + F_mesnavi("Spirit Vending Machine", "t_garden",128,122) + ".^000000";
+		close;
+	}
+	mes "[Procella]";
+	mes "Wind means the source of life, the atmosphere. If the elements of wind continue to turn into spirits, all living things in this dimension will eventually die. I need someone's help.";
+	next;
+	if (select( "I will help you next time.", "I will help you" ) == 1)
+		end;
+	mes "[Procella]";
+	mes "I'm glad there is someone who can solve this problem. Please solve my request well.";
+	close2;
+	.@quest_id[0] = rand(12629,12630);
+	.@quest_id[1] = rand(12631,12632);
+	setquest .@quest_id[0];
+	setquest .@quest_id[1];
+	setquest 12601;
+	open_quest_ui(.@quest_id[0]);
+	end;
+
+OnInit:
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(12620) == 2 && (checkquest(12601,PLAYTIME) == -1 || checkquest(12601,PLAYTIME) == 2) && F_queststatus( HAVEQUEST,12629,12630,12631,12632 ) == 0" );
+	end;
+}
+
+t_garden,109,126,5	script(CLOAKED)	Ardor#life2	4_EM_ARDOR,{
+	if (isbegin_quest(12620) != 2)
+		end;
+	if (checkweight(1201,1) == 0) {
+		mes "I am unable to communicate with spirits because I have too many items or weights.";
+		close;
+	}
+	switch( checkquest(12602,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "^ff0000Today's request has already been received. You can't receive any more.^000000";
+		close;
+	case 2:
+		erasequest 12602;
+		break;
+	}
+	if (F_queststatus( HAVEQUEST,12625,12626,12627,12628 ) == -1) {
+		mes "^0000ffThere are still uncompleted quests. You cannot receive additional requests or reset until all requests are completed at the " + F_mesnavi("Spirit Vending Machine", "t_garden",128,122) + ".^000000";
+		close;
+	}
+	mes "[Ardor]";
+	mes "Flame that has become a spirit and moves and thinks on its own is dangerous in itself. Don't you think it's too dangerous to just sit there like this? I don't ask you any favors. Follow my instructions.";
+	next;
+	if (select( "I will help you next time.", "I will help you" ) == 1)
+		end;
+	mes "[Ardor]";
+	mes "It's something you have to do. You'd better do it as quickly as possible.";
+	close2;
+	.@quest_id[0] = rand(12625,12626);
+	.@quest_id[1] = rand(12627,12628);
+	setquest .@quest_id[0];
+	setquest .@quest_id[1];
+	setquest 12602;
+	open_quest_ui(.@quest_id[0]);
+	end;
+
+OnInit:
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(12620) == 2 && (checkquest(12602,PLAYTIME) == -1 || checkquest(12602,PLAYTIME) == 2) && F_queststatus( HAVEQUEST,12625,12626,12627,12628 ) == 0" );
+	end;
+}
+
+
+// Uncloak quest NPC rewards and exchange/enchants NPCs
+t_garden,126,123,0	script	#v_wp01	HIDDEN_WARP_NPC,3,3,{
+	end;
+OnTouch:
+	if (isbegin_quest(12620) != 2)
+		end;
+	cloakoffnpcself( "Subspace vending machine#1" );
+	cloakoffnpcself( "Subspace vending machine#2" );
+	cloakoffnpcself( "Subspace vending machine#3" );
+	cloakoffnpcself( "Spirit Complaint Terminal#1" );
+	end;
+}
+t_garden,130,119,0	duplicate(#v_wp01)	#v_wp02	HIDDEN_WARP_NPC,3,3
+t_garden,134,115,0	duplicate(#v_wp01)	#v_wp03	HIDDEN_WARP_NPC,4,4
+
+
+// Quest rewards
+t_garden,126,126,2	script(CLOAKED)	Spirit Complaint Terminal#1	4_VENDING_MACHINE2,{
+	if (isbegin_quest(12620) != 2)
+		end;
+	if (checkweight(1201,1) == 0) {
+		mes "I cannot communicate with the barrier because I have too many types or weights of items.";
+		close;
+	}
+	mes "[Spirit Complaint Terminal]";
+	mes "Conversation between spirits and humans. Seamless communication. We will listen to the voices of our customers. This is Kiosk 5000, a comprehensive information terminal that processes spirit complaints and compensation at the same time. How can we help you?";
+	next;
+	if (select( "Exit menu", "Spirit complaint processing" ) == 1) {
+		mes "[Spirit Complaint Terminal]";
+		mes "Goodbye.";
+		close;
+	}
+	mes "[Spirit Complaint Terminal]";
+	mes "We will automatically process all completed spirit requests that you have.";
+	next;
+	mes "[Spirit Complaint Terminal]";
+
+	.@count += callsub( S_Hunt,
+		12621,				// Quest ID
+		"Terremotus' Request 1",	// Quest name
+		1001464,			// Reward item ID
+		13890900,			// Base exp
+		0					// Job exp (unknown)
+	);
+	.@count += callsub( S_Hunt, 12622, "Terremotus' Request 2", 1001464, 13890900,0 );	// Energy_Of_Ground
+	.@count += callsub( S_Hunt, 12623, "Terremotus' Request 3", 1001464, 13890900,0 );
+	.@count += callsub( S_Hunt, 12624, "Terremotus' Request 4", 1001464, 13890900,0 );
+
+	.@count += callsub( S_Hunt, 12625, "Ardor's Request 1", 1001461, 13890900,0 );	// Energy_Of_Flame
+	.@count += callsub( S_Hunt, 12626, "Ardor's Request 2", 1001461, 13890900,0 );
+	.@count += callsub( S_Hunt, 12627, "Ardor's Request 3", 1001461, 13890900,0 );
+	.@count += callsub( S_Hunt, 12628, "Ardor's Request 4", 1001461, 13890900,0 );
+
+	.@count += callsub( S_Hunt, 12629, "Procella's Request 1", 1001463, 13890900,0 );	// Energy_Of_Wind
+	.@count += callsub( S_Hunt, 12630, "Procella's Request 2", 1001463, 13890900,0 );
+	.@count += callsub( S_Hunt, 12631, "Procella's Request 3", 1001463, 13890900,0 );
+	.@count += callsub( S_Hunt, 12632, "Procella's Request 4", 1001463, 13890900,0 );
+
+	.@count += callsub( S_Hunt, 12633, "Diluvio's Request 1", 1001462, 13890900,0 );	// Energy_Of_Water
+	.@count += callsub( S_Hunt, 12634, "Diluvio's Request 2", 1001462, 13890900,0 );
+	.@count += callsub( S_Hunt, 12635, "Diluvio's Request 3", 1001462, 13890900,0 );
+	.@count += callsub( S_Hunt, 12636, "Diluvio's Request 4", 1001462, 13890900,0 );
+
+	.@count += callsub( S_Hunt, 12637, "Serpens's Request 1", 1001465, 27176580,0 );	// Grace_Of_Spirit
+	.@count += callsub( S_Hunt, 12638, "Serpens's Request 2", 1001465, 27176580,0 );
+
+	.@count += callsub( S_Gathering,
+		12639,				// Quest ID
+		"Serpens's Request 3",	// Quest name
+		1001433,			// Required item ID
+		10,					// Required amount
+		1001461,			// Reward item ID
+		27176580,			// Base exp
+		0					// Job exp (unknown)
+	);
+	.@count += callsub( S_Gathering, 12640, "Serpens's Request 4", 1001434,10, 1001462, 27176580,0 );
+	.@count += callsub( S_Gathering, 12641, "Serpens's Request 5", 1001435,10, 1001463, 27176580,0 );
+	.@count += callsub( S_Gathering, 12642, "Serpens's Request 6", 1001436,10, 1001464, 27176580,0 );
+	.@count += callsub( S_Gathering, 12643, "Serpens's Request 7", 1001432,20, 1001465, 27176580,0 );
+
+	if (.@count == 0) {
+		mes "It appears that no special complaints have been handled. If you have handled a complaint related to spirits, please come back at any time. Thank you.";
+		close;
+	}
+	mes "------------";
+	mes "The above " + .@count + " complaints have been processed.";
+	close;
+
+S_Hunt:
+	if (checkquest(getarg(0),HUNTING) == 2) {
+		mes "^0000ff" + getarg(1) + " Completed^000000 - Compensation paid.";
+		erasequest getarg(0);
+		getitem getarg(2),1;
+		for ( .@i = 0; .@i < 10; ++.@i )
+			getexp getarg(3), getarg(4);
+		return 1;
+	}
+	return 0;
+	
+S_Gathering:
+	if (countitem(getarg(2)) >= getarg(3)) {
+		mes "^0000ff" + getarg(1) + " Completed^000000 - Compensation paid.";
+		erasequest getarg(0);
+		delitem getarg(2),getarg(3);
+		getitem getarg(4),1;
+		for ( .@i = 0; .@i < 10; ++.@i )
+			getexp getarg(5), getarg(6);
+		return 1;
+	}
+	return 0;
+
+OnInit:
+	setunittitle( getnpcid(0), "<Elemental Latest Model>" );
+
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(12621,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(12622,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(12623,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(12624,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(12625,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(12626,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(12627,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(12628,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(12629,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(12630,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(12631,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(12632,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(12633,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(12634,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(12635,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(12636,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(12637,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(12638,HUNTING) == 2" );
+
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(12639) == 1 && countitem(1001433) >= 10" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(12640) == 1 && countitem(1001434) >= 10" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(12641) == 1 && countitem(1001435) >= 10" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(12642) == 1 && countitem(1001436) >= 10" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(12643) == 1 && countitem(1001432) >= 20" );
+	end;
+}
+
+
+// Exchange and enchants
+t_garden,129,123,2	script(CLOAKED)	Subspace vending machine#1	HEROS_IN_ORB_1,{
+	if (isbegin_quest(12620) != 2)
+		end;
+	if (checkweight(1201,1) == 0) {
+		mes "I cannot communicate with the barrier because I have too many types or weights of objects.";
+		close;
+	}
+	npctalk "Everything you want is here. What deal do you want?", "", bc_self;
+	switch( select( "Cancel", "Energy transaction by attribute", "Energy transaction by season", "Various consumable transaction" ) ) {
+	case 1:
+		end;
+	case 2:
+		callshop( "barter_t_garden_1" );
+		break;
+	case 3:
+		callshop( "barter_t_garden_2" );
+		break;
+	case 4:
+		callshop( "barter_t_garden_3" );
+		break;
+	}
+	end;
+
+OnInit:
+	setunittitle( getnpcid(0), "<Welcome to various goods trading>" );
+	end;
+}
+
+t_garden,132,120,2	script(CLOAKED)	Subspace vending machine#2	HEROS_IN_ORB_2,{
+	if (isbegin_quest(12620) != 2)
+		end;
+	if (checkweight(1201,1) == 0) {
+		mes "I cannot communicate with the barrier because I have too many types or weights of objects.";
+		close;
+	}
+	npctalk "This place specializes in equipment. What kind of deal do you want?", "", bc_self;
+	switch( select( "Cancel", "Purchase Circulation of Life Accessories", "Purchase Divine Beast's Cloak", "Upgrade Divine Beast's Cloak" ) ) {
+	case 1:
+		end;
+	case 2:
+		callshop( "barter_t_garden_4" );
+		end;
+	case 3:
+		callshop( "barter_t_garden_5" );
+		end;
+	case 4:
+		item_reform("Season_H_Upgrade");
+		end;
+	}
+	end;
+
+OnInit:
+	setunittitle( getnpcid(0), "<Clothing Upgrade Specialist>" );
+	end;
+}
+
+t_garden,135,117,2	script(CLOAKED)	Subspace vending machine#3	HEROS_IN_ORB_3,{
+	if (isbegin_quest(12620) != 2)
+		end;
+	if (checkweight(1201,1) == 0) {
+		mes "I cannot communicate with the barrier because I have too many types or weights of objects.";
+		close;
+	}
+	npctalk "We carefully enchant the equipment obtained from the Lake of Fire. Is there a menu you would like?", "", bc_self;
+	switch( select( "Divine Beast's Cloak - Spring", "Divine Beast's Cloak - Summer", "Divine Beast's Cloak - Fall", "Divine Beast's Cloak - Winter" ) ) {
+	case 1:
+		item_enchant(117);
+		break;
+	case 2:
+		item_enchant(119);
+		break;
+	case 3:
+		item_enchant(121);
+		break;
+	case 4:
+		item_enchant(123);
+		break;
+	}
+	end;
+
+OnInit:
+	setunittitle( getnpcid(0), "<Divine Cloak Enchantment>" );
+	end;
+}
+
+t_garden,138,114,2	script(CLOAKED)	Subspace vending machine#4	HEROS_IN_ORB_4,{
+	if (isbegin_quest(12620) != 2)
+		end;
+	if (checkweight(1201,1) == 0) {
+		mes "I cannot communicate with the barrier because I have too many types or weights of objects.";
+		close;
+	}
+	npctalk "We put great effort into enchanting circulating equipment. Is there a menu you would like?", "", bc_self;
+	switch( select( "Circle of Life Accessories", "Circle of Life-Spring", "Circle of Life-Summer", "Circle of Life-Autumn", "Circle of Life-Winter" ) ) {
+	case 1:
+		item_enchant(142);
+		break;
+	case 2:
+		item_enchant(118);
+		break;
+	case 3:
+		item_enchant(120);
+		break;
+	case 4:
+		item_enchant(122);
+		break;
+	case 5:
+		item_enchant(124);
+		break;
+	}
+	end;
+
+OnInit:
+	setunittitle( getnpcid(0), "<Circle of Life Ingent>" );
+	end;
+}
+
+
+// Storages
+-	shop	t_garden_shop	-1,501:-1
+
+t_garden,156,222,2	script	Functional Vending Machine#1	4_VENDING_MACHINE2,{
+	// switch( select( "Tool Dealer", "Storage 1 (100z)", "Storage 2 (100z)", "Storage 3 (100z)", "Use savepoint service" ) ) {
+	switch( select( "Tool Dealer", "Storage 1 (100z)", "", "", "Use savepoint service" ) ) {
+	case 1:
+		callshop( "t_garden_shop", 2 );
+		end;
+	case 2:
+		.@storage_num = 1;
+		break;
+	case 3:
+		.@storage_num = 2;
+		break;
+	case 4:
+		.@storage_num = 3;
+		break;
+	case 5:
+		npctalk "" + strcharinfo(0) + " your location has been safely saved.", "", bc_self;
+
+		.@num = atoi( strnpcinfo(2) );
+		if (.@num == 1)
+			savepoint "t_garden",156,220;
+		else if (.@num == 2)
+			savepoint "t_garden",97,135;
+		else if (.@num == 3)
+			savepoint "t_garden",90,115;
+		else if (.@num == 4)
+			savepoint "t_garden",137,106;
+		break;
+	}
+	if (Zeny < 100) {
+		npctalk "To use the Storage, please insert 100 zeny.", "", bc_self;
+		end;
+	}
+	Zeny -= 100;
+	npctalk "I will open storage number " + .@storage_num + ". Thank you for using it.", "", bc_self;
+	openstorage;
+	end;
+
+OnInit:
+	questinfo( QTYPE_CLICKME, QMARK_YELLOW, "isbegin_quest(12592) == 2" );
+	end;
+}
+t_garden,97,138,6	duplicate(Functional Vending Machine#1)	Functional Vending Machine#2	4_VENDING_MACHINE2
+t_garden,91,116,2	duplicate(Functional Vending Machine#1)	Functional Vending Machine#3	4_VENDING_MACHINE2
+t_garden,144,116,2	duplicate(Functional Vending Machine#1)	Functional Vending Machine#4	4_VENDING_MACHINE2

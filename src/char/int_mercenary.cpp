@@ -31,13 +31,13 @@ bool mercenary_owner_fromsql(uint32 char_id, struct mmo_charstatus *status)
 		return false;
 	}
 
-	Sql_GetData(sql_handle,  0, &data, NULL); status->mer_id = atoi(data);
-	Sql_GetData(sql_handle,  1, &data, NULL); status->arch_calls = atoi(data);
-	Sql_GetData(sql_handle,  2, &data, NULL); status->arch_faith = atoi(data);
-	Sql_GetData(sql_handle,  3, &data, NULL); status->spear_calls = atoi(data);
-	Sql_GetData(sql_handle,  4, &data, NULL); status->spear_faith = atoi(data);
-	Sql_GetData(sql_handle,  5, &data, NULL); status->sword_calls = atoi(data);
-	Sql_GetData(sql_handle,  6, &data, NULL); status->sword_faith = atoi(data);
+	Sql_GetData(sql_handle,  0, &data, nullptr); status->mer_id = atoi(data);
+	Sql_GetData(sql_handle,  1, &data, nullptr); status->arch_calls = atoi(data);
+	Sql_GetData(sql_handle,  2, &data, nullptr); status->arch_faith = atoi(data);
+	Sql_GetData(sql_handle,  3, &data, nullptr); status->spear_calls = atoi(data);
+	Sql_GetData(sql_handle,  4, &data, nullptr); status->spear_faith = atoi(data);
+	Sql_GetData(sql_handle,  5, &data, nullptr); status->sword_calls = atoi(data);
+	Sql_GetData(sql_handle,  6, &data, nullptr); status->sword_faith = atoi(data);
 	Sql_FreeResult(sql_handle);
 
 	return true;
@@ -80,7 +80,7 @@ bool mapif_mercenary_save(struct s_mercenary* merc)
 			flag = false;
 		}
 		else
-			merc->mercenary_id = (int)Sql_LastInsertId(sql_handle);
+			merc->mercenary_id = (int32)Sql_LastInsertId(sql_handle);
 	}
 	else if( SQL_ERROR == Sql_Query(sql_handle,
 		"UPDATE `%s` SET `char_id` = '%d', `class` = '%d', `hp` = '%u', `sp` = '%u', `kill_counter` = '%u', `life_time` = '%" PRtf "' WHERE `mer_id` = '%d'",
@@ -93,7 +93,7 @@ bool mapif_mercenary_save(struct s_mercenary* merc)
 	return flag;
 }
 
-bool mapif_mercenary_load(int merc_id, uint32 char_id, struct s_mercenary *merc)
+bool mapif_mercenary_load(int32 merc_id, uint32 char_id, struct s_mercenary *merc)
 {
 	char* data;
 
@@ -113,11 +113,11 @@ bool mapif_mercenary_load(int merc_id, uint32 char_id, struct s_mercenary *merc)
 		return false;
 	}
 
-	Sql_GetData(sql_handle,  0, &data, NULL); merc->class_ = atoi(data);
-	Sql_GetData(sql_handle,  1, &data, NULL); merc->hp = atoi(data);
-	Sql_GetData(sql_handle,  2, &data, NULL); merc->sp = atoi(data);
-	Sql_GetData(sql_handle,  3, &data, NULL); merc->kill_count = atoi(data);
-	Sql_GetData(sql_handle,  4, &data, NULL); merc->life_time = strtoll( data, nullptr, 10 );
+	Sql_GetData(sql_handle,  0, &data, nullptr); merc->class_ = atoi(data);
+	Sql_GetData(sql_handle,  1, &data, nullptr); merc->hp = atoi(data);
+	Sql_GetData(sql_handle,  2, &data, nullptr); merc->sp = atoi(data);
+	Sql_GetData(sql_handle,  3, &data, nullptr); merc->kill_count = atoi(data);
+	Sql_GetData(sql_handle,  4, &data, nullptr); merc->life_time = strtoll( data, nullptr, 10 );
 	Sql_FreeResult(sql_handle);
 	if( charserv_config.save_log )
 		ShowInfo("Mercenary loaded (ID: %d / Class: %d / CID: %d).\n", merc->mercenary_id, merc->class_, merc->char_id);
@@ -125,7 +125,7 @@ bool mapif_mercenary_load(int merc_id, uint32 char_id, struct s_mercenary *merc)
 	return true;
 }
 
-bool mapif_mercenary_delete(int merc_id)
+bool mapif_mercenary_delete(int32 merc_id)
 {
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `mer_id` = '%d'", schema_config.mercenary_db, merc_id) )
 	{
@@ -136,9 +136,9 @@ bool mapif_mercenary_delete(int merc_id)
 	return true;
 }
 
-void mapif_mercenary_send(int fd, struct s_mercenary *merc, unsigned char flag)
+void mapif_mercenary_send(int32 fd, struct s_mercenary *merc, unsigned char flag)
 {
-	int size = sizeof(struct s_mercenary) + 5;
+	int32 size = sizeof(struct s_mercenary) + 5;
 
 	WFIFOHEAD(fd,size);
 	WFIFOW(fd,0) = 0x3870;
@@ -148,20 +148,20 @@ void mapif_mercenary_send(int fd, struct s_mercenary *merc, unsigned char flag)
 	WFIFOSET(fd,size);
 }
 
-void mapif_parse_mercenary_create(int fd, struct s_mercenary* merc)
+void mapif_parse_mercenary_create(int32 fd, struct s_mercenary* merc)
 {
 	bool result = mapif_mercenary_save(merc);
 	mapif_mercenary_send(fd, merc, result);
 }
 
-void mapif_parse_mercenary_load(int fd, int merc_id, uint32 char_id)
+void mapif_parse_mercenary_load(int32 fd, int32 merc_id, uint32 char_id)
 {
 	struct s_mercenary merc;
 	bool result = mapif_mercenary_load(merc_id, char_id, &merc);
 	mapif_mercenary_send(fd, &merc, result);
 }
 
-void mapif_mercenary_deleted(int fd, unsigned char flag)
+void mapif_mercenary_deleted(int32 fd, unsigned char flag)
 {
 	WFIFOHEAD(fd,3);
 	WFIFOW(fd,0) = 0x3871;
@@ -169,13 +169,13 @@ void mapif_mercenary_deleted(int fd, unsigned char flag)
 	WFIFOSET(fd,3);
 }
 
-void mapif_parse_mercenary_delete(int fd, int merc_id)
+void mapif_parse_mercenary_delete(int32 fd, int32 merc_id)
 {
 	bool result = mapif_mercenary_delete(merc_id);
 	mapif_mercenary_deleted(fd, result);
 }
 
-void mapif_mercenary_saved(int fd, unsigned char flag)
+void mapif_mercenary_saved(int32 fd, unsigned char flag)
 {
 	WFIFOHEAD(fd,3);
 	WFIFOW(fd,0) = 0x3872;
@@ -183,13 +183,13 @@ void mapif_mercenary_saved(int fd, unsigned char flag)
 	WFIFOSET(fd,3);
 }
 
-void mapif_parse_mercenary_save(int fd, struct s_mercenary* merc)
+void mapif_parse_mercenary_save(int32 fd, struct s_mercenary* merc)
 {
 	bool result = mapif_mercenary_save(merc);
 	mapif_mercenary_saved(fd, result);
 }
 
-int inter_mercenary_sql_init(void)
+int32 inter_mercenary_sql_init(void)
 {
 	return 0;
 }
@@ -201,15 +201,15 @@ void inter_mercenary_sql_final(void)
 /*==========================================
  * Inter Packets
  *------------------------------------------*/
-int inter_mercenary_parse_frommap(int fd)
+int32 inter_mercenary_parse_frommap(int32 fd)
 {
 	unsigned short cmd = RFIFOW(fd,0);
 
 	switch( cmd )
 	{
 		case 0x3070: mapif_parse_mercenary_create(fd, (struct s_mercenary*)RFIFOP(fd,4)); break;
-		case 0x3071: mapif_parse_mercenary_load(fd, (int)RFIFOL(fd,2), (int)RFIFOL(fd,6)); break;
-		case 0x3072: mapif_parse_mercenary_delete(fd, (int)RFIFOL(fd,2)); break;
+		case 0x3071: mapif_parse_mercenary_load(fd, (int32)RFIFOL(fd,2), (int32)RFIFOL(fd,6)); break;
+		case 0x3072: mapif_parse_mercenary_delete(fd, (int32)RFIFOL(fd,2)); break;
 		case 0x3073: mapif_parse_mercenary_save(fd, (struct s_mercenary*)RFIFOP(fd,4)); break;
 		default:
 			return 0;

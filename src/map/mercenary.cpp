@@ -53,7 +53,7 @@ struct view_data *mercenary_get_viewdata( uint16 class_ ){
 * @param lifetime Contract duration
 * @return false if failed, true otherwise
 **/
-bool mercenary_create(map_session_data *sd, uint16 class_, unsigned int lifetime) {
+bool mercenary_create(map_session_data *sd, uint16 class_, uint32 lifetime) {
 	nullpo_retr(false,sd);
 
 	std::shared_ptr<s_mercenary_db> db = mercenary_db.find(class_);
@@ -83,11 +83,11 @@ bool mercenary_create(map_session_data *sd, uint16 class_, unsigned int lifetime
 * @return The Lifetime
 **/
 t_tick mercenary_get_lifetime(s_mercenary_data *md) {
-	if( md == NULL || md->contract_timer == INVALID_TIMER )
+	if( md == nullptr || md->contract_timer == INVALID_TIMER )
 		return 0;
 
 	const struct TimerData *td = get_timer(md->contract_timer);
-	return (td != NULL) ? DIFF_TICK(td->tick, gettick()) : 0;
+	return (td != nullptr) ? DIFF_TICK(td->tick, gettick()) : 0;
 }
 
 /**
@@ -96,7 +96,7 @@ t_tick mercenary_get_lifetime(s_mercenary_data *md) {
 * @return enum e_MercGuildType
 **/
 e_MercGuildType mercenary_get_guild(s_mercenary_data *md){
-	if( md == NULL || md->db == NULL )
+	if( md == nullptr || md->db == nullptr )
 		return NONE_MERC_GUILD;
 
 	uint16 class_ = md->db->class_;
@@ -116,10 +116,10 @@ e_MercGuildType mercenary_get_guild(s_mercenary_data *md){
 * @param md Mercenary
 * @return the Faith value
 **/
-int mercenary_get_faith(s_mercenary_data *md) {
+int32 mercenary_get_faith(s_mercenary_data *md) {
 	map_session_data *sd;
 
-	if( md == NULL || md->db == NULL || (sd = md->master) == NULL )
+	if( md == nullptr || md->db == nullptr || (sd = md->master) == nullptr )
 		return 0;
 
 	e_MercGuildType guild = mercenary_get_guild(md);
@@ -142,14 +142,14 @@ int mercenary_get_faith(s_mercenary_data *md) {
 * @param md The Mercenary
 * @param value Faith Value
 **/
-void mercenary_set_faith(s_mercenary_data *md, int value) {
+void mercenary_set_faith(s_mercenary_data *md, int32 value) {
 	map_session_data *sd;
 
-	if( md == NULL || md->db == NULL || (sd = md->master) == NULL )
+	if( md == nullptr || md->db == nullptr || (sd = md->master) == nullptr )
 		return;
 
 	e_MercGuildType guild = mercenary_get_guild(md);
-	int *faith = nullptr;
+	int32 *faith = nullptr;
 
 	switch( guild ){
 		case ARCH_MERC_GUILD:
@@ -175,10 +175,10 @@ void mercenary_set_faith(s_mercenary_data *md, int value) {
 * @param md Mercenary
 * @return Number of calls
 **/
-int mercenary_get_calls(s_mercenary_data *md) {
+int32 mercenary_get_calls(s_mercenary_data *md) {
 	map_session_data *sd;
 
-	if( md == NULL || md->db == NULL || (sd = md->master) == NULL )
+	if( md == nullptr || md->db == nullptr || (sd = md->master) == nullptr )
 		return 0;
 
 	e_MercGuildType guild = mercenary_get_guild(md);
@@ -201,14 +201,14 @@ int mercenary_get_calls(s_mercenary_data *md) {
 * @param md Mercenary
 * @param value
 **/
-void mercenary_set_calls(s_mercenary_data *md, int value) {
+void mercenary_set_calls(s_mercenary_data *md, int32 value) {
 	map_session_data *sd;
 
-	if( md == NULL || md->db == NULL || (sd = md->master) == NULL )
+	if( md == nullptr || md->db == nullptr || (sd = md->master) == nullptr )
 		return;
 
 	e_MercGuildType guild = mercenary_get_guild(md);
-	int *calls = nullptr;
+	int32 *calls = nullptr;
 
 	switch( guild ){
 		case ARCH_MERC_GUILD:
@@ -247,9 +247,9 @@ static TIMER_FUNC(merc_contract_end){
 	map_session_data *sd;
 	s_mercenary_data *md;
 
-	if( (sd = map_id2sd(id)) == NULL )
+	if( (sd = map_id2sd(id)) == nullptr )
 		return 1;
-	if( (md = sd->md) == NULL )
+	if( (md = sd->md) == nullptr )
 		return 1;
 
 	if( md->contract_timer != tid )
@@ -269,7 +269,7 @@ static TIMER_FUNC(merc_contract_end){
 * @param md Mercenary
 * @param reply
 **/
-int mercenary_delete(s_mercenary_data *md, int reply) {
+int32 mercenary_delete(s_mercenary_data *md, int32 reply) {
 	map_session_data *sd = md->master;
 	md->mercenary.life_time = 0;
 
@@ -286,11 +286,18 @@ int mercenary_delete(s_mercenary_data *md, int reply) {
 
 	switch( reply )
 	{
-		case 0: mercenary_set_faith(md, 1); break; // +1 Loyalty on Contract ends.
-		case 1: mercenary_set_faith(md, -1); break; // -1 Loyalty on Mercenary killed
+		case 0:
+			// +1 Loyalty on Contract ends.
+			mercenary_set_faith(md, 1);
+			clif_msg(sd, MSI_MER_FINISH);
+			break; 
+		case 1:
+			// -1 Loyalty on Mercenary killed
+			mercenary_set_faith(md, -1);
+			clif_msg(sd, MSI_MER_DIE);
+			break; 
 	}
 
-	clif_mercenary_message(sd, reply);
 	return unit_remove_map(&md->bl, CLR_OUTSIGHT);
 }
 
@@ -327,7 +334,7 @@ bool mercenary_recv_data(s_mercenary *merc, bool flag)
 	map_session_data *sd;
 	t_tick tick = gettick();
 
-	if( (sd = map_charid2sd(merc->char_id)) == NULL )
+	if( (sd = map_charid2sd(merc->char_id)) == nullptr )
 		return false;
 
 	std::shared_ptr<s_mercenary_db> db = mercenary_db.find(merc->class_);
@@ -378,7 +385,7 @@ bool mercenary_recv_data(s_mercenary *merc, bool flag)
 		mercenary_set_calls(md, 1);
 	sd->status.mer_id = merc->mercenary_id;
 
-	if( md && md->bl.prev == NULL && sd->bl.prev != NULL ) {
+	if( md && md->bl.prev == nullptr && sd->bl.prev != nullptr ) {
 		if(map_addblock(&md->bl))
 			return false;
 		clif_spawn(&md->bl);
@@ -395,8 +402,8 @@ bool mercenary_recv_data(s_mercenary *merc, bool flag)
 * @param hp HP amount
 * @param sp SP amount
 **/
-void mercenary_heal(s_mercenary_data *md, int hp, int sp) {
-	if (md->master == NULL)
+void mercenary_heal(s_mercenary_data *md, int32 hp, int32 sp) {
+	if (md->master == nullptr)
 		return;
 	if( hp )
 		clif_mercenary_updatestatus(md->master, SP_HP);

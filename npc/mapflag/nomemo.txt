@@ -731,6 +731,13 @@ spl_fild01	mapflag	nomemo
 spl_in01	mapflag	nomemo
 spl_in02	mapflag	nomemo
 
+//============================================================
+// Brasilis
+//============================================================
+bra_in01	mapflag	nomemo
+bra_dun01	mapflag	nomemo
+bra_dun02	mapflag	nomemo
+
 //evt_zombie	mapflag	nomemo
 
 //============================================================

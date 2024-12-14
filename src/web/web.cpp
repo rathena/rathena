@@ -70,10 +70,10 @@ std::string web_server_db = "ragnarok";
 
 std::string default_codepage = "";
 
-Sql * login_handle = NULL;
-Sql * char_handle = NULL;
-Sql * map_handle = NULL;
-Sql * web_handle = NULL;
+Sql * login_handle = nullptr;
+Sql * char_handle = nullptr;
+Sql * map_handle = nullptr;
+Sql * web_handle = nullptr;
 
 char login_table[32] = "login";
 char guild_emblems_table[32] = "guild_emblems";
@@ -85,17 +85,17 @@ char partybookings_table[32] = "party_bookings";
 char guild_db_table[32] = "guild";
 char char_db_table[32] = "char";
 
-int parse_console(const char * buf) {
+int32 parse_console(const char * buf) {
 	return 1;
 }
 
 std::thread svr_thr;
 
 /// Msg_conf tayloring
-int web_msg_config_read(char *cfgName){
+int32 web_msg_config_read(char *cfgName){
 	return _msg_config_read(cfgName,WEB_MAX_MSG,msg_table);
 }
-const char* web_msg_txt(int msg_number){
+const char* web_msg_txt(int32 msg_number){
 	return _msg_txt(msg_number,WEB_MAX_MSG,msg_table);
 }
 void web_do_final_msg(void){
@@ -112,7 +112,7 @@ void web_do_final_msg(void){
 bool web_config_read(const char* cfgName, bool normal) {
 	char line[1024], w1[32], w2[1024];
 	FILE* fp = fopen(cfgName, "r");
-	if (fp == NULL) {
+	if (fp == nullptr) {
 		ShowError("Configuration file (%s) not found.\n", cfgName);
 		return false;
 	}
@@ -161,13 +161,13 @@ bool web_config_read(const char* cfgName, bool normal) {
 /*==========================================
  * read config file
  *------------------------------------------*/
-int inter_config_read(const char* cfgName)
+int32 inter_config_read(const char* cfgName)
 {
 	char line[1024];
 	FILE* fp;
 
 	fp = fopen(cfgName, "r");
-	if(fp == NULL) {
+	if(fp == nullptr) {
 		ShowError("File not found: %s\n", cfgName);
 		return 1;
 	}
@@ -270,7 +270,7 @@ void web_set_defaults() {
 
 /// Constructor destructor and signal handlers
 
-int web_sql_init(void) {
+int32 web_sql_init(void) {
 	// login db connection
 	login_handle = Sql_Malloc();
 	ShowInfo("Connecting to the Login DB server.....\n");
@@ -344,20 +344,20 @@ int web_sql_init(void) {
 	return 0;
 }
 
-int web_sql_close(void)
+int32 web_sql_close(void)
 {
 	ShowStatus("Close Login DB Connection....\n");
 	Sql_Free(login_handle);
-	login_handle = NULL;
+	login_handle = nullptr;
 	ShowStatus("Close Char DB Connection....\n");
 	Sql_Free(char_handle);
-	char_handle = NULL;
+	char_handle = nullptr;
 	ShowStatus("Close Map DB Connection....\n");
 	Sql_Free(map_handle);
-	map_handle = NULL;
+	map_handle = nullptr;
 	ShowStatus("Close Web DB Connection....\n");
 	Sql_Free(web_handle);
-	web_handle = NULL;
+	web_handle = nullptr;
 
 	return 0;
 }
@@ -423,7 +423,7 @@ void logger(const Request & req, const Response & res) {
 }
 
 
-bool WebServer::initialize( int argc, char* argv[] ){
+bool WebServer::initialize( int32 argc, char* argv[] ){
 #ifndef WEB_SERVER_ENABLE
 	ShowStatus("The web-server is " CL_GREEN "stopping" CL_RESET " (PACKETVER too old to use).\n\n");
 	this->signal_shutdown();
@@ -469,7 +469,7 @@ bool WebServer::initialize( int argc, char* argv[] ){
 		http_server->listen(web_config.web_ip.c_str(), web_config.web_port);
 	});
 
-	for (int i = 0; i < 10; i++) {
+	for (int32 i = 0; i < 10; i++) {
 		if( global_core->get_status() == e_core_status::STOPPING ){
 			return true;
 		}
@@ -494,6 +494,6 @@ void WebServer::handle_main( t_tick next ){
 	std::this_thread::sleep_for( std::chrono::milliseconds( next ) );
 }
 
-int main( int argc, char *argv[] ){
+int32 main( int32 argc, char *argv[] ){
 	return main_core<WebServer>( argc, argv );
 }
