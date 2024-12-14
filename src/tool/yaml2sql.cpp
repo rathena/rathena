@@ -816,7 +816,13 @@ static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
 
 		if (racegroups) {
 			for (uint16 i = 1; i < RC2_MAX; i++) {
-				std::string constant = constant_lookup(i, "RC2_");
+				const char* constant_ptr = constant_lookup(i, "RC2_");
+
+				if( constant_ptr == nullptr ){
+					continue;
+				}
+
+				std::string constant( constant_ptr );
 
 				constant.erase(0, 4);
 
