@@ -1616,6 +1616,12 @@ struct PACKET_CZ_AUCTION_ADD{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_AUCTION_ADD, 0x24d);
 
+struct PACKET_ZC_DRESSROOM_OPEN{
+	int16 packetType;
+	uint16 view;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_DRESSROOM_OPEN, 0xa02);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
