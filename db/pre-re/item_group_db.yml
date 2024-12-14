@@ -51,7 +51,7 @@ Header:
 Body:
   - Group: ACCESORY
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -182,7 +182,7 @@ Body:
             Rate: 1
   - Group: BLEUBOX
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -220,7 +220,7 @@ Body:
             Rate: 1
   - Group: BLUEBOX
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -3291,7 +3291,7 @@ Body:
             Rate: 1
   - Group: BOMB
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -3320,7 +3320,7 @@ Body:
             Rate: 1
   - Group: BOX
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -3334,7 +3334,7 @@ Body:
             Rate: 1
   - Group: CANDY
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -3345,7 +3345,7 @@ Body:
             Rate: 1
   - Group: CARDALBUM
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -4436,7 +4436,7 @@ Body:
             Rate: 1
   - Group: CASH_FOOD
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -4459,7 +4459,7 @@ Body:
             Rate: 1
   - Group: CHERISH_BOX
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -4473,7 +4473,7 @@ Body:
             Rate: 5
   - Group: CHERISH_BOX_ORI
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -4493,7 +4493,7 @@ Body:
             Rate: 2
   - Group: COOKIEBAG
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -4546,7 +4546,7 @@ Body:
             Rate: 1
   - Group: EASTER_SCROLL
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -4593,7 +4593,7 @@ Body:
             Rate: 1
   - Group: EGGBOY
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -4619,7 +4619,7 @@ Body:
             Rate: 2
   - Group: EGGGIRL
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -4645,7 +4645,7 @@ Body:
             Rate: 2
   - Group: ELEMENT
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -4662,7 +4662,7 @@ Body:
             Rate: 1
   - Group: FIRSTAID
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -4721,7 +4721,7 @@ Body:
             Rate: 5
   - Group: FISH
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -4732,7 +4732,7 @@ Body:
             Rate: 1
   - Group: FOOD
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -4803,7 +4803,7 @@ Body:
             Rate: 600
   - Group: FOODBAG
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -4940,7 +4940,7 @@ Body:
             Rate: 1
   - Group: FRUIT
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -4960,7 +4960,7 @@ Body:
             Rate: 1
   - Group: GEMSTONE
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -4974,7 +4974,7 @@ Body:
             Rate: 1
   - Group: GIFTBOX
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -5189,7 +5189,7 @@ Body:
             Rate: 1
   - Group: GIFTBOXCHINA
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -5986,7 +5986,7 @@ Body:
             Rate: 2
   - Group: GIFTBOX_1
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -6201,7 +6201,7 @@ Body:
             Rate: 1
   - Group: GIFTBOX_2
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -6416,7 +6416,7 @@ Body:
             Rate: 1
   - Group: GIFTBOX_3
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -6631,7 +6631,7 @@ Body:
             Rate: 1
   - Group: GIFTBOX_4
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -6846,7 +6846,7 @@ Body:
             Rate: 1
   - Group: GREENBOX
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -6884,7 +6884,7 @@ Body:
             Rate: 100
   - Group: HERB
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -6898,7 +6898,7 @@ Body:
             Rate: 1
   - Group: HOMETOWNGIFT
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -6927,7 +6927,7 @@ Body:
             Rate: 1
   - Group: JEWEL
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -6992,7 +6992,7 @@ Body:
             Rate: 50
   - Group: JUICE
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -7006,7 +7006,7 @@ Body:
             Rate: 1
   - Group: LOTTOBOX
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -7041,7 +7041,7 @@ Body:
             Rate: 1
   - Group: LOUISE_COSTUME_BOX
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -7052,7 +7052,7 @@ Body:
             Rate: 2
   - Group: MAGICCARDALBUM
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -7150,7 +7150,7 @@ Body:
             Rate: 3
   - Group: MASK
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -7194,7 +7194,7 @@ Body:
             Rate: 2
   - Group: MASQUERADE
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -7211,7 +7211,7 @@ Body:
             Rate: 10
   - Group: MASQUERADE_2
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -7228,7 +7228,7 @@ Body:
             Rate: 10
   - Group: MEAT
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -7239,7 +7239,7 @@ Body:
             Rate: 1
   - Group: MERCENARY
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -7334,7 +7334,7 @@ Body:
             Rate: 1
   - Group: MINERAL
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -7399,7 +7399,7 @@ Body:
             Rate: 1
   - Group: OLDGIFTBOX
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -7413,7 +7413,7 @@ Body:
             Rate: 40
   - Group: ORE
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -7478,7 +7478,7 @@ Body:
             Rate: 1
   - Group: PIERRE_TREASUREBOX
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -7567,7 +7567,7 @@ Body:
             Rate: 1
   - Group: POISON
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -7596,7 +7596,7 @@ Body:
             Rate: 1
   - Group: POTION
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -7613,7 +7613,7 @@ Body:
             Rate: 1
   - Group: QUIVER
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -7657,7 +7657,7 @@ Body:
             Rate: 2
   - Group: RECOVERY
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -7704,7 +7704,7 @@ Body:
             Rate: 600
   - Group: REDBOX
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -7751,7 +7751,7 @@ Body:
             Rate: 10
   - Group: REDBOX_2
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -7768,7 +7768,7 @@ Body:
             Rate: 10
   - Group: RESIST
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -7785,7 +7785,7 @@ Body:
             Rate: 1
   - Group: SCROLL
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -7844,7 +7844,7 @@ Body:
             Rate: 1
   - Group: TAMING
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -7999,7 +7999,7 @@ Body:
             Rate: 1
   - Group: THROWABLE
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -8073,7 +8073,7 @@ Body:
             Rate: 1
   - Group: TOKEN_OF_SIEGFRIED
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -8087,7 +8087,7 @@ Body:
             Rate: 1
   - Group: TRESURE_BOX_WOE
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -8152,7 +8152,7 @@ Body:
             Rate: 8
   - Group: VIOLETBOX
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -10926,7 +10926,7 @@ Body:
             Rate: 1
   - Group: XMAS_GIFT
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0
@@ -10988,7 +10988,7 @@ Body:
             Rate: 6
   - Group: YELLOWBOX
     SubGroups:
-      - SubGroup: 6
+      - SubGroup: 1
         Algorithm: Random
         List:
           - Index: 0

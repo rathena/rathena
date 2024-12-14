@@ -3010,10 +3010,11 @@ enum e_delay_consume : uint8 {
 
 /// Enum for different ways to search an item group
 enum e_group_algorithm_type : uint8 {
-	GROUP_ALGORITHM_RANDOM, // Draws with replacement. Always return an item from the group, rate determines which item is more likely to be returned
-	GROUP_ALGORITHM_DROP, // Draws with replacement. Pick one item from the group and check use rate as drop rate, on fail, do not return any item
-	GROUP_ALGORITHM_SHAREDPOOL, // Draws without replacement. Always return an item from the group, rate determines which item is more likely to be returned
-	GROUP_ALGORITHM_ALL, // Give all items of a subgroup without using rates
+	GROUP_ALGORITHM_USEDB, // Use algorithm defined in the database for the sub group (All, Random or SharedPool).
+	GROUP_ALGORITHM_DROP, // Pick one item from the group and use rate as drop rate, on fail, do not return any item.
+	GROUP_ALGORITHM_ALL, // All items have an equal chance to be returned. Using getgroupitem will return all items in the group.
+	GROUP_ALGORITHM_RANDOM, // Always return an item from the group, rate determines which item is more likely to be returned.
+	GROUP_ALGORITHM_SHAREDPOOL, // Rate is the amount of items in the group, return a random item and remove it from the group.
 };
 
 /// Item combo struct
@@ -3143,8 +3144,8 @@ struct s_item_group_entry
 struct s_item_group_random
 {
 	uint32 total_rate;
-	e_group_algorithm_type algorithm;
 	uint32 total_given; /// Amount of times an item from this group has been given out
+	e_group_algorithm_type algorithm;
 	std::unordered_map<uint32, std::shared_ptr<s_item_group_entry>> data; /// index, s_item_group_entry
 };
 
@@ -3313,12 +3314,11 @@ public:
 	// Additional
 	bool item_exists(uint16 group_id, t_itemid nameid);
 	int16 item_exists_pc(map_session_data *sd, uint16 group_id);
-	std::shared_ptr<s_item_group_entry> get_random_entry(uint16 group_id, uint8 sub_group, e_group_algorithm_type search_type);
-	std::shared_ptr<s_item_group_entry> get_random_entry(uint16 group_id, uint8 sub_group);
+	std::shared_ptr<s_item_group_entry> get_random_entry(uint16 group_id, uint8 sub_group, e_group_algorithm_type algorithm = GROUP_ALGORITHM_USEDB);
 	uint8 pc_get_itemgroup( uint16 group_id, bool identify, map_session_data& sd );
 
 private:
-	std::shared_ptr<s_item_group_entry> get_random_itemsubgroup(std::shared_ptr<s_item_group_random> random, e_group_algorithm_type search_type = GROUP_ALGORITHM_SHAREDPOOL);
+	std::shared_ptr<s_item_group_entry> get_random_itemsubgroup(std::shared_ptr<s_item_group_random> random, e_group_algorithm_type algorithm = GROUP_ALGORITHM_USEDB);
 	void pc_get_itemgroup_sub( map_session_data& sd, bool identify, std::shared_ptr<s_item_group_entry> data );
 };
 
