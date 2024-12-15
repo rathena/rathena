@@ -12876,8 +12876,7 @@ static TIMER_FUNC(pc_autosave){
 		//Save char.
 		last_save_id = sd->bl.id;
 		save_flag = 2;
-		if (pc_isvip(sd)) // Check if we're still VIP
-			chrif_req_login_operation(1, sd->status.name, CHRIF_OP_LOGIN_VIP, 0, 1, 0);
+
 		chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
 		break;
 	}

@@ -1547,7 +1547,7 @@ void chrif_parse_ack_vipActive(int32 fd) {
 	uint32 vip_time = RFIFOL(fd,6);
 	uint32 groupid = RFIFOL(fd,10);
 	uint8 flag = RFIFOB(fd,14);
-	TBL_PC *sd = map_id2sd(aid);
+	map_session_data* sd = map_id2sd(aid);
 	bool changed = false;
 
 	if(sd == nullptr) return;
@@ -1555,9 +1555,7 @@ void chrif_parse_ack_vipActive(int32 fd) {
 	sd->group_id = groupid;
 	pc_group_pc_load(sd);
 
-	if ((flag&0x2)) //isgm
-		clif_displaymessage(sd->fd,msg_txt(sd,437));
-	else {
+	if (!(flag&0x2)){ //isgm
 		changed = (sd->vip.enabled != (flag&0x1));
 		if((flag&0x1)) { //isvip
 			sd->vip.enabled = 1;
@@ -1568,12 +1566,13 @@ void chrif_parse_ack_vipActive(int32 fd) {
 				ShowError("intif_parse_ack_vipActive: Storage size for player %s (%d:%d) is larger than MAX_STORAGE. Storage size has been set to MAX_STORAGE.\n", sd->status.name, sd->status.account_id, sd->status.char_id);
 				sd->storage.max_amount = MAX_STORAGE;
 			}
+			sd->special_state.no_gemstone = battle_config.vip_gemstone;
 		} else if (sd->vip.enabled) {
 			sd->vip.enabled = 0;
 			sd->vip.time = 0;
 			sd->storage.max_amount = MIN_STORAGE;
 			sd->special_state.no_gemstone = 0;
-			clif_displaymessage(sd->fd,msg_txt(sd,438));
+			clif_displaymessage(sd->fd,msg_txt(sd,438)); // You are no longer VIP.
 		}
 	}
 	// Show info if status changed

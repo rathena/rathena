@@ -10364,30 +10364,40 @@ ACMD_FUNC(vip) {
 	}
 
 	if (pc_get_group_level(pl_sd) > pc_get_group_level(sd)) {
-		clif_displaymessage(fd, msg_txt(sd,81)); // Your GM level don't authorise you to do this action on this player.
+		clif_displaymessage(fd, msg_txt(sd,81)); // Your GM level doesn't authorize you to perform this action on the specified player.
 		return -1;
 	}
+
+	if( pc_get_group_level( pl_sd ) > 0 ){
+		clif_displaymessage( sd->fd, msg_txt( sd, 437 ) ); // GM's cannot become a VIP.
+		return -1;
+	}
+
 	if(pl_sd->vip.time==0) pl_sd->vip.time=now;
 	pl_sd->vip.time += vipdifftime; //increase or reduce VIP duration
 	
 	if (pl_sd->vip.time <= now) {
 		clif_displaymessage(pl_sd->fd, msg_txt(pl_sd,703)); // GM has removed your VIP time.
-		clif_displaymessage(fd, msg_txt(sd,704)); // Player is no longer VIP.
+
+		if( pl_sd != sd ){
+			sprintf( atcmd_output, msg_txt( sd, 704 ), pl_sd->status.name ); // Player '%s' is no longer VIP.
+			clif_displaymessage( fd, atcmd_output );
+		}
 	} else {
 		int32 year,month,day,hour,minute,second;
 		char timestr[21];
 		
 		split_time((int32)(pl_sd->vip.time-now),&year,&month,&day,&hour,&minute,&second);
-		sprintf(atcmd_output,msg_txt(pl_sd,705),year,month,day,hour,minute); // Your VIP status is valid for %d years, %d months, %d days, %d hours and %d minutes.
+		sprintf(atcmd_output,msg_txt(pl_sd,705),year,month,day,hour,minute,second); // Your VIP status is valid for %d years, %d months, %d days, %d hours, %d minutes and %d seconds.
 		clif_displaymessage(pl_sd->fd,atcmd_output);
-		timestamp2string(timestr,20,pl_sd->vip.time,"%Y-%m-%d %H:%M");
-		sprintf(atcmd_output,msg_txt(pl_sd,707),timestr); // You are VIP until : %s
+		timestamp2string(timestr,20,pl_sd->vip.time,"%Y-%m-%d %H:%M:%S");
+		sprintf(atcmd_output,msg_txt(pl_sd,707),timestr); // You are VIP until: %s
 		clif_displaymessage(pl_sd->fd,atcmd_output);
 
 		if (pl_sd != sd) {
-			sprintf(atcmd_output,msg_txt(sd,706),pl_sd->status.name,year,month,day,hour,minute); // Player '%s' is now VIP for %d years, %d months, %d days, %d hours and %d minutes.
+			sprintf(atcmd_output,msg_txt(sd,706),pl_sd->status.name,year,month,day,hour,minute,second); // Player '%s' is now VIP for %d years, %d months, %d days, %d hours, %d minutes and %d seconds.
 			clif_displaymessage(fd,atcmd_output);
-			sprintf(atcmd_output,msg_txt(sd,708),timestr); // The player is now VIP until : %s
+			sprintf(atcmd_output,msg_txt(sd,708),timestr); // The player is now VIP until: %s
 			clif_displaymessage(fd,atcmd_output);
 		}
 	}
