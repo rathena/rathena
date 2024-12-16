@@ -9827,13 +9827,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case BS_GREED:
 		if (sd != nullptr) {
-#ifdef	RENEWAL
-			// Greed skill should be disabled, if the player has less than 5 slots free in the inventory
-			if (pc_inventoryblank(sd) < 5) {
-				clif_msg_color(sd, MSI_SKILL_INVENTORY_KINDCNT_OVER, color_table[COLOR_RED]);
-				break;
-			}
-#endif
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 			map_foreachinallrange(skill_greed, bl, skill_get_splash(skill_id, skill_lv), BL_ITEM, sd);
 		}
@@ -18170,6 +18163,15 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 			if (!(sc && sc->getSCE(SC_THIRD_EXOR_FLAME)))
 				return false;
 			break;
+#ifdef	RENEWAL
+		case BS_GREED:
+			// Greed skill should be disabled, if the player has less than 5 slots free in the inventory
+			if( pc_inventoryblank( &sd ) < 5 ){
+				clif_msg_color( &sd, MSI_SKILL_INVENTORY_KINDCNT_OVER, color_table[COLOR_RED] );
+				return false;
+			}
+			break;
+#endif
 	}
 
 	/* check state required */
