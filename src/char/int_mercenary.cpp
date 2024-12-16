@@ -97,22 +97,22 @@ bool mapif_mercenary_save(struct s_mercenary* merc)
 	if (SQL_ERROR == stmt.Prepare("REPLACE INTO `%s` (`mer_id`, `skill`, `tick`) VALUES (%d, ?, ?)", schema_config.skillcooldown_mercenary_db, merc->mercenary_id)) {
 		SqlStmt_ShowDebug(stmt);
 		return false;
-	} else {
-		for (uint16 i = 0; i < MAX_SKILLCOOLDOWN; ++i) {
-			if (merc->scd[i].skill_id == 0) {
-				continue;
-			}
+	}
 
-			if (merc->scd[i].tick == 0) {
-				continue;
-			}
+	for (uint16 i = 0; i < MAX_SKILLCOOLDOWN; ++i) {
+		if (merc->scd[i].skill_id == 0) {
+			continue;
+		}
 
-			if (SQL_ERROR == stmt.BindParam(0, SQLDT_USHORT, &merc->scd[i].skill_id, 0)
-				|| SQL_ERROR == stmt.BindParam(1, SQLDT_LONGLONG, &merc->scd[i].tick, 0)
-				|| SQL_ERROR == stmt.Execute()) {
-				SqlStmt_ShowDebug(stmt);
-				return false;
-			}
+		if (merc->scd[i].tick == 0) {
+			continue;
+		}
+
+		if (SQL_ERROR == stmt.BindParam(0, SQLDT_USHORT, &merc->scd[i].skill_id, 0)
+			|| SQL_ERROR == stmt.BindParam(1, SQLDT_LONGLONG, &merc->scd[i].tick, 0)
+			|| SQL_ERROR == stmt.Execute()) {
+			SqlStmt_ShowDebug(stmt);
+			return false;
 		}
 	}
 

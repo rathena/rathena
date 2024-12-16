@@ -122,15 +122,15 @@ bool mapif_homunculus_save(struct s_homunculus* hd)
 			if (SQL_ERROR == stmt.Prepare("REPLACE INTO `%s` (`homun_id`, `id`, `lv`) VALUES (%d, ?, ?)", schema_config.skill_homunculus_db, hd->hom_id)) {
 				SqlStmt_ShowDebug(stmt);
 				return false;
-			} else {
-				for (uint16 i = 0; i < MAX_HOMUNSKILL; ++i) {
-					if (hd->hskill[i].id > 0 && hd->hskill[i].lv != 0) {
-						stmt.BindParam(0, SQLDT_USHORT, &hd->hskill[i].id, 0);
-						stmt.BindParam(1, SQLDT_USHORT, &hd->hskill[i].lv, 0);
-						if (SQL_ERROR == stmt.Execute()) {
-							SqlStmt_ShowDebug(stmt);
-							return false;
-						}
+			}
+
+			for (uint16 i = 0; i < MAX_HOMUNSKILL; ++i) {
+				if (hd->hskill[i].id > 0 && hd->hskill[i].lv != 0) {
+					stmt.BindParam(0, SQLDT_USHORT, &hd->hskill[i].id, 0);
+					stmt.BindParam(1, SQLDT_USHORT, &hd->hskill[i].lv, 0);
+					if (SQL_ERROR == stmt.Execute()) {
+						SqlStmt_ShowDebug(stmt);
+						return false;
 					}
 				}
 			}
@@ -139,22 +139,22 @@ bool mapif_homunculus_save(struct s_homunculus* hd)
 			if (SQL_ERROR == stmt.Prepare("REPLACE INTO `%s` (`homun_id`, `skill`, `tick`) VALUES (%d, ?, ?)", schema_config.skillcooldown_homunculus_db, hd->hom_id)) {
 				SqlStmt_ShowDebug(stmt);
 				return false;
-			} else {
-				for (uint16 i = 0; i < MAX_SKILLCOOLDOWN; ++i) {
-					if (hd->scd[i].skill_id == 0) {
-						continue;
-					}
+			}
 
-					if (hd->scd[i].tick == 0) {
-						continue;
-					}
+			for (uint16 i = 0; i < MAX_SKILLCOOLDOWN; ++i) {
+				if (hd->scd[i].skill_id == 0) {
+					continue;
+				}
 
-					if (SQL_ERROR == stmt.BindParam(0, SQLDT_USHORT, &hd->scd[i].skill_id, 0)
-						|| SQL_ERROR == stmt.BindParam(1, SQLDT_LONGLONG, &hd->scd[i].tick, 0)
-						|| SQL_ERROR == stmt.Execute()) {
-						SqlStmt_ShowDebug(stmt);
-						return false;
-					}
+				if (hd->scd[i].tick == 0) {
+					continue;
+				}
+
+				if (SQL_ERROR == stmt.BindParam(0, SQLDT_USHORT, &hd->scd[i].skill_id, 0)
+					|| SQL_ERROR == stmt.BindParam(1, SQLDT_LONGLONG, &hd->scd[i].tick, 0)
+					|| SQL_ERROR == stmt.Execute()) {
+					SqlStmt_ShowDebug(stmt);
+					return false;
 				}
 			}
 		}
