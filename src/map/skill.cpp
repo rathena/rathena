@@ -20205,7 +20205,7 @@ int skill_greed(struct block_list *bl, va_list ap)
 
 #ifndef RENEWAL
 	// Greed skill should show a message, if the player's inventory is full
-	if( pc_inventoryblank( sd ) == 0 ){
+	if( pc_inventoryblank( sd ) == 0 && pc_checkadditem( sd, fitem->item.nameid, fitem->item.amount ) != CHKADDITEM_EXIST ){
 		clif_msg_color( sd, MSI_CANT_GET_ITEM_BECAUSE_COUNT, color_table[COLOR_RED] );
 		return 0;
 	}
