@@ -282,7 +282,7 @@
 	packet(0x01f2,20);
 	packet(0x01f3,10);
 	packet(0x01f6,34);
-	parseable_packet(0x01f7,14,clif_parse_Adopt_reply,2,6,10);
+	parseable_packet( HEADER_CZ_JOIN_BABY, sizeof( PACKET_CZ_JOIN_BABY ), clif_parse_Adopt_reply, 0 );
 	packet(0x01f8,2);
 	parseable_packet(0x01f9,6,clif_parse_Adopt_request,2);
 	packet(0x01fa,48);
@@ -669,7 +669,7 @@
 	parseable_packet(0x024c,8,clif_parse_Auction_setitem,2,4);
 	packet(0x024d,14);
 	parseable_packet(0x024e,6,clif_parse_Auction_cancel,2);
-	parseable_packet(0x024f,10,clif_parse_Auction_bid,2,6);
+	parseable_packet( HEADER_CZ_AUCTION_BUY, sizeof( PACKET_CZ_AUCTION_BUY ), clif_parse_Auction_bid, 0 );
 	packet(0x0250,3);
 	packet(0x0251,2);
 	packet(0x0252,-1);
@@ -702,7 +702,7 @@
 
 // 2005-08-08aSakexe
 #if PACKETVER >= 20050808
-	parseable_packet(0x024d,12,clif_parse_Auction_register,2,6,10);
+	parseable_packet( HEADER_CZ_AUCTION_ADD, sizeof( PACKET_CZ_AUCTION_ADD ), clif_parse_Auction_register, 0 );
 	packet(0x024e,4);
 #endif
 
@@ -757,7 +757,7 @@
 // 2005-11-07aSakexe
 #if PACKETVER >= 20051107
 	parseable_packet(0x024e,6,clif_parse_Auction_cancel,2);
-	parseable_packet(0x0251,34,clif_parse_Auction_search,2,4,8,32);
+	parseable_packet( HEADER_CZ_AUCTION_ITEM_SEARCH, sizeof( PACKET_CZ_AUCTION_ITEM_SEARCH ), clif_parse_Auction_search, 0 );
 #endif
 
 // 2006-01-09aSakexe
@@ -938,7 +938,6 @@
 	packet(0x02b3,107);
 	packet(0x02b4,6);
 	packet(0x02b5,-1);
-	parseable_packet(0x02b6,7,clif_parse_questStateAck,2,6);
 	packet(0x02b7,7);
 	packet( HEADER_ZC_ITEM_PICKUP_PARTY, sizeof( struct PACKET_ZC_ITEM_PICKUP_PARTY ) );
 	packet(0x02b9,191);
@@ -969,6 +968,10 @@
 	packet(0x02de,6);
 	packet(0x02df,36);
 	packet(0x02e0,34);
+#endif
+
+#if PACKETVER >= 20070622
+	parseable_packet( HEADER_CZ_ACTIVE_QUEST, sizeof( PACKET_CZ_ACTIVE_QUEST ), clif_parse_questStateAck, 0 );
 #endif
 
 // 2007-10-23aSakexe
@@ -1780,7 +1783,6 @@
 	// New packet
 	packet(0x0A00,269); // ZC_SHORTCUT_KEY_LIST_V3
 	parseable_packet(0x0A01,3,clif_parse_HotkeyRowShift,2); // CZ_SHORTCUTKEYBAR_ROTATE
-	packet(0x0A02,4); // ZC_DRESSROOM_OPEN
 	packet(0x0A0E,14); // ZC_BATTLEFIELD_NOTIFY_HP2
 	packet(0x09F7,75); // ZC_PROPERTY_HOMUN_2
 	packet(0x09E6,22); // ZC_UPDATE_ITEM_FROM_BUYING_STORE2

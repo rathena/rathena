@@ -79,7 +79,7 @@
 
 /// Returns if the script data is a string
 #define data_isstring(data) ( (data)->type == C_STR || (data)->type == C_CONSTSTR )
-/// Returns if the script data is an int32
+/// Returns if the script data is an int
 #define data_isint(data) ( (data)->type == C_INT )
 /// Returns if the script data is a reference
 #define data_isreference(data) ( (data)->type == C_NAME )

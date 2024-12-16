@@ -885,7 +885,7 @@ int32 npc_isnear_sub(struct block_list* bl, va_list args) {
 		return 0;
 	}
 
-	int32 skill_id = va_arg(args, int);
+	int32 skill_id = va_arg(args, int32);
 
 	if (skill_id > 0) { //If skill_id > 0 that means is used for INF2_DISABLENEARNPC [Cydh]
 		std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
@@ -986,7 +986,7 @@ static int32 npc_cloaked_sub(struct block_list *bl, va_list ap)
 
 	nullpo_ret(bl);
 	nullpo_ret(sd = (map_session_data *)bl);
-	int32 id = va_arg(ap, int);
+	int32 id = va_arg(ap, int32);
 
 	auto it = std::find(sd->cloaked_npc.begin(), sd->cloaked_npc.end(), id);
 
@@ -1229,7 +1229,7 @@ int32 npc_event_doall_sub(DBKey key, DBData *data, va_list ap)
 	nullpo_ret(ev = (struct event_data*)db_data2ptr(data));
 	nullpo_ret(c = va_arg(ap, int32 *));
 	nullpo_ret(name = va_arg(ap, const char *));
-	rid = va_arg(ap, int);
+	rid = va_arg(ap, int32);
 
 	p = strchr(p, ':'); // match only the event name
 	if( p && strcmpi(name, p) == 0 /* && !ev->nd->src_id */ ) // Do not run on duplicates. [Paradox924X]
@@ -1257,7 +1257,7 @@ static int32 npc_event_do_sub(DBKey key, DBData *data, va_list ap)
 	nullpo_ret(ev = (struct event_data*)db_data2ptr(data));
 	nullpo_ret(c = va_arg(ap, int32 *));
 	nullpo_ret(name = va_arg(ap, const char *));
-	rid = va_arg(ap, int);
+	rid = va_arg(ap, int32);
 
 	if( p && strcmpi(name, p) == 0 )
 	{
@@ -1800,7 +1800,7 @@ int32 npc_touch_areanpc_sub(struct block_list *bl, va_list ap)
 	nullpo_ret(bl);
 	nullpo_ret((sd = map_id2sd(bl->id)));
 
-	pc_id = va_arg(ap,int);
+	pc_id = va_arg(ap,int32);
 	name = va_arg(ap,char*);
 
 	if( sd->state.warping )
@@ -2270,8 +2270,8 @@ bool npc_scriptcont(map_session_data* sd, int32 id, bool closing){
 		TBL_NPC* nd_sd = (TBL_NPC*)map_id2bl(sd->npc_id);
 
 		ShowDebug("npc_scriptcont: %s (sd->npc_id=%d) is not %s (id=%d).\n",
-			nd_sd?(char*)nd_sd->name:"'Unknown NPC'", (int)sd->npc_id,
-			nd?(char*)nd->name:"'Unknown NPC'", (int)id);
+			nd_sd?(char*)nd_sd->name:"'Unknown NPC'", (int32)sd->npc_id,
+			nd?(char*)nd->name:"'Unknown NPC'", (int32)id);
 		return true;
 	}
 
@@ -2622,7 +2622,7 @@ void npc_shop_currency_type(map_session_data *sd, struct npc_data *nd, int32 cos
 
 				memset(output, '\0', sizeof(output));
 
-				sprintf(output, msg_txt(sd, 715), nd->u.shop.pointshop_str); // Point32 Shop List: '%s'
+				sprintf(output, msg_txt(sd, 715), nd->u.shop.pointshop_str); // Point Shop List: '%s'
 				clif_broadcast(&sd->bl, output, strlen(output) + 1, BC_BLUE,SELF);
 			}
 			
@@ -2858,7 +2858,7 @@ e_purchase_result npc_buylist( map_session_data* sd, std::vector<s_npc_buy_list>
 	if( pc_inventoryblank(sd) < new_ )
 		return e_purchase_result::PURCHASE_FAIL_COUNT;	// Not enough space to store items
 
-	pc_payzeny(sd, (int)z, LOG_TYPE_NPC);
+	pc_payzeny(sd, (int32)z, LOG_TYPE_NPC);
 
 	for( int32 i = 0; i < item_list.size(); ++i ) {
 		t_itemid nameid = item_list[i].nameid;
@@ -2906,7 +2906,7 @@ e_purchase_result npc_buylist( map_session_data* sd, std::vector<s_npc_buy_list>
 			z = z * (double)skill * (double)battle_config.shop_exp/10000.;
 			if( z < 1 )
 				z = 1;
-			pc_gainexp(sd,nullptr,0,(int)z, 0);
+			pc_gainexp(sd,nullptr,0,(int32)z, 0);
 		}
 	}
 
@@ -3082,7 +3082,7 @@ uint8 npc_selllist(map_session_data* sd, int32 list_length, const PACKET_CZ_PC_S
 	if( z > MAX_ZENY )
 		z = MAX_ZENY;
 
-	pc_getzeny(sd, (int)z, LOG_TYPE_NPC);
+	pc_getzeny(sd, (int32)z, LOG_TYPE_NPC);
 
 	// custom merchant shop exp bonus
 	if( battle_config.shop_exp > 0 && z > 0 && ( skill = pc_checkskill(sd,MC_OVERCHARGE) ) > 0)
@@ -3096,7 +3096,7 @@ uint8 npc_selllist(map_session_data* sd, int32 list_length, const PACKET_CZ_PC_S
 			z = z * (double)skill * (double)battle_config.shop_exp/10000.;
 			if( z < 1 )
 				z = 1;
-			pc_gainexp(sd, nullptr, 0, (int)z, 0);
+			pc_gainexp(sd, nullptr, 0, (int32)z, 0);
 		}
 	}
 
@@ -3315,7 +3315,7 @@ e_purchase_result npc_barter_purchase( map_session_data& sd, std::shared_ptr<s_n
 		}
 	}
 
-	if( pc_payzeny( &sd, (int)requiredZeny, LOG_TYPE_BARTER ) != 0 ){
+	if( pc_payzeny( &sd, (int32)requiredZeny, LOG_TYPE_BARTER ) != 0 ){
 		return e_purchase_result::PURCHASE_FAIL_MONEY;
 	}
 
@@ -3425,7 +3425,7 @@ static int32 npc_unload_dup_sub(struct npc_data* nd, va_list args)
 {
 	int32 src_id;
 
-	src_id = va_arg(args, int);
+	src_id = va_arg(args, int32);
 	if (nd->src_id == src_id)
 		npc_unload(nd, true);
 	return 0;
@@ -4120,7 +4120,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		}
 		if( ( type == NPCTYPE_SHOP || type == NPCTYPE_MARKETSHOP ) && value*0.75 < id->value_sell*1.24 ) { // Exploit possible: you can buy and sell back with profit
 			ShowWarning("npc_parse_shop: Item %s [%u] discounted buying price (%d->%d) is less than overcharged selling price (%d->%d) at file '%s', line '%d'.\n",
-				id->name.c_str(), nameid2, value, (int)(value*0.75), id->value_sell, (int)(id->value_sell*1.24), filepath, strline(buffer,start-buffer));
+				id->name.c_str(), nameid2, value, (int32)(value*0.75), id->value_sell, (int32)(id->value_sell*1.24), filepath, strline(buffer,start-buffer));
 		}
 		if (type == NPCTYPE_MARKETSHOP && qty < -1) {
 			ShowWarning("npc_parse_shop: Item %s [%u] is stocked with invalid value %hd, changed to unlimited (-1). File '%s', line '%d'.\n",
@@ -4168,7 +4168,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		// Item shop currency
 		nd->u.shop.itemshop_nameid = nameid;
 	}else if( type == NPCTYPE_POINTSHOP ){
-		// Point32 shop currency
+		// Point shop currency
 		safestrncpy( nd->u.shop.pointshop_str, point_str, strlen( point_str ) + 1 );
 	}
 
@@ -4764,12 +4764,11 @@ int32 npc_instancedestroy(struct npc_data* nd)
  * @param qty Stock
  **/
 void npc_market_tosql(const char *exname, struct npc_item_list *list) {
-	SqlStmt* stmt = SqlStmt_Malloc(mmysql_handle);
-	if (SQL_ERROR == SqlStmt_Prepare(stmt, "REPLACE INTO `%s` (`name`,`nameid`,`price`,`amount`,`flag`) VALUES ('%s','%u','%d','%d','%" PRIu8 "')",
+	SqlStmt stmt{ *mmysql_handle };
+	if (SQL_ERROR == stmt.Prepare("REPLACE INTO `%s` (`name`,`nameid`,`price`,`amount`,`flag`) VALUES ('%s','%u','%d','%d','%" PRIu8 "')",
 		market_table, exname, list->nameid, list->value, list->qty, list->flag) ||
-		SQL_ERROR == SqlStmt_Execute(stmt))
+		SQL_ERROR == stmt.Execute())
 		SqlStmt_ShowDebug(stmt);
-	SqlStmt_Free(stmt);
 }
 
 /**
@@ -4779,17 +4778,16 @@ void npc_market_tosql(const char *exname, struct npc_item_list *list) {
  * @param clear True: will removes all records related with the NPC
  **/
 void npc_market_delfromsql_(const char *exname, t_itemid nameid, bool clear) {
-	SqlStmt* stmt = SqlStmt_Malloc(mmysql_handle);
+	SqlStmt stmt{ *mmysql_handle };
 	if (clear) {
-		if( SQL_ERROR == SqlStmt_Prepare(stmt, "DELETE FROM `%s` WHERE `name`='%s'", market_table, exname) ||
-			SQL_ERROR == SqlStmt_Execute(stmt))
+		if( SQL_ERROR == stmt.Prepare("DELETE FROM `%s` WHERE `name`='%s'", market_table, exname) ||
+			SQL_ERROR == stmt.Execute())
 			SqlStmt_ShowDebug(stmt);
 	} else {
-		if (SQL_ERROR == SqlStmt_Prepare(stmt, "DELETE FROM `%s` WHERE `name`='%s' AND `nameid`='%u' LIMIT 1", market_table, exname, nameid) ||
-			SQL_ERROR == SqlStmt_Execute(stmt))
+		if (SQL_ERROR == stmt.Prepare("DELETE FROM `%s` WHERE `name`='%s' AND `nameid`='%u' LIMIT 1", market_table, exname, nameid) ||
+			SQL_ERROR == stmt.Execute())
 			SqlStmt_ShowDebug(stmt);
 	}
-	SqlStmt_Free(stmt);
 }
 
 /**
@@ -4927,7 +4925,7 @@ static void npc_market_fromsql(void) {
 
 		if (list.value * 0.75 < id->value_sell * 1.24) { // Exploit possible: you can buy and sell back with profit
 			ShowWarning("npc_market_fromsql: Item %s [%u] discounted buying price (%d->%d) is less than overcharged selling price (%d->%d) in table '%s'. Assigning to current sell value.\n",
-						id->name.c_str(), list.nameid, list.value, (int)(list.value * 0.75), id->value_sell, (int)(id->value_sell * 1.24), market_table);
+						id->name.c_str(), list.nameid, list.value, (int32)(list.value * 0.75), id->value_sell, (int32)(id->value_sell * 1.24), market_table);
 			list.value = id->value_sell;
 		}
 
@@ -4976,7 +4974,7 @@ void npc_setcells(struct npc_data* nd)
 int32 npc_unsetcells_sub(struct block_list* bl, va_list ap)
 {
 	struct npc_data *nd = (struct npc_data*)bl;
-	int32 id =  va_arg(ap,int);
+	int32 id =  va_arg(ap,int32);
 	if (nd->bl.id == id) return 0;
 	npc_setcells(nd);
 	return 1;
@@ -5994,7 +5992,7 @@ void npc_read_event_script(void)
 	}
 
 	if (battle_config.etc_log) {
-		//Print32 summary.
+		//Print summary.
 		for (i = 0; i < NPCE_MAX; i++)
 			ShowInfo("%" PRIuPTR " '%s' events.\n", script_event[static_cast<enum npce_event>(i)].size(), npc_get_script_event_name(i));
 	}

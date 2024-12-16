@@ -354,7 +354,7 @@ int32 npc_chat_sub(struct block_list* bl, va_list ap)
 		return 0;
 	
 	msg = va_arg(ap,char*);
-	len = va_arg(ap,int);
+	len = va_arg(ap,int32);
 	sd = va_arg(ap,map_session_data *);
 	
 	// iterate across all active sets

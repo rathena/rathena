@@ -1577,6 +1577,51 @@ struct PACKET_CZ_LESSEFFECT{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_LESSEFFECT, 0x21d);
 
+struct PACKET_CZ_ACTIVE_QUEST{
+	int16 packetType;
+	uint32 quest_id;
+	uint8 active;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_ACTIVE_QUEST, 0x2b6);
+
+struct PACKET_CZ_JOIN_BABY{
+	int16 packetType;
+	uint32 father_AID;
+	uint32 mother_AID;
+	uint32 accepted;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_JOIN_BABY, 0x1f7);
+
+struct PACKET_CZ_AUCTION_ITEM_SEARCH{
+	int16 packetType;
+	uint16 type;
+	uint32 auction_id;
+	char text[24];
+	uint16 page;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_AUCTION_ITEM_SEARCH, 0x251);
+
+struct PACKET_CZ_AUCTION_BUY{
+	int16 packetType;
+	uint32 auction_id;
+	uint32 money;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_AUCTION_BUY, 0x24f);
+
+struct PACKET_CZ_AUCTION_ADD{
+	int16 packetType;
+	uint32 now_money;
+	uint32 max_money;
+	uint16 hours;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_AUCTION_ADD, 0x24d);
+
+struct PACKET_ZC_DRESSROOM_OPEN{
+	int16 packetType;
+	uint16 view;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_DRESSROOM_OPEN, 0xa02);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )

@@ -81,7 +81,7 @@ bool mapif_mercenary_save(struct s_mercenary* merc)
 			return false;
 		}
 		else
-			merc->mercenary_id = (int)Sql_LastInsertId(sql_handle);
+			merc->mercenary_id = (int32)Sql_LastInsertId(sql_handle);
 	}
 	else if( SQL_ERROR == Sql_Query(sql_handle,
 		"UPDATE `%s` SET `char_id` = '%d', `class` = '%d', `hp` = '%u', `sp` = '%u', `kill_counter` = '%u', `life_time` = '%" PRtf "' WHERE `mer_id` = '%d'",
@@ -92,11 +92,10 @@ bool mapif_mercenary_save(struct s_mercenary* merc)
 	}
 
 	// Save skill cooldowns
-	SqlStmt *stmt = SqlStmt_Malloc(sql_handle);
+	SqlStmt stmt{ *sql_handle };
 
-	if (SQL_ERROR == SqlStmt_Prepare(stmt, "REPLACE INTO `%s` (`mer_id`, `skill`, `tick`) VALUES (%d, ?, ?)", schema_config.skillcooldown_mercenary_db, merc->mercenary_id)) {
+	if (SQL_ERROR == stmt.Prepare("REPLACE INTO `%s` (`mer_id`, `skill`, `tick`) VALUES (%d, ?, ?)", schema_config.skillcooldown_mercenary_db, merc->mercenary_id)) {
 		SqlStmt_ShowDebug(stmt);
-		SqlStmt_Free(stmt);
 		return false;
 	} else {
 		for (uint16 i = 0; i < MAX_SKILLCOOLDOWN; ++i) {
@@ -108,17 +107,14 @@ bool mapif_mercenary_save(struct s_mercenary* merc)
 				continue;
 			}
 
-			if (SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_USHORT, &merc->scd[i].skill_id, 0)
-				|| SQL_ERROR == SqlStmt_BindParam(stmt, 1, SQLDT_LONGLONG, &merc->scd[i].tick, 0)
-				|| SQL_ERROR == SqlStmt_Execute(stmt)) {
+			if (SQL_ERROR == stmt.BindParam(0, SQLDT_USHORT, &merc->scd[i].skill_id, 0)
+				|| SQL_ERROR == stmt.BindParam(1, SQLDT_LONGLONG, &merc->scd[i].tick, 0)
+				|| SQL_ERROR == stmt.Execute()) {
 				SqlStmt_ShowDebug(stmt);
-				SqlStmt_Free(stmt);
 				return false;
 			}
 		}
 	}
-
-	SqlStmt_Free(stmt);
 
 	return true;
 }
@@ -274,8 +270,8 @@ int32 inter_mercenary_parse_frommap(int32 fd)
 	switch( cmd )
 	{
 		case 0x3070: mapif_parse_mercenary_create(fd, (struct s_mercenary*)RFIFOP(fd,4)); break;
-		case 0x3071: mapif_parse_mercenary_load(fd, (int)RFIFOL(fd,2), (int)RFIFOL(fd,6)); break;
-		case 0x3072: mapif_parse_mercenary_delete(fd, (int)RFIFOL(fd,2)); break;
+		case 0x3071: mapif_parse_mercenary_load(fd, (int32)RFIFOL(fd,2), (int32)RFIFOL(fd,6)); break;
+		case 0x3072: mapif_parse_mercenary_delete(fd, (int32)RFIFOL(fd,2)); break;
 		case 0x3073: mapif_parse_mercenary_save(fd, (struct s_mercenary*)RFIFOP(fd,4)); break;
 		default:
 			return 0;

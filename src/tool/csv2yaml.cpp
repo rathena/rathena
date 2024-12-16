@@ -5182,9 +5182,9 @@ static bool read_homunculusdb( char* str[], size_t columns, size_t current ){
 
 			body << YAML::BeginMap;
 			body << YAML::Key << "Skill" << YAML::Value << *skill_name;
-			body << YAML::Key << "MaxLevel" << YAML::Value << (int)skillit.max;
+			body << YAML::Key << "MaxLevel" << YAML::Value << (int32)skillit.max;
 			if (skillit.need_level > 0)
-				body << YAML::Key << "RequiredLevel" << YAML::Value << (int)skillit.need_level;
+				body << YAML::Key << "RequiredLevel" << YAML::Value << (int32)skillit.need_level;
 			if (skillit.intimacy > 0)
 				body << YAML::Key << "RequiredIntimacy" << YAML::Value << skillit.intimacy;
 
@@ -5228,9 +5228,9 @@ static bool read_homunculusdb( char* str[], size_t columns, size_t current ){
 
 			body << YAML::BeginMap;
 			body << YAML::Key << "Skill" << YAML::Value << *skill_name;
-			body << YAML::Key << "MaxLevel" << YAML::Value << (int)skillit.max;
+			body << YAML::Key << "MaxLevel" << YAML::Value << (int32)skillit.max;
 			if (skillit.need_level > 0)
-				body << YAML::Key << "RequiredLevel" << YAML::Value << (int)skillit.need_level;
+				body << YAML::Key << "RequiredLevel" << YAML::Value << (int32)skillit.need_level;
 			if (skillit.intimacy > 0)
 				body << YAML::Key << "RequiredIntimacy" << YAML::Value << skillit.intimacy;
 			body << YAML::Key << "RequireEvolution" << YAML::Value << "true";

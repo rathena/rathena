@@ -2441,7 +2441,7 @@ int32 unit_set_target(struct unit_data* ud, int32 target_id)
 int32 unit_stopattack(struct block_list *bl, va_list ap)
 {
 	struct unit_data *ud = unit_bl2ud(bl);
-	int32 id = va_arg(ap, int);
+	int32 id = va_arg(ap, int32);
 
 	if (ud && ud->attacktimer != INVALID_TIMER && (!id || id == ud->target)) {
 		unit_stop_attack(bl);

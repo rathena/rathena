@@ -243,7 +243,7 @@ int32 config_switch(const char* str)
 	if (strcmpi(str, "off") == 0 || strcmpi(str, "no") == 0 || strcmpi(str, "non") == 0 || strcmpi(str, "nein") == 0 || strcmpi(str, "nao") == 0)
 		return 0;
 
-	return (int)strtol(str, nullptr, 0);
+	return (int32)strtol(str, nullptr, 0);
 }
 
 /// strncpy that always nul-terminates the string
@@ -1005,7 +1005,7 @@ size_t _StringBuf_Vprintf( const char* file, int32 line, const char* func, Strin
 	for(;;)
 	{
 		va_list apcopy;
-		/* Try to print32 in the allocated space. */
+		/* Try to print in the allocated space. */
 		size_t size = self->max_ - (self->ptr_ - self->buf_);
 		va_copy(apcopy, ap);
 		int32 n = vsnprintf( self->ptr_, size, fmt, apcopy );
@@ -1065,7 +1065,7 @@ size_t _StringBuf_AppendStr(const char *file, int32 line, const char *func,Strin
 // Returns the length of the data in the Stringbuf
 int32 StringBuf_Length(StringBuf* self)
 {
-	return (int)(self->ptr_ - self->buf_);
+	return (int32)(self->ptr_ - self->buf_);
 }
 
 /// Returns the data in the StringBuf

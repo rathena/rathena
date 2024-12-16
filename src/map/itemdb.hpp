@@ -240,7 +240,6 @@ enum e_random_item_group {
 	IG_CARDALBUM,
 	IG_GIFTBOX,
 	IG_SCROLLBOX,
-	IG_FINDINGORE,
 	IG_COOKIEBAG,
 	IG_FIRSTAID,
 	IG_HERB,
@@ -3009,6 +3008,12 @@ enum e_delay_consume : uint8 {
 	DELAYCONSUME_NOCONSUME = 0x2, // Items that are not removed upon double-click
 };
 
+/// Enum for different ways to search an item group
+enum e_group_search_type : uint8 {
+	GROUP_SEARCH_BOX = 0, // Always return an item from the group, rate determines which item is more likely to be returned
+	GROUP_SEARCH_DROP = 1, // Pick one item from the group and check use rate as drop rate, on fail, do not return any item
+};
+
 /// Item combo struct
 struct s_item_combo {
 	std::vector<t_itemid> nameid;
@@ -3135,8 +3140,6 @@ struct s_item_group_random
 {
 	uint32 total_rate;
 	std::unordered_map<uint32, std::shared_ptr<s_item_group_entry>> data; /// index, s_item_group_entry
-
-	std::shared_ptr<s_item_group_entry> get_random_itemsubgroup();
 };
 
 /// Struct of item group that will be used for db
@@ -3304,11 +3307,11 @@ public:
 	// Additional
 	bool item_exists(uint16 group_id, t_itemid nameid);
 	int16 item_exists_pc(map_session_data *sd, uint16 group_id);
-	t_itemid get_random_item_id(uint16 group_id, uint8 sub_group);
-	std::shared_ptr<s_item_group_entry> get_random_entry(uint16 group_id, uint8 sub_group);
+	std::shared_ptr<s_item_group_entry> get_random_entry(uint16 group_id, uint8 sub_group, e_group_search_type search_type = GROUP_SEARCH_BOX);
 	uint8 pc_get_itemgroup( uint16 group_id, bool identify, map_session_data& sd );
 
 private:
+	std::shared_ptr<s_item_group_entry> get_random_itemsubgroup(std::shared_ptr<s_item_group_random> random, e_group_search_type search_type = GROUP_SEARCH_BOX);
 	void pc_get_itemgroup_sub( map_session_data& sd, bool identify, std::shared_ptr<s_item_group_entry> data );
 };
 
@@ -3536,7 +3539,7 @@ bool itemdb_canstore_sub(struct item_data *itd, int32 gmlv, int32 unused);
 bool itemdb_canguildstore_sub(struct item_data *itd, int32 gmlv, int32 unused);
 bool itemdb_canmail_sub(struct item_data *itd, int32 gmlv, int32 unused);
 bool itemdb_canauction_sub(struct item_data *itd, int32 gmlv, int32 unused);
-bool itemdb_isrestricted(struct item* item, int32 gmlv, int32 gmlv2, bool (*func)(struct item_data*, int, int));
+bool itemdb_isrestricted(struct item* item, int32 gmlv, int32 gmlv2, bool (*func)(struct item_data*, int32, int32));
 bool itemdb_ishatched_egg(struct item* item);
 #define itemdb_isdropable(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_isdropable_sub)
 #define itemdb_cantrade(item, gmlv, gmlv2) itemdb_isrestricted(item, gmlv, gmlv2, itemdb_cantrade_sub)
