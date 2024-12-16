@@ -78,7 +78,7 @@
 
 Header:
   Type: JOB_STATS
-  Version: 3
+  Version: 2
 
 Body:
   - Jobs:
