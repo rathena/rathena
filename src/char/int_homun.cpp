@@ -136,7 +136,7 @@ bool mapif_homunculus_save(struct s_homunculus* hd)
 			}
 
 			// Save skill cooldowns
-			if (SQL_ERROR == stmt.Prepare("REPLACE INTO `%s` (`homun_id`, `skill`, `tick`) VALUES (%d, ?, ?)", schema_config.skillcooldown_homunculus_db, hd->hom_id)) {
+			if (SQL_ERROR == stmt.Prepare("INSERT INTO `%s` (`homun_id`, `skill`, `tick`) VALUES (%d, ?, ?)", schema_config.skillcooldown_homunculus_db, hd->hom_id)) {
 				SqlStmt_ShowDebug(stmt);
 				return false;
 			}

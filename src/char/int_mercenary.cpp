@@ -94,7 +94,7 @@ bool mapif_mercenary_save(struct s_mercenary* merc)
 	// Save skill cooldowns
 	SqlStmt stmt{ *sql_handle };
 
-	if (SQL_ERROR == stmt.Prepare("REPLACE INTO `%s` (`mer_id`, `skill`, `tick`) VALUES (%d, ?, ?)", schema_config.skillcooldown_mercenary_db, merc->mercenary_id)) {
+	if (SQL_ERROR == stmt.Prepare("INSERT INTO `%s` (`mer_id`, `skill`, `tick`) VALUES (%d, ?, ?)", schema_config.skillcooldown_mercenary_db, merc->mercenary_id)) {
 		SqlStmt_ShowDebug(stmt);
 		return false;
 	}
