@@ -25,7 +25,6 @@
 # - Jobs:                    List of jobs associated to group.
 #     Job                    Job name.
 #   MaxWeight                Base maximum weight. (Default: 20000)
-#   MaxWeightBaby            Base maximum weight for Baby class. (Default: 20000)
 #   HpFactor                 Exponential HP increase. Per base level: [HpFactor * BaseLv / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 0)
 #   HpIncrease               Linear HP increase. Per base level: [HpIncrease / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 500)
 #   SpIncrease               Linear SP increase. Per base level: [SpIncrease / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 100)
@@ -2938,7 +2937,6 @@ Body:
       Baby_Rune_Knight: true
       Baby_Rune_Knight2: true
     MaxWeight: 35000
-    MaxWeightBaby: 28000
     HpFactor: 150
     SpIncrease: 300
     BonusStats:
@@ -3029,11 +3027,14 @@ Body:
       - Level: 70
         Str: 1
   - Jobs:
+      Baby_Rune_Knight: true
+      Baby_Rune_Knight2: true
+    MaxWeight: 28000
+  - Jobs:
       Warlock: true
       Warlock_T: true
       Baby_Warlock: true
     MaxWeight: 30000
-    MaxWeightBaby: 24000
     HpFactor: 55
     SpIncrease: 900
     BonusStats:
@@ -3124,6 +3125,9 @@ Body:
       - Level: 70
         Vit: 1
   - Jobs:
+      Baby_Warlock: true
+    MaxWeight: 24000
+  - Jobs:
       Ranger: true
       Ranger2: true
       Ranger_T: true
@@ -3131,7 +3135,6 @@ Body:
       Baby_Ranger: true
       Baby_Ranger2: true
     MaxWeight: 32000
-    MaxWeightBaby: 27000
     HpFactor: 85
     SpIncrease: 400
     BonusStats:
@@ -3222,11 +3225,14 @@ Body:
       - Level: 70
         Luk: 1
   - Jobs:
+      Baby_Ranger: true
+      Baby_Ranger2: true
+    MaxWeight: 27000
+  - Jobs:
       Arch_Bishop: true
       Arch_Bishop_T: true
       Baby_Arch_Bishop: true
     MaxWeight: 30000
-    MaxWeightBaby: 26000
     HpFactor: 75
     SpIncrease: 800
     BonusStats:
@@ -3317,6 +3323,9 @@ Body:
       - Level: 70
         Agi: 1
   - Jobs:
+      Baby_Arch_Bishop: true
+    MaxWeight: 26000
+  - Jobs:
       Mechanic: true
       Mechanic2: true
       Mechanic_T: true
@@ -3324,7 +3333,6 @@ Body:
       Baby_Mechanic: true
       Baby_Mechanic2: true
     MaxWeight: 38000
-    MaxWeightBaby: 30000
     HpFactor: 90
     SpIncrease: 400
     BonusStats:
@@ -3415,11 +3423,14 @@ Body:
       - Level: 70
         Agi: 1
   - Jobs:
+      Baby_Mechanic: true
+      Baby_Mechanic2: true
+    MaxWeight: 30000
+  - Jobs:
       Guillotine_Cross: true
       Guillotine_Cross_T: true
       Baby_Guillotine_Cross: true
     MaxWeight: 32000
-    MaxWeightBaby: 24000
     HpFactor: 110
     SpIncrease: 400
     BonusStats:
@@ -3510,6 +3521,9 @@ Body:
       - Level: 70
         Agi: 1
   - Jobs:
+      Baby_Guillotine_Cross: true
+    MaxWeight: 24000
+  - Jobs:
       Royal_Guard: true
       Royal_Guard2: true
       Royal_Guard_T: true
@@ -3517,7 +3531,6 @@ Body:
       Baby_Royal_Guard: true
       Baby_Royal_Guard2: true
     MaxWeight: 35000
-    MaxWeightBaby: 28000
     HpFactor: 110
     HpIncrease: 700
     SpIncrease: 400
@@ -3609,11 +3622,14 @@ Body:
       - Level: 70
         Str: 1
   - Jobs:
+      Baby_Royal_Guard: true
+      Baby_Royal_Guard2: true
+    MaxWeight: 28000
+  - Jobs:
       Sorcerer: true
       Sorcerer_T: true
       Baby_Sorcerer: true
     MaxWeight: 30000
-    MaxWeightBaby: 24000
     HpFactor: 75
     SpIncrease: 900
     BonusStats:
@@ -3704,11 +3720,13 @@ Body:
       - Level: 70
         Vit: 1
   - Jobs:
+      Baby_Sorcerer: true
+    MaxWeight: 24000
+  - Jobs:
       Minstrel: true
       Minstrel_T: true
       Baby_Minstrel: true
     MaxWeight: 32000
-    MaxWeightBaby: 27000
     HpFactor: 75
     HpIncrease: 300
     SpIncrease: 400
@@ -3800,11 +3818,13 @@ Body:
       - Level: 70
         Luk: 1
   - Jobs:
+      Baby_Minstrel: true
+    MaxWeight: 27000
+  - Jobs:
       Wanderer: true
       Wanderer_T: true
       Baby_Wanderer: true
     MaxWeight: 32000
-    MaxWeightBaby: 27000
     HpFactor: 75
     HpIncrease: 300
     SpIncrease: 400
@@ -3896,11 +3916,13 @@ Body:
       - Level: 70
         Str: 1
   - Jobs:
+      Baby_Wanderer: true
+    MaxWeight: 27000
+  - Jobs:
       Sura: true
       Sura_T: true
       Baby_Sura: true
     MaxWeight: 30000
-    MaxWeightBaby: 26000
     HpFactor: 90
     HpIncrease: 650
     SpIncrease: 400
@@ -3992,11 +4014,13 @@ Body:
       - Level: 70
         Agi: 1
   - Jobs:
+      Baby_Sura: true
+    MaxWeight: 26000
+  - Jobs:
       Genetic: true
       Genetic_T: true
       Baby_Genetic: true
     MaxWeight: 32000
-    MaxWeightBaby: 30000
     HpFactor: 90
     SpIncrease: 900
     BonusStats:
@@ -4087,11 +4111,13 @@ Body:
       - Level: 69
         Vit: 1
   - Jobs:
+      Baby_Genetic: true
+    MaxWeight: 30000
+  - Jobs:
       Shadow_Chaser: true
       Shadow_Chaser_T: true
       Baby_Shadow_Chaser: true
     MaxWeight: 28000
-    MaxWeightBaby: 24000
     HpFactor: 85
     SpIncrease: 400
     BonusStats:
@@ -4181,6 +4207,9 @@ Body:
         Agi: 1
       - Level: 70
         Agi: 1
+  - Jobs:
+      Baby_Shadow_Chaser: true
+    MaxWeight: 24000
   - Jobs:
       Super_Novice_E: true
     HpIncrease: 5000
