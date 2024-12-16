@@ -1816,60 +1816,30 @@ uint64 LaphineUpgradeDatabase::parseBodyNode( const ryml::NodeRef& node ){
 		}
 	}
 
-	if( this->nodeExists( node, "ResultRefine" ) ){
-		uint16 refine;
+	if (this->nodeExists(node, "ResultRefine")) {
+		const auto& refineNode = node["ResultRefine"];
 
-		if( !this->asUInt16( node, "ResultRefine", refine ) ){
-			return 0;
-		}
+		for (const auto& refineit : refineNode) {
+			uint16 level;
 
-		if( refine > MAX_REFINE ){
-			this->invalidWarning( node["ResultRefine"], "Result refine %hu is too high, capping to MAX_REFINE...\n", refine );
-			refine = MAX_REFINE;
-		}
+			if (!this->asUInt16Rate(refineit, "Level", level, MAX_REFINE))
+				return 0;
 
-		entry->resultRefine = refine;
-	}else{
-		if( !exists ){
-			entry->resultRefine = 0;
-		}
-	}
+			bool refine_exists = util::umap_find(entry->resultRefine, level) != nullptr;
 
-	if( this->nodeExists( node, "ResultRefineMinimum" ) ){
-		uint16 refine;
+			if (this->nodeExists(refineit, "Rate")) {
+				uint16 rate;
 
-		if( !this->asUInt16( node, "ResultRefineMinimum", refine ) ){
-			return 0;
-		}
-
-		if( refine > MAX_REFINE ){
-			this->invalidWarning( node["ResultRefineMinimum"], "Result refine minimum %hu is too high, capping to MAX_REFINE...\n", refine );
-			refine = MAX_REFINE;
-		}
-
-		entry->resultRefineMinimum = refine;
-	}else{
-		if( !exists ){
-			entry->resultRefineMinimum = 0;
-		}
-	}
-
-	if( this->nodeExists( node, "ResultRefineMaximum" ) ){
-		uint16 refine;
-
-		if( !this->asUInt16( node, "ResultRefineMaximum", refine ) ){
-			return 0;
-		}
-
-		if( refine > MAX_REFINE ){
-			this->invalidWarning( node["ResultRefineMaximum"], "Result refine maximum %hu is too high, capping to MAX_REFINE...\n", refine );
-			refine = MAX_REFINE;
-		}
-
-		entry->resultRefineMaximum = refine;
-	}else{
-		if( !exists ){
-			entry->resultRefineMaximum = 0;
+				if (!this->asUInt16Rate(refineit, "Rate", rate)) {
+					return 0;
+				}
+				entry->resultRefine[level] = rate;
+			}
+			else {
+				if (!refine_exists) {
+					entry->resultRefine[level] = 1;
+				}
+			}
 		}
 	}
 
