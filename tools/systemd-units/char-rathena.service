@@ -1,7 +1,6 @@
 [Unit]
 Description=rAthena Character Server
 After=network-online.target remote-fs.target nss-lookup.target
-Wants=network-online.target
 
 [Service]
 Type=single
