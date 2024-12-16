@@ -9828,16 +9828,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case BS_GREED:
 		if (sd != nullptr) {
 #ifdef	RENEWAL
-			if (pc_inventoryblank(sd) < 5) { // Greed skill should be disabled if the character have less than 5 slots [Haydrich]
+			// Greed skill should be disabled, if the player has less than 5 slots free in the inventory
+			if (pc_inventoryblank(sd) < 5) {
 				clif_msg_color(sd, MSI_SKILL_INVENTORY_KINDCNT_OVER, color_table[COLOR_RED]);
 				break;
 			}
-#else
-			if (!pc_inventoryblank(sd)) // Greed skill should show a message if the character inventory is full on Pre-Re [Daegaladh]
-				clif_msg_color(sd, MSI_CANT_GET_ITEM_BECAUSE_COUNT, color_table[COLOR_RED]);
 #endif
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			map_foreachinallrange(skill_greed, bl, skill_get_splash(skill_id, skill_lv), BL_ITEM, bl);
+			map_foreachinallrange(skill_greed, bl, skill_get_splash(skill_id, skill_lv), BL_ITEM, sd);
 		}
 		break;
 
@@ -20189,15 +20187,29 @@ int skill_graffitiremover(struct block_list *bl, va_list ap)
 /// Greed effect
 int skill_greed(struct block_list *bl, va_list ap)
 {
-	struct block_list *src;
-	map_session_data *sd = nullptr;
-	struct flooritem_data *fitem = nullptr;
-
 	nullpo_ret(bl);
-	nullpo_ret(src = va_arg(ap, struct block_list *));
 
-	if(src->type == BL_PC && (sd = (map_session_data *)src) && bl->type == BL_ITEM && (fitem = (struct flooritem_data *)bl))
-		pc_takeitem(sd, fitem);
+	map_session_data* sd = va_arg( ap, map_session_data* );
+
+	if( sd == nullptr ){
+		return 0;
+	}
+
+	flooritem_data* fitem = BL_CAST( BL_ITEM, bl );
+
+	if( fitem == nullptr ){
+		return 0;
+	}
+
+#ifndef RENEWAL
+	// Greed skill should show a message, if the player's inventory is full
+	if( pc_inventoryblank( sd ) == 0 ){
+		clif_msg_color( sd, MSI_CANT_GET_ITEM_BECAUSE_COUNT, color_table[COLOR_RED] );
+		return 0;
+	}
+#endif
+
+	pc_takeitem(sd, fitem);
 
 	return 0;
 }
