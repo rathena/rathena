@@ -462,10 +462,8 @@ itemmall	mapflag	monster_noteleport
 // Forgotten Area 1
 //============================================================
 for_dun01	mapflag	noteleport
-for_dun01	mapflag	monster_noteleport
 
 //============================================================
 // Forgotten Area 2
 //============================================================
 for_dun02	mapflag	noteleport
-for_dun02	mapflag	monster_noteleport

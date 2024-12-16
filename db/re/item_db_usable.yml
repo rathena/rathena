@@ -78223,8 +78223,11 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      if(strcharinfo(3) == "for_dun01"){
-        warp strcharinfo(3),0,0;
+      if (strcharinfo(3) == "for_dun01")
+         warp "for_dun01",0,0;
+      else {
+         specialeffect2 EF_FREEZING;
+         showscript "It doesn't seem to have any effect here.", playerattached(), SELF;
       }
   - Id: 102796
     AegisName: Forgotten_Crystal_2
@@ -78239,8 +78242,11 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      if(strcharinfo(3) == "for_dun02"){
-        warp strcharinfo(3),0,0;
+      if (strcharinfo(3) == "for_dun02")
+         warp "for_dun02",0,0;
+      else {
+         specialeffect2 EF_FREEZING;
+         showscript "It doesn't seem to have any effect here.", playerattached(), SELF;
       }
   - Id: 102797
     AegisName: Super_Sonic_pack
