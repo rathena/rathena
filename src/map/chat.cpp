@@ -413,7 +413,7 @@ int chat_createnpcchat(struct npc_data* nd, const char* title, int limit, bool p
 
 	cd = chat_createchat(&nd->bl, title, "", limit, pub, trigger, ev, zeny, minLvl, maxLvl);
 
-	if( cd ) {
+	if( cd != nullptr ){
 		nd->chat_id = cd->bl.id;
 		clif_dispchat(*cd);
 	}

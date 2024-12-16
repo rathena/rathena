@@ -760,9 +760,9 @@ enum e_create_chatroom : uint8 {
 
 enum e_status_chatroom : uint8 {
 	STATUSROOM_PRIVATE = 0,
-	STATUSROOM_PUBLIC = 1,
-	STATUSROOM_ARENA = 2,
-	STATUSROOM_PK_ZONE = 3
+	STATUSROOM_PUBLIC,
+	STATUSROOM_ARENA,
+	STATUSROOM_PK_ZONE
 };
 
 enum e_action_failure : uint8 {
@@ -890,7 +890,7 @@ void clif_changeoption2( block_list& bl );
 void clif_useitemack(map_session_data *sd,int index,int amount,bool ok);	// self
 void clif_GlobalMessage( block_list& bl, const char* message, enum send_target target );
 void clif_createchat( map_session_data& sd, e_create_chatroom flag );
-void clif_dispchat(const struct chat_data &cd);	// area or fd
+void clif_dispchat( const chat_data& cd );
 void clif_joinchatfail( map_session_data& sd, e_refuse_enter_room result );
 void clif_joinchatok(map_session_data& sd,chat_data& cd);
 void clif_addchat(struct chat_data* cd,map_session_data *sd);	// chat
