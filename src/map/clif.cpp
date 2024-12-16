@@ -4496,7 +4496,7 @@ void clif_createchat( map_session_data& sd, e_create_chatroom flag ){
 ///     1 = public
 ///     2 = arena (npc waiting room)
 ///     3 = PK zone (non-clickable)
-e_status_chatroom clif_chat_status( const chat_data &cd ){
+static e_status_chatroom clif_chat_status( const chat_data &cd ){
 	if (cd.owner->type == BL_PC)
 		return (cd.pub) ? STATUSROOM_PUBLIC : STATUSROOM_PRIVATE;
 	else if (cd.owner->type == BL_NPC)
@@ -4506,7 +4506,7 @@ e_status_chatroom clif_chat_status( const chat_data &cd ){
 }
 
 /// Calculates the chat user count
-uint16 clif_chat_usercount( const chat_data& cd ){
+static uint16 clif_chat_usercount( const chat_data& cd ){
 	if( cd.owner->type == BL_NPC ){
 		return cd.users + 1;
 	}else{
@@ -4517,6 +4517,10 @@ uint16 clif_chat_usercount( const chat_data& cd ){
 /// Display a chat above the owner.
 /// 00d7 <packet len>.W <owner id>.L <char id>.L <limit>.W <users>.W <type>.B <title>.?B (ZC_ROOM_NEWENTRY)
 void clif_dispchat( const chat_data& cd ){
+	if( cd.owner == nullptr ){
+		return;
+	}
+
 	PACKET_ZC_ROOM_NEWENTRY* p = reinterpret_cast<PACKET_ZC_ROOM_NEWENTRY*>( packet_buffer );
 
 	p->packetType = HEADER_ZC_ROOM_NEWENTRY;
@@ -4538,8 +4542,9 @@ void clif_dispchat( const chat_data& cd ){
 /// Chatroom properties adjustment.
 /// 00df <packet len>.W <owner id>.L <chat id>.L <limit>.W <users>.W <type>.B <title>.?B (ZC_CHANGE_CHATROOM)
 void clif_changechatstatus(chat_data& cd) {
-	if(cd.usersd[0] == nullptr )
+	if( cd.owner == nullptr ){
 		return;
+	}
 
 	PACKET_ZC_CHANGE_CHATROOM* p = reinterpret_cast<PACKET_ZC_CHANGE_CHATROOM*>( packet_buffer );
 
