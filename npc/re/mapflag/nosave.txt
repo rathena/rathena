@@ -98,3 +98,5 @@ que_swat	mapflag	nosave	SavePoint
 // Rockridge
 //============================================================
 rockmi2	mapflag	nosave	SavePoint
+
+bl_depth1	mapflag	nosave	SavePoint

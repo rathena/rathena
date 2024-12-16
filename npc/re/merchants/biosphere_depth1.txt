@@ -1,0 +1,196 @@
+//===== rAthena Script =======================================
+//= Varmundt's Depth Biosphere 1st floor
+//===== Description: =========================================
+//= [Walkthrough Conversion]
+//= Merchants npcs.
+//===== Changelog: ===========================================
+//= 1.0 First version. [Atemo]
+//============================================================
+
+// Equipment store and enchantments
+ba_in01,293,116,3	script	Rune Energy Equipment Manager#b	4_EP17_BASKET,{
+	if (isbegin_quest(16734) == 0) {
+		mes "[Rune Energy Equipment Manager]";
+		mes "Yo! I will make rune armor using materials from Depth Biosphere and also engrave and enchant it.";
+		mes "By the way, have you been to the Depth Biosphere? Did you hear the explanation?";
+		next;
+		mes "[Rune Energy Equipment Manager]";
+		mes "No, not yet. Then, listen to the explanation first.";
+		mes "If you listen to the explanation and proceed step by step with the Deep 1st floor <b>research</b> of the Biosphere, you will be able to see my skills next time.";
+		close;
+	}
+	.@points = get_reputation_points(REPU_BIO_DEPTH1);
+	if (.@points < 500) {
+		mes "[Rune Energy Equipment Manager]";
+		mes "Yo! I guess you haven't done many requests for Depth Biosphere yet?";
+		mes "Then we wouldn't have collected so many ingredients...";
+		next;
+		mes "[Rune Energy Equipment Manager]";
+		mes "It's not that I don't trust guests, but it would be better for you to <b>conduct research</b> on the deeper 1st floor of the Biosphere!";
+		mes "Oh my, it's not like I don't trust you?";
+		next;
+		mes "[Instructions]";
+		mes "- Can only be crafted by customers with a research progress of 500 or more on the 1st floor of the Biosphere -";
+		close;
+	}
+	mes "[Rune Energy Equipment Manager]";
+	mes "Yo! I will make rune armor using materials from Depth Biosphere and also engrave and enchant it.";
+	next;
+	mes "[Rune Energy Equipment Manager]";
+	mes "Customers must <b>conduct research</b> on the 1st floor in order to be able to engrave and enchant, but we can make as much armor as they want.";
+	next;
+	mes "[Rune Energy Equipment Manager]";
+	mes "Then, I'll show you my skills! Have you brought enough materials? Would you like to start working?";
+	next;
+	.@menu$[0] = ( (.@points < 1000) ? "^AAAAAADeep Rune Armor Enchantment (Lack of Research)^000000" : "Deep Rune Armor Enchantment" );
+	.@menu$[1] = ( (.@points < 1500) ? "^AAAAAADeep Rune Armor Engraving (Lack of Research)^000000" : "Deep Rune Armor Engraving" );
+	.@menu$[2] = ( (.@points < 3500) ? "^AAAAAAUnimprint Deep Rune Armor (Lack of Research)^000000" : "Unimprint Deep Rune Armor" );
+
+	switch( select( "Craft Deep Rune Armor", .@menu$[0], .@menu$[1], .@menu$[2], "Cancel" ) ) {
+	case 1:
+		mes "[Rune Energy Equipment Manager]";
+		mes "Then shall we start working right away?";
+		close2;
+		callshop( "barter_bio_depth_eq_1" );
+		end;
+	case 2:
+		if (.@points < 1000) {
+			mes "[Rune Energy Equipment Manager]";
+			mes "Oh, by the way, I told you that you would have to do more <b>research</b> before I could enchant you. The customer also has two ears.";
+			mes "Please come back later! I'll treat you well!";
+			next;
+			mes "[Instructions]";
+			mes "- Only guests with Depth Biosphere 1st Floor research progress of 1000 points or more can proceed. -";
+			close;
+		}
+		mes "[Rune Energy Equipment Manager]";
+		mes "If you brought these equipment, we will enchant them for you! Let's see what you brought?";
+		mes "^i[450274] ^i[450279] ^i[450280] ^i[450281]";
+		next;
+		mes "[Rune Energy Equipment Manager]";
+		mes "We will also enchant engraved armor, so if you have engraved armor, bring that too!";
+		mes "^i[450282] ^i[450283] ^i[450284] ^i[450285]";
+		next;
+		switch( select( getitemname(450274), getitemname(450279), getitemname(450280), getitemname(450281) ) ) {
+		case 1:
+			mes "[Rune Energy Equipment Manager]";
+			mes "Oh, you brought the " + getitemname(450274) + ".";
+			mes "Then I'll show you my skills~!";
+			close2;
+			item_enchant(99);
+			end;
+		case 2:
+			mes "[Rune Energy Equipment Manager]";
+			mes "Oh, you brought the " + getitemname(450279) + ".";
+			mes "Then I'll show you my skills~!";
+			close2;
+			item_enchant(100);
+			end;
+		case 3:
+			mes "[Rune Energy Equipment Manager]";
+			mes "Oh, you brought the " + getitemname(450280) + ".";
+			mes "Then I'll show you my skills~!";
+			close2;
+			item_enchant(101);
+			end;
+		case 4:
+			mes "[Rune Energy Equipment Manager]";
+			mes "Oh, you brought the " + getitemname(450281) + ".";
+			mes "Then I'll show you my skills~!";
+			close2;
+			item_enchant(102);
+			end;
+		}
+		end;
+	case 3:
+		if (.@points < 1500) {
+			mes "[Rune Energy Equipment Manager]";
+			mes "Hmm~ If you want to engrave the customer's magic into the deep rune armor, you need to <b>conduct research</b> more about the first floor of the deep.";
+			next;
+			mes "[Instructions]";
+			mes "- Only guests with a Depth Biosphere 1st Floor research progress level of 1500 points or higher can proceed. -";
+			close;
+		}
+		mes "[Rune Energy Equipment Manager]";
+		mes "You want to imprint the customer's magic into the deep rune armor you made and turn it into engraved deep rune armor!";
+		mes "Then shall we start working right away?";
+		mes "^i[450282] ^i[450283] ^i[450284] ^i[450285]";
+		close2;
+		item_reform("Bar_D_A_Seal");
+		end;
+	case 4:
+		if (.@points < 3500) {
+			mes "[Rune Energy Equipment Manager]";
+			mes "Hmm~ If you want to remove the customer's magic imprint from the deep rune armor, you need to <b>conduct research</b> more about the first floor of the deep.";
+			next;
+			mes "[Instructions]";
+			mes "- Only guests with a Depth Biosphere 1st Floor research progress score of 3500 or more can proceed. -";
+			close;
+		}
+		mes "[Rune Energy Equipment Manager]";
+		mes "You want to remove the customer's magic imprint from the engraved deep rune armor!";
+		mes "Then shall we start working right away?";
+		close2;
+		item_reform("Bar_D_A_Unseal");
+		end;
+	case 5:
+		mes "[Rune Energy Equipment Manager]";
+		mes "Would you like to try crafting later?";
+		close;
+	}
+	end;
+
+OnInit:
+	setunittitle( getnpcid(0), "<Depth Biosphere 1st Floor>" );
+	end;
+}
+
+// Item exchange
+ba_in01,293,119,3	script	Rune Energy Fusion Manager#b	4_EP17_TABLET,{
+	if (isbegin_quest(16734) == 0) {
+		mes "[Rune Energy Fusion Manager]";
+		mes "It looks like you haven't received any guidance on Depth Biosphere yet.";
+		mes "Please listen to the instructions first before coming.";
+		next;
+		mes "[Rune Energy Fusion Manager]";
+		mes "I am fusing deep energy and deep crystals.";
+		mes "If you come after receiving Deep guidance, I will also guide you through my work.";
+		close;
+	}
+	mes "[Rune Energy Fusion Manager]";
+	mes "I am fusing the deep energy you brought into crystals, and the deep crystals you brought into runes or essences.";
+	mes "What can I fuse for you?";
+	next;
+	switch( select( "Deep Energy Crystal Fusion", "Deep Crystal Rune Fusion", "Deep Crystal Essence Fusion", "Cancel" ) ) {
+	case 1:
+		mes "[Rune Energy Fusion Manager]";
+		mes "Collects the deep energy below and fuses it into a crystal suitable for its properties.";
+		mes "^i[1001290] ^i[1001291] ^i[1001292] ^i[1001293] ^i[1001294] ^i[1001295] ^i[1001296] ^i[1001297]";
+		close2;
+		callshop( "barter_bio_depth_items_1" );
+		end;
+	case 2:
+		mes "[Rune Energy Fusion Manager]";
+		mes "We will collect the deep crystals below and fuse them into runes appropriate for their properties.";
+		mes "^i[1001298] ^i[1001299] ^i[1001300] ^i[1001301] ^i[1001302] ^i[1001303] ^i[1001304] ^i[1001305]";
+		close2;
+		callshop( "barter_bio_depth_items_2" );
+		end;
+	case 3:
+		mes "[Rune Energy Fusion Manager]";
+		mes "We will collect the deep crystals below and fuse them into essences appropriate for their properties.";
+		mes "^i[1001298] ^i[1001299] ^i[1001300] ^i[1001301] ^i[1001302] ^i[1001303] ^i[1001304] ^i[1001305]";
+		close2;
+		callshop( "barter_bio_depth_items_3" );
+		end;
+	case 4:
+		mes "[Rune Energy Fusion Manager]";
+		mes "Please come back again when you need more fusion.";
+		close;
+	}
+	end;
+
+OnInit:
+	setunittitle( getnpcid(0), "<Depth Biosphere 1st Floor>" );
+	end;
+}

@@ -457,3 +457,5 @@ que_thr	mapflag	noteleport
 //============================================================
 itemmall	mapflag	noteleport
 itemmall	mapflag	monster_noteleport
+
+bl_depth1	mapflag	noteleport

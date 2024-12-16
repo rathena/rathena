@@ -114949,38 +114949,774 @@ Body:
 #    AegisName: AB_YEMOB_131
 #  - Id: 22139
 #    AegisName: AB_YEMOB_132
-#  - Id: 22140
-#    AegisName: BIO_ANOLIAN
-#  - Id: 22141
-#    AegisName: BIO_SKEL_ARCHER
-#  - Id: 22142
-#    AegisName: BIO_DRAGON_TAIL
-#  - Id: 22143
-#    AegisName: BIO_LAVA_TOAD
-#  - Id: 22144
-#    AegisName: BIO_LITTLE_FATUM
-#  - Id: 22145
-#    AegisName: BIO_STING
-#  - Id: 22146
-#    AegisName: BIO_EMPATHIZER
-#  - Id: 22147
-#    AegisName: BIO_FIRE_FRILLDORA
-#  - Id: 22148
-#    AegisName: BIO_HOLY_FRUS
-#  - Id: 22149
-#    AegisName: BIO_HOLY_SKOGUL
-#  - Id: 22150
-#    AegisName: BIO_KAPHA
-#  - Id: 22151
-#    AegisName: BIO_SKEL_SOLDIER
-#  - Id: 22152
-#    AegisName: BIO_PINGUICULA_D
-#  - Id: 22153
-#    AegisName: BIO_POM_SPIDER
-#  - Id: 22154
-#    AegisName: BIO_PRAY_GIVER
-#  - Id: 22155
-#    AegisName: BIO_WOOD_GOBLIN
+  - Id: 22140
+    AegisName: BIO_ANOLIAN
+    Name: Deep Anolian
+    Level: 263
+    Hp: 107320500
+    BaseExp: 5440652
+    JobExp: 3789414
+    Attack: 39880
+    Attack2: 9297
+    Defense: 229
+    MagicDefense: 115
+    Resistance: 1357
+    MagicResistance: 630
+    Str: 369
+    Agi: 254
+    Vit: 293
+    Int: 236
+    Dex: 423
+    Luk: 323
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Fish
+    Element: Water
+    ElementLevel: 3
+    WalkSpeed: 190
+    AttackDelay: 300
+    AttackMotion: 900
+    DamageMotion: 864 # TODO
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Bar_D_Ic_Energy
+        Rate: 500
+      - Item: Bar_D_Ic_Crystal
+        Rate: 50
+      - Item: Etel_Dust
+        Rate: 150
+      - Item: Ice_Barmund_Rune
+        Rate: 80
+      - Item: Ice_Barmund_Rune2
+        Rate: 20
+      - Item: Barmund_Ice_Essence
+        Rate: 30
+      - Item: aegis_1001332
+        Rate: 2500
+  - Id: 22141
+    AegisName: BIO_SKEL_ARCHER
+    Name: Deep Skeleton Archer
+    Level: 264
+    Hp: 98579600
+    BaseExp: 5522166
+    JobExp: 3855867
+    Attack: 22235
+    Attack2: 10779
+    Defense: 172
+    MagicDefense: 100
+    Resistance: 640
+    MagicResistance: 578
+    Str: 302
+    Agi: 290
+    Vit: 191
+    Int: 253
+    Dex: 441
+    Luk: 319
+    AttackRange: 10
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 2
+    WalkSpeed: 250
+    AttackDelay: 180
+    AttackMotion: 540
+    DamageMotion: 576 # TODO
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Bar_D_Co_Energy
+        Rate: 500
+      - Item: Bar_D_Co_Crystal
+        Rate: 50
+      - Item: Etel_Dust
+        Rate: 150
+      - Item: Death_Barmund_Rune
+        Rate: 80
+      - Item: Death_Barmund_Rune2
+        Rate: 20
+      - Item: Barmund_Death_Essence
+        Rate: 30
+      - Item: aegis_1001336
+        Rate: 2500
+  - Id: 22142
+    AegisName: BIO_DRAGON_TAIL
+    Name: Deep Dragon Tail
+    Level: 264
+    Hp: 83702230
+    BaseExp: 5478855
+    JobExp: 3825625
+    Attack: 29537
+    Attack2: 12175
+    Defense: 201
+    MagicDefense: 119
+    Resistance: 898
+    MagicResistance: 793
+    Str: 430
+    Agi: 414
+    Vit: 281
+    Int: 361
+    Dex: 597
+    Luk: 455
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Insect
+    Element: Wind
+    ElementLevel: 4
+    WalkSpeed: 175
+    AttackDelay: 240
+    AttackMotion: 720
+    DamageMotion: 312 # TODO
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Bar_D_St_Energy
+        Rate: 500
+      - Item: Bar_D_St_Crystal
+        Rate: 50
+      - Item: Etel_Dust
+        Rate: 150
+      - Item: Plain_Barmund_Rune
+        Rate: 80
+      - Item: Plain_Barmund_Rune2
+        Rate: 20
+      - Item: Barmund_Plain_Essence
+        Rate: 30
+      - Item: aegis_1001333
+        Rate: 2500
+  - Id: 22143
+    AegisName: BIO_LAVA_TOAD
+    Name: Deep Lava Toad
+    Level: 262
+    Hp: 102957370
+    BaseExp: 5449476
+    JobExp: 3791860
+    Attack: 34538
+    Attack2: 9975
+    Defense: 363
+    MagicDefense: 159
+    Resistance: 1630
+    MagicResistance: 954
+    Str: 244
+    Agi: 225
+    Vit: 331
+    Int: 286
+    Dex: 411
+    Luk: 295
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Fire
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 280
+    AttackMotion: 840
+    DamageMotion: 300 # TODO
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Bar_D_Fl_Energy
+        Rate: 500
+      - Item: Bar_D_Fl_Crystal
+        Rate: 50
+      - Item: Etel_Dust
+        Rate: 150
+      - Item: Flame_Barmund_Rune
+        Rate: 80
+      - Item: Flame_Barmund_Rune2
+        Rate: 20
+      - Item: Barmund_Flame_Essence
+        Rate: 30
+      - Item: aegis_1001330
+        Rate: 2500
+  - Id: 22144
+    AegisName: BIO_LITTLE_FATUM
+    Name: Deep Little Fatum
+    Level: 263
+    Hp: 87700530
+    BaseExp: 5475237
+    JobExp: 3830757
+    Attack: 38685
+    Attack2: 14601
+    Defense: 192
+    MagicDefense: 213
+    Resistance: 862
+    MagicResistance: 1414
+    Str: 243
+    Agi: 251
+    Vit: 274
+    Int: 370
+    Dex: 455
+    Luk: 380
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Demihuman
+    Element: Wind
+    ElementLevel: 3
+    WalkSpeed: 170
+    AttackDelay: 320
+    AttackMotion: 960
+    DamageMotion: 432 # TODO
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Bar_D_St_Energy
+        Rate: 500
+      - Item: Bar_D_St_Crystal
+        Rate: 50
+      - Item: Etel_Dust
+        Rate: 150
+      - Item: Plain_Barmund_Rune
+        Rate: 80
+      - Item: Plain_Barmund_Rune2
+        Rate: 20
+      - Item: Barmund_Plain_Essence
+        Rate: 30
+      - Item: aegis_1001333
+        Rate: 2500
+  - Id: 22145
+    AegisName: BIO_STING
+    Name: Deep Sting
+    Level: 265
+    Hp: 101934980
+    BaseExp: 5596403
+    JobExp: 3917482
+    Attack: 22685
+    Attack2: 11912
+    Defense: 292
+    MagicDefense: 170
+    Resistance: 1402
+    MagicResistance: 1123
+    Str: 352
+    Agi: 249
+    Vit: 335
+    Int: 352
+    Dex: 471
+    Luk: 345
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Earth
+    ElementLevel: 4
+    WalkSpeed: 200
+    AttackDelay: 176
+    AttackMotion: 528
+    DamageMotion: 240 # TODO
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Bar_D_Ea_Energy
+        Rate: 500
+      - Item: Bar_D_Ea_Crystal
+        Rate: 50
+      - Item: Etel_Dust
+        Rate: 150
+      - Item: Plain_Barmund_Rune
+        Rate: 80
+      - Item: Plain_Barmund_Rune2
+        Rate: 20
+      - Item: Barmund_Plain_Essence
+        Rate: 30
+      - Item: aegis_1001331
+        Rate: 2500
+  - Id: 22146
+    AegisName: BIO_EMPATHIZER
+    Name: Deep Empathizer
+    Level: 262
+    Hp: 78695860
+    BaseExp: 5389361
+    JobExp: 3770674
+    Attack: 40685
+    Attack2: 15776
+    Defense: 199
+    MagicDefense: 223
+    Resistance: 930
+    MagicResistance: 1529
+    Str: 265
+    Agi: 273
+    Vit: 298
+    Int: 403
+    Dex: 493
+    Luk: 415
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Angel
+    Element: Ghost
+    ElementLevel: 2
+    WalkSpeed: 120
+    AttackDelay: 336
+    AttackMotion: 1008
+    DamageMotion: 432 # TODO
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Bar_D_So_Energy
+        Rate: 500
+      - Item: Bar_D_So_Crystal
+        Rate: 50
+      - Item: Etel_Dust
+        Rate: 150
+      - Item: Soul_Barmund_Rune
+        Rate: 80
+      - Item: Soul_Barmund_Rune2
+        Rate: 20
+      - Item: Barmund_Soul_Essence
+        Rate: 30
+      - Item: aegis_1001334
+        Rate: 2500
+  - Id: 22147
+    AegisName: BIO_FIRE_FRILLDORA
+    Name: Deep Fire Frilldora
+    Level: 265
+    Hp: 93256470
+    BaseExp: 5675187
+    JobExp: 3962714
+    Attack: 22127
+    Attack2: 11275
+    Defense: 180
+    MagicDefense: 103
+    Resistance: 701
+    MagicResistance: 611
+    Str: 321
+    Agi: 309
+    Vit: 210
+    Int: 270
+    Dex: 455
+    Luk: 340
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Fire
+    ElementLevel: 3
+    WalkSpeed: 120
+    AttackDelay: 180
+    AttackMotion: 540
+    DamageMotion: 432 # TODO
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Bar_D_Fl_Energy
+        Rate: 500
+      - Item: Bar_D_Fl_Crystal
+        Rate: 50
+      - Item: Etel_Dust
+        Rate: 150
+      - Item: Flame_Barmund_Rune
+        Rate: 80
+      - Item: Flame_Barmund_Rune2
+        Rate: 20
+      - Item: Barmund_Flame_Essence
+        Rate: 30
+      - Item: aegis_1001330
+        Rate: 2500
+  - Id: 22148
+    AegisName: BIO_HOLY_FRUS
+    Name: Deep Holy Frus
+    Level: 263
+    Hp: 85467880
+    BaseExp: 5525795
+    JobExp: 3848717
+    Attack: 34216
+    Attack2: 10632
+    Defense: 299
+    MagicDefense: 115
+    Resistance: 1357
+    MagicResistance: 630
+    Str: 369
+    Agi: 254
+    Vit: 293
+    Int: 236
+    Dex: 423
+    Luk: 323
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Angel
+    Element: Holy
+    ElementLevel: 2
+    WalkSpeed: 130
+    AttackDelay: 260
+    AttackMotion: 780
+    DamageMotion: 432 # TODO
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Bar_D_Pu_Energy
+        Rate: 500
+      - Item: Bar_D_Pu_Crystal
+        Rate: 50
+      - Item: Etel_Dust
+        Rate: 150
+      - Item: Temple_Barmund_Rune
+        Rate: 80
+      - Item: Temple_Barmund_Rune2
+        Rate: 20
+      - Item: Barmund_Temple_Essence
+        Rate: 30
+      - Item: aegis_1001335
+        Rate: 2500
+  - Id: 22149
+    AegisName: BIO_HOLY_SKOGUL
+    Name: Deep Holy Skogul
+    Level: 265
+    Hp: 83587530
+    BaseExp: 5693764
+    JobExp: 3983650
+    Attack: 68405
+    Attack2: 22109
+    Defense: 187
+    MagicDefense: 207
+    Resistance: 819
+    MagicResistance: 1341
+    Str: 229
+    Agi: 237
+    Vit: 258
+    Int: 349
+    Dex: 431
+    Luk: 359
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Angel
+    Element: Holy
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 352
+    AttackMotion: 1056
+    DamageMotion: 480 # TODO
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Bar_D_Pu_Energy
+        Rate: 500
+      - Item: Bar_D_Pu_Crystal
+        Rate: 50
+      - Item: Etel_Dust
+        Rate: 150
+      - Item: Temple_Barmund_Rune
+        Rate: 80
+      - Item: Temple_Barmund_Rune2
+        Rate: 20
+      - Item: Barmund_Temple_Essence
+        Rate: 30
+      - Item: aegis_1001335
+        Rate: 2500
+  - Id: 22150
+    AegisName: BIO_KAPHA
+    Name: Deep Kapha
+    Level: 263
+    Hp: 105899670
+    BaseExp: 5440652
+    JobExp: 3789414
+    Attack: 37985
+    Attack2: 9205
+    Defense: 299
+    MagicDefense: 115
+    Resistance: 1357
+    MagicResistance: 630
+    Str: 369
+    Agi: 254
+    Vit: 293
+    Int: 236
+    Dex: 423
+    Luk: 395
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Fish
+    Element: Water
+    ElementLevel: 3
+    WalkSpeed: 165
+    AttackDelay: 288
+    AttackMotion: 864
+    DamageMotion: 672 # TODO
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Bar_D_Ic_Energy
+        Rate: 500
+      - Item: Bar_D_Ic_Crystal
+        Rate: 50
+      - Item: Etel_Dust
+        Rate: 150
+      - Item: Ice_Barmund_Rune
+        Rate: 80
+      - Item: Ice_Barmund_Rune2
+        Rate: 20
+      - Item: Barmund_Ice_Essence
+        Rate: 30
+      - Item: aegis_1001332
+        Rate: 2500
+  - Id: 22151
+    AegisName: BIO_SKEL_SOLDIER
+    Name: Deep Skeleton Soldier
+    Level: 264
+    Hp: 100400600
+    BaseExp: 5526869
+    JobExp: 3849464
+    Attack: 25278
+    Attack2: 9899
+    Defense: 294
+    MagicDefense: 114
+    Resistance: 1312
+    MagicResistance: 609
+    Str: 355
+    Agi: 244
+    Vit: 282
+    Int: 227
+    Dex: 408
+    Luk: 310
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 3
+    WalkSpeed: 160
+    AttackDelay: 192
+    AttackMotion: 576
+    DamageMotion: 432 # TODO
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Bar_D_Co_Energy
+        Rate: 500
+      - Item: Bar_D_Co_Crystal
+        Rate: 50
+      - Item: Etel_Dust
+        Rate: 150
+      - Item: Death_Barmund_Rune
+        Rate: 80
+      - Item: Death_Barmund_Rune2
+        Rate: 20
+      - Item: Barmund_Death_Essence
+        Rate: 30
+      - Item: aegis_1001336
+        Rate: 2500
+  - Id: 22152
+    AegisName: BIO_PINGUICULA_D
+    Name: Deep Dark Pinguicula
+    Level: 264
+    Hp: 81679820
+    BaseExp: 5519017
+    JobExp: 3861388
+    Attack: 24025
+    Attack2: 16364
+    Defense: 198
+    MagicDefense: 222
+    Resistance: 919
+    MagicResistance: 1511
+    Str: 262
+    Agi: 270
+    Vit: 294
+    Int: 398
+    Dex: 487
+    Luk: 409
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Poison
+    ElementLevel: 3
+    WalkSpeed: 230
+    AttackDelay: 200
+    AttackMotion: 600
+    DamageMotion: 360 # TODO
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Bar_D_Po_Energy
+        Rate: 500
+      - Item: Bar_D_Po_Crystal
+        Rate: 50
+      - Item: Etel_Dust
+        Rate: 150
+      - Item: Venom_Barmund_Rune
+        Rate: 80
+      - Item: Venom_Barmund_Rune2
+        Rate: 20
+      - Item: Barmund_Venom_Essence
+        Rate: 30
+      - Item: aegis_1001337
+        Rate: 2500
+  - Id: 22153
+    AegisName: BIO_POM_SPIDER
+    Name: Deep Pom Spider
+    Level: 265
+    Hp: 89009870
+    BaseExp: 5613974
+    JobExp: 3910133
+    Attack: 29025
+    Attack2: 10836
+    Defense: 319
+    MagicDefense: 123
+    Resistance: 1524
+    MagicResistance: 707
+    Str: 420
+    Agi: 289
+    Vit: 334
+    Int: 269
+    Dex: 477
+    Luk: 368
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Insect
+    Element: Poison
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 220
+    AttackMotion: 660
+    DamageMotion: 576 # TODO
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Bar_D_Po_Energy
+        Rate: 500
+      - Item: Bar_D_Po_Crystal
+        Rate: 50
+      - Item: Etel_Dust
+        Rate: 150
+      - Item: Venom_Barmund_Rune
+        Rate: 80
+      - Item: Venom_Barmund_Rune2
+        Rate: 20
+      - Item: Barmund_Venom_Essence
+        Rate: 30
+      - Item: aegis_1001337
+        Rate: 2500
+  - Id: 22154
+    AegisName: BIO_PRAY_GIVER
+    Name: Deep Pray Giver
+    Level: 263
+    Hp: 89002070
+    BaseExp: 5466195
+    JobExp: 3826337
+    Attack: 32823
+    Attack2: 13117
+    Defense: 299
+    MagicDefense: 175
+    Resistance: 1472
+    MagicResistance: 1180
+    Str: 372
+    Agi: 263
+    Vit: 354
+    Int: 372
+    Dex: 496
+    Luk: 365
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Angel
+    Element: Ghost
+    ElementLevel: 3
+    WalkSpeed: 120
+    AttackDelay: 256
+    AttackMotion: 768
+    DamageMotion: 480 # TODO
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Bar_D_So_Energy
+        Rate: 500
+      - Item: Bar_D_So_Crystal
+        Rate: 50
+      - Item: Etel_Dust
+        Rate: 150
+      - Item: Soul_Barmund_Rune
+        Rate: 80
+      - Item: Soul_Barmund_Rune2
+        Rate: 20
+      - Item: Barmund_Soul_Essence
+        Rate: 30
+      - Item: aegis_1001334
+        Rate: 2500
+  - Id: 22155
+    AegisName: BIO_WOOD_GOBLIN
+    Name: Deep Wood Goblin
+    Level: 264
+    Hp: 99900999
+    BaseExp: 5466757
+    JobExp: 3826730
+    Attack: 35823
+    Attack2: 12158
+    Defense: 303
+    MagicDefense: 177
+    Resistance: 1506
+    MagicResistance: 1207
+    Str: 382
+    Agi: 270
+    Vit: 363
+    Int: 382
+    Dex: 507
+    Luk: 374
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Earth
+    ElementLevel: 3
+    WalkSpeed: 240
+    AttackDelay: 280
+    AttackMotion: 840
+    DamageMotion: 360 # TODO
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Bar_D_Ea_Energy
+        Rate: 500
+      - Item: Bar_D_Ea_Crystal
+        Rate: 50
+      - Item: Etel_Dust
+        Rate: 150
+      - Item: Plain_Barmund_Rune
+        Rate: 80
+      - Item: Plain_Barmund_Rune2
+        Rate: 20
+      - Item: Barmund_Plain_Essence
+        Rate: 30
+      - Item: aegis_1001331
+        Rate: 2500
 #  - Id: 22156
 #    AegisName: VR_MD_LAKE
 #  - Id: 22157

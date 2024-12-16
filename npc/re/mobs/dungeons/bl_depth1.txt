@@ -1,0 +1,25 @@
+//===== rAthena Script =======================================
+//= Varmundt's Depth Biosphere 1st floor
+//===== Description: =========================================
+//= [Walkthrough Conversion]
+//= Monster Spawn.
+//===== Changelog: ===========================================
+//= 1.0 First version. [Atemo]
+//============================================================
+
+bl_depth1	monster	--ja--	22140,25	// BIO_ANOLIAN
+bl_depth1	monster	--ja--	22141,25	// BIO_SKEL_ARCHER
+bl_depth1	monster	--ja--	22142,25	// BIO_DRAGON_TAIL
+bl_depth1	monster	--ja--	22143,25	// BIO_LAVA_TOAD
+bl_depth1	monster	--ja--	22144,25	// BIO_LITTLE_FATUM
+bl_depth1	monster	--ja--	22145,25	// BIO_STING
+bl_depth1	monster	--ja--	22146,25	// BIO_EMPATHIZER
+bl_depth1	monster	--ja--	22147,25	// BIO_FIRE_FRILLDORA
+bl_depth1	monster	--ja--	22148,25	// BIO_HOLY_FRUS
+bl_depth1	monster	--ja--	22149,25	// BIO_HOLY_SKOGUL
+bl_depth1	monster	--ja--	22155,25	// BIO_WOOD_GOBLIN
+bl_depth1	monster	--ja--	22150,25	// BIO_KAPHA
+bl_depth1	monster	--ja--	22152,25	// BIO_PINGUICULA_D
+bl_depth1	monster	--ja--	22153,25	// BIO_POM_SPIDER
+bl_depth1	monster	--ja--	22154,25	// BIO_PRAY_GIVER
+bl_depth1	monster	--ja--	22151,25	// BIO_SKEL_SOLDIER
