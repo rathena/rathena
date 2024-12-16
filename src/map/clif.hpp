@@ -758,6 +758,13 @@ enum e_create_chatroom : uint8 {
 	CREATEROOM_ALREADY_EXISTS = 2
 };
 
+enum e_status_chatroom : uint8 {
+	STATUSROOM_PRIVATE = 0,
+	STATUSROOM_PUBLIC,
+	STATUSROOM_ARENA,
+	STATUSROOM_PK_ZONE
+};
+
 enum e_action_failure : uint8 {
 	ARROWFAIL_NO_AMMO = 0,
 	ARROWFAIL_WEIGHT_LIMIT = 1,
@@ -883,7 +890,7 @@ void clif_changeoption2( block_list& bl );
 void clif_useitemack(map_session_data *sd,int32 index,int32 amount,bool ok);	// self
 void clif_GlobalMessage( block_list& bl, const char* message, enum send_target target );
 void clif_createchat( map_session_data& sd, e_create_chatroom flag );
-void clif_dispchat(struct chat_data* cd, int32 fd);	// area or fd
+void clif_dispchat( const chat_data& cd );
 void clif_joinchatfail( map_session_data& sd, e_refuse_enter_room result );
 void clif_joinchatok(map_session_data& sd,chat_data& cd);
 void clif_addchat( chat_data& cd, map_session_data& sd );

@@ -4490,62 +4490,61 @@ void clif_createchat( map_session_data& sd, e_create_chatroom flag ){
 	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
-
-/// Display a chat above the owner (ZC_ROOM_NEWENTRY).
-/// 00d7 <packet len>.W <owner id>.L <char id>.L <limit>.W <users>.W <type>.B <title>.?B
+/// Calculates the chat status
 /// type:
 ///     0 = private (password protected)
 ///     1 = public
 ///     2 = arena (npc waiting room)
 ///     3 = PK zone (non-clickable)
-void clif_dispchat(struct chat_data* cd, int32 fd)
-{
-	unsigned char buf[128];
-	uint8 type;
+static e_status_chatroom clif_chat_status( const chat_data &cd ){
+	if (cd.owner->type == BL_PC)
+		return (cd.pub) ? STATUSROOM_PUBLIC : STATUSROOM_PRIVATE;
+	else if (cd.owner->type == BL_NPC)
+		return (cd.limit) ? STATUSROOM_ARENA : STATUSROOM_PK_ZONE;
+	else
+		return STATUSROOM_PUBLIC;
+}
 
-	if( cd == nullptr || cd->owner == nullptr )
-		return;
-
-	type = (cd->owner->type == BL_PC ) ? (cd->pub) ? 1 : 0
-	     : (cd->owner->type == BL_NPC) ? (cd->limit) ? 2 : 3
-	     : 1;
-
-	WBUFW(buf, 0) = 0xd7;
-	WBUFW(buf, 2) = (uint16)(17 + strlen(cd->title));
-	WBUFL(buf, 4) = cd->owner->id;
-	WBUFL(buf, 8) = cd->bl.id;
-	WBUFW(buf,12) = cd->limit;
-	WBUFW(buf,14) = (cd->owner->type == BL_NPC) ? cd->users+1 : cd->users;
-	WBUFB(buf,16) = type;
-	memcpy(WBUFCP(buf,17), cd->title, strlen(cd->title)); // not zero-terminated
-
-	if( session_isActive(fd) ) {
-		WFIFOHEAD(fd,WBUFW(buf,2));
-		memcpy(WFIFOP(fd,0),buf,WBUFW(buf,2));
-		WFIFOSET(fd,WBUFW(buf,2));
-	} else {
-		clif_send(buf,WBUFW(buf,2),cd->owner,AREA_WOSC);
+/// Calculates the chat user count
+static uint16 clif_chat_usercount( const chat_data& cd ){
+	if( cd.owner->type == BL_NPC ){
+		return cd.users + 1;
+	}else{
+		return cd.users;
 	}
 }
 
-
-/// Chatroom properties adjustment (ZC_CHANGE_CHATROOM).
-/// 00df <packet len>.W <owner id>.L <chat id>.L <limit>.W <users>.W <type>.B <title>.?B
-/// type:
-///     0 = private (password protected)
-///     1 = public
-///     2 = arena (npc waiting room)
-///     3 = PK zone (non-clickable)
-void clif_changechatstatus(chat_data& cd) {
-	if(cd.usersd[0] == nullptr )
+/// Display a chat above the owner.
+/// 00d7 <packet len>.W <owner id>.L <char id>.L <limit>.W <users>.W <type>.B <title>.?B (ZC_ROOM_NEWENTRY)
+void clif_dispchat( const chat_data& cd ){
+	if( cd.owner == nullptr ){
 		return;
+	}
 
-	enum e_chat_flags:uint8 {
-		CHAT_PRIVATE = 0,
-		CHAT_PUBLIC,
-		CHAT_ARENA,
-		CHAT_PK
-	};
+	PACKET_ZC_ROOM_NEWENTRY* p = reinterpret_cast<PACKET_ZC_ROOM_NEWENTRY*>( packet_buffer );
+
+	p->packetType = HEADER_ZC_ROOM_NEWENTRY;
+	p->packetSize = sizeof( *p );
+	p->owner = cd.owner->id;
+	p->id = cd.bl.id;
+	p->limit = cd.limit;
+	p->users = clif_chat_usercount( cd );
+	p->type = clif_chat_status( cd );
+
+	// not zero-terminated
+	size_t max = safestrnlen( cd.title, CHATROOM_TITLE_SIZE );
+	strncpy( p->title, cd.title, max );
+	p->packetSize += static_cast<decltype(p->packetSize)>( max );
+
+	clif_send( p, p->packetSize, cd.owner, AREA_WOSC );
+}
+
+/// Chatroom properties adjustment.
+/// 00df <packet len>.W <owner id>.L <chat id>.L <limit>.W <users>.W <type>.B <title>.?B (ZC_CHANGE_CHATROOM)
+void clif_changechatstatus(chat_data& cd) {
+	if( cd.owner == nullptr ){
+		return;
+	}
 
 	PACKET_ZC_CHANGE_CHATROOM* p = reinterpret_cast<PACKET_ZC_CHANGE_CHATROOM*>( packet_buffer );
 
@@ -4554,26 +4553,13 @@ void clif_changechatstatus(chat_data& cd) {
 	p->ownerId = cd.owner->id;
 	p->chatId = cd.bl.id;
 	p->limit = cd.limit;
-	p->users = cd.users;
+	p->users = clif_chat_usercount( cd );
+	p->flag = clif_chat_status( cd );
 
 	// not zero-terminated
 	size_t max = safestrnlen( cd.title, CHATROOM_TITLE_SIZE );
 	strncpy( p->title, cd.title, max );
 	p->packetSize += static_cast<decltype(p->packetSize)>( max );
-
-	if(cd.owner->type == BL_NPC){
-		// NPC itself counts as additional chat user
-		p->users++;
-
-		if(cd.limit)
-			p->flag = CHAT_ARENA;
-		else
-			p->flag = CHAT_PK;
-	}else if(cd.owner->type == BL_PC && cd.pub == false){
-		p->flag = CHAT_PRIVATE;
-	}else{
-		p->flag = CHAT_PUBLIC;
-	}
 
 	clif_send(p,p->packetSize,cd.owner,CHAT);
 }
@@ -4619,8 +4605,6 @@ void clif_joinchatfail( map_session_data& sd, e_refuse_enter_room result ){
 ///     0 = owner (menu)
 ///     1 = normal
 void clif_joinchatok(map_session_data& sd, chat_data& cd){
-
-
 	PACKET_ZC_ENTER_ROOM* p = reinterpret_cast<PACKET_ZC_ENTER_ROOM*>( packet_buffer );
 
 	p->packetType = HEADER_ZC_ENTER_ROOM;
@@ -4653,7 +4637,6 @@ void clif_joinchatok(map_session_data& sd, chat_data& cd){
 	}
 
 	clif_send(p,p->packetSize,&sd.bl,SELF);
-
 }
 
 
@@ -4976,9 +4959,11 @@ static void clif_getareachar_pc(map_session_data* sd,map_session_data* dstsd)
 	int32 i;
 
 	if( dstsd->chatID ) {
-		struct chat_data *cd = nullptr;
-		if( (cd = (struct chat_data*)map_id2bl(dstsd->chatID)) && cd->usersd[0]==dstsd)
-			clif_dispchat(cd,sd->fd);
+		chat_data* cd = map_id2cd( dstsd->chatID );
+
+		if( cd != nullptr && cd->usersd[0] == dstsd ){
+			clif_dispchat(*cd);
+		}
 	} else if( dstsd->state.vending )
 		clif_showvendingboard( *dstsd, SELF, &sd->bl );
 	else if( dstsd->state.buyingstore )
@@ -5071,8 +5056,15 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 	case BL_NPC:
 		{
 			TBL_NPC* nd = (TBL_NPC*)bl;
-			if( nd->chat_id )
-				clif_dispchat((struct chat_data*)map_id2bl(nd->chat_id),sd->fd);
+
+			if( nd->chat_id ){
+				chat_data* cd = map_id2cd( nd->chat_id );
+
+				if( cd != nullptr ){
+					clif_dispchat( *cd );
+				}
+			}
+
 			if( nd->size == SZ_BIG )
 				clif_specialeffect_single(bl,EF_GIANTBODY2,sd->fd);
 			else if( nd->size == SZ_MEDIUM )
@@ -5581,7 +5573,7 @@ int32 clif_outsight(struct block_list *bl,va_list ap)
 				struct chat_data *cd;
 				cd=(struct chat_data*)map_id2bl(sd->chatID);
 				if(cd->usersd[0]==sd)
-					clif_dispchat(cd,tsd->fd);
+					clif_dispchat(*cd);
 			}
 			if(sd->state.vending)
 				clif_closevendingboard(bl,tsd->fd);

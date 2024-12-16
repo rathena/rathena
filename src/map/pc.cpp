@@ -3018,9 +3018,11 @@ int32 pc_disguise(map_session_data *sd, int32 class_)
 			clif_updatestatus(*sd,SP_CARTINFO);
 		}
 		if (sd->chatID) {
-			struct chat_data* cd;
-			if ((cd = (struct chat_data*)map_id2bl(sd->chatID)) != nullptr)
-				clif_dispchat(cd,0);
+			chat_data* cd = map_id2cd( sd->chatID );
+
+			if( cd != nullptr ){
+				clif_dispchat( *cd );
+			}
 		}
 	}
 	return 1;
