@@ -10864,7 +10864,6 @@ Body:
       - Level: 1
         Str: 1
         Agi: 1
-        Sta: 1
       - Level: 2
         Int: 1
         Dex: 1
@@ -10876,7 +10875,6 @@ Body:
         Str: 1
         Agi: 1
         Pow: 1
-        Sta: 1
       - Level: 6
         Int: 1
         Dex: 1
@@ -10890,6 +10888,8 @@ Body:
         Dex: 1
       - Level: 10
         Agi: 1
+      - Level: 11
+        Sta: 1
       - Level: 12
         Vit: 1
       - Level: 13
@@ -10900,24 +10900,20 @@ Body:
         Int: 1
       - Level: 15
         Str: 1
-        Sta: 1
       - Level: 16
         Crt: 1
       - Level: 17
         Str: 1
         Vit: 1
-        Sta: 1
         Con: 1
       - Level: 18
         Str: 1
-        Sta: 1
       - Level: 19
         Int: 1
         Spl: 1
       - Level: 20
         Str: 1
         Pow: 1
-        Sta: 1
       - Level: 21
         Crt: 1
       - Level: 22
@@ -10927,9 +10923,9 @@ Body:
         Int: 1
       - Level: 24
         Pow: 1
+        Sta: 1
       - Level: 25
         Str: 1
-        Sta: 1
       - Level: 26
         Agi: 1
       - Level: 27
@@ -10948,10 +10944,11 @@ Body:
       - Level: 33
         Pow: 1
         Spl: 1
+      - Level: 34
+        Sta: 1
       - Level: 35
         Str: 1
         Int: 1
-        Sta: 1
       - Level: 36
         Con: 1
       - Level: 37
@@ -10966,11 +10963,11 @@ Body:
         Con: 1
       - Level: 41
         Str: 1
-        Sta: 1
       - Level: 42
         Int: 1
       - Level: 43
         Pow: 1
+        Sta: 1
       - Level: 44
         Luk: 1
       - Level: 45
@@ -10983,7 +10980,6 @@ Body:
       - Level: 48
         Str: 1
         Int: 1
-        Sta: 1
       - Level: 49
         Pow: 1
         Spl: 1

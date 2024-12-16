@@ -16,7 +16,7 @@
 #include "char.hpp"
 #include "inter.hpp"
 
-int inter_homunculus_sql_init(void)
+int32 inter_homunculus_sql_init(void)
 {
 	return 0;
 }
@@ -25,7 +25,7 @@ void inter_homunculus_sql_final(void)
 	return;
 }
 
-void mapif_homunculus_created(int fd, uint32 account_id, struct s_homunculus *sh, unsigned char flag)
+void mapif_homunculus_created(int32 fd, uint32 account_id, struct s_homunculus *sh, unsigned char flag)
 {
 	WFIFOHEAD(fd, sizeof(struct s_homunculus)+9);
 	WFIFOW(fd,0) = 0x3890;
@@ -36,7 +36,7 @@ void mapif_homunculus_created(int fd, uint32 account_id, struct s_homunculus *sh
 	WFIFOSET(fd, WFIFOW(fd,2));
 }
 
-void mapif_homunculus_deleted(int fd, int flag)
+void mapif_homunculus_deleted(int32 fd, int32 flag)
 {
 	WFIFOHEAD(fd, 3);
 	WFIFOW(fd, 0) = 0x3893;
@@ -44,7 +44,7 @@ void mapif_homunculus_deleted(int fd, int flag)
 	WFIFOSET(fd, 3);
 }
 
-void mapif_homunculus_loaded(int fd, uint32 account_id, struct s_homunculus *hd)
+void mapif_homunculus_loaded(int32 fd, uint32 account_id, struct s_homunculus *hd)
 {
 	WFIFOHEAD(fd, sizeof(struct s_homunculus)+9);
 	WFIFOW(fd,0) = 0x3891;
@@ -63,7 +63,7 @@ void mapif_homunculus_loaded(int fd, uint32 account_id, struct s_homunculus *hd)
 	WFIFOSET(fd, sizeof(struct s_homunculus)+9);
 }
 
-void mapif_homunculus_saved(int fd, uint32 account_id, bool flag)
+void mapif_homunculus_saved(int32 fd, uint32 account_id, bool flag)
 {
 	WFIFOHEAD(fd, 7);
 	WFIFOW(fd,0) = 0x3892;
@@ -72,7 +72,7 @@ void mapif_homunculus_saved(int fd, uint32 account_id, bool flag)
 	WFIFOSET(fd, 7);
 }
 
-void mapif_homunculus_renamed(int fd, uint32 account_id, uint32 char_id, unsigned char flag, char* name)
+void mapif_homunculus_renamed(int32 fd, uint32 account_id, uint32 char_id, unsigned char flag, char* name)
 {
 	WFIFOHEAD(fd, NAME_LENGTH+12);
 	WFIFOW(fd, 0) = 0x3894;
@@ -103,7 +103,7 @@ bool mapif_homunculus_save(struct s_homunculus* hd)
 		}
 		else
 		{
-			hd->hom_id = (int)Sql_LastInsertId(sql_handle);
+			hd->hom_id = (int32)Sql_LastInsertId(sql_handle);
 		}
 	}
 	else
@@ -117,28 +117,24 @@ bool mapif_homunculus_save(struct s_homunculus* hd)
 		}
 		else
 		{
-			SqlStmt* stmt;
-			int i;
+			SqlStmt stmt{ *sql_handle };
+			int32 i;
 
-			stmt = SqlStmt_Malloc(sql_handle);
-			if( SQL_ERROR == SqlStmt_Prepare(stmt, "REPLACE INTO `%s` (`homun_id`, `id`, `lv`) VALUES (%d, ?, ?)", schema_config.skill_homunculus_db, hd->hom_id) )
+			if( SQL_ERROR == stmt.Prepare("REPLACE INTO `%s` (`homun_id`, `id`, `lv`) VALUES (%d, ?, ?)", schema_config.skill_homunculus_db, hd->hom_id) )
 				SqlStmt_ShowDebug(stmt);
 			for( i = 0; i < MAX_HOMUNSKILL; ++i )
 			{
 				if( hd->hskill[i].id > 0 && hd->hskill[i].lv != 0 )
 				{
-					SqlStmt_BindParam(stmt, 0, SQLDT_USHORT, &hd->hskill[i].id, 0);
-					SqlStmt_BindParam(stmt, 1, SQLDT_USHORT, &hd->hskill[i].lv, 0);
-					if( SQL_ERROR == SqlStmt_Execute(stmt) )
-					{
+					stmt.BindParam(0, SQLDT_USHORT, &hd->hskill[i].id, 0);
+					stmt.BindParam(1, SQLDT_USHORT, &hd->hskill[i].lv, 0);
+					if( SQL_ERROR == stmt.Execute() ){
 						SqlStmt_ShowDebug(stmt);
-						SqlStmt_Free(stmt);
 						flag = false;
 						break;
 					}
 				}
 			}
-			SqlStmt_Free(stmt);
 		}
 	}
 
@@ -148,7 +144,7 @@ bool mapif_homunculus_save(struct s_homunculus* hd)
 
 
 // Load an homunculus
-bool mapif_homunculus_load(int homun_id, struct s_homunculus* hd)
+bool mapif_homunculus_load(int32 homun_id, struct s_homunculus* hd)
 {
 	char* data;
 	size_t len;
@@ -181,7 +177,7 @@ bool mapif_homunculus_load(int homun_id, struct s_homunculus* hd)
 	Sql_GetData(sql_handle,  4, &data, &len); safestrncpy(hd->name, data, sizeof(hd->name));
 	Sql_GetData(sql_handle,  5, &data, nullptr); hd->level = atoi(data);
 	Sql_GetData(sql_handle,  6, &data, nullptr); hd->exp = strtoull( data, nullptr, 10 );
-	Sql_GetData(sql_handle,  7, &data, nullptr); hd->intimacy = (unsigned int)strtoul(data, nullptr, 10);
+	Sql_GetData(sql_handle,  7, &data, nullptr); hd->intimacy = (uint32)strtoul(data, nullptr, 10);
 	Sql_GetData(sql_handle,  8, &data, nullptr); hd->hunger = atoi(data);
 	Sql_GetData(sql_handle,  9, &data, nullptr); hd->str = atoi(data);
 	Sql_GetData(sql_handle, 10, &data, nullptr); hd->agi = atoi(data);
@@ -210,7 +206,7 @@ bool mapif_homunculus_load(int homun_id, struct s_homunculus* hd)
 	}
 	while( SQL_SUCCESS == Sql_NextRow(sql_handle) )
 	{
-		int i;
+		int32 i;
 		// id
 		Sql_GetData(sql_handle, 0, &data, nullptr);
 		i = atoi(data);
@@ -231,7 +227,7 @@ bool mapif_homunculus_load(int homun_id, struct s_homunculus* hd)
 	return true;
 }
 
-bool mapif_homunculus_delete(int homun_id)
+bool mapif_homunculus_delete(int32 homun_id)
 {
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `homun_id` = '%u'", schema_config.homunculus_db, homun_id)
 	||	SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `homun_id` = '%u'", schema_config.skill_homunculus_db, homun_id)
@@ -245,7 +241,7 @@ bool mapif_homunculus_delete(int homun_id)
 
 bool mapif_homunculus_rename(char *name)
 {
-	int i;
+	int32 i;
 
 	// Check Authorised letters/symbols in the name of the homun
 	if( charserv_config.char_config.char_name_option == 1 )
@@ -265,32 +261,32 @@ bool mapif_homunculus_rename(char *name)
 }
 
 
-void mapif_parse_homunculus_create(int fd, int len, uint32 account_id, struct s_homunculus* phd)
+void mapif_parse_homunculus_create(int32 fd, int32 len, uint32 account_id, struct s_homunculus* phd)
 {
 	bool result = mapif_homunculus_save(phd);
 	mapif_homunculus_created(fd, account_id, phd, result);
 }
 
-void mapif_parse_homunculus_delete(int fd, int homun_id)
+void mapif_parse_homunculus_delete(int32 fd, int32 homun_id)
 {
 	bool result = mapif_homunculus_delete(homun_id);
 	mapif_homunculus_deleted(fd, result);
 }
 
-void mapif_parse_homunculus_load(int fd, uint32 account_id, int homun_id)
+void mapif_parse_homunculus_load(int32 fd, uint32 account_id, int32 homun_id)
 {
 	struct s_homunculus hd;
 	bool result = mapif_homunculus_load(homun_id, &hd);
 	mapif_homunculus_loaded(fd, account_id, ( result ? &hd : nullptr ));
 }
 
-void mapif_parse_homunculus_save(int fd, int len, uint32 account_id, struct s_homunculus* phd)
+void mapif_parse_homunculus_save(int32 fd, int32 len, uint32 account_id, struct s_homunculus* phd)
 {
 	bool result = mapif_homunculus_save(phd);
 	mapif_homunculus_saved(fd, account_id, result);
 }
 
-void mapif_parse_homunculus_rename(int fd, uint32 account_id, uint32 char_id, char* name)
+void mapif_parse_homunculus_rename(int32 fd, uint32 account_id, uint32 char_id, char* name)
 {
 	bool result = mapif_homunculus_rename(name);
 	mapif_homunculus_renamed(fd, account_id, char_id, result, name);
@@ -299,17 +295,17 @@ void mapif_parse_homunculus_rename(int fd, uint32 account_id, uint32 char_id, ch
 /*==========================================
  * Inter Packets
  *------------------------------------------*/
-int inter_homunculus_parse_frommap(int fd)
+int32 inter_homunculus_parse_frommap(int32 fd)
 {
 	unsigned short cmd = RFIFOW(fd,0);
 
 	switch( cmd )
 	{
-		case 0x3090: mapif_parse_homunculus_create(fd, (int)RFIFOW(fd,2), (int)RFIFOL(fd,4), (struct s_homunculus*)RFIFOP(fd,8)); break;
-		case 0x3091: mapif_parse_homunculus_load  (fd, (int)RFIFOL(fd,2), (int)RFIFOL(fd,6)); break;
-		case 0x3092: mapif_parse_homunculus_save  (fd, (int)RFIFOW(fd,2), (int)RFIFOL(fd,4), (struct s_homunculus*)RFIFOP(fd,8)); break;
-		case 0x3093: mapif_parse_homunculus_delete(fd, (int)RFIFOL(fd,2)); break;
-		case 0x3094: mapif_parse_homunculus_rename(fd, (int)RFIFOL(fd,2), (int)RFIFOL(fd,6), RFIFOCP(fd,10)); break;
+		case 0x3090: mapif_parse_homunculus_create(fd, (int32)RFIFOW(fd,2), (int32)RFIFOL(fd,4), (struct s_homunculus*)RFIFOP(fd,8)); break;
+		case 0x3091: mapif_parse_homunculus_load  (fd, (int32)RFIFOL(fd,2), (int32)RFIFOL(fd,6)); break;
+		case 0x3092: mapif_parse_homunculus_save  (fd, (int32)RFIFOW(fd,2), (int32)RFIFOL(fd,4), (struct s_homunculus*)RFIFOP(fd,8)); break;
+		case 0x3093: mapif_parse_homunculus_delete(fd, (int32)RFIFOL(fd,2)); break;
+		case 0x3094: mapif_parse_homunculus_rename(fd, (int32)RFIFOL(fd,2), (int32)RFIFOL(fd,6), RFIFOCP(fd,10)); break;
 		default:
 			return 0;
 	}

@@ -25,13 +25,13 @@
  * @param count: Pointer to return the number of found entries.
  * @return Array of found entries. It has *count entries, and it is care of the caller to aFree() it afterwards.
  */
-struct achievement *mapif_achievements_fromsql(uint32 char_id, int *count)
+struct achievement *mapif_achievements_fromsql(uint32 char_id, int32 *count)
 {
 	struct achievement *achievelog = nullptr;
 	struct achievement tmp_achieve;
-	SqlStmt *stmt;
+	SqlStmt stmt{ *sql_handle };
 	StringBuf buf;
-	int i;
+	int32 i;
 
 	if (!count)
 		return nullptr;
@@ -44,29 +44,27 @@ struct achievement *mapif_achievements_fromsql(uint32 char_id, int *count)
 		StringBuf_Printf(&buf, ", `count%d`", i + 1);
 	StringBuf_Printf(&buf, " FROM `%s` WHERE `char_id` = '%u'", schema_config.achievement_table, char_id);
 
-	stmt = SqlStmt_Malloc(sql_handle);
-	if( SQL_ERROR == SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf))
-	||  SQL_ERROR == SqlStmt_Execute(stmt) )
+	if( SQL_ERROR == stmt.PrepareStr(StringBuf_Value(&buf))
+	||  SQL_ERROR == stmt.Execute() )
 	{
 		SqlStmt_ShowDebug(stmt);
-		SqlStmt_Free(stmt);
 		StringBuf_Destroy(&buf);
 		*count = 0;
 		return nullptr;
 	}
 
-	SqlStmt_BindColumn(stmt, 0, SQLDT_INT,  &tmp_achieve.achievement_id, 0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 1, SQLDT_INT,  &tmp_achieve.completed, 0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 2, SQLDT_INT,  &tmp_achieve.rewarded, 0, nullptr, nullptr);
+	stmt.BindColumn(0, SQLDT_INT,  &tmp_achieve.achievement_id, 0, nullptr, nullptr);
+	stmt.BindColumn(1, SQLDT_INT,  &tmp_achieve.completed, 0, nullptr, nullptr);
+	stmt.BindColumn(2, SQLDT_INT,  &tmp_achieve.rewarded, 0, nullptr, nullptr);
 	for (i = 0; i < MAX_ACHIEVEMENT_OBJECTIVES; ++i)
-		SqlStmt_BindColumn(stmt, 3 + i, SQLDT_INT, &tmp_achieve.count[i], 0, nullptr, nullptr);
+		stmt.BindColumn(3 + i, SQLDT_INT, &tmp_achieve.count[i], 0, nullptr, nullptr);
 
-	*count = (int)SqlStmt_NumRows(stmt);
+	*count = (int32)stmt.NumRows();
 	if (*count > 0) {
 		i = 0;
 
 		achievelog = (struct achievement *)aCalloc(*count, sizeof(struct achievement));
-		while (SQL_SUCCESS == SqlStmt_NextRow(stmt)) {
+		while (SQL_SUCCESS == stmt.NextRow()) {
 			if (i >= *count) // Sanity check, should never happen
 				break;
 			memcpy(&achievelog[i++], &tmp_achieve, sizeof(tmp_achieve));
@@ -78,7 +76,6 @@ struct achievement *mapif_achievements_fromsql(uint32 char_id, int *count)
 		}
 	}
 
-	SqlStmt_Free(stmt);
 	StringBuf_Destroy(&buf);
 
 	ShowInfo("achievement load complete from DB - id: %d (total: %d)\n", char_id, *count);
@@ -92,7 +89,7 @@ struct achievement *mapif_achievements_fromsql(uint32 char_id, int *count)
  * @param achievement_id: Achievement ID
  * @return false in case of errors, true otherwise
  */
-bool mapif_achievement_delete(uint32 char_id, int achievement_id)
+bool mapif_achievement_delete(uint32 char_id, int32 achievement_id)
 {
 	if (SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` = '%d' AND `char_id` = '%u'", schema_config.achievement_table, achievement_id, char_id)) {
 		Sql_ShowDebug(sql_handle);
@@ -111,7 +108,7 @@ bool mapif_achievement_delete(uint32 char_id, int achievement_id)
 bool mapif_achievement_add(uint32 char_id, struct achievement* ad)
 {
 	StringBuf buf;
-	int i;
+	int32 i;
 
 	ARR_FIND( 0, MAX_ACHIEVEMENT_OBJECTIVES, i, ad->count[i] != 0 );
 
@@ -160,7 +157,7 @@ bool mapif_achievement_add(uint32 char_id, struct achievement* ad)
 bool mapif_achievement_update(uint32 char_id, struct achievement* ad)
 {
 	StringBuf buf;
-	int i;
+	int32 i;
 
 	StringBuf_Init(&buf);
 	StringBuf_Printf(&buf, "UPDATE `%s` SET ", schema_config.achievement_table);
@@ -192,7 +189,7 @@ bool mapif_achievement_update(uint32 char_id, struct achievement* ad)
 /**
  * Notifies the map-server of the result of saving a character's achievementlog.
  */
-void mapif_achievement_save( int fd, uint32 char_id, bool success ){
+void mapif_achievement_save( int32 fd, uint32 char_id, bool success ){
 	WFIFOHEAD(fd, 7);
 	WFIFOW(fd, 0) = 0x3863;
 	WFIFOL(fd, 2) = char_id;
@@ -205,9 +202,9 @@ void mapif_achievement_save( int fd, uint32 char_id, bool success ){
  * Received achievements are saved, and an ack is sent back to the map server.
  * @see inter_parse_frommap
  */
-int mapif_parse_achievement_save(int fd)
+int32 mapif_parse_achievement_save(int32 fd)
 {
-	int i, j, k, old_n, new_n = (RFIFOW(fd, 2) - 8) / sizeof(struct achievement);
+	int32 i, j, k, old_n, new_n = (RFIFOW(fd, 2) - 8) / sizeof(struct achievement);
 	uint32 char_id = RFIFOL(fd, 4);
 	struct achievement *old_ad = nullptr, *new_ad = nullptr;
 	bool success = true;
@@ -256,9 +253,9 @@ int mapif_parse_achievement_save(int fd)
 /**
  * Sends the achievementlog of a character to the map-server.
  */
-void mapif_achievement_load( int fd, uint32 char_id ){
+void mapif_achievement_load( int32 fd, uint32 char_id ){
 	struct achievement *tmp_achievementlog = nullptr;
-	int num_achievements = 0;
+	int32 num_achievements = 0;
 
 	tmp_achievementlog = mapif_achievements_fromsql(char_id, &num_achievements);
 
@@ -281,7 +278,7 @@ void mapif_achievement_load( int fd, uint32 char_id ){
  * NOTE: Achievements sent to the player are only completed ones
  * @see inter_parse_frommap
  */
-int mapif_parse_achievement_load(int fd)
+int32 mapif_parse_achievement_load(int32 fd)
 {
 	mapif_achievement_load( fd, RFIFOL(fd, 2) );
 
@@ -291,7 +288,7 @@ int mapif_parse_achievement_load(int fd)
 /**
  * Notify the map-server if claiming the reward has succeeded.
  */
-void mapif_achievement_reward( int fd, uint32 char_id, int32 achievement_id, time_t rewarded ){
+void mapif_achievement_reward( int32 fd, uint32 char_id, int32 achievement_id, time_t rewarded ){
 	WFIFOHEAD(fd, 14);
 	WFIFOW(fd, 0) = 0x3864;
 	WFIFOL(fd, 2) = char_id;
@@ -304,7 +301,7 @@ void mapif_achievement_reward( int fd, uint32 char_id, int32 achievement_id, tim
  * Request of the map-server that a player claimed his achievement rewards.
  * @see inter_parse_frommap
  */
-int mapif_parse_achievement_reward(int fd){
+int32 mapif_parse_achievement_reward(int32 fd){
 	time_t current = time(nullptr);
 	uint32 char_id = RFIFOL(fd, 2);
 	int32 achievement_id = RFIFOL(fd, 6);
@@ -343,7 +340,7 @@ int mapif_parse_achievement_reward(int fd){
  * Parses achievementlog related packets from the map server.
  * @see inter_parse_frommap
  */
-int inter_achievement_parse_frommap(int fd)
+int32 inter_achievement_parse_frommap(int32 fd)
 {
 	switch (RFIFOW(fd, 0)) {
 		case 0x3062: mapif_parse_achievement_load(fd); break;

@@ -20,7 +20,7 @@ enum send_target : uint8;
 struct block_list;
 
 extern int16 instance_start;
-extern int instance_count;
+extern int32 instance_count;
 
 #define INSTANCE_NAME_LENGTH (60+1)
 
@@ -59,14 +59,14 @@ struct s_instance_map {
 
 /// Instance data
 struct s_instance_data {
-	int id; ///< Instance DB ID
+	int32 id; ///< Instance DB ID
 	e_instance_state state; ///< State of instance
 	e_instance_mode mode; ///< Mode of instance
-	int owner_id; ///< Owner ID of instance
+	int32 owner_id; ///< Owner ID of instance
 	int64 keep_limit; ///< Life time of instance
-	int keep_timer; ///< Life time ID
+	int32 keep_timer; ///< Life time ID
 	int64 idle_limit; ///< Idle time of instance
-	int idle_timer; ///< Idle timer ID
+	int32 idle_timer; ///< Idle timer ID
 	bool nonpc;
 	bool nomapflag;
 	struct reg_db regs; ///< Instance variables for scripts
@@ -89,7 +89,7 @@ struct s_instance_data {
 
 /// Instance DB entry
 struct s_instance_db {
-	int id; ///< Instance DB ID
+	int32 id; ///< Instance DB ID
 	std::string name; ///< Instance name
 	int64 limit, ///< Duration limit
 		timeout; ///< Timeout limit
@@ -114,21 +114,21 @@ public:
 
 extern InstanceDatabase instance_db;
 
-extern std::unordered_map<int, std::shared_ptr<s_instance_data>> instances;
+extern std::unordered_map<int32, std::shared_ptr<s_instance_data>> instances;
 
 std::shared_ptr<s_instance_db> instance_search_db_name(const char* name);
-void instance_getsd(int instance_id, map_session_data *&sd, enum send_target *target);
+void instance_getsd(int32 instance_id, map_session_data *&sd, enum send_target *target);
 
-int instance_create(int owner_id, const char *name, e_instance_mode mode);
-bool instance_destroy(int instance_id);
+int32 instance_create(int32 owner_id, const char *name, e_instance_mode mode);
+bool instance_destroy(int32 instance_id);
 void instance_destroy_command(map_session_data *sd);
-e_instance_enter instance_enter(map_session_data *sd, int instance_id, const char *name, short x, short y);
-bool instance_reqinfo(map_session_data *sd, int instance_id);
-bool instance_addusers(int instance_id);
-bool instance_delusers(int instance_id);
-void instance_generate_mapname(int map_id, int instance_id, char outname[MAP_NAME_LENGTH]);
-int16 instance_mapid(int16 m, int instance_id);
-size_t instance_addmap( int instance_id );
+e_instance_enter instance_enter(map_session_data *sd, int32 instance_id, const char *name, short x, short y);
+bool instance_reqinfo(map_session_data *sd, int32 instance_id);
+bool instance_addusers(int32 instance_id);
+bool instance_delusers(int32 instance_id);
+void instance_generate_mapname(int32 map_id, int32 instance_id, char outname[MAP_NAME_LENGTH]);
+int16 instance_mapid(int16 m, int32 instance_id);
+size_t instance_addmap( int32 instance_id );
 
 void instance_addnpc(std::shared_ptr<s_instance_data> idata);
 

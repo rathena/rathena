@@ -1231,7 +1231,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1002;
+      pet;
   - Id: 620
     AegisName: Orange_Juice
     Name: Orange Juice
@@ -1243,7 +1243,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1113;
+      pet;
   - Id: 621
     AegisName: Bitter_Herb
     Name: Bitter Herb
@@ -1255,7 +1255,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1031;
+      pet;
   - Id: 622
     AegisName: Rainbow_Carrot
     Name: Rainbow Carrot
@@ -1267,7 +1267,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1063;
+      pet;
   - Id: 623
     AegisName: Earthworm_The_Dude
     Name: Earthworm the Dude
@@ -1279,7 +1279,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1049;
+      pet;
   - Id: 624
     AegisName: Rotten_Fish
     Name: Rotten Fish
@@ -1291,7 +1291,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1011;
+      pet;
   - Id: 625
     AegisName: Lusty_Iron
     Name: Rusty Iron
@@ -1303,7 +1303,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1042;
+      pet;
   - Id: 626
     AegisName: Monster_Juice
     Name: Monster Juice
@@ -1315,7 +1315,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1035;
+      pet;
   - Id: 627
     AegisName: Sweet_Milk
     Name: Sweet Milk
@@ -1327,7 +1327,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1167;
+      pet;
   - Id: 628
     AegisName: Well_Dried_Bone
     Name: Well-Dried Bone
@@ -1339,7 +1339,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1107;
+      pet;
   - Id: 629
     AegisName: Singing_Flower
     Name: Singing Flower
@@ -1351,7 +1351,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1052;
+      pet;
   - Id: 630
     AegisName: Dew_Laden_Moss
     Name: Dew Laden Moss
@@ -1363,7 +1363,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1014;
+      pet;
   - Id: 631
     AegisName: Deadly_Noxious_Herb
     Name: Deadly Noxious Herb
@@ -1375,7 +1375,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1077;
+      pet;
   - Id: 632
     AegisName: Fatty_Chubby_Earthworm
     Name: Fatty Chubby Earthworm
@@ -1387,7 +1387,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1019;
+      pet;
   - Id: 633
     AegisName: Baked_Yam
     Name: Sweet Potato
@@ -1399,7 +1399,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1056;
+      pet;
   - Id: 634
     AegisName: Tropical_Banana
     Name: Tropical Banana
@@ -1411,7 +1411,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1057;
+      pet;
   - Id: 635
     AegisName: Horror_Of_Tribe
     Name: Orc Trophy
@@ -1423,7 +1423,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1023;
+      pet;
   - Id: 636
     AegisName: No_Recipient
     Name: No Recipient
@@ -1435,7 +1435,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1026;
+      pet;
   - Id: 637
     AegisName: Old_Broom
     Name: Old Broom
@@ -1447,7 +1447,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1110;
+      pet;
   - Id: 638
     AegisName: Silver_Knife_Of_Chaste
     Name: Silver Knife of Chastity
@@ -1459,7 +1459,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1170;
+      pet;
   - Id: 639
     AegisName: Armlet_Of_Obedience
     Name: Armlet of Obedience
@@ -1471,7 +1471,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1029;
+      pet;
   - Id: 640
     AegisName: Shining_Stone
     Name: Shining Stone
@@ -1483,7 +1483,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1155;
+      pet;
   - Id: 641
     AegisName: Contracts_In_Shadow
     Name: Contract in Shadow
@@ -1495,7 +1495,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1109;
+      pet;
   - Id: 642
     AegisName: Book_Of_Devil
     Name: Book of the Devil
@@ -1507,7 +1507,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1101;
+      pet;
   - Id: 643
     AegisName: Pet_Incubator
     Name: Pet Incubator
@@ -1619,7 +1619,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1188;
+      pet;
   - Id: 660
     AegisName: Prohibition_Red_Candle
     Name: Forbidden Red Candle
@@ -1631,7 +1631,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1200;
+      pet;
   - Id: 661
     AegisName: Sway_Apron
     Name: Soft Apron
@@ -1643,7 +1643,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1275;
+      pet;
   - Id: 662
     AegisName: Inspector_Certificate
     Name: Authoritative Badge
@@ -5017,7 +5017,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1245;
+      pet;
   - Id: 12226
     AegisName: Examination1
     Name: Examination 1
@@ -6401,7 +6401,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      pet 1815;
+      pet;
   - Id: 12341
     AegisName: Special_Alloy_Trap_Box
     Name: Special Alloy Trap Box
@@ -6642,7 +6642,7 @@ Body:
     Buy: 20
     Weight: 50
     Script: |
-      pet 1630;
+      pet;
   - Id: 12358
     AegisName: Fan_Of_Wind
     Name: Fan Of Wind
@@ -6654,7 +6654,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1513;
+      pet;
   - Id: 12359
     AegisName: Very_Soft_Plant
     Name: Very Soft Plant
@@ -6666,7 +6666,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1586;
+      pet;
   - Id: 12360
     AegisName: Very_Red_Juice
     Name: Very Red Juice
@@ -6678,7 +6678,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1505;
+      pet;
   - Id: 12361
     AegisName: Delicious_Shaved_Ice
     Name: Delicious Shaved Ice
@@ -6695,7 +6695,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      pet 1143;
+      pet;
   - Id: 12362
     AegisName: Kuloren
     Name: Kuloren
@@ -6707,7 +6707,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1401;
+      pet;
   - Id: 12363
     AegisName: Fit_Pipe
     Name: Fit Pipe
@@ -6724,7 +6724,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      pet 1179;
+      pet;
   - Id: 12364
     AegisName: Staff_Of_Leader
     Name: Staff Of Leader
@@ -6736,7 +6736,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1299;
+      pet;
   - Id: 12365
     AegisName: Charming_Lotus
     Name: Charming Lotus
@@ -6748,7 +6748,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1416;
+      pet;
   - Id: 12366
     AegisName: Gril_Doll
     Name: Girl's Doll
@@ -6760,7 +6760,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1404;
+      pet;
   - Id: 12367
     AegisName: Luxury_Whisky_Bottle
     Name: Luxury Whisky Bottle
@@ -6772,7 +6772,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1504;
+      pet;
   - Id: 12368
     AegisName: Splendid_Mirror
     Name: Splendid Mirror
@@ -6784,7 +6784,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1148;
+      pet;
   - Id: 12369
     AegisName: Oilpalm_Coconut
     Name: Oilpalm Coconut
@@ -6796,7 +6796,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1495;
+      pet;
   - Id: 12370
     AegisName: Gril's_Naivety
     Name: Girl's Naivety
@@ -6813,7 +6813,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      pet 1374;
+      pet;
   - Id: 12371
     AegisName: Magical_Lithography
     Name: Magical Lithography
@@ -6825,7 +6825,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1040;
+      pet;
   - Id: 12372
     AegisName: Hell_Contract
     Name: Hell Contract
@@ -6837,7 +6837,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1379;
+      pet;
   - Id: 12373
     AegisName: Boy's_Naivety
     Name: Boy's Pure Heart
@@ -6849,7 +6849,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1370;
+      pet;
   - Id: 12374
     AegisName: Flaming_Ice
     Name: Ice Fireworks
@@ -6861,7 +6861,7 @@ Body:
     NoUse:
       Sitting: true
     Script: |
-      pet 1837;
+      pet;
   - Id: 12375
     AegisName: Acaraje
     Name: Akaraje
@@ -6875,7 +6875,7 @@ Body:
       NoAuction: true
     Script: |
       specialeffect2 EF_STEAL;
-      bonus_script "{ bonus bHit,5; bonus bAspdRate,10; }",1200,0,0,EFST_ACARAJE;
+      sc_start2 SC_ACARAJE,1200000,10,5;
   - Id: 12376
     AegisName: Mysterious_Can2
     Name: Mysterious Can2
@@ -7140,7 +7140,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      pet 1519;
+      pet;
   - Id: 12396
     AegisName: Fools_Day_Box
     Name: Gift Box?
@@ -7300,7 +7300,7 @@ Body:
     Name: Leaf Cat Ball
     Type: Usable
     Script: |
-      pet 2081;
+      pet;
   - Id: 12409
     AegisName: Pork_Belly_H
     Name: 1st Class Pork Belly
@@ -21307,7 +21307,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      pet 1122;
+      pet;
   - Id: 14570
     AegisName: Flail_Goblin_Ring
     Name: Flail Goblin Ring
@@ -21322,7 +21322,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      pet 1123;
+      pet;
   - Id: 14571
     AegisName: Hammer_Goblin_Ring
     Name: Hammer Goblin Ring
@@ -21337,7 +21337,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      pet 1125;
+      pet;
   - Id: 14572
     AegisName: Holy_Marble
     Name: Holy Marble
@@ -21352,7 +21352,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      pet 1385;
+      pet;
   - Id: 14573
     AegisName: Red_Burning_Stone
     Name: Red Burning Stone
@@ -21367,7 +21367,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      pet 1382;
+      pet;
   - Id: 14574
     AegisName: Skull_Of_Vagabond
     Name: Vagabond's Skull
@@ -21382,7 +21382,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      pet 1208;
+      pet;
   - Id: 14575
     AegisName: Str_Dish05_
     Name: Lutie Lady's Pancake

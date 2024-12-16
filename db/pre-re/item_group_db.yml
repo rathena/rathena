@@ -4644,70 +4644,6 @@ Body:
           - Index: 3
             Item: Lime_Green_Pts
             Rate: 1
-  - Group: FINDINGORE
-    SubGroups:
-      - SubGroup: 1
-        List:
-          - Index: 0
-            Item: Emperium
-            Rate: 3
-          - Index: 1
-            Item: Oridecon_Stone
-            Rate: 20
-          - Index: 2
-            Item: Elunium_Stone
-            Rate: 20
-          - Index: 3
-            Item: Gold
-            Rate: 2
-          - Index: 4
-            Item: Oridecon
-            Rate: 10
-          - Index: 5
-            Item: Elunium
-            Rate: 10
-          - Index: 6
-            Item: Boody_Red
-            Rate: 30
-          - Index: 7
-            Item: Crystal_Blue
-            Rate: 30
-          - Index: 8
-            Item: Wind_Of_Verdure
-            Rate: 30
-          - Index: 9
-            Item: Yellow_Live
-            Rate: 30
-          - Index: 10
-            Item: Flame_Heart
-            Rate: 15
-          - Index: 11
-            Item: Mistic_Frozen
-            Rate: 15
-          - Index: 12
-            Item: Rough_Wind
-            Rate: 15
-          - Index: 13
-            Item: Great_Nature
-            Rate: 15
-          - Index: 14
-            Item: Iron
-            Rate: 80
-          - Index: 15
-            Item: Steel
-            Rate: 50
-          - Index: 16
-            Item: Iron_Ore
-            Rate: 100
-          - Index: 17
-            Item: Coal
-            Rate: 60
-          - Index: 18
-            Item: Phracon
-            Rate: 95
-          - Index: 19
-            Item: Emveretarcon
-            Rate: 55
   - Group: FIRSTAID
     SubGroups:
       - SubGroup: 1
@@ -7018,7 +6954,7 @@ Body:
             Rate: 3
           - Index: 18
             Item: Crystal_Jewel___
-            Rate: 27
+            Rate: 2
           - Index: 19
             Item: Glass_Bead
             Rate: 50
@@ -7688,7 +7624,7 @@ Body:
             Item: Red_Slim_Potion
             Rate: 10
           - Index: 4
-            Item: Resist_Fire
+            Item: Resist_Earth
             Rate: 10
           - Index: 5
             Item: Yellow_Herb

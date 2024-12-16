@@ -56,7 +56,7 @@ int8 packet_buffer[UINT16_MAX];
 /////////////////////////////////////////////////////////////////////
 // windows portability layer
 
-typedef int socklen_t;
+typedef int32 socklen_t;
 
 #define sErrno WSAGetLastError()
 #define S_ENOTSOCK WSAENOTSOCK
@@ -71,7 +71,7 @@ typedef int socklen_t;
 // global array of sockets (emulating linux)
 // fd is the position in the array
 static SOCKET sock_arr[MAXCONN];
-static int sock_arr_len = 0;
+static int32 sock_arr_len = 0;
 
 /// Returns the socket associated with the target fd.
 ///
@@ -84,9 +84,9 @@ static int sock_arr_len = 0;
 ///
 /// @param s Socket
 /// @return Fd or -1
-int sock2fd(SOCKET s)
+int32 sock2fd(SOCKET s)
 {
-	int fd;
+	int32 fd;
 
 	// search for the socket
 	for( fd = 1; fd < sock_arr_len; ++fd )
@@ -106,9 +106,9 @@ int sock2fd(SOCKET s)
 ///
 /// @param s Socket
 /// @return New fd or -1
-int sock2newfd(SOCKET s)
+int32 sock2newfd(SOCKET s)
 {
-	int fd;
+	int32 fd;
 
 	// find an empty position
 	for( fd = 1; fd < sock_arr_len; ++fd )
@@ -126,7 +126,7 @@ int sock2newfd(SOCKET s)
 	return fd;
 }
 
-int sAccept(int fd, struct sockaddr* addr, int* addrlen)
+int32 sAccept(int32 fd, struct sockaddr* addr, int* addrlen)
 {
 	SOCKET s;
 
@@ -137,14 +137,14 @@ int sAccept(int fd, struct sockaddr* addr, int* addrlen)
 	return sock2newfd(s);
 }
 
-int sClose(int fd)
+int32 sClose(int32 fd)
 {
-	int ret = closesocket(fd2sock(fd));
+	int32 ret = closesocket(fd2sock(fd));
 	fd2sock(fd) = INVALID_SOCKET;
 	return ret;
 }
 
-int sSocket(int af, int type, int protocol)
+int32 sSocket(int32 af, int32 type, int32 protocol)
 {
 	SOCKET s;
 
@@ -155,7 +155,7 @@ int sSocket(int af, int type, int protocol)
 	return sock2newfd(s);
 }
 
-char* sErr(int code)
+char* sErr(int32 code)
 {
 	static char sbuf[512];
 	// strerror does not handle socket codes
@@ -224,18 +224,18 @@ char* sErr(int code)
 	fd_set readfds;
 #else
 	// Epoll based Event Dispatcher
-	static int epoll_maxevents = (MAXCONN / 2);
-	static int epfd = SOCKET_ERROR;
+	static int32 epoll_maxevents = (MAXCONN / 2);
+	static int32 epfd = SOCKET_ERROR;
 	static struct epoll_event epevent;
 	static struct epoll_event *epevents = nullptr;
 #endif
 
-int fd_max;
+int32 fd_max;
 time_t last_tick;
 time_t stall_time = 60;
 
 uint32 addr_[16];   // ip addresses of local host (host byte order)
-int naddr_ = 0;   // # of ip addresses
+int32 naddr_ = 0;   // # of ip addresses
 
 // Maximum packet size in bytes, which the client is able to handle.
 // Larger packets cause a buffer overflow and stack corruption.
@@ -265,22 +265,22 @@ static time_t socket_data_last_tick = 0;
 struct socket_data* session[MAXCONN];
 
 #ifdef SEND_SHORTLIST
-int send_shortlist_array[MAXCONN];// we only support MAXCONN sockets, limit the array to that
+int32 send_shortlist_array[MAXCONN];// we only support MAXCONN sockets, limit the array to that
 size_t send_shortlist_count = 0;// how many fd's are in the shortlist
 uint32 send_shortlist_set[(MAXCONN+31)/32];// to know if specific fd's are already in the shortlist
 #endif
 
-static int create_session(int fd, RecvFunc func_recv, SendFunc func_send, ParseFunc func_parse);
+static int32 create_session(int32 fd, RecvFunc func_recv, SendFunc func_send, ParseFunc func_parse);
 
 #ifndef MINICORE
-	int ip_rules = 1;
-	static int connect_check(uint32 ip);
+	int32 ip_rules = 1;
+	static int32 connect_check(uint32 ip);
 #endif
 
 const char* error_msg(void)
 {
 	static char buf[512];
-	int code = sErrno;
+	int32 code = sErrno;
 	snprintf(buf, sizeof(buf), "error %d: %s", code, sErr(code));
 	return buf;
 }
@@ -288,9 +288,9 @@ const char* error_msg(void)
 /*======================================
  *	CORE : Default processing functions
  *--------------------------------------*/
-int null_recv(int fd) { return 0; }
-int null_send(int fd) { return 0; }
-int null_parse(int fd) { return 0; }
+int32 null_recv(int32 fd) { return 0; }
+int32 null_send(int32 fd) { return 0; }
+int32 null_parse(int32 fd) { return 0; }
 
 ParseFunc default_func_parse = null_parse;
 
@@ -303,7 +303,7 @@ void set_defaultparse(ParseFunc defaultparse)
 /*======================================
  *	CORE : Socket options
  *--------------------------------------*/
-void set_nonblocking(int fd, unsigned long yes)
+void set_nonblocking(int32 fd, unsigned long yes)
 {
 	// FIONBIO Use with a nonzero argp parameter to enable the nonblocking mode of socket s.
 	// The argp parameter is zero if nonblocking is to be disabled.
@@ -311,8 +311,8 @@ void set_nonblocking(int fd, unsigned long yes)
 		ShowError("set_nonblocking: Failed to set socket #%d to non-blocking mode (%s) - Please report this!!!\n", fd, error_msg());
 }
 
-void setsocketopts(int fd,int delay_timeout){
-	int yes = 1; // reuse fix
+void setsocketopts(int32 fd,int32 delay_timeout){
+	int32 yes = 1; // reuse fix
 
 #if !defined(WIN32)
 	// set SO_REAUSEADDR to true, unix only. on windows this option causes
@@ -339,7 +339,7 @@ void setsocketopts(int fd,int delay_timeout){
 	}
 	if(delay_timeout){
 #if defined(WIN32)
-		int timeout = delay_timeout * 1000;
+		int32 timeout = delay_timeout * 1000;
 #else
 		struct timeval timeout;
 		timeout.tv_sec = delay_timeout;
@@ -356,7 +356,7 @@ void setsocketopts(int fd,int delay_timeout){
 /*======================================
  *	CORE : Socket Sub Function
  *--------------------------------------*/
-void set_eof(int fd)
+void set_eof(int32 fd)
 {
 	if( session_isActive(fd) )
 	{
@@ -368,14 +368,14 @@ void set_eof(int fd)
 	}
 }
 
-int recv_to_fifo(int fd)
+int32 recv_to_fifo(int32 fd)
 {
-	int len;
+	int32 len;
 
 	if( !session_isActive(fd) )
 		return -1;
 
-	len = sRecv(fd, (char *) session[fd]->rdata + session[fd]->rdata_size, (int)RFIFOSPACE(fd), 0);
+	len = sRecv(fd, (char *) session[fd]->rdata + session[fd]->rdata_size, (int32)RFIFOSPACE(fd), 0);
 
 	if( len == SOCKET_ERROR )
 	{//An exception has occured
@@ -405,9 +405,9 @@ int recv_to_fifo(int fd)
 	return 0;
 }
 
-int send_from_fifo(int fd)
+int32 send_from_fifo(int32 fd)
 {
-	int len;
+	int32 len;
 
 	if( !session_isValid(fd) )
 		return -1;
@@ -415,7 +415,7 @@ int send_from_fifo(int fd)
 	if( session[fd]->wdata_size == 0 )
 		return 0; // nothing to send
 
-	len = sSend(fd, (const char *) session[fd]->wdata, (int)session[fd]->wdata_size, MSG_NOSIGNAL);
+	len = sSend(fd, (const char *) session[fd]->wdata, (int32)session[fd]->wdata_size, MSG_NOSIGNAL);
 
 	if( len == SOCKET_ERROR )
 	{//An exception has occured
@@ -454,7 +454,7 @@ int send_from_fifo(int fd)
 }
 
 /// Best effort - there's no warranty that the data will be sent.
-void flush_fifo(int fd)
+void flush_fifo(int32 fd)
 {
 	if(session[fd] != nullptr)
 		session[fd]->func_send(fd);
@@ -462,7 +462,7 @@ void flush_fifo(int fd)
 
 void flush_fifos(void)
 {
-	int i;
+	int32 i;
 	for(i = 1; i < fd_max; i++)
 		flush_fifo(i);
 }
@@ -470,9 +470,9 @@ void flush_fifos(void)
 /*======================================
  *	CORE : Connection functions
  *--------------------------------------*/
-int connect_client(int listen_fd)
+int32 connect_client(int32 listen_fd)
 {
-	int fd;
+	int32 fd;
 	struct sockaddr_in client_address;
 	socklen_t len;
 
@@ -529,11 +529,11 @@ int connect_client(int listen_fd)
 	return fd;
 }
 
-int make_listen_bind(uint32 ip, uint16 port)
+int32 make_listen_bind(uint32 ip, uint16 port)
 {
 	struct sockaddr_in server_address;
-	int fd;
-	int result;
+	int32 fd;
+	int32 result;
 
 	fd = sSocket(AF_INET, SOCK_STREAM, 0);
 
@@ -598,10 +598,10 @@ int make_listen_bind(uint32 ip, uint16 port)
 	return fd;
 }
 
-int make_connection(uint32 ip, uint16 port, bool silent,int timeout) {
+int32 make_connection(uint32 ip, uint16 port, bool silent,int32 timeout) {
 	struct sockaddr_in remote_address;
-	int fd;
-	int result;
+	int32 fd;
+	int32 result;
 
 	fd = sSocket(AF_INET, SOCK_STREAM, 0);
 
@@ -723,7 +723,7 @@ int make_connection(uint32 ip, uint16 port, bool silent,int timeout) {
 	return fd;
 }
 
-static int create_session(int fd, RecvFunc func_recv, SendFunc func_send, ParseFunc func_parse)
+static int32 create_session(int32 fd, RecvFunc func_recv, SendFunc func_send, ParseFunc func_parse)
 {
 	CREATE(session[fd], struct socket_data, 1);
 	CREATE(session[fd]->rdata, unsigned char, RFIFO_SIZE);
@@ -738,7 +738,7 @@ static int create_session(int fd, RecvFunc func_recv, SendFunc func_send, ParseF
 	return 0;
 }
 
-static void delete_session(int fd)
+static void delete_session(int32 fd)
 {
 	if( session_isValid(fd) )
 	{
@@ -754,7 +754,7 @@ static void delete_session(int fd)
 	}
 }
 
-int _realloc_fifo( int fd, unsigned int rfifo_size, unsigned int wfifo_size, const char* file, int line, const char* func ){
+int32 _realloc_fifo( int32 fd, uint32 rfifo_size, uint32 wfifo_size, const char* file, int32 line, const char* func ){
 	if( !session_isValid(fd) )
 		return 0;
 
@@ -770,7 +770,7 @@ int _realloc_fifo( int fd, unsigned int rfifo_size, unsigned int wfifo_size, con
 	return 0;
 }
 
-int _realloc_writefifo( int fd, size_t addition, const char* file, int line, const char* func ){
+int32 _realloc_writefifo( int32 fd, size_t addition, const char* file, int32 line, const char* func ){
 	size_t newsize;
 
 	if( !session_isValid(fd) ) // might not happen
@@ -797,7 +797,7 @@ int _realloc_writefifo( int fd, size_t addition, const char* file, int line, con
 }
 
 /// advance the RFIFO cursor (marking 'len' bytes as processed)
-int RFIFOSKIP(int fd, size_t len)
+int32 RFIFOSKIP(int32 fd, size_t len)
 {
     struct socket_data *s;
 
@@ -819,7 +819,7 @@ int RFIFOSKIP(int fd, size_t len)
 }
 
 /// advance the WFIFO cursor (marking 'len' bytes for sending)
-int WFIFOSET(int fd, size_t len)
+int32 WFIFOSET(int32 fd, size_t len)
 {
 	size_t newreserve;
 	struct socket_data* s = session[fd];
@@ -831,7 +831,7 @@ int WFIFOSET(int fd, size_t len)
 	if(s->wdata_size+len > s->max_wdata)
 	{	// actually there was a buffer overflow already
 		uint32 ip = s->client_addr;
-		ShowFatalError("WFIFOSET: Write Buffer Overflow. Connection %d (%d.%d.%d.%d) has written %u bytes on a %u/%u bytes buffer.\n", fd, CONVIP(ip), (unsigned int)len, (unsigned int)s->wdata_size, (unsigned int)s->max_wdata);
+		ShowFatalError("WFIFOSET: Write Buffer Overflow. Connection %d (%d.%d.%d.%d) has written %u bytes on a %u/%u bytes buffer.\n", fd, CONVIP(ip), (uint32)len, (uint32)s->wdata_size, (uint32)s->max_wdata);
 		ShowDebug("Likely command that caused it: 0x%x\n", (*(uint16*)(s->wdata + s->wdata_size)));
 		// no other chance, make a better fifo model
 		exit(EXIT_FAILURE);
@@ -841,7 +841,7 @@ int WFIFOSET(int fd, size_t len)
 	{
 		// dynamic packets allow up to UINT16_MAX bytes (<packet_id>.W <packet_len>.W ...)
 		// all known fixed-size packets are within this limit, so use the same limit
-		ShowFatalError("WFIFOSET: Packet 0x%x is too big. (len=%u, max=%u)\n", (*(uint16*)(s->wdata + s->wdata_size)), (unsigned int)len, 0xFFFF);
+		ShowFatalError("WFIFOSET: Packet 0x%x is too big. (len=%u, max=%u)\n", (*(uint16*)(s->wdata + s->wdata_size)), (uint32)len, 0xFFFF);
 		exit(EXIT_FAILURE);
 	}
 	else if( len == 0 )
@@ -889,13 +889,13 @@ int WFIFOSET(int fd, size_t len)
 	return 0;
 }
 
-int do_sockets(t_tick next)
+int32 do_sockets(t_tick next)
 {
 #ifndef SOCKET_EPOLL
 	fd_set rfd;
 	struct timeval timeout;
 #endif
-	int ret,i;
+	int32 ret,i;
 
 	// PRESEND Timers are executed before do_sendrecv and can send packets and/or set sessions to eof.
 	// Send remaining data and process client-side disconnects here.
@@ -950,9 +950,9 @@ int do_sockets(t_tick next)
 
 #if defined(WIN32)
 	// on windows, enumerating all members of the fd_set is way faster if we access the internals
-	for( i = 0; i < (int)rfd.fd_count; ++i )
+	for( i = 0; i < (int32)rfd.fd_count; ++i )
 	{
-		int fd = sock2fd(rfd.fd_array[i]);
+		int32 fd = sock2fd(rfd.fd_array[i]);
 		if( session[fd] )
 			session[fd]->func_recv(fd);
 	}
@@ -961,7 +961,7 @@ int do_sockets(t_tick next)
 
 	for( i = 0; i < ret; i++ ){
 		struct epoll_event *it = &epevents[i];
-		int fd = it->data.fd;
+		int32 fd = it->data.fd;
 		struct socket_data *sock = session[fd];
 
 		if( !sock ){
@@ -1065,7 +1065,7 @@ typedef struct _connect_history {
 	struct _connect_history* next;
 	uint32 ip;
 	t_tick tick;
-	int count;
+	int32 count;
 	unsigned ddos : 1;
 } ConnectHistory;
 
@@ -1082,24 +1082,24 @@ enum _aco {
 
 static AccessControl* access_allow = nullptr;
 static AccessControl* access_deny = nullptr;
-static int access_order    = ACO_DENY_ALLOW;
-static int access_allownum = 0;
-static int access_denynum  = 0;
-static int access_debug    = 0;
-static int ddos_count      = 10;
-static int ddos_interval   = 3*1000;
-static int ddos_autoreset  = 10*60*1000;
+static int32 access_order    = ACO_DENY_ALLOW;
+static int32 access_allownum = 0;
+static int32 access_denynum  = 0;
+static int32 access_debug    = 0;
+static int32 ddos_count      = 10;
+static int32 ddos_interval   = 3*1000;
+static int32 ddos_autoreset  = 10*60*1000;
 /// Connection history, an array of linked lists.
 /// The array's index for any ip is ip&0xFFFF
 static ConnectHistory* connect_history[0x10000];
 
-static int connect_check_(uint32 ip);
+static int32 connect_check_(uint32 ip);
 
 /// Verifies if the IP can connect. (with debug info)
 /// @see connect_check_()
-static int connect_check(uint32 ip)
+static int32 connect_check(uint32 ip)
 {
-	int result = connect_check_(ip);
+	int32 result = connect_check_(ip);
 	if( access_debug ) {
 		ShowInfo("connect_check: Connection from %d.%d.%d.%d %s\n", CONVIP(ip),result ? "allowed." : "denied!");
 	}
@@ -1109,13 +1109,13 @@ static int connect_check(uint32 ip)
 /// Verifies if the IP can connect.
 ///  0      : Connection Rejected
 ///  1 or 2 : Connection Accepted
-static int connect_check_(uint32 ip)
+static int32 connect_check_(uint32 ip)
 {
 	ConnectHistory* hist = connect_history[ip&0xFFFF];
-	int i;
-	int is_allowip = 0;
-	int is_denyip = 0;
-	int connect_ok = 0;
+	int32 i;
+	int32 is_allowip = 0;
+	int32 is_denyip = 0;
+	int32 connect_ok = 0;
 
 	// Search the allow list
 	for( i=0; i < access_allownum; ++i ){
@@ -1212,9 +1212,9 @@ static int connect_check_(uint32 ip)
 /// Timer function.
 /// Deletes old connection history records.
 static TIMER_FUNC(connect_check_clear){
-	int i;
-	int clear = 0;
-	int list  = 0;
+	int32 i;
+	int32 clear = 0;
+	int32 list  = 0;
 	ConnectHistory root;
 	ConnectHistory* prev_hist;
 	ConnectHistory* hist;
@@ -1246,7 +1246,7 @@ static TIMER_FUNC(connect_check_clear){
 
 /// Parses the ip address and mask and puts it into acc.
 /// Returns 1 is successful, 0 otherwise.
-int access_ipmask(const char* str, AccessControl* acc)
+int32 access_ipmask(const char* str, AccessControl* acc)
 {
 	uint32 ip;
 	uint32 mask;
@@ -1255,9 +1255,9 @@ int access_ipmask(const char* str, AccessControl* acc)
 		ip   = 0;
 		mask = 0;
 	} else {
-		unsigned int a[4];
-		unsigned int m[4];
-		int n;
+		uint32 a[4];
+		uint32 m[4];
+		int32 n;
 		if( ((n=sscanf(str,"%3u.%3u.%3u.%3u/%3u.%3u.%3u.%3u",a,a+1,a+2,a+3,m,m+1,m+2,m+3)) != 8 && // not an ip + standard mask
 				(n=sscanf(str,"%3u.%3u.%3u.%3u/%3u",a,a+1,a+2,a+3,m)) != 5 && // not an ip + bit mask
 				(n=sscanf(str,"%3u.%3u.%3u.%3u",a,a+1,a+2,a+3)) != 4 ) || // not an ip
@@ -1293,7 +1293,7 @@ int access_ipmask(const char* str, AccessControl* acc)
 #endif
 //////////////////////////////
 
-int socket_config_read(const char* cfgName)
+int32 socket_config_read(const char* cfgName)
 {
 	char line[1024],w1[1024],w2[1024];
 	FILE *fp;
@@ -1372,7 +1372,7 @@ int socket_config_read(const char* cfgName)
 
 void socket_final(void)
 {
-	int i;
+	int32 i;
 #ifndef MINICORE
 	ConnectHistory* hist;
 	ConnectHistory* next_hist;
@@ -1421,7 +1421,7 @@ void socket_final(void)
 }
 
 /// Closes a socket.
-void do_close(int fd)
+void do_close(int32 fd)
 {
 	if( fd <= 0 ||fd >= MAXCONN )
 		return;// invalid
@@ -1445,9 +1445,9 @@ void do_close(int fd)
 
 /// Retrieve local ips in host byte order.
 /// Uses loopback is no address is found.
-int socket_getips(uint32* ips, int max)
+int32 socket_getips(uint32* ips, int32 max)
 {
-	int num = 0;
+	int32 num = 0;
 
 	if( ips == nullptr || max <= 0 )
 		return 0;
@@ -1481,7 +1481,7 @@ int socket_getips(uint32* ips, int max)
 	}
 #else // not WIN32
 	{
-		int fd;
+		int32 fd;
 		char buf[2*16*sizeof(struct ifreq)];
 		struct ifconf ic;
 		u_long ad;
@@ -1501,7 +1501,7 @@ int socket_getips(uint32* ips, int max)
 		}
 		else
 		{
-			int pos;
+			int32 pos;
 			for( pos=0; pos < ic.ifc_len && num < max; )
 			{
 				struct ifreq* ir = (struct ifreq*)(buf+pos);
@@ -1532,7 +1532,7 @@ int socket_getips(uint32* ips, int max)
 void socket_init(void)
 {
 	const char *SOCKET_CONF_FILENAME = "conf/packet_athena.conf";
-	unsigned int rlim_cur = MAXCONN;
+	uint32 rlim_cur = MAXCONN;
 
 #ifdef WIN32
 	{// Start up windows networking
@@ -1563,16 +1563,16 @@ void socket_init(void)
 				if( 0 != setrlimit(RLIMIT_NOFILE, &rlp) )
 				{// failed
 					const char *errmsg = error_msg();
-					int rlim_ori;
+					int32 rlim_ori;
 					// set to maximum allowed
 					getrlimit(RLIMIT_NOFILE, &rlp);
-					rlim_ori = (int)rlp.rlim_cur;
+					rlim_ori = (int32)rlp.rlim_cur;
 					rlp.rlim_cur = rlp.rlim_max;
 					setrlimit(RLIMIT_NOFILE, &rlp);
 					// report limit
 					getrlimit(RLIMIT_NOFILE, &rlp);
 					rlim_cur = rlp.rlim_cur;
-					ShowWarning("socket_init: failed to set socket limit to %d, setting to maximum allowed (original limit=%d, current limit=%d, maximum allowed=%d, %s).\n", MAXCONN, rlim_ori, (int)rlp.rlim_cur, (int)rlp.rlim_max, errmsg);
+					ShowWarning("socket_init: failed to set socket limit to %d, setting to maximum allowed (original limit=%d, current limit=%d, maximum allowed=%d, %s).\n", MAXCONN, rlim_ori, (int32)rlp.rlim_cur, (int32)rlp.rlim_max, errmsg);
 				}
 			}
 		}
@@ -1625,12 +1625,12 @@ void socket_init(void)
 }
 
 
-bool session_isValid(int fd)
+bool session_isValid(int32 fd)
 {
 	return ( fd > 0 && fd < MAXCONN && session[fd] != nullptr );
 }
 
-bool session_isActive(int fd)
+bool session_isActive(int32 fd)
 {
 	return ( session_isValid(fd) && !session[fd]->flag.eof );
 }
@@ -1667,10 +1667,10 @@ uint16 ntows(uint16 netshort)
 #ifdef SEND_SHORTLIST
 // Add a fd to the shortlist so that it'll be recognized as a fd that needs
 // sending or eof handling.
-void send_shortlist_add_fd(int fd)
+void send_shortlist_add_fd(int32 fd)
 {
-	int i;
-	int bit;
+	int32 i;
+	int32 bit;
 
 	if( !session_isValid(fd) )
 		return;// out of range
@@ -1696,10 +1696,10 @@ void send_shortlist_add_fd(int fd)
 // Do pending network sends and eof handling from the shortlist.
 void send_shortlist_do_sends()
 {
-	for( int i = static_cast<int>( send_shortlist_count - 1 ); i >= 0; --i ){
-		int fd = send_shortlist_array[i];
-		int idx = fd/32;
-		int bit = fd%32;
+	for( int32 i = static_cast<int>( send_shortlist_count - 1 ); i >= 0; --i ){
+		int32 fd = send_shortlist_array[i];
+		int32 idx = fd/32;
+		int32 bit = fd%32;
 
 		// Remove fd from shortlist, move the last fd to the current position
 		--send_shortlist_count;
