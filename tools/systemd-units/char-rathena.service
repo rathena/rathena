@@ -1,5 +1,5 @@
 [Unit]
-Description=Rathena Char Server
+Description=rAthena Character Server
 After=network-online.target remote-fs.target nss-lookup.target
 Wants=network-online.target
 #You might wanna edit the next line if your units are running in different servers instead of all in a single server.
