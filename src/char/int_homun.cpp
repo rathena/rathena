@@ -126,9 +126,9 @@ bool mapif_homunculus_save(struct s_homunculus* hd)
 
 			for (uint16 i = 0; i < MAX_HOMUNSKILL; ++i) {
 				if (hd->hskill[i].id > 0 && hd->hskill[i].lv != 0) {
-					stmt.BindParam(0, SQLDT_USHORT, &hd->hskill[i].id, 0);
-					stmt.BindParam(1, SQLDT_USHORT, &hd->hskill[i].lv, 0);
-					if (SQL_ERROR == stmt.Execute()) {
+					if (SQL_ERROR == stmt.BindParam(0, SQLDT_USHORT, &hd->hskill[i].id, 0)
+						|| SQL_ERROR == stmt.BindParam(1, SQLDT_USHORT, &hd->hskill[i].lv, 0)
+						|| SQL_ERROR == stmt.Execute()) {
 						SqlStmt_ShowDebug(stmt);
 						return false;
 					}
