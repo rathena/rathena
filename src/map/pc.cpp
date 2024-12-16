@@ -7005,8 +7005,7 @@ enum e_setpos pc_setpos(map_session_data* sd, unsigned short mapindex, int32 x, 
 			status_db.removeByStatusFlag(&sd->hd->bl, { SCF_REMOVEFROMHOMONWARP });
 
 		if (battle_config.hom_delay_reset_warp) {
-			sd->hd->blockskill.clear();
-			sd->hd->blockskill.shrink_to_fit();
+			skill_blockhomun_clear(*sd->hd);
 		}
 
 		sd->hd->bl.m = m;

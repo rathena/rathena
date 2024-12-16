@@ -2293,8 +2293,9 @@ bool char_checkdb(void){
                 schema_config.guild_expulsion_db, schema_config.guild_member_db, 
                 schema_config.guild_skill_db, schema_config.guild_position_db, schema_config.guild_storage_db,
 		schema_config.party_db, schema_config.pet_db, schema_config.friend_db, schema_config.mail_db, 
-                schema_config.auction_db, schema_config.quest_db, schema_config.homunculus_db, schema_config.skill_homunculus_db,
-                schema_config.mercenary_db, schema_config.mercenary_owner_db,
+                schema_config.auction_db, schema_config.quest_db,
+                schema_config.homunculus_db, schema_config.skill_homunculus_db, schema_config.skillcooldown_homunculus_db,
+                schema_config.mercenary_db, schema_config.mercenary_owner_db, schema_config.skillcooldown_mercenary_db,
 		schema_config.elemental_db, schema_config.skillcooldown_db, schema_config.bonus_script_db,
 		schema_config.clan_table, schema_config.clan_alliance_table, schema_config.mail_attachment_db, schema_config.achievement_table
 	};
@@ -2472,6 +2473,11 @@ bool char_checkdb(void){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
+	//checking skillcooldown_homunculus_db
+	if (SQL_ERROR == Sql_Query(sql_handle, "SELECT  `homun_id`,`skill`,`tick` FROM `%s` LIMIT 1;", schema_config.skillcooldown_homunculus_db)) {
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
 	//checking mercenary_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `mer_id`,`char_id`,`class`,`hp`,`sp`,`kill_counter`,`life_time` FROM `%s` LIMIT 1;", schema_config.mercenary_db) ){
 		Sql_ShowDebug(sql_handle);
@@ -2481,6 +2487,11 @@ bool char_checkdb(void){
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `char_id`,`merc_id`,`arch_calls`,`arch_faith`,"
 		"`spear_calls`,`spear_faith`,`sword_calls`,`sword_faith`"
 		" FROM `%s` LIMIT 1;", schema_config.mercenary_owner_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking skillcooldown_mercenary_db
+	if (SQL_ERROR == Sql_Query(sql_handle, "SELECT  `mer_id`,`skill`,`tick` FROM `%s` LIMIT 1;", schema_config.skillcooldown_mercenary_db)) {
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
@@ -2614,10 +2625,14 @@ void char_sql_config_read(const char* cfgName) {
 			safestrncpy(schema_config.homunculus_db,w2,sizeof(schema_config.homunculus_db));
 		else if(!strcmpi(w1,"skill_homunculus_db"))
 			safestrncpy(schema_config.skill_homunculus_db,w2,sizeof(schema_config.skill_homunculus_db));
+		else if (!strcmpi(w1, "skillcooldown_homunculus_db"))
+			safestrncpy(schema_config.skillcooldown_homunculus_db, w2, sizeof(schema_config.skillcooldown_homunculus_db));
 		else if(!strcmpi(w1,"mercenary_db"))
 			safestrncpy(schema_config.mercenary_db,w2,sizeof(schema_config.mercenary_db));
 		else if(!strcmpi(w1,"mercenary_owner_db"))
 			safestrncpy(schema_config.mercenary_owner_db,w2,sizeof(schema_config.mercenary_owner_db));
+		else if (!strcmpi(w1, "skillcooldown_mercenary_db"))
+			safestrncpy(schema_config.skillcooldown_mercenary_db, w2, sizeof(schema_config.skillcooldown_mercenary_db));
 		else if(!strcmpi(w1,"elemental_db"))
 			safestrncpy(schema_config.elemental_db,w2,sizeof(schema_config.elemental_db));
 		else if(!strcmpi(w1,"skillcooldown_db"))
@@ -2678,8 +2693,10 @@ void char_set_default_sql(){
 	safestrncpy(schema_config.quest_db,"quest",sizeof(schema_config.quest_db));
 	safestrncpy(schema_config.homunculus_db,"homunculus",sizeof(schema_config.homunculus_db));
 	safestrncpy(schema_config.skill_homunculus_db,"skill_homunculus",sizeof(schema_config.skill_homunculus_db));
+	safestrncpy(schema_config.skillcooldown_homunculus_db,"skillcooldown_homunculus",sizeof(schema_config.skillcooldown_homunculus_db));
 	safestrncpy(schema_config.mercenary_db,"mercenary",sizeof(schema_config.mercenary_db));
 	safestrncpy(schema_config.mercenary_owner_db,"mercenary_owner",sizeof(schema_config.mercenary_owner_db));
+	safestrncpy(schema_config.skillcooldown_mercenary_db, "skillcooldown_mercenary", sizeof(schema_config.skillcooldown_mercenary_db));
 	safestrncpy(schema_config.skillcooldown_db,"skillcooldown",sizeof(schema_config.skillcooldown_db));
 	safestrncpy(schema_config.bonus_script_db,"bonus_script",sizeof(schema_config.bonus_script_db));
 	safestrncpy(schema_config.char_reg_num_table,"char_reg_num",sizeof(schema_config.char_reg_num_table));

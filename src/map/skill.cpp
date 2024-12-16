@@ -834,7 +834,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 		return true;
 	}
 
-	if (skill_blockpc_get(&sd, skill_id) != -1){
+	if (util::umap_exists(sd.scd, skill_id)) {
 		clif_skill_fail( sd, skill_id, USESKILL_FAIL_SKILLINTERVAL );
 		return true;
 	}
@@ -996,7 +996,7 @@ bool skill_isNotOk_hom(struct homun_data *hd, uint16 skill_id, uint16 skill_lv)
 	if (sc != nullptr && sc->empty())
 		sc = nullptr;
 
-	if (util::vector_exists(hd->blockskill, skill_id)) {
+	if (util::umap_exists(hd->scd, skill_id)) {
 		clif_skill_fail(*sd, skill_id, USESKILL_FAIL_SKILLINTERVAL);
 		return true;
 	}
@@ -1109,7 +1109,7 @@ bool skill_isNotOk_mercenary( uint16 skill_id, s_mercenary_data& md ){
 	if (sd == nullptr)
 		return true;
 
-	if (util::vector_exists(md.blockskill, skill_id)) {
+	if (util::umap_exists(md.scd, skill_id)) {
 		clif_skill_fail(*sd, skill_id, USESKILL_FAIL_SKILLINTERVAL);
 		return true;
 	}
@@ -6591,7 +6591,7 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 				int32 cooldown = pc_get_skillcooldown(sd,pres_skill_id, pres_skill_lv);
 
 				if( cooldown > 0 )
-					skill_blockpc_start(sd, pres_skill_id, cooldown);
+					skill_blockpc_start(*sd, pres_skill_id, cooldown);
 			} else { // Summoned Balls
 				for (i = SC_SPHERE_5; i >= SC_SPHERE_1; i--) {
 					if (sc->getSCE(static_cast<sc_type>(i)) == nullptr)
@@ -10513,7 +10513,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 				skill_castend_nodamage_id);
 			if (sd)
 #ifdef RENEWAL
-				skill_blockpc_start(sd, skill_id, skill_get_cooldown(skill_id, skill_lv));
+				skill_blockpc_start(*sd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 #else
 				guild_block_skill(sd, skill_get_time2(skill_id, skill_lv));
 #endif
@@ -10557,7 +10557,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			}
 			if (sd)
 #ifdef RENEWAL
-				skill_blockpc_start(sd, skill_id, skill_get_cooldown(skill_id, skill_lv));
+				skill_blockpc_start(*sd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 #else
 				guild_block_skill(sd, skill_get_time2(skill_id, skill_lv));
 #endif
@@ -11230,7 +11230,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			else rate += 40 + 10 * skill_lv; // On Monsters, (40 + 10 * Skill Level) %
 
 			if( sd )
-				skill_blockpc_start(sd,skill_id,4000);
+				skill_blockpc_start(*sd,skill_id,4000);
 
 			if( !(tsc && tsc->getSCE(type)) ){
 				i = sc_start2(src,bl,type,rate,skill_lv,src->id,(src == bl)?5000:(bl->type == BL_PC)?skill_get_time(skill_id,skill_lv):skill_get_time2(skill_id, skill_lv));
@@ -12033,7 +12033,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			sd->skill_id_old = skill_id;
 			elemental_action(sd->ed, bl, tick);
 			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			skill_blockpc_start(sd, skill_id, duration);
+			skill_blockpc_start(*sd, skill_id, duration);
 		}
 		break;
 
@@ -13411,20 +13411,31 @@ TIMER_FUNC(skill_castend_id){
 
 		// Cooldown application
 		switch (src->type) {
-		case BL_PC:{
-			// Increases/Decreases cooldown of a skill by item/card bonuses.
-			int32 cooldown = pc_get_skillcooldown(sd, ud->skill_id, ud->skill_lv);
-			if (cooldown > 0)
-				skill_blockpc_start(sd, ud->skill_id, cooldown);
-		} break;
-		case BL_HOM:{
-			homun_data& hd = reinterpret_cast<homun_data&>(*src);
+			case BL_PC:
+			{
+				// Increases/Decreases cooldown of a skill by item/card bonuses.
+				int32 cooldown = pc_get_skillcooldown(sd, ud->skill_id, ud->skill_lv);
+				if (cooldown > 0)
+					skill_blockpc_start(*sd, ud->skill_id, cooldown);
+			}
+			break;
+			case BL_HOM:
+			{
+				homun_data &hd = reinterpret_cast<homun_data &>(*src);
 #ifdef RENEWAL
-			skill_blockhomun_start(&hd, ud->skill_id, skill_get_cooldown(ud->skill_id, ud->skill_lv));
+				skill_blockhomun_start(hd, ud->skill_id, skill_get_cooldown(ud->skill_id, ud->skill_lv));
 #else
-			skill_blockhomun_start(&hd, ud->skill_id, skill_get_delay(ud->skill_id, ud->skill_lv));
+				skill_blockhomun_start(hd, ud->skill_id, skill_get_delay(ud->skill_id, ud->skill_lv));
 #endif
-		} break;
+			}
+			break;
+			case BL_MER:
+			{
+				s_mercenary_data &mc = reinterpret_cast<s_mercenary_data &>(*src);
+
+				skill_blockmerc_start(mc, ud->skill_id, skill_get_cooldown(ud->skill_id, ud->skill_lv));
+			}
+			break;
 		}
 
 		if( battle_config.display_status_timers && sd )
@@ -13495,7 +13506,7 @@ TIMER_FUNC(skill_castend_id){
 				sc->getSCE(SC_SPIRIT)->val3 = 0; //Clear bounced spell check.
 #ifndef RENEWAL
 			if( sc->getSCE(SC_DANCING) && sd && skill_get_inf2(ud->skill_id, INF2_ISSONG) )
-				skill_blockpc_start(sd,BD_ADAPTATION,3000);
+				skill_blockpc_start(*sd,BD_ADAPTATION,3000);
 #endif
 		}
 
@@ -13662,7 +13673,7 @@ TIMER_FUNC(skill_castend_pos){
 			ud->canact_tick = i64max(tick + skill_delayfix(src, ud->skill_id, ud->skill_lv), ud->canact_tick - SECURITY_CASTTIME);
 		if (sd) { //Cooldown application
 			int32 cooldown = pc_get_skillcooldown(sd,ud->skill_id, ud->skill_lv);
-			if(cooldown) skill_blockpc_start(sd, ud->skill_id, cooldown);
+			if(cooldown) skill_blockpc_start(*sd, ud->skill_id, cooldown);
 		}
 		if( battle_config.display_status_timers && sd )
 			clif_status_change(src, EFST_POSTDELAY, 1, skill_delayfix(src, ud->skill_id, ud->skill_lv), 0, 0, 0);
@@ -14097,7 +14108,7 @@ int32 skill_castend_pos2(struct block_list* src, int32 x, int32 y, uint16 skill_
 			clif_skill_poseffect(src,skill_id,skill_lv,src->x,src->y,tick);
 #endif
 			if (sd)
-				skill_blockpc_start (sd, MO_EXTREMITYFIST, 2000);
+				skill_blockpc_start (*sd, MO_EXTREMITYFIST, 2000);
 		}
 		break;
 	case NJ_SHADOWJUMP:
@@ -23010,155 +23021,164 @@ static int32 skill_destroy_trap(struct block_list *bl, va_list ap)
 /*==========================================
  *
  *------------------------------------------*/
-int32 skill_blockpc_get(map_session_data *sd, int32 skillid) {
-	int32 i;
-
-	nullpo_retr(-1, sd);
-
-	ARR_FIND(0, MAX_SKILLCOOLDOWN, i, sd->scd[i] && sd->scd[i]->skill_id == skillid);
-	return (i >= MAX_SKILLCOOLDOWN) ? -1 : i;
-}
-
 TIMER_FUNC(skill_blockpc_end){
 	map_session_data *sd = map_id2sd(id);
-	int32 i = (int32)data;
 
-	if (!sd || data < 0 || data >= MAX_SKILLCOOLDOWN)
+	if (sd == nullptr)
 		return 0;
 
-	if (!sd->scd[i] || sd->scd[i]->timer != tid) {
-		ShowWarning("skill_blockpc_end: Invalid Timer or not Skill Cooldown.\n");
-		return 0;
-	}
+	sd->scd.erase(static_cast<uint16>(data));
 
-	aFree(sd->scd[i]);
-	sd->scd[i] = nullptr;
-		return 1;
+	return 1;
 }
 
 /**
- * Flags a singular skill as being blocked from persistent usage.
- * @param   sd        the player the skill delay affects
- * @param   skill_id   the skill which should be delayed
- * @param   tick      the length of time the delay should last
- * @param   load      whether this assignment is being loaded upon player login
- * @return  0 if successful, -1 otherwise
+ * Flags a singular skill as being blocked from persistent usage for a player.
+ * @param sd: The player the skill delay affects
+ * @param skill_id: The skill which should be delayed
+ * @param tick: The length of time the delay should last
+ * @return True if successful, false otherwise
  */
-int32 skill_blockpc_start(map_session_data *sd, int32 skill_id, t_tick tick) {
-	int32 i;
+bool skill_blockpc_start(map_session_data &sd, uint16 skill_id, t_tick tick) {
+	if (!skill_db.exists(skill_id) || tick < 1)
+		return false;
 
-	nullpo_retr(-1, sd);
-
-	if (!skill_id || tick < 1)
-		return -1;
-
-	ARR_FIND(0, MAX_SKILLCOOLDOWN, i, sd->scd[i] && sd->scd[i]->skill_id == skill_id);
-	if (i < MAX_SKILLCOOLDOWN) { // Skill already with cooldown
-		delete_timer(sd->scd[i]->timer, skill_blockpc_end);
-		aFree(sd->scd[i]);
-		sd->scd[i] = nullptr;
-	}
-
-	ARR_FIND(0, MAX_SKILLCOOLDOWN, i, !sd->scd[i]);
-	if (i < MAX_SKILLCOOLDOWN) { // Free Slot found
-		CREATE(sd->scd[i], struct skill_cooldown_entry, 1);
-		sd->scd[i]->skill_id = skill_id;
-		sd->scd[i]->timer = add_timer(gettick() + tick, skill_blockpc_end, sd->bl.id, i);
-
-		if (battle_config.display_status_timers)
-			clif_skill_cooldown( *sd, skill_id, tick );
-
-		return 1;
-	} else {
+	if (sd.scd.size() == MAX_SKILLCOOLDOWN) {
 		ShowWarning("skill_blockpc_start: Too many skillcooldowns, increase MAX_SKILLCOOLDOWN.\n");
-		return 0;
+		return false;
 	}
+
+	// Add entry to list.
+	sd.scd[skill_id] = add_timer(gettick() + tick, skill_blockpc_end, sd.bl.id, skill_id);
+
+	if (battle_config.display_status_timers)
+		clif_skill_cooldown(sd, skill_id, tick);
+
+	return true;
 }
 
-int32 skill_blockpc_clear(map_session_data *sd) {
-	int32 i;
-
-	nullpo_ret(sd);
-
-	for (i = 0; i < MAX_SKILLCOOLDOWN; i++) {
-		if (!sd->scd[i])
-			continue;
-		delete_timer(sd->scd[i]->timer, skill_blockpc_end);
-		aFree(sd->scd[i]);
-		sd->scd[i] = nullptr;
+/**
+ * Clear skill cooldowns from player.
+ * @param sd: Player data
+ */
+void skill_blockpc_clear(map_session_data &sd) {
+	for (auto &entry : sd.scd) {
+		if (battle_config.display_status_timers)
+			clif_skill_cooldown(sd, entry.first, 0);
+		delete_timer(entry.second, skill_blockpc_end);
 	}
-	return 1;
+
+	sd.scd.clear();
 }
 
+/**
+ * Timer end for homunculus skill cooldowns.
+ */
 TIMER_FUNC(skill_blockhomun_end){
-	struct homun_data *hd = (TBL_HOM*) map_id2bl(id);
+	homun_data *hd = map_id2hd(id);
 
-	if (hd) {
-		auto skill = util::vector_get(hd->blockskill, (uint16)data);
+	if (hd == nullptr)
+		return 0;
 
-		if (skill != hd->blockskill.end())
-			hd->blockskill.erase(skill);
-	}
+	hd->scd.erase(static_cast<uint16>(data));
 
 	return 1;
 }
 
-int32 skill_blockhomun_start(struct homun_data *hd, uint16 skill_id, int32 tick)	//[orn]
+/**
+ * Flags a singular skill as being blocked from persistent usage for a homunculus.
+ * @param hd: The homunculus the skill delay affects
+ * @param skill_id: The skill which should be delayed
+ * @param tick: The length of time the delay should last
+ * @return True if successful, false otherwise
+ */
+bool skill_blockhomun_start(homun_data &hd, uint16 skill_id, t_tick tick)	//[orn]
 {
-	nullpo_retr(-1, hd);
+	if (!skill_db.exists(skill_id) || tick < 1)
+		return false;
 
-	if (!skill_db.exists(skill_id))
-		return -1;
-
-	auto skill = util::vector_get(hd->blockskill, skill_id);
-
-	if (tick < 1 && skill != hd->blockskill.end()) {
-		hd->blockskill.erase(skill);
-		return -1;
+	if (hd.scd.size() == MAX_SKILLCOOLDOWN) {
+		ShowWarning("skill_blockhomun_start: Too many skillcooldowns, increase MAX_SKILLCOOLDOWN.\n");
+		return false;
 	}
 
-	hd->blockskill.push_back(skill_id);
+	// Add entry to list.
+	hd.scd[skill_id] = add_timer(gettick() + tick, skill_blockhomun_end, hd.bl.id, skill_id);
 
 	if (battle_config.display_status_timers)
-		clif_skill_cooldown(*hd->master, skill_id, tick);
+		clif_skill_cooldown(*hd.master, skill_id, tick);
 
-	return add_timer(gettick() + tick, skill_blockhomun_end, hd->bl.id, skill_id);
+	return true;
 }
 
+/**
+ * Clear skill cooldowns from homunculus.
+ * @param hd: Homunculus data
+ */
+void skill_blockhomun_clear(homun_data &hd) {
+	for (auto &entry : hd.scd) {
+		if (battle_config.display_status_timers)
+			clif_skill_cooldown(*hd.master, entry.first, 0);
+		delete_timer(entry.second, skill_blockhomun_end);
+	}
+
+	hd.scd.clear();
+}
+
+/**
+ * Timer end for mercenary skill cooldowns.
+ */
 TIMER_FUNC(skill_blockmerc_end){
-	s_mercenary_data *md = (TBL_MER*)map_id2bl(id);
+	s_mercenary_data *mc = map_id2mc(id);
 
-	if (md) {
-		auto skill = util::vector_get(md->blockskill, (uint16)data);
+	if (mc == nullptr)
+		return 0;
 
-		if (skill != md->blockskill.end())
-			md->blockskill.erase(skill);
-	}
+	mc->scd.erase(static_cast<uint16>(data));
 
 	return 1;
 }
 
-int32 skill_blockmerc_start(s_mercenary_data *md, uint16 skill_id, int32 tick)
+/**
+ * Flags a singular skill as being blocked from persistent usage for a mercenary.
+ * @param mc: The mercenary the skill delay affects
+ * @param skill_id: The skill which should be delayed
+ * @param tick: The length of time the delay should last
+ * @return True if successful, false otherwise
+ */
+bool skill_blockmerc_start(s_mercenary_data &mc, uint16 skill_id, t_tick tick)
 {
-	nullpo_retr(-1, md);
+	if (!skill_db.exists(skill_id) || tick < 1)
+		return false;
 
-	if (!skill_db.exists(skill_id))
-		return -1;
-
-	auto skill = util::vector_get(md->blockskill, skill_id);
-
-	if (tick < 1 && skill != md->blockskill.end()) {
-		md->blockskill.erase(skill);
-		return -1;
+	if (mc.scd.size() == MAX_SKILLCOOLDOWN) {
+		ShowWarning("skill_blockpc_start: Too many skillcooldowns, increase MAX_SKILLCOOLDOWN.\n");
+		return false;
 	}
 
-	md->blockskill.push_back(skill_id);
+	// Add entry to list.
+	mc.scd[skill_id] = add_timer(gettick() + tick, skill_blockmerc_end, mc.bl.id, skill_id);
 
 	if (battle_config.display_status_timers)
-		clif_skill_cooldown(*md->master, skill_id, tick);
+		clif_skill_cooldown(*mc.master, skill_id, tick);
 
-	return add_timer(gettick() + tick, skill_blockmerc_end, md->bl.id, skill_id);
+	return true;
 }
+
+/**
+ * Clear skill cooldowns from mercenary.
+ * @param mc: Mercenary data
+ */
+void skill_blockmerc_clear(s_mercenary_data &mc) {
+	for (auto &entry : mc.scd) {
+		if (battle_config.display_status_timers)
+			clif_skill_cooldown(*mc.master, entry.first, 0);
+		delete_timer(entry.second, skill_blockmerc_end);
+	}
+
+	mc.scd.clear();
+}
+
 /**
  * Adds a new skill unit entry for this player to recast after map load
  * @param sd: Player
