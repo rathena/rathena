@@ -21228,20 +21228,16 @@ void clif_broadcast_obtain_special_item( const char *char_name, t_itemid nameid,
 	}
 }
 
-/// Show body view windows (ZC_DRESSROOM_OPEN).
-/// 0A02 <view>.W
-/// Value <flag> has the following effects:
-/// 1: Open a Dress Room window.
-void clif_dressing_room(map_session_data *sd, int32 flag) {
-#if PACKETVER >= 20150513
-	int32 fd = sd->fd;
+/// Open the dress room window.
+/// 0A02 <view>.W (ZC_DRESSROOM_OPEN)
+void clif_dressing_room( map_session_data& sd ){
+#if PACKETVER >= 20140212
+	PACKET_ZC_DRESSROOM_OPEN p = {};
 
-	nullpo_retv(sd);
+	p.packetType = HEADER_ZC_DRESSROOM_OPEN;
+	p.view = 0; // Ignored
 
-	WFIFOHEAD(fd, packet_len(0xa02));
-	WFIFOW(fd,0) = 0xa02;
-	WFIFOW(fd,2) = flag;
-	WFIFOSET(fd, packet_len(0xa02));
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 #endif
 }
 

@@ -24235,25 +24235,22 @@ BUILDIN_FUNC(geteleminfo) {
 }
 
 /**
- * opendressroom(<flag>{,<char_id>});
+ * opendressroom({<char_id>});
  */
 BUILDIN_FUNC(opendressroom)
 {
-#if PACKETVER >= 20150513
-	int32 flag = 1;
-    TBL_PC* sd;
+#if PACKETVER >= 20140212
+	map_session_data* sd;
 
-	if( script_hasdata(st,2) )
-		flag = script_getnum(st,2);
+	if (!script_charid2sd(2, sd))
+		return SCRIPT_CMD_FAILURE;
 
-    if (!script_charid2sd(3, sd))
-        return SCRIPT_CMD_FAILURE;
+	clif_dressing_room( *sd );
 
-    clif_dressing_room(sd, flag);
-
-    return SCRIPT_CMD_SUCCESS;
+	return SCRIPT_CMD_SUCCESS;
 #else
-    return SCRIPT_CMD_FAILURE;
+	ShowError( "buildin_opendressroom: This command requires PACKETVER 2014-02-12 or newer.\n" );
+	return SCRIPT_CMD_FAILURE;
 #endif
 }
 
@@ -28108,7 +28105,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(showscript,"s??"),
 	BUILDIN_DEF(ignoretimeout,"i?"),
 	BUILDIN_DEF(geteleminfo,"i?"),
-	BUILDIN_DEF(opendressroom,"i?"),
+	BUILDIN_DEF(opendressroom,"?"),
 	BUILDIN_DEF(navigateto,"s???????"),
 	BUILDIN_DEF(getguildalliance,"ii"),
 	BUILDIN_DEF(adopt,"vv"),
