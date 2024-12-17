@@ -10560,6 +10560,10 @@
 	export_constant(SEARCHSTORE_EFFECT_NORMAL);
 	export_constant(SEARCHSTORE_EFFECT_REMOTE);
 
+	export_constant(GROUP_ALGORITHM_RANDOM);
+	export_constant(GROUP_ALGORITHM_SHAREDPOOL);
+	export_constant(GROUP_ALGORITHM_ALL);
+
 	#undef export_constant
 	#undef export_constant2
 	#undef export_parameter
