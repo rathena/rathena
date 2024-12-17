@@ -3256,6 +3256,72 @@ Body:
     Title: "[Daily] Half Flower Gathering"
   - Id: 5942
     Title: Flower Room Opening Ceremony
+  - Id: 5961
+    Title: "[Standby] The Devil's Meal"
+    TimeLimit: 4h
+  - Id: 5962
+    Title: Devil's Breakfast
+    Targets:
+      - Id: 1
+        Count: 100
+        Location: clock_01
+        MapMobTargets:
+          EXTRA_JOKER: true
+          ERZSEBET: true
+          JENIFFER: true
+          GENERAL_ORC: true
+          SIEGLOUSE: true
+  - Id: 5963
+    Title: Devil's Lunch
+    Targets:
+      - Id: 1
+        Count: 300
+        Location: clock_01
+        MapMobTargets:
+          EXTRA_JOKER: true
+          ERZSEBET: true
+          JENIFFER: true
+          GENERAL_ORC: true
+          SIEGLOUSE: true
+  - Id: 5964
+    Title: Devil's Dinner
+    Targets:
+      - Id: 1
+        Count: 1000
+        Location: clock_01
+        MapMobTargets:
+          EXTRA_JOKER: true
+          ERZSEBET: true
+          JENIFFER: true
+          GENERAL_ORC: true
+          SIEGLOUSE: true
+  - Id: 5965
+    Title: "[Standby] Devil's Special"
+    TimeLimit: Monday 4h
+  - Id: 5966
+    Title: Devil's Special
+    Targets:
+      - Id: 1
+        Count: 5000
+        Location: clock_01
+        MapMobTargets:
+          EXTRA_JOKER: true
+          ERZSEBET: true
+          JENIFFER: true
+          GENERAL_ORC: true
+          SIEGLOUSE: true
+  - Id: 5967
+    Title: "[Standby] Devil's Snack"
+    TimeLimit: 4h
+  - Id: 5968
+    Title: "[Standby] Devil's Pet Mimic"
+    TimeLimit: 4h
+  - Id: 5969
+    Title: Food for Pet Mimic
+  - Id: 5970
+    Title: Delivery of food (?) completed
+  - Id: 5971
+    Title: Devil in the box
   - Id: 6000
     Title: Job Change to Taekwon
   - Id: 6001
