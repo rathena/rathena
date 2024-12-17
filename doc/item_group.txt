@@ -183,42 +183,44 @@ Example #2:
 	          - Index: 0
 	            Item: Milk
 	            Rate: 10
+	            Amount: 3
 	          - Index: 1
 	            Item: Well_Baked_Cookie
 	            Rate: 5
+	            Amount: 2
 	          - Index: 2
 	            Item: Gift_Box
 	            Rate: 1
 
 (Note: Specifying the "SharedPool" algorithm is optional, as it defaults to SharedPool if not specified.)
 
-You can interpret this as within MyItemGroup2 there are 10 Milk, 5 Well_Baked_Cookie and 1 Gift_Box.
+You can interpret this as within MyItemGroup2 there are 10 packs of 3x Milk, 5 packs of 2x Well_Baked_Cookie and 1 Gift_Box; 16 packs in total.
 
 Usages:
 'getgroupitem(IG_MyItemGroup2);'
 'getrandgroupitem(IG_MyItemGroup2);'
 
 The first time one of the two commands above are called:
-	- Player has chance to get 1x Milk by chance 10/16
-	- Player has chance to get 1x Well_Baked_Cookie by chance 5/16
+	- Player has chance to get 3x Milk by chance 10/16
+	- Player has chance to get 2x Well_Baked_Cookie by chance 5/16
 	- Player has chance to get 1x Gift_Box by chance 1/16
 
-Let's say a Well_Baked_Cookie was received from the group. That means only 4 Well_Baked_Cookie remain in the group.
+Let's say a pack of Well_Baked_Cookie was received from the group. That means only 4 packs of Well_Baked_Cookie remain in the group.
 
 The second time one of the two commands above are called:
-	- Player has chance to get 1x Milk by chance 10/15
-	- Player has chance to get 1x Well_Baked_Cookie by chance 4/15
+	- Player has chance to get 3x Milk by chance 10/15
+	- Player has chance to get 2x Well_Baked_Cookie by chance 4/15
 	- Player has chance to get 1x Gift_Box by chance 1/15
 
 Now a Gift_Box is received from the group. That means no more Gift_Box are remaining in the group.
 
 The third time one of the two commands above are called:
-	- Player has chance to get 1x Milk by chance 10/14
-	- Player has chance to get 1x Well_Baked_Cookie by chance 4/14
+	- Player has chance to get 3x Milk by chance 10/14
+	- Player has chance to get 2x Well_Baked_Cookie by chance 4/14
 
 After the two commands were called 16 times, the server will always have given out exactly:
-	- 10 Milk
-	- 5 Well-Baked Cookies
+	- 30 Milk (10 packs of 3x Milk)
+	- 10 Well_Baked_Cookie (5 packs of 2x Well_Baked_Cookie)
 	- 1 Gift_Box
 
 Now the group is refilled and the next time the command is called, it will behave similar to the first time.
