@@ -93,6 +93,8 @@ SharedPool        - Rate is the amount of items of this item ID in the sub group
                     an item from this sub group as often as there are total items in this sub group, it will get exactly the amounts specified under "rate".
                     Only when the group is completely empty or the server restarts, the group refills.
 
+Default: SharedPool
+
 Example:
 	Item Group:
       - Group: MyItemGroup
@@ -169,6 +171,57 @@ Example:
 		- Returns Item ID of Knife by chance 5/7 from 'must' SubGroup
 		- Returns Item ID of Dagger by chance 2/7 from 'must' SubGroup
 		- 'SubGroup 1' and 'SubGroup 2' are ignored
+
+Example #2:
+
+	Item Group:
+	  - Group: MyItemGroup2
+	    SubGroups:
+	      - SubGroup: 1
+	        Algorithm: SharedPool
+	        List:
+	          - Index: 0
+	            Item: Milk
+	            Rate: 10
+	          - Index: 1
+	            Item: Well_Baked_Cookie
+	            Rate: 5
+	          - Index: 2
+	            Item: Gift_Box
+	            Rate: 1
+
+(Note: Specifying the "SharedPool" algorithm is optional, as it defaults to SharedPool if not specified.)
+
+You can interpret this as within MyItemGroup2 there are 10 Milk, 5 Well_Baked_Cookie and 1 Gift_Box.
+
+Usages:
+'getgroupitem(IG_MyItemGroup2);'
+'getrandgroupitem(IG_MyItemGroup2);'
+
+The first time one of the two commands above are called:
+	- Player has chance to get 1x Milk by chance 10/16
+	- Player has chance to get 1x Well_Baked_Cookie by chance 5/16
+	- Player has chance to get 1x Gift_Box by chance 1/16
+
+Let's say a Well_Baked_Cookie was received from the group. That means only 4 Well_Baked_Cookie remain in the group.
+
+The second time one of the two commands above are called:
+	- Player has chance to get 1x Milk by chance 10/15
+	- Player has chance to get 1x Well_Baked_Cookie by chance 4/15
+	- Player has chance to get 1x Gift_Box by chance 1/15
+
+Now a Gift_Box is received from the group. That means no more Gift_Box are remaining in the group.
+
+The third time one of the two commands above are called:
+	- Player has chance to get 1x Milk by chance 10/14
+	- Player has chance to get 1x Well_Baked_Cookie by chance 4/14
+
+After the two commands were called 16 times, the server will always have given out exactly:
+	- 10 Milk
+	- 5 Well-Baked Cookies
+	- 1 Gift_Box
+
+Now the group is refilled and the next time the command is called, it will behave similar to the first time.
 
 ---------------------------------------
 
