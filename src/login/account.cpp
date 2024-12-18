@@ -15,6 +15,7 @@
 #include <common/strlib.hpp>
 
 #include "login.hpp" // login_config
+#include "loginchrif.hpp"
 
 /// global defines
 
@@ -60,6 +61,12 @@ static bool account_db_sql_load_str(AccountDB* self, struct mmo_account* acc, co
 static AccountDBIterator* account_db_sql_iterator(AccountDB* self);
 static void account_db_sql_iter_destroy(AccountDBIterator* self);
 static bool account_db_sql_iter_next(AccountDBIterator* self, struct mmo_account* acc);
+TIMER_FUNC(account_disable_webtoken_timer);
+#ifdef VIP_ENABLE
+TIMER_FUNC(account_vip_timeout_timer);
+bool account_db_sql_enable_monitor_vip( AccountDB* self, const uint32 account_id, time_t vip_time );
+bool account_db_sql_disable_monitor_vip( AccountDB* self, const uint32 account_id );
+#endif
 
 static bool mmo_auth_fromsql(AccountDB_SQL* db, struct mmo_account* acc, uint32 account_id);
 static bool mmo_auth_tosql(AccountDB_SQL* db, const struct mmo_account* acc, bool is_new, bool refresh_token);
@@ -83,6 +90,10 @@ AccountDB* account_db_sql(void) {
 	db->vtable.load_num     = &account_db_sql_load_num;
 	db->vtable.load_str     = &account_db_sql_load_str;
 	db->vtable.iterator     = &account_db_sql_iterator;
+#ifdef VIP_ENABLE
+	db->vtable.enable_monitor_vip = &account_db_sql_enable_monitor_vip;
+	db->vtable.disable_monitor_vip = &account_db_sql_disable_monitor_vip;
+#endif
 
 	// initialize to default values
 	db->accounts = nullptr;
@@ -91,6 +102,11 @@ AccountDB* account_db_sql(void) {
 	safestrncpy(db->account_db, "login", sizeof(db->account_db));
 	safestrncpy(db->global_acc_reg_num_table, "global_acc_reg_num", sizeof(db->global_acc_reg_num_table));
 	safestrncpy(db->global_acc_reg_str_table, "global_acc_reg_str", sizeof(db->global_acc_reg_str_table));
+
+	add_timer_func_list( account_disable_webtoken_timer, "account_disable_webtoken_timer" );
+#ifdef VIP_ENABLE
+	add_timer_func_list(account_vip_timeout_timer, "account_vip_timeout_timer");
+#endif
 
 	return &db->vtable;
 }
@@ -951,3 +967,77 @@ bool account_db_sql_remove_webtokens( AccountDB* self ){
 
 	return true;
 }
+
+#ifdef VIP_ENABLE
+TIMER_FUNC(account_vip_timeout_timer){
+	struct online_login_data* ld = login_get_online_user( id );
+	AccountDB* db = reinterpret_cast<AccountDB*>( data );
+
+	// Player is not online anymore
+	if( ld == nullptr ){
+		return 0;
+	}
+
+	ld->vip_timeout_tid = INVALID_TIMER;
+
+	struct mmo_account acc;
+
+	if( db->load_num( db, &acc, id ) ){
+		time_t now = time( nullptr );
+		time_t vip_time = acc.vip_time;
+		bool isvip;
+
+		// Is still VIP
+		if( now < vip_time ){
+			t_tick remaining = vip_time - now;
+
+			ld->vip_timeout_tid = add_timer( gettick() + remaining * 1000, account_vip_timeout_timer, id, data );
+
+			isvip = true;
+		}else{
+			isvip = false;
+		}
+
+		logchrif_sendvipdata( ch_server[ld->char_server].fd, &acc, isvip ? 0x1 : 0x0, -1 );
+	}
+
+	return 0;
+}
+
+bool account_db_sql_enable_monitor_vip( AccountDB* self, const uint32 account_id, time_t vip_time ){
+	struct online_login_data* ld = login_get_online_user( account_id );
+
+	if( ld == nullptr ){
+		return false;
+	}
+
+	if( ld->vip_timeout_tid != INVALID_TIMER ){
+		delete_timer( ld->vip_timeout_tid, account_vip_timeout_timer );
+		ld->vip_timeout_tid = INVALID_TIMER;
+	}
+
+	time_t now = time(nullptr);
+	t_tick remaining = vip_time - now;
+
+	ld->vip_timeout_tid = add_timer( gettick() + remaining * 1000, account_vip_timeout_timer, account_id, reinterpret_cast<intptr_t>( self ) );
+
+	return true;
+}
+
+bool account_db_sql_disable_monitor_vip( AccountDB* self, const uint32 account_id ){
+	AccountDB_SQL* db = (AccountDB_SQL*)self;
+
+	struct online_login_data* ld = login_get_online_user( account_id );
+
+	if( ld == nullptr ){
+		return false;
+	}
+
+	if( ld->vip_timeout_tid != INVALID_TIMER ){
+		delete_timer( ld->vip_timeout_tid, account_vip_timeout_timer );
+		ld->vip_timeout_tid = INVALID_TIMER;
+	}
+
+	return true;
+}
+#endif

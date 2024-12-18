@@ -662,6 +662,22 @@ int32 chlogif_parse_vipack(int32 fd) {
 		uint32 groupid = RFIFOL(fd,11); //new group id
 		int32 mapfd = RFIFOL(fd,15); //link to mapserv for ack
 		RFIFOSKIP(fd,19);
+
+		// If it was triggered from login-server and not requested from a specific map-server
+		if( mapfd < 0 ){
+			std::shared_ptr<struct online_char_data> character = util::umap_find( char_get_onlinedb(), aid );
+
+			if( character == nullptr ){
+				return 1;
+			}
+
+			if( character->server < 0 ){
+				return 1;
+			}
+
+			mapfd = map_server[character->server].fd;
+		}
+
 		chmapif_vipack(mapfd,aid,vip_time,groupid,flag);
 	}
 #endif
