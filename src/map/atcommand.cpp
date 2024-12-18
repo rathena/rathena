@@ -2273,7 +2273,11 @@ ACMD_FUNC(monster)
 		return -1;
 	}
 
-	if ((mob_id = mobdb_searchname(monster)) == 0) // check name first (to avoid possible name begining by a number)
+	// If AegisName matches exactly, summon that monster
+	std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname(monster);
+	if (mob != nullptr)
+		mob_id = mob->id;
+	else if ((mob_id = mobdb_searchname(monster)) == 0) // check name first (to avoid possible name begining by a number)
 		mob_id = mobdb_checkid(atoi(monster));
 
 	if (mob_id == 0) {
