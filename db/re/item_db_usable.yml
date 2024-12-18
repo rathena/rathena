@@ -60753,6 +60753,22 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box9);
+  - Id: 23059
+    AegisName: Face_Paint_Box
+    Name: Face Paint Box
+    Type: Usable
+    Buy: 20
+    Weight: 150
+    Script: |
+      getitem 6120,50; /* Face Paint */
+  - Id: 23060
+    AegisName: Surface_Paint_Box
+    Name: Surface Paint Box
+    Type: Usable
+    Buy: 20
+    Weight: 150
+    Script: |
+      getitem 6123,50; /* Surface Paint */
   - Id: 23061
     AegisName: Incisive_Arrow_Cntr
     Name: Sharp Arrow Quiver
