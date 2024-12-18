@@ -14787,7 +14787,6 @@ void clif_parse_GMRecall2(int32 fd, map_session_data* sd)
 void clif_parse_GM_Item_Monster(int32 fd, map_session_data *sd)
 {
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	int32 mob_id = 0;
 	StringBuf command;
 	char *str;
 //#if PACKETVER >= 20131218
@@ -14831,10 +14830,15 @@ void clif_parse_GM_Item_Monster(int32 fd, map_session_data *sd)
 	}
 
 	// Monster
-	if ((mob_id = mobdb_searchname(str)) == 0)
-		mob_id = mobdb_checkid(atoi(str));
-
-	std::shared_ptr<s_mob_db> mob = mob_db.find(mob_id);
+	// If AegisName matches exactly, summon that monster (official behavior)
+	std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname(str);
+	// Otherwise, search for monster with that name or ID (rAthena added behavior)
+	if (mob == nullptr) {
+		int32 mob_id = 0;
+		if ((mob_id = mobdb_searchname(str)) == 0)
+			mob_id = mobdb_checkid(atoi(str));
+		mob = mob_db.find(mob_id);
+	}
 
 	if( mob != nullptr ) {
 		StringBuf_Init(&command);
