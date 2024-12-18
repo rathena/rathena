@@ -304,6 +304,10 @@ function	script	F_KafStor	{
 				mes "Storage access fee is " + .@fee + " zeny.";
 				return;
 			}
+			if (!checkre(RENEWAL)) {
+				Zeny -= .@fee;
+				RESRVPTS += (.@fee/5);
+			}
 		}
 	}
 
