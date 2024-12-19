@@ -2277,8 +2277,13 @@ ACMD_FUNC(monster)
 	std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname(monster);
 	if (mob != nullptr)
 		mob_id = mob->id;
-	else if ((mob_id = mobdb_searchname(monster)) == 0) // check name first (to avoid possible name begining by a number)
-		mob_id = mobdb_checkid(atoi(monster));
+	else {
+		// Otherwise, search for monster with that ID or name
+		// Check for ID first as this is faster; if search string is not a number it will return 0
+		mob_id = mobdb_checkid(strtol(monster, nullptr, 10));
+		if (mob_id == 0)
+			mob_id = mobdb_searchname(monster);
+	}
 
 	if (mob_id == 0) {
 		clif_displaymessage(fd, msg_txt(sd,40)); // Invalid monster ID or name.
