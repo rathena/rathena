@@ -3069,10 +3069,10 @@ uint8 ItemGroupDatabase::pc_get_itemgroup( uint16 group_id, bool identify, map_s
 		return 0;
 
 	if (group->announce_box_id != 0) {
-		sd->opened_box_id = group->announce_box_id;
+		sd.opened_box_id = group->announce_box_id;
 	}
 	else {
-		sd->opened_box_id = sd->itemid;
+		sd.opened_box_id = sd.itemid;
 	}
 
 	for (const auto &random : group->random) {
