@@ -39,7 +39,9 @@ std::vector<struct s_point_str> accessible_maps{
 	s_point_str{ MAP_VEINS, 204, 103 },
 	s_point_str{ MAP_AYOTHAYA, 218, 187 },
 	s_point_str{ MAP_LIGHTHALZEN, 159, 95 },
+#ifdef RENEWAL
 	s_point_str{ MAP_MORA, 57, 143 }
+#endif
 };
 
 #if PACKETVER_SUPPORTS_PINCODE
