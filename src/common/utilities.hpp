@@ -321,6 +321,16 @@ namespace rathena {
 		std::string string_left_pad(const std::string& original, char padding, size_t num);
 
 		/**
+		* Converts a string (char pointer) to an int32 value
+		* Returns the given default value when conversion fails or string is not a number
+		* @param str: String to convert
+		* @param def: Default value that should be returned on failure
+		*
+		* @return Converted int32 value
+		*/
+		int32 strtoint32def(const char* str, int32 def = 0);
+
+		/**
 		* Encode base10 number to base62. Originally by lututui
 		* @param val: Base10 Number
 		* @return Base62 string
