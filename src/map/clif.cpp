@@ -14836,7 +14836,7 @@ void clif_parse_GM_Item_Monster(int32 fd, map_session_data *sd)
 		// Otherwise, search for monster with that ID or name (rAthena added behavior)
 		if (mob == nullptr) {
 			// Check for ID first as this is faster; if search string is not a number it will return 0
-			int32 mob_id = mobdb_checkid(strtol(str, nullptr, 10));
+			int32 mob_id = mobdb_checkid(util::strtoint32def(str));
 			if (mob_id == 0)
 				mob_id = mobdb_searchname(str);
 			mob = mob_db.find(mob_id);
