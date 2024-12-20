@@ -34,7 +34,7 @@ std::vector<struct s_point_str> accessible_maps{
 	s_point_str{ MAP_GEFFEN, 120, 100 },
 	s_point_str{ MAP_MORROC, 160, 94 },
 	s_point_str{ MAP_ALBERTA, 116, 57 },
-	s_point_str{ MAP_PAYON, 87, 117 },
+	s_point_str{ MAP_PAYON, 120, 60 },
 	s_point_str{ MAP_IZLUDE, 94, 103 }
 };
 
