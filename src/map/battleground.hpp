@@ -22,7 +22,7 @@ struct s_battleground_member_data {
 };
 
 struct s_battleground_data {
-	int id; ///< Battleground ID
+	int32 id; ///< Battleground ID
 	std::vector<s_battleground_member_data> members; ///< List of players in battleground
 	struct point cemetery; ///< Respawn point for players who die
 	std::string logout_event; ///< NPC Event to call on log out events
@@ -39,7 +39,7 @@ struct s_battleground_team {
 };
 
 struct s_battleground_map {
-	int id; ///< Battleground ID
+	int32 id; ///< Battleground ID
 	uint16 mapindex; ///< Index of the map
 	s_battleground_team team1, team2; ///< Team data
 	std::string bgcallscript; ///< Script to be called when players join the battleground
@@ -56,27 +56,27 @@ enum e_queue_state : uint16 {
 
 /// Battlegrounds client interface queue system [MasterOfMuppets]
 struct s_battleground_queue {
-	int queue_id; ///< Battlegrounds Queue ID
-	int id; ///< Battlegrounds database ID
+	int32 queue_id; ///< Battlegrounds Queue ID
+	int32 id; ///< Battlegrounds database ID
 	std::vector<map_session_data *> teama_members; ///< List of members on team A
 	std::vector<map_session_data *> teamb_members; ///< List of members on team B
-	int required_players; ///< Amount of players required on each side to start
-	int max_players; ///< Maximum amount of players on each side
-	int accepted_players; ///< Amount of players who accepted the offer to enter the battleground
+	int32 required_players; ///< Amount of players required on each side to start
+	int32 max_players; ///< Maximum amount of players on each side
+	int32 accepted_players; ///< Amount of players who accepted the offer to enter the battleground
 	e_queue_state state; ///< See @e_queue_state
-	int tid_expire; ///< Timer ID associated with the time out at the ready to enter window
-	int tid_start; ///< Timer ID associated with the start delay
-	int tid_requeue; ///< Timer ID associated with requeuing this group if all BG maps are reserved
+	int32 tid_expire; ///< Timer ID associated with the time out at the ready to enter window
+	int32 tid_start; ///< Timer ID associated with the start delay
+	int32 tid_requeue; ///< Timer ID associated with requeuing this group if all BG maps are reserved
 	s_battleground_map *map; ///< Map this BG queue has been assigned to
 };
 
 struct s_battleground_type {
-	int id; ///< Battlegrounds database ID
+	int32 id; ///< Battlegrounds database ID
 	std::string name; ///< Name of the battleground type
-	int required_players; ///< Amount of players required on each side to start
-	int max_players; ///< Maximum amount of players on each side
-	int min_lvl; ///< Minimum level to participate in this battleground type
-	int max_lvl; ///< Maximum level to participate in this battleground type
+	int32 required_players; ///< Amount of players required on each side to start
+	int32 max_players; ///< Maximum amount of players on each side
+	int32 min_lvl; ///< Minimum level to participate in this battleground type
+	int32 max_lvl; ///< Maximum level to participate in this battleground type
 	std::vector<s_battleground_map> maps; ///< List of battleground locations
 	uint32 deserter_time; ///< Amount of time a player is marked deserter (seconds)
 	uint32 start_delay; ///< Amount of time before the start message is sent to players (seconds)
@@ -123,24 +123,24 @@ public:
 };
 
 extern BattlegroundDatabase battleground_db;
-extern std::unordered_map<int, std::shared_ptr<s_battleground_data>> bg_team_db;
+extern std::unordered_map<int32, std::shared_ptr<s_battleground_data>> bg_team_db;
 extern std::vector<std::shared_ptr<s_battleground_queue>> bg_queues;
 
 std::shared_ptr<s_battleground_type> bg_search_name(const char *name);
-std::shared_ptr<s_battleground_queue> bg_search_queue(int queue_id);
+std::shared_ptr<s_battleground_queue> bg_search_queue(int32 queue_id);
 void bg_send_dot_remove(map_session_data *sd);
-int bg_team_get_id(struct block_list *bl);
+int32 bg_team_get_id(struct block_list *bl);
 map_session_data *bg_getavailablesd(s_battleground_data *bg);
 
 bool bg_queue_reservation(const char *name, bool state, bool ended);
 #define bg_queue_reserve(name, end) (bg_queue_reservation(name, true, end))
 #define bg_queue_unbook(name) (bg_queue_reservation(name, false, false))
 
-int bg_create(uint16 mapindex, s_battleground_team* team);
-bool bg_team_join(int bg_id, map_session_data *sd, bool is_queue);
-bool bg_team_delete(int bg_id);
-int bg_team_leave(map_session_data *sd, bool quit, bool deserter);
-bool bg_team_warp(int bg_id, unsigned short mapindex, short x, short y);
+int32 bg_create(uint16 mapindex, s_battleground_team* team);
+bool bg_team_join(int32 bg_id, map_session_data *sd, bool is_queue);
+bool bg_team_delete(int32 bg_id);
+int32 bg_team_leave(map_session_data *sd, bool quit, bool deserter);
+bool bg_team_warp(int32 bg_id, unsigned short mapindex, short x, short y);
 bool bg_player_is_in_bg_map(map_session_data *sd);
 bool bg_queue_check_joinable(std::shared_ptr<s_battleground_type> bg, map_session_data *sd, const char *name);
 void bg_queue_join_solo(const char *name, map_session_data *sd);

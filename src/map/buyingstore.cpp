@@ -24,7 +24,7 @@
 //Autotrader
 static DBMap *buyingstore_autotrader_db; /// Holds autotrader info: char_id -> struct s_autotrader
 static void buyingstore_autotrader_remove(struct s_autotrader *at, bool remove);
-static int buyingstore_autotrader_free(DBKey key, DBData *data, va_list ap);
+static int32 buyingstore_autotrader_free(DBKey key, DBData *data, va_list ap);
 
 /// constants (client-side restrictions)
 #define BUYINGSTORE_MAX_PRICE 99990000
@@ -50,12 +50,12 @@ enum e_buyingstore_failure
 };
 
 
-static unsigned int buyingstore_nextid = 0;
+static uint32 buyingstore_nextid = 0;
 static const t_itemid buyingstore_blankslots[MAX_SLOTS] = { 0 };  // used when checking whether or not an item's card slots are blank
 
 
 /// Returns unique buying store id
-static unsigned int buyingstore_getuid(void)
+static uint32 buyingstore_getuid(void)
 {
 	return ++buyingstore_nextid;
 }
@@ -92,7 +92,7 @@ int8 buyingstore_setup(map_session_data* sd, unsigned char slots){
 
 	if( slots > MAX_BUYINGSTORE_SLOTS )
 	{
-		ShowWarning("buyingstore_setup: Requested %d slots, but server supports only %d slots.\n", (int)slots, MAX_BUYINGSTORE_SLOTS);
+		ShowWarning("buyingstore_setup: Requested %d slots, but server supports only %d slots.\n", (int32)slots, MAX_BUYINGSTORE_SLOTS);
 		slots = MAX_BUYINGSTORE_SLOTS;
 	}
 
@@ -113,8 +113,8 @@ int8 buyingstore_setup(map_session_data* sd, unsigned char slots){
 * @param at Autotrader info, or nullptr if requetsed not from autotrade persistance
 * @return 0 If success, 1 - Cannot open, 2 - Manner penalty, 3 - Mapflag restiction, 4 - Cell restriction, 5 - Invalid count/result, 6 - Cannot give item, 7 - Will be overweight
 */
-int8 buyingstore_create( map_session_data* sd, int zenylimit, unsigned char result, const char* storename, const struct PACKET_CZ_REQ_OPEN_BUYING_STORE_sub* itemlist, unsigned int count, struct s_autotrader *at ){
-	unsigned int i, weight, listidx;
+int8 buyingstore_create( map_session_data* sd, int32 zenylimit, unsigned char result, const char* storename, const struct PACKET_CZ_REQ_OPEN_BUYING_STORE_sub* itemlist, uint32 count, struct s_autotrader *at ){
+	uint32 i, weight, listidx;
 	char message_sql[MESSAGE_SIZE*2];
 	StringBuf buf;
 
@@ -135,7 +135,7 @@ int8 buyingstore_create( map_session_data* sd, int zenylimit, unsigned char resu
 	if( !pc_can_give_items(sd) )
 	{// custom: GM is not allowed to buy (give zeny)
 		sd->buyingstore.slots = 0;
-		clif_displaymessage(sd->fd, msg_txt(sd,246));
+		clif_displaymessage( sd->fd, msg_txt( sd, 246 ) ); // Your GM level doesn't authorize you to perform this action.
 		clif_buyingstore_open_failed(sd, BUYINGSTORE_CREATE, 0);
 		return 6;
 	}
@@ -179,7 +179,7 @@ int8 buyingstore_create( map_session_data* sd, int zenylimit, unsigned char resu
 			break;
 		}
 
-		int idx = pc_search_inventory( sd, item->itemId );
+		int32 idx = pc_search_inventory( sd, item->itemId );
 
 		// At least one must be owned
 		if( idx < 0 ){
@@ -298,7 +298,7 @@ void buyingstore_open(map_session_data* sd, uint32 account_id)
 
 	if( !pc_can_give_items(sd) )
 	{// custom: GM is not allowed to sell
-		clif_displaymessage(sd->fd, msg_txt(sd,246));
+		clif_displaymessage( sd->fd, msg_txt( sd, 246 ) ); // Your GM level doesn't authorize you to perform this action.
 		return;
 	}
 
@@ -323,9 +323,9 @@ void buyingstore_open(map_session_data* sd, uint32 account_id)
 * @param *itemlist List of sold items { <index>.W, <nameid>.W, <amount>.W }*
 * @param count Number of item on the itemlist
 */
-void buyingstore_trade( map_session_data* sd, uint32 account_id, unsigned int buyer_id, const struct PACKET_CZ_REQ_TRADE_BUYING_STORE_sub* itemlist, unsigned int count ){
-	int zeny = 0;
-	unsigned int weight;
+void buyingstore_trade( map_session_data* sd, uint32 account_id, uint32 buyer_id, const struct PACKET_CZ_REQ_TRADE_BUYING_STORE_sub* itemlist, uint32 count ){
+	int32 zeny = 0;
+	uint32 weight;
 	map_session_data* pl_sd;
 
 	nullpo_retv(sd);
@@ -343,7 +343,7 @@ void buyingstore_trade( map_session_data* sd, uint32 account_id, unsigned int bu
 
 	if( !pc_can_give_items(sd) )
 	{// custom: GM is not allowed to sell
-		clif_displaymessage(sd->fd, msg_txt(sd,246));
+		clif_displaymessage( sd->fd, msg_txt( sd, 246 ) ); // Your GM level doesn't authorize you to perform this action.
 		clif_buyingstore_trade_failed_seller(sd, BUYINGSTORE_TRADE_SELLER_FAILED, 0);
 		return;
 	}
@@ -369,11 +369,11 @@ void buyingstore_trade( map_session_data* sd, uint32 account_id, unsigned int bu
 	weight = pl_sd->weight;
 
 	// check item list
-	for( int i = 0; i < count; i++ ){
+	for( int32 i = 0; i < count; i++ ){
 		const struct PACKET_CZ_REQ_TRADE_BUYING_STORE_sub* item = &itemlist[i];
 
 		// duplicate check. as the client does this too, only malicious intent should be caught here
-		for( int k = 0; k < i; k++ ){
+		for( int32 k = 0; k < i; k++ ){
 			// duplicate
 			if( itemlist[k].index == item->index && k != i ){
 				ShowWarning( "buyingstore_trade: Found duplicate item on selling list (prevnameid=%u, prevamount=%hu, nameid=%u, amount=%hu, account_id=%d, char_id=%d).\n", itemlist[k].itemId, itemlist[k].amount, item->itemId, item->amount, sd->status.account_id, sd->status.char_id );
@@ -382,7 +382,7 @@ void buyingstore_trade( map_session_data* sd, uint32 account_id, unsigned int bu
 			}
 		}
 
-		int index = item->index - 2; // TODO: clif::server_index
+		int32 index = item->index - 2; // TODO: clif::server_index
 
 		// invalid input
 		if( index < 0 || index >= ARRAYLENGTH( sd->inventory.u.items_inventory ) || sd->inventory_data[index] == nullptr || sd->inventory.u.items_inventory[index].nameid != item->itemId || sd->inventory.u.items_inventory[index].amount < item->amount ){
@@ -396,7 +396,7 @@ void buyingstore_trade( map_session_data* sd, uint32 account_id, unsigned int bu
 			return;
 		}
 
-		int listidx;
+		int32 listidx;
 
 		ARR_FIND( 0, pl_sd->buyingstore.slots, listidx, pl_sd->buyingstore.items[listidx].nameid == item->itemId );
 
@@ -420,7 +420,7 @@ void buyingstore_trade( map_session_data* sd, uint32 account_id, unsigned int bu
 
 		// normally this is not supposed to happen, as the total weight is
 		// checked upon creation, but the buyer could have gained items
-		if( item->amount * (unsigned int)sd->inventory_data[index]->weight > pl_sd->max_weight - weight ){
+		if( item->amount * (uint32)sd->inventory_data[index]->weight > pl_sd->max_weight - weight ){
 			clif_buyingstore_trade_failed_seller( sd, BUYINGSTORE_TRADE_SELLER_FAILED, item->itemId );
 			return;
 		}
@@ -437,14 +437,14 @@ void buyingstore_trade( map_session_data* sd, uint32 account_id, unsigned int bu
 	}
 
 	// process item list
-	for( int i = 0; i < count; i++ ){
+	for( int32 i = 0; i < count; i++ ){
 		const struct PACKET_CZ_REQ_TRADE_BUYING_STORE_sub* item = &itemlist[i];
-		int listidx;
+		int32 listidx;
 
 		ARR_FIND( 0, pl_sd->buyingstore.slots, listidx, pl_sd->buyingstore.items[listidx].nameid == item->itemId );
 		zeny = item->amount * pl_sd->buyingstore.items[listidx].price;
 
-		int index = item->index - 2; // TODO: clif::server_index
+		int32 index = item->index - 2; // TODO: clif::server_index
 
 		// move item
 		pc_additem(pl_sd, &sd->inventory.u.items_inventory[index], item->amount, LOG_TYPE_BUYING_STORE);
@@ -477,7 +477,7 @@ void buyingstore_trade( map_session_data* sd, uint32 account_id, unsigned int bu
 	}
 	
 	// check whether or not there is still something to buy
-	int i;
+	int32 i;
 	ARR_FIND( 0, pl_sd->buyingstore.slots, i, pl_sd->buyingstore.items[i].amount != 0 );
 	if( i == pl_sd->buyingstore.slots )
 	{// everything was bought
@@ -510,7 +510,7 @@ void buyingstore_trade( map_session_data* sd, uint32 account_id, unsigned int bu
 /// Checks if an item is being bought in given player's buying store.
 bool buyingstore_search(map_session_data* sd, t_itemid nameid)
 {
-	unsigned int i;
+	uint32 i;
 
 	nullpo_ret(sd);
 
@@ -533,7 +533,7 @@ bool buyingstore_search(map_session_data* sd, t_itemid nameid)
 /// @return Whether or not the search should be continued.
 bool buyingstore_searchall(map_session_data* sd, const struct s_search_store_search* s)
 {
-	unsigned int i, idx;
+	uint32 i, idx;
 	struct s_buyingstore_item* it;
 
 	nullpo_ret(sd);
@@ -552,12 +552,12 @@ bool buyingstore_searchall(map_session_data* sd, const struct s_search_store_sea
 		}
 		it = &sd->buyingstore.items[i];
 
-		if( s->min_price && s->min_price > (unsigned int)it->price )
+		if( s->min_price && s->min_price > (uint32)it->price )
 		{// too low price
 			continue;
 		}
 
-		if( s->max_price && s->max_price < (unsigned int)it->price )
+		if( s->max_price && s->max_price < (uint32)it->price )
 		{// too high price
 			continue;
 		}
@@ -568,7 +568,7 @@ bool buyingstore_searchall(map_session_data* sd, const struct s_search_store_sea
 		}
 
 		// Check if the result set is full
-		if( s->search_sd->searchstore.items.size() >= (unsigned int)battle_config.searchstore_maxresults ){
+		if( s->search_sd->searchstore.items.size() >= (uint32)battle_config.searchstore_maxresults ){
 			return false;
 		}
 
@@ -580,7 +580,7 @@ bool buyingstore_searchall(map_session_data* sd, const struct s_search_store_sea
 		ssitem->nameid = it->nameid;
 		ssitem->amount = it->amount;
 		ssitem->price = it->price;
-		for( int j = 0; j < MAX_SLOTS; j++ ){
+		for( int32 j = 0; j < MAX_SLOTS; j++ ){
 			ssitem->card[j] = 0;
 		}
 		ssitem->refine = 0;
@@ -609,7 +609,7 @@ void buyingstore_reopen( map_session_data* sd ){
 		// Init buyingstore data for autotrader
 		CREATE(data, struct PACKET_CZ_REQ_OPEN_BUYING_STORE_sub, at->count );
 
-		for( int j = 0; j < at->count; j++) {
+		for( int32 j = 0; j < at->count; j++) {
 			data[j].itemId = at->entries[j]->item_id;
 			data[j].amount = at->entries[j]->amount;
 			data[j].price = at->entries[j]->price;
@@ -791,7 +791,7 @@ static void buyingstore_autotrader_remove(struct s_autotrader *at, bool remove) 
 * Clear all autotraders
 * @author [Cydh]
 */
-static int buyingstore_autotrader_free(DBKey key, DBData *data, va_list ap) {
+static int32 buyingstore_autotrader_free(DBKey key, DBData *data, va_list ap) {
 	struct s_autotrader *at = (struct s_autotrader *)db_data2ptr(data);
 	if (at)
 		buyingstore_autotrader_remove(at, false);

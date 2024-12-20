@@ -4,13 +4,15 @@
 #ifndef LOGINCLIF_HPP
 #define LOGINCLIF_HPP
 
+#include <common/cbasetypes.hpp>
+
 /**
  * Entry point from client to log-server.
  * Function that checks incoming command, then splits it to the correct handler.
  * @param fd: file descriptor to parse, (link to client)
  * @return 0=invalid session,marked for disconnection,unknow packet, banned..; 1=success
  */
-int logclif_parse(int fd);
+int32 logclif_parse(int32 fd);
 
 /**
  * Initialize the module.

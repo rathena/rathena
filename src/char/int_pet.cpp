@@ -18,10 +18,10 @@
 #include "inter.hpp"
 
 struct s_pet *pet_pt;
-int mapif_load_pet(int fd, uint32 account_id, uint32 char_id, int pet_id);
+int32 mapif_load_pet(int32 fd, uint32 account_id, uint32 char_id, int32 pet_id);
 
 //---------------------------------------------------------
-int inter_pet_tosql(int pet_id, struct s_pet* p)
+int32 inter_pet_tosql(int32 pet_id, struct s_pet* p)
 {
 	//`pet` (`pet_id`, `class`,`name`,`account_id`,`char_id`,`level`,`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incubate`,`autofeed`)
 	char esc_name[NAME_LENGTH*2+1];// escaped pet name
@@ -41,7 +41,7 @@ int inter_pet_tosql(int pet_id, struct s_pet* p)
 			Sql_ShowDebug(sql_handle);
 			return 0;
 		}
-		p->pet_id = (int)Sql_LastInsertId(sql_handle);
+		p->pet_id = (int32)Sql_LastInsertId(sql_handle);
 	}
 	else
 	{// Update pet.
@@ -59,7 +59,7 @@ int inter_pet_tosql(int pet_id, struct s_pet* p)
 	return 1;
 }
 
-int inter_pet_fromsql(int pet_id, struct s_pet* p)
+int32 inter_pet_fromsql(int32 pet_id, struct s_pet* p)
 {
 	char* data;
 	size_t len;
@@ -105,7 +105,7 @@ int inter_pet_fromsql(int pet_id, struct s_pet* p)
 }
 //----------------------------------------------
 
-int inter_pet_sql_init(void){
+int32 inter_pet_sql_init(void){
 	//memory alloc
 	pet_pt = (struct s_pet*)aCalloc(sizeof(struct s_pet), 1);
 	return 0;
@@ -115,7 +115,7 @@ void inter_pet_sql_final(void){
 	return;
 }
 //----------------------------------
-int inter_pet_delete(int pet_id){
+int32 inter_pet_delete(int32 pet_id){
 	ShowInfo("delete pet request: %d...\n",pet_id);
 
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `pet_id`='%d'", schema_config.pet_db, pet_id) )
@@ -123,7 +123,7 @@ int inter_pet_delete(int pet_id){
 	return 0;
 }
 //------------------------------------------------------
-int mapif_pet_created(int fd, uint32 account_id, struct s_pet *p)
+int32 mapif_pet_created(int32 fd, uint32 account_id, struct s_pet *p)
 {
 	WFIFOHEAD(fd, 12);
 	WFIFOW(fd, 0) = 0x3880;
@@ -141,7 +141,7 @@ int mapif_pet_created(int fd, uint32 account_id, struct s_pet *p)
 	return 0;
 }
 
-int mapif_pet_info(int fd, uint32 account_id, struct s_pet *p){
+int32 mapif_pet_info(int32 fd, uint32 account_id, struct s_pet *p){
 	WFIFOHEAD(fd, sizeof(struct s_pet) + 9);
 	WFIFOW(fd, 0) =0x3881;
 	WFIFOW(fd, 2) =sizeof(struct s_pet) + 9;
@@ -153,7 +153,7 @@ int mapif_pet_info(int fd, uint32 account_id, struct s_pet *p){
 	return 0;
 }
 
-int mapif_pet_noinfo(int fd, uint32 account_id){
+int32 mapif_pet_noinfo(int32 fd, uint32 account_id){
 	WFIFOHEAD(fd, sizeof(struct s_pet) + 9);
 	WFIFOW(fd, 0) =0x3881;
 	WFIFOW(fd, 2) =sizeof(struct s_pet) + 9;
@@ -165,7 +165,7 @@ int mapif_pet_noinfo(int fd, uint32 account_id){
 	return 0;
 }
 
-int mapif_save_pet_ack(int fd, uint32 account_id, int flag){
+int32 mapif_save_pet_ack(int32 fd, uint32 account_id, int32 flag){
 	WFIFOHEAD(fd, 7);
 	WFIFOW(fd, 0) =0x3882;
 	WFIFOL(fd, 2) =account_id;
@@ -175,7 +175,7 @@ int mapif_save_pet_ack(int fd, uint32 account_id, int flag){
 	return 0;
 }
 
-int mapif_delete_pet_ack(int fd, int flag){
+int32 mapif_delete_pet_ack(int32 fd, int32 flag){
 	WFIFOHEAD(fd, 3);
 	WFIFOW(fd, 0) =0x3883;
 	WFIFOB(fd, 2) =flag;
@@ -184,7 +184,7 @@ int mapif_delete_pet_ack(int fd, int flag){
 	return 0;
 }
 
-int mapif_create_pet(int fd, uint32 account_id, uint32 char_id, short pet_class, short pet_lv, t_itemid pet_egg_id, t_itemid pet_equip, short intimate, short hungry, char rename_flag, char incubate, char *pet_name)
+int32 mapif_create_pet(int32 fd, uint32 account_id, uint32 char_id, short pet_class, short pet_lv, t_itemid pet_egg_id, t_itemid pet_equip, short intimate, short hungry, char rename_flag, char incubate, char *pet_name)
 {
 	memset(pet_pt, 0, sizeof(struct s_pet));
 	safestrncpy(pet_pt->name, pet_name, NAME_LENGTH);
@@ -226,7 +226,7 @@ int mapif_create_pet(int fd, uint32 account_id, uint32 char_id, short pet_class,
 	return 0;
 }
 
-int mapif_load_pet(int fd, uint32 account_id, uint32 char_id, int pet_id){
+int32 mapif_load_pet(int32 fd, uint32 account_id, uint32 char_id, int32 pet_id){
 	memset(pet_pt, 0, sizeof(struct s_pet));
 
 	inter_pet_fromsql(pet_id, pet_pt);
@@ -247,10 +247,9 @@ int mapif_load_pet(int fd, uint32 account_id, uint32 char_id, int pet_id){
 	return 0;
 }
 
-int mapif_save_pet(int fd, uint32 account_id, struct s_pet *data) {
+int32 mapif_save_pet(int32 fd, uint32 account_id, struct s_pet *data) {
 	//here process pet save request.
-	int len;
-	RFIFOHEAD(fd);
+	int32 len;
 	len=RFIFOW(fd, 2);
 	if(sizeof(struct s_pet)!=len-8) {
 		ShowError("inter pet: data size error %" PRIuPTR " %d\n", sizeof(struct s_pet), len-8);
@@ -272,39 +271,34 @@ int mapif_save_pet(int fd, uint32 account_id, struct s_pet *data) {
 	return 0;
 }
 
-int mapif_delete_pet(int fd, int pet_id){
+int32 mapif_delete_pet(int32 fd, int32 pet_id){
 	mapif_delete_pet_ack(fd, inter_pet_delete(pet_id));
 
 	return 0;
 }
 
-int mapif_parse_CreatePet(int fd){
-	RFIFOHEAD(fd);
+int32 mapif_parse_CreatePet(int32 fd){
 	mapif_create_pet(fd, RFIFOL(fd, 2), RFIFOL(fd, 6), RFIFOW(fd, 10), RFIFOW(fd, 12), RFIFOL(fd, 14), RFIFOL(fd, 18), RFIFOW(fd, 22),
 		RFIFOW(fd, 24), RFIFOB(fd, 26), RFIFOB(fd, 27), RFIFOCP(fd, 28));
 	return 0;
 }
 
-int mapif_parse_LoadPet(int fd){
-	RFIFOHEAD(fd);
+int32 mapif_parse_LoadPet(int32 fd){
 	mapif_load_pet(fd, RFIFOL(fd, 2), RFIFOL(fd, 6), RFIFOL(fd, 10));
 	return 0;
 }
 
-int mapif_parse_SavePet(int fd){
-	RFIFOHEAD(fd);
+int32 mapif_parse_SavePet(int32 fd){
 	mapif_save_pet(fd, RFIFOL(fd, 4), (struct s_pet *) RFIFOP(fd, 8));
 	return 0;
 }
 
-int mapif_parse_DeletePet(int fd){
-	RFIFOHEAD(fd);
+int32 mapif_parse_DeletePet(int32 fd){
 	mapif_delete_pet(fd, RFIFOL(fd, 2));
 	return 0;
 }
 
-int inter_pet_parse_frommap(int fd){
-	RFIFOHEAD(fd);
+int32 inter_pet_parse_frommap(int32 fd){
 	switch(RFIFOW(fd, 0)){
 	case 0x3080: mapif_parse_CreatePet(fd); break;
 	case 0x3081: mapif_parse_LoadPet(fd); break;
