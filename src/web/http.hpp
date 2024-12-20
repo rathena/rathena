@@ -5,7 +5,7 @@
 #define HTTP_HPP
 
 #ifdef WIN32
-#include "../common/winapi.hpp"
+#include <common/winapi.hpp>
 #endif
 
 #include <httplib.h>

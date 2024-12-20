@@ -781,15 +781,15 @@ har_in01,20,30,5	script	Wyatt Warp#har_in01	4_M_YATTWARP,{
 		next;
 		mes "[Wyatt Warp]";
 		mes "Both badges are worn by us Vigilantes, but they provide different effects.";
-		mes "I have <ITEM>Vigilante Badge (L)<INFO>28495</INFO></ITEM>";
-		mes "and <ITEM>Vigilante Badge (R)<INFO>28496</INFO></ITEM>.";
+		mes "I have " + mesitemlink( 28495, false, "Vigilante Badge (L)" );
+		mes "and " + mesitemlink( 28496, false, "Vigilante Badge (R)" ) + ".";
 		mes "Pick one you like.";
 		next;
 		setarray .@item_name$[0], "Vigilante Badge (L)", "Vigilante Badge (R)";
 		setarray .@item_id[0], 28495, 28496;
 		.@s = select( "Vigilante Badge (L)", "Vigilante Badge (R)" ) - 1;
 		mes "[Wyatt Warp]";
-		mes "Do you want <ITEM>" + .@item_name$[.@s] + "<INFO>" + .@item_id[.@s] + "</INFO></ITEM>?";
+		mes "Do you want " + mesitemlink( .@item_id[.@s], false, .@item_name$[.@s] ) + "?";
 		mes "Excellent choice!";
 		mes "Are you certain you want this?";
 		next;
@@ -1225,9 +1225,9 @@ OnInit:
 rockrdg1,160,306,3	duplicate(dummy_cloaked_npc)	Johnny James#revt04	4_M_JOHNNYJAMES
 rockrdg1,168,306,3	duplicate(dummy_cloaked_npc)	Albert Ford#revt08	4_M_ALBERTFORD
 rockrdg1,156,302,7	duplicate(dummy_cloaked_npc)	Ivoka Skudi#revt02	4_M_EVOKASCUDI
-rockrdg1,156,306,5	duplicate(dummy_cloaked_npc)	Cactus Gunslinger#revt01	4_M_EVOKASCUDI
-rockrdg1,161,302,1	duplicate(dummy_cloaked_npc)	Cactus Gunslinger#revt02	4_M_EVOKASCUDI
-rockrdg1,164,306,3	duplicate(dummy_cloaked_npc)	Cactus Gunslinger#revt03	4_M_EVOKASCUDI
+rockrdg1,156,306,5	duplicate(dummy_cloaked_npc)	Cactus Gunslinger#revt05	4_M_EVOKASCUDI
+rockrdg1,161,302,1	duplicate(dummy_cloaked_npc)	Cactus Gunslinger#revt06	4_M_EVOKASCUDI
+rockrdg1,164,306,3	duplicate(dummy_cloaked_npc)	Cactus Gunslinger#revt07	4_M_EVOKASCUDI
 
 rockrdg1,156,312,3	script	Unmoving Freight Train#	4_ENERGY_RED,{
 	if (rock_main_quest == 5) {
@@ -3345,7 +3345,7 @@ harboro1,357,163,3	script	Food Distributer	4_COOK,{
 		mes "Sweet potato croquettes are on the menu today, and I can't make them because I didn't get the regular shipment from the mainland.";
 		next;
 		mes "[Food Distributer]";
-		mes "Bring me 160 <ITEM>Sweet Potatoes<INFO>516</INFO></ITEM> from Midgard. You can buy them from merchants in big cities.";
+		mes "Bring me 160 " + mesitemlink( 516, false, "Sweet Potatoes" ) + " from Midgard. You can buy them from merchants in big cities.";
 		close;
 	case 12384:
 		setquest 12384;// Meat Delivery
@@ -3356,7 +3356,7 @@ harboro1,357,163,3	script	Food Distributer	4_COOK,{
 		mes "What? I could always feed them veggies, you say? Sure, but all they want is meat.";
 		next;
 		mes "[Food Distributer]";
-		mes "Bring me 50 <ITEM>Meats<INFO>517</INFO></ITEM> from Midgard. You can buy them from merchants in big cities.";
+		mes "Bring me 50 " + mesitemlink( 517, false, "Meats" ) + " from Midgard. You can buy them from merchants in big cities.";
 		close;
 	case 12385:
 		setquest 12385;// Carrot Delivery
@@ -3367,7 +3367,7 @@ harboro1,357,163,3	script	Food Distributer	4_COOK,{
 		mes "They're as thin as fingers, and once I almost put my fingers into a stew instead of them.";
 		next;
 		mes "[Food Distributer]";
-		mes "Bring me 160 <ITEM>Carrots<INFO>515</INFO></ITEM> from Midgard. You can buy them from merchants in big cities.";
+		mes "Bring me 160 " + mesitemlink( 515, false, "Carrots" ) + " from Midgard. You can buy them from merchants in big cities.";
 		close;
 	case 12386:
 		setquest 12386;// Banana Delivery
@@ -3375,7 +3375,7 @@ harboro1,357,163,3	script	Food Distributer	4_COOK,{
 		mes "I shouldn't have put that banana bread on the menu. Who knew they wouldn't arrive in time?";
 		next;
 		mes "[Food Distributer]";
-		mes "Bring me 160 <ITEM>Bananas<INFO>513</INFO></ITEM> from Midgard. You can buy them from merchants in big cities.";
+		mes "Bring me 160 " + mesitemlink( 513, false, "Bananas" ) + " from Midgard. You can buy them from merchants in big cities.";
 		close;
 	case 12387:
 		setquest 12387;// Pumpkin Delivery
@@ -3383,7 +3383,7 @@ harboro1,357,163,3	script	Food Distributer	4_COOK,{
 		mes "I have to cook a pumpkin stew, but I don't have pumpkins. This is the equivalent of making toast without bread.";
 		next;
 		mes "[Food Distributer]";
-		mes "Bring me 160 <ITEM>Pumpkins<INFO>535</INFO></ITEM> from Midgard. You can buy them from merchants in big cities.";
+		mes "Bring me 160 " + mesitemlink( 535, false, "Pumpkins" ) + " from Midgard. You can buy them from merchants in big cities.";
 		close;
 	case 12388:
 		setquest 12388;// Mushroom Delivery
@@ -3391,7 +3391,7 @@ harboro1,357,163,3	script	Food Distributer	4_COOK,{
 		mes "The only thing I can cook with the ingredients I have is mushroom soup, but I don't have the main ingredient: mushrooms.";
 		next;
 		mes "[Food Distributer]";
-		mes "Bring me 60 <ITEM>Mushrooms<INFO>581</INFO></ITEM> from Midgard. You can buy them from merchants in big cities.";
+		mes "Bring me 60 " + mesitemlink( 581, false, "Mushrooms" ) + " from Midgard. You can buy them from merchants in big cities.";
 		close;
 	}
 	end;
@@ -3401,7 +3401,7 @@ S_Food:
 	.@amount = getarg(2);
 	if (countitem(.@item_id) < .@amount) {
 		mes "[Food Distributer]";
-		mes "Bring me " + .@amount + " <ITEM>" + getitemname(.@item_id) + "<INFO>" + .@item_id + "</INFO></ITEM> from Midgard. You can buy them from merchants in big cities.";
+		mes "Bring me " + .@amount + " " + mesitemlink( .@item_id, false ) + " from Midgard. You can buy them from merchants in big cities.";
 		close;
 	}
 	delitem .@item_id, .@amount;

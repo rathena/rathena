@@ -3,13 +3,13 @@
 
 #include "pc_groups.hpp"
 
-#include "../common/showmsg.hpp"
-#include "../common/socket.hpp" // set_eof
-#include "../common/strlib.hpp" // strcmpi
-#include "../common/utilities.hpp"
+#include <common/showmsg.hpp>
+#include <common/socket.hpp> // set_eof
+#include <common/strlib.hpp> // strcmpi
+#include <common/utilities.hpp>
 
 #include "atcommand.hpp" // AtCommandType
-#include "pc.hpp" // struct map_session_data
+#include "pc.hpp" // map_session_data
 
 using namespace rathena;
 
@@ -210,8 +210,8 @@ uint64 PlayerGroupDatabase::parseBodyNode( const ryml::NodeRef& node ){
 }
 
 void PlayerGroupDatabase::loadingFinished(){
-	static const int MAX_CYCLES = 10;
-	int i;
+	static const int32 MAX_CYCLES = 10;
+	int32 i;
 
 	for( i = 0; i < MAX_CYCLES; i++ ){
 		auto inheritanceIt = this->inheritance.begin();
@@ -338,7 +338,7 @@ bool s_player_group::can_use_command( const std::string& command, AtCommandType 
  * Load permission for player based on group id
  * @param sd Player
  */
-void pc_group_pc_load(struct map_session_data * sd) {
+void pc_group_pc_load(map_session_data * sd) {
 	std::shared_ptr<s_player_group> group = player_group_db.find( sd->group_id );
 
 	if( group == nullptr ){
@@ -392,7 +392,7 @@ void pc_groups_reload( void ){
 	
 	/* refresh online users permissions */
 	struct s_mapiterator* iter = mapit_getallusers();
-	for( struct map_session_data* sd = (struct map_session_data*)mapit_first(iter); mapit_exists(iter); sd = (struct map_session_data*)mapit_next(iter) ){
+	for( map_session_data* sd = (map_session_data*)mapit_first(iter); mapit_exists(iter); sd = (map_session_data*)mapit_next(iter) ){
 		pc_group_pc_load(sd);
 	}
 	mapit_free(iter);

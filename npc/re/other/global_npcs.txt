@@ -4,15 +4,17 @@
 //= General npcs which should be loaded first.
 //===== Additional Comments: ================================= 
 //= 1.0 Added "dummy_npc" and "dummy_cloaked_npc". [Capuche]
+//= 1.1 Added "dummy_disabled_npc". [Capuche]
 //============================================================ 
 
 -	script	dummy_npc	-1,{
 	end;
 }
 
--	script	dummy_cloaked_npc	-1,{
+-	script(CLOAKED)	dummy_cloaked_npc	-1,{
 	end;
-OnInit:
-	cloakonnpc();
+}
+
+-	script(DISABLED)	dummy_disabled_npc	-1,{
 	end;
 }

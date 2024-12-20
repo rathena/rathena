@@ -4,35 +4,38 @@
 #include "web.hpp"
 
 #include <chrono>
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 #include <string>
 #include <thread>
 
-#include "../common/cli.hpp"
-#include "../common/core.hpp"
-#include "../common/malloc.hpp"
-#include "../common/md5calc.hpp"
-#include "../common/mmo.hpp"
-#include "../common/msg_conf.hpp"
-#include "../common/random.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/socket.hpp" //ip2str
-#include "../common/sql.hpp"
-#include "../common/strlib.hpp"
-#include "../common/timer.hpp"
-#include "../common/utilities.hpp"
-#include "../common/utils.hpp"
-#include "../config/core.hpp"
+#include <common/cli.hpp>
+#include <common/core.hpp>
+#include <common/malloc.hpp>
+#include <common/md5calc.hpp>
+#include <common/mmo.hpp>
+#include <common/msg_conf.hpp>
+#include <common/random.hpp>
+#include <common/showmsg.hpp>
+#include <common/socket.hpp> //ip2str
+#include <common/sql.hpp>
+#include <common/strlib.hpp>
+#include <common/timer.hpp>
+#include <common/utilities.hpp>
+#include <common/utils.hpp>
+#include <config/core.hpp>
 
 #include "charconfig_controller.hpp"
 #include "emblem_controller.hpp"
 #include "http.hpp"
-#include "userconfig_controller.hpp"
 #include "merchantstore_controller.hpp"
+#include "partybooking_controller.hpp"
+#include "userconfig_controller.hpp"
 
 
 using namespace rathena;
+using namespace rathena::server_core;
+using namespace rathena::server_web;
 
 #define WEB_MAX_MSG 30				/// Max number predefined in msg_conf
 static char* msg_table[WEB_MAX_MSG];	/// Web Server messages_conf
@@ -41,49 +44,58 @@ struct Web_Config web_config {};
 struct Inter_Config inter_config {};
 std::shared_ptr<httplib::Server> http_server;
 
-int login_server_port = 3306;
 std::string login_server_ip = "127.0.0.1";
+uint16 login_server_port = 3306;
 std::string login_server_id = "ragnarok";
 std::string login_server_pw = "";
 std::string login_server_db = "ragnarok";
 
-int  char_server_port = 3306;
 std::string char_server_ip = "127.0.0.1";
+uint16  char_server_port = 3306;
 std::string char_server_id = "ragnarok";
 std::string char_server_pw = "";
 std::string char_server_db = "ragnarok";
 
-int web_server_port = 3306;
+std::string map_server_ip = "127.0.0.1";
+uint16 map_server_port = 3306;
+std::string map_server_id = "ragnarok";
+std::string map_server_pw = "";
+std::string map_server_db = "ragnarok";
+
 std::string web_server_ip = "127.0.0.1";
+uint16 web_server_port = 3306;
 std::string web_server_id = "ragnarok";
 std::string web_server_pw = "";
 std::string web_server_db = "ragnarok";
 
 std::string default_codepage = "";
 
-Sql * login_handle = NULL;
-Sql * char_handle = NULL;
-Sql * web_handle = NULL;
+Sql * login_handle = nullptr;
+Sql * char_handle = nullptr;
+Sql * map_handle = nullptr;
+Sql * web_handle = nullptr;
 
 char login_table[32] = "login";
 char guild_emblems_table[32] = "guild_emblems";
 char user_configs_table[32] = "user_configs";
 char char_configs_table[32] = "char_configs";
 char merchant_configs_table[32] = "merchant_configs";
+char party_table[32] = "party";
+char partybookings_table[32] = "party_bookings";
 char guild_db_table[32] = "guild";
 char char_db_table[32] = "char";
 
-int parse_console(const char * buf) {
+int32 parse_console(const char * buf) {
 	return 1;
 }
 
 std::thread svr_thr;
 
 /// Msg_conf tayloring
-int web_msg_config_read(char *cfgName){
+int32 web_msg_config_read(char *cfgName){
 	return _msg_config_read(cfgName,WEB_MAX_MSG,msg_table);
 }
-const char* web_msg_txt(int msg_number){
+const char* web_msg_txt(int32 msg_number){
 	return _msg_txt(msg_number,WEB_MAX_MSG,msg_table);
 }
 void web_do_final_msg(void){
@@ -100,7 +112,7 @@ void web_do_final_msg(void){
 bool web_config_read(const char* cfgName, bool normal) {
 	char line[1024], w1[32], w2[1024];
 	FILE* fp = fopen(cfgName, "r");
-	if (fp == NULL) {
+	if (fp == nullptr) {
 		ShowError("Configuration file (%s) not found.\n", cfgName);
 		return false;
 	}
@@ -149,13 +161,13 @@ bool web_config_read(const char* cfgName, bool normal) {
 /*==========================================
  * read config file
  *------------------------------------------*/
-int inter_config_read(const char* cfgName)
+int32 inter_config_read(const char* cfgName)
 {
 	char line[1024];
 	FILE* fp;
 
 	fp = fopen(cfgName, "r");
-	if(fp == NULL) {
+	if(fp == nullptr) {
 		ShowError("File not found: %s\n", cfgName);
 		return 1;
 	}
@@ -176,7 +188,7 @@ int inter_config_read(const char* cfgName)
 		else if(!strcmpi(w1,"login_server_ip"))
 			login_server_ip = w2;
 		else if(!strcmpi(w1,"login_server_port"))
-			login_server_port = atoi(w2);
+			login_server_port = (uint16)strtoul( w2, nullptr, 10 );
 		else if(!strcmpi(w1,"login_server_id"))
 			login_server_id = w2;
 		else if(!strcmpi(w1,"login_server_pw"))
@@ -186,17 +198,27 @@ int inter_config_read(const char* cfgName)
 		else if(!strcmpi(w1,"char_server_ip"))
 			char_server_ip = w2;
 		else if(!strcmpi(w1,"char_server_port"))
-			char_server_port = atoi(w2);
+			char_server_port = (uint16)strtoul( w2, nullptr, 10 );
 		else if(!strcmpi(w1,"char_server_id"))
 			char_server_id = w2;
 		else if(!strcmpi(w1,"char_server_pw"))
 			char_server_pw = w2;
 		else if(!strcmpi(w1,"char_server_db"))
 			char_server_db = w2;
+		else if(!strcmpi(w1,"map_server_ip"))
+			map_server_ip = w2;
+		else if(!strcmpi(w1,"map_server_port"))
+			map_server_port = (uint16)strtoul( w2, nullptr, 10 );
+		else if(!strcmpi(w1,"map_server_id"))
+			map_server_id = w2;
+		else if(!strcmpi(w1,"map_server_pw"))
+			map_server_pw = w2;
+		else if(!strcmpi(w1,"map_server_db"))
+			map_server_db = w2;
 		else if(!strcmpi(w1,"web_server_ip"))
 			web_server_ip = w2;
 		else if(!strcmpi(w1,"web_server_port"))
-			web_server_port = atoi(w2);
+			web_server_port = (uint16)strtoul( w2, nullptr, 10 );
 		else if(!strcmpi(w1,"web_server_id"))
 			web_server_id = w2;
 		else if(!strcmpi(w1,"web_server_pw"))
@@ -211,6 +233,10 @@ int inter_config_read(const char* cfgName)
 			safestrncpy(char_configs_table, w2, sizeof(char_configs_table));
 		else if (!strcmpi(w1, "merchant_configs"))
 			safestrncpy(merchant_configs_table, w2, sizeof(merchant_configs_table));
+		else if (!strcmpi(w1, "party_db"))
+			safestrncpy(party_table, w2, sizeof(party_table));
+		else if (!strcmpi(w1, "partybookings_table"))
+			safestrncpy(partybookings_table, w2, sizeof(partybookings_table));
 		else if (!strcmpi(w1, "guild_emblems"))
 			safestrncpy(guild_emblems_table, w2, sizeof(guild_emblems_table));
 		else if (!strcmpi(w1, "login_server_account_db"))
@@ -232,7 +258,7 @@ int inter_config_read(const char* cfgName)
 
 void web_set_defaults() {
 	web_config.web_ip = "0.0.0.0";
-	web_config.web_port = 3000;
+	web_config.web_port = 8888;
 	safestrncpy(web_config.webconf_name, "conf/web_athena.conf", sizeof(web_config.webconf_name));
 	safestrncpy(web_config.msgconf_name, "conf/msg_conf/web_msg.conf", sizeof(web_config.msgconf_name));
 	web_config.print_req_res = false;
@@ -244,14 +270,14 @@ void web_set_defaults() {
 
 /// Constructor destructor and signal handlers
 
-int web_sql_init(void) {
+int32 web_sql_init(void) {
 	// login db connection
 	login_handle = Sql_Malloc();
 	ShowInfo("Connecting to the Login DB server.....\n");
 
 	if (SQL_ERROR == Sql_Connect(login_handle, login_server_id.c_str(), login_server_pw.c_str(), login_server_ip.c_str(), login_server_port, login_server_db.c_str())) {
-		ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-			login_server_id.c_str(), login_server_pw.c_str(), login_server_ip.c_str(), login_server_port, login_server_db.c_str());
+		ShowError("Couldn't connect with uname='%s',host='%s',port='%hu',database='%s'\n",
+			login_server_id.c_str(), login_server_ip.c_str(), login_server_port, login_server_db.c_str());
 		Sql_ShowDebug(login_handle);
 		Sql_Free(login_handle);
 		exit(EXIT_FAILURE);
@@ -267,8 +293,8 @@ int web_sql_init(void) {
 	ShowInfo("Connecting to the Char DB server.....\n");
 
 	if (SQL_ERROR == Sql_Connect(char_handle, char_server_id.c_str(), char_server_pw.c_str(), char_server_ip.c_str(), char_server_port, char_server_db.c_str())) {
-		ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-			char_server_id.c_str(), char_server_pw.c_str(), char_server_ip.c_str(), char_server_port, char_server_db.c_str());
+		ShowError("Couldn't connect with uname='%s',host='%s',port='%hu',database='%s'\n",
+			char_server_id.c_str(), char_server_ip.c_str(), char_server_port, char_server_db.c_str());
 		Sql_ShowDebug(char_handle);
 		Sql_Free(char_handle);
 		exit(EXIT_FAILURE);
@@ -280,12 +306,29 @@ int web_sql_init(void) {
 			Sql_ShowDebug(char_handle);
 	}
 
+	map_handle = Sql_Malloc();
+	ShowInfo("Connecting to the Map DB server.....\n");
+
+	if (SQL_ERROR == Sql_Connect(map_handle, map_server_id.c_str(), map_server_pw.c_str(), map_server_ip.c_str(), map_server_port, map_server_db.c_str())) {
+		ShowError("Couldn't connect with uname='%s',host='%s',port='%hu',database='%s'\n",
+			map_server_id.c_str(), map_server_ip.c_str(), map_server_port, map_server_db.c_str());
+		Sql_ShowDebug(map_handle);
+		Sql_Free(map_handle);
+		exit(EXIT_FAILURE);
+	}
+	ShowStatus("Connect success! (Map Server Connection)\n");
+
+	if (!default_codepage.empty()) {
+		if (SQL_ERROR == Sql_SetEncoding(map_handle, default_codepage.c_str()))
+			Sql_ShowDebug(map_handle);
+	}
+
 	web_handle = Sql_Malloc();
 	ShowInfo("Connecting to the Web DB server.....\n");
 
 	if (SQL_ERROR == Sql_Connect(web_handle, web_server_id.c_str(), web_server_pw.c_str(), web_server_ip.c_str(), web_server_port, web_server_db.c_str())) {
-		ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-			web_server_id.c_str(), web_server_pw.c_str(), web_server_ip.c_str(), web_server_port, web_server_db.c_str());
+		ShowError("Couldn't connect with uname='%s',host='%s',port='%hu',database='%s'\n",
+			web_server_id.c_str(), web_server_ip.c_str(), web_server_port, web_server_db.c_str());
 		Sql_ShowDebug(web_handle);
 		Sql_Free(web_handle);
 		exit(EXIT_FAILURE);
@@ -301,26 +344,29 @@ int web_sql_init(void) {
 	return 0;
 }
 
-int web_sql_close(void)
+int32 web_sql_close(void)
 {
 	ShowStatus("Close Login DB Connection....\n");
 	Sql_Free(login_handle);
-	login_handle = NULL;
+	login_handle = nullptr;
 	ShowStatus("Close Char DB Connection....\n");
 	Sql_Free(char_handle);
-	char_handle = NULL;
+	char_handle = nullptr;
+	ShowStatus("Close Map DB Connection....\n");
+	Sql_Free(map_handle);
+	map_handle = nullptr;
 	ShowStatus("Close Web DB Connection....\n");
 	Sql_Free(web_handle);
-	web_handle = NULL;
+	web_handle = nullptr;
 
 	return 0;
 }
 
 /**
- * Login-serv destructor
- *  dealloc..., function called at exit of the login-serv
+ * web-server destructor
+ *  dealloc..., function called at exit of the web-server
  */
-void do_final(void) {
+void WebServer::finalize(){
 	ShowStatus("Terminating...\n");
 #ifdef WEB_SERVER_ENABLE
 	http_server->stop();
@@ -333,23 +379,10 @@ void do_final(void) {
 
 /**
  * Signal handler
- *  This function attempts to properly close the server when an interrupt signal is received.
- *  current signal catch : SIGTERM, SIGINT
- */
-void do_shutdown(void) {
-	if( runflag != WEBSERVER_ST_SHUTDOWN ) {
-		runflag = WEBSERVER_ST_SHUTDOWN;
-		ShowStatus("Shutting down...\n");
-		runflag = CORE_ST_STOP;
-	}
-}
-
-/**
- * Signal handler
  *  Function called when the server has received a crash signal.
  *  current signal catch : SIGSEGV, SIGFPE
  */
-void do_abort(void) {
+void WebServer::handle_crash(){
 #ifdef WEB_SERVER_ENABLE
 	http_server->stop();
 	svr_thr.join();
@@ -365,13 +398,6 @@ void display_helpscreen(bool do_exit)
 	if( do_exit )
 		exit(EXIT_SUCCESS);
 }
-
-
-// Is this still used ??
-void set_server_type(void) {
-	SERVER_TYPE = ATHENA_SERVER_WEB;
-}
-
 
 // called just before sending repsonse
 void logger(const Request & req, const Response & res) {
@@ -397,11 +423,11 @@ void logger(const Request & req, const Response & res) {
 }
 
 
-int do_init(int argc, char** argv) {
-	runflag = WEBSERVER_ST_STARTING;
+bool WebServer::initialize( int32 argc, char* argv[] ){
 #ifndef WEB_SERVER_ENABLE
-	ShowStatus("The web-server is " CL_GREEN "idling" CL_RESET " (PACKETVER too old to use).\n\n");
-	return 0;
+	ShowStatus("The web-server is " CL_GREEN "stopping" CL_RESET " (PACKETVER too old to use).\n\n");
+	this->signal_shutdown();
+	return true;
 #else
 	INTER_CONF_NAME="conf/inter_athena.conf";
 
@@ -421,28 +447,33 @@ int do_init(int argc, char** argv) {
 
 	http_server = std::make_shared<httplib::Server>();
 	// set up routes
-	http_server->Post("/emblem/download", emblem_download);
-	http_server->Post("/emblem/upload", emblem_upload);
-	http_server->Post("/userconfig/load", userconfig_load);
-	http_server->Post("/userconfig/save", userconfig_save);
 	http_server->Post("/charconfig/load", charconfig_load);
 	http_server->Post("/charconfig/save", charconfig_save);
+	http_server->Post("/emblem/download", emblem_download);
+	http_server->Post("/emblem/upload", emblem_upload);
 	http_server->Post("/MerchantStore/load", merchantstore_load);
 	http_server->Post("/MerchantStore/save", merchantstore_save);
+	http_server->Post("/party/add", partybooking_add);
+	http_server->Post("/party/del", partybooking_delete);
+	http_server->Post("/party/get", partybooking_get);
+	http_server->Post("/party/info", partybooking_info);
+	http_server->Post("/party/list", partybooking_list);
+	http_server->Post("/party/search", partybooking_search);
+	http_server->Post("/userconfig/load", userconfig_load);
+	http_server->Post("/userconfig/save", userconfig_save);
 
 	// set up logger
 	http_server->set_logger(logger);
-	shutdown_callback = do_shutdown;
-
-	runflag = WEBSERVER_ST_STARTING;
 
 	svr_thr = std::thread([] {
 		http_server->listen(web_config.web_ip.c_str(), web_config.web_port);
 	});
 
-	for (int i = 0; i < 10; i++) {
-		if (runflag == CORE_ST_STOP)
-			return 0;
+	for (int32 i = 0; i < 10; i++) {
+		if( global_core->get_status() == e_core_status::STOPPING ){
+			return true;
+		}
+
 		if (http_server->is_running())
 			break;
 		ShowDebug("Web server not running, sleeping 1 second.\n");
@@ -451,12 +482,18 @@ int do_init(int argc, char** argv) {
 
 	if (!http_server->is_running()) {
 		ShowError("Web server hasn't started, stopping.\n");
-		runflag = CORE_ST_STOP;
-		return 0;
+		return false;
 	}
 
-	runflag = WEBSERVER_ST_RUNNING;
 	ShowStatus("The web-server is " CL_GREEN "ready" CL_RESET " (Server is listening on the port %u).\n\n", web_config.web_port);
-	return 0;
+	return true;
 #endif
+}
+
+void WebServer::handle_main( t_tick next ){
+	std::this_thread::sleep_for( std::chrono::milliseconds( next ) );
+}
+
+int32 main( int32 argc, char *argv[] ){
+	return main_core<WebServer>( argc, argv );
 }

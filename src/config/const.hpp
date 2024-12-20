@@ -4,7 +4,7 @@
 #ifndef CONFIG_CONST_H
 #define CONFIG_CONST_H
 
-#include "../common/cbasetypes.hpp"
+#include <common/cbasetypes.hpp>
 
 /**
  * rAthena configuration file (http://rathena.org)

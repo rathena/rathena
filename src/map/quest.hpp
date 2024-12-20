@@ -6,13 +6,13 @@
 
 #include <string>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/database.hpp"
-#include "../common/strlib.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/database.hpp>
+#include <common/strlib.hpp>
 
 #include "map.hpp"
 
-struct map_session_data;
+class map_session_data;
 enum e_size : uint8;
 
 struct s_quest_dropitem {
@@ -42,6 +42,7 @@ struct s_quest_db {
 	int32 id;
 	time_t time;
 	bool time_at;
+	int32 time_week;
 	std::vector<std::shared_ptr<s_quest_objective>> objectives;
 	std::vector<std::shared_ptr<s_quest_dropitem>> dropitem;
 	std::string name;
@@ -69,17 +70,17 @@ public:
 
 extern QuestDatabase quest_db;
 
-int quest_pc_login(struct map_session_data *sd);
+int32 quest_pc_login(map_session_data *sd);
 
-int quest_add(struct map_session_data *sd, int quest_id);
-int quest_delete(struct map_session_data *sd, int quest_id);
-int quest_change(struct map_session_data *sd, int qid1, int qid2);
-int quest_update_objective_sub(struct block_list *bl, va_list ap);
-void quest_update_objective(struct map_session_data *sd, struct mob_data* md);
-int quest_update_status(struct map_session_data *sd, int quest_id, e_quest_state status);
-int quest_check(struct map_session_data *sd, int quest_id, e_quest_check_type type);
+int32 quest_add(map_session_data *sd, int32 quest_id);
+int32 quest_delete(map_session_data *sd, int32 quest_id);
+int32 quest_change(map_session_data *sd, int32 qid1, int32 qid2);
+int32 quest_update_objective_sub(struct block_list *bl, va_list ap);
+void quest_update_objective(map_session_data *sd, struct mob_data* md);
+int32 quest_update_status(map_session_data *sd, int32 quest_id, e_quest_state status);
+int32 quest_check(map_session_data *sd, int32 quest_id, e_quest_check_type type);
 
-std::shared_ptr<s_quest_db> quest_search(int quest_id);
+std::shared_ptr<s_quest_db> quest_search(int32 quest_id);
 
 void do_init_quest(void);
 void do_final_quest(void);

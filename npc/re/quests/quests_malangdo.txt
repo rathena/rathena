@@ -5904,7 +5904,7 @@ malangdo,172,178,7	script	Cat Detective#nya_14	560,{
 	} else if (nyadven == 10) {
 		mes "[Homnya]";
 		mes "Please find the pieces of the treasure.";
-		mes "The tresure is hidden inside of the ship Navi according to our information.";
+		mes "The treasure is hidden inside of the ship Navi according to our information.";
 		next;
 		mes "[Nyangson]";
 		mes "Come here right after you find treasure!";

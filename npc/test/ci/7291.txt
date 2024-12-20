@@ -1,14 +1,18 @@
 -	script	itemlink#ci	-1,{
 OnInit:
 	if( checkre(0) ){
-		if( PACKETVER >= 20200916 ){
+		if( PACKETVER >= 20200724 ){
+			// Change of separators and add grade
 			.@expected$ = "<ITEML>0000213v0%0g&00'00)18X)1ck)00)00+2R,00-00</ITEML>";
-		}else if( PACKETVER >= 20150225 ){
-			// Grade does not exist (clientside) yet
-			.@expected$ = "<ITEMLINK>0000213v0%0g&00(18X(1ck(00(00*2R+00,00</ITEMLINK>";
-		}else if( PACKETVER >= 20100000 ){
-			// Random Options do not exist (clientside) yet
-			.@expected$ = "<ITEMLINK>0000213v0%0g&00(18X(1ck(00(00</ITEMLINK>";
+		}else if( PACKETVER >= 20161116 ){
+			// Change of separators and add equip preview
+			.@expected$ = "<ITEML>0000213v0%0g&00(18X(1ck(00(00*2R+00,00</ITEML>";
+		}else if( PACKETVER >= 20160113 ){
+			// Change from <ITEM> to <ITEML>
+			.@expected$ = "<ITEML>0000213v0%0g'18X'1ck'00'00)2R*00+00</ITEML>";
+		}else if( PACKETVER >= 20151104 ){
+			// Initial version
+			.@expected$ = "<ITEM>0000213v0%0g'18X'1ck'00'00)2R*00+00</ITEM>";
 		}else{
 			// Item Link does not exist (clientside) yet
 			.@expected$ = "Crimson Saber";
@@ -18,11 +22,18 @@ OnInit:
 		.@actual$ = itemlink(13454,16,4399,4608,0,0,0,.@opt_ids,.@opt_dummy,.@opt_dummy);
 		AssertEquals(.@expected$, .@actual$, "Generated itemlink for +16 Earth Crimson Saber");
 	}else{
-		if( PACKETVER >= 20200916 ){
+		if( PACKETVER >= 20200724 ){
+			// Change of separators and add grade (not used in pre-renewal)
 			.@expected$ = "<ITEML>000021hS%0a&00'00)18X)00)00)00</ITEML>";
-		}else if( PACKETVER >= 20100000 ){
-			// Grade does not exist (clientside) yet// Grade does not exist (clientside) yet
-			.@expected$ = "<ITEMLINK>000021hS%0a&00(18X(00(00(00</ITEMLINK>";
+		}else if( PACKETVER >= 20161116 ){
+			// Change of separators and add equip preview
+			.@expected$ = "<ITEML>000021hS%0a&00(18X(00(00(00</ITEML>";
+		}else if( PACKETVER >= 20160113 ){
+			// Change from <ITEM> to <ITEML>
+			.@expected$ = "<ITEML>000021hS%0a'18X'00'00'00</ITEML>";
+		}else if( PACKETVER >= 20151104 ){
+			// Initial version
+			.@expected$ = "<ITEM>000021hS%0a'18X'00'00'00</ITEM>";
 		}else{
 			// Item Link does not exist (clientside) yet
 			.@expected$ = "Blade";

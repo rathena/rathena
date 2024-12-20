@@ -323,7 +323,7 @@ lasa_fild01,60,322,3	script	Vigilante Aglio#doram02	4_DR_AGLIO,{
 				cutin "tutorial02.BMP",4;
 				mes "^4d4dff!- Notice -!^000000";
 				mes "^4d4dffCheck out the quest details by pressing the shortcut key [Alt+U],^000000 or through the Quest icon found in the menu tray.^000000";
-				close;
+				close3;
 			}
 			mes "[Vigilante Aglio]";
 			mes "Whoa, you're good!";
@@ -2066,22 +2066,22 @@ lasagna,131,245,5	script	The diligent second son	4_CAT_3COLOR,{
 	mes "[Yota Chara]";
 	switch(.@s) {
 	case 1:
-		mes "<ITEM>Low-grade Horse Mackerel Amulet <INFO>28413</INFO></ITEM> is for my father who is far out to the sea.";
+		mes mesitemlink( 28413, false ) + " is for my father who is far out to the sea.";
 		break;
 	case 2:
-		mes "<ITEM>Low-grade Leaf Amulet <INFO>28416</INFO></ITEM> is for my mother who should be wandering about the deep side of the forest.";
+		mes mesitemlink( 28416, false ) + " is for my mother who should be wandering about the deep side of the forest.";
 		break;
 	case 3:
-		mes "<ITEM>Low-grade Rabbit Amulet <INFO>28419</INFO></ITEM> is for my brothers' health and wellness.";
+		mes mesitemlink( 28419, false ) + " is for my brothers' health and wellness.";
 		break;
 	case 4:
-		mes "<ITEM>Shining Twig Charm <INFO>28422</INFO></ITEM> is to wish for my mother to return home safely from anywhere in the world.";
+		mes mesitemlink( 28422, false ) + " is to wish for my mother to return home safely from anywhere in the world.";
 		break;
 	case 5:
-		mes "<ITEM>Fresh Tuna Amulet <INFO>28423</INFO></ITEM> is to wish for my father to return home quick with his ship full of tunas.";
+		mes mesitemlink( 28423, false ) + " is to wish for my father to return home quick with his ship full of tunas.";
 		break;
 	case 6:
-		mes "<ITEM>Plump Earthworm Amulet <INFO>28424</INFO></ITEM> is to wish for easy fishing so that my family won't be starved.";
+		mes mesitemlink( 28424, false ) + " is to wish for easy fishing so that my family won't be starved.";
 		break;
 	}
 	if (.@s < 4) {
@@ -2092,7 +2092,7 @@ lasagna,131,245,5	script	The diligent second son	4_CAT_3COLOR,{
 		.@cost = 30;
 		.@item_id = 28418 + .@s;
 	}
-	mes "Will you exchange it for " + .@cost + " <ITEM>Doram Token<INFO>25142</INFO></ITEM>?";
+	mes "Will you exchange it for " + .@cost + " " + mesitemlink( 25142, false ) + "?";
 	next;
 	if (select( "Exchange", "Cancel" ) == 2) {
 		mes "[Yota Chara]";
@@ -2164,7 +2164,7 @@ lasagna,131,250,5	script	The brave third#weapon	4_DR_M_02,{
 	emotion ET_SPARK;
 	mes "[Jogi Chara]";
 	mes "Whoa, a new weapon! New power!";
-	mes "What are you going to give me? Do you have a lot of weapons? Can I search into them? Will you exchange it for <ITEM>Doram Token <INFO>25142</INFO></ITEM>?";
+	mes "What are you going to give me? Do you have a lot of weapons? Can I search into them? Will you exchange it for " + mesitemlink( 25142, false ) + "?";
 	next;
 	if (select( "Search", "Cancel" ) == 1) {
 		setarray .@item_data[0],
@@ -2193,7 +2193,7 @@ lasagna,131,250,5	script	The brave third#weapon	4_DR_M_02,{
 			else {
 				mes "[Jogi Chara]";
 				mes "Whoa! This is ^3131FF" + getitemname(.@item_data[.@i]) + "^000000!";
-				mes "Exchange it for " + .@item_data[.@i+1] + " <ITEM>Doram Token<INFO>25142</INFO></ITEM>! Please? Will you do it, please?";
+				mes "Exchange it for " + .@item_data[.@i+1] + " " + mesitemlink( 25142, false ) + "! Please? Will you do it, please?";
 				next;
 				if (select( "Exchange", "Quit exchanging" ) == 2) {
 					mes "[Jogi Chara]";
@@ -2253,7 +2253,7 @@ lasagna,140,250,3	script	The skittish fourth#wea	4_DR_F_01,{
 	}
 	mes "[Dandi Chara]";
 	mes "Do you mind if I search you to see the items you have with you?";
-	mes "If I find an item suitable for Jogi, I'll pay <INFO>25142</INFO><ITEM>Doram Token </ITEM>....";
+	mes "If I find an item suitable for Jogi, I'll pay " + mesitemlink( 25142, false ) + "....";
 	next;
 	if (select( "Search", "Cancel" ) == 1) {
 		setarray .@item_data[0],	// keep the order
@@ -2298,7 +2298,7 @@ lasagna,140,250,3	script	The skittish fourth#wea	4_DR_F_01,{
 			else {
 				mes "[Dandi Chara]";
 				mes "Whoa, this must be ^3131FF" + getitemname(.@item_data[.@i]) + "^000000!!";
-				mes "Don't you want to exchange this with " + .@item_data[.@i+1] + " <ITEM>Doram Token<INFO>25142</INFO></ITEM>?";
+				mes "Don't you want to exchange this with " + .@item_data[.@i+1] + " " + mesitemlink( 25142, false ) + "?";
 				next;
 				if (select( "Exchange", "Quit exchanging" ) == 2) {
 					mes "[Dandi Chara]";
@@ -2388,8 +2388,8 @@ lasagna,140,245,3	script	The sensitive-minded ela	4_CAT_SAILOR3,{
 	mes "...I knew this was going to happen again. Worse, this one must require a lot more time to polish!";
 	next;
 	mes "[Goma Chara]";
-	mes "Hey, if you give me " + .@needCoin + "<ITEM>Doram Token<INFO>25142</INFO></ITEM>, I'll fix this for you.";
-	mes "<ITEM>This should produce the <INFO>" + .@next_charm_ID + "</INFO></ITEM> function, I guess. How do you like it?";
+	mes "Hey, if you give me " + .@needCoin + " " + mesitemlink( 25142, false ) + ", I'll fix this for you.";
+	mes "This should produce " + mesitemlink( .@next_charm_ID, false ) + ", I guess. How do you like it?";
 	next;
 	if (select( "Upgrade", "Cancel" ) == 2) {
 		mes "[Goma Chara]";
@@ -3710,7 +3710,7 @@ lasagna,85,93,5	script	Shaman meow#dorcon	4_DR_KID_01,{
 		npctalk "Meow meow", "", bc_self;
 		next;
 		mes "[Shaman meow]";
-		mes "When I told him that ¡°a noble person from a new place solves the problem,¡± I meant that the the problem will move onto ^0000cda new person^000000. Seems like he misunderstood me and sent you.";
+		mes "When I told him that ¡°a noble person from a new place solves the problem,¡± I meant that the problem will move onto ^0000cda new person^000000. Seems like he misunderstood me and sent you.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "T-then, you've also...";

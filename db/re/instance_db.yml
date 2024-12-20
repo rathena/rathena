@@ -375,3 +375,204 @@ Body:
       Map: 1@begi
       X: 100
       Y: 22
+  - Id: 49
+    Name: Old Glast Heim (Challenge Mode)
+    Enter:
+      Map: 1@gl_he
+      X: 150
+      Y: 28
+  - Id: 50
+    Name: Old Glast Heim (Beginner)
+    Enter:
+      Map: 1@gl_k2
+      X: 150
+      Y: 20
+  - Id: 51
+    Name: Fall of Glast Heim (Normal)
+    Enter:
+      Map: 1@gl_prq
+      X: 299
+      Y: 19
+  - Id: 52
+    Name: Fall of Glast Heim (Advanced)
+    Enter:
+      Map: 1@gl_prq
+      X: 79
+      Y: 22
+  - Id: 53
+    Name: Twilight Garden
+    Enter:
+      Map: 1@bamn
+      X: 100
+      Y: 320
+    AdditionalMaps:
+       1@bamq: true
+  - Id: 54
+    Name: Hey! Sweety
+    Enter:
+      Map: 1@bamq
+      X: 16
+      Y: 39
+    AdditionalMaps:
+       1@bamn: true
+  - Id: 55
+    Name: Farm Lost in Time
+    Enter:
+      Map: 1@lost
+      X: 161
+      Y: 42
+  - Id: 56
+    Name: Water Garden
+    Enter:
+      Map: 1@ghg
+      X: 64
+      Y: 69
+  - Id: 57
+    Name: Water Garden Hard
+    Enter:
+      Map: 1@ghg
+      X: 64
+      Y: 69
+  - Id: 58
+    Name: Hidden Flower Garden
+    Enter:
+      Map: 1@herbs
+      X: 51
+      Y: 273
+  - Id: 59
+    Name: Security Area 1
+    Enter:
+      Map: 1@herbs
+      X: 45
+      Y: 208
+  - Id: 60
+    Name: Security Area 2
+    Enter:
+      Map: 1@herbs
+      X: 59
+      Y: 214
+  - Id: 61
+    Name: Sunken Tower
+    Enter:
+      Map: 1@ch_u
+      X: 13
+      Y: 59
+  - Id: 62
+    Name: Constellation Tower
+    Enter:
+      Map: 1@ch_t
+      X: 48
+      Y: 183
+    AdditionalMaps:
+       2@ch_t: true
+       3@ch_t: true
+  - Id: 63
+    Name: Tomb of Remorse
+    Enter:
+      Map: 1@spa2
+      X: 51
+      Y: 197
+  - Id: 64
+    Name: Geffen Night Arena
+    Enter:
+      Map: 1@ge_sn
+      X: 89
+      Y: 48
+  - Id: 65
+    Name: Airship Crash
+    Enter:
+      Map: 1@mjo1
+      X: 219
+      Y: 379
+    AdditionalMaps:
+      1@mjo2: true
+  - Id: 66
+    Name: Thanatos Tower
+    Enter:
+      Map: 1@thts
+      X: 74
+      Y: 371
+    AdditionalMaps:
+      2@thts: true
+      3@thts: true
+      4@thts: true
+      5@thts: true
+      6@thts: true
+      7@thts: true
+      8@thts: true
+  - Id: 67
+    Name: Oz Labyrinth
+    Enter:
+      Map: 1@oz
+      X: 284
+      Y: 167
+  - Id: 68
+    Name: Thor Military Base
+    Enter:
+      Map: 1@tcamp
+      X: 103
+      Y: 237
+  - Id: 69
+    Name: Wolves Gathering Place
+    Enter:
+      Map: 1@nyr
+      X: 194
+      Y: 30
+    AdditionalMaps:
+      2@nyr: true
+  - Id: 70
+    Name: Sanctuary Purification
+    Enter:
+      Map: 1@nyr
+      X: 194
+      Y: 30
+    AdditionalMaps:
+      2@nyr: true
+  - Id: 71
+    Name: High Priest's Villa
+    Enter:
+      Map: 1@adv
+      X: 123
+      Y: 17
+  - Id: 72
+    Name: Villa of Deception
+    Enter:
+      Map: 1@advs
+      X: 111
+      Y: 19
+  - Id: 73
+    Name: Villa of Deception Advanced
+    Enter:
+      Map: 1@advs
+      X: 111
+      Y: 19
+  - Id: 74
+    Name: Bagot Laboratory
+    Enter:
+      Map: 1@jorlab
+      X: 57
+      Y: 45
+  - Id: 75
+    Name: Confused Snake's Nest
+    Enter:
+      Map: 1@jorchs
+      X: 272
+      Y: 20
+  - Id: 76
+    Name: Iwin Patrol
+    Enter:
+      Map: 1@iwp
+      X: 380
+      Y: 229
+  - Id: 77
+    Name: Airship Destruction
+    Enter:
+      Map: 1@whl
+      X: 32
+      Y: 53
+  - Id: 78
+    Name: Simulation Battle
+    Enter:
+      Map: 1@jorlab
+      X: 57
+      Y: 45

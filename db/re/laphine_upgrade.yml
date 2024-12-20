@@ -40,27 +40,28 @@ Header:
   Version: 1
 
 Body:
-#  - Item: Ein_Ddbox
-#    TargetItems:
-#      - Item: Ein_BHSWORD
-#      - Item: Detecting_Staff
-#      - Item: Ein_BHHuuma
-#      - Item: Ein_BHKATAR
-#      - Item: Ein_BHAXE
-#      - Item: Ein_BHBOW
-#      - Item: Ein_1HKNUCK
-#      - Item: Ein_1HHAMMER
-#      - Item: Ein_1HWAND
-#      - Item: Ein_1HWHIP
-#      - Item: Ein_1HBOOK
-#      - Item: Ein_1HDAGGER
-#      - Item: Ein_1HMAGGER
-#      - Item: Ein_1HSPEAR
-#      - Item: Ein_1HLUTE
-#      - Item: Ein_1HSWORD
-#      - Item: Ein_1HGUN
-#      - Item: Ein_1H_Foxtail
-  - Item: Metal_Smelting_Ticket
+  - Item: Ein_Ddbox
+    RandomOptionGroup: EIN_DDBOX
+    TargetItems:
+      - Item: Ein_BHSWORD
+      - Item: Ein_BHSTAFF
+      - Item: Ein_BHHuuma
+      - Item: Ein_BHKATAR
+      - Item: Ein_BHAXE
+      - Item: Ein_BHBOW
+      - Item: Ein_1HKNUCK
+      - Item: Ein_1HHAMMER
+      - Item: Ein_1HWAND
+      - Item: Ein_1HWHIP
+      - Item: Ein_1HBOOK
+      - Item: Ein_1HDAGGER
+      - Item: Ein_1HMAGGER
+      - Item: Ein_1HSPEAR
+      - Item: Ein_1HLUTE
+      - Item: Ein_1HSWORD
+      - Item: Ein_1HGUN
+      - Item: Ein_1H_Foxtail
+  - Item: Metal_Rifine_Ticket
     ResultRefine: 7
     CardsAllowed: true
     TargetItems:
@@ -74,28 +75,29 @@ Body:
       - Item: Metal_Bow
       - Item: Metal_Two_Hand_Sword
       - Item: Metal_Revolver
-      - Item: Huuma_Metal_Shuriken
+      - Item: Metal_Huuma_Shuriken
       - Item: Metal_Foxtail
-#  - Item: Ein_Ddbox2
-#    TargetItems:
-#      - Item: Ein_BHSWORD
-#      - Item: Detecting_Staff
-#      - Item: Ein_BHHuuma
-#      - Item: Ein_BHKATAR
-#      - Item: Ein_BHAXE
-#      - Item: Ein_BHBOW
-#      - Item: Ein_1HKNUCK
-#      - Item: Ein_1HHAMMER
-#      - Item: Ein_1HWAND
-#      - Item: Ein_1HWHIP
-#      - Item: Ein_1HBOOK
-#      - Item: Ein_1HDAGGER
-#      - Item: Ein_1HMAGGER
-#      - Item: Ein_1HSPEAR
-#      - Item: Ein_1HLUTE
-#      - Item: Ein_1HSWORD
-#      - Item: Ein_1HGUN
-#      - Item: Ein_1H_Foxtail
+  - Item: Ein_Ddbox2
+    RandomOptionGroup: EIN_DDBOX2
+    TargetItems:
+      - Item: Ein_BHSWORD
+      - Item: Ein_BHSTAFF
+      - Item: Ein_BHHuuma
+      - Item: Ein_BHKATAR
+      - Item: Ein_BHAXE
+      - Item: Ein_BHBOW
+      - Item: Ein_1HKNUCK
+      - Item: Ein_1HHAMMER
+      - Item: Ein_1HWAND
+      - Item: Ein_1HWHIP
+      - Item: Ein_1HBOOK
+      - Item: Ein_1HDAGGER
+      - Item: Ein_1HMAGGER
+      - Item: Ein_1HSPEAR
+      - Item: Ein_1HLUTE
+      - Item: Ein_1HSWORD
+      - Item: Ein_1HGUN
+      - Item: Ein_1H_Foxtail
   - Item: Gemstone_Of_Time
     RandomOptionGroup: GEMSTONE_OF_TIME
     TargetItems:
@@ -124,7 +126,7 @@ Body:
       - Item: Huuma_Flutter_Snow_IL
       - Item: Combo_Battle_Glove_IL
       - Item: Cap_IL
-      - Item: Illusion_Survivor_Manteau
+      - Item: Clack_Of_Servival_IL
       - Item: Herald_Of_GOD_IL
   - Item: True_Hunting_9Refine
     ResultRefine: 9
@@ -155,18 +157,18 @@ Body:
     MaximumRefine: 9
     CardsAllowed: true
     TargetItems:
-      - Item: T1_Shadow_Armor
-      - Item: T1_Shadow_Weapon
-      - Item: T1_Shadow_Shield
-      - Item: T1_Shadow_Shoes
-      - Item: T1_Shadow_R_Accessory
-      - Item: T1_Shadow_L_Accessory
-      - Item: T2_Shadow_Armor
-      - Item: T2_Shadow_Weapon
-      - Item: T2_Shadow_Shield
-      - Item: T2_Shadow_Shoes
-      - Item: T2_Shadow_R_Accessory
-      - Item: T2_Shadow_L_Accessory
+      - Item: T_Str1_Armor_S
+      - Item: T_Dex1_Weapon_S
+      - Item: T_Luk1_Shield_S
+      - Item: T_Agi1_Shoes_S
+      - Item: T_Vit1_Acc_R_S
+      - Item: T_Int1_Acc_L_S
+      - Item: T_Str2_Armor_S
+      - Item: T_Dex2_Weapon_S
+      - Item: T_Luk2_Shield_S
+      - Item: T_Agi2_Shoes_S
+      - Item: T_Vit2_Acc_R_S
+      - Item: T_Int2_Acc_L_S
       - Item: S_Promotion_Weapon
       - Item: S_Promotion_Armor
       - Item: S_Promotion_Shoes
@@ -961,18 +963,18 @@ Body:
     MinimumRefine: 7
     MaximumRefine: 10
     TargetItems:
-      - Item: T1_Shadow_Armor
-      - Item: T1_Shadow_Weapon
-      - Item: T1_Shadow_Shield
-      - Item: T1_Shadow_Shoes
-      - Item: T1_Shadow_R_Accessory
-      - Item: T1_Shadow_L_Accessory
-      - Item: T2_Shadow_Armor
-      - Item: T2_Shadow_Weapon
-      - Item: T2_Shadow_Shield
-      - Item: T2_Shadow_Shoes
-      - Item: T2_Shadow_R_Accessory
-      - Item: T2_Shadow_L_Accessory
+      - Item: T_Str1_Armor_S
+      - Item: T_Dex1_Weapon_S
+      - Item: T_Luk1_Shield_S
+      - Item: T_Agi1_Shoes_S
+      - Item: T_Vit1_Acc_R_S
+      - Item: T_Int1_Acc_L_S
+      - Item: T_Str2_Armor_S
+      - Item: T_Dex2_Weapon_S
+      - Item: T_Luk2_Shield_S
+      - Item: T_Agi2_Shoes_S
+      - Item: T_Vit2_Acc_R_S
+      - Item: T_Int2_Acc_L_S
       - Item: S_Promotion_Weapon
       - Item: S_Promotion_Armor
       - Item: S_Promotion_Shoes
@@ -1690,25 +1692,25 @@ Body:
     RequiredRandomOptions: 2
     TargetItems:
       - Item: Lava_Leather_Armor
-      - Item: Lava_Leather_Suit
+      - Item: Lava_Leather_Suits
       - Item: Lava_Leather_Robe
   - Item: Shadow_9_Refine_Hammer
     ResultRefine: 9
     MaximumRefine: 8
     CardsAllowed: true
     TargetItems:
-      - Item: T1_Shadow_Armor
-      - Item: T1_Shadow_Weapon
-      - Item: T1_Shadow_Shield
-      - Item: T1_Shadow_Shoes
-      - Item: T1_Shadow_R_Accessory
-      - Item: T1_Shadow_L_Accessory
-      - Item: T2_Shadow_Armor
-      - Item: T2_Shadow_Weapon
-      - Item: T2_Shadow_Shield
-      - Item: T2_Shadow_Shoes
-      - Item: T2_Shadow_R_Accessory
-      - Item: T2_Shadow_L_Accessory
+      - Item: T_Str1_Armor_S
+      - Item: T_Dex1_Weapon_S
+      - Item: T_Luk1_Shield_S
+      - Item: T_Agi1_Shoes_S
+      - Item: T_Vit1_Acc_R_S
+      - Item: T_Int1_Acc_L_S
+      - Item: T_Str2_Armor_S
+      - Item: T_Dex2_Weapon_S
+      - Item: T_Luk2_Shield_S
+      - Item: T_Agi2_Shoes_S
+      - Item: T_Vit2_Acc_R_S
+      - Item: T_Int2_Acc_L_S
       - Item: S_Promotion_Weapon
       - Item: S_Promotion_Armor
       - Item: S_Promotion_Shoes
@@ -2408,17 +2410,17 @@ Body:
   - Item: ILL_Piece_A
     RandomOptionGroup: ILL_PIECE_A
     TargetItems:
-      - Item: Illusion_Bazerald
-      - Item: Illusion_Butcher
-      - Item: Illusion_Gold_Lux
+      - Item: Bazerald_IL
+      - Item: Butcher_IL
+      - Item: Gold_Lux_IL
       - Item: Infiltrator_IL
-      - Item: Illusion_War_Axe
-      - Item: Illusion_Immaterial_Sword
-      - Item: Illusion_Iron_Driver
-      - Item: Illusion_Pole_Axe
+      - Item: War_Axe_IL
+      - Item: Immaterial_Sword_IL
+      - Item: Iron_Driver_IL
+      - Item: Pole_Axe_IL
       - Item: Book_Of_The_Apo_IL
       - Item: Balistar_IL
-      - Item: Illusion_Wing_Shuriken
+      - Item: Huuma_Bird_Wing_IL
       - Item: Wizardy_Staff_IL
       - Item: Long_Mace_IL
       - Item: Huuma_Flutter_Snow_IL
@@ -2426,12 +2428,12 @@ Body:
       - Item: Spectral_Spear_IL
       - Item: Staff_Of_Bordeaux_IL
       - Item: Moonlight_Sword_IL
-      - Item: Illusion_Hunter_Bow
-      - Item: Illusion_Tablet
-      - Item: Illusion_Gate_Keeper_DD
-      - Item: Illusion_Counter_Dagger
-      - Item: Illusion_Survivor's_Staff
-      - Item: Illusion_Tae_Goo_Lyeon
+      - Item: Hunter_Bow_IL
+      - Item: Tablet_IL
+      - Item: Gate_KeeperDD_IL
+      - Item: Counter_Dagger_IL
+      - Item: Survival_Staff_IL
+      - Item: Taegoolyeon_IL
       - Item: Death_Guidance_IL
       - Item: KatarOfCold_Icicle_IL
       - Item: Brionac_IL
@@ -2447,17 +2449,17 @@ Body:
   - Item: ILL_Piece_B
     RandomOptionGroup: ILL_PIECE_B
     TargetItems:
-      - Item: Illusion_Bazerald
-      - Item: Illusion_Butcher
-      - Item: Illusion_Gold_Lux
+      - Item: Bazerald_IL
+      - Item: Butcher_IL
+      - Item: Gold_Lux_IL
       - Item: Infiltrator_IL
-      - Item: Illusion_War_Axe
-      - Item: Illusion_Immaterial_Sword
-      - Item: Illusion_Iron_Driver
-      - Item: Illusion_Pole_Axe
+      - Item: War_Axe_IL
+      - Item: Immaterial_Sword_IL
+      - Item: Iron_Driver_IL
+      - Item: Pole_Axe_IL
       - Item: Book_Of_The_Apo_IL
       - Item: Balistar_IL
-      - Item: Illusion_Wing_Shuriken
+      - Item: Huuma_Bird_Wing_IL
       - Item: Wizardy_Staff_IL
       - Item: Long_Mace_IL
       - Item: Huuma_Flutter_Snow_IL
@@ -2465,12 +2467,12 @@ Body:
       - Item: Spectral_Spear_IL
       - Item: Staff_Of_Bordeaux_IL
       - Item: Moonlight_Sword_IL
-      - Item: Illusion_Hunter_Bow
-      - Item: Illusion_Tablet
-      - Item: Illusion_Gate_Keeper_DD
-      - Item: Illusion_Counter_Dagger
-      - Item: Illusion_Survivor's_Staff
-      - Item: Illusion_Tae_Goo_Lyeon
+      - Item: Hunter_Bow_IL
+      - Item: Tablet_IL
+      - Item: Gate_KeeperDD_IL
+      - Item: Counter_Dagger_IL
+      - Item: Survival_Staff_IL
+      - Item: Taegoolyeon_IL
       - Item: Death_Guidance_IL
       - Item: KatarOfCold_Icicle_IL
       - Item: Brionac_IL
@@ -2483,9 +2485,11 @@ Body:
       - Item: Gelerdria_IL
       - Item: Thorn_Staff_IL
       - Item: Dea_Staff_IL
-#  - Item: Joy_Of_Victory
-#    TargetItems:
-#      - Item: Victory_Wing_Ear_
+  - Item: Joy_Of_Victory
+    RandomOptionGroup: JOY_OF_VICTORY
+    CardsAllowed: true
+    TargetItems:
+      - Item: Victory_Wing_Ear_
   - Item: Ancient_Hero_Bravery
     RandomOptionGroup: ANCIENT_HERO_BRAVERY
     TargetItems:
@@ -2560,6 +2564,28 @@ Body:
       - Item: Up_Crimson_Rose
       - Item: Up_OneSkyOneSun
       - Item: Up_SoulWeight
+      - Item: Comp_Iron_Staff
+      - Item: Comp_Undine_Spear_K
+      - Item: Comp_Royal_Bow_K
+      - Item: Comp_Shadow_Staff_K
+      - Item: Comp_Iron_Nail_K
+      - Item: Comp_Sword_Of_Bluefire
+      - Item: Comp_Oriental_Sword
+      - Item: Comp_Narcis_Bow
+      - Item: Comp_Avenger
+      - Item: Comp_Magic_Sword
+      - Item: Comp_D_Hunt_Bible_K
+      - Item: Comp_Shiver_Katar_K_TH
+      - Item: Comp_Demon_S_Shot
+      - Item: Comp_Sharp_Wind_Sword
+      - Item: Comp_Fog_Dew_Sword
+      - Item: Comp_Crimson_Rose
+      - Item: Comp_The_Black_Gatling
+      - Item: Comp_MeawFoxtail
+      - Item: Comp_Dragonic_Slayer
+      - Item: Comp_Fatalist
+      - Item: Comp_Light_Blade
+      - Item: Comp_Scalet_DragonL_Bow
   - Item: Ancient_Hero_Wisdom
     RandomOptionGroup: ANCIENT_HERO_WISDOM
     TargetItems:
@@ -2634,6 +2660,28 @@ Body:
       - Item: Up_Crimson_Rose
       - Item: Up_OneSkyOneSun
       - Item: Up_SoulWeight
+      - Item: Comp_Iron_Staff
+      - Item: Comp_Undine_Spear_K
+      - Item: Comp_Royal_Bow_K
+      - Item: Comp_Shadow_Staff_K
+      - Item: Comp_Iron_Nail_K
+      - Item: Comp_Sword_Of_Bluefire
+      - Item: Comp_Oriental_Sword
+      - Item: Comp_Narcis_Bow
+      - Item: Comp_Avenger
+      - Item: Comp_Magic_Sword
+      - Item: Comp_D_Hunt_Bible_K
+      - Item: Comp_Shiver_Katar_K_TH
+      - Item: Comp_Demon_S_Shot
+      - Item: Comp_Sharp_Wind_Sword
+      - Item: Comp_Fog_Dew_Sword
+      - Item: Comp_Crimson_Rose
+      - Item: Comp_The_Black_Gatling
+      - Item: Comp_MeawFoxtail
+      - Item: Comp_Dragonic_Slayer
+      - Item: Comp_Fatalist
+      - Item: Comp_Light_Blade
+      - Item: Comp_Scalet_DragonL_Bow
   - Item: Boost_Up_1
     ResultRefine: 10
     MaximumRefine: 9
@@ -2657,21 +2705,21 @@ Body:
     TargetItems:
       - Item: Boost_TH_Sword
       - Item: Boost_Katar
-      - Item: Boost_Mace
+      - Item: Boost_Hall
       - Item: Boost_Staff
       - Item: Boost_Bow
       - Item: Boost_Spear
       - Item: Boost_Sword
       - Item: Boost_Dagger
-      - Item: Boost_Spellbook
+      - Item: Boost_Spl_Book
       - Item: Boost_Guitar
-      - Item: Boost_Knuckles
+      - Item: Boost_Knuckle
       - Item: Boost_Whip
       - Item: Boost_Nindo
       - Item: Boost_Gatling
       - Item: Boost_Axe
-      - Item: Boost_Book
-      - Item: Boost_Rod
+      - Item: Boost_Text
+      - Item: Boost_Soul_Rod
       - Item: Boost_Foxtail
   - Item: Metal_7_Ticket
     ResultRefine: 7
@@ -2689,7 +2737,7 @@ Body:
       - Item: Metal_Bow
       - Item: Metal_Foxtail
       - Item: Metal_Revolver
-      - Item: Huuma_Metal_Shuriken
+      - Item: Metal_Huuma_Shuriken
   - Item: Noblesse_Rifine_Ticket
     ResultRefine: 9
     CardsAllowed: true
@@ -3012,174 +3060,180 @@ Body:
 #  - Item: Abyss_Ddbox4
 #    TargetItems:
 #      - Item: Dragon_Boots
-#  - Item: Auto_Imp_Melee_1
-#    TargetItems:
-#      - Item: Ep172_1h_Sword
-#      - Item: Ep172_Bh_Sword
-#      - Item: Ep172_1h_Wand
-#      - Item: Ep172_1h_Book
-#      - Item: Ep172_1h_Axe
-#      - Item: Ep172_1h_Sword2
-#      - Item: Ep172_Bh_Bow
-#      - Item: Ep172_Bh_Bow2
-#      - Item: Ep172_Bh_Knuck
-#      - Item: Ep172_1h_Spear
-#      - Item: Ep172_Bh_Spear
-#      - Item: Ep172_1h_Dagger
-#      - Item: Ep172_Bh_Katar
-#      - Item: Ep172_Bh_Staff
-#      - Item: Ep172_1h_Book2
-#      - Item: Ep172_1h_Dagger2
-#      - Item: Ep172_1h_Whip
-#      - Item: Ep172_1h_Inst
-#      - Item: Ep172_Bh_Bow3
-#      - Item: Ep172_Bh_Huuma
-#      - Item: Ep172_1h_Hammer
-#      - Item: Ep172_1h_Foxtail
-#      - Item: Ep172_1h_Rifle
-#      - Item: Ep172_1h_Shotgun
-#      - Item: Ep172_1h_Gatling
-#      - Item: Ep172_1h_Grenade
-#  - Item: Auto_Imp_Melee_2
-#    TargetItems:
-#      - Item: Ep172_1h_Sword
-#      - Item: Ep172_Bh_Sword
-#      - Item: Ep172_1h_Wand
-#      - Item: Ep172_1h_Book
-#      - Item: Ep172_1h_Axe
-#      - Item: Ep172_1h_Sword2
-#      - Item: Ep172_Bh_Bow
-#      - Item: Ep172_Bh_Bow2
-#      - Item: Ep172_Bh_Knuck
-#      - Item: Ep172_1h_Spear
-#      - Item: Ep172_Bh_Spear
-#      - Item: Ep172_1h_Dagger
-#      - Item: Ep172_Bh_Katar
-#      - Item: Ep172_Bh_Staff
-#      - Item: Ep172_1h_Book2
-#      - Item: Ep172_1h_Dagger2
-#      - Item: Ep172_1h_Whip
-#      - Item: Ep172_1h_Inst
-#      - Item: Ep172_Bh_Bow3
-#      - Item: Ep172_Bh_Huuma
-#      - Item: Ep172_1h_Hammer
-#      - Item: Ep172_1h_Foxtail
-#      - Item: Ep172_1h_Rifle
-#      - Item: Ep172_1h_Shotgun
-#      - Item: Ep172_1h_Gatling
-#      - Item: Ep172_1h_Grenade
-#  - Item: Auto_Imp_Melee_3
-#    TargetItems:
-#      - Item: Ep172_1h_Sword
-#      - Item: Ep172_Bh_Sword
-#      - Item: Ep172_1h_Wand
-#      - Item: Ep172_1h_Book
-#      - Item: Ep172_1h_Axe
-#      - Item: Ep172_1h_Sword2
-#      - Item: Ep172_Bh_Bow
-#      - Item: Ep172_Bh_Bow2
-#      - Item: Ep172_Bh_Knuck
-#      - Item: Ep172_1h_Spear
-#      - Item: Ep172_Bh_Spear
-#      - Item: Ep172_1h_Dagger
-#      - Item: Ep172_Bh_Katar
-#      - Item: Ep172_Bh_Staff
-#      - Item: Ep172_1h_Book2
-#      - Item: Ep172_1h_Dagger2
-#      - Item: Ep172_1h_Whip
-#      - Item: Ep172_1h_Inst
-#      - Item: Ep172_Bh_Bow3
-#      - Item: Ep172_Bh_Huuma
-#      - Item: Ep172_1h_Hammer
-#      - Item: Ep172_1h_Foxtail
-#      - Item: Ep172_1h_Rifle
-#      - Item: Ep172_1h_Shotgun
-#      - Item: Ep172_1h_Gatling
-#      - Item: Ep172_1h_Grenade
-#  - Item: Auto_Imp_Magic_1
-#    TargetItems:
-#      - Item: Ep172_1h_Sword
-#      - Item: Ep172_Bh_Sword
-#      - Item: Ep172_1h_Wand
-#      - Item: Ep172_1h_Book
-#      - Item: Ep172_1h_Axe
-#      - Item: Ep172_1h_Sword2
-#      - Item: Ep172_Bh_Bow
-#      - Item: Ep172_Bh_Bow2
-#      - Item: Ep172_Bh_Knuck
-#      - Item: Ep172_1h_Spear
-#      - Item: Ep172_Bh_Spear
-#      - Item: Ep172_1h_Dagger
-#      - Item: Ep172_Bh_Katar
-#      - Item: Ep172_Bh_Staff
-#      - Item: Ep172_1h_Book2
-#      - Item: Ep172_1h_Dagger2
-#      - Item: Ep172_1h_Whip
-#      - Item: Ep172_1h_Inst
-#      - Item: Ep172_Bh_Bow3
-#      - Item: Ep172_Bh_Huuma
-#      - Item: Ep172_1h_Hammer
-#      - Item: Ep172_1h_Foxtail
-#      - Item: Ep172_1h_Rifle
-#      - Item: Ep172_1h_Shotgun
-#      - Item: Ep172_1h_Gatling
-#      - Item: Ep172_1h_Grenade
-#  - Item: Auto_Imp_Magic_2
-#    TargetItems:
-#      - Item: Ep172_1h_Sword
-#      - Item: Ep172_Bh_Sword
-#      - Item: Ep172_1h_Wand
-#      - Item: Ep172_1h_Book
-#      - Item: Ep172_1h_Axe
-#      - Item: Ep172_1h_Sword2
-#      - Item: Ep172_Bh_Bow
-#      - Item: Ep172_Bh_Bow2
-#      - Item: Ep172_Bh_Knuck
-#      - Item: Ep172_1h_Spear
-#      - Item: Ep172_Bh_Spear
-#      - Item: Ep172_1h_Dagger
-#      - Item: Ep172_Bh_Katar
-#      - Item: Ep172_Bh_Staff
-#      - Item: Ep172_1h_Book2
-#      - Item: Ep172_1h_Dagger2
-#      - Item: Ep172_1h_Whip
-#      - Item: Ep172_1h_Inst
-#      - Item: Ep172_Bh_Bow3
-#      - Item: Ep172_Bh_Huuma
-#      - Item: Ep172_1h_Hammer
-#      - Item: Ep172_1h_Foxtail
-#      - Item: Ep172_1h_Rifle
-#      - Item: Ep172_1h_Shotgun
-#      - Item: Ep172_1h_Gatling
-#      - Item: Ep172_1h_Grenade
-#  - Item: Auto_Imp_Magic_3
-#    TargetItems:
-#      - Item: Ep172_1h_Sword
-#      - Item: Ep172_Bh_Sword
-#      - Item: Ep172_1h_Wand
-#      - Item: Ep172_1h_Book
-#      - Item: Ep172_1h_Axe
-#      - Item: Ep172_1h_Sword2
-#      - Item: Ep172_Bh_Bow
-#      - Item: Ep172_Bh_Bow2
-#      - Item: Ep172_Bh_Knuck
-#      - Item: Ep172_1h_Spear
-#      - Item: Ep172_Bh_Spear
-#      - Item: Ep172_1h_Dagger
-#      - Item: Ep172_Bh_Katar
-#      - Item: Ep172_Bh_Staff
-#      - Item: Ep172_1h_Book2
-#      - Item: Ep172_1h_Dagger2
-#      - Item: Ep172_1h_Whip
-#      - Item: Ep172_1h_Inst
-#      - Item: Ep172_Bh_Bow3
-#      - Item: Ep172_Bh_Huuma
-#      - Item: Ep172_1h_Hammer
-#      - Item: Ep172_1h_Foxtail
-#      - Item: Ep172_1h_Rifle
-#      - Item: Ep172_1h_Shotgun
-#      - Item: Ep172_1h_Gatling
-#      - Item: Ep172_1h_Grenade
+  - Item: Auto_Imp_Melee_1
+    RandomOptionGroup: AUTO_IMP_MELEE_1
+    TargetItems:
+      - Item: Ep172_1h_Sword
+      - Item: Ep172_Bh_Sword
+      - Item: Ep172_1h_Wand
+      - Item: Ep172_1h_Book
+      - Item: Ep172_1h_Axe
+      - Item: Ep172_1h_Sword2
+      - Item: Ep172_Bh_Bow
+      - Item: Ep172_Bh_Bow2
+      - Item: Ep172_Bh_Knuck
+      - Item: Ep172_1h_Spear
+      - Item: Ep172_Bh_Spear
+      - Item: Ep172_1h_Dagger
+      - Item: Ep172_Bh_Katar
+      - Item: Ep172_Bh_Staff
+      - Item: Ep172_1h_Book2
+      - Item: Ep172_1h_Dagger2
+      - Item: Ep172_1h_Whip
+      - Item: Ep172_1h_Inst
+      - Item: Ep172_Bh_Bow3
+      - Item: Ep172_Bh_Huuma
+      - Item: Ep172_1h_Hammer
+      - Item: Ep172_1h_Foxtail
+      - Item: Ep172_1h_Rifle
+      - Item: Ep172_1h_Shotgun
+      - Item: Ep172_1h_Gatling
+      - Item: Ep172_1h_Grenade
+  - Item: Auto_Imp_Melee_2
+    RandomOptionGroup: AUTO_IMP_MELEE_2
+    TargetItems:
+      - Item: Ep172_1h_Sword
+      - Item: Ep172_Bh_Sword
+      - Item: Ep172_1h_Wand
+      - Item: Ep172_1h_Book
+      - Item: Ep172_1h_Axe
+      - Item: Ep172_1h_Sword2
+      - Item: Ep172_Bh_Bow
+      - Item: Ep172_Bh_Bow2
+      - Item: Ep172_Bh_Knuck
+      - Item: Ep172_1h_Spear
+      - Item: Ep172_Bh_Spear
+      - Item: Ep172_1h_Dagger
+      - Item: Ep172_Bh_Katar
+      - Item: Ep172_Bh_Staff
+      - Item: Ep172_1h_Book2
+      - Item: Ep172_1h_Dagger2
+      - Item: Ep172_1h_Whip
+      - Item: Ep172_1h_Inst
+      - Item: Ep172_Bh_Bow3
+      - Item: Ep172_Bh_Huuma
+      - Item: Ep172_1h_Hammer
+      - Item: Ep172_1h_Foxtail
+      - Item: Ep172_1h_Rifle
+      - Item: Ep172_1h_Shotgun
+      - Item: Ep172_1h_Gatling
+      - Item: Ep172_1h_Grenade
+  - Item: Auto_Imp_Melee_3
+    RandomOptionGroup: AUTO_IMP_MELEE_3
+    TargetItems:
+      - Item: Ep172_1h_Sword
+      - Item: Ep172_Bh_Sword
+      - Item: Ep172_1h_Wand
+      - Item: Ep172_1h_Book
+      - Item: Ep172_1h_Axe
+      - Item: Ep172_1h_Sword2
+      - Item: Ep172_Bh_Bow
+      - Item: Ep172_Bh_Bow2
+      - Item: Ep172_Bh_Knuck
+      - Item: Ep172_1h_Spear
+      - Item: Ep172_Bh_Spear
+      - Item: Ep172_1h_Dagger
+      - Item: Ep172_Bh_Katar
+      - Item: Ep172_Bh_Staff
+      - Item: Ep172_1h_Book2
+      - Item: Ep172_1h_Dagger2
+      - Item: Ep172_1h_Whip
+      - Item: Ep172_1h_Inst
+      - Item: Ep172_Bh_Bow3
+      - Item: Ep172_Bh_Huuma
+      - Item: Ep172_1h_Hammer
+      - Item: Ep172_1h_Foxtail
+      - Item: Ep172_1h_Rifle
+      - Item: Ep172_1h_Shotgun
+      - Item: Ep172_1h_Gatling
+      - Item: Ep172_1h_Grenade
+  - Item: Auto_Imp_Magic_1
+    RandomOptionGroup: AUTO_IMP_MAGIC_1
+    TargetItems:
+      - Item: Ep172_1h_Sword
+      - Item: Ep172_Bh_Sword
+      - Item: Ep172_1h_Wand
+      - Item: Ep172_1h_Book
+      - Item: Ep172_1h_Axe
+      - Item: Ep172_1h_Sword2
+      - Item: Ep172_Bh_Bow
+      - Item: Ep172_Bh_Bow2
+      - Item: Ep172_Bh_Knuck
+      - Item: Ep172_1h_Spear
+      - Item: Ep172_Bh_Spear
+      - Item: Ep172_1h_Dagger
+      - Item: Ep172_Bh_Katar
+      - Item: Ep172_Bh_Staff
+      - Item: Ep172_1h_Book2
+      - Item: Ep172_1h_Dagger2
+      - Item: Ep172_1h_Whip
+      - Item: Ep172_1h_Inst
+      - Item: Ep172_Bh_Bow3
+      - Item: Ep172_Bh_Huuma
+      - Item: Ep172_1h_Hammer
+      - Item: Ep172_1h_Foxtail
+      - Item: Ep172_1h_Rifle
+      - Item: Ep172_1h_Shotgun
+      - Item: Ep172_1h_Gatling
+      - Item: Ep172_1h_Grenade
+  - Item: Auto_Imp_Magic_2
+    RandomOptionGroup: AUTO_IMP_MAGIC_2
+    TargetItems:
+      - Item: Ep172_1h_Sword
+      - Item: Ep172_Bh_Sword
+      - Item: Ep172_1h_Wand
+      - Item: Ep172_1h_Book
+      - Item: Ep172_1h_Axe
+      - Item: Ep172_1h_Sword2
+      - Item: Ep172_Bh_Bow
+      - Item: Ep172_Bh_Bow2
+      - Item: Ep172_Bh_Knuck
+      - Item: Ep172_1h_Spear
+      - Item: Ep172_Bh_Spear
+      - Item: Ep172_1h_Dagger
+      - Item: Ep172_Bh_Katar
+      - Item: Ep172_Bh_Staff
+      - Item: Ep172_1h_Book2
+      - Item: Ep172_1h_Dagger2
+      - Item: Ep172_1h_Whip
+      - Item: Ep172_1h_Inst
+      - Item: Ep172_Bh_Bow3
+      - Item: Ep172_Bh_Huuma
+      - Item: Ep172_1h_Hammer
+      - Item: Ep172_1h_Foxtail
+      - Item: Ep172_1h_Rifle
+      - Item: Ep172_1h_Shotgun
+      - Item: Ep172_1h_Gatling
+      - Item: Ep172_1h_Grenade
+  - Item: Auto_Imp_Magic_3
+    RandomOptionGroup: AUTO_IMP_MAGIC_3
+    TargetItems:
+      - Item: Ep172_1h_Sword
+      - Item: Ep172_Bh_Sword
+      - Item: Ep172_1h_Wand
+      - Item: Ep172_1h_Book
+      - Item: Ep172_1h_Axe
+      - Item: Ep172_1h_Sword2
+      - Item: Ep172_Bh_Bow
+      - Item: Ep172_Bh_Bow2
+      - Item: Ep172_Bh_Knuck
+      - Item: Ep172_1h_Spear
+      - Item: Ep172_Bh_Spear
+      - Item: Ep172_1h_Dagger
+      - Item: Ep172_Bh_Katar
+      - Item: Ep172_Bh_Staff
+      - Item: Ep172_1h_Book2
+      - Item: Ep172_1h_Dagger2
+      - Item: Ep172_1h_Whip
+      - Item: Ep172_1h_Inst
+      - Item: Ep172_Bh_Bow3
+      - Item: Ep172_Bh_Huuma
+      - Item: Ep172_1h_Hammer
+      - Item: Ep172_1h_Foxtail
+      - Item: Ep172_1h_Rifle
+      - Item: Ep172_1h_Shotgun
+      - Item: Ep172_1h_Gatling
+      - Item: Ep172_1h_Grenade
 #  - Item: Class_Sha_R_M_Melee
 #    TargetItems:
 #      - Item: S_Swordman_earring
@@ -3942,25 +3996,25 @@ Body:
     MaximumRefine: 10
     CardsAllowed: true
     TargetItems:
-      - Item: Racing_Cap_MC
-      - Item: Racing_Cap_GN
-      - Item: Racing_Cap_GC
-      - Item: Racing_Cap_SC
-      - Item: Racing_Cap_WL
-      - Item: Racing_Cap_SO
-      - Item: Racing_Cap_RK
-      - Item: Racing_Cap_RG
-      - Item: Racing_Cap_AB
-      - Item: Racing_Cap_SR
-      - Item: Racing_Cap_RA
-      - Item: Racing_Cap_MI
-      - Item: Racing_Cap_WA
-      - Item: Racing_Cap_GS
-      - Item: Racing_Cap_NJ
-      - Item: Racing_Cap_SN
-      - Item: Racing_Cap_SU
-      - Item: Racing_Cap_SG
-      - Item: Racing_Cap_SL
+      - Item: Racing_C_Mecha
+      - Item: Racing_C_Gene
+      - Item: Racing_C_Cross
+      - Item: Racing_C_Chaser
+      - Item: Racing_C_Warlock
+      - Item: Racing_C_Sorcer
+      - Item: Racing_C_Rune
+      - Item: Racing_C_Royal
+      - Item: Racing_C_Bishop
+      - Item: Racing_C_Sura
+      - Item: Racing_C_Ranger
+      - Item: Racing_C_Mins
+      - Item: Racing_C_Wander
+      - Item: Racing_C_Gunner
+      - Item: Racing_C_Ninja
+      - Item: Racing_C_Super
+      - Item: Racing_C_Doram
+      - Item: Racing_C_Star
+      - Item: Racing_C_Soul
   - Item: Booster_W_Up_1
     ResultRefine: 9
     MaximumRefine: 8
@@ -4184,80 +4238,82 @@ Body:
       - Item: Nurse_Cap_IL
       - Item: Puente_Robe_IL
       - Item: Apple_Of_Archer_IL
-#  - Item: Great_Hero_Bravery
-#    TargetItems:
-#      - Item: Up_Oriental_Sword
-#      - Item: Up_Dragonic_Slayer
-#      - Item: Up_Shiver_Katar_K
-#      - Item: Up_Blade_Katar
-#      - Item: Up_Sword_Of_Bluefire
-#      - Item: Up_Slate_Sword
-#      - Item: Up_Narcis_Bow
-#      - Item: Up_Trumpet_Shell_K
-#      - Item: Up_Barb_Wire_K
-#      - Item: Up_Avenger
-#      - Item: Up_Magic_Sword
-#      - Item: Up_Fatalist
-#      - Item: Up_Meteor_Striker
-#      - Item: Up_Royal_Bow_K
-#      - Item: Up_Scalet_Dragon_L_Bow
-#      - Item: Up_Shadow_Staff_K
-#      - Item: Up_Freezing_Rod
-#      - Item: Up_Iron_Nail_K
-#      - Item: Up_Ray_Knuckle
-#      - Item: Up_Undine_Spear_K
-#      - Item: Up_Light_Blade
-#      - Item: Up_Iron_Staff
-#      - Item: Up_Blue_Crystal_Staff
-#      - Item: Up_Demon_Hunting_Bible
-#      - Item: Up_Saint_Hall
-#      - Item: Up_MeawFoxtail
-#      - Item: Up_Fog_Dew_Sword
-#      - Item: Up_Humma_Clear
-#      - Item: Up_Master_Soul_Rifle
-#      - Item: Up_Golden_L_Launcher
-#      - Item: Up_The_Black_Gatling
-#      - Item: Up_Demon_S_Shot
-#      - Item: Up_Crimson_Rose
-#      - Item: Up_OneSkyOneSun
-#      - Item: Up_SoulWeight
-#  - Item: Great_Hero_Wisdom
-#    TargetItems:
-#      - Item: Up_Oriental_Sword
-#      - Item: Up_Dragonic_Slayer
-#      - Item: Up_Shiver_Katar_K
-#      - Item: Up_Blade_Katar
-#      - Item: Up_Sword_Of_Bluefire
-#      - Item: Up_Slate_Sword
-#      - Item: Up_Narcis_Bow
-#      - Item: Up_Trumpet_Shell_K
-#      - Item: Up_Barb_Wire_K
-#      - Item: Up_Avenger
-#      - Item: Up_Magic_Sword
-#      - Item: Up_Fatalist
-#      - Item: Up_Meteor_Striker
-#      - Item: Up_Royal_Bow_K
-#      - Item: Up_Scalet_Dragon_L_Bow
-#      - Item: Up_Shadow_Staff_K
-#      - Item: Up_Freezing_Rod
-#      - Item: Up_Iron_Nail_K
-#      - Item: Up_Ray_Knuckle
-#      - Item: Up_Undine_Spear_K
-#      - Item: Up_Light_Blade
-#      - Item: Up_Iron_Staff
-#      - Item: Up_Blue_Crystal_Staff
-#      - Item: Up_Demon_Hunting_Bible
-#      - Item: Up_Saint_Hall
-#      - Item: Up_MeawFoxtail
-#      - Item: Up_Fog_Dew_Sword
-#      - Item: Up_Humma_Clear
-#      - Item: Up_Master_Soul_Rifle
-#      - Item: Up_Golden_L_Launcher
-#      - Item: Up_The_Black_Gatling
-#      - Item: Up_Demon_S_Shot
-#      - Item: Up_Crimson_Rose
-#      - Item: Up_OneSkyOneSun
-#      - Item: Up_SoulWeight
+  - Item: Great_Hero_Bravery
+    RandomOptionGroup: GREAT_HERO_BRAVERY
+    TargetItems:
+      - Item: Up_Oriental_Sword
+      - Item: Up_Dragonic_Slayer
+      - Item: Up_Shiver_Katar_K
+      - Item: Up_Blade_Katar
+      - Item: Up_Sword_Of_Bluefire
+      - Item: Up_Slate_Sword
+      - Item: Up_Narcis_Bow
+      - Item: Up_Trumpet_Shell_K
+      - Item: Up_Barb_Wire_K
+      - Item: Up_Avenger
+      - Item: Up_Magic_Sword
+      - Item: Up_Fatalist
+      - Item: Up_Meteor_Striker
+      - Item: Up_Royal_Bow_K
+      - Item: Up_Scalet_Dragon_L_Bow
+      - Item: Up_Shadow_Staff_K
+      - Item: Up_Freezing_Rod
+      - Item: Up_Iron_Nail_K
+      - Item: Up_Ray_Knuckle
+      - Item: Up_Undine_Spear_K
+      - Item: Up_Light_Blade
+      - Item: Up_Iron_Staff
+      - Item: Up_Blue_Crystal_Staff
+      - Item: Up_Demon_Hunting_Bible
+      - Item: Up_Saint_Hall
+      - Item: Up_MeawFoxtail
+      - Item: Up_Fog_Dew_Sword
+      - Item: Up_Humma_Clear
+      - Item: Up_Master_Soul_Rifle
+      - Item: Up_Golden_L_Launcher
+      - Item: Up_The_Black_Gatling
+      - Item: Up_Demon_S_Shot
+      - Item: Up_Crimson_Rose
+      - Item: Up_OneSkyOneSun
+      - Item: Up_SoulWeight
+  - Item: Great_Hero_Wisdom
+    RandomOptionGroup: GREAT_HERO_WISDOM
+    TargetItems:
+      - Item: Up_Oriental_Sword
+      - Item: Up_Dragonic_Slayer
+      - Item: Up_Shiver_Katar_K
+      - Item: Up_Blade_Katar
+      - Item: Up_Sword_Of_Bluefire
+      - Item: Up_Slate_Sword
+      - Item: Up_Narcis_Bow
+      - Item: Up_Trumpet_Shell_K
+      - Item: Up_Barb_Wire_K
+      - Item: Up_Avenger
+      - Item: Up_Magic_Sword
+      - Item: Up_Fatalist
+      - Item: Up_Meteor_Striker
+      - Item: Up_Royal_Bow_K
+      - Item: Up_Scalet_Dragon_L_Bow
+      - Item: Up_Shadow_Staff_K
+      - Item: Up_Freezing_Rod
+      - Item: Up_Iron_Nail_K
+      - Item: Up_Ray_Knuckle
+      - Item: Up_Undine_Spear_K
+      - Item: Up_Light_Blade
+      - Item: Up_Iron_Staff
+      - Item: Up_Blue_Crystal_Staff
+      - Item: Up_Demon_Hunting_Bible
+      - Item: Up_Saint_Hall
+      - Item: Up_MeawFoxtail
+      - Item: Up_Fog_Dew_Sword
+      - Item: Up_Humma_Clear
+      - Item: Up_Master_Soul_Rifle
+      - Item: Up_Golden_L_Launcher
+      - Item: Up_The_Black_Gatling
+      - Item: Up_Demon_S_Shot
+      - Item: Up_Crimson_Rose
+      - Item: Up_OneSkyOneSun
+      - Item: Up_SoulWeight
   - Item: Vampire_Box_IL
     ResultRefineMinimum: 7
     ResultRefineMaximum: 10
@@ -4294,7 +4350,7 @@ Body:
       - Item: Huuma_Flutter_Snow_IL
       - Item: Combo_Battle_Glove_IL
       - Item: Cap_IL
-      - Item: Illusion_Survivor_Manteau
+      - Item: Clack_Of_Servival_IL
       - Item: Herald_Of_GOD_IL
   - Item: Turtle_Is_Box_IL
     ResultRefineMinimum: 7
@@ -4303,12 +4359,12 @@ Body:
     MaximumRefine: 9
     CardsAllowed: true
     TargetItems:
-      - Item: Illusion_Wing_Shuriken
-      - Item: Illusion_War_Axe
-      - Item: Illusion_Immaterial_Sword
-      - Item: Illusion_Iron_Driver
-      - Item: Illusion_Pole_Axe
-      - Item: Illusion_Fancy_Flower
+      - Item: Huuma_Bird_Wing_IL
+      - Item: War_Axe_IL
+      - Item: Immaterial_Sword_IL
+      - Item: Iron_Driver_IL
+      - Item: Pole_Axe_IL
+      - Item: Fancy_Flower_IL
   - Item: S_Turtle_Is_Box_IL
     ResultRefineMinimum: 9
     ResultRefineMaximum: 12
@@ -4316,12 +4372,12 @@ Body:
     MaximumRefine: 11
     CardsAllowed: true
     TargetItems:
-      - Item: Illusion_Wing_Shuriken
-      - Item: Illusion_War_Axe
-      - Item: Illusion_Immaterial_Sword
-      - Item: Illusion_Iron_Driver
-      - Item: Illusion_Pole_Axe
-      - Item: Illusion_Fancy_Flower
+      - Item: Huuma_Bird_Wing_IL
+      - Item: War_Axe_IL
+      - Item: Immaterial_Sword_IL
+      - Item: Iron_Driver_IL
+      - Item: Pole_Axe_IL
+      - Item: Fancy_Flower_IL
   - Item: Teddy_Bear_Box_IL
     ResultRefineMinimum: 7
     ResultRefineMaximum: 10
@@ -4329,11 +4385,11 @@ Body:
     MaximumRefine: 9
     CardsAllowed: true
     TargetItems:
-      - Item: Illusion_Survivor's_Staff
-      - Item: Illusion_Gate_Keeper_DD
-      - Item: Illusion_Counter_Dagger
-      - Item: Illusion_Hot_blooded_Headband
-      - Item: Illusion_Boots
+      - Item: Survival_Staff_IL
+      - Item: Gate_KeeperDD_IL
+      - Item: Counter_Dagger_IL
+      - Item: Headband_Of_Power_IL
+      - Item: Boots_IL
   - Item: S_Teddy_Bear_Box_IL
     ResultRefineMinimum: 9
     ResultRefineMaximum: 12
@@ -4341,11 +4397,11 @@ Body:
     MaximumRefine: 11
     CardsAllowed: true
     TargetItems:
-      - Item: Illusion_Survivor's_Staff
-      - Item: Illusion_Gate_Keeper_DD
-      - Item: Illusion_Counter_Dagger
-      - Item: Illusion_Hot_blooded_Headband
-      - Item: Illusion_Boots
+      - Item: Survival_Staff_IL
+      - Item: Gate_KeeperDD_IL
+      - Item: Counter_Dagger_IL
+      - Item: Headband_Of_Power_IL
+      - Item: Boots_IL
   - Item: Luanda_Box_IL
     ResultRefineMinimum: 7
     ResultRefineMaximum: 10
@@ -4353,12 +4409,12 @@ Body:
     MaximumRefine: 9
     CardsAllowed: true
     TargetItems:
-      - Item: Illusion_Hunter_Bow
-      - Item: Illusion_Tablet
-      - Item: Illusion_Goibne_Armor
-      - Item: Illusion_Goibne_Helm
-      - Item: Illusion_Goibne_Spaulders
-      - Item: Illusion_Goibne's_Greaves
+      - Item: Hunter_Bow_IL
+      - Item: Tablet_IL
+      - Item: Goibne_Armor_IL
+      - Item: Goibne_Helmet_IL
+      - Item: Goibne_Shoulder_IL
+      - Item: Goibne_Boots_IL
   - Item: S_Luanda_Box_IL
     ResultRefineMinimum: 9
     ResultRefineMaximum: 12
@@ -4366,12 +4422,12 @@ Body:
     MaximumRefine: 11
     CardsAllowed: true
     TargetItems:
-      - Item: Illusion_Hunter_Bow
-      - Item: Illusion_Tablet
-      - Item: Illusion_Goibne_Armor
-      - Item: Illusion_Goibne_Helm
-      - Item: Illusion_Goibne_Spaulders
-      - Item: Illusion_Goibne's_Greaves
+      - Item: Hunter_Bow_IL
+      - Item: Tablet_IL
+      - Item: Goibne_Armor_IL
+      - Item: Goibne_Helmet_IL
+      - Item: Goibne_Shoulder_IL
+      - Item: Goibne_Boots_IL
   - Item: Labyrinth_Box_IL
     ResultRefineMinimum: 7
     ResultRefineMaximum: 10
@@ -4379,25 +4435,25 @@ Body:
     MaximumRefine: 9
     CardsAllowed: true
     TargetItems:
-      - Item: Illusion_Tae_Goo_Lyeon
-      - Item: Illusion_Butcher
-      - Item: Illusion_Gold_Lux
-      - Item: Illusion_Bazerald
-      - Item: Illusion_Morpheus's_Hood
-      - Item: Illusion_Morpheus's_Shawl
-  - Item: S_Labyrinth_Box_IL
+      - Item: Taegoolyeon_IL
+      - Item: Butcher_IL
+      - Item: Gold_Lux_IL
+      - Item: Bazerald_IL
+      - Item: Morpheus_Hood_IL
+      - Item: Morpheus_Shawl_IL
+  - Item: S_Teddy_Labyrinth_IL
     ResultRefineMinimum: 9
     ResultRefineMaximum: 12
     MinimumRefine: 4
     MaximumRefine: 11
     CardsAllowed: true
     TargetItems:
-      - Item: Illusion_Tae_Goo_Lyeon
-      - Item: Illusion_Butcher
-      - Item: Illusion_Gold_Lux
-      - Item: Illusion_Bazerald
-      - Item: Illusion_Morpheus's_Hood
-      - Item: Illusion_Morpheus's_Shawl
+      - Item: Taegoolyeon_IL
+      - Item: Butcher_IL
+      - Item: Gold_Lux_IL
+      - Item: Bazerald_IL
+      - Item: Morpheus_Hood_IL
+      - Item: Morpheus_Shawl_IL
   - Item: Underwater_Box_IL
     ResultRefineMinimum: 7
     ResultRefineMaximum: 10
@@ -4414,8 +4470,8 @@ Body:
       - Item: Saint_Robe_IL
       - Item: Water_Sprits_Armor_IL
       - Item: Chain_Mail_IL
-      - Item: Morrigane's_Helm_IL
-      - Item: Morrigane's_Manteau_IL
+      - Item: Morrigane_Helm_IL
+      - Item: Morrigane_Manyeau_IL
   - Item: S_Underwater_Box_IL
     ResultRefineMinimum: 9
     ResultRefineMaximum: 12
@@ -4432,8 +4488,8 @@ Body:
       - Item: Saint_Robe_IL
       - Item: Water_Sprits_Armor_IL
       - Item: Chain_Mail_IL
-      - Item: Morrigane's_Helm_IL
-      - Item: Morrigane's_Manteau_IL
+      - Item: Morrigane_Helm_IL
+      - Item: Morrigane_Manyeau_IL
   - Item: Circlet_Refine_Cube
     ResultRefine: 11
     MaximumRefine: 10
@@ -4564,9 +4620,11 @@ Body:
 #      - Item: Poenitentia_Ramus
 #      - Item: Poenitentia_Planta
 #      - Item: Poenitentia_Ferrum
-#  - Item: Overclocker
-#    TargetItems:
-#      - Item: Battle_Processor_
+  - Item: Overclocker
+    RandomOptionGroup: OVERCLOCKER
+    CardsAllowed: true
+    TargetItems:
+      - Item: Battle_Processor_
 #  - Item: Sakray_Regret
 #    TargetItems:
 #      - Item: Poenitentia_Ensis
@@ -4669,170 +4727,174 @@ Body:
       - Item: Gray_W_Muffler
       - Item: Gray_W_Boots
       - Item: Gray_W_Shoes
-#  - Item: Pontifex_Courage
-#    TargetItems:
-#      - Item: Adulter_F_T_Sword
-#      - Item: Adulter_F_Cakram
-#      - Item: Adulter_F_Katar
-#      - Item: Adulter_F_Lance
-#      - Item: Adulter_F_T_Staff
-#      - Item: Adulter_F_Rod
-#      - Item: Adulter_F_Humma
-#      - Item: Adulter_F_C_Humma
-#      - Item: Adulter_F_C_Bow
-#      - Item: Adulter_F_Ballista
-#      - Item: Adulter_F_A_Bow
-#      - Item: Adulter_F_Revolver
-#      - Item: Adulter_F_Rifle
-#      - Item: Adulter_F_Shotgun
-#      - Item: Adulter_F_Gatling
-#      - Item: Adulter_F_Launcher
-#      - Item: Adulter_F_G_Sword
-#      - Item: Adulter_F_Lapier
-#      - Item: Adulter_F_Dagger
-#      - Item: Adulter_F_Axe
-#      - Item: Adulter_F_G_Spear
-#      - Item: Adulter_F_M_Book
-#      - Item: Adulter_F_P_Book
-#      - Item: Adulter_F_Bible
-#      - Item: Adulter_F_Moon_B
-#      - Item: Adulter_F_Star_B
-#      - Item: Adulter_F_Wand
-#      - Item: Adulter_F_S_Stick
-#      - Item: Adulter_F_D_Wand
-#      - Item: Adulter_F_F_Wand
-#      - Item: Adulter_F_F_model
-#      - Item: Adulter_F_Knuckle
-#      - Item: Adulter_F_Claw
-#      - Item: Adulter_F_Violin
-#      - Item: Adulter_F_Harp
-#      - Item: Adulter_F_C_Rope
-#      - Item: Adulter_F_Ribbon
-#      - Item: Adulter_F_Mace
-#      - Item: Adulter_F_Hall
-#  - Item: Pontifex_Wisdom
-#    TargetItems:
-#      - Item: Adulter_F_T_Sword
-#      - Item: Adulter_F_Cakram
-#      - Item: Adulter_F_Katar
-#      - Item: Adulter_F_Lance
-#      - Item: Adulter_F_T_Staff
-#      - Item: Adulter_F_Rod
-#      - Item: Adulter_F_Humma
-#      - Item: Adulter_F_C_Humma
-#      - Item: Adulter_F_C_Bow
-#      - Item: Adulter_F_Ballista
-#      - Item: Adulter_F_A_Bow
-#      - Item: Adulter_F_Revolver
-#      - Item: Adulter_F_Rifle
-#      - Item: Adulter_F_Shotgun
-#      - Item: Adulter_F_Gatling
-#      - Item: Adulter_F_Launcher
-#      - Item: Adulter_F_G_Sword
-#      - Item: Adulter_F_Lapier
-#      - Item: Adulter_F_Dagger
-#      - Item: Adulter_F_Axe
-#      - Item: Adulter_F_G_Spear
-#      - Item: Adulter_F_M_Book
-#      - Item: Adulter_F_P_Book
-#      - Item: Adulter_F_Bible
-#      - Item: Adulter_F_Moon_B
-#      - Item: Adulter_F_Star_B
-#      - Item: Adulter_F_Wand
-#      - Item: Adulter_F_S_Stick
-#      - Item: Adulter_F_D_Wand
-#      - Item: Adulter_F_F_Wand
-#      - Item: Adulter_F_F_model
-#      - Item: Adulter_F_Knuckle
-#      - Item: Adulter_F_Claw
-#      - Item: Adulter_F_Violin
-#      - Item: Adulter_F_Harp
-#      - Item: Adulter_F_C_Rope
-#      - Item: Adulter_F_Ribbon
-#      - Item: Adulter_F_Mace
-#      - Item: Adulter_F_Hall
-#  - Item: Pontifex_Tenacity
-#    TargetItems:
-#      - Item: Vivatus_F_T_Sword
-#      - Item: Vivatus_F_Cakram
-#      - Item: Vivatus_F_Katar
-#      - Item: Vivatus_F_Lance
-#      - Item: Vivatus_F_T_Staff
-#      - Item: Vivatus_F_Rod
-#      - Item: Vivatus_F_C_Bow
-#      - Item: Vivatus_F_Ballista
-#      - Item: Vivatus_F_A_Bow
-#      - Item: Vivatus_F_G_Sword
-#      - Item: Vivatus_F_Lapier
-#      - Item: Vivatus_F_Dagger
-#      - Item: Vivatus_F_Axe
-#      - Item: Vivatus_F_G_Spear
-#      - Item: Vivatus_F_M_Book
-#      - Item: Vivatus_F_P_Book
-#      - Item: Vivatus_F_Bible
-#      - Item: Vivatus_F_Wand
-#      - Item: Vivatus_F_Knuckle
-#      - Item: Vivatus_F_Claw
-#      - Item: Vivatus_F_Violin
-#      - Item: Vivatus_F_Harp
-#      - Item: Vivatus_F_C_Rope
-#      - Item: Vivatus_F_Ribbon
-#      - Item: Vivatus_F_Mace
-#      - Item: Vivatus_F_Hall
-#      - Item: Vivatus_F_D_Wand
-#      - Item: Vivatus_F_S_Stick
-#      - Item: Vivatus_F_F_Wand
-#      - Item: Vivatus_F_F_model
-#      - Item: Vivatus_F_Star_B
-#      - Item: Vivatus_F_Moon_B
-#      - Item: Vivatus_F_Gatling
-#      - Item: Vivatus_F_Launcher
-#      - Item: Vivatus_F_Rifle
-#      - Item: Vivatus_F_Shotgun
-#      - Item: Vivatus_F_Revolver
-#      - Item: Vivatus_F_C_Humma
-#      - Item: Vivatus_F_Humma
-#  - Item: Pontifex_Belief
-#    TargetItems:
-#      - Item: Vivatus_F_T_Sword
-#      - Item: Vivatus_F_Cakram
-#      - Item: Vivatus_F_Katar
-#      - Item: Vivatus_F_Lance
-#      - Item: Vivatus_F_T_Staff
-#      - Item: Vivatus_F_Rod
-#      - Item: Vivatus_F_C_Bow
-#      - Item: Vivatus_F_Ballista
-#      - Item: Vivatus_F_A_Bow
-#      - Item: Vivatus_F_G_Sword
-#      - Item: Vivatus_F_Lapier
-#      - Item: Vivatus_F_Dagger
-#      - Item: Vivatus_F_Axe
-#      - Item: Vivatus_F_G_Spear
-#      - Item: Vivatus_F_M_Book
-#      - Item: Vivatus_F_P_Book
-#      - Item: Vivatus_F_Bible
-#      - Item: Vivatus_F_Wand
-#      - Item: Vivatus_F_Knuckle
-#      - Item: Vivatus_F_Claw
-#      - Item: Vivatus_F_Violin
-#      - Item: Vivatus_F_Harp
-#      - Item: Vivatus_F_C_Rope
-#      - Item: Vivatus_F_Ribbon
-#      - Item: Vivatus_F_Mace
-#      - Item: Vivatus_F_Hall
-#      - Item: Vivatus_F_D_Wand
-#      - Item: Vivatus_F_S_Stick
-#      - Item: Vivatus_F_F_Wand
-#      - Item: Vivatus_F_F_model
-#      - Item: Vivatus_F_Star_B
-#      - Item: Vivatus_F_Moon_B
-#      - Item: Vivatus_F_Gatling
-#      - Item: Vivatus_F_Launcher
-#      - Item: Vivatus_F_Rifle
-#      - Item: Vivatus_F_Shotgun
-#      - Item: Vivatus_F_Revolver
-#      - Item: Vivatus_F_C_Humma
-#      - Item: Vivatus_F_Humma
+  - Item: Pontifex_Courage
+    RandomOptionGroup: PONTIFEX_COURAGE
+    TargetItems:
+      - Item: Adulter_F_T_Sword
+      - Item: Adulter_F_Cakram
+      - Item: Adulter_F_Katar
+      - Item: Adulter_F_Lance
+      - Item: Adulter_F_T_Staff
+      - Item: Adulter_F_Rod
+      - Item: Adulter_F_Humma
+      - Item: Adulter_F_C_Humma
+      - Item: Adulter_F_C_Bow
+      - Item: Adulter_F_Ballista
+      - Item: Adulter_F_A_Bow
+      - Item: Adulter_F_Revolver
+      - Item: Adulter_F_Rifle
+      - Item: Adulter_F_Shotgun
+      - Item: Adulter_F_Gatling
+      - Item: Adulter_F_Launcher
+      - Item: Adulter_F_G_Sword
+      - Item: Adulter_F_Lapier
+      - Item: Adulter_F_Dagger
+      - Item: Adulter_F_Axe
+      - Item: Adulter_F_G_Spear
+      - Item: Adulter_F_M_Book
+      - Item: Adulter_F_P_Book
+      - Item: Adulter_F_Bible
+      - Item: Adulter_F_Moon_B
+      - Item: Adulter_F_Star_B
+      - Item: Adulter_F_Wand
+      - Item: Adulter_F_S_Stick
+      - Item: Adulter_F_D_Wand
+      - Item: Adulter_F_F_Wand
+      - Item: Adulter_F_F_model
+      - Item: Adulter_F_Knuckle
+      - Item: Adulter_F_Claw
+      - Item: Adulter_F_Violin
+      - Item: Adulter_F_Harp
+      - Item: Adulter_F_C_Rope
+      - Item: Adulter_F_Ribbon
+      - Item: Adulter_F_Mace
+      - Item: Adulter_F_Hall
+  - Item: Pontifex_Wisdom
+    RandomOptionGroup: PONTIFEX_WISDOM
+    TargetItems:
+      - Item: Adulter_F_T_Sword
+      - Item: Adulter_F_Cakram
+      - Item: Adulter_F_Katar
+      - Item: Adulter_F_Lance
+      - Item: Adulter_F_T_Staff
+      - Item: Adulter_F_Rod
+      - Item: Adulter_F_Humma
+      - Item: Adulter_F_C_Humma
+      - Item: Adulter_F_C_Bow
+      - Item: Adulter_F_Ballista
+      - Item: Adulter_F_A_Bow
+      - Item: Adulter_F_Revolver
+      - Item: Adulter_F_Rifle
+      - Item: Adulter_F_Shotgun
+      - Item: Adulter_F_Gatling
+      - Item: Adulter_F_Launcher
+      - Item: Adulter_F_G_Sword
+      - Item: Adulter_F_Lapier
+      - Item: Adulter_F_Dagger
+      - Item: Adulter_F_Axe
+      - Item: Adulter_F_G_Spear
+      - Item: Adulter_F_M_Book
+      - Item: Adulter_F_P_Book
+      - Item: Adulter_F_Bible
+      - Item: Adulter_F_Moon_B
+      - Item: Adulter_F_Star_B
+      - Item: Adulter_F_Wand
+      - Item: Adulter_F_S_Stick
+      - Item: Adulter_F_D_Wand
+      - Item: Adulter_F_F_Wand
+      - Item: Adulter_F_F_model
+      - Item: Adulter_F_Knuckle
+      - Item: Adulter_F_Claw
+      - Item: Adulter_F_Violin
+      - Item: Adulter_F_Harp
+      - Item: Adulter_F_C_Rope
+      - Item: Adulter_F_Ribbon
+      - Item: Adulter_F_Mace
+      - Item: Adulter_F_Hall
+  - Item: Pontifex_Tenacity
+    RandomOptionGroup: PONTIFEX_TENACITY
+    TargetItems:
+      - Item: Vivatus_F_T_Sword
+      - Item: Vivatus_F_Cakram
+      - Item: Vivatus_F_Katar
+      - Item: Vivatus_F_Lance
+      - Item: Vivatus_F_T_Staff
+      - Item: Vivatus_F_Rod
+      - Item: Vivatus_F_C_Bow
+      - Item: Vivatus_F_Ballista
+      - Item: Vivatus_F_A_Bow
+      - Item: Vivatus_F_G_Sword
+      - Item: Vivatus_F_Lapier
+      - Item: Vivatus_F_Dagger
+      - Item: Vivatus_F_Axe
+      - Item: Vivatus_F_G_Spear
+      - Item: Vivatus_F_M_Book
+      - Item: Vivatus_F_P_Book
+      - Item: Vivatus_F_Bible
+      - Item: Vivatus_F_Wand
+      - Item: Vivatus_F_Knuckle
+      - Item: Vivatus_F_Claw
+      - Item: Vivatus_F_Violin
+      - Item: Vivatus_F_Harp
+      - Item: Vivatus_F_C_Rope
+      - Item: Vivatus_F_Ribbon
+      - Item: Vivatus_F_Mace
+      - Item: Vivatus_F_Hall
+      - Item: Vivatus_F_D_Wand
+      - Item: Vivatus_F_S_Stick
+      - Item: Vivatus_F_F_Wand
+      - Item: Vivatus_F_F_model
+      - Item: Vivatus_F_Star_B
+      - Item: Vivatus_F_Moon_B
+      - Item: Vivatus_F_Gatling
+      - Item: Vivatus_F_Launcher
+      - Item: Vivatus_F_Rifle
+      - Item: Vivatus_F_Shotgun
+      - Item: Vivatus_F_Revolver
+      - Item: Vivatus_F_C_Humma
+      - Item: Vivatus_F_Humma
+  - Item: Pontifex_Belief
+    RandomOptionGroup: PONTIFEX_BELIEF
+    TargetItems:
+      - Item: Vivatus_F_T_Sword
+      - Item: Vivatus_F_Cakram
+      - Item: Vivatus_F_Katar
+      - Item: Vivatus_F_Lance
+      - Item: Vivatus_F_T_Staff
+      - Item: Vivatus_F_Rod
+      - Item: Vivatus_F_C_Bow
+      - Item: Vivatus_F_Ballista
+      - Item: Vivatus_F_A_Bow
+      - Item: Vivatus_F_G_Sword
+      - Item: Vivatus_F_Lapier
+      - Item: Vivatus_F_Dagger
+      - Item: Vivatus_F_Axe
+      - Item: Vivatus_F_G_Spear
+      - Item: Vivatus_F_M_Book
+      - Item: Vivatus_F_P_Book
+      - Item: Vivatus_F_Bible
+      - Item: Vivatus_F_Wand
+      - Item: Vivatus_F_Knuckle
+      - Item: Vivatus_F_Claw
+      - Item: Vivatus_F_Violin
+      - Item: Vivatus_F_Harp
+      - Item: Vivatus_F_C_Rope
+      - Item: Vivatus_F_Ribbon
+      - Item: Vivatus_F_Mace
+      - Item: Vivatus_F_Hall
+      - Item: Vivatus_F_D_Wand
+      - Item: Vivatus_F_S_Stick
+      - Item: Vivatus_F_F_Wand
+      - Item: Vivatus_F_F_model
+      - Item: Vivatus_F_Star_B
+      - Item: Vivatus_F_Moon_B
+      - Item: Vivatus_F_Gatling
+      - Item: Vivatus_F_Launcher
+      - Item: Vivatus_F_Rifle
+      - Item: Vivatus_F_Shotgun
+      - Item: Vivatus_F_Revolver
+      - Item: Vivatus_F_C_Humma
+      - Item: Vivatus_F_Humma
   - Item: Bio_Helm_Refine_Cube
     ResultRefine: 11
     MaximumRefine: 10
@@ -4968,83 +5030,87 @@ Body:
 #      - Item: EC_B_Staff
 #      - Item: SP_B_Saber
 #      - Item: SI_B_Saber
-#  - Item: Costama_Egg69
-#    TargetItems:
-#      - Item: Saint_Hall_LT
-#      - Item: Undine_Spear_K_LT
-#      - Item: Demon_Hunting_Bible_LT
-#      - Item: Light_Blade_LT
-#      - Item: Magic_Sword_LT
-#      - Item: Fatalist_LT
-#      - Item: Iron_Staff_LT
-#      - Item: Blue_Crystal_Staff_LT
-#      - Item: Shadow_Staff_K_LT
-#      - Item: Freezing_Rod_LT
-#      - Item: Iron_Nail_K_LT
-#      - Item: Ray_Knuckle_LT
-#      - Item: Scalet_Dragon_L_Bow_LT
-#      - Item: Royal_Bow_K_LT
-#      - Item: Slate_Sword_LT
-#      - Item: Sword_Of_Bluefire_LT
-#      - Item: Trumpet_Shell_K_LT
-#      - Item: Barb_Wire_K_LT
-#      - Item: Narcis_Bow_LT
-#      - Item: Avenger_LT
-#      - Item: Meteor_Striker_LT
-#      - Item: Oriental_Sword_LT
-#      - Item: Dragonic_Slayer_LT
-#      - Item: Shiver_Katar_K_LT
-#      - Item: Blade_Katar_LT
-#      - Item: Humma_Clear_LT
-#      - Item: Fog_Dew_Sword_LT
-#      - Item: Crimson_Rose_LT
-#      - Item: Master_Soul_Rifle_LT
-#      - Item: Demon_S_Shot_LT
-#      - Item: The_Black_Gatling_LT
-#      - Item: Golden_L_Launcher_LT
-#      - Item: MeawFoxtail_LT
-#      - Item: OneSkyOneSun_LT
-#      - Item: SoulWeight_LT
-#  - Item: Hero_LT_Refine_Magic
-#    TargetItems:
-#      - Item: Saint_Hall_LT
-#      - Item: Undine_Spear_K_LT
-#      - Item: Demon_Hunting_Bible_LT
-#      - Item: Light_Blade_LT
-#      - Item: Magic_Sword_LT
-#      - Item: Fatalist_LT
-#      - Item: Iron_Staff_LT
-#      - Item: Blue_Crystal_Staff_LT
-#      - Item: Shadow_Staff_K_LT
-#      - Item: Freezing_Rod_LT
-#      - Item: Iron_Nail_K_LT
-#      - Item: Ray_Knuckle_LT
-#      - Item: Scalet_Dragon_L_Bow_LT
-#      - Item: Royal_Bow_K_LT
-#      - Item: Slate_Sword_LT
-#      - Item: Sword_Of_Bluefire_LT
-#      - Item: Trumpet_Shell_K_LT
-#      - Item: Barb_Wire_K_LT
-#      - Item: Narcis_Bow_LT
-#      - Item: Avenger_LT
-#      - Item: Meteor_Striker_LT
-#      - Item: Oriental_Sword_LT
-#      - Item: Dragonic_Slayer_LT
-#      - Item: Shiver_Katar_K_LT
-#      - Item: Blade_Katar_LT
-#      - Item: Humma_Clear_LT
-#      - Item: Fog_Dew_Sword_LT
-#      - Item: Crimson_Rose_LT
-#      - Item: Master_Soul_Rifle_LT
-#      - Item: Demon_S_Shot_LT
-#      - Item: The_Black_Gatling_LT
-#      - Item: Golden_L_Launcher_LT
-#      - Item: MeawFoxtail_LT
-#      - Item: OneSkyOneSun_LT
-#      - Item: SoulWeight_LT
-#  - Item: Lens_Craft_Stone
-#    TargetItems:
-#      - Item: Deepblue_Sunglasses_
+  - Item: Hero_LT_Refine_Melee
+    RandomOptionGroup: HERO_LT_REFINE_MELEE
+    TargetItems:
+      - Item: Saint_Hall_LT
+      - Item: Undine_Spear_K_LT
+      - Item: Demon_Hunting_Bible_LT
+      - Item: Light_Blade_LT
+      - Item: Magic_Sword_LT
+      - Item: Fatalist_LT
+      - Item: Iron_Staff_LT
+      - Item: Blue_Crystal_Staff_LT
+      - Item: Shadow_Staff_K_LT
+      - Item: Freezing_Rod_LT
+      - Item: Iron_Nail_K_LT
+      - Item: Ray_Knuckle_LT
+      - Item: Scalet_Dragon_L_Bow_LT
+      - Item: Royal_Bow_K_LT
+      - Item: Slate_Sword_LT
+      - Item: Sword_Of_Bluefire_LT
+      - Item: Trumpet_Shell_K_LT
+      - Item: Barb_Wire_K_LT
+      - Item: Narcis_Bow_LT
+      - Item: Avenger_LT
+      - Item: Meteor_Striker_LT
+      - Item: Oriental_Sword_LT
+      - Item: Dragonic_Slayer_LT
+      - Item: Shiver_Katar_K_LT
+      - Item: Blade_Katar_LT
+      - Item: Humma_Clear_LT
+      - Item: Fog_Dew_Sword_LT
+      - Item: Crimson_Rose_LT
+      - Item: Master_Soul_Rifle_LT
+      - Item: Demon_S_Shot_LT
+      - Item: The_Black_Gatling_LT
+      - Item: Golden_L_Launcher_LT
+      - Item: MeawFoxtail_LT
+      - Item: OneSkyOneSun_LT
+      - Item: SoulWeight_LT
+  - Item: Hero_LT_Refine_Magic
+    RandomOptionGroup: HERO_LT_REFINE_MAGIC
+    TargetItems:
+      - Item: Saint_Hall_LT
+      - Item: Undine_Spear_K_LT
+      - Item: Demon_Hunting_Bible_LT
+      - Item: Light_Blade_LT
+      - Item: Magic_Sword_LT
+      - Item: Fatalist_LT
+      - Item: Iron_Staff_LT
+      - Item: Blue_Crystal_Staff_LT
+      - Item: Shadow_Staff_K_LT
+      - Item: Freezing_Rod_LT
+      - Item: Iron_Nail_K_LT
+      - Item: Ray_Knuckle_LT
+      - Item: Scalet_Dragon_L_Bow_LT
+      - Item: Royal_Bow_K_LT
+      - Item: Slate_Sword_LT
+      - Item: Sword_Of_Bluefire_LT
+      - Item: Trumpet_Shell_K_LT
+      - Item: Barb_Wire_K_LT
+      - Item: Narcis_Bow_LT
+      - Item: Avenger_LT
+      - Item: Meteor_Striker_LT
+      - Item: Oriental_Sword_LT
+      - Item: Dragonic_Slayer_LT
+      - Item: Shiver_Katar_K_LT
+      - Item: Blade_Katar_LT
+      - Item: Humma_Clear_LT
+      - Item: Fog_Dew_Sword_LT
+      - Item: Crimson_Rose_LT
+      - Item: Master_Soul_Rifle_LT
+      - Item: Demon_S_Shot_LT
+      - Item: The_Black_Gatling_LT
+      - Item: Golden_L_Launcher_LT
+      - Item: MeawFoxtail_LT
+      - Item: OneSkyOneSun_LT
+      - Item: SoulWeight_LT
+  - Item: Lens_Craft_Stone
+    RandomOptionGroup: LENS_CRAFT_STONE
+    CardsAllowed: true
+    TargetItems:
+      - Item: Deepblue_Sunglasses_
 #  - Item: FullPenest_Shadow_Up
 #    MaximumRefine: 10
 #    TargetItems:
@@ -5156,3 +5222,34 @@ Body:
       - Item: Subject_CapeRange_TH
       - Item: Subject_CapeMagic_TH
       - Item: Subject_CapeMelee_TH
+  - Item: GMT_Robe_Stone
+    ResultRefine: 12
+    MaximumRefine: 11
+    CardsAllowed: true
+    TargetItems:
+      - Item: Geffen_Magic_Muffler
+      - Item: Anti_Magic_Manteau
+      - Item: Comp_Anti_Manteau_TH
+      - Item: Comp_Geffen_M_Muffle
+#  - Item: Loki_Coin_2
+#    TargetItems:
+#      - Item: Gambler_Seal_KR_
+#  - Item: Loki_Advice_2
+#    TargetItems:
+#      - Item: Spade_Ace_Melee
+#  - Item: Loki_Advice
+#    TargetItems:
+#      - Item: Heart_Ace_Melee
+#  - Item: Loki_Coin
+#    TargetItems:
+#      - Item: Gambler_Seal_KR_
+#  - Item: Glacier_Armor_9Refine
+#    NotSocketEnchantItem: false
+#    TargetItems:
+#      - Item: Glacier_Armor
+#      - Item: Glacier_Robe
+#      - Item: Glacier_Manteau
+#      - Item: Glacier_Muffler
+#      - Item: Glacier_Boots
+#      - Item: Glacier_Shoes
+#      - Item: Glacier_Guard

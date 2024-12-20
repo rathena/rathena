@@ -296,7 +296,7 @@ har_in01,24,69,3	script	Affable Lady#rockridge0	1_F_MERCHANT_02,{
 	}
 	mes "[Affable Lady]";
 	mes "Ah, you're interested in the";
-	mes "[<ITEM>" + .@item_name$[.@s] + "<INFO>" + .@item_id[.@s] + "</INFO></ITEM>].";
+	mes "[" + mesitemlink( .@item_id[.@s], false, .@item_name$[.@s] ) + "].";
 	mes "Click the name for the detailed description.";
 	mes "As I told you, it's ^0000CD3,000,000 Zeny^000000. Do you want to buy it?";
 	next;
@@ -371,7 +371,7 @@ har_in01,34,81,5	script	Howard#rr	4_M_TATIO,{
 	.@s = ( select(.@menu$) - 1 ) * 3;
 
 	mes "[Howard]";
-	mes "<ITEM>" + .@data$[.@s+2] + "<INFO>" + .@data$[.@s+1] + "</INFO></ITEM>, got it.";
+	mes mesitemlink( atoi( .@data$[.@s+1] ), false, .@data$[.@s+2] ) + ", got it.";
 	mes "That'll be " + .@data$[.@s] + " Rock Ridge Coins.";
 	mes "Are you certain you want this item?";
 	next;

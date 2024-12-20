@@ -263,7 +263,6 @@ OnTouch:
 1@os_b,137,139,0	duplicate(Thick Wire#171_os_0)	Thick Wire#171_os_2	4_ENERGY_BLUE
 
 1@os_b,122,212,5	script	Dien#171_os_3	4_F_DIENE,{
-OnTalk:
 	cutin "ep162_dn01",2;
 	mes "[Dien]";
 	mes "Oh!";
@@ -281,8 +280,14 @@ OnTalk:
 	mes "It will take some time to break it~";
 	npctalk "Cotnes : Oh, is this gate too hard? It will take some time to break it.";
 	next;
-	doevent instance_npcname("Dien#171_os_3") + "::OnTalk";
-	close;
+	cutin "ep162_dn01",2;
+	mes "[Dien]";
+	mes "Oh!";
+	mes "If you go to the right, I think you can go back on the railroad without having to break the door.";
+	npctalk "Dien : Oh! If you go to the right, I think you can go back on the railroad without having to break the door";
+	if (!'unlocked)
+		donpcevent instance_npcname("#171_sealedos_control") + "::OnEvent04";
+	close3;
 }
 
 1@os_b,146,221,7	script	Ridsh#171_os_2	4_F_LEEDSH,{

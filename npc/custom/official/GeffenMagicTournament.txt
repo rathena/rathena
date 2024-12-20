@@ -260,7 +260,7 @@ L_Shield:
 				case 3: goto L_Menu; break;
 			}
 			mes .@n$;
-			mes "<ITEM>"+getitemname(.@item)+"<INFO>"+.@item+"</INFO></ITEM>";
+			mes mesitemlink( .@item, false );
 			mes "Price is "+.@cost+" coins";
 			mes "Do you wish to exchange your coins?";
 			next;
@@ -303,7 +303,7 @@ L_Ring:
 						break;
 				}
 			mes .@n$;
-			mes "<ITEM>"+getitemname(.@item)+"<INFO>"+.@item+"</INFO></ITEM>";
+			mes mesitemlink( .@item, false );
 			mes "Price is "+.@cost+" coins";
 			mes "Do you wish to exchange your coins?";
 			next;
@@ -345,7 +345,7 @@ L_Armor:
 						break;
 				}
 			mes .@n$;
-			mes "<ITEM>"+getitemname(.@item)+"<INFO>"+.@item+"</INFO></ITEM>";
+			mes mesitemlink( .@item, false );
 			mes "Price is "+.@cost+" coins";
 			mes "Do you wish to exchange your coins?";
 			next;

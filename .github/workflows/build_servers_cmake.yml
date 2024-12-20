@@ -1,7 +1,12 @@
 name: Build servers with CMake
 # build_servers_cmake.yml
 
+concurrency:
+  group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
+
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
@@ -13,6 +18,8 @@ on:
       # This workflow should run when a file in a source directory has been modified.
       - 'src/**'
       - '3rdparty/**'
+      # This workflow should run whenever a CMake related file has been modified
+      - '**/CMakeLists.txt'
 
 jobs:
   build:
@@ -22,12 +29,12 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-          # The ubuntu-latest label currently points to ubuntu-20.04.
+          # The ubuntu-latest label currently points to ubuntu-22.04.
           # Available: ubuntu-22.04, ubuntu-20.04
           os: [ubuntu-latest]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       # Install latest CMake.
       - uses: lukka/get-cmake@latest

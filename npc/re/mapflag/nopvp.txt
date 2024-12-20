@@ -85,8 +85,6 @@ paramk	mapflag	pvp	off
 // Municipality (Cities/Towns/Villages)
 //============================================================
 moc_para01	mapflag	pvp	off
-brasilis	mapflag	pvp	off
-bra_in01	mapflag	pvp	off
 dicastes01	mapflag	pvp	off
 dicastes02	mapflag	pvp	off
 dic_in01	mapflag	pvp	off
@@ -122,3 +120,8 @@ ecl_hub01	mapflag	pvp	off
 que_avan01	mapflag	pvp	off
 dali	mapflag	pvp	off
 wolfvill	mapflag	pvp	off
+
+//============================================================
+// Cash Mall
+//============================================================
+itemmall	mapflag	pvp	off

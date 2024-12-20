@@ -27,10 +27,16 @@ class cScopeTimer {
 	cScopeTimer();
 };
 
-int levenshtein( const std::string &s1, const std::string &s2 );
+int32 levenshtein( const std::string &s1, const std::string &s2 );
 
 namespace rathena {
 	namespace util {
+		/**
+		 * Determine if a key-value pair exists in the map
+		 * @param map: Map to search through
+		 * @param key: Key wanted
+		 * @return True on success or false otherwise
+		 */
 		template <typename K, typename V> bool map_exists( std::map<K,V>& map, K key ){
 			return map.find( key ) != map.end();
 		}
@@ -97,6 +103,16 @@ namespace rathena {
 		}
 
 		/**
+		 * Determine if a key-value pair exists in the unordered map
+		 * @param map: Unordered Map to search through
+		 * @param key: Key wanted
+		 * @return True on success or false otherwise
+		 */
+		template <typename K, typename V> bool umap_exists(std::unordered_map<K, V> &map, K key) {
+			return map.find(key) != map.end();
+		}
+
+		/**
 		 * Find a key-value pair and return the key value as a reference
 		 * @param map: Unordered Map to search through
 		 * @param key: Key wanted
@@ -159,7 +175,7 @@ namespace rathena {
 		template <typename K, typename V> V& umap_random( std::unordered_map<K, V>& map ){
 			auto it = map.begin();
 
-			std::advance( it, rnd_value( 0, map.size() - 1 ) );
+			std::advance( it, rnd_value<size_t>( 0, map.size() - 1 ) );
 
 			return it->second;
 		}
@@ -172,7 +188,7 @@ namespace rathena {
 		template <typename K> K &vector_random(std::vector<K> &vec) {
 			auto it = vec.begin();
 
-			std::advance(it, rnd_value(0, vec.size() - 1));
+			std::advance( it, rnd_value<size_t>( 0, vec.size() - 1 ) );
 
 			return *it;
 		}
@@ -217,6 +233,7 @@ namespace rathena {
 
 		/**
 		 * Determine if a value exists in the vector and then erase it
+		 * This will only erase the first occurrence of the value
 		 * @param vector: Vector to erase value from
 		 * @param value: Value to remove
 		 */
@@ -277,9 +294,8 @@ namespace rathena {
 
 			if( rathena::util::safe_addition( a, b, result ) ){
 				return cap;
-			}else{
-				return result;
 			}
+			return std::min(result, cap);
 		}
 
 		template <typename T> void tolower( T& string ){

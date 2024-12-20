@@ -13,51 +13,71 @@
 #else
 	#include <termios.h>
 	#include <unistd.h>
-	#include <stdio.h>
+	#include <cstdio>
 #endif
 
 #include <yaml-cpp/yaml.h>
 #include <ryml_std.hpp>
 #include <ryml.hpp>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/core.hpp"
-#include "../common/malloc.hpp"
-#include "../common/mmo.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/strlib.hpp"
-#include "../common/utilities.hpp"
-#include "../common/utils.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/core.hpp>
+#include <common/malloc.hpp>
+#include <common/mmo.hpp>
+#include <common/nullpo.hpp>
+#include <common/showmsg.hpp>
+#include <common/strlib.hpp>
+#include <common/utilities.hpp>
+#include <common/utils.hpp>
 #ifdef WIN32
-#include "../common/winapi.hpp"
+#include <common/winapi.hpp>
 #endif
 
 // Only for constants - do not use functions of it or linking will fail
-#include "../map/achievement.hpp"
-#include "../map/battle.hpp"
-#include "../map/battleground.hpp"
-#include "../map/channel.hpp"
-#include "../map/chat.hpp"
-#include "../map/date.hpp"
-#include "../map/elemental.hpp"
-#include "../map/instance.hpp"
-#include "../map/mercenary.hpp"
-#include "../map/mob.hpp"
-#include "../map/npc.hpp"
-#include "../map/pc.hpp"
-#include "../map/pet.hpp"
-#include "../map/quest.hpp"
-#include "../map/script.hpp"
-#include "../map/skill.hpp"
-#include "../map/storage.hpp"
+#define ONLY_CONSTANTS
+#include <map/achievement.hpp>
+#include <map/battle.hpp>
+#include <map/battleground.hpp>
+#include <map/cashshop.hpp>
+#include <map/channel.hpp>
+#include <map/chat.hpp>
+#include <map/date.hpp>
+#include <map/elemental.hpp>
+#include <map/homunculus.hpp>
+#include <map/instance.hpp>
+#include <map/mercenary.hpp>
+#include <map/mob.hpp>
+#include <map/npc.hpp>
+#include <map/pc.hpp>
+#include <map/pet.hpp>
+#include <map/quest.hpp>
+#include <map/script.hpp>
+#include <map/skill.hpp>
+#include <map/storage.hpp>
 
 using namespace rathena;
+using namespace rathena::server_core;
+
+namespace rathena{
+	namespace tool_yaml2sql{
+		class Yaml2SqlTool : public Core{
+			protected:
+				bool initialize( int32 argc, char* argv[] ) override;
+
+			public:
+				Yaml2SqlTool() : Core( e_core_type::TOOL ){
+
+				}
+		};
+	}
+}
+
+using namespace rathena::tool_yaml2sql;
 
 #ifndef WIN32
-int getch( void ){
+int32 getch( void ){
     struct termios oldattr, newattr;
-    int ch;
+    int32 ch;
     tcgetattr( STDIN_FILENO, &oldattr );
     newattr = oldattr;
     newattr.c_lflag &= ~( ICANON | ECHO );
@@ -192,7 +212,7 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 	return true;
 }
 
-int do_init( int argc, char** argv ){
+bool Yaml2SqlTool::initialize( int32 argc, char* argv[] ){
 	const std::string path_db = std::string( db_path );
 	const std::string path_db_mode = path_db + "/" + DBPATH;
 	const std::string path_db_import = path_db + "/" + DBIMPORT + "/";
@@ -214,40 +234,37 @@ int do_init( int argc, char** argv ){
 	};
 
 	// Load constants
-	#include "../map/script_constants.hpp"
+	#include <map/script_constants.hpp>
 
 	for( const std::string& suffix : item_table_suffixes ){
 		if (!process("ITEM_DB", 1, { path_db_mode }, "item_db_" + suffix, item_table_name + "_" + suffix, item_table_name, [](const std::string& path, const std::string& name_ext, const std::string& table) -> bool {
 			return item_db_yaml2sql(path + name_ext, table);
 		})) {
-			return 0;
+			return false;
 		}
 	}
 
 	if (!process("ITEM_DB", 1, { path_db_import }, "item_db", item_import_table_name, item_import_table_name, [](const std::string& path, const std::string& name_ext, const std::string& table) -> bool {
 		return item_db_yaml2sql(path + name_ext, table);
 	})) {
-		return 0;
+		return false;
 	}
 
 	if (!process("MOB_DB", 1, { path_db_mode }, "mob_db", mob_table_name, mob_table_name, [](const std::string &path, const std::string &name_ext, const std::string &table) -> bool {
 		return mob_db_yaml2sql(path + name_ext, table);
 	})) {
-		return 0;
+		return false;
 	}
 
 	if (!process("MOB_DB", 1, { path_db_import }, "mob_db", mob_import_table_name, mob_import_table_name, [](const std::string &path, const std::string &name_ext, const std::string &table) -> bool {
 		return mob_db_yaml2sql(path + name_ext, table);
 	})) {
-		return 0;
+		return false;
 	}
 
 	// TODO: add implementations ;-)
 
-	return 0;
-}
-
-void do_final(void){
+	return true;
 }
 
 bool fileExists( const std::string& path ){
@@ -799,7 +816,13 @@ static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
 
 		if (racegroups) {
 			for (uint16 i = 1; i < RC2_MAX; i++) {
-				std::string constant = constant_lookup(i, "RC2_");
+				const char* constant_ptr = constant_lookup(i, "RC2_");
+
+				if( constant_ptr == nullptr ){
+					continue;
+				}
+
+				std::string constant( constant_ptr );
 
 				constant.erase(0, 4);
 
@@ -934,4 +957,8 @@ static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
 	ShowStatus("Done converting '" CL_WHITE "%zu" CL_RESET "' mobs in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
 
 	return true;
+}
+
+int32 main( int32 argc, char *argv[] ){
+	return main_core<Yaml2SqlTool>( argc, argv );
 }

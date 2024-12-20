@@ -686,7 +686,7 @@ lhz_in02,281,24,5	duplicate(Dietrich#ns_prt)	Fruel#2	4_M_02
 // Shadowdecon/Zelunium exchange npcs
 prt_in,64,57,3	script	Pauline	4_M_02,{
 	mes "[" + strnpcinfo(1) + "]";
-	mes "Do you have <ITEM>[Shadowdecon Gemstone]<INFO>25728</INFO></ITEM> or <ITEM>[Zelunium Gemstone]<INFO>25730</INFO></ITEM>?";
+	mes "Do you have " + mesitemlink( 25728 ) + " or " + mesitemlink( 25730 ) + "?";
 	mes "We will exchange them for refined products for use as smelting goods.";
 	close2;
 	callshop "barter_refine_3";

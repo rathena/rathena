@@ -6,6 +6,8 @@ COMMON_DIR_OBJ = $(COMMON_OBJ:%=obj/%)
 COMMON_H = $(shell ls ../common/*.hpp)
 COMMON_AR = obj/common.a
 
+RA_INCLUDE = -I../
+
 LIBCONFIG_H = $(shell ls ../../3rdparty/libconfig/*.h)
 LIBCONFIG_AR = ../../3rdparty/libconfig/obj/libconfig.a
 LIBCONFIG_INCLUDE = -I../../3rdparty/libconfig
@@ -68,11 +70,11 @@ common: obj $(COMMON_DIR_OBJ) $(LIBCONFIG_AR) $(YAML_CPP_AR) $(RAPIDYAML_AR) $(C
 
 obj/%.o: %.cpp $(COMMON_H) $(LIBCONFIG_H) $(RAPIDYAML_H)
 	@echo "	CXX	$<"
-	@@CXX@ @CXXFLAGS@ @CFLAGS_AR@ $(LIBCONFIG_INCLUDE) $(RAPIDYAML_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@@CXX@ @CXXFLAGS@ @CFLAGS_AR@ $(RA_INCLUDE) $(LIBCONFIG_INCLUDE) $(RAPIDYAML_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 obj/mini%.o: %.cpp $(COMMON_H) $(LIBCONFIG_H) $(YAML_CPP_H)
 	@echo "	CXX	$<"
-	@@CXX@ @CXXFLAGS@ @CFLAGS_AR@ $(LIBCONFIG_INCLUDE) $(YAML_CPP_INCLUDE) @MYSQL_CFLAGS@ -DMINICORE @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@@CXX@ @CXXFLAGS@ @CFLAGS_AR@ $(RA_INCLUDE) $(LIBCONFIG_INCLUDE) $(YAML_CPP_INCLUDE) @MYSQL_CFLAGS@ -DMINICORE @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 # missing object files
 $(LIBCONFIG_AR):

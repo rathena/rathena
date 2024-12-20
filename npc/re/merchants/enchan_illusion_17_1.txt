@@ -21,7 +21,7 @@ sp_cor,152,158,4	script	Butterfly Merchant#sp_cor	4_M_ORIENT01,{
 sp_cor,136,156,3	script	Grace Operator#ext162	4_M_REPAIR,{
 	mes "[Grace Operator]";
 	mes "Hello.";
-	mes "We have ^4d4dffGrace^000000 equipment that can be exchanged for <ITEM>[" + getitemname(25723) + "]<INFO>25723</INFO></ITEM>.";
+	mes "We have ^4d4dffGrace^000000 equipment that can be exchanged for " + mesitemlink( 25723 ) + ".";
 	mes "I will guide you to exchange items according to your job.";
 	close2;
 	switch( eaclass() & EAJ_THIRDMASK ) {
@@ -160,12 +160,12 @@ sp_cor,108,130,5	script	Rebellion#rm171_7	4_F_REBELLION3,{
 		npctalk "Elyumina: What? If you were just going to keep me standing here like a statue, why did you even call me? You jerks!", "Elyumina#rm171_4", bc_self;
 		if (checkweight(1201,3) == 0) {
 			mes "[Rebellion]";
-			mes "Do you want a Weapon Modification Device? It's 5 <ITEM>[Cor Cores]<INFO>25723</INFO></ITEM> or 1 million Zeny.";
+			mes "Do you want a Weapon Modification Device? It's 5 " + mesitemlink( 25723 ) + " or 1 million Zeny.";
 			mes "Your bag is full. Please make some room first.";
 			close;
 		}
 		mes "[Rebellion]";
-		mes "Do you want a Weapon Modification Device? It's 5 <ITEM>[Cor Cores]<INFO>25723</INFO></ITEM> or 1 million Zeny.";
+		mes "Do you want a Weapon Modification Device? It's 5 " + mesitemlink( 25723 ) + " or 1 million Zeny.";
 		mes "If you want a weapon, you can talk to Elyumina.";
 		next;
 		if (select("Request Weapon Modification Device (Physical).", "Request Weapon Modification Device (Magic).") == 1) {
@@ -178,9 +178,9 @@ sp_cor,108,130,5	script	Rebellion#rm171_7	4_F_REBELLION3,{
 			setarray .@ids[0],23779,23780,23781;
 		}
 		mes "[Rebellion]";
-		mes "I can randomly give you a <ITEM>[" + getitemname(.@ids[0]) + "]<INFO>" + .@ids[0] + "</INFO></ITEM>,";
-		mes "<ITEM>[" + getitemname(.@ids[1]) + "]<INFO>" + .@ids[1] + "</INFO></ITEM>,";
-		mes "or <ITEM>[" + getitemname(.@ids[2]) + "]<INFO>" + .@ids[2] + "</INFO></ITEM>.";
+		mes "I can randomly give you a " + mesitemlink( .@ids[0] ) + ",";
+		mes mesitemlink( .@ids[1] ) + ",";
+		mes "or " + mesitemlink( .@ids[2] ) + ".";
 		mes "Which one do you have, 5 Cor Cores or 1 million Zeny?";
 		next;
 		disable_items;
@@ -220,7 +220,7 @@ sp_cor,108,130,5	script	Rebellion#rm171_7	4_F_REBELLION3,{
 	case 3:
 		npctalk "Elyumina: What? If you were just going to keep me standing here like a statue, why did you even call me? You brutes!", "Elyumina#rm171_4", bc_self;
 		mes "[Rebellion]";
-		mes "Do you want an Armor Modification Module? It's 30 <ITEM>[Mysterious Components]<INFO>25669</INFO></ITEM> and 5 <ITEM>[Cor Cores]<INFO>25723</INFO></ITEM>.";
+		mes "Do you want an Armor Modification Module? It's 30 " + mesitemlink( 25669 ) + " and 5 " + mesitemlink( 25723 ) + ".";
 		if (checkweight(1201,3) == 0) {
 			mes "Your bag is full. Please make some room first.";
 			close;
@@ -287,7 +287,7 @@ sp_cor,111,130,3	script	Elyumina#rm171_4	4_EP17_ELYUMINA,{
 	case 1:
 		cutin "ep171_elyumina01",0;
 		mes "[Elyumina]";
-		mes "OS weapons? I'll handle that if you bring me 1 <ITEM>[Damaged Weapon]<INFO>25668</INFO></ITEM> and 50 <ITEM>[Mysterious Components]<INFO>25669</INFO></ITEM>.";
+		mes "OS weapons? I'll handle that if you bring me 1 " + mesitemlink( 25668 ) + " and 50 " + mesitemlink( 25669 ) + ".";
 		mes "I'll give you whatever kind I want to give you, among the ones I have. Why should I let you pick?";
 		next;
 		cutin "",255;
@@ -297,21 +297,21 @@ sp_cor,111,130,3	script	Elyumina#rm171_4	4_EP17_ELYUMINA,{
 			mes "Tsk, tsk. I said everything I make is good. Do you really have to choose? Alright, then listen up.";
 			next;
 			mes "[Elyumina]";
-			mes "Sword: <ITEM>[Cannon Rapier-OS]<INFO>13493</INFO></ITEM>";
-			mes "Two-handed Sword: <ITEM>[Beam Claymore-OS]<INFO>21047</INFO></ITEM>";
-			mes "Staff: <ITEM>[Rutilus Stick-OS]<INFO>26151</INFO></ITEM>";
-			mes "Book: <ITEM>[Circuit Board-OS]<INFO>28629</INFO></ITEM>";
-			mes "Axe: <ITEM>[Blasti-OS]<INFO>28136</INFO></ITEM>";
-			mes "Mace: <ITEM>[Saphir Hall-OS]<INFO>16088</INFO></ITEM>";
-			mes "Bow: <ITEM>[Virtual Bow-OS]<INFO>18178</INFO></ITEM>";
-			mes "Crossbow: <ITEM>[MH-P89-OS]<INFO>18179</INFO></ITEM>";
-			mes "Katar: <ITEM>[Meuchler-OS]<INFO>28038</INFO></ITEM>";
-			mes "Knuckle: <ITEM>[Burning Knuckle-OS]<INFO>1862</INFO></ITEM>";
-			mes "Sniper Rifle: <ITEM>[HR-S55-OS]<INFO>28253</INFO></ITEM>";
-			mes "Dagger: <ITEM>[Kuroiro-OS]<INFO>28755</INFO></ITEM>";
-			mes "Bow: <ITEM>[AC-B44-OS]<INFO>18180</INFO></ITEM>";
-			mes "Lance: <ITEM>[Boost Lance-OS]<INFO>32019</INFO></ITEM>";
-			mes "Mace: <ITEM>[Ultio-OS]<INFO>16089</INFO></ITEM>";
+			mes "Sword: " + mesitemlink( 13493 );
+			mes "Two-handed Sword: " + mesitemlink( 21047 );
+			mes "Staff: " + mesitemlink( 26151 );
+			mes "Book: " + mesitemlink( 28629 );
+			mes "Axe: " + mesitemlink( 28136 );
+			mes "Mace: " + mesitemlink( 16088 );
+			mes "Bow: " + mesitemlink( 18178 );
+			mes "Crossbow: " + mesitemlink( 18179 );
+			mes "Katar: " + mesitemlink( 28038 );
+			mes "Knuckle: " + mesitemlink( 1862 );
+			mes "Sniper Rifle: " + mesitemlink( 28253 );
+			mes "Dagger: " + mesitemlink( 28755 );
+			mes "Bow: " + mesitemlink( 18180 );
+			mes "Lance: " + mesitemlink( 32019 );
+			mes "Mace: " + mesitemlink( 16089 );
 			close3;
 		}
 		disable_items;
@@ -340,7 +340,7 @@ sp_cor,111,130,3	script	Elyumina#rm171_4	4_EP17_ELYUMINA,{
 	case 2:
 		cutin "ep171_elyumina04",0;
 		mes "[Elyumina]";
-		mes "If you want Illusion armor, bring me 50 <ITEM>[Cor Cores]<INFO>25723</INFO></ITEM>. I'll give you a piece.";
+		mes "If you want Illusion armor, bring me 50 " + mesitemlink( 25723 ) + ". I'll give you a piece.";
 		mes "Let's see... Ooh, when did I make so many varieties? Alright, I feel generous. What do you want?";
 		next;
 		cutin "",255;
@@ -363,8 +363,8 @@ sp_cor,111,130,3	script	Elyumina#rm171_4	4_EP17_ELYUMINA,{
 		}
 		cutin "ep171_elyumina01",0;
 		mes "[Elyumina]";
-		mes "<ITEM>[" + getitemname(.@item[0]) + "]<INFO>" + .@item[0] + "</INFO></ITEM>";
-		mes "<ITEM>[" + getitemname(.@item[1]) + "]<INFO>" + .@item[1] + "</INFO></ITEM>";
+		mes mesitemlink( .@item[0] );
+		mes mesitemlink( .@item[1] );
 		mes "Which one?";
 		next;
 		cutin "",255;

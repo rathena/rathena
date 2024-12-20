@@ -18,7 +18,7 @@
 paramk	mapflag	nomemo
 
 //============================================================
-// Episode 13
+// Episode 13.3
 //============================================================
 job3_arch01	mapflag	nomemo
 job3_arch02	mapflag	nomemo
@@ -37,9 +37,6 @@ job3_gen01	mapflag	nomemo
 job3_sha01	mapflag	nomemo
 jupe_core2	mapflag	nomemo
 s_atelier	mapflag	nomemo
-bra_in01	mapflag	nomemo
-bra_dun01	mapflag	nomemo
-bra_dun02	mapflag	nomemo
 dicastes01	mapflag	nomemo
 dicastes02	mapflag	nomemo
 dic_in01	mapflag	nomemo
@@ -255,6 +252,12 @@ que_swat	mapflag	nomemo
 har_in01	mapflag	nomemo
 rockmi1	mapflag	nomemo
 rockmi2	mapflag	nomemo
+
+//============================================================
+// Memorial day
+//============================================================
+1@md_gef	mapflag	nomemo
+1@md_pay	mapflag	nomemo
 
 //============================================================
 // Lasagna
@@ -486,3 +489,8 @@ wolfvill	mapflag	nomemo
 // Illusion of Twins
 //============================================================
 ant_d02_i	mapflag	nomemo
+
+//============================================================
+// Cash Mall
+//============================================================
+itemmall	mapflag	nomemo

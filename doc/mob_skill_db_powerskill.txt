@@ -10,8 +10,8 @@
 
 When a monster uses a level 10 skill on Aegis, it will be much stronger than the 
 normal player version. On rAthena we reflect this by giving the monster a skill
-level above the maximum player level.
-The following lists explains the skill specialities and the corresponding level
+level above the maximum player skill level.
+The following list explains the skill specialities and the corresponding level
 which needs to be put for these skills in the mob_skill_db.
 
 Note: The "SkillDatabase::parseNode" template has a linear determination feature

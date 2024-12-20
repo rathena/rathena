@@ -483,14 +483,14 @@ AC_LANG([C++])
 
 CFLAGS="$CFLAGS -pipe -ffast-math -Wall"
 CPPFLAGS="$CPPFLAGS -I../common"
-CXXFLAGS="$CXXFLAGS -std=c++11"
-#CXXFLAGS="$CXXFLAGS -std=gnu++11"
-CXXFLAG_CLEARS="-std=c++11"
+CXXFLAGS="$CXXFLAGS -std=c++17"
+#CXXFLAGS="$CXXFLAGS -std=gnu++17"
+CXXFLAG_CLEARS="-std=c++17"
 
 AC_C_BIGENDIAN(
 	[AC_MSG_ERROR([[bigendian is not supported... stopping]])],
 	,
-	[AC_MSG_WARN([[unable to determine endianess, only little endian is supported]])]
+	[AC_MSG_WARN([[unable to determine endianness, only little endian is supported]])]
 )
 
 
@@ -620,7 +620,7 @@ if test "$enable_lto" != "no" ; then
 	)
 	CFLAGS="$OLD_CFLAGS"
 	LDFLAGS="$OLD_LDFLAGS"
-	
+
 	CFLAGS="$CFLAGS -flto -fuse-linker-plugin"
 	LDFLAGS="$LDFLAGS -flto -fuse-linker-plugin"
 	
@@ -1355,7 +1355,7 @@ else
 	AC_MSG_RESULT([no])
 fi
 
-CXXFLAG_CLEARS="-std=c++11 $CPPFLAGS"
+CXXFLAG_CLEARS="-std=c++17 $CPPFLAGS"
 CFLAGS="$OPT_LTO $CFLAGS" 
 CFLAGS_AR="$OPT_LTO_AR $CFLAGS"
 AC_SUBST([CFLAGS_AR])

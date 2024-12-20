@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20221013
+//= 20241109
 //===== Description: =========================================
 //= Explanation of the status.yml file and structure.
 //============================================================
@@ -232,6 +232,7 @@ Flags: Various status flags for specific status change events.
 	RemoveOnUnequip       - Removed when unequipping any type of equipment.
 	RemoveOnUnequipWeapon - Removed when unequipping a weapon.
 	RemoveOnUnequipArmor  - Removed when unequipping an armor.
+	RemoveOnHermode       - Removed by CG_HERMODE.
 
 	StopAttacking         - Makes the unit stop attacking.
 	StopCasting           - Makes the unit stop casting skills.
@@ -247,10 +248,14 @@ Flags: Various status flags for specific status change events.
 	NonPlayer             - Sends the NPC_SHOWEFST_UPDATE packet. Used to send effects to NPC/monsters.
 
 	RequireWeapon         - Status requires a weapon to be equipped.
+	RequireNoWeapon       - Status requires that no weapons be equipped.
 	RequireShield         - Status requires a shield to be equipped.
 
 	SuperNoviceAngel      - Status that is given from Super Novice Angel.
 	TaekwonAngel          - Status that is given from Taekwon Angel.
+
+	RemoveFromHomOnWarp    - Removes the status from the Homunculus when teleporting or warping to another map.
+	RemoveFromHomOnMapWarp - Removes the status from the Homunculus when warping to another map.
 
 ---------------------------------------
 
@@ -277,6 +282,11 @@ EndReturn: List of status that will end if the status activates and it won't giv
 ---------------------------------------
 
 EndOnEnd: List of status that will end when the status becomes inactive.
+
+---------------------------------------
+
+Script:	Script to execute, when starting the status change. When this is set all battle relevant status will be recalculated, after
+		executing the script. Scripted status changes can only be started on players.
 
 ---------------------------------------
 

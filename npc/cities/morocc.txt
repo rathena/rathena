@@ -131,7 +131,7 @@ morocc,223,102,0	script	Volunteer - Morocc#06::MocVolunteer	741,{
 	specialeffect EF_HIT2,AREA,"Volunteer - Morocc#06";
 	next;
 	mes "[Morocc Volunteer]";
-	mes "Heyyy, you're being too harsh, Senyorita. Your fist may be as fragile as you are, but it sure can hurt somebody.";
+	mes "Heyyy, you're being too harsh, Señorita. Your fist may be as fragile as you are, but it sure can hurt somebody.";
 	next;
 	mes "[Ringing Voice]";
 	mes "Anyways, isn't that a crib? I think I heard something like that before..";
@@ -603,7 +603,7 @@ moc_fild16,199,212,4	script	 Uncle Assassin#moc	55,{
 		mes "before performing their duties.";
 		mes "However, we no longer do so,";
 		mes "since insect or animal monsters are";
-		mes "very senstive to the smell.";
+		mes "very sensitive to the smell.";
 		next;
 		mes "[Hashisid]";
 		mes "We strictly prohibit";
