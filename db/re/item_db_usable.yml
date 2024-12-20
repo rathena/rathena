@@ -4400,7 +4400,7 @@ Body:
       itemheal 0,180; /* average value */
   - Id: 11638
     AegisName: 24_A_Ev_Choco_C
-    Name: Academic Festival Choco Egg Cookie    # !todo check english name
+    Name: Symposium Choco Egg Cookie
     Type: Healing
     Weight: 1
     EquipLevelMin: 100
@@ -4416,7 +4416,7 @@ Body:
       itemheal 2650,0; /* average value */
   - Id: 11639
     AegisName: 24_A_Ev_Egg_C
-    Name: Academic Festival Egg Cookie    # !todo check english name
+    Name: Symposium Egg Cookie
     Type: Healing
     Weight: 1
     EquipLevelMin: 100
@@ -78011,7 +78011,7 @@ Body:
       getgroupitem(IG_BL_DEPTH_EV_2);
   - Id: 102723
     AegisName: aegis_102723
-    Name: Beehive    # !todo check english name
+    Name: Beehive Box
     Type: Usable
   - Id: 102732
     AegisName: IsgardCrown_Box
@@ -78567,7 +78567,7 @@ Body:
 #     /* TODO */
   - Id: 102913
     AegisName: 2403_ev_Spray_1
-    Name: Abundant flower branches    # !todo check english name
+    Name: Abundant Spray
     Type: Usable
     Weight: 1
     Flags:
@@ -78584,7 +78584,7 @@ Body:
 #     /* TODO */
   - Id: 102924
     AegisName: 2403_ev_Crepe
-    Name: Sweet Crepe    # !todo check english name
+    Name: Sweet Crepe
     Type: Usable
     Weight: 1
     Flags:
@@ -78601,7 +78601,7 @@ Body:
 #     /* TODO */
   - Id: 102925
     AegisName: 2403_ev_Melon_Parfait
-    Name: Melon Parfait    # !todo check english name
+    Name: Melon Parfait
     Type: Usable
     Weight: 1
     Flags:
@@ -78638,7 +78638,7 @@ Body:
       getgroupitem(IG_AEGIS_102948);
   - Id: 102949
     AegisName: Sonic_Costume_Pack
-    Name: Sonic Costume Selection Box    # !todo check english name
+    Name: Sonic Costume Selection Box
     Type: DelayConsume
     Trade:
       NoDrop: true
@@ -78914,7 +78914,7 @@ Body:
       percentheal 100,100;
   - Id: 103094
     AegisName: CLB_SS_Box
-    Name: Shiva Seizu Costume Selection Box    # !todo check english name
+    Name: Shiba Says Costume Selection Box
     Type: DelayConsume
     Trade:
       NoDrop: true
@@ -79009,7 +79009,7 @@ Body:
       getgroupitem(IG_STOVE_CHANNELING_BOX_4);
   - Id: 103114
     AegisName: 2024ROS_Box_1st
-    Name: ROS Korea Representative 1st Place Box    # !todo check english name
+    Name: ROS Korea Representative 1st Place Box
     Type: Usable
     Flags:
       Container: true
@@ -79025,7 +79025,7 @@ Body:
       getgroupitem(IG_2024ROS_BOX_1ST);
   - Id: 103115
     AegisName: 2024ROS_Box_2nd
-    Name: ROS Korea Representative 2nd Place Box    # !todo check english name
+    Name: ROS Korea Representative 2nd Place Box
     Type: Usable
     Flags:
       Container: true
@@ -79041,7 +79041,7 @@ Body:
       getgroupitem(IG_2024ROS_BOX_2ND);
   - Id: 103116
     AegisName: 2024ROS_Box_3rd
-    Name: ROS Korea Representative 3rd Place Box    # !todo check english name
+    Name: ROS Korea Representative 3rd Place Box
     Type: Usable
     Flags:
       Container: true
@@ -79057,7 +79057,7 @@ Body:
       getgroupitem(IG_2024ROS_BOX_3RD);
   - Id: 103117
     AegisName: 2024ROS_Box_4th
-    Name: ROS Korea Participant Box    # !todo check english name
+    Name: ROS Korea Participant Box
     Type: Usable
     Flags:
       Container: true
@@ -79073,7 +79073,7 @@ Body:
       getgroupitem(IG_2024ROS_BOX_4TH);
   - Id: 103118
     AegisName: 2024ROS_Box_5th
-    Name: ROS Korea Applicant Box    # !todo check english name
+    Name: ROS Korea Applicant Box
     Type: Usable
     Flags:
       Container: true
@@ -79089,7 +79089,7 @@ Body:
       getgroupitem(IG_2024ROS_BOX_5TH);
   - Id: 103234
     AegisName: aegis_103234
-    Name: Costume Enchant Stone Box36    # !todo check english name
+    Name: Costume Enchant Stone Box 36
     Type: Usable
     Weight: 10
     Flags:
@@ -79098,17 +79098,17 @@ Body:
       getgroupitem(IG_AEGIS_103234);
   - Id: 103260
     AegisName: Summer_Select_Box1
-    Name: Summer Costume Selection Box (Pioneer)    # !todo check english name
+    Name: Summer Costume Selection Box (Paeonia)
     Type: DelayConsume
     Weight: 10
   - Id: 103261
     AegisName: Summer_Select_Box2
-    Name: Summer Costume Selection Box (Parasol)    # !todo check english name
+    Name: Summer Costume Selection Box (Parasol)
     Type: DelayConsume
     Weight: 10
   - Id: 103262
     AegisName: Summer_Select_Box3
-    Name: Summer Costume Selection Box (Sunbed)    # !todo check english name
+    Name: Summer Costume Selection Box (Sunbed)
     Type: DelayConsume
     Weight: 10
   - Id: 103263
@@ -79118,7 +79118,7 @@ Body:
     Weight: 10
   - Id: 103266
     AegisName: Kr_B_Special11
-    Name: Sweet Poring Cake    # !todo check english name
+    Name: Sweet Poring Cake
     Type: Usable
     Weight: 10
     Trade:
@@ -79131,7 +79131,7 @@ Body:
       NoAuction: true
   - Id: 103272
     AegisName: E_Speed_Booster
-    Name: "[Non-Sellable] Speed ​​Booster"    # !todo check english name
+    Name: "[Not For Sale] Speed Booster"
     Type: Usable
     Weight: 10
     Trade:
@@ -79144,7 +79144,7 @@ Body:
       NoAuction: true
   - Id: 103273
     AegisName: E_Force_Booster
-    Name: "[Non-Sellable] Force Booster"    # !todo check english name
+    Name: "[Not For Sale] Force Booster"
     Type: Usable
     Weight: 10
     Trade:
@@ -79157,7 +79157,7 @@ Body:
       NoAuction: true
   - Id: 103278
     AegisName: 2024Sports_Box
-    Name: 2024 World Sports Cheer Box    # !todo check english name
+    Name: 2024 World Sports Cheer Box
     Type: Usable
     Flags:
       Container: true
@@ -79173,7 +79173,7 @@ Body:
       getgroupitem(IG_2024SPORTS_BOX);
   - Id: 103307
     AegisName: CharSlot_Open_Card
-    Name: Character Slot Expansion Card    # !todo check english name
+    Name: Character Slot Expansion Card
     Type: Usable
     Trade:
       NoDrop: true
@@ -79185,7 +79185,7 @@ Body:
       NoAuction: true
   - Id: 103308
     AegisName: Time_Gap_Refine_Hammer
-    Name: Time Gap Refining Hammer    # !todo check english name
+    Name: Time Gap Refine Hammer
     Type: DelayConsume
     Weight: 10
     EquipLevelMin: 250
@@ -79195,13 +79195,13 @@ Body:
       item_reform();
   - Id: 103309
     AegisName: Reform_4th_Skill_Shadow
-    Name: 4th Job Skill Random Option Granting Cube    # !todo check english name
+    Name: 4th Class Jobs Skills Random Option Grant Cube
     Type: DelayConsume
     Script: |
       item_reform();
   - Id: 103314
     AegisName: 22th_Present_Box
-    Name: 22nd Anniversary Gift Box    # !todo check english name
+    Name: 22nd Anniversary Gift Box
     Type: Usable
     Weight: 10
     Flags:
@@ -79217,7 +79217,7 @@ Body:
       getgroupitem(IG_22TH_PRESENT_BOX);
   - Id: 103316
     AegisName: aegis_103316
-    Name: Characteristic Status Shadow Cube    # !todo check english name
+    Name: Trait Status Shadow Cube
     Type: Usable
     Flags:
       BuyingStore: true
@@ -79226,7 +79226,7 @@ Body:
       getgroupitem(IG_AEGIS_103316);
   - Id: 103318
     AegisName: Enriched_Refine_Box
-    Name: Concentrated Refining Stone Selection Box    # !todo check english name
+    Name: Enriched Refine Ore Selection Box
     Type: DelayConsume
     Trade:
       NoDrop: true
@@ -79238,7 +79238,7 @@ Body:
       NoAuction: true
   - Id: 103319
     AegisName: Henriched_Refine_Box
-    Name: High Concentrated Refining Stone Selection Box    # !todo check english name
+    Name: High Enriched Refine Ore Selection Box
     Type: DelayConsume
     Trade:
       NoDrop: true
@@ -79278,7 +79278,7 @@ Body:
       getgroupitem(IG_SVIP_GIFT_22THANIV);
   - Id: 103335
     AegisName: Rt_Ep17_Doubt_A
-    Name: Mysterious Accessory Activation Reward    # !todo check english name
+    Name: Doubtful Components Activation Reward
     Type: Usable
     Flags:
       Container: true
@@ -79294,7 +79294,7 @@ Body:
       getgroupitem(IG_RT_EP17_DOUBT_A);
   - Id: 103339
     AegisName: Rt_Ep17_Doubt_3
-    Name: Mysterious Accessory 3-Set Reward    # !todo check english name
+    Name: Doubtful Components 3 Set Reward
     Type: Usable
     Flags:
       Container: true
@@ -79310,7 +79310,7 @@ Body:
       getgroupitem(IG_RT_EP17_DOUBT_3);
   - Id: 103340
     AegisName: Rt_Ep17_Doubt_C
-    Name: Mysterious Accessory Completion Reward    # !todo check english name
+    Name: Doubtful Components Completion Reward
     Type: Usable
     Flags:
       Container: true
@@ -79326,7 +79326,7 @@ Body:
       getgroupitem(IG_RT_EP17_DOUBT_C);
   - Id: 103347
     AegisName: Rt_Ep17_Auto_A
-    Name: Automatic Armor Activation Reward    # !todo check english name
+    Name: Automatic Armor Activation Reward
     Type: Usable
     Flags:
       Container: true
@@ -79342,7 +79342,7 @@ Body:
       getgroupitem(IG_RT_EP17_AUTO_A);
   - Id: 103348
     AegisName: Rt_Ep17_Auto_C
-    Name: Automatic Armor Completion Reward    # !todo check english name
+    Name: Automatic Armor Completion Reward
     Type: Usable
     Flags:
       Container: true
@@ -79358,7 +79358,7 @@ Body:
       getgroupitem(IG_RT_EP17_AUTO_C);
   - Id: 103349
     AegisName: Rt_Ep17_Secret_A
-    Name: Secret Facility Activation Reward    # !todo check english name
+    Name: Secret Facility Activation Reward
     Type: Usable
     Flags:
       Container: true
@@ -79374,7 +79374,7 @@ Body:
       getgroupitem(IG_RT_EP17_SECRET_A);
   - Id: 103350
     AegisName: Rt_Ep17_Secret_C
-    Name: Secret Facility Completion Reward    # !todo check english name
+    Name: Secret Facility Completion Reward
     Type: Usable
     Flags:
       Container: true
@@ -79390,7 +79390,7 @@ Body:
       getgroupitem(IG_RT_EP17_SECRET_C);
   - Id: 103351
     AegisName: Rt_Ep17_Mutant_A
-    Name: Variant Activation Reward    # !todo check english name
+    Name: Mutant Activation Reward
     Type: Usable
     Flags:
       Container: true
@@ -79406,7 +79406,7 @@ Body:
       getgroupitem(IG_RT_EP17_MUTANT_A);
   - Id: 103352
     AegisName: Rt_Ep17_Mutant_C
-    Name: Variant Completion Reward    # !todo check english name
+    Name: Mutant Completion Reward
     Type: Usable
     Flags:
       Container: true
@@ -79422,7 +79422,7 @@ Body:
       getgroupitem(IG_RT_EP17_MUTANT_C);
   - Id: 103353
     AegisName: Rt_Ep17_Miguel_A
-    Name: Secret Activation Reward    # !todo check english name
+    Name: Secret Activation Reward
     Type: Usable
     Flags:
       Container: true
@@ -79438,7 +79438,7 @@ Body:
       getgroupitem(IG_RT_EP17_MIGUEL_A);
   - Id: 103354
     AegisName: Rt_Ep17_Miguel_C
-    Name: Secret Completion Reward    # !todo check english name
+    Name: Secret Completion Reward
     Type: Usable
     Flags:
       Container: true
@@ -79454,7 +79454,7 @@ Body:
       getgroupitem(IG_RT_EP17_MIGUEL_C);
   - Id: 103355
     AegisName: Rt_Ep17_Miguel_2
-    Name: Secret 2 Set Reward    # !todo check english name
+    Name: Secret 2 Set Reward
     Type: Usable
     Flags:
       Container: true
@@ -79470,7 +79470,7 @@ Body:
       getgroupitem(IG_RT_EP17_MIGUEL_2);
   - Id: 103356
     AegisName: Rt_Ep17_Overload_A
-    Name: Magic Addiction Activation Reward    # !todo check english name
+    Name: Spell Addict Activation Reward
     Type: Usable
     Flags:
       Container: true
@@ -79486,7 +79486,7 @@ Body:
       getgroupitem(IG_RT_EP17_OVERLOAD_A);
   - Id: 103357
     AegisName: Rt_Ep17_Overload_C
-    Name: Magic Addiction Completion Reward    # !todo check english name
+    Name: Spell Addict Completion Reward
     Type: Usable
     Flags:
       Container: true
@@ -79502,7 +79502,7 @@ Body:
       getgroupitem(IG_RT_EP17_OVERLOAD_C);
   - Id: 103358
     AegisName: Rt_Ep17_Overload_3
-    Name: Magic Addiction 3 Set Reward    # !todo check english name
+    Name: Spell Addict 3 Set Reward
     Type: Usable
     Flags:
       Container: true
@@ -79518,7 +79518,7 @@ Body:
       getgroupitem(IG_RT_EP17_OVERLOAD_3);
   - Id: 103359
     AegisName: Rt_Ep17_Bath_A
-    Name: Bathhouse Management Activation Reward    # !todo check english name
+    Name: Baths Administration Activation Reward
     Type: Usable
     Flags:
       Container: true
@@ -79534,7 +79534,7 @@ Body:
       getgroupitem(IG_RT_EP17_BATH_A);
   - Id: 103360
     AegisName: Rt_Ep17_Bath_C
-    Name: Bathhouse Management Completion Reward    # !todo check english name
+    Name: Baths Administration Completion Reward
     Type: Usable
     Flags:
       Container: true
@@ -79550,7 +79550,7 @@ Body:
       getgroupitem(IG_RT_EP17_BATH_C);
   - Id: 103361
     AegisName: Rt_Ep17_Garden_A
-    Name: Garden Management Activation Reward    # !todo check english name
+    Name: Garden Administration Activation Reward
     Type: Usable
     Flags:
       Container: true
@@ -79566,7 +79566,7 @@ Body:
       getgroupitem(IG_RT_EP17_GARDEN_A);
   - Id: 103362
     AegisName: Rt_Ep17_Garden_C
-    Name: Garden Management Completion Reward    # !todo check english name
+    Name: Garden Administration Completion Reward
     Type: Usable
     Flags:
       Container: true
@@ -79582,7 +79582,7 @@ Body:
       getgroupitem(IG_RT_EP17_GARDEN_C);
   - Id: 103364
     AegisName: Rt_Ep17_Garden_3
-    Name: Garden Management 3 Set Reward    # !todo check english name
+    Name: Garden Administration 3 Set Reward
     Type: Usable
     Flags:
       Container: true
@@ -79598,7 +79598,7 @@ Body:
       getgroupitem(IG_RT_EP17_GARDEN_3);
   - Id: 103365
     AegisName: Rt_Ep17_Garden_5
-    Name: Garden Management 5 Set Reward    # !todo check english name
+    Name: Garden Administration 5 Set Reward
     Type: Usable
     Flags:
       Container: true
@@ -79614,7 +79614,7 @@ Body:
       getgroupitem(IG_RT_EP17_GARDEN_5);
   - Id: 103366
     AegisName: Rt_Ep17_Green_A
-    Name: Greenhouse Management Activation Reward    # !todo check english name
+    Name: Greenhouse Administration Activation Reward
     Type: Usable
     Flags:
       Container: true
@@ -79630,7 +79630,7 @@ Body:
       getgroupitem(IG_RT_EP17_GREEN_A);
   - Id: 103367
     AegisName: Rt_Ep17_Green_C
-    Name: Greenhouse Management Completion Reward    # !todo check english name
+    Name: Greenhouse Administration Completion Reward
     Type: Usable
     Flags:
       Container: true
@@ -79646,7 +79646,7 @@ Body:
       getgroupitem(IG_RT_EP17_GREEN_C);
   - Id: 103368
     AegisName: Rt_Ep17_Green_2
-    Name: Greenhouse Management 2 Set Reward    # !todo check english name
+    Name: Greenhouse Administration 2 Set Reward
     Type: Usable
     Flags:
       Container: true
@@ -79662,7 +79662,7 @@ Body:
       getgroupitem(IG_RT_EP17_GREEN_2);
   - Id: 103369
     AegisName: Rt_Ep17_Green_4
-    Name: Greenhouse Management 4-Set Reward    # !todo check english name
+    Name: Greenhouse Administration 4 Set Reward
     Type: Usable
     Flags:
       Container: true
@@ -79694,7 +79694,7 @@ Body:
       getgroupitem(IG_RT_EP17_WING_A);
   - Id: 103371
     AegisName: Rt_Ep17_Wing_C
-    Name: Wing Completion Reward    # !todo check english name
+    Name: Wing Completion Reward
     Type: Usable
     Flags:
       Container: true
@@ -79710,7 +79710,7 @@ Body:
       getgroupitem(IG_RT_EP17_WING_C);
   - Id: 103372
     AegisName: Rt_Ep17_Wing_2
-    Name: Wing 2-Set Reward    # !todo check english name
+    Name: Wing 2 Set Reward
     Type: Usable
     Flags:
       Container: true
@@ -79726,7 +79726,7 @@ Body:
       getgroupitem(IG_RT_EP17_WING_2);
   - Id: 103373
     AegisName: Rt_Ep17_Wing_4
-    Name: Wing 4-Set Reward    # !todo check english name
+    Name: Wing 4 Set Reward
     Type: Usable
     Flags:
       Container: true
@@ -79742,7 +79742,7 @@ Body:
       getgroupitem(IG_RT_EP17_WING_4);
   - Id: 103374
     AegisName: Rt_Ep17_Harmful_A
-    Name: Addiction Symptom Activation Reward    # !todo check english name
+    Name: Toxic Symptom Activation Reward
     Type: Usable
     Flags:
       Container: true
@@ -79758,7 +79758,7 @@ Body:
       getgroupitem(IG_RT_EP17_HARMFUL_A);
   - Id: 103375
     AegisName: Rt_Ep17_Harmful_C
-    Name: Addiction Symptom Completion Reward    # !todo check english name
+    Name: Toxic Symptom Completion Reward
     Type: Usable
     Flags:
       Container: true
@@ -79774,7 +79774,7 @@ Body:
       getgroupitem(IG_RT_EP17_HARMFUL_C);
   - Id: 103376
     AegisName: Rt_Ep17_Harmful_2
-    Name: Addiction Symptom 2-Set Reward    # !todo check english name
+    Name: Toxic Symptom 2 Set Reward
     Type: Usable
     Flags:
       Container: true
@@ -79790,7 +79790,7 @@ Body:
       getgroupitem(IG_RT_EP17_HARMFUL_2);
   - Id: 103377
     AegisName: Rt_Ep17_Harmful_4
-    Name: Addiction Symptom 4-Set Reward    # !todo check english name
+    Name: Toxic Symptom 4 Set Reward
     Type: Usable
     Flags:
       Container: true
@@ -79806,7 +79806,7 @@ Body:
       getgroupitem(IG_RT_EP17_HARMFUL_4);
   - Id: 103378
     AegisName: Rt_Ep17_Boss_A
-    Name: Strongest Activation Reward    # !todo check english name
+    Name: Strongest Activation Reward
     Type: Usable
     Flags:
       Container: true
@@ -79822,7 +79822,7 @@ Body:
       getgroupitem(IG_RT_EP17_BOSS_A);
   - Id: 103379
     AegisName: Rt_Ep17_Boss_C
-    Name: Strongest Completion Reward    # !todo check english name
+    Name: Strongest Completion Reward
     Type: Usable
     Flags:
       Container: true
@@ -79838,7 +79838,7 @@ Body:
       getgroupitem(IG_RT_EP17_BOSS_C);
   - Id: 103381
     AegisName: Rt_Ep17_Boss_3
-    Name: Strongest 3-Set Reward    # !todo check english name
+    Name: Strongest 3 Set Reward
     Type: Usable
     Flags:
       Container: true
@@ -79854,7 +79854,7 @@ Body:
       getgroupitem(IG_RT_EP17_BOSS_3);
   - Id: 103383
     AegisName: Rt_Ep17_Boss_5
-    Name: Strongest 5-Set Reward    # !todo check english name
+    Name: Strongest 5 Set Reward
     Type: Usable
     Flags:
       Container: true
@@ -79870,7 +79870,7 @@ Body:
       getgroupitem(IG_RT_EP17_BOSS_5);
   - Id: 103385
     AegisName: Rt_Ep17_Malfun_A
-    Name: Broken Reason Activation Reward    # !todo check english name
+    Name: Malfunction Activation Reward
     Type: Usable
     Flags:
       Container: true
@@ -79886,7 +79886,7 @@ Body:
       getgroupitem(IG_RT_EP17_MALFUN_A);
   - Id: 103386
     AegisName: Rt_Ep17_Malfun_C
-    Name: Broken Reason Completion Reward    # !todo check english name
+    Name: Malfunction Completion Reward
     Type: Usable
     Flags:
       Container: true
@@ -79902,7 +79902,7 @@ Body:
       getgroupitem(IG_RT_EP17_MALFUN_C);
   - Id: 103387
     AegisName: Rt_Ep17_Malfun_3
-    Name: Broken Reason 3-Set Reward    # !todo check english name
+    Name: Malfunction 3 Set Reward
     Type: Usable
     Flags:
       Container: true
@@ -79918,7 +79918,7 @@ Body:
       getgroupitem(IG_RT_EP17_MALFUN_3);
   - Id: 103428
     AegisName: 24_A_Ev_Docu
-    Name: Secret Document    # !todo check english name
+    Name: Confidential Document
     Type: Usable
     Weight: 10
     Trade:
@@ -79935,7 +79935,7 @@ Body:
       sc_start2 SC_CONTENTS_26,900000,30,10;
   - Id: 103429
     AegisName: 24_A_Ev_Rice
-    Name: Academic Festival Rice Crackers    # !todo check english name
+    Name: Symposium Rice Cake
     Type: Usable
     Weight: 10
     Trade:
@@ -79951,7 +79951,7 @@ Body:
       sc_start2 SC_CONTENTS_27,900000,15,10;
   - Id: 103430
     AegisName: 24_A_Ev_Butter
-    Name: Academic Festival Butter Crackers    # !todo check english name
+    Name: Symposium Butter Cookie
     Type: Usable
     Weight: 10
     Trade:
@@ -79967,7 +79967,7 @@ Body:
       sc_start2 SC_CONTENTS_28,900000,15,12;
   - Id: 103431
     AegisName: 24_A_Ev_Coffee
-    Name: Academic Festival Coffee Sticks    # !todo check english name
+    Name: Symposium Coffee Stick
     Type: Usable
     Weight: 10
     Trade:
@@ -79983,7 +79983,7 @@ Body:
       sc_start2 SC_CONTENTS_29,900000,15,-10;
   - Id: 103432
     AegisName: 24_A_Ev_Cookie
-    Name: Academic Festival Commemorative Cookies    # !todo check english name
+    Name: Symposium Commemorative Cookie
     Type: Usable
     Weight: 50
     Delay:
@@ -80002,7 +80002,7 @@ Body:
       percentheal 100,100;
   - Id: 103437
     AegisName: Rt_Ep18_Armor_A
-    Name: Gray Wolf Activation Reward    # !todo check english name
+    Name: Gray Wolf Activation Reward
     Type: Usable
     Flags:
       Container: true
@@ -80018,7 +80018,7 @@ Body:
       getgroupitem(IG_RT_EP18_ARMOR_A);
   - Id: 103438
     AegisName: Rt_Ep18_Armor_C
-    Name: Gray Wolf Completion Reward    # !todo check english name
+    Name: Gray Wolf Completion Reward
     Type: Usable
     Flags:
       Container: true
@@ -80034,7 +80034,7 @@ Body:
       getgroupitem(IG_RT_EP18_ARMOR_C);
   - Id: 103439
     AegisName: Rt_Ep18_Melee_A
-    Name: False Warrior Activation Reward    # !todo check english name
+    Name: False Warrior Activation Reward
     Type: Usable
     Flags:
       Container: true
@@ -80050,7 +80050,7 @@ Body:
       getgroupitem(IG_RT_EP18_MELEE_A);
   - Id: 103440
     AegisName: Rt_Ep18_Magic_C
-    Name: False Shaman Completion Reward    # !todo check english name
+    Name: False Magician Completion Reward
     Type: Usable
     Flags:
       Container: true
@@ -80066,7 +80066,7 @@ Body:
       getgroupitem(IG_RT_EP18_MAGIC_C);
   - Id: 103441
     AegisName: Rt_Ep18_Melee_C
-    Name: False Warrior Completion Reward    # !todo check english name
+    Name: False Warrior Completion Reward
     Type: Usable
     Flags:
       Container: true
@@ -80082,7 +80082,7 @@ Body:
       getgroupitem(IG_RT_EP18_MELEE_C);
   - Id: 103442
     AegisName: Rt_Ep18_Magic_A
-    Name: False Sorcerer Activation Reward    # !todo check english name
+    Name: False Magician Activation Reward
     Type: Usable
     Flags:
       Container: true
@@ -80098,7 +80098,7 @@ Body:
       getgroupitem(IG_RT_EP18_MAGIC_A);
   - Id: 103443
     AegisName: Rt_Ep18_Range_A
-    Name: False Marksman Activation Reward    # !todo check english name
+    Name: False Shooter Activation Reward
     Type: Usable
     Flags:
       Container: true
@@ -80114,7 +80114,7 @@ Body:
       getgroupitem(IG_RT_EP18_RANGE_A);
   - Id: 103444
     AegisName: Rt_Ep18_Range_C
-    Name: False Marksman Completion Reward    # !todo check english name
+    Name: False Shooter Completion Reward
     Type: Usable
     Flags:
       Container: true
@@ -80130,7 +80130,7 @@ Body:
       getgroupitem(IG_RT_EP18_RANGE_C);
   - Id: 103445
     AegisName: Rt_Ep18_Field_A
-    Name: Gray Forest Activation Reward    # !todo check english name
+    Name: Ashy Forest Activation Reward
     Type: Usable
     Flags:
       Container: true
@@ -80146,7 +80146,7 @@ Body:
       getgroupitem(IG_RT_EP18_FIELD_A);
   - Id: 103446
     AegisName: Rt_Ep18_Field_C
-    Name: Gray Forest Completion Reward    # !todo check english name
+    Name: Ashy Forest Completion Reward
     Type: Usable
     Flags:
       Container: true
@@ -80162,7 +80162,7 @@ Body:
       getgroupitem(IG_RT_EP18_FIELD_C);
   - Id: 103447
     AegisName: Rt_Ep18_Field_3
-    Name: Gray Forest 3-Set Reward    # !todo check english name
+    Name: Ashy Forest 3 Set Reward
     Type: Usable
     Flags:
       Container: true
@@ -80178,7 +80178,7 @@ Body:
       getgroupitem(IG_RT_EP18_FIELD_3);
   - Id: 103449
     AegisName: Rt_Ep18_Lava_A
-    Name: Lava Fields Activation Reward    # !todo check english name
+    Name: Lava Zone Activation Reward
     Type: Usable
     Flags:
       Container: true
@@ -80194,7 +80194,7 @@ Body:
       getgroupitem(IG_RT_EP18_LAVA_A);
   - Id: 103450
     AegisName: Rt_Ep18_Lava_C
-    Name: Lava Fields Completion Reward    # !todo check english name
+    Name: Lava Zone Completion Reward
     Type: Usable
     Flags:
       Container: true
@@ -80210,7 +80210,7 @@ Body:
       getgroupitem(IG_RT_EP18_LAVA_C);
   - Id: 103451
     AegisName: Rt_Ep18_Lava_2
-    Name: Lava Fields 2-Set Reward    # !todo check english name
+    Name: Lava Zone 2 Set Reward
     Type: Usable
     Flags:
       Container: true
@@ -80226,7 +80226,7 @@ Body:
       getgroupitem(IG_RT_EP18_LAVA_2);
   - Id: 103452
     AegisName: Rt_Ep18_Total_A
-    Name: Ashen Wastes Activation Reward    # !todo check english name
+    Name: Grey Wilderness Activation Reward
     Type: Usable
     Flags:
       Container: true
@@ -80242,7 +80242,7 @@ Body:
       getgroupitem(IG_RT_EP18_TOTAL_A);
   - Id: 103453
     AegisName: Rt_Ep18_Total_C
-    Name: Ashen Wastes Completion Reward    # !todo check english name
+    Name: Grey Wilderness Completion Reward
     Type: Usable
     Flags:
       Container: true
@@ -80258,7 +80258,7 @@ Body:
       getgroupitem(IG_RT_EP18_TOTAL_C);
   - Id: 103454
     AegisName: Rt_Ep18_Total_3
-    Name: Ashen Wastes 3-Set Reward    # !todo check english name
+    Name: Grey Wilderness 3 Set Reward
     Type: Usable
     Flags:
       Container: true
@@ -80274,7 +80274,7 @@ Body:
       getgroupitem(IG_RT_EP18_TOTAL_3);
   - Id: 103455
     AegisName: Rt_Ep18_Total_6
-    Name: Ashen Wastes 6-Set Reward    # !todo check english name
+    Name: Grey Wilderness 6 Set Reward
     Type: Usable
     Flags:
       Container: true
@@ -80290,7 +80290,7 @@ Body:
       getgroupitem(IG_RT_EP18_TOTAL_6);
   - Id: 103456
     AegisName: Rt_Ep18_Fang_A
-    Name: Burning Fangs Activation Reward    # !todo check english name
+    Name: Burning Fang Activation Reward
     Type: Usable
     Flags:
       Container: true
@@ -80306,7 +80306,7 @@ Body:
       getgroupitem(IG_RT_EP18_FANG_A);
   - Id: 103457
     AegisName: Rt_Ep18_Fang_C
-    Name: Burning Fangs Completion Reward    # !todo check english name
+    Name: Burning Fang Completion Reward
     Type: Usable
     Flags:
       Container: true
@@ -80322,7 +80322,7 @@ Body:
       getgroupitem(IG_RT_EP18_FANG_C);
   - Id: 103458
     AegisName: Rt_Ep18_Demi_A
-    Name: Demi-Body Activation Reward    # !todo check english name
+    Name: Demigod Activation Reward
     Type: Usable
     Flags:
       Container: true
@@ -80338,7 +80338,7 @@ Body:
       getgroupitem(IG_RT_EP18_DEMI_A);
   - Id: 103459
     AegisName: Rt_Ep18_Demi_C
-    Name: Demi-Body Completion Reward    # !todo check english name
+    Name: Demigod Completion Reward
     Type: Usable
     Flags:
       Container: true
@@ -80354,7 +80354,7 @@ Body:
       getgroupitem(IG_RT_EP18_DEMI_C);
   - Id: 103460
     AegisName: Rt_Ep18_Demi_2
-    Name: Demi-Body 2-Set Reward    # !todo check english name
+    Name: Demigod 2 Set Reward
     Type: Usable
     Flags:
       Container: true
@@ -80402,7 +80402,7 @@ Body:
       getgroupitem(IG_VIP_GIFT_22THANIV);
   - Id: 103463
     AegisName: 2409_Songpyeon
-    Name: Songpyeon I Made    # !todo check english name
+    Name: Self-made Songpyeon
     Type: Usable
     Weight: 30
     Trade:
@@ -80415,21 +80415,21 @@ Body:
       NoAuction: true
   - Id: 103501
     AegisName: aegis_103501
-    Name: Yorskalp 1st Floor Transfer Scale    # !todo check english name
+    Name: Yorscalp 1st Floor Travel Scale
     Type: Usable
     Weight: 30
     Flags:
       BuyingStore: true
   - Id: 103502
     AegisName: aegis_103502
-    Name: Yorskalp 2nd Floor Transfer Scale    # !todo check english name
+    Name: Yorscalp 2nd Floor Travel Scale
     Type: Usable
     Weight: 30
     Flags:
       BuyingStore: true
   - Id: 103503
     AegisName: Yorscalp_Scroll_A
-    Name: Yorskalp Upgrade    # !todo check english name
+    Name: Yorscalp Upgrade
     Type: DelayConsume
     Trade:
       NoDrop: true
@@ -80444,7 +80444,7 @@ Body:
       item_reform();
   - Id: 103505
     AegisName: Yorscalp_Refin_Hammer
-    Name: +10 Yorskalp Armor Refining Hammer    # !todo check english name
+    Name: +10 Yorscalp Equipment Refine Hammer
     Type: DelayConsume
     Weight: 100
     Flags:
@@ -80453,7 +80453,7 @@ Body:
       item_reform();
   - Id: 103512
     AegisName: Yor_Card_P_Box
-    Name: Past Hero Fragment Box    # !todo check english name
+    Name: Past Heroes Fragment Box
     Type: Usable
     Flags:
       Container: true
@@ -80468,14 +80468,14 @@ Body:
       getgroupitem(IG_YOR_CARD_P_BOX);
   - Id: 103523
     AegisName: aegis_103523
-    Name: Encroached Fruit    # !todo check english name
+    Name: Encroached Fruit
     Type: Usable
     Weight: 30
     Flags:
       BuyingStore: true
   - Id: 103524
     AegisName: EP21_Costume_Box1
-    Name: Costume Gift Box I    # !todo check english name
+    Name: Costume Gift Box I
     Type: Usable
     Flags:
       Container: true
@@ -80491,7 +80491,7 @@ Body:
       getgroupitem(IG_EP21_COSTUME_BOX1);
   - Id: 103525
     AegisName: EP21_Costume_Box2
-    Name: Costume Gift Box II    # !todo check english name
+    Name: Costume Gift Box II
     Type: Usable
     Flags:
       Container: true
@@ -80507,7 +80507,7 @@ Body:
       getgroupitem(IG_EP21_COSTUME_BOX2);
   - Id: 103537
     AegisName: aegis_103537
-    Name: Giant Serpent Artifact (Encroached Tan Hard)    # !todo check english name
+    Name: Antiquity of Giant Snake (Encroached Tan Hard)
     Type: Usable
     Weight: 200
     Flags:
@@ -80517,7 +80517,7 @@ Body:
       getgroupitem(IG_AEGIS_103537);
   - Id: 103582
     AegisName: aegis_103582
-    Name: Time Gap Dagger Box    # !todo check english name
+    Name: Time Gap Dagger Box
     Type: Usable
     Weight: 100
     Flags:
@@ -80564,7 +80564,7 @@ Body:
       NoAuction: true
   - Id: 103617
     AegisName: aegis_103617
-    Name: Costume Enchant Stone Box 37    # !todo check english name
+    Name: Costume Enchant Stone Box 37
     Type: Usable
     Weight: 10
     Flags:
@@ -80573,7 +80573,7 @@ Body:
       getgroupitem(IG_AEGIS_103617);
   - Id: 103619
     AegisName: Ifirit_Promotion_Pack
-    Name: New Server Launch Appreciation Box    # !todo check english name
+    Name: New Server Launch Thank You Box
     Type: Usable
     Weight: 10
     Flags:
@@ -80591,7 +80591,7 @@ Body:
       getgroupitem(IG_IFIRIT_PROMOTION_PACK);
   - Id: 103622
     AegisName: aegis_103622
-    Name: 3rd Stone (Upper) Box    # !todo check english name
+    Name: 3rd Stone (Upper) Box
     Type: Usable
     Weight: 10
     Flags:
@@ -80600,7 +80600,7 @@ Body:
       getgroupitem(IG_AEGIS_103622);
   - Id: 103623
     AegisName: aegis_103623
-    Name: 3rd Stone (Middle) Box    # !todo check english name
+    Name: 3rd Stone (Middle) Box
     Type: Usable
     Weight: 10
     Flags:
@@ -80609,7 +80609,7 @@ Body:
       getgroupitem(IG_AEGIS_103623);
   - Id: 103624
     AegisName: aegis_103624
-    Name: 3rd Stone (Lower) Box    # !todo check english name
+    Name: 3rd Stone (Lower) Box
     Type: Usable
     Weight: 10
     Flags:
@@ -80618,7 +80618,7 @@ Body:
       getgroupitem(IG_AEGIS_103624);
   - Id: 103625
     AegisName: aegis_103625
-    Name: Upper Expansion Stone (Upper) Box    # !todo check english name
+    Name: High Expansion Stone (Upper) Box
     Type: Usable
     Weight: 10
     Flags:
@@ -80627,7 +80627,7 @@ Body:
       getgroupitem(IG_AEGIS_103625);
   - Id: 103626
     AegisName: aegis_103626
-    Name: Upper Expansion Stone (Mid) Box    # !todo check english name
+    Name: High Expansion Stone (Middle) Box
     Type: Usable
     Weight: 10
     Flags:
@@ -80636,7 +80636,7 @@ Body:
       getgroupitem(IG_AEGIS_103626);
   - Id: 103627
     AegisName: aegis_103627
-    Name: Upper Expansion Stone (Lower) Box    # !todo check english name
+    Name: High Expansion Stone (Lower) Box
     Type: Usable
     Weight: 10
     Flags:
@@ -82364,7 +82364,7 @@ Body:
   - Id: 200325
     AegisName: CostumeMilePack_32_1
 #   Name: Nyangdarae Costume Mileage Package I (Stone Box 32)
-    Name: Nyangdarae Costume Mileage Package I (Stone Box 3    # !todo check english name
+    Name: Costume Mileage Package I (Stone Box 32)
     Type: Cash
     Flags:
       Container: true
@@ -82381,7 +82381,7 @@ Body:
   - Id: 200326
     AegisName: CostumeMilePack_32_2
 #   Name: Nyangdarae Costume Mileage Package II (Stone Box 32)
-    Name: Nyangdarae Costume Mileage Package II (Stone Box     # !todo check english name
+    Name: Costume Mileage Package II (Stone Box 32)
     Type: Cash
     Flags:
       Container: true
@@ -82398,7 +82398,7 @@ Body:
   - Id: 200327
     AegisName: CostumeMilePack_32_3
 #   Name: Nyangdarae Costume Mileage Package III (Stone Box 32)
-    Name: Nyangdarae Costume Mileage Package III (Stone Box    # !todo check english name
+    Name: Costume Mileage Package III (Stone Box 32)
     Type: Cash
     Flags:
       Container: true
@@ -82415,7 +82415,7 @@ Body:
   - Id: 200330
     AegisName: LI_Nyangvine_Box1_33
 #   Name: (Limited) Nyangvine Fruit Package I (Stone Box 33)
-    Name: (Limited) Nyangvine Fruit Package I (Stone Box 33
+    Name: (Limited) Fruit Package I (Stone Box 33)
     Type: Cash
     Flags:
       Container: true
@@ -82432,7 +82432,7 @@ Body:
   - Id: 200331
     AegisName: LI_Nyangvine_Box2_33
 #   Name: (Limited) Nyangvine Fruit Package II (Stone Box 33)
-    Name: (Limited) Nyangvine Fruit Package II (Stone Box 3
+    Name: (Limited) Fruit Package II (Stone Box 33)
     Type: Cash
     Flags:
       Container: true
@@ -82449,7 +82449,7 @@ Body:
   - Id: 200332
     AegisName: LI_Nyangvine_Box3_33
 #   Name: (Limited) Nyangvine Fruit Package III (Stone Box 33)
-    Name: (Limited) Nyangvine Fruit Package III (Stone Box
+    Name: (Limited) Fruit Package III (Stone Box 33)
     Type: Cash
     Flags:
       Container: true
@@ -82619,7 +82619,7 @@ Body:
   - Id: 200351
     AegisName: CostumeMilePack_33_1
 #   Name: Nyangvine Costume Mileage Package I (Stone Box 33)
-    Name: Nyangvine Costume Mileage Package I (Stone Box 33
+    Name: Costume Mileage Package I (Stone Box 33)
     Type: Cash
     Flags:
       Container: true
@@ -82636,7 +82636,7 @@ Body:
   - Id: 200352
     AegisName: CostumeMilePack_33_2
 #   Name: Nyangvine Costume Mileage Package II (Stone Box 33)
-    Name: Nyangvine Costume Mileage Package II (Stone Box 3
+    Name: Costume Mileage Package II (Stone Box 33)
     Type: Cash
     Flags:
       Container: true
@@ -82653,7 +82653,7 @@ Body:
   - Id: 200353
     AegisName: CostumeMilePack_33_3
 #   Name: Nyangvine Costume Mileage Package III (Stone Box 33)
-    Name: Nyangvine Costume Mileage Package III (Stone Box
+    Name: Costume Mileage Package III (Stone Box 33)
     Type: Cash
     Flags:
       Container: true
@@ -82870,7 +82870,7 @@ Body:
   - Id: 200385
     AegisName: CostumeMilePack_34_1
 #   Name: Nyandarae Costume Mileage Package I (Stone Box 34)
-    Name: Nyandarae Costume Mileage Package I (Stone Box 34    # !todo check english name
+    Name: Costume Mileage Package I (Stone Box 34)
     Type: Cash
     Flags:
       Container: true
@@ -82887,7 +82887,7 @@ Body:
   - Id: 200386
     AegisName: CostumeMilePack_34_2
 #   Name: Nyandarae Costume Mileage Package II (Stone Box 34)
-    Name: Nyandarae Costume Mileage Package II (Stone Box 3    # !todo check english name
+    Name: Costume Mileage Package II (Stone Box 34)
     Type: Cash
     Flags:
       Container: true
@@ -82904,7 +82904,7 @@ Body:
   - Id: 200387
     AegisName: CostumeMilePack_34_3
 #   Name: Nyandarae Costume Mileage Package III (Stone Box 34)
-    Name: Nyandarae Costume Mileage Package III (Stone Box     # !todo check english name
+    Name: Costume Mileage Package III (Stone Box 34)
     Type: Cash
     Flags:
       Container: true
@@ -82921,7 +82921,7 @@ Body:
   - Id: 200405
     AegisName: LI_Nyangvine_Box1_35
 #   Name: (Limited) Nyangvine Fruit Package I (Stone Box 35)
-    Name: (Limited) Nyangvine Fruit Package I (Stone Box 35
+    Name: (Limited) Fruit Package I (Stone Box 35)
     Type: Cash
     Flags:
       Container: true
@@ -82938,7 +82938,7 @@ Body:
   - Id: 200406
     AegisName: LI_Nyangvine_Box2_35
 #   Name: (Limited) Nyangvine Fruit Package II (Stone Box 35)
-    Name: (Limited) Nyangvine Fruit Package II (Stone Box 3
+    Name: (Limited) Fruit Package II (Stone Box 35)
     Type: Cash
     Flags:
       Container: true
@@ -82955,7 +82955,7 @@ Body:
   - Id: 200407
     AegisName: LI_Nyangvine_Box3_35
 #   Name: (Limited) Nyangvine Fruit Package III (Stone Box 35)
-    Name: (Limited) Nyangvine Fruit Package III (Stone Box
+    Name: (Limited) Fruit Package III (Stone Box 35)
     Type: Cash
     Flags:
       Container: true
@@ -83102,7 +83102,7 @@ Body:
   - Id: 200425
     AegisName: CostumeMilePack_35_1
 #   Name: Nyangvine Costume Mileage Package I (Stone Box 35)
-    Name: Nyangvine Costume Mileage Package I (Stone Box 35
+    Name: Costume Mileage Package I (Stone Box 35)
     Type: Cash
     Flags:
       Container: true
@@ -83119,7 +83119,7 @@ Body:
   - Id: 200426
     AegisName: CostumeMilePack_35_2
 #   Name: Nyangvine Costume Mileage Package II (Stone Box 35)
-    Name: Nyangvine Costume Mileage Package II (Stone Box 3
+    Name: Costume Mileage Package II (Stone Box 35)
     Type: Cash
     Flags:
       Container: true
@@ -83136,7 +83136,7 @@ Body:
   - Id: 200427
     AegisName: CostumeMilePack_35_3
 #   Name: Nyangvine Costume Mileage Package III (Stone Box 35)
-    Name: Nyangvine Costume Mileage Package III (Stone Box
+    Name: Costume Mileage Package III (Stone Box 35)
     Type: Cash
     Flags:
       Container: true
@@ -83153,7 +83153,7 @@ Body:
   - Id: 200434
     AegisName: LI_Nyangvine_Box1_36
 #   Name: (Account Limited) Cat's Eye Fruit Package I (Stone Box 36)
-    Name: (Account Limited) Cat's Eye Fruit Package I (Ston    # !todo check english name
+    Name: (Limited) Fruit Package I (Stone Box 36)
     Type: Cash
     Flags:
       Container: true
@@ -83170,7 +83170,7 @@ Body:
   - Id: 200435
     AegisName: LI_Nyangvine_Box2_36
 #   Name: (Account Limited) Cat's Eye Fruit Package II (Stone Box 36)
-    Name: (Account Limited) Cat's Eye Fruit Package II (Sto    # !todo check english name
+    Name: (Limited) Fruit Package II (Stone Box 36)
     Type: Cash
     Flags:
       Container: true
@@ -83187,7 +83187,7 @@ Body:
   - Id: 200436
     AegisName: LI_Nyangvine_Box3_36
 #   Name: (Account Limited) Cat's Eye Fruit Package III (Stone Box 36)
-    Name: (Account Limited) Cat's Eye Fruit Package III (St    # !todo check english name
+    Name: (Limited) Fruit Package III (Stone Box 36)
     Type: Cash
     Flags:
       Container: true
@@ -83203,7 +83203,7 @@ Body:
       getgroupitem(IG_LI_NYANGVINE_BOX3_36);
   - Id: 200438
     AegisName: 2024_Summer_Pack_1
-    Name: (Account Limited) 2024 Summer Vacation Package I    # !todo check english name
+    Name: (Limited) 2024 Summer Vacation Package I
     Type: Cash
     Flags:
       Container: true
@@ -83219,7 +83219,7 @@ Body:
       getgroupitem(IG_2024_SUMMER_PACK_1);
   - Id: 200439
     AegisName: 2024_Summer_Pack_2
-    Name: (Account Limited) 2024 Summer Vacation Package II    # !todo check english name
+    Name: (Limited) 2024 Summer Vacation Package II
     Type: Cash
     Flags:
       Container: true
@@ -83236,7 +83236,7 @@ Body:
   - Id: 200440
     AegisName: 2024_Summer_Pack_3
 #   Name: (Account Limited) 2024 Summer Vacation Package III
-    Name: (Account Limited) 2024 Summer Vacation Package II    # !todo check english name
+    Name: (Limited) 2024 Summer Vacation Package III
     Type: Cash
     Flags:
       Container: true
@@ -83252,7 +83252,7 @@ Body:
       getgroupitem(IG_2024_SUMMER_PACK_3);
   - Id: 200441
     AegisName: 2024_Summer_Pack_4
-    Name: (Account Limited) 2024 Summer Vacation Package IV    # !todo check english name
+    Name: (Limited) 2024 Summer Vacation Package IV
     Type: Cash
     Flags:
       Container: true
@@ -83268,7 +83268,7 @@ Body:
       getgroupitem(IG_2024_SUMMER_PACK_4);
   - Id: 200442
     AegisName: LI_A_HD_CarniumBox
-    Name: High Density Carnium Account-Limited Package    # !todo check english name
+    Name: HD Carnium Account Limited Package
     Type: Cash
     Weight: 10
     Flags:
@@ -83285,7 +83285,7 @@ Body:
       getgroupitem(IG_LI_A_HD_CARNIUMBOX);
   - Id: 200443
     AegisName: LI_A_HD_BradiumBox
-    Name: High Density Bradium Account-Limited Package    # !todo check english name
+    Name: HD Bradium Account Limited Package
     Type: Cash
     Weight: 10
     Flags:
@@ -83302,7 +83302,7 @@ Body:
       getgroupitem(IG_LI_A_HD_BRADIUMBOX);
   - Id: 200445
     AegisName: 22th_Package_1
-    Name: 22nd Anniversary Monthly Package I    # !todo check english name
+    Name: 22nd Anniversary Monthly Package I
     Type: Cash
     Flags:
       Container: true
@@ -83318,7 +83318,7 @@ Body:
       getgroupitem(IG_22TH_PACKAGE_1);
   - Id: 200446
     AegisName: 22th_Package_2
-    Name: 22nd Anniversary Monthly Package II    # !todo check english name
+    Name: 22nd Anniversary Monthly Package II
     Type: Cash
     Flags:
       Container: true
@@ -83334,7 +83334,7 @@ Body:
       getgroupitem(IG_22TH_PACKAGE_2);
   - Id: 200447
     AegisName: 22th_Package_3
-    Name: 22nd Anniversary Monthly Package III    # !todo check english name
+    Name: 22nd Anniversary Monthly Package III
     Type: Cash
     Flags:
       Container: true
@@ -83350,7 +83350,7 @@ Body:
       getgroupitem(IG_22TH_PACKAGE_3);
   - Id: 200448
     AegisName: 22th_Package_4
-    Name: 22nd Anniversary Monthly Package IV    # !todo check english name
+    Name: 22nd Anniversary Monthly Package IV
     Type: Cash
     Flags:
       Container: true
@@ -83366,7 +83366,7 @@ Body:
       getgroupitem(IG_22TH_PACKAGE_4);
   - Id: 200449
     AegisName: CLB_SS_Nyang_Pack
-    Name: Shiba Seiz Nyandarae Package    # !todo check english name
+    Name: Shiba Says Nyangvine Package
     Type: Cash
     Flags:
       Container: true
@@ -83382,7 +83382,7 @@ Body:
       getgroupitem(IG_CLB_SS_NYANG_PACK);
   - Id: 200450
     AegisName: CLB_SS_Refine1_Pack
-    Name: Shiba Seiz Concentrated Refining Package    # !todo check english name
+    Name: Shiba Says Enriched Refine Package
     Type: Cash
     Flags:
       Container: true
@@ -83398,7 +83398,7 @@ Body:
       getgroupitem(IG_CLB_SS_REFINE1_PACK);
   - Id: 200451
     AegisName: CLB_SS_Refine2_Pack
-    Name: Shiba Seiz High Concentrated Refining Package    # !todo check english name
+    Name: Shiba Says High Enriched Refine Package
     Type: Cash
     Flags:
       Container: true
@@ -83414,7 +83414,7 @@ Body:
       getgroupitem(IG_CLB_SS_REFINE2_PACK);
   - Id: 200452
     AegisName: CLB_SS_Exp_Pack
-    Name: Shiba Seiz Experience Package    # !todo check english name
+    Name: Shiba Says Experience Package
     Type: Cash
     Flags:
       Container: true
@@ -83430,7 +83430,7 @@ Body:
       getgroupitem(IG_CLB_SS_EXP_PACK);
   - Id: 200463
     AegisName: C_CharSlot_Open_Box
-    Name: Character Slot Expansion Card Box    # !todo check english name
+    Name: Character Slot Expansion Card Box
     Type: Cash
     Flags:
       Container: true
@@ -83447,7 +83447,7 @@ Body:
   - Id: 200465
     AegisName: CostumeMilePack_36_1
 #   Name: Nyangdare Costume Mileage Package I (Stone Box 36)
-    Name: Nyangdare Costume Mileage Package I (Stone Box 36    # !todo check english name
+    Name: Costume Mileage Package I (Stone Box 36)
     Type: Cash
     Flags:
       Container: true
@@ -83464,7 +83464,7 @@ Body:
   - Id: 200466
     AegisName: CostumeMilePack_36_2
 #   Name: Nyangdare Costume Mileage Package II (Stone Box 36)
-    Name: Nyangdare Costume Mileage Package II (Stone Box 3    # !todo check english name
+    Name: Costume Mileage Package II (Stone Box 36)
     Type: Cash
     Flags:
       Container: true
@@ -83481,7 +83481,7 @@ Body:
   - Id: 200467
     AegisName: CostumeMilePack_36_3
 #   Name: Nyangdare Costume Mileage Package III (Stone Box 36)
-    Name: Nyangdare Costume Mileage Package III (Stone Box     # !todo check english name
+    Name: Costume Mileage Package III (Stone Box 36)
     Type: Cash
     Flags:
       Container: true
@@ -83497,7 +83497,7 @@ Body:
       getgroupitem(IG_COSTUMEMILEPACK_36_3);
   - Id: 200468
     AegisName: Nyangvine_Special_Pack1
-    Name: Nyangdare Special Package I    # !todo check english name
+    Name: Nyangvine Special Package I
     Type: Cash
     Flags:
       Container: true
@@ -83513,7 +83513,7 @@ Body:
       getgroupitem(IG_NYANGVINE_SPECIAL_PACK1);
   - Id: 200469
     AegisName: Nyangvine_Special_Pack2
-    Name: Nyangdare Special Package II    # !todo check english name
+    Name: Nyangvine Special Package II
     Type: Cash
     Flags:
       Container: true
@@ -83529,7 +83529,7 @@ Body:
       getgroupitem(IG_NYANGVINE_SPECIAL_PACK2);
   - Id: 200470
     AegisName: Nyangvine_Special_Pack3
-    Name: Nyangdare Special Package III    # !todo check english name
+    Name: Nyangvine Special Package III
     Type: Cash
     Flags:
       Container: true
@@ -83562,7 +83562,7 @@ Body:
   - Id: 200481
     AegisName: LI_Nyangvine_Box1_37
 #   Name: (Account Limited) Nyangdare Fruit Package I (Stone Box 37)
-    Name: (Account Limited) Nyangdare Fruit Package I (Ston    # !todo check english name
+    Name: (Limited) Nyangvine Fruit Package I (Stone Box 37)
     Type: Cash
     Flags:
       Container: true
@@ -83579,7 +83579,7 @@ Body:
   - Id: 200482
     AegisName: LI_Nyangvine_Box2_37
 #   Name: (Account Limited) Nyangdare Fruit Package II (Stone Box 37)
-    Name: (Account Limited) Nyangdare Fruit Package II (Sto    # !todo check english name
+    Name: (Limited) Fruit Package II (Stone Box 37)
     Type: Cash
     Flags:
       Container: true
@@ -83596,7 +83596,7 @@ Body:
   - Id: 200483
     AegisName: LI_Nyangvine_Box3_37
 #   Name: (Account Limited) Nyangdare Fruit Package III (Stone Box 37)
-    Name: (Account Limited) Nyangdare Fruit Package III (St    # !todo check english name
+    Name: (Limited) Fruit Package III (Stone Box 37)
     Type: Cash
     Flags:
       Container: true
@@ -83857,7 +83857,7 @@ Body:
       itemheal 0,120; /* average value */
   - Id: 1100021
     AegisName: 2403_ev_Berry_Cup
-    Name: Strawberry whipped cream cupcake    # !todo check english name
+    Name: Strawberry Fresh Cream Cupcake
     Type: Healing
     Weight: 1
     Flags:
@@ -83874,7 +83874,7 @@ Body:
       itemheal 0,200; /* average value */
   - Id: 1100022
     AegisName: 2403_ev_Macaron
-    Name: Moist Macaron    # !todo check english name
+    Name: Moist Macaron
     Type: Healing
     Weight: 1
     EquipLevelMin: 60
