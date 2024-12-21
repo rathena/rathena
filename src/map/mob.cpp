@@ -325,10 +325,10 @@ uint16 mobdb_searchname_array(const char *str, uint16 * out, uint16 size)
 	const auto &mob_list = mob_db.getCache();
 
 	// Full compare first
-	for( const auto &mob : mob_list ) {
+	for (const auto& mob : mob_list) {
 		if (mob == nullptr)
 			continue;
-		if( mobdb_searchname_sub(mob->id, str, true) ) {
+		if (mobdb_searchname_sub(mob->id, str, true)) {
 			out[count] = mob->id;
 			if (++count >= size)
 				return count;

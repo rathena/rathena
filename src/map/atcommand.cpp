@@ -7823,7 +7823,8 @@ ACMD_FUNC(mobinfo)
 	}
 
 	// If monster identifier/name argument is a name
-	if ((i = mobdb_checkid(strtoul(message, nullptr, 10))))
+	i = util::strtoint32def(message);
+	if (i != 0 && (i = mobdb_checkid(i)))
 	{
 		mob_ids[0] = i;
 		count = 1;
