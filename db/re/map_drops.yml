@@ -2418,10 +2418,10 @@ Body:
             Rate: 2500
           - Index: 5
             Item: Celine_Brooch_K
-            Rate: 1500
+            Rate: 150
           - Index: 6
             Item: Celine_Dress
-            Rate: 1500
+            Rate: 150
           - Index: 7
             Item: Celines_Ribbon
             Rate: 500
