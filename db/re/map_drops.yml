@@ -2385,7 +2385,7 @@ Body:
           - Index: 3
             Item: Noble_Cross
             Rate: 250
-      - Monster: XM_CELINE_KIMI
+      - Monster: XM_ANTONIO
         Drops:
           - Index: 0
             Item: Bloody_Coin
@@ -2399,7 +2399,7 @@ Body:
           - Index: 3
             Item: Chrismas_Tree
             Rate: 1000
-      - Monster: XM_ANTONIO
+      - Monster: XM_CELINE_KIMI
         Drops:
           - Index: 0
             Item: Bloody_Coin
