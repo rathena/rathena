@@ -14787,7 +14787,6 @@ void clif_parse_GMRecall2(int32 fd, map_session_data* sd)
 void clif_parse_GM_Item_Monster(int32 fd, map_session_data *sd)
 {
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	int32 mob_id = 0;
 	StringBuf command;
 	char *str;
 //#if PACKETVER >= 20131218
@@ -14831,17 +14830,30 @@ void clif_parse_GM_Item_Monster(int32 fd, map_session_data *sd)
 	}
 
 	// Monster
-	if ((mob_id = mobdb_searchname(str)) == 0)
-		mob_id = mobdb_checkid(atoi(str));
+	if (pc_can_use_command(sd, "monster", COMMAND_ATCOMMAND)) {
+		// If AegisName matches exactly, summon that monster (official behavior)
+		std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname(str);
+		// Otherwise, search for monster with that ID or name (rAthena added behavior)
+		if (mob == nullptr) {
+			// Check for ID first as this is faster; if search string is not a number it will return 0
+			int32 mob_id = util::strtoint32def(str);
+			if (mob_id == 0 || mobdb_checkid(mob_id) == 0) {
+				mob_id = mobdb_searchname(str);
 
-	std::shared_ptr<s_mob_db> mob = mob_db.find(mob_id);
-
-	if( mob != nullptr ) {
-		StringBuf_Init(&command);
-		StringBuf_Printf(&command, "%cmonster %s", atcommand_symbol, mob->sprite.c_str());
-		is_atcommand(fd, sd, StringBuf_Value(&command), 1);
-		StringBuf_Destroy(&command);
-		return;
+				if (mob_id != 0) {
+					mob = mob_db.find(mob_id);
+				}
+			}
+			else
+				mob = mob_db.find(mob_id);
+		}
+		// Call corresponding atcommand when a valid monster was found
+		if (mob != nullptr) {
+			char command[CHAT_SIZE_MAX];
+			safesnprintf(command, sizeof(command), "%cmonster %s", atcommand_symbol, mob->sprite.c_str());
+			is_atcommand(fd, sd, command, 1);
+			return;
+		}
 	}
 }
 

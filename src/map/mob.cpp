@@ -269,13 +269,14 @@ static bool mobdb_searchname_sub(uint16 mob_id, const char * const str, bool ful
 	
 	if( mobdb_checkid(mob_id) <= 0 )
 		return false; // invalid mob_id (includes clone check)
+	if (strcmpi(mob->sprite.c_str(), str) == 0)
+		return true; // If AegisName matches exactly, always return true
 	if(!mob->base_exp && !mob->job_exp && !mob_has_spawn(mob_id))
 		return false; // Monsters with no base/job exp and no spawn point are, by this criteria, considered "slave mobs" and excluded from search results
 	if( full_cmp ) {
 		// str must equal the db value
 		if( strcmpi(mob->name.c_str(), str) == 0 || 
-			strcmpi(mob->jname.c_str(), str) == 0 || 
-			strcmpi(mob->sprite.c_str(), str) == 0 )
+			strcmpi(mob->jname.c_str(), str) == 0)
 			return true;
 	} else {
 		// str must be in the db value
@@ -316,29 +317,37 @@ std::shared_ptr<s_mob_db> mobdb_search_aegisname( const char* str ){
 }
 
 /*==========================================
- * Searches up to N matches. Returns number of matches [Skotlex]
+ * Searches up to N matches. Prioritizing full matches first. Returns the number of matches
  *------------------------------------------*/
-uint16 mobdb_searchname_array_(const char *str, uint16 * out, uint16 size, bool full_cmp)
+uint16 mobdb_searchname_array(const char *str, uint16 * out, uint16 size)
 {
 	uint16 count = 0;
 	const auto &mob_list = mob_db.getCache();
 
-	for( const auto &mob : mob_list ) {
+	// Full compare first
+	for (const auto& mob : mob_list) {
 		if (mob == nullptr)
 			continue;
-		if( mobdb_searchname_sub(mob->id, str, full_cmp) ) {
-			if( count < size )
+		if (mobdb_searchname_sub(mob->id, str, true)) {
+			out[count] = mob->id;
+			if (++count >= size)
+				return count;
+		}
+	}
+	// If there are still free places, check if search string is contained in a name but not equal
+	if (count < size) {
+		for (const auto& mob : mob_list) {
+			if (mob == nullptr)
+				continue;
+			if (mobdb_searchname_sub(mob->id, str, false) && !mobdb_searchname_sub(mob->id, str, true)) {
 				out[count] = mob->id;
-			count++;
+				if (++count >= size)
+					return count;
+			}
 		}
 	}
 
 	return count;
-}
-
-uint16 mobdb_searchname_array(const char *str, uint16 * out, uint16 size)
-{
-	return mobdb_searchname_array_(str, out, size, false);
 }
 
 /*==========================================

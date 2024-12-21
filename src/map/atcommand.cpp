@@ -2273,8 +2273,17 @@ ACMD_FUNC(monster)
 		return -1;
 	}
 
-	if ((mob_id = mobdb_searchname(monster)) == 0) // check name first (to avoid possible name begining by a number)
-		mob_id = mobdb_checkid(atoi(monster));
+	// If AegisName matches exactly, summon that monster
+	std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname(monster);
+	if (mob != nullptr)
+		mob_id = mob->id;
+	else {
+		// Otherwise, search for monster with that ID or name
+		// Check for ID first as this is faster; if search string is not a number it will return 0
+		mob_id = util::strtoint32def(monster);
+		if (mob_id == 0 || mobdb_checkid(mob_id) == 0)
+			mob_id = mobdb_searchname(monster);
+	}
 
 	if (mob_id == 0) {
 		clif_displaymessage(fd, msg_txt(sd,40)); // Invalid monster ID or name.
@@ -7814,7 +7823,8 @@ ACMD_FUNC(mobinfo)
 	}
 
 	// If monster identifier/name argument is a name
-	if ((i = mobdb_checkid(strtoul(message, nullptr, 10))))
+	i = util::strtoint32def(message);
+	if (i != 0 && (i = mobdb_checkid(i)))
 	{
 		mob_ids[0] = i;
 		count = 1;
