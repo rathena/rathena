@@ -1701,14 +1701,11 @@ struct PACKET_ZC_MVP {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_MVP, 0x10c);
 
-// Kro remove this packet [Napster]
-#if PACKETVER < 20131223
 struct PACKET_ZC_MVP_GETTING_SPECIAL_EXP {
 	int16 packetType;
 	uint32 exp;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_MVP_GETTING_SPECIAL_EXP, 0x10b);
-#endif
 
 struct PACKET_ZC_THROW_MVPITEM {
 	int16 packetType;

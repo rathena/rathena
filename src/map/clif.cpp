@@ -1745,9 +1745,10 @@ int32 clif_spawn( struct block_list *bl, bool walking ){
 		}
 		break;
 	case BL_PET:
-		if (vd->head_bottom) { // needed to display pet equip properly
-			pet_data* pd = BL_CAST( BL_PET, bl );
-			clif_pet_equip_area( *pd );
+		// If the pet wears equip
+		if( vd->head_bottom != 0 ){
+			pet_data& pd = *reinterpret_cast<pet_data*>( bl );
+			clif_pet_equip_area( pd );
 		}
 		break;
 	}
@@ -2102,9 +2103,10 @@ void clif_move( struct unit_data& ud )
 		}
 	break;
 	case BL_PET:
-		if (vd->head_bottom) { // needed to display pet equip properly
-			pet_data* pd = reinterpret_cast<pet_data*>( bl );
-			clif_pet_equip_area( *pd );
+		// If the pet wears equip
+		if( vd->head_bottom != 0 ){
+			pet_data& pd = *reinterpret_cast<pet_data*>( bl );
+			clif_pet_equip_area( pd );
 		}
 		break;
 	}
@@ -5095,9 +5097,10 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 		}
 		break;
 	case BL_PET:
-		if (vd->head_bottom) { // needed to display pet equip properly
-			pet_data* pd = BL_CAST( BL_PET, bl );
-			clif_pet_equip( sd, *pd );
+		// If the pet wears equip
+		if( vd->head_bottom != 0 ){
+			pet_data& pd = *reinterpret_cast<pet_data*>( bl );
+			clif_pet_equip( sd, pd );
 		}
 		break;
 	}
@@ -6119,15 +6122,15 @@ bool clif_skill_nodamage( block_list* src, block_list& dst, uint16 skill_id, int
 
 /// Non-damaging ground skill effect.
 /// 0117 <skill id>.W <src id>.L <level>.W <x>.W <y>.W <tick>.L (ZC_NOTIFY_GROUNDSKILL)
-void clif_skill_poseffect( block_list& bl, uint16 skill_id, uint16 skill_lv, int32 x, int32 y, t_tick tick ){
+void clif_skill_poseffect( block_list& bl, uint16 skill_id, uint16 skill_lv, uint16 x, uint16 y, t_tick tick ){
 	PACKET_ZC_NOTIFY_GROUNDSKILL packet{};
 
 	packet.PacketType = HEADER_ZC_NOTIFY_GROUNDSKILL;
 	packet.SKID = skill_id;
 	packet.AID = bl.id;
 	packet.level = skill_lv;
-	packet.xPos = static_cast<decltype(packet.xPos)>( x );
-	packet.yPos = static_cast<decltype(packet.yPos)>( y );
+	packet.xPos = x;
+	packet.yPos = y;
 	packet.startTime = client_tick( tick );
 
 	if (disguised(&bl)) {
@@ -6263,15 +6266,15 @@ void clif_skill_estimation( map_session_data& sd, mob_data& md ){
 	packet.mdef = static_cast<decltype(packet.mdef)>( ((battle_config.estimation_type&1) ? md.status.mdef : 0 ) + ((battle_config.estimation_type&2) ? md.status.mdef2 : 0 ) );
 	packet.element = md.status.def_ele;
 	// The following caps negative attributes to 0 since the client displays them as 255-fix. [Skotlex]
-	packet.water = static_cast<decltype(packet.water)>( std::max( elemental_attribute_db.getAttribute(md.status.ele_lv, 1, md.status.def_ele), (int16)0 ) );
-	packet.earth = static_cast<decltype(packet.earth)>( std::max( elemental_attribute_db.getAttribute(md.status.ele_lv, 2, md.status.def_ele), (int16)0 ) );
-	packet.fire = static_cast<decltype(packet.fire)>( std::max( elemental_attribute_db.getAttribute(md.status.ele_lv, 3, md.status.def_ele), (int16)0 ) );
-	packet.wind = static_cast<decltype(packet.wind)>( std::max( elemental_attribute_db.getAttribute(md.status.ele_lv, 4, md.status.def_ele), (int16)0 ) );
-	packet.poison = static_cast<decltype(packet.poison)>( std::max( elemental_attribute_db.getAttribute(md.status.ele_lv, 5, md.status.def_ele), (int16)0 ) );
-	packet.holy = static_cast<decltype(packet.holy)>( std::max( elemental_attribute_db.getAttribute(md.status.ele_lv, 6, md.status.def_ele), (int16)0 ) );
-	packet.shadow = static_cast<decltype(packet.shadow)>( std::max( elemental_attribute_db.getAttribute(md.status.ele_lv, 7, md.status.def_ele), (int16)0 ) );
-	packet.ghost = static_cast<decltype(packet.ghost)>( std::max( elemental_attribute_db.getAttribute(md.status.ele_lv, 8, md.status.def_ele), (int16)0 ) );
-	packet.undead = static_cast<decltype(packet.undead)>( std::max( elemental_attribute_db.getAttribute(md.status.ele_lv, 9, md.status.def_ele), (int16)0 ) );
+	packet.water = static_cast<decltype(packet.water)>( std::max( elemental_attribute_db.getAttribute(md.status.ele_lv, ELE_WATER, md.status.def_ele), (int16)0 ) );
+	packet.earth = static_cast<decltype(packet.earth)>( std::max( elemental_attribute_db.getAttribute(md.status.ele_lv, ELE_EARTH, md.status.def_ele), (int16)0 ) );
+	packet.fire = static_cast<decltype(packet.fire)>( std::max( elemental_attribute_db.getAttribute(md.status.ele_lv, ELE_FIRE, md.status.def_ele), (int16)0 ) );
+	packet.wind = static_cast<decltype(packet.wind)>( std::max( elemental_attribute_db.getAttribute(md.status.ele_lv, ELE_WIND, md.status.def_ele), (int16)0 ) );
+	packet.poison = static_cast<decltype(packet.poison)>( std::max( elemental_attribute_db.getAttribute(md.status.ele_lv, ELE_POISON, md.status.def_ele), (int16)0 ) );
+	packet.holy = static_cast<decltype(packet.holy)>( std::max( elemental_attribute_db.getAttribute(md.status.ele_lv, ELE_HOLY, md.status.def_ele), (int16)0 ) );
+	packet.shadow = static_cast<decltype(packet.shadow)>( std::max( elemental_attribute_db.getAttribute(md.status.ele_lv, ELE_DARK, md.status.def_ele), (int16)0 ) );
+	packet.ghost = static_cast<decltype(packet.ghost)>( std::max( elemental_attribute_db.getAttribute(md.status.ele_lv, ELE_GHOST, md.status.def_ele), (int16)0 ) );
+	packet.undead = static_cast<decltype(packet.undead)>( std::max( elemental_attribute_db.getAttribute(md.status.ele_lv, ELE_UNDEAD, md.status.def_ele), (int16)0 ) );
 
 	clif_send( &packet, sizeof( packet ), &sd.bl, (sd.status.party_id > 0) ? PARTY_SAMEMAP : SELF );
 }
@@ -8497,8 +8500,8 @@ void clif_mvp_exp( map_session_data& sd, t_exp exp ){
 #if PACKETVER >= 20131223		// Kro remove this packet [Napster]
 	if (battle_config.mvp_exp_reward_message) {
 		char e_msg[CHAT_SIZE_MAX];
-		sprintf(e_msg, msg_txt(&sd, 717), exp);
-		clif_messagecolor( &sd.bl, color_table[COLOR_CYAN], e_msg, false, SELF );		// Congratulations! You are the MVP! Your reward EXP Points are %u !!
+		sprintf(e_msg, msg_txt(&sd, 717), exp); // Congratulations! You are the MVP! Your reward EXP Points are %u !!
+		clif_messagecolor( &sd.bl, color_table[COLOR_CYAN], e_msg, false, SELF );
 	}
 #else
 	PACKET_ZC_MVP_GETTING_SPECIAL_EXP packet{};

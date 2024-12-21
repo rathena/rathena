@@ -1189,10 +1189,6 @@
 	packet(0x043f,8);
 #endif
 
-// 2008-11-26aSakexe
-#if PACKETVER >= 20081126
-#endif
-
 // 2008-12-10aSakexe
 #if PACKETVER >= 20081210
 	parseable_packet( HEADER_CZ_SKILL_SELECT_RESPONSE, sizeof( PACKET_CZ_SKILL_SELECT_RESPONSE ), clif_parse_SkillSelectMenu, 0 );
@@ -1263,10 +1259,6 @@
 // 2008-11-12aRagexeRE
 #if PACKETVER >= 20081112
 	packet(0x043f,8);
-#endif
-
-// 2008-12-17aRagexeRE
-#if PACKETVER >= 20081217
 #endif
 
 // 2008-12-17bRagexeRE
