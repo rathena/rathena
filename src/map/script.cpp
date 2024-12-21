@@ -74,6 +74,7 @@ uint32 active_scripts;
 uint32 next_id;
 struct eri *st_ers;
 struct eri *stack_ers;
+static map_session_data* dummy_sd;
 
 static bool script_rid2sd_( struct script_state *st, map_session_data** sd, const char *func );
 
@@ -4835,6 +4836,12 @@ void do_final_script() {
 	ers_destroy(st_ers);
 	ers_destroy(stack_ers);
 	db_destroy(st_db);
+
+	if( dummy_sd != nullptr ){
+		dummy_sd->~map_session_data();
+		aFree( dummy_sd );
+		dummy_sd = nullptr;
+	}
 }
 /*==========================================
  * Initialization
@@ -4861,6 +4868,11 @@ void do_init_script(void) {
 	add_buildin_func();
 	constant_db.load();
 	script_hardcoded_constants();
+
+	CREATE( dummy_sd, map_session_data, 1 );
+	new( dummy_sd ) map_session_data();
+	dummy_sd->group_id = 99;
+	dummy_sd->fd = 0;
 }
 
 void script_reload(void) {
@@ -15612,36 +15624,42 @@ BUILDIN_FUNC(nude)
 }
 
 int32 atcommand_sub(struct script_state* st,int32 type) {
-	TBL_PC *sd, dummy_sd;
-	int32 fd;
-	const char *cmd;
+	map_session_data* sd;
 
-	cmd = script_getstr(st,2);
+	if( st->rid != 0 && !script_rid2sd( sd ) ){
+		return SCRIPT_CMD_FAILURE;
+	}else{
+		if( st->oid != 0 ){
+			block_list* bl = map_id2bl( st->oid );
 
-	if (st->rid) {
-		if( !script_rid2sd(sd) )
-			return SCRIPT_CMD_SUCCESS;
-
-		fd = sd->fd;
-	} else { //Use a dummy character.
-		sd = &dummy_sd;
-		fd = 0;
-
-		memset(&dummy_sd, 0, sizeof(TBL_PC));
-		if (st->oid) {
-			struct block_list* bl = map_id2bl(st->oid);
-			memcpy(&dummy_sd.bl, bl, sizeof(struct block_list));
-			if (bl->type == BL_NPC)
-				safestrncpy(dummy_sd.status.name, ((TBL_NPC*)bl)->name, NAME_LENGTH);
-			sd->mapindex = (bl->m > 0) ? map_id2index(bl->m) : 0;
+			safestrncpy( dummy_sd->status.name, status_get_name( bl ), sizeof( dummy_sd->status.name ) );
+			dummy_sd->bl.m = bl->m;
+			dummy_sd->bl.x = bl->x;
+			dummy_sd->bl.y = bl->y;
+			if( dummy_sd->bl.m > 0 ){
+				dummy_sd->mapindex = map_id2index( dummy_sd->bl.m );
+			}else{
+				dummy_sd->mapindex = 0;
+			}
+		}else{
+			snprintf( dummy_sd->status.name, sizeof( dummy_sd->status.name ), "script.cpp:%d", __LINE__ );
+			dummy_sd->bl.m = 0;
+			dummy_sd->bl.x = 0;
+			dummy_sd->bl.y = 0;
+			dummy_sd->mapindex = 0;
 		}
 
-		// Init Group ID, Level, & permissions
-		sd->group_id = 99;
-		pc_group_pc_load( sd );
+		if( dummy_sd->group == nullptr ){
+			pc_group_pc_load( dummy_sd );
+		}
+
+		// Use the dummy character.
+		sd = dummy_sd;
 	}
 
-	if (!is_atcommand(fd, sd, cmd, type)) {
+	const char* cmd = script_getstr( st, 2 );
+
+	if( !is_atcommand( sd->fd, sd, cmd, type ) ){
 		ShowWarning("buildin_atcommand: failed to execute command '%s'\n", cmd);
 		script_reportsrc(st);
 		return SCRIPT_CMD_FAILURE;
