@@ -2280,8 +2280,8 @@ ACMD_FUNC(monster)
 	else {
 		// Otherwise, search for monster with that ID or name
 		// Check for ID first as this is faster; if search string is not a number it will return 0
-		mob_id = mobdb_checkid(util::strtoint32def(monster));
-		if (mob_id == 0)
+		mob_id = util::strtoint32def(monster);
+		if (mob_id == 0 || mobdb_checkid(mob_id) == 0)
 			mob_id = mobdb_searchname(monster);
 	}
 

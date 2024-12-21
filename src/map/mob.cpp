@@ -317,7 +317,7 @@ std::shared_ptr<s_mob_db> mobdb_search_aegisname( const char* str ){
 }
 
 /*==========================================
- * Searches up to N matches. Prioritizing full matches first. Returns number of matches [Skotlex]
+ * Searches up to N matches. Prioritizing full matches first. Returns the number of matches
  *------------------------------------------*/
 uint16 mobdb_searchname_array(const char *str, uint16 * out, uint16 size)
 {
@@ -329,10 +329,9 @@ uint16 mobdb_searchname_array(const char *str, uint16 * out, uint16 size)
 		if (mob == nullptr)
 			continue;
 		if( mobdb_searchname_sub(mob->id, str, true) ) {
-			if( count < size )
-				out[count] = mob->id;
+			out[count] = mob->id;
 			if (++count >= size)
-				break;
+				return count;
 		}
 	}
 	// If there are still free places, check if search string is contained in a name but not equal
@@ -341,10 +340,9 @@ uint16 mobdb_searchname_array(const char *str, uint16 * out, uint16 size)
 			if (mob == nullptr)
 				continue;
 			if (mobdb_searchname_sub(mob->id, str, false) && !mobdb_searchname_sub(mob->id, str, true)) {
-				if (count < size)
-					out[count] = mob->id;
+				out[count] = mob->id;
 				if (++count >= size)
-					break;
+					return count;
 			}
 		}
 	}

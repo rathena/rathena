@@ -14836,17 +14836,21 @@ void clif_parse_GM_Item_Monster(int32 fd, map_session_data *sd)
 		// Otherwise, search for monster with that ID or name (rAthena added behavior)
 		if (mob == nullptr) {
 			// Check for ID first as this is faster; if search string is not a number it will return 0
-			int32 mob_id = mobdb_checkid(util::strtoint32def(str));
-			if (mob_id == 0)
+			int32 mob_id = util::strtoint32def(str);
+			if (mob_id == 0 || mobdb_checkid(mob_id) == 0){
 				mob_id = mobdb_searchname(str);
-			mob = mob_db.find(mob_id);
+
+				if (mob_id != 0){
+					mob = mob_db.find(mob_id);
+				}
+			else
+				mob = mob_db.find(mob_id);
 		}
 		// Call corresponding atcommand when a valid monster was found
 		if (mob != nullptr) {
-			StringBuf_Init(&command);
-			StringBuf_Printf(&command, "%cmonster %s", atcommand_symbol, mob->sprite.c_str());
-			is_atcommand(fd, sd, StringBuf_Value(&command), 1);
-			StringBuf_Destroy(&command);
+			char command[CHAT_SIZE_MAX];
+			safesnprintf(command, sizeof(command), "%cmonster %s", atcommand_symbol, mob->sprite.c_str());
+			is_atcommand(fd, sd, command, 1);
 			return;
 		}
 	}

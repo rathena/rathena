@@ -132,11 +132,11 @@ int32 rathena::util::strtoint32def(const char* str, int32 def) {
 	int32 result = std::strtol(str, &str_end, 10);
 
 	if (str_end != nullptr && *str_end != '\0') {
-		result = def;
+		return def;
 	}
 
 	if (errno == ERANGE) {
-		result = def;
+		return def;
 	}
 
 	return result;
