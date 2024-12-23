@@ -350,6 +350,7 @@ struct mob_data {
 	struct s_dmglog {
 		int32 id; //char id
 		uint32 dmg;
+		uint32 attdmg;
 		uint32 flag : 2; //0: Normal. 1: Homunc exp. 2: Pet exp
 	} dmglog[DAMAGELOG_SIZE];
 	uint32 spotted_log[DAMAGELOG_SIZE];
@@ -515,7 +516,7 @@ int32 mob_spawn(struct mob_data *md);
 TIMER_FUNC(mob_delayspawn);
 int32 mob_setdelayspawn(struct mob_data *md);
 int32 mob_parse_dataset(struct spawn_data *data);
-void mob_log_damage(struct mob_data *md, struct block_list *src, int32 damage);
+void mob_log_damage(struct mob_data *md, struct block_list *src, int32 damage, int32 attdamage = 0);
 void mob_damage(struct mob_data *md, struct block_list *src, int32 damage);
 int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type);
 void mob_revive(struct mob_data *md, uint32 hp);

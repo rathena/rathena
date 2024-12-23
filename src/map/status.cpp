@@ -1585,7 +1585,8 @@ int32 status_damage(struct block_list *src,struct block_list *target,int64 dhp, 
 	dhp = cap_value(dhp, INT_MIN, INT_MAX);
 	switch (target->type) {
 	case BL_PC:
-		pc_damage(reinterpret_cast<map_session_data*>(target), src, hp, sp, ap); break;
+		pc_damage(reinterpret_cast<map_session_data*>(target), src, hp, sp, ap);
+		break;
 	case BL_MOB:
 		mob_damage(reinterpret_cast<mob_data*>(target), src, (int32)dhp);
 		break;
@@ -1599,6 +1600,11 @@ int32 status_damage(struct block_list *src,struct block_list *target,int64 dhp, 
 		elemental_heal(reinterpret_cast<s_elemental_data*>(target), hp, sp);
 		break;
 	}
+
+	// Normal attack damage is logged in the monster's dmglog as attack damage
+	// This counts as exp tap and is used for determining the MVP
+	if (src && src->type == BL_MOB && skill_id == 0)
+		mob_log_damage(reinterpret_cast<mob_data*>(src), target, 0, (int32)dhp);
 
 	if( src && target->type == BL_PC && ((TBL_PC*)target)->disguise ) { // Stop walking when attacked in disguise to prevent walk-delay bug
 		unit_stop_walking( target, 1 );
