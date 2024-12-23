@@ -8559,18 +8559,39 @@ void status_calc_slave_mode(mob_data& md)
  * @param bl: Object whose name to get [PC|MOB|PET|HOM|NPC]
  * @return name or "Unknown" if any other bl->type than noted above
  */
-const char* status_get_name(struct block_list *bl)
-{
-	nullpo_ret(bl);
-	switch (bl->type) {
-		case BL_PC:	return ((TBL_PC *)bl)->fakename[0] != '\0' ? ((TBL_PC*)bl)->fakename : ((TBL_PC*)bl)->status.name;
-		case BL_MOB:	return ((TBL_MOB*)bl)->name;
-		case BL_PET:	return ((TBL_PET*)bl)->pet.name;
-		case BL_HOM:	return ((TBL_HOM*)bl)->homunculus.name;
-		case BL_MER:	return ((TBL_MER *)bl)->db->name.c_str();	// They only have database names which are global, not specific to GID.
-		case BL_NPC:	return ((TBL_NPC*)bl)->name;
-		case BL_ELEM:	return ((TBL_ELEM *)bl)->db->name.c_str(); // They only have database names which are global, not specific to GID.
+const char* status_get_name( block_list& bl ){
+	switch( bl.type ){
+		case BL_PC: {
+				map_session_data& sd = reinterpret_cast<map_session_data&>( bl );
+
+				if( sd.fakename[0] != '\0' ){
+					return sd.fakename;
+				}else{
+					return sd.status.name;
+				}
+			} break;
+
+		case BL_MOB:
+			return reinterpret_cast<mob_data&>( bl ).name;
+
+		case BL_PET:
+			return reinterpret_cast<pet_data&>( bl ).pet.name;
+
+		case BL_HOM:
+			return reinterpret_cast<homun_data&>( bl ).homunculus.name;
+
+		case BL_MER:
+			// They only have database names which are global, not specific to GID.
+			return reinterpret_cast<s_mercenary_data&>( bl ).db->name.c_str();
+
+		case BL_NPC:
+			return reinterpret_cast<npc_data&>( bl ).name;
+
+		case BL_ELEM:
+			// They only have database names which are global, not specific to GID.
+			return reinterpret_cast<s_elemental_data&>( bl ).db->name.c_str();
 	}
+
 	return "Unknown";
 }
 
