@@ -2400,14 +2400,16 @@ TIMER_FUNC(mob_respawn){
 	return 1;
 }
 
-void mob_log_damage(mob_data* md, block_list* src, int32 damage, int32 attdamage)
+void mob_log_damage(mob_data* md, block_list* src, int32 damage, int32 damage_tanked)
 {
 	uint32 char_id = 0;
 	int32 flag = MDLF_NORMAL;
 
 	if( damage < 0 )
 		return; //Do nothing for absorbed damage.
-	if( !damage && !attdamage && !(src->type&DEFAULT_ENEMY_TYPE(md)) )
+	if (damage_tanked < 0)
+		return; //Just to make sure we don't subtract it (should not happen)
+	if( !damage && !damage_tanked && !(src->type&DEFAULT_ENEMY_TYPE(md)) )
 		return; //Do not log non-damaging effects from non-enemies.
 
 	switch( src->type )
@@ -2502,7 +2504,7 @@ void mob_log_damage(mob_data* md, block_list* src, int32 damage, int32 attdamage
 				md->dmglog[i].flag= flag;
 				// Damage is added outside the loop, we reset it here to be safe
 				md->dmglog[i].dmg = 0;
-				md->dmglog[i].attdmg = 0;
+				md->dmglog[i].dmg_tanked = 0;
 
 				if( md->get_bosstype() == BOSSTYPE_MVP )
 					pc_damage_log_add(map_charid2sd(char_id),md->bl.id);
@@ -2512,7 +2514,7 @@ void mob_log_damage(mob_data* md, block_list* src, int32 damage, int32 attdamage
 		// Character or empty slot was found, just add damage to it
 		if (i < DAMAGELOG_SIZE) {
 			md->dmglog[i].dmg += damage;
-			md->dmglog[i].attdmg += attdamage;
+			md->dmglog[i].dmg_tanked += damage_tanked;
 		}
 		else {
 			// Damage log is full, remove oldest entry
@@ -2520,14 +2522,14 @@ void mob_log_damage(mob_data* md, block_list* src, int32 damage, int32 attdamage
 				md->dmglog[i].id = md->dmglog[i+1].id;
 				md->dmglog[i].flag = md->dmglog[i+1].flag;
 				md->dmglog[i].dmg = md->dmglog[i+1].dmg;
-				md->dmglog[i].attdmg = md->dmglog[i+1].attdmg;
+				md->dmglog[i].dmg_tanked = md->dmglog[i+1].dmg_tanked;
 			}
 
 			// Add new character to damage log at last (newest) position
 			md->dmglog[DAMAGELOG_SIZE-1].id  = char_id;
 			md->dmglog[DAMAGELOG_SIZE-1].flag= flag;
 			md->dmglog[DAMAGELOG_SIZE-1].dmg = damage;
-			md->dmglog[DAMAGELOG_SIZE-1].attdmg = attdamage;
+			md->dmglog[DAMAGELOG_SIZE-1].dmg_tanked = damage_tanked;
 
 			if( md->get_bosstype() == BOSSTYPE_MVP )
 				pc_damage_log_add(map_charid2sd(char_id),md->bl.id);

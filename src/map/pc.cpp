@@ -14497,7 +14497,7 @@ static void pc_clear_log_damage_sub(uint32 char_id, struct mob_data *md)
 	if (i < DAMAGELOG_SIZE) {
 		md->dmglog[i].id = 0;
 		md->dmglog[i].dmg = 0;
-		md->dmglog[i].attdmg = 0;
+		md->dmglog[i].dmg_tanked = 0;
 		md->dmglog[i].flag = 0;
 	}
 }

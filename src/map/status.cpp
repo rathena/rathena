@@ -1588,7 +1588,7 @@ int32 status_damage(struct block_list *src,struct block_list *target,int64 dhp, 
 		pc_damage(reinterpret_cast<map_session_data*>(target), src, hp, sp, ap);
 		break;
 	case BL_MOB:
-		mob_damage(reinterpret_cast<mob_data*>(target), src, (int32)dhp);
+		mob_damage(reinterpret_cast<mob_data*>(target), src, static_cast<int32>(dhp));
 		break;
 	case BL_HOM:
 		hom_heal(reinterpret_cast<homun_data&>(*target), hp != 0, sp != 0);
