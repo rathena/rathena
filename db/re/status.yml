@@ -765,7 +765,7 @@ Body:
       OverlapIgnoreLevel: true
       RemoveOnHermode: true
     Script: |
-      bonus bMatk, getstatus(SC_MATKPOTION, 1);  /* TODO: hidden in status window */
+      bonus bMatk2, getstatus(SC_MATKPOTION, 1);
   - Status: Wedding
     States:
       NoAttack: true
