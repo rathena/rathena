@@ -111,6 +111,12 @@ struct AccountDB {
 	/// Removes the web auth token for all accounts
 	bool (*remove_webtokens)(AccountDB* self);
 
+#ifdef VIP_ENABLE
+	bool (*enable_monitor_vip)( AccountDB* self, const uint32 account_id, time_t vip_time );
+
+	bool (*disable_monitor_vip)( AccountDB* self, const uint32 account_id );
+#endif
+
 	/// Modifies the data of an existing account.
 	/// Uses acc->account_id to identify the account.
 	///
