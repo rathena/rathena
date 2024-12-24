@@ -1604,7 +1604,7 @@ int32 status_damage(struct block_list *src,struct block_list *target,int64 dhp, 
 	// Normal attack damage is logged in the monster's dmglog as attack damage
 	// This counts as exp tap and is used for determining the MVP
 	if (src && src->type == BL_MOB && skill_id == 0)
-		mob_log_damage(reinterpret_cast<mob_data*>(src), target, 0, (int32)dhp);
+		mob_log_damage(reinterpret_cast<mob_data*>(src), target, 0, static_cast<int32>(dhp));
 
 	if( src && target->type == BL_PC && ((TBL_PC*)target)->disguise ) { // Stop walking when attacked in disguise to prevent walk-delay bug
 		unit_stop_walking( target, 1 );

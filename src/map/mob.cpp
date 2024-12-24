@@ -2400,7 +2400,7 @@ TIMER_FUNC(mob_respawn){
 	return 1;
 }
 
-void mob_log_damage(struct mob_data *md, struct block_list *src, int32 damage, int32 attdamage)
+void mob_log_damage(mob_data* md, block_list* src, int32 damage, int32 attdamage)
 {
 	uint32 char_id = 0;
 	int32 flag = MDLF_NORMAL;
@@ -2490,7 +2490,7 @@ void mob_log_damage(struct mob_data *md, struct block_list *src, int32 damage, i
 
 	if( char_id )
 	{ //Log damage...
-		int32 i;
+		size_t i;
 		for (i = 0; i < DAMAGELOG_SIZE; i++) {
 			// Character is already in damage log
 			if(md->dmglog[i].id==char_id &&
