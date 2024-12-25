@@ -1985,9 +1985,6 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 			// Target within range and potentially able to use normal attack, engage
 			if (md->ud.target != tbl->id || md->ud.attacktimer == INVALID_TIMER)
 			{ //Only attack if no more attack delay left
-				if (tbl->type == BL_PC)
-					mob_log_damage(md, tbl, 0); //Log interaction (counts as 'attacker' for the exp bonus)
-
 				if (!(mode&MD_RANDOMTARGET))
 					unit_attack(&md->bl,tbl->id,1);
 				else { // Attack once and find a new random target
@@ -2403,14 +2400,16 @@ TIMER_FUNC(mob_respawn){
 	return 1;
 }
 
-void mob_log_damage(struct mob_data *md, struct block_list *src, int32 damage)
+void mob_log_damage(mob_data* md, block_list* src, int32 damage, int32 damage_tanked)
 {
 	uint32 char_id = 0;
 	int32 flag = MDLF_NORMAL;
 
 	if( damage < 0 )
 		return; //Do nothing for absorbed damage.
-	if( !damage && !(src->type&DEFAULT_ENEMY_TYPE(md)) )
+	if (damage_tanked < 0)
+		return; //Just to make sure we don't subtract it (should not happen)
+	if( !damage && !damage_tanked && !(src->type&DEFAULT_ENEMY_TYPE(md)) )
 		return; //Do not log non-damaging effects from non-enemies.
 
 	switch( src->type )
@@ -2493,29 +2492,41 @@ void mob_log_damage(struct mob_data *md, struct block_list *src, int32 damage)
 
 	if( char_id )
 	{ //Log damage...
-		int32 i,minpos;
-		uint32 mindmg;
-		for(i=0,minpos=DAMAGELOG_SIZE-1,mindmg=UINT_MAX;i<DAMAGELOG_SIZE;i++){
+		size_t i;
+		for (i = 0; i < DAMAGELOG_SIZE; i++) {
+			// Character is already in damage log
 			if(md->dmglog[i].id==char_id &&
 				md->dmglog[i].flag==flag)
 				break;
-			if(md->dmglog[i].id==0) {	//Store data in first empty slot.
+			// Store data in first empty slot.
+			if (md->dmglog[i].id == 0) {
 				md->dmglog[i].id  = char_id;
 				md->dmglog[i].flag= flag;
+				// Damage is added outside the loop, we reset it here to be safe
+				md->dmglog[i].dmg = 0;
+				md->dmglog[i].dmg_tanked = 0;
 				break;
 			}
-			if(md->dmglog[i].dmg<mindmg && i)
-			{	//Never overwrite first hit slot (he gets double exp bonus)
-				minpos=i;
-				mindmg=md->dmglog[i].dmg;
-			}
 		}
-		if(i<DAMAGELOG_SIZE)
-			md->dmglog[i].dmg+=damage;
+		// Character or empty slot was found, just add damage to it
+		if (i < DAMAGELOG_SIZE) {
+			md->dmglog[i].dmg += damage;
+			md->dmglog[i].dmg_tanked += damage_tanked;
+		}
 		else {
-			md->dmglog[minpos].id  = char_id;
-			md->dmglog[minpos].flag= flag;
-			md->dmglog[minpos].dmg = damage;
+			// Damage log is full, remove oldest entry
+			for (i = 0; i < DAMAGELOG_SIZE-1; i++) {
+				md->dmglog[i].id = md->dmglog[i+1].id;
+				md->dmglog[i].flag = md->dmglog[i+1].flag;
+				md->dmglog[i].dmg = md->dmglog[i+1].dmg;
+				md->dmglog[i].dmg_tanked = md->dmglog[i+1].dmg_tanked;
+			}
+
+			// Add new character to damage log at last (newest) position
+			md->dmglog[DAMAGELOG_SIZE-1].id  = char_id;
+			md->dmglog[DAMAGELOG_SIZE-1].flag= flag;
+			md->dmglog[DAMAGELOG_SIZE-1].dmg = damage;
+			md->dmglog[DAMAGELOG_SIZE-1].dmg_tanked = damage_tanked;
 		}
 	}
 	return;
