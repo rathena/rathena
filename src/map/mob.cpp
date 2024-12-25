@@ -2505,9 +2505,6 @@ void mob_log_damage(mob_data* md, block_list* src, int32 damage, int32 damage_ta
 				// Damage is added outside the loop, we reset it here to be safe
 				md->dmglog[i].dmg = 0;
 				md->dmglog[i].dmg_tanked = 0;
-
-				if( md->get_bosstype() == BOSSTYPE_MVP )
-					pc_damage_log_add(map_charid2sd(char_id),md->bl.id);
 				break;
 			}
 		}
@@ -2530,9 +2527,6 @@ void mob_log_damage(mob_data* md, block_list* src, int32 damage, int32 damage_ta
 			md->dmglog[DAMAGELOG_SIZE-1].flag= flag;
 			md->dmglog[DAMAGELOG_SIZE-1].dmg = damage;
 			md->dmglog[DAMAGELOG_SIZE-1].dmg_tanked = damage_tanked;
-
-			if( md->get_bosstype() == BOSSTYPE_MVP )
-				pc_damage_log_add(map_charid2sd(char_id),md->bl.id);
 		}
 	}
 	return;
@@ -2903,9 +2897,6 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 				if(zeny) // zeny from mobs [Valaris]
 					pc_getzeny(tmpsd[i], zeny, LOG_TYPE_PICKDROP_MONSTER);
 			}
-
-			if( md->get_bosstype() == BOSSTYPE_MVP )
-				pc_damage_log_clear(tmpsd[i],md->bl.id);
 		}
 
 		for( i = 0; i < pnum; i++ ) //Party share.

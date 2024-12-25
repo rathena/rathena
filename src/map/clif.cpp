@@ -11398,7 +11398,6 @@ void clif_parse_QuitGame(int32 fd, map_session_data *sd)
 	if( !sd->sc.getSCE(SC_CLOAKING) && !sd->sc.getSCE(SC_HIDING) && !sd->sc.getSCE(SC_CHASEWALK) && !sd->sc.getSCE(SC_CLOAKINGEXCEED) && !sd->sc.getSCE(SC_SUHIDE) && !sd->sc.getSCE(SC_NEWMOON) &&
 		(!battle_config.prevent_logout || sd->canlog_tick == 0 || DIFF_TICK(gettick(), sd->canlog_tick) > battle_config.prevent_logout) )
 	{
-		pc_damage_log_clear(sd,0);
 		clif_disconnect_ack(sd, 0);
 		flush_fifo( fd );
 		if( battle_config.drop_connection_on_quit ){
@@ -11784,7 +11783,6 @@ void clif_parse_Restart(int32 fd, map_session_data *sd)
 		if( !sd->sc.getSCE(SC_CLOAKING) && !sd->sc.getSCE(SC_HIDING) && !sd->sc.getSCE(SC_CHASEWALK) && !sd->sc.getSCE(SC_CLOAKINGEXCEED) && !sd->sc.getSCE(SC_SUHIDE) && !sd->sc.getSCE(SC_NEWMOON) &&
 			(!battle_config.prevent_logout || sd->canlog_tick == 0 || DIFF_TICK(gettick(), sd->canlog_tick) > battle_config.prevent_logout) )
 		{	//Send to char-server for character selection.
-			pc_damage_log_clear(sd,0);
 			chrif_charselectreq(sd, session[fd]->client_addr);
 		} else {
 			clif_disconnect_ack(sd, 1);
