@@ -14,8 +14,7 @@ fi
 
 SHOULD_EXIT=0
 
-# only check files in common for now
-for FILE in $(ls src/common/*.hpp src/common/*.cpp)
+for FILE in $(ls src/**/*.hpp src/**/*.cpp)
 do
     CHANGES=$(diff -u <(cat "$FILE") <($CLANG_FORMAT_BIN -Werror "$FILE"))
     if [ -n "$CHANGES" ]; then
