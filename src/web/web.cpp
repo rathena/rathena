@@ -85,17 +85,17 @@ char partybookings_table[32] = "party_bookings";
 char guild_db_table[32] = "guild";
 char char_db_table[32] = "char";
 
-int parse_console(const char * buf) {
+int32 parse_console(const char * buf) {
 	return 1;
 }
 
 std::thread svr_thr;
 
 /// Msg_conf tayloring
-int web_msg_config_read(char *cfgName){
+int32 web_msg_config_read(char *cfgName){
 	return _msg_config_read(cfgName,WEB_MAX_MSG,msg_table);
 }
-const char* web_msg_txt(int msg_number){
+const char* web_msg_txt(int32 msg_number){
 	return _msg_txt(msg_number,WEB_MAX_MSG,msg_table);
 }
 void web_do_final_msg(void){
@@ -161,7 +161,7 @@ bool web_config_read(const char* cfgName, bool normal) {
 /*==========================================
  * read config file
  *------------------------------------------*/
-int inter_config_read(const char* cfgName)
+int32 inter_config_read(const char* cfgName)
 {
 	char line[1024];
 	FILE* fp;
@@ -270,7 +270,7 @@ void web_set_defaults() {
 
 /// Constructor destructor and signal handlers
 
-int web_sql_init(void) {
+int32 web_sql_init(void) {
 	// login db connection
 	login_handle = Sql_Malloc();
 	ShowInfo("Connecting to the Login DB server.....\n");
@@ -344,7 +344,7 @@ int web_sql_init(void) {
 	return 0;
 }
 
-int web_sql_close(void)
+int32 web_sql_close(void)
 {
 	ShowStatus("Close Login DB Connection....\n");
 	Sql_Free(login_handle);
@@ -423,7 +423,7 @@ void logger(const Request & req, const Response & res) {
 }
 
 
-bool WebServer::initialize( int argc, char* argv[] ){
+bool WebServer::initialize( int32 argc, char* argv[] ){
 #ifndef WEB_SERVER_ENABLE
 	ShowStatus("The web-server is " CL_GREEN "stopping" CL_RESET " (PACKETVER too old to use).\n\n");
 	this->signal_shutdown();
@@ -469,7 +469,7 @@ bool WebServer::initialize( int argc, char* argv[] ){
 		http_server->listen(web_config.web_ip.c_str(), web_config.web_port);
 	});
 
-	for (int i = 0; i < 10; i++) {
+	for (int32 i = 0; i < 10; i++) {
 		if( global_core->get_status() == e_core_status::STOPPING ){
 			return true;
 		}
@@ -494,6 +494,6 @@ void WebServer::handle_main( t_tick next ){
 	std::this_thread::sleep_for( std::chrono::milliseconds( next ) );
 }
 
-int main( int argc, char *argv[] ){
+int32 main( int32 argc, char *argv[] ){
 	return main_core<WebServer>( argc, argv );
 }

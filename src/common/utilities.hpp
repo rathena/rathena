@@ -27,14 +27,19 @@ class cScopeTimer {
 	cScopeTimer();
 };
 
-int levenshtein(const std::string& s1, const std::string& s2);
+int32 levenshtein( const std::string &s1, const std::string &s2 );
 
 namespace rathena {
-namespace util {
-template <typename K, typename V>
-bool map_exists(std::map<K, V>& map, K key) {
-	return map.find(key) != map.end();
-}
+	namespace util {
+		/**
+		 * Determine if a key-value pair exists in the map
+		 * @param map: Map to search through
+		 * @param key: Key wanted
+		 * @return True on success or false otherwise
+		 */
+		template <typename K, typename V> bool map_exists( std::map<K,V>& map, K key ){
+			return map.find( key ) != map.end();
+		}
 
 /**
  * Find a key-value pair and return the key value as a reference
@@ -102,8 +107,18 @@ void map_resize(std::map<K, V>& map, S size) {
 
 	std::advance(it, size);
 
-	map.erase(it, map.end());
-}
+			map.erase(it, map.end());
+		}
+
+		/**
+		 * Determine if a key-value pair exists in the unordered map
+		 * @param map: Unordered Map to search through
+		 * @param key: Key wanted
+		 * @return True on success or false otherwise
+		 */
+		template <typename K, typename V> bool umap_exists(std::unordered_map<K, V> &map, K key) {
+			return map.find(key) != map.end();
+		}
 
 /**
  * Find a key-value pair and return the key value as a reference
@@ -332,15 +347,25 @@ void tolower(T& string) {
  */
 void string_left_pad_inplace(std::string& str, char padding, size_t num);
 
-/**
- * Pad string with arbitrary character
- * @param original: String to pad
- * @param padding: Padding character
- * @param num: Maximum length of padding
- *
- * @return A copy of original string with padding added
- */
-std::string string_left_pad(const std::string& original, char padding, size_t num);
+		/**
+		* Pad string with arbitrary character
+		* @param original: String to pad
+		* @param padding: Padding character
+		* @param num: Maximum length of padding
+		*
+		* @return A copy of original string with padding added
+		*/
+		std::string string_left_pad(const std::string& original, char padding, size_t num);
+
+		/**
+		* Converts a string (char pointer) to an int32 value
+		* Returns the given default value when conversion fails or string is not a number
+		* @param str: String to convert
+		* @param def: Default value that should be returned on failure
+		*
+		* @return Converted int32 value
+		*/
+		int32 strtoint32def(const char* str, int32 def = 0);
 
 /**
  * Encode base10 number to base62. Originally by lututui

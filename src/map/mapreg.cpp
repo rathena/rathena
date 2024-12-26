@@ -62,7 +62,7 @@ char* mapreg_readregstr(int64 uid)
 bool mapreg_setreg(int64 uid, int64 val)
 {
 	struct mapreg_save *m;
-	int num = script_getvarid(uid);
+	int32 num = script_getvarid(uid);
 	uint32 i = script_getvaridx(uid);
 	const char* name = get_str(num);
 
@@ -121,7 +121,7 @@ bool mapreg_setreg(int64 uid, int64 val)
 bool mapreg_setregstr(int64 uid, const char* str)
 {
 	struct mapreg_save *m;
-	int num = script_getvarid(uid);
+	int32 num = script_getvarid(uid);
 	uint32 i = script_getvaridx(uid);
 	const char* name = get_str(num);
 
@@ -186,28 +186,27 @@ static void script_load_mapreg(void)
 	   | varname | index | value |
 	   +-------------------------+
 	                                */
-	SqlStmt* stmt = SqlStmt_Malloc(mmysql_handle);
+	SqlStmt stmt{ *mmysql_handle };
 	char varname[32+1];
 	uint32 index;
 	char value[255+1];
 	uint32 length;
 
-	if ( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `varname`, `index`, `value` FROM `%s`", mapreg_table)
-	  || SQL_ERROR == SqlStmt_Execute(stmt)
+	if ( SQL_ERROR == stmt.Prepare("SELECT `varname`, `index`, `value` FROM `%s`", mapreg_table)
+	  || SQL_ERROR == stmt.Execute()
 	  ) {
 		SqlStmt_ShowDebug(stmt);
-		SqlStmt_Free(stmt);
 		return;
 	}
 
 	skip_insert = true;
 
-	SqlStmt_BindColumn(stmt, 0, SQLDT_STRING, &varname[0], sizeof(varname), &length, nullptr);
-	SqlStmt_BindColumn(stmt, 1, SQLDT_UINT32, &index, 0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 2, SQLDT_STRING, &value[0], sizeof(value), nullptr, nullptr);
+	stmt.BindColumn(0, SQLDT_STRING, &varname[0], sizeof(varname), &length, nullptr);
+	stmt.BindColumn(1, SQLDT_UINT32, &index, 0, nullptr, nullptr);
+	stmt.BindColumn(2, SQLDT_STRING, &value[0], sizeof(value), nullptr, nullptr);
 
-	while ( SQL_SUCCESS == SqlStmt_NextRow(stmt) ) {
-		int s = add_str(varname);
+	while ( SQL_SUCCESS == stmt.NextRow() ) {
+		int32 s = add_str(varname);
 		int64 uid = reference_uid(s, index);
 
 		if( i64db_exists(regs.vars, uid) ) {
@@ -220,8 +219,6 @@ static void script_load_mapreg(void)
 			mapreg_setreg(uid, strtoll(value,nullptr,10));
 		}
 	}
-
-	SqlStmt_Free(stmt);
 
 	skip_insert = false;
 	mapreg_dirty = false;
@@ -237,7 +234,7 @@ static void script_save_mapreg(void)
 		struct mapreg_save *m;
 		for (m = static_cast<mapreg_save *>(dbi_first(iter)); dbi_exists(iter); m = static_cast<mapreg_save *>(dbi_next(iter))) {
 			if (m->save) {
-				int num = script_getvarid(m->uid);
+				int32 num = script_getvarid(m->uid);
 				uint32 i = script_getvaridx(m->uid);
 				const char* name = get_str(num);
 				if (!m->is_string) {
@@ -274,7 +271,7 @@ static TIMER_FUNC(script_autosave_mapreg){
  *
  * @see DBApply
  */
-int mapreg_destroyreg(DBKey key, DBData *data, va_list ap)
+int32 mapreg_destroyreg(DBKey key, DBData *data, va_list ap)
 {
 	struct mapreg_save *m = nullptr;
 

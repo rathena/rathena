@@ -20,7 +20,7 @@
 #endif
 
 #if defined(BUILDBOT)
-extern int buildbotflag;
+extern int32 buildbotflag;
 #endif
 
 #define UNKNOWN_VERSION '\x02'
@@ -29,7 +29,7 @@ extern char* SERVER_NAME;
 extern char db_path[12]; /// relative path for db from servers
 extern char conf_path[12]; /// relative path for conf from servers
 
-extern int parse_console(const char* buf);
+extern int32 parse_console(const char* buf);
 const char* get_svn_revision(void);
 const char* get_git_hash(void);
 
@@ -66,7 +66,7 @@ private:
 	bool m_crashed;
 
 protected:
-	virtual bool initialize(int argc, char* argv[]);
+	virtual bool initialize(int32 argc, char* argv[]);
 	virtual void handle_main(t_tick next);
 	virtual void finalize();
 	virtual void handle_crash();
@@ -88,15 +88,16 @@ public:
 	void set_run_once(bool run_once);
 	void signal_crash();
 	void signal_shutdown();
-	int start(int argc, char* argv[]);
+	int32 start(int32 argc, char* argv[]);
 };
+
 } // namespace server_core
 } // namespace rathena
 
 extern rathena::server_core::Core* global_core;
 
 template <typename T>
-int main_core(int argc, char* argv[]) {
+int32 main_core(int32 argc, char* argv[]) {
 	T server = {};
 
 	global_core = &server;

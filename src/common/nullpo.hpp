@@ -195,7 +195,7 @@
  * @param target: Target to check
  * @return 0 on success or 1 on nullptr
  */
-int nullpo_chk(const char *file, int line, const char *func, const void *target);
+int32 nullpo_chk(const char *file, int32 line, const char *func, const void *target);
 
 /**
  * Check for nullptr pointer and output detailed information.
@@ -206,8 +206,9 @@ int nullpo_chk(const char *file, int line, const char *func, const void *target)
  * @param fmt: Passed to vprintf
  * @return 0 on success or 1 on nullptr
  */
-int nullpo_chk_f(const char *file, int line, const char *func, const void *target, const char *fmt, ...)
-	__attribute__((format(printf, 5, 6)));
+int32 nullpo_chk_f(const char *file, int32 line, const char *func, const void *target,
+                 const char *fmt, ...)
+                 __attribute__((format(printf,5,6)));
 
 /**
  * Display information of the code that cause this function to trigger.
@@ -216,7 +217,7 @@ int nullpo_chk_f(const char *file, int line, const char *func, const void *targe
  * @param func: __func__ (name of the function) [NLP_MARK]
  * @param target: Target to check
  */
-void nullpo_info(const char *file, int line, const char *func);
+void nullpo_info(const char *file, int32 line, const char *func);
 
 /**
  * Check for nullptr pointer and output detailed information.
@@ -226,7 +227,8 @@ void nullpo_info(const char *file, int line, const char *func);
  * @param target: Target to check
  * @param fmt: Passed to vprintf
  */
-void nullpo_info_f(const char *file, int line, const char *func, const char *fmt, ...)
-	__attribute__((format(printf, 4, 5)));
+void nullpo_info_f(const char *file, int32 line, const char *func, 
+                   const char *fmt, ...)
+                   __attribute__((format(printf,4,5)));
 
 #endif /* NULLPO_HPP */

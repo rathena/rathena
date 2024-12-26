@@ -138,9 +138,9 @@ std::shared_ptr<s_cash_item> CashShopDatabase::findItemInTab( e_cash_shop_tab ta
 CashShopDatabase cash_shop_db;
 
 #if PACKETVER_SUPPORTS_SALES
-static bool sale_parse_dbrow( char* fields[], int columns, int current ){
+static bool sale_parse_dbrow( char* fields[], int32 columns, int32 current ){
 	t_itemid nameid = strtoul(fields[0], nullptr, 10);
-	int start = atoi(fields[1]), end = atoi(fields[2]), amount = atoi(fields[3]);
+	int32 start = atoi(fields[1]), end = atoi(fields[2]), amount = atoi(fields[3]);
 	time_t now = time(nullptr);
 	struct sale_item_data* sale_item = nullptr;
 
@@ -197,7 +197,7 @@ static void sale_read_db_sql( void ){
 	while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) ){
 		char* str[4];
 		char dummy[256] = "";
-		int i;
+		int32 i;
 
 		lines++;
 
@@ -249,7 +249,7 @@ static TIMER_FUNC(sale_start_timer){
 	}
 
 	// Init sale end
-	sale_item->timer_end = add_timer( gettick() + (unsigned int)( sale_item->end - time(nullptr) ) * 1000, sale_end_timer, 0, (intptr_t)sale_item );
+	sale_item->timer_end = add_timer( gettick() + (uint32)( sale_item->end - time(nullptr) ) * 1000, sale_end_timer, 0, (intptr_t)sale_item );
 
 	return 1;
 }
@@ -293,7 +293,7 @@ enum e_sale_add_result sale_add_item( t_itemid nameid, int32 count, time_t from,
 	sale_item->start = from;
 	sale_item->end = to;
 	sale_item->amount = count;
-	sale_item->timer_start = add_timer( gettick() + (unsigned int)(from - time(nullptr)) * 1000, sale_start_timer, 0, (intptr_t)sale_item );
+	sale_item->timer_start = add_timer( gettick() + (uint32)(from - time(nullptr)) * 1000, sale_start_timer, 0, (intptr_t)sale_item );
 	sale_item->timer_end = INVALID_TIMER;
 
 	return SALE_ADD_SUCCESS;
@@ -301,7 +301,7 @@ enum e_sale_add_result sale_add_item( t_itemid nameid, int32 count, time_t from,
 
 bool sale_remove_item( t_itemid nameid ){
 	struct sale_item_data* sale_item;
-	int i;
+	int32 i;
 
 	// Check if there is an entry for this item id
 	sale_item = sale_find_item(nameid, false);
@@ -353,7 +353,7 @@ bool sale_remove_item( t_itemid nameid ){
 }
 
 struct sale_item_data* sale_find_item( t_itemid nameid, bool onsale ){
-	int i;
+	int32 i;
 	struct sale_item_data* sale_item;
 	time_t now = time(nullptr);
 
@@ -391,7 +391,7 @@ struct sale_item_data* sale_find_item( t_itemid nameid, bool onsale ){
 }
 
 void sale_notify_login( map_session_data* sd ){
-	int i;
+	int32 i;
 
 	for( i = 0; i < sale_items.count; i++ ){
 		if( sale_items.item[i]->timer_end != INVALID_TIMER ){
@@ -406,7 +406,7 @@ static void cashshop_read_db( void ){
 	cash_shop_db.load();
 
 #if PACKETVER_SUPPORTS_SALES
-	int i;
+	int32 i;
 	time_t now = time(nullptr);
 
 	sale_read_db_sql();
@@ -421,7 +421,7 @@ static void cashshop_read_db( void ){
 		struct sale_item_data* it = sale_items.item[i];
 
 		if( it->start > now ){
-			it->timer_start = add_timer( gettick() + (unsigned int)( it->start - time(nullptr) ) * 1000, sale_start_timer, 0, (intptr_t)it );
+			it->timer_start = add_timer( gettick() + (uint32)( it->start - time(nullptr) ) * 1000, sale_start_timer, 0, (intptr_t)it );
 		}else{
 			sale_start_timer( 0, gettick(), 0, (intptr_t)it );
 		}
@@ -438,10 +438,10 @@ static void cashshop_read_db( void ){
  * @param item_list Array of item ID
  * @return true: success, false: fail
  */
-bool cashshop_buylist( map_session_data* sd, uint32 kafrapoints, int n, const PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub* item_list ){
+bool cashshop_buylist( map_session_data* sd, uint32 kafrapoints, int32 n, const PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub* item_list ){
 	uint32 totalcash = 0;
 	uint32 totalweight = 0;
-	int i,new_;
+	int32 i,new_;
 
 	if( sd == nullptr || item_list == nullptr ){
 		clif_cashshop_result( sd, 0, CASHSHOP_RESULT_ERROR_UNKNOWN );
@@ -640,7 +640,7 @@ void do_final_cashshop( void ){
 
 #if PACKETVER_SUPPORTS_SALES
 	if( sale_items.count > 0 ){
-		for( int i = 0; i < sale_items.count; i++ ){
+		for( int32 i = 0; i < sale_items.count; i++ ){
 			struct sale_item_data* it = sale_items.item[i];
 
 			if( it->timer_start != INVALID_TIMER ){

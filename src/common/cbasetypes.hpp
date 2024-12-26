@@ -374,7 +374,7 @@ void SET_FUNCPOINTER(T1& var, T2 p)
 #endif
 
 #ifndef max
-static inline int max(int a, int b) {
+static inline int32 max(int a, int b) {
 	return (a > b) ? a : b;
 } // default is int
 #endif
@@ -414,7 +414,7 @@ static inline size_t zmax(size_t a, size_t b) {
 #endif
 
 #ifndef min
-static inline int min(int a, int b) {
+static inline int32 min(int a, int b) {
 	return (a < b) ? a : b;
 } // default is int
 #endif

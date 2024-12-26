@@ -36,14 +36,16 @@ void WriteDump(FILE* fp, const void* buffer, size_t length) {
 		ascii[i % 16] = ISCNTRL(c) ? '.' : c;
 		sprintf(hex + (i % 16) * 3, "%02X ", RBUFB(buffer, i));
 
-		if ((i % 16) == 15) {
-			fprintf(fp, "%03X %s  %s\n", (unsigned int)(i / 16), hex, ascii);
+		if( (i%16) == 15 )
+		{
+			fprintf(fp, "%03X %s  %s\n", (uint32)(i/16), hex, ascii);
 		}
 	}
 
-	if ((i % 16) != 0) {
-		ascii[i % 16] = 0;
-		fprintf(fp, "%03X %-48s  %-16s\n", (unsigned int)(i / 16), hex, ascii);
+	if( (i%16) != 0 )
+	{
+		ascii[i%16] = 0;
+		fprintf(fp, "%03X %-48s  %-16s\n", (uint32)(i/16), hex, ascii);
 	}
 }
 
@@ -141,7 +143,8 @@ void findfile(const char* p, const char* pat, void(func)(const char*)) {
  *         2 = File
  *         3 = File but doesn't exist
  */
-int check_filepath(const char* filepath) {
+int32 check_filepath(const char* filepath)
+{
 	DWORD Attribute;
 
 	if (Attribute = GetFileAttributes(filepath)) {
@@ -172,7 +175,8 @@ int check_filepath(const char* filepath) {
  *         2 = File
  *         3 = Neither a file or directory
  */
-int check_filepath(const char* filepath) {
+int32 check_filepath(const char* filepath)
+{
 	struct stat s;
 
 	if (stat(filepath, &s) == 0) {
@@ -263,17 +267,15 @@ bool exists(const char* filename) {
 	return !access(filename, F_OK);
 }
 
-uint8 GetByte(uint32 val, int idx) {
-	switch (idx) {
-		case 0:
-			return (uint8)((val & 0x000000FF));
-		case 1:
-			return (uint8)((val & 0x0000FF00) >> 0x08);
-		case 2:
-			return (uint8)((val & 0x00FF0000) >> 0x10);
-		case 3:
-			return (uint8)((val & 0xFF000000) >> 0x18);
-		default:
+uint8 GetByte(uint32 val, int32 idx)
+{
+	switch( idx )
+	{
+	case 0: return (uint8)( (val & 0x000000FF)         );
+	case 1: return (uint8)( (val & 0x0000FF00) >> 0x08 );
+	case 2: return (uint8)( (val & 0x00FF0000) >> 0x10 );
+	case 3: return (uint8)( (val & 0xFF000000) >> 0x18 );
+	default:
 #if defined(DEBUG)
 			ShowDebug("GetByte: invalid index (idx=%d)\n", idx);
 #endif
@@ -281,13 +283,13 @@ uint8 GetByte(uint32 val, int idx) {
 	}
 }
 
-uint16 GetWord(uint32 val, int idx) {
-	switch (idx) {
-		case 0:
-			return (uint16)((val & 0x0000FFFF));
-		case 1:
-			return (uint16)((val & 0xFFFF0000) >> 0x10);
-		default:
+uint16 GetWord(uint32 val, int32 idx)
+{
+	switch( idx )
+	{
+	case 0: return (uint16)( (val & 0x0000FFFF)         );
+	case 1: return (uint16)( (val & 0xFFFF0000) >> 0x10 );
+	default:
 #if defined(DEBUG)
 			ShowDebug("GetWord: invalid index (idx=%d)\n", idx);
 #endif
@@ -347,7 +349,8 @@ float GetFloat(const unsigned char* buf) {
 }
 
 /// calculates the value of A / B, in percent (rounded down)
-unsigned int get_percentage(const unsigned int A, const unsigned int B) {
+uint32 get_percentage(const uint32 A, const uint32 B)
+{
 	double result;
 
 	if (B == 0) {
@@ -362,7 +365,7 @@ unsigned int get_percentage(const unsigned int A, const unsigned int B) {
 		return UINT_MAX;
 	}
 
-	return (unsigned int)floor(result);
+	return (uint32)floor(result);
 }
 
 uint32 get_percentage_exp(const uint64 a, const uint64 b) {

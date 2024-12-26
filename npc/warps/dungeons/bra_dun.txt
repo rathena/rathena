@@ -1,0 +1,8 @@
+//===== rAthena Script =======================================
+//= Brasilis Dungeon Warps
+//===== Changelog: ===========================================
+//= 1.0 First version. [L0ne_W0lf]
+//============================================================
+
+bra_dun01,199,35,0	warp	brad1tobrad2	1,1,bra_dun02,261,263
+bra_dun02,261,265,0	warp	brad2tobrad1	1,1,bra_dun01,199,37

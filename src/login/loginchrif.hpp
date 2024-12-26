@@ -12,7 +12,7 @@
  * @param fd: file descriptor to parse, (link to char-serv)
  * @return 0=invalid server,marked for disconnection,unknow packet; 1=success
  */
-int logchrif_parse(int fd);
+int32 logchrif_parse(int32 fd);
 
 /**
  * Packet send to all char-servers, except one. (wos: without our self)
@@ -21,7 +21,7 @@ int logchrif_parse(int fd);
  * @param len: size of packet
  * @return : the number of char-serv the packet was sent to
  */
-int logchrif_sendallwos(int sfd, uint8* buf, size_t len);
+int32 logchrif_sendallwos(int32 sfd, uint8* buf, size_t len);
 
 /**
  * loginchrif constructor
