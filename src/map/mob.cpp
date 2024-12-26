@@ -2716,10 +2716,10 @@ void mob_log_damage(mob_data *md, block_list *src, int32 damage, int32 damage_ta
 			}
 
 			// Add new character to damage log at last (newest) position
-			md->dmglog[DAMAGELOG_SIZE-1].id  = char_id;
-			md->dmglog[DAMAGELOG_SIZE-1].flag= flag;
-			md->dmglog[DAMAGELOG_SIZE-1].dmg = damage;
-			md->dmglog[DAMAGELOG_SIZE-1].dmg_tanked = damage_tanked;
+			md->dmglog[DAMAGELOG_SIZE - 1].id = char_id;
+			md->dmglog[DAMAGELOG_SIZE - 1].flag = flag;
+			md->dmglog[DAMAGELOG_SIZE - 1].dmg = damage;
+			md->dmglog[DAMAGELOG_SIZE - 1].dmg_tanked = damage_tanked;
 		}
 	}
 	return;

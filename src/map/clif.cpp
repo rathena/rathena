@@ -11815,9 +11815,10 @@ void clif_disconnect_ack(map_session_data* sd, short result) {
 ///     0 = quit
 void clif_parse_QuitGame(int32 fd, map_session_data* sd) {
 	/*	Rovert's prevent logout option fixed [Valaris]	*/
-	if( !sd->sc.getSCE(SC_CLOAKING) && !sd->sc.getSCE(SC_HIDING) && !sd->sc.getSCE(SC_CHASEWALK) && !sd->sc.getSCE(SC_CLOAKINGEXCEED) && !sd->sc.getSCE(SC_SUHIDE) && !sd->sc.getSCE(SC_NEWMOON) &&
-		(!battle_config.prevent_logout || sd->canlog_tick == 0 || DIFF_TICK(gettick(), sd->canlog_tick) > battle_config.prevent_logout) )
-	{
+	if (!sd->sc.getSCE(SC_CLOAKING) && !sd->sc.getSCE(SC_HIDING) && !sd->sc.getSCE(SC_CHASEWALK) &&
+		!sd->sc.getSCE(SC_CLOAKINGEXCEED) && !sd->sc.getSCE(SC_SUHIDE) && !sd->sc.getSCE(SC_NEWMOON) &&
+		(!battle_config.prevent_logout || sd->canlog_tick == 0 ||
+		 DIFF_TICK(gettick(), sd->canlog_tick) > battle_config.prevent_logout)) {
 		clif_disconnect_ack(sd, 0);
 		flush_fifo(fd);
 		if (battle_config.drop_connection_on_quit) {
@@ -12209,22 +12210,24 @@ void clif_parse_ActionRequest(int32 fd, map_session_data* sd) {
 /// type:
 ///     0 = restart (respawn)
 ///     1 = char-select (disconnect)
-void clif_parse_Restart(int32 fd, map_session_data *sd)
-{
-	switch(RFIFOB(fd,packet_db[RFIFOW(fd,0)].pos[0])) {
-	case 0x00:
-		pc_respawn(sd,CLR_OUTSIGHT);
-		break;
-	case 0x01:
-		/*	Rovert's Prevent logout option - Fixed [Valaris]	*/
-		if( !sd->sc.getSCE(SC_CLOAKING) && !sd->sc.getSCE(SC_HIDING) && !sd->sc.getSCE(SC_CHASEWALK) && !sd->sc.getSCE(SC_CLOAKINGEXCEED) && !sd->sc.getSCE(SC_SUHIDE) && !sd->sc.getSCE(SC_NEWMOON) &&
-			(!battle_config.prevent_logout || sd->canlog_tick == 0 || DIFF_TICK(gettick(), sd->canlog_tick) > battle_config.prevent_logout) )
-		{	//Send to char-server for character selection.
-			chrif_charselectreq(sd, session[fd]->client_addr);
-		} else {
-			clif_disconnect_ack(sd, 1);
-		}
-		break;
+void clif_parse_Restart(int32 fd, map_session_data* sd) {
+	switch (RFIFOB(fd, packet_db[RFIFOW(fd, 0)].pos[0])) {
+		case 0x00:
+			pc_respawn(sd, CLR_OUTSIGHT);
+			break;
+		case 0x01:
+			/*	Rovert's Prevent logout option - Fixed [Valaris]	*/
+			if (!sd->sc.getSCE(SC_CLOAKING) && !sd->sc.getSCE(SC_HIDING) && !sd->sc.getSCE(SC_CHASEWALK) &&
+				!sd->sc.getSCE(SC_CLOAKINGEXCEED) && !sd->sc.getSCE(SC_SUHIDE) && !sd->sc.getSCE(SC_NEWMOON) &&
+				(!battle_config.prevent_logout || sd->canlog_tick == 0 ||
+				 DIFF_TICK(gettick(), sd->canlog_tick) >
+					 battle_config.prevent_logout)) { // Send to char-server for character selection.
+				chrif_charselectreq(sd, session[fd]->client_addr);
+			}
+			else {
+				clif_disconnect_ack(sd, 1);
+			}
+			break;
 	}
 }
 
