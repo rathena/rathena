@@ -327,8 +327,7 @@ struct item {
 	uint32 expire_time;
 	char favorite, bound;
 	uint64 unique_id;
-	uint32
-		equipSwitch; // location(s) where item is equipped for equip switching (using enum equip_pos for bitmasking)
+	uint32 equipSwitch; // location(s) where item is equipped for equip switching (using enum equip_pos for bitmasking)
 	uint8 enchantgrade;
 } __attribute__((packed));
 
@@ -404,7 +403,7 @@ struct s_skill {
 
 struct script_reg_state {
 	uint32 type : 1; // because I'm a memory hoarder and having them in the same struct would be a 8-byte/instance
-						   // waste while ints outnumber str on a 10000-to-1 ratio.
+					 // waste while ints outnumber str on a 10000-to-1 ratio.
 	uint32 update : 1; // whether it needs to be sent to char server for insertion/update/delete
 };
 
@@ -513,7 +512,7 @@ struct s_homunculus { //[orn]
 	short level;
 	t_exp exp;
 	short rename_flag;
-	short vaporize; //albator
+	short vaporize; // albator
 	int32 str;
 	int32 agi;
 	int32 vit;
@@ -574,17 +573,17 @@ struct mmo_charstatus {
 	uint32 mother;
 	uint32 child;
 
-	t_exp base_exp,job_exp;
+	t_exp base_exp, job_exp;
 	int32 zeny;
 
 	short class_; ///< Player's JobID
-	uint32 status_point,skill_point,trait_point;
-	int32 hp,max_hp,sp,max_sp,ap,max_ap;
+	uint32 status_point, skill_point, trait_point;
+	int32 hp, max_hp, sp, max_sp, ap, max_ap;
 	uint32 option;
 	short manner; // Defines how many minutes a char will be muted, each negative point is equivalent to a minute.
 	unsigned char karma;
-	short hair,hair_color,clothes_color,body;
-	int32 party_id,guild_id,pet_id,hom_id,mer_id,ele_id,clan_id;
+	short hair, hair_color, clothes_color, body;
+	int32 party_id, guild_id, pet_id, hom_id, mer_id, ele_id, clan_id;
 	int32 fame;
 
 	// Mercenary Guilds Rank
@@ -599,10 +598,10 @@ struct mmo_charstatus {
 	uint8 body_direction;
 
 	char name[NAME_LENGTH];
-	uint32 base_level,job_level;
-	unsigned short str,agi,vit,int_,dex,luk;
-	unsigned short pow,sta,wis,spl,con,crt;
-	unsigned char slot,sex;
+	uint32 base_level, job_level;
+	unsigned short str, agi, vit, int_, dex, luk;
+	unsigned short pow, sta, wis, spl, con, crt;
+	unsigned char slot, sex;
 
 	uint32 mapip;
 	uint16 mapport;
@@ -660,10 +659,10 @@ enum mail_attachment_type {
 
 struct mail_message {
 	int32 id;
-	uint32 send_id;                 //hold char_id of sender
-	char send_name[NAME_LENGTH];    //sender nickname
-	uint32 dest_id;                 //hold char_id of receiver
-	char dest_name[NAME_LENGTH];    //receiver nickname
+	uint32 send_id; // hold char_id of sender
+	char send_name[NAME_LENGTH]; // sender nickname
+	uint32 dest_id; // hold char_id of receiver
+	char dest_name[NAME_LENGTH]; // receiver nickname
 	char title[MAIL_TITLE_LENGTH];
 	char body[MAIL_BODY_LENGTH];
 	enum mail_inbox_type type;
@@ -753,7 +752,7 @@ struct guild_expulsion {
 };
 
 struct guild_skill {
-	int32 id,lv;
+	int32 id, lv;
 };
 
 struct Channel;
@@ -763,11 +762,11 @@ struct mmo_guild {
 	t_exp exp;
 	t_exp next_exp;
 	int32 skill_point;
-	char name[NAME_LENGTH],master[NAME_LENGTH];
+	char name[NAME_LENGTH], master[NAME_LENGTH];
 	struct guild_member member[MAX_GUILD];
 	struct guild_position position[MAX_GUILDPOSITION];
-	char mes1[MAX_GUILDMES1],mes2[MAX_GUILDMES2];
-	int32 emblem_len,emblem_id;
+	char mes1[MAX_GUILDMES1], mes2[MAX_GUILDMES2];
+	int32 emblem_len, emblem_id;
 	char emblem_data[2048];
 	struct guild_alliance alliance[MAX_GUILDALLIANCE];
 	struct guild_expulsion expulsion[MAX_GUILDEXPULSION];
@@ -807,7 +806,7 @@ struct guild_castle {
 		unsigned visible : 1;
 		int32 id; // object id
 	} guardian[MAX_GUARDIANS];
-	int* temp_guardians; // ids of temporary guardians (mobs)
+	int *temp_guardians; // ids of temporary guardians (mobs)
 	int32 temp_guardians_max;
 };
 
@@ -1150,7 +1149,7 @@ struct clan_alliance {
 	char name[NAME_LENGTH];
 };
 
-struct clan{
+struct clan {
 	int32 id;
 	char name[NAME_LENGTH];
 	char master[NAME_LENGTH];

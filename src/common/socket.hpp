@@ -28,10 +28,10 @@ typedef long in_addr_t;
 #define FIFOSIZE_SERVERLINK 256 * 1024
 
 // socket I/O macros
-#define WFIFOHEAD( fd, size ) \
-	do{ \
-		if( ( fd ) && session[( fd )]->wdata_size + ( size ) > session[( fd )]->max_wdata ){ \
-			_realloc_writefifo( ( fd ), ( size ), ALC_MARK ); \
+#define WFIFOHEAD(fd, size) \
+	do { \
+		if ((fd) && session[(fd)]->wdata_size + (size) > session[(fd)]->max_wdata) { \
+			_realloc_writefifo((fd), (size), ALC_MARK); \
 		} \
 	} while (false)
 #define RFIFOP(fd, pos) (session[fd]->rdata + session[fd]->rdata_pos + (pos))
@@ -131,10 +131,10 @@ extern bool session_isActive(int32 fd);
 
 int32 make_listen_bind(uint32 ip, uint16 port);
 int32 make_connection(uint32 ip, uint16 port, bool silent, int32 timeout);
-#define realloc_fifo( fd, rfifo_size, wfifo_size ) _realloc_fifo( ( fd ), ( rfifo_size ), ( wfifo_size ), ALC_MARK )
-#define realloc_writefifo( fd, addition ) _realloc_writefifo( ( fd ), ( addition ), ALC_MARK )
-int32 _realloc_fifo( int32 fd, uint32 rfifo_size, uint32 wfifo_size, const char* file, int32 line, const char* func );
-int32 _realloc_writefifo( int32 fd, size_t addition, const char* file, int32 line, const char* func );
+#define realloc_fifo(fd, rfifo_size, wfifo_size) _realloc_fifo((fd), (rfifo_size), (wfifo_size), ALC_MARK)
+#define realloc_writefifo(fd, addition) _realloc_writefifo((fd), (addition), ALC_MARK)
+int32 _realloc_fifo(int32 fd, uint32 rfifo_size, uint32 wfifo_size, const char* file, int32 line, const char* func);
+int32 _realloc_writefifo(int32 fd, size_t addition, const char* file, int32 line, const char* func);
 int32 WFIFOSET(int32 fd, size_t len);
 int32 RFIFOSKIP(int32 fd, size_t len);
 
@@ -175,8 +175,8 @@ uint16 ntows(uint16 netshort);
 
 int32 socket_getips(uint32* ips, int32 max);
 
-extern uint32 addr_[16];   // ip addresses of local host (host byte order)
-extern int32 naddr_;   // # of ip addresses
+extern uint32 addr_[16]; // ip addresses of local host (host byte order)
+extern int32 naddr_; // # of ip addresses
 
 void set_eof(int32 fd);
 
@@ -200,8 +200,8 @@ void send_shortlist_do_sends();
 extern int8 packet_buffer[UINT16_MAX];
 
 template <typename P>
-bool socket_send( int32 fd, P& packet ){
-	if( !session_isActive( fd ) ){
+bool socket_send(int32 fd, P& packet) {
+	if (!session_isActive(fd)) {
 		return false;
 	}
 
@@ -213,8 +213,8 @@ bool socket_send( int32 fd, P& packet ){
 }
 
 template <typename P>
-bool socket_send( int32 fd, P* packet ){
-	if( !session_isActive( fd ) ){
+bool socket_send(int32 fd, P* packet) {
+	if (!session_isActive(fd)) {
 		return false;
 	}
 

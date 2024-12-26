@@ -110,7 +110,7 @@ int32 mapindex_addmap(int32 index, const char* name) {
 	return index;
 }
 
-unsigned short mapindex_name2idx(const char* name, const char *func) {
+unsigned short mapindex_name2idx(const char* name, const char* func) {
 	int32 i;
 	char map_name[MAP_NAME_LENGTH];
 	mapindex_getmapname(name, map_name);
@@ -195,7 +195,7 @@ void mapindex_check_mapdefault(const char* mapname) {
 	}
 }
 
-int32 mapindex_removemap(int32 index){
+int32 mapindex_removemap(int32 index) {
 	indexes[index].name[0] = '\0';
 	return 0;
 }

@@ -741,9 +741,11 @@ static void db_free_add(DBMap_impl *db, DBNode *node, DBNode **root) {
 
 	DB_COUNTSTAT(db_free_add);
 	if (db->free_lock == (uint32)~0) {
-		ShowFatalError("db_free_add: free_lock overflow\n"
-				"Database allocated at %s:%d\n",
-				db->alloc_file, db->alloc_line);
+		ShowFatalError(
+			"db_free_add: free_lock overflow\n"
+			"Database allocated at %s:%d\n",
+			db->alloc_file,
+			db->alloc_line);
 		exit(EXIT_FAILURE);
 	}
 	if (!(db->options & DB_OPT_DUP_KEY)) { // Make sure we have a key until the node is freed
@@ -755,9 +757,11 @@ static void db_free_add(DBMap_impl *db, DBNode *node, DBNode **root) {
 		db->free_max = (db->free_max << 2) + 3; // = db->free_max*4 +3
 		if (db->free_max <= db->free_count) {
 			if (db->free_count == (uint32)~0) {
-				ShowFatalError("db_free_add: free_count overflow\n"
-						"Database allocated at %s:%d\n",
-						db->alloc_file, db->alloc_line);
+				ShowFatalError(
+					"db_free_add: free_count overflow\n"
+					"Database allocated at %s:%d\n",
+					db->alloc_file,
+					db->alloc_line);
 				exit(EXIT_FAILURE);
 			}
 			db->free_max = (uint32)~0;
@@ -784,8 +788,7 @@ static void db_free_add(DBMap_impl *db, DBNode *node, DBNode **root) {
  * @see #db_obj_put(DBMap*,DBKey,DBData)
  * @see #db_free_add(DBMap_impl*,DBNode**,DBNode*)
  */
-static void db_free_remove(DBMap_impl* db, DBNode *node)
-{
+static void db_free_remove(DBMap_impl *db, DBNode *node) {
 	uint32 i;
 
 	DB_COUNTSTAT(db_free_remove);
@@ -819,9 +822,11 @@ static void db_free_remove(DBMap_impl* db, DBNode *node)
 static void db_free_lock(DBMap_impl *db) {
 	DB_COUNTSTAT(db_free_lock);
 	if (db->free_lock == (uint32)~0) {
-		ShowFatalError("db_free_lock: free_lock overflow\n"
-				"Database allocated at %s:%d\n",
-				db->alloc_file, db->alloc_line);
+		ShowFatalError(
+			"db_free_lock: free_lock overflow\n"
+			"Database allocated at %s:%d\n",
+			db->alloc_file,
+			db->alloc_line);
 		exit(EXIT_FAILURE);
 	}
 	db->free_lock++;
@@ -838,8 +843,7 @@ static void db_free_lock(DBMap_impl *db) {
  * @see #db_free_dbn(DBNode*)
  * @see #db_lock(DBMap_impl*)
  */
-static void db_free_unlock(DBMap_impl* db)
-{
+static void db_free_unlock(DBMap_impl *db) {
 	uint32 i;
 
 	DB_COUNTSTAT(db_free_unlock);
@@ -901,9 +905,8 @@ static void db_free_unlock(DBMap_impl* db)
  * @see #DBComparator
  * @see #db_default_cmp(DBType)
  */
-static int32 db_int_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
-{
-	(void)maxlen;//not used
+static int32 db_int_cmp(DBKey key1, DBKey key2, unsigned short maxlen) {
+	(void)maxlen; // not used
 	DB_COUNTSTAT(db_int_cmp);
 	if (key1.i < key2.i) {
 		return -1;
@@ -927,9 +930,8 @@ static int32 db_int_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
  * @see #DBComparator
  * @see #db_default_cmp(DBType)
  */
-static int32 db_uint_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
-{
-	(void)maxlen;//not used
+static int32 db_uint_cmp(DBKey key1, DBKey key2, unsigned short maxlen) {
+	(void)maxlen; // not used
 	DB_COUNTSTAT(db_uint_cmp);
 	if (key1.ui < key2.ui) {
 		return -1;
@@ -952,8 +954,7 @@ static int32 db_uint_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
  * @see #DBComparator
  * @see #db_default_cmp(DBType)
  */
-static int32 db_string_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
-{
+static int32 db_string_cmp(DBKey key1, DBKey key2, unsigned short maxlen) {
 	DB_COUNTSTAT(db_string_cmp);
 	return strncmp((const char *)key1.str, (const char *)key2.str, maxlen);
 }
@@ -970,8 +971,7 @@ static int32 db_string_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
  * @see #DBComparator
  * @see #db_default_cmp(DBType)
  */
-static int32 db_istring_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
-{
+static int32 db_istring_cmp(DBKey key1, DBKey key2, unsigned short maxlen) {
 	DB_COUNTSTAT(db_istring_cmp);
 	return strncasecmp((const char *)key1.str, (const char *)key2.str, maxlen);
 }
@@ -989,9 +989,8 @@ static int32 db_istring_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
  * @see #DBComparator
  * @see #db_default_cmp(DBType)
  */
-static int32 db_int64_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
-{
-	(void)maxlen;//not used
+static int32 db_int64_cmp(DBKey key1, DBKey key2, unsigned short maxlen) {
+	(void)maxlen; // not used
 	DB_COUNTSTAT(db_int64_cmp);
 	if (key1.i64 < key2.i64) {
 		return -1;
@@ -1015,9 +1014,8 @@ static int32 db_int64_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
  * @see #DBComparator
  * @see #db_default_cmp(DBType)
  */
-static int32 db_uint64_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
-{
-	(void)maxlen;//not used
+static int32 db_uint64_cmp(DBKey key1, DBKey key2, unsigned short maxlen) {
+	(void)maxlen; // not used
 	DB_COUNTSTAT(db_uint64_cmp);
 	if (key1.ui64 < key2.ui64) {
 		return -1;
@@ -1468,9 +1466,8 @@ bool dbit_obj_exists(DBIterator *self) {
  * @see DBMap#remove
  * @see DBIterator#remove
  */
-int32 dbit_obj_remove(DBIterator* self, DBData *out_data)
-{
-	DBIterator_impl* it = (DBIterator_impl*)self;
+int32 dbit_obj_remove(DBIterator *self, DBData *out_data) {
+	DBIterator_impl *it = (DBIterator_impl *)self;
 	DBNode *node;
 	int32 retval = 0;
 
@@ -1663,9 +1660,8 @@ static DBData *db_obj_get(DBMap *self, DBKey key) {
  * @protected
  * @see DBMap#vgetall
  */
-static uint32 db_obj_vgetall(DBMap* self, DBData **buf, uint32 max, DBMatcher match, va_list args)
-{
-	DBMap_impl* db = (DBMap_impl*)self;
+static uint32 db_obj_vgetall(DBMap *self, DBData **buf, uint32 max, DBMatcher match, va_list args) {
+	DBMap_impl *db = (DBMap_impl *)self;
 	uint32 i;
 	DBNode *node;
 	DBNode *parent;
@@ -1738,8 +1734,7 @@ static uint32 db_obj_vgetall(DBMap* self, DBData **buf, uint32 max, DBMatcher ma
  * @see DBMap#vgetall
  * @see DBMap#getall
  */
-static uint32 db_obj_getall(DBMap* self, DBData **buf, uint32 max, DBMatcher match, ...)
-{
+static uint32 db_obj_getall(DBMap *self, DBData **buf, uint32 max, DBMatcher match, ...) {
 	va_list args;
 	uint32 ret;
 
@@ -1909,9 +1904,8 @@ static DBData *db_obj_ensure(DBMap *self, DBKey key, DBCreateData create, ...) {
  * FIXME: If this method fails shouldn't it return another value?
  *        Other functions rely on this to know if they were able to put something [Panikon]
  */
-static int32 db_obj_put(DBMap* self, DBKey key, DBData data, DBData *out_data)
-{
-	DBMap_impl* db = (DBMap_impl*)self;
+static int32 db_obj_put(DBMap *self, DBKey key, DBData data, DBData *out_data) {
+	DBMap_impl *db = (DBMap_impl *)self;
 	DBNode *node;
 	DBNode *parent = nullptr;
 	int32 c = 0, retval = 0;
@@ -2032,9 +2026,8 @@ static int32 db_obj_put(DBMap* self, DBKey key, DBData data, DBData *out_data)
  * @see #db_free_add(DBMap_impl*,DBNode*,DBNode **)
  * @see DBMap#remove
  */
-static int32 db_obj_remove(DBMap* self, DBKey key, DBData *out_data)
-{
-	DBMap_impl* db = (DBMap_impl*)self;
+static int32 db_obj_remove(DBMap *self, DBKey key, DBData *out_data) {
+	DBMap_impl *db = (DBMap_impl *)self;
 	DBNode *node;
 	uint32 hash;
 	int32 retval = 0;
@@ -2059,8 +2052,8 @@ static int32 db_obj_remove(DBMap* self, DBKey key, DBData *out_data)
 	}
 
 	db_free_lock(db);
-	hash = db->hash(key, db->maxlen)%HASH_SIZE;
-	for(node = db->ht[hash]; node; ){
+	hash = db->hash(key, db->maxlen) % HASH_SIZE;
+	for (node = db->ht[hash]; node;) {
 		int32 c = db->cmp(key, node->key, db->maxlen);
 		if (c == 0) {
 			if (!(node->deleted)) {
@@ -2097,9 +2090,8 @@ static int32 db_obj_remove(DBMap* self, DBKey key, DBData *out_data)
  * @protected
  * @see DBMap#vforeach
  */
-static int32 db_obj_vforeach(DBMap* self, DBApply func, va_list args)
-{
-	DBMap_impl* db = (DBMap_impl*)self;
+static int32 db_obj_vforeach(DBMap *self, DBApply func, va_list args) {
+	DBMap_impl *db = (DBMap_impl *)self;
 	uint32 i;
 	int32 sum = 0;
 	DBNode *node;
@@ -2159,8 +2151,7 @@ static int32 db_obj_vforeach(DBMap* self, DBApply func, va_list args)
  * @see DBMap#vforeach
  * @see DBMap#foreach
  */
-static int32 db_obj_foreach(DBMap* self, DBApply func, ...)
-{
+static int32 db_obj_foreach(DBMap *self, DBApply func, ...) {
 	va_list args;
 	int32 ret;
 
@@ -2187,9 +2178,8 @@ static int32 db_obj_foreach(DBMap* self, DBApply func, ...)
  * @protected
  * @see DBMap#vclear
  */
-static int32 db_obj_vclear(DBMap* self, DBApply func, va_list args)
-{
-	DBMap_impl* db = (DBMap_impl*)self;
+static int32 db_obj_vclear(DBMap *self, DBApply func, va_list args) {
+	DBMap_impl *db = (DBMap_impl *)self;
 	int32 sum = 0;
 	uint32 i;
 	DBNode *node;
@@ -2265,8 +2255,7 @@ static int32 db_obj_vclear(DBMap* self, DBApply func, va_list args)
  * @see DBMap#vclear
  * @see DBMap#clear
  */
-static int32 db_obj_clear(DBMap* self, DBApply func, ...)
-{
+static int32 db_obj_clear(DBMap *self, DBApply func, ...) {
 	va_list args;
 	int32 ret;
 
@@ -2294,9 +2283,8 @@ static int32 db_obj_clear(DBMap* self, DBApply func, ...)
  * @protected
  * @see DBMap#vdestroy
  */
-static int32 db_obj_vdestroy(DBMap* self, DBApply func, va_list args)
-{
-	DBMap_impl* db = (DBMap_impl*)self;
+static int32 db_obj_vdestroy(DBMap *self, DBApply func, va_list args) {
+	DBMap_impl *db = (DBMap_impl *)self;
 	int32 sum;
 
 	DB_COUNTSTAT(db_vdestroy);
@@ -2372,8 +2360,7 @@ static int32 db_obj_vdestroy(DBMap* self, DBApply func, va_list args)
  * @see DBMap#vdestroy
  * @see DBMap#destroy
  */
-static int32 db_obj_destroy(DBMap* self, DBApply func, ...)
-{
+static int32 db_obj_destroy(DBMap *self, DBApply func, ...) {
 	va_list args;
 	int32 ret;
 
@@ -2396,9 +2383,8 @@ static int32 db_obj_destroy(DBMap* self, DBApply func, ...)
  * @see DBMap_impl#item_count
  * @see DBMap#size
  */
-static uint32 db_obj_size(DBMap* self)
-{
-	DBMap_impl* db = (DBMap_impl*)self;
+static uint32 db_obj_size(DBMap *self) {
+	DBMap_impl *db = (DBMap_impl *)self;
 	uint32 item_count;
 
 	DB_COUNTSTAT(db_size);
@@ -2652,8 +2638,8 @@ DBReleaser db_custom_release(DBRelease which) {
  * @see #DBMap_impl
  * @see #db_fix_options(DBType,DBOptions)
  */
-DBMap* db_alloc(const char *file, const char *func, int32 line, DBType type, DBOptions options, unsigned short maxlen) {
-	DBMap_impl* db;
+DBMap *db_alloc(const char *file, const char *func, int32 line, DBType type, DBOptions options, unsigned short maxlen) {
+	DBMap_impl *db;
 	uint32 i;
 	char ers_name[50];
 
@@ -2739,8 +2725,7 @@ DBMap* db_alloc(const char *file, const char *func, int32 line, DBType type, DBO
  * @return The key as a DBKey union
  * @public
  */
-DBKey db_i2key(int32 key)
-{
+DBKey db_i2key(int32 key) {
 	DBKey ret;
 
 	DB_COUNTSTAT(db_i2key);
@@ -2754,8 +2739,7 @@ DBKey db_i2key(int32 key)
  * @return The key as a DBKey union
  * @public
  */
-DBKey db_ui2key(uint32 key)
-{
+DBKey db_ui2key(uint32 key) {
 	DBKey ret;
 
 	DB_COUNTSTAT(db_ui2key);
@@ -2811,8 +2795,7 @@ DBKey db_ui642key(uint64 key) {
  * @return The data as a DBData struct
  * @public
  */
-DBData db_i2data(int32 data)
-{
+DBData db_i2data(int32 data) {
 	DBData ret;
 
 	DB_COUNTSTAT(db_i2data);
@@ -2827,8 +2810,7 @@ DBData db_i2data(int32 data)
  * @return The data as a DBData struct
  * @public
  */
-DBData db_ui2data(uint32 data)
-{
+DBData db_ui2data(uint32 data) {
 	DBData ret;
 
 	DB_COUNTSTAT(db_ui2data);
@@ -2874,8 +2856,7 @@ DBData db_i642data(int64 data) {
  * @return Integer value of the data.
  * @public
  */
-int32 db_data2i(DBData *data)
-{
+int32 db_data2i(DBData *data) {
 	DB_COUNTSTAT(db_data2i);
 	if (data && DB_DATA_INT == data->type) {
 		return data->u.i;
@@ -2890,8 +2871,7 @@ int32 db_data2i(DBData *data)
  * @return uint32 value of the data.
  * @public
  */
-uint32 db_data2ui(DBData *data)
-{
+uint32 db_data2ui(DBData *data) {
 	DB_COUNTSTAT(db_data2ui);
 	if (data && DB_DATA_UINT == data->type) {
 		return data->u.ui;
@@ -3135,8 +3115,7 @@ void linkdb_foreach(struct linkdb_node **head, LinkDBFunc func, ...) {
 	va_end(ap);
 }
 
-void* linkdb_search( struct linkdb_node** head, void *key)
-{
+void *linkdb_search(struct linkdb_node **head, void *key) {
 	int32 n = 0;
 	struct linkdb_node *node;
 	if (head == nullptr) {
@@ -3190,8 +3169,7 @@ void *linkdb_erase(struct linkdb_node **head, void *key) {
 	return nullptr;
 }
 
-void linkdb_replace( struct linkdb_node** head, void *key, void *data )
-{
+void linkdb_replace(struct linkdb_node **head, void *key, void *data) {
 	int32 n = 0;
 	struct linkdb_node *node;
 	if (head == nullptr) {

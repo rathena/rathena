@@ -45,7 +45,7 @@ typename std::enable_if<std::is_integral<T>::value, bool>::type rnd_chance(T cha
  */
 template <typename T>
 typename std::enable_if<std::is_integral<T>::value, bool>::type rnd_chance_official(T chance, T base) {
-	return rnd_value<T>(0, 20000)%base < chance;
+	return rnd_value<T>(0, 20000) % base < chance;
 }
 
 #endif /* RANDOM_HPP */

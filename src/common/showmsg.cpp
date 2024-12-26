@@ -47,8 +47,8 @@
 /// if false removes the escape sequences
 int32 stdout_with_ansisequence = 0;
 
-int32 msg_silent = 0; //Specifies how silent the console is.
-int32 console_msg_log = 0;//[Ind] msg error logging
+int32 msg_silent = 0; // Specifies how silent the console is.
+int32 console_msg_log = 0; //[Ind] msg error logging
 char console_log_filepath[32] = "./log/unknown.log";
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -188,8 +188,7 @@ Escape sequences for Select Character Set
 	#define is_console(handle) (FILE_TYPE_CHAR == GetFileType(handle))
 
 ///////////////////////////////////////////////////////////////////////////////
-int32	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
-{
+int32 VFPRINTF(HANDLE handle, const char *fmt, va_list argptr) {
 	/////////////////////////////////////////////////////////////////
 	/* XXX Two streams are being used. Disabled to avoid inconsistency [flaviojs]
 	static COORD saveposition = {0,0};
@@ -340,7 +339,7 @@ int32	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 					//    \033[0J - Clears the screen from cursor to end of display. The cursor position is unchanged.
 					//    \033[1J - Clears the screen from start to cursor. The cursor position is unchanged.
 					//    \033[2J - Clears the screen and moves the cursor to the home position (line 1, column 1).
-					uint8 num = (numbers[numpoint]>>4)*10+(numbers[numpoint]&0x0F);
+					uint8 num = (numbers[numpoint] >> 4) * 10 + (numbers[numpoint] & 0x0F);
 					int32 cnt;
 					DWORD tmp;
 					COORD origin = {0, 0};
@@ -506,8 +505,7 @@ int32	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 	return 0;
 }
 
-int32	FPRINTF(HANDLE handle, const char *fmt, ...)
-{
+int32 FPRINTF(HANDLE handle, const char *fmt, ...) {
 	int32 ret;
 	va_list argptr;
 	va_start(argptr, fmt);
@@ -525,9 +523,8 @@ int32	FPRINTF(HANDLE handle, const char *fmt, ...)
 
 	#define is_console(file) (0 != isatty(fileno(file)))
 
-//vprintf_without_ansiformats
-int32	VFPRINTF(FILE *file, const char *fmt, va_list argptr)
-{
+// vprintf_without_ansiformats
+int32 VFPRINTF(FILE *file, const char *fmt, va_list argptr) {
 	char *p, *q;
 	NEWBUF(tempbuf); // temporary buffer
 
@@ -545,11 +542,9 @@ int32	VFPRINTF(FILE *file, const char *fmt, va_list argptr)
 
 	// start with processing
 	p = BUFVAL(tempbuf);
-	while ((q = strchr(p, 0x1b)) != nullptr)
-	{	// find the escape character
-		fprintf(file, "%.*s", (int32)(q-p), p); // write up to the escape
-		if( q[1]!='[' )
-		{	// write the escape char (whatever purpose it has) 
+	while ((q = strchr(p, 0x1b)) != nullptr) { // find the escape character
+		fprintf(file, "%.*s", (int32)(q - p), p); // write up to the escape
+		if (q[1] != '[') { // write the escape char (whatever purpose it has)
 			fprintf(file, "%.*s", 1, q);
 			p = q + 1; // and start searching again
 		}
@@ -623,8 +618,7 @@ int32	VFPRINTF(FILE *file, const char *fmt, va_list argptr)
 	FREEBUF(tempbuf);
 	return 0;
 }
-int32	FPRINTF(FILE *file, const char *fmt, ...)
-{
+int32 FPRINTF(FILE *file, const char *fmt, ...) {
 	int32 ret;
 	va_list argptr;
 	va_start(argptr, fmt);
@@ -642,8 +636,7 @@ int32	FPRINTF(FILE *file, const char *fmt, ...)
 
 char timestamp_format[20] = ""; // For displaying Timestamps
 
-int32 _vShowMessage(enum msg_type flag, const char *string, va_list ap)
-{
+int32 _vShowMessage(enum msg_type flag, const char *string, va_list ap) {
 	va_list apcopy;
 	char prefix[100];
 #if defined(DEBUGLOGMAP) || defined(DEBUGLOGCHAR) || defined(DEBUGLOGLOGIN)
@@ -781,8 +774,7 @@ void ClearScreen(void) {
 	ShowMessage(CL_CLS); // to prevent empty string passed messages
 #endif
 }
-int32 _ShowMessage(enum msg_type flag, const char *string, ...)
-{
+int32 _ShowMessage(enum msg_type flag, const char *string, ...) {
 	int32 ret;
 	va_list ap;
 	va_start(ap, string);

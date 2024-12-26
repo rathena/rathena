@@ -30,7 +30,7 @@ enum {
 	TIMER_REMOVE_HEAP = 0x10,
 };
 
-#define TIMER_FUNC(x) int32 x ( int32 tid, t_tick tick, int32 id, intptr_t data )
+#define TIMER_FUNC(x) int32 x(int32 tid, t_tick tick, int32 id, intptr_t data)
 
 // Struct declaration
 typedef TIMER_FUNC((*TimerFunc));

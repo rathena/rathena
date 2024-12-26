@@ -151,7 +151,7 @@ typedef enum DBOptions {
 typedef union DBKey {
 	int32 i;
 	uint32 ui;
-	const char *str;
+	const char* str;
 	int64 i64;
 	uint64 ui64;
 } DBKey;
@@ -186,7 +186,7 @@ typedef struct DBData {
 	union {
 		int32 i;
 		uint32 ui;
-		void *ptr;
+		void* ptr;
 		int64 i64;
 	} u;
 } DBData;
@@ -218,7 +218,7 @@ typedef DBData (*DBCreateData)(DBKey key, va_list args);
  * @see DBMap#vdestroy
  * @see DBMap#destroy
  */
-typedef int32 (*DBApply)(DBKey key, DBData *data, va_list args);
+typedef int32 (*DBApply)(DBKey key, DBData* data, va_list args);
 
 /**
  * Format of functions that match database entries.
@@ -351,7 +351,7 @@ struct DBIterator {
 	 * @protected
 	 * @see DBMap#remove
 	 */
-	int32 (*remove)(DBIterator* self, DBData *out_data);
+	int32 (*remove)(DBIterator* self, DBData* out_data);
 
 	/**
 	 * Destroys this iterator and unlocks the database.
@@ -474,7 +474,7 @@ struct DBMap {
 	 * @return 1 if if the entry already exists, 0 otherwise
 	 * @protected
 	 */
-	int32 (*put)(DBMap* self, DBKey key, DBData data, DBData *out_data);
+	int32 (*put)(DBMap* self, DBKey key, DBData data, DBData* out_data);
 
 	/**
 	 * Remove an entry from the database.
@@ -486,7 +486,7 @@ struct DBMap {
 	 * @return 1 if if the entry already exists, 0 otherwise
 	 * @protected
 	 */
-	int32 (*remove)(DBMap* self, DBKey key, DBData *out_data);
+	int32 (*remove)(DBMap* self, DBKey key, DBData* out_data);
 
 	/**
 	 * Just calls {@link DBMap#vforeach}.
@@ -690,13 +690,13 @@ struct DBMap {
 #define ui64db_ensure(db, k, f) (db_data2ptr((db)->ensure((db), db_ui642key(k), (f))))
 
 // Database creation and destruction macros
-#define idb_alloc(opt)            db_alloc(__FILE__,__func__,__LINE__,DB_INT,(opt),sizeof(int32))
-#define uidb_alloc(opt)           db_alloc(__FILE__,__func__,__LINE__,DB_UINT,(opt),sizeof(uint32))
-#define strdb_alloc(opt,maxlen)   db_alloc(__FILE__,__func__,__LINE__,DB_STRING,(opt),(maxlen))
-#define stridb_alloc(opt,maxlen)  db_alloc(__FILE__,__func__,__LINE__,DB_ISTRING,(opt),(maxlen))
-#define i64db_alloc(opt)          db_alloc(__FILE__,__func__,__LINE__,DB_INT64,(opt),sizeof(int64))
-#define ui64db_alloc(opt)         db_alloc(__FILE__,__func__,__LINE__,DB_UINT64,(opt),sizeof(uint64))
-#define db_destroy(db)            ( (db)->destroy((db),nullptr) )
+#define idb_alloc(opt) db_alloc(__FILE__, __func__, __LINE__, DB_INT, (opt), sizeof(int32))
+#define uidb_alloc(opt) db_alloc(__FILE__, __func__, __LINE__, DB_UINT, (opt), sizeof(uint32))
+#define strdb_alloc(opt, maxlen) db_alloc(__FILE__, __func__, __LINE__, DB_STRING, (opt), (maxlen))
+#define stridb_alloc(opt, maxlen) db_alloc(__FILE__, __func__, __LINE__, DB_ISTRING, (opt), (maxlen))
+#define i64db_alloc(opt) db_alloc(__FILE__, __func__, __LINE__, DB_INT64, (opt), sizeof(int64))
+#define ui64db_alloc(opt) db_alloc(__FILE__, __func__, __LINE__, DB_UINT64, (opt), sizeof(uint64))
+#define db_destroy(db) ((db)->destroy((db), nullptr))
 // Other macros
 #define db_clear(db) ((db)->clear((db), nullptr))
 #define db_size(db) ((db)->size(db))
@@ -816,7 +816,7 @@ DBReleaser db_custom_release(DBRelease which);
  * @see #db_default_release(DBType,DBOptions)
  * @see #db_fix_options(DBType,DBOptions)
  */
-DBMap* db_alloc(const char *file, const char *func, int32 line, DBType type, DBOptions options, unsigned short maxlen);
+DBMap* db_alloc(const char* file, const char* func, int32 line, DBType type, DBOptions options, unsigned short maxlen);
 
 /**
  * Manual cast from 'int' to the union DBKey.
@@ -897,7 +897,7 @@ DBData db_i642data(int64 data);
  * @return Integer value of the data.
  * @public
  */
-int32 db_data2i(DBData *data);
+int32 db_data2i(DBData* data);
 
 /**
  * Gets uint32 type data from struct DBData.
@@ -906,7 +906,7 @@ int32 db_data2i(DBData *data);
  * @return uint32 value of the data.
  * @public
  */
-uint32 db_data2ui(DBData *data);
+uint32 db_data2ui(DBData* data);
 
 /**
  * Gets void* type data from struct DBData.

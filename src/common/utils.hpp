@@ -13,7 +13,7 @@ void WriteDump(FILE* fp, const void* buffer, size_t length);
 void ShowDump(const void* buffer, size_t length);
 
 int32 check_filepath(const char* filepath);
-void findfile(const char *p, const char *pat, void (func)(const char*));
+void findfile(const char* p, const char* pat, void(func)(const char*));
 bool exists(const char* filename);
 
 /// Caps values to min/max

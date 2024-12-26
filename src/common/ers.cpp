@@ -156,8 +156,7 @@ static ers_cache_t *ers_find_cache(uint32 size, enum ERSOptions Options) {
 	return cache;
 }
 
-static void ers_free_cache(ers_cache_t *cache, bool remove)
-{
+static void ers_free_cache(ers_cache_t *cache, bool remove) {
 	uint32 i;
 
 	for (i = 0; i < cache->Used; i++) {

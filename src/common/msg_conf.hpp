@@ -26,14 +26,14 @@ enum lang_types {
 	#define LANG_ENABLE 0x000
 #endif
 
-//read msg in table
-const char* _msg_txt(int32 msg_number,int32 size, char ** msg_table);
-//store msg from txtfile into msg_table
-int32 _msg_config_read(const char* cfgName,int32 size, char ** msg_table);
-//clear msg_table
-void _do_final_msg(int32 size, char ** msg_table);
-//Lookups
-int32 msg_langstr2langtype(char * langtype);
+// read msg in table
+const char* _msg_txt(int32 msg_number, int32 size, char** msg_table);
+// store msg from txtfile into msg_table
+int32 _msg_config_read(const char* cfgName, int32 size, char** msg_table);
+// clear msg_table
+void _do_final_msg(int32 size, char** msg_table);
+// Lookups
+int32 msg_langstr2langtype(char* langtype);
 const char* msg_langtype2langstr(int32 langtype);
 // Verify that the choosen langtype is enabled.
 int32 msg_checklangtype(int32 lang, bool display);
