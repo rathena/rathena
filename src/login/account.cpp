@@ -606,10 +606,10 @@ static bool mmo_auth_tosql(AccountDB_SQL* db, const struct mmo_account* acc, boo
 								   "`birthdate`, `character_slots`, `pincode`, `pincode_change`, `vip_time`, "
 								   "`old_group` ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 #else
-									"INSERT INTO `%s` (`account_id`, `userid`, `user_pass`, `sex`, `email`, "
-									"`group_id`, `state`, `unban_time`, `expiration_time`, `logincount`, `lastlogin`, "
-									"`last_ip`, `birthdate`, `character_slots`, `pincode`, `pincode_change`) VALUES "
-									"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+								   "INSERT INTO `%s` (`account_id`, `userid`, `user_pass`, `sex`, `email`, "
+								   "`group_id`, `state`, `unban_time`, `expiration_time`, `logincount`, `lastlogin`, "
+								   "`last_ip`, `birthdate`, `character_slots`, `pincode`, `pincode_change`) VALUES "
+								   "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 #endif
 								   db->account_db) ||
 				SQL_SUCCESS != stmt.BindParam(0, SQLDT_INT, (void*)&acc->account_id, sizeof(acc->account_id)) ||
@@ -653,10 +653,10 @@ static bool mmo_auth_tosql(AccountDB_SQL* db, const struct mmo_account* acc, boo
 						"time`=?,`logincount`=?,`lastlogin`=?,`last_ip`=?,`birthdate`=?,`character_slots`=?,`pincode`=?"
 						", `pincode_change`=?, `vip_time`=?, `old_group`=? WHERE `account_id` = '%d'",
 #else
-						 "UPDATE `%s` SET "
-						 "`userid`=?,`user_pass`=?,`sex`=?,`email`=?,`group_id`=?,`state`=?,`unban_time`=?,`expiration_"
-						 "time`=?,`logincount`=?,`lastlogin`=?,`last_ip`=?,`birthdate`=?,`character_slots`=?,`pincode`="
-						 "?, `pincode_change`=? WHERE `account_id` = '%d'",
+						"UPDATE `%s` SET "
+						"`userid`=?,`user_pass`=?,`sex`=?,`email`=?,`group_id`=?,`state`=?,`unban_time`=?,`expiration_"
+						"time`=?,`logincount`=?,`lastlogin`=?,`last_ip`=?,`birthdate`=?,`character_slots`=?,`pincode`="
+						"?, `pincode_change`=? WHERE `account_id` = '%d'",
 #endif
 						db->account_db,
 						acc->account_id) ||
