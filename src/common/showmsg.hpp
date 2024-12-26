@@ -67,7 +67,7 @@
 #define CL_XXBL			"\033[0;44m"	// default on blue
 #define CL_PASS			"\033[0;32;42m"	// green on green
 
-#define CL_SPACE		"           "	// space aquivalent of the print32 messages
+#define CL_SPACE		"           "	// space aquivalent of the print messages
 
 extern int32 stdout_with_ansisequence; //If the color ansi sequences are to be used. [flaviojs]
 extern int32 msg_silent; //Specifies how silent the console is. [Skotlex]

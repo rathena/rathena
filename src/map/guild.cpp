@@ -34,7 +34,7 @@
 
 using namespace rathena;
 
-std::unordered_map<int, std::shared_ptr<MapGuild>> guild_db;
+std::unordered_map<int32, std::shared_ptr<MapGuild>> guild_db;
 CastleDatabase castle_db;
 
 static DBMap* guild_expcache_db; // uint32 char_id -> struct guild_expcache*
@@ -1826,7 +1826,7 @@ void guild_block_skill(map_session_data *sd, int32 time) {
 	uint16 skill_id[] = { GD_BATTLEORDER, GD_REGENERATION, GD_RESTORE, GD_EMERGENCYCALL };
 	int32 i;
 	for (i = 0; i < 4; i++)
-		skill_blockpc_start(sd, skill_id[i], time);
+		skill_blockpc_start(*sd, skill_id[i], time);
 }
 
 /*====================================================
@@ -2448,8 +2448,8 @@ int32 guild_castledatasave(int32 castle_id, int32 index, int32 value) {
 }
 
 void guild_castle_reconnect_sub(void *key, void *data, va_list ap) {
-	int32 castle_id = GetWord((int)__64BPRTSIZE(key), 0);
-	int32 index = GetWord((int)__64BPRTSIZE(key), 1);
+	int32 castle_id = GetWord((int32)__64BPRTSIZE(key), 0);
+	int32 index = GetWord((int32)__64BPRTSIZE(key), 1);
 	intif_guild_castle_datasave(castle_id, index, *(int32 *)data);
 	aFree(data);
 }
@@ -2470,7 +2470,7 @@ void guild_castle_reconnect(int32 castle_id, int32 index, int32 value) {
 		linkdb_final(&gc_save_pending);
 	} else {
 		int32 *data;
-		CREATE(data, int, 1);
+		CREATE(data, int32, 1);
 		*data = value;
 		linkdb_replace(&gc_save_pending, (void*)__64BPRTSIZE((MakeDWord(castle_id, index))), data);
 	}

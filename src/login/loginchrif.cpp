@@ -8,7 +8,7 @@
 
 #include <common/showmsg.hpp> //show notice
 #include <common/socket.hpp> //wfifo session
-#include <common/strlib.hpp> //safeprint32
+#include <common/strlib.hpp> //safeprint
 #include <common/timer.hpp> //difftick
 
 #include "account.hpp"
@@ -216,7 +216,7 @@ int32 logchrif_sendvipdata(int32 fd, struct mmo_account* acc, unsigned char flag
 	WFIFOHEAD(fd,19);
 	WFIFOW(fd,0) = 0x2743;
 	WFIFOL(fd,2) = acc->account_id;
-	WFIFOL(fd,6) = (int)acc->vip_time;
+	WFIFOL(fd,6) = (int32)acc->vip_time;
 	WFIFOB(fd,10) = flag;
 	WFIFOL(fd,11) = acc->group_id; //new group id
 	WFIFOL(fd,15) = mapfd; //link to mapserv

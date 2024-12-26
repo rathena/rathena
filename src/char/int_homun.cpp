@@ -85,7 +85,6 @@ void mapif_homunculus_renamed(int32 fd, uint32 account_id, uint32 char_id, unsig
 
 bool mapif_homunculus_save(struct s_homunculus* hd)
 {
-	bool flag = true;
 	char esc_name[NAME_LENGTH*2+1];
 
 	Sql_EscapeStringLen(sql_handle, esc_name, hd->name, strnlen(hd->name, NAME_LENGTH));
@@ -99,11 +98,11 @@ bool mapif_homunculus_save(struct s_homunculus* hd)
 			hd->hp, hd->max_hp, hd->sp, hd->max_sp, hd->skillpts, hd->rename_flag, hd->vaporize, hd->autofeed) )
 		{
 			Sql_ShowDebug(sql_handle);
-			flag = false;
+			return false;
 		}
 		else
 		{
-			hd->hom_id = (int)Sql_LastInsertId(sql_handle);
+			hd->hom_id = (int32)Sql_LastInsertId(sql_handle);
 		}
 	}
 	else
@@ -113,36 +112,55 @@ bool mapif_homunculus_save(struct s_homunculus* hd)
 			hd->hp, hd->max_hp, hd->sp, hd->max_sp, hd->skillpts, hd->rename_flag, hd->vaporize, hd->autofeed, hd->hom_id) )
 		{
 			Sql_ShowDebug(sql_handle);
-			flag = false;
+			return false;
 		}
 		else
 		{
-			SqlStmt* stmt;
-			int32 i;
+			SqlStmt stmt{ *sql_handle };
 
-			stmt = SqlStmt_Malloc(sql_handle);
-			if( SQL_ERROR == SqlStmt_Prepare(stmt, "REPLACE INTO `%s` (`homun_id`, `id`, `lv`) VALUES (%d, ?, ?)", schema_config.skill_homunculus_db, hd->hom_id) )
+			// Save skills
+			if (SQL_ERROR == stmt.Prepare("REPLACE INTO `%s` (`homun_id`, `id`, `lv`) VALUES (%d, ?, ?)", schema_config.skill_homunculus_db, hd->hom_id)) {
 				SqlStmt_ShowDebug(stmt);
-			for( i = 0; i < MAX_HOMUNSKILL; ++i )
-			{
-				if( hd->hskill[i].id > 0 && hd->hskill[i].lv != 0 )
-				{
-					SqlStmt_BindParam(stmt, 0, SQLDT_USHORT, &hd->hskill[i].id, 0);
-					SqlStmt_BindParam(stmt, 1, SQLDT_USHORT, &hd->hskill[i].lv, 0);
-					if( SQL_ERROR == SqlStmt_Execute(stmt) )
-					{
+				return false;
+			}
+
+			for (uint16 i = 0; i < MAX_HOMUNSKILL; ++i) {
+				if (hd->hskill[i].id > 0 && hd->hskill[i].lv != 0) {
+					if (SQL_ERROR == stmt.BindParam(0, SQLDT_USHORT, &hd->hskill[i].id, 0)
+						|| SQL_ERROR == stmt.BindParam(1, SQLDT_USHORT, &hd->hskill[i].lv, 0)
+						|| SQL_ERROR == stmt.Execute()) {
 						SqlStmt_ShowDebug(stmt);
-						SqlStmt_Free(stmt);
-						flag = false;
-						break;
+						return false;
 					}
 				}
 			}
-			SqlStmt_Free(stmt);
+
+			// Save skill cooldowns
+			if (SQL_ERROR == stmt.Prepare("INSERT INTO `%s` (`homun_id`, `skill`, `tick`) VALUES (%d, ?, ?)", schema_config.skillcooldown_homunculus_db, hd->hom_id)) {
+				SqlStmt_ShowDebug(stmt);
+				return false;
+			}
+
+			for (uint16 i = 0; i < MAX_SKILLCOOLDOWN; ++i) {
+				if (hd->scd[i].skill_id == 0) {
+					continue;
+				}
+
+				if (hd->scd[i].tick == 0) {
+					continue;
+				}
+
+				if (SQL_ERROR == stmt.BindParam(0, SQLDT_USHORT, &hd->scd[i].skill_id, 0)
+					|| SQL_ERROR == stmt.BindParam(1, SQLDT_LONGLONG, &hd->scd[i].tick, 0)
+					|| SQL_ERROR == stmt.Execute()) {
+					SqlStmt_ShowDebug(stmt);
+					return false;
+				}
+			}
 		}
 	}
 
-	return flag;
+	return true;
 }
 
 
@@ -225,6 +243,42 @@ bool mapif_homunculus_load(int32 homun_id, struct s_homunculus* hd)
 	}
 	Sql_FreeResult(sql_handle);
 
+	// Load Homunuclus Skill Cooldown
+	if (SQL_ERROR == Sql_Query(sql_handle, "SELECT `skill`,`tick` FROM `%s` WHERE `homun_id`=%d", schema_config.skillcooldown_homunculus_db, homun_id)) {
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+
+	uint16 count = 0;
+
+	while (SQL_SUCCESS == Sql_NextRow(sql_handle)) {
+		if (count == MAX_SKILLCOOLDOWN) {
+			ShowWarning("Too many skillcooldowns for homunculus %d, skipping.\n", homun_id);
+			break;
+		}
+
+		// Skill
+		Sql_GetData(sql_handle, 0, &data, nullptr);
+		uint16 skill_id = static_cast<uint16>(strtoul(data, nullptr, 10));
+
+		if (skill_id < HM_SKILLBASE || skill_id >= HM_SKILLBASE + MAX_HOMUNSKILL)
+			continue; // invalid skill ID
+		hd->scd[count].skill_id = skill_id;
+
+		// Tick
+		Sql_GetData(sql_handle, 1, &data, nullptr);
+		hd->scd[count].tick = strtoll(data, nullptr, 10);
+
+		count++;
+	}
+	Sql_FreeResult(sql_handle);
+
+	// Clear the data once loaded.
+	if (count > 0) {
+		if (SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `homun_id`='%d'", schema_config.skillcooldown_homunculus_db, homun_id))
+			Sql_ShowDebug(sql_handle);
+	}
+
 	if( charserv_config.save_log )
 		ShowInfo("Homunculus loaded (ID: %d - %s / Class: %d / CID: %d).\n", hd->hom_id, hd->name, hd->class_, hd->char_id);
 
@@ -235,6 +289,7 @@ bool mapif_homunculus_delete(int32 homun_id)
 {
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `homun_id` = '%u'", schema_config.homunculus_db, homun_id)
 	||	SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `homun_id` = '%u'", schema_config.skill_homunculus_db, homun_id)
+	||	SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `homun_id` = '%u'", schema_config.skillcooldown_homunculus_db, homun_id)
 	) {
 		Sql_ShowDebug(sql_handle);
 		return false;
@@ -305,11 +360,11 @@ int32 inter_homunculus_parse_frommap(int32 fd)
 
 	switch( cmd )
 	{
-		case 0x3090: mapif_parse_homunculus_create(fd, (int)RFIFOW(fd,2), (int)RFIFOL(fd,4), (struct s_homunculus*)RFIFOP(fd,8)); break;
-		case 0x3091: mapif_parse_homunculus_load  (fd, (int)RFIFOL(fd,2), (int)RFIFOL(fd,6)); break;
-		case 0x3092: mapif_parse_homunculus_save  (fd, (int)RFIFOW(fd,2), (int)RFIFOL(fd,4), (struct s_homunculus*)RFIFOP(fd,8)); break;
-		case 0x3093: mapif_parse_homunculus_delete(fd, (int)RFIFOL(fd,2)); break;
-		case 0x3094: mapif_parse_homunculus_rename(fd, (int)RFIFOL(fd,2), (int)RFIFOL(fd,6), RFIFOCP(fd,10)); break;
+		case 0x3090: mapif_parse_homunculus_create(fd, (int32)RFIFOW(fd,2), (int32)RFIFOL(fd,4), (struct s_homunculus*)RFIFOP(fd,8)); break;
+		case 0x3091: mapif_parse_homunculus_load  (fd, (int32)RFIFOL(fd,2), (int32)RFIFOL(fd,6)); break;
+		case 0x3092: mapif_parse_homunculus_save  (fd, (int32)RFIFOW(fd,2), (int32)RFIFOL(fd,4), (struct s_homunculus*)RFIFOP(fd,8)); break;
+		case 0x3093: mapif_parse_homunculus_delete(fd, (int32)RFIFOL(fd,2)); break;
+		case 0x3094: mapif_parse_homunculus_rename(fd, (int32)RFIFOL(fd,2), (int32)RFIFOL(fd,6), RFIFOCP(fd,10)); break;
 		default:
 			return 0;
 	}

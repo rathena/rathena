@@ -457,3 +457,13 @@ que_thr	mapflag	noteleport
 //============================================================
 itemmall	mapflag	noteleport
 itemmall	mapflag	monster_noteleport
+
+//============================================================
+// Forgotten Area 1
+//============================================================
+for_dun01	mapflag	noteleport
+
+//============================================================
+// Forgotten Area 2
+//============================================================
+for_dun02	mapflag	noteleport

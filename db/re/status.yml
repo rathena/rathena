@@ -6246,7 +6246,7 @@ Body:
       NoClearance: true
       NoForcedEnd: true
     Script: |
-      bonus bMaxHP, getstatus(SC_MTF_MHP, 1);
+      bonus bMaxHPrate, getstatus(SC_MTF_MHP, 1);
   - Status: Mtf_Msp
     Icon: EFST_MTF_MSP
     Flags:
@@ -6257,7 +6257,7 @@ Body:
       NoClearance: true
       NoForcedEnd: true
     Script: |
-      bonus bMaxSP, getstatus(SC_MTF_MSP, 1);
+      bonus bMaxSPrate, getstatus(SC_MTF_MSP, 1);
   - Status: Mtf_Pumpkin
     Icon: EFST_MTF_PUMPKIN
     Flags:
@@ -8477,12 +8477,11 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
     Script: |
-      .@val1 = getstatus(SC_INFINITY_DRINK, 1);
-      bonus bCritAtkRate, .@val1;
-      bonus bLongAtkRate, .@val1;
-      bonus2 bMagicAtkEle,Ele_All, .@val1;
-      bonus bMaxHPrate, .@val1;
-      bonus bMaxSPrate, .@val1;
+      bonus bCritAtkRate,5;
+      bonus bLongAtkRate,5;
+      bonus2 bMagicAtkEle,Ele_All,5;
+      bonus bMaxHPrate,5;
+      bonus bMaxSPrate,5;
       bonus bNoCastCancel;
   - Status: Mental_Potion
     Icon: EFST_TARGET_ASPD
@@ -9391,3 +9390,42 @@ Body:
       bonus bAtkRate, .@val1;
       bonus bMatkRate, .@val1;
       bonus bVariableCastrate, .@val2;
+  - Status: Contents_31
+    Icon: EFST_CONTENTS_31
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_CONTENTS_31, 1);
+      bonus2 bAddSize,Size_All, .@val1;
+      bonus2 bMagicAddSize,Size_All, .@val1;
+      bonus2 bAddEle,Ele_All, .@val1;
+      bonus2 bMagicAddEle,Ele_All, .@val1;
+  - Status: Contents_32
+    Icon: EFST_CONTENTS_32
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_CONTENTS_32, 1);
+      bonus2 bMagicAtkEle,Ele_All, .@val1;
+      bonus bShortAtkRate, .@val1;
+      bonus bLongAtkRate, .@val1;
+      bonus bMatkRate, .@val1;
+      bonus bAtkRate, .@val1;
+  - Status: Contents_33
+    Icon: EFST_CONTENTS_33
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_CONTENTS_33, 1);
+      bonus bVariableCastrate, -.@val1;
+      bonus bMaxHPrate, .@val1;
+      bonus bMaxSPrate, .@val1;

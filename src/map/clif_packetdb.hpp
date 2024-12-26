@@ -85,7 +85,6 @@
 	parseable_packet(0x00d3,2,clif_parse_PMIgnoreList,0);
 	packet(0x00d4,-1);
 	parseable_packet( HEADER_CZ_CREATE_CHATROOM, -1, clif_parse_CreateChatRoom, 0 );
-	packet(0x00d7,-1);
 	parseable_packet(0x00d9,14,clif_parse_ChatAddMember,2,6);
 	parseable_packet(0x00de,-1,clif_parse_ChatRoomStatusChange,2,4,6,7,15);
 	parseable_packet(0x00e0,30,clif_parse_ChangeChatOwner,2,6);
@@ -1783,7 +1782,6 @@
 	// New packet
 	packet(0x0A00,269); // ZC_SHORTCUT_KEY_LIST_V3
 	parseable_packet(0x0A01,3,clif_parse_HotkeyRowShift,2); // CZ_SHORTCUTKEYBAR_ROTATE
-	packet(0x0A02,4); // ZC_DRESSROOM_OPEN
 	packet(0x0A0E,14); // ZC_BATTLEFIELD_NOTIFY_HP2
 	packet(0x09F7,75); // ZC_PROPERTY_HOMUN_2
 	packet(0x09E6,22); // ZC_UPDATE_ITEM_FROM_BUYING_STORE2

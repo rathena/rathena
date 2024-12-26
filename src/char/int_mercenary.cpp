@@ -57,6 +57,9 @@ bool mercenary_owner_tosql(uint32 char_id, struct mmo_charstatus *status)
 
 bool mercenary_owner_delete(uint32 char_id)
 {
+	if (SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `mer_id` IN ( SELECT `merc_id` FROM `%s` WHERE `char_id` = '%d' )", schema_config.skillcooldown_mercenary_db, schema_config.mercenary_owner_db, char_id))
+		Sql_ShowDebug(sql_handle);
+
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%d'", schema_config.mercenary_owner_db, char_id) )
 		Sql_ShowDebug(sql_handle);
 
@@ -68,8 +71,6 @@ bool mercenary_owner_delete(uint32 char_id)
 
 bool mapif_mercenary_save(struct s_mercenary* merc)
 {
-	bool flag = true;
-
 	if( merc->mercenary_id == 0 )
 	{ // Create new DB entry
 		if( SQL_ERROR == Sql_Query(sql_handle,
@@ -77,20 +78,45 @@ bool mapif_mercenary_save(struct s_mercenary* merc)
 			schema_config.mercenary_db, merc->char_id, merc->class_, merc->hp, merc->sp, merc->kill_count, merc->life_time) )
 		{
 			Sql_ShowDebug(sql_handle);
-			flag = false;
+			return false;
 		}
 		else
-			merc->mercenary_id = (int)Sql_LastInsertId(sql_handle);
+			merc->mercenary_id = (int32)Sql_LastInsertId(sql_handle);
 	}
 	else if( SQL_ERROR == Sql_Query(sql_handle,
 		"UPDATE `%s` SET `char_id` = '%d', `class` = '%d', `hp` = '%u', `sp` = '%u', `kill_counter` = '%u', `life_time` = '%" PRtf "' WHERE `mer_id` = '%d'",
 		schema_config.mercenary_db, merc->char_id, merc->class_, merc->hp, merc->sp, merc->kill_count, merc->life_time, merc->mercenary_id) )
 	{ // Update DB entry
 		Sql_ShowDebug(sql_handle);
-		flag = false;
+		return false;
 	}
 
-	return flag;
+	// Save skill cooldowns
+	SqlStmt stmt{ *sql_handle };
+
+	if (SQL_ERROR == stmt.Prepare("INSERT INTO `%s` (`mer_id`, `skill`, `tick`) VALUES (%d, ?, ?)", schema_config.skillcooldown_mercenary_db, merc->mercenary_id)) {
+		SqlStmt_ShowDebug(stmt);
+		return false;
+	}
+
+	for (uint16 i = 0; i < MAX_SKILLCOOLDOWN; ++i) {
+		if (merc->scd[i].skill_id == 0) {
+			continue;
+		}
+
+		if (merc->scd[i].tick == 0) {
+			continue;
+		}
+
+		if (SQL_ERROR == stmt.BindParam(0, SQLDT_USHORT, &merc->scd[i].skill_id, 0)
+			|| SQL_ERROR == stmt.BindParam(1, SQLDT_LONGLONG, &merc->scd[i].tick, 0)
+			|| SQL_ERROR == stmt.Execute()) {
+			SqlStmt_ShowDebug(stmt);
+			return false;
+		}
+	}
+
+	return true;
 }
 
 bool mapif_mercenary_load(int32 merc_id, uint32 char_id, struct s_mercenary *merc)
@@ -121,6 +147,42 @@ bool mapif_mercenary_load(int32 merc_id, uint32 char_id, struct s_mercenary *mer
 	Sql_FreeResult(sql_handle);
 	if( charserv_config.save_log )
 		ShowInfo("Mercenary loaded (ID: %d / Class: %d / CID: %d).\n", merc->mercenary_id, merc->class_, merc->char_id);
+
+	// Load Mercenary Skill Cooldown
+	if (SQL_ERROR == Sql_Query(sql_handle, "SELECT `skill`,`tick` FROM `%s` WHERE `mer_id`=%d", schema_config.skillcooldown_mercenary_db, merc_id)) {
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+
+	uint16 count = 0;
+
+	while (SQL_SUCCESS == Sql_NextRow(sql_handle)) {
+		if (count == MAX_SKILLCOOLDOWN) {
+			ShowWarning("Too many skillcooldowns for mercenary %d, skipping.\n", merc_id);
+			break;
+		}
+
+		// Skill
+		Sql_GetData(sql_handle, 0, &data, nullptr);
+		uint16 skill_id = static_cast<uint16>(strtoul(data, nullptr, 10));
+
+		if (skill_id < MC_SKILLBASE || skill_id >= MC_SKILLBASE + MAX_MERCSKILL)
+			continue; // invalid skill ID
+		merc->scd[count].skill_id = skill_id;
+
+		// Tick
+		Sql_GetData(sql_handle, 1, &data, nullptr);
+		merc->scd[count].tick = strtoll(data, nullptr, 10);
+
+		count++;
+	}
+	Sql_FreeResult(sql_handle);
+
+	// Clear the data once loaded.
+	if (count > 0) {
+		if (SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `mer_id`='%d'", schema_config.skillcooldown_mercenary_db, merc_id))
+			Sql_ShowDebug(sql_handle);
+	}
 
 	return true;
 }
@@ -208,8 +270,8 @@ int32 inter_mercenary_parse_frommap(int32 fd)
 	switch( cmd )
 	{
 		case 0x3070: mapif_parse_mercenary_create(fd, (struct s_mercenary*)RFIFOP(fd,4)); break;
-		case 0x3071: mapif_parse_mercenary_load(fd, (int)RFIFOL(fd,2), (int)RFIFOL(fd,6)); break;
-		case 0x3072: mapif_parse_mercenary_delete(fd, (int)RFIFOL(fd,2)); break;
+		case 0x3071: mapif_parse_mercenary_load(fd, (int32)RFIFOL(fd,2), (int32)RFIFOL(fd,6)); break;
+		case 0x3072: mapif_parse_mercenary_delete(fd, (int32)RFIFOL(fd,2)); break;
 		case 0x3073: mapif_parse_mercenary_save(fd, (struct s_mercenary*)RFIFOP(fd,4)); break;
 		default:
 			return 0;

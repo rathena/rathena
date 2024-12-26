@@ -357,7 +357,7 @@ ACMD_FUNC(send)
 				// parse string
 				++message;
 				CHECK_EOS(message);
-				end=(num<=0? 0: min(off+((int)num),len));
+				end=(num<=0? 0: min(off+((int32)num),len));
 				for(; *message != '"' && (off < end || end == 0); ++off){
 					if(*message == '\\'){
 						++message;
@@ -472,7 +472,7 @@ ACMD_FUNC(send)
 /**
  * Retrieves map name suggestions for a given string.
  * This will first check if any map names contain the given string, and will
- *   print32 out MAX_SUGGESTIONS results if any maps are found.
+ *   print out MAX_SUGGESTIONS results if any maps are found.
  * Otherwise, suggestions will be calculated through Levenshtein distance,
  *   and up to 5 of the closest matches will be printed.
  *
@@ -511,7 +511,7 @@ static void warp_get_suggestions(map_session_data* sd, const char *name) {
 		// Levenshtein > 4 is bad
 		const int32 LEVENSHTEIN_MAX = 4;
 
-		std::unordered_map<int, std::vector<const char*>> maps;
+		std::unordered_map<int32, std::vector<const char*>> maps;
 
 		for (int32 i = 0; i < map_num; i++) {
 			struct map_data *mapdata = map_getmapdata(i);
@@ -1154,42 +1154,31 @@ ACMD_FUNC(resetcooltime)
 {
 	nullpo_retr(-1, sd);
 
-	for( size_t i = 0; i < ARRAYLENGTH( sd->scd ); i++ ){
-		if( sd->scd[i] != nullptr ) {
-			sprintf( atcmd_output, msg_txt( sd, 1537 ), skill_db.find( sd->scd[i]->skill_id )->name ); // Found skill '%s', unblocking...
+	if (!sd->scd.empty()) {
+		for (const auto &entry : sd->scd) {
+			sprintf( atcmd_output, msg_txt( sd, 1537 ), skill_db.find( entry.first )->name ); // Found skill '%s', unblocking...
 			clif_displaymessage( sd->fd, atcmd_output );
-
-			if (battle_config.display_status_timers)
-				clif_skill_cooldown( *sd, sd->scd[i]->skill_id, 0 );
-
-			delete_timer(sd->scd[i]->timer, skill_blockpc_end);
-			aFree(sd->scd[i]);
-			sd->scd[i] = nullptr;
 		}
+
+		skill_blockpc_clear(*sd);
 	}
 
 	if( sd->hd != nullptr && hom_is_active( sd->hd ) ){
-		for( const uint16& skill_id : sd->hd->blockskill ){
-			sprintf( atcmd_output, msg_txt( sd, 1537 ), skill_db.find( skill_id )->name ); // Found skill '%s', unblocking...
+		for (const auto &entry : sd->hd->scd) {
+			sprintf( atcmd_output, msg_txt( sd, 1537 ), skill_db.find( entry.first )->name ); // Found skill '%s', unblocking...
 			clif_displaymessage( sd->fd, atcmd_output );
-
-			if (battle_config.display_status_timers)
-				clif_skill_cooldown( *sd, skill_id, 0 );
 		}
 
-		sd->hd->blockskill.clear();
+		skill_blockhomun_clear(*sd->hd);
 	}
 
 	if( sd->md != nullptr ){
-		for( const uint16& skill_id : sd->md->blockskill ){
-			sprintf( atcmd_output, msg_txt( sd, 1537 ), skill_db.find( skill_id )->name ); // Found skill '%s', unblocking...
+		for( const auto &entry : sd->md->scd ){
+			sprintf( atcmd_output, msg_txt( sd, 1537 ), skill_db.find( entry.first )->name ); // Found skill '%s', unblocking...
 			clif_displaymessage( sd->fd, atcmd_output );
-
-			if (battle_config.display_status_timers)
-				clif_skill_cooldown( *sd, skill_id, 0 );
 		}
 
-		sd->md->blockskill.clear();
+		skill_blockmerc_clear(*sd->md);
 	}
 
 	return 0;
@@ -2284,8 +2273,17 @@ ACMD_FUNC(monster)
 		return -1;
 	}
 
-	if ((mob_id = mobdb_searchname(monster)) == 0) // check name first (to avoid possible name begining by a number)
-		mob_id = mobdb_checkid(atoi(monster));
+	// If AegisName matches exactly, summon that monster
+	std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname(monster);
+	if (mob != nullptr)
+		mob_id = mob->id;
+	else {
+		// Otherwise, search for monster with that ID or name
+		// Check for ID first as this is faster; if search string is not a number it will return 0
+		mob_id = util::strtoint32def(monster);
+		if (mob_id == 0 || mobdb_checkid(mob_id) == 0)
+			mob_id = mobdb_searchname(monster);
+	}
 
 	if (mob_id == 0) {
 		clif_displaymessage(fd, msg_txt(sd,40)); // Invalid monster ID or name.
@@ -2320,7 +2318,7 @@ ACMD_FUNC(monster)
 		ShowInfo("%s monster='%s' name='%s' id=%d count=%d (%d,%d)\n", command, monster, name, mob_id, number, sd->bl.x, sd->bl.y);
 
 	count = 0;
-	range = (int)sqrt((float)number) +2; // calculation of an odd number (+ 4 area around)
+	range = (int32)sqrt((float)number) +2; // calculation of an odd number (+ 4 area around)
 	for (i = 0; i < number; i++) {
 		int32 k;
 		map_search_freecell(&sd->bl, 0, &mx,  &my, range, range, 0);
@@ -2355,7 +2353,7 @@ static int32 atkillmonster_sub(struct block_list *bl, va_list ap)
 	int32 flag;
 
 	nullpo_ret(md=(struct mob_data *)bl);
-	flag = va_arg(ap, int);
+	flag = va_arg(ap, int32);
 
 	if (md->guardian_data)
 		return 0; //Do not touch WoE mobs!
@@ -3170,7 +3168,6 @@ ACMD_FUNC(makeegg) {
 	if (pet != nullptr) {
 		std::shared_ptr<s_mob_db> mdb = mob_db.find(pet->class_);
 		if(mdb){
-			sd->catch_target_class = pet->class_;
 			if(intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->jname.c_str())){
 				res = 0;
 			} else {
@@ -5177,7 +5174,7 @@ char* txt_time(t_tick duration_)
 	memset(temp1, '\0', sizeof(temp1));
 
 	// Cap it
-	int32 duration = (int)duration_;
+	int32 duration = (int32)duration_;
 
 	days = duration / (60 * 60 * 24);
 	duration = duration - (60 * 60 * 24 * days);
@@ -5378,7 +5375,7 @@ ACMD_FUNC(jailfor) {
 	atcmd_output[sizeof(atcmd_output)-1] = '\0';
 
 	modif_p = atcmd_output;
-	jailtime = (int)solve_time(modif_p)/60; // Change to minutes
+	jailtime = (int32)solve_time(modif_p)/60; // Change to minutes
 
 	if (jailtime == 0) {
 		clif_displaymessage(fd, msg_txt(sd,1136)); // Invalid time for jail command.
@@ -6043,7 +6040,8 @@ ACMD_FUNC(stockall)
 				return -1;
 		}
 	}
-	uint16 count = 0, count2 = 0;
+
+	int32 count = 0, count2 = 0;
 	for ( uint16 i = 0; i < MAX_CART; i++ ) {
 		if ( sd->cart.u.items_cart[i].amount > 0 ) {
 			std::shared_ptr<item_data> id = item_db.find(sd->cart.u.items_cart[i].nameid);
@@ -6052,10 +6050,13 @@ ACMD_FUNC(stockall)
 				continue;
 			}
 			if ( type == -1 || static_cast<item_types>(type) == id->type ) {
-				if (pc_getitemfromcart(sd, i, sd->cart.u.items_cart[i].amount))
-					count += sd->cart.u.items_cart[i].amount;
-				else
-					count2 += sd->cart.u.items_cart[i].amount;
+				int32 amount = sd->cart.u.items_cart[i].amount;
+
+				if( pc_getitemfromcart( sd, i, amount ) ){
+					count += amount;
+				}else{
+					count2 += amount;
+				}
 			}
 		}
 	}
@@ -6731,7 +6732,7 @@ ACMD_FUNC(autoloot)
 	} else {
 		double drate;
 		drate = atof(message);
-		rate = (int)(drate*100);
+		rate = (int32)(drate*100);
 	}
 	if (rate < 0) rate = 0;
 	if (rate > 10000) rate = 10000;
@@ -7822,7 +7823,8 @@ ACMD_FUNC(mobinfo)
 	}
 
 	// If monster identifier/name argument is a name
-	if ((i = mobdb_checkid(strtoul(message, nullptr, 10))))
+	i = util::strtoint32def(message);
+	if (i != 0 && (i = mobdb_checkid(i)))
 	{
 		mob_ids[0] = i;
 		count = 1;
@@ -8341,7 +8343,7 @@ ACMD_FUNC(homshuffle)
 		return -1;
 
 	clif_displaymessage(sd->fd, msg_txt(sd,1275)); // Homunculus stats altered.
-	atcommand_homstats(fd, sd, command, message); //Print32 out the new stats
+	atcommand_homstats(fd, sd, command, message); //Print out the new stats
 	return 0;
 }
 
@@ -8544,8 +8546,8 @@ static int32 atcommand_mutearea_sub(struct block_list *bl,va_list ap)
 	if (pl_sd == nullptr)
 		return 0;
 
-	id = va_arg(ap, int);
-	time = va_arg(ap, int);
+	id = va_arg(ap, int32);
+	time = va_arg(ap, int32);
 
 	if (id != bl->id && !pc_get_group_level(pl_sd)) {
 		pl_sd->status.manner -= time;
@@ -10374,7 +10376,7 @@ ACMD_FUNC(vip) {
 		int32 year,month,day,hour,minute,second;
 		char timestr[21];
 		
-		split_time((int)(pl_sd->vip.time-now),&year,&month,&day,&hour,&minute,&second);
+		split_time((int32)(pl_sd->vip.time-now),&year,&month,&day,&hour,&minute,&second);
 		sprintf(atcmd_output,msg_txt(pl_sd,705),year,month,day,hour,minute); // Your VIP status is valid for %d years, %d months, %d days, %d hours and %d minutes.
 		clif_displaymessage(pl_sd->fd,atcmd_output);
 		timestamp2string(timestr,20,pl_sd->vip.time,"%Y-%m-%d %H:%M");

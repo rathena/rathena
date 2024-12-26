@@ -93,7 +93,7 @@ struct Channel* channel_create_simple(char *name, char *pass, enum Channel_Type 
 	switch (chantype) {
 		case CHAN_TYPE_ALLY:
 			memcpy(&tmp_chan, &channel_config.ally_tmpl, sizeof(channel_config.ally_tmpl));
-			tmp_chan.gid = (int)owner;
+			tmp_chan.gid = (int32)owner;
 			break;
 		case CHAN_TYPE_MAP:
 			memcpy(&tmp_chan, &channel_config.map_tmpl, sizeof(channel_config.map_tmpl));

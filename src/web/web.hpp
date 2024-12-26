@@ -39,7 +39,7 @@ namespace rathena{
 struct Web_Config {
 	std::string web_ip;								// the address to bind to
 	uint16 web_port;								// the port to bind to
-	bool print_req_res;								// Whether or not to print32 requests/responses
+	bool print_req_res;								// Whether or not to print requests/responses
 
 	char webconf_name[256];						/// name of main config file
 	char msgconf_name[256];							/// name of msg_conf config file

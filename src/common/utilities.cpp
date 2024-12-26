@@ -127,6 +127,21 @@ std::string rathena::util::string_left_pad(const std::string& original, char pad
 	return std::string( num - std::min( num, original.length() ), padding ) + original;
 }
 
+int32 rathena::util::strtoint32def(const char* str, int32 def) {
+	char* str_end{};
+	int32 result = std::strtol(str, &str_end, 10);
+
+	if (str_end != nullptr && *str_end != '\0') {
+		return def;
+	}
+
+	if (errno == ERANGE) {
+		return def;
+	}
+
+	return result;
+}
+
 constexpr char base62_dictionary[] = {
 	'0', '1', '2', '3', '4', '5', '6', '7',
 	'8', '9', 'a', 'b', 'c', 'd', 'e', 'f',
