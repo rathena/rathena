@@ -18,7 +18,7 @@ enum locktype {
 class SQLLock {
 private:
 	std::unique_lock<std::mutex> ulock;
-	Sql * handle;
+	Sql* handle;
 	locktype lt;
 
 public:
@@ -26,8 +26,7 @@ public:
 	~SQLLock();
 	void lock();
 	void unlock();
-	Sql * getHandle();
+	Sql* getHandle();
 };
-
 
 #endif

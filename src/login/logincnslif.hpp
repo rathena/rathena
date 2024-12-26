@@ -26,4 +26,4 @@ void do_init_logincnslif(void);
  */
 void do_final_logincnslif(void);
 
-#endif	/* LOGINCNSLIF_HPP */
+#endif /* LOGINCNSLIF_HPP */

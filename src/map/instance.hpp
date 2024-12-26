@@ -22,7 +22,7 @@ struct block_list;
 extern int16 instance_start;
 extern int32 instance_count;
 
-#define INSTANCE_NAME_LENGTH (60+1)
+#define INSTANCE_NAME_LENGTH (60 + 1)
 
 enum e_instance_state : uint8 {
 	INSTANCE_IDLE,
@@ -72,19 +72,20 @@ struct s_instance_data {
 	struct reg_db regs; ///< Instance variables for scripts
 	std::vector<s_instance_map> map; ///< Array of maps in instance
 
-	s_instance_data() :
-		id(0),
-		state(INSTANCE_IDLE),
-		mode(IM_PARTY),
-		owner_id(0),
-		keep_limit(0),
-		keep_timer(INVALID_TIMER),
-		idle_limit(0),
-		idle_timer(INVALID_TIMER),
-		nonpc(false),
-		nomapflag(false),
-		regs(),
-		map() { }
+	s_instance_data()
+		: id(0),
+		  state(INSTANCE_IDLE),
+		  mode(IM_PARTY),
+		  owner_id(0),
+		  keep_limit(0),
+		  keep_timer(INVALID_TIMER),
+		  idle_limit(0),
+		  idle_timer(INVALID_TIMER),
+		  nonpc(false),
+		  nomapflag(false),
+		  regs(),
+		  map() {
+	}
 };
 
 /// Instance DB entry
@@ -105,18 +106,17 @@ struct s_instance_db {
 class InstanceDatabase : public TypesafeYamlDatabase<int32, s_instance_db> {
 public:
 	InstanceDatabase() : TypesafeYamlDatabase("INSTANCE_DB", 2, 1) {
-
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const ryml::NodeRef& node) override;
+	uint64 parseBodyNode(const ryml::NodeRef &node) override;
 };
 
 extern InstanceDatabase instance_db;
 
 extern std::unordered_map<int32, std::shared_ptr<s_instance_data>> instances;
 
-std::shared_ptr<s_instance_db> instance_search_db_name(const char* name);
+std::shared_ptr<s_instance_db> instance_search_db_name(const char *name);
 void instance_getsd(int32 instance_id, map_session_data *&sd, enum send_target *target);
 
 int32 instance_create(int32 owner_id, const char *name, e_instance_mode mode);
@@ -128,7 +128,7 @@ bool instance_addusers(int32 instance_id);
 bool instance_delusers(int32 instance_id);
 void instance_generate_mapname(int32 map_id, int32 instance_id, char outname[MAP_NAME_LENGTH]);
 int16 instance_mapid(int16 m, int32 instance_id);
-size_t instance_addmap( int32 instance_id );
+size_t instance_addmap(int32 instance_id);
 
 void instance_addnpc(std::shared_ptr<s_instance_data> idata);
 

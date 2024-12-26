@@ -11,9 +11,9 @@
 #include <unordered_map>
 #include <vector>
 
-#include <common/mmo.hpp>
 #include <common/database.hpp>
 #include <common/db.hpp>
+#include <common/mmo.hpp>
 
 class map_session_data;
 struct block_list;
@@ -80,7 +80,7 @@ struct s_achievement_db {
 	enum e_achievement_group group;
 	std::map<uint16, std::shared_ptr<achievement_target>> targets;
 	std::vector<uint32> dependent_ids;
-	struct script_code* condition;
+	struct script_code *condition;
 	int16 mapindex;
 	struct ach_reward {
 		t_itemid nameid;
@@ -97,18 +97,17 @@ struct s_achievement_db {
 	~s_achievement_db();
 };
 
-class AchievementDatabase : public TypesafeYamlDatabase<uint32, s_achievement_db>{
+class AchievementDatabase : public TypesafeYamlDatabase<uint32, s_achievement_db> {
 private:
 	std::vector<uint32> achievement_mobs; // Avoids checking achievements on every mob killed
 
 public:
-	AchievementDatabase() : TypesafeYamlDatabase( "ACHIEVEMENT_DB", 2 ){
-
+	AchievementDatabase() : TypesafeYamlDatabase("ACHIEVEMENT_DB", 2) {
 	}
 
 	void clear() override;
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode( const ryml::NodeRef& node ) override;
+	uint64 parseBodyNode(const ryml::NodeRef &node) override;
 	void loadingFinished() override;
 
 	// Additional
@@ -117,19 +116,18 @@ public:
 
 extern AchievementDatabase achievement_db;
 
-struct s_achievement_level{
+struct s_achievement_level {
 	uint16 level;
 	uint16 points;
 };
 
-class AchievementLevelDatabase : public TypesafeYamlDatabase<uint16, s_achievement_level>{
+class AchievementLevelDatabase : public TypesafeYamlDatabase<uint16, s_achievement_level> {
 public:
-	AchievementLevelDatabase() : TypesafeYamlDatabase( "ACHIEVEMENT_LEVEL_DB", 1 ){
-
+	AchievementLevelDatabase() : TypesafeYamlDatabase("ACHIEVEMENT_LEVEL_DB", 1) {
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode( const ryml::NodeRef& node ) override;
+	uint64 parseBodyNode(const ryml::NodeRef &node) override;
 };
 
 extern AchievementLevelDatabase achievement_level_db;
@@ -142,7 +140,7 @@ void achievement_check_reward(map_session_data *sd, int32 achievement_id);
 void achievement_free(map_session_data *sd);
 int32 achievement_check_progress(map_session_data *sd, int32 achievement_id, int32 type);
 int32 *achievement_level(map_session_data *sd, bool flag);
-bool achievement_check_condition(struct script_code* condition, map_session_data* sd);
+bool achievement_check_condition(struct script_code *condition, map_session_data *sd);
 void achievement_get_titles(uint32 char_id);
 void achievement_update_objective(map_session_data *sd, enum e_achievement_group group, uint8 arg_count, ...);
 int32 achievement_update_objective_sub(block_list *bl, va_list ap);

@@ -18,13 +18,13 @@
 
 enum e_ammo_type : uint8;
 
-///Use apple for unknown items.
+/// Use apple for unknown items.
 const t_itemid UNKNOWN_ITEM_ID = 512;
 /// The maximum number of item delays
-#define MAX_ITEMDELAYS	10
-///Designed for search functions, species max number of matches to display.
+#define MAX_ITEMDELAYS 10
+/// Designed for search functions, species max number of matches to display.
 #ifndef MAX_SEARCH
-#define MAX_SEARCH	10
+	#define MAX_SEARCH 10
 #endif
 
 #define MAX_ROULETTE_LEVEL 7 /** client-defined value **/
@@ -34,94 +34,92 @@ const t_itemid CARD0_FORGE = 0x00FF;
 const t_itemid CARD0_CREATE = 0x00FE;
 const t_itemid CARD0_PET = 0x0100;
 
-///Marks if the card0 given is "special" (non-item id used to mark pets/created items. [Skotlex]
+/// Marks if the card0 given is "special" (non-item id used to mark pets/created items. [Skotlex]
 #define itemdb_isspecial(i) (i == CARD0_FORGE || i == CARD0_CREATE || i == CARD0_PET)
 
-///Enum of item id (for hardcoded purpose)
-enum item_itemid : t_itemid
-{
-	ITEMID_DUMMY						= 499,
-	ITEMID_RED_POTION					= 501,
-	ITEMID_YELLOW_POTION				= 503,
-	ITEMID_WHITE_POTION					= 504,
-	ITEMID_BLUE_POTION					= 505,
-	ITEMID_APPLE						= 512,
-	ITEMID_HOLY_WATER					= 523,
-	ITEMID_PUMPKIN						= 535,
-	ITEMID_PET_FOOD						= 537,
-	ITEMID_RED_SLIM_POTION				= 545,
-	ITEMID_YELLOW_SLIM_POTION			= 546,
-	ITEMID_WHITE_SLIM_POTION			= 547,
-	ITEMID_ANODYNE						= 605,
-	ITEMID_ALOEBERA						= 606,
-	ITEMID_MAGNIFIER					= 611,
-	ITEMID_POISON_BOTTLE				= 678,
-	ITEMID_EMPTY_BOTTLE					= 713,
-	ITEMID_EMPERIUM						= 714,
-	ITEMID_RED_GEMSTONE					= 716,
-	ITEMID_BLUE_GEMSTONE				= 717,
-	ITEMID_ORIDECON_STONE				= 756,
-	ITEMID_ALCOHOL						= 970,
-	ITEMID_ORIDECON						= 984,
-	ITEMID_ANVIL						= 986,
-	ITEMID_ORIDECON_ANVIL				= 987,
-	ITEMID_GOLDEN_ANVIL					= 988,
-	ITEMID_EMPERIUM_ANVIL				= 989,
-	ITEMID_BLOODY_RED					= 990,
-	ITEMID_CRYSTAL_BLUE					= 991,
-	ITEMID_WIND_OF_VERDURE				= 992,
-	ITEMID_YELLOW_LIVE					= 993,
-	ITEMID_FLAME_HEART					= 994,
-	ITEMID_MISTIC_FROZEN				= 995,
-	ITEMID_ROUGH_WIND					= 996,
-	ITEMID_GREAT_NATURE					= 997,
-	ITEMID_IRON							= 998,
-	ITEMID_STEEL						= 999,
-	ITEMID_STAR_CRUMB					= 1000,
-	ITEMID_IRON_ORE						= 1002,
-	ITEMID_PHRACON						= 1010,
-	ITEMID_EMVERETARCON					= 1011,
-	ITEMID_TRAP							= 1065,
-	ITEMID_ANGRA_MANYU					= 1599,
-	ITEMID_PAINT_BRUSH					= 6122,
-	ITEMID_MAGIC_GEAR_FUEL				= 6146,
-	ITEMID_NEW_INSURANCE				= 6413,
-	ITEMID_STRANGE_EMBRYO				= 6415,
-	ITEMID_BLACKSMITH_BLESSING			= 6635,
-	ITEMID_STONE						= 7049,
-	ITEMID_FIRE_BOTTLE					= 7135,
-	ITEMID_ACID_BOTTLE					= 7136,
-	ITEMID_MAN_EATER_BOTTLE				= 7137,
-	ITEMID_MINI_BOTTLE					= 7138,
-	ITEMID_COATING_BOTTLE				= 7139,
-	ITEMID_FRAGMENT_OF_CRYSTAL			= 7321,
-	ITEMID_SKULL_						= 7420,
-	ITEMID_TRAP_ALLOY					= 7940,
-	ITEMID_COOKIE_BAT					= 11605,
-	ITEMID_MERCENARY_RED_POTION			= 12184,
-	ITEMID_MERCENARY_BLUE_POTION		= 12185,
-	ITEMID_NEURALIZER					= 12213,
-	ITEMID_M_CENTER_POTION				= 12241,
-	ITEMID_M_AWAKENING_POTION			= 12242,
-	ITEMID_M_BERSERK_POTION				= 12243,
-	ITEMID_NOVICE_MAGNIFIER				= 12325,
-	ITEMID_ANCILLA						= 12333,
-	ITEMID_REINS_OF_MOUNT				= 12622,
-	ITEMID_NOBLE_NAMEPLATE				= 12705,
-	ITEMID_SILVER_BULLET				= 13201,
-	ITEMID_PURIFICATION_BULLET			= 13220,
-	ITEMID_SILVER_BULLET_				= 13221,
-	ITEMID_INVENTORY_EX_EVT				= 25791,
-	ITEMID_INVENTORY_EX_DIS				= 25792,
-	ITEMID_INVENTORY_EX					= 25793,
-	ITEMID_WL_MB_SG						= 100065,
-	ITEMID_HOMUNCULUS_SUPPLEMENT		= 100371,
+/// Enum of item id (for hardcoded purpose)
+enum item_itemid : t_itemid {
+	ITEMID_DUMMY = 499,
+	ITEMID_RED_POTION = 501,
+	ITEMID_YELLOW_POTION = 503,
+	ITEMID_WHITE_POTION = 504,
+	ITEMID_BLUE_POTION = 505,
+	ITEMID_APPLE = 512,
+	ITEMID_HOLY_WATER = 523,
+	ITEMID_PUMPKIN = 535,
+	ITEMID_PET_FOOD = 537,
+	ITEMID_RED_SLIM_POTION = 545,
+	ITEMID_YELLOW_SLIM_POTION = 546,
+	ITEMID_WHITE_SLIM_POTION = 547,
+	ITEMID_ANODYNE = 605,
+	ITEMID_ALOEBERA = 606,
+	ITEMID_MAGNIFIER = 611,
+	ITEMID_POISON_BOTTLE = 678,
+	ITEMID_EMPTY_BOTTLE = 713,
+	ITEMID_EMPERIUM = 714,
+	ITEMID_RED_GEMSTONE = 716,
+	ITEMID_BLUE_GEMSTONE = 717,
+	ITEMID_ORIDECON_STONE = 756,
+	ITEMID_ALCOHOL = 970,
+	ITEMID_ORIDECON = 984,
+	ITEMID_ANVIL = 986,
+	ITEMID_ORIDECON_ANVIL = 987,
+	ITEMID_GOLDEN_ANVIL = 988,
+	ITEMID_EMPERIUM_ANVIL = 989,
+	ITEMID_BLOODY_RED = 990,
+	ITEMID_CRYSTAL_BLUE = 991,
+	ITEMID_WIND_OF_VERDURE = 992,
+	ITEMID_YELLOW_LIVE = 993,
+	ITEMID_FLAME_HEART = 994,
+	ITEMID_MISTIC_FROZEN = 995,
+	ITEMID_ROUGH_WIND = 996,
+	ITEMID_GREAT_NATURE = 997,
+	ITEMID_IRON = 998,
+	ITEMID_STEEL = 999,
+	ITEMID_STAR_CRUMB = 1000,
+	ITEMID_IRON_ORE = 1002,
+	ITEMID_PHRACON = 1010,
+	ITEMID_EMVERETARCON = 1011,
+	ITEMID_TRAP = 1065,
+	ITEMID_ANGRA_MANYU = 1599,
+	ITEMID_PAINT_BRUSH = 6122,
+	ITEMID_MAGIC_GEAR_FUEL = 6146,
+	ITEMID_NEW_INSURANCE = 6413,
+	ITEMID_STRANGE_EMBRYO = 6415,
+	ITEMID_BLACKSMITH_BLESSING = 6635,
+	ITEMID_STONE = 7049,
+	ITEMID_FIRE_BOTTLE = 7135,
+	ITEMID_ACID_BOTTLE = 7136,
+	ITEMID_MAN_EATER_BOTTLE = 7137,
+	ITEMID_MINI_BOTTLE = 7138,
+	ITEMID_COATING_BOTTLE = 7139,
+	ITEMID_FRAGMENT_OF_CRYSTAL = 7321,
+	ITEMID_SKULL_ = 7420,
+	ITEMID_TRAP_ALLOY = 7940,
+	ITEMID_COOKIE_BAT = 11605,
+	ITEMID_MERCENARY_RED_POTION = 12184,
+	ITEMID_MERCENARY_BLUE_POTION = 12185,
+	ITEMID_NEURALIZER = 12213,
+	ITEMID_M_CENTER_POTION = 12241,
+	ITEMID_M_AWAKENING_POTION = 12242,
+	ITEMID_M_BERSERK_POTION = 12243,
+	ITEMID_NOVICE_MAGNIFIER = 12325,
+	ITEMID_ANCILLA = 12333,
+	ITEMID_REINS_OF_MOUNT = 12622,
+	ITEMID_NOBLE_NAMEPLATE = 12705,
+	ITEMID_SILVER_BULLET = 13201,
+	ITEMID_PURIFICATION_BULLET = 13220,
+	ITEMID_SILVER_BULLET_ = 13221,
+	ITEMID_INVENTORY_EX_EVT = 25791,
+	ITEMID_INVENTORY_EX_DIS = 25792,
+	ITEMID_INVENTORY_EX = 25793,
+	ITEMID_WL_MB_SG = 100065,
+	ITEMID_HOMUNCULUS_SUPPLEMENT = 100371,
 };
 
-///Rune Knight
-enum rune_item_list : t_itemid
-{
-	ITEMID_NAUTHIZ		= 12725,
+/// Rune Knight
+enum rune_item_list : t_itemid {
+	ITEMID_NAUTHIZ = 12725,
 	ITEMID_RAIDO,
 	ITEMID_BERKANA,
 	ITEMID_ISA,
@@ -130,14 +128,13 @@ enum rune_item_list : t_itemid
 	ITEMID_THURISAZ,
 	ITEMID_WYRD,
 	ITEMID_HAGALAZ,
-	ITEMID_LUX_ANIMA	= 22540,
+	ITEMID_LUX_ANIMA = 22540,
 };
 
-///Mechanic
-enum mechanic_item_list : t_itemid
-{
-	ITEMID_ACCELERATOR				= 2800,
-	ITEMID_SUICIDAL_DEVICE				= 2802,
+/// Mechanic
+enum mechanic_item_list : t_itemid {
+	ITEMID_ACCELERATOR = 2800,
+	ITEMID_SUICIDAL_DEVICE = 2802,
 	ITEMID_SHAPE_SHIFTER,
 	ITEMID_COOLING_DEVICE,
 	ITEMID_MAGNETIC_FIELD_GENERATOR,
@@ -146,22 +143,21 @@ enum mechanic_item_list : t_itemid
 	ITEMID_CAMOUFLAGE_GENERATOR,
 	ITEMID_HIGH_QUALITY_COOLER,
 	ITEMID_SPECIAL_COOLER,
-	ITEMID_SCARLET_PTS				= 6360,
+	ITEMID_SCARLET_PTS = 6360,
 	ITEMID_INDIGO_PTS,
 	ITEMID_YELLOW_WISH_PTS,
 	ITEMID_LIME_GREEN_PTS,
-	ITEMID_REPAIR_A              = 12392,
+	ITEMID_REPAIR_A = 12392,
 	ITEMID_REPAIR_B,
 	ITEMID_REPAIR_C,
 };
 
-///Genetic
-enum genetic_item_list : t_itemid
-{
-	ITEMID_SEED_OF_HORNY_PLANT			= 6210,
+/// Genetic
+enum genetic_item_list : t_itemid {
+	ITEMID_SEED_OF_HORNY_PLANT = 6210,
 	ITEMID_BLOODSUCK_PLANT_SEED,
 	ITEMID_BOMB_MUSHROOM_SPORE,
-	ITEMID_HP_INCREASE_POTION_SMALL		= 12422,
+	ITEMID_HP_INCREASE_POTION_SMALL = 12422,
 	ITEMID_HP_INCREASE_POTION_MEDIUM,
 	ITEMID_HP_INCREASE_POTION_LARGE,
 	ITEMID_SP_INCREASE_POTION_SMALL,
@@ -177,8 +173,8 @@ enum genetic_item_list : t_itemid
 	ITEMID_BLACK_MASS,
 	ITEMID_VITATA500,
 	ITEMID_CONCENTRATED_CEROMAIN_SOUP,
-	ITEMID_CURE_FREE					= 12475,
-	ITEMID_APPLE_BOMB					= 13260,
+	ITEMID_CURE_FREE = 12475,
+	ITEMID_APPLE_BOMB = 13260,
 	ITEMID_COCONUT_BOMB,
 	ITEMID_MELON_BOMB,
 	ITEMID_PINEAPPLE_BOMB,
@@ -187,7 +183,7 @@ enum genetic_item_list : t_itemid
 	ITEMID_BLACK_HARD_LUMP,
 	ITEMID_VERY_HARD_LUMP,
 	ITEMID_MYSTERIOUS_POWDER,
-	ITEMID_HP_INC_POTS_TO_THROW			= 13275,
+	ITEMID_HP_INC_POTS_TO_THROW = 13275,
 	ITEMID_HP_INC_POTM_TO_THROW,
 	ITEMID_HP_INC_POTL_TO_THROW,
 	ITEMID_SP_INC_POTS_TO_THROW,
@@ -195,9 +191,8 @@ enum genetic_item_list : t_itemid
 	ITEMID_SP_INC_POTL_TO_THROW,
 };
 
-///Guillotine Cross
-enum poison_item_list : t_itemid
-{
+/// Guillotine Cross
+enum poison_item_list : t_itemid {
 	ITEMID_PARALYSE = 12717,
 	ITEMID_LEECHESEND,
 	ITEMID_OBLIVIONCURSE,
@@ -208,31 +203,31 @@ enum poison_item_list : t_itemid
 	ITEMID_VENOMBLEED,
 };
 
-///Item job
-enum e_item_job : uint16
-{
-	ITEMJ_NONE        = 0x00,
-	ITEMJ_NORMAL      = 0x01,
-	ITEMJ_UPPER       = 0x02,
-	ITEMJ_BABY        = 0x04,
-	ITEMJ_THIRD       = 0x08,
+/// Item job
+enum e_item_job : uint16 {
+	ITEMJ_NONE = 0x00,
+	ITEMJ_NORMAL = 0x01,
+	ITEMJ_UPPER = 0x02,
+	ITEMJ_BABY = 0x04,
+	ITEMJ_THIRD = 0x08,
 	ITEMJ_THIRD_UPPER = 0x10,
-	ITEMJ_THIRD_BABY  = 0x20,
-	ITEMJ_FOURTH      = 0x40,
-	ITEMJ_MAX         = 0xFF,
+	ITEMJ_THIRD_BABY = 0x20,
+	ITEMJ_FOURTH = 0x40,
+	ITEMJ_MAX = 0xFF,
 
 	ITEMJ_ALL_UPPER = ITEMJ_UPPER | ITEMJ_THIRD_UPPER | ITEMJ_FOURTH,
 	ITEMJ_ALL_BABY = ITEMJ_BABY | ITEMJ_THIRD_BABY,
 	ITEMJ_ALL_THIRD = ITEMJ_THIRD | ITEMJ_THIRD_UPPER | ITEMJ_THIRD_BABY,
 
 #ifdef RENEWAL
-	ITEMJ_ALL = ITEMJ_NORMAL | ITEMJ_UPPER | ITEMJ_BABY | ITEMJ_THIRD | ITEMJ_THIRD_UPPER | ITEMJ_THIRD_BABY | ITEMJ_FOURTH,
+	ITEMJ_ALL =
+		ITEMJ_NORMAL | ITEMJ_UPPER | ITEMJ_BABY | ITEMJ_THIRD | ITEMJ_THIRD_UPPER | ITEMJ_THIRD_BABY | ITEMJ_FOURTH,
 #else
 	ITEMJ_ALL = ITEMJ_NORMAL | ITEMJ_UPPER | ITEMJ_BABY,
 #endif
 };
 
-#define AMMO_TYPE_ALL ((1<<MAX_AMMO_TYPE)-1)
+#define AMMO_TYPE_ALL ((1 << MAX_AMMO_TYPE) - 1)
 
 enum e_random_item_group {
 	IG_BLUEBOX = 1,
@@ -3027,15 +3022,18 @@ enum e_delay_consume : uint8 {
 enum e_group_algorithm_type : uint8 {
 	GROUP_ALGORITHM_USEDB, // Use algorithm defined in the database for the sub group (All, Random or SharedPool).
 	GROUP_ALGORITHM_DROP, // Pick one item from the group and use rate as drop rate, on fail, do not return any item.
-	GROUP_ALGORITHM_ALL, // All items have an equal chance to be returned. Using getgroupitem will return all items in the group.
-	GROUP_ALGORITHM_RANDOM, // Always return an item from the group, rate determines which item is more likely to be returned.
-	GROUP_ALGORITHM_SHAREDPOOL, // Rate is the amount of items in the group, return a random item and remove it from the group.
+	GROUP_ALGORITHM_ALL, // All items have an equal chance to be returned. Using getgroupitem will return all items in
+						 // the group.
+	GROUP_ALGORITHM_RANDOM, // Always return an item from the group, rate determines which item is more likely to be
+							// returned.
+	GROUP_ALGORITHM_SHAREDPOOL, // Rate is the amount of items in the group, return a random item and remove it from the
+								// group.
 };
 
 /// Item combo struct
 struct s_item_combo {
 	std::vector<t_itemid> nameid;
-	script_code *script;
+	script_code* script;
 	uint16 id;
 
 	~s_item_combo() {
@@ -3051,14 +3049,13 @@ struct s_item_combo {
 class ComboDatabase : public TypesafeYamlDatabase<uint16, s_item_combo> {
 private:
 	uint16 combo_num;
-	uint16 find_combo_id( const std::vector<t_itemid>& items );
+	uint16 find_combo_id(const std::vector<t_itemid>& items);
 
 public:
 	ComboDatabase() : TypesafeYamlDatabase("COMBO_DB", 1) {
-
 	}
 
-	void clear() override{
+	void clear() override {
 		TypesafeYamlDatabase::clear();
 		this->combo_num = 0;
 	}
@@ -3070,15 +3067,15 @@ public:
 extern ComboDatabase itemdb_combo;
 
 // Struct for item random option [Secret]
-struct s_random_opt_data
-{
+struct s_random_opt_data {
 	uint16 id;
 	std::string name;
-	script_code *script;
+	script_code* script;
 
 	~s_random_opt_data() {
-		if (script)
+		if (script) {
 			script_free_code(script);
+		}
 	}
 };
 
@@ -3099,13 +3096,12 @@ struct s_random_opt_group {
 	std::vector<std::shared_ptr<s_random_opt_group_entry>> random_options;
 
 public:
-	void apply( struct item& item );
+	void apply(struct item& item);
 };
 
 class RandomOptionDatabase : public TypesafeYamlDatabase<uint16, s_random_opt_data> {
 public:
 	RandomOptionDatabase() : TypesafeYamlDatabase("RANDOM_OPTION_DB", 1) {
-
 	}
 
 	const std::string getDefaultLocation() override;
@@ -3114,7 +3110,7 @@ public:
 
 	// Additional
 	bool option_exists(std::string name);
-	bool option_get_id(std::string name, uint16 &id);
+	bool option_get_id(std::string name, uint16& id);
 };
 
 extern RandomOptionDatabase random_option_db;
@@ -3122,23 +3118,21 @@ extern RandomOptionDatabase random_option_db;
 class RandomOptionGroupDatabase : public TypesafeYamlDatabase<uint16, s_random_opt_group> {
 public:
 	RandomOptionGroupDatabase() : TypesafeYamlDatabase("RANDOM_OPTION_GROUP", 1) {
-
 	}
 
 	const std::string getDefaultLocation() override;
 	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 
 	// Additional
-	bool add_option(const ryml::NodeRef& node, std::shared_ptr<s_random_opt_group_entry> &entry);
+	bool add_option(const ryml::NodeRef& node, std::shared_ptr<s_random_opt_group_entry>& entry);
 	bool option_exists(std::string name);
-	bool option_get_id(std::string name, uint16 &id);
+	bool option_get_id(std::string name, uint16& id);
 };
 
 extern RandomOptionGroupDatabase random_option_group;
 
 /// Struct of item group entry
-struct s_item_group_entry
-{
+struct s_item_group_entry {
 	t_itemid nameid; /// Item ID
 	uint16 rate;
 	uint16 adj_rate; /// Rate adjusted by the battle_config.item_group_rate
@@ -3156,8 +3150,7 @@ struct s_item_group_entry
 };
 
 /// Struct of random group
-struct s_item_group_random
-{
+struct s_item_group_random {
 	uint32 total_rate;
 	uint32 total_given; /// Amount of times an item from this group has been given out
 	e_group_algorithm_type algorithm;
@@ -3165,24 +3158,22 @@ struct s_item_group_random
 };
 
 /// Struct of item group that will be used for db
-struct s_item_group_db
-{
+struct s_item_group_db {
 	uint16 id; /// Item Group ID
-	std::unordered_map<uint16, std::shared_ptr<s_item_group_random>> random;	/// group ID, s_item_group_random
+	std::unordered_map<uint16, std::shared_ptr<s_item_group_random>> random; /// group ID, s_item_group_random
 };
 
 /// Struct of Roulette db
 struct s_roulette_db {
-	t_itemid *nameid[MAX_ROULETTE_LEVEL]; /// Item ID
-	unsigned short *qty[MAX_ROULETTE_LEVEL]; /// Amount of Item ID
-	int32 *flag[MAX_ROULETTE_LEVEL]; /// Whether the item is for loss or win
+	t_itemid* nameid[MAX_ROULETTE_LEVEL]; /// Item ID
+	unsigned short* qty[MAX_ROULETTE_LEVEL]; /// Amount of Item ID
+	int32* flag[MAX_ROULETTE_LEVEL]; /// Whether the item is for loss or win
 	int32 items[MAX_ROULETTE_LEVEL]; /// Number of items in the list for each
 };
 extern struct s_roulette_db rd;
 
-///Main item data struct
-struct item_data
-{
+/// Main item data struct
+struct item_data {
 	t_itemid nameid;
 	std::string name, ename;
 
@@ -3190,7 +3181,8 @@ struct item_data
 	uint32 value_sell;
 	item_types type;
 	uint8 subtype;
-	int32 maxchance; //For logs, for external game info, for scripts: Max drop chance of this item (e.g. 0.01% , etc.. if it = 0, then monsters don't drop it, -1 denotes items sold in shops only) [Lupus]
+	int32 maxchance; // For logs, for external game info, for scripts: Max drop chance of this item (e.g. 0.01% , etc..
+					 // if it = 0, then monsters don't drop it, -1 denotes items sold in shops only) [Lupus]
 	uint8 sex;
 	uint32 equip;
 	uint32 weight;
@@ -3208,28 +3200,29 @@ struct item_data
 	uint32 matk;
 #endif
 
-//Lupus: I rearranged order of these fields due to compatibility with ITEMINFO script command
-//		some script commands should be revised as well...
-	uint64 class_base[3];	//Specifies if the base can wear this item (split in 3 indexes per type: 1-1, 2-1, 2-2)
-	uint16 class_upper; //Specifies if the class-type can equip it (See e_item_job)
+	// Lupus: I rearranged order of these fields due to compatibility with ITEMINFO script command
+	//		some script commands should be revised as well...
+	uint64 class_base[3]; // Specifies if the base can wear this item (split in 3 indexes per type: 1-1, 2-1, 2-2)
+	uint16 class_upper; // Specifies if the class-type can equip it (See e_item_job)
 	struct {
 		int32 chance;
 		int32 id;
-	} mob[MAX_SEARCH]; //Holds the mobs that have the highest drop rate for this item. [Skotlex]
-	struct script_code *script;	//Default script for everything.
-	struct script_code *equip_script;	//Script executed once when equipping.
-	struct script_code *unequip_script;//Script executed once when unequipping.
+	} mob[MAX_SEARCH]; // Holds the mobs that have the highest drop rate for this item. [Skotlex]
+	struct script_code* script; // Default script for everything.
+	struct script_code* equip_script; // Script executed once when equipping.
+	struct script_code* unequip_script; // Script executed once when unequipping.
 	struct {
 		unsigned available : 1;
 		uint32 no_equip;
-		unsigned no_refine : 1;	// [celest]
-		unsigned delay_consume;	// [Skotlex]
+		unsigned no_refine : 1; // [celest]
+		unsigned delay_consume; // [Skotlex]
 		struct {
 			bool drop, trade, trade_partner, sell, cart, storage, guild_storage, mail, auction;
-		} trade_restriction;	//Item restrictions mask [Skotlex]
-		unsigned autoequip: 1;
+		} trade_restriction; // Item restrictions mask [Skotlex]
+		unsigned autoequip : 1;
 		bool buyingstore;
-		bool dead_branch; // As dead branch item. Logged at `branchlog` table and cannot be used at 'nobranch' mapflag [Cydh]
+		bool dead_branch; // As dead branch item. Logged at `branchlog` table and cannot be used at 'nobranch' mapflag
+						  // [Cydh]
 		bool group; // As item group container [Cydh]
 		unsigned guid : 1; // This item always be attached with GUID and make it as bound item! [Cydh]
 		bool broadcast; ///< Will be broadcasted if someone obtain the item [Cydh]
@@ -3237,7 +3230,7 @@ struct item_data
 		e_item_drop_effect dropEffect; ///< Drop Effect Mode
 		unsigned gradable : 1;
 	} flag;
-	struct {// item stacking limitation
+	struct { // item stacking limitation
 		uint16 amount;
 		bool inventory, cart, storage, guild_storage;
 	} stack;
@@ -3245,7 +3238,7 @@ struct item_data
 		uint16 override;
 		bool sitting;
 	} item_usage;
-	short gm_lv_trade_override;	//GM-level to override trade_restriction
+	short gm_lv_trade_override; // GM-level to override trade_restriction
 	std::vector<std::shared_ptr<s_item_combo>> combos;
 	struct {
 		uint32 duration;
@@ -3253,17 +3246,17 @@ struct item_data
 	} delay;
 
 	~item_data() {
-		if (this->script){
+		if (this->script) {
 			script_free_code(this->script);
 			this->script = nullptr;
 		}
 
-		if (this->equip_script){
+		if (this->equip_script) {
 			script_free_code(this->equip_script);
 			this->equip_script = nullptr;
 		}
 
-		if (this->unequip_script){
+		if (this->unequip_script) {
 			script_free_code(this->unequip_script);
 			this->unequip_script = nullptr;
 		}
@@ -3280,7 +3273,7 @@ private:
 	std::unordered_map<std::string, std::shared_ptr<item_data>> nameToItemDataMap;
 	std::unordered_map<std::string, std::shared_ptr<item_data>> aegisNameToItemDataMap;
 
-	e_sex defaultGender( const ryml::NodeRef& node, std::shared_ptr<item_data> id );
+	e_sex defaultGender(const ryml::NodeRef& node, std::shared_ptr<item_data> id);
 
 	std::string create_item_link(struct item& item, std::shared_ptr<item_data>& data);
 
@@ -3293,13 +3286,12 @@ private:
 
 public:
 	ItemDatabase() : TypesafeCachedYamlDatabase("ITEM_DB", 3, 1) {
-
 	}
 
 	const std::string getDefaultLocation() override;
 	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 	void loadingFinished() override;
-	void clear() override{
+	void clear() override {
 		TypesafeCachedYamlDatabase::clear();
 
 		this->nameToItemDataMap.clear();
@@ -3307,11 +3299,11 @@ public:
 	}
 
 	// Additional
-	std::shared_ptr<item_data> searchname( const char* name );
-	std::shared_ptr<item_data> search_aegisname( const char *name );
+	std::shared_ptr<item_data> searchname(const char* name);
+	std::shared_ptr<item_data> search_aegisname(const char* name);
 	std::string create_item_link(struct item& item);
-	std::string create_item_link( std::shared_ptr<item_data>& data );
-	std::string create_item_link_for_mes( std::shared_ptr<item_data>& data, bool use_brackets, const char* name );
+	std::string create_item_link(std::shared_ptr<item_data>& data);
+	std::string create_item_link_for_mes(std::shared_ptr<item_data>& data, bool use_brackets, const char* name);
 };
 
 extern ItemDatabase item_db;
@@ -3319,7 +3311,6 @@ extern ItemDatabase item_db;
 class ItemGroupDatabase : public TypesafeCachedYamlDatabase<uint16, s_item_group_db> {
 public:
 	ItemGroupDatabase() : TypesafeCachedYamlDatabase("ITEM_GROUP_DB", 4, 1) {
-
 	}
 
 	const std::string getDefaultLocation() override;
@@ -3328,23 +3319,26 @@ public:
 
 	// Additional
 	bool item_exists(uint16 group_id, t_itemid nameid);
-	int16 item_exists_pc(map_session_data *sd, uint16 group_id);
-	std::shared_ptr<s_item_group_entry> get_random_entry(uint16 group_id, uint8 sub_group, e_group_algorithm_type algorithm = GROUP_ALGORITHM_USEDB);
-	uint8 pc_get_itemgroup( uint16 group_id, bool identify, map_session_data& sd );
+	int16 item_exists_pc(map_session_data* sd, uint16 group_id);
+	std::shared_ptr<s_item_group_entry> get_random_entry(uint16 group_id,
+														 uint8 sub_group,
+														 e_group_algorithm_type algorithm = GROUP_ALGORITHM_USEDB);
+	uint8 pc_get_itemgroup(uint16 group_id, bool identify, map_session_data& sd);
 
 private:
-	std::shared_ptr<s_item_group_entry> get_random_itemsubgroup(std::shared_ptr<s_item_group_random> random, e_group_algorithm_type algorithm = GROUP_ALGORITHM_USEDB);
-	void pc_get_itemgroup_sub( map_session_data& sd, bool identify, std::shared_ptr<s_item_group_entry> data );
+	std::shared_ptr<s_item_group_entry> get_random_itemsubgroup(
+		std::shared_ptr<s_item_group_random> random, e_group_algorithm_type algorithm = GROUP_ALGORITHM_USEDB);
+	void pc_get_itemgroup_sub(map_session_data& sd, bool identify, std::shared_ptr<s_item_group_entry> data);
 };
 
 extern ItemGroupDatabase itemdb_group;
 
-struct s_laphine_synthesis_requirement{
+struct s_laphine_synthesis_requirement {
 	t_itemid item_id;
 	uint16 amount;
 };
 
-struct s_laphine_synthesis{
+struct s_laphine_synthesis {
 	t_itemid item_id;
 	uint16 minimumRefine;
 	uint16 maximumRefine;
@@ -3353,19 +3347,18 @@ struct s_laphine_synthesis{
 	uint16 rewardGroupId;
 };
 
-class LaphineSynthesisDatabase : public TypesafeYamlDatabase<t_itemid, s_laphine_synthesis>{
+class LaphineSynthesisDatabase : public TypesafeYamlDatabase<t_itemid, s_laphine_synthesis> {
 public:
-	LaphineSynthesisDatabase() : TypesafeYamlDatabase( "LAPHINE_SYNTHESIS_DB", 1 ){
-
+	LaphineSynthesisDatabase() : TypesafeYamlDatabase("LAPHINE_SYNTHESIS_DB", 1) {
 	}
 
 	const std::string getDefaultLocation();
-	uint64 parseBodyNode( const ryml::NodeRef& node );
+	uint64 parseBodyNode(const ryml::NodeRef& node);
 };
 
 extern LaphineSynthesisDatabase laphine_synthesis_db;
 
-struct s_laphine_upgrade{
+struct s_laphine_upgrade {
 	t_itemid item_id;
 	std::vector<t_itemid> target_item_ids;
 	uint16 minimumRefine;
@@ -3378,19 +3371,18 @@ struct s_laphine_upgrade{
 	uint16 resultRefineMaximum;
 };
 
-class LaphineUpgradeDatabase : public TypesafeYamlDatabase<t_itemid, s_laphine_upgrade>{
+class LaphineUpgradeDatabase : public TypesafeYamlDatabase<t_itemid, s_laphine_upgrade> {
 public:
-	LaphineUpgradeDatabase() : TypesafeYamlDatabase( "LAPHINE_UPGRADE_DB", 1 ){
-
+	LaphineUpgradeDatabase() : TypesafeYamlDatabase("LAPHINE_UPGRADE_DB", 1) {
 	}
 
 	const std::string getDefaultLocation();
-	uint64 parseBodyNode( const ryml::NodeRef& node );
+	uint64 parseBodyNode(const ryml::NodeRef& node);
 };
 
 extern LaphineUpgradeDatabase laphine_upgrade_db;
 
-struct s_item_reform_base{
+struct s_item_reform_base {
 	t_itemid item_id;
 	uint16 minimumRefine;
 	uint16 maximumRefine;
@@ -3404,64 +3396,63 @@ struct s_item_reform_base{
 	bool removeEnchantgrade;
 };
 
-struct s_item_reform{
+struct s_item_reform {
 	t_itemid item_id;
 	std::unordered_map<t_itemid, std::shared_ptr<s_item_reform_base>> base_items;
 };
 
-class ItemReformDatabase : public TypesafeYamlDatabase<t_itemid, s_item_reform>{
+class ItemReformDatabase : public TypesafeYamlDatabase<t_itemid, s_item_reform> {
 public:
-	ItemReformDatabase() : TypesafeYamlDatabase( "ITEM_REFORM_DB", 1 ){
-
+	ItemReformDatabase() : TypesafeYamlDatabase("ITEM_REFORM_DB", 1) {
 	}
 
 	const std::string getDefaultLocation();
-	uint64 parseBodyNode( const ryml::NodeRef& node );
+	uint64 parseBodyNode(const ryml::NodeRef& node);
 };
 
 extern ItemReformDatabase item_reform_db;
 
-struct s_item_enchant_normal_sub{
+struct s_item_enchant_normal_sub {
 	t_itemid item_id;
 	uint32 chance;
 };
 
-struct s_item_enchant_normal{
+struct s_item_enchant_normal {
 	uint16 enchantgrade;
 	std::unordered_map<t_itemid, std::shared_ptr<s_item_enchant_normal_sub>> enchants;
 };
 
-struct s_item_enchant_perfect{
+struct s_item_enchant_perfect {
 	t_itemid item_id;
 	uint32 zeny;
 	std::unordered_map<t_itemid, uint16> materials;
 };
 
-struct s_item_enchant_upgrade{
+struct s_item_enchant_upgrade {
 	t_itemid enchant_item_id;
 	t_itemid upgrade_item_id;
 	uint32 zeny;
 	std::unordered_map<t_itemid, uint16> materials;
 };
 
-struct s_item_enchant_slot{
+struct s_item_enchant_slot {
 	uint16 slot;
-	struct{
+	struct {
 		uint32 zeny;
 		std::unordered_map<t_itemid, uint16> materials;
 		uint32 chance;
 		std::unordered_map<uint16, uint32> enchantgradeChanceIncrease;
 		std::unordered_map<uint16, std::shared_ptr<s_item_enchant_normal>> enchants;
 	} normal;
-	struct{
+	struct {
 		std::unordered_map<t_itemid, std::shared_ptr<s_item_enchant_perfect>> enchants;
 	} perfect;
-	struct{
+	struct {
 		std::unordered_map<t_itemid, std::shared_ptr<s_item_enchant_upgrade>> enchants;
 	} upgrade;
 };
 
-struct s_item_enchant{
+struct s_item_enchant {
 	uint64 id;
 	std::vector<t_itemid> target_item_ids;
 	uint16 minimumRefine;
@@ -3476,22 +3467,21 @@ struct s_item_enchant{
 	std::unordered_map<uint16, std::shared_ptr<s_item_enchant_slot>> slots;
 };
 
-class ItemEnchantDatabase : public TypesafeYamlDatabase<uint64, s_item_enchant>{
+class ItemEnchantDatabase : public TypesafeYamlDatabase<uint64, s_item_enchant> {
 private:
-	bool parseMaterials( const ryml::NodeRef& node, std::unordered_map<t_itemid, uint16>& materials );
+	bool parseMaterials(const ryml::NodeRef& node, std::unordered_map<t_itemid, uint16>& materials);
 
 public:
-	ItemEnchantDatabase() : TypesafeYamlDatabase( "ITEM_ENCHANT_DB", 1 ){
-
+	ItemEnchantDatabase() : TypesafeYamlDatabase("ITEM_ENCHANT_DB", 1) {
 	}
 
 	const std::string getDefaultLocation();
-	uint64 parseBodyNode( const ryml::NodeRef& node );
+	uint64 parseBodyNode(const ryml::NodeRef& node);
 };
 
 extern ItemEnchantDatabase item_enchant_db;
 
-struct s_item_package_item{
+struct s_item_package_item {
 	t_itemid item_id;
 	uint16 amount;
 	uint16 rentalhours;
@@ -3499,33 +3489,34 @@ struct s_item_package_item{
 	std::shared_ptr<s_random_opt_group> randomOptionGroup;
 };
 
-struct s_item_package_group{
+struct s_item_package_group {
 	uint32 groupIndex;
 	std::unordered_map<t_itemid, std::shared_ptr<s_item_package_item>> items;
 };
 
-struct s_item_package{
+struct s_item_package {
 	t_itemid item_id;
 	std::unordered_map<uint32, std::shared_ptr<s_item_package_group>> groups;
 };
 
-class ItemPackageDatabase : public TypesafeYamlDatabase<t_itemid, s_item_package>{
+class ItemPackageDatabase : public TypesafeYamlDatabase<t_itemid, s_item_package> {
 public:
-	ItemPackageDatabase() : TypesafeYamlDatabase( "ITEM_PACKAGE_DB", 1 ){
-
+	ItemPackageDatabase() : TypesafeYamlDatabase("ITEM_PACKAGE_DB", 1) {
 	}
 
 	const std::string getDefaultLocation();
-	uint64 parseBodyNode( const ryml::NodeRef& node );
+	uint64 parseBodyNode(const ryml::NodeRef& node);
 };
 
 extern ItemPackageDatabase item_package_db;
 
-uint16 itemdb_searchname_array(std::map<t_itemid, std::shared_ptr<item_data>> &data, uint16 size, const char *str);
+uint16 itemdb_searchname_array(std::map<t_itemid, std::shared_ptr<item_data>>& data, uint16 size, const char* str);
 struct item_data* itemdb_search(t_itemid nameid);
 
-[[deprecated("Please upgrade your code to item_db.exists() or item_db.find()! This function will be dropped soon!")]]
-std::shared_ptr<item_data> itemdb_exists(t_itemid nameid);
+[[deprecated(
+	"Please upgrade your code to item_db.exists() or item_db.find()! This function will be dropped soon!")]] std::
+	shared_ptr<item_data>
+	itemdb_exists(t_itemid nameid);
 
 #define itemdb_name(n) itemdb_search(n)->name.c_str()
 #define itemdb_ename(n) itemdb_search(n)->ename.c_str()
@@ -3547,38 +3538,38 @@ std::shared_ptr<item_data> itemdb_exists(t_itemid nameid);
 #define itemdb_autoequip(n) (itemdb_search(n)->flag.autoequip)
 #define itemdb_dropeffect(n) (itemdb_search(n)->flag.dropEffect)
 const char* itemdb_typename(enum item_types type);
-const char *itemdb_typename_ammo (e_ammo_type ammo);
+const char* itemdb_typename_ammo(e_ammo_type ammo);
 
 #define itemdb_value_buy(n) itemdb_search(n)->value_buy
 #define itemdb_value_sell(n) itemdb_search(n)->value_sell
-//Item trade restrictions [Skotlex]
-bool itemdb_isdropable_sub(struct item_data *itd, int32 gmlv, int32 unused);
-bool itemdb_cantrade_sub(struct item_data *itd, int32 gmlv, int32 gmlv2);
-bool itemdb_canpartnertrade_sub(struct item_data *itd, int32 gmlv, int32 gmlv2);
-bool itemdb_cansell_sub(struct item_data *itd, int32 gmlv, int32 unused);
-bool itemdb_cancartstore_sub(struct item_data *itd, int32 gmlv, int32 unused);
-bool itemdb_canstore_sub(struct item_data *itd, int32 gmlv, int32 unused);
-bool itemdb_canguildstore_sub(struct item_data *itd, int32 gmlv, int32 unused);
-bool itemdb_canmail_sub(struct item_data *itd, int32 gmlv, int32 unused);
-bool itemdb_canauction_sub(struct item_data *itd, int32 gmlv, int32 unused);
+// Item trade restrictions [Skotlex]
+bool itemdb_isdropable_sub(struct item_data* itd, int32 gmlv, int32 unused);
+bool itemdb_cantrade_sub(struct item_data* itd, int32 gmlv, int32 gmlv2);
+bool itemdb_canpartnertrade_sub(struct item_data* itd, int32 gmlv, int32 gmlv2);
+bool itemdb_cansell_sub(struct item_data* itd, int32 gmlv, int32 unused);
+bool itemdb_cancartstore_sub(struct item_data* itd, int32 gmlv, int32 unused);
+bool itemdb_canstore_sub(struct item_data* itd, int32 gmlv, int32 unused);
+bool itemdb_canguildstore_sub(struct item_data* itd, int32 gmlv, int32 unused);
+bool itemdb_canmail_sub(struct item_data* itd, int32 gmlv, int32 unused);
+bool itemdb_canauction_sub(struct item_data* itd, int32 gmlv, int32 unused);
 bool itemdb_isrestricted(struct item* item, int32 gmlv, int32 gmlv2, bool (*func)(struct item_data*, int32, int32));
 bool itemdb_ishatched_egg(struct item* item);
 #define itemdb_isdropable(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_isdropable_sub)
 #define itemdb_cantrade(item, gmlv, gmlv2) itemdb_isrestricted(item, gmlv, gmlv2, itemdb_cantrade_sub)
 #define itemdb_canpartnertrade(item, gmlv, gmlv2) itemdb_isrestricted(item, gmlv, gmlv2, itemdb_canpartnertrade_sub)
 #define itemdb_cansell(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_cansell_sub)
-#define itemdb_cancartstore(item, gmlv)  itemdb_isrestricted(item, gmlv, 0, itemdb_cancartstore_sub)
+#define itemdb_cancartstore(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_cancartstore_sub)
 #define itemdb_canstore(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_canstore_sub)
-#define itemdb_canguildstore(item, gmlv) itemdb_isrestricted(item , gmlv, 0, itemdb_canguildstore_sub)
-#define itemdb_canmail(item, gmlv) itemdb_isrestricted(item , gmlv, 0, itemdb_canmail_sub)
-#define itemdb_canauction(item, gmlv) itemdb_isrestricted(item , gmlv, 0, itemdb_canauction_sub)
+#define itemdb_canguildstore(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_canguildstore_sub)
+#define itemdb_canmail(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_canmail_sub)
+#define itemdb_canauction(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_canauction_sub)
 
-bool itemdb_isequip2(struct item_data *id);
+bool itemdb_isequip2(struct item_data* id);
 #define itemdb_isequip(nameid) itemdb_isequip2(itemdb_search(nameid))
 char itemdb_isidentified(t_itemid nameid);
-bool itemdb_isstackable2(struct item_data *id);
+bool itemdb_isstackable2(struct item_data* id);
 #define itemdb_isstackable(nameid) itemdb_isstackable2(itemdb_search(nameid))
-bool itemdb_isNoEquip(struct item_data *id, uint16 m);
+bool itemdb_isNoEquip(struct item_data* id, uint16 m);
 
 bool itemdb_parse_roulette_db(void);
 

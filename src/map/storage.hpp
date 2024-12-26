@@ -41,7 +41,7 @@ enum e_guild_storage_log : uint16 {
 	GUILDSTORAGE_LOG_FAILED,
 };
 
-struct guild_log_entry{
+struct guild_log_entry {
 	uint32 id;
 	char name[NAME_LENGTH];
 	char time[NAME_LENGTH];
@@ -52,7 +52,7 @@ struct guild_log_entry{
 const char *storage_getName(uint8 id);
 bool storage_exists(uint8 id);
 
-int32 storage_delitem(map_session_data* sd, struct s_storage *stor, int32 index, int32 amount);
+int32 storage_delitem(map_session_data *sd, struct s_storage *stor, int32 index, int32 amount);
 int32 storage_storageopen(map_session_data *sd);
 void storage_storageadd(map_session_data *sd, struct s_storage *stor, int32 index, int32 amount);
 void storage_storageget(map_session_data *sd, struct s_storage *stor, int32 index, int32 amount);
@@ -60,28 +60,28 @@ void storage_storageaddfromcart(map_session_data *sd, struct s_storage *stor, in
 void storage_storagegettocart(map_session_data *sd, struct s_storage *stor, int32 index, int32 amount);
 void storage_storagesave(map_session_data *sd);
 void storage_storageclose(map_session_data *sd);
-void storage_sortitem(struct item* items, uint32 size);
+void storage_sortitem(struct item *items, uint32 size);
 void do_init_storage(void);
 void do_final_storage(void);
 void do_reconnect_storage(void);
 void storage_storage_quit(map_session_data *sd, int32 flag);
 
-struct s_storage* guild2storage(int32 guild_id);
-struct s_storage* guild2storage2(int32 guild_id);
+struct s_storage *guild2storage(int32 guild_id);
+struct s_storage *guild2storage2(int32 guild_id);
 void storage_guild_delete(int32 guild_id);
 char storage_guild_storageopen(map_session_data *sd);
-enum e_guild_storage_log storage_guild_log_read( map_session_data* sd );
-bool storage_guild_additem(map_session_data *sd,struct s_storage *stor,struct item *item_data,int32 amount);
-bool storage_guild_additem2(struct s_storage* stor, struct item* item, int32 amount);
-bool storage_guild_delitem(map_session_data *sd,struct s_storage *stor,int32 n,int32 amount);
-void storage_guild_storageadd(map_session_data *sd,int32 index,int32 amount);
-void storage_guild_storageget(map_session_data *sd,int32 index,int32 amount);
-void storage_guild_storageaddfromcart(map_session_data *sd,int32 index,int32 amount);
-void storage_guild_storagegettocart(map_session_data *sd,int32 index,int32 amount);
+enum e_guild_storage_log storage_guild_log_read(map_session_data *sd);
+bool storage_guild_additem(map_session_data *sd, struct s_storage *stor, struct item *item_data, int32 amount);
+bool storage_guild_additem2(struct s_storage *stor, struct item *item, int32 amount);
+bool storage_guild_delitem(map_session_data *sd, struct s_storage *stor, int32 n, int32 amount);
+void storage_guild_storageadd(map_session_data *sd, int32 index, int32 amount);
+void storage_guild_storageget(map_session_data *sd, int32 index, int32 amount);
+void storage_guild_storageaddfromcart(map_session_data *sd, int32 index, int32 amount);
+void storage_guild_storagegettocart(map_session_data *sd, int32 index, int32 amount);
 void storage_guild_storageclose(map_session_data *sd);
-void storage_guild_storage_quit(map_session_data *sd,int32 flag);
+void storage_guild_storage_quit(map_session_data *sd, int32 flag);
 bool storage_guild_storagesave(uint32 account_id, int32 guild_id, int32 flag);
-void storage_guild_storagesaved(int32 guild_id); //Ack from char server that guild store was saved.
+void storage_guild_storagesaved(int32 guild_id); // Ack from char server that guild store was saved.
 
 // Premium Storage [Cydh]
 void storage_premiumStorage_open(map_session_data *sd);

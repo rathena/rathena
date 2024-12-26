@@ -6,15 +6,15 @@
 
 #include <common/mmo.hpp>
 
-#pragma warning( push )
-#pragma warning( disable : 4200 )
+#pragma warning(push)
+#pragma warning(disable : 4200)
 
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
-#if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
-	#pragma pack( push, 1 )
+#if !defined(sun) && (!defined(__NETBSD__) || __NetBSD_Version__ >= 600000000)
+	#pragma pack(push, 1)
 #endif
 
-struct CHARACTER_INFO{
+struct CHARACTER_INFO {
 	uint32 GID;
 #if PACKETVER >= 20170830
 	int64 exp;
@@ -90,18 +90,18 @@ struct CHARACTER_INFO{
 #endif
 } __attribute__((packed));
 
-struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME_sub{
+struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME_sub {
 	int32 status;
 	char map[MAP_NAME_LENGTH_EXT];
 } __attribute__((packed));
 
-struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME{
+struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME {
 	int16 packetType;
 	int16 packetLength;
 	struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME_sub maps[];
 } __attribute__((packed));
 
-struct PACKET_CH_SELECT_ACCESSIBLE_MAPNAME{
+struct PACKET_CH_SELECT_ACCESSIBLE_MAPNAME {
 	int16 packetType;
 	int8 slot;
 	int8 mapnumber;
@@ -110,31 +110,31 @@ struct PACKET_CH_SELECT_ACCESSIBLE_MAPNAME{
 #define DEFINE_PACKET_HEADER(name, id) const int16 HEADER_##name = id;
 
 #if PACKETVER_MAIN_NUM >= 20201007 || PACKETVER_RE_NUM >= 20211103
-	DEFINE_PACKET_HEADER( HC_ACK_CHANGE_CHARACTER_SLOT, 0xb70 )
+DEFINE_PACKET_HEADER(HC_ACK_CHANGE_CHARACTER_SLOT, 0xb70)
 #else
-	DEFINE_PACKET_HEADER( HC_ACK_CHANGE_CHARACTER_SLOT, 0x8d5 )
+DEFINE_PACKET_HEADER(HC_ACK_CHANGE_CHARACTER_SLOT, 0x8d5)
 #endif
 #if PACKETVER_MAIN_NUM >= 20201007 || PACKETVER_RE_NUM >= 20211103
-	DEFINE_PACKET_HEADER( HC_ACK_CHARINFO_PER_PAGE, 0xb72 )
+DEFINE_PACKET_HEADER(HC_ACK_CHARINFO_PER_PAGE, 0xb72)
 #else
-	DEFINE_PACKET_HEADER( HC_ACK_CHARINFO_PER_PAGE, 0x99d )
+DEFINE_PACKET_HEADER(HC_ACK_CHARINFO_PER_PAGE, 0x99d)
 #endif
 #if PACKETVER_MAIN_NUM >= 20201007 || PACKETVER_RE_NUM >= 20211103
-	DEFINE_PACKET_HEADER( HC_ACCEPT_MAKECHAR, 0xb6f )
+DEFINE_PACKET_HEADER(HC_ACCEPT_MAKECHAR, 0xb6f)
 #else
-	DEFINE_PACKET_HEADER( HC_ACCEPT_MAKECHAR, 0x6d )
+DEFINE_PACKET_HEADER(HC_ACCEPT_MAKECHAR, 0x6d)
 #endif
 
-DEFINE_PACKET_HEADER( HC_NOTIFY_ACCESSIBLE_MAPNAME, 0x840 )
-DEFINE_PACKET_HEADER( CH_SELECT_ACCESSIBLE_MAPNAME, 0x841 )
+DEFINE_PACKET_HEADER(HC_NOTIFY_ACCESSIBLE_MAPNAME, 0x840)
+DEFINE_PACKET_HEADER(CH_SELECT_ACCESSIBLE_MAPNAME, 0x841)
 
 #undef DEFINE_PACKET_HEADER
 
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
-#if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
-	#pragma pack( pop )
+#if !defined(sun) && (!defined(__NETBSD__) || __NetBSD_Version__ >= 600000000)
+	#pragma pack(pop)
 #endif
 
-#pragma warning( pop )
+#pragma warning(pop)
 
 #endif /* PACKETS_HPP */

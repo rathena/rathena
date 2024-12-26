@@ -10,7 +10,7 @@
 
 #ifdef WIN32
 	#include "winapi.hpp"
-	typedef long in_addr_t;
+typedef long in_addr_t;
 #else
 	#include <sys/types.h>
 	#include <sys/socket.h>
@@ -25,72 +25,71 @@
 	#define MAXCONN FD_SETSIZE
 #endif
 
-#define FIFOSIZE_SERVERLINK 256*1024
+#define FIFOSIZE_SERVERLINK 256 * 1024
 
 // socket I/O macros
-#define WFIFOHEAD( fd, size ) \
-	do{ \
-		if( ( fd ) && session[( fd )]->wdata_size + ( size ) > session[( fd )]->max_wdata ){ \
-			_realloc_writefifo( ( fd ), ( size ), ALC_MARK ); \
+#define WFIFOHEAD(fd, size) \
+	do { \
+		if ((fd) && session[(fd)]->wdata_size + (size) > session[(fd)]->max_wdata) { \
+			_realloc_writefifo((fd), (size), ALC_MARK); \
 		} \
-	}while( false )
-#define RFIFOP(fd,pos) (session[fd]->rdata + session[fd]->rdata_pos + (pos))
-#define WFIFOP(fd,pos) (session[fd]->wdata + session[fd]->wdata_size + (pos))
+	} while (false)
+#define RFIFOP(fd, pos) (session[fd]->rdata + session[fd]->rdata_pos + (pos))
+#define WFIFOP(fd, pos) (session[fd]->wdata + session[fd]->wdata_size + (pos))
 
-#define RFIFOCP(fd,pos) ((char*)RFIFOP(fd,pos))
-#define WFIFOCP(fd,pos) ((char*)WFIFOP(fd,pos))
-#define RFIFOB(fd,pos) (*(uint8*)RFIFOP(fd,pos))
-#define WFIFOB(fd,pos) (*(uint8*)WFIFOP(fd,pos))
-#define RFIFOW(fd,pos) (*(uint16*)RFIFOP(fd,pos))
-#define WFIFOW(fd,pos) (*(uint16*)WFIFOP(fd,pos))
-#define RFIFOL(fd,pos) (*(uint32*)RFIFOP(fd,pos))
-#define WFIFOL(fd,pos) (*(uint32*)WFIFOP(fd,pos))
-#define RFIFOF(fd,pos) (*(float*)RFIFOP(fd,pos))
-#define WFIFOF(fd,pos) (*(float*)WFIFOP(fd,pos))
-#define RFIFOQ(fd,pos) (*(uint64*)RFIFOP(fd,pos))
-#define WFIFOQ(fd,pos) (*(uint64*)WFIFOP(fd,pos))
+#define RFIFOCP(fd, pos) ((char*)RFIFOP(fd, pos))
+#define WFIFOCP(fd, pos) ((char*)WFIFOP(fd, pos))
+#define RFIFOB(fd, pos) (*(uint8*)RFIFOP(fd, pos))
+#define WFIFOB(fd, pos) (*(uint8*)WFIFOP(fd, pos))
+#define RFIFOW(fd, pos) (*(uint16*)RFIFOP(fd, pos))
+#define WFIFOW(fd, pos) (*(uint16*)WFIFOP(fd, pos))
+#define RFIFOL(fd, pos) (*(uint32*)RFIFOP(fd, pos))
+#define WFIFOL(fd, pos) (*(uint32*)WFIFOP(fd, pos))
+#define RFIFOF(fd, pos) (*(float*)RFIFOP(fd, pos))
+#define WFIFOF(fd, pos) (*(float*)WFIFOP(fd, pos))
+#define RFIFOQ(fd, pos) (*(uint64*)RFIFOP(fd, pos))
+#define WFIFOQ(fd, pos) (*(uint64*)WFIFOP(fd, pos))
 #define RFIFOSPACE(fd) (session[fd]->max_rdata - session[fd]->rdata_size)
 #define WFIFOSPACE(fd) (session[fd]->max_wdata - session[fd]->wdata_size)
 
-#define RFIFOREST(fd)  (session[fd]->flag.eof ? 0 : session[fd]->rdata_size - session[fd]->rdata_pos)
+#define RFIFOREST(fd) (session[fd]->flag.eof ? 0 : session[fd]->rdata_size - session[fd]->rdata_pos)
 #define RFIFOFLUSH(fd) \
 	do { \
-		if(session[fd]->rdata_size == session[fd]->rdata_pos){ \
+		if (session[fd]->rdata_size == session[fd]->rdata_pos) { \
 			session[fd]->rdata_size = session[fd]->rdata_pos = 0; \
-		} else { \
+		} \
+		else { \
 			session[fd]->rdata_size -= session[fd]->rdata_pos; \
-			memmove(session[fd]->rdata, session[fd]->rdata+session[fd]->rdata_pos, session[fd]->rdata_size); \
+			memmove(session[fd]->rdata, session[fd]->rdata + session[fd]->rdata_pos, session[fd]->rdata_size); \
 			session[fd]->rdata_pos = 0; \
 		} \
-	} while(0)
+	} while (0)
 
 // buffer I/O macros
-#define RBUFP(p,pos) (((uint8*)(p)) + (pos))
-#define RBUFCP(p,pos) ((char*)RBUFP((p),(pos)))
-#define RBUFB(p,pos) (*(uint8*)RBUFP((p),(pos)))
-#define RBUFW(p,pos) (*(uint16*)RBUFP((p),(pos)))
-#define RBUFL(p,pos) (*(uint32*)RBUFP((p),(pos)))
-#define RBUFQ(p,pos) (*(uint64*)RBUFP((p),(pos)))
+#define RBUFP(p, pos) (((uint8*)(p)) + (pos))
+#define RBUFCP(p, pos) ((char*)RBUFP((p), (pos)))
+#define RBUFB(p, pos) (*(uint8*)RBUFP((p), (pos)))
+#define RBUFW(p, pos) (*(uint16*)RBUFP((p), (pos)))
+#define RBUFL(p, pos) (*(uint32*)RBUFP((p), (pos)))
+#define RBUFQ(p, pos) (*(uint64*)RBUFP((p), (pos)))
 
-#define WBUFP(p,pos) (((uint8*)(p)) + (pos))
-#define WBUFCP(p,pos) ((char*)WBUFP((p),(pos)))
-#define WBUFB(p,pos) (*(uint8*)WBUFP((p),(pos)))
-#define WBUFW(p,pos) (*(uint16*)WBUFP((p),(pos)))
-#define WBUFL(p,pos) (*(uint32*)WBUFP((p),(pos)))
-#define WBUFQ(p,pos) (*(uint64*)WBUFP((p),(pos)))
+#define WBUFP(p, pos) (((uint8*)(p)) + (pos))
+#define WBUFCP(p, pos) ((char*)WBUFP((p), (pos)))
+#define WBUFB(p, pos) (*(uint8*)WBUFP((p), (pos)))
+#define WBUFW(p, pos) (*(uint16*)WBUFP((p), (pos)))
+#define WBUFL(p, pos) (*(uint32*)WBUFP((p), (pos)))
+#define WBUFQ(p, pos) (*(uint64*)WBUFP((p), (pos)))
 
 #define TOB(n) ((uint8)((n)&UINT8_MAX))
 #define TOW(n) ((uint16)((n)&UINT16_MAX))
 #define TOL(n) ((uint32)((n)&UINT32_MAX))
-
 
 // Struct declaration
 typedef int32 (*RecvFunc)(int32 fd);
 typedef int32 (*SendFunc)(int32 fd);
 typedef int32 (*ParseFunc)(int32 fd);
 
-struct socket_data
-{
+struct socket_data {
 	struct {
 		unsigned char eof : 1;
 		unsigned char server : 1;
@@ -113,7 +112,6 @@ struct socket_data
 	void* session_data; // stores application-specific data related to the session
 };
 
-
 // Data prototype declaration
 
 extern struct socket_data* session[MAXCONN];
@@ -133,10 +131,10 @@ extern bool session_isActive(int32 fd);
 
 int32 make_listen_bind(uint32 ip, uint16 port);
 int32 make_connection(uint32 ip, uint16 port, bool silent, int32 timeout);
-#define realloc_fifo( fd, rfifo_size, wfifo_size ) _realloc_fifo( ( fd ), ( rfifo_size ), ( wfifo_size ), ALC_MARK )
-#define realloc_writefifo( fd, addition ) _realloc_writefifo( ( fd ), ( addition ), ALC_MARK )
-int32 _realloc_fifo( int32 fd, uint32 rfifo_size, uint32 wfifo_size, const char* file, int32 line, const char* func );
-int32 _realloc_writefifo( int32 fd, size_t addition, const char* file, int32 line, const char* func );
+#define realloc_fifo(fd, rfifo_size, wfifo_size) _realloc_fifo((fd), (rfifo_size), (wfifo_size), ALC_MARK)
+#define realloc_writefifo(fd, addition) _realloc_writefifo((fd), (addition), ALC_MARK)
+int32 _realloc_fifo(int32 fd, uint32 rfifo_size, uint32 wfifo_size, const char* file, int32 line, const char* func);
+int32 _realloc_writefifo(int32 fd, size_t addition, const char* file, int32 line, const char* func);
 int32 WFIFOSET(int32 fd, size_t len);
 int32 RFIFOSKIP(int32 fd, size_t len);
 
@@ -150,7 +148,6 @@ extern void flush_fifos(void);
 extern void set_nonblocking(int32 fd, unsigned long yes);
 
 void set_defaultparse(ParseFunc defaultparse);
-
 
 /// Server operation request
 enum chrif_req_op {
@@ -168,19 +165,18 @@ enum chrif_req_op {
 	CHRIF_OP_CHANGECHARSEX,
 };
 
-
 // hostname/ip conversion functions
 uint32 host2ip(const char* hostname);
 const char* ip2str(uint32 ip, char ip_str[16]);
 uint32 str2ip(const char* ip_str);
-#define CONVIP(ip) ((ip)>>24)&0xFF,((ip)>>16)&0xFF,((ip)>>8)&0xFF,((ip)>>0)&0xFF
-#define MAKEIP(a,b,c,d) (uint32)( ( ( (a)&0xFF ) << 24 ) | ( ( (b)&0xFF ) << 16 ) | ( ( (c)&0xFF ) << 8 ) | ( ( (d)&0xFF ) << 0 ) )
+#define CONVIP(ip) ((ip) >> 24) & 0xFF, ((ip) >> 16) & 0xFF, ((ip) >> 8) & 0xFF, ((ip) >> 0) & 0xFF
+#define MAKEIP(a, b, c, d) (uint32)((((a)&0xFF) << 24) | (((b)&0xFF) << 16) | (((c)&0xFF) << 8) | (((d)&0xFF) << 0))
 uint16 ntows(uint16 netshort);
 
 int32 socket_getips(uint32* ips, int32 max);
 
-extern uint32 addr_[16];   // ip addresses of local host (host byte order)
-extern int32 naddr_;   // # of ip addresses
+extern uint32 addr_[16]; // ip addresses of local host (host byte order)
+extern int32 naddr_; // # of ip addresses
 
 void set_eof(int32 fd);
 
@@ -204,27 +200,27 @@ void send_shortlist_do_sends();
 extern int8 packet_buffer[UINT16_MAX];
 
 template <typename P>
-bool socket_send( int32 fd, P& packet ){
-	if( !session_isActive( fd ) ){
+bool socket_send(int32 fd, P& packet) {
+	if (!session_isActive(fd)) {
 		return false;
 	}
 
-	WFIFOHEAD( fd, sizeof( P ) );
-	memcpy( WFIFOP( fd, 0 ), &packet, sizeof( P ) );
-	WFIFOSET( fd, sizeof( P ) );
+	WFIFOHEAD(fd, sizeof(P));
+	memcpy(WFIFOP(fd, 0), &packet, sizeof(P));
+	WFIFOSET(fd, sizeof(P));
 
 	return true;
 }
 
 template <typename P>
-bool socket_send( int32 fd, P* packet ){
-	if( !session_isActive( fd ) ){
+bool socket_send(int32 fd, P* packet) {
+	if (!session_isActive(fd)) {
 		return false;
 	}
 
-	WFIFOHEAD( fd, packet->packetLength );
-	memcpy( WFIFOP( fd, 0 ), packet, packet->packetLength );
-	WFIFOSET( fd, packet->packetLength );
+	WFIFOHEAD(fd, packet->packetLength);
+	memcpy(WFIFOP(fd, 0), packet, packet->packetLength);
+	WFIFOSET(fd, packet->packetLength);
 
 	return true;
 }

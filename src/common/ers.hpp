@@ -57,7 +57,7 @@
  * All code except the typedef of ERInterface will be disabled.
  * To allow a smooth transition,
  */
-//#define DISABLE_ERS
+// #define DISABLE_ERS
 
 /**
  * Entries are aligned to ERS_ALIGNED bytes in the blocks of entries.
@@ -67,21 +67,24 @@
  * but is here just in case some alignment issues arise.
  */
 #ifndef ERS_ALIGNED
-#	define ERS_ALIGNED 1
+	#define ERS_ALIGNED 1
 #endif /* not ERS_ALIGN_ENTRY */
 
 enum ERSOptions {
-	ERS_OPT_NONE        = 0x00,
-	ERS_OPT_CLEAR       = 0x01,/* silently clears any entries left in the manager upon destruction */
-	ERS_OPT_WAIT        = 0x02,/* wait for entries to come in order to list! */
-	ERS_OPT_FREE_NAME   = 0x04,/* name is dynamic memory, and should be freed */
-	ERS_OPT_CLEAN       = 0x08,/* clears used memory upon ers_free so that its all new to be reused on the next alloc */
-	ERS_OPT_FLEX_CHUNK  = 0x10,/* signs that it should look for its own cache given it'll have a dynamic chunk size, so that it doesn't affect the other ERS it'd otherwise be sharing */
+	ERS_OPT_NONE = 0x00,
+	ERS_OPT_CLEAR = 0x01, /* silently clears any entries left in the manager upon destruction */
+	ERS_OPT_WAIT = 0x02, /* wait for entries to come in order to list! */
+	ERS_OPT_FREE_NAME = 0x04, /* name is dynamic memory, and should be freed */
+	ERS_OPT_CLEAN = 0x08, /* clears used memory upon ers_free so that its all new to be reused on
+							 the next alloc */
+	ERS_OPT_FLEX_CHUNK = 0x10, /* signs that it should look for its own cache given it'll have a dynamic chunk size,
+								  so that it doesn't affect the other ERS it'd otherwise be sharing */
 
-	/* Compound, is used to determine whether it should be looking for a cache of matching options */
-	ERS_CACHE_OPTIONS   = ERS_OPT_CLEAN|ERS_OPT_FLEX_CHUNK,
-	ERS_CLEAN_OPTIONS   = ERS_OPT_CLEAN|ERS_OPT_CLEAR,
-	ERS_DBN_OPTIONS     = ERS_OPT_CLEAN|ERS_OPT_WAIT|ERS_OPT_FREE_NAME,
+	/* Compound, is used to determine whether it should be looking for a cache of matching options
+	 */
+	ERS_CACHE_OPTIONS = ERS_OPT_CLEAN | ERS_OPT_FLEX_CHUNK,
+	ERS_CLEAN_OPTIONS = ERS_OPT_CLEAN | ERS_OPT_CLEAR,
+	ERS_DBN_OPTIONS = ERS_OPT_CLEAN | ERS_OPT_WAIT | ERS_OPT_FREE_NAME,
 };
 
 /**
@@ -92,7 +95,6 @@ enum ERSOptions {
  * @param destroy Destroy this instance of the manager
  */
 typedef struct eri {
-
 	/**
 	 * Allocate an entry from this entry manager.
 	 * If there are reusable entries available, it reuses one instead.
@@ -127,28 +129,28 @@ typedef struct eri {
 	void (*destroy)(struct eri *self);
 
 	/* */
-	void (*chunk_size) (struct eri *self, uint32 new_size);
+	void (*chunk_size)(struct eri *self, uint32 new_size);
 } ERS;
 
 #ifdef DISABLE_ERS
-// Use memory manager to allocate/free and disable other interface functions
-#	define ers_alloc(obj,type) (type *)aMalloc(sizeof(type))
-#	define ers_free(obj,entry) aFree(entry)
-#	define ers_entry_size(obj) (size_t)0
-#	define ers_destroy(obj)
-#	define ers_chunk_size(obj,size)
-// Disable the public functions
-#	define ers_new(size,name,options) nullptr
-#	define ers_report()
-#	define ers_final()
+	// Use memory manager to allocate/free and disable other interface functions
+	#define ers_alloc(obj, type) (type *)aMalloc(sizeof(type))
+	#define ers_free(obj, entry) aFree(entry)
+	#define ers_entry_size(obj) (size_t)0
+	#define ers_destroy(obj)
+	#define ers_chunk_size(obj, size)
+	// Disable the public functions
+	#define ers_new(size, name, options) nullptr
+	#define ers_report()
+	#define ers_final()
 #else /* not DISABLE_ERS */
-// These defines should be used to allow the code to keep working whenever
-// the system is disabled
-#	define ers_alloc(obj,type) ((type *)(obj)->alloc(obj))
-#	define ers_free(obj,entry) ((obj)->free((obj),(entry)))
-#	define ers_entry_size(obj) ((obj)->entry_size(obj))
-#	define ers_destroy(obj)    ((obj)->destroy(obj))
-#	define ers_chunk_size(obj,size) ((obj)->chunk_size((obj),(size)))
+	// These defines should be used to allow the code to keep working whenever
+	// the system is disabled
+	#define ers_alloc(obj, type) ((type *)(obj)->alloc(obj))
+	#define ers_free(obj, entry) ((obj)->free((obj), (entry)))
+	#define ers_entry_size(obj) ((obj)->entry_size(obj))
+	#define ers_destroy(obj) ((obj)->destroy(obj))
+	#define ers_chunk_size(obj, size) ((obj)->chunk_size((obj), (size)))
 
 /**
  * Get a new instance of the manager that handles the specified entry size.

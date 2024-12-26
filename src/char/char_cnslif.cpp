@@ -17,8 +17,7 @@
 /*======================================================
  * Login-Server help option info
  *------------------------------------------------------*/
-void display_helpscreen(bool do_exit)
-{
+void display_helpscreen(bool do_exit) {
 	ShowInfo("Usage: %s [options]\n", SERVER_NAME);
 	ShowInfo("\n");
 	ShowInfo("Options:\n");
@@ -29,8 +28,9 @@ void display_helpscreen(bool do_exit)
 	ShowInfo("  --lan-config <file>\t\tAlternative lag configuration.\n");
 	ShowInfo("  --inter-config <file>\t\tAlternative inter-server configuration.\n");
 	ShowInfo("  --msg-config <file>\t\tAlternative message configuration.\n");
-	if( do_exit )
+	if (do_exit) {
 		exit(EXIT_SUCCESS);
+	}
 }
 
 /**
@@ -41,52 +41,57 @@ void display_helpscreen(bool do_exit)
  * @param data: unused
  * @return 0
  */
-TIMER_FUNC(cnslif_console_timer){
-	char buf[MAX_CONSOLE_IN]; //max cmd atm is 63+63+63+3+3
+TIMER_FUNC(cnslif_console_timer) {
+	char buf[MAX_CONSOLE_IN]; // max cmd atm is 63+63+63+3+3
 
-	memset(buf,0,MAX_CONSOLE_IN); //clear out buf
+	memset(buf, 0, MAX_CONSOLE_IN); // clear out buf
 
-	if(cli_hasevent()){
-		if(fgets(buf, MAX_CONSOLE_IN, stdin)==nullptr)
+	if (cli_hasevent()) {
+		if (fgets(buf, MAX_CONSOLE_IN, stdin) == nullptr) {
 			return -1;
-		else if(strlen(buf)>MIN_CONSOLE_IN)
+		}
+		else if (strlen(buf) > MIN_CONSOLE_IN) {
 			cnslif_parse(buf);
+		}
 	}
 	return 0;
 }
 
 // Console Command Parser [Wizputer]
-int32 cnslif_parse(const char* buf)
-{
+int32 cnslif_parse(const char* buf) {
 	char type[64];
 	char command[64];
-	int32 n=0;
+	int32 n = 0;
 
-	if( ( n = sscanf(buf, "%63[^:]:%63[^\n]", type, command) ) < 2 ){
-		if((n = sscanf(buf, "%63[^\n]", type))<1) return -1; //nothing to do no arg
+	if ((n = sscanf(buf, "%63[^:]:%63[^\n]", type, command)) < 2) {
+		if ((n = sscanf(buf, "%63[^\n]", type)) < 1) {
+			return -1; // nothing to do no arg
+		}
 	}
-	if( n != 2 ){ //end string
-		ShowNotice("Type: '%s'\n",type);
+	if (n != 2) { // end string
+		ShowNotice("Type: '%s'\n", type);
 		command[0] = '\0';
 	}
-	else
-		ShowNotice("Type of command: '%s' || Command: '%s'\n",type,command);
+	else {
+		ShowNotice("Type of command: '%s' || Command: '%s'\n", type, command);
+	}
 
-	if( n == 2 && strcmpi("server", type) == 0 ){
-		if( strcmpi("shutdown", command) == 0 || strcmpi("exit", command) == 0 || strcmpi("quit", command) == 0 ){
+	if (n == 2 && strcmpi("server", type) == 0) {
+		if (strcmpi("shutdown", command) == 0 || strcmpi("exit", command) == 0 || strcmpi("quit", command) == 0) {
 			global_core->signal_shutdown();
 		}
-		else if( strcmpi("alive", command) == 0 || strcmpi("status", command) == 0 )
+		else if (strcmpi("alive", command) == 0 || strcmpi("status", command) == 0) {
 			ShowInfo(CL_CYAN "Console: " CL_BOLD "I'm Alive." CL_RESET "\n");
-		else if( strcmpi("reloadconf", command) == 0 ) {
+		}
+		else if (strcmpi("reloadconf", command) == 0) {
 			ShowInfo("Reloading config file \"%s\"\n", CHAR_CONF_NAME);
 			char_config_read(CHAR_CONF_NAME, false);
 		}
 	}
-	else if( strcmpi("ers_report", type) == 0 ){
+	else if (strcmpi("ers_report", type) == 0) {
 		ers_report();
 	}
-	else if( strcmpi("help", type) == 0 ){
+	else if (strcmpi("help", type) == 0) {
 		ShowInfo("Available commands:\n");
 		ShowInfo("\t server:shutdown => Stops the server.\n");
 		ShowInfo("\t server:alive => Checks if the server is running.\n");
@@ -97,9 +102,9 @@ int32 cnslif_parse(const char* buf)
 	return 0;
 }
 
-void do_init_chcnslif(void){
-	if( charserv_config.console ){ //start listening
+void do_init_chcnslif(void) {
+	if (charserv_config.console) { // start listening
 		add_timer_func_list(cnslif_console_timer, "cnslif_console_timer");
-		add_timer_interval(gettick()+1000, cnslif_console_timer, 0, 0, 1000); //start in 1s each 1sec
+		add_timer_interval(gettick() + 1000, cnslif_console_timer, 0, 0, 1000); // start in 1s each 1sec
 	}
 }

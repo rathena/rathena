@@ -37,7 +37,6 @@ struct s_guild_exp_db {
 class GuildExpDatabase : public TypesafeYamlDatabase<uint16, s_guild_exp_db> {
 public:
 	GuildExpDatabase() : TypesafeYamlDatabase("GUILD_EXP_DB", 1) {
-
 	}
 
 	const std::string getDefaultLocation() override;
@@ -57,11 +56,11 @@ public:
 int32 inter_guild_parse_frommap(int32 fd);
 void inter_guild_sql_init(void);
 void inter_guild_sql_final(void);
-int32 inter_guild_leave(int32 guild_id,uint32 account_id,uint32 char_id);
-int32 mapif_parse_BreakGuild(int32 fd,int32 guild_id);
+int32 inter_guild_leave(int32 guild_id, uint32 account_id, uint32 char_id);
+int32 mapif_parse_BreakGuild(int32 fd, int32 guild_id);
 int32 inter_guild_broken(int32 guild_id);
-int32 inter_guild_sex_changed(int32 guild_id,uint32 account_id,uint32 char_id, short gender);
-int32 inter_guild_charname_changed(int32 guild_id,uint32 account_id, uint32 char_id, char *name);
+int32 inter_guild_sex_changed(int32 guild_id, uint32 account_id, uint32 char_id, short gender);
+int32 inter_guild_charname_changed(int32 guild_id, uint32 account_id, uint32 char_id, char* name);
 int32 inter_guild_CharOnline(uint32 char_id, int32 guild_id);
 int32 inter_guild_CharOffline(uint32 char_id, int32 guild_id);
 uint16 inter_guild_storagemax(int32 guild_id);

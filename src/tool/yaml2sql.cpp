@@ -16,9 +16,9 @@
 	#include <cstdio>
 #endif
 
-#include <yaml-cpp/yaml.h>
-#include <ryml_std.hpp>
 #include <ryml.hpp>
+#include <ryml_std.hpp>
+#include <yaml-cpp/yaml.h>
 
 #include <common/cbasetypes.hpp>
 #include <common/core.hpp>
@@ -30,7 +30,7 @@
 #include <common/utilities.hpp>
 #include <common/utils.hpp>
 #ifdef WIN32
-#include <common/winapi.hpp>
+	#include <common/winapi.hpp>
 #endif
 
 // Only for constants - do not use functions of it or linking will fail
@@ -58,33 +58,32 @@
 using namespace rathena;
 using namespace rathena::server_core;
 
-namespace rathena{
-	namespace tool_yaml2sql{
-		class Yaml2SqlTool : public Core{
-			protected:
-				bool initialize( int32 argc, char* argv[] ) override;
+namespace rathena {
+namespace tool_yaml2sql {
+class Yaml2SqlTool : public Core {
+protected:
+	bool initialize(int32 argc, char *argv[]) override;
 
-			public:
-				Yaml2SqlTool() : Core( e_core_type::TOOL ){
-
-				}
-		};
+public:
+	Yaml2SqlTool() : Core(e_core_type::TOOL) {
 	}
-}
+};
+} // namespace tool_yaml2sql
+} // namespace rathena
 
 using namespace rathena::tool_yaml2sql;
 
 #ifndef WIN32
-int32 getch( void ){
-    struct termios oldattr, newattr;
-    int32 ch;
-    tcgetattr( STDIN_FILENO, &oldattr );
-    newattr = oldattr;
-    newattr.c_lflag &= ~( ICANON | ECHO );
-    tcsetattr( STDIN_FILENO, TCSANOW, &newattr );
-    ch = getchar();
-    tcsetattr( STDIN_FILENO, TCSANOW, &oldattr );
-    return ch;
+int32 getch(void) {
+	struct termios oldattr, newattr;
+	int32 ch;
+	tcgetattr(STDIN_FILENO, &oldattr);
+	newattr = oldattr;
+	newattr.c_lflag &= ~(ICANON | ECHO);
+	tcsetattr(STDIN_FILENO, TCSANOW, &newattr);
+	ch = getchar();
+	tcsetattr(STDIN_FILENO, TCSANOW, &oldattr);
+	return ch;
 }
 #endif
 
@@ -95,8 +94,8 @@ std::unordered_map<const char *, int64> constants;
 static bool item_db_yaml2sql(const std::string &file, const std::string &table);
 static bool mob_db_yaml2sql(const std::string &file, const std::string &table);
 
-bool fileExists( const std::string& path );
-bool askConfirmation( const char* fmt, ... );
+bool fileExists(const std::string &path);
+bool askConfirmation(const char *fmt, ...);
 
 YAML::Node inNode;
 std::ofstream outFile;
@@ -107,8 +106,9 @@ void script_set_constant_(const char *name, int64 value, const char *constant_na
 }
 
 const char *constant_lookup(int32 value, const char *prefix) {
-	if (prefix == nullptr)
+	if (prefix == nullptr) {
 		return nullptr;
+	}
 
 	for (auto const &pair : constants) {
 		// Same prefix group and same value
@@ -121,8 +121,9 @@ const char *constant_lookup(int32 value, const char *prefix) {
 }
 
 int64 constant_lookup_int(const char *constant) {
-	if (constant == nullptr)
+	if (constant == nullptr) {
 		return -100;
+	}
 
 	for (auto const &pair : constants) {
 		if (strlen(pair.first) == strlen(constant) && strncasecmp(pair.first, constant, strlen(constant)) == 0) {
@@ -133,37 +134,45 @@ int64 constant_lookup_int(const char *constant) {
 	return -100;
 }
 
-void copyFileIfExists( std::ofstream& file,const std::string& name ){
+void copyFileIfExists(std::ofstream &file, const std::string &name) {
 	std::string path = "doc/yaml/sql/" + name + ".sql";
 
-	if( fileExists( path ) ){
-		std::ifstream source( path, std::ios::binary );
+	if (fileExists(path)) {
+		std::ifstream source(path, std::ios::binary);
 
 		std::istreambuf_iterator<char> begin_source(source);
 		std::istreambuf_iterator<char> end_source;
-		std::ostreambuf_iterator<char> begin_dest( file );
-		copy( begin_source, end_source, begin_dest );
+		std::ostreambuf_iterator<char> begin_dest(file);
+		copy(begin_source, end_source, begin_dest);
 
 		source.close();
 	}
 }
 
-void prepareHeader(std::ofstream &file, const std::string& name) {
-	copyFileIfExists( file, name );
+void prepareHeader(std::ofstream &file, const std::string &name) {
+	copyFileIfExists(file, name);
 
 	file << "\n";
 }
 
-template<typename Func>
-bool process( const std::string& type, uint32 version, const std::vector<std::string>& paths, const std::string& name, const std::string& to_table, const std::string& table, Func lambda ){
-	for( const std::string& path : paths ){
+template <typename Func>
+bool process(const std::string &type,
+			 uint32 version,
+			 const std::vector<std::string> &paths,
+			 const std::string &name,
+			 const std::string &to_table,
+			 const std::string &table,
+			 Func lambda) {
+	for (const std::string &path : paths) {
 		const std::string name_ext = name + ".yml";
 		const std::string from = path + name_ext;
 		const std::string to = "sql-files/" + to_table + ".sql";
 
-		if( fileExists( from ) ){
+		if (fileExists(from)) {
 #ifndef CONVERT_ALL
-			if( !askConfirmation( "Found the file \"%s\", which can be converted to sql.\nDo you want to convert it now? (Y/N)\n", from.c_str() ) ){
+			if (!askConfirmation(
+					"Found the file \"%s\", which can be converted to sql.\nDo you want to convert it now? (Y/N)\n",
+					from.c_str())) {
 				continue;
 			}
 #else
@@ -176,16 +185,20 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 				inNode = YAML::LoadFile(from);
 			} catch (YAML::Exception &e) {
 				ShowError("%s (Line %d: Column %d)\n", e.msg.c_str(), e.mark.line, e.mark.column);
-				if (!askConfirmation("Error found in \"%s\" while attempting to load.\nPress any key to continue.\n", from.c_str()))
+				if (!askConfirmation("Error found in \"%s\" while attempting to load.\nPress any key to continue.\n",
+									 from.c_str())) {
 					continue;
+				}
 			}
 
-			if (!inNode["Body"].IsDefined())
+			if (!inNode["Body"].IsDefined()) {
 				continue;
+			}
 
 #ifndef CONVERT_ALL
 			if (fileExists(to)) {
-				if (!askConfirmation("The file \"%s\" already exists.\nDo you want to replace it? (Y/N)\n", to.c_str())) {
+				if (!askConfirmation("The file \"%s\" already exists.\nDo you want to replace it? (Y/N)\n",
+									 to.c_str())) {
 					continue;
 				}
 			}
@@ -200,7 +213,7 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 
 			prepareHeader(outFile, table.compare(to_table) == 0 ? table : to_table);
 
-			if( !lambda( path, name_ext, table ) ){
+			if (!lambda(path, name_ext, table)) {
 				outFile.close();
 				return false;
 			}
@@ -212,8 +225,8 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 	return true;
 }
 
-bool Yaml2SqlTool::initialize( int32 argc, char* argv[] ){
-	const std::string path_db = std::string( db_path );
+bool Yaml2SqlTool::initialize(int32 argc, char *argv[]) {
+	const std::string path_db = std::string(db_path);
 	const std::string path_db_mode = path_db + "/" + DBPATH;
 	const std::string path_db_import = path_db + "/" + DBIMPORT + "/";
 #ifdef RENEWAL
@@ -227,38 +240,58 @@ bool Yaml2SqlTool::initialize( int32 argc, char* argv[] ){
 	const std::string mob_table_name = "mob_db";
 	const std::string mob_import_table_name = "mob_db2";
 #endif
-	std::vector<std::string> item_table_suffixes = {
-		"usable",
-		"equip",
-		"etc"
-	};
+	std::vector<std::string> item_table_suffixes = {"usable", "equip", "etc"};
 
-	// Load constants
-	#include <map/script_constants.hpp>
+// Load constants
+#include <map/script_constants.hpp>
 
-	for( const std::string& suffix : item_table_suffixes ){
-		if (!process("ITEM_DB", 1, { path_db_mode }, "item_db_" + suffix, item_table_name + "_" + suffix, item_table_name, [](const std::string& path, const std::string& name_ext, const std::string& table) -> bool {
-			return item_db_yaml2sql(path + name_ext, table);
-		})) {
+	for (const std::string &suffix : item_table_suffixes) {
+		if (!process("ITEM_DB",
+					 1,
+					 {path_db_mode},
+					 "item_db_" + suffix,
+					 item_table_name + "_" + suffix,
+					 item_table_name,
+					 [](const std::string &path, const std::string &name_ext, const std::string &table) -> bool {
+						 return item_db_yaml2sql(path + name_ext, table);
+					 })) {
 			return false;
 		}
 	}
 
-	if (!process("ITEM_DB", 1, { path_db_import }, "item_db", item_import_table_name, item_import_table_name, [](const std::string& path, const std::string& name_ext, const std::string& table) -> bool {
-		return item_db_yaml2sql(path + name_ext, table);
-	})) {
+	if (!process("ITEM_DB",
+				 1,
+				 {path_db_import},
+				 "item_db",
+				 item_import_table_name,
+				 item_import_table_name,
+				 [](const std::string &path, const std::string &name_ext, const std::string &table) -> bool {
+					 return item_db_yaml2sql(path + name_ext, table);
+				 })) {
 		return false;
 	}
 
-	if (!process("MOB_DB", 1, { path_db_mode }, "mob_db", mob_table_name, mob_table_name, [](const std::string &path, const std::string &name_ext, const std::string &table) -> bool {
-		return mob_db_yaml2sql(path + name_ext, table);
-	})) {
+	if (!process("MOB_DB",
+				 1,
+				 {path_db_mode},
+				 "mob_db",
+				 mob_table_name,
+				 mob_table_name,
+				 [](const std::string &path, const std::string &name_ext, const std::string &table) -> bool {
+					 return mob_db_yaml2sql(path + name_ext, table);
+				 })) {
 		return false;
 	}
 
-	if (!process("MOB_DB", 1, { path_db_import }, "mob_db", mob_import_table_name, mob_import_table_name, [](const std::string &path, const std::string &name_ext, const std::string &table) -> bool {
-		return mob_db_yaml2sql(path + name_ext, table);
-	})) {
+	if (!process("MOB_DB",
+				 1,
+				 {path_db_import},
+				 "mob_db",
+				 mob_import_table_name,
+				 mob_import_table_name,
+				 [](const std::string &path, const std::string &name_ext, const std::string &table) -> bool {
+					 return mob_db_yaml2sql(path + name_ext, table);
+				 })) {
 		return false;
 	}
 
@@ -267,34 +300,36 @@ bool Yaml2SqlTool::initialize( int32 argc, char* argv[] ){
 	return true;
 }
 
-bool fileExists( const std::string& path ){
+bool fileExists(const std::string &path) {
 	std::ifstream in;
 
-	in.open( path );
+	in.open(path);
 
-	if( in.is_open() ){
+	if (in.is_open()) {
 		in.close();
 
 		return true;
-	}else{
+	}
+	else {
 		return false;
 	}
 }
 
-bool askConfirmation( const char* fmt, ... ){
+bool askConfirmation(const char *fmt, ...) {
 	va_list ap;
 
-	va_start( ap, fmt );
+	va_start(ap, fmt);
 
-	_vShowMessage( MSG_NONE, fmt, ap );
+	_vShowMessage(MSG_NONE, fmt, ap);
 
-	va_end( ap );
+	va_end(ap);
 
 	char c = getch();
 
-	if( c == 'Y' || c == 'y' ){
+	if (c == 'Y' || c == 'y') {
 		return true;
-	}else{
+	}
+	else {
 		return false;
 	}
 }
@@ -304,8 +339,10 @@ std::string name2Upper(std::string name) {
 	name[0] = toupper(name[0]);
 
 	for (size_t i = 0; i < name.size(); i++) {
-		if (name[i - 1] == '_' || (name[i - 2] == '1' && name[i - 1] == 'h') || (name[i - 2] == '2' && name[i - 1] == 'h'))
+		if (name[i - 1] == '_' || (name[i - 2] == '1' && name[i - 1] == 'h') ||
+			(name[i - 2] == '2' && name[i - 1] == 'h')) {
 			name[i] = toupper(name[i]);
+		}
 	}
 
 	return name;
@@ -336,14 +373,16 @@ std::string string_escape(const std::string &s) {
 	escaped.reserve(n * 2);
 
 	for (size_t i = 0; i < n; ++i) {
-		if (s[i] == '\r')
+		if (s[i] == '\r') {
 			continue;
+		}
 		if (s[i] == '\n' && (i + 1) < n) {
 			escaped += "\\n";
 			continue;
 		}
-		if (s[i] == '\\' || s[i] == '\'')
+		if (s[i] == '\\' || s[i] == '\'') {
 			escaped += '\\';
+		}
 		escaped += s[i];
 	}
 
@@ -362,7 +401,8 @@ static bool appendEntry(const YAML::Node &node, std::string &value, bool string 
 			value.append("'");
 			value.append(string_trim(string_escape(node.as<std::string>())));
 			value.append("',");
-		} else {
+		}
+		else {
 			value.append(string_trim(node.as<std::string>()));
 			value.append(",");
 		}
@@ -382,106 +422,149 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 	for (const YAML::Node &input : inNode["Body"]) {
 		std::string column = "", value = "";
 
-		if (appendEntry(input["Id"], value))
+		if (appendEntry(input["Id"], value)) {
 			column.append("`id`,");
-		if (appendEntry(input["AegisName"], value, true))
+		}
+		if (appendEntry(input["AegisName"], value, true)) {
 			column.append("`name_aegis`,");
-		if (appendEntry(input["Name"], value, true))
+		}
+		if (appendEntry(input["Name"], value, true)) {
 			column.append("`name_english`,");
-		if (appendEntry(input["Type"], value, true))
+		}
+		if (appendEntry(input["Type"], value, true)) {
 			column.append("`type`,");
-		if (appendEntry(input["SubType"], value, true))
+		}
+		if (appendEntry(input["SubType"], value, true)) {
 			column.append("`subtype`,");
-		if (appendEntry(input["Buy"], value))
+		}
+		if (appendEntry(input["Buy"], value)) {
 			column.append("`price_buy`,");
-		if (appendEntry(input["Sell"], value))
+		}
+		if (appendEntry(input["Sell"], value)) {
 			column.append("`price_sell`,");
-		if (appendEntry(input["Weight"], value))
+		}
+		if (appendEntry(input["Weight"], value)) {
 			column.append("`weight`,");
-		if (appendEntry(input["Attack"], value))
+		}
+		if (appendEntry(input["Attack"], value)) {
 			column.append("`attack`,");
+		}
 #ifdef RENEWAL
-		if (appendEntry(input["MagicAttack"], value))
+		if (appendEntry(input["MagicAttack"], value)) {
 			column.append("`magic_attack`,");
+		}
 #endif
-		if (appendEntry(input["Defense"], value))
+		if (appendEntry(input["Defense"], value)) {
 			column.append("`defense`,");
-		if (appendEntry(input["Range"], value))
+		}
+		if (appendEntry(input["Range"], value)) {
 			column.append("`range`,");
-		if (appendEntry(input["Slots"], value))
+		}
+		if (appendEntry(input["Slots"], value)) {
 			column.append("`slots`,");
+		}
 
 		const YAML::Node &jobs = input["Jobs"];
 
 		if (jobs) {
-			if (appendEntry(jobs["All"], value))
+			if (appendEntry(jobs["All"], value)) {
 				column.append("`job_all`,");
-			if (appendEntry(jobs["Acolyte"], value))
+			}
+			if (appendEntry(jobs["Acolyte"], value)) {
 				column.append("`job_acolyte`,");
-			if (appendEntry(jobs["Alchemist"], value))
+			}
+			if (appendEntry(jobs["Alchemist"], value)) {
 				column.append("`job_alchemist`,");
-			if (appendEntry(jobs["Archer"], value))
+			}
+			if (appendEntry(jobs["Archer"], value)) {
 				column.append("`job_archer`,");
-			if (appendEntry(jobs["Assassin"], value))
+			}
+			if (appendEntry(jobs["Assassin"], value)) {
 				column.append("`job_assassin`,");
-			if (appendEntry(jobs["BardDancer"], value))
+			}
+			if (appendEntry(jobs["BardDancer"], value)) {
 				column.append("`job_barddancer`,");
-			if (appendEntry(jobs["Blacksmith"], value))
+			}
+			if (appendEntry(jobs["Blacksmith"], value)) {
 				column.append("`job_blacksmith`,");
-			if (appendEntry(jobs["Crusader"], value))
+			}
+			if (appendEntry(jobs["Crusader"], value)) {
 				column.append("`job_crusader`,");
-			if (appendEntry(jobs["Gunslinger"], value))
+			}
+			if (appendEntry(jobs["Gunslinger"], value)) {
 				column.append("`job_gunslinger`,");
-			if (appendEntry(jobs["Hunter"], value))
+			}
+			if (appendEntry(jobs["Hunter"], value)) {
 				column.append("`job_hunter`,");
+			}
 #ifdef RENEWAL
-			if (appendEntry(jobs["KagerouOboro"], value))
+			if (appendEntry(jobs["KagerouOboro"], value)) {
 				column.append("`job_kagerouoboro`,");
+			}
 #endif
-			if (appendEntry(jobs["Knight"], value))
+			if (appendEntry(jobs["Knight"], value)) {
 				column.append("`job_knight`,");
-			if (appendEntry(jobs["Mage"], value))
+			}
+			if (appendEntry(jobs["Mage"], value)) {
 				column.append("`job_mage`,");
-			if (appendEntry(jobs["Merchant"], value))
+			}
+			if (appendEntry(jobs["Merchant"], value)) {
 				column.append("`job_merchant`,");
-			if (appendEntry(jobs["Monk"], value))
+			}
+			if (appendEntry(jobs["Monk"], value)) {
 				column.append("`job_monk`,");
-			if (appendEntry(jobs["Ninja"], value))
+			}
+			if (appendEntry(jobs["Ninja"], value)) {
 				column.append("`job_ninja`,");
-			if (appendEntry(jobs["Novice"], value))
+			}
+			if (appendEntry(jobs["Novice"], value)) {
 				column.append("`job_novice`,");
-			if (appendEntry(jobs["Priest"], value))
+			}
+			if (appendEntry(jobs["Priest"], value)) {
 				column.append("`job_priest`,");
+			}
 #ifdef RENEWAL
-			if (appendEntry(jobs["Rebellion"], value))
+			if (appendEntry(jobs["Rebellion"], value)) {
 				column.append("`job_rebellion`,");
+			}
 #endif
-			if (appendEntry(jobs["Rogue"], value))
+			if (appendEntry(jobs["Rogue"], value)) {
 				column.append("`job_rogue`,");
-			if (appendEntry(jobs["Sage"], value))
+			}
+			if (appendEntry(jobs["Sage"], value)) {
 				column.append("`job_sage`,");
-			if (appendEntry(jobs["SoulLinker"], value))
+			}
+			if (appendEntry(jobs["SoulLinker"], value)) {
 				column.append("`job_soullinker`,");
+			}
 #ifdef RENEWAL
-			if (appendEntry(jobs["Spirit_Handler"], value))
+			if (appendEntry(jobs["Spirit_Handler"], value)) {
 				column.append("`job_spirit_handler`,");
+			}
 #endif
-			if (appendEntry(jobs["StarGladiator"], value))
+			if (appendEntry(jobs["StarGladiator"], value)) {
 				column.append("`job_stargladiator`,");
+			}
 #ifdef RENEWAL
-			if (appendEntry(jobs["Summoner"], value))
+			if (appendEntry(jobs["Summoner"], value)) {
 				column.append("`job_summoner`,");
+			}
 #endif
-			if (appendEntry(jobs["SuperNovice"], value))
+			if (appendEntry(jobs["SuperNovice"], value)) {
 				column.append("`job_supernovice`,");
-			if (appendEntry(jobs["Swordman"], value))
+			}
+			if (appendEntry(jobs["Swordman"], value)) {
 				column.append("`job_swordman`,");
-			if (appendEntry(jobs["Taekwon"], value))
+			}
+			if (appendEntry(jobs["Taekwon"], value)) {
 				column.append("`job_taekwon`,");
-			if (appendEntry(jobs["Thief"], value))
+			}
+			if (appendEntry(jobs["Thief"], value)) {
 				column.append("`job_thief`,");
-			if (appendEntry(jobs["Wizard"], value))
+			}
+			if (appendEntry(jobs["Wizard"], value)) {
 				column.append("`job_wizard`,");
+			}
 		}
 
 		const YAML::Node &classes = input["Classes"];
@@ -490,24 +573,30 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 			std::string str_all_upper;
 			std::string str_all_baby;
 
-			if (classes["All_Upper"].IsDefined())
+			if (classes["All_Upper"].IsDefined()) {
 				str_all_upper = string_trim(classes["All_Upper"].as<std::string>());
-			if (classes["All_Baby"].IsDefined())
+			}
+			if (classes["All_Baby"].IsDefined()) {
 				str_all_baby = string_trim(classes["All_Baby"].as<std::string>());
+			}
 
-			if (appendEntry(classes["All"], value))
+			if (appendEntry(classes["All"], value)) {
 				column.append("`class_all`,");
-			if (appendEntry(classes["Normal"], value))
+			}
+			if (appendEntry(classes["Normal"], value)) {
 				column.append("`class_normal`,");
-			if (appendEntry(classes["Upper"], value))
+			}
+			if (appendEntry(classes["Upper"], value)) {
 				column.append("`class_upper`,");
+			}
 			else if (!str_all_upper.empty()) {
 				value.append(str_all_upper);
 				value.append(",");
 				column.append("`class_upper`,");
 			}
-			if (appendEntry(classes["Baby"], value))
+			if (appendEntry(classes["Baby"], value)) {
 				column.append("`class_baby`,");
+			}
 			else if (!str_all_baby.empty()) {
 				value.append(str_all_baby);
 				value.append(",");
@@ -516,55 +605,69 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 #ifdef RENEWAL
 			std::string str_all_third;
 
-			if (classes["All_Third"].IsDefined())
+			if (classes["All_Third"].IsDefined()) {
 				str_all_third = string_trim(classes["All_Third"].as<std::string>());
+			}
 
-			if (appendEntry(classes["Third"], value))
+			if (appendEntry(classes["Third"], value)) {
 				column.append("`class_third`,");
+			}
 			else if (!str_all_third.empty()) {
 				value.append(str_all_third);
 				value.append(",");
 				column.append("`class_third`,");
 			}
-			if (appendEntry(classes["Third_Upper"], value))
+			if (appendEntry(classes["Third_Upper"], value)) {
 				column.append("`class_third_upper`,");
+			}
 			else if (!str_all_upper.empty() || !str_all_third.empty()) {
-				if (!str_all_upper.empty())
+				if (!str_all_upper.empty()) {
 					value.append(str_all_upper);
-				else
+				}
+				else {
 					value.append(str_all_third);
+				}
 				value.append(",");
 				column.append("`class_third_upper`,");
 			}
-			if (appendEntry(classes["Third_Baby"], value))
+			if (appendEntry(classes["Third_Baby"], value)) {
 				column.append("`class_third_baby`,");
+			}
 			else if (!str_all_baby.empty() || !str_all_third.empty()) {
-				if (!str_all_baby.empty())
+				if (!str_all_baby.empty()) {
 					value.append(str_all_baby);
-				else
+				}
+				else {
 					value.append(str_all_third);
+				}
 				value.append(",");
 				column.append("`class_third_baby`,");
 			}
-			if (appendEntry(classes["Fourth"], value))
+			if (appendEntry(classes["Fourth"], value)) {
 				column.append("`class_fourth`,");
+			}
 #endif
 		}
 
-		if (appendEntry(input["Gender"], value, true))
+		if (appendEntry(input["Gender"], value, true)) {
 			column.append("`gender`,");
+		}
 
 		const YAML::Node &locations = input["Locations"];
 
 		if (locations) {
-			if (appendEntry(locations["Head_Top"], value))
+			if (appendEntry(locations["Head_Top"], value)) {
 				column.append("`location_head_top`,");
-			if (appendEntry(locations["Head_Mid"], value))
+			}
+			if (appendEntry(locations["Head_Mid"], value)) {
 				column.append("`location_head_mid`,");
-			if (appendEntry(locations["Head_Low"], value))
+			}
+			if (appendEntry(locations["Head_Low"], value)) {
 				column.append("`location_head_low`,");
-			if (appendEntry(locations["Armor"], value))
+			}
+			if (appendEntry(locations["Armor"], value)) {
 				column.append("`location_armor`,");
+			}
 			if (locations["Both_Hand"].IsDefined()) {
 				std::string tmp_value = string_trim(locations["Both_Hand"].as<std::string>());
 				if (!appendEntry(locations["Left_Hand"], value)) {
@@ -577,18 +680,21 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 				}
 				column.append("`location_left_hand`,");
 				column.append("`location_right_hand`,");
-
 			}
 			else {
-				if (appendEntry(locations["Left_Hand"], value))
+				if (appendEntry(locations["Left_Hand"], value)) {
 					column.append("`location_left_hand`,");
-				if (appendEntry(locations["Right_Hand"], value))
+				}
+				if (appendEntry(locations["Right_Hand"], value)) {
 					column.append("`location_right_hand`,");
+				}
 			}
-			if (appendEntry(locations["Garment"], value))
+			if (appendEntry(locations["Garment"], value)) {
 				column.append("`location_garment`,");
-			if (appendEntry(locations["Shoes"], value))
+			}
+			if (appendEntry(locations["Shoes"], value)) {
 				column.append("`location_shoes`,");
+			}
 			if (locations["Both_Accessory"].IsDefined()) {
 				std::string tmp_value = string_trim(locations["Both_Accessory"].as<std::string>());
 				if (!appendEntry(locations["Right_Accessory"], value)) {
@@ -601,140 +707,190 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 				}
 				column.append("`location_right_accessory`,");
 				column.append("`location_left_accessory`,");
-
 			}
 			else {
-				if (appendEntry(locations["Right_Accessory"], value))
+				if (appendEntry(locations["Right_Accessory"], value)) {
 					column.append("`location_right_accessory`,");
-				if (appendEntry(locations["Left_Accessory"], value))
+				}
+				if (appendEntry(locations["Left_Accessory"], value)) {
 					column.append("`location_left_accessory`,");
+				}
 			}
-			if (appendEntry(locations["Costume_Head_Top"], value))
+			if (appendEntry(locations["Costume_Head_Top"], value)) {
 				column.append("`location_costume_head_top`,");
-			if (appendEntry(locations["Costume_Head_Mid"], value))
+			}
+			if (appendEntry(locations["Costume_Head_Mid"], value)) {
 				column.append("`location_costume_head_Mid`,");
-			if (appendEntry(locations["Costume_Head_Low"], value))
+			}
+			if (appendEntry(locations["Costume_Head_Low"], value)) {
 				column.append("`location_costume_head_Low`,");
-			if (appendEntry(locations["Costume_Garment"], value))
+			}
+			if (appendEntry(locations["Costume_Garment"], value)) {
 				column.append("`location_costume_garment`,");
-			if (appendEntry(locations["Ammo"], value))
+			}
+			if (appendEntry(locations["Ammo"], value)) {
 				column.append("`location_ammo`,");
-			if (appendEntry(locations["Shadow_Armor"], value))
+			}
+			if (appendEntry(locations["Shadow_Armor"], value)) {
 				column.append("`location_shadow_armor`,");
-			if (appendEntry(locations["Shadow_Weapon"], value))
+			}
+			if (appendEntry(locations["Shadow_Weapon"], value)) {
 				column.append("`location_shadow_weapon`,");
-			if (appendEntry(locations["Shadow_Shield"], value))
+			}
+			if (appendEntry(locations["Shadow_Shield"], value)) {
 				column.append("`location_shadow_shield`,");
-			if (appendEntry(locations["Shadow_Shoes"], value))
+			}
+			if (appendEntry(locations["Shadow_Shoes"], value)) {
 				column.append("`location_shadow_shoes`,");
-			if (appendEntry(locations["Shadow_Right_Accessory"], value))
+			}
+			if (appendEntry(locations["Shadow_Right_Accessory"], value)) {
 				column.append("`location_shadow_right_accessory`,");
-			if (appendEntry(locations["Shadow_Left_Accessory"], value))
+			}
+			if (appendEntry(locations["Shadow_Left_Accessory"], value)) {
 				column.append("`location_shadow_left_accessory`,");
+			}
 		}
 
-		if (appendEntry(input["WeaponLevel"], value))
+		if (appendEntry(input["WeaponLevel"], value)) {
 			column.append("`weapon_level`,");
-		if (appendEntry(input["ArmorLevel"], value))
+		}
+		if (appendEntry(input["ArmorLevel"], value)) {
 			column.append("`armor_level`,");
-		if (appendEntry(input["EquipLevelMin"], value))
+		}
+		if (appendEntry(input["EquipLevelMin"], value)) {
 			column.append("`equip_level_min`,");
-		if (appendEntry(input["EquipLevelMax"], value))
+		}
+		if (appendEntry(input["EquipLevelMax"], value)) {
 			column.append("`equip_level_max`,");
-		if (appendEntry(input["Refineable"], value))
+		}
+		if (appendEntry(input["Refineable"], value)) {
 			column.append("`refineable`,");
-		if (appendEntry(input["Gradable"], value))
+		}
+		if (appendEntry(input["Gradable"], value)) {
 			column.append("`gradable`,");
-		if (appendEntry(input["View"], value))
+		}
+		if (appendEntry(input["View"], value)) {
 			column.append("`view`,");
-		if (appendEntry(input["AliasName"], value, true))
+		}
+		if (appendEntry(input["AliasName"], value, true)) {
 			column.append("`alias_name`,");
+		}
 
 		const YAML::Node &flags = input["Flags"];
 
 		if (flags) {
-			if (appendEntry(flags["BuyingStore"], value))
+			if (appendEntry(flags["BuyingStore"], value)) {
 				column.append("`flag_buyingstore`,");
-			if (appendEntry(flags["DeadBranch"], value))
+			}
+			if (appendEntry(flags["DeadBranch"], value)) {
 				column.append("`flag_deadbranch`,");
-			if (appendEntry(flags["Container"], value))
+			}
+			if (appendEntry(flags["Container"], value)) {
 				column.append("`flag_container`,");
-			if (appendEntry(flags["UniqueId"], value))
+			}
+			if (appendEntry(flags["UniqueId"], value)) {
 				column.append("`flag_uniqueid`,");
-			if (appendEntry(flags["BindOnEquip"], value))
+			}
+			if (appendEntry(flags["BindOnEquip"], value)) {
 				column.append("`flag_bindonequip`,");
-			if (appendEntry(flags["DropAnnounce"], value))
+			}
+			if (appendEntry(flags["DropAnnounce"], value)) {
 				column.append("`flag_dropannounce`,");
-			if (appendEntry(flags["NoConsume"], value))
+			}
+			if (appendEntry(flags["NoConsume"], value)) {
 				column.append("`flag_noconsume`,");
-			if (appendEntry(flags["DropEffect"], value, true))
+			}
+			if (appendEntry(flags["DropEffect"], value, true)) {
 				column.append("`flag_dropeffect`,");
+			}
 		}
 
 		const YAML::Node &delay = input["Delay"];
 
 		if (delay) {
-			if (appendEntry(delay["Duration"], value))
+			if (appendEntry(delay["Duration"], value)) {
 				column.append("`delay_duration`,");
-			if (appendEntry(delay["Status"], value, true))
+			}
+			if (appendEntry(delay["Status"], value, true)) {
 				column.append("`delay_status`,");
+			}
 		}
 
 		const YAML::Node &stack = input["Stack"];
 
 		if (stack) {
-			if (appendEntry(stack["Amount"], value))
+			if (appendEntry(stack["Amount"], value)) {
 				column.append("`stack_amount`,");
-			if (appendEntry(stack["Inventory"], value))
+			}
+			if (appendEntry(stack["Inventory"], value)) {
 				column.append("`stack_inventory`,");
-			if (appendEntry(stack["Cart"], value))
+			}
+			if (appendEntry(stack["Cart"], value)) {
 				column.append("`stack_cart`,");
-			if (appendEntry(stack["Storage"], value))
+			}
+			if (appendEntry(stack["Storage"], value)) {
 				column.append("`stack_storage`,");
-			if (appendEntry(stack["GuildStorage"], value))
+			}
+			if (appendEntry(stack["GuildStorage"], value)) {
 				column.append("`stack_guildstorage`,");
+			}
 		}
 
 		const YAML::Node &nouse = input["NoUse"];
 
 		if (nouse) {
-			if (appendEntry(nouse["Override"], value))
+			if (appendEntry(nouse["Override"], value)) {
 				column.append("`nouse_override`,");
-			if (appendEntry(nouse["Sitting"], value))
+			}
+			if (appendEntry(nouse["Sitting"], value)) {
 				column.append("`nouse_sitting`,");
+			}
 		}
 
 		const YAML::Node &trade = input["Trade"];
 
 		if (trade) {
-			if (appendEntry(trade["Override"], value))
+			if (appendEntry(trade["Override"], value)) {
 				column.append("`trade_override`,");
-			if (appendEntry(trade["NoDrop"], value))
+			}
+			if (appendEntry(trade["NoDrop"], value)) {
 				column.append("`trade_nodrop`,");
-			if (appendEntry(trade["NoTrade"], value))
+			}
+			if (appendEntry(trade["NoTrade"], value)) {
 				column.append("`trade_notrade`,");
-			if (appendEntry(trade["TradePartner"], value))
+			}
+			if (appendEntry(trade["TradePartner"], value)) {
 				column.append("`trade_tradepartner`,");
-			if (appendEntry(trade["NoSell"], value))
+			}
+			if (appendEntry(trade["NoSell"], value)) {
 				column.append("`trade_nosell`,");
-			if (appendEntry(trade["NoCart"], value))
+			}
+			if (appendEntry(trade["NoCart"], value)) {
 				column.append("`trade_nocart`,");
-			if (appendEntry(trade["NoStorage"], value))
+			}
+			if (appendEntry(trade["NoStorage"], value)) {
 				column.append("`trade_nostorage`,");
-			if (appendEntry(trade["NoGuildStorage"], value))
+			}
+			if (appendEntry(trade["NoGuildStorage"], value)) {
 				column.append("`trade_noguildstorage`,");
-			if (appendEntry(trade["NoMail"], value))
+			}
+			if (appendEntry(trade["NoMail"], value)) {
 				column.append("`trade_nomail`,");
-			if (appendEntry(trade["NoAuction"], value))
+			}
+			if (appendEntry(trade["NoAuction"], value)) {
 				column.append("`trade_noauction`,");
+			}
 		}
 
-		if (appendEntry(input["Script"], value, true))
+		if (appendEntry(input["Script"], value, true)) {
 			column.append("`script`,");
-		if (appendEntry(input["EquipScript"], value, true))
+		}
+		if (appendEntry(input["EquipScript"], value, true)) {
 			column.append("`equip_script`,");
-		if (appendEntry(input["UnEquipScript"], value, true))
+		}
+		if (appendEntry(input["UnEquipScript"], value, true)) {
 			column.append("`unequip_script`,");
+		}
 
 		column.pop_back(); // Remove last ','
 		value.pop_back(); // Remove last ','
@@ -743,7 +899,9 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 		entries++;
 	}
 
-	ShowStatus("Done converting '" CL_WHITE "%zu" CL_RESET "' items in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
+	ShowStatus("Done converting '" CL_WHITE "%zu" CL_RESET "' items in '" CL_WHITE "%s" CL_RESET "'.\n",
+			   entries,
+			   file.c_str());
 
 	return true;
 }
@@ -755,74 +913,101 @@ static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
 	for (const YAML::Node &input : inNode["Body"]) {
 		std::string column = "", value = "";
 
-		if (appendEntry(input["Id"], value))
+		if (appendEntry(input["Id"], value)) {
 			column.append("`id`,");
-		if (appendEntry(input["AegisName"], value, true))
+		}
+		if (appendEntry(input["AegisName"], value, true)) {
 			column.append("`name_aegis`,");
-		if (appendEntry(input["Name"], value, true))
+		}
+		if (appendEntry(input["Name"], value, true)) {
 			column.append("`name_english`,");
-		if (appendEntry(input["Name"], value, true))
+		}
+		if (appendEntry(input["Name"], value, true)) {
 			column.append("`name_japanese`,");
-		if (appendEntry(input["Level"], value))
+		}
+		if (appendEntry(input["Level"], value)) {
 			column.append("`level`,");
-		if (appendEntry(input["Hp"], value))
+		}
+		if (appendEntry(input["Hp"], value)) {
 			column.append("`hp`,");
-		if (appendEntry(input["Sp"], value))
+		}
+		if (appendEntry(input["Sp"], value)) {
 			column.append("`sp`,");
-		if (appendEntry(input["BaseExp"], value))
+		}
+		if (appendEntry(input["BaseExp"], value)) {
 			column.append("`base_exp`,");
-		if (appendEntry(input["JobExp"], value))
+		}
+		if (appendEntry(input["JobExp"], value)) {
 			column.append("`job_exp`,");
-		if (appendEntry(input["MvpExp"], value))
+		}
+		if (appendEntry(input["MvpExp"], value)) {
 			column.append("`mvp_exp`,");
-		if (appendEntry(input["Attack"], value))
+		}
+		if (appendEntry(input["Attack"], value)) {
 			column.append("`attack`,");
-		if (appendEntry(input["Attack2"], value))
+		}
+		if (appendEntry(input["Attack2"], value)) {
 			column.append("`attack2`,");
-		if (appendEntry(input["Defense"], value))
+		}
+		if (appendEntry(input["Defense"], value)) {
 			column.append("`defense`,");
-		if (appendEntry(input["MagicDefense"], value))
+		}
+		if (appendEntry(input["MagicDefense"], value)) {
 			column.append("`magic_defense`,");
+		}
 #ifdef RENEWAL
-		if (appendEntry(input["Resistance"], value))
+		if (appendEntry(input["Resistance"], value)) {
 			column.append("`resistance`,");
-		if (appendEntry(input["MagicResistance"], value))
+		}
+		if (appendEntry(input["MagicResistance"], value)) {
 			column.append("`magic_resistance`,");
+		}
 #endif
-		if (appendEntry(input["Str"], value))
+		if (appendEntry(input["Str"], value)) {
 			column.append("`str`,");
-		if (appendEntry(input["Agi"], value))
+		}
+		if (appendEntry(input["Agi"], value)) {
 			column.append("`agi`,");
-		if (appendEntry(input["Vit"], value))
+		}
+		if (appendEntry(input["Vit"], value)) {
 			column.append("`vit`,");
-		if (appendEntry(input["Int"], value))
+		}
+		if (appendEntry(input["Int"], value)) {
 			column.append("`int`,");
-		if (appendEntry(input["Dex"], value))
+		}
+		if (appendEntry(input["Dex"], value)) {
 			column.append("`dex`,");
-		if (appendEntry(input["Luk"], value))
+		}
+		if (appendEntry(input["Luk"], value)) {
 			column.append("`luk`,");
-		if (appendEntry(input["AttackRange"], value))
+		}
+		if (appendEntry(input["AttackRange"], value)) {
 			column.append("`attack_range`,");
-		if (appendEntry(input["SkillRange"], value))
+		}
+		if (appendEntry(input["SkillRange"], value)) {
 			column.append("`skill_range`,");
-		if (appendEntry(input["ChaseRange"], value))
+		}
+		if (appendEntry(input["ChaseRange"], value)) {
 			column.append("`chase_range`,");
-		if (appendEntry(input["Size"], value, true))
+		}
+		if (appendEntry(input["Size"], value, true)) {
 			column.append("`size`,");
-		if (appendEntry(input["Race"], value, true))
+		}
+		if (appendEntry(input["Race"], value, true)) {
 			column.append("`race`,");
+		}
 
 		const YAML::Node &racegroups = input["RaceGroups"];
 
 		if (racegroups) {
 			for (uint16 i = 1; i < RC2_MAX; i++) {
-				const char* constant_ptr = constant_lookup(i, "RC2_");
+				const char *constant_ptr = constant_lookup(i, "RC2_");
 
-				if( constant_ptr == nullptr ){
+				if (constant_ptr == nullptr) {
 					continue;
 				}
 
-				std::string constant( constant_ptr );
+				std::string constant(constant_ptr);
 
 				constant.erase(0, 4);
 
@@ -833,117 +1018,163 @@ static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
 			}
 		}
 
-		if (appendEntry(input["Element"], value, true))
+		if (appendEntry(input["Element"], value, true)) {
 			column.append("`element`,");
-		if (appendEntry(input["ElementLevel"], value))
+		}
+		if (appendEntry(input["ElementLevel"], value)) {
 			column.append("`element_level`,");
-		if (appendEntry(input["WalkSpeed"], value))
+		}
+		if (appendEntry(input["WalkSpeed"], value)) {
 			column.append("`walk_speed`,");
-		if (appendEntry(input["AttackDelay"], value))
+		}
+		if (appendEntry(input["AttackDelay"], value)) {
 			column.append("`attack_delay`,");
-		if (appendEntry(input["AttackMotion"], value))
+		}
+		if (appendEntry(input["AttackMotion"], value)) {
 			column.append("`attack_motion`,");
-		if (appendEntry(input["DamageMotion"], value))
+		}
+		if (appendEntry(input["DamageMotion"], value)) {
 			column.append("`damage_motion`,");
-		if (appendEntry(input["DamageTaken"], value))
+		}
+		if (appendEntry(input["DamageTaken"], value)) {
 			column.append("`damage_taken`,");
-		if (appendEntry(input["Ai"], value, true))
+		}
+		if (appendEntry(input["Ai"], value, true)) {
 			column.append("`ai`,");
-		if (appendEntry(input["Class"], value, true))
+		}
+		if (appendEntry(input["Class"], value, true)) {
 			column.append("`class`,");
+		}
 
 		const YAML::Node &modes = input["Modes"];
 
 		if (modes) {
-			if (appendEntry(modes["CanMove"], value))
+			if (appendEntry(modes["CanMove"], value)) {
 				column.append("`mode_canmove`,");
-			if (appendEntry(modes["Looter"], value))
+			}
+			if (appendEntry(modes["Looter"], value)) {
 				column.append("`mode_looter`,");
-			if (appendEntry(modes["Aggressive"], value))
+			}
+			if (appendEntry(modes["Aggressive"], value)) {
 				column.append("`mode_aggressive`,");
-			if (appendEntry(modes["Assist"], value))
+			}
+			if (appendEntry(modes["Assist"], value)) {
 				column.append("`mode_assist`,");
-			if (appendEntry(modes["CastSensorIdle"], value))
+			}
+			if (appendEntry(modes["CastSensorIdle"], value)) {
 				column.append("`mode_castsensoridle`,");
-			if (appendEntry(modes["NoRandomWalk"], value))
+			}
+			if (appendEntry(modes["NoRandomWalk"], value)) {
 				column.append("`mode_norandomwalk`,");
-			if (appendEntry(modes["NoCast"], value))
+			}
+			if (appendEntry(modes["NoCast"], value)) {
 				column.append("`mode_nocast`,");
-			if (appendEntry(modes["CanAttack"], value))
+			}
+			if (appendEntry(modes["CanAttack"], value)) {
 				column.append("`mode_canattack`,");
-			if (appendEntry(modes["CastSensorChase"], value))
+			}
+			if (appendEntry(modes["CastSensorChase"], value)) {
 				column.append("`mode_castsensorchase`,");
-			if (appendEntry(modes["ChangeChase"], value))
+			}
+			if (appendEntry(modes["ChangeChase"], value)) {
 				column.append("`mode_changechase`,");
-			if (appendEntry(modes["Angry"], value))
+			}
+			if (appendEntry(modes["Angry"], value)) {
 				column.append("`mode_angry`,");
-			if (appendEntry(modes["ChangeTargetMelee"], value))
+			}
+			if (appendEntry(modes["ChangeTargetMelee"], value)) {
 				column.append("`mode_changetargetmelee`,");
-			if (appendEntry(modes["ChangeTargetChase"], value))
+			}
+			if (appendEntry(modes["ChangeTargetChase"], value)) {
 				column.append("`mode_changetargetchase`,");
-			if (appendEntry(modes["TargetWeak"], value))
+			}
+			if (appendEntry(modes["TargetWeak"], value)) {
 				column.append("`mode_targetweak`,");
-			if (appendEntry(modes["RandomTarget"], value))
+			}
+			if (appendEntry(modes["RandomTarget"], value)) {
 				column.append("`mode_randomtarget`,");
-			if (appendEntry(modes["IgnoreMelee"], value))
+			}
+			if (appendEntry(modes["IgnoreMelee"], value)) {
 				column.append("`mode_ignoremelee`,");
-			if (appendEntry(modes["IgnoreMagic"], value))
+			}
+			if (appendEntry(modes["IgnoreMagic"], value)) {
 				column.append("`mode_ignoremagic`,");
-			if (appendEntry(modes["IgnoreRanged"], value))
+			}
+			if (appendEntry(modes["IgnoreRanged"], value)) {
 				column.append("`mode_ignoreranged`,");
-			if (appendEntry(modes["Mvp"], value))
+			}
+			if (appendEntry(modes["Mvp"], value)) {
 				column.append("`mode_mvp`,");
-			if (appendEntry(modes["IgnoreMisc"], value))
+			}
+			if (appendEntry(modes["IgnoreMisc"], value)) {
 				column.append("`mode_ignoremisc`,");
-			if (appendEntry(modes["KnockBackImmune"], value))
+			}
+			if (appendEntry(modes["KnockBackImmune"], value)) {
 				column.append("`mode_knockbackimmune`,");
-			if (appendEntry(modes["TeleportBlock"], value))
+			}
+			if (appendEntry(modes["TeleportBlock"], value)) {
 				column.append("`mode_teleportblock`,");
-			if (appendEntry(modes["FixedItemDrop"], value))
+			}
+			if (appendEntry(modes["FixedItemDrop"], value)) {
 				column.append("`mode_fixeditemdrop`,");
-			if (appendEntry(modes["Detector"], value))
+			}
+			if (appendEntry(modes["Detector"], value)) {
 				column.append("`mode_detector`,");
-			if (appendEntry(modes["StatusImmune"], value))
+			}
+			if (appendEntry(modes["StatusImmune"], value)) {
 				column.append("`mode_statusimmune`,");
-			if (appendEntry(modes["SkillImmune"], value))
+			}
+			if (appendEntry(modes["SkillImmune"], value)) {
 				column.append("`mode_skillimmune`,");
+			}
 		}
 
 		for (uint16 i = 0; i < MAX_MVP_DROP; i++) {
-			if (!input["MvpDrops"].IsDefined())
+			if (!input["MvpDrops"].IsDefined()) {
 				continue;
+			}
 
 			const YAML::Node &mvpdrops = input["MvpDrops"][i];
 
 			if (mvpdrops) {
-				if (appendEntry(mvpdrops["Item"], value, true))
+				if (appendEntry(mvpdrops["Item"], value, true)) {
 					column.append("`mvpdrop" + std::to_string(i + 1) + "_item`,");
-				if (appendEntry(mvpdrops["Rate"], value))
+				}
+				if (appendEntry(mvpdrops["Rate"], value)) {
 					column.append("`mvpdrop" + std::to_string(i + 1) + "_rate`,");
-				if (appendEntry(mvpdrops["RandomOptionGroup"], value, true))
+				}
+				if (appendEntry(mvpdrops["RandomOptionGroup"], value, true)) {
 					column.append("`mvpdrop" + std::to_string(i + 1) + "_option`,");
-				if (appendEntry(mvpdrops["Index"], value))
+				}
+				if (appendEntry(mvpdrops["Index"], value)) {
 					column.append("`mvpdrop" + std::to_string(i + 1) + "_index`,");
+				}
 			}
 		}
 
 		for (uint16 i = 0; i < MAX_MOB_DROP; i++) {
-			if (!input["Drops"].IsDefined())
+			if (!input["Drops"].IsDefined()) {
 				continue;
+			}
 
 			const YAML::Node &drops = input["Drops"][i];
 
 			if (drops) {
-				if (appendEntry(drops["Item"], value, true))
+				if (appendEntry(drops["Item"], value, true)) {
 					column.append("`drop" + std::to_string(i + 1) + "_item`,");
-				if (appendEntry(drops["Rate"], value))
+				}
+				if (appendEntry(drops["Rate"], value)) {
 					column.append("`drop" + std::to_string(i + 1) + "_rate`,");
-				if (appendEntry(drops["StealProtected"], value))
+				}
+				if (appendEntry(drops["StealProtected"], value)) {
 					column.append("`drop" + std::to_string(i + 1) + "_nosteal`,");
-				if (appendEntry(drops["RandomOptionGroup"], value, true))
+				}
+				if (appendEntry(drops["RandomOptionGroup"], value, true)) {
 					column.append("`drop" + std::to_string(i + 1) + "_option`,");
-				if (appendEntry(drops["Index"], value))
+				}
+				if (appendEntry(drops["Index"], value)) {
 					column.append("`drop" + std::to_string(i + 1) + "_index`,");
+				}
 			}
 		}
 
@@ -954,11 +1185,12 @@ static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
 		entries++;
 	}
 
-	ShowStatus("Done converting '" CL_WHITE "%zu" CL_RESET "' mobs in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
+	ShowStatus(
+		"Done converting '" CL_WHITE "%zu" CL_RESET "' mobs in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
 
 	return true;
 }
 
-int32 main( int32 argc, char *argv[] ){
-	return main_core<Yaml2SqlTool>( argc, argv );
+int32 main(int32 argc, char *argv[]) {
+	return main_core<Yaml2SqlTool>(argc, argv);
 }

@@ -43,14 +43,17 @@ struct s_battleground_map {
 	uint16 mapindex; ///< Index of the map
 	s_battleground_team team1, team2; ///< Team data
 	std::string bgcallscript; ///< Script to be called when players join the battleground
-	bool isReserved; ///< Reserve BG maps that are used so that the system won't create multiple BG instances on the same map
+	bool isReserved; ///< Reserve BG maps that are used so that the system won't create multiple BG instances on the
+					 ///< same map
 };
 
 /// Enum for queue state tracking
 enum e_queue_state : uint16 {
 	QUEUE_STATE_SETUP = 0, ///< The initial setup of a queue (a required amount of players hasn't been met)
-	QUEUE_STATE_SETUP_DELAY, ///< The initial setup of a queue but a required amount of players have accepted and the delay timer is active
-	QUEUE_STATE_ACTIVE, ///< The queue is active script side and more players can join (players may or may not be on the field)
+	QUEUE_STATE_SETUP_DELAY, ///< The initial setup of a queue but a required amount of players have accepted and the
+							 ///< delay timer is active
+	QUEUE_STATE_ACTIVE, ///< The queue is active script side and more players can join (players may or may not be on the
+						///< field)
 	QUEUE_STATE_ENDED, ///< The queue is no longer joinable (players are getting prizes)
 };
 
@@ -115,11 +118,10 @@ enum e_bg_info : uint16 {
 class BattlegroundDatabase : public TypesafeYamlDatabase<uint32, s_battleground_type> {
 public:
 	BattlegroundDatabase() : TypesafeYamlDatabase("BATTLEGROUND_DB", 1) {
-
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const ryml::NodeRef& node) override;
+	uint64 parseBodyNode(const ryml::NodeRef &node) override;
 };
 
 extern BattlegroundDatabase battleground_db;
@@ -136,7 +138,7 @@ bool bg_queue_reservation(const char *name, bool state, bool ended);
 #define bg_queue_reserve(name, end) (bg_queue_reservation(name, true, end))
 #define bg_queue_unbook(name) (bg_queue_reservation(name, false, false))
 
-int32 bg_create(uint16 mapindex, s_battleground_team* team);
+int32 bg_create(uint16 mapindex, s_battleground_team *team);
 bool bg_team_join(int32 bg_id, map_session_data *sd, bool is_queue);
 bool bg_team_delete(int32 bg_id);
 int32 bg_team_leave(map_session_data *sd, bool quit, bool deserter);

@@ -8,35 +8,35 @@
 #include <unordered_map>
 #include <vector>
 
+#include <config/core.hpp>
+
 #include <common/core.hpp> // CORE_ST_LAST
 #include <common/mmo.hpp>
 #include <common/msg_conf.hpp>
 #include <common/timer.hpp>
-#include <config/core.hpp>
 
 #include "packets.hpp"
 
 using rathena::server_core::Core;
 using rathena::server_core::e_core_type;
 
-namespace rathena{
-	namespace server_character{
-		class CharacterServer : public Core{
-			protected:
-				bool initialize( int32 argc, char* argv[] ) override;
-				void finalize() override;
-				void handle_shutdown() override;
+namespace rathena {
+namespace server_character {
+class CharacterServer : public Core {
+protected:
+	bool initialize(int32 argc, char* argv[]) override;
+	void finalize() override;
+	void handle_shutdown() override;
 
-			public:
-				CharacterServer() : Core( e_core_type::CHARACTER ){
-
-				}
-		};
+public:
+	CharacterServer() : Core(e_core_type::CHARACTER) {
 	}
-}
+};
+} // namespace server_character
+} // namespace rathena
 
-extern int32 login_fd; //login file descriptor
-extern int32 char_fd; //char file descriptor
+extern int32 login_fd; // login file descriptor
+extern int32 char_fd; // char file descriptor
 
 #define MAX_STARTPOINT 5
 #define MAX_STARTITEM 32
@@ -112,22 +112,22 @@ extern struct Schema_Config schema_config;
 #if PACKETVER_SUPPORTS_PINCODE
 /// Pincode system
 enum pincode_state : uint8 {
-	PINCODE_OK		= 0,
-	PINCODE_ASK		= 1,
-	PINCODE_NOTSET	= 2,
-	PINCODE_EXPIRED	= 3,
-	PINCODE_NEW		= 4,
+	PINCODE_OK = 0,
+	PINCODE_ASK = 1,
+	PINCODE_NOTSET = 2,
+	PINCODE_EXPIRED = 3,
+	PINCODE_NEW = 4,
 	PINCODE_ILLEGAL = 5,
-#if 0
+	#if 0
 	PINCODE_KSSN	= 6, // Not supported since we do not store KSSN
-#endif
-#if PACKETVER >= 20180124
+	#endif
+	#if PACKETVER >= 20180124
 	// The button for pin code access was removed
-	PINCODE_PASSED  = PINCODE_OK,
-#else
-	PINCODE_PASSED	= 7,
-#endif
-	PINCODE_WRONG	= 8,
+	PINCODE_PASSED = PINCODE_OK,
+	#else
+	PINCODE_PASSED = 7,
+	#endif
+	PINCODE_WRONG = 8,
 	PINCODE_MAXSTATE
 };
 struct Pincode_Config {
@@ -146,21 +146,25 @@ struct CharMove_Config {
 	bool char_moves_unlimited;
 };
 struct Char_Config {
-	int32 char_per_account; //Maximum chars per account (default unlimited) [Sirius]
-	int32 char_del_level; //From which level u can delete character [Lupus]
-	int32 char_del_delay; //minimum delay before effectly do the deletion
+	int32 char_per_account; // Maximum chars per account (default unlimited) [Sirius]
+	int32 char_del_level; // From which level u can delete character [Lupus]
+	int32 char_del_delay; // minimum delay before effectly do the deletion
 	bool name_ignoring_case; // Allow or not identical name for characters but with a different case by [Yor]
 	char unknown_char_name[NAME_LENGTH]; // Name to use when the requested name cannot be determined
 	char char_name_letters[1024]; // list of letters/symbols allowed (or not) in a character name. by [Yor]
-	int32 char_name_option; // Option to know which letters/symbols are authorised in the name of a character (0: all, 1: only those in char_name_letters, 2: all EXCEPT those in char_name_letters) by [Yor]
+	int32 char_name_option; // Option to know which letters/symbols are authorised in the name of a character (0: all,
+							// 1: only those in char_name_letters, 2: all EXCEPT those in char_name_letters) by [Yor]
 	uint8 char_name_min_length; // Minimum character name length (default: 4)
-	int32 char_del_option;	// Character deletion type, email = 1, birthdate = 2 (default)
-	int32 char_del_restriction;	// Character deletion restriction (0: none, 1: if the character is in a party, 2: if the character is in a guild, 3: if the character is in a party or a guild)
-	bool char_rename_party;	// Character renaming in a party
-	bool char_rename_guild;	// Character renaming in a guild
+	int32 char_del_option; // Character deletion type, email = 1, birthdate = 2 (default)
+	int32 char_del_restriction; // Character deletion restriction (0: none, 1: if the character is in a party, 2: if the
+								// character is in a guild, 3: if the character is in a party or a guild)
+	bool char_rename_party; // Character renaming in a party
+	bool char_rename_guild; // Character renaming in a guild
 };
 
-#define TRIM_CHARS "\255\xA0\032\t\x0A\x0D " //The following characters are trimmed regardless because they cause confusion and problems on the servers. [Skotlex]
+#define TRIM_CHARS \
+	"\255\xA0\032\t\x0A\x0D " // The following characters are trimmed regardless because they cause confusion and
+							  // problems on the servers. [Skotlex]
 struct CharServ_Config {
 	char userid[24];
 	char passwd[24];
@@ -185,13 +189,15 @@ struct CharServ_Config {
 #endif
 
 	int32 save_log; // show loading/saving messages
-	int32 log_char;	// loggin char or not [devil]
-	int32 log_inter;	// loggin inter or not [devil]
-	int32 char_check_db;	///cheking sql-table at begining ?
+	int32 log_char; // loggin char or not [devil]
+	int32 log_inter; // loggin inter or not [devil]
+	int32 char_check_db; /// cheking sql-table at begining ?
 
-	struct s_point_str start_point[MAX_STARTPOINT], start_point_doram[MAX_STARTPOINT]; // Initial position the player will spawn on the server
+	struct s_point_str start_point[MAX_STARTPOINT],
+		start_point_doram[MAX_STARTPOINT]; // Initial position the player will spawn on the server
 	short start_point_count, start_point_count_doram; // Number of positions read
-	struct startitem start_items[MAX_STARTITEM], start_items_doram[MAX_STARTITEM]; // Initial items the player with spawn with on the server
+	struct startitem start_items[MAX_STARTITEM],
+		start_items_doram[MAX_STARTITEM]; // Initial items the player with spawn with on the server
 	uint32 start_status_points;
 	int32 console;
 	int32 max_connect_user;
@@ -211,7 +217,7 @@ struct CharServ_Config {
 };
 extern struct CharServ_Config charserv_config;
 
-#define MAX_MAP_SERVERS 2 //how many mapserver a char server can handle
+#define MAX_MAP_SERVERS 2 // how many mapserver a char server can handle
 struct mmo_map_server {
 	int32 fd;
 	uint32 ip;
@@ -245,8 +251,8 @@ struct online_char_data {
 	short server; // -2: unknown server, -1: not connected, 0+: id of server
 	bool pincode_success;
 
-public: 
-	online_char_data( uint32 account_id );
+public:
+	online_char_data(uint32 account_id);
 };
 
 std::unordered_map<uint32, std::shared_ptr<struct online_char_data>>& char_get_onlinedb();
@@ -263,9 +269,9 @@ struct char_session_data {
 	uint8 chars_billing;
 	uint8 clienttype;
 	char new_name[NAME_LENGTH];
-	char birthdate[10+1];  // YYYY-MM-DD
+	char birthdate[10 + 1]; // YYYY-MM-DD
 	// Pincode system
-	char pincode[PINCODE_LENGTH+1];
+	char pincode[PINCODE_LENGTH + 1];
 	uint32 pincode_seed;
 	time_t pincode_change;
 	uint16 pincode_try;
@@ -280,7 +286,7 @@ struct char_session_data {
 
 std::unordered_map<uint32, std::shared_ptr<struct mmo_charstatus>>& char_get_chardb();
 
-//Custom limits for the fame lists. [Skotlex]
+// Custom limits for the fame lists. [Skotlex]
 extern int32 fame_list_size_chemist;
 extern int32 fame_list_size_smith;
 extern int32 fame_list_size_taekwon;
@@ -289,58 +295,79 @@ extern struct fame_list smith_fame_list[MAX_FAME_LIST];
 extern struct fame_list chemist_fame_list[MAX_FAME_LIST];
 extern struct fame_list taekwon_fame_list[MAX_FAME_LIST];
 
-#define DEFAULT_AUTOSAVE_INTERVAL 300*1000
-#define MAX_CHAR_BUF sizeof( struct CHARACTER_INFO ) //Max size (for WFIFOHEAD calls)
+#define DEFAULT_AUTOSAVE_INTERVAL 300 * 1000
+#define MAX_CHAR_BUF sizeof(struct CHARACTER_INFO) // Max size (for WFIFOHEAD calls)
 
-int32 char_search_mapserver( const std::string& map, uint32 ip, uint16 port );
+int32 char_search_mapserver(const std::string& map, uint32 ip, uint16 port);
 int32 char_lan_subnetcheck(uint32 ip);
 
 int32 char_count_users(void);
-void char_db_setoffline( std::shared_ptr<struct online_char_data> character, int32 server );
+void char_db_setoffline(std::shared_ptr<struct online_char_data> character, int32 server);
 void char_set_char_online(int32 map_id, uint32 char_id, uint32 account_id);
 void char_set_char_offline(uint32 char_id, uint32 account_id);
 void char_set_all_offline(int32 id);
 void char_disconnect_player(uint32 account_id);
 TIMER_FUNC(char_chardb_waiting_disconnect);
 
-int32 char_mmo_gender(const struct char_session_data *sd, const struct mmo_charstatus *p, char sex);
+int32 char_mmo_gender(const struct char_session_data* sd, const struct mmo_charstatus* p, char sex);
 int32 char_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p);
 int32 char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p);
 int32 char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_everything);
 int32 char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf, uint8* count = nullptr);
 enum e_char_del_response char_delete(struct char_session_data* sd, uint32 char_id);
-int32 char_rename_char_sql(struct char_session_data *sd, uint32 char_id);
+int32 char_rename_char_sql(struct char_session_data* sd, uint32 char_id);
 int32 char_divorce_char_sql(int32 partner_id1, int32 partner_id2);
-int32 char_memitemdata_to_sql(const struct item items[], int32 max, int32 id, enum storage_type tableswitch, uint8 stor_id);
+int32 char_memitemdata_to_sql(
+	const struct item items[], int32 max, int32 id, enum storage_type tableswitch, uint8 stor_id);
 bool char_memitemdata_from_sql(struct s_storage* p, int32 max, int32 id, enum storage_type tableswitch, uint8 stor_id);
 
-int32 char_married(int32 pl1,int32 pl2);
+int32 char_married(int32 pl1, int32 pl2);
 int32 char_child(int32 parent_id, int32 child_id);
-int32 char_family(int32 pl1,int32 pl2,int32 pl3);
+int32 char_family(int32 pl1, int32 pl2, int32 pl3);
 
-//extern bool char_gm_read;
+// extern bool char_gm_read;
 int32 char_loadName(uint32 char_id, char* name);
-int32 char_check_char_name(char * name, char * esc_name);
+int32 char_check_char_name(char* name, char* esc_name);
 
-bool char_pincode_decrypt( uint32 userSeed, char* pin );
-int32 char_pincode_compare( int32 fd, struct char_session_data* sd, char* pin );
-void char_auth_ok(int32 fd, struct char_session_data *sd);
+bool char_pincode_decrypt(uint32 userSeed, char* pin);
+int32 char_pincode_compare(int32 fd, struct char_session_data* sd, char* pin);
+void char_auth_ok(int32 fd, struct char_session_data* sd);
 void char_set_charselect(uint32 account_id);
 void char_read_fame_list(void);
 
-int32 char_make_new_char( struct char_session_data* sd, char* name_, int32 str, int32 agi, int32 vit, int32 int_, int32 dex, int32 luk, int32 slot, int32 hair_color, int32 hair_style, short start_job, int32 sex );
+int32 char_make_new_char(struct char_session_data* sd,
+						 char* name_,
+						 int32 str,
+						 int32 agi,
+						 int32 vit,
+						 int32 int_,
+						 int32 dex,
+						 int32 luk,
+						 int32 slot,
+						 int32 hair_color,
+						 int32 hair_style,
+						 short start_job,
+						 int32 sex);
 
 void char_set_session_flag_(int32 account_id, int32 val, bool set);
-#define char_set_session_flag(account_id, val)   ( char_set_session_flag_((account_id), (val), true)  )
-#define char_unset_session_flag(account_id, val) ( char_set_session_flag_((account_id), (val), false) )
+#define char_set_session_flag(account_id, val) (char_set_session_flag_((account_id), (val), true))
+#define char_unset_session_flag(account_id, val) (char_set_session_flag_((account_id), (val), false))
 
-//For use in packets that depend on an sd being present [Skotlex]
-#define FIFOSD_CHECK(rest) { if (RFIFOREST(fd) < rest) return 0; if (sd == nullptr || !sd->auth) { RFIFOSKIP(fd, rest); return 0; } }
+// For use in packets that depend on an sd being present [Skotlex]
+#define FIFOSD_CHECK(rest) \
+	{ \
+		if (RFIFOREST(fd) < rest) \
+			return 0; \
+		if (sd == nullptr || !sd->auth) { \
+			RFIFOSKIP(fd, rest); \
+			return 0; \
+		} \
+	}
 
 #define msg_config_read(cfgName) char_msg_config_read(cfgName)
 #define msg_txt(msg_number) char_msg_txt(msg_number)
 #define do_final_msg() char_do_final_msg()
-int32 char_msg_config_read(const char *cfgName);
+int32 char_msg_config_read(const char* cfgName);
 const char* char_msg_txt(int32 msg_number);
 void char_do_final_msg(void);
 bool char_config_read(const char* cfgName, bool normal);

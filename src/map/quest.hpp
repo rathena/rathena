@@ -20,9 +20,9 @@ struct s_quest_dropitem {
 	uint16 count;
 	uint16 rate;
 	uint16 mob_id;
-	//uint8 bound;
-	//bool isAnnounced;
-	//bool isGUID;
+	// uint8 bound;
+	// bool isAnnounced;
+	// bool isGUID;
 };
 
 struct s_quest_objective {
@@ -51,18 +51,17 @@ struct s_quest_db {
 // Questlog check types
 enum e_quest_check_type : uint8 {
 	HAVEQUEST, ///< Query the state of the given quest
-	PLAYTIME,  ///< Check if the given quest has been completed or has yet to expire
-	HUNTING,   ///< Check if the given hunting quest's requirements have been met
+	PLAYTIME, ///< Check if the given quest has been completed or has yet to expire
+	HUNTING, ///< Check if the given hunting quest's requirements have been met
 };
 
 class QuestDatabase : public TypesafeYamlDatabase<uint32, s_quest_db> {
 public:
 	QuestDatabase() : TypesafeYamlDatabase("QUEST_DB", 3, 1) {
-
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const ryml::NodeRef& node) override;
+	uint64 parseBodyNode(const ryml::NodeRef &node) override;
 
 	// Additional
 	bool reload();
@@ -76,7 +75,7 @@ int32 quest_add(map_session_data *sd, int32 quest_id);
 int32 quest_delete(map_session_data *sd, int32 quest_id);
 int32 quest_change(map_session_data *sd, int32 qid1, int32 qid2);
 int32 quest_update_objective_sub(struct block_list *bl, va_list ap);
-void quest_update_objective(map_session_data *sd, struct mob_data* md);
+void quest_update_objective(map_session_data *sd, struct mob_data *md);
 int32 quest_update_status(map_session_data *sd, int32 quest_id, e_quest_state status);
 int32 quest_check(map_session_data *sd, int32 quest_id, e_quest_check_type type);
 

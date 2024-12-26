@@ -16,8 +16,7 @@
 #define SEARCHSTORE_RESULTS_PER_PAGE 10
 
 /// Failure constants for clif functions
-enum e_searchstore_failure : uint16
-{
+enum e_searchstore_failure : uint16 {
 	// "No matching stores were found." (1803)
 	SSI_FAILED_NOTHING_SEARCH_ITEM = 0,
 
@@ -35,8 +34,7 @@ enum e_searchstore_failure : uint16
 };
 
 /// Search type constants
-enum e_searchstore_searchtype : uint16
-{
+enum e_searchstore_searchtype : uint16 {
 	// Search for vending stores
 	SEARCHTYPE_VENDING = 0,
 
@@ -45,8 +43,7 @@ enum e_searchstore_searchtype : uint16
 };
 
 /// Search effect constants
-enum e_searchstore_effecttype : uint16
-{
+enum e_searchstore_effecttype : uint16 {
 	// Displays the coordinates of the store
 	SEARCHSTORE_EFFECT_NORMAL = 0,
 
@@ -58,7 +55,7 @@ enum e_searchstore_effecttype : uint16
 
 /// information about the search being performed
 struct s_search_store_search {
-	map_session_data* search_sd;  // sd of the searching player
+	map_session_data* search_sd; // sd of the searching player
 	const struct PACKET_CZ_SEARCH_STORE_INFO_item* itemlist;
 	const struct PACKET_CZ_SEARCH_STORE_INFO_item* cardlist;
 	uint32 item_count;
@@ -81,7 +78,7 @@ struct s_search_store_info_item {
 
 struct s_search_store_info {
 	std::vector<std::shared_ptr<s_search_store_info_item>> items;
-	uint32 pages;  // amount of pages already sent to client
+	uint32 pages; // amount of pages already sent to client
 	uint16 uses;
 	int32 remote_id;
 	time_t nextquerytime;
@@ -92,7 +89,14 @@ struct s_search_store_info {
 };
 
 bool searchstore_open(map_session_data& sd, uint16 uses, e_searchstore_effecttype effect, int16 mapid);
-void searchstore_query(map_session_data& sd, e_searchstore_searchtype type, uint32 min_price, uint32 max_price, const struct PACKET_CZ_SEARCH_STORE_INFO_item* itemlist, uint32 item_count, const struct PACKET_CZ_SEARCH_STORE_INFO_item* cardlist, uint32 card_count);
+void searchstore_query(map_session_data& sd,
+					   e_searchstore_searchtype type,
+					   uint32 min_price,
+					   uint32 max_price,
+					   const struct PACKET_CZ_SEARCH_STORE_INFO_item* itemlist,
+					   uint32 item_count,
+					   const struct PACKET_CZ_SEARCH_STORE_INFO_item* cardlist,
+					   uint32 card_count);
 bool searchstore_querynext(map_session_data& sd);
 void searchstore_next(map_session_data& sd);
 void searchstore_clear(map_session_data& sd);

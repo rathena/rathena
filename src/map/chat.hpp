@@ -12,20 +12,20 @@ struct chat_data;
 #define MAX_CHAT_USERS 20
 
 struct chat_data {
-	struct block_list bl;            // data for this map object
-	char title[CHATROOM_TITLE_SIZE]; // room title 
-	char pass[CHATROOM_PASS_SIZE];   // password
-	bool pub;                        // private/public flag
-	uint8 users;                     // current user count
-	uint8 limit;                     // join limit
-	uint8 trigger;                   // number of users needed to trigger event
-	uint32 zeny;						 // required zeny to join
-	uint32 minLvl;					 // minimum base level to join
-	uint32 maxLvl;					 // maximum base level allowed to join
+	struct block_list bl; // data for this map object
+	char title[CHATROOM_TITLE_SIZE]; // room title
+	char pass[CHATROOM_PASS_SIZE]; // password
+	bool pub; // private/public flag
+	uint8 users; // current user count
+	uint8 limit; // join limit
+	uint8 trigger; // number of users needed to trigger event
+	uint32 zeny; // required zeny to join
+	uint32 minLvl; // minimum base level to join
+	uint32 maxLvl; // maximum base level allowed to join
 	map_session_data* usersd[MAX_CHAT_USERS];
 	struct block_list* owner;
 	char npc_event[EVENT_NAME_LENGTH];
-	DBMap* kick_list;				//DBMap of users who were kicked from this chat
+	DBMap* kick_list; // DBMap of users who were kicked from this chat
 };
 
 int32 chat_createpcchat(map_session_data* sd, const char* title, const char* pass, int32 limit, bool pub);
@@ -35,7 +35,15 @@ int32 chat_changechatowner(map_session_data* sd, const char* nextownername);
 int32 chat_changechatstatus(map_session_data* sd, const char* title, const char* pass, int32 limit, bool pub);
 int32 chat_kickchat(map_session_data* sd, const char* kickusername);
 
-int32 chat_createnpcchat(struct npc_data* nd, const char* title, int32 limit, bool pub, int32 trigger, const char* ev, int32 zeny, int32 minLvl, int32 maxLvl);
+int32 chat_createnpcchat(struct npc_data* nd,
+						 const char* title,
+						 int32 limit,
+						 bool pub,
+						 int32 trigger,
+						 const char* ev,
+						 int32 zeny,
+						 int32 minLvl,
+						 int32 maxLvl);
 int32 chat_deletenpcchat(struct npc_data* nd);
 int32 chat_enableevent(struct chat_data* cd);
 int32 chat_disableevent(struct chat_data* cd);
