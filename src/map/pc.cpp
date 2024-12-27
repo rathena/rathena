@@ -3956,8 +3956,12 @@ void pc_bonus(map_session_data *sd,int32 type,int32 val)
 				sd->left_weapon.ignore_def_class |= 1<<val;
 			break;
 		case SP_ATK_RATE:
+#ifdef RENEWAL
 			if (sd->state.lr_flag != LR_FLAG_ARROW)
 				sd->bonus.atk_rate += val;
+#else
+			ShowError( "pc_bonus: %s is not supported in Pre-Renewal mode.\n", QUOTE( SP_ATK_RATE ) );
+#endif
 			break;
 		case SP_MAGIC_ATK_DEF:
 			if (sd->state.lr_flag != LR_FLAG_ARROW)
@@ -10161,7 +10165,13 @@ int64 pc_readparam(map_session_data* sd,int64 type)
 		case SP_DOUBLE_RATE:     val = sd->bonus.double_rate; break;
 		case SP_DOUBLE_ADD_RATE: val = sd->bonus.double_add_rate; break;
 		case SP_MATK_RATE:       val = sd->matk_rate; break;
-		case SP_ATK_RATE:        val = sd->bonus.atk_rate; break;
+		case SP_ATK_RATE:
+#ifdef RENEWAL
+			val = sd->bonus.atk_rate;
+#else
+			ShowError( "pc_readparam: %s is not supported in Pre-Renewal mode.\n", QUOTE( SP_ATK_RATE ) );
+#endif
+			break;
 		case SP_MAGIC_ATK_DEF:   val = sd->bonus.magic_def_rate; break;
 		case SP_MISC_ATK_DEF:    val = sd->bonus.misc_def_rate; break;
 		case SP_PERFECT_HIT_RATE:val = sd->bonus.perfect_hit; break;
