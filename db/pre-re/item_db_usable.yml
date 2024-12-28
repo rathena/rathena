@@ -13079,7 +13079,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 7804,1;
+      getitem 2713,1;
   - Id: 13766
     AegisName: Nagan_Box
     Name: Refined Nagan Box
