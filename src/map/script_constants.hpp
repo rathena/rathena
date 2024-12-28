@@ -4755,7 +4755,7 @@
 	export_constant(IG_LASTANGEL_LUCKYSCROLL);
 	export_constant(IG_VALKYRIE_LUCKY_SCROLL);
 	export_constant(IG_SPLASH_RAINBOW_LUCKY_SCROLL);
-	export_constant(IG_SHAPESHIFTER_COSTUME);
+	export_constant(IG_COSTAMA_EGG22);
 	export_constant(IG_JULY_LUCKY_SCROLL);
 	export_constant(IG_COSTAMA_EGG23);
 	export_constant(IG_COSTAMA_EGG28);

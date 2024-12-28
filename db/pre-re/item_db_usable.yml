@@ -2371,7 +2371,7 @@ Body:
     Buy: 1
     Weight: 10
     Script: |
-      itemheal rand(425,425),0;
+      itemheal 425,0;
   - Id: 11706
     AegisName: Steak
     Name: Steak

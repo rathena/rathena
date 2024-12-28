@@ -39830,7 +39830,7 @@ Body:
     WeaponLevel: 4
     Script: |
       bonus bAtkEle,Ele_Fire;
-      bonus bHPDrainRate,1;
+      bonus2 bHPDrainRate,1000,1;
       bonus2 bSPLossRate,15,10000;
   - Id: 13404
     AegisName: Platinum_Shotel
