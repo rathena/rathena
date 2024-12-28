@@ -866,6 +866,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 		case RETURN_TO_ELDICASTES:
 		case ALL_GUARDIAN_RECALL:
 		case ECLAGE_RECALL:
+		case ALL_NIFLHEIM_RECALL:
 		case ALL_PRONTERA_RECALL:
 		case ALL_GLASTHEIM_RECALL:
 		case ALL_THANATOS_RECALL:
@@ -11842,16 +11843,18 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 	case RETURN_TO_ELDICASTES:
 	case ALL_GUARDIAN_RECALL:
 	case ECLAGE_RECALL:
+	case ALL_NIFLHEIM_RECALL:
 	case ALL_PRONTERA_RECALL:
 	case ALL_GLASTHEIM_RECALL:
 	case ALL_THANATOS_RECALL:
 	case ALL_LIGHTHALZEN_RECALL:
 		if( sd != nullptr ){
-			short x=0, y=0; // Destination position.
-			unsigned short mapindex=0;
+			// Destination position.
+			uint16 x;
+			uint16 y;
+			uint16 mapindex;
 
 			switch(skill_id){
-			default:
 			case RETURN_TO_ELDICASTES:
 				x = 198;
 				y = 187;
@@ -11866,6 +11869,11 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 				x = 47;
 				y = 31;
 				mapindex  = mapindex_name2id(MAP_ECLAGE_IN);
+				break;
+			case ALL_NIFLHEIM_RECALL:
+				x = 193;
+				y = 186;
+				mapindex = mapindex_name2id( MAP_NIFLHEIM );
 				break;
 			case ALL_PRONTERA_RECALL:
 				if(skill_lv == 1) {
@@ -11901,6 +11909,10 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 				map_freeblock_unlock();
 				return 0;
 			}
+
+			// TODO: Confirm if this also applies on failure
+			sc_start( src, bl, type, 100, skill_lv, skill_get_cooldown( skill_id, skill_lv ) );
+
 			pc_setpos(sd, mapindex, x, y, CLR_TELEPORT);
 		}
 		break;

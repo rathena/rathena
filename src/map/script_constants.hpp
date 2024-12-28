@@ -1921,6 +1921,14 @@
 	export_constant(SC_CONTENTS_31);
 	export_constant(SC_CONTENTS_32);
 	export_constant(SC_CONTENTS_33);
+	export_constant(SC_RETURN_TO_ELDICASTES);
+	export_constant(SC_GUARDIAN_RECALL);
+	export_constant(SC_ECLAGE_RECALL);
+	export_constant(SC_ALL_NIFLHEIM_RECALL);
+	export_constant(SC_ALL_PRONTERA_RECALL);
+	export_constant(SC_ALL_GLASTHEIM_RECALL);
+	export_constant(SC_ALL_THANATOS_RECALL);
+	export_constant(SC_ALL_LIGHTHALZEN_RECALL);
 
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
 /// @APIHOOK_START(EFST_CONST)
