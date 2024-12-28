@@ -82363,7 +82363,7 @@ Body:
       getgroupitem(IG_LI_NYANGVINE_BOX3_32);
   - Id: 200325
     AegisName: CostumeMilePack_32_1
-#   Name: Nyangdarae Costume Mileage Package I (Stone Box 32)
+#   Name: Nyangvine Costume Mileage Package I (Stone Box 32)
     Name: Costume Mileage Package I (Stone Box 32)
     Type: Cash
     Flags:
@@ -82380,7 +82380,7 @@ Body:
       getgroupitem(IG_COSTUMEMILEPACK_32_1);
   - Id: 200326
     AegisName: CostumeMilePack_32_2
-#   Name: Nyangdarae Costume Mileage Package II (Stone Box 32)
+#   Name: Nyangvine Costume Mileage Package II (Stone Box 32)
     Name: Costume Mileage Package II (Stone Box 32)
     Type: Cash
     Flags:
@@ -82397,7 +82397,7 @@ Body:
       getgroupitem(IG_COSTUMEMILEPACK_32_2);
   - Id: 200327
     AegisName: CostumeMilePack_32_3
-#   Name: Nyangdarae Costume Mileage Package III (Stone Box 32)
+#   Name: Nyangvine Costume Mileage Package III (Stone Box 32)
     Name: Costume Mileage Package III (Stone Box 32)
     Type: Cash
     Flags:
@@ -82869,7 +82869,7 @@ Body:
       getgroupitem(IG_CHAOS_EMERALD_PACK_);
   - Id: 200385
     AegisName: CostumeMilePack_34_1
-#   Name: Nyandarae Costume Mileage Package I (Stone Box 34)
+#   Name: Nyangvine Costume Mileage Package I (Stone Box 34)
     Name: Costume Mileage Package I (Stone Box 34)
     Type: Cash
     Flags:
@@ -82886,7 +82886,7 @@ Body:
       getgroupitem(IG_COSTUMEMILEPACK_34_1);
   - Id: 200386
     AegisName: CostumeMilePack_34_2
-#   Name: Nyandarae Costume Mileage Package II (Stone Box 34)
+#   Name: Nyangvine Costume Mileage Package II (Stone Box 34)
     Name: Costume Mileage Package II (Stone Box 34)
     Type: Cash
     Flags:
@@ -82903,7 +82903,7 @@ Body:
       getgroupitem(IG_COSTUMEMILEPACK_34_2);
   - Id: 200387
     AegisName: CostumeMilePack_34_3
-#   Name: Nyandarae Costume Mileage Package III (Stone Box 34)
+#   Name: Nyangvine Costume Mileage Package III (Stone Box 34)
     Name: Costume Mileage Package III (Stone Box 34)
     Type: Cash
     Flags:
@@ -83152,7 +83152,7 @@ Body:
       getgroupitem(IG_COSTUMEMILEPACK_35_3);
   - Id: 200434
     AegisName: LI_Nyangvine_Box1_36
-#   Name: (Account Limited) Cat's Eye Fruit Package I (Stone Box 36)
+#   Name: (Limited) Nyangvine Fruit Package I (Stone Box 36)
     Name: (Limited) Fruit Package I (Stone Box 36)
     Type: Cash
     Flags:
@@ -83169,7 +83169,7 @@ Body:
       getgroupitem(IG_LI_NYANGVINE_BOX1_36);
   - Id: 200435
     AegisName: LI_Nyangvine_Box2_36
-#   Name: (Account Limited) Cat's Eye Fruit Package II (Stone Box 36)
+#   Name: (Limited) Nyangvine Fruit Package II (Stone Box 36)
     Name: (Limited) Fruit Package II (Stone Box 36)
     Type: Cash
     Flags:
@@ -83186,7 +83186,7 @@ Body:
       getgroupitem(IG_LI_NYANGVINE_BOX2_36);
   - Id: 200436
     AegisName: LI_Nyangvine_Box3_36
-#   Name: (Account Limited) Cat's Eye Fruit Package III (Stone Box 36)
+#   Name: (Limited) Nyangvine Fruit Package III (Stone Box 36)
     Name: (Limited) Fruit Package III (Stone Box 36)
     Type: Cash
     Flags:
@@ -83446,7 +83446,7 @@ Body:
       getgroupitem(IG_C_CHARSLOT_OPEN_BOX);
   - Id: 200465
     AegisName: CostumeMilePack_36_1
-#   Name: Nyangdare Costume Mileage Package I (Stone Box 36)
+#   Name: Nyangvine Costume Mileage Package I (Stone Box 36)
     Name: Costume Mileage Package I (Stone Box 36)
     Type: Cash
     Flags:
@@ -83463,7 +83463,7 @@ Body:
       getgroupitem(IG_COSTUMEMILEPACK_36_1);
   - Id: 200466
     AegisName: CostumeMilePack_36_2
-#   Name: Nyangdare Costume Mileage Package II (Stone Box 36)
+#   Name: Nyangvine Costume Mileage Package II (Stone Box 36)
     Name: Costume Mileage Package II (Stone Box 36)
     Type: Cash
     Flags:
@@ -83480,7 +83480,7 @@ Body:
       getgroupitem(IG_COSTUMEMILEPACK_36_2);
   - Id: 200467
     AegisName: CostumeMilePack_36_3
-#   Name: Nyangdare Costume Mileage Package III (Stone Box 36)
+#   Name: Nyangvine Costume Mileage Package III (Stone Box 36)
     Name: Costume Mileage Package III (Stone Box 36)
     Type: Cash
     Flags:
@@ -83578,7 +83578,7 @@ Body:
       getgroupitem(IG_LI_NYANGVINE_BOX1_37);
   - Id: 200482
     AegisName: LI_Nyangvine_Box2_37
-#   Name: (Account Limited) Nyangdare Fruit Package II (Stone Box 37)
+#   Name: (Limited) Nyangvine Fruit Package II (Stone Box 37)
     Name: (Limited) Fruit Package II (Stone Box 37)
     Type: Cash
     Flags:
@@ -83595,7 +83595,7 @@ Body:
       getgroupitem(IG_LI_NYANGVINE_BOX2_37);
   - Id: 200483
     AegisName: LI_Nyangvine_Box3_37
-#   Name: (Account Limited) Nyangdare Fruit Package III (Stone Box 37)
+#   Name: (Limited) Nyangvine Fruit Package III (Stone Box 37)
     Name: (Limited) Fruit Package III (Stone Box 37)
     Type: Cash
     Flags:
