@@ -4809,9 +4809,9 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 			pc_bonus(sd, SP_MATK_RATE, sc->getSCE(SC_CATNIPPOWDER)->val2);
 		if (sc->getSCE(SC_NIBELUNGEN) && sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_MATKRATE)
 			pc_bonus(sd, SP_MATK_RATE, 20);
-		if( sc->getSCE(SC_TALISMAN_OF_FIVE_ELEMENTS) ) {
+		if( sc->getSCE(SC_TALISMAN_OF_FIVE_ELEMENTS) != nullptr ) {
 			const std::vector<e_element> elements = { ELE_FIRE, ELE_WATER, ELE_WIND, ELE_EARTH, ELE_NEUTRAL };
-			int bonus = sc->getSCE(SC_TALISMAN_OF_FIVE_ELEMENTS)->val2;
+			int32 bonus = sc->getSCE(SC_TALISMAN_OF_FIVE_ELEMENTS)->val2;
 
 			for( const auto &element : elements ){
 				sd->indexed_bonus.magic_addele[element] += bonus;
@@ -4821,7 +4821,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 				}
 			}
 		}
-		if( sc->getSCE(SC_HEAVEN_AND_EARTH) ) {
+		if( sc->getSCE(SC_HEAVEN_AND_EARTH) != nullptr ) {
 			i = sc->getSCE(SC_HEAVEN_AND_EARTH)->val2;
 			sd->indexed_bonus.magic_atk_ele[ELE_ALL] += i;
 			sd->bonus.short_attack_atk_rate += i;
@@ -8257,7 +8257,7 @@ static signed short status_calc_patk(struct block_list *bl, status_change *sc, i
 	}
 	if (sc->getSCE(SC_HIDDEN_CARD))
 		patk += sc->getSCE(SC_HIDDEN_CARD)->val2;
-	if (sc->getSCE(SC_TALISMAN_OF_WARRIOR))
+	if (sc->getSCE(SC_TALISMAN_OF_WARRIOR) != nullptr)
 		patk += sc->getSCE(SC_TALISMAN_OF_WARRIOR)->val2;
 
 	return (short)cap_value(patk, 0, SHRT_MAX);
@@ -8286,9 +8286,9 @@ static signed short status_calc_smatk(struct block_list *bl, status_change *sc, 
 	if( sc->getSCE( SC_ATTACK_STANCE ) ){
 		smatk += sc->getSCE( SC_ATTACK_STANCE )->val3;
 	}
-	if (sc->getSCE(SC_TALISMAN_OF_MAGICIAN))
+	if (sc->getSCE(SC_TALISMAN_OF_MAGICIAN) != nullptr)
 		smatk += sc->getSCE(SC_TALISMAN_OF_MAGICIAN)->val2;
-	if (sc->getSCE(SC_T_FIFTH_GOD))
+	if (sc->getSCE(SC_T_FIFTH_GOD) != nullptr)
 		smatk += sc->getSCE(SC_T_FIFTH_GOD)->val2;
 
 	return (short)cap_value(smatk, 0, SHRT_MAX);
@@ -12477,10 +12477,10 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 			val3 = 10 * val1;
 			break;
 		case SC_TALISMAN_OF_PROTECTION:
-			//heal value is static per cast of skill [munkrej]
+			// Heal value is static per cast of skill
 			val3 = skill_calc_heal(src, bl, SOA_TALISMAN_OF_PROTECTION, val1, true);
 			val4 = tick / 3000;
-			//first heal tick applies on cast [munkrej]
+			// First heal tick applies on cast
 			tick_time = 100;
 			break;
 		case SC_TALISMAN_OF_WARRIOR:
@@ -14621,7 +14621,7 @@ TIMER_FUNC(status_change_timer){
 				break;
 			}
 
-			int hp = sc->getSCE(SC_TALISMAN_OF_PROTECTION)->val3;
+			int32 hp = sc->getSCE(SC_TALISMAN_OF_PROTECTION)->val3;
 
 			status_heal( bl, hp, 0, 0, 0 );
 			clif_skill_nodamage( nullptr, *bl, AL_HEAL, hp );

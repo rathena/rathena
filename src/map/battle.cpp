@@ -7833,16 +7833,16 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			}
 			break;
 		case SOA_TALISMAN_OF_FOUR_BEARING_GOD:
-			if (sc){
-				if (sc->getSCE(SC_T_FIRST_GOD))
+			if (sc != nullptr){
+				if (sc->getSCE(SC_T_FIRST_GOD) != nullptr)
 					ad.div_ = 2;
-				else if (sc->getSCE(SC_T_SECOND_GOD))
+				else if (sc->getSCE(SC_T_SECOND_GOD) != nullptr)
 					ad.div_ = 3;
-				else if (sc->getSCE(SC_T_THIRD_GOD))
+				else if (sc->getSCE(SC_T_THIRD_GOD) != nullptr)
 					ad.div_ = 4;
-				else if (sc->getSCE(SC_T_FOURTH_GOD))
+				else if (sc->getSCE(SC_T_FOURTH_GOD) != nullptr)
 					ad.div_ = 5;
-				else if (sc->getSCE(SC_T_FIFTH_GOD))
+				else if (sc->getSCE(SC_T_FIFTH_GOD) != nullptr)
 					ad.div_ = 7;
 			}
 			break;
@@ -8807,7 +8807,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += pc_checkskill(sd, SOA_SOUL_MASTERY) * 2;
 						skillratio += 1 * sstatus->spl;
 
-						if (tsc && tsc->getSCE(SC_SOULCURSE) || sc && sc->getSCE(SC_TOTEM_OF_TUTELARY))
+						if ((tsc != nullptr && tsc->getSCE(SC_SOULCURSE) != nullptr) || (sc != nullptr && sc->getSCE(SC_TOTEM_OF_TUTELARY) != nullptr))
 							skillratio += 100 * skill_lv;
 
 						if (sd != nullptr)
@@ -8818,7 +8818,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += -100 + 850 + 2250 * skill_lv;
 						skillratio += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 15 * skill_lv;
 						skillratio += 5 * sstatus->spl;
-						if (sc && sc->getSCE(SC_T_FIFTH_GOD))
+						if (sc != nullptr && sc->getSCE(SC_T_FIFTH_GOD) != nullptr)
 							skillratio += 100 + 700 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
@@ -8826,7 +8826,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += -100 + 400 + 1000 * skill_lv;
 						skillratio += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 15 * skill_lv;
 						skillratio += 5 * sstatus->spl;
-						if (sc && sc->getSCE(SC_T_FIFTH_GOD))
+						if (sc != nullptr && sc->getSCE(SC_T_FIFTH_GOD) != nullptr)
 							skillratio += 400 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
@@ -8834,7 +8834,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += -100 + 1400 + 1450 * skill_lv;
 						skillratio += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 15 * skill_lv;
 						skillratio += 5 * sstatus->spl;
-						if (sc && sc->getSCE(SC_T_FIFTH_GOD))
+						if (sc != nullptr && sc->getSCE(SC_T_FIFTH_GOD) != nullptr)
 							skillratio += 200 + 400 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
@@ -8842,7 +8842,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += -100 + 2150 + 1600 * skill_lv;
 						skillratio += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 15 * skill_lv;
 						skillratio += 5 * sstatus->spl;
-						if (sc && sc->getSCE(SC_T_FIFTH_GOD))
+						if (sc != nullptr && sc->getSCE(SC_T_FIFTH_GOD) != nullptr)
 							skillratio += 150 + 500 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
