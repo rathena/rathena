@@ -570,6 +570,12 @@ int32 skill_calc_heal(struct block_list *src, struct block_list *target, uint16 
 				hp_bonus += skill * 2;
 #endif
 			break;
+
+		case SOA_TALISMAN_OF_PROTECTION:
+			hp = (500 + pc_checkskill(sd,SOA_TALISMAN_MASTERY) * 50) * skill_lv * status_get_lv(src) / 100;
+			hp += (status_get_lv(src) + status_get_int(src)) / 5 * 30 * status_get_crt(src) / 100;
+			break;
+
 		default:
 			if (skill_lv >= battle_config.max_heal_lv)
 				return battle_config.max_heal;
@@ -686,7 +692,7 @@ int32 skill_calc_heal(struct block_list *src, struct block_list *target, uint16 
 	}
 
 #ifdef RENEWAL
-	if (hp_bonus)
+	if (hp_bonus && skill_id != SOA_TALISMAN_OF_PROTECTION)
 		hp += hp * hp_bonus / 100;
 
 	// MATK part of the RE heal formula [malufett]
@@ -764,7 +770,7 @@ int32 skill_calc_heal(struct block_list *src, struct block_list *target, uint16 
 
 	// Final heal increased by HPlus.
 	// Is this the right place for this??? [Rytech]
-	if ( sd && status_get_hplus(src) > 0 )
+	if ( sd && status_get_hplus(src) > 0 && skill_id != SOA_TALISMAN_OF_PROTECTION)
 		hp += hp * status_get_hplus(src) / 100;
 
 	return (heal) ? max(1, hp) : hp;
@@ -5726,6 +5732,11 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 	case TR_METALIC_FURY:
 	case IG_GRAND_JUDGEMENT:
 	case HN_JUPITEL_THUNDER_STORM:
+	case SOA_EXORCISM_OF_MALICIOUS_SOUL:
+	case SOA_TALISMAN_OF_WHITE_TIGER:
+	case SOA_TALISMAN_OF_RED_PHOENIX:
+	case SOA_TALISMAN_OF_FOUR_BEARING_GOD:
+	case SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS:
 		if( flag&1 ) {//Recursive invocation
 			int32 sflag = skill_area_temp[0] & 0xFFF;
 			int32 heal = 0;
@@ -5797,6 +5808,7 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 				case DK_HACKANDSLASHER:
 				case MT_SPARK_BLASTER:
 				case HN_JUPITEL_THUNDER_STORM:
+				case SOA_TALISMAN_OF_FOUR_BEARING_GOD:
 					clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 					break;
 #ifdef RENEWAL
@@ -5937,6 +5949,18 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 				case SHC_CROSS_SLASH:
 					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 					sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
+					break;
+				case SOA_TALISMAN_OF_RED_PHOENIX:
+					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+					skill_area_temp[0] = map_foreachinallrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
+					if (sc != nullptr && sc->getSCE(SC_T_SECOND_GOD) != nullptr){
+						sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
+					}
+					break;
+				case SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS:
+					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+					skill_area_temp[0] = map_foreachinallrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
+					sc_start(src,src,skill_get_sc(skill_id),100,skill_lv,skill_get_time(skill_id,skill_lv));
 					break;
 			}
 
@@ -7134,6 +7158,22 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 			status_change_end(src, SC_INTENSIVE_AIM_COUNT);
  		break;
 
+	case SOA_TALISMAN_OF_BLUE_DRAGON:
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+		skill_attack(skill_get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
+		sc_start(src,src,skill_get_sc(skill_id), 100, 1, skill_get_time(skill_id, skill_lv));
+		break;
+
+	case SOA_TALISMAN_OF_SOUL_STEALING:
+		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
+		if( bl->type != BL_SKILL ){
+			int32 sp = (100 + status_get_lv(src) / 50) * skill_lv;
+
+			status_heal(src, 0, sp, 0, 0);
+			clif_skill_nodamage( src, *src, skill_id, sp );
+		}
+		break;
+
 	default:
 		ShowWarning("skill_castend_damage_id: Unknown skill used:%d\n",skill_id);
 		clif_skill_damage(src, bl, tick, status_get_amotion(src), tstatus->dmotion,
@@ -8056,6 +8096,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 
 	case DK_SERVANTWEAPON:
 	case ABC_FROM_THE_ABYSS:
+	case SOA_TALISMAN_OF_PROTECTION:
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start2(src, bl, type, 100, skill_lv, src->id, skill_get_time(skill_id, skill_lv)));
 		break;
 
@@ -8619,6 +8660,8 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 	case MT_MIGHTY_SMASH:
 	case ABC_ABYSS_DAGGER:
 	case BO_EXPLOSIVE_POWDER:
+	case SOA_EXORCISM_OF_MALICIOUS_SOUL:
+	case SOA_TALISMAN_OF_WHITE_TIGER:
 	{
 		int32 starget = BL_CHAR|BL_SKILL;
 
@@ -8645,6 +8688,24 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		if (skill_id == MH_THE_ONE_FIGHTER_RISES) {
 			hom_addspiritball(hd, MAX_SPIRITBALL);
+		}
+
+		// TODO: refactor the ifs above into the switch below
+
+		switch( skill_id ){
+			case SOA_EXORCISM_OF_MALICIOUS_SOUL:
+				if( sd != nullptr ){
+					// Remove old souls if any exist.
+					sd->soulball_old = sd->soulball;
+					pc_delsoulball( *sd, sd->soulball, 0 );
+				}
+				break;
+
+			case SOA_TALISMAN_OF_WHITE_TIGER:
+				if (sc != nullptr && sc->getSCE(SC_T_FIRST_GOD) != nullptr) {
+					sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
+				}
+				break;
 		}
 
 		skill_area_temp[1] = 0;
@@ -8833,11 +8894,20 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 #endif
 	case PR_MAGNIFICAT:
 	case PR_GLORIA:
+	case SOA_SOUL_OF_HEAVEN_AND_EARTH:
 		if (sd == nullptr || sd->status.party_id == 0 || (flag & 1)) {
 
 			// Animations don't play when outside visible range
 			if (check_distance_bl(src, bl, AREA_SIZE))
 				clif_skill_nodamage(bl, *bl, skill_id, skill_lv);
+
+			if( skill_id == SOA_SOUL_OF_HEAVEN_AND_EARTH ){
+				status_percent_heal(bl, 0, 100);
+
+				if( src != bl && sc != nullptr && sc->getSCE(SC_TOTEM_OF_TUTELARY) != nullptr ){
+					status_heal(bl, 0, 0, 3 * skill_lv, 0);
+				}
+			}
 
 			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		}
@@ -12997,6 +13067,34 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		clif_skill_nodamage(src, *src, skill_id, skill_lv);
 		break;
 
+	case SOA_SOUL_GATHERING:
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+
+		if( sd != nullptr ){
+			int32 limit = 5 + pc_checkskill(sd, SP_SOULENERGY) * 3;
+			
+			for (i = 0; i < limit; i++)
+				pc_addsoulball(*sd,limit);
+		}
+		break;
+
+	case SOA_TALISMAN_OF_WARRIOR:
+	case SOA_TALISMAN_OF_MAGICIAN:
+	case SOA_TALISMAN_OF_FIVE_ELEMENTS:
+		if( dstsd != nullptr ){
+			int16 index = dstsd->equip_index[EQI_HAND_R];
+
+			if (index >= 0 && dstsd->inventory_data[index] != nullptr && dstsd->inventory_data[index]->type == IT_WEAPON) {
+				clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
+				break;
+			}
+		}
+
+		if( sd != nullptr ){
+			clif_skill_fail( *sd, skill_id, USESKILL_FAIL_NEED_WEAPON );
+		}
+		break;
+
 	default: {
 		std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
 		ShowWarning("skill_castend_nodamage_id: missing code case for skill %s(%d)\n", skill ? skill->name : "UNKNOWN", skill_id);
@@ -13982,6 +14080,7 @@ int32 skill_castend_pos2(struct block_list* src, int32 x, int32 y, uint16 skill_
 	case EM_VENOM_SWAMP:
 	case EM_CONFLAGRATION:
 	case EM_TERRA_DRIVE:
+	case SOA_TOTEM_OF_TUTELARY:
 		flag|=1;//Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
 		[[fallthrough]];
 	case GS_GROUNDDRIFT: //Ammo should be deleted right away.
@@ -14778,6 +14877,13 @@ int32 skill_castend_pos2(struct block_list* src, int32 x, int32 y, uint16 skill_
 		}
 		break;
 
+	case SOA_TALISMAN_OF_BLACK_TORTOISE:
+		if (sc != nullptr && sc->getSCE(SC_T_THIRD_GOD) != nullptr){
+			sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time2(skill_id, skill_lv));
+		}
+		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
+		break;
+
 	default:
 		ShowWarning("skill_castend_pos2: Unknown skill used:%d\n",skill_id);
 		return 1;
@@ -15176,6 +15282,7 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(struct block_list *src, ui
 	case SA_DELUGE:
 	case SA_VIOLENTGALE:
 	case SC_CHAOSPANIC:
+	case SOA_TOTEM_OF_TUTELARY:
 	{
 		std::shared_ptr<s_skill_unit_group> old_sg = skill_locate_element_field(src);
 
@@ -16161,6 +16268,7 @@ int32 skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t
 					skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 					break;
 				case HN_METEOR_STORM_BUSTER:
+				case SOA_TALISMAN_OF_BLACK_TORTOISE:
 					skill_attack( skill_get_type(sg->skill_id), ss, ss, bl, sg->skill_id, sg->skill_lv, tick, 0 );
 					break;
 				default:
@@ -16795,6 +16903,31 @@ int32 skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t
 				skill_attack(skill_get_type(sg->skill_id), ss, &unit->bl, bl, sg->skill_id, sg->skill_lv, tick, flag);
 			}
 			break;
+
+		case UNT_TOTEM_OF_TUTELARY:
+			if( bl->type == BL_PC ) {
+				if (tsc != nullptr && tsc->option&OPTION_MADOGEAR)
+					break;
+
+				int32 hp = 500;
+
+				hp += 500 * sg->skill_lv;
+				hp += 50 * pc_checkskill( BL_CAST( BL_PC, ss ), SOA_TALISMAN_MASTERY ) * sg->skill_lv;
+				hp += 5 * status_get_crt( ss ) * sg->skill_lv;
+				hp *= status_get_lv( ss ) / 100;
+
+				int32 sp = 0;
+
+				sp += 50 * sg->skill_lv;
+				sp += 5 * pc_checkskill( BL_CAST( BL_PC, ss ), SOA_TALISMAN_MASTERY ) * sg->skill_lv;
+				sp += 5 * status_get_crt( ss ) * sg->skill_lv;
+				sp *= status_get_lv( ss ) / 100;
+
+				status_heal( bl, hp, sp, 0, 2 );
+
+				sc_start( ss, bl, skill_get_sc( sg->skill_id ), 100, sg->skill_lv, sg->interval + 100 );
+			} 
+			break;
 	}
 
 	if (bl->type == BL_MOB && ss != bl)
@@ -16834,6 +16967,7 @@ int32 skill_unit_onout(struct skill_unit *src, struct block_list *bl, t_tick tic
 		case UNT_SAFETYWALL:
 		case UNT_PNEUMA:
 		case UNT_EPICLESIS://Arch Bishop
+		case UNT_TOTEM_OF_TUTELARY:
 			if (sce)
 				status_change_end(bl, type);
 			break;
@@ -18178,6 +18312,19 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 			if (!(sc && sc->getSCE(SC_THIRD_EXOR_FLAME)))
 				return false;
 			break;
+
+		case SOA_SOUL_GATHERING:
+			if (!(sc != nullptr && sc->getSCE(SC_SOULCOLLECT) != nullptr)){
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_CONDITION,0);
+				return false;
+			}
+			break;
+		case SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS:
+			if (!(sc != nullptr && (sc->getSCE(SC_T_FOURTH_GOD) != nullptr || sc->getSCE(SC_T_FIFTH_GOD) != nullptr))) {
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_CONDITION,0);
+				return false;
+			}
+			break;
 	}
 
 	/* check state required */
@@ -18431,6 +18578,7 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 			case SP_SOULREAPER:
 			case SP_SOULEXPLOSION:
 			case SP_KAUTE:
+			case SOA_EXORCISM_OF_MALICIOUS_SOUL:
 				if (sd.soulball < require.spiritball) {
 					clif_skill_fail( sd, skill_id, USESKILL_FAIL_SPIRITS );
 					return false;
@@ -20120,6 +20268,7 @@ int32 skill_clear_group(block_list *bl, uint8 flag)
 			case SC_CHAOSPANIC:
 			case MH_POISON_MIST:
 			case MH_LAVA_SLIDE:
+			case SOA_TOTEM_OF_TUTELARY:
 				if (flag & 1) {
 					skill_delunitgroup(*it);
 					count++;
@@ -20181,6 +20330,7 @@ std::shared_ptr<s_skill_unit_group> skill_locate_element_field(struct block_list
 			case SC_CHAOSPANIC:
 			case MH_POISON_MIST:
 			case MH_LAVA_SLIDE:
+			case SOA_TOTEM_OF_TUTELARY:
 				return su;
 		}
 	}
@@ -23922,18 +24072,28 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (!this->asString(node, "Name", name))
 			return 0;
 
+		if( name.length() > SKILL_NAME_LENGTH ){
+			this->invalidWarning( node["Name"], "Name \"%s\" exceeds maximum length of %d.\n", name.c_str(), SKILL_NAME_LENGTH );
+			return 0;
+		}
+
 		name.resize(SKILL_NAME_LENGTH);
 		memcpy(skill->name, name.c_str(), sizeof(skill->name));
 	}
 
 	if (this->nodeExists(node, "Description")) {
-		std::string name;
+		std::string desc;
 
-		if (!this->asString(node, "Description", name))
+		if (!this->asString(node, "Description", desc))
 			return 0;
 
-		name.resize(SKILL_DESC_LENGTH);
-		memcpy(skill->desc, name.c_str(), sizeof(skill->desc));
+		if( desc.length() > SKILL_DESC_LENGTH ){
+			this->invalidWarning( node["Description"], "Description \"%s\" exceeds maximum length of %d.\n", desc.c_str(), SKILL_DESC_LENGTH );
+			return 0;
+		}
+
+		desc.resize(SKILL_DESC_LENGTH);
+		memcpy(skill->desc, desc.c_str(), sizeof(skill->desc));
 	}
 
 	if (this->nodeExists(node, "MaxLevel")) {
