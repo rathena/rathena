@@ -9443,6 +9443,8 @@ Body:
     Flags:
       BlEffect: true
       DisplayPc: true
+      RemoveOnUnequipWeapon: true
+      RequireWeapon: true
   - Status: Talisman_of_Magician
     Icon: EFST_TALISMAN_OF_MAGICIAN
     DurationLookup: SOA_TALISMAN_OF_MAGICIAN
@@ -9451,6 +9453,8 @@ Body:
     Flags:
       BlEffect: true
       DisplayPc: true
+      RemoveOnUnequipWeapon: true
+      RequireWeapon: true
   - Status: Talisman_of_five_Elements
     Icon: EFST_TALISMAN_OF_FIVE_ELEMENTS
     DurationLookup: SOA_TALISMAN_OF_FIVE_ELEMENTS
@@ -9459,6 +9463,8 @@ Body:
     Flags:
       BlEffect: true
       DisplayPc: true
+      RemoveOnUnequipWeapon: true
+      RequireWeapon: true
   - Status: Totem_of_Tutelary
     Icon: EFST_BLANK
     DurationLookup: SOA_TOTEM_OF_TUTELARY
