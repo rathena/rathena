@@ -33001,8 +33001,6 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-    Hit: Single
-    HitCount: 1
     CastTime: 3000
     Cooldown: 300000
     CastTimeFlags:
@@ -33023,8 +33021,6 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-    Hit: Single
-    HitCount: 1
     Cooldown: 300000
     FixedCastTime: 1000
     CastTimeFlags:
@@ -33045,8 +33041,6 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-    Hit: Single
-    HitCount: 1
     Cooldown:
       - Level: 1
         Time: 1800000
