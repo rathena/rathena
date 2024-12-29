@@ -51,9 +51,9 @@ struct s_subnet {
 	uint32 char_ip;
 	uint32 map_ip;
 } subnet[16];
-int subnet_count = 0; //number of subnet config
+int32 subnet_count = 0; //number of subnet config
 
-int login_fd; // login server file descriptor socket
+int32 login_fd; // login server file descriptor socket
 
 //early declaration
 bool login_check_password( struct login_session_data& sd, struct mmo_account& acc );
@@ -65,7 +65,7 @@ AccountDB* login_get_accounts_db(void){
 
 // Console Command Parser [Wizputer]
 //FIXME to be remove (moved to cnslif / will be done once map/char/login, all have their cnslif interface ready)
-int parse_console(const char* buf){
+int32 parse_console(const char* buf){
 	return cnslif_parse(buf);
 }
 
@@ -80,7 +80,7 @@ struct online_login_data* login_get_online_user( uint32 account_id ){
  * @param account_id : aid connected
  * @return the new online_login_data for that user
  */
-struct online_login_data* login_add_online_user(int char_server, uint32 account_id){
+struct online_login_data* login_add_online_user(int32 char_server, uint32 account_id){
 	struct online_login_data* p = login_get_online_user( account_id );
 
 	if( p == nullptr ){
@@ -170,7 +170,7 @@ TIMER_FUNC(login_waiting_disconnect_timer){
 	return 0;
 }
 
-void login_online_db_setoffline( int char_server ){
+void login_online_db_setoffline( int32 char_server ){
 	for( std::pair<uint32,struct online_login_data> pair : online_db ){
 		if( char_server == -1 ){
 			pair.second.char_server = -1;
@@ -218,8 +218,8 @@ static TIMER_FUNC(login_online_data_cleanup){
  *	1: incorrect pass or userid (userid|pass too short or already exist);
  *	3: registration limit exceeded;
  */
-int login_mmo_auth_new(const char* userid, const char* pass, const char sex, const char* last_ip) {
-	static int num_regs = 0; // registration counter
+int32 login_mmo_auth_new(const char* userid, const char* pass, const char sex, const char* last_ip) {
+	static int32 num_regs = 0; // registration counter
 	static t_tick new_reg_tick = 0;
 	t_tick tick = gettick();
 	struct mmo_account acc;
@@ -290,7 +290,7 @@ int login_mmo_auth_new(const char* userid, const char* pass, const char sex, con
  *	6: banned
  *	x: acc state (TODO document me deeper)
  */
-int login_mmo_auth(struct login_session_data* sd, bool isServer) {
+int32 login_mmo_auth(struct login_session_data* sd, bool isServer) {
 	struct mmo_account acc;
 
 	char ip[16];
@@ -328,7 +328,7 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 				return 0; // unregistered id
 			}
 
-			int result;
+			int32 result;
 			// remove the _M/_F suffix
 			len -= 2;
 			sd->userid[len] = '\0';
@@ -388,7 +388,7 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 
 		if( !match ) {
 			char smd5[33];
-			int i;
+			int32 i;
 
 			if( !sd->has_client_hash ) {
 				ShowNotice("Client didn't send client hash (account: %s, ip: %s)\n", sd->userid, ip);
@@ -478,7 +478,7 @@ bool login_check_password( struct login_session_data& sd, struct mmo_account& ac
 	return false;
 }
 
-int login_get_usercount( int users ){
+int32 login_get_usercount( int32 users ){
 #if PACKETVER >= 20170726
 	if( login_config.usercount_disable ){
 		return 4; // Removes count and colorization completely
@@ -501,8 +501,8 @@ int login_get_usercount( int users ){
  * @param ip: ip to check if in auth network
  * @return 0 if from wan, or subnet_char_ip if lan
  */
-int lan_subnetcheck(uint32 ip) {
-	int i;
+int32 lan_subnetcheck(uint32 ip) {
+	int32 i;
 	ARR_FIND( 0, subnet_count, i, (subnet[i].char_ip & subnet[i].mask) == (ip & subnet[i].mask) );
 	return ( i < subnet_count ) ? subnet[i].char_ip : 0;
 }
@@ -511,10 +511,10 @@ int lan_subnetcheck(uint32 ip) {
 
 
 /// Msg_conf tayloring
-int login_msg_config_read(const char *cfgName){
+int32 login_msg_config_read(const char *cfgName){
 	return _msg_config_read(cfgName,LOGIN_MAX_MSG,msg_table);
 }
-const char* login_msg_txt(int msg_number){
+const char* login_msg_txt(int32 msg_number){
 	return _msg_txt(msg_number,LOGIN_MAX_MSG,msg_table);
 }
 void login_do_final_msg(void){
@@ -531,9 +531,9 @@ void login_do_final_msg(void){
  * @param lancfgName: Name of the lan configuration (could be fullpath)
  * @return 0:success, 1:failure (file not found|readable)
  */
-int login_lan_config_read(const char *lancfgName) {
+int32 login_lan_config_read(const char *lancfgName) {
 	FILE *fp;
-	int line_num = 0, s_subnet=ARRAYLENGTH(subnet);
+	int32 line_num = 0, s_subnet=ARRAYLENGTH(subnet);
 	char line[1024], w1[64], w2[64], w3[64], w4[64];
 
 	if((fp = fopen(lancfgName, "r")) == nullptr) {
@@ -656,9 +656,9 @@ bool login_config_read(const char* cfgName, bool normal) {
 		else if(!strcmpi(w1, "dnsbl_servers"))
 			safestrncpy(login_config.dnsbl_servs, w2, sizeof(login_config.dnsbl_servs));
 		else if(!strcmpi(w1, "ipban_cleanup_interval"))
-			login_config.ipban_cleanup_interval = (unsigned int)atoi(w2);
+			login_config.ipban_cleanup_interval = (uint32)atoi(w2);
 		else if(!strcmpi(w1, "ip_sync_interval"))
-			login_config.ip_sync_interval = (unsigned int)1000*60*atoi(w2); //w2 comes in minutes.
+			login_config.ip_sync_interval = (uint32)1000*60*atoi(w2); //w2 comes in minutes.
 		else if(!strcmpi(w1, "client_hash_check"))
 			login_config.client_hash_check = config_switch(w2);
 		else if(!strcmpi(w1, "use_web_auth_token"))
@@ -666,7 +666,7 @@ bool login_config_read(const char* cfgName, bool normal) {
 		else if (!strcmpi(w1, "disable_webtoken_delay"))
 			login_config.disable_webtoken_delay = cap_value(atoi(w2), 0, INT_MAX);
 		else if(!strcmpi(w1, "client_hash")) {
-			int group = 0;
+			int32 group = 0;
 			char md5[33];
 
 			if (sscanf(w2, "%3d, %32s", &group, md5) == 2) {
@@ -675,10 +675,10 @@ bool login_config_read(const char* cfgName, bool normal) {
 				if (strcmpi(md5, "disabled") == 0) {
 					nnode->hash[0] = '\0';
 				} else {
-					int i;
+					int32 i;
 					for (i = 0; i < 32; i += 2) {
 						char buf[3];
-						unsigned int byte;
+						uint32 byte;
 
 						memcpy(buf, &md5[i], 2);
 						buf[2] = 0;
@@ -717,7 +717,7 @@ bool login_config_read(const char* cfgName, bool normal) {
 				login_config.vip_sys.char_increase = MAX_CHAR_VIP;
 			else
 				login_config.vip_sys.char_increase = atoi(w2);
-			if (login_config.vip_sys.char_increase > (unsigned int) MAX_CHARS-login_config.char_per_account) {
+			if (login_config.vip_sys.char_increase > (uint32)MAX_CHARS-login_config.char_per_account) {
 				ShowWarning("vip_char_increase too high, can only go up to %d, according to your char_per_account config %d\n",
 					MAX_CHARS-login_config.char_per_account,login_config.char_per_account);
 				login_config.vip_sys.char_increase = MAX_CHARS-login_config.char_per_account;
@@ -847,7 +847,7 @@ void LoginServer::handle_shutdown(){
 	flush_fifos();
 }
 
-bool LoginServer::initialize( int argc, char* argv[] ){
+bool LoginServer::initialize( int32 argc, char* argv[] ){
 	// Init default value
 	safestrncpy(console_log_filepath, "./log/login-msg_log.log", sizeof(console_log_filepath));
 
@@ -907,6 +907,6 @@ bool LoginServer::initialize( int argc, char* argv[] ){
 	return true;
 }
 
-int main( int argc, char *argv[] ){
+int32 main( int32 argc, char *argv[] ){
 	return main_core<LoginServer>( argc, argv );
 }

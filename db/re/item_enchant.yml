@@ -22318,6 +22318,10 @@ Body:
             Materials:
               - Material: S_Enchant_Essence
                 Amount: 5
+          - Item: DK_Soul_DP
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
   - Id: 72
     TargetItems:
       S_IG_Armor: true
@@ -22387,6 +22391,10 @@ Body:
               - Material: S_Enchant_Essence
                 Amount: 5
           - Item: IG_Soul_RS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: IG_Soul_IP
             Materials:
               - Material: S_Enchant_Essence
                 Amount: 5
@@ -22550,6 +22558,10 @@ Body:
             Materials:
               - Material: S_Enchant_Essence
                 Amount: 5
+          - Item: ABC_Soul_AF
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
   - Id: 75
     TargetItems:
       S_CD_Armor: true
@@ -22611,6 +22623,10 @@ Body:
               - Material: S_Enchant_Essence
                 Amount: 5
           - Item: CD_Soul_PT
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: CD_Soul_DF
             Materials:
               - Material: S_Enchant_Essence
                 Amount: 5
@@ -22679,6 +22695,10 @@ Body:
               - Material: S_Enchant_Essence
                 Amount: 5
           - Item: IQ_Soul_FL
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: IQ_Soul_BFB
             Materials:
               - Material: S_Enchant_Essence
                 Amount: 5
@@ -23298,6 +23318,14 @@ Body:
             Materials:
               - Material: S_Enchant_Essence
                 Amount: 5
+          - Item: SH_Soul_CHB
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SH_Soul_HRSP
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
   - Id: 85
     TargetItems:
       S_SS_Armor: true
@@ -23467,6 +23495,18 @@ Body:
               - Material: S_Enchant_Essence
                 Amount: 5
           - Item: SKE_Soul_SC
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SKE_Soul_SS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SKE_Soul_SM
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SKE_Soul_SLK
             Materials:
               - Material: S_Enchant_Essence
                 Amount: 5
@@ -32848,6 +32888,12 @@ Body:
       Time_Gap_BO_Blade: true
       Time_Gap_SHC_Dagger1: true
       Time_Gap_SOA_Rod: true
+      Time_Gap_DK_Spear: true
+      Time_Gap_CD_Staff: true
+      Time_Gap_SKE_Book: true
+      Time_Gap_ABC_Dagger: true
+      Time_Gap_SH_Foxtail: true
+      Time_Gap_IQ_Knuckle: true
     Reset:
       Chance: 100000
       Price: 5000000
@@ -34215,3 +34261,175 @@ Body:
                 Amount: 100
               - Material: Yorscalp_Spirit
                 Amount: 200
+  - Id: 157
+    TargetItems:
+      Royal_H_Mail_A: true
+      Royal_H_Mail_B: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Hunt_Ev_State
+            Price: 100000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 10
+              - Material: E_Hunting_Tag
+                Amount: 30
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Hunt_Ev_Atk
+            Price: 150000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 15
+              - Material: E_Hunting_Tag
+                Amount: 45
+          - Item: Hunt_Ev_Matk
+            Price: 150000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 15
+              - Material: E_Hunting_Tag
+                Amount: 45
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Hunt_Ev_Warrior
+            Price: 300000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 30
+              - Material: E_Hunting_Tag
+                Amount: 90
+          - Item: Hunt_Ev_Archer
+            Price: 300000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 30
+              - Material: E_Hunting_Tag
+                Amount: 90
+          - Item: Hunt_Ev_Assassin
+            Price: 300000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 30
+              - Material: E_Hunting_Tag
+                Amount: 90
+          - Item: Hunt_Ev_Magician
+            Price: 300000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 30
+              - Material: E_Hunting_Tag
+                Amount: 90
+  - Id: 158
+    TargetItems:
+      Royal_H_Manteau_A: true
+      Royal_H_Manteau_B: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Hunt_Ev_Speed
+            Price: 150000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 15
+              - Material: E_Hunting_Tag
+                Amount: 45
+          - Item: Hunt_Ev_Caster
+            Price: 150000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 15
+              - Material: E_Hunting_Tag
+                Amount: 45
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Hunt_Ev_Melee
+            Price: 300000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 30
+              - Material: E_Hunting_Tag
+                Amount: 90
+          - Item: Hunt_Ev_Range
+            Price: 300000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 30
+              - Material: E_Hunting_Tag
+                Amount: 90
+          - Item: Hunt_Ev_Critical
+            Price: 300000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 30
+              - Material: E_Hunting_Tag
+                Amount: 90
+          - Item: Hunt_Ev_Spell
+            Price: 300000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 30
+              - Material: E_Hunting_Tag
+                Amount: 90
+  - Id: 159
+    TargetItems:
+      Royal_H_Boots_A: true
+      Royal_H_Boots_B: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Hunt_Ev_Hp
+            Price: 150000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 15
+              - Material: E_Hunting_Tag
+                Amount: 45
+          - Item: Hunt_Ev_Sp
+            Price: 150000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 15
+              - Material: E_Hunting_Tag
+                Amount: 45
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Hunt_Ev_P_Force
+            Price: 300000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 30
+              - Material: E_Hunting_Tag
+                Amount: 90
+          - Item: Hunt_Ev_M_Force
+            Price: 300000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 30
+              - Material: E_Hunting_Tag
+                Amount: 90
+          - Item: Hunt_Ev_Robust
+            Price: 300000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 30
+              - Material: E_Hunting_Tag
+                Amount: 90
+          - Item: Hunt_Ev_F_Cast
+            Price: 300000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 30
+              - Material: E_Hunting_Tag
+                Amount: 90

@@ -30,15 +30,15 @@ struct unit_data {
 	uint8 sx, sy; // Subtile position (0-15, with 8 being center of cell)
 	short skillx, skilly;
 	uint16 skill_id, skill_lv;
-	int skilltarget;
-	int skilltimer;
-	int target;
-	int target_to;
-	int attacktimer;
-	int walktimer;
-	int chaserange;
+	int32 skilltarget;
+	int32 skilltimer;
+	int32 target;
+	int32 target_to;
+	int32 attacktimer;
+	int32 walktimer;
+	int32 chaserange;
 	bool stepaction; //Action should be executed on step [Playtester]
-	int steptimer; //Timer that triggers the action [Playtester]
+	int32 steptimer; //Timer that triggers the action [Playtester]
 	uint16 stepskill_id, stepskill_lv; //Remembers skill that should be casted on step [Playtester]
 	t_tick attackabletime;
 	t_tick canact_tick;
@@ -107,58 +107,58 @@ enum e_unit_stop_walking {
 // PC, MOB, PET
 
 // Does walk action for unit
-int unit_walktoxy(struct block_list *bl, short x, short y, unsigned char flag);
-int unit_walktobl(struct block_list *bl, struct block_list *target, int range, unsigned char flag);
+int32 unit_walktoxy(struct block_list *bl, short x, short y, unsigned char flag);
+int32 unit_walktobl(struct block_list *bl, struct block_list *target, int32 range, unsigned char flag);
 void unit_run_hit(struct block_list *bl, status_change *sc, map_session_data *sd, enum sc_type type);
 bool unit_run(struct block_list *bl, map_session_data *sd, enum sc_type type);
-int unit_calc_pos(struct block_list *bl, int tx, int ty, uint8 dir);
+int32 unit_calc_pos(struct block_list *bl, int32 tx, int32 ty, uint8 dir);
 TIMER_FUNC(unit_delay_walktoxy_timer);
 TIMER_FUNC(unit_delay_walktobl_timer);
 
 void unit_stop_walking_soon(struct block_list& bl);
 // Causes the target object to stop moving.
-int unit_stop_walking(struct block_list *bl,int type);
+int32 unit_stop_walking(struct block_list *bl,int32 type);
 bool unit_can_move(struct block_list *bl);
-int unit_is_walking(struct block_list *bl);
-int unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int type);
+int32 unit_is_walking(struct block_list *bl);
+int32 unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int32 type);
 
 t_tick unit_get_walkpath_time(struct block_list& bl);
 t_tick unit_escape(struct block_list *bl, struct block_list *target, short dist, uint8 flag = 0);
 
 // Instant unit changes
-bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool checkpath);
-int unit_warp(struct block_list *bl, short map, short x, short y, clr_type type);
+bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int32 easy, bool checkpath);
+int32 unit_warp(struct block_list *bl, short map, short x, short y, clr_type type);
 bool unit_setdir(block_list *bl, uint8 dir, bool send_update = true);
 uint8 unit_getdir(struct block_list *bl);
-int unit_blown(struct block_list* bl, int dx, int dy, int count, enum e_skill_blown flag);
+int32 unit_blown(struct block_list* bl, int32 dx, int32 dy, int32 count, enum e_skill_blown flag);
 enum e_unit_blown unit_blown_immune(struct block_list* bl, uint8 flag);
 
 // Can-reach checks
-bool unit_can_reach_pos(struct block_list *bl,int x,int y,int easy);
-bool unit_can_reach_bl(struct block_list *bl,struct block_list *tbl, int range, int easy, short *x, short *y);
+bool unit_can_reach_pos(struct block_list *bl,int32 x,int32 y,int32 easy);
+bool unit_can_reach_bl(struct block_list *bl,struct block_list *tbl, int32 range, int32 easy, short *x, short *y);
 
 // Unit attack functions
-int unit_stopattack(struct block_list *bl, va_list ap);
+int32 unit_stopattack(struct block_list *bl, va_list ap);
 void unit_stop_attack(struct block_list *bl);
-int unit_attack(struct block_list *src,int target_id,int continuous);
-int unit_cancel_combo(struct block_list *bl);
-bool unit_can_attack(struct block_list *bl, int target_id);
+int32 unit_attack(struct block_list *src,int32 target_id,int32 continuous);
+int32 unit_cancel_combo(struct block_list *bl);
+bool unit_can_attack(struct block_list *bl, int32 target_id);
 
 // Cast on a unit
-int unit_skilluse_id(struct block_list *src, int target_id, uint16 skill_id, uint16 skill_lv);
-int unit_skilluse_pos(struct block_list *src, short skill_x, short skill_y, uint16 skill_id, uint16 skill_lv);
-int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, uint16 skill_lv, int casttime, int castcancel, bool ignore_range = false);
-int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, uint16 skill_id, uint16 skill_lv, int casttime, int castcancel, bool ignore_range = false);
+int32 unit_skilluse_id(struct block_list *src, int32 target_id, uint16 skill_id, uint16 skill_lv);
+int32 unit_skilluse_pos(struct block_list *src, short skill_x, short skill_y, uint16 skill_id, uint16 skill_lv);
+int32 unit_skilluse_id2(struct block_list *src, int32 target_id, uint16 skill_id, uint16 skill_lv, int32 casttime, int32 castcancel, bool ignore_range = false);
+int32 unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, uint16 skill_id, uint16 skill_lv, int32 casttime, int32 castcancel, bool ignore_range = false);
 
 // Step timer used for delayed attack and skill use
 TIMER_FUNC(unit_step_timer);
 void unit_stop_stepaction(struct block_list *bl);
 
 // Cancel unit cast
-int unit_skillcastcancel(struct block_list *bl, char type);
+int32 unit_skillcastcancel(struct block_list *bl, char type);
 
-int unit_counttargeted(struct block_list *bl);
-int unit_set_target(struct unit_data* ud, int target_id);
+int32 unit_counttargeted(struct block_list *bl);
+int32 unit_set_target(struct unit_data* ud, int32 target_id);
 
 // unit_data
 void unit_dataset(struct block_list *bl);
@@ -170,13 +170,13 @@ void unit_remove_map_pc(map_session_data *sd, clr_type clrtype);
 void unit_refresh(struct block_list *bl, bool walking = false);
 void unit_free_pc(map_session_data *sd);
 #define unit_remove_map(bl,clrtype) unit_remove_map_(bl,clrtype,__FILE__,__LINE__,__func__)
-int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, int line, const char* func);
-int unit_free(struct block_list *bl, clr_type clrtype);
-int unit_changetarget(block_list *bl,va_list ap);
+int32 unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, int32 line, const char* func);
+int32 unit_free(struct block_list *bl, clr_type clrtype);
+int32 unit_changetarget(block_list *bl,va_list ap);
 void unit_changetarget_sub(unit_data& ud, block_list& target);
 
 // Shadow Scar
-void unit_addshadowscar(unit_data &ud, int interval);
+void unit_addshadowscar(unit_data &ud, int32 interval);
 
 void do_init_unit(void);
 void do_final_unit(void);

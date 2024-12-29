@@ -1048,3 +1048,14 @@ Body:
         Items:
           - Item: HD_Oridecon
             Amount: 26
+#  - Item: Calender_Costume_Box
+#    Groups:
+#      - Group: 0
+#        Items:
+#          - Item: C_berry_Prince_Crown
+#      - Group: 1
+#        Items:
+#          - Item: C_Loki_Nidhogg_Hat
+#      - Group: 2
+#        Items:
+#          - Item: C_Firinto_Scarf
