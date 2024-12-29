@@ -12107,7 +12107,7 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 			break;
 		case SC_FRESHSHRIMP: {
 				int32 min = 0, max = 0;
-				map_session_data* ssd = reinterpret_cast<map_session_data*>(src);
+				map_session_data* ssd = BL_CAST( BL_PC, src );
 
 #ifdef RENEWAL
 				status_data* sstatus = status_get_status_data(*src);
