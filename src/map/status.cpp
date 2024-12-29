@@ -12145,7 +12145,7 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 			break;
 		case SC_TUNAPARTY:
 			val2 = status_get_max_hp(src) * (val1 * 10) / 100; // Shield according to the Caster's MaxHP%
-			if (pc_checkskill(reinterpret_cast<map_session_data*>(src), SU_SPIRITOFSEA) > 0)
+			if (map_session_data* ssd = BL_CAST(BL_PC, src); pc_checkskill(ssd, SU_SPIRITOFSEA) > 0)
 				val2 *= 2; // Double the shield life if the caster has learned Spirit of Sea
 			break;
 		case SC_HISS:
