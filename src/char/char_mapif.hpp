@@ -6,54 +6,54 @@
 
 #include <common/cbasetypes.hpp>
 
-int chmapif_sendall(unsigned char *buf, unsigned int len);
-int chmapif_sendallwos(int sfd, unsigned char *buf, unsigned int len);
-int chmapif_send(int fd, unsigned char *buf, unsigned int len);
-int chmapif_send_fame_list(int fd);
-void chmapif_update_fame_list(int type, int index, int fame);
-void chmapif_sendall_playercount(int users);
-int chmapif_parse_getmapname(int fd, int id);
-int chmapif_parse_askscdata(int fd);
-int chmapif_parse_getusercount(int fd, int id);
-int chmapif_parse_regmapuser(int fd, int id);
-int chmapif_parse_reqsavechar(int fd, int id);
-int chmapif_parse_authok(int fd);
-int chmapif_parse_req_saveskillcooldown(int fd);
-int chmapif_parse_req_skillcooldown(int fd);
-int chmapif_parse_reqchangemapserv(int fd);
-int chmapif_parse_askrmfriend(int fd);
-int chmapif_parse_reqcharname(int fd);
-int chmapif_parse_reqnewemail(int fd);
-int chmapif_parse_fwlog_changestatus(int fd);
-int chmapif_parse_updfamelist(int fd);
-void chmapif_send_ackdivorce(int partner_id1, int partner_id2);
-int chmapif_parse_reqdivorce(int fd);
-int chmapif_parse_setcharoffline(int fd);
-int chmapif_parse_setalloffline(int fd, int id);
-int chmapif_parse_setcharonline(int fd, int id);
-int chmapif_parse_reqfamelist(int fd);
-int chmapif_parse_save_scdata(int fd);
-int chmapif_parse_keepalive(int fd);
-int chmapif_parse_reqauth(int fd, int id);
-int chmapif_parse_updmapip(int fd, int id);
+int32 chmapif_sendall(unsigned char *buf, uint32 len);
+int32 chmapif_sendallwos(int32 sfd, unsigned char *buf, uint32 len);
+int32 chmapif_send(int32 fd, unsigned char *buf, uint32 len);
+int32 chmapif_send_fame_list(int32 fd);
+void chmapif_update_fame_list(int32 type, int32 index, int32 fame);
+void chmapif_sendall_playercount(int32 users);
+int32 chmapif_parse_getmapname(int32 fd, int32 id);
+int32 chmapif_parse_askscdata(int32 fd);
+int32 chmapif_parse_getusercount(int32 fd, int32 id);
+int32 chmapif_parse_regmapuser(int32 fd, int32 id);
+int32 chmapif_parse_reqsavechar(int32 fd, int32 id);
+int32 chmapif_parse_authok(int32 fd);
+int32 chmapif_parse_req_saveskillcooldown(int32 fd);
+int32 chmapif_parse_req_skillcooldown(int32 fd);
+int32 chmapif_parse_reqchangemapserv(int32 fd);
+int32 chmapif_parse_askrmfriend(int32 fd);
+int32 chmapif_parse_reqcharname(int32 fd);
+int32 chmapif_parse_reqnewemail(int32 fd);
+int32 chmapif_parse_fwlog_changestatus(int32 fd);
+int32 chmapif_parse_updfamelist(int32 fd);
+void chmapif_send_ackdivorce(int32 partner_id1, int32 partner_id2);
+int32 chmapif_parse_reqdivorce(int32 fd);
+int32 chmapif_parse_setcharoffline(int32 fd);
+int32 chmapif_parse_setalloffline(int32 fd, int32 id);
+int32 chmapif_parse_setcharonline(int32 fd, int32 id);
+int32 chmapif_parse_reqfamelist(int32 fd);
+int32 chmapif_parse_save_scdata(int32 fd);
+int32 chmapif_parse_keepalive(int32 fd);
+int32 chmapif_parse_reqauth(int32 fd, int32 id);
+int32 chmapif_parse_updmapip(int32 fd, int32 id);
 
-int chmapif_vipack(int mapfd, uint32 aid, uint32 vip_time, uint32 groupid, uint8 flag);
-int chmapif_parse_reqcharban(int fd);
-int chmapif_parse_reqcharunban(int fd);
-int chmapif_bonus_script_get(int fd);
-int chmapif_bonus_script_save(int fd);
+int32 chmapif_vipack(int32 mapfd, uint32 aid, uint32 vip_time, uint32 groupid, uint8 flag);
+int32 chmapif_parse_reqcharban(int32 fd);
+int32 chmapif_parse_reqcharunban(int32 fd);
+int32 chmapif_bonus_script_get(int32 fd);
+int32 chmapif_bonus_script_save(int32 fd);
 
-void chmapif_connectack(int fd, uint8 errCode);
-void chmapif_charselres(int fd, uint32 aid, uint8 res);
-void chmapif_changemapserv_ack(int fd, bool nok);
+void chmapif_connectack(int32 fd, uint8 errCode);
+void chmapif_charselres(int32 fd, uint32 aid, uint8 res);
+void chmapif_changemapserv_ack(int32 fd, bool nok);
 
-int chmapif_parse(int fd);
-int chmapif_init(int fd);
-void chmapif_server_init(int id);
-void chmapif_server_destroy(int id);
+int32 chmapif_parse(int32 fd);
+int32 chmapif_init(int32 fd);
+void chmapif_server_init(int32 id);
+void chmapif_server_destroy(int32 id);
 void do_init_chmapif(void);
-void chmapif_server_reset(int id);
-void chmapif_on_disconnect(int id);
+void chmapif_server_reset(int32 id);
+void chmapif_on_disconnect(int32 id);
 void do_final_chmapif(void);
 
 #endif /* CHAR_MAPIF_HPP */

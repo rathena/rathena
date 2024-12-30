@@ -65,10 +65,11 @@ struct s_pet_db {
 
 enum e_pet_itemtype : uint8 { PET_CATCH,PET_EGG,PET_EQUIP,PET_FOOD };
 
-enum e_pet_catch : uint16 {
-	PET_CATCH_FAIL = 0, ///< A catch attempt failed
-	PET_CATCH_UNIVERSAL = 1, ///< The catch attempt is universal (ignoring MD_STATUS_IMMUNE/Boss)
-	PET_CATCH_UNIVERSAL_ITEM = 2,
+enum e_pet_catch_flag : uint8 {
+	PET_CATCH_NORMAL = 0,
+	PET_CATCH_UNIVERSAL_NO_BOSS, // The catch attempt is universal (ignoring MD_STATUS_IMMUNE/Boss)
+	PET_CATCH_UNIVERSAL_ALL,
+	PET_CATCH_MAX
 };
 
 enum e_pet_intimate_level : uint16 {
@@ -93,7 +94,7 @@ enum e_pet_hungry : uint16 {
 struct pet_recovery { //Stat recovery
 	enum sc_type type;	//Status Change id
 	unsigned short delay; //How long before curing (secs).
-	int timer;
+	int32 timer;
 };
 
 struct pet_bonus {
@@ -101,7 +102,7 @@ struct pet_bonus {
 	unsigned short val;	//value
 	unsigned short duration; //in seconds
 	unsigned short delay;	//Time before re-effect the bonus in seconds
-	int timer;
+	int32 timer;
 };
 
 struct pet_skill_attack { //Attack Skill
@@ -119,7 +120,7 @@ struct pet_skill_support { //Support Skill
 	unsigned short hp; //Max HP% for skill to trigger (50 -> 50% for Magnificat)
 	unsigned short sp; //Max SP% for skill to trigger (100 = no check)
 	unsigned short delay; //Time (secs) between being able to recast.
-	int timer;
+	int32 timer;
 };
 
 struct pet_loot {
@@ -187,12 +188,12 @@ struct pet_data {
 	struct s_pet pet;
 	struct status_data status;
 	std::shared_ptr<s_mob_db> db;
-	int pet_hungry_timer;
-	int target_id;
+	int32 pet_hungry_timer;
+	int32 target_id;
 	struct {
 		unsigned skillbonus : 1;
 	} state;
-	int move_fail_count;
+	int32 move_fail_count;
 	t_tick next_walktime,last_thinktime;
 	unsigned short rate_fix;	//Support rate as modified by intimacy (1000 = 100%) [Skotlex]
 
@@ -203,14 +204,14 @@ struct pet_data {
 	struct pet_loot* loot;
 	std::vector<std::shared_ptr<s_petautobonus>> autobonus, autobonus2, autobonus3;
 
-	int masterteleport_timer;
+	int32 masterteleport_timer;
 	map_session_data *master;
 
 	std::shared_ptr<s_pet_db> get_pet_db() {
 		return pet_db.find(this->pet.class_);
 	}
 
-	int get_pet_walk_speed() {
+	int32 get_pet_walk_speed() {
 		switch (battle_config.pet_walk_speed) {
 			default:
 			case 1: // Master
@@ -224,34 +225,34 @@ struct pet_data {
 };
 
 bool pet_create_egg(map_session_data *sd, t_itemid item_id);
-int pet_hungry_val(struct pet_data *pd);
-void pet_set_intimate(struct pet_data *pd, int value);
-int pet_target_check(struct pet_data *pd,struct block_list *bl,int type);
+int32 pet_hungry_val(struct pet_data *pd);
+void pet_set_intimate(struct pet_data *pd, int32 value);
+int32 pet_target_check(struct pet_data *pd,struct block_list *bl,int32 type);
 void pet_unlocktarget(struct pet_data *pd);
-int pet_sc_check(map_session_data *sd, int type); //Skotlex
-std::shared_ptr<s_pet_db> pet_db_search(int key, enum e_pet_itemtype type);
-int pet_hungry_timer_delete(struct pet_data *pd);
+int32 pet_sc_check(map_session_data *sd, int32 type); //Skotlex
+std::shared_ptr<s_pet_db> pet_db_search(int32 key, enum e_pet_itemtype type);
+int32 pet_hungry_timer_delete(struct pet_data *pd);
 bool pet_data_init(map_session_data *sd, struct s_pet *pet);
 bool pet_return_egg( map_session_data *sd, struct pet_data *pd );
-int pet_birth_process(map_session_data *sd, struct s_pet *pet);
-int pet_recv_petdata(uint32 account_id,struct s_pet *p,int flag);
-int pet_select_egg(map_session_data *sd,short egg_index);
-int pet_catch_process1(map_session_data *sd,int target_class);
-int pet_catch_process2(map_session_data *sd,int target_id);
-bool pet_get_egg(uint32 account_id, short pet_class, int pet_id);
-int pet_menu(map_session_data *sd,int menunum);
-int pet_change_name(map_session_data *sd,char *name);
-int pet_change_name_ack(map_session_data *sd, char* name, int flag);
-int pet_equipitem(map_session_data *sd,int index);
+int32 pet_birth_process(map_session_data *sd, struct s_pet *pet);
+int32 pet_recv_petdata(uint32 account_id,struct s_pet *p,int32 flag);
+int32 pet_select_egg(map_session_data *sd,short egg_index);
+void pet_catch_process_start( map_session_data& sd, t_itemid item_id, e_pet_catch_flag flag );
+void pet_catch_process_end( map_session_data& sd, int32 target_id );
+bool pet_get_egg(uint32 account_id, short pet_class, int32 pet_id);
+int32 pet_menu(map_session_data *sd,int32 menunum);
+int32 pet_change_name(map_session_data *sd,char *name);
+int32 pet_change_name_ack(map_session_data *sd, char* name, int32 flag);
+int32 pet_equipitem(map_session_data *sd,int32 index);
 void pet_lootitem_drop( pet_data& pd, map_session_data* sd );
-int pet_attackskill(struct pet_data *pd, int target_id);
+int32 pet_attackskill(struct pet_data *pd, int32 target_id);
 TIMER_FUNC(pet_skill_support_timer); // [Skotlex]
 TIMER_FUNC(pet_skill_bonus_timer); // [Valaris]
 TIMER_FUNC(pet_recovery_timer); // [Valaris]
 TIMER_FUNC(pet_heal_timer); // [Valaris]
-int pet_egg_search(map_session_data *sd, int pet_id);
+int32 pet_egg_search(map_session_data *sd, int32 pet_id);
 void pet_evolution(map_session_data *sd, int16 pet_id);
-int pet_food(map_session_data *sd, struct pet_data *pd);
+int32 pet_food(map_session_data *sd, struct pet_data *pd);
 void pet_clear_support_bonuses(map_session_data *sd);
 
 #define pet_stop_walking(pd, type) unit_stop_walking(&(pd)->bl, type)

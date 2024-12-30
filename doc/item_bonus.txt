@@ -31,7 +31,8 @@ This list contains all available constants referenced in the 'bonus' commands.
 	RC2_Bio5_Swordman_Thief, RC2_Bio5_Acolyte_Merchant, RC2_Bio5_Mage_Archer, RC2_Bio5_MVP,
 	RC2_Clocktower, RC2_Thanatos, RC2_Faceworm, RC2_Hearthunter, RC2_Rockridge, RC2_Werner_Lab,
 	RC2_Temple_Demon, RC2_Illusion_Vampire, RC2_Malangdo, RC2_EP172ALPHA, RC2_EP172BETA, RC2_EP172BATH,
-	RC2_Illusion_Turtle, RC2_Rachel_Sanctuary, RC2_Illusion_Luanda, RC2_Illusion_Frozen, RC2_Illusion_Moonlight
+	RC2_Illusion_Turtle, RC2_Rachel_Sanctuary, RC2_Illusion_Luanda, RC2_Illusion_Frozen, RC2_Illusion_Moonlight,
+	RC2_Ep16_def, RC2_Edda_Arunafeltz
 
 * Class (c)
 	Class_Normal, Class_Boss, Class_Guardian, Class_All
@@ -480,7 +481,10 @@ bonus3 bAddMonsterDropItemGroup,ig,r,n;	Adds a n/100% chance to get an item of g
 bonus3 bAddClassDropItemGroup,ig,c,n;	Adds a n/100% chance to get an item of group type ig when killing a monster of class c
                                      	NOTE: If 'x' is negative value, then it's a part of formula:
                                      	      chance = -n*(killed_mob_level/10)+1
-                                     	LIMIT: Only 10 of these bonuses can be set. Those which exceed 10 are ignored.
+                                     	NOTE: Officially, the drop bonus for groups always activates to 100% so n should be 10000 for all
+                                              official items. The actual drop rate of each item is defined in the item_group_db instead.
+                                              Please note that each time only one random item in the group is checked for its drop rate.
+                                              That means that the chance is divided by the number of items in the group.
 
 bonus2 bGetZenyNum,x,n;   		Adds a n% chance of gaining 1~x zeny when killing a monster (only the highest among all is applied)
 bonus2 bAddGetZenyNum,x,n;		Adds a n% chance of gaining 1~x zeny when killing a monster

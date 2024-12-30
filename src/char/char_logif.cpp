@@ -39,7 +39,7 @@ void chlogif_pincode_notifyLoginPinError( uint32 account_id ){
 
 void chlogif_pincode_notifyLoginPinUpdate( uint32 account_id, char* pin ){
 	if ( chlogif_isconnected() ){
-		int size = 8 + PINCODE_LENGTH+1;
+		int32 size = 8 + PINCODE_LENGTH+1;
 		WFIFOHEAD(login_fd,size);
 		WFIFOW(login_fd,0) = 0x2738;
 		WFIFOW(login_fd,2) = size;
@@ -49,7 +49,7 @@ void chlogif_pincode_notifyLoginPinUpdate( uint32 account_id, char* pin ){
 	}
 }
 
-void chlogif_pincode_start(int fd, struct char_session_data* sd){
+void chlogif_pincode_start(int32 fd, struct char_session_data* sd){
 	if( charserv_config.pincode_config.pincode_enabled ){
 		//ShowInfo("Asking to start pincode to AID: %d\n", sd->account_id);
 		// PIN code system enabled
@@ -97,7 +97,7 @@ TIMER_FUNC(chlogif_send_acc_tologin){
 	if ( chlogif_isconnected() ){
 		// send account list to login server
 		size_t users = char_get_onlinedb().size();
-		int i = 0;
+		int32 i = 0;
 
 		WFIFOHEAD(login_fd,8+users*4);
 		WFIFOW(login_fd,0) = 0x272d;
@@ -117,7 +117,7 @@ TIMER_FUNC(chlogif_send_acc_tologin){
 	return 0;
 }
 
-void chlogif_send_usercount(int users){
+void chlogif_send_usercount(int32 users){
 	if (!chlogif_isconnected())
 		return;
 	// send number of user to login server
@@ -130,10 +130,10 @@ void chlogif_send_usercount(int users){
 
 TIMER_FUNC(chlogif_broadcast_user_count){
 	uint8 buf[6];
-	int users = char_count_users();
+	int32 users = char_count_users();
 
 	// only send an update when needed
-	static int prev_users = 0;
+	static int32 prev_users = 0;
 	if( prev_users == users )
 		return 0;
 	prev_users = users;
@@ -172,7 +172,7 @@ void chlogif_prepsend_global_accreg(void) {
 	}
 }
 
-void chlogif_send_global_accreg(const char *key, unsigned int index, int64 int_value, const char* string_value, bool is_string) {
+void chlogif_send_global_accreg(const char *key, uint32 index, int64 int_value, const char* string_value, bool is_string) {
 	if (!chlogif_isconnected())
 		return;
 
@@ -217,7 +217,7 @@ void chlogif_send_global_accreg(const char *key, unsigned int index, int64 int_v
 	WFIFOW(login_fd, 2) = nlen;
 
 	if( WFIFOW(login_fd, 2) > 60000 ) {
-		int account_id = WFIFOL(login_fd,4), char_id = WFIFOL(login_fd,8);
+		int32 account_id = WFIFOL(login_fd,4), char_id = WFIFOL(login_fd,8);
 
 		chlogif_prepsend_global_accreg();
 		chlogif_upd_global_accreg(account_id, char_id); // prepare next
@@ -234,7 +234,7 @@ void chlogif_request_accreg2(uint32 account_id, uint32 char_id){
 	WFIFOSET(login_fd,10);
 }
 
-void chlogif_send_reqaccdata(int fd, struct char_session_data *sd){
+void chlogif_send_reqaccdata(int32 fd, struct char_session_data *sd){
 	if (!chlogif_isconnected())
 		return;
 	WFIFOHEAD(fd,6);
@@ -243,7 +243,7 @@ void chlogif_send_reqaccdata(int fd, struct char_session_data *sd){
 	WFIFOSET(fd,6);
 }
 
-void chlogif_send_setacconline(int aid){
+void chlogif_send_setacconline(int32 aid){
 	if (!chlogif_isconnected())
 		return;
 	WFIFOHEAD(login_fd,6);
@@ -252,7 +252,7 @@ void chlogif_send_setacconline(int aid){
 	WFIFOSET(login_fd,6);
 }
 
-void chlogif_send_setallaccoffline(int fd){
+void chlogif_send_setallaccoffline(int32 fd){
 	if (!chlogif_isconnected())
 		return;
 	WFIFOHEAD(fd,2);
@@ -260,7 +260,7 @@ void chlogif_send_setallaccoffline(int fd){
 	WFIFOSET(fd,2);
 }
 
-void chlogif_send_setaccoffline(int fd, int aid){
+void chlogif_send_setaccoffline(int32 fd, int32 aid){
 	if (!chlogif_isconnected())
 		return;
 	WFIFOHEAD(fd,6);
@@ -269,7 +269,7 @@ void chlogif_send_setaccoffline(int fd, int aid){
 	WFIFOSET(fd,6);
 }
 
-int chlogif_parse_ackconnect(int fd){
+int32 chlogif_parse_ackconnect(int32 fd){
 	if (RFIFOREST(fd) < 3)
 		return 0;
 
@@ -289,7 +289,7 @@ int chlogif_parse_ackconnect(int fd){
 	return 1;
 }
 
-int chlogif_parse_ackaccreq(int fd){
+int32 chlogif_parse_ackaccreq(int32 fd){
 	if (RFIFOREST(fd) < 21)
 		return 0;
 	{
@@ -299,14 +299,14 @@ int chlogif_parse_ackaccreq(int fd){
 		uint32 login_id2 = RFIFOL(fd,10);
 		uint8 sex = RFIFOB(fd,14);
 		uint8 result = RFIFOB(fd,15);
-		int request_id = RFIFOL(fd,16);
+		int32 request_id = RFIFOL(fd,16);
 		uint8 clienttype = RFIFOB(fd,20);
 		RFIFOSKIP(fd,21);
 
 		if( session_isActive(request_id) && (sd=(struct char_session_data*)session[request_id]->session_data) &&
 			!sd->auth && sd->account_id == account_id && sd->login_id1 == login_id1 && sd->login_id2 == login_id2 && sd->sex == sex )
 		{
-			int client_fd = request_id;
+			int32 client_fd = request_id;
 			sd->clienttype = clienttype;
 
 			switch( result )
@@ -327,10 +327,10 @@ int chlogif_parse_ackaccreq(int fd){
  * Receive account data from login-server
  * AH 0x2717 <aid>.L <email>.40B <expiration_time>.L <group_id>.B <birthdate>.11B <pincode>.5B <pincode_change>.L <isvip>.B <char_vip>.B <char_billing>.B
  **/
-int chlogif_parse_reqaccdata(int fd){
+int32 chlogif_parse_reqaccdata(int32 fd){
 	if (RFIFOREST(fd) < 75)
 		return 0;
-	int u_fd; //user fd
+	int32 u_fd; //user fd
 	struct char_session_data* sd;
 
 	// find the authenticated session with this account id
@@ -370,7 +370,7 @@ int chlogif_parse_reqaccdata(int fd){
 	return 1;
 }
 
-int chlogif_parse_keepalive(int fd){
+int32 chlogif_parse_keepalive(int32 fd){
 	if (RFIFOREST(fd) < 2)
 		return 0;
 	RFIFOSKIP(fd,2);
@@ -389,7 +389,7 @@ int chlogif_parse_keepalive(int fd){
  * @param class_   The character's current job class.
  * @param guild_id The character's guild ID.
  */
-void chlogif_parse_change_sex_sub(int sex, int acc, int char_id, int class_, int guild_id)
+void chlogif_parse_change_sex_sub(int32 sex, int32 acc, int32 char_id, int32 class_, int32 guild_id)
 {
 	// job modification
 	switch (class_)
@@ -465,40 +465,37 @@ void chlogif_parse_change_sex_sub(int sex, int acc, int char_id, int class_, int
 		inter_guild_sex_changed(guild_id, acc, char_id, sex);
 }
 
-int chlogif_parse_ackchangesex(int fd)
+int32 chlogif_parse_ackchangesex(int32 fd)
 {
 	if (RFIFOREST(fd) < 7)
 		return 0;
 	else {
 		unsigned char buf[7];
 		uint32 acc = RFIFOL(fd,2);
-		int sex = RFIFOB(fd,6);
+		int32 sex = RFIFOB(fd,6);
 		RFIFOSKIP(fd,7);
 
 		if (acc > 0) { // TODO: Is this even possible?
 			unsigned char i;
-			int char_id = 0, class_ = 0, guild_id = 0;
+			int32 char_id = 0, class_ = 0, guild_id = 0;
 			std::shared_ptr<struct auth_node> node = util::umap_find( char_get_authdb(), acc );
-			SqlStmt *stmt;
+			SqlStmt stmt{ *sql_handle };
 
 			if (node != nullptr)
 				node->sex = sex;
 
 			// get characters
-			stmt = SqlStmt_Malloc(sql_handle);
-			if (SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `char_id`, `class`, `guild_id` FROM `%s` WHERE `account_id` = '%d'", schema_config.char_db, acc) || SqlStmt_Execute(stmt)) {
+			if (SQL_ERROR == stmt.Prepare( "SELECT `char_id`, `class`, `guild_id` FROM `%s` WHERE `account_id` = '%d'", schema_config.char_db, acc) || stmt.Execute()) {
 				SqlStmt_ShowDebug(stmt);
-				SqlStmt_Free(stmt);
 			}
 
-			SqlStmt_BindColumn(stmt, 0, SQLDT_INT,   &char_id,  0, nullptr, nullptr);
-			SqlStmt_BindColumn(stmt, 1, SQLDT_SHORT, &class_,   0, nullptr, nullptr);
-			SqlStmt_BindColumn(stmt, 2, SQLDT_INT,   &guild_id, 0, nullptr, nullptr);
+			stmt.BindColumn(0, SQLDT_INT,   &char_id,  0, nullptr, nullptr);
+			stmt.BindColumn(1, SQLDT_SHORT, &class_,   0, nullptr, nullptr);
+			stmt.BindColumn(2, SQLDT_INT,   &guild_id, 0, nullptr, nullptr);
 
-			for (i = 0; i < MAX_CHARS && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i) {
+			for (i = 0; i < MAX_CHARS && SQL_SUCCESS == stmt.NextRow(); ++i) {
 				chlogif_parse_change_sex_sub(sex, acc, char_id, class_, guild_id);
 			}
-			SqlStmt_Free(stmt);
 		}
 
 		// notify all mapservers about this change
@@ -520,9 +517,9 @@ int chlogif_parse_ackchangesex(int fd)
  * @retval 0 in case of success.
  * @retval 1 in case of failure.
  */
-int chlogif_parse_ackchangecharsex(int char_id, int sex)
+int32 chlogif_parse_ackchangecharsex(int32 char_id, int32 sex)
 {
-	int class_ = 0, guild_id = 0, account_id = 0;
+	int32 class_ = 0, guild_id = 0, account_id = 0;
 	unsigned char buf[7];
 	char *data;
 
@@ -554,7 +551,7 @@ int chlogif_parse_ackchangecharsex(int char_id, int sex)
 	return 0;
 }
 
-int chlogif_parse_ack_global_accreg(int fd){
+int32 chlogif_parse_ack_global_accreg(int32 fd){
 	if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
 		return 0;
 	else { //Receive account_reg2 registry, forward to map servers.
@@ -565,7 +562,7 @@ int chlogif_parse_ack_global_accreg(int fd){
 	return 1;
 }
 
-int chlogif_parse_accbannotification(int fd){
+int32 chlogif_parse_accbannotification(int32 fd){
 	if (RFIFOREST(fd) < 11)
 		return 0;
 	else { // send to all map-servers to disconnect the player
@@ -582,7 +579,7 @@ int chlogif_parse_accbannotification(int fd){
 	return 1;
 }
 
-int chlogif_parse_askkick(int fd){
+int32 chlogif_parse_askkick(int32 fd){
 	if (RFIFOREST(fd) < 6)
 		return 0;
 	else {
@@ -602,7 +599,7 @@ int chlogif_parse_askkick(int fd){
 			else
 			{// Manual kick from char server.
 				struct char_session_data *tsd;
-				int i;
+				int32 i;
 				ARR_FIND( 0, fd_max, i, session[i] && (tsd = (struct char_session_data*)session[i]->session_data) && tsd->account_id == aid );
 				if( i < fd_max )
 				{
@@ -620,7 +617,7 @@ int chlogif_parse_askkick(int fd){
 	return 1;
 }
 
-int chlogif_parse_updip(int fd){
+int32 chlogif_parse_updip(int32 fd){
 	unsigned char buf[2];
 	uint32 new_ip = 0;
 
@@ -654,7 +651,7 @@ int chlogif_parse_updip(int fd){
  * AH 0x2743
  * We received the info from login-serv, transmit it to map
  */
-int chlogif_parse_vipack(int fd) {
+int32 chlogif_parse_vipack(int32 fd) {
 #ifdef VIP_ENABLE
 	if (RFIFOREST(fd) < 19)
 		return 0;
@@ -663,7 +660,7 @@ int chlogif_parse_vipack(int fd) {
 		uint32 vip_time = RFIFOL(fd,6); //vip_time
 		uint8 flag = RFIFOB(fd,10);
 		uint32 groupid = RFIFOL(fd,11); //new group id
-		int mapfd = RFIFOL(fd,15); //link to mapserv for ack
+		int32 mapfd = RFIFOL(fd,15); //link to mapserv for ack
 		RFIFOSKIP(fd,19);
 		chmapif_vipack(mapfd,aid,vip_time,groupid,flag);
 	}
@@ -680,7 +677,7 @@ int chlogif_parse_vipack(int fd) {
  * @param mapfd: link to mapserv for ack
  * @return 0 if success
  */
-int chlogif_reqvipdata(uint32 aid, uint8 flag, int32 timediff, int mapfd) {
+int32 chlogif_reqvipdata(uint32 aid, uint8 flag, int32 timediff, int32 mapfd) {
 	loginif_check(-1);
 #ifdef VIP_ENABLE
 	WFIFOHEAD(login_fd,15);
@@ -698,7 +695,7 @@ int chlogif_reqvipdata(uint32 aid, uint8 flag, int32 timediff, int mapfd) {
 * HA 0x2720
 * Request account info to login-server
 */
-int chlogif_req_accinfo(int fd, int u_fd, int u_aid, int account_id, int8 type) {
+int32 chlogif_req_accinfo(int32 fd, int32 u_fd, int32 u_aid, int32 account_id, int8 type) {
 	loginif_check(-1);
 	//ShowInfo("%d request account info for %d (type %d)\n", u_aid, account_id, type);
 	WFIFOHEAD(login_fd,19);
@@ -716,7 +713,7 @@ int chlogif_req_accinfo(int fd, int u_fd, int u_aid, int account_id, int8 type) 
  * AH 0x2721
  * Retrieve account info from login-server, ask inter-server to tell player
  */
-int chlogif_parse_AccInfoAck(int fd) {
+int32 chlogif_parse_AccInfoAck(int32 fd) {
 	if (RFIFOREST(fd) < 19)
 		return 0;
 	else {
@@ -736,7 +733,7 @@ int chlogif_parse_AccInfoAck(int fd) {
 }
 
 
-int chlogif_parse(int fd) {
+int32 chlogif_parse(int32 fd) {
 
 	// only process data from the login-server
 	if( fd != login_fd ) {
@@ -767,7 +764,7 @@ int chlogif_parse(int fd) {
 		// -1: Login server is not connected
 		//  0: Avoid processing followup packets (prev was probably incomplete) packet
 		//  1: Continue parsing
-		int next = 1;
+		int32 next = 1;
 		uint16 command = RFIFOW(fd,0);
 		switch( command ) {
 			case 0x2711: next = chlogif_parse_ackconnect(fd); break;
@@ -827,7 +824,7 @@ TIMER_FUNC(chlogif_check_connect_logserver){
 
 
 
-int chlogif_isconnected(){
+int32 chlogif_isconnected(){
 	return session_isActive(login_fd);
 }
 
@@ -843,7 +840,7 @@ void do_init_chlogif(void) {
 
 /// Resets all the data.
 void chlogif_reset(void){
-	int id;
+	int32 id;
 	// TODO kick everyone out and reset everything or wait for connect and try to reaquire locks [FlavioJS]
 	for( id = 0; id < ARRAYLENGTH(map_server); ++id )
 		chmapif_server_reset(id);
@@ -859,7 +856,7 @@ void chlogif_on_disconnect(void){
 /// Called when all the connection steps are completed.
 void chlogif_on_ready(void)
 {
-	int i;
+	int32 i;
 
 	//Send online accounts to login server.
 	chlogif_send_acc_tologin(INVALID_TIMER, gettick(), 0, 0);
