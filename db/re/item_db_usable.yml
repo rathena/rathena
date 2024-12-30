@@ -4499,7 +4499,7 @@ Body:
     Buy: 1
     Weight: 10
     Script: |
-      itemheal rand(425,425),0;
+      itemheal 425,0;
   - Id: 11706
     AegisName: Steak
     Name: Steak
@@ -64422,7 +64422,7 @@ Body:
       getitem 23505,25;
       getitem 23583,1;
       getitem 23582,1;
-      getitem 23427,1;
+      getitem 25427,1;
       getitem 23586,1;
   - Id: 23586
     AegisName: Rebeginer_Box_110
@@ -64440,7 +64440,7 @@ Body:
     Script: |
       getitem 23506,20;
       getitem 23582,2;
-      getitem 23428,1;
+      getitem 25428,1;
       getitem 23587,1;
   - Id: 23587
     AegisName: Rebeginer_Box_120
@@ -70765,7 +70765,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      warp "ba_in",87,389;
+      warp "ba_in01",87,389;
   - Id: 100903
     AegisName: Teleport_Ep17_01
     Name: Border Area Cor Transport Wing
