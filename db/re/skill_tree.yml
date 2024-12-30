@@ -7908,6 +7908,116 @@ Body:
       Royal_Guard: true
       Royal_Guard_T: true
       Imperial_Guard: true
+  - Job: Soul_Ascetic
+    Inherit:
+      Novice: true
+      Taekwon: true
+      Soul_Linker: true
+      Soul_Reaper: true
+    Tree:
+      - Name: SOA_SOUL_MASTERY
+        MaxLevel: 10
+      - Name: SOA_TALISMAN_MASTERY
+        MaxLevel: 10
+      - Name: SOA_SOUL_GATHERING
+        MaxLevel: 5
+        Requires:
+          - Name: SP_SOULENERGY
+            Level: 5
+          - Name: SOA_SOUL_MASTERY
+            Level: 3
+      - Name: SOA_TALISMAN_OF_PROTECTION
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_MASTERY
+            Level: 1
+      - Name: SOA_TALISMAN_OF_WARRIOR
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_MASTERY
+            Level: 1
+      - Name: SOA_TALISMAN_OF_MAGICIAN
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_MASTERY
+            Level: 1
+      - Name: SOA_EXORCISM_OF_MALICIOUS_SOUL
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_SOUL_GATHERING
+            Level: 1
+          - Name: SP_SOULCURSE
+            Level: 5
+      - Name: SOA_TALISMAN_OF_SOUL_STEALING
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_MASTERY
+            Level: 1
+          - Name: SOA_SOUL_MASTERY
+            Level: 1
+      - Name: SOA_TOTEM_OF_TUTELARY
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_MASTERY
+            Level: 3
+          - Name: SOA_SOUL_MASTERY
+            Level: 3
+      - Name: SOA_TALISMAN_OF_FIVE_ELEMENTS
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_MASTERY
+            Level: 1
+      - Name: SOA_TALISMAN_OF_BLUE_DRAGON
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_OF_SOUL_STEALING
+            Level: 1
+      - Name: SOA_TALISMAN_OF_WHITE_TIGER
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_OF_BLUE_DRAGON
+            Level: 1
+      - Name: SOA_TALISMAN_OF_RED_PHOENIX
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_OF_WHITE_TIGER
+            Level: 1
+      - Name: SOA_TALISMAN_OF_BLACK_TORTOISE
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_OF_RED_PHOENIX
+            Level: 1
+      - Name: SOA_TALISMAN_OF_FOUR_BEARING_GOD
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_OF_BLUE_DRAGON
+            Level: 1
+          - Name: SOA_TALISMAN_OF_WHITE_TIGER
+            Level: 1
+          - Name: SOA_TALISMAN_OF_RED_PHOENIX
+            Level: 1
+          - Name: SOA_TALISMAN_OF_BLACK_TORTOISE
+            Level: 1
+      - Name: SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_SOUL_MASTERY
+            Level: 3
+          - Name: SOA_TALISMAN_OF_FIVE_ELEMENTS
+            Level: 1
+          - Name: SOA_TALISMAN_OF_FOUR_BEARING_GOD
+            Level: 1
+      - Name: SOA_SOUL_OF_HEAVEN_AND_EARTH
+        MaxLevel: 10
+        Requires:
+          - Name: SOA_TALISMAN_OF_PROTECTION
+            Level: 5
+          - Name: SOA_TALISMAN_OF_WARRIOR
+            Level: 5
+          - Name: SOA_TALISMAN_OF_MAGICIAN
+            Level: 5
+          - Name: SOA_TALISMAN_OF_FIVE_ELEMENTS
+            Level: 5
   - Job: Night_Watch
     Inherit:
       Novice: true
