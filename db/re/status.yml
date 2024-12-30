@@ -9512,3 +9512,59 @@ Body:
     DurationLookup: SOA_SOUL_OF_HEAVEN_AND_EARTH
     CalcFlags:
       All: true
+  - Status: RETURN_TO_ELDICASTES
+    Icon: EFST_RETURN_TO_ELDICASTES
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: GUARDIAN_RECALL
+    Icon: EFST_GUARDIAN_RECALL
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: ECLAGE_RECALL
+    Icon: EFST_ECLAGE_RECALL
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: ALL_NIFLHEIM_RECALL
+    Icon: EFST_ALL_NIFLHEIM_RECALL
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: ALL_PRONTERA_RECALL
+    Icon: EFST_ALL_PRONTERA_RECALL
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: ALL_GLASTHEIM_RECALL
+    Icon: EFST_ALL_GLASTHEIM_RECALL
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: ALL_THANATOS_RECALL
+    Icon: EFST_ALL_THANATOS_RECALL
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: ALL_LIGHTHALZEN_RECALL
+    Icon: EFST_ALL_LIGHTHALZEN_RECALL
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
