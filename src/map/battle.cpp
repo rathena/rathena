@@ -3019,6 +3019,11 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 					return false;
 				}
 				break;
+			case SH_CHUL_HO_SONIC_CLAW:
+			case SH_HOGOGONG_STRIKE:
+				if (!(sd && pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO)) || !(sc && sc->getSCE(SC_TEMPORARY_COMMUNION)))
+					return false;
+				break;
 		}
 		if(tsd && tsd->bonus.critical_def)
 			cri = cri * ( 100 - tsd->bonus.critical_def ) / 100;
@@ -3583,6 +3588,24 @@ int32 battle_get_magic_element(struct block_list* src, struct block_list* target
 		case TR_SOUNDBLEND:
 			if (sd)
 				element = sd->bonus.arrow_ele;
+			break;
+		case SU_CN_METEOR:
+		case SH_HYUN_ROKS_BREEZE:
+		case SH_HYUN_ROK_CANNON:
+			if (sc && sc->count) {
+				if (sc->getSCE(SC_COLORS_OF_HYUN_ROK_1))
+					element = ELE_WATER;
+				else if (sc->getSCE(SC_COLORS_OF_HYUN_ROK_2))
+					element = ELE_WIND;
+				else if (sc->getSCE(SC_COLORS_OF_HYUN_ROK_3))
+					element = ELE_EARTH;
+				else if (sc->getSCE(SC_COLORS_OF_HYUN_ROK_4))
+					element = ELE_FIRE;
+				else if (sc->getSCE(SC_COLORS_OF_HYUN_ROK_5))
+					element = ELE_DARK;
+				else if (sc->getSCE(SC_COLORS_OF_HYUN_ROK_6))
+					element = ELE_HOLY;
+			}
 			break;
 	}
 
@@ -6314,6 +6337,24 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			skillratio += 5 * sstatus->con;
 			RE_LVL_DMOD(100);
 			break;
+		case SH_HOWLING_OF_CHUL_HO:
+			skillratio += -100 + 600 + 1050 * skill_lv + 50 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY) + 5 * sstatus->pow;
+			if ((sd && pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO)) || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION)))
+				skillratio += 100 + 200 * skill_lv + 50 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
+			RE_LVL_DMOD(100);
+			break;
+		case SH_HOGOGONG_STRIKE:
+			skillratio += -100 + 180 + 200 * skill_lv + 10 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY) + 5 * sstatus->pow;
+			if ((sd && pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO)) || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION)))
+				skillratio += 70 + 150 * skill_lv + 10 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
+			RE_LVL_DMOD(100);
+			break;
+		case SH_CHUL_HO_SONIC_CLAW:
+			skillratio += -100 + 400 + 750 * skill_lv + 50 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY) + 5 * sstatus->pow;
+			if ((sd && pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO)) || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION)))
+				skillratio += 100 + 100 * skill_lv + 50 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
+			RE_LVL_DMOD(100);
+			break;
 	}
 	return skillratio;
 }
@@ -8040,6 +8081,18 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case WZ_WATERBALL:
 						skillratio += 30 * skill_lv;
 						break;
+					case SH_HYUN_ROKS_BREEZE:
+						skillratio += -100 + 600 + 600 * skill_lv + 20 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY) + 5 * sstatus->spl;
+						if ((sd && pc_checkskill(sd, SH_COMMUNE_WITH_HYUN_ROK)) || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION)))
+							skillratio += 100 + 200 * skill_lv + 20 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
+						RE_LVL_DMOD(100);
+						break;
+					case SH_HYUN_ROK_CANNON:
+						skillratio += -100 + 700 + 950 * skill_lv + 50 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY) + 5 * sstatus->spl;
+						if ((sd && pc_checkskill(sd, SH_COMMUNE_WITH_HYUN_ROK)) || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION)))
+							skillratio += 100 + 150 * skill_lv + 25 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
+						RE_LVL_DMOD(100);
+						break;
 					case WZ_STORMGUST:
 #ifdef RENEWAL
 						skillratio -= 30; // Offset only once
@@ -8390,8 +8443,12 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case SU_CN_METEOR:
 					case SU_CN_METEOR2:
-						skillratio += 100 + 100 * skill_lv + sstatus->int_ * 5; // !TODO: Confirm INT bonus
+						skillratio += 100 + 100 * skill_lv;
+						if (status_get_lv(src) > 99)
+							skillratio += sstatus->int_;
 						RE_LVL_DMOD(100);
+						if (sc && sc->getSCE(SC_COLORS_OF_HYUN_ROK_BUFF))
+							skillratio += skillratio * 50 / 100;
 						break;
 					case NPC_VENOMFOG:
 						skillratio += 600 + 100 * skill_lv;
