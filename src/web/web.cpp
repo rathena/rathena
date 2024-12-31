@@ -46,27 +46,27 @@ std::shared_ptr<httplib::Server> http_server;
 
 std::string login_server_ip = "127.0.0.1";
 uint16 login_server_port = 3306;
-std::string login_server_id = "ragnarok";
+std::string login_server_id = "caramelo";
 std::string login_server_pw = "";
-std::string login_server_db = "ragnarok";
+std::string login_server_db = "rathena";
 
 std::string char_server_ip = "127.0.0.1";
 uint16  char_server_port = 3306;
-std::string char_server_id = "ragnarok";
+std::string char_server_id = "caramelo";
 std::string char_server_pw = "";
-std::string char_server_db = "ragnarok";
+std::string char_server_db = "rathena";
 
 std::string map_server_ip = "127.0.0.1";
 uint16 map_server_port = 3306;
-std::string map_server_id = "ragnarok";
+std::string map_server_id = "caramelo";
 std::string map_server_pw = "";
-std::string map_server_db = "ragnarok";
+std::string map_server_db = "rathena";
 
 std::string web_server_ip = "127.0.0.1";
 uint16 web_server_port = 3306;
-std::string web_server_id = "ragnarok";
+std::string web_server_id = "caramelo";
 std::string web_server_pw = "";
-std::string web_server_db = "ragnarok";
+std::string web_server_db = "rathena_web";
 
 std::string default_codepage = "";
 
@@ -84,6 +84,18 @@ char party_table[32] = "party";
 char partybookings_table[32] = "party_bookings";
 char guild_db_table[32] = "guild";
 char char_db_table[32] = "char";
+
+std::string env(char *var)
+{
+	ShowInfo("Getting %s", var);
+	const char *r = std::getenv(var);
+	if (!r)
+	{
+		ShowError("Failed to get env var %s", var);
+		return std::string();
+	}
+	return std::string(r);
+}
 
 int32 parse_console(const char * buf) {
 	return 1;
@@ -186,43 +198,43 @@ int32 inter_config_read(const char* cfgName)
 		else if (!strcmpi(w1, "emblem_transparency_limit"))
 			inter_config.emblem_woe_change = config_switch(w2) == 1;
 		else if(!strcmpi(w1,"login_server_ip"))
-			login_server_ip = w2;
+			login_server_ip = env(w2);
 		else if(!strcmpi(w1,"login_server_port"))
 			login_server_port = (uint16)strtoul( w2, nullptr, 10 );
 		else if(!strcmpi(w1,"login_server_id"))
-			login_server_id = w2;
+			login_server_id = env(w2);
 		else if(!strcmpi(w1,"login_server_pw"))
-			login_server_pw = w2;
+			login_server_pw = env(w2);
 		else if(!strcmpi(w1,"login_server_db"))
 			login_server_db = w2;
 		else if(!strcmpi(w1,"char_server_ip"))
-			char_server_ip = w2;
+			char_server_ip = env(w2);
 		else if(!strcmpi(w1,"char_server_port"))
 			char_server_port = (uint16)strtoul( w2, nullptr, 10 );
 		else if(!strcmpi(w1,"char_server_id"))
-			char_server_id = w2;
+			char_server_id = env(w2);
 		else if(!strcmpi(w1,"char_server_pw"))
-			char_server_pw = w2;
+			char_server_pw = env(w2);
 		else if(!strcmpi(w1,"char_server_db"))
 			char_server_db = w2;
 		else if(!strcmpi(w1,"map_server_ip"))
-			map_server_ip = w2;
+			map_server_ip = env(w2);
 		else if(!strcmpi(w1,"map_server_port"))
 			map_server_port = (uint16)strtoul( w2, nullptr, 10 );
 		else if(!strcmpi(w1,"map_server_id"))
-			map_server_id = w2;
+			map_server_id = env(w2);
 		else if(!strcmpi(w1,"map_server_pw"))
-			map_server_pw = w2;
+			map_server_pw = env(w2);
 		else if(!strcmpi(w1,"map_server_db"))
 			map_server_db = w2;
 		else if(!strcmpi(w1,"web_server_ip"))
-			web_server_ip = w2;
+			web_server_ip = env(w2);
 		else if(!strcmpi(w1,"web_server_port"))
 			web_server_port = (uint16)strtoul( w2, nullptr, 10 );
 		else if(!strcmpi(w1,"web_server_id"))
-			web_server_id = w2;
+			web_server_id = env(w2);
 		else if(!strcmpi(w1,"web_server_pw"))
-			web_server_pw = w2;
+			web_server_pw = env(w2);
 		else if(!strcmpi(w1,"web_server_db"))
 			web_server_db = w2;
 		else if(!strcmpi(w1,"default_codepage"))

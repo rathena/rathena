@@ -29,7 +29,7 @@ prontera,160,190,3	script	inarray sample	847,{
 			switch(select("Basic:Advanced")){
 				case 1:
 					mes "[countinarray Basic Test]";
-					setarray .@array$[0],"rathena","ragnarok","poring","script";
+					setarray .@array$[0],"rathena","rathena","poring","script";
 					mes "the array elements: ";
 					for(.@i=0;.@i<getarraysize(.@array$);.@i++)
 						mes .@array$[.@i];

@@ -37,10 +37,10 @@ my $sTarget = "Upd|DB|Compile|MapDB"; #default target doesn't restart
 my %hDefConf = (
 	SQL_HOST => "localhost",
 	SQL_PORT => "3306",
-	SQL_UID => "ragnarok",
-	SQL_PW => "ragnarok",
-	SQL_MAIN_DB => "ragnarok",
-	SQL_LOG_DB => ,"ragnarok",
+	SQL_UID => "caramelo",
+	SQL_PW => "rathena",
+	SQL_MAIN_DB => "rathena",
+	SQL_LOG_DB => ,"rathena_log",
 );
 
 GetArgs();

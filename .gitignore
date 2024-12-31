@@ -1,5 +1,7 @@
 autom4te.cache/
 
+.env
+
 #Global
 .vscode
 .Apple*

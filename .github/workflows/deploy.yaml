@@ -1,0 +1,48 @@
+name: Push-to-EC2
+
+jobs:
+  deploy:
+    name: Push to EC2 Instance
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v1
+
+      - name: Update & Install packages
+        # Ubuntu runners already have most of the packages rAthena requires to build.
+        # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-Readme.md
+        run: |
+          sudo apt update
+          sudo apt install zlib1g-dev libpcre3-dev git gettext make libmysqlclient-dev gcc g++ 
+
+      - name: Command - configure
+        env:
+            CONFIGURE_FLAGS: '--enable-prere=yes --enable-buildbot=yes --enable-vip=yes --enable-packetver=20220406'
+        run: ./configure $CONFIGURE_FLAGS
+      
+      - name: Command - make clean
+        run: make clean
+
+      - name: Command - make server
+        run: make server
+
+      - name: Command - Export secrets
+        env:
+          RATHENA_HOST: ${{ secrets.RATHENA_HOST }}
+          RATHENA_USER: ${{ secrets.RATHENA_USER }}
+          RATHENA_PASS: ${{ secrets.RATHENA_PASS }}
+        run: |
+          echo "RATHENA_HOST=${{ secrets.RATHENA_HOST }}" >> .env
+          echo "RATHENA_USER=${{ secrets.RATHENA_USER }}" >> .env
+          echo "RATHENA_PASS=${{ secrets.RATHENA_PASS }}" >> .env
+
+      - name: Deploy to my EC2 instance
+        uses: easingthemes/ssh-deploy@v2.1.5
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY }}
+          SOURCE: "./"
+          REMOTE_HOST:  ${{ secrets.EC2_HOST }}
+          REMOTE_USER:  ${{ secrets.EC2_USER }}
+          TARGET: "/home/ubuntu/CarameloRO"
+          SCRIPT_AFTER: "./start.sh"

@@ -48,9 +48,9 @@ Sql* sql_handle = nullptr;	///Link to mysql db, connection FD
 
 int32 char_server_port = 3306;
 std::string char_server_ip = "127.0.0.1";
-std::string char_server_id = "ragnarok";
+std::string char_server_id = "caramelo";
 std::string char_server_pw = ""; // Allow user to send empty password (bugreport:7787)
-std::string char_server_db = "ragnarok";
+std::string char_server_db = "rathena";
 std::string default_codepage = ""; //Feature by irmin.
 uint32 party_share_level = 10;
 
@@ -72,6 +72,18 @@ int32 inter_recv_packet_length[] = {
 #ifndef WHISPER_MESSAGE_SIZE
 	#define WHISPER_MESSAGE_SIZE 512
 #endif
+
+std::string env(char *var)
+{
+	ShowInfo("Getting %s", var);
+	const char *r = std::getenv(var);
+	if (!r)
+	{
+		ShowError("Failed to get env var %s", var);
+		return std::string();
+	}
+	return std::string(r);
+}
 
 struct WisData {
 	int32 id, fd, count, len, gmlvl;
@@ -852,13 +864,13 @@ int32 inter_config_read(const char* cfgName)
 			continue;
 
 		if(!strcmpi(w1,"char_server_ip"))
-			char_server_ip = w2;
+			char_server_ip = env(w2);
 		else if(!strcmpi(w1,"char_server_port"))
 			char_server_port = atoi(w2);
 		else if(!strcmpi(w1,"char_server_id"))
-			char_server_id = w2;
+			char_server_id = env(w2);
 		else if(!strcmpi(w1,"char_server_pw"))
-			char_server_pw = w2;
+			char_server_pw = env(w2);
 		else if(!strcmpi(w1,"char_server_db"))
 			char_server_db = w2;
 		else if(!strcmpi(w1,"default_codepage"))

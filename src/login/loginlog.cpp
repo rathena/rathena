@@ -16,9 +16,9 @@
 
 std::string log_db_hostname = "127.0.0.1";
 uint16 log_db_port = 3306;
-std::string log_db_username = "ragnarok";
+std::string log_db_username = "caramelo";
 std::string log_db_password = "";
-std::string log_db_database = "ragnarok";
+std::string log_db_database = "rathena_log";
 std::string log_login_db = "loginlog";
 std::string log_codepage = "";
 
@@ -79,6 +79,18 @@ void login_log(uint32 ip, const char* username, int32 rcode, const char* message
 		Sql_ShowDebug(sql_handle);
 }
 
+std::string envConst(const char *var)
+{
+	ShowInfo("Getting %s", var);
+	const char *r = std::getenv(var);
+	if (!r)
+	{
+		ShowError("Failed to get env var %s", var);
+		return std::string();
+	}
+	return std::string(r);
+}
+
 /**
  * Read configuration options.
  * @param key: config keyword
@@ -87,16 +99,16 @@ void login_log(uint32 ip, const char* username, int32 rcode, const char* message
  */
 bool loginlog_config_read(const char* key, const char* value) {
 	if( strcmpi(key, "log_db_ip") == 0 )
-		log_db_hostname = value;
+		log_db_hostname = envConst(value);
 	else
 	if( strcmpi(key, "log_db_port") == 0 )
 		log_db_port = (uint16)strtoul(value, nullptr, 10);
 	else
 	if( strcmpi(key, "log_db_id") == 0 )
-		log_db_username = value;
+		log_db_username = envConst(value);
 	else
 	if( strcmpi(key, "log_db_pw") == 0 )
-		log_db_password = value;
+		log_db_password = envConst(value);
 	else
 	if( strcmpi(key, "log_db_db") == 0 )
 		log_db_database = value;

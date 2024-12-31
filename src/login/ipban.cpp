@@ -18,9 +18,9 @@
 
 std::string ipban_db_hostname = "127.0.0.1";
 uint16 ipban_db_port = 3306;
-std::string ipban_db_username = "ragnarok";
+std::string ipban_db_username = "rathena";
 std::string ipban_db_password = "";
-std::string ipban_db_database = "ragnarok";
+std::string ipban_db_database = "rathena";
 std::string ipban_codepage = "";
 std::string ipban_table = "ipbanlist";
 
@@ -106,6 +106,18 @@ TIMER_FUNC(ipban_cleanup){
 	return 0;
 }
 
+std::string env(const char *var)
+{
+	ShowInfo("Getting %s", var);
+	const char *r = std::getenv(var);
+	if (!r)
+	{
+		ShowError("Failed to get env var %s", var);
+		return std::string();
+	}
+	return std::string(r);
+}
+
 /**
  * Read configuration options.
  * @param key: config keyword
@@ -123,16 +135,16 @@ bool ipban_config_read(const char* key, const char* value) {
 	{
 		key += strlen(signature);
 		if( strcmpi(key, "ip") == 0 )
-			ipban_db_hostname = value;
+			ipban_db_hostname = env(value);
 		else
 		if( strcmpi(key, "port") == 0 )
 			ipban_db_port = (uint16)strtoul( value, nullptr, 10 );
 		else
 		if( strcmpi(key, "id") == 0 )
-			ipban_db_username = value;
+			ipban_db_username = env(value);
 		else
 		if( strcmpi(key, "pw") == 0 )
-			ipban_db_password = value;
+			ipban_db_password = env(value);
 		else
 		if( strcmpi(key, "db") == 0 )
 			ipban_db_database = value;

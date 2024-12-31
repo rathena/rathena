@@ -24,9 +24,9 @@ typedef struct AccountDB_SQL {
 	Sql* accounts;       // SQL handle accounts storage
 	std::string db_hostname = "127.0.0.1";
 	uint16 db_port = 3306;
-	std::string db_username = "ragnarok";
+	std::string db_username = "caramelo";
 	std::string db_password = "";
-	std::string db_database = "ragnarok";
+	std::string db_database = "rathena";
 	std::string codepage = "";
 	// other settings
 	bool case_sensitive;
@@ -146,6 +146,19 @@ static void account_db_sql_destroy(AccountDB* self){
 	aFree(db);
 }
 
+std::string envaccount(const char *var)
+{
+	ShowInfo("Getting %s", var);
+	const char *r = std::getenv(var);
+	if (!r)
+	{
+		ShowError("Failed to get env var %s", var);
+		return std::string();
+	}
+	return std::string(r);
+}
+
+
 /**
  * Get configuration information into buf.
  *  If the option is supported, adjust the internal state.
@@ -223,16 +236,16 @@ static bool account_db_sql_set_property(AccountDB* self, const char* key, const 
 	if( strncmp(key, signature, strlen(signature)) == 0 ) {
 		key += strlen(signature);
 		if( strcmpi(key, "ip") == 0 )
-			db->db_hostname = value;
+			db->db_hostname = envaccount(value);
 		else
 		if( strcmpi(key, "port") == 0 )
 			db->db_port = (uint16)strtoul( value, nullptr, 10 );
 		else
 		if( strcmpi(key, "id") == 0 )
-			db->db_username = value;
+			db->db_username = envaccount(value);
 		else
 		if( strcmpi(key, "pw") == 0 )
-			db->db_password = value;
+			db->db_password = envaccount(value);
 		else
 		if( strcmpi(key, "db") == 0 )
 			db->db_database = value;

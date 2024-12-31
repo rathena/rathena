@@ -60,9 +60,9 @@ std::string default_codepage = "";
 
 int32 map_server_port = 3306;
 std::string map_server_ip = "127.0.0.1";
-std::string map_server_id = "ragnarok";
+std::string map_server_id = "caramelo";
 std::string map_server_pw = "";
-std::string map_server_db = "ragnarok";
+std::string map_server_db = "rathena";
 Sql* mmysql_handle;
 Sql* qsmysql_handle; /// For query_sql
 
@@ -96,9 +96,9 @@ char guild_storage_log_table[32] = "guild_storage_log";
 // log database
 std::string log_db_ip = "127.0.0.1";
 uint16 log_db_port = 3306;
-std::string log_db_id = "ragnarok";
+std::string log_db_id = "caramelo";
 std::string log_db_pw = "";
-std::string log_db_db = "log";
+std::string log_db_db = "rathena_log";
 Sql* logmysql_handle;
 
 // inter config
@@ -3985,6 +3985,18 @@ int32 parse_console(const char* buf){
 	return 0;
 }
 
+std::string env(char *var)
+{
+	ShowInfo("Getting %s", var);
+	const char *r = std::getenv(var);
+	if (!r)
+	{
+		ShowError("Failed to get env var %s", var);
+		return std::string();
+	}
+	return std::string(r);
+}
+
 /*==========================================
  * Read map server configuration files (conf/map_athena.conf...)
  *------------------------------------------*/
@@ -4208,16 +4220,16 @@ int32 inter_config_read(const char *cfgName)
 		else
 		//Map Server SQL DB
 		if(strcmpi(w1,"map_server_ip")==0)
-			map_server_ip = w2;
+			map_server_ip = env(w2);
 		else
 		if(strcmpi(w1,"map_server_port")==0)
 			map_server_port=atoi(w2);
 		else
 		if(strcmpi(w1,"map_server_id")==0)
-			map_server_id = w2;
+			map_server_id = env(w2);
 		else
 		if(strcmpi(w1,"map_server_pw")==0)
-			map_server_pw = w2;
+			map_server_pw = env(w2);
 		else
 		if(strcmpi(w1,"map_server_db")==0)
 			map_server_db = w2;
@@ -4230,13 +4242,13 @@ int32 inter_config_read(const char *cfgName)
 			ShowStatus ("Using SQL dbs: %s\n",w2);
 		} else
 		if(strcmpi(w1,"log_db_ip")==0)
-			log_db_ip = w2;
+			log_db_ip = env(w2);
 		else
 		if(strcmpi(w1,"log_db_id")==0)
-			log_db_id = w2;
+			log_db_id = env(w2);
 		else
 		if(strcmpi(w1,"log_db_pw")==0)
-			log_db_pw = w2;
+			log_db_pw = env(w2);
 		else
 		if(strcmpi(w1,"log_db_port")==0)
 			log_db_port = (uint16)strtoul( w2, nullptr, 10 );

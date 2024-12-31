@@ -1,5 +1,5 @@
-login_server_ip: db
+login_server_ip: RATHENA_HOST
 ipban_db_ip: db
-char_server_ip: db
-map_server_ip: db
-log_db_ip: db
+char_server_ip: RATHENA_HOST
+map_server_ip: RATHENA_HOST
+log_db_ip: RATHENA_HOST
