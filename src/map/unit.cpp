@@ -797,13 +797,14 @@ int32 unit_walktoxy( struct block_list *bl, short x, short y, unsigned char flag
 		return 1;
 	}
 
+	if( sc != nullptr && sc->getSCE( SC_KI_SUL_RAMPAGE ) != nullptr ){
+		status_change_end( bl, SC_KI_SUL_RAMPAGE );
+	}
+
 	TBL_PC *sd = BL_CAST(BL_PC, bl);
 
+	// Start timer to recall summon
 	if( sd != nullptr ){
-		if (sc && sc->getSCE(SC_KI_SUL_RAMPAGE))
-			status_change_end(bl, SC_KI_SUL_RAMPAGE);
-
-		// Start timer to recall summon
 		if (sd->md != nullptr)
 			unit_check_start_teleport_timer(&sd->md->bl);
 		if (sd->ed != nullptr)
