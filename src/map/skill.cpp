@@ -13169,18 +13169,31 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		break;
 
 	case SH_KI_SUL_RAMPAGE:
-		if( flag&1 ){
+		if( flag&2 ){
 			if( src == bl ){
 				break;
 			}
 
 			int64 ap = 3;
 
-			if( pc_checkskill( sd, SH_COMMUNE_WITH_KI_SUL ) > 0 || ( sc != nullptr && sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ) ){
+			if( flag&4 ){
 				ap += 3;
 			}
 
 			status_heal( bl, 0, 0, ap, 0 );
+		}else if( flag&1 ){
+			int32 range = skill_get_splash( SH_KI_SUL_RAMPAGE, skill_lv );
+			uint16 skill_lv2 = skill_lv;
+
+			if( pc_checkskill( sd, SH_COMMUNE_WITH_KI_SUL ) > 0 || ( sc != nullptr && sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ) ){
+				range += 2;
+				skill_lv2 = skill_get_max( SH_KI_SUL_RAMPAGE );
+				// Set a flag for AP increase
+				flag |= 4;
+			}
+
+			clif_skill_nodamage( bl, *bl, SH_KI_SUL_RAMPAGE, skill_lv2, 1 );
+			map_foreachinrange( skill_area_sub, bl, range, BL_CHAR, bl, SH_KI_SUL_RAMPAGE, skill_lv2, tick, flag|BCT_PARTY|SD_SPLASH|2, skill_castend_nodamage_id );
 		}else{
 			sc_start( src, bl, type, 100, skill_lv, skill_get_time( skill_id, skill_lv ) );
 		}

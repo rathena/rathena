@@ -6856,8 +6856,9 @@ static unsigned short status_calc_pow(struct block_list *bl, status_change *sc, 
 
 	if (sc->getSCE(SC_BENEDICTUM))
 		pow += sc->getSCE(SC_BENEDICTUM)->val2;
-	if (sc->getSCE(SC_MARINE_FESTIVAL))
+	if( sc->getSCE( SC_MARINE_FESTIVAL ) != nullptr ){
 		pow += sc->getSCE(SC_MARINE_FESTIVAL)->val2;
+	}
 
 	return (unsigned short)cap_value(pow, 0, USHRT_MAX);
 }
@@ -6876,8 +6877,9 @@ static unsigned short status_calc_sta(struct block_list *bl, status_change *sc, 
 
 	if (sc->getSCE(SC_RELIGIO))
 		sta += sc->getSCE(SC_RELIGIO)->val2;
-	if (sc->getSCE(SC_SANDY_FESTIVAL))
+	if( sc->getSCE( SC_SANDY_FESTIVAL ) != nullptr ){
 		sta += sc->getSCE(SC_SANDY_FESTIVAL)->val2;
+	}
 
 	return (unsigned short)cap_value(sta, 0, USHRT_MAX);
 }
@@ -6896,8 +6898,9 @@ static unsigned short status_calc_wis(struct block_list *bl, status_change *sc, 
 
 	if (sc->getSCE(SC_RELIGIO))
 		wis += sc->getSCE(SC_RELIGIO)->val2;
-	if (sc->getSCE(SC_SANDY_FESTIVAL))
+	if( sc->getSCE( SC_SANDY_FESTIVAL ) != nullptr ){
 		wis += sc->getSCE(SC_SANDY_FESTIVAL)->val2;
+	}
 
 	return (unsigned short)cap_value(wis, 0, USHRT_MAX);
 }
@@ -6916,8 +6919,9 @@ static unsigned short status_calc_spl(struct block_list *bl, status_change *sc, 
 
 	if (sc->getSCE(SC_RELIGIO))
 		spl += sc->getSCE(SC_RELIGIO)->val2;
-	if (sc->getSCE(SC_SANDY_FESTIVAL))
+	if( sc->getSCE( SC_SANDY_FESTIVAL ) != nullptr ){
 		spl += sc->getSCE(SC_SANDY_FESTIVAL)->val2;
+	}
 
 	return (unsigned short)cap_value(spl, 0, USHRT_MAX);
 }
@@ -6936,8 +6940,9 @@ static unsigned short status_calc_con(struct block_list *bl, status_change *sc, 
 
 	if (sc->getSCE(SC_BENEDICTUM))
 		con += sc->getSCE(SC_BENEDICTUM)->val2;
-	if (sc->getSCE(SC_MARINE_FESTIVAL))
+	if( sc->getSCE( SC_MARINE_FESTIVAL ) != nullptr ){
 		con += sc->getSCE(SC_MARINE_FESTIVAL)->val2;
+	}
 
 	return (unsigned short)cap_value(con, 0, USHRT_MAX);
 }
@@ -6956,8 +6961,9 @@ static unsigned short status_calc_crt(struct block_list *bl, status_change *sc, 
 
 	if (sc->getSCE(SC_BENEDICTUM))
 		crt += sc->getSCE(SC_BENEDICTUM)->val2;
-	if (sc->getSCE(SC_MARINE_FESTIVAL))
+	if( sc->getSCE( SC_MARINE_FESTIVAL ) != nullptr ){
 		crt += sc->getSCE(SC_MARINE_FESTIVAL)->val2;
+	}
 
 	return (unsigned short)cap_value(crt, 0, USHRT_MAX);
 }
@@ -8275,10 +8281,14 @@ static signed short status_calc_patk(struct block_list *bl, status_change *sc, i
 		patk += sc->getSCE(SC_HIDDEN_CARD)->val2;
 	if (sc->getSCE(SC_TALISMAN_OF_WARRIOR) != nullptr)
 		patk += sc->getSCE(SC_TALISMAN_OF_WARRIOR)->val2;
-	if (sc->getSCE(SC_TEMPORARY_COMMUNION))
+
+	if( sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ){
 		patk += sc->getSCE(SC_TEMPORARY_COMMUNION)->val2;
-	if (sc->getSCE(SC_BLESSING_OF_M_CREATURES))
+	}
+
+	if( sc->getSCE( SC_BLESSING_OF_M_CREATURES ) != nullptr ){
 		patk += sc->getSCE(SC_BLESSING_OF_M_CREATURES)->val2;
+	}
 
 	return (short)cap_value(patk, 0, SHRT_MAX);
 }
@@ -8382,8 +8392,9 @@ static signed short status_calc_hplus(struct block_list *bl, status_change *sc, 
 	if (sc == nullptr || sc->empty())
 		return cap_value(hplus, 0, SHRT_MAX);
 
-	if (sc->getSCE(SC_TEMPORARY_COMMUNION))
+	if( sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ){
 		hplus += sc->getSCE(SC_TEMPORARY_COMMUNION)->val2;
+	}
 
 	return (short)cap_value(hplus, 0, SHRT_MAX);
 }
@@ -13683,22 +13694,6 @@ TIMER_FUNC(status_change_timer){
 	};
 	
 	switch(type) {
-	case SC_KI_SUL_RAMPAGE:
-		if (sce->val4-- > 0) {
-			int i = skill_get_splash(SH_KI_SUL_RAMPAGE, sce->val1);
-			int lv = sce->val1;
-			if ((sd && pc_checkskill(sd, SH_COMMUNE_WITH_KI_SUL)) || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION)))
-			{
-				i += 2;
-				lv += skill_get_max(SH_KI_SUL_RAMPAGE);
-			}
-			clif_skill_nodamage(bl, *bl, SH_KI_SUL_RAMPAGE, lv, 1);
-			map_foreachinrange(skill_area_sub, bl, i, BL_CHAR,
-				bl, SH_KI_SUL_RAMPAGE, lv, tick, BCT_PARTY | SD_SPLASH | 1, skill_castend_nodamage_id);
-			sc_timer_next(1000 + tick);
-			return 0;
-		}
-		break;
 	case SC_MAXIMIZEPOWER:
 	case SC_CLOAKING:
 		if(!status_charge(bl, 0, 1))
@@ -14689,6 +14684,14 @@ TIMER_FUNC(status_change_timer){
 			status_heal( bl, hp, 0, 0, 0 );
 			clif_skill_nodamage( nullptr, *bl, AL_HEAL, hp );
 			sc_timer_next(3000 + tick);
+			return 0;
+		}
+		break;
+
+	case SC_KI_SUL_RAMPAGE:
+		if (sce->val4-- > 0) {
+			skill_castend_nodamage_id( bl, bl, SH_KI_SUL_RAMPAGE, sce->val1, tick, 1 );
+			sc_timer_next(1000 + tick);
 			return 0;
 		}
 		break;
