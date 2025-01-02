@@ -14979,14 +14979,7 @@ TIMER_FUNC(status_change_timer){
 		return 0;
 	case SC_KI_SUL_RAMPAGE:
 		if (--(sce->val4) >= 0) {
-			int i = skill_get_splash(SH_KI_SUL_RAMPAGE, sce->val1);
-			int lv = sce->val1;
-			if (pc_checkskill(sd, SH_COMMUNE_WITH_KI_SUL) > 0 || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION))) {
-				i += 2;
-				lv += skill_get_max(SH_KI_SUL_RAMPAGE);
-			}
-			clif_skill_nodamage(bl, bl, SH_KI_SUL_RAMPAGE, lv, 1);
-			map_foreachinrange(skill_area_sub, bl, i, BL_CHAR, bl, SH_KI_SUL_RAMPAGE, lv, tick, BCT_PARTY | 1, skill_castend_nodamage_id);
+			skill_castend_nodamage_id( bl, bl, SH_KI_SUL_RAMPAGE, sce->val1, tick, 1 );
 			sc_timer_next(1000 + tick);
 			return 0;
 		}
