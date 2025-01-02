@@ -6937,7 +6937,7 @@ static unsigned short status_calc_pow(struct block_list *bl, status_change *sc, 
 
 	if (sc->getSCE(SC_BENEDICTUM))
 		pow += sc->getSCE(SC_BENEDICTUM)->val2;
-	if (sc->getSCE(SC_MARINE_FESTIVAL))
+	if (sc->getSCE(SC_MARINE_FESTIVAL) != nullptr)
 		pow += sc->getSCE(SC_MARINE_FESTIVAL)->val2;
 
 	return (unsigned short)cap_value(pow, 0, USHRT_MAX);
@@ -6957,7 +6957,7 @@ static unsigned short status_calc_sta(struct block_list *bl, status_change *sc, 
 
 	if (sc->getSCE(SC_RELIGIO))
 		sta += sc->getSCE(SC_RELIGIO)->val2;
-	if (sc->getSCE(SC_SANDY_FESTIVAL))
+	if (sc->getSCE(SC_SANDY_FESTIVAL) != nullptr)
 		sta += sc->getSCE(SC_SANDY_FESTIVAL)->val2;
 
 	return (unsigned short)cap_value(sta, 0, USHRT_MAX);
@@ -6977,7 +6977,7 @@ static unsigned short status_calc_wis(struct block_list *bl, status_change *sc, 
 
 	if (sc->getSCE(SC_RELIGIO))
 		wis += sc->getSCE(SC_RELIGIO)->val2;
-	if (sc->getSCE(SC_SANDY_FESTIVAL))
+	if (sc->getSCE(SC_SANDY_FESTIVAL) != nullptr)
 		wis += sc->getSCE(SC_SANDY_FESTIVAL)->val2;
 
 	return (unsigned short)cap_value(wis, 0, USHRT_MAX);
@@ -6997,7 +6997,7 @@ static unsigned short status_calc_spl(struct block_list *bl, status_change *sc, 
 
 	if (sc->getSCE(SC_RELIGIO))
 		spl += sc->getSCE(SC_RELIGIO)->val2;
-	if (sc->getSCE(SC_SANDY_FESTIVAL))
+	if (sc->getSCE(SC_SANDY_FESTIVAL) != nullptr)
 		spl += sc->getSCE(SC_SANDY_FESTIVAL)->val2;
 
 	return (unsigned short)cap_value(spl, 0, USHRT_MAX);
@@ -7017,7 +7017,7 @@ static unsigned short status_calc_con(struct block_list *bl, status_change *sc, 
 
 	if (sc->getSCE(SC_BENEDICTUM))
 		con += sc->getSCE(SC_BENEDICTUM)->val2;
-	if (sc->getSCE(SC_MARINE_FESTIVAL))
+	if (sc->getSCE(SC_MARINE_FESTIVAL) != nullptr)
 		con += sc->getSCE(SC_MARINE_FESTIVAL)->val2;
 
 	return (unsigned short)cap_value(con, 0, USHRT_MAX);
@@ -7037,7 +7037,7 @@ static unsigned short status_calc_crt(struct block_list *bl, status_change *sc, 
 
 	if (sc->getSCE(SC_BENEDICTUM))
 		crt += sc->getSCE(SC_BENEDICTUM)->val2;
-	if (sc->getSCE(SC_MARINE_FESTIVAL))
+	if (sc->getSCE(SC_MARINE_FESTIVAL) != nullptr)
 		crt += sc->getSCE(SC_MARINE_FESTIVAL)->val2;
 
 	return (unsigned short)cap_value(crt, 0, USHRT_MAX);
@@ -8559,9 +8559,9 @@ static signed short status_calc_patk(struct block_list *bl, status_change *sc, i
 	}
 	if (sc->getSCE(SC_HIDDEN_CARD))
 		patk += sc->getSCE(SC_HIDDEN_CARD)->val2;
-	if (sc->getSCE(SC_TEMPORARY_COMMUNION))
+	if (sc->getSCE(SC_TEMPORARY_COMMUNION) != nullptr)
 		patk += sc->getSCE(SC_TEMPORARY_COMMUNION)->val2;
-	if (sc->getSCE(SC_BLESSING_OF_M_CREATURES))
+	if (sc->getSCE(SC_BLESSING_OF_M_CREATURES) != nullptr)
 		patk += sc->getSCE(SC_BLESSING_OF_M_CREATURES)->val2;
 
 	return (short)cap_value(patk, 0, SHRT_MAX);
@@ -8590,9 +8590,9 @@ static signed short status_calc_smatk(struct block_list *bl, status_change *sc, 
 	if( sc->getSCE( SC_ATTACK_STANCE ) ){
 		smatk += sc->getSCE( SC_ATTACK_STANCE )->val3;
 	}
-	if (sc->getSCE(SC_TEMPORARY_COMMUNION))
+	if (sc->getSCE(SC_TEMPORARY_COMMUNION) != nullptr)
 		smatk += sc->getSCE(SC_TEMPORARY_COMMUNION)->val2;
-	if (sc->getSCE(SC_BLESSING_OF_M_CREATURES))
+	if (sc->getSCE(SC_BLESSING_OF_M_CREATURES) != nullptr)
 		smatk += sc->getSCE(SC_BLESSING_OF_M_CREATURES)->val2;
 
 	return (short)cap_value(smatk, 0, SHRT_MAX);
@@ -8662,7 +8662,7 @@ static signed short status_calc_hplus(struct block_list *bl, status_change *sc, 
 	if (!sc || !sc->count)
 		return cap_value(hplus, 0, SHRT_MAX);
 
-	if (sc->getSCE(SC_TEMPORARY_COMMUNION))
+	if (sc->getSCE(SC_TEMPORARY_COMMUNION) != nullptr)
 		hplus += sc->getSCE(SC_TEMPORARY_COMMUNION)->val2;
 
 	return (short)cap_value(hplus, 0, SHRT_MAX);
