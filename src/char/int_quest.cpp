@@ -26,39 +26,31 @@
 struct quest *mapif_quests_fromsql( uint32 char_id, size_t& count ){
 	struct quest *questlog = nullptr;
 	struct quest tmp_quest;
-	SqlStmt *stmt;
-
-	stmt = SqlStmt_Malloc(sql_handle);
-	if( stmt == nullptr ) {
-		SqlStmt_ShowDebug(stmt);
-		count = 0;
-		return nullptr;
-	}
+	SqlStmt stmt{ *sql_handle };
 
 	memset(&tmp_quest, 0, sizeof(struct quest));
 
-	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `quest_id`, `state`, `time`, `count1`, `count2`, `count3` FROM `%s` WHERE `char_id`=? ", schema_config.quest_db)
-	||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
-	||	SQL_ERROR == SqlStmt_Execute(stmt)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_INT,  &tmp_quest.quest_id, 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_INT,  &tmp_quest.state,    0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 2, SQLDT_UINT, &tmp_quest.time,     0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 3, SQLDT_INT,  &tmp_quest.count[0], 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 4, SQLDT_INT,  &tmp_quest.count[1], 0, nullptr, nullptr)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 5, SQLDT_INT,  &tmp_quest.count[2], 0, nullptr, nullptr)
+	if( SQL_ERROR == stmt.Prepare("SELECT `quest_id`, `state`, `time`, `count1`, `count2`, `count3` FROM `%s` WHERE `char_id`=? ", schema_config.quest_db)
+	||	SQL_ERROR == stmt.BindParam(0, SQLDT_INT, &char_id, 0)
+	||	SQL_ERROR == stmt.Execute()
+	||	SQL_ERROR == stmt.BindColumn(0, SQLDT_INT,  &tmp_quest.quest_id, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(1, SQLDT_INT,  &tmp_quest.state,    0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(2, SQLDT_UINT, &tmp_quest.time,     0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(3, SQLDT_INT,  &tmp_quest.count[0], 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(4, SQLDT_INT,  &tmp_quest.count[1], 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(5, SQLDT_INT,  &tmp_quest.count[2], 0, nullptr, nullptr)
 	) {
 		SqlStmt_ShowDebug(stmt);
-		SqlStmt_Free(stmt);
 		count = 0;
 		return nullptr;
 	}
 
-	count = static_cast<std::remove_reference<decltype(count)>::type>( SqlStmt_NumRows( stmt ) );
+	count = static_cast<std::remove_reference<decltype(count)>::type>( stmt.NumRows() );
 	if( count > 0 ) {
 		size_t i = 0;
 
 		questlog = (struct quest *)aCalloc( count, sizeof( struct quest ) );
-		while( SQL_SUCCESS == SqlStmt_NextRow(stmt) ) {
+		while( SQL_SUCCESS == stmt.NextRow() ) {
 			// Sanity check, should never happen
 			if( i >= count ){
 				break;
@@ -74,7 +66,6 @@ struct quest *mapif_quests_fromsql( uint32 char_id, size_t& count ){
 		}
 	}
 
-	SqlStmt_Free(stmt);
 	return questlog;
 }
 
@@ -85,7 +76,7 @@ struct quest *mapif_quests_fromsql( uint32 char_id, size_t& count ){
  * @param quest_id Quest ID
  * @return false in case of errors, true otherwise
  */
-bool mapif_quest_delete(uint32 char_id, int quest_id) {
+bool mapif_quest_delete(uint32 char_id, int32 quest_id) {
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `quest_id` = '%d' AND `char_id` = '%d'", schema_config.quest_db, quest_id, char_id) )
 	{
 		Sql_ShowDebug(sql_handle);
@@ -136,7 +127,7 @@ bool mapif_quest_update(uint32 char_id, struct quest qd) {
  *
  * @see inter_parse_frommap
  */
-int mapif_parse_quest_save(int fd) {
+int32 mapif_parse_quest_save(int32 fd) {
 	uint32 char_id = RFIFOL(fd,4);
 	struct quest *old_qd = nullptr, *new_qd = nullptr;
 	bool success = true;
@@ -193,7 +184,7 @@ int mapif_parse_quest_save(int fd) {
  *
  * @see inter_parse_frommap
  */
-int mapif_parse_quest_load(int fd) {
+int32 mapif_parse_quest_load(int32 fd) {
 	uint32 char_id = RFIFOL(fd,2);
 	size_t num_quests;
 	struct quest* tmp_questlog = mapif_quests_fromsql( char_id, num_quests );
@@ -219,7 +210,7 @@ int mapif_parse_quest_load(int fd) {
  *
  * @see inter_parse_frommap
  */
-int inter_quest_parse_frommap(int fd) {
+int32 inter_quest_parse_frommap(int32 fd) {
 	switch(RFIFOW(fd,0)) {
 		case 0x3060: mapif_parse_quest_load(fd); break;
 		case 0x3061: mapif_parse_quest_save(fd); break;

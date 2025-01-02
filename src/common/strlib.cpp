@@ -11,10 +11,10 @@
 #include "showmsg.hpp"
 
 // Function to suppress control characters in a string.
-int remove_control_chars(char* str)
+int32 remove_control_chars(char* str)
 {
-	int i;
-	int change = 0;
+	int32 i;
+	int32 change = 0;
 
 	for(i = 0; str[i]; i++) {
 		if (ISCNTRL(str[i])) {
@@ -60,7 +60,7 @@ char* normalize_name(char* str,const char* delims)
 {
 	char* in = str;
 	char* out = str;
-	int put_space = 0;
+	int32 put_space = 0;
 
 	if( str == nullptr || delims == nullptr )
 		return str;
@@ -154,11 +154,11 @@ size_t strnlen (const char* string, size_t maxlen)
 #endif
 
 #if defined(WIN32) && defined(_MSC_VER) && _MSC_VER <= 1200
-uint64 strtoull(const char* str, char** endptr, int base)
+uint64 strtoull(const char* str, char** endptr, int32 base)
 {
 	uint64 result;
-	int count;
-	int n;
+	int32 count;
+	int32 n;
 
 	if( base == 0 )
 	{
@@ -199,7 +199,7 @@ uint64 strtoull(const char* str, char** endptr, int base)
 //----------------------------------------------------
 // E-mail check: return 0 (not correct) or 1 (valid).
 //----------------------------------------------------
-int e_mail_check(char* email)
+int32 e_mail_check(char* email)
 {
 	char ch;
 	char* last_arobas;
@@ -236,14 +236,14 @@ int e_mail_check(char* email)
 // Return numerical value of a switch configuration
 // on/off, english, fran�ais, deutsch, espa�ol, portuguese
 //--------------------------------------------------
-int config_switch(const char* str)
+int32 config_switch(const char* str)
 {
 	if (strcmpi(str, "on") == 0 || strcmpi(str, "yes") == 0 || strcmpi(str, "oui") == 0 || strcmpi(str, "ja") == 0 || strcmpi(str, "si") == 0 || strcmpi(str, "sim") == 0)
 		return 1;
 	if (strcmpi(str, "off") == 0 || strcmpi(str, "no") == 0 || strcmpi(str, "non") == 0 || strcmpi(str, "nein") == 0 || strcmpi(str, "nao") == 0)
 		return 0;
 
-	return (int)strtol(str, nullptr, 0);
+	return (int32)strtol(str, nullptr, 0);
 }
 
 /// strncpy that always nul-terminates the string
@@ -282,10 +282,10 @@ size_t safestrnlen(const char* string, size_t maxlen)
 /// @param fmt Format string
 /// @param ... Format arguments
 /// @return The size of the string or -1 if the buffer is too small
-int safesnprintf(char* buf, size_t sz, const char* fmt, ...)
+int32 safesnprintf(char* buf, size_t sz, const char* fmt, ...)
 {
 	va_list ap;
-	int ret;
+	int32 ret;
 
 	va_start(ap,fmt);
 	ret = vsnprintf(buf, sz, fmt, ap);
@@ -300,10 +300,10 @@ int safesnprintf(char* buf, size_t sz, const char* fmt, ...)
 
 /// Returns the line of the target position in the string.
 /// Lines start at 1.
-int strline(const char* str, size_t pos)
+int32 strline(const char* str, size_t pos)
 {
 	const char* target;
-	int line;
+	int32 line;
 
 	if( str == nullptr || pos == 0 )
 		return 1;
@@ -349,7 +349,7 @@ bool bin2hex(char* output, unsigned char* input, size_t count)
 ///
 /// @param sv Parse state
 /// @return 1 if a field was parsed, 0 if already done, -1 on error.
-int sv_parse_next( s_svstate& sv ){
+int32 sv_parse_next( s_svstate& sv ){
 	enum {
 		START_OF_FIELD,
 		PARSING_FIELD,
@@ -361,7 +361,7 @@ int sv_parse_next( s_svstate& sv ){
 
 	const char* str = sv.str;
 	size_t len = sv.len;
-	int opt = sv.opt;
+	int32 opt = sv.opt;
 	char delim = sv.delim;
 
 	// check opt
@@ -512,7 +512,7 @@ int sv_parse_next( s_svstate& sv ){
 /// @param npos Size of the pos array
 /// @param opt Options that determine the parsing behaviour
 /// @return Number of fields found in the string or -1 if an error occured
-size_t sv_parse( const char* str, size_t len, size_t startoff, char delim, size_t* out_pos, size_t npos, int opt, bool& error ){
+size_t sv_parse( const char* str, size_t len, size_t startoff, char delim, size_t* out_pos, size_t npos, int32 opt, bool& error ){
 	// initialize
 	error = false;
 
@@ -583,7 +583,7 @@ size_t sv_parse( const char* str, size_t len, size_t startoff, char delim, size_
 /// @param nfields Size of the field array
 /// @param opt Options that determine the parsing behaviour
 /// @return Number of fields found in the string or -1 if an error occured
-size_t sv_split( char* str, size_t len, size_t startoff, char delim, char** out_fields, size_t nfields, int opt, bool& error ){
+size_t sv_split( char* str, size_t len, size_t startoff, char delim, char** out_fields, size_t nfields, int32 opt, bool& error ){
 	if( out_fields == nullptr || nfields <= 0 ){
 		return 0; // nothing to do
 	}
@@ -886,7 +886,7 @@ const char* skip_escaped_c(const char* p)
  */
 bool sv_readdb( const char* directory, const char* filename, char delim, size_t mincols, size_t maxcols, size_t maxrows, bool (*parseproc)( char* fields[], size_t columns, size_t current ), bool silent ){
 	FILE* fp;
-	int lines = 0;
+	int32 lines = 0;
 	size_t entries = 0;
 	char** fields; // buffer for fields ([0] is reserved)
 	char path[1024], *line;
@@ -974,7 +974,7 @@ bool sv_readdb( const char* directory, const char* filename, char delim, size_t 
 // @author MouseJstr (original)
 
 /// Allocates a StringBuf
-StringBuf* _StringBuf_Malloc(const char *file, int line, const char *func)
+StringBuf* _StringBuf_Malloc(const char *file, int32 line, const char *func)
 {
 	StringBuf* self;
 	self = (StringBuf *)aCalloc2(1, sizeof(StringBuf), file, line, func);
@@ -983,14 +983,14 @@ StringBuf* _StringBuf_Malloc(const char *file, int line, const char *func)
 }
 
 /// Initializes a previously allocated StringBuf
-void _StringBuf_Init(const char *file, int line, const char *func,StringBuf* self)
+void _StringBuf_Init(const char *file, int32 line, const char *func,StringBuf* self)
 {
 	self->max_ = 1024;
 	self->ptr_ = self->buf_ = (char*)aMalloc2(self->max_ + 1, file, line, func);
 }
 
 /// Appends the result of printf to the StringBuf
-size_t _StringBuf_Printf( const char* file, int line, const char* func, StringBuf* self, const char* fmt, ... ){
+size_t _StringBuf_Printf( const char* file, int32 line, const char* func, StringBuf* self, const char* fmt, ... ){
 	va_list ap;
 
 	va_start(ap, fmt);
@@ -1001,14 +1001,14 @@ size_t _StringBuf_Printf( const char* file, int line, const char* func, StringBu
 }
 
 /// Appends the result of vprintf to the StringBuf
-size_t _StringBuf_Vprintf( const char* file, int line, const char* func, StringBuf* self, const char* fmt, va_list ap ){
+size_t _StringBuf_Vprintf( const char* file, int32 line, const char* func, StringBuf* self, const char* fmt, va_list ap ){
 	for(;;)
 	{
 		va_list apcopy;
 		/* Try to print in the allocated space. */
 		size_t size = self->max_ - (self->ptr_ - self->buf_);
 		va_copy(apcopy, ap);
-		int n = vsnprintf( self->ptr_, size, fmt, apcopy );
+		int32 n = vsnprintf( self->ptr_, size, fmt, apcopy );
 		va_end(apcopy);
 		/* If that worked, return the length. */
 		if( n > -1 && static_cast<size_t>(n) < size )
@@ -1025,7 +1025,7 @@ size_t _StringBuf_Vprintf( const char* file, int line, const char* func, StringB
 }
 
 /// Appends the contents of another StringBuf to the StringBuf
-size_t _StringBuf_Append(const char *file, int line, const char *func,StringBuf* self, const StringBuf* sbuf)
+size_t _StringBuf_Append(const char *file, int32 line, const char *func,StringBuf* self, const StringBuf* sbuf)
 {
 	size_t available = self->max_ - (self->ptr_ - self->buf_);
 	size_t needed = sbuf->ptr_ - sbuf->buf_;
@@ -1044,7 +1044,7 @@ size_t _StringBuf_Append(const char *file, int line, const char *func,StringBuf*
 }
 
 // Appends str to the StringBuf
-size_t _StringBuf_AppendStr(const char *file, int line, const char *func,StringBuf* self, const char* str)
+size_t _StringBuf_AppendStr(const char *file, int32 line, const char *func,StringBuf* self, const char* str)
 {
 	size_t available = self->max_ - ( self->ptr_ - self->buf_ );
 	size_t needed = strlen( str );
@@ -1063,9 +1063,9 @@ size_t _StringBuf_AppendStr(const char *file, int line, const char *func,StringB
 }
 
 // Returns the length of the data in the Stringbuf
-int StringBuf_Length(StringBuf* self)
+int32 StringBuf_Length(StringBuf* self)
 {
-	return (int)(self->ptr_ - self->buf_);
+	return (int32)(self->ptr_ - self->buf_);
 }
 
 /// Returns the data in the StringBuf

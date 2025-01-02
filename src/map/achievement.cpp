@@ -439,9 +439,9 @@ AchievementLevelDatabase achievement_level_db;
  * @param achievement_id: Achievement to add
  * @return nullptr on failure, achievement data on success
  */
-struct achievement *achievement_add(map_session_data *sd, int achievement_id)
+struct achievement *achievement_add(map_session_data *sd, int32 achievement_id)
 {
-	int i, index;
+	int32 i, index;
 
 	nullpo_retr(nullptr, sd);
 
@@ -485,10 +485,10 @@ struct achievement *achievement_add(map_session_data *sd, int achievement_id)
  * @param achievement_id: Achievement to remove
  * @return True on success, false on failure
  */
-bool achievement_remove(map_session_data *sd, int achievement_id)
+bool achievement_remove(map_session_data *sd, int32 achievement_id)
 {
 	struct achievement dummy;
-	int i;
+	int32 i;
 
 	nullpo_retr(false, sd);
 
@@ -532,8 +532,8 @@ bool achievement_remove(map_session_data *sd, int achievement_id)
  * @param achievement_id: Achievement to check if it's complete
  * @return True on completed, false if not
  */
-static bool achievement_done(map_session_data *sd, int achievement_id) {
-	for (int i = 0; i < sd->achievement_data.count; i++) {
+static bool achievement_done(map_session_data *sd, int32 achievement_id) {
+	for (int32 i = 0; i < sd->achievement_data.count; i++) {
 		if (sd->achievement_data.achievements[i].achievement_id == achievement_id && sd->achievement_data.achievements[i].completed > 0)
 			return true;
 	}
@@ -547,7 +547,7 @@ static bool achievement_done(map_session_data *sd, int achievement_id) {
  * @param achievement_id: Achievement to check if it has a dependent
  * @return False on failure or not complete, true on complete or no dependents
  */
-bool achievement_check_dependent(map_session_data *sd, int achievement_id)
+bool achievement_check_dependent(map_session_data *sd, int32 achievement_id)
 {
 	nullpo_retr(false, sd);
 
@@ -573,9 +573,9 @@ bool achievement_check_dependent(map_session_data *sd, int achievement_id)
  * @param sd: Achievement to compare for completed dependents
  * @return True if successful, false if not
  */
-static int achievement_check_groups(map_session_data *sd, struct s_achievement_db *ad)
+static int32 achievement_check_groups(map_session_data *sd, struct s_achievement_db *ad)
 {
-	int i;
+	int32 i;
 
 	if (ad == nullptr || sd == nullptr)
 		return 0;
@@ -604,9 +604,9 @@ static int achievement_check_groups(map_session_data *sd, struct s_achievement_d
  * @param complete: Complete state of an achievement
  * @return True if successful, false if not
  */
-bool achievement_update_achievement(map_session_data *sd, int achievement_id, bool complete)
+bool achievement_update_achievement(map_session_data *sd, int32 achievement_id, bool complete)
 {
-	int i;
+	int32 i;
 
 	nullpo_retr(false, sd);
 
@@ -658,9 +658,9 @@ bool achievement_update_achievement(map_session_data *sd, int achievement_id, bo
  * @param sd: Player getting the reward
  * @param achievement_id: Achievement to get reward data
  */
-void achievement_get_reward(map_session_data *sd, int achievement_id, time_t rewarded)
+void achievement_get_reward(map_session_data *sd, int32 achievement_id, time_t rewarded)
 {
-	int i;
+	int32 i;
 
 	nullpo_retv(sd);
 
@@ -699,9 +699,9 @@ void achievement_get_reward(map_session_data *sd, int achievement_id, time_t rew
  * @param sd: Player to get reward
  * @param achievement_id: Achievement to get reward data
  */
-void achievement_check_reward(map_session_data *sd, int achievement_id)
+void achievement_check_reward(map_session_data *sd, int32 achievement_id)
 {
-	int i;
+	int32 i;
 
 	nullpo_retv(sd);
 
@@ -741,7 +741,7 @@ void achievement_get_titles(uint32 char_id)
 		sd->titles.clear();
 
 		if (sd->achievement_data.count) {
-			for (int i = 0; i < sd->achievement_data.count; i++) {
+			for (int32 i = 0; i < sd->achievement_data.count; i++) {
 				std::shared_ptr<s_achievement_db> adb = achievement_db.find( sd->achievement_data.achievements[i].achievement_id );
 
 				// If the achievement has a title and is complete, give it to the player
@@ -775,9 +775,9 @@ void achievement_free(map_session_data *sd)
  * @param type: Type to return
  * @return The type's data, -1 if player doesn't have achievement, -2 on failure/incorrect type
  */
-int achievement_check_progress(map_session_data *sd, int achievement_id, int type)
+int32 achievement_check_progress(map_session_data *sd, int32 achievement_id, int32 type)
 {
-	int i;
+	int32 i;
 
 	nullpo_retr(-2, sd);
 
@@ -796,7 +796,7 @@ int achievement_check_progress(map_session_data *sd, int achievement_id, int typ
 	else if (type == ACHIEVEINFO_COMPLETE)
 		return sd->achievement_data.achievements[i].completed > 0;
 	else if (type == ACHIEVEINFO_COMPLETEDATE)
-		return (int)sd->achievement_data.achievements[i].completed;
+		return (int32)sd->achievement_data.achievements[i].completed;
 	else if (type == ACHIEVEINFO_GOTREWARD)
 		return sd->achievement_data.achievements[i].rewarded > 0;
 	return -2;
@@ -808,18 +808,18 @@ int achievement_check_progress(map_session_data *sd, int achievement_id, int typ
  * @param flag: If the call should attempt to give the AG_GOAL_ACHIEVE achievement
  * @return Rollover and TNL EXP or 0 on failure
  */
-int *achievement_level(map_session_data *sd, bool flag)
+int32 *achievement_level(map_session_data *sd, bool flag)
 {
 	nullpo_retr(nullptr, sd);
 
 	sd->achievement_data.total_score = 0;
 
-	for (int i = 0; i < sd->achievement_data.count; i++) { // Recount total score
+	for (int32 i = 0; i < sd->achievement_data.count; i++) { // Recount total score
 		if (sd->achievement_data.achievements[i].completed > 0)
 			sd->achievement_data.total_score += sd->achievement_data.achievements[i].score;
 	}
 
-	int left_score, right_score, old_level = sd->achievement_data.level;
+	int32 left_score, right_score, old_level = sd->achievement_data.level;
 
 	for( sd->achievement_data.level = 0; /* Break condition's inside the loop */; sd->achievement_data.level++ ){
 		std::shared_ptr<s_achievement_level> level = achievement_level_db.find( sd->achievement_data.level );
@@ -860,7 +860,7 @@ int *achievement_level(map_session_data *sd, bool flag)
 		}
 	}
 
-	static int info[2];
+	static int32 info[2];
 
 	info[0] = left_score; // Left number
 	info[1] = right_score; // Right number
@@ -886,7 +886,7 @@ bool achievement_check_condition( struct script_code* condition, map_session_dat
 
 	struct script_state* st = sd->st;
 
-	int value = 0;
+	int32 value = 0;
 
 	if( st != nullptr ){
 		value = script_getnum( st, 2 );
@@ -912,7 +912,7 @@ bool achievement_check_condition( struct script_code* condition, map_session_dat
  * @param current_count: Current target data
  * @return True if all target values meet the requirements or false otherwise
  */
-static bool achievement_target_complete(std::shared_ptr<s_achievement_db> ad, std::array<int, MAX_ACHIEVEMENT_OBJECTIVES> current_count) {
+static bool achievement_target_complete(std::shared_ptr<s_achievement_db> ad, std::array<int32, MAX_ACHIEVEMENT_OBJECTIVES> current_count) {
 	return std::find_if(ad->targets.begin(), ad->targets.end(),
 		[current_count](const std::pair<uint16, std::shared_ptr<achievement_target>> &target) -> bool {
 		return current_count[target.first] < target.second->count;
@@ -927,7 +927,7 @@ static bool achievement_target_complete(std::shared_ptr<s_achievement_db> ad, st
  * @param update_count: Objective values from event
  * @return 1 on success and false on failure
  */
-static bool achievement_update_objectives(map_session_data *sd, std::shared_ptr<struct s_achievement_db> ad, enum e_achievement_group group, const std::array<int, MAX_ACHIEVEMENT_OBJECTIVES> &update_count)
+static bool achievement_update_objectives(map_session_data *sd, std::shared_ptr<struct s_achievement_db> ad, enum e_achievement_group group, const std::array<int32, MAX_ACHIEVEMENT_OBJECTIVES> &update_count)
 {
 	if (!ad || !sd)
 		return false;
@@ -940,8 +940,8 @@ static bool achievement_update_objectives(map_session_data *sd, std::shared_ptr<
 
 	struct achievement *entry = nullptr;
 	bool isNew = false, changed = false, complete = false;
-	std::array<int, MAX_ACHIEVEMENT_OBJECTIVES> current_count = {}; // Player's current objective values
-	int i;
+	std::array<int32, MAX_ACHIEVEMENT_OBJECTIVES> current_count = {}; // Player's current objective values
+	int32 i;
 
 	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == ad->achievement_id);
 	if (i == sd->achievement_data.count) { // Achievement isn't in player's log
@@ -1055,7 +1055,7 @@ static bool achievement_update_objectives(map_session_data *sd, std::shared_ptr<
 		// If it was not completed
 		if( !hasCounter ){
 			// Check if it has a counter
-			for( int counter : current_count ){
+			for( int32 counter : current_count ){
 				if( counter != 0 ){
 					hasCounter = true;
 					break;
@@ -1094,15 +1094,15 @@ void achievement_update_objective(map_session_data *sd, enum e_achievement_group
 
 	if (sd) {
 		va_list ap;
-		std::array<int, MAX_ACHIEVEMENT_OBJECTIVES> count = {};
+		std::array<int32, MAX_ACHIEVEMENT_OBJECTIVES> count = {};
 
 		va_start(ap, arg_count);
-		for (int i = 0; i < arg_count; i++){
+		for (int32 i = 0; i < arg_count; i++){
 			std::string name = "ARG" + std::to_string(i);
 
-			count[i] = va_arg(ap, int);
+			count[i] = va_arg(ap, int32);
 
-			pc_setglobalreg( sd, add_str( name.c_str() ), (int)count[i] );
+			pc_setglobalreg( sd, add_str( name.c_str() ), (int32)count[i] );
 		}
 		va_end(ap);
 
@@ -1110,7 +1110,7 @@ void achievement_update_objective(map_session_data *sd, enum e_achievement_group
 			achievement_update_objectives(sd, ach.second, group, count);
 
 		// Remove variables that might have been set
-		for (int i = 0; i < arg_count; i++){
+		for (int32 i = 0; i < arg_count; i++){
 			std::string name = "ARG" + std::to_string(i);
 
 			pc_setglobalreg( sd, add_str( name.c_str() ), 0 );
@@ -1122,19 +1122,19 @@ void achievement_update_objective(map_session_data *sd, enum e_achievement_group
  * Map iterator subroutine to update achievement objectives for a party after killing a monster.
  * @see map_foreachinrange
  * @param ap: Argument list, expecting:
- *   int Party ID
- *   int Mob ID
+ *   int32 Party ID
+ *   int32 Mob ID
  */
-int achievement_update_objective_sub(block_list *bl, va_list ap)
+int32 achievement_update_objective_sub(block_list *bl, va_list ap)
 {
 	map_session_data *sd;
-	int mob_id, party_id;
+	int32 mob_id, party_id;
 
 	nullpo_ret(bl);
 	nullpo_ret(sd = (map_session_data *)bl);
 
-	party_id = va_arg(ap, int);
-	mob_id = va_arg(ap, int);
+	party_id = va_arg(ap, int32);
+	mob_id = va_arg(ap, int32);
 
 	if (sd->achievement_data.achievements == nullptr)
 		return 0;
