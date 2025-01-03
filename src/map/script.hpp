@@ -144,6 +144,8 @@ enum e_labelType { LABEL_NEXTLINE = 1, LABEL_START };
 class map_session_data;
 struct eri;
 
+extern map_session_data* dummy_sd;
+
 extern int32 potion_flag; //For use on Alchemist improved potions/Potion Pitcher. [Skotlex]
 extern int32 potion_hp, potion_per_hp, potion_sp, potion_per_sp;
 extern int32 potion_target;
