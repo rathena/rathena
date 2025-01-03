@@ -74,7 +74,7 @@ uint32 active_scripts;
 uint32 next_id;
 struct eri *st_ers;
 struct eri *stack_ers;
-static map_session_data* dummy_sd;
+map_session_data* dummy_sd;
 
 static bool script_rid2sd_( struct script_state *st, map_session_data** sd, const char *func );
 
