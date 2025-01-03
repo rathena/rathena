@@ -114,49 +114,49 @@ bool mapif_homunculus_save(struct s_homunculus* hd)
 			Sql_ShowDebug(sql_handle);
 			return false;
 		}
-		else
-		{
-			SqlStmt stmt{ *sql_handle };
+	}
 
-			// Save skills
-			if (SQL_ERROR == stmt.Prepare("REPLACE INTO `%s` (`homun_id`, `id`, `lv`) VALUES (%d, ?, ?)", schema_config.skill_homunculus_db, hd->hom_id)) {
+	SqlStmt stmt{ *sql_handle };
+
+	// Save skills
+	if( SQL_ERROR == Sql_Query( sql_handle, "DELETE FROM `%s` WHERE `homun_id` = '%d'", schema_config.skill_homunculus_db, hd->hom_id )
+	 || SQL_ERROR == stmt.Prepare( "INSERT INTO `%s` (`homun_id`, `id`, `lv`) VALUES (%d, ?, ?)", schema_config.skill_homunculus_db, hd->hom_id ) ){
+		SqlStmt_ShowDebug(stmt);
+		return false;
+	}
+
+	for (uint16 i = 0; i < MAX_HOMUNSKILL; ++i) {
+		if (hd->hskill[i].id > 0 && hd->hskill[i].lv != 0) {
+			if (SQL_ERROR == stmt.BindParam(0, SQLDT_USHORT, &hd->hskill[i].id, 0)
+				|| SQL_ERROR == stmt.BindParam(1, SQLDT_USHORT, &hd->hskill[i].lv, 0)
+				|| SQL_ERROR == stmt.Execute()) {
 				SqlStmt_ShowDebug(stmt);
 				return false;
 			}
+		}
+	}
 
-			for (uint16 i = 0; i < MAX_HOMUNSKILL; ++i) {
-				if (hd->hskill[i].id > 0 && hd->hskill[i].lv != 0) {
-					if (SQL_ERROR == stmt.BindParam(0, SQLDT_USHORT, &hd->hskill[i].id, 0)
-						|| SQL_ERROR == stmt.BindParam(1, SQLDT_USHORT, &hd->hskill[i].lv, 0)
-						|| SQL_ERROR == stmt.Execute()) {
-						SqlStmt_ShowDebug(stmt);
-						return false;
-					}
-				}
-			}
+	// Save skill cooldowns
+	if( SQL_ERROR == Sql_Query( sql_handle, "DELETE FROM `%s` WHERE `homun_id` = '%d'", schema_config.skillcooldown_homunculus_db, hd->hom_id )
+	 || SQL_ERROR == stmt.Prepare( "INSERT INTO `%s` (`homun_id`, `skill`, `tick`) VALUES (%d, ?, ?)", schema_config.skillcooldown_homunculus_db, hd->hom_id ) ){
+		SqlStmt_ShowDebug(stmt);
+		return false;
+	}
 
-			// Save skill cooldowns
-			if (SQL_ERROR == stmt.Prepare("INSERT INTO `%s` (`homun_id`, `skill`, `tick`) VALUES (%d, ?, ?)", schema_config.skillcooldown_homunculus_db, hd->hom_id)) {
-				SqlStmt_ShowDebug(stmt);
-				return false;
-			}
+	for (uint16 i = 0; i < MAX_SKILLCOOLDOWN; ++i) {
+		if (hd->scd[i].skill_id == 0) {
+			continue;
+		}
 
-			for (uint16 i = 0; i < MAX_SKILLCOOLDOWN; ++i) {
-				if (hd->scd[i].skill_id == 0) {
-					continue;
-				}
+		if (hd->scd[i].tick == 0) {
+			continue;
+		}
 
-				if (hd->scd[i].tick == 0) {
-					continue;
-				}
-
-				if (SQL_ERROR == stmt.BindParam(0, SQLDT_USHORT, &hd->scd[i].skill_id, 0)
-					|| SQL_ERROR == stmt.BindParam(1, SQLDT_LONGLONG, &hd->scd[i].tick, 0)
-					|| SQL_ERROR == stmt.Execute()) {
-					SqlStmt_ShowDebug(stmt);
-					return false;
-				}
-			}
+		if (SQL_ERROR == stmt.BindParam(0, SQLDT_USHORT, &hd->scd[i].skill_id, 0)
+			|| SQL_ERROR == stmt.BindParam(1, SQLDT_LONGLONG, &hd->scd[i].tick, 0)
+			|| SQL_ERROR == stmt.Execute()) {
+			SqlStmt_ShowDebug(stmt);
+			return false;
 		}
 	}
 
@@ -273,12 +273,6 @@ bool mapif_homunculus_load(int32 homun_id, struct s_homunculus* hd)
 	}
 	Sql_FreeResult(sql_handle);
 
-	// Clear the data once loaded.
-	if (count > 0) {
-		if (SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `homun_id`='%d'", schema_config.skillcooldown_homunculus_db, homun_id))
-			Sql_ShowDebug(sql_handle);
-	}
-
 	if( charserv_config.save_log )
 		ShowInfo("Homunculus loaded (ID: %d - %s / Class: %d / CID: %d).\n", hd->hom_id, hd->name, hd->class_, hd->char_id);
 
@@ -287,10 +281,9 @@ bool mapif_homunculus_load(int32 homun_id, struct s_homunculus* hd)
 
 bool mapif_homunculus_delete(int32 homun_id)
 {
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `homun_id` = '%u'", schema_config.homunculus_db, homun_id)
-	||	SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `homun_id` = '%u'", schema_config.skill_homunculus_db, homun_id)
-	||	SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `homun_id` = '%u'", schema_config.skillcooldown_homunculus_db, homun_id)
-	) {
+	if( SQL_ERROR == Sql_Query( sql_handle, "DELETE FROM `%s` WHERE `homun_id` = '%u'", schema_config.skillcooldown_homunculus_db, homun_id )
+	 || SQL_ERROR == Sql_Query( sql_handle, "DELETE FROM `%s` WHERE `homun_id` = '%u'", schema_config.skill_homunculus_db, homun_id )
+	 || SQL_ERROR == Sql_Query( sql_handle, "DELETE FROM `%s` WHERE `homun_id` = '%u'", schema_config.homunculus_db, homun_id ) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
