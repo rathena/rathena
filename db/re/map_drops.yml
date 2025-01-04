@@ -2285,3 +2285,146 @@ Body:
           - Index: 5
             Item: Etel_Topaz
             Rate: 30
+  - Map: 1@xm_d
+    SpecificDrops:
+      - Monster: XM_MARIONETTE
+        Drops:
+          - Index: 0
+            Item: Bloody_Coin
+            Rate: 5000
+          - Index: 1
+            Item: Bloody_Coin
+            Rate: 2500
+          - Index: 2
+            Item: Bloody_Coin
+            Rate: 500
+          - Index: 3
+            Item: Shadow_Walk_
+            Rate: 25
+      - Monster: XM_LUDE
+        Drops:
+          - Index: 0
+            Item: Bloody_Coin
+            Rate: 5000
+          - Index: 1
+            Item: Bloody_Coin
+            Rate: 2500
+          - Index: 2
+            Item: Bloody_Coin
+            Rate: 500
+          - Index: 3
+            Item: Red_Lantern
+            Rate: 25
+      - Monster: XM_TREE
+        Drops:
+          - Index: 0
+            Item: Bloody_Coin
+            Rate: 5000
+          - Index: 1
+            Item: Bloody_Coin
+            Rate: 2500
+          - Index: 2
+            Item: Bloody_Coin
+            Rate: 500
+          - Index: 3
+            Item: Lush_Rose
+            Rate: 25
+      - Monster: XM_HYLOZOIST
+        Drops:
+          - Index: 0
+            Item: Bloody_Coin
+            Rate: 5000
+          - Index: 1
+            Item: Bloody_Coin
+            Rate: 2500
+          - Index: 2
+            Item: Bloody_Coin
+            Rate: 500
+          - Index: 3
+            Item: Old_Parasol
+            Rate: 25
+      - Monster: XM_TEDDY_BEAR
+        Drops:
+          - Index: 0
+            Item: Bloody_Coin
+            Rate: 5000
+          - Index: 1
+            Item: Bloody_Coin
+            Rate: 2500
+          - Index: 2
+            Item: Bloody_Coin
+            Rate: 500
+          - Index: 3
+            Item: KindHeart
+            Rate: 25
+      - Monster: XM_COOKIE
+        Drops:
+          - Index: 0
+            Item: Bloody_Coin
+            Rate: 5000
+          - Index: 1
+            Item: Bloody_Coin
+            Rate: 2500
+          - Index: 2
+            Item: Bloody_Coin
+            Rate: 500
+          - Index: 3
+            Item: Hurt_Mind
+            Rate: 25
+      - Monster: XM_MYSTCASE
+        Drops:
+          - Index: 0
+            Item: Bloody_Coin
+            Rate: 5000
+          - Index: 1
+            Item: Bloody_Coin
+            Rate: 2500
+          - Index: 2
+            Item: Bloody_Coin
+            Rate: 500
+          - Index: 3
+            Item: Noble_Cross
+            Rate: 25
+      - Monster: XM_ANTONIO
+        Drops:
+          - Index: 0
+            Item: Bloody_Coin
+            Rate: 15000
+          - Index: 1
+            Item: Bloody_Coin
+            Rate: 1000
+          - Index: 2
+            Item: Bloody_Coin
+            Rate: 5000
+          - Index: 3
+            Item: Chrismas_Tree
+            Rate: 1000
+      - Monster: XM_CELINE_KIMI
+        Drops:
+          - Index: 0
+            Item: Bloody_Coin
+            Rate: 15000
+          - Index: 1
+            Item: Bloody_Coin
+            Rate: 12500
+          - Index: 2
+            Item: Bloody_Coin
+            Rate: 10000
+          - Index: 3
+            Item: Bloody_Coin
+            Rate: 5000
+          - Index: 4
+            Item: Bloody_Coin
+            Rate: 2500
+          - Index: 5
+            Item: Celine_Brooch_K
+            Rate: 150
+          - Index: 6
+            Item: Celine_Dress
+            Rate: 150
+          - Index: 7
+            Item: Celines_Ribbon
+            Rate: 50
+          - Index: 8
+            Item: Evilspirit_Gloves
+            Rate: 50

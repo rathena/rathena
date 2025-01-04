@@ -1585,9 +1585,10 @@ int32 status_damage(struct block_list *src,struct block_list *target,int64 dhp, 
 	dhp = cap_value(dhp, INT_MIN, INT_MAX);
 	switch (target->type) {
 	case BL_PC:
-		pc_damage(reinterpret_cast<map_session_data*>(target), src, hp, sp, ap); break;
+		pc_damage(reinterpret_cast<map_session_data*>(target), src, hp, sp, ap);
+		break;
 	case BL_MOB:
-		mob_damage(reinterpret_cast<mob_data*>(target), src, (int32)dhp);
+		mob_damage(reinterpret_cast<mob_data*>(target), src, static_cast<int32>(dhp));
 		break;
 	case BL_HOM:
 		hom_heal(reinterpret_cast<homun_data&>(*target), hp != 0, sp != 0);
@@ -1599,6 +1600,11 @@ int32 status_damage(struct block_list *src,struct block_list *target,int64 dhp, 
 		elemental_heal(reinterpret_cast<s_elemental_data*>(target), hp, sp);
 		break;
 	}
+
+	// Normal attack damage is logged in the monster's dmglog as attack damage
+	// This counts as exp tap and is used for determining the MVP
+	if (src && src->type == BL_MOB && skill_id == 0)
+		mob_log_damage(reinterpret_cast<mob_data*>(src), target, 0, static_cast<int32>(dhp));
 
 	if( src && target->type == BL_PC && ((TBL_PC*)target)->disguise ) { // Stop walking when attacked in disguise to prevent walk-delay bug
 		unit_stop_walking( target, 1 );
@@ -4201,6 +4207,10 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	if ((skill = pc_checkskill(sd, NW_GRENADE_MASTERY)) > 0)
 		base_status->con += skill;
 
+// ----- SPELL CALCULATION -----
+	if ((skill = pc_checkskill(sd, SOA_SOUL_MASTERY)) > 0)
+		base_status->spl += skill;
+
 // ------ ATTACK CALCULATION ------
 
 	// Base batk value is set in status_calc_misc
@@ -4417,6 +4427,8 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		base_status->smatk += skill;
 	if ((skill = pc_checkskill(sd, NW_P_F_I)) > 0 && (sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE))
 		base_status->patk += skill + 2;
+	if ((skill = pc_checkskill(sd, SOA_TALISMAN_MASTERY)) > 0)
+		base_status->smatk += skill;
 
 	// 2-Handed Staff Mastery
 	if( sd->status.weapon == W_2HSTAFF && ( skill = pc_checkskill( sd, AG_TWOHANDSTAFF ) ) > 0 ){
@@ -4797,6 +4809,24 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 			pc_bonus(sd, SP_MATK_RATE, sc->getSCE(SC_CATNIPPOWDER)->val2);
 		if (sc->getSCE(SC_NIBELUNGEN) && sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_MATKRATE)
 			pc_bonus(sd, SP_MATK_RATE, 20);
+		if( sc->getSCE(SC_TALISMAN_OF_FIVE_ELEMENTS) != nullptr ) {
+			const std::vector<e_element> elements = { ELE_FIRE, ELE_WATER, ELE_WIND, ELE_EARTH, ELE_NEUTRAL };
+			int32 bonus = sc->getSCE(SC_TALISMAN_OF_FIVE_ELEMENTS)->val2;
+
+			for( const auto &element : elements ){
+				sd->indexed_bonus.magic_addele[element] += bonus;
+				sd->right_weapon.addele[element] += bonus;
+				if( !battle_config.left_cardfix_to_right ){
+					sd->left_weapon.addele[element] += bonus;
+				}
+			}
+		}
+		if( sc->getSCE(SC_HEAVEN_AND_EARTH) != nullptr ) {
+			i = sc->getSCE(SC_HEAVEN_AND_EARTH)->val2;
+			sd->indexed_bonus.magic_atk_ele[ELE_ALL] += i;
+			sd->bonus.short_attack_atk_rate += i;
+			sd->bonus.long_attack_atk_rate += i;
+		}
 	}
 	status_cpy(&sd->battle_status, base_status);
 
@@ -8227,6 +8257,8 @@ static signed short status_calc_patk(struct block_list *bl, status_change *sc, i
 	}
 	if (sc->getSCE(SC_HIDDEN_CARD))
 		patk += sc->getSCE(SC_HIDDEN_CARD)->val2;
+	if (sc->getSCE(SC_TALISMAN_OF_WARRIOR) != nullptr)
+		patk += sc->getSCE(SC_TALISMAN_OF_WARRIOR)->val2;
 
 	return (short)cap_value(patk, 0, SHRT_MAX);
 }
@@ -8254,6 +8286,10 @@ static signed short status_calc_smatk(struct block_list *bl, status_change *sc, 
 	if( sc->getSCE( SC_ATTACK_STANCE ) ){
 		smatk += sc->getSCE( SC_ATTACK_STANCE )->val3;
 	}
+	if (sc->getSCE(SC_TALISMAN_OF_MAGICIAN) != nullptr)
+		smatk += sc->getSCE(SC_TALISMAN_OF_MAGICIAN)->val2;
+	if (sc->getSCE(SC_T_FIFTH_GOD) != nullptr)
+		smatk += sc->getSCE(SC_T_FIFTH_GOD)->val2;
 
 	return (short)cap_value(smatk, 0, SHRT_MAX);
 }
@@ -8559,18 +8595,39 @@ void status_calc_slave_mode(mob_data& md)
  * @param bl: Object whose name to get [PC|MOB|PET|HOM|NPC]
  * @return name or "Unknown" if any other bl->type than noted above
  */
-const char* status_get_name(struct block_list *bl)
-{
-	nullpo_ret(bl);
-	switch (bl->type) {
-		case BL_PC:	return ((TBL_PC *)bl)->fakename[0] != '\0' ? ((TBL_PC*)bl)->fakename : ((TBL_PC*)bl)->status.name;
-		case BL_MOB:	return ((TBL_MOB*)bl)->name;
-		case BL_PET:	return ((TBL_PET*)bl)->pet.name;
-		case BL_HOM:	return ((TBL_HOM*)bl)->homunculus.name;
-		case BL_MER:	return ((TBL_MER *)bl)->db->name.c_str();	// They only have database names which are global, not specific to GID.
-		case BL_NPC:	return ((TBL_NPC*)bl)->name;
-		case BL_ELEM:	return ((TBL_ELEM *)bl)->db->name.c_str(); // They only have database names which are global, not specific to GID.
+const char* status_get_name( block_list& bl ){
+	switch( bl.type ){
+		case BL_PC: {
+				map_session_data& sd = reinterpret_cast<map_session_data&>( bl );
+
+				if( sd.fakename[0] != '\0' ){
+					return sd.fakename;
+				}else{
+					return sd.status.name;
+				}
+			} break;
+
+		case BL_MOB:
+			return reinterpret_cast<mob_data&>( bl ).name;
+
+		case BL_PET:
+			return reinterpret_cast<pet_data&>( bl ).pet.name;
+
+		case BL_HOM:
+			return reinterpret_cast<homun_data&>( bl ).homunculus.name;
+
+		case BL_MER:
+			// They only have database names which are global, not specific to GID.
+			return reinterpret_cast<s_mercenary_data&>( bl ).db->name.c_str();
+
+		case BL_NPC:
+			return reinterpret_cast<npc_data&>( bl ).name;
+
+		case BL_ELEM:
+			// They only have database names which are global, not specific to GID.
+			return reinterpret_cast<s_elemental_data&>( bl ).db->name.c_str();
 	}
+
 	return "Unknown";
 }
 
@@ -12073,43 +12130,45 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 			val2 = 15 + 5 * val1; // AGI
 			val3 = 25; // Move speed increase
 			if (sd && (sd->class_&MAPID_BASEMASK) == MAPID_SUMMONER)
-				val4 = 10; // Ranged ATK increase
+				val4 = 10; // Ranged ATK increase if the target is a Doram
 			break;
 		case SC_SHRIMP:
 			val2 = 10; // BATK%, MATK%
 			break;
 		case SC_FRESHSHRIMP: {
 				int32 min = 0, max = 0;
+				map_session_data* ssd = BL_CAST( BL_PC, src );
 
 #ifdef RENEWAL
-				min = status_base_matk_min(src, status, status_get_lv(src));
-				max = status_base_matk_max(src, status, status_get_lv(src));
-				if (status->rhw.matk > 0) {
+				status_data* sstatus = status_get_status_data(*src);
+				min = status_base_matk_min(src, sstatus, status_get_lv(src));
+				max = status_base_matk_max(src, sstatus, status_get_lv(src));
+				if (sstatus->rhw.matk > 0) {
 					int32 wMatk, variance;
 
-					wMatk = status->rhw.matk;
-					variance = wMatk * status->rhw.wlv / 10;
+					wMatk = sstatus->rhw.matk;
+					variance = wMatk * sstatus->rhw.wlv / 10;
 					min += wMatk - variance;
 					max += wMatk + variance;
 				}
 #endif
 
-				if (sd && sd->right_weapon.overrefine > 0) {
+				if (ssd != nullptr && ssd->right_weapon.overrefine > 0) {
 					min++;
-					max += sd->right_weapon.overrefine - 1;
+					max += ssd->right_weapon.overrefine - 1;
 				}
 
 				val2 += min + 178; // Heal
 				if (max > min)
 					val2 += rnd() % (max - min); // Heal
 
-				if (sd) {
-					if (pc_checkskill(sd, SU_POWEROFSEA) > 0) {
+				if (ssd != nullptr) {
+					if (pc_checkskill(ssd, SU_POWEROFSEA) > 0) {
 						val2 += val2 * 10 / 100;
-						if (pc_checkskill_summoner(sd, SUMMONER_POWER_SEA) >= 20)
+						if (pc_checkskill_summoner(ssd, SUMMONER_POWER_SEA) >= 20)
 							val2 += val2 * 20 / 100;
 					}
-					if (pc_checkskill(sd, SU_SPIRITOFSEA) > 0)
+					if (pc_checkskill(ssd, SU_SPIRITOFSEA) > 0)
 						val2 *= 2; // Doubles HP
 				}
 				tick_time = 10000 - ((val1 - 1) * 1000);
@@ -12117,9 +12176,9 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 			}
 			break;
 		case SC_TUNAPARTY:
-			val2 = (status->max_hp * (val1 * 10) / 100); // Max HP% to absorb
-			if (sd && pc_checkskill(sd, SU_SPIRITOFSEA))
-				val2 *= 2; // Double the shield life
+			val2 = status_get_max_hp(src) * (val1 * 10) / 100; // Shield according to the Caster's MaxHP%
+			if (map_session_data* ssd = BL_CAST(BL_PC, src); pc_checkskill(ssd, SU_SPIRITOFSEA) > 0)
+				val2 *= 2; // Double the shield life if the caster has learned Spirit of Sea
 			break;
 		case SC_HISS:
 			val2 = 50; // Perfect Dodge
@@ -12418,6 +12477,26 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 		case SC_HIDDEN_CARD:
 			val2 = 3 * val1;
 			val3 = 10 * val1;
+			break;
+		case SC_TALISMAN_OF_PROTECTION:
+			// Heal value is static per cast of skill
+			val3 = skill_calc_heal(src, bl, SOA_TALISMAN_OF_PROTECTION, val1, true);
+			val4 = tick / 3000;
+			// First heal tick applies on cast
+			tick_time = 100;
+			break;
+		case SC_TALISMAN_OF_WARRIOR:
+		case SC_TALISMAN_OF_MAGICIAN:
+			val2 = 2 * val1;
+			break;
+		case SC_T_FIFTH_GOD:
+			val2 = 5 * val1;
+			break;
+		case SC_TALISMAN_OF_FIVE_ELEMENTS:
+			val2 = 4 * val1;
+			break;
+		case SC_HEAVEN_AND_EARTH:
+			val2 = 5 + 2 * val1;
 			break;
 
 		default:
@@ -14408,7 +14487,7 @@ TIMER_FUNC(status_change_timer){
 		break;
 	case SC_FRESHSHRIMP:
 		if (--(sce->val4) >= 0) {
-			status_heal(bl, sce->val2, 0, 0);
+			status_heal(bl, sce->val2, 0, 2);
 			sc_timer_next((10000 - ((sce->val1 - 1) * 1000)) + tick);
 			return 0;
 		}
@@ -14531,6 +14610,27 @@ TIMER_FUNC(status_change_timer){
 		}
 		sc_timer_next(500 + tick);
 		return 0;
+	case SC_TALISMAN_OF_PROTECTION:
+		if(--(sce->val4) >= 0){
+			// Get the original caster
+			map_session_data* ssd = map_id2sd( sce->val2 );
+
+			// If the caster is offline, dead, on another map or
+			// if the target is not a player or is in another party
+			if( ssd == nullptr || status_isdead( ssd->bl ) || ssd->bl.m != bl->m || sd == nullptr || ssd->status.party_id != sd->status.party_id ){
+				// End the status change
+				sce->val4 = 0;
+				break;
+			}
+
+			int32 hp = sc->getSCE(SC_TALISMAN_OF_PROTECTION)->val3;
+
+			status_heal( bl, hp, 0, 0, 0 );
+			clif_skill_nodamage( nullptr, *bl, AL_HEAL, hp );
+			sc_timer_next(3000 + tick);
+			return 0;
+		}
+		break;
 	}
 
 	// If status has an interval and there is at least 100ms remaining time, wait for next interval

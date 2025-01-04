@@ -269,13 +269,14 @@ static bool mobdb_searchname_sub(uint16 mob_id, const char * const str, bool ful
 	
 	if( mobdb_checkid(mob_id) <= 0 )
 		return false; // invalid mob_id (includes clone check)
+	if (strcmpi(mob->sprite.c_str(), str) == 0)
+		return true; // If AegisName matches exactly, always return true
 	if(!mob->base_exp && !mob->job_exp && !mob_has_spawn(mob_id))
 		return false; // Monsters with no base/job exp and no spawn point are, by this criteria, considered "slave mobs" and excluded from search results
 	if( full_cmp ) {
 		// str must equal the db value
 		if( strcmpi(mob->name.c_str(), str) == 0 || 
-			strcmpi(mob->jname.c_str(), str) == 0 || 
-			strcmpi(mob->sprite.c_str(), str) == 0 )
+			strcmpi(mob->jname.c_str(), str) == 0)
 			return true;
 	} else {
 		// str must be in the db value
@@ -316,29 +317,37 @@ std::shared_ptr<s_mob_db> mobdb_search_aegisname( const char* str ){
 }
 
 /*==========================================
- * Searches up to N matches. Returns number of matches [Skotlex]
+ * Searches up to N matches. Prioritizing full matches first. Returns the number of matches
  *------------------------------------------*/
-uint16 mobdb_searchname_array_(const char *str, uint16 * out, uint16 size, bool full_cmp)
+uint16 mobdb_searchname_array(const char *str, uint16 * out, uint16 size)
 {
 	uint16 count = 0;
 	const auto &mob_list = mob_db.getCache();
 
-	for( const auto &mob : mob_list ) {
+	// Full compare first
+	for (const auto& mob : mob_list) {
 		if (mob == nullptr)
 			continue;
-		if( mobdb_searchname_sub(mob->id, str, full_cmp) ) {
-			if( count < size )
+		if (mobdb_searchname_sub(mob->id, str, true)) {
+			out[count] = mob->id;
+			if (++count >= size)
+				return count;
+		}
+	}
+	// If there are still free places, check if search string is contained in a name but not equal
+	if (count < size) {
+		for (const auto& mob : mob_list) {
+			if (mob == nullptr)
+				continue;
+			if (mobdb_searchname_sub(mob->id, str, false) && !mobdb_searchname_sub(mob->id, str, true)) {
 				out[count] = mob->id;
-			count++;
+				if (++count >= size)
+					return count;
+			}
 		}
 	}
 
 	return count;
-}
-
-uint16 mobdb_searchname_array(const char *str, uint16 * out, uint16 size)
-{
-	return mobdb_searchname_array_(str, out, size, false);
 }
 
 /*==========================================
@@ -1976,9 +1985,6 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 			// Target within range and potentially able to use normal attack, engage
 			if (md->ud.target != tbl->id || md->ud.attacktimer == INVALID_TIMER)
 			{ //Only attack if no more attack delay left
-				if (tbl->type == BL_PC)
-					mob_log_damage(md, tbl, 0); //Log interaction (counts as 'attacker' for the exp bonus)
-
 				if (!(mode&MD_RANDOMTARGET))
 					unit_attack(&md->bl,tbl->id,1);
 				else { // Attack once and find a new random target
@@ -2394,14 +2400,16 @@ TIMER_FUNC(mob_respawn){
 	return 1;
 }
 
-void mob_log_damage(struct mob_data *md, struct block_list *src, int32 damage)
+void mob_log_damage(mob_data* md, block_list* src, int32 damage, int32 damage_tanked)
 {
 	uint32 char_id = 0;
 	int32 flag = MDLF_NORMAL;
 
 	if( damage < 0 )
 		return; //Do nothing for absorbed damage.
-	if( !damage && !(src->type&DEFAULT_ENEMY_TYPE(md)) )
+	if (damage_tanked < 0)
+		return; //Just to make sure we don't subtract it (should not happen)
+	if( !damage && !damage_tanked && !(src->type&DEFAULT_ENEMY_TYPE(md)) )
 		return; //Do not log non-damaging effects from non-enemies.
 
 	switch( src->type )
@@ -2484,35 +2492,41 @@ void mob_log_damage(struct mob_data *md, struct block_list *src, int32 damage)
 
 	if( char_id )
 	{ //Log damage...
-		int32 i,minpos;
-		uint32 mindmg;
-		for(i=0,minpos=DAMAGELOG_SIZE-1,mindmg=UINT_MAX;i<DAMAGELOG_SIZE;i++){
+		size_t i;
+		for (i = 0; i < DAMAGELOG_SIZE; i++) {
+			// Character is already in damage log
 			if(md->dmglog[i].id==char_id &&
 				md->dmglog[i].flag==flag)
 				break;
-			if(md->dmglog[i].id==0) {	//Store data in first empty slot.
+			// Store data in first empty slot.
+			if (md->dmglog[i].id == 0) {
 				md->dmglog[i].id  = char_id;
 				md->dmglog[i].flag= flag;
-
-				if( md->get_bosstype() == BOSSTYPE_MVP )
-					pc_damage_log_add(map_charid2sd(char_id),md->bl.id);
+				// Damage is added outside the loop, we reset it here to be safe
+				md->dmglog[i].dmg = 0;
+				md->dmglog[i].dmg_tanked = 0;
 				break;
 			}
-			if(md->dmglog[i].dmg<mindmg && i)
-			{	//Never overwrite first hit slot (he gets double exp bonus)
-				minpos=i;
-				mindmg=md->dmglog[i].dmg;
-			}
 		}
-		if(i<DAMAGELOG_SIZE)
-			md->dmglog[i].dmg+=damage;
+		// Character or empty slot was found, just add damage to it
+		if (i < DAMAGELOG_SIZE) {
+			md->dmglog[i].dmg += damage;
+			md->dmglog[i].dmg_tanked += damage_tanked;
+		}
 		else {
-			md->dmglog[minpos].id  = char_id;
-			md->dmglog[minpos].flag= flag;
-			md->dmglog[minpos].dmg = damage;
+			// Damage log is full, remove oldest entry
+			for (i = 0; i < DAMAGELOG_SIZE-1; i++) {
+				md->dmglog[i].id = md->dmglog[i+1].id;
+				md->dmglog[i].flag = md->dmglog[i+1].flag;
+				md->dmglog[i].dmg = md->dmglog[i+1].dmg;
+				md->dmglog[i].dmg_tanked = md->dmglog[i+1].dmg_tanked;
+			}
 
-			if( md->get_bosstype() == BOSSTYPE_MVP )
-				pc_damage_log_add(map_charid2sd(char_id),md->bl.id);
+			// Add new character to damage log at last (newest) position
+			md->dmglog[DAMAGELOG_SIZE-1].id  = char_id;
+			md->dmglog[DAMAGELOG_SIZE-1].flag= flag;
+			md->dmglog[DAMAGELOG_SIZE-1].dmg = damage;
+			md->dmglog[DAMAGELOG_SIZE-1].dmg_tanked = damage_tanked;
 		}
 	}
 	return;
@@ -2883,9 +2897,6 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 				if(zeny) // zeny from mobs [Valaris]
 					pc_getzeny(tmpsd[i], zeny, LOG_TYPE_PICKDROP_MONSTER);
 			}
-
-			if( md->get_bosstype() == BOSSTYPE_MVP )
-				pc_damage_log_clear(tmpsd[i],md->bl.id);
 		}
 
 		for( i = 0; i < pnum; i++ ) //Party share.
@@ -2961,10 +2972,10 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 						mobdrop.rate = drop_rate;
 					}
 					else {
-						std::shared_ptr<s_item_group_entry> entry = itemdb_group.get_random_entry(it.group, 1, GROUP_SEARCH_DROP);
+						std::shared_ptr<s_item_group_entry> entry = itemdb_group.get_random_entry(it.group, 1, GROUP_ALGORITHM_DROP);
 						if (entry == nullptr) continue;
 						mobdrop.nameid = entry->nameid;
-						mobdrop.rate = entry->rate * drop_rate / 10000;
+						mobdrop.rate = entry->adj_rate * drop_rate / 10000;
 					}
 
 					std::shared_ptr<s_item_drop> ditem = mob_setdropitem(mobdrop, 1, md->mob_id);
@@ -3018,11 +3029,11 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 
 		// Ore Discovery (triggers if owner has loot priority, does not require to be the killer)
 		if (mvp_sd && pc_checkskill(mvp_sd, BS_FINDINGORE) > 0) {
-			std::shared_ptr<s_item_group_entry> entry = itemdb_group.get_random_entry(IG_ORE, 1, GROUP_SEARCH_DROP);
+			std::shared_ptr<s_item_group_entry> entry = itemdb_group.get_random_entry(IG_ORE, 1, GROUP_ALGORITHM_DROP);
 			if (entry != nullptr) {
 				s_mob_drop mobdrop = {};
 				mobdrop.nameid = entry->nameid;
-				mobdrop.rate = entry->rate;
+				mobdrop.rate = entry->adj_rate;
 
 				std::shared_ptr<s_item_drop> ditem = mob_setdropitem(mobdrop, 1, md->mob_id);
 

@@ -98,7 +98,7 @@ struct homun_data {
 	map_session_data *master; //pointer back to its master
 	int32 hungry_timer;	//[orn]
 	t_exp exp_next;
-	std::vector<uint16> blockskill;	// [orn]
+	std::unordered_map<uint16, int32> scd;
 };
 
 #define HOM_EVO 0x100 //256

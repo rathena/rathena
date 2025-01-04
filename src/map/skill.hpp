@@ -33,8 +33,8 @@ class status_change;
 #define MAX_SKILL_LEVEL 13 /// Max Skill Level (for skill_db storage)
 #define MAX_MOBSKILL_LEVEL 100	/// Max monster skill level (on skill usage)
 #define MAX_SKILL_CRIMSON_MARKER 3 /// Max Crimson Marker targets (RL_C_MARKER)
-#define SKILL_NAME_LENGTH 31 /// Max Skill Name length
-#define SKILL_DESC_LENGTH 31 /// Max Skill Desc length
+#define SKILL_NAME_LENGTH 40 /// Max Skill Name length
+#define SKILL_DESC_LENGTH 40 /// Max Skill Desc length
 
 /// Used with tracking the hitcount of Earthquake for skills that can avoid the first attack
 #define NPC_EARTHQUAKE_FLAG 0x800
@@ -634,13 +634,15 @@ int32 skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,u
 int32 skill_castend_damage_id( struct block_list* src, struct block_list *bl,uint16 skill_id,uint16 skill_lv,t_tick tick,int32 flag );
 int32 skill_castend_pos2( struct block_list *src, int32 x,int32 y,uint16 skill_id,uint16 skill_lv,t_tick tick,int32 flag);
 
-int32 skill_blockpc_start(map_session_data*, int32, t_tick);
-int32 skill_blockpc_get(map_session_data *sd, int32 skillid);
-int32 skill_blockpc_clear(map_session_data *sd);
+bool skill_blockpc_start(map_session_data &sd, uint16 skill_id, t_tick tick);
+void skill_blockpc_clear(map_session_data &sd);
 TIMER_FUNC(skill_blockpc_end);
-int32 skill_blockhomun_start (struct homun_data*,uint16 skill_id,int32);
-int32 skill_blockmerc_start (s_mercenary_data*,uint16 skill_id,int32);
-
+bool skill_blockhomun_start(homun_data &hd, uint16 skill_id, t_tick tick);
+void skill_blockhomun_clear(homun_data &hd);
+TIMER_FUNC(skill_blockhomun_end);
+bool skill_blockmerc_start(s_mercenary_data &mc, uint16 skill_id, t_tick tick);
+void skill_blockmerc_clear(s_mercenary_data &mc);
+TIMER_FUNC(skill_blockmerc_end);
 
 // (Epoque:) To-do: replace this macro with some sort of skill tree check (rather than hard-coded skill names)
 #define skill_ischangesex(id) ( \
@@ -1952,8 +1954,13 @@ enum e_skill {
 	ECL_SADAGUI,
 	ECL_SEQUOIADUST,
 	ECLAGE_RECALL,
-
-	ALL_PRONTERA_RECALL = 3042,
+	BA_POEMBRAGI2,
+	DC_FORTUNEKISS2,
+	// ITEM_OPTION_SPLASH_ATTACK,
+	GM_FORCE_TRANSFER = 3039,
+	GM_WIDE_RESURRECTION,
+	ALL_NIFLHEIM_RECALL,
+	ALL_PRONTERA_RECALL,
 	ALL_GLASTHEIM_RECALL,
 	ALL_THANATOS_RECALL,
 	ALL_LIGHTHALZEN_RECALL,

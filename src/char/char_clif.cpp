@@ -30,12 +30,18 @@
 using namespace rathena;
 
 std::vector<struct s_point_str> accessible_maps{
-	s_point_str{ MAP_PRONTERA, 273, 354 },
-	s_point_str{ MAP_GEFFEN, 120, 100 },
-	s_point_str{ MAP_MORROC, 160, 94 },
-	s_point_str{ MAP_ALBERTA, 116, 57 },
-	s_point_str{ MAP_PAYON, 87, 117 },
-	s_point_str{ MAP_IZLUDE, 94, 103 }
+	s_point_str{ MAP_PRONTERA, 116, 73 },
+	s_point_str{ MAP_PAYON, 162, 58 },
+	s_point_str{ MAP_GEFFEN, 121, 37 },
+	s_point_str{ MAP_ALDEBARAN, 167, 112 },
+	s_point_str{ MAP_MORROC, 157, 45 },
+	s_point_str{ MAP_COMODO, 179, 152 },
+	s_point_str{ MAP_VEINS, 204, 103 },
+	s_point_str{ MAP_AYOTHAYA, 218, 187 },
+	s_point_str{ MAP_LIGHTHALZEN, 159, 95 },
+#ifdef RENEWAL
+	s_point_str{ MAP_MORA, 57, 143 }
+#endif
 };
 
 #if PACKETVER_SUPPORTS_PINCODE

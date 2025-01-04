@@ -352,7 +352,7 @@ void log_atcommand(map_session_data* sd, const char* message)
 	{
 		SqlStmt stmt{ *logmysql_handle };
 
-		if( SQL_SUCCESS != stmt.Prepare(LOG_QUERY " INTO `%s` (`atcommand_date`, `account_id`, `char_id`, `char_name`, `map`, `command`) VALUES (NOW(), '%d', '%d', ?, '%s', ?)", log_config.log_gm, sd->status.account_id, sd->status.char_id, mapindex_id2name(sd->mapindex) )
+		if( SQL_SUCCESS != stmt.Prepare(LOG_QUERY " INTO `%s` (`atcommand_date`, `account_id`, `char_id`, `char_name`, `map`, `command`) VALUES (NOW(), '%d', '%d', ?, '%s', ?)", log_config.log_gm, sd->status.account_id, sd->status.char_id, sd->mapindex == 0 ? "" : mapindex_id2name(sd->mapindex))
 		||  SQL_SUCCESS != stmt.BindParam(0, SQLDT_STRING, sd->status.name, strnlen(sd->status.name, NAME_LENGTH))
 		||  SQL_SUCCESS != stmt.BindParam(1, SQLDT_STRING, (char*)message, safestrnlen(message, 255))
 		||  SQL_SUCCESS != stmt.Execute() )

@@ -570,6 +570,12 @@ int32 skill_calc_heal(struct block_list *src, struct block_list *target, uint16 
 				hp_bonus += skill * 2;
 #endif
 			break;
+
+		case SOA_TALISMAN_OF_PROTECTION:
+			hp = (500 + pc_checkskill(sd,SOA_TALISMAN_MASTERY) * 50) * skill_lv * status_get_lv(src) / 100;
+			hp += (status_get_lv(src) + status_get_int(src)) / 5 * 30 * status_get_crt(src) / 100;
+			break;
+
 		default:
 			if (skill_lv >= battle_config.max_heal_lv)
 				return battle_config.max_heal;
@@ -686,7 +692,7 @@ int32 skill_calc_heal(struct block_list *src, struct block_list *target, uint16 
 	}
 
 #ifdef RENEWAL
-	if (hp_bonus)
+	if (hp_bonus && skill_id != SOA_TALISMAN_OF_PROTECTION)
 		hp += hp * hp_bonus / 100;
 
 	// MATK part of the RE heal formula [malufett]
@@ -764,7 +770,7 @@ int32 skill_calc_heal(struct block_list *src, struct block_list *target, uint16 
 
 	// Final heal increased by HPlus.
 	// Is this the right place for this??? [Rytech]
-	if ( sd && status_get_hplus(src) > 0 )
+	if ( sd && status_get_hplus(src) > 0 && skill_id != SOA_TALISMAN_OF_PROTECTION)
 		hp += hp * status_get_hplus(src) / 100;
 
 	return (heal) ? max(1, hp) : hp;
@@ -834,7 +840,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 		return true;
 	}
 
-	if (skill_blockpc_get(&sd, skill_id) != -1){
+	if (util::umap_exists(sd.scd, skill_id)) {
 		clif_skill_fail( sd, skill_id, USESKILL_FAIL_SKILLINTERVAL );
 		return true;
 	}
@@ -866,6 +872,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 		case RETURN_TO_ELDICASTES:
 		case ALL_GUARDIAN_RECALL:
 		case ECLAGE_RECALL:
+		case ALL_NIFLHEIM_RECALL:
 		case ALL_PRONTERA_RECALL:
 		case ALL_GLASTHEIM_RECALL:
 		case ALL_THANATOS_RECALL:
@@ -996,7 +1003,7 @@ bool skill_isNotOk_hom(struct homun_data *hd, uint16 skill_id, uint16 skill_lv)
 	if (sc != nullptr && sc->empty())
 		sc = nullptr;
 
-	if (util::vector_exists(hd->blockskill, skill_id)) {
+	if (util::umap_exists(hd->scd, skill_id)) {
 		clif_skill_fail(*sd, skill_id, USESKILL_FAIL_SKILLINTERVAL);
 		return true;
 	}
@@ -1109,7 +1116,7 @@ bool skill_isNotOk_mercenary( uint16 skill_id, s_mercenary_data& md ){
 	if (sd == nullptr)
 		return true;
 
-	if (util::vector_exists(md.blockskill, skill_id)) {
+	if (util::umap_exists(md.scd, skill_id)) {
 		clif_skill_fail(*sd, skill_id, USESKILL_FAIL_SKILLINTERVAL);
 		return true;
 	}
@@ -5726,6 +5733,11 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 	case TR_METALIC_FURY:
 	case IG_GRAND_JUDGEMENT:
 	case HN_JUPITEL_THUNDER_STORM:
+	case SOA_EXORCISM_OF_MALICIOUS_SOUL:
+	case SOA_TALISMAN_OF_WHITE_TIGER:
+	case SOA_TALISMAN_OF_RED_PHOENIX:
+	case SOA_TALISMAN_OF_FOUR_BEARING_GOD:
+	case SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS:
 		if( flag&1 ) {//Recursive invocation
 			int32 sflag = skill_area_temp[0] & 0xFFF;
 			int32 heal = 0;
@@ -5797,6 +5809,7 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 				case DK_HACKANDSLASHER:
 				case MT_SPARK_BLASTER:
 				case HN_JUPITEL_THUNDER_STORM:
+				case SOA_TALISMAN_OF_FOUR_BEARING_GOD:
 					clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 					break;
 #ifdef RENEWAL
@@ -5937,6 +5950,18 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 				case SHC_CROSS_SLASH:
 					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 					sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
+					break;
+				case SOA_TALISMAN_OF_RED_PHOENIX:
+					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+					skill_area_temp[0] = map_foreachinallrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
+					if (sc != nullptr && sc->getSCE(SC_T_SECOND_GOD) != nullptr){
+						sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
+					}
+					break;
+				case SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS:
+					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+					skill_area_temp[0] = map_foreachinallrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
+					sc_start(src,src,skill_get_sc(skill_id),100,skill_lv,skill_get_time(skill_id,skill_lv));
 					break;
 			}
 
@@ -6591,7 +6616,7 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 				int32 cooldown = pc_get_skillcooldown(sd,pres_skill_id, pres_skill_lv);
 
 				if( cooldown > 0 )
-					skill_blockpc_start(sd, pres_skill_id, cooldown);
+					skill_blockpc_start(*sd, pres_skill_id, cooldown);
 			} else { // Summoned Balls
 				for (i = SC_SPHERE_5; i >= SC_SPHERE_1; i--) {
 					if (sc->getSCE(static_cast<sc_type>(i)) == nullptr)
@@ -7133,6 +7158,22 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 		if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
 			status_change_end(src, SC_INTENSIVE_AIM_COUNT);
  		break;
+
+	case SOA_TALISMAN_OF_BLUE_DRAGON:
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+		skill_attack(skill_get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
+		sc_start(src,src,skill_get_sc(skill_id), 100, 1, skill_get_time(skill_id, skill_lv));
+		break;
+
+	case SOA_TALISMAN_OF_SOUL_STEALING:
+		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
+		if( bl->type != BL_SKILL ){
+			int32 sp = (100 + status_get_lv(src) / 50) * skill_lv;
+
+			status_heal(src, 0, sp, 0, 0);
+			clif_skill_nodamage( src, *src, skill_id, sp );
+		}
+		break;
 
 	default:
 		ShowWarning("skill_castend_damage_id: Unknown skill used:%d\n",skill_id);
@@ -8056,6 +8097,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 
 	case DK_SERVANTWEAPON:
 	case ABC_FROM_THE_ABYSS:
+	case SOA_TALISMAN_OF_PROTECTION:
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start2(src, bl, type, 100, skill_lv, src->id, skill_get_time(skill_id, skill_lv)));
 		break;
 
@@ -8619,6 +8661,8 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 	case MT_MIGHTY_SMASH:
 	case ABC_ABYSS_DAGGER:
 	case BO_EXPLOSIVE_POWDER:
+	case SOA_EXORCISM_OF_MALICIOUS_SOUL:
+	case SOA_TALISMAN_OF_WHITE_TIGER:
 	{
 		int32 starget = BL_CHAR|BL_SKILL;
 
@@ -8645,6 +8689,24 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		if (skill_id == MH_THE_ONE_FIGHTER_RISES) {
 			hom_addspiritball(hd, MAX_SPIRITBALL);
+		}
+
+		// TODO: refactor the ifs above into the switch below
+
+		switch( skill_id ){
+			case SOA_EXORCISM_OF_MALICIOUS_SOUL:
+				if( sd != nullptr ){
+					// Remove old souls if any exist.
+					sd->soulball_old = sd->soulball;
+					pc_delsoulball( *sd, sd->soulball, 0 );
+				}
+				break;
+
+			case SOA_TALISMAN_OF_WHITE_TIGER:
+				if (sc != nullptr && sc->getSCE(SC_T_FIRST_GOD) != nullptr) {
+					sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
+				}
+				break;
 		}
 
 		skill_area_temp[1] = 0;
@@ -8833,11 +8895,20 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 #endif
 	case PR_MAGNIFICAT:
 	case PR_GLORIA:
+	case SOA_SOUL_OF_HEAVEN_AND_EARTH:
 		if (sd == nullptr || sd->status.party_id == 0 || (flag & 1)) {
 
 			// Animations don't play when outside visible range
 			if (check_distance_bl(src, bl, AREA_SIZE))
 				clif_skill_nodamage(bl, *bl, skill_id, skill_lv);
+
+			if( skill_id == SOA_SOUL_OF_HEAVEN_AND_EARTH ){
+				status_percent_heal(bl, 0, 100);
+
+				if( src != bl && sc != nullptr && sc->getSCE(SC_TOTEM_OF_TUTELARY) != nullptr ){
+					status_heal(bl, 0, 0, 3 * skill_lv, 0);
+				}
+			}
 
 			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		}
@@ -10513,7 +10584,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 				skill_castend_nodamage_id);
 			if (sd)
 #ifdef RENEWAL
-				skill_blockpc_start(sd, skill_id, skill_get_cooldown(skill_id, skill_lv));
+				skill_blockpc_start(*sd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 #else
 				guild_block_skill(sd, skill_get_time2(skill_id, skill_lv));
 #endif
@@ -10557,7 +10628,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			}
 			if (sd)
 #ifdef RENEWAL
-				skill_blockpc_start(sd, skill_id, skill_get_cooldown(skill_id, skill_lv));
+				skill_blockpc_start(*sd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 #else
 				guild_block_skill(sd, skill_get_time2(skill_id, skill_lv));
 #endif
@@ -11230,7 +11301,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			else rate += 40 + 10 * skill_lv; // On Monsters, (40 + 10 * Skill Level) %
 
 			if( sd )
-				skill_blockpc_start(sd,skill_id,4000);
+				skill_blockpc_start(*sd,skill_id,4000);
 
 			if( !(tsc && tsc->getSCE(type)) ){
 				i = sc_start2(src,bl,type,rate,skill_lv,src->id,(src == bl)?5000:(bl->type == BL_PC)?skill_get_time(skill_id,skill_lv):skill_get_time2(skill_id, skill_lv));
@@ -11842,16 +11913,18 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 	case RETURN_TO_ELDICASTES:
 	case ALL_GUARDIAN_RECALL:
 	case ECLAGE_RECALL:
+	case ALL_NIFLHEIM_RECALL:
 	case ALL_PRONTERA_RECALL:
 	case ALL_GLASTHEIM_RECALL:
 	case ALL_THANATOS_RECALL:
 	case ALL_LIGHTHALZEN_RECALL:
 		if( sd != nullptr ){
-			short x=0, y=0; // Destination position.
-			unsigned short mapindex=0;
+			// Destination position.
+			uint16 x;
+			uint16 y;
+			uint16 mapindex;
 
 			switch(skill_id){
-			default:
 			case RETURN_TO_ELDICASTES:
 				x = 198;
 				y = 187;
@@ -11866,6 +11939,11 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 				x = 47;
 				y = 31;
 				mapindex  = mapindex_name2id(MAP_ECLAGE_IN);
+				break;
+			case ALL_NIFLHEIM_RECALL:
+				x = 193;
+				y = 186;
+				mapindex = mapindex_name2id( MAP_NIFLHEIM );
 				break;
 			case ALL_PRONTERA_RECALL:
 				if(skill_lv == 1) {
@@ -11895,12 +11973,15 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 				break;
 			}
 
+			sc_start( src, bl, type, 100, skill_lv, skill_get_cooldown( skill_id, skill_lv ) );
+
 			if(!mapindex)
 			{ //Given map not found?
 				clif_skill_fail( *sd, skill_id );
 				map_freeblock_unlock();
 				return 0;
 			}
+
 			pc_setpos(sd, mapindex, x, y, CLR_TELEPORT);
 		}
 		break;
@@ -12033,7 +12114,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			sd->skill_id_old = skill_id;
 			elemental_action(sd->ed, bl, tick);
 			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			skill_blockpc_start(sd, skill_id, duration);
+			skill_blockpc_start(*sd, skill_id, duration);
 		}
 		break;
 
@@ -12246,7 +12327,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		if(sd){
 			struct mob_data *md2;
 
-			md2 = mob_once_spawn_sub(src, src->m, src->x, src->y, status_get_name(src), MOBID_ZANZOU, "", SZ_SMALL, AI_NONE);
+			md2 = mob_once_spawn_sub(src, src->m, src->x, src->y, status_get_name(*src), MOBID_ZANZOU, "", SZ_SMALL, AI_NONE);
 			if( md2 )
 			{
 				md2->master_id = src->id;
@@ -12446,7 +12527,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		}
 
 		for(i_slave=0; i_slave<qty[skill_lv - 1]; i_slave++){ //easy way
-			sum_md = mob_once_spawn_sub(src, src->m, src->x, src->y, status_get_name(src), summons[skill_lv - 1], "", SZ_SMALL, AI_ATTACK);
+			sum_md = mob_once_spawn_sub(src, src->m, src->x, src->y, status_get_name(*src), summons[skill_lv - 1], "", SZ_SMALL, AI_ATTACK);
 			if (sum_md) {
 				sum_md->master_id =  src->id;
 				sum_md->special_state.ai = AI_LEGION;
@@ -12997,6 +13078,34 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		clif_skill_nodamage(src, *src, skill_id, skill_lv);
 		break;
 
+	case SOA_SOUL_GATHERING:
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+
+		if( sd != nullptr ){
+			int32 limit = 5 + pc_checkskill(sd, SP_SOULENERGY) * 3;
+			
+			for (i = 0; i < limit; i++)
+				pc_addsoulball(*sd,limit);
+		}
+		break;
+
+	case SOA_TALISMAN_OF_WARRIOR:
+	case SOA_TALISMAN_OF_MAGICIAN:
+	case SOA_TALISMAN_OF_FIVE_ELEMENTS:
+		if( dstsd != nullptr ){
+			int16 index = dstsd->equip_index[EQI_HAND_R];
+
+			if (index >= 0 && dstsd->inventory_data[index] != nullptr && dstsd->inventory_data[index]->type == IT_WEAPON) {
+				clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
+				break;
+			}
+		}
+
+		if( sd != nullptr ){
+			clif_skill_fail( *sd, skill_id, USESKILL_FAIL_NEED_WEAPON );
+		}
+		break;
+
 	default: {
 		std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
 		ShowWarning("skill_castend_nodamage_id: missing code case for skill %s(%d)\n", skill ? skill->name : "UNKNOWN", skill_id);
@@ -13411,20 +13520,31 @@ TIMER_FUNC(skill_castend_id){
 
 		// Cooldown application
 		switch (src->type) {
-		case BL_PC:{
-			// Increases/Decreases cooldown of a skill by item/card bonuses.
-			int32 cooldown = pc_get_skillcooldown(sd, ud->skill_id, ud->skill_lv);
-			if (cooldown > 0)
-				skill_blockpc_start(sd, ud->skill_id, cooldown);
-		} break;
-		case BL_HOM:{
-			homun_data& hd = reinterpret_cast<homun_data&>(*src);
+			case BL_PC:
+			{
+				// Increases/Decreases cooldown of a skill by item/card bonuses.
+				int32 cooldown = pc_get_skillcooldown(sd, ud->skill_id, ud->skill_lv);
+				if (cooldown > 0)
+					skill_blockpc_start(*sd, ud->skill_id, cooldown);
+			}
+			break;
+			case BL_HOM:
+			{
+				homun_data &hd = reinterpret_cast<homun_data &>(*src);
 #ifdef RENEWAL
-			skill_blockhomun_start(&hd, ud->skill_id, skill_get_cooldown(ud->skill_id, ud->skill_lv));
+				skill_blockhomun_start(hd, ud->skill_id, skill_get_cooldown(ud->skill_id, ud->skill_lv));
 #else
-			skill_blockhomun_start(&hd, ud->skill_id, skill_get_delay(ud->skill_id, ud->skill_lv));
+				skill_blockhomun_start(hd, ud->skill_id, skill_get_delay(ud->skill_id, ud->skill_lv));
 #endif
-		} break;
+			}
+			break;
+			case BL_MER:
+			{
+				s_mercenary_data &mc = reinterpret_cast<s_mercenary_data &>(*src);
+
+				skill_blockmerc_start(mc, ud->skill_id, skill_get_cooldown(ud->skill_id, ud->skill_lv));
+			}
+			break;
 		}
 
 		if( battle_config.display_status_timers && sd )
@@ -13495,7 +13615,7 @@ TIMER_FUNC(skill_castend_id){
 				sc->getSCE(SC_SPIRIT)->val3 = 0; //Clear bounced spell check.
 #ifndef RENEWAL
 			if( sc->getSCE(SC_DANCING) && sd && skill_get_inf2(ud->skill_id, INF2_ISSONG) )
-				skill_blockpc_start(sd,BD_ADAPTATION,3000);
+				skill_blockpc_start(*sd,BD_ADAPTATION,3000);
 #endif
 		}
 
@@ -13662,7 +13782,7 @@ TIMER_FUNC(skill_castend_pos){
 			ud->canact_tick = i64max(tick + skill_delayfix(src, ud->skill_id, ud->skill_lv), ud->canact_tick - SECURITY_CASTTIME);
 		if (sd) { //Cooldown application
 			int32 cooldown = pc_get_skillcooldown(sd,ud->skill_id, ud->skill_lv);
-			if(cooldown) skill_blockpc_start(sd, ud->skill_id, cooldown);
+			if(cooldown) skill_blockpc_start(*sd, ud->skill_id, cooldown);
 		}
 		if( battle_config.display_status_timers && sd )
 			clif_status_change(src, EFST_POSTDELAY, 1, skill_delayfix(src, ud->skill_id, ud->skill_lv), 0, 0, 0);
@@ -13971,6 +14091,7 @@ int32 skill_castend_pos2(struct block_list* src, int32 x, int32 y, uint16 skill_
 	case EM_VENOM_SWAMP:
 	case EM_CONFLAGRATION:
 	case EM_TERRA_DRIVE:
+	case SOA_TOTEM_OF_TUTELARY:
 		flag|=1;//Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
 		[[fallthrough]];
 	case GS_GROUNDDRIFT: //Ammo should be deleted right away.
@@ -14097,7 +14218,7 @@ int32 skill_castend_pos2(struct block_list* src, int32 x, int32 y, uint16 skill_
 			clif_skill_poseffect(src,skill_id,skill_lv,src->x,src->y,tick);
 #endif
 			if (sd)
-				skill_blockpc_start (sd, MO_EXTREMITYFIST, 2000);
+				skill_blockpc_start (*sd, MO_EXTREMITYFIST, 2000);
 		}
 		break;
 	case NJ_SHADOWJUMP:
@@ -14114,7 +14235,7 @@ int32 skill_castend_pos2(struct block_list* src, int32 x, int32 y, uint16 skill_
 			struct mob_data *md;
 
 			// Correct info, don't change any of this! [celest]
-			md = mob_once_spawn_sub(src, src->m, x, y, status_get_name(src), class_, "", SZ_SMALL, ai);
+			md = mob_once_spawn_sub(src, src->m, x, y, status_get_name(*src), class_, "", SZ_SMALL, ai);
 			if (md) {
 				md->master_id = src->id;
 				md->special_state.ai = ai;
@@ -14380,7 +14501,7 @@ int32 skill_castend_pos2(struct block_list* src, int32 x, int32 y, uint16 skill_
 		{
 			struct mob_data *md;
 
-			md = mob_once_spawn_sub(src, src->m, x, y, status_get_name(src), MOBID_SILVERSNIPER, "", SZ_SMALL, AI_NONE);
+			md = mob_once_spawn_sub(src, src->m, x, y, status_get_name(*src), MOBID_SILVERSNIPER, "", SZ_SMALL, AI_NONE);
 			if( md ) {
 				md->master_id = src->id;
 				md->special_state.ai = AI_FAW;
@@ -14765,6 +14886,13 @@ int32 skill_castend_pos2(struct block_list* src, int32 x, int32 y, uint16 skill_
 		for (i = 1; i <= (skill_get_time(skill_id, skill_lv) / skill_get_unit_interval(skill_id)); i++) {
 			skill_addtimerskill(src, tick + (t_tick)i*skill_get_unit_interval(skill_id), 0, x, y, skill_id, skill_lv, 0, flag);
 		}
+		break;
+
+	case SOA_TALISMAN_OF_BLACK_TORTOISE:
+		if (sc != nullptr && sc->getSCE(SC_T_THIRD_GOD) != nullptr){
+			sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time2(skill_id, skill_lv));
+		}
+		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
 		break;
 
 	default:
@@ -15165,6 +15293,7 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(struct block_list *src, ui
 	case SA_DELUGE:
 	case SA_VIOLENTGALE:
 	case SC_CHAOSPANIC:
+	case SOA_TOTEM_OF_TUTELARY:
 	{
 		std::shared_ptr<s_skill_unit_group> old_sg = skill_locate_element_field(src);
 
@@ -16150,6 +16279,7 @@ int32 skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t
 					skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 					break;
 				case HN_METEOR_STORM_BUSTER:
+				case SOA_TALISMAN_OF_BLACK_TORTOISE:
 					skill_attack( skill_get_type(sg->skill_id), ss, ss, bl, sg->skill_id, sg->skill_lv, tick, 0 );
 					break;
 				default:
@@ -16784,6 +16914,31 @@ int32 skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t
 				skill_attack(skill_get_type(sg->skill_id), ss, &unit->bl, bl, sg->skill_id, sg->skill_lv, tick, flag);
 			}
 			break;
+
+		case UNT_TOTEM_OF_TUTELARY:
+			if( bl->type == BL_PC ) {
+				if (tsc != nullptr && tsc->option&OPTION_MADOGEAR)
+					break;
+
+				int32 hp = 500;
+
+				hp += 500 * sg->skill_lv;
+				hp += 50 * pc_checkskill( BL_CAST( BL_PC, ss ), SOA_TALISMAN_MASTERY ) * sg->skill_lv;
+				hp += 5 * status_get_crt( ss ) * sg->skill_lv;
+				hp *= status_get_lv( ss ) / 100;
+
+				int32 sp = 0;
+
+				sp += 50 * sg->skill_lv;
+				sp += 5 * pc_checkskill( BL_CAST( BL_PC, ss ), SOA_TALISMAN_MASTERY ) * sg->skill_lv;
+				sp += 5 * status_get_crt( ss ) * sg->skill_lv;
+				sp *= status_get_lv( ss ) / 100;
+
+				status_heal( bl, hp, sp, 0, 2 );
+
+				sc_start( ss, bl, skill_get_sc( sg->skill_id ), 100, sg->skill_lv, sg->interval + 100 );
+			} 
+			break;
 	}
 
 	if (bl->type == BL_MOB && ss != bl)
@@ -16823,6 +16978,7 @@ int32 skill_unit_onout(struct skill_unit *src, struct block_list *bl, t_tick tic
 		case UNT_SAFETYWALL:
 		case UNT_PNEUMA:
 		case UNT_EPICLESIS://Arch Bishop
+		case UNT_TOTEM_OF_TUTELARY:
 			if (sce)
 				status_change_end(bl, type);
 			break;
@@ -18167,6 +18323,19 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 			if (!(sc && sc->getSCE(SC_THIRD_EXOR_FLAME)))
 				return false;
 			break;
+
+		case SOA_SOUL_GATHERING:
+			if (!(sc != nullptr && sc->getSCE(SC_SOULCOLLECT) != nullptr)){
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_CONDITION,0);
+				return false;
+			}
+			break;
+		case SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS:
+			if (!(sc != nullptr && (sc->getSCE(SC_T_FOURTH_GOD) != nullptr || sc->getSCE(SC_T_FIFTH_GOD) != nullptr))) {
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_CONDITION,0);
+				return false;
+			}
+			break;
 	}
 
 	/* check state required */
@@ -18420,6 +18589,7 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 			case SP_SOULREAPER:
 			case SP_SOULEXPLOSION:
 			case SP_KAUTE:
+			case SOA_EXORCISM_OF_MALICIOUS_SOUL:
 				if (sd.soulball < require.spiritball) {
 					clif_skill_fail( sd, skill_id, USESKILL_FAIL_SPIRITS );
 					return false;
@@ -20109,6 +20279,7 @@ int32 skill_clear_group(block_list *bl, uint8 flag)
 			case SC_CHAOSPANIC:
 			case MH_POISON_MIST:
 			case MH_LAVA_SLIDE:
+			case SOA_TOTEM_OF_TUTELARY:
 				if (flag & 1) {
 					skill_delunitgroup(*it);
 					count++;
@@ -20170,6 +20341,7 @@ std::shared_ptr<s_skill_unit_group> skill_locate_element_field(struct block_list
 			case SC_CHAOSPANIC:
 			case MH_POISON_MIST:
 			case MH_LAVA_SLIDE:
+			case SOA_TOTEM_OF_TUTELARY:
 				return su;
 		}
 	}
@@ -23010,155 +23182,164 @@ static int32 skill_destroy_trap(struct block_list *bl, va_list ap)
 /*==========================================
  *
  *------------------------------------------*/
-int32 skill_blockpc_get(map_session_data *sd, int32 skillid) {
-	int32 i;
-
-	nullpo_retr(-1, sd);
-
-	ARR_FIND(0, MAX_SKILLCOOLDOWN, i, sd->scd[i] && sd->scd[i]->skill_id == skillid);
-	return (i >= MAX_SKILLCOOLDOWN) ? -1 : i;
-}
-
 TIMER_FUNC(skill_blockpc_end){
 	map_session_data *sd = map_id2sd(id);
-	int32 i = (int32)data;
 
-	if (!sd || data < 0 || data >= MAX_SKILLCOOLDOWN)
+	if (sd == nullptr)
 		return 0;
 
-	if (!sd->scd[i] || sd->scd[i]->timer != tid) {
-		ShowWarning("skill_blockpc_end: Invalid Timer or not Skill Cooldown.\n");
-		return 0;
-	}
+	sd->scd.erase(static_cast<uint16>(data));
 
-	aFree(sd->scd[i]);
-	sd->scd[i] = nullptr;
-		return 1;
+	return 1;
 }
 
 /**
- * Flags a singular skill as being blocked from persistent usage.
- * @param   sd        the player the skill delay affects
- * @param   skill_id   the skill which should be delayed
- * @param   tick      the length of time the delay should last
- * @param   load      whether this assignment is being loaded upon player login
- * @return  0 if successful, -1 otherwise
+ * Flags a singular skill as being blocked from persistent usage for a player.
+ * @param sd: The player the skill delay affects
+ * @param skill_id: The skill which should be delayed
+ * @param tick: The length of time the delay should last
+ * @return True if successful, false otherwise
  */
-int32 skill_blockpc_start(map_session_data *sd, int32 skill_id, t_tick tick) {
-	int32 i;
+bool skill_blockpc_start(map_session_data &sd, uint16 skill_id, t_tick tick) {
+	if (!skill_db.exists(skill_id) || tick < 1)
+		return false;
 
-	nullpo_retr(-1, sd);
-
-	if (!skill_id || tick < 1)
-		return -1;
-
-	ARR_FIND(0, MAX_SKILLCOOLDOWN, i, sd->scd[i] && sd->scd[i]->skill_id == skill_id);
-	if (i < MAX_SKILLCOOLDOWN) { // Skill already with cooldown
-		delete_timer(sd->scd[i]->timer, skill_blockpc_end);
-		aFree(sd->scd[i]);
-		sd->scd[i] = nullptr;
-	}
-
-	ARR_FIND(0, MAX_SKILLCOOLDOWN, i, !sd->scd[i]);
-	if (i < MAX_SKILLCOOLDOWN) { // Free Slot found
-		CREATE(sd->scd[i], struct skill_cooldown_entry, 1);
-		sd->scd[i]->skill_id = skill_id;
-		sd->scd[i]->timer = add_timer(gettick() + tick, skill_blockpc_end, sd->bl.id, i);
-
-		if (battle_config.display_status_timers)
-			clif_skill_cooldown( *sd, skill_id, tick );
-
-		return 1;
-	} else {
+	if (sd.scd.size() == MAX_SKILLCOOLDOWN) {
 		ShowWarning("skill_blockpc_start: Too many skillcooldowns, increase MAX_SKILLCOOLDOWN.\n");
-		return 0;
+		return false;
 	}
+
+	// Add entry to list.
+	sd.scd[skill_id] = add_timer(gettick() + tick, skill_blockpc_end, sd.bl.id, skill_id);
+
+	if (battle_config.display_status_timers)
+		clif_skill_cooldown(sd, skill_id, tick);
+
+	return true;
 }
 
-int32 skill_blockpc_clear(map_session_data *sd) {
-	int32 i;
-
-	nullpo_ret(sd);
-
-	for (i = 0; i < MAX_SKILLCOOLDOWN; i++) {
-		if (!sd->scd[i])
-			continue;
-		delete_timer(sd->scd[i]->timer, skill_blockpc_end);
-		aFree(sd->scd[i]);
-		sd->scd[i] = nullptr;
+/**
+ * Clear skill cooldowns from player.
+ * @param sd: Player data
+ */
+void skill_blockpc_clear(map_session_data &sd) {
+	for (auto &entry : sd.scd) {
+		if (battle_config.display_status_timers)
+			clif_skill_cooldown(sd, entry.first, 0);
+		delete_timer(entry.second, skill_blockpc_end);
 	}
-	return 1;
+
+	sd.scd.clear();
 }
 
+/**
+ * Timer end for homunculus skill cooldowns.
+ */
 TIMER_FUNC(skill_blockhomun_end){
-	struct homun_data *hd = (TBL_HOM*) map_id2bl(id);
+	homun_data *hd = map_id2hd(id);
 
-	if (hd) {
-		auto skill = util::vector_get(hd->blockskill, (uint16)data);
+	if (hd == nullptr)
+		return 0;
 
-		if (skill != hd->blockskill.end())
-			hd->blockskill.erase(skill);
-	}
+	hd->scd.erase(static_cast<uint16>(data));
 
 	return 1;
 }
 
-int32 skill_blockhomun_start(struct homun_data *hd, uint16 skill_id, int32 tick)	//[orn]
+/**
+ * Flags a singular skill as being blocked from persistent usage for a homunculus.
+ * @param hd: The homunculus the skill delay affects
+ * @param skill_id: The skill which should be delayed
+ * @param tick: The length of time the delay should last
+ * @return True if successful, false otherwise
+ */
+bool skill_blockhomun_start(homun_data &hd, uint16 skill_id, t_tick tick)	//[orn]
 {
-	nullpo_retr(-1, hd);
+	if (!skill_db.exists(skill_id) || tick < 1)
+		return false;
 
-	if (!skill_db.exists(skill_id))
-		return -1;
-
-	auto skill = util::vector_get(hd->blockskill, skill_id);
-
-	if (tick < 1 && skill != hd->blockskill.end()) {
-		hd->blockskill.erase(skill);
-		return -1;
+	if (hd.scd.size() == MAX_SKILLCOOLDOWN) {
+		ShowWarning("skill_blockhomun_start: Too many skillcooldowns, increase MAX_SKILLCOOLDOWN.\n");
+		return false;
 	}
 
-	hd->blockskill.push_back(skill_id);
+	// Add entry to list.
+	hd.scd[skill_id] = add_timer(gettick() + tick, skill_blockhomun_end, hd.bl.id, skill_id);
 
 	if (battle_config.display_status_timers)
-		clif_skill_cooldown(*hd->master, skill_id, tick);
+		clif_skill_cooldown(*hd.master, skill_id, tick);
 
-	return add_timer(gettick() + tick, skill_blockhomun_end, hd->bl.id, skill_id);
+	return true;
 }
 
+/**
+ * Clear skill cooldowns from homunculus.
+ * @param hd: Homunculus data
+ */
+void skill_blockhomun_clear(homun_data &hd) {
+	for (auto &entry : hd.scd) {
+		if (battle_config.display_status_timers)
+			clif_skill_cooldown(*hd.master, entry.first, 0);
+		delete_timer(entry.second, skill_blockhomun_end);
+	}
+
+	hd.scd.clear();
+}
+
+/**
+ * Timer end for mercenary skill cooldowns.
+ */
 TIMER_FUNC(skill_blockmerc_end){
-	s_mercenary_data *md = (TBL_MER*)map_id2bl(id);
+	s_mercenary_data *mc = map_id2mc(id);
 
-	if (md) {
-		auto skill = util::vector_get(md->blockskill, (uint16)data);
+	if (mc == nullptr)
+		return 0;
 
-		if (skill != md->blockskill.end())
-			md->blockskill.erase(skill);
-	}
+	mc->scd.erase(static_cast<uint16>(data));
 
 	return 1;
 }
 
-int32 skill_blockmerc_start(s_mercenary_data *md, uint16 skill_id, int32 tick)
+/**
+ * Flags a singular skill as being blocked from persistent usage for a mercenary.
+ * @param mc: The mercenary the skill delay affects
+ * @param skill_id: The skill which should be delayed
+ * @param tick: The length of time the delay should last
+ * @return True if successful, false otherwise
+ */
+bool skill_blockmerc_start(s_mercenary_data &mc, uint16 skill_id, t_tick tick)
 {
-	nullpo_retr(-1, md);
+	if (!skill_db.exists(skill_id) || tick < 1)
+		return false;
 
-	if (!skill_db.exists(skill_id))
-		return -1;
-
-	auto skill = util::vector_get(md->blockskill, skill_id);
-
-	if (tick < 1 && skill != md->blockskill.end()) {
-		md->blockskill.erase(skill);
-		return -1;
+	if (mc.scd.size() == MAX_SKILLCOOLDOWN) {
+		ShowWarning("skill_blockpc_start: Too many skillcooldowns, increase MAX_SKILLCOOLDOWN.\n");
+		return false;
 	}
 
-	md->blockskill.push_back(skill_id);
+	// Add entry to list.
+	mc.scd[skill_id] = add_timer(gettick() + tick, skill_blockmerc_end, mc.bl.id, skill_id);
 
 	if (battle_config.display_status_timers)
-		clif_skill_cooldown(*md->master, skill_id, tick);
+		clif_skill_cooldown(*mc.master, skill_id, tick);
 
-	return add_timer(gettick() + tick, skill_blockmerc_end, md->bl.id, skill_id);
+	return true;
 }
+
+/**
+ * Clear skill cooldowns from mercenary.
+ * @param mc: Mercenary data
+ */
+void skill_blockmerc_clear(s_mercenary_data &mc) {
+	for (auto &entry : mc.scd) {
+		if (battle_config.display_status_timers)
+			clif_skill_cooldown(*mc.master, entry.first, 0);
+		delete_timer(entry.second, skill_blockmerc_end);
+	}
+
+	mc.scd.clear();
+}
+
 /**
  * Adds a new skill unit entry for this player to recast after map load
  * @param sd: Player
@@ -23902,18 +24083,28 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (!this->asString(node, "Name", name))
 			return 0;
 
+		if( name.length() > SKILL_NAME_LENGTH ){
+			this->invalidWarning( node["Name"], "Name \"%s\" exceeds maximum length of %d.\n", name.c_str(), SKILL_NAME_LENGTH );
+			return 0;
+		}
+
 		name.resize(SKILL_NAME_LENGTH);
 		memcpy(skill->name, name.c_str(), sizeof(skill->name));
 	}
 
 	if (this->nodeExists(node, "Description")) {
-		std::string name;
+		std::string desc;
 
-		if (!this->asString(node, "Description", name))
+		if (!this->asString(node, "Description", desc))
 			return 0;
 
-		name.resize(SKILL_DESC_LENGTH);
-		memcpy(skill->desc, name.c_str(), sizeof(skill->desc));
+		if( desc.length() > SKILL_DESC_LENGTH ){
+			this->invalidWarning( node["Description"], "Description \"%s\" exceeds maximum length of %d.\n", desc.c_str(), SKILL_DESC_LENGTH );
+			return 0;
+		}
+
+		desc.resize(SKILL_DESC_LENGTH);
+		memcpy(skill->desc, desc.c_str(), sizeof(skill->desc));
 	}
 
 	if (this->nodeExists(node, "MaxLevel")) {

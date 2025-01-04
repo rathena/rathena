@@ -1010,10 +1010,6 @@ bool pc_addfame(map_session_data &sd, int32 count)
 {
 	enum e_rank ranktype;
 
-	sd.status.fame += count;
-	if (sd.status.fame > MAX_FAME)
-		sd.status.fame = MAX_FAME;
-
 	switch(sd.class_&MAPID_UPPERMASK){
 		case MAPID_BLACKSMITH:	ranktype = RANK_BLACKSMITH; break;
 		case MAPID_ALCHEMIST:	ranktype = RANK_ALCHEMIST; break;
@@ -1022,6 +1018,8 @@ bool pc_addfame(map_session_data &sd, int32 count)
 			ShowWarning( "pc_addfame: Trying to add fame to class '%s'(%d).\n", job_name(sd.status.class_), sd.status.class_ );
 			return false;
 	}
+
+	sd.status.fame = cap_value( sd.status.fame + count, 0, MAX_FAME );
 
 	clif_update_rankingpoint(sd, ranktype, count);
 	chrif_updatefamelist(sd, ranktype);
@@ -3018,9 +3016,11 @@ int32 pc_disguise(map_session_data *sd, int32 class_)
 			clif_updatestatus(*sd,SP_CARTINFO);
 		}
 		if (sd->chatID) {
-			struct chat_data* cd;
-			if ((cd = (struct chat_data*)map_id2bl(sd->chatID)) != nullptr)
-				clif_dispchat(cd,0);
+			chat_data* cd = map_id2cd( sd->chatID );
+
+			if( cd != nullptr ){
+				clif_dispchat( *cd );
+			}
 		}
 	}
 	return 1;
@@ -3954,8 +3954,12 @@ void pc_bonus(map_session_data *sd,int32 type,int32 val)
 				sd->left_weapon.ignore_def_class |= 1<<val;
 			break;
 		case SP_ATK_RATE:
+#ifdef RENEWAL
 			if (sd->state.lr_flag != LR_FLAG_ARROW)
 				sd->bonus.atk_rate += val;
+#else
+			ShowError( "pc_bonus: %s is not supported in Pre-Renewal mode.\n", QUOTE( SP_ATK_RATE ) );
+#endif
 			break;
 		case SP_MAGIC_ATK_DEF:
 			if (sd->state.lr_flag != LR_FLAG_ARROW)
@@ -7005,8 +7009,7 @@ enum e_setpos pc_setpos(map_session_data* sd, unsigned short mapindex, int32 x, 
 			status_db.removeByStatusFlag(&sd->hd->bl, { SCF_REMOVEFROMHOMONWARP });
 
 		if (battle_config.hom_delay_reset_warp) {
-			sd->hd->blockskill.clear();
-			sd->hd->blockskill.shrink_to_fit();
+			skill_blockhomun_clear(*sd->hd);
 		}
 
 		sd->hd->bl.m = m;
@@ -10160,7 +10163,13 @@ int64 pc_readparam(map_session_data* sd,int64 type)
 		case SP_DOUBLE_RATE:     val = sd->bonus.double_rate; break;
 		case SP_DOUBLE_ADD_RATE: val = sd->bonus.double_add_rate; break;
 		case SP_MATK_RATE:       val = sd->matk_rate; break;
-		case SP_ATK_RATE:        val = sd->bonus.atk_rate; break;
+		case SP_ATK_RATE:
+#ifdef RENEWAL
+			val = sd->bonus.atk_rate;
+#else
+			ShowError( "pc_readparam: %s is not supported in Pre-Renewal mode.\n", QUOTE( SP_ATK_RATE ) );
+#endif
+			break;
 		case SP_MAGIC_ATK_DEF:   val = sd->bonus.magic_def_rate; break;
 		case SP_MISC_ATK_DEF:    val = sd->bonus.misc_def_rate; break;
 		case SP_PERFECT_HIT_RATE:val = sd->bonus.perfect_hit; break;
@@ -14482,80 +14491,6 @@ uint8 pc_itemcd_check(map_session_data *sd, struct item_data *id, t_tick tick, u
 
 	sc_start(&sd->bl, &sd->bl, id->delay.sc, 100, id->nameid, id->delay.duration);
 	return 0;
-}
-
-/**
-* Clear the dmglog data from player
-* @param sd
-* @param md
-**/
-static void pc_clear_log_damage_sub(uint32 char_id, struct mob_data *md)
-{
-	uint8 i;
-	ARR_FIND(0,DAMAGELOG_SIZE,i,md->dmglog[i].id == char_id);
-	if (i < DAMAGELOG_SIZE) {
-		md->dmglog[i].id = 0;
-		md->dmglog[i].dmg = 0;
-		md->dmglog[i].flag = 0;
-	}
-}
-
-/**
-* Add log to player's dmglog
-* @param sd
-* @param id Monster's GID
-**/
-void pc_damage_log_add(map_session_data *sd, int32 id)
-{
-	uint8 i = 0;
-
-	if (!sd || !id)
-		return;
-
-	//Only store new data, don't need to renew the old one with same id
-	ARR_FIND(0, DAMAGELOG_SIZE_PC, i, sd->dmglog[i] == id);
-	if (i < DAMAGELOG_SIZE_PC)
-		return;
-
-	for (i = 0; i < DAMAGELOG_SIZE_PC; i++) {
-		if (sd->dmglog[i] == 0) {
-			sd->dmglog[i] = id;
-			return;
-		}
-	}
-}
-
-/**
-* Clear dmglog data from player
-* @param sd
-* @param id Monster's id
-**/
-void pc_damage_log_clear(map_session_data *sd, int32 id)
-{
-	uint8 i;
-	struct mob_data *md = nullptr;
-
-	if (!sd)
-		return;
-
-	if (!id) {
-		for (i = 0; i < DAMAGELOG_SIZE_PC; i++) {
-			if( !sd->dmglog[i] )	//skip the empty value
-				continue;
-
-			if ((md = map_id2md(sd->dmglog[i])))
-				pc_clear_log_damage_sub(sd->status.char_id,md);
-			sd->dmglog[i] = 0;
-		}
-	}
-	else {
-		if ((md = map_id2md(id)))
-			pc_clear_log_damage_sub(sd->status.char_id,md);
-
-		ARR_FIND(0,DAMAGELOG_SIZE_PC,i,sd->dmglog[i] == id);	// find the id position
-		if (i < DAMAGELOG_SIZE_PC)
-			sd->dmglog[i] = 0;
-	}
 }
 
 /**
