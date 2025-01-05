@@ -33,137 +33,240 @@ Header:
   Version: 1
 
 Body:
-  - Command: help
+  - Command: accept
+    Help: |
+      Accepts an invitation to a duel.
+  - Command: accinfo
     Aliases:
-      - h
-    Help: |
-      Params: <command>
-      Shows help for specified command.
-  - Command: noask
-    Help: |
-      Auto rejects deals/invites.
-  - Command: gmotd
-    Help: |
-      Broadcasts the Message of The Day to all players.
-  - Command: me
-    Help: |
-      Params: <message>
-      Displays normal text as a message in this format: *name message* (like /me in mIRC).
-  - Command: fakename
-    Help: |
-      Params: <name>
-      Changes your name to your choice temporarily.
-  - Command: npctalk
+      - accountinfo
+  - Command: addfame
     Aliases:
-      - npctalkc
+      - famepoint
+      - famepoints
+  - Command: addperm
     Help: |
-      Params: <NPC name> <message>
-      Forces a NPC to display a message in normal chat.
+      Params: <permission_name>
+      Temporarily add a permission to a player.
+  - Command: addwarp
+    Help: |
+      Params: <map name> <x coord> <y coord> <NPC name>
+  - Command: adjgroup
+    Help: |
+      Params: <level> <char name>
+      Do a temporary adjustment of the group level of a player.
+  - Command: agi
+    Help: |
+      Params: <amount>
+      Raises AGI by given amount.
+  - Command: agitend
+    Help: |
+      End War of Emperium
+  - Command: agitstart
+    Help: |
+      Starts War of Emperium
+  - Command: alive
+    Help: |
+      Revives yourself from death.
+  - Command: allskill
+    Aliases:
+      - allskills
+      - skillall
+      - skillsall
+    Help: |
+      Give you all skills.
+  - Command: allstats
+    Aliases:
+      - allstat
+      - statall
+      - statsall
+    Help: |
+      Params: <value>
+      Adds value in all stats (maximum if no value).
+  - Command: alltraits
+    Aliases:
+      - alltrait
+      - traitall
+      - traitsall
+    Help: |
+      Params: <value>
+      Adds value in all traits (maximum if no value).
+  - Command: autoloot
+    Help: |
+      Params: <on|off|#>
+      Makes items go straight into your inventory.
+  - Command: autoloottype
+    Aliases:
+      - aloottype
+  - Command: autotrade
+    Aliases:
+      - at
+    Help: |
+      Allows you to vend while you are offline.
+  - Command: ban
+    Aliases:
+      - banish
+    Help: |
+      Params: <time> <name>\n" "Temporarily ban an account.
+      time usage: adjustment (+/- value) and element (y/a, m, d/j, h, mn, s)
+      Example: @ban +1m-2mn1s-6y testplayer
+  - Command: block
+    Help: |
+      Params: <char name>
+      Permanently blocks an account.
+  - Command: blvl
+    Aliases:
+      - lvup
+      - blevel
+      - baselvl
+      - baselvup
+      - baselevel
+      - baselvlup
+    Help: |
+      Params: <number of levels>
+      Raises your base level the desired number of levels.
   - Command: broadcast
     Help: |
       Params: <message>
       Broadcasts a message with your name (in yellow).
-  - Command: kami
+  - Command: camerainfo
+    Aliases:
+      - viewpointvalue
+      - setcamera
     Help: |
-      Params: <message>
-      Broadcasts a message without your name (in yellow).
-  - Command: kamib
+      Shows or updates the client's camera settings.
+  - Command: cash
     Help: |
-      Params: <message>
-      Broadcasts a message without your name (in blue).
-  - Command: localbroadcast
+      Params: <amount> - Gives you the specified amount of cash points.
+  - Command: changedress
+    Aliases:
+      - nocosplay
     Help: |
-      Params: <message>
-      Broadcasts a message with your name (in yellow) only on your map.
+      Removes all character costumes.
+  - Command: changegm
+    Help: |
+      Params: <charname>
+      Changes the leader of your guild (You must be guild leader)
+  - Command: changeleader
+    Help: |
+      Params: <charname>
+      Changes the leader of your party (You must be party leader)
+  - Command: channel
+    Aliases:
+      - main
+  - Command: changesex
+    Help: |
+      Changes your gender.
+  - Command: clone
+    Help: |
+      Params: <charname>
+      Spawns a supportive clone of the given player.
+  - Command: cloneequip
+    Aliases:
+      - eqclone
+  - Command: clonestat
+    Aliases:
+      - stclone
+  - Command: clouds
+    Help: |
+      Makes all maps to have the cloudy weather effect.
+  - Command: clouds2
+    Help: |
+      Makes all maps to have another cloudy weather effect.
   - Command: commands
     Help: |
       Displays a list of commands that you can use.
-  - Command: rates
+  - Command: con
     Help: |
-      Displays the server's current rates.
-  - Command: uptime
+      Params: <amount>
+      Raises CON by given amount.
+  - Command: crt
     Help: |
-      Displays how long the server has been online.
-  - Command: showdelay
+      Params: <amount>
+      Raises CRT by given amount.
+  - Command: day
     Help: |
-      Shows/hides the "There is a delay after this skill" message.
-  - Command: exp
+      Disables night mode and restores regular lighting, all characters are affected.
+  - Command: dex
     Help: |
-      Displays current levels and % progress.
-  - Command: mobinfo
-    Aliases:
-      - monsterinfo
-      - mi
+      Params: <amount>
+      Raises DEX by given amount.
+  - Command: disguise
     Help: |
       Params: <monster name|ID>
-      Shows monster info (stats, exp, drops etc).
-  - Command: iteminfo
+      Change your appearence to other players to a mob.
+  - Command: disguiseguild
+    Help: |
+      Disguises all online characters of a guild.
+  - Command: divorce
+    Help: |
+      Divorce player.
+  - Command: doom
+    Help: |
+      Kills all NON GM chars on the server.
+  - Command: doommap
+    Help: |
+      Kills all non GM characters on the map.
+  - Command: dropall
+    Help: |
+      Params: [<item type>]
+      Throws all your possession on the ground. No type specified will drop all items.
+  - Command: duel
+    Help: |
+      Starts a duel.
+  - Command: dye
     Aliases:
-      - ii
+      - ccolor
     Help: |
-      Params: <item name|ID>
-      Shows item info (type, price etc).
-  - Command: whodrops
+      Params: <clothes palette no.>
+      Changes your characters clothes color.
+  - Command: effect
     Help: |
-      Params: <item name|ID>
-      Shows who drops an item (monster with highest drop rates).
-  - Command: version
-    Help: |
-      Displays SVN version of the server.
+      Params: <effect id> [<flag>]
+      Give an effect to your character.
   - Command: email
     Help: |
       Params: <current email> <new email>
       Changes your account e-mail address.
-  - Command: where
+  - Command: enchantgradeui
+    Help: |
+      Opens the enchantgrade UI.
+  - Command: evilclone
+    Help: |
+      Params: <charname>
+      Spawns an aggressive clone of the given player.
+  - Command: exp
+    Help: |
+      Displays current levels and % progress.
+  - Command: fakename
+    Help: |
+      Params: <name>
+      Changes your name to your choice temporarily.
+  - Command: fireworks
+    Help: |
+      Makes all maps to have the fireworks weather effect.
+  - Command: fog
+    Help: |
+      Makes all maps to have the fog weather effect.
+  - Command: follow
     Help: |
       Params: <char name>
-      Tells you the location of a character.
-  - Command: time
+      Follow a player.
+  - Command: gat
+    Help: |
+      For debugging (you inspect around gat)
+  - Command: glvl
     Aliases:
-      - date
-      - serverdate
-      - servertime
+      - glevel
+      - guildlvl
+      - guildlvup
+      - guildlevel
+      - guildlvlup
     Help: |
-      Shows the date and time of the server.
-  - Command: showexp
+      Params: <# of levels>
+      Raise Guild by desired number of levels
+  - Command: gmotd
     Help: |
-      Displays/hides experience gained.
-  - Command: showzeny
-    Help: |
-      Displays/hides Zeny gained.
-  - Command: mobsearch
-    Help: |
-      Params: <monster name|ID>
-      Shows the location of a certain mob on the current map.
-  - Command: who
-    Aliases:
-      - whois
-    Help: |
-      Params: [<name>]
-      Shows a list of online players and their party and guild.
-  - Command: who2
-    Help: |
-      Params: [<name>]
-      Shows a list of online players and their job.
-  - Command: who3
-    Help: |
-      Params: [<name>]
-      Shows a list of online players and their location.
-  - Command: whomap
-    Help: |
-      @whomap/@whomap2/@whomap3 [map] - like @who/@who2/@who3 but only for specified map.
-  - Command: whogm
-    Help: |
-      Params: [match_text] - Like @who+@who2+who3, but only for GM.
-  - Command: guildspy
-    Help: |
-      Params: <guild name|id> - You will receive all messages of the guild channel (Chat logging must be enabled)
-  - Command: partyspy
-    Help: |
-      @partyspy <party name|id> - You will receive all messages of the party channel (Chat logging must be enabled)
-  - Command: mapinfo
-    Help: |
-      Params: [<0-3> [map]] - Give information about a map (general info +: 0: no more, 1: players, 2: NPC, 3: chatrooms).
+      Broadcasts the Message of The Day to all players.
   - Command: go
     Help: |
       Params: <city name|number>
@@ -185,72 +288,123 @@ Body:
       11: gonryun              28: splendide
       12: umbala               29: brasilis
       13: niflheim              30: el dicastes
-  - Command: jumpto
+  - Command: grade
+    Help: |
+      Params: <equip position> <+/- amount>
+  - Command: guild
+    Help: |
+      Params: <guild_name>
+      Create a guild.
+  - Command: guildrecall
+    Help: |
+      Params: <guild name|ID>
+      Warps all online characters of a guild to you.
+  - Command: guildspy
+    Help: |
+      Params: <guild name|id> - You will receive all messages of the guild channel (Chat logging must be enabled)
+  - Command: guildstorage
     Aliases:
-      - goto
-      - warpto
+      - gstorage
     Help: |
-      Params: <char name>
-      Warps you to selected character.
-  - Command: follow
-    Help: |
-      Params: <char name>
-      Follow a player.
-  - Command: mount
+      Opens guild storage.
+  - Command: gvgoff
     Aliases:
-      - mountpeco
+      - gpvpoff
     Help: |
-      Give/remove a job-based mount (class is required, but not the skill).
-  - Command: mount2
+      Disables GvG on the current map
+  - Command: gvgon
+    Aliases:
+      - gpvpon
     Help: |
-      Give/remove a cash mount.
-  - Command: disguise
+      Enables GvG on the current map
+  - Command: haircolor
+    Aliases:
+      - hcolor
     Help: |
-      Params: <monster name|ID>
-      Change your appearence to other players to a mob.
-  - Command: undisguise
+      Params <hair palette no.>
+      Changes your hair color.
+  - Command: hairstyle
+    Aliases:
+      - hstyle
     Help: |
-      Restore your normal appearance.
-  - Command: disguiseguild
+      Params: <hairstyle no.>
+      Changes your hair style.
+  - Command: hatch
     Help: |
-      Disguises all online characters of a guild.
-  - Command: undisguiseguild
+      Create a pet from your inventory eggs list.
+  - Command: heal
     Help: |
-      Restore the normal appearance of all characters of a guild.
-  - Command: model
+      Params: [<HP> <SP>]
+      Heals the desired amount of HP and SP. No value specified will do a full heal.
+  - Command: healap
     Help: |
-      Params:  <hair ID: 0-17> <hair color: 0-8> <clothes color: 0-4> - Changes your characters appearence.
-  - Command: size
+      Params: [<AP>]
+      Heals the desired amount of AP. No value specified will do a full AP heal.
+  - Command: help
+    Aliases:
+      - h
     Help: |
-      Params:  <0-2> Changes your size (0-Normal 1-Small 2-Large)
-  - Command: sizeall
-    Help: |
-      Changes the size of all players.
-  - Command: sizeguild
-    Help: |
-      Changes the size of all online characters of a guild.
+      Params: <command>
+      Shows help for specified command.
   - Command: hide
     Help: |
       Makes you character invisible (GM invisibility). Type again to become visible.
-  - Command: save
+  - Command: hidenpc
     Help: |
-      Sets respawn point to current spot.
-  - Command: load
+      Params: <NPC name>
+      Disable a NPC.
+  - Command: homevolution
     Aliases:
-      - return
-    Help: |
-      Warps you to your save point.
-  - Command: warp
+      - homevolve
+  - Command: homlevel
     Aliases:
-      - rura
-      - mapmove
+      - hlvl
+      - hlevel
+      - homlvl
+      - homlvup
+  - Command: idsearch
     Help: |
-      Params: <mapname> [<x> <y>]
-      Warps you to the selected map and position.
-  - Command: jump
+      Params: <part_of_item_name>
+      Search all items that name have part_of_item_name
+  - Command: int
     Help: |
-      Params: [<x> [<y>]]
-      Randomly warps you like a flywing.
+      Params: <amount>
+      Raises INT by given amount.
+  - Command: invite
+    Help: |
+      Invites a player to a duel.
+  - Command: item
+    Help: |
+      Params: <item name or ID> <quantity>
+      Gives you the desired item.
+  - Command: item2
+    Help: |
+      Params: <item name or ID> <quantity> <identified_flag> <refine> <broken_flag> <Card1> <Card2> <Card3> <Card4>
+      Gives you the desired item.
+  - Command: iteminfo
+    Aliases:
+      - ii
+    Help: |
+      Params: <item name|ID>
+      Shows item info (type, price etc).
+  - Command: itemreset
+    Aliases:
+      - clearinventory
+    Help: |
+      Remove all your items.
+  - Command: jail
+    Help: |
+      Params: <char name> - Sends specified character in jails
+  - Command: jlvl
+    Aliases:
+      - jlevel
+      - joblvl
+      - joblvup
+      - joblevel
+      - joblvlup
+    Help: |
+      Params: <number of levels>
+      Raises your job level the desired number of levels.
   - Command: jobchange
     Aliases:
       - job
@@ -313,100 +467,73 @@ Body:
       4220 Baby Summoner        4222 Baby Ninja        4223 Baby Kagero         4224 Baby Oboro
       4225 Baby Taekwon       4226 Baby Star Glad    4227 Baby Soul Linker    4228 Baby Gunslinger
       4229 Baby Rebellion   4241 Baby Star Emperor    4242 Baby Soul Reaper
-  - Command: option
+  - Command: jump
     Help: |
-      Params: <param1> <param2>(stackable) <param3>(stackable)
-      Adds different visual effects on or around your character.
-       <param1>       <param2>        <param3>
-      01: Stone      01: Sight       01: Sight          512: Cart Lv. 4
-      02: Frozen     02: Curse       02: Hiding        1024: Cart Lv. 5
-      03: Stun       04: Silence     04: Cloaking      2048: Orc Head
-      04: Sleep      08: Signum      08: Cart Lv. 1    4096: Wedding
-      06: Petrify    16: Blind       16: Falcon        8192: Ruwach
-      07: Burning    32: Angelus     32: Riding       16384: Chasewalk
-      08: Imprison   64: Bleeding    64: Invisible
-      16: (Nothing) 128: D. Poison  128: Cart Lv. 2
-      32: (Nothing) 256: Fear       256: Cart Lv. 3
-  - Command: heal
-    Help: |
-      Params: [<HP> <SP>]
-      Heals the desired amount of HP and SP. No value specified will do a full heal.
-  - Command: healap
-    Help: |
-      Params: [<AP>]
-      Heals the desired amount of AP. No value specified will do a full AP heal.
-  - Command: dye
+      Params: [<x> [<y>]]
+      Randomly warps you like a flywing.
+  - Command: jumpto
     Aliases:
-      - ccolor
+      - goto
+      - warpto
     Help: |
-      Params: <clothes palette no.>
-      Changes your characters clothes color.
-  - Command: hairstyle
+      Params: <char name>
+      Warps you to selected character.
+  - Command: kami
+    Help: |
+      Params: <message>
+      Broadcasts a message without your name (in yellow).
+  - Command: kamib
+    Help: |
+      Params: <message>
+      Broadcasts a message without your name (in blue).
+  - Command: kick
+    Help: |
+      Params: <char name>
+      Kicks specified character off the server
+  - Command: kickall
+    Help: |
+      Kick all characters off the server
+  - Command: kill
     Aliases:
-      - hstyle
+      - die
     Help: |
-      Params: <hairstyle no.>
-      Changes your hair style.
-  - Command: haircolor
-    Aliases:
-      - hcolor
-    Help: |
-      Params <hair palette no.>
-      Changes your hair color.
-  - Command: speed
-    Help: |
-      Params: <1-1000>
-      Changes you walking speed. 1 being the fastest and 1000 the slowest. Default is 150.
-  - Command: effect
-    Help: |
-      Params: <effect id> [<flag>]
-      Give an effect to your character.
-  - Command: dropall
-    Help: |
-      Params: [<item type>]
-      Throws all your possession on the ground. No type specified will drop all items.
-  - Command: stockall
-    Help: |
-      Params: [<item type>]
-      Transfer items from cart to your inventory. No type specified will transfer all items.
-  - Command: storeall
-    Help: |
-      Puts all your possessions in storage.
+      Kills player.
   - Command: killable
     Help: |
       Make your character killable.
-  - Command: memo
+  - Command: killmonster
     Help: |
-      Params: [memo position]
-      Set/change a memo location (no position: display memo points).
-  - Command: spiritball
+      Params: <map>
+      Kill all monsters of the map (they drop)
+  - Command: killmonster2
     Help: |
-      Params: <1-100>
-      Gives you "spirit spheres" like from the skill "Call Spirits".
-  - Command: questskill
+      Kills all monsters of your map (without drops).
+  - Command: langtype
     Help: |
-      Params: <#>
-      Gives you the specified quest skill
-      Novice = 142: First Aid, 143: Act Dead
-      Archer = 147: Create Arrow, 148: Charge Arrow
-      Swordman = 144: Moving HP Recovery, 145: Attack Weak Point, 146: Auto Berserk
-      Acolyte = 156: Holy Light
-      Thief = 149: Throw Sand, 150: Back Sliding, 151: Take Stone, 152: Throw Stone
-      Merchant = 153: Cart Revolution, 154: Change Cart, 155: Crazy Uproar, 2535: Open Buying Store
-      Magician = 157: Energy Coat
-      Hunter = 1009: Phantasmic Arrow
-      Bard = 1010: Pang Voice
-      Dancer = 1011: Wink of Charm
-      Knight = 1001: Charge Attack
-      Crusader = 1002: Shrink
-      Priest = 1014: Redemptio
-      Monk = 1015: Ki Translation, 1016: Ki Explosio
-      Assassin = 1003: Sonic Acceleration, 1004: Throw Venom Knife
-      Rogue = 1005: Close Confine
-      Blacksmith = 1012: Unfair Trick, 1013: Greed
-      Alchemist = 238: Basis of Life
-      Wizard = 1006: Sight Blaster
-      Sage = 1007: Create Elemental Converter, 1008: Elemental Change (Water), 1017: Elemental Change (Earth), 1018: Elemental Change (Fire), 1019: Elemental Change (Wind)
+      Params: <language>
+      Changes your language setting.
+  - Command: leave
+    Help: |
+      Leaves a duel.
+  - Command: leaves
+    Help: |
+      Makes all maps to have the leaves weather effect.
+  - Command: limitedsale
+    Help: |
+      Opens the limited sale window.
+  - Command: load
+    Aliases:
+      - return
+    Help: |
+      Warps you to your save point.
+  - Command: loadnpc
+    Help: |
+      Params: <path to script>
+      Load the specified script file path.
+  - Command: localbroadcast
+    Help: |
+      Params: <message>
+      Broadcasts a message with your name (in yellow) only on your map.
   - Command: lostskill
     Help: |
       Params: <#>
@@ -431,144 +558,49 @@ Body:
       Alchemist = 238: Basis of Life
       Wizard = 1006: Sight Blaster
       Sage = 1007: Create Elemental Converter, 1008: Elemental Change (Water), 1017: Elemental Change (Earth), 1018: Elemental Change (Fire), 1019: Elemental Change (Wind)
-  - Command: skillid
-    Help: |
-      Params: <name>
-      Look up a skill by name
-  - Command: useskill
-    Help: |
-      Params: <skillid> <skillv> <target>
-      Use a skill on target
-  - Command: skilltree
-    Help: |
-      Params: <skillnum> <charname>
-      Prints the skill tree needed to get a skill for the target player.
-  - Command: marry
-    Help: |
-      Params: <player name>
-      Marry another player.
-  - Command: divorce
-    Help: |
-      Divorce player.
-  - Command: alive
-    Help: |
-      Revives yourself from death.
-  - Command: blvl
-    Aliases:
-      - lvup
-      - blevel
-      - baselvl
-      - baselvup
-      - baselevel
-      - baselvlup
-    Help: |
-      Params: <number of levels>
-      Raises your base level the desired number of levels.
-  - Command: jlvl
-    Aliases:
-      - jlevel
-      - joblvl
-      - joblvup
-      - joblevel
-      - joblvlup
-    Help: |
-      Params: <number of levels>
-      Raises your job level the desired number of levels.
-  - Command: allskill
-    Aliases:
-      - allskills
-      - skillall
-      - skillsall
-    Help: |
-      Give you all skills.
-  - Command: stpoint
-    Help: |
-      Params: <number of points> - Gives you the desired number of stat points.
-  - Command: trpoint
-    Help: |
-      Params: <number of points> - Gives you the desired number of trait stat points.
-  - Command: skpoint
-    Help: |
-      Params: <number of points> - Gives you the desired number of skill points.
-  - Command: zeny
-    Help: |
-      Params: <amount> - Gives you desired amount of Zeny.
-  - Command: cash
-    Help: |
-      Params: <amount> - Gives you the specified amount of cash points.
-  - Command: points
-    Help: |
-      Params: <amount> - Gives you the specified amount of Kafra Points.
-  - Command: str
-    Help: |
-      Params: <amount>
-      Raises STR by given amount.
-  - Command: agi
-    Help: |
-      Params: <amount>
-      Raises AGI by given amount.
-  - Command: dex
-    Help: |
-      Params: <amount>
-      Raises DEX by given amount.
-  - Command: vit
-    Help: |
-      Params: <amount>
-      Raises VIT by given amount.
-  - Command: int
-    Help: |
-      Params: <amount>
-      Raises INT by given amount.
   - Command: luk
     Help: |
       Params: <amount>
       Raises LUK by given amount.
-  - Command: pow
+  - Command: mail
     Help: |
-      Params: <amount>
-      Raises POW by given amount.
-  - Command: sta
+      Open mail box.
+  - Command: makeegg
     Help: |
-      Params: <amount>
-      Raises STA by given amount.
-  - Command: wis
+      Params: <pet_id>
+      Gives pet egg for monster number in pet DB
+  - Command: mapexit
     Help: |
-      Params: <amount>
-      Raises WIS by given amount.
-  - Command: spl
+      Kick all players and shut down map-server.
+  - Command: mapinfo
     Help: |
-      Params: <amount>
-      Raises SPL by given amount.
-  - Command: con
+      Params: [<0-3> [map]] - Give information about a map (general info +: 0: no more, 1: players, 2: NPC, 3: chatrooms).
+  - Command: marry
     Help: |
-      Params: <amount>
-      Raises CON by given amount.
-  - Command: crt
+      Params: <player name>
+      Marry another player.
+  - Command: me
     Help: |
-      Params: <amount>
-      Raises CRT by given amount.
-  - Command: allstats
+      Params: <message>
+      Displays normal text as a message in this format: *name message* (like /me in mIRC).
+  - Command: memo
+    Help: |
+      Params: [memo position]
+      Set/change a memo location (no position: display memo points).
+  - Command: mobinfo
     Aliases:
-      - allstat
-      - statall
-      - statsall
+      - monsterinfo
+      - mi
     Help: |
-      Params: <value>
-      Adds value in all stats (maximum if no value).
-  - Command: alltraits
-    Aliases:
-      - alltrait
-      - traitall
-      - traitsall
+      Params: <monster name|ID>
+      Shows monster info (stats, exp, drops etc).
+  - Command: mobsearch
     Help: |
-      Params: <value>
-      Adds value in all traits (maximum if no value).
-  - Command: addwarp
+      Params: <monster name|ID>
+      Shows the location of a certain mob on the current map.
+  - Command: model
     Help: |
-      Params: <map name> <x coord> <y coord> <NPC name>
-  - Command: killmonster2
-    Help: |
-      Kills all monsters of your map (without drops).
+      Params:  <hair ID: 0-17> <hair color: 0-8> <clothes color: 0-4> - Changes your characters appearence.
   - Command: monster
     Aliases:
       - spawn
@@ -578,170 +610,73 @@ Body:
       @spawn/@monster/@summon/@monster2 "desired monster name" <monster name|ID> [<number to spawn> [<x coord> [<y coord>]]]
       @spawn/@monster/@summon/@monster2 <monster name|ID> "desired monster name" [<number to spawn> [<x coord> [<y coord>]]]
       Spawns the desired monster with any desired name.
-  - Command: monstersmall
-    Help: |
-      Params: <monster name|ID>
-      Spawns a smaller version of a monster.
   - Command: monsterbig
     Help: |
       Params: <monster name|ID>
       Spawns a larger version of a monster.
-  - Command: killmonster
-    Help: |
-      Params: <map>
-      Kill all monsters of the map (they drop)
-  - Command: autoloot
-    Help: |
-      Params: <on|off|#>
-      Makes items go straight into your inventory.
-  - Command: autotrade
+  - Command: monsterignore
     Aliases:
-      - at
+      - battleignore
+  - Command: monstersmall
     Help: |
-      Allows you to vend while you are offline.
-  - Command: changegm
-    Help: |
-      Params: <charname>
-      Changes the leader of your guild (You must be guild leader)
-  - Command: changeleader
-    Help: |
-      Params: <charname>
-      Changes the leader of your party (You must be party leader)
-  - Command: request
-    Help: |
-      Params: <message>
-      Sends a message to all connected GMs (via the gm whisper system)
-  - Command: sound
-    Help: |
-      Params: <path to file in data folder or GRF file>
-      Plays a sound from the data folder or GRF file located on the client.
-  - Command: clone
-    Help: |
-      Params: <charname>
-      Spawns a supportive clone of the given player.
-  - Command: slaveclone
-    Help: |
-      Params: <charname>
-      Spawns a supportive clone of the given player that follows the creator around.
-  - Command: evilclone
-    Help: |
-      Params: <charname>
-      Spawns an aggressive clone of the given player.
-  - Command: changesex
-    Help: |
-      Changes your gender.
-  - Command: duel
-    Help: |
-      Starts a duel.
-  - Command: invite
-    Help: |
-      Invites a player to a duel.
-  - Command: accept
-    Help: |
-      Accepts an invitation to a duel.
-  - Command: reject
-    Help: |
-      Rejects an invitation to a duel.
-  - Command: leave
-    Help: |
-      Leaves a duel.
-  - Command: mail
-    Help: |
-      Open mail box.
-  - Command: storage
-    Help: |
-      Opens storage.
-  - Command: itemreset
+      Params: <monster name|ID>
+      Spawns a smaller version of a monster.
+  - Command: mount
     Aliases:
-      - clearinventory
+      - mountpeco
     Help: |
-      Remove all your items.
-  - Command: guildstorage
+      Give/remove a job-based mount (class is required, but not the skill).
+  - Command: mount2
+    Help: |
+      Give/remove a cash mount.
+  - Command: mutearea
     Aliases:
-      - gstorage
+      - stfu
+  - Command: night
     Help: |
-      Opens guild storage.
-  - Command: idsearch
+      Enables night mode on all maps, all characters are affected.
+  - Command: noask
     Help: |
-      Params: <part_of_item_name>
-      Search all items that name have part_of_item_name
-  - Command: refine
+      Auto rejects deals/invites.
+  - Command: npcmove
     Help: |
-      Params: <equip position> <+/- amount>
-  - Command: grade
-    Help: |
-      Params: <equip position> <+/- amount>
-  - Command: produce
-    Help: |
-      Params: <equip name or equip ID> <element> <# of very's>
-      Element: 0=None 1=Ice 2=Earth 3=Fire 4=Wind
-      You can add up to 3 Star Crumbs and 1 element
-  - Command: repairall
-    Help: |
-      Repair all items of your inventory
-  - Command: item
-    Help: |
-      Params: <item name or ID> <quantity>
-      Gives you the desired item.
-  - Command: item2
-    Help: |
-      Params: <item name or ID> <quantity> <identified_flag> <refine> <broken_flag> <Card1> <Card2> <Card3> <Card4>
-      Gives you the desired item.
-  - Command: pvpon
-    Help: |
-      Enables PvP on the current map
-  - Command: pvpoff
-    Help: |
-      Disables PvP on the current map
-  - Command: gvgon
+      Params: <x coord> <y coord> <NPC name>
+      Move a NPC.
+  - Command: npctalk
     Aliases:
-      - gpvpon
+      - npctalkc
     Help: |
-      Enables GvG on the current map
-  - Command: gvgoff
-    Aliases:
-      - gpvpoff
+      Params: <NPC name> <message>
+      Forces a NPC to display a message in normal chat.
+  - Command: nuke
     Help: |
-      Disables GvG on the current map
-  - Command: agitstart
+      Params: <char name>
+      Blow somebody up, including those surrounding them.
+  - Command: option
     Help: |
-      Starts War of Emperium
-  - Command: agitend
-    Help: |
-      End War of Emperium
+      Params: <param1> <param2>(stackable) <param3>(stackable)
+      Adds different visual effects on or around your character.
+       <param1>       <param2>        <param3>
+      01: Stone      01: Sight       01: Sight          512: Cart Lv. 4
+      02: Frozen     02: Curse       02: Hiding        1024: Cart Lv. 5
+      03: Stun       04: Silence     04: Cloaking      2048: Orc Head
+      04: Sleep      08: Signum      08: Cart Lv. 1    4096: Wedding
+      06: Petrify    16: Blind       16: Falcon        8192: Ruwach
+      07: Burning    32: Angelus     32: Riding       16384: Chasewalk
+      08: Imprison   64: Bleeding    64: Invisible
+      16: (Nothing) 128: D. Poison  128: Cart Lv. 2
+      32: (Nothing) 256: Fear       256: Cart Lv. 3
   - Command: party
     Help: |
       Params: <party_name>
       Create a party.
-  - Command: guild
-    Help: |
-      Params: <guild_name>
-      Create a guild.
-  - Command: glvl
-    Aliases:
-      - glevel
-      - guildlvl
-      - guildlvup
-      - guildlevel
-      - guildlvlup
-    Help: |
-      Params: <# of levels>
-      Raise Guild by desired number of levels
-  - Command: guildrecall
-    Help: |
-      Params: <guild name|ID>
-      Warps all online characters of a guild to you.
   - Command: partyrecall
     Help: |
       Params: <party name|ID>
       Warps all online characters of a party to you.
-  - Command: petrename
+  - Command: partyspy
     Help: |
-      Re-enable pet rename
-  - Command: pettalk
-    Help: |
-      Params: <message>
-      Makes your pet say a message.
+      @partyspy <party name|id> - You will receive all messages of the party channel (Chat logging must be enabled)
   - Command: petfriendly
     Help: |
       Params: <#>
@@ -750,162 +685,89 @@ Body:
     Help: |
       Params: <#>
       Set pet hungry amount (0-100) 100 = Max
-  - Command: hatch
+  - Command: petrename
     Help: |
-      Create a pet from your inventory eggs list.
-  - Command: makeegg
+      Re-enable pet rename
+  - Command: pettalk
     Help: |
-      Params: <pet_id>
-      Gives pet egg for monster number in pet DB
-  - Command: kick
+      Params: <message>
+      Makes your pet say a message.
+  - Command: points
     Help: |
-      Params: <char name>
-      Kicks specified character off the server
-  - Command: unjail
-    Aliases:
-      - discharge
+      Params: <amount> - Gives you the specified amount of Kafra Points.
+  - Command: pow
     Help: |
-      Params: <char name>
-      Discharges specified character/prisoner
-  - Command: kill
-    Aliases:
-      - die
+      Params: <amount>
+      Raises POW by given amount.
+  - Command: produce
     Help: |
-      Kills player.
-  - Command: recall
+      Params: <equip name or equip ID> <element> <# of very's>
+      Element: 0=None 1=Ice 2=Earth 3=Fire 4=Wind
+      You can add up to 3 Star Crumbs and 1 element
+  - Command: pvpoff
     Help: |
-      Params: <char name>
-      Warps target character to you.
+      Disables PvP on the current map
+  - Command: pvpon
+    Help: |
+      Enables PvP on the current map
+  - Command: questskill
+    Help: |
+      Params: <#>
+      Gives you the specified quest skill
+      Novice = 142: First Aid, 143: Act Dead
+      Archer = 147: Create Arrow, 148: Charge Arrow
+      Swordman = 144: Moving HP Recovery, 145: Attack Weak Point, 146: Auto Berserk
+      Acolyte = 156: Holy Light
+      Thief = 149: Throw Sand, 150: Back Sliding, 151: Take Stone, 152: Throw Stone
+      Merchant = 153: Cart Revolution, 154: Change Cart, 155: Crazy Uproar, 2535: Open Buying Store
+      Magician = 157: Energy Coat
+      Hunter = 1009: Phantasmic Arrow
+      Bard = 1010: Pang Voice
+      Dancer = 1011: Wink of Charm
+      Knight = 1001: Charge Attack
+      Crusader = 1002: Shrink
+      Priest = 1014: Redemptio
+      Monk = 1015: Ki Translation, 1016: Ki Explosio
+      Assassin = 1003: Sonic Acceleration, 1004: Throw Venom Knife
+      Rogue = 1005: Close Confine
+      Blacksmith = 1012: Unfair Trick, 1013: Greed
+      Alchemist = 238: Basis of Life
+      Wizard = 1006: Sight Blaster
+      Sage = 1007: Create Elemental Converter, 1008: Elemental Change (Water), 1017: Elemental Change (Earth), 1018: Elemental Change (Fire), 1019: Elemental Change (Wind)
   - Command: raise
     Aliases:
       - revive
     Help: |
       Params: <char name>
       Revives target character.
-  - Command: block
-    Help: |
-      Params: <char name>
-      Permanently blocks an account.
-  - Command: unblock
-    Help: |
-      Params: <char name>
-      Unblocks an account.
-  - Command: ban
-    Aliases:
-      - banish
-    Help: |
-      Params: <time> <name>\n" "Temporarily ban an account.
-      time usage: adjustment (+/- value) and element (y/a, m, d/j, h, mn, s)
-      Example: @ban +1m-2mn1s-6y testplayer
-  - Command: unban
-    Aliases:
-      - unbanish
-    Help: |
-      Params: <name> - Unban a account
-  - Command: jail
-    Help: |
-      Params: <char name> - Sends specified character in jails
-  - Command: trade
-    Help: |
-      Params: <char name> - Open a trade window with a another player
-  - Command: recallall
-    Help: |
-      Warps every character online to you.
-  - Command: doom
-    Help: |
-      Kills all NON GM chars on the server.
-  - Command: doommap
-    Help: |
-      Kills all non GM characters on the map.
   - Command: raisemap
     Help: |
       Resurrects all characters on the map.
-  - Command: night
+  - Command: rates
     Help: |
-      Enables night mode on all maps, all characters are affected.
-  - Command: day
-    Help: |
-      Disables night mode and restores regular lighting, all characters are affected.
-  - Command: skillon
-    Help: |
-      Turn skills on for a map.
-  - Command: skilloff
-    Help: |
-      Turn skills off for a map.
-  - Command: snow
-    Help: |
-      Makes all maps to have the snow weather effect.
-  - Command: clouds
-    Help: |
-      Makes all maps to have the cloudy weather effect.
-  - Command: clouds2
-    Help: |
-      Makes all maps to have another cloudy weather effect.
-  - Command: fog
-    Help: |
-      Makes all maps to have the fog weather effect.
-  - Command: fireworks
-    Help: |
-      Makes all maps to have the fireworks weather effect.
-  - Command: sakura
-    Help: |
-      Makes all maps to have the sakura weather effect.
-  - Command: leaves
-    Help: |
-      Makes all maps to have the leaves weather effect.
-  - Command: shownpc
-    Help: |
-      Params: <NPC name>
-      Enable a NPC.
-  - Command: hidenpc
-    Help: |
-      Params: <NPC name>
-      Disable a NPC.
-  - Command: npcmove
-    Help: |
-      Params: <x coord> <y coord> <NPC name>
-      Move a NPC.
-  - Command: loadnpc
-    Help: |
-      Params: <path to script>
-      Load the specified script file path.
-  - Command: unloadnpc
-    Help: |
-      Params: <NPC name>
-      Unload the specified NPC according to name.
-  - Command: unloadnpcfile
-    Help: |
-      Params: <path>
-      Unload the specified script file path.
-  - Command: adjgroup
-    Help: |
-      Params: <level> <char name>
-      Do a temporary adjustment of the group level of a player.
-  - Command: addperm
-    Help: |
-      Params: <permission_name>
-      Temporarily add a permission to a player.
-  - Command: rmvperm
-    Help: |
-      Params: <permission_name>
-      Temporarily remove a permission from a player.
-  - Command: kickall
-    Help: |
-      Kick all characters off the server
-  - Command: mapexit
-    Help: |
-      Kick all players and shut down map-server.
-  - Command: gat
-    Help: |
-      For debugging (you inspect around gat)
-  - Command: send
-    Help: |
-      Params: <Hex Number> [<value>]
-      For debugging (packet variety)
-  - Command: nuke
+      Displays the server's current rates.
+  - Command: recall
     Help: |
       Params: <char name>
-      Blow somebody up, including those surrounding them.
+      Warps target character to you.
+  - Command: recallall
+    Help: |
+      Warps every character online to you.
+  - Command: refine
+    Help: |
+      Params: <equip position> <+/- amount>
+  - Command: reject
+    Help: |
+      Rejects an invitation to a duel.
+  - Command: reload
+    Help: |
+      Params: <type>
+      Reload a database or configuration file.
+      itemdb                mobdb          skilldb
+      atcommand       battleconf     statusdb
+      pcdb                    motd             script
+      questdb              msgconf       packetdb
+      cashdb
   - Command: reloadachievementdb
     Help: |
       Reload achievement database.
@@ -953,90 +815,225 @@ Body:
   - Command: reloadstatusdb
     Help: |
       Reload status settings.
-  - Command: reload
+  - Command: repairall
     Help: |
-      Params: <type>
-      Reload a database or configuration file.
-      itemdb                mobdb          skilldb
-      atcommand       battleconf     statusdb
-      pcdb                    motd             script
-      questdb              msgconf       packetdb
-      cashdb
-  - Command: langtype
+      Repair all items of your inventory
+  - Command: request
     Help: |
-      Params: <language>
-      Changes your language setting.
-  - Command: limitedsale
-    Help: |
-      Opens the limited sale window.
-  - Command: changedress
-    Aliases:
-      - nocosplay
-    Help: |
-      Removes all character costumes.
-  - Command: camerainfo
-    Aliases:
-      - viewpointvalue
-      - setcamera
-    Help: |
-      Shows or updates the client's camera settings.
-  - Command: resetstat
-    Aliases:
-      - streset
-  - Command: resetskill
-    Aliases:
-      - skreset
-  - Command: homlevel
-    Aliases:
-      - hlvl
-      - hlevel
-      - homlvl
-      - homlvup
-  - Command: homevolution
-    Aliases:
-      - homevolve
-  - Command: mutearea
-    Aliases:
-      - stfu
-  - Command: monsterignore
-    Aliases:
-      - battleignore
-  - Command: accinfo
-    Aliases:
-      - accountinfo
-  - Command: channel
-    Aliases:
-      - main
-  - Command: autoloottype
-    Aliases:
-      - aloottype
-  - Command: cloneequip
-    Aliases:
-      - eqclone
-  - Command: clonestat
-    Aliases:
-      - stclone
-  - Command: reloadnpcfile
-    Aliases:
-      - reloadnpc
-  - Command: addfame
-    Aliases:
-      - famepoint
-      - famepoints
-  - Command: enchantgradeui
-    Help: |
-      Opens the enchantgrade UI.
-  - Command: roulette
-    Help: |
-      Opens the roulette UI.
-  - Command: setcard 
-    Help: |
-      Adds a card or enchant to the specific slot of the equipment.
+      Params: <message>
+      Sends a message to all connected GMs (via the gm whisper system)
   - Command: resetcooltime
     Aliases:
       - resetcooldown
     Help: |
       Resets the cooldown of all skills of the player and if active also of the homunculus or the mercenary.
+  - Command: resetskill
+    Aliases:
+      - skreset
+  - Command: resetstat
+    Aliases:
+      - streset
+  - Command: rmvperm
+    Help: |
+      Params: <permission_name>
+      Temporarily remove a permission from a player.
+  - Command: roulette
+    Help: |
+      Opens the roulette UI.
+  - Command: sakura
+    Help: |
+      Makes all maps to have the sakura weather effect.
+  - Command: save
+    Help: |
+      Sets respawn point to current spot.
+  - Command: send
+    Help: |
+      Params: <Hex Number> [<value>]
+      For debugging (packet variety)
+  - Command: setcard 
+    Help: |
+      Adds a card or enchant to the specific slot of the equipment.
+  - Command: showdelay
+    Help: |
+      Shows/hides the "There is a delay after this skill" message.
+  - Command: showexp
+    Help: |
+      Displays/hides experience gained.
+  - Command: shownpc
+    Help: |
+      Params: <NPC name>
+      Enable a NPC.
+  - Command: showzeny
+    Help: |
+      Displays/hides Zeny gained.
+  - Command: size
+    Help: |
+      Params:  <0-2> Changes your size (0-Normal 1-Small 2-Large)
+  - Command: sizeall
+    Help: |
+      Changes the size of all players.
+  - Command: sizeguild
+    Help: |
+      Changes the size of all online characters of a guild.
+  - Command: skillid
+    Help: |
+      Params: <name>
+      Look up a skill by name
+  - Command: skilloff
+    Help: |
+      Turn skills off for a map.
+  - Command: skillon
+    Help: |
+      Turn skills on for a map.
+  - Command: skilltree
+    Help: |
+      Params: <skillnum> <charname>
+      Prints the skill tree needed to get a skill for the target player.
+  - Command: skpoint
+    Help: |
+      Params: <number of points> - Gives you the desired number of skill points.
+  - Command: slaveclone
+    Help: |
+      Params: <charname>
+      Spawns a supportive clone of the given player that follows the creator around.
+  - Command: snow
+    Help: |
+      Makes all maps to have the snow weather effect.
+  - Command: sound
+    Help: |
+      Params: <path to file in data folder or GRF file>
+      Plays a sound from the data folder or GRF file located on the client.
+  - Command: speed
+    Help: |
+      Params: <1-1000>
+      Changes you walking speed. 1 being the fastest and 1000 the slowest. Default is 150.
+  - Command: spiritball
+    Help: |
+      Params: <1-100>
+      Gives you "spirit spheres" like from the skill "Call Spirits".
+  - Command: spl
+    Help: |
+      Params: <amount>
+      Raises SPL by given amount.
+  - Command: sta
+    Help: |
+      Params: <amount>
+      Raises STA by given amount.
+  - Command: stockall
+    Help: |
+      Params: [<item type>]
+      Transfer items from cart to your inventory. No type specified will transfer all items.
+  - Command: storage
+    Help: |
+      Opens storage.
+  - Command: storeall
+    Help: |
+      Puts all your possessions in storage.
+  - Command: stpoint
+    Help: |
+      Params: <number of points> - Gives you the desired number of stat points.
+  - Command: str
+    Help: |
+      Params: <amount>
+      Raises STR by given amount.
+  - Command: time
+    Aliases:
+      - date
+      - serverdate
+      - servertime
+    Help: |
+      Shows the date and time of the server.
+  - Command: trade
+    Help: |
+      Params: <char name> - Open a trade window with a another player
+  - Command: trpoint
+    Help: |
+      Params: <number of points> - Gives you the desired number of trait stat points.
+  - Command: unban
+    Aliases:
+      - unbanish
+    Help: |
+      Params: <name> - Unban a account
+  - Command: unblock
+    Help: |
+      Params: <char name>
+      Unblocks an account.
+  - Command: undisguise
+    Help: |
+      Restore your normal appearance.
+  - Command: undisguiseguild
+    Help: |
+      Restore the normal appearance of all characters of a guild.
+  - Command: unjail
+    Aliases:
+      - discharge
+    Help: |
+      Params: <char name>
+      Discharges specified character/prisoner
+  - Command: unloadnpc
+    Help: |
+      Params: <NPC name>
+      Unload the specified NPC according to name.
+  - Command: unloadnpcfile
+    Help: |
+      Params: <path>
+      Unload the specified script file path.
+  - Command: uptime
+    Help: |
+      Displays how long the server has been online.
+  - Command: useskill
+    Help: |
+      Params: <skillid> <skillv> <target>
+      Use a skill on target
+  - Command: version
+    Help: |
+      Displays SVN version of the server.
+  - Command: vit
+    Help: |
+      Params: <amount>
+      Raises VIT by given amount.
+  - Command: warp
+    Aliases:
+      - rura
+      - mapmove
+    Help: |
+      Params: <mapname> [<x> <y>]
+      Warps you to the selected map and position.
+  - Command: where
+    Help: |
+      Params: <char name>
+      Tells you the location of a character.
+  - Command: who
+    Aliases:
+      - whois
+    Help: |
+      Params: [<name>]
+      Shows a list of online players and their party and guild.
+  - Command: who2
+    Help: |
+      Params: [<name>]
+      Shows a list of online players and their job.
+  - Command: who3
+    Help: |
+      Params: [<name>]
+      Shows a list of online players and their location.
+  - Command: whodrops
+    Help: |
+      Params: <item name|ID>
+      Shows who drops an item (monster with highest drop rates).
+  - Command: whogm
+    Help: |
+      Params: [match_text] - Like @who+@who2+who3, but only for GM.
+  - Command: whomap
+    Help: |
+      @whomap/@whomap2/@whomap3 [map] - like @who/@who2/@who3 but only for specified map.
+  - Command: wis
+    Help: |
+      Params: <amount>
+      Raises WIS by given amount.
+  - Command: zeny
+    Help: |
+      Params: <amount> - Gives you desired amount of Zeny.
 
 Footer:
   Imports:
