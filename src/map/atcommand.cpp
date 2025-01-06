@@ -66,9 +66,13 @@ int32 atcmd_binding_count = 0;
 
 /// Atcommand restriction usage
 enum e_atcmd_restict {
+	ATCMD_NORESTRICTION = 0x0,
 	ATCMD_NOCONSOLE    = 0x1, /// Cannot be used via console (is_atcommand type 2)
 	ATCMD_NOSCRIPT     = 0x2, /// Cannot be used via script command 'atcommand' or 'useatcmd' (is_atcommand type 0 and 3)
 	ATCMD_NOAUTOTRADE  = 0x4, /// Like ATCMD_NOSCRIPT, but if the player is autotrader. Example: atcommand "@kick "+strcharinfo(0);
+	ATCMD_NOSCRIPT_PLAYERLESS = 0x8,
+
+	ATCMD_NO_WITHOUT_SD = ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE|ATCMD_NOSCRIPT_PLAYERLESS,
 };
 
 struct AtCommandInfo {
@@ -11029,19 +11033,18 @@ ACMD_FUNC(setcard)
 /**
  * Fills the reference of available commands in atcommand DBMap
  **/
-#define ACMD_DEF(x) { #x, atcommand_ ## x, nullptr, nullptr, 0 }
-#define ACMD_DEF2(x2, x) { x2, atcommand_ ## x, nullptr, nullptr, 0 }
+#define ACMD_DEF(x) { #x, atcommand_ ## x, nullptr, nullptr, ATCMD_NO_WITHOUT_SD }
+#define ACMD_DEF2(x2, x) { x2, atcommand_ ## x, nullptr, nullptr, ATCMD_NO_WITHOUT_SD }
 // Define with restriction
 #define ACMD_DEFR(x, r) { #x, atcommand_ ## x, nullptr, nullptr, r }
 #define ACMD_DEF2R(x2, x, r) { x2, atcommand_ ## x, nullptr, nullptr, r }
 void atcommand_basecommands(void) {
 	/**
 	 * Command reference list, place the base of your commands here
-	 * TODO: List all commands that causing crash
 	 **/
 	AtCommandInfo atcommand_base[] = {
 #include <custom/atcommand_def.inc>
-		ACMD_DEF2R("warp", mapmove, ATCMD_NOCONSOLE),
+		ACMD_DEF2("warp", mapmove),
 		ACMD_DEF(where),
 		ACMD_DEF(jumpto),
 		ACMD_DEF(jump),
@@ -11060,7 +11063,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(option),
 		ACMD_DEF(hide), // + /hide
 		ACMD_DEF(resetcooltime), // + /resetcooltime
-		ACMD_DEFR(jobchange, ATCMD_NOCONSOLE),
+		ACMD_DEF(jobchange),
 		ACMD_DEF(kill),
 		ACMD_DEF(alive),
 		ACMD_DEF(kami),
@@ -11077,7 +11080,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(clearstorage),
 		ACMD_DEF(cleargstorage),
 		ACMD_DEF(clearcart),
-		ACMD_DEF2R("blvl", baselevelup, ATCMD_NOCONSOLE),
+		ACMD_DEF2("blvl", baselevelup),
 		ACMD_DEF2("jlvl", joblevelup),
 		ACMD_DEF(help),
 		ACMD_DEF(pvpoff),
@@ -11085,7 +11088,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(gvgoff),
 		ACMD_DEF(gvgon),
 		ACMD_DEF(model),
-		ACMD_DEFR(go, ATCMD_NOCONSOLE),
+		ACMD_DEF(go),
 		ACMD_DEF(monster),
 		ACMD_DEF2("monstersmall", monster),
 		ACMD_DEF2("monsterbig", monster),
@@ -11126,7 +11129,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(doommap),
 		ACMD_DEF(raise),
 		ACMD_DEF(raisemap),
-		ACMD_DEFR(kick,ATCMD_NOAUTOTRADE), // + right click menu for GM "(name) force to quit"
+		ACMD_DEF(kick), // + right click menu for GM "(name) force to quit"
 		ACMD_DEF(kickall),
 		ACMD_DEF(allskill),
 		ACMD_DEF(questskill),
@@ -11144,22 +11147,22 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(localbroadcast), // + /lb and /nlb
 		ACMD_DEF(recallall),
 		ACMD_DEFR(reload,ATCMD_NOSCRIPT),
-		ACMD_DEF2("reloaditemdb", reload),
-		ACMD_DEF2("reloadcashdb", reload),
-		ACMD_DEF2("reloadmobdb", reload),
-		ACMD_DEF2("reloadskilldb", reload),
+		ACMD_DEF2R("reloaditemdb", reload, ATCMD_NOSCRIPT),
+		ACMD_DEF2R("reloadcashdb", reload, ATCMD_NOSCRIPT),
+		ACMD_DEF2R("reloadmobdb", reload, ATCMD_NOSCRIPT),
+		ACMD_DEF2R("reloadskilldb", reload, ATCMD_NOSCRIPT),
 		ACMD_DEF2R("reloadscript", reload, ATCMD_NOSCRIPT),
-		ACMD_DEF2("reloadatcommand", reload),
-		ACMD_DEF2("reloadbattleconf", reload),
-		ACMD_DEF2("reloadstatusdb", reload),
-		ACMD_DEF2("reloadpcdb", reload),
-		ACMD_DEF2("reloadmotd", reload),
-		ACMD_DEF2("reloadquestdb", reload),
-		ACMD_DEF2("reloadmsgconf", reload),
-		ACMD_DEF2("reloadinstancedb", reload),
-		ACMD_DEF2("reloadachievementdb",reload),
-		ACMD_DEF2("reloadattendancedb",reload),
-		ACMD_DEF2("reloadbarterdb",reload),
+		ACMD_DEF2R("reloadatcommand", reload, ATCMD_NOSCRIPT),
+		ACMD_DEF2R("reloadbattleconf", reload, ATCMD_NOSCRIPT),
+		ACMD_DEF2R("reloadstatusdb", reload, ATCMD_NOSCRIPT),
+		ACMD_DEF2R("reloadpcdb", reload, ATCMD_NOSCRIPT),
+		ACMD_DEF2R("reloadmotd", reload, ATCMD_NOSCRIPT),
+		ACMD_DEF2R("reloadquestdb", reload, ATCMD_NOSCRIPT),
+		ACMD_DEF2R("reloadmsgconf", reload, ATCMD_NOSCRIPT),
+		ACMD_DEF2R("reloadinstancedb", reload, ATCMD_NOSCRIPT),
+		ACMD_DEF2R("reloadachievementdb",reload, ATCMD_NOSCRIPT),
+		ACMD_DEF2R("reloadattendancedb",reload, ATCMD_NOSCRIPT),
+		ACMD_DEF2R("reloadbarterdb",reload, ATCMD_NOSCRIPT),
 		ACMD_DEF(partysharelvl),
 		ACMD_DEF(mapinfo),
 		ACMD_DEF(dye),
@@ -11340,19 +11343,19 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(adopt),
 		ACMD_DEF(agitstart3),
 		ACMD_DEF(agitend3),
-		ACMD_DEFR(limitedsale, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
-		ACMD_DEFR(changedress, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
-		ACMD_DEFR(camerainfo, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
-		ACMD_DEFR(resurrect, ATCMD_NOCONSOLE),
+		ACMD_DEF(limitedsale),
+		ACMD_DEF(changedress),
+		ACMD_DEF(camerainfo),
+		ACMD_DEF(resurrect),
 		ACMD_DEF2("setquest", quest),
 		ACMD_DEF2("erasequest", quest),
 		ACMD_DEF2("completequest", quest),
 		ACMD_DEF2("checkquest", quest),
 		ACMD_DEF(refineui),
-		ACMD_DEFR(stylist, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
+		ACMD_DEF(stylist),
 		ACMD_DEF(addfame),
-		ACMD_DEFR(enchantgradeui, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
-		ACMD_DEFR(roulette, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
+		ACMD_DEF(enchantgradeui),
+		ACMD_DEF(roulette),
 		ACMD_DEF(setcard),
 	};
 	AtCommandInfo* atcommand;
@@ -11609,7 +11612,7 @@ bool is_atcommand(const int32 fd, map_session_data* sd, const char* message, int
 	}
 
 	//check restriction
-	if (info->restriction) {
+	if( info->restriction != ATCMD_NORESTRICTION ){
 		if (info->restriction&ATCMD_NOCONSOLE && type == 2) //console prevent
 			return true;
 		if (info->restriction&ATCMD_NOSCRIPT && (type == 0 || type == 3)) //scripts prevent
@@ -11617,6 +11620,9 @@ bool is_atcommand(const int32 fd, map_session_data* sd, const char* message, int
 		if (info->restriction&ATCMD_NOAUTOTRADE && (type == 0 || type == 3)
 			&& ((is_atcommand && sd && sd->state.autotrade) || (ssd && ssd->state.autotrade)))
 			return true;
+		if( info->restriction&ATCMD_NOSCRIPT_PLAYERLESS && ( type == 0 || type == 3 ) && ( sd == dummy_sd || ssd == dummy_sd ) ){
+			return true;
+		}
 	}
 
 	// type == 1 : player invoked

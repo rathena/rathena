@@ -1,0 +1,5 @@
+-	script	8899#ci	-1,{
+OnInit:
+	atcommand "@warp prontera 100 141";
+	end;
+}
