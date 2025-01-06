@@ -759,15 +759,6 @@ Body:
   - Command: reject
     Help: |
       Rejects an invitation to a duel.
-  - Command: reload
-    Help: |
-      Params: <type>
-      Reload a database or configuration file.
-      itemdb                mobdb          skilldb
-      atcommand       battleconf     statusdb
-      pcdb                    motd             script
-      questdb              msgconf       packetdb
-      cashdb
   - Command: reloadachievementdb
     Help: |
       Reload achievement database.
