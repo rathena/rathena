@@ -78,6 +78,9 @@ Body:
     Help: |
       Params: <on|off|#>
       Makes items go straight into your inventory.
+  - Command: autolootitem
+    Aliases:
+      - alootid
   - Command: autoloottype
     Aliases:
       - aloottype
