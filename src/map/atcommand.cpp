@@ -11378,6 +11378,10 @@ bool atcommand_exists(const char* name)
 	return strdb_exists(atcommand_db, name);
 }
 
+const char* atcommand_alias_lookup( const std::string& cmd ){
+	return atcommand_alias_db.checkAlias( cmd.c_str() );
+}
+
 static AtCommandInfo* get_atcommandinfo_byname(const char *name)
 {
 	if (strdb_exists(atcommand_db, name))
