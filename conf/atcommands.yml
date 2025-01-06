@@ -143,6 +143,12 @@ Body:
     Help: |
       Params: <char name>
       Permanently blocks an account.
+  - Command: char_unblock
+    Aliases:
+      - unblock
+    Help: |
+      Params: <char name>
+      Unblocks an account.
   - Command: clone
     Help: |
       Params: <charname>
@@ -977,10 +983,6 @@ Body:
       - unbanish
     Help: |
       Params: <name> - Unban a account
-  - Command: unblock
-    Help: |
-      Params: <char name>
-      Unblocks an account.
   - Command: undisguise
     Help: |
       Restore your normal appearance.
