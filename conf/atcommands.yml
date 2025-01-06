@@ -517,6 +517,9 @@ Body:
   - Command: killmonster2
     Help: |
       Kills all monsters of your map (without drops).
+  - Command: ksprotection
+    Aliases:
+      - noks
   - Command: langtype
     Help: |
       Params: <language>

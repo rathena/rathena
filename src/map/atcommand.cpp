@@ -11296,7 +11296,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(hatereset),
 		ACMD_DEF(auction),
 		ACMD_DEF(mail),
-		ACMD_DEF2("noks", ksprotection),
+		ACMD_DEF(ksprotection),
 		ACMD_DEF(allowks),
 		ACMD_DEF(cash),
 		ACMD_DEF2("points", cash),
