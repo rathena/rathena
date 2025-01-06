@@ -11113,7 +11113,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF2("spl", param),
 		ACMD_DEF2("con", param),
 		ACMD_DEF2("crt", param),
-		ACMD_DEF2("glvl", guildlevelup),
+		ACMD_DEF(guildlevelup),
 		ACMD_DEF(makeegg),
 		ACMD_DEF(hatch),
 		ACMD_DEF(petfriendly),

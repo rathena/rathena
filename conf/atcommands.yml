@@ -239,13 +239,14 @@ Body:
   - Command: gat
     Help: |
       For debugging (you inspect around gat)
-  - Command: glvl
+  - Command: guildlevelup
     Aliases:
       - glevel
-      - guildlvl
-      - guildlvup
+      - glvl
       - guildlevel
+      - guildlvl
       - guildlvlup
+      - guildlvup
     Help: |
       Params: <# of levels>
       Raise Guild by desired number of levels
