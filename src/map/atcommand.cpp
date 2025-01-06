@@ -11164,7 +11164,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(mapinfo),
 		ACMD_DEF(dye),
 		ACMD_DEF(hair_style),
-		ACMD_DEF2("haircolor", hair_color),
+		ACMD_DEF(hair_color),
 		ACMD_DEF2("allstats", stat_all),
 		ACMD_DEF2("alltraits", trait_all),
 		ACMD_DEF2("block", char_block),

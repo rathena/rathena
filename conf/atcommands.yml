@@ -317,8 +317,9 @@ Body:
       - gpvpon
     Help: |
       Enables GvG on the current map
-  - Command: haircolor
+  - Command: hair_color
     Aliases:
+      - haircolor
       - hcolor
     Help: |
       Params <hair palette no.>
