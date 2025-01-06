@@ -1280,39 +1280,75 @@ ACMD_FUNC(alive)
 	return 0;
 }
 
-/*==========================================
- * +kamic [LuzZza]
- *------------------------------------------*/
-ACMD_FUNC(kami)
-{
+ACMD_FUNC(kami){
+	nullpo_retr(-1, sd);
+
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+
+	if (!message || !*message) {
+		clif_displaymessage(fd, msg_txt(sd,980)); // Please enter a message (usage: @kami <message>).
+		return -1;
+	}
+
+	sscanf(message, "%255[^\n]", atcmd_output);
+
+	intif_broadcast(atcmd_output, strlen(atcmd_output) + 1, BC_DEFAULT);
+
+	return 0;
+}
+
+ACMD_FUNC(lkami){
+	nullpo_retr(-1, sd);
+
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+
+	if (!message || !*message) {
+		clif_displaymessage(fd, msg_txt(sd,980)); // Please enter a message (usage: @kami <message>).
+		return -1;
+	}
+
+	sscanf(message, "%255[^\n]", atcmd_output);
+
+	clif_broadcast(&sd->bl, atcmd_output, strlen(atcmd_output) + 1, BC_DEFAULT, ALL_SAMEMAP);
+
+	return 0;
+}
+
+ACMD_FUNC(kamib){
+	nullpo_retr(-1, sd);
+
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+
+	if (!message || !*message) {
+		clif_displaymessage(fd, msg_txt(sd,980)); // Please enter a message (usage: @kami <message>).
+		return -1;
+	}
+
+	sscanf(message, "%255[^\n]", atcmd_output);
+
+	intif_broadcast(atcmd_output, strlen(atcmd_output) + 1, BC_BLUE);
+
+	return 0;
+}
+
+ACMD_FUNC(kamic){
 	unsigned long color=0;
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
-	if(*(command + 5) != 'c' && *(command + 5) != 'C') {
-		if (!message || !*message) {
-			clif_displaymessage(fd, msg_txt(sd,980)); // Please enter a message (usage: @kami <message>).
-			return -1;
-		}
-
-		sscanf(message, "%255[^\n]", atcmd_output);
-		if (strstr(command, "l") != nullptr)
-			clif_broadcast(&sd->bl, atcmd_output, strlen(atcmd_output) + 1, BC_DEFAULT, ALL_SAMEMAP);
-		else
-			intif_broadcast(atcmd_output, strlen(atcmd_output) + 1, (*(command + 5) == 'b' || *(command + 5) == 'B') ? BC_BLUE : BC_DEFAULT);
-	} else {
-		if(!message || !*message || (sscanf(message, "%20lx %199[^\n]", &color, atcmd_output) < 2)) {
-			clif_displaymessage(fd, msg_txt(sd,981)); // Please enter color and message (usage: @kamic <color> <message>).
-			return -1;
-		}
-
-		if(color > 0xFFFFFF) {
-			clif_displaymessage(fd, msg_txt(sd,982)); // Invalid color.
-			return -1;
-		}
-		intif_broadcast2(atcmd_output, strlen(atcmd_output) + 1, color, 0x190, 12, 0, 0);
+	if(!message || !*message || (sscanf(message, "%20lx %199[^\n]", &color, atcmd_output) < 2)) {
+		clif_displaymessage(fd, msg_txt(sd,981)); // Please enter color and message (usage: @kamic <color> <message>).
+		return -1;
 	}
+
+	if(color > 0xFFFFFF) {
+		clif_displaymessage(fd, msg_txt(sd,982)); // Invalid color.
+		return -1;
+	}
+
+	intif_broadcast2(atcmd_output, strlen(atcmd_output) + 1, color, 0x190, 12, 0, 0);
+
 	return 0;
 }
 
@@ -11240,9 +11276,9 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(kill),
 		ACMD_DEF(alive),
 		ACMD_DEF(kami),
-		ACMD_DEF2("kamib", kami),
-		ACMD_DEF2("kamic", kami),
-		ACMD_DEF2("lkami", kami),
+		ACMD_DEF(kamib),
+		ACMD_DEF(kamic),
+		ACMD_DEF(lkami),
 		ACMD_DEF(heal),
 		ACMD_DEF(healap),
 		ACMD_DEF(item),
