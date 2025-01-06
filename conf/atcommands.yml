@@ -109,21 +109,22 @@ Body:
       Params: <time> <name>\n" "Temporarily ban an account.
       time usage: adjustment (+/- value) and element (y/a, m, d/j, h, mn, s)
       Example: @ban +1m-2mn1s-6y testplayer
+  - Command: baselevelup
+    Aliases:
+      - baselevel
+      - baselvl
+      - baselvup
+      - baselvlup
+      - blevel
+      - blvl
+      - lvup
+    Help: |
+      Params: <number of levels>
+      Raises your base level the desired number of levels.
   - Command: block
     Help: |
       Params: <char name>
       Permanently blocks an account.
-  - Command: blvl
-    Aliases:
-      - lvup
-      - blevel
-      - baselvl
-      - baselvup
-      - baselevel
-      - baselvlup
-    Help: |
-      Params: <number of levels>
-      Raises your base level the desired number of levels.
   - Command: broadcast
     Help: |
       Params: <message>
