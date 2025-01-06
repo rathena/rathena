@@ -904,13 +904,15 @@ Body:
   - Command: skillon
     Help: |
       Turn skills on for a map.
+  - Command: skillpoint
+    Aliases:
+      - skpoint
+    Help: |
+      Params: <number of points> - Gives you the desired number of skill points.
   - Command: skilltree
     Help: |
       Params: <skillnum> <charname>
       Prints the skill tree needed to get a skill for the target player.
-  - Command: skpoint
-    Help: |
-      Params: <number of points> - Gives you the desired number of skill points.
   - Command: slaveclone
     Help: |
       Params: <charname>

@@ -11099,7 +11099,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(displaystatus),
 		ACMD_DEF(statuspoint),
 		ACMD_DEF(traitpoint),
-		ACMD_DEF2("skpoint", skillpoint),
+		ACMD_DEF(skillpoint),
 		ACMD_DEF(zeny),
 		ACMD_DEF2("str", param),
 		ACMD_DEF2("agi", param),
