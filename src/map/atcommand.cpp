@@ -11166,7 +11166,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(hair_style),
 		ACMD_DEF(hair_color),
 		ACMD_DEF(stat_all),
-		ACMD_DEF2("alltraits", trait_all),
+		ACMD_DEF(trait_all),
 		ACMD_DEF2("block", char_block),
 		ACMD_DEF2("ban", char_ban),
 		ACMD_DEF2("unblock", char_unblock),

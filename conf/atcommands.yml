@@ -74,14 +74,6 @@ Body:
       - skillsall
     Help: |
       Give you all skills.
-  - Command: alltraits
-    Aliases:
-      - alltrait
-      - traitall
-      - traitsall
-    Help: |
-      Params: <value>
-      Adds value in all traits (maximum if no value).
   - Command: autoloot
     Help: |
       Params: <on|off|#>
@@ -963,6 +955,15 @@ Body:
   - Command: trade
     Help: |
       Params: <char name> - Open a trade window with a another player
+  - Command: trait_all
+    Aliases:
+      - alltrait
+      - alltraits
+      - traitall
+      - traitsall
+    Help: |
+      Params: <value>
+      Adds value in all traits (maximum if no value).
   - Command: traitpoint
     Aliases:
       - trpoint
