@@ -4,6 +4,7 @@
 #ifndef MOB_HPP
 #define MOB_HPP
 
+#include <deque>
 #include <vector>
 
 #include <common/database.hpp>
@@ -318,6 +319,13 @@ private:
 extern MapDropDatabase map_drop_db;
 extern std::unordered_map<uint16, std::vector<spawn_info>> mob_spawn_data;
 
+struct s_dmglog{
+	int32 id; //char id
+	uint32 dmg;
+	uint32 dmg_tanked; //Damage tanked from normal attacks of the monster, MVP is the player with highest dmg+dmg_tanked
+	uint32 flag : 2; //0: Normal. 1: Homunc exp. 2: Pet exp
+};
+
 struct mob_data {
 	struct block_list bl;
 	struct unit_data  ud;
@@ -347,12 +355,7 @@ struct mob_data {
 		int32 provoke_flag; // Celest
 	} state;
 	struct guardian_data* guardian_data;
-	struct s_dmglog {
-		int32 id; //char id
-		uint32 dmg;
-		uint32 dmg_tanked; //Damage tanked from normal attacks of the monster, MVP is the player with highest dmg+dmg_tanked
-		uint32 flag : 2; //0: Normal. 1: Homunc exp. 2: Pet exp. 3: Self.
-	} dmglog[DAMAGELOG_SIZE];
+	std::deque<s_dmglog> dmglog;
 	uint32 spotted_log[DAMAGELOG_SIZE];
 	struct spawn_data *spawn; //Spawn data.
 	int32 spawn_timer; //Required for Convex Mirror
