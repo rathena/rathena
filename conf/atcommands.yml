@@ -575,6 +575,13 @@ Body:
   - Command: mapinfo
     Help: |
       Params: [<0-3> [map]] - Give information about a map (general info +: 0: no more, 1: players, 2: NPC, 3: chatrooms).
+  - Command: mapmove
+    Aliases:
+      - rura
+      - warp
+    Help: |
+      Params: <mapname> [<x> <y>]
+      Warps you to the selected map and position.
   - Command: marry
     Help: |
       Params: <player name>
@@ -993,13 +1000,6 @@ Body:
     Help: |
       Params: <amount>
       Raises VIT by given amount.
-  - Command: warp
-    Aliases:
-      - rura
-      - mapmove
-    Help: |
-      Params: <mapname> [<x> <y>]
-      Warps you to the selected map and position.
   - Command: where
     Help: |
       Params: <char name>
