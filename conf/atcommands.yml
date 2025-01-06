@@ -323,8 +323,9 @@ Body:
     Help: |
       Params <hair palette no.>
       Changes your hair color.
-  - Command: hairstyle
+  - Command: hair_style
     Aliases:
+      - hairstyle
       - hstyle
     Help: |
       Params: <hairstyle no.>

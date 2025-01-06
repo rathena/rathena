@@ -11163,7 +11163,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(partysharelvl),
 		ACMD_DEF(mapinfo),
 		ACMD_DEF(dye),
-		ACMD_DEF2("hairstyle", hair_style),
+		ACMD_DEF(hair_style),
 		ACMD_DEF2("haircolor", hair_color),
 		ACMD_DEF2("allstats", stat_all),
 		ACMD_DEF2("alltraits", trait_all),
