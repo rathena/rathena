@@ -105,10 +105,6 @@ Body:
     Help: |
       Params: <number of levels>
       Raises your base level the desired number of levels.
-  - Command: block
-    Help: |
-      Params: <char name>
-      Permanently blocks an account.
   - Command: broadcast
     Help: |
       Params: <message>
@@ -141,6 +137,12 @@ Body:
   - Command: changesex
     Help: |
       Changes your gender.
+  - Command: char_block
+    Aliases:
+      - block
+    Help: |
+      Params: <char name>
+      Permanently blocks an account.
   - Command: clone
     Help: |
       Params: <charname>
