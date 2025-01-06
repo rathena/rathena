@@ -9998,14 +9998,10 @@ ACMD_FUNC(set) {
 
 	return 0;
 }
+
 ACMD_FUNC(addperm) {
 	int32 perm_size = ARRAYLENGTH(pc_g_permission_name);
-	bool add;
 	int32 i;
-
-	parent_cmd = atcommand_alias_db.checkAlias(command+1);
-
-	add = (strcmpi(parent_cmd, "addperm") == 0);
 
 	if( !message || !*message ) {
 		sprintf(atcmd_output,  msg_txt(sd,1378),command); // Usage: %s <permission_name>
@@ -10031,11 +10027,49 @@ ACMD_FUNC(addperm) {
 		return -1;
 	}
 
-	if( add && pc_has_permission( sd, pc_g_permission_name[i].permission) ){
+	if( pc_has_permission( sd, pc_g_permission_name[i].permission) ){
 		sprintf(atcmd_output,  msg_txt(sd,1381),sd->status.name,pc_g_permission_name[i].name); // User '%s' already possesses the '%s' permission.
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
-	}else if( !add && !pc_has_permission( sd, pc_g_permission_name[i].permission ) ){
+	}
+
+	sd->permissions.set( pc_g_permission_name[i].permission );
+
+	sprintf(atcmd_output, msg_txt(sd,1384),sd->status.name); // User '%s' permissions updated successfully. The changes are temporary.
+	clif_displaymessage(fd, atcmd_output);
+
+	return 0;
+}
+
+ACMD_FUNC(rmvperm) {
+	int32 perm_size = ARRAYLENGTH(pc_g_permission_name);
+	int32 i;
+
+	if( !message || !*message ) {
+		sprintf(atcmd_output,  msg_txt(sd,1378),command); // Usage: %s <permission_name>
+		clif_displaymessage(fd, atcmd_output);
+		clif_displaymessage(fd, msg_txt(sd,1379)); // -- Permission List
+		for( i = 0; i < perm_size; i++ ) {
+			sprintf(atcmd_output,"- %s",pc_g_permission_name[i].name);
+			clif_displaymessage(fd, atcmd_output);
+		}
+		return -1;
+	}
+
+	ARR_FIND(0, perm_size, i, strcmpi(pc_g_permission_name[i].name, message) == 0);
+
+	if( i == perm_size ) {
+		sprintf(atcmd_output,msg_txt(sd,1380),message); // '%s' is not a known permission.
+		clif_displaymessage(fd, atcmd_output);
+		clif_displaymessage(fd, msg_txt(sd,1379)); // -- Permission List
+		for( i = 0; i < perm_size; i++ ) {
+			sprintf(atcmd_output,"- %s",pc_g_permission_name[i].name);
+			clif_displaymessage(fd, atcmd_output);
+		}
+		return -1;
+	}
+
+	if( !pc_has_permission( sd, pc_g_permission_name[i].permission ) ){
 		sprintf(atcmd_output,  msg_txt(sd,1382),sd->status.name,pc_g_permission_name[i].name); // User '%s' doesn't possess the '%s' permission.
 		clif_displaymessage(fd, atcmd_output);
 		sprintf(atcmd_output,msg_txt(sd,1383),sd->status.name); // -- User '%s' Permissions
@@ -10050,18 +10084,14 @@ ACMD_FUNC(addperm) {
 		return -1;
 	}
 
-	if( add ){
-		sd->permissions.set( pc_g_permission_name[i].permission );
-	}else{
-		sd->permissions.reset( pc_g_permission_name[i].permission );
-	}
-
+	sd->permissions.reset( pc_g_permission_name[i].permission );
 
 	sprintf(atcmd_output, msg_txt(sd,1384),sd->status.name); // User '%s' permissions updated successfully. The changes are temporary.
 	clif_displaymessage(fd, atcmd_output);
 
 	return 0;
 }
+
 ACMD_FUNC(unloadnpcfile) {
 
 	if( !message || !*message ) {
@@ -11380,7 +11410,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(sizeall),
 		ACMD_DEF(sizeguild),
 		ACMD_DEF(addperm),
-		ACMD_DEF2("rmvperm", addperm),
+		ACMD_DEF(rmvperm),
 		ACMD_DEF(unloadnpcfile),
 		ACMD_DEF(cart),
 		ACMD_DEF(mount2),
