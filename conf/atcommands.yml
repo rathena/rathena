@@ -960,7 +960,9 @@ Body:
   - Command: trade
     Help: |
       Params: <char name> - Open a trade window with a another player
-  - Command: trpoint
+  - Command: traitpoint
+    Aliases:
+      - trpoint
     Help: |
       Params: <number of points> - Gives you the desired number of trait stat points.
   - Command: unban
