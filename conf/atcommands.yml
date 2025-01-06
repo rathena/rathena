@@ -86,13 +86,6 @@ Body:
       - at
     Help: |
       Allows you to vend while you are offline.
-  - Command: ban
-    Aliases:
-      - banish
-    Help: |
-      Params: <time> <name>\n" "Temporarily ban an account.
-      time usage: adjustment (+/- value) and element (y/a, m, d/j, h, mn, s)
-      Example: @ban +1m-2mn1s-6y testplayer
   - Command: baselevelup
     Aliases:
       - baselevel
@@ -137,6 +130,15 @@ Body:
   - Command: changesex
     Help: |
       Changes your gender.
+  - Command: char_ban
+    Aliases:
+      - ban
+      - banish
+      - charban
+    Help: |
+      Params: <time> <name>\n" "Temporarily ban an account.
+      time usage: adjustment (+/- value) and element (y/a, m, d/j, h, mn, s)
+      Example: @ban +1m-2mn1s-6y testplayer
   - Command: char_block
     Aliases:
       - block
