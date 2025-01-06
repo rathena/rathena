@@ -9117,49 +9117,62 @@ ACMD_FUNC(cash)
 		return -1;
 	}
 
-	parent_cmd = atcommand_alias_db.checkAlias(command+1);
-
-	if( !strcmpi(parent_cmd,"cash") )
-	{
-		if( value > 0 ) {
-			if( (ret=pc_getcash(sd, value, 0, LOG_TYPE_COMMAND)) >= 0){
-				// If this option is set, the message is already sent by pc function
-				if( !battle_config.cashshop_show_points ){
-					sprintf(output, msg_txt(sd,505), ret, sd->cashPoints); // Gained %d cash points. Total %d points.
-					clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
-				}
+	if( value > 0 ) {
+		if( (ret=pc_getcash(sd, value, 0, LOG_TYPE_COMMAND)) >= 0){
+			// If this option is set, the message is already sent by pc function
+			if( !battle_config.cashshop_show_points ){
+				sprintf(output, msg_txt(sd,505), ret, sd->cashPoints); // Gained %d cash points. Total %d points.
+				clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 			}
-			else clif_displaymessage(fd, msg_txt(sd,149)); // Impossible to increase the number/value.
-		} else {
-			if (-value > sd->cashPoints) //By command, if cash < value, force it to remove all
-				value = -sd->cashPoints;
-			if( (ret=pc_paycash(sd, -value, 0, LOG_TYPE_COMMAND)) >= 0){
-				// If this option is set, the message is already sent by pc function
-				if( !battle_config.cashshop_show_points ){
-					sprintf(output, msg_txt(sd,410), ret, sd->cashPoints); // Removed %d cash points. Total %d points.
-					clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
-				}
-			}
-			else clif_displaymessage(fd, msg_txt(sd,41)); // Unable to decrease the number/value.
 		}
+		else clif_displaymessage(fd, msg_txt(sd,149)); // Impossible to increase the number/value.
+	} else {
+		if (-value > sd->cashPoints) //By command, if cash < value, force it to remove all
+			value = -sd->cashPoints;
+		if( (ret=pc_paycash(sd, -value, 0, LOG_TYPE_COMMAND)) >= 0){
+			// If this option is set, the message is already sent by pc function
+			if( !battle_config.cashshop_show_points ){
+				sprintf(output, msg_txt(sd,410), ret, sd->cashPoints); // Removed %d cash points. Total %d points.
+				clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
+			}
+		}
+		else clif_displaymessage(fd, msg_txt(sd,41)); // Unable to decrease the number/value.
 	}
-	else
-	{ // @points
-		if( value > 0 ) {
-			if( (ret=pc_getcash(sd, 0, value, LOG_TYPE_COMMAND)) >= 0){
-				sprintf(output, msg_txt(sd,506), ret, sd->kafraPoints); // Gained %d kafra points. Total %d points.
-				clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
-			}
-			else clif_displaymessage(fd, msg_txt(sd,149)); // Impossible to increase the number/value.
-		} else {
-			if (-value > sd->kafraPoints) //By command, if cash < value, force it to remove all
-				value = -sd->kafraPoints;
-			if( (ret=pc_paycash(sd, 0, -value, LOG_TYPE_COMMAND)) >= 0){
-				sprintf(output, msg_txt(sd,411), ret, sd->kafraPoints); // Removed %d kafra points. Total %d points.
-				clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
-			}
-			else clif_displaymessage(fd, msg_txt(sd,41)); // Unable to decrease the number/value.
+
+	return 0;
+}
+
+ACMD_FUNC(points){
+	char output[128];
+	int32 value;
+	int32 ret=0;
+	nullpo_retr(-1, sd);
+
+	// Since there is no cashpoint update packet we need to force updating like this
+	if( sd->state.cashshop_open ){
+		clif_displaymessage(fd, msg_txt(sd, 1376)); // Please close the cashshop before using this command.
+		return -1;
+	}
+
+	if( !message || !*message || (value = atoi(message)) == 0 ) {
+		clif_displaymessage(fd, msg_txt(sd,1322)); // Please enter an amount.
+		return -1;
+	}
+
+	if( value > 0 ) {
+		if( (ret=pc_getcash(sd, 0, value, LOG_TYPE_COMMAND)) >= 0){
+			sprintf(output, msg_txt(sd,506), ret, sd->kafraPoints); // Gained %d kafra points. Total %d points.
+			clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 		}
+		else clif_displaymessage(fd, msg_txt(sd,149)); // Impossible to increase the number/value.
+	} else {
+		if (-value > sd->kafraPoints) //By command, if cash < value, force it to remove all
+			value = -sd->kafraPoints;
+		if( (ret=pc_paycash(sd, 0, -value, LOG_TYPE_COMMAND)) >= 0){
+			sprintf(output, msg_txt(sd,411), ret, sd->kafraPoints); // Removed %d kafra points. Total %d points.
+			clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
+		}
+		else clif_displaymessage(fd, msg_txt(sd,41)); // Unable to decrease the number/value.
 	}
 
 	return 0;
@@ -10775,8 +10788,7 @@ ACMD_FUNC(resurrect) {
 	return 0;
 }
 
-ACMD_FUNC(quest) {
-	uint8 i;
+ACMD_FUNC(setquest){
 	int32 quest_id = 0;
 	nullpo_retr(-1, sd);
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
@@ -10792,46 +10804,94 @@ ACMD_FUNC(quest) {
 		return -1;
 	}
 
-	const char* type[] = { "setquest", "erasequest", "completequest", "checkquest" };
-	ARR_FIND( 0, ARRAYLENGTH(type), i, strcmpi(command+1, type[i]) == 0 );
-
-	switch(i) {
-	case 0:
-		if (quest_check(sd, quest_id, HAVEQUEST) >= 0) {
-			sprintf(atcmd_output,  msg_txt(sd,1507), quest_id); // Character already has quest %d.
-			clif_displaymessage(fd, atcmd_output);
-			return -1;
-		}
-		quest_add(sd, quest_id);
-		pc_show_questinfo(sd);
-		break;
-	case 1:
-		if (quest_check(sd, quest_id, HAVEQUEST) < 0) {
-			sprintf(atcmd_output,  msg_txt(sd,1508), quest_id); // Character doesn't have quest %d.
-			clif_displaymessage(fd, atcmd_output);
-			return -1;
-		}
-		quest_delete(sd, quest_id);
-		pc_show_questinfo(sd);
-		break;
-	case 2:
-		if (quest_check(sd, quest_id, HAVEQUEST) < 0)
-			quest_add(sd, quest_id);
-		if (quest_check(sd, quest_id, HAVEQUEST) < 2)
-			quest_update_status(sd, quest_id, Q_COMPLETE);
-		pc_show_questinfo(sd);
-		break;
-	case 3:
-		sprintf(atcmd_output, msg_txt(sd,1509), quest_id); // Checkquest value for quest %d
+	if (quest_check(sd, quest_id, HAVEQUEST) >= 0) {
+		sprintf(atcmd_output,  msg_txt(sd,1507), quest_id); // Character already has quest %d.
 		clif_displaymessage(fd, atcmd_output);
-		sprintf(atcmd_output, msg_txt(sd,1510), quest_check(sd, quest_id, HAVEQUEST));	// HAVEQUEST : %d
-		clif_displaymessage(fd, atcmd_output);
-		sprintf(atcmd_output, msg_txt(sd,1511), quest_check(sd, quest_id, HUNTING));	// HUNTING   : %d
-		clif_displaymessage(fd, atcmd_output);
-		sprintf(atcmd_output, msg_txt(sd,1512), quest_check(sd, quest_id, PLAYTIME));	// PLAYTIME  : %d
-		clif_displaymessage(fd, atcmd_output);
-		break;
+		return -1;
 	}
+	quest_add(sd, quest_id);
+	pc_show_questinfo(sd);
+
+	return 0;
+}
+
+ACMD_FUNC(erasequest) {
+	int32 quest_id = 0;
+	nullpo_retr(-1, sd);
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+
+	if (!message || !*message || sscanf(message, "%11d", &quest_id) < 1 || quest_id == 0) {
+		sprintf(atcmd_output, msg_txt(sd,1505), command); // Usage: %s <quest ID>
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
+	if (!quest_search(quest_id)) {
+		sprintf(atcmd_output,  msg_txt(sd,1506), quest_id); // Quest %d not found in DB.
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
+
+	if (quest_check(sd, quest_id, HAVEQUEST) < 0) {
+		sprintf(atcmd_output,  msg_txt(sd,1508), quest_id); // Character doesn't have quest %d.
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
+	quest_delete(sd, quest_id);
+	pc_show_questinfo(sd);
+
+	return 0;
+}
+
+ACMD_FUNC(completequest){
+	int32 quest_id = 0;
+	nullpo_retr(-1, sd);
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+
+	if (!message || !*message || sscanf(message, "%11d", &quest_id) < 1 || quest_id == 0) {
+		sprintf(atcmd_output, msg_txt(sd,1505), command); // Usage: %s <quest ID>
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
+	if (!quest_search(quest_id)) {
+		sprintf(atcmd_output,  msg_txt(sd,1506), quest_id); // Quest %d not found in DB.
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
+
+	if (quest_check(sd, quest_id, HAVEQUEST) < 0)
+		quest_add(sd, quest_id);
+	if (quest_check(sd, quest_id, HAVEQUEST) < 2)
+		quest_update_status(sd, quest_id, Q_COMPLETE);
+	pc_show_questinfo(sd);
+
+	return 0;
+}
+
+ACMD_FUNC(checkquest){
+	int32 quest_id = 0;
+	nullpo_retr(-1, sd);
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+
+	if (!message || !*message || sscanf(message, "%11d", &quest_id) < 1 || quest_id == 0) {
+		sprintf(atcmd_output, msg_txt(sd,1505), command); // Usage: %s <quest ID>
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
+	if (!quest_search(quest_id)) {
+		sprintf(atcmd_output,  msg_txt(sd,1506), quest_id); // Quest %d not found in DB.
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
+
+	sprintf(atcmd_output, msg_txt(sd,1509), quest_id); // Checkquest value for quest %d
+	clif_displaymessage(fd, atcmd_output);
+	sprintf(atcmd_output, msg_txt(sd,1510), quest_check(sd, quest_id, HAVEQUEST));	// HAVEQUEST : %d
+	clif_displaymessage(fd, atcmd_output);
+	sprintf(atcmd_output, msg_txt(sd,1511), quest_check(sd, quest_id, HUNTING));	// HUNTING   : %d
+	clif_displaymessage(fd, atcmd_output);
+	sprintf(atcmd_output, msg_txt(sd,1512), quest_check(sd, quest_id, PLAYTIME));	// PLAYTIME  : %d
+	clif_displaymessage(fd, atcmd_output);
+
 	return 0;
 }
 
@@ -11301,7 +11361,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF2("noks", ksprotection),
 		ACMD_DEF(allowks),
 		ACMD_DEF(cash),
-		ACMD_DEF2("points", cash),
+		ACMD_DEF(points),
 		ACMD_DEF(agitstart2),
 		ACMD_DEF(agitend2),
 		ACMD_DEF(resetskill),
@@ -11344,10 +11404,10 @@ void atcommand_basecommands(void) {
 		ACMD_DEFR(changedress, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 		ACMD_DEFR(camerainfo, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 		ACMD_DEFR(resurrect, ATCMD_NOCONSOLE),
-		ACMD_DEF2("setquest", quest),
-		ACMD_DEF2("erasequest", quest),
-		ACMD_DEF2("completequest", quest),
-		ACMD_DEF2("checkquest", quest),
+		ACMD_DEF(setquest),
+		ACMD_DEF(erasequest),
+		ACMD_DEF(completequest),
+		ACMD_DEF(checkquest),
 		ACMD_DEF(refineui),
 		ACMD_DEFR(stylist, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 		ACMD_DEF(addfame),
