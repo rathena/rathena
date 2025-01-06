@@ -11186,7 +11186,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(loadnpc),
 		ACMD_DEF(unloadnpc),
 		ACMD_DEF(reloadnpcfile),
-		ACMD_DEF2("time", servertime),
+		ACMD_DEF(servertime),
 		ACMD_DEF(jail),
 		ACMD_DEF(unjail),
 		ACMD_DEF(jailfor),

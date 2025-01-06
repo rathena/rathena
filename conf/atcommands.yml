@@ -850,6 +850,13 @@ Body:
     Help: |
       Params: <Hex Number> [<value>]
       For debugging (packet variety)
+  - Command: servertime
+    Aliases:
+      - date
+      - serverdate
+      - time
+    Help: |
+      Shows the date and time of the server.
   - Command: setcard 
     Help: |
       Adds a card or enchant to the specific slot of the equipment.
@@ -936,13 +943,6 @@ Body:
     Help: |
       Params: <amount>
       Raises STR by given amount.
-  - Command: time
-    Aliases:
-      - date
-      - serverdate
-      - servertime
-    Help: |
-      Shows the date and time of the server.
   - Command: trade
     Help: |
       Params: <char name> - Open a trade window with a another player
