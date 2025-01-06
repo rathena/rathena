@@ -621,8 +621,9 @@ Body:
     Help: |
       Params: <monster name|ID>
       Spawns a smaller version of a monster.
-  - Command: mount
+  - Command: mount_peco
     Aliases:
+      - mount
       - mountpeco
     Help: |
       Give/remove a job-based mount (class is required, but not the skill).

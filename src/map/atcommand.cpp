@@ -11173,7 +11173,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF2("unban", char_unban),
 		ACMD_DEF2("charban", char_ban),
 		ACMD_DEF2("charunban", char_unban),
-		ACMD_DEF2("mount", mount_peco),
+		ACMD_DEF(mount_peco),
 		ACMD_DEF(guildspy),
 		ACMD_DEF(partyspy),
 		ACMD_DEF(clanspy),
