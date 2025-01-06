@@ -938,6 +938,11 @@ Body:
     Help: |
       Params: <amount>
       Raises STA by given amount.
+  - Command: statuspoint
+    Aliases:
+      - stpoint
+    Help: |
+      Params: <number of points> - Gives you the desired number of stat points.
   - Command: stockall
     Help: |
       Params: [<item type>]
@@ -948,9 +953,6 @@ Body:
   - Command: storeall
     Help: |
       Puts all your possessions in storage.
-  - Command: stpoint
-    Help: |
-      Params: <number of points> - Gives you the desired number of stat points.
   - Command: str
     Help: |
       Params: <amount>
