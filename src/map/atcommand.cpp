@@ -11078,7 +11078,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(cleargstorage),
 		ACMD_DEF(clearcart),
 		ACMD_DEF(baselevelup),
-		ACMD_DEF2("jlvl", joblevelup),
+		ACMD_DEF(joblevelup),
 		ACMD_DEF(help),
 		ACMD_DEF(pvpoff),
 		ACMD_DEF(pvpon),

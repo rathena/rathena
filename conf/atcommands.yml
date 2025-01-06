@@ -398,16 +398,6 @@ Body:
   - Command: jail
     Help: |
       Params: <char name> - Sends specified character in jails
-  - Command: jlvl
-    Aliases:
-      - jlevel
-      - joblvl
-      - joblvup
-      - joblevel
-      - joblvlup
-    Help: |
-      Params: <number of levels>
-      Raises your job level the desired number of levels.
   - Command: jobchange
     Aliases:
       - job
@@ -470,6 +460,17 @@ Body:
       4220 Baby Summoner        4222 Baby Ninja        4223 Baby Kagero         4224 Baby Oboro
       4225 Baby Taekwon       4226 Baby Star Glad    4227 Baby Soul Linker    4228 Baby Gunslinger
       4229 Baby Rebellion   4241 Baby Star Emperor    4242 Baby Soul Reaper
+  - Command: joblevelup
+    Aliases:
+      - jlevel
+      - jlvl
+      - joblevel
+      - joblvl
+      - joblvlup
+      - joblvup
+    Help: |
+      Params: <number of levels>
+      Raises your job level the desired number of levels.
   - Command: jump
     Help: |
       Params: [<x> [<y>]]
