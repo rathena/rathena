@@ -74,14 +74,6 @@ Body:
       - skillsall
     Help: |
       Give you all skills.
-  - Command: allstats
-    Aliases:
-      - allstat
-      - statall
-      - statsall
-    Help: |
-      Params: <value>
-      Adds value in all stats (maximum if no value).
   - Command: alltraits
     Aliases:
       - alltrait
@@ -940,6 +932,15 @@ Body:
     Help: |
       Params: <amount>
       Raises STA by given amount.
+  - Command: stat_all
+    Aliases:
+      - allstat
+      - allstats
+      - statall
+      - statsall
+    Help: |
+      Params: <value>
+      Adds value in all stats (maximum if no value).
   - Command: statuspoint
     Aliases:
       - stpoint
