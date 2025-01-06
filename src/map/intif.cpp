@@ -3203,21 +3203,20 @@ int32 intif_parse_elemental_saved(int32 fd)
  * @param type : 1 - Only return account id & userid, 0 - Full info
  * @return : 0=error, 1=msg sent
  */
-int32 intif_request_accinfo(int32 u_fd, int32 aid, int32 group_lv, char* query, char type) {
+int32 intif_request_accinfo( int32 u_fd, int32 aid, int32 group_lv, char* query ){
 
 	if( CheckForCharServer() )
 		return 0;
 	
-	WFIFOHEAD(inter_fd,2 + 4 + 4 + 4 + 1 + NAME_LENGTH);
+	WFIFOHEAD(inter_fd,2 + 4 + 4 + 4 + NAME_LENGTH);
 
 	WFIFOW(inter_fd,0) = 0x3007;
 	WFIFOL(inter_fd,2) = u_fd;
 	WFIFOL(inter_fd,6) = aid;
 	WFIFOL(inter_fd,10) = group_lv;
-	WFIFOB(inter_fd,14) = type;
-	safestrncpy(WFIFOCP(inter_fd,15), query, NAME_LENGTH);
+	safestrncpy(WFIFOCP(inter_fd,14), query, NAME_LENGTH);
 
-	WFIFOSET(inter_fd,2 + 4 + 4 + 4 + 1 + NAME_LENGTH);
+	WFIFOSET(inter_fd,2 + 4 + 4 + 4 + NAME_LENGTH);
 	return 1;
 }
 

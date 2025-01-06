@@ -9857,23 +9857,16 @@ ACMD_FUNC(mount2) {
 
 ACMD_FUNC(accinfo) {
 	char query[NAME_LENGTH];
-	char type = 0; // type = 1, get only account name
 
 	if (!message || !*message || strlen(message) > NAME_LENGTH
-		|| ( sscanf(message, "%23s %c", query, &type) < 1))
+		|| ( sscanf(message, "%23s", query) < 1))
 	{
 		clif_displaymessage(fd, msg_txt(sd,1365)); // Usage: @accinfo/@accountinfo <account_id/char name>
 		clif_displaymessage(fd, msg_txt(sd,1366)); // You may search partial name by making use of '%' in the search, ex. "@accinfo %Mario%" lists all characters whose name contains "Mario".
 		return -1;
-	} else if (type != 0) {
-		type = type-'0'; //make it int32
-		if (type != 1) {
-			clif_displaymessage(fd, "accinfo : Unknow type specified\n");
-			return -1;
-		}
- 	}
+	}
 
-	intif_request_accinfo( sd->fd, sd->bl.id, pc_get_group_level(sd), query, type);
+	intif_request_accinfo( sd->fd, sd->bl.id, pc_get_group_level(sd), query);
 	return 0;
 }
 

@@ -31,9 +31,7 @@ void inter_final(void);
 int32 inter_parse_frommap(int32 fd);
 int32 inter_mapif_init(int32 fd);
 int32 mapif_disconnectplayer(int32 fd, uint32 account_id, uint32 char_id, int32 reason);
-void mapif_accinfo_ack(bool success, int32 map_fd, int32 u_fd, int32 u_aid, int32 account_id, int8 type,
-	int32 group_id, int32 logincount, int32 state, const char *email, const char *last_ip, const char *lastlogin,
-	const char *birthdate, const char *userid);
+void mapif_accinfo_ack( bool success, int32 map_fd, int32 u_fd, int32 u_aid, int32 account_id, int32 group_id, int32 logincount, int32 state, const char* email, const char* last_ip, const char* lastlogin, const char* birthdate, const char* userid );
 
 int32 inter_log(const char *fmt,...);
 
