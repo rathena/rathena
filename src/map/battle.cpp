@@ -8393,8 +8393,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += -100 + 200 + 100 * skill_lv;
 						if (status_get_lv(src) > 99) {
 							skillratio += sstatus->int_ * 5;
-							RE_LVL_DMOD(100);
 						}
+						RE_LVL_DMOD(100);
 						break;
 					case NPC_VENOMFOG:
 						skillratio += 600 + 100 * skill_lv;
