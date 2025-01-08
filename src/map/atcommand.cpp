@@ -4332,11 +4332,11 @@ ACMD_FUNC(reloadscript){
 	mapit_free(iter);
 
 	for (auto &bg : bg_queues) {
-			for (auto &bg_sd : bg->teama_members)
-				bg_team_leave(bg_sd, false, false); // Kick Team A from battlegrounds
-			for (auto &bg_sd : bg->teamb_members)
-				bg_team_leave(bg_sd, false, false); // Kick Team B from battlegrounds
-			bg_queue_clear(bg, true);
+		for (auto &bg_sd : bg->teama_members)
+			bg_team_leave(bg_sd, false, false); // Kick Team A from battlegrounds
+		for (auto &bg_sd : bg->teamb_members)
+			bg_team_leave(bg_sd, false, false); // Kick Team B from battlegrounds
+		bg_queue_clear(bg, true);
 	}
 
 	flush_fifos();
