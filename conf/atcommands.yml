@@ -74,26 +74,13 @@ Body:
       - skillsall
     Help: |
       Give you all skills.
-  - Command: allstats
-    Aliases:
-      - allstat
-      - statall
-      - statsall
-    Help: |
-      Params: <value>
-      Adds value in all stats (maximum if no value).
-  - Command: alltraits
-    Aliases:
-      - alltrait
-      - traitall
-      - traitsall
-    Help: |
-      Params: <value>
-      Adds value in all traits (maximum if no value).
   - Command: autoloot
     Help: |
       Params: <on|off|#>
       Makes items go straight into your inventory.
+  - Command: autolootitem
+    Aliases:
+      - alootid
   - Command: autoloottype
     Aliases:
       - aloottype
@@ -102,25 +89,15 @@ Body:
       - at
     Help: |
       Allows you to vend while you are offline.
-  - Command: ban
+  - Command: baselevelup
     Aliases:
-      - banish
-    Help: |
-      Params: <time> <name>\n" "Temporarily ban an account.
-      time usage: adjustment (+/- value) and element (y/a, m, d/j, h, mn, s)
-      Example: @ban +1m-2mn1s-6y testplayer
-  - Command: block
-    Help: |
-      Params: <char name>
-      Permanently blocks an account.
-  - Command: blvl
-    Aliases:
-      - lvup
-      - blevel
+      - baselevel
       - baselvl
       - baselvup
-      - baselevel
       - baselvlup
+      - blevel
+      - blvl
+      - lvup
     Help: |
       Params: <number of levels>
       Raises your base level the desired number of levels.
@@ -156,6 +133,34 @@ Body:
   - Command: changesex
     Help: |
       Changes your gender.
+  - Command: char_ban
+    Aliases:
+      - ban
+      - banish
+      - charban
+    Help: |
+      Params: <time> <name>\n" "Temporarily ban an account.
+      time usage: adjustment (+/- value) and element (y/a, m, d/j, h, mn, s)
+      Example: @ban +1m-2mn1s-6y testplayer
+  - Command: char_block
+    Aliases:
+      - block
+    Help: |
+      Params: <char name>
+      Permanently blocks an account.
+  - Command: char_unban
+    Aliases:
+      - charunban
+      - unban
+      - unbanish
+    Help: |
+      Params: <name> - Unban an account
+  - Command: char_unblock
+    Aliases:
+      - unblock
+    Help: |
+      Params: <char name>
+      Unblocks an account.
   - Command: clone
     Help: |
       Params: <charname>
@@ -254,13 +259,14 @@ Body:
   - Command: gat
     Help: |
       For debugging (you inspect around gat)
-  - Command: glvl
+  - Command: guildlevelup
     Aliases:
       - glevel
-      - guildlvl
-      - guildlvup
+      - glvl
       - guildlevel
+      - guildlvl
       - guildlvlup
+      - guildlvup
     Help: |
       Params: <# of levels>
       Raise Guild by desired number of levels
@@ -317,14 +323,16 @@ Body:
       - gpvpon
     Help: |
       Enables GvG on the current map
-  - Command: haircolor
+  - Command: hair_color
     Aliases:
+      - haircolor
       - hcolor
     Help: |
       Params <hair palette no.>
       Changes your hair color.
-  - Command: hairstyle
+  - Command: hair_style
     Aliases:
+      - hairstyle
       - hstyle
     Help: |
       Params: <hairstyle no.>
@@ -395,16 +403,6 @@ Body:
   - Command: jail
     Help: |
       Params: <char name> - Sends specified character in jails
-  - Command: jlvl
-    Aliases:
-      - jlevel
-      - joblvl
-      - joblvup
-      - joblevel
-      - joblvlup
-    Help: |
-      Params: <number of levels>
-      Raises your job level the desired number of levels.
   - Command: jobchange
     Aliases:
       - job
@@ -467,6 +465,17 @@ Body:
       4220 Baby Summoner        4222 Baby Ninja        4223 Baby Kagero         4224 Baby Oboro
       4225 Baby Taekwon       4226 Baby Star Glad    4227 Baby Soul Linker    4228 Baby Gunslinger
       4229 Baby Rebellion   4241 Baby Star Emperor    4242 Baby Soul Reaper
+  - Command: joblevelup
+    Aliases:
+      - jlevel
+      - jlvl
+      - joblevel
+      - joblvl
+      - joblvlup
+      - joblvup
+    Help: |
+      Params: <number of levels>
+      Raises your job level the desired number of levels.
   - Command: jump
     Help: |
       Params: [<x> [<y>]]
@@ -508,6 +517,9 @@ Body:
   - Command: killmonster2
     Help: |
       Kills all monsters of your map (without drops).
+  - Command: ksprotection
+    Aliases:
+      - noks
   - Command: langtype
     Help: |
       Params: <language>
@@ -575,6 +587,13 @@ Body:
   - Command: mapinfo
     Help: |
       Params: [<0-3> [map]] - Give information about a map (general info +: 0: no more, 1: players, 2: NPC, 3: chatrooms).
+  - Command: mapmove
+    Aliases:
+      - rura
+      - warp
+    Help: |
+      Params: <mapname> [<x> <y>]
+      Warps you to the selected map and position.
   - Command: marry
     Help: |
       Params: <player name>
@@ -621,8 +640,9 @@ Body:
     Help: |
       Params: <monster name|ID>
       Spawns a smaller version of a monster.
-  - Command: mount
+  - Command: mount_peco
     Aliases:
+      - mount
       - mountpeco
     Help: |
       Give/remove a job-based mount (class is required, but not the skill).
@@ -841,6 +861,13 @@ Body:
     Help: |
       Params: <Hex Number> [<value>]
       For debugging (packet variety)
+  - Command: servertime
+    Aliases:
+      - date
+      - serverdate
+      - time
+    Help: |
+      Shows the date and time of the server.
   - Command: setcard 
     Help: |
       Adds a card or enchant to the specific slot of the equipment.
@@ -876,13 +903,15 @@ Body:
   - Command: skillon
     Help: |
       Turn skills on for a map.
+  - Command: skillpoint
+    Aliases:
+      - skpoint
+    Help: |
+      Params: <number of points> - Gives you the desired number of skill points.
   - Command: skilltree
     Help: |
       Params: <skillnum> <charname>
       Prints the skill tree needed to get a skill for the target player.
-  - Command: skpoint
-    Help: |
-      Params: <number of points> - Gives you the desired number of skill points.
   - Command: slaveclone
     Help: |
       Params: <charname>
@@ -910,6 +939,20 @@ Body:
     Help: |
       Params: <amount>
       Raises STA by given amount.
+  - Command: stat_all
+    Aliases:
+      - allstat
+      - allstats
+      - statall
+      - statsall
+    Help: |
+      Params: <value>
+      Adds value in all stats (maximum if no value).
+  - Command: statuspoint
+    Aliases:
+      - stpoint
+    Help: |
+      Params: <number of points> - Gives you the desired number of stat points.
   - Command: stockall
     Help: |
       Params: [<item type>]
@@ -920,35 +963,27 @@ Body:
   - Command: storeall
     Help: |
       Puts all your possessions in storage.
-  - Command: stpoint
-    Help: |
-      Params: <number of points> - Gives you the desired number of stat points.
   - Command: str
     Help: |
       Params: <amount>
       Raises STR by given amount.
-  - Command: time
-    Aliases:
-      - date
-      - serverdate
-      - servertime
-    Help: |
-      Shows the date and time of the server.
   - Command: trade
     Help: |
       Params: <char name> - Open a trade window with a another player
-  - Command: trpoint
+  - Command: trait_all
+    Aliases:
+      - alltrait
+      - alltraits
+      - traitall
+      - traitsall
+    Help: |
+      Params: <value>
+      Adds value in all traits (maximum if no value).
+  - Command: traitpoint
+    Aliases:
+      - trpoint
     Help: |
       Params: <number of points> - Gives you the desired number of trait stat points.
-  - Command: unban
-    Aliases:
-      - unbanish
-    Help: |
-      Params: <name> - Unban a account
-  - Command: unblock
-    Help: |
-      Params: <char name>
-      Unblocks an account.
   - Command: undisguise
     Help: |
       Restore your normal appearance.
@@ -983,13 +1018,6 @@ Body:
     Help: |
       Params: <amount>
       Raises VIT by given amount.
-  - Command: warp
-    Aliases:
-      - rura
-      - mapmove
-    Help: |
-      Params: <mapname> [<x> <y>]
-      Warps you to the selected map and position.
   - Command: where
     Help: |
       Params: <char name>

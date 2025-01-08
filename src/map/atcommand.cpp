@@ -11253,7 +11253,7 @@ void atcommand_basecommands(void) {
 	 **/
 	AtCommandInfo atcommand_base[] = {
 #include <custom/atcommand_def.inc>
-		ACMD_DEF2R("warp", mapmove, ATCMD_NOCONSOLE),
+		ACMD_DEF(mapmove),
 		ACMD_DEF(where),
 		ACMD_DEF(jumpto),
 		ACMD_DEF(jump),
@@ -11289,8 +11289,8 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(clearstorage),
 		ACMD_DEF(cleargstorage),
 		ACMD_DEF(clearcart),
-		ACMD_DEF2R("blvl", baselevelup, ATCMD_NOCONSOLE),
-		ACMD_DEF2("jlvl", joblevelup),
+		ACMD_DEF(baselevelup),
+		ACMD_DEF(joblevelup),
 		ACMD_DEF(help),
 		ACMD_DEF(pvpoff),
 		ACMD_DEF(pvpon),
@@ -11309,9 +11309,9 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(memo),
 		ACMD_DEF(gat),
 		ACMD_DEF(displaystatus),
-		ACMD_DEF2("stpoint", statuspoint),
-		ACMD_DEF2("trpoint", traitpoint),
-		ACMD_DEF2("skpoint", skillpoint),
+		ACMD_DEF(statuspoint),
+		ACMD_DEF(traitpoint),
+		ACMD_DEF(skillpoint),
 		ACMD_DEF(zeny),
 		ACMD_DEF2("str", param),
 		ACMD_DEF2("agi", param),
@@ -11325,7 +11325,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF2("spl", param),
 		ACMD_DEF2("con", param),
 		ACMD_DEF2("crt", param),
-		ACMD_DEF2("glvl", guildlevelup),
+		ACMD_DEF(guildlevelup),
 		ACMD_DEF(makeegg),
 		ACMD_DEF(hatch),
 		ACMD_DEF(petfriendly),
@@ -11375,17 +11375,15 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(partysharelvl),
 		ACMD_DEF(mapinfo),
 		ACMD_DEF(dye),
-		ACMD_DEF2("hairstyle", hair_style),
-		ACMD_DEF2("haircolor", hair_color),
-		ACMD_DEF2("allstats", stat_all),
-		ACMD_DEF2("alltraits", trait_all),
-		ACMD_DEF2("block", char_block),
-		ACMD_DEF2("ban", char_ban),
-		ACMD_DEF2("unblock", char_unblock),
-		ACMD_DEF2("unban", char_unban),
-		ACMD_DEF2("charban", char_ban),
-		ACMD_DEF2("charunban", char_unban),
-		ACMD_DEF2("mount", mount_peco),
+		ACMD_DEF(hair_style),
+		ACMD_DEF(hair_color),
+		ACMD_DEF(stat_all),
+		ACMD_DEF(trait_all),
+		ACMD_DEF(char_block),
+		ACMD_DEF(char_ban),
+		ACMD_DEF(char_unblock),
+		ACMD_DEF(char_unban),
+		ACMD_DEF(mount_peco),
 		ACMD_DEF(guildspy),
 		ACMD_DEF(partyspy),
 		ACMD_DEF(clanspy),
@@ -11398,7 +11396,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(loadnpc),
 		ACMD_DEF(unloadnpc),
 		ACMD_DEF(reloadnpcfile),
-		ACMD_DEF2("time", servertime),
+		ACMD_DEF(servertime),
 		ACMD_DEF(jail),
 		ACMD_DEF(unjail),
 		ACMD_DEF(jailfor),
@@ -11461,7 +11459,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(disguiseall),
 		ACMD_DEF(changelook),
 		ACMD_DEF(autoloot),
-		ACMD_DEF2("alootid", autolootitem),
+		ACMD_DEF(autolootitem),
 		ACMD_DEF(autoloottype),
 		ACMD_DEF(mobinfo),
 		ACMD_DEF(exp),
@@ -11510,7 +11508,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(hatereset),
 		ACMD_DEF(auction),
 		ACMD_DEF(mail),
-		ACMD_DEF2("noks", ksprotection),
+		ACMD_DEF(ksprotection),
 		ACMD_DEF(allowks),
 		ACMD_DEF(cash),
 		ACMD_DEF(points),
@@ -11590,6 +11588,10 @@ void atcommand_basecommands(void) {
 bool atcommand_exists(const char* name)
 {
 	return strdb_exists(atcommand_db, name);
+}
+
+const char* atcommand_alias_lookup( const std::string& cmd ){
+	return atcommand_alias_db.checkAlias( cmd.c_str() );
 }
 
 static AtCommandInfo* get_atcommandinfo_byname(const char *name)
