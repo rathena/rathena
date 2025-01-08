@@ -13152,6 +13152,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 
 	case SH_KI_SUL_WATER_SPRAYING:
 		if (sd == nullptr || sd->status.party_id == 0 || (flag & 1)) {
+			// TODO: verify on official server, if this should be moved into skill_calc_heal
 			int32 heal = 500 * skill_lv + status_get_int(src) * 5;
 			heal += pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY) * 100;
 
