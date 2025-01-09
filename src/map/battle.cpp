@@ -8453,7 +8453,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						if (status_get_lv(src) > 99) {
 							skillratio += sstatus->int_ * 5;
 						}
-            // !TODO: the buff could be here or could be part of the skillatk bonus
+						// !TODO: the buff could be here or could be part of the skillatk bonus
 						if( sc != nullptr && sc->getSCE( SC_COLORS_OF_HYUN_ROK_BUFF ) != nullptr )
 							skillratio += skillratio * 50 / 100;
 						RE_LVL_DMOD(100);
