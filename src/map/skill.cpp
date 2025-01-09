@@ -2208,6 +2208,9 @@ int32 skill_additional_effect( struct block_list* src, struct block_list *bl, ui
 	case HN_GROUND_GRAVITATION:
 		sc_start(src, bl, skill_get_sc(skill_id), 100, 0, skill_get_time2(skill_id, skill_lv));
 		break;
+	case SH_HOWLING_OF_CHUL_HO:
+		sc_start(src, bl, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		break;
 	} //end switch skill_id
 
 	if (md && battle_config.summons_trigger_autospells && md->master_id && md->special_state.ai && md->special_state.ai != AI_ABR && md->special_state.ai != AI_BIONIC)
@@ -3103,6 +3106,8 @@ short skill_blown(struct block_list* src, struct block_list* target, char count,
 			status_change_end(target, SC_ROLLINGCUTTER);
 		if (tsc->getSCE(SC_CRESCIVEBOLT))
 			status_change_end(target, SC_CRESCIVEBOLT);
+		if( tsc->getSCE( SC_KI_SUL_RAMPAGE ) != nullptr )
+			status_change_end(target, SC_KI_SUL_RAMPAGE);
 		if (tsc->getSCE(SC_SV_ROOTTWIST)) // Shouldn't move.
 			return 0;
 	}
@@ -5268,6 +5273,10 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 	case DK_DRAGONIC_AURA:
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+		skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
+		sc_start(src, src, SC_DRAGONIC_AURA, 100, skill_lv, skill_get_time(skill_id,skill_lv));
+		break;
 	case DK_STORMSLASH:
 	case IG_IMPERIAL_CROSS:
 	case CD_EFFLIGO:
@@ -5278,10 +5287,9 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 	case TR_RHYTHMSHOOTING:
 	case HN_MEGA_SONIC_BLOW:
 	case HN_SPIRAL_PIERCE_MAX:
+	case SH_CHUL_HO_SONIC_CLAW:
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
-		if (skill_id == DK_DRAGONIC_AURA)
-			sc_start(src, src, SC_DRAGONIC_AURA, 100, skill_lv, skill_get_time(skill_id,skill_lv));
 		break;
 
 	case SHC_ETERNAL_SLASH:
@@ -6001,6 +6009,16 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 		}
 		break;
 
+	case SH_HOWLING_OF_CHUL_HO:
+		if (flag & 1)
+			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
+		break;
+	case SH_HOGOGONG_STRIKE:
+		if( flag&1 && tsc != nullptr && tsc->getSCE( SC_HOGOGONG ) != nullptr ){
+			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
+		}
+		break;
+
 	//Place units around target
 	case NJ_BAKUENRYU:
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
@@ -6203,8 +6221,9 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 
 	case IG_JUDGEMENT_CROSS:
 	case TR_SOUNDBLEND:
+	case SH_HYUN_ROK_CANNON:
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		skill_attack(BF_MAGIC, src, src, bl, skill_id, skill_lv, tick, flag);
+		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
 
 	case AG_DEADLY_PROJECTION:
@@ -8056,6 +8075,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 	case NPC_RELIEVE_OFF:
 	case HN_BREAKINGLIMIT:
 	case HN_RULEBREAK:
+	case SH_TEMPORARY_COMMUNION:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
@@ -13106,6 +13126,150 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		}
 		break;
 
+	case SH_HOWLING_OF_CHUL_HO: {
+		int32 range = skill_get_splash(skill_id, skill_lv);
+
+		if( pc_checkskill( sd, SH_COMMUNE_WITH_CHUL_HO ) > 0 || ( sc != nullptr && sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ) ){
+			range += 1;
+		}
+
+		skill_area_temp[0] = 0;
+		skill_area_temp[1] = bl->id;
+		skill_area_temp[2] = 0;
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+		map_foreachinrange(skill_area_sub, bl, range, BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1, skill_castend_damage_id);
+		} break;
+
+	case SH_HOGOGONG_STRIKE:
+		if( pc_checkskill( sd, SH_COMMUNE_WITH_CHUL_HO ) > 0 || ( sc != nullptr && sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ) )
+			status_heal(src, 0, 0, 1, 0);
+		skill_area_temp[0] = 0;
+		skill_area_temp[1] = bl->id;
+		skill_area_temp[2] = 0;
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+		map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1, skill_castend_damage_id);
+		break;
+
+	case SH_KI_SUL_WATER_SPRAYING:
+		if (sd == nullptr || sd->status.party_id == 0 || (flag & 1)) {
+			// TODO: verify on official server, if this should be moved into skill_calc_heal
+			int32 heal = 500 * skill_lv + status_get_int(src) * 5;
+			heal += pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY) * 100;
+
+			if( pc_checkskill( sd, SH_COMMUNE_WITH_KI_SUL ) > 0 || ( sc != nullptr && sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ) ){
+				heal += 250 * skill_lv;
+				heal += pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY) * 50;
+			}
+			heal = heal * (100 + status_get_crt(src)) * status_get_lv(src) / 10000;
+			status_heal(bl, heal, 0, 0, 0);
+			clif_skill_nodamage(src, *bl, skill_id, heal);
+		}
+		else {
+			int32 range = skill_get_splash(skill_id, skill_lv);
+			if( pc_checkskill( sd, SH_COMMUNE_WITH_KI_SUL ) > 0 || ( sc != nullptr && sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ) )
+				range += 2;
+			party_foreachsamemap(skill_area_sub, sd, range, src, skill_id, skill_lv, tick, flag|BCT_PARTY|1, skill_castend_nodamage_id);
+		}
+		break;
+
+	case SH_MARINE_FESTIVAL_OF_KI_SUL:
+	case SH_SANDY_FESTIVAL_OF_KI_SUL:
+		if (sd == nullptr || sd->status.party_id == 0 || (flag & 1)) {
+			int32 time = skill_get_time(skill_id, skill_lv);
+			if( pc_checkskill( sd, SH_COMMUNE_WITH_KI_SUL ) > 0 || ( sc != nullptr && sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ) )
+				time *= 2;
+			sc_start(src, bl, type, 100, skill_lv, time);
+			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+		}
+		else {
+			int32 range = skill_get_splash(skill_id, skill_lv);
+			if( pc_checkskill( sd, SH_COMMUNE_WITH_KI_SUL ) > 0 || ( sc != nullptr && sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ) )
+				range += 2;
+			party_foreachsamemap(skill_area_sub, sd, range, src, skill_id, skill_lv, tick, flag|BCT_PARTY|1, skill_castend_nodamage_id);
+		}
+		break;
+
+	case SH_KI_SUL_RAMPAGE:
+		if( flag&2 ){
+			if( src == bl ){
+				break;
+			}
+
+			int64 ap = 2;
+
+			if( flag&4 ){
+				ap += 4;
+			}
+
+			status_heal( bl, 0, 0, ap, 0 );
+		}else if( flag&1 ){
+			int32 range = skill_get_splash( SH_KI_SUL_RAMPAGE, skill_lv );
+			uint16 skill_lv2 = skill_lv;
+
+			if( pc_checkskill( sd, SH_COMMUNE_WITH_KI_SUL ) > 0 || ( sc != nullptr && sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ) ){
+				range += 2;
+				skill_lv2 = skill_get_max( SH_KI_SUL_RAMPAGE );
+				// Set a flag for AP increase
+				flag |= 4;
+			}
+
+			clif_skill_nodamage( bl, *bl, SH_KI_SUL_RAMPAGE, skill_lv2 );
+			map_foreachinrange( skill_area_sub, bl, range, BL_CHAR, bl, SH_KI_SUL_RAMPAGE, skill_lv2, tick, flag|BCT_PARTY|SD_SPLASH|2, skill_castend_nodamage_id );
+		}else{
+			// TODO: no party check ?
+			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		}
+		break;
+
+	case SH_COLORS_OF_HYUN_ROK:
+		if (skill_lv == 7) {
+			status_change_end(src, SC_COLORS_OF_HYUN_ROK_1);
+			status_change_end(src, SC_COLORS_OF_HYUN_ROK_2);
+			status_change_end(src, SC_COLORS_OF_HYUN_ROK_3);
+			status_change_end(src, SC_COLORS_OF_HYUN_ROK_4);
+			status_change_end(src, SC_COLORS_OF_HYUN_ROK_5);
+			status_change_end(src, SC_COLORS_OF_HYUN_ROK_6);
+
+			clif_skill_nodamage(src, *src, skill_id, skill_lv);
+		}
+		else {
+			// Buff to increase Catnip Meteor damage
+			if( pc_checkskill( sd, SH_COMMUNE_WITH_HYUN_ROK ) > 0 || ( sc != nullptr && sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ) )
+				sc_start(src, bl, SC_COLORS_OF_HYUN_ROK_BUFF, 100, 1, skill_get_time(skill_id, skill_lv));
+
+			// Endows elemental property to Catnip Meteor, Hyunrok Breeze and Hyunrok Cannon skills
+			switch (skill_lv) {
+				case 1:
+					type = SC_COLORS_OF_HYUN_ROK_1;
+					break;
+				case 2:
+					type = SC_COLORS_OF_HYUN_ROK_2;
+					break;
+				case 3:
+					type = SC_COLORS_OF_HYUN_ROK_3;
+					break;
+				case 4:
+					type = SC_COLORS_OF_HYUN_ROK_4;
+					break;
+				case 5:
+					type = SC_COLORS_OF_HYUN_ROK_5;
+					break;
+				case 6:
+					type = SC_COLORS_OF_HYUN_ROK_6;
+					break;
+			}
+			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id,skill_lv));
+			clif_skill_nodamage(src, *src, skill_id, skill_lv);
+		}
+		break;
+
+	case SH_BLESSING_OF_MYSTICAL_CREATURES:
+		status_heal(bl, 0, 0, 200-status_get_ap(bl), 0);
+		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		clif_skill_nodamage(src, *src, skill_id, skill_lv);
+		break;
+
 	default: {
 		std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
 		ShowWarning("skill_castend_nodamage_id: missing code case for skill %s(%d)\n", skill ? skill->name : "UNKNOWN", skill_id);
@@ -13231,6 +13395,23 @@ static int8 skill_castend_id_check(struct block_list *src, struct block_list *ta
 		case IQ_THIRD_CONSECRATION:
 			if (!tsc || !tsc->getSCE(SC_SECOND_BRAND))
 				return USESKILL_FAIL_LEVEL;
+			break;
+		case SH_BLESSING_OF_MYSTICAL_CREATURES:
+			if( src == target ){
+				return USESKILL_FAIL_TOTARGET;
+			}
+
+			if( battle_check_target( src, target, BCT_PARTY ) <= 0 ){
+				return USESKILL_FAIL_TOTARGET;
+			}
+
+			if( ( status_get_class_( target )&MAPID_BASEMASK ) == MAPID_SUMMONER ){
+				return USESKILL_FAIL_TOTARGET;
+			}
+
+			if( tsc != nullptr && tsc->getSCE( SC_BLESSING_OF_M_C_DEBUFF ) != nullptr ){
+				return USESKILL_FAIL_TOTARGET;
+			}
 			break;
 	}
 
@@ -13490,6 +13671,10 @@ TIMER_FUNC(skill_castend_id){
 							if (sc && sc->getSCE(SC_CRESCIVEBOLT) && sc->getSCE(SC_CRESCIVEBOLT)->val1 >= 3) {
 								add_ap += 2;
 							}
+							break;
+						case SH_HYUN_ROK_CANNON:
+							if( pc_checkskill( sd, SH_COMMUNE_WITH_HYUN_ROK ) > 0 || ( sc != nullptr && sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ) )
+								add_ap += 1;
 							break;
 					}
 
@@ -14092,6 +14277,7 @@ int32 skill_castend_pos2(struct block_list* src, int32 x, int32 y, uint16 skill_
 	case EM_CONFLAGRATION:
 	case EM_TERRA_DRIVE:
 	case SOA_TOTEM_OF_TUTELARY:
+	case SH_HYUN_ROKS_BREEZE:
 		flag|=1;//Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
 		[[fallthrough]];
 	case GS_GROUNDDRIFT: //Ammo should be deleted right away.
@@ -16207,6 +16393,7 @@ int32 skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t
 		case UNT_SOLIDTRAP:
 		case UNT_SWIFTTRAP:
 		case UNT_FLAMETRAP:
+		case UNT_HYUN_ROKS_BREEZE:
 			skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 			break;
 #ifdef RENEWAL
@@ -18333,6 +18520,12 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 		case SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS:
 			if (!(sc != nullptr && (sc->getSCE(SC_T_FOURTH_GOD) != nullptr || sc->getSCE(SC_T_FIFTH_GOD) != nullptr))) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_CONDITION,0);
+				return false;
+			}
+			break;
+		case SH_TEMPORARY_COMMUNION:
+			if (pc_checkskill(&sd, SH_COMMUNE_WITH_CHUL_HO) == 0 && pc_checkskill(&sd, SH_COMMUNE_WITH_HYUN_ROK) == 0 && pc_checkskill(&sd, SH_COMMUNE_WITH_KI_SUL) == 0) {
+				clif_skill_fail( sd, skill_id, USESKILL_FAIL_CONDITION );
 				return false;
 			}
 			break;
