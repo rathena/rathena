@@ -15626,8 +15626,12 @@ BUILDIN_FUNC(nude)
 int32 atcommand_sub(struct script_state* st,int32 type) {
 	map_session_data* sd;
 
-	if( st->rid != 0 && !script_rid2sd( sd ) ){
-		return SCRIPT_CMD_FAILURE;
+	if( st->rid != 0 ){
+		if( !script_rid2sd( sd ) ){
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		// Use the attached character
 	}else{
 		if( st->oid != 0 ){
 			block_list* bl = map_id2bl( st->oid );

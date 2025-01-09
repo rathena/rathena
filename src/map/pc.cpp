@@ -1010,10 +1010,6 @@ bool pc_addfame(map_session_data &sd, int32 count)
 {
 	enum e_rank ranktype;
 
-	sd.status.fame += count;
-	if (sd.status.fame > MAX_FAME)
-		sd.status.fame = MAX_FAME;
-
 	switch(sd.class_&MAPID_UPPERMASK){
 		case MAPID_BLACKSMITH:	ranktype = RANK_BLACKSMITH; break;
 		case MAPID_ALCHEMIST:	ranktype = RANK_ALCHEMIST; break;
@@ -1022,6 +1018,8 @@ bool pc_addfame(map_session_data &sd, int32 count)
 			ShowWarning( "pc_addfame: Trying to add fame to class '%s'(%d).\n", job_name(sd.status.class_), sd.status.class_ );
 			return false;
 	}
+
+	sd.status.fame = cap_value( sd.status.fame + count, 0, MAX_FAME );
 
 	clif_update_rankingpoint(sd, ranktype, count);
 	chrif_updatefamelist(sd, ranktype);

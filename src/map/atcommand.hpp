@@ -4,6 +4,8 @@
 #ifndef ATCOMMAND_HPP
 #define ATCOMMAND_HPP
 
+#include <string>
+
 #include <common/cbasetypes.hpp>
 #include <common/mmo.hpp>
 
@@ -28,6 +30,7 @@ void do_final_atcommand(void);
 void atcommand_db_load_groups();
 
 bool atcommand_exists(const char* name);
+const char* atcommand_alias_lookup( const std::string& cmd );
 
 // @commands (script based)
 struct atcmd_binding_data {

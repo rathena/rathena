@@ -30,8 +30,15 @@ bool PlayerGroupDatabase::parseCommands( const ryml::NodeRef& node, std::vector<
 		}
 
 		if( !atcommand_exists( command.c_str() ) ){
-			this->invalidWarning( it, "Unknown atcommand: %s\n", command.c_str() );
-			return false;
+			const char* command_str = command.c_str();
+			const char* alias_str = atcommand_alias_lookup( command );
+
+			if( strcmp( command_str, alias_str ) == 0 ){
+				this->invalidWarning( it, "Unknown atcommand: %s\n", command.c_str() );
+				return false;
+			}
+
+			command = alias_str;
 		}
 
 		util::tolower( command );
