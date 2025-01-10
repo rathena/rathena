@@ -3627,6 +3627,7 @@ Body:
     Flags:
       BlEffect: true
       DisplayPc: true
+      DisplayMob: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
