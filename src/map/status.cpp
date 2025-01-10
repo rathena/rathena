@@ -5989,13 +5989,13 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 		// Bonuses from ExtraMATK are separated in order to order them (order has no impact)
 
 		// EquipMATK (flat MATK from equipments)
-		if (sd != nullptr && sd->bonus.ematk > 0) {
+		if (sd != nullptr && sd->bonus.ematk != 0) {
 			matk_min += sd->bonus.ematk;
 			matk_max += sd->bonus.ematk;
 		}
 
 		// Flat MATK not visible in status window
-		if (sd != nullptr && sd->bonus.ematk_hidden > 0) {
+		if (sd != nullptr && sd->bonus.ematk_hidden != 0) {
 			matk_min += sd->bonus.ematk_hidden;
 			matk_max += sd->bonus.ematk_hidden;
 		}
