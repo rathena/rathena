@@ -64,6 +64,8 @@ int32 chrif_save(map_session_data* sd, int32 flag);
 int32 chrif_charselectreq(map_session_data* sd, uint32 s_ip);
 int32 chrif_changemapserver(map_session_data* sd, uint32 ip, uint16 port);
 
+void chrif_aa_save(map_session_data* sd);
+
 int32 chrif_searchcharid(uint32 char_id);
 int32 chrif_changeemail(int32 id, const char *actual_email, const char *new_email);
 int32 chrif_req_login_operation(int32 aid, const char* character_name, enum chrif_req_op operation_type, int32 timediff, int32 val1, int32 val2);

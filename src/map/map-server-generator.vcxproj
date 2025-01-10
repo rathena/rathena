@@ -22,6 +22,7 @@
     <ProjectGuid>{EB03BC16-8A47-43B9-B5BB-D0200E4A2775}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>mapserver</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

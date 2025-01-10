@@ -22,6 +22,7 @@
     <ProjectGuid>{9115C6D1-520A-4540-B4FE-95F3C923FE2C}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>yamlupgrade</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

@@ -7,6 +7,8 @@
 #include <cstring>
 
 #include <common/cbasetypes.hpp>
+#include <common/database.hpp>
+#include <common/db.hpp>
 #include <common/ers.hpp>
 #include <common/malloc.hpp>
 #include <common/nullpo.hpp>
@@ -340,7 +342,89 @@ int32 chrif_save(map_session_data *sd, int32 flag) {
 	if (sd->achievement_data.save)
 		intif_achievement_save(sd);
 
+	chrif_aa_save(sd);
+
 	return 0;
+}
+
+void chrif_aa_save(map_session_data* sd){
+	int i;
+
+	//aa_common_config
+	if( SQL_ERROR == Sql_Query( mmysql_handle, "INSERT INTO `aa_common_config` (`char_id`,`stopmelee`,`pickup_item_config`,`prio_item_config`,`aggressive_behavior`,`autositregen_conf`,`autositregen_maxhp`,`autositregen_minhp`,`autositregen_maxsp`,`autositregen_minsp`,`tp_use_teleport`,`tp_use_flywing`,`tp_min_hp`,`tp_delay_nomobmeet`) VALUES (%d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d) ON DUPLICATE KEY UPDATE `stopmelee` = %d, `pickup_item_config` = %d, `prio_item_config` = %d, `aggressive_behavior` = %d, `autositregen_conf` = %d, `autositregen_maxhp` = %d, `autositregen_minhp` = %d, `autositregen_maxsp` = %d, `autositregen_minsp` = %d, `tp_use_teleport` = %d, `tp_use_flywing` = %d, `tp_min_hp` = %d, `tp_delay_nomobmeet` = %d ", sd->status.char_id, sd->aa.stopmelee, sd->aa.pickup_item_config, sd->aa.prio_item_config, sd->aa.mobs.aggressive_behavior, sd->aa.autositregen.is_active, sd->aa.autositregen.max_hp, sd->aa.autositregen.min_hp, sd->aa.autositregen.max_sp, sd->aa.autositregen.min_sp, sd->aa.teleport.use_teleport, sd->aa.teleport.use_flywing, sd->aa.teleport.min_hp, sd->aa.teleport.delay_nomobmeet, sd->aa.stopmelee, sd->aa.pickup_item_config, sd->aa.prio_item_config, sd->aa.mobs.aggressive_behavior, sd->aa.autositregen.is_active, sd->aa.autositregen.max_hp, sd->aa.autositregen.min_hp, sd->aa.autositregen.max_sp, sd->aa.autositregen.min_sp, sd->aa.teleport.use_teleport, sd->aa.teleport.use_flywing, sd->aa.teleport.min_hp, sd->aa.teleport.delay_nomobmeet ) ){
+		Sql_ShowDebug(mmysql_handle);
+	}
+
+	//clean aa_items
+	if( SQL_ERROR == Sql_Query( mmysql_handle, "DELETE FROM `aa_items` WHERE `char_id` = %d", sd->status.char_id ) ){
+		Sql_ShowDebug(mmysql_handle);
+	}
+	//insert aa_items - 0 - autobuffitems
+	if(!sd->aa.autobuffitems.empty()){
+		for(auto &itAutobuffitem : sd->aa.autobuffitems){
+			if( SQL_ERROR == Sql_Query( mmysql_handle, "INSERT INTO `aa_items` (`char_id`,`type`,`item_id`,`delay`) VALUES (%d, 0, %d, %d)", sd->status.char_id, itAutobuffitem.item_id, itAutobuffitem.delay ) ){
+				Sql_ShowDebug(mmysql_handle);
+			}
+		}
+	}
+	//insert aa_items - 1 - autopotion
+	if(!sd->aa.autopotion.empty()){
+		for(auto &itAutopotion : sd->aa.autopotion){
+			if( SQL_ERROR == Sql_Query( mmysql_handle, "INSERT INTO `aa_items` (`char_id`,`type`,`item_id`,`min_hp`,`min_sp`) VALUES (%d, 1, %d, %d, %d)", sd->status.char_id, itAutopotion.item_id, itAutopotion.min_hp, itAutopotion.min_sp ) ){
+				Sql_ShowDebug(mmysql_handle);
+			}
+		}
+	}
+	//insert aa_items - 2 - pickup_item_id
+	if(!sd->aa.pickup_item_id.empty()){
+		for (i=0; i<sd->aa.pickup_item_id.size(); i++){
+			if( SQL_ERROR == Sql_Query( mmysql_handle, "INSERT INTO `aa_items` (`char_id`,`type`,`item_id`) VALUES (%d, 2, %d)", sd->status.char_id, sd->aa.pickup_item_id.at(i) ) ){
+				Sql_ShowDebug(mmysql_handle);
+			}
+		}
+	}
+
+	//clean aa_mobs
+	if( SQL_ERROR == Sql_Query( mmysql_handle, "DELETE FROM `aa_mobs` WHERE `char_id` = %d", sd->status.char_id ) ){
+		Sql_ShowDebug(mmysql_handle);
+	}
+	//insert aa_mobs
+	if(!sd->aa.mobs.id.empty()){
+		for (i=0; i<sd->aa.mobs.id.size(); i++){
+			if( SQL_ERROR == Sql_Query( mmysql_handle, "INSERT INTO `aa_mobs` (`char_id`,`mob_id`) VALUES (%d, %d)", sd->status.char_id, sd->aa.mobs.id.at(i) ) ){
+				Sql_ShowDebug(mmysql_handle);
+			}
+		}
+	}
+
+	//clean aa_skills
+	if( SQL_ERROR == Sql_Query( mmysql_handle, "DELETE FROM `aa_skills` WHERE `char_id` = %d", sd->status.char_id ) ){
+		Sql_ShowDebug(mmysql_handle);
+	}
+	//insert aa_skills - 0 - autoheal
+	if(!sd->aa.autoheal.empty()){
+		for(auto &itAutoheal : sd->aa.autoheal){
+			if( SQL_ERROR == Sql_Query( mmysql_handle, "INSERT INTO `aa_skills` (`char_id`,`type`,`skill_id`,`skill_lv`,`min_hp`) VALUES (%d, 0, %d, %d, %d)", sd->status.char_id, itAutoheal.skill_id, itAutoheal.skill_lv, itAutoheal.min_hp ) ){
+				Sql_ShowDebug(mmysql_handle);
+			}
+		}
+	}
+	//insert aa_skills - 1 - autobuffskills
+	if(!sd->aa.autobuffskills.empty()){
+		for(auto &itAutobuffskills : sd->aa.autobuffskills){
+			if( SQL_ERROR == Sql_Query( mmysql_handle, "INSERT INTO `aa_skills` (`char_id`,`type`,`skill_id`,`skill_lv`) VALUES (%d, 1, %d, %d)", sd->status.char_id, itAutobuffskills.skill_id, itAutobuffskills.skill_lv ) ){
+				Sql_ShowDebug(mmysql_handle);
+			}
+		}
+	}
+	//insert aa_skills - 2 - autoattackskills
+	if(!sd->aa.autoattackskills.empty()){
+		for(auto &itAutoattackskills : sd->aa.autoattackskills){
+			if( SQL_ERROR == Sql_Query( mmysql_handle, "INSERT INTO `aa_skills` (`char_id`,`type`,`skill_id`,`skill_lv`) VALUES (%d, 2, %d, %d)", sd->status.char_id, itAutoattackskills.skill_id, itAutoattackskills.skill_lv ) ){
+				Sql_ShowDebug(mmysql_handle);
+			}
+		}
+	}
 }
 
 // connects to char-server (plaintext)

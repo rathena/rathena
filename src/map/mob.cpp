@@ -1302,6 +1302,15 @@ static int32 mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 	target= va_arg(ap,struct block_list**);
 	mode= static_cast<enum e_mode>(va_arg(ap, int32));
 
+	if(battle_config.feature_autoattack_teleport_mvp && bl->type == BL_PC){
+		TBL_PC *sd = BL_CAST(BL_PC, bl);
+		e_mob_bosstype bosstype = md->get_bosstype();
+
+		if(bosstype != BOSSTYPE_NONE){
+			aa_teleport(sd);
+		}
+	}
+
 	//If can't seek yet, not an enemy, or you can't attack it, skip.
 	if ((*target) == bl || !status_check_skilluse(&md->bl, bl, 0, 0))
 		return 0;
@@ -2552,6 +2561,11 @@ void mob_damage(struct mob_data *md, struct block_list *src, int32 damage)
 		//Log damage
 		mob_log_damage(md, src, damage);
 		md->dmgtick = gettick();
+
+		if(src->type == BL_PC){
+			map_session_data *sd = (map_session_data *)src;
+			sd->aa.last_attack = gettick();
+		}
 	}
 
 	if (battle_config.show_mob_info&3)

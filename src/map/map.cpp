@@ -127,7 +127,7 @@ static struct block_list *bl_list[BL_LIST_MAX];
 static int32 bl_list_count = 0;
 
 #ifndef MAP_MAX_MSG
-	#define MAP_MAX_MSG 1550
+	#define MAP_MAX_MSG 5000
 #endif
 
 struct map_data map[MAX_MAP_PER_SERVER];
@@ -4948,6 +4948,7 @@ void MapServer::finalize(){
 	do_final_vending();
 	do_final_buyingstore();
 	do_final_path();
+	do_final_emotions();
 
 	map_db->destroy(map_db, map_db_final);
 
@@ -5325,7 +5326,13 @@ bool MapServer::initialize( int32 argc, char *argv[] ){
 	do_init_vending();
 	do_init_buyingstore();
 
+	do_init_emotions();
 	npc_event_do_oninit();	// Init npcs (OnInit)
+
+	if(battle_config.feature_autoattack_move_min > battle_config.feature_autoattack_move_max){
+		ShowError("feature_autoattack_move_min > feature_autoattack_move_max, forcing to 1 \n");
+		battle_config.feature_autoattack_move_min = 1;
+	}
 
 	if (battle_config.pk_mode)
 		ShowNotice("Server is running on '" CL_WHITE "PK Mode" CL_RESET "'.\n");

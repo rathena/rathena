@@ -902,6 +902,8 @@ enum sc_type : int16 {
 	SC_ENERGY_DRINK_RESERCH,
 	SC_NORECOVER_STATE,
 
+	SC_AUTOATTACK,
+
 	/**
 	 * Summoner
 	 */
@@ -2441,6 +2443,7 @@ enum efst_type : short{
 	EFST_ABYSS_007,
 	EFST_ABYSS_008,
 
+	EFST_AUTOATTACK = 1074,
 	EFST_REUSE_LIMIT_THM = 1075,
 	EFST_REUSE_LIMIT_TLI,
 	EFST_REUSE_LIMIT_TKC,
@@ -3640,6 +3643,21 @@ uint16 status_calc_consumablematk( status_change *sc, int32 matk );
 uint16 status_calc_pseudobuff_matk( map_session_data *sd, status_change *sc, int32 matk );
 
 unsigned short status_base_atk(const struct block_list *bl, const struct status_data *status, int32 level);
+
+bool aa_check_target(map_session_data *sd, unsigned int id);
+bool aa_canuseskill(map_session_data *sd, uint16 skill_id, uint16 skill_lv);
+int buildin_autopick_sub(struct block_list *bl, va_list ap);
+bool aa_check_item_pickup(map_session_data *sd, struct block_list *bl);
+unsigned int aa_check_item_pickup_onfloor(map_session_data *sd);
+int buildin_autoattack_sub(struct block_list *bl, va_list ap);
+unsigned int aa_check_target_alive(map_session_data *sd);
+bool aa_teleport(map_session_data *sd);
+int aa_arrowchange(map_session_data * sd, struct mob_data *md);
+int aa_bulletchange(map_session_data * sd, mob_data *md);
+int aa_kunaichange(map_session_data * sd, struct mob_data *md, int rqamount);
+int aa_cannonballchange(map_session_data * sd, struct mob_data *md);
+bool aa_elemstrong(struct mob_data *md, int ele);
+bool aa_elemallowed(struct mob_data *md, int ele);
 
 // Status changes accessors for StatusChange database
 uint16 status_efst_get_bl_type(enum efst_type efst);

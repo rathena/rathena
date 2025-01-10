@@ -382,6 +382,15 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 				break;
 			}
 
+			// Heuristic : stop processing if path can't possibly be shorter than maximum length allowed
+			int usedlength = abs(x - x0);
+			if (usedlength < abs(y - y0)) usedlength = abs(y - y0);
+
+			int needlength = abs(x - x1);
+			if (needlength < abs(y - y1)) needlength = abs(y - y1);
+
+			if (usedlength+needlength > MAX_WALKPATH) continue;
+
 			if (y < ys && !map_getcellp(mapdata, x, y+1, cell)) allowed_dirs |= PATH_DIR_NORTH;
 			if (y >  0 && !map_getcellp(mapdata, x, y-1, cell)) allowed_dirs |= PATH_DIR_SOUTH;
 			if (x < xs && !map_getcellp(mapdata, x+1, y, cell)) allowed_dirs |= PATH_DIR_EAST;

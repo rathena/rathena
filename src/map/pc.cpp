@@ -1286,8 +1286,13 @@ void pc_makesavestatus(map_session_data *sd) {
 	if(!battle_config.save_clothcolor)
 		sd->status.clothes_color = 0;
 
-	if(!battle_config.save_body_style)
+	if(!battle_config.save_body_style) {
+#if PACKETVER_MAIN_NUM >= 20231220
+		sd->status.body = sd->status.class_;
+#else
 		sd->status.body = 0;
+#endif
+	}
 
 	//Only copy the Cart/Peco/Falcon options, the rest are handled via
 	//status change load/saving. [Skotlex]
@@ -2233,9 +2238,180 @@ bool pc_authok(map_session_data *sd, uint32 login_id2, time_t expiration_time, i
 		clif_updatestatus(*sd, SP_JOBEXP);
 	}
 
+	pc_aa_load(sd);
+
 	// Request all registries (auth is considered completed whence they arrive)
 	intif_request_registry(sd,7);
 	return true;
+}
+
+
+void pc_aa_load(map_session_data* sd){
+	int type;
+	t_tick tick = gettick();
+
+	// aa_common_config
+	if (Sql_Query(mmysql_handle,
+		"SELECT `stopmelee`,`pickup_item_config`,`prio_item_config`,`aggressive_behavior`,`autositregen_conf`,`autositregen_maxhp`,`autositregen_minhp`,`autositregen_maxsp`,`autositregen_minsp`,`tp_use_teleport`,`tp_use_flywing`,`tp_min_hp`,`tp_delay_nomobmeet` "
+		"FROM `aa_common_config` "
+		"WHERE `char_id` = %d ",
+		sd->status.char_id ) != SQL_SUCCESS )
+	{
+		Sql_ShowDebug(mmysql_handle);
+		return;
+	}
+
+	if( Sql_NumRows(mmysql_handle) > 0 ){
+		while (SQL_SUCCESS == Sql_NextRow(mmysql_handle)) {
+			char* data;
+			Sql_GetData(mmysql_handle, 0, &data, NULL); sd->aa.stopmelee = atoi(data);
+			Sql_GetData(mmysql_handle, 1, &data, NULL); sd->aa.pickup_item_config = atoi(data);
+			Sql_GetData(mmysql_handle, 2, &data, NULL); sd->aa.prio_item_config = atoi(data);
+			Sql_GetData(mmysql_handle, 3, &data, NULL); sd->aa.mobs.aggressive_behavior = atoi(data);
+			Sql_GetData(mmysql_handle, 4, &data, NULL); sd->aa.autositregen.is_active = atoi(data);
+			Sql_GetData(mmysql_handle, 5, &data, NULL); sd->aa.autositregen.max_hp = atoi(data);
+			Sql_GetData(mmysql_handle, 6, &data, NULL); sd->aa.autositregen.min_hp = atoi(data);
+			Sql_GetData(mmysql_handle, 7, &data, NULL); sd->aa.autositregen.max_sp = atoi(data);
+			Sql_GetData(mmysql_handle, 8, &data, NULL); sd->aa.autositregen.min_sp = atoi(data);
+			Sql_GetData(mmysql_handle, 9, &data, NULL); sd->aa.teleport.use_teleport = atoi(data);
+			Sql_GetData(mmysql_handle, 10, &data, NULL); sd->aa.teleport.use_flywing = atoi(data);
+			Sql_GetData(mmysql_handle, 11, &data, NULL); sd->aa.teleport.min_hp = atoi(data);
+			Sql_GetData(mmysql_handle, 12, &data, NULL); sd->aa.teleport.delay_nomobmeet = atoi(data);
+		}
+	} else {
+		sd->aa.stopmelee = 0;	
+		sd->aa.pickup_item_config = 0;
+		sd->aa.prio_item_config = 0;
+		sd->aa.mobs.aggressive_behavior = 0;
+		sd->aa.autositregen.is_active = 0;
+		sd->aa.autositregen.max_hp = 0;
+		sd->aa.autositregen.min_hp = 0;
+		sd->aa.autositregen.max_sp = 0;
+		sd->aa.autositregen.min_sp = 0;
+		sd->aa.teleport.use_teleport = 0;
+		sd->aa.teleport.use_flywing = 0;
+		sd->aa.teleport.min_hp = 0;
+		sd->aa.teleport.delay_nomobmeet = 0;
+	}
+	Sql_FreeResult(mmysql_handle);
+
+	// aa_items
+	if (Sql_Query(mmysql_handle,
+		"SELECT `type`,`item_id`,`min_hp`,`min_sp`,`delay` "
+		"FROM `aa_items` "
+		"WHERE `char_id` = %d ",
+		sd->status.char_id ) != SQL_SUCCESS )
+	{
+		Sql_ShowDebug(mmysql_handle);
+		return;
+	}
+
+	if( Sql_NumRows(mmysql_handle) > 0 ){
+		while (SQL_SUCCESS == Sql_NextRow(mmysql_handle)) {
+			char* data;
+			Sql_GetData(mmysql_handle, 0, &data, NULL); type = atoi(data);
+			switch(type){
+				case 0:
+					struct s_autobuffitems autobuffitems;
+					autobuffitems.is_active = 1;
+					Sql_GetData(mmysql_handle, 1, &data, NULL); autobuffitems.item_id = atoi(data);
+					Sql_GetData(mmysql_handle, 4, &data, NULL); autobuffitems.delay = atoi(data);
+					autobuffitems.last_use = 0;
+					sd->aa.autobuffitems.push_back(autobuffitems);
+					break;
+				case 1:
+					struct s_autopotion autopotion;
+					autopotion.is_active = 1;
+					Sql_GetData(mmysql_handle, 1, &data, NULL); autopotion.item_id = atoi(data);
+					Sql_GetData(mmysql_handle, 2, &data, NULL); autopotion.min_hp = atoi(data);
+					Sql_GetData(mmysql_handle, 3, &data, NULL); autopotion.min_sp = atoi(data);
+					sd->aa.autopotion.push_back(autopotion);
+					break;
+				case 2:
+					t_itemid nameid;
+					Sql_GetData(mmysql_handle, 1, &data, NULL); nameid = atoi(data);
+					sd->aa.pickup_item_id.push_back(nameid);
+					break;
+			}
+		}
+	}
+	Sql_FreeResult(mmysql_handle);
+
+	// aa_mobs
+	if (Sql_Query(mmysql_handle,
+		"SELECT `mob_id` "
+		"FROM `aa_mobs` "
+		"WHERE `char_id` = %d ",
+		sd->status.char_id ) != SQL_SUCCESS )
+	{
+		Sql_ShowDebug(mmysql_handle);
+		return;
+	}
+
+	if( Sql_NumRows(mmysql_handle) > 0 ){
+		while (SQL_SUCCESS == Sql_NextRow(mmysql_handle)) {
+			char* data;
+			uint32 mob_id;
+			Sql_GetData(mmysql_handle, 0, &data, NULL); mob_id = atoi(data);
+			sd->aa.mobs.id.push_back(mob_id);
+		}
+	}
+	Sql_FreeResult(mmysql_handle);
+
+	// aa_skills
+	if (Sql_Query(mmysql_handle,
+		"SELECT `type`,`skill_id`,`skill_lv`,`min_hp`"
+		"FROM `aa_skills` "
+		"WHERE `char_id` = %d ",
+		sd->status.char_id ) != SQL_SUCCESS )
+	{
+		Sql_ShowDebug(mmysql_handle);
+		return;
+	}
+
+	if( Sql_NumRows(mmysql_handle) > 0 ){
+		while (SQL_SUCCESS == Sql_NextRow(mmysql_handle)) {
+			char* data;
+			Sql_GetData(mmysql_handle, 0, &data, NULL); type = atoi(data);
+			switch(type){
+				case 0:
+					struct s_autoheal autoheal;
+					autoheal.is_active = 1;
+					Sql_GetData(mmysql_handle, 1, &data, NULL); autoheal.skill_id = atoi(data);
+					Sql_GetData(mmysql_handle, 2, &data, NULL); autoheal.skill_lv = atoi(data);
+					Sql_GetData(mmysql_handle, 3, &data, NULL); autoheal.min_hp = atoi(data);
+					autoheal.last_use = 1;
+					sd->aa.autoheal.push_back(autoheal);
+					break;
+				case 1:
+					struct s_autobuffskills autobuffskills;
+					autobuffskills.is_active = 1;
+					Sql_GetData(mmysql_handle, 1, &data, NULL); autobuffskills.skill_id = atoi(data);
+					Sql_GetData(mmysql_handle, 2, &data, NULL); autobuffskills.skill_lv = atoi(data);
+					autobuffskills.last_use = 1;
+					sd->aa.autobuffskills.push_back(autobuffskills);
+					break;
+				case 2:
+					struct s_autoattackskills autoattackskills;
+					autoattackskills.is_active = 1;
+					Sql_GetData(mmysql_handle, 1, &data, NULL); autoattackskills.skill_id = atoi(data);
+					Sql_GetData(mmysql_handle, 2, &data, NULL); autoattackskills.skill_lv = atoi(data);
+					autoattackskills.last_use = 1;
+					sd->aa.autoattackskills.push_back(autoattackskills);
+					break;
+			}
+		}
+	}
+	Sql_FreeResult(mmysql_handle);
+
+	sd->aa.last_hit = gettick();
+	sd->aa.last_teleport = gettick();
+	sd->aa.last_move = gettick();
+	sd->aa.last_attack = gettick();
+	sd->aa.last_hit = gettick();
+	sd->aa.attack_target_id = 0;
+	sd->aa.target_id = 0;
+	sd->aa.itempick_id = 0;
 }
 
 /*==========================================
@@ -6808,7 +6984,7 @@ enum e_setpos pc_setpos(map_session_data* sd, unsigned short mapindex, int32 x, 
 		return SETPOS_MAPINDEX;
 	}
 
-	if ( sd->state.autotrade && (sd->vender_id || sd->buyer_id) ) // Player with autotrade just causes clif glitch! @ FIXME
+	if ( (sd->sc.getSCE(SC_AUTOATTACK) && sd->mapindex != mapindex) || (sd->state.autotrade && sd->sc.getSCE(SC_AUTOATTACK)) || (sd->state.autotrade && (sd->vender_id || sd->buyer_id)) ) // Player with autotrade just causes clif glitch! @ FIXME
 		return SETPOS_AUTOTRADE;
 
 	if( battle_config.revive_onwarp && pc_isdead(sd) ) { //Revive dead people before warping them
@@ -9543,6 +9719,8 @@ static TIMER_FUNC(pc_respawn_timer){
  *------------------------------------------*/
 void pc_damage(map_session_data *sd,struct block_list *src,uint32 hp, uint32 sp, uint32 ap)
 {
+	struct status_data *status = status_get_status_data(sd->bl);
+
 	if (ap) clif_updatestatus(*sd,SP_AP);
 	if (sp) clif_updatestatus(*sd,SP_SP);
 	if (hp) clif_updatestatus(*sd,SP_HP);
@@ -9567,6 +9745,17 @@ void pc_damage(map_session_data *sd,struct block_list *src,uint32 hp, uint32 sp,
 
 	if(battle_config.prevent_logout_trigger&PLT_DAMAGE)
 		sd->canlog_tick = gettick();
+
+	if((!sd->aa.teleport.use_teleport || !sd->aa.teleport.use_flywing) && sd->aa.teleport.min_hp && (status->hp * 100 / sd->aa.teleport.min_hp) < sd->status.max_hp)
+		aa_teleport(sd);
+
+	if(!sd->aa.target_id && !sd->aa.mobs.aggressive_behavior && src->type == BL_MOB){
+		if(sd->aa.itempick_id)
+			sd->aa.itempick_id = 0; // priority to defend player
+		sd->aa.target_id = src->id;
+	}
+
+	sd->aa.last_hit = gettick();
 }
 
 TIMER_FUNC(pc_close_npc_timer){
@@ -9635,6 +9824,12 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 	int32 i=0,k=0;
 	t_tick tick = gettick();
 	struct map_data *mapdata = map_getmapdata(sd->bl.m);
+
+	status_change_end(&sd->bl, SC_AUTOATTACK);
+	for(auto &itAutobuffitem : sd->aa.autobuffitems){
+		if(itAutobuffitem.is_active)				
+			itAutobuffitem.last_use = 0;
+	}
 
 	// Activate Steel body if a super novice dies at 99+% exp [celest]
 	// Super Novices have no kill or die functions attached when saved by their angel
@@ -10766,8 +10961,12 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 
 	// Reset body style to 0 before changing job to avoid
 	// errors since not every job has a alternate outfit.
+#if PACKETVER_MAIN_NUM >= 20231220
+	sd->status.body = job;
+#else
 	sd->status.body = 0;
-	clif_changelook(&sd->bl,LOOK_BODY2,0);
+#endif
+	clif_changelook(&sd->bl,LOOK_BODY2,sd->status.body);
 
 	sd->status.class_ = job;
 	fame_flag = pc_famerank(sd->status.char_id,sd->class_&MAPID_UPPERMASK);
@@ -14286,6 +14485,438 @@ void PlayerStatPointDatabase::loadingFinished(){
 	}
 
 	TypesafeCachedYamlDatabase::loadingFinished();
+}
+
+EmotionDatabase emotion_db;
+
+const std::string EmotionDatabase::getDefaultLocation() { return std::string(db_path) + "/emotion_db.yml"; }
+
+uint64 EmotionDatabase::parseBodyNode(const ryml::NodeRef& Node)
+{
+	int16 Id;
+	if (!this->asInt16(Node, "Id", Id))
+	{
+		return 0;
+	}
+
+	std::shared_ptr<s_emotion_db> EmotionsInfo = this->find(Id);
+
+	const bool bExists = EmotionsInfo != nullptr;
+	if (!bExists)
+	{
+		EmotionsInfo = std::make_shared<s_emotion_db>();
+		EmotionsInfo->Id = Id;
+	}
+
+	if (this->nodeExists(Node, "Price"))
+	{
+		uint16 Price = -1;
+		if (!this->asUInt16(Node, "Price", Price))
+		{
+			return 0;
+		}
+
+		if (Price > MAX_AMOUNT)
+		{
+			this->invalidWarning(Node["Price"], "Emotion expantion \'%hu\' amount it is too high, capping it to MAX_AMOUNT...\n", Id);
+			Price = MAX_AMOUNT;
+		}
+
+		EmotionsInfo->Price = Price;
+	}
+	else
+	{
+		EmotionsInfo->Price = 0;
+	}
+	
+	if (this->nodeExists(Node, "Type"))
+	{
+		uint16 Type = -1;
+		if (!this->asUInt16(Node, "Type", Type))
+		{
+			return 0;
+		}
+
+		if (Type > 1)
+		{
+			this->invalidWarning(Node["Type"], "Emotion expantion \'%hu\' type it is invalid, capping it to 1...\n", Id);
+			Type = 1;
+		}
+
+		EmotionsInfo->Type = Type;
+	}
+	else
+	{
+		EmotionsInfo->Type = 0;
+	}
+
+	if (this->nodeExists(Node, "SaleStart"))
+	{
+		uint32 SaleStart = -1;
+		if (!this->asUInt32(Node, "SaleStart", SaleStart))
+		{
+			return 0;
+		}
+
+		if (SaleStart != 0 && (SaleStart < 20020000 || SaleStart > 29990000))
+		{
+			this->invalidWarning(Node["SaleStart"], "Emotion expantion \'%hu\' sale start it is invalid, capping it to 0...\n", Id);
+			SaleStart = 0;
+		}
+
+		EmotionsInfo->SaleStart = SaleStart;
+	}
+	else
+	{
+		EmotionsInfo->SaleStart = 0;
+	}
+
+	if (this->nodeExists(Node, "SaleEnd"))
+	{
+		uint32 SaleEnd = -1;
+		if (!this->asUInt32(Node, "SaleEnd", SaleEnd))
+		{
+			return 0;
+		}
+
+		if (SaleEnd != 0 && (SaleEnd < 20020000 || SaleEnd > 29990000 || EmotionsInfo->SaleStart > SaleEnd))
+		{
+			this->invalidWarning(Node["SaleEnd"], "Emotion expantion \'%hu\' sale start it is invalid, capping it to 0...\n", Id);
+			EmotionsInfo->SaleStart = 0;
+			SaleEnd = 0;
+		}
+
+		EmotionsInfo->SaleEnd = SaleEnd;
+	}
+	else
+	{
+		EmotionsInfo->SaleEnd = 0;
+	}
+
+	if (this->nodeExists(Node, "SaleRentalPeriod"))
+	{
+		uint32 SaleRentalPeriod = -1;
+		if (!this->asUInt32(Node, "SaleRentalPeriod", SaleRentalPeriod))
+		{
+			return 0;
+		}
+
+		EmotionsInfo->SaleRentalPeriod = SaleRentalPeriod * 60 * 60 * 24;
+	}
+	else
+	{
+		EmotionsInfo->SaleRentalPeriod = 0;
+	}
+
+	for (const ryml::NodeRef& EmotionsNode : Node["Emotions"])
+	{
+		std::string EmotionName;
+		c4::from_chars(EmotionsNode.val(), &EmotionName);
+
+		int64 EmotionId;
+		script_get_constant(EmotionName.c_str(), &EmotionId);
+
+		if (EmotionId < 0 || EmotionId >= ET_MAX)
+		{
+			this->invalidWarning(Node["Emotions"], "Invalid emotion constant with name \'%s\'.\n", EmotionName.c_str());
+			return 0;
+		}
+
+		EmotionsInfo->Emotions.push_back(static_cast<emotion_type>(EmotionId));
+	}
+
+	if (!bExists)
+	{
+		this->put(Id, EmotionsInfo);
+	}
+
+	return 1;
+}
+
+void do_init_emotions(void)
+{
+	emotion_db.load();
+}
+
+void do_final_emotions(void)
+{
+	emotion_db.clear();
+}
+
+void pc_use_emotion(map_session_data* const sd, const uint16 Id, const uint16 EmotionId)
+{
+	nullpo_retv(sd);
+
+	//
+	// Prevent use of the mute emote [Valaris].
+	//
+
+	if (battle_config.basic_skill_check != 0 && pc_checkskill(sd, NV_BASIC) < 2 && pc_checkskill(sd, SU_BASIC_SKILL) < 1)
+	{
+		clif_emotion2_fail(sd, Id, EmotionId, EMSG_EMOTION_USE_FAIL_SKILL_LEVEL);
+		return;
+	}
+
+	//
+	// Fix flood of emotion icon (ro-proxy): flood only the hacker player
+	//
+
+	if (sd->emotionlasttime + 1 >= time(nullptr)) // not more than 1 per second
+	{
+		sd->emotionlasttime = time(nullptr);
+		clif_emotion2_fail(sd, Id, EmotionId, EMSG_EMOTION_EXPANTION_USE_FAIL_UNKNOWN);
+		return;
+	}
+
+	sd->emotionlasttime = time(nullptr);
+
+	if (battle_config.idletime_option & IDLE_EMOTION)
+	{
+		sd->idletime = last_tick;
+	}
+
+	if (battle_config.hom_idle_no_share && sd->hd && battle_config.idletime_hom_option & IDLE_EMOTION)
+	{
+		sd->idletime_hom = last_tick;
+	}
+
+	if (battle_config.mer_idle_no_share && sd->md && battle_config.idletime_mer_option & IDLE_EMOTION)
+	{
+		sd->idletime_mer = last_tick;
+	}
+
+	if (sd->state.block_action & PCBLOCK_EMOTION)
+	{
+		clif_emotion2_fail(sd, Id, EmotionId, EMSG_EMOTION_EXPANTION_USE_FAIL_UNKNOWN);
+		return;
+	}
+
+	if (battle_config.client_reshuffle_dice && EmotionId >= ET_DICE1 && EmotionId <= ET_DICE6) // re-roll dice
+	{
+		const uint16 DiceEmotionId = (rnd() % 6 + ET_DICE1);
+		clif_emotion2(&sd->bl, 0, DiceEmotionId);
+		return;
+	}
+
+	//
+	// Checks for the emotion expantion and emote id in the emotion database.
+	//
+
+	std::shared_ptr<s_emotion_db> EmotionsInfo = emotion_db.find(Id);
+	if (EmotionsInfo == nullptr)
+	{
+		clif_emotion2_fail(sd, Id, EmotionId, EMSG_EMOTION_EXPANTION_USE_FAIL_UNKNOWN);
+		return;
+	}
+
+	if (util::vector_exists(EmotionsInfo->Emotions, static_cast<emotion_type>(EmotionId)) != true)
+	{
+		clif_emotion2_fail(sd, Id, EmotionId, EMSG_EMOTION_EXPANTION_USE_FAIL_UNKNOWN);
+		return;
+	}
+
+	if (EmotionsInfo->Id != 0)
+	{
+		char Buffer[32];
+		const char* FormatString = nullptr;
+
+		if (EmotionsInfo->Type) // Character Bound
+		{
+			FormatString = "emotion_%hu";
+		}
+		else // Account Bound
+		{
+			FormatString = "#emotion_%hu";
+		}
+
+		memset(Buffer, '\0', sizeof(Buffer));
+		sprintf(Buffer, FormatString, EmotionsInfo->Id);
+
+		const bool bExpantionBought = static_cast<bool>(pc_readglobalreg(sd, add_str(Buffer)));
+		if (bExpantionBought == false)
+		{
+			clif_emotion2_fail(sd, Id, EmotionId, EMSG_EMOTION_EXPANTION_USE_FAIL_UNPURCHASED);
+			return;
+		}
+
+		if (EmotionsInfo->Type) // Character Bound
+		{
+			FormatString = "emotion_expire_%hu";
+		}
+		else // Account Bound
+		{
+			FormatString = "#emotion_expire_%hu";
+		}
+
+		memset(Buffer, '\0', sizeof(Buffer));
+		sprintf(Buffer, FormatString, EmotionsInfo->Id);
+
+		const time_t CurrentTime = time(nullptr);
+		const int64 ExpireTime = pc_readglobalreg(sd, add_str(Buffer));
+		if (EmotionsInfo->SaleRentalPeriod != 0 && CurrentTime > time_t(ExpireTime))
+		{
+			clif_emotion2_fail(sd, Id, EmotionId, EMSG_EMOTION_EXPANTION_USE_FAIL_DATE);
+			return;
+		}
+	}
+
+	clif_emotion2(&sd->bl, Id, EmotionId);
+}
+
+void pc_buy_emotion_expantion(map_session_data* const sd, const uint16 Id, const uint16 ItemId, const uint8 Amount)
+{
+	nullpo_retv(sd);
+
+	if (battle_config.basic_skill_check != 0 && pc_checkskill(sd, NV_BASIC) < 2 && pc_checkskill(sd, SU_BASIC_SKILL) < 1)
+	{
+		clif_emotion2_expantion_fail(sd, Id, EMSG_EMOTION_EXPANTION_FAIL_UNKNOWN);
+		return;
+	}
+
+	std::shared_ptr<s_emotion_db> EmotionsInfo = emotion_db.find(Id);
+	if (EmotionsInfo == nullptr)
+	{
+		clif_emotion2_expantion_fail(sd, Id, EMSG_EMOTION_EXPANTION_FAIL_UNKNOWN);
+		return;
+	}
+
+	const time_t CurrentTime = time(nullptr);
+	if (EmotionsInfo->SaleEnd != 0 && EmotionsInfo->SaleEnd < CurrentTime)
+	{
+		clif_emotion2_expantion_fail(sd, Id, EMSG_EMOTION_EXPANTION_FAIL_DATE);
+		return;
+	}
+
+	if (EmotionsInfo->SaleStart != 0 && EmotionsInfo->SaleStart > CurrentTime)
+	{
+		clif_emotion2_expantion_fail(sd, Id, EMSG_NOT_YET_SALE_START_TIME);
+		return;
+	}
+
+	char Buffer[32];
+	const char* FormatString = nullptr;
+
+	if (EmotionsInfo->Type) // Character Bound
+	{
+		FormatString = "emotion_%hu";
+	}
+	else // Account Bound
+	{
+		FormatString = "#emotion_%hu";
+	}
+
+	memset(Buffer, '\0', sizeof(Buffer));
+	sprintf(Buffer, FormatString, EmotionsInfo->Id);
+
+	const bool bExpantionBought = static_cast<bool>(pc_readglobalreg(sd, add_str(Buffer)));
+	if (bExpantionBought == true)
+	{
+		clif_emotion2_expantion_fail(sd, Id, EMSG_EMOTION_EXPANTION_FAIL_ALREADY_BUY);
+		return;
+	}
+
+	if (ItemId != 6909)
+	{
+		clif_emotion2_expantion_fail(sd, Id, EMSG_EMOTION_EXPANTION_FAIL_UNKNOWN);
+		return;
+	}
+
+	if (EmotionsInfo->Price != Amount)
+	{
+		clif_emotion2_expantion_fail(sd, Id, EMSG_EMOTION_EXPANTION_FAIL_UNKNOWN);
+		return;
+	}
+
+	const int32 NyangvineIndex = pc_search_inventory(sd, ItemId);
+	if (NyangvineIndex < 0 || sd->inventory.u.items_inventory[NyangvineIndex].amount < Amount)
+	{
+		clif_emotion2_expantion_fail(sd, Id, EMSG_EMOTION_EXPANTION_NOT_ENOUGH_NYANGVINE);
+		return;
+	}
+
+	pc_delitem(sd, NyangvineIndex, Amount, 0, 0, LOG_TYPE_CONSUME);
+	pc_setglobalreg(sd, add_str(Buffer), 1);
+
+	if (EmotionsInfo->SaleRentalPeriod != 0)
+	{
+		if (EmotionsInfo->Type) // Character Bound
+		{
+			FormatString = "emotion_expire_%hu";
+		}
+		else // Account Bound
+		{
+			FormatString = "#emotion_expire_%hu";
+		}
+
+		memset(Buffer, '\0', sizeof(Buffer));
+		sprintf(Buffer, FormatString, EmotionsInfo->Id);
+
+		const int64 ExpireTime = CurrentTime + EmotionsInfo->SaleRentalPeriod;
+		pc_setglobalreg(sd, add_str(Buffer), ExpireTime);
+
+		clif_emotion2_expantion(sd, Id, true, (uint32)ExpireTime);
+		return;
+	}
+
+	clif_emotion2_expantion(sd, Id, false, 0);
+}
+
+void pc_load_emotion_expantion_list(map_session_data* const sd)
+{
+	nullpo_retv(sd);
+
+	char Buffer1[32];
+	char Buffer2[32];
+	const char* FormatString = nullptr;
+
+	std::vector<PACKET_ZC_EMOTION2_EXPANTION_LIST_SUB> EmotionExpantionList;
+	for (const std::pair<uint16, std::shared_ptr<s_emotion_db>>& EmotionPair : emotion_db)
+	{
+		const uint16& ExpantionId = EmotionPair.first;
+		const std::shared_ptr<s_emotion_db>& EmotionsInfo = EmotionPair.second;
+
+		if (EmotionsInfo->Type) // Character Bound
+		{
+			FormatString = "emotion_%hu";
+		}
+		else // Account Bound
+		{
+			FormatString = "#emotion_%hu";
+		}
+
+		memset(Buffer1, '\0', sizeof(Buffer1));
+		sprintf(Buffer1, FormatString, EmotionsInfo->Id);
+
+		if (EmotionsInfo->Type) // Character Bound
+		{
+			FormatString = "emotion_expire_%hu";
+		}
+		else // Account Bound
+		{
+			FormatString = "#emotion_expire_%hu";
+		}
+
+		memset(Buffer2, '\0', sizeof(Buffer2));
+		sprintf(Buffer2, FormatString, EmotionsInfo->Id);
+
+		const bool bRental = EmotionsInfo->SaleRentalPeriod != 0;
+		const time_t CurrentTime = time(nullptr);
+		const bool bExpantionBought = static_cast<bool>(pc_readglobalreg(sd, add_str(Buffer1)));
+		const int64 ExpireTime = pc_readglobalreg(sd, add_str(Buffer2));
+		if (bExpantionBought && bRental && CurrentTime > static_cast<time_t>(ExpireTime))
+		{
+			pc_setglobalreg(sd, add_str(Buffer1), 0);
+			pc_setglobalreg(sd, add_str(Buffer2), 0);
+			continue;
+		}
+
+		if (bExpantionBought)
+		{
+			EmotionExpantionList.push_back({ ExpantionId, bRental, static_cast<uint32>(ExpireTime) });
+		}
+	}
+
+	clif_emotion2_expantion_list(sd, EmotionExpantionList);
 }
 
 /*==========================================
