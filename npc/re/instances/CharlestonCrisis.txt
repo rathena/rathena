@@ -727,11 +727,11 @@ OnTimer300:
 }
 
 1@mcd,141,214,5	script	Charleston 2#1	4_F_CHARLESTON02,{
-	cutin "dalle01.bmp",2;
 	if (is_party_leader() == false) {
+		cutin "dalle01.bmp",2;
 		mes "[Charleston 1]";
 		mes "Please let me talk to your leader about the supplementation of the factory.";
-		close;
+		close3;
 	}
 	if ('ep15_1_mcd01 > 11)
 		end;

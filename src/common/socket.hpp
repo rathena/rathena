@@ -28,7 +28,6 @@
 #define FIFOSIZE_SERVERLINK 256*1024
 
 // socket I/O macros
-#define RFIFOHEAD(fd)
 #define WFIFOHEAD( fd, size ) \
 	do{ \
 		if( ( fd ) && session[( fd )]->wdata_size + ( size ) > session[( fd )]->max_wdata ){ \
@@ -86,9 +85,9 @@
 
 
 // Struct declaration
-typedef int (*RecvFunc)(int fd);
-typedef int (*SendFunc)(int fd);
-typedef int (*ParseFunc)(int fd);
+typedef int32 (*RecvFunc)(int32 fd);
+typedef int32 (*SendFunc)(int32 fd);
+typedef int32 (*ParseFunc)(int32 fd);
 
 struct socket_data
 {
@@ -119,36 +118,36 @@ struct socket_data
 
 extern struct socket_data* session[MAXCONN];
 
-extern int fd_max;
+extern int32 fd_max;
 
 extern time_t last_tick;
 extern time_t stall_time;
 
 //////////////////////////////////
 // some checking on sockets
-extern bool session_isValid(int fd);
-extern bool session_isActive(int fd);
+extern bool session_isValid(int32 fd);
+extern bool session_isActive(int32 fd);
 //////////////////////////////////
 
 // Function prototype declaration
 
-int make_listen_bind(uint32 ip, uint16 port);
-int make_connection(uint32 ip, uint16 port, bool silent, int timeout);
+int32 make_listen_bind(uint32 ip, uint16 port);
+int32 make_connection(uint32 ip, uint16 port, bool silent, int32 timeout);
 #define realloc_fifo( fd, rfifo_size, wfifo_size ) _realloc_fifo( ( fd ), ( rfifo_size ), ( wfifo_size ), ALC_MARK )
 #define realloc_writefifo( fd, addition ) _realloc_writefifo( ( fd ), ( addition ), ALC_MARK )
-int _realloc_fifo( int fd, unsigned int rfifo_size, unsigned int wfifo_size, const char* file, int line, const char* func );
-int _realloc_writefifo( int fd, size_t addition, const char* file, int line, const char* func );
-int WFIFOSET(int fd, size_t len);
-int RFIFOSKIP(int fd, size_t len);
+int32 _realloc_fifo( int32 fd, uint32 rfifo_size, uint32 wfifo_size, const char* file, int32 line, const char* func );
+int32 _realloc_writefifo( int32 fd, size_t addition, const char* file, int32 line, const char* func );
+int32 WFIFOSET(int32 fd, size_t len);
+int32 RFIFOSKIP(int32 fd, size_t len);
 
-int do_sockets(t_tick next);
-void do_close(int fd);
+int32 do_sockets(t_tick next);
+void do_close(int32 fd);
 void socket_init(void);
 void socket_final(void);
 
-extern void flush_fifo(int fd);
+extern void flush_fifo(int32 fd);
 extern void flush_fifos(void);
-extern void set_nonblocking(int fd, unsigned long yes);
+extern void set_nonblocking(int32 fd, unsigned long yes);
 
 void set_defaultparse(ParseFunc defaultparse);
 
@@ -178,12 +177,12 @@ uint32 str2ip(const char* ip_str);
 #define MAKEIP(a,b,c,d) (uint32)( ( ( (a)&0xFF ) << 24 ) | ( ( (b)&0xFF ) << 16 ) | ( ( (c)&0xFF ) << 8 ) | ( ( (d)&0xFF ) << 0 ) )
 uint16 ntows(uint16 netshort);
 
-int socket_getips(uint32* ips, int max);
+int32 socket_getips(uint32* ips, int32 max);
 
 extern uint32 addr_[16];   // ip addresses of local host (host byte order)
-extern int naddr_;   // # of ip addresses
+extern int32 naddr_;   // # of ip addresses
 
-void set_eof(int fd);
+void set_eof(int32 fd);
 
 /// Use a shortlist of sockets instead of iterating all sessions for sockets
 /// that have data to send or need eof handling.
@@ -195,7 +194,7 @@ void set_eof(int fd);
 #ifdef SEND_SHORTLIST
 // Add a fd to the shortlist so that it'll be recognized as a fd that needs
 // sending done on it.
-void send_shortlist_add_fd(int fd);
+void send_shortlist_add_fd(int32 fd);
 // Do pending network sends (and eof handling) from the shortlist.
 void send_shortlist_do_sends();
 #endif
@@ -205,7 +204,7 @@ void send_shortlist_do_sends();
 extern int8 packet_buffer[UINT16_MAX];
 
 template <typename P>
-bool socket_send( int fd, P& packet ){
+bool socket_send( int32 fd, P& packet ){
 	if( !session_isActive( fd ) ){
 		return false;
 	}
@@ -218,7 +217,7 @@ bool socket_send( int fd, P& packet ){
 }
 
 template <typename P>
-bool socket_send( int fd, P* packet ){
+bool socket_send( int32 fd, P* packet ){
 	if( !session_isActive( fd ) ){
 		return false;
 	}

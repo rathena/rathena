@@ -5320,7 +5320,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      bonus2 bAddMonsterDropItemGroup,IG_Food,600;
+      bonus2 bAddMonsterDropItemGroup,IG_Food,10000;
   - Id: 4216
     AegisName: Sasquatch_Card
     Name: Sasquatch Card
@@ -6230,7 +6230,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      bonus2 bAddMonsterDropItemGroup,IG_Recovery,600;
+      bonus2 bAddMonsterDropItemGroup,IG_Recovery,10000;
   - Id: 4283
     AegisName: Greatest_General_Card
     Name: Greatest General Card
@@ -17930,7 +17930,7 @@ Body:
     Weight: 10
   - Id: 7773
     AegisName: War_Badge
-    Name: Wat Badge
+    Name: War Badge
     Type: Etc
     Trade:
       NoDrop: true
