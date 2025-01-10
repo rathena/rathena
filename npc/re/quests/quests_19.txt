@@ -35,7 +35,7 @@ wolfvill,223,83,3	script	Gray Wolf Villager#ep19	4_EP18_GW_MAN02,{
 		mes "^4d4dffThere are quests that can be completed at level 200 or higher.^000000";
 		close;
 	}
-	if (ep19_main == 0 && ep18_1_main == 57) {
+	if (ep19_main == 0 && ep18_main == 57) {
 		mes "[Greywolf Villager]";
 		mes "Would you like to wait a minute?";
 		mes "Maram was looking for you.";
@@ -152,7 +152,7 @@ wolfvill,223,83,3	script	Gray Wolf Villager#ep19	4_EP18_GW_MAN02,{
 	close;
 
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ep19_main == 0 && ep18_1_main >= 57 && BaseLevel >= 200 && isbegin_quest(18119) == 0" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ep19_main == 0 && ep18_main >= 57 && BaseLevel >= 200 && isbegin_quest(18119) == 0" );
 	end;
 }
 
