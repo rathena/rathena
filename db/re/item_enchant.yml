@@ -22318,6 +22318,10 @@ Body:
             Materials:
               - Material: S_Enchant_Essence
                 Amount: 5
+          - Item: DK_Soul_DP
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
   - Id: 72
     TargetItems:
       S_IG_Armor: true
@@ -22379,6 +22383,18 @@ Body:
               - Material: S_Enchant_Essence
                 Amount: 5
           - Item: IG_Soul_CR
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: IG_Soul_IC
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: IG_Soul_RS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: IG_Soul_IP
             Materials:
               - Material: S_Enchant_Essence
                 Amount: 5
@@ -22447,6 +22463,10 @@ Body:
               - Material: S_Enchant_Essence
                 Amount: 5
           - Item: SHC_Soul_SS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SHC_Soul_CS
             Materials:
               - Material: S_Enchant_Essence
                 Amount: 5
@@ -22526,6 +22546,22 @@ Body:
             Materials:
               - Material: S_Enchant_Essence
                 Amount: 5
+          - Item: ABC_Soul_HAS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: ABC_Soul_CB
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: ABC_Soul_CS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: ABC_Soul_AF
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
   - Id: 75
     TargetItems:
       S_CD_Armor: true
@@ -22587,6 +22623,10 @@ Body:
               - Material: S_Enchant_Essence
                 Amount: 5
           - Item: CD_Soul_PT
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: CD_Soul_DF
             Materials:
               - Material: S_Enchant_Essence
                 Amount: 5
@@ -22658,6 +22698,10 @@ Body:
             Materials:
               - Material: S_Enchant_Essence
                 Amount: 5
+          - Item: IQ_Soul_BFB
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
   - Id: 77
     TargetItems:
       S_MT_Armor: true
@@ -22726,6 +22770,18 @@ Body:
             Materials:
               - Material: S_Enchant_Essence
                 Amount: 5
+          - Item: MT_Soul_RS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: MT_Soul_PS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: MT_Soul_EC
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
   - Id: 78
     TargetItems:
       S_BO_Armor: true
@@ -22787,6 +22843,14 @@ Body:
               - Material: S_Enchant_Essence
                 Amount: 5
           - Item: BO_Soul_EP
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: BO_Soul_MP
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: BO_Soul_DE
             Materials:
               - Material: S_Enchant_Essence
                 Amount: 5
@@ -22931,6 +22995,10 @@ Body:
               - Material: S_Enchant_Essence
                 Amount: 5
           - Item: TR_Soul_MF
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: TR_Soul_RW
             Materials:
               - Material: S_Enchant_Essence
                 Amount: 5
@@ -23174,6 +23242,14 @@ Body:
             Materials:
               - Material: S_Enchant_Essence
                 Amount: 5
+          - Item: NW_Soul_WS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: NW_Soul_MF
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
   - Id: 84
     TargetItems:
       S_SH_Armor: true
@@ -23239,6 +23315,14 @@ Body:
               - Material: S_Enchant_Essence
                 Amount: 5
           - Item: SH_Soul_HS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SH_Soul_CHB
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SH_Soul_HRSP
             Materials:
               - Material: S_Enchant_Essence
                 Amount: 5
@@ -23411,6 +23495,18 @@ Body:
               - Material: S_Enchant_Essence
                 Amount: 5
           - Item: SKE_Soul_SC
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SKE_Soul_SS
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SKE_Soul_SM
+            Materials:
+              - Material: S_Enchant_Essence
+                Amount: 5
+          - Item: SKE_Soul_SLK
             Materials:
               - Material: S_Enchant_Essence
                 Amount: 5
@@ -32780,3 +32876,1560 @@ Body:
                 Amount: 30
               - Material: EP19_N_P_Crystal
                 Amount: 30
+  - Id: 150
+    TargetItems:
+      Time_Gap_Spear_IG: true
+      Time_Gap_Staff_AG: true
+      Time_Gap_Revolver_NW: true
+      Time_Gap_MT_Axe: true
+      Time_Gap_TR_Ribbon: true
+      Time_Gap_TR_Vilolin: true
+      Time_Gap_HN_Staff: true
+      Time_Gap_BO_Blade: true
+      Time_Gap_SHC_Dagger1: true
+      Time_Gap_SOA_Rod: true
+      Time_Gap_DK_Spear: true
+      Time_Gap_CD_Staff: true
+      Time_Gap_SKE_Book: true
+      Time_Gap_ABC_Dagger: true
+      Time_Gap_SH_Foxtail: true
+      Time_Gap_IQ_Knuckle: true
+    Reset:
+      Chance: 100000
+      Price: 5000000
+      Materials:
+        - Material: Zelunium
+          Amount: 50
+        - Material: Shadowdecon
+          Amount: 50
+        - Material: Etel_Dust
+          Amount: 100
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Bio_Jam_Df2
+            Materials:
+              - Material: Bar_D_St_Rune
+                Amount: 15
+              - Material: Bar_D_Ic_Rune
+                Amount: 15
+              - Material: Time_D_Ma_Rune
+                Amount: 10
+          - Item: Bio_Jam_Es2
+            Materials:
+              - Material: Bar_D_Co_Rune
+                Amount: 15
+              - Material: Bar_D_Po_Rune
+                Amount: 15
+              - Material: Time_D_Ma_Rune
+                Amount: 10
+          - Item: Bio_Jam_Vl2
+            Materials:
+              - Material: Bar_D_Pu_Rune
+                Amount: 15
+              - Material: Bar_D_So_Rune
+                Amount: 15
+              - Material: Time_D_Ma_Rune
+                Amount: 10
+          - Item: Bio_Jam_Eq2
+            Materials:
+              - Material: Bar_D_Fl_Rune
+                Amount: 15
+              - Material: Bar_D_Po_Rune
+                Amount: 15
+              - Material: Time_D_Ma_Rune
+                Amount: 10
+          - Item: Bio_Jam_Hd2
+            Materials:
+              - Material: Bar_D_Ea_Rune
+                Amount: 15
+              - Material: Bar_D_So_Rune
+                Amount: 15
+              - Material: Time_D_Ma_Rune
+                Amount: 10
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Barmund_Flame3
+            Materials:
+              - Material: Energy_Of_Elemental
+                Amount: 10
+              - Material: Time_D_Ma_Rune
+                Amount: 15
+          - Item: Barmund_Ice3
+            Materials:
+              - Material: Energy_Of_Elemental
+                Amount: 10
+              - Material: Time_D_Ma_Rune
+                Amount: 15
+          - Item: Barmund_Plain3
+            Materials:
+              - Material: Energy_Of_Elemental
+                Amount: 10
+              - Material: Time_D_Ma_Rune
+                Amount: 15
+          - Item: Barmund_Death3
+            Materials:
+              - Material: Energy_Of_Elemental
+                Amount: 10
+              - Material: Time_D_Ma_Rune
+                Amount: 15
+          - Item: Barmund_Poison3
+            Materials:
+              - Material: Energy_Of_Elemental
+                Amount: 10
+              - Material: Time_D_Ma_Rune
+                Amount: 15
+  - Id: 151
+    TargetItems:
+      Rising_Circlet: true
+    Reset:
+      Chance: 100000
+      Price: 300000
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Rising_Swordman
+            Materials:
+              - Material: Symposium_Card_RD
+                Amount: 7
+              - Material: Symposium_Card_SB
+                Amount: 7
+          - Item: Rising_Thief
+            Materials:
+              - Material: Symposium_Card_RD
+                Amount: 7
+              - Material: Symposium_Card_SB
+                Amount: 7
+          - Item: Rising_Merchant
+            Materials:
+              - Material: Symposium_Card_RD
+                Amount: 7
+              - Material: Symposium_Card_SB
+                Amount: 7
+          - Item: Rising_Magician
+            Materials:
+              - Material: Symposium_Card_OR
+                Amount: 7
+              - Material: Symposium_Card_BU
+                Amount: 7
+          - Item: Rising_Archer
+            Materials:
+              - Material: Symposium_Card_OR
+                Amount: 7
+              - Material: Symposium_Card_BU
+                Amount: 7
+          - Item: Rising_Acolyte
+            Materials:
+              - Material: Symposium_Card_OR
+                Amount: 7
+              - Material: Symposium_Card_BU
+                Amount: 7
+          - Item: Rising_Ninja
+            Materials:
+              - Material: Symposium_Card_YL
+                Amount: 7
+              - Material: Symposium_Card_PP
+                Amount: 7
+          - Item: Rising_Gunner
+            Materials:
+              - Material: Symposium_Card_YL
+                Amount: 7
+              - Material: Symposium_Card_PP
+                Amount: 7
+          - Item: Rising_TK_Star
+            Materials:
+              - Material: Symposium_Card_YL
+                Amount: 7
+              - Material: Symposium_Card_PP
+                Amount: 7
+          - Item: Rising_TK_Soul
+            Materials:
+              - Material: Symposium_Card_GR
+                Amount: 7
+              - Material: Symposium_Card_BL
+                Amount: 7
+          - Item: Rising_Summoner
+            Materials:
+              - Material: Symposium_Card_GR
+                Amount: 7
+              - Material: Symposium_Card_BL
+                Amount: 7
+          - Item: Rinsing_Novice
+            Materials:
+              - Material: Symposium_Card_GR
+                Amount: 7
+              - Material: Symposium_Card_BL
+                Amount: 7
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Expert_Fighter3
+            Materials:
+              - Material: Symposium_Coin
+                Amount: 5
+          - Item: Expert_Magician3
+            Materials:
+              - Material: Symposium_Coin
+                Amount: 5
+          - Item: Attack_Delay_5
+            Materials:
+              - Material: Symposium_Coin
+                Amount: 5
+          - Item: Hit_Plus5
+            Materials:
+              - Material: Symposium_Coin
+                Amount: 5
+          - Item: Caster5
+            Materials:
+              - Material: Symposium_Coin
+                Amount: 5
+          - Item: Expert_Archer3
+            Materials:
+              - Material: Symposium_Coin
+                Amount: 5
+  - Id: 152
+    TargetItems:
+      Yorscalp_Armor: true
+      Yorscalp_Robe: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Ep21_4_Def
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+          - Item: Ep21_4_Mdef
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+          - Item: Ep21_4_Warrior
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+          - Item: Ep21_4_Archer
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+          - Item: Ep21_4_Assassin
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+          - Item: Ep21_4_Magician
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Ep21_3_Berserker
+            Price: 2000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone2
+                Amount: 25
+              - Material: EP19_S_F_1_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 30
+              - Material: EP19_Gla_Extract
+                Amount: 30
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+          - Item: Ep21_3_Marksman
+            Price: 2000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone2
+                Amount: 25
+              - Material: EP19_S_F_1_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 30
+              - Material: EP19_Gla_Extract
+                Amount: 30
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+          - Item: Ep21_3_Executioner
+            Price: 2000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone2
+                Amount: 25
+              - Material: EP19_S_F_1_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 30
+              - Material: EP19_Gla_Extract
+                Amount: 30
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+          - Item: Ep21_3_Wizard
+            Price: 2000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone2
+                Amount: 25
+              - Material: EP19_S_F_1_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 30
+              - Material: EP19_Gla_Extract
+                Amount: 30
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Ep21_2_P_Force
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+          - Item: Ep21_2_M_Force
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+          - Item: Ep21_2_G_Cooldown
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+  - Id: 153
+    TargetItems:
+      Yorscalp_Manteau: true
+      Yorscalp_Muffler: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Ep21_4_Def
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Robe_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+          - Item: Ep21_4_Mdef
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Robe_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Ep21_3_Speed
+            Price: 2000000
+            Materials:
+              - Material: Ep21_Robe_E_Stone2
+                Amount: 25
+              - Material: EP19_S_F_1_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 30
+              - Material: EP19_Gla_Extract
+                Amount: 30
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+          - Item: Ep21_3_Caster
+            Price: 2000000
+            Materials:
+              - Material: Ep21_Robe_E_Stone2
+                Amount: 25
+              - Material: EP19_S_F_1_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 30
+              - Material: EP19_Gla_Extract
+                Amount: 30
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Ep21_2_Melee
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Robe_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+          - Item: Ep21_2_Range
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Robe_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+          - Item: Ep21_2_Critical
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Robe_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+          - Item: Ep21_2_Spell
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Robe_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+          - Item: Ep21_2_Ab_All
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Robe_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+  - Id: 154
+    TargetItems:
+      Yorscalp_Boots: true
+      Yorscalp_Shoes: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Ep21_4_Hp
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Shoes_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+          - Item: Ep21_4_Sp
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Shoes_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+          - Item: Ep21_4_Phy_Force
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Shoes_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+          - Item: Ep21_4_Mag_Force
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Shoes_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Ep21_3_Size_Atk
+            Price: 2000000
+            Materials:
+              - Material: Ep21_Shoes_E_Stone2
+                Amount: 25
+              - Material: EP19_S_F_1_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 30
+              - Material: EP19_Gla_Extract
+                Amount: 30
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+          - Item: Ep21_3_Size_Matk
+            Price: 2000000
+            Materials:
+              - Material: Ep21_Shoes_E_Stone2
+                Amount: 25
+              - Material: EP19_S_F_1_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 30
+              - Material: EP19_Gla_Extract
+                Amount: 30
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Ep21_2_Ov_Power
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Shoes_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+          - Item: Ep21_2_Fi_Shot
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Shoes_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+          - Item: Ep21_2_Luk_Strike
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Shoes_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+          - Item: Ep21_2_Spl_Buster
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Shoes_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+  - Id: 155
+    TargetItems:
+      Yorscalp_Ring: true
+      Yorscalp_Glove: true
+      Yorscalp_Earring: true
+      Yorscalp_Necklace: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Ep21_4_F_Spirit
+            Price: 1500000
+            Materials:
+              - Material: Ep21_Acc_E_Stone1
+                Amount: 70
+              - Material: EP19_S_F_1_Extract
+                Amount: 35
+              - Material: EP19_S_F_2_Extract
+                Amount: 35
+              - Material: EP19_Gla_Extract
+                Amount: 35
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+          - Item: Ep21_4_E_Archer
+            Price: 1500000
+            Materials:
+              - Material: Ep21_Acc_E_Stone1
+                Amount: 70
+              - Material: EP19_S_F_1_Extract
+                Amount: 35
+              - Material: EP19_S_F_2_Extract
+                Amount: 35
+              - Material: EP19_Gla_Extract
+                Amount: 35
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+          - Item: Ep21_4_Fatal
+            Price: 1500000
+            Materials:
+              - Material: Ep21_Acc_E_Stone1
+                Amount: 70
+              - Material: EP19_S_F_1_Extract
+                Amount: 35
+              - Material: EP19_S_F_2_Extract
+                Amount: 35
+              - Material: EP19_Gla_Extract
+                Amount: 35
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+          - Item: Ep21_4_Sp_Power
+            Price: 1500000
+            Materials:
+              - Material: Ep21_Acc_E_Stone1
+                Amount: 70
+              - Material: EP19_S_F_1_Extract
+                Amount: 35
+              - Material: EP19_S_F_2_Extract
+                Amount: 35
+              - Material: EP19_Gla_Extract
+                Amount: 35
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Ep21_3_Tenacity
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Acc_E_Stone2
+                Amount: 35
+              - Material: EP19_S_F_1_Extract
+                Amount: 45
+              - Material: EP19_S_F_2_Extract
+                Amount: 45
+              - Material: EP19_Gla_Extract
+                Amount: 45
+              - Material: EP19_S_F_3_Extract
+                Amount: 25
+              - Material: EP20_D_P_Extract
+                Amount: 25
+          - Item: Ep21_3_M_Archer
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Acc_E_Stone2
+                Amount: 35
+              - Material: EP19_S_F_1_Extract
+                Amount: 45
+              - Material: EP19_S_F_2_Extract
+                Amount: 45
+              - Material: EP19_Gla_Extract
+                Amount: 45
+              - Material: EP19_S_F_3_Extract
+                Amount: 25
+              - Material: EP20_D_P_Extract
+                Amount: 25
+          - Item: Ep21_3_Acute
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Acc_E_Stone2
+                Amount: 35
+              - Material: EP19_S_F_1_Extract
+                Amount: 45
+              - Material: EP19_S_F_2_Extract
+                Amount: 45
+              - Material: EP19_Gla_Extract
+                Amount: 45
+              - Material: EP19_S_F_3_Extract
+                Amount: 25
+              - Material: EP20_D_P_Extract
+                Amount: 25
+          - Item: Ep21_3_M_Eessence
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Acc_E_Stone2
+                Amount: 35
+              - Material: EP19_S_F_1_Extract
+                Amount: 45
+              - Material: EP19_S_F_2_Extract
+                Amount: 45
+              - Material: EP19_Gla_Extract
+                Amount: 45
+              - Material: EP19_S_F_3_Extract
+                Amount: 25
+              - Material: EP20_D_P_Extract
+                Amount: 25
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Ep21_2_Phy_Power
+            Price: 4500000
+            Materials:
+              - Material: Ep21_Acc_E_Stone3
+                Amount: 20
+              - Material: EP19_S_F_1_Extract
+                Amount: 65
+              - Material: EP19_S_F_2_Extract
+                Amount: 65
+              - Material: EP19_Gla_Extract
+                Amount: 65
+              - Material: EP19_S_F_3_Extract
+                Amount: 35
+              - Material: EP20_D_P_Extract
+                Amount: 35
+          - Item: Ep21_2_Mag_Power
+            Price: 4500000
+            Materials:
+              - Material: Ep21_Acc_E_Stone3
+                Amount: 20
+              - Material: EP19_S_F_1_Extract
+                Amount: 65
+              - Material: EP19_S_F_2_Extract
+                Amount: 65
+              - Material: EP19_Gla_Extract
+                Amount: 65
+              - Material: EP19_S_F_3_Extract
+                Amount: 35
+              - Material: EP20_D_P_Extract
+                Amount: 35
+  - Id: 156
+    TargetItems:
+      Yorscalp_P_Circlet: true
+      Yorscalp_M_Circlet: true
+    Reset:
+      Chance: 100000
+      Materials:
+        - Material: Zelunium
+          Amount: 20
+        - Material: Shadowdecon
+          Amount: 20
+        - Material: Yorscalp_Spirit
+          Amount: 20
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        Price: 300000
+        Materials:
+          - Material: Yorscalp_Serpent
+          - Material: Yorscalp_Symbol
+            Amount: 5
+          - Material: Yorscalp_Spirit
+            Amount: 10
+        Enchants:
+          - Enchantgrade: 0
+            Items:
+              - Item: Strength1
+                Chance: 11500
+              - Item: Strength2
+                Chance: 8000
+              - Item: Strength3
+                Chance: 3500
+              - Item: Strength4
+                Chance: 1500
+              - Item: Strength5
+                Chance: 500
+              - Item: Inteligence1
+                Chance: 11500
+              - Item: Inteligence2
+                Chance: 8000
+              - Item: Inteligence3
+                Chance: 3500
+              - Item: Inteligence4
+                Chance: 1500
+              - Item: Inteligence5
+                Chance: 500
+              - Item: Vitality1
+                Chance: 11500
+              - Item: Vitality2
+                Chance: 8000
+              - Item: Vitality3
+                Chance: 3500
+              - Item: Vitality4
+                Chance: 1500
+              - Item: Vitality5
+                Chance: 500
+              - Item: Luck1
+                Chance: 11500
+              - Item: Luck2
+                Chance: 8000
+              - Item: Luck3
+                Chance: 3500
+              - Item: Luck4
+                Chance: 1500
+              - Item: Luck5
+                Chance: 500
+          - Enchantgrade: 1
+            Items:
+              - Item: Strength1
+                Chance: 11500
+              - Item: Strength2
+                Chance: 8000
+              - Item: Strength3
+                Chance: 3500
+              - Item: Strength4
+                Chance: 1500
+              - Item: Strength5
+                Chance: 500
+              - Item: Inteligence1
+                Chance: 11500
+              - Item: Inteligence2
+                Chance: 8000
+              - Item: Inteligence3
+                Chance: 3500
+              - Item: Inteligence4
+                Chance: 1500
+              - Item: Inteligence5
+                Chance: 500
+              - Item: Vitality1
+                Chance: 11500
+              - Item: Vitality2
+                Chance: 8000
+              - Item: Vitality3
+                Chance: 3500
+              - Item: Vitality4
+                Chance: 1500
+              - Item: Vitality5
+                Chance: 500
+              - Item: Luck1
+                Chance: 11500
+              - Item: Luck2
+                Chance: 8000
+              - Item: Luck3
+                Chance: 3500
+              - Item: Luck4
+                Chance: 1500
+              - Item: Luck5
+                Chance: 500
+          - Enchantgrade: 2
+            Items:
+              - Item: Strength1
+                Chance: 11500
+              - Item: Strength2
+                Chance: 8000
+              - Item: Strength3
+                Chance: 3500
+              - Item: Strength4
+                Chance: 1500
+              - Item: Strength5
+                Chance: 500
+              - Item: Inteligence1
+                Chance: 11500
+              - Item: Inteligence2
+                Chance: 8000
+              - Item: Inteligence3
+                Chance: 3500
+              - Item: Inteligence4
+                Chance: 1500
+              - Item: Inteligence5
+                Chance: 500
+              - Item: Vitality1
+                Chance: 11500
+              - Item: Vitality2
+                Chance: 8000
+              - Item: Vitality3
+                Chance: 3500
+              - Item: Vitality4
+                Chance: 1500
+              - Item: Vitality5
+                Chance: 500
+              - Item: Luck1
+                Chance: 11500
+              - Item: Luck2
+                Chance: 8000
+              - Item: Luck3
+                Chance: 3500
+              - Item: Luck4
+                Chance: 1500
+              - Item: Luck5
+                Chance: 500
+          - Enchantgrade: 3
+            Items:
+              - Item: Strength1
+                Chance: 11500
+              - Item: Strength2
+                Chance: 8000
+              - Item: Strength3
+                Chance: 3500
+              - Item: Strength4
+                Chance: 1500
+              - Item: Strength5
+                Chance: 500
+              - Item: Inteligence1
+                Chance: 11500
+              - Item: Inteligence2
+                Chance: 8000
+              - Item: Inteligence3
+                Chance: 3500
+              - Item: Inteligence4
+                Chance: 1500
+              - Item: Inteligence5
+                Chance: 500
+              - Item: Vitality1
+                Chance: 11500
+              - Item: Vitality2
+                Chance: 8000
+              - Item: Vitality3
+                Chance: 3500
+              - Item: Vitality4
+                Chance: 1500
+              - Item: Vitality5
+                Chance: 500
+              - Item: Luck1
+                Chance: 11500
+              - Item: Luck2
+                Chance: 8000
+              - Item: Luck3
+                Chance: 3500
+              - Item: Luck4
+                Chance: 1500
+              - Item: Luck5
+                Chance: 500
+          - Enchantgrade: 4
+            Items:
+              - Item: Strength1
+                Chance: 11500
+              - Item: Strength2
+                Chance: 8000
+              - Item: Strength3
+                Chance: 3500
+              - Item: Strength4
+                Chance: 1500
+              - Item: Strength5
+                Chance: 500
+              - Item: Inteligence1
+                Chance: 11500
+              - Item: Inteligence2
+                Chance: 8000
+              - Item: Inteligence3
+                Chance: 3500
+              - Item: Inteligence4
+                Chance: 1500
+              - Item: Inteligence5
+                Chance: 500
+              - Item: Vitality1
+                Chance: 11500
+              - Item: Vitality2
+                Chance: 8000
+              - Item: Vitality3
+                Chance: 3500
+              - Item: Vitality4
+                Chance: 1500
+              - Item: Vitality5
+                Chance: 500
+              - Item: Luck1
+                Chance: 11500
+              - Item: Luck2
+                Chance: 8000
+              - Item: Luck3
+                Chance: 3500
+              - Item: Luck4
+                Chance: 1500
+              - Item: Luck5
+                Chance: 500
+      - Slot: 2
+        Price: 300000
+        Materials:
+          - Material: Yorscalp_Serpent
+            Amount: 2
+          - Material: Yorscalp_Symbol
+            Amount: 10
+          - Material: Yorscalp_Spirit
+            Amount: 20
+        Enchants:
+          - Enchantgrade: 0
+            Items:
+              - Item: Yorscalp_Str1
+                Chance: 11400
+              - Item: Yorscalp_Str2
+                Chance: 6000
+              - Item: Yorscalp_Str3
+                Chance: 2500
+              - Item: Yorscalp_Str4
+                Chance: 100
+              - Item: Yorscalp_Int1
+                Chance: 11400
+              - Item: Yorscalp_Int2
+                Chance: 6000
+              - Item: Yorscalp_Int3
+                Chance: 2500
+              - Item: Yorscalp_Int4
+                Chance: 100
+              - Item: Yorscalp_Smart1
+                Chance: 11400
+              - Item: Yorscalp_Smart2
+                Chance: 6000
+              - Item: Yorscalp_Smart3
+                Chance: 2500
+              - Item: Yorscalp_Smart4
+                Chance: 100
+              - Item: Yorscalp_Speed1
+                Chance: 11400
+              - Item: Yorscalp_Speed2
+                Chance: 6000
+              - Item: Yorscalp_Speed3
+                Chance: 2500
+              - Item: Yorscalp_Speed4
+                Chance: 100
+              - Item: Yorscalp_Def1
+                Chance: 11400
+              - Item: Yorscalp_Def2
+                Chance: 6000
+              - Item: Yorscalp_Def3
+                Chance: 2500
+              - Item: Yorscalp_Def4
+                Chance: 100
+          - Enchantgrade: 1
+            Items:
+              - Item: Yorscalp_Str1
+                Chance: 11400
+              - Item: Yorscalp_Str2
+                Chance: 6000
+              - Item: Yorscalp_Str3
+                Chance: 2500
+              - Item: Yorscalp_Str4
+                Chance: 100
+              - Item: Yorscalp_Int1
+                Chance: 11400
+              - Item: Yorscalp_Int2
+                Chance: 6000
+              - Item: Yorscalp_Int3
+                Chance: 2500
+              - Item: Yorscalp_Int4
+                Chance: 100
+              - Item: Yorscalp_Smart1
+                Chance: 11400
+              - Item: Yorscalp_Smart2
+                Chance: 6000
+              - Item: Yorscalp_Smart3
+                Chance: 2500
+              - Item: Yorscalp_Smart4
+                Chance: 100
+              - Item: Yorscalp_Speed1
+                Chance: 11400
+              - Item: Yorscalp_Speed2
+                Chance: 6000
+              - Item: Yorscalp_Speed3
+                Chance: 2500
+              - Item: Yorscalp_Speed4
+                Chance: 100
+              - Item: Yorscalp_Def1
+                Chance: 11400
+              - Item: Yorscalp_Def2
+                Chance: 6000
+              - Item: Yorscalp_Def3
+                Chance: 2500
+              - Item: Yorscalp_Def4
+                Chance: 100
+          - Enchantgrade: 2
+            Items:
+              - Item: Yorscalp_Str1
+                Chance: 11400
+              - Item: Yorscalp_Str2
+                Chance: 6000
+              - Item: Yorscalp_Str3
+                Chance: 2500
+              - Item: Yorscalp_Str4
+                Chance: 100
+              - Item: Yorscalp_Int1
+                Chance: 11400
+              - Item: Yorscalp_Int2
+                Chance: 6000
+              - Item: Yorscalp_Int3
+                Chance: 2500
+              - Item: Yorscalp_Int4
+                Chance: 100
+              - Item: Yorscalp_Smart1
+                Chance: 11400
+              - Item: Yorscalp_Smart2
+                Chance: 6000
+              - Item: Yorscalp_Smart3
+                Chance: 2500
+              - Item: Yorscalp_Smart4
+                Chance: 100
+              - Item: Yorscalp_Speed1
+                Chance: 11400
+              - Item: Yorscalp_Speed2
+                Chance: 6000
+              - Item: Yorscalp_Speed3
+                Chance: 2500
+              - Item: Yorscalp_Speed4
+                Chance: 100
+              - Item: Yorscalp_Def1
+                Chance: 11400
+              - Item: Yorscalp_Def2
+                Chance: 6000
+              - Item: Yorscalp_Def3
+                Chance: 2500
+              - Item: Yorscalp_Def4
+                Chance: 100
+          - Enchantgrade: 3
+            Items:
+              - Item: Yorscalp_Str1
+                Chance: 11400
+              - Item: Yorscalp_Str2
+                Chance: 6000
+              - Item: Yorscalp_Str3
+                Chance: 2500
+              - Item: Yorscalp_Str4
+                Chance: 100
+              - Item: Yorscalp_Int1
+                Chance: 11400
+              - Item: Yorscalp_Int2
+                Chance: 6000
+              - Item: Yorscalp_Int3
+                Chance: 2500
+              - Item: Yorscalp_Int4
+                Chance: 100
+              - Item: Yorscalp_Smart1
+                Chance: 11400
+              - Item: Yorscalp_Smart2
+                Chance: 6000
+              - Item: Yorscalp_Smart3
+                Chance: 2500
+              - Item: Yorscalp_Smart4
+                Chance: 100
+              - Item: Yorscalp_Speed1
+                Chance: 11400
+              - Item: Yorscalp_Speed2
+                Chance: 6000
+              - Item: Yorscalp_Speed3
+                Chance: 2500
+              - Item: Yorscalp_Speed4
+                Chance: 100
+              - Item: Yorscalp_Def1
+                Chance: 11400
+              - Item: Yorscalp_Def2
+                Chance: 6000
+              - Item: Yorscalp_Def3
+                Chance: 2500
+              - Item: Yorscalp_Def4
+                Chance: 100
+          - Enchantgrade: 4
+            Items:
+              - Item: Yorscalp_Str1
+                Chance: 11400
+              - Item: Yorscalp_Str2
+                Chance: 6000
+              - Item: Yorscalp_Str3
+                Chance: 2500
+              - Item: Yorscalp_Str4
+                Chance: 100
+              - Item: Yorscalp_Int1
+                Chance: 11400
+              - Item: Yorscalp_Int2
+                Chance: 6000
+              - Item: Yorscalp_Int3
+                Chance: 2500
+              - Item: Yorscalp_Int4
+                Chance: 100
+              - Item: Yorscalp_Smart1
+                Chance: 11400
+              - Item: Yorscalp_Smart2
+                Chance: 6000
+              - Item: Yorscalp_Smart3
+                Chance: 2500
+              - Item: Yorscalp_Smart4
+                Chance: 100
+              - Item: Yorscalp_Speed1
+                Chance: 11400
+              - Item: Yorscalp_Speed2
+                Chance: 6000
+              - Item: Yorscalp_Speed3
+                Chance: 2500
+              - Item: Yorscalp_Speed4
+                Chance: 100
+              - Item: Yorscalp_Def1
+                Chance: 11400
+              - Item: Yorscalp_Def2
+                Chance: 6000
+              - Item: Yorscalp_Def3
+                Chance: 2500
+              - Item: Yorscalp_Def4
+                Chance: 100
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Arbiter_Warrant
+            Price: 5000000
+            Materials:
+              - Material: Yorscalp_Serpent
+                Amount: 20
+              - Material: Yorscalp_Symbol
+                Amount: 100
+              - Material: Yorscalp_Spirit
+                Amount: 200
+          - Item: Bailiff_Warrant
+            Price: 5000000
+            Materials:
+              - Material: Yorscalp_Serpent
+                Amount: 20
+              - Material: Yorscalp_Symbol
+                Amount: 100
+              - Material: Yorscalp_Spirit
+                Amount: 200
+  - Id: 157
+    TargetItems:
+      Royal_H_Mail_A: true
+      Royal_H_Mail_B: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Hunt_Ev_State
+            Price: 100000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 10
+              - Material: E_Hunting_Tag
+                Amount: 30
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Hunt_Ev_Atk
+            Price: 150000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 15
+              - Material: E_Hunting_Tag
+                Amount: 45
+          - Item: Hunt_Ev_Matk
+            Price: 150000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 15
+              - Material: E_Hunting_Tag
+                Amount: 45
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Hunt_Ev_Warrior
+            Price: 300000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 30
+              - Material: E_Hunting_Tag
+                Amount: 90
+          - Item: Hunt_Ev_Archer
+            Price: 300000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 30
+              - Material: E_Hunting_Tag
+                Amount: 90
+          - Item: Hunt_Ev_Assassin
+            Price: 300000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 30
+              - Material: E_Hunting_Tag
+                Amount: 90
+          - Item: Hunt_Ev_Magician
+            Price: 300000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 30
+              - Material: E_Hunting_Tag
+                Amount: 90
+  - Id: 158
+    TargetItems:
+      Royal_H_Manteau_A: true
+      Royal_H_Manteau_B: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Hunt_Ev_Speed
+            Price: 150000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 15
+              - Material: E_Hunting_Tag
+                Amount: 45
+          - Item: Hunt_Ev_Caster
+            Price: 150000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 15
+              - Material: E_Hunting_Tag
+                Amount: 45
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Hunt_Ev_Melee
+            Price: 300000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 30
+              - Material: E_Hunting_Tag
+                Amount: 90
+          - Item: Hunt_Ev_Range
+            Price: 300000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 30
+              - Material: E_Hunting_Tag
+                Amount: 90
+          - Item: Hunt_Ev_Critical
+            Price: 300000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 30
+              - Material: E_Hunting_Tag
+                Amount: 90
+          - Item: Hunt_Ev_Spell
+            Price: 300000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 30
+              - Material: E_Hunting_Tag
+                Amount: 90
+  - Id: 159
+    TargetItems:
+      Royal_H_Boots_A: true
+      Royal_H_Boots_B: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Hunt_Ev_Hp
+            Price: 150000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 15
+              - Material: E_Hunting_Tag
+                Amount: 45
+          - Item: Hunt_Ev_Sp
+            Price: 150000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 15
+              - Material: E_Hunting_Tag
+                Amount: 45
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Hunt_Ev_P_Force
+            Price: 300000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 30
+              - Material: E_Hunting_Tag
+                Amount: 90
+          - Item: Hunt_Ev_M_Force
+            Price: 300000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 30
+              - Material: E_Hunting_Tag
+                Amount: 90
+          - Item: Hunt_Ev_Robust
+            Price: 300000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 30
+              - Material: E_Hunting_Tag
+                Amount: 90
+          - Item: Hunt_Ev_F_Cast
+            Price: 300000
+            Materials:
+              - Material: E_Hunter_Bdg
+                Amount: 30
+              - Material: E_Hunting_Tag
+                Amount: 90

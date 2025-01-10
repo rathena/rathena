@@ -31,7 +31,7 @@ using namespace rathena;
 
 ElementalDatabase elemental_db;
 
-struct view_data * elemental_get_viewdata(int class_) {
+struct view_data * elemental_get_viewdata(int32 class_) {
 	std::shared_ptr<s_elemental_db> db = elemental_db.find(class_);
 	if (db == nullptr)
 		return 0;
@@ -39,7 +39,7 @@ struct view_data * elemental_get_viewdata(int class_) {
 	return &db->vd;
 }
 
-int elemental_create(map_session_data *sd, int class_, unsigned int lifetime) {
+int32 elemental_create(map_session_data *sd, int32 class_, uint32 lifetime) {
 	nullpo_retr(1,sd);
 
 	std::shared_ptr<s_elemental_db> db = elemental_db.find(class_);
@@ -53,7 +53,7 @@ int elemental_create(map_session_data *sd, int class_, unsigned int lifetime) {
 	ele.char_id = sd->status.char_id;
 	ele.class_ = class_;
 	ele.mode = EL_MODE_PASSIVE; // Initial mode
-	int i = db->status.size+1; // summon level
+	int32 i = db->status.size+1; // summon level
 
 	//[(Caster's Max HP/ 3 ) + (Caster's INT x 10 )+ (Caster's Job Level x 20 )] x [(Elemental Summon Level + 2) / 3]
 	ele.hp = ele.max_hp = (sd->battle_status.max_hp/3 + sd->battle_status.int_*10 + sd->status.job_level*20) * ((i + 2) / 3);
@@ -146,7 +146,7 @@ t_tick elemental_get_lifetime(s_elemental_data *ed) {
 	return (td != nullptr) ? DIFF_TICK(td->tick, gettick()) : 0;
 }
 
-int elemental_save(s_elemental_data *ed) {
+int32 elemental_save(s_elemental_data *ed) {
 	ed->elemental.mode = ed->battle_status.mode;
 	ed->elemental.hp = ed->battle_status.hp;
 	ed->elemental.sp = ed->battle_status.sp;
@@ -193,7 +193,7 @@ void elemental_summon_stop(s_elemental_data *ed) {
 	ed->summon_timer = INVALID_TIMER;
 }
 
-int elemental_delete(s_elemental_data *ed) {
+int32 elemental_delete(s_elemental_data *ed) {
 	nullpo_ret(ed);
 
 	map_session_data *sd = ed->master;
@@ -224,7 +224,7 @@ void elemental_summon_init(s_elemental_data *ed) {
  * @param flag : 0:not created, 1:was saved/loaded
  * @return 0:failed, 1:sucess
  */
-int elemental_data_received(s_elemental *ele, bool flag) {
+int32 elemental_data_received(s_elemental *ele, bool flag) {
 	map_session_data *sd;
 	t_tick tick = gettick();
 
@@ -290,7 +290,7 @@ int elemental_data_received(s_elemental *ele, bool flag) {
 	return 1;
 }
 
-int elemental_clean_effect(s_elemental_data *ed) {
+int32 elemental_clean_effect(s_elemental_data *ed) {
 	nullpo_ret(ed);
 
 	status_db.removeByStatusFlag(&ed->bl, { SCF_REMOVEELEMENTALOPTION });
@@ -299,7 +299,7 @@ int elemental_clean_effect(s_elemental_data *ed) {
 	return 1;
 }
 
-int elemental_action(s_elemental_data *ed, block_list *bl, t_tick tick) {
+int32 elemental_action(s_elemental_data *ed, block_list *bl, t_tick tick) {
 	nullpo_ret(ed);
 	nullpo_ret(bl);
 
@@ -334,7 +334,7 @@ int elemental_action(s_elemental_data *ed, block_list *bl, t_tick tick) {
 			elemental_unlocktarget(ed);
 		else {
 			// Walking, waiting to be in range. Client don't handle it, then we must handle it here.
-			int walk_dist = distance_bl(&ed->bl,bl) - skill_get_range(skill_id,skill_lv);
+			int32 walk_dist = distance_bl(&ed->bl,bl) - skill_get_range(skill_id,skill_lv);
 			ed->ud.skill_id = skill_id;
 			ed->ud.skill_lv = skill_lv;
 
@@ -375,7 +375,7 @@ int elemental_action(s_elemental_data *ed, block_list *bl, t_tick tick) {
  * Action that elemental perform after changing mode.
  * Activates one of the skills of the new mode.
  *-------------------------------------------------------------*/
-int elemental_change_mode_ack(s_elemental_data *ed, e_elemental_skillmode skill_mode) {
+int32 elemental_change_mode_ack(s_elemental_data *ed, e_elemental_skillmode skill_mode) {
 	nullpo_ret(ed);
 
 	block_list *bl = &ed->master->bl;
@@ -413,7 +413,7 @@ int elemental_change_mode_ack(s_elemental_data *ed, e_elemental_skillmode skill_
 /*===============================================================
  * Change elemental mode.
  *-------------------------------------------------------------*/
-int elemental_change_mode(s_elemental_data *ed, int mode) {
+int32 elemental_change_mode(s_elemental_data *ed, int32 mode) {
 	nullpo_ret(ed);
 
 	// Remove target
@@ -437,7 +437,7 @@ int elemental_change_mode(s_elemental_data *ed, int mode) {
 	return 1;
 }
 
-void elemental_heal(s_elemental_data *ed, int hp, int sp) {
+void elemental_heal(s_elemental_data *ed, int32 hp, int32 sp) {
 	if (ed->master == nullptr)
 		return;
 	if( hp )
@@ -446,12 +446,12 @@ void elemental_heal(s_elemental_data *ed, int hp, int sp) {
 		clif_elemental_updatestatus(*ed->master, SP_SP);
 }
 
-int elemental_dead(s_elemental_data *ed) {
+int32 elemental_dead(s_elemental_data *ed) {
 	elemental_delete(ed);
 	return 0;
 }
 
-int elemental_unlocktarget(s_elemental_data *ed) {
+int32 elemental_unlocktarget(s_elemental_data *ed) {
 	nullpo_ret(ed);
 
 	ed->target_id = 0;
@@ -489,7 +489,7 @@ struct s_skill_condition elemental_skill_get_requirements(uint16 skill_id, uint1
 	return req;
 }
 
-int elemental_set_target( map_session_data *sd, block_list *bl ) {
+int32 elemental_set_target( map_session_data *sd, block_list *bl ) {
 	s_elemental_data *ed = sd->ed;
 
 	nullpo_ret(ed);
@@ -507,7 +507,7 @@ int elemental_set_target( map_session_data *sd, block_list *bl ) {
 	return 1;
 }
 
-static int elemental_ai_sub_timer_activesearch(block_list *bl, va_list ap) {
+static int32 elemental_ai_sub_timer_activesearch(block_list *bl, va_list ap) {
 	nullpo_ret(bl);
 
 	s_elemental_data *ed;
@@ -525,7 +525,7 @@ static int elemental_ai_sub_timer_activesearch(block_list *bl, va_list ap) {
 
 	if (bl->type == BL_PC && !map_flag_vs(ed->bl.m))
 		return 0;
-	int dist = distance_bl(&ed->bl, bl);
+	int32 dist = distance_bl(&ed->bl, bl);
 	if( ((*target) == nullptr || !check_distance_bl(&ed->bl, *target, dist)) && battle_check_range(&ed->bl,bl,ed->db->range2) ) { //Pick closest target?
 		(*target) = bl;
 		ed->target_id = bl->id;
@@ -537,7 +537,7 @@ static int elemental_ai_sub_timer_activesearch(block_list *bl, va_list ap) {
 	return 0;
 }
 
-static int elemental_ai_sub_timer(s_elemental_data *ed, map_session_data *sd, t_tick tick) {
+static int32 elemental_ai_sub_timer(s_elemental_data *ed, map_session_data *sd, t_tick tick) {
 	nullpo_ret(ed);
 	nullpo_ret(sd);
 
@@ -546,7 +546,7 @@ static int elemental_ai_sub_timer(s_elemental_data *ed, map_session_data *sd, t_
 
 	// Check if caster can sustain the summoned elemental
 	if( DIFF_TICK(tick,ed->last_spdrain_time) >= 10000 ){// Drain SP every 10 seconds
-		int sp = 5;
+		int32 sp = 5;
 
 		switch(ed->vd->class_){
 			case ELEMENTALID_AGNI_M:	case ELEMENTALID_AQUA_M:
@@ -582,14 +582,14 @@ static int elemental_ai_sub_timer(s_elemental_data *ed, map_session_data *sd, t_
 	if(ed->ud.walkpath.path_pos < ed->ud.walkpath.path_len && ed->ud.target == sd->bl.id)
 		return 0; //No thinking until be near the master.
 
-	int master_dist, view_range;
+	int32 master_dist, view_range;
 
-	if( ed->sc.count && ed->sc.getSCE(SC_BLIND) )
+	if( ed->sc.getSCE(SC_BLIND) )
 		view_range = 3;
 	else
 		view_range = ed->db->range2;
 
-	int mode = status_get_mode(&ed->bl);
+	int32 mode = status_get_mode(&ed->bl);
 
 	master_dist = distance_bl(&sd->bl, &ed->bl);
 	if( master_dist > AREA_SIZE ) {	// Master out of vision range.
@@ -647,7 +647,7 @@ static int elemental_ai_sub_timer(s_elemental_data *ed, map_session_data *sd, t_
 	return 0;
 }
 
-static int elemental_ai_sub_foreachclient(map_session_data *sd, va_list ap) {
+static int32 elemental_ai_sub_foreachclient(map_session_data *sd, va_list ap) {
 	t_tick tick = va_arg(ap,t_tick);
 	if(sd->status.ele_id && sd->ed)
 		elemental_ai_sub_timer(sd->ed,sd,tick);

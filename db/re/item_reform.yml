@@ -9390,12 +9390,12 @@ Body:
         RandomOptionGroup: Group_0
         ClearSlots: true
         RemoveEnchantgrade: true
-      - BaseItem: Card_Coin
-        MaximumRefine: 0
-        ResultItem: R_Recycle_Card
-        RandomOptionGroup: Group_0
-        ClearSlots: true
-        RemoveEnchantgrade: true
+#     - BaseItem: Card_Coin   # mistake ?
+#       MaximumRefine: 0
+#       ResultItem: R_Recycle_Card
+#       RandomOptionGroup: Group_0
+#       ClearSlots: true
+#       RemoveEnchantgrade: true
       - BaseItem: Adulter_F_A_Bow
         Materials:
           - Material: Imperfect_Rune
@@ -11719,3 +11719,3417 @@ Body:
             Amount: 5
         ResultItem: Gaebolg_Shoes
         ChangeRefine: 1
+  - Item: Reform_4th_Skill_Shadow
+    BaseItems:
+      - BaseItem: S_SHC_EC_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_SHC_EC_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_SHC_EC_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_SHC_EC_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_SHC_SI_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_SHC_SI_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_SHC_SI_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_SHC_SI_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_WH_GS_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_WH_GS_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_WH_GS_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_WH_GS_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_WH_CB_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_WH_CB_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_WH_CB_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_WH_CB_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_SS_SR_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_SS_SR_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_SS_SR_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_SS_SR_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_SS_KR_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_SS_KR_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_SS_KR_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_SS_KR_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_DK_SS_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_DK_SS_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_DK_SS_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_DK_SS_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_DK_HS_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_DK_HS_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_DK_HS_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_DK_HS_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_TR_RW_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_TR_RW_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_TR_RW_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_TR_RW_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_TR_MF_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_TR_MF_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_TR_MF_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_TR_MF_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_NW_SO_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_NW_SO_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_NW_SO_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_NW_SO_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_NW_WB_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_NW_WB_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_NW_WB_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_NW_WB_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_MT_MS_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_MT_MS_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_MT_MS_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_MT_MS_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_MT_PR_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_MT_PR_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_MT_PR_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_MT_PR_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_BO_EP_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_BO_EP_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_BO_EP_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_BO_EP_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_BO_MD_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_BO_MD_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_BO_MD_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_BO_MD_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_HN_VJ_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_HN_VJ_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_HN_VJ_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_HN_VJ_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_HN_TB_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_HN_TB_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_HN_TB_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_HN_TB_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_IG_OC_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_IG_OC_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_IG_OC_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_IG_OC_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_IG_RF_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_IG_RF_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_IG_RF_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_IG_RF_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_IQ_EB_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_IQ_EB_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_IQ_EB_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_IQ_EB_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_IQ_BFB_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_IQ_BFB_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_IQ_BFB_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_IQ_BFB_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_SU_CS_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_SU_CS_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_SU_CS_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_SU_CS_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_SU_HB_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_SU_HB_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_SU_HB_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_SU_HB_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_CD_AR_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_CD_AR_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_CD_AR_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_CD_AR_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_CD_DF_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_CD_DF_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_CD_DF_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_CD_DF_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_AG_FB_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_AG_FB_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_AG_FB_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_AG_FB_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_AG_SH_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_AG_SH_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_AG_SH_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_AG_SH_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_SKE_NS_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_SKE_NS_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_SKE_NS_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_SKE_NS_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_SKE_SB_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_SKE_SB_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_SKE_SB_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_SKE_SB_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+  - Item: Time_Gap_Refine_Hammer
+    BaseItems:
+      - BaseItem: Time_Gap_Spear_IG
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 12
+          - Material: Time_D_Ma_Rune
+            Amount: 2
+        ResultItem: Time_Gap_Spear_IG
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_Staff_AG
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 12
+          - Material: Time_D_Ma_Rune
+            Amount: 2
+        ResultItem: Time_Gap_Staff_AG
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_Revolver_NW
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 12
+          - Material: Time_D_Ma_Rune
+            Amount: 2
+        ResultItem: Time_Gap_Revolver_NW
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_MT_Axe
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 12
+          - Material: Time_D_Ma_Rune
+            Amount: 2
+        ResultItem: Time_Gap_MT_Axe
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_TR_Ribbon
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 12
+          - Material: Time_D_Ma_Rune
+            Amount: 2
+        ResultItem: Time_Gap_TR_Ribbon
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_TR_Vilolin
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 12
+          - Material: Time_D_Ma_Rune
+            Amount: 2
+        ResultItem: Time_Gap_TR_Vilolin
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_HN_Staff
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 12
+          - Material: Time_D_Ma_Rune
+            Amount: 2
+        ResultItem: Time_Gap_HN_Staff
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_BO_Blade
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 12
+          - Material: Time_D_Ma_Rune
+            Amount: 2
+        ResultItem: Time_Gap_BO_Blade
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_SHC_Dagger1
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 12
+          - Material: Time_D_Ma_Rune
+            Amount: 2
+        ResultItem: Time_Gap_SHC_Dagger1
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_SHC_Dagger2
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 12
+          - Material: Time_D_Ma_Rune
+            Amount: 2
+        ResultItem: Time_Gap_SHC_Dagger2
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_SOA_Rod
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 12
+          - Material: Time_D_Ma_Rune
+            Amount: 2
+        ResultItem: Time_Gap_SOA_Rod
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_DK_Spear
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 12
+          - Material: Time_D_Ma_Rune
+            Amount: 2
+        ResultItem: Time_Gap_DK_Spear
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_CD_Staff
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 12
+          - Material: Time_D_Ma_Rune
+            Amount: 2
+        ResultItem: Time_Gap_CD_Staff
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_SKE_Book
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 12
+          - Material: Time_D_Ma_Rune
+            Amount: 2
+        ResultItem: Time_Gap_SKE_Book
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_ABC_Dagger
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 12
+          - Material: Time_D_Ma_Rune
+            Amount: 2
+        ResultItem: Time_Gap_ABC_Dagger
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_IQ_Knuckle
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 12
+          - Material: Time_D_Ma_Rune
+            Amount: 2
+        ResultItem: Time_Gap_IQ_Knuckle
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_SH_Foxtail
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 12
+          - Material: Time_D_Ma_Rune
+            Amount: 2
+        ResultItem: Time_Gap_SH_Foxtail
+        ChangeRefine: 1
+  - Item: Yorscalp_Refin_Hammer
+    BaseItems:
+      - BaseItem: Yorscalp_Armor
+        MinimumRefine: 10
+        MaximumRefine: 10
+        Materials:
+          - Material: Zelunium
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 100
+        ResultItem: Yorscalp_Armor
+        ChangeRefine: 1
+      - BaseItem: Yorscalp_Robe
+        MinimumRefine: 10
+        MaximumRefine: 10
+        Materials:
+          - Material: Zelunium
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 100
+        ResultItem: Yorscalp_Robe
+        ChangeRefine: 1
+      - BaseItem: Yorscalp_Manteau
+        MinimumRefine: 10
+        MaximumRefine: 10
+        Materials:
+          - Material: Zelunium
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 100
+        ResultItem: Yorscalp_Manteau
+        ChangeRefine: 1
+      - BaseItem: Yorscalp_Muffler
+        MinimumRefine: 10
+        MaximumRefine: 10
+        Materials:
+          - Material: Zelunium
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 100
+        ResultItem: Yorscalp_Muffler
+        ChangeRefine: 1
+      - BaseItem: Yorscalp_Boots
+        MinimumRefine: 10
+        MaximumRefine: 10
+        Materials:
+          - Material: Zelunium
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 100
+        ResultItem: Yorscalp_Boots
+        ChangeRefine: 1
+      - BaseItem: Yorscalp_Shoes
+        MinimumRefine: 10
+        MaximumRefine: 10
+        Materials:
+          - Material: Zelunium
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 100
+        ResultItem: Yorscalp_Shoes
+        ChangeRefine: 1
+      - BaseItem: Yorscalp_P_Circlet
+        MinimumRefine: 10
+        MaximumRefine: 10
+        Materials:
+          - Material: Zelunium
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 100
+        ResultItem: Yorscalp_P_Circlet
+        ChangeRefine: 1
+      - BaseItem: Yorscalp_M_Circlet
+        MinimumRefine: 10
+        MaximumRefine: 10
+        Materials:
+          - Material: Zelunium
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 100
+        ResultItem: Yorscalp_M_Circlet
+        ChangeRefine: 1
+  - Item: Yorscalp_Scroll_A
+    BaseItems:
+      - BaseItem: Gaebolg_Armor
+        Materials:
+          - Material: Ep21_Wigner_Ticket
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 200
+        ResultItem: Yorscalp_Armor
+      - BaseItem: Gaebolg_Robe
+        Materials:
+          - Material: Ep21_Wigner_Ticket
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 200
+        ResultItem: Yorscalp_Robe
+      - BaseItem: Gaebolg_Manteau
+        Materials:
+          - Material: Ep21_Wigner_Ticket
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 200
+        ResultItem: Yorscalp_Manteau
+      - BaseItem: Gaebolg_Muffler
+        Materials:
+          - Material: Ep21_Wigner_Ticket
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 200
+        ResultItem: Yorscalp_Muffler
+      - BaseItem: Gaebolg_Boots
+        Materials:
+          - Material: Ep21_Wigner_Ticket
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 200
+        ResultItem: Yorscalp_Boots
+      - BaseItem: Gaebolg_Shoes
+        Materials:
+          - Material: Ep21_Wigner_Ticket
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 200
+        ResultItem: Yorscalp_Shoes
+      - BaseItem: Gaebolg_Earring
+        Materials:
+          - Material: Ep21_Wigner_Ticket
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 200
+        ResultItem: Yorscalp_Earring
+      - BaseItem: Gaebolg_Glove
+        Materials:
+          - Material: Ep21_Wigner_Ticket
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 200
+        ResultItem: Yorscalp_Glove
+      - BaseItem: Gaebolg_Ring
+        Materials:
+          - Material: Ep21_Wigner_Ticket
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 200
+        ResultItem: Yorscalp_Ring
+      - BaseItem: Gaebolg_Necklace
+        Materials:
+          - Material: Ep21_Wigner_Ticket
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 200
+        ResultItem: Yorscalp_Necklace
+  - Item: Plus7_Refine_NPC
+    BaseItems:
+      - BaseItem: F_Ein_1HGUN
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: F_Ein_Weapon_Hammer
+        ResultItem: F_Ein_1HGUN
+        ChangeRefine: 7
+      - BaseItem: F_Ein_BHBOW
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: F_Ein_Weapon_Hammer
+        ResultItem: F_Ein_BHBOW
+        ChangeRefine: 7
+      - BaseItem: F_Ein_BHHuuma
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: F_Ein_Weapon_Hammer
+        ResultItem: F_Ein_BHHuuma
+        ChangeRefine: 7
+      - BaseItem: F_Ein_BHSTAFF
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: F_Ein_Weapon_Hammer
+        ResultItem: F_Ein_BHSTAFF
+        ChangeRefine: 7
+      - BaseItem: F_Ein_BHAXE
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: F_Ein_Weapon_Hammer
+        ResultItem: F_Ein_BHAXE
+        ChangeRefine: 7
+      - BaseItem: F_Ein_BHKATAR
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: F_Ein_Weapon_Hammer
+        ResultItem: F_Ein_BHKATAR
+        ChangeRefine: 7
+      - BaseItem: F_Ein_BHSWORD
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: F_Ein_Weapon_Hammer
+        ResultItem: F_Ein_BHSWORD
+        ChangeRefine: 7
+      - BaseItem: F_Ein_1HHAMMER
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: F_Ein_Weapon_Hammer
+        ResultItem: F_Ein_1HHAMMER
+        ChangeRefine: 7
+      - BaseItem: F_Ein_1HWHIP
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: F_Ein_Weapon_Hammer
+        ResultItem: F_Ein_1HWHIP
+        ChangeRefine: 7
+      - BaseItem: F_Ein_1HLUTE
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: F_Ein_Weapon_Hammer
+        ResultItem: F_Ein_1HLUTE
+        ChangeRefine: 7
+      - BaseItem: F_Ein_1HKNUCK
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: F_Ein_Weapon_Hammer
+        ResultItem: F_Ein_1HKNUCK
+        ChangeRefine: 7
+      - BaseItem: F_Ein_1HWAND
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: F_Ein_Weapon_Hammer
+        ResultItem: F_Ein_1HWAND
+        ChangeRefine: 7
+      - BaseItem: F_Ein_1H_Foxtail
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: F_Ein_Weapon_Hammer
+        ResultItem: F_Ein_1H_Foxtail
+        ChangeRefine: 7
+      - BaseItem: F_Ein_1HBOOK
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: F_Ein_Weapon_Hammer
+        ResultItem: F_Ein_1HBOOK
+        ChangeRefine: 7
+      - BaseItem: F_Ein_1HSPEAR
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: F_Ein_Weapon_Hammer
+        ResultItem: F_Ein_1HSPEAR
+        ChangeRefine: 7
+      - BaseItem: F_Ein_1HDAGGER2
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: F_Ein_Weapon_Hammer
+        ResultItem: F_Ein_1HDAGGER2
+        ChangeRefine: 7
+      - BaseItem: F_Ein_1HDAGGER
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: F_Ein_Weapon_Hammer
+        ResultItem: F_Ein_1HDAGGER
+        ChangeRefine: 7
+      - BaseItem: F_Ein_1HMAGGER
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: F_Ein_Weapon_Hammer
+        ResultItem: F_Ein_1HMAGGER
+        ChangeRefine: 7
+      - BaseItem: F_Ein_1HSWORD
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: F_Ein_Weapon_Hammer
+        ResultItem: F_Ein_1HSWORD
+        ChangeRefine: 7
+      - BaseItem: Thanos_Sword_AD
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Thanos_Refine_Hammer
+        ResultItem: Thanos_Sword_AD
+        ChangeRefine: 7
+      - BaseItem: Thanos_Dagger_AD
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Thanos_Refine_Hammer
+        ResultItem: Thanos_Dagger_AD
+        ChangeRefine: 7
+      - BaseItem: Thanos_Spear_AD
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Thanos_Refine_Hammer
+        ResultItem: Thanos_Spear_AD
+        ChangeRefine: 7
+      - BaseItem: Thanos_Staff_AD
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Thanos_Refine_Hammer
+        ResultItem: Thanos_Staff_AD
+        ChangeRefine: 7
+      - BaseItem: Thanos_Knuckle_AD
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Thanos_Refine_Hammer
+        ResultItem: Thanos_Knuckle_AD
+        ChangeRefine: 7
+      - BaseItem: Thanos_Violin_AD
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Thanos_Refine_Hammer
+        ResultItem: Thanos_Violin_AD
+        ChangeRefine: 7
+      - BaseItem: Thanos_Whip_AD
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Thanos_Refine_Hammer
+        ResultItem: Thanos_Whip_AD
+        ChangeRefine: 7
+      - BaseItem: Thanos_Hammer_AD
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Thanos_Refine_Hammer
+        ResultItem: Thanos_Hammer_AD
+        ChangeRefine: 7
+      - BaseItem: Thanos_TSword_AD
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Thanos_Refine_Hammer
+        ResultItem: Thanos_TSword_AD
+        ChangeRefine: 7
+      - BaseItem: Thanos_Katar_AD
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Thanos_Refine_Hammer
+        ResultItem: Thanos_Katar_AD
+        ChangeRefine: 7
+      - BaseItem: Thanos_Axe_AD
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Thanos_Refine_Hammer
+        ResultItem: Thanos_Axe_AD
+        ChangeRefine: 7
+      - BaseItem: Thanos_Rod_AD
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Thanos_Refine_Hammer
+        ResultItem: Thanos_Rod_AD
+        ChangeRefine: 7
+      - BaseItem: Thanos_Bow_AD
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Thanos_Refine_Hammer
+        ResultItem: Thanos_Bow_AD
+        ChangeRefine: 7
+      - BaseItem: Thanos_Helm_1
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Thanos_Refine_Hammer
+        ResultItem: Thanos_Helm_1
+        ChangeRefine: 7
+      - BaseItem: Thanos_Helm1_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Thanos_Refine_Hammer
+        ResultItem: Thanos_Helm1_LT
+        ChangeRefine: 7
+      - BaseItem: Thanos_Helm_2
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Thanos_Refine_Hammer
+        ResultItem: Thanos_Helm_2
+        ChangeRefine: 7
+      - BaseItem: Thanos_Helm2_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Thanos_Refine_Hammer
+        ResultItem: Thanos_Helm2_LT
+        ChangeRefine: 7
+      - BaseItem: Thanos_Helm_3
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Thanos_Refine_Hammer
+        ResultItem: Thanos_Helm_3
+        ChangeRefine: 7
+      - BaseItem: Thanos_Helm3_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Thanos_Refine_Hammer
+        ResultItem: Thanos_Helm3_LT
+        ChangeRefine: 7
+      - BaseItem: Thanos_Helm_4
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Thanos_Refine_Hammer
+        ResultItem: Thanos_Helm_4
+        ChangeRefine: 7
+      - BaseItem: Thanos_Helm4_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Thanos_Refine_Hammer
+        ResultItem: Thanos_Helm4_LT
+        ChangeRefine: 7
+      - BaseItem: Sagittarius_DiademK_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: OS_Helm_Hammer
+        ResultItem: Sagittarius_DiademK_LT
+        ChangeRefine: 7
+      - BaseItem: Scorpio_Diadem_K_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: OS_Helm_Hammer
+        ResultItem: Scorpio_Diadem_K_LT
+        ChangeRefine: 7
+      - BaseItem: Large_Sorcerer_Crown_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: OS_Helm_Hammer
+        ResultItem: Large_Sorcerer_Crown_LT
+        ChangeRefine: 7
+      - BaseItem: Stripe_Hat_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: OS_Helm_Hammer
+        ResultItem: Stripe_Hat_LT
+        ChangeRefine: 7
+      - BaseItem: Phantom_Cap_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: OS_Helm_Hammer
+        ResultItem: Phantom_Cap_LT
+        ChangeRefine: 7
+      - BaseItem: Ignis_CapK_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: OS_Helm_Hammer
+        ResultItem: Ignis_CapK_LT
+        ChangeRefine: 7
+      - BaseItem: Clock_Casket_RD_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: OS_Helm_Hammer
+        ResultItem: Clock_Casket_RD_LT
+        ChangeRefine: 7
+      - BaseItem: Beam_Claymore_AD
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: OS_Weapon_Hammer
+        ResultItem: Beam_Claymore_AD
+        ChangeRefine: 7
+      - BaseItem: Meuchler_AD
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: OS_Weapon_Hammer
+        ResultItem: Meuchler_AD
+        ChangeRefine: 7
+      - BaseItem: Blasti_AD
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: OS_Weapon_Hammer
+        ResultItem: Blasti_AD
+        ChangeRefine: 7
+      - BaseItem: Virtual_Bow_AD
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: OS_Weapon_Hammer
+        ResultItem: Virtual_Bow_AD
+        ChangeRefine: 7
+      - BaseItem: MH_P89_AD
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: OS_Weapon_Hammer
+        ResultItem: MH_P89_AD
+        ChangeRefine: 7
+      - BaseItem: AC_B44_AD
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: OS_Weapon_Hammer
+        ResultItem: AC_B44_AD
+        ChangeRefine: 7
+      - BaseItem: HR_S55_AD
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: OS_Weapon_Hammer
+        ResultItem: HR_S55_AD
+        ChangeRefine: 7
+      - BaseItem: Burning_Knuckle_AD
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: OS_Weapon_Hammer
+        ResultItem: Burning_Knuckle_AD
+        ChangeRefine: 7
+      - BaseItem: Cannon_Rapier_AD
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: OS_Weapon_Hammer
+        ResultItem: Cannon_Rapier_AD
+        ChangeRefine: 7
+      - BaseItem: Saphir_Hall_AD
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: OS_Weapon_Hammer
+        ResultItem: Saphir_Hall_AD
+        ChangeRefine: 7
+      - BaseItem: Ultio_Spes_AD
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: OS_Weapon_Hammer
+        ResultItem: Ultio_Spes_AD
+        ChangeRefine: 7
+      - BaseItem: Rutilus_Stick_AD
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: OS_Weapon_Hammer
+        ResultItem: Rutilus_Stick_AD
+        ChangeRefine: 7
+      - BaseItem: ElectricFox_AD
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: OS_Weapon_Hammer
+        ResultItem: ElectricFox_AD
+        ChangeRefine: 7
+      - BaseItem: Circuit_Board_AD
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: OS_Weapon_Hammer
+        ResultItem: Circuit_Board_AD
+        ChangeRefine: 7
+      - BaseItem: Kuroiro_AD
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: OS_Weapon_Hammer
+        ResultItem: Kuroiro_AD
+        ChangeRefine: 7
+      - BaseItem: Boost_Lance_AD
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: OS_Weapon_Hammer
+        ResultItem: Boost_Lance_AD
+        ChangeRefine: 7
+      - BaseItem: Poenitentia_Gladius
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenitentia_Gladius
+        ChangeRefine: 7
+      - BaseItem: Poenitentia_Ligula
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenitentia_Ligula
+        ChangeRefine: 7
+      - BaseItem: Poenitentia_Orbis
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenitentia_Orbis
+        ChangeRefine: 7
+      - BaseItem: Poenitentia_Mucro
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenitentia_Mucro
+        ChangeRefine: 7
+      - BaseItem: Poenitentia_Sol
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenitentia_Sol
+        ChangeRefine: 7
+      - BaseItem: Poenitentia_Jana
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenitentia_Jana
+        ChangeRefine: 7
+      - BaseItem: Poenitentia_Hasta
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenitentia_Hasta
+        ChangeRefine: 7
+      - BaseItem: Poenitentia_Codex
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenitentia_Codex
+        ChangeRefine: 7
+      - BaseItem: Poenitentia_Liber
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenitentia_Liber
+        ChangeRefine: 7
+      - BaseItem: Poenitentia_Radius
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenitentia_Radius
+        ChangeRefine: 7
+      - BaseItem: Poenitentia_Scipio
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenitentia_Scipio
+        ChangeRefine: 7
+      - BaseItem: Poenitentia_Crystallum
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenitentia_Crystallum
+        ChangeRefine: 7
+      - BaseItem: Poenitentia_Ramus
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenitentia_Ramus
+        ChangeRefine: 7
+      - BaseItem: Poenitentia_Planta
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenitentia_Planta
+        ChangeRefine: 7
+      - BaseItem: Poenitentia_Ferrum
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenitentia_Ferrum
+        ChangeRefine: 7
+      - BaseItem: Poenitentia_Caestus
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenitentia_Caestus
+        ChangeRefine: 7
+      - BaseItem: Poenitentia_Ungula
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenitentia_Ungula
+        ChangeRefine: 7
+      - BaseItem: Poenitentia_Chorda
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenitentia_Chorda
+        ChangeRefine: 7
+      - BaseItem: Poenitentia_Flagellum
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenitentia_Flagellum
+        ChangeRefine: 7
+      - BaseItem: Poenitentia_Clava
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenitentia_Clava
+        ChangeRefine: 7
+      - BaseItem: Poenitentia_Pendulus
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenitentia_Pendulus
+        ChangeRefine: 7
+      - BaseItem: Poenitentia_Ensis
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenitentia_Ensis
+        ChangeRefine: 7
+      - BaseItem: Poenitentia_Manus
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenitentia_Manus
+        ChangeRefine: 7
+      - BaseItem: Poenitentia_Ascia
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenitentia_Ascia
+        ChangeRefine: 7
+      - BaseItem: Poenitentia_Catapulta
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenitentia_Catapulta
+        ChangeRefine: 7
+      - BaseItem: Poenitentia_Termes
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenitentia_Termes
+        ChangeRefine: 7
+      - BaseItem: Poenitentia_Virga
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenitentia_Virga
+        ChangeRefine: 7
+      - BaseItem: Poenitentia_Tenon
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenitentia_Tenon
+        ChangeRefine: 7
+      - BaseItem: Poenitentia_Nervus
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenitentia_Nervus
+        ChangeRefine: 7
+      - BaseItem: Poenitentia_Foramen
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenitentia_Foramen
+        ChangeRefine: 7
+      - BaseItem: Poenitentia_Penet
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenitentia_Penet
+        ChangeRefine: 7
+      - BaseItem: Poenitentia_Veloci
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenitentia_Veloci
+        ChangeRefine: 7
+      - BaseItem: Poenitentia_Ruina
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenitentia_Ruina
+        ChangeRefine: 7
+      - BaseItem: Poenetentia_Vatia
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenetentia_Vatia
+        ChangeRefine: 7
+      - BaseItem: Poenetentia_Attendo
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenetentia_Attendo
+        ChangeRefine: 7
+      - BaseItem: Poenetentia_Dilacero
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Poenitentia_Hammer
+        ResultItem: Poenetentia_Dilacero
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_M_Book
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_M_Book
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_P_Book
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_P_Book
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_Bible
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_Bible
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_Ribbon
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_Ribbon
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_Harp
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_Harp
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_Claw
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_Claw
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_C_Rope
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_C_Rope
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_Violin
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_Violin
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_A_Bow
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_A_Bow
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_Ballista
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_Ballista
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_Knuckle
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_Knuckle
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_Wand
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_Wand
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_Rod
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_Rod
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_T_Staff
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_T_Staff
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_C_Bow
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_C_Bow
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_Cakram
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_Cakram
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_Hall
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_Hall
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_Dagger
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_Dagger
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_Katar
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_Katar
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_Lapier
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_Lapier
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_Mace
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_Mace
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_G_Sword
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_G_Sword
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_Axe
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_Axe
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_G_Spear
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_G_Spear
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_Lance
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_Lance
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_T_Sword
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_T_Sword
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_Humma
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_Humma
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_C_Humma
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_C_Humma
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_Revolver
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_Revolver
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_Rifle
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_Rifle
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_Gatling
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_Gatling
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_Launcher
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_Launcher
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_Moon_B
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_Moon_B
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_Star_B
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_Star_B
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_S_Stick
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_S_Stick
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_D_Wand
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_D_Wand
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_F_Wand
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_F_Wand
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_Shotgun
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_Shotgun
+        ChangeRefine: 7
+      - BaseItem: Vivatus_F_F_model
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Vivatus_Weapon_Hammer
+        ResultItem: Vivatus_F_F_model
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_WL1
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_WL1
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_WL2
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_WL2
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_SR1
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_SR1
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_SR2
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_SR2
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_AB1
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_AB1
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_AB2
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_AB2
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_SC1
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_SC1
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_SC2
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_SC2
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_RA1
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_RA1
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_RA2
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_RA2
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_LG1
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_LG1
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_LG2
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_LG2
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_GC1
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_GC1
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_GC2
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_GC2
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_SO1
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_SO1
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_SO2
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_SO2
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_RK1
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_RK1
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_RK2
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_RK2
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_WM1
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_WM1
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_WM2
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_WM2
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_NC1
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_NC1
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_NC2
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_NC2
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_GN1
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_GN1
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_GN2
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_GN2
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_KO1
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_KO1
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_KO2
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_KO2
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_RL1
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_RL1
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_RL2
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_RL2
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_SP1
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_SP1
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_SP2
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_SP2
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_SJ1
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_SJ1
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_SJ2
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_SJ2
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_SU1
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_SU1
+        ChangeRefine: 7
+      - BaseItem: Viva_Adul_Hat_SU2
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Helm_Of_Faith_Hammer
+        ResultItem: Viva_Adul_Hat_SU2
+        ChangeRefine: 7
+      - BaseItem: Precision_Bow
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Clock_Tower_W_Hammer
+        ResultItem: Precision_Bow
+        ChangeRefine: 7
+      - BaseItem: Precision_Fist
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Clock_Tower_W_Hammer
+        ResultItem: Precision_Fist
+        ChangeRefine: 7
+      - BaseItem: Precision_Fuuma
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Clock_Tower_W_Hammer
+        ResultItem: Precision_Fuuma
+        ChangeRefine: 7
+      - BaseItem: Precision_Gatling
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Clock_Tower_W_Hammer
+        ResultItem: Precision_Gatling
+        ChangeRefine: 7
+      - BaseItem: Precision_Grenade
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Clock_Tower_W_Hammer
+        ResultItem: Precision_Grenade
+        ChangeRefine: 7
+      - BaseItem: Precision_Lute
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Clock_Tower_W_Hammer
+        ResultItem: Precision_Lute
+        ChangeRefine: 7
+      - BaseItem: Precision_Pistol
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Clock_Tower_W_Hammer
+        ResultItem: Precision_Pistol
+        ChangeRefine: 7
+      - BaseItem: Precision_Rifle
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Clock_Tower_W_Hammer
+        ResultItem: Precision_Rifle
+        ChangeRefine: 7
+      - BaseItem: Precision_Shotgun
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Clock_Tower_W_Hammer
+        ResultItem: Precision_Shotgun
+        ChangeRefine: 7
+      - BaseItem: Precision_Whip
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Clock_Tower_W_Hammer
+        ResultItem: Precision_Whip
+        ChangeRefine: 7
+      - BaseItem: Solid_Claymore
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Clock_Tower_W_Hammer
+        ResultItem: Solid_Claymore
+        ChangeRefine: 7
+      - BaseItem: Solid_Dagger
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Clock_Tower_W_Hammer
+        ResultItem: Solid_Dagger
+        ChangeRefine: 7
+      - BaseItem: Solid_Edge
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Clock_Tower_W_Hammer
+        ResultItem: Solid_Edge
+        ChangeRefine: 7
+      - BaseItem: Solid_Manual
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Clock_Tower_W_Hammer
+        ResultItem: Solid_Manual
+        ChangeRefine: 7
+      - BaseItem: Solid_Rod
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Clock_Tower_W_Hammer
+        ResultItem: Solid_Rod
+        ChangeRefine: 7
+      - BaseItem: Solid_Spear
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Clock_Tower_W_Hammer
+        ResultItem: Solid_Spear
+        ChangeRefine: 7
+      - BaseItem: Solid_Staff
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Clock_Tower_W_Hammer
+        ResultItem: Solid_Staff
+        ChangeRefine: 7
+      - BaseItem: Solid_Wand
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Clock_Tower_W_Hammer
+        ResultItem: Solid_Wand
+        ChangeRefine: 7
+      - BaseItem: Wicked_Axe
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Clock_Tower_W_Hammer
+        ResultItem: Wicked_Axe
+        ChangeRefine: 7
+      - BaseItem: Wicked_Blade
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Clock_Tower_W_Hammer
+        ResultItem: Wicked_Blade
+        ChangeRefine: 7
+      - BaseItem: Wicked_Book
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Clock_Tower_W_Hammer
+        ResultItem: Wicked_Book
+        ChangeRefine: 7
+      - BaseItem: Wicked_Cross
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Clock_Tower_W_Hammer
+        ResultItem: Wicked_Cross
+        ChangeRefine: 7
+      - BaseItem: Wicked_Dagger
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Clock_Tower_W_Hammer
+        ResultItem: Wicked_Dagger
+        ChangeRefine: 7
+      - BaseItem: Wicked_Edge
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Clock_Tower_W_Hammer
+        ResultItem: Wicked_Edge
+        ChangeRefine: 7
+      - BaseItem: Wicked_Katar
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Clock_Tower_W_Hammer
+        ResultItem: Wicked_Katar
+        ChangeRefine: 7
+      - BaseItem: Wicked_Plant
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Clock_Tower_W_Hammer
+        ResultItem: Wicked_Plant
+        ChangeRefine: 7
+      - BaseItem: Glacier_Helm_1
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Isgard_Crown_Hammer
+        ResultItem: Glacier_Helm_1
+        ChangeRefine: 7
+      - BaseItem: Glacier_Helm_2
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Isgard_Crown_Hammer
+        ResultItem: Glacier_Helm_2
+        ChangeRefine: 7
+      - BaseItem: Glacier_Helm_3
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Isgard_Crown_Hammer
+        ResultItem: Glacier_Helm_3
+        ChangeRefine: 7
+      - BaseItem: GoodnEvil_Circlet_DK
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: GoodnEvil_Helm_Hammer
+        ResultItem: GoodnEvil_Circlet_DK
+        ChangeRefine: 7
+      - BaseItem: GoodnEvil_Circlet_IG
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: GoodnEvil_Helm_Hammer
+        ResultItem: GoodnEvil_Circlet_IG
+        ChangeRefine: 7
+      - BaseItem: GoodnEvil_Circlet_AG
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: GoodnEvil_Helm_Hammer
+        ResultItem: GoodnEvil_Circlet_AG
+        ChangeRefine: 7
+      - BaseItem: GoodnEvil_Circlet_EM
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: GoodnEvil_Helm_Hammer
+        ResultItem: GoodnEvil_Circlet_EM
+        ChangeRefine: 7
+      - BaseItem: GoodnEvil_Circlet_CD
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: GoodnEvil_Helm_Hammer
+        ResultItem: GoodnEvil_Circlet_CD
+        ChangeRefine: 7
+      - BaseItem: GoodnEvil_Circlet_IQ
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: GoodnEvil_Helm_Hammer
+        ResultItem: GoodnEvil_Circlet_IQ
+        ChangeRefine: 7
+      - BaseItem: GoodnEvil_Circlet_MT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: GoodnEvil_Helm_Hammer
+        ResultItem: GoodnEvil_Circlet_MT
+        ChangeRefine: 7
+      - BaseItem: GoodnEvil_Circlet_BO
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: GoodnEvil_Helm_Hammer
+        ResultItem: GoodnEvil_Circlet_BO
+        ChangeRefine: 7
+      - BaseItem: GoodnEvil_Circlet_SHC
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: GoodnEvil_Helm_Hammer
+        ResultItem: GoodnEvil_Circlet_SHC
+        ChangeRefine: 7
+      - BaseItem: GoodnEvil_Circlet_ABC
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: GoodnEvil_Helm_Hammer
+        ResultItem: GoodnEvil_Circlet_ABC
+        ChangeRefine: 7
+      - BaseItem: GoodnEvil_Circlet_WH
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: GoodnEvil_Helm_Hammer
+        ResultItem: GoodnEvil_Circlet_WH
+        ChangeRefine: 7
+      - BaseItem: GoodnEvil_Circlet_TR
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: GoodnEvil_Helm_Hammer
+        ResultItem: GoodnEvil_Circlet_TR
+        ChangeRefine: 7
+      - BaseItem: GoodnEvil_Circlet_SS
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: GoodnEvil_Helm_Hammer
+        ResultItem: GoodnEvil_Circlet_SS
+        ChangeRefine: 7
+      - BaseItem: GoodnEvil_Circlet_SKE
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: GoodnEvil_Helm_Hammer
+        ResultItem: GoodnEvil_Circlet_SKE
+        ChangeRefine: 7
+      - BaseItem: GoodnEvil_Circlet_SOA
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: GoodnEvil_Helm_Hammer
+        ResultItem: GoodnEvil_Circlet_SOA
+        ChangeRefine: 7
+      - BaseItem: GoodnEvil_Circlet_HN
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: GoodnEvil_Helm_Hammer
+        ResultItem: GoodnEvil_Circlet_HN
+        ChangeRefine: 7
+      - BaseItem: GoodnEvil_Circlet_SH
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: GoodnEvil_Helm_Hammer
+        ResultItem: GoodnEvil_Circlet_SH
+        ChangeRefine: 7
+      - BaseItem: GoodnEvil_Circlet_NW
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: GoodnEvil_Helm_Hammer
+        ResultItem: GoodnEvil_Circlet_NW
+        ChangeRefine: 7
+      - BaseItem: GoodnEvil_Circlet_NW2
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: GoodnEvil_Helm_Hammer
+        ResultItem: GoodnEvil_Circlet_NW2
+        ChangeRefine: 7
+      - BaseItem: GoodnEvil_Circlet_NW3
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: GoodnEvil_Helm_Hammer
+        ResultItem: GoodnEvil_Circlet_NW3
+        ChangeRefine: 7
+      - BaseItem: GoodnEvil_Circlet_NW4
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: GoodnEvil_Helm_Hammer
+        ResultItem: GoodnEvil_Circlet_NW4
+        ChangeRefine: 7
+      - BaseItem: GoodnEvil_Circlet_NW5
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: GoodnEvil_Helm_Hammer
+        ResultItem: GoodnEvil_Circlet_NW5
+        ChangeRefine: 7
+      - BaseItem: Punish_Hall
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Justice_Weapon_Hammer
+        ResultItem: Punish_Hall
+        ChangeRefine: 7
+      - BaseItem: Saint_Bringer
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Justice_Weapon_Hammer
+        ResultItem: Saint_Bringer
+        ChangeRefine: 7
+      - BaseItem: Humma_Brilliance
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Justice_Weapon_Hammer
+        ResultItem: Humma_Brilliance
+        ChangeRefine: 7
+      - BaseItem: Luppiter_Spear
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Justice_Weapon_Hammer
+        ResultItem: Luppiter_Spear
+        ChangeRefine: 7
+      - BaseItem: Holy_Raise_Spear
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Justice_Weapon_Hammer
+        ResultItem: Holy_Raise_Spear
+        ChangeRefine: 7
+      - BaseItem: Lightforce_Foxtail_Wand
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Justice_Weapon_Hammer
+        ResultItem: Lightforce_Foxtail_Wand
+        ChangeRefine: 7
+      - BaseItem: Shining_Light_Katar
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Justice_Weapon_Hammer
+        ResultItem: Shining_Light_Katar
+        ChangeRefine: 7
+      - BaseItem: Angel_Wing_Bow
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Justice_Weapon_Hammer
+        ResultItem: Angel_Wing_Bow
+        ChangeRefine: 7
+      - BaseItem: Guardian_Saber
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Justice_Weapon_Hammer
+        ResultItem: Guardian_Saber
+        ChangeRefine: 7
+      - BaseItem: Holy_Light_Dagger
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Justice_Weapon_Hammer
+        ResultItem: Holy_Light_Dagger
+        ChangeRefine: 7
+      - BaseItem: Light_Power_Harp
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Justice_Weapon_Hammer
+        ResultItem: Light_Power_Harp
+        ChangeRefine: 7
+      - BaseItem: Light_Power_Spark
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Justice_Weapon_Hammer
+        ResultItem: Light_Power_Spark
+        ChangeRefine: 7
+      - BaseItem: Lighting_Splatter
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Justice_Weapon_Hammer
+        ResultItem: Lighting_Splatter
+        ChangeRefine: 7
+      - BaseItem: Justice_Bomber
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Justice_Weapon_Hammer
+        ResultItem: Justice_Bomber
+        ChangeRefine: 7
+      - BaseItem: Last_Dawn
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Justice_Weapon_Hammer
+        ResultItem: Last_Dawn
+        ChangeRefine: 7
+      - BaseItem: Devil_Hunter
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Justice_Weapon_Hammer
+        ResultItem: Devil_Hunter
+        ChangeRefine: 7
+      - BaseItem: Road_Of_Glory
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Justice_Weapon_Hammer
+        ResultItem: Road_Of_Glory
+        ChangeRefine: 7
+      - BaseItem: Victory_Sword
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Justice_Weapon_Hammer
+        ResultItem: Victory_Sword
+        ChangeRefine: 7
+      - BaseItem: Divine_Buster
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Justice_Weapon_Hammer
+        ResultItem: Divine_Buster
+        ChangeRefine: 7
+      - BaseItem: Orign_Of_Life
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Justice_Weapon_Hammer
+        ResultItem: Orign_Of_Life
+        ChangeRefine: 7
+      - BaseItem: Destiny_Staff
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Justice_Weapon_Hammer
+        ResultItem: Destiny_Staff
+        ChangeRefine: 7
+      - BaseItem: Blessed_Bible
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Justice_Weapon_Hammer
+        ResultItem: Blessed_Bible
+        ChangeRefine: 7
+      - BaseItem: Soul_Liberator
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Justice_Weapon_Hammer
+        ResultItem: Soul_Liberator
+        ChangeRefine: 7
+      - BaseItem: Demonic_Claw
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Injustice_Weapon_Hammer
+        ResultItem: Demonic_Claw
+        ChangeRefine: 7
+      - BaseItem: Sealed_Bible
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Injustice_Weapon_Hammer
+        ResultItem: Sealed_Bible
+        ChangeRefine: 7
+      - BaseItem: Darkness_Tablet
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Injustice_Weapon_Hammer
+        ResultItem: Darkness_Tablet
+        ChangeRefine: 7
+      - BaseItem: Devil_Wing_Staff
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Injustice_Weapon_Hammer
+        ResultItem: Devil_Wing_Staff
+        ChangeRefine: 7
+      - BaseItem: Doom_Bible
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Injustice_Weapon_Hammer
+        ResultItem: Doom_Bible
+        ChangeRefine: 7
+      - BaseItem: Soul_Harvest
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Injustice_Weapon_Hammer
+        ResultItem: Soul_Harvest
+        ChangeRefine: 7
+      - BaseItem: The_Reaper
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Injustice_Weapon_Hammer
+        ResultItem: The_Reaper
+        ChangeRefine: 7
+      - BaseItem: Underworld_Knife
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Injustice_Weapon_Hammer
+        ResultItem: Underworld_Knife
+        ChangeRefine: 7
+      - BaseItem: Devil_Cursed_Sword
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Injustice_Weapon_Hammer
+        ResultItem: Devil_Cursed_Sword
+        ChangeRefine: 7
+      - BaseItem: Dark_Angel_Ray_Bow
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Injustice_Weapon_Hammer
+        ResultItem: Dark_Angel_Ray_Bow
+        ChangeRefine: 7
+      - BaseItem: Crime_Violine
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Injustice_Weapon_Hammer
+        ResultItem: Crime_Violine
+        ChangeRefine: 7
+      - BaseItem: Crime_Whip
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Injustice_Weapon_Hammer
+        ResultItem: Crime_Whip
+        ChangeRefine: 7
+      - BaseItem: RG_5649
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Injustice_Weapon_Hammer
+        ResultItem: RG_5649
+        ChangeRefine: 7
+      - BaseItem: Devil_L_Launcher
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Injustice_Weapon_Hammer
+        ResultItem: Devil_L_Launcher
+        ChangeRefine: 7
+      - BaseItem: Screaming_Rifle
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Injustice_Weapon_Hammer
+        ResultItem: Screaming_Rifle
+        ChangeRefine: 7
+      - BaseItem: Devils_Bullet
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Injustice_Weapon_Hammer
+        ResultItem: Devils_Bullet
+        ChangeRefine: 7
+      - BaseItem: Outlaw_Cursed_Shotgun
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Injustice_Weapon_Hammer
+        ResultItem: Outlaw_Cursed_Shotgun
+        ChangeRefine: 7
+      - BaseItem: Blood_Rapier
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Injustice_Weapon_Hammer
+        ResultItem: Blood_Rapier
+        ChangeRefine: 7
+      - BaseItem: Destruction_Axe
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Injustice_Weapon_Hammer
+        ResultItem: Destruction_Axe
+        ChangeRefine: 7
+      - BaseItem: Devil_Claw
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Injustice_Weapon_Hammer
+        ResultItem: Devil_Claw
+        ChangeRefine: 7
+      - BaseItem: Execution_Great_Sword
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Injustice_Weapon_Hammer
+        ResultItem: Execution_Great_Sword
+        ChangeRefine: 7
+      - BaseItem: Devil_Guardian_Sword
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Injustice_Weapon_Hammer
+        ResultItem: Devil_Guardian_Sword
+        ChangeRefine: 7
+      - BaseItem: Darkness_Foxtail_Model
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Injustice_Weapon_Hammer
+        ResultItem: Darkness_Foxtail_Model
+        ChangeRefine: 7
+      - BaseItem: FateSin_Boots_CD
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: FateSin_Boots_Hammer
+        ResultItem: FateSin_Boots_CD
+        ChangeRefine: 7
+      - BaseItem: FateSin_Boots_IQ
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: FateSin_Boots_Hammer
+        ResultItem: FateSin_Boots_IQ
+        ChangeRefine: 7
+      - BaseItem: FateSin_Boots_SOA
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: FateSin_Boots_Hammer
+        ResultItem: FateSin_Boots_SOA
+        ChangeRefine: 7
+      - BaseItem: FateSin_Boots_BO
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: FateSin_Boots_Hammer
+        ResultItem: FateSin_Boots_BO
+        ChangeRefine: 7
+      - BaseItem: FateSin_Boots_DK
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: FateSin_Boots_Hammer
+        ResultItem: FateSin_Boots_DK
+        ChangeRefine: 7
+      - BaseItem: FateSin_Boots_SH
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: FateSin_Boots_Hammer
+        ResultItem: FateSin_Boots_SH
+        ChangeRefine: 7
+      - BaseItem: FateSin_Boots_EM
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: FateSin_Boots_Hammer
+        ResultItem: FateSin_Boots_EM
+        ChangeRefine: 7
+      - BaseItem: FateSin_Boots_WH
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: FateSin_Boots_Hammer
+        ResultItem: FateSin_Boots_WH
+        ChangeRefine: 7
+      - BaseItem: FateSin_Boots_SKE
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: FateSin_Boots_Hammer
+        ResultItem: FateSin_Boots_SKE
+        ChangeRefine: 7
+      - BaseItem: FateSin_Boots_MT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: FateSin_Boots_Hammer
+        ResultItem: FateSin_Boots_MT
+        ChangeRefine: 7
+      - BaseItem: FateSin_Boots_SHC
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: FateSin_Boots_Hammer
+        ResultItem: FateSin_Boots_SHC
+        ChangeRefine: 7
+      - BaseItem: FateSin_Boots_SS
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: FateSin_Boots_Hammer
+        ResultItem: FateSin_Boots_SS
+        ChangeRefine: 7
+      - BaseItem: FateSin_Boots_ABC
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: FateSin_Boots_Hammer
+        ResultItem: FateSin_Boots_ABC
+        ChangeRefine: 7
+      - BaseItem: FateSin_Boots_TR
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: FateSin_Boots_Hammer
+        ResultItem: FateSin_Boots_TR
+        ChangeRefine: 7
+      - BaseItem: FateSin_Boots_HN
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: FateSin_Boots_Hammer
+        ResultItem: FateSin_Boots_HN
+        ChangeRefine: 7
+      - BaseItem: FateSin_Boots_IG
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: FateSin_Boots_Hammer
+        ResultItem: FateSin_Boots_IG
+        ChangeRefine: 7
+      - BaseItem: FateSin_Boots_AG
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: FateSin_Boots_Hammer
+        ResultItem: FateSin_Boots_AG
+        ChangeRefine: 7
+      - BaseItem: FateSin_Boots_NW
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: FateSin_Boots_Hammer
+        ResultItem: FateSin_Boots_NW
+        ChangeRefine: 7
+      - BaseItem: Saint_Hall_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_1
+        ResultItem: Saint_Hall_LT
+        ChangeRefine: 7
+      - BaseItem: Undine_Spear_K_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_1
+        ResultItem: Undine_Spear_K_LT
+        ChangeRefine: 7
+      - BaseItem: Demon_Hunting_Bible_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_1
+        ResultItem: Demon_Hunting_Bible_LT
+        ChangeRefine: 7
+      - BaseItem: Light_Blade_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_1
+        ResultItem: Light_Blade_LT
+        ChangeRefine: 7
+      - BaseItem: Magic_Sword_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_1
+        ResultItem: Magic_Sword_LT
+        ChangeRefine: 7
+      - BaseItem: Fatalist_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_1
+        ResultItem: Fatalist_LT
+        ChangeRefine: 7
+      - BaseItem: Iron_Staff_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_2
+        ResultItem: Iron_Staff_LT
+        ChangeRefine: 7
+      - BaseItem: Blue_Crystal_Staff_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_2
+        ResultItem: Blue_Crystal_Staff_LT
+        ChangeRefine: 7
+      - BaseItem: Shadow_Staff_K_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_2
+        ResultItem: Shadow_Staff_K_LT
+        ChangeRefine: 7
+      - BaseItem: Freezing_Rod_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_2
+        ResultItem: Freezing_Rod_LT
+        ChangeRefine: 7
+      - BaseItem: Iron_Nail_K_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_2
+        ResultItem: Iron_Nail_K_LT
+        ChangeRefine: 7
+      - BaseItem: Ray_Knuckle_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_2
+        ResultItem: Ray_Knuckle_LT
+        ChangeRefine: 7
+      - BaseItem: Sword_Of_Bluefire_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_3
+        ResultItem: Sword_Of_Bluefire_LT
+        ChangeRefine: 7
+      - BaseItem: Slate_Sword_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_3
+        ResultItem: Slate_Sword_LT
+        ChangeRefine: 7
+      - BaseItem: Royal_Bow_K_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_3
+        ResultItem: Royal_Bow_K_LT
+        ChangeRefine: 7
+      - BaseItem: Scalet_Dragon_L_Bow_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_3
+        ResultItem: Scalet_Dragon_L_Bow_LT
+        ChangeRefine: 7
+      - BaseItem: Trumpet_Shell_K_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_4
+        ResultItem: Trumpet_Shell_K_LT
+        ChangeRefine: 7
+      - BaseItem: Barb_Wire_K_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_4
+        ResultItem: Barb_Wire_K_LT
+        ChangeRefine: 7
+      - BaseItem: Narcis_Bow_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_4
+        ResultItem: Narcis_Bow_LT
+        ChangeRefine: 7
+      - BaseItem: Avenger_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_4
+        ResultItem: Avenger_LT
+        ChangeRefine: 7
+      - BaseItem: Meteor_Striker_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_4
+        ResultItem: Meteor_Striker_LT
+        ChangeRefine: 7
+      - BaseItem: Blade_Katar_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_5
+        ResultItem: Blade_Katar_LT
+        ChangeRefine: 7
+      - BaseItem: Shiver_Katar_K_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_5
+        ResultItem: Shiver_Katar_K_LT
+        ChangeRefine: 7
+      - BaseItem: Dragonic_Slayer_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_5
+        ResultItem: Dragonic_Slayer_LT
+        ChangeRefine: 7
+      - BaseItem: Oriental_Sword_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_5
+        ResultItem: Oriental_Sword_LT
+        ChangeRefine: 7
+      - BaseItem: Humma_Clear_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_6
+        ResultItem: Humma_Clear_LT
+        ChangeRefine: 7
+      - BaseItem: Fog_Dew_Sword_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_6
+        ResultItem: Fog_Dew_Sword_LT
+        ChangeRefine: 7
+      - BaseItem: Crimson_Rose_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_6
+        ResultItem: Crimson_Rose_LT
+        ChangeRefine: 7
+      - BaseItem: Master_Soul_Rifle_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_6
+        ResultItem: Master_Soul_Rifle_LT
+        ChangeRefine: 7
+      - BaseItem: Demon_S_Shot_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_6
+        ResultItem: Demon_S_Shot_LT
+        ChangeRefine: 7
+      - BaseItem: The_Black_Gatling_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_6
+        ResultItem: The_Black_Gatling_LT
+        ChangeRefine: 7
+      - BaseItem: Golden_L_Launcher_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_6
+        ResultItem: Golden_L_Launcher_LT
+        ChangeRefine: 7
+      - BaseItem: MeawFoxtail_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_6
+        ResultItem: MeawFoxtail_LT
+        ChangeRefine: 7
+      - BaseItem: OneSkyOneSun_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_6
+        ResultItem: OneSkyOneSun_LT
+        ChangeRefine: 7
+      - BaseItem: SoulWeight_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_6
+        ResultItem: SoulWeight_LT
+        ChangeRefine: 7
+      - BaseItem: Freedom_Stick_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_6
+        ResultItem: Freedom_Stick_LT
+        ChangeRefine: 7
+      - BaseItem: Blessed_Knife_LT
+        MaximumRefine: 4
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Hero_Weapon_Hammer_6
+        ResultItem: Blessed_Knife_LT
+        ChangeRefine: 7
