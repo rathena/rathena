@@ -92053,25 +92053,25 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
   - Id: 1001581
-    AegisName: aegis_1001581
+    AegisName: Coupon_GoodnEvil_Helm
     Name: Crown of Good and Evil Coupon
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 1001583
-    AegisName: aegis_1001583
+    AegisName: Coupon_FateSinBoots
     Name: Boots of Good and Evil Coupon
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 1001584
-    AegisName: aegis_1001584
+    AegisName: Coupon_Justice_Weapon
     Name: Good Weapon Coupon
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 1001588
-    AegisName: aegis_1001588
+    AegisName: Coupon_Injustice_Weapon
     Name: Evil Weapon Coupon
     Type: Etc
     Flags:
