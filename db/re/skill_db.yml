@@ -15918,6 +15918,15 @@ Body:
       - Level: 5
         Time: 350000
     FixedCastTime: 1000
+  - Id: 578
+    Name: DE_BERSERKAIZER  # TODO: effect? The skill is only used to display a visual effect for now
+    Description: Berserkaizer
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    HitCount: 1
+    Duration1: -1
   - Id: 653
     Name: NPC_EARTHQUAKE
     Description: Earthquake

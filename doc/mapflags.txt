@@ -118,7 +118,23 @@ is disabled in '/conf/battle/items.conf'.
 *nomvploot
 
 Disables normal monsters and MVPs from dropping items on a map. Looted items will always drop.
-'noloot' is the same as 'nomobloot' and 'nomvploot' combined.
+'nomobloot' prevents monsters and MVPs from dropping items from the 'Drops' table.
+'nomvploot' prevents MVPs from giving MVP prize items from the 'MvpDrops' table.
+'noloot' is the same as 'nomobloot' and 'nomvploot' combined.	
+
+---------------------------------------
+
+*nolootnormalmob
+
+Disables normal monsters type (only) from dropping items on a map. Looted items will always drop.
+
+---------------------------------------
+
+*no_npc_selfdestruction_on_all
+
+A quick mapflag to change the behaviour of the NPC_SELFDESTRUCTION skill.
+When defined, the skill always and only hits enemy type instead of all units.
+
 		
 ---------------------------------------
 
