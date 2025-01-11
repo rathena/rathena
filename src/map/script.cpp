@@ -23198,7 +23198,38 @@ BUILDIN_FUNC(consumeitem)
 		}
 	}
 
+	// Save the old script the player was attached to
+	struct script_state* previous_st = sd->st;
+	// Save the old item id, if this command was called inside another item
+	t_itemid previous_itemid = sd->itemid;
+
+	// Only if there was an old script
+	if( previous_st != nullptr ){
+		// Detach the player from the current script
+		script_detach_rid( previous_st );
+	}
+
+	// Set the item id to the item id of the script that will be executed (needed for announcement of group containers for example)
+	sd->itemid = item_data->nameid;
 	run_script( item_data->script, 0, sd->bl.id, 0 );
+
+	if( sd->st != nullptr ){
+		script_free_state( sd->st );
+		sd->st = nullptr;
+	}
+
+	// If an old script is present
+	if( previous_st != nullptr ){
+		// Because of detach the RID will be removed, so we need to restore it
+		previous_st->rid = sd->bl.id;
+
+		// Reattach the player to it, so that the limitations of that script kick back in
+		script_attach_state( previous_st );
+	}
+
+	// Restore the old item id
+	sd->itemid = previous_itemid;
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
