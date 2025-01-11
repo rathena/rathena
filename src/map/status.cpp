@@ -5279,7 +5279,8 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, sta
 		|| sc->getSCE(SC_BLEEDING)
 		|| (sc->getSCE(SC_MAGICMUSHROOM) && sc->getSCE(SC_MAGICMUSHROOM)->val3 == 1)
 		|| sc->getSCE(SC_SATURDAYNIGHTFEVER)
-		|| sc->getSCE(SC_REBOUND))
+		|| sc->getSCE(SC_REBOUND)
+		|| sc->getSCE(SC_NORECOVER_STATE))
 		regen->flag = RGN_NONE;
 
 	// No natural SP regen
