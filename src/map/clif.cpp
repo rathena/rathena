@@ -11777,6 +11777,7 @@ void clif_parse_WalkToXY(int32 fd, map_session_data* sd) {
 	}
 	status_change_end(&sd->bl, SC_ROLLINGCUTTER); // If you move, you lose your counters. [malufett]
 	status_change_end(&sd->bl, SC_CRESCIVEBOLT);
+	status_change_end(&sd->bl, SC_KI_SUL_RAMPAGE);
 
 	pc_delinvincibletimer(sd);
 

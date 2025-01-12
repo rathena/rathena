@@ -33,8 +33,8 @@ class status_change;
 #define MAX_SKILL_LEVEL 13 /// Max Skill Level (for skill_db storage)
 #define MAX_MOBSKILL_LEVEL 100 /// Max monster skill level (on skill usage)
 #define MAX_SKILL_CRIMSON_MARKER 3 /// Max Crimson Marker targets (RL_C_MARKER)
-#define SKILL_NAME_LENGTH 31 /// Max Skill Name length
-#define SKILL_DESC_LENGTH 31 /// Max Skill Desc length
+#define SKILL_NAME_LENGTH 40 /// Max Skill Name length
+#define SKILL_DESC_LENGTH 40 /// Max Skill Desc length
 
 /// Used with tracking the hitcount of Earthquake for skills that can avoid the first attack
 #define NPC_EARTHQUAKE_FLAG 0x800
@@ -2011,8 +2011,13 @@ enum e_skill {
 	ECL_SADAGUI,
 	ECL_SEQUOIADUST,
 	ECLAGE_RECALL,
-
-	ALL_PRONTERA_RECALL = 3042,
+	BA_POEMBRAGI2,
+	DC_FORTUNEKISS2,
+	// ITEM_OPTION_SPLASH_ATTACK,
+	GM_FORCE_TRANSFER = 3039,
+	GM_WIDE_RESURRECTION,
+	ALL_NIFLHEIM_RECALL,
+	ALL_PRONTERA_RECALL,
 	ALL_GLASTHEIM_RECALL,
 	ALL_THANATOS_RECALL,
 	ALL_LIGHTHALZEN_RECALL,

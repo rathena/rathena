@@ -753,17 +753,16 @@ int32 chlogif_reqvipdata(uint32 aid, uint8 flag, int32 timediff, int32 mapfd) {
  * HA 0x2720
  * Request account info to login-server
  */
-int32 chlogif_req_accinfo(int32 fd, int32 u_fd, int32 u_aid, int32 account_id, int8 type) {
+int32 chlogif_req_accinfo(int32 fd, int32 u_fd, int32 u_aid, int32 account_id) {
 	loginif_check(-1);
-	// ShowInfo("%d request account info for %d (type %d)\n", u_aid, account_id, type);
-	WFIFOHEAD(login_fd, 19);
+	// ShowInfo("%d request account info for %d\n", u_aid, account_id);
+	WFIFOHEAD(login_fd, 18);
 	WFIFOW(login_fd, 0) = 0x2720;
 	WFIFOL(login_fd, 2) = fd;
 	WFIFOL(login_fd, 6) = u_fd;
 	WFIFOL(login_fd, 10) = u_aid;
 	WFIFOL(login_fd, 14) = account_id;
-	WFIFOB(login_fd, 18) = type;
-	WFIFOSET(login_fd, 19);
+	WFIFOSET(login_fd, 18);
 	return 1;
 }
 
@@ -776,14 +775,14 @@ int32 chlogif_parse_AccInfoAck(int32 fd) {
 		return 0;
 	}
 	else {
-		int8 type = RFIFOB(fd, 18);
-		if (type == 0 || RFIFOREST(fd) < 122 + NAME_LENGTH) {
-			mapif_accinfo_ack(false,
+		bool success = RFIFOB(fd, 18) != 0;
+
+		if (!success) {
+			mapif_accinfo_ack(success,
 							  RFIFOL(fd, 2),
 							  RFIFOL(fd, 6),
 							  RFIFOL(fd, 10),
 							  RFIFOL(fd, 14),
-							  0,
 							  -1,
 							  0,
 							  0,
@@ -795,13 +794,12 @@ int32 chlogif_parse_AccInfoAck(int32 fd) {
 			RFIFOSKIP(fd, 19);
 			return 1;
 		}
-		type >>= 1;
-		mapif_accinfo_ack(true,
+
+		mapif_accinfo_ack(success,
 						  RFIFOL(fd, 2),
 						  RFIFOL(fd, 6),
 						  RFIFOL(fd, 10),
 						  RFIFOL(fd, 14),
-						  type,
 						  RFIFOL(fd, 19),
 						  RFIFOL(fd, 23),
 						  RFIFOL(fd, 27),

@@ -3542,6 +3542,13 @@ static bool is_attack_critical(struct Damage *wd,
 					return false;
 				}
 				break;
+			case SH_CHUL_HO_SONIC_CLAW:
+				if (pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO) > 0 ||
+					(sc != nullptr && sc->getSCE(SC_TEMPORARY_COMMUNION) != nullptr)) {
+					break;
+				}
+
+				return false;
 		}
 		if (tsd && tsd->bonus.critical_def) {
 			cri = cri * (100 - tsd->bonus.critical_def) / 100;
@@ -4206,6 +4213,31 @@ int32 battle_get_magic_element(
 		case TR_SOUNDBLEND:
 			if (sd) {
 				element = sd->bonus.arrow_ele;
+			}
+			break;
+		case SU_CN_METEOR:
+		case SU_CN_METEOR2:
+		case SH_HYUN_ROKS_BREEZE:
+		case SH_HYUN_ROK_CANNON:
+			if (sc != nullptr && sc->count > 0) {
+				if (sc->getSCE(SC_COLORS_OF_HYUN_ROK_1) != nullptr) {
+					element = ELE_WATER;
+				}
+				else if (sc->getSCE(SC_COLORS_OF_HYUN_ROK_2) != nullptr) {
+					element = ELE_WIND;
+				}
+				else if (sc->getSCE(SC_COLORS_OF_HYUN_ROK_3) != nullptr) {
+					element = ELE_EARTH;
+				}
+				else if (sc->getSCE(SC_COLORS_OF_HYUN_ROK_4) != nullptr) {
+					element = ELE_FIRE;
+				}
+				else if (sc->getSCE(SC_COLORS_OF_HYUN_ROK_5) != nullptr) {
+					element = ELE_DARK;
+				}
+				else if (sc->getSCE(SC_COLORS_OF_HYUN_ROK_6) != nullptr) {
+					element = ELE_HOLY;
+				}
 			}
 			break;
 	}
@@ -7290,6 +7322,42 @@ static int32 battle_calc_attack_skill_ratio(
 			skillratio += 5 * sstatus->con;
 			RE_LVL_DMOD(100);
 			break;
+		case SH_CHUL_HO_SONIC_CLAW:
+			skillratio += -100 + 1100 + 2200 * skill_lv;
+			skillratio += 50 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
+			skillratio += 5 * sstatus->pow;
+
+			if (pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO) > 0 ||
+				(sc != nullptr && sc->getSCE(SC_TEMPORARY_COMMUNION) != nullptr)) {
+				skillratio += 400 * skill_lv;
+				skillratio += 50 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
+			}
+			RE_LVL_DMOD(100);
+			break;
+		case SH_HOWLING_OF_CHUL_HO:
+			skillratio += -100 + 600 + 1050 * skill_lv;
+			skillratio += 50 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
+			skillratio += 5 * sstatus->pow;
+
+			if (pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO) > 0 ||
+				(sc != nullptr && sc->getSCE(SC_TEMPORARY_COMMUNION) != nullptr)) {
+				skillratio += 100 + 100 * skill_lv;
+				skillratio += 50 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
+			}
+			RE_LVL_DMOD(100);
+			break;
+		case SH_HOGOGONG_STRIKE:
+			skillratio += -100 + 180 + 200 * skill_lv;
+			skillratio += 10 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
+			skillratio += 5 * sstatus->pow;
+
+			if (pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO) > 0 ||
+				(sc != nullptr && sc->getSCE(SC_TEMPORARY_COMMUNION) != nullptr)) {
+				skillratio += 70 + 150 * skill_lv;
+				skillratio += 10 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
+			}
+			RE_LVL_DMOD(100);
+			break;
 	}
 	return skillratio;
 }
@@ -9090,6 +9158,25 @@ struct Damage battle_calc_magic_attack(
 				ad.div_ = 2;
 			}
 			break;
+		case SOA_TALISMAN_OF_FOUR_BEARING_GOD:
+			if (sc != nullptr) {
+				if (sc->getSCE(SC_T_FIRST_GOD) != nullptr) {
+					ad.div_ = 2;
+				}
+				else if (sc->getSCE(SC_T_SECOND_GOD) != nullptr) {
+					ad.div_ = 3;
+				}
+				else if (sc->getSCE(SC_T_THIRD_GOD) != nullptr) {
+					ad.div_ = 4;
+				}
+				else if (sc->getSCE(SC_T_FOURTH_GOD) != nullptr) {
+					ad.div_ = 5;
+				}
+				else if (sc->getSCE(SC_T_FIFTH_GOD) != nullptr) {
+					ad.div_ = 7;
+				}
+			}
+			break;
 	}
 
 	// Set miscellaneous data that needs be filled
@@ -9705,7 +9792,14 @@ struct Damage battle_calc_magic_attack(
 						break;
 					case SU_CN_METEOR:
 					case SU_CN_METEOR2:
-						skillratio += 100 + 100 * skill_lv + sstatus->int_ * 5; // !TODO: Confirm INT bonus
+						skillratio += -100 + 200 + 100 * skill_lv;
+						if (status_get_lv(src) > 99) {
+							skillratio += sstatus->int_ * 5;
+						}
+						// !TODO: the buff could be here or could be part of the skillatk bonus
+						if (sc != nullptr && sc->getSCE(SC_COLORS_OF_HYUN_ROK_BUFF) != nullptr) {
+							skillratio += skillratio * 50 / 100;
+						}
 						RE_LVL_DMOD(100);
 						break;
 					case NPC_VENOMFOG:
@@ -10149,6 +10243,101 @@ struct Damage battle_calc_magic_attack(
 						if (sc && sc->getSCE(SC_RULEBREAK)) {
 							skillratio += skillratio * 50 / 100;
 						}
+						break;
+					case SOA_EXORCISM_OF_MALICIOUS_SOUL:
+						skillratio += -100 + 150 * skill_lv;
+						skillratio += pc_checkskill(sd, SOA_SOUL_MASTERY) * 2;
+						skillratio += 1 * sstatus->spl;
+
+						if ((tsc != nullptr && tsc->getSCE(SC_SOULCURSE) != nullptr) ||
+							(sc != nullptr && sc->getSCE(SC_TOTEM_OF_TUTELARY) != nullptr)) {
+							skillratio += 100 * skill_lv;
+						}
+
+						if (sd != nullptr) {
+							skillratio *= sd->soulball_old;
+						}
+						RE_LVL_DMOD(100);
+						break;
+					case SOA_TALISMAN_OF_BLUE_DRAGON:
+						skillratio += -100 + 850 + 2250 * skill_lv;
+						skillratio += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 15 * skill_lv;
+						skillratio += 5 * sstatus->spl;
+						if (sc != nullptr && sc->getSCE(SC_T_FIFTH_GOD) != nullptr) {
+							skillratio += 100 + 700 * skill_lv;
+						}
+						RE_LVL_DMOD(100);
+						break;
+					case SOA_TALISMAN_OF_WHITE_TIGER:
+						skillratio += -100 + 400 + 1000 * skill_lv;
+						skillratio += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 15 * skill_lv;
+						skillratio += 5 * sstatus->spl;
+						if (sc != nullptr && sc->getSCE(SC_T_FIFTH_GOD) != nullptr) {
+							skillratio += 400 * skill_lv;
+						}
+						RE_LVL_DMOD(100);
+						break;
+					case SOA_TALISMAN_OF_RED_PHOENIX:
+						skillratio += -100 + 1400 + 1450 * skill_lv;
+						skillratio += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 15 * skill_lv;
+						skillratio += 5 * sstatus->spl;
+						if (sc != nullptr && sc->getSCE(SC_T_FIFTH_GOD) != nullptr) {
+							skillratio += 200 + 400 * skill_lv;
+						}
+						RE_LVL_DMOD(100);
+						break;
+					case SOA_TALISMAN_OF_BLACK_TORTOISE:
+						skillratio += -100 + 2150 + 1600 * skill_lv;
+						skillratio += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 15 * skill_lv;
+						skillratio += 5 * sstatus->spl;
+						if (sc != nullptr && sc->getSCE(SC_T_FIFTH_GOD) != nullptr) {
+							skillratio += 150 + 500 * skill_lv;
+						}
+						RE_LVL_DMOD(100);
+						break;
+					case SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS:
+						skillratio += -100 + 500 + 2000 * skill_lv;
+						skillratio += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 15 * skill_lv;
+						skillratio += pc_checkskill(sd, SOA_SOUL_MASTERY) * 15 * skill_lv;
+						skillratio += 5 * sstatus->spl;
+						RE_LVL_DMOD(100);
+						break;
+					case SOA_TALISMAN_OF_FOUR_BEARING_GOD:
+						skillratio += -100 + 50 + 250 * skill_lv;
+						skillratio += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 15 * skill_lv;
+						skillratio += 5 * sstatus->spl;
+						RE_LVL_DMOD(100);
+						break;
+					case SOA_TALISMAN_OF_SOUL_STEALING:
+						skillratio += -100 + 500 + 1250 * skill_lv;
+						skillratio += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 7 * skill_lv;
+						skillratio += pc_checkskill(sd, SOA_SOUL_MASTERY) * 7 * skill_lv;
+						skillratio += 3 * sstatus->spl;
+						RE_LVL_DMOD(100);
+						break;
+					case SH_HYUN_ROKS_BREEZE:
+						skillratio += -100 + 650 + 750 * skill_lv;
+						skillratio += 20 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
+						skillratio += 5 * sstatus->spl;
+
+						if (pc_checkskill(sd, SH_COMMUNE_WITH_HYUN_ROK) > 0 ||
+							(sc != nullptr && sc->getSCE(SC_TEMPORARY_COMMUNION) != nullptr)) {
+							skillratio += 100 + 200 * skill_lv;
+							skillratio += 20 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
+						}
+						RE_LVL_DMOD(100);
+						break;
+					case SH_HYUN_ROK_CANNON:
+						skillratio += -100 + 1100 + 2050 * skill_lv;
+						skillratio += 50 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
+						skillratio += 5 * sstatus->spl;
+
+						if (pc_checkskill(sd, SH_COMMUNE_WITH_HYUN_ROK) > 0 ||
+							(sc != nullptr && sc->getSCE(SC_TEMPORARY_COMMUNION) != nullptr)) {
+							skillratio += 400 * skill_lv;
+							skillratio += 25 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
+						}
+						RE_LVL_DMOD(100);
 						break;
 				}
 

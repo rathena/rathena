@@ -71,7 +71,7 @@ Body:
       mobinfo: true
       iteminfo: true
       whodrops: true
-      time: true
+      servertime: true
       jailtime: true
       hominfo: true
       homstats: true
@@ -195,7 +195,7 @@ Body:
       fakename: true
       option: true
       speed: true
-      warp: true
+      mapmove: true
       kill: true
       recall: true
       ban: true

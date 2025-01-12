@@ -1069,11 +1069,6 @@ void pc_delabyssball(map_session_data &sd, int32 count) {
 bool pc_addfame(map_session_data &sd, int32 count) {
 	enum e_rank ranktype;
 
-	sd.status.fame += count;
-	if (sd.status.fame > MAX_FAME) {
-		sd.status.fame = MAX_FAME;
-	}
-
 	switch (sd.class_ & MAPID_UPPERMASK) {
 		case MAPID_BLACKSMITH:
 			ranktype = RANK_BLACKSMITH;
@@ -1089,6 +1084,8 @@ bool pc_addfame(map_session_data &sd, int32 count) {
 				"pc_addfame: Trying to add fame to class '%s'(%d).\n", job_name(sd.status.class_), sd.status.class_);
 			return false;
 	}
+
+	sd.status.fame = cap_value(sd.status.fame + count, 0, MAX_FAME);
 
 	clif_update_rankingpoint(sd, ranktype, count);
 	chrif_updatefamelist(sd, ranktype);
@@ -4382,9 +4379,13 @@ void pc_bonus(map_session_data *sd, int32 type, int32 val) {
 			}
 			break;
 		case SP_ATK_RATE:
+#ifdef RENEWAL
 			if (sd->state.lr_flag != LR_FLAG_ARROW) {
 				sd->bonus.atk_rate += val;
 			}
+#else
+			ShowError("pc_bonus: %s is not supported in Pre-Renewal mode.\n", QUOTE(SP_ATK_RATE));
+#endif
 			break;
 		case SP_MAGIC_ATK_DEF:
 			if (sd->state.lr_flag != LR_FLAG_ARROW) {
@@ -11853,7 +11854,11 @@ int64 pc_readparam(map_session_data *sd, int64 type) {
 			val = sd->matk_rate;
 			break;
 		case SP_ATK_RATE:
+#ifdef RENEWAL
 			val = sd->bonus.atk_rate;
+#else
+			ShowError("pc_readparam: %s is not supported in Pre-Renewal mode.\n", QUOTE(SP_ATK_RATE));
+#endif
 			break;
 		case SP_MAGIC_ATK_DEF:
 			val = sd->bonus.magic_def_rate;

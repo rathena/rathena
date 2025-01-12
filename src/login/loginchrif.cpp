@@ -847,15 +847,15 @@ int32 logchrif_parse_reqvipdata(int32 fd) {
  * Get account info that asked by inter/char-server
  */
 int32 logchrif_parse_accinfo(int32 fd) {
-	if (RFIFOREST(fd) < 19) {
+	if (RFIFOREST(fd) < 18) {
 		return 0;
 	}
+
 	else {
 		int32 map_fd = RFIFOL(fd, 2), u_fd = RFIFOL(fd, 6), u_aid = RFIFOL(fd, 10), account_id = RFIFOL(fd, 14);
-		int8 type = RFIFOB(fd, 18);
 		AccountDB* accounts = login_get_accounts_db();
 		struct mmo_account acc;
-		RFIFOSKIP(fd, 19);
+		RFIFOSKIP(fd, 18);
 
 		// Send back the result to char-server
 		if (accounts->load_num(accounts, &acc, account_id)) {
@@ -867,7 +867,7 @@ int32 logchrif_parse_accinfo(int32 fd) {
 			WFIFOL(fd, 6) = u_fd;
 			WFIFOL(fd, 10) = u_aid;
 			WFIFOL(fd, 14) = account_id;
-			WFIFOB(fd, 18) = (1 << type); // success
+			WFIFOB(fd, 18) = true; // success
 			WFIFOL(fd, 19) = acc.group_id;
 			WFIFOL(fd, 23) = acc.logincount;
 			WFIFOL(fd, 27) = acc.state;
@@ -886,7 +886,7 @@ int32 logchrif_parse_accinfo(int32 fd) {
 			WFIFOL(fd, 6) = u_fd;
 			WFIFOL(fd, 10) = u_aid;
 			WFIFOL(fd, 14) = account_id;
-			WFIFOB(fd, 18) = 0; // failed
+			WFIFOB(fd, 18) = false; // failed
 			WFIFOSET(fd, 19);
 		}
 	}

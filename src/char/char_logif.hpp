@@ -41,7 +41,7 @@ int32 chlogif_parse_updip(int32 fd);
 
 int32 chlogif_parse_vipack(int32 fd);
 int32 chlogif_reqvipdata(uint32 aid, uint8 flag, int32 timediff, int32 mapfd);
-int32 chlogif_req_accinfo(int32 fd, int32 u_fd, int32 u_aid, int32 account_id, int8 type);
+int32 chlogif_req_accinfo(int32 fd, int32 u_fd, int32 u_aid, int32 account_id);
 
 int32 chlogif_parse(int32 fd);
 

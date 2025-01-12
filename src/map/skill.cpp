@@ -716,6 +716,12 @@ int32 skill_calc_heal(struct block_list *src, struct block_list *target, uint16 
 			}
 #endif
 			break;
+
+		case SOA_TALISMAN_OF_PROTECTION:
+			hp = (500 + pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 50) * skill_lv * status_get_lv(src) / 100;
+			hp += (status_get_lv(src) + status_get_int(src)) / 5 * 30 * status_get_crt(src) / 100;
+			break;
+
 		default:
 			if (skill_lv >= battle_config.max_heal_lv) {
 				return battle_config.max_heal;
@@ -841,98 +847,100 @@ int32 skill_calc_heal(struct block_list *src, struct block_list *target, uint16 
 	}
 
 #ifdef RENEWAL
-	if (hp_bonus) {
+	if (hp_bonus && skill_id != SOA_TALISMAN_OF_PROTECTION) {
 		hp += hp * hp_bonus / 100;
 	}
+}
 
-	// MATK part of the RE heal formula [malufett]
-	// Note: in this part matk bonuses from items or skills are not applied
-	switch (skill_id) {
-		case BA_APPLEIDUN:
-		case PR_SANCTUARY:
-		case NPC_EVILLAND:
-			break;
-		default: {
-			status_data *status = status_get_status_data(*src);
-			int32 min, max;
+// MATK part of the RE heal formula [malufett]
+// Note: in this part matk bonuses from items or skills are not applied
+switch (skill_id) {
+	case BA_APPLEIDUN:
+	case PR_SANCTUARY:
+	case NPC_EVILLAND:
+		break;
+	default: {
+		status_data *status = status_get_status_data(*src);
+		int32 min, max;
 
-			min = status_base_matk_min(src, status, status_get_lv(src));
-			max = status_base_matk_max(src, status, status_get_lv(src));
-			if (status->rhw.matk > 0) {
-				int32 wMatk, variance;
-				wMatk = status->rhw.matk;
-				variance = wMatk * status->rhw.wlv / 10;
-				min += wMatk - variance;
-				max += wMatk + variance;
-			}
+		min = status_base_matk_min(src, status, status_get_lv(src));
+		max = status_base_matk_max(src, status, status_get_lv(src));
+		if (status->rhw.matk > 0) {
+			int32 wMatk, variance;
+			wMatk = status->rhw.matk;
+			variance = wMatk * status->rhw.wlv / 10;
+			min += wMatk - variance;
+			max += wMatk + variance;
+		}
 
-			if (sc && sc->getSCE(SC_RECOGNIZEDSPELL)) {
-				min = max;
-			}
+		if (sc && sc->getSCE(SC_RECOGNIZEDSPELL)) {
+			min = max;
+		}
 
-			if (sd && sd->right_weapon.overrefine > 0) {
-				min++;
-				max += sd->right_weapon.overrefine - 1;
-			}
+		if (sd && sd->right_weapon.overrefine > 0) {
+			min++;
+			max += sd->right_weapon.overrefine - 1;
+		}
 
-			if (max > min) {
-				hp += min + rnd() % (max - min);
-			}
-			else {
-				hp += min;
-			}
+		if (max > min) {
+			hp += min + rnd() % (max - min);
+		}
+		else {
+			hp += min;
 		}
 	}
+}
 
-	// Global multipliers are applied after the MATK is applied
-	if (tsc != nullptr && !tsc->empty()) {
-		if (skill_id != NPC_EVILLAND && skill_id != BA_APPLEIDUN) {
-			if (tsc->getSCE(SC_WATER_INSIGNIA) && tsc->getSCE(SC_WATER_INSIGNIA)->val1 == 2) {
-				global_bonus *= 1.1f;
-			}
+// Global multipliers are applied after the MATK is applied
+if (tsc != nullptr && !tsc->empty()) {
+	if (skill_id != NPC_EVILLAND && skill_id != BA_APPLEIDUN) {
+		if (tsc->getSCE(SC_WATER_INSIGNIA) && tsc->getSCE(SC_WATER_INSIGNIA)->val1 == 2) {
+			global_bonus *= 1.1f;
 		}
 	}
+}
 
-	if (skill_id == AB_HIGHNESSHEAL) {
-		global_bonus *= 2 + 0.3f * (skill_lv - 1);
-	}
-	else if (skill_id == CD_DILECTIO_HEAL) { // Description says its 10% on Lv 1 but thats clearly a typo. [Rytech]
-		global_bonus *= 1 + 0.15f + 0.05f * skill_lv;
-	}
+if (skill_id == AB_HIGHNESSHEAL) {
+	global_bonus *= 2 + 0.3f * (skill_lv - 1);
+}
+else if (skill_id == CD_DILECTIO_HEAL) { // Description says its 10% on Lv 1 but thats clearly a typo. [Rytech]
+	global_bonus *= 1 + 0.15f + 0.05f * skill_lv;
+}
 #endif
 
-	if (heal && tsc != nullptr && !tsc->empty()) {
-		uint8 penalty = 0;
+if (heal && tsc != nullptr && !tsc->empty()) {
+	uint8 penalty = 0;
 
-		if (tsc->getSCE(SC_CRITICALWOUND)) {
-			penalty += tsc->getSCE(SC_CRITICALWOUND)->val2;
-		}
-		if (tsc->getSCE(SC_DEATHHURT) && tsc->getSCE(SC_DEATHHURT)->val3 == 1) {
-			penalty += 20;
-		}
-		if (tsc->getSCE(SC_NORECOVER_STATE)) {
-			penalty = 100;
-		}
-		if (penalty > 0) {
+	if (tsc->getSCE(SC_CRITICALWOUND)) {
+		penalty += tsc->getSCE(SC_CRITICALWOUND)->val2;
+	}
+	if (tsc->getSCE(SC_DEATHHURT) && tsc->getSCE(SC_DEATHHURT)->val3 == 1) {
+		penalty += 20;
+	}
+	if (tsc->getSCE(SC_NORECOVER_STATE)) {
+		penalty = 100;
+	}
+	if (penalty > 0) {
 #ifdef RENEWAL
-			penalty = cap_value(penalty, 1, 100);
-			global_bonus *= (100 - penalty) / 100.f;
+		penalty = cap_value(penalty, 1, 100);
+		global_bonus *= (100 - penalty) / 100.f;
 #else
 			hp -= hp * penalty / 100;
 #endif
-		}
 	}
+}
 
 #ifdef RENEWAL
-	hp = (int32)(hp * global_bonus);
+hp = (int32)(hp * global_bonus);
 
-	// Final heal increased by HPlus.
-	// Is this the right place for this??? [Rytech]
-	if (sd && status_get_hplus(src) > 0) {
-		hp += hp * status_get_hplus(src) / 100;
-	}
+// Final heal increased by HPlus.
+// Is this the right place for this??? [Rytech]
+if (sd && status_get_hplus(src) > 0 && skill_id != SOA_TALISMAN_OF_PROTECTION) {
+	hp += hp * status_get_hplus(src) / 100;
+}
+}
 
-	return (heal) ? max(1, hp) : hp;
+return (heal) ? max(1, hp) : hp;
 #else
 	return hp;
 #endif
@@ -1044,6 +1052,7 @@ bool skill_isNotOk(uint16 skill_id, map_session_data &sd) {
 		case RETURN_TO_ELDICASTES:
 		case ALL_GUARDIAN_RECALL:
 		case ECLAGE_RECALL:
+		case ALL_NIFLHEIM_RECALL:
 		case ALL_PRONTERA_RECALL:
 		case ALL_GLASTHEIM_RECALL:
 		case ALL_THANATOS_RECALL:
@@ -2618,6 +2627,9 @@ int32 skill_additional_effect(struct block_list *src,
 		case HN_GROUND_GRAVITATION:
 			sc_start(src, bl, skill_get_sc(skill_id), 100, 0, skill_get_time2(skill_id, skill_lv));
 			break;
+		case SH_HOWLING_OF_CHUL_HO:
+			sc_start(src, bl, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
+			break;
 	} // end switch skill_id
 
 	if (md && battle_config.summons_trigger_autospells && md->master_id && md->special_state.ai &&
@@ -3638,9 +3650,12 @@ short skill_blown(struct block_list *src, struct block_list *target, char count,
 		}
 		if (tsc->getSCE(SC_CRESCIVEBOLT)) {
 			status_change_end(target, SC_CRESCIVEBOLT);
-		}
-		if (tsc->getSCE(SC_SV_ROOTTWIST)) { // Shouldn't move.
-			return 0;
+			if (tsc->getSCE(SC_KI_SUL_RAMPAGE) != nullptr) {
+				status_change_end(target, SC_KI_SUL_RAMPAGE);
+			}
+			if (tsc->getSCE(SC_SV_ROOTTWIST)) { // Shouldn't move.
+				return 0;
+			}
 		}
 	}
 
@@ -6330,6 +6345,10 @@ int32 skill_castend_damage_id(
 			skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
 			break;
 		case DK_DRAGONIC_AURA:
+			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+			skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
+			sc_start(src, src, SC_DRAGONIC_AURA, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+			break;
 		case DK_STORMSLASH:
 		case IG_IMPERIAL_CROSS:
 		case CD_EFFLIGO:
@@ -6340,11 +6359,9 @@ int32 skill_castend_damage_id(
 		case TR_RHYTHMSHOOTING:
 		case HN_MEGA_SONIC_BLOW:
 		case HN_SPIRAL_PIERCE_MAX:
+		case SH_CHUL_HO_SONIC_CLAW:
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 			skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
-			if (skill_id == DK_DRAGONIC_AURA) {
-				sc_start(src, src, SC_DRAGONIC_AURA, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-			}
 			break;
 
 		case SHC_ETERNAL_SLASH:
@@ -6935,6 +6952,11 @@ int32 skill_castend_damage_id(
 		case TR_METALIC_FURY:
 		case IG_GRAND_JUDGEMENT:
 		case HN_JUPITEL_THUNDER_STORM:
+		case SOA_EXORCISM_OF_MALICIOUS_SOUL:
+		case SOA_TALISMAN_OF_WHITE_TIGER:
+		case SOA_TALISMAN_OF_RED_PHOENIX:
+		case SOA_TALISMAN_OF_FOUR_BEARING_GOD:
+		case SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS:
 			if (flag & 1) { // Recursive invocation
 				int32 sflag = skill_area_temp[0] & 0xFFF;
 				int32 heal = 0;
@@ -7020,6 +7042,7 @@ int32 skill_castend_damage_id(
 					case DK_HACKANDSLASHER:
 					case MT_SPARK_BLASTER:
 					case HN_JUPITEL_THUNDER_STORM:
+					case SOA_TALISMAN_OF_FOUR_BEARING_GOD:
 						clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 						break;
 #ifdef RENEWAL
@@ -7210,6 +7233,37 @@ int32 skill_castend_damage_id(
 						clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 						sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
 						break;
+					case SOA_TALISMAN_OF_RED_PHOENIX:
+						clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+						skill_area_temp[0] = map_foreachinallrange(skill_area_sub,
+																   bl,
+																   skill_get_splash(skill_id, skill_lv),
+																   BL_CHAR,
+																   src,
+																   skill_id,
+																   skill_lv,
+																   tick,
+																   BCT_ENEMY,
+																   skill_area_sub_count);
+						if (sc != nullptr && sc->getSCE(SC_T_SECOND_GOD) != nullptr) {
+							sc_start(
+								src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
+						}
+						break;
+					case SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS:
+						clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+						skill_area_temp[0] = map_foreachinallrange(skill_area_sub,
+																   bl,
+																   skill_get_splash(skill_id, skill_lv),
+																   BL_CHAR,
+																   src,
+																   skill_id,
+																   skill_lv,
+																   tick,
+																   BCT_ENEMY,
+																   skill_area_sub_count);
+						sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
+						break;
 				}
 
 				// if skill damage should be split among targets, count them
@@ -7278,6 +7332,17 @@ int32 skill_castend_damage_id(
 				if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT)) {
 					status_change_end(src, SC_INTENSIVE_AIM_COUNT);
 				}
+			}
+			break;
+
+		case SH_HOWLING_OF_CHUL_HO:
+			if (flag & 1) {
+				skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
+			}
+			break;
+		case SH_HOGOGONG_STRIKE:
+			if (flag & 1 && tsc != nullptr && tsc->getSCE(SC_HOGOGONG) != nullptr) {
+				skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 			}
 			break;
 
@@ -7584,8 +7649,9 @@ int32 skill_castend_damage_id(
 
 		case IG_JUDGEMENT_CROSS:
 		case TR_SOUNDBLEND:
+		case SH_HYUN_ROK_CANNON:
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			skill_attack(BF_MAGIC, src, src, bl, skill_id, skill_lv, tick, flag);
+			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 			break;
 
 		case AG_DEADLY_PROJECTION:
@@ -8896,6 +8962,22 @@ int32 skill_castend_damage_id(
 			}
 			break;
 
+		case SOA_TALISMAN_OF_BLUE_DRAGON:
+			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
+			sc_start(src, src, skill_get_sc(skill_id), 100, 1, skill_get_time(skill_id, skill_lv));
+			break;
+
+		case SOA_TALISMAN_OF_SOUL_STEALING:
+			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
+			if (bl->type != BL_SKILL) {
+				int32 sp = (100 + status_get_lv(src) / 50) * skill_lv;
+
+				status_heal(src, 0, sp, 0, 0);
+				clif_skill_nodamage(src, *src, skill_id, sp);
+			}
+			break;
+
 		default:
 			ShowWarning("skill_castend_damage_id: Unknown skill used:%d\n", skill_id);
 			clif_skill_damage(src,
@@ -9993,6 +10075,7 @@ int32 skill_castend_nodamage_id(
 		case NPC_RELIEVE_OFF:
 		case HN_BREAKINGLIMIT:
 		case HN_RULEBREAK:
+		case SH_TEMPORARY_COMMUNION:
 			clif_skill_nodamage(src,
 								*bl,
 								skill_id,
@@ -10065,6 +10148,7 @@ int32 skill_castend_nodamage_id(
 
 		case DK_SERVANTWEAPON:
 		case ABC_FROM_THE_ABYSS:
+		case SOA_TALISMAN_OF_PROTECTION:
 			clif_skill_nodamage(src,
 								*bl,
 								skill_id,
@@ -10829,7 +10913,9 @@ int32 skill_castend_nodamage_id(
 		case MT_AXE_STOMP:
 		case MT_MIGHTY_SMASH:
 		case ABC_ABYSS_DAGGER:
-		case BO_EXPLOSIVE_POWDER: {
+		case BO_EXPLOSIVE_POWDER:
+		case SOA_EXORCISM_OF_MALICIOUS_SOUL:
+		case SOA_TALISMAN_OF_WHITE_TIGER: {
 			int32 starget = BL_CHAR | BL_SKILL;
 
 			if (skill_id == SR_HOWLINGOFLION) {
@@ -10872,6 +10958,24 @@ int32 skill_castend_nodamage_id(
 			}
 			if (skill_id == MH_THE_ONE_FIGHTER_RISES) {
 				hom_addspiritball(hd, MAX_SPIRITBALL);
+			}
+
+			// TODO: refactor the ifs above into the switch below
+
+			switch (skill_id) {
+				case SOA_EXORCISM_OF_MALICIOUS_SOUL:
+					if (sd != nullptr) {
+						// Remove old souls if any exist.
+						sd->soulball_old = sd->soulball;
+						pc_delsoulball(*sd, sd->soulball, 0);
+					}
+					break;
+
+				case SOA_TALISMAN_OF_WHITE_TIGER:
+					if (sc != nullptr && sc->getSCE(SC_T_FIRST_GOD) != nullptr) {
+						sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
+					}
+					break;
 			}
 
 			skill_area_temp[1] = 0;
@@ -11205,10 +11309,19 @@ int32 skill_castend_nodamage_id(
 #endif
 		case PR_MAGNIFICAT:
 		case PR_GLORIA:
+		case SOA_SOUL_OF_HEAVEN_AND_EARTH:
 			if (sd == nullptr || sd->status.party_id == 0 || (flag & 1)) {
 				// Animations don't play when outside visible range
 				if (check_distance_bl(src, bl, AREA_SIZE)) {
 					clif_skill_nodamage(bl, *bl, skill_id, skill_lv);
+				}
+
+				if (skill_id == SOA_SOUL_OF_HEAVEN_AND_EARTH) {
+					status_percent_heal(bl, 0, 100);
+
+					if (src != bl && sc != nullptr && sc->getSCE(SC_TOTEM_OF_TUTELARY) != nullptr) {
+						status_heal(bl, 0, 0, 3 * skill_lv, 0);
+					}
 				}
 
 				sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
@@ -11671,23 +11784,32 @@ int32 skill_castend_nodamage_id(
 				clif_skill_nodamage(src, *bl, skill_id, skill_lv, false);
 				break;
 			}
-			if (tsc) {
-				status_change_end(bl, SC_FREEZE);
-				status_change_end(bl, SC_STONEWAIT);
-				status_change_end(bl, SC_STONE);
-				status_change_end(bl, SC_SLEEP);
-				status_change_end(bl, SC_STUN);
-				status_change_end(bl, SC_WHITEIMPRISON);
-				status_change_end(bl, SC_STASIS);
-				status_change_end(bl, SC_NETHERWORLD);
-			}
 			if (battle_check_undead(tstatus->race, tstatus->def_ele)) {
 				skill_addtimerskill(src, tick + 1000, bl->id, 0, 0, skill_id, skill_lv, 100, flag);
 			}
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			if (dstmd) {
-				mob_unlocktarget(dstmd, tick);
+			else {
+				// Bodystate is reset to "normal" for non-undead
+				if (tsc) {
+					// The following are bodystate status changes
+					status_change_end(bl, SC_STONE);
+					status_change_end(bl, SC_FREEZE);
+					status_change_end(bl, SC_STUN);
+					status_change_end(bl, SC_SLEEP);
+					status_change_end(bl, SC_STONEWAIT);
+					status_change_end(bl, SC_BURNING);
+					status_change_end(bl, SC_WHITEIMPRISON);
+				}
+				// Resetting bodystate to normal always also resets the monster AI to idle
+				if (dstmd) {
+					mob_unlocktarget(dstmd, tick);
+				}
 			}
+			if (tsc) {
+				// Ends SC_NETHERWORLD and SC_NORECOVER_STATE (even on undead)
+				status_change_end(bl, SC_NETHERWORLD);
+				status_change_end(bl, SC_NORECOVER_STATE);
+			}
+			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 			break;
 
 		// Mercenary Supportive Skills
@@ -15225,16 +15347,18 @@ int32 skill_castend_nodamage_id(
 		case RETURN_TO_ELDICASTES:
 		case ALL_GUARDIAN_RECALL:
 		case ECLAGE_RECALL:
+		case ALL_NIFLHEIM_RECALL:
 		case ALL_PRONTERA_RECALL:
 		case ALL_GLASTHEIM_RECALL:
 		case ALL_THANATOS_RECALL:
 		case ALL_LIGHTHALZEN_RECALL:
 			if (sd != nullptr) {
-				short x = 0, y = 0; // Destination position.
-				unsigned short mapindex = 0;
+				// Destination position.
+				uint16 x;
+				uint16 y;
+				uint16 mapindex;
 
 				switch (skill_id) {
-					default:
 					case RETURN_TO_ELDICASTES:
 						x = 198;
 						y = 187;
@@ -15249,6 +15373,11 @@ int32 skill_castend_nodamage_id(
 						x = 47;
 						y = 31;
 						mapindex = mapindex_name2id(MAP_ECLAGE_IN);
+						break;
+					case ALL_NIFLHEIM_RECALL:
+						x = 193;
+						y = 186;
+						mapindex = mapindex_name2id(MAP_NIFLHEIM);
 						break;
 					case ALL_PRONTERA_RECALL:
 						if (skill_lv == 1) {
@@ -15278,11 +15407,14 @@ int32 skill_castend_nodamage_id(
 						break;
 				}
 
+				sc_start(src, bl, type, 100, skill_lv, skill_get_cooldown(skill_id, skill_lv));
+
 				if (!mapindex) { // Given map not found?
 					clif_skill_fail(*sd, skill_id);
 					map_freeblock_unlock();
 					return 0;
 				}
+
 				pc_setpos(sd, mapindex, x, y, CLR_TELEPORT);
 			}
 			break;
@@ -16848,6 +16980,242 @@ int32 skill_castend_nodamage_id(
 			clif_skill_nodamage(src, *src, skill_id, skill_lv);
 			break;
 
+		case SOA_SOUL_GATHERING:
+			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+
+			if (sd != nullptr) {
+				int32 limit = 5 + pc_checkskill(sd, SP_SOULENERGY) * 3;
+
+				for (i = 0; i < limit; i++) {
+					pc_addsoulball(*sd, limit);
+				}
+			}
+			break;
+
+		case SOA_TALISMAN_OF_WARRIOR:
+		case SOA_TALISMAN_OF_MAGICIAN:
+		case SOA_TALISMAN_OF_FIVE_ELEMENTS:
+			if (dstsd != nullptr) {
+				int16 index = dstsd->equip_index[EQI_HAND_R];
+
+				if (index >= 0 && dstsd->inventory_data[index] != nullptr &&
+					dstsd->inventory_data[index]->type == IT_WEAPON) {
+					clif_skill_nodamage(src,
+										*bl,
+										skill_id,
+										skill_lv,
+										sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
+					break;
+				}
+			}
+
+			if (sd != nullptr) {
+				clif_skill_fail(*sd, skill_id, USESKILL_FAIL_NEED_WEAPON);
+			}
+			break;
+
+		case SH_HOWLING_OF_CHUL_HO: {
+			int32 range = skill_get_splash(skill_id, skill_lv);
+
+			if (pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO) > 0 ||
+				(sc != nullptr && sc->getSCE(SC_TEMPORARY_COMMUNION) != nullptr)) {
+				range += 1;
+			}
+
+			skill_area_temp[0] = 0;
+			skill_area_temp[1] = bl->id;
+			skill_area_temp[2] = 0;
+			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+			map_foreachinrange(skill_area_sub,
+							   bl,
+							   range,
+							   BL_CHAR,
+							   src,
+							   skill_id,
+							   skill_lv,
+							   tick,
+							   flag | BCT_ENEMY | 1,
+							   skill_castend_damage_id);
+		} break;
+
+		case SH_HOGOGONG_STRIKE:
+			if (pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO) > 0 ||
+				(sc != nullptr && sc->getSCE(SC_TEMPORARY_COMMUNION) != nullptr)) {
+				status_heal(src, 0, 0, 1, 0);
+			}
+			skill_area_temp[0] = 0;
+			skill_area_temp[1] = bl->id;
+			skill_area_temp[2] = 0;
+			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+			map_foreachinrange(skill_area_sub,
+							   bl,
+							   skill_get_splash(skill_id, skill_lv),
+							   BL_CHAR,
+							   src,
+							   skill_id,
+							   skill_lv,
+							   tick,
+							   flag | BCT_ENEMY | 1,
+							   skill_castend_damage_id);
+			break;
+
+		case SH_KI_SUL_WATER_SPRAYING:
+			if (sd == nullptr || sd->status.party_id == 0 || (flag & 1)) {
+				// TODO: verify on official server, if this should be moved into skill_calc_heal
+				int32 heal = 500 * skill_lv + status_get_int(src) * 5;
+				heal += pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY) * 100;
+
+				if (pc_checkskill(sd, SH_COMMUNE_WITH_KI_SUL) > 0 ||
+					(sc != nullptr && sc->getSCE(SC_TEMPORARY_COMMUNION) != nullptr)) {
+					heal += 250 * skill_lv;
+					heal += pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY) * 50;
+				}
+				heal = heal * (100 + status_get_crt(src)) * status_get_lv(src) / 10000;
+				status_heal(bl, heal, 0, 0, 0);
+				clif_skill_nodamage(src, *bl, skill_id, heal);
+			}
+			else {
+				int32 range = skill_get_splash(skill_id, skill_lv);
+				if (pc_checkskill(sd, SH_COMMUNE_WITH_KI_SUL) > 0 ||
+					(sc != nullptr && sc->getSCE(SC_TEMPORARY_COMMUNION) != nullptr)) {
+					range += 2;
+				}
+				party_foreachsamemap(skill_area_sub,
+									 sd,
+									 range,
+									 src,
+									 skill_id,
+									 skill_lv,
+									 tick,
+									 flag | BCT_PARTY | 1,
+									 skill_castend_nodamage_id);
+			}
+			break;
+
+		case SH_MARINE_FESTIVAL_OF_KI_SUL:
+		case SH_SANDY_FESTIVAL_OF_KI_SUL:
+			if (sd == nullptr || sd->status.party_id == 0 || (flag & 1)) {
+				int32 time = skill_get_time(skill_id, skill_lv);
+				if (pc_checkskill(sd, SH_COMMUNE_WITH_KI_SUL) > 0 ||
+					(sc != nullptr && sc->getSCE(SC_TEMPORARY_COMMUNION) != nullptr)) {
+					time *= 2;
+				}
+				sc_start(src, bl, type, 100, skill_lv, time);
+				clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+			}
+			else {
+				int32 range = skill_get_splash(skill_id, skill_lv);
+				if (pc_checkskill(sd, SH_COMMUNE_WITH_KI_SUL) > 0 ||
+					(sc != nullptr && sc->getSCE(SC_TEMPORARY_COMMUNION) != nullptr)) {
+					range += 2;
+				}
+				party_foreachsamemap(skill_area_sub,
+									 sd,
+									 range,
+									 src,
+									 skill_id,
+									 skill_lv,
+									 tick,
+									 flag | BCT_PARTY | 1,
+									 skill_castend_nodamage_id);
+			}
+			break;
+
+		case SH_KI_SUL_RAMPAGE:
+			if (flag & 2) {
+				if (src == bl) {
+					break;
+				}
+
+				int64 ap = 2;
+
+				if (flag & 4) {
+					ap += 4;
+				}
+
+				status_heal(bl, 0, 0, ap, 0);
+			}
+			else if (flag & 1) {
+				int32 range = skill_get_splash(SH_KI_SUL_RAMPAGE, skill_lv);
+				uint16 skill_lv2 = skill_lv;
+
+				if (pc_checkskill(sd, SH_COMMUNE_WITH_KI_SUL) > 0 ||
+					(sc != nullptr && sc->getSCE(SC_TEMPORARY_COMMUNION) != nullptr)) {
+					range += 2;
+					skill_lv2 = skill_get_max(SH_KI_SUL_RAMPAGE);
+					// Set a flag for AP increase
+					flag |= 4;
+				}
+
+				clif_skill_nodamage(bl, *bl, SH_KI_SUL_RAMPAGE, skill_lv2);
+				map_foreachinrange(skill_area_sub,
+								   bl,
+								   range,
+								   BL_CHAR,
+								   bl,
+								   SH_KI_SUL_RAMPAGE,
+								   skill_lv2,
+								   tick,
+								   flag | BCT_PARTY | SD_SPLASH | 2,
+								   skill_castend_nodamage_id);
+			}
+			else {
+				// TODO: no party check ?
+				clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+				sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+			}
+			break;
+
+		case SH_COLORS_OF_HYUN_ROK:
+			if (skill_lv == 7) {
+				status_change_end(src, SC_COLORS_OF_HYUN_ROK_1);
+				status_change_end(src, SC_COLORS_OF_HYUN_ROK_2);
+				status_change_end(src, SC_COLORS_OF_HYUN_ROK_3);
+				status_change_end(src, SC_COLORS_OF_HYUN_ROK_4);
+				status_change_end(src, SC_COLORS_OF_HYUN_ROK_5);
+				status_change_end(src, SC_COLORS_OF_HYUN_ROK_6);
+
+				clif_skill_nodamage(src, *src, skill_id, skill_lv);
+			}
+			else {
+				// Buff to increase Catnip Meteor damage
+				if (pc_checkskill(sd, SH_COMMUNE_WITH_HYUN_ROK) > 0 ||
+					(sc != nullptr && sc->getSCE(SC_TEMPORARY_COMMUNION) != nullptr)) {
+					sc_start(src, bl, SC_COLORS_OF_HYUN_ROK_BUFF, 100, 1, skill_get_time(skill_id, skill_lv));
+				}
+
+				// Endows elemental property to Catnip Meteor, Hyunrok Breeze and Hyunrok Cannon skills
+				switch (skill_lv) {
+					case 1:
+						type = SC_COLORS_OF_HYUN_ROK_1;
+						break;
+					case 2:
+						type = SC_COLORS_OF_HYUN_ROK_2;
+						break;
+					case 3:
+						type = SC_COLORS_OF_HYUN_ROK_3;
+						break;
+					case 4:
+						type = SC_COLORS_OF_HYUN_ROK_4;
+						break;
+					case 5:
+						type = SC_COLORS_OF_HYUN_ROK_5;
+						break;
+					case 6:
+						type = SC_COLORS_OF_HYUN_ROK_6;
+						break;
+				}
+				sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+				clif_skill_nodamage(src, *src, skill_id, skill_lv);
+			}
+			break;
+
+		case SH_BLESSING_OF_MYSTICAL_CREATURES:
+			status_heal(bl, 0, 0, 200 - status_get_ap(bl), 0);
+			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+			clif_skill_nodamage(src, *src, skill_id, skill_lv);
+			break;
+
 		default: {
 			std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
 			ShowWarning("skill_castend_nodamage_id: missing code case for skill %s(%d)\n",
@@ -16987,6 +17355,23 @@ static int8 skill_castend_id_check(struct block_list *src,
 		case IQ_THIRD_CONSECRATION:
 			if (!tsc || !tsc->getSCE(SC_SECOND_BRAND)) {
 				return USESKILL_FAIL_LEVEL;
+			}
+			break;
+		case SH_BLESSING_OF_MYSTICAL_CREATURES:
+			if (src == target) {
+				return USESKILL_FAIL_TOTARGET;
+			}
+
+			if (battle_check_target(src, target, BCT_PARTY) <= 0) {
+				return USESKILL_FAIL_TOTARGET;
+			}
+
+			if ((status_get_class_(target) & MAPID_BASEMASK) == MAPID_SUMMONER) {
+				return USESKILL_FAIL_TOTARGET;
+			}
+
+			if (tsc != nullptr && tsc->getSCE(SC_BLESSING_OF_M_C_DEBUFF) != nullptr) {
+				return USESKILL_FAIL_TOTARGET;
 			}
 			break;
 	}
@@ -17259,6 +17644,12 @@ TIMER_FUNC(skill_castend_id) {
 						case WH_CRESCIVE_BOLT:
 							if (sc && sc->getSCE(SC_CRESCIVEBOLT) && sc->getSCE(SC_CRESCIVEBOLT)->val1 >= 3) {
 								add_ap += 2;
+							}
+							break;
+						case SH_HYUN_ROK_CANNON:
+							if (pc_checkskill(sd, SH_COMMUNE_WITH_HYUN_ROK) > 0 ||
+								(sc != nullptr && sc->getSCE(SC_TEMPORARY_COMMUNION) != nullptr)) {
+								add_ap += 1;
 							}
 							break;
 					}
@@ -17985,6 +18376,8 @@ int32 skill_castend_pos2(
 		case EM_VENOM_SWAMP:
 		case EM_CONFLAGRATION:
 		case EM_TERRA_DRIVE:
+		case SOA_TOTEM_OF_TUTELARY:
+		case SH_HYUN_ROKS_BREEZE:
 			flag |= 1; // Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
 			[[fallthrough]];
 		case GS_GROUNDDRIFT: // Ammo should be deleted right away.
@@ -19072,6 +19465,13 @@ int32 skill_castend_pos2(
 			}
 			break;
 
+		case SOA_TALISMAN_OF_BLACK_TORTOISE:
+			if (sc != nullptr && sc->getSCE(SC_T_THIRD_GOD) != nullptr) {
+				sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time2(skill_id, skill_lv));
+			}
+			skill_unitsetting(src, skill_id, skill_lv, x, y, 0);
+			break;
+
 		default:
 			ShowWarning("skill_castend_pos2: Unknown skill used:%d\n", skill_id);
 			return 1;
@@ -19505,7 +19905,8 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(
 		case SA_VOLCANO:
 		case SA_DELUGE:
 		case SA_VIOLENTGALE:
-		case SC_CHAOSPANIC: {
+		case SC_CHAOSPANIC:
+		case SOA_TOTEM_OF_TUTELARY: {
 			std::shared_ptr<s_skill_unit_group> old_sg = skill_locate_element_field(src);
 
 			if (old_sg != nullptr) { // HelloKitty confirmed that these are interchangeable,
@@ -20574,6 +20975,7 @@ int32 skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t
 		case UNT_SOLIDTRAP:
 		case UNT_SWIFTTRAP:
 		case UNT_FLAMETRAP:
+		case UNT_HYUN_ROKS_BREEZE:
 			skill_attack(skill_get_type(sg->skill_id), ss, &unit->bl, bl, sg->skill_id, sg->skill_lv, tick, 0);
 			break;
 #ifdef RENEWAL
@@ -20665,6 +21067,7 @@ int32 skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t
 					skill_attack(skill_get_type(sg->skill_id), ss, &unit->bl, bl, sg->skill_id, sg->skill_lv, tick, 0);
 					break;
 				case HN_METEOR_STORM_BUSTER:
+				case SOA_TALISMAN_OF_BLACK_TORTOISE:
 					skill_attack(skill_get_type(sg->skill_id), ss, ss, bl, sg->skill_id, sg->skill_lv, tick, 0);
 					break;
 				default:
@@ -21634,10 +22037,32 @@ int32 skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t
 
 			skill_attack(skill_get_type(sg->skill_id), ss, &unit->bl, bl, sg->skill_id, sg->skill_lv, tick, flag);
 		} break;
-	}
 
-	if (bl->type == BL_MOB && ss != bl) {
-		mobskill_event((TBL_MOB *)bl, ss, tick, MSC_SKILLUSED | (skill_id << 16));
+		case UNT_TOTEM_OF_TUTELARY:
+			if (bl->type == BL_PC) {
+				if (tsc != nullptr && tsc->option & OPTION_MADOGEAR) {
+					break;
+				}
+
+				int32 hp = 500;
+
+				hp += 500 * sg->skill_lv;
+				hp += 50 * pc_checkskill(BL_CAST(BL_PC, ss), SOA_TALISMAN_MASTERY) * sg->skill_lv;
+				hp += 5 * status_get_crt(ss) * sg->skill_lv;
+				hp *= status_get_lv(ss) / 100;
+
+				int32 sp = 0;
+
+				sp += 50 * sg->skill_lv;
+				sp += 5 * pc_checkskill(BL_CAST(BL_PC, ss), SOA_TALISMAN_MASTERY) * sg->skill_lv;
+				sp += 5 * status_get_crt(ss) * sg->skill_lv;
+				sp *= status_get_lv(ss) / 100;
+
+				status_heal(bl, hp, sp, 0, 2);
+
+				sc_start(ss, bl, skill_get_sc(sg->skill_id), 100, sg->skill_lv, sg->interval + 100);
+			}
+			break;
 	}
 
 	return skill_id;
@@ -21676,6 +22101,7 @@ int32 skill_unit_onout(struct skill_unit *src, struct block_list *bl, t_tick tic
 		case UNT_SAFETYWALL:
 		case UNT_PNEUMA:
 		case UNT_EPICLESIS: // Arch Bishop
+		case UNT_TOTEM_OF_TUTELARY:
 			if (sce) {
 				status_change_end(bl, type);
 			}
@@ -23139,10 +23565,31 @@ bool skill_check_condition_castbegin(map_session_data &sd, uint16 skill_id, uint
 		case IQ_THIRD_FLAME_BOMB:
 			if (!(sc && sc->getSCE(SC_THIRD_EXOR_FLAME))) {
 				return false;
-			}
-			break;
-	}
+				break;
 
+				case SOA_SOUL_GATHERING:
+					if (!(sc != nullptr && sc->getSCE(SC_SOULCOLLECT) != nullptr)) {
+						clif_skill_fail(sd, skill_id, USESKILL_FAIL_CONDITION, 0);
+						return false;
+					}
+					break;
+				case SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS:
+					if (!(sc != nullptr &&
+						  (sc->getSCE(SC_T_FOURTH_GOD) != nullptr || sc->getSCE(SC_T_FIFTH_GOD) != nullptr))) {
+						clif_skill_fail(sd, skill_id, USESKILL_FAIL_CONDITION, 0);
+						return false;
+					}
+					break;
+				case SH_TEMPORARY_COMMUNION:
+					if (pc_checkskill(&sd, SH_COMMUNE_WITH_CHUL_HO) == 0 &&
+						pc_checkskill(&sd, SH_COMMUNE_WITH_HYUN_ROK) == 0 &&
+						pc_checkskill(&sd, SH_COMMUNE_WITH_KI_SUL) == 0) {
+						clif_skill_fail(sd, skill_id, USESKILL_FAIL_CONDITION);
+						return false;
+					}
+					break;
+			}
+	}
 	/* check state required */
 	switch (require.state) {
 		case ST_HIDDEN:
@@ -23406,6 +23853,7 @@ bool skill_check_condition_castbegin(map_session_data &sd, uint16 skill_id, uint
 			case SP_SOULREAPER:
 			case SP_SOULEXPLOSION:
 			case SP_KAUTE:
+			case SOA_EXORCISM_OF_MALICIOUS_SOUL:
 				if (sd.soulball < require.spiritball) {
 					clif_skill_fail(sd, skill_id, USESKILL_FAIL_SPIRITS);
 					return false;
@@ -23461,7 +23909,8 @@ bool skill_check_condition_castend(map_session_data &sd, uint16 skill_id, uint16
 	}
 
 	if (pc_has_permission(&sd, PC_PERM_SKILL_UNCONDITIONAL) && sd.skillitem != skill_id) {
-		// GMs don't override the skillItem check, otherwise they can use items without them being consumed! [Skotlex]
+		// GMs don't override the skillItem check, otherwise they can use items without them being consumed!
+		// [Skotlex]
 		sd.state.arrow_atk = skill_get_ammotype(skill_id) ? 1 : 0; // Need to do arrow state check.
 		sd.spiritball_old = sd.spiritball; // Need to do Spiritball check.
 		sd.soulball_old = sd.soulball; // Need to do Soulball check.
@@ -24148,8 +24597,8 @@ struct s_skill_condition skill_get_requirement(map_session_data *sd, uint16 skil
 					}
 					else {
 						if (sd->special_state.no_gemstone ||
-							(sc && sc->getSCE(SC_INTOABYSS))) { // All gem skills except Hocus Pocus and Ganbantein can
-																// cast for free with Mistress card -helvetica
+							(sc && sc->getSCE(SC_INTOABYSS))) { // All gem skills except Hocus Pocus and Ganbantein
+																// can cast for free with Mistress card -helvetica
 							if (skill_id != SA_ABRACADABRA && skill_id != HW_GANBANTEIN) {
 								req.itemid[i] = req.amount[i] = 0;
 							}
@@ -24984,16 +25433,16 @@ void skill_weaponrefine(map_session_data &sd, int32 idx) {
 						sd.status.char_id) { // Fame point system [DracoRPG]
 					switch (ditem->weapon_level) {
 						case 1:
-							pc_addfame(sd, battle_config.fame_refine_lv1); // Success to refine to +10 a lv1 weapon you
-																		   // forged = +1 fame point
+							pc_addfame(sd, battle_config.fame_refine_lv1); // Success to refine to +10 a lv1 weapon
+																		   // you forged = +1 fame point
 							break;
 						case 2:
-							pc_addfame(sd, battle_config.fame_refine_lv2); // Success to refine to +10 a lv2 weapon you
-																		   // forged = +25 fame point
+							pc_addfame(sd, battle_config.fame_refine_lv2); // Success to refine to +10 a lv2 weapon
+																		   // you forged = +25 fame point
 							break;
 						case 3:
-							pc_addfame(sd, battle_config.fame_refine_lv3); // Success to refine to +10 a lv3 weapon you
-																		   // forged = +1000 fame point
+							pc_addfame(sd, battle_config.fame_refine_lv3); // Success to refine to +10 a lv3 weapon
+																		   // you forged = +1000 fame point
 							break;
 					}
 				}
@@ -25360,6 +25809,7 @@ int32 skill_clear_group(block_list *bl, uint8 flag) {
 			case SC_CHAOSPANIC:
 			case MH_POISON_MIST:
 			case MH_LAVA_SLIDE:
+			case SOA_TOTEM_OF_TUTELARY:
 				if (flag & 1) {
 					skill_delunitgroup(*it);
 					count++;
@@ -25421,6 +25871,7 @@ std::shared_ptr<s_skill_unit_group> skill_locate_element_field(struct block_list
 			case SC_CHAOSPANIC:
 			case MH_POISON_MIST:
 			case MH_LAVA_SLIDE:
+			case SOA_TOTEM_OF_TUTELARY:
 				return su;
 		}
 	}
@@ -26244,8 +26695,12 @@ int32 skill_delunit(struct skill_unit *unit) {
 		} break;
 		case WZ_ICEWALL:
 			map_setgatcell(unit->bl.m, unit->bl.x, unit->bl.y, unit->val2);
-			clif_changemapcell(
-				0, unit->bl.m, unit->bl.x, unit->bl.y, unit->val2, ALL_SAMEMAP); // hack to avoid clientside cell bug
+			clif_changemapcell(0,
+							   unit->bl.m,
+							   unit->bl.x,
+							   unit->bl.y,
+							   unit->val2,
+							   ALL_SAMEMAP); // hack to avoid clientside cell bug
 			skill_unitsetmapcell(unit, WZ_ICEWALL, group->skill_lv, CELL_ICEWALL, false);
 			break;
 		case SA_LANDPROTECTOR:
@@ -27392,8 +27847,8 @@ short skill_can_produce_mix(map_session_data *sd, t_itemid nameid, int32 trigger
  * @param slot2
  * @param slot3
  * @param qty Amount of requested item
- * @param produce_idx Index of produce entry in skill_produce_db[]. (Optional. Assumed the requirements are complete,
- * checked somewhere)
+ * @param produce_idx Index of produce entry in skill_produce_db[]. (Optional. Assumed the requirements are
+ * complete, checked somewhere)
  * @return True is success, False if failed
  */
 bool skill_produce_mix(map_session_data *sd,
@@ -27669,8 +28124,8 @@ bool skill_produce_mix(map_session_data *sd,
 
 				make_per =
 					status->int_ + status->dex / 2 + status->luk + sd->status.job_level +
-					(30 + rnd() % 120 + 1) + // Caster's INT + (Caster's DEX / 2) + Caster's LUK + Caster's Job Level +
-											 // Random number between (30 ~ 150) +
+					(30 + rnd() % 120 + 1) + // Caster's INT + (Caster's DEX / 2) + Caster's LUK + Caster's
+											 // Job Level + Random number between (30 ~ 150) +
 					sd->status.base_level + 5 * (pc_checkskill(sd, AM_LEARNINGPOTION) - 20) +
 					pc_checkskill(sd, CR_FULLPROTECTION) *
 						(6 + rnd() % 4 + 1); // Caster's Base Level + (5 x (Potion Research Skill Level - 20)) + (Full
@@ -29421,8 +29876,8 @@ int32 skill_block_check(struct block_list *bl, sc_type type, uint16 skill_id) {
 }
 
 /**
- * Determines whether a skill is currently active or not. Used for purposes of cancelling HP/SP usage when disabling a
- * skill.
+ * Determines whether a skill is currently active or not. Used for purposes of cancelling HP/SP usage when disabling
+ * a skill.
  * @param sc: Status changes active on target
  * @param skill_id: Skill to toggle
  * @return True on success or false otherwise
@@ -29475,8 +29930,8 @@ int32 skill_get_elemental_type(uint16 skill_id, uint16 skill_lv) {
 
 /**
  * Check before do `unit_movepos` call
- * @param check_flag Flags: 1:Check for BG maps, 2:Check for GVG maps on WOE times, 4:Check for GVG maps regardless Agit
- *flags
+ * @param check_flag Flags: 1:Check for BG maps, 2:Check for GVG maps on WOE times, 4:Check for GVG maps regardless
+ *Agit flags
  * @return True:If unit can be moved, False:If check on flags are met or unit cannot be moved.
  **/
 static bool skill_check_unit_movepos(
@@ -29640,231 +30095,210 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef &node) {
 
 		if (!this->asString(node, "Name", name)) {
 			return 0;
+
+			if (name.length() > SKILL_NAME_LENGTH) {
+				this->invalidWarning(
+					node["Name"], "Name \"%s\" exceeds maximum length of %d.\n", name.c_str(), SKILL_NAME_LENGTH);
+				return 0;
+			}
+
+			name.resize(SKILL_NAME_LENGTH);
+			memcpy(skill->name, name.c_str(), sizeof(skill->name));
 		}
 
-		name.resize(SKILL_NAME_LENGTH);
-		memcpy(skill->name, name.c_str(), sizeof(skill->name));
-	}
+		if (this->nodeExists(node, "Description")) {
+			std::string desc;
 
-	if (this->nodeExists(node, "Description")) {
-		std::string name;
+			if (!this->asString(node, "Description", desc)) {
+				return 0;
+			}
 
-		if (!this->asString(node, "Description", name)) {
-			return 0;
+			if (desc.length() > SKILL_DESC_LENGTH) {
+				this->invalidWarning(node["Description"],
+									 "Description \"%s\" exceeds maximum length of %d.\n",
+									 desc.c_str(),
+									 SKILL_DESC_LENGTH);
+				return 0;
+			}
+
+			desc.resize(SKILL_DESC_LENGTH);
+			memcpy(skill->desc, desc.c_str(), sizeof(skill->desc));
 		}
 
-		name.resize(SKILL_DESC_LENGTH);
-		memcpy(skill->desc, name.c_str(), sizeof(skill->desc));
-	}
+		if (this->nodeExists(node, "MaxLevel")) {
+			uint16 skill_lv;
 
-	if (this->nodeExists(node, "MaxLevel")) {
-		uint16 skill_lv;
+			if (!this->asUInt16(node, "MaxLevel", skill_lv)) {
+				return 0;
+			}
 
-		if (!this->asUInt16(node, "MaxLevel", skill_lv)) {
-			return 0;
+			if (skill_lv == 0 || skill_lv > MAX_SKILL_LEVEL) {
+				this->invalidWarning(
+					node["MaxLevel"], "MaxLevel %hu does not meet the bounds of 1~%d.\n", skill_lv, MAX_SKILL_LEVEL);
+				return 0;
+			}
+
+			skill->max = skill_lv;
 		}
 
-		if (skill_lv == 0 || skill_lv > MAX_SKILL_LEVEL) {
-			this->invalidWarning(
-				node["MaxLevel"], "MaxLevel %hu does not meet the bounds of 1~%d.\n", skill_lv, MAX_SKILL_LEVEL);
-			return 0;
-		}
+		if (this->nodeExists(node, "Type")) {
+			std::string type;
 
-		skill->max = skill_lv;
-	}
+			if (!this->asString(node, "Type", type)) {
+				return 0;
+			}
 
-	if (this->nodeExists(node, "Type")) {
-		std::string type;
+			std::string type_constant = "BF_" + type;
 
-		if (!this->asString(node, "Type", type)) {
-			return 0;
-		}
-
-		std::string type_constant = "BF_" + type;
-
-		int64 constant;
-
-		if (!script_get_constant(type_constant.c_str(), &constant)) {
-			this->invalidWarning(node["Type"], "Type %s is invalid.\n", type.c_str());
-			return 0;
-		}
-
-		if (constant < BF_NONE || constant > BF_MISC) {
-			this->invalidWarning(
-				node["Type"], "Constant Type %s is not a supported skill type.\n", type_constant.c_str());
-			return 0;
-		}
-
-		skill->skill_type = static_cast<e_battle_flag>(constant);
-	}
-	else {
-		if (!exists) {
-			skill->skill_type = BF_NONE;
-		}
-	}
-
-	if (this->nodeExists(node, "TargetType")) {
-		std::string inf;
-
-		if (!this->asString(node, "TargetType", inf)) {
-			return 0;
-		}
-
-		std::string inf_constant = "INF_" + inf + "_SKILL";
-		int64 constant;
-
-		if (!script_get_constant(inf_constant.c_str(), &constant)) {
-			this->invalidWarning(node["TargetType"], "TargetType %s is invalid.\n", inf.c_str());
-			return 0;
-		}
-
-		skill->inf = static_cast<uint16>(constant);
-	}
-
-	if (this->nodeExists(node, "DamageFlags")) {
-		const auto &damageNode = node["DamageFlags"];
-
-		for (const auto &it : damageNode) {
-			std::string nk;
-			c4::from_chars(it.key(), &nk);
-			std::string nk_constant = "NK_" + nk;
 			int64 constant;
 
-			if (!script_get_constant(nk_constant.c_str(), &constant)) {
-				this->invalidWarning(damageNode, "DamageFlags %s is invalid.\n", nk.c_str());
+			if (!script_get_constant(type_constant.c_str(), &constant)) {
+				this->invalidWarning(node["Type"], "Type %s is invalid.\n", type.c_str());
 				return 0;
 			}
 
-			bool active;
-
-			if (!this->asBool(damageNode, nk, active)) {
+			if (constant < BF_NONE || constant > BF_MISC) {
+				this->invalidWarning(
+					node["Type"], "Constant Type %s is not a supported skill type.\n", type_constant.c_str());
 				return 0;
 			}
 
-			if (active) {
-				skill->nk.set(static_cast<uint8>(constant));
-			}
-			else {
-				skill->nk.reset(static_cast<uint8>(constant));
-			}
-		}
-	}
-
-	if (this->nodeExists(node, "Flags")) {
-		const auto &infoNode = node["Flags"];
-
-		for (const auto &it : infoNode) {
-			std::string inf2;
-			c4::from_chars(it.key(), &inf2);
-			std::string inf2_constant = "INF2_" + inf2;
-			int64 constant;
-
-			if (!script_get_constant(inf2_constant.c_str(), &constant)) {
-				this->invalidWarning(infoNode, "Flag %s is invalid, skipping.\n", inf2.c_str());
-				continue;
-			}
-
-			bool active;
-
-			if (!this->asBool(infoNode, inf2, active)) {
-				return 0;
-			}
-
-			if (active) {
-				skill->inf2.set(static_cast<uint8>(constant));
-			}
-			else {
-				skill->inf2.reset(static_cast<uint8>(constant));
-			}
-		}
-	}
-
-	if (this->nodeExists(node, "Range")) {
-		if (!this->parseNode("Range", "Size", node, skill->range)) {
-			return 0;
-		}
-	}
-	else {
-		if (!exists) {
-			memset(skill->range, 0, sizeof(skill->range));
-		}
-	}
-
-	if (this->nodeExists(node, "Hit")) {
-		std::string hit;
-
-		if (!this->asString(node, "Hit", hit)) {
-			return 0;
-		}
-
-		std::string hit_constant = "DMG_" + hit;
-		int64 constant;
-
-		if (!script_get_constant(hit_constant.c_str(), &constant)) {
-			this->invalidWarning(node["Hit"], "Hit %s is invalid.\n", hit.c_str());
-			return 0;
-		}
-
-		skill->hit = static_cast<e_damage_type>(constant);
-	}
-	else {
-		if (!exists) {
-			skill->hit = DMG_NORMAL;
-		}
-	}
-
-	if (this->nodeExists(node, "HitCount")) {
-		if (!this->parseNode("HitCount", "Count", node, skill->num)) {
-			return 0;
-		}
-	}
-	else {
-		if (!exists) {
-			memset(skill->num, 0, sizeof(skill->num));
-		}
-	}
-
-	if (this->nodeExists(node, "Element")) {
-		const auto elementNode = node["Element"];
-		std::string element;
-
-		if (!elementNode.is_seq()) {
-			if (!this->asString(node, "Element", element)) {
-				return 0;
-			}
-
-			std::string element_constant = "ELE_" + element;
-			int64 constant;
-
-			if (!script_get_constant(element_constant.c_str(), &constant)) {
-				this->invalidWarning(elementNode["Element"], "Element %s is invalid.\n", element.c_str());
-				return 0;
-			}
-
-			if (constant == ELE_NONE) {
-				this->invalidWarning(elementNode["Element"], "%s is not a valid element.\n", element.c_str());
-				return 0;
-			}
-
-			memset(skill->element, static_cast<e_element>(constant), sizeof(skill->element));
+			skill->skill_type = static_cast<e_battle_flag>(constant);
 		}
 		else {
-			for (const auto &it : elementNode) {
-				uint16 skill_lv;
+			if (!exists) {
+				skill->skill_type = BF_NONE;
+			}
+		}
 
-				if (!this->asUInt16(it, "Level", skill_lv)) {
+		if (this->nodeExists(node, "TargetType")) {
+			std::string inf;
+
+			if (!this->asString(node, "TargetType", inf)) {
+				return 0;
+			}
+
+			std::string inf_constant = "INF_" + inf + "_SKILL";
+			int64 constant;
+
+			if (!script_get_constant(inf_constant.c_str(), &constant)) {
+				this->invalidWarning(node["TargetType"], "TargetType %s is invalid.\n", inf.c_str());
+				return 0;
+			}
+
+			skill->inf = static_cast<uint16>(constant);
+		}
+
+		if (this->nodeExists(node, "DamageFlags")) {
+			const auto &damageNode = node["DamageFlags"];
+
+			for (const auto &it : damageNode) {
+				std::string nk;
+				c4::from_chars(it.key(), &nk);
+				std::string nk_constant = "NK_" + nk;
+				int64 constant;
+
+				if (!script_get_constant(nk_constant.c_str(), &constant)) {
+					this->invalidWarning(damageNode, "DamageFlags %s is invalid.\n", nk.c_str());
+					return 0;
+				}
+
+				bool active;
+
+				if (!this->asBool(damageNode, nk, active)) {
+					return 0;
+				}
+
+				if (active) {
+					skill->nk.set(static_cast<uint8>(constant));
+				}
+				else {
+					skill->nk.reset(static_cast<uint8>(constant));
+				}
+			}
+		}
+
+		if (this->nodeExists(node, "Flags")) {
+			const auto &infoNode = node["Flags"];
+
+			for (const auto &it : infoNode) {
+				std::string inf2;
+				c4::from_chars(it.key(), &inf2);
+				std::string inf2_constant = "INF2_" + inf2;
+				int64 constant;
+
+				if (!script_get_constant(inf2_constant.c_str(), &constant)) {
+					this->invalidWarning(infoNode, "Flag %s is invalid, skipping.\n", inf2.c_str());
 					continue;
 				}
 
-				if (skill_lv > MAX_SKILL_LEVEL) {
-					this->invalidWarning(it["Level"],
-										 "Element Level exceeds the maximum skill level of %d, skipping.\n",
-										 MAX_SKILL_LEVEL);
-					return false;
+				bool active;
+
+				if (!this->asBool(infoNode, inf2, active)) {
+					return 0;
 				}
 
-				if (!this->asString(it, "Element", element)) {
-					continue;
+				if (active) {
+					skill->inf2.set(static_cast<uint8>(constant));
+				}
+				else {
+					skill->inf2.reset(static_cast<uint8>(constant));
+				}
+			}
+		}
+
+		if (this->nodeExists(node, "Range")) {
+			if (!this->parseNode("Range", "Size", node, skill->range)) {
+				return 0;
+			}
+		}
+		else {
+			if (!exists) {
+				memset(skill->range, 0, sizeof(skill->range));
+			}
+		}
+
+		if (this->nodeExists(node, "Hit")) {
+			std::string hit;
+
+			if (!this->asString(node, "Hit", hit)) {
+				return 0;
+			}
+
+			std::string hit_constant = "DMG_" + hit;
+			int64 constant;
+
+			if (!script_get_constant(hit_constant.c_str(), &constant)) {
+				this->invalidWarning(node["Hit"], "Hit %s is invalid.\n", hit.c_str());
+				return 0;
+			}
+
+			skill->hit = static_cast<e_damage_type>(constant);
+		}
+		else {
+			if (!exists) {
+				skill->hit = DMG_NORMAL;
+			}
+		}
+
+		if (this->nodeExists(node, "HitCount")) {
+			if (!this->parseNode("HitCount", "Count", node, skill->num)) {
+				return 0;
+			}
+		}
+		else {
+			if (!exists) {
+				memset(skill->num, 0, sizeof(skill->num));
+			}
+		}
+
+		if (this->nodeExists(node, "Element")) {
+			const auto elementNode = node["Element"];
+			std::string element;
+
+			if (!elementNode.is_seq()) {
+				if (!this->asString(node, "Element", element)) {
+					return 0;
 				}
 
 				std::string element_constant = "ELE_" + element;
@@ -29880,849 +30314,885 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef &node) {
 					return 0;
 				}
 
-				skill->element[skill_lv - 1] = static_cast<e_element>(constant);
-			}
-		}
-	}
-	else {
-		if (!exists) {
-			memset(skill->element, ELE_NEUTRAL, sizeof(skill->element));
-		}
-	}
-
-	if (this->nodeExists(node, "SplashArea")) {
-		if (!this->parseNode("SplashArea", "Area", node, skill->splash)) {
-			return 0;
-		}
-	}
-	else {
-		if (!exists) {
-			memset(skill->splash, 0, sizeof(skill->splash));
-		}
-	}
-
-	if (this->nodeExists(node, "ActiveInstance")) {
-		if (!this->parseNode("ActiveInstance", "Max", node, skill->maxcount)) {
-			return 0;
-		}
-	}
-	else {
-		if (!exists) {
-			memset(skill->maxcount, 0, sizeof(skill->maxcount));
-		}
-	}
-
-	if (this->nodeExists(node, "Knockback")) {
-		if (!this->parseNode("Knockback", "Amount", node, skill->blewcount)) {
-			return 0;
-		}
-	}
-	else {
-		if (!exists) {
-			memset(skill->blewcount, 0, sizeof(skill->blewcount));
-		}
-	}
-
-	if (this->nodeExists(node, "CopyFlags")) {
-		const auto &copyNode = node["CopyFlags"];
-
-		if (this->nodeExists(copyNode, "Skill")) {
-			const auto &copyskillNode = copyNode["Skill"];
-
-			if (this->nodeExists(copyskillNode, "Plagiarism")) {
-				bool active;
-
-				if (!this->asBool(copyskillNode, "Plagiarism", active)) {
-					return 0;
-				}
-
-				if (active) {
-					skill->copyable.option |= SKILL_COPY_PLAGIARISM;
-				}
-				else {
-					skill->copyable.option &= SKILL_COPY_PLAGIARISM;
-				}
-			}
-
-			if (this->nodeExists(copyskillNode, "Reproduce")) {
-				bool active;
-
-				if (!this->asBool(copyskillNode, "Reproduce", active)) {
-					return 0;
-				}
-
-				if (active) {
-					skill->copyable.option |= SKILL_COPY_REPRODUCE;
-				}
-				else {
-					skill->copyable.option &= SKILL_COPY_REPRODUCE;
-				}
-			}
-		}
-		else {
-			this->invalidWarning(copyNode, "CopyFlags requires a Skill copy type.\n");
-			return 0;
-		}
-
-		if (this->nodeExists(copyNode, "RemoveRequirement")) {
-			const auto &copyreqNode = copyNode["RemoveRequirement"];
-
-			for (const auto &it : copyreqNode) {
-				std::string req;
-				c4::from_chars(it.key(), &req);
-				std::string req_constant = "SKILL_REQ_" + req;
-				int64 constant;
-
-				if (!script_get_constant(req_constant.c_str(), &constant)) {
-					this->invalidWarning(copyreqNode, "CopyFlags RemoveRequirement %s is invalid.\n", req.c_str());
-					return 0;
-				}
-
-				skill->copyable.req_opt |= constant;
-			}
-		}
-		else {
-			if (!exists) {
-				skill->copyable.req_opt = 0;
-			}
-		}
-	}
-
-	if (this->nodeExists(node, "NoNearNPC")) {
-		const auto &npcNode = node["NoNearNPC"];
-
-		if (this->nodeExists(npcNode, "AdditionalRange")) {
-			uint16 range;
-
-			if (!this->asUInt16(npcNode, "AdditionalRange", range)) {
-				return 0;
-			}
-
-			skill->unit_nonearnpc_range = range;
-		}
-		else {
-			if (!exists) {
-				skill->unit_nonearnpc_range = 0;
-			}
-		}
-
-		if (this->nodeExists(npcNode, "Type")) {
-			const auto &npctypeNode = npcNode["Type"];
-
-			for (const auto &it : npctypeNode) {
-				std::string type;
-				c4::from_chars(it.key(), &type);
-				std::string type_constant = "SKILL_NONEAR_" + type;
-				int64 constant;
-
-				if (!script_get_constant(type_constant.c_str(), &constant)) {
-					this->invalidWarning(npctypeNode, "NoNearNPC Type %s is invalid.\n", type.c_str());
-					return 0;
-				}
-
-				bool active;
-
-				if (!this->asBool(npctypeNode, type, active)) {
-					return 0;
-				}
-
-				if (active) {
-					skill->unit_nonearnpc_type |= constant;
-				}
-				else {
-					skill->unit_nonearnpc_type &= ~constant;
-				}
-			}
-		}
-		else {
-			if (!exists) {
-				skill->unit_nonearnpc_type = 0;
-			}
-		}
-	}
-
-	if (this->nodeExists(node, "CastCancel")) {
-		bool active;
-
-		if (!this->asBool(node, "CastCancel", active)) {
-			return 0;
-		}
-
-		skill->castcancel = active;
-	}
-	else {
-		if (!exists) {
-			skill->castcancel = false;
-		}
-	}
-
-	if (this->nodeExists(node, "CastDefenseReduction")) {
-		uint16 reduction;
-
-		if (!this->asUInt16(node, "CastDefenseReduction", reduction)) {
-			return 0;
-		}
-
-		skill->cast_def_rate = reduction;
-	}
-	else {
-		if (!exists) {
-			skill->cast_def_rate = 0;
-		}
-	}
-
-	if (this->nodeExists(node, "CastTime")) {
-		if (!this->parseNode("CastTime", "Time", node, skill->cast)) {
-			return 0;
-		}
-	}
-	else {
-		if (!exists) {
-			memset(skill->cast, 0, sizeof(skill->cast));
-		}
-	}
-
-	if (this->nodeExists(node, "AfterCastActDelay")) {
-		if (!this->parseNode("AfterCastActDelay", "Time", node, skill->delay)) {
-			return 0;
-		}
-	}
-	else {
-		if (!exists) {
-			memset(skill->delay, 0, sizeof(skill->delay));
-		}
-	}
-
-	if (this->nodeExists(node, "AfterCastWalkDelay")) {
-		if (!this->parseNode("AfterCastWalkDelay", "Time", node, skill->walkdelay)) {
-			return 0;
-		}
-	}
-	else {
-		if (!exists) {
-			memset(skill->walkdelay, 0, sizeof(skill->walkdelay));
-		}
-	}
-
-	if (this->nodeExists(node, "Duration1")) {
-		if (!this->parseNode("Duration1", "Time", node, skill->upkeep_time)) {
-			return 0;
-		}
-	}
-	else {
-		if (!exists) {
-			memset(skill->upkeep_time, 0, sizeof(skill->upkeep_time));
-		}
-	}
-
-	if (this->nodeExists(node, "Duration2")) {
-		if (!this->parseNode("Duration2", "Time", node, skill->upkeep_time2)) {
-			return 0;
-		}
-	}
-	else {
-		if (!exists) {
-			memset(skill->upkeep_time2, 0, sizeof(skill->upkeep_time2));
-		}
-	}
-
-	if (this->nodeExists(node, "Cooldown")) {
-		if (!this->parseNode("Cooldown", "Time", node, skill->cooldown)) {
-			return 0;
-		}
-	}
-	else {
-		if (!exists) {
-			memset(skill->cooldown, 0, sizeof(skill->cooldown));
-		}
-	}
-
-#ifdef RENEWAL_CAST
-	if (this->nodeExists(node, "FixedCastTime")) {
-		if (!this->parseNode("FixedCastTime", "Time", node, skill->fixed_cast)) {
-			return 0;
-		}
-	}
-	else {
-		if (!exists) {
-			memset(skill->fixed_cast, 0, sizeof(skill->fixed_cast));
-		}
-	}
-#endif
-
-	if (this->nodeExists(node, "CastTimeFlags")) {
-		const auto &castNode = node["CastTimeFlags"];
-
-		for (const auto &it : castNode) {
-			std::string flag;
-			c4::from_chars(it.key(), &flag);
-			std::string flag_constant = "SKILL_CAST_" + flag;
-			int64 constant;
-
-			if (!script_get_constant(flag_constant.c_str(), &constant)) {
-				this->invalidWarning(castNode, "CastTimeFlags %s option is invalid.\n", flag.c_str());
-				return 0;
-			}
-
-			bool active;
-
-			if (!this->asBool(castNode, flag, active)) {
-				return 0;
-			}
-
-			if (active) {
-				skill->castnodex |= constant;
+				memset(skill->element, static_cast<e_element>(constant), sizeof(skill->element));
 			}
 			else {
-				skill->castnodex &= ~constant;
-			}
-		}
-	}
+				for (const auto &it : elementNode) {
+					uint16 skill_lv;
 
-	if (this->nodeExists(node, "CastDelayFlags")) {
-		const auto &castNode = node["CastDelayFlags"];
-
-		for (const auto &it : castNode) {
-			std::string flag;
-			c4::from_chars(it.key(), &flag);
-			std::string flag_constant = "SKILL_CAST_" + flag;
-			int64 constant;
-
-			if (!script_get_constant(flag_constant.c_str(), &constant)) {
-				this->invalidWarning(castNode, "CastDelayFlags %s option is invalid.\n", flag.c_str());
-				return 0;
-			}
-
-			bool active;
-
-			if (!this->asBool(castNode, flag, active)) {
-				return 0;
-			}
-
-			if (active) {
-				skill->delaynodex |= constant;
-			}
-			else {
-				skill->delaynodex &= ~constant;
-			}
-		}
-	}
-
-	if (this->nodeExists(node, "Requires")) {
-		const auto &requireNode = node["Requires"];
-
-		if (this->nodeExists(requireNode, "HpCost")) {
-			if (!this->parseNode("HpCost", "Amount", requireNode, skill->require.hp)) {
-				return 0;
-			}
-		}
-		else {
-			if (!exists) {
-				memset(skill->require.hp, 0, sizeof(skill->require.hp));
-			}
-		}
-
-		if (this->nodeExists(requireNode, "SpCost")) {
-			if (!this->parseNode("SpCost", "Amount", requireNode, skill->require.sp)) {
-				return 0;
-			}
-		}
-		else {
-			if (!exists) {
-				memset(skill->require.sp, 0, sizeof(skill->require.sp));
-			}
-		}
-
-		if (this->nodeExists(requireNode, "ApCost")) {
-			if (!this->parseNode("ApCost", "Amount", requireNode, skill->require.ap)) {
-				return 0;
-			}
-		}
-		else {
-			if (!exists) {
-				memset(skill->require.ap, 0, sizeof(skill->require.ap));
-			}
-		}
-
-		if (this->nodeExists(requireNode, "HpRateCost")) {
-			if (!this->parseNode("HpRateCost", "Amount", requireNode, skill->require.hp_rate)) {
-				return 0;
-			}
-		}
-		else {
-			if (!exists) {
-				memset(skill->require.hp_rate, 0, sizeof(skill->require.hp_rate));
-			}
-		}
-
-		if (this->nodeExists(requireNode, "SpRateCost")) {
-			if (!this->parseNode("SpRateCost", "Amount", requireNode, skill->require.sp_rate)) {
-				return 0;
-			}
-		}
-		else {
-			if (!exists) {
-				memset(skill->require.sp_rate, 0, sizeof(skill->require.sp_rate));
-			}
-		}
-
-		if (this->nodeExists(requireNode, "ApRateCost")) {
-			if (!this->parseNode("ApRateCost", "Amount", requireNode, skill->require.ap_rate)) {
-				return 0;
-			}
-		}
-		else {
-			if (!exists) {
-				memset(skill->require.ap_rate, 0, sizeof(skill->require.ap_rate));
-			}
-		}
-
-		if (this->nodeExists(requireNode, "MaxHpTrigger")) {
-			if (!this->parseNode("MaxHpTrigger", "Amount", requireNode, skill->require.mhp)) {
-				return 0;
-			}
-		}
-		else {
-			if (!exists) {
-				memset(skill->require.mhp, 0, sizeof(skill->require.mhp));
-			}
-		}
-
-		if (this->nodeExists(requireNode, "ZenyCost")) {
-			if (!this->parseNode("ZenyCost", "Amount", requireNode, skill->require.zeny)) {
-				return 0;
-			}
-		}
-		else {
-			if (!exists) {
-				memset(skill->require.zeny, 0, sizeof(skill->require.zeny));
-			}
-		}
-
-		if (this->nodeExists(requireNode, "Weapon")) {
-			const auto &weaponNode = requireNode["Weapon"];
-
-			if (this->nodeExists(weaponNode, "All")) {
-				bool active;
-
-				if (!this->asBool(weaponNode, "All", active)) {
-					return 0;
-				}
-
-				if (active) {
-					skill->require.weapon = 0;
-				}
-			}
-			else {
-				for (const auto &it : weaponNode) {
-					std::string weapon;
-					c4::from_chars(it.key(), &weapon);
-					std::string weapon_constant = "W_" + weapon;
-					int64 constant;
-
-					if (!script_get_constant(weapon_constant.c_str(), &constant)) {
-						this->invalidWarning(weaponNode, "Requires Weapon %s is invalid.\n", weapon.c_str());
-						return 0;
-					}
-
-					bool active;
-
-					if (!this->asBool(weaponNode, weapon, active)) {
-						return 0;
-					}
-
-					if (active) {
-						skill->require.weapon |= 1 << constant;
-					}
-					else {
-						skill->require.weapon &= ~(1 << constant);
-					}
-				}
-			}
-		}
-		else {
-			if (!exists) {
-				skill->require.weapon = 0;
-			}
-		}
-
-		if (this->nodeExists(requireNode, "Ammo")) {
-			const auto &ammoNode = requireNode["Ammo"];
-
-			if (this->nodeExists(ammoNode, "None")) {
-				bool active;
-
-				if (!this->asBool(ammoNode, "None", active)) {
-					return 0;
-				}
-
-				if (active) {
-					skill->require.ammo = 0;
-				}
-			}
-			else {
-				for (const auto &it : ammoNode) {
-					std::string ammo;
-					c4::from_chars(it.key(), &ammo);
-					std::string ammo_constant = "AMMO_" + ammo;
-					int64 constant;
-
-					if (!script_get_constant(ammo_constant.c_str(), &constant)) {
-						this->invalidWarning(ammoNode, "Requires Ammo %s is invalid.\n", ammo.c_str());
-						return 0;
-					}
-
-					bool active;
-
-					if (!this->asBool(ammoNode, ammo, active)) {
-						return 0;
-					}
-
-					if (active) {
-						skill->require.ammo |= 1 << constant;
-					}
-					else {
-						skill->require.ammo &= ~(1 << constant);
-					}
-				}
-			}
-		}
-		else {
-			if (!exists) {
-				skill->require.ammo = 0;
-			}
-		}
-
-		if (this->nodeExists(requireNode, "AmmoAmount")) {
-			if (skill->require.ammo == 0) {
-				this->invalidWarning(requireNode["AmmoAmount"],
-									 "An ammo type is required before specifying ammo amount.\n");
-				return 0;
-			}
-
-			if (!this->parseNode("AmmoAmount", "Amount", requireNode, skill->require.ammo_qty)) {
-				return 0;
-			}
-		}
-		else {
-			if (!exists) {
-				memset(skill->require.ammo_qty, 0, sizeof(skill->require.ammo_qty));
-			}
-		}
-
-		if (this->nodeExists(requireNode, "State")) {
-			std::string state;
-
-			if (!this->asString(requireNode, "State", state)) {
-				return 0;
-			}
-
-			std::string state_constant = "ST_" + state;
-			int64 constant;
-
-			if (!script_get_constant(state_constant.c_str(), &constant)) {
-				this->invalidWarning(requireNode["State"], "Requires State %s is invalid.\n", state.c_str());
-				return 0;
-			}
-
-			skill->require.state = static_cast<int32>(constant);
-		}
-
-		if (this->nodeExists(requireNode, "Status")) {
-			const auto &statusNode = requireNode["Status"];
-
-			for (const auto &it : statusNode) {
-				std::string status;
-				c4::from_chars(it.key(), &status);
-				std::string status_constant = "SC_" + status;
-				int64 constant;
-
-				if (!script_get_constant(status_constant.c_str(), &constant)) {
-					this->invalidWarning(statusNode, "Requires Status %s is invalid.\n", status.c_str());
-					return 0;
-				}
-
-				bool active;
-
-				if (!this->asBool(statusNode, status, active)) {
-					return 0;
-				}
-
-				auto status_exists = util::vector_get(skill->require.status, constant);
-
-				if (active && status_exists == skill->require.status.end()) {
-					skill->require.status.push_back(static_cast<sc_type>(constant));
-				}
-				else if (!active && status_exists != skill->require.status.end()) {
-					skill->require.status.erase(status_exists);
-				}
-			}
-		}
-
-		if (this->nodeExists(requireNode, "SpiritSphereCost")) {
-			if (!this->parseNode("SpiritSphereCost", "Amount", requireNode, skill->require.spiritball)) {
-				return 0;
-			}
-		}
-		else {
-			if (!exists) {
-				memset(skill->require.spiritball, 0, sizeof(skill->require.spiritball));
-			}
-		}
-
-		if (this->nodeExists(requireNode, "ItemCost")) {
-			const auto itemNode = requireNode["ItemCost"];
-			int32 count = 0;
-
-			for (const auto &it : itemNode) {
-				std::string item_name;
-
-				if (!this->asString(it, "Item", item_name)) {
-					continue;
-				}
-
-				std::shared_ptr<item_data> item = item_db.search_aegisname(item_name.c_str());
-
-				if (item == nullptr) {
-					this->invalidWarning(it["Item"], "Requires ItemCost Item %s does not exist.\n", item_name.c_str());
-					return 0;
-				}
-
-				int32 amount;
-
-				if (!this->asInt32(it, "Amount", amount)) {
-					continue;
-				}
-
-				if (this->nodeExists(it, "Level")) {
-					uint16 cost_level;
-
-					if (!this->asUInt16(it, "Level", cost_level)) {
+					if (!this->asUInt16(it, "Level", skill_lv)) {
 						continue;
 					}
 
-					if (cost_level < 1 || cost_level > skill->max) {
+					if (skill_lv > MAX_SKILL_LEVEL) {
 						this->invalidWarning(it["Level"],
-											 "Requires ItemCost Level %d is not within %s's level range of 1~%d.\n",
-											 cost_level,
-											 skill->name,
-											 skill->max);
+											 "Element Level exceeds the maximum skill level of %d, skipping.\n",
+											 MAX_SKILL_LEVEL);
+						return false;
+					}
+
+					if (!this->asString(it, "Element", element)) {
+						continue;
+					}
+
+					std::string element_constant = "ELE_" + element;
+					int64 constant;
+
+					if (!script_get_constant(element_constant.c_str(), &constant)) {
+						this->invalidWarning(elementNode["Element"], "Element %s is invalid.\n", element.c_str());
 						return 0;
 					}
 
-					count = cost_level - 1;
+					if (constant == ELE_NONE) {
+						this->invalidWarning(elementNode["Element"], "%s is not a valid element.\n", element.c_str());
+						return 0;
+					}
 
-					if (!skill->require.itemid_level_dependent) {
-						skill->require.itemid_level_dependent = true;
+					skill->element[skill_lv - 1] = static_cast<e_element>(constant);
+				}
+			}
+		}
+		else {
+			if (!exists) {
+				memset(skill->element, ELE_NEUTRAL, sizeof(skill->element));
+			}
+		}
+
+		if (this->nodeExists(node, "SplashArea")) {
+			if (!this->parseNode("SplashArea", "Area", node, skill->splash)) {
+				return 0;
+			}
+		}
+		else {
+			if (!exists) {
+				memset(skill->splash, 0, sizeof(skill->splash));
+			}
+		}
+
+		if (this->nodeExists(node, "ActiveInstance")) {
+			if (!this->parseNode("ActiveInstance", "Max", node, skill->maxcount)) {
+				return 0;
+			}
+		}
+		else {
+			if (!exists) {
+				memset(skill->maxcount, 0, sizeof(skill->maxcount));
+			}
+		}
+
+		if (this->nodeExists(node, "Knockback")) {
+			if (!this->parseNode("Knockback", "Amount", node, skill->blewcount)) {
+				return 0;
+			}
+		}
+		else {
+			if (!exists) {
+				memset(skill->blewcount, 0, sizeof(skill->blewcount));
+			}
+		}
+
+		if (this->nodeExists(node, "CopyFlags")) {
+			const auto &copyNode = node["CopyFlags"];
+
+			if (this->nodeExists(copyNode, "Skill")) {
+				const auto &copyskillNode = copyNode["Skill"];
+
+				if (this->nodeExists(copyskillNode, "Plagiarism")) {
+					bool active;
+
+					if (!this->asBool(copyskillNode, "Plagiarism", active)) {
+						return 0;
+					}
+
+					if (active) {
+						skill->copyable.option |= SKILL_COPY_PLAGIARISM;
+					}
+					else {
+						skill->copyable.option &= SKILL_COPY_PLAGIARISM;
 					}
 				}
 
-				skill->require.itemid[count] = item->nameid;
-				skill->require.amount[count] = amount;
-				count++;
+				if (this->nodeExists(copyskillNode, "Reproduce")) {
+					bool active;
+
+					if (!this->asBool(copyskillNode, "Reproduce", active)) {
+						return 0;
+					}
+
+					if (active) {
+						skill->copyable.option |= SKILL_COPY_REPRODUCE;
+					}
+					else {
+						skill->copyable.option &= SKILL_COPY_REPRODUCE;
+					}
+				}
+			}
+			else {
+				this->invalidWarning(copyNode, "CopyFlags requires a Skill copy type.\n");
+				return 0;
+			}
+
+			if (this->nodeExists(copyNode, "RemoveRequirement")) {
+				const auto &copyreqNode = copyNode["RemoveRequirement"];
+
+				for (const auto &it : copyreqNode) {
+					std::string req;
+					c4::from_chars(it.key(), &req);
+					std::string req_constant = "SKILL_REQ_" + req;
+					int64 constant;
+
+					if (!script_get_constant(req_constant.c_str(), &constant)) {
+						this->invalidWarning(copyreqNode, "CopyFlags RemoveRequirement %s is invalid.\n", req.c_str());
+						return 0;
+					}
+
+					skill->copyable.req_opt |= constant;
+				}
+			}
+			else {
+				if (!exists) {
+					skill->copyable.req_opt = 0;
+				}
 			}
 		}
 
-		if (this->nodeExists(requireNode, "Equipment")) {
-			const auto &equipNode = requireNode["Equipment"];
+		if (this->nodeExists(node, "NoNearNPC")) {
+			const auto &npcNode = node["NoNearNPC"];
 
-			for (const auto &it : equipNode) {
-				std::string item_name;
-				c4::from_chars(it.key(), &item_name);
+			if (this->nodeExists(npcNode, "AdditionalRange")) {
+				uint16 range;
 
-				std::shared_ptr<item_data> item = item_db.search_aegisname(item_name.c_str());
-
-				if (item == nullptr) {
-					this->invalidWarning(it, "Requires Equipment %s does not exist.\n", item_name.c_str());
+				if (!this->asUInt16(npcNode, "AdditionalRange", range)) {
 					return 0;
 				}
 
-				bool active;
-
-				if (!this->asBool(equipNode, item_name, active)) {
-					return 0;
-				}
-
-				auto equip_exists = util::vector_get(skill->require.eqItem, item->nameid);
-
-				if (active && equip_exists == skill->require.eqItem.end()) {
-					skill->require.eqItem.push_back(item->nameid);
-				}
-				else if (!active && equip_exists != skill->require.eqItem.end()) {
-					skill->require.eqItem.erase(equip_exists);
+				skill->unit_nonearnpc_range = range;
+			}
+			else {
+				if (!exists) {
+					skill->unit_nonearnpc_range = 0;
 				}
 			}
+
+			if (this->nodeExists(npcNode, "Type")) {
+				const auto &npctypeNode = npcNode["Type"];
+
+				for (const auto &it : npctypeNode) {
+					std::string type;
+					c4::from_chars(it.key(), &type);
+					std::string type_constant = "SKILL_NONEAR_" + type;
+					int64 constant;
+
+					if (!script_get_constant(type_constant.c_str(), &constant)) {
+						this->invalidWarning(npctypeNode, "NoNearNPC Type %s is invalid.\n", type.c_str());
+						return 0;
+					}
+
+					bool active;
+
+					if (!this->asBool(npctypeNode, type, active)) {
+						return 0;
+					}
+
+					if (active) {
+						skill->unit_nonearnpc_type |= constant;
+					}
+					else {
+						skill->unit_nonearnpc_type &= ~constant;
+					}
+				}
+			}
+			else {
+				if (!exists) {
+					skill->unit_nonearnpc_type = 0;
+				}
+			}
 		}
-	}
 
-	if (this->nodeExists(node, "GiveAp")) {
-		if (!this->parseNode("GiveAp", "Amount", node, skill->giveap)) {
-			return 0;
-		}
-	}
-	else {
-		if (!exists) {
-			memset(skill->giveap, 0, sizeof(skill->giveap));
-		}
-	}
+		if (this->nodeExists(node, "CastCancel")) {
+			bool active;
 
-	if (this->nodeExists(node, "Unit")) {
-		const auto &unitNode = node["Unit"];
-
-		if (this->nodeExists(unitNode, "Id")) {
-			std::string unit;
-
-			if (!this->asString(unitNode, "Id", unit)) {
+			if (!this->asBool(node, "CastCancel", active)) {
 				return 0;
 			}
 
-			std::string unit_constant = "UNT_" + unit;
-			int64 constant;
-
-			if (!script_get_constant(unit_constant.c_str(), &constant)) {
-				this->invalidWarning(unitNode["Id"], "Unit Id %s is invalid.\n", unit.c_str());
-				return 0;
-			}
-
-			skill->unit_id = static_cast<uint16>(constant);
-		}
-		else {
-			this->invalidWarning(unitNode["Id"], "Unit requires an Id.\n");
-			return 0;
-		}
-
-		if (this->nodeExists(unitNode, "AlternateId")) {
-			std::string unit;
-
-			if (!this->asString(unitNode, "AlternateId", unit)) {
-				return 0;
-			}
-
-			std::string unit_constant = "UNT_" + unit;
-			int64 constant;
-
-			if (!script_get_constant(unit_constant.c_str(), &constant)) {
-				this->invalidWarning(unitNode["AlternateId"], "Alternate Unit Id %s is invalid.\n", unit.c_str());
-				return 0;
-			}
-
-			skill->unit_id2 = static_cast<uint16>(constant);
+			skill->castcancel = active;
 		}
 		else {
 			if (!exists) {
-				skill->unit_id2 = 0;
+				skill->castcancel = false;
 			}
 		}
 
-		if (this->nodeExists(unitNode, "Layout")) {
-			if (!this->parseNode("Layout", "Size", unitNode, skill->unit_layout_type)) {
+		if (this->nodeExists(node, "CastDefenseReduction")) {
+			uint16 reduction;
+
+			if (!this->asUInt16(node, "CastDefenseReduction", reduction)) {
 				return 0;
 			}
+
+			skill->cast_def_rate = reduction;
 		}
 		else {
 			if (!exists) {
-				memset(skill->unit_layout_type, 0, sizeof(skill->unit_layout_type));
+				skill->cast_def_rate = 0;
 			}
 		}
 
-		if (this->nodeExists(unitNode, "Range")) {
-			if (!this->parseNode("Range", "Size", unitNode, skill->unit_range)) {
+		if (this->nodeExists(node, "CastTime")) {
+			if (!this->parseNode("CastTime", "Time", node, skill->cast)) {
 				return 0;
 			}
 		}
 		else {
 			if (!exists) {
-				memset(skill->unit_range, 0, sizeof(skill->unit_range));
+				memset(skill->cast, 0, sizeof(skill->cast));
 			}
 		}
 
-		if (this->nodeExists(unitNode, "Interval")) {
-			int16 interval;
-
-			if (!this->asInt16(unitNode, "Interval", interval)) {
+		if (this->nodeExists(node, "AfterCastActDelay")) {
+			if (!this->parseNode("AfterCastActDelay", "Time", node, skill->delay)) {
 				return 0;
 			}
-
-			skill->unit_interval = interval;
 		}
 		else {
 			if (!exists) {
-				skill->unit_interval = 0;
+				memset(skill->delay, 0, sizeof(skill->delay));
 			}
 		}
 
-		if (this->nodeExists(unitNode, "Target")) {
-			std::string target;
-
-			if (!this->asString(unitNode, "Target", target)) {
+		if (this->nodeExists(node, "AfterCastWalkDelay")) {
+			if (!this->parseNode("AfterCastWalkDelay", "Time", node, skill->walkdelay)) {
 				return 0;
 			}
-
-			std::string target_constant = "BCT_" + target;
-			int64 constant;
-
-			if (!script_get_constant(target_constant.c_str(), &constant)) {
-				this->invalidWarning(unitNode["Target"], "Unit Target %s is invalid.\n", target.c_str());
-				return 0;
-			}
-
-			skill->unit_target = static_cast<int32>(constant);
 		}
 		else {
 			if (!exists) {
-				skill->unit_target = BCT_ALL;
+				memset(skill->walkdelay, 0, sizeof(skill->walkdelay));
 			}
 		}
 
-		if (this->nodeExists(unitNode, "Flag")) {
-			const auto &flagNode = unitNode["Flag"];
+		if (this->nodeExists(node, "Duration1")) {
+			if (!this->parseNode("Duration1", "Time", node, skill->upkeep_time)) {
+				return 0;
+			}
+		}
+		else {
+			if (!exists) {
+				memset(skill->upkeep_time, 0, sizeof(skill->upkeep_time));
+			}
+		}
 
-			for (const auto &it : flagNode) {
+		if (this->nodeExists(node, "Duration2")) {
+			if (!this->parseNode("Duration2", "Time", node, skill->upkeep_time2)) {
+				return 0;
+			}
+		}
+		else {
+			if (!exists) {
+				memset(skill->upkeep_time2, 0, sizeof(skill->upkeep_time2));
+			}
+		}
+
+		if (this->nodeExists(node, "Cooldown")) {
+			if (!this->parseNode("Cooldown", "Time", node, skill->cooldown)) {
+				return 0;
+			}
+		}
+		else {
+			if (!exists) {
+				memset(skill->cooldown, 0, sizeof(skill->cooldown));
+			}
+		}
+
+#ifdef RENEWAL_CAST
+		if (this->nodeExists(node, "FixedCastTime")) {
+			if (!this->parseNode("FixedCastTime", "Time", node, skill->fixed_cast)) {
+				return 0;
+			}
+		}
+		else {
+			if (!exists) {
+				memset(skill->fixed_cast, 0, sizeof(skill->fixed_cast));
+			}
+		}
+#endif
+
+		if (this->nodeExists(node, "CastTimeFlags")) {
+			const auto &castNode = node["CastTimeFlags"];
+
+			for (const auto &it : castNode) {
 				std::string flag;
 				c4::from_chars(it.key(), &flag);
-				std::string flag_constant = "UF_" + flag;
+				std::string flag_constant = "SKILL_CAST_" + flag;
 				int64 constant;
 
 				if (!script_get_constant(flag_constant.c_str(), &constant)) {
-					this->invalidWarning(it, "Skill Unit Flag %s is invalid.\n", flag.c_str());
+					this->invalidWarning(castNode, "CastTimeFlags %s option is invalid.\n", flag.c_str());
 					return 0;
 				}
 
 				bool active;
 
-				if (!this->asBool(flagNode, flag, active)) {
+				if (!this->asBool(castNode, flag, active)) {
 					return 0;
 				}
 
 				if (active) {
-					skill->unit_flag.set(static_cast<uint8>(constant));
+					skill->castnodex |= constant;
 				}
 				else {
-					skill->unit_flag.reset(static_cast<uint8>(constant));
+					skill->castnodex &= ~constant;
+				}
+			}
+		}
+
+		if (this->nodeExists(node, "CastDelayFlags")) {
+			const auto &castNode = node["CastDelayFlags"];
+
+			for (const auto &it : castNode) {
+				std::string flag;
+				c4::from_chars(it.key(), &flag);
+				std::string flag_constant = "SKILL_CAST_" + flag;
+				int64 constant;
+
+				if (!script_get_constant(flag_constant.c_str(), &constant)) {
+					this->invalidWarning(castNode, "CastDelayFlags %s option is invalid.\n", flag.c_str());
+					return 0;
+				}
+
+				bool active;
+
+				if (!this->asBool(castNode, flag, active)) {
+					return 0;
+				}
+
+				if (active) {
+					skill->delaynodex |= constant;
+				}
+				else {
+					skill->delaynodex &= ~constant;
+				}
+			}
+		}
+
+		if (this->nodeExists(node, "Requires")) {
+			const auto &requireNode = node["Requires"];
+
+			if (this->nodeExists(requireNode, "HpCost")) {
+				if (!this->parseNode("HpCost", "Amount", requireNode, skill->require.hp)) {
+					return 0;
+				}
+			}
+			else {
+				if (!exists) {
+					memset(skill->require.hp, 0, sizeof(skill->require.hp));
 				}
 			}
 
-			if (skill->unit_flag[UF_NOENEMY] && battle_config.defnotenemy) {
-				skill->unit_target = BCT_NOENEMY;
+			if (this->nodeExists(requireNode, "SpCost")) {
+				if (!this->parseNode("SpCost", "Amount", requireNode, skill->require.sp)) {
+					return 0;
+				}
+			}
+			else {
+				if (!exists) {
+					memset(skill->require.sp, 0, sizeof(skill->require.sp));
+				}
 			}
 
-			// By default, target just characters.
-			skill->unit_target |= BL_CHAR;
-			if (skill->unit_flag[UF_NOPC]) {
-				skill->unit_target &= ~BL_PC;
+			if (this->nodeExists(requireNode, "ApCost")) {
+				if (!this->parseNode("ApCost", "Amount", requireNode, skill->require.ap)) {
+					return 0;
+				}
 			}
-			if (skill->unit_flag[UF_NOMOB]) {
-				skill->unit_target &= ~BL_MOB;
+			else {
+				if (!exists) {
+					memset(skill->require.ap, 0, sizeof(skill->require.ap));
+				}
 			}
-			if (skill->unit_flag[UF_SKILL]) {
-				skill->unit_target |= BL_SKILL;
+
+			if (this->nodeExists(requireNode, "HpRateCost")) {
+				if (!this->parseNode("HpRateCost", "Amount", requireNode, skill->require.hp_rate)) {
+					return 0;
+				}
+			}
+			else {
+				if (!exists) {
+					memset(skill->require.hp_rate, 0, sizeof(skill->require.hp_rate));
+				}
+			}
+
+			if (this->nodeExists(requireNode, "SpRateCost")) {
+				if (!this->parseNode("SpRateCost", "Amount", requireNode, skill->require.sp_rate)) {
+					return 0;
+				}
+			}
+			else {
+				if (!exists) {
+					memset(skill->require.sp_rate, 0, sizeof(skill->require.sp_rate));
+				}
+			}
+
+			if (this->nodeExists(requireNode, "ApRateCost")) {
+				if (!this->parseNode("ApRateCost", "Amount", requireNode, skill->require.ap_rate)) {
+					return 0;
+				}
+			}
+			else {
+				if (!exists) {
+					memset(skill->require.ap_rate, 0, sizeof(skill->require.ap_rate));
+				}
+			}
+
+			if (this->nodeExists(requireNode, "MaxHpTrigger")) {
+				if (!this->parseNode("MaxHpTrigger", "Amount", requireNode, skill->require.mhp)) {
+					return 0;
+				}
+			}
+			else {
+				if (!exists) {
+					memset(skill->require.mhp, 0, sizeof(skill->require.mhp));
+				}
+			}
+
+			if (this->nodeExists(requireNode, "ZenyCost")) {
+				if (!this->parseNode("ZenyCost", "Amount", requireNode, skill->require.zeny)) {
+					return 0;
+				}
+			}
+			else {
+				if (!exists) {
+					memset(skill->require.zeny, 0, sizeof(skill->require.zeny));
+				}
+			}
+
+			if (this->nodeExists(requireNode, "Weapon")) {
+				const auto &weaponNode = requireNode["Weapon"];
+
+				if (this->nodeExists(weaponNode, "All")) {
+					bool active;
+
+					if (!this->asBool(weaponNode, "All", active)) {
+						return 0;
+					}
+
+					if (active) {
+						skill->require.weapon = 0;
+					}
+				}
+				else {
+					for (const auto &it : weaponNode) {
+						std::string weapon;
+						c4::from_chars(it.key(), &weapon);
+						std::string weapon_constant = "W_" + weapon;
+						int64 constant;
+
+						if (!script_get_constant(weapon_constant.c_str(), &constant)) {
+							this->invalidWarning(weaponNode, "Requires Weapon %s is invalid.\n", weapon.c_str());
+							return 0;
+						}
+
+						bool active;
+
+						if (!this->asBool(weaponNode, weapon, active)) {
+							return 0;
+						}
+
+						if (active) {
+							skill->require.weapon |= 1 << constant;
+						}
+						else {
+							skill->require.weapon &= ~(1 << constant);
+						}
+					}
+				}
+			}
+			else {
+				if (!exists) {
+					skill->require.weapon = 0;
+				}
+			}
+
+			if (this->nodeExists(requireNode, "Ammo")) {
+				const auto &ammoNode = requireNode["Ammo"];
+
+				if (this->nodeExists(ammoNode, "None")) {
+					bool active;
+
+					if (!this->asBool(ammoNode, "None", active)) {
+						return 0;
+					}
+
+					if (active) {
+						skill->require.ammo = 0;
+					}
+				}
+				else {
+					for (const auto &it : ammoNode) {
+						std::string ammo;
+						c4::from_chars(it.key(), &ammo);
+						std::string ammo_constant = "AMMO_" + ammo;
+						int64 constant;
+
+						if (!script_get_constant(ammo_constant.c_str(), &constant)) {
+							this->invalidWarning(ammoNode, "Requires Ammo %s is invalid.\n", ammo.c_str());
+							return 0;
+						}
+
+						bool active;
+
+						if (!this->asBool(ammoNode, ammo, active)) {
+							return 0;
+						}
+
+						if (active) {
+							skill->require.ammo |= 1 << constant;
+						}
+						else {
+							skill->require.ammo &= ~(1 << constant);
+						}
+					}
+				}
+			}
+			else {
+				if (!exists) {
+					skill->require.ammo = 0;
+				}
+			}
+
+			if (this->nodeExists(requireNode, "AmmoAmount")) {
+				if (skill->require.ammo == 0) {
+					this->invalidWarning(requireNode["AmmoAmount"],
+										 "An ammo type is required before specifying ammo amount.\n");
+					return 0;
+				}
+
+				if (!this->parseNode("AmmoAmount", "Amount", requireNode, skill->require.ammo_qty)) {
+					return 0;
+				}
+			}
+			else {
+				if (!exists) {
+					memset(skill->require.ammo_qty, 0, sizeof(skill->require.ammo_qty));
+				}
+			}
+
+			if (this->nodeExists(requireNode, "State")) {
+				std::string state;
+
+				if (!this->asString(requireNode, "State", state)) {
+					return 0;
+				}
+
+				std::string state_constant = "ST_" + state;
+				int64 constant;
+
+				if (!script_get_constant(state_constant.c_str(), &constant)) {
+					this->invalidWarning(requireNode["State"], "Requires State %s is invalid.\n", state.c_str());
+					return 0;
+				}
+
+				skill->require.state = static_cast<int32>(constant);
+			}
+
+			if (this->nodeExists(requireNode, "Status")) {
+				const auto &statusNode = requireNode["Status"];
+
+				for (const auto &it : statusNode) {
+					std::string status;
+					c4::from_chars(it.key(), &status);
+					std::string status_constant = "SC_" + status;
+					int64 constant;
+
+					if (!script_get_constant(status_constant.c_str(), &constant)) {
+						this->invalidWarning(statusNode, "Requires Status %s is invalid.\n", status.c_str());
+						return 0;
+					}
+
+					bool active;
+
+					if (!this->asBool(statusNode, status, active)) {
+						return 0;
+					}
+
+					auto status_exists = util::vector_get(skill->require.status, constant);
+
+					if (active && status_exists == skill->require.status.end()) {
+						skill->require.status.push_back(static_cast<sc_type>(constant));
+					}
+					else if (!active && status_exists != skill->require.status.end()) {
+						skill->require.status.erase(status_exists);
+					}
+				}
+			}
+
+			if (this->nodeExists(requireNode, "SpiritSphereCost")) {
+				if (!this->parseNode("SpiritSphereCost", "Amount", requireNode, skill->require.spiritball)) {
+					return 0;
+				}
+			}
+			else {
+				if (!exists) {
+					memset(skill->require.spiritball, 0, sizeof(skill->require.spiritball));
+				}
+			}
+
+			if (this->nodeExists(requireNode, "ItemCost")) {
+				const auto itemNode = requireNode["ItemCost"];
+				int32 count = 0;
+
+				for (const auto &it : itemNode) {
+					std::string item_name;
+
+					if (!this->asString(it, "Item", item_name)) {
+						continue;
+					}
+
+					std::shared_ptr<item_data> item = item_db.search_aegisname(item_name.c_str());
+
+					if (item == nullptr) {
+						this->invalidWarning(
+							it["Item"], "Requires ItemCost Item %s does not exist.\n", item_name.c_str());
+						return 0;
+					}
+
+					int32 amount;
+
+					if (!this->asInt32(it, "Amount", amount)) {
+						continue;
+					}
+
+					if (this->nodeExists(it, "Level")) {
+						uint16 cost_level;
+
+						if (!this->asUInt16(it, "Level", cost_level)) {
+							continue;
+						}
+
+						if (cost_level < 1 || cost_level > skill->max) {
+							this->invalidWarning(it["Level"],
+												 "Requires ItemCost Level %d is not within %s's level range of 1~%d.\n",
+												 cost_level,
+												 skill->name,
+												 skill->max);
+							return 0;
+						}
+
+						count = cost_level - 1;
+
+						if (!skill->require.itemid_level_dependent) {
+							skill->require.itemid_level_dependent = true;
+						}
+					}
+
+					skill->require.itemid[count] = item->nameid;
+					skill->require.amount[count] = amount;
+					count++;
+				}
+			}
+
+			if (this->nodeExists(requireNode, "Equipment")) {
+				const auto &equipNode = requireNode["Equipment"];
+
+				for (const auto &it : equipNode) {
+					std::string item_name;
+					c4::from_chars(it.key(), &item_name);
+
+					std::shared_ptr<item_data> item = item_db.search_aegisname(item_name.c_str());
+
+					if (item == nullptr) {
+						this->invalidWarning(it, "Requires Equipment %s does not exist.\n", item_name.c_str());
+						return 0;
+					}
+
+					bool active;
+
+					if (!this->asBool(equipNode, item_name, active)) {
+						return 0;
+					}
+
+					auto equip_exists = util::vector_get(skill->require.eqItem, item->nameid);
+
+					if (active && equip_exists == skill->require.eqItem.end()) {
+						skill->require.eqItem.push_back(item->nameid);
+					}
+					else if (!active && equip_exists != skill->require.eqItem.end()) {
+						skill->require.eqItem.erase(equip_exists);
+					}
+				}
+			}
+		}
+
+		if (this->nodeExists(node, "GiveAp")) {
+			if (!this->parseNode("GiveAp", "Amount", node, skill->giveap)) {
+				return 0;
 			}
 		}
 		else {
 			if (!exists) {
-				skill->unit_flag = UF_NONE;
+				memset(skill->giveap, 0, sizeof(skill->giveap));
+			}
+		}
+
+		if (this->nodeExists(node, "Unit")) {
+			const auto &unitNode = node["Unit"];
+
+			if (this->nodeExists(unitNode, "Id")) {
+				std::string unit;
+
+				if (!this->asString(unitNode, "Id", unit)) {
+					return 0;
+				}
+
+				std::string unit_constant = "UNT_" + unit;
+				int64 constant;
+
+				if (!script_get_constant(unit_constant.c_str(), &constant)) {
+					this->invalidWarning(unitNode["Id"], "Unit Id %s is invalid.\n", unit.c_str());
+					return 0;
+				}
+
+				skill->unit_id = static_cast<uint16>(constant);
+			}
+			else {
+				this->invalidWarning(unitNode["Id"], "Unit requires an Id.\n");
+				return 0;
+			}
+
+			if (this->nodeExists(unitNode, "AlternateId")) {
+				std::string unit;
+
+				if (!this->asString(unitNode, "AlternateId", unit)) {
+					return 0;
+				}
+
+				std::string unit_constant = "UNT_" + unit;
+				int64 constant;
+
+				if (!script_get_constant(unit_constant.c_str(), &constant)) {
+					this->invalidWarning(unitNode["AlternateId"], "Alternate Unit Id %s is invalid.\n", unit.c_str());
+					return 0;
+				}
+
+				skill->unit_id2 = static_cast<uint16>(constant);
+			}
+			else {
+				if (!exists) {
+					skill->unit_id2 = 0;
+				}
+			}
+
+			if (this->nodeExists(unitNode, "Layout")) {
+				if (!this->parseNode("Layout", "Size", unitNode, skill->unit_layout_type)) {
+					return 0;
+				}
+			}
+			else {
+				if (!exists) {
+					memset(skill->unit_layout_type, 0, sizeof(skill->unit_layout_type));
+				}
+			}
+
+			if (this->nodeExists(unitNode, "Range")) {
+				if (!this->parseNode("Range", "Size", unitNode, skill->unit_range)) {
+					return 0;
+				}
+			}
+			else {
+				if (!exists) {
+					memset(skill->unit_range, 0, sizeof(skill->unit_range));
+				}
+			}
+
+			if (this->nodeExists(unitNode, "Interval")) {
+				int16 interval;
+
+				if (!this->asInt16(unitNode, "Interval", interval)) {
+					return 0;
+				}
+
+				skill->unit_interval = interval;
+			}
+			else {
+				if (!exists) {
+					skill->unit_interval = 0;
+				}
+			}
+
+			if (this->nodeExists(unitNode, "Target")) {
+				std::string target;
+
+				if (!this->asString(unitNode, "Target", target)) {
+					return 0;
+				}
+
+				std::string target_constant = "BCT_" + target;
+				int64 constant;
+
+				if (!script_get_constant(target_constant.c_str(), &constant)) {
+					this->invalidWarning(unitNode["Target"], "Unit Target %s is invalid.\n", target.c_str());
+					return 0;
+				}
+
+				skill->unit_target = static_cast<int32>(constant);
+			}
+			else {
+				if (!exists) {
+					skill->unit_target = BCT_ALL;
+				}
+			}
+
+			if (this->nodeExists(unitNode, "Flag")) {
+				const auto &flagNode = unitNode["Flag"];
+
+				for (const auto &it : flagNode) {
+					std::string flag;
+					c4::from_chars(it.key(), &flag);
+					std::string flag_constant = "UF_" + flag;
+					int64 constant;
+
+					if (!script_get_constant(flag_constant.c_str(), &constant)) {
+						this->invalidWarning(it, "Skill Unit Flag %s is invalid.\n", flag.c_str());
+						return 0;
+					}
+
+					bool active;
+
+					if (!this->asBool(flagNode, flag, active)) {
+						return 0;
+					}
+
+					if (active) {
+						skill->unit_flag.set(static_cast<uint8>(constant));
+					}
+					else {
+						skill->unit_flag.reset(static_cast<uint8>(constant));
+					}
+				}
+
+				if (skill->unit_flag[UF_NOENEMY] && battle_config.defnotenemy) {
+					skill->unit_target = BCT_NOENEMY;
+				}
+
 				// By default, target just characters.
 				skill->unit_target |= BL_CHAR;
+				if (skill->unit_flag[UF_NOPC]) {
+					skill->unit_target &= ~BL_PC;
+				}
+				if (skill->unit_flag[UF_NOMOB]) {
+					skill->unit_target &= ~BL_MOB;
+				}
+				if (skill->unit_flag[UF_SKILL]) {
+					skill->unit_target |= BL_SKILL;
+				}
+			}
+			else {
+				if (!exists) {
+					skill->unit_flag = UF_NONE;
+					// By default, target just characters.
+					skill->unit_target |= BL_CHAR;
+				}
 			}
 		}
 	}
@@ -30773,7 +31243,8 @@ void SkillDatabase::clear() {
 void SkillDatabase::loadingFinished() {
 	if (this->skill_num > MAX_SKILL) {
 		ShowError(
-			"There are more skills defined in the skill database (%d) than the MAX_SKILL (%d) define. Please increase "
+			"There are more skills defined in the skill database (%d) than the MAX_SKILL (%d) define. Please "
+			"increase "
 			"it and recompile.\n",
 			this->skill_num,
 			MAX_SKILL);
@@ -31184,11 +31655,12 @@ static bool skill_parse_row_changematerialdb(char *split[], size_t columns, size
 	}
 
 	// Import just for clearing/disabling from original data
-	// NOTE: If import for disabling, better disable list from produce_db instead of here, or creation just failed with
-	// deleting requirements.
+	// NOTE: If import for disabling, better disable list from produce_db instead of here, or creation just
+	// failed with deleting requirements.
 	if (nameid == 0) {
 		memset(&skill_changematerial_db[id], 0, sizeof(skill_changematerial_db[id]));
-		// ShowInfo("skill_parse_row_changematerialdb: Change Material list with ID %d removed from list.\n", id);
+		// ShowInfo("skill_parse_row_changematerialdb: Change Material list with ID %d removed from list.\n",
+		// id);
 		return true;
 	}
 

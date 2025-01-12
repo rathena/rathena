@@ -7908,6 +7908,116 @@ Body:
       Royal_Guard: true
       Royal_Guard_T: true
       Imperial_Guard: true
+  - Job: Soul_Ascetic
+    Inherit:
+      Novice: true
+      Taekwon: true
+      Soul_Linker: true
+      Soul_Reaper: true
+    Tree:
+      - Name: SOA_SOUL_MASTERY
+        MaxLevel: 10
+      - Name: SOA_TALISMAN_MASTERY
+        MaxLevel: 10
+      - Name: SOA_SOUL_GATHERING
+        MaxLevel: 5
+        Requires:
+          - Name: SP_SOULENERGY
+            Level: 5
+          - Name: SOA_SOUL_MASTERY
+            Level: 3
+      - Name: SOA_TALISMAN_OF_PROTECTION
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_MASTERY
+            Level: 1
+      - Name: SOA_TALISMAN_OF_WARRIOR
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_MASTERY
+            Level: 1
+      - Name: SOA_TALISMAN_OF_MAGICIAN
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_MASTERY
+            Level: 1
+      - Name: SOA_EXORCISM_OF_MALICIOUS_SOUL
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_SOUL_GATHERING
+            Level: 1
+          - Name: SP_SOULCURSE
+            Level: 5
+      - Name: SOA_TALISMAN_OF_SOUL_STEALING
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_MASTERY
+            Level: 1
+          - Name: SOA_SOUL_MASTERY
+            Level: 1
+      - Name: SOA_TOTEM_OF_TUTELARY
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_MASTERY
+            Level: 3
+          - Name: SOA_SOUL_MASTERY
+            Level: 3
+      - Name: SOA_TALISMAN_OF_FIVE_ELEMENTS
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_MASTERY
+            Level: 1
+      - Name: SOA_TALISMAN_OF_BLUE_DRAGON
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_OF_SOUL_STEALING
+            Level: 1
+      - Name: SOA_TALISMAN_OF_WHITE_TIGER
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_OF_BLUE_DRAGON
+            Level: 1
+      - Name: SOA_TALISMAN_OF_RED_PHOENIX
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_OF_WHITE_TIGER
+            Level: 1
+      - Name: SOA_TALISMAN_OF_BLACK_TORTOISE
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_OF_RED_PHOENIX
+            Level: 1
+      - Name: SOA_TALISMAN_OF_FOUR_BEARING_GOD
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_OF_BLUE_DRAGON
+            Level: 1
+          - Name: SOA_TALISMAN_OF_WHITE_TIGER
+            Level: 1
+          - Name: SOA_TALISMAN_OF_RED_PHOENIX
+            Level: 1
+          - Name: SOA_TALISMAN_OF_BLACK_TORTOISE
+            Level: 1
+      - Name: SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_SOUL_MASTERY
+            Level: 3
+          - Name: SOA_TALISMAN_OF_FIVE_ELEMENTS
+            Level: 1
+          - Name: SOA_TALISMAN_OF_FOUR_BEARING_GOD
+            Level: 1
+      - Name: SOA_SOUL_OF_HEAVEN_AND_EARTH
+        MaxLevel: 10
+        Requires:
+          - Name: SOA_TALISMAN_OF_PROTECTION
+            Level: 5
+          - Name: SOA_TALISMAN_OF_WARRIOR
+            Level: 5
+          - Name: SOA_TALISMAN_OF_MAGICIAN
+            Level: 5
+          - Name: SOA_TALISMAN_OF_FIVE_ELEMENTS
+            Level: 5
   - Job: Night_Watch
     Inherit:
       Novice: true
@@ -8083,3 +8193,108 @@ Body:
             Level: 5
           - Name: HN_NAPALM_VULCAN_STRIKE
             Level: 5
+  - Job: Spirit_Handler
+    Inherit:
+      Summoner: true
+    Tree:
+      - Name: SH_MYSTICAL_CREATURE_MASTERY
+        MaxLevel: 10
+      - Name: SH_CHUL_HO_SONIC_CLAW
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 1
+      - Name: SH_KI_SUL_WATER_SPRAYING
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 1
+      - Name: SH_COLORS_OF_HYUN_ROK
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 1
+      - Name: SH_HOWLING_OF_CHUL_HO
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 3
+          - Name: SH_CHUL_HO_SONIC_CLAW
+            Level: 3
+      - Name: SH_MARINE_FESTIVAL_OF_KI_SUL
+        MaxLevel: 5
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 3
+          - Name: SH_KI_SUL_WATER_SPRAYING
+            Level: 3
+      - Name: SH_SANDY_FESTIVAL_OF_KI_SUL
+        MaxLevel: 5
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 3
+          - Name: SH_KI_SUL_WATER_SPRAYING
+            Level: 3
+      - Name: SH_HYUN_ROKS_BREEZE
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 3
+          - Name: SH_COLORS_OF_HYUN_ROK
+            Level: 3
+      - Name: SH_HOGOGONG_STRIKE
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 5
+          - Name: SH_CHUL_HO_SONIC_CLAW
+            Level: 3
+      - Name: SH_KI_SUL_RAMPAGE
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 5
+          - Name: SH_MARINE_FESTIVAL_OF_KI_SUL
+            Level: 2
+          - Name: SH_SANDY_FESTIVAL_OF_KI_SUL
+            Level: 2
+      - Name: SH_HYUN_ROK_CANNON
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 5
+          - Name: SH_HYUN_ROKS_BREEZE
+            Level: 3
+      - Name: SH_COMMUNE_WITH_CHUL_HO
+        MaxLevel: 1
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 7
+          - Name: SH_HOGOGONG_STRIKE
+            Level: 3
+      - Name: SH_COMMUNE_WITH_KI_SUL
+        MaxLevel: 1
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 7
+          - Name: SH_KI_SUL_RAMPAGE
+            Level: 3
+      - Name: SH_COMMUNE_WITH_HYUN_ROK
+        MaxLevel: 1
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 7
+          - Name: SH_HYUN_ROK_CANNON
+            Level: 3
+      - Name: SH_TEMPORARY_COMMUNION
+        MaxLevel: 5
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 10
+      - Name: SH_BLESSING_OF_MYSTICAL_CREATURES
+        MaxLevel: 5
+        Requires:
+          - Name: SH_COMMUNE_WITH_KI_SUL
+            Level: 1
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 10

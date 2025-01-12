@@ -62,7 +62,7 @@ int32 inter_recv_packet_length[] = {
 	-1,
 	13,
 	36,
-	(2 + 4 + 4 + 4 + 1 + NAME_LENGTH),
+	(2 + 4 + 4 + 4 + NAME_LENGTH),
 	0,
 	-1,
 	0,
@@ -878,12 +878,11 @@ void mapif_acc_info_ack(int32 fd, int32 u_fd, int32 acc_id, const char *acc_name
  */
 void mapif_parse_accinfo(int32 fd) {
 	int32 u_fd = RFIFOL(fd, 2), u_aid = RFIFOL(fd, 6), u_group = RFIFOL(fd, 10);
-	char type = RFIFOB(fd, 14);
 	char query[NAME_LENGTH], query_esq[NAME_LENGTH * 2 + 1];
 	uint32 account_id = 0;
 	char *data;
 
-	safestrncpy(query, RFIFOCP(fd, 15), NAME_LENGTH);
+	safestrncpy(query, RFIFOCP(fd, 14), NAME_LENGTH);
 	Sql_EscapeString(sql_handle, query_esq, query);
 
 	account_id = atoi(query);
@@ -896,11 +895,12 @@ void mapif_parse_accinfo(int32 fd) {
 								   query_esq) ||
 			Sql_NumRows(sql_handle) == 0) {
 			if (Sql_NumRows(sql_handle) == 0) {
-				inter_to_fd(fd, u_fd, u_aid, (char *)msg_txt(212), query);
+				inter_to_fd(
+					fd, u_fd, u_aid, (char *)msg_txt(212), query); // No matches were found for your criteria, '%s'
 			}
 			else {
 				Sql_ShowDebug(sql_handle);
-				inter_to_fd(fd, u_fd, u_aid, (char *)msg_txt(213));
+				inter_to_fd(fd, u_fd, u_aid, (char *)msg_txt(213)); // An error occured, bother your admin about it.
 			}
 			Sql_FreeResult(sql_handle);
 			return;
@@ -913,7 +913,13 @@ void mapif_parse_accinfo(int32 fd) {
 				Sql_FreeResult(sql_handle);
 			}
 			else { // more than one, listing... [Dekamaster/Nightroad]
-				inter_to_fd(fd, u_fd, u_aid, (char *)msg_txt(214), (int32)Sql_NumRows(sql_handle));
+				inter_to_fd(
+					fd,
+					u_fd,
+					u_aid,
+					(char *)msg_txt(214),
+					(int32)Sql_NumRows(
+						sql_handle)); // Your query returned the following %d results, please be more specific...
 				while (SQL_SUCCESS == Sql_NextRow(sql_handle)) {
 					int32 class_;
 					short base_level, job_level, online;
@@ -941,7 +947,7 @@ void mapif_parse_accinfo(int32 fd) {
 								job_name(class_),
 								base_level,
 								job_level,
-								online ? "Online" : "Offline");
+								online ? "Online" : "Offline"); // [AID: %d] %s | %s | Level: %d/%d | %s
 				}
 				Sql_FreeResult(sql_handle);
 				return;
@@ -950,8 +956,8 @@ void mapif_parse_accinfo(int32 fd) {
 	}
 
 	/* it will only get here if we have a single match then ask login-server to fetch the `login` record */
-	if (!account_id || chlogif_req_accinfo(fd, u_fd, u_aid, account_id, type) != 1) {
-		inter_to_fd(fd, u_fd, u_aid, (char *)msg_txt(213));
+	if (!account_id || chlogif_req_accinfo(fd, u_fd, u_aid, account_id) != 1) {
+		inter_to_fd(fd, u_fd, u_aid, (char *)msg_txt(213)); // An error occured, bother your admin about it.
 	}
 	return;
 }
@@ -964,7 +970,6 @@ void mapif_accinfo_ack(bool success,
 					   int32 u_fd,
 					   int32 u_aid,
 					   int32 account_id,
-					   int8 type,
 					   int32 group_id,
 					   int32 logincount,
 					   int32 state,
@@ -978,34 +983,37 @@ void mapif_accinfo_ack(bool success,
 	}
 
 	if (!success) {
-		inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(216), account_id);
+		inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(216), account_id); // No account with ID '%d' was found.
 		return;
 	}
 
-	if (type == 1) { // type 1 we don't want all the info [lighta] @CHECKME
-		mapif_acc_info_ack(map_fd, u_fd, account_id, userid);
-		return;
-	}
+	inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(217), account_id); // -- Account %d --
+	inter_to_fd(
+		map_fd, u_fd, u_aid, (char *)msg_txt(218), userid, group_id, state); // User: %s | GM Group: %d | State: %d
+	inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(221), email, birthdate); // Account e-mail: %s | Birthdate: %s
+	inter_to_fd(
+		map_fd, u_fd, u_aid, (char *)msg_txt(222), last_ip, geoip_getcountry(str2ip(last_ip))); // Last IP: %s (%s)
+	inter_to_fd(map_fd,
+				u_fd,
+				u_aid,
+				(char *)msg_txt(223),
+				logincount,
+				lastlogin); // This user has logged in %d times, the last time was at %s
+	inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(224)); // -- Character Details --
 
-	inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(217), account_id);
-	inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(218), userid, group_id, state);
-	inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(221), email, birthdate);
-	inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(222), last_ip, geoip_getcountry(str2ip(last_ip)));
-	inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(223), logincount, lastlogin);
-	inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(224));
-
-	if (SQL_ERROR == Sql_Query(sql_handle,
-							   "SELECT `char_id`, `name`, `char_num`, `class`, `base_level`, `job_level`, `online` "
-							   "FROM `%s` WHERE `account_id` = '%d' ORDER BY `char_num` LIMIT %d",
-							   schema_config.char_db,
-							   account_id,
-							   MAX_CHARS) ||
+	if (SQL_ERROR ==
+			Sql_Query(sql_handle,
+					  "SELECT `char_id`, `name`, `char_num`, `class`, `base_level`, `job_level`, `online` FROM "
+					  "`%s` WHERE `account_id` = '%d' ORDER BY `char_num` LIMIT %d",
+					  schema_config.char_db,
+					  account_id,
+					  MAX_CHARS) ||
 		Sql_NumRows(sql_handle) == 0) {
 		if (Sql_NumRows(sql_handle) == 0) {
-			inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(226));
+			inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(226)); // This account doesn't have characters.
 		}
 		else {
-			inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(213));
+			inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(213)); // An error occured, bother your admin about it.
 			Sql_ShowDebug(sql_handle);
 		}
 	}
@@ -1041,7 +1049,7 @@ void mapif_accinfo_ack(bool success,
 						job_name(class_),
 						base_level,
 						job_level,
-						online ? "Online" : "Offline");
+						online ? "Online" : "Offline"); // [Slot/CID: %d/%d] %s | %s | Level: %d/%d | %s
 		}
 	}
 	Sql_FreeResult(sql_handle);

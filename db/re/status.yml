@@ -6499,8 +6499,8 @@ Body:
       MaxSp: true
   - Status: Norecover_State
     Icon: EFST_HANDICAPSTATE_NORECOVER
-    Fail:
-      Norecover_State: true
+    CalcFlags:
+      Regen: true
   - Status: Suhide
     Icon: EFST_SUHIDE
     DurationLookup: SU_HIDE
@@ -7946,6 +7946,8 @@ Body:
     Flags:
       BlEffect: true
       DisplayPc: true
+    EndOnStart:
+      Sandy_Festival: true
   - Status: Benedictum
     Icon: EFST_BENEDICTUM
     DurationLookup: CD_BENEDICTUM
@@ -7956,6 +7958,8 @@ Body:
     Flags:
       BlEffect: true
       DisplayPc: true
+    EndOnStart:
+      Marine_Festival: true
   - Status: Axe_Stomp
     Icon: EFST_AXE_STOMP
     DurationLookup: MT_AXE_STOMP
@@ -9429,3 +9433,245 @@ Body:
       bonus bVariableCastrate, -.@val1;
       bonus bMaxHPrate, .@val1;
       bonus bMaxSPrate, .@val1;
+  - Status: Talisman_of_Protection
+    Icon: EFST_TALISMAN_OF_PROTECTION
+    DurationLookup: SOA_TALISMAN_OF_PROTECTION
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Talisman_of_Warrior
+    Icon: EFST_TALISMAN_OF_WARRIOR
+    DurationLookup: SOA_TALISMAN_OF_WARRIOR
+    CalcFlags:
+      Patk: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      RequireWeapon: true
+  - Status: Talisman_of_Magician
+    Icon: EFST_TALISMAN_OF_MAGICIAN
+    DurationLookup: SOA_TALISMAN_OF_MAGICIAN
+    CalcFlags:
+      Smatk: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      RequireWeapon: true
+  - Status: Talisman_of_five_Elements
+    Icon: EFST_TALISMAN_OF_FIVE_ELEMENTS
+    DurationLookup: SOA_TALISMAN_OF_FIVE_ELEMENTS
+    CalcFlags:
+      All: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      RequireWeapon: true
+  - Status: Totem_of_Tutelary
+    Icon: EFST_BLANK
+    DurationLookup: SOA_TOTEM_OF_TUTELARY
+    CalcFlags:
+      Regen: true
+  - Status: T_First_God
+    Icon: EFST_T_FIRST_GOD
+    DurationLookup: SOA_TALISMAN_OF_BLUE_DRAGON
+    Fail:
+      T_Second_God: true
+      T_Third_God: true
+      T_Fourth_God: true
+      T_Fifth_God: true
+  - Status: T_Second_God
+    Icon: EFST_T_SECOND_GOD
+    DurationLookup: SOA_TALISMAN_OF_WHITE_TIGER
+    Fail:
+      T_Second_God: true
+    EndOnStart:
+      T_First_God: true
+  - Status: T_Third_God
+    Icon: EFST_T_THIRD_GOD
+    DurationLookup: SOA_TALISMAN_OF_RED_PHOENIX
+    Fail:
+      T_Third_God: true
+    EndOnStart:
+      T_Second_God: true
+  - Status: T_Fourth_God
+    Icon: EFST_T_FOURTH_GOD
+    DurationLookup: SOA_TALISMAN_OF_BLACK_TORTOISE
+    Fail:
+      T_Fourth_God: true
+    EndOnStart:
+      T_Third_God: true
+  - Status: T_Fifth_God
+    Icon: EFST_T_FIVETH_GOD
+    DurationLookup: SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS
+    CalcFlags:
+      Smatk: true
+    Flags:
+      NoBanishingBuster: true
+      NoClearance: true
+      NoDispell: true
+    EndOnStart:
+      T_Fourth_God: true
+  - Status: Heaven_and_Earth
+    Icon: EFST_HEAVEN_AND_EARTH
+    DurationLookup: SOA_SOUL_OF_HEAVEN_AND_EARTH
+    CalcFlags:
+      All: true
+  - Status: RETURN_TO_ELDICASTES
+    Icon: EFST_RETURN_TO_ELDICASTES
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: GUARDIAN_RECALL
+    Icon: EFST_GUARDIAN_RECALL
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: ECLAGE_RECALL
+    Icon: EFST_ECLAGE_RECALL
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: ALL_NIFLHEIM_RECALL
+    Icon: EFST_ALL_NIFLHEIM_RECALL
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: ALL_PRONTERA_RECALL
+    Icon: EFST_ALL_PRONTERA_RECALL
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: ALL_GLASTHEIM_RECALL
+    Icon: EFST_ALL_GLASTHEIM_RECALL
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: ALL_THANATOS_RECALL
+    Icon: EFST_ALL_THANATOS_RECALL
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: ALL_LIGHTHALZEN_RECALL
+    Icon: EFST_ALL_LIGHTHALZEN_RECALL
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Hogogong
+    Icon: EFST_HOGOGONG
+    DurationLookup: SH_HOWLING_OF_CHUL_HO
+    Flags:
+      Debuff: true
+      BlEffect: true
+      DisplayPc: true
+  - Status: Temporary_Communion
+    Icon: EFST_TEMPORARY_COMMUNION
+    DurationLookup: SH_TEMPORARY_COMMUNION
+    CalcFlags:
+      Patk: true
+      Smatk: true
+      Hplus: true
+  - Status: Marine_Festival
+    Icon: EFST_MARINE_FESTIVAL
+    DurationLookup: SH_MARINE_FESTIVAL_OF_KI_SUL
+    CalcFlags:
+      Pow: true
+      Con: true
+      Crt: true
+    EndOnStart:
+      Benedictum: true
+  - Status: Sandy_Festival
+    Icon: EFST_SANDY_FESTIVAL
+    DurationLookup: SH_SANDY_FESTIVAL_OF_KI_SUL
+    CalcFlags:
+      Spl: true
+      Wis: true
+      Sta: true
+    EndOnStart:
+      Religio: true
+  - Status: Ki_Sul_Rampage
+    Icon: EFST_KI_SUL_RAMPAGE
+    DurationLookup: SH_KI_SUL_RAMPAGE
+    States:
+      NoCast: true
+  - Status: Colors_of_Hyun_Rok_Buff
+    Icon: EFST_COLORS_OF_HYUN_ROK_BUFF
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+  - Status: Colors_of_Hyun_Rok_1
+    Icon: EFST_COLORS_OF_HYUN_ROK_1
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+    EndOnStart:
+      Colors_of_Hyun_Rok_2: true
+      Colors_of_Hyun_Rok_3: true
+      Colors_of_Hyun_Rok_4: true
+      Colors_of_Hyun_Rok_5: true
+      Colors_of_Hyun_Rok_6: true
+  - Status: Colors_of_Hyun_Rok_2
+    Icon: EFST_COLORS_OF_HYUN_ROK_2
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+    EndOnStart:
+      Colors_of_Hyun_Rok_1: true
+      Colors_of_Hyun_Rok_3: true
+      Colors_of_Hyun_Rok_4: true
+      Colors_of_Hyun_Rok_5: true
+      Colors_of_Hyun_Rok_6: true
+  - Status: Colors_of_Hyun_Rok_3
+    Icon: EFST_COLORS_OF_HYUN_ROK_3
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+    EndOnStart:
+      Colors_of_Hyun_Rok_1: true
+      Colors_of_Hyun_Rok_2: true
+      Colors_of_Hyun_Rok_4: true
+      Colors_of_Hyun_Rok_5: true
+      Colors_of_Hyun_Rok_6: true
+  - Status: Colors_of_Hyun_Rok_4
+    Icon: EFST_COLORS_OF_HYUN_ROK_4
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+    EndOnStart:
+      Colors_of_Hyun_Rok_1: true
+      Colors_of_Hyun_Rok_2: true
+      Colors_of_Hyun_Rok_3: true
+      Colors_of_Hyun_Rok_5: true
+      Colors_of_Hyun_Rok_6: true
+  - Status: Colors_of_Hyun_Rok_5
+    Icon: EFST_COLORS_OF_HYUN_ROK_5
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+    EndOnStart:
+      Colors_of_Hyun_Rok_1: true
+      Colors_of_Hyun_Rok_2: true
+      Colors_of_Hyun_Rok_3: true
+      Colors_of_Hyun_Rok_4: true
+      Colors_of_Hyun_Rok_6: true
+  - Status: Colors_of_Hyun_Rok_6
+    Icon: EFST_COLORS_OF_HYUN_ROK_6
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+    EndOnStart:
+      Colors_of_Hyun_Rok_1: true
+      Colors_of_Hyun_Rok_2: true
+      Colors_of_Hyun_Rok_3: true
+      Colors_of_Hyun_Rok_4: true
+      Colors_of_Hyun_Rok_5: true
+  - Status: Blessing_of_M_Creatures
+    Icon: EFST_BLESSING_OF_M_CREATURES
+    DurationLookup: SH_BLESSING_OF_MYSTICAL_CREATURES
+    CalcFlags:
+      Patk: true
+      Smatk: true
+  - Status: Blessing_of_M_C_Debuff
+    Icon: EFST_BLESSING_OF_M_C_DEBUFF
+    DurationLookup: SH_BLESSING_OF_MYSTICAL_CREATURES
