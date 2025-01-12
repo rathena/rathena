@@ -6,6 +6,8 @@
 
 #include <common/cbasetypes.hpp>
 
+struct mmo_account;
+
 /**
  * Entry point from char-server to log-server.
  * Function that checks incoming command, then splits it to the correct handler.
@@ -22,6 +24,8 @@ int32 logchrif_parse(int32 fd);
  * @return : the number of char-serv the packet was sent to
  */
 int32 logchrif_sendallwos(int32 sfd, uint8* buf, size_t len);
+
+int32 logchrif_sendvipdata( int32 fd, struct mmo_account* acc, unsigned char flag, int32 mapfd );
 
 /**
  * loginchrif constructor

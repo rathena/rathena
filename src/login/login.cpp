@@ -90,6 +90,9 @@ struct online_login_data* login_add_online_user(int32 char_server, uint32 accoun
 		p->account_id = account_id;
 		p->char_server = char_server;
 		p->waiting_disconnect = INVALID_TIMER;
+#ifdef VIP_ENABLE
+		p->vip_timeout_tid = INVALID_TIMER;
+#endif
 	}else{
 		p->char_server = char_server;
 
