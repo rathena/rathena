@@ -5082,10 +5082,12 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 				clif_specialeffect_single(bl,EF_BABYBODY2,sd->fd);
 #if PACKETVER >= 20120404
 			if (battle_config.monster_hp_bars_info && !map_getmapflag(bl->m, MF_HIDEMOBHPBAR)) {
-				int32 i;
-				for(i = 0; i < DAMAGELOG_SIZE; i++)// must show hp bar to all char who already hit the mob.
-					if( md->dmglog[i].id == sd->status.char_id )
+				// Must show hp bar to all char who already hit the mob.
+				for( const auto& entry : md->dmglog ){
+					if( entry.id == sd->status.char_id ){
 						clif_monster_hp_bar(md, sd->fd);
+					}
+				}
 			}
 #endif
 		}
