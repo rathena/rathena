@@ -850,97 +850,95 @@ int32 skill_calc_heal(struct block_list *src, struct block_list *target, uint16 
 	if (hp_bonus && skill_id != SOA_TALISMAN_OF_PROTECTION) {
 		hp += hp * hp_bonus / 100;
 	}
-}
 
-// MATK part of the RE heal formula [malufett]
-// Note: in this part matk bonuses from items or skills are not applied
-switch (skill_id) {
-	case BA_APPLEIDUN:
-	case PR_SANCTUARY:
-	case NPC_EVILLAND:
-		break;
-	default: {
-		status_data *status = status_get_status_data(*src);
-		int32 min, max;
+	// MATK part of the RE heal formula [malufett]
+	// Note: in this part matk bonuses from items or skills are not applied
+	switch (skill_id) {
+		case BA_APPLEIDUN:
+		case PR_SANCTUARY:
+		case NPC_EVILLAND:
+			break;
+		default: {
+			status_data *status = status_get_status_data(*src);
+			int32 min, max;
 
-		min = status_base_matk_min(src, status, status_get_lv(src));
-		max = status_base_matk_max(src, status, status_get_lv(src));
-		if (status->rhw.matk > 0) {
-			int32 wMatk, variance;
-			wMatk = status->rhw.matk;
-			variance = wMatk * status->rhw.wlv / 10;
-			min += wMatk - variance;
-			max += wMatk + variance;
-		}
+			min = status_base_matk_min(src, status, status_get_lv(src));
+			max = status_base_matk_max(src, status, status_get_lv(src));
+			if (status->rhw.matk > 0) {
+				int32 wMatk, variance;
+				wMatk = status->rhw.matk;
+				variance = wMatk * status->rhw.wlv / 10;
+				min += wMatk - variance;
+				max += wMatk + variance;
+			}
 
-		if (sc && sc->getSCE(SC_RECOGNIZEDSPELL)) {
-			min = max;
-		}
+			if (sc && sc->getSCE(SC_RECOGNIZEDSPELL)) {
+				min = max;
+			}
 
-		if (sd && sd->right_weapon.overrefine > 0) {
-			min++;
-			max += sd->right_weapon.overrefine - 1;
-		}
+			if (sd && sd->right_weapon.overrefine > 0) {
+				min++;
+				max += sd->right_weapon.overrefine - 1;
+			}
 
-		if (max > min) {
-			hp += min + rnd() % (max - min);
-		}
-		else {
-			hp += min;
-		}
-	}
-}
-
-// Global multipliers are applied after the MATK is applied
-if (tsc != nullptr && !tsc->empty()) {
-	if (skill_id != NPC_EVILLAND && skill_id != BA_APPLEIDUN) {
-		if (tsc->getSCE(SC_WATER_INSIGNIA) && tsc->getSCE(SC_WATER_INSIGNIA)->val1 == 2) {
-			global_bonus *= 1.1f;
+			if (max > min) {
+				hp += min + rnd() % (max - min);
+			}
+			else {
+				hp += min;
+			}
 		}
 	}
-}
 
-if (skill_id == AB_HIGHNESSHEAL) {
-	global_bonus *= 2 + 0.3f * (skill_lv - 1);
-}
-else if (skill_id == CD_DILECTIO_HEAL) { // Description says its 10% on Lv 1 but thats clearly a typo. [Rytech]
-	global_bonus *= 1 + 0.15f + 0.05f * skill_lv;
-}
+	// Global multipliers are applied after the MATK is applied
+	if (tsc != nullptr && !tsc->empty()) {
+		if (skill_id != NPC_EVILLAND && skill_id != BA_APPLEIDUN) {
+			if (tsc->getSCE(SC_WATER_INSIGNIA) && tsc->getSCE(SC_WATER_INSIGNIA)->val1 == 2) {
+				global_bonus *= 1.1f;
+			}
+		}
+	}
+
+	if (skill_id == AB_HIGHNESSHEAL) {
+		global_bonus *= 2 + 0.3f * (skill_lv - 1);
+	}
+	else if (skill_id == CD_DILECTIO_HEAL) { // Description says its 10% on Lv 1 but thats clearly a typo. [Rytech]
+		global_bonus *= 1 + 0.15f + 0.05f * skill_lv;
+	}
 #endif
 
-if (heal && tsc != nullptr && !tsc->empty()) {
-	uint8 penalty = 0;
+	if (heal && tsc != nullptr && !tsc->empty()) {
+		uint8 penalty = 0;
 
-	if (tsc->getSCE(SC_CRITICALWOUND)) {
-		penalty += tsc->getSCE(SC_CRITICALWOUND)->val2;
-	}
-	if (tsc->getSCE(SC_DEATHHURT) && tsc->getSCE(SC_DEATHHURT)->val3 == 1) {
-		penalty += 20;
-	}
-	if (tsc->getSCE(SC_NORECOVER_STATE)) {
-		penalty = 100;
-	}
-	if (penalty > 0) {
+		if (tsc->getSCE(SC_CRITICALWOUND)) {
+			penalty += tsc->getSCE(SC_CRITICALWOUND)->val2;
+		}
+		if (tsc->getSCE(SC_DEATHHURT) && tsc->getSCE(SC_DEATHHURT)->val3 == 1) {
+			penalty += 20;
+		}
+		if (tsc->getSCE(SC_NORECOVER_STATE)) {
+			penalty = 100;
+		}
+		if (penalty > 0) {
 #ifdef RENEWAL
-		penalty = cap_value(penalty, 1, 100);
-		global_bonus *= (100 - penalty) / 100.f;
+			penalty = cap_value(penalty, 1, 100);
+			global_bonus *= (100 - penalty) / 100.f;
 #else
 			hp -= hp * penalty / 100;
 #endif
+		}
 	}
-}
 
 #ifdef RENEWAL
-hp = (int32)(hp * global_bonus);
+	hp = (int32)(hp * global_bonus);
 
-// Final heal increased by HPlus.
-// Is this the right place for this??? [Rytech]
-if (sd && status_get_hplus(src) > 0 && skill_id != SOA_TALISMAN_OF_PROTECTION) {
-	hp += hp * status_get_hplus(src) / 100;
-}
-}
+	// Final heal increased by HPlus.
+	// Is this the right place for this??? [Rytech]
+	if (sd && status_get_hplus(src) > 0 && skill_id != SOA_TALISMAN_OF_PROTECTION) {
+		hp += hp * status_get_hplus(src) / 100;
+	}
 
-return (heal) ? max(1, hp) : hp;
+	return (heal) ? max(1, hp) : hp;
 #else
 	return hp;
 #endif
