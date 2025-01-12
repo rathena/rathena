@@ -30103,200 +30103,234 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef &node) {
 			name.resize(SKILL_NAME_LENGTH);
 			memcpy(skill->name, name.c_str(), sizeof(skill->name));
 		}
+	}
+	if (this->nodeExists(node, "Description")) {
+		std::string desc;
 
-		if (this->nodeExists(node, "Description")) {
-			std::string desc;
-
-			if (!this->asString(node, "Description", desc)) {
-				return 0;
-			}
-
-			if (desc.length() > SKILL_DESC_LENGTH) {
-				this->invalidWarning(node["Description"],
-									 "Description \"%s\" exceeds maximum length of %d.\n",
-									 desc.c_str(),
-									 SKILL_DESC_LENGTH);
-				return 0;
-			}
-
-			desc.resize(SKILL_DESC_LENGTH);
-			memcpy(skill->desc, desc.c_str(), sizeof(skill->desc));
+		if (!this->asString(node, "Description", desc)) {
+			return 0;
 		}
 
-		if (this->nodeExists(node, "MaxLevel")) {
-			uint16 skill_lv;
-
-			if (!this->asUInt16(node, "MaxLevel", skill_lv)) {
-				return 0;
-			}
-
-			if (skill_lv == 0 || skill_lv > MAX_SKILL_LEVEL) {
-				this->invalidWarning(
-					node["MaxLevel"], "MaxLevel %hu does not meet the bounds of 1~%d.\n", skill_lv, MAX_SKILL_LEVEL);
-				return 0;
-			}
-
-			skill->max = skill_lv;
+		if (desc.length() > SKILL_DESC_LENGTH) {
+			this->invalidWarning(node["Description"],
+								 "Description \"%s\" exceeds maximum length of %d.\n",
+								 desc.c_str(),
+								 SKILL_DESC_LENGTH);
+			return 0;
 		}
 
-		if (this->nodeExists(node, "Type")) {
-			std::string type;
+		desc.resize(SKILL_DESC_LENGTH);
+		memcpy(skill->desc, desc.c_str(), sizeof(skill->desc));
+	}
 
-			if (!this->asString(node, "Type", type)) {
-				return 0;
-			}
+	if (this->nodeExists(node, "MaxLevel")) {
+		uint16 skill_lv;
 
-			std::string type_constant = "BF_" + type;
+		if (!this->asUInt16(node, "MaxLevel", skill_lv)) {
+			return 0;
+		}
 
+		if (skill_lv == 0 || skill_lv > MAX_SKILL_LEVEL) {
+			this->invalidWarning(
+				node["MaxLevel"], "MaxLevel %hu does not meet the bounds of 1~%d.\n", skill_lv, MAX_SKILL_LEVEL);
+			return 0;
+		}
+
+		skill->max = skill_lv;
+	}
+
+	if (this->nodeExists(node, "Type")) {
+		std::string type;
+
+		if (!this->asString(node, "Type", type)) {
+			return 0;
+		}
+
+		std::string type_constant = "BF_" + type;
+
+		int64 constant;
+
+		if (!script_get_constant(type_constant.c_str(), &constant)) {
+			this->invalidWarning(node["Type"], "Type %s is invalid.\n", type.c_str());
+			return 0;
+		}
+
+		if (constant < BF_NONE || constant > BF_MISC) {
+			this->invalidWarning(
+				node["Type"], "Constant Type %s is not a supported skill type.\n", type_constant.c_str());
+			return 0;
+		}
+
+		skill->skill_type = static_cast<e_battle_flag>(constant);
+	}
+	else {
+		if (!exists) {
+			skill->skill_type = BF_NONE;
+		}
+	}
+
+	if (this->nodeExists(node, "TargetType")) {
+		std::string inf;
+
+		if (!this->asString(node, "TargetType", inf)) {
+			return 0;
+		}
+
+		std::string inf_constant = "INF_" + inf + "_SKILL";
+		int64 constant;
+
+		if (!script_get_constant(inf_constant.c_str(), &constant)) {
+			this->invalidWarning(node["TargetType"], "TargetType %s is invalid.\n", inf.c_str());
+			return 0;
+		}
+
+		skill->inf = static_cast<uint16>(constant);
+	}
+
+	if (this->nodeExists(node, "DamageFlags")) {
+		const auto &damageNode = node["DamageFlags"];
+
+		for (const auto &it : damageNode) {
+			std::string nk;
+			c4::from_chars(it.key(), &nk);
+			std::string nk_constant = "NK_" + nk;
 			int64 constant;
 
-			if (!script_get_constant(type_constant.c_str(), &constant)) {
-				this->invalidWarning(node["Type"], "Type %s is invalid.\n", type.c_str());
+			if (!script_get_constant(nk_constant.c_str(), &constant)) {
+				this->invalidWarning(damageNode, "DamageFlags %s is invalid.\n", nk.c_str());
 				return 0;
 			}
 
-			if (constant < BF_NONE || constant > BF_MISC) {
-				this->invalidWarning(
-					node["Type"], "Constant Type %s is not a supported skill type.\n", type_constant.c_str());
+			bool active;
+
+			if (!this->asBool(damageNode, nk, active)) {
 				return 0;
 			}
 
-			skill->skill_type = static_cast<e_battle_flag>(constant);
+			if (active) {
+				skill->nk.set(static_cast<uint8>(constant));
+			}
+			else {
+				skill->nk.reset(static_cast<uint8>(constant));
+			}
+		}
+	}
+
+	if (this->nodeExists(node, "Flags")) {
+		const auto &infoNode = node["Flags"];
+
+		for (const auto &it : infoNode) {
+			std::string inf2;
+			c4::from_chars(it.key(), &inf2);
+			std::string inf2_constant = "INF2_" + inf2;
+			int64 constant;
+
+			if (!script_get_constant(inf2_constant.c_str(), &constant)) {
+				this->invalidWarning(infoNode, "Flag %s is invalid, skipping.\n", inf2.c_str());
+				continue;
+			}
+
+			bool active;
+
+			if (!this->asBool(infoNode, inf2, active)) {
+				return 0;
+			}
+
+			if (active) {
+				skill->inf2.set(static_cast<uint8>(constant));
+			}
+			else {
+				skill->inf2.reset(static_cast<uint8>(constant));
+			}
+		}
+	}
+
+	if (this->nodeExists(node, "Range")) {
+		if (!this->parseNode("Range", "Size", node, skill->range)) {
+			return 0;
+		}
+	}
+	else {
+		if (!exists) {
+			memset(skill->range, 0, sizeof(skill->range));
+		}
+	}
+
+	if (this->nodeExists(node, "Hit")) {
+		std::string hit;
+
+		if (!this->asString(node, "Hit", hit)) {
+			return 0;
+		}
+
+		std::string hit_constant = "DMG_" + hit;
+		int64 constant;
+
+		if (!script_get_constant(hit_constant.c_str(), &constant)) {
+			this->invalidWarning(node["Hit"], "Hit %s is invalid.\n", hit.c_str());
+			return 0;
+		}
+
+		skill->hit = static_cast<e_damage_type>(constant);
+	}
+	else {
+		if (!exists) {
+			skill->hit = DMG_NORMAL;
+		}
+	}
+
+	if (this->nodeExists(node, "HitCount")) {
+		if (!this->parseNode("HitCount", "Count", node, skill->num)) {
+			return 0;
+		}
+	}
+	else {
+		if (!exists) {
+			memset(skill->num, 0, sizeof(skill->num));
+		}
+	}
+
+	if (this->nodeExists(node, "Element")) {
+		const auto elementNode = node["Element"];
+		std::string element;
+
+		if (!elementNode.is_seq()) {
+			if (!this->asString(node, "Element", element)) {
+				return 0;
+			}
+
+			std::string element_constant = "ELE_" + element;
+			int64 constant;
+
+			if (!script_get_constant(element_constant.c_str(), &constant)) {
+				this->invalidWarning(elementNode["Element"], "Element %s is invalid.\n", element.c_str());
+				return 0;
+			}
+
+			if (constant == ELE_NONE) {
+				this->invalidWarning(elementNode["Element"], "%s is not a valid element.\n", element.c_str());
+				return 0;
+			}
+
+			memset(skill->element, static_cast<e_element>(constant), sizeof(skill->element));
 		}
 		else {
-			if (!exists) {
-				skill->skill_type = BF_NONE;
-			}
-		}
+			for (const auto &it : elementNode) {
+				uint16 skill_lv;
 
-		if (this->nodeExists(node, "TargetType")) {
-			std::string inf;
-
-			if (!this->asString(node, "TargetType", inf)) {
-				return 0;
-			}
-
-			std::string inf_constant = "INF_" + inf + "_SKILL";
-			int64 constant;
-
-			if (!script_get_constant(inf_constant.c_str(), &constant)) {
-				this->invalidWarning(node["TargetType"], "TargetType %s is invalid.\n", inf.c_str());
-				return 0;
-			}
-
-			skill->inf = static_cast<uint16>(constant);
-		}
-
-		if (this->nodeExists(node, "DamageFlags")) {
-			const auto &damageNode = node["DamageFlags"];
-
-			for (const auto &it : damageNode) {
-				std::string nk;
-				c4::from_chars(it.key(), &nk);
-				std::string nk_constant = "NK_" + nk;
-				int64 constant;
-
-				if (!script_get_constant(nk_constant.c_str(), &constant)) {
-					this->invalidWarning(damageNode, "DamageFlags %s is invalid.\n", nk.c_str());
-					return 0;
-				}
-
-				bool active;
-
-				if (!this->asBool(damageNode, nk, active)) {
-					return 0;
-				}
-
-				if (active) {
-					skill->nk.set(static_cast<uint8>(constant));
-				}
-				else {
-					skill->nk.reset(static_cast<uint8>(constant));
-				}
-			}
-		}
-
-		if (this->nodeExists(node, "Flags")) {
-			const auto &infoNode = node["Flags"];
-
-			for (const auto &it : infoNode) {
-				std::string inf2;
-				c4::from_chars(it.key(), &inf2);
-				std::string inf2_constant = "INF2_" + inf2;
-				int64 constant;
-
-				if (!script_get_constant(inf2_constant.c_str(), &constant)) {
-					this->invalidWarning(infoNode, "Flag %s is invalid, skipping.\n", inf2.c_str());
+				if (!this->asUInt16(it, "Level", skill_lv)) {
 					continue;
 				}
 
-				bool active;
-
-				if (!this->asBool(infoNode, inf2, active)) {
-					return 0;
+				if (skill_lv > MAX_SKILL_LEVEL) {
+					this->invalidWarning(it["Level"],
+										 "Element Level exceeds the maximum skill level of %d, skipping.\n",
+										 MAX_SKILL_LEVEL);
+					return false;
 				}
 
-				if (active) {
-					skill->inf2.set(static_cast<uint8>(constant));
-				}
-				else {
-					skill->inf2.reset(static_cast<uint8>(constant));
-				}
-			}
-		}
-
-		if (this->nodeExists(node, "Range")) {
-			if (!this->parseNode("Range", "Size", node, skill->range)) {
-				return 0;
-			}
-		}
-		else {
-			if (!exists) {
-				memset(skill->range, 0, sizeof(skill->range));
-			}
-		}
-
-		if (this->nodeExists(node, "Hit")) {
-			std::string hit;
-
-			if (!this->asString(node, "Hit", hit)) {
-				return 0;
-			}
-
-			std::string hit_constant = "DMG_" + hit;
-			int64 constant;
-
-			if (!script_get_constant(hit_constant.c_str(), &constant)) {
-				this->invalidWarning(node["Hit"], "Hit %s is invalid.\n", hit.c_str());
-				return 0;
-			}
-
-			skill->hit = static_cast<e_damage_type>(constant);
-		}
-		else {
-			if (!exists) {
-				skill->hit = DMG_NORMAL;
-			}
-		}
-
-		if (this->nodeExists(node, "HitCount")) {
-			if (!this->parseNode("HitCount", "Count", node, skill->num)) {
-				return 0;
-			}
-		}
-		else {
-			if (!exists) {
-				memset(skill->num, 0, sizeof(skill->num));
-			}
-		}
-
-		if (this->nodeExists(node, "Element")) {
-			const auto elementNode = node["Element"];
-			std::string element;
-
-			if (!elementNode.is_seq()) {
-				if (!this->asString(node, "Element", element)) {
-					return 0;
+				if (!this->asString(it, "Element", element)) {
+					continue;
 				}
 
 				std::string element_constant = "ELE_" + element;
@@ -30312,885 +30346,849 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef &node) {
 					return 0;
 				}
 
-				memset(skill->element, static_cast<e_element>(constant), sizeof(skill->element));
-			}
-			else {
-				for (const auto &it : elementNode) {
-					uint16 skill_lv;
-
-					if (!this->asUInt16(it, "Level", skill_lv)) {
-						continue;
-					}
-
-					if (skill_lv > MAX_SKILL_LEVEL) {
-						this->invalidWarning(it["Level"],
-											 "Element Level exceeds the maximum skill level of %d, skipping.\n",
-											 MAX_SKILL_LEVEL);
-						return false;
-					}
-
-					if (!this->asString(it, "Element", element)) {
-						continue;
-					}
-
-					std::string element_constant = "ELE_" + element;
-					int64 constant;
-
-					if (!script_get_constant(element_constant.c_str(), &constant)) {
-						this->invalidWarning(elementNode["Element"], "Element %s is invalid.\n", element.c_str());
-						return 0;
-					}
-
-					if (constant == ELE_NONE) {
-						this->invalidWarning(elementNode["Element"], "%s is not a valid element.\n", element.c_str());
-						return 0;
-					}
-
-					skill->element[skill_lv - 1] = static_cast<e_element>(constant);
-				}
+				skill->element[skill_lv - 1] = static_cast<e_element>(constant);
 			}
 		}
-		else {
-			if (!exists) {
-				memset(skill->element, ELE_NEUTRAL, sizeof(skill->element));
-			}
+	}
+	else {
+		if (!exists) {
+			memset(skill->element, ELE_NEUTRAL, sizeof(skill->element));
 		}
+	}
 
-		if (this->nodeExists(node, "SplashArea")) {
-			if (!this->parseNode("SplashArea", "Area", node, skill->splash)) {
-				return 0;
-			}
+	if (this->nodeExists(node, "SplashArea")) {
+		if (!this->parseNode("SplashArea", "Area", node, skill->splash)) {
+			return 0;
 		}
-		else {
-			if (!exists) {
-				memset(skill->splash, 0, sizeof(skill->splash));
-			}
+	}
+	else {
+		if (!exists) {
+			memset(skill->splash, 0, sizeof(skill->splash));
 		}
+	}
 
-		if (this->nodeExists(node, "ActiveInstance")) {
-			if (!this->parseNode("ActiveInstance", "Max", node, skill->maxcount)) {
-				return 0;
-			}
+	if (this->nodeExists(node, "ActiveInstance")) {
+		if (!this->parseNode("ActiveInstance", "Max", node, skill->maxcount)) {
+			return 0;
 		}
-		else {
-			if (!exists) {
-				memset(skill->maxcount, 0, sizeof(skill->maxcount));
-			}
+	}
+	else {
+		if (!exists) {
+			memset(skill->maxcount, 0, sizeof(skill->maxcount));
 		}
+	}
 
-		if (this->nodeExists(node, "Knockback")) {
-			if (!this->parseNode("Knockback", "Amount", node, skill->blewcount)) {
-				return 0;
-			}
+	if (this->nodeExists(node, "Knockback")) {
+		if (!this->parseNode("Knockback", "Amount", node, skill->blewcount)) {
+			return 0;
 		}
-		else {
-			if (!exists) {
-				memset(skill->blewcount, 0, sizeof(skill->blewcount));
-			}
+	}
+	else {
+		if (!exists) {
+			memset(skill->blewcount, 0, sizeof(skill->blewcount));
 		}
+	}
 
-		if (this->nodeExists(node, "CopyFlags")) {
-			const auto &copyNode = node["CopyFlags"];
+	if (this->nodeExists(node, "CopyFlags")) {
+		const auto &copyNode = node["CopyFlags"];
 
-			if (this->nodeExists(copyNode, "Skill")) {
-				const auto &copyskillNode = copyNode["Skill"];
+		if (this->nodeExists(copyNode, "Skill")) {
+			const auto &copyskillNode = copyNode["Skill"];
 
-				if (this->nodeExists(copyskillNode, "Plagiarism")) {
-					bool active;
+			if (this->nodeExists(copyskillNode, "Plagiarism")) {
+				bool active;
 
-					if (!this->asBool(copyskillNode, "Plagiarism", active)) {
-						return 0;
-					}
-
-					if (active) {
-						skill->copyable.option |= SKILL_COPY_PLAGIARISM;
-					}
-					else {
-						skill->copyable.option &= SKILL_COPY_PLAGIARISM;
-					}
-				}
-
-				if (this->nodeExists(copyskillNode, "Reproduce")) {
-					bool active;
-
-					if (!this->asBool(copyskillNode, "Reproduce", active)) {
-						return 0;
-					}
-
-					if (active) {
-						skill->copyable.option |= SKILL_COPY_REPRODUCE;
-					}
-					else {
-						skill->copyable.option &= SKILL_COPY_REPRODUCE;
-					}
-				}
-			}
-			else {
-				this->invalidWarning(copyNode, "CopyFlags requires a Skill copy type.\n");
-				return 0;
-			}
-
-			if (this->nodeExists(copyNode, "RemoveRequirement")) {
-				const auto &copyreqNode = copyNode["RemoveRequirement"];
-
-				for (const auto &it : copyreqNode) {
-					std::string req;
-					c4::from_chars(it.key(), &req);
-					std::string req_constant = "SKILL_REQ_" + req;
-					int64 constant;
-
-					if (!script_get_constant(req_constant.c_str(), &constant)) {
-						this->invalidWarning(copyreqNode, "CopyFlags RemoveRequirement %s is invalid.\n", req.c_str());
-						return 0;
-					}
-
-					skill->copyable.req_opt |= constant;
-				}
-			}
-			else {
-				if (!exists) {
-					skill->copyable.req_opt = 0;
-				}
-			}
-		}
-
-		if (this->nodeExists(node, "NoNearNPC")) {
-			const auto &npcNode = node["NoNearNPC"];
-
-			if (this->nodeExists(npcNode, "AdditionalRange")) {
-				uint16 range;
-
-				if (!this->asUInt16(npcNode, "AdditionalRange", range)) {
+				if (!this->asBool(copyskillNode, "Plagiarism", active)) {
 					return 0;
 				}
 
-				skill->unit_nonearnpc_range = range;
-			}
-			else {
-				if (!exists) {
-					skill->unit_nonearnpc_range = 0;
+				if (active) {
+					skill->copyable.option |= SKILL_COPY_PLAGIARISM;
+				}
+				else {
+					skill->copyable.option &= SKILL_COPY_PLAGIARISM;
 				}
 			}
 
-			if (this->nodeExists(npcNode, "Type")) {
-				const auto &npctypeNode = npcNode["Type"];
+			if (this->nodeExists(copyskillNode, "Reproduce")) {
+				bool active;
 
-				for (const auto &it : npctypeNode) {
-					std::string type;
-					c4::from_chars(it.key(), &type);
-					std::string type_constant = "SKILL_NONEAR_" + type;
-					int64 constant;
-
-					if (!script_get_constant(type_constant.c_str(), &constant)) {
-						this->invalidWarning(npctypeNode, "NoNearNPC Type %s is invalid.\n", type.c_str());
-						return 0;
-					}
-
-					bool active;
-
-					if (!this->asBool(npctypeNode, type, active)) {
-						return 0;
-					}
-
-					if (active) {
-						skill->unit_nonearnpc_type |= constant;
-					}
-					else {
-						skill->unit_nonearnpc_type &= ~constant;
-					}
+				if (!this->asBool(copyskillNode, "Reproduce", active)) {
+					return 0;
 				}
-			}
-			else {
-				if (!exists) {
-					skill->unit_nonearnpc_type = 0;
+
+				if (active) {
+					skill->copyable.option |= SKILL_COPY_REPRODUCE;
+				}
+				else {
+					skill->copyable.option &= SKILL_COPY_REPRODUCE;
 				}
 			}
 		}
-
-		if (this->nodeExists(node, "CastCancel")) {
-			bool active;
-
-			if (!this->asBool(node, "CastCancel", active)) {
-				return 0;
-			}
-
-			skill->castcancel = active;
-		}
 		else {
-			if (!exists) {
-				skill->castcancel = false;
-			}
+			this->invalidWarning(copyNode, "CopyFlags requires a Skill copy type.\n");
+			return 0;
 		}
 
-		if (this->nodeExists(node, "CastDefenseReduction")) {
-			uint16 reduction;
+		if (this->nodeExists(copyNode, "RemoveRequirement")) {
+			const auto &copyreqNode = copyNode["RemoveRequirement"];
 
-			if (!this->asUInt16(node, "CastDefenseReduction", reduction)) {
-				return 0;
-			}
+			for (const auto &it : copyreqNode) {
+				std::string req;
+				c4::from_chars(it.key(), &req);
+				std::string req_constant = "SKILL_REQ_" + req;
+				int64 constant;
 
-			skill->cast_def_rate = reduction;
-		}
-		else {
-			if (!exists) {
-				skill->cast_def_rate = 0;
-			}
-		}
+				if (!script_get_constant(req_constant.c_str(), &constant)) {
+					this->invalidWarning(copyreqNode, "CopyFlags RemoveRequirement %s is invalid.\n", req.c_str());
+					return 0;
+				}
 
-		if (this->nodeExists(node, "CastTime")) {
-			if (!this->parseNode("CastTime", "Time", node, skill->cast)) {
-				return 0;
+				skill->copyable.req_opt |= constant;
 			}
 		}
 		else {
 			if (!exists) {
-				memset(skill->cast, 0, sizeof(skill->cast));
+				skill->copyable.req_opt = 0;
+			}
+		}
+	}
+
+	if (this->nodeExists(node, "NoNearNPC")) {
+		const auto &npcNode = node["NoNearNPC"];
+
+		if (this->nodeExists(npcNode, "AdditionalRange")) {
+			uint16 range;
+
+			if (!this->asUInt16(npcNode, "AdditionalRange", range)) {
+				return 0;
+			}
+
+			skill->unit_nonearnpc_range = range;
+		}
+		else {
+			if (!exists) {
+				skill->unit_nonearnpc_range = 0;
 			}
 		}
 
-		if (this->nodeExists(node, "AfterCastActDelay")) {
-			if (!this->parseNode("AfterCastActDelay", "Time", node, skill->delay)) {
-				return 0;
+		if (this->nodeExists(npcNode, "Type")) {
+			const auto &npctypeNode = npcNode["Type"];
+
+			for (const auto &it : npctypeNode) {
+				std::string type;
+				c4::from_chars(it.key(), &type);
+				std::string type_constant = "SKILL_NONEAR_" + type;
+				int64 constant;
+
+				if (!script_get_constant(type_constant.c_str(), &constant)) {
+					this->invalidWarning(npctypeNode, "NoNearNPC Type %s is invalid.\n", type.c_str());
+					return 0;
+				}
+
+				bool active;
+
+				if (!this->asBool(npctypeNode, type, active)) {
+					return 0;
+				}
+
+				if (active) {
+					skill->unit_nonearnpc_type |= constant;
+				}
+				else {
+					skill->unit_nonearnpc_type &= ~constant;
+				}
 			}
 		}
 		else {
 			if (!exists) {
-				memset(skill->delay, 0, sizeof(skill->delay));
+				skill->unit_nonearnpc_type = 0;
 			}
+		}
+	}
+
+	if (this->nodeExists(node, "CastCancel")) {
+		bool active;
+
+		if (!this->asBool(node, "CastCancel", active)) {
+			return 0;
 		}
 
-		if (this->nodeExists(node, "AfterCastWalkDelay")) {
-			if (!this->parseNode("AfterCastWalkDelay", "Time", node, skill->walkdelay)) {
-				return 0;
-			}
+		skill->castcancel = active;
+	}
+	else {
+		if (!exists) {
+			skill->castcancel = false;
 		}
-		else {
-			if (!exists) {
-				memset(skill->walkdelay, 0, sizeof(skill->walkdelay));
-			}
+	}
+
+	if (this->nodeExists(node, "CastDefenseReduction")) {
+		uint16 reduction;
+
+		if (!this->asUInt16(node, "CastDefenseReduction", reduction)) {
+			return 0;
 		}
 
-		if (this->nodeExists(node, "Duration1")) {
-			if (!this->parseNode("Duration1", "Time", node, skill->upkeep_time)) {
-				return 0;
-			}
+		skill->cast_def_rate = reduction;
+	}
+	else {
+		if (!exists) {
+			skill->cast_def_rate = 0;
 		}
-		else {
-			if (!exists) {
-				memset(skill->upkeep_time, 0, sizeof(skill->upkeep_time));
-			}
-		}
+	}
 
-		if (this->nodeExists(node, "Duration2")) {
-			if (!this->parseNode("Duration2", "Time", node, skill->upkeep_time2)) {
-				return 0;
-			}
+	if (this->nodeExists(node, "CastTime")) {
+		if (!this->parseNode("CastTime", "Time", node, skill->cast)) {
+			return 0;
 		}
-		else {
-			if (!exists) {
-				memset(skill->upkeep_time2, 0, sizeof(skill->upkeep_time2));
-			}
+	}
+	else {
+		if (!exists) {
+			memset(skill->cast, 0, sizeof(skill->cast));
 		}
+	}
 
-		if (this->nodeExists(node, "Cooldown")) {
-			if (!this->parseNode("Cooldown", "Time", node, skill->cooldown)) {
-				return 0;
-			}
+	if (this->nodeExists(node, "AfterCastActDelay")) {
+		if (!this->parseNode("AfterCastActDelay", "Time", node, skill->delay)) {
+			return 0;
 		}
-		else {
-			if (!exists) {
-				memset(skill->cooldown, 0, sizeof(skill->cooldown));
-			}
+	}
+	else {
+		if (!exists) {
+			memset(skill->delay, 0, sizeof(skill->delay));
 		}
+	}
+
+	if (this->nodeExists(node, "AfterCastWalkDelay")) {
+		if (!this->parseNode("AfterCastWalkDelay", "Time", node, skill->walkdelay)) {
+			return 0;
+		}
+	}
+	else {
+		if (!exists) {
+			memset(skill->walkdelay, 0, sizeof(skill->walkdelay));
+		}
+	}
+
+	if (this->nodeExists(node, "Duration1")) {
+		if (!this->parseNode("Duration1", "Time", node, skill->upkeep_time)) {
+			return 0;
+		}
+	}
+	else {
+		if (!exists) {
+			memset(skill->upkeep_time, 0, sizeof(skill->upkeep_time));
+		}
+	}
+
+	if (this->nodeExists(node, "Duration2")) {
+		if (!this->parseNode("Duration2", "Time", node, skill->upkeep_time2)) {
+			return 0;
+		}
+	}
+	else {
+		if (!exists) {
+			memset(skill->upkeep_time2, 0, sizeof(skill->upkeep_time2));
+		}
+	}
+
+	if (this->nodeExists(node, "Cooldown")) {
+		if (!this->parseNode("Cooldown", "Time", node, skill->cooldown)) {
+			return 0;
+		}
+	}
+	else {
+		if (!exists) {
+			memset(skill->cooldown, 0, sizeof(skill->cooldown));
+		}
+	}
 
 #ifdef RENEWAL_CAST
-		if (this->nodeExists(node, "FixedCastTime")) {
-			if (!this->parseNode("FixedCastTime", "Time", node, skill->fixed_cast)) {
+	if (this->nodeExists(node, "FixedCastTime")) {
+		if (!this->parseNode("FixedCastTime", "Time", node, skill->fixed_cast)) {
+			return 0;
+		}
+	}
+	else {
+		if (!exists) {
+			memset(skill->fixed_cast, 0, sizeof(skill->fixed_cast));
+		}
+	}
+#endif
+
+	if (this->nodeExists(node, "CastTimeFlags")) {
+		const auto &castNode = node["CastTimeFlags"];
+
+		for (const auto &it : castNode) {
+			std::string flag;
+			c4::from_chars(it.key(), &flag);
+			std::string flag_constant = "SKILL_CAST_" + flag;
+			int64 constant;
+
+			if (!script_get_constant(flag_constant.c_str(), &constant)) {
+				this->invalidWarning(castNode, "CastTimeFlags %s option is invalid.\n", flag.c_str());
+				return 0;
+			}
+
+			bool active;
+
+			if (!this->asBool(castNode, flag, active)) {
+				return 0;
+			}
+
+			if (active) {
+				skill->castnodex |= constant;
+			}
+			else {
+				skill->castnodex &= ~constant;
+			}
+		}
+	}
+
+	if (this->nodeExists(node, "CastDelayFlags")) {
+		const auto &castNode = node["CastDelayFlags"];
+
+		for (const auto &it : castNode) {
+			std::string flag;
+			c4::from_chars(it.key(), &flag);
+			std::string flag_constant = "SKILL_CAST_" + flag;
+			int64 constant;
+
+			if (!script_get_constant(flag_constant.c_str(), &constant)) {
+				this->invalidWarning(castNode, "CastDelayFlags %s option is invalid.\n", flag.c_str());
+				return 0;
+			}
+
+			bool active;
+
+			if (!this->asBool(castNode, flag, active)) {
+				return 0;
+			}
+
+			if (active) {
+				skill->delaynodex |= constant;
+			}
+			else {
+				skill->delaynodex &= ~constant;
+			}
+		}
+	}
+
+	if (this->nodeExists(node, "Requires")) {
+		const auto &requireNode = node["Requires"];
+
+		if (this->nodeExists(requireNode, "HpCost")) {
+			if (!this->parseNode("HpCost", "Amount", requireNode, skill->require.hp)) {
 				return 0;
 			}
 		}
 		else {
 			if (!exists) {
-				memset(skill->fixed_cast, 0, sizeof(skill->fixed_cast));
+				memset(skill->require.hp, 0, sizeof(skill->require.hp));
 			}
 		}
-#endif
 
-		if (this->nodeExists(node, "CastTimeFlags")) {
-			const auto &castNode = node["CastTimeFlags"];
+		if (this->nodeExists(requireNode, "SpCost")) {
+			if (!this->parseNode("SpCost", "Amount", requireNode, skill->require.sp)) {
+				return 0;
+			}
+		}
+		else {
+			if (!exists) {
+				memset(skill->require.sp, 0, sizeof(skill->require.sp));
+			}
+		}
 
-			for (const auto &it : castNode) {
-				std::string flag;
-				c4::from_chars(it.key(), &flag);
-				std::string flag_constant = "SKILL_CAST_" + flag;
-				int64 constant;
+		if (this->nodeExists(requireNode, "ApCost")) {
+			if (!this->parseNode("ApCost", "Amount", requireNode, skill->require.ap)) {
+				return 0;
+			}
+		}
+		else {
+			if (!exists) {
+				memset(skill->require.ap, 0, sizeof(skill->require.ap));
+			}
+		}
 
-				if (!script_get_constant(flag_constant.c_str(), &constant)) {
-					this->invalidWarning(castNode, "CastTimeFlags %s option is invalid.\n", flag.c_str());
-					return 0;
-				}
+		if (this->nodeExists(requireNode, "HpRateCost")) {
+			if (!this->parseNode("HpRateCost", "Amount", requireNode, skill->require.hp_rate)) {
+				return 0;
+			}
+		}
+		else {
+			if (!exists) {
+				memset(skill->require.hp_rate, 0, sizeof(skill->require.hp_rate));
+			}
+		}
 
+		if (this->nodeExists(requireNode, "SpRateCost")) {
+			if (!this->parseNode("SpRateCost", "Amount", requireNode, skill->require.sp_rate)) {
+				return 0;
+			}
+		}
+		else {
+			if (!exists) {
+				memset(skill->require.sp_rate, 0, sizeof(skill->require.sp_rate));
+			}
+		}
+
+		if (this->nodeExists(requireNode, "ApRateCost")) {
+			if (!this->parseNode("ApRateCost", "Amount", requireNode, skill->require.ap_rate)) {
+				return 0;
+			}
+		}
+		else {
+			if (!exists) {
+				memset(skill->require.ap_rate, 0, sizeof(skill->require.ap_rate));
+			}
+		}
+
+		if (this->nodeExists(requireNode, "MaxHpTrigger")) {
+			if (!this->parseNode("MaxHpTrigger", "Amount", requireNode, skill->require.mhp)) {
+				return 0;
+			}
+		}
+		else {
+			if (!exists) {
+				memset(skill->require.mhp, 0, sizeof(skill->require.mhp));
+			}
+		}
+
+		if (this->nodeExists(requireNode, "ZenyCost")) {
+			if (!this->parseNode("ZenyCost", "Amount", requireNode, skill->require.zeny)) {
+				return 0;
+			}
+		}
+		else {
+			if (!exists) {
+				memset(skill->require.zeny, 0, sizeof(skill->require.zeny));
+			}
+		}
+
+		if (this->nodeExists(requireNode, "Weapon")) {
+			const auto &weaponNode = requireNode["Weapon"];
+
+			if (this->nodeExists(weaponNode, "All")) {
 				bool active;
 
-				if (!this->asBool(castNode, flag, active)) {
+				if (!this->asBool(weaponNode, "All", active)) {
 					return 0;
 				}
 
 				if (active) {
-					skill->castnodex |= constant;
-				}
-				else {
-					skill->castnodex &= ~constant;
-				}
-			}
-		}
-
-		if (this->nodeExists(node, "CastDelayFlags")) {
-			const auto &castNode = node["CastDelayFlags"];
-
-			for (const auto &it : castNode) {
-				std::string flag;
-				c4::from_chars(it.key(), &flag);
-				std::string flag_constant = "SKILL_CAST_" + flag;
-				int64 constant;
-
-				if (!script_get_constant(flag_constant.c_str(), &constant)) {
-					this->invalidWarning(castNode, "CastDelayFlags %s option is invalid.\n", flag.c_str());
-					return 0;
-				}
-
-				bool active;
-
-				if (!this->asBool(castNode, flag, active)) {
-					return 0;
-				}
-
-				if (active) {
-					skill->delaynodex |= constant;
-				}
-				else {
-					skill->delaynodex &= ~constant;
-				}
-			}
-		}
-
-		if (this->nodeExists(node, "Requires")) {
-			const auto &requireNode = node["Requires"];
-
-			if (this->nodeExists(requireNode, "HpCost")) {
-				if (!this->parseNode("HpCost", "Amount", requireNode, skill->require.hp)) {
-					return 0;
-				}
-			}
-			else {
-				if (!exists) {
-					memset(skill->require.hp, 0, sizeof(skill->require.hp));
-				}
-			}
-
-			if (this->nodeExists(requireNode, "SpCost")) {
-				if (!this->parseNode("SpCost", "Amount", requireNode, skill->require.sp)) {
-					return 0;
-				}
-			}
-			else {
-				if (!exists) {
-					memset(skill->require.sp, 0, sizeof(skill->require.sp));
-				}
-			}
-
-			if (this->nodeExists(requireNode, "ApCost")) {
-				if (!this->parseNode("ApCost", "Amount", requireNode, skill->require.ap)) {
-					return 0;
-				}
-			}
-			else {
-				if (!exists) {
-					memset(skill->require.ap, 0, sizeof(skill->require.ap));
-				}
-			}
-
-			if (this->nodeExists(requireNode, "HpRateCost")) {
-				if (!this->parseNode("HpRateCost", "Amount", requireNode, skill->require.hp_rate)) {
-					return 0;
-				}
-			}
-			else {
-				if (!exists) {
-					memset(skill->require.hp_rate, 0, sizeof(skill->require.hp_rate));
-				}
-			}
-
-			if (this->nodeExists(requireNode, "SpRateCost")) {
-				if (!this->parseNode("SpRateCost", "Amount", requireNode, skill->require.sp_rate)) {
-					return 0;
-				}
-			}
-			else {
-				if (!exists) {
-					memset(skill->require.sp_rate, 0, sizeof(skill->require.sp_rate));
-				}
-			}
-
-			if (this->nodeExists(requireNode, "ApRateCost")) {
-				if (!this->parseNode("ApRateCost", "Amount", requireNode, skill->require.ap_rate)) {
-					return 0;
-				}
-			}
-			else {
-				if (!exists) {
-					memset(skill->require.ap_rate, 0, sizeof(skill->require.ap_rate));
-				}
-			}
-
-			if (this->nodeExists(requireNode, "MaxHpTrigger")) {
-				if (!this->parseNode("MaxHpTrigger", "Amount", requireNode, skill->require.mhp)) {
-					return 0;
-				}
-			}
-			else {
-				if (!exists) {
-					memset(skill->require.mhp, 0, sizeof(skill->require.mhp));
-				}
-			}
-
-			if (this->nodeExists(requireNode, "ZenyCost")) {
-				if (!this->parseNode("ZenyCost", "Amount", requireNode, skill->require.zeny)) {
-					return 0;
-				}
-			}
-			else {
-				if (!exists) {
-					memset(skill->require.zeny, 0, sizeof(skill->require.zeny));
-				}
-			}
-
-			if (this->nodeExists(requireNode, "Weapon")) {
-				const auto &weaponNode = requireNode["Weapon"];
-
-				if (this->nodeExists(weaponNode, "All")) {
-					bool active;
-
-					if (!this->asBool(weaponNode, "All", active)) {
-						return 0;
-					}
-
-					if (active) {
-						skill->require.weapon = 0;
-					}
-				}
-				else {
-					for (const auto &it : weaponNode) {
-						std::string weapon;
-						c4::from_chars(it.key(), &weapon);
-						std::string weapon_constant = "W_" + weapon;
-						int64 constant;
-
-						if (!script_get_constant(weapon_constant.c_str(), &constant)) {
-							this->invalidWarning(weaponNode, "Requires Weapon %s is invalid.\n", weapon.c_str());
-							return 0;
-						}
-
-						bool active;
-
-						if (!this->asBool(weaponNode, weapon, active)) {
-							return 0;
-						}
-
-						if (active) {
-							skill->require.weapon |= 1 << constant;
-						}
-						else {
-							skill->require.weapon &= ~(1 << constant);
-						}
-					}
-				}
-			}
-			else {
-				if (!exists) {
 					skill->require.weapon = 0;
 				}
 			}
+			else {
+				for (const auto &it : weaponNode) {
+					std::string weapon;
+					c4::from_chars(it.key(), &weapon);
+					std::string weapon_constant = "W_" + weapon;
+					int64 constant;
 
-			if (this->nodeExists(requireNode, "Ammo")) {
-				const auto &ammoNode = requireNode["Ammo"];
+					if (!script_get_constant(weapon_constant.c_str(), &constant)) {
+						this->invalidWarning(weaponNode, "Requires Weapon %s is invalid.\n", weapon.c_str());
+						return 0;
+					}
 
-				if (this->nodeExists(ammoNode, "None")) {
 					bool active;
 
-					if (!this->asBool(ammoNode, "None", active)) {
+					if (!this->asBool(weaponNode, weapon, active)) {
 						return 0;
 					}
 
 					if (active) {
-						skill->require.ammo = 0;
+						skill->require.weapon |= 1 << constant;
 					}
-				}
-				else {
-					for (const auto &it : ammoNode) {
-						std::string ammo;
-						c4::from_chars(it.key(), &ammo);
-						std::string ammo_constant = "AMMO_" + ammo;
-						int64 constant;
-
-						if (!script_get_constant(ammo_constant.c_str(), &constant)) {
-							this->invalidWarning(ammoNode, "Requires Ammo %s is invalid.\n", ammo.c_str());
-							return 0;
-						}
-
-						bool active;
-
-						if (!this->asBool(ammoNode, ammo, active)) {
-							return 0;
-						}
-
-						if (active) {
-							skill->require.ammo |= 1 << constant;
-						}
-						else {
-							skill->require.ammo &= ~(1 << constant);
-						}
-					}
-				}
-			}
-			else {
-				if (!exists) {
-					skill->require.ammo = 0;
-				}
-			}
-
-			if (this->nodeExists(requireNode, "AmmoAmount")) {
-				if (skill->require.ammo == 0) {
-					this->invalidWarning(requireNode["AmmoAmount"],
-										 "An ammo type is required before specifying ammo amount.\n");
-					return 0;
-				}
-
-				if (!this->parseNode("AmmoAmount", "Amount", requireNode, skill->require.ammo_qty)) {
-					return 0;
-				}
-			}
-			else {
-				if (!exists) {
-					memset(skill->require.ammo_qty, 0, sizeof(skill->require.ammo_qty));
-				}
-			}
-
-			if (this->nodeExists(requireNode, "State")) {
-				std::string state;
-
-				if (!this->asString(requireNode, "State", state)) {
-					return 0;
-				}
-
-				std::string state_constant = "ST_" + state;
-				int64 constant;
-
-				if (!script_get_constant(state_constant.c_str(), &constant)) {
-					this->invalidWarning(requireNode["State"], "Requires State %s is invalid.\n", state.c_str());
-					return 0;
-				}
-
-				skill->require.state = static_cast<int32>(constant);
-			}
-
-			if (this->nodeExists(requireNode, "Status")) {
-				const auto &statusNode = requireNode["Status"];
-
-				for (const auto &it : statusNode) {
-					std::string status;
-					c4::from_chars(it.key(), &status);
-					std::string status_constant = "SC_" + status;
-					int64 constant;
-
-					if (!script_get_constant(status_constant.c_str(), &constant)) {
-						this->invalidWarning(statusNode, "Requires Status %s is invalid.\n", status.c_str());
-						return 0;
-					}
-
-					bool active;
-
-					if (!this->asBool(statusNode, status, active)) {
-						return 0;
-					}
-
-					auto status_exists = util::vector_get(skill->require.status, constant);
-
-					if (active && status_exists == skill->require.status.end()) {
-						skill->require.status.push_back(static_cast<sc_type>(constant));
-					}
-					else if (!active && status_exists != skill->require.status.end()) {
-						skill->require.status.erase(status_exists);
-					}
-				}
-			}
-
-			if (this->nodeExists(requireNode, "SpiritSphereCost")) {
-				if (!this->parseNode("SpiritSphereCost", "Amount", requireNode, skill->require.spiritball)) {
-					return 0;
-				}
-			}
-			else {
-				if (!exists) {
-					memset(skill->require.spiritball, 0, sizeof(skill->require.spiritball));
-				}
-			}
-
-			if (this->nodeExists(requireNode, "ItemCost")) {
-				const auto itemNode = requireNode["ItemCost"];
-				int32 count = 0;
-
-				for (const auto &it : itemNode) {
-					std::string item_name;
-
-					if (!this->asString(it, "Item", item_name)) {
-						continue;
-					}
-
-					std::shared_ptr<item_data> item = item_db.search_aegisname(item_name.c_str());
-
-					if (item == nullptr) {
-						this->invalidWarning(
-							it["Item"], "Requires ItemCost Item %s does not exist.\n", item_name.c_str());
-						return 0;
-					}
-
-					int32 amount;
-
-					if (!this->asInt32(it, "Amount", amount)) {
-						continue;
-					}
-
-					if (this->nodeExists(it, "Level")) {
-						uint16 cost_level;
-
-						if (!this->asUInt16(it, "Level", cost_level)) {
-							continue;
-						}
-
-						if (cost_level < 1 || cost_level > skill->max) {
-							this->invalidWarning(it["Level"],
-												 "Requires ItemCost Level %d is not within %s's level range of 1~%d.\n",
-												 cost_level,
-												 skill->name,
-												 skill->max);
-							return 0;
-						}
-
-						count = cost_level - 1;
-
-						if (!skill->require.itemid_level_dependent) {
-							skill->require.itemid_level_dependent = true;
-						}
-					}
-
-					skill->require.itemid[count] = item->nameid;
-					skill->require.amount[count] = amount;
-					count++;
-				}
-			}
-
-			if (this->nodeExists(requireNode, "Equipment")) {
-				const auto &equipNode = requireNode["Equipment"];
-
-				for (const auto &it : equipNode) {
-					std::string item_name;
-					c4::from_chars(it.key(), &item_name);
-
-					std::shared_ptr<item_data> item = item_db.search_aegisname(item_name.c_str());
-
-					if (item == nullptr) {
-						this->invalidWarning(it, "Requires Equipment %s does not exist.\n", item_name.c_str());
-						return 0;
-					}
-
-					bool active;
-
-					if (!this->asBool(equipNode, item_name, active)) {
-						return 0;
-					}
-
-					auto equip_exists = util::vector_get(skill->require.eqItem, item->nameid);
-
-					if (active && equip_exists == skill->require.eqItem.end()) {
-						skill->require.eqItem.push_back(item->nameid);
-					}
-					else if (!active && equip_exists != skill->require.eqItem.end()) {
-						skill->require.eqItem.erase(equip_exists);
+					else {
+						skill->require.weapon &= ~(1 << constant);
 					}
 				}
 			}
 		}
+		else {
+			if (!exists) {
+				skill->require.weapon = 0;
+			}
+		}
 
-		if (this->nodeExists(node, "GiveAp")) {
-			if (!this->parseNode("GiveAp", "Amount", node, skill->giveap)) {
+		if (this->nodeExists(requireNode, "Ammo")) {
+			const auto &ammoNode = requireNode["Ammo"];
+
+			if (this->nodeExists(ammoNode, "None")) {
+				bool active;
+
+				if (!this->asBool(ammoNode, "None", active)) {
+					return 0;
+				}
+
+				if (active) {
+					skill->require.ammo = 0;
+				}
+			}
+			else {
+				for (const auto &it : ammoNode) {
+					std::string ammo;
+					c4::from_chars(it.key(), &ammo);
+					std::string ammo_constant = "AMMO_" + ammo;
+					int64 constant;
+
+					if (!script_get_constant(ammo_constant.c_str(), &constant)) {
+						this->invalidWarning(ammoNode, "Requires Ammo %s is invalid.\n", ammo.c_str());
+						return 0;
+					}
+
+					bool active;
+
+					if (!this->asBool(ammoNode, ammo, active)) {
+						return 0;
+					}
+
+					if (active) {
+						skill->require.ammo |= 1 << constant;
+					}
+					else {
+						skill->require.ammo &= ~(1 << constant);
+					}
+				}
+			}
+		}
+		else {
+			if (!exists) {
+				skill->require.ammo = 0;
+			}
+		}
+
+		if (this->nodeExists(requireNode, "AmmoAmount")) {
+			if (skill->require.ammo == 0) {
+				this->invalidWarning(requireNode["AmmoAmount"],
+									 "An ammo type is required before specifying ammo amount.\n");
+				return 0;
+			}
+
+			if (!this->parseNode("AmmoAmount", "Amount", requireNode, skill->require.ammo_qty)) {
 				return 0;
 			}
 		}
 		else {
 			if (!exists) {
-				memset(skill->giveap, 0, sizeof(skill->giveap));
+				memset(skill->require.ammo_qty, 0, sizeof(skill->require.ammo_qty));
 			}
 		}
 
-		if (this->nodeExists(node, "Unit")) {
-			const auto &unitNode = node["Unit"];
+		if (this->nodeExists(requireNode, "State")) {
+			std::string state;
 
-			if (this->nodeExists(unitNode, "Id")) {
-				std::string unit;
-
-				if (!this->asString(unitNode, "Id", unit)) {
-					return 0;
-				}
-
-				std::string unit_constant = "UNT_" + unit;
-				int64 constant;
-
-				if (!script_get_constant(unit_constant.c_str(), &constant)) {
-					this->invalidWarning(unitNode["Id"], "Unit Id %s is invalid.\n", unit.c_str());
-					return 0;
-				}
-
-				skill->unit_id = static_cast<uint16>(constant);
-			}
-			else {
-				this->invalidWarning(unitNode["Id"], "Unit requires an Id.\n");
+			if (!this->asString(requireNode, "State", state)) {
 				return 0;
 			}
 
-			if (this->nodeExists(unitNode, "AlternateId")) {
-				std::string unit;
+			std::string state_constant = "ST_" + state;
+			int64 constant;
 
-				if (!this->asString(unitNode, "AlternateId", unit)) {
-					return 0;
-				}
+			if (!script_get_constant(state_constant.c_str(), &constant)) {
+				this->invalidWarning(requireNode["State"], "Requires State %s is invalid.\n", state.c_str());
+				return 0;
+			}
 
-				std::string unit_constant = "UNT_" + unit;
+			skill->require.state = static_cast<int32>(constant);
+		}
+
+		if (this->nodeExists(requireNode, "Status")) {
+			const auto &statusNode = requireNode["Status"];
+
+			for (const auto &it : statusNode) {
+				std::string status;
+				c4::from_chars(it.key(), &status);
+				std::string status_constant = "SC_" + status;
 				int64 constant;
 
-				if (!script_get_constant(unit_constant.c_str(), &constant)) {
-					this->invalidWarning(unitNode["AlternateId"], "Alternate Unit Id %s is invalid.\n", unit.c_str());
+				if (!script_get_constant(status_constant.c_str(), &constant)) {
+					this->invalidWarning(statusNode, "Requires Status %s is invalid.\n", status.c_str());
 					return 0;
 				}
 
-				skill->unit_id2 = static_cast<uint16>(constant);
-			}
-			else {
-				if (!exists) {
-					skill->unit_id2 = 0;
-				}
-			}
+				bool active;
 
-			if (this->nodeExists(unitNode, "Layout")) {
-				if (!this->parseNode("Layout", "Size", unitNode, skill->unit_layout_type)) {
-					return 0;
-				}
-			}
-			else {
-				if (!exists) {
-					memset(skill->unit_layout_type, 0, sizeof(skill->unit_layout_type));
-				}
-			}
-
-			if (this->nodeExists(unitNode, "Range")) {
-				if (!this->parseNode("Range", "Size", unitNode, skill->unit_range)) {
-					return 0;
-				}
-			}
-			else {
-				if (!exists) {
-					memset(skill->unit_range, 0, sizeof(skill->unit_range));
-				}
-			}
-
-			if (this->nodeExists(unitNode, "Interval")) {
-				int16 interval;
-
-				if (!this->asInt16(unitNode, "Interval", interval)) {
+				if (!this->asBool(statusNode, status, active)) {
 					return 0;
 				}
 
-				skill->unit_interval = interval;
-			}
-			else {
-				if (!exists) {
-					skill->unit_interval = 0;
+				auto status_exists = util::vector_get(skill->require.status, constant);
+
+				if (active && status_exists == skill->require.status.end()) {
+					skill->require.status.push_back(static_cast<sc_type>(constant));
+				}
+				else if (!active && status_exists != skill->require.status.end()) {
+					skill->require.status.erase(status_exists);
 				}
 			}
+		}
 
-			if (this->nodeExists(unitNode, "Target")) {
-				std::string target;
+		if (this->nodeExists(requireNode, "SpiritSphereCost")) {
+			if (!this->parseNode("SpiritSphereCost", "Amount", requireNode, skill->require.spiritball)) {
+				return 0;
+			}
+		}
+		else {
+			if (!exists) {
+				memset(skill->require.spiritball, 0, sizeof(skill->require.spiritball));
+			}
+		}
 
-				if (!this->asString(unitNode, "Target", target)) {
+		if (this->nodeExists(requireNode, "ItemCost")) {
+			const auto itemNode = requireNode["ItemCost"];
+			int32 count = 0;
+
+			for (const auto &it : itemNode) {
+				std::string item_name;
+
+				if (!this->asString(it, "Item", item_name)) {
+					continue;
+				}
+
+				std::shared_ptr<item_data> item = item_db.search_aegisname(item_name.c_str());
+
+				if (item == nullptr) {
+					this->invalidWarning(it["Item"], "Requires ItemCost Item %s does not exist.\n", item_name.c_str());
 					return 0;
 				}
 
-				std::string target_constant = "BCT_" + target;
-				int64 constant;
+				int32 amount;
 
-				if (!script_get_constant(target_constant.c_str(), &constant)) {
-					this->invalidWarning(unitNode["Target"], "Unit Target %s is invalid.\n", target.c_str());
-					return 0;
+				if (!this->asInt32(it, "Amount", amount)) {
+					continue;
 				}
 
-				skill->unit_target = static_cast<int32>(constant);
-			}
-			else {
-				if (!exists) {
-					skill->unit_target = BCT_ALL;
-				}
-			}
+				if (this->nodeExists(it, "Level")) {
+					uint16 cost_level;
 
-			if (this->nodeExists(unitNode, "Flag")) {
-				const auto &flagNode = unitNode["Flag"];
+					if (!this->asUInt16(it, "Level", cost_level)) {
+						continue;
+					}
 
-				for (const auto &it : flagNode) {
-					std::string flag;
-					c4::from_chars(it.key(), &flag);
-					std::string flag_constant = "UF_" + flag;
-					int64 constant;
-
-					if (!script_get_constant(flag_constant.c_str(), &constant)) {
-						this->invalidWarning(it, "Skill Unit Flag %s is invalid.\n", flag.c_str());
+					if (cost_level < 1 || cost_level > skill->max) {
+						this->invalidWarning(it["Level"],
+											 "Requires ItemCost Level %d is not within %s's level range of 1~%d.\n",
+											 cost_level,
+											 skill->name,
+											 skill->max);
 						return 0;
 					}
 
-					bool active;
+					count = cost_level - 1;
 
-					if (!this->asBool(flagNode, flag, active)) {
-						return 0;
-					}
-
-					if (active) {
-						skill->unit_flag.set(static_cast<uint8>(constant));
-					}
-					else {
-						skill->unit_flag.reset(static_cast<uint8>(constant));
+					if (!skill->require.itemid_level_dependent) {
+						skill->require.itemid_level_dependent = true;
 					}
 				}
 
-				if (skill->unit_flag[UF_NOENEMY] && battle_config.defnotenemy) {
-					skill->unit_target = BCT_NOENEMY;
+				skill->require.itemid[count] = item->nameid;
+				skill->require.amount[count] = amount;
+				count++;
+			}
+		}
+
+		if (this->nodeExists(requireNode, "Equipment")) {
+			const auto &equipNode = requireNode["Equipment"];
+
+			for (const auto &it : equipNode) {
+				std::string item_name;
+				c4::from_chars(it.key(), &item_name);
+
+				std::shared_ptr<item_data> item = item_db.search_aegisname(item_name.c_str());
+
+				if (item == nullptr) {
+					this->invalidWarning(it, "Requires Equipment %s does not exist.\n", item_name.c_str());
+					return 0;
 				}
 
+				bool active;
+
+				if (!this->asBool(equipNode, item_name, active)) {
+					return 0;
+				}
+
+				auto equip_exists = util::vector_get(skill->require.eqItem, item->nameid);
+
+				if (active && equip_exists == skill->require.eqItem.end()) {
+					skill->require.eqItem.push_back(item->nameid);
+				}
+				else if (!active && equip_exists != skill->require.eqItem.end()) {
+					skill->require.eqItem.erase(equip_exists);
+				}
+			}
+		}
+	}
+
+	if (this->nodeExists(node, "GiveAp")) {
+		if (!this->parseNode("GiveAp", "Amount", node, skill->giveap)) {
+			return 0;
+		}
+	}
+	else {
+		if (!exists) {
+			memset(skill->giveap, 0, sizeof(skill->giveap));
+		}
+	}
+
+	if (this->nodeExists(node, "Unit")) {
+		const auto &unitNode = node["Unit"];
+
+		if (this->nodeExists(unitNode, "Id")) {
+			std::string unit;
+
+			if (!this->asString(unitNode, "Id", unit)) {
+				return 0;
+			}
+
+			std::string unit_constant = "UNT_" + unit;
+			int64 constant;
+
+			if (!script_get_constant(unit_constant.c_str(), &constant)) {
+				this->invalidWarning(unitNode["Id"], "Unit Id %s is invalid.\n", unit.c_str());
+				return 0;
+			}
+
+			skill->unit_id = static_cast<uint16>(constant);
+		}
+		else {
+			this->invalidWarning(unitNode["Id"], "Unit requires an Id.\n");
+			return 0;
+		}
+
+		if (this->nodeExists(unitNode, "AlternateId")) {
+			std::string unit;
+
+			if (!this->asString(unitNode, "AlternateId", unit)) {
+				return 0;
+			}
+
+			std::string unit_constant = "UNT_" + unit;
+			int64 constant;
+
+			if (!script_get_constant(unit_constant.c_str(), &constant)) {
+				this->invalidWarning(unitNode["AlternateId"], "Alternate Unit Id %s is invalid.\n", unit.c_str());
+				return 0;
+			}
+
+			skill->unit_id2 = static_cast<uint16>(constant);
+		}
+		else {
+			if (!exists) {
+				skill->unit_id2 = 0;
+			}
+		}
+
+		if (this->nodeExists(unitNode, "Layout")) {
+			if (!this->parseNode("Layout", "Size", unitNode, skill->unit_layout_type)) {
+				return 0;
+			}
+		}
+		else {
+			if (!exists) {
+				memset(skill->unit_layout_type, 0, sizeof(skill->unit_layout_type));
+			}
+		}
+
+		if (this->nodeExists(unitNode, "Range")) {
+			if (!this->parseNode("Range", "Size", unitNode, skill->unit_range)) {
+				return 0;
+			}
+		}
+		else {
+			if (!exists) {
+				memset(skill->unit_range, 0, sizeof(skill->unit_range));
+			}
+		}
+
+		if (this->nodeExists(unitNode, "Interval")) {
+			int16 interval;
+
+			if (!this->asInt16(unitNode, "Interval", interval)) {
+				return 0;
+			}
+
+			skill->unit_interval = interval;
+		}
+		else {
+			if (!exists) {
+				skill->unit_interval = 0;
+			}
+		}
+
+		if (this->nodeExists(unitNode, "Target")) {
+			std::string target;
+
+			if (!this->asString(unitNode, "Target", target)) {
+				return 0;
+			}
+
+			std::string target_constant = "BCT_" + target;
+			int64 constant;
+
+			if (!script_get_constant(target_constant.c_str(), &constant)) {
+				this->invalidWarning(unitNode["Target"], "Unit Target %s is invalid.\n", target.c_str());
+				return 0;
+			}
+
+			skill->unit_target = static_cast<int32>(constant);
+		}
+		else {
+			if (!exists) {
+				skill->unit_target = BCT_ALL;
+			}
+		}
+
+		if (this->nodeExists(unitNode, "Flag")) {
+			const auto &flagNode = unitNode["Flag"];
+
+			for (const auto &it : flagNode) {
+				std::string flag;
+				c4::from_chars(it.key(), &flag);
+				std::string flag_constant = "UF_" + flag;
+				int64 constant;
+
+				if (!script_get_constant(flag_constant.c_str(), &constant)) {
+					this->invalidWarning(it, "Skill Unit Flag %s is invalid.\n", flag.c_str());
+					return 0;
+				}
+
+				bool active;
+
+				if (!this->asBool(flagNode, flag, active)) {
+					return 0;
+				}
+
+				if (active) {
+					skill->unit_flag.set(static_cast<uint8>(constant));
+				}
+				else {
+					skill->unit_flag.reset(static_cast<uint8>(constant));
+				}
+			}
+
+			if (skill->unit_flag[UF_NOENEMY] && battle_config.defnotenemy) {
+				skill->unit_target = BCT_NOENEMY;
+			}
+
+			// By default, target just characters.
+			skill->unit_target |= BL_CHAR;
+			if (skill->unit_flag[UF_NOPC]) {
+				skill->unit_target &= ~BL_PC;
+			}
+			if (skill->unit_flag[UF_NOMOB]) {
+				skill->unit_target &= ~BL_MOB;
+			}
+			if (skill->unit_flag[UF_SKILL]) {
+				skill->unit_target |= BL_SKILL;
+			}
+		}
+		else {
+			if (!exists) {
+				skill->unit_flag = UF_NONE;
 				// By default, target just characters.
 				skill->unit_target |= BL_CHAR;
-				if (skill->unit_flag[UF_NOPC]) {
-					skill->unit_target &= ~BL_PC;
-				}
-				if (skill->unit_flag[UF_NOMOB]) {
-					skill->unit_target &= ~BL_MOB;
-				}
-				if (skill->unit_flag[UF_SKILL]) {
-					skill->unit_target |= BL_SKILL;
-				}
-			}
-			else {
-				if (!exists) {
-					skill->unit_flag = UF_NONE;
-					// By default, target just characters.
-					skill->unit_target |= BL_CHAR;
-				}
 			}
 		}
 	}
