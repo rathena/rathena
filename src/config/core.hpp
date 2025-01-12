@@ -26,7 +26,7 @@
 /// Uncomment to enable the Cell Stack Limit mod.
 /// It's only config is the battle_config custom_cell_stack_limit.
 /// Only chars affected are those defined in BL_CHAR
-//#define CELL_NOSTACK
+// #define CELL_NOSTACK
 
 /// Uncomment to enable circular area checks.
 /// By default, most server-sided range checks in Aegis are of square shapes, so a monster
@@ -34,20 +34,20 @@
 /// Client-sided range checks are, however, are always circular.
 /// Enabling this changes all checks to circular checks, which is more realistic,
 /// - but is not the official behaviour.
-//#define CIRCULAR_AREA
+// #define CIRCULAR_AREA
 
 /// Comment to disable Guild/Party Bound item system
 /// By default, we recover/remove Guild/Party Bound items automatically
 #define BOUND_ITEMS
 
 /// Uncomment to enable real-time server stats (in and out data and ram usage).
-//#define SHOW_SERVER_STATS
+// #define SHOW_SERVER_STATS
 
 /// Comment to disable the job base HP/SP/AP table (job_basepoints.yml)
 #define HP_SP_TABLES
 
 /// Uncomment to enable VIP system.
-//#define VIP_ENABLE
+// #define VIP_ENABLE
 
 /// Enable VIP script changes? (requires VIP_ENABLE)
 /// The primary effects of this are restrictions on non-VIP players, such as requiring
@@ -85,20 +85,20 @@
 // Note:
 // Windows XP still has 32bit ticks. This means you need to restart your operating system before time
 // overflows, which is approximately every ~49 days.
-//#define DEPRECATED_WINDOWS_SUPPORT
+// #define DEPRECATED_WINDOWS_SUPPORT
 
 // Uncomment to enable compilation for unsupported compilers
 // Note:
 // Compilation might work on these compilers, but they might not fully follow newer C++ rules and
 // cause unexpected behavior.
 // Do NOT create any issues or ask for help with these compilers.
-//#define DEPRECATED_COMPILER_SUPPORT
+// #define DEPRECATED_COMPILER_SUPPORT
 
 /// Uncomment for use with Nemo patch ExtendCashShopPreview
-//#define ENABLE_CASHSHOP_PREVIEW_PATCH
+// #define ENABLE_CASHSHOP_PREVIEW_PATCH
 
 /// Uncomment for use with Nemo patch ExtendOldCashShopPreview
-//#define ENABLE_OLD_CASHSHOP_PREVIEW_PATCH
+// #define ENABLE_OLD_CASHSHOP_PREVIEW_PATCH
 
 #if defined(_DEBUG) || defined(DEBUG)
 	#define DETAILED_LOADING_OUTPUT
@@ -106,21 +106,21 @@
 
 /// Uncomment to forcibly disable the detailed loading output.
 /// This will noticeably decrease the boot time of the map server by not having to print so many status messages.
-//#undef DETAILED_LOADING_OUTPUT
+// #undef DETAILED_LOADING_OUTPUT
 
 /**
  * No settings past this point
  **/
+#include "./classes/general.hpp"
 #include "./packets.hpp"
 #include "./renewal.hpp"
 #include "./secure.hpp"
-#include "./classes/general.hpp"
 
 /**
  * Constants come last; so they process anything that could've been modified in early includes
  **/
-#include "./const.hpp"
-
 #include <custom/defines_post.hpp>
+
+#include "./const.hpp"
 
 #endif /* CONFIG_CORE_HPP */

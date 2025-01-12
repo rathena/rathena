@@ -13,15 +13,13 @@ class map_session_data;
 
 #define MAX_BUYINGSTORE_SLOTS 5
 
-struct s_buyingstore_item
-{
+struct s_buyingstore_item {
 	int32 price;
 	unsigned short amount;
 	t_itemid nameid;
 };
 
-struct s_buyingstore
-{
+struct s_buyingstore {
 	struct s_buyingstore_item items[MAX_BUYINGSTORE_SLOTS];
 	int32 zenylimit;
 	unsigned char slots;
@@ -51,23 +49,33 @@ struct s_autotrader {
 	char title[MESSAGE_SIZE]; ///< Store name
 	uint32 limit; ///< Maximum zeny to be spent (for buyingstore)
 	uint16 count; ///< Number of item in store
-	struct s_autotrade_entry **entries; ///< Store details
-	map_session_data *sd;
+	struct s_autotrade_entry** entries; ///< Store details
+	map_session_data* sd;
 };
 
 int8 buyingstore_setup(map_session_data* sd, unsigned char slots);
-int8 buyingstore_create(map_session_data* sd, int32 zenylimit, unsigned char result, const char* storename, const struct PACKET_CZ_REQ_OPEN_BUYING_STORE_sub* itemlist, uint32 count, struct s_autotrader *at);
+int8 buyingstore_create(map_session_data* sd,
+						int32 zenylimit,
+						unsigned char result,
+						const char* storename,
+						const struct PACKET_CZ_REQ_OPEN_BUYING_STORE_sub* itemlist,
+						uint32 count,
+						struct s_autotrader* at);
 void buyingstore_close(map_session_data* sd);
 void buyingstore_open(map_session_data* sd, uint32 account_id);
-void buyingstore_trade(map_session_data* sd, uint32 account_id, uint32 buyer_id, const struct PACKET_CZ_REQ_TRADE_BUYING_STORE_sub* itemlist, uint32 count);
+void buyingstore_trade(map_session_data* sd,
+					   uint32 account_id,
+					   uint32 buyer_id,
+					   const struct PACKET_CZ_REQ_TRADE_BUYING_STORE_sub* itemlist,
+					   uint32 count);
 bool buyingstore_search(map_session_data* sd, t_itemid nameid);
 bool buyingstore_searchall(map_session_data* sd, const struct s_search_store_search* s);
-DBMap *buyingstore_getdb(void);
+DBMap* buyingstore_getdb(void);
 void do_final_buyingstore(void);
 void do_init_buyingstore(void);
 
-void do_init_buyingstore_autotrade( void );
-void buyingstore_reopen( map_session_data* sd );
-void buyingstore_update(map_session_data &sd);
+void do_init_buyingstore_autotrade(void);
+void buyingstore_reopen(map_session_data* sd);
+void buyingstore_update(map_session_data& sd);
 
 #endif /* BUYINGSTORE_HPP */

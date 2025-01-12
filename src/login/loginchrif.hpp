@@ -40,4 +40,4 @@ void do_shutdown_loginchrif(void);
  */
 void do_final_loginchrif(void);
 
-#endif	/* LOGINCHRIF_HPP */
+#endif /* LOGINCHRIF_HPP */

@@ -3,27 +3,27 @@
 
 #include "winapi.hpp"
 
-// Taken from https://support.microsoft.com/de-de/help/118626/how-to-determine-whether-a-thread-is-running-in-user-context-of-local
-bool IsCurrentUserLocalAdministrator(void){
+// Taken from
+// https://support.microsoft.com/de-de/help/118626/how-to-determine-whether-a-thread-is-running-in-user-context-of-local
+bool IsCurrentUserLocalAdministrator(void) {
 #ifdef WIN32
-	BOOL   fReturn = FALSE;
-	DWORD  dwStatus;
-	DWORD  dwAccessMask;
-	DWORD  dwAccessDesired;
-	DWORD  dwACLSize;
-	DWORD  dwStructureSize = sizeof(PRIVILEGE_SET);
-	PACL   pACL = nullptr;
-	PSID   psidAdmin = nullptr;
+	BOOL fReturn = FALSE;
+	DWORD dwStatus;
+	DWORD dwAccessMask;
+	DWORD dwAccessDesired;
+	DWORD dwACLSize;
+	DWORD dwStructureSize = sizeof(PRIVILEGE_SET);
+	PACL pACL = nullptr;
+	PSID psidAdmin = nullptr;
 
 	HANDLE hToken = nullptr;
 	HANDLE hImpersonationToken = nullptr;
 
-	PRIVILEGE_SET   ps;
+	PRIVILEGE_SET ps;
 	GENERIC_MAPPING GenericMapping;
 
-	PSECURITY_DESCRIPTOR     psdAdmin = nullptr;
+	PSECURITY_DESCRIPTOR psdAdmin = nullptr;
 	SID_IDENTIFIER_AUTHORITY SystemSidAuthority = SECURITY_NT_AUTHORITY;
-
 
 	/*
 	Determine if the current thread is running as a user that is a member
@@ -33,17 +33,14 @@ bool IsCurrentUserLocalAdministrator(void){
 	Then, call AccessCheck with the current thread's token and the security
 	descriptor. It will say whether the user could access an object if it
 	had that security descriptor.
-	
+
 	Note: you do not need to actually create the object. Just checking access
 	against the security descriptor alone will be sufficient.
 	*/
 	const DWORD ACCESS_READ = 1;
 	const DWORD ACCESS_WRITE = 2;
 
-
-	__try
-	{
-
+	__try {
 		/*
 		AccessCheck() requires an impersonation token.  We first get a
 		primary	token and then create a duplicate impersonation token.  The
@@ -53,24 +50,29 @@ bool IsCurrentUserLocalAdministrator(void){
 		thread was impersonating already, this function uses that impersonation
 		context.
 		*/
-		if (!OpenThreadToken(GetCurrentThread(), TOKEN_DUPLICATE | TOKEN_QUERY,
+		if (!OpenThreadToken(GetCurrentThread(),
+							 TOKEN_DUPLICATE | TOKEN_QUERY,
 
-			TRUE, &hToken))
-		{
-			if (GetLastError() != ERROR_NO_TOKEN)
+							 TRUE,
+							 &hToken)) {
+			if (GetLastError() != ERROR_NO_TOKEN) {
 				__leave;
+			}
 
 			if (!OpenProcessToken(GetCurrentProcess(),
 
-				TOKEN_DUPLICATE | TOKEN_QUERY, &hToken))
+								  TOKEN_DUPLICATE | TOKEN_QUERY,
+								  &hToken)) {
 				__leave;
+			}
 		}
 
-		if (!DuplicateToken(hToken, SecurityImpersonation,
+		if (!DuplicateToken(hToken,
+							SecurityImpersonation,
 
-			&hImpersonationToken))
+							&hImpersonationToken)) {
 			__leave;
-
+		}
 
 		/*
 		Create the binary representation of the well-known SID that
@@ -83,41 +85,56 @@ bool IsCurrentUserLocalAdministrator(void){
 		After that, perform the access check.  This will determine whether
 		the current user is a local admin.
 		*/
-		if (!AllocateAndInitializeSid(&SystemSidAuthority, 2,
-			SECURITY_BUILTIN_DOMAIN_RID,
-			DOMAIN_ALIAS_RID_ADMINS,
-			0, 0, 0, 0, 0, 0, &psidAdmin))
+		if (!AllocateAndInitializeSid(&SystemSidAuthority,
+									  2,
+									  SECURITY_BUILTIN_DOMAIN_RID,
+									  DOMAIN_ALIAS_RID_ADMINS,
+									  0,
+									  0,
+									  0,
+									  0,
+									  0,
+									  0,
+									  &psidAdmin)) {
 			__leave;
+		}
 
 		psdAdmin = LocalAlloc(LPTR, SECURITY_DESCRIPTOR_MIN_LENGTH);
-		if (psdAdmin == nullptr)
+		if (psdAdmin == nullptr) {
 			__leave;
+		}
 
 		if (!InitializeSecurityDescriptor(psdAdmin,
 
-			SECURITY_DESCRIPTOR_REVISION))
+										  SECURITY_DESCRIPTOR_REVISION)) {
 			__leave;
+		}
 
 		// Compute size needed for the ACL.
-		dwACLSize = sizeof(ACL) + sizeof(ACCESS_ALLOWED_ACE) +
-			GetLengthSid(psidAdmin) - sizeof(DWORD);
+		dwACLSize = sizeof(ACL) + sizeof(ACCESS_ALLOWED_ACE) + GetLengthSid(psidAdmin) - sizeof(DWORD);
 
 		pACL = (PACL)LocalAlloc(LPTR, dwACLSize);
-		if (pACL == nullptr)
+		if (pACL == nullptr) {
 			__leave;
+		}
 
-		if (!InitializeAcl(pACL, dwACLSize, ACL_REVISION2))
+		if (!InitializeAcl(pACL, dwACLSize, ACL_REVISION2)) {
 			__leave;
+		}
 
 		dwAccessMask = ACCESS_READ | ACCESS_WRITE;
 
-		if (!AddAccessAllowedAce(pACL, ACL_REVISION2, dwAccessMask,
+		if (!AddAccessAllowedAce(pACL,
+								 ACL_REVISION2,
+								 dwAccessMask,
 
-			psidAdmin))
+								 psidAdmin)) {
 			__leave;
+		}
 
-		if (!SetSecurityDescriptorDacl(psdAdmin, TRUE, pACL, FALSE))
+		if (!SetSecurityDescriptorDacl(psdAdmin, TRUE, pACL, FALSE)) {
 			__leave;
+		}
 
 		/*
 		AccessCheck validates a security descriptor somewhat;
@@ -127,8 +144,9 @@ bool IsCurrentUserLocalAdministrator(void){
 		SetSecurityDescriptorGroup(psdAdmin, psidAdmin, FALSE);
 		SetSecurityDescriptorOwner(psdAdmin, psidAdmin, FALSE);
 
-		if (!IsValidSecurityDescriptor(psdAdmin))
+		if (!IsValidSecurityDescriptor(psdAdmin)) {
 			__leave;
+		}
 
 		dwAccessDesired = ACCESS_READ;
 
@@ -141,22 +159,34 @@ bool IsCurrentUserLocalAdministrator(void){
 		GenericMapping.GenericExecute = 0;
 		GenericMapping.GenericAll = ACCESS_READ | ACCESS_WRITE;
 
-		if (!AccessCheck(psdAdmin, hImpersonationToken, dwAccessDesired,
-			&GenericMapping, &ps, &dwStructureSize, &dwStatus,
-			&fReturn))
-		{
+		if (!AccessCheck(psdAdmin,
+						 hImpersonationToken,
+						 dwAccessDesired,
+						 &GenericMapping,
+						 &ps,
+						 &dwStructureSize,
+						 &dwStatus,
+						 &fReturn)) {
 			fReturn = FALSE;
 			__leave;
 		}
-	}
-	__finally
-	{
+	} __finally {
 		// Clean up.
-		if (pACL) LocalFree(pACL);
-		if (psdAdmin) LocalFree(psdAdmin);
-		if (psidAdmin) FreeSid(psidAdmin);
-		if (hImpersonationToken) CloseHandle(hImpersonationToken);
-		if (hToken) CloseHandle(hToken);
+		if (pACL) {
+			LocalFree(pACL);
+		}
+		if (psdAdmin) {
+			LocalFree(psdAdmin);
+		}
+		if (psidAdmin) {
+			FreeSid(psidAdmin);
+		}
+		if (hImpersonationToken) {
+			CloseHandle(hImpersonationToken);
+		}
+		if (hToken) {
+			CloseHandle(hToken);
+		}
 	}
 
 	return fReturn == TRUE;

@@ -19,7 +19,7 @@
 #ifndef PACKETVER_RE
 	/// From November 2015 only RagexeRE are supported.
 	/// After July 2018 only Ragexe are supported.
-	#if ( PACKETVER > 20151104 && PACKETVER < 20180704 ) || ( PACKETVER >= 20200902 && PACKETVER <= 20211118 )
+	#if (PACKETVER > 20151104 && PACKETVER < 20180704) || (PACKETVER >= 20200902 && PACKETVER <= 20211118)
 		#define PACKETVER_RE
 	#endif
 #endif
@@ -48,9 +48,9 @@
 		#define PACKET_OBFUSCATION
 
 		// Define these inside src/custom/defines_pre.hpp or src/custom/defines_post.hpp
-		//#define PACKET_OBFUSCATION_KEY1 <key1>
-		//#define PACKET_OBFUSCATION_KEY2 <key2>
-		//#define PACKET_OBFUSCATION_KEY3 <key3>
+		// #define PACKET_OBFUSCATION_KEY1 <key1>
+		// #define PACKET_OBFUSCATION_KEY2 <key2>
+		// #define PACKET_OBFUSCATION_KEY3 <key3>
 
 		/// Comment this to disable warnings for missing client side encryption
 		#define PACKET_OBFUSCATION_WARN
@@ -68,11 +68,11 @@
 #endif
 
 #ifndef DUMP_UNKNOWN_PACKET
-	//#define DUMP_UNKNOWN_PACKET
+	// #define DUMP_UNKNOWN_PACKET
 #endif
 
 #ifndef DUMP_INVALID_PACKET
-	//#define DUMP_INVALID_PACKET
+	// #define DUMP_INVALID_PACKET
 #endif
 
 /**
@@ -82,7 +82,8 @@
 /// Check if the specified packetversion supports the pincode system
 #define PACKETVER_SUPPORTS_PINCODE PACKETVER >= 20110309
 
-/// Check if the client needs delete_date as remaining time and not the actual delete_date (actually it was tested for clients since 2013)
+/// Check if the client needs delete_date as remaining time and not the actual delete_date (actually it was tested for
+/// clients since 2013)
 #define PACKETVER_CHAR_DELETEDATE (PACKETVER > 20130000 && PACKETVER <= 20141022) || PACKETVER >= 20150513
 
 /// Check if the specified packetvresion supports the cashshop sale system

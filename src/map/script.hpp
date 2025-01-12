@@ -4,11 +4,11 @@
 #ifndef SCRIPT_HPP
 #define SCRIPT_HPP
 
-#include <ryml_std.hpp>
 #include <ryml.hpp>
+#include <ryml_std.hpp>
 
-#include <common/database.hpp>
 #include <common/cbasetypes.hpp>
+#include <common/database.hpp>
 #include <common/db.hpp>
 #include <common/malloc.hpp>
 #include <common/mmo.hpp>
@@ -17,137 +17,139 @@
 #define NUM_WHISPER_VAR 10
 
 ///////////////////////////////////////////////////////////////////////////////
-//## TODO possible enhancements: [FlavioJS]
-// - 'callfunc' supporting labels in the current npc "::LabelName"
-// - 'callfunc' supporting labels in other npcs "NpcName::LabelName"
-// - 'function FuncName;' function declarations reverting to global functions
-//   if local label isn't found
-// - join callfunc and callsub's functionality
-// - remove dynamic allocation in add_word()
-// - remove GETVALUE / SETVALUE
-// - clean up the set_reg / set_val / setd_sub mess
-// - detect invalid label references at parse-time
+// ## TODO possible enhancements: [FlavioJS]
+//  - 'callfunc' supporting labels in the current npc "::LabelName"
+//  - 'callfunc' supporting labels in other npcs "NpcName::LabelName"
+//  - 'function FuncName;' function declarations reverting to global functions
+//    if local label isn't found
+//  - join callfunc and callsub's functionality
+//  - remove dynamic allocation in add_word()
+//  - remove GETVALUE / SETVALUE
+//  - clean up the set_reg / set_val / setd_sub mess
+//  - detect invalid label references at parse-time
 
 //
 // struct script_state* st;
 //
 
 /// Returns the script_data at the target index
-#define script_getdata(st,i) ( &((st)->stack->stack_data[(st)->start + (i)]) )
+#define script_getdata(st, i) (&((st)->stack->stack_data[(st)->start + (i)]))
 /// Returns if the stack contains data at the target index
-#define script_hasdata(st,i) ( (st)->end > (st)->start + (i) )
+#define script_hasdata(st, i) ((st)->end > (st)->start + (i))
 /// Returns the index of the last data in the stack
-#define script_lastdata(st) ( (st)->end - (st)->start - 1 )
+#define script_lastdata(st) ((st)->end - (st)->start - 1)
 /// Pushes an int32 into the stack
-#define script_pushint(st,val) push_val((st)->stack, C_INT, (val))
+#define script_pushint(st, val) push_val((st)->stack, C_INT, (val))
 /// Pushes an int64 into the stack
-#define script_pushint64( st, val ) push_val2( (st)->stack, C_INT, val, nullptr )
+#define script_pushint64(st, val) push_val2((st)->stack, C_INT, val, nullptr)
 /// Pushes a string into the stack (script engine frees it automatically)
-#define script_pushstr(st,val) push_str((st)->stack, C_STR, (val))
+#define script_pushstr(st, val) push_str((st)->stack, C_STR, (val))
 /// Pushes a copy of a string into the stack
-#define script_pushstrcopy(st,val) push_str((st)->stack, C_STR, aStrdup(val))
+#define script_pushstrcopy(st, val) push_str((st)->stack, C_STR, aStrdup(val))
 /// Pushes a constant string into the stack (must never change or be freed)
-#define script_pushconststr(st,val) push_str((st)->stack, C_CONSTSTR, const_cast<char *>(val))
+#define script_pushconststr(st, val) push_str((st)->stack, C_CONSTSTR, const_cast<char*>(val))
 /// Pushes a nil into the stack
 #define script_pushnil(st) push_val((st)->stack, C_NOP, 0)
 /// Pushes a copy of the data in the target index
-#define script_pushcopy(st,i) push_copy((st)->stack, (st)->start + (i))
+#define script_pushcopy(st, i) push_copy((st)->stack, (st)->start + (i))
 
-#define script_isstring(st,i) data_isstring(get_val(st, script_getdata(st,i)))
-#define script_isint(st,i) data_isint(get_val(st, script_getdata(st,i)))
+#define script_isstring(st, i) data_isstring(get_val(st, script_getdata(st, i)))
+#define script_isint(st, i) data_isint(get_val(st, script_getdata(st, i)))
 
-#define script_getnum(st,val) conv_num(st, script_getdata(st,val))
-#define script_getnum64(st,val) conv_num64(st, script_getdata(st,val))
-#define script_getstr(st,val) conv_str(st, script_getdata(st,val))
-#define script_getref(st,val) ( script_getdata(st,val)->ref )
+#define script_getnum(st, val) conv_num(st, script_getdata(st, val))
+#define script_getnum64(st, val) conv_num64(st, script_getdata(st, val))
+#define script_getstr(st, val) conv_str(st, script_getdata(st, val))
+#define script_getref(st, val) (script_getdata(st, val)->ref)
 // Returns name of currently running function
-#define script_getfuncname(st) ( st->funcname )
+#define script_getfuncname(st) (st->funcname)
 
 // Note: "top" functions/defines use indexes relative to the top of the stack
 //       -1 is the index of the data at the top
 
 /// Returns the script_data at the target index relative to the top of the stack
-#define script_getdatatop(st,i) ( &((st)->stack->stack_data[(st)->stack->sp + (i)]) )
+#define script_getdatatop(st, i) (&((st)->stack->stack_data[(st)->stack->sp + (i)]))
 /// Pushes a copy of the data in the target index relative to the top of the stack
-#define script_pushcopytop(st,i) push_copy((st)->stack, (st)->stack->sp + (i))
+#define script_pushcopytop(st, i) push_copy((st)->stack, (st)->stack->sp + (i))
 /// Removes the range of values [start,end[ relative to the top of the stack
-#define script_removetop(st,start,end) ( pop_stack((st), ((st)->stack->sp + (start)), (st)->stack->sp + (end)) )
+#define script_removetop(st, start, end) (pop_stack((st), ((st)->stack->sp + (start)), (st)->stack->sp + (end)))
 
 //
 // struct script_data* data;
 //
 
 /// Returns if the script data is a string
-#define data_isstring(data) ( (data)->type == C_STR || (data)->type == C_CONSTSTR )
+#define data_isstring(data) ((data)->type == C_STR || (data)->type == C_CONSTSTR)
 /// Returns if the script data is an int
-#define data_isint(data) ( (data)->type == C_INT )
+#define data_isint(data) ((data)->type == C_INT)
 /// Returns if the script data is a reference
-#define data_isreference(data) ( (data)->type == C_NAME )
+#define data_isreference(data) ((data)->type == C_NAME)
 /// Returns if the script data is a label
-#define data_islabel(data) ( (data)->type == C_POS )
+#define data_islabel(data) ((data)->type == C_POS)
 /// Returns if the script data is an internal script function label
-#define data_isfunclabel(data) ( (data)->type == C_USERFUNC_POS )
+#define data_isfunclabel(data) ((data)->type == C_USERFUNC_POS)
 
 /// Returns if this is a reference to a constant
-#define reference_toconstant(data) ( str_data[reference_getid(data)].type == C_INT )
+#define reference_toconstant(data) (str_data[reference_getid(data)].type == C_INT)
 /// Returns if this a reference to a param
-#define reference_toparam(data) ( str_data[reference_getid(data)].type == C_PARAM )
+#define reference_toparam(data) (str_data[reference_getid(data)].type == C_PARAM)
 /// Returns if this a reference to a variable
-//##TODO confirm it's C_NAME [FlavioJS]
-#define reference_tovariable(data) ( str_data[reference_getid(data)].type == C_NAME )
+// ##TODO confirm it's C_NAME [FlavioJS]
+#define reference_tovariable(data) (str_data[reference_getid(data)].type == C_NAME)
 /// Returns the unique id of the reference (id and index)
-#define reference_getuid(data) ( (data)->u.num )
+#define reference_getuid(data) ((data)->u.num)
 /// Returns the id of the reference
-#define reference_getid(data) ( (int32)(int64)(reference_getuid(data) & 0xffffffff) )
+#define reference_getid(data) ((int32)(int64)(reference_getuid(data) & 0xffffffff))
 /// Returns the array index of the reference
-#define reference_getindex(data) ( (uint32)(int64)((reference_getuid(data) >> 32) & 0xffffffff) )
+#define reference_getindex(data) ((uint32)(int64)((reference_getuid(data) >> 32) & 0xffffffff))
 /// Returns the name of the reference
-#define reference_getname(data) ( str_buf + str_data[reference_getid(data)].str )
+#define reference_getname(data) (str_buf + str_data[reference_getid(data)].str)
 /// Returns the linked list of uid-value pairs of the reference (can be nullptr)
-#define reference_getref(data) ( (data)->ref )
+#define reference_getref(data) ((data)->ref)
 /// Returns the value of the constant
-#define reference_getconstant(data) ( str_data[reference_getid(data)].val )
+#define reference_getconstant(data) (str_data[reference_getid(data)].val)
 /// Returns the type of param
-#define reference_getparamtype(data) ( str_data[reference_getid(data)].val )
+#define reference_getparamtype(data) (str_data[reference_getid(data)].val)
 
 /// Composes the uid of a reference from the id and the index
-#define reference_uid(id,idx) ( (int64) ((uint64)(id) & 0xFFFFFFFF) | ((uint64)(idx) << 32) )
+#define reference_uid(id, idx) ((int64)((uint64)(id)&0xFFFFFFFF) | ((uint64)(idx) << 32))
 
 /// Checks whether two references point to the same variable (or array)
 #define is_same_reference(data1, data2) \
-	(  reference_getid(data1) == reference_getid(data2) \
-	&& ( (data1->ref == data2->ref && data1->ref == nullptr) \
-	  || (data1->ref != nullptr && data2->ref != nullptr && data1->ref->vars == data2->ref->vars \
-	     ) ) )
+	(reference_getid(data1) == reference_getid(data2) && \
+	 ((data1->ref == data2->ref && data1->ref == nullptr) || \
+	  (data1->ref != nullptr && data2->ref != nullptr && data1->ref->vars == data2->ref->vars)))
 
-#define script_getvarid(var) ( (int32)(int64)(var & 0xFFFFFFFF) )
-#define script_getvaridx(var) ( (uint32)(int64)((var >> 32) & 0xFFFFFFFF) )
+#define script_getvarid(var) ((int32)(int64)(var & 0xFFFFFFFF))
+#define script_getvaridx(var) ((uint32)(int64)((var >> 32) & 0xFFFFFFFF))
 
-#define not_server_variable(prefix) ( (prefix) != '$' && (prefix) != '.' && (prefix) != '\'')
-#define is_string_variable(name) ( (name)[strlen(name) - 1] == '$' )
+#define not_server_variable(prefix) ((prefix) != '$' && (prefix) != '.' && (prefix) != '\'')
+#define is_string_variable(name) ((name)[strlen(name) - 1] == '$')
 
 #define FETCH(n, t) \
-		if( script_hasdata(st,n) ) \
-			(t)=script_getnum(st,n);
+	if (script_hasdata(st, n)) \
+		(t) = script_getnum(st, n);
 
 /// Maximum amount of elements in script arrays
 #define SCRIPT_MAX_ARRAYSIZE (UINT_MAX - 1)
 
 enum script_cmd_result {
-	SCRIPT_CMD_SUCCESS = 0, ///when a buildin cmd was correctly done
-	SCRIPT_CMD_FAILURE = 1, ///when an errors appear in cmd, show_debug will follow
+	SCRIPT_CMD_SUCCESS = 0, /// when a buildin cmd was correctly done
+	SCRIPT_CMD_FAILURE = 1, /// when an errors appear in cmd, show_debug will follow
 };
 
 #define SCRIPT_BLOCK_SIZE 512
-enum e_labelType { LABEL_NEXTLINE = 1, LABEL_START };
+enum e_labelType {
+	LABEL_NEXTLINE = 1,
+	LABEL_START
+};
 
 class map_session_data;
 struct eri;
 
-extern int32 potion_flag; //For use on Alchemist improved potions/Potion Pitcher. [Skotlex]
+extern int32 potion_flag; // For use on Alchemist improved potions/Potion Pitcher. [Skotlex]
 extern int32 potion_hp, potion_per_hp, potion_sp, potion_per_sp;
 extern int32 potion_target;
-extern uint32 *generic_ui_array;
+extern uint32* generic_ui_array;
 extern uint32 generic_ui_array_size;
 
 struct Script_Config {
@@ -159,14 +161,14 @@ struct Script_Config {
 	int32 input_max_value;
 
 	// PC related
-	const char *die_event_name;
-	const char *kill_pc_event_name;
-	const char *kill_mob_event_name;
-	const char *login_event_name;
-	const char *logout_event_name;
-	const char *loadmap_event_name;
-	const char *baselvup_event_name;
-	const char *joblvup_event_name;
+	const char* die_event_name;
+	const char* kill_pc_event_name;
+	const char* kill_mob_event_name;
+	const char* login_event_name;
+	const char* logout_event_name;
+	const char* loadmap_event_name;
+	const char* baselvup_event_name;
+	const char* joblvup_event_name;
 
 	// NPC related
 	const char* ontouch_event_name;
@@ -267,26 +269,26 @@ typedef enum c_op {
  * Generic reg database abstraction to be used with various types of regs/script variables.
  */
 struct reg_db {
-	struct DBMap *vars;
-	struct DBMap *arrays;
+	struct DBMap* vars;
+	struct DBMap* arrays;
 };
 
 struct script_retinfo {
-	struct reg_db scope;        ///< scope variables
+	struct reg_db scope; ///< scope variables
 	struct script_code* script; ///< script code
-	int32 pos;                    ///< script location
-	int32 nargs;                  ///< argument count
-	int32 defsp;                  ///< default stack pointer
+	int32 pos; ///< script location
+	int32 nargs; ///< argument count
+	int32 defsp; ///< default stack pointer
 };
 
 struct script_data {
 	enum c_op type;
 	union script_data_val {
 		int64 num;
-		char *str;
+		char* str;
 		struct script_retinfo* ri;
 	} u;
-	struct reg_db *ref;
+	struct reg_db* ref;
 };
 
 // Moved defsp from script_state to script_stack since
@@ -299,36 +301,43 @@ struct script_code {
 };
 
 struct script_stack {
-	int32 sp;                         ///< number of entries in the stack
-	int32 sp_max;                     ///< capacity of the stack
+	int32 sp; ///< number of entries in the stack
+	int32 sp_max; ///< capacity of the stack
 	int32 defsp;
-	struct script_data *stack_data; ///< stack
-	struct reg_db scope;            ///< scope variables
+	struct script_data* stack_data; ///< stack
+	struct reg_db scope; ///< scope variables
 };
-
 
 //
 // Script state
 //
-enum e_script_state { RUN,STOP,END,RERUNLINE,GOTO,RETFUNC,CLOSE };
+enum e_script_state {
+	RUN,
+	STOP,
+	END,
+	RERUNLINE,
+	GOTO,
+	RETFUNC,
+	CLOSE
+};
 
 struct script_state {
 	struct script_stack* stack;
-	int32 start,end;
+	int32 start, end;
 	int32 pos;
 	enum e_script_state state;
-	int32 rid,oid;
-	struct script_code *script;
+	int32 rid, oid;
+	struct script_code* script;
 	struct sleep_data {
-		int32 tick,timer,charid;
+		int32 tick, timer, charid;
 	} sleep;
-	//For backing up purposes
-	struct script_state *bk_st;
+	// For backing up purposes
+	struct script_state* bk_st;
 	int32 bk_npcid;
-	unsigned freeloop : 1;// used by buildin_freeloop
-	unsigned op2ref : 1;// used by op_2
+	unsigned freeloop : 1; // used by buildin_freeloop
+	unsigned op2ref : 1; // used by op_2
 	unsigned npc_item_flag : 1;
-	unsigned mes_active : 1;  // Store if invoking character has a NPC dialog box open.
+	unsigned mes_active : 1; // Store if invoking character has a NPC dialog box open.
 	unsigned clear_cutin : 1;
 	char* funcname; // Stores the current running function name
 	uint32 id;
@@ -345,15 +354,15 @@ struct script_regstr {
 };
 
 struct script_array {
-	uint32 id;       ///< the first 32b of the 64b uid, aka the id
-	uint32 size;     ///< how many members
-	uint32 *members; ///< member list
+	uint32 id; ///< the first 32b of the 64b uid, aka the id
+	uint32 size; ///< how many members
+	uint32* members; ///< member list
 };
 
 enum script_parse_options {
-	SCRIPT_USE_LABEL_DB = 0x1,// records labels in scriptlabel_db
-	SCRIPT_IGNORE_EXTERNAL_BRACKETS = 0x2,// ignores the check for {} brackets around the script
-	SCRIPT_RETURN_EMPTY_SCRIPT = 0x4// returns the script object instead of nullptr for empty scripts
+	SCRIPT_USE_LABEL_DB = 0x1, // records labels in scriptlabel_db
+	SCRIPT_IGNORE_EXTERNAL_BRACKETS = 0x2, // ignores the check for {} brackets around the script
+	SCRIPT_RETURN_EMPTY_SCRIPT = 0x4 // returns the script object instead of nullptr for empty scripts
 };
 
 enum monsterinfo_types {
@@ -427,16 +436,16 @@ enum e_questinfo_markcolor : uint8 {
 #ifndef WIN32
 	// These are declared in wingdi.h
 	/* Font Weights */
-	#define FW_DONTCARE         0
-	#define FW_THIN             100
-	#define FW_EXTRALIGHT       200
-	#define FW_LIGHT            300
-	#define FW_NORMAL           400
-	#define FW_MEDIUM           500
-	#define FW_SEMIBOLD         600
-	#define FW_BOLD             700
-	#define FW_EXTRABOLD        800
-	#define FW_HEAVY            900
+	#define FW_DONTCARE 0
+	#define FW_THIN 100
+	#define FW_EXTRALIGHT 200
+	#define FW_LIGHT 300
+	#define FW_NORMAL 400
+	#define FW_MEDIUM 500
+	#define FW_SEMIBOLD 600
+	#define FW_BOLD 700
+	#define FW_EXTRABOLD 800
+	#define FW_HEAVY 900
 #endif
 
 enum unitdata_mobtypes {
@@ -1901,7 +1910,7 @@ enum e_special_effects {
 	EF_MAX
 };
 
-enum e_hat_effects : int16{
+enum e_hat_effects : int16 {
 	HAT_EF_MIN = 0,
 	HAT_EF_BLOSSOM_FLUTTERING,
 	HAT_EF_MERMAID_LONGING,
@@ -2149,13 +2158,13 @@ enum e_hat_effects : int16{
 };
 
 enum e_convertpcinfo_type : uint8 {
-	CPC_NAME      = 0,
-	CPC_CHAR      = 1,
-	CPC_ACCOUNT   = 2
+	CPC_NAME = 0,
+	CPC_CHAR = 1,
+	CPC_ACCOUNT = 2
 };
 
-enum e_instance_warpall_flag{
-	IWA_NONE    = 0x00,
+enum e_instance_warpall_flag {
+	IWA_NONE = 0x00,
 	IWA_NOTDEAD = 0x01,
 };
 
@@ -2163,19 +2172,19 @@ enum e_instance_warpall_flag{
  * Player blocking actions related flags.
  */
 enum e_pcblock_action_flag : uint16 {
-	PCBLOCK_MOVE     = 0x001,
-	PCBLOCK_ATTACK   = 0x002,
-	PCBLOCK_SKILL    = 0x004,
-	PCBLOCK_USEITEM  = 0x008,
-	PCBLOCK_CHAT     = 0x010,
-	PCBLOCK_IMMUNE   = 0x020,
+	PCBLOCK_MOVE = 0x001,
+	PCBLOCK_ATTACK = 0x002,
+	PCBLOCK_SKILL = 0x004,
+	PCBLOCK_USEITEM = 0x008,
+	PCBLOCK_CHAT = 0x010,
+	PCBLOCK_IMMUNE = 0x020,
 	PCBLOCK_SITSTAND = 0x040,
 	PCBLOCK_COMMANDS = 0x080,
 	PCBLOCK_NPCCLICK = 0x100,
-	PCBLOCK_EMOTION  = 0x200,
-	PCBLOCK_EQUIP    = 0x400,
-	PCBLOCK_NPC      = 0x58D,
-	PCBLOCK_ALL      = 0x7FF,
+	PCBLOCK_EMOTION = 0x200,
+	PCBLOCK_EQUIP = 0x400,
+	PCBLOCK_NPC = 0x58D,
+	PCBLOCK_ALL = 0x7FF,
 };
 
 /* getiteminfo/setiteminfo script commands */
@@ -2198,7 +2207,7 @@ enum e_iteminfo : uint8 {
 	ITEMINFO_EQUIPLEVELMAX,
 	ITEMINFO_MAGICATTACK,
 	ITEMINFO_ID,
-	ITEMINFO_AEGISNAME,	// 18
+	ITEMINFO_AEGISNAME, // 18
 	ITEMINFO_ARMORLEVEL,
 	ITEMINFO_SUBTYPE,
 };
@@ -2213,10 +2222,10 @@ enum e_eleminfo : uint8 {
 class ConstantDatabase : public YamlDatabase {
 public:
 	ConstantDatabase() : YamlDatabase("CONSTANT_DB", 1) {
-
 	}
 
-	void clear() override{ }
+	void clear() override {
+	}
 	const std::string getDefaultLocation() override;
 	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 };
@@ -2224,87 +2233,102 @@ public:
 /**
  * used to generate quick script_array entries
  **/
-extern struct eri *array_ers;
-extern DBMap *st_db;
+extern struct eri* array_ers;
+extern DBMap* st_db;
 extern uint32 active_scripts;
 extern uint32 next_id;
-extern struct eri *st_ers;
-extern struct eri *stack_ers;
+extern struct eri* st_ers;
+extern struct eri* stack_ers;
 
 const char* skip_space(const char* p);
 void script_error(const char* src, const char* file, int32 start_line, const char* error_msg, const char* error_pos);
 void script_warning(const char* src, const char* file, int32 start_line, const char* error_msg, const char* error_pos);
 
-bool is_number(const char *p);
-struct script_code* parse_script_( const char *src, const char *file, int32 line, int32 options, const char* src_file, int32 src_line, const char* src_func );
-#define parse_script( src, file, line, options ) parse_script_( ( src ), ( file ), ( line ), ( options ), ALC_MARK )
-void run_script(struct script_code *rootscript,int32 pos,int32 rid,int32 oid);
+bool is_number(const char* p);
+struct script_code* parse_script_(const char* src,
+								  const char* file,
+								  int32 line,
+								  int32 options,
+								  const char* src_file,
+								  int32 src_line,
+								  const char* src_func);
+#define parse_script(src, file, line, options) parse_script_((src), (file), (line), (options), ALC_MARK)
+void run_script(struct script_code* rootscript, int32 pos, int32 rid, int32 oid);
 
-bool set_reg_num(struct script_state* st, map_session_data* sd, int64 num, const char* name, const int64 value, struct reg_db *ref);
-bool set_reg_str(struct script_state* st, map_session_data* sd, int64 num, const char* name, const char* value, struct reg_db* ref);
-bool set_var_str(map_session_data *sd, const char* name, const char* val);
-bool clear_reg( struct script_state* st, map_session_data* sd, int64 num, const char* name, struct reg_db *ref );
-int64 conv_num64(struct script_state *st, struct script_data *data);
-int32 conv_num(struct script_state *st, struct script_data *data);
-const char* conv_str(struct script_state *st,struct script_data *data);
+bool set_reg_num(
+	struct script_state* st, map_session_data* sd, int64 num, const char* name, const int64 value, struct reg_db* ref);
+bool set_reg_str(
+	struct script_state* st, map_session_data* sd, int64 num, const char* name, const char* value, struct reg_db* ref);
+bool set_var_str(map_session_data* sd, const char* name, const char* val);
+bool clear_reg(struct script_state* st, map_session_data* sd, int64 num, const char* name, struct reg_db* ref);
+int64 conv_num64(struct script_state* st, struct script_data* data);
+int32 conv_num(struct script_state* st, struct script_data* data);
+const char* conv_str(struct script_state* st, struct script_data* data);
 void pop_stack(struct script_state* st, int32 start, int32 end);
 TIMER_FUNC(run_script_timer);
 void script_stop_sleeptimers(int32 id);
-struct linkdb_node *script_erase_sleepdb(struct linkdb_node *n);
+struct linkdb_node* script_erase_sleepdb(struct linkdb_node* n);
 void script_attach_state(struct script_state* st);
 void script_detach_rid(struct script_state* st);
-void run_script_main(struct script_state *st);
+void run_script_main(struct script_state* st);
 
-void script_stop_scriptinstances(struct script_code *code);
+void script_stop_scriptinstances(struct script_code* code);
 void script_free_code(struct script_code* code);
-void script_free_vars(struct DBMap *storage);
+void script_free_vars(struct DBMap* storage);
 struct script_state* script_alloc_state(struct script_code* rootscript, int32 pos, int32 rid, int32 oid);
 void script_free_state(struct script_state* st);
 
 struct DBMap* script_get_label_db(void);
 struct DBMap* script_get_userfunc_db(void);
-void script_run_autobonus(const char *autobonus, map_session_data *sd, uint32 pos);
-void script_run_petautobonus(const std::string &autobonus, map_session_data &sd);
+void script_run_autobonus(const char* autobonus, map_session_data* sd, uint32 pos);
+void script_run_petautobonus(const std::string& autobonus, map_session_data& sd);
 
 const char* script_get_constant_str(const char* prefix, int64 value);
 bool script_get_parameter(const char* name, int64* value);
 bool script_get_constant(const char* name, int64* value);
 void script_set_constant_(const char* name, int64 value, const char* constant_name, bool isparameter, bool deprecated);
-#define script_set_constant(name, value, isparameter, deprecated) script_set_constant_(name, value, nullptr, isparameter, deprecated)
+#define script_set_constant(name, value, isparameter, deprecated) \
+	script_set_constant_(name, value, nullptr, isparameter, deprecated)
 void script_hardcoded_constants(void);
 
 void script_cleararray_pc(map_session_data* sd, const char* varname);
 void script_setarray_pc(map_session_data* sd, const char* varname, uint32 idx, int64 value, int* refcache);
 
-int32 script_config_read(const char *cfgName);
+int32 script_config_read(const char* cfgName);
 void do_init_script(void);
 void do_final_script(void);
 int32 add_str(const char* p);
 const char* get_str(int32 id);
 void script_reload(void);
 
-void setd_sub_num( struct script_state* st, map_session_data* sd, const char* varname, int32 elem, int64 value, struct reg_db* ref );
-void setd_sub_str( struct script_state* st, map_session_data* sd, const char* varname, int32 elem, const char* value, struct reg_db* ref );
+void setd_sub_num(
+	struct script_state* st, map_session_data* sd, const char* varname, int32 elem, int64 value, struct reg_db* ref);
+void setd_sub_str(struct script_state* st,
+				  map_session_data* sd,
+				  const char* varname,
+				  int32 elem,
+				  const char* value,
+				  struct reg_db* ref);
 
 /**
  * Array Handling
  **/
-struct reg_db *script_array_src(struct script_state *st, map_session_data *sd, const char *name, struct reg_db *ref);
-void script_array_update(struct reg_db *src, int64 num, bool empty);
-void script_array_delete(struct reg_db *src, struct script_array *sa);
-void script_array_remove_member(struct reg_db *src, struct script_array *sa, uint32 idx);
-void script_array_add_member(struct script_array *sa, uint32 idx);
-uint32 script_array_size(struct script_state *st, map_session_data *sd, const char *name, struct reg_db *ref);
-uint32 script_array_highest_key(struct script_state *st, map_session_data *sd, const char *name, struct reg_db *ref);
-void script_array_ensure_zero(struct script_state *st, map_session_data *sd, int64 uid, struct reg_db *ref);
-int32 script_free_array_db(DBKey key, DBData *data, va_list ap);
+struct reg_db* script_array_src(struct script_state* st, map_session_data* sd, const char* name, struct reg_db* ref);
+void script_array_update(struct reg_db* src, int64 num, bool empty);
+void script_array_delete(struct reg_db* src, struct script_array* sa);
+void script_array_remove_member(struct reg_db* src, struct script_array* sa, uint32 idx);
+void script_array_add_member(struct script_array* sa, uint32 idx);
+uint32 script_array_size(struct script_state* st, map_session_data* sd, const char* name, struct reg_db* ref);
+uint32 script_array_highest_key(struct script_state* st, map_session_data* sd, const char* name, struct reg_db* ref);
+void script_array_ensure_zero(struct script_state* st, map_session_data* sd, int64 uid, struct reg_db* ref);
+int32 script_free_array_db(DBKey key, DBData* data, va_list ap);
 /* */
-void script_reg_destroy_single(map_session_data *sd, int64 reg, struct script_reg_state *data);
-int32 script_reg_destroy(DBKey key, DBData *data, va_list ap);
+void script_reg_destroy_single(map_session_data* sd, int64 reg, struct script_reg_state* data);
+int32 script_reg_destroy(DBKey key, DBData* data, va_list ap);
 /* */
 void script_generic_ui_array_expand(uint32 plus);
-uint32 *script_array_cpy_list(struct script_array *sa);
+uint32* script_array_cpy_list(struct script_array* sa);
 
-bool script_check_RegistryVariableLength(int32 pType, const char *val, size_t* vlen);
+bool script_check_RegistryVariableLength(int32 pType, const char* val, size_t* vlen);
 
 #endif /* SCRIPT_HPP */

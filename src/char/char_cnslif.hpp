@@ -9,5 +9,4 @@
 int32 cnslif_parse(const char* buf);
 void do_init_chcnslif(void);
 
-
 #endif /* CHAR_CNSLIF_HPP */

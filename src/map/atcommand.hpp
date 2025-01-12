@@ -11,7 +11,7 @@
 
 class map_session_data;
 
-//global var
+// global var
 extern char atcommand_symbol;
 extern char charcommand_symbol;
 extern int32 atcmd_binding_count;
@@ -19,7 +19,7 @@ extern int32 atcmd_binding_count;
 enum AtCommandType : uint8 {
 	COMMAND_ATCOMMAND = 1,
 	COMMAND_CHARCOMMAND = 2,
-} ;
+};
 
 typedef int32 (*AtCommandFunc)(const int32 fd, map_session_data* sd, const char* command, const char* message);
 
@@ -30,7 +30,7 @@ void do_final_atcommand(void);
 void atcommand_db_load_groups();
 
 bool atcommand_exists(const char* name);
-const char* atcommand_alias_lookup( const std::string& cmd );
+const char* atcommand_alias_lookup(const std::string& cmd);
 
 // @commands (script based)
 struct atcmd_binding_data {

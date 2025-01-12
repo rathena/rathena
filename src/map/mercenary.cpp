@@ -32,29 +32,30 @@ using namespace rathena;
 MercenaryDatabase mercenary_db;
 
 /**
-* Get View Data of Mercenary by Class ID
-* @param class_ The Class ID
-* @return View Data of Mercenary
-**/
-struct view_data *mercenary_get_viewdata( uint16 class_ ){
+ * Get View Data of Mercenary by Class ID
+ * @param class_ The Class ID
+ * @return View Data of Mercenary
+ **/
+struct view_data *mercenary_get_viewdata(uint16 class_) {
 	std::shared_ptr<s_mercenary_db> db = mercenary_db.find(class_);
 
-	if( db ){
+	if (db) {
 		return &db->vd;
-	}else{
+	}
+	else {
 		return nullptr;
 	}
 }
 
 /**
-* Create a new Mercenary for Player
-* @param sd The Player
-* @param class_ Mercenary Class
-* @param lifetime Contract duration
-* @return false if failed, true otherwise
-**/
+ * Create a new Mercenary for Player
+ * @param sd The Player
+ * @param class_ Mercenary Class
+ * @param lifetime Contract duration
+ * @return false if failed, true otherwise
+ **/
 bool mercenary_create(map_session_data *sd, uint16 class_, uint32 lifetime) {
-	nullpo_retr(false,sd);
+	nullpo_retr(false, sd);
 
 	std::shared_ptr<s_mercenary_db> db = mercenary_db.find(class_);
 
@@ -78,53 +79,59 @@ bool mercenary_create(map_session_data *sd, uint16 class_, uint32 lifetime) {
 }
 
 /**
-* Get current Mercenary lifetime
-* @param md The Mercenary
-* @return The Lifetime
-**/
+ * Get current Mercenary lifetime
+ * @param md The Mercenary
+ * @return The Lifetime
+ **/
 t_tick mercenary_get_lifetime(s_mercenary_data *md) {
-	if( md == nullptr || md->contract_timer == INVALID_TIMER )
+	if (md == nullptr || md->contract_timer == INVALID_TIMER) {
 		return 0;
+	}
 
 	const struct TimerData *td = get_timer(md->contract_timer);
 	return (td != nullptr) ? DIFF_TICK(td->tick, gettick()) : 0;
 }
 
 /**
-* Get Guild type of Mercenary
-* @param md Mercenary
-* @return enum e_MercGuildType
-**/
-e_MercGuildType mercenary_get_guild(s_mercenary_data *md){
-	if( md == nullptr || md->db == nullptr )
+ * Get Guild type of Mercenary
+ * @param md Mercenary
+ * @return enum e_MercGuildType
+ **/
+e_MercGuildType mercenary_get_guild(s_mercenary_data *md) {
+	if (md == nullptr || md->db == nullptr) {
 		return NONE_MERC_GUILD;
+	}
 
 	uint16 class_ = md->db->class_;
 
-	if( class_ >= MERID_MER_ARCHER01 && class_ <= MERID_MER_ARCHER10 )
+	if (class_ >= MERID_MER_ARCHER01 && class_ <= MERID_MER_ARCHER10) {
 		return ARCH_MERC_GUILD;
-	if( class_ >= MERID_MER_LANCER01 && class_ <= MERID_MER_LANCER10 )
+	}
+	if (class_ >= MERID_MER_LANCER01 && class_ <= MERID_MER_LANCER10) {
 		return SPEAR_MERC_GUILD;
-	if( class_ >= MERID_MER_SWORDMAN01 && class_ <= MERID_MER_SWORDMAN10 )
+	}
+	if (class_ >= MERID_MER_SWORDMAN01 && class_ <= MERID_MER_SWORDMAN10) {
 		return SWORD_MERC_GUILD;
+	}
 
 	return NONE_MERC_GUILD;
 }
 
 /**
-* Get Faith value of Mercenary
-* @param md Mercenary
-* @return the Faith value
-**/
+ * Get Faith value of Mercenary
+ * @param md Mercenary
+ * @return the Faith value
+ **/
 int32 mercenary_get_faith(s_mercenary_data *md) {
 	map_session_data *sd;
 
-	if( md == nullptr || md->db == nullptr || (sd = md->master) == nullptr )
+	if (md == nullptr || md->db == nullptr || (sd = md->master) == nullptr) {
 		return 0;
+	}
 
 	e_MercGuildType guild = mercenary_get_guild(md);
 
-	switch( guild ){
+	switch (guild) {
 		case ARCH_MERC_GUILD:
 			return sd->status.arch_faith;
 		case SPEAR_MERC_GUILD:
@@ -138,20 +145,21 @@ int32 mercenary_get_faith(s_mercenary_data *md) {
 }
 
 /**
-* Set faith value of Mercenary
-* @param md The Mercenary
-* @param value Faith Value
-**/
+ * Set faith value of Mercenary
+ * @param md The Mercenary
+ * @param value Faith Value
+ **/
 void mercenary_set_faith(s_mercenary_data *md, int32 value) {
 	map_session_data *sd;
 
-	if( md == nullptr || md->db == nullptr || (sd = md->master) == nullptr )
+	if (md == nullptr || md->db == nullptr || (sd = md->master) == nullptr) {
 		return;
+	}
 
 	e_MercGuildType guild = mercenary_get_guild(md);
 	int32 *faith = nullptr;
 
-	switch( guild ){
+	switch (guild) {
 		case ARCH_MERC_GUILD:
 			faith = &sd->status.arch_faith;
 			break;
@@ -171,19 +179,20 @@ void mercenary_set_faith(s_mercenary_data *md, int32 value) {
 }
 
 /**
-* Get Mercenary's calls
-* @param md Mercenary
-* @return Number of calls
-**/
+ * Get Mercenary's calls
+ * @param md Mercenary
+ * @return Number of calls
+ **/
 int32 mercenary_get_calls(s_mercenary_data *md) {
 	map_session_data *sd;
 
-	if( md == nullptr || md->db == nullptr || (sd = md->master) == nullptr )
+	if (md == nullptr || md->db == nullptr || (sd = md->master) == nullptr) {
 		return 0;
+	}
 
 	e_MercGuildType guild = mercenary_get_guild(md);
 
-	switch( guild ){
+	switch (guild) {
 		case ARCH_MERC_GUILD:
 			return sd->status.arch_calls;
 		case SPEAR_MERC_GUILD:
@@ -197,20 +206,21 @@ int32 mercenary_get_calls(s_mercenary_data *md) {
 }
 
 /**
-* Set Mercenary's calls
-* @param md Mercenary
-* @param value
-**/
+ * Set Mercenary's calls
+ * @param md Mercenary
+ * @param value
+ **/
 void mercenary_set_calls(s_mercenary_data *md, int32 value) {
 	map_session_data *sd;
 
-	if( md == nullptr || md->db == nullptr || (sd = md->master) == nullptr )
+	if (md == nullptr || md->db == nullptr || (sd = md->master) == nullptr) {
 		return;
+	}
 
 	e_MercGuildType guild = mercenary_get_guild(md);
 	int32 *calls = nullptr;
 
-	switch( guild ){
+	switch (guild) {
 		case ARCH_MERC_GUILD:
 			calls = &sd->status.arch_calls;
 			break;
@@ -229,18 +239,19 @@ void mercenary_set_calls(s_mercenary_data *md, int32 value) {
 }
 
 /**
-* Save Mercenary data
-* @param md Mercenary
-**/
+ * Save Mercenary data
+ * @param md Mercenary
+ **/
 void mercenary_save(s_mercenary_data *md) {
 	md->mercenary.hp = md->battle_status.hp;
 	md->mercenary.sp = md->battle_status.sp;
 	md->mercenary.life_time = mercenary_get_lifetime(md);
 
 	// Clear skill cooldown array.
-	for (uint16 i = 0; i < MAX_SKILLCOOLDOWN; i++)
+	for (uint16 i = 0; i < MAX_SKILLCOOLDOWN; i++) {
 		md->mercenary.scd[i] = {};
-	
+	}
+
 	// Store current cooldown entries.
 	uint16 count = 0;
 	t_tick tick = gettick();
@@ -248,10 +259,11 @@ void mercenary_save(s_mercenary_data *md) {
 	for (const auto &entry : md->scd) {
 		const TimerData *timer = get_timer(entry.second);
 
-		if (timer == nullptr || timer->func != skill_blockmerc_end || DIFF_TICK(timer->tick, tick) < 0)
+		if (timer == nullptr || timer->func != skill_blockmerc_end || DIFF_TICK(timer->tick, tick) < 0) {
 			continue;
+		}
 
-		md->mercenary.scd[count] = { entry.first, DIFF_TICK(timer->tick, tick) };
+		md->mercenary.scd[count] = {entry.first, DIFF_TICK(timer->tick, tick)};
 
 		count++;
 	}
@@ -260,19 +272,20 @@ void mercenary_save(s_mercenary_data *md) {
 }
 
 /**
-* Ends contract of Mercenary
-**/
-static TIMER_FUNC(merc_contract_end){
+ * Ends contract of Mercenary
+ **/
+static TIMER_FUNC(merc_contract_end) {
 	map_session_data *sd;
 	s_mercenary_data *md;
 
-	if( (sd = map_id2sd(id)) == nullptr )
+	if ((sd = map_id2sd(id)) == nullptr) {
 		return 1;
-	if( (md = sd->md) == nullptr )
+	}
+	if ((md = sd->md) == nullptr) {
 		return 1;
+	}
 
-	if( md->contract_timer != tid )
-	{
+	if (md->contract_timer != tid) {
 		ShowError("merc_contract_end %d != %d.\n", md->contract_timer, tid);
 		return 0;
 	}
@@ -284,60 +297,61 @@ static TIMER_FUNC(merc_contract_end){
 }
 
 /**
-* Delete Mercenary
-* @param md Mercenary
-* @param reply
-**/
+ * Delete Mercenary
+ * @param md Mercenary
+ * @param reply
+ **/
 int32 mercenary_delete(s_mercenary_data *md, int32 reply) {
 	map_session_data *sd = md->master;
 	md->mercenary.life_time = 0;
 
 	mercenary_contract_stop(md);
 
-	if( !sd )
+	if (!sd) {
 		return unit_free(&md->bl, CLR_OUTSIGHT);
+	}
 
-	if( md->devotion_flag )
-	{
+	if (md->devotion_flag) {
 		md->devotion_flag = 0;
 		status_change_end(&sd->bl, SC_DEVOTION);
 	}
 
-	switch( reply )
-	{
+	switch (reply) {
 		case 0:
 			// +1 Loyalty on Contract ends.
 			mercenary_set_faith(md, 1);
 			clif_msg(sd, MSI_MER_FINISH);
-			break; 
+			break;
 		case 1:
 			// -1 Loyalty on Mercenary killed
 			mercenary_set_faith(md, -1);
 			clif_msg(sd, MSI_MER_DIE);
-			break; 
+			break;
 	}
 
 	return unit_remove_map(&md->bl, CLR_OUTSIGHT);
 }
 
 /**
-* Stop contract of Mercenary
-* @param md Mercenary
-**/
+ * Stop contract of Mercenary
+ * @param md Mercenary
+ **/
 void mercenary_contract_stop(s_mercenary_data *md) {
 	nullpo_retv(md);
-	if( md->contract_timer != INVALID_TIMER )
+	if (md->contract_timer != INVALID_TIMER) {
 		delete_timer(md->contract_timer, merc_contract_end);
+	}
 	md->contract_timer = INVALID_TIMER;
 }
 
 /**
-* Init contract of Mercenary
-* @param md Mercenary
-**/
+ * Init contract of Mercenary
+ * @param md Mercenary
+ **/
 void merc_contract_init(s_mercenary_data *md) {
-	if( md->contract_timer == INVALID_TIMER )
+	if (md->contract_timer == INVALID_TIMER) {
 		md->contract_timer = add_timer(gettick() + md->mercenary.life_time, merc_contract_end, md->master->bl.id, 0);
+	}
 
 	md->regen.state.block = 0;
 }
@@ -348,25 +362,25 @@ void merc_contract_init(s_mercenary_data *md) {
  * @param flag : if inter-serv request was sucessfull
  * @return false:failure, true:sucess
  */
-bool mercenary_recv_data(s_mercenary *merc, bool flag)
-{
+bool mercenary_recv_data(s_mercenary *merc, bool flag) {
 	map_session_data *sd;
 	t_tick tick = gettick();
 
-	if( (sd = map_charid2sd(merc->char_id)) == nullptr )
+	if ((sd = map_charid2sd(merc->char_id)) == nullptr) {
 		return false;
+	}
 
 	std::shared_ptr<s_mercenary_db> db = mercenary_db.find(merc->class_);
 
-	if( !flag || !db ){ // Not created - loaded - DB info
+	if (!flag || !db) { // Not created - loaded - DB info
 		sd->status.mer_id = 0;
 		return false;
 	}
 
 	s_mercenary_data *md;
 
-	if( !sd->md ) {
-		sd->md = md = (s_mercenary_data*)aCalloc(1,sizeof(s_mercenary_data));
+	if (!sd->md) {
+		sd->md = md = (s_mercenary_data *)aCalloc(1, sizeof(s_mercenary_data));
 		new (sd->md) s_mercenary_data();
 
 		md->bl.type = BL_MER;
@@ -397,18 +411,21 @@ bool mercenary_recv_data(s_mercenary *merc, bool flag)
 		md->contract_timer = INVALID_TIMER;
 		md->masterteleport_timer = INVALID_TIMER;
 		merc_contract_init(md);
-	} else {
+	}
+	else {
 		memcpy(&sd->md->mercenary, merc, sizeof(s_mercenary));
 		md = sd->md;
 	}
 
-	if( sd->status.mer_id == 0 )
+	if (sd->status.mer_id == 0) {
 		mercenary_set_calls(md, 1);
+	}
 	sd->status.mer_id = merc->mercenary_id;
 
-	if( md && md->bl.prev == nullptr && sd->bl.prev != nullptr ) {
-		if(map_addblock(&md->bl))
+	if (md && md->bl.prev == nullptr && sd->bl.prev != nullptr) {
+		if (map_addblock(&md->bl)) {
 			return false;
+		}
 		clif_spawn(&md->bl);
 		clif_mercenary_info(sd);
 		clif_mercenary_skillblock(sd);
@@ -423,18 +440,21 @@ bool mercenary_recv_data(s_mercenary *merc, bool flag)
 }
 
 /**
-* Heals Mercenary
-* @param md Mercenary
-* @param hp HP amount
-* @param sp SP amount
-**/
+ * Heals Mercenary
+ * @param md Mercenary
+ * @param hp HP amount
+ * @param sp SP amount
+ **/
 void mercenary_heal(s_mercenary_data *md, int32 hp, int32 sp) {
-	if (md->master == nullptr)
+	if (md->master == nullptr) {
 		return;
-	if( hp )
+	}
+	if (hp) {
 		clif_mercenary_updatestatus(md->master, SP_HP);
-	if( sp )
+	}
+	if (sp) {
 		clif_mercenary_updatestatus(md->master, SP_SP);
+	}
 }
 
 /**
@@ -448,42 +468,44 @@ bool mercenary_dead(s_mercenary_data *md) {
 }
 
 /**
-* Gives bonus to Mercenary
-* @param md Mercenary
-**/
+ * Gives bonus to Mercenary
+ * @param md Mercenary
+ **/
 void mercenary_killbonus(s_mercenary_data *md) {
-	std::vector<sc_type> scs = { SC_MERC_FLEEUP, SC_MERC_ATKUP, SC_MERC_HPUP, SC_MERC_SPUP, SC_MERC_HITUP };
+	std::vector<sc_type> scs = {SC_MERC_FLEEUP, SC_MERC_ATKUP, SC_MERC_HPUP, SC_MERC_SPUP, SC_MERC_HITUP};
 
-	sc_start(&md->bl,&md->bl, util::vector_random(scs), 100, rnd_value(1, 5), 300000); //Bonus lasts for 5 minutes
+	sc_start(&md->bl, &md->bl, util::vector_random(scs), 100, rnd_value(1, 5), 300000); // Bonus lasts for 5 minutes
 }
 
 /**
-* Mercenary does kill
-* @param md Mercenary
-**/
-void mercenary_kills(s_mercenary_data *md){
-	if(md->mercenary.kill_count <= (INT_MAX-1)) //safe cap to INT_MAX
+ * Mercenary does kill
+ * @param md Mercenary
+ **/
+void mercenary_kills(s_mercenary_data *md) {
+	if (md->mercenary.kill_count <= (INT_MAX - 1)) { // safe cap to INT_MAX
 		md->mercenary.kill_count++;
+	}
 
-	if( (md->mercenary.kill_count % 50) == 0 )
-	{
+	if ((md->mercenary.kill_count % 50) == 0) {
 		mercenary_set_faith(md, 1);
 		mercenary_killbonus(md);
 	}
 
-	if( md->master )
+	if (md->master) {
 		clif_mercenary_updatestatus(md->master, SP_MERCKILLS);
+	}
 }
 
 /**
-* Check if Mercenary has the skill
-* @param md Mercenary
-* @param skill_id The skill
-* @return Skill Level or 0 if Mercenary doesn't have the skill
-**/
+ * Check if Mercenary has the skill
+ * @param md Mercenary
+ * @param skill_id The skill
+ * @return Skill Level or 0 if Mercenary doesn't have the skill
+ **/
 uint16 mercenary_checkskill(s_mercenary_data *md, uint16 skill_id) {
-	if (!md || !md->db)
+	if (!md || !md->db) {
 		return 0;
+	}
 	auto skill_level = util::umap_find(md->db->skill, skill_id);
 	return skill_level ? *skill_level : 0;
 }
@@ -497,18 +519,20 @@ const std::string MercenaryDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 MercenaryDatabase::parseBodyNode(const ryml::NodeRef& node) {
+uint64 MercenaryDatabase::parseBodyNode(const ryml::NodeRef &node) {
 	uint32 id;
 
-	if (!this->asUInt32(node, "Id", id))
+	if (!this->asUInt32(node, "Id", id)) {
 		return 0;
+	}
 
 	std::shared_ptr<s_mercenary_db> mercenary = this->find(id);
 	bool exists = mercenary != nullptr;
 
 	if (!exists) {
-		if (!this->nodesExist(node, { "AegisName", "Name" }))
+		if (!this->nodesExist(node, {"AegisName", "Name"})) {
 			return 0;
+		}
 
 		mercenary = std::make_shared<s_mercenary_db>();
 		mercenary->class_ = id;
@@ -517,11 +541,15 @@ uint64 MercenaryDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	if (this->nodeExists(node, "AegisName")) {
 		std::string name;
 
-		if (!this->asString(node, "AegisName", name))
+		if (!this->asString(node, "AegisName", name)) {
 			return 0;
+		}
 
 		if (name.size() > NAME_LENGTH) {
-			this->invalidWarning(node["AegisName"], "AegisName \"%s\" exceeds maximum of %d characters, capping...\n", name.c_str(), NAME_LENGTH - 1);
+			this->invalidWarning(node["AegisName"],
+								 "AegisName \"%s\" exceeds maximum of %d characters, capping...\n",
+								 name.c_str(),
+								 NAME_LENGTH - 1);
 		}
 
 		name.resize(NAME_LENGTH);
@@ -531,11 +559,15 @@ uint64 MercenaryDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	if (this->nodeExists(node, "Name")) {
 		std::string name;
 
-		if (!this->asString(node, "Name", name))
+		if (!this->asString(node, "Name", name)) {
 			return 0;
+		}
 
 		if (name.size() > NAME_LENGTH) {
-			this->invalidWarning(node["Name"], "Name \"%s\" exceeds maximum of %d characters, capping...\n", name.c_str(), NAME_LENGTH - 1);
+			this->invalidWarning(node["Name"],
+								 "Name \"%s\" exceeds maximum of %d characters, capping...\n",
+								 name.c_str(),
+								 NAME_LENGTH - 1);
 		}
 
 		name.resize(NAME_LENGTH);
@@ -545,8 +577,9 @@ uint64 MercenaryDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	if (this->nodeExists(node, "Level")) {
 		uint16 level;
 
-		if (!this->asUInt16(node, "Level", level))
+		if (!this->asUInt16(node, "Level", level)) {
 			return 0;
+		}
 
 		if (level > MAX_LEVEL) {
 			this->invalidWarning(node["Level"], "Level %d exceeds MAX_LEVEL, capping to %d.\n", level, MAX_LEVEL);
@@ -554,64 +587,79 @@ uint64 MercenaryDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		}
 
 		mercenary->lv = level;
-	} else {
-		if (!exists)
+	}
+	else {
+		if (!exists) {
 			mercenary->lv = 1;
+		}
 	}
 
 	if (this->nodeExists(node, "Hp")) {
 		uint32 hp;
 
-		if (!this->asUInt32(node, "Hp", hp))
+		if (!this->asUInt32(node, "Hp", hp)) {
 			return 0;
+		}
 
 		mercenary->status.max_hp = hp;
-	} else {
-		if (!exists)
-			mercenary->status.max_hp = 1;
 	}
-	
+	else {
+		if (!exists) {
+			mercenary->status.max_hp = 1;
+		}
+	}
+
 	if (this->nodeExists(node, "Sp")) {
 		uint32 sp;
 
-		if (!this->asUInt32(node, "Sp", sp))
+		if (!this->asUInt32(node, "Sp", sp)) {
 			return 0;
+		}
 
 		mercenary->status.max_sp = sp;
-	} else {
-		if (!exists)
+	}
+	else {
+		if (!exists) {
 			mercenary->status.max_sp = 1;
+		}
 	}
 
 	if (this->nodeExists(node, "Attack")) {
 		uint16 atk;
 
-		if (!this->asUInt16(node, "Attack", atk))
+		if (!this->asUInt16(node, "Attack", atk)) {
 			return 0;
+		}
 
 		mercenary->status.rhw.atk = atk;
-	} else {
-		if (!exists)
-			mercenary->status.rhw.atk = 0;
 	}
-	
+	else {
+		if (!exists) {
+			mercenary->status.rhw.atk = 0;
+		}
+	}
+
 	if (this->nodeExists(node, "Attack2")) {
 		uint16 atk;
 
-		if (!this->asUInt16(node, "Attack2", atk))
+		if (!this->asUInt16(node, "Attack2", atk)) {
 			return 0;
+		}
 
 		mercenary->status.rhw.atk2 = mercenary->status.rhw.atk + atk;
-	} else {
-		if (!exists)
+	}
+	else {
+		if (!exists) {
 			mercenary->status.rhw.atk2 = mercenary->status.rhw.atk;
+		}
 	}
 
 	if (this->nodeExists(node, "Defense")) {
 		int32 def;
 
-		if (!this->asInt32(node, "Defense", def))
+		if (!this->asInt32(node, "Defense", def)) {
 			return 0;
+		}
 
 		if (def < DEFTYPE_MIN || def > DEFTYPE_MAX) {
 			this->invalidWarning(node["Defense"], "Invalid defense %d, capping...\n", def);
@@ -619,16 +667,19 @@ uint64 MercenaryDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		}
 
 		mercenary->status.def = static_cast<defType>(def);
-	} else {
-		if (!exists)
-			mercenary->status.def = 0;
 	}
-	
+	else {
+		if (!exists) {
+			mercenary->status.def = 0;
+		}
+	}
+
 	if (this->nodeExists(node, "MagicDefense")) {
 		int32 def;
 
-		if (!this->asInt32(node, "MagicDefense", def))
+		if (!this->asInt32(node, "MagicDefense", def)) {
 			return 0;
+		}
 
 		if (def < DEFTYPE_MIN || def > DEFTYPE_MAX) {
 			this->invalidWarning(node["MagicDefense"], "Invalid magic defense %d, capping...\n", def);
@@ -636,124 +687,154 @@ uint64 MercenaryDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		}
 
 		mercenary->status.mdef = static_cast<defType>(def);
-	} else {
-		if (!exists)
+	}
+	else {
+		if (!exists) {
 			mercenary->status.mdef = 0;
+		}
 	}
 
 	if (this->nodeExists(node, "Str")) {
 		uint16 stat;
 
-		if (!this->asUInt16(node, "Str", stat))
+		if (!this->asUInt16(node, "Str", stat)) {
 			return 0;
+		}
 
 		mercenary->status.str = stat;
-	} else {
-		if (!exists)
+	}
+	else {
+		if (!exists) {
 			mercenary->status.str = 1;
+		}
 	}
 
 	if (this->nodeExists(node, "Agi")) {
 		uint16 stat;
 
-		if (!this->asUInt16(node, "Agi", stat))
+		if (!this->asUInt16(node, "Agi", stat)) {
 			return 0;
+		}
 
 		mercenary->status.agi = stat;
-	} else {
-		if (!exists)
+	}
+	else {
+		if (!exists) {
 			mercenary->status.agi = 1;
+		}
 	}
 
 	if (this->nodeExists(node, "Vit")) {
 		uint16 stat;
 
-		if (!this->asUInt16(node, "Vit", stat))
+		if (!this->asUInt16(node, "Vit", stat)) {
 			return 0;
+		}
 
 		mercenary->status.vit = stat;
-	} else {
-		if (!exists)
+	}
+	else {
+		if (!exists) {
 			mercenary->status.vit = 1;
+		}
 	}
 
 	if (this->nodeExists(node, "Int")) {
 		uint16 stat;
 
-		if (!this->asUInt16(node, "Int", stat))
+		if (!this->asUInt16(node, "Int", stat)) {
 			return 0;
+		}
 
 		mercenary->status.int_ = stat;
-	} else {
-		if (!exists)
+	}
+	else {
+		if (!exists) {
 			mercenary->status.int_ = 1;
+		}
 	}
 
 	if (this->nodeExists(node, "Dex")) {
 		uint16 stat;
 
-		if (!this->asUInt16(node, "Dex", stat))
+		if (!this->asUInt16(node, "Dex", stat)) {
 			return 0;
+		}
 
 		mercenary->status.dex = stat;
-	} else {
-		if (!exists)
+	}
+	else {
+		if (!exists) {
 			mercenary->status.dex = 1;
+		}
 	}
 
 	if (this->nodeExists(node, "Luk")) {
 		uint16 stat;
 
-		if (!this->asUInt16(node, "Luk", stat))
+		if (!this->asUInt16(node, "Luk", stat)) {
 			return 0;
+		}
 
 		mercenary->status.luk = stat;
-	} else {
-		if (!exists)
+	}
+	else {
+		if (!exists) {
 			mercenary->status.luk = 1;
+		}
 	}
 
 	if (this->nodeExists(node, "AttackRange")) {
 		uint16 range;
 
-		if (!this->asUInt16(node, "AttackRange", range))
+		if (!this->asUInt16(node, "AttackRange", range)) {
 			return 0;
+		}
 
 		mercenary->status.rhw.range = range;
-	} else {
-		if (!exists)
-			mercenary->status.rhw.range = 0;
 	}
-	
+	else {
+		if (!exists) {
+			mercenary->status.rhw.range = 0;
+		}
+	}
+
 	if (this->nodeExists(node, "SkillRange")) {
 		uint16 range;
 
-		if (!this->asUInt16(node, "SkillRange", range))
+		if (!this->asUInt16(node, "SkillRange", range)) {
 			return 0;
+		}
 
 		mercenary->range2 = range;
-	} else {
-		if (!exists)
-			mercenary->range2 = 0;
 	}
-	
+	else {
+		if (!exists) {
+			mercenary->range2 = 0;
+		}
+	}
+
 	if (this->nodeExists(node, "ChaseRange")) {
 		uint16 range;
 
-		if (!this->asUInt16(node, "ChaseRange", range))
+		if (!this->asUInt16(node, "ChaseRange", range)) {
 			return 0;
+		}
 
 		mercenary->range3 = range;
-	} else {
-		if (!exists)
+	}
+	else {
+		if (!exists) {
 			mercenary->range3 = 0;
+		}
 	}
 
 	if (this->nodeExists(node, "Size")) {
 		std::string size;
 
-		if (!this->asString(node, "Size", size))
+		if (!this->asString(node, "Size", size)) {
 			return 0;
+		}
 
 		std::string size_constant = "Size_" + size;
 		int64 constant;
@@ -769,16 +850,19 @@ uint64 MercenaryDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		}
 
 		mercenary->status.size = static_cast<e_size>(constant);
-	} else {
-		if (!exists)
-			mercenary->status.size = SZ_SMALL;
 	}
-	
+	else {
+		if (!exists) {
+			mercenary->status.size = SZ_SMALL;
+		}
+	}
+
 	if (this->nodeExists(node, "Race")) {
 		std::string race;
 
-		if (!this->asString(node, "Race", race))
+		if (!this->asString(node, "Race", race)) {
 			return 0;
+		}
 
 		std::string race_constant = "RC_" + race;
 		int64 constant;
@@ -794,58 +878,70 @@ uint64 MercenaryDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		}
 
 		mercenary->status.race = static_cast<e_race>(constant);
-	} else {
-		if (!exists)
+	}
+	else {
+		if (!exists) {
 			mercenary->status.race = RC_FORMLESS;
+		}
 	}
 
 	if (this->nodeExists(node, "Element")) {
 		std::string ele;
 
-		if (!this->asString(node, "Element", ele))
+		if (!this->asString(node, "Element", ele)) {
 			return 0;
+		}
 
 		std::string ele_constant = "ELE_" + ele;
 		int64 constant;
 
 		if (!script_get_constant(ele_constant.c_str(), &constant)) {
-			this->invalidWarning(node["Element"], "Unknown mercenary element %s, defaulting to Neutral.\n", ele.c_str());
+			this->invalidWarning(
+				node["Element"], "Unknown mercenary element %s, defaulting to Neutral.\n", ele.c_str());
 			constant = ELE_NEUTRAL;
 		}
 
 		if (!CHK_ELEMENT(constant)) {
-			this->invalidWarning(node["Element"], "Invalid mercenary element %s, defaulting to Neutral.\n", ele.c_str());
+			this->invalidWarning(
+				node["Element"], "Invalid mercenary element %s, defaulting to Neutral.\n", ele.c_str());
 			constant = ELE_NEUTRAL;
 		}
 
 		mercenary->status.def_ele = static_cast<e_element>(constant);
-	} else {
-		if (!exists)
+	}
+	else {
+		if (!exists) {
 			mercenary->status.def_ele = ELE_NEUTRAL;
+		}
 	}
 
 	if (this->nodeExists(node, "ElementLevel")) {
 		uint16 level;
 
-		if (!this->asUInt16(node, "ElementLevel", level))
+		if (!this->asUInt16(node, "ElementLevel", level)) {
 			return 0;
+		}
 
 		if (!CHK_ELEMENT_LEVEL(level)) {
-			this->invalidWarning(node["ElementLevel"], "Invalid mercenary element level %hu, defaulting to 1.\n", level);
+			this->invalidWarning(
+				node["ElementLevel"], "Invalid mercenary element level %hu, defaulting to 1.\n", level);
 			level = 1;
 		}
 
 		mercenary->status.ele_lv = static_cast<uint8>(level);
-	} else {
-		if (!exists)
+	}
+	else {
+		if (!exists) {
 			mercenary->status.ele_lv = 1;
+		}
 	}
 
 	if (this->nodeExists(node, "WalkSpeed")) {
 		uint16 speed;
 
-		if (!this->asUInt16(node, "WalkSpeed", speed))
+		if (!this->asUInt16(node, "WalkSpeed", speed)) {
 			return 0;
+		}
 
 		if (speed < MIN_WALK_SPEED || speed > MAX_WALK_SPEED) {
 			this->invalidWarning(node["WalkSpeed"], "Invalid mercenary walk speed %hu, capping...\n", speed);
@@ -853,57 +949,69 @@ uint64 MercenaryDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		}
 
 		mercenary->status.speed = speed;
-	} else {
-		if (!exists)
+	}
+	else {
+		if (!exists) {
 			mercenary->status.speed = DEFAULT_WALK_SPEED;
+		}
 	}
 
 	if (this->nodeExists(node, "AttackDelay")) {
 		uint16 speed;
 
-		if (!this->asUInt16(node, "AttackDelay", speed))
+		if (!this->asUInt16(node, "AttackDelay", speed)) {
 			return 0;
+		}
 
 		mercenary->status.adelay = cap_value(speed, 0, 4000);
-	} else {
-		if (!exists)
-			mercenary->status.adelay = 4000;
 	}
-	
+	else {
+		if (!exists) {
+			mercenary->status.adelay = 4000;
+		}
+	}
+
 	if (this->nodeExists(node, "AttackMotion")) {
 		uint16 speed;
 
-		if (!this->asUInt16(node, "AttackMotion", speed))
+		if (!this->asUInt16(node, "AttackMotion", speed)) {
 			return 0;
+		}
 
 		mercenary->status.amotion = cap_value(speed, 0, 2000);
-	} else {
-		if (!exists)
+	}
+	else {
+		if (!exists) {
 			mercenary->status.amotion = 2000;
+		}
 	}
 
 	if (this->nodeExists(node, "DamageMotion")) {
 		uint16 speed;
 
-		if (!this->asUInt16(node, "DamageMotion", speed))
+		if (!this->asUInt16(node, "DamageMotion", speed)) {
 			return 0;
+		}
 
 		mercenary->status.dmotion = speed;
-	} else {
-		if (!exists)
+	}
+	else {
+		if (!exists) {
 			mercenary->status.dmotion = 0;
+		}
 	}
 
 	mercenary->status.aspd_rate = 1000;
 
 	if (this->nodeExists(node, "Skills")) {
-		const ryml::NodeRef& skillsNode = node["Skills"];
+		const ryml::NodeRef &skillsNode = node["Skills"];
 
-		for (const ryml::NodeRef& skill : skillsNode) {
+		for (const ryml::NodeRef &skill : skillsNode) {
 			std::string skill_name;
 
-			if (!this->asString(skill, "Name", skill_name))
+			if (!this->asString(skill, "Name", skill_name)) {
 				return 0;
+			}
 
 			uint16 skill_id = skill_name2id(skill_name.c_str());
 
@@ -913,18 +1021,28 @@ uint64 MercenaryDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			}
 
 			if (!SKILL_CHK_MERC(skill_id)) {
-				this->invalidWarning(skill["Name"], "Skill %s (%u) is out of the mercenary skill range [%u-%u], skipping.\n", skill_name.c_str(), skill_id, MC_SKILLBASE, MC_SKILLBASE + MAX_MERCSKILL - 1);
+				this->invalidWarning(skill["Name"],
+									 "Skill %s (%u) is out of the mercenary skill range [%u-%u], skipping.\n",
+									 skill_name.c_str(),
+									 skill_id,
+									 MC_SKILLBASE,
+									 MC_SKILLBASE + MAX_MERCSKILL - 1);
 				return 0;
 			}
 
 			uint16 level;
 
-			if (!this->asUInt16(skill, "MaxLevel", level))
+			if (!this->asUInt16(skill, "MaxLevel", level)) {
 				return 0;
+			}
 
 			if (level == 0) {
-				if (mercenary->skill.erase(skill_id) == 0)
-					this->invalidWarning(skill["Name"], "Failed to remove %s, the skill doesn't exist for mercenary %hu.\n", skill_name.c_str(), id);
+				if (mercenary->skill.erase(skill_id) == 0) {
+					this->invalidWarning(skill["Name"],
+										 "Failed to remove %s, the skill doesn't exist for mercenary %hu.\n",
+										 skill_name.c_str(),
+										 id);
+				}
 				continue;
 			}
 
@@ -932,24 +1050,25 @@ uint64 MercenaryDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		}
 	}
 
-	if (!exists)
+	if (!exists) {
 		this->put(id, mercenary);
+	}
 
 	return true;
 }
 
 /**
-* Init Mercenary datas
-**/
-void do_init_mercenary(void){
+ * Init Mercenary datas
+ **/
+void do_init_mercenary(void) {
 	mercenary_db.load();
 
 	add_timer_func_list(merc_contract_end, "merc_contract_end");
 }
 
 /**
-* Do Final Mercenary datas
-**/
-void do_final_mercenary(void){
+ * Do Final Mercenary datas
+ **/
+void do_final_mercenary(void) {
 	mercenary_db.clear();
 }

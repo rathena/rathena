@@ -6,6 +6,6 @@
 
 #include "http.hpp"
 
-bool isAuthorized(const Request &request, bool checkGuildLeader=false);
+bool isAuthorized(const Request &request, bool checkGuildLeader = false);
 
 #endif

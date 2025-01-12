@@ -9,14 +9,13 @@
 
 std::mutex dbmutex;
 
-extern Sql * login_handle;
-extern Sql * char_handle;
-extern Sql * map_handle;
-extern Sql * web_handle;
-
+extern Sql* login_handle;
+extern Sql* char_handle;
+extern Sql* map_handle;
+extern Sql* web_handle;
 
 SQLLock::SQLLock(locktype lt) : ulock(dbmutex, std::defer_lock), lt(lt) {
-	switch(lt) {
+	switch (lt) {
 		case LOGIN_SQL_LOCK:
 			handle = login_handle;
 			break;
@@ -66,14 +65,13 @@ void SQLLock::unlock() {
 	//         ShowDebug("Unlocked web sql\n");
 	//         break;
 	// }
-
 }
 
-
 // can only get handle if locked
-Sql * SQLLock::getHandle() {
-	if (!ulock.owns_lock())
+Sql* SQLLock::getHandle() {
+	if (!ulock.owns_lock()) {
 		return nullptr;
+	}
 	return handle;
 }
 

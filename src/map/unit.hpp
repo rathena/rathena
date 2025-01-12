@@ -16,11 +16,11 @@ struct unit_data;
 class map_session_data;
 enum clr_type : uint8;
 
-extern const short dirx[DIR_MAX]; ///lookup to know where will move to x according dir
-extern const short diry[DIR_MAX]; ///lookup to know where will move to y according dir
+extern const short dirx[DIR_MAX]; /// lookup to know where will move to x according dir
+extern const short diry[DIR_MAX]; /// lookup to know where will move to y according dir
 
 struct unit_data {
-	struct block_list *bl; ///link to owner object BL_PC|BL_MOB|BL_PET|BL_NPC|BL_HOM|BL_MER|BL_ELEM
+	struct block_list *bl; /// link to owner object BL_PC|BL_MOB|BL_PET|BL_NPC|BL_HOM|BL_MER|BL_ELEM
 	struct walkpath_data walkpath;
 	struct skill_timerskill *skilltimerskill[MAX_SKILLTIMERSKILL];
 	std::vector<std::shared_ptr<s_skill_unit_group>> skillunits;
@@ -37,9 +37,9 @@ struct unit_data {
 	int32 attacktimer;
 	int32 walktimer;
 	int32 chaserange;
-	bool stepaction; //Action should be executed on step [Playtester]
-	int32 steptimer; //Timer that triggers the action [Playtester]
-	uint16 stepskill_id, stepskill_lv; //Remembers skill that should be casted on step [Playtester]
+	bool stepaction; // Action should be executed on step [Playtester]
+	int32 steptimer; // Timer that triggers the action [Playtester]
+	uint16 stepskill_id, stepskill_lv; // Remembers skill that should be casted on step [Playtester]
 	t_tick attackabletime;
 	t_tick canact_tick;
 	t_tick canmove_tick;
@@ -47,11 +47,11 @@ struct unit_data {
 	uint8 dir;
 	unsigned char target_count;
 	struct s_udState {
-		unsigned change_walk_target : 1 ;
-		unsigned skillcastcancel : 1 ;
-		unsigned attack_continue : 1 ;
+		unsigned change_walk_target : 1;
+		unsigned skillcastcancel : 1;
+		unsigned attack_continue : 1;
 		unsigned step_attack : 1;
-		unsigned walk_easy : 1 ;
+		unsigned walk_easy : 1;
 		unsigned running : 1;
 		unsigned walk_script : 1;
 		unsigned blockedmove : 1;
@@ -68,18 +68,10 @@ struct unit_data {
 
 struct view_data {
 	uint16 class_;
-	t_itemid
-		weapon,
-		shield, //Or left-hand weapon.
-		robe,
-		head_top,
-		head_mid,
-		head_bottom;
-	uint16
-		hair_style,
-		hair_color,
-		cloth_color,
-		body_style;
+	t_itemid weapon,
+		shield, // Or left-hand weapon.
+		robe, head_top, head_mid, head_bottom;
+	uint16 hair_style, hair_color, cloth_color, body_style;
 	char sex;
 	unsigned dead_sit : 2; // 0: Standing, 1: Dead, 2: Sitting
 };
@@ -99,7 +91,8 @@ enum e_unit_stop_walking {
 	USW_NONE = 0x0, /// Unit will keep walking to their original destination
 	USW_FIXPOS = 0x1, /// Issue a fixpos packet afterwards
 	USW_MOVE_ONCE = 0x2, /// Force the unit to move one cell if it hasn't yet
-	USW_MOVE_FULL_CELL = 0x4, /// Enable moving to the next cell when unit was already half-way there (may cause on-touch/place side-effects, such as a scripted map change)
+	USW_MOVE_FULL_CELL = 0x4, /// Enable moving to the next cell when unit was already half-way there (may cause
+							  /// on-touch/place side-effects, such as a scripted map change)
 	USW_FORCE_STOP = 0x8, /// Force stop moving, even if walktimer is currently INVALID_TIMER
 	USW_ALL = 0xf,
 };
@@ -115,14 +108,14 @@ int32 unit_calc_pos(struct block_list *bl, int32 tx, int32 ty, uint8 dir);
 TIMER_FUNC(unit_delay_walktoxy_timer);
 TIMER_FUNC(unit_delay_walktobl_timer);
 
-void unit_stop_walking_soon(struct block_list& bl);
+void unit_stop_walking_soon(struct block_list &bl);
 // Causes the target object to stop moving.
-int32 unit_stop_walking(struct block_list *bl,int32 type);
+int32 unit_stop_walking(struct block_list *bl, int32 type);
 bool unit_can_move(struct block_list *bl);
 int32 unit_is_walking(struct block_list *bl);
 int32 unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int32 type);
 
-t_tick unit_get_walkpath_time(struct block_list& bl);
+t_tick unit_get_walkpath_time(struct block_list &bl);
 t_tick unit_escape(struct block_list *bl, struct block_list *target, short dist, uint8 flag = 0);
 
 // Instant unit changes
@@ -130,25 +123,38 @@ bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int32 easy, b
 int32 unit_warp(struct block_list *bl, short map, short x, short y, clr_type type);
 bool unit_setdir(block_list *bl, uint8 dir, bool send_update = true);
 uint8 unit_getdir(struct block_list *bl);
-int32 unit_blown(struct block_list* bl, int32 dx, int32 dy, int32 count, enum e_skill_blown flag);
-enum e_unit_blown unit_blown_immune(struct block_list* bl, uint8 flag);
+int32 unit_blown(struct block_list *bl, int32 dx, int32 dy, int32 count, enum e_skill_blown flag);
+enum e_unit_blown unit_blown_immune(struct block_list *bl, uint8 flag);
 
 // Can-reach checks
-bool unit_can_reach_pos(struct block_list *bl,int32 x,int32 y,int32 easy);
-bool unit_can_reach_bl(struct block_list *bl,struct block_list *tbl, int32 range, int32 easy, short *x, short *y);
+bool unit_can_reach_pos(struct block_list *bl, int32 x, int32 y, int32 easy);
+bool unit_can_reach_bl(struct block_list *bl, struct block_list *tbl, int32 range, int32 easy, short *x, short *y);
 
 // Unit attack functions
 int32 unit_stopattack(struct block_list *bl, va_list ap);
 void unit_stop_attack(struct block_list *bl);
-int32 unit_attack(struct block_list *src,int32 target_id,int32 continuous);
+int32 unit_attack(struct block_list *src, int32 target_id, int32 continuous);
 int32 unit_cancel_combo(struct block_list *bl);
 bool unit_can_attack(struct block_list *bl, int32 target_id);
 
 // Cast on a unit
 int32 unit_skilluse_id(struct block_list *src, int32 target_id, uint16 skill_id, uint16 skill_lv);
 int32 unit_skilluse_pos(struct block_list *src, short skill_x, short skill_y, uint16 skill_id, uint16 skill_lv);
-int32 unit_skilluse_id2(struct block_list *src, int32 target_id, uint16 skill_id, uint16 skill_lv, int32 casttime, int32 castcancel, bool ignore_range = false);
-int32 unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, uint16 skill_id, uint16 skill_lv, int32 casttime, int32 castcancel, bool ignore_range = false);
+int32 unit_skilluse_id2(struct block_list *src,
+						int32 target_id,
+						uint16 skill_id,
+						uint16 skill_lv,
+						int32 casttime,
+						int32 castcancel,
+						bool ignore_range = false);
+int32 unit_skilluse_pos2(struct block_list *src,
+						 short skill_x,
+						 short skill_y,
+						 uint16 skill_id,
+						 uint16 skill_lv,
+						 int32 casttime,
+						 int32 castcancel,
+						 bool ignore_range = false);
 
 // Step timer used for delayed attack and skill use
 TIMER_FUNC(unit_step_timer);
@@ -158,22 +164,22 @@ void unit_stop_stepaction(struct block_list *bl);
 int32 unit_skillcastcancel(struct block_list *bl, char type);
 
 int32 unit_counttargeted(struct block_list *bl);
-int32 unit_set_target(struct unit_data* ud, int32 target_id);
+int32 unit_set_target(struct unit_data *ud, int32 target_id);
 
 // unit_data
 void unit_dataset(struct block_list *bl);
-void unit_skillunit_maxcount(unit_data& ud, uint16 skill_id, int& maxcount);
+void unit_skillunit_maxcount(unit_data &ud, uint16 skill_id, int &maxcount);
 
 // Remove unit
-struct unit_data* unit_bl2ud(struct block_list *bl);
+struct unit_data *unit_bl2ud(struct block_list *bl);
 void unit_remove_map_pc(map_session_data *sd, clr_type clrtype);
 void unit_refresh(struct block_list *bl, bool walking = false);
 void unit_free_pc(map_session_data *sd);
-#define unit_remove_map(bl,clrtype) unit_remove_map_(bl,clrtype,__FILE__,__LINE__,__func__)
-int32 unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, int32 line, const char* func);
+#define unit_remove_map(bl, clrtype) unit_remove_map_(bl, clrtype, __FILE__, __LINE__, __func__)
+int32 unit_remove_map_(struct block_list *bl, clr_type clrtype, const char *file, int32 line, const char *func);
 int32 unit_free(struct block_list *bl, clr_type clrtype);
-int32 unit_changetarget(block_list *bl,va_list ap);
-void unit_changetarget_sub(unit_data& ud, block_list& target);
+int32 unit_changetarget(block_list *bl, va_list ap);
+void unit_changetarget_sub(unit_data &ud, block_list &target);
 
 // Shadow Scar
 void unit_addshadowscar(unit_data &ud, int32 interval);

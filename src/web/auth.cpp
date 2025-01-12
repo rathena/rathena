@@ -12,14 +12,15 @@
 #include "sqllock.hpp"
 #include "web.hpp"
 
-
 bool isAuthorized(const Request &request, bool checkGuildLeader) {
-	if (!request.has_file("AuthToken") || !request.has_file("AID"))
+	if (!request.has_file("AuthToken") || !request.has_file("AID")) {
 		return false;
+	}
 
-	if (checkGuildLeader && !request.has_file("GDID"))
+	if (checkGuildLeader && !request.has_file("GDID")) {
 		return false;
-	
+	}
+
 	auto token_str = request.get_file_value("AuthToken").content;
 	auto token = token_str.c_str();
 	auto account_id = std::stoi(request.get_file_value("AID").content);
@@ -30,15 +31,13 @@ bool isAuthorized(const Request &request, bool checkGuildLeader) {
 
 	auto handle = loginlock.getHandle();
 
-	SqlStmt stmt{ *handle };
+	SqlStmt stmt{*handle};
 
-	if (SQL_SUCCESS != stmt.Prepare(
-			"SELECT `account_id` FROM `%s` WHERE (`account_id` = ? AND `web_auth_token` = ? AND `web_auth_token_enabled` = '1')",
-			login_table)
-		|| SQL_SUCCESS != stmt.BindParam(0, SQLDT_INT, &account_id, sizeof(account_id))
-		|| SQL_SUCCESS != stmt.BindParam(1, SQLDT_STRING, (void *)token, strlen(token))
-		|| SQL_SUCCESS != stmt.Execute()
-	) {
+	if (SQL_SUCCESS != stmt.Prepare("SELECT `account_id` FROM `%s` WHERE (`account_id` = ? AND `web_auth_token` = ? "
+									"AND `web_auth_token_enabled` = '1')",
+									login_table) ||
+		SQL_SUCCESS != stmt.BindParam(0, SQLDT_INT, &account_id, sizeof(account_id)) ||
+		SQL_SUCCESS != stmt.BindParam(1, SQLDT_STRING, (void *)token, strlen(token)) || SQL_SUCCESS != stmt.Execute()) {
 		SqlStmt_ShowDebug(stmt);
 		loginlock.unlock();
 		return false;
@@ -61,15 +60,16 @@ bool isAuthorized(const Request &request, bool checkGuildLeader) {
 	SQLLock charlock(CHAR_SQL_LOCK);
 	charlock.lock();
 	handle = charlock.getHandle();
-	SqlStmt stmt2{ *handle };
+	SqlStmt stmt2{*handle};
 
-	if (SQL_SUCCESS != stmt2.Prepare(
-		"SELECT `account_id` FROM `%s` LEFT JOIN `%s` using (`char_id`) WHERE (`%s`.`account_id` = ? AND `%s`.`guild_id` = ?) LIMIT 1",
-		guild_db_table, char_db_table, char_db_table, guild_db_table)
-		|| SQL_SUCCESS != stmt2.BindParam(0, SQLDT_INT, &account_id, sizeof(account_id))
-		|| SQL_SUCCESS != stmt2.BindParam(1, SQLDT_INT, &guild_id, sizeof(guild_id))
-		|| SQL_SUCCESS != stmt2.Execute()
-	) {
+	if (SQL_SUCCESS != stmt2.Prepare("SELECT `account_id` FROM `%s` LEFT JOIN `%s` using (`char_id`) WHERE "
+									 "(`%s`.`account_id` = ? AND `%s`.`guild_id` = ?) LIMIT 1",
+									 guild_db_table,
+									 char_db_table,
+									 char_db_table,
+									 guild_db_table) ||
+		SQL_SUCCESS != stmt2.BindParam(0, SQLDT_INT, &account_id, sizeof(account_id)) ||
+		SQL_SUCCESS != stmt2.BindParam(1, SQLDT_INT, &guild_id, sizeof(guild_id)) || SQL_SUCCESS != stmt2.Execute()) {
 		SqlStmt_ShowDebug(stmt2);
 		charlock.unlock();
 		return false;

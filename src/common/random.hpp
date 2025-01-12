@@ -4,15 +4,15 @@
 #ifndef RANDOM_HPP
 #define RANDOM_HPP
 
-#include <type_traits>
 #include <random>
+#include <type_traits>
 
 #include "cbasetypes.hpp"
 
 inline std::random_device device;
 inline std::mt19937 generator = std::mt19937(device());
 
-int32 rnd(void);// [0, SINT32_MAX]
+int32 rnd(void); // [0, SINT32_MAX]
 
 /*
  * Generates a random number in the interval [min, max]
@@ -45,7 +45,7 @@ typename std::enable_if<std::is_integral<T>::value, bool>::type rnd_chance(T cha
  */
 template <typename T>
 typename std::enable_if<std::is_integral<T>::value, bool>::type rnd_chance_official(T chance, T base) {
-	return rnd_value<T>(0, 20000)%base < chance;
+	return rnd_value<T>(0, 20000) % base < chance;
 }
 
 #endif /* RANDOM_HPP */

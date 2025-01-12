@@ -1,0 +1,32 @@
+name: Check format of code
+
+on:
+  pull_request:
+    paths:
+      # Always trigger all Github Actions if an action or something CI related was changed
+      - ".github/workflows/**"
+      - "tools/ci/**"
+      - ".clang-format"
+      # This workflow should run when a file in a source directory has been modified.
+      - "src/**"
+
+jobs:
+  clang-format:
+    # Github Actions checks for '[ci skip]', '[skip ci]', '[no ci]', '[skip actions]', or '[actions skip]' but not a hyphenated version.
+    # It's a catch-all incase a Pull Request has been opened and someone is on auto-pilot.
+    if: "!contains(github.event.head_commit.message, 'ci-skip')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.1.0
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+      - name: Update & Install packages
+        # Ubuntu runners already have most of the packages rAthena requires to build.
+        # https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2204-Readme.md
+        run: |
+          sudo apt update
+          sudo apt install clang-format-15
+          sudo mv /usr/bin/clang-format-15 /usr/bin/clang-format
+      - name: Check format
+        run: ./tools/ci/check-format.sh

@@ -10,8 +10,8 @@
 struct char_session_data;
 
 #if PACKETVER_SUPPORTS_PINCODE
-void chlogif_pincode_notifyLoginPinError( uint32 account_id );
-void chlogif_pincode_notifyLoginPinUpdate( uint32 account_id, char* pin );
+void chlogif_pincode_notifyLoginPinError(uint32 account_id);
+void chlogif_pincode_notifyLoginPinUpdate(uint32 account_id, char* pin);
 void chlogif_pincode_start(int32 fd, struct char_session_data* sd);
 #endif
 TIMER_FUNC(chlogif_send_acc_tologin);
@@ -19,9 +19,10 @@ TIMER_FUNC(chlogif_broadcast_user_count);
 void chlogif_send_usercount(int32 users);
 void chlogif_upd_global_accreg(uint32 account_id, uint32 char_id);
 void chlogif_prepsend_global_accreg(void);
-void chlogif_send_global_accreg(const char *key, uint32 index, int64 int_value, const char* string_value, bool is_string);
+void chlogif_send_global_accreg(
+	const char* key, uint32 index, int64 int_value, const char* string_value, bool is_string);
 void chlogif_request_accreg2(uint32 account_id, uint32 char_id);
-void chlogif_send_reqaccdata(int32 fd, struct char_session_data *sd);
+void chlogif_send_reqaccdata(int32 fd, struct char_session_data* sd);
 void chlogif_send_setacconline(int32 aid);
 void chlogif_send_setallaccoffline(int32 fd);
 void chlogif_send_setaccoffline(int32 fd, int32 aid);
@@ -53,6 +54,10 @@ void chlogif_on_disconnect(void);
 void chlogif_on_ready(void);
 void do_final_chlogif(void);
 
-#define loginif_check(a) { if(!chlogif_isconnected()) return a; }
+#define loginif_check(a) \
+	{ \
+		if (!chlogif_isconnected()) \
+			return a; \
+	}
 
 #endif /* CHAR_LOGIF_HPP */
