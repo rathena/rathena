@@ -13171,9 +13171,10 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			}
 			heal = heal * (100 + status_get_crt(src)) * status_get_lv(src) / 10000;
 			status_heal(bl, heal, 0, 0, 0);
-			clif_skill_nodamage(src, *bl, skill_id, heal);
+			clif_skill_nodamage(src, *bl, AL_HEAL, heal);
 		}
 		else {
+			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 			int32 range = skill_get_splash(skill_id, skill_lv);
 			if( pc_checkskill( sd, SH_COMMUNE_WITH_KI_SUL ) > 0 || ( sc != nullptr && sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ) )
 				range += 2;
@@ -13239,6 +13240,8 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			status_change_end(src, SC_COLORS_OF_HYUN_ROK_4);
 			status_change_end(src, SC_COLORS_OF_HYUN_ROK_5);
 			status_change_end(src, SC_COLORS_OF_HYUN_ROK_6);
+			// The skill also ends the buff that increases Catnip Meteor damage
+			status_change_end(src, SC_COLORS_OF_HYUN_ROK_BUFF);
 
 			clif_skill_nodamage(src, *src, skill_id, skill_lv);
 		}
@@ -16402,7 +16405,6 @@ int32 skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t
 		case UNT_SOLIDTRAP:
 		case UNT_SWIFTTRAP:
 		case UNT_FLAMETRAP:
-		case UNT_HYUN_ROKS_BREEZE:
 			skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 			break;
 #ifdef RENEWAL
@@ -17135,6 +17137,10 @@ int32 skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t
 				sc_start( ss, bl, skill_get_sc( sg->skill_id ), 100, sg->skill_lv, sg->interval + 100 );
 			} 
 			break;
+
+		case UNT_HYUN_ROKS_BREEZE:
+			skill_attack(skill_get_type(sg->skill_id), ss, ss, bl, sg->skill_id, sg->skill_lv, tick, flag|SD_ANIMATION);
+ 			break;
 	}
 
 	if (bl->type == BL_MOB && ss != bl)

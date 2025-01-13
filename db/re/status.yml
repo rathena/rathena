@@ -6563,6 +6563,8 @@ Body:
   - Status: Tunaparty
     Icon: EFST_TUNAPARTY
     DurationLookup: SU_TUNAPARTY
+    Flags:
+      NoDispell: true
   - Status: Shrimp
     Icon: EFST_SHRIMP
     DurationLookup: SU_BUNCHOFSHRIMP
@@ -7524,24 +7526,20 @@ Body:
       bonus bVariableCastrate,-80;
   - Status: OverBrandReady
     Icon: EFST_OVERBRANDREADY
-    Flags:
   - Status: Poison_Mist
     Icon: EFST_POISON_MIST
     DurationLookup: MH_POISON_MIST
     CalcFlags:
       Flee: true
-    Flags:
   - Status: Stone_Wall
     Icon: EFST_STONE_WALL
     DurationLookup: MH_STEINWAND
     CalcFlags:
       Def: true
       Mdef: true
-    Flags:
   - Status: Cloud_Poison
     Icon: EFST_CLOUD_POISON
     DurationLookup: SO_CLOUD_KILL
-    Flags:
   - Status: Homun_Time
     Icon: EFST_HOMUN_TIME
     Flags:

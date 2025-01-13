@@ -12541,6 +12541,9 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 		case SC_BLESSING_OF_M_CREATURES:
 			val2 = val1 * 10;
 			break;
+		case SC_COLORS_OF_HYUN_ROK_BUFF:
+			val2 = 50;
+			break;
 
 		default:
 			if (calc_flag.none() && scdb->skill_id == 0 && scdb->icon == EFST_BLANK && scdb->opt1 == OPT1_NONE && scdb->opt2 == OPT2_NONE && scdb->state.none() && scdb->flag.none() && scdb->endonstart.empty() && scdb->endreturn.empty() && scdb->fail.empty() && scdb->endonend.empty()) {
