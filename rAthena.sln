@@ -106,6 +106,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "yamlupgrade", "src\tool\yam
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ryml", "3rdparty\rapidyaml\ryml.vcxproj", "{492E2981-34F4-3A6A-BFD9-46096C641203}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_DEPRECATED_USE_CMAKE_INSTEAD_", "_DEPRECATED_USE_CMAKE_INSTEAD_", "{7BDFFA26-6F88-4F5B-8B7E-3B51C9FD9BA3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
