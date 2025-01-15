@@ -11799,6 +11799,8 @@ static const struct _battle_data {
 	{ "feature.mesitemlink",                &battle_config.feature_mesitemlink,             1,      0,      1,              },
 	{ "feature.mesitemlink_brackets",       &battle_config.feature_mesitemlink_brackets,    0,      0,      1,              },
 	{ "feature.mesitemlink_dbname",         &battle_config.feature_mesitemlink_dbname,      0,      0,      1,              },
+	{ "feature.mesitemicon",                &battle_config.feature_mesitemicon,             1,      0,      1,              },
+	{ "feature.mesitemicon_dbname",         &battle_config.feature_mesitemicon_dbname,      0,      0,      1,              },
 	{ "break_mob_equip",                    &battle_config.break_mob_equip,                 0,      0,      1,              },
 	{ "macro_detection_retry",              &battle_config.macro_detection_retry,           3,      1,      INT_MAX,        },
 	{ "macro_detection_timeout",            &battle_config.macro_detection_timeout,         60000,  0,      INT_MAX,        },
@@ -12053,6 +12055,15 @@ void battle_adjust_conf()
 	if( battle_config.feature_barter_extended ){
 		ShowWarning("conf/battle/feature.conf extended barter shop system is enabled but it requires PACKETVER 2019-11-06 or newer, disabling...\n");
 		battle_config.feature_barter_extended = 0;
+	}
+#endif
+
+#if PACKETVER < 20230302
+	if( battle_config.feature_mesitemicon ){
+#if !defined(BUILDBOT)
+		ShowWarning( "conf/battle/feature.conf:mesitemicon is enabled but it requires PACKETVER 2023-03-02 or newer, disabling...\n" );
+#endif
+		battle_config.feature_mesitemicon = 0;
 	}
 #endif
 
