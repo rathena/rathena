@@ -14699,8 +14699,9 @@ TIMER_FUNC(status_change_timer){
 
 	case SC_STAR_BURST:
 		if (sce->val4 >= 0) {
-			struct block_list *src=map_id2bl(sce->val2);
-			if(src && tid != INVALID_TIMER) {
+			block_list* src = map_id2bl( sce->val2 );
+
+			if( src != nullptr && tid != INVALID_TIMER ){
 				skill_unitsetting(src, SKE_STAR_BURST, sce->val1, bl->x, bl->y, 0);
 			}
 		}
