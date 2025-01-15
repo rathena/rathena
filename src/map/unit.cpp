@@ -786,7 +786,7 @@ int unit_walktoxy( struct block_list *bl, short x, short y, unsigned char flag)
 
 	TBL_PC *sd = BL_CAST(BL_PC, bl);
 
-	// Start timers to recall summon
+	// Start timer to recall summon
 	if( sd != nullptr ){
 		if (sd->md != nullptr)
 			unit_check_start_teleport_timer(&sd->md->bl);

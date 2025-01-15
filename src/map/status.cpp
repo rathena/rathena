@@ -4344,8 +4344,6 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		base_status->hit += 20;
 	if ((skill = pc_checkskill_imperial_guard(sd, 2)) > 0)// IG_SPEAR_SWORD_M
 		base_status->hit += skill * 3;
-	if ((skill = pc_checkskill(sd, SKE_WAR_BOOK_MASTERY))>0)
-		base_status->hit += skill * 3;
 
 	if ((skill = pc_checkskill(sd, SU_SOULATTACK)) > 0)
 		base_status->rhw.range += skill_get_range2(&sd->bl, SU_SOULATTACK, skill, true);
@@ -4392,8 +4390,6 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		base_status->patk += skill + 2;
 	if (sd->status.weapon == W_2HSTAFF && (skill = pc_checkskill(sd, AG_TWOHANDSTAFF)) > 0)// 2-Handed Staff Mastery
 		base_status->smatk += pc_checkskill(sd, AG_TWOHANDSTAFF) * 2;
-	if ((skill = pc_checkskill(sd, SKE_WAR_BOOK_MASTERY)) > 0)
-		base_status->patk += skill+2;
 
 	// 2-Handed Staff Mastery
 	if( sd->status.weapon == W_2HSTAFF && ( skill = pc_checkskill( sd, AG_TWOHANDSTAFF ) ) > 0 ){
@@ -6939,7 +6935,7 @@ static unsigned short status_calc_pow(struct block_list *bl, status_change *sc, 
 
 	if (sc->getSCE(SC_BENEDICTUM))
 		pow += sc->getSCE(SC_BENEDICTUM)->val2;
-	
+
 	return (unsigned short)cap_value(pow, 0, USHRT_MAX);
 }
 
@@ -6957,7 +6953,7 @@ static unsigned short status_calc_sta(struct block_list *bl, status_change *sc, 
 
 	if (sc->getSCE(SC_RELIGIO))
 		sta += sc->getSCE(SC_RELIGIO)->val2;
-	
+
 	return (unsigned short)cap_value(sta, 0, USHRT_MAX);
 }
 
@@ -7011,7 +7007,7 @@ static unsigned short status_calc_con(struct block_list *bl, status_change *sc, 
 
 	if (sc->getSCE(SC_BENEDICTUM))
 		con += sc->getSCE(SC_BENEDICTUM)->val2;
-	
+
 	return (unsigned short)cap_value(con, 0, USHRT_MAX);
 }
 
@@ -7029,7 +7025,7 @@ static unsigned short status_calc_crt(struct block_list *bl, status_change *sc, 
 
 	if (sc->getSCE(SC_BENEDICTUM))
 		crt += sc->getSCE(SC_BENEDICTUM)->val2;
-	
+
 	return (unsigned short)cap_value(crt, 0, USHRT_MAX);
 }
 
@@ -9486,8 +9482,6 @@ void status_change_init(struct block_list *bl)
 static int status_get_sc_interval(enum sc_type type)
 {
 	switch (type) {
-		case SC_STAR_BURST:
-			return 300;
 		case SC_POISON:
 		case SC_LEECHESEND:
 		case SC_DPOISON:
@@ -12838,10 +12832,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 3 * val1;
 			val3 = 10 * val1;
 			break;
-		case SC_STAR_BURST:
-			tick_time = status_get_sc_interval(type);
-			val4 = tick - tick_time; // Remaining time
-			break;
 
 		default:
 			if (calc_flag.none() && scdb->skill_id == 0 && scdb->icon == EFST_BLANK && scdb->opt1 == OPT1_NONE && scdb->opt2 == OPT2_NONE && scdb->state.none() && scdb->flag.none() && scdb->endonstart.empty() && scdb->endreturn.empty() && scdb->fail.empty() && scdb->endonend.empty()) {
@@ -14508,15 +14498,6 @@ TIMER_FUNC(status_change_timer){
 	case SC_HELLS_PLANT:
 		if( sce->val4 >= 0 ){
 			skill_castend_damage_id( bl, bl, GN_HELLS_PLANT_ATK, sce->val1, tick, 0 );
-		}
-		break;
-
-	case SC_STAR_BURST:
-		if (sce->val4 >= 0) {
-			struct block_list *src=map_id2bl(sce->val2);
-			if(src && tid != INVALID_TIMER) {
-				skill_unitsetting(src, SKE_STAR_BURST, sce->val1, bl->x, bl->y, 0);
-			}
 		}
 		break;
 

@@ -2691,7 +2691,6 @@ enum e_skill_unit_id : uint16 {
 	UNT_KUNAIKAITEN,// Shows Nothing
 	UNT_KUNAIWAIKYOKU,// Kunai - Distortion
 
-	UNT_STAR_BURST = 2409,
 	// Skill units outside the normal unit range.
 	UNT_DEEPBLINDTRAP = 20852,
 	UNT_SOLIDTRAP,
