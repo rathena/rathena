@@ -9584,6 +9584,11 @@ Body:
       Patk: true
       Smatk: true
       Hplus: true
+    Flags:
+      # NoClearbuff: true  # !TODO
+      NoDispell: true
+      # NoBanishingBuster: true  # !TODO
+      # NoClearance: true  # !TODO
   - Status: Marine_Festival
     Icon: EFST_MARINE_FESTIVAL
     DurationLookup: SH_MARINE_FESTIVAL_OF_KI_SUL
@@ -9670,6 +9675,12 @@ Body:
     CalcFlags:
       Patk: true
       Smatk: true
+    # Flags:  # !TODO: NoDispell ?
   - Status: Blessing_of_M_C_Debuff
     Icon: EFST_BLESSING_OF_M_C_DEBUFF
     DurationLookup: SH_BLESSING_OF_MYSTICAL_CREATURES
+    Flags:
+      # NoClearbuff: true  # !TODO
+      NoDispell: true
+      # NoBanishingBuster: true  # !TODO
+      # NoClearance: true  # !TODO
