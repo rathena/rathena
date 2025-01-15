@@ -13171,7 +13171,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			}
 			heal = heal * (100 + status_get_crt(src)) * status_get_lv(src) / 10000;
 			status_heal(bl, heal, 0, 0, 0);
-			clif_skill_nodamage(src, *bl, AL_HEAL, heal);
+			clif_skill_nodamage(nullptr, *bl, AL_HEAL, heal);
 		}
 		else {
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
