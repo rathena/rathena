@@ -9083,8 +9083,8 @@ BUILDIN_FUNC(getguildmasterid)
 BUILDIN_FUNC(getguildinfo)
 {
 	int32 i, c = 0;
-	int32 type = script_getnum(st, 3);
 	int32 guild_id = script_getnum(st,2);
+	int32 type = script_getnum(st,3);
 	auto g = guild_search(guild_id);
 	
 	if ( !g ) {
