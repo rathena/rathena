@@ -4383,7 +4383,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		base_status->hit += 20;
 	if ((skill = pc_checkskill_imperial_guard(sd, 2)) > 0)// IG_SPEAR_SWORD_M
 		base_status->hit += skill * 3;
-	if ((skill = pc_checkskill(sd, SKE_WAR_BOOK_MASTERY))>0)
+	if (sd->status.weapon == W_BOOK && (skill = pc_checkskill(sd, SKE_WAR_BOOK_MASTERY)) > 0)
 		base_status->hit += skill * 3;
 
 	if ((skill = pc_checkskill(sd, SU_SOULATTACK)) > 0)
@@ -4431,7 +4431,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		base_status->patk += skill + 2;
 	if ((skill = pc_checkskill(sd, SOA_TALISMAN_MASTERY)) > 0)
 		base_status->smatk += skill;
-	if ((skill = pc_checkskill(sd, SKE_WAR_BOOK_MASTERY)) > 0)
+	if (sd->status.weapon == W_BOOK && (skill = pc_checkskill(sd, SKE_WAR_BOOK_MASTERY)) > 0)
 		base_status->patk += skill+2;
 
 	// 2-Handed Staff Mastery

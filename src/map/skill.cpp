@@ -6048,7 +6048,7 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 		break;
 
 	case SKE_RISING_SUN:
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv, 1);
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 
 		if ( sc == nullptr || ( sc->getSCE( SC_RISING_SUN ) == nullptr && sc->getSCE( SC_NOON_SUN ) == nullptr && sc->getSCE( SC_SUNSET_SUN ) == nullptr ) ){
@@ -6086,7 +6086,6 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 						continue;
 					}
 
-					
 					std::shared_ptr<s_skill_unit_group> sg = su->group;
 
 					for( int32 i = 0; i < MAX_SKILLTIMERSKILL; i++ ){
@@ -6111,7 +6110,7 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 			}
 
 			if( sd != nullptr ){
-				clif_skill_fail(*sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+				clif_skill_fail(*sd, skill_id, USESKILL_FAIL_LEVEL);
 			}
 
 			return 1;
@@ -18749,25 +18748,25 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 			break;
 		case SKE_NOON_BLAST:
 			if( sc == nullptr || ( sc->getSCE( SC_RISING_SUN ) == nullptr && sc->getSCE( SC_NOON_SUN ) == nullptr && sc->getSCE( SC_SKY_ENCHANT ) == nullptr ) ){
-				clif_skill_fail(sd,skill_id,USESKILL_FAIL_CONDITION,0);
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_CONDITION);
 				return false;
 			}
 			break;
 		case SKE_SUNSET_BLAST:
 			if( sc == nullptr || ( sc->getSCE( SC_SUNSET_SUN ) == nullptr && sc->getSCE( SC_NOON_SUN ) == nullptr && sc->getSCE( SC_SKY_ENCHANT ) == nullptr ) ){
-				clif_skill_fail(sd,skill_id,USESKILL_FAIL_CONDITION,0);
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_CONDITION);
 				return false;
 			}
 			break;
 		case SKE_MIDNIGHT_KICK:
 			if( sc == nullptr || ( sc->getSCE( SC_RISING_MOON ) == nullptr && sc->getSCE( SC_MIDNIGHT_MOON ) == nullptr && sc->getSCE( SC_SKY_ENCHANT ) == nullptr ) ){
-				clif_skill_fail(sd,skill_id,USESKILL_FAIL_CONDITION,0);
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_CONDITION);
 				return false;
 			}
 			break;
 		case SKE_DAWN_BREAK:
 			if( sc == nullptr || ( sc->getSCE( SC_DAWN_MOON ) == nullptr && sc->getSCE( SC_MIDNIGHT_MOON ) == nullptr && sc->getSCE( SC_SKY_ENCHANT ) == nullptr ) ){
-				clif_skill_fail(sd,skill_id,USESKILL_FAIL_CONDITION,0);
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_CONDITION);
 				return false;
 			}
 			break;
