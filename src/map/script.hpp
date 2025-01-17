@@ -2212,7 +2212,7 @@ enum e_eleminfo : uint8 {
 
 /* getguildinfo script command */
 enum e_guildinfo : uint8 {
-	GUILDINFO_NAME = 0,
+	GUILDINFO_NAME = 1,
 	GUILDINFO_LEVEL,
 	GUILDINFO_AVERAGELEVEL,
 	GUILDINFO_ONLINECOUNT,

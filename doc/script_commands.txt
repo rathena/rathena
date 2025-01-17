@@ -3513,23 +3513,25 @@ This function will look up and return the request type of guild information.
 
 Types:
 	GUILDINFO_NAME              - Guild's Name
-	GUILDINFO_LEVEL,            - Guild's Level
-	GUILDINFO_AVERAGELEVEL,     - Guild's Average Level
-	GUILDINFO_ONLINECOUNT,      - Guild's Online Member Count
-	GUILDINFO_MEMBERCOUNT,      - Guild's Current Member Count
-	GUILDINFO_MAXMEMBERCOUNT,   - Guild's Max Member Count
-	GUILDINFO_EXP,              - Guild's Current EXP
-	GUILDINFO_NEXTEXP,          - Guild's Required EXP to Level
-	GUILDINFO_MASTERID,         - Guild Master Character ID
-	GUILDINFO_MASTERNAME,       - Guild Master Name
+	GUILDINFO_LEVEL             - Guild's Level
+	GUILDINFO_AVERAGELEVEL      - Guild's Average Level
+	GUILDINFO_ONLINECOUNT       - Guild's Online Member Count
+	GUILDINFO_MEMBERCOUNT       - Guild's Current Member Count
+	GUILDINFO_MAXMEMBERCOUNT    - Guild's Max Member Count
+	GUILDINFO_EXP               - Guild's Current EXP
+	GUILDINFO_NEXTEXP           - Guild's Required EXP to Level
+	GUILDINFO_MASTERID          - Guild Master Character ID
+	GUILDINFO_MASTERNAME        - Guild Master Name
 
-Note: Make sure to use *requestguildinfo to sync the latest guild data from the char-server
+Note: Make sure to use the requestguildinfo script command to load the guild data from the char-server.
 Example Case ( Newly formed guild ):
 
-getguildinfo( getcharid(2), GUILDINFO_LEVEL ); //Returns 0
+.@gid = 1234;
 
-requestguildinfo( getcharid(2) );
-getguildinfo( getcharid(2), GUILDINFO_LEVEL ); //Returns current guild level
+getguildinfo( .@gid, GUILDINFO_LEVEL ); //Returns 0
+
+requestguildinfo( .@gid );
+getguildinfo( .@gid, GUILDINFO_LEVEL ); //Returns current guild level
 
 See the sample in 'doc/sample/getguildinfo.txt'.
 

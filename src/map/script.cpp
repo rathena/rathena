@@ -9078,7 +9078,7 @@ BUILDIN_FUNC(getguildmasterid)
 }
 
 /*==========================================
- * Return the requested information of the @guild_id
+ * Returns the requested information of the provided guild ID
  *------------------------------------------*/
 BUILDIN_FUNC(getguildinfo)
 {
@@ -9086,7 +9086,7 @@ BUILDIN_FUNC(getguildinfo)
 	auto g = guild_search(guild_id);
 	
 	if ( g == nullptr ) {
-		ShowError( "buildin_getguildinfo: The guild id '%d' doesn't exist or is not yet loaded into the map-server. \n", guild_id );
+		ShowError( "buildin_getguildinfo: The guild ID '%d' doesn't exist or is not yet loaded into the map-server. \n", guild_id );
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -9113,8 +9113,7 @@ BUILDIN_FUNC(getguildinfo)
 					c++;
 			}
 			script_pushint(st, c);
-			break;
-		}
+		} break;
 		case GUILDINFO_MAXMEMBERCOUNT:
 			script_pushint(st, g->guild.max_member);
 			break;
