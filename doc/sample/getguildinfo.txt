@@ -13,8 +13,8 @@ prontera,255,55,5	script	test_getguildinfo	2_M_SAGE_OLD,{
 	
 	requestguildinfo .@gid; //Sync guild information with char-server
 	
-	setarray .@data$, "Guild Name", "Guild Level", "Average Level", "Online Count", "Member Count", "Max Member Count", "EXP", "Next Exp", "Master CID", "Master Name";
-	setarray .@type, GUILDINFO_NAME, GUILDINFO_LEVEL, GUILDINFO_AVERAGELEVEL, GUILDINFO_ONLINECOUNT, GUILDINFO_MEMBERCOUNT, GUILDINFO_MAXMEMBERCOUNT, GUILDINFO_EXP, GUILDINFO_NEXTEXP, GUILDINFO_MASTERID, GUILDINFO_MASTERNAME;
+	setarray .@data$[0], "Guild Name", "Guild Level", "Average Level", "Online Count", "Member Count", "Max Member Count", "EXP", "Next Exp", "Master CID", "Master Name";
+	setarray .@type[0], GUILDINFO_NAME, GUILDINFO_LEVEL, GUILDINFO_AVERAGELEVEL, GUILDINFO_ONLINECOUNT, GUILDINFO_MEMBERCOUNT, GUILDINFO_MAXMEMBERCOUNT, GUILDINFO_EXP, GUILDINFO_NEXTEXP, GUILDINFO_MASTERID, GUILDINFO_MASTERNAME;
 	for ( .@i = 0; .@i < getarraysize(.@data$); ++.@i )
 		dispbottom .@data$[.@i] + " : " + getguildinfo(.@gid, .@type[.@i]);
 	end;

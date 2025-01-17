@@ -9082,14 +9082,13 @@ BUILDIN_FUNC(getguildmasterid)
  *------------------------------------------*/
 BUILDIN_FUNC(getguildinfo)
 {
-	int32 i, c = 0;
 	int32 guild_id = script_getnum(st,2);
 	int32 type = script_getnum(st,3);
 	auto g = guild_search(guild_id);
 	
-	if ( !g ) {
+	if ( g == nullptr ) {
 		ShowError( "buildin_getguildinfo: The guild id '%d' doesn't exist or is not yet loaded into the map-server. \n", guild_id );
-		script_pushint(st, -1);
+		st->state = END;
 		return SCRIPT_CMD_FAILURE;
 	}
 	
@@ -9106,13 +9105,15 @@ BUILDIN_FUNC(getguildinfo)
 		case GUILDINFO_ONLINECOUNT:
 			script_pushint(st, g->guild.connect_member);
 			break;
-		case GUILDINFO_MEMBERCOUNT:
-			for ( i = 0; i < g->guild.max_member; ++i ) {
+		case GUILDINFO_MEMBERCOUNT: {
+			int32 c = 0;
+			for ( int32 i = 0; i < g->guild.max_member; ++i ) {
 				if( g->guild.member[i].account_id > 0 )
 					c++;
 			}
 			script_pushint(st, c);
 			break;
+		}
 		case GUILDINFO_MAXMEMBERCOUNT:
 			script_pushint(st, g->guild.max_member);
 			break;
@@ -9130,7 +9131,7 @@ BUILDIN_FUNC(getguildinfo)
 			break;
 		default:
 			ShowError( "buildin_getguildinfo: Invalid guildinfo type. \n", type );
-			script_pushint(st, -1);
+			st->state = END;
 			return SCRIPT_CMD_FAILURE;
 	}
 	

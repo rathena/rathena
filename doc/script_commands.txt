@@ -3510,7 +3510,6 @@ guild specified by the ID. 0 if the character is not a guild master of any guild
 *getguildinfo(<guild ID>, <type>);
 
 This function will look up and return the request type of guild information.
-The function will return -1 on failure.
 
 Types:
 	GUILDINFO_NAME              - Guild's Name
@@ -3527,7 +3526,7 @@ Types:
 Note: Make sure to use *requestguildinfo to sync the latest guild data from the char-server
 Example Case ( Newly formed guild ):
 
-getguildinfo( getcharid(2), GUILDINFO_LEVEL ); //Returns -1
+getguildinfo( getcharid(2), GUILDINFO_LEVEL ); //Returns 0
 
 requestguildinfo( getcharid(2) );
 getguildinfo( getcharid(2), GUILDINFO_LEVEL ); //Returns current guild level
