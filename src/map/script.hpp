@@ -2210,6 +2210,20 @@ enum e_eleminfo : uint8 {
 	ELEMINFO_CLASS,
 };
 
+/* getguildinfo script command */
+enum e_guildinfo : uint8 {
+	GUILDINFO_NAME = 0,
+	GUILDINFO_LEVEL,
+	GUILDINFO_AVERAGELEVEL,
+	GUILDINFO_ONLINECOUNT,
+	GUILDINFO_MEMBERCOUNT,
+	GUILDINFO_MAXMEMBERCOUNT,
+	GUILDINFO_EXP,
+	GUILDINFO_NEXTEXP,
+	GUILDINFO_MASTERID,
+	GUILDINFO_MASTERNAME,
+};
+
 class ConstantDatabase : public YamlDatabase {
 public:
 	ConstantDatabase() : YamlDatabase("CONSTANT_DB", 1) {
