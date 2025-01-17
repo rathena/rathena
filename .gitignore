@@ -111,6 +111,7 @@ Thumbs.db
 /tools/*.exe
 /tools/*.ilk
 /tools/*.pdb
+docker-compose.override.yml
 
 # Visual Studio
 .vs
