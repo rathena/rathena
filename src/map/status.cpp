@@ -1700,6 +1700,7 @@ int32 status_damage(struct block_list *src,struct block_list *target,int64 dhp, 
 	else { // Some death states that would normally be handled by unit_remove_map
 		unit_stop_attack(target);
 		unit_stop_walking(target,1);
+		unit_stop_chase(*target);
 		unit_skillcastcancel(target,0);
 		clif_clearunit_area( *target, CLR_DEAD );
 		skill_unit_move(target,gettick(),4);
@@ -2248,7 +2249,10 @@ int32 status_check_visibility(struct block_list *src, struct block_list *target)
 	status_change* tsc = status_get_sc(target);
 	switch (src->type) {
 		case BL_MOB:
-			view_range = ((TBL_MOB*)src)->min_chase;
+			if (((TBL_MOB*)src)->sc.getSCE(SC_BLIND))
+				view_range = 1;
+			else
+				view_range = ((TBL_MOB*)src)->db->range3;
 			break;
 		case BL_PET:
 			view_range = ((TBL_PET*)src)->db->range2;

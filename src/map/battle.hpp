@@ -764,6 +764,7 @@ struct Battle_Config
 	int32 item_stacking;
 	int32 hom_delay_reset_vaporize;
 	int32 hom_delay_reset_warp;
+	int32 loot_range;
 
 #include <custom/battle_config_struct.inc>
 };

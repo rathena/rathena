@@ -11681,7 +11681,7 @@ static const struct _battle_data {
 	{ "arrow_shower_knockback",             &battle_config.arrow_shower_knockback,          1,      0,      1,              },
 	{ "devotion_rdamage_skill_only",        &battle_config.devotion_rdamage_skill_only,     1,      0,      1,              },
 	{ "max_extended_aspd",                  &battle_config.max_extended_aspd,               193,    100,    199,            },
-	{ "monster_chase_refresh",              &battle_config.mob_chase_refresh,               30,     0,      MAX_MINCHASE,   },
+	{ "monster_chase_refresh",              &battle_config.mob_chase_refresh,               32,     0,      MAX_WALKPATH,   },
 	{ "mob_icewall_walk_block",             &battle_config.mob_icewall_walk_block,          75,     0,      255,            },
 	{ "boss_icewall_walk_block",            &battle_config.boss_icewall_walk_block,         0,      0,      255,            },
 	{ "snap_dodge",                         &battle_config.snap_dodge,                      0,      0,      1,              },
@@ -11831,6 +11831,7 @@ static const struct _battle_data {
 	{ "hom_delay_reset_vaporize",           &battle_config.hom_delay_reset_vaporize,        1,      0,      1,              },
 	{ "hom_delay_reset_warp",               &battle_config.hom_delay_reset_warp,            1,      0,      1,              },
 #endif
+	{ "loot_range",                         &battle_config.loot_range,                      12,     1,      MAX_WALKPATH,   },
 
 #include <custom/battle_config_init.inc>
 };
