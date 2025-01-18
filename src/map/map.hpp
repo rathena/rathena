@@ -453,6 +453,7 @@ struct block_list {
 	int32 id;
 	int16 m,x,y;
 	enum bl_type type;
+	int champion_monster; /* flag Monstro campeão*/
 };
 
 
@@ -1261,6 +1262,17 @@ extern const char*MSG_CONF_NAME_IDN;
 extern const char*MSG_CONF_NAME_FRN;
 extern const char*MSG_CONF_NAME_POR;
 extern const char*MSG_CONF_NAME_THA;
+
+// unit_hateffect [NeoWolfer]
+#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
+typedef struct {
+	int IdSetEffect;
+	uint32 IdAccount;
+	uint32 IdChar;
+	int16 IdEffect;
+	bool visible;
+} hatEffect;
+#endif
 
 //Useful typedefs from jA [Skotlex]
 typedef map_session_data TBL_PC;

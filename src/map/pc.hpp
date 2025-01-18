@@ -473,6 +473,7 @@ public:
 	struct s_autoattack aa;
 	//NOTE: When deciding to add a flag to state or special_state, take into consideration that state is preserved in
 	//status_calc_pc, while special_state is recalculated in each call. [Skotlex]
+	int boss_effect_dead;
 	struct s_state {
 		unsigned int autoattack : 1;
 		uint32 active : 1; //Marks active player (not active is logging in/out, or changing map servers)
@@ -1013,7 +1014,8 @@ public:
 	short setlook_head_top, setlook_head_mid, setlook_head_bottom, setlook_robe; ///< Stores 'setlook' script command values.
 
 #if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
-	std::vector<int16> hatEffects;
+//	std::vector<int16> hatEffects;
+	std::vector<hatEffect> hatEffects;
 #endif
 
 	struct{
@@ -1031,6 +1033,16 @@ public:
 	s_macro_detect macro_detect;
 
 	std::vector<uint32> party_booking_requests;
+	
+	// Show Mob MvP Effect
+	bool showMobMvPEffect;
+
+	// Show Mobs Hat Effects
+	bool showMobHatEffectElement;
+	bool showMobHatEffectRace;
+	bool showMobHatEffectQuest;
+	
+	t_tick monster_champion_tick;
 };
 
 extern struct eri *pc_sc_display_ers; /// Player's SC display table
@@ -1894,5 +1906,12 @@ void pc_macro_reporter_process(map_session_data &sd, int32 reporter_account_id =
 #ifdef MAP_GENERATOR
 void pc_reputation_generate();
 #endif
+
+// Mob Hat Effects
+int pc_mob_hateffect_sub(struct block_list *bl, va_list ap);
+bool pc_mob_quest_check(map_session_data *sd, int mob_id);
+
+// Quest System
+bool pc_is_quest_monster(map_session_data* sd, t_quest quest_required_id);
 
 #endif /* PC_HPP */

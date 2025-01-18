@@ -11238,6 +11238,63 @@ ACMD_FUNC(setcard)
 	return 0;
 }
 
+// Show Mob MvP Effect
+ACMD_FUNC(showmobmvp) {
+	nullpo_retr(-1, sd);
+
+	if( sd->showMobMvPEffect ) {
+		sd->showMobMvPEffect = false;
+		clif_displaymessage(fd, "Show Mobs MvP: On");
+	} else {
+		sd->showMobMvPEffect = true;
+		clif_displaymessage(fd, "Show Mobs MvP: Off");
+	}
+	return 0;
+}
+
+// Show Mobs Hat Effects
+ACMD_FUNC(showmobelement) {
+	nullpo_retr(-1, sd);
+
+	if( sd->showMobHatEffectElement ) {
+		sd->showMobHatEffectElement = false;
+		clif_displaymessage(fd, "Show Mobs Element: On");
+	} else {
+		sd->showMobHatEffectElement = true;
+		clif_displaymessage(fd, "Show Mobs Element: Off");
+	}
+	map_foreachinallrange(pc_mob_hateffect_sub, &sd->bl, AREA_SIZE, BL_MOB, sd);
+	return 0;
+}
+
+ACMD_FUNC(showmobrace) {
+	nullpo_retr(-1, sd);
+
+	if( sd->showMobHatEffectRace ) {
+		sd->showMobHatEffectRace = false;
+		clif_displaymessage(fd, "Show Mobs Race: On");
+	} else {
+		sd->showMobHatEffectRace = true;
+		clif_displaymessage(fd, "Show Mobs Race: Off");
+	}
+	map_foreachinallrange(pc_mob_hateffect_sub, &sd->bl, AREA_SIZE, BL_MOB, sd);
+	return 0;
+}
+
+ACMD_FUNC(showmobquest) {
+	nullpo_retr(-1, sd);
+
+	if( sd->showMobHatEffectQuest ) {
+		sd->showMobHatEffectQuest = false;
+		clif_displaymessage(fd, "Show Mobs Quest: On");
+	} else {
+		sd->showMobHatEffectQuest = true;
+		clif_displaymessage(fd, "Show Mobs Quest: Off");
+	}
+	map_foreachinallrange(pc_mob_hateffect_sub, &sd->bl, AREA_SIZE, BL_MOB, sd);
+	return 0;
+}
+
 #include <custom/atcommand.inc>
 
 /**
@@ -11567,6 +11624,12 @@ void atcommand_basecommands(void) {
 		ACMD_DEFR(enchantgradeui, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 		ACMD_DEFR(roulette, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 		ACMD_DEF(setcard),
+		// Show Mob MvP Effect
+		ACMD_DEF(showmobmvp),
+		// Show Mobs Hat Effects
+		ACMD_DEF(showmobelement),
+		ACMD_DEF(showmobrace),
+		ACMD_DEF(showmobquest),
 	};
 	AtCommandInfo* atcommand;
 	int32 i;

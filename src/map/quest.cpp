@@ -622,6 +622,10 @@ int32 quest_add(map_session_data *sd, int32 quest_id)
 
 	if( save_settings&CHARSAVE_QUEST )
 		chrif_save(sd, CSAVE_NORMAL);
+	
+	// Mob Hat Effect Element
+	if( battle_config.mob_show_hateffect_quest )
+		map_foreachinallrange(pc_mob_hateffect_sub, &sd->bl, AREA_SIZE, BL_MOB, sd);
 
 	return 0;
 }
@@ -672,6 +676,10 @@ int32 quest_change(map_session_data *sd, int32 qid1, int32 qid2)
 
 	if( save_settings&CHARSAVE_QUEST )
 		chrif_save(sd, CSAVE_NORMAL);
+
+	// Mob Hat Effect Element
+	if( battle_config.mob_show_hateffect_quest )
+		map_foreachinallrange(pc_mob_hateffect_sub, &sd->bl, AREA_SIZE, BL_MOB, sd);
 
 	return 0;
 }
@@ -803,6 +811,7 @@ void quest_update_objective(map_session_data *sd, struct mob_data* md)
 				sd->quest_log[i].count[j]++;
 				sd->save_quest = true;
 				clif_quest_update_objective(sd, &sd->quest_log[i]);
+				clif_quest_show_killMonster(sd, &sd->quest_log[i], j);
 			}
 		}
 
@@ -835,6 +844,10 @@ void quest_update_objective(map_session_data *sd, struct mob_data* md)
 		}
 	}
 	pc_show_questinfo(sd);
+
+	// Mob Hat Effect Element
+	if( battle_config.mob_show_hateffect_quest )
+		map_foreachinallrange(pc_mob_hateffect_sub, &sd->bl, AREA_SIZE, BL_MOB, sd);
 }
 
 /**
@@ -877,6 +890,10 @@ int32 quest_update_status(map_session_data *sd, int32 quest_id, e_quest_state st
 
 	if (save_settings&CHARSAVE_QUEST)
 		chrif_save(sd, CSAVE_NORMAL);
+	
+	// Mob Hat Effect Element
+	if( battle_config.mob_show_hateffect_quest )
+		map_foreachinallrange(pc_mob_hateffect_sub, &sd->bl, AREA_SIZE, BL_MOB, sd);
 
 	return 0;
 }

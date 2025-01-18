@@ -9,6 +9,9 @@
 #include <map>
 #include <unordered_map>
 #include <vector>
+#include <iostream>
+#include <chrono>
+#include <thread>
 
 #include <common/cbasetypes.hpp>
 #include <common/db.hpp>
@@ -41,6 +44,7 @@
 #include "pc.hpp"
 #include "pet.hpp"
 #include "quest.hpp"
+#include "mapreg.hpp"
 
 using namespace rathena;
 
@@ -173,6 +177,46 @@ TIMER_FUNC(mvptomb_delayspawn){
 		}
 		nd->u.tomb.spawn_timer = INVALID_TIMER;
 		clif_spawn(&nd->bl);
+		// effeito aqui
+		if(nd->u.tomb.md->get_bosstype() == BOSSTYPE_MVP){
+			unit_hateffect(&nd->bl, 328, true, true);
+		}
+		if(nd->u.tomb.md->get_bosstype() == BOSSTYPE_MINIBOSS){
+			unit_hateffect(&nd->bl, 329, true, true);
+		}
+		nd->mvp_tomb_effect = INVALID_TIMER;
+		nd->mvp_tomb_effect = add_timer(gettick() + 1500, tomb_mvp_effect, nd->bl.id, 0);
+	}
+	return 0;
+}
+
+TIMER_FUNC(tomb_mvp_effect){
+	struct npc_data *nd = BL_CAST(BL_NPC, map_id2bl(id));
+
+
+	if (nd) {
+
+		if( nd->mvp_tomb_effect != tid ) {
+			ShowError("mob_mvp_effect_timer: Timer mismatch: %d != %d\n", tid, nd->mvp_tomb_effect);
+			return 0;
+		}
+
+		if( nd->mvp_tomb_effect != INVALID_TIMER ) {
+			delete_timer(nd->mvp_tomb_effect, tomb_mvp_effect);
+			nd->mvp_tomb_effect = INVALID_TIMER;
+		}
+		// effeito aqui
+		if(nd->u.tomb.md->get_bosstype() == BOSSTYPE_MVP){
+			unit_hateffect(&nd->bl, 328, false, false);
+			unit_hateffect(&nd->bl, 328, true, true);
+		}
+		if(nd->u.tomb.md->get_bosstype() == BOSSTYPE_MINIBOSS){
+			unit_hateffect(&nd->bl, 329, false, false);
+			unit_hateffect(&nd->bl, 329, true, true);
+		}
+
+		nd->mvp_tomb_effect = INVALID_TIMER;
+		nd->mvp_tomb_effect = add_timer(gettick() + 1500, tomb_mvp_effect, nd->bl.id, 0);
 	}
 	return 0;
 }
@@ -243,6 +287,14 @@ void mvptomb_destroy(struct mob_data *md) {
 		struct map_data *mapdata = map_getmapdata(nd->bl.m);
 
 		clif_clearunit_area( nd->bl, CLR_OUTSIGHT );
+		if(nd->mvp_tomb_effect != INVALID_TIMER) {
+			delete_timer(nd->mvp_tomb_effect,tomb_mvp_effect);
+			nd->mvp_tomb_effect = INVALID_TIMER;
+		}
+		if(nd->u.tomb.md->get_bosstype() == BOSSTYPE_MVP)
+			unit_hateffect(&nd->bl, 328, false, false);
+		if(nd->u.tomb.md->get_bosstype() == BOSSTYPE_MINIBOSS)
+			unit_hateffect(&nd->bl, 329, false, false);
 		map_delblock(&nd->bl);
 
 		ARR_FIND( 0, mapdata->npc_num, i, mapdata->npc[i] == nd );
@@ -393,6 +445,109 @@ e_mob_bosstype mob_data::get_bosstype(){
 		return BOSSTYPE_MINIBOSS;
 	}else{
 		return BOSSTYPE_NONE;
+	}
+}
+
+// Mob Hat Effects
+e_hat_effects mob_data::get_hatelement(int hub) {
+	if( this->db != nullptr ){
+		std::string name;
+		switch( this->db->status.def_ele ) {
+			case ELE_NEUTRAL:
+				name = "NEUTRAL";
+				break;
+			case ELE_WATER:
+				name = "WATER";
+				break;
+			case ELE_EARTH:
+				name = "EARTH";
+				break;
+			case ELE_FIRE:
+				name = "FIRE";
+				break;
+			case ELE_WIND:
+				name = "WIND";
+				break;
+			case ELE_POISON:
+				name = "POISON";
+				break;
+			case ELE_HOLY:
+				name = "HOLY";
+				break;
+			case ELE_DARK:
+				name = "DARK";
+				break;
+			case ELE_GHOST:
+				name = "GHOST";
+				break;
+			case ELE_UNDEAD:
+				name = "UNDEAD";
+				break;
+			default:
+				return HAT_EF_MIN;
+		}
+
+		int64 id;
+		if( !script_get_constant(("HAT_EF_ELE_" + name + "_" + std::to_string(hub)).c_str(), &id) )
+			return HAT_EF_MIN;
+
+		return static_cast<e_hat_effects>(id);
+	}else{
+		return HAT_EF_MIN;
+	}
+}
+
+e_hat_effects mob_data::get_hatrace(int hub) {
+	if( this->db != nullptr ){
+		std::string name;
+		switch( this->db->status.race ) {
+			case RC_FORMLESS:
+				name = "FORMLESS";
+				break;
+			case RC_UNDEAD:
+				name = "UNDEAD";
+				break;
+			case RC_BRUTE:
+				name = "BRUTE";
+				break;
+			case RC_PLANT:
+				name = "PLANT";
+				break;
+			case RC_INSECT:
+				name = "INSECT";
+				break;
+			case RC_FISH:
+				name = "FISH";
+				break;
+			case RC_DEMON:
+				name = "DEMON";
+				break;
+			case RC_DEMIHUMAN:
+				name = "DEMIHUMAN";
+				break;
+			case RC_ANGEL:
+				name = "ANGEL";
+				break;
+			case RC_DRAGON:
+				name = "DRAGON";
+				break;
+			case RC_PLAYER_HUMAN:
+				name = "PLAYER_HUMAN";
+				break;
+			case RC_PLAYER_DORAM:
+				name = "PLAYER_DORAM";
+				break;
+			default:
+				return HAT_EF_MIN;
+		}
+
+		int64 id;
+		if( !script_get_constant(("HAT_EF_RC_" + name + "_" + std::to_string(hub)).c_str(), &id) )
+			return HAT_EF_MIN;
+
+		return static_cast<e_hat_effects>(id);
+	}else{
+		return HAT_EF_MIN;
 	}
 }
 
@@ -636,7 +791,7 @@ bool mob_ksprotected (struct block_list *src, struct block_list *target)
 	return false;
 }
 
-struct mob_data *mob_once_spawn_sub(struct block_list *bl, int16 m, int16 x, int16 y, const char *mobname, int32 mob_id, const char *event, uint32 size, enum mob_ai ai)
+struct mob_data *mob_once_spawn_sub(struct block_list *bl, int16 m, int16 x, int16 y, const char *mobname, int32 mob_id, const char *event, uint32 size, enum mob_ai ai, int champion )
 {
 	struct spawn_data data;
 
@@ -679,7 +834,7 @@ struct mob_data *mob_once_spawn_sub(struct block_list *bl, int16 m, int16 x, int
 /*==========================================
  * Spawn a single mob on the specified coordinates.
  *------------------------------------------*/
-int32 mob_once_spawn(map_session_data* sd, int16 m, int16 x, int16 y, const char* mobname, int32 mob_id, int32 amount, const char* event, uint32 size, enum mob_ai ai)
+int32 mob_once_spawn(map_session_data* sd, int16 m, int16 x, int16 y, const char* mobname, int32 mob_id, int32 amount, const char* event, uint32 size, enum mob_ai ai, int champion )
 {
 	struct mob_data* md = nullptr;
 	int32 count, lv;
@@ -692,7 +847,7 @@ int32 mob_once_spawn(map_session_data* sd, int16 m, int16 x, int16 y, const char
 	for (count = 0; count < amount; count++)
 	{
 		int32 c = (mob_id >= 0) ? mob_id : mob_get_random_id(-mob_id - 1, (battle_config.random_monster_checklv) ? static_cast<e_random_monster_flags>(RMF_DB_RATE|RMF_CHECK_MOB_LV) : RMF_DB_RATE, lv);
-		md = mob_once_spawn_sub((sd) ? &sd->bl : nullptr, m, x, y, mobname, c, event, size, ai);
+		md = mob_once_spawn_sub((sd) ? &sd->bl : nullptr, m, x, y, mobname, c, event, size, ai, champion);
 
 		if (!md)
 			continue;
@@ -717,8 +872,20 @@ int32 mob_once_spawn(map_session_data* sd, int16 m, int16 x, int16 y, const char
 					add_timer(gettick() + battle_config.mob_respawn_time,mob_spawn_guardian_sub,md->bl.id,md->guardian_data->guild_id);
 			}
 		}	// end addition [Valaris]
+		
+		//Monstro CampiÃƒÂ£o
+		if(champion > 0){
+			md->bl.champion_monster = champion;
+		}else
+			md->bl.champion_monster = 0;
 
 		mob_spawn(md);
+
+		//ativa os effeitos nos mostros
+		if(md->bl.champion_monster){
+			int champion_effect[] = {303, 308, 305, 306};
+			unit_hateffect(&md->bl,champion_effect[md->bl.champion_monster-1],true,true);
+		}
 
 		if (mob_id < 0 && battle_config.dead_branch_active)
 			//Behold Aegis's masterful decisions yet again...
@@ -732,7 +899,7 @@ int32 mob_once_spawn(map_session_data* sd, int16 m, int16 x, int16 y, const char
 /*==========================================
  * Spawn mobs in the specified area.
  *------------------------------------------*/
-int32 mob_once_spawn_area(map_session_data* sd, int16 m, int16 x0, int16 y0, int16 x1, int16 y1, const char* mobname, int32 mob_id, int32 amount, const char* event, uint32 size, enum mob_ai ai)
+int32 mob_once_spawn_area(map_session_data* sd, int16 m, int16 x0, int16 y0, int16 x1, int16 y1, const char* mobname, int32 mob_id, int32 amount, const char* event, uint32 size, enum mob_ai ai, int champion)
 {
 	int32 i, max, id = 0;
 	int32 lx = -1, ly = -1;
@@ -778,7 +945,7 @@ int32 mob_once_spawn_area(map_session_data* sd, int16 m, int16 x0, int16 y0, int
 		lx = x;
 		ly = y;
 
-		id = mob_once_spawn(sd, m, x, y, mobname, mob_id, 1, event, size, ai);
+		id = mob_once_spawn(sd, m, x, y, mobname, mob_id, 1, event, size, ai, champion);
 	}
 
 	return id; // id of last spawned mob
@@ -1116,7 +1283,7 @@ int32 mob_count_sub(struct block_list *bl, va_list ap) {
  * @param md : mob data to spawn
  * @return 0:spawned, 1:delayed, 2:error
  */
-int32 mob_spawn (struct mob_data *md)
+int32 mob_spawn (struct mob_data *md, bool reload )
 {
 	int32 i=0;
 	t_tick tick = gettick();
@@ -1227,10 +1394,21 @@ int32 mob_spawn (struct mob_data *md)
 	skill_unit_move(&md->bl,tick,1);
 	mobskill_use(md, tick, MSC_SPAWN);
 	
+		// Mob MvP Effect
+	md->mvp_effect_tid = INVALID_TIMER;
+	if( md->get_bosstype() == BOSSTYPE_MVP )
+		md->mvp_effect_tid = add_timer(gettick() + 1, mob_mvp_effect_timer, md->bl.id, 0);
+
+	md->boss_effect_tid = INVALID_TIMER;
+	if( md->get_bosstype() == BOSSTYPE_MINIBOSS )
+		md->boss_effect_tid = add_timer(gettick() + 1, mob_boss_effect_timer, md->bl.id, 0);
+
 	if(md->spawn && md->spawn->state.boss){
 		std::string mapregname = "$" + std::to_string(md->mob_id) + "_" + std::to_string(md->bl.m);
 		mapreg_setreg(reference_uid( add_str( mapregname.c_str() ), 0 ),2);
 	}
+
+	if (reload) map_foreachinallrange(hateffect_area, &md->bl, AREA_SIZE, BL_PC, md);
 
 	return 0;
 }
@@ -2718,6 +2896,13 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 
 	if(src && src->type == BL_MOB)
 		mob_unlocktarget((struct mob_data *)src,tick);
+	
+	//mostra o effeito quando um mini boss morre
+	if(mvp_sd && md->get_bosstype() == BOSSTYPE_MINIBOSS && mvp_sd->boss_effect_dead <= 0){
+		clif_hat_effect_single(sd,327, true, md->bl.id, true);
+		mvp_sd->boss_effect_dead = INVALID_TIMER;
+		mvp_sd->boss_effect_dead = add_timer(gettick() + 1500, mob_boss_dead_effect_timer, mvp_sd->bl.id, 0);
+	}
 
 	// filter out entries not eligible for exp distribution
 	memset(tmpsd,0,sizeof(tmpsd));
@@ -2756,6 +2941,11 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 			case MDLF_PET:    dmgbltypes|= BL_PET; break;
 		}
 	}
+
+	// puxa o valor da variavel
+	char key[256];
+	sprintf(key, "$monster_champion_%d", md->bl.champion_monster);
+	int champion = static_cast<int>(mapreg_readreg(add_str(key)));
 
 	// determines, if the monster was killed by homunculus' damage only
 	homkillonly = (bool)( ( dmgbltypes&BL_HOM ) && !( dmgbltypes&~BL_HOM ) );
@@ -2912,6 +3102,25 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 								job_exp = (t_exp)cap_value(apply_rate(job_exp, rate), 1, MAX_EXP);
 						}
 #endif
+						//bonus exp monstro campeÃ£o
+						if(md->bl.champion_monster && champion == md->bl.id){
+							if(md->bl.champion_monster  == 1){
+								t_exp exp_base_monster_champion;
+								t_exp exp_job_monster_champion;
+								exp_base_monster_champion = base_exp*10/100;
+								exp_job_monster_champion = job_exp*10/100;
+								base_exp += exp_base_monster_champion;
+								job_exp += exp_job_monster_champion;
+							}
+							if(md->bl.champion_monster  == 3){
+								t_exp exp_base_monster_champion;
+								t_exp exp_job_monster_champion;
+								exp_base_monster_champion = base_exp*100/100;
+								exp_job_monster_champion = job_exp*100/100;
+								base_exp += exp_base_monster_champion;
+								job_exp += exp_job_monster_champion;
+							}
+						}
 						pc_gainexp(tmpsd[i], &md->bl, base_exp, job_exp, 0);
 					}
 				}
@@ -2962,7 +3171,13 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 		dlist->first_charid = (mvp_sd ? mvp_sd->status.char_id : 0);
 		dlist->second_charid = (second_sd ? second_sd->status.char_id : 0);
 		dlist->third_charid = (third_sd ? third_sd->status.char_id : 0);
-
+		
+		//limpa a variavel monstro campeão
+		if(md->bl.champion_monster && champion == md->bl.id){
+			//limpa a variavel
+			mapreg_setreg(add_str(key),0);
+		}
+	
 		// These trigger for the killer of the monster
 		if(sd) {
 			// process script-granted extra drop bonuses
@@ -3301,6 +3516,12 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 		}
 	}
 
+	// Mob Mvp Effect
+	if(md->mvp_effect_tid != INVALID_TIMER) {
+		delete_timer(md->mvp_effect_tid,mob_mvp_effect_timer);
+		md->mvp_effect_tid = INVALID_TIMER;
+	}
+	
 	if(md->deletetimer != INVALID_TIMER) {
 		delete_timer(md->deletetimer,mob_timer_delete);
 		md->deletetimer = INVALID_TIMER;
@@ -3349,9 +3570,74 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 		mapreg_setregstr(reference_uid( add_str( mapregnamestr.c_str() ), 4),mvp_sd ? mvp_sd->status.name : NULL);
 	}
 
+	// [RomuloSM]: Mob Hat Effects
+	if( battle_config.mob_show_hateffect_quest )
+		map_foreachinallrange(mob_hateffect_sub, &md->bl, AREA_SIZE, BL_PC, md);
+
 	if( !rebirth )
 		mob_setdelayspawn(md); //Set respawning.
 	return 3; //Remove from map.
+}
+
+TIMER_FUNC(mob_boss_dead_effect_timer) {
+	struct block_list* bl = map_id2bl(id);
+	map_session_data *sd = BL_CAST(BL_PC, bl);
+
+	if( !sd )
+		return 0;
+
+	if( sd->boss_effect_dead != tid ) {
+		ShowError("mob_boss_dead_effect_timer: Timer mismatch: %d != %d\n", tid, sd->boss_effect_dead);
+		return 0;
+	}
+
+	if( sd->boss_effect_dead != INVALID_TIMER ) {
+		delete_timer(sd->boss_effect_dead, mob_boss_dead_effect_timer);
+		sd->boss_effect_dead = INVALID_TIMER;
+	}
+	clif_hat_effect_single(sd,327, false, sd->bl.id, false);
+
+	return 1;
+}
+
+int mob_boss_sub(struct block_list *bl, va_list ap) {
+	struct mob_data *md;
+	map_session_data *sd;
+
+	sd = (map_session_data *)bl;
+	md = va_arg(ap,mob_data *);
+	
+	nullpo_ret(sd);
+	nullpo_ret(md);
+
+	if( sd && md ) {
+		if( battle_config.mob_show_mvp_effect && !sd->showMobMvPEffect )
+			clif_hat_effect_single2(&md->bl,218, true);
+	}
+	return 1;
+}
+
+TIMER_FUNC(mob_boss_effect_timer) {
+	struct block_list* bl = map_id2bl(id);
+	struct mob_data* md = BL_CAST(BL_MOB, bl);
+
+	if( !md )
+		return 0;
+
+	if( md->boss_effect_tid != tid ) {
+		ShowError("mob_boss_effect_timer: Timer mismatch: %d != %d\n", tid, md->boss_effect_tid);
+		return 0;
+	}
+
+	if( md->boss_effect_tid != INVALID_TIMER ) {
+		delete_timer(md->boss_effect_tid, mob_boss_effect_timer);
+		md->boss_effect_tid = INVALID_TIMER;
+	}
+
+	if( battle_config.mob_show_mvp_effect )
+		map_foreachinallrange(mob_boss_sub, &md->bl, AREA_SIZE, BL_PC, md);
+	md->boss_effect_tid = add_timer(gettick() + battle_config.mob_show_mvp_effect_timer, mob_boss_effect_timer, md->bl.id, 0);
+	return 1;
 }
 
 /**
@@ -3380,6 +3666,12 @@ void mob_revive(struct mob_data *md, uint32 hp)
 	mobskill_use(md, tick, MSC_SPAWN);
 	if (battle_config.show_mob_info&3)
 		clif_name_area(&md->bl);
+	
+	// Mob MvP Effect
+	md->mvp_effect_tid = INVALID_TIMER;
+	if( md->get_bosstype() == BOSSTYPE_MVP )
+		md->mvp_effect_tid = add_timer(gettick() + 1, mob_mvp_effect_timer, md->bl.id, 0);
+
 }
 
 int32 mob_guardian_guildchange(struct mob_data *md)
@@ -4446,6 +4738,65 @@ int32 mob_clone_delete(struct mob_data *md){
 		return 1;
 	}
 	return 0;
+}
+// Mob MvP Effect
+int mob_mvp_sub(struct block_list *bl, va_list ap) {
+	struct mob_data *md;
+	map_session_data *sd;
+
+	sd = (map_session_data *)bl;
+	md = va_arg(ap,mob_data *);
+	
+	nullpo_ret(sd);
+	nullpo_ret(md);
+
+	if( sd && md ) {
+		if( battle_config.mob_show_mvp_effect && !sd->showMobMvPEffect )
+			clif_specialeffect_single(&md->bl,EF_MVP,sd->fd);
+	}
+	return 1;
+}
+
+TIMER_FUNC(mob_mvp_effect_timer) {
+	struct block_list* bl = map_id2bl(id);
+	struct mob_data* md = BL_CAST(BL_MOB, bl);
+
+	if( !md )
+		return 0;
+
+	if( md->mvp_effect_tid != tid ) {
+		ShowError("mob_mvp_effect_timer: Timer mismatch: %d != %d\n", tid, md->mvp_effect_tid);
+		return 0;
+	}
+
+	if( md->mvp_effect_tid != INVALID_TIMER ) {
+		delete_timer(md->mvp_effect_tid, mob_mvp_effect_timer);
+		md->mvp_effect_tid = INVALID_TIMER;
+	}
+
+	if( battle_config.mob_show_mvp_effect )
+		map_foreachinallrange(mob_mvp_sub, &md->bl, AREA_SIZE, BL_PC, md);
+	md->mvp_effect_tid = add_timer(gettick() + battle_config.mob_show_mvp_effect_timer, mob_mvp_effect_timer, md->bl.id, 0);
+	return 1;
+}
+
+// [RomuloSM]: Mob Hat Effects
+int mob_hateffect_sub(struct block_list *bl, va_list ap)
+{
+	struct mob_data *md;
+	map_session_data *sd;
+
+	sd = (map_session_data *)bl;
+	md = va_arg(ap,mob_data *);
+	
+	nullpo_ret(sd);
+	nullpo_ret(md);
+
+	if( sd && md ) {
+		clif_mob_hat_effect_hub_remove(md,sd);
+		clif_mob_hat_effects(md, &sd->bl, SELF);
+	}
+	return 1;
 }
 
 //Adjusts the drop rate of item according to the criteria given. [Skotlex]
@@ -6947,6 +7298,8 @@ void do_init_mob(void){
 	add_timer_func_list(mvptomb_delayspawn,"mvptomb_delayspawn");
 	add_timer_interval(gettick()+MIN_MOBTHINKTIME,mob_ai_hard,0,0,MIN_MOBTHINKTIME);
 	add_timer_interval(gettick()+MIN_MOBTHINKTIME*10,mob_ai_lazy,0,0,MIN_MOBTHINKTIME*10);
+		// Mob MvP Effect
+	add_timer_func_list(mob_mvp_effect_timer,"mob_mvp_effect_timer");
 }
 
 /*==========================================

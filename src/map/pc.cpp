@@ -2084,6 +2084,10 @@ bool pc_authok(map_session_data *sd, uint32 login_id2, time_t expiration_time, i
 	sd->regen.tick.hp = tick;
 	sd->regen.tick.sp = tick;
 
+	// [RomuloSM]: Show Mobs Hat Effects
+	sd->showMobHatEffectElement = false;
+	sd->showMobHatEffectQuest = false;
+
 	for(int32 i = 0; i < MAX_SPIRITBALL; i++)
 		sd->spirit_timer[i] = INVALID_TIMER;
 
@@ -16422,6 +16426,85 @@ uint64 CaptchaDatabase::parseBodyNode(const ryml::NodeRef &node) {
 		captcha_db.put(index, cd);
 
 	return 1;
+}
+
+// Mob Hat Effects
+int pc_mob_hateffect_sub(struct block_list *bl, va_list ap)
+{
+	map_session_data *sd;
+	struct mob_data *md;
+
+	md = (struct mob_data *)bl;
+	sd = va_arg(ap,map_session_data *);
+	
+	nullpo_ret(sd);
+	nullpo_ret(md);
+
+	if( sd && md ) {
+		clif_mob_hat_effect_hub_remove(md,sd);
+		clif_mob_hat_effects(md, &sd->bl, SELF);
+	}
+	return 1;
+}
+
+/**
+ * Quest System
+ * Check if player is hunting given monsterID or nameID fo item.
+ */
+bool pc_is_quest_monster( map_session_data* sd, t_quest quest_required_id) {
+	uint8 i = 0;
+
+	if (sd->num_quests < 1)
+		return false;
+
+	for (int i = 0; i < sd->avail_quests; i++) {
+		if (sd->quest_log[i].state == Q_COMPLETE) // Skip complete quests
+			continue;
+
+		if (sd->quest_log[i].state == Q_INACTIVE) // Skip not active quests
+			continue;
+
+		std::shared_ptr<s_quest_db> qi = quest_search(sd->quest_log[i].quest_id);
+		if (!qi)
+			continue;
+
+		for (int j = 0; j < qi->objectives.size(); j++)
+			if (qi->objectives[j]->mob_id == quest_required_id)
+				if (qi->objectives[j]->count > sd->quest_log[i].count[j])
+					return true;
+
+		for (int j = 0; j < qi->dropitem.size(); j++)
+			if (qi->dropitem[j]->nameid == quest_required_id)
+				if (qi->dropitem[j]->count > sd->quest_log[i].count[j])
+					return true;
+	}
+	return false;
+}
+
+bool pc_mob_quest_check(map_session_data *sd, int mob_id)
+{
+	nullpo_retr(false,sd);
+
+	if( !mob_id )
+		return false;
+
+	for( int i = 0; i < sd->avail_quests; i++ ) {
+		if( sd->quest_log[i].state == Q_COMPLETE ) // Skip complete quests
+			continue;
+
+		std::shared_ptr<s_quest_db> qi = quest_search(sd->quest_log[i].quest_id);
+		if( !qi )
+			continue;
+
+		for( int j = 0; j < qi->objectives.size(); j++ ) {
+			uint8 objective_check = 0;
+
+			if( qi->objectives[j]->mob_id == mob_id && sd->quest_log[i].count[j] < qi->objectives[j]->count )
+				return true;
+		}
+	}
+
+	return false;
 }
 
 /*==========================================

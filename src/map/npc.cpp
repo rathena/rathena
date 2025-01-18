@@ -5249,6 +5249,7 @@ void npc_parse_mob2(struct spawn_data* mob)
 		}
 		md->spawn->active++;
 		mob_spawn(md);
+		mob_spawn(md, false);
 	}
 }
 

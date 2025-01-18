@@ -390,6 +390,17 @@ struct mob_data {
 	uint16 damagetaken;
 
 	e_mob_bosstype get_bosstype();
+	
+	// Mob MvP Effect
+	int mvp_effect_tid;
+	int boss_effect_tid;
+
+	// [RomuloSM]: Mob Hat Effects
+#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
+	std::vector<int16> hatEffects;
+#endif
+	e_hat_effects get_hatelement(int hub);
+	e_hat_effects get_hatrace(int hub);
 };
 
 class MobAvailDatabase : public YamlDatabase {
@@ -493,13 +504,13 @@ struct view_data* mob_get_viewdata(int32 mob_id);
 void mob_set_dynamic_viewdata( struct mob_data* md );
 void mob_free_dynamic_viewdata( struct mob_data* md );
 
-struct mob_data *mob_once_spawn_sub(struct block_list *bl, int16 m, int16 x, int16 y, const char *mobname, int32 mob_id, const char *event, uint32 size, enum mob_ai ai);
+struct mob_data *mob_once_spawn_sub(struct block_list *bl, int16 m, int16 x, int16 y, const char *mobname, int32 mob_id, const char *event, uint32 size, enum mob_ai ai, int champion = 0);
 
 int32 mob_once_spawn(map_session_data* sd, int16 m, int16 x, int16 y,
-	const char* mobname, int32 mob_id, int32 amount, const char* event, uint32 size, enum mob_ai ai);
+	const char* mobname, int32 mob_id, int32 amount, const char* event, uint32 size, enum mob_ai ai, int champion = 0);
 
 int32 mob_once_spawn_area(map_session_data* sd, int16 m,
-	int16 x0, int16 y0, int16 x1, int16 y1, const char* mobname, int32 mob_id, int32 amount, const char* event, uint32 size, enum mob_ai ai);
+	int16 x0, int16 y0, int16 x1, int16 y1, const char* mobname, int32 mob_id, int32 amount, const char* event, uint32 size, enum mob_ai ai, int champion = 0);
 
 bool mob_ksprotected (struct block_list *src, struct block_list *target);
 
@@ -512,7 +523,7 @@ int32 mob_warpchase(struct mob_data *md, struct block_list *target);
 int32 mob_target(struct mob_data *md,struct block_list *bl,int32 dist);
 int32 mob_unlocktarget(struct mob_data *md, t_tick tick);
 struct mob_data* mob_spawn_dataset(struct spawn_data *data);
-int32 mob_spawn(struct mob_data *md);
+int32 mob_spawn(struct mob_data *md, bool reload = true );
 TIMER_FUNC(mob_delayspawn);
 int32 mob_setdelayspawn(struct mob_data *md);
 int32 mob_parse_dataset(struct spawn_data *data);
@@ -562,10 +573,22 @@ int32 mob_getdroprate(struct block_list *src, std::shared_ptr<s_mob_db> mob, int
 // MvP Tomb System
 int32 mvptomb_setdelayspawn(struct npc_data *nd);
 TIMER_FUNC(mvptomb_delayspawn);
+TIMER_FUNC(mob_champion_timer);
 void mvptomb_create(struct mob_data *md, char *killer, time_t time);
 void mvptomb_destroy(struct mob_data *md);
 
 void mob_setdropitem_option( item& itm, s_mob_drop& mobdrop );
+
+// Mob MvP Effect
+int mob_mvp_sub(struct block_list *bl, va_list ap);
+int mob_boss_sub(struct block_list *bl, va_list ap);
+TIMER_FUNC(mob_mvp_effect_timer);
+TIMER_FUNC(tomb_mvp_effect);
+TIMER_FUNC(mob_boss_effect_timer);
+TIMER_FUNC(mob_boss_dead_effect_timer);
+
+// [RomuloSM]: Mob Hat Effects
+int mob_hateffect_sub(struct block_list *bl, va_list ap);
 
 #define CHK_MOBSIZE(size) ((size) >= SZ_SMALL && (size) < SZ_MAX) /// Check valid Monster Size
 

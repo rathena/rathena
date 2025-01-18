@@ -783,7 +783,22 @@ struct Battle_Config
 	int32 item_stacking;
 	int32 hom_delay_reset_vaporize;
 	int32 hom_delay_reset_warp;
+	
+	// Champion Monster
+	int group_id_monster_champion;
+	
+	// Mob MvP effect
+	int mob_show_mvp_effect;
+	int mob_show_mvp_effect_timer;
 
+	// Mob Hat Effect Element
+	int mob_show_hateffect_element;
+	int mob_show_hateffect_race;
+	int mob_show_hateffect_quest;
+	
+	// Quest Mob
+	int id_hat_effect;
+	
 #include <custom/battle_config_struct.inc>
 };
 

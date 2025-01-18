@@ -1731,6 +1731,9 @@ int32 clif_spawn( struct block_list *bl, bool walking ){
 				clif_specialeffect(&md->bl,EF_BABYBODY2,AREA);
 			if ( md->special_state.ai == AI_ABR || md->special_state.ai == AI_BIONIC )
 				clif_summon_init(*md);
+			clif_hat_effect_npc(&md->bl, bl, true, SELF);
+			// [RomuloSM]: Mob Hat Effects
+			map_foreachinallrange(mob_hateffect_sub, &md->bl, AREA_SIZE, BL_PC, md);
 		}
 		break;
 	case BL_NPC:
@@ -1742,6 +1745,7 @@ int32 clif_spawn( struct block_list *bl, bool walking ){
 				clif_specialeffect(&nd->bl,EF_BABYBODY2,AREA);
 			clif_efst_status_change_sub(bl, bl, AREA);
 			clif_progressbar_npc_area(nd);
+			clif_hat_effect_npc(&nd->bl, bl, true, SELF);
 		}
 		break;
 	case BL_PET:
@@ -1806,6 +1810,22 @@ void clif_homunculus_updatestatus(map_session_data& sd, _sp type) {
 	}
 
 	clif_send(&p, sizeof(p), &sd.bl, SELF);
+#endif
+}
+
+void clif_hat_effect_single_npc( struct block_list* bl, uint16 effectId, bool enable ){
+#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
+	nullpo_retv(bl);
+ 
+ 	struct PACKET_ZC_EQUIPMENT_EFFECT* p = (struct PACKET_ZC_EQUIPMENT_EFFECT*)packet_buffer;
+ 
+ 	p->packetType = HEADER_ZC_EQUIPMENT_EFFECT;
+ 	p->packetLength = (int16)( sizeof( struct PACKET_ZC_EQUIPMENT_EFFECT ) + sizeof( int16 ) );
+	p->aid = bl->id;
+ 	p->status = enable;
+ 	p->effects[0] = effectId;
+ 
+	clif_send( p, p->packetLength, bl, AREA );
 #endif
 }
 
@@ -5090,6 +5110,8 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 						clif_monster_hp_bar(md, sd->fd);
 			}
 #endif
+			// Mob Hat Effects
+			clif_mob_hat_effects(md,&sd->bl, SELF);
 		}
 		break;
 	case BL_PET:
@@ -5097,6 +5119,96 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 			clif_pet_equip(sd, (TBL_PET*)bl); // needed to display pet equip properly
 		break;
 	}
+}
+
+/** Gera Efeito em Monstros
+* @param id do efeito
+* @param true ou false (ativa ou desativa efeito)
+* @param id do monstro
+* @author [NeoWolfer]
+*/
+int clif_unit_hateffect( map_session_data* sd, int16 effectID, bool enable, uint32 CharID, uint32 target, bool visible) {
+#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
+
+	if (sd == nullptr)
+		return -1;
+
+	if (CharID != sd->status.char_id && !visible)
+		return -1;
+
+	bool CheckEffect = false;
+
+	for (auto it = sd->hatEffects.begin(); it != sd->hatEffects.end(); it++) {
+		if (it->IdEffect == effectID) {
+			CheckEffect = true;
+			if (!enable)
+				sd->hatEffects.erase(it);
+			break;
+		}
+	}
+
+	if (enable) {
+		hatEffect ef{ sd->bl.id, target, CharID, effectID, visible };
+
+		if (!CheckEffect)
+			sd->hatEffects.push_back(ef);
+	}
+
+	if (!sd->state.connect_new) {
+		clif_hat_effect_single(sd, effectID, enable, target, visible);
+	}
+
+#endif
+	return 0;
+}
+
+/*==========================================
+ * hateffect_area by NeoWolfer
+ *------------------------------------------*/
+int hateffect_area(struct block_list* bl, va_list ap)
+{
+	nullpo_ret(bl);
+
+	map_session_data* sd = BL_CAST(BL_PC, bl);
+	mob_data* md = va_arg(ap, struct mob_data*);
+
+	if (!clif_session_isValid(sd))
+		return 0;
+
+	if (&md->bl == bl || md == NULL)
+		return 0;
+
+	if (pc_is_quest_monster(sd, md->mob_id))
+		clif_unit_hateffect(sd, battle_config.id_hat_effect, true, sd->status.char_id, md->bl.id, false);
+
+	return 0;
+}
+
+void clif_hat_effect_npc(struct block_list* src, struct block_list* bl, bool enable, enum send_target target ){
+ #if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
+	struct unit_data* ud;
+	
+	if (!src || !bl || !(ud = unit_bl2ud(bl)))
+ 		return;
+	
+	if (ud->hatEffects.empty() || map_getmapdata(src->m)->getMapFlag(MF_NOCOSTUME)) {
+ 		return;
+ 	}
+	
+ 	struct PACKET_ZC_EQUIPMENT_EFFECT* p = (struct PACKET_ZC_EQUIPMENT_EFFECT*)packet_buffer;
+ 
+ 	p->packetType = HEADER_ZC_EQUIPMENT_EFFECT;
+	
+	p->packetLength = (int16)( sizeof( struct PACKET_ZC_EQUIPMENT_EFFECT ) + sizeof( int16 ) * ud->hatEffects.size() );
+	p->aid = bl->id;
+	p->status = enable;
+	
+	for (size_t i = 0; i < ud->hatEffects.size(); i++) {
+		p->effects[i] = ud->hatEffects[i];
+ 	}
+	
+	clif_send(p, p->packetLength, src, target);
+#endif
 }
 
 //Modifies the type of damage according to status changes [Skotlex]
@@ -10016,6 +10128,7 @@ void clif_name( struct block_list* src, struct block_list *bl, send_target targe
 			break;
 		case BL_MOB: {
 			mob_data *md = (mob_data *)bl;
+			map_session_data *sd = (map_session_data *)bl;
 
 			if( md->guardian_data && md->guardian_data->guild_id ){
 				PACKET_ZC_ACK_REQNAMEALL packet = { 0 };
@@ -10027,7 +10140,7 @@ void clif_name( struct block_list* src, struct block_list *bl, send_target targe
 				safestrncpy( packet.position_name, md->guardian_data->castle->castle_name, NAME_LENGTH );
 
 				clif_send(&packet, sizeof(packet), src, target);
-			}else if( battle_config.show_mob_info ){
+			}else if( battle_config.show_mob_info && md->bl.champion_monster == 0){
 				PACKET_ZC_ACK_REQNAMEALL packet = { 0 };
 
 				packet.packet_id = HEADER_ZC_ACK_REQNAMEALL;
@@ -10035,9 +10148,16 @@ void clif_name( struct block_list* src, struct block_list *bl, send_target targe
 				safestrncpy( packet.name, md->name, NAME_LENGTH );
 
 				char mobhp[50], *str_p = mobhp;
+				char mobinfos[50], *str_p1 = mobinfos;
+				char mobinfos2[50], *str_p2 = mobinfos2;
 
 				if( battle_config.show_mob_info&4 ){
-					str_p += sprintf( str_p, "Lv. %d | ", md->level );
+					str_p += sprintf( str_p, "Lv. %d | ", md->level);
+				}
+
+				if( battle_config.show_mob_info&32 ){
+					unsigned char msize[SZ_ALL][7] = { "Small", "Medium", "Large" };
+					str_p += sprintf( str_p, "Size: %s |", msize[md->status.size]);
 				}
 
 				if( battle_config.show_mob_info&1 ){
@@ -10047,15 +10167,59 @@ void clif_name( struct block_list* src, struct block_list *bl, send_target targe
 				if( battle_config.show_mob_info&2 ){
 					str_p += sprintf( str_p, "HP: %u%% | ", get_percentage( md->status.hp, md->status.max_hp ) );
 				}
+				if( battle_config.show_mob_info&8 ){
+					unsigned char melement[ELE_ALL][8] = { "Neutral", "Water", "Earth", "Fire", "Wind", "Poison", "Holy", "Dark", "Ghost", "Undead" };
+					
+					str_p2 += sprintf( str_p2, "Element: %s LV. %u | ", melement[md->status.def_ele], md->status.ele_lv );
+				}
+				if( battle_config.show_mob_info&16 ){
+					unsigned char mrace[RC_ALL][11] = { "Formless", "Undead", "Beast", "Plant", "Insect", "Fish", "Demon", "Demi-Human", "Angel", "Dragon", "Player" };
+
+					str_p1 += sprintf( str_p1, "[Race: %s] | ", mrace[md->status.race] );
+				}
 
 				// Even thought mobhp ain't a name, we send it as one so the client can parse it. [Skotlex]
 				if( str_p != mobhp ){
 					*(str_p-3) = '\0'; //Remove trailing space + pipe.
 					safestrncpy( packet.party_name, mobhp, NAME_LENGTH );
 				}
+				
+				if( str_p1 != mobinfos ){
+					*(str_p1-3) = '\0'; //Remove trailing space + pipe.
+					safestrncpy( packet.guild_name, mobinfos, NAME_LENGTH );
+				}
+				if( str_p2 != mobinfos2 ){
+					*(str_p2-3) = '\0'; //Remove trailing space + pipe.
+					safestrncpy( packet.position_name, mobinfos2, NAME_LENGTH );
+				}
 
 				clif_send(&packet, sizeof(packet), src, target);
-			} else {
+			} else if(md->bl.champion_monster){
+					unit_data *ud = unit_bl2ud(bl);
+					if (ud != nullptr) {
+						if(md->bl.champion_monster){
+							md->ud.group_id = battle_config.group_id_monster_champion;
+							unit_refresh(bl);
+						}
+					    
+					    PACKET_ZC_ACK_REQNAMEALL_NPC packet = { 0 };
+					    packet.packet_id = HEADER_ZC_ACK_REQNAMEALL_NPC;
+					    packet.gid = bl->id;
+						
+						if (ud->group_id) {
+							safestrncpy(ud->title, msg_txt(sd,2501+md->bl.champion_monster), NAME_LENGTH);
+							memcpy(packet.name, ud->title, NAME_LENGTH);
+						}
+						char mobhp[100], * str_p = mobhp;
+						str_p += sprintf(str_p, "%s (HP: %u%%) | ", md->name, get_percentage(md->status.hp, md->status.max_hp));
+						if (str_p != mobhp) {
+							*(str_p - 3) = '\0'; //Remove trailing space + pipe.
+						}
+						safestrncpy(packet.title, mobhp, NAME_LENGTH);
+						packet.groupId = ud->group_id;
+					    clif_send(&packet, sizeof(packet), src, target);
+					}
+			}else{
 				PACKET_ZC_ACK_REQNAMEALL_NPC packet = { 0 };
 
 				packet.packet_id = HEADER_ZC_ACK_REQNAMEALL_NPC;
@@ -18010,6 +18174,42 @@ void clif_quest_update_status(map_session_data *sd, int32 quest_id, bool active)
 	WFIFOSET(fd, packet_len(0x2b7));
 }
 
+/// Mosta na tela só o Monstro que Matou [NeoWolfer]
+/// 02b5 <packet len>.W <mobs>.W { <quest id>.L <mob id>.L <total count>.W <current count>.W }*3 (ZC_UPDATE_MISSION_HUNT)
+/// 09fa <packet len>.W <mobs>.W { <quest id>.L <hunt identification>.L <total count>.W <current count>.W }*3 (ZC_UPDATE_MISSION_HUNT_EX)
+void clif_quest_show_killMonster( map_session_data* sd, struct quest* qd, int objective)
+{
+	int fd = sd->fd;
+	int offset = 6;
+	std::shared_ptr<s_quest_db> qi = quest_search(qd->quest_id);
+	int len = 18;
+#if PACKETVER >= 20150513
+	int cmd = 0x9fa;
+#else
+	int cmd = 0x2b5;
+#endif
+
+	WFIFOHEAD(fd, len);
+	WFIFOW(fd, 0) = cmd;
+	WFIFOW(fd, 4) = static_cast<uint16>(1);
+
+	WFIFOL(fd, offset) = qd->quest_id;
+	offset += 4;
+#if PACKETVER >= 20150513
+	WFIFOL(fd, offset) = qd->quest_id * 1000 + objective;
+	offset += 4;
+#else
+	WFIFOL(fd, offset) = qi->objectives[objective]->mob_id;
+	offset += 4;
+#endif
+	WFIFOW(fd, offset) = qi->objectives[objective]->count;
+	offset += 2;
+	WFIFOW(fd, offset) = qd->count[objective];
+	offset += 2;
+
+	WFIFOW(fd, 2) = offset;
+	WFIFOSET(fd, offset);
+}
 
 /// Notification about an NPC's quest state (ZC_QUEST_NOTIFY_EFFECT).
 /// 0446 <npc id>.L <x>.W <y>.W <effect>.W <color>.W
@@ -21351,37 +21551,47 @@ void clif_hat_effects( map_session_data& sd, block_list& bl, enum send_target ta
 		return;
 	}
 
+	// Carrega somente os effect que esta no personagem [NeoWolfer]
+	std::vector<int16> getEffectAtive;
+	for (auto it = tsd->hatEffects.begin(); it != tsd->hatEffects.end(); it++) {
+		if (it->IdAccount == tsd->bl.id && (it->visible == true || it->IdChar == tsd->status.char_id)) {
+			getEffectAtive.push_back(it->IdEffect);
+		}
+	}
+
 	PACKET_ZC_EQUIPMENT_EFFECT* p = reinterpret_cast<PACKET_ZC_EQUIPMENT_EFFECT*>( packet_buffer );
 
 	p->packetType = HEADER_ZC_EQUIPMENT_EFFECT;
-	p->packetLength = sizeof( *p );
+	//p->packetLength = sizeof( *p );
+	p->packetLength = (int16)( sizeof( struct PACKET_ZC_EQUIPMENT_EFFECT ) + sizeof( int16 ) * getEffectAtive.size() );
 	p->aid = tsd->bl.id;
 	p->status = 1;
 
-	for( size_t i = 0; i < tsd->hatEffects.size(); i++ ){
-		p->effects[i] = tsd->hatEffects[i];
+	for( size_t i = 0; i < getEffectAtive.size(); i++ ){
+		p->effects[i] = getEffectAtive[i];
 
 		p->packetLength += static_cast<decltype(p->packetLength)>( sizeof( p->effects[0] ) );
 	}
 
 	clif_send( p, p->packetLength, tbl, target );
+	getEffectAtive.clear();
 #endif
 }
 
 /// Send a single hat effect to the client.
 /// 0A3B <Length>.W <AID>.L <Status>.B { <HatEffectId>.W } (ZC_EQUIPMENT_EFFECT)
-void clif_hat_effect_single( map_session_data& sd, uint16 effectId, bool enable ){
+void clif_hat_effect_single( map_session_data *sd, uint16 effectId, bool enable, uint32 target, bool visible ){
 #if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
 	PACKET_ZC_EQUIPMENT_EFFECT* p = reinterpret_cast<PACKET_ZC_EQUIPMENT_EFFECT*>( packet_buffer );
 
 	p->packetType = HEADER_ZC_EQUIPMENT_EFFECT;
 	p->packetLength = sizeof( *p );
-	p->aid = sd.bl.id;
+	p->aid = target == 0 ? sd->bl.id : target;
 	p->status = enable;
 	p->effects[0] = effectId;
 	p->packetLength += static_cast<decltype(p->packetLength)>( sizeof( p->effects[0] ) );
 
-	clif_send( p, p->packetLength, &sd.bl, AREA );
+	clif_send( p, p->packetLength, &sd->bl, AREA );
 #endif
 }
 
@@ -25533,6 +25743,102 @@ void clif_emotion2_expantion_list(map_session_data* const sd, const std::vector<
 	WFIFOSET(fd, PacketTotalSize);
 #endif
 }
+
+/// Mob Hat Effects
+/// Send hat effects to the client (ZC_HAT_EFFECT).
+/// 0A3B <Length>.W <AID>.L <Status>.B { <HatEffectId>.W }
+void clif_mob_hat_effects( struct mob_data* md, struct block_list* bl, enum send_target target ){
+#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
+	nullpo_retv( md );
+	nullpo_retv( bl );
+
+	if( bl->type != BL_PC || map_getmapdata(bl->m)->getMapFlag(MF_NOCOSTUME) ){
+		return;
+	}
+
+	struct PACKET_ZC_EQUIPMENT_EFFECT* p = (struct PACKET_ZC_EQUIPMENT_EFFECT*)packet_buffer;
+	size_t i = 0, pSize = md->hatEffects.size();
+
+	if( !md->hatEffects.empty() ) {
+		for( i = 0; i < md->hatEffects.size(); i++ ){
+			p->effects[i] = md->hatEffects[i];
+		}
+	}
+
+	int hub = 1;
+	int64 id;
+	map_session_data* sd = BL_CAST( BL_PC, bl );
+	if (md->get_bosstype() == BOSSTYPE_MINIBOSS && battle_config.mob_show_hateffect_element && sd && (id = md->get_hatelement(hub)) != HAT_EF_MIN && !sd->showMobHatEffectElement || md->get_bosstype() == BOSSTYPE_MVP && battle_config.mob_show_hateffect_element && sd && (id = md->get_hatelement(hub)) != HAT_EF_MIN && !sd->showMobHatEffectElement) {
+		p->effects[i] = static_cast<e_hat_effects>(id);
+		i++;
+		hub++;
+	}
+
+	if (md->get_bosstype() == BOSSTYPE_MINIBOSS && battle_config.mob_show_hateffect_race && sd && (id = md->get_hatrace(hub)) != HAT_EF_MIN && !sd->showMobHatEffectRace || md->get_bosstype() == BOSSTYPE_MVP && battle_config.mob_show_hateffect_race && sd && (id = md->get_hatrace(hub)) != HAT_EF_MIN && !sd->showMobHatEffectRace) {
+		p->effects[i] = static_cast<e_hat_effects>(id);
+		i++;
+		hub++;
+	}
+
+	if( battle_config.mob_show_hateffect_quest && sd && pc_mob_quest_check(sd,md->mob_id) && !sd->showMobHatEffectQuest ) {
+		std::string constant = "HAT_EF_QUEST_OBJECTIVE_" + std::to_string(hub);
+		if( script_get_constant(constant.c_str(), &id) ) {
+			p->effects[i] = static_cast<e_hat_effects>(id);
+			i++;
+			hub++;
+		}
+	}
+
+	if( !i ) {
+		return;
+	}
+
+	p->packetType = HEADER_ZC_EQUIPMENT_EFFECT;
+	p->packetLength = (int16)(sizeof(struct PACKET_ZC_EQUIPMENT_EFFECT) + sizeof(int16) * i);
+	p->aid = md->bl.id;
+	p->status = 1;
+
+	clif_send( p, p->packetLength, bl, target );
+#endif
+}
+
+void clif_mob_hat_effect_single( struct mob_data *md, map_session_data* sd, uint16 effectId, bool enable ){
+#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
+	nullpo_retv( md );
+	nullpo_retv( sd );
+
+	struct PACKET_ZC_EQUIPMENT_EFFECT* p = (struct PACKET_ZC_EQUIPMENT_EFFECT*)packet_buffer;
+
+	p->packetType = HEADER_ZC_EQUIPMENT_EFFECT;
+	p->packetLength = (int16)( sizeof( struct PACKET_ZC_EQUIPMENT_EFFECT ) + sizeof( int16 ) );
+	p->aid = md->bl.id;
+	p->status = enable;
+	p->effects[0] = effectId;
+
+	clif_send( p, p->packetLength, &sd->bl, SELF );
+#endif
+}
+
+void clif_mob_hat_effect_hub_remove( struct mob_data *md, map_session_data* sd ){
+#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
+	nullpo_retv( md );
+	nullpo_retv( sd );
+
+	int i;
+
+	// Elements
+	for (i = HAT_EF_ELE_NEUTRAL_1; i <= HAT_EF_ELE_UNDEAD_3; i++)
+		clif_mob_hat_effect_single(md, sd, i, false);
+
+	// Race
+	for (i = HAT_EF_RC_FORMLESS_1; i <= HAT_EF_RC_PLAYER_DORAM_3; i++)
+		clif_mob_hat_effect_single(md, sd, i, false);
+
+	// Quests
+	for (i = HAT_EF_QUEST_OBJECTIVE_1; i <= HAT_EF_QUEST_OBJECTIVE_3; i++)
+		clif_mob_hat_effect_single(md, sd, i, false);
+#endif
+}
 void clif_quest_status_ack(map_session_data* const sd, const PACKET_CZ_QUEST_STATUS_REQ_SUB* const QuestList, const uint16 QuestCount)
 {
 	uint8 Buffer[2048];
@@ -25583,7 +25889,6 @@ void clif_parse_quest_status(const int fd, map_session_data* const sd)
 	const uint16 QuestCount = uint16(int16(Packet->PacketLength - sizeof(PACKET_CZ_QUEST_STATUS_REQ)) / sizeof(PACKET_CZ_QUEST_STATUS_REQ_SUB));
 	clif_quest_status_ack(sd, QuestList, QuestCount);
 }
-
 
 /*==========================================
  * Main client packet processing function

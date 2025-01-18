@@ -33,6 +33,7 @@
 #include <common/timer.hpp>
 #include <common/utilities.hpp>
 #include <common/utils.hpp>
+#include <common/ers.hpp>
 
 #include "achievement.hpp"
 #include "atcommand.hpp"
@@ -12037,6 +12038,7 @@ BUILDIN_FUNC(monster)
 	int32 class_;
 	int32 amount			= script_getnum(st,7);
 	const char* event	= "";
+	int monster_chapion = (script_hasdata(st, 11) ? script_getnum(st,11):0);
 	uint32 size	= SZ_SMALL;
 	enum mob_ai ai		= AI_NONE;
 
@@ -12095,7 +12097,7 @@ BUILDIN_FUNC(monster)
 	TBL_MOB* md;
 
 	for(i = 0; i < amount; i++) { //not optimised
-		int32 mobid = mob_once_spawn(sd, m, x, y, str, class_, 1, event, size, ai);
+		int32 mobid = mob_once_spawn(sd, m, x, y, str, class_, 1, event, size, ai, monster_chapion);
 
 		if (mobid > 0) {
 			md = map_id2md(mobid);
@@ -12161,6 +12163,7 @@ BUILDIN_FUNC(areamonster)
 	int32 class_;
 	int32 amount			= script_getnum(st,9);
 	const char* event	= "";
+	int monster_chapion = (script_hasdata(st, 11) ? script_getnum(st,11):0);
 	uint32 size	= SZ_SMALL;
 	enum mob_ai ai		= AI_NONE;
 
@@ -12219,7 +12222,7 @@ BUILDIN_FUNC(areamonster)
 	TBL_MOB* md;
 
 	for(i = 0; i < amount; i++) { //not optimised
-		int32 mobid = mob_once_spawn_area(sd, m, x0, y0, x1, y1, str, class_, 1, event, size, ai);
+		int32 mobid = mob_once_spawn_area(sd, m, x0, y0, x1, y1, str, class_, 1, event, size, ai, monster_chapion);
 
 		if (mobid > 0) {
 			md = map_id2md(mobid);
@@ -25456,34 +25459,54 @@ BUILDIN_FUNC(hateffect){
 
 	int16 effectID = script_getnum(st,2);
 	bool enable = script_getnum(st,3) ? true : false;
+	uint32 target = sd->bl.id;
 
 	if( effectID <= HAT_EF_MIN || effectID >= HAT_EF_MAX ){
 		ShowError( "buildin_hateffect: unsupported hat effect id %d\n", effectID );
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	auto it = util::vector_get( sd->hatEffects, effectID );
+	//auto it = util::vector_get( sd->hatEffects, effectID );
+	bool CheckEffect = false;
 
-	if( enable ){
-		if( it != sd->hatEffects.end() ){
-			return SCRIPT_CMD_SUCCESS;
+	for (auto it = sd->hatEffects.begin(); it != sd->hatEffects.end(); it++) {
+		if (it->IdEffect == effectID) {
+			CheckEffect = true;
+			if (!enable)
+				sd->hatEffects.erase(it);
+			break;
 		}
+	}
+	if (enable) {
+		hatEffect ef{ sd->bl.id, target, (uint32)-1, effectID, true };
 
-		sd->hatEffects.push_back( effectID );
-	}else{
-		if( it == sd->hatEffects.end() ){
-			return SCRIPT_CMD_SUCCESS;
-		}
 
-		util::vector_erase_if_exists( sd->hatEffects, effectID );
+		if (!CheckEffect)
+			sd->hatEffects.push_back(ef);
 	}
 
 	if( !sd->state.connect_new ){
-		clif_hat_effect_single( *sd, effectID, enable );
+		clif_hat_effect_single( sd, effectID, enable, target, true );
 	}
 
 #endif
 	return SCRIPT_CMD_SUCCESS;
+}
+
+void clif_hat_effect_single2(struct block_list* bl, uint16 effectId, bool enable) {
+#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
+	nullpo_retv(bl);
+
+	struct PACKET_ZC_EQUIPMENT_EFFECT* p = (struct PACKET_ZC_EQUIPMENT_EFFECT*)packet_buffer;
+
+	p->packetType = HEADER_ZC_EQUIPMENT_EFFECT;
+	p->packetLength = (int16)(sizeof(struct PACKET_ZC_EQUIPMENT_EFFECT) + sizeof(int16));
+	p->aid = bl->id;
+	p->status = enable;
+	p->effects[0] = effectId;
+
+	clif_send(p, p->packetLength, bl, AREA);
+#endif
 }
 
 /**
@@ -28399,6 +28422,287 @@ BUILDIN_FUNC(permission_add)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+// Mob Hat Effects
+BUILDIN_FUNC(mob_hateffect){
+#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
+	struct block_list* bl;
+	int16 effectID;
+	bool enable;
+	TBL_MOB* md;
+
+	if( !script_rid2bl(2,bl) ) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( (md = map_id2md(bl->id)) == NULL ) {
+		ShowError( "buildin_mob_hateffect: invalid unit id %d\n", bl->id );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	effectID = script_getnum(st,3);
+	enable = script_getnum(st,4) ? true : false;
+
+	if( effectID <= HAT_EF_MIN || effectID >= HAT_EF_MAX ){
+		ShowError( "buildin_mob_hateffect: unsupported hat effect id %d\n", effectID );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	auto it = util::vector_get( md->hatEffects, effectID );
+
+	if( enable ){
+		if( it != md->hatEffects.end() ){
+			return SCRIPT_CMD_SUCCESS;
+		}
+
+		md->hatEffects.push_back( effectID );
+	}else{
+		if( it == md->hatEffects.end() ){
+			return SCRIPT_CMD_SUCCESS;
+		}
+
+		util::vector_erase_if_exists( md->hatEffects, effectID );
+	}
+
+	clif_mob_hat_effects(md, bl, AREA);
+
+#endif
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(mob_showelement) {
+#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
+	map_session_data* sd;
+	int flag = script_getnum(st,2);
+
+	if( script_hasdata(st, 3) ){
+		if (script_isint(st, 3))
+			script_charid2sd(3, sd);
+		else
+			script_nick2sd(3, sd);
+	}else{
+		script_rid2sd(sd);
+	}
+
+	if( !sd ) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	sd->showMobHatEffectElement = flag ? false : true;
+	map_foreachinallrange(pc_mob_hateffect_sub, &sd->bl, AREA_SIZE, BL_MOB, sd);
+	script_pushint(st,1);
+#endif
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(mob_showrace) {
+#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
+	map_session_data* sd;
+	int flag = script_getnum(st,2);
+
+	if( script_hasdata(st, 3) ){
+		if (script_isint(st, 3))
+			script_charid2sd(3, sd);
+		else
+			script_nick2sd(3, sd);
+	}else{
+		script_rid2sd(sd);
+	}
+
+	if( !sd ) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	sd->showMobHatEffectRace = flag ? false : true;
+	map_foreachinallrange(pc_mob_hateffect_sub, &sd->bl, AREA_SIZE, BL_MOB, sd);
+	script_pushint(st,1);
+#endif
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(mob_showquest) {
+#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
+	map_session_data* sd;
+	int flag = script_getnum(st,2);
+
+	if( script_hasdata(st, 3) ){
+		if (script_isint(st, 3))
+			script_charid2sd(3, sd);
+		else
+			script_nick2sd(3, sd);
+	}else{
+		script_rid2sd(sd);
+	}
+
+	if( !sd ) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	sd->showMobHatEffectQuest = flag ? false : true;
+	map_foreachinallrange(pc_mob_hateffect_sub, &sd->bl, AREA_SIZE, BL_MOB, sd);
+	script_pushint(st,1);
+#endif
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(hateffect_npc){
+#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
+	int16 effectID = script_getnum(st,2);
+	bool enable = script_getnum(st,3) ? true : false;
+
+	struct block_list* bl;
+	bool send = true;
+
+	if (script_hasdata(st, 4)) {
+		bl = map_id2bl(script_getnum(st, 4));
+	}
+	else {
+		bl = map_id2bl(st->rid);
+		map_session_data* sd = BL_CAST(BL_PC, bl);
+
+		if (sd && sd->state.connect_new) {
+			send = false;
+		}
+	}
+
+	unit_hateffect(bl, effectID, enable, send);
+#endif
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC( statusmes ){
+	ShowStatus( "%s\n", script_getstr( st, 2 ) );
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC( infomes ){
+	ShowInfo( "%s\n", script_getstr( st, 2 ) );
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(specialeffect3)
+{
+	struct block_list *bl = NULL;
+	int id = 0;
+	int type = script_getnum(st,2);
+	enum send_target target = script_hasdata(st,3) ? (send_target)script_getnum(st,3) : AREA;
+
+	if (script_hasdata(st,4)) {
+		id = script_getnum(st,4);
+		bl = map_id2bl(id);
+	}
+	else {
+		bl = st->rid ? map_id2bl(st->rid) : map_id2bl(st->oid);
+	}
+
+	if(bl == NULL)
+		return SCRIPT_CMD_SUCCESS;
+
+	if( type <= EF_NONE || type >= EF_MAX ){
+		ShowError( "buildin_specialeffect: unsupported effect id %d\n", type );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (target == SELF) {
+		TBL_PC *sd;
+		if (script_rid2sd(sd))
+			clif_specialeffect_single(bl,type,sd->fd);
+	} else {
+		clif_specialeffect(bl, type, target);
+	}
+	return SCRIPT_CMD_SUCCESS;
+}
+
+//<map>,x,y,mob_id,<CHAR_ID>
+BUILDIN_FUNC(champion_drop) {
+	map_session_data* sd;
+	static struct eri *item_drop_ers; //For loot drops delay structures.
+	static struct eri *item_drop_list_ers;
+	int x, y;
+	char mapname[MAP_NAME_LENGTH];
+	//struct block_list* bl;
+	uint16 flag = 0;
+	//struct item item_tmp;
+	bool canShowEffect = false;
+
+	if (!script_hasdata(st, 5)) {
+		ShowError("buildin_champion_drop: mob_id is null  %d\n", script_getnum(st, 5));
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (!script_charid2sd(6, sd)) {
+		ShowError("buildin_champion_drop: player not atached  \n");
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	std::shared_ptr<s_mob_db> md = mob_db.find(script_getnum(st, 5));
+	if (md == nullptr) {
+		ShowError("buildin_champion_drop: mob_id not found: %d\n", script_getnum(st, 5));
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (!script_isstring(st, 2)) {
+		ShowError("buildin_champion_drop: mapname is not a string: %d\n", script_getnum(st, 2));
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	strcpy(mapname, script_getstr(st, 2));
+	x = script_getnum(st, 3);
+	y = script_getnum(st, 4);
+	int drop_modifier = 100;
+	struct s_mob_drop mdrop[MAX_MOB_DROP_TOTAL];
+//	int temp;
+
+	memset(&mdrop,0,sizeof(mdrop));
+	//Normal order
+	for(int i = 0; i < MAX_MVP_DROP_TOTAL; i++) {
+		if (md->dropitem[i].nameid > 0)
+			memcpy(&mdrop[i],&md->dropitem[i],sizeof(mdrop[i]));
+	}
+
+	for (int i = 0; i < MAX_MOB_DROP_TOTAL; i++) {
+		if(mdrop[i].nameid == 0)
+			continue;
+
+		std::shared_ptr<item_data> i_data = item_db.find(mdrop[i].nameid);
+
+		if (i_data == nullptr)
+			continue;
+
+		int droprate = mob_getdroprate(&sd->bl, md, mdrop[i].rate, drop_modifier);
+
+		if (rnd() % 10000 >= droprate)
+			continue;
+
+		if (sd && i_data->type == IT_PETEGG) {
+			pet_create_egg(sd, mdrop[i].nameid);
+			continue;
+		}
+
+		// A Rare Drop Global Announce
+		if (sd && md->dropitem[i].rate <= battle_config.rare_drop_announce) {
+			char message[128];
+			sprintf(message, msg_txt(NULL, 541), sd->status.name, md->name.c_str(), i_data->ename, (float)droprate / 100);
+			// MSG: "'%s' won %s's %s (chance: %0.02f%%)"
+			intif_broadcast(message, strlen(message) + 1, BC_DEFAULT);
+		}
+		struct item item = {};
+		item.nameid=mdrop[i].nameid;
+		item.identify= itemdb_isidentified(item.nameid);
+		
+		mob_setdropitem_option(item, mdrop[i]);
+		
+		//if((temp = pc_additem(sd,&item,1,LOG_TYPE_PICKDROP_PLAYER)) != 0) {
+		//	clif_additem(sd,0,0,temp);
+			map_addflooritem(&item,1, map_mapname2mapid(mapname),x,y,sd->status.char_id,0,0,1,0,true);
+		//}		
+	}
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include <custom/script.inc>
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -28604,7 +28908,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(itemskill,"vi?"),
 	BUILDIN_DEF(produce,"i"),
 	BUILDIN_DEF(cooking,"i"),
-	BUILDIN_DEF(monster,"siisvi???"),
+//	BUILDIN_DEF(monster,"siisvi???"),
+	BUILDIN_DEF(monster,"siisvi????"),
 	BUILDIN_DEF(getmobdrops,"i"),
 	BUILDIN_DEF(areamonster,"siiiisvi???"),
 	BUILDIN_DEF(killmonster,"ss?"),
@@ -29175,6 +29480,19 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(permission_add, "i?"),
 	BUILDIN_DEF2(permission_add, "permission_remove", "i?"),
 
+	// Mob Hat Effects
+	BUILDIN_DEF(mob_hateffect, "iii"),
+	BUILDIN_DEF(mob_showelement, "i?"),
+	BUILDIN_DEF(mob_showrace, "i?"),
+	BUILDIN_DEF(mob_showquest, "i?"),
+
+	// Champion
+	BUILDIN_DEF(hateffect_npc,"ii?"),
+	BUILDIN_DEF(statusmes,"s"),
+	BUILDIN_DEF(infomes,"s"),
+	BUILDIN_DEF(specialeffect3,"i??"),
+
+	BUILDIN_DEF(champion_drop,"siii?"),
 #include <custom/script_def.inc>
 
 	{nullptr,nullptr,nullptr},

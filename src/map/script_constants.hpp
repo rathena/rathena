@@ -9789,23 +9789,153 @@
 	export_constant(HAT_EF_C_BABY_GLOOM);
 	export_constant(HAT_EF_WINTERNIGHTBELLS);
 	export_constant(HAT_EF_NIGHTSKYOFRUTIE);
-	export_constant(FOOTPRINT_EF_BASE);
-	export_constant(FOOTPRINT_EF_STR_BASE);
-	export_constant(FOOTPRINT_EF_PURPLESTAR);
-	export_constant(FOOTPRINT_EF_YELLOWSTAR);
-	export_constant(FOOTPRINT_EF_REDSTAR);
-	export_constant(HAT_EF_RAINBOW_POISON_MASTER);
-	export_constant(HAT_EF_C_ANCIENT_RUNE);
-	export_constant(HAT_EF_C_DRAGON_GREEN_AURA);
-	export_constant(HAT_EF_C_DRAGON_RED_AURA);
-	export_constant(HAT_EF_C_DRAGON_YELLOW_AURA);
-	export_constant(HAT_EF_INTERDIMENSIONAL_RIFT);
-	export_constant(HAT_EF_C_CLB_SS_LL);
-	export_constant(HAT_EF_VACATION);
-	export_constant(HAT_EF_C_FH_LOSTWING);
-	export_constant(FOOTPRINT_EF_DOGFOOT);
-	export_constant(HAT_EF_C_AUSPICLOUD);
-	export_constant(HAT_EF_AURA_OF_GHOST_S);
+//	export_constant(FOOTPRINT_EF_BASE);
+//	export_constant(FOOTPRINT_EF_STR_BASE);
+//	export_constant(FOOTPRINT_EF_PURPLESTAR);
+//	export_constant(FOOTPRINT_EF_YELLOWSTAR);
+//	export_constant(FOOTPRINT_EF_REDSTAR);
+//	export_constant(HAT_EF_RAINBOW_POISON_MASTER);
+//	export_constant(HAT_EF_C_ANCIENT_RUNE);
+//	export_constant(HAT_EF_C_DRAGON_GREEN_AURA);
+//	export_constant(HAT_EF_C_DRAGON_RED_AURA);
+//	export_constant(HAT_EF_C_DRAGON_YELLOW_AURA);
+//	export_constant(HAT_EF_INTERDIMENSIONAL_RIFT);
+//	export_constant(HAT_EF_C_CLB_SS_LL);
+//	export_constant(HAT_EF_VACATION);
+//	export_constant(HAT_EF_C_FH_LOSTWING);
+//	export_constant(FOOTPRINT_EF_DOGFOOT);
+//	export_constant(HAT_EF_C_AUSPICLOUD);
+//	export_constant(HAT_EF_AURA_OF_GHOST_S);
+	// [RomuloSM]: Elements
+	export_constant(HAT_EF_ELE_NEUTRAL_1);
+	export_constant(HAT_EF_ELE_WATER_1);
+	export_constant(HAT_EF_ELE_EARTH_1);
+	export_constant(HAT_EF_ELE_FIRE_1);
+	export_constant(HAT_EF_ELE_WIND_1);
+	export_constant(HAT_EF_ELE_POISON_1);
+	export_constant(HAT_EF_ELE_HOLY_1);
+	export_constant(HAT_EF_ELE_DARK_1);
+	export_constant(HAT_EF_ELE_GHOST_1);
+	export_constant(HAT_EF_ELE_UNDEAD_1);
+	export_constant(HAT_EF_ELE_NEUTRAL_2);
+	export_constant(HAT_EF_ELE_WATER_2);
+	export_constant(HAT_EF_ELE_EARTH_2);
+	export_constant(HAT_EF_ELE_FIRE_2);
+	export_constant(HAT_EF_ELE_WIND_2);
+	export_constant(HAT_EF_ELE_POISON_2);
+	export_constant(HAT_EF_ELE_HOLY_2);
+	export_constant(HAT_EF_ELE_DARK_2);
+	export_constant(HAT_EF_ELE_GHOST_2);
+	export_constant(HAT_EF_ELE_UNDEAD_2);
+	export_constant(HAT_EF_ELE_NEUTRAL_3);
+	export_constant(HAT_EF_ELE_WATER_3);
+	export_constant(HAT_EF_ELE_EARTH_3);
+	export_constant(HAT_EF_ELE_FIRE_3);
+	export_constant(HAT_EF_ELE_WIND_3);
+	export_constant(HAT_EF_ELE_POISON_3);
+	export_constant(HAT_EF_ELE_HOLY_3);
+	export_constant(HAT_EF_ELE_DARK_3);
+	export_constant(HAT_EF_ELE_GHOST_3);
+	export_constant(HAT_EF_ELE_UNDEAD_3);
+	// [RomuloSM]: Race
+	export_constant(HAT_EF_RC_FORMLESS_1),
+	export_constant(HAT_EF_RC_UNDEAD_1),
+	export_constant(HAT_EF_RC_BRUTE_1),
+	export_constant(HAT_EF_RC_PLANT_1),
+	export_constant(HAT_EF_RC_INSECT_1),
+	export_constant(HAT_EF_RC_FISH_1),
+	export_constant(HAT_EF_RC_DEMON_1),
+	export_constant(HAT_EF_RC_DEMIHUMAN_1),
+	export_constant(HAT_EF_RC_ANGEL_1),
+	export_constant(HAT_EF_RC_DRAGON_1),
+	export_constant(HAT_EF_RC_PLAYER_HUMAN_1),
+	export_constant(HAT_EF_RC_PLAYER_DORAM_1),
+	export_constant(HAT_EF_RC_FORMLESS_2),
+	export_constant(HAT_EF_RC_UNDEAD_2),
+	export_constant(HAT_EF_RC_BRUTE_2),
+	export_constant(HAT_EF_RC_PLANT_2),
+	export_constant(HAT_EF_RC_INSECT_2),
+	export_constant(HAT_EF_RC_FISH_2),
+	export_constant(HAT_EF_RC_DEMON_2),
+	export_constant(HAT_EF_RC_DEMIHUMAN_2),
+	export_constant(HAT_EF_RC_ANGEL_2),
+	export_constant(HAT_EF_RC_DRAGON_2),
+	export_constant(HAT_EF_RC_PLAYER_HUMAN_2),
+	export_constant(HAT_EF_RC_PLAYER_DORAM_2),
+	export_constant(HAT_EF_RC_FORMLESS_3),
+	export_constant(HAT_EF_RC_UNDEAD_3),
+	export_constant(HAT_EF_RC_BRUTE_3),
+	export_constant(HAT_EF_RC_PLANT_3),
+	export_constant(HAT_EF_RC_INSECT_3),
+	export_constant(HAT_EF_RC_FISH_3),
+	export_constant(HAT_EF_RC_DEMON_3),
+	export_constant(HAT_EF_RC_DEMIHUMAN_3),
+	export_constant(HAT_EF_RC_ANGEL_3),
+	export_constant(HAT_EF_RC_DRAGON_3),
+	export_constant(HAT_EF_RC_PLAYER_HUMAN_3),
+	export_constant(HAT_EF_RC_PLAYER_DORAM_3),
+	// [RomuloSM]: Quest
+	export_constant(HAT_EF_QUEST_OBJECTIVE_1);
+	export_constant(HAT_EF_QUEST_OBJECTIVE_2);
+	export_constant(HAT_EF_QUEST_OBJECTIVE_3);
+	// MVP & MINI
+	export_constant(HAT_EF_MVPICON);
+	export_constant(HAT_EF_MINIBOSSICON);
+	export_constant(HAT_EF_OVERKILL);
+	export_constant(HAT_EF_MINI_BOSS);
+	export_constant(HAT_EF_TOMB_MVP_ICON);
+	export_constant(HAT_EF_TOMB_MINIBOSS_ICON);
+	// Auras
+	export_constant(HAT_EF_effect_purple_aura);
+	export_constant(HAT_EF_effect_orange_aura);
+	export_constant(HAT_EF_effect_blue_aura);
+	export_constant(HAT_EF_effect_cyan_aura);
+	export_constant(HAT_EF_effect_pink_aura);
+	export_constant(HAT_EF_effect_red_aura);
+	export_constant(HAT_EF_effect_yellow_aura);
+	export_constant(HAT_EF_effect_green_aura);
+	export_constant(HAT_EF_effect_purple_s_aura);
+	export_constant(HAT_EF_effect_orange_s_aura);
+	export_constant(HAT_EF_effect_blue_s_aura);
+	export_constant(HAT_EF_effect_cyan_s_aura);
+	export_constant(HAT_EF_effect_pink_s_aura);
+	export_constant(HAT_EF_effect_red_s_aura);
+	export_constant(HAT_EF_effect_yellow_s_aura);
+	export_constant(HAT_EF_effect_green_s_aura);
+
+	//-- New Custom
+	export_constant(HAT_EF_10SEC);
+	export_constant(HAT_EF_15SEC);
+	export_constant(HAT_EF_20SEC);
+	export_constant(HAT_EF_25SEC);
+	export_constant(HAT_EF_GAMEMASTER);
+	export_constant(HAT_EF_GAMEMASTER2);
+	export_constant(HAT_EF_supervip);
+	export_constant(HAT_EF_novice);
+	export_constant(HAT_EF_rain);
+
+	//- New
+	export_constant(EF_DAILY_QUEST_ICON);
+	export_constant(HAT_EF_Reset_D);
+	export_constant(HAT_EF_Reset_C);
+	export_constant(HAT_EF_Reset_B);
+	export_constant(HAT_EF_Reset_A);
+	export_constant(HAT_EF_Reset_E);
+	export_constant(HAT_EF_Reset_S);
+	export_constant(HAT_EF_Reset_SS);
+	export_constant(HAT_EF_Reset_SSS);
+	//- Monster Champion
+	export_constant(HAT_EF_CM_RED_AURA);
+	export_constant(HAT_EF_CM_GRAY_AURA);
+	export_constant(HAT_EF_CM_BLUE_AURA);
+	export_constant(HAT_EF_CM_YELLOW_AURA);
+	export_constant(HAT_EF_CM_PINK_AURA);
+	export_constant(HAT_EF_CM_GREEN_AURA);
+	export_constant(HAT_EF_CM_FURIOUS);
+	export_constant(HAT_EF_CM_BEATER);
+	export_constant(HAT_EF_CM_EXPERIENT);
+	export_constant(HAT_EF_CM_PRECIOUS);
+	export_constant(HAT_EF_CM_CHALLENGER);
 
 	/* pet catch */
 	export_constant(PET_CATCH_UNIVERSAL_NO_BOSS);

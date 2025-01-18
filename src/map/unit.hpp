@@ -64,6 +64,11 @@ struct unit_data {
 	int32 group_id;
 
 	std::vector<int> shadow_scar_timer;
+
+#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
+	std::vector<int16> hatEffects;
+#endif
+
 };
 
 struct view_data {
@@ -180,5 +185,7 @@ void unit_addshadowscar(unit_data &ud, int32 interval);
 
 void do_init_unit(void);
 void do_final_unit(void);
+
+void unit_hateffect(struct block_list* bl, int16 effectID, bool enable, bool send);
 
 #endif /* UNIT_HPP */

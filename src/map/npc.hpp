@@ -237,6 +237,7 @@ struct npc_data {
 	std::vector<navi_link> links; // for extra links, like warper npc
 #endif
 	bool is_invisible;
+	int mvp_tomb_effect;
 };
 
 struct eri;
@@ -1537,6 +1538,195 @@ enum e_job_types
 	JT_ROZ_MQ_XAVIER = 13000,
 	JT_ROZ_MQ_MOCLORD,
 	JT_ROZ_MQ_SKULD,
+	
+		//-- Custom NPC
+	JT_4_Helper_Desk = 11000,
+	JT_4_vending_machine = 11001,
+	JT_BoardCustom = 11002,
+	JT_MvpNpc = 11003,
+	JT_Nevermore = 11004,
+	JT_cash_drop_machine = 11005,
+	JT_guildpack = 11006,
+	JT_Healer = 10450,
+	JT_OdinNpc = 10451,
+	JT_JobMaster = 10452,
+	JT_Lucky_Roulette = 10453,
+	JT_Ban = 10454,
+	JT_4_F_OMNIKNIGHT = 10455,
+	JT_dark_atros = 10456,
+	JT_4_vr_book_blue = 10457,
+	JT_4_ragfes_02 = 10458,
+	JT_Poseidon = 10459,
+	JT_Zeus = 10460,
+	JT_HAZ_HELA = 10461,
+	JT_HAZ_ODIN	= 10462,
+	JT_4_f_faewoman3 = 10463,
+	JT_GoldCard = 10464,
+	JT_NPC_CUSTOM_18 = 10465,
+	JT_Goku = 10466,
+	JT_Cell = 10467,
+	
+	//-- Custom
+	JT_ZRO_Board = 10800,
+	JT_ZRO_CASHG = 10801,
+	JT_ZRO_CG = 10802,
+	JT_ZRO_Chicky = 10803,
+	JT_ZRO_ETCG = 10804,
+	
+	//-- Farming
+	JT_ZRO_Farm00 = 10763,
+	JT_ZRO_Farm01 = 10764,
+	JT_ZRO_Farm02 = 10765,
+	JT_ZRO_Farm03 = 10766,
+	
+	//-- Mining
+	JT_MINERAL1 = 19001,
+	JT_MINERAL2 = 19002,
+	JT_MINERAL3 = 19003,
+	JT_MINERAL4 = 19004,
+	JT_MINERAL5 = 19005,
+	JT_M4MINING = 19006,
+	
+	//-- Main 01
+	JT_ZRO_Gold = 10805,
+	JT_ZRO_JMaster = 10806,
+	JT_ZRO_Job = 10807,
+	JT_ZRO_Machine = 10808,
+	JT_ZRO_MISCG = 10809,
+	JT_ZRO_Mission = 10810,
+	JT_ZRO_Mvp = 10811,
+	JT_ZRO_NURSE = 10812,
+	JT_ZRO_Quest = 10813,
+	JT_ZRO_Roulette = 10814,
+	JT_ZRO_StarB = 10815,
+	JT_ZRO_StarBox = 10816,
+	JT_ZRO_StarC = 10817,
+	JT_ZRO_Stone = 10818,
+	JT_ZRO_TOOL = 10819,
+	JT_ZRO_Treasure = 10820,
+	JT_ZRO_WARP = 10821,
+	JT_ZRO_WB = 10822,
+	JT_ZRO_Wizard = 10823,
+	JT_ZRO_Robe = 10824,
+	JT_ZRO_Smith = 10825,
+
+	//-- NPC Quest
+	JT_4_m_fairyscholar_dirty = 10846,
+	JT_4_m_fae_sage = 10847,
+	JT_1_m_faerogue = 10848,
+	JT_4_f_faenoble = 10849,
+	JT_4_ep19_juncea_d = 10850,
+	
+	//-- Worldboss
+	JT_HAZ_CHRONOS = 20920,
+	
+	//-- Time Rift
+	JT_TITAN_01 = 23250,
+	JT_TITAN_02 = 23251,
+	JT_TITAN_03 = 23252,
+	//-- Part 2 Rift
+	JT_HAZ_AINZ = 23253,
+	JT_HAZ_ALBEDO = 23254,
+	JT_HAZ_MBFIORE = 23255,
+	JT_HAZ_MOMON = 23256,
+	JT_HAZ_NARBERA = 23257,
+	JT_HAZ_SHALLTEAR = 23258,
+	
+	//-- Mvp Pets --
+	JT_Dark_Dracula = 23550,
+	JT_Dark_Mistress = 23551,
+	JT_Dark_AmonRA = 23552,
+	JT_Dark_Baphomet = 23553,
+	JT_Dark_Doppelganger = 23554,
+	JT_Dark_Drake = 23555,
+	JT_Dark_Eddga = 23556,
+	JT_Dark_Moonlight = 23557,
+	JT_Dark_Phreeoni = 23558,
+	JT_Dark_TurtleGeneral = 23559,
+	JT_Dark_GoldenBug = 23560,
+	JT_Dark_Kraken = 23561,
+	JT_Dark_LadyTanee = 23562,
+	JT_Dark_Maya = 23564,
+	JT_Dark_OrcHero = 23566,
+	JT_Dark_OrcLord = 23567,
+	JT_Dark_Osiris = 23568,
+	JT_Dark_Pharaoh = 23569,
+	JT_Dark_TaoGunka = 23571,
+	
+	//-- Mobs Naruto
+	JT_Deidara = 25000,
+	JT_Hidan = 25001,
+	JT_Itachi = 25002,
+	JT_Kakuzu = 25003,
+	JT_Kisame = 25004,
+	JT_Konan = 25005,
+	JT_Nagato = 25006,
+	JT_ObitoOrangeMask = 25007,
+	JT_Pain = 25008,
+	JT_Sasori = 25009,
+	JT_Zetsu = 25010,
+	
+	//-- Chicken
+	JT_Chicken = 25011,
+	JT_ChickenA = 25012,
+	JT_ChickenB = 25013,
+	JT_ChickenC = 25014,
+	JT_ChickenD = 25015,
+	JT_ChickenE = 25016,
+	JT_ChickenF = 25017,
+	
+	//-- Monster Arena
+	JT_AR_agni_boss = 26100,
+	JT_AR_Airboat_Boss = 26101,
+	JT_AR_Airboat_LEECH = 26102,
+	JT_AR_Airboat_Mos = 26103,
+	JT_AR_Airboat_Tree = 26104,
+	JT_AR_Airboat_Worm = 26105,
+	JT_AR_ash_toad = 26106,
+	JT_AR_ashhopper = 26107,
+	JT_AR_burning_fang = 26108,
+	JT_AR_firewind_kite = 26109,
+	JT_AR_grey_goat = 26110,
+	JT_AR_grey_wolf = 26111,
+	JT_AR_hnignun = 26112,
+	JT_AR_hot_molar = 26113,
+	JT_AR_lava_toad = 26114,
+	JT_AR_SAKRAY = 26115,
+	JT_AR_volcaring = 26116,
+	
+	//-- BOSS
+	JT_ep20_demigod_lasgand = 26119,
+	JT_ep20_jorgan_guardian = 26120,
+	JT_ep20_jorgan_healer = 26121,
+	JT_ep20_jorgan_warlock = 26122,
+	
+	//-- Training
+	JT_HAZ_DUMMY = 31900,
+	JT_HAZ_EMPERIUM = 31901,
+	
+	//-- Warp
+	JT_ZRO_Warp01 = 10851,
+	JT_ZRO_Warp02 = 10852,
+	JT_ZRO_Warp03 = 10853,
+	
+	//-- New
+	JT_ZRO_M_Board = 10854,
+	JT_ZRO_M_Mail = 10855,
+	JT_ZRO_M_Meg = 10856,
+	JT_ZRO_M_MegExp = 10857,
+	JT_ZRO_M_MVP = 10858,
+	JT_ZRO_M_Small = 10859,
+	JT_ZRO_F_03 = 10860,
+	JT_ZRO_F_B01 = 10861,
+	JT_ZRO_F_B02 = 10862,
+	JT_ZRO_F_B03 = 10863,
+	JT_ZRO_Style = 10864,
+	
+	//-- MVP Treasure
+	JT_MVP_TREASURE_COMUM = 12010,
+	JT_MVP_TREASURE_RARE = 12011,
+	JT_MVP_TREASURE_EPIC = 12012,
+	
 
 	JT_NEW_NPC_3RD_END = 19999,
 	NPC_RANGE3_END, // Official: JT_NEW_NPC_3RD_END=19999

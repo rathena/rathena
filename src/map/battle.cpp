@@ -11479,6 +11479,7 @@ static const struct _battle_data {
 	{ "max_exp_gain_rate",                  &battle_config.max_exp_gain_rate,               0,      0,      INT_MAX,        },
 	{ "backstab_bow_penalty",               &battle_config.backstab_bow_penalty,            0,      0,      1,              },
 	{ "night_at_start",                     &battle_config.night_at_start,                  0,      0,      1,              },
+	{ "show_mob_info",                      &battle_config.show_mob_info,                   0,      0,      1|2|4|8|16|32,          },
 	{ "show_mob_info",                      &battle_config.show_mob_info,                   0,      0,      1|2|4,          },
 	{ "ban_hack_trade",                     &battle_config.ban_hack_trade,                  0,      0,      INT_MAX,        },
 	{ "min_hair_style",                     &battle_config.min_hair_style,                  0,      0,      INT_MAX,        },
@@ -11851,6 +11852,20 @@ static const struct _battle_data {
 	{ "hom_delay_reset_vaporize",           &battle_config.hom_delay_reset_vaporize,        1,      0,      1,              },
 	{ "hom_delay_reset_warp",               &battle_config.hom_delay_reset_warp,            1,      0,      1,              },
 #endif
+	// Mob Champion
+	{ "group_id_monster_champion",   &battle_config.group_id_monster_champion,        0,      0,     INT_MAX,              },
+
+	// Mob MvP Effect
+	{ "mob_show_mvp_effect",                &battle_config.mob_show_mvp_effect,             1,      0,      1,              },
+	{ "mob_show_mvp_effect_timer",          &battle_config.mob_show_mvp_effect_timer,    1000,   2000,      INT_MAX,        },
+
+	// Mob Hat Effect Element
+	{ "mob_show_hateffect_element",         &battle_config.mob_show_hateffect_element,      1,      0,      1,              },
+	{ "mob_show_hateffect_race",            &battle_config.mob_show_hateffect_race,         1,      0,      1,              },
+	{ "mob_show_hateffect_quest",           &battle_config.mob_show_hateffect_quest,        1,      0,      1,              },
+
+	// Quest System
+	{ "id_hat_effect",                      &battle_config.id_hat_effect,                   2,      1,      HAT_EF_MAX,     },
 
 #include <custom/battle_config_init.inc>
 };

@@ -1052,7 +1052,7 @@ void clif_item_repaireffect( map_session_data& sd, int32 idx, bool failure );
 void clif_item_damaged( map_session_data& sd, uint16 position );
 void clif_item_refine_list( map_session_data& sd );
 void clif_hat_effects( map_session_data& sd, block_list& bl, enum send_target target );
-void clif_hat_effect_single( map_session_data& sd, uint16 effectId, bool enable );
+void clif_hat_effect_single( map_session_data *sd, uint16 effectId, bool enable, uint32 target, bool visible );
 
 void clif_item_skill(map_session_data *sd,uint16 skill_id,uint16 skill_lv);
 
@@ -1232,8 +1232,11 @@ void clif_quest_add(map_session_data * sd, struct quest * qd);
 void clif_quest_delete(map_session_data * sd, int32 quest_id);
 void clif_quest_update_status(map_session_data * sd, int32 quest_id, bool active);
 void clif_quest_update_objective(map_session_data * sd, struct quest * qd);
+void clif_quest_show_killMonster( map_session_data* sd, struct quest* qd, int objective);
 void clif_quest_show_event(map_session_data *sd, struct block_list *bl, e_questinfo_types effect, e_questinfo_markcolor color);
 void clif_displayexp(map_session_data *sd, t_exp exp, char type, bool quest, bool lost);
+
+void clif_hat_effect_single2(struct block_list* bl, uint16 effectId, bool enable);
 
 int32 clif_send(const void* buf, int32 len, struct block_list* bl, enum send_target type);
 void do_init_clif(void);
@@ -1501,6 +1504,9 @@ void clif_macro_detector_status(map_session_data &sd, e_macro_detect_status styp
 void clif_macro_reporter_select(map_session_data &sd, const std::vector<uint32> &aid_list);
 void clif_macro_reporter_status(map_session_data &sd, e_macro_report_status stype);
 
+int clif_unit_hateffect(map_session_data* sd, int16 effectID, bool enable, uint32 CharID, uint32 target, bool visible);
+int hateffect_area(struct block_list* bl, va_list ap);	// [NeoWolfer] map_foreachallinrange
+
 void clif_dynamicnpc_result( map_session_data& sd, e_dynamicnpc_result result );
 
 void clif_set_dialog_align(map_session_data& sd, int32 npcid, e_say_dialog_align align);
@@ -1519,6 +1525,14 @@ void clif_parse_emotion2_expantion(const int fd, map_session_data* const sd);
 void clif_emotion2_expantion(map_session_data* const sd, const uint16 ExpantionId, const bool bRented, const uint32 RentEndTime);
 void clif_emotion2_expantion_fail(map_session_data* const sd, const uint16 ExpantionId, const EEmotionExpantionStatus Status);
 void clif_emotion2_expantion_list(map_session_data* const sd, const std::vector<PACKET_ZC_EMOTION2_EXPANTION_LIST_SUB>& List);
+
+/// Mob Hat Effects
+void clif_mob_hat_effects( struct mob_data* md, struct block_list* bl, enum send_target target );
+void clif_mob_hat_effect_single( struct mob_data *md, map_session_data* sd, uint16 effectId, bool enable );
+void clif_mob_hat_effect_hub_remove( struct mob_data *md, map_session_data* sd );
+
+void clif_hat_effect_single_npc(struct block_list* bl, uint16 effectId, bool enable);
+void clif_hat_effect_npc(struct block_list* src, struct block_list* bl, bool enable, enum send_target target );
 
 #endif /* CLIF_HPP */
 
