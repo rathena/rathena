@@ -79,6 +79,113 @@ struct unit_data* unit_bl2ud(struct block_list *bl)
 }
 
 /**
+ * Updates chase depending on situation:
+ * If target out of sight -> drop target
+ * If target in attack range -> attack
+ * Otherwise update chase path
+ * @param bl: Moving bl
+ * @param tick: Current tick
+ * @return Whether the chase path was updated (true) or current movement can continue (false)
+ */
+bool unit_update_chase(block_list& bl, t_tick tick) {
+
+	unit_data* ud = unit_bl2ud(&bl);
+
+	if (ud == nullptr)
+		return true;
+
+	struct block_list* tbl = nullptr;
+	if (ud->target_to)
+		tbl = map_id2bl(ud->target_to);
+
+	// Cancel chase
+	if (tbl == nullptr || !status_check_visibility(&bl, tbl)) {
+		ud->to_x = bl.x;
+		ud->to_y = bl.y;
+
+		if (tbl != nullptr && bl.type == BL_MOB) {
+			mob_data& md = reinterpret_cast<mob_data&>(bl);
+			if (mob_warpchase(&md, tbl))
+				return true;
+			// Make sure monsters properly unlock their target, but still continue movement
+			mob_unlocktarget(&md, tick);
+			return false;
+		}
+
+		ud->target_to = 0;
+	}
+	// Reached destination, start attacking
+	else if (tbl->m == bl.m && check_distance_bl(&bl, tbl, ud->chaserange)) {
+		if (ud->state.attack_continue) {
+			ud->target_to = 0;
+			// Aegis uses one before every attack, we should
+			// only need this one for syncing purposes. [Skotlex]
+			clif_fixpos(bl);
+			unit_attack(&bl, tbl->id, ud->state.attack_continue);
+		}
+	}
+	// Update chase path
+	else if (ud->walkpath.path_pos > 0) {
+		unit_walktobl(&bl, tbl, ud->chaserange, ud->state.walk_easy | (ud->state.attack_continue ? 2 : 0));
+	}
+	// Still at start of walkpath, just start movement
+	else {
+		return false;
+	}
+
+	return true;
+}
+
+/**
+ * Handles everything that happens when movement to the next cell is initiated
+ * @param bl: Moving bl
+ * @param sendMove: Whether move packet should be sent or not
+ * @param tick: Current tick
+ * @return Whether movement was initialized (true) or not (false)
+ */
+bool unit_walktoxy_nextcell(block_list& bl, bool sendMove, t_tick tick) {
+
+	unit_data* ud = unit_bl2ud(&bl);
+
+	if (ud == nullptr)
+		return true;
+
+	int32 speed;
+
+	if (ud->walkpath.path_pos >= ud->walkpath.path_len)
+		speed = -1;
+	else if (direction_diagonal(ud->walkpath.path[ud->walkpath.path_pos]))
+		speed = status_get_speed(&bl) * MOVE_DIAGONAL_COST / MOVE_COST;
+	else
+		speed = status_get_speed(&bl);
+
+	if (speed > 0) {
+		// Monsters update their chase path one cell before reach their final destination
+		if (bl.type == BL_MOB && ud->target_to && ud->walkpath.path_pos == ud->walkpath.path_len - 1) {
+			short tx = ud->to_x;
+			short ty = ud->to_y;
+			if (unit_update_chase(bl, tick))
+				return true;
+			// Continue moving, restore to_x and to_y
+			ud->to_x = tx;
+			ud->to_y = ty;
+		}
+
+		// Make sure there is no active walktimer
+		if (ud->walktimer != INVALID_TIMER) {
+			delete_timer(ud->walktimer, unit_walktoxy_timer);
+			ud->walktimer = INVALID_TIMER;
+		}
+		ud->walktimer = add_timer(tick + speed, unit_walktoxy_timer, bl.id, speed);
+		if (sendMove)
+			clif_move(*ud);
+		return true;
+	}
+
+	return false;
+}
+
+/**
  * Tells a unit to walk to a specific coordinate
  * @param bl: Unit to walk [ALL]
  * @return 1: Success 0: Fail
@@ -140,21 +247,7 @@ int32 unit_walktoxy_sub(struct block_list *bl)
 		unit_refresh( bl, true );
 	}
 #endif
-	clif_move( *ud );
-
-	if(ud->walkpath.path_pos>=ud->walkpath.path_len)
-		i = -1;
-	else if( direction_diagonal( ud->walkpath.path[ud->walkpath.path_pos] ) )
-		i = status_get_speed(bl)*MOVE_DIAGONAL_COST/MOVE_COST;
-	else
-		i = status_get_speed(bl);
-	if( i > 0 ){
-		if( ud->walktimer != INVALID_TIMER ){
-			delete_timer( ud->walktimer, unit_walktoxy_timer );
-			ud->walktimer = INVALID_TIMER;
-		}
-		ud->walktimer = add_timer(gettick()+i,unit_walktoxy_timer,bl->id,i);
-	}
+	unit_walktoxy_nextcell(*bl, true, gettick());
 
 	return 1;
 }
@@ -540,8 +633,6 @@ static TIMER_FUNC(unit_walktoxy_timer)
 					return 0; // Warped
 			} else
 				md->areanpc_id = 0;
-			if (md->min_chase > md->db->range3)
-				md->min_chase--;
 			// Walk skills are triggered regardless of target due to the idle-walk mob state.
 			// But avoid triggering on stop-walk calls.
 			// Monsters use walk/chase skills every second, but we only get here every "speed" ms
@@ -614,53 +705,14 @@ static TIMER_FUNC(unit_walktoxy_timer)
 
 	ud->walkpath.path_pos++;
 
-	if(ud->walkpath.path_pos >= ud->walkpath.path_len)
-		speed = -1;
-	else if( direction_diagonal( ud->walkpath.path[ud->walkpath.path_pos] ) )
-		speed = status_get_speed(bl)*MOVE_DIAGONAL_COST/MOVE_COST;
-	else
-		speed = status_get_speed(bl);
-
-	if(speed > 0) {
-		// For some reason sometimes the walk timer is not empty here
-		// TODO: Need to check why (e.g. when the monster spams NPC_RUN)
-		if (ud->walktimer != INVALID_TIMER) {
-			delete_timer(ud->walktimer, unit_walktoxy_timer);
-			ud->walktimer = INVALID_TIMER;
-		}
-		ud->walktimer = add_timer(tick+speed,unit_walktoxy_timer,id,speed);
-		if( md && DIFF_TICK(tick,md->dmgtick) < 3000 ) // Not required not damaged recently
-			clif_move( *ud );
+	if(unit_walktoxy_nextcell(*bl, (md && DIFF_TICK(tick, md->dmgtick) < 3000), tick)) {
+		// Nothing else needs to be done
 	} else if(ud->state.running) { // Keep trying to run.
 		if (!(unit_run(bl, nullptr, SC_RUN) || unit_run(bl, sd, SC_WUGDASH)) )
 			ud->state.running = 0;
 	} else if (!ud->stepaction && ud->target_to) {
 		// Update target trajectory.
-		struct block_list *tbl = map_id2bl(ud->target_to);
-		if (!tbl || !status_check_visibility(bl, tbl)) { // Cancel chase.
-			ud->to_x = bl->x;
-			ud->to_y = bl->y;
-
-			if (tbl && bl->type == BL_MOB && mob_warpchase((TBL_MOB*)bl, tbl) )
-				return 0;
-
-			ud->target_to = 0;
-
-			return 0;
-		}
-		if (tbl->m == bl->m && check_distance_bl(bl, tbl, ud->chaserange)) { // Reached destination.
-			if (ud->state.attack_continue) {
-				// Aegis uses one before every attack, we should
-				// only need this one for syncing purposes. [Skotlex]
-				ud->target_to = 0;
-				clif_fixpos( *bl );
-				unit_attack(bl, tbl->id, ud->state.attack_continue);
-			}
-		} else { // Update chase-path
-			unit_walktobl(bl, tbl, ud->chaserange, ud->state.walk_easy|(ud->state.attack_continue?2:0));
-
-			return 0;
-		}
+		unit_update_chase(*bl, tick);
 	} else { // Stopped walking. Update to_x and to_y to current location [Skotlex]
 		ud->to_x = bl->x;
 		ud->to_y = bl->y;
@@ -840,12 +892,15 @@ static TIMER_FUNC(unit_walktobl_sub){
 	struct block_list *bl = map_id2bl(id);
 	struct unit_data *ud = bl?unit_bl2ud(bl):nullptr;
 
-	if (ud && ud->walktimer == INVALID_TIMER && ud->target && ud->target == data) {
-		if (DIFF_TICK(ud->canmove_tick, tick) > 0) // Keep waiting?
-			add_timer(ud->canmove_tick+1, unit_walktobl_sub, id, data);
-		else if (unit_can_move(bl)) {
-			if (unit_walktoxy_sub(bl))
-				set_mobstate(bl, ud->state.attack_continue);
+	if (ud) {
+		ud->walkdelaytimer = INVALID_TIMER;
+		if (ud->walktimer == INVALID_TIMER && ud->target_to && ud->target_to == data) {
+			if (DIFF_TICK(ud->canmove_tick, tick) > 0) // Keep waiting?
+				ud->walkdelaytimer = add_timer(ud->canmove_tick+1, unit_walktobl_sub, id, data);
+			else if (unit_can_move(bl)) {
+				if (unit_walktoxy_sub(bl))
+					set_mobstate(bl, ud->state.attack_continue);
+			}
 		}
 	}
 
@@ -908,7 +963,7 @@ int32 unit_walktobl(struct block_list *bl, struct block_list *tbl, int32 range, 
 	}
 
 	if(DIFF_TICK(ud->canmove_tick, gettick()) > 0) { // Can't move, wait a bit before invoking the movement.
-		add_timer(ud->canmove_tick+1, unit_walktobl_sub, bl->id, ud->target);
+		ud->walkdelaytimer = add_timer(ud->canmove_tick+1, unit_walktobl_sub, bl->id, ud->target_to);
 		return 1;
 	}
 
@@ -1546,6 +1601,25 @@ int32 unit_stop_walking(struct block_list *bl,int32 type)
 }
 
 /**
+ * Stops a unit from chasing a target
+ * This also stops a planned future chase that is delayed due to hit lock
+ * Does not stop the current movement
+ * @param bl: Unit that should stop the chase
+ */
+void unit_stop_chase(block_list& bl) {
+	unit_data* ud = unit_bl2ud(&bl);
+
+	if (ud == nullptr)
+		return;
+
+	if (ud->walkdelaytimer != INVALID_TIMER) {
+		delete_timer(ud->walkdelaytimer, unit_walktobl_sub);
+		ud->walkdelaytimer = INVALID_TIMER;
+	}
+	ud->target_to = 0;
+}
+
+/**
  * Initiates a skill use by a unit
  * @param src: Source object initiating skill use
  * @param target_id: Target ID (bl->id)
@@ -1702,8 +1776,8 @@ int32 unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int32
 			else {
 				unit_stop_walking(bl,4);
 
-				if(ud->target)
-					add_timer(ud->canmove_tick+1, unit_walktobl_sub, bl->id, ud->target);
+				if(ud->target_to)
+					ud->walkdelaytimer = add_timer(ud->canmove_tick+1, unit_walktobl_sub, bl->id, ud->target_to);
 			}
 		}
 	}
@@ -2140,7 +2214,6 @@ int32 unit_skilluse_id2(struct block_list *src, int32 target_id, uint16 skill_id
 
 					md->target_id = src->id;
 					md->state.aggressive = status_has_mode(tstatus,MD_ANGRY)?1:0;
-					md->min_chase = md->db->range3;
 					break;
 				case MSS_IDLE:
 				case MSS_WALK:
@@ -2149,7 +2222,6 @@ int32 unit_skilluse_id2(struct block_list *src, int32 target_id, uint16 skill_id
 
 					md->target_id = src->id;
 					md->state.aggressive = status_has_mode(tstatus,MD_ANGRY)?1:0;
-					md->min_chase = md->db->range3;
 					break;
 			}
 		}
@@ -3087,6 +3159,7 @@ void unit_dataset(struct block_list *bl)
 	memset( ud, 0, sizeof( struct unit_data) );
 	ud->bl             = bl;
 	ud->walktimer      = INVALID_TIMER;
+	ud->walkdelaytimer = INVALID_TIMER;
 	ud->skilltimer     = INVALID_TIMER;
 	ud->attacktimer    = INVALID_TIMER;
 	ud->steptimer      = INVALID_TIMER;
@@ -3194,6 +3267,7 @@ int32 unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file
 
 	if (ud->walktimer != INVALID_TIMER)
 		unit_stop_walking(bl,0);
+	unit_stop_chase(*bl);
 
 	if (clrtype == CLR_DEAD)
 		ud->state.blockedmove = true;

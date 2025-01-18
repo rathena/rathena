@@ -29,8 +29,6 @@ struct guardian_data;
 #define MAX_MOB_DROP_TOTAL (MAX_MOB_DROP+MAX_MOB_DROP_ADD)
 #define MAX_MVP_DROP_TOTAL (MAX_MVP_DROP+MAX_MVP_DROP_ADD)
 
-#define MAX_MINCHASE 30	//Max minimum chase value to use for mobs.
-
 //Min time between AI executions
 const t_tick MIN_MOBTHINKTIME = 100;
 //Min time before mobs do a check to call nearby friends for help (or for slaves to support their master)
@@ -368,7 +366,6 @@ struct mob_data {
 	t_tick next_walktime,last_thinktime,last_linktime,last_pcneartime,dmgtick,last_canmove,last_skillcheck;
 	short move_fail_count;
 	short lootitem_count;
-	short min_chase;
 	unsigned char walktoxy_fail_count; //Pathfinding succeeds but the actual walking failed (e.g. Icewall lock)
 
 	int32 deletetimer;
