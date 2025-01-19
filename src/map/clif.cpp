@@ -5099,9 +5099,31 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 
 //Modifies the type of damage according to status changes [Skotlex]
 //Aegis data specifies that: 4 endure against single hit sources, 9 against multi-hit.
-static enum e_damage_type clif_calc_delay(enum e_damage_type type, int32 div, int64 damage, int32 delay)
-{
-	return ( delay == 0 && damage > 0 ) ? ( div > 1 ? DMG_MULTI_HIT_ENDURE : DMG_ENDURE ) : type;
+static enum e_damage_type clif_calc_delay( e_damage_type type, int32 div, int64 damage, status_change *sc ) {
+	if (damage < 1)
+		return type;
+
+	if (sc == nullptr || sc->getSCE(SC_ENDURE) == nullptr)	// !TODO: berserk status?
+		return type;
+
+	switch( type ) {
+		case DMG_ENDURE:
+		case DMG_MULTI_HIT_ENDURE:
+		case DMG_SPLASH_ENDURE:
+			return type;
+		case DMG_NORMAL:
+		case DMG_CRITICAL:
+		case DMG_SINGLE:
+		case DMG_MULTI_HIT_CRITICAL:	// DMG_ENDURE despite div > 1
+			return DMG_ENDURE;
+		case DMG_MULTI_HIT:
+			return DMG_MULTI_HIT_ENDURE;
+		case DMG_SPLASH:
+			return DMG_SPLASH_ENDURE;
+	}
+
+	// Custom, unknown result of endure with types not listed
+	return (div > 1 ? DMG_MULTI_HIT_ENDURE : DMG_ENDURE);
 }
 
 /*==========================================
@@ -5170,10 +5192,9 @@ int32 clif_damage(block_list& src, block_list& dst, t_tick tick, int32 sdelay, i
 	int32 damage = (int32)cap_value(sdamage,INT_MIN,INT_MAX);
 	int32 damage2 = (int32)cap_value(sdamage2,INT_MIN,INT_MAX);
 
-	if (type != DMG_MULTI_HIT_CRITICAL)
-		type = clif_calc_delay(type,div,damage+damage2,ddelay);
-
 	status_change *sc = status_get_sc(&dst);
+
+	type = clif_calc_delay( type, div, damage+damage2, sc );
 
 	if(sc != nullptr && !sc->empty()) {
 		if(sc->getSCE(SC_HALLUCINATION)) {
@@ -5249,8 +5270,6 @@ int32 clif_damage(block_list& src, block_list& dst, t_tick tick, int32 sdelay, i
 	if(&src == &dst) 
 		unit_setdir(&src, unit_getdir(&src));
 
-	// In case this assignment is bypassed by DMG_MULTI_HIT_CRITICAL
-	type = clif_calc_delay(type, div, damage + damage2, ddelay);
 	//Return adjusted can't walk delay for further processing.
 	return clif_calc_walkdelay(&dst, ddelay, type, damage+damage2, div);
 }
@@ -5973,9 +5992,9 @@ int32 clif_skill_damage(struct block_list *src,struct block_list *dst,t_tick tic
 	nullpo_ret(src);
 	nullpo_ret(dst);
 
-	type = clif_calc_delay(type,div,damage,ddelay);
-
 	status_change* sc = status_get_sc( dst );
+
+	type = clif_calc_delay( type, div, damage, sc );
 
 	if( sc != nullptr && !sc->empty() ) {
 		if(sc->getSCE(SC_HALLUCINATION) && damage)
