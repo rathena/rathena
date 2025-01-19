@@ -7542,6 +7542,10 @@ Body:
     Icon: EFST_CLOUD_POISON
     DurationLookup: SO_CLOUD_KILL
     Flags:
+      BlEffect: true
+#     DisplayMob: true  # !TODO: check me
+    Fail:
+      Cloud_Poison: true
   - Status: Homun_Time
     Icon: EFST_HOMUN_TIME
     Flags:
