@@ -12535,8 +12535,8 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 			val2 = 2 * val1;
 			break;
 		case SC_KI_SUL_RAMPAGE:
-			tick_time = 1000;
-			val4 = tick / tick_time;
+			tick_time = 100;
+			val4 = tick / 1000;
 			break;
 		case SC_BLESSING_OF_M_CREATURES:
 			val2 = val1 * 10;
