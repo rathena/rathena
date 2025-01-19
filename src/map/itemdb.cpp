@@ -1447,6 +1447,34 @@ std::string ItemDatabase::create_item_link_for_mes( std::shared_ptr<item_data>& 
 	}
 }
 
+std::string ItemDatabase::create_item_icon_for_mes( std::shared_ptr<item_data>& data, const char* name ){
+	if( data == nullptr ){
+		return "Unknown item";
+	}
+
+	// Feature is disabled
+	if( !battle_config.feature_mesitemicon ){
+		if( name != nullptr && !battle_config.feature_mesitemlink_dbname ){
+			// Name was forcefully overwritten
+			return name;
+		}else{
+			// Use database name
+			return data->ename;
+		}
+	}
+
+	const std::string start_tag = "^i[";
+	const std::string closing_tag = "]";
+
+	std::string itemstr;
+
+	itemstr += start_tag;
+	itemstr += std::to_string( data->nameid );
+	itemstr += closing_tag;
+
+	return itemstr;
+}
+
 ItemDatabase item_db;
 
 /**
