@@ -8888,7 +8888,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		skill_area_temp[1] = 0;
 		map_foreachinshootrange(skill_attack_area, src,
 			skill_get_splash(skill_id, skill_lv), splash_target(src),
-			BF_MAGIC, src, src, skill_id, skill_lv, tick, flag, BCT_ENEMY);
+			BF_MAGIC, src, src, MG_FROSTDIVER, skill_lv, tick, flag|SD_ANIMATION|SD_LEVEL, BCT_ENEMY);	// !TODO: dsrc should actually be the unit bl of a ground attack
 		break;
 
 	case NPC_SELFDESTRUCTION:
@@ -20433,7 +20433,8 @@ int32 skill_attack_area(struct block_list *bl, va_list ap)
 		return 0;
 
 	switch (skill_id) {
-		case WZ_FROSTNOVA: //Skills that don't require the animation to be removed
+		// case WZ_FROSTNOVA: //Skills that don't require the animation to be removed
+		case MG_FROSTDIVER: //Skills that don't require the animation to be removed
 			if (src->x == bl->x && src->y == bl->y)
 				return 0; //Does not hit current cell
 			if (map_getcell(bl->m, bl->x, bl->y, CELL_CHKLANDPROTECTOR)) // Attack should not happen if the target is on Land Protector
