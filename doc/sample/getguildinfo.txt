@@ -1,0 +1,31 @@
+//===== rAthena Script =======================================
+//= getguildinfo sample
+//===== Description: =========================================
+//= Sample script for the getguildinfo script command
+//===== Additional Comments: =================================
+//= 1.0 First version. [crazyarashi]
+//============================================================
+
+prontera,255,55,5	script	test_getguildinfo	2_M_SAGE_OLD,{
+	.@gid = getcharid(2);
+	if ( !.@gid ) {
+		mes "You don't have a guild.";
+		close;
+	}
+	setarray .@data$[0], "Guild Name", "Guild Level", "Average Level", "Online Count", "Member Count", "Max Member Count", "EXP", "Next Exp", "Master CID", "Master Name";
+	setarray .@type[0], GUILDINFO_NAME, GUILDINFO_LEVEL, GUILDINFO_AVERAGELEVEL, GUILDINFO_ONLINECOUNT, GUILDINFO_MEMBERCOUNT, GUILDINFO_MAXMEMBERCOUNT, GUILDINFO_EXP, GUILDINFO_NEXTEXP, GUILDINFO_MASTERID, GUILDINFO_MASTERNAME;
+	for ( .@i = 0; .@i < getarraysize(.@data$); ++.@i )
+		dispbottom .@data$[.@i] + " : " + getguildinfo(.@gid, .@type[.@i]);
+	end;
+}
+
+prontera,255,57,5	script	test_getguildinfo2	2_M_SAGE_OLD,{
+	.@gid = 1234;
+	// Load guild information from char-server
+	requestguildinfo .@gid;
+	setarray .@data$[0], "Guild Name", "Guild Level", "Average Level", "Online Count", "Member Count", "Max Member Count", "EXP", "Next Exp", "Master CID", "Master Name";
+	setarray .@type[0], GUILDINFO_NAME, GUILDINFO_LEVEL, GUILDINFO_AVERAGELEVEL, GUILDINFO_ONLINECOUNT, GUILDINFO_MEMBERCOUNT, GUILDINFO_MAXMEMBERCOUNT, GUILDINFO_EXP, GUILDINFO_NEXTEXP, GUILDINFO_MASTERID, GUILDINFO_MASTERNAME;
+	for ( .@i = 0; .@i < getarraysize(.@data$); ++.@i )
+		dispbottom .@data$[.@i] + " : " + getguildinfo(.@gid, .@type[.@i]);
+	end;
+}
