@@ -7787,6 +7787,7 @@ Body:
     BonusStats:
       - Level: 1
         Dex: 1
+        Sta: 1
       - Level: 2
         Int: 1
         Dex: 1
@@ -7812,7 +7813,6 @@ Body:
       - Level: 10
         Str: 1
         Pow: 1
-        Sta: 1
       - Level: 11
         Dex: 1
         Crt: 1
@@ -7845,7 +7845,6 @@ Body:
         Spl: 1
       - Level: 23
         Str: 1
-        Sta: 1
       - Level: 24
         Int: 1
         Con: 1
@@ -7854,6 +7853,7 @@ Body:
         Crt: 1
       - Level: 26
         Vit: 1
+        Sta: 1
       - Level: 27
         Luk: 1
         Wis: 1
@@ -7866,7 +7866,6 @@ Body:
         Spl: 1
       - Level: 31
         Str: 1
-        Sta: 1
       - Level: 32
         Dex: 1
         Con: 1
@@ -7879,7 +7878,6 @@ Body:
         Dex: 1
       - Level: 36
         Str: 1
-        Sta: 1
       - Level: 37
         Int: 1
       - Level: 38
@@ -7902,9 +7900,13 @@ Body:
       - Level: 45
         Spl: 1
         Con: 1
+      - Level: 46
+        Sta: 1
       - Level: 47
         Wis: 1
         Con: 1
+      - Level: 48
+        Sta: 1
       - Level: 49
         Crt: 1
       - Level: 50
