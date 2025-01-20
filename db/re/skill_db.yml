@@ -27832,7 +27832,6 @@ Body:
       - Level: 5
         Time: 6000
     AfterCastActDelay: 1000
-    Duration1: 18000
     Cooldown: 2000
     FixedCastTime:
       - Level: 1
@@ -27857,7 +27856,6 @@ Body:
           Amount: 130
         - Level: 5
           Amount: 150
-    Status: Poison
   - Id: 2449
     Name: SO_PSYCHIC_WAVE
     Description: Psychic Wave
