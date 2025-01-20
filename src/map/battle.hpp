@@ -12,6 +12,7 @@
 
 #include "map.hpp" //ELE_MAX
 #include "skill.hpp"
+#include "mapreg.hpp"
 
 //fwd declaration
 class map_session_data;
@@ -799,6 +800,24 @@ struct Battle_Config
 	// Quest Mob
 	int id_hat_effect;
 	
+	// Random Option
+	int ATK_Weapon_Lv1;
+	int ATK_Weapon_Lv2;
+	int ATK_Weapon_Lv3;
+	int ATK_Weapon_Lv4;
+
+	int MATK_Weapon_Lv1;
+	int MATK_Weapon_Lv2;
+	int MATK_Weapon_Lv3;
+	int MATK_Weapon_Lv4;
+
+	int Accessory;
+	int Shoes;
+	int Garment;
+	int Armor;
+	int Shield;
+	
+	int rate_option;
 #include <custom/battle_config_struct.inc>
 };
 

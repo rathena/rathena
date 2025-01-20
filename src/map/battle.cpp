@@ -10837,6 +10837,16 @@ int32 battle_check_target( struct block_list *src, struct block_list *target,int
 	if( (s_bl = battle_get_master(src)) == nullptr )
 		s_bl = src;
 
+	if ( s_bl->type == BL_PC && t_bl->type == BL_MOB ) {
+		map_session_data *sd = BL_CAST( BL_PC, s_bl );
+		map_data *mapdata = map_getmapdata(m);
+		char output[128];
+		sprintf(output, "$koe_%s", mapindex_id2name(sd->mapindex));
+		if ( ( ( ( ( (TBL_MOB*)target )->mob_id == 28003 || ( (TBL_MOB*)target )->mob_id == 28004 ) && mapdata->getMapFlag(MF_KINGOFEMP) ) &&
+			( sd->status.guild_id == mapreg_readreg( add_str(output) ) || battle_getcurrentskill(src) > 0 && ((TBL_MOB*)target )->mob_id != 28004) ) )
+		return 0;
+	}
+
 	if ( s_bl->type == BL_PC ) {
 		switch( t_bl->type ) {
 			case BL_MOB: // Source => PC, Target => MOB
@@ -11868,6 +11878,23 @@ static const struct _battle_data {
 
 	// Quest System
 	{ "id_hat_effect",                      &battle_config.id_hat_effect,                   2,      1,      HAT_EF_MAX,     },
+	
+	// Random Option System
+    { "ATK_Weapon_Lv1", 					&battle_config.ATK_Weapon_Lv1, 					6, 		0, 		INT_MAX 		},
+    { "ATK_Weapon_Lv2", 					&battle_config.ATK_Weapon_Lv2, 					7, 		0, 		INT_MAX 		},
+    { "ATK_Weapon_Lv3", 					&battle_config.ATK_Weapon_Lv3, 					8, 		0, 		INT_MAX 		},
+    { "ATK_Weapon_Lv4", 					&battle_config.ATK_Weapon_Lv4, 					9, 		0, 		INT_MAX 		},
+    { "MATK_Weapon_Lv1", 					&battle_config.MATK_Weapon_Lv1, 				10,		0, 		INT_MAX 		},
+    { "MATK_Weapon_Lv2", 					&battle_config.MATK_Weapon_Lv2, 				11, 	0, 		INT_MAX 		},
+    { "MATK_Weapon_Lv3", 					&battle_config.MATK_Weapon_Lv3, 				12, 	0, 		INT_MAX 		},
+    { "MATK_Weapon_Lv4", 					&battle_config.MATK_Weapon_Lv4, 				13, 	0, 		INT_MAX 		},
+    { "Accessory", 							&battle_config.Accessory, 						1, 		0, 		INT_MAX 		},
+    { "Shoes", 								&battle_config.Shoes, 							5, 		0, 		INT_MAX 		},
+    { "Garment", 							&battle_config.Garment, 						4, 		0, 		INT_MAX 		},
+    { "Armor", 								&battle_config.Armor, 							2,		0, 		INT_MAX 		},
+    { "Shield", 							&battle_config.Shield, 							3, 		0, 		INT_MAX 		},
+
+	{ "rate_option",                   &battle_config.rate_option,                0,      0,      INT_MAX,        },
 
 #include <custom/battle_config_init.inc>
 };

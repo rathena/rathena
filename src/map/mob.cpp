@@ -2400,6 +2400,85 @@ static TIMER_FUNC(mob_ai_hard){
 	return 0;
 }
 
+int get_equip_type(t_itemid nameid) {
+    struct item_data *id = itemdb_search(nameid);
+
+    if (!id) {
+        return -1;
+    }
+    if (id->equip & EQP_ACC_L) {
+        return EQP_ACC_L;
+    }
+    if (id->equip & EQP_ACC_R) {
+        return EQP_ACC_R;
+    }
+    if (id->equip & EQP_SHOES) {
+        return EQP_SHOES;
+    }
+    if (id->equip & EQP_GARMENT) {
+        return EQP_GARMENT;
+    }
+    if (id->equip & EQP_HEAD_LOW) {
+        return EQP_HEAD_LOW;
+    }
+    if (id->equip & EQP_HEAD_MID) {
+        return EQP_HEAD_MID;
+    }
+    if (id->equip & EQP_HEAD_TOP) {
+        return EQP_HEAD_TOP;
+    }
+    if (id->equip & EQP_ARMOR) {
+        return EQP_ARMOR;
+    }
+    if (id->equip & EQP_HAND_L) {
+        return EQP_HAND_L;
+    }
+    if (id->equip & EQP_HAND_R) {
+        return EQP_HAND_R;
+    }
+    return 0;
+}
+
+int get_weapon_subtype(t_itemid nameid) {
+    struct item_data *it = itemdb_search(nameid);
+
+    if (!it) {
+        return -1;
+    }
+	if(it->type == IT_WEAPON) {
+		switch (it->subtype) {
+			case W_FIST:
+			case W_DAGGER:
+			case W_1HSWORD:
+			case W_2HSWORD:
+			case W_1HSPEAR:
+			case W_2HSPEAR:
+			case W_1HAXE:
+			case W_2HAXE:
+			case W_MACE:
+			case W_2HMACE:
+			case W_STAFF:
+			case W_BOW:
+			case W_KNUCKLE:
+			case W_MUSICAL:
+			case W_WHIP:
+			case W_BOOK:
+			case W_KATAR:
+			case W_REVOLVER:
+			case W_RIFLE:
+			case W_GATLING:
+			case W_SHOTGUN:
+			case W_GRENADE:
+			case W_HUUMA:
+			case W_2HSTAFF:
+				return it->subtype;
+			default:
+				return -1;
+		}
+	}
+	return -1;
+}
+
 /**
  * Set random option for item when dropped from monster
  * @param item: Item data
@@ -2407,7 +2486,104 @@ static TIMER_FUNC(mob_ai_hard){
  * @author [Cydh]
  **/
 void mob_setdropitem_option( item& item, s_mob_drop& mobdrop ){
-	std::shared_ptr<s_random_opt_group> group = random_option_group.find( mobdrop.randomopt_group );
+
+	uint16 rnd_group = 0;
+    if (rand()%10000 <= battle_config.rate_option) {
+		if (itemdb_isequip(item.nameid)) {
+			int subtype = get_weapon_subtype(item.nameid);
+		if (subtype != -1) {
+			int wlvl = itemdb_wlv(item.nameid);
+//			ShowDebug("%d /n", wlvl);
+            switch (subtype) {
+                case W_FIST:
+                case W_1HSWORD:
+                case W_2HSWORD:
+                case W_1HSPEAR:
+                case W_2HSPEAR:
+                case W_1HAXE:
+                case W_2HAXE:
+                case W_MACE:
+                case W_2HMACE:
+                case W_BOW:
+                case W_KNUCKLE:
+                case W_MUSICAL:
+                case W_WHIP:
+                case W_KATAR:
+                case W_REVOLVER:
+                case W_RIFLE:
+                case W_GATLING:
+                case W_SHOTGUN:
+                case W_GRENADE:
+                case W_HUUMA:
+					if (wlvl == 1)
+						rnd_group = battle_config.ATK_Weapon_Lv1;
+					else if (wlvl == 2)
+						rnd_group = battle_config.ATK_Weapon_Lv2;
+					else if (wlvl == 3)
+						rnd_group = battle_config.ATK_Weapon_Lv3;
+					else if (wlvl == 4)
+						rnd_group = battle_config.ATK_Weapon_Lv4;
+					break;
+                case W_2HSTAFF:
+                case W_STAFF:
+                case W_BOOK:
+					if (wlvl == 1)
+						rnd_group = battle_config.MATK_Weapon_Lv1;
+					else if (wlvl == 2)
+						rnd_group = battle_config.MATK_Weapon_Lv2;
+					else if (wlvl == 3)
+						rnd_group = battle_config.MATK_Weapon_Lv3;
+					else if (wlvl == 4)
+						rnd_group = battle_config.MATK_Weapon_Lv4;
+					break;
+                case W_DAGGER:
+					if ((rnd() % 100) < 50) {
+						if (wlvl == 1)
+							rnd_group = battle_config.ATK_Weapon_Lv1;
+						else if (wlvl == 2)
+							rnd_group = battle_config.ATK_Weapon_Lv2;
+						else if (wlvl == 3)
+							rnd_group = battle_config.ATK_Weapon_Lv3;
+						else if (wlvl == 4)
+							rnd_group = battle_config.ATK_Weapon_Lv4;
+					} else {
+						if (wlvl == 1)
+							rnd_group = battle_config.MATK_Weapon_Lv1;
+						else if (wlvl == 2)
+							rnd_group = battle_config.MATK_Weapon_Lv2;
+						else if (wlvl == 3)
+							rnd_group = battle_config.MATK_Weapon_Lv3;
+						else if (wlvl == 4)
+							rnd_group = battle_config.MATK_Weapon_Lv4;
+					}
+					break;
+            }
+        } else {
+			int equip_type = get_equip_type(item.nameid);
+			switch (equip_type) {
+				case EQP_ACC_L:
+				case EQP_ACC_R:
+					rnd_group = battle_config.Accessory;
+					break;
+				case EQP_SHOES:
+					rnd_group = battle_config.Shoes;
+					break;
+				case EQP_GARMENT:
+					rnd_group = battle_config.Garment;
+					break;
+				case EQP_ARMOR:
+					rnd_group = battle_config.Armor;
+					break;
+				case EQP_HAND_L:
+					rnd_group = battle_config.Shield;
+					break;
+				}
+			}
+        }
+    }
+//	ShowDebug("%d \n", rnd_group);
+	
+	std::shared_ptr<s_random_opt_group> group = random_option_group.find(rnd_group);
 
 	if (group != nullptr) {
 		group->apply( item );

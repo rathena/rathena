@@ -96,6 +96,13 @@ enum equip_index {
 	EQI_MAX
 };
 
+enum job_bonus_type {
+	JST_ALL = 0,
+	JST_JOB = 1,
+	JST_ACCOUNT = 2,
+	JST_CHAR = 3
+};
+
 enum prevent_logout_trigger {
 	PLT_NONE = 0,
 	PLT_LOGIN = 1,
@@ -1212,6 +1219,31 @@ public:
 
 extern JobDatabase job_db;
 
+struct s_job_bonus_db {
+	struct script_code *script;
+	job_bonus_type type;
+	uint32 id, account_id, char_id, jobidx;
+
+	~s_job_bonus_db() {
+		if (this->script){
+			script_free_code(this->script);
+			this->script = nullptr;
+		}
+	}
+};
+
+class JobBonusDatabase : public TypesafeYamlDatabase<uint32, s_job_bonus_db> {
+public:
+	JobBonusDatabase() : TypesafeYamlDatabase("JOB_BONUS", 1) {
+
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const ryml::NodeRef &node) override;
+};
+
+extern JobBonusDatabase job_bonus_db;
+
 #define EQP_WEAPON EQP_HAND_R
 #define EQP_SHIELD EQP_HAND_L
 #define EQP_ARMS (EQP_HAND_R|EQP_HAND_L)
@@ -1879,6 +1911,7 @@ void pc_show_questinfo(map_session_data *sd);
 void pc_show_questinfo_reinit(map_session_data *sd);
 
 bool pc_job_can_entermap(enum e_job jobid, int32 m, int32 group_lv);
+void pc_job_bonus(map_session_data *sd);
 
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
 uint16 pc_level_penalty_mod( map_session_data* sd, e_penalty_type type, std::shared_ptr<s_mob_db> mob, mob_data* md = nullptr );

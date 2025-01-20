@@ -67,6 +67,7 @@
 using namespace rathena;
 
 JobDatabase job_db;
+JobBonusDatabase job_bonus_db;
 
 CaptchaDatabase captcha_db;
 const char *macro_allowed_answer_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
@@ -6077,6 +6078,24 @@ enum e_additem_result pc_additem(map_session_data *sd,struct item *item,int32 am
 
 	if (id->flag.guid && !item->unique_id)
 		item->unique_id = pc_generate_unique_id(sd);
+	
+    int quant_opt = 0;
+    if(item->option[0].id) 
+        quant_opt +=1;
+    if(item->option[1].id) 
+        quant_opt +=1;
+    if(item->option[2].id)
+        quant_opt +=1;
+    if(item->option[3].id)
+        quant_opt +=1;
+    if(quant_opt == 1)
+        item->enchantgrade = ENCHANTGRADE_D;
+    if(quant_opt == 2)
+        item->enchantgrade = ENCHANTGRADE_C;
+    if(quant_opt == 3)
+        item->enchantgrade = ENCHANTGRADE_B;
+    if(quant_opt == 4)
+        item->enchantgrade = ENCHANTGRADE_A;
 
 	// Stackable | Non Rental
 	if( itemdb_isstackable2(id) && item->expire_time == 0 ) {
@@ -13376,6 +13395,133 @@ void pc_delspiritcharm(map_session_data *sd, int32 count, int32 type)
 	clif_spiritcharm( *sd );
 }
 
+/**
+ * Pc status refresh (in case of db reload)
+ * @param sd Player
+ * @author [Shakto]
+ **/
+int pc_status_refresh(map_session_data *sd, va_list ap) {
+	status_calc_pc(sd, SCO_FORCE);
+
+	return 1;
+}
+
+/**
+ * Check & run script bonus for a player
+ * @param sd Player
+ * @author [Shakto]
+ **/
+void pc_job_bonus(map_session_data *sd) {
+	int idx = 0, i = 0;
+	std::shared_ptr<s_job_bonus_db> js;
+
+	nullpo_retv(sd);
+	while ( (js = job_bonus_db.find(i)) != nullptr ) {
+		if(	js->type == JST_ALL
+			|| (js->type == JST_ACCOUNT && sd->status.account_id == js->account_id)
+			|| (js->type == JST_CHAR && sd->status.char_id == js->char_id)
+			|| (js->type == JST_JOB && sd->status.class_ == js->jobidx))
+			run_script(js->script, 0, sd->bl.id, 0);
+		i++;
+	}
+}
+
+/**
+ * Get location of job bonus database
+ * @author [Shakto]
+ **/
+const std::string JobBonusDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/job_bonus.yml";
+}
+
+/**
+ * Read job bonus YML db
+ * @author [Shakto]
+ **/
+uint64 JobBonusDatabase::parseBodyNode( const ryml::NodeRef &node ){
+	uint32 id;
+
+	if (!this->asUInt32(node, "Id", id))
+		return 0;
+
+	std::shared_ptr<s_job_bonus_db> js = this->find(id);
+	bool exists = js != nullptr;
+
+	if (!exists) {
+		if ((!this->nodeExists(node, "Job")
+			&& !this->nodeExists(node, "Account")
+			&& !this->nodeExists(node, "Char"))
+			&& !this->nodesExist( node, { "Script" } )) {
+			return 0;
+		}
+
+		js = std::make_shared<s_job_bonus_db>();
+		js->id = id;
+	}
+
+	if (this->nodeExists(node, "Job")){
+		std::string job;
+
+		if (!this->asString(node, "Job", job))
+			return 0;
+
+		if(strcmp(job.c_str(), "All") == 0){
+			js->type = JST_ALL;
+		} else {
+			js->type = JST_JOB;
+			int64 jobid = 0;
+			if (pcdb_checkid(jobid) && script_get_constant(job.c_str(),&jobid)) {
+				js->jobidx = static_cast<uint32>(jobid);
+			}
+			else {
+				this->invalidWarning(node["Job"], "Unknown job %s.\n", job.c_str());
+				return 0;
+			}
+		}
+	}
+
+	if (this->nodeExists(node, "Account")){
+		uint32 account_id;
+
+		if (!this->asUInt32(node, "Account", account_id))
+			return 0;
+
+		js->account_id = account_id;
+		js->type = JST_ACCOUNT;
+	}
+
+	if (this->nodeExists(node, "Char")){
+		uint32 char_id;
+
+		if (!this->asUInt32(node, "Char", char_id))
+			return 0;
+
+		js->char_id = char_id;
+		js->type = JST_CHAR;
+	}
+
+	std::string script;
+	if (this->nodeExists(node, "Script")) {
+		if (!this->asString(node, "Script", script))
+			return 0;
+
+		if (exists && js->script) {
+			script_free_code(js->script);
+			js->script = nullptr;
+		}
+
+		js->script = parse_script(script.c_str(), this->getCurrentFile().c_str(), this->getLineNumber(node["Script"]), SCRIPT_IGNORE_EXTERNAL_BRACKETS);
+	} else {
+		if (!exists)
+			js->script = nullptr;
+	}
+
+	if (!exists)
+		this->put(id,js);
+
+	return 1;
+}
+
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
 /**
  * Renewal EXP/Item Drop rate modifier based on level penalty
@@ -14939,13 +15085,16 @@ void pc_readdb(void) {
 		
 	//reset
 	job_db.clear(); // job_info table
-
+	job_bonus_db.clear();
+	
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
 	penalty_db.load();
 #endif
 
 	statpoint_db.clear();
 	job_db.load();
+	job_bonus_db.load();
+	map_foreachpc(pc_status_refresh);
 
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
 		uint8 n1 = (uint8)(strlen(db_path)+strlen(dbsubpath[i])+1);

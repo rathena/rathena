@@ -901,12 +901,15 @@ void clif_dropflooritem( struct flooritem_data* fitem, bool canShowEffect ){
 
 			if (optionCount > 0) {
 				p.showdropeffect = 1;
-				if (optionCount == 1)
-					p.dropeffectmode = DROPEFFECT_BLUE_PILLAR - 1;
-				else if (optionCount == 2)
-					p.dropeffectmode = DROPEFFECT_YELLOW_PILLAR - 1;
+//				ShowDebug("%d /n", optionCount);
+				if (optionCount == 2)
+					p.dropeffectmode = DROPEFFECT_RED_PILLAR - 1;
+				else if (optionCount == 3)
+					p.dropeffectmode = DROPEFFECT_RED_PILLAR - 1;
+				else if (optionCount == 4)
+					p.dropeffectmode = DROPEFFECT_RED_PILLAR - 1;
 				else
-					p.dropeffectmode = DROPEFFECT_PURPLE_PILLAR - 1;
+					p.dropeffectmode = DROPEFFECT_RED_PILLAR - 1;
 			} else {
 				p.showdropeffect = 0;
 				p.dropeffectmode = DROPEFFECT_NONE;
@@ -10061,6 +10064,23 @@ void clif_name( struct block_list* src, struct block_list *bl, send_target targe
 				p = party_search( sd->status.party_id );
 			}
 
+//			// do not display party unless the player is also in a guild
+//			if( p && ( sd->guild || battle_config.display_party_name ) ){
+			/** mostra o rank no packet da party **/
+			int rank_id = static_cast<unsigned char>(pc_readglobalreg(sd, add_str("Reset_char")));
+			unsigned char rank_array[8][7] = { "D", "C", "B" , "A" , "E" , "S" , "SS" , "SSS" };
+			if (sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL && battle_config.display_party_name == 1 && rank_id != 0){
+				char nomehp[100], * str_p = nomehp;
+				str_p += sprintf(str_p, msg_txt(sd,2210),rank_array[rank_id],p->party.name);
+				safestrncpy( packet.party_name, nomehp, NAME_LENGTH );
+			}else if(p && battle_config.display_party_name == 2){
+				safestrncpy( packet.party_name, p->party.name, NAME_LENGTH );
+			}else if(rank_id != 0){
+				char nomehp[100], * str_p = nomehp;
+				str_p += sprintf(str_p, msg_txt(sd,2211),rank_array[rank_id]);
+				safestrncpy( packet.party_name, nomehp, NAME_LENGTH );
+			}
+	
 			// do not display party unless the player is also in a guild
 			if( p && ( sd->guild || battle_config.display_party_name ) ){
 				safestrncpy( packet.party_name, p->party.name, NAME_LENGTH );

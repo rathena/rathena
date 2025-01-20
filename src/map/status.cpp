@@ -4098,7 +4098,8 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	}
 
 	pc_bonus_script(sd);
-
+	pc_job_bonus(sd);
+	
 	if( sd->pd ) { // Pet Bonus
 		struct pet_data *pd = sd->pd;
 		std::shared_ptr<s_pet_db> pet_db_ptr = pd->get_pet_db();

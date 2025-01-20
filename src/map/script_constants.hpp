@@ -521,7 +521,9 @@
 	export_constant(MF_NODYNAMICNPC);
 	export_constant(MF_NOBANK);
 	export_constant(MF_SPECIALPOPUP);
-
+	// New
+	export_constant(MF_KINGOFEMP);
+	
 	/* setcell types */
 	export_constant(CELL_WALKABLE);
 	export_constant(CELL_SHOOTABLE);

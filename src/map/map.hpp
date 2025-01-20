@@ -683,6 +683,8 @@ enum e_mapflag : int16 {
 	MF_NODYNAMICNPC,
 	MF_NOBANK,
 	MF_SPECIALPOPUP,
+	// NEW 
+	MF_KINGOFEMP,
 	MF_MAX
 };
 
