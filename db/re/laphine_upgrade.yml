@@ -1,5 +1,5 @@
 # This file is a part of rAthena.
-#   Copyright(C) 2022 rAthena Development Team
+#   Copyright(C) 2024 rAthena Development Team
 #   https://rathena.org - https://github.com/rathena
 #
 # This program is free software: you can redistribute it and/or modify
@@ -24,9 +24,9 @@
 ###########################################################################
 # - Item                       Item that triggers Laphine Upgrade.
 #   RandomOptionGroup          Name of the random option group that will be applied. (Default: none)
-#   ResultRefine               Absolute refine level after the upgrade. (Default: none)
-#   ResultRefineMinimum        Minimum refine level after the upgrade. (Default: none)
-#   ResultRefineMaximum        Maximum refine level after the upgrade. (Default: none)
+#   ResultRefine:              Refine level after the upgrade. (Default: none)
+#     - Level                  Refine level.
+#       Rate                   Rate per level. The total rate is the sum of the rates. (Default: 1)
 #   MinimumRefine              Minimum refine level of the required items. (Default: 0)
 #   MaximumRefine              Maximum refine level of the required items. (Default: MAX_REFINE)
 #   RequiredRandomOptions      How many random options have to be in the item? (Default: 0)
@@ -37,7 +37,7 @@
 
 Header:
   Type: LAPHINE_UPGRADE_DB
-  Version: 1
+  Version: 2
 
 Body:
   - Item: Ein_Ddbox
@@ -62,7 +62,8 @@ Body:
       - Item: Ein_1HGUN
       - Item: Ein_1H_Foxtail
   - Item: Metal_Rifine_Ticket
-    ResultRefine: 7
+    ResultRefine:
+      - Level: 7
     CardsAllowed: true
     TargetItems:
       - Item: Metal_Katar
@@ -117,8 +118,11 @@ Body:
       - Item: Temporal_M_Dex
       - Item: Temporal_M_Luk
   - Item: Frozen_Box_IL
-    ResultRefineMinimum: 7
-    ResultRefineMaximum: 10
+    ResultRefine:
+      - Level: 7
+      - Level: 8
+      - Level: 9
+      - Level: 10
     MinimumRefine: 4
     MaximumRefine: 9
     CardsAllowed: true
@@ -129,7 +133,8 @@ Body:
       - Item: Clack_Of_Servival_IL
       - Item: Herald_Of_GOD_IL
   - Item: True_Hunting_9Refine
-    ResultRefine: 9
+    ResultRefine:
+      - Level: 9
     MaximumRefine: 8
     CardsAllowed: true
     TargetItems:
@@ -152,8 +157,27 @@ Body:
 #      - Item: True_Hunting_Ring2
   # Source: https://ro.gnjoy.com/news/probability/View.asp?seq=3954806
   - Item: Shadow_Refine_Hammer
-    ResultRefineMinimum: 1
-    ResultRefineMaximum: 10
+    ResultRefine:
+      - Level: 1
+        Rate: 440
+      - Level: 2
+        Rate: 879
+      - Level: 3
+        Rate: 1703
+      - Level: 4
+        Rate: 3516
+      - Level: 5
+        Rate: 1758
+      - Level: 6
+        Rate: 879
+      - Level: 7
+        Rate: 440
+      - Level: 8
+        Rate: 220
+      - Level: 9
+        Rate: 110
+      - Level: 10
+        Rate: 55
     MaximumRefine: 9
     CardsAllowed: true
     TargetItems:
@@ -1695,7 +1719,8 @@ Body:
       - Item: Lava_Leather_Suits
       - Item: Lava_Leather_Robe
   - Item: Shadow_9_Refine_Hammer
-    ResultRefine: 9
+    ResultRefine:
+      - Level: 9
     MaximumRefine: 8
     CardsAllowed: true
     TargetItems:
@@ -2683,7 +2708,8 @@ Body:
       - Item: Comp_Light_Blade
       - Item: Comp_Scalet_DragonL_Bow
   - Item: Boost_Up_1
-    ResultRefine: 10
+    ResultRefine:
+      - Level: 10
     MaximumRefine: 9
     CardsAllowed: true
     TargetItems:
@@ -2700,7 +2726,8 @@ Body:
       - Item: Defn_Muffler
       - Item: Defn_Shoes
   - Item: Boost_Up_2
-    ResultRefine: 10
+    ResultRefine:
+      - Level: 10
     CardsAllowed: true
     TargetItems:
       - Item: Boost_TH_Sword
@@ -2722,7 +2749,8 @@ Body:
       - Item: Boost_Soul_Rod
       - Item: Boost_Foxtail
   - Item: Metal_7_Ticket
-    ResultRefine: 7
+    ResultRefine:
+      - Level: 7
     MaximumRefine: 6
     CardsAllowed: true
     TargetItems:
@@ -2739,7 +2767,8 @@ Body:
       - Item: Metal_Revolver
       - Item: Metal_Huuma_Shuriken
   - Item: Noblesse_Rifine_Ticket
-    ResultRefine: 9
+    ResultRefine:
+      - Level: 9
     CardsAllowed: true
     TargetItems:
       - Item: Noblesse_Breath_Armor
@@ -2783,7 +2812,8 @@ Body:
       - Item: Noblesse_Attack_Manteau
       - Item: Noblesse_Magic_Manteau
   - Item: Imperial_Rifine_Ticket
-    ResultRefine: 9
+    ResultRefine:
+      - Level: 9
     CardsAllowed: true
     TargetItems:
       - Item: Imperial_Breath_Armor
@@ -2827,7 +2857,8 @@ Body:
       - Item: Imperial_Attack_Manteau
       - Item: Imperial_Magic_Manteau
   - Item: Grace_Rifine_Ticket
-    ResultRefine: 9
+    ResultRefine:
+      - Level: 9
     CardsAllowed: true
     TargetItems:
       - Item: Grace_Breath_Armor
@@ -3831,7 +3862,8 @@ Body:
 #      - Item: S_Evilcurse_Pendant
 #      - Item: S_Evilcurse_Shoes
   - Item: Illu_Enhance_Cube
-    ResultRefine: 7
+    ResultRefine:
+      - Level: 7
     MinimumRefine: 4
     MaximumRefine: 6
     CardsAllowed: true
@@ -3843,7 +3875,8 @@ Body:
       - Item: Illusion_Leg_A
       - Item: Illusion_Leg_B
   - Item: Auto_Enhance_Cube
-    ResultRefine: 7
+    ResultRefine:
+      - Level: 7
     MinimumRefine: 4
     MaximumRefine: 6
     CardsAllowed: true
@@ -3855,7 +3888,8 @@ Body:
       - Item: Auto_Leg_A
       - Item: Auto_Leg_B
   - Item: Temporal_Refine_Cube
-    ResultRefine: 11
+    ResultRefine:
+      - Level: 11
     MaximumRefine: 10
     CardsAllowed: true
     TargetItems:
@@ -3896,7 +3930,8 @@ Body:
       - Item: Modify_Dex_Boots_
       - Item: Modify_Luk_Boots_
   - Item: Geffen_Refine_Cube
-    ResultRefine: 12
+    ResultRefine:
+      - Level: 12
     MaximumRefine: 11
     CardsAllowed: true
     TargetItems:
@@ -3905,7 +3940,8 @@ Body:
       - Item: Geffen_Magic_Muffler
       - Item: Anti_Magic_Manteau
   - Item: Old_Refine_Cube
-    ResultRefine: 12
+    ResultRefine:
+      - Level: 12
     MaximumRefine: 11
     CardsAllowed: true
     TargetItems:
@@ -3924,7 +3960,8 @@ Body:
       - Item: Old_Protect_Of_Crown
       - Item: Old_Camo_RabbitHood
   - Item: Refine_Hero_Weapon
-    ResultRefine: 9
+    ResultRefine:
+      - Level: 9
     MaximumRefine: 8
     CardsAllowed: true
     TargetItems:
@@ -3965,13 +4002,15 @@ Body:
       - Item: Blue_Crystal_Staff
       - Item: Freezing_Rod
   - Item: Refine_Hero_Boots
-    ResultRefine: 9
+    ResultRefine:
+      - Level: 9
     MaximumRefine: 8
     CardsAllowed: true
     TargetItems:
       - Item: Ancient_Hero_Boots
   - Item: OS_Weapon_Refine_Cube
-    ResultRefine: 11
+    ResultRefine:
+      - Level: 11
     MaximumRefine: 10
     CardsAllowed: true
     TargetItems:
@@ -3992,7 +4031,8 @@ Body:
       - Item: Kuroiro_OS
       - Item: Boost_Lance_OS
   - Item: Racecap_Refine_Cube
-    ResultRefine: 11
+    ResultRefine:
+      - Level: 11
     MaximumRefine: 10
     CardsAllowed: true
     TargetItems:
@@ -4016,7 +4056,8 @@ Body:
       - Item: Racing_C_Star
       - Item: Racing_C_Soul
   - Item: Booster_W_Up_1
-    ResultRefine: 9
+    ResultRefine:
+      - Level: 9
     MaximumRefine: 8
     CardsAllowed: true
     TargetItems:
@@ -4046,7 +4087,8 @@ Body:
       - Item: MV_B_Violin
       - Item: MV_B_Whip
   - Item: Booster_W_Up_2
-    ResultRefine: 11
+    ResultRefine:
+      - Level: 11
     MaximumRefine: 10
     CardsAllowed: true
     TargetItems:
@@ -4076,7 +4118,8 @@ Body:
       - Item: MV_B_Violin
       - Item: MV_B_Whip
   - Item: Booster_W_Up_3
-    ResultRefine: 13
+    ResultRefine:
+      - Level: 13
     MaximumRefine: 12
     CardsAllowed: true
     TargetItems:
@@ -4119,7 +4162,8 @@ Body:
       - Item: SP_B_Saber
       - Item: SI_B_Saber
   - Item: E_ILL_Up
-    ResultRefine: 10
+    ResultRefine:
+      - Level: 10
     MaximumRefine: 9
     CardsAllowed: true
     TargetItems:
@@ -4130,7 +4174,8 @@ Body:
       - Item: E_Illusion_Leg_A
       - Item: E_Illusion_Leg_B
   - Item: Auto_Armor_Refine_Cube
-    ResultRefine: 11
+    ResultRefine:
+      - Level: 11
     MaximumRefine: 10
     CardsAllowed: true
     TargetItems:
@@ -4141,7 +4186,8 @@ Body:
       - Item: Auto_Leg_A
       - Item: Auto_Leg_B
   - Item: Bio_Weapon_Refine_Cube
-    ResultRefine: 12
+    ResultRefine:
+      - Level: 12
     MaximumRefine: 11
     CardsAllowed: true
     TargetItems:
@@ -4207,8 +4253,11 @@ Body:
 #      - Item: MD_Geffen_Shield
 #      - Item: MD_Geffen_Shield2
   - Item: Moonlight_Box_IL
-    ResultRefineMinimum: 7
-    ResultRefineMaximum: 10
+    ResultRefine:
+      - Level: 7
+      - Level: 8
+      - Level: 9
+      - Level: 10
     MinimumRefine: 4
     MaximumRefine: 9
     CardsAllowed: true
@@ -4223,8 +4272,11 @@ Body:
       - Item: Puente_Robe_IL
       - Item: Apple_Of_Archer_IL
   - Item: S_Moonlight_Box_IL
-    ResultRefineMinimum: 9
-    ResultRefineMaximum: 12
+    ResultRefine:
+      - Level: 9
+      - Level: 10
+      - Level: 11
+      - Level: 12
     MinimumRefine: 4
     MaximumRefine: 11
     CardsAllowed: true
@@ -4315,8 +4367,11 @@ Body:
       - Item: Up_OneSkyOneSun
       - Item: Up_SoulWeight
   - Item: Vampire_Box_IL
-    ResultRefineMinimum: 7
-    ResultRefineMaximum: 10
+    ResultRefine:
+      - Level: 7
+      - Level: 8
+      - Level: 9
+      - Level: 10
     MinimumRefine: 4
     MaximumRefine: 9
     CardsAllowed: true
@@ -4328,8 +4383,11 @@ Body:
       - Item: Ghoul_Leg_IL
       - Item: Cape_Of_Ancient_Lord_IL
   - Item: S_Vampire_Box_IL
-    ResultRefineMinimum: 9
-    ResultRefineMaximum: 12
+    ResultRefine:
+      - Level: 9
+      - Level: 10
+      - Level: 11
+      - Level: 12
     MinimumRefine: 4
     MaximumRefine: 11
     CardsAllowed: true
@@ -4341,8 +4399,11 @@ Body:
       - Item: Ghoul_Leg_IL
       - Item: Cape_Of_Ancient_Lord_IL
   - Item: S_Frozen_Box_IL
-    ResultRefineMinimum: 9
-    ResultRefineMaximum: 12
+    ResultRefine:
+      - Level: 9
+      - Level: 10
+      - Level: 11
+      - Level: 12
     MinimumRefine: 4
     MaximumRefine: 11
     CardsAllowed: true
@@ -4353,8 +4414,11 @@ Body:
       - Item: Clack_Of_Servival_IL
       - Item: Herald_Of_GOD_IL
   - Item: Turtle_Is_Box_IL
-    ResultRefineMinimum: 7
-    ResultRefineMaximum: 10
+    ResultRefine:
+      - Level: 7
+      - Level: 8
+      - Level: 9
+      - Level: 10
     MinimumRefine: 4
     MaximumRefine: 9
     CardsAllowed: true
@@ -4366,8 +4430,11 @@ Body:
       - Item: Pole_Axe_IL
       - Item: Fancy_Flower_IL
   - Item: S_Turtle_Is_Box_IL
-    ResultRefineMinimum: 9
-    ResultRefineMaximum: 12
+    ResultRefine:
+      - Level: 9
+      - Level: 10
+      - Level: 11
+      - Level: 12
     MinimumRefine: 4
     MaximumRefine: 11
     CardsAllowed: true
@@ -4379,8 +4446,11 @@ Body:
       - Item: Pole_Axe_IL
       - Item: Fancy_Flower_IL
   - Item: Teddy_Bear_Box_IL
-    ResultRefineMinimum: 7
-    ResultRefineMaximum: 10
+    ResultRefine:
+      - Level: 7
+      - Level: 8
+      - Level: 9
+      - Level: 10
     MinimumRefine: 4
     MaximumRefine: 9
     CardsAllowed: true
@@ -4391,8 +4461,11 @@ Body:
       - Item: Headband_Of_Power_IL
       - Item: Boots_IL
   - Item: S_Teddy_Bear_Box_IL
-    ResultRefineMinimum: 9
-    ResultRefineMaximum: 12
+    ResultRefine:
+      - Level: 9
+      - Level: 10
+      - Level: 11
+      - Level: 12
     MinimumRefine: 4
     MaximumRefine: 11
     CardsAllowed: true
@@ -4403,8 +4476,11 @@ Body:
       - Item: Headband_Of_Power_IL
       - Item: Boots_IL
   - Item: Luanda_Box_IL
-    ResultRefineMinimum: 7
-    ResultRefineMaximum: 10
+    ResultRefine:
+      - Level: 7
+      - Level: 8
+      - Level: 9
+      - Level: 10
     MinimumRefine: 4
     MaximumRefine: 9
     CardsAllowed: true
@@ -4416,8 +4492,11 @@ Body:
       - Item: Goibne_Shoulder_IL
       - Item: Goibne_Boots_IL
   - Item: S_Luanda_Box_IL
-    ResultRefineMinimum: 9
-    ResultRefineMaximum: 12
+    ResultRefine:
+      - Level: 9
+      - Level: 10
+      - Level: 11
+      - Level: 12
     MinimumRefine: 4
     MaximumRefine: 11
     CardsAllowed: true
@@ -4429,8 +4508,11 @@ Body:
       - Item: Goibne_Shoulder_IL
       - Item: Goibne_Boots_IL
   - Item: Labyrinth_Box_IL
-    ResultRefineMinimum: 7
-    ResultRefineMaximum: 10
+    ResultRefine:
+      - Level: 7
+      - Level: 8
+      - Level: 9
+      - Level: 10
     MinimumRefine: 4
     MaximumRefine: 9
     CardsAllowed: true
@@ -4442,8 +4524,11 @@ Body:
       - Item: Morpheus_Hood_IL
       - Item: Morpheus_Shawl_IL
   - Item: S_Teddy_Labyrinth_IL
-    ResultRefineMinimum: 9
-    ResultRefineMaximum: 12
+    ResultRefine:
+      - Level: 9
+      - Level: 10
+      - Level: 11
+      - Level: 12
     MinimumRefine: 4
     MaximumRefine: 11
     CardsAllowed: true
@@ -4455,8 +4540,11 @@ Body:
       - Item: Morpheus_Hood_IL
       - Item: Morpheus_Shawl_IL
   - Item: Underwater_Box_IL
-    ResultRefineMinimum: 7
-    ResultRefineMaximum: 10
+    ResultRefine:
+      - Level: 7
+      - Level: 8
+      - Level: 9
+      - Level: 10
     MinimumRefine: 4
     MaximumRefine: 9
     CardsAllowed: true
@@ -4473,8 +4561,11 @@ Body:
       - Item: Morrigane_Helm_IL
       - Item: Morrigane_Manyeau_IL
   - Item: S_Underwater_Box_IL
-    ResultRefineMinimum: 9
-    ResultRefineMaximum: 12
+    ResultRefine:
+      - Level: 9
+      - Level: 10
+      - Level: 11
+      - Level: 12
     MinimumRefine: 4
     MaximumRefine: 11
     CardsAllowed: true
@@ -4491,7 +4582,8 @@ Body:
       - Item: Morrigane_Helm_IL
       - Item: Morrigane_Manyeau_IL
   - Item: Circlet_Refine_Cube
-    ResultRefine: 11
+    ResultRefine:
+      - Level: 11
     MaximumRefine: 10
     CardsAllowed: true
     TargetItems:
@@ -4706,7 +4798,8 @@ Body:
 #      - Item: Blue_Mental_Pendant
 #      - Item: Red_Force_Pendant
   - Item: GrayWolf_7_Ticket
-    ResultRefine: 7
+    ResultRefine:
+      - Level: 7
     MaximumRefine: 6
     CardsAllowed: true
     TargetItems:
@@ -4717,7 +4810,8 @@ Body:
       - Item: Gray_W_Boots
       - Item: Gray_W_Shoes
   - Item: GrayWolf_9_Ticket
-    ResultRefine: 9
+    ResultRefine:
+      - Level: 9
     MaximumRefine: 8
     CardsAllowed: true
     TargetItems:
@@ -4896,7 +4990,8 @@ Body:
       - Item: Vivatus_F_C_Humma
       - Item: Vivatus_F_Humma
   - Item: Bio_Helm_Refine_Cube
-    ResultRefine: 11
+    ResultRefine:
+      - Level: 11
     MaximumRefine: 10
     CardsAllowed: true
     TargetItems:
@@ -4913,8 +5008,11 @@ Body:
       - Item: BioWeapon_Helm_SC
       - Item: BioWeapon_Helm_GC
   - Item: Twins_Box_IL
-    ResultRefineMinimum: 7
-    ResultRefineMaximum: 10
+    ResultRefine:
+      - Level: 7
+      - Level: 8
+      - Level: 9
+      - Level: 10
     MinimumRefine: 4
     MaximumRefine: 9
     CardsAllowed: true
@@ -4931,8 +5029,11 @@ Body:
       - Item: Dea_Staff_IL
       - Item: Sprint_Mail_IL
   - Item: S_Twins_Box_IL
-    ResultRefineMinimum: 9
-    ResultRefineMaximum: 12
+    ResultRefine:
+      - Level: 9
+      - Level: 10
+      - Level: 11
+      - Level: 12
     MinimumRefine: 4
     MaximumRefine: 11
     CardsAllowed: true
@@ -5149,7 +5250,8 @@ Body:
 #      - Item: S_Creative_Weapon
 #      - Item: S_Creative_Shield
   - Item: Snow_F_Refine
-    ResultRefine: 9
+    ResultRefine:
+      - Level: 9
     MaximumRefine: 8
     CardsAllowed: true
     TargetItems:
@@ -5160,7 +5262,8 @@ Body:
       - Item: Snowflower_Boots
       - Item: Snowflower_Shoes
   - Item: Glacier_W_Refine
-    ResultRefine: 9
+    ResultRefine:
+      - Level: 9
     MaximumRefine: 8
     CardsAllowed: true
     TargetItems:
@@ -5215,7 +5318,8 @@ Body:
 #      - Item: S_M_Mammoth_Earring
 #      - Item: S_M_Mammoth_Pendant
   - Item: SubjectCape_Refine_Cube
-    ResultRefine: 12
+    ResultRefine:
+      - Level: 12
     MaximumRefine: 11
     CardsAllowed: true
     TargetItems:
@@ -5223,7 +5327,8 @@ Body:
       - Item: Subject_CapeMagic_TH
       - Item: Subject_CapeMelee_TH
   - Item: GMT_Robe_Stone
-    ResultRefine: 12
+    ResultRefine:
+      - Level: 12
     MaximumRefine: 11
     CardsAllowed: true
     TargetItems:

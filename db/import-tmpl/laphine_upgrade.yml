@@ -24,9 +24,9 @@
 ###########################################################################
 # - Item                       Item that triggers Laphine Upgrade.
 #   RandomOptionGroup          Name of the random option group that will be applied. (Default: none)
-#   ResultRefine               Absolute refine level after the upgrade. (Default: none)
-#   ResultRefineMinimum        Minimum refine level after the upgrade. (Default: none)
-#   ResultRefineMaximum        Maximum refine level after the upgrade. (Default: none)
+#   ResultRefine:              Refine level after the upgrade. (Default: none)
+#     - Level                  Refine level.
+#       Rate                   Rate per level. The total rate is the sum of the rates. (Default: 1)
 #   MinimumRefine              Minimum refine level of the required items. (Default: 0)
 #   MaximumRefine              Maximum refine level of the required items. (Default: MAX_REFINE)
 #   RequiredRandomOptions      How many random options have to be in the item? (Default: 0)
@@ -37,4 +37,4 @@
 
 Header:
   Type: LAPHINE_UPGRADE_DB
-  Version: 1
+  Version: 2
