@@ -521,6 +521,8 @@
 	export_constant(MF_NODYNAMICNPC);
 	export_constant(MF_NOBANK);
 	export_constant(MF_SPECIALPOPUP);
+	export_constant(MF_NOLOOTNORMALMOB);
+	export_constant(MF_NO_NPC_SELFDESTRUCTION_ON_ALL);
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);
@@ -7064,6 +7066,7 @@
 	export_constant(IG_REGIA_HUNTING_SET);
 	export_constant(IG_MYSTERIOUS_FRUIT_BOX);
 	export_constant(IG_ZONDA_SUPPORT_PACKAGE);
+	export_constant(IG_D_GW_EXTRACTOR);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
