@@ -80,14 +80,15 @@ struct unit_data* unit_bl2ud(struct block_list *bl)
 
 /**
  * Updates chase depending on situation:
- * If target out of sight -> drop target
  * If target in attack range -> attack
+ * If target out of sight -> drop target
  * Otherwise update chase path
  * @param bl: Moving bl
  * @param tick: Current tick
+ * @param fullcheck: If false, only check for attack, don't drop target or update chase path
  * @return Whether the chase path was updated (true) or current movement can continue (false)
  */
-bool unit_update_chase(block_list& bl, t_tick tick) {
+bool unit_update_chase(block_list& bl, t_tick tick, bool fullcheck) {
 
 	unit_data* ud = unit_bl2ud(&bl);
 
@@ -98,8 +99,20 @@ bool unit_update_chase(block_list& bl, t_tick tick) {
 	if (ud->target_to)
 		tbl = map_id2bl(ud->target_to);
 
+	// Reached destination, start attacking
+	if (tbl && tbl->m == bl.m && check_distance_bl(&bl, tbl, ud->chaserange) && status_check_visibility(&bl, tbl, false)) {
+		ud->to_x = bl.x;
+		ud->to_y = bl.y;
+		ud->target_to = 0;
+		// Aegis uses one before every attack, we should
+		// only need this one for syncing purposes.
+		clif_fixpos(bl);
+		if (ud->state.attack_continue)
+			unit_attack(&bl, tbl->id, ud->state.attack_continue);
+		return true;
+	}
 	// Cancel chase
-	if (tbl == nullptr || !status_check_visibility(&bl, tbl)) {
+	else if (tbl == nullptr || (fullcheck && !status_check_visibility(&bl, tbl, (bl.type == BL_MOB)))) {
 		ud->to_x = bl.x;
 		ud->to_y = bl.y;
 
@@ -113,27 +126,15 @@ bool unit_update_chase(block_list& bl, t_tick tick) {
 		}
 
 		ud->target_to = 0;
-	}
-	// Reached destination, start attacking
-	else if (tbl->m == bl.m && check_distance_bl(&bl, tbl, ud->chaserange)) {
-		if (ud->state.attack_continue) {
-			ud->target_to = 0;
-			// Aegis uses one before every attack, we should
-			// only need this one for syncing purposes. [Skotlex]
-			clif_fixpos(bl);
-			unit_attack(&bl, tbl->id, ud->state.attack_continue);
-		}
+		return true;
 	}
 	// Update chase path
-	else if (ud->walkpath.path_pos > 0) {
+	else if (fullcheck && ud->walkpath.path_pos > 0) {
 		unit_walktobl(&bl, tbl, ud->chaserange, ud->state.walk_easy | (ud->state.attack_continue ? 2 : 0));
-	}
-	// Still at start of walkpath, just start movement
-	else {
-		return false;
+		return true;
 	}
 
-	return true;
+	return false;
 }
 
 /**
@@ -160,11 +161,12 @@ bool unit_walktoxy_nextcell(block_list& bl, bool sendMove, t_tick tick) {
 		speed = status_get_speed(&bl);
 
 	if (speed > 0) {
-		// Monsters update their chase path one cell before reach their final destination
-		if (bl.type == BL_MOB && ud->target_to && ud->walkpath.path_pos == ud->walkpath.path_len - 1) {
+		// Monsters check if their target is in range each cell
+		if (bl.type == BL_MOB && ud->target_to) {
 			short tx = ud->to_x;
 			short ty = ud->to_y;
-			if (unit_update_chase(bl, tick))
+			// Monsters update their chase path one cell before reaching their final destination
+			if (unit_update_chase(bl, tick, (ud->walkpath.path_pos == ud->walkpath.path_len-1)))
 				return true;
 			// Continue moving, restore to_x and to_y
 			ud->to_x = tx;
@@ -215,7 +217,8 @@ int32 unit_walktoxy_sub(struct block_list *bl)
 
 	int32 i;
 
-	if (ud->target_to && ud->chaserange>1) {
+	// Monsters always target an adjacent tile even if ranged, no need to shorten the path
+	if (ud->target_to && ud->chaserange>1 && bl->type != BL_MOB) {
 		// Generally speaking, the walk path is already to an adjacent tile
 		// so we only need to shorten the path if the range is greater than 1.
 		// Trim the last part of the path to account for range,
@@ -223,7 +226,7 @@ int32 unit_walktoxy_sub(struct block_list *bl)
 		for (i = (ud->chaserange*10)-10; i > 0 && ud->walkpath.path_len>1;) {
 			ud->walkpath.path_len--;
 			enum directions dir = ud->walkpath.path[ud->walkpath.path_len];
-			if (direction_diagonal(dir) && bl->type != BL_MOB)
+			if (direction_diagonal(dir))
 				i -= MOVE_COST * 2; //When chasing, units will target a diamond-shaped area in range [Playtester]
 			else
 				i -= MOVE_COST;
@@ -413,7 +416,7 @@ TIMER_FUNC(unit_step_timer){
 	} else {
 		//If a player has target_id set and target is in range, attempt attack
 		struct block_list *tbl = map_id2bl(target_id);
-		if (!tbl || !status_check_visibility(bl, tbl)) {
+		if (!tbl || !status_check_visibility(bl, tbl, false)) {
 			return 0;
 		}
 		if(ud->stepskill_id == 0) {
@@ -712,7 +715,7 @@ static TIMER_FUNC(unit_walktoxy_timer)
 			ud->state.running = 0;
 	} else if (!ud->stepaction && ud->target_to) {
 		// Update target trajectory.
-		unit_update_chase(*bl, tick);
+		unit_update_chase(*bl, tick, true);
 	} else { // Stopped walking. Update to_x and to_y to current location [Skotlex]
 		ud->to_x = bl->x;
 		ud->to_y = bl->y;
@@ -3044,8 +3047,25 @@ static TIMER_FUNC(unit_attack_timer){
 
 	bl = map_id2bl(id);
 
-	if(bl && unit_attack_timer_sub(bl, tid, tick) == 0)
-		unit_unattackable(bl);
+	if (bl) {
+		// Monsters have a special visibility check at the end of their attack delay
+		// We don't want this to trigger on direct calls of this function
+		if (bl->type == BL_MOB && tid != INVALID_TIMER) {
+			unit_data* ud = unit_bl2ud(bl);
+			if (ud == nullptr)
+				return 0;
+			block_list* tbl = map_id2bl(ud->target);
+			if (tbl == nullptr)
+				return 0;
+			if (!status_check_visibility(bl, tbl, true)) {
+				unit_unattackable(bl);
+				return 0;
+			}
+		}
+		// Execute attack
+		if (unit_attack_timer_sub(bl, tid, tick) == 0)
+			unit_unattackable(bl);
+	}
 
 	return 0;
 }

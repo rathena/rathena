@@ -1613,6 +1613,9 @@ int32 mob_randomwalk(struct mob_data *md,t_tick tick)
 	   !status_has_mode(&md->status,MD_CANMOVE))
 		return 0;
 
+	// Make sure the monster has no target anymore, otherwise the walkpath will check for it
+	md->ud.target_to = 0;
+
 	r=rnd();
 	rdir=rnd()%4; // Randomize direction in which we iterate to prevent monster cluttering up in one corner
 	dx=r%(d*2+1)-d;
@@ -1717,7 +1720,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 {
 	struct block_list *tbl = nullptr, *abl = nullptr;
 	int32 mode;
-	int32 view_range, chase_range, can_move;
+	int32 view_range, can_move;
 
 	if(md->bl.prev == nullptr || md->status.hp == 0)
 		return false;
@@ -1740,14 +1743,10 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 		return false;
 	}
 
-	if (md->sc.getSCE(SC_BLIND)) {
+	if (md->sc.getSCE(SC_BLIND))
 		view_range = 1;
-		chase_range = 1;
-	}
-	else {
+	else
 		view_range = md->db->range2;
-		chase_range = md->db->range3;
-	}
 	mode = status_get_mode(&md->bl);
 
 	can_move = (mode&MD_CANMOVE) && unit_can_move(&md->bl);
@@ -1760,7 +1759,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 		bool iswalking = (md->ud.walktimer != INVALID_TIMER || md->ud.walkdelaytimer != INVALID_TIMER);
 		if (!tbl || tbl->m != md->bl.m ||
 			(md->ud.attacktimer == INVALID_TIMER && !status_check_skilluse(&md->bl, tbl, 0, 0)) ||
-			(iswalking && !(battle_config.mob_ai&0x1) && !check_distance_bl(&md->bl, tbl, chase_range)) ||
+			(iswalking && !(battle_config.mob_ai&0x1) && !check_distance_bl(&md->bl, tbl, md->db->range3)) ||
 			(
 				tbl->type == BL_PC &&
 				((((TBL_PC*)tbl)->state.gangsterparadise && !(mode&MD_STATUSIMMUNE)) ||
@@ -1837,7 +1836,6 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 				md->target_id = md->attacked_id; // set target
 				if (md->state.attacked_count)
 					md->state.attacked_count--; //Should we reset rude attack count?
-				chase_range = dist + md->db->range3; //To make sure the monster retaliates even outside chase range
 				tbl = abl; //Set the new target
 			}
 		}
@@ -1974,7 +1972,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 	}
 
 	// Normal attack / berserk skill is only used when target is in range
-	if (battle_check_range(&md->bl, tbl, min(md->status.rhw.range, chase_range)))
+	if (battle_check_range(&md->bl, tbl, md->status.rhw.range))
 	{
 		// Hiding is a special case because it prevents normal attacks but allows skill usage
 		// TODO: Some other states also have this behavior and should be investigated (e.g. NPC_SR_CURSEDCIRCLE)
@@ -2003,12 +2001,9 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 				md->ud.attackabletime = tick + md->status.adelay;
 			}
 		}
+		//Target still in attack range, no need to chase the target
 		return true;
 	}
-
-	//Target still in attack range, no need to chase the target
-	if(battle_check_range(&md->bl, tbl, min(md->status.rhw.range, chase_range)))
-		return true;
 
 	//Only update target cell / drop target after having moved at least "mob_chase_refresh" cells
 	if(md->ud.walktimer != INVALID_TIMER && (!can_move || md->ud.walkpath.path_pos <= battle_config.mob_chase_refresh)
@@ -2042,12 +2037,27 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 		return true;
 
 	// Follow up if possible.
-	// Monsters in Berserk state with attack range 1 or 2 always start chasing if they have a valid target to chase
-	// Other monsters only start chasing when target is in chase range
-	if ((md->state.skillstate != MSS_BERSERK || md->status.rhw.range > 2) && !mob_can_reach(md, tbl, chase_range)) {
+
+	// Officially when a monster cannot act, move or attack, the AI isn't processed at all.
+	// The attacked ID remains unprocessed, so that once the monster can act again it will process it at this point.
+	// Our code works quite different from that and we try to plan a chase ahead of time.
+	// If we would go ahead now and initiate a chase, it will kill the attack timer which is not good because we
+	// need to check for visibility at the end of it for monsters because that's when they actually drop target.
+	// However, we only process a monster's AI every 100ms instead of every 20ms like on official servers, so
+	// without planning a chase, a monster is easy to hitlock.
+	// For now we prevent processing this part of the code if an attack timer is still running and the monster
+	// cannot move yet.
+	if (md->ud.walktimer == INVALID_TIMER
+		&& md->ud.attacktimer != INVALID_TIMER
+		&& DIFF_TICK(md->ud.canmove_tick, tick) > 0)
+		return true;
+
+	// Monsters in Angry state only start chasing when target is in chase range
+	if (md->state.skillstate == MSS_ANGRY && !mob_can_reach(md, tbl, md->db->range3)) {
 		mob_unlocktarget(md, tick);
 		return true;
 	}
+
 	// Monsters can use chase skills before starting to walk
 	// So we need to change the state and check for a skill here already
 	// But only use skill if able to walk on next tick and not attempted a skill the last second

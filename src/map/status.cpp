@@ -2240,25 +2240,29 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
  * Checks whether the src can see the target
  * @param src:	Object using skill on target [PC|MOB|PET|HOM|MER|ELEM]
  * @param target: Object being targeted by src [PC|MOB|HOM|MER|ELEM]
+ * @param checkblind: Whether blind condition should be considered (sets view range to 1)
  * @return src can see (1) or target is invisible (0)
  * @author [Skotlex]
  */
-int32 status_check_visibility(struct block_list *src, struct block_list *target)
+int32 status_check_visibility(struct block_list *src, struct block_list *target, bool checkblind)
 {
 	int32 view_range;
 	status_change* tsc = status_get_sc(target);
 	switch (src->type) {
 		case BL_MOB:
-			if (((TBL_MOB*)src)->sc.getSCE(SC_BLIND))
-				view_range = 1;
-			else
-				view_range = ((TBL_MOB*)src)->db->range3;
+			view_range = ((TBL_MOB*)src)->db->range3;
 			break;
 		case BL_PET:
 			view_range = ((TBL_PET*)src)->db->range2;
 			break;
 		default:
 			view_range = AREA_SIZE;
+	}
+
+	if (checkblind) {
+		status_change* sc = status_get_sc(src);
+		if (sc && sc->getSCE(SC_BLIND))
+			view_range = 1;
 	}
 
 	if (src->m != target->m || !check_distance_bl(src, target, view_range))
