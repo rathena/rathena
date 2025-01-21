@@ -5129,7 +5129,7 @@ static enum e_damage_type clif_calc_delay( e_damage_type type, int32 div, int64 
 /*==========================================
  * Estimates walk delay based on the damage criteria. [Skotlex]
  *------------------------------------------*/
-static int32 clif_calc_walkdelay(struct block_list *bl,int32 delay, e_damage_type type, int64 damage, int32 div_)
+static int32 clif_calc_walkdelay(struct block_list *bl,int32 delay, e_damage_type type, int64 damage, int32 div_) {
 	if (damage < 1)
 		return 0;
 
