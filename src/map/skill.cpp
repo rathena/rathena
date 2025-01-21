@@ -1962,9 +1962,6 @@ int32 skill_additional_effect( struct block_list* src, struct block_list *bl, ui
 	case SO_VARETYR_SPEAR:
 		sc_start(src,bl, SC_STUN, 5 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
-	case SO_POISON_BUSTER:
-		sc_start(src,bl, SC_POISON, 5 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
-		break;
 	case GN_SPORE_EXPLOSION:
 		sc_start(src, bl, SC_SPORE_EXPLOSION, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
