@@ -27960,7 +27960,18 @@ Body:
       - Level: 5
         Time: 3100
     AfterCastActDelay: 1000
-    Duration1: 5000
+    Duration1: # !TODO: find exact values
+      - Level: 1
+        Time: 1000
+      - Level: 2
+        Time: 2000
+      - Level: 3
+        Time: 3000
+      - Level: 4
+        Time: 4000
+      - Level: 5
+        Time: 5000
+    Duration2: 5000
     Cooldown: 5000
     FixedCastTime:
       - Level: 1

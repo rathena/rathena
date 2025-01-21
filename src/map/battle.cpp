@@ -581,13 +581,6 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 #else
 					damage += (int64)(damage * tsc->getSCE(SC_VENOMIMPRESS)->val2 / 100);
 #endif
-				if (tsc->getSCE(SC_CLOUD_POISON)) {
-#ifdef RENEWAL
-					ratio += 5 * tsc->getSCE(SC_CLOUD_POISON)->val1;
-#else
-					damage += (int64)(damage * 5 * tsc->getSCE(SC_CLOUD_POISON)->val1 / 100);
-#endif
-				}
 				break;
 			case ELE_WIND:
 				if (tsc->getSCE(SC_WATER_INSIGNIA))
@@ -690,6 +683,10 @@ static int32 battle_calc_cardfix_debuff( status_change& tsc, int32 rh_ele ){
 		case ELE_WATER:
 			if (tsc.getSCE(SC_MISTYFROST))
 				ele_fix += 15;
+			break;
+		case ELE_POISON:
+			if (tsc.getSCE(SC_CLOUD_POISON))
+				ele_fix += 5 * tsc.getSCE(SC_CLOUD_POISON)->val1;
 			break;
 	}
 	return ele_fix;
@@ -8374,6 +8371,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case SO_CLOUD_KILL:
 						skillratio += -100 + 40 * skill_lv;
+						skillratio += sstatus->int_ * 3;
 						RE_LVL_DMOD(100);
 						if (sc) {
 							if (sc->getSCE(SC_CURSED_SOIL_OPTION))
