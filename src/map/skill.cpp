@@ -16065,11 +16065,6 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 		case UNT_SOLIDTRAP:
 		case UNT_SWIFTTRAP:
 		case UNT_FLAMETRAP:
-		case UNT_HYUN_ROKS_BREEZE:
-		case UNT_GRENADES_DROPPING:
-		case UNT_GROUND_GRAVITATION:
-		case UNT_MISSION_BOMBARD:
-		case UNT_JACK_FROST_NOVA:
 			skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 			break;
 
