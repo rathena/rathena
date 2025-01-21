@@ -5068,31 +5068,6 @@ int status_calc_homunculus_(struct homun_data *hd, uint8 opt)
 
 	status_calc_misc(&hd->bl, status, hom.level);
 
-	if((skill_lv = hom_checkskill(hd, MH_CLASSY_FLUTTER)) > 0) {
-		status->matk_min += 100 + 60* skill_lv;
-		status->matk_max += 100 + 60* skill_lv;
-	}
-
-	if((skill_lv = hom_checkskill(hd, MH_BRUSHUP_CLAW)) > 0) {
-		status->batk += 100 + 60* skill_lv;
-	}
-
-	if((skill_lv = hom_checkskill(hd, MH_POLISHING_NEEDLE)) > 0) {
-		status->matk_min += 50 + 20* skill_lv;
-		status->matk_max += 50 + 20* skill_lv;
-		status->batk += 100 + 40* skill_lv;
-	}
-
-	if((skill_lv = hom_checkskill(hd, MH_LICHT_GEHORN)) > 0) {
-		status->matk_min += 100 + 30* skill_lv;
-		status->matk_max += 100 + 30* skill_lv;
-		status->batk += 100 + 30* skill_lv;
-	}
-
-	if((skill_lv = hom_checkskill(hd, MH_BLAZING_LAVA)) > 0) {
-		status->batk += 100 + 60* skill_lv;
-	}
-
 	status_cpy(&hd->battle_status, status);
 	return 1;
 }
