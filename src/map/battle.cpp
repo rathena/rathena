@@ -8348,7 +8348,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 							skillratio += (sd ? sd->status.job_level * 5 : 0);
 						break;
 					case SO_POISON_BUSTER:
-						skillratio += -100 + 1000 + 300 * skill_lv + sstatus->int_ / 6; // !TODO: Confirm INT bonus
+						skillratio += -100 + 1000 + 300 * skill_lv;
+						skillratio += sstatus->int_;
 						if( tsc && tsc->getSCE(SC_CLOUD_POISON) )
 							skillratio += 200 * skill_lv;
 						RE_LVL_DMOD(100);
@@ -8451,9 +8452,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						if (status_get_lv(src) > 99) {
 							skillratio += sstatus->int_ * 5;
 						}
-						// !TODO: the buff could be here or could be part of the skillatk bonus
-						if( sc != nullptr && sc->getSCE( SC_COLORS_OF_HYUN_ROK_BUFF ) != nullptr )
-							skillratio += skillratio * 50 / 100;
 						RE_LVL_DMOD(100);
 						break;
 					case NPC_VENOMFOG:
@@ -9122,6 +9120,11 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			case AG_CRYSTAL_IMPACT_ATK:
 				if (sc->getSCE(SC_CLIMAX) && sc->getSCE(SC_CLIMAX)->val1 == 4)
 					i += 150;
+				break;
+			case SU_CN_METEOR:
+			case SU_CN_METEOR2:
+				if (sc->getSCE(SC_COLORS_OF_HYUN_ROK_BUFF) != nullptr)
+					i += sc->getSCE(SC_COLORS_OF_HYUN_ROK_BUFF)->val2;
 				break;
 		}
 

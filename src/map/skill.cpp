@@ -1962,9 +1962,6 @@ int32 skill_additional_effect( struct block_list* src, struct block_list *bl, ui
 	case SO_VARETYR_SPEAR:
 		sc_start(src,bl, SC_STUN, 5 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
-	case SO_POISON_BUSTER:
-		sc_start(src,bl, SC_POISON, 5 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
-		break;
 	case SO_CLOUD_KILL:
 		sc_start(src, bl, skill_get_sc(skill_id), 100, skill_lv, skill_get_time2(skill_id, skill_lv));
  		break;
@@ -13174,9 +13171,10 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			}
 			heal = heal * (100 + status_get_crt(src)) * status_get_lv(src) / 10000;
 			status_heal(bl, heal, 0, 0, 0);
-			clif_skill_nodamage(src, *bl, skill_id, heal);
+			clif_skill_nodamage(nullptr, *bl, AL_HEAL, heal);
 		}
 		else {
+			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 			int32 range = skill_get_splash(skill_id, skill_lv);
 			if( pc_checkskill( sd, SH_COMMUNE_WITH_KI_SUL ) > 0 || ( sc != nullptr && sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ) )
 				range += 2;
@@ -13215,20 +13213,18 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 
 			status_heal( bl, 0, 0, ap, 0 );
 		}else if( flag&1 ){
-			int32 range = skill_get_splash( SH_KI_SUL_RAMPAGE, skill_lv );
-			uint16 skill_lv2 = skill_lv;
+			int32 range = skill_get_splash( skill_id, skill_lv );
 
 			if( pc_checkskill( sd, SH_COMMUNE_WITH_KI_SUL ) > 0 || ( sc != nullptr && sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ) ){
 				range += 2;
-				skill_lv2 = skill_get_max( SH_KI_SUL_RAMPAGE );
 				// Set a flag for AP increase
 				flag |= 4;
 			}
 
-			clif_skill_nodamage( bl, *bl, SH_KI_SUL_RAMPAGE, skill_lv2 );
-			map_foreachinrange( skill_area_sub, bl, range, BL_CHAR, bl, SH_KI_SUL_RAMPAGE, skill_lv2, tick, flag|BCT_PARTY|SD_SPLASH|2, skill_castend_nodamage_id );
+			clif_skill_nodamage( src, *bl, skill_id, 0 );
+			map_foreachinrange( skill_area_sub, bl, range, BL_CHAR, bl, skill_id, skill_lv, tick, flag|BCT_PARTY|2, skill_castend_nodamage_id );
 		}else{
-			// TODO: no party check ?
+			// No party check required
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		}
@@ -13242,6 +13238,8 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			status_change_end(src, SC_COLORS_OF_HYUN_ROK_4);
 			status_change_end(src, SC_COLORS_OF_HYUN_ROK_5);
 			status_change_end(src, SC_COLORS_OF_HYUN_ROK_6);
+			// The skill also ends the buff that increases Catnip Meteor damage
+			status_change_end(src, SC_COLORS_OF_HYUN_ROK_BUFF);
 
 			clif_skill_nodamage(src, *src, skill_id, skill_lv);
 		}
@@ -16405,7 +16403,6 @@ int32 skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t
 		case UNT_SOLIDTRAP:
 		case UNT_SWIFTTRAP:
 		case UNT_FLAMETRAP:
-		case UNT_HYUN_ROKS_BREEZE:
 			skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 			break;
 #ifdef RENEWAL
@@ -17136,6 +17133,10 @@ int32 skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t
 				sc_start( ss, bl, skill_get_sc( sg->skill_id ), 100, sg->skill_lv, sg->interval + 100 );
 			} 
 			break;
+
+		case UNT_HYUN_ROKS_BREEZE:
+			skill_attack(skill_get_type(sg->skill_id), ss, ss, bl, sg->skill_id, sg->skill_lv, tick, SD_ANIMATION);
+ 			break;
 	}
 
 	if (bl->type == BL_MOB && ss != bl)
@@ -18535,7 +18536,8 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 			break;
 		case SH_TEMPORARY_COMMUNION:
 			if (pc_checkskill(&sd, SH_COMMUNE_WITH_CHUL_HO) == 0 && pc_checkskill(&sd, SH_COMMUNE_WITH_HYUN_ROK) == 0 && pc_checkskill(&sd, SH_COMMUNE_WITH_KI_SUL) == 0) {
-				clif_skill_fail( sd, skill_id, USESKILL_FAIL_CONDITION );
+				clif_skill_fail( sd, skill_id, USESKILL_FAIL_SH_TEMPORARY_COMMUNION );
+				clif_skill_fail( sd, skill_id, USESKILL_FAIL );
 				return false;
 			}
 			break;

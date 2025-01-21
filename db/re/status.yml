@@ -6563,6 +6563,8 @@ Body:
   - Status: Tunaparty
     Icon: EFST_TUNAPARTY
     DurationLookup: SU_TUNAPARTY
+    Flags:
+      NoDispell: true
   - Status: Shrimp
     Icon: EFST_SHRIMP
     DurationLookup: SU_BUNCHOFSHRIMP
@@ -7524,20 +7526,17 @@ Body:
       bonus bVariableCastrate,-80;
   - Status: OverBrandReady
     Icon: EFST_OVERBRANDREADY
-    Flags:
   - Status: Poison_Mist
     Icon: EFST_POISON_MIST
     DurationLookup: MH_POISON_MIST
     CalcFlags:
       Flee: true
-    Flags:
   - Status: Stone_Wall
     Icon: EFST_STONE_WALL
     DurationLookup: MH_STEINWAND
     CalcFlags:
       Def: true
       Mdef: true
-    Flags:
   - Status: Cloud_Poison
     Icon: EFST_CLOUD_POISON
     DurationLookup: SO_CLOUD_KILL
@@ -9590,6 +9589,11 @@ Body:
       Patk: true
       Smatk: true
       Hplus: true
+    Flags:
+      # NoClearbuff: true  # !TODO
+      NoDispell: true
+      # NoBanishingBuster: true  # !TODO
+      # NoClearance: true  # !TODO
   - Status: Marine_Festival
     Icon: EFST_MARINE_FESTIVAL
     DurationLookup: SH_MARINE_FESTIVAL_OF_KI_SUL
@@ -9676,6 +9680,12 @@ Body:
     CalcFlags:
       Patk: true
       Smatk: true
+    # Flags:  # !TODO: NoDispell ?
   - Status: Blessing_of_M_C_Debuff
     Icon: EFST_BLESSING_OF_M_C_DEBUFF
     DurationLookup: SH_BLESSING_OF_MYSTICAL_CREATURES
+    Flags:
+      # NoClearbuff: true  # !TODO
+      NoDispell: true
+      # NoBanishingBuster: true  # !TODO
+      # NoClearance: true  # !TODO
