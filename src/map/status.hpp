@@ -1284,7 +1284,7 @@ enum sc_type : int16 {
 	SC_RUSH_QUAKE2,
 	
 	SC_G_LIFEPOTION,
-	
+
 	// Hyper Novice
 	SC_HNNOWEAPON,
 	SC_SHIELDCHAINRUSH,
@@ -1304,12 +1304,6 @@ enum sc_type : int16 {
 	SC_GRENADE_FRAGMENT_6,
 	SC_AUTO_FIRING_LAUNCHER,
 	SC_HIDDEN_CARD,
-
-	// Shinkiro/Shiranui
-	SC_SHADOW_CLOCK,
-	SC_SHINKIROU_CALL,
-	SC_NIGHTMARE,
-	SC_SBUNSHIN,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled

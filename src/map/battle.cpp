@@ -1701,8 +1701,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		}
 #endif
 
-		if (tsc->getSCE(SC_SHADOW_CLOCK) && (flag&(BF_WEAPON|BF_MAGIC)))
-			damage -= damage / 4; //TODO exact reduction unknown [Muh]
 		if (tsc->getSCE(SC_DEFENDER) &&
 			skill_id != NJ_ZENYNAGE && skill_id != KO_MUCHANAGE &&
 #ifdef RENEWAL
@@ -2671,11 +2669,6 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 		case BO_ACIDIFIED_ZONE_WIND_ATK:
 		case NW_THE_VIGILANTE_AT_NIGHT:
 		case KO_HAPPOKUNAI:
-		case SS_FUUMAKOUCHIKU:
-		case SS_FUUMAKOUCHIKU_BLASTING:
-		case SS_KUNAIKAITEN:
-		case SS_KUNAIKUSSETSU:
-		case SS_HITOUAKUMU:
 			return BF_LONG;
 		case NJ_KIRIKAGE: // Cast range mimics NJ_SHADOWJUMP but damage is considered melee
 		case GC_CROSSIMPACT: // Cast range is 7 cells and player jumps to target but skill is considered melee
@@ -2685,7 +2678,6 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 		case MT_RUSH_QUAKE: // 9 cell cast range.
 		case ABC_UNLUCKY_RUSH: // 7 cell cast range.
 		case MH_THE_ONE_FIGHTER_RISES: // 7 cell cast range.
-		case SS_SHIMIRU: // 11 cell cast range.
 		//case ABC_DEFT_STAB: // 2 cell cast range???
 		case NPC_MAXPAIN_ATK:
 			return BF_SHORT;
@@ -2906,8 +2898,6 @@ static bool is_skill_using_arrow(struct block_list *src, int skill_id)
 		return ((sd && sd->state.arrow_atk) || (!sd && ((skill_id && skill_get_ammotype(skill_id)) || sstatus->rhw.range>3)) 
 				|| (skill_id == HT_PHANTASMIC) 
 				|| (skill_id == GS_GROUNDDRIFT)
-				|| (skill_id == SS_KUNAIKUSSETSU)
-				|| (skill_id == SS_KUNAIKAITEN)
 				|| (skill_id == WM_SEVERE_RAINSTORM_MELEE)
 				);
 	} else
@@ -3546,12 +3536,6 @@ int battle_get_weapon_element(struct Damage* wd, struct block_list *src, struct 
 				}
 			}
 			break;
-		case SS_FUUMASHOUAKU:
-		case SS_FUUMAKOUCHIKU:
-		case SS_FUUMAKOUCHIKU_BLASTING:
-				if (sd)
-					element = sd->bonus.arrow_ele;
-			break;
 	}
 
 	if (sc && sc->getSCE(SC_GOLDENE_FERSE) && ((!skill_id && (rnd() % 100 < sc->getSCE(SC_GOLDENE_FERSE)->val4)) || skill_id == MH_STAHL_HORN))
@@ -3630,10 +3614,6 @@ int battle_get_magic_element(struct block_list* src, struct block_list* target, 
 		case TR_SOUNDBLEND:
 			if (sd)
 				element = sd->bonus.arrow_ele;
-			break;
-		case SS_ANKOKURYUUAKUMU:
-			if (mflag & SKILL_ALTDMG_FLAG)
-				element = ELE_FIRE;
 			break;
 	}
 
@@ -6081,59 +6061,6 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += 5 * sstatus->con;
 			RE_LVL_DMOD(100);
 			break;
-		case SS_SHIMIRU:
-			skillratio += -100 + 700 * skill_lv + 5 * sstatus->con;
-			RE_LVL_DMOD(100);
-			break;
-		case SS_KAGEGARI:
-			skillratio += -100 + 500 + (400 + pc_checkskill(sd, SS_KAGEGISSEN) * 5) * skill_lv + 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case SS_KAGEAKUMU:
-		case SS_HITOUAKUMU:
-			skillratio += -100 + 18000 + 5 * sstatus->pow;
-			if (tsc && tsc->getSCE(SC_NIGHTMARE))
-				skillratio += skillratio / 2;
-			RE_LVL_DMOD(100);
-			break;
-		case SS_KAGENOMAI:
-			skillratio += -100 + 400 + (550 + pc_checkskill(sd, SS_KAGEGARI) * 50) * skill_lv + 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			if (wd->miscflag & SKILL_ALTDMG_FLAG)
-				skillratio = skillratio * 3 / 10;
-			break;
-		case SS_FUUMASHOUAKU:
-			skillratio += -100 + 700 + (200 + pc_checkskill(sd, SS_FUUMAKOUCHIKU) * 5) * skill_lv + 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case SS_FUUMAKOUCHIKU:
-			skillratio += -100 + 600 + (400 + pc_checkskill(sd, SS_FUUMASHOUAKU) * 30) * skill_lv + 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case SS_FUUMAKOUCHIKU_BLASTING:
-			skillratio += -100 + 800 + (600 + pc_checkskill(sd, SS_FUUMASHOUAKU) * 30) * skill_lv + 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case SS_KUNAIWAIKYOKU:
-			skillratio += -100 + 300 + (600 + pc_checkskill(sd, SS_KUNAIKUSSETSU) * 10) * skill_lv + 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			if (wd->miscflag & SKILL_ALTDMG_FLAG)
-				skillratio = skillratio * 3 / 10;
-			break;
-		case SS_KUNAIKUSSETSU:
-			skillratio += -100 + 200 + (360 + pc_checkskill(sd, SS_KUNAIKAITEN) * 10) * skill_lv + 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case SS_KUNAIKAITEN:
-			skillratio += -100 + 800 + (700 + pc_checkskill(sd, SS_KUNAIWAIKYOKU) * 70) * skill_lv + 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case SS_KAGEGISSEN:
-			skillratio += -100 + 1600 + (700 + pc_checkskill(sd, SS_KAGENOMAI) * 100) * skill_lv + 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			if (wd->miscflag & SKILL_ALTDMG_FLAG)
-				skillratio = skillratio * 3 / 10;
-			break;
 	}
 	return skillratio;
 }
@@ -7841,36 +7768,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case WZ_WATERBALL:
 						skillratio += 30 * skill_lv;
-						break;
-					case SS_TOKEDASU:
-						skillratio += -100 + 700 * skill_lv + 5 * sstatus->con;
-						RE_LVL_DMOD(100);
-						break;
-					case SS_SEKIENHOU:
-						skillratio += -100 + 850 + (1250 + 70 * pc_checkskill(sd, SS_ANTENPOU)) * skill_lv + 5 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						break;
-					case SS_REIKETSUHOU:
-						skillratio += -100 + 250 + (550 + 40 * pc_checkskill(sd, SS_ANTENPOU)) * skill_lv + 5 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						break;
-					case SS_KINRYUUHOU:
-						skillratio += -100 + 300 + (400 + 15 * pc_checkskill(sd, SS_ANTENPOU)) * skill_lv + 5 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						break;
-					case SS_ANKOKURYUUAKUMU:
-						skillratio += -100 + 15500 * skill_lv + 5 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						break;
-					case SS_RAIDENPOU:
-						skillratio += -100 + 600 + (1300 + 70 * pc_checkskill(sd, SS_ANTENPOU)) * skill_lv + 5 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						break;
-					case SS_ANTENPOU:
-						skillratio += -100 + 450 + 950 * skill_lv + 5 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						if (mflag & SKILL_ALTDMG_FLAG)
-							skillratio = skillratio * 3 / 10;
 						break;
 					case WZ_STORMGUST:
 #ifdef RENEWAL

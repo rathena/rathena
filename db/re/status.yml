@@ -8928,20 +8928,3 @@ Body:
     DurationLookup: BO_HELL_DUSTY
     CalcFlags:
       All: true
-  - Status: Shadow_Clock
-    Icon: EFST_SHADOW_CLOCK
-    DurationLookup: SS_TOKEDASU
-    CalcFlags:
-      Speed: true
-  - Status: Shinkirou_Call
-    Icon: EFST_SBUNSHIN
-    DurationLookup: SS_SHINKIROU
-    CalcFlags:
-      Speed: true
-  - Status: Nightmare
-    Icon: EFST_NIGHTMARE
-    DurationLookup: SS_KAGEGARI
-    Flags:
-      Debuff: true
-      BlEffect: true
-      DisplayPc: true

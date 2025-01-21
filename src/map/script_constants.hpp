@@ -1911,12 +1911,6 @@
 	export_constant(SC_AUTO_FIRING_LAUNCHER);
 	export_constant(SC_HIDDEN_CARD);
 
-	// Shinkiro/Shiranui
-	export_constant(SC_SHADOW_CLOCK);
-	export_constant(SC_SHINKIROU_CALL);
-	export_constant(SC_NIGHTMARE);
-	export_constant(SC_SBUNSHIN);
-
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
@@ -10107,8 +10101,6 @@
 	export_constant(UNT_JACK_FROST_NOVA);
 	export_constant(UNT_GROUND_GRAVITATION);
 	export_constant(UNT_KUNAIWAIKYOKU);
-	export_constant(UNT_KUNAIKAITEN);
-
 	export_constant(UNT_GD_LEADERSHIP);
 	export_constant(UNT_GD_GLORYWOUNDS);
 	export_constant(UNT_GD_SOULCOLD);
