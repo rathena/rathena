@@ -34,6 +34,7 @@
 #include "itemdb.hpp"
 #include "log.hpp"
 #include "map.hpp"
+#include "mapreg.hpp" //Mir4 Mining Sys (Hyroshima)
 #include "mercenary.hpp"
 #include "mob.hpp"
 #include "npc.hpp"
@@ -20091,8 +20092,14 @@ void skill_weaponrefine( map_session_data& sd, int32 idx ){
 
 	if (idx >= 0 && idx < MAX_INVENTORY)
 	{
-		struct item_data *ditem = sd.inventory_data[idx];
+		struct item_data* ditem = sd.inventory_data[idx];
 		struct item* item = &sd.inventory.u.items_inventory[idx];
+
+		//Mir4 Mining Sys (Hyroshima)
+		if (item->nameid == mapreg_readreg(reference_uid(add_str("$SMsys_reqeqp"), 0))) {
+			clif_displaymessage(sd.fd, "Only the master of forge can refine this item!\n");
+			return;
+		}
 
 		if(item->nameid > 0 && ditem->type == IT_WEAPON) {
 			if( ditem->flag.no_refine || ditem->weapon_level < 1 ) { 	// if the item isn't refinable

@@ -9617,6 +9617,8 @@ BUILDIN_FUNC(getequippercentrefinery)
  * successrefitem <equipment slot>{,<count>{,<char_id>}}
  *------------------------------------------*/
 BUILDIN_FUNC(successrefitem) {
+	int pass = 0; //Mir4 Mining Sys (Hyroshima)
+	int64 ichk = 0; //Mir4 Mining Sys (Hyroshima)
 	short i = -1, up = 1;
 	int32 pos;
 	TBL_PC *sd;
@@ -9635,6 +9637,18 @@ BUILDIN_FUNC(successrefitem) {
 		i = pc_checkequip(sd,equip_bitmask[pos]);
 	if (i >= 0) {
 		uint32 ep = sd->inventory.u.items_inventory[i].equip;
+		
+		//Mir4 Mining Sys (Hyroshima)
+		if (script_hasdata(st, 5)){
+			pass = script_getnum(st,5);
+			ichk = mapreg_readreg(reference_uid(add_str("$SMsys_reqeqp"),0));
+
+			if(sd->inventory_data[i]->nameid == ichk && !pass){
+				clif_displaymessage(sd->fd, "Only the master of forge can refine this item!\n");
+				script_pushint( st, 0 );
+				return SCRIPT_CMD_FAILURE;
+			}
+		}
 
 		//Logs items, got from (N)PC scripts [Lupus]
 		log_pick_pc(sd, LOG_TYPE_SCRIPT, -1, &sd->inventory.u.items_inventory[i]);
@@ -18644,6 +18658,16 @@ BUILDIN_FUNC(setnpcdisplay)
 	struct npc_data* nd;
 
 	name = script_getstr(st,2);
+	
+	//Mir4 Mining Sys
+	if(!atoi(name)) nd = npc_name2id(name); // "<npc name>"
+	else nd = map_id2nd(st->oid); // "<npc_id> getnpcid()"
+
+	if( nd == NULL )
+	{// not found
+		script_pushint(st,1);
+		return SCRIPT_CMD_SUCCESS;
+	}
 
 	if( script_hasdata(st,4) )
 		class_ = script_getnum(st,4);
@@ -18654,13 +18678,13 @@ BUILDIN_FUNC(setnpcdisplay)
  		newname = script_getstr(st, 3);
 	else
  		class_ = script_getnum(st, 3);
-
-	nd = npc_name2id(name);
-	if( nd == nullptr )
-	{// not found
-		script_pushint(st,1);
-		return SCRIPT_CMD_SUCCESS;
-	}
+	
+//	nd = npc_name2id(name);
+//	if( nd == nullptr )
+//	{// not found
+//		script_pushint(st,1);
+//		return SCRIPT_CMD_SUCCESS;
+//	}
 
 	// update npc
 	if( newname )
@@ -27274,6 +27298,9 @@ BUILDIN_FUNC( camerainfo ){
 	}
 
 	clif_camerainfo( sd, false, script_getnum( st, 2 ) / 100.0f, script_getnum( st, 3 ) / 100.0f, script_getnum( st, 4 ) / 100.0f );
+	//Mir4 Mining Sys
+	if(script_getnum(st,6) > -1)
+		unit_setdir( &sd->bl, map_calc_dir(&sd->bl, script_getnum(st,6), script_getnum(st,7) ));
 
 	return SCRIPT_CMD_SUCCESS;
 #endif
@@ -28782,6 +28809,22 @@ BUILDIN_FUNC(preg_match) {
 #endif
 }
 
+/** Mir4 Mining Sys (Hyroshima)
+ *
+ * moveframe(<number frame>, <charid optional>) (Tio Akima)
+ */
+BUILDIN_FUNC(moveframe)
+{
+	TBL_PC *sd;
+	int n = 0;
+
+	n = script_getnum(st,2);
+	if(!script_nick2sd(3,sd) || !n) return SCRIPT_CMD_FAILURE;
+	clif_frame(&sd->bl, n);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /// script command definitions
 /// for an explanation on args, see add_buildin_func
 struct script_function buildin_func[] = {
@@ -28796,6 +28839,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(select,"s*"), //for future jA script compatibility
 	BUILDIN_DEF(prompt,"s*"),
 	//
+	BUILDIN_DEF(moveframe,"i?"),	//Mir4 Mining Sys (Tio Akima)
 	BUILDIN_DEF(goto,"l"),
 	BUILDIN_DEF(callsub,"l*"),
 	BUILDIN_DEF(callfunc,"s*"),
@@ -28881,7 +28925,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getequipweaponlv,"??"),
 	BUILDIN_DEF(getequiparmorlv, "??"),
 	BUILDIN_DEF(getequippercentrefinery,"i?"),
-	BUILDIN_DEF(successrefitem,"i??"),
+	BUILDIN_DEF(successrefitem,"i???"),	//Mir4 Mining Sys Edited
 	BUILDIN_DEF(failedrefitem,"i?"),
 	BUILDIN_DEF(downrefitem,"i??"),
 	BUILDIN_DEF(statusup,"i?"),
@@ -29451,7 +29495,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(identifyall,"??"),
 	BUILDIN_DEF(is_guild_leader,"?"),
 	BUILDIN_DEF(is_party_leader,"?"),
-	BUILDIN_DEF(camerainfo,"iii?"),
+	BUILDIN_DEF(camerainfo,"iii???"),	//Mir4 Mining Sys Edited
 
 	BUILDIN_DEF(achievement_condition,"i"),
 	BUILDIN_DEF(getinstancevar,"ri"),

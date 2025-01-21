@@ -1534,5 +1534,8 @@ void clif_mob_hat_effect_hub_remove( struct mob_data *md, map_session_data* sd )
 void clif_hat_effect_single_npc(struct block_list* bl, uint16 effectId, bool enable);
 void clif_hat_effect_npc(struct block_list* src, struct block_list* bl, bool enable, enum send_target target );
 
+//Mir4 Mining Sys (Hyroshima)
+void clif_frame(struct block_list* bl, int n);
+
 #endif /* CLIF_HPP */
 

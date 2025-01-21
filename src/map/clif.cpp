@@ -44,6 +44,7 @@
 #include "log.hpp"
 #include "mail.hpp"
 #include "map.hpp"
+#include "mapreg.hpp" //Mir4 Mining Sys (Hyroshima)
 #include "mercenary.hpp"
 #include "mob.hpp"
 #include "npc.hpp"
@@ -22817,6 +22818,12 @@ void clif_parse_refineui_refine( int32 fd, map_session_data* sd ){
 		return;
 	}
 
+	//Mir4 Mining Sys (Hyroshima)
+	if (sd->inventory_data[index]->nameid == mapreg_readreg(reference_uid(add_str("$SMsys_reqeqp"),0))){
+		clif_displaymessage(sd->fd, "Only the master of forge can refine this item!\n");
+		return;
+	}
+
 	// Delete the required material
 	if( pc_delitem( sd, j, 1, 0, 0, LOG_TYPE_CONSUME ) ){
 		return;
@@ -26142,6 +26149,26 @@ void do_init_clif(void) {
 #endif
 
 	delay_clearunit_ers = ers_new(sizeof(struct block_list),"clif.cpp::delay_clearunit_ers",ERS_OPT_CLEAR);
+}
+
+//Mir4 Mining Sys (Hyroshima)
+/*================================================
+ tells the client that `bl` will move the frame (Tio Akima)
+----------------------------------------------*/
+void clif_frame(struct block_list* bl, int n)
+{
+	unsigned char buf[32];
+	nullpo_retv(bl);
+
+	WBUFW(buf, 0) = 0x8a;
+	WBUFL(buf, 2) = bl->id;
+	WBUFB(buf,26) = n;
+	clif_send(buf, packet_len(0x8a), bl, AREA);
+
+	if(disguised(bl)) {
+		WBUFL(buf, 2) = disguised_bl_id( bl->id );
+		clif_send(buf, packet_len(0x8a), bl, SELF);
+	}
 }
 
 void do_final_clif(void) {

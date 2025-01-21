@@ -88,13 +88,8 @@ int32 npc_get_new_npc_id(void) {
 	}
 }
 
-static DBMap* ev_db; // const char* event_name -> struct event_data*
-static DBMap* npcname_db; // const char* npc_name -> struct npc_data*
-
-struct event_data {
-	struct npc_data *nd;
-	int32 pos;
-};
+DBMap* ev_db; // const char* event_name -> struct event_data*
+DBMap* npcname_db; // const char* npc_name -> struct npc_data*
 
 static struct eri *timer_event_ers; //For the npc timer data. [Skotlex]
 
@@ -3422,7 +3417,8 @@ static int32 npc_unload_ev(DBKey key, DBData *data, va_list ap)
 
 //Chk if npc matches src_id, then unload.
 //Sub-function used to find duplicates.
-static int32 npc_unload_dup_sub(struct npc_data* nd, va_list args)
+//static int32 npc_unload_dup_sub(struct npc_data* nd, va_list args)
+int32 npc_unload_dup_sub(struct npc_data* nd, va_list args)
 {
 	int32 src_id;
 

@@ -243,6 +243,14 @@ struct npc_data {
 struct eri;
 extern struct eri *npc_sc_display_ers;
 
+extern DBMap* ev_db; // const char* event_name -> struct event_data*
+extern DBMap* npcname_db; // const char* npc_name -> struct npc_data*
+
+struct event_data {
+	struct npc_data *nd;
+	int pos;
+};
+
 #define START_NPC_NUM 110000000
 
 enum e_job_types
@@ -1833,6 +1841,7 @@ int32 npc_duplicate4instance(struct npc_data *snd, int16 m);
 int32 npc_instanceinit(struct npc_data* nd);
 int32 npc_instancedestroy(struct npc_data* nd);
 int32 npc_cashshop_buy(map_session_data *sd, t_itemid nameid, int32 amount, int32 points);
+int32 npc_unload_dup_sub(struct npc_data *nd, va_list args);
 
 void npc_shop_currency_type(map_session_data *sd, struct npc_data *nd, int32 cost[2], bool display);
 

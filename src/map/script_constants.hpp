@@ -8431,6 +8431,194 @@
 	export_constant_npc(JT_ROZ_MQ_MOCLORD);
 	export_constant_npc(JT_ROZ_MQ_SKULD);
 	export_constant_npc(JT_NEW_NPC_3RD_END);
+	//-- Custom NPC
+	export_constant(JT_4_Helper_Desk);
+	export_constant(JT_4_vending_machine);
+	export_constant(JT_BoardCustom);
+	export_constant(JT_MvpNpc);
+	export_constant(JT_Nevermore);
+	export_constant(JT_cash_drop_machine);
+	export_constant(JT_guildpack);
+	export_constant(JT_Healer);
+	export_constant(JT_OdinNpc);
+	export_constant(JT_JobMaster);
+	export_constant(JT_Lucky_Roulette);
+	export_constant(JT_Ban);
+	export_constant(JT_4_F_OMNIKNIGHT);
+	export_constant(JT_dark_atros);
+	export_constant(JT_4_vr_book_blue);
+	export_constant(JT_4_ragfes_02);
+	export_constant(JT_Poseidon);
+	export_constant(JT_Zeus);
+	export_constant(JT_HAZ_HELA);
+	export_constant(JT_HAZ_ODIN);
+	export_constant(JT_4_f_faewoman3);
+	export_constant(JT_GoldCard);
+	export_constant(JT_NPC_CUSTOM_18);
+	export_constant(JT_Goku);
+	export_constant(JT_Cell);
+	
+	//-- Custom
+	export_constant(JT_ZRO_Board);
+	export_constant(JT_ZRO_CASHG);
+	export_constant(JT_ZRO_CG);
+	export_constant(JT_ZRO_Chicky);
+	export_constant(JT_ZRO_ETCG);
+	
+	//-- Farming
+	export_constant(JT_ZRO_Farm00);
+	export_constant(JT_ZRO_Farm01);
+	export_constant(JT_ZRO_Farm02);
+	export_constant(JT_ZRO_Farm03);
+	
+	//-- Mining
+	export_constant(JT_MINERAL1);
+	export_constant(JT_MINERAL2);
+	export_constant(JT_MINERAL3);
+	export_constant(JT_MINERAL4);
+	export_constant(JT_MINERAL5);
+	export_constant(JT_M4MINING);
+	
+	//-- Main 01
+	export_constant(JT_ZRO_Gold);
+	export_constant(JT_ZRO_JMaster);
+	export_constant(JT_ZRO_Job);
+	export_constant(JT_ZRO_Machine);
+	export_constant(JT_ZRO_MISCG);
+	export_constant(JT_ZRO_Mission);
+	export_constant(JT_ZRO_Mvp);
+	export_constant(JT_ZRO_NURSE);
+	export_constant(JT_ZRO_Quest);
+	export_constant(JT_ZRO_Roulette);
+	export_constant(JT_ZRO_StarB);
+	export_constant(JT_ZRO_StarBox);
+	export_constant(JT_ZRO_StarC);
+	export_constant(JT_ZRO_Stone);
+	export_constant(JT_ZRO_TOOL);
+	export_constant(JT_ZRO_Treasure);
+	export_constant(JT_ZRO_WARP);
+	export_constant(JT_ZRO_WB);
+	export_constant(JT_ZRO_Wizard);
+	export_constant(JT_ZRO_Robe);
+	export_constant(JT_ZRO_Smith);
+
+	//-- NPC Quest
+	export_constant(JT_4_m_fairyscholar_dirty);
+	export_constant(JT_4_m_fae_sage);
+	export_constant(JT_1_m_faerogue);
+	export_constant(JT_4_f_faenoble);
+	export_constant(JT_4_ep19_juncea_d);
+	
+	//-- Worldboss
+	export_constant(JT_HAZ_CHRONOS);
+	
+	//-- Time Rift
+	export_constant(JT_TITAN_01);
+	export_constant(JT_TITAN_02);
+	export_constant(JT_TITAN_03);
+	//-- Part 2 Rift
+	export_constant(JT_HAZ_AINZ);
+	export_constant(JT_HAZ_ALBEDO);
+	export_constant(JT_HAZ_MBFIORE);
+	export_constant(JT_HAZ_MOMON);
+	export_constant(JT_HAZ_NARBERA);
+	export_constant(JT_HAZ_SHALLTEAR);
+	
+	//-- Mvp Pets --
+	export_constant(JT_Dark_Dracula);
+	export_constant(JT_Dark_Mistress);
+	export_constant(JT_Dark_AmonRA);
+	export_constant(JT_Dark_Baphomet);
+	export_constant(JT_Dark_Doppelganger);
+	export_constant(JT_Dark_Drake);
+	export_constant(JT_Dark_Eddga);
+	export_constant(JT_Dark_Moonlight);
+	export_constant(JT_Dark_Phreeoni);
+	export_constant(JT_Dark_TurtleGeneral);
+	export_constant(JT_Dark_GoldenBug);
+	export_constant(JT_Dark_Kraken);
+	export_constant(JT_Dark_LadyTanee);
+	export_constant(JT_Dark_Maya);
+	export_constant(JT_Dark_OrcHero);
+	export_constant(JT_Dark_OrcLord);
+	export_constant(JT_Dark_Osiris);
+	export_constant(JT_Dark_Pharaoh);
+	export_constant(JT_Dark_TaoGunka);
+	
+	//-- Mobs Naruto
+	export_constant(JT_Deidara);
+	export_constant(JT_Hidan);
+	export_constant(JT_Itachi);
+	export_constant(JT_Kakuzu);
+	export_constant(JT_Kisame);
+	export_constant(JT_Konan);
+	export_constant(JT_Nagato);
+	export_constant(JT_ObitoOrangeMask);
+	export_constant(JT_Pain);
+	export_constant(JT_Sasori);
+	export_constant(JT_Zetsu);
+	
+	//-- Chicken
+	export_constant(JT_Chicken);
+	export_constant(JT_ChickenA);
+	export_constant(JT_ChickenB);
+	export_constant(JT_ChickenC);
+	export_constant(JT_ChickenD);
+	export_constant(JT_ChickenE);
+	export_constant(JT_ChickenF);
+	
+	//-- Monster Arena
+	export_constant(JT_AR_agni_boss);
+	export_constant(JT_AR_Airboat_Boss);
+	export_constant(JT_AR_Airboat_LEECH);
+	export_constant(JT_AR_Airboat_Mos);
+	export_constant(JT_AR_Airboat_Tree);
+	export_constant(JT_AR_Airboat_Worm);
+	export_constant(JT_AR_ash_toad);
+	export_constant(JT_AR_ashhopper);
+	export_constant(JT_AR_burning_fang);
+	export_constant(JT_AR_firewind_kite);
+	export_constant(JT_AR_grey_goat);
+	export_constant(JT_AR_grey_wolf);
+	export_constant(JT_AR_hnignun);
+	export_constant(JT_AR_hot_molar);
+	export_constant(JT_AR_lava_toad);
+	export_constant(JT_AR_SAKRAY);
+	export_constant(JT_AR_volcaring);
+	
+	//-- BOSS
+	export_constant(JT_ep20_demigod_lasgand);
+	export_constant(JT_ep20_jorgan_guardian);
+	export_constant(JT_ep20_jorgan_healer);
+	export_constant(JT_ep20_jorgan_warlock);
+	
+	//-- Training
+	export_constant(JT_HAZ_DUMMY);
+	export_constant(JT_HAZ_EMPERIUM);
+	
+	//-- Warp
+	export_constant(JT_ZRO_Warp01);
+	export_constant(JT_ZRO_Warp02);
+	export_constant(JT_ZRO_Warp03);
+	
+	//-- New
+	export_constant(JT_ZRO_M_Board);
+	export_constant(JT_ZRO_M_Mail);
+	export_constant(JT_ZRO_M_Meg);
+	export_constant(JT_ZRO_M_MegExp);
+	export_constant(JT_ZRO_M_MVP);
+	export_constant(JT_ZRO_M_Small);
+	export_constant(JT_ZRO_F_03);
+	export_constant(JT_ZRO_F_B01);
+	export_constant(JT_ZRO_F_B02);
+	export_constant(JT_ZRO_F_B03);
+	export_constant(JT_ZRO_Style);
+	
+	//-- MVP Treasure
+	export_constant(JT_MVP_TREASURE_COMUM);
+	export_constant(JT_MVP_TREASURE_RARE);
+	export_constant(JT_MVP_TREASURE_EPIC);
+	
 	#undef export_constant_npc
 
 	/* special effects */

@@ -9,4 +9,6 @@
  **/
 
 //BUILDIN_DEF(example,""),
-BUILDIN_DEF(getmonsterdamage,"i"),
+
+BUILDIN_DEF(duplicatenpc, "ssssiii???"),
+BUILDIN_DEF(duplicateremove, "?"),BUILDIN_DEF(getmonsterdamage,"i"),
