@@ -4765,6 +4765,12 @@ wall), the character is pushed only up to the obstacle.
 
 ---------------------------------------
 
+*kick({<char_id>});
+
+This command kicks the character from the map server, just like @kick.
+
+---------------------------------------
+
 *recalculatestat;
 
 This command will force a stat recalculation for the attached player.
