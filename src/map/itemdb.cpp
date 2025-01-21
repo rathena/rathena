@@ -1454,7 +1454,7 @@ std::string ItemDatabase::create_item_icon_for_mes( std::shared_ptr<item_data>& 
 
 	// Feature is disabled
 	if( !battle_config.feature_mesitemicon ){
-		if( name != nullptr && !battle_config.feature_mesitemlink_dbname ){
+		if( name != nullptr && !battle_config.feature_mesitemicon_dbname ){
 			// Name was forcefully overwritten
 			return name;
 		}else{
