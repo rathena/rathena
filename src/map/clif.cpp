@@ -5129,10 +5129,16 @@ static enum e_damage_type clif_calc_delay( e_damage_type type, int32 div, int64 
 /*==========================================
  * Estimates walk delay based on the damage criteria. [Skotlex]
  *------------------------------------------*/
-static int32 clif_calc_walkdelay(struct block_list *bl,int32 delay, char type, int64 damage, int32 div_)
-{
-	if (type == DMG_ENDURE || type == DMG_MULTI_HIT_ENDURE || damage <= 0)
+static int32 clif_calc_walkdelay(struct block_list *bl,int32 delay, e_damage_type type, int64 damage, int32 div_)
+	if (damage < 1)
 		return 0;
+
+	switch( type ) {
+		case DMG_ENDURE:
+		case DMG_MULTI_HIT_ENDURE:
+		case DMG_SPLASH_ENDURE:
+			return 0;
+	}
 
 	if (bl->type == BL_PC) {
 		if (battle_config.pc_walk_delay_rate != 100)
