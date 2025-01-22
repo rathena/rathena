@@ -44316,7 +44316,7 @@ Body:
     FixedCastTime: 1000
     Cooldown: 2000
     Requires:
-      ApCost: 35
+      ApCost: 70
       SpCost: 85
   - Id: 5475
     Name: SKE_ENCHANTING_SKY

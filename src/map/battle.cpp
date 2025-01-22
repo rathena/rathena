@@ -6407,7 +6407,7 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			break;
 
 		case SKE_ALL_IN_THE_SKY:
-			skillratio += -100 + 3000 + 2000 * skill_lv;
+			skillratio += -100 + 250 + 1200 * skill_lv;
 			skillratio += 5 * sstatus->pow;
 			if (status_get_race(target) == RC_DEMIHUMAN || status_get_race(target) == RC_DEMON)
 				wd->div_ = 3;
