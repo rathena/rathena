@@ -16888,6 +16888,8 @@ int32 skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t
 		case UNT_SWIFTTRAP:
 		case UNT_FLAMETRAP:
 		case UNT_STAR_BURST:
+		case UNT_GRENADES_DROPPING:
+		case UNT_MISSION_BOMBARD:
 		case UNT_FUUMASHOUAKU:
 		case UNT_KUNAIKAITEN:
 			skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
