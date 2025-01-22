@@ -20044,7 +20044,7 @@ int32 skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint1
 		if (sc->getSCE(SC_SUFFRAGIUM)) {
 			VARCAST_REDUCTION(sc->getSCE(SC_SUFFRAGIUM)->val2);
 #ifndef RENEWAL
-			status_change_end(bl, SC_SUFFRAGIUM, INVALID_TIMER);
+			status_change_end( bl, SC_SUFFRAGIUM );
 #endif
 		}
 		if (sc->getSCE(SC_MEMORIZE)) {
