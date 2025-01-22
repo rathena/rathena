@@ -44196,9 +44196,9 @@ Body:
     CastTime: 1000
     Cooldown: 5000
     FixedCastTime: 500
-    Duration1: 4500
+    Duration1: 3500
     Requires:
-      SpCost: 84
+      SpCost: 124
     Unit:
       Id: TWINKLING_GALAXY
       Range:
@@ -44212,7 +44212,7 @@ Body:
           Size: 5
         - Level: 5
           Size: 4
-      Interval: 300
+      Interval: 500
       Target: Enemy
       Flag:
         PathCheck: true

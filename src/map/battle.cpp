@@ -6414,7 +6414,7 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			break;
 
 		case SKE_TWINKLING_GALAXY:
-			skillratio += -100 + 200 + 400 * skill_lv;
+			skillratio += -100 + 300 + 500 * skill_lv;
 			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 3 * skill_lv;
 			skillratio += 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
