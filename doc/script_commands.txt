@@ -4767,7 +4767,7 @@ wall), the character is pushed only up to the obstacle.
 
 *kick({<char_id>});
 
-This command kicks the character from the map server, just like @kick.
+This command kicks the attached character (or character provided by <char_id>) from the map server, just like @kick.
 
 ---------------------------------------
 
