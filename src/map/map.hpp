@@ -748,6 +748,7 @@ enum cell_t{
 	CELL_MAELSTROM,
 	CELL_ICEWALL,
 	CELL_NOBUYINGSTORE,
+	CELL_PVP,
 };
 
 // used by map_getcell()
@@ -772,6 +773,7 @@ enum cell_chk : uint8 {
 	CELL_CHKMAELSTROM,		// Whether the cell has Maelstrom
 	CELL_CHKICEWALL,		// Whether the cell has Ice Wall
 	CELL_CHKNOBUYINGSTORE,	// Whether the cell denies ALL_BUYING_STORE skill
+	CELL_CHKPVP,
 
 };
 
@@ -792,7 +794,8 @@ struct mapcell
 		nochat : 1,
 		maelstrom : 1,
 		icewall : 1,
-		nobuyingstore : 1;
+		nobuyingstore : 1,
+		pvp : 1;
 
 #ifdef CELL_NOSTACK
 	unsigned char cell_bl; //Holds amount of bls in this cell.
@@ -821,6 +824,7 @@ struct map_data {
 	int32 npc_num_warp; // number of warp npc on the map
 	int32 users;
 	int32 users_pvp;
+	int32 cell_pvpuser;
 	int32 iwall_num; // Total of invisible walls in this map
 
 	struct point save;
@@ -1253,6 +1257,8 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 #define CHK_RACE(race) ((race) > RC_NONE_ && (race) < RC_MAX) /// Check valid Race
 #define CHK_RACE2(race2) ((race2) >= RC2_NONE && (race2) < RC2_MAX) /// Check valid Race2
 #define CHK_CLASS(class_) ((class_) > CLASS_NONE && (class_) < CLASS_MAX) /// Check valid Class
+
+int map_pvp_area(map_session_data* sd, bool flag);
 
 //Other languages supported
 extern const char*MSG_CONF_NAME_RUS;

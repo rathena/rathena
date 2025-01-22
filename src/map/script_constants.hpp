@@ -10965,6 +10965,10 @@
 	export_constant(SEARCHSTORE_EFFECT_NORMAL);
 	export_constant(SEARCHSTORE_EFFECT_REMOTE);
 
+	// Cell PvP
+	export_constant(CELL_PVP);
+	export_constant(CELL_CHKPVP);
+
 	export_constant(GROUP_ALGORITHM_RANDOM);
 	export_constant(GROUP_ALGORITHM_SHAREDPOOL);
 	export_constant(GROUP_ALGORITHM_ALL);

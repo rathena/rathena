@@ -3698,6 +3698,12 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 		md->mvp_effect_tid = INVALID_TIMER;
 	}
 	
+	for(i = 0; i < DAMAGELOG_SIZE && md->dmglog[i].id; i++) {
+		if (!tmpsd[i]) continue;
+		if( md->get_bosstype() == BOSSTYPE_MVP )
+			pc_damage_log_clear(tmpsd[i],md->bl.id);
+	}
+	
 	if(md->deletetimer != INVALID_TIMER) {
 		delete_timer(md->deletetimer,mob_timer_delete);
 		md->deletetimer = INVALID_TIMER;

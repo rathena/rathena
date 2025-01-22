@@ -1335,7 +1335,7 @@ void pc_makesavestatus(map_session_data *sd) {
 		struct map_data* mapdata = map_getmapdata( sd->bl.m );
 
 		// If saving is not allowed on the map, we return the player to the designated point
-		if( mapdata->getMapFlag(MF_NOSAVE) ){
+		if(mapdata->getMapFlag(MF_NOSAVE) || map_getcell( sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKPVP ) ) {
 			// The map has a specific return point
 			if( mapdata->save.map ){
 				safestrncpy( sd->status.last_point.map, mapindex_id2name( mapdata->save.map ), sizeof( sd->status.last_point.map ) );
@@ -6409,6 +6409,10 @@ bool pc_isUseitem(map_session_data *sd,int32 n)
 	}
 
 	if( itemdb_group.item_exists( IG_GIANT_FLY_WING, nameid ) ){
+
+		if( map_getcell( sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKPVP ) )
+			return false;
+
 		struct party_data *pd = party_search( sd->status.party_id );
 
 		if( pd ){
@@ -7093,6 +7097,9 @@ enum e_setpos pc_setpos(map_session_data* sd, unsigned short mapindex, int32 x, 
 
 		channel_pcquit(sd,4); //quit map chan
 
+		if(sd->state.pvp && map_getcell( sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKPVP))
+			map[sd->state.pmap].cell_pvpuser--;
+
 		// Remove Cloaked NPCs on map change
 		sd->cloaked_npc.clear();
 	}
@@ -7300,7 +7307,7 @@ bool pc_memo(map_session_data* sd, int32 pos)
 	nullpo_ret(sd);
 
 	// check mapflags
-	if( sd->bl.m >= 0 && (map_getmapflag(sd->bl.m, MF_NOMEMO) || map_getmapflag(sd->bl.m, MF_NOWARPTO)) && !pc_has_permission(sd, PC_PERM_WARP_ANYWHERE) ) {
+	if( sd->bl.m >= 0 && (map_getmapflag(sd->bl.m, MF_NOMEMO) || map_getmapflag(sd->bl.m, MF_NOWARPTO)) && !pc_has_permission(sd, PC_PERM_WARP_ANYWHERE) || map_getcell( sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKPVP ) ) {
 		clif_skill_teleportmessage( *sd, NOTIFY_MAPINFO_CANT_MEMO ); // "Saved point cannot be memorized."
 		return false;
 	}
@@ -9706,6 +9713,11 @@ int32 pc_skillheal2_bonus(map_session_data *sd, uint16 skill_id) {
 			bonus += it.val;
 			break;
 		}
+
+	if (sd->state.pvp && map_getcell( sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKPVP) )
+		map_pvp_area(sd, 1);
+	else
+		map_pvp_area(sd, 0);
 	}
 
 	return bonus;
@@ -9734,6 +9746,54 @@ static TIMER_FUNC(pc_respawn_timer){
 		pc_respawn(sd,CLR_OUTSIGHT);
 	}
 
+	return 0;
+}
+
+void pc_deathmatch(map_session_data* sd, clr_type clrtype)
+{
+	struct npc_data *nd;
+	short x = 0, y = 0;
+
+	if( !pc_isdead(sd) )
+		return; // not applicable
+
+	if( map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKPVP) && battle_config.cellpvp_deathmatch ) 
+	{
+		do {
+			x = rand() % (map[sd->bl.m].xs - 2) + 1;
+			y = rand() % (map[sd->bl.m].ys - 2) + 1;
+		} while( !map_getcell(sd->bl.m, x, y, CELL_CHKPVP) );
+
+		pc_setstand(sd, true);
+		pc_setrestartvalue(sd,3);
+		status_percent_heal(&sd->bl, battle_config.deathmatch_hp_rate, battle_config.deathmatch_sp_rate);
+
+		if( pc_setpos(sd, sd->mapindex, x, y, clrtype) )
+			clif_resurrection(sd->bl); //If warping fails, send a normal stand up packet.
+
+		status_change_clear(&sd->bl, 3);
+
+		if(sd && battle_config.cellpvp_autobuff)
+		{
+			nd = npc_name2id("deathmatch_core");
+			if (nd && nd->subtype == NPCTYPE_SCRIPT)
+				run_script(nd->u.scr.script, 0, sd->bl.id, nd->bl.id);
+		}
+	}
+}
+
+static TIMER_FUNC(pc_deathmatch_timer)
+{
+	map_session_data *sd = map_id2sd(id);
+	if( sd != NULL )
+	{
+		pc_deathmatch(sd, CLR_OUTSIGHT);
+		if (sd->state.pvp && map_getcell( sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKPVP ) )
+		{
+			map_pvp_area(sd, 1);
+			map[sd->bl.m].cell_pvpuser--;
+		}
+	}
 	return 0;
 }
 
@@ -10053,7 +10113,9 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 	}
 
 	if(battle_config.bone_drop==2
-		|| (battle_config.bone_drop==1 && mapdata->getMapFlag(MF_PVP)))
+		|| (battle_config.bone_drop==1 && mapdata->getMapFlag(MF_PVP))
+		|| map_getcell( sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKPVP) && sd->state.pvp // [CreativeSD]: Cell PvP
+		)
 	{
 		struct item item_tmp;
 		memset(&item_tmp,0,sizeof(item_tmp));
@@ -10128,6 +10190,13 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 			if(zeny_penalty)
 				pc_payzeny(sd, zeny_penalty, LOG_TYPE_PICKDROP_PLAYER);
 		}
+	}
+
+	// [CreativeSD]: Cell PVP
+	if (map_getcell( sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKPVP ) && battle_config.cellpvp_deathmatch && sd->state.pvp)
+	{
+		add_timer(tick+battle_config.cellpvp_deathmatch_delay, pc_deathmatch_timer, sd->bl.id, 0);
+		return 1|8;
 	}
 
 	if( mapdata->getMapFlag(MF_PVP_NIGHTMAREDROP) ) { // Moved this outside so it works when PVP isn't enabled and during pk mode [Ancyker]
@@ -12843,6 +12912,13 @@ int32 pc_calc_pvprank(map_session_data *sd)
 
 	sd->pvp_rank=1;
 	map_foreachinmap(pc_calc_pvprank_sub,sd->bl.m,BL_PC,sd);
+
+	if( (old!=sd->pvp_rank || sd->pvp_lastusers!=mapdata->cell_pvpuser) || sd->state.pvp ) 
+	{
+		clif_pvpset( sd, sd->pvp_rank, sd->pvp_lastusers = mapdata->cell_pvpuser, 0);
+		return sd->pvp_rank;
+	}
+
 	if(old!=sd->pvp_rank || sd->pvp_lastusers!=mapdata->users_pvp)
 		clif_pvpset(sd,sd->pvp_rank,sd->pvp_lastusers=mapdata->users_pvp,0);
 	return sd->pvp_rank;
@@ -15275,6 +15351,80 @@ uint8 pc_itemcd_check(map_session_data *sd, struct item_data *id, t_tick tick, u
 
 	sc_start(&sd->bl, &sd->bl, id->delay.sc, 100, id->nameid, id->delay.duration);
 	return 0;
+}
+
+/**
+* Clear the dmglog data from player
+* @param sd
+* @param md
+**/
+static void pc_clear_log_damage_sub(uint32 char_id, struct mob_data *md)
+{
+	uint8 i;
+	ARR_FIND(0,DAMAGELOG_SIZE,i,md->dmglog[i].id == char_id);
+	if (i < DAMAGELOG_SIZE) {
+		md->dmglog[i].id = 0;
+		md->dmglog[i].dmg = 0;
+		md->dmglog[i].flag = 0;
+	}
+}
+
+/**
+* Add log to player's dmglog
+* @param sd
+* @param id Monster's GID
+**/
+void pc_damage_log_add(map_session_data *sd, int32 id)
+{
+	uint8 i = 0;
+
+	if (!sd || !id)
+		return;
+
+	//Only store new data, don't need to renew the old one with same id
+	ARR_FIND(0, DAMAGELOG_SIZE_PC, i, sd->dmglog[i] == id);
+	if (i < DAMAGELOG_SIZE_PC)
+		return;
+
+	for (i = 0; i < DAMAGELOG_SIZE_PC; i++) {
+		if (sd->dmglog[i] == 0) {
+			sd->dmglog[i] = id;
+			return;
+		}
+	}
+}
+
+/**
+* Clear dmglog data from player
+* @param sd
+* @param id Monster's id
+**/
+void pc_damage_log_clear(map_session_data *sd, int32 id)
+{
+	uint8 i;
+	struct mob_data *md = nullptr;
+
+	if (!sd)
+		return;
+
+	if (!id) {
+		for (i = 0; i < DAMAGELOG_SIZE_PC; i++) {
+			if( !sd->dmglog[i] )	//skip the empty value
+				continue;
+
+			if ((md = map_id2md(sd->dmglog[i])))
+				pc_clear_log_damage_sub(sd->status.char_id,md);
+			sd->dmglog[i] = 0;
+		}
+	}
+	else {
+		if ((md = map_id2md(id)))
+			pc_clear_log_damage_sub(sd->status.char_id,md);
+
+		ARR_FIND(0,DAMAGELOG_SIZE_PC,i,sd->dmglog[i] == id);	// find the id position
+		if (i < DAMAGELOG_SIZE_PC)
+			sd->dmglog[i] = 0;
+	}
 }
 
 /**

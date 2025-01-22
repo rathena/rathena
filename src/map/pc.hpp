@@ -37,6 +37,7 @@ class MapGuild;
 
 #define MAX_PC_BONUS 50 /// Max bonus, usually used by item bonus
 #define MAX_PC_FEELHATE 3 /// Max feel hate info
+#define DAMAGELOG_SIZE_PC 100	/// Damage log
 #define MAX_SPIRITBALL 15 /// Max spirit balls
 #define MAX_DEVOTION 5 /// Max Devotion slots
 #define MAX_SPIRITCHARM 10 /// Max spirit charms
@@ -531,6 +532,7 @@ public:
 		uint32 banking : 1; //1 when we using the banking system 0 when closed
 		uint32 hpmeter_visible : 1;
 		unsigned disable_atcommand_on_npc : 1; //Prevent to use atcommand while talking with NPC [Kichi]
+		unsigned int pvp : 1;
 		uint8 isBoundTrading; // Player is currently add bound item to trade list [Cydh]
 		bool ignoretimeout; // Prevent the SECURE_NPCTIMEOUT function from closing current script.
 		uint32 workinprogress : 2; // See clif.hpp::e_workinprogress
@@ -640,6 +642,7 @@ public:
 	t_tick canskill_tick; // used to prevent abuse from no-delay ACT files
 	t_tick cansendmail_tick; // [Mail System Flood Protection]
 	t_tick ks_floodprotect_tick; // [Kill Steal Protection]
+	t_tick pvpcan_walkout_tick;
 	t_tick equipswitch_tick; // Equip switch
 
 	struct s_item_delay {
@@ -975,6 +978,8 @@ public:
 	unsigned char vars_received; // char loading is only complete when you get it all.
 	bool vars_ok;
 	bool vars_dirty;
+
+	uint16 dmglog[DAMAGELOG_SIZE_PC]; ///target ids
 
 	int32 c_marker[MAX_SKILL_CRIMSON_MARKER]; /// Store target that marked by Crimson Marker [Cydh]
 	bool flicker; /// Check RL_FLICKER usage status [Cydh]
@@ -1879,6 +1884,9 @@ void pc_addspiritcharm(map_session_data *sd, int32 interval, int32 max, int32 ty
 void pc_delspiritcharm(map_session_data *sd, int32 count, int32 type);
 
 void pc_baselevelchanged(map_session_data *sd);
+
+void pc_damage_log_add(map_session_data *sd, int32 id);
+void pc_damage_log_clear(map_session_data *sd, int32 id);
 
 enum e_BANKING_DEPOSIT_ACK : uint8;
 enum e_BANKING_WITHDRAW_ACK : uint8;

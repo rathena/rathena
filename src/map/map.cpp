@@ -2197,7 +2197,11 @@ int32 map_quit(map_session_data *sd) {
 
 	if (sd->state.buyingstore)
 		idb_remove(buyingstore_getdb(), sd->status.char_id);
+	
+	if( sd->state.pvp && map_getcell( sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKPVP ) )
+		map_pvp_area(sd, 0);
 
+	pc_damage_log_clear(sd,0);
 	party_booking_delete(sd); // Party Booking [Spiria]
 	pc_makesavestatus(sd);
 	pc_clean_skilltree(sd);
@@ -3299,10 +3303,44 @@ void map_setcell(int16 m, int16 x, int16 y, cell_t cell, bool flag)
 		case CELL_MAELSTROM:	 mapdata->cell[j].maelstrom = flag;	  break;
 		case CELL_ICEWALL:		 mapdata->cell[j].icewall = flag;		  break;
 		case CELL_NOBUYINGSTORE: mapdata->cell[j].nobuyingstore = flag; break;
+		case CELL_PVP:           mapdata->cell[j].pvp = flag;        break;
 		default:
 			ShowWarning("map_setcell: invalid cell type '%d'\n", (int32)cell);
 			break;
 	}
+}
+int32 map_pvp_area(map_session_data* sd, bool flag)
+{
+	switch(flag) 
+	{
+		case 1:
+			clif_map_property(&sd->bl, MAPPROPERTY_FREEPVPZONE,AREA);
+			if (sd->pvp_timer == INVALID_TIMER) {
+				map[sd->bl.m].cell_pvpuser++;
+ 
+				sd->pvp_timer  = add_timer(gettick()+200, pc_calc_pvprank_timer, sd->bl.id, 0);
+				sd->pvp_rank  = 0;
+				sd->pvp_lastusers = 0;
+				sd->pvp_point  = 5;
+				sd->pvp_won   = 0;
+				sd->pvp_lost  = 0;
+				sd->state.pvp  = 1;
+				sd->pvpcan_walkout_tick = gettick();
+			}
+			break;
+		default:
+			clif_pvpset(sd, 0, 0, 2);
+			map[sd->bl.m].cell_pvpuser--;
+
+			if( sd->pvp_timer != INVALID_TIMER )
+				delete_timer(sd->pvp_timer, pc_calc_pvprank_timer);
+
+			sd->pvp_timer  = INVALID_TIMER;
+			sd->state.pvp  = 0;
+			break;
+	}
+
+	return 0;
 }
 
 void map_setgatcell(int16 m, int16 x, int16 y, int32 gat)

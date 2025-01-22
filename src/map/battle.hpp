@@ -786,38 +786,49 @@ struct Battle_Config
 	int32 hom_delay_reset_warp;
 	
 	// Champion Monster
-	int group_id_monster_champion;
+	int32 group_id_monster_champion;
 	
 	// Mob MvP effect
-	int mob_show_mvp_effect;
-	int mob_show_mvp_effect_timer;
+	int32 mob_show_mvp_effect;
+	int32 mob_show_mvp_effect_timer;
 
 	// Mob Hat Effect Element
-	int mob_show_hateffect_element;
-	int mob_show_hateffect_race;
-	int mob_show_hateffect_quest;
+	int32 mob_show_hateffect_element;
+	int32 mob_show_hateffect_race;
+	int32 mob_show_hateffect_quest;
 	
 	// Quest Mob
-	int id_hat_effect;
+	int32 id_hat_effect;
 	
 	// Random Option
-	int ATK_Weapon_Lv1;
-	int ATK_Weapon_Lv2;
-	int ATK_Weapon_Lv3;
-	int ATK_Weapon_Lv4;
+	int32 ATK_Weapon_Lv1;
+	int32 ATK_Weapon_Lv2;
+	int32 ATK_Weapon_Lv3;
+	int32 ATK_Weapon_Lv4;
 
-	int MATK_Weapon_Lv1;
-	int MATK_Weapon_Lv2;
-	int MATK_Weapon_Lv3;
-	int MATK_Weapon_Lv4;
+	int32 MATK_Weapon_Lv1;
+	int32 MATK_Weapon_Lv2;
+	int32 MATK_Weapon_Lv3;
+	int32 MATK_Weapon_Lv4;
 
-	int Accessory;
-	int Shoes;
-	int Garment;
-	int Armor;
-	int Shield;
+	int32 Accessory;
+	int32 Shoes;
+	int32 Garment;
+	int32 Armor;
+	int32 Shield;
 	
-	int rate_option;
+	int32 rate_option;
+	
+	// Cell PK PVP
+	int32 cellpvp_deathmatch;
+	int32 cellpvp_deathmatch_delay;
+	int32 deathmatch_hp_rate;
+	int32 deathmatch_sp_rate;
+	int32 cellpvp_autobuff;
+	int32 cellpvp_party_enable;
+	int32 cellpvp_guild_enable;
+	int32 cellpvp_walkout_delay;
+	
 #include <custom/battle_config_struct.inc>
 };
 

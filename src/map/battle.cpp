@@ -11144,7 +11144,12 @@ int32 battle_check_target( struct block_list *src, struct block_list *target,int
 					else
 						return 0; // You can't target anything out of your duel
 				}
+				else if( map_getcell( s_bl->m, s_bl->x, s_bl->y, CELL_CHKPVP ) && map_getcell( t_bl->m, t_bl->x, t_bl->y, CELL_CHKPVP ) )		// Addon Cell PVP [Napster]
+				{
+					 state |= BCT_ENEMY;
+				}
 			}
+
 			if( !sd->status.guild_id && t_bl->type == BL_MOB && ((TBL_MOB*)t_bl)->mob_id == MOBID_EMPERIUM && mapdata_flag_gvg(mapdata) )
 				return 0; //If you don't belong to a guild, can't target emperium.
 			if( t_bl->type != BL_PC )
@@ -11245,15 +11250,19 @@ int32 battle_check_target( struct block_list *src, struct block_list *target,int
 		if( flag&BCT_PARTY || state&BCT_ENEMY )
 		{
 			int32 s_party = status_get_party_id(s_bl);
-			if(s_party && s_party == status_get_party_id(t_bl))
+			if(s_party && s_party == status_get_party_id(t_bl) && !(battle_config.cellpvp_party_enable && map_getcell( t_bl->m, t_bl->x, t_bl->y, CELL_CHKPVP )) )		// Addon Cell PVP [Napster]
 				state |= BCT_PARTY;
+			else
+				state |= BCT_ENEMY;
 		}
 		if( flag&BCT_GUILD || state&BCT_ENEMY )
 		{
 			int32 s_guild = status_get_guild_id(s_bl);
 			int32 t_guild = status_get_guild_id(t_bl);
-			if(s_guild && t_guild && (s_guild == t_guild || (!(flag&BCT_SAMEGUILD) && guild_isallied(s_guild, t_guild))))
+			if(s_guild && t_guild && (s_guild == t_guild || (!(flag&BCT_SAMEGUILD) && guild_isallied(s_guild, t_guild))) && !(battle_config.cellpvp_guild_enable && map_getcell( t_bl->m, t_bl->x, t_bl->y, CELL_CHKPVP )) )		// Addon Cell PVP [Napster]
 				state |= BCT_GUILD;
+			else
+				state |= BCT_ENEMY;
 		}
 	} //end non pvp/gvg chk rivality
 
@@ -11912,6 +11921,15 @@ static const struct _battle_data {
 	{ "instance_block_leaderchange",        &battle_config.instance_block_leaderchange,     1,      0,      1,              },
 	{ "instance_block_invite",              &battle_config.instance_block_invite,           1,      0,      1,              },
 	{ "instance_block_expulsion",           &battle_config.instance_block_expulsion,        1,      0,      1,              },
+
+	{ "cellpvp_deathmatch",                 &battle_config.cellpvp_deathmatch,               1,      0,       1,            },
+	{ "cellpvp_deathmatch_delay",           &battle_config.cellpvp_deathmatch_delay,      1000,      0, INT_MAX,            },
+	{ "deathmatch_hp_rate",                 &battle_config.deathmatch_hp_rate,               0,		 0,		100,			},
+	{ "deathmatch_sp_rate",                 &battle_config.deathmatch_sp_rate,               0,		 0,		100,			},
+	{ "cellpvp_autobuff",                   &battle_config.cellpvp_autobuff,                 1,      0,       1,            },
+	{ "cellpvp_party_enable",               &battle_config.cellpvp_party_enable,             1,      0,       1,            },
+	{ "cellpvp_guild_enable",               &battle_config.cellpvp_guild_enable,             1,      0,       1,            },
+	{ "cellpvp_walkout_delay",              &battle_config.cellpvp_walkout_delay,         5000,      0, INT_MAX,            },
 
 	// 4th Job Stuff
 	{ "use_traitpoint_table",               &battle_config.use_traitpoint_table,            1,      0,      1,              },

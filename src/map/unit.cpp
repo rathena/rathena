@@ -531,6 +531,11 @@ static TIMER_FUNC(unit_walktoxy_timer)
 			} else
 				sd->areanpc.clear();
 			pc_cell_basilica(sd);
+
+			if( !sd->state.pvp && map_getcell( sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKPVP) )
+				map_pvp_area(sd, 1);
+			else if( sd->state.pvp && !map_getcell( sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKPVP) )
+				map_pvp_area(sd, 0);
 			break;
 		case BL_MOB:
 			//Movement was successful, reset walktoxy_fail_count
@@ -780,6 +785,28 @@ int32 unit_walktoxy( struct block_list *bl, short x, short y, unsigned char flag
 
 	if(!(flag&2) && (!status_bl_has_mode(bl,MD_CANMOVE) || !unit_can_move(bl)))
 		return 0;
+	
+	if (bl->type == BL_PC)
+	{
+		map_session_data* sd = (TBL_PC*)bl;
+		t_tick tick = gettick();
+
+		// [CreativeSD]: Cell PvP
+		if (sd && sd->pvpcan_walkout_tick && !map_getcell( sd->bl.m, x, y, CELL_CHKPVP ) ) {
+			if ( DIFF_TICK(tick, sd->pvpcan_walkout_tick) < battle_config.cellpvp_walkout_delay )
+			{
+				t_tick e_tick = (battle_config.cellpvp_walkout_delay - DIFF_TICK( tick, sd->pvpcan_walkout_tick))/1000;
+				char e_msg[150];
+				if( e_tick > 99 )
+						sprintf(e_msg, msg_txt(sd, 1599), sd->status.name, (double)e_tick / 60); 
+				else
+						sprintf(e_msg, msg_txt(sd, 1600), sd->status.name, e_tick+1);
+
+				clif_messagecolor(&sd->bl, color_table[COLOR_YELLOW], e_msg, false, SELF);
+				return 0;
+			}
+		}
+	}
 
 	ud->state.walk_easy = flag&1;
 	ud->to_x = x;
