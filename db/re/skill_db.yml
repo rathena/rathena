@@ -44266,23 +44266,23 @@ Body:
     HitCount: -3
     GiveAp: 3
     Element: Weapon
-    SplashArea: 3
-    Cooldown: 5000
+    SplashArea: 2
+    Cooldown: 3500
     CastCancel: true
     FixedCastTime: 500
-    Duration1: 4500
+    Duration1: 2500
     Requires:
       SpCost:
         - Level: 1
-          Amount: 51
+          Amount: 90
         - Level: 2
-          Amount: 54
+          Amount: 95
         - Level: 3
-          Amount: 57
+          Amount: 100
         - Level: 4
-          Amount: 60
+          Amount: 105
         - Level: 5
-          Amount: 63
+          Amount: 110
     Unit:
       Id: STAR_CANNON
       Range:
@@ -44296,7 +44296,7 @@ Body:
           Size: 5
         - Level: 5
           Size: 4
-      Interval: 300
+      Interval: 500
       Target: Enemy
       Flag:
         PathCheck: true
