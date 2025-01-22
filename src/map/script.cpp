@@ -22480,6 +22480,23 @@ BUILDIN_FUNC(pushpc)
 }
 
 
+/**
+ * Kick the character from the server
+ * kick({<char_id>});
+ */
+BUILDIN_FUNC(kick)
+{
+	map_session_data *sd = nullptr;
+
+	if (!script_charid2sd(2, sd)) {
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_GM_kick(nullptr, sd);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+
 /// Invokes buying store preparation window
 /// buyingstore <slots>;
 BUILDIN_FUNC(buyingstore)
@@ -28035,6 +28052,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(progressbar,"si"),
 	BUILDIN_DEF(progressbar_npc, "si?"),
 	BUILDIN_DEF(pushpc,"ii"),
+	BUILDIN_DEF(kick, "?"),
 	BUILDIN_DEF(buyingstore,"i"),
 	BUILDIN_DEF(searchstores,"ii?"),
 	BUILDIN_DEF(showdigit,"i?"),
