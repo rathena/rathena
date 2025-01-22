@@ -581,13 +581,6 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 #else
 					damage += (int64)(damage * tsc->getSCE(SC_VENOMIMPRESS)->val2 / 100);
 #endif
-				if (tsc->getSCE(SC_CLOUD_POISON)) {
-#ifdef RENEWAL
-					ratio += 5 * tsc->getSCE(SC_CLOUD_POISON)->val1;
-#else
-					damage += (int64)(damage * 5 * tsc->getSCE(SC_CLOUD_POISON)->val1 / 100);
-#endif
-				}
 				break;
 			case ELE_WIND:
 				if (tsc->getSCE(SC_WATER_INSIGNIA))
@@ -690,6 +683,10 @@ static int32 battle_calc_cardfix_debuff( status_change& tsc, int32 rh_ele ){
 		case ELE_WATER:
 			if (tsc.getSCE(SC_MISTYFROST))
 				ele_fix += 15;
+			break;
+		case ELE_POISON:
+			if (tsc.getSCE(SC_CLOUD_POISON))
+				ele_fix += 5 * tsc.getSCE(SC_CLOUD_POISON)->val1;
 			break;
 	}
 	return ele_fix;
@@ -3025,6 +3022,28 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 				}
 
 				return false;
+
+			case SKE_NOON_BLAST:
+				if( sc == nullptr ){
+					return false;
+				}
+
+				if( sc->getSCE( SC_NOON_SUN ) == nullptr && sc->getSCE( SC_SKY_ENCHANT ) == nullptr ){
+					return false;
+				}
+
+				break;
+
+			case SKE_SUNSET_BLAST:
+				if( sc == nullptr ){
+					return false;
+				}
+
+				if( sc->getSCE( SC_SUNSET_SUN ) == nullptr && sc->getSCE( SC_SKY_ENCHANT ) == nullptr ){
+					return false;
+				}
+
+				break;
 		}
 		if(tsd && tsd->bonus.critical_def)
 			cri = cri * ( 100 - tsd->bonus.critical_def ) / 100;
@@ -6373,6 +6392,85 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			}
 			RE_LVL_DMOD(100);
 			break;
+		case SKE_MIDNIGHT_KICK:
+			skillratio += -100 + 600 + 1200  * skill_lv;
+			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 5 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+
+			if( sc != nullptr && ( sc->getSCE( SC_MIDNIGHT_MOON ) != nullptr || sc->getSCE( SC_SKY_ENCHANT ) != nullptr ) ){
+				skillratio += 950 + 250 * skill_lv;
+			}
+
+			RE_LVL_DMOD(100);
+			break;
+
+		case SKE_ALL_IN_THE_SKY:
+			skillratio += -100 + 3000 + 2000 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+			if (status_get_race(target) == RC_DEMIHUMAN || status_get_race(target) == RC_DEMON)
+				wd->div_ = 3;
+			break;
+
+		case SKE_TWINKLING_GALAXY:
+			skillratio += -100 + 200 + 400 * skill_lv;
+			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 3 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+			RE_LVL_DMOD(100);
+			break;
+
+		case SKE_STAR_CANNON:
+			skillratio += -100 + 200 + 500 * skill_lv;
+			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 5 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+			RE_LVL_DMOD(100);
+			break;
+
+		case SKE_STAR_BURST:
+			skillratio += -100 + 500 + 400 * skill_lv;
+			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 3 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+			RE_LVL_DMOD(100);
+			break;
+
+		case SKE_DAWN_BREAK:
+			skillratio += -100 + 400 + 400 * skill_lv;
+			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 5 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+
+			if( sc != nullptr && ( sc->getSCE( SC_DAWN_MOON ) != nullptr || sc->getSCE( SC_SKY_ENCHANT ) != nullptr ) ){
+				skillratio += 200 * skill_lv;
+			}
+
+			RE_LVL_DMOD(100);
+			break;
+
+		case SKE_SUNSET_BLAST:
+			skillratio += -100 + 950 + 400 * skill_lv;
+			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 5 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+			RE_LVL_DMOD(100);
+			break;
+
+		case SKE_RISING_MOON:
+			skillratio += -100 + 700 + 450 * skill_lv;
+			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 5 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+			RE_LVL_DMOD(100);
+			break;
+
+		case SKE_NOON_BLAST:
+			skillratio += -100 + 1500 + 1250 * skill_lv;
+			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 5 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+			RE_LVL_DMOD(100);
+			break;
+
+		case SKE_RISING_SUN:
+			skillratio += -100 + 500 + 600 * skill_lv;
+			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 5 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+			RE_LVL_DMOD(100);
+			break;
 	}
 	return skillratio;
 }
@@ -8351,7 +8449,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 							skillratio += (sd ? sd->status.job_level * 5 : 0);
 						break;
 					case SO_POISON_BUSTER:
-						skillratio += -100 + 1000 + 300 * skill_lv + sstatus->int_ / 6; // !TODO: Confirm INT bonus
+						skillratio += -100 + 1000 + 300 * skill_lv;
+						skillratio += sstatus->int_;
 						if( tsc && tsc->getSCE(SC_CLOUD_POISON) )
 							skillratio += 200 * skill_lv;
 						RE_LVL_DMOD(100);
@@ -8373,6 +8472,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case SO_CLOUD_KILL:
 						skillratio += -100 + 40 * skill_lv;
+						skillratio += sstatus->int_ * 3;
 						RE_LVL_DMOD(100);
 						if (sc) {
 							if (sc->getSCE(SC_CURSED_SOIL_OPTION))

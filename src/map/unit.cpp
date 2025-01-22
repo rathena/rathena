@@ -3861,7 +3861,7 @@ static TIMER_FUNC(unit_shadowscar_timer) {
 	}
 
 	if (ud->shadow_scar_timer.empty())
-		status_change_end(bl, SC_SHADOW_SCAR, INVALID_TIMER);
+		status_change_end( bl, SC_SHADOW_SCAR );
 
 	return 0;
 }

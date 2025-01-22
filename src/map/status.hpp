@@ -1377,6 +1377,16 @@ enum sc_type : int16 {
 	SC_BLESSING_OF_M_CREATURES,
 	SC_BLESSING_OF_M_C_DEBUFF,
 
+	// Sky Emperor
+	SC_RISING_SUN,
+	SC_NOON_SUN,
+	SC_SUNSET_SUN,
+	SC_RISING_MOON,
+	SC_MIDNIGHT_MOON,
+	SC_DAWN_MOON,
+	SC_STAR_BURST,
+	SC_SKY_ENCHANT,
+
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 

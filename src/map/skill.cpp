@@ -1963,9 +1963,9 @@ int32 skill_additional_effect( struct block_list* src, struct block_list *bl, ui
 	case SO_VARETYR_SPEAR:
 		sc_start(src,bl, SC_STUN, 5 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
-	case SO_POISON_BUSTER:
-		sc_start(src,bl, SC_POISON, 5 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
-		break;
+	case SO_CLOUD_KILL:
+		sc_start(src, bl, skill_get_sc(skill_id), 100, skill_lv, skill_get_time2(skill_id, skill_lv));
+ 		break;
 	case GN_SPORE_EXPLOSION:
 		sc_start(src, bl, SC_SPORE_EXPLOSION, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
@@ -4827,6 +4827,27 @@ static TIMER_FUNC(skill_timerskill){
 							src, skl->skill_id, skl->skill_lv, tick, skl->flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
 					}
 					break;
+
+				case SKE_TWINKLING_GALAXY:{
+						int32 area = skill_get_unit_range( skl->skill_id, skl->skill_lv );
+						int32 splash = skill_get_splash( skl->skill_id, skl->skill_lv );
+						int16 tmpx = skl->x - area + rnd() % ( area * 2 + 1 );
+						int16 tmpy = skl->y - area + rnd() % ( area * 2 + 1 );
+
+						map_foreachinarea( skill_area_sub, src->m, tmpx - splash, tmpy - splash, tmpx + splash, tmpy + splash, BL_CHAR, src, skl->skill_id, skl->skill_lv, tick, skl->flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id );
+					} break;
+
+				case SKE_STAR_CANNON: {
+						int32 area = skill_get_unit_range( skl->skill_id, skl->skill_lv );
+						int32 splash = skill_get_splash( skl->skill_id, skl->skill_lv );
+
+						for( int32 i = 0, stars = 1 + ( skl->skill_lv + 1 ) / 2; i < stars; i++) {
+							int16 tmpx = skl->x - area + rnd() % ( area * 2 + 1 );
+							int16 tmpy = skl->y - area + rnd() % ( area * 2 + 1 );
+
+							map_foreachinarea( skill_area_sub, src->m, tmpx - splash, tmpy - splash, tmpx + splash, tmpy + splash, BL_CHAR, src, skl->skill_id, skl->skill_lv, tick, skl->flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id );
+						}
+					} break;
 			}
 		}
 	} while (0);
@@ -5271,6 +5292,9 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 	case NW_HASTY_FIRE_IN_THE_HOLE:
 	case NW_BASIC_GRENADE:
 	case NW_WILD_FIRE:
+	case SKE_MIDNIGHT_KICK:
+	case SKE_DAWN_BREAK:
+	case SKE_RISING_MOON:
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 	case DK_DRAGONIC_AURA:
@@ -5747,6 +5771,8 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 	case SOA_TALISMAN_OF_RED_PHOENIX:
 	case SOA_TALISMAN_OF_FOUR_BEARING_GOD:
 	case SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS:
+	case SKE_SUNSET_BLAST:
+	case SKE_NOON_BLAST:
 		if( flag&1 ) {//Recursive invocation
 			int32 sflag = skill_area_temp[0] & 0xFFF;
 			int32 heal = 0;
@@ -5819,6 +5845,8 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 				case MT_SPARK_BLASTER:
 				case HN_JUPITEL_THUNDER_STORM:
 				case SOA_TALISMAN_OF_FOUR_BEARING_GOD:
+				case SKE_SUNSET_BLAST:
+				case SKE_NOON_BLAST:
 					clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 					break;
 #ifdef RENEWAL
@@ -6018,6 +6046,85 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 		if( flag&1 && tsc != nullptr && tsc->getSCE( SC_HOGOGONG ) != nullptr ){
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		}
+		break;
+
+	case SKE_RISING_SUN:
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
+
+		if ( sc == nullptr || ( sc->getSCE( SC_RISING_SUN ) == nullptr && sc->getSCE( SC_NOON_SUN ) == nullptr && sc->getSCE( SC_SUNSET_SUN ) == nullptr ) ){
+			sc_start(src, src, SC_RISING_SUN, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		}else if( sc->getSCE( SC_NOON_SUN ) == nullptr && sc->getSCE( SC_SUNSET_SUN ) == nullptr ){
+			sc_start(src, src, SC_NOON_SUN, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		}else if( sc->getSCE( SC_SUNSET_SUN ) == nullptr ){
+			sc_start(src, src, SC_SUNSET_SUN, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		}
+
+		break;
+
+	case SKE_TWINKLING_GALAXY:
+	case SKE_STAR_CANNON:
+		if (flag & 1)
+			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
+		break;
+
+	case SKE_STAR_BURST:
+		if (flag & 1) {
+			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
+		} else {
+			unit_data* ud = unit_bl2ud( src );
+
+			if( ud != nullptr ){
+				for( const std::shared_ptr<s_skill_unit_group>& sug : ud->skillunits ){
+					if( sug->skill_id != SKE_TWINKLING_GALAXY ){
+						continue;
+					}
+
+					skill_unit* su = sug->unit;
+
+					// Check if it is too far away
+					if( distance_xy( bl->x, bl->y, su->bl.x, su->bl.y ) > skill_get_unit_range( sug->skill_id, sug->skill_lv ) ){
+						continue;
+					}
+
+					std::shared_ptr<s_skill_unit_group> sg = su->group;
+
+					for( int32 i = 0; i < MAX_SKILLTIMERSKILL; i++ ){
+						if( ud->skilltimerskill[i] == nullptr ){
+							continue;
+						}
+
+						if( ud->skilltimerskill[i]->skill_id != sug->skill_id ){
+							continue;
+						}
+
+						delete_timer(ud->skilltimerskill[i]->timer, skill_timerskill);
+						ers_free(skill_timer_ers, ud->skilltimerskill[i]);
+						ud->skilltimerskill[i] = nullptr;
+					}
+
+					skill_delunitgroup(sg);
+					sc_start2(src, bl, skill_get_sc(skill_id), 100, skill_lv, src->id, skill_get_time2(skill_id, skill_lv));
+
+					return skill_castend_pos2(src, bl->x, bl->y, skill_id, skill_lv, tick, 0);
+				}
+			}
+
+			if( sd != nullptr ){
+				clif_skill_fail(*sd, skill_id, USESKILL_FAIL_LEVEL);
+			}
+
+			return 1;
+		}
+		break;
+
+	case SKE_ALL_IN_THE_SKY:
+		if (bl->type == BL_PC)
+			status_zap(bl, 0, 0, status_get_ap(bl));
+		if( unit_movepos( src, bl->x, bl->y, 2, true ) ){
+			clif_snap(src, src->x, src->y);
+		}
+		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
 
 	//Place units around target
@@ -8077,6 +8184,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 	case HN_BREAKINGLIMIT:
 	case HN_RULEBREAK:
 	case SH_TEMPORARY_COMMUNION:
+	case SKE_ENCHANTING_SKY:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
@@ -8684,6 +8792,9 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 	case BO_EXPLOSIVE_POWDER:
 	case SOA_EXORCISM_OF_MALICIOUS_SOUL:
 	case SOA_TALISMAN_OF_WHITE_TIGER:
+	case SKE_DAWN_BREAK:
+	case SKE_RISING_MOON:
+	case SKE_MIDNIGHT_KICK:
 	{
 		int32 starget = BL_CHAR|BL_SKILL;
 
@@ -8726,6 +8837,18 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			case SOA_TALISMAN_OF_WHITE_TIGER:
 				if (sc != nullptr && sc->getSCE(SC_T_FIRST_GOD) != nullptr) {
 					sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
+				}
+				break;
+
+			case SKE_RISING_MOON:
+				if( sc == nullptr || ( sc->getSCE( SC_RISING_MOON ) == nullptr && sc->getSCE( SC_MIDNIGHT_MOON ) == nullptr && sc->getSCE( SC_DAWN_MOON ) == nullptr ) ){
+					sc_start(src, src, SC_RISING_MOON, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+				}else if( sc->getSCE( SC_MIDNIGHT_MOON ) == nullptr && sc->getSCE( SC_DAWN_MOON ) == nullptr ){
+					sc_start(src, src, SC_MIDNIGHT_MOON, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+				}else if( sc->getSCE( SC_DAWN_MOON ) == nullptr ){
+					sc_start(src, src, SC_DAWN_MOON, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+				}else if( sc->getSCE( SC_RISING_SUN ) != nullptr ){
+					status_change_end(bl, SC_DAWN_MOON);
 				}
 				break;
 		}
@@ -13424,6 +13547,37 @@ static int8 skill_castend_id_check(struct block_list *src, struct block_list *ta
 				return USESKILL_FAIL_TOTARGET;
 			}
 			break;
+
+		case SKE_STAR_BURST:
+		case SKE_STAR_CANNON: {
+				unit_data* ud = unit_bl2ud( src );
+
+				if( ud == nullptr ){
+					return USESKILL_FAIL_NEED_TWINKLING_GALAXY;
+				}
+
+				bool ok = false;
+
+				for( const std::shared_ptr<s_skill_unit_group>& sug : ud->skillunits ){
+					if( sug->skill_id != SKE_TWINKLING_GALAXY ){
+						continue;
+					}
+
+					skill_unit* su = sug->unit;
+					std::shared_ptr<s_skill_unit_group> sg = su->group;
+
+					if( distance_xy( src->x, src->y, su->bl.x, su->bl.y ) > skill_get_unit_range( sug->skill_id, sug->skill_lv ) ){
+						continue;
+					}
+
+					ok = true;
+					break;
+				}
+
+				if( !ok ){
+					return USESKILL_FAIL_NEED_TWINKLING_GALAXY;
+				}
+			} break;
 	}
 
 	if (inf&INF_ATTACK_SKILL ||
@@ -15092,6 +15246,59 @@ int32 skill_castend_pos2(struct block_list* src, int32 x, int32 y, uint16 skill_
 		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
 		break;
 
+	case SKE_TWINKLING_GALAXY:
+		for (i = 0; i < skill_get_time(skill_id, skill_lv) / skill_get_unit_interval(skill_id); i++)
+			skill_addtimerskill(src, tick + (t_tick)i*skill_get_unit_interval(skill_id), 0, x, y, skill_id, skill_lv, 0, flag);
+		flag |= 1;
+		skill_unitsetting(src, skill_id, skill_lv, x, y, 0);
+		break;
+	case SKE_STAR_BURST:
+		flag |= 1;
+		skill_unitsetting(src, skill_id, skill_lv, x, y, 0);
+		break;
+	case SKE_STAR_CANNON: {
+			unit_data* ud = unit_bl2ud( src );
+
+			if( ud == nullptr ){
+				break;
+			}
+
+			for( const std::shared_ptr<s_skill_unit_group>& sug : ud->skillunits ){
+				if( sug->skill_id != SKE_TWINKLING_GALAXY ){
+					continue;
+				}
+
+				skill_unit* su = sug->unit;
+
+				if( distance_xy( x, y, su->bl.x, su->bl.y ) > skill_get_unit_range( sug->skill_id, sug->skill_lv ) ){
+					continue;
+				}
+
+				std::shared_ptr<s_skill_unit_group> sg = su->group;
+				
+				for( int32 i = 0; i< MAX_SKILLTIMERSKILL; i++ ){
+					if( ud->skilltimerskill[i] == nullptr ){
+						continue;
+					}
+
+					if( ud->skilltimerskill[i]->skill_id != SKE_TWINKLING_GALAXY ){
+						continue;
+					}
+						
+					delete_timer(ud->skilltimerskill[i]->timer, skill_timerskill);
+					ers_free(skill_timer_ers, ud->skilltimerskill[i]);
+					ud->skilltimerskill[i] = nullptr;
+				}
+
+				skill_delunitgroup(sg);
+
+				for (i = 0; i < skill_get_time(skill_id, skill_lv) / skill_get_unit_interval(skill_id); i++)
+					skill_addtimerskill(src, tick + (t_tick)i*skill_get_unit_interval(skill_id), 0, x, y, skill_id, skill_lv, 0, flag);
+				flag |= 1;
+				skill_unitsetting(src, skill_id, skill_lv, x, y, 0);
+			}
+		} break;
+
 	default:
 		ShowWarning("skill_castend_pos2: Unknown skill used:%d\n",skill_id);
 		return 1;
@@ -16404,6 +16611,9 @@ int32 skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t
 		case UNT_SOLIDTRAP:
 		case UNT_SWIFTTRAP:
 		case UNT_FLAMETRAP:
+		case UNT_STAR_BURST:
+		case UNT_GRENADES_DROPPING:
+		case UNT_MISSION_BOMBARD:
 			skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 			break;
 #ifdef RENEWAL
@@ -16978,9 +17188,7 @@ int32 skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t
 			break;
 
 		case UNT_CLOUD_KILL:
-			if (tsc && !tsc->getSCE(type))
-				status_change_start(ss, bl, type, 10000, sg->skill_lv, ss->id, 0, 0, skill_get_time(sg->skill_id, sg->skill_lv), SCSTART_NOTICKDEF);
-			skill_attack(skill_get_type(sg->skill_id), ss, &unit->bl, bl, sg->skill_id, sg->skill_lv, tick, 0);
+			skill_attack(skill_get_type(sg->skill_id), ss, ss, bl, sg->skill_id, sg->skill_lv, tick, SD_ANIMATION|SD_LEVEL);
 			break;
 
 		case UNT_VACUUM_EXTREME:
@@ -18544,6 +18752,30 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 				return false;
 			}
 			break;
+		case SKE_NOON_BLAST:
+			if( sc == nullptr || ( sc->getSCE( SC_RISING_SUN ) == nullptr && sc->getSCE( SC_NOON_SUN ) == nullptr && sc->getSCE( SC_SKY_ENCHANT ) == nullptr ) ){
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_CONDITION);
+				return false;
+			}
+			break;
+		case SKE_SUNSET_BLAST:
+			if( sc == nullptr || ( sc->getSCE( SC_SUNSET_SUN ) == nullptr && sc->getSCE( SC_NOON_SUN ) == nullptr && sc->getSCE( SC_SKY_ENCHANT ) == nullptr ) ){
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_CONDITION);
+				return false;
+			}
+			break;
+		case SKE_MIDNIGHT_KICK:
+			if( sc == nullptr || ( sc->getSCE( SC_RISING_MOON ) == nullptr && sc->getSCE( SC_MIDNIGHT_MOON ) == nullptr && sc->getSCE( SC_SKY_ENCHANT ) == nullptr ) ){
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_CONDITION);
+				return false;
+			}
+			break;
+		case SKE_DAWN_BREAK:
+			if( sc == nullptr || ( sc->getSCE( SC_DAWN_MOON ) == nullptr && sc->getSCE( SC_MIDNIGHT_MOON ) == nullptr && sc->getSCE( SC_SKY_ENCHANT ) == nullptr ) ){
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_CONDITION);
+				return false;
+			}
+			break;
 	}
 
 	/* check state required */
@@ -19813,7 +20045,7 @@ int32 skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint1
 		if (sc->getSCE(SC_SUFFRAGIUM)) {
 			VARCAST_REDUCTION(sc->getSCE(SC_SUFFRAGIUM)->val2);
 #ifndef RENEWAL
-			status_change_end(bl, SC_SUFFRAGIUM, INVALID_TIMER);
+			status_change_end( bl, SC_SUFFRAGIUM );
 #endif
 		}
 		if (sc->getSCE(SC_MEMORIZE)) {

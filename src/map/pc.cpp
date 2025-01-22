@@ -7511,7 +7511,7 @@ static void pc_checkallowskill(map_session_data *sd)
 		}
 		if (flag[SCF_REQUIRENOWEAPON]) { 
 			if (sd->sc.getSCE(status) && sd->status.weapon)
-				status_change_end(&sd->bl, status, INVALID_TIMER);
+				status_change_end( &sd->bl, status );
 		}
 
 		if (flag[SCF_REQUIRESHIELD]) { // Skills requiring a shield
