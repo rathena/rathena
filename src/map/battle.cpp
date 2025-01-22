@@ -6435,7 +6435,7 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			break;
 
 		case SKE_DAWN_BREAK:
-			skillratio += -100 + 400 + 400 * skill_lv;
+			skillratio += -100 + 600 + 700 * skill_lv;
 			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 5 * skill_lv;
 			skillratio += 5 * sstatus->pow;
 
