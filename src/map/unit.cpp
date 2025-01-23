@@ -3827,7 +3827,7 @@ static TIMER_FUNC(unit_shadowscar_timer) {
 	}
 
 	if (ud->shadow_scar_timer.empty())
-		status_change_end(bl, SC_SHADOW_SCAR, INVALID_TIMER);
+		status_change_end( bl, SC_SHADOW_SCAR );
 
 	return 0;
 }
@@ -3839,7 +3839,7 @@ static TIMER_FUNC(unit_shadowscar_timer) {
  */
 void unit_addshadowscar(unit_data &ud, int32 interval) {
 	if (ud.shadow_scar_timer.size() >= MAX_SHADOW_SCAR) {
-		ShowWarning("unit_addshadowscar: Unit %s (%d) has reached the maximum amount of Shadow Scars (%d).\n", status_get_name(ud.bl), ud.bl->id, MAX_SHADOW_SCAR);
+		ShowWarning("unit_addshadowscar: Unit %s (%d) has reached the maximum amount of Shadow Scars (%d).\n", status_get_name(*ud.bl), ud.bl->id, MAX_SHADOW_SCAR);
 		return;
 	}
 

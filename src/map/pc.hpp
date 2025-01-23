@@ -37,7 +37,6 @@ class MapGuild;
 
 #define MAX_PC_BONUS 50 /// Max bonus, usually used by item bonus
 #define MAX_PC_FEELHATE 3 /// Max feel hate info
-#define DAMAGELOG_SIZE_PC 100	/// Damage log
 #define MAX_SPIRITBALL 15 /// Max spirit balls
 #define MAX_DEVOTION 5 /// Max Devotion slots
 #define MAX_SPIRITCHARM 10 /// Max spirit charms
@@ -881,8 +880,6 @@ public:
 	bool vars_ok;
 	bool vars_dirty;
 
-	uint16 dmglog[DAMAGELOG_SIZE_PC]; ///target ids
-
 	int32 c_marker[MAX_SKILL_CRIMSON_MARKER]; /// Store target that marked by Crimson Marker [Cydh]
 	bool flicker; /// Check RL_FLICKER usage status [Cydh]
 
@@ -1701,9 +1698,6 @@ void pc_addspiritcharm(map_session_data *sd, int32 interval, int32 max, int32 ty
 void pc_delspiritcharm(map_session_data *sd, int32 count, int32 type);
 
 void pc_baselevelchanged(map_session_data *sd);
-
-void pc_damage_log_add(map_session_data *sd, int32 id);
-void pc_damage_log_clear(map_session_data *sd, int32 id);
 
 enum e_BANKING_DEPOSIT_ACK : uint8;
 enum e_BANKING_WITHDRAW_ACK : uint8;

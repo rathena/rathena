@@ -74,6 +74,7 @@ uint32 active_scripts;
 uint32 next_id;
 struct eri *st_ers;
 struct eri *stack_ers;
+static map_session_data* dummy_sd;
 
 static bool script_rid2sd_( struct script_state *st, map_session_data** sd, const char *func );
 
@@ -509,9 +510,9 @@ static void script_reportsrc(struct script_state *st)
 			} break;
 		default:
 			if( bl->m >= 0 )
-				ShowDebug("Source (Non-NPC type %d): name %s at %s (%d,%d)\n", bl->type, status_get_name(bl), map_mapid2mapname(bl->m), bl->x, bl->y);
+				ShowDebug("Source (Non-NPC type %d): name %s at %s (%d,%d)\n", bl->type, status_get_name(*bl), map_mapid2mapname(bl->m), bl->x, bl->y);
 			else
-				ShowDebug("Source (Non-NPC type %d): name %s (invisible/not on a map)\n", bl->type, status_get_name(bl));
+				ShowDebug("Source (Non-NPC type %d): name %s (invisible/not on a map)\n", bl->type, status_get_name(*bl));
 			break;
 	}
 }
@@ -4835,6 +4836,12 @@ void do_final_script() {
 	ers_destroy(st_ers);
 	ers_destroy(stack_ers);
 	db_destroy(st_db);
+
+	if( dummy_sd != nullptr ){
+		dummy_sd->~map_session_data();
+		aFree( dummy_sd );
+		dummy_sd = nullptr;
+	}
 }
 /*==========================================
  * Initialization
@@ -4861,6 +4868,11 @@ void do_init_script(void) {
 	add_buildin_func();
 	constant_db.load();
 	script_hardcoded_constants();
+
+	CREATE( dummy_sd, map_session_data, 1 );
+	new( dummy_sd ) map_session_data();
+	dummy_sd->group_id = 99;
+	dummy_sd->fd = 0;
 }
 
 void script_reload(void) {
@@ -12141,7 +12153,7 @@ BUILDIN_FUNC(getunits)
 		{
 			if( data ){
 				if( is_string_variable( name ) ){
-					set_reg_str( st, sd, reference_uid( id, idx + size ), name, status_get_name( bl ), reference_getref( data ) );
+					set_reg_str( st, sd, reference_uid( id, idx + size ), name, status_get_name( *bl ), reference_getref( data ) );
 				}else{
 					set_reg_num( st, sd, reference_uid( id, idx + size ), name, bl->id, reference_getref( data ) );
 				}
@@ -15612,36 +15624,46 @@ BUILDIN_FUNC(nude)
 }
 
 int32 atcommand_sub(struct script_state* st,int32 type) {
-	TBL_PC *sd, dummy_sd;
-	int32 fd;
-	const char *cmd;
+	map_session_data* sd;
 
-	cmd = script_getstr(st,2);
-
-	if (st->rid) {
-		if( !script_rid2sd(sd) )
-			return SCRIPT_CMD_SUCCESS;
-
-		fd = sd->fd;
-	} else { //Use a dummy character.
-		sd = &dummy_sd;
-		fd = 0;
-
-		memset(&dummy_sd, 0, sizeof(TBL_PC));
-		if (st->oid) {
-			struct block_list* bl = map_id2bl(st->oid);
-			memcpy(&dummy_sd.bl, bl, sizeof(struct block_list));
-			if (bl->type == BL_NPC)
-				safestrncpy(dummy_sd.status.name, ((TBL_NPC*)bl)->name, NAME_LENGTH);
-			sd->mapindex = (bl->m > 0) ? map_id2index(bl->m) : 0;
+	if( st->rid != 0 ){
+		if( !script_rid2sd( sd ) ){
+			return SCRIPT_CMD_FAILURE;
 		}
 
-		// Init Group ID, Level, & permissions
-		sd->group_id = 99;
-		pc_group_pc_load( sd );
+		// Use the attached character
+	}else{
+		if( st->oid != 0 ){
+			block_list* bl = map_id2bl( st->oid );
+
+			safestrncpy( dummy_sd->status.name, status_get_name( *bl ), sizeof( dummy_sd->status.name ) );
+			dummy_sd->bl.m = bl->m;
+			dummy_sd->bl.x = bl->x;
+			dummy_sd->bl.y = bl->y;
+			if( dummy_sd->bl.m > 0 ){
+				dummy_sd->mapindex = map_id2index( dummy_sd->bl.m );
+			}else{
+				dummy_sd->mapindex = 0;
+			}
+		}else{
+			snprintf( dummy_sd->status.name, sizeof( dummy_sd->status.name ), "script.cpp:%d", __LINE__ );
+			dummy_sd->bl.m = 0;
+			dummy_sd->bl.x = 0;
+			dummy_sd->bl.y = 0;
+			dummy_sd->mapindex = 0;
+		}
+
+		if( dummy_sd->group == nullptr ){
+			pc_group_pc_load( dummy_sd );
+		}
+
+		// Use the dummy character.
+		sd = dummy_sd;
 	}
 
-	if (!is_atcommand(fd, sd, cmd, type)) {
+	const char* cmd = script_getstr( st, 2 );
+
+	if( !is_atcommand( sd->fd, sd, cmd, type ) ){
 		ShowWarning("buildin_atcommand: failed to execute command '%s'\n", cmd);
 		script_reportsrc(st);
 		return SCRIPT_CMD_FAILURE;
@@ -19690,7 +19712,7 @@ BUILDIN_FUNC(getunitname)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	script_pushstrcopy(st, status_get_name(bl));
+	script_pushstrcopy(st, status_get_name(*bl));
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -22458,6 +22480,23 @@ BUILDIN_FUNC(pushpc)
 }
 
 
+/**
+ * Kick the character from the server
+ * kick({<char_id>});
+ */
+BUILDIN_FUNC(kick)
+{
+	map_session_data *sd = nullptr;
+
+	if (!script_charid2sd(2, sd)) {
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_GM_kick(nullptr, sd);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+
 /// Invokes buying store preparation window
 /// buyingstore <slots>;
 BUILDIN_FUNC(buyingstore)
@@ -23176,7 +23215,38 @@ BUILDIN_FUNC(consumeitem)
 		}
 	}
 
+	// Save the old script the player was attached to
+	struct script_state* previous_st = sd->st;
+	// Save the old item id, if this command was called inside another item
+	t_itemid previous_itemid = sd->itemid;
+
+	// Only if there was an old script
+	if( previous_st != nullptr ){
+		// Detach the player from the current script
+		script_detach_rid( previous_st );
+	}
+
+	// Set the item id to the item id of the script that will be executed (needed for announcement of group containers for example)
+	sd->itemid = item_data->nameid;
 	run_script( item_data->script, 0, sd->bl.id, 0 );
+
+	if( sd->st != nullptr ){
+		script_free_state( sd->st );
+		sd->st = nullptr;
+	}
+
+	// If an old script is present
+	if( previous_st != nullptr ){
+		// Because of detach the RID will be removed, so we need to restore it
+		previous_st->rid = sd->bl.id;
+
+		// Reattach the player to it, so that the limitations of that script kick back in
+		script_attach_state( previous_st );
+	}
+
+	// Restore the old item id
+	sd->itemid = previous_itemid;
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -27471,6 +27541,31 @@ BUILDIN_FUNC(permission_add)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(mesitemicon){
+	t_itemid nameid = script_getnum( st, 2 );
+	std::shared_ptr<item_data> data = item_db.find( nameid );
+	
+	if( data == nullptr ){
+		ShowError( "buildin_mesitemicon: Item ID %u does not exists.\n", nameid );
+		script_pushconststr( st, "" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	const char* name = nullptr;
+
+	if( script_hasdata( st, 3 ) ){
+		name = script_getstr( st, 3 );
+	}
+
+	// Create the link, depending on configuration
+	std::string itemlstr = item_db.create_item_icon_for_mes( data, name );
+
+	// Push it to the script engine for further usage
+	script_pushstrcopy( st, itemlstr.c_str() );
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include <custom/script.inc>
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -27982,6 +28077,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(progressbar,"si"),
 	BUILDIN_DEF(progressbar_npc, "si?"),
 	BUILDIN_DEF(pushpc,"ii"),
+	BUILDIN_DEF(kick, "?"),
 	BUILDIN_DEF(buyingstore,"i"),
 	BUILDIN_DEF(searchstores,"ii?"),
 	BUILDIN_DEF(showdigit,"i?"),
@@ -28240,6 +28336,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(permission_check, "i?"),
 	BUILDIN_DEF(permission_add, "i?"),
 	BUILDIN_DEF2(permission_add, "permission_remove", "i?"),
+
+	BUILDIN_DEF( mesitemicon, "i??" ),
 
 #include <custom/script_def.inc>
 

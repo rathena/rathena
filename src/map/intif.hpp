@@ -124,7 +124,7 @@ void intif_request_achievements(uint32 char_id);
 int32 intif_achievement_save(map_session_data *sd);
 int32 intif_achievement_reward(map_session_data *sd, struct s_achievement_db *adb);
 
-int32 intif_request_accinfo(int32 u_fd, int32 aid, int32 group_lv, char* query, char type);
+int32 intif_request_accinfo( int32 u_fd, int32 aid, int32 group_lv, char* query );
 
 // STORAGE
 bool intif_storage_request(map_session_data *sd, enum storage_type type, uint8 stor_id, uint8 mode);

@@ -1220,7 +1220,7 @@ static void clif_set_unit_idle( struct block_list* bl, bool walking, send_target
 #endif
 /* Might be earlier, this is when the named item bug began */
 #if PACKETVER >= 20131223
-	safestrncpy(p.name, status_get_name( bl ), NAME_LENGTH);
+	safestrncpy(p.name, status_get_name( *bl ), NAME_LENGTH);
 #endif
 
 	clif_send( &p, sizeof( p ), tbl, target );
@@ -1361,7 +1361,7 @@ static void clif_spawn_unit( struct block_list *bl, enum send_target target ){
 #endif
 /* Might be earlier, this is when the named item bug began */
 #if PACKETVER >= 20131223
-	safestrncpy( p.name, status_get_name( bl ), NAME_LENGTH );
+	safestrncpy( p.name, status_get_name( *bl ), NAME_LENGTH );
 #endif
 
 	if( disguised( bl ) ){
@@ -1463,7 +1463,7 @@ static void clif_set_unit_walking( struct block_list& bl, map_session_data* tsd,
 #endif
 /* Might be earlier, this is when the named item bug began */
 #if PACKETVER >= 20131223
-	safestrncpy(p.name, status_get_name( &bl ), NAME_LENGTH);
+	safestrncpy(p.name, status_get_name( bl ), NAME_LENGTH);
 #endif
 
 	clif_send( &p, sizeof(p), tsd ? &tsd->bl : &bl, target );
@@ -11288,6 +11288,7 @@ void clif_parse_WalkToXY(int32 fd, map_session_data *sd)
 		skill_check_cloaking(&sd->bl, sd->sc.getSCE(SC_CLOAKING));
 	status_change_end(&sd->bl, SC_ROLLINGCUTTER); // If you move, you lose your counters. [malufett]
 	status_change_end(&sd->bl, SC_CRESCIVEBOLT);
+	status_change_end(&sd->bl, SC_KI_SUL_RAMPAGE);
 
 	pc_delinvincibletimer(sd);
 
@@ -11330,7 +11331,6 @@ void clif_parse_QuitGame(int32 fd, map_session_data *sd)
 	if( !sd->sc.getSCE(SC_CLOAKING) && !sd->sc.getSCE(SC_HIDING) && !sd->sc.getSCE(SC_CHASEWALK) && !sd->sc.getSCE(SC_CLOAKINGEXCEED) && !sd->sc.getSCE(SC_SUHIDE) && !sd->sc.getSCE(SC_NEWMOON) &&
 		(!battle_config.prevent_logout || sd->canlog_tick == 0 || DIFF_TICK(gettick(), sd->canlog_tick) > battle_config.prevent_logout) )
 	{
-		pc_damage_log_clear(sd,0);
 		clif_disconnect_ack(sd, 0);
 		flush_fifo( fd );
 		if( battle_config.drop_connection_on_quit ){
@@ -11716,7 +11716,6 @@ void clif_parse_Restart(int32 fd, map_session_data *sd)
 		if( !sd->sc.getSCE(SC_CLOAKING) && !sd->sc.getSCE(SC_HIDING) && !sd->sc.getSCE(SC_CHASEWALK) && !sd->sc.getSCE(SC_CLOAKINGEXCEED) && !sd->sc.getSCE(SC_SUHIDE) && !sd->sc.getSCE(SC_NEWMOON) &&
 			(!battle_config.prevent_logout || sd->canlog_tick == 0 || DIFF_TICK(gettick(), sd->canlog_tick) > battle_config.prevent_logout) )
 		{	//Send to char-server for character selection.
-			pc_damage_log_clear(sd,0);
 			chrif_charselectreq(sd, session[fd]->client_addr);
 		} else {
 			clif_disconnect_ack(sd, 1);
@@ -14581,7 +14580,7 @@ void clif_parse_GMKick(int32 fd, map_session_data *sd)
 		case BL_PC:
 		{
 			char command[NAME_LENGTH+6];
-			safesnprintf(command,sizeof(command),"%ckick %s", atcommand_symbol, status_get_name(target));
+			safesnprintf(command,sizeof(command),"%ckick %s", atcommand_symbol, status_get_name(*target));
 			is_atcommand(fd, sd, command, 1);
 		}
 		break;
@@ -14596,7 +14595,7 @@ void clif_parse_GMKick(int32 fd, map_session_data *sd)
 				clif_GM_kickack(sd, 0);
 				return;
 			}
-			safesnprintf(command,sizeof(command),"/kick %s (%d)", status_get_name(target), status_get_class(target));
+			safesnprintf(command,sizeof(command),"/kick %s (%d)", status_get_name(*target), status_get_class(target));
 			log_atcommand(sd, command);
 			status_percent_damage(&sd->bl, target, 100, 0, true); // can invalidate 'target'
 		}
@@ -14719,7 +14718,6 @@ void clif_parse_GMRecall2(int32 fd, map_session_data* sd)
 void clif_parse_GM_Item_Monster(int32 fd, map_session_data *sd)
 {
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	int32 mob_id = 0;
 	StringBuf command;
 	char *str;
 //#if PACKETVER >= 20131218
@@ -14763,17 +14761,30 @@ void clif_parse_GM_Item_Monster(int32 fd, map_session_data *sd)
 	}
 
 	// Monster
-	if ((mob_id = mobdb_searchname(str)) == 0)
-		mob_id = mobdb_checkid(atoi(str));
+	if (pc_can_use_command(sd, "monster", COMMAND_ATCOMMAND)) {
+		// If AegisName matches exactly, summon that monster (official behavior)
+		std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname(str);
+		// Otherwise, search for monster with that ID or name (rAthena added behavior)
+		if (mob == nullptr) {
+			// Check for ID first as this is faster; if search string is not a number it will return 0
+			int32 mob_id = util::strtoint32def(str);
+			if (mob_id == 0 || mobdb_checkid(mob_id) == 0) {
+				mob_id = mobdb_searchname(str);
 
-	std::shared_ptr<s_mob_db> mob = mob_db.find(mob_id);
-
-	if( mob != nullptr ) {
-		StringBuf_Init(&command);
-		StringBuf_Printf(&command, "%cmonster %s", atcommand_symbol, mob->sprite.c_str());
-		is_atcommand(fd, sd, StringBuf_Value(&command), 1);
-		StringBuf_Destroy(&command);
-		return;
+				if (mob_id != 0) {
+					mob = mob_db.find(mob_id);
+				}
+			}
+			else
+				mob = mob_db.find(mob_id);
+		}
+		// Call corresponding atcommand when a valid monster was found
+		if (mob != nullptr) {
+			char command[CHAT_SIZE_MAX];
+			safesnprintf(command, sizeof(command), "%cmonster %s", atcommand_symbol, mob->sprite.c_str());
+			is_atcommand(fd, sd, command, 1);
+			return;
+		}
 	}
 }
 
