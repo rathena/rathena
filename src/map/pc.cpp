@@ -2995,7 +2995,7 @@ int32 pc_disguise(map_session_data *sd, int32 class_)
 	}
 
 	if (sd->bl.prev != nullptr) {
-		pc_stop_walking(sd, 0);
+		unit_stop_walking( &sd->bl, USW_NONE );
 		clif_clearunit_area( sd->bl, CLR_OUTSIGHT );
 	}
 
@@ -6126,7 +6126,7 @@ bool pc_takeitem(map_session_data *sd,struct flooritem_data *fitem)
 	}
 
 	//Display pickup animation.
-	pc_stop_attack(sd);
+	unit_stop_attack( &sd->bl );
 	clif_takeitem(sd->bl,fitem->bl);
 
 	if (fitem->mob_id &&
@@ -8083,7 +8083,7 @@ int32 pc_stop_following (map_session_data *sd)
 	sd->followtarget = -1;
 	sd->ud.target_to = 0;
 
-	unit_stop_walking(&sd->bl, 1);
+	unit_stop_walking( &sd->bl, USW_FIXPOS );
 
 	return 0;
 }
@@ -11091,7 +11091,8 @@ void pc_setoption(map_session_data *sd,int32 type, int32 subtype)
 		new_look = sd->vd.class_;
 	}
 
-	pc_stop_attack(sd); //Stop attacking on new view change (to prevent wedding/santa attacks.
+	// Stop attacking on new view change (to prevent wedding/santa attacks).
+	unit_stop_attack( &sd->bl );
 	clif_changelook(&sd->bl,LOOK_BASE,new_look);
 	if (sd->vd.cloth_color)
 		clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->vd.cloth_color);

@@ -455,8 +455,9 @@ int32 elemental_unlocktarget(s_elemental_data *ed) {
 	nullpo_ret(ed);
 
 	ed->target_id = 0;
-	elemental_stop_attack(ed);
-	elemental_stop_walking(ed,1);
+	unit_stop_attack( &ed->bl );
+	unit_stop_walking( &ed->bl, USW_FIXPOS );
+
 	return 0;
 }
 

@@ -230,8 +230,6 @@ int32 hom_food(map_session_data *sd, struct homun_data *hd);
 int32 hom_hungry_timer_delete(struct homun_data *hd);
 int32 hom_change_name(map_session_data *sd,char *name);
 void hom_change_name_ack(map_session_data *sd, char* name, int32 flag);
-#define hom_stop_walking(hd, type) unit_stop_walking(&(hd)->bl, type)
-#define hom_stop_attack(hd) unit_stop_attack(&(hd)->bl)
 int32 hom_increase_intimacy(struct homun_data * hd, uint32 value);
 int32 hom_decrease_intimacy(struct homun_data * hd, uint32 value);
 int32 hom_skill_tree_get_max(int32 skill_id, int32 b_class);
