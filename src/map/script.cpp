@@ -27541,6 +27541,31 @@ BUILDIN_FUNC(permission_add)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(mesitemicon){
+	t_itemid nameid = script_getnum( st, 2 );
+	std::shared_ptr<item_data> data = item_db.find( nameid );
+	
+	if( data == nullptr ){
+		ShowError( "buildin_mesitemicon: Item ID %u does not exists.\n", nameid );
+		script_pushconststr( st, "" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	const char* name = nullptr;
+
+	if( script_hasdata( st, 3 ) ){
+		name = script_getstr( st, 3 );
+	}
+
+	// Create the link, depending on configuration
+	std::string itemlstr = item_db.create_item_icon_for_mes( data, name );
+
+	// Push it to the script engine for further usage
+	script_pushstrcopy( st, itemlstr.c_str() );
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include <custom/script.inc>
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -28311,6 +28336,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(permission_check, "i?"),
 	BUILDIN_DEF(permission_add, "i?"),
 	BUILDIN_DEF2(permission_add, "permission_remove", "i?"),
+
+	BUILDIN_DEF( mesitemicon, "i??" ),
 
 #include <custom/script_def.inc>
 
