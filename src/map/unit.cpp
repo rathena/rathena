@@ -895,15 +895,12 @@ static TIMER_FUNC(unit_walktobl_sub){
 	struct block_list *bl = map_id2bl(id);
 	struct unit_data *ud = bl?unit_bl2ud(bl):nullptr;
 
-	if (ud) {
-		ud->walkdelaytimer = INVALID_TIMER;
-		if (ud->walktimer == INVALID_TIMER && ud->target_to && ud->target_to == data) {
-			if (DIFF_TICK(ud->canmove_tick, tick) > 0) // Keep waiting?
-				ud->walkdelaytimer = add_timer(ud->canmove_tick+1, unit_walktobl_sub, id, data);
-			else if (unit_can_move(bl)) {
-				if (unit_walktoxy_sub(bl))
-					set_mobstate(bl, ud->state.attack_continue);
-			}
+	if (ud && ud->walktimer == INVALID_TIMER && ud->target_to && ud->target_to == data) {
+		if (DIFF_TICK(ud->canmove_tick, tick) > 0) // Keep waiting?
+			add_timer(ud->canmove_tick+1, unit_walktobl_sub, id, data);
+		else if (unit_can_move(bl)) {
+			if (unit_walktoxy_sub(bl))
+				set_mobstate(bl, ud->state.attack_continue);
 		}
 	}
 
@@ -966,7 +963,7 @@ int32 unit_walktobl(struct block_list *bl, struct block_list *tbl, int32 range, 
 	}
 
 	if(DIFF_TICK(ud->canmove_tick, gettick()) > 0) { // Can't move, wait a bit before invoking the movement.
-		ud->walkdelaytimer = add_timer(ud->canmove_tick+1, unit_walktobl_sub, bl->id, ud->target_to);
+		add_timer(ud->canmove_tick+1, unit_walktobl_sub, bl->id, ud->target_to);
 		return 1;
 	}
 
@@ -1540,12 +1537,7 @@ void unit_stop_walking_soon(struct block_list& bl)
 /**
  * Stops a unit from walking
  * @param bl: Object to stop walking
- * @param type: Options
- *	USW_FIXPOS: Issue a fixpos packet afterwards
- *	USW_MOVE_ONCE: Force the unit to move one cell if it hasn't yet
- *	USW_MOVE_FULL_CELL: Enable moving to the next cell when unit was already half-way there
- *		(may cause on-touch/place side-effects, such as a scripted map change)
- *	USW_FORCE_STOP: Force stop moving, even if walktimer is currently INVALID_TIMER
+ * @param type: Options, see e_unit_stop_walking
  * @return Success(1); Failed(0);
  */
 int32 unit_stop_walking(struct block_list *bl,int32 type)
@@ -1591,6 +1583,9 @@ int32 unit_stop_walking(struct block_list *bl,int32 type)
 	ud->to_x = bl->x;
 	ud->to_y = bl->y;
 
+	if (type&USW_RELEASE_TARGET)
+		ud->target_to = 0;
+
 	if(bl->type == BL_PET && type&~USW_ALL)
 		ud->canmove_tick = gettick() + (type>>8);
 
@@ -1601,25 +1596,6 @@ int32 unit_stop_walking(struct block_list *bl,int32 type)
 	}
 
 	return 1;
-}
-
-/**
- * Stops a unit from chasing a target
- * This also stops a planned future chase that is delayed due to hit lock
- * Does not stop the current movement
- * @param bl: Unit that should stop the chase
- */
-void unit_stop_chase(block_list& bl) {
-	unit_data* ud = unit_bl2ud(&bl);
-
-	if (ud == nullptr)
-		return;
-
-	if (ud->walkdelaytimer != INVALID_TIMER) {
-		delete_timer(ud->walkdelaytimer, unit_walktobl_sub);
-		ud->walkdelaytimer = INVALID_TIMER;
-	}
-	ud->target_to = 0;
 }
 
 /**
@@ -1780,7 +1756,7 @@ int32 unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int32
 				unit_stop_walking(bl,4);
 
 				if(ud->target_to)
-					ud->walkdelaytimer = add_timer(ud->canmove_tick+1, unit_walktobl_sub, bl->id, ud->target_to);
+					add_timer(ud->canmove_tick+1, unit_walktobl_sub, bl->id, ud->target_to);
 			}
 		}
 	}
@@ -3179,7 +3155,6 @@ void unit_dataset(struct block_list *bl)
 	memset( ud, 0, sizeof( struct unit_data) );
 	ud->bl             = bl;
 	ud->walktimer      = INVALID_TIMER;
-	ud->walkdelaytimer = INVALID_TIMER;
 	ud->skilltimer     = INVALID_TIMER;
 	ud->attacktimer    = INVALID_TIMER;
 	ud->steptimer      = INVALID_TIMER;
@@ -3286,8 +3261,7 @@ int32 unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file
 	map_freeblock_lock();
 
 	if (ud->walktimer != INVALID_TIMER)
-		unit_stop_walking(bl,0);
-	unit_stop_chase(*bl);
+		unit_stop_walking(bl,USW_RELEASE_TARGET);
 
 	if (clrtype == CLR_DEAD)
 		ud->state.blockedmove = true;

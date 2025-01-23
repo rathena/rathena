@@ -36,7 +36,6 @@ struct unit_data {
 	int32 target_to;
 	int32 attacktimer;
 	int32 walktimer;
-	int32 walkdelaytimer;
 	int32 chaserange;
 	bool stepaction; //Action should be executed on step [Playtester]
 	int32 steptimer; //Timer that triggers the action [Playtester]
@@ -102,7 +101,8 @@ enum e_unit_stop_walking {
 	USW_MOVE_ONCE = 0x2, /// Force the unit to move one cell if it hasn't yet
 	USW_MOVE_FULL_CELL = 0x4, /// Enable moving to the next cell when unit was already half-way there (may cause on-touch/place side-effects, such as a scripted map change)
 	USW_FORCE_STOP = 0x8, /// Force stop moving, even if walktimer is currently INVALID_TIMER
-	USW_ALL = 0xf,
+	USW_RELEASE_TARGET = 0x10, /// Release chase target
+	USW_ALL = 0x1f,
 };
 
 // PC, MOB, PET
@@ -119,7 +119,6 @@ TIMER_FUNC(unit_delay_walktobl_timer);
 void unit_stop_walking_soon(struct block_list& bl);
 // Causes the target object to stop moving.
 int32 unit_stop_walking(struct block_list *bl,int32 type);
-void unit_stop_chase(block_list& bl);
 bool unit_can_move(struct block_list *bl);
 int32 unit_is_walking(struct block_list *bl);
 int32 unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int32 type);
