@@ -4840,7 +4840,7 @@ static TIMER_FUNC(skill_timerskill){
 						int32 area = skill_get_unit_range( skl->skill_id, skl->skill_lv );
 						int32 splash = skill_get_splash( skl->skill_id, skl->skill_lv );
 
-						for( int32 i = 0, stars = 1 + ( skl->skill_lv + 1 ) / 2; i < stars; i++) {
+						for( int32 i = 0, stars = ( skl->skill_lv / 4 ) + 1; i < stars; i++) {
 							int16 tmpx = skl->x - area + rnd() % ( area * 2 + 1 );
 							int16 tmpy = skl->y - area + rnd() % ( area * 2 + 1 );
 
