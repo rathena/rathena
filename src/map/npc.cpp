@@ -2626,7 +2626,7 @@ void npc_shop_currency_type(map_session_data *sd, struct npc_data *nd, int32 cos
 				clif_broadcast(&sd->bl, output, strlen(output) + 1, BC_BLUE,SELF);
 			}
 			
-			cost[0] = static_cast<int>(pc_readreg2(sd, nd->u.shop.pointshop_str));
+			cost[0] = static_cast<int32>(pc_readreg2(sd, nd->u.shop.pointshop_str));
 			break;
 	}
 }
@@ -3738,13 +3738,13 @@ int32 npc_parseview(const char* w4, const char* start, const char* buffer, const
 		if(!script_get_constant(viewid, &val_tmp)) {
 			std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname(viewid);
 			if (mob != nullptr)
-				val = static_cast<int>(mob->id);
+				val = static_cast<int32>(mob->id);
 			else {
 				ShowWarning("npc_parseview: Invalid NPC constant '%s' specified in file '%s', line'%d'. Defaulting to INVISIBLE. \n", viewid, filepath, strline(buffer,start-buffer));
 				val = JT_INVISIBLE;
 			}
 		} else
-			val = static_cast<int>(val_tmp);
+			val = static_cast<int32>(val_tmp);
 	}
 
 	return val;

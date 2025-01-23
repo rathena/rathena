@@ -500,7 +500,7 @@ uint64 SizeFixDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		return 0;
 	}
 
-	int32 weapon_id = static_cast<int>(constant);
+	int32 weapon_id = static_cast<int32>(constant);
 	std::shared_ptr<s_sizefix_db> size = this->find(weapon_id);
 	bool exists = size != nullptr;
 

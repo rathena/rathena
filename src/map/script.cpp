@@ -1689,7 +1689,7 @@ const char* parse_syntax(const char* p)
 					//Check for constants
 					p2 = skip_word(p);
 					v = (int32)(size_t) (p2-p); // length of word at p2
-					memcpy(label,p,static_cast<int>(v));
+					memcpy(label,p,static_cast<int32>(v));
 					label[v]='\0';
 					if( !script_get_constant(label, &v) )
 						disp_error_message("parse_syntax: 'case' label is not an integer",p);
@@ -3439,7 +3439,7 @@ int64 conv_num64(struct script_state* st, struct script_data* data)
 
 int32 conv_num(struct script_state* st, struct script_data* data)
 {
-	return static_cast<int>(conv_num_(st, data, nullptr));
+	return static_cast<int32>(conv_num_(st, data, nullptr));
 }
 
 //
@@ -8819,7 +8819,7 @@ BUILDIN_FUNC(readparam)
 		get_val_(st, data, sd);
 		value = (int32)data->u.num;
 	}else{
-		value = static_cast<int>(pc_readparam(sd,script_getnum(st, 2)));
+		value = static_cast<int32>(pc_readparam(sd,script_getnum(st, 2)));
 	}
 
 	script_pushint(st,value);
@@ -14742,7 +14742,7 @@ BUILDIN_FUNC(setiteminfo)
 		case ITEMINFO_BUY: i_data->value_buy = static_cast<uint32>(value); break;
 		case ITEMINFO_SELL: i_data->value_sell = static_cast<uint32>(value); break;
 		case ITEMINFO_TYPE: i_data->type = static_cast<item_types>(value); break;
-		case ITEMINFO_MAXCHANCE: i_data->maxchance = static_cast<int>(value); break;
+		case ITEMINFO_MAXCHANCE: i_data->maxchance = static_cast<int32>(value); break;
 		case ITEMINFO_GENDER: i_data->sex = static_cast<uint8>(value); break;
 		case ITEMINFO_LOCATIONS: i_data->equip = static_cast<uint32>(value); break;
 		case ITEMINFO_WEIGHT: i_data->weight = static_cast<uint32>(value); break;
@@ -21459,7 +21459,7 @@ BUILDIN_FUNC(bg_info)
 			size_t i;
 
 			for( i = 0; i < bg->maps.size(); i++ ){
-				setd_sub_str( st, nullptr, ".@bgmaps$", static_cast<int>( i ), mapindex_id2name( bg->maps[i].mapindex ), nullptr );
+				setd_sub_str( st, nullptr, ".@bgmaps$", static_cast<int32>( i ), mapindex_id2name( bg->maps[i].mapindex ), nullptr );
 			}
 
 			setd_sub_num(st, nullptr, ".@bgmapscount", 0, i, nullptr);
