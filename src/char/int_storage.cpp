@@ -299,7 +299,7 @@ void mapif_itembound_ack(int32 fd, int32 account_id, int32 guild_id)
  * @param count
  * @author [Cydh]
  */
-void mapif_itembound_store2gstorage(int32 fd, int32 guild_id, struct item items[], unsigned short count) {
+void mapif_itembound_store2gstorage(int32 fd, int32 guild_id, struct item items[], uint16 count) {
 	int32 size = 8 + sizeof(struct item) * MAX_INVENTORY, i;
 
 	WFIFOHEAD(fd, size);
@@ -324,7 +324,7 @@ bool mapif_parse_itembound_retrieve(int32 fd)
 {
 	StringBuf buf;
 	SqlStmt stmt{ *sql_handle };
-	unsigned short i = 0, count = 0;
+	uint16 i = 0, count = 0;
 	struct item item, items[MAX_INVENTORY];
 	int32 j, guild_id = RFIFOW(fd,10);
 	uint32 char_id = RFIFOL(fd,2), account_id = RFIFOL(fd,6);

@@ -201,7 +201,7 @@ struct s_mob_skill {
 	short target;
 	int32 val[5];
 	short emotion;
-	unsigned short msg_id;
+	uint16 msg_id;
 };
 
 struct s_mob_chat {
@@ -237,14 +237,14 @@ public:
 };
 
 struct spawn_info {
-	unsigned short mapindex;
-	unsigned short qty;
+	uint16 mapindex;
+	uint16 qty;
 };
 
 /// Loooitem struct
 struct s_mob_lootitem {
 	struct item item;	   ///< Item info
-	unsigned short mob_id; ///< ID of monster that dropped the item
+	uint16 mob_id; ///< ID of monster that dropped the item
 };
 
 /// Struct for monster's drop item
@@ -473,7 +473,7 @@ enum e_mob_skill_condition {
 // The data structures for storing delayed item drops
 struct s_item_drop{
 	struct item item_data;
-	unsigned short mob_id;
+	uint16 mob_id;
 	enum bl_type src_type;
 };
 

@@ -374,7 +374,7 @@ struct s_point_str{
 
 struct startitem {
 	t_itemid nameid;
-	unsigned short amount;
+	uint16 amount;
 	uint32 pos;
 };
 
@@ -414,7 +414,7 @@ struct script_reg_str {
 
 //For saving status changes across sessions. [Skotlex]
 struct status_change_data {
-	unsigned short type; //SC_type
+	uint16 type; //SC_type
 	long val1, val2, val3, val4;
 	t_tick tick; //Remaining duration.
 };
@@ -554,7 +554,7 @@ struct s_friend {
 #ifdef HOTKEY_SAVING
 struct hotkey {
 	uint32 id;
-	unsigned short lv;
+	uint16 lv;
 	unsigned char type; // 0: item, 1: skill
 };
 #endif
@@ -593,8 +593,8 @@ struct mmo_charstatus {
 
 	char name[NAME_LENGTH];
 	uint32 base_level,job_level;
-	unsigned short str,agi,vit,int_,dex,luk;
-	unsigned short pow,sta,wis,spl,con,crt;
+	uint16 str,agi,vit,int_,dex,luk;
+	uint16 pow,sta,wis,spl,con,crt;
 	unsigned char slot,sex;
 
 	uint32 mapip;
@@ -688,7 +688,7 @@ struct auction_data {
 	char item_name[ITEM_NAME_LENGTH];
 	short type;
 
-	unsigned short hours;
+	uint16 hours;
 	int32 price, buynow;
 	time_t timestamp; // auction's end time
 	int32 auction_end_timer;
@@ -698,9 +698,9 @@ struct party_member {
 	uint32 account_id;
 	uint32 char_id;
 	char name[NAME_LENGTH];
-	unsigned short class_;
+	uint16 class_;
 	char map[MAP_NAME_LENGTH_EXT];
-	unsigned short lv;
+	uint16 lv;
 	unsigned leader : 1,
 	         online : 1;
 };
@@ -1152,7 +1152,7 @@ struct clan{
 	short max_member, connect_member;
 	map_session_data *members[MAX_CLAN];
 	struct clan_alliance alliance[MAX_CLANALLIANCE];
-	unsigned short instance_id;
+	uint16 instance_id;
 };
 
 // Sanity checks...
