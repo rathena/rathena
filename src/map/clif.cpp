@@ -12331,14 +12331,16 @@ void clif_parse_CreateChatRoom( int32 fd, map_session_data* sd){
 }
 
 
-/// Chatroom join request (CZ_REQ_ENTER_ROOM).
-/// 00d9 <chat ID>.L <passwd>.8B
+/// Chatroom join request.
+/// 00d9 <chat ID>.L <passwd>.8B (CZ_REQ_ENTER_ROOM)
 void clif_parse_ChatAddMember(int32 fd, map_session_data* sd){
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	int32 chatid = RFIFOL(fd,info->pos[0]);
-	const char* password = RFIFOCP(fd,info->pos[1]); // not zero-terminated
+	if( sd == nullptr ){
+		return;
+	}
 
-	chat_joinchat(sd,chatid,password);
+	const PACKET_CZ_REQ_ENTER_ROOM* p = reinterpret_cast<PACKET_CZ_REQ_ENTER_ROOM*>( RFIFOP( fd, 0 ) );
+
+	chat_joinchat( sd, p->chat_id, p->password );
 }
 
 
