@@ -35,7 +35,7 @@ struct quest *mapif_quests_fromsql( uint32 char_id, size_t& count ){
 	||	SQL_ERROR == stmt.Execute()
 	||	SQL_ERROR == stmt.BindColumn(0, SQLDT_INT32,  &tmp_quest.quest_id, 0, nullptr, nullptr)
 	||	SQL_ERROR == stmt.BindColumn(1, SQLDT_INT32,  &tmp_quest.state,    0, nullptr, nullptr)
-	||	SQL_ERROR == stmt.BindColumn(2, SQLDT_UINT, &tmp_quest.time,     0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(2, SQLDT_UINT32, &tmp_quest.time,     0, nullptr, nullptr)
 	||	SQL_ERROR == stmt.BindColumn(3, SQLDT_INT32,  &tmp_quest.count[0], 0, nullptr, nullptr)
 	||	SQL_ERROR == stmt.BindColumn(4, SQLDT_INT32,  &tmp_quest.count[1], 0, nullptr, nullptr)
 	||	SQL_ERROR == stmt.BindColumn(5, SQLDT_INT32,  &tmp_quest.count[2], 0, nullptr, nullptr)
