@@ -1288,11 +1288,6 @@
 	packet(0x07d9,268);
 #endif
 
-// 2009-07-15aRagexeRE
-#if PACKETVER >= 20090715
-	packet(0x07e1,15);
-#endif
-
 // 2009-08-05aRagexeRE
 #if PACKETVER >= 20090805
 	packet(0x07e2,8);
