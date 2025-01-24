@@ -2476,15 +2476,15 @@ void pc_reg_received(map_session_data *sd)
 	sd->change_level_2nd = static_cast<unsigned char>(pc_readglobalreg(sd, add_str(JOBCHANGE2ND_VAR)));
 	sd->change_level_3rd = static_cast<unsigned char>(pc_readglobalreg(sd, add_str(JOBCHANGE3RD_VAR)));
 	sd->change_level_4th = static_cast<unsigned char>(pc_readglobalreg(sd, add_str(JOBCHANGE4TH_VAR)));
-	sd->die_counter = static_cast<int>(pc_readglobalreg(sd, add_str(PCDIECOUNTER_VAR)));
+	sd->die_counter = static_cast<int32>(pc_readglobalreg(sd, add_str(PCDIECOUNTER_VAR)));
 
-	sd->langtype = static_cast<int>(pc_readaccountreg(sd, add_str(LANGTYPE_VAR)));
+	sd->langtype = static_cast<int32>(pc_readaccountreg(sd, add_str(LANGTYPE_VAR)));
 	if (msg_checklangtype(sd->langtype,true) < 0)
 		sd->langtype = 0; //invalid langtype reset to default
 
 	// Cash shop
-	sd->cashPoints = static_cast<int>(pc_readaccountreg(sd, add_str(CASHPOINT_VAR)));
-	sd->kafraPoints = static_cast<int>(pc_readaccountreg(sd, add_str(KAFRAPOINT_VAR)));
+	sd->cashPoints = static_cast<int32>(pc_readaccountreg(sd, add_str(CASHPOINT_VAR)));
+	sd->kafraPoints = static_cast<int32>(pc_readaccountreg(sd, add_str(KAFRAPOINT_VAR)));
 
 	// Cooking Exp
 	sd->cook_mastery = static_cast<short>(pc_readglobalreg(sd, add_str(COOKMASTERY_VAR)));
@@ -2496,12 +2496,12 @@ void pc_reg_received(map_session_data *sd)
 	}
 
 	if (battle_config.feature_banking)
-		sd->bank_vault = static_cast<int>(pc_readreg2(sd, BANK_VAULT_VAR));
+		sd->bank_vault = static_cast<int32>(pc_readreg2(sd, BANK_VAULT_VAR));
 
 	if (battle_config.feature_roulette) {
-		sd->roulette_point.bronze = static_cast<int>(pc_readreg2(sd, ROULETTE_BRONZE_VAR));
-		sd->roulette_point.silver = static_cast<int>(pc_readreg2(sd, ROULETTE_SILVER_VAR));
-		sd->roulette_point.gold = static_cast<int>(pc_readreg2(sd, ROULETTE_GOLD_VAR));
+		sd->roulette_point.bronze = static_cast<int32>(pc_readreg2(sd, ROULETTE_BRONZE_VAR));
+		sd->roulette_point.silver = static_cast<int32>(pc_readreg2(sd, ROULETTE_SILVER_VAR));
+		sd->roulette_point.gold = static_cast<int32>(pc_readreg2(sd, ROULETTE_GOLD_VAR));
 	}
 	sd->roulette.prizeIdx = -1;
 
@@ -14569,7 +14569,7 @@ static bool pc_readdb_job_noenter_map( char *str[], size_t columns, size_t curre
 			ShowError("pc_readdb_job_noenter_map: Invalid job %s specified.\n", str[0]);
 			return false;
 		}
-		class_ = static_cast<int>(class_tmp);
+		class_ = static_cast<int32>(class_tmp);
 	}
 
 	if (!pcdb_checkid(class_)) {
@@ -16258,7 +16258,7 @@ int32 pc_attendance_counter( map_session_data* sd ){
 	}
 
 	// Get the counter for the current period
-	int32 counter = static_cast<int>(pc_readreg2( sd, ATTENDANCE_COUNT_VAR ));
+	int32 counter = static_cast<int32>(pc_readreg2( sd, ATTENDANCE_COUNT_VAR ));
 
 	// Check if we have a remaining counter from a previous period
 	if( counter > 0 && pc_readreg2( sd, ATTENDANCE_DATE_VAR ) < period->start ){

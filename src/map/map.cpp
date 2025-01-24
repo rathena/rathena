@@ -2881,7 +2881,7 @@ int32 map_addmobtolist(unsigned short m, struct spawn_data *spawn)
 	if( i < MAX_MOB_LIST_PER_MAP )
 	{
 		mapdata->moblist[i] = spawn;
-		return static_cast<int>(i);
+		return static_cast<int32>(i);
 	}
 	return -1;
 }

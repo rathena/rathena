@@ -20757,7 +20757,7 @@ int32 skill_clear_group(block_list *bl, uint8 flag)
 		}
 	}
 
-	return static_cast<int>(count);
+	return static_cast<int32>(count);
 }
 
 /**

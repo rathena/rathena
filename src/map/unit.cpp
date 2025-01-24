@@ -213,7 +213,7 @@ TIMER_FUNC(unit_teleport_timer){
 	else {
 		map_session_data* msd = unit_get_master( bl );
 
-		if( msd != nullptr && !check_distance_bl( &msd->bl, bl, static_cast<int>( data ) ) ){
+		if( msd != nullptr && !check_distance_bl( &msd->bl, bl, static_cast<int32>( data ) ) ){
 			*mast_tid = INVALID_TIMER;
 			unit_warp(bl, msd->bl.m, msd->bl.x, msd->bl.y, CLR_TELEPORT );
 		} else // No timer needed
@@ -716,7 +716,7 @@ TIMER_FUNC(unit_delay_walktoxy_timer){
  */
 TIMER_FUNC(unit_delay_walktobl_timer){
 	block_list* bl = map_id2bl( id );
-	block_list* tbl = map_id2bl( static_cast<int>( data ) );
+	block_list* tbl = map_id2bl( static_cast<int32>( data ) );
 
 	if(!bl || bl->prev == nullptr || tbl == nullptr)
 		return 0;
@@ -3910,7 +3910,7 @@ void unit_addshadowscar(unit_data &ud, int32 interval) {
 
 	if (sc != nullptr) {
 		if (sc->getSCE(SC_SHADOW_SCAR) != nullptr) {
-			sc->getSCE(SC_SHADOW_SCAR)->val1 = static_cast<int>(ud.shadow_scar_timer.size());
+			sc->getSCE(SC_SHADOW_SCAR)->val1 = static_cast<int32>(ud.shadow_scar_timer.size());
 		} else {
 			sc_start(ud.bl, ud.bl, SC_SHADOW_SCAR, 100, 1, INFINITE_TICK);
 		}
