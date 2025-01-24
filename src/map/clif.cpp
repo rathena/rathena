@@ -12342,28 +12342,30 @@ void clif_parse_ChatAddMember(int32 fd, map_session_data* sd){
 }
 
 
-/// Chatroom properties adjustment request (CZ_CHANGE_CHATROOM).
-/// 00de <packet len>.W <limit>.W <type>.B <passwd>.8B <title>.?B
+/// Chatroom properties adjustment request.
+/// 00de <packet len>.W <limit>.W <type>.B <passwd>.8B <title>.?B (CZ_CHANGE_CHATROOM)
 /// type:
 ///     0 = private
 ///     1 = public
 void clif_parse_ChatRoomStatusChange(int32 fd, map_session_data* sd){
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	int32 len = RFIFOW(fd,info->pos[0])-15;
-	int32 limit = RFIFOW(fd,info->pos[1]);
-	bool pub = (RFIFOB(fd,info->pos[2]) != 0);
-	const char* password = RFIFOCP(fd,info->pos[3]); // not zero-terminated
-	const char* title = RFIFOCP(fd,info->pos[4]); // not zero-terminated
-	char s_password[CHATROOM_PASS_SIZE];
-	char s_title[CHATROOM_TITLE_SIZE];
+	if( sd == nullptr ){
+		return;
+	}
+
+	const PACKET_CZ_CHANGE_CHATROOM* p = reinterpret_cast<PACKET_CZ_CHANGE_CHATROOM*>( RFIFOP( fd, 0 ) );
+	size_t len = p->packetSize - sizeof( *p );
 
 	if( len <= 0 )
 		return; // invalid input
 
-	safestrncpy(s_password, password, CHATROOM_PASS_SIZE);
-	safestrncpy(s_title, title, min(len+1,CHATROOM_TITLE_SIZE)); //NOTE: assumes that safestrncpy will not access the len+1'th byte
+	char s_password[CHATROOM_PASS_SIZE];
+	char s_title[CHATROOM_TITLE_SIZE];
 
-	chat_changechatstatus(sd, s_title, s_password, limit, pub);
+	safestrncpy( s_password, p->password, sizeof( s_password ) );
+	// NOTE: assumes that safestrncpy will not access the len+1'th byte
+	safestrncpy( s_title, p->title, min( len + 1, CHATROOM_TITLE_SIZE ) );
+
+	chat_changechatstatus( sd, s_title, s_password, p->limit, p->type );
 }
 
 

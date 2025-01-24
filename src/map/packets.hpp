@@ -1731,6 +1731,16 @@ struct PACKET_ZC_UPDATE_MAPINFO{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_UPDATE_MAPINFO, 0x192);
 
+struct PACKET_CZ_CHANGE_CHATROOM{
+	int16 packetType;
+	uint16 packetSize;
+	uint16 limit;
+	uint8 type;
+	char password[8];
+	char title[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_CHANGE_CHATROOM, 0xde);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
