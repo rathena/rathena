@@ -5138,9 +5138,21 @@ static int32 clif_calc_walkdelay(struct block_list *bl,int32 delay, char type, i
 * Returns hallucination damage the client displays
 *------------------------------------------*/
 static int64 clif_hallucination_damage( block_list& bl, int64 damage ){
-	status_change *sc;
+	status_change* sc = status_get_sc( &bl );
 
-	if (!((sc = status_get_sc(&bl)) && !sc->empty() && sc->getSCE(SC_HALLUCINATION) && damage)) {
+	if( sc == nullptr ){
+		return damage;
+	}
+
+	if( sc->empty() ){
+		return damage;
+	}
+
+	if( sc->getSCE( SC_HALLUCINATION ) == nullptr ){
+		return damage;
+	}
+
+	if( damage == 0 ){
 		return damage;
 	}
 
@@ -5187,9 +5199,8 @@ int32 clif_damage(block_list& src, block_list& dst, t_tick tick, int32 sdelay, i
 	if (type != DMG_MULTI_HIT_CRITICAL)
 		type = clif_calc_delay(type,div,damage+damage2,ddelay);
 
-	damage = static_cast<int32>(clif_hallucination_damage( dst, damage ));
-	if (damage2)
-		damage2 = static_cast<int32>(clif_hallucination_damage( dst, damage2 ));
+	damage = static_cast<decltype(damage)>(clif_hallucination_damage(dst, damage));
+	damage2 = static_cast<decltype(damage2)>(clif_hallucination_damage(dst, damage2));
 
 	// Calculate what sdelay to send to the client so it applies damage at the same time as the server
 	if (battle_config.synchronize_damage && src.type == BL_MOB) {
@@ -8128,15 +8139,17 @@ void clif_movetoattack( map_session_data& sd, block_list& bl ){
 }
 
 
-/// Notifies the client about the result of an item produce request (ZC_ACK_REQMAKINGITEM).
-/// 018f <result>.W <name id>.W
+/// Notifies the client about the result of an item produce request.
+/// 018f <result>.W <name id>.W (ZC_ACK_REQMAKINGITEM)
 /// result:
 ///     0 = success
 ///     1 = failure
 ///     2 = success (alchemist)
 ///     3 = failure (alchemist)
 void clif_produceeffect(map_session_data* sd,int32 flag, t_itemid nameid){
-	nullpo_retv( sd );
+	if( sd == nullptr ){
+		return;
+	}
 
 	clif_solved_charname( *sd, sd->status.char_id, sd->status.name );
 
