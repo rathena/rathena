@@ -95,7 +95,7 @@ struct Damage {
 	int64 damage, /// Right hand damage
 		damage2; /// Left hand damage
 	enum e_damage_type type; /// Check clif_damage for type
-	short div_; /// Number of hit
+	int16 div_; /// Number of hit
 	int32 amotion,
 		dmotion;
 	int32 blewcount; /// Number of knockback

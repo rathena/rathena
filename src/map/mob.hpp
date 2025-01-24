@@ -193,14 +193,14 @@ enum e_aegis_monsterclass : int8 {
 struct s_mob_skill {
 	enum MobSkillState state;
 	uint16 skill_id,skill_lv;
-	short permillage;
+	int16 permillage;
 	int32 casttime,delay;
-	short cancel;
-	short cond1;
+	int16 cancel;
+	int16 cond1;
 	int64 cond2;
-	short target;
+	int16 target;
 	int32 val[5];
-	short emotion;
+	int16 emotion;
 	uint16 msg_id;
 };
 
@@ -358,7 +358,7 @@ struct mob_data {
 	int32 spawn_timer; //Required for Convex Mirror
 	int16 centerX, centerY; // Spawn center of this individual monster
 	struct s_mob_lootitem *lootitems;
-	short mob_id;
+	int16 mob_id;
 	uint32 tdmg; //Stores total damage given to the mob, for exp calculations. [Skotlex]
 	int32 level;
 	int32 target_id,attacked_id,norm_attacked_id;
@@ -366,9 +366,9 @@ struct mob_data {
 	int32 bg_id; // BattleGround System
 
 	t_tick next_walktime,last_thinktime,last_linktime,last_pcneartime,dmgtick,last_canmove,last_skillcheck;
-	short move_fail_count;
-	short lootitem_count;
-	short min_chase;
+	int16 move_fail_count;
+	int16 lootitem_count;
+	int16 min_chase;
 	unsigned char walktoxy_fail_count; //Pathfinding succeeds but the actual walking failed (e.g. Icewall lock)
 
 	int32 deletetimer;

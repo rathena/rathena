@@ -986,7 +986,7 @@ void storage_guild_storageaddfromcart(map_session_data* sd, int32 index, int32 a
  */
 void storage_guild_storagegettocart(map_session_data* sd, int32 index, int32 amount)
 {
-	short flag;
+	int16 flag;
 	struct s_storage *stor;
 
 	nullpo_retv(sd);

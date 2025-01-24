@@ -1191,7 +1191,7 @@ int32 pet_recv_petdata(uint32 account_id,struct s_pet *p,int32 flag)
  * @param egg_index : egg index value in inventory
  * @return 0
  */
-int32 pet_select_egg(map_session_data *sd,short egg_index)
+int32 pet_select_egg(map_session_data *sd,int16 egg_index)
 {
 	nullpo_ret(sd);
 
@@ -1374,7 +1374,7 @@ void pet_catch_process_end( map_session_data& sd, int32 target_id ){
  * @param pet_id : pet ID otherwise means failure
  * @return true : success, false : failure
  **/
-bool pet_get_egg(uint32 account_id, short pet_class, int32 pet_id ) {
+bool pet_get_egg(uint32 account_id, int16 pet_class, int32 pet_id ) {
 	map_session_data *sd;
 	struct item tmp_item;
 	int32 ret = 0;
@@ -2160,7 +2160,7 @@ TIMER_FUNC(pet_heal_timer){
 TIMER_FUNC(pet_skill_support_timer){
 	map_session_data *sd = map_id2sd(id);
 	struct pet_data *pd;
-	short rate = 100;
+	int16 rate = 100;
 
 	if(sd == nullptr || sd->pd == nullptr || sd->pd->s_skill == nullptr)
 		return 1;
@@ -2221,7 +2221,7 @@ int32 pet_egg_search(map_session_data* sd, int32 pet_id) {
  * @param pet_id: Pet's database ID
  * @return True on success or false otherwise
  */
-bool pet_evolution_requirements_check(map_session_data *sd, short pet_id) {
+bool pet_evolution_requirements_check(map_session_data *sd, int16 pet_id) {
 	nullpo_retr(false, sd);
 
 	if (sd->pd == nullptr)

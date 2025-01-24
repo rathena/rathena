@@ -170,7 +170,7 @@ static inline uint16 client_nameid( t_itemid server_nameid ){
 }
 #endif
 
-static inline void WBUFPOS(uint8* p, uint16 pos, short x, short y, unsigned char dir) {
+static inline void WBUFPOS(uint8* p, uint16 pos, int16 x, int16 y, unsigned char dir) {
 	p += pos;
 	p[0] = (uint8)(x>>2);
 	p[1] = (uint8)((x<<6) | ((y>>4)&0x3f));
@@ -179,7 +179,7 @@ static inline void WBUFPOS(uint8* p, uint16 pos, short x, short y, unsigned char
 
 
 // client-side: x0+=sx0*0.0625-0.5 and y0+=sy0*0.0625-0.5
-static inline void WBUFPOS2(uint8* p, uint16 pos, short x0, short y0, short x1, short y1, uint8 sx0, uint8 sy0) {
+static inline void WBUFPOS2(uint8* p, uint16 pos, int16 x0, int16 y0, int16 x1, int16 y1, uint8 sx0, uint8 sy0) {
 	p += pos;
 	p[0] = (uint8)(x0>>2);
 	p[1] = (uint8)((x0<<6) | ((y0>>4)&0x3f));
@@ -190,11 +190,11 @@ static inline void WBUFPOS2(uint8* p, uint16 pos, short x0, short y0, short x1, 
 }
 
 
-static inline void WFIFOPOS(int32 fd, uint16 pos, short x, short y, unsigned char dir) {
+static inline void WFIFOPOS(int32 fd, uint16 pos, int16 x, int16 y, unsigned char dir) {
 	WBUFPOS(WFIFOP(fd,pos), 0, x, y, dir);
 }
 
-static inline void RBUFPOS(const uint8* p, uint16 pos, short* x, short* y, unsigned char* dir) {
+static inline void RBUFPOS(const uint8* p, uint16 pos, int16* x, int16* y, unsigned char* dir) {
 	p += pos;
 
 	if( x ) {
@@ -211,7 +211,7 @@ static inline void RBUFPOS(const uint8* p, uint16 pos, short* x, short* y, unsig
 }
 
 
-static inline void RBUFPOS2(const uint8* p, uint16 pos, short* x0, short* y0, short* x1, short* y1, unsigned char* sx0, unsigned char* sy0) {
+static inline void RBUFPOS2(const uint8* p, uint16 pos, int16* x0, int16* y0, int16* x1, int16* y1, unsigned char* sx0, unsigned char* sy0) {
 	p += pos;
 
 	if( x0 ) {
@@ -240,12 +240,12 @@ static inline void RBUFPOS2(const uint8* p, uint16 pos, short* x0, short* y0, sh
 }
 
 
-static inline void RFIFOPOS(int32 fd, uint16 pos, short* x, short* y, unsigned char* dir) {
+static inline void RFIFOPOS(int32 fd, uint16 pos, int16* x, int16* y, unsigned char* dir) {
 	RBUFPOS(RFIFOP(fd,pos), 0, x, y, dir);
 }
 
 
-static inline void RFIFOPOS2(int32 fd, uint16 pos, short* x0, short* y0, short* x1, short* y1, unsigned char* sx0, unsigned char* sy0) {
+static inline void RFIFOPOS2(int32 fd, uint16 pos, int16* x0, int16* y0, int16* x1, int16* y1, unsigned char* sx0, unsigned char* sy0) {
 	RBUFPOS2(WFIFOP(fd,pos), 0, x0, y0, x1, y1, sx0, sy0);
 }
 
@@ -1972,7 +1972,7 @@ void clif_homskillinfoblock( homun_data& hd ){
 
 		if (id != 0) {
 			int32 combo = (hd.homunculus.hskill[i].flag)&SKILL_FLAG_TMP_COMBO;
-			short idx = hom_skill_get_index(id);
+			int16 idx = hom_skill_get_index(id);
 			if (idx == -1)
 				continue;
 			packet->skills[count].id = id;
@@ -1994,7 +1994,7 @@ void clif_homskillinfoblock( homun_data& hd ){
 
 void clif_homskillup( homun_data& hd, uint16 skill_id ){
 #if PACKETVER >= 20050531
-	short idx = hom_skill_get_index( skill_id );
+	int16 idx = hom_skill_get_index( skill_id );
 
 	if( idx == -1 ){
 		return;
@@ -2140,7 +2140,7 @@ void clif_quitsave(int32 fd,map_session_data *sd) {
 
 /// Notifies the client of a position change to coordinates on given map (ZC_NPCACK_MAPMOVE).
 /// 0091 <map name>.16B <x>.W <y>.W
-void clif_changemap( map_session_data& sd, short m, uint16 x, uint16 y ){
+void clif_changemap( map_session_data& sd, int16 m, uint16 x, uint16 y ){
 	PACKET_ZC_NPCACK_MAPMOVE packet{};
 
 	packet.packetType = HEADER_ZC_NPCACK_MAPMOVE;
@@ -2902,7 +2902,7 @@ void clif_dropitem( map_session_data& sd, int32 index, int32 amount ){
 ///     5 = Moved to cart
 ///     6 = Item sold
 ///     7 = Consumed by Four Spirit Analysis (SO_EL_ANALYSIS) skill
-void clif_delitem( map_session_data& sd, int32 index, int32 amount, short reason ){
+void clif_delitem( map_session_data& sd, int32 index, int32 amount, int16 reason ){
 #if PACKETVER >= 20091117
 	PACKET_ZC_DELETE_ITEM_FROM_BODY packet{};
 
@@ -2917,7 +2917,7 @@ void clif_delitem( map_session_data& sd, int32 index, int32 amount, short reason
 #endif
 }
 
-static void clif_item_equip( short idx, struct EQUIPITEM_INFO *p, struct item *it, struct item_data *id, int32 eqp_pos ){
+static void clif_item_equip( int16 idx, struct EQUIPITEM_INFO *p, struct item *it, struct item_data *id, int32 eqp_pos ){
 	nullpo_retv( p );
 	nullpo_retv( it );
 	nullpo_retv( id );
@@ -2972,7 +2972,7 @@ static void clif_item_equip( short idx, struct EQUIPITEM_INFO *p, struct item *i
 #endif
 }
 
-static void clif_item_normal( short idx, struct NORMALITEM_INFO *p, struct item *i, struct item_data *id ){
+static void clif_item_normal( int16 idx, struct NORMALITEM_INFO *p, struct item *i, struct item_data *id ){
 	nullpo_retv(p);
 	nullpo_retv(i);
 	nullpo_retv(id);
@@ -5460,7 +5460,7 @@ void clif_getareachar_skillunit(struct block_list *bl, struct skill_unit *unit, 
 }
 
 /// 09ca <lenght>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.L <range>.B <visible>.B <skill level>.B (ZC_SKILL_ENTRY5)
-void clif_skill_unit_test(struct block_list *bl, short x, short y, int32 unit_id, short range, short skill_lv) {
+void clif_skill_unit_test(struct block_list *bl, int16 x, int16 y, int32 unit_id, int16 range, int16 skill_lv) {
 	unsigned char buf[128];
 
 	nullpo_retv(bl);
@@ -6754,7 +6754,7 @@ void clif_GlobalMessage( block_list& bl, const char* message, enum send_target t
 
 /// Send broadcast message with font formatting.
 /// 01c3 <packet len>.W <fontColor>.L <fontType>.W <fontSize>.W <fontAlign>.W <fontY>.W <message>.?B (ZC_BROADCAST2)
-void clif_broadcast2(struct block_list* bl, const char* mes, size_t len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target)
+void clif_broadcast2(struct block_list* bl, const char* mes, size_t len, unsigned long fontColor, int16 fontType, int16 fontSize, int16 fontAlign, int16 fontY, enum send_target target)
 {
 	nullpo_retv(mes);
 	if (len < 2)
@@ -6850,10 +6850,10 @@ void clif_resurrection( block_list& bl ){
 void clif_map_property(struct block_list *bl, enum map_property property, enum send_target t)
 {
 #if PACKETVER >= 20121010
-	short cmd = 0x99b;
+	int16 cmd = 0x99b;
 	unsigned char buf[8];
 #else
-	short cmd = 0x199;
+	int16 cmd = 0x199;
 	unsigned char buf[4];
 #endif
 	
@@ -9887,7 +9887,7 @@ void clif_refresh(map_session_data *sd)
 	clif_loadConfirm( sd );
 
 	if( disguised(&sd->bl) ) {/* refresh-da */
-		short disguise = sd->disguise;
+		int16 disguise = sd->disguise;
 		pc_disguise(sd, 0);
 		pc_disguise(sd, disguise);
 	}
@@ -11325,7 +11325,7 @@ void clif_progressbar_npc( struct npc_data *nd, map_session_data* sd ){
 /// There are various variants of this packet, some of them have padding between fields.
 void clif_parse_WalkToXY(int32 fd, map_session_data *sd)
 {
-	short x, y;
+	int16 x, y;
 
 	if (pc_isdead(sd)) {
 		clif_clearunit_area( sd->bl, CLR_DEAD );
@@ -11378,7 +11378,7 @@ void clif_parse_WalkToXY(int32 fd, map_session_data *sd)
 ///     0 = disconnect (quit)
 ///     1 = cannot disconnect (wait 10 seconds)
 ///     ? = ignored
-void clif_disconnect_ack(map_session_data* sd, short result)
+void clif_disconnect_ack(map_session_data* sd, int16 result)
 {
 	int32 fd = sd->fd;
 
@@ -12470,13 +12470,13 @@ void clif_parse_TradeAck(int32 fd,map_session_data *sd)
 void clif_parse_TradeAddItem(int32 fd,map_session_data *sd)
 {
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	short index = RFIFOW(fd,info->pos[0]);
+	int16 index = RFIFOW(fd,info->pos[0]);
 	int32 amount = RFIFOL(fd,info->pos[1]);
 
 	if( index == 0 )
 		trade_tradeaddzeny(sd, amount);
 	else
-		trade_tradeadditem(sd, server_index(index), (short)amount);
+		trade_tradeadditem(sd, server_index(index), (int16)amount);
 }
 
 
@@ -12709,7 +12709,7 @@ static void clif_parse_UseSkillToId_homun(struct homun_data *hd, map_session_dat
 		unit_skilluse_id(&hd->bl, target_id, skill_id, skill_lv);
 }
 
-static void clif_parse_UseSkillToPos_homun(struct homun_data *hd, map_session_data *sd, t_tick tick, uint16 skill_id, uint16 skill_lv, short x, short y, int32 skillmoreinfo)
+static void clif_parse_UseSkillToPos_homun(struct homun_data *hd, map_session_data *sd, t_tick tick, uint16 skill_id, uint16 skill_lv, int16 x, int16 y, int32 skillmoreinfo)
 {
 	int32 lv;
 	if( !hd )
@@ -12764,7 +12764,7 @@ static void clif_parse_UseSkillToId_mercenary(s_mercenary_data *md, map_session_
 		unit_skilluse_id(&md->bl, target_id, skill_id, skill_lv);
 }
 
-static void clif_parse_UseSkillToPos_mercenary(s_mercenary_data *md, map_session_data *sd, t_tick tick, uint16 skill_id, uint16 skill_lv, short x, short y, int32 skillmoreinfo)
+static void clif_parse_UseSkillToPos_mercenary(s_mercenary_data *md, map_session_data *sd, t_tick tick, uint16 skill_id, uint16 skill_lv, int16 x, int16 y, int32 skillmoreinfo)
 {
 	int32 lv;
 	if( !md )
@@ -12925,7 +12925,7 @@ void clif_parse_UseSkillToId( int32 fd, map_session_data *sd ){
 /*==========================================
  * Client tells server he'd like to use AoE skill id 'skill_id' of level 'skill_lv' on 'x','y' location
  *------------------------------------------*/
-static void clif_parse_UseSkillToPosSub( int32 fd, map_session_data& sd, uint16 skill_lv, uint16 skill_id, short x, short y, int32 skillmoreinfo ){
+static void clif_parse_UseSkillToPosSub( int32 fd, map_session_data& sd, uint16 skill_lv, uint16 skill_id, int16 x, int16 y, int32 skillmoreinfo ){
 	t_tick tick = gettick();
 
 	if( !(skill_get_inf(skill_id)&INF_GROUND_SKILL) )
@@ -13159,7 +13159,7 @@ void clif_parse_Cooking(int32 fd,map_session_data *sd) {
 	const PACKET_CZ_REQ_MAKINGITEM* p = reinterpret_cast<PACKET_CZ_REQ_MAKINGITEM*>( RFIFOP( fd, 0 ) );
 
 	int32 amount = sd->menuskill_val2 ? sd->menuskill_val2 : 1;
-	short food_idx = -1;
+	int16 food_idx = -1;
 
 	if( p->type == 6 && sd->menuskill_id != GN_MIX_COOKING && sd->menuskill_id != GN_S_PHARMACY )
 		return;
@@ -13333,7 +13333,7 @@ void clif_parse_NpcCloseClicked(int32 fd,map_session_data *sd)
 /// index:
 ///     -1 = cancel
 void clif_parse_ItemIdentify(int32 fd,map_session_data *sd) {
-	short idx = RFIFOW(fd,packet_db[RFIFOW(fd,0)].pos[0]) - 2;
+	int16 idx = RFIFOW(fd,packet_db[RFIFOW(fd,0)].pos[0]) - 2;
 
 	if (sd->menuskill_id != MC_IDENTIFY)
 		return;
@@ -13601,7 +13601,7 @@ void clif_parse_CloseKafra(int32 fd, map_session_data *sd)
 ///     8 = too many wrong passwords
 ///     ? = ignored
 /// NOTE: This packet is only available on certain non-kRO clients.
-void clif_storagepassword(map_session_data* sd, short info)
+void clif_storagepassword(map_session_data* sd, int16 info)
 {
 	int32 fd = sd->fd;
 
@@ -13638,7 +13638,7 @@ void clif_parse_StoragePassword(int32 fd, map_session_data *sd){ //@TODO
 ///     8 = too many wrong passwords
 ///     ? = ignored
 /// NOTE: This packet is only available on certain non-kRO clients.
-void clif_storagepassword_result(map_session_data* sd, short result, short error_count)
+void clif_storagepassword_result(map_session_data* sd, int16 result, int16 error_count)
 {
 	int32 fd = sd->fd;
 
@@ -13847,10 +13847,10 @@ void clif_parse_PartyChangeLeader(int32 fd, map_session_data* sd){
 /// 0802 <level>.W <map id>.W { <job>.W }*6
 void clif_parse_PartyBookingRegisterReq(int32 fd, map_session_data* sd){
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	short level = RFIFOW(fd,info->pos[0]);
-	short mapid = RFIFOW(fd,info->pos[1]);
+	int16 level = RFIFOW(fd,info->pos[0]);
+	int16 mapid = RFIFOW(fd,info->pos[1]);
 	int32 idxpbj = info->pos[2];
-	short job[MAX_PARTY_BOOKING_JOBS];
+	int16 job[MAX_PARTY_BOOKING_JOBS];
 	int32 i;
 
 	for(i=0; i<MAX_PARTY_BOOKING_JOBS; i++)
@@ -13881,11 +13881,11 @@ void clif_PartyBookingRegisterAck(map_session_data *sd, int32 flag)
 /// 0804 <level>.W <map id>.W <job>.W <last index>.L <result count>.W
 void clif_parse_PartyBookingSearchReq(int32 fd, map_session_data* sd){
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	short level = RFIFOW(fd,info->pos[0]);
-	short mapid = RFIFOW(fd,info->pos[1]);
-	short job = RFIFOW(fd,info->pos[2]);
+	int16 level = RFIFOW(fd,info->pos[0]);
+	int16 mapid = RFIFOW(fd,info->pos[1]);
+	int16 job = RFIFOW(fd,info->pos[2]);
 	unsigned long lastindex = RFIFOL(fd,info->pos[3]);
-	short resultcount = RFIFOW(fd,info->pos[4]);
+	int16 resultcount = RFIFOW(fd,info->pos[4]);
 
 	party_booking_search(sd, level, mapid, job, lastindex, resultcount);
 }
@@ -13951,7 +13951,7 @@ void clif_PartyBookingDeleteAck(map_session_data* sd, int32 flag)
 /// 0808 { <job>.W }*6
 void clif_parse_PartyBookingUpdateReq(int32 fd, map_session_data* sd)
 {
-	short job[MAX_PARTY_BOOKING_JOBS];
+	int16 job[MAX_PARTY_BOOKING_JOBS];
 	int32 i;
 	int32 idxpbu = packet_db[RFIFOW(fd,0)].pos[0];
 
@@ -14072,7 +14072,7 @@ void clif_parse_OpenVending(int32 fd, map_session_data* sd){
 
 	int32 cmd = RFIFOW(fd,0);
 	struct s_packet_db* info = &packet_db[cmd];
-	short len = (short)RFIFOW(fd,info->pos[0]);
+	int16 len = (int16)RFIFOW(fd,info->pos[0]);
 	const char* message = RFIFOCP(fd,info->pos[1]);
 	const uint8* data = (uint8*)RFIFOP(fd,info->pos[3]);
 
@@ -15555,7 +15555,7 @@ void clif_parse_HomMoveTo(int32 fd, map_session_data *sd){
 #if PACKETVER >= 20050425
 	const PACKET_CZ_REQUEST_MOVENPC* p = reinterpret_cast<const PACKET_CZ_REQUEST_MOVENPC*>( RFIFOP( fd, 0 ) );
 	struct block_list *bl = nullptr;
-	short x, y;
+	int16 x, y;
 
 	RBUFPOS( p->PosDir, 0, &x, &y, nullptr );
 
@@ -15848,7 +15848,7 @@ void clif_mail_delete( map_session_data* sd, struct mail_message *msg, bool succ
 /// result:
 ///     0 = success
 ///     1 = failure
-void clif_Mail_return(int32 fd, int32 mail_id, short fail)
+void clif_Mail_return(int32 fd, int32 mail_id, int16 fail)
 {
 	WFIFOHEAD(fd,packet_len(0x274));
 	WFIFOW(fd,0) = 0x274;
@@ -16336,7 +16336,7 @@ void clif_parse_Mail_cancelwrite( int32 fd, map_session_data *sd ){
 /// Give the client information about the recipient, if available
 /// 0a14 <char id>.L <class>.W <base level>.W (ZC_CHECK_RECEIVE_CHARACTER_NAME)
 /// 0a51 <char id>.L <class>.W <base level>.W <name>.24B (ZC_CHECK_RECEIVE_CHARACTER_NAME2)
-void clif_Mail_Receiver_Ack( map_session_data* sd, uint32 char_id, short class_, uint32 level, const char* name ){
+void clif_Mail_Receiver_Ack( map_session_data* sd, uint32 char_id, int16 class_, uint32 level, const char* name ){
 #if PACKETVER >= 20141119
 	PACKET_ZC_CHECKNAME p = { 0 };
 
@@ -16737,7 +16737,7 @@ void clif_Auction_openwindow(map_session_data *sd)
 
 /// Returns auction item search results (ZC_AUCTION_ITEM_REQ_SEARCH).
 /// 0252 <packet len>.W <pages>.L <count>.L { <auction id>.L <seller name>.24B <name id>.W <type>.L <amount>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W <now price>.L <max price>.L <buyer name>.24B <delete time>.L }*
-void clif_Auction_results(map_session_data *sd, short count, short pages, uint8 *buf)
+void clif_Auction_results(map_session_data *sd, int16 count, int16 pages, uint8 *buf)
 {
 	int32 i, fd = sd->fd, len = sizeof(struct auction_data);
 	struct auction_data auction;
@@ -17051,7 +17051,7 @@ void clif_parse_Auction_search(int32 fd, map_session_data* sd){
 ///     1 = buy (own bids)
 void clif_parse_Auction_buysell(int32 fd, map_session_data* sd)
 {
-	short type = RFIFOW(fd,packet_db[RFIFOW(fd,0)].pos[0]) + 6;
+	int16 type = RFIFOW(fd,packet_db[RFIFOW(fd,0)].pos[0]) + 6;
 
 	if( !battle_config.feature_auction )
 		return;
@@ -18404,7 +18404,7 @@ void clif_parse_bg_queue_apply_request(int32 fd, map_session_data *sd)
 
 	nullpo_retv(sd);
 
-	short type = RFIFOW(fd,2);
+	int16 type = RFIFOW(fd,2);
 	char name[NAME_LENGTH];
 
 	safestrncpy(name, RFIFOCP(fd, 4), NAME_LENGTH);
@@ -19177,7 +19177,7 @@ static void clif_parse_ReqTradeBuyingStore( int32 fd, map_session_data* sd ){
 ///     3 = "All items within the buy limit were purchased." (0x6cf, MSI_BUYINGSTORE_TRADE_OVERLIMITZENY)
 ///     4 = "All items were purchased." (0x6d0, MSI_BUYINGSTORE_TRADE_BUYCOMPLETE)
 ///     ? = nothing
-void clif_buyingstore_trade_failed_buyer(map_session_data* sd, short result)
+void clif_buyingstore_trade_failed_buyer(map_session_data* sd, int16 result)
 {
 	int32 fd = sd->fd;
 
@@ -19214,7 +19214,7 @@ void clif_buyingstore_update_item( map_session_data* sd, t_itemid nameid, uint16
 ///     "%s (%d) were sold at %dz." (0x6d2, MSI_BUYINGSTORE_TRADE_SELLCOMPLETE)
 ///
 /// NOTE:   This function has to be called _instead_ of clif_delitem/clif_dropitem.
-void clif_buyingstore_delete_item(map_session_data* sd, short index, uint16 amount, int32 price)
+void clif_buyingstore_delete_item(map_session_data* sd, int16 index, uint16 amount, int32 price)
 {
 	int32 fd = sd->fd;
 
@@ -19234,7 +19234,7 @@ void clif_buyingstore_delete_item(map_session_data* sd, short index, uint16 amou
 ///     6 = "The trade failed, because the entered amount of item %s is higher, than the buyer is willing to buy." (0x6d3, MSI_BUYINGSTORE_TRADE_OVERCOUNT)
 ///     7 = "The trade failed, because the buyer is lacking required balance." (0x6d1, MSI_BUYINGSTORE_TRADE_LACKBUYERZENY)
 ///     ? = nothing
-void clif_buyingstore_trade_failed_seller( map_session_data* sd, short result, t_itemid nameid ){
+void clif_buyingstore_trade_failed_seller( map_session_data* sd, int16 result, t_itemid nameid ){
 	PACKET_ZC_FAILED_TRADE_BUYING_STORE_TO_SELLER p = {};
 
 	p.packetType = HEADER_ZC_FAILED_TRADE_BUYING_STORE_TO_SELLER;
@@ -19537,7 +19537,7 @@ void clif_millenniumshield( block_list& bl, int16 shields ){
 /*==========================================
  * Magic Decoy Material List
  *------------------------------------------*/
-void clif_magicdecoy_list( map_session_data& sd, uint16 skill_lv, short x, short y ){
+void clif_magicdecoy_list( map_session_data& sd, uint16 skill_lv, int16 x, int16 y ){
 	PACKET_ZC_MAKINGARROW_LIST* p = reinterpret_cast<PACKET_ZC_MAKINGARROW_LIST*>( packet_buffer );
 
 	p->packetType = HEADER_ZC_MAKINGARROW_LIST;
@@ -19749,7 +19749,7 @@ static void clif_favorite_item( map_session_data& sd, uint16 index ){
 
 
 /// 08d2 <id>.L <Pos X>.W <Pos Y>.W (ZC_FASTMOVE).
-void clif_snap( struct block_list *bl, short x, short y ) {
+void clif_snap( struct block_list *bl, int16 x, int16 y ) {
 	unsigned char buf[10];
 
 	WBUFW(buf,0) = 0x8d2;
@@ -20826,7 +20826,7 @@ static uint8 clif_roulette_getitem(map_session_data *sd) {
 
 /// Update Roulette window with current stats
 /// 0A20 <result>.B <stage>.W <price index>.W <bonus item>.W <gold>.L <silver>.L <bronze>.L (ZC_ACK_GENERATE_ROULETTE)
-void clif_roulette_generate( map_session_data *sd, unsigned char result, short stage, short prizeIdx, t_itemid bonusItemID ){
+void clif_roulette_generate( map_session_data *sd, unsigned char result, int16 stage, int16 prizeIdx, t_itemid bonusItemID ){
 	nullpo_retv( sd );
 
 	struct packet_roulette_generate_ack p;
@@ -21248,7 +21248,7 @@ void clif_dressing_room( map_session_data& sd ){
 /// 0A35 <result>.W
 void clif_parse_Oneclick_Itemidentify(int32 fd, map_session_data *sd) {
 #if PACKETVER >= 20150513
-	short idx = RFIFOW(fd,packet_db[RFIFOW(fd,0)].pos[0]) - 2, magnifier_idx;
+	int16 idx = RFIFOW(fd,packet_db[RFIFOW(fd,0)].pos[0]) - 2, magnifier_idx;
 
 	// Ignore the request
 	// - Invalid item index
@@ -22057,7 +22057,7 @@ void clif_equipswitch_list( map_session_data* sd ){
 
 	WFIFOW(fd, 0) = 0xa9b;
 	for( i = 0, offset = 4, position = 0; i < EQI_MAX; i++ ){
-		short index = sd->equip_switch_index[i];
+		int16 index = sd->equip_switch_index[i];
 
 		if( index >= 0 && !( position & equip_bitmask[i] ) ){
 			WFIFOW(fd, offset) = index + 2;

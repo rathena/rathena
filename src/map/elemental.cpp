@@ -599,7 +599,7 @@ static int32 elemental_ai_sub_timer(s_elemental_data *ed, map_session_data *sd, 
 		clif_elemental_updatestatus(*sd, SP_SP);
 		return 0;
 	} else if( master_dist > MAX_ELEDISTANCE ) {	// Master too far, chase.
-		short x = sd->bl.x, y = sd->bl.y;
+		int16 x = sd->bl.x, y = sd->bl.y;
 		if( ed->target_id )
 			elemental_unlocktarget(ed);
 		if( ed->ud.walktimer != INVALID_TIMER && ed->ud.target == sd->bl.id )

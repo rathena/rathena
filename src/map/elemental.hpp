@@ -89,7 +89,7 @@ struct s_elemental_data {
 	int32 skill_timer;
 
 	t_tick last_thinktime, last_linktime, last_spdrain_time;
-	short min_chase;
+	int16 min_chase;
 	int32 target_id, attacked_id;
 };
 

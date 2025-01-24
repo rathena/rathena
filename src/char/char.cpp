@@ -1381,7 +1381,7 @@ int32 char_check_char_name(char * name, char * esc_name)
 //-----------------------------------
 // Function to create a new character
 //-----------------------------------
-int32 char_make_new_char( struct char_session_data* sd, char* name_, int32 str, int32 agi, int32 vit, int32 int_, int32 dex, int32 luk, int32 slot, int32 hair_color, int32 hair_style, short start_job, int32 sex ){
+int32 char_make_new_char( struct char_session_data* sd, char* name_, int32 str, int32 agi, int32 vit, int32 int_, int32 dex, int32 luk, int32 slot, int32 hair_color, int32 hair_style, int16 start_job, int32 sex ){
 	char name[NAME_LENGTH];
 	char esc_name[NAME_LENGTH*2+1];
 	struct s_point_str tmp_start_point[MAX_STARTPOINT];
@@ -2819,7 +2819,7 @@ void char_set_defaults(){
  * @param start: Start point reference
  * @param count: Start point count reference
  */
-void char_config_split_startpoint( char* w1_value, char* w2_value, struct s_point_str start_point[MAX_STARTPOINT], short* count ){
+void char_config_split_startpoint( char* w1_value, char* w2_value, struct s_point_str start_point[MAX_STARTPOINT], int16* count ){
 	char *lineitem, **fields;
 	int32 i = 0;
 	size_t fields_length = 3 + 1;

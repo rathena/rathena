@@ -1386,8 +1386,8 @@ int32 map_foreachindir(int32 (*func)(struct block_list*, va_list), int16 m, int1
 	int32 bx, by;
 	int32 mx0, mx1, my0, my1, rx, ry;
 	uint8 dir = map_calc_dir_xy( x0, y0, x1, y1, DIR_EAST );
-	short dx = dirx[dir];
-	short dy = diry[dir];
+	int16 dx = dirx[dir];
+	int16 dy = diry[dir];
 	va_list ap;
 
 	if (m < 0)
@@ -1818,8 +1818,8 @@ bool map_closest_freecell(int16 m, int16 *x, int16 *y, int32 type, int32 flag)
 
 	//Algorithm only works up to costrange of 34
 	while(costrange <= 34) {
-		short dx = dirx[dir];
-		short dy = diry[dir];
+		int16 dx = dirx[dir];
+		int16 dy = diry[dir];
 
 		//Linear search
 		if( !direction_diagonal( (directions)dir ) && costrange % MOVE_COST == 0 ){
@@ -3127,19 +3127,19 @@ uint8 map_calc_dir_xy(int16 srcx, int16 srcy, int16 x, int16 y, uint8 srcdir) {
  *------------------------------------------*/
 int32 map_random_dir(struct block_list *bl, int16 *x, int16 *y)
 {
-	short xi = *x-bl->x;
-	short yi = *y-bl->y;
-	short i=0;
+	int16 xi = *x-bl->x;
+	int16 yi = *y-bl->y;
+	int16 i=0;
 	int32 dist2 = xi*xi + yi*yi;
-	short dist = (short)sqrt((float)dist2);
+	int16 dist = (int16)sqrt((float)dist2);
 
 	if (dist < 1) dist =1;
 
 	do {
 		directions j = static_cast<directions>(1 + 2 * rnd_value(0, 3)); //Pick a random diagonal direction
-		short segment = rnd_value((short)1, dist); //Pick a random interval from the whole vector in that direction
+		int16 segment = rnd_value((int16)1, dist); //Pick a random interval from the whole vector in that direction
 		xi = bl->x + segment*dirx[j];
-		segment = (short)sqrt((float)(dist2 - segment*segment)); //The complement of the previously picked segment
+		segment = (int16)sqrt((float)(dist2 - segment*segment)); //The complement of the previously picked segment
 		yi = bl->y + segment*diry[j];
 	} while (
 		(map_getcell(bl->m,xi,yi,CELL_CHKNOPASS) || !path_search(nullptr,bl->m,bl->x,bl->y,xi,yi,1,CELL_CHKNOREACH))

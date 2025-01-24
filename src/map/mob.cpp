@@ -3572,7 +3572,7 @@ int32 mob_warpslave_sub(struct block_list *bl,va_list ap)
 {
 	struct mob_data *md=(struct mob_data *)bl;
 	struct block_list *master;
-	short x,y,range=0;
+	int16 x,y,range=0;
 	master = va_arg(ap, struct block_list*);
 	range = va_arg(ap, int32);
 
@@ -3686,7 +3686,7 @@ int32 mob_summonslave(struct mob_data *md2,int32 *value,int32 amount,uint16 skil
 		hp_rate = get_percentage(md2->status.hp, md2->status.max_hp);
 
 	for(;k<amount;k++) {
-		short x,y;
+		int16 x,y;
 		data.id = value[k%count]; //Summon slaves in round-robin fashion. [Skotlex]
 		if (mobdb_checkid(data.id) == 0)
 			continue;
@@ -3901,7 +3901,7 @@ int32 mobskill_use(struct mob_data *md, t_tick tick, int32 event, int64 damage)
 	struct block_list *bl;
 	struct mob_data *fmd = nullptr;
 	int32 i,j,n;
-	short skill_target;
+	int16 skill_target;
 
 	nullpo_ret(md);
 
@@ -4010,7 +4010,7 @@ int32 mobskill_use(struct mob_data *md, t_tick tick, int32 event, int64 damage)
 		skill_target = status_has_mode(&md->db->status,MD_RANDOMTARGET) ? MST_RANDOM : ms[i]->target;
 		if (skill_get_casttype(ms[i]->skill_id) == CAST_GROUND)
 		{	//Ground skill.
-			short x, y;
+			int16 x, y;
 			switch (skill_target) {
 				case MST_RANDOM: //Pick a random enemy within skill range.
 					bl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md),

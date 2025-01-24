@@ -3798,7 +3798,7 @@ struct npc_data *npc_create_npc(int16 m, int16 x, int16 y){
  * @param to_y : y coordinate to warp to
  * @return nullptr:failed creation, npc_data* new warp
  */
-struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short from_y, short xs, short ys, uint16 to_mapindex, short to_x, short to_y)
+struct npc_data* npc_add_warp(char* name, int16 from_mapid, int16 from_x, int16 from_y, int16 xs, int16 ys, uint16 to_mapindex, int16 to_x, int16 to_y)
 {
 	int32 i, flag = 0;
 	struct npc_data *nd;
@@ -3859,7 +3859,7 @@ struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short 
  */
 static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
-	short x, y, xs, ys, to_x, to_y;
+	int16 x, y, xs, ys, to_x, to_y;
 	char mapname[MAP_NAME_LENGTH_EXT], to_mapname[MAP_NAME_LENGTH_EXT];
 
 	// w1=<from map name>,<fromX>,<fromY>,<facing>
@@ -3971,7 +3971,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 	char *p, point_str[32];
 	int32 m, is_discount = 0;
 	uint16 dir;
-	short x, y;
+	int16 x, y;
 	t_itemid nameid = 0;
 	struct npc_data *nd;
 	enum npc_subtype type;
@@ -4348,7 +4348,7 @@ static const char* npc_skip_script(const char* start, const char* buffer, const 
  */
 static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath) {
 	int16 dir = 0;
-	short m, x, y, xs = 0, ys = 0; // [Valaris] thanks to fov
+	int16 m, x, y, xs = 0, ys = 0; // [Valaris] thanks to fov
 	struct script_code *script;
 	int32 i;
 	const char* end;
@@ -4492,7 +4492,7 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 /// npc: -%TAB%duplicate(<name of target>)%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>
 /// npc: <map name>,<x>,<y>,<facing>%TAB%duplicate(<name of target>)%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>
 const char* npc_parse_duplicate( char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath, map_session_data* owner = nullptr ){
-	short x, y, m, xs = -1, ys = -1;
+	int16 x, y, m, xs = -1, ys = -1;
 	int16 dir;
 	char srcname[128];
 	int32 i;
@@ -5048,7 +5048,7 @@ void npc_setdisplayname(struct npc_data* nd, const char* newname)
 ///
 /// @param nd Target npc
 /// @param class_ New display class
-void npc_setclass(struct npc_data* nd, short class_)
+void npc_setclass(struct npc_data* nd, int16 class_)
 {
 	nullpo_retv(nd);
 
@@ -5189,7 +5189,7 @@ void npc_parse_mob2(struct spawn_data* mob)
 static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
 	int32 num, mob_id, mob_lv = -1, delay = 5000, size = -1, w1count, w4count;
-	short m, x = 0, y = 0, xs = 0, ys = 0;
+	int16 m, x = 0, y = 0, xs = 0, ys = 0;
 	char mapname[MAP_NAME_LENGTH_EXT], mobname[NAME_LENGTH], sprite[NAME_LENGTH];
 	struct spawn_data mob, *data;
 	int32 ai = AI_NONE; // mob_ai
@@ -5277,11 +5277,11 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 
 	mob.num = (uint16)num;
 	mob.active = 0;
-	mob.id = (short) mob_id;
+	mob.id = (int16) mob_id;
 	mob.x = (uint16)x;
 	mob.y = (uint16)y;
-	mob.xs = (signed short)xs;
-	mob.ys = (signed short)ys;
+	mob.xs = (int16)xs;
+	mob.ys = (int16)ys;
 	if (mob_lv > 0 && mob_lv <= MAX_LEVEL)
 		mob.level = mob_lv;
 	if (size > SZ_SMALL && size <= SZ_BIG)

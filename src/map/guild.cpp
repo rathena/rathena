@@ -204,7 +204,7 @@ uint16 guild_flags_count;
  * @param skill_id
  * @return Index in skill_tree or -1
  **/
-static short guild_skill_get_index(uint16 skill_id) {
+static int16 guild_skill_get_index(uint16 skill_id) {
 	if (!SKILL_CHK_GUILD(skill_id))
 		return -1;
 	skill_id -= GD_SKILLBASE;
@@ -1487,7 +1487,7 @@ int32 guild_recv_message( int32 guild_id, uint32 account_id, const char *mes, si
 /*====================================================
  * Member changing position in guild
  *---------------------------------------------------*/
-int32 guild_change_memberposition(int32 guild_id,uint32 account_id,uint32 char_id,short idx) {
+int32 guild_change_memberposition(int32 guild_id,uint32 account_id,uint32 char_id,int16 idx) {
 	return intif_guild_change_memberinfo(guild_id,account_id,char_id,GMI_POSITION,&idx,sizeof(idx));
 }
 
@@ -1726,8 +1726,8 @@ t_exp guild_getexp(map_session_data *sd,t_exp exp) {
  * Ask to increase guildskill skill_id
  *---------------------------------------------------*/
 void guild_skillup(map_session_data* sd, uint16 skill_id) {
-	short idx = guild_skill_get_index(skill_id);
-	short max = 0;
+	int16 idx = guild_skill_get_index(skill_id);
+	int16 max = 0;
 
 	nullpo_retv(sd);
 
@@ -1755,7 +1755,7 @@ int32 guild_skillupack(int32 guild_id,uint16 skill_id,uint32 account_id) {
 	map_session_data *sd = map_id2sd(account_id);
 	auto g = guild_search(guild_id);
 	int32 i;
-	short idx = guild_skill_get_index(skill_id);
+	int16 idx = guild_skill_get_index(skill_id);
 
 	if (g == nullptr || idx == -1)
 		return 0;
