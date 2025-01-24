@@ -1204,7 +1204,6 @@ int32 mob_spawn (struct mob_data *md)
 		md->spotted_log[i] = 0;
 
 	md->dmglog.clear();
-	md->tdmg = 0;
 
 	if (md->lootitems)
 		memset(md->lootitems, 0, sizeof(*md->lootitems));
@@ -2400,7 +2399,7 @@ TIMER_FUNC(mob_respawn){
 	return 1;
 }
 
-void mob_log_damage(mob_data* md, block_list* src, int32 damage, int32 damage_tanked)
+void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_tanked)
 {
 	uint32 char_id = 0;
 	int32 flag = MDLF_NORMAL;
@@ -2498,8 +2497,8 @@ void mob_log_damage(mob_data* md, block_list* src, int32 damage, int32 damage_ta
 	for( auto& entry : md->dmglog ){
 		if( entry.id == char_id && entry.flag == flag ){
 			// Just add damage to it
-			entry.dmg += damage;
-			entry.dmg_tanked += damage_tanked;
+			entry.dmg = util::safe_addition_cap(entry.dmg, damage, INT64_MAX);
+			entry.dmg_tanked = util::safe_addition_cap(entry.dmg_tanked, damage_tanked, INT64_MAX);
 			return;
 		}
 	}
@@ -2529,18 +2528,10 @@ void mob_damage(struct mob_data *md, struct block_list *src, int32 damage)
 	}
 
 	if (src && damage > 0) { //Store total damage...
-		if (UINT_MAX - (uint32)damage > md->tdmg)
-			md->tdmg += damage;
-		else if (md->tdmg == UINT_MAX)
-			damage = 0; //Stop recording damage once the cap has been reached.
-		else { //Cap damage log...
-			damage = (int32)(UINT_MAX - md->tdmg);
-			md->tdmg = UINT_MAX;
-		}
 		if ((src != &md->bl) && md->state.aggressive) //No longer aggressive, change to retaliate AI.
 			md->state.aggressive = 0;
 		//Log damage
-		mob_log_damage(md, src, damage);
+		mob_log_damage(md, src, static_cast<int64>(damage));
 		md->dmgtick = gettick();
 	}
 
@@ -2669,7 +2660,6 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 	} pt[DAMAGELOG_SIZE];
 	int32 i, temp, count, m = md->bl.m;
 	int32 dmgbltypes = 0;  // bitfield of all bl types, that caused damage to the mob and are elligible for exp distribution
-	uint32 mvp_damage;
 	t_tick tick = gettick();
 	bool rebirth, homkillonly, merckillonly;
 
@@ -2701,9 +2691,12 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 	memset(tmpsd,0,sizeof(tmpsd));
 
 	count = 0;
-	mvp_damage = 0;
+	int64 mvp_damage = 0;
+	int64 total_damage = 0;
 	for( i = 0; i < md->dmglog.size(); i++ ){
 		const s_dmglog& entry = md->dmglog[i];
+
+		total_damage = util::safe_addition_cap(total_damage, entry.dmg, INT64_MAX);
 
 		if( entry.flag == MDLF_SELF ){
 			//Self damage counts as exp tap
@@ -2725,22 +2718,18 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 			case MDLF_NORMAL:
 				dmgbltypes |= BL_PC;
 				break;
-
 			case MDLF_HOMUN:
 				// Skip homunculus' share if inactive
 				if( !hom_is_active( tsd->hd ) ){
 					continue;
 				}
-
 				dmgbltypes |= BL_HOM;
 				break;
-
 			case MDLF_PET:
 				// Skip pet's share if inactive
 				if( tsd->status.pet_id == 0 || tsd->pd == nullptr ){
 					continue;
 				}
-
 				dmgbltypes |= BL_PET;
 				break;
 		}
@@ -2762,14 +2751,8 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 
 	if(battle_config.exp_calc_type == 2 && count > 1) {	//Apply first-attacker 200% exp share bonus
 		s_dmglog& entry = md->dmglog[0];
-
-		if( UINT_MAX - entry.dmg > md->tdmg ){
-			md->tdmg += entry.dmg;
-			entry.dmg *= 2;
-		} else {
-			entry.dmg+= UINT_MAX - md->tdmg;
-			md->tdmg = UINT_MAX;
-		}
+		total_damage = util::safe_addition_cap(total_damage, entry.dmg, INT64_MAX);
+		entry.dmg = util::safe_addition_cap(entry.dmg, entry.dmg, INT64_MAX);
 	}
 
 	if(!(type&2) && //No exp
@@ -2806,13 +2789,13 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 
 			if (!tmpsd[i]) continue;
 
-			if (battle_config.exp_calc_type == 1 || md->tdmg == 0) {
+			if (battle_config.exp_calc_type == 1 || total_damage == 0) {
 				// eAthena's exp formula based on max hp
 				per = (double)entry.dmg / (double)status->max_hp;
 			}
 			else {
 				// Aegis's exp formula based on total damage
-				per = (double)entry.dmg / (double)md->tdmg;
+				per = (double)entry.dmg / (double)total_damage;
 			}
 			// To prevent exploits
 			if (per > 1) per = 1;
@@ -3360,8 +3343,7 @@ void mob_revive(struct mob_data *md, uint32 hp)
 	md->last_pcneartime = 0;
 	//We reset the damage log and then set the already lost damage as self damage so players don't get exp for it [Playtester]
 	md->dmglog.clear();
-	mob_log_damage(md, &md->bl, md->status.max_hp - hp);
-	md->tdmg = 0;
+	mob_log_damage(md, &md->bl, static_cast<int64>(md->status.max_hp - hp));
 	if (!md->bl.prev){
 		if(map_addblock(&md->bl))
 			return;
@@ -3542,7 +3524,6 @@ int32 mob_class_change (struct mob_data *md, int32 mob_id)
 
 	if (battle_config.monster_class_change_recover) {
 		md->dmglog.clear();
-		md->tdmg = 0;
 	} else {
 		md->status.hp = md->status.max_hp*hp_rate/100;
 		if(md->status.hp < 1) md->status.hp = 1;

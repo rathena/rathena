@@ -321,8 +321,8 @@ extern std::unordered_map<uint16, std::vector<spawn_info>> mob_spawn_data;
 
 struct s_dmglog{
 	int32 id; //char id
-	uint32 dmg;
-	uint32 dmg_tanked; //Damage tanked from normal attacks of the monster, MVP is the player with highest dmg+dmg_tanked
+	int64 dmg;
+	int64 dmg_tanked; //Damage tanked from normal attacks of the monster, MVP is the player with highest dmg+dmg_tanked
 	uint32 flag : 2; //0: Normal. 1: Homunc exp. 2: Pet exp
 };
 
@@ -362,7 +362,6 @@ struct mob_data {
 	int16 centerX, centerY; // Spawn center of this individual monster
 	struct s_mob_lootitem *lootitems;
 	short mob_id;
-	uint32 tdmg; //Stores total damage given to the mob, for exp calculations. [Skotlex]
 	int32 level;
 	int32 target_id,attacked_id,norm_attacked_id;
 	int32 areanpc_id; //Required in OnTouchNPC (to avoid multiple area touchs)
@@ -519,7 +518,7 @@ int32 mob_spawn(struct mob_data *md);
 TIMER_FUNC(mob_delayspawn);
 int32 mob_setdelayspawn(struct mob_data *md);
 int32 mob_parse_dataset(struct spawn_data *data);
-void mob_log_damage(mob_data* md, block_list* src, int32 damage, int32 damage_tanked = 0);
+void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_tanked = 0);
 void mob_damage(struct mob_data *md, struct block_list *src, int32 damage);
 int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type);
 void mob_revive(struct mob_data *md, uint32 hp);

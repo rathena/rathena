@@ -7653,7 +7653,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			if( dstmd )
 			{ // Reset Damage Logs
 				dstmd->dmglog.clear();
-				dstmd->tdmg = 0;
 			}
 		}
 		break;
