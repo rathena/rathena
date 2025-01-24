@@ -478,6 +478,16 @@ struct PACKET_CZ_RESET_SKILL{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_RESET_SKILL, 0x0bb1)
 
+struct PACKET_ZC_SKILLINFO_UPDATE{
+	uint16 packetType;
+	uint16 skillId;
+	uint16 level;
+	uint16 sp;
+	uint16 range2;
+	bool upFlag;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_SKILLINFO_UPDATE, 0x10e);
+
 struct PACKET_ZC_BOSS_INFO{
 	int16 packetType;
 	uint8 type;
