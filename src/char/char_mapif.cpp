@@ -1224,7 +1224,7 @@ int32 chmapif_parse_reqcharban(int32 fd){
 					  "UPDATE `%s` SET `unban_time` = ? WHERE `char_id` = ? LIMIT 1",
 					  schema_config.char_db)
 				|| SQL_SUCCESS != stmt.BindParam(0, SQLDT_LONG,   (void*)&unban_time,   sizeof(unban_time))
-				|| SQL_SUCCESS != stmt.BindParam(1, SQLDT_INT,    (void*)&t_cid,     sizeof(t_cid))
+				|| SQL_SUCCESS != stmt.BindParam(1, SQLDT_INT32,    (void*)&t_cid,     sizeof(t_cid))
 				|| SQL_SUCCESS != stmt.Execute()
 
 				)

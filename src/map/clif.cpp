@@ -5704,7 +5704,7 @@ void clif_skillinfoblock(map_session_data *sd)
 	// adoption fix
 	if (haveCallPartnerSkill) {
 		clif_addskill(*sd, WE_CALLPARTNER);
-		clif_skillinfo(sd, WE_CALLPARTNER, 0);
+		clif_skillinfo( *sd, WE_CALLPARTNER );
 	}
 
 	// workaround for bugreport:5348; send the remaining skills one by one to bypass packet size limit
@@ -5713,7 +5713,7 @@ void clif_skillinfoblock(map_session_data *sd)
 		if( (id = sd->status.skill[i].id) != 0 && ( id != WE_CALLPARTNER || !haveCallPartnerSkill ) )
 		{
 			clif_addskill(*sd, id);
-			clif_skillinfo(sd, id, 0);
+			clif_skillinfo( *sd, id );
 		}
 	}
 }
@@ -5801,30 +5801,38 @@ void clif_skillup( map_session_data& sd, uint16 skill_id, uint16 lv, uint16 rang
 }
 
 
-/// Updates a skill in the skill tree (ZC_SKILLINFO_UPDATE2).
-/// 07e1 <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <upgradable>.B
-void clif_skillinfo(map_session_data *sd,int32 skill_id, int32 inf)
-{
-	nullpo_retv(sd);
-
-	const int32 fd = sd->fd;
+/// Updates a skill in the skill tree
+/// 07e1 <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <upgradable>.B (ZC_SKILLINFO_UPDATE2)
+/// 0b33 <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <upgradable>.B <level2>.W (ZC_SKILLINFO_UPDATE3)
+void clif_skillinfo( map_session_data& sd, uint16 skill_id ){
+#if PACKETVER >= 20090715
 	uint16 idx = skill_get_index(skill_id);
 
-	if (!session_isActive(fd) || !idx)
+	if( idx == 0 ){
 		return;
+	}
 
-	WFIFOHEAD(fd,packet_len(0x7e1));
-	WFIFOW(fd,0) = 0x7e1;
-	WFIFOW(fd,2) = skill_id;
-	WFIFOL(fd,4) = inf?inf:skill_get_inf(skill_id);
-	WFIFOW(fd,8) = sd->status.skill[idx].lv;
-	WFIFOW(fd,10) = skill_get_sp(skill_id,sd->status.skill[idx].lv);
-	WFIFOW(fd,12) = skill_get_range2(&sd->bl,skill_id,sd->status.skill[idx].lv,false);
-	if( sd->status.skill[idx].flag == SKILL_FLAG_PERMANENT )
-		WFIFOB(fd,14) = (sd->status.skill[idx].lv < skill_tree_get_max(skill_id, sd->status.class_))? 1:0;
-	else
-		WFIFOB(fd,14) = 0;
-	WFIFOSET(fd,packet_len(0x7e1));
+	PACKET_ZC_SKILLINFO_UPDATE2 p = {};
+
+	p.packetType = HEADER_ZC_SKILLINFO_UPDATE2;	
+	p.id = skill_id;
+	p.level = sd.status.skill[idx].lv;
+	p.sp = static_cast<decltype(p.sp)>( skill_get_sp( skill_id,sd.status.skill[idx].lv ) );
+	p.range2 = static_cast<decltype(p.range2)>( skill_get_range2( &sd.bl,skill_id,sd.status.skill[idx].lv,false ) );
+	p.inf = skill_get_inf( skill_id );
+
+	if( sd.status.skill[idx].flag == SKILL_FLAG_PERMANENT && sd.status.skill[idx].lv < skill_tree_get_max( skill_id, sd.status.class_ ) ){
+		p.upFlag = true;
+	}else{
+		p.upFlag = false;
+	}
+
+#if PACKETVER_RE_NUM >= 20190807 || PACKETVER_ZERO_NUM >= 20190918
+	p.level2 = p.level;
+#endif
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
 }
 
 void clif_skill_scale( struct block_list *bl, int32 src_id, int32 x, int32 y, uint16 skill_id, uint16 skill_lv, int32 casttime ){
