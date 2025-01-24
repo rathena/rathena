@@ -671,7 +671,7 @@ enum e_guild_storage_log storage_guild_log_read_sub( map_session_data* sd, std::
 	stmt.BindColumn(0, SQLDT_UINT,      &entry.id,               0, nullptr, nullptr);
 	stmt.BindColumn(1, SQLDT_STRING,    &entry.time, sizeof(entry.time), nullptr, nullptr);
 	stmt.BindColumn(2, SQLDT_STRING,    &entry.name, sizeof(entry.name), nullptr, nullptr);
-	stmt.BindColumn(3, SQLDT_SHORT,     &entry.amount,           0, nullptr, nullptr);
+	stmt.BindColumn(3, SQLDT_INT16,     &entry.amount,           0, nullptr, nullptr);
 
 	// Item data
 	stmt.BindColumn(4, SQLDT_UINT,      &entry.item.nameid,      0, nullptr, nullptr);
@@ -685,8 +685,8 @@ enum e_guild_storage_log storage_guild_log_read_sub( map_session_data* sd, std::
 	for( j = 0; j < MAX_SLOTS; ++j )
 		stmt.BindColumn(12+j, SQLDT_UINT, &entry.item.card[j], 0, nullptr, nullptr);
 	for( j = 0; j < MAX_ITEM_RDM_OPT; ++j ) {
-		stmt.BindColumn(12+MAX_SLOTS+j*3, SQLDT_SHORT, &entry.item.option[j].id, 0, nullptr, nullptr);
-		stmt.BindColumn(12+MAX_SLOTS+j*3+1, SQLDT_SHORT, &entry.item.option[j].value, 0, nullptr, nullptr);
+		stmt.BindColumn(12+MAX_SLOTS+j*3, SQLDT_INT16, &entry.item.option[j].id, 0, nullptr, nullptr);
+		stmt.BindColumn(12+MAX_SLOTS+j*3+1, SQLDT_INT16, &entry.item.option[j].value, 0, nullptr, nullptr);
 		stmt.BindColumn(12+MAX_SLOTS+j*3+2, SQLDT_CHAR, &entry.item.option[j].param, 0, nullptr, nullptr);
 	}
 
