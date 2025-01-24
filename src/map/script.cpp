@@ -15390,13 +15390,13 @@ BUILDIN_FUNC(petskillsupport)
 static inline void script_skill_effect( block_list& bl, uint16 skill_id, uint16 skill_lv, int16 x, int16 y ) {
 	switch (skill_get_casttype(skill_id)) {
 		case CAST_GROUND:
-			clif_skill_poseffect(&bl, skill_id, skill_lv, x, y, gettick());
+			clif_skill_poseffect( bl, skill_id, skill_lv, x, y, gettick() );
 			break;
 		case CAST_NODAMAGE:
 			clif_skill_nodamage(&bl, bl, skill_id, skill_lv);
 			break;
 		case CAST_DAMAGE:
-			clif_skill_damage(&bl, &bl, gettick(), status_get_amotion(&bl), status_get_dmotion(&bl), 0, 1, skill_id, skill_lv, skill_get_hit(skill_id));
+			clif_skill_damage( bl, bl, gettick(), status_get_amotion(&bl), status_get_dmotion(&bl), 0, 1, skill_id, skill_lv, skill_get_hit(skill_id) );
 			break;
 	}
 }
@@ -16555,7 +16555,7 @@ BUILDIN_FUNC(summon)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	clif_skill_poseffect( &sd->bl, AM_CALLHOMUN, 1, sd->bl.x, sd->bl.y, tick );
+	clif_skill_poseffect( sd->bl, AM_CALLHOMUN, 1, sd->bl.x, sd->bl.y, tick );
 
 	md->master_id = sd->bl.id;
 	md->special_state.ai = AI_ATTACK;
@@ -19454,8 +19454,8 @@ BUILDIN_FUNC(setunitdata)
 			case UPET_MAPID: if (mapname) value = map_mapname2mapid(mapname); unit_warp(bl, (short)value, 0, 0, CLR_TELEPORT); break;
 			case UPET_X: if (!unit_walktoxy(bl, (short)value, pd->bl.y, 2)) unit_movepos(bl, (short)value, pd->bl.y, 0, 0); break;
 			case UPET_Y: if (!unit_walktoxy(bl, pd->bl.x, (short)value, 2)) unit_movepos(bl, pd->bl.x, (short)value, 0, 0); break;
-			case UPET_HUNGER: pd->pet.hungry = cap_value((short)value, 0, 100); clif_send_petdata(map_id2sd(pd->pet.account_id), pd, 2, pd->pet.hungry); break;
-			case UPET_INTIMACY: pet_set_intimate(pd, (uint32)value); clif_send_petdata(map_id2sd(pd->pet.account_id), pd, 1, pd->pet.intimate); break;
+			case UPET_HUNGER: pd->pet.hungry = cap_value((short)value, 0, 100); clif_send_petdata( map_id2sd(pd->pet.account_id), *pd, CHANGESTATEPET_HUNGER ); break;
+			case UPET_INTIMACY: pet_set_intimate(pd, (uint32)value); clif_send_petdata( map_id2sd(pd->pet.account_id), *pd, CHANGESTATEPET_INTIMACY ); break;
 			case UPET_SPEED: pd->status.speed = (uint16)value; status_calc_misc(bl, &pd->status, pd->pet.level); break;
 			case UPET_LOOKDIR: unit_setdir(bl, (uint8)value); break;
 			case UPET_CANMOVETICK: pd->ud.canmove_tick = value > 0 ? (uint32)value : 0; break;
@@ -19490,7 +19490,7 @@ BUILDIN_FUNC(setunitdata)
 			}
 
 			// Client information update
-			clif_send_petstatus( pd->master );
+			clif_send_petstatus( *pd->master, *pd );
 		} break;
 
 	case BL_MER: {

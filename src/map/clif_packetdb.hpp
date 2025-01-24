@@ -114,9 +114,6 @@
 	parseable_packet(0x0108,-1,clif_parse_PartyMessage,2,4);
 	packet(0x0109,-1);
 	packet( HEADER_ZC_MVP_GETTING_ITEM, sizeof( struct PACKET_ZC_MVP_GETTING_ITEM ) );
-	packet(0x010b,6);
-	packet(0x010c,6);
-	packet(0x010d,2);
 	packet(0x010e,11);
 	packet(0x010f,-1);
 	packet( HEADER_ZC_ACK_TOUSESKILL, sizeof( PACKET_ZC_ACK_TOUSESKILL ) );
@@ -125,7 +122,6 @@
 	packet(0x0114,31);
 	packet(0x0115,35);
 	parseable_packet(0x0116,10,clif_parse_UseSkillToPos,2,4,6,8);
-	packet(0x0117,18);
 	parseable_packet(0x0118,2,clif_parse_StopAttack,0);
 	packet(0x0119,13);
 	parseable_packet(0x011b,20,clif_parse_UseSkillMap,2,4);
@@ -196,14 +192,12 @@
 	packet(0x0187,6);
 	parseable_packet(0x018a,4,clif_parse_QuitGame,2);
 	packet(0x018b,4);
-	packet(0x018c,29);
 	parseable_packet( HEADER_CZ_REQMAKINGITEM, sizeof( struct PACKET_CZ_REQMAKINGITEM ), clif_parse_ProduceMix, 0 );
 	packet( HEADER_ZC_ACK_REQMAKINGITEM, sizeof( PACKET_ZC_ACK_REQMAKINGITEM ) );
 	parseable_packet(0x0190,90,clif_parse_UseSkillToPosMoreInfo,2,4,6,8,10);
 	packet( HEADER_ZC_TALKBOX_CHATCONTENTS, sizeof( struct PACKET_ZC_TALKBOX_CHATCONTENTS ) );
 	packet(0x0192,24);
 	parseable_packet(0x0193,6,clif_parse_SolveCharName,2);
-	packet(0x0194,30);
 	packet( HEADER_ZC_ACK_REQNAMEALL, sizeof( struct PACKET_ZC_ACK_REQNAMEALL ) );
 	packet(0x0196,9);
 	parseable_packet(0x0197,4,clif_parse_ResetChar,2);
@@ -214,15 +208,12 @@
 	parseable_packet(0x019d,6,clif_parse_GMHide,2);
 	parseable_packet(0x019f,6,clif_parse_CatchPet,2);
 	parseable_packet(0x01a1,3,clif_parse_PetMenu,2);
-	packet(0x01a2,35);
 	packet(0x01a3,5);
-	packet(0x01a4,11);
 	parseable_packet(0x01a5,26,clif_parse_ChangePetName,2);
 	packet(0x01a6,-1);
 	parseable_packet(0x01a7,4,clif_parse_SelectEgg,2);
 	packet(0x01a8,4);
 	parseable_packet(0x01a9,6,clif_parse_SendEmotion,2);
-	packet(0x01aa,10);
 	packet(0x01ac,6);
 	packet(0x01ad,-1);
 	parseable_packet( HEADER_CZ_REQ_MAKINGARROW, sizeof( PACKET_CZ_REQ_MAKINGARROW ), clif_parse_SelectArrow, 0 );
@@ -252,8 +243,6 @@
 	parseable_packet(0x01ce,6,clif_parse_AutoSpell,2);
 	packet(0x01cf,28);
 	packet(0x01d0,8);
-	packet(0x01d1,14);
-	packet(0x01d2,10);
 	parseable_packet(0x01d5,-1,clif_parse_NpcStringInput,2,4,8);
 	packet(0x01d7,11);
 	packet(0x01d8,54);
@@ -1200,11 +1189,6 @@
 	packet(0x043f,8);
 #endif
 
-// 2008-11-26aSakexe
-#if PACKETVER >= 20081126
-	packet(0x01a2,37);
-#endif
-
 // 2008-12-10aSakexe
 #if PACKETVER >= 20081210
 	parseable_packet( HEADER_CZ_SKILL_SELECT_RESPONSE, sizeof( PACKET_CZ_SKILL_SELECT_RESPONSE ), clif_parse_SkillSelectMenu, 0 );
@@ -1275,11 +1259,6 @@
 // 2008-11-12aRagexeRE
 #if PACKETVER >= 20081112
 	packet(0x043f,8);
-#endif
-
-// 2008-12-17aRagexeRE
-#if PACKETVER >= 20081217
-	packet(0x01a2,37);
 #endif
 
 // 2008-12-17bRagexeRE
@@ -1979,7 +1958,6 @@
 // 2018-02-21aRagexeRE or 2018-02-21bRagexeRE
 #if PACKETVER >= 20180221
 	packet(0x0206,35); // ZC_FRIENDS_STATE
-	packet(0x0af7,32);
 #endif
 
 // 2018-03-07bRagexeRE

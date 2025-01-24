@@ -3094,7 +3094,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 		t_itemid log_mvp_nameid = 0;
 		t_exp log_mvp_exp = 0;
 
-		clif_mvp_effect( mvp_sd );
+		clif_mvp_effect( *mvp_sd );
 
 		//mapflag: noexp check [Lorky]
 		if( md->db->mexp > 0 && !( map_getmapflag( m, MF_NOBASEEXP ) || type&2 ) ){
@@ -3116,7 +3116,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 
 			log_mvp_exp = cap_value( log_mvp_exp, 1, MAX_EXP );
 
-			clif_mvp_exp( mvp_sd, log_mvp_exp );
+			clif_mvp_exp( *mvp_sd, log_mvp_exp );
 			pc_gainexp( mvp_sd, &md->bl, log_mvp_exp, 0, 0 );
 		}
 

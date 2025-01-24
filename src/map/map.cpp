@@ -1979,8 +1979,8 @@ void map_addnickdb(int32 charid, const char* nick)
 		req = p->requests;
 		p->requests = req->next;
 		sd = map_charid2sd(req->charid);
-		if( sd )
-			clif_solved_charname(sd->fd, charid, p->nick);
+		if( sd != nullptr )
+			clif_solved_charname( *sd, charid, p->nick );
 		aFree(req);
 	}
 }
@@ -2001,8 +2001,8 @@ void map_delnickdb(int32 charid, const char* name)
 		req = p->requests;
 		p->requests = req->next;
 		sd = map_charid2sd(req->charid);
-		if( sd )
-			clif_solved_charname(sd->fd, charid, name);
+		if( sd != nullptr )
+			clif_solved_charname( *sd, charid, name );
 		aFree(req);
 	}
 	aFree(p);
@@ -2020,16 +2020,16 @@ void map_reqnickdb(map_session_data * sd, int32 charid)
 	nullpo_retv(sd);
 
 	tsd = map_charid2sd(charid);
-	if( tsd )
+	if( tsd != nullptr )
 	{
-		clif_solved_charname(sd->fd, charid, tsd->status.name);
+		clif_solved_charname( *sd, charid, tsd->status.name );
 		return;
 	}
 
 	p = (struct charid2nick*)idb_ensure(nick_db, charid, create_charid2nick);
 	if( *p->nick )
 	{
-		clif_solved_charname(sd->fd, charid, p->nick);
+		clif_solved_charname( *sd, charid, p->nick );
 		return;
 	}
 	// not in cache, request it

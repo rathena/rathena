@@ -3063,7 +3063,7 @@ void status_calc_pet_(struct pet_data *pd, uint8 opt)
 			status_calc_misc(&pd->bl, &pd->status, lv);
 
 			if (!(opt&SCO_FIRST)) // Not done the first time because the pet is not visible yet
-				clif_send_petstatus(sd);
+				clif_send_petstatus( *sd, *pd );
 		}
 	} else if (opt&SCO_FIRST) {
 		status_calc_misc(&pd->bl, &pd->status, pd->db->lv);
@@ -13159,7 +13159,7 @@ int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid)
 					tsc->getSCE(SC_BLADESTOP)->val4 = 0;
 					status_change_end(tbl, SC_BLADESTOP);
 				}
-				clif_bladestop(bl, tid2, 0);
+				clif_bladestop( *bl, tid2, false );
 			}
 			break;
 		case SC_DANCING:
@@ -13408,7 +13408,7 @@ int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid)
 				status_change *sc2 = status_get_sc(src);
 
 				if( sc2 && sc2->getSCE(SC_CURSEDCIRCLE_ATKER) && --(sc2->getSCE(SC_CURSEDCIRCLE_ATKER)->val2) == 0 ) {
-					clif_bladestop(bl, sce->val2, 0);
+					clif_bladestop( *bl, sce->val2, false );
 					status_change_end(src, SC_CURSEDCIRCLE_ATKER);
 				}
 			}
@@ -14803,7 +14803,7 @@ int32 status_change_timer_sub(struct block_list* bl, va_list ap)
 		break;
 	case SC_CURSEDCIRCLE_TARGET:
 		if( tsc && tsc->getSCE(SC_CURSEDCIRCLE_TARGET) && tsc->getSCE(SC_CURSEDCIRCLE_TARGET)->val2 == src->id ) {
-			clif_bladestop(bl, tsc->getSCE(SC_CURSEDCIRCLE_TARGET)->val2, 0);
+			clif_bladestop( *bl, tsc->getSCE(SC_CURSEDCIRCLE_TARGET)->val2, false );
 			status_change_end(bl, type);
 		}
 		break;
