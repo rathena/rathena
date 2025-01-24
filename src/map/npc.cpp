@@ -102,7 +102,7 @@ static char *npc_last_path;
 
 struct npc_path_data {
 	char* path;
-	unsigned short references;
+	uint16 references;
 };
 struct npc_path_data *npc_last_npd;
 static DBMap *npc_path_db;
@@ -2216,7 +2216,7 @@ int32 npc_click(map_session_data* sd, struct npc_data* nd)
 		case NPCTYPE_MARKETSHOP:
 #if PACKETVER >= 20131223
 			 {
-				unsigned short i;
+				uint16 i;
 
 				for (i = 0; i < nd->u.shop.count; i++) {
 					if (nd->u.shop.shop_item[i].qty)
@@ -2553,7 +2553,7 @@ int32 npc_cashshop_buylist( map_session_data *sd, int32 points, std::vector<s_np
 
 		if( !pet_create_egg(sd,nameid) ) {
 			struct item item_tmp;
-			unsigned short get_amt = amount;
+			uint16 get_amt = amount;
 
 			memset(&item_tmp, 0, sizeof(item_tmp));
 			item_tmp.nameid = nameid;
@@ -2707,7 +2707,7 @@ int32 npc_cashshop_buy(map_session_data *sd, t_itemid nameid, int32 amount, int3
 		return res;
 
 	if( !pet_create_egg(sd, nameid) ) {
-		unsigned short get_amt = amount;
+		uint16 get_amt = amount;
 
 		struct item item_tmp = {};
 
@@ -2787,7 +2787,7 @@ e_purchase_result npc_buylist( map_session_data* sd, std::vector<s_npc_buy_list>
 	// process entries in buy list, one by one
 	for( int32 i = 0; i < item_list.size(); ++i ){
 		t_itemid nameid;
-		unsigned short amount;
+		uint16 amount;
 		int32 value;
 
 		// find this entry in the shop's sell list
@@ -2862,7 +2862,7 @@ e_purchase_result npc_buylist( map_session_data* sd, std::vector<s_npc_buy_list>
 
 	for( int32 i = 0; i < item_list.size(); ++i ) {
 		t_itemid nameid = item_list[i].nameid;
-		unsigned short amount = item_list[i].qty;
+		uint16 amount = item_list[i].qty;
 
 #if PACKETVER >= 20131223
 		if (nd->subtype == NPCTYPE_MARKETSHOP) {
@@ -2880,7 +2880,7 @@ e_purchase_result npc_buylist( map_session_data* sd, std::vector<s_npc_buy_list>
 		if (itemdb_type(nameid) == IT_PETEGG)
 			pet_create_egg(sd, nameid);
 		else {
-			unsigned short get_amt = amount;
+			uint16 get_amt = amount;
 
 			if ((itemdb_search(nameid))->flag.guid)
 				get_amt = 1;
@@ -3798,7 +3798,7 @@ struct npc_data *npc_create_npc(int16 m, int16 x, int16 y){
  * @param to_y : y coordinate to warp to
  * @return nullptr:failed creation, npc_data* new warp
  */
-struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short from_y, short xs, short ys, unsigned short to_mapindex, short to_x, short to_y)
+struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short from_y, short xs, short ys, uint16 to_mapindex, short to_x, short to_y)
 {
 	int32 i, flag = 0;
 	struct npc_data *nd;
@@ -3870,7 +3870,7 @@ static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const 
 	}
 
 	int32 m = map_mapname2mapid(mapname);
-	unsigned short i = mapindex_name2id(to_mapname);
+	uint16 i = mapindex_name2id(to_mapname);
 
 	if( i == 0 ) {
 		ShowError("npc_parse_warp: Unknown destination map in file '%s', line '%d' : %s\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), to_mapname, w1, w2, w3, w4);
@@ -5216,7 +5216,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	m =  map_mapname2mapid(mapname);
 	if( m < 0 )//Not loaded on this map-server instance.
 		return strchr(start,'\n');// skip and continue
-	mob.m = (unsigned short)m;
+	mob.m = (uint16)m;
 
 	struct map_data *mapdata = map_getmapdata(m);
 
@@ -5275,11 +5275,11 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 		return strchr(start, '\n');
 	}
 
-	mob.num = (unsigned short)num;
+	mob.num = (uint16)num;
 	mob.active = 0;
 	mob.id = (short) mob_id;
-	mob.x = (unsigned short)x;
-	mob.y = (unsigned short)y;
+	mob.x = (uint16)x;
+	mob.y = (uint16)y;
 	mob.xs = (signed short)xs;
 	mob.ys = (signed short)ys;
 	if (mob_lv > 0 && mob_lv <= MAX_LEVEL)

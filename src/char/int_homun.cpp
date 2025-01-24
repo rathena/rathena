@@ -235,7 +235,7 @@ bool mapif_homunculus_load(int32 homun_id, struct s_homunculus* hd)
 		if( i < HM_SKILLBASE || i >= HM_SKILLBASE + MAX_HOMUNSKILL )
 			continue;// invalid skill id
 		i = i - HM_SKILLBASE;
-		hd->hskill[i].id = (unsigned short)atoi(data);
+		hd->hskill[i].id = (uint16)atoi(data);
 
 		// lv
 		Sql_GetData(sql_handle, 1, &data, nullptr);
@@ -356,7 +356,7 @@ void mapif_parse_homunculus_rename(int32 fd, uint32 account_id, uint32 char_id, 
  *------------------------------------------*/
 int32 inter_homunculus_parse_frommap(int32 fd)
 {
-	unsigned short cmd = RFIFOW(fd,0);
+	uint16 cmd = RFIFOW(fd,0);
 
 	switch( cmd )
 	{

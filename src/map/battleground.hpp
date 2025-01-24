@@ -15,7 +15,7 @@
 #define MAX_BG_MEMBERS 30
 
 struct s_battleground_member_data {
-	unsigned short x, y;
+	uint16 x, y;
 	map_session_data *sd;
 	unsigned afk : 1;
 	struct point entry_point; ///< Battleground queue entry point
@@ -140,7 +140,7 @@ int32 bg_create(uint16 mapindex, s_battleground_team* team);
 bool bg_team_join(int32 bg_id, map_session_data *sd, bool is_queue);
 bool bg_team_delete(int32 bg_id);
 int32 bg_team_leave(map_session_data *sd, bool quit, bool deserter);
-bool bg_team_warp(int32 bg_id, unsigned short mapindex, short x, short y);
+bool bg_team_warp(int32 bg_id, uint16 mapindex, short x, short y);
 bool bg_player_is_in_bg_map(map_session_data *sd);
 bool bg_queue_check_joinable(std::shared_ptr<s_battleground_type> bg, map_session_data *sd, const char *name);
 void bg_queue_join_solo(const char *name, map_session_data *sd);

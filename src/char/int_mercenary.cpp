@@ -265,7 +265,7 @@ void inter_mercenary_sql_final(void)
  *------------------------------------------*/
 int32 inter_mercenary_parse_frommap(int32 fd)
 {
-	unsigned short cmd = RFIFOW(fd,0);
+	uint16 cmd = RFIFOW(fd,0);
 
 	switch( cmd )
 	{

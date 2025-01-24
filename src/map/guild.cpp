@@ -197,7 +197,7 @@ static TIMER_FUNC(guild_send_xy_timer);
 
 /* guild flags cache */
 struct npc_data **guild_flags;
-unsigned short guild_flags_count;
+uint16 guild_flags_count;
 
 /**
  * Get guild skill index in guild structure of mmo.hpp

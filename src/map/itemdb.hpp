@@ -3174,7 +3174,7 @@ struct s_item_group_db
 /// Struct of Roulette db
 struct s_roulette_db {
 	t_itemid *nameid[MAX_ROULETTE_LEVEL]; /// Item ID
-	unsigned short *qty[MAX_ROULETTE_LEVEL]; /// Amount of Item ID
+	uint16 *qty[MAX_ROULETTE_LEVEL]; /// Amount of Item ID
 	int32 *flag[MAX_ROULETTE_LEVEL]; /// Whether the item is for loss or win
 	int32 items[MAX_ROULETTE_LEVEL]; /// Number of items in the list for each
 };

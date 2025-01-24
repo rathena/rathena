@@ -170,7 +170,7 @@ static inline uint16 client_nameid( t_itemid server_nameid ){
 }
 #endif
 
-static inline void WBUFPOS(uint8* p, unsigned short pos, short x, short y, unsigned char dir) {
+static inline void WBUFPOS(uint8* p, uint16 pos, short x, short y, unsigned char dir) {
 	p += pos;
 	p[0] = (uint8)(x>>2);
 	p[1] = (uint8)((x<<6) | ((y>>4)&0x3f));
@@ -179,7 +179,7 @@ static inline void WBUFPOS(uint8* p, unsigned short pos, short x, short y, unsig
 
 
 // client-side: x0+=sx0*0.0625-0.5 and y0+=sy0*0.0625-0.5
-static inline void WBUFPOS2(uint8* p, unsigned short pos, short x0, short y0, short x1, short y1, uint8 sx0, uint8 sy0) {
+static inline void WBUFPOS2(uint8* p, uint16 pos, short x0, short y0, short x1, short y1, uint8 sx0, uint8 sy0) {
 	p += pos;
 	p[0] = (uint8)(x0>>2);
 	p[1] = (uint8)((x0<<6) | ((y0>>4)&0x3f));
@@ -190,11 +190,11 @@ static inline void WBUFPOS2(uint8* p, unsigned short pos, short x0, short y0, sh
 }
 
 
-static inline void WFIFOPOS(int32 fd, unsigned short pos, short x, short y, unsigned char dir) {
+static inline void WFIFOPOS(int32 fd, uint16 pos, short x, short y, unsigned char dir) {
 	WBUFPOS(WFIFOP(fd,pos), 0, x, y, dir);
 }
 
-static inline void RBUFPOS(const uint8* p, unsigned short pos, short* x, short* y, unsigned char* dir) {
+static inline void RBUFPOS(const uint8* p, uint16 pos, short* x, short* y, unsigned char* dir) {
 	p += pos;
 
 	if( x ) {
@@ -211,7 +211,7 @@ static inline void RBUFPOS(const uint8* p, unsigned short pos, short* x, short* 
 }
 
 
-static inline void RBUFPOS2(const uint8* p, unsigned short pos, short* x0, short* y0, short* x1, short* y1, unsigned char* sx0, unsigned char* sy0) {
+static inline void RBUFPOS2(const uint8* p, uint16 pos, short* x0, short* y0, short* x1, short* y1, unsigned char* sx0, unsigned char* sy0) {
 	p += pos;
 
 	if( x0 ) {
@@ -240,12 +240,12 @@ static inline void RBUFPOS2(const uint8* p, unsigned short pos, short* x0, short
 }
 
 
-static inline void RFIFOPOS(int32 fd, unsigned short pos, short* x, short* y, unsigned char* dir) {
+static inline void RFIFOPOS(int32 fd, uint16 pos, short* x, short* y, unsigned char* dir) {
 	RBUFPOS(RFIFOP(fd,pos), 0, x, y, dir);
 }
 
 
-static inline void RFIFOPOS2(int32 fd, unsigned short pos, short* x0, short* y0, short* x1, short* y1, unsigned char* sx0, unsigned char* sy0) {
+static inline void RFIFOPOS2(int32 fd, uint16 pos, short* x0, short* y0, short* x1, short* y1, unsigned char* sx0, unsigned char* sy0) {
 	RBUFPOS2(WFIFOP(fd,pos), 0, x0, y0, x1, y1, sx0, sy0);
 }
 
@@ -6654,7 +6654,7 @@ void clif_displaymessage(const int32 fd, const char* mes)
 		/** so we redirect to ZC_NPC_CHAT **/
 		//clif_messagecolor(&sd->bl, color_table[COLOR_DEFAULT], mes, false, SELF);
 			unsigned long color = (color_table[COLOR_DEFAULT] & 0x0000FF) << 16 | (color_table[COLOR_DEFAULT] & 0x00FF00) | (color_table[COLOR_DEFAULT] & 0xFF0000) >> 16; // RGB to BGR
-			unsigned short len = strnlen(line, CHAT_SIZE_MAX);
+			uint16 len = strnlen(line, CHAT_SIZE_MAX);
 
 			if (len > 0) { 
 				WFIFOHEAD(fd, 13 + len);
@@ -6781,13 +6781,13 @@ void clif_broadcast2(struct block_list* bl, const char* mes, size_t len, unsigne
 void clif_channel_msg(struct Channel *channel, const char *msg, unsigned long color) {
 	DBIterator *iter;
 	map_session_data *user;
-	unsigned short msg_len = 0, len = 0;
+	uint16 msg_len = 0, len = 0;
 	unsigned char buf[CHAT_SIZE_MAX];
 
 	if (!channel || !msg)
 		return;
 
-	msg_len = (unsigned short)(strlen(msg) + 1);
+	msg_len = (uint16)(strlen(msg) + 1);
 
 	if( msg_len > sizeof(buf)-12 ) {
 		ShowWarning("clif_channel_msg: Truncating too long message '%s' (len=%u).\n", msg, msg_len);
@@ -9753,7 +9753,7 @@ void clif_specialeffect_remove(struct block_list* bl_src, int32 effect, enum sen
 /// Monster/NPC color chat [SnakeDrak] (ZC_NPC_CHAT).
 /// 02c1 <packet len>.W <id>.L <color>.L <message>.?B
 void clif_messagecolor_target(struct block_list *bl, unsigned long color, const char *msg, bool rgb2bgr, enum send_target type, map_session_data *sd) {
-	unsigned short msg_len = (unsigned short)(strlen(msg) + 1);
+	uint16 msg_len = (uint16)(strlen(msg) + 1);
 	uint8 buf[CHAT_SIZE_MAX];
 
 	nullpo_retv(bl);
@@ -10351,7 +10351,7 @@ void clif_viewequip_ack( map_session_data& sd, map_session_data& tsd ){
 
 /// Display msgstringtable.txt string (ZC_MSG).
 /// 0291 <message>.W
-void clif_msg(map_session_data* sd, unsigned short id)
+void clif_msg(map_session_data* sd, uint16 id)
 {
 	int32 fd;
 	nullpo_retv(sd);
@@ -10366,7 +10366,7 @@ void clif_msg(map_session_data* sd, unsigned short id)
 
 /// Display msgstringtable.txt string and fill in a valid for %d format (ZC_MSG_VALUE).
 /// 0x7e2 <message>.W <value>.L
-void clif_msg_value(map_session_data* sd, unsigned short id, int32 value)
+void clif_msg_value(map_session_data* sd, uint16 id, int32 value)
 {
 	int32 fd = sd->fd;
 
@@ -11214,7 +11214,7 @@ void clif_parse_Hotkey(int32 fd, map_session_data *sd) {
 #ifdef HOTKEY_SAVING
 #if PACKETVER_MAIN_NUM >= 20190522 || PACKETVER_RE_NUM >= 20190508 || PACKETVER_ZERO_NUM >= 20190605
 	const PACKET_CZ_SHORTCUT_KEY_CHANGE2* p = reinterpret_cast<PACKET_CZ_SHORTCUT_KEY_CHANGE2*>( RFIFOP( fd, 0 ) );
-	const unsigned short idx = p->index + p->tab * MAX_HOTKEYS;
+	const uint16 idx = p->index + p->tab * MAX_HOTKEYS;
 
 	if( idx >= MAX_HOTKEYS_DB ){
 		return;
@@ -11225,7 +11225,7 @@ void clif_parse_Hotkey(int32 fd, map_session_data *sd) {
 	sd->status.hotkeys[idx].lv = p->hotkey.count;
 #elif PACKETVER_MAIN_NUM >= 20070618 || defined(PACKETVER_RE) || defined(PACKETVER_ZERO) || PACKETVER_AD_NUM >= 20070618 || PACKETVER_SAK_NUM >= 20070618
 	const PACKET_CZ_SHORTCUT_KEY_CHANGE1* p = reinterpret_cast<PACKET_CZ_SHORTCUT_KEY_CHANGE1*>( RFIFOP( fd, 0 ) );
-	const unsigned short idx = p->index;
+	const uint16 idx = p->index;
 
 	if( idx >= MAX_HOTKEYS_DB ){
 		return;
@@ -18867,7 +18867,7 @@ void clif_parse_ItemListWindowSelected(int32 fd, map_session_data* sd) {
 	int32 n = (RFIFOW(fd,info->pos[0])-12) / 4;
 	int32 type = RFIFOL(fd,info->pos[1]);
 	int32 flag = RFIFOL(fd,info->pos[2]); // Button clicked: 0 = Cancel, 1 = OK
-	unsigned short* item_list = (unsigned short*)RFIFOP(fd,info->pos[3]);
+	uint16* item_list = (uint16*)RFIFOP(fd,info->pos[3]);
 
 	if( sd->state.trading || sd->npc_shopid )
 		return;
@@ -19016,7 +19016,7 @@ static void clif_parse_ReqOpenBuyingStore( int32 fd, map_session_data* sd ){
 ///     2 = "Total amount of then possessed items exceeds the weight limit by <weight/10-maxweight*90%>. Please re-enter." (0x6ce, MSI_BUYINGSTORE_OVERWEIGHT)
 ///     8 = "No sale (purchase) information available." (0x705)
 ///     ? = nothing
-void clif_buyingstore_open_failed(map_session_data* sd, unsigned short result, uint32 weight)
+void clif_buyingstore_open_failed(map_session_data* sd, uint16 result, uint32 weight)
 {
 	int32 fd = sd->fd;
 
@@ -19191,7 +19191,7 @@ void clif_buyingstore_trade_failed_buyer(map_session_data* sd, short result)
 /// Updates the zeny limit and an item in the buying store item list.
 /// 081b <name id>.W <amount>.W <limit zeny>.L (ZC_UPDATE_ITEM_FROM_BUYING_STORE)
 /// 09e6 <name id>.W <amount>.W <zeny>.L <limit zeny>.L <GID>.L <Date>.L (ZC_UPDATE_ITEM_FROM_BUYING_STORE2)
-void clif_buyingstore_update_item( map_session_data* sd, t_itemid nameid, unsigned short amount, uint32 char_id, int32 zeny ){
+void clif_buyingstore_update_item( map_session_data* sd, t_itemid nameid, uint16 amount, uint32 char_id, int32 zeny ){
 	PACKET_ZC_UPDATE_ITEM_FROM_BUYING_STORE p = {};
 
 	p.packetType = buyingStoreUpdateItemType;
@@ -19214,7 +19214,7 @@ void clif_buyingstore_update_item( map_session_data* sd, t_itemid nameid, unsign
 ///     "%s (%d) were sold at %dz." (0x6d2, MSI_BUYINGSTORE_TRADE_SELLCOMPLETE)
 ///
 /// NOTE:   This function has to be called _instead_ of clif_delitem/clif_dropitem.
-void clif_buyingstore_delete_item(map_session_data* sd, short index, unsigned short amount, int32 price)
+void clif_buyingstore_delete_item(map_session_data* sd, short index, uint16 amount, int32 price)
 {
 	int32 fd = sd->fd;
 
@@ -20777,7 +20777,7 @@ static void clif_roulette_recvitem_ack(map_session_data *sd, enum RECV_ROULETTE_
 static uint8 clif_roulette_getitem(map_session_data *sd) {
 	struct item it;
 	uint8 res = 1;
-	unsigned short factor = 1;
+	uint16 factor = 1;
 
 	nullpo_retr(1, sd);
 
@@ -20978,7 +20978,7 @@ void clif_merge_item_ack( map_session_data &sd, enum MERGE_ITEM_ACK type, uint16
  **/
 static bool clif_merge_item_has_pair(map_session_data *sd, struct item *it) {
 	struct item *it_;
-	unsigned short i;
+	uint16 i;
 
 	nullpo_retr(false, sd);
 

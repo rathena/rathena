@@ -2223,7 +2223,7 @@ void mob_setdropitem_option( item& item, s_mob_drop& mobdrop ){
 /*==========================================
  * Initializes the delay drop structure for mob-dropped items.
  *------------------------------------------*/
-static std::shared_ptr<s_item_drop> mob_setdropitem( s_mob_drop& mobdrop, int32 qty, unsigned short mob_id ){
+static std::shared_ptr<s_item_drop> mob_setdropitem( s_mob_drop& mobdrop, int32 qty, uint16 mob_id ){
 	std::shared_ptr<s_item_drop> drop = std::make_shared<s_item_drop>();
 
 	drop->item_data = { 0 };
@@ -2239,7 +2239,7 @@ static std::shared_ptr<s_item_drop> mob_setdropitem( s_mob_drop& mobdrop, int32 
 /*==========================================
  * Initializes the delay drop structure for mob-looted items.
  *------------------------------------------*/
-static std::shared_ptr<s_item_drop> mob_setlootitem( s_mob_lootitem& item, unsigned short mob_id ){
+static std::shared_ptr<s_item_drop> mob_setlootitem( s_mob_lootitem& item, uint16 mob_id ){
 	std::shared_ptr<s_item_drop> drop = std::make_shared<s_item_drop>();
 
 	memcpy( &drop->item_data, &item, sizeof( struct item ) );
@@ -3444,7 +3444,7 @@ bool mob_has_spawn(uint16 mob_id)
 */
 void mob_add_spawn(uint16 mob_id, const struct spawn_info& new_spawn)
 {
-	unsigned short m = new_spawn.mapindex;
+	uint16 m = new_spawn.mapindex;
 
 	if( new_spawn.qty <= 0 )
 		return; //ignore empty spawns
@@ -4418,7 +4418,7 @@ int32 mob_clone_delete(struct mob_data *md){
 }
 
 //Adjusts the drop rate of item according to the criteria given. [Skotlex]
-static uint32 mob_drop_adjust(int32 baserate, int32 rate_adjust, unsigned short rate_min, unsigned short rate_max)
+static uint32 mob_drop_adjust(int32 baserate, int32 rate_adjust, uint16 rate_min, uint16 rate_max)
 {
 	double rate = baserate;
 
@@ -5478,7 +5478,7 @@ uint64 MobAvailDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			constant = sprite_mob->id;
 		}
 
-		mob->vd.class_ = (unsigned short)constant;
+		mob->vd.class_ = (uint16)constant;
 	} else {
 		this->invalidWarning(node["Sprite"], "Sprite is missing.\n");
 		return 0;
@@ -6379,7 +6379,7 @@ static void mob_drop_ratio_adjust(void){
 		}
 
 		for( j = 0; j < MAX_MOB_DROP_TOTAL; j++ ){
-			unsigned short ratemin, ratemax;
+			uint16 ratemin, ratemax;
 			bool is_treasurechest;
 
 			nameid = mob->dropitem[j].nameid;
@@ -6463,7 +6463,7 @@ static void mob_drop_ratio_adjust(void){
 			// calculate and store Max available drop chance of the item
 			// but skip treasure chests.
 			if( rate && !is_treasurechest ){
-				unsigned short k;
+				uint16 k;
 
 				if( id->maxchance == -1 || ( id->maxchance < rate ) ){
 					id->maxchance = rate; // item has bigger drop chance or sold in shops
