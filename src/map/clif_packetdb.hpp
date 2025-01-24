@@ -1468,7 +1468,7 @@
 	parseable_packet(0x089e,-1,clif_parse_ReqTradeBuyingStore,2,4,8,12);
 	parseable_packet(0x08ab,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x088b,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x08a2,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x08a2,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 #endif
 
 // 2012-03-07fRagexeRE
@@ -1499,7 +1499,7 @@
 	parseable_packet(0x0811,-1,clif_parse_ReqTradeBuyingStore,2,4,8,12);
 	parseable_packet(0x0884,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0439,8,clif_parse_UseItem,2,4);
 	parseable_packet(0x0365,41,clif_parse_PartyBookingRegisterReq,2,4,6);
 	// New Packet
@@ -1526,7 +1526,7 @@
 	parseable_packet(0x0811,-1,clif_parse_ReqTradeBuyingStore,2,4,8,12);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0437,5,clif_parse_WalkToXY,2);
 	parseable_packet(0x0886,6,clif_parse_TickSend,2);
 	parseable_packet(0x0871,5,clif_parse_ChangeDir,2,4);
@@ -1642,7 +1642,7 @@
 	//parseable_packet(0x0281,-1,clif_parse_ItemListWindowSelected,2,4,8,12);
 	parseable_packet(0x035f,6,clif_parse_ReqClickBuyingStore,2);
 	parseable_packet(0x0363,6,clif_parse_TickSend,2);
-	parseable_packet(0x0365,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0365,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0438,6,clif_parse_DropItem,2,4);
 	parseable_packet(0x0447,2,clif_parse_blocking_playcancel,0); // CZ_BLOCKING_PLAY_CANCEL
 	parseable_packet(0x044A,6,clif_parse_client_version,2);
