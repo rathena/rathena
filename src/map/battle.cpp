@@ -4304,8 +4304,10 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 				}
 #else
 				if ((skill = pc_checkskill(sd, TK_POWER)) > 0) {
-					ATK_ADDRATE(wd->damage, wd->damage2, 10 + 15 * skill);
-					RE_ALLATK_ADDRATE(wd, 10 + 15 * skill);
+					int32 dmg_bonus = 20 * skill;
+
+					ATK_ADDRATE(wd->damage, wd->damage2, dmg_bonus);
+					RE_ALLATK_ADDRATE(wd, dmg_bonus);
 				}
 #endif
 			}
@@ -6393,7 +6395,7 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			RE_LVL_DMOD(100);
 			break;
 		case SKE_MIDNIGHT_KICK:
-			skillratio += -100 + 600 + 1200  * skill_lv;
+			skillratio += -100 + 800 + 1500  * skill_lv;
 			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 5 * skill_lv;
 			skillratio += 5 * sstatus->pow;
 
@@ -6405,21 +6407,21 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			break;
 
 		case SKE_ALL_IN_THE_SKY:
-			skillratio += -100 + 3000 + 2000 * skill_lv;
+			skillratio += -100 + 250 + 1200 * skill_lv;
 			skillratio += 5 * sstatus->pow;
 			if (status_get_race(target) == RC_DEMIHUMAN || status_get_race(target) == RC_DEMON)
 				wd->div_ = 3;
 			break;
 
 		case SKE_TWINKLING_GALAXY:
-			skillratio += -100 + 200 + 400 * skill_lv;
+			skillratio += -100 + 300 + 500 * skill_lv;
 			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 3 * skill_lv;
 			skillratio += 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 
 		case SKE_STAR_CANNON:
-			skillratio += -100 + 200 + 500 * skill_lv;
+			skillratio += -100 + 250 + 550 * skill_lv;
 			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 5 * skill_lv;
 			skillratio += 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
@@ -6433,7 +6435,7 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			break;
 
 		case SKE_DAWN_BREAK:
-			skillratio += -100 + 400 + 400 * skill_lv;
+			skillratio += -100 + 600 + 700 * skill_lv;
 			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 5 * skill_lv;
 			skillratio += 5 * sstatus->pow;
 
@@ -6699,6 +6701,12 @@ static void battle_attack_sc_bonus(struct Damage* wd, struct block_list *src, st
 			skillratio += sstatus->str; // SG_STAR_ANGER additionally has STR added in its formula.
 		if (anger_level < 4)
 			skillratio /= 12 - 3 * anger_level;
+
+#ifdef RENEWAL
+		// (renewal) maximum damage bonus limit : (skill level x 25)%
+		skillratio = min( skillratio, 25 * anger_level );
+#endif
+
 		ATK_ADDRATE(wd->damage, wd->damage2, skillratio);
 #ifdef RENEWAL
 		RE_ALLATK_ADDRATE(wd, skillratio);
@@ -11950,6 +11958,8 @@ static const struct _battle_data {
 	{ "feature.mesitemlink",                &battle_config.feature_mesitemlink,             1,      0,      1,              },
 	{ "feature.mesitemlink_brackets",       &battle_config.feature_mesitemlink_brackets,    0,      0,      1,              },
 	{ "feature.mesitemlink_dbname",         &battle_config.feature_mesitemlink_dbname,      0,      0,      1,              },
+	{ "feature.mesitemicon",                &battle_config.feature_mesitemicon,             1,      0,      1,              },
+	{ "feature.mesitemicon_dbname",         &battle_config.feature_mesitemicon_dbname,      0,      0,      1,              },
 	{ "break_mob_equip",                    &battle_config.break_mob_equip,                 0,      0,      1,              },
 	{ "macro_detection_retry",              &battle_config.macro_detection_retry,           3,      1,      INT_MAX,        },
 	{ "macro_detection_timeout",            &battle_config.macro_detection_timeout,         60000,  0,      INT_MAX,        },
@@ -12235,6 +12245,15 @@ void battle_adjust_conf()
 	if( battle_config.feature_barter_extended ){
 		ShowWarning("conf/battle/feature.conf extended barter shop system is enabled but it requires PACKETVER 2019-11-06 or newer, disabling...\n");
 		battle_config.feature_barter_extended = 0;
+	}
+#endif
+
+#if PACKETVER < 20230302
+	if( battle_config.feature_mesitemicon ){
+#if !defined(BUILDBOT)
+		ShowWarning( "conf/battle/feature.conf:mesitemicon is enabled but it requires PACKETVER 2023-03-02 or newer, disabling...\n" );
+#endif
+		battle_config.feature_mesitemicon = 0;
 	}
 #endif
 
