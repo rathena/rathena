@@ -2243,7 +2243,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
  * @return src can see (1) or target is invisible (0)
  * @author [Skotlex]
  */
-int32 status_check_visibility(struct block_list *src, struct block_list *target, bool checkblind)
+int32 status_check_visibility(block_list* src, block_list* target, bool checkblind)
 {
 	int32 view_range;
 	status_change* tsc = status_get_sc(target);
@@ -2260,7 +2260,7 @@ int32 status_check_visibility(struct block_list *src, struct block_list *target,
 
 	if (checkblind) {
 		status_change* sc = status_get_sc(src);
-		if (sc && sc->getSCE(SC_BLIND))
+		if (sc != nullptr && sc->getSCE(SC_BLIND) != nullptr)
 			view_range = 1;
 	}
 

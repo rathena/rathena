@@ -89,18 +89,17 @@ struct unit_data* unit_bl2ud(struct block_list *bl)
  * @return Whether the chase path was updated (true) or current movement can continue (false)
  */
 bool unit_update_chase(block_list& bl, t_tick tick, bool fullcheck) {
-
 	unit_data* ud = unit_bl2ud(&bl);
 
 	if (ud == nullptr)
 		return true;
 
-	struct block_list* tbl = nullptr;
-	if (ud->target_to)
+	block_list* tbl = nullptr;
+	if (ud->target_to != 0)
 		tbl = map_id2bl(ud->target_to);
 
 	// Reached destination, start attacking
-	if (tbl && tbl->m == bl.m && check_distance_bl(&bl, tbl, ud->chaserange) && status_check_visibility(&bl, tbl, false)) {
+	if (tbl != nullptr && tbl->m == bl.m && check_distance_bl(&bl, tbl, ud->chaserange) && status_check_visibility(&bl, tbl, false)) {
 		ud->to_x = bl.x;
 		ud->to_y = bl.y;
 		ud->target_to = 0;
@@ -145,7 +144,6 @@ bool unit_update_chase(block_list& bl, t_tick tick, bool fullcheck) {
  * @return Whether movement was initialized (true) or not (false)
  */
 bool unit_walktoxy_nextcell(block_list& bl, bool sendMove, t_tick tick) {
-
 	unit_data* ud = unit_bl2ud(&bl);
 
 	if (ud == nullptr)
@@ -218,7 +216,7 @@ int32 unit_walktoxy_sub(struct block_list *bl)
 	int32 i;
 
 	// Monsters always target an adjacent tile even if ranged, no need to shorten the path
-	if (ud->target_to && ud->chaserange>1 && bl->type != BL_MOB) {
+	if (ud->target_to != 0 && ud->chaserange>1 && bl->type != BL_MOB) {
 		// Generally speaking, the walk path is already to an adjacent tile
 		// so we only need to shorten the path if the range is greater than 1.
 		// Trim the last part of the path to account for range,
@@ -416,7 +414,7 @@ TIMER_FUNC(unit_step_timer){
 	} else {
 		//If a player has target_id set and target is in range, attempt attack
 		struct block_list *tbl = map_id2bl(target_id);
-		if (!tbl || !status_check_visibility(bl, tbl, false)) {
+		if (tbl == nullptr || !status_check_visibility(bl, tbl, false)) {
 			return 0;
 		}
 		if(ud->stepskill_id == 0) {
@@ -708,7 +706,7 @@ static TIMER_FUNC(unit_walktoxy_timer)
 
 	ud->walkpath.path_pos++;
 
-	if(unit_walktoxy_nextcell(*bl, (md && DIFF_TICK(tick, md->dmgtick) < 3000), tick)) {
+	if(unit_walktoxy_nextcell(*bl, (md != nullptr && DIFF_TICK(tick, md->dmgtick) < 3000), tick)) {
 		// Nothing else needs to be done
 	} else if(ud->state.running) { // Keep trying to run.
 		if (!(unit_run(bl, nullptr, SC_RUN) || unit_run(bl, sd, SC_WUGDASH)) )
@@ -895,7 +893,7 @@ static TIMER_FUNC(unit_walktobl_sub){
 	struct block_list *bl = map_id2bl(id);
 	struct unit_data *ud = bl?unit_bl2ud(bl):nullptr;
 
-	if (ud && ud->walktimer == INVALID_TIMER && ud->target_to && ud->target_to == data) {
+	if (ud != nullptr && ud->walktimer == INVALID_TIMER && ud->target_to != 0 && ud->target_to == data) {
 		if (DIFF_TICK(ud->canmove_tick, tick) > 0) // Keep waiting?
 			add_timer(ud->canmove_tick+1, unit_walktobl_sub, id, data);
 		else if (unit_can_move(bl)) {
@@ -1755,7 +1753,7 @@ int32 unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int32
 			else {
 				unit_stop_walking(bl,4);
 
-				if(ud->target_to)
+				if(ud->target_to != 0)
 					add_timer(ud->canmove_tick+1, unit_walktobl_sub, bl->id, ud->target_to);
 			}
 		}
@@ -3023,7 +3021,7 @@ static TIMER_FUNC(unit_attack_timer){
 
 	bl = map_id2bl(id);
 
-	if (bl) {
+	if (bl != nullptr) {
 		// Monsters have a special visibility check at the end of their attack delay
 		// We don't want this to trigger on direct calls of this function
 		if (bl->type == BL_MOB && tid != INVALID_TIMER) {
