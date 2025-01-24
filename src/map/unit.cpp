@@ -161,9 +161,9 @@ bool unit_walktoxy_nextcell(block_list& bl, bool sendMove, t_tick tick) {
 		speed = status_get_speed(&bl);
 
 	// Monsters check if their target is in range each cell
-	if (bl.type == BL_MOB && ud->target_to) {
-		short tx = ud->to_x;
-		short ty = ud->to_y;
+	if (bl.type == BL_MOB && ud->target_to != 0) {
+		int16 tx = ud->to_x;
+		int16 ty = ud->to_y;
 		// Monsters update their chase path one cell before reaching their final destination
 		if (unit_update_chase(bl, tick, (ud->walkpath.path_pos == ud->walkpath.path_len - 1)))
 			return true;

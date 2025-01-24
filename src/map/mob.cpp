@@ -1719,8 +1719,8 @@ int32 mob_warpchase(struct mob_data *md, struct block_list *target)
 static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 {
 	struct block_list *tbl = nullptr, *abl = nullptr;
-	int32 mode;
-	int32 view_range, can_move;
+	bool can_move;
+	int32 view_range, mode;
 
 	if(md->bl.prev == nullptr || md->status.hp == 0)
 		return false;
