@@ -1712,6 +1712,15 @@ struct PACKET_ZC_THROW_MVPITEM {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_THROW_MVPITEM, 0x10d);
 
+struct PACKET_ZC_UPDATE_MAPINFO{
+	int16 packetType;
+	int16 x;
+	int16 y;
+	int16 type;
+	char mapname[MAP_NAME_LENGTH_EXT];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_UPDATE_MAPINFO, 0x192);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )

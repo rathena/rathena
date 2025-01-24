@@ -1005,7 +1005,7 @@ void clif_servantball( map_session_data& sd, struct block_list* target = nullptr
 void clif_abyssball( map_session_data& sd, struct block_list* target = nullptr, enum send_target send_target = AREA );
 void clif_combo_delay( block_list& bl, t_tick wait );
 void clif_bladestop( block_list& src, uint32 target_id, bool active );
-void clif_changemapcell(int32 fd, int16 m, int32 x, int32 y, int32 type, enum send_target target);
+void clif_changemapcell( int16 m, int16 x, int16 y, int16 type, send_target target = ALL_SAMEMAP, block_list* tbl = nullptr );
 
 #define clif_status_load(bl, type, flag) clif_status_change((bl), (type), (flag), 0, 0, 0, 0)
 void clif_status_change(struct block_list *bl, int32 type, int32 flag, t_tick tick, int32 val1, int32 val2, int32 val3);

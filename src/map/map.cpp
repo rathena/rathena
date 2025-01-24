@@ -3383,7 +3383,7 @@ bool map_iwall_set(int16 m, int16 x, int16 y, int32 size, int8 dir, bool shootab
 		map_setcell(m, x1, y1, CELL_WALKABLE, false);
 		map_setcell(m, x1, y1, CELL_SHOOTABLE, shootable);
 
-		clif_changemapcell(0, m, x1, y1, map_getcell(m, x1, y1, CELL_GETTYPE), ALL_SAMEMAP);
+		clif_changemapcell( m, x1, y1, map_getcell( m, x1, y1, CELL_GETTYPE ) );
 	}
 
 	iwall->size = i;
@@ -3410,7 +3410,7 @@ void map_iwall_get(map_session_data *sd) {
 
 		for( i = 0; i < iwall->size; i++ ) {
 			map_iwall_nextxy(iwall->x, iwall->y, iwall->dir, i, &x1, &y1);
-			clif_changemapcell(sd->fd, iwall->m, x1, y1, map_getcell(iwall->m, x1, y1, CELL_GETTYPE), SELF);
+			clif_changemapcell( iwall->m, x1, y1, map_getcell( iwall->m, x1, y1, CELL_GETTYPE ), SELF, &sd->bl );
 		}
 	}
 	dbi_destroy(iter);
@@ -3430,7 +3430,7 @@ bool map_iwall_remove(const char *wall_name)
 		map_setcell(iwall->m, x1, y1, CELL_SHOOTABLE, true);
 		map_setcell(iwall->m, x1, y1, CELL_WALKABLE, true);
 
-		clif_changemapcell(0, iwall->m, x1, y1, map_getcell(iwall->m, x1, y1, CELL_GETTYPE), ALL_SAMEMAP);
+		clif_changemapcell( iwall->m, x1, y1, map_getcell( iwall->m, x1, y1, CELL_GETTYPE ) );
 	}
 
 	map_getmapdata(iwall->m)->iwall_num--;
