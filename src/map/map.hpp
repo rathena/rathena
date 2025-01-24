@@ -685,6 +685,7 @@ enum e_mapflag : int16 {
 	MF_SPECIALPOPUP,
 	// NEW 
 	MF_KINGOFEMP,
+	MF_AFK, // @Afk System
 	MF_MAX
 };
 

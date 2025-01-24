@@ -28712,6 +28712,9 @@ BUILDIN_FUNC(mesitemicon){
 
 	// Push it to the script engine for further usage
 	script_pushstrcopy( st, itemlstr.c_str() );
+
+	return SCRIPT_CMD_SUCCESS;
+}
   
 //<map>,x,y,mob_id,<CHAR_ID>
 BUILDIN_FUNC(champion_drop) {
@@ -28799,6 +28802,46 @@ BUILDIN_FUNC(champion_drop) {
 	}
 
 return SCRIPT_CMD_SUCCESS;
+}
+
+/*
+* fstatus
+* fstatus(CHAR_ID,ICON_ID,TIME,STATE)
+*/
+BUILDIN_FUNC(fstatus)
+{
+	TBL_PC* sd = map_charid2sd(script_getnum(st, 2));
+	int icon = script_getnum(st, 3);
+	int time = script_getnum(st, 4);
+	bool state = (script_getnum(st, 5) == 1);
+
+	if (sd == NULL)
+		return SCRIPT_CMD_FAILURE;
+
+	clif_status_change(&sd->bl, icon, state, time, 0, 0, 0);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(fake_icon_all)
+{
+	map_session_data* pl_sd;
+	struct s_mapiterator* iter;
+
+	int icon = script_getnum(st, 2);
+	int time = script_getnum(st, 3);
+	bool state = (script_getnum(st, 4) == 1);
+
+	iter = mapit_getallusers();
+	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
+	{
+		if(!pl_sd->vender_id && !pl_sd->state.autotrade)
+			clif_status_change(&pl_sd->bl, icon, state, time, 0, 0, 0);
+	}
+	mapit_free(iter);
+
+	return SCRIPT_CMD_SUCCESS;
+
 }
 
 #include <custom/script.inc>
@@ -29596,6 +29639,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(permission_add, "i?"),
 	BUILDIN_DEF2(permission_add, "permission_remove", "i?"),
 
+	BUILDIN_DEF(fstatus,"iiii"),
+	
 	// Mob Hat Effects
 	BUILDIN_DEF(mob_hateffect, "iii"),
 	BUILDIN_DEF(mob_showelement, "i?"),

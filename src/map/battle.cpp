@@ -12024,6 +12024,15 @@ static const struct _battle_data {
 
 	{ "rate_option",                   &battle_config.rate_option,                0,      0,      INT_MAX,        },
 
+	// @Afk System
+	{ "afk_enable",                         &battle_config.afk_enable,                      1,      0,      1,              },
+	{ "afk_at_enable",                      &battle_config.afk_at_enable,                   1,      0,      1,              },
+	{ "afk_at_logout_event",                &battle_config.afk_at_logout_event,             1,      0,      1,              },
+	{ "afk_timeout",                        &battle_config.afk_timeout,                     1,      0,      INT_MAX,        },
+	{ "afk_monster_ignore",                 &battle_config.afk_monster_ignore,              1,      0,      1,              },
+	{ "afk_headgear_viewid",                &battle_config.afk_headgear_viewid,             0,      0,      INT_MAX,        },
+	{ "afk_hat_effectid",                   &battle_config.afk_hat_effectid,                0,      0,      INT_MAX,        },
+
 #include <custom/battle_config_init.inc>
 };
 

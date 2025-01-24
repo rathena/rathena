@@ -1015,6 +1015,7 @@ void clif_clearunit_delayed(struct block_list* bl, clr_type type, t_tick tick)
 
 void clif_get_weapon_view(map_session_data* sd, t_itemid *rhand, t_itemid *lhand)
 {
+	int c_weapon = 0;
 	if(sd->sc.option&OPTION_COSTUME)
 	{
 		*rhand = *lhand = 0;
@@ -1025,26 +1026,40 @@ void clif_get_weapon_view(map_session_data* sd, t_itemid *rhand, t_itemid *lhand
 	*rhand = sd->status.weapon;
 	*lhand = sd->status.shield;
 #else
-	if (sd->equip_index[EQI_HAND_R] >= 0 &&
-		sd->inventory_data[sd->equip_index[EQI_HAND_R]])
-	{
-		struct item_data* id = sd->inventory_data[sd->equip_index[EQI_HAND_R]];
+	if (sd->equip_index[EQI_SHADOW_WEAPON] >= 0 &&
+		sd->inventory_data[sd->equip_index[EQI_SHADOW_WEAPON]]){
+		struct item_data* id = sd->inventory_data[sd->equip_index[EQI_SHADOW_WEAPON]];
+		
 		if (id->view_id > 0)
 			*rhand = id->view_id;
 		else
 			*rhand = id->nameid;
+		c_weapon = 1;
 	} else
 		*rhand = 0;
+
+	if (*rhand == 0){
+		if (sd->equip_index[EQI_HAND_R] >= 0 &&
+			sd->inventory_data[sd->equip_index[EQI_HAND_R]]){
+			struct item_data* id = sd->inventory_data[sd->equip_index[EQI_HAND_R]];
+			*rhand = id->nameid;
+		} else
+			*rhand = 0;
+	}
 
 	if (sd->equip_index[EQI_HAND_L] >= 0 &&
 		sd->equip_index[EQI_HAND_L] != sd->equip_index[EQI_HAND_R] &&
 		sd->inventory_data[sd->equip_index[EQI_HAND_L]])
 	{
 		struct item_data* id = sd->inventory_data[sd->equip_index[EQI_HAND_L]];
+		if (c_weapon && id->type == IT_WEAPON)
+			*lhand = 0;
+		else {
 		if (id->view_id > 0)
 			*lhand = id->view_id;
 		else
 			*lhand = id->nameid;
+		}
 	} else
 		*lhand = 0;
 #endif
@@ -1724,6 +1739,10 @@ int32 clif_spawn( struct block_list *bl, bool walking ){
 				clif_refreshlook(bl,bl->id,LOOK_ROBE,sd->status.robe,AREA);
 			clif_efst_status_change_sub(bl, bl, AREA);
 			clif_hat_effects( *sd, sd->bl, AREA );
+
+			// @Afk System
+			if( sd->afk_system.enable && battle_config.afk_headgear_viewid )
+				clif_refreshlook(bl,bl->id,LOOK_HEAD_TOP,battle_config.afk_headgear_viewid,AREA);
 		}
 		break;
 	case BL_MOB:
@@ -2112,6 +2131,9 @@ void clif_move( struct unit_data& ud )
 				clif_specialeffect(&sd->bl, EF_BABYBODY2, AREA);
 			if (sd->status.robe)
 				clif_refreshlook(bl, bl->id, LOOK_ROBE, sd->status.robe, AREA);
+			// @Afk System
+			if( sd->afk_system.enable && battle_config.afk_headgear_viewid )
+				clif_refreshlook(bl,bl->id,LOOK_HEAD_TOP,battle_config.afk_headgear_viewid,AREA);
 		}
 	break;
 	case BL_MOB:
@@ -5071,8 +5093,12 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 				clif_sendbgemblem_single(sd->fd,tsd);
 			if ( tsd->status.robe )
 				clif_refreshlook(&sd->bl,bl->id,LOOK_ROBE,tsd->status.robe,SELF);
+			
 			clif_efst_status_change_sub(&sd->bl, bl, SELF);
 			clif_hat_effects( *sd, tsd->bl, SELF );
+			// @Afk System
+			if( tsd->afk_system.enable && battle_config.afk_headgear_viewid )
+				clif_refreshlook(&sd->bl,bl->id,LOOK_HEAD_TOP,battle_config.afk_headgear_viewid,SELF);
 		}
 		break;
 	case BL_MER: // Devotion Effects
@@ -12103,7 +12129,7 @@ void clif_parse_WisMessage(int32 fd, map_session_data* sd)
 	}
 
 	// if player is autotrading
-	if (dstsd->state.autotrade == 1){
+	if (dstsd->state.autotrade == 1 && !dstsd->afk_system.enable ){
 		safesnprintf(output,sizeof(output),"%s is in autotrade mode and cannot receive whispered messages.", dstsd->status.name);
 		clif_wis_message(sd, wisp_server_name, output, strlen(output) + 1, 0);
 		return;

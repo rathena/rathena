@@ -2140,6 +2140,10 @@ int32 map_quit(map_session_data *sd) {
 
 	npc_script_event( *sd, NPCE_LOGOUT );
 
+	// @Afk System
+	if( sd->afk_system.enable )
+		pc_set_afk(sd,false,true);
+
 	//Unit_free handles clearing the player related data,
 	//map_quit handles extra specific data which is related to quitting normally
 	//(changing map-servers invokes unit_free but bypasses map_quit)

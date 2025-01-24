@@ -1055,6 +1055,16 @@ public:
 	bool showMobHatEffectQuest;
 	
 	t_tick monster_champion_tick;
+
+	// @Afk System
+	struct {
+		bool enable;
+		bool headTopView;
+		int hatEffect;
+		bool hatEffectExist;
+		int timeOut;
+		char message[CHAT_SIZE_MAX];
+	} afk_system;
 };
 
 extern struct eri *pc_sc_display_ers; /// Player's SC display table
@@ -1954,5 +1964,8 @@ bool pc_mob_quest_check(map_session_data *sd, int mob_id);
 
 // Quest System
 bool pc_is_quest_monster(map_session_data* sd, t_quest quest_required_id);
+// [RomuloSM]: @Afk System
+bool pc_set_afk(map_session_data *sd, bool enable, bool stand = true);
+TIMER_FUNC(pc_afk_timeout);
 
 #endif /* PC_HPP */

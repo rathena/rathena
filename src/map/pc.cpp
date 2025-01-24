@@ -2065,7 +2065,9 @@ bool pc_authok(map_session_data *sd, uint32 login_id2, time_t expiration_time, i
 	sd->skill_keep_using.skill_id = 0;
 	sd->skill_keep_using.level = 0;
 	sd->skill_keep_using.target = 0;
-
+	// @AFK System
+	sd->afk_system.timeOut = INVALID_TIMER;
+	
 #ifdef SECURE_NPCTIMEOUT
 	// Initialize to defaults/expected
 	sd->npc_idle_timer = INVALID_TIMER;
@@ -10286,6 +10288,11 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 	//Reset "can log out" tick.
 	if( battle_config.prevent_logout )
 		sd->canlog_tick = gettick() - battle_config.prevent_logout;
+
+	// @Afk System
+	if( sd->afk_system.enable )
+		pc_set_afk(sd,false,false);
+
 	return 1;
 }
 
@@ -13273,6 +13280,10 @@ bool pc_setstand(map_session_data *sd, bool force){
 	}else{
 		sd->state.dead_sit = sd->vd.dead_sit = 0;
 	}
+
+	// @Afk System
+	if( sd->afk_system.enable )
+		pc_set_afk(sd,false,false);
 	return true;
 }
 
@@ -16133,7 +16144,7 @@ bool pc_job_can_entermap(enum e_job jobid, int32 m, int32 group_lv) {
  * @param sd
  **/
 void pc_set_costume_view(map_session_data *sd) {
-	int32 i = -1, head_low = 0, head_mid = 0, head_top = 0, robe = 0;
+	int32 i = -1, head_low = 0, head_mid = 0, head_top = 0, robe = 0, weapon = 0;
 	struct item_data *id = nullptr;
 
 	nullpo_retv(sd);
@@ -16142,8 +16153,9 @@ void pc_set_costume_view(map_session_data *sd) {
 	head_mid = sd->status.head_mid;
 	head_top = sd->status.head_top;
 	robe = sd->status.robe;
+	weapon = sd->status.costume_weapon;
 
-	sd->status.head_bottom = sd->status.head_mid = sd->status.head_top = sd->status.robe = 0;
+	sd->status.head_bottom = sd->status.head_mid = sd->status.head_top = sd->status.robe = sd->status.costume_weapon = 0;
 
 	//Added check to prevent sending the same look on multiple slots ->
 	//causes client to redraw item on top of itself. (suggested by Lupus)
@@ -16164,7 +16176,8 @@ void pc_set_costume_view(map_session_data *sd) {
 		sd->status.head_top = id->look;
 	if ((i = sd->equip_index[EQI_GARMENT]) != -1 && (id = sd->inventory_data[i]))
 		sd->status.robe = id->look;
-
+	if ((i = sd->equip_index[EQI_HAND_R]) != -1 && (id = sd->inventory_data[i]))
+		sd->status.costume_weapon = id->look;
 	// Costumes check
 	if (!map_getmapflag(sd->bl.m, MF_NOCOSTUME)) {
 		if ((i = sd->equip_index[EQI_COSTUME_HEAD_LOW]) != -1 && (id = sd->inventory_data[i])) {
@@ -16183,6 +16196,8 @@ void pc_set_costume_view(map_session_data *sd) {
 			sd->status.head_top = id->look;
 		if ((i = sd->equip_index[EQI_COSTUME_GARMENT]) != -1 && (id = sd->inventory_data[i]))
 			sd->status.robe = id->look;
+	if ((i = sd->equip_index[EQI_HAND_R]) != -1 && (id = sd->inventory_data[i]))
+		sd->status.costume_weapon = id->look;
 	}
 
 	if (sd->setlook_head_bottom)
@@ -16202,6 +16217,8 @@ void pc_set_costume_view(map_session_data *sd) {
 		clif_changelook(&sd->bl, LOOK_HEAD_TOP, sd->status.head_top);
 	if (robe != sd->status.robe)
 		clif_changelook(&sd->bl, LOOK_ROBE, sd->status.robe);
+	if (weapon != sd->status.costume_weapon)
+		clif_changelook(&sd->bl, LOOK_WEAPON, sd->status.weapon);
 }
 
 std::shared_ptr<s_attendance_period> pc_attendance_period(){
@@ -16806,6 +16823,138 @@ bool pc_mob_quest_check(map_session_data *sd, int mob_id)
 	return false;
 }
 
+// @Afk System
+bool pc_set_afk(map_session_data *sd, bool enable, bool stand) {
+	nullpo_retr(false, sd);
+
+	int effectId = battle_config.afk_hat_effectid;
+
+	if( sd->afk_system.timeOut != INVALID_TIMER ) {
+		delete_timer(sd->afk_system.timeOut, pc_afk_timeout);
+		sd->afk_system.timeOut = INVALID_TIMER;
+	}
+
+	if( enable ) {
+		if( battle_config.afk_hat_effectid ) {
+			if( !effectId )
+				return false;
+
+			if( effectId <= HAT_EF_MIN || effectId >= HAT_EF_MAX ){
+				ShowError( "pc_afk_hateffect: unsupported hat effect id %d\n", effectId );
+				return false;
+			}
+
+			if( sd->afk_system.hatEffect )
+				pc_set_afk(sd, false);
+
+			//auto it = util::vector_get( sd->hatEffects, effectId );
+			//if( it != sd->hatEffects.end() ) {
+			//	sd->afk_system.hatEffectExist = false;
+			//	return true;
+			//}
+			for (auto it = sd->hatEffects.begin(); it != sd->hatEffects.end(); it++) {
+				if (it != sd->hatEffects.end()) {
+					sd->afk_system.hatEffectExist = false;
+					return true;
+				}
+			}
+			
+			sd->afk_system.hatEffect = effectId;
+			sd->afk_system.hatEffectExist = true;
+			hatEffect ef{ sd->bl.id, sd->bl.id, sd->status.char_id, effectId, enable };
+			sd->hatEffects.push_back(ef);
+			clif_hat_effects(*sd,sd->bl,AREA);
+		}
+
+		if( battle_config.afk_headgear_viewid ) {
+			int viewId = battle_config.afk_headgear_viewid;
+			sd->afk_system.headTopView = true;
+			clif_refreshlook(&sd->bl,sd->bl.id,LOOK_HEAD_TOP,viewId,AREA);
+		}
+
+		sd->afk_system.enable = true;
+		pc_setsit(sd);
+		skill_sit(sd,1);
+		clif_sitting(sd->bl);
+		clif_specialeffect(&sd->bl, 234,AREA);
+
+		if( battle_config.afk_monster_ignore && !(sd->state.block_action & PCBLOCK_IMMUNE) )
+			sd->state.block_action &= ~PCBLOCK_IMMUNE;
+
+		if( battle_config.afk_timeout )
+			sd->afk_system.timeOut = add_timer(gettick() + battle_config.afk_timeout, pc_afk_timeout, sd->bl.id, 0);
+
+		if( battle_config.afk_at_enable ) {
+			sd->state.autotrade = 1;
+
+			if (battle_config.afk_at_logout_event)
+				npc_script_event(*sd, NPCE_LOGOUT); //Logout Event
+
+			channel_pcquit(sd,0xF); //leave all chan
+			clif_authfail_fd(sd->fd, 15);
+			chrif_save(sd, CSAVE_AUTOTRADE);
+		}
+	}
+	else {
+		effectId = sd->afk_system.hatEffect;
+
+		if( effectId && sd->afk_system.hatEffectExist ) {
+			//auto it = util::vector_get( sd->hatEffects, effectId );
+			//
+			//if( it != sd->hatEffects.end() ) {
+			//	util::vector_erase_if_exists( sd->hatEffects, effectId );
+			//	clif_hat_effects(*sd,sd->bl,AREA);
+			//	clif_hat_effect_single(sd, effectId, false,sd->bl.id,false);
+			//}
+			for (auto it = sd->hatEffects.begin(); it != sd->hatEffects.end(); it++) {
+				if (it != sd->hatEffects.end()) {
+					//util::vector_erase_if_exists(sd->hatEffects, effectId);
+					clif_hat_effects(*sd, sd->bl, AREA);
+					clif_hat_effect_single(sd, effectId, false, sd->bl.id, false);
+				}
+			}
+		}
+		sd->afk_system.hatEffect = 0;
+		sd->afk_system.hatEffectExist = false;
+		clif_refreshlook(&sd->bl,sd->bl.id,LOOK_HEAD_TOP,sd->status.head_top,AREA);
+
+		sd->afk_system.enable = false;
+		sd->afk_system.hatEffect = 0;
+		sd->afk_system.hatEffectExist = false;
+		sd->afk_system.headTopView = false;
+		memset(sd->afk_system.message, '\0', sizeof(sd->afk_system.message));
+
+		if( stand == true ) {
+			pc_setstand(sd,true);
+			skill_sit(sd,0);
+		}
+
+		if( battle_config.afk_monster_ignore && sd->state.block_action & PCBLOCK_IMMUNE )
+			sd->state.block_action &= ~PCBLOCK_IMMUNE;
+	}
+	return true;
+}
+
+TIMER_FUNC(pc_afk_timeout){
+	map_session_data *sd;
+
+	if( (sd=(map_session_data *)map_id2sd(id)) == NULL || sd->bl.type!=BL_PC )
+		return 1;
+
+	if(sd->afk_system.timeOut != tid){
+		ShowError("pc_afk_timeout %d != %d\n",sd->invincible_timer,tid);
+		return 0;
+	}
+
+	pc_set_afk(sd,false,true);
+
+	if( !sd->state.autotrade )
+		clif_GM_kick(sd, sd);
+	else
+		map_quit(sd);
+	return 1;
+}
+
 /*==========================================
  * pc Init/Terminate
  *------------------------------------------*/
@@ -16853,7 +17002,8 @@ void do_init_pc(void) {
 	add_timer_func_list(pc_autotrade_timer, "pc_autotrade_timer");
 	add_timer_func_list(pc_on_expire_active, "pc_on_expire_active");
 	add_timer_func_list(pc_macro_detector_timeout, "pc_macro_detector_timeout");
-
+	// @Afk System
+	add_timer_func_list(pc_afk_timeout, "pc_afk_timeout");
 	add_timer(gettick() + autosave_interval, pc_autosave, 0, 0);
 
 	// 0=day, 1=night [Yor]

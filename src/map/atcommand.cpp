@@ -11295,6 +11295,55 @@ ACMD_FUNC(showmobquest) {
 	return 0;
 }
 
+// @Afk System
+ACMD_FUNC(afk) {
+	nullpo_retr(-1,sd);
+
+	// Remove Afk
+	if( sd->afk_system.enable ) {
+		if( pc_set_afk(sd,false) )
+			clif_displaymessage(fd, msg_txt(sd,2409));
+		else
+			clif_displaymessage(fd, msg_txt(sd,2407));
+		return 0;
+	}
+
+	if( !message || !*message ) {
+		clif_displaymessage(fd, msg_txt(sd,2401)); // Please enter a message (usage: @afk <message>).
+		return -1;
+	}
+
+	if( pc_isdead(sd) ) {
+		clif_displaymessage(fd, msg_txt(sd,2402));
+		return -1;
+	}
+
+	if( !map_getmapflag(sd->bl.m, MF_AFK) || (battle_config.afk_at_enable && map_getmapflag(sd->bl.m, MF_AUTOTRADE) != battle_config.autotrade_mapflag) ) {
+		clif_displaymessage(fd, msg_txt(sd,2403)); // Afk is not allowed on this map.
+		return -1;
+	}
+
+	if( sd->state.vending ) {
+		clif_displaymessage(fd, msg_txt(sd,2404)); // You cannot use afk with an open vending.
+		return -1;
+	}
+
+	if( sd->state.buyingstore ) {
+		clif_displaymessage(fd, msg_txt(sd,2405)); // You cannot use afk with an open buyingstore.
+		return -1;
+	}
+
+	if( pc_set_afk(sd,true) ) {
+		clif_displaymessage(fd, msg_txt(sd,2408));
+		memset(sd->afk_system.message, '\0', sizeof(sd->afk_system.message));
+		sprintf(sd->afk_system.message, "[%s]: %s", msg_txt(sd,2000), message);
+	}
+	else {
+		clif_displaymessage(fd, msg_txt(sd,2406));
+	}
+	return 0;
+}
+
 #include <custom/atcommand.inc>
 
 /**
@@ -11630,6 +11679,8 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(showmobelement),
 		ACMD_DEF(showmobrace),
 		ACMD_DEF(showmobquest),
+		// @Afk System
+		ACMD_DEF(afk),
 	};
 	AtCommandInfo* atcommand;
 	int32 i;

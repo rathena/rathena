@@ -831,6 +831,16 @@ struct Battle_Config
 	int32 cellpvp_guild_enable;
 	int32 cellpvp_walkout_delay;
 	
+	// @Afk System
+	int afk_enable;
+	int afk_at_enable;
+	int afk_at_logout_event;
+	int afk_timeout;
+	int afk_monster_ignore;
+	int afk_headgear_viewid;
+	int afk_hat_effectid;
+
+	
 #include <custom/battle_config_struct.inc>
 };
 
