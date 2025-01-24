@@ -9468,11 +9468,11 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			break;
 		}
 
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		if (dstmd != nullptr)
 			clif_skill_estimation( *sd, *dstmd );
 		if( skill_id == MER_ESTIMATION )
 			sd = nullptr;
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		break;
 
 	case BS_REPAIRWEAPON:

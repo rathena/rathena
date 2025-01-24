@@ -1155,9 +1155,7 @@ void clif_catch_process( map_session_data& sd );
 void clif_pet_roulette( map_session_data& sd, bool success );
 void clif_sendegg(map_session_data *sd);
 void clif_send_petstatus( map_session_data& sd, pet_data& pd );
-void clif_send_petdata( map_session_data* sd, pet_data& pd, e_changestate_pet data_type, int32 value );
-#define clif_pet_equip(sd, pd) clif_send_petdata(sd, pd, CHANGESTATEPET_ACCESSORY, (pd).vd.head_bottom)
-#define clif_pet_equip_area(pd) clif_send_petdata(nullptr, pd, CHANGESTATEPET_ACCESSORY, (pd).vd.head_bottom)
+void clif_send_petdata( map_session_data* sd, pet_data& pd, e_changestate_pet data_type );
 void clif_pet_emotion( pet_data& pd, int32 param );
 void clif_pet_food( map_session_data& sd, int32 foodid, bool success );
 void clif_pet_autofeed_status(map_session_data* sd, bool force);

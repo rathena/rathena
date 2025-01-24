@@ -9703,7 +9703,7 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 		struct pet_data *pd = sd->pd;
 		if( !mapdata->getMapFlag(MF_NOEXPPENALTY) ) {
 			pet_set_intimate(pd, pd->pet.intimate + pd->get_pet_db()->die);
-			clif_send_petdata( sd, *sd->pd, CHANGESTATEPET_INTIMACY, pd->pet.intimate );
+			clif_send_petdata( sd, *sd->pd, CHANGESTATEPET_INTIMACY );
 		}
 		if( sd->pd->target_id ) // Unlock all targets...
 			pet_unlocktarget(sd->pd);

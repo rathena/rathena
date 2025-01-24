@@ -1748,7 +1748,7 @@ int32 clif_spawn( struct block_list *bl, bool walking ){
 		// If the pet wears equip
 		if( vd->head_bottom != 0 ){
 			pet_data& pd = *reinterpret_cast<pet_data*>( bl );
-			clif_pet_equip_area( pd );
+			clif_send_petdata( nullptr, pd, CHANGESTATEPET_ACCESSORY );
 		}
 		break;
 	}
@@ -2106,7 +2106,7 @@ void clif_move( struct unit_data& ud )
 		// If the pet wears equip
 		if( vd->head_bottom != 0 ){
 			pet_data& pd = *reinterpret_cast<pet_data*>( bl );
-			clif_pet_equip_area( pd );
+			clif_send_petdata( nullptr, pd, CHANGESTATEPET_ACCESSORY );
 		}
 		break;
 	}
@@ -5100,7 +5100,7 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 		// If the pet wears equip
 		if( vd->head_bottom != 0 ){
 			pet_data& pd = *reinterpret_cast<pet_data*>( bl );
-			clif_pet_equip( sd, pd );
+			clif_send_petdata( sd, pd, CHANGESTATEPET_ACCESSORY );
 		}
 		break;
 	}
@@ -8218,7 +8218,46 @@ void clif_sendegg(map_session_data *sd)
 ///     6 = close egg selection ui and update egg in inventory (PACKETVER >= 20180704)
 ///
 /// If sd is null, the update is sent to nearby objects, otherwise it is sent only to that player.
-void clif_send_petdata( map_session_data* sd, pet_data& pd, e_changestate_pet data_type, int32 value ){
+void clif_send_petdata( map_session_data* sd, pet_data& pd, e_changestate_pet data_type ){
+	int32 value;
+
+	switch( data_type ) {
+		case CHANGESTATEPET_INIT:
+			value = 0;
+			break;
+		case CHANGESTATEPET_INTIMACY:
+			value = pd.pet.intimate;
+			break;
+		case CHANGESTATEPET_HUNGER:
+			value = pd.pet.hungry;
+			break;
+		case CHANGESTATEPET_ACCESSORY:
+			value = pd.vd.head_bottom;
+			break;
+		case CHANGESTATEPET_PERFORMANCE: {
+			int32 num;
+
+			// data = 1~3: normal, 4: special
+			if (pd.pet.intimate > PET_INTIMATE_LOYAL)
+				num = pd.get_pet_db()->s_perfor ? 4 : 3;
+			else if (pd.pet.intimate > PET_INTIMATE_CORDIAL) //TODO: this is way too high
+				num = 2;
+			else
+				num = 1;
+
+			value = rnd_value(1, num);
+			break;
+		}
+		case CHANGESTATEPET_HAIRSTYLE:
+			value = battle_config.pet_hair_style;
+			break;
+		case CHANGESTATEPET_UPDATE_EGG:
+			value = ( pd.pet.intimate == 1 ) ? 0 : 1;
+			break;
+		default:	// shouldn't happen
+			return;
+	}
+
 	PACKET_ZC_CHANGESTATE_PET packet{};
 
 	packet.PacketType = HEADER_ZC_CHANGESTATE_PET;
@@ -10771,7 +10810,7 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 			if(map_addblock(&sd->pd->bl))
 				return;
 			clif_spawn(&sd->pd->bl);
-			clif_send_petdata( sd, *sd->pd, CHANGESTATEPET_INIT, 0 );
+			clif_send_petdata( sd, *sd->pd, CHANGESTATEPET_INIT );
 			clif_send_petstatus( *sd, *sd->pd );
 //			skill_unit_move(&sd->pd->bl,gettick(),1);
 		}
