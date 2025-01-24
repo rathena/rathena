@@ -108,7 +108,7 @@ bool mapif_mercenary_save(struct s_mercenary* merc)
 			continue;
 		}
 
-		if (SQL_ERROR == stmt.BindParam(0, SQLDT_USHORT, &merc->scd[i].skill_id, 0)
+		if (SQL_ERROR == stmt.BindParam(0, SQLDT_UINT16, &merc->scd[i].skill_id, 0)
 			|| SQL_ERROR == stmt.BindParam(1, SQLDT_LONGLONG, &merc->scd[i].tick, 0)
 			|| SQL_ERROR == stmt.Execute()) {
 			SqlStmt_ShowDebug(stmt);

@@ -1200,7 +1200,7 @@ int32 char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_
 	||	SQL_ERROR == stmt.BindColumn(0, SQLDT_INT,    &hotkey_num, 0, nullptr, nullptr)
 	||	SQL_ERROR == stmt.BindColumn(1, SQLDT_UCHAR,  &tmp_hotkey.type, 0, nullptr, nullptr)
 	||	SQL_ERROR == stmt.BindColumn(2, SQLDT_UINT,   &tmp_hotkey.id, 0, nullptr, nullptr)
-	||	SQL_ERROR == stmt.BindColumn(3, SQLDT_USHORT, &tmp_hotkey.lv, 0, nullptr, nullptr) )
+	||	SQL_ERROR == stmt.BindColumn(3, SQLDT_UINT16, &tmp_hotkey.lv, 0, nullptr, nullptr) )
 		SqlStmt_ShowDebug(stmt);
 
 	while( SQL_SUCCESS == stmt.NextRow() )
