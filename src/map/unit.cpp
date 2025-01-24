@@ -151,38 +151,36 @@ bool unit_walktoxy_nextcell(block_list& bl, bool sendMove, t_tick tick) {
 
 	int32 speed;
 
+	// Reached end of walkpath
 	if (ud->walkpath.path_pos >= ud->walkpath.path_len)
-		speed = -1;
-	else if (direction_diagonal(ud->walkpath.path[ud->walkpath.path_pos]))
+		return false;
+
+	if (direction_diagonal(ud->walkpath.path[ud->walkpath.path_pos]))
 		speed = status_get_speed(&bl) * MOVE_DIAGONAL_COST / MOVE_COST;
 	else
 		speed = status_get_speed(&bl);
 
-	if (speed > 0) {
-		// Monsters check if their target is in range each cell
-		if (bl.type == BL_MOB && ud->target_to) {
-			short tx = ud->to_x;
-			short ty = ud->to_y;
-			// Monsters update their chase path one cell before reaching their final destination
-			if (unit_update_chase(bl, tick, (ud->walkpath.path_pos == ud->walkpath.path_len-1)))
-				return true;
-			// Continue moving, restore to_x and to_y
-			ud->to_x = tx;
-			ud->to_y = ty;
-		}
-
-		// Make sure there is no active walktimer
-		if (ud->walktimer != INVALID_TIMER) {
-			delete_timer(ud->walktimer, unit_walktoxy_timer);
-			ud->walktimer = INVALID_TIMER;
-		}
-		ud->walktimer = add_timer(tick + speed, unit_walktoxy_timer, bl.id, speed);
-		if (sendMove)
-			clif_move(*ud);
-		return true;
+	// Monsters check if their target is in range each cell
+	if (bl.type == BL_MOB && ud->target_to) {
+		short tx = ud->to_x;
+		short ty = ud->to_y;
+		// Monsters update their chase path one cell before reaching their final destination
+		if (unit_update_chase(bl, tick, (ud->walkpath.path_pos == ud->walkpath.path_len - 1)))
+			return true;
+		// Continue moving, restore to_x and to_y
+		ud->to_x = tx;
+		ud->to_y = ty;
 	}
 
-	return false;
+	// Make sure there is no active walktimer
+	if (ud->walktimer != INVALID_TIMER) {
+		delete_timer(ud->walktimer, unit_walktoxy_timer);
+		ud->walktimer = INVALID_TIMER;
+	}
+	ud->walktimer = add_timer(tick + speed, unit_walktoxy_timer, bl.id, speed);
+	if (sendMove)
+		clif_move(*ud);
+	return true;
 }
 
 /**
@@ -216,7 +214,7 @@ int32 unit_walktoxy_sub(struct block_list *bl)
 	int32 i;
 
 	// Monsters always target an adjacent tile even if ranged, no need to shorten the path
-	if (ud->target_to != 0 && ud->chaserange>1 && bl->type != BL_MOB) {
+	if (ud->target_to != 0 && ud->chaserange > 1 && bl->type != BL_MOB) {
 		// Generally speaking, the walk path is already to an adjacent tile
 		// so we only need to shorten the path if the range is greater than 1.
 		// Trim the last part of the path to account for range,
