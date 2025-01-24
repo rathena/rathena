@@ -1895,7 +1895,7 @@ bool map_closest_freecell(int16 m, int16 *x, int16 *y, int32 type, int32 flag)
  * @param type: types of block the item should not stack on
  * @return 0:failure, x:item_gid [MIN_FLOORITEM;MAX_FLOORITEM]==[2;START_ACCOUNT_NUM]
  *------------------------------------------*/
-int32 map_addflooritem(struct item *item, int32 amount, int16 m, int16 x, int16 y, int32 first_charid, int32 second_charid, int32 third_charid, int32 flags, unsigned short mob_id, bool canShowEffect, enum directions dir, int32 type)
+int32 map_addflooritem(struct item *item, int32 amount, int16 m, int16 x, int16 y, int32 first_charid, int32 second_charid, int32 third_charid, int32 flags, uint16 mob_id, bool canShowEffect, enum directions dir, int32 type)
 {
 	struct flooritem_data *fitem = nullptr;
 
@@ -2864,7 +2864,7 @@ int32 map_delinstancemap(int32 m)
  *-----------------------------------------*/
 // Stores the spawn data entry in the mob list.
 // Returns the index of successful, or -1 if the list was full.
-int32 map_addmobtolist(unsigned short m, struct spawn_data *spawn)
+int32 map_addmobtolist(uint16 m, struct spawn_data *spawn)
 {
 	size_t i;
 	struct map_data *mapdata = map_getmapdata(m);
@@ -2873,7 +2873,7 @@ int32 map_addmobtolist(unsigned short m, struct spawn_data *spawn)
 	if( i < MAX_MOB_LIST_PER_MAP )
 	{
 		mapdata->moblist[i] = spawn;
-		return static_cast<int>(i);
+		return static_cast<int32>(i);
 	}
 	return -1;
 }
@@ -3006,7 +3006,7 @@ const char* map_mapid2mapname(int32 m)
  *------------------------------------------*/
 int16 map_mapname2mapid(const char* name)
 {
-	unsigned short map_index;
+	uint16 map_index;
 	map_index = mapindex_name2id(name);
 	if (!map_index)
 		return -1;
@@ -3016,7 +3016,7 @@ int16 map_mapname2mapid(const char* name)
 /*==========================================
  * Returns the map of the given mapindex. [Skotlex]
  *------------------------------------------*/
-int16 map_mapindex2mapid(unsigned short mapindex)
+int16 map_mapindex2mapid(uint16 mapindex)
 {
 	struct map_data *md=nullptr;
 
@@ -3032,7 +3032,7 @@ int16 map_mapindex2mapid(unsigned short mapindex)
 /*==========================================
  * Switching Ip, port ? (like changing map_server) get ip/port from map_name
  *------------------------------------------*/
-int32 map_mapname2ipport(unsigned short name, uint32* ip, uint16* port)
+int32 map_mapname2ipport(uint16 name, uint32* ip, uint16* port)
 {
 	struct map_data_other_server *mdos;
 
@@ -3444,7 +3444,7 @@ bool map_iwall_remove(const char *wall_name)
 static DBData create_map_data_other_server(DBKey key, va_list args)
 {
 	struct map_data_other_server *mdos;
-	unsigned short mapindex = (unsigned short)key.ui;
+	uint16 mapindex = (uint16)key.ui;
 	mdos=(struct map_data_other_server *)aCalloc(1,sizeof(struct map_data_other_server));
 	mdos->index = mapindex;
 	memcpy(mdos->name, mapindex_id2name(mapindex), MAP_NAME_LENGTH);
@@ -3454,7 +3454,7 @@ static DBData create_map_data_other_server(DBKey key, va_list args)
 /*==========================================
  * Add mapindex to db of another map server
  *------------------------------------------*/
-int32 map_setipport(unsigned short mapindex, uint32 ip, uint16 port)
+int32 map_setipport(uint16 mapindex, uint32 ip, uint16 port)
 {
 	struct map_data_other_server *mdos;
 
@@ -3495,7 +3495,7 @@ int32 map_eraseallipport(void)
 /*==========================================
  * Delete mapindex from db of another map server
  *------------------------------------------*/
-int32 map_eraseipport(unsigned short mapindex, uint32 ip, uint16 port)
+int32 map_eraseipport(uint16 mapindex, uint32 ip, uint16 port)
 {
 	struct map_data_other_server *mdos;
 
@@ -3828,7 +3828,7 @@ int32 map_readallmaps (void)
 	for (int32 i = 0; i < map_num; i++) {
 		size_t size;
 		bool success = false;
-		unsigned short idx = 0;
+		uint16 idx = 0;
 		struct map_data *mapdata = &map[i];
 		char map_cache_decode_buffer[MAX_MAP_SIZE];
 

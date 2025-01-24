@@ -2293,15 +2293,15 @@ void pc_reg_received(map_session_data *sd)
 	sd->change_level_2nd = static_cast<unsigned char>(pc_readglobalreg(sd, add_str(JOBCHANGE2ND_VAR)));
 	sd->change_level_3rd = static_cast<unsigned char>(pc_readglobalreg(sd, add_str(JOBCHANGE3RD_VAR)));
 	sd->change_level_4th = static_cast<unsigned char>(pc_readglobalreg(sd, add_str(JOBCHANGE4TH_VAR)));
-	sd->die_counter = static_cast<int>(pc_readglobalreg(sd, add_str(PCDIECOUNTER_VAR)));
+	sd->die_counter = static_cast<int32>(pc_readglobalreg(sd, add_str(PCDIECOUNTER_VAR)));
 
-	sd->langtype = static_cast<int>(pc_readaccountreg(sd, add_str(LANGTYPE_VAR)));
+	sd->langtype = static_cast<int32>(pc_readaccountreg(sd, add_str(LANGTYPE_VAR)));
 	if (msg_checklangtype(sd->langtype,true) < 0)
 		sd->langtype = 0; //invalid langtype reset to default
 
 	// Cash shop
-	sd->cashPoints = static_cast<int>(pc_readaccountreg(sd, add_str(CASHPOINT_VAR)));
-	sd->kafraPoints = static_cast<int>(pc_readaccountreg(sd, add_str(KAFRAPOINT_VAR)));
+	sd->cashPoints = static_cast<int32>(pc_readaccountreg(sd, add_str(CASHPOINT_VAR)));
+	sd->kafraPoints = static_cast<int32>(pc_readaccountreg(sd, add_str(KAFRAPOINT_VAR)));
 
 	// Cooking Exp
 	sd->cook_mastery = static_cast<short>(pc_readglobalreg(sd, add_str(COOKMASTERY_VAR)));
@@ -2313,12 +2313,12 @@ void pc_reg_received(map_session_data *sd)
 	}
 
 	if (battle_config.feature_banking)
-		sd->bank_vault = static_cast<int>(pc_readreg2(sd, BANK_VAULT_VAR));
+		sd->bank_vault = static_cast<int32>(pc_readreg2(sd, BANK_VAULT_VAR));
 
 	if (battle_config.feature_roulette) {
-		sd->roulette_point.bronze = static_cast<int>(pc_readreg2(sd, ROULETTE_BRONZE_VAR));
-		sd->roulette_point.silver = static_cast<int>(pc_readreg2(sd, ROULETTE_SILVER_VAR));
-		sd->roulette_point.gold = static_cast<int>(pc_readreg2(sd, ROULETTE_GOLD_VAR));
+		sd->roulette_point.bronze = static_cast<int32>(pc_readreg2(sd, ROULETTE_BRONZE_VAR));
+		sd->roulette_point.silver = static_cast<int32>(pc_readreg2(sd, ROULETTE_SILVER_VAR));
+		sd->roulette_point.gold = static_cast<int32>(pc_readreg2(sd, ROULETTE_GOLD_VAR));
 	}
 	sd->roulette.prizeIdx = -1;
 
@@ -2337,7 +2337,7 @@ void pc_reg_received(map_session_data *sd)
 	}
 
 	if ((i = pc_checkskill(sd,RG_PLAGIARISM)) > 0) {
-		unsigned short skid = static_cast<unsigned short>(pc_readglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM)));
+		uint16 skid = static_cast<uint16>(pc_readglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM)));
 		sd->cloneskill_idx = skill_get_index(skid);
 		if (sd->cloneskill_idx > 0) {
 			sd->status.skill[sd->cloneskill_idx].id = skid;
@@ -2348,7 +2348,7 @@ void pc_reg_received(map_session_data *sd)
 		}
 	}
 	if ((i = pc_checkskill(sd,SC_REPRODUCE)) > 0) {
-		unsigned short skid = static_cast<unsigned short>(pc_readglobalreg(sd, add_str(SKILL_VAR_REPRODUCE)));
+		uint16 skid = static_cast<uint16>(pc_readglobalreg(sd, add_str(SKILL_VAR_REPRODUCE)));
 		sd->reproduceskill_idx = skill_get_index(skid);
 		if (sd->reproduceskill_idx > 0) {
 			sd->status.skill[sd->reproduceskill_idx].id = skid;
@@ -6799,7 +6799,7 @@ int32 pc_steal_coin(map_session_data *sd,struct block_list *target)
  *			SETPOS_NO_MAPSERVER	Map not in this map-server, and failed to locate alternate map-server.
  *			SETPOS_AUTOTRADE	Player is in autotrade state
  *------------------------------------------*/
-enum e_setpos pc_setpos(map_session_data* sd, unsigned short mapindex, int32 x, int32 y, clr_type clrtype)
+enum e_setpos pc_setpos(map_session_data* sd, uint16 mapindex, int32 x, int32 y, clr_type clrtype)
 {
 	nullpo_retr(SETPOS_OK,sd);
 
@@ -7375,7 +7375,7 @@ bool pc_checkequip2(map_session_data *sd, t_itemid nameid, int32 min, int32 max)
  * Convert's from the client's lame Job ID system
  * to the map server's 'makes sense' system. [Skotlex]
  *------------------------------------------*/
-uint64 pc_jobid2mapid(unsigned short b_class)
+uint64 pc_jobid2mapid(uint16 b_class)
 {
 	switch(b_class)
 	{
@@ -10724,7 +10724,7 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 	if (job == -1)
 		return false;
 
-	if ((unsigned short)b_class == sd->class_)
+	if ((uint16)b_class == sd->class_)
 		return false; //Nothing to change.
 
 	// If the job does not exist in the job db, dont allow changing to it
@@ -10772,7 +10772,7 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 	sd->status.class_ = job;
 	fame_flag = pc_famerank(sd->status.char_id,sd->class_&MAPID_UPPERMASK);
 	uint64 previous_class = sd->class_;
-	sd->class_ = (unsigned short)b_class;
+	sd->class_ = (uint16)b_class;
 	sd->status.job_level=1;
 	sd->status.job_exp=0;
 
@@ -14133,7 +14133,7 @@ static bool pc_readdb_job_noenter_map( char *str[], size_t columns, size_t curre
 			ShowError("pc_readdb_job_noenter_map: Invalid job %s specified.\n", str[0]);
 			return false;
 		}
-		class_ = static_cast<int>(class_tmp);
+		class_ = static_cast<int32>(class_tmp);
 	}
 
 	if (!pcdb_checkid(class_)) {
@@ -14426,7 +14426,7 @@ void pc_itemcd_do(map_session_data *sd, bool load) {
  * @return 0: No delay, can consume item.
  *         1: Has delay, cancel consumption.
  **/
-uint8 pc_itemcd_add(map_session_data *sd, struct item_data *id, t_tick tick, unsigned short n) {
+uint8 pc_itemcd_add(map_session_data *sd, struct item_data *id, t_tick tick, uint16 n) {
 	int32 i;
 	ARR_FIND(0, MAX_ITEMDELAYS, i, sd->item_delay[i].nameid == id->nameid );
 	if( i == MAX_ITEMDELAYS ) /* item not found. try first empty now */
@@ -14472,7 +14472,7 @@ uint8 pc_itemcd_add(map_session_data *sd, struct item_data *id, t_tick tick, uns
  * @return 0: No delay, can consume item.
  *         1: Has delay, cancel consumption.
  **/
-uint8 pc_itemcd_check(map_session_data *sd, struct item_data *id, t_tick tick, unsigned short n) {
+uint8 pc_itemcd_check(map_session_data *sd, struct item_data *id, t_tick tick, uint16 n) {
 	status_change *sc = nullptr;
 
 	nullpo_retr(0, sd);
@@ -15307,7 +15307,7 @@ int32 pc_attendance_counter( map_session_data* sd ){
 	}
 
 	// Get the counter for the current period
-	int32 counter = static_cast<int>(pc_readreg2( sd, ATTENDANCE_COUNT_VAR ));
+	int32 counter = static_cast<int32>(pc_readreg2( sd, ATTENDANCE_COUNT_VAR ));
 
 	// Check if we have a remaining counter from a previous period
 	if( counter > 0 && pc_readreg2( sd, ATTENDANCE_DATE_VAR ) < period->start ){

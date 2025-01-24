@@ -3278,11 +3278,11 @@ enum e_refine_chance_type {
 * Required because players have two of these, one in status_data
 * and another for their left hand weapon. */
 struct weapon_atk {
-	unsigned short atk, atk2;
-	unsigned short range;
+	uint16 atk, atk2;
+	uint16 range;
 	unsigned char ele;
 #ifdef RENEWAL
-	unsigned short matk;
+	uint16 matk;
 	unsigned char wlv;
 #endif
 };
@@ -3300,7 +3300,7 @@ struct status_data {
 		str, agi, vit, int_, dex, luk,
 		pow, sta, wis, spl, con, crt,
 		eatk;
-	unsigned short
+	uint16
 		batk,
 #ifdef RENEWAL
 		watk,
@@ -3336,7 +3336,7 @@ struct status_data {
 
 ///Additional regen data that only players have.
 struct regen_data_sub {
-	unsigned short
+	uint16
 		hp,sp;
 
 	//tick accumulation before healing.
@@ -3347,14 +3347,14 @@ struct regen_data_sub {
 
 	//Regen rates. n/100
 	struct {
-		unsigned short hp,sp;
+		uint16 hp,sp;
 	} rate;
 };
 
 ///Regen data
 struct regen_data {
 	unsigned char flag; //Marks what stuff you may heal or not.
-	unsigned short hp,sp,shp,ssp;
+	uint16 hp,sp,shp,ssp;
 
 	//tick accumulation before healing.
 	struct {
@@ -3365,7 +3365,7 @@ struct regen_data {
 
 	//Regen rates. n/100
 	struct {
-		unsigned short hp, sp, shp, ssp;
+		uint16 hp, sp, shp, ssp;
 	} rate;
 
 	struct {
@@ -3396,8 +3396,8 @@ class status_change {
 public:
 	uint32 option;// effect state (bitfield)
 	uint32 opt3;// skill state (bitfield)
-	unsigned short opt1;// body state
-	unsigned short opt2;// health state (bitfield)
+	uint16 opt1;// body state
+	uint16 opt2;// health state (bitfield)
 	unsigned char count;
 	sc_type lastEffect; // Used to check for stacking damageable SC on the same attack
 	int32 lastEffectTimer; // Timer for lastEffect
@@ -3530,7 +3530,7 @@ defType status_get_def(struct block_list *bl);
 #define status_get_matk_min(bl) status_get_status_data(*bl)->matk_min
 #define status_get_lwatk(bl) status_get_status_data(*bl)->lhw.atk
 #define status_get_lwatk2(bl) status_get_status_data(*bl)->lhw.atk2
-unsigned short status_get_speed(struct block_list *bl);
+uint16 status_get_speed(struct block_list *bl);
 #define status_get_adelay(bl) status_get_status_data(*bl)->adelay
 #define status_get_amotion(bl) status_get_status_data(*bl)->amotion
 #define status_get_clientamotion(bl) status_get_status_data(*bl)->clientamotion
@@ -3637,19 +3637,19 @@ int32 status_check_visibility(struct block_list *src, struct block_list *target)
 int32 status_change_spread(block_list *src, block_list *bl);
 
 #ifndef RENEWAL
-unsigned short status_base_matk_min(const struct status_data* status);
-unsigned short status_base_matk_max(const struct status_data* status);
+uint16 status_base_matk_min(const struct status_data* status);
+uint16 status_base_matk_max(const struct status_data* status);
 #else
 uint32 status_weapon_atk(struct weapon_atk wa, map_session_data *sd);
-unsigned short status_base_atk_min(struct block_list *bl, const struct status_data* status, int32 level);
-unsigned short status_base_atk_max(struct block_list *bl, const struct status_data* status, int32 level);
-unsigned short status_base_matk_min(struct block_list *bl, const struct status_data* status, int32 level);
-unsigned short status_base_matk_max(struct block_list *bl, const struct status_data* status, int32 level);
+uint16 status_base_atk_min(struct block_list *bl, const struct status_data* status, int32 level);
+uint16 status_base_atk_max(struct block_list *bl, const struct status_data* status, int32 level);
+uint16 status_base_matk_min(struct block_list *bl, const struct status_data* status, int32 level);
+uint16 status_base_matk_max(struct block_list *bl, const struct status_data* status, int32 level);
 #endif
 uint16 status_calc_consumablematk( status_change *sc, int32 matk );
 uint16 status_calc_pseudobuff_matk( map_session_data *sd, status_change *sc, int32 matk );
 
-unsigned short status_base_atk(const struct block_list *bl, const struct status_data *status, int32 level);
+uint16 status_base_atk(const struct block_list *bl, const struct status_data *status, int32 level);
 
 // Status changes accessors for StatusChange database
 uint16 status_efst_get_bl_type(enum efst_type efst);

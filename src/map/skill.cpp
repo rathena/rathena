@@ -65,7 +65,7 @@ struct skill_usave {
 };
 
 struct s_skill_produce_db skill_produce_db[MAX_SKILL_PRODUCE_DB];
-static unsigned short skill_produce_count;
+static uint16 skill_produce_count;
 
 AbraDatabase abra_db;
 ReadingSpellbookDatabase reading_spellbook_db;
@@ -75,12 +75,12 @@ SkillArrowDatabase skill_arrow_db;
 #define MAX_SKILL_CHANGEMATERIAL_SET 3
 struct s_skill_changematerial_db {
 	t_itemid nameid;
-	unsigned short rate;
-	unsigned short qty[MAX_SKILL_CHANGEMATERIAL_SET];
-	unsigned short qty_rate[MAX_SKILL_CHANGEMATERIAL_SET];
+	uint16 rate;
+	uint16 qty[MAX_SKILL_CHANGEMATERIAL_SET];
+	uint16 qty_rate[MAX_SKILL_CHANGEMATERIAL_SET];
 };
 struct s_skill_changematerial_db skill_changematerial_db[MAX_SKILL_CHANGEMATERIAL_DB];
-static unsigned short skill_changematerial_count;
+static uint16 skill_changematerial_count;
 
 
 MagicMushroomDatabase magic_mushroom_db;
@@ -372,7 +372,7 @@ int32 skill_get_range2(struct block_list *bl, uint16 skill_id, uint16 skill_lv, 
  * @param skill_id Dummy skill ID
  * @return Real skill id if found
  **/
-unsigned short skill_dummy2skill_id(unsigned short skill_id) {
+uint16 skill_dummy2skill_id(uint16 skill_id) {
 	switch (skill_id) {
 		case AB_DUPLELIGHT_MELEE:
 		case AB_DUPLELIGHT_MAGIC:
@@ -2784,7 +2784,7 @@ int32 skill_counter_additional_effect (struct block_list* src, struct block_list
  - flag is a BCT_ flag to indicate which type of adjustment should be used
    (BCT_ENEMY/BCT_PARTY/BCT_SELF) are the valid values.
 --------------------------------------------------------------------------*/
-int32 skill_break_equip(struct block_list *src, struct block_list *bl, unsigned short where, int32 rate, int32 flag)
+int32 skill_break_equip(struct block_list *src, struct block_list *bl, uint16 where, int32 rate, int32 flag)
 {
 	status_change *src_sc = status_get_sc(src);
 
@@ -5027,7 +5027,7 @@ static int32 skill_tarotcard(struct block_list* src, struct block_list *target, 
 		clif_damage(*src, *target, tick, 0, 0, 1000, 0, DMG_NORMAL, 0, false);
 		if (!status_isdead(*target))
 		{
-			unsigned short where[] = { EQP_ARMOR, EQP_SHIELD, EQP_HELM };
+			uint16 where[] = { EQP_ARMOR, EQP_SHIELD, EQP_HELM };
 			skill_break_equip(src, target, where[rnd() % 3], 10000, BCT_ENEMY);
 		}
 		break;
@@ -15378,7 +15378,7 @@ int32 skill_castend_map (map_session_data *sd, uint16 skill_id, const char *mapn
 			int32 i, lv, wx, wy;
 			int32 maxcount=0;
 			int32 x,y;
-			unsigned short mapindex;
+			uint16 mapindex;
 
 			mapindex  = mapindex_name2id((char*)mapname);
 			if(!mapindex) { //Given map not found?
@@ -16294,7 +16294,7 @@ static int32 skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, 
 					int32 x = sg->val2>>16;
 					int32 y = sg->val2&0xffff;
 					int32 count = sg->val1>>16;
-					unsigned short m = sg->val3;
+					uint16 m = sg->val3;
 
 					if( --count <= 0 )
 						skill_delunitgroup(sg);
@@ -17905,7 +17905,7 @@ static int32 skill_check_condition_mob_master_sub(struct block_list *bl, va_list
  * @param skill_id Skill ID
  * @return True if skill is need ammo; False otherwise.
  */
-int32 skill_isammotype(map_session_data *sd, unsigned short skill_id)
+int32 skill_isammotype(map_session_data *sd, uint16 skill_id)
 {
 	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
 
@@ -20751,7 +20751,7 @@ int32 skill_clear_group(block_list *bl, uint8 flag)
 		}
 	}
 
-	return static_cast<int>(count);
+	return static_cast<int32>(count);
 }
 
 /**
@@ -22518,7 +22518,7 @@ short skill_can_produce_mix(map_session_data *sd, t_itemid nameid, int32 trigger
 			if (pc_search_inventory(sd,nameid_produce) < 0)
 				return 0;
 		} else {
-			unsigned short idx, amt;
+			uint16 idx, amt;
 
 			for (idx = 0, amt = 0; idx < MAX_INVENTORY; idx++)
 				if (sd->inventory.u.items_inventory[idx].nameid == nameid_produce)
@@ -23454,7 +23454,7 @@ void skill_select_menu( map_session_data& sd, uint16 skill_id ){
 	sc_start4(&sd.bl,&sd.bl,SC__AUTOSHADOWSPELL,100,id,lv,prob,(aslvl*5),skill_get_time(SC_AUTOSHADOWSPELL,aslvl));
 }
 
-int32 skill_elementalanalysis( map_session_data& sd, int32 n, uint16 skill_lv, unsigned short* item_list ){
+int32 skill_elementalanalysis( map_session_data& sd, int32 n, uint16 skill_lv, uint16* item_list ){
 	nullpo_ret(item_list);
 
 	if( n <= 0 )
@@ -23527,7 +23527,7 @@ int32 skill_elementalanalysis( map_session_data& sd, int32 n, uint16 skill_lv, u
 	return 0;
 }
 
-int32 skill_changematerial(map_session_data *sd, int32 n, unsigned short *item_list) {
+int32 skill_changematerial(map_session_data *sd, int32 n, uint16 *item_list) {
 	int32 i, j, k, c, p = 0, amount;
 	t_itemid nameid;
 
@@ -25648,8 +25648,8 @@ static bool skill_parse_row_nocastdb( char* split[], size_t columns, size_t curr
  * Structure: ProduceItemID,ItemLV,RequireSkill,Requireskill_lv,MaterialID1,MaterialAmount1,...
  */
 static bool skill_parse_row_producedb( char* split[], size_t columns, size_t current ){
-	unsigned short x, y;
-	unsigned short id = atoi(split[0]);
+	uint16 x, y;
+	uint16 id = atoi(split[0]);
 	t_itemid nameid = 0;
 	bool found = false;
 

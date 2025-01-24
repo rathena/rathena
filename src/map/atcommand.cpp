@@ -581,7 +581,7 @@ static void warp_get_suggestions(map_session_data* sd, const char *name) {
 ACMD_FUNC(mapmove)
 {
 	char map_name[MAP_NAME_LENGTH_EXT];
-	unsigned short mapindex;
+	uint16 mapindex;
 	short x = 0, y = 0;
 	int16 m = -1;
 
@@ -4540,7 +4540,7 @@ ACMD_FUNC(mapinfo) {
 	struct chat_data *cd = nullptr;
 	char direction[12];
 	int32 i, m_id, chat_num = 0, list = 0, vend_num = 0;
-	unsigned short m_index;
+	uint16 m_index;
 	char mapname[MAP_NAME_LENGTH];
 
 	nullpo_retr(-1, sd);
@@ -6007,7 +6007,7 @@ ACMD_FUNC(addwarp)
 {
 	char mapname[MAP_NAME_LENGTH_EXT], warpname[NPC_NAME_LENGTH];
 	short x,y;
-	unsigned short m;
+	uint16 m;
 	struct npc_data* nd;
 
 	nullpo_retr(-1, sd);
@@ -10630,7 +10630,7 @@ ACMD_FUNC(costume) {
 		SC_HANBOK,
 		SC_OKTOBERFEST
 	};
-	unsigned short k = 0, len = ARRAYLENGTH(names);
+	uint16 k = 0, len = ARRAYLENGTH(names);
 
 	if( !message || !*message ) {
 		for( k = 0; k < len; k++ ) {

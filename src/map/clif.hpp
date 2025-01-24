@@ -1204,8 +1204,8 @@ void clif_configuration( map_session_data* sd, enum e_config_type type, bool ena
 void clif_viewequip_ack( map_session_data& sd, map_session_data& tsd );
 void clif_equipcheckbox(map_session_data* sd);
 
-void clif_msg(map_session_data* sd, unsigned short id);
-void clif_msg_value(map_session_data* sd, unsigned short id, int32 value);
+void clif_msg(map_session_data* sd, uint16 id);
+void clif_msg_value(map_session_data* sd, uint16 id, int32 value);
 void clif_msg_skill(map_session_data* sd, uint16 skill_id, int32 msg_id);
 void clif_msg_color( map_session_data* sd, uint16 msg_id, uint32 color );
 
@@ -1296,14 +1296,14 @@ void clif_showdigit(map_session_data* sd, unsigned char type, int32 value);
 
 /// Buying Store System
 void clif_buyingstore_open(map_session_data* sd);
-void clif_buyingstore_open_failed(map_session_data* sd, unsigned short result, uint32 weight);
+void clif_buyingstore_open_failed(map_session_data* sd, uint16 result, uint32 weight);
 void clif_buyingstore_myitemlist( map_session_data& sd );
 void clif_buyingstore_entry( map_session_data& sd, struct block_list* tbl = nullptr );
 void clif_buyingstore_disappear_entry( map_session_data& sd, struct block_list* tbl = nullptr );
 void clif_buyingstore_itemlist( map_session_data& sd, map_session_data& pl_sd );
 void clif_buyingstore_trade_failed_buyer(map_session_data* sd, short result);
-void clif_buyingstore_update_item(map_session_data* sd, t_itemid nameid, unsigned short amount, uint32 char_id, int32 zeny);
-void clif_buyingstore_delete_item(map_session_data* sd, short index, unsigned short amount, int32 price);
+void clif_buyingstore_update_item(map_session_data* sd, t_itemid nameid, uint16 amount, uint32 char_id, int32 zeny);
+void clif_buyingstore_delete_item(map_session_data* sd, short index, uint16 amount, int32 price);
 void clif_buyingstore_trade_failed_seller(map_session_data* sd, short result, t_itemid nameid);
 
 /// Search Store System
