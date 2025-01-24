@@ -1078,6 +1078,7 @@ pay_fild09,108,346,3	script	Suspicious Light#JQ_SH	4_ENERGY_WHITE,{
 		mes "- A suspicious ripple is visible. -";
 		close;
 	}
+	// !TODO: unknown dialog for steps [2-12]
 	if (isbegin_quest(11781) == 1) {
 		mes "[Chulho]";
 		mes "<FONT SIZE = 14>Oh no!</FONT>";

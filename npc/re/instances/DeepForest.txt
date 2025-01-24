@@ -520,8 +520,10 @@ OnMobDead:
 	npctalk "Hyunrok : Please...", .@npc_d$;
 	sleep2 2000;
 	npctalk "Hyunrok : Have a safe journey home...", .@npc_d$;
-	erasequest 11782;
-	setquest 11769;
+	if (isbegin_quest(11782) == 1) {
+		erasequest 11782;
+		setquest 11769;
+	}
 	if ('step == 8)
 		'step = 9;
 	sleep2 2000;
