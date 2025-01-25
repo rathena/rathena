@@ -6293,7 +6293,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 						skillratio += 200 * skill_lv;
 					else if (sd->weapontype1 == W_GRENADE)
 						skillratio += 340 * skill_lv;
-					else
+					else if (sd->weapontype1 == W_SHOTGUN)
 						skillratio += 400 * skill_lv;
 				}
 			}
