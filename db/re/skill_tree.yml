@@ -7291,6 +7291,13 @@ Body:
             Level: 3
           - Name: IG_SHIELD_SHOOTING
             Level: 3
+      - Name: IG_IMPERIAL_PRESSURE
+        MaxLevel: 5
+        Requires:
+          - Name: IG_SPEAR_SWORD_M
+            Level: 7
+          - Name: IG_GUARD_STANCE
+            Level: 3
   - Job: Biolo
     Inherit:
       Novice: true

@@ -44788,6 +44788,47 @@ Body:
           Amount: 65
       Status:
         Attack_Stance: true
+  - Id: 6505
+    Name: IG_IMPERIAL_PRESSURE
+    Description: Imperial Pressure
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: 5
+    Element: Neutral
+    GiveAp: 2
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 3
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 4
+    CastCancel: true
+    CastTime: 1500
+    AfterCastActDelay: 2000
+    Cooldown: 2000
+    FixedCastTime: 500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 89
+        - Level: 2
+          Amount: 93
+        - Level: 3
+          Amount: 97
+        - Level: 4
+          Amount: 101
+        - Level: 5
+          Amount: 105
   - Id: 6506
     Name: MT_RUSH_STRIKE
     Description: Rush Strike
