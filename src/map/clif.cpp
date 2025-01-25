@@ -12515,16 +12515,22 @@ void clif_parse_PutItemToCart( int32 fd, map_session_data *sd ){
 }
 
 
-/// Request to move an item from cart to inventory (CZ_MOVE_ITEM_FROM_CART_TO_BODY).
-/// 0127 <index>.W <amount>.L
+/// Request to move an item from cart to inventory.
+/// 0127 <index>.W <amount>.L (CZ_MOVE_ITEM_FROM_CART_TO_BODY)
 void clif_parse_GetItemFromCart(int32 fd,map_session_data *sd)
 {
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
+	if( sd == nullptr ){
+		return;
+	}
+
 	if (!pc_iscarton(sd) || pc_cant_act2(sd))
 		return;
 	if (map_getmapflag(sd->bl.m, MF_NOUSECART))
 		return;
-	pc_getitemfromcart(sd,RFIFOW(fd,info->pos[0])-2,RFIFOL(fd,info->pos[1]));
+
+	const PACKET_CZ_MOVE_ITEM_FROM_CART_TO_BODY* p = reinterpret_cast<PACKET_CZ_MOVE_ITEM_FROM_CART_TO_BODY*>( RFIFOP( fd, 0 ) );
+
+	pc_getitemfromcart( sd, server_index( p->index ), p->amount );
 }
 
 
