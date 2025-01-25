@@ -2634,6 +2634,7 @@ static int32 battle_range_type(struct block_list *src, struct block_list *target
 		case MH_THE_ONE_FIGHTER_RISES: // 7 cell cast range.
 		//case ABC_DEFT_STAB: // 2 cell cast range???
 		case NPC_MAXPAIN_ATK:
+		case SKE_STAR_LIGHT_KICK: // 7 cell cast range.
 			return BF_SHORT;
 		case CD_PETITIO: { // Skill range is 2 but damage is melee with books and ranged with mace.
 			map_session_data *sd = BL_CAST(BL_PC, src);
@@ -2999,6 +3000,7 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 			case SHC_ETERNAL_SLASH:
 			case SHC_IMPACT_CRATER:
 			case SHC_CROSS_SLASH:
+			case SKE_SKY_SUN:
 				cri /= 2;
 				break;
 			case WH_GALESTORM:
@@ -6470,6 +6472,24 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 		case SKE_RISING_SUN:
 			skillratio += -100 + 500 + 600 * skill_lv;
 			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 5 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+			RE_LVL_DMOD(100);
+			break;
+		case SKE_SKY_SUN:
+			skillratio += -100 + 1500 * skill_lv;
+			skillratio += skill_lv * 7 * pc_checkskill( sd, SKE_SKY_MASTERY );
+			skillratio += 5 * sstatus->pow;
+			RE_LVL_DMOD(100);
+			break;
+		case SKE_SKY_MOON:
+			skillratio += -100 + 1200 + 450 * skill_lv;
+			skillratio += skill_lv * 9 * pc_checkskill( sd, SKE_SKY_MASTERY );
+			skillratio += 5 * sstatus->pow;
+			RE_LVL_DMOD(100);
+			break;
+		case SKE_STAR_LIGHT_KICK:
+			skillratio += -100 + 400 + 200 * skill_lv;
+			skillratio += skill_lv * 5 * pc_checkskill( sd, SKE_SKY_MASTERY );
 			skillratio += 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
