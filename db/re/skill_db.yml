@@ -45018,6 +45018,36 @@ Body:
         - Level: 5
           Amount: 78
     Status: WeaponBlock_On
+  - Id: 6519
+    Name: IQ_BLAZING_FLAME_BLAST
+    Description: Blazing Flame Blast
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Critical: true
+    Range: 7
+    Hit: Multi_Hit
+    HitCount: -7
+    Element: Weapon
+    GiveAp: 2
+    CastCancel: true
+    FixedCastTime: 1000
+    AfterCastActDelay: 500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 54
+        - Level: 2
+          Amount: 58
+        - Level: 3
+          Amount: 62
+        - Level: 4
+          Amount: 66
+        - Level: 5
+          Amount: 68
+      Status:
+        Explosionspirits: true
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch

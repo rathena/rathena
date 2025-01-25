@@ -7704,6 +7704,11 @@ Body:
         Requires:
           - Name: IQ_JUDGE
             Level: 1
+      - Name: IQ_BLAZING_FLAME_BLAST
+        MaxLevel: 5
+        Requires:
+          - Name: IQ_MASSIVE_F_BLASTER
+            Level: 7
   - Job: Troubadour
     Inherit:
       Novice: true
