@@ -14768,7 +14768,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 				splash += 2;
 		}
 		map_foreachinallarea(skill_area_sub,src->m, x - splash, y - splash, x + splash, y + splash, BL_CHAR,src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1,skill_castend_damage_id);
-		break;
+		} break;
 
 	default:
 		ShowWarning("skill_castend_pos2: Unknown skill used:%d\n",skill_id);
