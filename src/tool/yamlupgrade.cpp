@@ -75,7 +75,7 @@ bool process(const std::string &type, uint32 version, const std::vector<std::str
 	return true;
 }
 
-bool YamlUpgradeTool::initialize( int argc, char* argv[] ){
+bool YamlUpgradeTool::initialize( int32 argc, char* argv[] ){
 	const std::string path_db = std::string(db_path);
 	const std::string path_db_mode = path_db + "/" + DBPATH;
 	const std::string path_db_import = path_db + "/" + DBIMPORT;
@@ -145,7 +145,7 @@ bool YamlUpgradeTool::initialize( int argc, char* argv[] ){
 		} ) ){
 		return false;
 	}
-	if( !process( "ITEM_GROUP_DB", 3, root_paths, "item_group_db", []( const std::string& path, const std::string& name_ext, uint32 source_version ) -> bool {
+	if( !process( "ITEM_GROUP_DB", 4, root_paths, "item_group_db", []( const std::string& path, const std::string& name_ext, uint32 source_version ) -> bool {
 		return upgrade_item_group_db( path + name_ext, source_version );
 		} ) ){
 		return false;
@@ -405,7 +405,7 @@ static bool upgrade_enchantgrade_db( std::string file, const uint32 source_versi
 
 							auto chancesNode = gradeNode["Chances"];
 
-							for( int i = refine, j = 0; i <= MAX_REFINE; i++, j++ ){
+							for( int32 i = refine, j = 0; i <= MAX_REFINE; i++, j++ ){
 								auto chanceNode = chancesNode[j];
 
 								chanceNode["Refine"] = i;
@@ -436,8 +436,7 @@ static bool upgrade_item_group_db( std::string file, const uint32 source_version
 	size_t entries = 0;
 
 	for( const auto input : inNode["Body"] ){
-		// If under version 3
-		if( source_version < 3 ){
+		if( source_version < 4 ){
 			body << YAML::BeginMap;
 			body << YAML::Key << "Group" << YAML::Value << input["Group"];
 
@@ -447,9 +446,18 @@ static bool upgrade_item_group_db( std::string file, const uint32 source_version
 
 				for (const auto &it : input["SubGroups"]) {
 					body << YAML::BeginMap;
-					if( it["SubGroup"].IsDefined() ){
-						body << YAML::Key << "SubGroup" << YAML::Value << it["SubGroup"];
+					if( !it["SubGroup"].IsDefined() ){
+						ShowError( "Cannot upgrade automatically, SubGroup is missing." );
+						return false;
 					}
+					body << YAML::Key << "SubGroup" << YAML::Value << it["SubGroup"];
+
+					if (it["SubGroup"].as<uint16>() == 0)
+						body << YAML::Key << "Algorithm" << YAML::Value << "All";
+					else if (it["SubGroup"].as<uint16>() == 6)
+						body << YAML::Key << "Algorithm" << YAML::Value << "Random";
+					// else
+						// body << YAML::Key << "Algorithm" << YAML::Value << "SharedPool";
 
 					if( it["List"].IsDefined() )
 						body << YAML::Key << "List";{
@@ -517,6 +525,6 @@ static bool upgrade_item_group_db( std::string file, const uint32 source_version
 }
 
 
-int main( int argc, char *argv[] ){
+int32 main( int32 argc, char *argv[] ){
 	return main_core<YamlUpgradeTool>( argc, argv );
 }

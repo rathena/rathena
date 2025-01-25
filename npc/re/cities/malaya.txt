@@ -81,7 +81,7 @@ malaya,276,55,4	script	Optamara Crew#malaya	100,{
 		mes "[Optamara Crew]";
 		mes "Great! Let's leave now for Alberta!!";
 		close2;
-		warp "alberta",239,68;
+		warp "alberta",192,217;
 		end;
 	case 2:
 		mes "[Optamara Crew]";

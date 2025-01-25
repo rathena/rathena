@@ -8,6 +8,7 @@
 # - Group                      Group name of the item.
 #   SubGroups:
 #     - SubGroup:              SubGroup number associated with the list of item. See doc/item_group.txt for more information.
+#       Algorithm:             Type of algorithm associated with SubGroup. (Default: SharedPool)
 #       List:                  List of item(s) for the SubGroup.
 #        - Index               Unique number that can be used to add the same Item with different data in the list.
 #          Item                AegisName of item that will be obtained from this item group.

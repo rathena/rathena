@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20221216
+//= 20241109
 //===== Description: =========================================
 //= Explanation of the status.yml file and structure.
 //============================================================
@@ -282,6 +282,11 @@ EndReturn: List of status that will end if the status activates and it won't giv
 ---------------------------------------
 
 EndOnEnd: List of status that will end when the status becomes inactive.
+
+---------------------------------------
+
+Script:	Script to execute, when starting the status change. When this is set all battle relevant status will be recalculated, after
+		executing the script. Scripted status changes can only be started on players.
 
 ---------------------------------------
 

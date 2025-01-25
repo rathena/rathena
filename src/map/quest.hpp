@@ -70,17 +70,17 @@ public:
 
 extern QuestDatabase quest_db;
 
-int quest_pc_login(map_session_data *sd);
+int32 quest_pc_login(map_session_data *sd);
 
-int quest_add(map_session_data *sd, int quest_id);
-int quest_delete(map_session_data *sd, int quest_id);
-int quest_change(map_session_data *sd, int qid1, int qid2);
-int quest_update_objective_sub(struct block_list *bl, va_list ap);
+int32 quest_add(map_session_data *sd, int32 quest_id);
+int32 quest_delete(map_session_data *sd, int32 quest_id);
+int32 quest_change(map_session_data *sd, int32 qid1, int32 qid2);
+int32 quest_update_objective_sub(struct block_list *bl, va_list ap);
 void quest_update_objective(map_session_data *sd, struct mob_data* md);
-int quest_update_status(map_session_data *sd, int quest_id, e_quest_state status);
-int quest_check(map_session_data *sd, int quest_id, e_quest_check_type type);
+int32 quest_update_status(map_session_data *sd, int32 quest_id, e_quest_state status);
+int32 quest_check(map_session_data *sd, int32 quest_id, e_quest_check_type type);
 
-std::shared_ptr<s_quest_db> quest_search(int quest_id);
+std::shared_ptr<s_quest_db> quest_search(int32 quest_id);
 
 void do_init_quest(void);
 void do_final_quest(void);
