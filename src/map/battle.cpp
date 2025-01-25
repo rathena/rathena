@@ -6288,7 +6288,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case NW_MIDNIGHT_FALLEN:
 			skillratio += -100 + 2400 + 800 * skill_lv;
 			if (sc && sc->getSCE(SC_HIDDEN_CARD)) {
-				if (sd) {
+				if (sd != nullptr) {
 					if (sd->weapontype1 == W_GATLING)
 						skillratio += 200 * skill_lv;
 					else if (sd->weapontype1 == W_GRENADE)
