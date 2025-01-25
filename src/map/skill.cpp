@@ -14759,8 +14759,8 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			skill_addtimerskill(src, tick + (t_tick)i*skill_get_unit_interval(skill_id), 0, x, y, skill_id, skill_lv, 0, flag);
 		}
 		break;
-	case NW_MIDNIGHT_FALLEN:
-		i = skill_get_splash(skill_id, skill_lv);
+	case NW_MIDNIGHT_FALLEN: {
+		int32 splash = skill_get_splash(skill_id, skill_lv);
 		if (sd) {
 			if (sd->status.weapon == W_GATLING)
 				i += 1;
