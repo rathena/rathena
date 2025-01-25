@@ -173,7 +173,7 @@ struct npc_data {
 	struct status_data status;
 	uint32 level,stat_point;
 	struct s_npc_params {
-		unsigned short str, agi, vit, int_, dex, luk;
+		uint16 str, agi, vit, int_, dex, luk;
 	} params;
 
 	void* chatdb; // pointer to a npc_parse struct (see npc_chat.cpp)
@@ -203,7 +203,7 @@ struct npc_data {
 		struct {
 			short xs,ys; // OnTouch area radius
 			short x,y; // destination coords
-			unsigned short mapindex; // destination map
+			uint16 mapindex; // destination map
 		} warp;
 		struct {
 			struct mob_data *md;
@@ -1789,7 +1789,7 @@ static int32 npc_buylist_sub(map_session_data* sd, std::vector<s_npc_buy_list>& 
 uint8 npc_selllist(map_session_data* sd, int32 list_length, const PACKET_CZ_PC_SELL_ITEMLIST_sub* item_list);
 e_purchase_result npc_barter_purchase( map_session_data& sd, std::shared_ptr<s_npc_barter> barter, std::vector<s_barter_purchase>& purchases );
 void npc_parse_mob2(struct spawn_data* mob);
-struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short from_y, short xs, short ys, unsigned short to_mapindex, short to_x, short to_y);
+struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short from_y, short xs, short ys, uint16 to_mapindex, short to_x, short to_y);
 int32 npc_globalmessage(const char* name,const char* mes);
 const char *npc_get_script_event_name(int32 npce_index);
 npc_data* npc_duplicate_npc( npc_data& nd, char name[NPC_NAME_LENGTH + 1], int16 mapid, int16 x, int16 y, int32 class_, uint8 dir, int16 xs, int16 ys, map_session_data* owner = nullptr );

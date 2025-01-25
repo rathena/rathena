@@ -126,8 +126,8 @@ bool mapif_homunculus_save(struct s_homunculus* hd)
 
 			for (uint16 i = 0; i < MAX_HOMUNSKILL; ++i) {
 				if (hd->hskill[i].id > 0 && hd->hskill[i].lv != 0) {
-					if (SQL_ERROR == stmt.BindParam(0, SQLDT_USHORT, &hd->hskill[i].id, 0)
-						|| SQL_ERROR == stmt.BindParam(1, SQLDT_USHORT, &hd->hskill[i].lv, 0)
+					if (SQL_ERROR == stmt.BindParam(0, SQLDT_UINT16, &hd->hskill[i].id, 0)
+						|| SQL_ERROR == stmt.BindParam(1, SQLDT_UINT16, &hd->hskill[i].lv, 0)
 						|| SQL_ERROR == stmt.Execute()) {
 						SqlStmt_ShowDebug(stmt);
 						return false;
@@ -150,7 +150,7 @@ bool mapif_homunculus_save(struct s_homunculus* hd)
 					continue;
 				}
 
-				if (SQL_ERROR == stmt.BindParam(0, SQLDT_USHORT, &hd->scd[i].skill_id, 0)
+				if (SQL_ERROR == stmt.BindParam(0, SQLDT_UINT16, &hd->scd[i].skill_id, 0)
 					|| SQL_ERROR == stmt.BindParam(1, SQLDT_LONGLONG, &hd->scd[i].tick, 0)
 					|| SQL_ERROR == stmt.Execute()) {
 					SqlStmt_ShowDebug(stmt);
@@ -235,7 +235,7 @@ bool mapif_homunculus_load(int32 homun_id, struct s_homunculus* hd)
 		if( i < HM_SKILLBASE || i >= HM_SKILLBASE + MAX_HOMUNSKILL )
 			continue;// invalid skill id
 		i = i - HM_SKILLBASE;
-		hd->hskill[i].id = (unsigned short)atoi(data);
+		hd->hskill[i].id = (uint16)atoi(data);
 
 		// lv
 		Sql_GetData(sql_handle, 1, &data, nullptr);
@@ -356,7 +356,7 @@ void mapif_parse_homunculus_rename(int32 fd, uint32 account_id, uint32 char_id, 
  *------------------------------------------*/
 int32 inter_homunculus_parse_frommap(int32 fd)
 {
-	unsigned short cmd = RFIFOW(fd,0);
+	uint16 cmd = RFIFOW(fd,0);
 
 	switch( cmd )
 	{

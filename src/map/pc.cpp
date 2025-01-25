@@ -2520,7 +2520,7 @@ void pc_reg_received(map_session_data *sd)
 	}
 
 	if ((i = pc_checkskill(sd,RG_PLAGIARISM)) > 0) {
-		unsigned short skid = static_cast<unsigned short>(pc_readglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM)));
+		uint16 skid = static_cast<uint16>(pc_readglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM)));
 		sd->cloneskill_idx = skill_get_index(skid);
 		if (sd->cloneskill_idx > 0) {
 			sd->status.skill[sd->cloneskill_idx].id = skid;
@@ -2531,7 +2531,7 @@ void pc_reg_received(map_session_data *sd)
 		}
 	}
 	if ((i = pc_checkskill(sd,SC_REPRODUCE)) > 0) {
-		unsigned short skid = static_cast<unsigned short>(pc_readglobalreg(sd, add_str(SKILL_VAR_REPRODUCE)));
+		uint16 skid = static_cast<uint16>(pc_readglobalreg(sd, add_str(SKILL_VAR_REPRODUCE)));
 		sd->reproduceskill_idx = skill_get_index(skid);
 		if (sd->reproduceskill_idx > 0) {
 			sd->status.skill[sd->reproduceskill_idx].id = skid;
@@ -7004,7 +7004,7 @@ int32 pc_steal_coin(map_session_data *sd,struct block_list *target)
  *			SETPOS_NO_MAPSERVER	Map not in this map-server, and failed to locate alternate map-server.
  *			SETPOS_AUTOTRADE	Player is in autotrade state
  *------------------------------------------*/
-enum e_setpos pc_setpos(map_session_data* sd, unsigned short mapindex, int32 x, int32 y, clr_type clrtype)
+enum e_setpos pc_setpos(map_session_data* sd, uint16 mapindex, int32 x, int32 y, clr_type clrtype)
 {
 	nullpo_retr(SETPOS_OK,sd);
 
@@ -7583,7 +7583,7 @@ bool pc_checkequip2(map_session_data *sd, t_itemid nameid, int32 min, int32 max)
  * Convert's from the client's lame Job ID system
  * to the map server's 'makes sense' system. [Skotlex]
  *------------------------------------------*/
-uint64 pc_jobid2mapid(unsigned short b_class)
+uint64 pc_jobid2mapid(uint16 b_class)
 {
 	switch(b_class)
 	{
@@ -9223,7 +9223,6 @@ void pc_skillup(map_session_data *sd,uint16 skill_id)
 			sd->status.skill[idx].flag == SKILL_FLAG_PERMANENT && //Don't allow raising while you have granted skills. [Skotlex]
 			sd->status.skill[idx].lv < skill_tree_get_max(skill_id, sd->status.class_) )
 		{
-			int32 lv, range, upgradable;
 			sd->status.skill[idx].lv++;
 			sd->status.skill_point--;
 			if( !skill_get_inf(skill_id) || pc_checkskill_summoner(sd, SUMMONER_POWER_LAND) >= 20 || pc_checkskill_summoner(sd, SUMMONER_POWER_SEA) >= 20 )
@@ -9233,10 +9232,10 @@ void pc_skillup(map_session_data *sd,uint16 skill_id)
 			else
 				pc_check_skilltree(sd); // Check if a new skill can Lvlup
 
-			lv = sd->status.skill[idx].lv;
-			range = skill_get_range2(&sd->bl, skill_id, lv, false);
-			upgradable = (lv < skill_tree_get_max(sd->status.skill[idx].id, sd->status.class_)) ? 1 : 0;
-			clif_skillup(sd,skill_id,lv,range,upgradable);
+			uint16 lv = sd->status.skill[idx].lv;
+			int32 range = skill_get_range2(&sd->bl, skill_id, lv, false);
+			bool upgradable = ( lv < skill_tree_get_max( sd->status.skill[idx].id, sd->status.class_ ) );
+			clif_skillup( *sd, skill_id, lv, range, upgradable );
 			clif_updatestatus(*sd,SP_SKILLPOINT);
 			if( skill_id == GN_REMODELING_CART ) /* cart weight info was updated by status_calc_pc */
 				clif_updatestatus(*sd,SP_CARTINFO);
@@ -9983,7 +9982,7 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 		struct pet_data *pd = sd->pd;
 		if( !mapdata->getMapFlag(MF_NOEXPPENALTY) ) {
 			pet_set_intimate(pd, pd->pet.intimate + pd->get_pet_db()->die);
-			clif_send_petdata(sd,sd->pd,1,pd->pet.intimate);
+			clif_send_petdata( sd, *sd->pd, CHANGESTATEPET_INTIMACY );
 		}
 		if( sd->pd->target_id ) // Unlock all targets...
 			pet_unlocktarget(sd->pd);
@@ -11018,7 +11017,7 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 	if (job == -1)
 		return false;
 
-	if ((unsigned short)b_class == sd->class_)
+	if ((uint16)b_class == sd->class_)
 		return false; //Nothing to change.
 
 	// If the job does not exist in the job db, dont allow changing to it
@@ -11070,7 +11069,7 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 	sd->status.class_ = job;
 	fame_flag = pc_famerank(sd->status.char_id,sd->class_&MAPID_UPPERMASK);
 	uint64 previous_class = sd->class_;
-	sd->class_ = (unsigned short)b_class;
+	sd->class_ = (uint16)b_class;
 	sd->status.job_level=1;
 	sd->status.job_exp=0;
 
@@ -15297,7 +15296,7 @@ void pc_itemcd_do(map_session_data *sd, bool load) {
  * @return 0: No delay, can consume item.
  *         1: Has delay, cancel consumption.
  **/
-uint8 pc_itemcd_add(map_session_data *sd, struct item_data *id, t_tick tick, unsigned short n) {
+uint8 pc_itemcd_add(map_session_data *sd, struct item_data *id, t_tick tick, uint16 n) {
 	int32 i;
 	ARR_FIND(0, MAX_ITEMDELAYS, i, sd->item_delay[i].nameid == id->nameid );
 	if( i == MAX_ITEMDELAYS ) /* item not found. try first empty now */
@@ -15343,7 +15342,7 @@ uint8 pc_itemcd_add(map_session_data *sd, struct item_data *id, t_tick tick, uns
  * @return 0: No delay, can consume item.
  *         1: Has delay, cancel consumption.
  **/
-uint8 pc_itemcd_check(map_session_data *sd, struct item_data *id, t_tick tick, unsigned short n) {
+uint8 pc_itemcd_check(map_session_data *sd, struct item_data *id, t_tick tick, uint16 n) {
 	status_change *sc = nullptr;
 
 	nullpo_retr(0, sd);

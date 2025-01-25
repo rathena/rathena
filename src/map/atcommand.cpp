@@ -581,7 +581,7 @@ static void warp_get_suggestions(map_session_data* sd, const char *name) {
 ACMD_FUNC(mapmove)
 {
 	char map_name[MAP_NAME_LENGTH_EXT];
-	unsigned short mapindex;
+	uint16 mapindex;
 	short x = 0, y = 0;
 	int16 m = -1;
 
@@ -3272,7 +3272,7 @@ ACMD_FUNC(petfriendly) {
 	}
 
 	pet_set_intimate(pd, friendly);
-	clif_send_petstatus(sd);
+	clif_send_petstatus( *sd, *pd );
 	clif_displaymessage(fd, msg_txt(sd,182)); // Pet intimacy changed.
 	return 0;
 }
@@ -3306,7 +3306,7 @@ ACMD_FUNC(pethungry)
 	}
 
 	pd->pet.hungry = hungry;
-	clif_send_petstatus(sd);
+	clif_send_petstatus( *sd, *pd );
 	clif_displaymessage(fd, msg_txt(sd,185)); // Pet hunger changed.
 
 	return 0;
@@ -3331,7 +3331,7 @@ ACMD_FUNC(petrename)
 
 	pd->pet.rename_flag = 0;
 	intif_save_petdata(sd->status.account_id, &pd->pet);
-	clif_send_petstatus(sd);
+	clif_send_petstatus( *sd, *pd );
 	clif_displaymessage(fd, msg_txt(sd,187)); // You can now rename your pet.
 
 	return 0;
@@ -4542,7 +4542,7 @@ ACMD_FUNC(mapinfo) {
 	struct chat_data *cd = nullptr;
 	char direction[12];
 	int32 i, m_id, chat_num = 0, list = 0, vend_num = 0;
-	unsigned short m_index;
+	uint16 m_index;
 	char mapname[MAP_NAME_LENGTH];
 
 	nullpo_retr(-1, sd);
@@ -6009,7 +6009,7 @@ ACMD_FUNC(addwarp)
 {
 	char mapname[MAP_NAME_LENGTH_EXT], warpname[NPC_NAME_LENGTH];
 	short x,y;
-	unsigned short m;
+	uint16 m;
 	struct npc_data* nd;
 
 	nullpo_retr(-1, sd);
@@ -6438,13 +6438,13 @@ ACMD_FUNC(displayskill)
 	status_data* status = status_get_status_data(sd->bl);
 	tick = gettick();
 	if (type == 0 || type == 1)
-		clif_skill_damage(&sd->bl, &sd->bl, tick, status->amotion, status->dmotion, 1, 1, skill_id, skill_lv, DMG_SINGLE);
+		clif_skill_damage( sd->bl, sd->bl, tick, status->amotion, status->dmotion, 1, 1, skill_id, skill_lv, DMG_SINGLE );
 	if (type == 0 || type == 2)
-		clif_skill_damage(&sd->bl, &sd->bl, tick, status->amotion, status->dmotion, 1, 1, skill_id, skill_lv, DMG_SPLASH);
+		clif_skill_damage( sd->bl, sd->bl, tick, status->amotion, status->dmotion, 1, 1, skill_id, skill_lv, DMG_SPLASH );
 	if (type == 0 || type == 3)
 		clif_skill_nodamage(&sd->bl, sd->bl, skill_id, skill_lv);
 	if (type == 0 || type == 4)
-		clif_skill_poseffect(&sd->bl, skill_id, skill_lv, sd->bl.x, sd->bl.y, tick);
+		clif_skill_poseffect( sd->bl, skill_id, skill_lv, sd->bl.x, sd->bl.y, tick );
 	return 0;
 }
 
@@ -7574,7 +7574,7 @@ ACMD_FUNC(summon)
 	clif_specialeffect(&md->bl,EF_ENTRY2,AREA);
 	mob_spawn(md);
 	sc_start4(nullptr,&md->bl, SC_MODECHANGE, 100, 1, 0, MD_AGGRESSIVE, 0, 60000);
-	clif_skill_poseffect(&sd->bl,AM_CALLHOMUN,1,md->bl.x,md->bl.y,tick);
+	clif_skill_poseffect( sd->bl, AM_CALLHOMUN, 1, md->bl.x, md->bl.y, tick );
 	clif_displaymessage(fd, msg_txt(sd,39));	// All monster summoned!
 
 	return 0;
@@ -10632,7 +10632,7 @@ ACMD_FUNC(costume) {
 		SC_HANBOK,
 		SC_OKTOBERFEST
 	};
-	unsigned short k = 0, len = ARRAYLENGTH(names);
+	uint16 k = 0, len = ARRAYLENGTH(names);
 
 	if( !message || !*message ) {
 		for( k = 0; k < len; k++ ) {

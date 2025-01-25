@@ -197,7 +197,7 @@ static TIMER_FUNC(guild_send_xy_timer);
 
 /* guild flags cache */
 struct npc_data **guild_flags;
-unsigned short guild_flags_count;
+uint16 guild_flags_count;
 
 /**
  * Get guild skill index in guild structure of mmo.hpp
@@ -1760,9 +1760,9 @@ int32 guild_skillupack(int32 guild_id,uint16 skill_id,uint32 account_id) {
 	if (g == nullptr || idx == -1)
 		return 0;
 	if (sd != nullptr) {
-		int32 lv = g->guild.skill[idx].lv;
+		uint16 lv = g->guild.skill[idx].lv;
 		int32 range = skill_get_range(skill_id, lv);
-		clif_skillup(sd,skill_id,lv,range,1);
+		clif_skillup( *sd, skill_id,lv, range, true );
 
 		/* Guild Aura handling */
 		switch( skill_id ) {

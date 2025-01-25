@@ -1052,7 +1052,7 @@ bool unit_run(struct block_list *bl, map_session_data *sd, enum sc_type type)
 t_tick unit_get_walkpath_time(struct block_list& bl)
 {
 	t_tick time = 0;
-	unsigned short speed = status_get_speed(&bl);
+	uint16 speed = status_get_speed(&bl);
 	struct unit_data* ud = unit_bl2ud(&bl);
 
 	// The next walk start time is calculated.
