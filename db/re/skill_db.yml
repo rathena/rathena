@@ -45057,8 +45057,6 @@ Body:
         - Level: 5
           Amount: 75
       ApCost: 5
-      Weapon:
-        Bow: true
       State: Falcon
     Status: Wild_Walk
   - Id: 8001
