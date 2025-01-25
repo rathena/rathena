@@ -42709,7 +42709,7 @@ Body:
     AfterCastActDelay: 1000
     Cooldown: 750
     CastCancel: true
-    FixedCastTime: 1000
+    FixedCastTime: 1000    # TODO
     Requires:
       SpCost:
         - Level: 1
