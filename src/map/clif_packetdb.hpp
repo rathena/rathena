@@ -84,7 +84,7 @@
 	parseable_packet(0x00d3,2,clif_parse_PMIgnoreList,0);
 	packet(0x00d4,-1);
 	parseable_packet( HEADER_CZ_CREATE_CHATROOM, -1, clif_parse_CreateChatRoom, 0 );
-	parseable_packet(0x00d9,14,clif_parse_ChatAddMember,2,6);
+	parseable_packet( HEADER_CZ_REQ_ENTER_ROOM, sizeof( PACKET_CZ_REQ_ENTER_ROOM ), clif_parse_ChatAddMember, 0 );
 	parseable_packet(0x00de,-1,clif_parse_ChatRoomStatusChange,2,4,6,7,15);
 	parseable_packet(0x00e0,30,clif_parse_ChangeChatOwner,2,6);
 	parseable_packet(0x00e2,26,clif_parse_KickFromChat,2);
