@@ -14761,7 +14761,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		break;
 	case NW_MIDNIGHT_FALLEN: {
 		int32 splash = skill_get_splash(skill_id, skill_lv);
-		if (sd) {
+		if (sd != nullptr) {
 			if (sd->status.weapon == W_GATLING)
 				i += 1;
 			else if (sd->status.weapon == W_GRENADE)
