@@ -5088,10 +5088,12 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 				clif_specialeffect_single(bl,EF_BABYBODY2,sd->fd);
 #if PACKETVER >= 20120404
 			if (battle_config.monster_hp_bars_info && !map_getmapflag(bl->m, MF_HIDEMOBHPBAR)) {
-				int32 i;
-				for(i = 0; i < DAMAGELOG_SIZE; i++)// must show hp bar to all char who already hit the mob.
-					if( md->dmglog[i].id == sd->status.char_id )
+				// Must show hp bar to all char who already hit the mob.
+				for( const auto& entry : md->dmglog ){
+					if( entry.id == sd->status.char_id ){
 						clif_monster_hp_bar(md, sd->fd);
+					}
+				}
 			}
 #endif
 		}
@@ -5371,22 +5373,20 @@ void clif_getareachar_item( map_session_data& sd, flooritem_data& fitem ){
 
 /// Notifes client about Graffiti
 /// 01c9 <id>.L <creator id>.L <x>.W <y>.W <unit id>.B <visible>.B <has msg>.B <msg>.80B (ZC_SKILL_ENTRY2)
-static void clif_graffiti(struct block_list *bl, struct skill_unit *unit, enum send_target target) {
-	unsigned char buf[128];
-	
-	nullpo_retv(bl);
-	nullpo_retv(unit);
+static void clif_graffiti( skill_unit& unit, send_target target, block_list& bl ){
+	packet_graffiti_entry p = {};
 
-	WBUFW(buf, 0) = 0x1c9;
-	WBUFL(buf, 2) = unit->bl.id;
-	WBUFL(buf, 6) = unit->group->src_id;
-	WBUFW(buf,10) = unit->bl.x;
-	WBUFW(buf,12) = unit->bl.y;
-	WBUFB(buf,14) = unit->group->unit_id;
-	WBUFB(buf,15) = 1;
-	WBUFB(buf,16) = 1;
-	safestrncpy(WBUFCP(buf,17),unit->group->valstr,MESSAGE_SIZE);
-	clif_send(buf,packet_len(0x1c9),bl,target);
+	p.PacketType = graffiti_entryType;
+	p.AID = unit.bl.id;
+	p.creatorAID = unit.group->src_id;
+	p.xPos = unit.bl.x;
+	p.yPos = unit.bl.y;
+	p.job = unit.group->unit_id;
+	p.isContens = 1;
+	p.isVisible = 1;
+	safestrncpy( p.msg, unit.group->valstr, sizeof( p.msg ) );
+
+	clif_send( &p, sizeof( p ), &bl, target );
 }
 
 /// Notifies the client of a skill unit.
@@ -5419,7 +5419,7 @@ void clif_getareachar_skillunit(struct block_list *bl, struct skill_unit *unit, 
 
 #if PACKETVER >= 3
 	if (unit_id == UNT_GRAFFITI) { // Graffiti [Valaris]
-		clif_graffiti(bl, unit, target);
+		clif_graffiti( *unit, target, *bl );
 		return;
 	}
 #endif
@@ -12331,39 +12331,43 @@ void clif_parse_CreateChatRoom( int32 fd, map_session_data* sd){
 }
 
 
-/// Chatroom join request (CZ_REQ_ENTER_ROOM).
-/// 00d9 <chat ID>.L <passwd>.8B
+/// Chatroom join request.
+/// 00d9 <chat ID>.L <passwd>.8B (CZ_REQ_ENTER_ROOM)
 void clif_parse_ChatAddMember(int32 fd, map_session_data* sd){
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	int32 chatid = RFIFOL(fd,info->pos[0]);
-	const char* password = RFIFOCP(fd,info->pos[1]); // not zero-terminated
+	if( sd == nullptr ){
+		return;
+	}
 
-	chat_joinchat(sd,chatid,password);
+	const PACKET_CZ_REQ_ENTER_ROOM* p = reinterpret_cast<PACKET_CZ_REQ_ENTER_ROOM*>( RFIFOP( fd, 0 ) );
+
+	chat_joinchat( sd, p->chat_id, p->password );
 }
 
 
-/// Chatroom properties adjustment request (CZ_CHANGE_CHATROOM).
-/// 00de <packet len>.W <limit>.W <type>.B <passwd>.8B <title>.?B
+/// Chatroom properties adjustment request.
+/// 00de <packet len>.W <limit>.W <type>.B <passwd>.8B <title>.?B (CZ_CHANGE_CHATROOM)
 /// type:
 ///     0 = private
 ///     1 = public
 void clif_parse_ChatRoomStatusChange(int32 fd, map_session_data* sd){
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	int32 len = RFIFOW(fd,info->pos[0])-15;
-	int32 limit = RFIFOW(fd,info->pos[1]);
-	bool pub = (RFIFOB(fd,info->pos[2]) != 0);
-	const char* password = RFIFOCP(fd,info->pos[3]); // not zero-terminated
-	const char* title = RFIFOCP(fd,info->pos[4]); // not zero-terminated
-	char s_password[CHATROOM_PASS_SIZE];
-	char s_title[CHATROOM_TITLE_SIZE];
+	if( sd == nullptr ){
+		return;
+	}
+
+	const PACKET_CZ_CHANGE_CHATROOM* p = reinterpret_cast<PACKET_CZ_CHANGE_CHATROOM*>( RFIFOP( fd, 0 ) );
+	size_t len = p->packetSize - sizeof( *p );
 
 	if( len <= 0 )
 		return; // invalid input
 
-	safestrncpy(s_password, password, CHATROOM_PASS_SIZE);
-	safestrncpy(s_title, title, min(len+1,CHATROOM_TITLE_SIZE)); //NOTE: assumes that safestrncpy will not access the len+1'th byte
+	char s_password[CHATROOM_PASS_SIZE];
+	char s_title[CHATROOM_TITLE_SIZE];
 
-	chat_changechatstatus(sd, s_title, s_password, limit, pub);
+	safestrncpy( s_password, p->password, sizeof( s_password ) );
+	// NOTE: assumes that safestrncpy will not access the len+1'th byte
+	safestrncpy( s_title, p->title, min( len + 1, CHATROOM_TITLE_SIZE ) );
+
+	chat_changechatstatus( sd, s_title, s_password, p->limit, p->type );
 }
 
 
