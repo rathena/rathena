@@ -13060,28 +13060,35 @@ void clif_parse_UseSkillToPosMoreInfo(int32 fd, map_session_data *sd)
 }
 
 
-/// Answer to map selection dialog (CZ_SELECT_WARPPOINT).
-/// 011b <skill id>.W <map name>.16B
+/// Answer to map selection dialog.
+/// 011b <skill id>.W <map name>.16B (CZ_SELECT_WARPPOINT)
 void clif_parse_UseSkillMap(int32 fd, map_session_data* sd)
 {
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	uint16 skill_id = RFIFOW(fd,info->pos[0]);
-	char map_name[MAP_NAME_LENGTH];
+	if( sd == nullptr ){
+		return;
+	}
 
-	mapindex_getmapname(RFIFOCP(fd,info->pos[1]), map_name);
 	sd->state.workinprogress = WIP_DISABLE_NONE;
 
-	if(skill_id != sd->menuskill_id)
+	const PACKET_CZ_SELECT_WARPPOINT* p = reinterpret_cast<PACKET_CZ_SELECT_WARPPOINT*>( RFIFOP( fd, 0 ) );
+
+	if( p->skill_id != sd->menuskill_id ){
 		return;
+	}
 
 	//It is possible to use teleport with the storage window open bugreport:8027
-	if (pc_cant_act(sd) && !sd->state.storage_flag && skill_id != AL_TELEPORT) {
+	if( pc_cant_act( sd ) && !sd->state.storage_flag && p->skill_id != AL_TELEPORT ){
 		clif_menuskill_clear(sd);
 		return;
 	}
 
 	pc_delinvincibletimer(sd);
-	skill_castend_map(sd,skill_id,map_name);
+
+	char map_name[MAP_NAME_LENGTH];
+
+	mapindex_getmapname( p->mapname, map_name );
+
+	skill_castend_map( sd, p->skill_id, map_name );
 }
 
 
