@@ -42707,7 +42707,7 @@ Body:
         Area: 3
     GiveAp: 2
     AfterCastActDelay: 1000
-    Cooldown: 500
+    Cooldown: 750
     CastCancel: true
     FixedCastTime: 1000
     Requires:
