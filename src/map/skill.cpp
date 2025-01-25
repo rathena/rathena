@@ -10721,6 +10721,17 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			sc_start(src,src,SC_SMA,100,skill_lv,skill_get_time(SL_SMA,skill_lv));
 		break;
 
+	case AG_ENERGY_CONVERSION:
+	{
+		// Calculate SP gain: 40 * skill_lv * (skill_lv + 1) / 2
+		int sp = (skill_lv * (skill_lv + 1) / 2) * 40;
+
+		// Apply the SP gain to the caster
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+		status_heal(bl, 0, sp, 1);
+	}
+	break;
+
 	// New guild skills [Celest]
 	case GD_BATTLEORDER:
 	case GD_REGENERATION:
