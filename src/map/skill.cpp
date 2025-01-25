@@ -5728,6 +5728,7 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 	case CD_ARBITRIUM_ATK:
 	case CD_PETITIO:
 	case CD_FRAMEN:
+	case CD_DIVINUS_FLOS:
 	case SHC_DANCING_KNIFE:
 	case SHC_SAVAGE_IMPACT:
 	case SHC_IMPACT_CRATER:
@@ -5920,6 +5921,7 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 				case IG_RADIANT_SPEAR:
 				case CD_PETITIO:
 				case CD_FRAMEN:
+				case CD_DIVINUS_FLOS:
 				case MT_POWERFUL_SWING:
 				case MT_ENERGY_CANNONADE:
 				case BO_DUST_EXPLOSION:

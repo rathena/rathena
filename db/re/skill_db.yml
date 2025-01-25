@@ -45018,6 +45018,36 @@ Body:
         - Level: 5
           Amount: 78
     Status: WeaponBlock_On
+  - Id: 6518
+    Name: CD_DIVINUS_FLOS
+    Description: Divinus Flos
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: 5
+    Element: Holy
+    SplashArea: 3
+    GiveAp: 2
+    CastCancel: true
+    FixedCastTime: 1500
+    AfterCastActDelay: 500
+    Cooldown: 2500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 99
+        - Level: 2
+          Amount: 103
+        - Level: 3
+          Amount: 107
+        - Level: 4
+          Amount: 111
+        - Level: 5
+          Amount: 115
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch
