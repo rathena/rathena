@@ -13213,37 +13213,39 @@ void clif_parse_WeaponRefine( int32 fd, map_session_data *sd ){
 }
 
 
-/// Answer to script menu dialog (CZ_CHOOSE_MENU).
-/// 00b8 <npc id>.L <choice>.B
+/// Answer to script menu dialog.
+/// 00b8 <npc id>.L <choice>.B (CZ_CHOOSE_MENU)
 /// choice:
 ///     1~254 = menu item
 ///     255   = cancel
 /// NOTE: If there were more than 254 items in the list, choice
 ///     overflows to choice%256.
 void clif_parse_NpcSelectMenu(int32 fd,map_session_data *sd){
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	int32 npc_id = RFIFOL(fd,info->pos[0]);
-	uint8 select = RFIFOB(fd,info->pos[1]);
+	if( sd == nullptr ){
+		return;
+	}
 
 #ifdef SECURE_NPCTIMEOUT
 	if( sd->npc_idle_timer == INVALID_TIMER && !sd->state.ignoretimeout )
 		return;
 #endif
 
-	if( (select > sd->npc_menu && select != 0xff) || select == 0 ) {
-			TBL_NPC* nd = map_id2nd(npc_id);
-			ShowWarning("Invalid menu selection on npc %d:'%s' - got %d, valid range is [%d..%d] (player AID:%d, CID:%d, name:'%s')!\n", npc_id, (nd)?nd->name:"invalid npc id", select, 1, sd->npc_menu, sd->bl.id, sd->status.char_id, sd->status.name);
+	const PACKET_CZ_CHOOSE_MENU* p = reinterpret_cast<PACKET_CZ_CHOOSE_MENU*>( RFIFOP( fd, 0 ) );
+
+	if( ( p->choice > sd->npc_menu && p->choice != 0xff ) || p->choice == 0 ){
+			npc_data* nd = map_id2nd( p->GID );
+			ShowWarning( "Invalid menu selection on npc %d:'%s' - got %d, valid range is [%d..%d] (player AID:%d, CID:%d, name:'%s')!\n", p->GID, ( nd != nullptr ) ? nd->name : "invalid npc id", select, 1, sd->npc_menu, sd->bl.id, sd->status.char_id, sd->status.name );
 			clif_GM_kick(nullptr,sd);
 		return;
 	}
 
-	sd->npc_menu = select;
+	sd->npc_menu = p->choice;
 
 	if( battle_config.idletime_option&IDLE_NPC_MENU ){
 		sd->idletime = last_tick;
 	}
 
-	npc_scriptcont(sd,npc_id, false);
+	npc_scriptcont( sd, p->GID, false );
 }
 
 
