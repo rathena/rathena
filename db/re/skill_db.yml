@@ -45018,6 +45018,44 @@ Body:
         - Level: 5
           Amount: 78
     Status: WeaponBlock_On
+  - Id: 6517
+    Name: EM_PSYCHIC_STREAM
+    Description: Psychic Stream
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: 5
+    Element: Neutral
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
+    CastCancel: true
+    FixedCastTime: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 77
+        - Level: 2
+          Amount: 84
+        - Level: 3
+          Amount: 91
+        - Level: 4
+          Amount: 98
+        - Level: 5
+          Amount: 105
+      ApCost: 5
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch
