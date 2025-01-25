@@ -14765,7 +14765,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			if (sd->status.weapon == W_GATLING)
 				splash += 1;
 			else if (sd->status.weapon == W_GRENADE)
-				i += 2;
+				splash += 2;
 		}
 		map_foreachinallarea(skill_area_sub,src->m, x - i, y - i, x + i, y + i, BL_CHAR,src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1,skill_castend_damage_id);
 		break;
