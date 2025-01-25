@@ -6743,9 +6743,11 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		uint8 dir = DIR_NORTHEAST;
 
 		// Calculate distance between the player and target
-		int distance = (int) sqrt(pow(src->x - bl->x, 2) + pow(src->y - bl->y, 2));
-		int base_backslide = skill_lv;	// Number of cells to move back based on skill level
-		int total_backslide = base_backslide + distance;	// Total backslide = base backslide + distance between player and target
+		int32 distance = distance_bl(src, bl);
+		// Number of cells to move back based on skill level
+		int32 base_backslide = skill_lv;
+		// Total backslide = base backslide + distance between player and target
+		int32 total_backslide = base_backslide + distance;
 
 		if (bl->x != src->x || bl->y != src->y)
 			dir = map_calc_dir(bl, src->x, src->y);
@@ -6755,10 +6757,9 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			unit_setdir(src, map_calc_dir(src, bl->x, bl->y)); // Set the player's direction to face the target
 			skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
 		} else { //Is this the right behavior? [Haydrich]
-			if (sd)
+			if (sd != nullptr)
 				clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
 		}
-		break;
 
 		// Trigger skill animation
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv, 1);
