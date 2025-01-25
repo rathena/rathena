@@ -5981,7 +5981,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		if (flag & 1) {
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		} else {
-			int splash = skill_get_splash(skill_id, skill_lv);
+			int32 splash = skill_get_splash(skill_id, skill_lv);
 
 			if (sd && sd->weapontype1 == W_RIFLE)
 				splash += 1;
