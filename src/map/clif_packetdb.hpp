@@ -229,7 +229,6 @@
 	packet(0x01c3,-1);
 	packet(0x01c6,4);
 	packet(0x01c7,2);
-	packet(0x01c9,97);
 	packet(0x01cb,9);
 	packet(0x01cc,9);
 	parseable_packet(0x01ce,6,clif_parse_AutoSpell,2);
