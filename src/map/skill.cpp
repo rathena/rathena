@@ -8005,7 +8005,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 	case SU_GROOMING:
 	case SU_CHATTERING:
 	case ALL_RAY_OF_PROTECTION:
-	case HN_OVERCOMING_CRISIS:
 		clif_skill_nodamage(bl,*bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
@@ -10721,6 +10720,15 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		if (skill_id == SL_SKE)
 			sc_start(src,src,SC_SMA,100,skill_lv,skill_get_time(SL_SMA,skill_lv));
 		break;
+
+	case HN_OVERCOMING_CRISIS:
+	{
+		int hp = skill_lv * 15000;
+
+		clif_skill_nodamage(bl,bl,skill_id,skill_lv,sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
+		status_heal(bl, hp, 0, 1);
+	}
+	break;
 
 	// New guild skills [Celest]
 	case GD_BATTLEORDER:
