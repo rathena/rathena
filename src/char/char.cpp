@@ -1118,7 +1118,7 @@ int32 char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_
 	||	SQL_ERROR == stmt.BindColumn(73, SQLDT_UINT8,  &p->body_direction, 0, nullptr, nullptr)
 	||	SQL_ERROR == stmt.BindColumn(74, SQLDT_UINT8,	&p->disable_call, 0, nullptr, nullptr)
 	||	SQL_ERROR == stmt.BindColumn(75, SQLDT_INT32,    &p->last_point_instanceid, 0, nullptr, nullptr)
-	||	SQL_ERROR == stmt.BindColumn(77, SQLDT_UINT8,	&p->disable_partyinvite, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(76, SQLDT_UINT8,	&p->disable_partyinvite, 0, nullptr, nullptr)
 	)
 	{
 		SqlStmt_ShowDebug(stmt);
