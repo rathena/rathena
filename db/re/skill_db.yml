@@ -45018,6 +45018,49 @@ Body:
         - Level: 5
           Amount: 78
     Status: WeaponBlock_On
+  - Id: 6520
+    Name: WH_WILD_WALK
+    Description: Wild Walk
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Critical: true
+    Flags:
+      AllowOnWarg: true
+    Range: 11
+    Hit: Multi_Hit
+    HitCount: -3
+    CastCancel: true
+    FixedCastTime: 50
+    Duration1:
+      - Level: 1
+        Time: 6000
+      - Level: 2
+        Time: 9000
+      - Level: 3
+        Time: 12000
+      - Level: 4
+        Time: 15000
+      - Level: 5
+        Time: 18000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 63
+        - Level: 2
+          Amount: 66
+        - Level: 3
+          Amount: 69
+        - Level: 4
+          Amount: 72
+        - Level: 5
+          Amount: 75
+      ApCost: 5
+      Weapon:
+        Bow: true
+      State: Falcon
+    Status: Wild_Walk
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch

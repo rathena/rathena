@@ -6138,6 +6138,14 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			RE_LVL_DMOD(100);
 			skillratio += skillratio * (20 * (sd ? pc_checkskill(sd, WH_ADVANCED_TRAP) : 5)) / 100;
 			break;
+		case WH_WILD_WALK:
+			skillratio += -100 + 1800 + 2800 * skill_lv + 5 * sstatus->con;
+			if (sd != nullptr) {
+				skillratio += skillratio * pc_checkskill(sd, WH_NATUREFRIENDLY) / 10;
+				skillratio += skillratio * pc_checkskill(sd, HT_STEELCROW) / 10;
+			}
+			RE_LVL_DMOD(100);
+			break;
 		case BO_ACIDIFIED_ZONE_WATER:
 		case BO_ACIDIFIED_ZONE_GROUND:
 		case BO_ACIDIFIED_ZONE_WIND:
