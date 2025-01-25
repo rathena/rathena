@@ -42753,10 +42753,10 @@ Body:
       - Level: 5
         Area: 3
     GiveAp: 2
-    AfterCastActDelay: 1000
-    Cooldown: 500
+    AfterCastActDelay: 800
+    Cooldown: 700
     CastCancel: true
-    FixedCastTime: 1000
+    FixedCastTime: 1000    # TODO
     Requires:
       SpCost:
         - Level: 1
