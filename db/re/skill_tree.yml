@@ -8298,6 +8298,20 @@ Body:
             Level: 1
           - Name: SH_MYSTICAL_CREATURE_MASTERY
             Level: 10
+      - Name: SH_CHUL_HO_BATTERING
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 7
+          - Name: SH_CHUL_HO_SONIC_CLAW
+            Level: 5
+      - Name: SH_HYUN_ROK_SPIRIT_POWER
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 7
+          - Name: SH_HYUN_ROKS_BREEZE
+            Level: 5
   - Job: Sky_Emperor
     Inherit:
       Novice: true

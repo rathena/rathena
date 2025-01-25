@@ -2999,6 +2999,7 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 			case SHC_ETERNAL_SLASH:
 			case SHC_IMPACT_CRATER:
 			case SHC_CROSS_SLASH:
+			case SH_CHUL_HO_BATTERING:
 				cri /= 2;
 				break;
 			case WH_GALESTORM:
@@ -3613,6 +3614,7 @@ int32 battle_get_magic_element(struct block_list* src, struct block_list* target
 		case SU_CN_METEOR2:
 		case SH_HYUN_ROKS_BREEZE:
 		case SH_HYUN_ROK_CANNON:
+		case SH_HYUN_ROK_SPIRIT_POWER:
 			if( sc != nullptr && sc->count > 0 ){
 				if( sc->getSCE( SC_COLORS_OF_HYUN_ROK_1 ) != nullptr ){
 					element = ELE_WATER;
@@ -6394,6 +6396,12 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			}
 			RE_LVL_DMOD(100);
 			break;
+		case SH_CHUL_HO_BATTERING:
+			skillratio += -100 + 480 + 160 * skill_lv;
+			skillratio += 70 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
+			skillratio += 5 * sstatus->pow;
+			RE_LVL_DMOD(100);
+			break;
 		case SKE_MIDNIGHT_KICK:
 			skillratio += -100 + 800 + 1500  * skill_lv;
 			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 5 * skill_lv;
@@ -9056,6 +9064,12 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 							skillratio += 400 * skill_lv;
 							skillratio += 25 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
 						}
+						RE_LVL_DMOD(100);
+						break;
+					case SH_HYUN_ROK_SPIRIT_POWER:
+						skillratio += -100 + 350 + 200 * skill_lv;
+						skillratio += 30 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
+						skillratio += 5 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						break;
 				}
