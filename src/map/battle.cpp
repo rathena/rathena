@@ -6386,6 +6386,8 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 				}
 			}
 			skillratio += 5 * sstatus->con; //!TODO: check con ratio
+			RE_LVL_DMOD(100);
+			break;
 		case SH_CHUL_HO_SONIC_CLAW:
 			skillratio += -100 + 1100 + 2200 * skill_lv;
 			skillratio += 50 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
