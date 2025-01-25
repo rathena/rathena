@@ -6369,6 +6369,7 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 						skillratio += 60 * skill_lv;
 					else if (sd->weapontype1 == W_RIFLE)
 						skillratio += 100 * skill_lv;
+				}
 			}
 			skillratio += 5 * sstatus->con; //!TODO: check con ratio
 			RE_LVL_DMOD(100);
