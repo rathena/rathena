@@ -13353,21 +13353,22 @@ void clif_parse_NpcCloseClicked(int32 fd,map_session_data *sd)
 }
 
 
-/// Answer to identify item selection dialog (CZ_REQ_ITEMIDENTIFY).
-/// 0178 <index>.W
+/// Answer to identify item selection dialog.
+/// 0178 <index>.W (CZ_REQ_ITEMIDENTIFY)
 /// index:
 ///     -1 = cancel
 void clif_parse_ItemIdentify(int32 fd,map_session_data *sd) {
-	int16 idx = RFIFOW(fd,packet_db[RFIFOW(fd,0)].pos[0]) - 2;
-
 	if (sd->menuskill_id != MC_IDENTIFY)
 		return;
+
+	const PACKET_CZ_REQ_ITEMIDENTIFY* p = reinterpret_cast<PACKET_CZ_REQ_ITEMIDENTIFY*>( RFIFOP( fd, 0 ) );
+	uint16 idx = server_index( p->index );
 
 	// Ignore the request
 	// - Invalid item index
 	// - Invalid item ID or item doesn't exist
 	// - Item is already identified
-	if (idx < 0 || idx >= MAX_INVENTORY ||
+	if ( idx >= MAX_INVENTORY ||
 		sd->inventory.u.items_inventory[idx].nameid == 0 || sd->inventory_data[idx] == nullptr ||
 		sd->inventory.u.items_inventory[idx].identify) {// cancel pressed
 			sd->state.workinprogress = WIP_DISABLE_NONE;
