@@ -12559,7 +12559,8 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 			val4 = tick - tick_time; // Remaining time
 			break;
 		case SC_WILD_WALK:
-			val2 = ((val1 + 1) / 2) * 25;
+			val2 = (1 + val1 / 2) * 25;
+			val3 = 50 + 50 * val1;
 			break;
 
 		default:
