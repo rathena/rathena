@@ -1731,6 +1731,44 @@ struct PACKET_ZC_UPDATE_MAPINFO{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_UPDATE_MAPINFO, 0x192);
 
+struct PACKET_CZ_REQ_ENTER_ROOM{
+	int16 packetType;
+	uint32 chat_id;
+	char password[8];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_ENTER_ROOM, 0xd9);
+
+struct PACKET_CZ_CHANGE_CHATROOM{
+	int16 packetType;
+	uint16 packetSize;
+	uint16 limit;
+	uint8 type;
+	char password[8];
+	char title[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_CHANGE_CHATROOM, 0xde);
+
+struct PACKET_CZ_ADD_EXCHANGE_ITEM{
+	int16 packetType;
+	uint16 index;
+	int32 amount;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_ADD_EXCHANGE_ITEM, 0xe8);
+
+struct PACKET_CZ_MOVE_ITEM_FROM_CART_TO_BODY{
+	int16 packetType;
+	uint16 index;
+	int32 amount;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_MOVE_ITEM_FROM_CART_TO_BODY, 0x127);
+
+struct PACKET_CZ_SELECT_WARPPOINT{
+	int16 packetType;
+	int16 skill_id;
+	char mapname[MAP_NAME_LENGTH_EXT];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_SELECT_WARPPOINT, 0x11b);
+
 struct PACKET_CZ_CHOOSE_MENU{
 	int16 packetType;
 	uint32 GID;
