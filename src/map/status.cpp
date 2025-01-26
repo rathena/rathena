@@ -7343,8 +7343,8 @@ static signed short status_calc_flee(struct block_list *bl, status_change *sc, i
 		flee -= sc->getSCE(SC_WATER_BARRIER)->val2;
 	if( sc->getSCE(SC_C_MARKER) )
 		flee -= sc->getSCE(SC_C_MARKER)->val3;
-	if( sc->getSCE(SC_WILD_WALK) )
-		flee += 50 + 50 * sc->getSCE(SC_WILD_WALK)->val1;
+	if( sc->getSCE(SC_WILD_WALK) != nullptr )
+		flee += sc->getSCE(SC_WILD_WALK)->val3;
 #ifdef RENEWAL
 	if( sc->getSCE(SC_SPEARQUICKEN) )
 		flee += 2 * sc->getSCE(SC_SPEARQUICKEN)->val1;
