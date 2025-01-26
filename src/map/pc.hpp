@@ -37,7 +37,6 @@ class MapGuild;
 
 #define MAX_PC_BONUS 50 /// Max bonus, usually used by item bonus
 #define MAX_PC_FEELHATE 3 /// Max feel hate info
-#define DAMAGELOG_SIZE_PC 100	/// Damage log
 #define MAX_SPIRITBALL 15 /// Max spirit balls
 #define MAX_DEVOTION 5 /// Max Devotion slots
 #define MAX_SPIRITCHARM 10 /// Max spirit charms
@@ -321,10 +320,10 @@ struct s_addeffectonskill {
 ///Struct of add drop item/group rate
 struct s_add_drop {
 	t_itemid nameid; ///Item ID
-	unsigned short group; ///Group ID
+	uint16 group; ///Group ID
 	int32 rate; ///Rate, 1 ~ 10000, -1 ~ -100000
 	short race; ///Target Race, bitwise value of 1<<x. if < 0 means Monster ID
-	unsigned short class_; ///Target Class, bitwise value of 1<<x
+	uint16 class_; ///Target Class, bitwise value of 1<<x
 };
 
 struct s_vanish_bonus {
@@ -423,9 +422,9 @@ public:
 		uint32 changemap : 1;
 		uint32 callshop : 1; // flag to indicate that a script used callshop; on a shop
 		short pmap; // Previous map on Map Change
-		unsigned short autoloot;
+		uint16 autoloot;
 		t_itemid autolootid[AUTOLOOTITEM_SIZE]; // [Zephyrus]
-		unsigned short autoloottype;
+		uint16 autoloottype;
 		uint32 autolooting : 1; //performance-saver, autolooting state for @alootid
 		uint32 gmaster_flag : 1;
 		uint32 prevend : 1;//used to flag wheather you've spent 40sp to open the vending or not.
@@ -494,7 +493,7 @@ public:
 	uint32 weight,max_weight,add_max_weight;
 	int32 cart_weight,cart_num,cart_weight_max;
 	int32 fd;
-	unsigned short mapindex;
+	uint16 mapindex;
 	unsigned char head_dir; //0: Look forward. 1: Look right, 2: Look left.
 	t_tick client_tick;
 	int32 npc_id,npc_shopid; //for script follow scriptoid;   ,npcid
@@ -665,9 +664,9 @@ public:
 		short add_steal_rate;
 		int32 add_heal_rate, add_heal2_rate;
 		int32 sp_gain_value, hp_gain_value, magic_sp_gain_value, magic_hp_gain_value, long_sp_gain_value, long_hp_gain_value;
-		unsigned short unbreakable;	// chance to prevent ANY equipment breaking [celest]
-		unsigned short unbreakable_equip; //100% break resistance on certain equipment
-		unsigned short unstripable_equip;
+		uint16 unbreakable;	// chance to prevent ANY equipment breaking [celest]
+		uint16 unbreakable_equip; //100% break resistance on certain equipment
+		uint16 unstripable_equip;
 		int32 fixcastrate, varcastrate, delayrate; // n/100
 		int32 add_fixcast, add_varcast; // in milliseconds
 		int32 ematk; // matk bonus from equipment
@@ -752,18 +751,18 @@ public:
 
 	struct s_hate_mob {
 		int32  m; //-1 - none, other: map index corresponding to map name.
-		unsigned short index; //map index
+		uint16 index; //map index
 	} feel_map[3];// 0 - Sun; 1 - Moon; 2 - Stars
 	short hate_mob[3];
 
 	int32 pvp_timer;
 	short pvp_point;
-	unsigned short pvp_rank, pvp_lastusers;
-	unsigned short pvp_won, pvp_lost;
+	uint16 pvp_rank, pvp_lastusers;
+	uint16 pvp_won, pvp_lost;
 
 	char eventqueue[MAX_EVENTQUEUE][EVENT_NAME_LENGTH];
 	int32 eventtimer[MAX_EVENTTIMER];
-	unsigned short eventcount; // [celest]
+	uint16 eventcount; // [celest]
 
 	uint16 change_level_2nd; // job level when changing from 1st to 2nd class [jobchange_level in global_reg_value]
 	uint16 change_level_3rd; // job level when changing from 2nd to 3rd class [jobchange_level_3rd in global_reg_value]
@@ -880,8 +879,6 @@ public:
 	unsigned char vars_received; // char loading is only complete when you get it all.
 	bool vars_ok;
 	bool vars_dirty;
-
-	uint16 dmglog[DAMAGELOG_SIZE_PC]; ///target ids
 
 	int32 c_marker[MAX_SKILL_CRIMSON_MARKER]; /// Store target that marked by Crimson Marker [Cydh]
 	bool flicker; /// Check RL_FLICKER usage status [Cydh]
@@ -1424,7 +1421,7 @@ enum e_setpos{
 	SETPOS_AUTOTRADE = 3
 };
 
-enum e_setpos pc_setpos(map_session_data* sd, unsigned short mapindex, int32 x, int32 y, clr_type clrtype);
+enum e_setpos pc_setpos(map_session_data* sd, uint16 mapindex, int32 x, int32 y, clr_type clrtype);
 enum e_setpos pc_setpos_savepoint( map_session_data& sd, clr_type clrtype = CLR_TELEPORT );
 void pc_setsavepoint(map_session_data *sd, short mapindex,int32 x,int32 y);
 char pc_randomwarp(map_session_data *sd,clr_type type,bool ignore_mapflag = false);
@@ -1604,7 +1601,7 @@ void pc_regen (map_session_data *sd, t_tick diff_tick);
 bool pc_setstand(map_session_data *sd, bool force);
 bool pc_candrop(map_session_data *sd,struct item *item);
 
-uint64 pc_jobid2mapid(unsigned short b_class);	// Skotlex
+uint64 pc_jobid2mapid(uint16 b_class);	// Skotlex
 int32 pc_mapid2jobid(uint64 class_, int32 sex);	// Skotlex
 
 const char * job_name(int32 class_);
@@ -1692,8 +1689,8 @@ bool pc_isautolooting(map_session_data *sd, t_itemid nameid);
 void pc_overheat(map_session_data &sd, int16 heat);
 
 void pc_itemcd_do(map_session_data *sd, bool load);
-uint8 pc_itemcd_add(map_session_data *sd, struct item_data *id, t_tick tick, unsigned short n);
-uint8 pc_itemcd_check(map_session_data *sd, struct item_data *id, t_tick tick, unsigned short n);
+uint8 pc_itemcd_add(map_session_data *sd, struct item_data *id, t_tick tick, uint16 n);
+uint8 pc_itemcd_check(map_session_data *sd, struct item_data *id, t_tick tick, uint16 n);
 
 int32 pc_load_combo(map_session_data *sd);
 
@@ -1701,9 +1698,6 @@ void pc_addspiritcharm(map_session_data *sd, int32 interval, int32 max, int32 ty
 void pc_delspiritcharm(map_session_data *sd, int32 count, int32 type);
 
 void pc_baselevelchanged(map_session_data *sd);
-
-void pc_damage_log_add(map_session_data *sd, int32 id);
-void pc_damage_log_clear(map_session_data *sd, int32 id);
 
 enum e_BANKING_DEPOSIT_ACK : uint8;
 enum e_BANKING_WITHDRAW_ACK : uint8;

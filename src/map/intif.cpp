@@ -570,7 +570,7 @@ bool intif_send_guild_storage(uint32 account_id, struct s_storage *gstor)
 		return false;
 	WFIFOHEAD(inter_fd,sizeof(struct s_storage)+12);
 	WFIFOW(inter_fd,0) = 0x3019;
-	WFIFOW(inter_fd,2) = (unsigned short)sizeof(struct s_storage)+12;
+	WFIFOW(inter_fd,2) = (uint16)sizeof(struct s_storage)+12;
 	WFIFOL(inter_fd,4) = account_id;
 	WFIFOL(inter_fd,8) = gstor->id;
 	memcpy( WFIFOP(inter_fd,12),gstor, sizeof(struct s_storage) );
@@ -3203,21 +3203,20 @@ int32 intif_parse_elemental_saved(int32 fd)
  * @param type : 1 - Only return account id & userid, 0 - Full info
  * @return : 0=error, 1=msg sent
  */
-int32 intif_request_accinfo(int32 u_fd, int32 aid, int32 group_lv, char* query, char type) {
+int32 intif_request_accinfo( int32 u_fd, int32 aid, int32 group_lv, char* query ){
 
 	if( CheckForCharServer() )
 		return 0;
 	
-	WFIFOHEAD(inter_fd,2 + 4 + 4 + 4 + 1 + NAME_LENGTH);
+	WFIFOHEAD(inter_fd,2 + 4 + 4 + 4 + NAME_LENGTH);
 
 	WFIFOW(inter_fd,0) = 0x3007;
 	WFIFOL(inter_fd,2) = u_fd;
 	WFIFOL(inter_fd,6) = aid;
 	WFIFOL(inter_fd,10) = group_lv;
-	WFIFOB(inter_fd,14) = type;
-	safestrncpy(WFIFOCP(inter_fd,15), query, NAME_LENGTH);
+	safestrncpy(WFIFOCP(inter_fd,14), query, NAME_LENGTH);
 
-	WFIFOSET(inter_fd,2 + 4 + 4 + 4 + 1 + NAME_LENGTH);
+	WFIFOSET(inter_fd,2 + 4 + 4 + 4 + NAME_LENGTH);
 	return 1;
 }
 
@@ -3395,7 +3394,7 @@ void intif_parse_itembound_ack(int32 fd) {
  * @author [Cydh]
  */
 void intif_parse_itembound_store2gstorage(int32 fd) {
-	unsigned short i, failed = 0;
+	uint16 i, failed = 0;
 	short count = RFIFOW(fd, 4), guild_id = RFIFOW(fd, 6);
 	struct s_storage *gstor = guild2storage(guild_id);
 

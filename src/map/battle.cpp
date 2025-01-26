@@ -274,7 +274,7 @@ struct block_list* battle_getenemyarea(struct block_list *src, int32 x, int32 y,
 * @param tick: Current tick
 * @return HP+SP+AP (0 if HP/SP/AP remained unchanged)
 */
-int32 battle_damage(struct block_list *src, struct block_list *target, int64 damage, t_tick delay, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, unsigned short attack_type, bool additional_effects, t_tick tick, bool isspdamage) {
+int32 battle_damage(struct block_list *src, struct block_list *target, int64 damage, t_tick delay, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, uint16 attack_type, bool additional_effects, t_tick tick, bool isspdamage) {
 	int32 dmg_change;
 	map_session_data* sd = nullptr;
 	if (src)
@@ -318,11 +318,11 @@ struct delay_damage {
 	int32 target_id;
 	int64 damage;
 	t_tick delay;
-	unsigned short distance;
+	uint16 distance;
 	uint16 skill_lv;
 	uint16 skill_id;
 	enum damage_lv dmg_lv;
-	unsigned short attack_type;
+	uint16 attack_type;
 	bool additional_effects;
 	enum bl_type src_type;
 	bool isspdamage;
@@ -581,13 +581,6 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 #else
 					damage += (int64)(damage * tsc->getSCE(SC_VENOMIMPRESS)->val2 / 100);
 #endif
-				if (tsc->getSCE(SC_CLOUD_POISON)) {
-#ifdef RENEWAL
-					ratio += 5 * tsc->getSCE(SC_CLOUD_POISON)->val1;
-#else
-					damage += (int64)(damage * 5 * tsc->getSCE(SC_CLOUD_POISON)->val1 / 100);
-#endif
-				}
 				break;
 			case ELE_WIND:
 				if (tsc->getSCE(SC_WATER_INSIGNIA))
@@ -690,6 +683,10 @@ static int32 battle_calc_cardfix_debuff( status_change& tsc, int32 rh_ele ){
 		case ELE_WATER:
 			if (tsc.getSCE(SC_MISTYFROST))
 				ele_fix += 15;
+			break;
+		case ELE_POISON:
+			if (tsc.getSCE(SC_CLOUD_POISON))
+				ele_fix += 5 * tsc.getSCE(SC_CLOUD_POISON)->val1;
 			break;
 	}
 	return ele_fix;
@@ -1234,7 +1231,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 
 	// SC Types that must be first because they may or may not block damage
 	if ((sce = sc->getSCE(SC_KYRIE)) && damage > 0) {
-		sce->val2 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX));
+		sce->val2 -= static_cast<int32>(cap_value(damage, INT_MIN, INT_MAX));
 		if (flag & BF_WEAPON || skill_id == TF_THROWSTONE) {
 			if (sce->val2 >= 0)
 				damage = 0;
@@ -1322,7 +1319,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 
 	if ((sce = sc->getSCE(SC_P_ALTER)) && damage > 0) {
 		clif_specialeffect(target, EF_GUARD, AREA);
-		sce->val3 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX));
+		sce->val3 -= static_cast<int32>(cap_value(damage, INT_MIN, INT_MAX));
 		if (sce->val3 >= 0)
 			damage = 0;
 		else
@@ -1332,7 +1329,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 	}
 
 	if ((sce = sc->getSCE(SC_TUNAPARTY)) && damage > 0) {
-		sce->val2 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX));
+		sce->val2 -= static_cast<int32>(cap_value(damage, INT_MIN, INT_MAX));
 		if (sce->val2 >= 0)
 			damage = 0;
 		else
@@ -1342,14 +1339,14 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 	}
 
 	if ((sce = sc->getSCE(SC_DIMENSION1)) && damage > 0) {
-		sce->val2 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX));
+		sce->val2 -= static_cast<int32>(cap_value(damage, INT_MIN, INT_MAX));
 		if (sce->val2 <= 0)
 			status_change_end(target, SC_DIMENSION1);
 		return false;
 	}
 
 	if ((sce = sc->getSCE(SC_DIMENSION2)) && damage > 0) {
-		sce->val2 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX));
+		sce->val2 -= static_cast<int32>(cap_value(damage, INT_MIN, INT_MAX));
 		if (sce->val2 <= 0)
 			status_change_end(target, SC_DIMENSION2);
 		return false;
@@ -1357,7 +1354,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 
 	if ((sce = sc->getSCE(SC_GUARDIAN_S)) && damage > 0) {
 		clif_specialeffect(target, EF_GUARD3, AREA);// Not official but we gotta show some way the barrier is working. [Rytech]
-		sce->val2 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX));
+		sce->val2 -= static_cast<int32>(cap_value(damage, INT_MIN, INT_MAX));
 		if (flag & BF_WEAPON) {
 			if (sce->val2 >= 0)
 				damage = 0;
@@ -1394,7 +1391,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 				}
 #ifdef RENEWAL
 				if (group->val3 - damage > 0)
-					group->val3 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX));
+					group->val3 -= static_cast<int32>(cap_value(damage, INT_MIN, INT_MAX));
 				else
 					skill_delunitgroup(group);
 #endif
@@ -1405,7 +1402,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 					break;
 				}
 				if (group->val3 - damage > 0)
-					group->val3 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX));
+					group->val3 -= static_cast<int32>(cap_value(damage, INT_MIN, INT_MAX));
 				else
 					skill_delunitgroup(group);
 				break;
@@ -1449,7 +1446,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 	}
 
 	if ((sce = sc->getSCE(SC_MILLENNIUMSHIELD)) && sce->val2 > 0 && damage > 0) {
-		sce->val3 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX)); // absorb damage
+		sce->val3 -= static_cast<int32>(cap_value(damage, INT_MIN, INT_MAX)); // absorb damage
 		d->dmg_lv = ATK_BLOCK;
 		if (sce->val3 <= 0) { // Shield Down
 			sce->val2--;
@@ -2449,7 +2446,7 @@ static int32 battle_calc_base_weapon_attack(struct block_list *src, struct statu
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
-static int64 battle_calc_base_damage(struct block_list *src, struct status_data *status, struct weapon_atk *wa, status_change *sc, unsigned short t_size, int32 flag)
+static int64 battle_calc_base_damage(struct block_list *src, struct status_data *status, struct weapon_atk *wa, status_change *sc, uint16 t_size, int32 flag)
 {
 	uint32 atkmin = 0, atkmax = 0;
 	short type = 0;
@@ -3019,6 +3016,34 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 					return false;
 				}
 				break;
+			case SH_CHUL_HO_SONIC_CLAW:
+				if( pc_checkskill( sd, SH_COMMUNE_WITH_CHUL_HO ) > 0 || ( sc != nullptr && sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ) ){
+					break;
+				}
+
+				return false;
+
+			case SKE_NOON_BLAST:
+				if( sc == nullptr ){
+					return false;
+				}
+
+				if( sc->getSCE( SC_NOON_SUN ) == nullptr && sc->getSCE( SC_SKY_ENCHANT ) == nullptr ){
+					return false;
+				}
+
+				break;
+
+			case SKE_SUNSET_BLAST:
+				if( sc == nullptr ){
+					return false;
+				}
+
+				if( sc->getSCE( SC_SUNSET_SUN ) == nullptr && sc->getSCE( SC_SKY_ENCHANT ) == nullptr ){
+					return false;
+				}
+
+				break;
 		}
 		if(tsd && tsd->bonus.critical_def)
 			cri = cri * ( 100 - tsd->bonus.critical_def ) / 100;
@@ -3583,6 +3608,26 @@ int32 battle_get_magic_element(struct block_list* src, struct block_list* target
 		case TR_SOUNDBLEND:
 			if (sd)
 				element = sd->bonus.arrow_ele;
+			break;
+		case SU_CN_METEOR:
+		case SU_CN_METEOR2:
+		case SH_HYUN_ROKS_BREEZE:
+		case SH_HYUN_ROK_CANNON:
+			if( sc != nullptr && sc->count > 0 ){
+				if( sc->getSCE( SC_COLORS_OF_HYUN_ROK_1 ) != nullptr ){
+					element = ELE_WATER;
+				}else if( sc->getSCE( SC_COLORS_OF_HYUN_ROK_2 ) != nullptr ){
+					element = ELE_WIND;
+				}else if( sc->getSCE( SC_COLORS_OF_HYUN_ROK_3 ) != nullptr ){
+					element = ELE_EARTH;
+				}else if( sc->getSCE( SC_COLORS_OF_HYUN_ROK_4 ) != nullptr ){
+					element = ELE_FIRE;
+				}else if( sc->getSCE( SC_COLORS_OF_HYUN_ROK_5 ) != nullptr ){
+					element = ELE_DARK;
+				}else if( sc->getSCE( SC_COLORS_OF_HYUN_ROK_6 ) != nullptr ){
+					element = ELE_HOLY;
+				}
+			}
 			break;
 	}
 
@@ -4259,8 +4304,10 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 				}
 #else
 				if ((skill = pc_checkskill(sd, TK_POWER)) > 0) {
-					ATK_ADDRATE(wd->damage, wd->damage2, 10 + 15 * skill);
-					RE_ALLATK_ADDRATE(wd, 10 + 15 * skill);
+					int32 dmg_bonus = 20 * skill;
+
+					ATK_ADDRATE(wd->damage, wd->damage2, dmg_bonus);
+					RE_ALLATK_ADDRATE(wd, dmg_bonus);
 				}
 #endif
 			}
@@ -4450,7 +4497,7 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
  * @param sc: Object's status change information
  * @return atkpercent with cap_value(watk,0,USHRT_MAX)
  */
-static unsigned short battle_get_atkpercent(struct block_list& bl, uint16 skill_id, status_change& sc)
+static uint16 battle_get_atkpercent(struct block_list& bl, uint16 skill_id, status_change& sc)
 {
 	if (bl.type == BL_PC && !battle_skill_stacks_masteries_vvs(skill_id, BCHK_ALL))
 		return 100;
@@ -4491,7 +4538,7 @@ static unsigned short battle_get_atkpercent(struct block_list& bl, uint16 skill_
 	* MH_VOLCANIC_ASH (-50)
 	*/
 
-	return (unsigned short)cap_value(atkpercent, 0, USHRT_MAX);
+	return (uint16)cap_value(atkpercent, 0, USHRT_MAX);
 }
 
 /*======================================================
@@ -6314,6 +6361,118 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			skillratio += 5 * sstatus->con;
 			RE_LVL_DMOD(100);
 			break;
+		case SH_CHUL_HO_SONIC_CLAW:
+			skillratio += -100 + 1100 + 2200 * skill_lv;
+			skillratio += 50 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
+			skillratio += 5 * sstatus->pow;
+
+			if( pc_checkskill( sd, SH_COMMUNE_WITH_CHUL_HO ) > 0 || ( sc != nullptr && sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ) ){
+				skillratio += 400 * skill_lv;
+				skillratio += 50 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
+			}
+			RE_LVL_DMOD(100);
+			break;
+		case SH_HOWLING_OF_CHUL_HO:
+			skillratio += -100 + 600 + 1050 * skill_lv;
+			skillratio += 50 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
+			skillratio += 5 * sstatus->pow;
+
+			if( pc_checkskill( sd, SH_COMMUNE_WITH_CHUL_HO ) > 0 || ( sc != nullptr && sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ) ){
+				skillratio += 100 + 100 * skill_lv;
+				skillratio += 50 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
+			}
+			RE_LVL_DMOD(100);
+			break;
+		case SH_HOGOGONG_STRIKE:
+			skillratio += -100 + 180 + 200 * skill_lv;
+			skillratio += 10 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
+			skillratio += 5 * sstatus->pow;
+
+			if( pc_checkskill( sd, SH_COMMUNE_WITH_CHUL_HO ) > 0 || ( sc != nullptr && sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ) ){
+				skillratio += 70 + 150 * skill_lv;
+				skillratio += 10 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
+			}
+			RE_LVL_DMOD(100);
+			break;
+		case SKE_MIDNIGHT_KICK:
+			skillratio += -100 + 800 + 1500  * skill_lv;
+			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 5 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+
+			if( sc != nullptr && ( sc->getSCE( SC_MIDNIGHT_MOON ) != nullptr || sc->getSCE( SC_SKY_ENCHANT ) != nullptr ) ){
+				skillratio += 950 + 250 * skill_lv;
+			}
+
+			RE_LVL_DMOD(100);
+			break;
+
+		case SKE_ALL_IN_THE_SKY:
+			skillratio += -100 + 250 + 1200 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+			if (status_get_race(target) == RC_DEMIHUMAN || status_get_race(target) == RC_DEMON)
+				wd->div_ = 3;
+			break;
+
+		case SKE_TWINKLING_GALAXY:
+			skillratio += -100 + 300 + 500 * skill_lv;
+			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 3 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+			RE_LVL_DMOD(100);
+			break;
+
+		case SKE_STAR_CANNON:
+			skillratio += -100 + 250 + 550 * skill_lv;
+			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 5 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+			RE_LVL_DMOD(100);
+			break;
+
+		case SKE_STAR_BURST:
+			skillratio += -100 + 500 + 400 * skill_lv;
+			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 3 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+			RE_LVL_DMOD(100);
+			break;
+
+		case SKE_DAWN_BREAK:
+			skillratio += -100 + 600 + 700 * skill_lv;
+			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 5 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+
+			if( sc != nullptr && ( sc->getSCE( SC_DAWN_MOON ) != nullptr || sc->getSCE( SC_SKY_ENCHANT ) != nullptr ) ){
+				skillratio += 200 * skill_lv;
+			}
+
+			RE_LVL_DMOD(100);
+			break;
+
+		case SKE_SUNSET_BLAST:
+			skillratio += -100 + 950 + 400 * skill_lv;
+			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 5 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+			RE_LVL_DMOD(100);
+			break;
+
+		case SKE_RISING_MOON:
+			skillratio += -100 + 700 + 450 * skill_lv;
+			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 5 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+			RE_LVL_DMOD(100);
+			break;
+
+		case SKE_NOON_BLAST:
+			skillratio += -100 + 1500 + 1250 * skill_lv;
+			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 5 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+			RE_LVL_DMOD(100);
+			break;
+
+		case SKE_RISING_SUN:
+			skillratio += -100 + 500 + 600 * skill_lv;
+			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 5 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+			RE_LVL_DMOD(100);
+			break;
 	}
 	return skillratio;
 }
@@ -6542,6 +6701,12 @@ static void battle_attack_sc_bonus(struct Damage* wd, struct block_list *src, st
 			skillratio += sstatus->str; // SG_STAR_ANGER additionally has STR added in its formula.
 		if (anger_level < 4)
 			skillratio /= 12 - 3 * anger_level;
+
+#ifdef RENEWAL
+		// (renewal) maximum damage bonus limit : (skill level x 25)%
+		skillratio = min( skillratio, 25 * anger_level );
+#endif
+
 		ATK_ADDRATE(wd->damage, wd->damage2, skillratio);
 #ifdef RENEWAL
 		RE_ALLATK_ADDRATE(wd, skillratio);
@@ -7039,8 +7204,8 @@ static void battle_calc_weapon_final_atk_modifiers(struct Damage* wd, struct blo
 		rdamage = battle_calc_base_damage(target,tstatus,&tstatus->rhw,tsc,sstatus->size,0);
 		rdamage = (int64)rdamage * ratio / 100 + wd->damage * (10 + tsc->getSCE(SC_CRESCENTELBOW)->val1 * 20 / 10) / 10;
 		skill_blown(target, src, skill_get_blewcount(SR_CRESCENTELBOW_AUTOSPELL, tsc->getSCE(SC_CRESCENTELBOW)->val1), unit_getdir(src), BLOWN_NONE);
-		clif_skill_damage(target, src, gettick(), status_get_amotion(src), 0, rdamage,
-			1, SR_CRESCENTELBOW_AUTOSPELL, tsc->getSCE(SC_CRESCENTELBOW)->val1, DMG_SINGLE); // This is how official does
+		clif_skill_damage( *target, *src, gettick(), status_get_amotion(src), 0, rdamage,
+			1, SR_CRESCENTELBOW_AUTOSPELL, tsc->getSCE(SC_CRESCENTELBOW)->val1, DMG_SINGLE ); // This is how official does
 		clif_damage(*src, *target, gettick(), status_get_amotion(src)+1000, 0, rdamage/10, 1, DMG_NORMAL, 0, false);
 		battle_fix_damage(target, src, rdamage, 0, SR_CRESCENTELBOW);
 		status_damage(src, target, rdamage/10, 0, 0, 1, 0);
@@ -7832,6 +7997,20 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				ad.div_ = 2;
 			}
 			break;
+		case SOA_TALISMAN_OF_FOUR_BEARING_GOD:
+			if (sc != nullptr){
+				if (sc->getSCE(SC_T_FIRST_GOD) != nullptr)
+					ad.div_ = 2;
+				else if (sc->getSCE(SC_T_SECOND_GOD) != nullptr)
+					ad.div_ = 3;
+				else if (sc->getSCE(SC_T_THIRD_GOD) != nullptr)
+					ad.div_ = 4;
+				else if (sc->getSCE(SC_T_FOURTH_GOD) != nullptr)
+					ad.div_ = 5;
+				else if (sc->getSCE(SC_T_FIFTH_GOD) != nullptr)
+					ad.div_ = 7;
+			}
+			break;
 	}
 
 	//Set miscellaneous data that needs be filled
@@ -8278,7 +8457,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 							skillratio += (sd ? sd->status.job_level * 5 : 0);
 						break;
 					case SO_POISON_BUSTER:
-						skillratio += -100 + 1000 + 300 * skill_lv + sstatus->int_ / 6; // !TODO: Confirm INT bonus
+						skillratio += -100 + 1000 + 300 * skill_lv;
+						skillratio += sstatus->int_;
 						if( tsc && tsc->getSCE(SC_CLOUD_POISON) )
 							skillratio += 200 * skill_lv;
 						RE_LVL_DMOD(100);
@@ -8300,6 +8480,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case SO_CLOUD_KILL:
 						skillratio += -100 + 40 * skill_lv;
+						skillratio += sstatus->int_ * 3;
 						RE_LVL_DMOD(100);
 						if (sc) {
 							if (sc->getSCE(SC_CURSED_SOIL_OPTION))
@@ -8376,7 +8557,10 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case SU_CN_METEOR:
 					case SU_CN_METEOR2:
-						skillratio += 100 + 100 * skill_lv + sstatus->int_ * 5; // !TODO: Confirm INT bonus
+						skillratio += -100 + 200 + 100 * skill_lv;
+						if (status_get_lv(src) > 99) {
+							skillratio += sstatus->int_ * 5;
+						}
 						RE_LVL_DMOD(100);
 						break;
 					case NPC_VENOMFOG:
@@ -8788,6 +8972,92 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						if (sc && sc->getSCE(SC_RULEBREAK))
 							skillratio += skillratio * 50 / 100;
 						break;
+					case SOA_EXORCISM_OF_MALICIOUS_SOUL:
+						skillratio += -100 + 150 * skill_lv;
+						skillratio += pc_checkskill(sd, SOA_SOUL_MASTERY) * 2;
+						skillratio += 1 * sstatus->spl;
+
+						if ((tsc != nullptr && tsc->getSCE(SC_SOULCURSE) != nullptr) || (sc != nullptr && sc->getSCE(SC_TOTEM_OF_TUTELARY) != nullptr))
+							skillratio += 100 * skill_lv;
+
+						if (sd != nullptr)
+							skillratio *= sd->soulball_old;
+						RE_LVL_DMOD(100);
+						break;
+					case SOA_TALISMAN_OF_BLUE_DRAGON:
+						skillratio += -100 + 850 + 2250 * skill_lv;
+						skillratio += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 15 * skill_lv;
+						skillratio += 5 * sstatus->spl;
+						if (sc != nullptr && sc->getSCE(SC_T_FIFTH_GOD) != nullptr)
+							skillratio += 100 + 700 * skill_lv;
+						RE_LVL_DMOD(100);
+						break;
+					case SOA_TALISMAN_OF_WHITE_TIGER:
+						skillratio += -100 + 400 + 1000 * skill_lv;
+						skillratio += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 15 * skill_lv;
+						skillratio += 5 * sstatus->spl;
+						if (sc != nullptr && sc->getSCE(SC_T_FIFTH_GOD) != nullptr)
+							skillratio += 400 * skill_lv;
+						RE_LVL_DMOD(100);
+						break;
+					case SOA_TALISMAN_OF_RED_PHOENIX:
+						skillratio += -100 + 1400 + 1450 * skill_lv;
+						skillratio += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 15 * skill_lv;
+						skillratio += 5 * sstatus->spl;
+						if (sc != nullptr && sc->getSCE(SC_T_FIFTH_GOD) != nullptr)
+							skillratio += 200 + 400 * skill_lv;
+						RE_LVL_DMOD(100);
+						break;
+					case SOA_TALISMAN_OF_BLACK_TORTOISE:
+						skillratio += -100 + 2150 + 1600 * skill_lv;
+						skillratio += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 15 * skill_lv;
+						skillratio += 5 * sstatus->spl;
+						if (sc != nullptr && sc->getSCE(SC_T_FIFTH_GOD) != nullptr)
+							skillratio += 150 + 500 * skill_lv;
+						RE_LVL_DMOD(100);
+						break;
+					case SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS:
+						skillratio += -100 + 500 + 2000 * skill_lv;
+						skillratio += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 15 * skill_lv;
+						skillratio += pc_checkskill(sd, SOA_SOUL_MASTERY) * 15 * skill_lv;
+						skillratio += 5 * sstatus->spl;
+						RE_LVL_DMOD(100);
+						break;
+					case SOA_TALISMAN_OF_FOUR_BEARING_GOD:
+						skillratio += -100 + 50 + 250 * skill_lv;
+						skillratio += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 15 * skill_lv;
+						skillratio += 5 * sstatus->spl;
+						RE_LVL_DMOD(100);
+						break;
+					case SOA_TALISMAN_OF_SOUL_STEALING:
+						skillratio += -100 + 500 + 1250 * skill_lv;
+						skillratio += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 7 * skill_lv;
+						skillratio += pc_checkskill(sd, SOA_SOUL_MASTERY) * 7 * skill_lv;
+						skillratio += 3 * sstatus->spl;
+						RE_LVL_DMOD(100);
+						break;
+					case SH_HYUN_ROKS_BREEZE:
+						skillratio += -100 + 650 + 750 * skill_lv;
+						skillratio += 20 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
+						skillratio += 5 * sstatus->spl;
+
+						if( pc_checkskill( sd, SH_COMMUNE_WITH_HYUN_ROK ) > 0 || ( sc != nullptr && sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ) ){
+							skillratio += 100 + 200 * skill_lv;
+							skillratio += 20 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
+						}
+						RE_LVL_DMOD(100);
+						break;
+					case SH_HYUN_ROK_CANNON:
+						skillratio += -100 + 1100 + 2050 * skill_lv;
+						skillratio += 50 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
+						skillratio += 5 * sstatus->spl;
+
+						if( pc_checkskill( sd, SH_COMMUNE_WITH_HYUN_ROK ) > 0 || ( sc != nullptr && sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ) ){
+							skillratio += 400 * skill_lv;
+							skillratio += 25 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
+						}
+						RE_LVL_DMOD(100);
+						break;
 				}
 
 				if (sc) {// Insignia's increases the damage of offensive magic by a fixed percentage depending on the element.
@@ -8959,6 +9229,11 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			case AG_CRYSTAL_IMPACT_ATK:
 				if (sc->getSCE(SC_CLIMAX) && sc->getSCE(SC_CLIMAX)->val1 == 4)
 					i += 150;
+				break;
+			case SU_CN_METEOR:
+			case SU_CN_METEOR2:
+				if (sc->getSCE(SC_COLORS_OF_HYUN_ROK_BUFF) != nullptr)
+					i += sc->getSCE(SC_COLORS_OF_HYUN_ROK_BUFF)->val2;
 				break;
 		}
 
@@ -9641,7 +9916,7 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 					int64 rd1 = i64min(damage, status_get_max_hp(tbl)) * tsc->getSCE(SC_DEATHBOUND)->val2 / 100; // Amplify damage.
 
 					*dmg = rd1 * 30 / 100; // Received damage = 30% of amplified damage.
-					clif_skill_damage(src, tbl, gettick(), status_get_amotion(src), 0, -30000, 1, RK_DEATHBOUND, tsc->getSCE(SC_DEATHBOUND)->val1, DMG_SINGLE);
+					clif_skill_damage( *src, *tbl, gettick(), status_get_amotion(src), 0, -30000, 1, RK_DEATHBOUND, tsc->getSCE(SC_DEATHBOUND)->val1, DMG_SINGLE );
 					skill_blown(tbl, src, skill_get_blewcount(RK_DEATHBOUND, tsc->getSCE(SC_DEATHBOUND)->val1), unit_getdir(src), BLOWN_NONE);
 					status_change_end(tbl, SC_DEATHBOUND);
 					rdamage += rd1 * 70 / 100; // Target receives 70% of the amplified damage. [Rytech]
@@ -10035,7 +10310,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		if(sc_start4(src,src, SC_BLADESTOP, 100, sd?pc_checkskill(sd, MO_BLADESTOP):5, 0, 0, target->id, duration))
 		{	//Target locked.
 			clif_damage(*src, *target, tick, sstatus->amotion, 1, 0, 1, DMG_NORMAL, 0, false); //Display MISS.
-			clif_bladestop(target, src->id, 1);
+			clif_bladestop( *target, src->id, true );
 			sc_start4(src,target, SC_BLADESTOP, 100, skill_lv, 0, 0, src->id, duration);
 			return ATK_BLOCK;
 		}
@@ -10237,7 +10512,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			s_elemental_data *ed = ((TBL_PC*)target)->ed;
 
 			if (ed) {
-				clif_skill_damage(&ed->bl, target, tick, status_get_amotion(src), 0, -30000, 1, EL_CIRCLE_OF_FIRE, tsc->getSCE(SC_CIRCLE_OF_FIRE_OPTION)->val1, DMG_SINGLE);
+				clif_skill_damage( ed->bl, *target, tick, status_get_amotion(src), 0, -30000, 1, EL_CIRCLE_OF_FIRE, tsc->getSCE(SC_CIRCLE_OF_FIRE_OPTION)->val1, DMG_SINGLE );
 				skill_attack(BF_WEAPON,&ed->bl,&ed->bl,src,EL_CIRCLE_OF_FIRE,tsc->getSCE(SC_CIRCLE_OF_FIRE_OPTION)->val1,tick,wd.flag);
 			}
 		}
@@ -11634,6 +11909,8 @@ static const struct _battle_data {
 	{ "feature.mesitemlink",                &battle_config.feature_mesitemlink,             1,      0,      1,              },
 	{ "feature.mesitemlink_brackets",       &battle_config.feature_mesitemlink_brackets,    0,      0,      1,              },
 	{ "feature.mesitemlink_dbname",         &battle_config.feature_mesitemlink_dbname,      0,      0,      1,              },
+	{ "feature.mesitemicon",                &battle_config.feature_mesitemicon,             1,      0,      1,              },
+	{ "feature.mesitemicon_dbname",         &battle_config.feature_mesitemicon_dbname,      0,      0,      1,              },
 	{ "break_mob_equip",                    &battle_config.break_mob_equip,                 0,      0,      1,              },
 	{ "macro_detection_retry",              &battle_config.macro_detection_retry,           3,      1,      INT_MAX,        },
 	{ "macro_detection_timeout",            &battle_config.macro_detection_timeout,         60000,  0,      INT_MAX,        },
@@ -11888,6 +12165,15 @@ void battle_adjust_conf()
 	if( battle_config.feature_barter_extended ){
 		ShowWarning("conf/battle/feature.conf extended barter shop system is enabled but it requires PACKETVER 2019-11-06 or newer, disabling...\n");
 		battle_config.feature_barter_extended = 0;
+	}
+#endif
+
+#if PACKETVER < 20230302
+	if( battle_config.feature_mesitemicon ){
+#if !defined(BUILDBOT)
+		ShowWarning( "conf/battle/feature.conf:mesitemicon is enabled but it requires PACKETVER 2023-03-02 or newer, disabling...\n" );
+#endif
+		battle_config.feature_mesitemicon = 0;
 	}
 #endif
 

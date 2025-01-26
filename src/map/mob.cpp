@@ -1203,8 +1203,7 @@ int32 mob_spawn (struct mob_data *md)
 	for (i = 0; i < DAMAGELOG_SIZE; i++)
 		md->spotted_log[i] = 0;
 
-	memset(md->dmglog, 0, sizeof(md->dmglog));
-	md->tdmg = 0;
+	md->dmglog.clear();
 
 	if (md->lootitems)
 		memset(md->lootitems, 0, sizeof(*md->lootitems));
@@ -2223,7 +2222,7 @@ void mob_setdropitem_option( item& item, s_mob_drop& mobdrop ){
 /*==========================================
  * Initializes the delay drop structure for mob-dropped items.
  *------------------------------------------*/
-static std::shared_ptr<s_item_drop> mob_setdropitem( s_mob_drop& mobdrop, int32 qty, unsigned short mob_id ){
+static std::shared_ptr<s_item_drop> mob_setdropitem( s_mob_drop& mobdrop, int32 qty, uint16 mob_id ){
 	std::shared_ptr<s_item_drop> drop = std::make_shared<s_item_drop>();
 
 	drop->item_data = { 0 };
@@ -2239,7 +2238,7 @@ static std::shared_ptr<s_item_drop> mob_setdropitem( s_mob_drop& mobdrop, int32 
 /*==========================================
  * Initializes the delay drop structure for mob-looted items.
  *------------------------------------------*/
-static std::shared_ptr<s_item_drop> mob_setlootitem( s_mob_lootitem& item, unsigned short mob_id ){
+static std::shared_ptr<s_item_drop> mob_setlootitem( s_mob_lootitem& item, uint16 mob_id ){
 	std::shared_ptr<s_item_drop> drop = std::make_shared<s_item_drop>();
 
 	memcpy( &drop->item_data, &item, sizeof( struct item ) );
@@ -2400,7 +2399,7 @@ TIMER_FUNC(mob_respawn){
 	return 1;
 }
 
-void mob_log_damage(mob_data* md, block_list* src, int32 damage, int32 damage_tanked)
+void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_tanked)
 {
 	uint32 char_id = 0;
 	int32 flag = MDLF_NORMAL;
@@ -2490,73 +2489,49 @@ void mob_log_damage(mob_data* md, block_list* src, int32 damage, int32 damage_ta
 		flag = MDLF_SELF;
 	}
 
-	if( char_id )
-	{ //Log damage...
-		size_t i;
-		for (i = 0; i < DAMAGELOG_SIZE; i++) {
-			// Character is already in damage log
-			if(md->dmglog[i].id==char_id &&
-				md->dmglog[i].flag==flag)
-				break;
-			// Store data in first empty slot.
-			if (md->dmglog[i].id == 0) {
-				md->dmglog[i].id  = char_id;
-				md->dmglog[i].flag= flag;
-				// Damage is added outside the loop, we reset it here to be safe
-				md->dmglog[i].dmg = 0;
-				md->dmglog[i].dmg_tanked = 0;
+	if( char_id == 0 ){
+		return;
+	}
 
-				if( md->get_bosstype() == BOSSTYPE_MVP )
-					pc_damage_log_add(map_charid2sd(char_id),md->bl.id);
-				break;
-			}
-		}
-		// Character or empty slot was found, just add damage to it
-		if (i < DAMAGELOG_SIZE) {
-			md->dmglog[i].dmg += damage;
-			md->dmglog[i].dmg_tanked += damage_tanked;
-		}
-		else {
-			// Damage log is full, remove oldest entry
-			for (i = 0; i < DAMAGELOG_SIZE-1; i++) {
-				md->dmglog[i].id = md->dmglog[i+1].id;
-				md->dmglog[i].flag = md->dmglog[i+1].flag;
-				md->dmglog[i].dmg = md->dmglog[i+1].dmg;
-				md->dmglog[i].dmg_tanked = md->dmglog[i+1].dmg_tanked;
-			}
-
-			// Add new character to damage log at last (newest) position
-			md->dmglog[DAMAGELOG_SIZE-1].id  = char_id;
-			md->dmglog[DAMAGELOG_SIZE-1].flag= flag;
-			md->dmglog[DAMAGELOG_SIZE-1].dmg = damage;
-			md->dmglog[DAMAGELOG_SIZE-1].dmg_tanked = damage_tanked;
-
-			if( md->get_bosstype() == BOSSTYPE_MVP )
-				pc_damage_log_add(map_charid2sd(char_id),md->bl.id);
+	// Check if the character is already in damage log
+	for( auto& entry : md->dmglog ){
+		if( entry.id == char_id && entry.flag == flag ){
+			// Just add damage to it
+			entry.dmg = util::safe_addition_cap(entry.dmg, damage, INT64_MAX);
+			entry.dmg_tanked = util::safe_addition_cap(entry.dmg_tanked, damage_tanked, INT64_MAX);
+			return;
 		}
 	}
-	return;
+
+	// Check if the damage log is full
+	if( md->dmglog.size() == DAMAGELOG_SIZE ){
+		// Remove oldest entry
+		md->dmglog.pop_front();
+	}
+
+	// Add new character to damage log at last (newest) position
+	s_dmglog dmg = {};
+
+	dmg.id = char_id;
+	dmg.flag = flag;
+	dmg.dmg = damage;
+	dmg.dmg_tanked = damage_tanked;
+
+	md->dmglog.push_back( dmg );
 }
 //Call when a mob has received damage.
 void mob_damage(struct mob_data *md, struct block_list *src, int32 damage)
 {
-	if( src != nullptr && md->special_state.ai == AI_SPHERE && !md->dmglog[0].id ) {//LOne WOlf explained that ANYONE can trigger the marine countdown skill. [Skotlex]
+	// LOne WOlf explained that ANYONE can trigger the marine countdown skill. [Skotlex]
+	if( src != nullptr && md->special_state.ai == AI_SPHERE && md->dmglog.empty() ){
 		md->state.can_escape = 1;
 	}
 
 	if (src && damage > 0) { //Store total damage...
-		if (UINT_MAX - (uint32)damage > md->tdmg)
-			md->tdmg += damage;
-		else if (md->tdmg == UINT_MAX)
-			damage = 0; //Stop recording damage once the cap has been reached.
-		else { //Cap damage log...
-			damage = (int32)(UINT_MAX - md->tdmg);
-			md->tdmg = UINT_MAX;
-		}
 		if ((src != &md->bl) && md->state.aggressive) //No longer aggressive, change to retaliate AI.
 			md->state.aggressive = 0;
 		//Log damage
-		mob_log_damage(md, src, damage);
+		mob_log_damage(md, src, static_cast<int64>(damage));
 		md->dmgtick = gettick();
 	}
 
@@ -2565,14 +2540,23 @@ void mob_damage(struct mob_data *md, struct block_list *src, int32 damage)
 
 #if PACKETVER >= 20120404
 	if (battle_config.monster_hp_bars_info && !map_getmapflag(md->bl.m, MF_HIDEMOBHPBAR)) {
-		int32 i;
 		if (md->special_state.ai == AI_ABR || md->special_state.ai == AI_BIONIC) {
 			clif_summon_hp_bar(*md);
 		}
-		for(i = 0; i < DAMAGELOG_SIZE; i++){ // must show hp bar to all char who already hit the mob.
-			map_session_data *sd = map_charid2sd(md->dmglog[i].id);
-			if( sd && check_distance_bl(&md->bl, &sd->bl, AREA_SIZE) ) // check if in range
-				clif_monster_hp_bar(md, sd->fd);
+
+		// Must show hp bar to all char who already hit the mob.
+		for( const auto& entry : md->dmglog ){
+			map_session_data* sd = map_charid2sd( entry.id );
+
+			if( sd == nullptr ){
+				continue;
+			}
+
+			if( !check_distance_bl( &md->bl, &sd->bl, AREA_SIZE ) ){
+				continue;
+			}
+
+			clif_monster_hp_bar( md, sd->fd );
 		}
 	}
 #endif
@@ -2676,7 +2660,6 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 	} pt[DAMAGELOG_SIZE];
 	int32 i, temp, count, m = md->bl.m;
 	int32 dmgbltypes = 0;  // bitfield of all bl types, that caused damage to the mob and are elligible for exp distribution
-	uint32 mvp_damage;
 	t_tick tick = gettick();
 	bool rebirth, homkillonly, merckillonly;
 
@@ -2706,40 +2689,59 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 
 	// filter out entries not eligible for exp distribution
 	memset(tmpsd,0,sizeof(tmpsd));
-	for(i = 0, count = 0, mvp_damage = 0; i < DAMAGELOG_SIZE && md->dmglog[i].id; i++) {
-		map_session_data* tsd = nullptr;
-		if (md->dmglog[i].flag == MDLF_SELF) {
+
+	count = 0;
+	int64 mvp_damage = 0;
+	int64 total_damage = 0;
+	for( i = 0; i < md->dmglog.size(); i++ ){
+		const s_dmglog& entry = md->dmglog[i];
+
+		total_damage = util::safe_addition_cap(total_damage, entry.dmg, INT64_MAX);
+
+		if( entry.flag == MDLF_SELF ){
 			//Self damage counts as exp tap
 			count++;
 			continue;
 		}
-		tsd = map_charid2sd(md->dmglog[i].id);
+
+		map_session_data* tsd = map_charid2sd( entry.id );
+
 		if (tsd == nullptr)
-			continue; // skip empty entries
+			continue; // skip players that are offline
 		if (tsd->bl.m != m)
 			continue; // skip players not on this map
 		count++; //Only logged into same map chars are counted for the total.
 		if (pc_isdead(tsd))
 			continue; // skip dead players
-		if (md->dmglog[i].flag == MDLF_HOMUN && !hom_is_active(tsd->hd))
-			continue; // skip homunc's share if inactive
-		if (md->dmglog[i].flag == MDLF_PET && (!tsd->status.pet_id || !tsd->pd))
-			continue; // skip pet's share if inactive
 
-		if(md->dmglog[i].dmg > mvp_damage) {
+		switch( entry.flag ){
+			case MDLF_NORMAL:
+				dmgbltypes |= BL_PC;
+				break;
+			case MDLF_HOMUN:
+				// Skip homunculus' share if inactive
+				if( !hom_is_active( tsd->hd ) ){
+					continue;
+				}
+				dmgbltypes |= BL_HOM;
+				break;
+			case MDLF_PET:
+				// Skip pet's share if inactive
+				if( tsd->status.pet_id == 0 || tsd->pd == nullptr ){
+					continue;
+				}
+				dmgbltypes |= BL_PET;
+				break;
+		}
+
+		if( entry.dmg > mvp_damage ){
 			third_sd = second_sd;
 			second_sd = mvp_sd;
 			mvp_sd = tsd;
-			mvp_damage = md->dmglog[i].dmg;
+			mvp_damage = entry.dmg;
 		}
 
 		tmpsd[i] = tsd; // record as valid damage-log entry
-
-		switch( md->dmglog[i].flag ) {
-			case MDLF_NORMAL: dmgbltypes|= BL_PC;  break;
-			case MDLF_HOMUN:  dmgbltypes|= BL_HOM; break;
-			case MDLF_PET:    dmgbltypes|= BL_PET; break;
-		}
 	}
 
 	// determines, if the monster was killed by homunculus' damage only
@@ -2748,13 +2750,9 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 	merckillonly = (bool)((dmgbltypes & BL_MER) && !(dmgbltypes & ~BL_MER));
 
 	if(battle_config.exp_calc_type == 2 && count > 1) {	//Apply first-attacker 200% exp share bonus
-		if (UINT_MAX - md->dmglog[0].dmg > md->tdmg) {
-			md->tdmg += md->dmglog[0].dmg;
-			md->dmglog[0].dmg *= 2;
-		} else {
-			md->dmglog[0].dmg+= UINT_MAX - md->tdmg;
-			md->tdmg = UINT_MAX;
-		}
+		s_dmglog& entry = md->dmglog[0];
+		total_damage = util::safe_addition_cap(total_damage, entry.dmg, INT64_MAX);
+		entry.dmg = util::safe_addition_cap(entry.dmg, entry.dmg, INT64_MAX);
 	}
 
 	if(!(type&2) && //No exp
@@ -2783,20 +2781,21 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 		if(battle_config.mobs_level_up && md->level > md->db->lv) // [Valaris]
 			bonus += (md->level-md->db->lv)*battle_config.mobs_level_up_exp_rate;
 
-		for(i = 0; i < DAMAGELOG_SIZE && md->dmglog[i].id; i++) {
+		for( i = 0; i < md->dmglog.size(); i++ ){
+			const s_dmglog& entry = md->dmglog[i];
 			int32 flag=1,zeny=0;
 			t_exp base_exp, job_exp;
 			double per; //Your share of the mob's exp
 
 			if (!tmpsd[i]) continue;
 
-			if (battle_config.exp_calc_type == 1 || md->tdmg == 0) {
+			if (battle_config.exp_calc_type == 1 || total_damage == 0) {
 				// eAthena's exp formula based on max hp
-				per = (double)md->dmglog[i].dmg / (double)status->max_hp;
+				per = (double)entry.dmg / (double)status->max_hp;
 			}
 			else {
 				// Aegis's exp formula based on total damage
-				per = (double)md->dmglog[i].dmg / (double)md->tdmg;
+				per = (double)entry.dmg / (double)total_damage;
 			}
 			// To prevent exploits
 			if (per > 1) per = 1;
@@ -2822,7 +2821,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 				}
 			}
 
-			if( md->dmglog[i].flag == MDLF_PET )
+			if( entry.flag == MDLF_PET )
 				per *= battle_config.pet_attack_exp_rate/100.;
 
 			if(battle_config.zeny_from_mobs && md->level) {
@@ -2843,7 +2842,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 
 			if (map_getmapflag(m, MF_NOJOBEXP) || !md->db->job_exp
 #ifndef RENEWAL
-				|| md->dmglog[i].flag == MDLF_HOMUN // Homun earned job-exp is always lost.
+				|| entry.flag == MDLF_HOMUN // Homun earned job-exp is always lost.
 #endif
 			)
 				job_exp = 0;
@@ -2854,7 +2853,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 				job_exp = (t_exp)cap_value(exp, 1, MAX_EXP);
 			}
 
-			if ((base_exp > 0 || job_exp > 0) && md->dmglog[i].flag == MDLF_HOMUN && homkillonly && battle_config.hom_idle_no_share && pc_isidle_hom(tmpsd[i]))
+			if ((base_exp > 0 || job_exp > 0) && entry.flag == MDLF_HOMUN && homkillonly && battle_config.hom_idle_no_share && pc_isidle_hom(tmpsd[i]))
 				base_exp = job_exp = 0;
 
 			if ( ( temp = tmpsd[i]->status.party_id)>0 ) {
@@ -2887,7 +2886,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 #endif
 			if(flag) {
 				if(base_exp || job_exp) {
-					if( md->dmglog[i].flag != MDLF_PET || battle_config.pet_attack_exp_to_master ) {
+					if( entry.flag != MDLF_PET || battle_config.pet_attack_exp_to_master ) {
 #ifdef RENEWAL_EXP
 						int32 rate = pc_level_penalty_mod( tmpsd[i], PENALTY_EXP, nullptr, md );
 						if (rate != 100) {
@@ -2903,9 +2902,6 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 				if(zeny) // zeny from mobs [Valaris]
 					pc_getzeny(tmpsd[i], zeny, LOG_TYPE_PICKDROP_MONSTER);
 			}
-
-			if( md->get_bosstype() == BOSSTYPE_MVP )
-				pc_damage_log_clear(tmpsd[i],md->bl.id);
 		}
 
 		for( i = 0; i < pnum; i++ ) //Party share.
@@ -3103,7 +3099,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 		t_itemid log_mvp_nameid = 0;
 		t_exp log_mvp_exp = 0;
 
-		clif_mvp_effect( mvp_sd );
+		clif_mvp_effect( *mvp_sd );
 
 		//mapflag: noexp check [Lorky]
 		if( md->db->mexp > 0 && !( map_getmapflag( m, MF_NOBASEEXP ) || type&2 ) ){
@@ -3125,7 +3121,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 
 			log_mvp_exp = cap_value( log_mvp_exp, 1, MAX_EXP );
 
-			clif_mvp_exp( mvp_sd, log_mvp_exp );
+			clif_mvp_exp( *mvp_sd, log_mvp_exp );
 			pc_gainexp( mvp_sd, &md->bl, log_mvp_exp, 0, 0 );
 		}
 
@@ -3346,9 +3342,8 @@ void mob_revive(struct mob_data *md, uint32 hp)
 	md->last_linktime = tick;
 	md->last_pcneartime = 0;
 	//We reset the damage log and then set the already lost damage as self damage so players don't get exp for it [Playtester]
-	memset(md->dmglog, 0, sizeof(md->dmglog));
-	mob_log_damage(md, &md->bl, md->status.max_hp - hp);
-	md->tdmg = 0;
+	md->dmglog.clear();
+	mob_log_damage(md, &md->bl, static_cast<int64>(md->status.max_hp - hp));
 	if (!md->bl.prev){
 		if(map_addblock(&md->bl))
 			return;
@@ -3453,7 +3448,7 @@ bool mob_has_spawn(uint16 mob_id)
 */
 void mob_add_spawn(uint16 mob_id, const struct spawn_info& new_spawn)
 {
-	unsigned short m = new_spawn.mapindex;
+	uint16 m = new_spawn.mapindex;
 
 	if( new_spawn.qty <= 0 )
 		return; //ignore empty spawns
@@ -3528,8 +3523,7 @@ int32 mob_class_change (struct mob_data *md, int32 mob_id)
 	status_calc_mob(md,SCO_FIRST);
 
 	if (battle_config.monster_class_change_recover) {
-		memset(md->dmglog, 0, sizeof(md->dmglog));
-		md->tdmg = 0;
+		md->dmglog.clear();
 	} else {
 		md->status.hp = md->status.max_hp*hp_rate/100;
 		if(md->status.hp < 1) md->status.hp = 1;
@@ -3560,16 +3554,19 @@ void mob_heal(struct mob_data *md,uint32 heal)
 		clif_name_area(&md->bl);
 #if PACKETVER >= 20120404
 	if (battle_config.monster_hp_bars_info && !map_getmapflag(md->bl.m, MF_HIDEMOBHPBAR)) {
-		int32 i;
 		if (md->special_state.ai == AI_ABR || md->special_state.ai == AI_BIONIC) {
 			clif_summon_hp_bar(*md);
 		}
-		for(i = 0; i < DAMAGELOG_SIZE; i++)// must show hp bar to all char who already hit the mob.
-			if( md->dmglog[i].id ) {
-				map_session_data *sd = map_charid2sd(md->dmglog[i].id);
-				if( sd && check_distance_bl(&md->bl, &sd->bl, AREA_SIZE) ) // check if in range
-					clif_monster_hp_bar(md, sd->fd);
+
+		// Must show hp bar to all char who already hit the mob.
+		for( const auto& entry : md->dmglog ){
+			map_session_data* sd = map_charid2sd( entry.id );
+
+			// Check if in range
+			if( sd != nullptr && check_distance_bl( &md->bl, &sd->bl, AREA_SIZE ) ){
+				clif_monster_hp_bar(md, sd->fd);
 			}
+		}
 	}
 #endif
 }
@@ -4427,7 +4424,7 @@ int32 mob_clone_delete(struct mob_data *md){
 }
 
 //Adjusts the drop rate of item according to the criteria given. [Skotlex]
-static uint32 mob_drop_adjust(int32 baserate, int32 rate_adjust, unsigned short rate_min, unsigned short rate_max)
+static uint32 mob_drop_adjust(int32 baserate, int32 rate_adjust, uint16 rate_min, uint16 rate_max)
 {
 	double rate = baserate;
 
@@ -5487,7 +5484,7 @@ uint64 MobAvailDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			constant = sprite_mob->id;
 		}
 
-		mob->vd.class_ = (unsigned short)constant;
+		mob->vd.class_ = (uint16)constant;
 	} else {
 		this->invalidWarning(node["Sprite"], "Sprite is missing.\n");
 		return 0;
@@ -6388,7 +6385,7 @@ static void mob_drop_ratio_adjust(void){
 		}
 
 		for( j = 0; j < MAX_MOB_DROP_TOTAL; j++ ){
-			unsigned short ratemin, ratemax;
+			uint16 ratemin, ratemax;
 			bool is_treasurechest;
 
 			nameid = mob->dropitem[j].nameid;
@@ -6472,7 +6469,7 @@ static void mob_drop_ratio_adjust(void){
 			// calculate and store Max available drop chance of the item
 			// but skip treasure chests.
 			if( rate && !is_treasurechest ){
-				unsigned short k;
+				uint16 k;
 
 				if( id->maxchance == -1 || ( id->maxchance < rate ) ){
 					id->maxchance = rate; // item has bigger drop chance or sold in shops

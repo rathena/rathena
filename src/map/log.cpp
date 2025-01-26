@@ -528,7 +528,7 @@ void log_cash( map_session_data* sd, e_log_pick_type type, e_log_cash_type cash_
  **/
 void log_feeding(map_session_data *sd, e_log_feeding_type type, t_itemid nameid) {
 	uint32 target_id = 0, intimacy = 0;
-	unsigned short target_class = 0;
+	uint16 target_class = 0;
 
 	nullpo_retv( sd );
 

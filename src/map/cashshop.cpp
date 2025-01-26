@@ -548,7 +548,7 @@ bool cashshop_buylist( map_session_data* sd, uint32 kafrapoints, int32 n, const 
 		if (!id)
 			continue;
 
-		unsigned short get_amt = quantity;
+		uint16 get_amt = quantity;
 
 		if (id->flag.guid || !itemdb_isstackable2(id))
 			get_amt = 1;

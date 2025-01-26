@@ -44,7 +44,7 @@ public:
 
 struct s_hom_stats {
 	uint32 HP, SP;
-	unsigned short str, agi, vit, int_, dex, luk;
+	uint16 str, agi, vit, int_, dex, luk;
 };
 
 /// Homunculus skill entry [Celest]

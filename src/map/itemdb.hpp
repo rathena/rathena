@@ -696,7 +696,7 @@ enum e_random_item_group {
 	IG_LASTANGEL_LUCKYSCROLL,
 	IG_VALKYRIE_LUCKY_SCROLL,
 	IG_SPLASH_RAINBOW_LUCKY_SCROLL,
-	IG_SHAPESHIFTER_COSTUME,
+	IG_COSTAMA_EGG22,
 	IG_JULY_LUCKY_SCROLL,
 	IG_COSTAMA_EGG23,
 	IG_COSTAMA_EGG28,
@@ -3174,7 +3174,7 @@ struct s_item_group_db
 /// Struct of Roulette db
 struct s_roulette_db {
 	t_itemid *nameid[MAX_ROULETTE_LEVEL]; /// Item ID
-	unsigned short *qty[MAX_ROULETTE_LEVEL]; /// Amount of Item ID
+	uint16 *qty[MAX_ROULETTE_LEVEL]; /// Amount of Item ID
 	int32 *flag[MAX_ROULETTE_LEVEL]; /// Whether the item is for loss or win
 	int32 items[MAX_ROULETTE_LEVEL]; /// Number of items in the list for each
 };
@@ -3312,6 +3312,7 @@ public:
 	std::string create_item_link(struct item& item);
 	std::string create_item_link( std::shared_ptr<item_data>& data );
 	std::string create_item_link_for_mes( std::shared_ptr<item_data>& data, bool use_brackets, const char* name );
+	std::string create_item_icon_for_mes( std::shared_ptr<item_data>& data, const char* name );
 };
 
 extern ItemDatabase item_db;

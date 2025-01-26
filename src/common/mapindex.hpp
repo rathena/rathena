@@ -58,10 +58,10 @@
 const char* mapindex_getmapname(const char* string, char* output);
 const char* mapindex_getmapname_ext(const char* string, char* output);
 
-unsigned short mapindex_name2idx(const char* name, const char *func);
+uint16 mapindex_name2idx(const char* name, const char *func);
 #define mapindex_name2id(mapname) mapindex_name2idx((mapname), __FUNCTION__)
 
-const char* mapindex_idx2name(unsigned short id, const char *func);
+const char* mapindex_idx2name(uint16 id, const char *func);
 #define mapindex_id2name(mapindex) mapindex_idx2name((mapindex), __FUNCTION__)
 
 int32 mapindex_addmap(int32 index, const char* name);

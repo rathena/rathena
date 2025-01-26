@@ -1010,10 +1010,6 @@ bool pc_addfame(map_session_data &sd, int32 count)
 {
 	enum e_rank ranktype;
 
-	sd.status.fame += count;
-	if (sd.status.fame > MAX_FAME)
-		sd.status.fame = MAX_FAME;
-
 	switch(sd.class_&MAPID_UPPERMASK){
 		case MAPID_BLACKSMITH:	ranktype = RANK_BLACKSMITH; break;
 		case MAPID_ALCHEMIST:	ranktype = RANK_ALCHEMIST; break;
@@ -1022,6 +1018,8 @@ bool pc_addfame(map_session_data &sd, int32 count)
 			ShowWarning( "pc_addfame: Trying to add fame to class '%s'(%d).\n", job_name(sd.status.class_), sd.status.class_ );
 			return false;
 	}
+
+	sd.status.fame = cap_value( sd.status.fame + count, 0, MAX_FAME );
 
 	clif_update_rankingpoint(sd, ranktype, count);
 	chrif_updatefamelist(sd, ranktype);
@@ -2295,15 +2293,15 @@ void pc_reg_received(map_session_data *sd)
 	sd->change_level_2nd = static_cast<unsigned char>(pc_readglobalreg(sd, add_str(JOBCHANGE2ND_VAR)));
 	sd->change_level_3rd = static_cast<unsigned char>(pc_readglobalreg(sd, add_str(JOBCHANGE3RD_VAR)));
 	sd->change_level_4th = static_cast<unsigned char>(pc_readglobalreg(sd, add_str(JOBCHANGE4TH_VAR)));
-	sd->die_counter = static_cast<int>(pc_readglobalreg(sd, add_str(PCDIECOUNTER_VAR)));
+	sd->die_counter = static_cast<int32>(pc_readglobalreg(sd, add_str(PCDIECOUNTER_VAR)));
 
-	sd->langtype = static_cast<int>(pc_readaccountreg(sd, add_str(LANGTYPE_VAR)));
+	sd->langtype = static_cast<int32>(pc_readaccountreg(sd, add_str(LANGTYPE_VAR)));
 	if (msg_checklangtype(sd->langtype,true) < 0)
 		sd->langtype = 0; //invalid langtype reset to default
 
 	// Cash shop
-	sd->cashPoints = static_cast<int>(pc_readaccountreg(sd, add_str(CASHPOINT_VAR)));
-	sd->kafraPoints = static_cast<int>(pc_readaccountreg(sd, add_str(KAFRAPOINT_VAR)));
+	sd->cashPoints = static_cast<int32>(pc_readaccountreg(sd, add_str(CASHPOINT_VAR)));
+	sd->kafraPoints = static_cast<int32>(pc_readaccountreg(sd, add_str(KAFRAPOINT_VAR)));
 
 	// Cooking Exp
 	sd->cook_mastery = static_cast<short>(pc_readglobalreg(sd, add_str(COOKMASTERY_VAR)));
@@ -2315,12 +2313,12 @@ void pc_reg_received(map_session_data *sd)
 	}
 
 	if (battle_config.feature_banking)
-		sd->bank_vault = static_cast<int>(pc_readreg2(sd, BANK_VAULT_VAR));
+		sd->bank_vault = static_cast<int32>(pc_readreg2(sd, BANK_VAULT_VAR));
 
 	if (battle_config.feature_roulette) {
-		sd->roulette_point.bronze = static_cast<int>(pc_readreg2(sd, ROULETTE_BRONZE_VAR));
-		sd->roulette_point.silver = static_cast<int>(pc_readreg2(sd, ROULETTE_SILVER_VAR));
-		sd->roulette_point.gold = static_cast<int>(pc_readreg2(sd, ROULETTE_GOLD_VAR));
+		sd->roulette_point.bronze = static_cast<int32>(pc_readreg2(sd, ROULETTE_BRONZE_VAR));
+		sd->roulette_point.silver = static_cast<int32>(pc_readreg2(sd, ROULETTE_SILVER_VAR));
+		sd->roulette_point.gold = static_cast<int32>(pc_readreg2(sd, ROULETTE_GOLD_VAR));
 	}
 	sd->roulette.prizeIdx = -1;
 
@@ -2339,7 +2337,7 @@ void pc_reg_received(map_session_data *sd)
 	}
 
 	if ((i = pc_checkskill(sd,RG_PLAGIARISM)) > 0) {
-		unsigned short skid = static_cast<unsigned short>(pc_readglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM)));
+		uint16 skid = static_cast<uint16>(pc_readglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM)));
 		sd->cloneskill_idx = skill_get_index(skid);
 		if (sd->cloneskill_idx > 0) {
 			sd->status.skill[sd->cloneskill_idx].id = skid;
@@ -2350,7 +2348,7 @@ void pc_reg_received(map_session_data *sd)
 		}
 	}
 	if ((i = pc_checkskill(sd,SC_REPRODUCE)) > 0) {
-		unsigned short skid = static_cast<unsigned short>(pc_readglobalreg(sd, add_str(SKILL_VAR_REPRODUCE)));
+		uint16 skid = static_cast<uint16>(pc_readglobalreg(sd, add_str(SKILL_VAR_REPRODUCE)));
 		sd->reproduceskill_idx = skill_get_index(skid);
 		if (sd->reproduceskill_idx > 0) {
 			sd->status.skill[sd->reproduceskill_idx].id = skid;
@@ -3956,8 +3954,12 @@ void pc_bonus(map_session_data *sd,int32 type,int32 val)
 				sd->left_weapon.ignore_def_class |= 1<<val;
 			break;
 		case SP_ATK_RATE:
+#ifdef RENEWAL
 			if (sd->state.lr_flag != LR_FLAG_ARROW)
 				sd->bonus.atk_rate += val;
+#else
+			ShowError( "pc_bonus: %s is not supported in Pre-Renewal mode.\n", QUOTE( SP_ATK_RATE ) );
+#endif
 			break;
 		case SP_MAGIC_ATK_DEF:
 			if (sd->state.lr_flag != LR_FLAG_ARROW)
@@ -6797,7 +6799,7 @@ int32 pc_steal_coin(map_session_data *sd,struct block_list *target)
  *			SETPOS_NO_MAPSERVER	Map not in this map-server, and failed to locate alternate map-server.
  *			SETPOS_AUTOTRADE	Player is in autotrade state
  *------------------------------------------*/
-enum e_setpos pc_setpos(map_session_data* sd, unsigned short mapindex, int32 x, int32 y, clr_type clrtype)
+enum e_setpos pc_setpos(map_session_data* sd, uint16 mapindex, int32 x, int32 y, clr_type clrtype)
 {
 	nullpo_retr(SETPOS_OK,sd);
 
@@ -7310,7 +7312,7 @@ static void pc_checkallowskill(map_session_data *sd)
 		}
 		if (flag[SCF_REQUIRENOWEAPON]) { 
 			if (sd->sc.getSCE(status) && sd->status.weapon)
-				status_change_end(&sd->bl, status, INVALID_TIMER);
+				status_change_end( &sd->bl, status );
 		}
 
 		if (flag[SCF_REQUIRESHIELD]) { // Skills requiring a shield
@@ -7373,7 +7375,7 @@ bool pc_checkequip2(map_session_data *sd, t_itemid nameid, int32 min, int32 max)
  * Convert's from the client's lame Job ID system
  * to the map server's 'makes sense' system. [Skotlex]
  *------------------------------------------*/
-uint64 pc_jobid2mapid(unsigned short b_class)
+uint64 pc_jobid2mapid(uint16 b_class)
 {
 	switch(b_class)
 	{
@@ -9013,7 +9015,6 @@ void pc_skillup(map_session_data *sd,uint16 skill_id)
 			sd->status.skill[idx].flag == SKILL_FLAG_PERMANENT && //Don't allow raising while you have granted skills. [Skotlex]
 			sd->status.skill[idx].lv < skill_tree_get_max(skill_id, sd->status.class_) )
 		{
-			int32 lv, range, upgradable;
 			sd->status.skill[idx].lv++;
 			sd->status.skill_point--;
 			if( !skill_get_inf(skill_id) || pc_checkskill_summoner(sd, SUMMONER_POWER_LAND) >= 20 || pc_checkskill_summoner(sd, SUMMONER_POWER_SEA) >= 20 )
@@ -9023,10 +9024,10 @@ void pc_skillup(map_session_data *sd,uint16 skill_id)
 			else
 				pc_check_skilltree(sd); // Check if a new skill can Lvlup
 
-			lv = sd->status.skill[idx].lv;
-			range = skill_get_range2(&sd->bl, skill_id, lv, false);
-			upgradable = (lv < skill_tree_get_max(sd->status.skill[idx].id, sd->status.class_)) ? 1 : 0;
-			clif_skillup(sd,skill_id,lv,range,upgradable);
+			uint16 lv = sd->status.skill[idx].lv;
+			int32 range = skill_get_range2(&sd->bl, skill_id, lv, false);
+			bool upgradable = ( lv < skill_tree_get_max( sd->status.skill[idx].id, sd->status.class_ ) );
+			clif_skillup( *sd, skill_id, lv, range, upgradable );
 			clif_updatestatus(*sd,SP_SKILLPOINT);
 			if( skill_id == GN_REMODELING_CART ) /* cart weight info was updated by status_calc_pc */
 				clif_updatestatus(*sd,SP_CARTINFO);
@@ -9701,7 +9702,7 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 		struct pet_data *pd = sd->pd;
 		if( !mapdata->getMapFlag(MF_NOEXPPENALTY) ) {
 			pet_set_intimate(pd, pd->pet.intimate + pd->get_pet_db()->die);
-			clif_send_petdata(sd,sd->pd,1,pd->pet.intimate);
+			clif_send_petdata( sd, *sd->pd, CHANGESTATEPET_INTIMACY );
 		}
 		if( sd->pd->target_id ) // Unlock all targets...
 			pet_unlocktarget(sd->pd);
@@ -10161,7 +10162,13 @@ int64 pc_readparam(map_session_data* sd,int64 type)
 		case SP_DOUBLE_RATE:     val = sd->bonus.double_rate; break;
 		case SP_DOUBLE_ADD_RATE: val = sd->bonus.double_add_rate; break;
 		case SP_MATK_RATE:       val = sd->matk_rate; break;
-		case SP_ATK_RATE:        val = sd->bonus.atk_rate; break;
+		case SP_ATK_RATE:
+#ifdef RENEWAL
+			val = sd->bonus.atk_rate;
+#else
+			ShowError( "pc_readparam: %s is not supported in Pre-Renewal mode.\n", QUOTE( SP_ATK_RATE ) );
+#endif
+			break;
 		case SP_MAGIC_ATK_DEF:   val = sd->bonus.magic_def_rate; break;
 		case SP_MISC_ATK_DEF:    val = sd->bonus.misc_def_rate; break;
 		case SP_PERFECT_HIT_RATE:val = sd->bonus.perfect_hit; break;
@@ -10716,7 +10723,7 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 	if (job == -1)
 		return false;
 
-	if ((unsigned short)b_class == sd->class_)
+	if ((uint16)b_class == sd->class_)
 		return false; //Nothing to change.
 
 	// If the job does not exist in the job db, dont allow changing to it
@@ -10764,7 +10771,7 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 	sd->status.class_ = job;
 	fame_flag = pc_famerank(sd->status.char_id,sd->class_&MAPID_UPPERMASK);
 	uint64 previous_class = sd->class_;
-	sd->class_ = (unsigned short)b_class;
+	sd->class_ = (uint16)b_class;
 	sd->status.job_level=1;
 	sd->status.job_exp=0;
 
@@ -14125,7 +14132,7 @@ static bool pc_readdb_job_noenter_map( char *str[], size_t columns, size_t curre
 			ShowError("pc_readdb_job_noenter_map: Invalid job %s specified.\n", str[0]);
 			return false;
 		}
-		class_ = static_cast<int>(class_tmp);
+		class_ = static_cast<int32>(class_tmp);
 	}
 
 	if (!pcdb_checkid(class_)) {
@@ -14418,7 +14425,7 @@ void pc_itemcd_do(map_session_data *sd, bool load) {
  * @return 0: No delay, can consume item.
  *         1: Has delay, cancel consumption.
  **/
-uint8 pc_itemcd_add(map_session_data *sd, struct item_data *id, t_tick tick, unsigned short n) {
+uint8 pc_itemcd_add(map_session_data *sd, struct item_data *id, t_tick tick, uint16 n) {
 	int32 i;
 	ARR_FIND(0, MAX_ITEMDELAYS, i, sd->item_delay[i].nameid == id->nameid );
 	if( i == MAX_ITEMDELAYS ) /* item not found. try first empty now */
@@ -14464,7 +14471,7 @@ uint8 pc_itemcd_add(map_session_data *sd, struct item_data *id, t_tick tick, uns
  * @return 0: No delay, can consume item.
  *         1: Has delay, cancel consumption.
  **/
-uint8 pc_itemcd_check(map_session_data *sd, struct item_data *id, t_tick tick, unsigned short n) {
+uint8 pc_itemcd_check(map_session_data *sd, struct item_data *id, t_tick tick, uint16 n) {
 	status_change *sc = nullptr;
 
 	nullpo_retr(0, sd);
@@ -14483,81 +14490,6 @@ uint8 pc_itemcd_check(map_session_data *sd, struct item_data *id, t_tick tick, u
 
 	sc_start(&sd->bl, &sd->bl, id->delay.sc, 100, id->nameid, id->delay.duration);
 	return 0;
-}
-
-/**
-* Clear the dmglog data from player
-* @param sd
-* @param md
-**/
-static void pc_clear_log_damage_sub(uint32 char_id, struct mob_data *md)
-{
-	uint8 i;
-	ARR_FIND(0,DAMAGELOG_SIZE,i,md->dmglog[i].id == char_id);
-	if (i < DAMAGELOG_SIZE) {
-		md->dmglog[i].id = 0;
-		md->dmglog[i].dmg = 0;
-		md->dmglog[i].dmg_tanked = 0;
-		md->dmglog[i].flag = 0;
-	}
-}
-
-/**
-* Add log to player's dmglog
-* @param sd
-* @param id Monster's GID
-**/
-void pc_damage_log_add(map_session_data *sd, int32 id)
-{
-	uint8 i = 0;
-
-	if (!sd || !id)
-		return;
-
-	//Only store new data, don't need to renew the old one with same id
-	ARR_FIND(0, DAMAGELOG_SIZE_PC, i, sd->dmglog[i] == id);
-	if (i < DAMAGELOG_SIZE_PC)
-		return;
-
-	for (i = 0; i < DAMAGELOG_SIZE_PC; i++) {
-		if (sd->dmglog[i] == 0) {
-			sd->dmglog[i] = id;
-			return;
-		}
-	}
-}
-
-/**
-* Clear dmglog data from player
-* @param sd
-* @param id Monster's id
-**/
-void pc_damage_log_clear(map_session_data *sd, int32 id)
-{
-	uint8 i;
-	struct mob_data *md = nullptr;
-
-	if (!sd)
-		return;
-
-	if (!id) {
-		for (i = 0; i < DAMAGELOG_SIZE_PC; i++) {
-			if( !sd->dmglog[i] )	//skip the empty value
-				continue;
-
-			if ((md = map_id2md(sd->dmglog[i])))
-				pc_clear_log_damage_sub(sd->status.char_id,md);
-			sd->dmglog[i] = 0;
-		}
-	}
-	else {
-		if ((md = map_id2md(id)))
-			pc_clear_log_damage_sub(sd->status.char_id,md);
-
-		ARR_FIND(0,DAMAGELOG_SIZE_PC,i,sd->dmglog[i] == id);	// find the id position
-		if (i < DAMAGELOG_SIZE_PC)
-			sd->dmglog[i] = 0;
-	}
 }
 
 /**
@@ -15374,7 +15306,7 @@ int32 pc_attendance_counter( map_session_data* sd ){
 	}
 
 	// Get the counter for the current period
-	int32 counter = static_cast<int>(pc_readreg2( sd, ATTENDANCE_COUNT_VAR ));
+	int32 counter = static_cast<int32>(pc_readreg2( sd, ATTENDANCE_COUNT_VAR ));
 
 	// Check if we have a remaining counter from a previous period
 	if( counter > 0 && pc_readreg2( sd, ATTENDANCE_DATE_VAR ) < period->start ){

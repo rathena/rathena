@@ -1188,6 +1188,11 @@ The following sample will open a preview window for Red Potion:
 
 NOTE: Be aware that item links are broken in some 2015 clients.
 
+In 2023 the syntax ^i[Item ID] was introduced to display an item icon inside a NPC dialog.
+We created a script command "mesitemicon" that allows you to create the correct syntax
+depending on your configured packet version. We recommend that you use this script command
+instead of hardcoding the other syntax. For more details see the documentation for "mesitemicon".
+
 URLs
 ----
 Similarly, you can create links to websites that launch in a new window:
@@ -4762,6 +4767,12 @@ wall), the character is pushed only up to the obstacle.
 	// pushes the character 5 cells in 3 o'clock direction from its
 	// current position.
 	pushpc DIR_EAST, 5;
+
+---------------------------------------
+
+*kick({<char_id>});
+
+This command kicks the attached character (or character provided by <char_id>) from the map server, just like @kick.
 
 ---------------------------------------
 
@@ -11201,6 +11212,21 @@ Examples:
 	mes "Bring me a " + mesitemlink( 1201 ) + "."; // Will display "Bring me a [Knife]." and "[Knife]" will be clickable.
 	mes "Bring me a " + mesitemlink( 1201, false ) + "."; // Will display "Bring me a Knife." and "Knife" will be clickable.
 	mes "Bring me a " + mesitemlink( 1201, true, "Super cutting knife" ) + "."; // Will display "Bring me a [Super cutting knife]." and "[Super cutting knife]" will be clickable.
+
+---------------------------------------
+
+*mesitemicon(<item_id>{,<display_name>});
+
+Generates an itemicon string for an item and can be used with NPC's mes command.
+The NPC message will show the item's icon which will be clickable and opens the
+item description client side.
+
+If the feature is disabled, by default the database name of the item will be used.
+However if you provide a <display_name>, this name will be displayed instead.
+
+Examples:
+
+	mes mesitemicon( 1201 ); // Will display a Knife icon and will be clickable. If clicked it opens the description for Knife [3]
 
 ========================
 |14.- Channel commands.|
