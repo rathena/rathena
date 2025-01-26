@@ -7880,6 +7880,8 @@ static uint16 status_calc_speed(struct block_list *bl, status_change *sc, int32 
 			val = max(val, 25); // !TODO: Confirm bonus movement speed
 		if (sc->getSCE(SC_EMERGENCY_MOVE))
 			val = max(val, sc->getSCE(SC_EMERGENCY_MOVE)->val2);
+		if (sc->getSCE(SC_SHADOW_CLOCK))
+			val = max(val, 75);
 		if( sc->getSCE(SC_JAWAII_SERENADE) ){
 			val = max( val, 25 );
 		}
