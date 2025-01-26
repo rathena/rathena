@@ -11831,7 +11831,7 @@ einbroch,149,242,5	script	Coughing young man#ITB	4_M_NFMAN,3,3,{
 		mes "Why haven't you come back yet...";
 		mes "Cough Cough!!";
 		next;
-		mes "^ff0000¡Ø You can start this quest from level 150.^000000";
+		mes "^ff0000Â¡Ã˜ You can start this quest from level 150.^000000";
 		close;
 	}
 	if (ill_teddy == 0) {
@@ -12851,25 +12851,25 @@ prt_maze01,97,21,7	script(CLOAKED)	Andrea#1	4_M_ANDREA,{
 		mes "[Andrea]";
 		mes "I heard the story from the guild leader Esmeralda. You are the one who saved us.";
 		next;
-		select( "It's not like I did anything particularly grand." );
+		select( "It's not like I did anything great particularly." );
 		mes "[Andrea]";
 		mes "What humble words these are. I almost couldn't come back to life even as a soul. Thank you so much.";
 		next;
 		select( "Where did Esmeralda go?" );
 		mes "[Andrea]";
-		mes "Oh, the guild leader said she had a few things to prepare and end;ed to the guild base for a moment. She said she would end; straight to the entrance of the labyrinth.";
+		mes "Oh, the guild leader said she had a few things to prepare and headed to the guild base for a moment. She said she would head straight to the entrance of the labyrinth.";
 		next;
 		mes "[Andrea]";
-		mes "Also, she asked me whether " + strcharinfo(0) + " wants to join us as guest member of the guild.";
+		mes "Also, she asked me whether " + strcharinfo(0) + " wants to join us as a guest member of the guild.";
 		next;
 		mes "[Andrea]";
-		mes "We don't have the manpower to raise funds for the guild revival. So, we are in a situation where even one hand is lacking.";
+		mes "We don't have the manpower to raise funds for the guild's revival. So, we are in a situation where even one hand is helping.";
 		next;
 		mes "[Andrea]";
-		mes "If we can conquer this newly revealed twisted labyrinth, it will be a spark that can revive our guild. The only person around guild who can do that is " + strcharinfo(0) + ".";
+		mes "If we can conquer this newly revealed Twisted Labyrinth, it will be a spark that can revive our guild. The only person around guild who can do that is " + strcharinfo(0) + ".";
 		next;
 		mes "[Andrea]";
-		mes "" + strcharinfo(0) + ", would you be able to work as a guest guild member for our guild?";
+		mes strcharinfo(0) + ", would you be able to work as a guest guild member for our guild?";
 		next;
 		if (select( "I guess that's too much.", "What are the benefits of being one?" ) == 1) {
 			mes "[Andrea]";
@@ -12877,7 +12877,7 @@ prt_maze01,97,21,7	script(CLOAKED)	Andrea#1	4_M_ANDREA,{
 			close;
 		}
 		mes "[Andrea]";
-		mes "Even though we are only souls, we have a lot of knowledge gained while wandering through this twisted labyrinth.";
+		mes "Even though we are only souls, we have gained a lot of knowledge, while wandering through this Twisted Labyrinth.";
 		next;
 		mes "[Andrea]";
 		mes "We will give you several requests and provide you with appropriate compensation. Would you like to work as a guest guild member?";
@@ -12888,7 +12888,7 @@ prt_maze01,97,21,7	script(CLOAKED)	Andrea#1	4_M_ANDREA,{
 			close;
 		}
 		mes "[Andrea]";
-		mes "Thank you. Now, on behalf of the guild, we would like to ask " + strcharinfo(0) + " a request related to this twisted labyrinth.";
+		mes "Thank you. Now, on behalf of the guild, we would like to ask " + strcharinfo(0) + " a request related to this Twisted Labyrinth.";
 		ill_laby = 6;
 		completequest 12489;
 		close;
@@ -12907,9 +12907,9 @@ prt_maze01,97,21,7	script(CLOAKED)	Andrea#1	4_M_ANDREA,{
 	}
 	mes "[Andrea]";
 	if (F_queststatus(HAVEQUEST,12470,12471,12472,12473,12474,12475,12476,12477) != 0)
-		mes "You still have quests you couldn't complete yesterday. ^ff0000If you accept a new quest now, the quest you couldn't complete yesterday will be continued today.^000000 Do you want to accept all today's quests?";
+		mes "You still have quests you couldn't complete yesterday. ^ff0000If you accept a new quest now, the quest you couldn't complete yesterday will be continued today.^000000 Do you want to accept all of today's quests?";
 	else
-		mes "" + strcharinfo(0) + ", I have a lot of requests for you. Do you want to accept all requests?";
+		mes strcharinfo(0) + ", I have a lot of requests for you. Do you want to accept all requests?";
 	next;
 	if (select( "Not now", "Accept all" ) == 1) {
 		mes "[Andrea]";
@@ -13139,7 +13139,7 @@ prt_maze01,97,25,5	script(CLOAKED)	Anes#1	4_F_ANES,{
 	switch( .@state ) {
 	case 0:
 		mes "[Anes]";
-		mes "" + strcharinfo(0) + ", there is one weekly request that you can receive weekly. Would you like to receive it?";
+		mes strcharinfo(0) + ", there is one weekly request that you can receive weekly. Would you like to receive it?";
 		next;
 		if (select( "Not now", "Receive 1 weekly request" ) == 1) {
 			mes "[Anes]";
@@ -13225,7 +13225,7 @@ prt_maze01,97,26,5	script(CLOAKED)	Irene#1	4_F_ERENE,2,2,{
 		next;
 		select( "Calm down." );
 		mes "[Irene]";
-		mes "Thank you. My name is Irene, member of the Prontera Priests' Guild. Ah.. There is a bit of reason why this is happening right now.";
+		mes "Thank you. My name is Irene, member of the Prontera Priest Guild. Ah.. There is a bit of reason why this is happening right now.";
 		next;
 		select( "Did you die while hunting?" );
 		mes "[Irene]";
@@ -13327,7 +13327,7 @@ prt_maze01,101,26,3	script(CLOAKED)	Esmeralda#1	4_GEFFEN_09,{
 		mes "As soon as you join, you enter into a contract with a guardian relic and undergo a ceremony that completely resurrects your soul and body even after death.";
 		next;
 		mes "[Esmeralda]";
-		mes "The problem is that the four new recruits who disappeared today are the ones who didn't even go through that process.";
+		mes "The problem is, that the 4 new recruits, who disappeared today, didn't even go through that process.";
 		next;
 		select( "Do I have to retrieve the remains and bring them back?" );
 		mes "[Esmeralda]";
@@ -13343,7 +13343,7 @@ prt_maze01,101,26,3	script(CLOAKED)	Esmeralda#1	4_GEFFEN_09,{
 			close;
 		}
 		mes "[Esmeralda]";
-		mes "Thank you. I've collected information about the four guild members, so if you need anything, please check it. Perhaps traces of my members lie beyond this twisted rift.";
+		mes "Thank you. I've collected information about the 4 guild members, so if you need anything, please check it. Perhaps traces of my members lie beyond this twisted rift.";
 		close2;
 		ill_laby = 3;
 		erasequest 12483;
@@ -13355,7 +13355,7 @@ prt_maze01,101,26,3	script(CLOAKED)	Esmeralda#1	4_GEFFEN_09,{
 	}
 	if (ill_laby == 3) {
 		mes "[Esmeralda]";
-		mes "I've collected information about the four guild members, so if you need anything, please check it. Perhaps traces of my members lie beyond this twisted rift.";
+		mes "I've collected information about the 4 guild members, so if you need anything, please check it. Perhaps traces of my members lie beyond this twisted rift.";
 		close;
 	}
 	if (ill_laby == 4) {
@@ -13408,10 +13408,10 @@ prontera,212,320,3	script(CLOAKED)	Esmeralda#2	4_GEFFEN_09,2,3,{
 		mes "[Esmeralda]";
 		mes "Huh? What's going on? Did something happen to our guild members?";
 		next;
-		select( "(Inform her terrible thing that happened to the priests' guild)" );
+		select( "(Inform her about the terrible thing that happened to the priest guild)" );
 		mes "[Esmeralda]";
 		mes "Our new recruits are missing?";
-		mes "Sigh... Is it a guild tradition? It always like this every year...";
+		mes "Sigh... Is it a guild tradition? It is always like this every year...";
 		next;
 		mes "[Esmeralda]";
 		mes "Thanks for telling me. I guess I'll have to go take care of these guys. God's blessings be with you, adventurer...";
@@ -13426,7 +13426,7 @@ prontera,212,320,3	script(CLOAKED)	Esmeralda#2	4_GEFFEN_09,2,3,{
 
 OnTouch:
 	if (ill_laby == 1) {
-		npctalk "Guided by the light, the Prontera Priests Guild is recruiting new guild members", "", bc_self;
+		npctalk "Guided by the light, the Prontera Priest Guild is recruiting new guild members", "", bc_self;
 		end;
 	}
 	end;
