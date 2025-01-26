@@ -13476,18 +13476,23 @@ void clif_parse_ResetChar(int32 fd, map_session_data *sd) {
 }
 
 
-/// /lb /nlb (CZ_LOCALBROADCAST).
+/// /lb /nlb.
 /// Request to broadcast a message on current map.
-/// 019c <packet len>.W <text>.?B
+/// 019c <packet len>.W <text>.?B (CZ_LOCALBROADCAST)
 void clif_parse_LocalBroadcast(int32 fd, map_session_data* sd)
 {
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	char command[CHAT_SIZE_MAX+16];
-	uint32 len = RFIFOW(fd,info->pos[0])-4;
-	char* msg = RFIFOCP(fd,info->pos[1]);
+	if( sd == nullptr ){
+		return;
+	}
 
-	// as the length varies depending on the command used, just block unreasonably long strings
-	mes_len_check(msg, len, CHAT_SIZE_MAX);
+	const PACKET_CZ_LOCALBROADCAST* p = reinterpret_cast<PACKET_CZ_LOCALBROADCAST*>( RFIFOP( fd, 0 ) );
+	size_t len = p->packetSize - sizeof( *p );
+
+	char msg[CHAT_SIZE_MAX];
+
+	safestrncpy( msg, p->message, std::min<size_t>( len, sizeof( msg ) ) );
+
+	char command[CHAT_SIZE_MAX];
 
 	safesnprintf(command,sizeof(command),"%clkami %s", atcommand_symbol, msg);
 	is_atcommand(fd, sd, command, 1);
