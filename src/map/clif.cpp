@@ -13433,14 +13433,31 @@ void clif_parse_UseCard(int32 fd,map_session_data *sd)
 }
 
 
-/// Answer to carding/composing item selection dialog (CZ_REQ_ITEMCOMPOSITION).
-/// 017c <card index>.W <equip index>.W
+/// Answer to carding/composing item selection dialog.
+/// 017c <card index>.W <equip index>.W (CZ_REQ_ITEMCOMPOSITION)
 void clif_parse_InsertCard(int32 fd,map_session_data *sd)
 {
+	if( sd == nullptr ){
+		return;
+	}
+
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
 	if (sd->state.trading != 0)
 		return;
-	pc_insert_card(sd,RFIFOW(fd,info->pos[0])-2,RFIFOW(fd,info->pos[1])-2);
+
+	const PACKET_CZ_REQ_ITEMCOMPOSITION* p = reinterpret_cast<PACKET_CZ_REQ_ITEMCOMPOSITION*>( RFIFOP( fd, 0 ) );
+	uint16 card_idx = server_index( p->index_card );
+	uint16 equip_idx = server_index( p->index_equip );
+
+	if( card_idx >= MAX_INVENTORY ){
+		return;
+	}
+
+	if( equip_idx >= MAX_INVENTORY ){
+		return;
+	}
+
+	pc_insert_card( sd, card_idx, equip_idx );
 }
 
 
