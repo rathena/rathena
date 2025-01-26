@@ -274,7 +274,7 @@ struct block_list* battle_getenemyarea(struct block_list *src, int32 x, int32 y,
 * @param tick: Current tick
 * @return HP+SP+AP (0 if HP/SP/AP remained unchanged)
 */
-int32 battle_damage(struct block_list *src, struct block_list *target, int64 damage, t_tick delay, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, unsigned short attack_type, bool additional_effects, t_tick tick, bool isspdamage) {
+int32 battle_damage(struct block_list *src, struct block_list *target, int64 damage, t_tick delay, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, uint16 attack_type, bool additional_effects, t_tick tick, bool isspdamage) {
 	int32 dmg_change;
 	map_session_data* sd = nullptr;
 	if (src)
@@ -318,11 +318,11 @@ struct delay_damage {
 	int32 target_id;
 	int64 damage;
 	t_tick delay;
-	unsigned short distance;
+	uint16 distance;
 	uint16 skill_lv;
 	uint16 skill_id;
 	enum damage_lv dmg_lv;
-	unsigned short attack_type;
+	uint16 attack_type;
 	bool additional_effects;
 	enum bl_type src_type;
 	bool isspdamage;
@@ -1231,7 +1231,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 
 	// SC Types that must be first because they may or may not block damage
 	if ((sce = sc->getSCE(SC_KYRIE)) && damage > 0) {
-		sce->val2 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX));
+		sce->val2 -= static_cast<int32>(cap_value(damage, INT_MIN, INT_MAX));
 		if (flag & BF_WEAPON || skill_id == TF_THROWSTONE) {
 			if (sce->val2 >= 0)
 				damage = 0;
@@ -1319,7 +1319,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 
 	if ((sce = sc->getSCE(SC_P_ALTER)) && damage > 0) {
 		clif_specialeffect(target, EF_GUARD, AREA);
-		sce->val3 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX));
+		sce->val3 -= static_cast<int32>(cap_value(damage, INT_MIN, INT_MAX));
 		if (sce->val3 >= 0)
 			damage = 0;
 		else
@@ -1329,7 +1329,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 	}
 
 	if ((sce = sc->getSCE(SC_TUNAPARTY)) && damage > 0) {
-		sce->val2 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX));
+		sce->val2 -= static_cast<int32>(cap_value(damage, INT_MIN, INT_MAX));
 		if (sce->val2 >= 0)
 			damage = 0;
 		else
@@ -1339,14 +1339,14 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 	}
 
 	if ((sce = sc->getSCE(SC_DIMENSION1)) && damage > 0) {
-		sce->val2 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX));
+		sce->val2 -= static_cast<int32>(cap_value(damage, INT_MIN, INT_MAX));
 		if (sce->val2 <= 0)
 			status_change_end(target, SC_DIMENSION1);
 		return false;
 	}
 
 	if ((sce = sc->getSCE(SC_DIMENSION2)) && damage > 0) {
-		sce->val2 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX));
+		sce->val2 -= static_cast<int32>(cap_value(damage, INT_MIN, INT_MAX));
 		if (sce->val2 <= 0)
 			status_change_end(target, SC_DIMENSION2);
 		return false;
@@ -1354,7 +1354,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 
 	if ((sce = sc->getSCE(SC_GUARDIAN_S)) && damage > 0) {
 		clif_specialeffect(target, EF_GUARD3, AREA);// Not official but we gotta show some way the barrier is working. [Rytech]
-		sce->val2 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX));
+		sce->val2 -= static_cast<int32>(cap_value(damage, INT_MIN, INT_MAX));
 		if (flag & BF_WEAPON) {
 			if (sce->val2 >= 0)
 				damage = 0;
@@ -1391,7 +1391,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 				}
 #ifdef RENEWAL
 				if (group->val3 - damage > 0)
-					group->val3 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX));
+					group->val3 -= static_cast<int32>(cap_value(damage, INT_MIN, INT_MAX));
 				else
 					skill_delunitgroup(group);
 #endif
@@ -1402,7 +1402,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 					break;
 				}
 				if (group->val3 - damage > 0)
-					group->val3 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX));
+					group->val3 -= static_cast<int32>(cap_value(damage, INT_MIN, INT_MAX));
 				else
 					skill_delunitgroup(group);
 				break;
@@ -1446,7 +1446,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 	}
 
 	if ((sce = sc->getSCE(SC_MILLENNIUMSHIELD)) && sce->val2 > 0 && damage > 0) {
-		sce->val3 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX)); // absorb damage
+		sce->val3 -= static_cast<int32>(cap_value(damage, INT_MIN, INT_MAX)); // absorb damage
 		d->dmg_lv = ATK_BLOCK;
 		if (sce->val3 <= 0) { // Shield Down
 			sce->val2--;
@@ -2446,7 +2446,7 @@ static int32 battle_calc_base_weapon_attack(struct block_list *src, struct statu
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
-static int64 battle_calc_base_damage(struct block_list *src, struct status_data *status, struct weapon_atk *wa, status_change *sc, unsigned short t_size, int32 flag)
+static int64 battle_calc_base_damage(struct block_list *src, struct status_data *status, struct weapon_atk *wa, status_change *sc, uint16 t_size, int32 flag)
 {
 	uint32 atkmin = 0, atkmax = 0;
 	short type = 0;
@@ -4304,8 +4304,10 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 				}
 #else
 				if ((skill = pc_checkskill(sd, TK_POWER)) > 0) {
-					ATK_ADDRATE(wd->damage, wd->damage2, 10 + 15 * skill);
-					RE_ALLATK_ADDRATE(wd, 10 + 15 * skill);
+					int32 dmg_bonus = 20 * skill;
+
+					ATK_ADDRATE(wd->damage, wd->damage2, dmg_bonus);
+					RE_ALLATK_ADDRATE(wd, dmg_bonus);
 				}
 #endif
 			}
@@ -4495,7 +4497,7 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
  * @param sc: Object's status change information
  * @return atkpercent with cap_value(watk,0,USHRT_MAX)
  */
-static unsigned short battle_get_atkpercent(struct block_list& bl, uint16 skill_id, status_change& sc)
+static uint16 battle_get_atkpercent(struct block_list& bl, uint16 skill_id, status_change& sc)
 {
 	if (bl.type == BL_PC && !battle_skill_stacks_masteries_vvs(skill_id, BCHK_ALL))
 		return 100;
@@ -4536,7 +4538,7 @@ static unsigned short battle_get_atkpercent(struct block_list& bl, uint16 skill_
 	* MH_VOLCANIC_ASH (-50)
 	*/
 
-	return (unsigned short)cap_value(atkpercent, 0, USHRT_MAX);
+	return (uint16)cap_value(atkpercent, 0, USHRT_MAX);
 }
 
 /*======================================================
@@ -6393,7 +6395,7 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			RE_LVL_DMOD(100);
 			break;
 		case SKE_MIDNIGHT_KICK:
-			skillratio += -100 + 600 + 1200  * skill_lv;
+			skillratio += -100 + 800 + 1500  * skill_lv;
 			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 5 * skill_lv;
 			skillratio += 5 * sstatus->pow;
 
@@ -6405,21 +6407,21 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			break;
 
 		case SKE_ALL_IN_THE_SKY:
-			skillratio += -100 + 3000 + 2000 * skill_lv;
+			skillratio += -100 + 250 + 1200 * skill_lv;
 			skillratio += 5 * sstatus->pow;
 			if (status_get_race(target) == RC_DEMIHUMAN || status_get_race(target) == RC_DEMON)
 				wd->div_ = 3;
 			break;
 
 		case SKE_TWINKLING_GALAXY:
-			skillratio += -100 + 200 + 400 * skill_lv;
+			skillratio += -100 + 300 + 500 * skill_lv;
 			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 3 * skill_lv;
 			skillratio += 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 
 		case SKE_STAR_CANNON:
-			skillratio += -100 + 200 + 500 * skill_lv;
+			skillratio += -100 + 250 + 550 * skill_lv;
 			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 5 * skill_lv;
 			skillratio += 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
@@ -6433,7 +6435,7 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			break;
 
 		case SKE_DAWN_BREAK:
-			skillratio += -100 + 400 + 400 * skill_lv;
+			skillratio += -100 + 600 + 700 * skill_lv;
 			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 5 * skill_lv;
 			skillratio += 5 * sstatus->pow;
 
@@ -6699,6 +6701,12 @@ static void battle_attack_sc_bonus(struct Damage* wd, struct block_list *src, st
 			skillratio += sstatus->str; // SG_STAR_ANGER additionally has STR added in its formula.
 		if (anger_level < 4)
 			skillratio /= 12 - 3 * anger_level;
+
+#ifdef RENEWAL
+		// (renewal) maximum damage bonus limit : (skill level x 25)%
+		skillratio = min( skillratio, 25 * anger_level );
+#endif
+
 		ATK_ADDRATE(wd->damage, wd->damage2, skillratio);
 #ifdef RENEWAL
 		RE_ALLATK_ADDRATE(wd, skillratio);
@@ -7196,8 +7204,8 @@ static void battle_calc_weapon_final_atk_modifiers(struct Damage* wd, struct blo
 		rdamage = battle_calc_base_damage(target,tstatus,&tstatus->rhw,tsc,sstatus->size,0);
 		rdamage = (int64)rdamage * ratio / 100 + wd->damage * (10 + tsc->getSCE(SC_CRESCENTELBOW)->val1 * 20 / 10) / 10;
 		skill_blown(target, src, skill_get_blewcount(SR_CRESCENTELBOW_AUTOSPELL, tsc->getSCE(SC_CRESCENTELBOW)->val1), unit_getdir(src), BLOWN_NONE);
-		clif_skill_damage(target, src, gettick(), status_get_amotion(src), 0, rdamage,
-			1, SR_CRESCENTELBOW_AUTOSPELL, tsc->getSCE(SC_CRESCENTELBOW)->val1, DMG_SINGLE); // This is how official does
+		clif_skill_damage( *target, *src, gettick(), status_get_amotion(src), 0, rdamage,
+			1, SR_CRESCENTELBOW_AUTOSPELL, tsc->getSCE(SC_CRESCENTELBOW)->val1, DMG_SINGLE ); // This is how official does
 		clif_damage(*src, *target, gettick(), status_get_amotion(src)+1000, 0, rdamage/10, 1, DMG_NORMAL, 0, false);
 		battle_fix_damage(target, src, rdamage, 0, SR_CRESCENTELBOW);
 		status_damage(src, target, rdamage/10, 0, 0, 1, 0);
@@ -9908,7 +9916,7 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 					int64 rd1 = i64min(damage, status_get_max_hp(tbl)) * tsc->getSCE(SC_DEATHBOUND)->val2 / 100; // Amplify damage.
 
 					*dmg = rd1 * 30 / 100; // Received damage = 30% of amplified damage.
-					clif_skill_damage(src, tbl, gettick(), status_get_amotion(src), 0, -30000, 1, RK_DEATHBOUND, tsc->getSCE(SC_DEATHBOUND)->val1, DMG_SINGLE);
+					clif_skill_damage( *src, *tbl, gettick(), status_get_amotion(src), 0, -30000, 1, RK_DEATHBOUND, tsc->getSCE(SC_DEATHBOUND)->val1, DMG_SINGLE );
 					skill_blown(tbl, src, skill_get_blewcount(RK_DEATHBOUND, tsc->getSCE(SC_DEATHBOUND)->val1), unit_getdir(src), BLOWN_NONE);
 					status_change_end(tbl, SC_DEATHBOUND);
 					rdamage += rd1 * 70 / 100; // Target receives 70% of the amplified damage. [Rytech]
@@ -10302,7 +10310,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		if(sc_start4(src,src, SC_BLADESTOP, 100, sd?pc_checkskill(sd, MO_BLADESTOP):5, 0, 0, target->id, duration))
 		{	//Target locked.
 			clif_damage(*src, *target, tick, sstatus->amotion, 1, 0, 1, DMG_NORMAL, 0, false); //Display MISS.
-			clif_bladestop(target, src->id, 1);
+			clif_bladestop( *target, src->id, true );
 			sc_start4(src,target, SC_BLADESTOP, 100, skill_lv, 0, 0, src->id, duration);
 			return ATK_BLOCK;
 		}
@@ -10504,7 +10512,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			s_elemental_data *ed = ((TBL_PC*)target)->ed;
 
 			if (ed) {
-				clif_skill_damage(&ed->bl, target, tick, status_get_amotion(src), 0, -30000, 1, EL_CIRCLE_OF_FIRE, tsc->getSCE(SC_CIRCLE_OF_FIRE_OPTION)->val1, DMG_SINGLE);
+				clif_skill_damage( ed->bl, *target, tick, status_get_amotion(src), 0, -30000, 1, EL_CIRCLE_OF_FIRE, tsc->getSCE(SC_CIRCLE_OF_FIRE_OPTION)->val1, DMG_SINGLE );
 				skill_attack(BF_WEAPON,&ed->bl,&ed->bl,src,EL_CIRCLE_OF_FIRE,tsc->getSCE(SC_CIRCLE_OF_FIRE_OPTION)->val1,tick,wd.flag);
 			}
 		}
@@ -11783,7 +11791,7 @@ static const struct _battle_data {
 	{ "arrow_shower_knockback",             &battle_config.arrow_shower_knockback,          1,      0,      1,              },
 	{ "devotion_rdamage_skill_only",        &battle_config.devotion_rdamage_skill_only,     1,      0,      1,              },
 	{ "max_extended_aspd",                  &battle_config.max_extended_aspd,               193,    100,    199,            },
-	{ "monster_chase_refresh",              &battle_config.mob_chase_refresh,               30,     0,      MAX_MINCHASE,   },
+	{ "monster_chase_refresh",              &battle_config.mob_chase_refresh,               32,     0,      MAX_WALKPATH,   },
 	{ "mob_icewall_walk_block",             &battle_config.mob_icewall_walk_block,          75,     0,      255,            },
 	{ "boss_icewall_walk_block",            &battle_config.boss_icewall_walk_block,         0,      0,      255,            },
 	{ "snap_dodge",                         &battle_config.snap_dodge,                      0,      0,      1,              },
@@ -11935,6 +11943,7 @@ static const struct _battle_data {
 	{ "hom_delay_reset_vaporize",           &battle_config.hom_delay_reset_vaporize,        1,      0,      1,              },
 	{ "hom_delay_reset_warp",               &battle_config.hom_delay_reset_warp,            1,      0,      1,              },
 #endif
+	{ "loot_range",                         &battle_config.loot_range,                      12,     1,      MAX_WALKPATH,   },
 
 #include <custom/battle_config_init.inc>
 };

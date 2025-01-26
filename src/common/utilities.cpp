@@ -44,8 +44,8 @@ int32 levenshtein(const std::string &s1, const std::string &s2)
 {
 	// To change the type this function manipulates and returns, change
 	// the return type and the types of the two variables below.
-	int32 s1len = static_cast<int>(s1.size());
-	int32 s2len = static_cast<int>(s2.size());
+	int32 s1len = static_cast<int32>(s1.size());
+	int32 s2len = static_cast<int32>(s2.size());
 	
 	auto column_start = (decltype(s1len))1;
 	
