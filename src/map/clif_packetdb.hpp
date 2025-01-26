@@ -231,7 +231,7 @@
 	packet(0x01c7,2);
 	packet(0x01cb,9);
 	packet(0x01cc,9);
-	parseable_packet(0x01ce,6,clif_parse_AutoSpell,2);
+	parseable_packet( HEADER_CZ_SELECTAUTOSPELL, sizeof( PACKET_CZ_SELECTAUTOSPELL ), clif_parse_AutoSpell, 0 );
 	packet(0x01cf,28);
 	packet(0x01d0,8);
 	parseable_packet(0x01d5,-1,clif_parse_NpcStringInput,2,4,8);

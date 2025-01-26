@@ -13411,14 +13411,18 @@ void clif_parse_SelectArrow(int32 fd,map_session_data *sd) {
 }
 
 
-/// Answer to SA_AUTOSPELL skill selection dialog (CZ_SELECTAUTOSPELL).
-/// 01ce <skill id>.L
+/// Answer to SA_AUTOSPELL skill selection dialog.
+/// 01ce <skill id>.L (CZ_SELECTAUTOSPELL)
 void clif_parse_AutoSpell(int32 fd,map_session_data *sd)
 {
 	if (sd->menuskill_id != SA_AUTOSPELL)
 		return;
 	sd->state.workinprogress = WIP_DISABLE_NONE;
-	skill_autospell(sd,RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[0]));
+
+	const PACKET_CZ_SELECTAUTOSPELL* p = reinterpret_cast<PACKET_CZ_SELECTAUTOSPELL*>( RFIFOP( fd, 0 ) );
+
+	skill_autospell( sd, static_cast<uint16>( p->skill_id ) );
+
 	clif_menuskill_clear(sd);
 }
 
