@@ -29639,7 +29639,6 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(permission_add, "i?"),
 	BUILDIN_DEF2(permission_add, "permission_remove", "i?"),
 
-	BUILDIN_DEF(fstatus,"iiii"),
 	
 	// Mob Hat Effects
 	BUILDIN_DEF(mob_hateffect, "iii"),
@@ -29656,6 +29655,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(champion_drop,"siii?"),
 
 	BUILDIN_DEF( mesitemicon, "i??" ),
+	
+	BUILDIN_DEF(fstatus,"iiii"),
+	BUILDIN_DEF(fake_icon_all,"iii"),
 
 #include <custom/script_def.inc>
 
