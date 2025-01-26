@@ -156,3 +156,5 @@ Thumbs.db
 
 # generated files
 generated
+
+CMakeUserPresets.json

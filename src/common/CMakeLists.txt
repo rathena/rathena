@@ -162,13 +162,13 @@ if(ENABLE_RDTSC)
 endif()
 
 
+# Propagated defines
 if(ENABLE_MEMMGR)
-	target_compile_definitions(common PRIVATE "-DUSE_MEMMGR")
+	target_compile_definitions(common PUBLIC "-DUSE_MEMMGR")
 else()
-	target_compile_definitions(common PRIVATE "-DNO_MEMMGR")
+	target_compile_definitions(common PUBLIC "-DNO_MEMMGR")
 endif()
 
-# Propagated defines
 target_compile_definitions(common PUBLIC "-DPACKETVER=${PACKETVER}")
 
 if(ENABLE_PRERENEWAL)
