@@ -9078,6 +9078,67 @@ BUILDIN_FUNC(getguildmasterid)
 }
 
 /*==========================================
+ * Returns the requested information of the provided guild ID
+ *------------------------------------------*/
+BUILDIN_FUNC(getguildinfo)
+{
+	int32 guild_id = script_getnum(st,2);
+	auto g = guild_search(guild_id);
+	
+	if ( g == nullptr ) {
+		ShowError( "buildin_getguildinfo: The guild ID '%d' doesn't exist or is not yet loaded into the map-server. \n", guild_id );
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+	
+	int32 type = script_getnum(st,3);
+	
+	switch ( type ) {
+		case GUILDINFO_NAME:
+			script_pushstrcopy(st, g->guild.name);
+			break;
+		case GUILDINFO_LEVEL:
+			script_pushint(st, g->guild.guild_lv);
+			break;
+		case GUILDINFO_AVERAGELEVEL:
+			script_pushint(st, g->guild.average_lv);
+			break;
+		case GUILDINFO_ONLINECOUNT:
+			script_pushint(st, g->guild.connect_member);
+			break;
+		case GUILDINFO_MEMBERCOUNT: {
+			int32 c = 0;
+			for ( int32 i = 0; i < g->guild.max_member; ++i ) {
+				if( g->guild.member[i].account_id > 0 )
+					c++;
+			}
+			script_pushint(st, c);
+		} break;
+		case GUILDINFO_MAXMEMBERCOUNT:
+			script_pushint(st, g->guild.max_member);
+			break;
+		case GUILDINFO_EXP:
+			script_pushint(st, g->guild.exp);
+			break;
+		case GUILDINFO_NEXTEXP:
+			script_pushint(st, g->guild.next_exp);
+			break;
+		case GUILDINFO_MASTERID:
+			script_pushint(st, g->guild.member[0].char_id);
+			break;
+		case GUILDINFO_MASTERNAME:
+			script_pushstrcopy(st, g->guild.member[0].name);
+			break;
+		default:
+			ShowError( "buildin_getguildinfo: Invalid guildinfo type. \n", type );
+			st->state = END;
+			return SCRIPT_CMD_FAILURE;
+	}
+	
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/*==========================================
  * Get char string information by type :
  * Return by @type :
  *	0 : char_name
@@ -27699,6 +27760,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getguildname,"i"),
 	BUILDIN_DEF(getguildmaster,"i"),
 	BUILDIN_DEF(getguildmasterid,"i"),
+	BUILDIN_DEF(getguildinfo,"ii"),
 	BUILDIN_DEF(strcharinfo,"i?"),
 	BUILDIN_DEF(strnpcinfo,"i"),
 	BUILDIN_DEF(getequipid,"??"),
