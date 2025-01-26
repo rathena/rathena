@@ -710,6 +710,7 @@ struct Battle_Config
 	int32 show_skill_scale;
 	int32 achievement_mob_share;
 	int32 slave_stick_with_master;
+	int32 slave_active_with_master;
 	int32 at_logout_event;
 	int32 homunculus_starving_rate;
 	int32 homunculus_starving_delay;

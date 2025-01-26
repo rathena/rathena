@@ -2085,9 +2085,9 @@ static int32 mob_ai_sub_hard_timer(struct block_list *bl,va_list ap)
 	struct mob_data *md = (struct mob_data*)bl;
 	uint32 char_id = va_arg(ap, uint32);
 	t_tick tick = va_arg(ap, t_tick);
+	mob_add_spotted(md, char_id);
 	if (mob_ai_sub_hard(md, tick))
 	{	//Hard AI triggered.
-		mob_add_spotted(md, char_id);
 		md->last_pcneartime = tick;
 	}
 	return 0;
@@ -2156,10 +2156,12 @@ static int32 mob_ai_sub_lazy(struct mob_data *md, va_list args)
 
 	if (md->master_id) {
 		if (!mob_is_spotted(md)) {
+			if (battle_config.slave_active_with_master == 0)
+				return 0;
 			// Get mob data of master
 			mob_data* mmd = map_id2md(md->master_id);
 			// If neither master nor slave have been spotted we don't have to execute the slave AI
-			if (mmd && !mob_is_spotted(mmd))
+			if (mmd != nullptr && !mob_is_spotted(mmd))
 				return 0;
 		}
 		mob_ai_sub_hard_slavemob (md,tick);
