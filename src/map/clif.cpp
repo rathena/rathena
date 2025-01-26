@@ -13254,7 +13254,7 @@ void clif_parse_NpcSelectMenu(int32 fd,map_session_data *sd){
 
 	if( ( p->choice > sd->npc_menu && p->choice != 0xff ) || p->choice == 0 ){
 			npc_data* nd = map_id2nd( p->GID );
-			ShowWarning( "Invalid menu selection on npc %d:'%s' - got %d, valid range is [%d..%d] (player AID:%d, CID:%d, name:'%s')!\n", p->GID, ( nd != nullptr ) ? nd->name : "invalid npc id", select, 1, sd->npc_menu, sd->bl.id, sd->status.char_id, sd->status.name );
+			ShowWarning( "Invalid menu selection on npc %d:'%s' - got %u, valid range is [%d..%d] (player AID:%d, CID:%d, name:'%s')!\n", p->GID, ( nd != nullptr ) ? nd->name : "invalid npc id", select, 1, sd->npc_menu, sd->bl.id, sd->status.char_id, sd->status.name );
 			clif_GM_kick(nullptr,sd);
 		return;
 	}
