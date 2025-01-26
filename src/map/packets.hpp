@@ -1755,6 +1755,14 @@ struct PACKET_CZ_ADD_EXCHANGE_ITEM{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_ADD_EXCHANGE_ITEM, 0xe8);
 
+struct PACKET_CZ_MOVE_ITEM_FROM_CART_TO_BODY{
+	int16 packetType;
+	uint16 index;
+	int32 amount;
+} __attribute__((packed));
+
+DEFINE_PACKET_HEADER(CZ_MOVE_ITEM_FROM_CART_TO_BODY, 0x127);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
