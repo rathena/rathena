@@ -482,7 +482,7 @@ bool bg_team_delete(int32 bg_id)
  * @param y: Y coordinate
  * @return True on success or false otherwise
  */
-bool bg_team_warp(int32 bg_id, uint16 mapindex, short x, short y)
+bool bg_team_warp(int32 bg_id, uint16 mapindex, int16 x, int16 y)
 {
 	std::shared_ptr<s_battleground_data> bgteam = util::umap_find(bg_team_db, bg_id);
 

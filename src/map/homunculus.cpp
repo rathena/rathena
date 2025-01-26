@@ -112,7 +112,7 @@ t_exp HomExpDatabase::get_nextexp(uint16 level) {
 * @param skill_id
 * @return -1 if invalid skill or skill index for homunculus skill in s_homunculus::hskill
 */
-short hom_skill_get_index(uint16 skill_id) {
+int16 hom_skill_get_index(uint16 skill_id) {
 	if (!SKILL_CHK_HOMUN(skill_id))
 		return -1;
 	skill_id -= HM_SKILLBASE;
@@ -324,7 +324,7 @@ void hom_calc_skilltree_sub(homun_data &hd, std::vector<s_homun_skill_tree_entry
 
 	for (const auto &skit : skill_tree) {
 		uint16 skill_id = skit.id;
-		short idx = hom_skill_get_index(skill_id);
+		int16 idx = hom_skill_get_index(skill_id);
 
 		if (skill_id == 0 || idx == -1)
 			continue;
@@ -385,9 +385,9 @@ void hom_calc_skilltree(homun_data *hd) {
 * @param skill_id
 * @return Skill Level or 0 if invalid or unlearned skill
 */
-short hom_checkskill(struct homun_data *hd,uint16 skill_id)
+int16 hom_checkskill(struct homun_data *hd,uint16 skill_id)
 {
-	short idx = hom_skill_get_index(skill_id);
+	int16 idx = hom_skill_get_index(skill_id);
 	if (idx < 0) // Invalid skill
 		return 0;
 
@@ -447,7 +447,7 @@ uint16 hom_skill_get_min_level(int32 class_, uint16 skill_id) {
  */
 void hom_skillup(struct homun_data *hd, uint16 skill_id)
 {
-	short idx = 0;
+	int16 idx = 0;
 	nullpo_retv(hd);
 
 	if (hd->homunculus.vaporize)
@@ -1286,7 +1286,7 @@ bool hom_create_request(map_session_data *sd, int32 class_)
  * @param y : Y map coordinate
  * @return 0:failure, 1:success
  */
-int32 hom_ressurect(map_session_data* sd, unsigned char per, short x, short y)
+int32 hom_ressurect(map_session_data* sd, unsigned char per, int16 x, int16 y)
 {
 	struct homun_data* hd;
 	nullpo_ret(sd);

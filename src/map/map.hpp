@@ -459,9 +459,9 @@ struct block_list {
 // Mob List Held in memory for Dynamic Mobs [Wizputer]
 // Expanded to specify all mob-related spawn data by [Skotlex]
 struct spawn_data {
-	short id; //ID, used because a mob can change it's class
+	int16 id; //ID, used because a mob can change it's class
 	uint16 m, x, y;	//Spawn information (map, point, spawn-area around point)
-	signed short xs, ys;
+	int16 xs, ys;
 	uint16 num; //Number of mobs using this structure
 	uint16 active;//Number of mobs that are already spawned (for mob_remove_damaged: no)
 	uint32 delay1, delay2; //Spawn delay (fixed base + random variance)
@@ -798,7 +798,7 @@ struct mapcell
 
 struct iwall_data {
 	char wall_name[50];
-	short m, x, y, size;
+	int16 m, x, y, size;
 	int8 dir;
 	bool shootable;
 };
