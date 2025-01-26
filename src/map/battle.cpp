@@ -6140,6 +6140,7 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			break;
 		case WH_WILD_WALK:
 			skillratio += -100 + 1800 + 2800 * skill_lv;
+			// !TODO: unknown con and WH_NATUREFRIENDLY/HT_STEELCROW skills ratio
 			skillratio += 5 * sstatus->con;
 			skillratio += skillratio * pc_checkskill(sd, WH_NATUREFRIENDLY) / 10;
 			skillratio += skillratio * pc_checkskill(sd, HT_STEELCROW) / 10;
