@@ -12457,18 +12457,21 @@ void clif_parse_TradeAck(int32 fd,map_session_data *sd)
 }
 
 
-/// Request to add an item to current trade (CZ_ADD_EXCHANGE_ITEM).
-/// 00e8 <index>.W <amount>.L
+/// Request to add an item to current trade.
+/// 00e8 <index>.W <amount>.L (CZ_ADD_EXCHANGE_ITEM)
 void clif_parse_TradeAddItem(int32 fd,map_session_data *sd)
 {
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	short index = RFIFOW(fd,info->pos[0]);
-	int32 amount = RFIFOL(fd,info->pos[1]);
+	if( sd == nullptr ){
+		return;
+	}
 
-	if( index == 0 )
-		trade_tradeaddzeny(sd, amount);
-	else
-		trade_tradeadditem(sd, server_index(index), (short)amount);
+	const PACKET_CZ_ADD_EXCHANGE_ITEM* p = reinterpret_cast<PACKET_CZ_ADD_EXCHANGE_ITEM*>( RFIFOP( fd, 0 ) );
+
+	if( p->index == 0 ){
+		trade_tradeaddzeny( sd, p->amount );
+	}else{
+		trade_tradeadditem( sd, server_index( p->index ), static_cast<int16>( p->amount ) );
+	}
 }
 
 
