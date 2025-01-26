@@ -102,8 +102,9 @@ static int32 status_calc_mode(struct block_list *bl, status_change *sc, int32 mo
 static int32 status_get_hpbonus(struct block_list *bl, enum e_status_bonus type);
 static int32 status_get_spbonus(struct block_list *bl, enum e_status_bonus type);
 static int32 status_get_apbonus(struct block_list *bl, enum e_status_bonus type);
-static uint32 status_calc_maxhpsp_pc(map_session_data* sd, uint32 stat, bool isHP);
-static uint32 status_calc_maxap_pc(map_session_data* sd);
+static uint32 status_calc_maxhp_pc( map_session_data& sd, uint32 vit );
+static uint32 status_calc_maxsp_pc( map_session_data& sd, uint32 int_ );
+static uint32 status_calc_maxap_pc( map_session_data& sd );
 static int32 status_get_sc_interval(enum sc_type type);
 
 static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, uint32 mapZone, bool mapIsTE);
@@ -3115,12 +3116,6 @@ static int32 status_get_hpbonus(struct block_list *bl, enum e_status_bonus type)
 				bonus += 350 * skill_lv + (skill_lv > 4 ? 250 : 0);
 			if ((skill_lv = pc_checkskill(sd, NV_TRANSCENDENCE)) > 0)
 				bonus += 350 * skill_lv + (skill_lv > 4 ? 250 : 0);
-#ifndef HP_SP_TABLES
-			if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.base_level >= 99)
-				bonus += 2000; // Supernovice lvl99 hp bonus.
-			if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.base_level >= 150)
-				bonus += 2000; // Supernovice lvl150 hp bonus.
-#endif
 		}
 
 		//Bonus by SC
@@ -3461,48 +3456,105 @@ static int32 status_get_apbonus_item(block_list *bl) {
 }
 
 /**
- * Get final MaxHP or MaxSP for player. References: http://irowiki.org/wiki/Max_HP and http://irowiki.org/wiki/Max_SP
- * The calculation needs base_level, base_status/battle_status (vit or int), additive modifier, and multiplicative modifier
+ * Get final MaxHP for players.
+ * The calculation needs base_level, base_status/battle_status (vit), additive modifier, and multiplicative modifier
  * @param sd Player
- * @param stat Vit/Int of player as param modifier
- * @param isHP true - calculates Max HP, false - calculated Max SP
- * @return max The max value of HP or SP
+ * @param stat Vit of player
+ * @return max The max value of HP
  */
-static uint32 status_calc_maxhpsp_pc(map_session_data* sd, uint32 stat, bool isHP) {
-	nullpo_ret(sd);
+static uint32 status_calc_maxhp_pc( map_session_data& sd, uint32 vit ){
+	std::shared_ptr<s_job_info> job = job_db.find( sd.status.class_ );
 
-	double dmax = 0;
-	uint32 level = umax(sd->status.base_level,1);
-	std::shared_ptr<s_job_info> job = job_db.find(pc_mapid2jobid(sd->class_, sd->status.sex));
-
-	if (job == nullptr)
+	if( job == nullptr ){
 		return 1;
-
-	if (isHP) { //Calculates MaxHP
-		double equip_bonus = 0, item_bonus = 0;
-		dmax = job->base_hp[level-1] * (1 + (umax(stat,1) * 0.01)) * ((sd->class_&JOBL_UPPER)?1.25:(pc_is_taekwon_ranker(sd))?3:1);
-		dmax += sd->indexed_bonus.param_equip[PARAM_VIT]; //Vit from equip gives +1 additional HP
-		dmax += status_get_hpbonus(&sd->bl,STATUS_BONUS_FIX);
-		equip_bonus = (dmax * status_get_hpbonus_equip(sd) / 100);
-		item_bonus = (dmax * status_get_hpbonus_item(&sd->bl) / 100);	// !FIXME: using bMaxHP* for usable items may cause rounding issue
-		dmax += equip_bonus + item_bonus;
-		dmax += (int64)(dmax * status_get_hpbonus(&sd->bl,STATUS_BONUS_RATE) / 100); //Aegis accuracy
-	}
-	else { //Calculates MaxSP
-		double equip_bonus = 0, item_bonus = 0;
-		dmax = job->base_sp[level-1] * (1 + (umax(stat,1) * 0.01)) * ((sd->class_&JOBL_UPPER)?1.25:(pc_is_taekwon_ranker(sd))?3:1);
-		dmax += sd->indexed_bonus.param_equip[PARAM_INT]; //Int from equip gives +1 additional SP
-		dmax += status_get_spbonus(&sd->bl,STATUS_BONUS_FIX);
-		equip_bonus = (dmax * status_get_spbonus_equip(sd) / 100);
-		item_bonus = (dmax * status_get_spbonus_item(&sd->bl) / 100);	// !FIXME: using bMaxSP* for usable items may cause rounding issue
-		dmax += equip_bonus + item_bonus;
-		dmax += (int64)(dmax * status_get_spbonus(&sd->bl,STATUS_BONUS_RATE) / 100); //Aegis accuracy
 	}
 
-	//Make sure it's not negative before casting to uint32
-	if(dmax < 1) dmax = 1;
+	// Prevent negative array index
+	uint32 level = umax( sd.status.base_level, 1 ) - 1;
 
-	return cap_value((uint32)dmax,1,UINT_MAX);
+	double dmax = job->base_hp[level];
+
+	if( vit > 0 ){
+		dmax *= ( 1.0 + vit * 0.01 );
+	}
+
+	if( sd.class_&JOBL_UPPER ){
+		dmax *= 1.25;
+	}else if( pc_is_taekwon_ranker( &sd ) ){
+		dmax *= 3;
+	}
+
+	// Vit from equip gives +1 additional HP
+	dmax += sd.indexed_bonus.param_equip[PARAM_VIT];
+
+	dmax += status_get_hpbonus( &sd.bl, STATUS_BONUS_FIX );
+
+	double equip_bonus = ( dmax * status_get_hpbonus_equip( &sd ) / 100 );
+	// TODO: using bMaxHP* for usable items may cause rounding issue
+	double item_bonus = ( dmax * status_get_hpbonus_item( &sd.bl ) / 100 );
+
+	dmax += equip_bonus + item_bonus;
+
+	// Aegis accuracy
+	dmax += static_cast<int64>( dmax * status_get_hpbonus( &sd.bl, STATUS_BONUS_RATE ) / 100 );
+
+	// Make sure it's not negative before casting to uint32
+	if( dmax < 1.0 ){
+		dmax = 1.0;
+	}
+
+	return cap_value( static_cast<uint32>( dmax ), 1, std::numeric_limits<uint32>::max() );
+}
+
+/**
+ * Get final MaxSP for players.
+ * The calculation needs base_level, base_status/battle_status (int), additive modifier, and multiplicative modifier
+ * @param sd Player
+ * @param stat Int of player
+ * @return max The max value of HP
+ */
+static uint32 status_calc_maxsp_pc( map_session_data& sd, uint32 int_ ){
+	std::shared_ptr<s_job_info> job = job_db.find( sd.status.class_ );
+
+	if( job == nullptr ){
+		return 1;
+	}
+
+	// Prevent negative array index
+	uint32 level = umax( sd.status.base_level, 1 ) - 1;
+
+	double dmax = job->base_sp[level];
+
+	if( int_ > 0 ){
+		dmax *= ( 1.0 + int_ * 0.01 );
+	}
+
+	if( sd.class_&JOBL_UPPER ){
+		dmax *= 1.25;
+	}else if( pc_is_taekwon_ranker( &sd ) ){
+		dmax *= 3.0;
+	}
+
+	// Int from equip gives +1 additional SP
+	dmax += sd.indexed_bonus.param_equip[PARAM_INT];
+
+	dmax += status_get_spbonus( &sd.bl, STATUS_BONUS_FIX );
+
+	double equip_bonus = ( dmax * status_get_spbonus_equip( &sd ) / 100 );
+	// TODO: using bMaxSP* for usable items may cause rounding issue
+	double item_bonus = ( dmax * status_get_spbonus_item( &sd.bl ) / 100 );
+
+	dmax += equip_bonus + item_bonus;
+
+	// Aegis accuracy
+	dmax += static_cast<int64>( dmax * status_get_spbonus( &sd.bl, STATUS_BONUS_RATE ) / 100 );
+
+	// Make sure it's not negative before casting to uint32
+	if( dmax < 1.0 ){
+		dmax = 1.0;
+	}
+
+	return cap_value( static_cast<uint32>( dmax ), 1, std::numeric_limits<uint32>::max() );
 }
 
 /**
@@ -3510,22 +3562,38 @@ static uint32 status_calc_maxhpsp_pc(map_session_data* sd, uint32 stat, bool isH
  * @param sd: Player data
  * @return AP amount
  */
-static uint32 status_calc_maxap_pc(map_session_data* sd) {
-	double dmax = 0, equip_bonus = 0, item_bonus = 0;
+static uint32 status_calc_maxap_pc( map_session_data& sd ){
+	std::shared_ptr<s_job_info> job = job_db.find( sd.status.class_ );
 
-	nullpo_ret(sd);
+	if( job == nullptr ){
+		return 1;
+	}
 
-	dmax = (sd->class_&JOBL_FOURTH) ? 200 : 0;
-	dmax += status_get_apbonus(&sd->bl, STATUS_BONUS_FIX);
-	equip_bonus = (dmax * status_get_apbonus_equip(sd) / 100);
-	item_bonus = (dmax * status_get_apbonus_item(&sd->bl) / 100);
+	// Prevent negative array index
+	uint32 level = umax( sd.status.base_level, 1 ) - 1;
+
+	double dmax = job->base_ap[level];
+
+	// No stat point dependent bonus
+	// No Upper Class or Taekwon ranker bonus
+
+	dmax += status_get_apbonus( &sd.bl, STATUS_BONUS_FIX );
+
+	double equip_bonus = ( dmax * status_get_apbonus_equip( &sd ) / 100 );
+	// TODO: using bMaxAP* for usable items may cause rounding issue
+	double item_bonus = ( dmax * status_get_apbonus_item( &sd.bl ) / 100 );
+
 	dmax += equip_bonus + item_bonus;
-	dmax += (int64)(dmax * status_get_apbonus(&sd->bl, STATUS_BONUS_RATE) / 100);// Aegis accuracy
 
-	//Make sure it's not negative before casting to uint32
-	if (dmax < 0) dmax = 0;
+	// Aegis accuracy
+	dmax += static_cast<int64>( dmax * status_get_apbonus( &sd.bl, STATUS_BONUS_RATE ) / 100 );
 
-	return cap_value((uint32)dmax, 0, UINT_MAX);
+	// Make sure it's not negative before casting to uint32
+	if( dmax < 0. ){
+		dmax = 0.;
+	}
+
+	return cap_value( static_cast<uint32>( dmax ), 0, std::numeric_limits<uint32>::max() );
 }
 
 /**
@@ -4235,7 +4303,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 #endif
 
 // ----- HP MAX CALCULATION -----
-	base_status->max_hp = sd->status.max_hp = status_calc_maxhpsp_pc(sd,base_status->vit,true);
+	base_status->max_hp = sd->status.max_hp = status_calc_maxhp_pc( *sd, base_status->vit );
 
 	if(battle_config.hp_rate != 100)
 		base_status->max_hp = (uint32)(battle_config.hp_rate * (base_status->max_hp/100.));
@@ -4248,7 +4316,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		base_status->max_hp = cap_value(base_status->max_hp,1,(uint32)battle_config.max_hp);
 
 // ----- SP MAX CALCULATION -----
-	base_status->max_sp = sd->status.max_sp = status_calc_maxhpsp_pc(sd,base_status->int_,false);
+	base_status->max_sp = sd->status.max_sp = status_calc_maxsp_pc( *sd, base_status->int_ );
 
 	if(battle_config.sp_rate != 100)
 		base_status->max_sp = (uint32)(battle_config.sp_rate * (base_status->max_sp/100.));
@@ -4256,7 +4324,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	base_status->max_sp = cap_value(base_status->max_sp,1,(uint32)battle_config.max_sp);
 
 // ----- AP MAX CALCULATION -----
-	base_status->max_ap = sd->status.max_ap = status_calc_maxap_pc(sd);
+	base_status->max_ap = sd->status.max_ap = status_calc_maxap_pc( *sd );
 
 	if (battle_config.ap_rate != 100)
 		base_status->max_ap = (uint32)(battle_config.ap_rate * (base_status->max_ap / 100.));
@@ -5896,7 +5964,7 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 
 	if(flag[SCB_MAXHP]) {
 		if( bl.type == BL_PC ) {
-			status->max_hp = status_calc_maxhpsp_pc(sd,status->vit,true);
+			status->max_hp = status_calc_maxhp_pc( *sd, status->vit );
 
 			if(battle_config.hp_rate != 100)
 				status->max_hp = (uint32)(battle_config.hp_rate * (status->max_hp/100.));
@@ -5919,7 +5987,7 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 
 	if(flag[SCB_MAXSP]) {
 		if( bl.type == BL_PC ) {
-			status->max_sp = status_calc_maxhpsp_pc(sd,status->int_,false);
+			status->max_sp = status_calc_maxsp_pc( *sd, status->int_ );
 
 			if(battle_config.sp_rate != 100)
 				status->max_sp = (uint32)(battle_config.sp_rate * (status->max_sp/100.));
@@ -6181,7 +6249,7 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 
 	if (flag[SCB_MAXAP]) {
 		if (bl.type == BL_PC) {
-			status->max_ap = status_calc_maxap_pc(sd);
+			status->max_ap = status_calc_maxap_pc( *sd );
 
 			if (battle_config.ap_rate != 100)
 				status->max_ap = (uint32)(battle_config.ap_rate * (status->max_ap / 100.));
