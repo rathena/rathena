@@ -106,7 +106,8 @@ enum e_unit_stop_walking {
 	USW_MOVE_ONCE = 0x2, /// Force the unit to move one cell if it hasn't yet
 	USW_MOVE_FULL_CELL = 0x4, /// Enable moving to the next cell when unit was already half-way there (may cause on-touch/place side-effects, such as a scripted map change)
 	USW_FORCE_STOP = 0x8, /// Force stop moving, even if walktimer is currently INVALID_TIMER
-	USW_ALL = 0xf,
+	USW_RELEASE_TARGET = 0x10, /// Release chase target
+	USW_ALL = 0x1f,
 };
 
 // PC, MOB, PET

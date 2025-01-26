@@ -1634,6 +1634,131 @@ struct PACKET_ZC_ROOM_NEWENTRY {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_ROOM_NEWENTRY, 0xd7);
 
+struct PACKET_ZC_MONSTER_INFO {
+	int16 packetType;
+	uint16 class_;
+	uint16 level;
+	uint16 size;
+	uint32 hp;
+	int16 def;
+	uint16 race;
+	int16 mdef;
+	uint16 element;
+	uint8 water;
+	uint8 earth;
+	uint8 fire;
+	uint8 wind;
+	uint8 poison;
+	uint8 holy;
+	uint8 shadow;
+	uint8 ghost;
+	uint8 undead;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_MONSTER_INFO, 0x18c);
+
+#if PACKETVER >= 20180221
+struct PACKET_ZC_ACK_REQNAME_BYGID {
+	int16 packetType;
+	uint16 flag;
+	uint32 CID;
+	char name[NAME_LENGTH];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_REQNAME_BYGID, 0xaf7);
+#else
+struct PACKET_ZC_ACK_REQNAME_BYGID {
+	int16 packetType;
+	uint32 CID;
+	char name[NAME_LENGTH];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_REQNAME_BYGID, 0x194);
+#endif
+
+struct PACKET_ZC_PET_ACT {
+	int16 packetType;
+	uint32 GID;
+	int32 data;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_PET_ACT, 0x1aa);
+
+struct PACKET_ZC_COMBODELAY {
+	int16 packetType;
+	uint32 AID;
+	uint32 delay;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_COMBODELAY, 0x1d2);
+
+struct PACKET_ZC_BLADESTOP {
+	int16 packetType;
+	uint32 srcId;
+	uint32 targetId;
+	uint32 flag;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_BLADESTOP, 0x1d1);
+
+struct PACKET_ZC_MVP {
+	int16 packetType;
+	uint32 AID;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_MVP, 0x10c);
+
+struct PACKET_ZC_MVP_GETTING_SPECIAL_EXP {
+	int16 packetType;
+	uint32 exp;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_MVP_GETTING_SPECIAL_EXP, 0x10b);
+
+struct PACKET_ZC_THROW_MVPITEM {
+	int16 packetType;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_THROW_MVPITEM, 0x10d);
+
+struct PACKET_ZC_UPDATE_MAPINFO{
+	int16 packetType;
+	int16 x;
+	int16 y;
+	int16 type;
+	char mapname[MAP_NAME_LENGTH_EXT];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_UPDATE_MAPINFO, 0x192);
+
+struct PACKET_CZ_REQ_ENTER_ROOM{
+	int16 packetType;
+	uint32 chat_id;
+	char password[8];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_ENTER_ROOM, 0xd9);
+
+struct PACKET_CZ_CHANGE_CHATROOM{
+	int16 packetType;
+	uint16 packetSize;
+	uint16 limit;
+	uint8 type;
+	char password[8];
+	char title[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_CHANGE_CHATROOM, 0xde);
+
+struct PACKET_CZ_ADD_EXCHANGE_ITEM{
+	int16 packetType;
+	uint16 index;
+	int32 amount;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_ADD_EXCHANGE_ITEM, 0xe8);
+
+struct PACKET_CZ_MOVE_ITEM_FROM_CART_TO_BODY{
+	int16 packetType;
+	uint16 index;
+	int32 amount;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_MOVE_ITEM_FROM_CART_TO_BODY, 0x127);
+
+struct PACKET_CZ_SELECT_WARPPOINT{
+	int16 packetType;
+	int16 skill_id;
+	char mapname[MAP_NAME_LENGTH_EXT];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_SELECT_WARPPOINT, 0x11b);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )

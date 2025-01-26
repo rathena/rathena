@@ -3713,7 +3713,7 @@ void status_calc_state(struct block_list *bl, status_change *sc, std::bitset<SCS
 void status_calc_slave_mode(mob_data& md);
 
 bool status_check_skilluse(struct block_list *src, struct block_list *target, uint16 skill_id, int32 flag);
-int32 status_check_visibility(struct block_list *src, struct block_list *target);
+bool status_check_visibility(block_list* src, block_list* target, bool checkblind);
 
 int32 status_change_spread(block_list *src, block_list *bl);
 

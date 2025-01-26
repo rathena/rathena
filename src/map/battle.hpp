@@ -786,7 +786,7 @@ struct Battle_Config
 	int32 item_stacking;
 	int32 hom_delay_reset_vaporize;
 	int32 hom_delay_reset_warp;
-	
+
 	// Champion Monster
 	int32 group_id_monster_champion;
 	
@@ -840,7 +840,8 @@ struct Battle_Config
 	int afk_headgear_viewid;
 	int afk_hat_effectid;
 
-	
+	int32 loot_range;
+
 #include <custom/battle_config_struct.inc>
 };
 
