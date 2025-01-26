@@ -40,10 +40,10 @@ HANDLER_FUNC(merchantstore_save) {
 	if (SQL_SUCCESS != stmt.Prepare(
 			"SELECT `account_id` FROM `%s` WHERE (`account_id` = ? AND `char_id` = ? AND `world_name` = ? AND `store_type` = ?) LIMIT 1",
 			merchant_configs_table)
-		|| SQL_SUCCESS != stmt.BindParam(0, SQLDT_INT, &account_id, sizeof(account_id))
-		|| SQL_SUCCESS != stmt.BindParam(1, SQLDT_INT, &char_id, sizeof(char_id))
+		|| SQL_SUCCESS != stmt.BindParam(0, SQLDT_INT32, &account_id, sizeof(account_id))
+		|| SQL_SUCCESS != stmt.BindParam(1, SQLDT_INT32, &char_id, sizeof(char_id))
 		|| SQL_SUCCESS != stmt.BindParam(2, SQLDT_STRING, (void *)world_name, strlen(world_name))
-		|| SQL_SUCCESS != stmt.BindParam(3, SQLDT_INT, &store_type, sizeof(store_type))
+		|| SQL_SUCCESS != stmt.BindParam(3, SQLDT_INT32, &store_type, sizeof(store_type))
 		|| SQL_SUCCESS != stmt.Execute()
 	) {
 		SqlStmt_ShowDebug(stmt);
@@ -57,10 +57,10 @@ HANDLER_FUNC(merchantstore_save) {
 		if (SQL_SUCCESS != stmt.Prepare(
 				"INSERT INTO `%s` (`account_id`, `char_id`, `world_name`, `store_type`, `data`) VALUES (?, ?, ?, ?, ?)",
 				merchant_configs_table)
-			|| SQL_SUCCESS != stmt.BindParam(0, SQLDT_INT, &account_id, sizeof(account_id))
-			|| SQL_SUCCESS != stmt.BindParam(1, SQLDT_INT, &char_id, sizeof(char_id))
+			|| SQL_SUCCESS != stmt.BindParam(0, SQLDT_INT32, &account_id, sizeof(account_id))
+			|| SQL_SUCCESS != stmt.BindParam(1, SQLDT_INT32, &char_id, sizeof(char_id))
 			|| SQL_SUCCESS != stmt.BindParam(2, SQLDT_STRING, (void *)world_name, strlen(world_name))
-			|| SQL_SUCCESS != stmt.BindParam(3, SQLDT_INT, &store_type, sizeof(store_type))
+			|| SQL_SUCCESS != stmt.BindParam(3, SQLDT_INT32, &store_type, sizeof(store_type))
 			|| SQL_SUCCESS != stmt.BindParam(4, SQLDT_STRING, (void *)data.c_str(), strlen(data.c_str()))
 			|| SQL_SUCCESS != stmt.Execute()
 		) {
@@ -76,10 +76,10 @@ HANDLER_FUNC(merchantstore_save) {
 				"UPDATE `%s` SET `data` = ? WHERE (`account_id` = ? AND `char_id` = ? AND `world_name` = ? AND `store_type` = ?)",
 				merchant_configs_table)
 			|| SQL_SUCCESS != stmt.BindParam(0, SQLDT_STRING, (void *)data.c_str(), strlen(data.c_str()))
-			|| SQL_SUCCESS != stmt.BindParam(1, SQLDT_INT, &account_id, sizeof(account_id))
-			|| SQL_SUCCESS != stmt.BindParam(2, SQLDT_INT, &char_id, sizeof(char_id))
+			|| SQL_SUCCESS != stmt.BindParam(1, SQLDT_INT32, &account_id, sizeof(account_id))
+			|| SQL_SUCCESS != stmt.BindParam(2, SQLDT_INT32, &char_id, sizeof(char_id))
 			|| SQL_SUCCESS != stmt.BindParam(3, SQLDT_STRING, (void *)world_name, strlen(world_name))
-			|| SQL_SUCCESS != stmt.BindParam(4, SQLDT_INT, &store_type, sizeof(store_type))
+			|| SQL_SUCCESS != stmt.BindParam(4, SQLDT_INT32, &store_type, sizeof(store_type))
 			|| SQL_SUCCESS != stmt.Execute()
 		) {
 			SqlStmt_ShowDebug(stmt);
@@ -121,10 +121,10 @@ HANDLER_FUNC(merchantstore_load) {
 	if (SQL_SUCCESS != stmt.Prepare(
 			"SELECT `data` FROM `%s` WHERE (`account_id` = ? AND `char_id` = ? AND `world_name` = ? AND `store_type` = ?) LIMIT 1",
 			merchant_configs_table)
-		|| SQL_SUCCESS != stmt.BindParam(0, SQLDT_INT, &account_id, sizeof(account_id))
-		|| SQL_SUCCESS != stmt.BindParam(1, SQLDT_INT, &char_id, sizeof(char_id))
+		|| SQL_SUCCESS != stmt.BindParam(0, SQLDT_INT32, &account_id, sizeof(account_id))
+		|| SQL_SUCCESS != stmt.BindParam(1, SQLDT_INT32, &char_id, sizeof(char_id))
 		|| SQL_SUCCESS != stmt.BindParam(2, SQLDT_STRING, (void *)world_name, strlen(world_name))
-		|| SQL_SUCCESS != stmt.BindParam(3, SQLDT_INT, &store_type, sizeof(store_type))
+		|| SQL_SUCCESS != stmt.BindParam(3, SQLDT_INT32, &store_type, sizeof(store_type))
 		|| SQL_SUCCESS != stmt.Execute()
 	) {
 		SqlStmt_ShowDebug(stmt);

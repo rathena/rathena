@@ -42,13 +42,9 @@ enum SqlDataType
 	SQLDT_UINT64,
 	// platform dependent size
 	SQLDT_CHAR,
-	SQLDT_SHORT,
-	SQLDT_INT,
 	SQLDT_LONG,
 	SQLDT_LONGLONG,
 	SQLDT_UCHAR,
-	SQLDT_USHORT,
-	SQLDT_UINT,
 	SQLDT_ULONG,
 	SQLDT_ULONGLONG,
 	// floating point

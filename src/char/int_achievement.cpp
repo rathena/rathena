@@ -53,11 +53,11 @@ struct achievement *mapif_achievements_fromsql(uint32 char_id, int32 *count)
 		return nullptr;
 	}
 
-	stmt.BindColumn(0, SQLDT_INT,  &tmp_achieve.achievement_id, 0, nullptr, nullptr);
-	stmt.BindColumn(1, SQLDT_INT,  &tmp_achieve.completed, 0, nullptr, nullptr);
-	stmt.BindColumn(2, SQLDT_INT,  &tmp_achieve.rewarded, 0, nullptr, nullptr);
+	stmt.BindColumn(0, SQLDT_INT32,  &tmp_achieve.achievement_id, 0, nullptr, nullptr);
+	stmt.BindColumn(1, SQLDT_INT32,  &tmp_achieve.completed, 0, nullptr, nullptr);
+	stmt.BindColumn(2, SQLDT_INT32,  &tmp_achieve.rewarded, 0, nullptr, nullptr);
 	for (i = 0; i < MAX_ACHIEVEMENT_OBJECTIVES; ++i)
-		stmt.BindColumn(3 + i, SQLDT_INT, &tmp_achieve.count[i], 0, nullptr, nullptr);
+		stmt.BindColumn(3 + i, SQLDT_INT32, &tmp_achieve.count[i], 0, nullptr, nullptr);
 
 	*count = (int32)stmt.NumRows();
 	if (*count > 0) {
