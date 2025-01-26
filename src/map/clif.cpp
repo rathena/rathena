@@ -3066,6 +3066,8 @@ void clif_inventorylist( map_session_data *sd ){
 	int32 equip = 0;
 	int32 normal = 0;
 
+	storage_sortitem( sd->storage.u.items_inventory, ARRAYLENGTH( sd->storage.u.items_inventory ) );
+
 	for( int32 i = 0; i < MAX_INVENTORY; i++ ){
 		if( sd->inventory.u.items_inventory[i].nameid == 0 || sd->inventory_data[i] == nullptr ){
 			continue;
@@ -3244,6 +3246,8 @@ void clif_cartlist( map_session_data *sd ){
 	static struct packet_itemlist_equip itemlist_equip;
 	int32 normal = 0;
 	int32 equip = 0;
+
+	storage_sortitem( sd->storage.u.items_cart, ARRAYLENGTH( sd->storage.u.items_cart ) );
 
 	for( int32 i = 0; i < MAX_CART; i++ ){
 		if( sd->cart.u.items_cart[i].nameid == 0 ){

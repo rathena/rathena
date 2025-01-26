@@ -803,7 +803,7 @@ bool char_memitemdata_from_sql(struct s_storage* p, int32 max, int32 id, enum st
 		StringBuf_Printf(&buf, ", `option_val%d`", j);
 		StringBuf_Printf(&buf, ", `option_parm%d`", j);
 	}
-	StringBuf_Printf(&buf, " FROM `%s` WHERE `%s`=? ORDER BY `nameid`", tablename, selectoption );
+	StringBuf_Printf(&buf, " FROM `%s` WHERE `%s`=? ORDER BY `id`", tablename, selectoption );
 
 	if( SQL_ERROR == stmt.PrepareStr(StringBuf_Value(&buf))
 		||	SQL_ERROR == stmt.BindParam(0, SQLDT_INT32, &id, 0)
