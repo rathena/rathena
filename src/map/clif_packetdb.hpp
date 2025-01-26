@@ -120,7 +120,7 @@
 	parseable_packet(0x0116,10,clif_parse_UseSkillToPos,2,4,6,8);
 	parseable_packet(0x0118,2,clif_parse_StopAttack,0);
 	packet(0x0119,13);
-	parseable_packet(0x011b,20,clif_parse_UseSkillMap,2,4);
+	parseable_packet( HEADER_CZ_SELECT_WARPPOINT, sizeof( PACKET_CZ_SELECT_WARPPOINT ), clif_parse_UseSkillMap, 0 );
 	parseable_packet(0x011d,2,clif_parse_RequestMemo,0);
 	packet(0x011f,16);
 	packet( cartlistequipType, -1 );
