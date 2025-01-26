@@ -445,7 +445,13 @@ OnMobDead:
 
 
 // Step 6
-1@exsh,90,148,3	duplicate(dummy_cloaked_npc)	Hyunrok#sh2	4_EXJOB_HYUN_ROK
+1@exsh,90,148,3	script(CLOAKED)	Hyunrok#sh2	4_EXJOB_HYUN_ROK,{
+	if ('step >= 8) {	// custom (debug)
+		warp "pay_fild09",113,343;
+		end;
+	}
+	end;
+}
 
 1@exsh,93,39,3	script	doram_job_change_mob_3	-1,{
 	end;

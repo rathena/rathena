@@ -1147,6 +1147,7 @@ pay_fild09,108,346,3	script	Suspicious Light#JQ_SH	4_ENERGY_WHITE,{
 			close;
 		}
 		if (SkillPoint > 0) {
+			// !TODO: unknown dialog
 			mes "[Chulho]";
 			mes "Please use all your skill points before proceeding.";
 			close3;
