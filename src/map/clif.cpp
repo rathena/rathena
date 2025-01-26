@@ -11637,9 +11637,11 @@ void clif_parse_ActionRequest_sub( map_session_data& sd, uint8 action_type, int3
 	if (action_type != DMG_NORMAL && action_type != DMG_REPEAT) {
 		if (sd.sc.cant.interact)
 			return;
-		pc_stop_walking(&sd, 1);
+
+		unit_stop_walking( &sd.bl, USW_FIXPOS );
 	}
-	pc_stop_attack(&sd);
+
+	unit_stop_attack( &sd.bl );
 
 	if(target_id<0 && -target_id == sd.bl.id) // for disguises [Valaris]
 		target_id = sd.bl.id;
@@ -12511,8 +12513,8 @@ void clif_parse_TradeCommit(int32 fd,map_session_data *sd)
 /// 0118
 void clif_parse_StopAttack(int32 fd,map_session_data *sd)
 {
-	pc_stop_attack(sd);
-	if (sd) sd->ud.state.attack_continue = 0;
+	unit_stop_attack( &sd->bl );
+	sd->ud.state.attack_continue = 0;
 }
 
 

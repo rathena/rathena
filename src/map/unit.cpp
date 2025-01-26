@@ -1137,7 +1137,7 @@ bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int32 easy, b
 	if(ud == nullptr)
 		return false;
 
-	unit_stop_walking(bl, 1);
+	unit_stop_walking( bl, USW_FIXPOS );
 	unit_stop_attack(bl);
 
 	if( checkpath && (map_getcell(bl->m,dst_x,dst_y,CELL_CHKNOPASS) || !path_search(nullptr,bl->m,bl->x,bl->y,dst_x,dst_y,easy,CELL_CHKNOREACH)) )
@@ -1267,7 +1267,7 @@ int32 unit_blown(struct block_list* bl, int32 dx, int32 dy, int32 count, enum e_
 		ny = result&0xffff;
 
 		if(!su)
-			unit_stop_walking(bl, 0);
+			unit_stop_walking( bl, USW_NONE );
 
 		if( sd ) {
 			unit_stop_stepaction(bl); //Stop stepaction when knocked back
@@ -1534,20 +1534,21 @@ void unit_stop_walking_soon(struct block_list& bl)
  * Stops a unit from walking
  * @param bl: Object to stop walking
  * @param type: Options, see e_unit_stop_walking
- * @return Success(1); Failed(0);
+ * @return Success(true); Failed(false);
  */
-int32 unit_stop_walking(struct block_list *bl,int32 type)
-{
+bool unit_stop_walking( block_list* bl, int32 type, t_tick canmove_delay ){
 	struct unit_data *ud;
 	const struct TimerData* td = nullptr;
 	t_tick tick;
 
-	nullpo_ret(bl);
+	if( bl == nullptr ){
+		return false;
+	}
 
 	ud = unit_bl2ud(bl);
 
 	if(!ud || (!(type&USW_FORCE_STOP) && ud->walktimer == INVALID_TIMER))
-		return 0;
+		return false;
 
 	// NOTE: We are using timer data after deleting it because we know the
 	// delete_timer function does not mess with it. If the function's
@@ -1582,8 +1583,9 @@ int32 unit_stop_walking(struct block_list *bl,int32 type)
 	if (type&USW_RELEASE_TARGET)
 		ud->target_to = 0;
 
-	if(bl->type == BL_PET && type&~USW_ALL)
-		ud->canmove_tick = gettick() + (type>>8);
+	if( canmove_delay > 0 ){
+		ud->canmove_tick = gettick() + canmove_delay;
+	}
 
 	// Re-added, the check in unit_set_walkdelay means dmg during running won't fall through to this place in code [Kevin]
 	if (ud->state.running) {
@@ -1591,7 +1593,7 @@ int32 unit_stop_walking(struct block_list *bl,int32 type)
 		status_change_end(bl, SC_WUGDASH);
 	}
 
-	return 1;
+	return true;
 }
 
 /**
@@ -1731,7 +1733,10 @@ int32 unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int32
 				if (md && md->state.can_escape == 1) // Mob needs to escape, don't stop it
 					return 0;
 			}
-			unit_stop_walking(bl,4); //Unit might still be moving even though it can't move
+
+			// Unit might still be moving even though it can't move
+			unit_stop_walking( bl, USW_MOVE_FULL_CELL );
+
 			return 0;
 		}
 		//Immune to being stopped for double the flinch time
@@ -1743,13 +1748,13 @@ int32 unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int32
 
 	if (ud->walktimer != INVALID_TIMER) { // Stop walking, if chasing, readjust timers.
 		if (delay == 1) // Minimal delay (walk-delay) disabled. Just stop walking.
-			unit_stop_walking(bl,0);
+			unit_stop_walking( bl, USW_NONE );
 		else {
 			// Resume running after can move again [Kevin]
 			if(ud->state.running)
 				add_timer(ud->canmove_tick, unit_resume_running, bl->id, (intptr_t)ud);
 			else {
-				unit_stop_walking(bl,4);
+				unit_stop_walking( bl, USW_MOVE_FULL_CELL );
 
 				if(ud->target_to != 0)
 					add_timer(ud->canmove_tick+1, unit_walktobl_sub, bl->id, ud->target_to);
@@ -2164,8 +2169,11 @@ int32 unit_skilluse_id2(struct block_list *src, int32 target_id, uint16 skill_id
 	casttime = skill_vfcastfix(src, casttime, skill_id, skill_lv);
 #endif
 
-	if(!ud->state.running) // Need TK_RUN or WUGDASH handler to be done before that, see bugreport:6026
-		unit_stop_walking(src, 1); // Even though this is not how official works but this will do the trick. bugreport:6829
+	// Need TK_RUN or WUGDASH handler to be done before that, see bugreport:6026
+	if(!ud->state.running){
+		// Even though this is not how official works but this will do the trick. bugreport:6829
+		unit_stop_walking( src, USW_FIXPOS );
+	}
 
 	// SC_MAGICPOWER needs to switch states at start of cast
 #ifndef RENEWAL
@@ -2426,7 +2434,7 @@ int32 unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, 
 		}
 	}
 
-	unit_stop_walking(src,1);
+	unit_stop_walking( src, USW_FIXPOS );
 
 	// SC_MAGICPOWER needs to switch states at start of cast
 #ifndef RENEWAL
@@ -2942,7 +2950,7 @@ static int32 unit_attack_timer_sub(struct block_list* src, int32 tid, t_tick tic
 			unit_setdir(src, map_calc_dir(src, target->x, target->y), false);
 
 		if(ud->walktimer != INVALID_TIMER)
-			unit_stop_walking(src,1);
+			unit_stop_walking( src, USW_FIXPOS );
 
 		if(md) {
 			// Berserk skills can replace normal attacks except for the first attack

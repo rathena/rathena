@@ -255,9 +255,6 @@ void pet_evolution(map_session_data *sd, int16 pet_id);
 int32 pet_food(map_session_data *sd, struct pet_data *pd);
 void pet_clear_support_bonuses(map_session_data *sd);
 
-#define pet_stop_walking(pd, type) unit_stop_walking(&(pd)->bl, type)
-#define pet_stop_attack(pd) unit_stop_attack(&(pd)->bl)
-
 bool pet_addautobonus(std::vector<std::shared_ptr<s_petautobonus>> &bonus, const std::string &script, int16 rate, uint32 dur, uint16 atk_type, const std::string &other_script, bool onskill);
 void pet_exeautobonus(map_session_data &sd, std::vector<std::shared_ptr<s_petautobonus>> *bonus, std::shared_ptr<s_petautobonus> &autobonus);
 void pet_delautobonus(map_session_data &sd, std::vector<std::shared_ptr<s_petautobonus>> &bonus, bool restore);

@@ -1404,8 +1404,11 @@ static int32 mob_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
 		(*target) = bl;
 		md->target_id = bl->id;
 	}
-	else if (!battle_config.monster_loot_search_type)
-		mob_stop_walking(md, 1); // Stop walking immediately if item is no longer on the ground.
+	else if( !battle_config.monster_loot_search_type ){
+		// Stop walking immediately if item is no longer on the ground.
+		unit_stop_walking( &md->bl, USW_FIXPOS );
+	}
+
 	return 0;
 }
 
@@ -1485,10 +1488,10 @@ static int32 mob_ai_sub_hard_slavemob(struct mob_data *md,t_tick tick)
 
 			if (map_search_freecell(&md->bl, bl->m, &x, &y, MOB_SLAVEDISTANCE, MOB_SLAVEDISTANCE, 1)) {
 				if (unit_walktoxy(&md->bl, x, y, 0) == 0) { // Slave is too far from master (outside of battle_config.max_walk_path range), stay put
-					mob_stop_walking(md, USW_FIXPOS);
+					unit_stop_walking( &md->bl, USW_FIXPOS );
 					return 0; // Fail here so target will be picked back up when in range
 				} else { // Slave will walk back to master if in range
-					mob_stop_attack(md);
+					unit_stop_attack( &md->bl );
 					return 1;
 				}
 			}
@@ -1565,7 +1568,7 @@ int32 mob_unlocktarget(struct mob_data *md, t_tick tick)
 				md->next_walktime = tick+rnd()%1000;
 		break;
 	default:
-		mob_stop_attack(md);
+		unit_stop_attack( &md->bl );
 		unit_stop_walking_soon(md->bl); //Stop chasing.
 		if (status_has_mode(&md->status,MD_ANGRY) && !md->state.aggressive)
 			md->state.aggressive = 1; //Restore angry state when switching to idle
@@ -3525,8 +3528,8 @@ int32 mob_class_change (struct mob_data *md, int32 mob_id)
 
 	status_change_end(&md->bl,SC_KEEPING); // End before calling status_calc_mob().
 	status_change_end(&md->bl,SC_BARRIER);
-	mob_stop_attack(md);
-	mob_stop_walking(md, 0);
+	unit_stop_attack( &md->bl );
+	unit_stop_walking( &md->bl, USW_NONE );
 	unit_skillcastcancel(&md->bl, 0);
 	status_set_viewdata(&md->bl, mob_id);
 	clif_class_change( md->bl, md->vd->class_ );

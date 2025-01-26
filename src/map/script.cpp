@@ -20032,7 +20032,7 @@ BUILDIN_FUNC(unitstopwalk)
 		if (ud != nullptr)
 			ud->state.force_walk = false;
 
-		if (unit_stop_walking(bl, flag) == 0 && flag != USW_FORCE_STOP) {
+		if( !unit_stop_walking( bl, flag ) && flag != USW_FORCE_STOP ){
 			ShowWarning("buildin_unitstopwalk: Unable to find unit or unit is not walking.\n");
 			return SCRIPT_CMD_FAILURE;
 		}
@@ -21296,8 +21296,8 @@ BUILDIN_FUNC(bg_monster_set_team)
 	md = (TBL_MOB *)mbl;
 	md->bg_id = bg_id;
 
-	mob_stop_attack(md);
-	mob_stop_walking(md, 0);
+	unit_stop_attack( &md->bl );
+	unit_stop_walking( &md->bl, USW_NONE );
 	md->target_id = md->attacked_id = 0;
 	clif_name_area(&md->bl);
 

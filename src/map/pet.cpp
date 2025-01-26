@@ -695,8 +695,8 @@ void pet_unlocktarget(struct pet_data *pd)
 	nullpo_retv(pd);
 
 	pd->target_id = 0;
-	pet_stop_attack(pd);
-	pet_stop_walking(pd,1);
+	unit_stop_attack( &pd->bl );
+	unit_stop_walking( &pd->bl, USW_FIXPOS );
 }
 
 /**
@@ -862,7 +862,7 @@ static TIMER_FUNC(pet_hungry){
 	pd->pet.hungry -= pet_db_ptr->fullness;
 
 	if( pd->pet.hungry < PET_HUNGRY_NONE ) {
-		pet_stop_attack(pd);
+		unit_stop_attack( &pd->bl );
 		pd->pet.hungry = PET_HUNGRY_NONE;
 		pet_set_intimate(pd, pd->pet.intimate + pet_db_ptr->hungry_intimacy_dec);
 
@@ -936,7 +936,7 @@ int32 pet_hungry_timer_delete(struct pet_data *pd)
  */
 static int32 pet_performance(map_session_data *sd, struct pet_data *pd)
 {
-	pet_stop_walking(pd,2000<<8);
+	unit_stop_walking( &pd->bl, USW_NONE, 2000 );
 	clif_send_petdata( nullptr, *pd, CHANGESTATEPET_PERFORMANCE );
 	pet_lootitem_drop( *pd, nullptr );
 
@@ -1652,7 +1652,7 @@ int32 pet_food(map_session_data *sd, struct pet_data *pd)
 	if (pd->pet.hungry > PET_HUNGRY_SATISFIED) {
 		pet_set_intimate(pd, pd->pet.intimate + pet_db_ptr->r_full);
 		if (pd->pet.intimate <= PET_INTIMATE_NONE) {
-			pet_stop_attack(pd);
+			unit_stop_attack( &pd->bl );
 			pd->status.speed = pd->get_pet_walk_speed();
 		}
 	}
@@ -2132,8 +2132,8 @@ TIMER_FUNC(pet_heal_timer){
 		return 0;
 	}
 
-	pet_stop_attack(pd);
-	pet_stop_walking(pd,1);
+	unit_stop_attack( &pd->bl );
+	unit_stop_walking( &pd->bl, USW_FIXPOS );
 	clif_skill_nodamage(&pd->bl,sd->bl,AL_HEAL,pd->s_skill->lv);
 	status_heal(&sd->bl, pd->s_skill->lv,0, 0);
 	pd->s_skill->timer = add_timer(tick+pd->s_skill->delay*1000,pet_heal_timer,sd->bl.id,0);
@@ -2180,8 +2180,8 @@ TIMER_FUNC(pet_skill_support_timer){
 		return 0;
 	}
 
-	pet_stop_attack(pd);
-	pet_stop_walking(pd,1);
+	unit_stop_attack( &pd->bl );
+	unit_stop_walking( &pd->bl, USW_FIXPOS );
 	pd->s_skill->timer=add_timer(tick+pd->s_skill->delay*1000,pet_skill_support_timer,sd->bl.id,0);
 
 	if (skill_get_inf(pd->s_skill->id) & INF_GROUND_SKILL)

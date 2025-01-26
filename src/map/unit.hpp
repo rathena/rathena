@@ -118,7 +118,7 @@ TIMER_FUNC(unit_delay_walktobl_timer);
 
 void unit_stop_walking_soon(struct block_list& bl);
 // Causes the target object to stop moving.
-int32 unit_stop_walking(struct block_list *bl,int32 type);
+bool unit_stop_walking( block_list* bl, int32 type, t_tick canmove_delay = 0 );
 bool unit_can_move(struct block_list *bl);
 int32 unit_is_walking(struct block_list *bl);
 int32 unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int32 type);
