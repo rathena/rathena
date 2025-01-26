@@ -29657,6 +29657,9 @@ struct script_function buildin_func[] = {
 
 	BUILDIN_DEF( mesitemicon, "i??" ),
 
+	BUILDIN_DEF(fstatus,"iiii"),
+	BUILDIN_DEF(fake_icon_all,"iii"),
+	
 #include <custom/script_def.inc>
 
 	{nullptr,nullptr,nullptr},
