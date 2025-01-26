@@ -13569,22 +13569,6 @@ void clif_parse_MoveToKafraFromCart(int32 fd, map_session_data *sd){
 	const PACKET_CZ_MOVE_ITEM_FROM_CART_TO_STORE* p = reinterpret_cast<PACKET_CZ_MOVE_ITEM_FROM_CART_TO_STORE*>( RFIFOP( fd, 0 ) );
 	uint16 idx = server_index( p->index );
 
-	if( idx >= MAX_INVENTORY ){
-		return;
-	}
-
-	if( p->amount <= 0 ){
-		return;
-	}
-
-	if( p->amount > MAX_AMOUNT ){
-		return;
-	}
-
-	if( sd->inventory.u.items_inventory[idx].equipSwitch ){
-		clif_msg( sd, MSI_SWAP_EQUIPITEM_UNREGISTER_FIRST );
-		return;
-	}
 
 	if (sd->state.storage_flag == 1)
 		storage_storageaddfromcart( sd, &sd->storage, idx, p->amount );
