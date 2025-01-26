@@ -7878,8 +7878,8 @@ static uint16 status_calc_speed(struct block_list *bl, status_change *sc, int32 
 		if( sc->getSCE(SC_JAWAII_SERENADE) ){
 			val = max( val, 25 );
 		}
-		if( sc->getSCE(SC_WILD_WALK) )
-			val = max( val, 2 * sc->getSCE(SC_WILD_WALK)->val2 );
+		if( sc->getSCE(SC_WILD_WALK) != nullptr )
+			val = max( val, sc->getSCE(SC_WILD_WALK)->val2 );
 
 		// !FIXME: official items use a single bonus for this [ultramage]
 		if( sd && sd->bonus.speed_rate + sd->bonus.speed_add_rate < 0 ) // Permanent item-based speedup
