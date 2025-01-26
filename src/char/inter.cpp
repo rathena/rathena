@@ -455,7 +455,7 @@ void inter_to_fd(int32 fd, int32 u_fd, int32 aid, char* msg, ...) {
 	WFIFOHEAD(fd,12 + len);
 
 	WFIFOW(fd,0) = 0x3807;
-	WFIFOW(fd,2) = 12 + (uint16)len;
+	WFIFOW(fd,2) = 12 + (unsigned short)len;
 	WFIFOL(fd,4) = u_fd;
 	WFIFOL(fd,8) = aid;
 	safestrncpy(WFIFOCP(fd,12), msg_out, len);

@@ -54,7 +54,7 @@ bool pincode_allowed( char* pincode );
 // reason
 // 0: success
 // 1: failed
-void chclif_moveCharSlotReply( int32 fd, struct char_session_data* sd, uint16 index, short reason ){
+void chclif_moveCharSlotReply( int32 fd, struct char_session_data* sd, unsigned short index, short reason ){
 	WFIFOHEAD(fd,8);
 	WFIFOW(fd,0) = HEADER_HC_ACK_CHANGE_CHARACTER_SLOT;
 	WFIFOW(fd,2) = 8;
@@ -1086,7 +1086,7 @@ int32 chclif_parse_charselect(int32 fd, struct char_session_data* sd,uint32 ipl)
 			return 0;
 #else
 			// Try to select a map for the user
-			uint16 j;
+			unsigned short j;
 			//First check that there's actually a map server online.
 			ARR_FIND( 0, ARRAYLENGTH(map_server), j, session_isValid(map_server[j].fd) && !map_server[j].maps.empty() );
 			if (j == ARRAYLENGTH(map_server)) {
@@ -1579,7 +1579,7 @@ int32 chclif_parse(int32 fd) {
 
 	while( RFIFOREST(fd) >= 2 ) {
 		int32 next = 1;
-		uint16 cmd;
+		unsigned short cmd;
 
 		cmd = RFIFOW(fd,0);
 

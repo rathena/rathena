@@ -807,8 +807,8 @@ void instance_generate_mapname(int32 map_id, int32 instance_id, char outname[MAP
 	static const int32 prefix_length = 4;
 	// Full map name length - prefix length - seperator character - zero termination
 	static const int32 suffix_length = MAP_NAME_LENGTH - prefix_length - 1 - 1;
-	static const int32 prefix_limit = static_cast<int32>(pow(10, prefix_length));
-	static const int32 suffix_limit = static_cast<int32>(pow(10, suffix_length));
+	static const int32 prefix_limit = static_cast<int>(pow(10, prefix_length));
+	static const int32 suffix_limit = static_cast<int>(pow(10, suffix_length));
 	safesnprintf(outname, MAP_NAME_LENGTH, "%0*u#%0*u", prefix_length, map_id % prefix_limit, suffix_length, instance_id % suffix_limit);
 }
 

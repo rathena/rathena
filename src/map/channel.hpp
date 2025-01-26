@@ -38,21 +38,21 @@ enum Channel_Type {
 };
 
 struct Channel {
-	//uint16 id;			  ///< Channel ID (unused yet)
+	//unsigned short id;			  ///< Channel ID (unused yet)
 	char name[CHAN_NAME_LENGTH];  ///< Channel Name
 	char pass[CHAN_NAME_LENGTH];  ///< Password
 	char alias[CHAN_NAME_LENGTH]; ///< Channel display name
 	enum Channel_Type type;		  ///< Channel type @see enum Channel_Type
 	unsigned long color;		  ///< Channel color in BGR
 	unsigned char opt;			  ///< Channel options @see enum Channel_Opt
-	uint16 msg_delay;	  ///< Chat delay in miliseconds
+	unsigned short msg_delay;	  ///< Chat delay in miliseconds
 	uint32 char_id;		  ///< If CHAN_TYPE_PRIVATE, owner is char_id of channel creator
 	uint16 m;					  ///< If CHAN_TYPE_MAP, owner is map id
 	int32 gid;					  ///< If CHAN_TYPE_ALLY, owner is first logged guild_id
 	DBMap *users;				  ///< List of users
 	DBMap *banned;				  ///< List of banned chars -> char_id
-	uint16 group_count;	  ///< Number of group id
-	uint16 *groups;		  ///< List of group id, only these groups can join the channel
+	unsigned short group_count;	  ///< Number of group id
+	unsigned short *groups;		  ///< List of group id, only these groups can join the channel
 };
 
 struct chan_banentry {
@@ -71,7 +71,7 @@ struct Channel_Config {
 		unsigned char opt;			 ///< Options @see enum Channel_Opt
 		unsigned long color;		 ///< Default color
 		uint32 delay;			 ///< Message delay
-		uint16 max_member;	 ///< Max member for each channel
+		unsigned short max_member;	 ///< Max member for each channel
 		unsigned allow : 1;			 ///< Allow private channel creation?
 		unsigned ban : 1;			 ///< Allow player to ban
 		unsigned kick : 1;			 ///< Allow player to kick

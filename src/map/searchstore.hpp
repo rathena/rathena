@@ -72,7 +72,7 @@ struct s_search_store_info_item {
 	uint32 account_id;
 	char store_name[MESSAGE_SIZE];
 	t_itemid nameid;
-	uint16 amount;
+	unsigned short amount;
 	uint32 price;
 	t_itemid card[MAX_SLOTS];
 	unsigned char refine;

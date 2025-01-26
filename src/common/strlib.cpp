@@ -908,7 +908,7 @@ bool sv_readdb( const char* directory, const char* filename, char delim, size_t 
 	line = (char*)aMalloc(nb_cols*colsize);
 
 	// process rows one by one
-	while( fgets( line, static_cast<int32>( maxcols * colsize ), fp ) ){
+	while( fgets( line, static_cast<int>( maxcols * colsize ), fp ) ){
 		char *match;
 		lines++;
 

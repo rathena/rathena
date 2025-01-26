@@ -4283,7 +4283,7 @@ DEFINE_PACKET_HEADER(ZC_SKILLINFO_LIST, 0x010f);
 struct PACKET_ZC_SKILLINFO_UPDATE2 {
 	int16 packetType;
 	uint16 id;
-	int32 inf;
+	int inf;
 	uint16 level;
 	uint16 sp;
 	uint16 range2;
@@ -4295,7 +4295,7 @@ DEFINE_PACKET_HEADER(ZC_SKILLINFO_UPDATE2, 0x0b33);
 struct PACKET_ZC_SKILLINFO_UPDATE2 {
 	int16 packetType;
 	uint16 id;
-	int32 inf;
+	int inf;
 	uint16 level;
 	uint16 sp;
 	uint16 range2;

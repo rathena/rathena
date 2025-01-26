@@ -3888,7 +3888,7 @@ bool itemdb_parse_roulette_db(void)
 		for (k = 0; k < limit && SQL_SUCCESS == Sql_NextRow(mmysql_handle); k++) {
 			char* data;
 			t_itemid item_id;
-			uint16 amount;
+			unsigned short amount;
 			int32 level, flag;
 
 			Sql_GetData(mmysql_handle, 1, &data, nullptr); level = atoi(data);
@@ -3911,7 +3911,7 @@ bool itemdb_parse_roulette_db(void)
 
 			j = rd.items[i];
 			RECREATE(rd.nameid[i], t_itemid, ++rd.items[i]);
-			RECREATE(rd.qty[i], uint16, rd.items[i]);
+			RECREATE(rd.qty[i], unsigned short, rd.items[i]);
 			RECREATE(rd.flag[i], int32, rd.items[i]);
 
 			rd.nameid[i][j] = item_id;
@@ -3942,7 +3942,7 @@ bool itemdb_parse_roulette_db(void)
 
 		rd.items[i] = limit;
 		RECREATE(rd.nameid[i], t_itemid, rd.items[i]);
-		RECREATE(rd.qty[i], uint16, rd.items[i]);
+		RECREATE(rd.qty[i], unsigned short, rd.items[i]);
 		RECREATE(rd.flag[i], int32, rd.items[i]);
 
 		for (j = 0; j < MAX_ROULETTE_COLUMNS - i; j++) {

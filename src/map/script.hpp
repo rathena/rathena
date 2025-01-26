@@ -295,7 +295,7 @@ struct script_code {
 	int32 script_size;
 	unsigned char* script_buf;
 	struct reg_db local;
-	uint16 instances;
+	unsigned short instances;
 };
 
 struct script_stack {

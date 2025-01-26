@@ -51,7 +51,7 @@ public:
 class CharGuild {
 public:
 	struct mmo_guild guild;
-	uint16 save_flag;
+	unsigned short save_flag;
 };
 
 int32 inter_guild_parse_frommap(int32 fd);

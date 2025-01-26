@@ -1251,7 +1251,7 @@ int32 channel_pcsetopt(map_session_data *sd, char *chname, const char *option, c
  * @return True on success or false on failure
  */
 bool channel_pccheckgroup(struct Channel *channel, int32 group_id) {
-	uint16 i;
+	unsigned short i;
 
 	nullpo_ret(channel);
 
@@ -1372,7 +1372,7 @@ bool channel_read_sub(config_setting_t *chan, struct Channel *tmp_chan, uint8 i)
 
 	if ((group_list = config_setting_get_member(chan, "groupid")) && (group_count = config_setting_length(group_list)) > 0) {
 		int32 j;
-		CREATE(tmp_chan->groups, uint16, group_count);
+		CREATE(tmp_chan->groups, unsigned short, group_count);
 		tmp_chan->group_count = group_count;
 		for (j = 0; j < group_count; j++) {
 			int32 groupid = config_setting_get_int_elem(group_list, j);

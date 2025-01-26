@@ -19,7 +19,7 @@ struct item;
 struct party_member_data {
 	map_session_data *sd;
 	uint32 hp; //For HP,x,y refreshing.
-	uint16 x, y;
+	unsigned short x, y;
 };
 
 struct party_data {
