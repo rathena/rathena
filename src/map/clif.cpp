@@ -13442,13 +13442,21 @@ void clif_parse_AutoSpell(int32 fd,map_session_data *sd)
 }
 
 
-/// Request to display item carding/composition list (CZ_REQ_ITEMCOMPOSITION_LIST).
-/// 017a <card index>.W
+/// Request to display item carding/composition list.
+/// 017a <card index>.W (CZ_REQ_ITEMCOMPOSITION_LIST)
 void clif_parse_UseCard(int32 fd,map_session_data *sd)
 {
 	if (sd->state.trading != 0)
 		return;
-	clif_use_card(sd,RFIFOW(fd,packet_db[RFIFOW(fd,0)].pos[0])-2);
+
+	const PACKET_CZ_REQ_ITEMCOMPOSITION_LIST* p = reinterpret_cast<PACKET_CZ_REQ_ITEMCOMPOSITION_LIST*>( RFIFOP( fd, 0 ) );
+	uint16 idx = server_index( p->index );
+
+	if( idx >= MAX_INVENTORY ){
+		return;
+	}
+
+	clif_use_card( sd, idx );
 }
 
 

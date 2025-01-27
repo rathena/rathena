@@ -177,7 +177,7 @@
 	packet(0x0176,106);
 	packet(0x0177,-1);
 	parseable_packet( HEADER_CZ_REQ_ITEMIDENTIFY, sizeof( PACKET_CZ_REQ_ITEMIDENTIFY ), clif_parse_ItemIdentify, 0 );
-	parseable_packet(0x017a,4,clif_parse_UseCard,2);
+	parseable_packet( HEADER_CZ_REQ_ITEMCOMPOSITION_LIST, sizeof( PACKET_CZ_REQ_ITEMCOMPOSITION_LIST ), clif_parse_UseCard, 0 );
 	packet(0x017b,-1);
 	parseable_packet(0x017c,6,clif_parse_InsertCard,2,4);
 	parseable_packet(0x017e,-1,clif_parse_GuildMessage,2,4);
