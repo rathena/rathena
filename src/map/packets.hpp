@@ -1803,6 +1803,12 @@ struct PACKET_CZ_MOVE_ITEM_FROM_STORE_TO_CART{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_MOVE_ITEM_FROM_STORE_TO_CART, 0x128);
 
+struct PACKET_CZ_REQ_ITEMIDENTIFY{
+	int16 packetType;
+	uint16 index;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_ITEMIDENTIFY, 0x178);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
