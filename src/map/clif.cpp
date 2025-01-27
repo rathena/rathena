@@ -13296,30 +13296,34 @@ void clif_parse_NpcNextClicked(int32 fd,map_session_data *sd)
 }
 
 
-/// NPC numeric input dialog value (CZ_INPUT_EDITDLG).
-/// 0143 <npc id>.L <value>.L
+/// NPC numeric input dialog value.
+/// 0143 <npc id>.L <value>.L (CZ_INPUT_EDITDLG)
 void clif_parse_NpcAmountInput(int32 fd,map_session_data *sd){
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	int32 npcid = RFIFOL(fd,info->pos[0]);
-	int32 amount = (int32)RFIFOL(fd,info->pos[1]);
+	if( sd == nullptr ){
+		return;
+	}
 
-	sd->npc_amount = amount;
+	const PACKET_CZ_INPUT_EDITDLG* p = reinterpret_cast<PACKET_CZ_INPUT_EDITDLG*>( RFIFOP( fd, 0 ) );
+
+	sd->npc_amount = p->value;
 
 	if( battle_config.idletime_option&IDLE_NPC_INPUT ){
 		sd->idletime = last_tick;
 	}
 
-	npc_scriptcont(sd, npcid, false);
+	npc_scriptcont( sd, p->GID, false );
 }
 
 
-/// NPC text input dialog value (CZ_INPUT_EDITDLGSTR).
-/// 01d5 <packet len>.W <npc id>.L <string>.?B
+/// NPC text input dialog value.
+/// 01d5 <packet len>.W <npc id>.L <string>.?B (CZ_INPUT_EDITDLGSTR)
 void clif_parse_NpcStringInput(int32 fd, map_session_data* sd){
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	int32 message_len = RFIFOW(fd,info->pos[0])-8;
-	int32 npcid = RFIFOL(fd,info->pos[1]);
-	const char* message = RFIFOCP(fd,info->pos[2]);
+	if( sd == nullptr ){
+		return;
+	}
+
+	const PACKET_CZ_INPUT_EDITDLGSTR* p = reinterpret_cast<PACKET_CZ_INPUT_EDITDLGSTR*>( RFIFOP( fd, 0 ) );
+	size_t message_len = p->packetSize - sizeof( *p );
 
 	if( message_len <= 0 )
 		return; // invalid input
@@ -13328,20 +13332,24 @@ void clif_parse_NpcStringInput(int32 fd, map_session_data* sd){
 	message_len++;
 #endif
 
-	safestrncpy(sd->npc_str, message, min(message_len,CHATBOX_SIZE));
+	safestrncpy( sd->npc_str, p->value, min( message_len, CHATBOX_SIZE ) );
 
 	if( battle_config.idletime_option&IDLE_NPC_INPUT ){
 		sd->idletime = last_tick;
 	}
 
-	npc_scriptcont(sd, npcid, false);
+	npc_scriptcont( sd, p->GID, false );
 }
 
 
-/// NPC dialog 'close' click (CZ_CLOSE_DIALOG).
-/// 0146 <npc id>.L
+/// NPC dialog 'close' click.
+/// 0146 <npc id>.L (CZ_CLOSE_DIALOG)
 void clif_parse_NpcCloseClicked(int32 fd,map_session_data *sd)
 {
+	if( sd == nullptr ){
+		return;
+	}
+
 	if (!sd->npc_id) //Avoid parsing anything when the script was done with. [Skotlex]
 		return;
 
@@ -13349,7 +13357,9 @@ void clif_parse_NpcCloseClicked(int32 fd,map_session_data *sd)
 		sd->idletime = last_tick;
 	}
 
-	npc_scriptcont(sd, RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[0]), true);
+	const PACKET_CZ_CLOSE_DIALOG* p = reinterpret_cast<PACKET_CZ_CLOSE_DIALOG*>( RFIFOP( fd, 0 ) );
+
+	npc_scriptcont( sd, p->GID, true );
 }
 
 
@@ -13463,19 +13473,30 @@ void clif_parse_SolveCharName(int32 fd, map_session_data *sd)
 }
 
 
-/// /resetskill /resetstate (CZ_RESET).
+/// /resetskill /resetstate.
 /// Request to reset stats or skills.
-/// 0197 <type>.W
+/// 0197 <type>.W (CZ_RESET)
 /// type:
 ///     0 = state
 ///     1 = skill
 void clif_parse_ResetChar(int32 fd, map_session_data *sd) {
-	char cmd[15];
+	if( sd == nullptr ){
+		return;
+	}
 
-	if( RFIFOW(fd,packet_db[RFIFOW(fd,0)].pos[0]) )
-		safesnprintf(cmd,sizeof(cmd),"%cresetskill",atcommand_symbol);
-	else
-		safesnprintf(cmd,sizeof(cmd),"%cresetstat",atcommand_symbol);
+	const PACKET_CZ_RESET* p = reinterpret_cast<PACKET_CZ_RESET*>( RFIFOP( fd, 0 ) );
+	char cmd[CHAT_SIZE_MAX];
+
+	switch( p->type ){
+		case 0:
+			safesnprintf( cmd, sizeof( cmd ), "%cresetstat", atcommand_symbol );
+			break;
+		case 1:
+			safesnprintf( cmd, sizeof(cmd), "%cresetskill", atcommand_symbol );
+			break;
+		default:
+			return;
+	}
 
 	is_atcommand(fd, sd, cmd, 1);
 }
@@ -13584,12 +13605,12 @@ void clif_parse_MoveToKafraFromCart(int32 fd, map_session_data *sd){
 }
 
 
-/// Request to move an item from storage to cart (CZ_MOVE_ITEM_FROM_STORE_TO_CART).
-/// 0128 <index>.W <amount>.L
+/// Request to move an item from storage to cart.
+/// 0128 <index>.W <amount>.L (CZ_MOVE_ITEM_FROM_STORE_TO_CART)
 void clif_parse_MoveFromKafraToCart(int32 fd, map_session_data *sd){
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	int32 idx = RFIFOW(fd,info->pos[0]) - 1;
-	int32 amount = RFIFOL(fd,info->pos[1]);
+	if( sd == nullptr ){
+		return;
+	}
 
 	if( sd->state.vending )
 		return;
@@ -13598,13 +13619,16 @@ void clif_parse_MoveFromKafraToCart(int32 fd, map_session_data *sd){
 	if (map_getmapflag(sd->bl.m, MF_NOUSECART))
 		return;
 
+	const PACKET_CZ_MOVE_ITEM_FROM_STORE_TO_CART* p = reinterpret_cast<PACKET_CZ_MOVE_ITEM_FROM_STORE_TO_CART*>( RFIFOP( fd, 0 ) );
+	uint16 idx = server_storage_index( p->index );
+
 	if (sd->state.storage_flag == 1)
-		storage_storagegettocart(sd, &sd->storage, idx, amount);
+		storage_storagegettocart( sd, &sd->storage, idx, p->amount );
 	else
 	if (sd->state.storage_flag == 2)
-		storage_guild_storagegettocart(sd, idx, amount);
+		storage_guild_storagegettocart( sd, idx, p->amount );
 	else if (sd->state.storage_flag == 3)
-		storage_storagegettocart(sd, &sd->premiumStorage, idx, amount);
+		storage_storagegettocart( sd, &sd->premiumStorage, idx, p->amount );
 }
 
 
