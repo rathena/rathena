@@ -768,6 +768,7 @@ struct Battle_Config
 	int32 hom_delay_reset_vaporize;
 	int32 hom_delay_reset_warp;
 	int32 loot_range;
+	int32 assist_range;
 
 #include <custom/battle_config_struct.inc>
 };
