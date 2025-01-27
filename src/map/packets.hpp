@@ -1828,6 +1828,13 @@ struct PACKET_CZ_REQ_ITEMCOMPOSITION{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_REQ_ITEMCOMPOSITION, 0x17c);
 
+struct PACKET_CZ_LOCALBROADCAST{
+	int16 packetType;
+	uint16 packetSize;
+	char message[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_LOCALBROADCAST, 0x19c);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
