@@ -1769,6 +1769,27 @@ struct PACKET_CZ_SELECT_WARPPOINT{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_SELECT_WARPPOINT, 0x11b);
 
+struct PACKET_CZ_INPUT_EDITDLG{
+	int16 packetType;
+	uint32 GID;
+	int32 value;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_INPUT_EDITDLG, 0x143);
+
+struct PACKET_CZ_INPUT_EDITDLGSTR{
+	int16 packetType;
+	uint16 packetSize;
+	int32 GID;
+	char value[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_INPUT_EDITDLGSTR, 0x1d5);
+
+struct PACKET_CZ_CLOSE_DIALOG{
+	int16 packetType;
+	uint32 GID;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_CLOSE_DIALOG, 0x146);
+
 struct PACKET_CZ_RESET{
 	int16 packetType;
 	uint16 type;

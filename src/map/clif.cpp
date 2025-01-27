@@ -3066,6 +3066,8 @@ void clif_inventorylist( map_session_data *sd ){
 	int32 equip = 0;
 	int32 normal = 0;
 
+	storage_sortitem( sd->storage.u.items_inventory, ARRAYLENGTH( sd->storage.u.items_inventory ) );
+
 	for( int32 i = 0; i < MAX_INVENTORY; i++ ){
 		if( sd->inventory.u.items_inventory[i].nameid == 0 || sd->inventory_data[i] == nullptr ){
 			continue;
@@ -3244,6 +3246,8 @@ void clif_cartlist( map_session_data *sd ){
 	static struct packet_itemlist_equip itemlist_equip;
 	int32 normal = 0;
 	int32 equip = 0;
+
+	storage_sortitem( sd->storage.u.items_cart, ARRAYLENGTH( sd->storage.u.items_cart ) );
 
 	for( int32 i = 0; i < MAX_CART; i++ ){
 		if( sd->cart.u.items_cart[i].nameid == 0 ){
@@ -13292,30 +13296,34 @@ void clif_parse_NpcNextClicked(int32 fd,map_session_data *sd)
 }
 
 
-/// NPC numeric input dialog value (CZ_INPUT_EDITDLG).
-/// 0143 <npc id>.L <value>.L
+/// NPC numeric input dialog value.
+/// 0143 <npc id>.L <value>.L (CZ_INPUT_EDITDLG)
 void clif_parse_NpcAmountInput(int32 fd,map_session_data *sd){
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	int32 npcid = RFIFOL(fd,info->pos[0]);
-	int32 amount = (int32)RFIFOL(fd,info->pos[1]);
+	if( sd == nullptr ){
+		return;
+	}
 
-	sd->npc_amount = amount;
+	const PACKET_CZ_INPUT_EDITDLG* p = reinterpret_cast<PACKET_CZ_INPUT_EDITDLG*>( RFIFOP( fd, 0 ) );
+
+	sd->npc_amount = p->value;
 
 	if( battle_config.idletime_option&IDLE_NPC_INPUT ){
 		sd->idletime = last_tick;
 	}
 
-	npc_scriptcont(sd, npcid, false);
+	npc_scriptcont( sd, p->GID, false );
 }
 
 
-/// NPC text input dialog value (CZ_INPUT_EDITDLGSTR).
-/// 01d5 <packet len>.W <npc id>.L <string>.?B
+/// NPC text input dialog value.
+/// 01d5 <packet len>.W <npc id>.L <string>.?B (CZ_INPUT_EDITDLGSTR)
 void clif_parse_NpcStringInput(int32 fd, map_session_data* sd){
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	int32 message_len = RFIFOW(fd,info->pos[0])-8;
-	int32 npcid = RFIFOL(fd,info->pos[1]);
-	const char* message = RFIFOCP(fd,info->pos[2]);
+	if( sd == nullptr ){
+		return;
+	}
+
+	const PACKET_CZ_INPUT_EDITDLGSTR* p = reinterpret_cast<PACKET_CZ_INPUT_EDITDLGSTR*>( RFIFOP( fd, 0 ) );
+	size_t message_len = p->packetSize - sizeof( *p );
 
 	if( message_len <= 0 )
 		return; // invalid input
@@ -13324,20 +13332,24 @@ void clif_parse_NpcStringInput(int32 fd, map_session_data* sd){
 	message_len++;
 #endif
 
-	safestrncpy(sd->npc_str, message, min(message_len,CHATBOX_SIZE));
+	safestrncpy( sd->npc_str, p->value, min( message_len, CHATBOX_SIZE ) );
 
 	if( battle_config.idletime_option&IDLE_NPC_INPUT ){
 		sd->idletime = last_tick;
 	}
 
-	npc_scriptcont(sd, npcid, false);
+	npc_scriptcont( sd, p->GID, false );
 }
 
 
-/// NPC dialog 'close' click (CZ_CLOSE_DIALOG).
-/// 0146 <npc id>.L
+/// NPC dialog 'close' click.
+/// 0146 <npc id>.L (CZ_CLOSE_DIALOG)
 void clif_parse_NpcCloseClicked(int32 fd,map_session_data *sd)
 {
+	if( sd == nullptr ){
+		return;
+	}
+
 	if (!sd->npc_id) //Avoid parsing anything when the script was done with. [Skotlex]
 		return;
 
@@ -13345,7 +13357,9 @@ void clif_parse_NpcCloseClicked(int32 fd,map_session_data *sd)
 		sd->idletime = last_tick;
 	}
 
-	npc_scriptcont(sd, RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[0]), true);
+	const PACKET_CZ_CLOSE_DIALOG* p = reinterpret_cast<PACKET_CZ_CLOSE_DIALOG*>( RFIFOP( fd, 0 ) );
+
+	npc_scriptcont( sd, p->GID, true );
 }
 
 
