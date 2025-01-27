@@ -1809,6 +1809,12 @@ struct PACKET_CZ_REQ_ITEMIDENTIFY{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_REQ_ITEMIDENTIFY, 0x178);
 
+struct PACKET_CZ_SELECTAUTOSPELL{
+	int16 packetType;
+	uint32 skill_id;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_SELECTAUTOSPELL, 0x1ce);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
