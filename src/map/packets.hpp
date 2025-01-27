@@ -1776,6 +1776,14 @@ struct PACKET_CZ_INPUT_EDITDLG{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_INPUT_EDITDLG, 0x143);
 
+struct PACKET_CZ_INPUT_EDITDLGSTR{
+	int16 packetType;
+	uint16 packetSize;
+	int32 GID;
+	char value[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_INPUT_EDITDLGSTR, 0x1d5);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )

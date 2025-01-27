@@ -13315,13 +13315,15 @@ void clif_parse_NpcAmountInput(int32 fd,map_session_data *sd){
 }
 
 
-/// NPC text input dialog value (CZ_INPUT_EDITDLGSTR).
-/// 01d5 <packet len>.W <npc id>.L <string>.?B
+/// NPC text input dialog value.
+/// 01d5 <packet len>.W <npc id>.L <string>.?B (CZ_INPUT_EDITDLGSTR)
 void clif_parse_NpcStringInput(int32 fd, map_session_data* sd){
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	int32 message_len = RFIFOW(fd,info->pos[0])-8;
-	int32 npcid = RFIFOL(fd,info->pos[1]);
-	const char* message = RFIFOCP(fd,info->pos[2]);
+	if( sd == nullptr ){
+		return;
+	}
+
+	const PACKET_CZ_INPUT_EDITDLGSTR* p = reinterpret_cast<PACKET_CZ_INPUT_EDITDLGSTR*>( RFIFOP( fd, 0 ) );
+	size_t message_len = p->packetSize - sizeof( *p );
 
 	if( message_len <= 0 )
 		return; // invalid input
@@ -13330,13 +13332,13 @@ void clif_parse_NpcStringInput(int32 fd, map_session_data* sd){
 	message_len++;
 #endif
 
-	safestrncpy(sd->npc_str, message, min(message_len,CHATBOX_SIZE));
+	safestrncpy( sd->npc_str, p->value, min( message_len, CHATBOX_SIZE ) );
 
 	if( battle_config.idletime_option&IDLE_NPC_INPUT ){
 		sd->idletime = last_tick;
 	}
 
-	npc_scriptcont(sd, npcid, false);
+	npc_scriptcont( sd, p->GID, false );
 }
 
 
