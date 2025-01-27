@@ -15560,13 +15560,13 @@ static void pc_macro_punishment(map_session_data &sd, e_macro_detect_status styp
  * @param image_size: Captcha image size
  * @param captcha_answer: Answer to captcha
  */
-void pc_macro_captcha_register(map_session_data &sd, uint16 image_size, const char captcha_answer[CAPTCHA_ANSWER_SIZE]) {
+void pc_macro_captcha_register(map_session_data &sd, uint16 image_size, const char captcha_answer[CAPTCHA_ANSWER_SIZE_MAX]) {
 	nullpo_retv(captcha_answer);
 
 	sd.captcha_upload.cd = nullptr;
 	sd.captcha_upload.upload_size = 0;
 
-	if (strlen(captcha_answer) < 4 || image_size == 0 || image_size > CAPTCHA_BMP_SIZE) {
+	if (strlen(captcha_answer) < CAPTCHA_ANSWER_SIZE_MIN || image_size == 0 || image_size > CAPTCHA_BMP_SIZE) {
 		clif_captcha_upload_request(sd); // Notify client of failure.
 		return;
 	}
@@ -15656,7 +15656,7 @@ TIMER_FUNC(pc_macro_detector_timeout) {
  * @param sd: Player data
  * @param captcha_answer: Captcha answer entered by player
  */
-void pc_macro_detector_process_answer(map_session_data &sd, const char captcha_answer[CAPTCHA_ANSWER_SIZE]) {
+void pc_macro_detector_process_answer(map_session_data &sd, const char captcha_answer[CAPTCHA_ANSWER_SIZE_MAX]) {
 	nullpo_retv(captcha_answer);
 
 	const std::shared_ptr<s_captcha_data> cd = sd.macro_detect.cd;
@@ -15683,7 +15683,9 @@ void pc_macro_detector_process_answer(map_session_data &sd, const char captcha_a
 		pc_setreg(&sd, add_str("@captcha_retries"), battle_config.macro_detection_retry - sd.macro_detect.retry);
 
 		// Grant bonuses via script
-		run_script(cd->bonus_script, 0, sd.bl.id, fake_nd->bl.id);
+		if( cd->bonus_script != nullptr ){
+			run_script(cd->bonus_script, 0, sd.bl.id, fake_nd->bl.id);
+		}
 
 		// Notify the client
 		clif_macro_detector_status(sd, MCD_GOOD);
@@ -15865,8 +15867,8 @@ uint64 CaptchaDatabase::parseBodyNode(const ryml::NodeRef &node) {
 		if (!this->asString(node, "Answer", answer))
 			return 0;
 
-		if (answer.length() < 4 || answer.length() > CAPTCHA_ANSWER_SIZE) {
-			this->invalidWarning(node["Answer"], "The captcha answer must be between 4~%d characters, skipping...", CAPTCHA_ANSWER_SIZE);
+		if (answer.length() < CAPTCHA_ANSWER_SIZE_MIN || answer.length() > CAPTCHA_ANSWER_SIZE_MAX) {
+			this->invalidWarning(node["Answer"], "The captcha answer must be between 4~%d characters, skipping...", CAPTCHA_ANSWER_SIZE_MAX);
 			return 0;
 		}
 
@@ -15874,18 +15876,26 @@ uint64 CaptchaDatabase::parseBodyNode(const ryml::NodeRef &node) {
 	}
 
 	if (this->nodeExists(node, "Bonus")) {
-		std::string script;
+		if( node["Bonus"].val_is_null() ){
+			if( cd->bonus_script ){
+				script_free_code( cd->bonus_script );
+			}
 
-		if (!this->asString(node, "Bonus", script)) {
-			return 0;
-		}
-
-		if (cd->bonus_script) {
-			script_free_code(cd->bonus_script);
 			cd->bonus_script = nullptr;
-		}
+		}else{
+			std::string script;
 
-		cd->bonus_script = parse_script(script.c_str(), this->getCurrentFile().c_str(), this->getLineNumber(node["Bonus"]), SCRIPT_IGNORE_EXTERNAL_BRACKETS);
+			if (!this->asString(node, "Bonus", script)) {
+				return 0;
+			}
+
+			if (cd->bonus_script) {
+				script_free_code(cd->bonus_script);
+				cd->bonus_script = nullptr;
+			}
+
+			cd->bonus_script = parse_script(script.c_str(), this->getCurrentFile().c_str(), this->getLineNumber(node["Bonus"]), SCRIPT_IGNORE_EXTERNAL_BRACKETS);
+		}
 	} else {
 		if (!exists)
 			cd->bonus_script = parse_script("specialeffect2 EF_BLESSING; sc_start SC_BLESSING,600000,10; specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,600000,10;", "macro_script", 0, SCRIPT_IGNORE_EXTERNAL_BRACKETS);
