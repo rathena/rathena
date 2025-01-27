@@ -192,7 +192,7 @@
 	parseable_packet(0x0190,90,clif_parse_UseSkillToPosMoreInfo,2,4,6,8,10);
 	parseable_packet(0x0193,6,clif_parse_SolveCharName,2);
 	packet(0x0196,9);
-	parseable_packet(0x0197,4,clif_parse_ResetChar,2);
+	parseable_packet( HEADER_CZ_RESET, sizeof( PACKET_CZ_RESET ), clif_parse_ResetChar, 0 );
 	parseable_packet(0x0198,8,clif_parse_GMChangeMapType,2,4,6);
 	packet(0x0199,4);
 	packet(0x019a,14);

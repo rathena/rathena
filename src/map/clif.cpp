@@ -13472,19 +13472,30 @@ void clif_parse_SolveCharName(int32 fd, map_session_data *sd)
 }
 
 
-/// /resetskill /resetstate (CZ_RESET).
+/// /resetskill /resetstate.
 /// Request to reset stats or skills.
-/// 0197 <type>.W
+/// 0197 <type>.W (CZ_RESET)
 /// type:
 ///     0 = state
 ///     1 = skill
 void clif_parse_ResetChar(int32 fd, map_session_data *sd) {
-	char cmd[15];
+	if( sd == nullptr ){
+		return;
+	}
 
-	if( RFIFOW(fd,packet_db[RFIFOW(fd,0)].pos[0]) )
-		safesnprintf(cmd,sizeof(cmd),"%cresetskill",atcommand_symbol);
-	else
-		safesnprintf(cmd,sizeof(cmd),"%cresetstat",atcommand_symbol);
+	const PACKET_CZ_RESET* p = reinterpret_cast<PACKET_CZ_RESET*>( RFIFOP( fd, 0 ) );
+	char cmd[CHAT_SIZE_MAX];
+
+	switch( p->type ){
+		case 0:
+			safesnprintf( cmd, sizeof( cmd ), "%cresetstat", atcommand_symbol );
+			break;
+		case 1:
+			safesnprintf( cmd, sizeof(cmd), "%cresetskill", atcommand_symbol );
+			break;
+		default:
+			return;
+	}
 
 	is_atcommand(fd, sd, cmd, 1);
 }

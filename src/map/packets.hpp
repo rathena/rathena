@@ -1790,6 +1790,12 @@ struct PACKET_CZ_CLOSE_DIALOG{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_CLOSE_DIALOG, 0x146);
 
+struct PACKET_CZ_RESET{
+	int16 packetType;
+	uint16 type;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_RESET, 0x197);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
