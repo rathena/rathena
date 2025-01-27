@@ -10940,7 +10940,7 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 				}
 			}
 		}else{
-			map_foreachpc( clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, true );
+			map_foreachpc( clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, static_cast<int32>( true ) );
 		}
 
 		if (!sd->state.autotrade) { // Don't trigger NPC event or opening vending/buyingstore will be failed
@@ -15228,7 +15228,7 @@ int32 clif_friendslist_toggle_sub(map_session_data *sd,va_list ap)
 {
 	uint32 account_id = va_arg( ap, uint32 );
 	uint32 char_id = va_arg( ap, uint32 );
-	bool online = va_arg( ap, bool );
+	bool online = va_arg( ap, int32 ) != 0;
 
 	// Seek friend.
 	for( size_t i = 0; i < MAX_FRIENDS; i++ ){

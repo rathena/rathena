@@ -3642,7 +3642,7 @@ int32 unit_free(struct block_list *bl, clr_type clrtype)
 					}
 				}
 			}else{
-				map_foreachpc( clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, false );
+				map_foreachpc( clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, static_cast<int32>( false ) );
 			}
 			party_send_logout(sd);
 			guild_send_memberinfoshort(sd,0);
