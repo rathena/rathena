@@ -141,7 +141,7 @@
 	parseable_packet( HEADER_CZ_MOVETO_MAP, sizeof( PACKET_CZ_MOVETO_MAP ), clif_parse_MapMove, 0 );
 	parseable_packet( HEADER_CZ_INPUT_EDITDLG, sizeof( PACKET_CZ_INPUT_EDITDLG ), clif_parse_NpcAmountInput, 0 );
 	packet(0x0145,19);
-	parseable_packet(0x0146,6,clif_parse_NpcCloseClicked,2);
+	parseable_packet( HEADER_CZ_CLOSE_DIALOG, sizeof( PACKET_CZ_CLOSE_DIALOG ), clif_parse_NpcCloseClicked, 0 );
 	packet(0x0147,39);
 	parseable_packet(0x0149,9,clif_parse_GMReqNoChat,2,6,7);
 	packet(0x014a,6);

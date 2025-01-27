@@ -13342,10 +13342,14 @@ void clif_parse_NpcStringInput(int32 fd, map_session_data* sd){
 }
 
 
-/// NPC dialog 'close' click (CZ_CLOSE_DIALOG).
-/// 0146 <npc id>.L
+/// NPC dialog 'close' click.
+/// 0146 <npc id>.L (CZ_CLOSE_DIALOG)
 void clif_parse_NpcCloseClicked(int32 fd,map_session_data *sd)
 {
+	if( sd == nullptr ){
+		return;
+	}
+
 	if (!sd->npc_id) //Avoid parsing anything when the script was done with. [Skotlex]
 		return;
 
@@ -13353,7 +13357,9 @@ void clif_parse_NpcCloseClicked(int32 fd,map_session_data *sd)
 		sd->idletime = last_tick;
 	}
 
-	npc_scriptcont(sd, RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[0]), true);
+	const PACKET_CZ_CLOSE_DIALOG* p = reinterpret_cast<PACKET_CZ_CLOSE_DIALOG*>( RFIFOP( fd, 0 ) );
+
+	npc_scriptcont( sd, p->GID, true );
 }
 
 
