@@ -60,7 +60,7 @@
 	parseable_packet(0x00ab,4,clif_parse_UnequipItem,2);
 	packet(0x00ae,-1);
 	parseable_packet(0x00b2,3,clif_parse_Restart,2);
-	parseable_packet(0x00b8,7,clif_parse_NpcSelectMenu,2,6);
+	parseable_packet( HEADER_CZ_CHOOSE_MENU, sizeof( PACKET_CZ_CHOOSE_MENU ), clif_parse_NpcSelectMenu, 0 );
 	parseable_packet(0x00b9,6,clif_parse_NpcNextClicked,2);
 	packet(0x00ba,2);
 	parseable_packet(0x00bb,5,clif_parse_StatusUp,2,4);

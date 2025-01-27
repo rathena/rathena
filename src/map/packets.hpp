@@ -1769,6 +1769,13 @@ struct PACKET_CZ_SELECT_WARPPOINT{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_SELECT_WARPPOINT, 0x11b);
 
+struct PACKET_CZ_CHOOSE_MENU{
+	int16 packetType;
+	uint32 GID;
+	uint8 choice;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_CHOOSE_MENU, 0x0b8);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
