@@ -10922,7 +10922,26 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 		}
 
 		// Notify everyone that this char logged in.
-		map_foreachpc( clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, true );
+		if( battle_config.friend_auto_add ){
+			for( size_t i = 0; i < MAX_FRIENDS; i++ ){
+				if( map_session_data* tsd = map_charid2sd( sd->status.friends[i].char_id ); tsd != nullptr ){
+					for( size_t j = 0; j < MAX_FRIENDS; j++ ){
+						if( tsd->status.friends[j].account_id != sd->status.account_id ){
+							continue;
+						}
+
+						if( tsd->status.friends[j].char_id != sd->status.char_id ){
+							continue;
+						}
+
+						clif_friendslist_toggle( *tsd, j, true );
+						break;
+					}
+				}
+			}
+		}else{
+			map_foreachpc( clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, true );
+		}
 
 		if (!sd->state.autotrade) { // Don't trigger NPC event or opening vending/buyingstore will be failed
 			npc_script_event( *sd, NPCE_LOGIN );
