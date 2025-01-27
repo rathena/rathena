@@ -10722,13 +10722,9 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		break;
 
 	case HN_OVERCOMING_CRISIS:
-	{
-		int hp = skill_lv * 15000;
-
 		clif_skill_nodamage(bl,*bl,skill_id,skill_lv,sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-		status_heal(bl, hp, 0, 1);
-	}
-	break;
+		status_heal(bl, skill_lv * 15000, 0, 1);
+		break;
 
 	// New guild skills [Celest]
 	case GD_BATTLEORDER:
