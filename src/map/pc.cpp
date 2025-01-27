@@ -13561,58 +13561,109 @@ void SkillTreeDatabase::loadingFinished() {
 }
 
 /**
- * Calculates base hp of player. Reference: http://irowiki.org/wiki/Max_HP
+ * Calculates base HP of player.
  * @param level: Base level of player
- * @param job_id: Job ID @see enum e_job
+ * @param job:
  * @return base_hp
- * @author [Cydh]
  */
-static uint32 pc_calc_basehp(uint16 level, uint16 job_id) {
-	std::shared_ptr<s_job_info> job = job_db.find(job_id);
-	double base_hp = 35 + level * (job->hp_increase / 100.);
+uint32 JobDatabase::calc_basehp( const uint16 level, const std::shared_ptr<s_job_info>& job ){
+	uint64 mapid = pc_jobid2mapid( job->job_id );
+	double base_hp = 35.;
+
+	base_hp += floor( level * ( job->hp_increase / 100. ) );
+
+	for( uint16 i = 2; i <= level; i++ ){
+		// Don't have round()
+		base_hp += floor( ( ( job->hp_factor / 100. ) * i ) + 0.5 );
+	}
 
 #ifndef RENEWAL
-	if (level >= 10 && (job_id == JOB_NINJA || job_id == JOB_GUNSLINGER))
-		base_hp += 90;
+	if( (mapid & MAPID_BASEMASK) == MAPID_NINJA ){
+		if( level >= 10 ){
+			base_hp += 90.;
+		}
+	}else if( (mapid & MAPID_BASEMASK) == MAPID_GUNSLINGER ){
+		if( level >= 10 ){
+			base_hp += 90.;
+		}
+	}
 #endif
-	for (uint16 i = 2; i <= level; i++)
-		base_hp += floor(((job->hp_factor / 100.) * i) + 0.5); //Don't have round()
-	if (job_id == JOB_SUMMONER || job_id == JOB_SPIRIT_HANDLER)
-		base_hp += floor((base_hp / 2) + 0.5);
-	return (uint32)base_hp;
+
+	if( (mapid&MAPID_BASEMASK) == MAPID_SUMMONER ){
+		base_hp += floor( ( base_hp / 2 ) + 0.5 );
+	}else if( (mapid&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE ){
+		// Supernovice lvl99 HP bonus.
+		if( level >= 99 ){
+			base_hp += 2000.;
+		}
+
+		// Supernovice lvl150 HP bonus.
+		if( level >= 150 ){
+			base_hp += 2000.;
+		}
+	}
+
+	return static_cast<uint32>( base_hp );
 }
 
 /**
- * Calculates base sp of player.
+ * Calculates base SP of player.
  * @param level: Base level of player
- * @param job_id: Job ID @see enum e_job
+ * @param job:
  * @return base_sp
- * @author [Playtester]
  */
-static uint32 pc_calc_basesp(uint16 level, uint16 job_id) {
-	std::shared_ptr<s_job_info> job = job_db.find(job_id);
-	double base_sp = 10 + floor(level * (job->sp_increase / 100.));
+uint32 JobDatabase::calc_basesp( const uint16 level, const std::shared_ptr<s_job_info>& job ){
+	uint64 mapid = pc_jobid2mapid( job->job_id );
+	double base_sp = 10;
 
-	switch (job_id) {
-		case JOB_NINJA:
-			if (level >= 10)
-				base_sp -= 22;
-			else
-				base_sp = 11 + 3*level;
-			break;
-		case JOB_GUNSLINGER:
-			if (level > 10)
-				base_sp -= 18;
-			else
-				base_sp = 9 + 3*level;
-			break;
-		case JOB_SUMMONER:
-		case JOB_SPIRIT_HANDLER:
-			base_sp -= floor(base_sp / 2);
-			break;
+	base_sp += floor( level * ( job->sp_increase / 100. ) );
+
+	for( uint16 i = 2; i <= level; i++ ){
+		// Don't have round()
+		base_sp += floor( ( ( job->sp_factor / 100. ) * i ) + 0.5 );
 	}
 
-	return (uint32)base_sp;
+	if( (mapid & MAPID_BASEMASK) == MAPID_NINJA ){
+		if( level >= 10 ){
+			base_sp -= 22.;
+		}else{
+			base_sp = 11. + 3. * level;
+		}
+	}else if( (mapid & MAPID_BASEMASK) == MAPID_GUNSLINGER ){
+		if( level >= 10 ){
+			base_sp -= 18.;
+		}else{
+			base_sp = 9. + 3. * level;
+		}
+	}else if( (mapid&MAPID_BASEMASK) == MAPID_SUMMONER ){
+		base_sp += floor( ( base_sp / 2 ) + 0.5 );
+	}
+
+	return static_cast<uint32>( base_sp );
+}
+
+/**
+ * Calculates base AP of player.
+ * @param level: Base level of player
+ * @param job_id:
+ * @return base_sp
+ */
+uint32 JobDatabase::calc_baseap( const uint16 level, const std::shared_ptr<s_job_info>& job ){
+	uint64 mapid = pc_jobid2mapid( job->job_id );
+	double base_ap = 0;
+
+	if( level >= 200 ){
+		base_ap = 200.0;
+	}
+
+	base_ap += floor( level * ( job->ap_increase / 100. ) );
+
+	for( uint16 i = 2; i <= level; i++ ){
+		// Don't have round()
+		base_ap += floor( ( ( job->ap_factor / 100. ) * i ) + 0.5 );
+	}
+
+	return static_cast<uint32>( base_ap );
 }
 
 const std::string JobDatabase::getDefaultLocation() {
@@ -13644,6 +13695,8 @@ uint64 JobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 			if (!exists) {
 				job = std::make_shared<s_job_info>();
+
+				job->job_id = static_cast<uint16>( job_id );
 
 				job->job_bonus.resize(MAX_LEVEL);
 				std::fill(job->job_bonus.begin(), job->job_bonus.end(), std::array<uint16, PARAM_MAX> { 0 });
@@ -13694,6 +13747,20 @@ uint64 JobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 					job->hp_increase = 500;
 			}
 
+			if( this->nodeExists( node, "SpFactor" ) ){
+				uint32 sp;
+
+				if( !this->asUInt32( node, "SpFactor", sp ) ){
+					return 0;
+				}
+
+				job->sp_factor = sp;
+			}else{
+				if( !exists ){
+					job->sp_factor = 0;
+				}
+			}
+
 			if (this->nodeExists(node, "SpIncrease")) {
 				uint32 sp;
 
@@ -13704,6 +13771,34 @@ uint64 JobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			} else {
 				if (!exists)
 					job->sp_increase = 100;
+			}
+
+			if( this->nodeExists( node, "ApFactor" ) ){
+				uint32 ap;
+
+				if( !this->asUInt32( node, "ApFactor", ap ) ){
+					return 0;
+				}
+
+				job->ap_factor = ap;
+			}else{
+				if( !exists ){
+					job->ap_factor = 0;
+				}
+			}
+
+			if( this->nodeExists( node, "ApIncrease" ) ){
+				uint32 ap;
+
+				if( !this->asUInt32( node, "ApIncrease", ap ) ){
+					return 0;
+				}
+
+				job->ap_increase = ap;
+			}else{
+				if( !exists ){
+					job->ap_increase = 0;
+				}
 			}
 
 			if (this->nodeExists(node, "BaseASPD")) {
@@ -14001,18 +14096,28 @@ void JobDatabase::loadingFinished() {
 		if (!maxJobLv)
 			ShowWarning("Class %s (%d) does not have a job exp table.\n", job_name(job_id), job_id);
 
-		// Init and checking the empty value of Base HP/SP [Cydh]
+		// Check and init the empty values
 		if (job->base_hp.empty())
 			job->base_hp.resize(maxBaseLv);
 		for (uint16 j = 0; j < maxBaseLv; j++) {
 			if (job->base_hp[j] == 0)
-				job->base_hp[j] = pc_calc_basehp(j + 1, job_id);
+				job->base_hp[j] = this->calc_basehp( j + 1, job );
 		}
 		if (job->base_sp.empty())
 			job->base_sp.resize(maxBaseLv);
 		for (uint16 j = 0; j < maxBaseLv; j++) {
 			if (job->base_sp[j] == 0)
-				job->base_sp[j] = pc_calc_basesp(j + 1, job_id);
+				job->base_sp[j] = this->calc_basesp( j + 1, job );
+		}
+
+		if( job->base_ap.empty() ){
+			job->base_ap.resize( maxBaseLv );
+		}
+
+		for( uint16 j = 0; j < maxBaseLv; j++ ){
+			if( job->base_ap[j] == 0 ){
+				job->base_ap[j] = this->calc_baseap( j + 1, job );
+			}
 		}
 
 		// Resize to the maximum base level
