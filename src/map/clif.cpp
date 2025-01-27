@@ -13495,9 +13495,11 @@ void clif_parse_ResetChar(int32 fd, map_session_data *sd) {
 		case 0:
 			safesnprintf( cmd, sizeof( cmd ), "%cresetstat", atcommand_symbol );
 			break;
+#if !(PACKETVER_MAIN_NUM >= 20220216 || PACKETVER_ZERO_NUM >= 20220203)
 		case 1:
 			safesnprintf( cmd, sizeof(cmd), "%cresetskill", atcommand_symbol );
 			break;
+#endif
 		default:
 			return;
 	}
@@ -25387,9 +25389,17 @@ void clif_parse_partybooking_reply( int32 fd, map_session_data* sd ){
 #endif
 }
 
+/// /resetskill.
+/// Request to skills.
+/// 0bb1 <type>.W <unknown>.B (CZ_RESET_SKILL)
 void clif_parse_reset_skill( int32 fd, map_session_data* sd ){
 #if PACKETVER_MAIN_NUM >= 20220216 || PACKETVER_ZERO_NUM >= 20220203
 	const PACKET_CZ_RESET_SKILL* p = reinterpret_cast<PACKET_CZ_RESET_SKILL*>( RFIFOP( fd, 0 ) );
+	char cmd[CHAT_SIZE_MAX];
+
+	safesnprintf( cmd, sizeof( cmd ), "%cresetskill", atcommand_symbol );
+
+	is_atcommand( fd, sd, cmd, 1 );
 #endif
 }
 
