@@ -1079,8 +1079,17 @@ public:
 };
 
 struct s_job_info {
-	std::vector<uint32> base_hp, base_sp, base_ap; //Storage for the first calculation with hp/sp/ap factor and multiplicator
-	uint32 hp_factor, hp_increase, sp_increase, max_weight_base;
+	uint16 job_id;
+	std::vector<uint32> base_hp;
+	std::vector<uint32> base_sp;
+	std::vector<uint32> base_ap;
+	uint32 hp_factor;
+	uint32 hp_increase;
+	uint32 sp_factor;
+	uint32 sp_increase;
+	uint32 ap_factor;
+	uint32 ap_increase;
+	uint32 max_weight_base;
 	std::vector<std::array<uint16,PARAM_MAX>> job_bonus;
 	std::vector<int16> aspd_base;
 	t_exp base_exp[MAX_LEVEL], job_exp[MAX_LEVEL];
@@ -1094,7 +1103,7 @@ struct s_job_info {
 
 class JobDatabase : public TypesafeCachedYamlDatabase<uint16, s_job_info> {
 public:
-	JobDatabase() : TypesafeCachedYamlDatabase("JOB_STATS", 2) {
+	JobDatabase() : TypesafeCachedYamlDatabase( "JOB_STATS", 3, 2 ){
 
 	}
 
@@ -1108,6 +1117,11 @@ public:
 	t_exp get_baseExp(uint16 job_id, uint32 level);
 	t_exp get_jobExp(uint16 job_id, uint32 level);
 	int32 get_maxWeight(uint16 job_id);
+
+private:
+	uint32 calc_basehp( const uint16 level, const std::shared_ptr<s_job_info>& job );
+	uint32 calc_basesp( const uint16 level, const std::shared_ptr<s_job_info>& job );
+	uint32 calc_baseap( const uint16 level, const std::shared_ptr<s_job_info>& job );
 };
 
 extern JobDatabase job_db;

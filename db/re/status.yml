@@ -9746,3 +9746,15 @@ Body:
       Rising_Moon: true
       Midnight_Moon: true
       Dawn_Moon: true
+  - Status: Wild_Walk
+    Icon: EFST_WILD_WALK
+    DurationLookup: WH_WILD_WALK
+    CalcFlags:
+      Flee: true
+      Speed: true
+    Flags:
+      NoRemoveOnDead: true
+      NoSave: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
