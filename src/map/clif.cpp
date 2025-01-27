@@ -13608,13 +13608,12 @@ void clif_parse_MoveFromKafra(int32 fd,map_session_data *sd)
 }
 
 
-/// Request to move an item from cart to storage (CZ_MOVE_ITEM_FROM_CART_TO_STORE).
-/// 0129 <index>.W <amount>.L
+/// Request to move an item from cart to storage.
+/// 0129 <index>.W <amount>.L (CZ_MOVE_ITEM_FROM_CART_TO_STORE)
 void clif_parse_MoveToKafraFromCart(int32 fd, map_session_data *sd){
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-
-	int32 idx = RFIFOW(fd,info->pos[0]) - 2;
-	int32 amount = RFIFOL(fd,info->pos[1]);
+	if( sd == nullptr ){
+		return;
+	}
 
 	if( sd->state.vending )
 		return;
@@ -13623,19 +13622,16 @@ void clif_parse_MoveToKafraFromCart(int32 fd, map_session_data *sd){
 	if (map_getmapflag(sd->bl.m, MF_NOUSECART))
 		return;
 
-	if (idx < 0 || idx >= MAX_INVENTORY || amount < 1)
-		return;
-	if( sd->inventory.u.items_inventory[idx].equipSwitch ){
-		clif_msg( sd, MSI_SWAP_EQUIPITEM_UNREGISTER_FIRST );
-		return;
-	}
+	const PACKET_CZ_MOVE_ITEM_FROM_CART_TO_STORE* p = reinterpret_cast<PACKET_CZ_MOVE_ITEM_FROM_CART_TO_STORE*>( RFIFOP( fd, 0 ) );
+	uint16 idx = server_index( p->index );
+
 
 	if (sd->state.storage_flag == 1)
-		storage_storageaddfromcart(sd, &sd->storage, idx, amount);
+		storage_storageaddfromcart( sd, &sd->storage, idx, p->amount );
 	else if (sd->state.storage_flag == 2)
-		storage_guild_storageaddfromcart(sd, idx, amount);
+		storage_guild_storageaddfromcart( sd, idx, p->amount );
 	else if (sd->state.storage_flag == 3)
-		storage_storageaddfromcart(sd, &sd->premiumStorage, idx, amount);
+		storage_storageaddfromcart( sd, &sd->premiumStorage, idx, p->amount );
 }
 
 

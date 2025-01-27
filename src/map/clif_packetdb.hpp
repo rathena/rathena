@@ -128,7 +128,7 @@
 	parseable_packet( HEADER_CZ_MOVE_ITEM_FROM_BODY_TO_CART, sizeof( PACKET_CZ_MOVE_ITEM_FROM_BODY_TO_CART ), clif_parse_PutItemToCart, 0 );
 	parseable_packet( HEADER_CZ_MOVE_ITEM_FROM_CART_TO_BODY, sizeof( PACKET_CZ_MOVE_ITEM_FROM_CART_TO_BODY ), clif_parse_GetItemFromCart, 0 );
 	parseable_packet( HEADER_CZ_MOVE_ITEM_FROM_STORE_TO_CART, sizeof( PACKET_CZ_MOVE_ITEM_FROM_STORE_TO_CART ), clif_parse_MoveFromKafraToCart, 0 );
-	parseable_packet(0x0129,8,clif_parse_MoveToKafraFromCart,2,4);
+	parseable_packet( HEADER_CZ_MOVE_ITEM_FROM_CART_TO_STORE, sizeof( PACKET_CZ_MOVE_ITEM_FROM_CART_TO_STORE ), clif_parse_MoveToKafraFromCart, 0 );
 	parseable_packet(0x012a,2,clif_parse_RemoveOption,0);
 	parseable_packet(0x012e,2,clif_parse_CloseVending,0);
 	parseable_packet(0x012f,-1,clif_parse_OpenVending,2,4,0,84);
