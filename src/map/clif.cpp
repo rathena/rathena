@@ -13296,20 +13296,22 @@ void clif_parse_NpcNextClicked(int32 fd,map_session_data *sd)
 }
 
 
-/// NPC numeric input dialog value (CZ_INPUT_EDITDLG).
-/// 0143 <npc id>.L <value>.L
+/// NPC numeric input dialog value.
+/// 0143 <npc id>.L <value>.L (CZ_INPUT_EDITDLG)
 void clif_parse_NpcAmountInput(int32 fd,map_session_data *sd){
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	int32 npcid = RFIFOL(fd,info->pos[0]);
-	int32 amount = (int32)RFIFOL(fd,info->pos[1]);
+	if( sd == nullptr ){
+		return;
+	}
 
-	sd->npc_amount = amount;
+	const PACKET_CZ_INPUT_EDITDLG* p = reinterpret_cast<PACKET_CZ_INPUT_EDITDLG*>( RFIFOP( fd, 0 ) );
+
+	sd->npc_amount = p->value;
 
 	if( battle_config.idletime_option&IDLE_NPC_INPUT ){
 		sd->idletime = last_tick;
 	}
 
-	npc_scriptcont(sd, npcid, false);
+	npc_scriptcont( sd, p->GID, false );
 }
 
 

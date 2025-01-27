@@ -139,7 +139,7 @@
 	packet(0x013e,24);
 	parseable_packet(0x013f,26,clif_parse_GM_Item_Monster,2);
 	parseable_packet( HEADER_CZ_MOVETO_MAP, sizeof( PACKET_CZ_MOVETO_MAP ), clif_parse_MapMove, 0 );
-	parseable_packet(0x0143,10,clif_parse_NpcAmountInput,2,6);
+	parseable_packet( HEADER_CZ_INPUT_EDITDLG, sizeof( PACKET_CZ_INPUT_EDITDLG ), clif_parse_NpcAmountInput, 0 );
 	packet(0x0145,19);
 	parseable_packet(0x0146,6,clif_parse_NpcCloseClicked,2);
 	packet(0x0147,39);
