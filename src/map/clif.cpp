@@ -15202,24 +15202,24 @@ void clif_parse_NoviceExplosionSpirits(int32 fd, map_session_data *sd)
 /// Friends List
 ///
 
-/// Toggles a single friend online/offline (ZC_FRIENDS_STATE).
-/// 0206 <account id>.L <char id>.L <state>.B
-/// 0206 <account id>.L <char id>.L <state>.B <name>.24B >= 20180221
+/// Toggles a single friend online/offline.
+/// 0206 <account id>.L <char id>.L <state>.B (ZC_FRIENDS_STATE)
+/// 0206 <account id>.L <char id>.L <state>.B <name>.24B >= 20180221 (ZC_FRIENDS_STATE)
 /// state:
 ///     0 = online
 ///     1 = offline
 void clif_friendslist_toggle( map_session_data& sd, size_t friendlist_index, bool online ){
-	int32 fd = sd.fd;
+	PACKET_ZC_FRIENDS_STATE p = {};
 
-	WFIFOHEAD(fd,packet_len(0x206));
-	WFIFOW(fd, 0) = 0x206;
-	WFIFOL(fd, 2) = sd.status.friends[friendlist_index].account_id;
-	WFIFOL(fd, 6) = sd.status.friends[friendlist_index].char_id;
-	WFIFOB(fd,10) = !online; //Yeah, a 1 here means "logged off", go figure...
-#if PACKETVER >= 20180221
-	safestrncpy(WFIFOCP(fd, 11), sd.status.friends[friendlist_index].name, NAME_LENGTH);
+	p.packetType = HEADER_ZC_FRIENDS_STATE;
+	p.AID = sd.status.friends[friendlist_index].account_id;
+	p.CID = sd.status.friends[friendlist_index].char_id;
+	p.offline = !online;
+#if PACKETVER_MAIN_NUM >= 20180307 || PACKETVER_RE_NUM >= 20180221 || PACKETVER_ZERO_NUM >= 20180328
+	safestrncpy( p.name, sd.status.friends[friendlist_index].name, sizeof( p.name ) );
 #endif
-	WFIFOSET(fd, packet_len(0x206));
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 }
 
 
