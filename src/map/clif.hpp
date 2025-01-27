@@ -1161,7 +1161,7 @@ void clif_pet_food( map_session_data& sd, int32 foodid, bool success );
 void clif_pet_autofeed_status(map_session_data* sd, bool force);
 
 //friends list
-void clif_friendslist_toggle( map_session_data* sd, uint32 account_id, uint32 char_id, int32 online );
+void clif_friendslist_toggle( map_session_data& sd, size_t friendlist_index, bool online );
 int32 clif_friendslist_toggle_sub(map_session_data *sd,va_list ap);
 void clif_friendslist_send( map_session_data& sd );
 void clif_friendslist_reqack(map_session_data *sd, map_session_data *f_sd, int32 type);

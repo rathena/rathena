@@ -3627,11 +3627,22 @@ int32 unit_free(struct block_list *bl, clr_type clrtype)
 			if( battle_config.friend_auto_add ){
 				for( size_t i = 0; i < MAX_FRIENDS; i++ ){
 					if( map_session_data* tsd = map_charid2sd( sd->status.friends[i].char_id ); tsd != nullptr ){
-						clif_friendslist_toggle( tsd, sd->status.account_id, sd->status.char_id, 0 );
+						for( size_t j = 0; j < MAX_FRIENDS; j++ ){
+							if( tsd->status.friends[j].account_id != sd->status.account_id ){
+								continue;
+							}
+
+							if( tsd->status.friends[j].char_id != sd->status.char_id ){
+								continue;
+							}
+
+							clif_friendslist_toggle( *tsd, j, false );
+							break;
+						}
 					}
 				}
 			}else{
-				map_foreachpc( clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, 0 );
+				map_foreachpc( clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, false );
 			}
 			party_send_logout(sd);
 			guild_send_memberinfoshort(sd,0);

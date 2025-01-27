@@ -10921,8 +10921,8 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 			clif_status_load(&sd->bl, EFST_SKE, 1);
 		}
 
-		// Notify everyone that this char logged in [Skotlex].
-		map_foreachpc(clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, 1);
+		// Notify everyone that this char logged in.
+		map_foreachpc( clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, true );
 
 		if (!sd->state.autotrade) { // Don't trigger NPC event or opening vending/buyingstore will be failed
 			npc_script_event( *sd, NPCE_LOGIN );
@@ -15183,50 +15183,56 @@ void clif_parse_NoviceExplosionSpirits(int32 fd, map_session_data *sd)
 /// Friends List
 ///
 
-/// Toggles a single friend online/offline [Skotlex] (ZC_FRIENDS_STATE).
+/// Toggles a single friend online/offline (ZC_FRIENDS_STATE).
 /// 0206 <account id>.L <char id>.L <state>.B
 /// 0206 <account id>.L <char id>.L <state>.B <name>.24B >= 20180221
 /// state:
 ///     0 = online
 ///     1 = offline
-void clif_friendslist_toggle(map_session_data *sd,uint32 account_id, uint32 char_id, int32 online)
-{
-	int32 i, fd = sd->fd;
-
-	//Seek friend.
-	for (i = 0; i < MAX_FRIENDS && sd->status.friends[i].char_id &&
-		(sd->status.friends[i].char_id != char_id || sd->status.friends[i].account_id != account_id); i++);
-
-	if(i == MAX_FRIENDS || sd->status.friends[i].char_id == 0)
-		return; //Not found
+void clif_friendslist_toggle( map_session_data& sd, size_t friendlist_index, bool online ){
+	int32 fd = sd.fd;
 
 	WFIFOHEAD(fd,packet_len(0x206));
 	WFIFOW(fd, 0) = 0x206;
-	WFIFOL(fd, 2) = sd->status.friends[i].account_id;
-	WFIFOL(fd, 6) = sd->status.friends[i].char_id;
+	WFIFOL(fd, 2) = sd.status.friends[friendlist_index].account_id;
+	WFIFOL(fd, 6) = sd.status.friends[friendlist_index].char_id;
 	WFIFOB(fd,10) = !online; //Yeah, a 1 here means "logged off", go figure...
 #if PACKETVER >= 20180221
-	safestrncpy(WFIFOCP(fd, 11), sd->status.friends[i].name, NAME_LENGTH);
+	safestrncpy(WFIFOCP(fd, 11), sd.status.friends[friendlist_index].name, NAME_LENGTH);
 #endif
 	WFIFOSET(fd, packet_len(0x206));
 }
 
 
-//Subfunction called from clif_foreachclient to toggle friends on/off [Skotlex]
+// Subfunction called from clif_foreachclient to toggle friends on/off
 int32 clif_friendslist_toggle_sub(map_session_data *sd,va_list ap)
 {
-	uint32 account_id, char_id, online;
-	account_id = va_arg(ap, int32);
-	char_id = va_arg(ap, int32);
-	online = va_arg(ap, int32);
-	clif_friendslist_toggle(sd, account_id, char_id, online);
+	uint32 account_id = va_arg( ap, uint32 );
+	uint32 char_id = va_arg( ap, uint32 );
+	bool online = va_arg( ap, bool );
+
+	// Seek friend.
+	for( size_t i = 0; i < MAX_FRIENDS; i++ ){
+		if( sd->status.friends[i].account_id != account_id ){
+			continue;
+		}
+
+		if( sd->status.friends[i].char_id != char_id ){
+			continue;
+		}
+
+		clif_friendslist_toggle( *sd, i, online );
+		return 1;
+	}
+
+	// Not found
 	return 0;
 }
 
 
-/// Sends the whole friends list (ZC_FRIENDS_LIST).
-/// 0201 <packet len>.W { <account id>.L <char id>.L <name>.24B }*
-/// 0201 <packet len>.W { <account id>.L <char id>.L }* >= 20180221
+/// Sends the whole friends list.
+/// 0201 <packet len>.W { <account id>.L <char id>.L <name>.24B }* (ZC_FRIENDS_LIST)
+/// 0201 <packet len>.W { <account id>.L <char id>.L }* >= 20180221 (ZC_FRIENDS_LIST)
 void clif_friendslist_send( map_session_data& sd ){
 	PACKET_ZC_FRIENDS_LIST* p = reinterpret_cast<PACKET_ZC_FRIENDS_LIST*>( packet_buffer );
 
@@ -15251,7 +15257,7 @@ void clif_friendslist_send( map_session_data& sd ){
 	// Sending the online players
 	for( int32 i = 0; i < MAX_FRIENDS && sd.status.friends[i].char_id; i++ ){
 		if( map_charid2sd( sd.status.friends[i].char_id ) ){
-			clif_friendslist_toggle( &sd, sd.status.friends[i].account_id, sd.status.friends[i].char_id, 1 );
+			clif_friendslist_toggle( sd, i, true );
 		}
 	}
 }
