@@ -128,8 +128,11 @@ enum e_lr_flag : uint8 {
 	LR_FLAG_SHIELD
 };
 
-#ifndef CAPTCHA_ANSWER_SIZE
-	#define CAPTCHA_ANSWER_SIZE 16
+#ifndef CAPTCHA_ANSWER_SIZE_MIN
+	#define CAPTCHA_ANSWER_SIZE_MIN 1
+#endif
+#ifndef CAPTCHA_ANSWER_SIZE_MAX
+	#define CAPTCHA_ANSWER_SIZE_MAX 16
 #endif
 #ifndef CAPTCHA_BMP_SIZE
 	#define CAPTCHA_BMP_SIZE (2 + 52 + (3 * 220 * 90)) // sizeof("BM") + sizeof(BITMAPV2INFOHEADER) + 24bits 220x90 BMP
@@ -142,7 +145,7 @@ struct s_captcha_data {
 	uint16 index;
 	uint16 image_size;
 	char image_data[CAPTCHA_BMP_SIZE];
-	char captcha_answer[CAPTCHA_ANSWER_SIZE];
+	char captcha_answer[CAPTCHA_ANSWER_SIZE_MAX];
 	script_code *bonus_script;
 
 	~s_captcha_data() {
@@ -1753,12 +1756,12 @@ void pc_attendance_claim_reward( map_session_data* sd );
 void pc_jail(map_session_data &sd, int32 duration = INT_MAX);
 
 // Captcha Register
-void pc_macro_captcha_register(map_session_data &sd, uint16 image_size, const char captcha_answer[CAPTCHA_ANSWER_SIZE]);
+void pc_macro_captcha_register(map_session_data &sd, uint16 image_size, const char captcha_answer[CAPTCHA_ANSWER_SIZE_MAX]);
 void pc_macro_captcha_register_upload(map_session_data & sd, uint16 upload_size, const char *upload_data);
 
 // Macro Detector
 TIMER_FUNC(pc_macro_detector_timeout);
-void pc_macro_detector_process_answer(map_session_data &sd, const char captcha_answer[CAPTCHA_ANSWER_SIZE]);
+void pc_macro_detector_process_answer(map_session_data &sd, const char captcha_answer[CAPTCHA_ANSWER_SIZE_MAX]);
 void pc_macro_detector_disconnect(map_session_data &sd);
 
 // Macro Reporter
