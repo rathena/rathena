@@ -456,10 +456,10 @@ void chlogif_parse_change_sex_sub(int32 sex, int32 acc, int32 char_id, int32 cla
 		break;
 	}
 
-	if (SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `equip` = '0' WHERE `char_id` = '%d'", schema_config.inventory_db, char_id))
+	if (SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `equip` = '0', `equip_switch` = '0' WHERE `char_id` = '%d'", schema_config.inventory_db, char_id))
 		Sql_ShowDebug(sql_handle);
 
-	if (SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `class` = '%d', `weapon` = '0', `shield` = '0', `head_top` = '0', `head_mid` = '0', `head_bottom` = '0', `sex` = '%c' WHERE `char_id` = '%d'", schema_config.char_db, class_, sex == SEX_MALE ? 'M' : 'F', char_id))
+	if (SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `class` = '%d', `weapon` = '0', `shield` = '0', `head_top` = '0', `head_mid` = '0', `head_bottom` = '0', `robe` = '0', `sex` = '%c' WHERE `char_id` = '%d'", schema_config.char_db, class_, sex == SEX_MALE ? 'M' : 'F', char_id))
 		Sql_ShowDebug(sql_handle);
 	if (guild_id) // If there is a guild, update the guild_member data [Skotlex]
 		inter_guild_sex_changed(guild_id, acc, char_id, sex);
@@ -489,9 +489,9 @@ int32 chlogif_parse_ackchangesex(int32 fd)
 				SqlStmt_ShowDebug(stmt);
 			}
 
-			stmt.BindColumn(0, SQLDT_INT,   &char_id,  0, nullptr, nullptr);
-			stmt.BindColumn(1, SQLDT_SHORT, &class_,   0, nullptr, nullptr);
-			stmt.BindColumn(2, SQLDT_INT,   &guild_id, 0, nullptr, nullptr);
+			stmt.BindColumn(0, SQLDT_INT32,   &char_id,  0, nullptr, nullptr);
+			stmt.BindColumn(1, SQLDT_INT16, &class_,   0, nullptr, nullptr);
+			stmt.BindColumn(2, SQLDT_INT32,   &guild_id, 0, nullptr, nullptr);
 
 			for (i = 0; i < MAX_CHARS && SQL_SUCCESS == stmt.NextRow(); ++i) {
 				chlogif_parse_change_sex_sub(sex, acc, char_id, class_, guild_id);
@@ -662,6 +662,22 @@ int32 chlogif_parse_vipack(int32 fd) {
 		uint32 groupid = RFIFOL(fd,11); //new group id
 		int32 mapfd = RFIFOL(fd,15); //link to mapserv for ack
 		RFIFOSKIP(fd,19);
+
+		// If it was triggered from login-server and not requested from a specific map-server
+		if( mapfd < 0 ){
+			std::shared_ptr<struct online_char_data> character = util::umap_find( char_get_onlinedb(), aid );
+
+			if( character == nullptr ){
+				return 1;
+			}
+
+			if( character->server < 0 ){
+				return 1;
+			}
+
+			mapfd = map_server[character->server].fd;
+		}
+
 		chmapif_vipack(mapfd,aid,vip_time,groupid,flag);
 	}
 #endif

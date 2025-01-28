@@ -4,6 +4,7 @@
 //= 1.0 Initial version from replays. [Lemongrass]
 //= 1.1 Cash Hair Stylist [Kisuka]
 //= 1.2 Updated Hair Stylist [Lemongrass]
+//= 1.3 Added an NPC to exchange coupons for Good, Evil or Wrath equipment. [Atemo]
 //============================================================
 
 prontera,137,125,4	script	Cash Sales Guide#prontera::cashmall_warper	4_M_HUMAN_02,{
@@ -328,4 +329,55 @@ itemmall,19,74,5	script	Stylist#cash	91,{
 	mes "new hair? Well, I hope";
 	mes "to see you again. Take care!";
 	close;
+}
+
+itemmall,41,55,3	script	Cat Hand Salesman Tunkarom	4_M_MERCAT1,{
+	mes "[Tunkarom]";
+	mes "Welcome!";
+	mes "If you have a special coupon, we'll exchange it for the product you want!";
+	mes "These are the exchangeable coupons:";
+	mes mesitemicon(1001583) + " " + mesitemicon(1001581) + " " + mesitemicon(1001584) + " " + mesitemicon(1001588) + " " + mesitemicon(1001809) + " " + mesitemicon(1001810);
+	next;
+	switch( select( "Exchange Good and Evil Boots", "Exchange Good and Evil Crown", "Exchange Good Weapons", "Exchange Evil Weapons", "Exchange Wrath Weapons", "Exchange Wrath Crown", "Cancel" ) ) {
+	case 1:
+		mes "[Tunkarom]";
+		mes "This is an exchange of Good and Evil Boots. What a good choice~!";
+		close2;
+		callshop( "barter_mall_coupon_1" );
+		end;
+	case 2:
+		mes "[Tunkarom]";
+		mes "This is an exchange of Good and Evil Crown. What a great choice~!";
+		close2;
+		callshop( "barter_mall_coupon_2" );
+		end;
+	case 3:
+		mes "[Tunkarom]";
+		mes "This is an exchange of Good Weapons. What a great choice~!";
+		close2;
+		callshop( "barter_mall_coupon_3" );
+		end;
+	case 4:
+		mes "[Tunkarom]";
+		mes "This is an exchange of Evil Weapons. What a great choice~!";
+		close2;
+		callshop( "barter_mall_coupon_4" );
+		end;
+	case 5:
+		mes "[Tunkarom]";
+		mes "This is an exchange of Wrath Weapons. What a great choice~!";
+		close2;
+		callshop( "barter_mall_coupon_5" );
+		end;
+	case 6:
+		mes "[Tunkarom]";
+		mes "This is an exchange of Wrath Crowns. What a great choice~!";
+		close2;
+		callshop( "barter_mall_coupon_6" );
+		end;
+	case 7:
+		mes "[Tunkarom]";
+		mes "Can't find what you're looking for? Come back next time.";
+		close;
+	}
 }

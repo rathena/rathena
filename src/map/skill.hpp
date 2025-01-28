@@ -354,7 +354,7 @@ struct skill_timerskill {
 	int32 src_id;
 	int32 target_id;
 	int32 map;
-	short x,y;
+	int16 x,y;
 	uint16 skill_id,skill_lv;
 	int32 type; // a BF_ type (NOTE: some places use this as general-purpose storage...)
 	int32 flag;
@@ -366,7 +366,7 @@ struct skill_unit {
 	std::shared_ptr<s_skill_unit_group> group; /// Skill group reference
 	t_tick limit;
 	int32 val1, val2;
-	short range;
+	int16 range;
 	bool alive;
 	bool hidden;
 };
@@ -443,11 +443,11 @@ enum e_skill_blown	{
 /// Create Database item
 struct s_skill_produce_db {
 	t_itemid nameid; /// Product ID
-	unsigned short req_skill; /// Required Skill
+	uint16 req_skill; /// Required Skill
 	unsigned char req_skill_lv, /// Required Skill Level
 		itemlv; /// Item Level
 	t_itemid mat_id[MAX_PRODUCE_RESOURCE]; /// Materials needed
-	unsigned short mat_amount[MAX_PRODUCE_RESOURCE]; /// Amount of each materials
+	uint16 mat_amount[MAX_PRODUCE_RESOURCE]; /// Amount of each materials
 };
 extern struct s_skill_produce_db skill_produce_db[MAX_SKILL_PRODUCE_DB];
 
@@ -545,11 +545,11 @@ int32 skill_get_ammo_qty( uint16 skill_id, uint16 skill_lv );
 int32 skill_get_state(uint16 skill_id);
 size_t skill_get_status_count( uint16 skill_id );
 int32 skill_get_spiritball( uint16 skill_id, uint16 skill_lv );
-unsigned short skill_dummy2skill_id(unsigned short skill_id);
+uint16 skill_dummy2skill_id(uint16 skill_id);
 
 uint16 skill_name2id(const char* name);
 
-int32 skill_isammotype(map_session_data *sd, unsigned short skill_id);
+int32 skill_isammotype(map_session_data *sd, uint16 skill_id);
 TIMER_FUNC(skill_castend_id);
 TIMER_FUNC(skill_castend_pos);
 TIMER_FUNC( skill_keep_using );
@@ -561,9 +561,9 @@ int32 skill_addtimerskill(struct block_list *src,t_tick tick,int32 target,int32 
 // Results? Added
 int32 skill_additional_effect( struct block_list* src, struct block_list *bl,uint16 skill_id,uint16 skill_lv,int32 attack_type,enum damage_lv dmg_lv,t_tick tick);
 int32 skill_counter_additional_effect( struct block_list* src, struct block_list *bl,uint16 skill_id,uint16 skill_lv,int32 attack_type,t_tick tick);
-short skill_blown(struct block_list* src, struct block_list* target, char count, int8 dir, enum e_skill_blown flag);
-int32 skill_break_equip(struct block_list *src,struct block_list *bl, unsigned short where, int32 rate, int32 flag);
-int32 skill_strip_equip(struct block_list *src,struct block_list *bl, unsigned short where, int32 rate, int32 lv, int32 time);
+int16 skill_blown(struct block_list* src, struct block_list* target, char count, int8 dir, enum e_skill_blown flag);
+int32 skill_break_equip(struct block_list *src,struct block_list *bl, uint16 where, int32 rate, int32 flag);
+int32 skill_strip_equip(struct block_list *src,struct block_list *bl, uint16 where, int32 rate, int32 lv, int32 time);
 // Skills unit
 std::shared_ptr<s_skill_unit_group> skill_id2group(int32 group_id);
 std::shared_ptr<s_skill_unit_group> skill_unitsetting(struct block_list* src, uint16 skill_id, uint16 skill_lv, int16 x, int16 y, int32 flag);
@@ -595,7 +595,7 @@ int32 skill_check_bl_sc(struct block_list *target, va_list ap);
 bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uint16 skill_lv );
 bool skill_check_condition_castend( map_session_data& sd, uint16 skill_id, uint16 skill_lv );
 int32 skill_check_condition_char_sub (struct block_list *bl, va_list ap);
-void skill_consume_requirement(map_session_data *sd, uint16 skill_id, uint16 skill_lv, short type);
+void skill_consume_requirement(map_session_data *sd, uint16 skill_id, uint16 skill_lv, int16 type);
 struct s_skill_condition skill_get_requirement(map_session_data *sd, uint16 skill_id, uint16 skill_lv);
 bool skill_disable_check(status_change &sc, uint16 skill_id);
 bool skill_pos_maxcount_check(struct block_list *src, int16 x, int16 y, uint16 skill_id, uint16 skill_lv, enum bl_type type, bool display_failure);
@@ -624,8 +624,8 @@ bool skill_isNotOk_mercenary( uint16 skill_id, s_mercenary_data& md);
 bool skill_isNotOk_npcRange(struct block_list *src, uint16 skill_id, uint16 skill_lv, int32 pos_x, int32 pos_y);
 
 // Item creation
-short skill_can_produce_mix( map_session_data *sd, t_itemid nameid, int32 trigger, int32 qty);
-bool skill_produce_mix( map_session_data *sd, uint16 skill_id, t_itemid nameid, int32 slot1, int32 slot2, int32 slot3, int32 qty, short produce_idx );
+int16 skill_can_produce_mix( map_session_data *sd, t_itemid nameid, int32 trigger, int32 qty);
+bool skill_produce_mix( map_session_data *sd, uint16 skill_id, t_itemid nameid, int32 slot1, int32 slot2, int32 slot3, int32 qty, int16 produce_idx );
 
 bool skill_arrow_create( map_session_data *sd, t_itemid nameid);
 
@@ -2735,6 +2735,8 @@ enum e_skill_unit_id : uint16 {
 
 	UNT_KUNAIWAIKYOKU = 298, // Kunai - Distortion
 
+	UNT_STAR_BURST = 2409,
+
 	// Skill units outside the normal unit range.
 	UNT_DEEPBLINDTRAP = 20852,
 	UNT_SOLIDTRAP,
@@ -2832,8 +2834,8 @@ void skill_poisoningweapon( map_session_data& sd, t_itemid nameid );
  **/
 void skill_select_menu( map_session_data& sd, uint16 skill_id );
 
-int32 skill_elementalanalysis( map_session_data& sd, int32 n, uint16 skill_lv, unsigned short *item_list ); // Sorcerer Four Elemental Analisys.
-int32 skill_changematerial(map_session_data *sd, int32 n, unsigned short *item_list);	// Genetic Change Material.
+int32 skill_elementalanalysis( map_session_data& sd, int32 n, uint16 skill_lv, uint16 *item_list ); // Sorcerer Four Elemental Analisys.
+int32 skill_changematerial(map_session_data *sd, int32 n, uint16 *item_list);	// Genetic Change Material.
 int32 skill_get_elemental_type(uint16 skill_id, uint16 skill_lv);
 
 int32 skill_banding_count(map_session_data *sd);

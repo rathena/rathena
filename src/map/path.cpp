@@ -32,11 +32,11 @@
 /// Path node
 struct path_node {
 	struct path_node *parent; ///< pointer to parent (for path reconstruction)
-	short x; ///< X-coordinate
-	short y; ///< Y-coordinate
-	short g_cost; ///< Actual cost from start to this node
-	short f_cost; ///< g_cost + heuristic(this, goal)
-	short flag; ///< SET_OPEN / SET_CLOSED
+	int16 x; ///< X-coordinate
+	int16 y; ///< Y-coordinate
+	int16 g_cost; ///< Actual cost from start to this node
+	int16 f_cost; ///< g_cost + heuristic(this, goal)
+	int16 flag; ///< SET_OPEN / SET_CLOSED
 };
 
 /// Binary heap of path nodes
@@ -324,7 +324,7 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 
 		return false; // easy path unsuccessful
 	} else { // !(flag&1)
-		// FIXME: This array is too small to ensure all paths shorter than MAX_WALKPATH
+		// FIXME: This array is too small to ensure all paths int16er than MAX_WALKPATH
 		// can be found without node collision: calc_index(node1) = calc_index(node2).
 		// Figure out more proper size or another way to keep track of known nodes.
 		struct path_node tp[MAX_WALKPATH * MAX_WALKPATH];
