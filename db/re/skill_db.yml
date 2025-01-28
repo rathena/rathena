@@ -44376,6 +44376,7 @@ Body:
     Range: 1
     CastCancel: true
     Duration1: 300000
+    AfterCastActDelay: 500
     Cooldown: 60000
     Requires:
       SpCost:
