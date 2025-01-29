@@ -10954,8 +10954,18 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 		// Notify everyone that this char logged in.
 		if( battle_config.friend_auto_add ){
 			for( const s_friend& my_friend : sd->status.friends ){
+				// Cancel early
+				if( my_friend.char_id == 0 ){
+					break;
+				}
+
 				if( map_session_data* tsd = map_charid2sd( my_friend.char_id ); tsd != nullptr ){
 					for( const s_friend& their_friend : tsd->status.friends ){
+						// Cancel early
+						if( their_friend.char_id == 0 ){
+							break;
+						}
+
 						if( their_friend.account_id != sd->status.account_id ){
 							continue;
 						}
@@ -15314,6 +15324,11 @@ int32 clif_friendslist_toggle_sub( map_session_data* tsd, va_list ap ){
 
 	// Seek friend.
 	for( const s_friend& their_friend : tsd->status.friends ){
+		// Cancel early
+		if( their_friend.char_id == 0 ){
+			break;
+		}
+
 		if( their_friend.account_id != account_id ){
 			continue;
 		}
@@ -15357,6 +15372,11 @@ void clif_friendslist_send( map_session_data& sd ){
 
 	// Sending the online players
 	for( const s_friend& my_friend : sd.status.friends ){
+		// Cancel early
+		if( my_friend.char_id == 0 ){
+			break;
+		}
+
 		if( map_charid2sd( my_friend.char_id ) ){
 			clif_friendslist_toggle( sd, my_friend, true );
 		}

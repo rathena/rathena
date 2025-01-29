@@ -3626,8 +3626,18 @@ int32 unit_free(struct block_list *bl, clr_type clrtype)
 			// Notify friends that this char logged out.
 			if( battle_config.friend_auto_add ){
 				for( const s_friend& my_friend : sd->status.friends ){
+					// Cancel early
+					if( my_friend.char_id == 0 ){
+						break;
+					}
+
 					if( map_session_data* tsd = map_charid2sd( my_friend.char_id ); tsd != nullptr ){
 						for( const s_friend& their_friend : tsd->status.friends ){
+							// Cancel early
+							if( their_friend.char_id == 0 ){
+								break;
+							}
+
 							if( their_friend.account_id != sd->status.account_id ){
 								continue;
 							}
