@@ -3636,7 +3636,7 @@ int32 unit_free(struct block_list *bl, clr_type clrtype)
 								continue;
 							}
 
-							clif_friendslist_toggle( *tsd, j, false );
+							clif_friendslist_toggle( *tsd, sd->status.friends[j], false );
 							break;
 						}
 					}

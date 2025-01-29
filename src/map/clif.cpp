@@ -10964,7 +10964,7 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 							continue;
 						}
 
-						clif_friendslist_toggle( *tsd, j, true );
+						clif_friendslist_toggle( *tsd, tsd->status.friends[j], true );
 						break;
 					}
 				}
@@ -15291,15 +15291,15 @@ void clif_parse_NoviceExplosionSpirits(int32 fd, map_session_data *sd)
 /// state:
 ///     0 = online
 ///     1 = offline
-void clif_friendslist_toggle( map_session_data& sd, size_t friendlist_index, bool online ){
+void clif_friendslist_toggle( map_session_data& sd, s_friend& f, bool online ){
 	PACKET_ZC_FRIENDS_STATE p = {};
 
 	p.packetType = HEADER_ZC_FRIENDS_STATE;
-	p.AID = sd.status.friends[friendlist_index].account_id;
-	p.CID = sd.status.friends[friendlist_index].char_id;
+	p.AID = f.account_id;
+	p.CID = f.char_id;
 	p.offline = !online;
 #if PACKETVER_MAIN_NUM >= 20180307 || PACKETVER_RE_NUM >= 20180221 || PACKETVER_ZERO_NUM >= 20180328
-	safestrncpy( p.name, sd.status.friends[friendlist_index].name, sizeof( p.name ) );
+	safestrncpy( p.name, f.name, sizeof( p.name ) );
 #endif
 
 	clif_send( &p, sizeof( p ), &sd.bl, SELF );
@@ -15323,7 +15323,7 @@ int32 clif_friendslist_toggle_sub(map_session_data *sd,va_list ap)
 			continue;
 		}
 
-		clif_friendslist_toggle( *sd, i, online );
+		clif_friendslist_toggle( *sd, sd->status.friends[i], online );
 		return 1;
 	}
 
@@ -15359,7 +15359,7 @@ void clif_friendslist_send( map_session_data& sd ){
 	// Sending the online players
 	for( int32 i = 0; i < MAX_FRIENDS && sd.status.friends[i].char_id; i++ ){
 		if( map_charid2sd( sd.status.friends[i].char_id ) ){
-			clif_friendslist_toggle( sd, i, true );
+			clif_friendslist_toggle( sd, sd.status.friends[i], true );
 		}
 	}
 }
