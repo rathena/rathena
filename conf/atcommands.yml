@@ -577,6 +577,10 @@ Body:
     Help: |
       Params: <amount>
       Raises LUK by given amount.
+  - Command: macrochecker
+    Help: |
+      Params: <mapname>
+      Trigger a macro detection on all players of the given map.
   - Command: mail
     Help: |
       Open mail box.
