@@ -288,14 +288,14 @@ bool Csv2YamlTool::initialize( int32 argc, char* argv[] ){
 	}
 
 	skill_txt_data( path_db_mode, path_db );
-	if (!process("SKILL_DB", 3, { path_db_mode }, "skill_db", [](const std::string& path, const std::string& name_ext) -> bool {
+	if (!process("SKILL_DB", 4, { path_db_mode }, "skill_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 18, 18, -1, &skill_parse_row_skilldb, false);
 	})){
 		return false;
 	}
 
 	skill_txt_data( path_db_import, path_db_import );
-	if (!process("SKILL_DB", 3, { path_db_import }, "skill_db", [](const std::string& path, const std::string& name_ext) -> bool {
+	if (!process("SKILL_DB", 4, { path_db_import }, "skill_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 18, 18, -1, &skill_parse_row_skilldb, false);
 	})){
 		return false;
@@ -1727,8 +1727,8 @@ static bool skill_parse_row_skilldb( char* split[], size_t columns, size_t curre
 		body << YAML::EndMap;
 	}
 
-	if (strcmpi(split[9], "yes") == 0)
-		body << YAML::Key << "CastCancel" << YAML::Value << "true";
+	if (strcmpi(split[9], "yes") != 0)
+		body << YAML::Key << "CastCancel" << YAML::Value << "false";
 	if (atoi(split[10]) != 0)
 		body << YAML::Key << "CastDefenseReduction" << YAML::Value << atoi(split[10]);
 

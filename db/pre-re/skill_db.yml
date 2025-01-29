@@ -58,7 +58,7 @@
 #   NoNearNPC:                Determines if the skill can be used near a NPC. (Optional)
 #     AdditionalRange         Number of cells from an NPC where the skill can be cast. (Optional)
 #     Type:                   Type of NPC.
-#   CastCancel                Cancel cast when hit. (Default: false)
+#   CastCancel                Cancel cast when hit. (Default: true)
 #   CastDefenseReduction      Defense reduction rate during skill cast. (Default: 0)
 #   CastTime:                 Time to cast the skill in milliseconds. (Default: 0)
 #     - Level                 Skill level.
@@ -140,7 +140,7 @@
 
 Header:
   Type: SKILL_DB
-  Version: 3
+  Version: 4
 
 Body:
   - Id: 1
@@ -377,7 +377,6 @@ Body:
     HitCount: 1
     Element: Fire
     SplashArea: 3
-    CastCancel: true
     Duration1: 10000
     Requires:
       SpCost: 10
@@ -403,7 +402,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay:
       - Level: 1
@@ -460,7 +458,6 @@ Body:
     Hit: Multi_Hit
     HitCount: 1
     Element: Ghost
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 4000
@@ -571,7 +568,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime: 500
     AfterCastActDelay:
       - Level: 1
@@ -652,7 +648,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 700
@@ -733,7 +728,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime: 800
     AfterCastActDelay: 1500
     Duration2:
@@ -794,7 +788,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Earth
-    CastCancel: true
     CastTime: 1000
     Duration1: 5000
     Duration2: 20000
@@ -844,7 +837,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 1500
@@ -907,7 +899,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 2000
@@ -996,7 +987,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 700
@@ -1097,7 +1087,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 700
@@ -1198,7 +1187,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 1000
@@ -1300,7 +1288,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     Duration1: 10000
     Requires:
       SpCost: 10
@@ -1316,7 +1303,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Duration1: 10000
     Requires:
       SpCost: 10
@@ -1342,7 +1328,6 @@ Body:
       AllowOnMado: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Requires:
       SpCost:
         - Level: 1
@@ -1361,7 +1346,6 @@ Body:
     Hit: Single
     HitCount: 1
     ActiveInstance: 3
-    CastCancel: true
     CastTime: 1000
     Duration1:
       - Level: 1
@@ -1424,7 +1408,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     AfterCastActDelay: 1000
     Requires:
       SpCost:
@@ -1461,7 +1444,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
     Duration1:
@@ -1520,7 +1502,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
     Duration1:
@@ -1579,7 +1560,6 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 500
     Requires:
@@ -1597,7 +1577,6 @@ Body:
     Hit: Single
     HitCount: 1
     SplashArea: 15
-    CastCancel: true
     CastTime: 500
     AfterCastActDelay: 2000
     Requires:
@@ -1615,7 +1594,6 @@ Body:
     Hit: Single
     HitCount: 1
     SplashArea: -1
-    CastCancel: true
     CastTime: 500
     AfterCastActDelay: 3500
     Duration1:
@@ -1675,7 +1653,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Duration1:
       - Level: 1
         Time: 60000
@@ -1731,7 +1708,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     AfterCastActDelay: 1000
     Duration2: 6000
     Requires:
@@ -2054,7 +2030,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 6000
@@ -2339,7 +2314,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     AfterCastActDelay: 3000
     Duration1: 60000
     Requires:
@@ -2368,7 +2342,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     AfterCastActDelay: 2000
     Duration1:
       - Level: 1
@@ -2398,7 +2371,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     AfterCastActDelay: 2000
     Duration1:
       - Level: 1
@@ -2447,7 +2419,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     Duration1:
       - Level: 1
         Time: 40000
@@ -2480,7 +2451,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime: 5000
     Duration1:
       - Level: 1
@@ -2547,7 +2517,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Duration1:
       - Level: 1
         Time: 10000
@@ -2579,7 +2548,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     AfterCastActDelay: 2000
     Duration2: 30000
     Requires:
@@ -2596,7 +2564,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 2000
     Duration1: 120000
@@ -2635,7 +2602,6 @@ Body:
     Hit: Single
     HitCount: 1
     SplashArea: -1
-    CastCancel: true
     CastTime: 4000
     AfterCastActDelay: 2000
     Duration1:
@@ -2664,7 +2630,6 @@ Body:
     Hit: Single
     HitCount: 1
     SplashArea: -1
-    CastCancel: true
     AfterCastActDelay: 2000
     Duration1:
       - Level: 1
@@ -2690,7 +2655,6 @@ Body:
       NoDamage: true
     Range: 5
     Hit: Single
-    CastCancel: true
     AfterCastActDelay: 3000
     Duration2:
       - Level: 1
@@ -2753,7 +2717,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 3000
     Requires:
@@ -2768,7 +2731,6 @@ Body:
       NoDamage: true
     Range: 9
     Hit: Single
-    CastCancel: true
     AfterCastActDelay: 3000
     Duration1: 600000
     Requires:
@@ -2808,7 +2770,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime: 15000
     AfterCastActDelay: 4000
     Duration1:
@@ -2930,7 +2891,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 3000
@@ -3022,7 +2982,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime: 500
     AfterCastActDelay: 2000
     Duration1: 500
@@ -3111,7 +3070,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime: 15000
     AfterCastActDelay:
       - Level: 1
@@ -3243,7 +3201,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 2500
@@ -3303,7 +3260,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 15000
@@ -3398,7 +3354,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 1000
@@ -3482,7 +3437,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Water
-    CastCancel: true
     Requires:
       SpCost: 20
     Unit:
@@ -3511,7 +3465,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 6000
@@ -3595,7 +3548,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 6000
@@ -3658,7 +3610,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 700
@@ -3720,7 +3671,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 1000
@@ -3769,7 +3719,6 @@ Body:
     HitCount: 1
     Element: Earth
     ActiveInstance: 3
-    CastCancel: true
     AfterCastActDelay: 1000
     Duration1:
       - Level: 1
@@ -3825,7 +3774,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Requires:
       SpCost: 10
   - Id: 94
@@ -3911,7 +3859,6 @@ Body:
     Range: 2
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 7500
     Requires:
       SpCost: 30
@@ -4651,7 +4598,6 @@ Body:
       - Level: 5
         Count: 5
     SplashArea: 1
-    CastCancel: true
     CastTime: 1500
     AfterCastActDelay: 1000
     Requires:
@@ -5019,7 +4965,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime: 1000
     Duration1:
       - Level: 1
@@ -5332,7 +5277,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime: 2000
     Requires:
       SpCost: 15
@@ -5348,7 +5292,6 @@ Body:
       IsQuest: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 5000
     Duration1: 300000
     Requires:
@@ -6397,7 +6340,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime: 1000
     Duration1:
       - Level: 1
@@ -6443,7 +6385,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime: 1000
     Duration1:
       - Level: 1
@@ -6476,7 +6417,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     AfterCastActDelay: 500
     Requires:
       SpCost: 1
@@ -6560,7 +6500,6 @@ Body:
     Range: 1
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 2000
     Duration1:
       - Level: 1
@@ -6590,7 +6529,6 @@ Body:
     Range: 1
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 2000
     Duration1:
       - Level: 1
@@ -6620,7 +6558,6 @@ Body:
     Range: 1
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 2000
     Duration1:
       - Level: 1
@@ -6650,7 +6587,6 @@ Body:
     Range: 1
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 2000
     Duration1:
       - Level: 1
@@ -6967,7 +6903,6 @@ Body:
         Size: 11
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 3000
     Duration2:
       - Level: 1
@@ -6995,7 +6930,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 3000
     Duration1: 180000
     Requires:
@@ -7107,7 +7041,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 2000
     Requires:
       SpCost: 5
@@ -7346,7 +7279,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 4000
@@ -7533,7 +7465,6 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Duration1:
       - Level: 1
         Time: 400
@@ -7559,7 +7490,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 700
     Requires:
       SpCost: 10
@@ -7578,7 +7508,6 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 3000
     Duration1:
       - Level: 1
@@ -7619,7 +7548,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Fire
-    CastCancel: true
     CastTime: 3000
     Duration1:
       - Level: 1
@@ -7653,7 +7581,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Water
-    CastCancel: true
     CastTime: 3000
     Duration1:
       - Level: 1
@@ -7687,7 +7614,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Wind
-    CastCancel: true
     CastTime: 3000
     Duration1:
       - Level: 1
@@ -7721,7 +7647,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Earth
-    CastCancel: true
     CastTime: 3000
     Duration1:
       - Level: 1
@@ -7759,7 +7684,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Fire
-    CastCancel: true
     CastTime: 5000
     Duration1:
       - Level: 1
@@ -7809,7 +7733,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Water
-    CastCancel: true
     CastTime: 5000
     Duration1:
       - Level: 1
@@ -7859,7 +7782,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Wind
-    CastCancel: true
     CastTime: 5000
     Duration1:
       - Level: 1
@@ -7906,7 +7828,6 @@ Body:
     Range: 2
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 5000
     Duration1:
       - Level: 1
@@ -7969,7 +7890,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 2000
     Requires:
       SpCost: 1
@@ -7986,7 +7906,6 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Requires:
       SpCost: 50
       ItemCost:
@@ -8005,7 +7924,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Requires:
       SpCost: 1
   - Id: 292
@@ -8021,7 +7939,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Requires:
       SpCost: 1
   - Id: 293
@@ -8036,7 +7953,6 @@ Body:
       IsNpc: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Requires:
       SpCost: 1
   - Id: 294
@@ -8052,7 +7968,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Duration1: 1200000
     Requires:
       SpCost: 1
@@ -8070,7 +7985,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Requires:
       SpCost: 1
   - Id: 296
@@ -8086,7 +8000,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Requires:
       SpCost: 1
   - Id: 297
@@ -8102,7 +8015,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Requires:
       SpCost: 1
   - Id: 298
@@ -8118,7 +8030,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Requires:
       SpCost: 1
   - Id: 299
@@ -8134,7 +8045,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Requires:
       SpCost: 1
   - Id: 300
@@ -8150,7 +8060,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Requires:
       SpCost: 1
   - Id: 301
@@ -8164,7 +8073,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Requires:
       SpCost: 1
   - Id: 302
@@ -8180,7 +8088,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Requires:
       SpCost: 1
   - Id: 303
@@ -8194,7 +8101,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Requires:
       SpCost: 1
     Status: Coma
@@ -9089,7 +8995,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 3000
     Requires:
       SpCost: 1
@@ -9106,7 +9011,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 3000
     Requires:
       SpCost: 1
@@ -9125,7 +9029,6 @@ Body:
     HitCount: 1
     SplashArea: 3
     ActiveInstance: 1
-    CastCancel: true
     Duration1: 20000
     CastTimeFlags:
       IgnoreDex: true
@@ -9223,7 +9126,6 @@ Body:
       - Level: 10
         Count: 5
     Element: Dark
-    CastCancel: true
   - Id: 341
     Name: NPC_DARKTHUNDER
     Description: Darkness Jupitel
@@ -9277,7 +9179,6 @@ Body:
         Amount: 6
       - Level: 10
         Amount: 7
-    CastCancel: true
   - Id: 342
     Name: NPC_STOP
     Description: Stop
@@ -9647,7 +9548,6 @@ Body:
     Hit: Single
     HitCount: 1
     SplashArea: 1
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 1000
@@ -9707,7 +9607,6 @@ Body:
     HitCount: 1
     ActiveInstance: 1
     Knockback: 2
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 5000
@@ -9801,7 +9700,6 @@ Body:
     Hit: Multi_Hit
     HitCount: 1
     Element: Weapon
-    CastCancel: true
     CastTime: 300
     AfterCastActDelay: 300
     Requires:
@@ -9917,7 +9815,6 @@ Body:
       IgnoreFlee: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
     AfterCastActDelay: 2000
     Requires:
       SpCost: 100
@@ -9935,7 +9832,6 @@ Body:
       Toggleable: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Duration1: 60000
     Duration2: 60000
     Requires:
@@ -9978,7 +9874,6 @@ Body:
     HitCount: 1
     Element: Weapon
     Knockback: 3
-    CastCancel: true
     AfterCastActDelay: 300
     CastTimeFlags:
       IgnoreDex: true
@@ -10139,7 +10034,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 3000
     AfterCastActDelay: 5000
     Requires:
@@ -10157,7 +10051,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Cooldown:
       - Level: 1
         Time: 10000
@@ -10241,7 +10134,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
-    CastCancel: true
     CastTime: 700
     AfterCastActDelay:
       - Level: 1
@@ -10331,7 +10223,6 @@ Body:
     Range: 9
     Hit: Multi_Hit
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 3000
     Requires:
@@ -10363,7 +10254,6 @@ Body:
     Element: Weapon
     SplashArea: 1
     ActiveInstance: 14
-    CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 1500
     Requires:
@@ -10395,7 +10285,6 @@ Body:
     Hit: Single
     HitCount: 1
     SplashArea: -1
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 2000
@@ -10473,7 +10362,6 @@ Body:
     Flags:
       AllowOnMado: true
     HitCount: 1
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 500
@@ -10548,7 +10436,6 @@ Body:
     DamageFlags:
       NoDamage: true
     HitCount: 1
-    CastCancel: true
     Requires:
       SpCost: 5
   - Id: 386
@@ -10559,7 +10446,6 @@ Body:
     DamageFlags:
       NoDamage: true
     HitCount: 1
-    CastCancel: true
     Requires:
       SpCost: 5
   - Id: 387
@@ -10621,7 +10507,6 @@ Body:
     DamageFlags:
       NoDamage: true
     HitCount: 1
-    CastCancel: true
     Duration1: 300000
     Requires:
       SpCost:
@@ -10644,7 +10529,6 @@ Body:
     DamageFlags:
       NoDamage: true
     HitCount: 1
-    CastCancel: true
   - Id: 393
     Name: CR_SYNTHESISPOTION
     Description: Potion Synthesis
@@ -10653,7 +10537,6 @@ Body:
     DamageFlags:
       NoDamage: true
     HitCount: 1
-    CastCancel: true
   - Id: 394
     Name: CG_ARROWVULCAN
     Description: Vulcan Arrow
@@ -10664,7 +10547,6 @@ Body:
     Hit: Multi_Hit
     HitCount: -9
     Element: Weapon
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 2000
@@ -10751,7 +10633,6 @@ Body:
     HitCount: 1
     SplashArea: 3
     Knockback: 2
-    CastCancel: true
     Duration1:
       - Level: 1
         Time: 20000
@@ -10798,7 +10679,6 @@ Body:
     Range: 7
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Duration1: 1000
     Requires:
       SpCost: 100
@@ -10955,7 +10835,6 @@ Body:
         Count: 5
     Element: Ghost
     SplashArea: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
     Duration2: 30000
@@ -10981,7 +10860,6 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 2000
     Duration1: 600000
     Requires:
@@ -11030,7 +10908,6 @@ Body:
     DamageFlags:
       NoDamage: true
     HitCount: 1
-    CastCancel: true
     CastTime: 5000
     CastTimeFlags:
       IgnoreDex: true
@@ -11054,7 +10931,6 @@ Body:
     HitCount: 1
     Element: Earth
     ActiveInstance: 2
-    CastCancel: true
     Duration1: 20000
     Duration2: 10000
     Requires:
@@ -11163,7 +11039,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 3000
     Duration1: 300000
     CastTimeFlags:
@@ -11186,7 +11061,6 @@ Body:
     HitCount: 1
     SplashArea: 3
     ActiveInstance: 1
-    CastCancel: true
     Duration1: 20000
     CastTimeFlags:
       IgnoreDex: true
@@ -11210,7 +11084,6 @@ Body:
     HitCount: 1
     SplashArea: 3
     ActiveInstance: 1
-    CastCancel: true
     Duration1: 20000
     CastTimeFlags:
       IgnoreDex: true
@@ -11233,7 +11106,6 @@ Body:
     Hit: Single
     HitCount: 1
     Knockback: 4
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 6000
@@ -11596,7 +11468,6 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     Requires:
       SpCost: 100
@@ -11617,7 +11488,6 @@ Body:
     Element: Weapon
     SplashArea: 1
     Knockback: 2
-    CastCancel: true
     Duration1:
       - Level: 1
         Time: 10000
@@ -11650,7 +11520,6 @@ Body:
     Element: Weapon
     SplashArea: 1
     Knockback: 2
-    CastCancel: true
     Duration1:
       - Level: 1
         Time: 10000
@@ -11683,7 +11552,6 @@ Body:
     Element: Weapon
     SplashArea: 1
     Knockback: 2
-    CastCancel: true
     Duration1:
       - Level: 1
         Time: 10000
@@ -11708,7 +11576,6 @@ Body:
     DamageFlags:
       NoDamage: true
     HitCount: 1
-    CastCancel: true
     AfterCastActDelay: 1000
     Duration1:
       - Level: 1
@@ -11739,7 +11606,6 @@ Body:
     DamageFlags:
       NoDamage: true
     HitCount: 1
-    CastCancel: true
     AfterCastActDelay: 1000
     Duration1:
       - Level: 1
@@ -11770,7 +11636,6 @@ Body:
     DamageFlags:
       NoDamage: true
     HitCount: 1
-    CastCancel: true
     AfterCastActDelay: 1000
     Duration1:
       - Level: 1
@@ -11803,7 +11668,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     Requires:
       SpCost: 100
@@ -11877,7 +11741,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 500
     Duration1:
@@ -11918,7 +11781,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     AfterCastActDelay: 500
     Requires:
       SpCost: 10
@@ -11939,7 +11801,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 500
     Duration1:
@@ -11979,7 +11840,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 500
     Duration1:
@@ -12019,7 +11879,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 500
     Duration1:
@@ -12059,7 +11918,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 500
     Duration1:
@@ -12099,7 +11957,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 500
     Duration1:
@@ -12139,7 +11996,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 500
     Duration1:
@@ -12179,7 +12035,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 500
     Duration1:
@@ -12219,7 +12074,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 500
     Duration1:
@@ -12259,7 +12113,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 500
     Duration1:
@@ -12299,7 +12152,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 500
     Duration1:
@@ -12339,7 +12191,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 500
     Duration1:
@@ -12379,7 +12230,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 500
     Duration1:
@@ -12455,7 +12305,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 500
     Duration1:
@@ -12495,7 +12344,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 500
     Duration1:
@@ -12533,7 +12381,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 4500
@@ -12581,7 +12428,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     AfterCastActDelay: 500
     Duration1: 350000
     Requires:
@@ -12598,7 +12444,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 500
     AfterCastActDelay: 500
     Duration1: 600000
@@ -12622,7 +12467,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 6000
@@ -12661,7 +12505,6 @@ Body:
     Description: Kaina
     MaxLevel: 7
     Type: Magic
-    CastCancel: true
   - Id: 467
     Name: SL_STIN
     Description: Estin
@@ -12751,7 +12594,6 @@ Body:
       - Level: 10
         Count: 10
     Element: Endowed
-    CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 500
     Duration1: 3000
@@ -12924,7 +12766,6 @@ Body:
     DamageFlags:
       NoDamage: true
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     Duration1: 600000
     Requires:
@@ -12941,7 +12782,6 @@ Body:
     Range: 1
     Hit: Single
     HitCount: 1
-    CastCancel: true
     AfterCastActDelay: 1000
     Duration1:
       - Level: 1
@@ -13028,7 +12868,6 @@ Body:
     Range: 1
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 2000
     Duration1:
       - Level: 1
@@ -13152,7 +12991,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Earth
-    CastCancel: true
     CastTime: 5000
     AfterCastActDelay: 2000
     Duration1:
@@ -13430,7 +13268,6 @@ Body:
         Count: 9
       - Level: 10
         Count: 10
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
     Requires:
@@ -13517,7 +13354,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 500
     Duration1:
@@ -13846,7 +13682,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 1200
@@ -14162,7 +13997,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
-    CastCancel: true
     AfterCastActDelay:
       - Level: 1
         Time: 1200
@@ -14453,7 +14287,6 @@ Body:
         Count: -5
     Element: Weapon
     SplashArea: 1
-    CastCancel: true
     CastTime: 3000
     AfterCastActDelay: 2000
     Requires:
@@ -14724,7 +14557,6 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 4000
@@ -14834,7 +14666,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 700
@@ -14891,7 +14722,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 6000
@@ -14942,7 +14772,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime: 3000
     AfterCastActDelay: 2000
     Duration1: 100
@@ -15002,7 +14831,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 700
@@ -15060,7 +14888,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Water
-    CastCancel: true
     CastTime: 3000
     Duration1:
       - Level: 1
@@ -15170,7 +14997,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 2000
@@ -15252,7 +15078,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 1000
@@ -15311,7 +15136,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime: 4000
     Duration1: 100
     Requires:
@@ -15384,7 +15208,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime: 4000
     Requires:
       SpCost:
@@ -15410,7 +15233,6 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 5000
@@ -16364,7 +16186,6 @@ Body:
       IsNpc: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
   - Id: 688
     Name: GM_SANDMAN
     Description: GM Sandman
@@ -16393,7 +16214,6 @@ Body:
     Hit: Single
     HitCount: 1
     SplashArea: -1
-    CastCancel: true
     Duration1:
       - Level: 1
         Time: 60000
@@ -16431,7 +16251,6 @@ Body:
     Hit: Single
     HitCount: 1
     SplashArea: -1
-    CastCancel: true
     Duration1:
       - Level: 1
         Time: 60000
@@ -16468,7 +16287,6 @@ Body:
     Hit: Single
     HitCount: 1
     SplashArea: -1
-    CastCancel: true
     Duration1:
       - Level: 1
         Time: 20000
@@ -16502,7 +16320,6 @@ Body:
     Hit: Single
     HitCount: 1
     SplashArea: -1
-    CastCancel: true
     Cooldown: 300000
     Status: PartyFlee
   - Id: 695
@@ -16525,7 +16342,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Status: Orcish
   - Id: 698
     Name: ALL_WEWISH
@@ -16747,7 +16563,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Poison
-    CastCancel: true
     Duration1:
       - Level: 1
         Time: 8000
@@ -16814,7 +16629,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Neutral
-    CastCancel: true
   - Id: 742
     Name: NPC_POISON_BUSTER
     Description: Poison Buster
@@ -16829,7 +16643,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Poison
-    CastCancel: true
     SplashArea: 1
   - Id: 743
     Name: NPC_HALLUCINATIONWALK
@@ -16842,7 +16655,6 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Duration1: 20000
   - Id: 744
     Name: NPC_ELECTRICWALK
@@ -16867,7 +16679,6 @@ Body:
         Max: 14
       - Level: 5
         Max: 16
-    CastCancel: true
     Duration1: 12000
     Unit:
       Id: Electricwalk
@@ -16899,7 +16710,6 @@ Body:
         Max: 14
       - Level: 5
         Max: 16
-    CastCancel: true
     Duration1: 12000
     Unit:
       Id: Firewalk
@@ -17013,7 +16823,6 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastCancel: true
     CastTime: 2000
     Duration1: 120000
     Requires:
@@ -17045,7 +16854,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Water
-    CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 1000
     Duration1: 1800000
@@ -17151,7 +16959,6 @@ Body:
     Hit: Single
     Element: Holy
     SplashArea: 14
-    CastCancel: true
     CastTime: 4000
     CastTimeFlags:
       IgnoreDex: true
@@ -17218,7 +17025,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Earth
-    CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 1000
     Duration1: 1800000
@@ -17242,7 +17048,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Fire
-    CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 1000
     Duration1: 1800000
@@ -17266,7 +17071,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Wind
-    CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 1000
     Duration1: 1800000
@@ -17286,7 +17090,6 @@ Body:
     Range: 1
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     Duration1: 300000
     Requires:
@@ -17647,7 +17450,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
-    CastCancel: true
     Duration1: 30000
     Duration2: 30000
     CastTimeFlags:
@@ -17665,7 +17467,6 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Duration1: 60000
     Duration2: 120000
     CastTimeFlags:
@@ -17683,7 +17484,6 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Duration1: 180000
     CastTimeFlags:
       IgnoreDex: true
@@ -17700,7 +17500,6 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Duration1: 180000
     Duration2: 10000
     CastTimeFlags:
@@ -17718,7 +17517,6 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Duration1: 180000
     Requires:
       SpCost: 1
@@ -17752,7 +17550,6 @@ Body:
     Hit: Single
     HitCount: 1
     SplashArea: -1
-    CastCancel: true
     Duration1: 180000
     Requires:
       SpCost: 1
@@ -17767,7 +17564,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Holy
-    CastCancel: true
     Duration1: 180000
     Requires:
       SpCost: 1
@@ -17819,7 +17615,6 @@ Body:
     Range: 11
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Duration1:
       - Level: 1
         Time: 6000
@@ -17873,7 +17668,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 500
     Requires:
@@ -17915,7 +17709,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 2000
@@ -17967,7 +17760,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 2000
@@ -18016,7 +17808,6 @@ Body:
     Range: 11
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 2500
     AfterCastActDelay: 1000
     Duration1: 25000
@@ -18042,7 +17833,6 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
     Duration1:
@@ -18105,7 +17895,6 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
-    CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 2000
     Duration1:
@@ -18160,7 +17949,6 @@ Body:
         Area: 12
       - Level: 5
         Area: 13
-    CastCancel: true
     CastTime: 3000
     AfterCastActDelay: 2000
     Duration1:
@@ -18211,7 +17999,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime: 4000
     Cooldown: 2000
     Requires:
@@ -18245,7 +18032,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime: 5000
     AfterCastActDelay: 2000
     Duration1: 5000
@@ -18277,7 +18063,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime: 3000
     AfterCastActDelay: 1000
     Duration1: 15000
@@ -18311,7 +18096,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 10000
@@ -18365,7 +18149,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 3500
@@ -18431,7 +18214,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 2000
@@ -18513,7 +18295,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime: # !TODO: Confirm cast time
       - Level: 1
         Time: 5000
@@ -18633,7 +18414,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime: 2000
     Duration1:
       - Level: 1
@@ -18672,7 +18452,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime: 2000
     Duration1:
       - Level: 1
@@ -18711,7 +18490,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime: 2000
     Duration1:
       - Level: 1
@@ -18814,7 +18592,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime: 2000
     Duration1:
       - Level: 1
@@ -18850,7 +18627,6 @@ Body:
     Range: 11
     Hit: Multi_Hit
     HitCount: 1
-    CastCancel: true
     Requires:
       SpCost:
         - Level: 1
@@ -18867,7 +18643,6 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 5000
     AfterCastActDelay: 500
     Duration1: 30000
@@ -19181,7 +18956,6 @@ Body:
     Hit: Single
     HitCount: 1
     ActiveInstance: 1
-    CastCancel: true
     AfterCastActDelay: 2000
     Duration1:
       - Level: 1
@@ -19351,7 +19125,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 500
     Requires:
@@ -19386,7 +19159,6 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
     Requires:
@@ -19431,7 +19203,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 500
     Duration1:
@@ -19520,7 +19291,6 @@ Body:
         Area: 7
       - Level: 3
         Area: 15
-    CastCancel: true
     CastTime: 3000
     Duration1:
       - Level: 1
@@ -19555,7 +19325,6 @@ Body:
         Area: 7
       - Level: 3
         Area: 15
-    CastCancel: true
     CastTime: 3000
     Duration1:
       - Level: 1
@@ -19591,7 +19360,6 @@ Body:
         Area: 7
       - Level: 3
         Area: 15
-    CastCancel: true
     CastTime: 3000
     Cooldown: 2000
     Requires:
@@ -19616,7 +19384,6 @@ Body:
     Element: Holy
     SplashArea: 2
     ActiveInstance: 1
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 2000
@@ -19667,7 +19434,6 @@ Body:
     Hit: Single
     HitCount: 1
     SplashArea: 15
-    CastCancel: true
     CastTime: 2000
     Duration1: 120000
     Cooldown:
@@ -19726,7 +19492,6 @@ Body:
     HitCount: 1
     Element: Holy
     SplashArea: 15
-    CastCancel: true
     CastTime: 4000
     Duration1: 30000
     Cooldown: 2000
@@ -19765,7 +19530,6 @@ Body:
     HitCount: 1
     Element: Holy
     SplashArea: 15
-    CastCancel: true
     CastTime: 1000
     Duration1: 60000
     Cooldown: 3000
@@ -19792,7 +19556,6 @@ Body:
     HitCount: 1
     Element: Holy
     SplashArea: 15
-    CastCancel: true
     CastTime: 1000
     Duration1: 60000
     Cooldown: 3000
@@ -19826,7 +19589,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime: 3000
     Duration1:
       - Level: 1
@@ -19863,7 +19625,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
     Cooldown: 3000
@@ -19893,7 +19654,6 @@ Body:
     Range: 11
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 4000
     Cooldown: 10000
     Requires:
@@ -19919,7 +19679,6 @@ Body:
     Range: 11
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     Duration1:
       - Level: 1
@@ -19957,7 +19716,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 1000
     Duration1:
@@ -20055,7 +19813,6 @@ Body:
         Area: 7
       - Level: 5
         Area: 8
-    CastCancel: true
     CastTime: 4000
     Duration1:
       - Level: 1
@@ -20092,7 +19849,6 @@ Body:
     Range: 11
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 500
     Duration1:
@@ -20156,7 +19912,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 2000
@@ -20233,7 +19988,6 @@ Body:
     TargetType: Self
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 2000
     Duration1:
       - Level: 1
@@ -20283,7 +20037,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime: 4000
     AfterCastActDelay: 500
     Cooldown: 1000
@@ -21196,7 +20949,6 @@ Body:
       AllowOnMado: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
     AfterCastActDelay: 2000
     Duration1: 300000
     CastTimeFlags:
@@ -21259,7 +21011,6 @@ Body:
     Hit: Single
     HitCount: 1
     SplashArea: 7
-    CastCancel: true
     AfterCastActDelay: 500
     Duration1: 3000
     Cooldown: 3000
@@ -21278,7 +21029,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     AfterCastActDelay: 1000
     Duration1: 20000
     CastTimeFlags:
@@ -21441,7 +21191,6 @@ Body:
         Size: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 200
@@ -21679,7 +21428,6 @@ Body:
     Hit: Single
     HitCount: 1
     ActiveInstance: 2
-    CastCancel: true
     Duration1:
       - Level: 1
         Time: 20000
@@ -21729,7 +21477,6 @@ Body:
     Hit: Single
     HitCount: 1
     ActiveInstance: 2
-    CastCancel: true
     Duration1:
       - Level: 1
         Time: 20000
@@ -21885,7 +21632,6 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 4000
@@ -22021,7 +21767,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 500
     Requires:
@@ -22102,7 +21847,6 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
     Cooldown:
@@ -22162,7 +21906,6 @@ Body:
     Range: 3
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 1000
     Duration1:
@@ -22196,7 +21939,6 @@ Body:
     Range: 3
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 1000
     Duration1:
@@ -22230,7 +21972,6 @@ Body:
     Range: 3
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 1000
     Duration1:
@@ -22264,7 +22005,6 @@ Body:
     Range: 3
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 1000
     Duration1:
@@ -22298,7 +22038,6 @@ Body:
     Range: 3
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 1000
     Duration1:
@@ -22332,7 +22071,6 @@ Body:
     Range: 3
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 1000
     Duration1:
@@ -22366,7 +22104,6 @@ Body:
     Range: 3
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
     Duration1:
@@ -22404,7 +22141,6 @@ Body:
     Hit: Single
     HitCount: 1
     ActiveInstance: 3
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 2000
     Duration1:
@@ -22454,7 +22190,6 @@ Body:
     Hit: Single
     HitCount: 1
     ActiveInstance: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 2000
     Duration1:
@@ -22500,7 +22235,6 @@ Body:
     NoNearNPC:
       Type:
         WarpPortal: true
-    CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 2000
     Duration1:
@@ -22557,7 +22291,6 @@ Body:
     NoNearNPC:
       Type:
         WarpPortal: true
-    CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 2000
     Duration1:
@@ -22598,7 +22331,6 @@ Body:
     Range: 7
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 2000
     Duration1:
@@ -22876,7 +22608,6 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
     AfterCastActDelay: 1000
     Duration1: 300000
     CastTimeFlags:
@@ -22924,7 +22655,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
     Duration1:
@@ -22950,7 +22680,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 5000
@@ -22988,7 +22717,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
-    CastCancel: true
     CastTime: 500
     AfterCastActDelay: 2000
     Requires:
@@ -23015,7 +22743,6 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     Duration1:
       - Level: 1
@@ -23098,7 +22825,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
     Duration1: 1000
@@ -23141,7 +22867,6 @@ Body:
     HitCount: -7
     Element: Holy
     SplashArea: 5
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 1000
@@ -23220,7 +22945,6 @@ Body:
     Hit: Single
     HitCount: 1
     SplashArea: 1
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 3000
@@ -23285,7 +23009,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
     Duration1:
@@ -23333,7 +23056,6 @@ Body:
     Hit: Multi_Hit
     HitCount: 3
     Element: Weapon
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 3000
     Cooldown: 20000
@@ -23361,7 +23083,6 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 2000
     Duration1:
@@ -23424,7 +23145,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
   - Id: 2520
     Name: LG_OVERBRAND_PLUSATK
     Description: Overbrand Plus Attack
@@ -23674,7 +23394,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 1100
@@ -24002,7 +23721,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 500
     Cooldown: 3000
@@ -24078,7 +23796,6 @@ Body:
     Range: 3
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1500
     Requires:
       SpCost: 50
@@ -24111,7 +23828,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 1000
@@ -24249,7 +23965,6 @@ Body:
     Range: 1
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
     Duration1: 240000
@@ -24288,7 +24003,6 @@ Body:
     Range: 2
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
     Duration1: 240000
@@ -24327,7 +24041,6 @@ Body:
     Range: 2
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
     Duration1: 240000
@@ -24488,7 +24201,6 @@ Body:
         Area: 10
       - Level: 5
         Area: 11
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 2000
     Duration1: 60000
@@ -24528,7 +24240,6 @@ Body:
         Area: 10
       - Level: 5
         Area: 11
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 2000
     Duration1: 60000
@@ -24568,7 +24279,6 @@ Body:
         Area: 10
       - Level: 5
         Area: 11
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 2000
     Duration1: 60000
@@ -24608,7 +24318,6 @@ Body:
         Area: 10
       - Level: 5
         Area: 11
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 2000
     Duration1: 60000
@@ -24648,7 +24357,6 @@ Body:
         Area: 10
       - Level: 5
         Area: 11
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 2000
     Duration1: 60000
@@ -24679,7 +24387,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
     Duration1: 60000
@@ -24716,7 +24423,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 1000
@@ -24799,7 +24505,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 1100
@@ -24905,7 +24610,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 1500
@@ -24971,7 +24675,6 @@ Body:
     HitCount: 1
     SplashArea: 1
     ActiveInstance: 5
-    CastCancel: true
     CastTime: 3000
     Duration1:
       - Level: 1
@@ -25042,7 +24745,6 @@ Body:
         Area: 5
       - Level: 5
         Area: 6
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 2000
@@ -25092,7 +24794,6 @@ Body:
     Range: 7
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 3000
@@ -25144,7 +24845,6 @@ Body:
         Area: 8
       - Level: 5
         Area: 9
-    CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 1000
     Duration1:
@@ -25195,7 +24895,6 @@ Body:
         Area: 6
       - Level: 5
         Area: 7
-    CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 1000
     Duration1: 60000
@@ -25226,7 +24925,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     AfterCastActDelay: 1000
     Cooldown: 3000
     Requires:
@@ -25254,7 +24952,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
     Duration1:
@@ -25308,7 +25005,6 @@ Body:
         Area: 4
       - Level: 5
         Area: 4
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 2000
@@ -25360,7 +25056,6 @@ Body:
         Area: 8
       - Level: 5
         Area: 9
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
     Duration1:
@@ -25413,7 +25108,6 @@ Body:
         Area: 8
       - Level: 5
         Area: 9
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 1500
@@ -25477,7 +25171,6 @@ Body:
         Area: 5
       - Level: 5
         Area: 6
-    CastCancel: true
     CastTime:
       - Level: 2
         Time: 500
@@ -25537,7 +25230,6 @@ Body:
         Area: 6
       - Level: 5
         Area: 7
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 1000
@@ -25611,7 +25303,6 @@ Body:
         Area: 6
       - Level: 5
         Area: 7
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
     Duration1:
@@ -25664,7 +25355,6 @@ Body:
         Area: 6
       - Level: 5
         Area: 7
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
     Duration1:
@@ -25717,7 +25407,6 @@ Body:
         Area: 6
       - Level: 5
         Area: 7
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
     Duration1:
@@ -25770,7 +25459,6 @@ Body:
         Area: 6
       - Level: 5
         Area: 7
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
     Duration1:
@@ -25851,7 +25539,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
     Duration1: 30000
@@ -25900,7 +25587,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
     Duration1: 30000
@@ -25993,7 +25679,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 2200
@@ -26062,7 +25747,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 5000
@@ -26143,7 +25827,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 2200
@@ -26181,7 +25864,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 8000
@@ -26249,7 +25931,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 2300
@@ -26318,7 +25999,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
     Duration1: 60000
@@ -26347,7 +26027,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Fire
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 2200
@@ -26415,7 +26094,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 1000
@@ -26507,7 +26185,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 1800
@@ -26607,7 +26284,6 @@ Body:
         Area: 2
       - Level: 5
         Area: 3
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 2200
@@ -26666,7 +26342,6 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 2000
     Cooldown: 5000
     Requires:
@@ -26682,7 +26357,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Fire
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 1000
@@ -26726,7 +26400,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Water
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 1000
@@ -26770,7 +26443,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Wind
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 1000
@@ -26814,7 +26486,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Earth
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 1000
@@ -26871,7 +26542,6 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTimeFlags:
       IgnoreDex: true
       IgnoreStatus: true
@@ -26895,7 +26565,6 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 1000
     Requires:
@@ -26914,7 +26583,6 @@ Body:
     HitCount: 1
     Element: Fire
     ActiveInstance: 1
-    CastCancel: true
     CastTime: 1000
     Duration1: 60000
     Cooldown: 60000
@@ -26956,7 +26624,6 @@ Body:
     HitCount: 1
     Element: Water
     ActiveInstance: 1
-    CastCancel: true
     CastTime: 1000
     Duration1: 60000
     Cooldown: 60000
@@ -26998,7 +26665,6 @@ Body:
     HitCount: 1
     Element: Wind
     ActiveInstance: 1
-    CastCancel: true
     CastTime: 1000
     Duration1: 60000
     Cooldown: 60000
@@ -27040,7 +26706,6 @@ Body:
     HitCount: 1
     Element: Earth
     ActiveInstance: 1
-    CastCancel: true
     CastTime: 1000
     Duration1: 60000
     Cooldown: 60000
@@ -27131,7 +26796,6 @@ Body:
         Area: 2
       - Level: 5
         Area: 3
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 1000
@@ -27169,7 +26833,6 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1500
     AfterCastActDelay: 500
     Duration1: 90000
@@ -27201,7 +26864,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime: 1500
     AfterCastActDelay: 500
     Duration1:
@@ -27255,7 +26917,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime: 1500
     AfterCastActDelay: 500
     Duration1:
@@ -27320,7 +26981,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime: 1500
     AfterCastActDelay: 500
     Cooldown: 5000
@@ -27368,7 +27028,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime: 1500
     AfterCastActDelay: 500
     Duration1:
@@ -27425,7 +27084,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 3000
@@ -27513,7 +27171,6 @@ Body:
     HitCount: 1
     Element: Fire
     ActiveInstance: 1
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 3000
@@ -27582,7 +27239,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 500
     Requires:
@@ -27712,7 +27368,6 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 3000
@@ -27797,7 +27452,6 @@ Body:
         Area: 7
       - Level: 5
         Area: 7
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 500
     Duration1:
@@ -27918,7 +27572,6 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 10000
     Cooldown: 300000
     Requires:
@@ -27985,7 +27638,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Duration1: 60000
     CastDelayFlags:
       IgnoreDex: true
@@ -29346,7 +28998,6 @@ Body:
     DamageFlags:
       NoDamage: true
     Hit: Single
-    CastCancel: true
     CastTime: 3000
     Duration1: 10000
     Cooldown: 10000
@@ -29585,7 +29236,6 @@ Body:
     Range: 7
     Hit: Single
     HitCount: 1
-    CastCancel: true
     AfterCastActDelay: 1000
     Duration1: 100
     Duration2: 10000
@@ -30969,7 +30619,6 @@ Body:
     DamageFlags:
       NoDamage: true
     Hit: Single
-    CastCancel: true
     AfterCastActDelay:
       - Level: 1
         Time: 60000
@@ -31363,7 +31012,6 @@ Body:
         Element: Neutral
       - Level: 5
         Element: Wind
-    CastCancel: true
     CastTime:
       - Level: 1
         Time: 1000
@@ -32663,7 +32311,6 @@ Body:
     Element: Weapon
     SplashArea: 1
     ActiveInstance: 14
-    CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 1500
     CastTimeFlags:
@@ -32850,7 +32497,6 @@ Body:
         Size: 11
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 3000
     Duration2:
       - Level: 1
@@ -32882,7 +32528,6 @@ Body:
     Hit: Single
     HitCount: 1
     SplashArea: -1
-    CastCancel: true
     CastTime: 4000
     AfterCastActDelay: 2000
     Duration1:
@@ -32970,7 +32615,6 @@ Body:
     HitCount: 1
     Element: Fire
     SplashArea: 3
-    CastCancel: true
     Duration1: 10000
     Requires:
       SpCost: 10
@@ -32985,7 +32629,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 2000
     Duration2: 5000
@@ -33009,7 +32652,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Requires:
       SpCost: 10
   - Id: 8227
@@ -33025,7 +32667,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Requires:
       SpCost: 10
   - Id: 8228
@@ -33041,7 +32682,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Requires:
       SpCost: 10
   - Id: 8229
@@ -33057,7 +32697,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Requires:
       SpCost: 10
   - Id: 8230
@@ -33073,7 +32712,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Requires:
       SpCost: 10
   - Id: 8231
@@ -33089,7 +32727,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Requires:
       SpCost: 10
   - Id: 8232
@@ -33150,7 +32787,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
     Duration1:
@@ -33210,7 +32846,6 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 3000
     CastTimeFlags:
       IgnoreDex: true
@@ -33228,7 +32863,6 @@ Body:
       NoDamage: true
     Range: 5
     Hit: Single
-    CastCancel: true
     AfterCastActDelay: 3000
     Duration2:
       - Level: 1
@@ -33285,7 +32919,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Requires:
       SpCost: 10
   - Id: 8238
@@ -33299,7 +32932,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 2000
     Duration1: 120000
@@ -33343,7 +32975,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     Duration1:
       - Level: 1
         Time: 60000
@@ -33401,7 +33032,6 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
     Duration1:
@@ -34134,7 +33764,6 @@ Body:
     Flags:
       IsGuild: true
     SplashArea: 15
-    CastCancel: true
     Duration1: 180000
     Duration2: 300000
     CastTimeFlags:
@@ -34154,7 +33783,6 @@ Body:
     Flags:
       IsGuild: true
     SplashArea: 15
-    CastCancel: true
     Duration1: 60000
     Duration2: 300000
     CastTimeFlags:
@@ -34174,7 +33802,6 @@ Body:
     Flags:
       IsGuild: true
     SplashArea: 15
-    CastCancel: true
     CastTime: 10000
     Duration2: 300000
     CastTimeFlags:
@@ -34193,7 +33820,6 @@ Body:
     Flags:
       IsGuild: true
       IgnoreKagehumi: true
-    CastCancel: true
     CastTime: 5000
     Duration2: 300000
     CastTimeFlags:
@@ -34219,5 +33845,4 @@ Body:
     Flags:
       IsGuild: true
       IgnoreKagehumi: true
-    CastCancel: true
     Duration2: 300000
