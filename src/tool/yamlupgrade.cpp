@@ -544,6 +544,10 @@ static bool upgrade_skill_db( std::string file, const uint32 source_version ){
 					// Remove it
 					input.remove( "CastCancel" );
 				}
+			}else{
+				if( input["CastTime"].IsDefined() || input["FixedCastTime"].IsDefined() ){
+					input.force_insert( "CastCancel", false );
+				}
 			}
 		}
 
