@@ -3623,8 +3623,37 @@ int32 unit_free(struct block_list *bl, clr_type clrtype)
 			channel_pcquit(sd,0xF); // Leave all chan
 			skill_blockpc_clear(*sd); // Clear all skill cooldown related
 
-			// Notify friends that this char logged out. [Skotlex]
-			map_foreachpc(clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, 0);
+			// Notify friends that this char logged out.
+			if( battle_config.friend_auto_add ){
+				for( const s_friend& my_friend : sd->status.friends ){
+					// Cancel early
+					if( my_friend.char_id == 0 ){
+						break;
+					}
+
+					if( map_session_data* tsd = map_charid2sd( my_friend.char_id ); tsd != nullptr ){
+						for( const s_friend& their_friend : tsd->status.friends ){
+							// Cancel early
+							if( their_friend.char_id == 0 ){
+								break;
+							}
+
+							if( their_friend.account_id != sd->status.account_id ){
+								continue;
+							}
+
+							if( their_friend.char_id != sd->status.char_id ){
+								continue;
+							}
+
+							clif_friendslist_toggle( *tsd, their_friend, false );
+							break;
+						}
+					}
+				}
+			}else{
+				map_foreachpc( clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, static_cast<int32>( false ) );
+			}
 			party_send_logout(sd);
 			guild_send_memberinfoshort(sd,0);
 			pc_cleareventtimer(sd);
