@@ -3625,18 +3625,18 @@ int32 unit_free(struct block_list *bl, clr_type clrtype)
 
 			// Notify friends that this char logged out.
 			if( battle_config.friend_auto_add ){
-				for( size_t i = 0; i < MAX_FRIENDS; i++ ){
-					if( map_session_data* tsd = map_charid2sd( sd->status.friends[i].char_id ); tsd != nullptr ){
-						for( size_t j = 0; j < MAX_FRIENDS; j++ ){
-							if( tsd->status.friends[j].account_id != sd->status.account_id ){
+				for( const s_friend& my_friend : sd->status.friends ){
+					if( map_session_data* tsd = map_charid2sd( my_friend.char_id ); tsd != nullptr ){
+						for( const s_friend& their_friend : tsd->status.friends ){
+							if( their_friend.account_id != sd->status.account_id ){
 								continue;
 							}
 
-							if( tsd->status.friends[j].char_id != sd->status.char_id ){
+							if( their_friend.char_id != sd->status.char_id ){
 								continue;
 							}
 
-							clif_friendslist_toggle( *tsd, sd->status.friends[j], false );
+							clif_friendslist_toggle( *tsd, their_friend, false );
 							break;
 						}
 					}

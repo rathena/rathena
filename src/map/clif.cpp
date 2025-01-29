@@ -10953,18 +10953,18 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 
 		// Notify everyone that this char logged in.
 		if( battle_config.friend_auto_add ){
-			for( size_t i = 0; i < MAX_FRIENDS; i++ ){
-				if( map_session_data* tsd = map_charid2sd( sd->status.friends[i].char_id ); tsd != nullptr ){
-					for( size_t j = 0; j < MAX_FRIENDS; j++ ){
-						if( tsd->status.friends[j].account_id != sd->status.account_id ){
+			for( const s_friend& my_friend : sd->status.friends ){
+				if( map_session_data* tsd = map_charid2sd( my_friend.char_id ); tsd != nullptr ){
+					for( const s_friend& their_friend : tsd->status.friends ){
+						if( their_friend.account_id != sd->status.account_id ){
 							continue;
 						}
 
-						if( tsd->status.friends[j].char_id != sd->status.char_id ){
+						if( their_friend.char_id != sd->status.char_id ){
 							continue;
 						}
 
-						clif_friendslist_toggle( *tsd, tsd->status.friends[j], true );
+						clif_friendslist_toggle( *tsd, their_friend, true );
 						break;
 					}
 				}
@@ -15291,7 +15291,7 @@ void clif_parse_NoviceExplosionSpirits(int32 fd, map_session_data *sd)
 /// state:
 ///     0 = online
 ///     1 = offline
-void clif_friendslist_toggle( map_session_data& sd, s_friend& f, bool online ){
+void clif_friendslist_toggle( map_session_data& sd, const s_friend& f, bool online ){
 	PACKET_ZC_FRIENDS_STATE p = {};
 
 	p.packetType = HEADER_ZC_FRIENDS_STATE;
@@ -15307,23 +15307,22 @@ void clif_friendslist_toggle( map_session_data& sd, s_friend& f, bool online ){
 
 
 // Subfunction called from clif_foreachclient to toggle friends on/off
-int32 clif_friendslist_toggle_sub(map_session_data *sd,va_list ap)
-{
+int32 clif_friendslist_toggle_sub( map_session_data* tsd, va_list ap ){
 	uint32 account_id = va_arg( ap, uint32 );
 	uint32 char_id = va_arg( ap, uint32 );
 	bool online = va_arg( ap, int32 ) != 0;
 
 	// Seek friend.
-	for( size_t i = 0; i < MAX_FRIENDS; i++ ){
-		if( sd->status.friends[i].account_id != account_id ){
+	for( const s_friend& their_friend : tsd->status.friends ){
+		if( their_friend.account_id != account_id ){
 			continue;
 		}
 
-		if( sd->status.friends[i].char_id != char_id ){
+		if( their_friend.char_id != char_id ){
 			continue;
 		}
 
-		clif_friendslist_toggle( *sd, sd->status.friends[i], online );
+		clif_friendslist_toggle( *tsd, their_friend, online );
 		return 1;
 	}
 
@@ -15357,9 +15356,9 @@ void clif_friendslist_send( map_session_data& sd ){
 	clif_send( p, p->PacketLength, &sd.bl, SELF );
 
 	// Sending the online players
-	for( int32 i = 0; i < MAX_FRIENDS && sd.status.friends[i].char_id; i++ ){
-		if( map_charid2sd( sd.status.friends[i].char_id ) ){
-			clif_friendslist_toggle( sd, sd.status.friends[i], true );
+	for( const s_friend& my_friend : sd.status.friends ){
+		if( map_charid2sd( my_friend.char_id ) ){
+			clif_friendslist_toggle( sd, my_friend, true );
 		}
 	}
 }
