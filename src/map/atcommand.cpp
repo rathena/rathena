@@ -163,6 +163,13 @@ uint64 AtcommandAliasDatabase::parseBodyNode( const ryml::NodeRef& node ){
 			std::string alias;
 			subNode >> alias;
 
+			AtCommandInfo* parent_cmd = get_atcommandinfo_byname( alias.c_str() );
+
+			if( parent_cmd != nullptr ){
+				this->invalidWarning( subNode, "\"%s\" cannot be used as alias for \"%s\", since a command with this name exists.\n", alias.c_str(), command.c_str() );
+				return 0;
+			}
+
 			info->aliases.insert( alias );
 			this->aliases[alias] = command;
 		}

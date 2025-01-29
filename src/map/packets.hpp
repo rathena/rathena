@@ -1776,6 +1776,72 @@ struct PACKET_CZ_INPUT_EDITDLG{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_INPUT_EDITDLG, 0x143);
 
+struct PACKET_CZ_INPUT_EDITDLGSTR{
+	int16 packetType;
+	uint16 packetSize;
+	int32 GID;
+	char value[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_INPUT_EDITDLGSTR, 0x1d5);
+
+struct PACKET_CZ_CLOSE_DIALOG{
+	int16 packetType;
+	uint32 GID;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_CLOSE_DIALOG, 0x146);
+
+struct PACKET_CZ_RESET{
+	int16 packetType;
+	uint16 type;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_RESET, 0x197);
+
+struct PACKET_CZ_MOVE_ITEM_FROM_STORE_TO_CART{
+	int16 packetType;
+	uint16 index;
+	int32 amount;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_MOVE_ITEM_FROM_STORE_TO_CART, 0x128);
+
+struct PACKET_CZ_REQ_ITEMIDENTIFY{
+	int16 packetType;
+	uint16 index;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_ITEMIDENTIFY, 0x178);
+
+struct PACKET_CZ_SELECTAUTOSPELL{
+	int16 packetType;
+	uint32 skill_id;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_SELECTAUTOSPELL, 0x1ce);
+
+struct PACKET_CZ_REQ_ITEMCOMPOSITION_LIST{
+	int16 packetType;
+	uint16 index;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_ITEMCOMPOSITION_LIST, 0x17a);
+
+struct PACKET_CZ_REQ_ITEMCOMPOSITION{
+	int16 packetType;
+	uint16 index_card;
+	uint16 index_equip;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_ITEMCOMPOSITION, 0x17c);
+
+struct PACKET_CZ_LOCALBROADCAST{
+	int16 packetType;
+	uint16 packetSize;
+	char message[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_LOCALBROADCAST, 0x19c);
+
+struct PACKET_CZ_MOVE_ITEM_FROM_CART_TO_STORE{
+	int16 packetType;
+	uint16 index;
+	int32 amount;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_MOVE_ITEM_FROM_CART_TO_STORE, 0x129);
+
 #if PACKETVER_MAIN_NUM >= 20180307 || PACKETVER_RE_NUM >= 20180221 || PACKETVER_ZERO_NUM >= 20180328
 struct PACKET_ZC_FRIENDS_STATE{
 	int16 packetType;
