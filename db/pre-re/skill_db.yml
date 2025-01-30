@@ -5186,7 +5186,6 @@ Body:
       SpCost: 3
       State: Recover_Weight_Rate
     Status: Stun
-    CastCancel: false
   - Id: 152
     Name: TF_THROWSTONE
     Description: Stone Fling
@@ -6478,7 +6477,6 @@ Body:
       ItemCost:
         - Item: MenEater_Plant_Bottle
           Amount: 1
-    CastCancel: false
   - Id: 233
     Name: AM_SPHEREMINE
     Description: Summon Marine Sphere
@@ -6498,7 +6496,6 @@ Body:
       ItemCost:
         - Item: Mini_Bottle
           Amount: 1
-    CastCancel: false
   - Id: 234
     Name: AM_CP_WEAPON
     Description: Alchemical Weapon
@@ -6665,7 +6662,6 @@ Body:
           Amount: 56
         - Level: 5
           Amount: 50
-    CastCancel: false
   - Id: 248
     Name: CR_TRUST
     Description: Faith
@@ -8420,7 +8416,6 @@ Body:
       Ammo:
         Arrow: true
       AmmoAmount: 1
-    CastCancel: false
   - Id: 317
     Name: BA_DISSONANCE
     Description: Unchained Serenade
@@ -8714,7 +8709,6 @@ Body:
       Ammo:
         Arrow: true
       AmmoAmount: 1
-    CastCancel: false
   - Id: 325
     Name: DC_UGLYDANCE
     Description: Hip Shaker
@@ -9760,7 +9754,6 @@ Body:
         - Level: 10
           Amount: 50
     Status: MagicPower
-    CastCancel: false
   - Id: 367
     Name: PA_PRESSURE
     Description: Gloria Domini
@@ -10518,7 +10511,6 @@ Body:
     Requires:
       SpCost: 10
     Status: ChaseWalk
-    CastCancel: false
   - Id: 390
     Name: ST_REJECTSWORD
     Description: Counter Instinct
@@ -11038,7 +11030,6 @@ Body:
           Amount: 26
         - Level: 10
           Amount: 28
-    CastCancel: false
   - Id: 407
     Name: ASC_CDP
     Description: Create Deadly Poison
@@ -12558,7 +12549,6 @@ Body:
           Amount: 28
         - Level: 7
           Amount: 30
-    CastCancel: false
   - Id: 468
     Name: SL_STUN
     Description: Estun
@@ -12589,7 +12579,6 @@ Body:
         - Level: 7
           Amount: 30
     Status: Stun
-    CastCancel: false
   - Id: 469
     Name: SL_SMA
     Description: Esma
@@ -12691,7 +12680,6 @@ Body:
         - Level: 7
           Amount: 15
     Status: Swoo
-    CastCancel: false
   - Id: 471
     Name: SL_SKE
     Description: Eske
@@ -12728,7 +12716,6 @@ Body:
         - Level: 3
           Amount: 15
     Status: Ske
-    CastCancel: false
   - Id: 472
     Name: SL_SKA
     Description: Eska
@@ -12764,7 +12751,6 @@ Body:
         - Level: 3
           Amount: 60
     Status: Ska
-    CastCancel: false
   - Id: 473
     Name: SM_SELFPROVOKE
     Description: Provoke Self
@@ -12886,7 +12872,6 @@ Body:
           Amount: 1
         - Item: White_Slim_Potion
           Amount: 1
-    CastCancel: false
   - Id: 479
     Name: CR_FULLPROTECTION
     Description: Full Protection
@@ -12939,7 +12924,6 @@ Body:
         - Level: 5
           Amount: 40
       State: Shield
-    CastCancel: false
   - Id: 481
     Name: HP_MANARECHARGE
     Description: Mana Recharge
@@ -12971,7 +12955,6 @@ Body:
         - Level: 5
           Amount: 60
     Status: DoubleCast
-    CastCancel: false
   - Id: 483
     Name: HW_GANBANTEIN
     Description: Ganbantein
@@ -13002,7 +12985,6 @@ Body:
           Amount: 1
         - Item: Blue_Gemstone
           Amount: 1
-    CastCancel: false
   - Id: 484
     Name: HW_GRAVITATION
     Description: Gravitation Field
@@ -13270,7 +13252,6 @@ Body:
     Requires:
       SpCost: 40
     Status: TarotCard
-    CastCancel: false
   - Id: 490
     Name: CR_ACIDDEMONSTRATION
     Description: Acid Demonstration
@@ -13377,7 +13358,6 @@ Body:
     CastTime: 1000
     Requires:
       SpCost: 10
-    CastCancel: false
   - Id: 494
     Name: SL_HIGH
     Description: Spirit of Rebirth
@@ -13452,7 +13432,6 @@ Body:
       ItemCost:
         - Item: Medicine_Bowl
           Amount: 200
-    CastCancel: false
   - Id: 497
     Name: AM_TWILIGHT2
     Description: Twilight Alchemy 2
@@ -13472,7 +13451,6 @@ Body:
       ItemCost:
         - Item: Medicine_Bowl
           Amount: 200
-    CastCancel: false
   - Id: 498
     Name: AM_TWILIGHT3
     Description: Twilight Alchemy 3
@@ -13492,7 +13470,6 @@ Body:
       ItemCost:
         - Item: Medicine_Bowl
           Amount: 200
-    CastCancel: false
   - Id: 499
     Name: HT_POWER
     Description: Beast Strafing
@@ -13601,7 +13578,6 @@ Body:
         Throwweapon: true
       AmmoAmount: 1
       SpiritSphereCost: 1
-    CastCancel: false
   - Id: 504
     Name: GS_MADNESSCANCEL
     Description: Madness Canceller
@@ -13619,7 +13595,6 @@ Body:
       SpCost: 30
       SpiritSphereCost: 4
     Status: MadnessCancel
-    CastCancel: false
   - Id: 505
     Name: GS_ADJUSTMENT
     Description: Adjustment
@@ -13637,7 +13612,6 @@ Body:
       SpCost: 15
       SpiritSphereCost: 2
     Status: Adjustment
-    CastCancel: false
   - Id: 506
     Name: GS_INCREASING
     Description: Increasing Accuracy
@@ -13840,7 +13814,6 @@ Body:
         Bullet: true
       AmmoAmount: 1
     Status: Bleeding
-    CastCancel: false
   - Id: 515
     Name: GS_RAPIDSHOWER
     Description: Rapid Shower
@@ -14027,7 +14000,6 @@ Body:
       Ammo:
         Bullet: true
       AmmoAmount: 1
-    CastCancel: false
   - Id: 519
     Name: GS_FULLBUSTER
     Description: Full Buster
@@ -14253,7 +14225,6 @@ Body:
       Range: 1
       Interval: 1000
       Target: Enemy
-    CastCancel: false
   - Id: 522
     Name: NJ_TOBIDOUGU
     Description: Shuriken Training
@@ -15363,7 +15334,6 @@ Body:
         Time: 300000
       - Level: 5
         Time: 350000
-    CastCancel: false
   - Id: 573
     Name: SL_COLLECTOR
     Description: SL_COLLECTOR
@@ -15381,7 +15351,6 @@ Body:
         Time: 300000
       - Level: 5
         Time: 350000
-    CastCancel: false
   - Id: 574
     Name: SL_NINJA
     Description: SL_NINJA
@@ -15399,7 +15368,6 @@ Body:
         Time: 300000
       - Level: 5
         Time: 350000
-    CastCancel: false
   - Id: 575
     Name: SL_GUNNER
     Description: SL_GUNNER
@@ -15417,7 +15385,6 @@ Body:
         Time: 300000
       - Level: 5
         Time: 350000
-    CastCancel: false
   - Id: 653
     Name: NPC_EARTHQUAKE
     Description: Earthquake
@@ -16785,7 +16752,6 @@ Body:
     CastTime: 500
     Requires:
       SpCost: 40
-    CastCancel: false
   - Id: 1002
     Name: CR_SHRINK
     Description: Shrink
@@ -16950,7 +16916,6 @@ Body:
     Duration1: 17000
     Requires:
       SpCost: 20
-    CastCancel: false
   - Id: 1011
     Name: DC_WINKCHARM
     Description: Wink of Charm
@@ -16970,7 +16935,6 @@ Body:
     Requires:
       SpCost: 40
     Status: WinkCharm
-    CastCancel: false
   - Id: 1012
     Name: BS_UNFAIRLYTRICK
     Description: Unfair Trick
@@ -17039,7 +17003,6 @@ Body:
     Requires:
       SpCost: 40
       SpiritSphereCost: 1
-    CastCancel: false
   - Id: 1016
     Name: MO_BALKYOUNG
     Description: Ki Explosion
@@ -21525,6 +21488,7 @@ Body:
           Amount: 1
         - Item: Steel
           Amount: 2
+    CastCancel: false
   - Id: 2282
     Name: NC_MAGICDECOY
     Description: FAW - Magic Decoy
@@ -21574,6 +21538,7 @@ Body:
           Amount: 2
         - Item: Brigan
           Amount: 1
+    CastCancel: false
   - Id: 2283
     Name: NC_DISJOINT
     Description: FAW Removal
@@ -21592,7 +21557,6 @@ Body:
       ItemCost:
         - Item: Monkey_Wrench
           Amount: 1
-    CastCancel: false
   - Id: 2284
     Name: SC_FATALMENACE
     Description: Fatal Menace
@@ -23936,6 +23900,7 @@ Body:
     Requires:
       SpCost: 100
       SpiritSphereCost: 2
+    CastCancel: false
   - Id: 2344
     Name: SR_GENTLETOUCH_QUIET
     Description: Gentle Touch - Quiet
@@ -24244,7 +24209,6 @@ Body:
           Amount: 4
         - Level: 5
           Amount: 5
-    CastCancel: false
   - Id: 2350
     Name: WA_SWING_DANCE
     Description: Swing Dance
@@ -24662,7 +24626,6 @@ Body:
     FixedCastTime: -1
     Requires:
       SpCost: 10
-    CastCancel: false
   - Id: 2418
     Name: WM_SEVERE_RAINSTORM
     Description: Severe Rainstorm
@@ -27566,7 +27529,6 @@ Body:
       Ammo:
         Throwweapon: true
       AmmoAmount: 1
-    CastCancel: false
   - Id: 2494
     Name: GN_CHANGEMATERIAL
     Description: Change Material
@@ -27662,7 +27624,6 @@ Body:
       IgnoreItemBonus: true
     Requires:
       SpCost: 1
-    CastCancel: false
   - Id: 2535
     Name: ALL_BUYING_STORE
     Description: Open Buying Store
@@ -27696,7 +27657,6 @@ Body:
       IgnoreItemBonus: true
     Requires:
       SpCost: 1
-    CastCancel: false
   - Id: 2537
     Name: ALL_ODINS_POWER
     Description: Odin's Power
@@ -27779,7 +27739,6 @@ Body:
       Ammo:
         Bullet: true
       AmmoAmount: 1
-    CastCancel: false
   - Id: 2554
     Name: RL_BANISHING_BUSTER
     Description: Banishing Buster
@@ -27821,7 +27780,6 @@ Body:
       Ammo:
         Bullet: true
       AmmoAmount: 1
-    CastCancel: false
   - Id: 2555
     Name: RL_B_TRAP
     Description: Bind Trap
@@ -27920,7 +27878,6 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
-    CastCancel: false
   - Id: 2556
     Name: RL_FLICKER
     Description: Flicker
@@ -27987,7 +27944,6 @@ Body:
       Ammo:
         Bullet: true
       AmmoAmount: 1
-    CastCancel: false
   - Id: 2558
     Name: RL_E_CHAIN
     Description: Eternal Chain
@@ -28029,7 +27985,6 @@ Body:
         Shotgun: true
         Grenade: true
       SpiritSphereCost: 1
-    CastCancel: false
   - Id: 2559
     Name: RL_QD_SHOT
     Description: Quick Draw Shot
@@ -28150,7 +28105,6 @@ Body:
           Amount: 65
       Weapon:
         Grenade: true
-    CastCancel: false
   - Id: 2563
     Name: RL_P_ALTER
     Description: Platinum Alter
@@ -28190,7 +28144,6 @@ Body:
       SpiritSphereCost: -1
       Equipment:
         Silver_Bullet: true
-    CastCancel: false
   - Id: 2564
     Name: RL_FALLEN_ANGEL
     Description: Fallen Angel
@@ -28304,7 +28257,6 @@ Body:
       Ammo:
         Grenade: true
       AmmoAmount: 1
-    CastCancel: false
   - Id: 2567
     Name: RL_FIRE_RAIN
     Description: Fire Rain
@@ -28363,7 +28315,6 @@ Body:
     Requires:
       SpCost: 30
       SpiritSphereCost: -1
-    CastCancel: false
   - Id: 2569
     Name: RL_AM_BLAST
     Description: Anti-Material Blast
@@ -28402,7 +28353,6 @@ Body:
           Amount: 96
       Weapon:
         Rifle: true
-    CastCancel: false
   - Id: 2570
     Name: RL_SLUGSHOT
     Description: Slug Shot
@@ -28442,7 +28392,6 @@ Body:
           Amount: 96
       Weapon:
         Shotgun: true
-    CastCancel: false
   - Id: 2571
     Name: RL_HAMMER_OF_GOD
     Description: Hammer of God
@@ -28804,7 +28753,6 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
-    CastCancel: false
   - Id: 3007
     Name: KO_HAPPOKUNAI
     Description: Kunai Splash
@@ -28937,7 +28885,6 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
-    CastCancel: false
   - Id: 3009
     Name: KO_HUUMARANKA
     Description: Swirling Petal
@@ -28997,7 +28944,6 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
-    CastCancel: false
   - Id: 3010
     Name: KO_MAKIBISHI
     Description: Makibishi
@@ -29186,7 +29132,6 @@ Body:
           Amount: 52
         - Level: 5
           Amount: 56
-    CastCancel: false
   - Id: 3014
     Name: KO_JYUSATSU
     Description: Illusion - Death
@@ -29232,7 +29177,6 @@ Body:
           Amount: 52
         - Level: 5
           Amount: 56
-    CastCancel: false
   - Id: 3015
     Name: KO_KAHU_ENTEN
     Description: Fire Charm
@@ -29250,7 +29194,6 @@ Body:
       ItemCost:
         - Item: Charm_Fire
           Amount: 1
-    CastCancel: false
   - Id: 3016
     Name: KO_HYOUHU_HUBUKI
     Description: Ice Charm
@@ -29268,7 +29211,6 @@ Body:
       ItemCost:
         - Item: Charm_Ice
           Amount: 1
-    CastCancel: false
   - Id: 3017
     Name: KO_KAZEHU_SEIRAN
     Description: Wind Charm
@@ -29286,7 +29228,6 @@ Body:
       ItemCost:
         - Item: Charm_Wind
           Amount: 1
-    CastCancel: false
   - Id: 3018
     Name: KO_DOHU_KOUKAI
     Description: Earth Charm
@@ -29304,7 +29245,6 @@ Body:
       ItemCost:
         - Item: Charm_Earth
           Amount: 1
-    CastCancel: false
   - Id: 3019
     Name: KO_KAIHOU
     Description: Release Ninja Spell
@@ -29383,7 +29323,6 @@ Body:
           Amount: 52
         - Level: 5
           Amount: 56
-    CastCancel: false
   - Id: 3022
     Name: KO_IZAYOI
     Description: 16th Night
@@ -29571,7 +29510,6 @@ Body:
           Amount: 90
         - Level: 5
           Amount: 100
-    CastCancel: false
   - Id: 3027
     Name: OB_OBOROGENSOU
     Description: Moonlight Fantasy
@@ -29608,7 +29546,6 @@ Body:
           Amount: 70
         - Level: 5
           Amount: 75
-    CastCancel: false
   - Id: 3028
     Name: OB_OBOROGENSOU_TRANSITION_ATK
     Description: Moonlight Fantasy Transition Attack
@@ -29666,7 +29603,6 @@ Body:
           Amount: 50
         - Level: 5
           Amount: 60
-    CastCancel: false
   - Id: 3031
     Name: ECL_SNOWFLIP
     Description: Snow Flip
@@ -29722,7 +29658,6 @@ Body:
     HitCount: 1
     CastTime: 3000
     Cooldown: 300000
-    CastCancel: false
   - Id: 5001
     Name: GC_DARKCROW
     Description: Dark Claw
@@ -30017,7 +29952,6 @@ Body:
       ItemCost:
         - Item: Heartbroken_Tears
           Amount: 1
-    CastCancel: false
   - Id: 5008
     Name: SO_ELEMENTAL_SHIELD
     Description: Elemental Shield
@@ -30162,7 +30096,6 @@ Body:
           Amount: 120
         - Level: 5
           Amount: 150
-    CastCancel: false
   - Id: 5012
     Name: WL_TELEKINESIS_INTENSE
     Description: Intense Telekinesis
@@ -30862,7 +30795,6 @@ Body:
           Amount: 120
         - Level: 5
           Amount: 140
-    CastCancel: false
   - Id: 8019
     Name: MH_NEEDLE_OF_PARALYZE
     Description: Needle of Paralyze
@@ -30908,7 +30840,6 @@ Body:
           Amount: 84
         - Level: 5
           Amount: 96
-    CastCancel: false
   - Id: 8020
     Name: MH_POISON_MIST
     Description: Poison Mist
@@ -30973,7 +30904,6 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
-    CastCancel: false
   - Id: 8021
     Name: MH_PAIN_KILLER
     Description: Pain Killer
@@ -31018,7 +30948,6 @@ Body:
           Amount: 60
         - Level: 5
           Amount: 64
-    CastCancel: false
   - Id: 8022
     Name: MH_LIGHT_OF_REGENE
     Description: Light of Regene
@@ -31094,7 +31023,6 @@ Body:
           Amount: 130
         - Level: 5
           Amount: 150
-    CastCancel: false
   - Id: 8024
     Name: MH_ERASER_CUTTER
     Description: Eraser Cutter
@@ -31216,7 +31144,6 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
-    CastCancel: false
   - Id: 8026
     Name: MH_SILENT_BREEZE
     Description: Silent Breeze
@@ -31272,7 +31199,6 @@ Body:
           Amount: 72
         - Level: 5
           Amount: 81
-    CastCancel: false
   - Id: 8027
     Name: MH_STYLE_CHANGE
     Description: Style Change
@@ -31404,7 +31330,6 @@ Body:
           Amount: 55
         - Level: 5
           Amount: 60
-    CastCancel: false
   - Id: 8032
     Name: MH_GOLDENE_FERSE
     Description: Golden Heel
@@ -31448,7 +31373,6 @@ Body:
           Amount: 75
         - Level: 5
           Amount: 80
-    CastCancel: false
   - Id: 8033
     Name: MH_STEINWAND
     Description: Stone Wall
@@ -31489,7 +31413,6 @@ Body:
         NoEnemy: true
         NoReiteration: true
     Status: Safetywall
-    CastCancel: false
   - Id: 8034
     Name: MH_HEILIGE_STANGE
     Description: Holy Pole
@@ -31537,7 +31460,6 @@ Body:
           Amount: 84
         - Level: 5
           Amount: 100
-    CastCancel: false
   - Id: 8035
     Name: MH_ANGRIFFS_MODUS
     Description: Attack Mode
@@ -31581,7 +31503,6 @@ Body:
           Amount: 75
         - Level: 5
           Amount: 80
-    CastCancel: false
   - Id: 8036
     Name: MH_TINDER_BREAKER
     Description: Tinder Breaker
@@ -31617,7 +31538,6 @@ Body:
         - Level: 5
           Amount: 40
       SpiritSphereCost: 1
-    CastCancel: false
   - Id: 8037
     Name: MH_CBC
     Description: Continual Break Combo
@@ -31724,7 +31644,6 @@ Body:
           Amount: 46
         - Level: 5
           Amount: 50
-    CastCancel: false
   - Id: 8040
     Name: MH_GRANITIC_ARMOR
     Description: Granitic Armor
@@ -31759,7 +31678,6 @@ Body:
           Amount: 66
         - Level: 5
           Amount: 70
-    CastCancel: false
   - Id: 8041
     Name: MH_LAVA_SLIDE
     Description: Lava Slide
@@ -31828,7 +31746,6 @@ Body:
         NoReiteration: true
         NoOverlap: true
         PathCheck: true
-    CastCancel: false
   - Id: 8042
     Name: MH_PYROCLASTIC
     Description: Pyroclastic
@@ -31874,7 +31791,6 @@ Body:
           Amount: 44
         - Level: 5
           Amount: 52
-    CastCancel: false
   - Id: 8043
     Name: MH_VOLCANIC_ASH
     Description: Volcanic Ash
@@ -31929,7 +31845,6 @@ Body:
         NoOverlap: true
         PathCheck: true
         RangedSingleUnit: true
-    CastCancel: false
   - Id: 8201
     Name: MS_BASH
     Description: Bash
@@ -33301,7 +33216,6 @@ Body:
         NoOverlap: true
         PathCheck: true
         RangedSingleUnit: true
-    CastCancel: false
   - Id: 8407
     Name: EL_WIND_STEP
     Description: Wind Step
@@ -33666,7 +33580,6 @@ Body:
     CastTime: 1000
     Requires:
       SpCost: 40
-    CastCancel: false
   - Id: 8435
     Name: EL_HURRICANE
     Description: Hurricane Rage
@@ -33681,7 +33594,6 @@ Body:
     CastTime: 1000
     Requires:
       SpCost: 60
-    CastCancel: false
   - Id: 8436
     Name: EL_HURRICANE_ATK
     Description: Hurricane Rage Attack
@@ -33709,7 +33621,6 @@ Body:
     Duration1: 15000
     Requires:
       SpCost: 80
-    CastCancel: false
   - Id: 8438
     Name: EL_TYPOON_MIS_ATK
     Description: Typhoon Missile Attack
