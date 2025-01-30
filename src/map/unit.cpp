@@ -1440,10 +1440,26 @@ int32 unit_warp(struct block_list *bl,int16 m,int16 x,int16 y,clr_type type)
 	bl->y = ud->to_y = y;
 	bl->m = m;
 
-	if (bl->type == BL_NPC) {
-		TBL_NPC *nd = (TBL_NPC*)bl;
-		map_addnpc(m, nd);
-		npc_setcells(nd);
+	switch (bl->type) {
+		case BL_NPC:
+		{
+			TBL_NPC* nd = reinterpret_cast<npc_data*>(bl);
+			map_addnpc(m, nd);
+			npc_setcells(nd);
+			break;
+		}
+		case BL_MOB:
+		{
+			TBL_MOB* md = reinterpret_cast<mob_data*>(bl);
+			// If slaves are set to stick with their master they should drop target if recalled at range
+			if (battle_config.slave_stick_with_master && md->target_id != 0) {
+				block_list* tbl = map_id2bl(md->target_id);
+				if (tbl == nullptr || !check_distance_bl(bl, tbl, AREA_SIZE)) {
+					md->target_id = 0;
+				}
+			}
+			break;
+		}
 	}
 
 	if(map_addblock(bl))
@@ -2968,7 +2984,7 @@ static int32 unit_attack_timer_sub(struct block_list* src, int32 tid, t_tick tic
 			if (status_has_mode(sstatus,MD_ASSIST) && DIFF_TICK(tick, md->last_linktime) >= MIN_MOBLINKTIME) { 
 				// Link monsters nearby [Skotlex]
 				md->last_linktime = tick;
-				map_foreachinrange(mob_linksearch, src, md->db->range2, BL_MOB, md->mob_id, target, tick);
+				map_foreachinshootrange(mob_linksearch, src, battle_config.assist_range, BL_MOB, md->mob_id, target->id, tick);
 			}
 		}
 
@@ -3411,6 +3427,10 @@ int32 unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file
 			// Drop previous target mob_slave_keep_target: no.
 			if (!battle_config.mob_slave_keep_target)
 				md->target_id=0;
+
+			// When a monster is removed from map, its spotted log is cleared
+			for (int32 i = 0; i < DAMAGELOG_SIZE; i++)
+				md->spotted_log[i] = 0;
 
 			md->attacked_id=0;
 			md->state.skillstate= MSS_IDLE;
