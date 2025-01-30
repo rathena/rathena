@@ -537,7 +537,6 @@ static bool upgrade_skill_db( std::string file, const uint32 source_version ){
 	for( auto input : inNode["Body"] ){
 		// If under version 4
 		if( source_version < 4 ){
-			// Rename End to EndOnStart
 			if( input["CastCancel"].IsDefined() ){
 				// If CastCancel was true (new default value)
 				if( input["CastCancel"].as<bool>() ){
