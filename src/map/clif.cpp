@@ -25568,6 +25568,38 @@ void clif_specialpopup(map_session_data& sd, int32 id ){
 #endif
 }
 
+/// 0c0c <result>.W (ZC_GM_CHECKER)
+void clif_macro_checker( map_session_data& sd, e_macro_checker_result result ){
+#if PACKETVER_MAIN_NUM >= 20240502
+	PACKET_ZC_GM_CHECKER p = {};
+
+	p.packetType = HEADER_ZC_GM_CHECKER;
+	p.result = result;
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
+}
+
+/// /macrochecker <mapname>
+/// 0c0b <mapname>.16B (CZ_GM_CHECKER)
+void clif_parse_macro_checker( int32 fd, map_session_data* sd ){
+#if PACKETVER_MAIN_NUM >= 20240502
+	if( !pc_can_use_command(sd, "macrochecker", COMMAND_ATCOMMAND)) {
+		return;
+	}
+
+	const PACKET_CZ_GM_CHECKER* p = reinterpret_cast<PACKET_CZ_GM_CHECKER*>( RFIFOP( fd, 0 ) );
+	char command[CHAT_SIZE_MAX];
+	char mapname[MAP_NAME_LENGTH_EXT];
+
+	safestrncpy( mapname, p->mapname, sizeof( mapname ) );
+
+	safesnprintf( command, sizeof( command ),"%cmacrochecker %s", atcommand_symbol, mapname );
+
+	is_atcommand( sd->fd, sd, command, 1 );
+#endif
+}
+
 /*==========================================
  * Main client packet processing function
  *------------------------------------------*/

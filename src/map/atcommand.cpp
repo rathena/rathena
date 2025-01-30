@@ -11289,6 +11289,78 @@ ACMD_FUNC(setcard)
 	return 0;
 }
 
+int32 atcommand_macrochecker_sub( block_list* bl, va_list ap ){
+	uint32 reporter_aid = va_arg( ap, uint32 );
+	uint32 reporter_gmlv = va_arg( ap, uint32 );
+
+	map_session_data* tsd = reinterpret_cast<map_session_data*>( bl );
+
+	// Dont start the macro checking on self
+	if( tsd->status.account_id == reporter_aid ){
+		return 0;
+	}
+
+	// Dont start it on other GMs with same or higher level
+	if( pc_get_group_level( tsd ) >= reporter_gmlv ){
+		return 0;
+	}
+
+	// Dont start it on autotraders
+	if( !session_isActive( tsd->fd ) ){
+		return 0;
+	}
+
+	// Start the macro checking on the player
+	pc_macro_reporter_process( *tsd, reporter_aid );
+
+	return 1;
+}
+
+ACMD_FUNC(macrochecker){
+	int16 mapid;
+
+	if( !message || !*message ){
+		mapid = sd->bl.m;
+	}else{
+		mapid = map_mapname2mapid( message );
+
+		if( mapid < 0 ){
+			clif_macro_checker( *sd, MACROCHECKER_UNKNOWN_MAP );
+			return -1;
+		}
+	}
+
+	map_data* mapdata = map_getmapdata( mapid );
+
+	if( !mapdata ){
+		// Should not happen
+		return -1;
+	}
+
+	if( mapdata->getMapFlag( MF_NOMACROCHECKER ) ){
+		clif_macro_checker( *sd, MACROCHECKER_MAPFLAG );
+		return -1;
+	}
+
+	if( DIFF_TICK( gettick(), mapdata->last_macrocheck ) < battle_config.macrochecker_delay ){
+		clif_macro_checker( *sd, MACROCHECKER_COOLDOWN );
+		return -1;
+	}
+
+	int32 count = map_foreachinmap( atcommand_macrochecker_sub, mapid, BL_PC, sd->status.account_id, pc_get_group_level( sd ) );
+
+	clif_macro_checker( *sd, MACROCHECKER_SUCCESS );
+
+	sprintf( atcmd_output, msg_txt( sd, 1538 ), count ); // Macro detection has been started on %d players.
+	clif_displaymessage( fd, atcmd_output );
+
+	if( count > 0 ){
+		mapdata->last_macrocheck = gettick();
+	}
+
+	return 0;
+}
+
 #include <custom/atcommand.inc>
 
 /**
@@ -11619,6 +11691,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEFR(enchantgradeui, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 		ACMD_DEFR(roulette, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 		ACMD_DEF(setcard),
+		ACMD_DEF(macrochecker),
 	};
 	AtCommandInfo* atcommand;
 	int32 i;
