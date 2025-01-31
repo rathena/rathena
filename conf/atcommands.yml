@@ -89,6 +89,13 @@ Body:
       - at
     Help: |
       Allows you to vend while you are offline.
+  - Command: ban
+    Aliases:
+      - banish
+    Help: |
+      Params: <time> <name>\n" "Temporarily ban an account.
+      time usage: adjustment (+/- value) and element (y/a, m, d/j, h, mn, s)
+      Example: @ban +1m-2mn1s-6y testplayer
   - Command: baselevelup
     Aliases:
       - baselevel
@@ -135,13 +142,11 @@ Body:
       Changes your gender.
   - Command: char_ban
     Aliases:
-      - ban
-      - banish
       - charban
     Help: |
-      Params: <time> <name>\n" "Temporarily ban an account.
+      Params: <time> <name>\n" "Temporarily ban a character.
       time usage: adjustment (+/- value) and element (y/a, m, d/j, h, mn, s)
-      Example: @ban +1m-2mn1s-6y testplayer
+      Example: @char_ban +1m-2mn1s-6y testplayer
   - Command: char_block
     Aliases:
       - block
@@ -151,10 +156,8 @@ Body:
   - Command: char_unban
     Aliases:
       - charunban
-      - unban
-      - unbanish
     Help: |
-      Params: <name> - Unban an account
+      Params: <name> - Unban a character
   - Command: char_unblock
     Aliases:
       - unblock
@@ -984,6 +987,11 @@ Body:
       - trpoint
     Help: |
       Params: <number of points> - Gives you the desired number of trait stat points.
+  - Command: unban
+    Aliases:
+      - unbanish
+    Help: |
+      Params: <name> - Unban an account
   - Command: undisguise
     Help: |
       Restore your normal appearance.

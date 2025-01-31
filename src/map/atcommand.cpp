@@ -3416,28 +3416,17 @@ ACMD_FUNC(char_block)
 
 /*==========================================
  * accountban command (usage: ban <%time> <player_name>)
- * charban command (usage: charban <%time> <player_name>)
  * %time see common/timer.cpp::solve_time()
  *------------------------------------------*/
-ACMD_FUNC(char_ban)
+ACMD_FUNC(ban)
 {
 	char *modif_p, output[CHAT_SIZE_MAX];
 	int32 timediff = 0; //don't set this as uint32 as we may want to decrease banned time
-	enum chrif_req_op bantype;
 
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
-
-	parent_cmd = atcommand_alias_db.checkAlias(command+1);
-
-	if (strcmpi(parent_cmd,"charban") == 0)
-		bantype = CHRIF_OP_BAN;
-	else if (strcmpi(parent_cmd,"ban") == 0)
-		bantype = CHRIF_OP_LOGIN_BAN;
-	else
-		return -1;
 
 	if (!message || !*message || sscanf(message, "%255s %23[^\n]", atcmd_output, atcmd_player_name) < 2) {
 		sprintf(output, msg_txt(sd,1022), command); // Please enter ban time and a player name (usage: %s <time> <char name>).
@@ -3457,21 +3446,59 @@ ACMD_FUNC(char_ban)
 		return -1;
 	}
 	
-	if( timediff < 0 && (
-		   (bantype == CHRIF_OP_LOGIN_BAN && !pc_can_use_command(sd, "unban", COMMAND_ATCOMMAND))
-		|| (bantype == CHRIF_OP_BAN && !pc_can_use_command(sd, "charunban", COMMAND_ATCOMMAND))
-		))
-	{
+	if( timediff < 0 ){
 		clif_displaymessage(fd,msg_txt(sd,1023)); // You are not allowed to alter the time of a ban.
 		return -1;
 	}
 
-	if (bantype == CHRIF_OP_BAN)
-		chrif_req_charban(sd->status.account_id, atcmd_player_name,timediff);
-	else
-		chrif_req_login_operation(sd->status.account_id, atcmd_player_name, bantype, timediff, 0, 0);
+	chrif_req_login_operation(sd->status.account_id, atcmd_player_name, CHRIF_OP_LOGIN_BAN, timediff, 0, 0);
 
-	safesnprintf(output, sizeof(output), msg_txt(sd,88), bantype == CHRIF_OP_BAN ? "char" : "login"); // Sending request to %s server...
+	safesnprintf(output, sizeof(output), msg_txt(sd,88), "login"); // Sending request to %s server...
+	clif_displaymessage(fd, output);
+
+	return 0;
+}
+
+/*==========================================
+ * charban command (usage: charban <%time> <player_name>)
+ * %time see common/timer.cpp::solve_time()
+ *------------------------------------------*/
+ACMD_FUNC(char_ban)
+{
+	char *modif_p, output[CHAT_SIZE_MAX];
+	int32 timediff = 0; //don't set this as uint32 as we may want to decrease banned time
+
+	nullpo_retr(-1, sd);
+
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+
+	if (!message || !*message || sscanf(message, "%255s %23[^\n]", atcmd_output, atcmd_player_name) < 2) {
+		sprintf(output, msg_txt(sd,1022), command); // Please enter ban time and a player name (usage: %s <time> <char name>).
+		clif_displaymessage(fd, output);
+		return -1;
+	}
+
+	atcmd_output[sizeof(atcmd_output)-1] = '\0';
+
+	modif_p = atcmd_output;
+	timediff = (int32)solve_time(modif_p); //discard seconds
+
+	if (timediff == 0) { //allow negative ?
+		safesnprintf(output, sizeof(output), msg_txt(sd,85), command, timediff); // Invalid time for %s command (time=%d)
+		clif_displaymessage(fd, output);
+		clif_displaymessage(fd, msg_txt(sd,702)); // Time parameter format is +/-<value> to alter. y/a = Year, m = Month, d/j = Day, h = Hour, n/mn = Minute, s = Second.
+		return -1;
+	}
+	
+	if( timediff < 0 ){
+		clif_displaymessage(fd,msg_txt(sd,1023)); // You are not allowed to alter the time of a ban.
+		return -1;
+	}
+
+	chrif_req_charban( sd->status.account_id, atcmd_player_name, timediff );
+
+	safesnprintf(output, sizeof(output), msg_txt(sd,88), "char"); // Sending request to %s server...
 	clif_displaymessage(fd, output);
 
 	return 0;
@@ -3502,23 +3529,12 @@ ACMD_FUNC(char_unblock)
 
 /*==========================================
  * acc unban command (usage: unban <player_name>)
- * char unban command (usage: charunban <player_name>)
  *------------------------------------------*/
-ACMD_FUNC(char_unban){
-	enum chrif_req_op unbantype;
+ACMD_FUNC(unban){
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
-
-	parent_cmd = atcommand_alias_db.checkAlias(command+1);
-
-	if (strcmpi(parent_cmd,"charunban") == 0)
-		unbantype = CHRIF_OP_UNBAN;
-	else if (strcmpi(parent_cmd,"unban") == 0)
-		unbantype = CHRIF_OP_LOGIN_UNBAN;
-	else
-		return -1;
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
 		sprintf(atcmd_output, msg_txt(sd,435), command); // Please enter a player name (usage: %s <char name>).
@@ -3526,12 +3542,32 @@ ACMD_FUNC(char_unban){
 		return -1;
 	}
 
-	if (unbantype == CHRIF_OP_UNBAN)
-		chrif_req_charunban(sd->status.account_id,atcmd_player_name);
-	else
-		chrif_req_login_operation(sd->status.account_id, atcmd_player_name, unbantype, 0, 0, 0);
+	chrif_req_login_operation(sd->status.account_id, atcmd_player_name, CHRIF_OP_LOGIN_UNBAN, 0, 0, 0);
 
-	sprintf(atcmd_output, msg_txt(sd,88), unbantype == CHRIF_OP_UNBAN ? "char":"login"); // Sending request to %s server...
+	sprintf(atcmd_output, msg_txt(sd,88), "login"); // Sending request to %s server...
+	clif_displaymessage(fd, atcmd_output);
+
+	return 0;
+}
+
+/*==========================================
+ * char unban command (usage: charunban <player_name>)
+ *------------------------------------------*/
+ACMD_FUNC(char_unban){
+	nullpo_retr(-1, sd);
+
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
+		sprintf(atcmd_output, msg_txt(sd,435), command); // Please enter a player name (usage: %s <char name>).
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
+
+	chrif_req_charunban(sd->status.account_id,atcmd_player_name);
+
+	sprintf(atcmd_output, msg_txt(sd,88), "char"); // Sending request to %s server...
 	clif_displaymessage(fd, atcmd_output);
 
 	return 0;
@@ -11397,8 +11433,10 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(stat_all),
 		ACMD_DEF(trait_all),
 		ACMD_DEF(char_block),
+		ACMD_DEF(ban),
 		ACMD_DEF(char_ban),
 		ACMD_DEF(char_unblock),
+		ACMD_DEF(unban),
 		ACMD_DEF(char_unban),
 		ACMD_DEF(mount_peco),
 		ACMD_DEF(guildspy),

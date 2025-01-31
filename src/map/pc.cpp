@@ -15535,6 +15535,7 @@ static void pc_macro_punishment(map_session_data &sd, e_macro_detect_status styp
 	if (sd.macro_detect.timer != INVALID_TIMER)
 		delete_timer(sd.macro_detect.timer, pc_macro_detector_timeout);
 
+	int32 reporter_aid = sd.macro_detect.reporter_aid;
 	// Clear the macro detect data
 	sd.macro_detect = {};
 	sd.macro_detect.timer = INVALID_TIMER;
@@ -15545,7 +15546,7 @@ static void pc_macro_punishment(map_session_data &sd, e_macro_detect_status styp
 
 	if (battle_config.macro_detection_punishment == 0) { // Ban
 		clif_macro_detector_status(sd, stype);
-		chrif_req_login_operation(sd.macro_detect.reporter_aid, sd.status.name, (duration == 0 ? CHRIF_OP_LOGIN_BLOCK : CHRIF_OP_LOGIN_BAN), duration, 0, 0);
+		chrif_req_login_operation(reporter_aid, sd.status.name, (duration == 0 ? CHRIF_OP_LOGIN_BLOCK : CHRIF_OP_LOGIN_BAN), duration, 0, 0);
 	} else { // Jail
 		// Send success to close the window without closing the client
 		clif_macro_detector_status(sd, MCD_GOOD);

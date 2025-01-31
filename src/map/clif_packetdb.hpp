@@ -274,7 +274,6 @@
 	parseable_packet(0x0203,10,clif_parse_FriendsListRemove,2,6);
 	packet(0x0204,18);
 	packet(0x0205,26);
-	packet(0x0206,11);
 	packet(0x0207,34);
 	parseable_packet(0x0208,11,clif_parse_FriendsListReply,2,6,10);
 	packet(0x0209,36);
@@ -1928,11 +1927,6 @@
 // 2018-02-07bRagexeRE
 #if PACKETVER >= 20180207
 	parseable_packet(0x0AF4,11,clif_parse_UseSkillToPos,2,4,6,8,10);
-#endif
-
-// 2018-02-21aRagexeRE or 2018-02-21bRagexeRE
-#if PACKETVER >= 20180221
-	packet(0x0206,35); // ZC_FRIENDS_STATE
 #endif
 
 // 2018-03-07bRagexeRE

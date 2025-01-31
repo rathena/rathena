@@ -1014,25 +1014,27 @@ int32 mob_can_reach(struct mob_data *md,struct block_list *bl,int32 range)
  *------------------------------------------*/
 int32 mob_linksearch(struct block_list *bl,va_list ap)
 {
-	struct mob_data *md;
+	mob_data *md;
 	int32 mob_id;
-	struct block_list *target;
+	int32 target_id;
 	t_tick tick;
 
 	nullpo_ret(bl);
-	md=(struct mob_data *)bl;
+	md = reinterpret_cast<mob_data*>(bl);
 	mob_id = va_arg(ap, int32);
-	target = va_arg(ap, struct block_list *);
+	target_id = va_arg(ap, int32);
 	tick=va_arg(ap, t_tick);
 
-	if (md->mob_id == mob_id && status_has_mode(&md->status,MD_ASSIST) && DIFF_TICK(tick, md->last_linktime) >= MIN_MOBLINKTIME
-		&& !md->target_id)
+	// Check if mob qualifies for assistance
+	// Line of sight to the ally is already checked at this point
+	// No valid path to the target is required
+	if (md->mob_id == mob_id && status_has_mode(&md->status,MD_ASSIST)
+		&& DIFF_TICK(tick, md->last_linktime) >= MIN_MOBLINKTIME
+		&& md->target_id == 0)
 	{
 		md->last_linktime = tick;
-		if( mob_can_reach(md,target,md->db->range2) ){	// Reachability judging
-			md->target_id = target->id;
-			return 1;
-		}
+		md->target_id = target_id;
+		return 1;
 	}
 
 	return 0;
@@ -1974,6 +1976,9 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 	// Normal attack / berserk skill is only used when target is in range
 	if (battle_check_range(&md->bl, tbl, md->status.rhw.range))
 	{
+		// Make sure there is no chase target when already in attack range
+		md->ud.target_to = 0;
+
 		// Hiding is a special case because it prevents normal attacks but allows skill usage
 		// TODO: Some other states also have this behavior and should be investigated (e.g. NPC_SR_CURSEDCIRCLE)
 		if (!(md->sc.option&OPTION_HIDE)) {
@@ -2085,9 +2090,9 @@ static int32 mob_ai_sub_hard_timer(struct block_list *bl,va_list ap)
 	struct mob_data *md = (struct mob_data*)bl;
 	uint32 char_id = va_arg(ap, uint32);
 	t_tick tick = va_arg(ap, t_tick);
+	mob_add_spotted(md, char_id);
 	if (mob_ai_sub_hard(md, tick))
 	{	//Hard AI triggered.
-		mob_add_spotted(md, char_id);
 		md->last_pcneartime = tick;
 	}
 	return 0;
@@ -2156,10 +2161,12 @@ static int32 mob_ai_sub_lazy(struct mob_data *md, va_list args)
 
 	if (md->master_id) {
 		if (!mob_is_spotted(md)) {
+			if (battle_config.slave_active_with_master == 0)
+				return 0;
 			// Get mob data of master
 			mob_data* mmd = map_id2md(md->master_id);
 			// If neither master nor slave have been spotted we don't have to execute the slave AI
-			if (mmd && !mob_is_spotted(mmd))
+			if (mmd != nullptr && !mob_is_spotted(mmd))
 				return 0;
 		}
 		mob_ai_sub_hard_slavemob (md,tick);

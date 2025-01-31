@@ -1842,6 +1842,25 @@ struct PACKET_CZ_MOVE_ITEM_FROM_CART_TO_STORE{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_MOVE_ITEM_FROM_CART_TO_STORE, 0x129);
 
+#if PACKETVER_MAIN_NUM >= 20180307 || PACKETVER_RE_NUM >= 20180221 || PACKETVER_ZERO_NUM >= 20180328
+struct PACKET_ZC_FRIENDS_STATE{
+	int16 packetType;
+	uint32 AID;
+	uint32 CID;
+	uint8 offline;
+	char name[NAME_LENGTH];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_FRIENDS_STATE, 0x206);
+#else
+struct PACKET_ZC_FRIENDS_STATE{
+	int16 packetType;
+	uint32 AID;
+	uint32 CID;
+	uint8 offline;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_FRIENDS_STATE, 0x206);
+#endif
+
 struct PACKET_CZ_MAKE_GROUP{
 	int16 packetType;
 	char name[NAME_LENGTH];

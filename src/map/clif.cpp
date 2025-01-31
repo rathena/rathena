@@ -10951,8 +10951,37 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 			clif_status_load(&sd->bl, EFST_SKE, 1);
 		}
 
-		// Notify everyone that this char logged in [Skotlex].
-		map_foreachpc(clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, 1);
+		// Notify everyone that this char logged in.
+		if( battle_config.friend_auto_add ){
+			for( const s_friend& my_friend : sd->status.friends ){
+				// Cancel early
+				if( my_friend.char_id == 0 ){
+					break;
+				}
+
+				if( map_session_data* tsd = map_charid2sd( my_friend.char_id ); tsd != nullptr ){
+					for( const s_friend& their_friend : tsd->status.friends ){
+						// Cancel early
+						if( their_friend.char_id == 0 ){
+							break;
+						}
+
+						if( their_friend.account_id != sd->status.account_id ){
+							continue;
+						}
+
+						if( their_friend.char_id != sd->status.char_id ){
+							continue;
+						}
+
+						clif_friendslist_toggle( *tsd, their_friend, true );
+						break;
+					}
+				}
+			}
+		}else{
+			map_foreachpc( clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, static_cast<int32>( true ) );
+		}
 
 		if (!sd->state.autotrade) { // Don't trigger NPC event or opening vending/buyingstore will be failed
 			npc_script_event( *sd, NPCE_LOGIN );
@@ -13549,9 +13578,11 @@ void clif_parse_ResetChar(int32 fd, map_session_data *sd) {
 		case 0:
 			safesnprintf( cmd, sizeof( cmd ), "%cresetstat", atcommand_symbol );
 			break;
+#if !(PACKETVER_MAIN_NUM >= 20220216 || PACKETVER_ZERO_NUM >= 20220203)
 		case 1:
 			safesnprintf( cmd, sizeof(cmd), "%cresetskill", atcommand_symbol );
 			break;
+#endif
 		default:
 			return;
 	}
@@ -15266,50 +15297,60 @@ void clif_parse_NoviceExplosionSpirits(int32 fd, map_session_data *sd)
 /// Friends List
 ///
 
-/// Toggles a single friend online/offline [Skotlex] (ZC_FRIENDS_STATE).
-/// 0206 <account id>.L <char id>.L <state>.B
-/// 0206 <account id>.L <char id>.L <state>.B <name>.24B >= 20180221
+/// Toggles a single friend online/offline.
+/// 0206 <account id>.L <char id>.L <state>.B (ZC_FRIENDS_STATE)
+/// 0206 <account id>.L <char id>.L <state>.B <name>.24B >= 20180221 (ZC_FRIENDS_STATE)
 /// state:
 ///     0 = online
 ///     1 = offline
-void clif_friendslist_toggle(map_session_data *sd,uint32 account_id, uint32 char_id, int32 online)
-{
-	int32 i, fd = sd->fd;
+void clif_friendslist_toggle( map_session_data& sd, const s_friend& f, bool online ){
+	PACKET_ZC_FRIENDS_STATE p = {};
 
-	//Seek friend.
-	for (i = 0; i < MAX_FRIENDS && sd->status.friends[i].char_id &&
-		(sd->status.friends[i].char_id != char_id || sd->status.friends[i].account_id != account_id); i++);
-
-	if(i == MAX_FRIENDS || sd->status.friends[i].char_id == 0)
-		return; //Not found
-
-	WFIFOHEAD(fd,packet_len(0x206));
-	WFIFOW(fd, 0) = 0x206;
-	WFIFOL(fd, 2) = sd->status.friends[i].account_id;
-	WFIFOL(fd, 6) = sd->status.friends[i].char_id;
-	WFIFOB(fd,10) = !online; //Yeah, a 1 here means "logged off", go figure...
-#if PACKETVER >= 20180221
-	safestrncpy(WFIFOCP(fd, 11), sd->status.friends[i].name, NAME_LENGTH);
+	p.packetType = HEADER_ZC_FRIENDS_STATE;
+	p.AID = f.account_id;
+	p.CID = f.char_id;
+	p.offline = !online;
+#if PACKETVER_MAIN_NUM >= 20180307 || PACKETVER_RE_NUM >= 20180221 || PACKETVER_ZERO_NUM >= 20180328
+	safestrncpy( p.name, f.name, sizeof( p.name ) );
 #endif
-	WFIFOSET(fd, packet_len(0x206));
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 }
 
 
-//Subfunction called from clif_foreachclient to toggle friends on/off [Skotlex]
-int32 clif_friendslist_toggle_sub(map_session_data *sd,va_list ap)
-{
-	uint32 account_id, char_id, online;
-	account_id = va_arg(ap, int32);
-	char_id = va_arg(ap, int32);
-	online = va_arg(ap, int32);
-	clif_friendslist_toggle(sd, account_id, char_id, online);
+// Subfunction called from clif_foreachclient to toggle friends on/off
+int32 clif_friendslist_toggle_sub( map_session_data* tsd, va_list ap ){
+	uint32 account_id = va_arg( ap, uint32 );
+	uint32 char_id = va_arg( ap, uint32 );
+	bool online = va_arg( ap, int32 ) != 0;
+
+	// Seek friend.
+	for( const s_friend& their_friend : tsd->status.friends ){
+		// Cancel early
+		if( their_friend.char_id == 0 ){
+			break;
+		}
+
+		if( their_friend.account_id != account_id ){
+			continue;
+		}
+
+		if( their_friend.char_id != char_id ){
+			continue;
+		}
+
+		clif_friendslist_toggle( *tsd, their_friend, online );
+		return 1;
+	}
+
+	// Not found
 	return 0;
 }
 
 
-/// Sends the whole friends list (ZC_FRIENDS_LIST).
-/// 0201 <packet len>.W { <account id>.L <char id>.L <name>.24B }*
-/// 0201 <packet len>.W { <account id>.L <char id>.L }* >= 20180221
+/// Sends the whole friends list.
+/// 0201 <packet len>.W { <account id>.L <char id>.L <name>.24B }* (ZC_FRIENDS_LIST)
+/// 0201 <packet len>.W { <account id>.L <char id>.L }* >= 20180221 (ZC_FRIENDS_LIST)
 void clif_friendslist_send( map_session_data& sd ){
 	PACKET_ZC_FRIENDS_LIST* p = reinterpret_cast<PACKET_ZC_FRIENDS_LIST*>( packet_buffer );
 
@@ -15332,9 +15373,14 @@ void clif_friendslist_send( map_session_data& sd ){
 	clif_send( p, p->PacketLength, &sd.bl, SELF );
 
 	// Sending the online players
-	for( int32 i = 0; i < MAX_FRIENDS && sd.status.friends[i].char_id; i++ ){
-		if( map_charid2sd( sd.status.friends[i].char_id ) ){
-			clif_friendslist_toggle( &sd, sd.status.friends[i].account_id, sd.status.friends[i].char_id, 1 );
+	for( const s_friend& my_friend : sd.status.friends ){
+		// Cancel early
+		if( my_friend.char_id == 0 ){
+			break;
+		}
+
+		if( map_charid2sd( my_friend.char_id ) ){
+			clif_friendslist_toggle( sd, my_friend, true );
 		}
 	}
 }
@@ -25443,9 +25489,17 @@ void clif_parse_partybooking_reply( int32 fd, map_session_data* sd ){
 #endif
 }
 
+/// /resetskill.
+/// Request to skills.
+/// 0bb1 <type>.W <unknown>.B (CZ_RESET_SKILL)
 void clif_parse_reset_skill( int32 fd, map_session_data* sd ){
 #if PACKETVER_MAIN_NUM >= 20220216 || PACKETVER_ZERO_NUM >= 20220203
 	const PACKET_CZ_RESET_SKILL* p = reinterpret_cast<PACKET_CZ_RESET_SKILL*>( RFIFOP( fd, 0 ) );
+	char cmd[CHAT_SIZE_MAX];
+
+	safesnprintf( cmd, sizeof( cmd ), "%cresetskill", atcommand_symbol );
+
+	is_atcommand( fd, sd, cmd, 1 );
 #endif
 }
 
