@@ -1,0 +1,209 @@
+//===== rAthena Script ======================================= 
+//= Prontera Market Street
+//===== Changelogs: ==========================================
+//= 1.0 Initial version from replays. [Haydrich]
+//============================================================
+
+prt_mk,161,171,0	script	Guide#mk_prt5	8W_SOLDIER,{
+	cutin "prt_soldier.bmp", 2;
+	.@npc_name$ = strnpcinfo(0);
+
+	mes "[Guide]";
+	mes "You are currently at the Prontera Market Street.";
+	mes "How may I assist you?";
+	next;
+
+	if (.@npc_name$ == "Guide#mk_prt1") {
+		.@menu$[0] = "Move to the Center Market Street";
+		.@menu$[1] = "Move to the South Market Street";
+		.@menu$[2] = "Move to the West Market Street";
+		.@menu$[3] = "Move to the North Market Street";
+		setarray .@direction$[0], "to the Center", "to the South", "to the West", "to the North";
+		setarray .@warp_x, 161, 161, 38, 161;
+		setarray .@warp_y, 143, 39, 162, 287;
+	}
+	else if (.@npc_name$ == "Guide#mk_prt2") {
+		.@menu$[0] = "Move to the Center Market Street";
+		.@menu$[1] = "Move to the South Market Street";
+		.@menu$[2] = "Move to the East Market Street";
+		.@menu$[3] = "Move to the North Market Street";
+		setarray .@direction$[0], "to the Center", "to the South", "to the East", "to the North";
+		setarray .@warp_x, 161, 285, 38, 161;
+		setarray .@warp_y, 143, 162, 162, 287;
+	}
+	else if (.@npc_name$ == "Guide#mk_prt3") {
+		.@menu$[0] = "Move to the Center Market Street";
+		.@menu$[1] = "Move to the East Market Street";
+		.@menu$[2] = "Move to the West Market Street";
+		.@menu$[3] = "Move to the North Market Street";
+		setarray .@direction$[0], "to the Center", "to the East", "to the West", "to the North";
+		setarray .@warp_x, 161, 285, 38, 161;
+		setarray .@warp_y, 143, 162, 162, 287;
+	}
+	else if (.@npc_name$ == "Guide#mk_prt4") {
+		.@menu$[0] = "Move to the Center Market Street";
+		.@menu$[1] = "Move to the South Market Street";
+		.@menu$[2] = "Move to the West Market Street";
+		.@menu$[3] = "Move to the East Market Street";
+		setarray .@direction$[0], "to the Center", "to the South", "to the West", "to the East";
+		setarray .@warp_x, 161, 161, 38, 285;
+		setarray .@warp_y, 143, 39, 162, 162;
+	} else {
+		.@menu$[0] = "Move to the East Market Street";
+		.@menu$[1] = "Move to the South Market Street";
+		.@menu$[2] = "Move to the West Market Street";
+		.@menu$[3] = "Move to the North Market Street";
+		setarray .@direction$[0], "to the East", "to the South", "to the West", "to the North";
+		setarray .@warp_x, 285, 161, 38, 161;
+		setarray .@warp_y, 162, 39, 162, 287;
+	}
+
+	.@menu = select(.@menu$[0], .@menu$[1], .@menu$[2], .@menu$[3], "~ Move to the Center of Prontera", "Cancel");
+	if (.@menu == 5) {
+		mes "[Guide]";
+		if (.@npc_name$ == "Guide#mk_prt1") {
+			set .@direction$, "to the East of";
+			set .@warp_x, 275;
+			set .@warp_y, 204;
+		}
+		else if (.@npc_name$ == "Guide#mk_prt2") {
+			set .@direction$, "to the West of";
+			set .@warp_x, 36;
+			set .@warp_y, 204;
+		}
+		else if (.@npc_name$ == "Guide#mk_prt3") {
+			set .@direction$, "to the South of";
+			set .@warp_x, 155;
+			set .@warp_y, 35;
+		}
+		else if (.@npc_name$ == "Guide#mk_prt4") {
+			set .@direction$, "to the North of";
+			set .@warp_x, 155;
+			set .@warp_y, 323;
+		} else {
+			set .@direction$, "to the Central Fountain at";
+			set .@warp_x, 155;
+			set .@warp_y, 183;
+		}
+		mes "You will be moved " + .@direction$ + " the Center of Prontera.";
+		close2;
+		warp "prontera",.@warp_x,.@warp_y;
+		end;
+	} else if (.@menu == 6) {
+		mes "[Guide]";
+		mes "Please come back if you need to move within the market street or to the center of Prontera.";
+		close3;
+	} else {
+		mes "[Guide]";
+		mes "I will guide you " + .@direction$[.@menu - 1] + ".";
+		close2;
+		warp "prt_mk", .@warp_x[.@menu - 1], .@warp_y[.@menu - 1];
+		end;
+	}
+}
+function	script	F_Box_Store	{
+	.@store_number = getarg(0);
+	.@store_id = getarg(1);
+	.@vip_store_id = getarg(2);
+
+	mes "This is an Unmanned Storage Box.";
+	mes "It is connected to Kafra Service's Storage " + .@store_number + ".";
+	mes "Please insert 50z to use the Storage.";
+	if (!callfunc("F_CanOpenStorage")) {
+		mes "^4d4dffTo use the Storage Service, you need to raise the Novice's Basic Skill to 6.^000000";
+		close;
+	}
+	if (Zeny < 50) {
+		mes "The Storage access fee is 50z.";
+		close;
+	}
+	next;
+	switch( select( "Insert 50z", "Cancel" )) {
+		case 1:
+			Zeny = Zeny - 50;
+			if(getstatus(SC_PREMIUM_STORAGEBOOST)) {
+				if (.@vip_store_id < 1)
+					openstorage;
+				else
+					openstorage2 .@vip_store_id,STOR_MODE_GET|STOR_MODE_PUT;
+			} else
+				openstorage2 .@store_id,STOR_MODE_GET|STOR_MODE_PUT;
+			close;
+		case 2:
+			mes "Thank you for using our service.";
+			close;
+	}
+}
+prt_mk,255,304,3	script	Unmanned Storage Box 1#mk_prt1-1	4_STEELBOX,{
+	callfunc "F_Box_Store", 1, 4, 0;
+}
+prt_mk,258,304,3	script	Unmanned Storage Box 2#mk_prt1-2	4_STEELBOX,{
+	callfunc "F_Box_Store", 2, 1, 5;
+}
+prt_mk,261,304,3	script	Unmanned Storage Box 3#mk_prt1-3	4_STEELBOX,{
+	callfunc "F_Box_Store", 3, 2, 6;
+}
+-	marketshop	market_shop_prt_mk	-1,12580:300:-1,23368:4000:-1
+prt_mk,264,304,3	script	Catalog Device Machine#mk_prt1	4_MACHINE_DEVICE,{
+	mes "We are selling a revolutionary catalog that allows you to check the items registered in the stalls at a glance!";
+	mes "Sponsored by: Alberta Merchant Guild";
+	mes "*The product includes shipping and handling fees.";
+	close2;
+	callshop "market_shop_prt_mk";
+	end;
+}
+prt_mk,272,299,3	shop	Tool Dealer#mk_prt1	4_M_03,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1
+
+prt_mk,100,224,3	script	Poring#mk_prt	CLEAR_NPC,{
+	.@npc_name$ = strnpcinfo(0);
+
+	if (.@npc_name$ == "Poporing#mk_prt") {
+		setarray .@menu$[0], "Poring", "Drops", "Angeling", "Cancel";
+		setarray .@warp_x, 100, 224, 224;
+		setarray .@warp_y, 220, 220, 91;
+	}
+	else if (.@npc_name$ == "Drops#mk_prt") {
+		setarray .@menu$[0], "Poring", "Poporing", "Angeling", "Cancel";
+		setarray .@warp_x, 100, 100, 224;
+		setarray .@warp_y, 220, 91, 91;
+	}
+
+	else if (.@npc_name$ == "Angeling#mk_prt") {
+		setarray .@menu$[0], "Poring", "Poporing", "Drops", "Cancel";
+		setarray .@warp_x, 100, 100, 224;
+		setarray .@warp_y, 220, 91, 91;
+	} else {
+		setarray .@menu$[0], "Poporing", "Drops", "Angeling", "Cancel";
+		setarray .@warp_x, 100, 224, 224;
+		setarray .@warp_y, 91, 220, 91;
+	}
+
+	.@menu = select(implode(.@menu$, ":"));
+
+	if (.@menu == getarraysize(.@menu$))
+		end;
+	warp "prt_mk", .@warp_x[.@menu - 1], .@warp_y[.@menu - 1];
+}
+
+prt_mk,299,67,2	duplicate(Guide#mk_prt5)	Guide#mk_prt1	8W_SOLDIER
+prt_mk,24,256,5	duplicate(Guide#mk_prt5)	Guide#mk_prt2	8W_SOLDIER
+prt_mk,71,20,0	duplicate(Guide#mk_prt5)	Guide#mk_prt3	8W_SOLDIER
+prt_mk,252,303,4	duplicate(Guide#mk_prt5)	Guide#mk_prt4	8W_SOLDIER
+prt_mk,224,224,3	duplicate(Poring#mk_prt)	Drops#mk_prt	CLEAR_NPC
+prt_mk,100,96,3	duplicate(Poring#mk_prt)	Poporing#mk_prt	CLEAR_NPC
+prt_mk,224,96,3	duplicate(Poring#mk_prt)	Angeling#mk_prt	CLEAR_NPC
+prt_mk,300,64,2	duplicate(Unmanned Storage Box 1#mk_prt1-1)	Unmanned Storage Box 1#mk_prt4-1	4_STEELBOX
+prt_mk,68,19,2	duplicate(Unmanned Storage Box 1#mk_prt1-1)	Unmanned Storage Box 1#mk_prt7-1	4_STEELBOX
+prt_mk,23,259,2	duplicate(Unmanned Storage Box 1#mk_prt1-1)	Unmanned Storage Box 1#mk_prt10-1	4_STEELBOX
+prt_mk,300,61,2	duplicate(Unmanned Storage Box 2#mk_prt1-2)	Unmanned Storage Box 2#mk_prt4-2	4_STEELBOX
+prt_mk,65,19,2	duplicate(Unmanned Storage Box 2#mk_prt1-2)	Unmanned Storage Box 2#mk_prt7-2	4_STEELBOX
+prt_mk,23,262,2	duplicate(Unmanned Storage Box 2#mk_prt1-2)	Unmanned Storage Box 2#mk_prt10-2	4_STEELBOX
+prt_mk,300,58,2	duplicate(Unmanned Storage Box 3#mk_prt1-3)	Unmanned Storage Box 3#mk_prt4-3	4_STEELBOX
+prt_mk,62,19,2	duplicate(Unmanned Storage Box 3#mk_prt1-3)	Unmanned Storage Box 3#mk_prt7-3	4_STEELBOX
+prt_mk,23,265,2	duplicate(Unmanned Storage Box 3#mk_prt1-3)	Unmanned Storage Box 3#mk_prt10-3	4_STEELBOX
+prt_mk,300,55,2	duplicate(Catalog Device Machine#mk_prt1)	Catalog Device Machine#mk_prt2	4_MACHINE_DEVICE
+prt_mk,59,19,2	duplicate(Catalog Device Machine#mk_prt1)	Catalog Device Machine#mk_prt3	4_MACHINE_DEVICE
+prt_mk,23,268,2	duplicate(Catalog Device Machine#mk_prt1)	Catalog Device Machine#mk_prt4	4_MACHINE_DEVICE
+prt_mk,294,47,1	duplicate(Tool Dealer#mk_prt1)	Tool Dealer#mk_prt2	4_M_01
+prt_mk,53,23,7	duplicate(Tool Dealer#mk_prt1)	Tool Dealer#mk_prt3	4_M_02
+prt_mk,27,275,5	duplicate(Tool Dealer#mk_prt1)	Tool Dealer#mk_prt4	4_M_03
