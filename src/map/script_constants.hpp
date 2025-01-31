@@ -1963,6 +1963,7 @@
 	export_constant(SC_STAR_BURST);
 	export_constant(SC_SKY_ENCHANT);
 	export_constant(SC_WILD_WALK);
+	export_constant(SC_OVERCOMING_CRISIS);
 
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
 /// @APIHOOK_START(EFST_CONST)
