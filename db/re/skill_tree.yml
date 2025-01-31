@@ -7201,6 +7201,13 @@ Body:
         Requires:
           - Name: WH_SOLIDTRAP
             Level: 1
+      - Name: WH_WILD_WALK
+        MaxLevel: 5
+        Requires:
+          - Name: WH_NATUREFRIENDLY
+            Level: 3
+          - Name: WH_HAWKRUSH
+            Level: 3
   - Job: Imperial_Guard
     Inherit:
       Novice: true

@@ -890,7 +890,7 @@ bool sv_readdb( const char* directory, const char* filename, char delim, size_t 
 	size_t entries = 0;
 	char** fields; // buffer for fields ([0] is reserved)
 	char path[1024], *line;
-	const short colsize=512;
+	const int16 colsize=512;
 
 	snprintf(path, sizeof(path), "%s/%s", directory, filename);
 

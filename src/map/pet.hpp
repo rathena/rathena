@@ -236,10 +236,10 @@ bool pet_data_init(map_session_data *sd, struct s_pet *pet);
 bool pet_return_egg( map_session_data *sd, struct pet_data *pd );
 int32 pet_birth_process(map_session_data *sd, struct s_pet *pet);
 int32 pet_recv_petdata(uint32 account_id,struct s_pet *p,int32 flag);
-int32 pet_select_egg(map_session_data *sd,short egg_index);
+int32 pet_select_egg(map_session_data *sd,int16 egg_index);
 void pet_catch_process_start( map_session_data& sd, t_itemid item_id, e_pet_catch_flag flag );
 void pet_catch_process_end( map_session_data& sd, int32 target_id );
-bool pet_get_egg(uint32 account_id, short pet_class, int32 pet_id);
+bool pet_get_egg(uint32 account_id, int16 pet_class, int32 pet_id);
 int32 pet_menu(map_session_data *sd,int32 menunum);
 int32 pet_change_name(map_session_data *sd,char *name);
 int32 pet_change_name_ack(map_session_data *sd, char* name, int32 flag);
@@ -254,9 +254,6 @@ int32 pet_egg_search(map_session_data *sd, int32 pet_id);
 void pet_evolution(map_session_data *sd, int16 pet_id);
 int32 pet_food(map_session_data *sd, struct pet_data *pd);
 void pet_clear_support_bonuses(map_session_data *sd);
-
-#define pet_stop_walking(pd, type) unit_stop_walking(&(pd)->bl, type)
-#define pet_stop_attack(pd) unit_stop_attack(&(pd)->bl)
 
 bool pet_addautobonus(std::vector<std::shared_ptr<s_petautobonus>> &bonus, const std::string &script, int16 rate, uint32 dur, uint16 atk_type, const std::string &other_script, bool onskill);
 void pet_exeautobonus(map_session_data &sd, std::vector<std::shared_ptr<s_petautobonus>> *bonus, std::shared_ptr<s_petautobonus> &autobonus);

@@ -263,7 +263,7 @@ void inter_auctions_fromsql(void)
 	Sql_FreeResult(sql_handle);
 }
 
-void mapif_Auction_sendlist(int32 fd, uint32 char_id, short count, short pages, unsigned char *buf)
+void mapif_Auction_sendlist(int32 fd, uint32 char_id, int16 count, int16 pages, unsigned char *buf)
 {
 	int32 len = (sizeof(struct auction_data) * count) + 12;
 
@@ -282,9 +282,9 @@ void mapif_parse_Auction_requestlist(int32 fd)
 	char searchtext[NAME_LENGTH];
 	uint32 char_id = RFIFOL(fd,4), len = sizeof(struct auction_data);
 	int32 price = RFIFOL(fd,10);
-	short type = RFIFOW(fd,8), page = max(1,RFIFOW(fd,14));
+	int16 type = RFIFOW(fd,8), page = max(1,RFIFOW(fd,14));
 	unsigned char buf[5 * sizeof(struct auction_data)];
-	short i = 0, j = 0, pages = 1;
+	int16 i = 0, j = 0, pages = 1;
 
 	memcpy(searchtext, RFIFOP(fd,16), NAME_LENGTH);
 

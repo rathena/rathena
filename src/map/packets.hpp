@@ -1731,6 +1731,150 @@ struct PACKET_ZC_UPDATE_MAPINFO{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_UPDATE_MAPINFO, 0x192);
 
+struct PACKET_CZ_REQ_ENTER_ROOM{
+	int16 packetType;
+	uint32 chat_id;
+	char password[8];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_ENTER_ROOM, 0xd9);
+
+struct PACKET_CZ_CHANGE_CHATROOM{
+	int16 packetType;
+	uint16 packetSize;
+	uint16 limit;
+	uint8 type;
+	char password[8];
+	char title[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_CHANGE_CHATROOM, 0xde);
+
+struct PACKET_CZ_ADD_EXCHANGE_ITEM{
+	int16 packetType;
+	uint16 index;
+	int32 amount;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_ADD_EXCHANGE_ITEM, 0xe8);
+
+struct PACKET_CZ_MOVE_ITEM_FROM_CART_TO_BODY{
+	int16 packetType;
+	uint16 index;
+	int32 amount;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_MOVE_ITEM_FROM_CART_TO_BODY, 0x127);
+
+struct PACKET_CZ_SELECT_WARPPOINT{
+	int16 packetType;
+	int16 skill_id;
+	char mapname[MAP_NAME_LENGTH_EXT];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_SELECT_WARPPOINT, 0x11b);
+
+struct PACKET_CZ_INPUT_EDITDLG{
+	int16 packetType;
+	uint32 GID;
+	int32 value;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_INPUT_EDITDLG, 0x143);
+
+struct PACKET_CZ_INPUT_EDITDLGSTR{
+	int16 packetType;
+	uint16 packetSize;
+	int32 GID;
+	char value[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_INPUT_EDITDLGSTR, 0x1d5);
+
+struct PACKET_CZ_CLOSE_DIALOG{
+	int16 packetType;
+	uint32 GID;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_CLOSE_DIALOG, 0x146);
+
+struct PACKET_CZ_RESET{
+	int16 packetType;
+	uint16 type;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_RESET, 0x197);
+
+struct PACKET_CZ_MOVE_ITEM_FROM_STORE_TO_CART{
+	int16 packetType;
+	uint16 index;
+	int32 amount;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_MOVE_ITEM_FROM_STORE_TO_CART, 0x128);
+
+struct PACKET_CZ_REQ_ITEMIDENTIFY{
+	int16 packetType;
+	uint16 index;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_ITEMIDENTIFY, 0x178);
+
+struct PACKET_CZ_SELECTAUTOSPELL{
+	int16 packetType;
+	uint32 skill_id;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_SELECTAUTOSPELL, 0x1ce);
+
+struct PACKET_CZ_REQ_ITEMCOMPOSITION_LIST{
+	int16 packetType;
+	uint16 index;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_ITEMCOMPOSITION_LIST, 0x17a);
+
+struct PACKET_CZ_REQ_ITEMCOMPOSITION{
+	int16 packetType;
+	uint16 index_card;
+	uint16 index_equip;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_ITEMCOMPOSITION, 0x17c);
+
+struct PACKET_CZ_LOCALBROADCAST{
+	int16 packetType;
+	uint16 packetSize;
+	char message[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_LOCALBROADCAST, 0x19c);
+
+struct PACKET_CZ_MOVE_ITEM_FROM_CART_TO_STORE{
+	int16 packetType;
+	uint16 index;
+	int32 amount;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_MOVE_ITEM_FROM_CART_TO_STORE, 0x129);
+
+#if PACKETVER_MAIN_NUM >= 20180307 || PACKETVER_RE_NUM >= 20180221 || PACKETVER_ZERO_NUM >= 20180328
+struct PACKET_ZC_FRIENDS_STATE{
+	int16 packetType;
+	uint32 AID;
+	uint32 CID;
+	uint8 offline;
+	char name[NAME_LENGTH];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_FRIENDS_STATE, 0x206);
+#else
+struct PACKET_ZC_FRIENDS_STATE{
+	int16 packetType;
+	uint32 AID;
+	uint32 CID;
+	uint8 offline;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_FRIENDS_STATE, 0x206);
+#endif
+
+struct PACKET_CZ_MAKE_GROUP{
+	int16 packetType;
+	char name[NAME_LENGTH];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_MAKE_GROUP, 0xf9);
+
+struct PACKET_CZ_MAKE_GROUP2{
+	int16 packetType;
+	char name[NAME_LENGTH];
+	uint8 item_pickup;
+	uint8 item_share;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_MAKE_GROUP2, 0x1e8);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )

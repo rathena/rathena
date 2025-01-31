@@ -1962,6 +1962,7 @@
 	export_constant(SC_DAWN_MOON);
 	export_constant(SC_STAR_BURST);
 	export_constant(SC_SKY_ENCHANT);
+	export_constant(SC_WILD_WALK);
 	export_constant(SC_OVERCOMING_CRISIS);
 
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
@@ -10627,6 +10628,18 @@
 	export_constant(GROUP_ALGORITHM_RANDOM);
 	export_constant(GROUP_ALGORITHM_SHAREDPOOL);
 	export_constant(GROUP_ALGORITHM_ALL);
+	
+	/* guildinfo script command */
+	export_constant(GUILDINFO_NAME);
+	export_constant(GUILDINFO_LEVEL);
+	export_constant(GUILDINFO_AVERAGELEVEL);
+	export_constant(GUILDINFO_ONLINECOUNT);
+	export_constant(GUILDINFO_MEMBERCOUNT);
+	export_constant(GUILDINFO_MAXMEMBERCOUNT);
+	export_constant(GUILDINFO_EXP);
+	export_constant(GUILDINFO_NEXTEXP);
+	export_constant(GUILDINFO_MASTERID);
+	export_constant(GUILDINFO_MASTERNAME);
 
 	#undef export_constant
 	#undef export_constant2
