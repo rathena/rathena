@@ -1861,6 +1861,20 @@ struct PACKET_ZC_FRIENDS_STATE{
 DEFINE_PACKET_HEADER(ZC_FRIENDS_STATE, 0x206);
 #endif
 
+struct PACKET_CZ_MAKE_GROUP{
+	int16 packetType;
+	char name[NAME_LENGTH];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_MAKE_GROUP, 0xf9);
+
+struct PACKET_CZ_MAKE_GROUP2{
+	int16 packetType;
+	char name[NAME_LENGTH];
+	uint8 item_pickup;
+	uint8 item_share;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_MAKE_GROUP2, 0x1e8);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
