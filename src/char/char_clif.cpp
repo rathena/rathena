@@ -54,7 +54,7 @@ bool pincode_allowed( char* pincode );
 // reason
 // 0: success
 // 1: failed
-void chclif_moveCharSlotReply( int32 fd, struct char_session_data* sd, unsigned short index, short reason ){
+void chclif_moveCharSlotReply( int32 fd, struct char_session_data* sd, uint16 index, int16 reason ){
 	WFIFOHEAD(fd,8);
 	WFIFOW(fd,0) = HEADER_HC_ACK_CHANGE_CHARACTER_SLOT;
 	WFIFOW(fd,2) = 8;
@@ -813,7 +813,7 @@ int32 chclif_parse_reqtoconnect(int32 fd, struct char_session_data* sd,uint32 ip
 	return 1;
 }
 
-//struct PACKET_CH_CHARLIST_REQ { 0x0 short PacketType}
+//struct PACKET_CH_CHARLIST_REQ { 0x0 int16 PacketType}
 int32 chclif_parse_req_charlist(int32 fd, struct char_session_data* sd){
 	FIFOSD_CHECK(2);
 	RFIFOSKIP(fd,2);
@@ -1086,7 +1086,7 @@ int32 chclif_parse_charselect(int32 fd, struct char_session_data* sd,uint32 ipl)
 			return 0;
 #else
 			// Try to select a map for the user
-			unsigned short j;
+			uint16 j;
 			//First check that there's actually a map server online.
 			ARR_FIND( 0, ARRAYLENGTH(map_server), j, session_isValid(map_server[j].fd) && !map_server[j].maps.empty() );
 			if (j == ARRAYLENGTH(map_server)) {
@@ -1163,7 +1163,7 @@ int32 chclif_parse_createnewchar(int32 fd, struct char_session_data* sd,int32 cm
 		int32 slot;
 		int32 hair_color;
 		int32 hair_style;
-		short start_job;
+		int16 start_job;
 		int32 sex;
 
 #if PACKETVER >= 20151001
@@ -1579,7 +1579,7 @@ int32 chclif_parse(int32 fd) {
 
 	while( RFIFOREST(fd) >= 2 ) {
 		int32 next = 1;
-		unsigned short cmd;
+		uint16 cmd;
 
 		cmd = RFIFOW(fd,0);
 

@@ -93,41 +93,41 @@ enum e_pet_hungry : uint16 {
 
 struct pet_recovery { //Stat recovery
 	enum sc_type type;	//Status Change id
-	unsigned short delay; //How long before curing (secs).
+	uint16 delay; //How long before curing (secs).
 	int32 timer;
 };
 
 struct pet_bonus {
-	unsigned short type; //bStr, bVit?
-	unsigned short val;	//value
-	unsigned short duration; //in seconds
-	unsigned short delay;	//Time before re-effect the bonus in seconds
+	uint16 type; //bStr, bVit?
+	uint16 val;	//value
+	uint16 duration; //in seconds
+	uint16 delay;	//Time before re-effect the bonus in seconds
 	int32 timer;
 };
 
 struct pet_skill_attack { //Attack Skill
-	unsigned short id;
-	unsigned short lv; // Skill level
-	unsigned short damage; // Fixed damage value of petskillattack2
-	unsigned short div_; //0 = Normal skill. >0 = Fixed damage (lv), fixed div_.
-	unsigned short rate; //Base chance of skill ocurrance (10 = 10% of attacks)
-	unsigned short bonusrate; //How being 100% loyal affects cast rate (10 = At 1000 intimacy->rate+10%
+	uint16 id;
+	uint16 lv; // Skill level
+	uint16 damage; // Fixed damage value of petskillattack2
+	uint16 div_; //0 = Normal skill. >0 = Fixed damage (lv), fixed div_.
+	uint16 rate; //Base chance of skill ocurrance (10 = 10% of attacks)
+	uint16 bonusrate; //How being 100% loyal affects cast rate (10 = At 1000 intimacy->rate+10%
 };
 
 struct pet_skill_support { //Support Skill
-	unsigned short id;
-	unsigned short lv;
-	unsigned short hp; //Max HP% for skill to trigger (50 -> 50% for Magnificat)
-	unsigned short sp; //Max SP% for skill to trigger (100 = no check)
-	unsigned short delay; //Time (secs) between being able to recast.
+	uint16 id;
+	uint16 lv;
+	uint16 hp; //Max HP% for skill to trigger (50 -> 50% for Magnificat)
+	uint16 sp; //Max SP% for skill to trigger (100 = no check)
+	uint16 delay; //Time (secs) between being able to recast.
 	int32 timer;
 };
 
 struct pet_loot {
 	struct item *item;
-	unsigned short count;
-	unsigned short weight;
-	unsigned short max;
+	uint16 count;
+	uint16 weight;
+	uint16 max;
 };
 
 class PetDatabase : public TypesafeYamlDatabase<uint16,s_pet_db>{
@@ -195,7 +195,7 @@ struct pet_data {
 	} state;
 	int32 move_fail_count;
 	t_tick next_walktime,last_thinktime;
-	unsigned short rate_fix;	//Support rate as modified by intimacy (1000 = 100%) [Skotlex]
+	uint16 rate_fix;	//Support rate as modified by intimacy (1000 = 100%) [Skotlex]
 
 	struct pet_recovery* recovery;
 	struct pet_bonus* bonus;
@@ -236,10 +236,10 @@ bool pet_data_init(map_session_data *sd, struct s_pet *pet);
 bool pet_return_egg( map_session_data *sd, struct pet_data *pd );
 int32 pet_birth_process(map_session_data *sd, struct s_pet *pet);
 int32 pet_recv_petdata(uint32 account_id,struct s_pet *p,int32 flag);
-int32 pet_select_egg(map_session_data *sd,short egg_index);
+int32 pet_select_egg(map_session_data *sd,int16 egg_index);
 void pet_catch_process_start( map_session_data& sd, t_itemid item_id, e_pet_catch_flag flag );
 void pet_catch_process_end( map_session_data& sd, int32 target_id );
-bool pet_get_egg(uint32 account_id, short pet_class, int32 pet_id);
+bool pet_get_egg(uint32 account_id, int16 pet_class, int32 pet_id);
 int32 pet_menu(map_session_data *sd,int32 menunum);
 int32 pet_change_name(map_session_data *sd,char *name);
 int32 pet_change_name_ack(map_session_data *sd, char* name, int32 flag);
@@ -254,9 +254,6 @@ int32 pet_egg_search(map_session_data *sd, int32 pet_id);
 void pet_evolution(map_session_data *sd, int16 pet_id);
 int32 pet_food(map_session_data *sd, struct pet_data *pd);
 void pet_clear_support_bonuses(map_session_data *sd);
-
-#define pet_stop_walking(pd, type) unit_stop_walking(&(pd)->bl, type)
-#define pet_stop_attack(pd) unit_stop_attack(&(pd)->bl)
 
 bool pet_addautobonus(std::vector<std::shared_ptr<s_petautobonus>> &bonus, const std::string &script, int16 rate, uint32 dur, uint16 atk_type, const std::string &other_script, bool onskill);
 void pet_exeautobonus(map_session_data &sd, std::vector<std::shared_ptr<s_petautobonus>> *bonus, std::shared_ptr<s_petautobonus> &autobonus);

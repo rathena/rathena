@@ -455,8 +455,9 @@ int32 elemental_unlocktarget(s_elemental_data *ed) {
 	nullpo_ret(ed);
 
 	ed->target_id = 0;
-	elemental_stop_attack(ed);
-	elemental_stop_walking(ed,1);
+	unit_stop_attack( &ed->bl );
+	unit_stop_walking( &ed->bl, USW_FIXPOS );
+
 	return 0;
 }
 
@@ -599,7 +600,7 @@ static int32 elemental_ai_sub_timer(s_elemental_data *ed, map_session_data *sd, 
 		clif_elemental_updatestatus(*sd, SP_SP);
 		return 0;
 	} else if( master_dist > MAX_ELEDISTANCE ) {	// Master too far, chase.
-		short x = sd->bl.x, y = sd->bl.y;
+		int16 x = sd->bl.x, y = sd->bl.y;
 		if( ed->target_id )
 			elemental_unlocktarget(ed);
 		if( ed->ud.walktimer != INVALID_TIMER && ed->ud.target == sd->bl.id )

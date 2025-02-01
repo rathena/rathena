@@ -10,7 +10,7 @@
 struct char_session_data;
 enum pincode_state : uint8;
 
-void chclif_moveCharSlotReply( int32 fd, struct char_session_data* sd, unsigned short index, short reason );
+void chclif_moveCharSlotReply( int32 fd, struct char_session_data* sd, uint16 index, int16 reason );
 int32 chclif_parse_moveCharSlot( int32 fd, struct char_session_data* sd);
 #if PACKETVER_SUPPORTS_PINCODE
 void chclif_pincode_sendstate( int32 fd, struct char_session_data* sd, enum pincode_state state );

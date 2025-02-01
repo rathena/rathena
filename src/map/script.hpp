@@ -295,7 +295,7 @@ struct script_code {
 	int32 script_size;
 	unsigned char* script_buf;
 	struct reg_db local;
-	unsigned short instances;
+	uint16 instances;
 };
 
 struct script_stack {
@@ -2208,6 +2208,20 @@ enum e_eleminfo : uint8 {
 	ELEMINFO_ID = 0,
 	ELEMINFO_GAMEID,
 	ELEMINFO_CLASS,
+};
+
+/* getguildinfo script command */
+enum e_guildinfo : uint8 {
+	GUILDINFO_NAME = 1,
+	GUILDINFO_LEVEL,
+	GUILDINFO_AVERAGELEVEL,
+	GUILDINFO_ONLINECOUNT,
+	GUILDINFO_MEMBERCOUNT,
+	GUILDINFO_MAXMEMBERCOUNT,
+	GUILDINFO_EXP,
+	GUILDINFO_NEXTEXP,
+	GUILDINFO_MASTERID,
+	GUILDINFO_MASTERNAME,
 };
 
 class ConstantDatabase : public YamlDatabase {
