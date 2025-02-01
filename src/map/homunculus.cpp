@@ -1684,9 +1684,9 @@ uint64 HomunculusDatabase::parseBodyNode(const ryml::NodeRef &node) {
 		if (!this->asUInt16(node, "AttackDelay", aspd))
 			return 0;
 
-		if (aspd > 2000) {
-			this->invalidWarning(node["AttackDelay"], "Homunculus AttackDelay %hu exceeds 2000, capping.\n", aspd);
-			aspd = 2000;
+		if (aspd > MIN_ASPD) {
+			this->invalidWarning(node["AttackDelay"], "Homunculus AttackDelay %hu exceeds %d, capping.\n", aspd, MIN_ASPD);
+			aspd = MIN_ASPD;
 		}
 
 		hom->baseASPD = aspd;

@@ -36,6 +36,25 @@ class status_change;
 #	define MAX_REFINE 10
 #endif
 
+/**
+ * Minimum ASPD (maximum delay between attacks)
+ * Default value of 8000 effectively results in a minimum ASPD of -200 for all types
+ */
+#ifndef MIN_ASPD
+	#define MIN_ASPD 8000
+#endif
+
+// DO NOT MODIFY THESE!
+// The amotion divider defines the relation between amotion and adelay
+// For players amotion is half of adelay
+#define AMOTION_DIVIDER_PC 2
+// For monsters, homunculus, mercenaries and elementals, amotion and adelay are equal or independent
+#define AMOTION_DIVIDER_NOPC 1
+// Delay between attacks that represents 0 ASPD
+#define ZERO_ASPD 4000
+// Value that represents how much each ASPD point reduces the delay
+#define ASPD_INTERVAL 20
+
 /// Refine type
 enum e_refine_type : uint16{
 	REFINE_TYPE_ARMOR = 0,

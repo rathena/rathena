@@ -12008,11 +12008,12 @@ void battle_set_defaults()
  *----------------------------------*/
 void battle_adjust_conf()
 {
-	battle_config.monster_max_aspd = 4000 - battle_config.monster_max_aspd * 20;
-	battle_config.max_aspd = 2000 - battle_config.max_aspd * 10;
-	battle_config.max_third_aspd = 2000 - battle_config.max_third_aspd * 10;
-	battle_config.max_summoner_aspd = 2000 - battle_config.max_summoner_aspd * 10;
-	battle_config.max_extended_aspd = 2000 - battle_config.max_extended_aspd * 10;
+	// Effectively we calculate the minimum delay between attacks here
+	battle_config.monster_max_aspd = ZERO_ASPD - battle_config.monster_max_aspd * ASPD_INTERVAL;
+	battle_config.max_aspd = ZERO_ASPD - battle_config.max_aspd * ASPD_INTERVAL;
+	battle_config.max_third_aspd = ZERO_ASPD - battle_config.max_third_aspd * ASPD_INTERVAL;
+	battle_config.max_summoner_aspd = ZERO_ASPD - battle_config.max_summoner_aspd * ASPD_INTERVAL;
+	battle_config.max_extended_aspd = ZERO_ASPD - battle_config.max_extended_aspd * ASPD_INTERVAL;
 	battle_config.max_walk_speed = 100 * DEFAULT_WALK_SPEED / battle_config.max_walk_speed;
 	battle_config.max_cart_weight *= 10;
 

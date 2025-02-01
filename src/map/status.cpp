@@ -4566,7 +4566,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 
 	// Basic ASPD value
 	i = status_base_amotion_pc(sd,base_status);
-	base_status->amotion = cap_value(i,pc_maxaspd(sd),4000);
+	base_status->amotion = cap_value(i, pc_maxaspd(sd)/AMOTION_DIVIDER_PC, MIN_ASPD/AMOTION_DIVIDER_PC);
 
 	// Relative modifiers from passive skills
 	// Renewal modifiers are handled in status_base_amotion_pc
@@ -4583,7 +4583,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	else if(pc_isridingdragon(sd))
 		base_status->aspd_rate += 250-50*pc_checkskill(sd,RK_DRAGONTRAINING);
 #endif
-	base_status->adelay = 2*base_status->amotion;
+	base_status->adelay = AMOTION_DIVIDER_PC * base_status->amotion;
 
 
 // ----- DMOTION -----
@@ -5045,8 +5045,8 @@ int32 status_calc_homunculus_(struct homun_data *hd, uint8 opt)
 	amotion = (1000 - 4 * status->agi - status->dex) * hd->homunculusDB->baseASPD / 1000;
 #endif
 
-	status->amotion = cap_value(amotion, battle_config.max_aspd, 2000);
-	status->adelay = status->amotion; //It seems adelay = amotion for Homunculus.
+	status->amotion = cap_value(amotion, battle_config.monster_max_aspd/AMOTION_DIVIDER_NOPC, MIN_ASPD/AMOTION_DIVIDER_NOPC);
+	status->adelay = AMOTION_DIVIDER_NOPC * status->amotion; //It seems adelay = amotion for Homunculus.
 
 	status->max_hp = hom.max_hp;
 	status->max_sp = hom.max_sp;
@@ -6139,9 +6139,9 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 #endif
 
 			amotion = status_calc_fix_aspd(&bl, sc, amotion);
-			status->amotion = cap_value(amotion, battle_config.max_aspd, 2000);
+			status->amotion = cap_value(amotion, battle_config.monster_max_aspd/AMOTION_DIVIDER_NOPC, MIN_ASPD/AMOTION_DIVIDER_NOPC);
 
-			status->adelay = status->amotion;
+			status->adelay = AMOTION_DIVIDER_NOPC * status->amotion;
 		} else if ( bl.type == BL_PC ) {
 			uint16 skill_lv;
 
@@ -6166,19 +6166,19 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 			amotion += sd->bonus.aspd_add;
 #endif
 			amotion = status_calc_fix_aspd(&bl, sc, amotion);
-			status->amotion = cap_value(amotion,pc_maxaspd(sd),4000);
+			status->amotion = cap_value(amotion, pc_maxaspd(sd)/AMOTION_DIVIDER_PC, MIN_ASPD/AMOTION_DIVIDER_PC);
 
-			status->adelay = 2 * status->amotion;
+			status->adelay = AMOTION_DIVIDER_PC * status->amotion;
 		} else { // Mercenary and mobs
 			amotion = b_status->amotion;
 			status->aspd_rate = status_calc_aspd_rate(&bl, sc, b_status->aspd_rate);
 			amotion = amotion*status->aspd_rate/1000;
 
 			amotion = status_calc_fix_aspd(&bl, sc, amotion);
-			status->amotion = cap_value(amotion, battle_config.monster_max_aspd, 8000);
+			status->amotion = cap_value(amotion, battle_config.monster_max_aspd/AMOTION_DIVIDER_NOPC, MIN_ASPD/AMOTION_DIVIDER_NOPC);
 
 			temp = b_status->adelay*status->aspd_rate/1000;
-			status->adelay = cap_value(temp, battle_config.monster_max_aspd, 8000);
+			status->adelay = cap_value(temp, battle_config.monster_max_aspd, MIN_ASPD);
 		}
 	}
 

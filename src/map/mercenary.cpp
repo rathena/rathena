@@ -864,7 +864,7 @@ uint64 MercenaryDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (!this->asUInt16(node, "AttackDelay", speed))
 			return 0;
 
-		mercenary->status.adelay = cap_value(speed, 0, 4000);
+		mercenary->status.adelay = cap_value(speed, 1, MIN_ASPD);
 	} else {
 		if (!exists)
 			mercenary->status.adelay = 4000;
@@ -876,7 +876,7 @@ uint64 MercenaryDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (!this->asUInt16(node, "AttackMotion", speed))
 			return 0;
 
-		mercenary->status.amotion = cap_value(speed, 0, 2000);
+		mercenary->status.amotion = cap_value(speed, 1, MIN_ASPD/AMOTION_DIVIDER_NOPC);
 	} else {
 		if (!exists)
 			mercenary->status.amotion = 2000;
