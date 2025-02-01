@@ -96,7 +96,7 @@ int32 chat_createpcchat(map_session_data* sd, const char* title, const char* pas
 		return 0;
 	}
 
-	pc_stop_walking(sd,1);
+	unit_stop_walking( &sd->bl, USW_FIXPOS );
 
 	cd = chat_createchat(&sd->bl, title, pass, limit, pub, 0, "", 0, 1, MAX_LEVEL);
 
@@ -104,7 +104,7 @@ int32 chat_createpcchat(map_session_data* sd, const char* title, const char* pas
 		cd->users = 1;
 		cd->usersd[0] = sd;
 		pc_setchatid(sd,cd->bl.id);
-		pc_stop_attack(sd);
+		unit_stop_attack( &sd->bl );
 		clif_createchat( *sd, CREATEROOM_SUCCESS );
 		clif_dispchat(*cd);
 
@@ -162,7 +162,7 @@ int32 chat_joinchat(map_session_data* sd, int32 chatid, const char* pass)
 		return 0;
 	}
 
-	pc_stop_walking(sd,1);
+	unit_stop_walking( &sd->bl, USW_FIXPOS );
 	cd->usersd[cd->users] = sd;
 	cd->users++;
 

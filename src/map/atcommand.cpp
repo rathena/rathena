@@ -163,6 +163,13 @@ uint64 AtcommandAliasDatabase::parseBodyNode( const ryml::NodeRef& node ){
 			std::string alias;
 			subNode >> alias;
 
+			AtCommandInfo* parent_cmd = get_atcommandinfo_byname( alias.c_str() );
+
+			if( parent_cmd != nullptr ){
+				this->invalidWarning( subNode, "\"%s\" cannot be used as alias for \"%s\", since a command with this name exists.\n", alias.c_str(), command.c_str() );
+				return 0;
+			}
+
 			info->aliases.insert( alias );
 			this->aliases[alias] = command;
 		}
@@ -581,8 +588,8 @@ static void warp_get_suggestions(map_session_data* sd, const char *name) {
 ACMD_FUNC(mapmove)
 {
 	char map_name[MAP_NAME_LENGTH_EXT];
-	unsigned short mapindex;
-	short x = 0, y = 0;
+	uint16 mapindex;
+	int16 x = 0, y = 0;
 	int16 m = -1;
 
 	nullpo_retr(-1, sd);
@@ -714,7 +721,7 @@ ACMD_FUNC(jumpto)
  *------------------------------------------*/
 ACMD_FUNC(jump)
 {
-	short x = 0, y = 0;
+	int16 x = 0, y = 0;
 
 	nullpo_retr(-1, sd);
 
@@ -988,7 +995,7 @@ ACMD_FUNC(load){
  *------------------------------------------*/
 ACMD_FUNC(speed)
 {
-	short speed;
+	int16 speed;
 
 	nullpo_retr(-1, sd);
 
@@ -2280,7 +2287,7 @@ ACMD_FUNC(monster)
 	int32 number = 0;
 	int32 count;
 	int32 i, range;
-	short mx, my;
+	int16 mx, my;
 	uint32 size;
 	nullpo_retr(-1, sd);
 
@@ -3015,7 +3022,7 @@ ACMD_FUNC(stat_all)
 	
 	count = 0;
 	for (i = PARAM_STR; i < PARAM_POW; i++) {
-		short new_value;
+		int16 new_value;
 
 		if (value > 0 && status[i] + value >= max_status[i])
 			new_value = max_status[i];
@@ -3089,7 +3096,7 @@ ACMD_FUNC(trait_all) {
 	uint8 count = 0;
 
 	for (i = PARAM_POW; i < PARAM_MAX; i++) {
-		short new_value;
+		int16 new_value;
 
 		if (value > 0 && status[i] + value >= max_status[i])
 			new_value = max_status[i];
@@ -3127,7 +3134,7 @@ ACMD_FUNC(trait_all) {
  *------------------------------------------*/
 ACMD_FUNC(guildlevelup) {
 	int32 level = 0;
-	short added_level;
+	int16 added_level;
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message || sscanf(message, "%11d", &level) < 1 || level == 0) {
@@ -3146,9 +3153,9 @@ ACMD_FUNC(guildlevelup) {
 	//	return -1;
 	//}
 
-	added_level = (short)level;
-	if (level > 0 && (level > MAX_GUILDLEVEL || added_level > ((short)MAX_GUILDLEVEL - guild_info->guild.guild_lv))) // fix positive overflow
-		added_level = (short)MAX_GUILDLEVEL - guild_info->guild.guild_lv;
+	added_level = (int16)level;
+	if (level > 0 && (level > MAX_GUILDLEVEL || added_level > ((int16)MAX_GUILDLEVEL - guild_info->guild.guild_lv))) // fix positive overflow
+		added_level = (int16)MAX_GUILDLEVEL - guild_info->guild.guild_lv;
 	else if (level < 0 && (level < -MAX_GUILDLEVEL || added_level < (1 - guild_info->guild.guild_lv))) // fix negative overflow
 		added_level = 1 - guild_info->guild.guild_lv;
 
@@ -3270,7 +3277,7 @@ ACMD_FUNC(petfriendly) {
 	}
 
 	pet_set_intimate(pd, friendly);
-	clif_send_petstatus(sd);
+	clif_send_petstatus( *sd, *pd );
 	clif_displaymessage(fd, msg_txt(sd,182)); // Pet intimacy changed.
 	return 0;
 }
@@ -3304,7 +3311,7 @@ ACMD_FUNC(pethungry)
 	}
 
 	pd->pet.hungry = hungry;
-	clif_send_petstatus(sd);
+	clif_send_petstatus( *sd, *pd );
 	clif_displaymessage(fd, msg_txt(sd,185)); // Pet hunger changed.
 
 	return 0;
@@ -3329,7 +3336,7 @@ ACMD_FUNC(petrename)
 
 	pd->pet.rename_flag = 0;
 	intif_save_petdata(sd->status.account_id, &pd->pet);
-	clif_send_petstatus(sd);
+	clif_send_petstatus( *sd, *pd );
 	clif_displaymessage(fd, msg_txt(sd,187)); // You can now rename your pet.
 
 	return 0;
@@ -3409,28 +3416,17 @@ ACMD_FUNC(char_block)
 
 /*==========================================
  * accountban command (usage: ban <%time> <player_name>)
- * charban command (usage: charban <%time> <player_name>)
  * %time see common/timer.cpp::solve_time()
  *------------------------------------------*/
-ACMD_FUNC(char_ban)
+ACMD_FUNC(ban)
 {
 	char *modif_p, output[CHAT_SIZE_MAX];
 	int32 timediff = 0; //don't set this as uint32 as we may want to decrease banned time
-	enum chrif_req_op bantype;
 
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
-
-	parent_cmd = atcommand_alias_db.checkAlias(command+1);
-
-	if (strcmpi(parent_cmd,"charban") == 0)
-		bantype = CHRIF_OP_BAN;
-	else if (strcmpi(parent_cmd,"ban") == 0)
-		bantype = CHRIF_OP_LOGIN_BAN;
-	else
-		return -1;
 
 	if (!message || !*message || sscanf(message, "%255s %23[^\n]", atcmd_output, atcmd_player_name) < 2) {
 		sprintf(output, msg_txt(sd,1022), command); // Please enter ban time and a player name (usage: %s <time> <char name>).
@@ -3450,21 +3446,59 @@ ACMD_FUNC(char_ban)
 		return -1;
 	}
 	
-	if( timediff < 0 && (
-		   (bantype == CHRIF_OP_LOGIN_BAN && !pc_can_use_command(sd, "unban", COMMAND_ATCOMMAND))
-		|| (bantype == CHRIF_OP_BAN && !pc_can_use_command(sd, "charunban", COMMAND_ATCOMMAND))
-		))
-	{
+	if( timediff < 0 ){
 		clif_displaymessage(fd,msg_txt(sd,1023)); // You are not allowed to alter the time of a ban.
 		return -1;
 	}
 
-	if (bantype == CHRIF_OP_BAN)
-		chrif_req_charban(sd->status.account_id, atcmd_player_name,timediff);
-	else
-		chrif_req_login_operation(sd->status.account_id, atcmd_player_name, bantype, timediff, 0, 0);
+	chrif_req_login_operation(sd->status.account_id, atcmd_player_name, CHRIF_OP_LOGIN_BAN, timediff, 0, 0);
 
-	safesnprintf(output, sizeof(output), msg_txt(sd,88), bantype == CHRIF_OP_BAN ? "char" : "login"); // Sending request to %s server...
+	safesnprintf(output, sizeof(output), msg_txt(sd,88), "login"); // Sending request to %s server...
+	clif_displaymessage(fd, output);
+
+	return 0;
+}
+
+/*==========================================
+ * charban command (usage: charban <%time> <player_name>)
+ * %time see common/timer.cpp::solve_time()
+ *------------------------------------------*/
+ACMD_FUNC(char_ban)
+{
+	char *modif_p, output[CHAT_SIZE_MAX];
+	int32 timediff = 0; //don't set this as uint32 as we may want to decrease banned time
+
+	nullpo_retr(-1, sd);
+
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+
+	if (!message || !*message || sscanf(message, "%255s %23[^\n]", atcmd_output, atcmd_player_name) < 2) {
+		sprintf(output, msg_txt(sd,1022), command); // Please enter ban time and a player name (usage: %s <time> <char name>).
+		clif_displaymessage(fd, output);
+		return -1;
+	}
+
+	atcmd_output[sizeof(atcmd_output)-1] = '\0';
+
+	modif_p = atcmd_output;
+	timediff = (int32)solve_time(modif_p); //discard seconds
+
+	if (timediff == 0) { //allow negative ?
+		safesnprintf(output, sizeof(output), msg_txt(sd,85), command, timediff); // Invalid time for %s command (time=%d)
+		clif_displaymessage(fd, output);
+		clif_displaymessage(fd, msg_txt(sd,702)); // Time parameter format is +/-<value> to alter. y/a = Year, m = Month, d/j = Day, h = Hour, n/mn = Minute, s = Second.
+		return -1;
+	}
+	
+	if( timediff < 0 ){
+		clif_displaymessage(fd,msg_txt(sd,1023)); // You are not allowed to alter the time of a ban.
+		return -1;
+	}
+
+	chrif_req_charban( sd->status.account_id, atcmd_player_name, timediff );
+
+	safesnprintf(output, sizeof(output), msg_txt(sd,88), "char"); // Sending request to %s server...
 	clif_displaymessage(fd, output);
 
 	return 0;
@@ -3495,23 +3529,12 @@ ACMD_FUNC(char_unblock)
 
 /*==========================================
  * acc unban command (usage: unban <player_name>)
- * char unban command (usage: charunban <player_name>)
  *------------------------------------------*/
-ACMD_FUNC(char_unban){
-	enum chrif_req_op unbantype;
+ACMD_FUNC(unban){
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
-
-	parent_cmd = atcommand_alias_db.checkAlias(command+1);
-
-	if (strcmpi(parent_cmd,"charunban") == 0)
-		unbantype = CHRIF_OP_UNBAN;
-	else if (strcmpi(parent_cmd,"unban") == 0)
-		unbantype = CHRIF_OP_LOGIN_UNBAN;
-	else
-		return -1;
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
 		sprintf(atcmd_output, msg_txt(sd,435), command); // Please enter a player name (usage: %s <char name>).
@@ -3519,12 +3542,32 @@ ACMD_FUNC(char_unban){
 		return -1;
 	}
 
-	if (unbantype == CHRIF_OP_UNBAN)
-		chrif_req_charunban(sd->status.account_id,atcmd_player_name);
-	else
-		chrif_req_login_operation(sd->status.account_id, atcmd_player_name, unbantype, 0, 0, 0);
+	chrif_req_login_operation(sd->status.account_id, atcmd_player_name, CHRIF_OP_LOGIN_UNBAN, 0, 0, 0);
 
-	sprintf(atcmd_output, msg_txt(sd,88), unbantype == CHRIF_OP_UNBAN ? "char":"login"); // Sending request to %s server...
+	sprintf(atcmd_output, msg_txt(sd,88), "login"); // Sending request to %s server...
+	clif_displaymessage(fd, atcmd_output);
+
+	return 0;
+}
+
+/*==========================================
+ * char unban command (usage: charunban <player_name>)
+ *------------------------------------------*/
+ACMD_FUNC(char_unban){
+	nullpo_retr(-1, sd);
+
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
+		sprintf(atcmd_output, msg_txt(sd,435), command); // Please enter a player name (usage: %s <char name>).
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
+
+	chrif_req_charunban(sd->status.account_id,atcmd_player_name);
+
+	sprintf(atcmd_output, msg_txt(sd,88), "char"); // Sending request to %s server...
 	clif_displaymessage(fd, atcmd_output);
 
 	return 0;
@@ -4540,7 +4583,7 @@ ACMD_FUNC(mapinfo) {
 	struct chat_data *cd = nullptr;
 	char direction[12];
 	int32 i, m_id, chat_num = 0, list = 0, vend_num = 0;
-	unsigned short m_index;
+	uint16 m_index;
 	char mapname[MAP_NAME_LENGTH];
 
 	nullpo_retr(-1, sd);
@@ -5918,7 +5961,7 @@ ACMD_FUNC(killer)
 		clif_displaymessage(fd, msg_txt(sd,241)); // You can now attack and kill players freely.
 	else {
 		clif_displaymessage(fd, msg_txt(sd,292)); // Killer state reset.
-		pc_stop_attack(sd);
+		unit_stop_attack( &sd->bl );
 	}
 	return 0;
 }
@@ -5971,7 +6014,7 @@ ACMD_FUNC(skilloff)
  *------------------------------------------*/
 ACMD_FUNC(npcmove)
 {
-	short x = 0, y = 0;
+	int16 x = 0, y = 0;
 	struct npc_data *nd = 0;
 	char npc_name[NPC_NAME_LENGTH];
 
@@ -6006,8 +6049,8 @@ ACMD_FUNC(npcmove)
 ACMD_FUNC(addwarp)
 {
 	char mapname[MAP_NAME_LENGTH_EXT], warpname[NPC_NAME_LENGTH];
-	short x,y;
-	unsigned short m;
+	int16 x,y;
+	uint16 m;
 	struct npc_data* nd;
 
 	nullpo_retr(-1, sd);
@@ -6436,13 +6479,13 @@ ACMD_FUNC(displayskill)
 	status_data* status = status_get_status_data(sd->bl);
 	tick = gettick();
 	if (type == 0 || type == 1)
-		clif_skill_damage(&sd->bl, &sd->bl, tick, status->amotion, status->dmotion, 1, 1, skill_id, skill_lv, DMG_SINGLE);
+		clif_skill_damage( sd->bl, sd->bl, tick, status->amotion, status->dmotion, 1, 1, skill_id, skill_lv, DMG_SINGLE );
 	if (type == 0 || type == 2)
-		clif_skill_damage(&sd->bl, &sd->bl, tick, status->amotion, status->dmotion, 1, 1, skill_id, skill_lv, DMG_SPLASH);
+		clif_skill_damage( sd->bl, sd->bl, tick, status->amotion, status->dmotion, 1, 1, skill_id, skill_lv, DMG_SPLASH );
 	if (type == 0 || type == 3)
 		clif_skill_nodamage(&sd->bl, sd->bl, skill_id, skill_lv);
 	if (type == 0 || type == 4)
-		clif_skill_poseffect(&sd->bl, skill_id, skill_lv, sd->bl.x, sd->bl.y, tick);
+		clif_skill_poseffect( sd->bl, skill_id, skill_lv, sd->bl.x, sd->bl.y, tick );
 	return 0;
 }
 
@@ -7352,7 +7395,7 @@ ACMD_FUNC(cleanmap)
 
 ACMD_FUNC(cleanarea)
 {
-	short x0 = 0, y0 = 0, x1 = 0, y1 = 0;
+	int16 x0 = 0, y0 = 0, x1 = 0, y1 = 0;
 
 	if (!message || !*message || sscanf(message, "%6hd %6hd %6hd %6hd", &x0, &y0, &x1, &y1) < 1) {
 		map_foreachinallarea(atcommand_cleanfloor_sub, sd->bl.m, sd->bl.x - (AREA_SIZE * 2), sd->bl.y - (AREA_SIZE * 2), sd->bl.x + (AREA_SIZE * 2), sd->bl.y + (AREA_SIZE * 2), BL_ITEM);
@@ -7572,7 +7615,7 @@ ACMD_FUNC(summon)
 	clif_specialeffect(&md->bl,EF_ENTRY2,AREA);
 	mob_spawn(md);
 	sc_start4(nullptr,&md->bl, SC_MODECHANGE, 100, 1, 0, MD_AGGRESSIVE, 0, 60000);
-	clif_skill_poseffect(&sd->bl,AM_CALLHOMUN,1,md->bl.x,md->bl.y,tick);
+	clif_skill_poseffect( sd->bl, AM_CALLHOMUN, 1, md->bl.x, md->bl.y, tick );
 	clif_displaymessage(fd, msg_txt(sd,39));	// All monster summoned!
 
 	return 0;
@@ -8928,7 +8971,7 @@ ACMD_FUNC(fakename)
  *------------------------------------------*/
 ACMD_FUNC(mapflag) {
 	char flag_name[50];
-	short flag = 0, i, j;
+	int16 flag = 0, i, j;
 	std::string buf;
 
 	nullpo_retr(-1, sd);
@@ -10521,30 +10564,40 @@ ACMD_FUNC(vip) {
 	}
 
 	if (pc_get_group_level(pl_sd) > pc_get_group_level(sd)) {
-		clif_displaymessage(fd, msg_txt(sd,81)); // Your GM level don't authorise you to do this action on this player.
+		clif_displaymessage(fd, msg_txt(sd,81)); // Your GM level doesn't authorize you to perform this action on the specified player.
 		return -1;
 	}
+
+	if( pc_get_group_level( pl_sd ) > 0 ){
+		clif_displaymessage( sd->fd, msg_txt( sd, 437 ) ); // GM's cannot become a VIP.
+		return -1;
+	}
+
 	if(pl_sd->vip.time==0) pl_sd->vip.time=now;
 	pl_sd->vip.time += vipdifftime; //increase or reduce VIP duration
 	
 	if (pl_sd->vip.time <= now) {
 		clif_displaymessage(pl_sd->fd, msg_txt(pl_sd,703)); // GM has removed your VIP time.
-		clif_displaymessage(fd, msg_txt(sd,704)); // Player is no longer VIP.
+
+		if( pl_sd != sd ){
+			sprintf( atcmd_output, msg_txt( sd, 704 ), pl_sd->status.name ); // Player '%s' is no longer VIP.
+			clif_displaymessage( fd, atcmd_output );
+		}
 	} else {
 		int32 year,month,day,hour,minute,second;
 		char timestr[21];
 		
 		split_time((int32)(pl_sd->vip.time-now),&year,&month,&day,&hour,&minute,&second);
-		sprintf(atcmd_output,msg_txt(pl_sd,705),year,month,day,hour,minute); // Your VIP status is valid for %d years, %d months, %d days, %d hours and %d minutes.
+		sprintf(atcmd_output,msg_txt(pl_sd,705),year,month,day,hour,minute,second); // Your VIP status is valid for %d years, %d months, %d days, %d hours, %d minutes and %d seconds.
 		clif_displaymessage(pl_sd->fd,atcmd_output);
-		timestamp2string(timestr,20,pl_sd->vip.time,"%Y-%m-%d %H:%M");
-		sprintf(atcmd_output,msg_txt(pl_sd,707),timestr); // You are VIP until : %s
+		timestamp2string(timestr,20,pl_sd->vip.time,"%Y-%m-%d %H:%M:%S");
+		sprintf(atcmd_output,msg_txt(pl_sd,707),timestr); // You are VIP until: %s
 		clif_displaymessage(pl_sd->fd,atcmd_output);
 
 		if (pl_sd != sd) {
-			sprintf(atcmd_output,msg_txt(sd,706),pl_sd->status.name,year,month,day,hour,minute); // Player '%s' is now VIP for %d years, %d months, %d days, %d hours and %d minutes.
+			sprintf(atcmd_output,msg_txt(sd,706),pl_sd->status.name,year,month,day,hour,minute,second); // Player '%s' is now VIP for %d years, %d months, %d days, %d hours, %d minutes and %d seconds.
 			clif_displaymessage(fd,atcmd_output);
-			sprintf(atcmd_output,msg_txt(sd,708),timestr); // The player is now VIP until : %s
+			sprintf(atcmd_output,msg_txt(sd,708),timestr); // The player is now VIP until: %s
 			clif_displaymessage(fd,atcmd_output);
 		}
 	}
@@ -10630,7 +10683,7 @@ ACMD_FUNC(costume) {
 		SC_HANBOK,
 		SC_OKTOBERFEST
 	};
-	unsigned short k = 0, len = ARRAYLENGTH(names);
+	uint16 k = 0, len = ARRAYLENGTH(names);
 
 	if( !message || !*message ) {
 		for( k = 0; k < len; k++ ) {
@@ -10714,7 +10767,7 @@ ACMD_FUNC(cloneequip) {
 	else {
 		int8 i;
 		for (i = 0; i < EQI_MAX; i++) {
-			short idx;
+			int16 idx;
 			char flag = 0;
 			struct item tmp_item;
 			if ((idx = pl_sd->equip_index[i]) < 0)
@@ -10786,7 +10839,7 @@ ACMD_FUNC(clonestat) {
 	}
 	else {
 		uint8 i;
-		short max_status[PARAM_MAX] = {};
+		int16 max_status[PARAM_MAX] = {};
 
 		pc_resetstate(sd);
 		if (pc_has_permission(sd, PC_PERM_BYPASS_STAT_ONCLONE)) {
@@ -11380,8 +11433,10 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(stat_all),
 		ACMD_DEF(trait_all),
 		ACMD_DEF(char_block),
+		ACMD_DEF(ban),
 		ACMD_DEF(char_ban),
 		ACMD_DEF(char_unblock),
+		ACMD_DEF(unban),
 		ACMD_DEF(char_unban),
 		ACMD_DEF(mount_peco),
 		ACMD_DEF(guildspy),

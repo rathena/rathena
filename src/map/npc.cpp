@@ -102,7 +102,7 @@ static char *npc_last_path;
 
 struct npc_path_data {
 	char* path;
-	unsigned short references;
+	uint16 references;
 };
 struct npc_path_data *npc_last_npd;
 static DBMap *npc_path_db;
@@ -2216,7 +2216,7 @@ int32 npc_click(map_session_data* sd, struct npc_data* nd)
 		case NPCTYPE_MARKETSHOP:
 #if PACKETVER >= 20131223
 			 {
-				unsigned short i;
+				uint16 i;
 
 				for (i = 0; i < nd->u.shop.count; i++) {
 					if (nd->u.shop.shop_item[i].qty)
@@ -2553,7 +2553,7 @@ int32 npc_cashshop_buylist( map_session_data *sd, int32 points, std::vector<s_np
 
 		if( !pet_create_egg(sd,nameid) ) {
 			struct item item_tmp;
-			unsigned short get_amt = amount;
+			uint16 get_amt = amount;
 
 			memset(&item_tmp, 0, sizeof(item_tmp));
 			item_tmp.nameid = nameid;
@@ -2626,7 +2626,7 @@ void npc_shop_currency_type(map_session_data *sd, struct npc_data *nd, int32 cos
 				clif_broadcast(&sd->bl, output, strlen(output) + 1, BC_BLUE,SELF);
 			}
 			
-			cost[0] = static_cast<int>(pc_readreg2(sd, nd->u.shop.pointshop_str));
+			cost[0] = static_cast<int32>(pc_readreg2(sd, nd->u.shop.pointshop_str));
 			break;
 	}
 }
@@ -2707,7 +2707,7 @@ int32 npc_cashshop_buy(map_session_data *sd, t_itemid nameid, int32 amount, int3
 		return res;
 
 	if( !pet_create_egg(sd, nameid) ) {
-		unsigned short get_amt = amount;
+		uint16 get_amt = amount;
 
 		struct item item_tmp = {};
 
@@ -2787,7 +2787,7 @@ e_purchase_result npc_buylist( map_session_data* sd, std::vector<s_npc_buy_list>
 	// process entries in buy list, one by one
 	for( int32 i = 0; i < item_list.size(); ++i ){
 		t_itemid nameid;
-		unsigned short amount;
+		uint16 amount;
 		int32 value;
 
 		// find this entry in the shop's sell list
@@ -2862,7 +2862,7 @@ e_purchase_result npc_buylist( map_session_data* sd, std::vector<s_npc_buy_list>
 
 	for( int32 i = 0; i < item_list.size(); ++i ) {
 		t_itemid nameid = item_list[i].nameid;
-		unsigned short amount = item_list[i].qty;
+		uint16 amount = item_list[i].qty;
 
 #if PACKETVER >= 20131223
 		if (nd->subtype == NPCTYPE_MARKETSHOP) {
@@ -2880,7 +2880,7 @@ e_purchase_result npc_buylist( map_session_data* sd, std::vector<s_npc_buy_list>
 		if (itemdb_type(nameid) == IT_PETEGG)
 			pet_create_egg(sd, nameid);
 		else {
-			unsigned short get_amt = amount;
+			uint16 get_amt = amount;
 
 			if ((itemdb_search(nameid))->flag.guid)
 				get_amt = 1;
@@ -3738,13 +3738,13 @@ int32 npc_parseview(const char* w4, const char* start, const char* buffer, const
 		if(!script_get_constant(viewid, &val_tmp)) {
 			std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname(viewid);
 			if (mob != nullptr)
-				val = static_cast<int>(mob->id);
+				val = static_cast<int32>(mob->id);
 			else {
 				ShowWarning("npc_parseview: Invalid NPC constant '%s' specified in file '%s', line'%d'. Defaulting to INVISIBLE. \n", viewid, filepath, strline(buffer,start-buffer));
 				val = JT_INVISIBLE;
 			}
 		} else
-			val = static_cast<int>(val_tmp);
+			val = static_cast<int32>(val_tmp);
 	}
 
 	return val;
@@ -3798,7 +3798,7 @@ struct npc_data *npc_create_npc(int16 m, int16 x, int16 y){
  * @param to_y : y coordinate to warp to
  * @return nullptr:failed creation, npc_data* new warp
  */
-struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short from_y, short xs, short ys, unsigned short to_mapindex, short to_x, short to_y)
+struct npc_data* npc_add_warp(char* name, int16 from_mapid, int16 from_x, int16 from_y, int16 xs, int16 ys, uint16 to_mapindex, int16 to_x, int16 to_y)
 {
 	int32 i, flag = 0;
 	struct npc_data *nd;
@@ -3859,7 +3859,7 @@ struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short 
  */
 static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
-	short x, y, xs, ys, to_x, to_y;
+	int16 x, y, xs, ys, to_x, to_y;
 	char mapname[MAP_NAME_LENGTH_EXT], to_mapname[MAP_NAME_LENGTH_EXT];
 
 	// w1=<from map name>,<fromX>,<fromY>,<facing>
@@ -3870,7 +3870,7 @@ static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const 
 	}
 
 	int32 m = map_mapname2mapid(mapname);
-	unsigned short i = mapindex_name2id(to_mapname);
+	uint16 i = mapindex_name2id(to_mapname);
 
 	if( i == 0 ) {
 		ShowError("npc_parse_warp: Unknown destination map in file '%s', line '%d' : %s\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), to_mapname, w1, w2, w3, w4);
@@ -3971,7 +3971,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 	char *p, point_str[32];
 	int32 m, is_discount = 0;
 	uint16 dir;
-	short x, y;
+	int16 x, y;
 	t_itemid nameid = 0;
 	struct npc_data *nd;
 	enum npc_subtype type;
@@ -4348,7 +4348,7 @@ static const char* npc_skip_script(const char* start, const char* buffer, const 
  */
 static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath) {
 	int16 dir = 0;
-	short m, x, y, xs = 0, ys = 0; // [Valaris] thanks to fov
+	int16 m, x, y, xs = 0, ys = 0; // [Valaris] thanks to fov
 	struct script_code *script;
 	int32 i;
 	const char* end;
@@ -4492,7 +4492,7 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 /// npc: -%TAB%duplicate(<name of target>)%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>
 /// npc: <map name>,<x>,<y>,<facing>%TAB%duplicate(<name of target>)%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>
 const char* npc_parse_duplicate( char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath, map_session_data* owner = nullptr ){
-	short x, y, m, xs = -1, ys = -1;
+	int16 x, y, m, xs = -1, ys = -1;
 	int16 dir;
 	char srcname[128];
 	int32 i;
@@ -5048,7 +5048,7 @@ void npc_setdisplayname(struct npc_data* nd, const char* newname)
 ///
 /// @param nd Target npc
 /// @param class_ New display class
-void npc_setclass(struct npc_data* nd, short class_)
+void npc_setclass(struct npc_data* nd, int16 class_)
 {
 	nullpo_retv(nd);
 
@@ -5189,7 +5189,7 @@ void npc_parse_mob2(struct spawn_data* mob)
 static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
 	int32 num, mob_id, mob_lv = -1, delay = 5000, size = -1, w1count, w4count;
-	short m, x = 0, y = 0, xs = 0, ys = 0;
+	int16 m, x = 0, y = 0, xs = 0, ys = 0;
 	char mapname[MAP_NAME_LENGTH_EXT], mobname[NAME_LENGTH], sprite[NAME_LENGTH];
 	struct spawn_data mob, *data;
 	int32 ai = AI_NONE; // mob_ai
@@ -5216,7 +5216,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	m =  map_mapname2mapid(mapname);
 	if( m < 0 )//Not loaded on this map-server instance.
 		return strchr(start,'\n');// skip and continue
-	mob.m = (unsigned short)m;
+	mob.m = (uint16)m;
 
 	struct map_data *mapdata = map_getmapdata(m);
 
@@ -5275,13 +5275,13 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 		return strchr(start, '\n');
 	}
 
-	mob.num = (unsigned short)num;
+	mob.num = (uint16)num;
 	mob.active = 0;
-	mob.id = (short) mob_id;
-	mob.x = (unsigned short)x;
-	mob.y = (unsigned short)y;
-	mob.xs = (signed short)xs;
-	mob.ys = (signed short)ys;
+	mob.id = (int16) mob_id;
+	mob.x = (uint16)x;
+	mob.y = (uint16)y;
+	mob.xs = (int16)xs;
+	mob.ys = (int16)ys;
 	if (mob_lv > 0 && mob_lv <= MAX_LEVEL)
 		mob.level = mob_lv;
 	if (size > SZ_SMALL && size <= SZ_BIG)
