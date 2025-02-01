@@ -21344,14 +21344,6 @@ static int32 skill_cell_overlap(struct block_list *bl, va_list ap)
 			}
 			break;
 
-		case SS_FUUMAKOUCHIKU:
-			if( unit->group->skill_id == skill_id ){
-				clif_skill_damage( nullptr, bl, gettick(), 0, 0, 0, 1, skill_id, 1, DMG_ENDURE );
-				*alive = 0;
-				skill_delunit(unit);
-				return 1;
-			}
-			break;
 		case SS_KUNAIWAIKYOKU:
 			if (unit->group->skill_id == skill_id) {
 				skill_delunit(unit);
