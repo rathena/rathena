@@ -2304,26 +2304,25 @@ bool status_check_visibility(block_list* src, block_list* target, bool checkblin
  * Base ASPD value taken from the job tables
  * @param sd: Player object
  * @param status: Player status
- * @return base amotion after single/dual weapon and shield adjustments [RENEWAL]
+ * @return base aspd after single/dual weapon and shield adjustments, passive bonuses and status changes [RENEWAL]
  *	  base amotion after single/dual weapon and stats adjustments [PRE-RENEWAL]
  */
 int32 status_base_amotion_pc(map_session_data* sd, struct status_data* status)
 {
 	std::shared_ptr<s_job_info> job = job_db.find(sd->status.class_);
 
-	if (job == nullptr)
-		return 2000;
-
-	int32 amotion;
 #ifdef RENEWAL_ASPD
+	if (job == nullptr)
+		return 0;
+
 	int16 skill_lv, val = 0;
 	float temp_aspd = 0;
 
-	amotion = job->aspd_base[sd->weapontype1]; // Single weapon
+	int32 aspd = job->aspd_base[sd->weapontype1]; // Single weapon
 	if (sd->status.shield)
-		amotion += job->aspd_base[MAX_WEAPON_TYPE];
+		aspd += job->aspd_base[MAX_WEAPON_TYPE];
 	else if (sd->weapontype2 != W_FIST && sd->equip_index[EQI_HAND_R] != sd->equip_index[EQI_HAND_L])
-		amotion += job->aspd_base[sd->weapontype2] / 4; // Dual-wield
+		aspd += job->aspd_base[sd->weapontype2] / 4; // Dual-wield
 
 	switch(sd->status.weapon) {
 		case W_BOW:
@@ -2351,8 +2350,13 @@ int32 status_base_amotion_pc(map_session_data* sd, struct status_data* status)
 		val -= 50 - 10 * pc_checkskill(sd, KN_CAVALIERMASTERY);
 	else if (pc_isridingdragon(sd))
 		val -= 25 - 5 * pc_checkskill(sd, RK_DRAGONTRAINING);
-	amotion = ((int32)(temp_aspd + ((float)(status_calc_aspd(&sd->bl, &sd->sc, true) + val) * status->agi / 200)) - min(amotion, 200));
+	aspd = ((int32)(temp_aspd + ((float)(status_calc_aspd(&sd->bl, &sd->sc, true) + val) * status->agi / 200)) - min(aspd, 200));
+	return aspd;
 #else
+	if (job == nullptr)
+		return ZERO_ASPD/AMOTION_DIVIDER_PC;
+
+	int32 amotion;
 	// Angra Manyu disregards aspd_base and similar
 	if (pc_checkequip2(sd, ITEMID_ANGRA_MANYU, EQI_ACC_L, EQI_MAX))
 		return 0;
@@ -2367,9 +2371,8 @@ int32 status_base_amotion_pc(map_session_data* sd, struct status_data* status)
 
 	// Raw delay adjustment from bAspd bonus
 	amotion += sd->bonus.aspd_add;
+	return amotion;
 #endif
-
- 	return amotion;
 }
 
 /**
@@ -4566,6 +4569,10 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 
 	// Basic ASPD value
 	i = status_base_amotion_pc(sd,base_status);
+#ifdef RENEWAL_ASPD
+	// Renewal base value is actually ASPD and not amotion, so we need to convert it
+	i = (ZERO_ASPD - i * ASPD_INTERVAL) / AMOTION_DIVIDER_PC;
+#endif
 	base_status->amotion = cap_value(i, pc_maxaspd(sd)/AMOTION_DIVIDER_PC, MIN_ASPD/AMOTION_DIVIDER_PC);
 
 	// Relative modifiers from passive skills
@@ -6161,7 +6168,9 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 #ifdef RENEWAL_ASPD
 			// RE ASPD % modifier
 			amotion += (max(0xc3 - amotion, 2) * (status->aspd_rate2 + status_calc_aspd(&bl, sc, false))) / 100;
-			amotion = 10 * (200 - amotion);
+
+			// Renewal base value is actually ASPD and not amotion, so we need to convert it
+			amotion = (ZERO_ASPD - amotion * ASPD_INTERVAL) / AMOTION_DIVIDER_PC;
 
 			amotion += sd->bonus.aspd_add;
 #endif
