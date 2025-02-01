@@ -4,6 +4,7 @@
 #ifndef MOB_HPP
 #define MOB_HPP
 
+#include <deque>
 #include <vector>
 
 #include <common/database.hpp>
@@ -29,12 +30,10 @@ struct guardian_data;
 #define MAX_MOB_DROP_TOTAL (MAX_MOB_DROP+MAX_MOB_DROP_ADD)
 #define MAX_MVP_DROP_TOTAL (MAX_MVP_DROP+MAX_MVP_DROP_ADD)
 
-#define MAX_MINCHASE 30	//Max minimum chase value to use for mobs.
-
 //Min time between AI executions
 const t_tick MIN_MOBTHINKTIME = 100;
 //Min time before mobs do a check to call nearby friends for help (or for slaves to support their master)
-const t_tick MIN_MOBLINKTIME = 1000;
+const t_tick MIN_MOBLINKTIME = 300;
 //Min time between random walks
 const t_tick MIN_RANDOMWALKTIME = 4000;
 
@@ -193,15 +192,15 @@ enum e_aegis_monsterclass : int8 {
 struct s_mob_skill {
 	enum MobSkillState state;
 	uint16 skill_id,skill_lv;
-	short permillage;
+	int16 permillage;
 	int32 casttime,delay;
-	short cancel;
-	short cond1;
+	int16 cancel;
+	int16 cond1;
 	int64 cond2;
-	short target;
+	int16 target;
 	int32 val[5];
-	short emotion;
-	unsigned short msg_id;
+	int16 emotion;
+	uint16 msg_id;
 };
 
 struct s_mob_chat {
@@ -237,14 +236,14 @@ public:
 };
 
 struct spawn_info {
-	unsigned short mapindex;
-	unsigned short qty;
+	uint16 mapindex;
+	uint16 qty;
 };
 
 /// Loooitem struct
 struct s_mob_lootitem {
 	struct item item;	   ///< Item info
-	unsigned short mob_id; ///< ID of monster that dropped the item
+	uint16 mob_id; ///< ID of monster that dropped the item
 };
 
 /// Struct for monster's drop item
@@ -318,6 +317,13 @@ private:
 extern MapDropDatabase map_drop_db;
 extern std::unordered_map<uint16, std::vector<spawn_info>> mob_spawn_data;
 
+struct s_dmglog{
+	int32 id; //char id
+	int64 dmg;
+	int64 dmg_tanked; //Damage tanked from normal attacks of the monster, MVP is the player with highest dmg+dmg_tanked
+	uint32 flag : 2; //0: Normal. 1: Homunc exp. 2: Pet exp
+};
+
 struct mob_data {
 	struct block_list bl;
 	struct unit_data  ud;
@@ -347,27 +353,21 @@ struct mob_data {
 		int32 provoke_flag; // Celest
 	} state;
 	struct guardian_data* guardian_data;
-	struct s_dmglog {
-		int32 id; //char id
-		uint32 dmg;
-		uint32 flag : 2; //0: Normal. 1: Homunc exp. 2: Pet exp
-	} dmglog[DAMAGELOG_SIZE];
+	std::deque<s_dmglog> dmglog;
 	uint32 spotted_log[DAMAGELOG_SIZE];
 	struct spawn_data *spawn; //Spawn data.
 	int32 spawn_timer; //Required for Convex Mirror
 	int16 centerX, centerY; // Spawn center of this individual monster
 	struct s_mob_lootitem *lootitems;
-	short mob_id;
-	uint32 tdmg; //Stores total damage given to the mob, for exp calculations. [Skotlex]
+	int16 mob_id;
 	int32 level;
 	int32 target_id,attacked_id,norm_attacked_id;
 	int32 areanpc_id; //Required in OnTouchNPC (to avoid multiple area touchs)
 	int32 bg_id; // BattleGround System
 
 	t_tick next_walktime,last_thinktime,last_linktime,last_pcneartime,dmgtick,last_canmove,last_skillcheck;
-	short move_fail_count;
-	short lootitem_count;
-	short min_chase;
+	int16 move_fail_count;
+	int16 lootitem_count;
 	unsigned char walktoxy_fail_count; //Pathfinding succeeds but the actual walking failed (e.g. Icewall lock)
 
 	int32 deletetimer;
@@ -472,7 +472,7 @@ enum e_mob_skill_condition {
 // The data structures for storing delayed item drops
 struct s_item_drop{
 	struct item item_data;
-	unsigned short mob_id;
+	uint16 mob_id;
 	enum bl_type src_type;
 };
 
@@ -515,14 +515,11 @@ int32 mob_spawn(struct mob_data *md);
 TIMER_FUNC(mob_delayspawn);
 int32 mob_setdelayspawn(struct mob_data *md);
 int32 mob_parse_dataset(struct spawn_data *data);
-void mob_log_damage(struct mob_data *md, struct block_list *src, int32 damage);
+void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_tanked = 0);
 void mob_damage(struct mob_data *md, struct block_list *src, int32 damage);
 int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type);
 void mob_revive(struct mob_data *md, uint32 hp);
 void mob_heal(struct mob_data *md,uint32 heal);
-
-#define mob_stop_walking(md, type) unit_stop_walking(&(md)->bl, type)
-#define mob_stop_attack(md) unit_stop_attack(&(md)->bl)
 
 void mob_clear_spawninfo();
 void do_init_mob(void);

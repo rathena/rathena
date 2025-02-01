@@ -696,7 +696,7 @@ enum e_random_item_group {
 	IG_LASTANGEL_LUCKYSCROLL,
 	IG_VALKYRIE_LUCKY_SCROLL,
 	IG_SPLASH_RAINBOW_LUCKY_SCROLL,
-	IG_SHAPESHIFTER_COSTUME,
+	IG_COSTAMA_EGG22,
 	IG_JULY_LUCKY_SCROLL,
 	IG_COSTAMA_EGG23,
 	IG_COSTAMA_EGG28,
@@ -2957,6 +2957,21 @@ enum e_random_item_group {
 	IG_LI_NYANGVINE_BOX1_37,
 	IG_LI_NYANGVINE_BOX2_37,
 	IG_LI_NYANGVINE_BOX3_37,
+	IG_JANUARYGIFTBOX,
+	IG_FEBRUARYGIFTBOX,
+	IG_MARCHGIFTBOX,
+	IG_MAYGIFTBOX,
+	IG_JUNEGIFTBOX,
+	IG_JULYGIFTBOX,
+	IG_AUGUSTGIFTBOX,
+	IG_OCTOBERGIFTBOX,
+	IG_DECEMBERGIFTBOX,
+	IG_2024GOLDPCBOX,
+	IG_E_CARD_PACK,
+	IG_TRUE_HUNTING_SET,
+	IG_REGIA_HUNTING_SET,
+	IG_MYSTERIOUS_FRUIT_BOX,
+	IG_ZONDA_SUPPORT_PACKAGE,
 
 	IG_MAX,
 };
@@ -3160,7 +3175,7 @@ struct s_item_group_db
 /// Struct of Roulette db
 struct s_roulette_db {
 	t_itemid *nameid[MAX_ROULETTE_LEVEL]; /// Item ID
-	unsigned short *qty[MAX_ROULETTE_LEVEL]; /// Amount of Item ID
+	uint16 *qty[MAX_ROULETTE_LEVEL]; /// Amount of Item ID
 	int32 *flag[MAX_ROULETTE_LEVEL]; /// Whether the item is for loss or win
 	int32 items[MAX_ROULETTE_LEVEL]; /// Number of items in the list for each
 };
@@ -3231,7 +3246,7 @@ struct item_data
 		uint16 override;
 		bool sitting;
 	} item_usage;
-	short gm_lv_trade_override;	//GM-level to override trade_restriction
+	int16 gm_lv_trade_override;	//GM-level to override trade_restriction
 	std::vector<std::shared_ptr<s_item_combo>> combos;
 	struct {
 		uint32 duration;
@@ -3298,6 +3313,7 @@ public:
 	std::string create_item_link(struct item& item);
 	std::string create_item_link( std::shared_ptr<item_data>& data );
 	std::string create_item_link_for_mes( std::shared_ptr<item_data>& data, bool use_brackets, const char* name );
+	std::string create_item_icon_for_mes( std::shared_ptr<item_data>& data, const char* name );
 };
 
 extern ItemDatabase item_db;

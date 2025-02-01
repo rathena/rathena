@@ -1333,12 +1333,64 @@ enum sc_type : int16 {
 	SC_CONTENTS_27,
 	SC_CONTENTS_28,
 	SC_CONTENTS_29,
+	SC_CONTENTS_31,
+	SC_CONTENTS_32,
+	SC_CONTENTS_33,
+
+	// Soul Ascetic
+	SC_TALISMAN_OF_PROTECTION,
+	SC_TALISMAN_OF_WARRIOR,
+	SC_TALISMAN_OF_MAGICIAN,
+	SC_TALISMAN_OF_FIVE_ELEMENTS,
+	SC_T_FIRST_GOD,
+	SC_T_SECOND_GOD,
+	SC_T_THIRD_GOD,
+	SC_T_FOURTH_GOD,
+	SC_T_FIFTH_GOD,
+	SC_HEAVEN_AND_EARTH,
+	SC_TOTEM_OF_TUTELARY,
+
+	SC_RETURN_TO_ELDICASTES,
+	SC_GUARDIAN_RECALL,
+	SC_ECLAGE_RECALL,
+	SC_ALL_NIFLHEIM_RECALL,
+	SC_ALL_PRONTERA_RECALL,
+	SC_ALL_GLASTHEIM_RECALL,
+	SC_ALL_THANATOS_RECALL,
+	SC_ALL_LIGHTHALZEN_RECALL,
+
+	// Spirit Handler
+	SC_HOGOGONG,
+	SC_MARINE_FESTIVAL,
+	SC_SANDY_FESTIVAL,
+	SC_KI_SUL_RAMPAGE,
+	SC_COLORS_OF_HYUN_ROK_1,
+	SC_COLORS_OF_HYUN_ROK_2,
+	SC_COLORS_OF_HYUN_ROK_3,
+	SC_COLORS_OF_HYUN_ROK_4,
+	SC_COLORS_OF_HYUN_ROK_5,
+	SC_COLORS_OF_HYUN_ROK_6,
+	SC_COLORS_OF_HYUN_ROK_BUFF,
+	SC_TEMPORARY_COMMUNION,
+	SC_BLESSING_OF_M_CREATURES,
+	SC_BLESSING_OF_M_C_DEBUFF,
+
+	// Sky Emperor
+	SC_RISING_SUN,
+	SC_NOON_SUN,
+	SC_SUNSET_SUN,
+	SC_RISING_MOON,
+	SC_MIDNIGHT_MOON,
+	SC_DAWN_MOON,
+	SC_STAR_BURST,
+	SC_SKY_ENCHANT,
+	SC_WILD_WALK,
 
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 
 /// Official status change ids, used to display status icons on the client.
-enum efst_type : short{
+enum efst_type : int16{
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
 /// @APIHOOK_START(EFST_ENUM)
 	EFST_BLANK = -1,
@@ -2794,7 +2846,10 @@ enum efst_type : short{
 	EFST_CONTENTS_27,
 	EFST_CONTENTS_28,
 	EFST_CONTENTS_29,
-	EFST_CONTENTS_30,	//1488
+	EFST_CONTENTS_30,
+	EFST_CONTENTS_31,
+	EFST_CONTENTS_32,
+	EFST_CONTENTS_33,	//1491
 
 	EFST_C_BUFF_1 = 1509,
 	EFST_C_BUFF_2,
@@ -2824,10 +2879,10 @@ enum e_joint_break : uint8 {
 	BREAK_FLAGS = BREAK_ANKLE | BREAK_WRIST | BREAK_KNEE | BREAK_SHOULDER | BREAK_WAIST | BREAK_NECK,
 };
 
-extern short current_equip_item_index;
+extern int16 current_equip_item_index;
 extern uint32 current_equip_combo_pos;
 extern int32 current_equip_card_id;
-extern short current_equip_opt_index;
+extern int16 current_equip_opt_index;
 
 //Status change option definitions (options are what makes status changes visible to chars
 //who were not on your field of sight when it happened)
@@ -3224,11 +3279,11 @@ enum e_refine_chance_type {
 * Required because players have two of these, one in status_data
 * and another for their left hand weapon. */
 struct weapon_atk {
-	unsigned short atk, atk2;
-	unsigned short range;
+	uint16 atk, atk2;
+	uint16 range;
 	unsigned char ele;
 #ifdef RENEWAL
-	unsigned short matk;
+	uint16 matk;
 	unsigned char wlv;
 #endif
 };
@@ -3242,11 +3297,11 @@ struct status_data {
 	uint32 max_hp;
 	uint32 max_sp;
 	uint32 max_ap;
-	short
+	int16
 		str, agi, vit, int_, dex, luk,
 		pow, sta, wis, spl, con, crt,
 		eatk;
-	unsigned short
+	uint16
 		batk,
 #ifdef RENEWAL
 		watk,
@@ -3256,7 +3311,7 @@ struct status_data {
 		speed,
 		amotion, clientamotion, adelay, dmotion;
 	int32 mode;
-	short
+	int16
 		hit, flee, cri, flee2,
 		def2, mdef2,
 #ifdef RENEWAL_ASPD
@@ -3282,7 +3337,7 @@ struct status_data {
 
 ///Additional regen data that only players have.
 struct regen_data_sub {
-	unsigned short
+	uint16
 		hp,sp;
 
 	//tick accumulation before healing.
@@ -3293,14 +3348,14 @@ struct regen_data_sub {
 
 	//Regen rates. n/100
 	struct {
-		unsigned short hp,sp;
+		uint16 hp,sp;
 	} rate;
 };
 
 ///Regen data
 struct regen_data {
 	unsigned char flag; //Marks what stuff you may heal or not.
-	unsigned short hp,sp,shp,ssp;
+	uint16 hp,sp,shp,ssp;
 
 	//tick accumulation before healing.
 	struct {
@@ -3311,7 +3366,7 @@ struct regen_data {
 
 	//Regen rates. n/100
 	struct {
-		unsigned short hp, sp, shp, ssp;
+		uint16 hp, sp, shp, ssp;
 	} rate;
 
 	struct {
@@ -3342,8 +3397,8 @@ class status_change {
 public:
 	uint32 option;// effect state (bitfield)
 	uint32 opt3;// skill state (bitfield)
-	unsigned short opt1;// body state
-	unsigned short opt2;// health state (bitfield)
+	uint16 opt1;// body state
+	uint16 opt2;// health state (bitfield)
 	unsigned char count;
 	sc_type lastEffect; // Used to check for stacking damageable SC on the same attack
 	int32 lastEffectTimer; // Timer for lastEffect
@@ -3363,7 +3418,7 @@ public:
 		uint8 interact;
 	} cant;/* status change state flags */
 	//int32 sg_id; //ID of the previous Storm gust that hit you
-	short comet_x, comet_y; // Point where src casted Comet - required to calculate damage from this point
+	int16 comet_x, comet_y; // Point where src casted Comet - required to calculate damage from this point
 /**
  * The Storm Gust counter was dropped in renewal
  **/
@@ -3439,7 +3494,7 @@ int32 status_revive(struct block_list *bl, unsigned char per_hp, unsigned char p
 struct regen_data *status_get_regen_data(struct block_list *bl);
 status_data* status_get_status_data(block_list& bl);
 struct status_data *status_get_base_status(struct block_list *bl);
-const char * status_get_name(struct block_list *bl);
+const char* status_get_name( block_list& bl );
 int32 status_get_class(struct block_list *bl);
 int32 status_get_lv(struct block_list *bl);
 #define status_get_range(bl) status_get_status_data(*bl)->rhw.range
@@ -3476,7 +3531,7 @@ defType status_get_def(struct block_list *bl);
 #define status_get_matk_min(bl) status_get_status_data(*bl)->matk_min
 #define status_get_lwatk(bl) status_get_status_data(*bl)->lhw.atk
 #define status_get_lwatk2(bl) status_get_status_data(*bl)->lhw.atk2
-unsigned short status_get_speed(struct block_list *bl);
+uint16 status_get_speed(struct block_list *bl);
 #define status_get_adelay(bl) status_get_status_data(*bl)->adelay
 #define status_get_amotion(bl) status_get_status_data(*bl)->amotion
 #define status_get_clientamotion(bl) status_get_status_data(*bl)->clientamotion
@@ -3578,24 +3633,24 @@ void status_calc_state(struct block_list *bl, status_change *sc, std::bitset<SCS
 void status_calc_slave_mode(mob_data& md);
 
 bool status_check_skilluse(struct block_list *src, struct block_list *target, uint16 skill_id, int32 flag);
-int32 status_check_visibility(struct block_list *src, struct block_list *target);
+bool status_check_visibility(block_list* src, block_list* target, bool checkblind);
 
 int32 status_change_spread(block_list *src, block_list *bl);
 
 #ifndef RENEWAL
-unsigned short status_base_matk_min(const struct status_data* status);
-unsigned short status_base_matk_max(const struct status_data* status);
+uint16 status_base_matk_min(const struct status_data* status);
+uint16 status_base_matk_max(const struct status_data* status);
 #else
 uint32 status_weapon_atk(struct weapon_atk wa, map_session_data *sd);
-unsigned short status_base_atk_min(struct block_list *bl, const struct status_data* status, int32 level);
-unsigned short status_base_atk_max(struct block_list *bl, const struct status_data* status, int32 level);
-unsigned short status_base_matk_min(struct block_list *bl, const struct status_data* status, int32 level);
-unsigned short status_base_matk_max(struct block_list *bl, const struct status_data* status, int32 level);
+uint16 status_base_atk_min(struct block_list *bl, const struct status_data* status, int32 level);
+uint16 status_base_atk_max(struct block_list *bl, const struct status_data* status, int32 level);
+uint16 status_base_matk_min(struct block_list *bl, const struct status_data* status, int32 level);
+uint16 status_base_matk_max(struct block_list *bl, const struct status_data* status, int32 level);
 #endif
 uint16 status_calc_consumablematk( status_change *sc, int32 matk );
 uint16 status_calc_pseudobuff_matk( map_session_data *sd, status_change *sc, int32 matk );
 
-unsigned short status_base_atk(const struct block_list *bl, const struct status_data *status, int32 level);
+uint16 status_base_atk(const struct block_list *bl, const struct status_data *status, int32 level);
 
 // Status changes accessors for StatusChange database
 uint16 status_efst_get_bl_type(enum efst_type efst);

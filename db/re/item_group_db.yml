@@ -26508,7 +26508,7 @@ Body:
           - Index: 18
             Item: Siege_Arrow_Quiver_S
             Rate: 13
-  - Group: SHAPESHIFTER_COSTUME
+  - Group: COSTAMA_EGG22
     SubGroups:
       - SubGroup: 1
         List:
@@ -43175,219 +43175,6 @@ Body:
             Item: Up_Demon_S_Shot
             RefineMinimum: 7
             RefineMaximum: 7
-  - Group: RUNE_CRAFT_MATERIALS
-    SubGroups:
-      - SubGroup: 1
-        List:
-          - Index: 0
-            Item: Emperium
-            Rate: 1
-          - Index: 1
-            Item: Ogre_Tooth
-            Rate: 1
-          - Index: 2
-            Item: Cobold_Hair
-            Rate: 1
-          - Index: 3
-            Item: Broken_Armor_Piece
-            Rate: 1
-          - Index: 4
-            Item: Claw_Of_Desert_Wolf
-            Rate: 1
-          - Index: 5
-            Item: Tangled_Chain
-            Rate: 1
-          - Index: 6
-            Item: Dullahan_Armor
-            Rate: 1
-          - Index: 7
-            Item: Dragon's_Skin
-            Rate: 1
-          - Index: 8
-            Item: Dragon_Canine
-            Rate: 1
-          - Index: 9
-            Item: Honey
-            Rate: 1
-          - Index: 10
-            Item: Light_Granule
-            Rate: 1
-          - Index: 11
-            Item: Old_Magic_Circle
-            Rate: 1
-          - Index: 12
-            Item: Slender_Snake
-            Rate: 1
-          - Index: 13
-            Item: Round_Shell
-            Rate: 1
-          - Index: 14
-            Item: Burning_Heart
-            Rate: 1
-          - Index: 15
-            Item: Red_Gemstone
-            Rate: 1
-  - Group: ELEMENTAL_CONVERTER
-    SubGroups:
-      - SubGroup: 1
-        List:
-          - Index: 0
-            Item: Scorpion's_Tail
-            Rate: 1
-          - Index: 1
-            Item: Snail's_Shell
-            Rate: 1
-          - Index: 2
-            Item: Horn
-            Rate: 1
-          - Index: 3
-            Item: Colorful_Shell
-            Rate: 1
-  - Group: POISONS
-    SubGroups:
-      - SubGroup: 1
-        List:
-          - Index: 0
-            Item: Anolian_Skin
-            Rate: 1
-          - Index: 1
-            Item: Izidor
-            Rate: 1
-          - Index: 2
-            Item: Poison_Toad's_Skin
-            Rate: 1
-          - Index: 3
-            Item: Poison_Spore
-            Rate: 1
-          - Index: 4
-            Item: Poison_Herb_Amoena
-            Rate: 1
-          - Index: 5
-            Item: Poison_Herb_Scopolia
-            Rate: 1
-          - Index: 6
-            Item: Poison_Herb_Seratum
-            Rate: 1
-          - Index: 7
-            Item: Poison_Herb_Makulata
-            Rate: 1
-          - Index: 8
-            Item: Poison_Herb_Rantana
-            Rate: 1
-          - Index: 9
-            Item: Poison_Herb_Nerium
-            Rate: 1
-          - Index: 10
-            Item: Heart_Of_Mermaid
-            Rate: 1
-          - Index: 11
-            Item: Sticky_Poison
-            Rate: 1
-          - Index: 12
-            Item: Decayed_Nail
-            Rate: 1
-  - Group: BLACKSMITH
-    SubGroups:
-      - SubGroup: 1
-        List:
-          - Index: 0
-            Item: Steel
-            Rate: 1
-          - Index: 1
-            Item: Iron
-            Rate: 1
-          - Index: 2
-            Item: Brigan
-            Rate: 1
-  - Group: POTION_CRAFT_MATERIALS
-    SubGroups:
-      - SubGroup: 1
-        List:
-          - Index: 0
-            Item: Red_Herb
-            Rate: 1
-          - Index: 1
-            Item: Yellow_Herb
-            Rate: 1
-          - Index: 2
-            Item: White_Herb
-            Rate: 1
-          - Index: 3
-            Item: Blue_Herb
-            Rate: 1
-          - Index: 4
-            Item: Green_Herb
-            Rate: 1
-          - Index: 5
-            Item: Cactus_Needle
-            Rate: 1
-          - Index: 6
-            Item: Starsand_Of_Witch
-            Rate: 1
-          - Index: 7
-            Item: Moustache_Of_Mole
-            Rate: 1
-  - Group: KUNAI_BOX
-    SubGroups:
-      - SubGroup: 1
-        List:
-          - Index: 0
-            Item: Dried_Squid_Box
-            Rate: 1
-          - Index: 1
-            Item: Flying_Fish_Box
-            Rate: 1
-          - Index: 2
-            Item: Starfish_Box
-            Rate: 1
-  - Group: BULLET_CASE
-    SubGroups:
-      - SubGroup: 1
-        List:
-          - Index: 0
-            Item: Bullet_Case
-            Rate: 1
-          - Index: 1
-            Item: Bullet_Case_Silver
-            Rate: 1
-          - Index: 2
-            Item: Bullet_Case_Blood
-            Rate: 1
-  - Group: SOUL_LINKER
-    SubGroups:
-      - SubGroup: 1
-        List:
-          - Index: 0
-            Item: Witherless_Rose
-            Rate: 1
-          - Index: 1
-            Item: Crystal_Jewel__
-            Rate: 1
-          - Index: 2
-            Item: Immortal_Heart
-            Rate: 1
-  - Group: ELEMENTAL_STONES
-    SubGroups:
-      - SubGroup: 1
-        List:
-          - Index: 0
-            Item: Flame_Heart
-            Rate: 1
-          - Index: 1
-            Item: Mistic_Frozen
-            Rate: 1
-          - Index: 2
-            Item: Rough_Wind
-            Rate: 1
-          - Index: 3
-            Item: Great_Nature
-            Rate: 1
-          - Index: 4
-            Item: Star_Crumb
-            Rate: 1
-          - Index: 5
-            Item: Sparkling_Dust
-            Rate: 1
   - Group: SHADOW_CUBE_ARMOR
     SubGroups:
       - SubGroup: 1
@@ -117806,3 +117593,546 @@ Body:
           - Index: 3
             Item: aegis_103617
             Amount: 10
+  - Group: JANUARYGIFTBOX
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: E_EXP_Drop_Up_7days
+          - Index: 1
+            Item: Calender_Costume_Box
+  - Group: FEBRUARYGIFTBOX
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: E_Speed_Booster
+            Amount: 10
+          - Index: 1
+            Item: E_Force_Booster
+            Amount: 10
+          - Index: 2
+            Item: Comp_Mystic_Powder
+            Amount: 20
+  - Group: MARCHGIFTBOX
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: E_Bubble_Gum_Box
+            Amount: 10
+          - Index: 1
+            Item: E_Token_Of_Siegfried
+            Amount: 10
+          - Index: 2
+            Item: Comp_Megaphone
+            Amount: 10
+  - Group: MAYGIFTBOX
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: E_Life_Potion_Pack
+            Amount: 2
+          - Index: 1
+            Item: E_Almighty_Box
+            Amount: 2
+  - Group: JUNEGIFTBOX
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Comp_Magic_Candy
+            Amount: 10
+          - Index: 1
+            Item: Comp_Spark_Candy
+            Amount: 10
+          - Index: 2
+            Item: E_LimitPowerBooster
+            Amount: 10
+          - Index: 3
+            Item: E_Infinity_Drink
+            Amount: 10
+  - Group: JULYGIFTBOX
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: E_Speed_Booster
+            Amount: 10
+          - Index: 1
+            Item: E_Force_Booster
+            Amount: 10
+          - Index: 2
+            Item: E_EXP_Drop_Up_7days
+  - Group: AUGUSTGIFTBOX
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Comp_Glass_Of_Illusion
+            Amount: 15
+          - Index: 1
+            Item: E_Red_Booster
+            Amount: 10
+          - Index: 2
+            Item: E_Wing_Of_Fly_3Day_Box
+  - Group: OCTOBERGIFTBOX
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: E_EXP_Drop_Up_7days
+          - Index: 1
+            Item: Comp_M_DEFScroll
+            Amount: 50
+          - Index: 2
+            Item: Comp_Regenerate_Potion
+            Amount: 50
+  - Group: DECEMBERGIFTBOX
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: E_Speed_Booster
+            Amount: 10
+          - Index: 1
+            Item: E_Force_Booster
+            Amount: 10
+          - Index: 2
+            Item: Battle_Manual100
+            Amount: 5
+  - Group: AEGIS_103622
+    SubGroups:
+      - SubGroup: 6
+        Algorithm: Random
+        List:
+          - Index: 0
+            Item: GuillcrossStone_Top3
+            Rate: 10
+          - Index: 1
+            Item: ArchbishopStone_Top3
+            Rate: 10
+          - Index: 2
+            Item: GeneticStone_Top3
+            Rate: 10
+          - Index: 3
+            Item: SorcererStone_Top3
+            Rate: 10
+          - Index: 4
+            Item: ShadowchasStone_Top3
+            Rate: 10
+          - Index: 5
+            Item: WanderMinsStone_Top3
+            Rate: 10
+          - Index: 6
+            Item: RuneknightStone_Top3
+            Rate: 10
+          - Index: 7
+            Item: RoyalguardStone_Top3
+            Rate: 10
+          - Index: 8
+            Item: SuraStone_Top3
+            Rate: 10
+          - Index: 9
+            Item: WarlockStone_Top3
+            Rate: 10
+          - Index: 10
+            Item: RangerStone_Top3
+            Rate: 10
+          - Index: 11
+            Item: MechanicStone_Top3
+            Rate: 10
+  - Group: AEGIS_103623
+    SubGroups:
+      - SubGroup: 6
+        Algorithm: Random
+        List:
+          - Index: 0
+            Item: GuillcrossStone_Middle3
+            Rate: 10
+          - Index: 1
+            Item: ArchbishopStone_Middle3
+            Rate: 10
+          - Index: 2
+            Item: GeneticStone_Middle3
+            Rate: 10
+          - Index: 3
+            Item: SorcererStone_Middle3
+            Rate: 10
+          - Index: 4
+            Item: ShadowchasStone_Middle3
+            Rate: 10
+          - Index: 5
+            Item: WanderMinsStone_Middle3
+            Rate: 10
+          - Index: 6
+            Item: RuneknightStone_Middle3
+            Rate: 10
+          - Index: 7
+            Item: RoyalguardStone_Middle3
+            Rate: 10
+          - Index: 8
+            Item: SuraStone_Middle3
+            Rate: 10
+          - Index: 9
+            Item: WarlockStone_Middle3
+            Rate: 10
+          - Index: 10
+            Item: RangerStone_Middle3
+            Rate: 10
+          - Index: 11
+            Item: MechanicStone_Middle3
+            Rate: 10
+  - Group: AEGIS_103624
+    SubGroups:
+      - SubGroup: 6
+        Algorithm: Random
+        List:
+          - Index: 0
+            Item: GuillcrossStone_Bottom3
+            Rate: 10
+          - Index: 1
+            Item: ArchbishopStone_Bottom3
+            Rate: 10
+          - Index: 2
+            Item: GeneticStone_Bottom3
+            Rate: 10
+          - Index: 3
+            Item: SorcererStone_Bottom3
+            Rate: 10
+          - Index: 4
+            Item: ShadowchasStone_Bottom3
+            Rate: 10
+          - Index: 5
+            Item: WanderMinsStone_Bottom3
+            Rate: 10
+          - Index: 6
+            Item: RuneknightStone_Bottom3
+            Rate: 10
+          - Index: 7
+            Item: RoyalguardStone_Bottom3
+            Rate: 10
+          - Index: 8
+            Item: SuraStone_Bottom3
+            Rate: 10
+          - Index: 9
+            Item: WarlockStone_Bottom3
+            Rate: 10
+          - Index: 10
+            Item: RangerStone_Bottom3
+            Rate: 10
+          - Index: 11
+            Item: MechanicStone_Bottom3
+            Rate: 10
+  - Group: AEGIS_103625
+    SubGroups:
+      - SubGroup: 6
+        Algorithm: Random
+        List:
+          - Index: 0
+            Item: KagerouStone_Top3
+            Rate: 10
+          - Index: 1
+            Item: OboroStone_Top3
+            Rate: 10
+          - Index: 2
+            Item: StarStone_Top3
+            Rate: 10
+          - Index: 3
+            Item: SuNoviceStone_Top
+            Rate: 10
+          - Index: 4
+            Item: RebelStone_Top3
+            Rate: 10
+          - Index: 5
+            Item: DoramStone_Top3
+            Rate: 10
+          - Index: 6
+            Item: ReaperStone_Top3
+            Rate: 10
+  - Group: AEGIS_103626
+    SubGroups:
+      - SubGroup: 6
+        Algorithm: Random
+        List:
+          - Index: 0
+            Item: KagerouStone_Middle3
+            Rate: 10
+          - Index: 1
+            Item: OboroStone_Middle3
+            Rate: 10
+          - Index: 2
+            Item: StarStone_Middle3
+            Rate: 10
+          - Index: 3
+            Item: SuNoviceStone_Middle
+            Rate: 10
+          - Index: 4
+            Item: RebelStone_Middle3
+            Rate: 10
+          - Index: 5
+            Item: DoramStone_Middle3
+            Rate: 10
+          - Index: 6
+            Item: ReaperStone_Middle3
+            Rate: 10
+  - Group: AEGIS_103627
+    SubGroups:
+      - SubGroup: 6
+        Algorithm: Random
+        List:
+          - Index: 0
+            Item: KagerouStone_Bottom3
+            Rate: 10
+          - Index: 1
+            Item: OboroStone_Bottom3
+            Rate: 10
+          - Index: 2
+            Item: StarStone_Bottom3
+            Rate: 10
+          - Index: 3
+            Item: SuNoviceStone_Bottom
+            Rate: 10
+          - Index: 4
+            Item: RebelStone_Bottom3
+            Rate: 10
+          - Index: 5
+            Item: DoramStone_Bottom3
+            Rate: 10
+          - Index: 6
+            Item: ReaperStone_Bottom3
+            Rate: 10
+  - Group: 2024GOLDPCBOX
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: C_Marin_Pattern_Hat
+          - Index: 1
+            Item: Comp_Almighty
+            Amount: 10
+          - Index: 2
+            Item: Comp_Power_Booster
+            Amount: 10
+          - Index: 3
+            Item: E_Small_Life_Potion
+            Amount: 30
+          - Index: 4
+            Item: E_Med_Life_Potion
+            Amount: 30
+          - Index: 5
+            Item: E_Mysterious_Water
+            Amount: 30
+          - Index: 6
+            Item: Comp_Small_Mana_Potion
+            Amount: 30
+          - Index: 7
+            Item: E_Infinity_Drink
+            Amount: 10
+          - Index: 8
+            Item: Comp_M_DEFScroll
+            Amount: 30
+          - Index: 9
+            Item: World_Tour_Ticket
+            Amount: 10
+  - Group: E_CARD_PACK
+    SubGroups:
+      - SubGroup: 6
+        Algorithm: Random
+        List:
+          - Index: 0
+            Item: S_Nihil_Card
+            Rate: 5
+          - Index: 1
+            Item: S_Agnes_Card
+            Rate: 5
+          - Index: 2
+            Item: S_Jurgen_Card
+            Rate: 5
+          - Index: 3
+            Item: S_Spica_Card
+            Rate: 5
+          - Index: 4
+            Item: S_Kronecker_Card
+            Rate: 5
+          - Index: 5
+            Item: S_Skia_Card
+            Rate: 5
+          - Index: 6
+            Item: S_Wolf_Card
+            Rate: 5
+          - Index: 7
+            Item: S_Poe_Card
+            Rate: 5
+          - Index: 8
+            Item: S_Kathryn_Card
+            Rate: 5
+          - Index: 9
+            Item: S_Issac_Card
+            Rate: 5
+          - Index: 10
+            Item: S_Meyer_Card
+            Rate: 5
+          - Index: 11
+            Item: S_Helmut_Card
+            Rate: 5
+          - Index: 12
+            Item: aegis_300422
+            Rate: 5
+          - Index: 13
+            Item: aegis_300424
+            Rate: 5
+          - Index: 14
+            Item: aegis_300426
+            Rate: 5
+          - Index: 15
+            Item: aegis_300487
+            Rate: 5
+          - Index: 16
+            Item: aegis_300489
+            Rate: 5
+          - Index: 17
+            Item: aegis_300491
+            Rate: 5
+          - Index: 18
+            Item: aegis_300493
+            Rate: 5
+          - Index: 19
+            Item: aegis_300495
+            Rate: 5
+          - Index: 20
+            Item: aegis_300497
+            Rate: 5
+          - Index: 21
+            Item: aegis_300606
+            Rate: 5
+          - Index: 22
+            Item: aegis_300607
+            Rate: 5
+          - Index: 23
+            Item: aegis_300608
+            Rate: 5
+          - Index: 24
+            Item: E_Card_Pack
+            Rate: 160
+            Amount: 2
+          - Index: 25
+            Item: Nihil_Card
+            Rate: 405
+          - Index: 26
+            Item: Agnes_Card
+            Rate: 405
+          - Index: 27
+            Item: Jurgen_Card
+            Rate: 405
+          - Index: 28
+            Item: Spica_Card
+            Rate: 405
+          - Index: 29
+            Item: Kronecker_Card
+            Rate: 405
+          - Index: 30
+            Item: Skia_Card
+            Rate: 405
+          - Index: 31
+            Item: Wolf_Card_E
+            Rate: 405
+          - Index: 32
+            Item: Poe_Card
+            Rate: 405
+          - Index: 33
+            Item: Kathryn_Card
+            Rate: 405
+          - Index: 34
+            Item: Isaac_Card
+            Rate: 405
+          - Index: 35
+            Item: Meyer_Card
+            Rate: 405
+          - Index: 36
+            Item: Helmut_Card
+            Rate: 405
+          - Index: 37
+            Item: aegis_300421
+            Rate: 405
+          - Index: 38
+            Item: aegis_300423
+            Rate: 405
+          - Index: 39
+            Item: aegis_300425
+            Rate: 405
+          - Index: 40
+            Item: aegis_300486
+            Rate: 405
+          - Index: 41
+            Item: aegis_300488
+            Rate: 405
+          - Index: 42
+            Item: aegis_300490
+            Rate: 405
+          - Index: 43
+            Item: aegis_300492
+            Rate: 405
+          - Index: 44
+            Item: aegis_300494
+            Rate: 405
+          - Index: 45
+            Item: aegis_300496
+            Rate: 405
+          - Index: 46
+            Item: aegis_300603
+            Rate: 405
+          - Index: 47
+            Item: aegis_300604
+            Rate: 405
+          - Index: 48
+            Item: aegis_300605
+            Rate: 405
+  - Group: TRUE_HUNTING_SET
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: True_Hunting_Mail
+          - Index: 1
+            Item: True_Hunting_Manteau
+          - Index: 2
+            Item: True_Hunting_Boots
+  - Group: REGIA_HUNTING_SET
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Regia_Hunting_Mail
+          - Index: 1
+            Item: Regia_Hunting_Manteau
+          - Index: 2
+            Item: Regia_Hunting_Boots
+  - Group: MYSTERIOUS_FRUIT_BOX
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Mysterious_Fruit
+            Amount: 5
+  - Group: ZONDA_SUPPORT_PACKAGE
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Zonda_Support

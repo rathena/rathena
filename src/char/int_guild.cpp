@@ -1485,7 +1485,7 @@ int32 mapif_parse_GuildBasicInfoChange(int32 fd,int32 guild_id,int32 type,const 
 		return 0;
 	}
 
-	short data_value = *((short *)data);
+	int16 data_value = *((int16 *)data);
 
 	switch(type) {
 		case GBI_GUILDLV:
@@ -1545,7 +1545,7 @@ int32 mapif_parse_GuildMemberInfoChange(int32 fd,int32 guild_id,uint32 account_i
 	{
 		case GMI_POSITION:
 		  {
-			g->guild.member[i].position=*((short *)data);
+			g->guild.member[i].position=*((int16 *)data);
 			g->guild.member[i].modified = GS_MEMBER_MODIFIED;
 			mapif_guild_memberinfochanged(guild_id,account_id,char_id,type,data,len);
 			g->save_flag |= GS_MEMBER;
@@ -1577,7 +1577,7 @@ int32 mapif_parse_GuildMemberInfoChange(int32 fd,int32 guild_id,uint32 account_i
 		}
 		case GMI_HAIR:
 		{
-			g->guild.member[i].hair=*((short *)data);
+			g->guild.member[i].hair=*((int16 *)data);
 			g->guild.member[i].modified = GS_MEMBER_MODIFIED;
 			mapif_guild_memberinfochanged(guild_id,account_id,char_id,type,data,len);
 			g->save_flag |= GS_MEMBER; //Save new data.
@@ -1585,7 +1585,7 @@ int32 mapif_parse_GuildMemberInfoChange(int32 fd,int32 guild_id,uint32 account_i
 		}
 		case GMI_HAIR_COLOR:
 		{
-			g->guild.member[i].hair_color=*((short *)data);
+			g->guild.member[i].hair_color=*((int16 *)data);
 			g->guild.member[i].modified = GS_MEMBER_MODIFIED;
 			mapif_guild_memberinfochanged(guild_id,account_id,char_id,type,data,len);
 			g->save_flag |= GS_MEMBER; //Save new data.
@@ -1593,7 +1593,7 @@ int32 mapif_parse_GuildMemberInfoChange(int32 fd,int32 guild_id,uint32 account_i
 		}
 		case GMI_GENDER:
 		{
-			g->guild.member[i].gender=*((short *)data);
+			g->guild.member[i].gender=*((int16 *)data);
 			g->guild.member[i].modified = GS_MEMBER_MODIFIED;
 			mapif_guild_memberinfochanged(guild_id,account_id,char_id,type,data,len);
 			g->save_flag |= GS_MEMBER; //Save new data.
@@ -1601,7 +1601,7 @@ int32 mapif_parse_GuildMemberInfoChange(int32 fd,int32 guild_id,uint32 account_i
 		}
 		case GMI_CLASS:
 		{
-			g->guild.member[i].class_=*((short *)data);
+			g->guild.member[i].class_=*((int16 *)data);
 			g->guild.member[i].modified = GS_MEMBER_MODIFIED;
 			mapif_guild_memberinfochanged(guild_id,account_id,char_id,type,data,len);
 			g->save_flag |= GS_MEMBER; //Save new data.
@@ -1609,7 +1609,7 @@ int32 mapif_parse_GuildMemberInfoChange(int32 fd,int32 guild_id,uint32 account_i
 		}
 		case GMI_LEVEL:
 		{
-			g->guild.member[i].lv=*((short *)data);
+			g->guild.member[i].lv=*((int16 *)data);
 			g->guild.member[i].modified = GS_MEMBER_MODIFIED;
 			mapif_guild_memberinfochanged(guild_id,account_id,char_id,type,data,len);
 			g->save_flag |= GS_MEMBER; //Save new data.
@@ -1622,7 +1622,7 @@ int32 mapif_parse_GuildMemberInfoChange(int32 fd,int32 guild_id,uint32 account_i
 	return 0;
 }
 
-int32 inter_guild_sex_changed(int32 guild_id,uint32 account_id,uint32 char_id, short gender)
+int32 inter_guild_sex_changed(int32 guild_id,uint32 account_id,uint32 char_id, int16 gender)
 {
 	return mapif_parse_GuildMemberInfoChange(0, guild_id, account_id, char_id, GMI_GENDER, (const char*)&gender, sizeof(gender));
 }

@@ -89,7 +89,7 @@ struct s_elemental_data {
 	int32 skill_timer;
 
 	t_tick last_thinktime, last_linktime, last_spdrain_time;
-	short min_chase;
+	int16 min_chase;
 	int32 target_id, attacked_id;
 };
 
@@ -128,9 +128,6 @@ int32 elemental_set_target( map_session_data *sd, block_list *bl );
 int32 elemental_clean_effect(s_elemental_data *ed);
 int32 elemental_action(s_elemental_data *ed, block_list *bl, t_tick tick);
 struct s_skill_condition elemental_skill_get_requirements(uint16 skill_id, uint16 skill_lv);
-
-#define elemental_stop_walking(ed, type) unit_stop_walking(&(ed)->bl, type)
-#define elemental_stop_attack(ed) unit_stop_attack(&(ed)->bl)
 
 void do_init_elemental(void);
 void do_final_elemental(void);

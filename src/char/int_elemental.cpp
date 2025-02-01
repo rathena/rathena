@@ -149,7 +149,7 @@ void inter_elemental_sql_final(void) {
  * Inter Packets
  *------------------------------------------*/
 int32 inter_elemental_parse_frommap(int32 fd) {
-	unsigned short cmd = RFIFOW(fd,0);
+	uint16 cmd = RFIFOW(fd,0);
 
 	switch( cmd ) {
 		case 0x307c: mapif_parse_elemental_create(fd, (struct s_elemental*)RFIFOP(fd,4)); break;

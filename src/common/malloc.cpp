@@ -167,20 +167,20 @@ struct block {
 	struct block* block_next;		/* Then the allocated area */
 	struct block* unfill_prev;		/* The previous area not filled */
 	struct block* unfill_next;		/* The next area not filled */
-	unsigned short unit_size;		/* The size of the unit */
-	unsigned short unit_hash;		/* The hash of the unit */
-	unsigned short unit_count;		/* The number of units */
-	unsigned short unit_used;		/* The number of used units */
-	unsigned short unit_unfill;		/* The number of unused units */
-	unsigned short unit_maxused;	/* The maximum value of units used */
+	uint16 unit_size;				/* The size of the unit */
+	uint16 unit_hash;				/* The hash of the unit */
+	uint16 unit_count;				/* The number of units */
+	uint16 unit_used;				/* The number of used units */
+	uint16 unit_unfill;				/* The number of unused units */
+	uint16 unit_maxused;			/* The maximum value of units used */
 	char   data[ BLOCK_DATA_SIZE ];
 };
 
 struct unit_head {
 	struct block   *block;
 	const  char*   file;
-	unsigned short line;
-	unsigned short size;
+	uint16 line;
+	uint16 size;
 	long           checksum;
 };
 
@@ -197,26 +197,26 @@ struct unit_head_large {
 
 static struct unit_head_large *unit_head_large_first = nullptr;
 
-static struct block* block_malloc(unsigned short hash);
+static struct block* block_malloc(uint16 hash);
 static void          block_free(struct block* p);
 static size_t        memmgr_usage_bytes;
 
 #define block2unit(p, n) ((struct unit_head*)(&(p)->data[ p->unit_size * (n) ]))
 #define memmgr_assert(v) do { if(!(v)) { ShowError("Memory manager: assertion '" #v "' failed!\n"); } } while(0)
 
-static unsigned short size2hash( size_t size )
+static uint16 size2hash( size_t size )
 {
 	if( size <= BLOCK_DATA_SIZE1 ) {
-		return (unsigned short)(size + BLOCK_ALIGNMENT1 - 1) / BLOCK_ALIGNMENT1;
+		return (uint16)(size + BLOCK_ALIGNMENT1 - 1) / BLOCK_ALIGNMENT1;
 	} else if( size <= BLOCK_DATA_SIZE ){
-		return (unsigned short)(size - BLOCK_DATA_SIZE1 + BLOCK_ALIGNMENT2 - 1) / BLOCK_ALIGNMENT2
+		return (uint16)(size - BLOCK_DATA_SIZE1 + BLOCK_ALIGNMENT2 - 1) / BLOCK_ALIGNMENT2
 				+ BLOCK_DATA_COUNT1;
 	} else {
 		return 0xffff;	// If it exceeds the block length hash I do not
 	}
 }
 
-static size_t hash2size( unsigned short hash )
+static size_t hash2size( uint16 hash )
 {
 	if( hash <= BLOCK_DATA_COUNT1) {
 		return hash * BLOCK_ALIGNMENT1;
@@ -228,7 +228,7 @@ static size_t hash2size( unsigned short hash )
 void* _mmalloc(size_t size, const char *file, int32 line, const char *func )
 {
 	struct block *block;
-	short size_hash = size2hash( size );
+	int16 size_hash = size2hash( size );
 	struct unit_head *head;
 
 	if( static_cast<long>( size ) < 0 || size == 0 ){
@@ -322,7 +322,7 @@ void* _mmalloc(size_t size, const char *file, int32 line, const char *func )
 	head->block = block;
 	head->file  = file;
 	head->line  = line;
-	head->size  = (unsigned short)size;
+	head->size  = (uint16)size;
 	*(long*)((char*)head + sizeof(struct unit_head) - sizeof(long) + size) = FREED_POINTER;
 	return (char *)head + sizeof(struct unit_head) - sizeof(long);
 }
@@ -436,14 +436,14 @@ void _mfree(void *ptr, const char *file, int32 line, const char *func )
 					hash_unfill[ block->unit_hash ] = block;
 				}
 				head->size     = block->unit_unfill;
-				block->unit_unfill = (unsigned short)(((uintptr_t)head - (uintptr_t)block->data) / block->unit_size);
+				block->unit_unfill = (uint16)(((uintptr_t)head - (uintptr_t)block->data) / block->unit_size);
 			}
 		}
 	}
 }
 
 /* Allocating blocks */
-static struct block* block_malloc(unsigned short hash)
+static struct block* block_malloc(uint16 hash)
 {
 	struct block *p;
 	if(hash_unfill[0] != nullptr) {
@@ -487,7 +487,7 @@ static struct block* block_malloc(unsigned short hash)
 	hash_unfill[ hash ] = p;
 	p->unfill_prev  = &block_head;
 	p->unfill_next  = nullptr;
-	p->unit_size    = (unsigned short)(hash2size( hash ) + sizeof(struct unit_head));
+	p->unit_size    = (uint16)(hash2size( hash ) + sizeof(struct unit_head));
 	p->unit_hash    = hash;
 	p->unit_count   = BLOCK_DATA_SIZE / p->unit_size;
 	p->unit_used    = 0;
