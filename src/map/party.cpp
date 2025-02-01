@@ -408,7 +408,7 @@ bool party_invite( map_session_data& sd, map_session_data *tsd ){
 		return false;
 	}
 
-	if( tsd == NULL ){
+	if( tsd == nullptr ){
 		clif_party_invite_reply( sd, "", PARTY_REPLY_OFFLINE );
 		return false;
 	}
