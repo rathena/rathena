@@ -5154,7 +5154,7 @@ bool skill_mirage_cast( block_list& src, block_list* bl, uint16 skill_id, uint16
 				if( distance_xy( x, y, su->bl.x, su->bl.y ) > skill_get_range( skill_id, skill_lv ) ){
 					continue;
 				}
-				clif_skill_poseffect( &su->bl, skill_id, skill_lv, x, y, tick );
+				clif_skill_poseffect( su->bl, skill_id, skill_lv, x, y, tick );
 				int32 range = skill_get_splash( skill_id, skill_lv );
 				map_foreachinallarea( skill_area_sub, src.m, x - range, y - range, x + range, y + range, BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SKILL_ALTDMG_FLAG | 1, skill_castend_damage_id );
 				} break;
