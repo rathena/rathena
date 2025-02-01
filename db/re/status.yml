@@ -2455,8 +2455,6 @@ Body:
     CalcFlags:
       Def2: true
       MDef2: true
-      Speed: true
-      Aspd: true
     Opt3:
       SteelBody: true
     Flags:

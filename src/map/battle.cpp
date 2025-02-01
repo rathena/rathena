@@ -6838,9 +6838,10 @@ static void battle_calc_defense_reduction(struct Damage* wd, struct block_list *
 	} else { //Mob-Pet vit-eq
 #ifndef RENEWAL
 		//VIT + rnd(0,[VIT/20]^2-1)
-		vit_def = (def2/20)*(def2/20);
 		if (tsc && tsc->getSCE(SC_SKA))
-			vit_def += 100; //Eska increases the random part of the formula by 100
+			vit_def = 90; //Eska sets the random part of the formula to 90
+		else
+			vit_def = (def2 / 20) * (def2 / 20);
 		vit_def = def2 + (vit_def>0?rnd()%vit_def:0);
 #else
 		//SoftDEF of monsters is floor((BaseLevel+Vit)/2)
@@ -11369,7 +11370,7 @@ static const struct _battle_data {
 	{ "mvp_hp_rate",                        &battle_config.mvp_hp_rate,                     100,    1,      INT_MAX,        },
 	{ "mvp_exp_rate",                       &battle_config.mvp_exp_rate,                    100,    0,      INT_MAX,        },
 	{ "monster_hp_rate",                    &battle_config.monster_hp_rate,                 100,    1,      INT_MAX,        },
-	{ "monster_max_aspd",                   &battle_config.monster_max_aspd,                199,    100,    199,            },
+	{ "monster_max_aspd",                   &battle_config.monster_max_aspd,                195,    100,    199,            },
 	{ "view_range_rate",                    &battle_config.view_range_rate,                 100,    0,      INT_MAX,        },
 	{ "chase_range_rate",                   &battle_config.chase_range_rate,                100,    0,      INT_MAX,        },
 	{ "gtb_sc_immunity",                    &battle_config.gtb_sc_immunity,                 50,     0,      INT_MAX,        },
@@ -12007,7 +12008,7 @@ void battle_set_defaults()
  *----------------------------------*/
 void battle_adjust_conf()
 {
-	battle_config.monster_max_aspd = 2000 - battle_config.monster_max_aspd * 10;
+	battle_config.monster_max_aspd = 4000 - battle_config.monster_max_aspd * 20;
 	battle_config.max_aspd = 2000 - battle_config.max_aspd * 10;
 	battle_config.max_third_aspd = 2000 - battle_config.max_third_aspd * 10;
 	battle_config.max_summoner_aspd = 2000 - battle_config.max_summoner_aspd * 10;

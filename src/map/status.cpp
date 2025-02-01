@@ -4566,7 +4566,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 
 	// Basic ASPD value
 	i = status_base_amotion_pc(sd,base_status);
-	base_status->amotion = cap_value(i,pc_maxaspd(sd),2000);
+	base_status->amotion = cap_value(i,pc_maxaspd(sd),4000);
 
 	// Relative modifiers from passive skills
 	// Renewal modifiers are handled in status_base_amotion_pc
@@ -6166,7 +6166,7 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 			amotion += sd->bonus.aspd_add;
 #endif
 			amotion = status_calc_fix_aspd(&bl, sc, amotion);
-			status->amotion = cap_value(amotion,pc_maxaspd(sd),2000);
+			status->amotion = cap_value(amotion,pc_maxaspd(sd),4000);
 
 			status->adelay = 2 * status->amotion;
 		} else { // Mercenary and mobs
@@ -6175,10 +6175,10 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 			amotion = amotion*status->aspd_rate/1000;
 
 			amotion = status_calc_fix_aspd(&bl, sc, amotion);
-			status->amotion = cap_value(amotion, battle_config.monster_max_aspd, 2000);
+			status->amotion = cap_value(amotion, battle_config.monster_max_aspd, 8000);
 
 			temp = b_status->adelay*status->aspd_rate/1000;
-			status->adelay = cap_value(temp, battle_config.monster_max_aspd*2, 4000);
+			status->adelay = cap_value(temp, battle_config.monster_max_aspd, 8000);
 		}
 	}
 
@@ -7865,8 +7865,6 @@ static uint16 status_calc_speed(struct block_list *bl, status_change *sc, int32 
 				val = max( val, sc->getSCE(SC_SUITON)->val3 );
 			if( sc->getSCE(SC_SWOO) )
 				val = max( val, 300 );
-			if( sc->getSCE(SC_SKA) )
-				val = max( val, 25 );
 			if( sc->getSCE(SC_FREEZING) )
 				val = max( val, 30 );
 			if( sc->getSCE(SC_MARSHOFABYSS) )
@@ -8046,7 +8044,7 @@ static int16 status_calc_aspd(struct block_list *bl, status_change *sc, bool fix
 		if (sc->getSCE(sc_val = SC_ASPDPOTION3) || sc->getSCE(sc_val = SC_ASPDPOTION2) || sc->getSCE(sc_val = SC_ASPDPOTION1) || sc->getSCE(sc_val = SC_ASPDPOTION0))
 			bonus += sc->getSCE(sc_val)->val1;
 	} else {
-		if (sc->getSCE(SC_DONTFORGETME))
+		if (bl->type == BL_PC && sc->getSCE(SC_DONTFORGETME))
 			bonus -= sc->getSCE(SC_DONTFORGETME)->val2 / 10;
 #ifdef RENEWAL
 		if (sc->getSCE(SC_ENSEMBLEFATIGUE))
@@ -8056,8 +8054,6 @@ static int16 status_calc_aspd(struct block_list *bl, status_change *sc, bool fix
 			bonus -= sc->getSCE(SC_LONGING)->val2 / 10;
 #endif
 		if (sc->getSCE(SC_STEELBODY))
-			bonus -= 25;
-		if (sc->getSCE(SC_SKA))
 			bonus -= 25;
 		if (sc->getSCE(SC_DEFENDER))
 			bonus -= sc->getSCE(SC_DEFENDER)->val4 / 10;
@@ -8139,7 +8135,7 @@ static int16 status_calc_aspd(struct block_list *bl, status_change *sc, bool fix
 static int16 status_calc_fix_aspd(struct block_list *bl, status_change *sc, int32 aspd)
 {
 	if (sc == nullptr || sc->empty())
-		return cap_value(aspd, 0, 2000);
+		return cap_value(aspd, 1, 8000);
 	if (sc->getSCE(SC_OVERED_BOOST))
 		return cap_value(2000 - sc->getSCE(SC_OVERED_BOOST)->val3 * 10, 0, 2000);
 
@@ -8154,7 +8150,7 @@ static int16 status_calc_fix_aspd(struct block_list *bl, status_change *sc, int3
 	if (sc->getSCE(SC_SINCERE_FAITH))
 		aspd -= 10 * sc->getSCE(SC_SINCERE_FAITH)->val2;
 
-	return cap_value(aspd, 0, 2000); // Will be recap for proper bl anyway
+	return cap_value(aspd, 1, 8000); // Will be recap for proper bl anyway
 }
 
 /**
@@ -8242,7 +8238,7 @@ static int16 status_calc_aspd_rate(struct block_list *bl, status_change *sc, int
 		sc->getSCE(i=SC_ASPDPOTION0) )
 		aspd_rate -= sc->getSCE(i)->val2;
 
-	if(sc->getSCE(SC_DONTFORGETME))
+	if(bl->type == BL_PC && sc->getSCE(SC_DONTFORGETME))
 		aspd_rate += sc->getSCE(SC_DONTFORGETME)->val2;
 #ifdef RENEWAL
 	if (sc->getSCE(SC_ENSEMBLEFATIGUE))
@@ -8252,8 +8248,6 @@ static int16 status_calc_aspd_rate(struct block_list *bl, status_change *sc, int
 		aspd_rate += sc->getSCE(SC_LONGING)->val2;
 #endif
 	if(sc->getSCE(SC_STEELBODY))
-		aspd_rate += 250;
-	if(sc->getSCE(SC_SKA))
 		aspd_rate += 250;
 	if(sc->getSCE(SC_DEFENDER))
 		aspd_rate += sc->getSCE(SC_DEFENDER)->val4;
