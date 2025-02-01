@@ -3738,6 +3738,9 @@ int32 unit_free(struct block_list *bl, clr_type clrtype)
 
 			skill_clear_unitgroup(bl);
 			status_change_clear(bl,1);
+
+			// Do not call the destructor here, it will be done in chrif_auth_delete
+			// sd->~map_session_data();
 			break;
 		}
 		case BL_PET: {
@@ -3859,10 +3862,11 @@ int32 unit_free(struct block_list *bl, clr_type clrtype)
 			if( sd )
 				sd->hd = nullptr;
 			hd->master = nullptr;
-			hd->~homun_data();
 
 			skill_clear_unitgroup(bl);
 			status_change_clear(bl,1);
+
+			hd->~homun_data();
 			break;
 		}
 		case BL_MER: {
@@ -3884,10 +3888,11 @@ int32 unit_free(struct block_list *bl, clr_type clrtype)
 			skill_blockmerc_clear(*md); // Clear all skill cooldown related
 			mercenary_contract_stop(md);
 			md->master = nullptr;
-			md->~s_mercenary_data();
 
 			skill_clear_unitgroup(bl);
 			status_change_clear(bl,1);
+
+			md->~s_mercenary_data();
 			break;
 		}
 		case BL_ELEM: {
