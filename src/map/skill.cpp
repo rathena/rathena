@@ -20946,9 +20946,9 @@ int32 skill_attack_area(struct block_list *bl, va_list ap)
 			return 0;
 		}
 
-		if (unit->group->skill_id == skill_id) {
-			map_foreachinallrange(skill_area_sub, bl, skill_get_splash(skill_id,skill_lv), BL_CHAR,
-				src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
+		if (unit->group->skill_id == SS_FUUMASHOUAKU) {
+			map_foreachinallrange(skill_area_sub, bl, skill_get_splash(SS_FUUMAKOUCHIKU,skill_lv), BL_CHAR,
+				src, SS_FUUMAKOUCHIKU, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | SKILL_ALTDMG_FLAG | 1, skill_castend_damage_id);
 			skill_delunit(unit);
 			return 1;
 		}
