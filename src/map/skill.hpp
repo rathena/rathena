@@ -317,7 +317,7 @@ private:
 	template<typename T, size_t S> bool parseNode(const std::string& nodeName, const std::string& subNodeName, const ryml::NodeRef& node, T(&arr)[S]);
 
 public:
-	SkillDatabase() : TypesafeCachedYamlDatabase("SKILL_DB", 3, 1) {
+	SkillDatabase() : TypesafeCachedYamlDatabase("SKILL_DB", 4) {
 		this->clear();
 	}
 

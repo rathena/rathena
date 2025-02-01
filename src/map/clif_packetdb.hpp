@@ -100,7 +100,7 @@
 	parseable_packet(0x00f3,8,clif_parse_MoveToKafra,2,4);
 	parseable_packet(0x00f5,8,clif_parse_MoveFromKafra,2,4);
 	parseable_packet(0x00f7,2,clif_parse_CloseKafra,0);
-	parseable_packet(0x00f9,26,clif_parse_CreateParty,2);
+	parseable_packet( HEADER_CZ_MAKE_GROUP, sizeof( PACKET_CZ_MAKE_GROUP ), clif_parse_CreateParty, 0 );
 	packet(0x00fb,-1);
 	parseable_packet( HEADER_CZ_REQ_JOIN_GROUP, sizeof( PACKET_CZ_REQ_JOIN_GROUP ), clif_parse_PartyInvite, 0 );
 	packet(0x00fd,27);
@@ -252,7 +252,7 @@
 	packet(0x01e5,6);
 	packet(0x01e6,26);
 	parseable_packet(0x01e7,2,clif_parse_NoviceDoriDori,0);
-	parseable_packet(0x01e8,28,clif_parse_CreateParty2,2,26,27);
+	parseable_packet( HEADER_CZ_MAKE_GROUP2, sizeof( PACKET_CZ_MAKE_GROUP2 ), clif_parse_CreateParty2, 0 );
 	packet(0x01ea,6);
 	packet(0x01ec,26);
 	parseable_packet(0x01ed,2,clif_parse_NoviceExplosionSpirits,0);

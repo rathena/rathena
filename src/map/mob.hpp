@@ -33,7 +33,7 @@ struct guardian_data;
 //Min time between AI executions
 const t_tick MIN_MOBTHINKTIME = 100;
 //Min time before mobs do a check to call nearby friends for help (or for slaves to support their master)
-const t_tick MIN_MOBLINKTIME = 1000;
+const t_tick MIN_MOBLINKTIME = 300;
 //Min time between random walks
 const t_tick MIN_RANDOMWALKTIME = 4000;
 
