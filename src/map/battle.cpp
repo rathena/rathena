@@ -2628,7 +2628,6 @@ static int32 battle_range_type(struct block_list *src, struct block_list *target
 		case BO_ACIDIFIED_ZONE_WIND_ATK:
 		case NW_THE_VIGILANTE_AT_NIGHT:
 		case SS_FUUMAKOUCHIKU:
-		case SS_FUUMAKOUCHIKU_BLASTING:
 		case SS_KUNAIKAITEN:
 		case SS_KUNAIKUSSETSU:
 		case SS_HITOUAKUMU:
@@ -3545,7 +3544,6 @@ int32 battle_get_weapon_element(struct Damage* wd, struct block_list *src, struc
 			break;
 		case SS_FUUMASHOUAKU:
 		case SS_FUUMAKOUCHIKU:
-		case SS_FUUMAKOUCHIKU_BLASTING:
 			if( sd != nullptr ){
 				element = sd->bonus.arrow_ele;
 			}
@@ -6534,12 +6532,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			break;
 		case SS_FUUMAKOUCHIKU:
 			skillratio += -100 + 600 + 400 * skill_lv;
-			skillratio += pc_checkskill( sd, SS_FUUMASHOUAKU ) * 30 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case SS_FUUMAKOUCHIKU_BLASTING:
-			skillratio += -100 + 800 + 600 * skill_lv;
 			skillratio += pc_checkskill( sd, SS_FUUMASHOUAKU ) * 30 * skill_lv;
 			skillratio += 5 * sstatus->pow;
 			RE_LVL_DMOD(100);

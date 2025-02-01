@@ -461,8 +461,6 @@ unsigned short skill_dummy2skill_id(unsigned short skill_id) {
 		case EM_ELEMENTAL_BUSTER_GROUND:
 		case EM_ELEMENTAL_BUSTER_POISON:
 			return EM_ELEMENTAL_BUSTER;
-		case SS_FUUMAKOUCHIKU_BLASTING:
-			return SS_FUUMAKOUCHIKU;
 	}
 	return skill_id;
 }
@@ -3946,9 +3944,6 @@ int64 skill_attack (int32 attack_type, struct block_list* src, struct block_list
 			else
 				dmg.dmotion = clif_skill_damage(dsrc, bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, skill_lv, dmg_type);
 			break;
-		case SS_FUUMAKOUCHIKU_BLASTING:
-			dmg.dmotion = clif_skill_damage(src, bl, tick, dmg.amotion, dmg.dmotion, dmg.damage, dmg.div_, SS_FUUMAKOUCHIKU, 1, DMG_MULTI_HIT);
-			break;
 		case AB_DUPLELIGHT_MELEE:
 		case AB_DUPLELIGHT_MAGIC:
 			dmg.amotion = 300;/* makes the damage value not overlap with previous damage (when displayed by the client) */
@@ -5374,7 +5369,7 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 	case SKE_MIDNIGHT_KICK:
 	case SKE_DAWN_BREAK:
 	case SKE_RISING_MOON:
-	case SS_FUUMAKOUCHIKU_BLASTING:
+	case SS_FUUMAKOUCHIKU:
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 	case DK_DRAGONIC_AURA:
@@ -20951,9 +20946,9 @@ int32 skill_attack_area(struct block_list *bl, va_list ap)
 			return 0;
 		}
 
-		if (unit->group->skill_id == SS_FUUMASHOUAKU) {
-			map_foreachinallrange(skill_area_sub, bl, skill_get_splash(SS_FUUMAKOUCHIKU_BLASTING,skill_lv), BL_CHAR,
-				src, SS_FUUMAKOUCHIKU_BLASTING, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
+		if (unit->group->skill_id == skill_id) {
+			map_foreachinallrange(skill_area_sub, bl, skill_get_splash(skill_id,skill_lv), BL_CHAR,
+				src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
 			skill_delunit(unit);
 			return 1;
 		}
