@@ -13937,31 +13937,41 @@ void clif_parse_RemovePartyMember( int32 fd, map_session_data* sd ){
 /// 07d7 <exp share rule>.L <item pickup rule>.B <item share rule>.B (CZ_GROUPINFO_CHANGE_V2)
 void clif_parse_PartyChangeOption(int32 fd, map_session_data *sd)
 {
-	struct party_data *p;
-	int32 i,expflag;
-	int32 cmd = RFIFOW(fd,0);
-	struct s_packet_db* info = &packet_db[cmd];
-
-	if( !sd->status.party_id )
+	if( sd == nullptr ){
 		return;
-
-	p = party_search(sd->status.party_id);
-	if( p == nullptr )
-		return;
-	ARR_FIND( 0, MAX_PARTY, i, p->data[i].sd == sd );
-	if( i == MAX_PARTY )
-		return; //Shouldn't happen
-	if( !p->party.member[i].leader )
-		return;
-
-	expflag = RFIFOL(fd,info->pos[0]);
-	if(cmd == 0x0102){ //Client can't change the item-field
-		party_changeoption(sd, expflag, p->party.item);
 	}
-	else {
-		int32 itemflag = (RFIFOB(fd,info->pos[1])?1:0)|(RFIFOB(fd,info->pos[2])?2:0);
-		party_changeoption(sd, expflag, itemflag);
+
+	if( sd->status.party_id == 0 ){
+		return;
 	}
+
+	party_data* party = party_search( sd->status.party_id );
+
+	if( party == nullptr ){
+		return;
+	}
+
+	if( !party_isleader( sd ) ){
+		return;
+	}
+
+	const PACKET_CZ_CHANGE_GROUPEXPOPTION* p = reinterpret_cast<PACKET_CZ_CHANGE_GROUPEXPOPTION*>( RFIFOP( fd, 0 ) );
+	int32 itemflag = 0;
+
+#if PACKETVER >= 20090603
+	if( p->item_pickup != 0 ){
+		itemflag |= 1;
+	}
+
+	if( p->item_share != 0 ){
+		itemflag |= 2;
+	}
+#else
+	// Client can't change the item-field
+	itemflag = party->party.item;
+#endif
+
+	party_changeoption( sd, p->exp_share, itemflag );
 }
 
 

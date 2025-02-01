@@ -1875,6 +1875,23 @@ struct PACKET_CZ_MAKE_GROUP2{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_MAKE_GROUP2, 0x1e8);
 
+#if PACKETVER >= 20090603
+// CZ_GROUPINFO_CHANGE_V2
+struct PACKET_CZ_CHANGE_GROUPEXPOPTION{
+	int16 packetType;
+	int32 exp_share;
+	uint8 item_pickup;
+	uint8 item_share;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_CHANGE_GROUPEXPOPTION, 0x7d7);
+#else
+struct PACKET_CZ_CHANGE_GROUPEXPOPTION{
+	int16 packetType;
+	int32 exp_share;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_CHANGE_GROUPEXPOPTION, 0x102);
+#endif
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )

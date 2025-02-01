@@ -107,7 +107,7 @@
 	parseable_packet( HEADER_CZ_JOIN_GROUP, sizeof( PACKET_CZ_JOIN_GROUP ), clif_parse_ReplyPartyInvite, 0 );
 	parseable_packet( HEADER_CZ_REQ_LEAVE_GROUP, sizeof( PACKET_CZ_REQ_LEAVE_GROUP ), clif_parse_LeaveParty, 0 );
 	packet(0x0101,6);
-	parseable_packet(0x0102,6,clif_parse_PartyChangeOption,2);
+	parseable_packet( HEADER_CZ_CHANGE_GROUPEXPOPTION, sizeof( PACKET_CZ_CHANGE_GROUPEXPOPTION ), clif_parse_PartyChangeOption, 0 );
 	parseable_packet( HEADER_CZ_REQ_EXPEL_GROUP_MEMBER, sizeof( PACKET_CZ_REQ_EXPEL_GROUP_MEMBER ), clif_parse_RemovePartyMember, 0 );
 	packet(0x0104,79);
 	parseable_packet(0x0108,-1,clif_parse_PartyMessage,2,4);
@@ -1264,7 +1264,6 @@
 
 // 2009-06-03aRagexeRE
 #if PACKETVER >= 20090603
-	parseable_packet(0x07d7,8,clif_parse_PartyChangeOption,2,6,7);
 	packet(0x07d8,8);
 	packet(0x07d9,254);
 	parseable_packet(0x07da,6,clif_parse_PartyChangeLeader,2);
