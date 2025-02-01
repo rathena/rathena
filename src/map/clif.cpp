@@ -7057,13 +7057,11 @@ void clif_solved_charname( map_session_data& sd, uint32 charid, const char* name
 }
 
 
-/// Presents a list of items that can be carded/composed (ZC_ITEMCOMPOSITION_LIST).
-/// 017b <packet len>.W { <name id>.W }*
+/// Presents a list of items that can be carded/composed.
+/// 017b <packet len>.W { <name id>.W }* (ZC_ITEMCOMPOSITION_LIST)
 void clif_use_card(map_session_data *sd,int32 idx)
 {
 	int32 i,c,ep;
-	int32 fd=sd->fd;
-
 	nullpo_retv(sd);
 	if (idx < 0 || idx >= MAX_INVENTORY) //Crash-fix from bad packets.
 		return;
@@ -7072,8 +7070,11 @@ void clif_use_card(map_session_data *sd,int32 idx)
 		return; //Avoid parsing invalid item indexes (no card/no item)
 
 	ep=sd->inventory_data[idx]->equip;
-	WFIFOHEAD(fd,MAX_INVENTORY * 2 + 4);
-	WFIFOW(fd,0)=0x17b;
+
+	PACKET_ZC_ITEMCOMPOSITION_LIST* p = reinterpret_cast<PACKET_ZC_ITEMCOMPOSITION_LIST*>( packet_buffer );
+
+	p->packetType = HEADER_ZC_ITEMCOMPOSITION_LIST;
+	p->packetLength = sizeof( *p );
 
 	for(i=c=0;i<MAX_INVENTORY;i++){
 		int32 j;
@@ -7104,14 +7105,16 @@ void clif_use_card(map_session_data *sd,int32 idx)
 		if( sd->inventory.u.items_inventory[i].equip > 0 )	// Do not check items that are already equipped
 			continue;
 
-		WFIFOW(fd,4+c*2)=i+2;
+		PACKET_ZC_ITEMCOMPOSITION_LIST_sub& entry = p->items[c];
+
+		entry.inventory_index = client_index( i );
+		p->packetLength += static_cast<decltype(p->packetLength)>( sizeof( entry ) );
 		c++;
 	}
 
 	if( !c ) return;	// no item is available for card insertion
 
-	WFIFOW(fd,2)=4+c*2;
-	WFIFOSET(fd,WFIFOW(fd,2));
+	clif_send( p, p->packetLength, &sd->bl, SELF );
 }
 
 

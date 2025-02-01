@@ -1875,6 +1875,17 @@ struct PACKET_CZ_MAKE_GROUP2{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_MAKE_GROUP2, 0x1e8);
 
+struct PACKET_ZC_ITEMCOMPOSITION_LIST_sub{
+	int16 inventory_index;
+} __attribute__((packed));
+
+struct PACKET_ZC_ITEMCOMPOSITION_LIST{
+	int16 packetType;
+	int16 packetLength;
+	PACKET_ZC_ITEMCOMPOSITION_LIST_sub items[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ITEMCOMPOSITION_LIST, 0x17b);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
