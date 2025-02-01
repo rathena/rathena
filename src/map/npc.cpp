@@ -1222,7 +1222,7 @@ int32 npc_event_doall_sub(DBKey key, DBData *data, va_list ap)
 {
 	const char* p = key.str;
 	struct event_data* ev;
-	int* c;
+	int32* c;
 	const char* name;
 	int32 rid;
 
@@ -1251,7 +1251,7 @@ static int32 npc_event_do_sub(DBKey key, DBData *data, va_list ap)
 {
 	const char* p = key.str;
 	struct event_data* ev;
-	int* c, rid;
+	int32* c, rid;
 	const char* name;
 
 	nullpo_ret(ev = (struct event_data*)db_data2ptr(data));
@@ -4237,13 +4237,13 @@ int32 npc_convertlabel_db(DBKey key, DBData *data, va_list ap)
 	const char* lname = (const char*)key.str;
 	int32 lpos = db_data2i(data);
 	struct npc_label_list** label_list;
-	int* label_list_num;
+	int32* label_list_num;
 	const char* filepath;
 	struct npc_label_list* label;
 	const char *p;
 
 	nullpo_ret(label_list = va_arg(ap,struct npc_label_list**));
-	nullpo_ret(label_list_num = va_arg(ap,int*));
+	nullpo_ret(label_list_num = va_arg(ap,int32*));
 	nullpo_ret(filepath = va_arg(ap,const char*));
 
 	// In case of labels not terminated with ':', for user defined function support

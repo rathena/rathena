@@ -9572,7 +9572,7 @@ TIMER_FUNC(pc_close_npc_timer){
 	map_session_data* sd = map_id2sd( id );
 
 	if( sd != nullptr ){
-		pc_close_npc( sd, static_cast<int>( data ) );
+		pc_close_npc( sd, static_cast<int32>( data ) );
 	}
 
 	return 0;

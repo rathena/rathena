@@ -2601,14 +2601,14 @@ void battle_consume_ammo(map_session_data*sd, int32 skill, int32 lv)
 
 static int32 battle_range_type(struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv)
 {
-	// [Akinari] , [Xynvaroth]: Traps are always int16 range.
+	// [Akinari] , [Xynvaroth]: Traps are always short range.
 	if (skill_get_inf2(skill_id, INF2_ISTRAP))
 		return BF_SHORT;
 
 	switch (skill_id) {
 		case AC_SHOWER:
 		case AM_DEMONSTRATION:
-			// When monsters use Arrow Shower or Bomb, it is always int16 range
+			// When monsters use Arrow Shower or Bomb, it is always short range
 			if (src->type == BL_MOB)
 				return BF_SHORT;
 			break;
@@ -7486,7 +7486,7 @@ void battle_do_reflect(int32 attack_type, struct Damage *wd, struct block_list* 
 		auto * sce = tsc->getSCE(SC_MAXPAIN);
 		if (sce) {
 			sce->val2 = (int32)damage;
-			if (!tsc->getSCE(SC_KYOMU) && !(tsc->getSCE(SC_DARKCROW) && (wd->flag&BF_SHORT))) //SC_KYOMU invalidates reflecting ability. SC_DARKCROW also does, but only for int16 weapon attack.
+			if (!tsc->getSCE(SC_KYOMU) && !(tsc->getSCE(SC_DARKCROW) && (wd->flag&BF_SHORT))) //SC_KYOMU invalidates reflecting ability. SC_DARKCROW also does, but only for short weapon attack.
 				skill_castend_damage_id(target, src, NPC_MAXPAIN_ATK, sce->val1, tick, ((wd->flag & 1) ? wd->flag - 1 : wd->flag));
 		}
 		
@@ -11309,7 +11309,7 @@ bool battle_check_range(struct block_list *src, struct block_list *bl, int32 ran
  */
 static const struct _battle_data {
 	const char* str;
-	int* val;
+	int32* val;
 	int32 defval;
 	int32 min;
 	int32 max;

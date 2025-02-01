@@ -2288,7 +2288,7 @@ void script_set_constant_(const char* name, int64 value, const char* constant_na
 void script_hardcoded_constants(void);
 
 void script_cleararray_pc(map_session_data* sd, const char* varname);
-void script_setarray_pc(map_session_data* sd, const char* varname, uint32 idx, int64 value, int* refcache);
+void script_setarray_pc(map_session_data* sd, const char* varname, uint32 idx, int64 value, int32* refcache);
 
 int32 script_config_read(const char *cfgName);
 void do_init_script(void);
