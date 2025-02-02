@@ -4,6 +4,7 @@
 #include "socket.hpp"
 
 #include <cstdlib>
+#include <unordered_map>
 
 #ifdef WIN32
 	#include "winapi.hpp"
@@ -1061,13 +1062,13 @@ int32 do_sockets(t_tick next)
 //////////////////////////////
 // IP rules and DDoS protection
 
-typedef struct _connect_history {
-	struct _connect_history* next;
-	uint32 ip;
-	t_tick tick;
-	int32 count;
-	unsigned ddos : 1;
-} ConnectHistory;
+struct ConnectHistory {
+	explicit ConnectHistory(t_tick tick) : tick_(tick) {}
+
+	t_tick tick_{};
+	int32 count_{};
+	bool ddos_{};
+};
 
 typedef struct _access_control {
 	uint32 ip;
@@ -1089,9 +1090,7 @@ static int32 access_debug    = 0;
 static int32 ddos_count      = 10;
 static int32 ddos_interval   = 3*1000;
 static int32 ddos_autoreset  = 10*60*1000;
-/// Connection history, an array of linked lists.
-/// The array's index for any ip is ip&0xFFFF
-static ConnectHistory* connect_history[0x10000];
+static std::unordered_map<uint32, ConnectHistory> connectHistoryMap;
 
 static int32 connect_check_(uint32 ip);
 
@@ -1111,7 +1110,6 @@ static int32 connect_check(uint32 ip)
 ///  1 or 2 : Connection Accepted
 static int32 connect_check_(uint32 ip)
 {
-	ConnectHistory* hist = connect_history[ip&0xFFFF];
 	int32 i;
 	int32 is_allowip = 0;
 	int32 is_denyip = 0;
@@ -1173,75 +1171,48 @@ static int32 connect_check_(uint32 ip)
 		break;
 	}
 
-	// Inspect connection history
-	while( hist ) {
-		if( ip == hist->ip )
-		{// IP found
-			if( hist->ddos )
-			{// flagged as DDoS
-				return (connect_ok == 2 ? 1 : 0);
-			} else if( DIFF_TICK(gettick(),hist->tick) < ddos_interval )
-			{// connection within ddos_interval
-				hist->tick = gettick();
-				if( hist->count++ >= ddos_count )
-				{// DDoS attack detected
-					hist->ddos = 1;
-					ShowWarning("connect_check: DDoS Attack detected from %d.%d.%d.%d!\n", CONVIP(ip));
-					return (connect_ok == 2 ? 1 : 0);
-				}
-				return connect_ok;
-			} else
-			{// not within ddos_interval, clear data
-				hist->tick  = gettick();
-				hist->count = 0;
-				return connect_ok;
-			}
-		}
-		hist = hist->next;
+	auto it = connectHistoryMap.find(ip); 
+	if (it == connectHistoryMap.end()) {
+		connectHistoryMap.emplace(ip, gettick());
+		return connect_ok;
 	}
-	// IP not found, add to history
-	CREATE(hist, ConnectHistory, 1);
-	memset(hist, 0, sizeof(ConnectHistory));
-	hist->ip   = ip;
-	hist->tick = gettick();
-	hist->next = connect_history[ip&0xFFFF];
-	connect_history[ip&0xFFFF] = hist;
+	if (it->second.ddos_) {
+		return (connect_ok == 2 ? 1 : 0);
+	}
+	if (DIFF_TICK(gettick(), it->second.tick_) < ddos_interval) {
+		it->second.tick_ = gettick();
+		if (it->second.count_++ >= ddos_count) {
+			it->second.ddos_ = true;
+			ShowWarning("connect_check: DDoS Attack detected from %d.%d.%d.%d!\n", CONVIP(ip));
+			return (connect_ok == 2 ? 1 : 0);
+		}
+	} else {
+		it->second.tick_ = gettick();
+		it->second.count_ = 0;
+	}
 	return connect_ok;
 }
 
 /// Timer function.
 /// Deletes old connection history records.
 static TIMER_FUNC(connect_check_clear){
-	int32 i;
+	int32 previousSize = connectHistoryMap.size();
 	int32 clear = 0;
-	int32 list  = 0;
-	ConnectHistory root;
-	ConnectHistory* prev_hist;
-	ConnectHistory* hist;
 
-	for( i=0; i < 0x10000 ; ++i ){
-		prev_hist = &root;
-		root.next = hist = connect_history[i];
-		while( hist ){
-			if( (!hist->ddos && DIFF_TICK(tick,hist->tick) > ddos_interval*3) ||
-					(hist->ddos && DIFF_TICK(tick,hist->tick) > ddos_autoreset) )
-			{// Remove connection history
-				prev_hist->next = hist->next;
-				aFree(hist);
-				hist = prev_hist->next;
-				clear++;
-			} else {
-				prev_hist = hist;
-				hist = hist->next;
-			}
-			list++;
+	for (auto it = connectHistoryMap.begin(); it != connectHistoryMap.end(); ) {
+		if ((!it->second.ddos_ && DIFF_TICK(tick, it->second.tick_) > ddos_interval * 3) ||
+			(it->second.ddos_ && DIFF_TICK(tick, it->second.tick_) > ddos_autoreset)) {
+			it = connectHistoryMap.erase(it);
+			clear++;
+		} else {
+			++it;
 		}
-		connect_history[i] = root.next;
 	}
-	if( access_debug ){
-		ShowInfo("connect_check_clear: Cleared %d of %d from IP list.\n", clear, list);
+
+	if (access_debug) {
+		ShowInfo("connect_check_clear: Cleared %d of %d from IP list.\n", clear, previousSize);
 	}
-	return list;
+	return previousSize;
 }
 
 /// Parses the ip address and mask and puts it into acc.
@@ -1374,17 +1345,6 @@ void socket_final(void)
 {
 	int32 i;
 #ifndef MINICORE
-	ConnectHistory* hist;
-	ConnectHistory* next_hist;
-
-	for( i=0; i < 0x10000; ++i ){
-		hist = connect_history[i];
-		while( hist ){
-			next_hist = hist->next;
-			aFree(hist);
-			hist = next_hist;
-		}
-	}
 	if( access_allow )
 		aFree(access_allow);
 	if( access_deny )
@@ -1616,7 +1576,6 @@ void socket_init(void)
 
 #ifndef MINICORE
 	// Delete old connection history every 5 minutes
-	memset(connect_history, 0, sizeof(connect_history));
 	add_timer_func_list(connect_check_clear, "connect_check_clear");
 	add_timer_interval(gettick()+1000, connect_check_clear, 0, 0, 5*60*1000);
 #endif
