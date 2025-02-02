@@ -27272,13 +27272,28 @@ BUILDIN_FUNC(itemlink)
 }
 
 BUILDIN_FUNC(mesitemlink){
-	t_itemid nameid = script_getnum( st, 2 );
-	std::shared_ptr<item_data> data = item_db.find( nameid );
-	
-	if( data == nullptr ){
-		ShowError( "buildin_mesitemlink: Item ID %u does not exists.\n", nameid );
-		script_pushconststr( st, "" );
-		return SCRIPT_CMD_FAILURE;
+	std::shared_ptr<item_data> data;
+
+	if( script_isstring( st, 2 ) ){
+		const char* item_name = script_getstr( st, 2 );
+
+		data = item_db.searchname( item_name );
+
+		if( data == nullptr ){
+			ShowError( "buildin_mesitemlink: Item \"%s\" does not exist.\n", item_name );
+			script_pushconststr( st, "" );
+			return SCRIPT_CMD_FAILURE;
+		}
+	}else{
+		t_itemid nameid = script_getnum( st, 2 );
+
+		data = item_db.find( nameid );
+
+		if( data == nullptr ){
+			ShowError( "buildin_mesitemlink: Item ID %u does not exist.\n", nameid );
+			script_pushconststr( st, "" );
+			return SCRIPT_CMD_FAILURE;
+		}
 	}
 
 	bool use_brackets = true;
@@ -28379,7 +28394,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(item_reform, "??"),
 	BUILDIN_DEF(item_enchant, "i?"),
 	BUILDIN_DEF(itemlink, "i?????????"),
-	BUILDIN_DEF(mesitemlink, "i??"),
+	BUILDIN_DEF(mesitemlink, "v??"),
 	BUILDIN_DEF(addfame, "i?"),
 	BUILDIN_DEF(getfame, "?"),
 	BUILDIN_DEF(getfamerank, "?"),

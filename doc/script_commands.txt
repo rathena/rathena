@@ -11228,6 +11228,7 @@ client (and server) supports the Item Random Options feature (PACKETVER >= 20150
 ---------------------------------------
 
 *mesitemlink(<item_id>{,<use_brackets>{,<display_name>});
+*mesitemlink(<"item_name">{,<use_brackets>{,<display_name>});
 
 Generates an itemlink string for an item and can be used with NPC's mes command.
 The NPC message will show the item's name which will be clickable and opens the
@@ -11239,6 +11240,7 @@ but in some cases it might be necessary to overwrite the <display_name> with som
 Examples:
 
 	mes mesitemlink( 1201 ); // Will display "[Knife]" and will be clickable. If clicked it opens the description for Knife [3]
+	mes mesitemlink( "Knife" ); // Will display "[Knife]" and will be clickable. If clicked it opens the description for Knife [3]
 	mes "Bring me a " + mesitemlink( 1201 ) + "."; // Will display "Bring me a [Knife]." and "[Knife]" will be clickable.
 	mes "Bring me a " + mesitemlink( 1201, false ) + "."; // Will display "Bring me a Knife." and "Knife" will be clickable.
 	mes "Bring me a " + mesitemlink( 1201, true, "Super cutting knife" ) + "."; // Will display "Bring me a [Super cutting knife]." and "[Super cutting knife]" will be clickable.
