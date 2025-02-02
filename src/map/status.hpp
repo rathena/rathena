@@ -61,10 +61,10 @@ class status_change;
 #define AMOTION_DIVIDER_PC 2
 // For monsters, homunculus, mercenaries and elementals, amotion and adelay are equal or independent
 #define AMOTION_DIVIDER_NOPC 1
-// Delay between attacks that represents 0 ASPD
-#define ZERO_ASPD 4000
-// Value that represents how much each ASPD point reduces the delay
-#define ASPD_INTERVAL 20
+// Value for amotion that is represented as 0 ASPD on the client
+#define AMOTION_ZERO_ASPD 2000
+// Value that represents by how much each ASPD point reduces amotion
+#define AMOTION_INTERVAL 10
 
 /// Refine type
 enum e_refine_type : uint16{

@@ -2354,15 +2354,14 @@ int32 status_base_amotion_pc(map_session_data* sd, struct status_data* status)
 	return aspd;
 #else
 	if (job == nullptr)
-		return ZERO_ASPD/AMOTION_DIVIDER_PC;
+		return AMOTION_ZERO_ASPD;
 
-	int32 amotion;
 	// Angra Manyu disregards aspd_base and similar
 	if (pc_checkequip2(sd, ITEMID_ANGRA_MANYU, EQI_ACC_L, EQI_MAX))
 		return 0;
 
 	// Base weapon delay
-	amotion = (sd->status.weapon < MAX_WEAPON_TYPE)
+	int32 amotion = (sd->status.weapon < MAX_WEAPON_TYPE)
 	 ? (job->aspd_base[sd->status.weapon]) // Single weapon
 	 : (job->aspd_base[sd->weapontype1] + job->aspd_base[sd->weapontype2]) * 7 / 10; // Dual-wield
 
@@ -4571,7 +4570,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	i = status_base_amotion_pc(sd,base_status);
 #ifdef RENEWAL_ASPD
 	// Renewal base value is actually ASPD and not amotion, so we need to convert it
-	i = (ZERO_ASPD - i * ASPD_INTERVAL) / AMOTION_DIVIDER_PC;
+	i = AMOTION_ZERO_ASPD - i * AMOTION_INTERVAL;
 #endif
 	base_status->amotion = cap_value(i, pc_maxaspd(sd)/AMOTION_DIVIDER_PC, MIN_ASPD/AMOTION_DIVIDER_PC);
 
@@ -6170,7 +6169,7 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 			amotion += (max(0xc3 - amotion, 2) * (status->aspd_rate2 + status_calc_aspd(&bl, sc, false))) / 100;
 
 			// Renewal base value is actually ASPD and not amotion, so we need to convert it
-			amotion = (ZERO_ASPD - amotion * ASPD_INTERVAL) / AMOTION_DIVIDER_PC;
+			amotion = AMOTION_ZERO_ASPD - amotion * AMOTION_INTERVAL;
 
 			amotion += sd->bonus.aspd_add;
 #endif
