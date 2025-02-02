@@ -9752,6 +9752,12 @@ Body:
     CalcFlags:
       Flee: true
       Speed: true
+    Flags:
+      NoRemoveOnDead: true
+      NoSave: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
   - Status: Overcoming_Crisis
     Icon: EFST_OVERCOMING_CRISIS
     DurationLookup: HN_OVERCOMING_CRISIS
@@ -9760,8 +9766,6 @@ Body:
       Smatk: true
       MaxHp: true
     Flags:
-      NoRemoveOnDead: true
-      NoSave: true
       NoBanishingBuster: true
       NoDispell: true
       NoClearance: true
