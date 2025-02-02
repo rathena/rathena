@@ -13,7 +13,7 @@ sec_in02,126,178,3	script	Kachua's Secret Box#bm	4_TREASURE_BOX,{
 	.@key$ = "K_Secret_Key";
 	.@box$ = "Main_Lucky_Box";
 	mes "A Secret Box where no one knows what's inside.";
-	mes "^4d4dffYou can open this box by consuming <ITEM>[Kachua's Secret Key]<INFO>23919</INFO></ITEM>.^000000";
+	mes "^4d4dffYou can open this box by consuming " + mesitemlink( .@key$ ) + ".^000000";
 	next;
 	switch(select("^4d4dffOpen the box 1 time (1 Kachua's Secret Key)^000000","^4d4dffOpen the box 10 times (10 Kachua's Secret Keys)^000000")) {
 		case 1:
@@ -25,7 +25,7 @@ sec_in02,126,178,3	script	Kachua's Secret Box#bm	4_TREASURE_BOX,{
 				mes "You have decided not to open the Box.";
 				close;
 			} else if (countitem(.@key$) < 1) {
-				mes "Not enough <ITEM>[Kachua Secret Key]<INFO>23919</INFO></ITEM>.";
+				mes "Not enough " + mesitemlink( .@key$ ) + ".";
 				close;
 			} else {
 				if (checkweight(1201,1) == 0 || ((MaxWeight - Weight) * 100 / MaxWeight) < 10) {
@@ -48,7 +48,7 @@ sec_in02,126,178,3	script	Kachua's Secret Box#bm	4_TREASURE_BOX,{
 				mes "You have decided not to open the Box.";
 				close;
 			} else if (countitem(.@key$) < 10) {
-				mes "You do not have enough <ITEM>[Kachua Secret Key]<INFO>23919</INFO></ITEM>.";
+				mes "You do not have enough " + mesitemlink( .@key$ ) + ".";
 				close;
 			} else {
 				for (.@i = 1; .@i <= 10; ++.@i) {
