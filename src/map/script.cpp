@@ -27291,6 +27291,7 @@ BUILDIN_FUNC(mesitemlink){
 
 		if( data == nullptr ){
 			ShowError( "buildin_mesitemlink: Item ID %u does not exist.\n", nameid );
+			script_pushconststr( st, "" );
 			return SCRIPT_CMD_FAILURE;
 		}
 	}
@@ -28393,7 +28394,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(item_reform, "??"),
 	BUILDIN_DEF(item_enchant, "i?"),
 	BUILDIN_DEF(itemlink, "i?????????"),
-	BUILDIN_DEF(mesitemlink, "???"),
+	BUILDIN_DEF(mesitemlink, "v??"),
 	BUILDIN_DEF(addfame, "i?"),
 	BUILDIN_DEF(getfame, "?"),
 	BUILDIN_DEF(getfamerank, "?"),
