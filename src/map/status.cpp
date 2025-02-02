@@ -8144,7 +8144,7 @@ static int16 status_calc_aspd(struct block_list *bl, status_change *sc, bool fix
 static int16 status_calc_fix_aspd(struct block_list *bl, status_change *sc, int32 aspd)
 {
 	if (sc == nullptr || sc->empty())
-		return cap_value(aspd, 1, 8000);
+		return cap_value(aspd, 1, MIN_ASPD);
 	if (sc->getSCE(SC_OVERED_BOOST))
 		return cap_value(2000 - sc->getSCE(SC_OVERED_BOOST)->val3 * 10, 0, 2000);
 
@@ -8159,7 +8159,7 @@ static int16 status_calc_fix_aspd(struct block_list *bl, status_change *sc, int3
 	if (sc->getSCE(SC_SINCERE_FAITH))
 		aspd -= 10 * sc->getSCE(SC_SINCERE_FAITH)->val2;
 
-	return cap_value(aspd, 1, 8000); // Will be recap for proper bl anyway
+	return cap_value(aspd, 1, MIN_ASPD); // Will be recap for proper bl anyway
 }
 
 /**
