@@ -1875,6 +1875,18 @@ struct PACKET_CZ_MAKE_GROUP2{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_MAKE_GROUP2, 0x1e8);
 
+struct PACKET_CZ_GM_CHECKER{
+	int16 packetType;
+	char mapname[MAP_NAME_LENGTH_EXT];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_GM_CHECKER, 0xc0b);
+
+struct PACKET_ZC_GM_CHECKER{
+	int16 packetType;
+	int16 result;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_GM_CHECKER, 0xc0c);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )

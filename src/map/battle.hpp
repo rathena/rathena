@@ -749,6 +749,7 @@ struct Battle_Config
 	int32 macro_detection_timeout;
 	int32 macro_detection_punishment;
 	int32 macro_detection_punishment_time;
+	int32 macrochecker_delay;
 
 	int32 feature_dynamicnpc_timeout;
 	int32 feature_dynamicnpc_rangex;
