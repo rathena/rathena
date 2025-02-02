@@ -23,7 +23,6 @@
 #
 ###########################################################################
 # - Group                      Group name of the item.
-#   AnnounceBoxItemId          Item to be shown in special item obtaining broadcast packet in the box name field. Uses the last item the player used if not defined. (Default: 0)
 #   SubGroups:
 #     - SubGroup:              SubGroup number associated with the list of item. See doc/item_group.txt for more information.
 #       Algorithm:             Type of algorithm associated with SubGroup. (Default: SharedPool)
@@ -47,4 +46,4 @@
 
 Header:
   Type: ITEM_GROUP_DB
-  Version: 5
+  Version: 4

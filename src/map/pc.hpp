@@ -946,9 +946,6 @@ public:
 	s_macro_detect macro_detect;
 
 	std::vector<uint32> party_booking_requests;
-
-	// The last item the player used before getgroupitem script command is called. Used in broadcast packet only
-	t_itemid opened_box_id;
 };
 
 extern struct eri *pc_sc_display_ers; /// Player's SC display table
