@@ -11,6 +11,7 @@
 
 sec_in02,126,178,3	script	Kachua's Secret Box#bm	4_TREASURE_BOX,{
 	.@key$ = "K_Secret_Key";
+	.@box$ = "Main_Lucky_Box";
 	mes "A Secret Box where no one knows what's inside.";
 	mes "^4d4dffYou can open this box by consuming <ITEM>[Kachua's Secret Key]<INFO>23919</INFO></ITEM>.^000000";
 	next;
@@ -32,7 +33,7 @@ sec_in02,126,178,3	script	Kachua's Secret Box#bm	4_TREASURE_BOX,{
 					close;
 				}
 				delitem(.@key$, 1);
-				getgroupitem(IG_MAIN_LUCKY_BOX); // TODO: change to consumeitem "Main_Lucky_Box" when consumeitem is fixed
+				consumeitem(.@box$);
 				mes "Kachua's Secret Box was opened!";
 				mes "Were you lucky?";
 				specialeffect2 EF_VALLENTINE;
@@ -60,7 +61,7 @@ sec_in02,126,178,3	script	Kachua's Secret Box#bm	4_TREASURE_BOX,{
 						close;
 					}
 					delitem(.@key$, 1);
-					getgroupitem(IG_MAIN_LUCKY_BOX); // TODO: change to consumeitem "Main_Lucky_Box" when consumeitem is fixed
+					consumeitem(.@box$);
 					dispbottom "Kachua's Secret Box was opened " + .@i + " times. Another one is being opened.",0xFFFFFF;
 					specialeffect2 EF_VALLENTINE;
 				}
