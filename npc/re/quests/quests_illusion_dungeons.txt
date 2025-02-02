@@ -11831,7 +11831,7 @@ einbroch,149,242,5	script	Coughing young man#ITB	4_M_NFMAN,3,3,{
 		mes "Why haven't you come back yet...";
 		mes "Cough Cough!!";
 		next;
-		mes "^ff0000Â¡Ã˜ You can start this quest from level 150.^000000";
+		mes "^ff0000¡Ø You can start this quest from level 150.^000000";
 		close;
 	}
 	if (ill_teddy == 0) {
@@ -13321,7 +13321,7 @@ prt_maze01,101,26,3	script(CLOAKED)	Esmeralda#1	4_GEFFEN_09,{
 		next;
 		select( "Is signing a contract with a guardian relic like insurance?" );
 		mes "[Esmeralda]";
-		mes "Yes, since our guild is made up of only priests, fatal accidents are unexpectedly rare, but they are very frequent.";
+		mes "Yes, since our guild is comprised entirely of priests, it seems like there wouldn't be any fatal accidents, but they actually happen quite frequently.";
 		next;
 		mes "[Esmeralda]";
 		mes "As soon as you join, you enter into a contract with a guardian relic and undergo a ceremony that completely resurrects your soul and body even after death.";
