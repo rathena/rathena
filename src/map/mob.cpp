@@ -4571,8 +4571,8 @@ s_mob_db::s_mob_db()
 	status.luk = 1;
 	status.ele_lv = 1;
 	status.speed = DEFAULT_WALK_SPEED;
-	status.adelay = battle_config.monster_max_aspd;
-	status.amotion = battle_config.monster_max_aspd/AMOTION_DIVIDER_NOPC;
+	status.adelay = MAX_ASPD_NOPC;
+	status.amotion = MAX_ASPD_NOPC/AMOTION_DIVIDER_NOPC;
 	status.clientamotion = cap_value(status.amotion, 1, USHRT_MAX);
 	status.mode = static_cast<e_mode>(MONSTER_TYPE_06);
 
@@ -4985,7 +4985,7 @@ uint64 MobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (!this->asUInt16(node, "AttackDelay", speed))
 			return 0;
 
-		// The base value can be below monster_max_aspd
+		// The base value can be below MAX_ASPD_NOPC
 		mob->status.adelay = cap_value(speed, 1, MIN_ASPD);
 	}
 	
@@ -4995,7 +4995,7 @@ uint64 MobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (!this->asUInt16(node, "AttackMotion", speed))
 			return 0;
 
-		// The base value can be below monster_max_aspd
+		// The base value can be below MAX_ASPD_NOPC
 		mob->status.amotion = cap_value(speed, 1, MIN_ASPD/AMOTION_DIVIDER_NOPC);
 	}
 

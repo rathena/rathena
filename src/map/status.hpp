@@ -38,10 +38,21 @@ class status_change;
 
 /**
  * Minimum ASPD (maximum delay between attacks)
- * Default value of 8000 effectively results in a minimum ASPD of -200 for all types
+ * Default value of 8000 effectively results in a minimum ASPD of -200 for players
  */
 #ifndef MIN_ASPD
 	#define MIN_ASPD 8000
+#endif
+
+/**
+ * Maximum ASPD for non-players (minimum delay between attacks)
+ * This is applied after ASPD adjustments, so a monster can theoretically be naturally faster than this
+ * Officially no buff can reduce the delay below 100ms
+ * This is also the default value for monsters if AttackMotion and AttackDelay are not defined
+ * The maximum ASPD for players is defined in player.conf
+ */
+#ifndef MAX_ASPD_NOPC
+	#define MAX_ASPD_NOPC 100
 #endif
 
 // DO NOT MODIFY THESE!

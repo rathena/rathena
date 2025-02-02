@@ -11370,7 +11370,6 @@ static const struct _battle_data {
 	{ "mvp_hp_rate",                        &battle_config.mvp_hp_rate,                     100,    1,      INT_MAX,        },
 	{ "mvp_exp_rate",                       &battle_config.mvp_exp_rate,                    100,    0,      INT_MAX,        },
 	{ "monster_hp_rate",                    &battle_config.monster_hp_rate,                 100,    1,      INT_MAX,        },
-	{ "monster_max_aspd",                   &battle_config.monster_max_aspd,                195,    100,    199,            },
 	{ "view_range_rate",                    &battle_config.view_range_rate,                 100,    0,      INT_MAX,        },
 	{ "chase_range_rate",                   &battle_config.chase_range_rate,                100,    0,      INT_MAX,        },
 	{ "gtb_sc_immunity",                    &battle_config.gtb_sc_immunity,                 50,     0,      INT_MAX,        },
@@ -12009,7 +12008,6 @@ void battle_set_defaults()
 void battle_adjust_conf()
 {
 	// Effectively we calculate the minimum delay between attacks here
-	battle_config.monster_max_aspd = ZERO_ASPD - battle_config.monster_max_aspd * ASPD_INTERVAL;
 	battle_config.max_aspd = ZERO_ASPD - battle_config.max_aspd * ASPD_INTERVAL;
 	battle_config.max_third_aspd = ZERO_ASPD - battle_config.max_third_aspd * ASPD_INTERVAL;
 	battle_config.max_summoner_aspd = ZERO_ASPD - battle_config.max_summoner_aspd * ASPD_INTERVAL;

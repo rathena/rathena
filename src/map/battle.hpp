@@ -205,7 +205,6 @@ struct Battle_Config
 	int32 mvp_exp_rate;
 	int32 mvp_hp_rate;
 	int32 monster_hp_rate;
-	int32 monster_max_aspd;
 	int32 view_range_rate;
 	int32 chase_range_rate;
 	int32 atc_spawn_quantity_limit;
