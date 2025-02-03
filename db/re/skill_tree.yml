@@ -7201,6 +7201,13 @@ Body:
         Requires:
           - Name: WH_SOLIDTRAP
             Level: 1
+      - Name: WH_WILD_WALK
+        MaxLevel: 5
+        Requires:
+          - Name: WH_NATUREFRIENDLY
+            Level: 3
+          - Name: WH_HAWKRUSH
+            Level: 3
   - Job: Imperial_Guard
     Inherit:
       Novice: true
@@ -8193,3 +8200,197 @@ Body:
             Level: 5
           - Name: HN_NAPALM_VULCAN_STRIKE
             Level: 5
+  - Job: Spirit_Handler
+    Inherit:
+      Summoner: true
+    Tree:
+      - Name: SH_MYSTICAL_CREATURE_MASTERY
+        MaxLevel: 10
+      - Name: SH_CHUL_HO_SONIC_CLAW
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 1
+      - Name: SH_KI_SUL_WATER_SPRAYING
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 1
+      - Name: SH_COLORS_OF_HYUN_ROK
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 1
+      - Name: SH_HOWLING_OF_CHUL_HO
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 3
+          - Name: SH_CHUL_HO_SONIC_CLAW
+            Level: 3
+      - Name: SH_MARINE_FESTIVAL_OF_KI_SUL
+        MaxLevel: 5
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 3
+          - Name: SH_KI_SUL_WATER_SPRAYING
+            Level: 3
+      - Name: SH_SANDY_FESTIVAL_OF_KI_SUL
+        MaxLevel: 5
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 3
+          - Name: SH_KI_SUL_WATER_SPRAYING
+            Level: 3
+      - Name: SH_HYUN_ROKS_BREEZE
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 3
+          - Name: SH_COLORS_OF_HYUN_ROK
+            Level: 3
+      - Name: SH_HOGOGONG_STRIKE
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 5
+          - Name: SH_CHUL_HO_SONIC_CLAW
+            Level: 3
+      - Name: SH_KI_SUL_RAMPAGE
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 5
+          - Name: SH_MARINE_FESTIVAL_OF_KI_SUL
+            Level: 2
+          - Name: SH_SANDY_FESTIVAL_OF_KI_SUL
+            Level: 2
+      - Name: SH_HYUN_ROK_CANNON
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 5
+          - Name: SH_HYUN_ROKS_BREEZE
+            Level: 3
+      - Name: SH_COMMUNE_WITH_CHUL_HO
+        MaxLevel: 1
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 7
+          - Name: SH_HOGOGONG_STRIKE
+            Level: 3
+      - Name: SH_COMMUNE_WITH_KI_SUL
+        MaxLevel: 1
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 7
+          - Name: SH_KI_SUL_RAMPAGE
+            Level: 3
+      - Name: SH_COMMUNE_WITH_HYUN_ROK
+        MaxLevel: 1
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 7
+          - Name: SH_HYUN_ROK_CANNON
+            Level: 3
+      - Name: SH_TEMPORARY_COMMUNION
+        MaxLevel: 5
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 10
+      - Name: SH_BLESSING_OF_MYSTICAL_CREATURES
+        MaxLevel: 5
+        Requires:
+          - Name: SH_COMMUNE_WITH_KI_SUL
+            Level: 1
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 10
+  - Job: Sky_Emperor
+    Inherit:
+      Novice: true
+      Taekwon: true
+      Star_Gladiator: true
+      Star_Emperor: true
+    Tree:
+      - Name: SKE_WAR_BOOK_MASTERY
+        MaxLevel: 10
+      - Name: SKE_SKY_MASTERY
+        MaxLevel: 10
+      - Name: SKE_RISING_SUN
+        MaxLevel: 5
+        Requires:
+          - Name: SKE_SKY_MASTERY
+            Level: 1
+      - Name: SKE_RISING_MOON
+        MaxLevel: 5
+        Requires:
+          - Name: SKE_SKY_MASTERY
+            Level: 1
+      - Name: SKE_TWINKLING_GALAXY
+        MaxLevel: 5
+        Requires:
+          - Name: SKE_SKY_MASTERY
+            Level: 1
+      - Name: SKE_NOON_BLAST
+        MaxLevel: 5
+        Requires:
+          - Name: SKE_SKY_MASTERY
+            Level: 3
+          - Name: SKE_RISING_SUN
+            Level: 1
+      - Name: SKE_MIDNIGHT_KICK
+        MaxLevel: 5
+        Requires:
+          - Name: SKE_SKY_MASTERY
+            Level: 3
+          - Name: SKE_RISING_MOON
+            Level: 1
+      - Name: SKE_STAR_BURST
+        MaxLevel: 5
+        Requires:
+          - Name: SKE_SKY_MASTERY
+            Level: 3
+          - Name: SKE_TWINKLING_GALAXY
+            Level: 1
+      - Name: SKE_SUNSET_BLAST
+        MaxLevel: 5
+        Requires:
+          - Name: SKE_SKY_MASTERY
+            Level: 5
+          - Name: SKE_NOON_BLAST
+            Level: 1
+      - Name: SKE_DAWN_BREAK
+        MaxLevel: 5
+        Requires:
+          - Name: SKE_SKY_MASTERY
+            Level: 5
+          - Name: SKE_MIDNIGHT_KICK
+            Level: 1
+      - Name: SKE_STAR_CANNON
+        MaxLevel: 5
+        Requires:
+          - Name: SKE_SKY_MASTERY
+            Level: 5
+          - Name: SKE_STAR_BURST
+            Level: 1
+      - Name: SKE_ALL_IN_THE_SKY
+        MaxLevel: 10
+        Requires:
+          - Name: SKE_WAR_BOOK_MASTERY
+            Level: 5
+          - Name: SKE_RISING_SUN
+            Level: 1
+          - Name: SKE_RISING_MOON
+            Level: 1
+      - Name: SKE_ENCHANTING_SKY
+        MaxLevel: 10
+        Requires:
+          - Name: SKE_SKY_MASTERY
+            Level: 5
+  - Job: Sky_Emperor2
+    Inherit:
+      Novice: true
+      Taekwon: true
+      Star_Gladiator: true
+      Star_Emperor: true
+      Sky_Emperor: true

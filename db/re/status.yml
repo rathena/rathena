@@ -2455,8 +2455,6 @@ Body:
     CalcFlags:
       Def2: true
       MDef2: true
-      Speed: true
-      Aspd: true
     Opt3:
       SteelBody: true
     Flags:
@@ -6499,8 +6497,8 @@ Body:
       MaxSp: true
   - Status: Norecover_State
     Icon: EFST_HANDICAPSTATE_NORECOVER
-    Fail:
-      Norecover_State: true
+    CalcFlags:
+      Regen: true
   - Status: Suhide
     Icon: EFST_SUHIDE
     DurationLookup: SU_HIDE
@@ -6563,6 +6561,8 @@ Body:
   - Status: Tunaparty
     Icon: EFST_TUNAPARTY
     DurationLookup: SU_TUNAPARTY
+    Flags:
+      NoDispell: true
   - Status: Shrimp
     Icon: EFST_SHRIMP
     DurationLookup: SU_BUNCHOFSHRIMP
@@ -7524,24 +7524,25 @@ Body:
       bonus bVariableCastrate,-80;
   - Status: OverBrandReady
     Icon: EFST_OVERBRANDREADY
-    Flags:
   - Status: Poison_Mist
     Icon: EFST_POISON_MIST
     DurationLookup: MH_POISON_MIST
     CalcFlags:
       Flee: true
-    Flags:
   - Status: Stone_Wall
     Icon: EFST_STONE_WALL
     DurationLookup: MH_STEINWAND
     CalcFlags:
       Def: true
       Mdef: true
-    Flags:
   - Status: Cloud_Poison
     Icon: EFST_CLOUD_POISON
     DurationLookup: SO_CLOUD_KILL
     Flags:
+      BlEffect: true
+#     DisplayMob: true  # !TODO: check me
+    Fail:
+      Cloud_Poison: true
   - Status: Homun_Time
     Icon: EFST_HOMUN_TIME
     Flags:
@@ -7946,6 +7947,8 @@ Body:
     Flags:
       BlEffect: true
       DisplayPc: true
+    EndOnStart:
+      Sandy_Festival: true
   - Status: Benedictum
     Icon: EFST_BENEDICTUM
     DurationLookup: CD_BENEDICTUM
@@ -7956,6 +7959,8 @@ Body:
     Flags:
       BlEffect: true
       DisplayPc: true
+    EndOnStart:
+      Marine_Festival: true
   - Status: Axe_Stomp
     Icon: EFST_AXE_STOMP
     DurationLookup: MT_AXE_STOMP
@@ -9567,4 +9572,187 @@ Body:
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
+      NoClearance: true
+  - Status: Hogogong
+    Icon: EFST_HOGOGONG
+    DurationLookup: SH_HOWLING_OF_CHUL_HO
+    Flags:
+      Debuff: true
+      BlEffect: true
+      DisplayPc: true
+  - Status: Temporary_Communion
+    Icon: EFST_TEMPORARY_COMMUNION
+    DurationLookup: SH_TEMPORARY_COMMUNION
+    CalcFlags:
+      Patk: true
+      Smatk: true
+      Hplus: true
+    Flags:
+      # NoClearbuff: true  # !TODO
+      NoDispell: true
+      # NoBanishingBuster: true  # !TODO
+      # NoClearance: true  # !TODO
+  - Status: Marine_Festival
+    Icon: EFST_MARINE_FESTIVAL
+    DurationLookup: SH_MARINE_FESTIVAL_OF_KI_SUL
+    CalcFlags:
+      Pow: true
+      Con: true
+      Crt: true
+    EndOnStart:
+      Benedictum: true
+  - Status: Sandy_Festival
+    Icon: EFST_SANDY_FESTIVAL
+    DurationLookup: SH_SANDY_FESTIVAL_OF_KI_SUL
+    CalcFlags:
+      Spl: true
+      Wis: true
+      Sta: true
+    EndOnStart:
+      Religio: true
+  - Status: Ki_Sul_Rampage
+    Icon: EFST_KI_SUL_RAMPAGE
+    DurationLookup: SH_KI_SUL_RAMPAGE
+    States:
+      NoCast: true
+  - Status: Colors_of_Hyun_Rok_Buff
+    Icon: EFST_COLORS_OF_HYUN_ROK_BUFF
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+  - Status: Colors_of_Hyun_Rok_1
+    Icon: EFST_COLORS_OF_HYUN_ROK_1
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+    EndOnStart:
+      Colors_of_Hyun_Rok_2: true
+      Colors_of_Hyun_Rok_3: true
+      Colors_of_Hyun_Rok_4: true
+      Colors_of_Hyun_Rok_5: true
+      Colors_of_Hyun_Rok_6: true
+  - Status: Colors_of_Hyun_Rok_2
+    Icon: EFST_COLORS_OF_HYUN_ROK_2
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+    EndOnStart:
+      Colors_of_Hyun_Rok_1: true
+      Colors_of_Hyun_Rok_3: true
+      Colors_of_Hyun_Rok_4: true
+      Colors_of_Hyun_Rok_5: true
+      Colors_of_Hyun_Rok_6: true
+  - Status: Colors_of_Hyun_Rok_3
+    Icon: EFST_COLORS_OF_HYUN_ROK_3
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+    EndOnStart:
+      Colors_of_Hyun_Rok_1: true
+      Colors_of_Hyun_Rok_2: true
+      Colors_of_Hyun_Rok_4: true
+      Colors_of_Hyun_Rok_5: true
+      Colors_of_Hyun_Rok_6: true
+  - Status: Colors_of_Hyun_Rok_4
+    Icon: EFST_COLORS_OF_HYUN_ROK_4
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+    EndOnStart:
+      Colors_of_Hyun_Rok_1: true
+      Colors_of_Hyun_Rok_2: true
+      Colors_of_Hyun_Rok_3: true
+      Colors_of_Hyun_Rok_5: true
+      Colors_of_Hyun_Rok_6: true
+  - Status: Colors_of_Hyun_Rok_5
+    Icon: EFST_COLORS_OF_HYUN_ROK_5
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+    EndOnStart:
+      Colors_of_Hyun_Rok_1: true
+      Colors_of_Hyun_Rok_2: true
+      Colors_of_Hyun_Rok_3: true
+      Colors_of_Hyun_Rok_4: true
+      Colors_of_Hyun_Rok_6: true
+  - Status: Colors_of_Hyun_Rok_6
+    Icon: EFST_COLORS_OF_HYUN_ROK_6
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+    EndOnStart:
+      Colors_of_Hyun_Rok_1: true
+      Colors_of_Hyun_Rok_2: true
+      Colors_of_Hyun_Rok_3: true
+      Colors_of_Hyun_Rok_4: true
+      Colors_of_Hyun_Rok_5: true
+  - Status: Blessing_of_M_Creatures
+    Icon: EFST_BLESSING_OF_M_CREATURES
+    DurationLookup: SH_BLESSING_OF_MYSTICAL_CREATURES
+    CalcFlags:
+      Patk: true
+      Smatk: true
+    # Flags:  # !TODO: NoDispell ?
+  - Status: Blessing_of_M_C_Debuff
+    Icon: EFST_BLESSING_OF_M_C_DEBUFF
+    DurationLookup: SH_BLESSING_OF_MYSTICAL_CREATURES
+    Flags:
+      # NoClearbuff: true  # !TODO
+      NoDispell: true
+      # NoBanishingBuster: true  # !TODO
+      # NoClearance: true  # !TODO
+  - Status: Rising_Sun
+    Icon: EFST_RISING_SUN
+    DurationLookup: SKE_RISING_SUN
+    Fail:
+      Rising_Moon: true
+      Midnight_Moon: true
+      Sky_Enchant: true
+    EndOnStart:
+      Dawn_Moon: true
+  - Status: Noon_Sun
+    Icon: EFST_NOON_SUN
+    DurationLookup: SKE_RISING_SUN
+    EndOnStart:
+      Rising_Sun: true
+  - Status: Sunset_Sun
+    Icon: EFST_SUNSET_SUN
+    DurationLookup: SKE_RISING_SUN
+    EndOnStart:
+      Noon_Sun: true
+    Fail:
+      Sunset_Sun: true
+  - Status: Rising_Moon
+    Icon: EFST_RISING_MOON
+    DurationLookup: SKE_RISING_MOON
+    Fail:
+      Rising_Sun: true
+      Noon_Sun: true
+      Sky_Enchant: true
+    EndOnStart:
+      Sunset_Sun: true
+  - Status: Midnight_Moon
+    Icon: EFST_MIDNIGHT_MOON
+    DurationLookup: SKE_RISING_MOON
+    EndOnStart:
+      Rising_Moon: true
+  - Status: Dawn_Moon
+    Icon: EFST_DAWN_MOON
+    DurationLookup: SKE_RISING_MOON
+    EndOnStart:
+      Midnight_Moon: true
+    Fail:
+      Dawn_Moon: true
+  - Status: Star_Burst
+    Icon: EFST_STAR_BURST
+    DurationLookup: SKE_STAR_BURST
+    Flags:
+      BlEffect: true
+  - Status: Sky_Enchant
+    Icon: EFST_SKY_ENCHANT
+    DurationLookup: SKE_ENCHANTING_SKY
+    EndOnStart:
+      Rising_Sun: true
+      Noon_Sun: true
+      Sunset_Sun: true
+      Rising_Moon: true
+      Midnight_Moon: true
+      Dawn_Moon: true
+  - Status: Wild_Walk
+    Icon: EFST_WILD_WALK
+    DurationLookup: WH_WILD_WALK
+    CalcFlags:
+      Flee: true
+      Speed: true
+    Flags:
+      NoRemoveOnDead: true
+      NoSave: true
+      NoBanishingBuster: true
+      NoDispell: true
       NoClearance: true

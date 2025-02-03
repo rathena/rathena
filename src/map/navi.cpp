@@ -41,11 +41,11 @@ std::string filePrefix = "generated/clientside/data/luafiles514/lua files/naviga
 // Path node
 struct path_node {
 	struct path_node *parent; // pointer to parent
-	short x; // x coord
-	short y; // y coord
-	short g_cost; // Actual cost from start to this node
-	short f_cost; // g_cost + heuristic(this, goal)
-	short flag; // SET_OPEN / SET_CLOSED
+	int16 x; // x coord
+	int16 y; // y coord
+	int16 g_cost; // Actual cost from start to this node
+	int16 f_cost; // g_cost + heuristic(this, goal)
+	int16 flag; // SET_OPEN / SET_CLOSED
 };
 
 /// Binary heap of path nodes
