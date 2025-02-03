@@ -165,14 +165,17 @@ endif()
 # Propagated defines
 if(ENABLE_MEMMGR)
 	target_compile_definitions(common PUBLIC "-DUSE_MEMMGR")
+	target_compile_definitions(minicore PUBLIC "-DUSE_MEMMGR")
 else()
 	target_compile_definitions(common PUBLIC "-DNO_MEMMGR")
+	target_compile_definitions(minicore PUBLIC "-DNO_MEMMGR")
 endif()
 
 target_compile_definitions(common PUBLIC "-DPACKETVER=${PACKETVER}")
 
 if(ENABLE_PRERENEWAL)
 	target_compile_definitions(common PUBLIC "-DPRERE")
+	target_compile_definitions(minicore PUBLIC "-DPRERE")
 endif()
 
 if(ENABLE_EXTRA_DEBUG_CODE)
@@ -203,6 +206,7 @@ endif()
 CHECK_FUNCTION_EXISTS(strnlen HAVE_STRNLEN)
 if (HAVE_STRNLEN)
 	target_compile_definitions(common PUBLIC "-DHAVE_STRNLEN")
+	target_compile_definitions(minicore PUBLIC "-DHAVE_STRNLEN")
 endif()
 
 target_include_directories(common PUBLIC
