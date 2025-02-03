@@ -1028,7 +1028,7 @@ uint64 ElementalDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (!this->asUInt16(node, "AttackDelay", speed))
 			return 0;
 
-		elemental->status.adelay = cap_value(speed, 0, 4000);
+		elemental->status.adelay = cap_value(speed, MAX_ASPD_NOPC, MIN_ASPD);
 	} else {
 		if (!exists)
 			elemental->status.adelay = 504;
@@ -1040,7 +1040,8 @@ uint64 ElementalDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (!this->asUInt16(node, "AttackMotion", speed))
 			return 0;
 
-		elemental->status.amotion = cap_value(speed, 0, 2000);
+		// amotion is only capped to MAX_ASPD_NOPC when receiving buffs/debuffs
+		elemental->status.amotion = cap_value(speed, 1, MIN_ASPD/AMOTION_DIVIDER_NOPC);
 	} else {
 		if (!exists)
 			elemental->status.amotion = 1020;

@@ -2304,26 +2304,25 @@ bool status_check_visibility(block_list* src, block_list* target, bool checkblin
  * Base ASPD value taken from the job tables
  * @param sd: Player object
  * @param status: Player status
- * @return base amotion after single/dual weapon and shield adjustments [RENEWAL]
+ * @return base aspd after single/dual weapon and shield adjustments, passive bonuses and status changes [RENEWAL]
  *	  base amotion after single/dual weapon and stats adjustments [PRE-RENEWAL]
  */
 int32 status_base_amotion_pc(map_session_data* sd, struct status_data* status)
 {
 	std::shared_ptr<s_job_info> job = job_db.find(sd->status.class_);
 
-	if (job == nullptr)
-		return 2000;
-
-	int32 amotion;
 #ifdef RENEWAL_ASPD
+	if (job == nullptr)
+		return 0;
+
 	int16 skill_lv, val = 0;
 	float temp_aspd = 0;
 
-	amotion = job->aspd_base[sd->weapontype1]; // Single weapon
+	int32 aspd = job->aspd_base[sd->weapontype1]; // Single weapon
 	if (sd->status.shield)
-		amotion += job->aspd_base[MAX_WEAPON_TYPE];
+		aspd += job->aspd_base[MAX_WEAPON_TYPE];
 	else if (sd->weapontype2 != W_FIST && sd->equip_index[EQI_HAND_R] != sd->equip_index[EQI_HAND_L])
-		amotion += job->aspd_base[sd->weapontype2] / 4; // Dual-wield
+		aspd += job->aspd_base[sd->weapontype2] / 4; // Dual-wield
 
 	switch(sd->status.weapon) {
 		case W_BOW:
@@ -2351,14 +2350,18 @@ int32 status_base_amotion_pc(map_session_data* sd, struct status_data* status)
 		val -= 50 - 10 * pc_checkskill(sd, KN_CAVALIERMASTERY);
 	else if (pc_isridingdragon(sd))
 		val -= 25 - 5 * pc_checkskill(sd, RK_DRAGONTRAINING);
-	amotion = ((int32)(temp_aspd + ((float)(status_calc_aspd(&sd->bl, &sd->sc, true) + val) * status->agi / 200)) - min(amotion, 200));
+	aspd = ((int32)(temp_aspd + ((float)(status_calc_aspd(&sd->bl, &sd->sc, true) + val) * status->agi / 200)) - min(aspd, 200));
+	return aspd;
 #else
+	if (job == nullptr)
+		return AMOTION_ZERO_ASPD;
+
 	// Angra Manyu disregards aspd_base and similar
 	if (pc_checkequip2(sd, ITEMID_ANGRA_MANYU, EQI_ACC_L, EQI_MAX))
 		return 0;
 
 	// Base weapon delay
-	amotion = (sd->status.weapon < MAX_WEAPON_TYPE)
+	int32 amotion = (sd->status.weapon < MAX_WEAPON_TYPE)
 	 ? (job->aspd_base[sd->status.weapon]) // Single weapon
 	 : (job->aspd_base[sd->weapontype1] + job->aspd_base[sd->weapontype2]) * 7 / 10; // Dual-wield
 
@@ -2367,9 +2370,8 @@ int32 status_base_amotion_pc(map_session_data* sd, struct status_data* status)
 
 	// Raw delay adjustment from bAspd bonus
 	amotion += sd->bonus.aspd_add;
+	return amotion;
 #endif
-
- 	return amotion;
 }
 
 /**
@@ -4566,7 +4568,11 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 
 	// Basic ASPD value
 	i = status_base_amotion_pc(sd,base_status);
-	base_status->amotion = cap_value(i,pc_maxaspd(sd),2000);
+#ifdef RENEWAL_ASPD
+	// Renewal base value is actually ASPD and not amotion, so we need to convert it
+	i = AMOTION_ZERO_ASPD - i * AMOTION_INTERVAL;
+#endif
+	base_status->amotion = cap_value(i, pc_maxaspd(sd)/AMOTION_DIVIDER_PC, MIN_ASPD/AMOTION_DIVIDER_PC);
 
 	// Relative modifiers from passive skills
 	// Renewal modifiers are handled in status_base_amotion_pc
@@ -4583,7 +4589,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	else if(pc_isridingdragon(sd))
 		base_status->aspd_rate += 250-50*pc_checkskill(sd,RK_DRAGONTRAINING);
 #endif
-	base_status->adelay = 2*base_status->amotion;
+	base_status->adelay = AMOTION_DIVIDER_PC * base_status->amotion;
 
 
 // ----- DMOTION -----
@@ -5045,8 +5051,8 @@ int32 status_calc_homunculus_(struct homun_data *hd, uint8 opt)
 	amotion = (1000 - 4 * status->agi - status->dex) * hd->homunculusDB->baseASPD / 1000;
 #endif
 
-	status->amotion = cap_value(amotion, battle_config.max_aspd, 2000);
-	status->adelay = status->amotion; //It seems adelay = amotion for Homunculus.
+	status->amotion = cap_value(amotion, MAX_ASPD_NOPC/AMOTION_DIVIDER_NOPC, MIN_ASPD/AMOTION_DIVIDER_NOPC);
+	status->adelay = AMOTION_DIVIDER_NOPC * status->amotion; //It seems adelay = amotion for Homunculus.
 
 	status->max_hp = hom.max_hp;
 	status->max_sp = hom.max_sp;
@@ -6139,9 +6145,9 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 #endif
 
 			amotion = status_calc_fix_aspd(&bl, sc, amotion);
-			status->amotion = cap_value(amotion, battle_config.max_aspd, 2000);
+			status->amotion = cap_value(amotion, MAX_ASPD_NOPC/AMOTION_DIVIDER_NOPC, MIN_ASPD/AMOTION_DIVIDER_NOPC);
 
-			status->adelay = status->amotion;
+			status->adelay = AMOTION_DIVIDER_NOPC * status->amotion;
 		} else if ( bl.type == BL_PC ) {
 			uint16 skill_lv;
 
@@ -6161,24 +6167,29 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 #ifdef RENEWAL_ASPD
 			// RE ASPD % modifier
 			amotion += (max(0xc3 - amotion, 2) * (status->aspd_rate2 + status_calc_aspd(&bl, sc, false))) / 100;
-			amotion = 10 * (200 - amotion);
+
+			// Renewal base value is actually ASPD and not amotion, so we need to convert it
+			amotion = AMOTION_ZERO_ASPD - amotion * AMOTION_INTERVAL;
 
 			amotion += sd->bonus.aspd_add;
 #endif
 			amotion = status_calc_fix_aspd(&bl, sc, amotion);
-			status->amotion = cap_value(amotion,pc_maxaspd(sd),2000);
+			status->amotion = cap_value(amotion, pc_maxaspd(sd)/AMOTION_DIVIDER_PC, MIN_ASPD/AMOTION_DIVIDER_PC);
 
-			status->adelay = 2 * status->amotion;
+			status->adelay = AMOTION_DIVIDER_PC * status->amotion;
 		} else { // Mercenary and mobs
 			amotion = b_status->amotion;
 			status->aspd_rate = status_calc_aspd_rate(&bl, sc, b_status->aspd_rate);
 			amotion = amotion*status->aspd_rate/1000;
 
 			amotion = status_calc_fix_aspd(&bl, sc, amotion);
-			status->amotion = cap_value(amotion, battle_config.monster_max_aspd, 2000);
+			status->amotion = cap_value(amotion, MAX_ASPD_NOPC/AMOTION_DIVIDER_NOPC, MIN_ASPD/AMOTION_DIVIDER_NOPC);
 
-			temp = b_status->adelay*status->aspd_rate/1000;
-			status->adelay = cap_value(temp, battle_config.monster_max_aspd*2, 4000);
+			// FIXME: Officially, adelay only considers a few buffs and is not affected by ASPD debuffs at all
+			// The only way to make monsters slower is to increase their amotion above their adelay
+			// For now we solve it by making sure we never increase adelay through aspd_rate and then cap it to amotion
+			temp = b_status->adelay * min(status->aspd_rate, 1000) / 1000;
+			status->adelay = cap_value(temp, AMOTION_DIVIDER_NOPC * status->amotion, MIN_ASPD);
 		}
 	}
 
@@ -7865,8 +7876,6 @@ static uint16 status_calc_speed(struct block_list *bl, status_change *sc, int32 
 				val = max( val, sc->getSCE(SC_SUITON)->val3 );
 			if( sc->getSCE(SC_SWOO) )
 				val = max( val, 300 );
-			if( sc->getSCE(SC_SKA) )
-				val = max( val, 25 );
 			if( sc->getSCE(SC_FREEZING) )
 				val = max( val, 30 );
 			if( sc->getSCE(SC_MARSHOFABYSS) )
@@ -8046,7 +8055,7 @@ static int16 status_calc_aspd(struct block_list *bl, status_change *sc, bool fix
 		if (sc->getSCE(sc_val = SC_ASPDPOTION3) || sc->getSCE(sc_val = SC_ASPDPOTION2) || sc->getSCE(sc_val = SC_ASPDPOTION1) || sc->getSCE(sc_val = SC_ASPDPOTION0))
 			bonus += sc->getSCE(sc_val)->val1;
 	} else {
-		if (sc->getSCE(SC_DONTFORGETME))
+		if (bl->type == BL_PC && sc->getSCE(SC_DONTFORGETME))
 			bonus -= sc->getSCE(SC_DONTFORGETME)->val2 / 10;
 #ifdef RENEWAL
 		if (sc->getSCE(SC_ENSEMBLEFATIGUE))
@@ -8056,8 +8065,6 @@ static int16 status_calc_aspd(struct block_list *bl, status_change *sc, bool fix
 			bonus -= sc->getSCE(SC_LONGING)->val2 / 10;
 #endif
 		if (sc->getSCE(SC_STEELBODY))
-			bonus -= 25;
-		if (sc->getSCE(SC_SKA))
 			bonus -= 25;
 		if (sc->getSCE(SC_DEFENDER))
 			bonus -= sc->getSCE(SC_DEFENDER)->val4 / 10;
@@ -8139,7 +8146,7 @@ static int16 status_calc_aspd(struct block_list *bl, status_change *sc, bool fix
 static int16 status_calc_fix_aspd(struct block_list *bl, status_change *sc, int32 aspd)
 {
 	if (sc == nullptr || sc->empty())
-		return cap_value(aspd, 0, 2000);
+		return cap_value(aspd, 1, MIN_ASPD);
 	if (sc->getSCE(SC_OVERED_BOOST))
 		return cap_value(2000 - sc->getSCE(SC_OVERED_BOOST)->val3 * 10, 0, 2000);
 
@@ -8154,7 +8161,7 @@ static int16 status_calc_fix_aspd(struct block_list *bl, status_change *sc, int3
 	if (sc->getSCE(SC_SINCERE_FAITH))
 		aspd -= 10 * sc->getSCE(SC_SINCERE_FAITH)->val2;
 
-	return cap_value(aspd, 0, 2000); // Will be recap for proper bl anyway
+	return cap_value(aspd, 1, MIN_ASPD); // Will be recap for proper bl anyway
 }
 
 /**
@@ -8242,7 +8249,7 @@ static int16 status_calc_aspd_rate(struct block_list *bl, status_change *sc, int
 		sc->getSCE(i=SC_ASPDPOTION0) )
 		aspd_rate -= sc->getSCE(i)->val2;
 
-	if(sc->getSCE(SC_DONTFORGETME))
+	if(bl->type == BL_PC && sc->getSCE(SC_DONTFORGETME))
 		aspd_rate += sc->getSCE(SC_DONTFORGETME)->val2;
 #ifdef RENEWAL
 	if (sc->getSCE(SC_ENSEMBLEFATIGUE))
@@ -8252,8 +8259,6 @@ static int16 status_calc_aspd_rate(struct block_list *bl, status_change *sc, int
 		aspd_rate += sc->getSCE(SC_LONGING)->val2;
 #endif
 	if(sc->getSCE(SC_STEELBODY))
-		aspd_rate += 250;
-	if(sc->getSCE(SC_SKA))
 		aspd_rate += 250;
 	if(sc->getSCE(SC_DEFENDER))
 		aspd_rate += sc->getSCE(SC_DEFENDER)->val4;
