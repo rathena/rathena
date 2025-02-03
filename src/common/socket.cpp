@@ -1063,11 +1063,11 @@ int32 do_sockets(t_tick next)
 // IP rules and DDoS protection
 
 struct ConnectHistory {
-	explicit ConnectHistory(t_tick tick) : tick_(tick) {}
+	explicit ConnectHistory(t_tick tick) : tick(tick) {}
 
-	t_tick tick_{};
-	int32 count_{};
-	bool ddos_{};
+	t_tick tick{};
+	int32 count{0};
+	bool ddos{false};
 };
 
 typedef struct _access_control {
@@ -1171,24 +1171,33 @@ static int32 connect_check_(uint32 ip)
 		break;
 	}
 
+	// DDoS protection
 	auto it = connectHistoryMap.find(ip); 
 	if (it == connectHistoryMap.end()) {
+		// Haven't seen this connection before, add it to the map and accept it.
 		connectHistoryMap.emplace(ip, gettick());
 		return connect_ok;
 	}
-	if (it->second.ddos_) {
+	if (it->second.ddos) {
+		// Connection is flagged as DDoS, reject it.
+		if (access_debug && connect_ok != 2) {
+			ShowInfo("connect_check: connection blocked for ddos from %d.%d.%d.%d!\n", CONVIP(ip));
+		}
 		return (connect_ok == 2 ? 1 : 0);
 	}
-	if (DIFF_TICK(gettick(), it->second.tick_) < ddos_interval) {
-		it->second.tick_ = gettick();
-		if (it->second.count_++ >= ddos_count) {
-			it->second.ddos_ = true;
+	if (DIFF_TICK(gettick(), it->second.tick) < ddos_interval) {
+		// Connection is too frequent, increment the count.
+		it->second.tick = gettick();
+		if (it->second.count++ >= ddos_count) {
+			// Count surpassed ddos_count, flag it as DDoS and reject it.
+			it->second.ddos = true;
 			ShowWarning("connect_check: DDoS Attack detected from %d.%d.%d.%d!\n", CONVIP(ip));
 			return (connect_ok == 2 ? 1 : 0);
 		}
 	} else {
-		it->second.tick_ = gettick();
-		it->second.count_ = 0;
+		// Connection is outside the interval, reset the count.
+		it->second.tick = gettick();
+		it->second.count = 0;
 	}
 	return connect_ok;
 }
@@ -1196,12 +1205,12 @@ static int32 connect_check_(uint32 ip)
 /// Timer function.
 /// Deletes old connection history records.
 static TIMER_FUNC(connect_check_clear){
-	int32 previousSize = connectHistoryMap.size();
-	int32 clear = 0;
+	size_t previousSize = connectHistoryMap.size();
+	size_t clear = 0;
 
 	for (auto it = connectHistoryMap.begin(); it != connectHistoryMap.end(); ) {
-		if ((!it->second.ddos_ && DIFF_TICK(tick, it->second.tick_) > ddos_interval * 3) ||
-			(it->second.ddos_ && DIFF_TICK(tick, it->second.tick_) > ddos_autoreset)) {
+		if ((!it->second.ddos && DIFF_TICK(tick, it->second.tick) > ddos_interval * 3) ||
+			(it->second.ddos && DIFF_TICK(tick, it->second.tick) > ddos_autoreset)) {
 			it = connectHistoryMap.erase(it);
 			clear++;
 		} else {
@@ -1210,9 +1219,9 @@ static TIMER_FUNC(connect_check_clear){
 	}
 
 	if (access_debug) {
-		ShowInfo("connect_check_clear: Cleared %d of %d from IP list.\n", clear, previousSize);
+		ShowInfo("connect_check_clear: Cleared %" PRId64 " of %" PRId64 " from IP list.\n", clear, previousSize);
 	}
-	return previousSize;
+	return 0;
 }
 
 /// Parses the ip address and mask and puts it into acc.
