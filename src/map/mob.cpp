@@ -4985,8 +4985,7 @@ uint64 MobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (!this->asUInt16(node, "AttackDelay", speed))
 			return 0;
 
-		// The base value can be below MAX_ASPD_NOPC
-		mob->status.adelay = cap_value(speed, 1, MIN_ASPD);
+		mob->status.adelay = cap_value(speed, MAX_ASPD_NOPC, MIN_ASPD);
 	}
 	
 	if (this->nodeExists(node, "AttackMotion")) {
@@ -4995,7 +4994,7 @@ uint64 MobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (!this->asUInt16(node, "AttackMotion", speed))
 			return 0;
 
-		// The base value can be below MAX_ASPD_NOPC
+		// amotion is only capped to MAX_ASPD_NOPC when receiving buffs/debuffs
 		mob->status.amotion = cap_value(speed, 1, MIN_ASPD/AMOTION_DIVIDER_NOPC);
 	}
 

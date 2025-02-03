@@ -6185,8 +6185,11 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 			amotion = status_calc_fix_aspd(&bl, sc, amotion);
 			status->amotion = cap_value(amotion, MAX_ASPD_NOPC/AMOTION_DIVIDER_NOPC, MIN_ASPD/AMOTION_DIVIDER_NOPC);
 
-			temp = b_status->adelay*status->aspd_rate/1000;
-			status->adelay = cap_value(temp, MAX_ASPD_NOPC, MIN_ASPD);
+			// FIXME: Officially, adelay only considers a few buffs and is not affected by ASPD debuffs at all
+			// The only way to make monsters slower is to increase their amotion above their adelay
+			// For now we solve it by making sure we never increase adelay through aspd_rate and then cap it to amotion
+			temp = b_status->adelay * min(status->aspd_rate, 1000) / 1000;
+			status->adelay = cap_value(temp, AMOTION_DIVIDER_NOPC * status->amotion, MIN_ASPD);
 		}
 	}
 

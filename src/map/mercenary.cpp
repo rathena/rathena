@@ -864,7 +864,7 @@ uint64 MercenaryDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (!this->asUInt16(node, "AttackDelay", speed))
 			return 0;
 
-		mercenary->status.adelay = cap_value(speed, 1, MIN_ASPD);
+		mercenary->status.adelay = cap_value(speed, MAX_ASPD_NOPC, MIN_ASPD);
 	} else {
 		if (!exists)
 			mercenary->status.adelay = 4000;
@@ -876,6 +876,7 @@ uint64 MercenaryDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (!this->asUInt16(node, "AttackMotion", speed))
 			return 0;
 
+		// amotion is only capped to MAX_ASPD_NOPC when receiving buffs/debuffs
 		mercenary->status.amotion = cap_value(speed, 1, MIN_ASPD/AMOTION_DIVIDER_NOPC);
 	} else {
 		if (!exists)
