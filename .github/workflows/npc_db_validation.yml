@@ -68,7 +68,7 @@ jobs:
         run: cmake -B build -DENABLE_PRERENEWAL=${{env.PRERE}} -DENABLE_EXTRA_BUILDBOT_CODE=ON
 
       - name: Build
-        run: cmake --build build -j2 --target map-server
+        run: cmake --build build -j4 --target map-server
 
       # npc.sh enables all NPC scripts in the custom and test folders.
       - name: Enable All NPCs for Testing
