@@ -10532,8 +10532,8 @@ ACMD_FUNC(langtype)
 	return -1;
 }
 
-#ifdef VIP_ENABLE
 ACMD_FUNC(vip) {
+#ifdef VIP_ENABLE
 	map_session_data* pl_sd = nullptr;;
 	char * modif_p;
 	int32 vipdifftime = 0;
@@ -10603,10 +10603,15 @@ ACMD_FUNC(vip) {
 	}
 	chrif_req_login_operation(pl_sd->status.account_id, pl_sd->status.name, CHRIF_OP_LOGIN_VIP, vipdifftime, 7, 0); 
 	return 0;
+#else
+	clif_displaymessage( fd, msg_txt( sd, 774 ) ); // This command is disabled via configuration.
+	return -1;
+#endif
 }
 
 /** Enable/disable rate info */
 ACMD_FUNC(showrate) {
+#ifdef VIP_ENABLE
 	nullpo_retr(-1,sd);
 	if (!sd->vip.disableshowrate) {
 		safestrncpy(atcmd_output,msg_txt(sd,718),CHAT_SIZE_MAX); //Personal rate information is not displayed now.
@@ -10617,8 +10622,11 @@ ACMD_FUNC(showrate) {
 	}
 	clif_displaymessage(fd,atcmd_output);
 	return 0;
-}
+#else
+	clif_displaymessage( fd, msg_txt( sd, 774 ) ); // This command is disabled via configuration.
+	return -1;
 #endif
+}
 
 ACMD_FUNC(fullstrip) {
 	int32 i;
@@ -11666,10 +11674,8 @@ void atcommand_basecommands(void) {
 		ACMD_DEFR(channel,ATCMD_NOSCRIPT),
 		ACMD_DEF(fontcolor),
 		ACMD_DEF(langtype),
-#ifdef VIP_ENABLE
 		ACMD_DEF(vip),
 		ACMD_DEF(showrate),
-#endif
 		ACMD_DEF(fullstrip),
 		ACMD_DEF(costume),
 		ACMD_DEF(cloneequip),

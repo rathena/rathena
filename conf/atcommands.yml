@@ -1270,6 +1270,9 @@ Body:
     Help: |
       Params: <NPC name>
       Enable a NPC.
+  - Command: showrate
+    Help: |
+      Enable or disable to show the rate information on every mapchange.
   - Command: showzeny
     Help: |
       Displays/hides Zeny gained.
@@ -1440,6 +1443,11 @@ Body:
   - Command: version
     Help: |
       Displays SVN version of the server.
+  - Command: vip
+    Help: |
+      Params: <+/- time> <char name>
+      Set a player in VIP mode for a limited time.
+      Time elements: y/a, m, d/j, h, mn, s
   - Command: vit
     Help: |
       Params: <amount>
