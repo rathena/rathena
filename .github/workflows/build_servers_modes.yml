@@ -61,16 +61,11 @@ jobs:
       - name: Setup Database and import table data
         run: ./tools/ci/sql.sh
 
-      - name: Create build directory
-        run: cmake -E make_directory ${{github.workspace}}/build
-
       - name: Configure CMake
-        working-directory: ${{github.workspace}}/build
-        run: cmake .. -DENABLE_PRERENEWAL=${{env.PRERE}} -DENABLE_EXTRA_BUILDBOT_CODE=ON
+        run: cmake -B build -DENABLE_PRERENEWAL=${{env.PRERE}} -DENABLE_EXTRA_BUILDBOT_CODE=ON
 
       - name: Build
-        working-directory: ${{github.workspace}}/build
-        run: cmake --build . -j2 --target server
+        run: cmake --build build -j4 --target server
 
       - name: Run Once - login-server
         run: ./login-server --run-once

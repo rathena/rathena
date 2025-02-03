@@ -77,16 +77,12 @@ jobs:
       # ?? If the Autobuild fails above, remove it and uncomment the following
       #    three lines and modify them (or add more) to build your code if your
       #    project uses a compiled language
-      - name: Create build directory
-        run: cmake -E make_directory ${{github.workspace}}/build
 
       - name: Configure CMake
-        working-directory: ${{github.workspace}}/build
-        run: cmake .. -DENABLE_PRERENEWAL=${{env.PRERE}} -DENABLE_EXTRA_BUILDBOT_CODE=ON
+        run: cmake -B build -DENABLE_PRERENEWAL=${{env.PRERE}} -DENABLE_EXTRA_BUILDBOT_CODE=ON
 
       - name: Build
-        working-directory: ${{github.workspace}}/build
-        run: cmake --build . -j2 --target server
+        run: cmake --build build -j4 --target all
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3

@@ -25,7 +25,7 @@ option(ENABLE_VIP "Enable VIP system (default=OFF)" OFF)
 
 
 # Set a default build type if none was specified
-set(default_build_type "Release")
+set(default_build_type "RelWithDebInfo")
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
     set(CMAKE_BUILD_TYPE "${default_build_type}" CACHE
         STRING "Choose the type of build, options are: Debug Release RelWithDebInfo MinSizeRel" FORCE)
@@ -54,16 +54,16 @@ endif()
 # Prevent building in the source directory by default
 #
 if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_CURRENT_BINARY_DIR)
-    message( FATAL_ERROR
+    message(FATAL_ERROR
         "Do not use the source directory to build your files, instead delete CMakeCache.txt, create a separate folder and build there.\n"
-        "Example: (build in subdir 'build' and install to source dir)\n"
+        "Example: (build in subdir 'build' and copy to src dir)\n"
         "  rm -f CMakeCache.txt\n"
         "  mkdir build\n"
         "  cd build\n"
         "  cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ..\n"
-        "  make install\n"
+        "  cmake --build .\n"
         "  cd ..\n"
-        "  rm -rf build\n")
+        "  ./athena-start.sh start\n")
 endif()
 
 if(WIN32)

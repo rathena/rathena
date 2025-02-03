@@ -125,8 +125,6 @@ if(WIN32)
 	set_target_properties(map-server-generator PROPERTIES FOLDER "Tools")
 endif()
 
-set_target_properties(map-server-generator PROPERTIES EXCLUDE_FROM_ALL TRUE)
-
 target_compile_definitions(map-server-generator PUBLIC "-DMAP_GENERATOR")
 
 target_link_libraries(map-server-generator PUBLIC

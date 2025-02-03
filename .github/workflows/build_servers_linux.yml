@@ -1,5 +1,5 @@
-name: Build servers on Windows
-# build_servers_windows.yml
+name: Build servers on Linux
+# build_servers_linux.yml
 
 concurrency:
   group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}
@@ -29,13 +29,27 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-          os: [windows-latest]
+          os: [ubuntu-latest]
+          compiler:
+            - cxx: g++-13
+              cc: gcc-13
+            - cxx: g++-14
+              cc: gcc-14
+            - cxx: clang++-17
+              cc: clang-17
+            - cxx: clang++-18
+              cc: clang-18
 
     steps:
       - uses: actions/checkout@v4
 
+      - name: Update & Install compilers
+        run: |
+          sudo apt update
+          sudo apt install zlib1g-dev libpcre3-dev
+
       - name: Configure CMake
-        run: cmake -B build
+        run: CXX=${{matrix.compiler.cxx}} CC=${{matrix.compiler.cc}} cmake -B build
 
       - name: Build
         # Execute the build.  You can specify a specific target with "--target <NAME>"

@@ -64,16 +64,11 @@ jobs:
       - name: Setup Database and import table data
         run: ./tools/ci/sql.sh
 
-      - name: Create build directory
-        run: cmake -E make_directory ${{github.workspace}}/build
-
       - name: Configure CMake
-        working-directory: ${{github.workspace}}/build
-        run: cmake .. -DENABLE_PRERENEWAL=${{env.PRERE}} -DENABLE_EXTRA_BUILDBOT_CODE=ON
+        run: cmake -B build -DENABLE_PRERENEWAL=${{env.PRERE}} -DENABLE_EXTRA_BUILDBOT_CODE=ON
 
       - name: Build
-        working-directory: ${{github.workspace}}/build
-        run: cmake --build . -j2 --target map-server
+        run: cmake --build build -j2 --target map-server
 
       # npc.sh enables all NPC scripts in the custom and test folders.
       - name: Enable All NPCs for Testing
