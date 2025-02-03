@@ -12048,6 +12048,8 @@ void atcommand_doload(void) {
 			continue;
 		}
 	}
+
+	dbi_destroy( atcommand_iter );
 #endif
 }
 
