@@ -682,6 +682,7 @@ enum e_mapflag : int16 {
 	MF_NODYNAMICNPC,
 	MF_NOBANK,
 	MF_SPECIALPOPUP,
+	MF_NOMACROCHECKER,
 	MF_MAX
 };
 
@@ -825,11 +826,12 @@ struct map_data {
 	uint32 zone; // zone number (for item/skill restrictions)
 	struct s_skill_damage damage_adjust; // Used for overall skill damage adjustment
 	std::unordered_map<uint16, s_skill_damage> skill_damage; // Used for single skill damage adjustment
-	std::unordered_map<uint16, int> skill_duration;
+	std::unordered_map<uint16, int32> skill_duration;
 
 	struct npc_data *npc[MAX_NPC_PER_MAP];
 	struct spawn_data *moblist[MAX_MOB_LIST_PER_MAP]; // [Wizputer]
 	int32 mob_delete_timer;	// Timer ID for map_removemobs_timer [Skotlex]
+	t_tick last_macrocheck;
 
 	// Instance Variables
 	int32 instance_id;
@@ -839,7 +841,7 @@ struct map_data {
 	struct Channel *channel;
 
 	/* ShowEvent Data Cache */
-	std::vector<int> qi_npc;
+	std::vector<int32> qi_npc;
 
 	/* speeds up clif_updatestatus processing by causing hpmeter to run only when someone with the permission can view it */
 	uint16 hpmeter_visible;
@@ -857,7 +859,7 @@ struct map_data {
 	void copyFlags(const map_data& other);
 
 private:
-	std::vector<int> flags;
+	std::vector<int32> flags;
 };
 
 /// Stores information about a remote map (for multi-mapserver setups).

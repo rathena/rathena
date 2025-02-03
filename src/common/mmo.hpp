@@ -801,7 +801,7 @@ struct guild_castle {
 		unsigned visible : 1;
 		int32 id; // object id
 	} guardian[MAX_GUARDIANS];
-	int* temp_guardians; // ids of temporary guardians (mobs)
+	int32* temp_guardians; // ids of temporary guardians (mobs)
 	int32 temp_guardians_max;
 };
 

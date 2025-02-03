@@ -9572,7 +9572,7 @@ TIMER_FUNC(pc_close_npc_timer){
 	map_session_data* sd = map_id2sd( id );
 
 	if( sd != nullptr ){
-		pc_close_npc( sd, static_cast<int>( data ) );
+		pc_close_npc( sd, static_cast<int32>( data ) );
 	}
 
 	return 0;
@@ -15869,7 +15869,7 @@ uint64 CaptchaDatabase::parseBodyNode(const ryml::NodeRef &node) {
 			return 0;
 
 		if (answer.length() < CAPTCHA_ANSWER_SIZE_MIN || answer.length() > CAPTCHA_ANSWER_SIZE_MAX) {
-			this->invalidWarning(node["Answer"], "The captcha answer must be between 4~%d characters, skipping...", CAPTCHA_ANSWER_SIZE_MAX);
+			this->invalidWarning(node["Answer"], "The captcha answer must be between 4~%d characters, skipping...\n", CAPTCHA_ANSWER_SIZE_MAX);
 			return 0;
 		}
 

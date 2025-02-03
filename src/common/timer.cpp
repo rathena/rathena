@@ -30,7 +30,7 @@ static int32 timer_data_max = 0;
 static int32 timer_data_num = 0;
 
 // free timers (array)
-static int* free_timer_list = nullptr;
+static int32* free_timer_list = nullptr;
 static int32 free_timer_list_max = 0;
 static int32 free_timer_list_pos = 0;
 
@@ -434,7 +434,7 @@ const char* timestamp2string(char* str, size_t size, time_t timestamp, const cha
 /*
  * Split given timein into year, month, day, hour, minute, second
  */
-void split_time(int32 timein, int* year, int* month, int* day, int* hour, int* minute, int32 *second) {
+void split_time(int32 timein, int32* year, int32* month, int32* day, int32* hour, int32* minute, int32 *second) {
 	const int32 factor_min = 60;
 	const int32 factor_hour = factor_min*60;
 	const int32 factor_day = factor_hour*24;

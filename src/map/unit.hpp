@@ -63,7 +63,7 @@ struct unit_data {
 	char title[NAME_LENGTH];
 	int32 group_id;
 
-	std::vector<int> shadow_scar_timer;
+	std::vector<int32> shadow_scar_timer;
 };
 
 struct view_data {

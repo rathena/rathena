@@ -500,8 +500,8 @@ public:
 	unsigned char head_dir; //0: Look forward. 1: Look right, 2: Look left.
 	t_tick client_tick;
 	int32 npc_id,npc_shopid; //for script follow scriptoid;   ,npcid
-	std::vector<int> npc_id_dynamic;
-	std::vector<int> areanpc, npc_ontouch_;	///< Array of OnTouch and OnTouch_ NPC ID
+	std::vector<int32> npc_id_dynamic;
+	std::vector<int32> areanpc, npc_ontouch_;	///< Array of OnTouch and OnTouch_ NPC ID
 	int32 npc_item_flag; //Marks the npc_id with which you can use items during interactions with said npc (see script command enable_itemuse)
 	int32 npc_menu; // internal variable, used in npc menu handling
 	int32 npc_amount;
@@ -818,9 +818,9 @@ public:
 	} achievement_data;
 
 	// Title system
-	std::vector<int> titles;
+	std::vector<int32> titles;
 
-	std::vector<int> cloaked_npc;
+	std::vector<int32> cloaked_npc;
 
 	/* ShowEvent Data Cache flags from map */
 	std::vector<s_qi_display> qi_display;

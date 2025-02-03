@@ -29,7 +29,7 @@ using namespace rathena;
 
 /// Instance Idle Queue data
 struct s_instance_wait {
-	std::deque<int> id;
+	std::deque<int32> id;
 	int32 timer;
 } instance_wait;
 

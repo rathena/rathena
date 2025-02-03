@@ -354,7 +354,7 @@ static struct {
 
 const char* parse_curly_close(const char* p);
 const char* parse_syntax_close(const char* p);
-const char* parse_syntax_close_sub(const char* p,int* flag);
+const char* parse_syntax_close_sub(const char* p,int32* flag);
 const char* parse_syntax(const char* p);
 static int32 parse_syntax_for_flag = 0;
 
@@ -2048,7 +2048,7 @@ const char* parse_syntax_close(const char *p) {
 // Close judgment if, for, while, of do
 //	 flag == 1 : closed
 //	 flag == 0 : not closed
-const char* parse_syntax_close_sub(const char* p,int* flag)
+const char* parse_syntax_close_sub(const char* p,int32* flag)
 {
 	char label[256];
 	int32 pos = syntax.curly_count - 1;
@@ -2634,11 +2634,11 @@ struct script_code* parse_script_( const char *src, const char *file, int32 line
 				ShowMessage(" %d", get_num(script_buf,&i));
 				break;
 			case C_POS:
-				ShowMessage(" 0x%06x", *(int*)(script_buf+i)&0xffffff);
+				ShowMessage(" 0x%06x", *(int32*)(script_buf+i)&0xffffff);
 				i += 3;
 				break;
 			case C_NAME:
-				j = (*(int*)(script_buf+i)&0xffffff);
+				j = (*(int32*)(script_buf+i)&0xffffff);
 				ShowMessage(" %s", ( j == 0xffffff ) ? "?? unknown ??" : get_str(j));
 				i += 3;
 				break;
@@ -4665,7 +4665,7 @@ void script_cleararray_pc( map_session_data* sd, const char* varname ){
 
 /// sets a temporary character array variable element idx to given value
 /// @param refcache Pointer to an int32 variable, which keeps a copy of the reference to varname and must be initialized to 0. Can be nullptr if only one element is set.
-void script_setarray_pc(map_session_data* sd, const char* varname, uint32 idx, int64 value, int* refcache)
+void script_setarray_pc(map_session_data* sd, const char* varname, uint32 idx, int64 value, int32* refcache)
 {
 	int32 key;
 
@@ -5049,7 +5049,7 @@ BUILDIN_FUNC(close2)
 /// Counts the number of valid and total number of options in 'str'
 /// If max_count > 0 the counting stops when that valid option is reached
 /// total is incremented for each option (nullptr is supported)
-static int32 menu_countoptions(const char* str, int32 max_count, int* total)
+static int32 menu_countoptions(const char* str, int32 max_count, int32* total)
 {
 	int32 count = 0;
 	int32 bogus_total;
@@ -8301,7 +8301,7 @@ BUILDIN_FUNC(makeitem2) {
 /// Counts / deletes the current item given by idx.
 /// Used by buildin_delitem_search
 /// Relies on all input data being already fully valid.
-static void buildin_delitem_delete(map_session_data* sd, int32 idx, int* amount, uint8 loc, bool delete_items)
+static void buildin_delitem_delete(map_session_data* sd, int32 idx, int32* amount, uint8 loc, bool delete_items)
 {
 	int32 delamount;
 	struct item *itm = nullptr;
@@ -27272,13 +27272,28 @@ BUILDIN_FUNC(itemlink)
 }
 
 BUILDIN_FUNC(mesitemlink){
-	t_itemid nameid = script_getnum( st, 2 );
-	std::shared_ptr<item_data> data = item_db.find( nameid );
-	
-	if( data == nullptr ){
-		ShowError( "buildin_mesitemlink: Item ID %u does not exists.\n", nameid );
-		script_pushconststr( st, "" );
-		return SCRIPT_CMD_FAILURE;
+	std::shared_ptr<item_data> data;
+
+	if( script_isstring( st, 2 ) ){
+		const char* item_name = script_getstr( st, 2 );
+
+		data = item_db.searchname( item_name );
+
+		if( data == nullptr ){
+			ShowError( "buildin_mesitemlink: Item \"%s\" does not exist.\n", item_name );
+			script_pushconststr( st, "" );
+			return SCRIPT_CMD_FAILURE;
+		}
+	}else{
+		t_itemid nameid = script_getnum( st, 2 );
+
+		data = item_db.find( nameid );
+
+		if( data == nullptr ){
+			ShowError( "buildin_mesitemlink: Item ID %u does not exist.\n", nameid );
+			script_pushconststr( st, "" );
+			return SCRIPT_CMD_FAILURE;
+		}
 	}
 
 	bool use_brackets = true;
@@ -28379,7 +28394,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(item_reform, "??"),
 	BUILDIN_DEF(item_enchant, "i?"),
 	BUILDIN_DEF(itemlink, "i?????????"),
-	BUILDIN_DEF(mesitemlink, "i??"),
+	BUILDIN_DEF(mesitemlink, "v??"),
 	BUILDIN_DEF(addfame, "i?"),
 	BUILDIN_DEF(getfame, "?"),
 	BUILDIN_DEF(getfamerank, "?"),

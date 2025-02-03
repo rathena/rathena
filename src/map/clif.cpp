@@ -12438,7 +12438,7 @@ void clif_parse_ChatRoomStatusChange(int32 fd, map_session_data* sd){
 
 	safestrncpy( s_password, p->password, sizeof( s_password ) );
 	// NOTE: assumes that safestrncpy will not access the len+1'th byte
-	safestrncpy( s_title, p->title, min( len + 1, CHATROOM_TITLE_SIZE ) );
+	safestrncpy( s_title, p->title, std::min<size_t>( len + 1, CHATROOM_TITLE_SIZE ) );
 
 	chat_changechatstatus( sd, s_title, s_password, p->limit, p->type );
 }
@@ -13391,7 +13391,7 @@ void clif_parse_NpcStringInput(int32 fd, map_session_data* sd){
 	message_len++;
 #endif
 
-	safestrncpy( sd->npc_str, p->value, min( message_len, CHATBOX_SIZE ) );
+	safestrncpy( sd->npc_str, p->value, std::min<size_t>( message_len, CHATBOX_SIZE ) );
 
 	if( battle_config.idletime_option&IDLE_NPC_INPUT ){
 		sd->idletime = last_tick;
@@ -25565,6 +25565,38 @@ void clif_specialpopup(map_session_data& sd, int32 id ){
 	p.ppId = id;
 
 	clif_send( &p, sizeof( p ), &sd.bl, SELF);
+#endif
+}
+
+/// 0c0c <result>.W (ZC_GM_CHECKER)
+void clif_macro_checker( map_session_data& sd, e_macro_checker_result result ){
+#if PACKETVER_MAIN_NUM >= 20240502
+	PACKET_ZC_GM_CHECKER p = {};
+
+	p.packetType = HEADER_ZC_GM_CHECKER;
+	p.result = result;
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
+}
+
+/// /macrochecker <mapname>
+/// 0c0b <mapname>.16B (CZ_GM_CHECKER)
+void clif_parse_macro_checker( int32 fd, map_session_data* sd ){
+#if PACKETVER_MAIN_NUM >= 20240502
+	if( !pc_can_use_command(sd, "macrochecker", COMMAND_ATCOMMAND)) {
+		return;
+	}
+
+	const PACKET_CZ_GM_CHECKER* p = reinterpret_cast<PACKET_CZ_GM_CHECKER*>( RFIFOP( fd, 0 ) );
+	char command[CHAT_SIZE_MAX];
+	char mapname[MAP_NAME_LENGTH_EXT];
+
+	safestrncpy( mapname, p->mapname, sizeof( mapname ) );
+
+	safesnprintf( command, sizeof( command ),"%cmacrochecker %s", atcommand_symbol, mapname );
+
+	is_atcommand( sd->fd, sd, command, 1 );
 #endif
 }
 

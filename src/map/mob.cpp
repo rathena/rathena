@@ -1423,7 +1423,7 @@ static int32 mob_warpchase_sub(struct block_list *bl,va_list ap) {
 
 	target= va_arg(ap, struct block_list*);
 	target_nd= va_arg(ap, struct npc_data**);
-	min_distance= va_arg(ap, int*);
+	min_distance= va_arg(ap, int32*);
 
 	nd = (TBL_NPC*) bl;
 
