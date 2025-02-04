@@ -1063,7 +1063,7 @@ int32 do_sockets(t_tick next)
 // IP rules and DDoS protection
 
 struct ConnectHistory {
-	explicit ConnectHistory(t_tick tick) : tick(tick) {}
+	explicit ConnectHistory(t_tick _tick) : tick(_tick) {}
 
 	t_tick tick{};
 	int32 count{0};
