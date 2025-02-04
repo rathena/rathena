@@ -2356,10 +2356,6 @@ int32 status_base_amotion_pc(map_session_data* sd, struct status_data* status)
 	if (job == nullptr)
 		return AMOTION_ZERO_ASPD;
 
-	// Angra Manyu disregards aspd_base and similar
-	if (pc_checkequip2(sd, ITEMID_ANGRA_MANYU, EQI_ACC_L, EQI_MAX))
-		return 0;
-
 	// Base weapon delay
 	int32 amotion = (sd->status.weapon < MAX_WEAPON_TYPE)
 	 ? (job->aspd_base[sd->status.weapon]) // Single weapon
