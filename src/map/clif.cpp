@@ -10294,21 +10294,18 @@ void clif_configuration( map_session_data* sd, enum e_config_type type, bool ena
 }
 
 
-/// The player's 'view equip' state, sent during login (ZC_CONFIG_NOTIFY).
-/// 02da <open equip window>.B
+/// The player's 'view equip' state, sent during login.
+/// 02da <open equip window>.B (ZC_CONFIG_NOTIFY)
 /// open equip window:
 ///     0 = disabled
 ///     1 = enabled
-void clif_equipcheckbox(map_session_data* sd)
-{
-	int32 fd;
-	nullpo_retv(sd);
-	fd = sd->fd;
+void clif_equipcheckbox( map_session_data& sd ){
+	PACKET_ZC_CONFIG_NOTIFY p{};
 
-	WFIFOHEAD(fd, packet_len(0x2da));
-	WFIFOW(fd, 0) = 0x2da;
-	WFIFOB(fd, 2) = (sd->status.show_equip ? 1 : 0);
-	WFIFOSET(fd, packet_len(0x2da));
+	p.packetType = HEADER_ZC_CONFIG_NOTIFY;
+	p.flag = sd.status.show_equip;
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 }
 
 
@@ -11019,7 +11016,7 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 	if( sd->state.changemap ) {// restore information that gets lost on map-change
 		clif_partyinvitationstate( *sd );
 #if PACKETVER >= 20070918
-		clif_equipcheckbox(sd);
+		clif_equipcheckbox( *sd );
 #endif
 		clif_pet_autofeed_status(sd,false);
 		clif_configuration( sd, CONFIG_CALL, sd->status.disable_call );
