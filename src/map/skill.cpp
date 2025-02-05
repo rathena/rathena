@@ -2215,7 +2215,7 @@ int32 skill_additional_effect( struct block_list* src, struct block_list *bl, ui
 	case SS_FUUMASHOUAKU:
 	case SS_KUNAIWAIKYOKU:
 	case SS_ANTENPOU:
-		sc_start(src, bl, SC_NIGHTMARE, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
+		sc_start(src, bl, skill_get_sc(skill_id), 100, skill_lv, skill_get_time2(skill_id, skill_lv));
 		break;
 	case SS_KAGEAKUMU:
 	case SS_HITOUAKUMU:
@@ -5511,7 +5511,7 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 
 	case SS_KAGEGISSEN:
 		skill_mirage_cast(*src, bl, skill_id, skill_lv, 0, 0, tick, flag);
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv, 1);
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		[[fallthrough]];
 	case NC_FLAMELAUNCHER:
 		skill_area_temp[1] = bl->id;
@@ -6090,7 +6090,7 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 					break;
 				case SS_KINRYUUHOU:
 					skill_mirage_cast(*src, nullptr, SS_ANTENPOU, skill_lv, 0, 0, tick, flag);
-					clif_skill_nodamage(src, *bl, skill_id, skill_lv, 1);
+					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 					break;
 			}
 
@@ -13585,7 +13585,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 	case SS_HITOUAKUMU: {
 		int32 range = skill_get_splash( skill_id, skill_lv );
 
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv, 1);
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 
 		map_foreachinrange( skill_area_sub, bl, range, BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id );
 		} break;
@@ -13595,7 +13595,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		} else {
 			int32 range = skill_get_splash( skill_id, skill_lv );
 
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv, 1);
+			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 
 			map_foreachinrange( skill_area_sub, bl, range, BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_nodamage_id );
 		}
@@ -15499,7 +15499,7 @@ int32 skill_castend_pos2(struct block_list* src, int32 x, int32 y, uint16 skill_
 
 	case SS_KUNAIKUSSETSU:
 		map_foreachinallrange(skill_detonator, src, skill_get_splash(skill_id, skill_lv), BL_SKILL, src, skill_lv);
-		clif_skill_nodamage(src, *src, skill_id, skill_lv, 1);
+		clif_skill_nodamage(src, *src, skill_id, skill_lv);
 		break;
 	case SS_RAIDENPOU:
 	case SS_SEKIENHOU:
@@ -15509,7 +15509,7 @@ int32 skill_castend_pos2(struct block_list* src, int32 x, int32 y, uint16 skill_
 			clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
 			return 0;
 		}
-		clif_skill_nodamage(src, *src, skill_id, skill_lv, 1);
+		clif_skill_nodamage(src, *src, skill_id, skill_lv);
 		if (battle_config.skill_eightpath_algorithm) {
 			//Use official AoE algorithm
 			map_foreachindir(skill_attack_area, src->m, src->x, src->y, x, y,
@@ -15524,8 +15524,8 @@ int32 skill_castend_pos2(struct block_list* src, int32 x, int32 y, uint16 skill_
 		break;
 	case SS_SHINKIROU:
 		flag |= 1;
-		clif_skill_nodamage(src, *src, skill_id, skill_lv, 1);
-		sc_start(src, src, SC_SHINKIROU_CALL, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		clif_skill_nodamage(src, *src, skill_id, skill_lv);
+		sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		skill_unitsetting(src, skill_id, skill_lv, x, y, 0);
 		break;
 	case SS_KAGEGARI:

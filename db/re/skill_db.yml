@@ -43841,7 +43841,6 @@ Body:
       NoDamage: true
       Splash: true
     SplashArea: 7
-    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 250
     Cooldown: 15000
@@ -43856,7 +43855,6 @@ Body:
     Range: 5
     DamageFlags:
       NoDamage: true
-    CastCancel: true
     CastTime: 2000
     Duration1: 20000
     Cooldown: 3000
@@ -43944,7 +43942,6 @@ Body:
         Area: 4
     AfterCastActDelay: 250
     Cooldown: 500
-    CastCancel: true
     FixedCastTime:
       - Level: 1
         Time: 1000
@@ -44037,7 +44034,6 @@ Body:
     GiveAp: 3
     Element: Weapon
     ActiveInstance: 2
-    CastCancel: true
     CastTime: 1200
     Duration1: 5000
     Duration2: 5000
@@ -44107,7 +44103,6 @@ Body:
     Element: Weapon
     SplashArea: 2
     ActiveInstance: 13
-    CastCancel: true
     CastTime: 1200
     Cooldown: 1000
     FixedCastTime: 1000
@@ -44154,7 +44149,6 @@ Body:
     Duration1: 5000
     Duration2: 5000
     Cooldown: 300
-    CastCancel: true
     CastTime: 200
     Requires:
       SpCost:
@@ -44253,7 +44247,6 @@ Body:
       Splash: true
       IgnoreFlee: true
     SplashArea: 7
-    CastCancel: true
     CastTime: 1500
     AfterCastActDelay: 500
     Duration1: 2000
@@ -44306,7 +44299,6 @@ Body:
     DamageFlags:
       Splash: true
     SplashArea: 1
-    CastCancel: true
     CastTime: 2000
     Cooldown: 700
     FixedCastTime: 1000
@@ -44368,7 +44360,6 @@ Body:
         Area: 3
       - Level: 10
         Area: 4
-    CastCancel: true
     CastTime: 3000
     Cooldown: 500
     FixedCastTime: 1000
@@ -44411,7 +44402,6 @@ Body:
     DamageFlags:
       Splash: true
     SplashArea: 1
-    CastCancel: true
     CastTime: 2000
     Cooldown: 700
     FixedCastTime: 1000
@@ -44473,7 +44463,6 @@ Body:
         Area: 4
       - Level: 10
         Area: 4
-    CastCancel: true
     CastTime: 3000
     Cooldown: 300
     FixedCastTime: 1000
@@ -44536,7 +44525,6 @@ Body:
         Area: 3
       - Level: 10
         Area: 3
-    CastCancel: true
     CastTime: 3000
     Cooldown: 500
     FixedCastTime: 1000
@@ -44580,7 +44568,6 @@ Body:
     DamageFlags:
       Splash: true
     SplashArea: 6
-    CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 500
     Cooldown: 1000
@@ -44602,7 +44589,6 @@ Body:
       Splash: true
       IgnoreFlee: true
     SplashArea: 6
-    CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 500
     Cooldown: 1000
@@ -44623,7 +44609,6 @@ Body:
     DamageFlags:
       Splash: true
     SplashArea: 5
-    CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 500
     Cooldown: 1000

@@ -2858,18 +2858,33 @@ bool is_infinite_defense(struct block_list *target, int32 flag)
  */
 static bool is_skill_using_arrow(struct block_list *src, int32 skill_id)
 {
-	if(src != nullptr) {
-		status_data* sstatus = status_get_status_data(*src);
-		map_session_data *sd = BL_CAST(BL_PC, src);
-
-		return ((sd && sd->state.arrow_atk) || (!sd && ((skill_id && skill_get_ammotype(skill_id)) || sstatus->rhw.range>3)) 
-				|| (skill_id == HT_PHANTASMIC) 
-				|| (skill_id == GS_GROUNDDRIFT)
-				|| (skill_id == SS_KUNAIKUSSETSU)
-				|| (skill_id == SS_KUNAIKAITEN)
-				);
-	} else
+	if (src == nullptr)
 		return false;
+
+	map_session_data *sd = BL_CAST(BL_PC, src);
+
+	if (sd != nullptr && sd->state.arrow_atk)
+		return true;
+
+	if (sd == nullptr && skill_id != 0) {
+		if (skill_get_ammotype(skill_id) != 0)
+			return true;
+
+		status_data* sstatus = status_get_status_data(*src);
+
+		if (sstatus->rhw.range > 3)
+			return true;
+	}
+
+	switch( skill_id ) {
+		case HT_PHANTASMIC:
+		case GS_GROUNDDRIFT:
+		case SS_KUNAIKUSSETSU:
+		case SS_KUNAIKAITEN:
+			return true;
+	}
+
+	return false;
 }
 
 /*=========================================
