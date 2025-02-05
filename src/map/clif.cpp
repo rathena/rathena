@@ -11183,16 +11183,15 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 }
 
 
-/// Server's tick (ZC_NOTIFY_TIME).
-/// 007f <time>.L
-void clif_notify_time(map_session_data* sd, t_tick time)
-{
-	int32 fd = sd->fd;
+/// Server's tick.
+/// 007f <time>.L (ZC_NOTIFY_TIME)
+void clif_notify_time( map_session_data& sd, t_tick time ){
+	PACKET_ZC_NOTIFY_TIME p{};
 
-	WFIFOHEAD(fd,packet_len(0x7f));
-	WFIFOW(fd,0) = 0x7f;
-	WFIFOL(fd,2) = client_tick(time);
-	WFIFOSET(fd,packet_len(0x7f));
+	p.packetType = HEADER_ZC_NOTIFY_TIME;
+	p.time = client_tick(time);
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 }
 
 
@@ -11205,7 +11204,7 @@ void clif_parse_TickSend(int32 fd, map_session_data *sd)
 	// TODO: shuffle packet
 	sd->client_tick = RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[0]);
 
-	clif_notify_time(sd, gettick());
+	clif_notify_time( *sd, gettick() );
 }
 
 
