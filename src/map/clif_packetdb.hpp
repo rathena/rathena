@@ -826,7 +826,6 @@
 	packet(0x028e,4);
 	packet(0x028f,6);
 	packet(0x0290,4);
-	packet(0x0291,4);
 	parseable_packet(0x0292,2,clif_parse_AutoRevive,0);
 	packet(0x0293,70);
 	packet(0x0294,10);

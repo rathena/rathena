@@ -10371,18 +10371,17 @@ void clif_viewequip_ack( map_session_data& sd, map_session_data& tsd ){
 }
 
 
-/// Display msgstringtable.txt string (ZC_MSG).
-/// 0291 <message>.W
-void clif_msg(map_session_data* sd, uint16 id)
-{
-	int32 fd;
-	nullpo_retv(sd);
-	fd = sd->fd;
+/// Display msgstringtable.txt string.
+/// 0291 <message>.W (ZC_MSG)
+void clif_msg( map_session_data& sd, e_clif_messages msg_id ){
+#if PACKETVER >= 20060424
+	PACKET_ZC_MSG p{};
 
-	WFIFOHEAD(fd, packet_len(0x291));
-	WFIFOW(fd, 0) = 0x291;
-	WFIFOW(fd, 2) = id;  // zero-based msgstringtable.txt index
-	WFIFOSET(fd, packet_len(0x291));
+	p.packetType = HEADER_ZC_MSG;
+	p.msgId = static_cast<decltype(p.msgId)>( msg_id );  // zero-based msgstringtable.txt index
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
 }
 
 
@@ -12083,7 +12082,7 @@ void clif_parse_UseItem(int32 fd, map_session_data *sd)
 	}
 
 	if ( (!sd->npc_id && pc_istrading(sd)) || sd->chatID || (sd->state.block_action & PCBLOCK_USEITEM) ) {
-		clif_msg(sd, MSI_BUSY);
+		clif_msg( *sd, MSI_BUSY );
 		return;
 	}
 
@@ -12207,7 +12206,7 @@ void clif_parse_NpcClicked( int32 fd, map_session_data* sd ){
 
 	if( pc_cant_act2(sd) || sd->npc_id || pc_hasprogress( sd, WIP_DISABLE_NPC ) ){
 #ifdef RENEWAL
-		clif_msg( sd, MSI_BUSY);
+		clif_msg( *sd, MSI_BUSY );
 #endif
 		return;
 	}
@@ -12229,7 +12228,7 @@ void clif_parse_NpcClicked( int32 fd, map_session_data* sd ){
 		case BL_NPC:
 #ifdef RENEWAL
 			if (sd->ud.skill_id < RK_ENCHANTBLADE && sd->ud.skilltimer != INVALID_TIMER) { // Should only show an error message for non-3rd job skills with a running timer
-				clif_msg(sd, MSI_BUSY);
+				clif_msg( *sd, MSI_BUSY );
 				break;
 			}
 #endif
@@ -12683,7 +12682,7 @@ void clif_parse_ChangeCart(int32 fd,map_session_data *sd)
 
 #ifdef RENEWAL
 	if (sd->npc_id || pc_hasprogress(sd, WIP_DISABLE_SKILLITEM)) {
-		clif_msg(sd, MSI_BUSY);
+		clif_msg( *sd, MSI_BUSY );
 		return;
 	}
 #endif
@@ -12881,7 +12880,7 @@ void clif_parse_skill_toid( map_session_data* sd, uint16 skill_id, uint16 skill_
 		return; //Using a ground/passive skill on a target? WRONG.
 
 	if (sd->state.block_action & PCBLOCK_SKILL) {
-		clif_msg(sd, MSI_BUSY);
+		clif_msg( *sd, MSI_BUSY );
 		return;
 	}
 
@@ -12907,7 +12906,7 @@ void clif_parse_skill_toid( map_session_data* sd, uint16 skill_id, uint16 skill_
 	if( sd->npc_id ){
 		if( pc_hasprogress( sd, WIP_DISABLE_SKILLITEM ) || !sd->npc_item_flag || !( inf & INF_SELF_SKILL ) ){
 #ifdef RENEWAL
-			clif_msg( sd, MSI_BUSY);
+			clif_msg( *sd, MSI_BUSY );
 #endif
 			return;
 		}
@@ -13007,7 +13006,7 @@ static void clif_parse_UseSkillToPosSub( int32 fd, map_session_data& sd, uint16 
 		return; //Using a target skill on the ground? WRONG.
 
 	if (sd.state.block_action & PCBLOCK_SKILL) {
-		clif_msg(&sd, MSI_BUSY);
+		clif_msg( sd, MSI_BUSY );
 		return;
 	}
 
@@ -13023,7 +13022,7 @@ static void clif_parse_UseSkillToPosSub( int32 fd, map_session_data& sd, uint16 
 
 	if( pc_hasprogress( &sd, WIP_DISABLE_SKILLITEM ) ){
 #ifdef RENEWAL
-		clif_msg( &sd, MSI_BUSY);
+		clif_msg( sd, MSI_BUSY );
 #endif
 		return;
 	}
@@ -13632,7 +13631,7 @@ void clif_parse_MoveToKafra(int32 fd, map_session_data *sd)
 	if (item_index < 0 || item_index >= MAX_INVENTORY || item_amount < 1)
 		return;
 	if( sd->inventory.u.items_inventory[item_index].equipSwitch ){
-		clif_msg( sd, MSI_SWAP_EQUIPITEM_UNREGISTER_FIRST );
+		clif_msg( *sd, MSI_SWAP_EQUIPITEM_UNREGISTER_FIRST );
 		return;
 	}
 
@@ -14363,12 +14362,12 @@ void clif_parse_GuildChangeMemberPosition( int32 fd, map_session_data *sd ){
 		// Guild leadership change
 		if( entry.position == 0 ){
 			if( !battle_config.guild_leaderchange_woe && is_agit_start() ){
-				clif_msg( sd, MSI_IMPOSSIBLE_CHANGE_GUILD_MASTER_IN_SIEGE_TIME );
+				clif_msg( *sd, MSI_IMPOSSIBLE_CHANGE_GUILD_MASTER_IN_SIEGE_TIME );
 				return;
 			}
 
 			if( battle_config.guild_leaderchange_delay && DIFF_TICK( time( nullptr ),sd->guild->guild.last_leader_change ) < battle_config.guild_leaderchange_delay ){
-				clif_msg( sd, MSI_IMPOSSIBLE_CHANGE_GUILD_MASTER_NOT_TIME );
+				clif_msg( *sd, MSI_IMPOSSIBLE_CHANGE_GUILD_MASTER_NOT_TIME );
 				return;
 			}
 
@@ -16746,7 +16745,7 @@ void clif_parse_Mail_setattach(int32 fd, map_session_data *sd){
 	flag = mail_setitem(sd, idx, amount);
 
 	if( flag == MAIL_ATTACH_EQUIPSWITCH ){
-		clif_msg( sd, MSI_SWAP_EQUIPITEM_UNREGISTER_FIRST );
+		clif_msg( *sd, MSI_SWAP_EQUIPITEM_UNREGISTER_FIRST );
 	}else{
 		clif_Mail_setattachment(sd,idx,amount,flag);
 	}
@@ -17695,7 +17694,7 @@ void clif_parse_ViewPlayerEquip(int32 fd, map_session_data* sd)
 	else if( tsd->status.show_equip || pc_has_permission(sd, PC_PERM_VIEW_EQUIPMENT) )
 		clif_viewequip_ack( *sd, *tsd );
 	else
-		clif_msg(sd, MSI_OPEN_EQUIPEDITEM_REFUSED);
+		clif_msg( *sd, MSI_OPEN_EQUIPEDITEM_REFUSED );
 }
 
 
@@ -21205,7 +21204,7 @@ void clif_merge_item_open( map_session_data& sd ){
 
 	// No item need to be merged
 	if( n < 2 ){
-		clif_msg( &sd, MSI_NOT_EXIST_MERGE_ITEM );
+		clif_msg( sd, MSI_NOT_EXIST_MERGE_ITEM );
 		return;
 	}
 
@@ -21226,7 +21225,7 @@ void clif_parse_merge_item_req( int32 fd, map_session_data* sd ){
 
 	// No item need to be merged
 	if( count < 2 ){
-		clif_msg( sd, MSI_NOT_EXIST_MERGE_ITEM );
+		clif_msg( *sd, MSI_NOT_EXIST_MERGE_ITEM );
 		return;
 	}
 
@@ -21237,7 +21236,7 @@ void clif_parse_merge_item_req( int32 fd, map_session_data* sd ){
 	}
 
 	if( !clif_merge_item_check( sd->inventory_data[idx_main], &sd->inventory.u.items_inventory[idx_main] ) ){
-		clif_msg( sd, MSI_NOT_EXIST_MERGE_ITEM );
+		clif_msg( *sd, MSI_NOT_EXIST_MERGE_ITEM );
 		return;
 	}
 
@@ -21261,7 +21260,7 @@ void clif_parse_merge_item_req( int32 fd, map_session_data* sd ){
 		}
 
 		if( !clif_merge_item_check( sd->inventory_data[idx], &sd->inventory.u.items_inventory[idx] ) ){
-			clif_msg( sd, MSI_NOT_EXIST_MERGE_ITEM );
+			clif_msg( *sd, MSI_NOT_EXIST_MERGE_ITEM );
 			return;
 		}
 
@@ -21269,7 +21268,7 @@ void clif_parse_merge_item_req( int32 fd, map_session_data* sd ){
 	}
 
 	if( indices.empty() ){
-		clif_msg( sd, MSI_NOT_EXIST_MERGE_ITEM );
+		clif_msg( *sd, MSI_NOT_EXIST_MERGE_ITEM );
 		return;
 	}
 
@@ -22392,7 +22391,7 @@ void clif_parse_equipswitch_request_single( int32 fd, map_session_data* sd ){
 		if( sd->npc_id ){
 #ifdef RENEWAL
 			if( pc_hasprogress( sd, WIP_DISABLE_SKILLITEM ) ){
-				clif_msg( sd, MSI_BUSY);
+				clif_msg( *sd, MSI_BUSY );
 				return;
 			}
 #endif
