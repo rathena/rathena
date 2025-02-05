@@ -6425,7 +6425,7 @@ void clif_cooking_list( map_session_data& sd, int32 trigger, uint16 skill_id, in
 		clif_menuskill_clear( &sd );
 
 #if PACKETVER >= 20090922
-		clif_msg_skill( &sd, skill_id, MSI_SKILL_INVENTORY_KINDCNT_OVER );
+		clif_msg_skill( sd, skill_id, MSI_SKILL_INVENTORY_KINDCNT_OVER );
 #else
 		clif_send( p, p->packetLength, &sd.bl, SELF );
 #endif
@@ -10400,20 +10400,21 @@ void clif_msg_value(map_session_data* sd, uint16 id, int32 value)
 }
 
 
-/// Displays msgstringtable.txt string, prefixed with a skill name. (ZC_MSG_SKILL).
-/// 07e6 <skill id>.W <msg id>.L
+/// Displays msgstringtable.txt string, prefixed with a skill name..
+/// 07e6 <skill id>.W <msg id>.L (ZC_MSG_SKILL)
 ///
 /// NOTE: Message has following format and is printed in color 0xCDCDFF (purple):
 ///       "[SkillName] Message"
-void clif_msg_skill(map_session_data* sd, uint16 skill_id, int32 msg_id)
-{
-	int32 fd = sd->fd;
+void clif_msg_skill( map_session_data& sd, uint16 skill_id, e_clif_messages msg_id ){
+#if PACKETVER >= 20090818
+	PACKET_ZC_MSG_SKILL p{};
 
-	WFIFOHEAD(fd, packet_len(0x7e6));
-	WFIFOW(fd,0) = 0x7e6;
-	WFIFOW(fd,2) = skill_id;
-	WFIFOL(fd,4) = msg_id;
-	WFIFOSET(fd, packet_len(0x7e6));
+	p.packetType = HEADER_ZC_MSG_SKILL;
+	p.skillId = skill_id;
+	p.msgId = static_cast<decltype(p.msgId)>( msg_id );
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
 }
 
 /// Displays msgstringtable.txt string in a color. (ZC_MSG_COLOR).

@@ -23105,7 +23105,7 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 			if (k) {
 				clif_produceeffect(sd,6,nameid);
 				clif_misceffect( sd->bl, NOTIFYEFFECT_PHARMACY_SUCCESS );
-				clif_msg_skill(sd,skill_id, MSI_SKILL_SUCCESS);
+				clif_msg_skill( *sd, skill_id, MSI_SKILL_SUCCESS );
 				return true;
 			}
 		} else if (tmp_item.amount) { //Success
@@ -23125,17 +23125,17 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 				case GN_S_PHARMACY:
 					clif_produceeffect(sd, 6, nameid);
 					clif_misceffect( sd->bl, NOTIFYEFFECT_PHARMACY_SUCCESS );
-					clif_msg_skill(sd, skill_id, MSI_SKILL_SUCCESS);
+					clif_msg_skill( *sd, skill_id, MSI_SKILL_SUCCESS );
 					break;
 				case MT_M_MACHINE:
 					clif_produceeffect(sd, 0, nameid);
 					clif_misceffect( sd->bl, NOTIFYEFFECT_REFINE_SUCCESS );
-					clif_msg_skill(sd, skill_id, MSI_SKILL_SUCCESS);
+					clif_msg_skill( *sd, skill_id, MSI_SKILL_SUCCESS );
 					break;
 				case BO_BIONIC_PHARMACY:
 					clif_produceeffect(sd, 2, nameid);
 					clif_misceffect( sd->bl, NOTIFYEFFECT_PHARMACY_SUCCESS );
-					clif_msg_skill(sd, skill_id, MSI_SKILL_SUCCESS);
+					clif_msg_skill( *sd, skill_id, MSI_SKILL_SUCCESS );
 					break;
 			}
 			return true;
@@ -23204,7 +23204,7 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 					}
 					clif_produceeffect(sd,7,nameid);
 					clif_misceffect( sd->bl, NOTIFYEFFECT_PHARMACY_FAILURE );
-					clif_msg_skill(sd, skill_id, MSI_SKILL_FAIL);
+					clif_msg_skill( *sd, skill_id, MSI_SKILL_FAIL );
 				}
 				break;
 			case GN_MAKEBOMB:
@@ -23212,17 +23212,17 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 			case GN_CHANGEMATERIAL:
 				clif_produceeffect(sd,7,nameid);
 				clif_misceffect( sd->bl, NOTIFYEFFECT_PHARMACY_FAILURE );
-				clif_msg_skill(sd, skill_id, MSI_SKILL_FAIL);
+				clif_msg_skill( *sd, skill_id, MSI_SKILL_FAIL );
 				break;
 			case MT_M_MACHINE:
 				clif_produceeffect(sd, 1, nameid);
 				clif_misceffect( sd->bl, NOTIFYEFFECT_REFINE_FAILURE );
-				clif_msg_skill(sd, skill_id, MSI_SKILL_FAIL);
+				clif_msg_skill( *sd, skill_id, MSI_SKILL_FAIL );
 				break;
 			case BO_BIONIC_PHARMACY:
 				clif_produceeffect(sd, 3, nameid);
 				clif_misceffect( sd->bl, NOTIFYEFFECT_PHARMACY_FAILURE );
-				clif_msg_skill(sd, skill_id, MSI_SKILL_FAIL);
+				clif_msg_skill( *sd, skill_id, MSI_SKILL_FAIL );
 				break;
 			default:
 				if (skill_produce_db[idx].itemlv > 10 && skill_produce_db[idx].itemlv <= 20 ) { //Cooking items.
@@ -23586,7 +23586,7 @@ int32 skill_changematerial(map_session_data *sd, int32 n, uint16 *item_list) {
 							nameid = sd->inventory.u.items_inventory[idx].nameid;
 							amount = item_list[k*2+1];
 							if( nameid > 0 && sd->inventory.u.items_inventory[idx].identify == 0 ){
-								clif_msg_skill(sd, GN_CHANGEMATERIAL, MSI_SKILL_FAIL_MATERIAL_IDENTITY);
+								clif_msg_skill( *sd, GN_CHANGEMATERIAL, MSI_SKILL_FAIL_MATERIAL_IDENTITY );
 								return 0;
 							}
 							if( nameid == skill_produce_db[i].mat_id[j] && (amount-p*skill_produce_db[i].mat_amount[j]) >= skill_produce_db[i].mat_amount[j]
@@ -23608,7 +23608,7 @@ int32 skill_changematerial(map_session_data *sd, int32 n, uint16 *item_list) {
 	}
 
 	if( p == 0)
-		clif_msg_skill(sd, GN_CHANGEMATERIAL, MSI_SKILL_RECIPE_NOTEXIST);
+		clif_msg_skill( *sd, GN_CHANGEMATERIAL, MSI_SKILL_RECIPE_NOTEXIST );
 
 	return 0;
 }
