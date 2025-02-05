@@ -1186,7 +1186,7 @@ void clif_disp_overhead_(struct block_list *bl, const char* mes, enum send_targe
 void clif_get_weapon_view(map_session_data* sd, t_itemid *rhand, t_itemid *lhand);
 
 void clif_party_xy_remove(map_session_data *sd); //Fix for minimap [Kevin]
-void clif_gospel_info(map_session_data *sd, int32 type);
+void clif_gospel_info( map_session_data& sd, int32 type );
 void clif_feel_req(int32 fd, map_session_data *sd, uint16 skill_lv);
 void clif_starskill(map_session_data* sd, const char* mapname, int32 monster_id, unsigned char star, unsigned char result);
 void clif_feel_info(map_session_data* sd, unsigned char feel_level, unsigned char type);

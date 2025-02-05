@@ -10164,8 +10164,8 @@ void clif_party_xy_remove(map_session_data* sd)
 }
 
 
-/// Displays a skill message (thanks to Rayce) (ZC_SKILLMSG).
-/// 0215 <msg id>.L
+/// Displays a skill message (thanks to Rayce).
+/// 0215 <msg id>.L (ZC_SKILLMSG)
 /// msg id:
 ///     0x15 = End all negative status (PA_GOSPEL)
 ///     0x16 = Immunity to all status (PA_GOSPEL)
@@ -10179,14 +10179,15 @@ void clif_party_xy_remove(map_session_data* sd)
 ///     0x20 = HIT/Flee +50 (PA_GOSPEL)
 ///     0x28 = Full strip failed because of coating (ST_FULLSTRIP)
 ///     ? = nothing
-void clif_gospel_info(map_session_data *sd, int32 type)
-{
-	int32 fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0x215));
-	WFIFOW(fd,0)=0x215;
-	WFIFOL(fd,2)=type;
-	WFIFOSET(fd, packet_len(0x215));
+void clif_gospel_info( map_session_data& sd, int32 type ){
+#if PACKETVER >= 20041101
+	PACKET_ZC_SKILLMSG p{};
 
+	p.packetType = HEADER_ZC_SKILLMSG;
+	p.msgId = type;
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
 }
 
 
