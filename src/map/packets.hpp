@@ -1938,6 +1938,7 @@ DEFINE_PACKET_HEADER(ZC_WARPLIST, 0xabe)
 #else
 DEFINE_PACKET_HEADER(ZC_WARPLIST, 0x11c)
 #endif
+DEFINE_PACKET_HEADER(ZC_MSG_COLOR, 0x9cd);
 
 
 const int16 MAX_INVENTORY_ITEM_PACKET_NORMAL = ( ( INT16_MAX - ( sizeof( struct packet_itemlist_normal ) - ( sizeof( struct NORMALITEM_INFO ) * MAX_ITEMLIST) ) ) / sizeof( struct NORMALITEM_INFO ) );
