@@ -10119,7 +10119,7 @@ int64 pc_readparam(map_session_data* sd,int64 type)
 		case SP_COOKMASTERY:     val = sd->cook_mastery; break;
 		case SP_ACHIEVEMENT_LEVEL: val = sd->achievement_data.level; break;
 		case SP_CRITICAL:        val = sd->battle_status.cri/10; break;
-		case SP_ASPD:            val = (2000-sd->battle_status.amotion)/10; break;
+		case SP_ASPD:            val = (AMOTION_ZERO_ASPD-sd->battle_status.amotion)/AMOTION_INTERVAL; break;
 		case SP_BASE_ATK:
 #ifdef RENEWAL
 			val = sd->bonus.eatk;
@@ -13804,14 +13804,18 @@ uint64 JobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			if (this->nodeExists(node, "BaseASPD")) {
 				const ryml::NodeRef& aspdNode = node["BaseASPD"];
 				uint8 max = MAX_WEAPON_TYPE;
+				int32 def_aspd = AMOTION_ZERO_ASPD;
 
-#ifdef RENEWAL // Renewal adds an extra column for shields
+#ifdef RENEWAL
+				// Renewal adds an extra column for shields
 				max += 1;
+				// Renewal uses ASPD penalty which is amotion divided by the amotion interval
+				def_aspd /= AMOTION_INTERVAL;
 #endif
 
 				if (!exists) {
 					job->aspd_base.resize(max);
-					std::fill(job->aspd_base.begin(), job->aspd_base.end(), 2000);
+					std::fill(job->aspd_base.begin(), job->aspd_base.end(), def_aspd);
 				}
 
 				for (const auto &aspdit : aspdNode) {
@@ -13840,12 +13844,16 @@ uint64 JobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			} else {
 				if (!exists) {
 					uint8 max = MAX_WEAPON_TYPE;
+					int32 def_aspd = AMOTION_ZERO_ASPD;
 
-#ifdef RENEWAL // Renewal adds an extra column for shields
+#ifdef RENEWAL
+					// Renewal adds an extra column for shields
 					max += 1;
+					// Renewal uses ASPD penalty which is amotion divided by the amotion interval
+					def_aspd /= AMOTION_INTERVAL;
 #endif
 					job->aspd_base.resize(max);
-					std::fill(job->aspd_base.begin(), job->aspd_base.end(), 2000);
+					std::fill(job->aspd_base.begin(), job->aspd_base.end(), def_aspd);
 				}
 			}
 
