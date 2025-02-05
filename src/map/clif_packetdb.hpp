@@ -145,7 +145,6 @@
 	packet(0x0147,39);
 	parseable_packet(0x0149,9,clif_parse_GMReqNoChat,2,6,7);
 	packet(0x014a,6);
-	packet(0x014b,27);
 	parseable_packet(0x014d,2,clif_parse_GuildCheckMaster,0);
 	parseable_packet(0x014f,6,clif_parse_GuildRequestInfo,2);
 	packet(0x0150,110);

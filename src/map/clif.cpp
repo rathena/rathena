@@ -9577,26 +9577,20 @@ void clif_manner_message(map_session_data* sd, uint32 type)
 	WFIFOSET(fd, packet_len(0x14a));
 }
 
-
-/// Followup to 0x14a type 3/5, informs who did the manner adjustment action (ZC_NOTIFY_MANNER_POINT_GIVEN).
-/// 014b <type>.B <GM name>.24B
+/// Followup to 0x14a type 3/5, informs who did the manner adjustment action.
+/// 014b <type>.B <GM name>.24B (ZC_NOTIFY_MANNER_POINT_GIVEN)
 /// type:
 ///     0 = positive (unmute)
 ///     1 = negative (mute)
-void clif_GM_silence(map_session_data* sd, map_session_data* tsd, uint8 type)
-{
-	int32 fd;
-	nullpo_retv(sd);
-	nullpo_retv(tsd);
+void clif_GM_silence( map_session_data& sd, map_session_data& tsd, bool muted ){
+	PACKET_ZC_NOTIFY_MANNER_POINT_GIVEN p{};
 
-	fd = tsd->fd;
-	WFIFOHEAD(fd,packet_len(0x14b));
-	WFIFOW(fd,0) = 0x14b;
-	WFIFOB(fd,2) = type;
-	safestrncpy(WFIFOCP(fd,3), sd->status.name, NAME_LENGTH);
-	WFIFOSET(fd, packet_len(0x14b));
+	p.packetType = HEADER_ZC_NOTIFY_MANNER_POINT_GIVEN;
+	p.type = muted;
+	safestrncpy( p.name, sd.status.name, sizeof( p.name ) );
+
+	clif_send( &p, sizeof( p ), &tsd.bl, SELF );
 }
-
 
 /// Notifies the client about the result of a request to allow/deny whispers from a player (ZC_SETTING_WHISPER_PC).
 /// 00d1 <type>.B <result>.B
