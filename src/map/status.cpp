@@ -2339,7 +2339,7 @@ int32 status_base_amotion_pc(map_session_data* sd, struct status_data* status)
 			temp_aspd = status->dex * status->dex / 5.0f + status->agi * status->agi * 0.5f;
 			break;
 	}
-	temp_aspd = (float)(sqrt(temp_aspd) * 0.25f) + 0xc4;
+	temp_aspd = (float)(sqrt(temp_aspd) * 0.25f) + 196;
 	if ((skill_lv = pc_checkskill(sd,SA_ADVANCEDBOOK)) > 0 && sd->status.weapon == W_BOOK)
 		val += (skill_lv - 1) / 2 + 1;
 	if ((skill_lv = pc_checkskill(sd, SG_DEVIL)) > 0 && ((sd->class_&MAPID_THIRDMASK) == MAPID_STAR_EMPEROR || pc_is_maxjoblv(sd)))
@@ -6162,7 +6162,7 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 
 #ifdef RENEWAL_ASPD
 			// RE ASPD % modifier
-			amotion += (max(0xc3 - amotion, 2) * (status->aspd_rate2 + status_calc_aspd(&bl, sc, false))) / 100;
+			amotion += (max(195 - amotion, 2) * (status->aspd_rate2 + status_calc_aspd(&bl, sc, false))) / 100;
 
 			// Renewal base value is actually ASPD and not amotion, so we need to convert it
 			amotion = AMOTION_ZERO_ASPD - amotion * AMOTION_INTERVAL;
@@ -8144,7 +8144,7 @@ static int16 status_calc_fix_aspd(struct block_list *bl, status_change *sc, int3
 	if (sc == nullptr || sc->empty())
 		return cap_value(aspd, 1, MIN_ASPD);
 	if (sc->getSCE(SC_OVERED_BOOST))
-		return cap_value(2000 - sc->getSCE(SC_OVERED_BOOST)->val3 * 10, 0, 2000);
+		return cap_value(AMOTION_ZERO_ASPD - sc->getSCE(SC_OVERED_BOOST)->val3 * AMOTION_INTERVAL, 1, MIN_ASPD);
 
 	if ((sc->getSCE(SC_GUST_OPTION) || sc->getSCE(SC_BLAST_OPTION) || sc->getSCE(SC_WILD_STORM_OPTION)))
 		aspd -= 50; // +5 ASPD
