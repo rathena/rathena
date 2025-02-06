@@ -936,7 +936,7 @@ void clif_changechatstatus(chat_data& cd);
 void clif_refresh_storagewindow(map_session_data *sd);
 void clif_refresh(map_session_data *sd);	// self
 
-void clif_emotion(struct block_list *bl,int32 type);
+void clif_emotion( block_list& bl, emotion_type type );
 void clif_talkiebox(struct block_list* bl, const char* talkie);
 void clif_wedding_effect(struct block_list *bl);
 void clif_divorced(map_session_data* sd, const char* name);
