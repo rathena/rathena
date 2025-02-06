@@ -171,11 +171,13 @@ un_bk_q	mapflag	noteleport
 un_myst	mapflag	noteleport
 verus04	mapflag	noteleport
 1@mcd	mapflag	noteleport
+1@ffp	mapflag	noteleport
 1@lab	mapflag	monster_noteleport
 1@uns	mapflag	monster_noteleport
 un_bk_q	mapflag	monster_noteleport
 verus04	mapflag	monster_noteleport
 1@mcd	mapflag	monster_noteleport
+1@ffp	mapflag	monster_noteleport
 
 //============================================================
 // Nightmare Biolab

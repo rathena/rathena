@@ -12008,6 +12008,26 @@
 3254,T_W_O@NPC_WIDESOULDRAIN,attack,680,10,10000,0,60000,no,self,always,0,,,,,,,
 3254,T_W_O@NPC_CRITICALWOUND,attack,673,5,1500,500,45000,no,target,always,,,,,,,,
 
+// Clan memorial
+3294,HEYDRICH@NPC_SUMMONSLAVE,attack,196,1,10000,0,5000,no,self,slavele,2,3295,,,,,,
+3294,HEYDRICH@NPC_SUMMONSLAVE,chase,196,1,10000,0,5000,no,self,slavele,2,3295,,,,,,
+3294,HEYDRICH@NPC_CRITICALWOUND,attack,673,1,2000,0,5000,no,target,always,0,,,,,,,
+3294,HEYDRICH@NPC_CRITICALSLASH,attack,170,1,2000,0,5000,no,target,always,0,,,,,,,
+3294,HEYDRICH@ASC_METEORASSAULT,attack,406,1,3000,500,5000,no,self,always,0,,,,,,,
+3294,HEYDRICH@NPC_POWERUP,chase,349,1,2000,1000,5000,no,self,always,0,,,,,,,
+3294,HEYDRICH@NPC_POWERUP,attack,349,1,2000,1000,5000,no,self,always,0,,,,,,,
+3294,HEYDRICH@NPC_DARKNESSATTACK,attack,190,1,2000,0,5000,no,target,always,0,,,,,,,
+3294,HEYDRICH@NPC_BLOODDRAIN,chase,199,1,2000,1000,5000,no,target,always,0,,,,,,,
+3294,HEYDRICH@NPC_BLOODDRAIN,attack,199,1,2000,1000,5000,no,target,always,0,,,,,,,
+3294,HEYDRICH@MG_FIREWALL,attack,18,1,1000,0,5000,yes,target,always,0,,,,,,,
+3294,HEYDRICH@MG_FIREWALL,chase,18,1,1000,0,5000,yes,target,always,0,,,,,,,
+3294,HEYDRICH@SA_DISPELL,attack,289,5,500,500,5000,no,target,always,0,,,,,,,
+3294,HEYDRICH@SA_DISPELL,chase,289,5,500,500,5000,no,target,always,0,,,,,,,
+3294,HEYDRICH@MG_THUNDERSTORM,chase,21,20,3000,0,5000,no,target,always,0,,,,,,,
+3294,HEYDRICH@MG_THUNDERSTORM,attack,21,20,2000,0,5000,no,target,always,0,,,,,,,
+3294,HEYDRICH@PR_LEXAETERNA,chase,78,1,500,0,5000,yes,target,always,0,,,,,,,
+3294,HEYDRICH@PR_LEXAETERNA,attack,78,1,500,0,5000,yes,target,always,0,,,,,,,
+
 // Episode 15.2 - Infinite Space
 3384,MIN_PORING@NPC_EMOTION,loot,197,1,2000,0,5000,yes,self,always,0,2,,,,,,
 3386,MIN_FABRE@NPC_GROUNDATTACK,attack,185,1,2000,0,5000,yes,target,always,0,,,,,,,

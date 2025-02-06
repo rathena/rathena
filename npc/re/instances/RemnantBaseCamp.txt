@@ -1,0 +1,1651 @@
+//===== rAthena Script =======================================
+//= Remnant's Base Camp
+//===== Description: =========================================
+//= [Official Conversion]
+//= Remnant's Base Camp Instance
+//===== Additional Comments: =================================
+//= 1.0 First version. [Atemo]
+//============================================================
+
+iz_dun03,30,170,6	script	Goalkeeper#dunclan02	4_M_RASWORD,{
+	if (isbegin_quest(14415) == 1 || isbegin_quest(14357) == 1 || isbegin_quest(14327) == 1 || isbegin_quest(14313) == 1) {
+		mes "[Goalkeeper]";
+		mes "You have eliminated the remnants, thank you for your hard work.";
+		mes "Hurry up and report back!";
+		close;
+	}
+	if (isbegin_quest(14414) != 1 && isbegin_quest(14356) != 1 && isbegin_quest(14326) != 1 && isbegin_quest(14312) != 1) {
+		mes "[Goalkeeper]";
+		mes "Who are you?";
+		mes "Very suspicious?";
+		mes "Go away!";
+		close;
+	}
+	switch( getcharid(5) ) {
+	case 1:
+		if (isbegin_quest(14312) != 1) {
+			mes "[Goalkeeper]";
+			mes "Did you accept a mission from the Sword Clan?";
+			mes "Please double-check!";
+			close;
+		}
+		break;
+	case 2:
+		if (isbegin_quest(14356) != 1) {
+			mes "[Goalkeeper]";
+			mes "Did you accept a mission from the Arch Wand Clan?";
+			mes "Please double-check!";
+			close;
+		}
+		break;
+	case 3:
+		if (isbegin_quest(14414) != 1) {
+			mes "[Goalkeeper]";
+			mes "Did you accept a mission from the Golden Mace Clan?";
+			mes "Please double-check!";
+			close;
+		}
+		break;
+	case 4:
+		if (isbegin_quest(14326) != 1) {
+			mes "[Goalkeeper]";
+			mes "Did you accept a mission from the Crossbow Clan?";
+			mes "Please double-check!";
+			close;
+		}
+		break;
+	default:
+		mes "[Goalkeeper]";
+		mes "Are you a member of a Clan?";
+		mes "Please double-check!";
+		close;
+	}
+	if (getcharid(1) < 1) {
+		mes "[Goalkeeper]";
+		mes "^FF0000 You need to form a team of at least 1 person or join a team to enter. ^000000";
+		close;
+	}
+	mes "[Goalkeeper]";
+	mes "You came? I've already heard from the Leader of the Clan.";
+	mes "He told me to secretly let everyone from the Clan carrying out the base raid mission in.";
+	next;
+	mes "[Goalkeeper]";
+	mes "They are currently not making any moves.";
+	mes "However, there have always been people coming and going.";
+	next;
+	mes "[Goalkeeper]";
+	mes "I've been told to provide the necessary assistance to the members of the Clan, so";
+	mes "do you need help?";
+	next;
+	.@md_name$ = "Remnant's Base Camp";
+
+	if (is_party_leader() == true) {
+		.@menu$[0] = "Please open the door";
+		.@menu$[1] = "Let me in";
+	}
+	else {
+		.@menu$[0] = "";
+		.@menu$[1] = "I want to go in";
+	}
+	switch( select( .@menu$[0], .@menu$[1], "Cancel" ) ) {
+	case 1:
+		if (instance_create(.@md_name$) < 1) {
+			mes "[Goalkeeper]";
+			mes "Oops .. The door can't be opened .. could you please come back later?";
+			close;
+		}
+		mes "[Goalkeeper]";
+		mes "Okay, I'll open the door.";
+		mes "It just takes a little while to open it. Please come back later!";
+		close;
+	case 2:
+		if (is_party_leader() == true) {
+			switch( instance_enter(.@md_name$) ) {
+			case IE_OTHER:
+				mes "^ff0000An unknown error has occurred!^000000";
+				close;
+			case IE_NOINSTANCE:
+				mes "[Goalkeeper]";
+				mes "Do you ask me to open the door? I didn't hear you!";
+				close;
+			case IE_NOMEMBER:
+				mes "[Goalkeeper]";
+				mes "It's dangerous to be alone. Don't you have a comrade to fight with? Why don't you form a team and come back later?";
+				close;
+			case IE_OK:
+				// warp "1@ffp",257,246;
+				end;
+			}
+		}
+		else {
+			switch( instance_enter(.@md_name$) ) {
+			case IE_OTHER:
+				mes "^ff0000An unknown error has occurred!^000000";
+				close;
+			case IE_NOINSTANCE:
+				mes "[Goalkeeper]";
+				mes "The Leader of the Clan did not request to open the door, so I can't just open it for anyone...";
+				close;
+			case IE_NOMEMBER:
+				mes "[Goalkeeper]";
+				mes "It's dangerous to be alone. Don't you have a comrade to fight with? Why don't you form a team and come back later?";
+				close;
+			case IE_OK:
+				// warp "1@ffp",257,246;
+				end;
+			}
+		}
+		end;
+	case 3:
+		end;
+	}
+	end;
+}
+
+
+// Step 1
+1@ffp,246,255,5	script	Otto#dclan01	4_M_EINMAN,{
+	if ('step != 0)
+		end;
+	if (is_party_leader() == false) {
+		mes "[Panettiere]";
+		mes "Didn't you hear the sound of the mosquito?";
+		mes "Did I hear that wrong?";
+		close;
+	}
+
+	.@panettiere_1$ = instance_npcname("Panettiere#dclan01");
+	.@philip$ = instance_npcname("Philip#dclan01");
+	.@otto_1$ = instance_npcname("Otto#dclan01f");
+	.@louis$ = instance_npcname("Louis#dclan01");
+	.@player_name$ = strcharinfo(0);
+	.@account_id = getcharid(3);
+
+	if (isbegin_quest(14414) == 1) {	// Quest from Golden Mace Clan
+		disablenpc();
+		enablenpc .@otto_1$;
+		mes "[Panettiere]";
+		mes "This is how it should be done...";
+		mes "Wow! You scared me! Who are you?";
+		npctalk "This is how you do it... Who are you?", .@panettiere_1$;
+		next;
+		mes "[" + .@player_name$ + "]";
+		mes "Are you hiding here?";
+		mes "I've been looking for you Louis!";
+		unittalk .@account_id, "" + .@player_name$ + " : I've been looking for you Louis!";
+		next;
+		mes "[Louis]";
+		mes "Ah! You're the one from last time..!!!";
+		npctalk "Ah!  You are the one from last time..!!", .@louis$;
+		next;
+		mes "[Otto]";
+		mes "What?";
+		npctalk "What?", .@otto_1$;
+		next;
+		mes "[Philip]";
+		mes "Is Louis being followed?";
+		npctalk "Is Louis being followed?", .@philip$;
+		next;
+		mes "[Louis]";
+		mes "Impossible!";
+		mes "How did you find me?";
+		npctalk "Impossible! How did you find me?", .@louis$;
+		next;
+		mes "[" + .@player_name$ + "]";
+		mes "Of course you can find anything if you want to, right?";
+		mes "In such an advanced society.";
+		unittalk .@account_id, "" + .@player_name$ + " : Of course you can find anything if you want to, right? In such an advanced society.";
+		next;
+		mes "[Panettiere]";
+		mes "It's hard to believe that Louis would...";
+		npctalk "It's hard to believe that Louis would...", .@panettiere_1$;
+		next;
+		mes "[Otto]";
+		mes "The world-famous Louis...";
+		npctalk "The world-famous Louis...", .@otto_1$;
+		next;
+		mes "[Philip]";
+		mes "He's always been a self-righteous man...";
+		npctalk "He's always been a self-righteous man...", .@philip$;
+		next;
+		mes "[Panettiere]";
+		mes "Why does the tone of this guy sound..";
+		npctalk "Why does the tone of this guy sound..", .@panettiere_1$;
+		next;
+		mes "[Otto]";
+		mes "Like Louis!";
+		npctalk "Like Louis!", .@otto_1$;
+		next;
+		mes "[Philip]";
+		mes "That's disgusting.";
+		npctalk "That's disgusting.", .@philip$;
+		next;
+		mes "[Louis]";
+		mes "Now's not the time to be flummoxed,";
+		mes "Get out of here!";
+		npctalk "Now's not the time to be flummoxed, get out of here!", .@louis$;
+		next;
+		mes "[Panettiere]";
+		mes "Before leaving, we need to get rid of the traces here!";
+		npctalk "Before leaving, we need to get rid of the traces here!", .@panettiere_1$;
+		next;
+		mes "[Louis]";
+		mes "I'm opening it!!!";
+		npctalk "I'm opening it!!!", .@louis$;
+		mapannounce 'map_1ffp$, "A bomb has been activated!", bc_map, 0x00ff00;
+		next;
+		mes "[Panettiere]";
+		mes "Louis, give me a heads up before you start!!!";
+		npctalk "Louis, give me a heads up before you start!!!", .@panettiere_1$;
+		next;
+		mes "[Otto]";
+		mes "What? Has the bomb already been activated?";
+		npctalk "What? Has the bomb already been activated?", .@otto_1$;
+		next;
+		mes "[Philip]";
+		mes "Wow!!! Let's get out of here quickly!!";
+		npctalk "Wow!!! Let's get out of here quickly!!", .@philip$;
+		next;
+		if ('step == 0) {
+			'step = 1;
+			donpcevent instance_npcname("clan_md_mob_spawn_1") + "::OnStart";
+			donpcevent instance_npcname("clan_bomb_round") + "::OnStart";
+
+			disablenpc .@panettiere_1$;
+			disablenpc .@otto_1$;
+			disablenpc .@philip$;
+			disablenpc .@louis$;
+		}
+		mes "[" + .@player_name$ + "]";
+		mes "Oh no, let's defuse the bomb first and then go after them!";
+		unittalk .@account_id, "" + .@player_name$ + " : Oh no, let's defuse the bomb first and then go after them!";
+		close;
+	}
+	if (isbegin_quest(14356) == 1) {	// Quest from Arch Wand Clan
+		disablenpc();
+		enablenpc .@otto_1$;
+		mes "[Panettiere]";
+		mes "Are you new here? Why are you so slow?";
+		mes "I thought I was starving to death!";
+		npctalk "Are you new here? Are you new here? Why are you so slow? I thought I was starving to death!", .@panettiere_1$;
+		next;
+		mes "[" + .@player_name$ + "]";
+		mes "I'll feed you till you die,";
+		mes "In a cold and dark place.";
+		unittalk .@account_id, "" + .@player_name$ + " : I'll feed you till you die, in a cold and dark place.";
+		next;
+		mes "[Otto]";
+		mes "Wow? You scared me! You're not a newcomer, are you? Who are you!!!";
+		npctalk "Wow? You scared me! You're not a newcomer, are you? Who are you!!!";
+		next;
+		mes "[Philip]";
+		mes "Who are you? How did you find this place?";
+		mes "Are you following me?";
+		npctalk "Who are you? How did you find this place? Are you following me?", .@philip$;
+		next;
+		mes "[Otto]";
+		mes "Stalking?";
+		mes "Has the trick you mastered to shake someone off failed?";
+		npctalk "Stalking? Has the trick you mastered to shake someone off failed?";
+		next;
+		mes "[Panettiere]";
+		mes "Well, it's not because I got caught.";
+		npctalk "Well, it's not because I got caught.", .@panettiere_1$;
+		next;
+		mes "[Otto]";
+		mes "It's all your fault!!!";
+		npctalk "It's all your fault!!!";
+		next;
+		mes "[Philip]";
+		mes "Do you have any evidence?";
+		npctalk "Do you have evidence?", .@philip$;
+		next;
+		mes "[Otto]";
+		mes "Should I blame you?";
+		npctalk "Should I blame you?";
+		next;
+		mes "[" + .@player_name$ + "]";
+		mes "It's definitely your fault!";
+		unittalk .@account_id, "" + .@player_name$ + " : It's definitely your fault!";
+		next;
+		mes "[Panettiere]";
+		mes "I knew it would be like this!!!!";
+		npctalk "I knew it would be like this!!!!", .@panettiere_1$;
+		next;
+		mes "[Louis]";
+		mes "Now is not the time for internal strife.";
+		mes "Since our base has been discovered, we have no choice but to abandon this place and leave quickly!";
+		npctalk "Since our base has been discovered, we have no choice but to abandon this place and leave quickly!", .@louis$;
+		next;
+		mes "[Otto]";
+		mes "Let's try it! We'll have to try it sooner or later!";
+		npctalk "Let's try it! We'll have to try it sooner or later!";
+		next;
+		mes "[Philip]";
+		mes "Sending you a bomb full of love~ Goodbye~~~~~";
+		npctalk "Sending you a bomb full of love~ Goodbye~~~~~", .@philip$;
+		next;
+		mes "[Philip]";
+		mes "Hahahahahahahahahaha!!!!";
+		npctalk "Hahahahahahahaha!!!!", .@philip$;
+		next;
+		if ('step == 0) {
+			'step = 1;
+			donpcevent instance_npcname("clan_md_mob_spawn_1") + "::OnStart";
+			donpcevent instance_npcname("clan_bomb_round") + "::OnStart";
+
+			disablenpc .@panettiere_1$;
+			disablenpc .@otto_1$;
+			disablenpc .@philip$;
+			disablenpc .@louis$;
+		}
+		mapannounce 'map_1ffp$, "A bomb has been activated!", bc_map, 0x00ff00;
+		mes "[" + .@player_name$ + "]";
+		mes "Oh no, let's defuse the bomb first and then go after them!";
+		unittalk .@account_id, "" + .@player_name$ + " : Oh no, let's defuse the bomb first and then go after them!";
+		close;
+	}
+	if (isbegin_quest(14326) == 1) {	// Quest from Crossbow Clan
+		disablenpc();
+		enablenpc .@otto_1$;
+		mes "[Panettiere]";
+		mes "Are you new here? Why are you so slow?";
+		mes "I thought I was starving to death!";
+		npctalk "Are you new here? Are you new here? Why are you so slow? I thought I was starving to death!", .@panettiere_1$;
+		next;
+		mes "[" + .@player_name$ + "]";
+		mes "It took me a lot of effort to find you,";
+		mes "you really made me suffer.";
+		unittalk .@account_id, "" + .@player_name$ + "It took me a lot of effort to find you, you really made me suffer.";
+		next;
+		mes "[Otto]";
+		mes "A beginner still like this, huh?";
+		mes "You, how did you find this place..??";
+		npctalk "You, how did you find this place..?";
+		next;
+		mes "[Philip]";
+		mes "Huh? Did you slip up?";
+		mes "I'm so disappointed in you!!!";
+		npctalk "Huh? Did you slip up?  I'm so disappointed in you!!!", .@philip$;
+		next;
+		mes "[Otto]";
+		mes "It's not me!!! Absolutely not me!!";
+		mes "You know it too!!";
+		npctalk "It's not me!!! Absolutely not me!! You know it too!!!";
+		next;
+		mes "[Panettiere]";
+		mes "I was originally planning to eat,";
+		mes "it's all your fault for showing up!!!!!!!!!";
+		npctalk "I was originally planning to eat, it's all your fault for showing up!!!!!!!!!", .@panettiere_1$;
+		next;
+		mes "[Louis]";
+		mes "Now is not the time for internal strife.";
+		mes "Since our base has been discovered, we have no choice but to abandon this place and leave quickly!";
+		npctalk "Since our base has been discovered, we have no choice but to abandon this place and leave quickly!", .@louis$;
+		next;
+		mes "[Otto]";
+		mes "Then let's give it a try! Anyway, we have to try it sooner or later!";
+		npctalk "Then let's give it a try! Anyway, we have to try it sooner or later!";
+		next;
+		mes "[Philip]";
+		mes "Whatever it is, let's activate it and get out of here quickly!";
+		npctalk "Whatever it is, let's activate it and get out of here quickly!", .@philip$;
+		next;
+		mes "[Otto]";
+		mes "Hahaha! Goodbye with a bang! Let's not meet again~";
+		mes "???~";
+		npctalk "Hahaha! Goodbye with a bang! Let's not meet again~";
+		next;
+		if ('step == 0) {
+			'step = 1;
+			donpcevent instance_npcname("clan_md_mob_spawn_1") + "::OnStart";
+			donpcevent instance_npcname("clan_bomb_round") + "::OnStart";
+
+			disablenpc .@panettiere_1$;
+			disablenpc .@otto_1$;
+			disablenpc .@philip$;
+			disablenpc .@louis$;
+		}
+		mapannounce 'map_1ffp$, "A bomb has been activated!", bc_map, 0x00ff00;
+		mes "[" + .@player_name$ + "]";
+		mes "Oh no, let's defuse the bomb first and then go after them!";
+		unittalk .@account_id, "" + .@player_name$ + " : Oh no, let's defuse the bomb first and then go after them!";
+		close;
+	}
+	if (isbegin_quest(14312) == 1) {	// Quest from Sword Clan
+		disablenpc();
+		enablenpc .@otto_1$;
+		mes "[Panettiere]";
+		mes "This is how it should be done...";
+		npctalk "This is how it should be done..", .@panettiere_1$;
+		next;
+		mes "[" + .@player_name$ + "]";
+		mes "Oh, so you're here?";
+		mes "I've been looking for you for a long time!";
+		unittalk .@account_id, "" + .@player_name$ + " : Oh, so you're here? I've been looking for you for a long time!";
+		next;
+		mes "[Panettiere]";
+		mes "You startled me, who are you?";
+		mes "Who are you? How did you find this place?";
+		npctalk "Who are you?  How did you find this place?", .@panettiere_1$;
+		next;
+		mes "[Otto]";
+		mes "It's all your fault for showing up!";
+		npctalk "It's all your fault for showing up!";
+		next;
+		mes "[Philip]";
+		mes "You have never been very careful, sigh!";
+		npctalk "You have never been very careful, sigh!", .@philip$;
+		next;
+		mes "[Panettiere]";
+		mes "Impossible, could it be that you guys are showing your true colors?";
+		npctalk "Impossible, could it be that you guys are showing your true colors?", .@panettiere_1$;
+		next;
+		mes "[Otto]";
+		mes "It's the same thing that happened to you last time you got caught at your base camp!";
+		npctalk "It's the same thing that happened to you last time you got caught at your base camp!";
+		next;
+		mes "[Panettiere]";
+		mes "Why bring up old matters? Ever since that incident, I've been more cautious, you know?";
+		npctalk "Why bring up old matters? Ever since that incident, I've been more cautious, you know?", .@panettiere_1$;
+		next;
+		mes "[Louis]";
+		mes "Stop arguing and leave this place quickly.";
+		npctalk "Stop arguing and leave this place quickly.", .@louis$;
+		next;
+		mes "[Philip]";
+		mes "Wait, let's take this opportunity to test the performance of the timed bomb.";
+		npctalk "Wait, let's take this opportunity to test the performance of the timed bomb." , .@philip$;
+		next;
+		mes "[Otto]";
+		mes "Isn't that still in the experimental stage? I don't think it's very appropriate.";
+		npctalk "Isn't that still in the experimental stage? I don't think it's very appropriate.";
+		next;
+		mes "[Louis]";
+		mes "Good idea, we have to try it sooner or later anyway.";
+		npctalk "Good idea, we have to try it sooner or later anyway.", .@louis$;
+		next;
+		mes "[Panettiere]";
+		mes "Haha! It's a bomb! So happy!!!!";
+		mes "Let's go! It's up to you how to handle it!";
+		npctalk "Haha! It's a bomb! So happy!!!! Let's go! It's up to you how to handle it!", .@panettiere_1$;
+		next;
+		mes "[Panettiere]";
+		mes "Let me give you a big gift before we leave!";
+		mes "Come out! My little monsters!!!";
+		npctalk "Let me give you a big gift before we leave! Come out! My little monsters!!!", .@panettiere_1$;
+		next;
+		if ('step == 0) {
+			'step = 1;
+			donpcevent instance_npcname("clan_md_mob_spawn_1") + "::OnStart";
+			donpcevent instance_npcname("clan_bomb_round") + "::OnStart";
+
+			disablenpc .@panettiere_1$;
+			disablenpc .@otto_1$;
+			disablenpc .@philip$;
+			disablenpc .@louis$;
+		}
+		mapannounce 'map_1ffp$, "A bomb has been activated!", bc_map, 0x00ff00;
+		mes "[" + .@player_name$ + "]";
+		mes "Oh no, let's defuse the bomb first and then go after them!";
+		unittalk .@account_id, "" + .@player_name$ + " : Oh no, let's defuse the bomb first and then go after them!";
+		close;
+	}
+	end;
+
+OnInstanceInit:
+	'step = 0;
+	'map_1ffp$ = instance_mapname("1@ffp");
+
+	setcell 'map_1ffp$,112,270,112,262,cell_walkable,0;
+	setcell 'map_1ffp$,151,147,146,152,cell_walkable,0;
+	setcell 'map_1ffp$,256,76,248,76,cell_walkable,0;
+	setcell 'map_1ffp$,99,56,99,64,cell_walkable,0;
+	end;
+}
+
+1@ffp,246,255,5	duplicate(dummy_disabled_npc)	Otto#dclan01f	4_M_EINMAN
+1@ffp,248,257,4	duplicate(dummy_npc)	Panettiere#dclan01	4_M_SCIENCE
+1@ffp,249,255,4	duplicate(dummy_npc)	Philip#dclan01	4_M_LGTGUARD
+1@ffp,247,253,7	duplicate(dummy_npc)	Louis#dclan01	4_M_MASKMAN
+
+
+// Step 2
+1@ffp,111,229,4	script	Otto#dclan02	4_M_EINMAN,{
+	if ('step != 1)
+		end;
+	if (is_party_leader() == false) {
+		mes "[Panettiere]";
+		mes "Didn't you hear the sound of a mosquito?";
+		mes "Did I hear that wrong?";
+		close;
+	}
+	.@panettiere_2$ = instance_npcname("Panettiere#dclan02");
+	.@otto_2$ = instance_npcname("Otto#dclan02f");
+	.@philip_2$ = instance_npcname("Philip#dclan02");
+	.@louis_2$ = instance_npcname("Louis#dclan02");
+	.@player_name$ = strcharinfo(0);
+
+	disablenpc();
+	enablenpc .@otto_2$;
+	mes "[Panettiere]";
+	mes "That guy was taken care of, right?";
+	npctalk "That guy was taken care of, right?", .@panettiere_2$;
+	next;
+	mes "[" + .@player_name$ + "]";
+	mes "How can that be!";
+	unittalk getcharid(3), "" + .@player_name$ + " : How can that be!";
+	next;
+	mes "[Otto]";
+	mes "Behind... behind..! That guy from earlier has appeared!";
+	npctalk "Behind.. behind..! That guy from earlier has appeared!", .@otto_2$;
+	next;
+	mes "[Philip]";
+	mes "What??";
+	npctalk "What??", .@philip_2$;
+	next;
+	mes "[Otto]";
+	mes "Not easy at all!";
+	mes "I can't believe I dodged the bombs, landmines, and monsters to get here!";
+	npctalk "Not easy at all! I can't believe I dodged the bombs, landmines, and monsters to get here!", .@otto_2$;
+	next;
+	mes "[Philip]";
+	mes "The other party really came prepared this time!";
+	npctalk "The other party really came prepared this time!", .@philip_2$;
+	next;
+	mes "[Louis]";
+	mes "There's no way!";
+	mes "I have no choice but to give up this place.";
+	npctalk "There's no way! I have no choice but to give up this place.", .@louis_2$;
+	next;
+	mes "[Panettiere]";
+	mes "Huh? We worked so hard to build this!";
+	npctalk "Huh? We worked so hard to build this!", .@panettiere_2$;
+	next;
+	mes "[Otto]";
+	mes "Yeah! I've put a lot of effort into this place!";
+	npctalk "Yeah! I've put a lot of effort into this place!", .@otto_2$;
+	next;
+	mes "[Louis]";
+	mes "Now that we've been discovered, we can't use this as a secret base anymore!";
+	npctalk "Now that we've been discovered, we can't use this as a secret base anymore!", .@louis_2$;
+	next;
+	mes "[Philip]";
+	mes "Alright! It has to be this way, but we need to deal with him first to prevent him from coming after us again.";
+	npctalk "Alright! It has to be this way, but we need to deal with him first to prevent him from coming after us again.", .@louis_2$;
+	next;
+	mes "[Otto]";
+	mes "Falcon missile!!! Launch!!!!";
+	npctalk "Falcon missile!!! Launch!!!", .@otto_2$;
+	next;
+	mes "[Panettiere]";
+	mes "Hey!!! You need to give us time to evacuate!!!!!";
+	npctalk "Hey!!! You need to give us time to evacuate!!!!!", .@panettiere_2$;
+	next;
+	mes "[Philip]";
+	mes "Wow wow wow!!! Move aside!!!!";
+	npctalk "Wow wow wow!!! Move aside!!!!", .@philip_2$;
+	next;
+	if ('step == 1) {
+		'step = 2;
+		donpcevent instance_npcname("clan_md_mob_spawn_2") + "::OnStart";
+		donpcevent instance_npcname("clan_bomb_round") + "::OnStart";
+
+		disablenpc .@panettiere_2$;
+		disablenpc .@otto_2$;
+		disablenpc .@philip_2$;
+		disablenpc .@louis_2$;
+	}
+
+	mapannounce 'map_1ffp$, "A bomb has been activated!", bc_map, 0x00ff00;
+	mes "[" + .@player_name$ + "]";
+	mes "Oh no, let's defuse the bomb first and then go after them!";
+	unittalk getcharid(3), "" + .@player_name$ + " : Oh no, let's defuse the bomb first and then go after them!";
+	close;
+}
+
+1@ffp,111,229,4	duplicate(dummy_disabled_npc)	Otto#dclan02f	4_M_EINMAN
+1@ffp,108,230,5	duplicate(dummy_npc)	Panettiere#dclan02	4_M_SCIENCE
+1@ffp,107,227,7	duplicate(dummy_npc)	Philip#dclan02	4_M_LGTGUARD
+1@ffp,111,227,1	duplicate(dummy_npc)	Louis#dclan02	4_M_MASKMAN
+
+
+// Step 3
+1@ffp,171,155,4	script	Otto#dclan03	4_M_EINMAN,{
+	if ('step != 2)
+		end;
+	.@panettiere_3$ = instance_npcname("Panettiere#dclan03");
+	.@otto_3$ = instance_npcname("Otto#dclan03f");
+	.@philip_3$ = instance_npcname("Philip#dclan03");
+	.@louis_3$ = instance_npcname("Louis#dclan03");
+	.@player_name$ = strcharinfo(0);
+
+	if (is_party_leader() == false) {
+		mes "[Panettiere]";
+		mes "Didn't you hear the sound of a mosquito?";
+		mes "Did I hear that wrong?";
+		close;
+	}
+	disablenpc();
+	enablenpc .@otto_3$;
+	mes "[Panettiere]";
+	mes "Did you take care of that guy just now?";
+	npctalk "That guy just got dealt with, right?", .@panettiere_3$;
+	next;
+	mes "[" + .@player_name$ + "]";
+	mes "Are you planning to escape to your place?";
+	mes "You'll be caught sooner or later, give it up!";
+	unittalk getcharid(3), "" + .@player_name$ + " : Are you planning to escape to your place? You'll be caught sooner or later, give it up!";
+	next;
+	mes "[Otto]";
+	mes "Wow!! How did you defuse the bomb?";
+	npctalk "Wow!! How did you defuse the bomb?", .@otto_3$;
+	next;
+	mes "[Philip]";
+	mes "Undeniably, his strength might be greater than ours.";
+	npctalk "Undeniably, his strength might be greater than ours.", .@philip_3$;
+	next;
+	mes "[Panettiere]";
+	mes "Are you willing to join us?";
+	mes "Let's strengthen our power together!";
+	npctalk "Are you willing to join us? Let's strengthen our power together!", .@panettiere_3$;
+	next;
+	mes "[Louis]";
+	mes "You come and be an officer, let's liberate the country together!";
+	npctalk "You come be an officer, let's liberate the country together!", .@louis_3$;
+	next;
+	mes "[Otto]";
+	mes "But can we decide on hiring new people?";
+	npctalk "But can we decide on hiring new people?", .@otto_3$;
+	next;
+	mes "[Panettiere]";
+	mes "It's better to discuss the details together.";
+	npctalk "It's better to discuss the details together.", .@panettiere_3$;
+	next;
+	mes "[" + .@player_name$ + "]";
+	mes "Is it a good deal?";
+	unittalk getcharid(3), "" + .@player_name$ + " : Is it a good deal?";
+	next;
+	mes "[Philip]";
+	mes "Not really,";
+	mes "However, with your skills, you should be treated well!";
+	npctalk "However, with your skills, you should be treated well!";
+	next;
+	mes "[Otto]";
+	mes "Good pay? Better than us?";
+	mes "That's not acceptable.";
+	npctalk "Good pay? Better than us? That's not acceptable.", .@otto_3$;
+	next;
+	mes "[Panettiere]";
+	mes "Hmm, that's not fair...";
+	npctalk "Hmm, that's not fair..", .@panettiere_3$;
+	next;
+	mes "[Philip]";
+	mes "Look at him shaking his head, he actually can't accept our proposal, can he?";
+	npctalk "Look at him shaking his head, he actually can't accept our proposal, can he?", .@philip_3$;
+	next;
+	mes "[" + .@player_name$ + "]";
+	mes "No matter how good the deal is, I definitely don't want to join a criminal organization.";
+	unittalk getcharid(3), "" + .@player_name$ + "No matter how good the deal is, I don't want to join a criminal organization.";
+	next;
+	mes "[Otto]";
+	mes "Ha! So infuriating!";
+	mes "A criminal organization? Us? This is a huge misunderstanding, we were originally..!";
+	npctalk "A criminal organization? Us? This is a huge misunderstanding, we were originally...!", .@otto_3$;
+	next;
+	mes "[Louis]";
+	mes "I don't think I can persuade him, there's no other way!";
+	npctalk "I don't think I can persuade him, there's no other way!", .@louis_3$;
+	next;
+	mes "[Philip]";
+	mes "This time, I'll show you something big. You're done for.";
+	mes "This is your final resting place, think about how to write your epitaph!";
+	npctalk "This is your final resting place, think about how to write your epitaph!", .@philip_3$;
+	next;
+	if ('step == 2) {
+		'step = 3;
+		donpcevent instance_npcname("clan_md_mob_spawn_3") + "::OnStart";
+		donpcevent instance_npcname("clan_bomb_round") + "::OnStart";
+
+		disablenpc .@panettiere_3$;
+		disablenpc .@otto_3$;
+		disablenpc .@philip_3$;
+		disablenpc .@louis_3$;
+	}
+	mapannounce 'map_1ffp$, "A bomb has been activated!", bc_map, 0x00ff00;
+	mes "[" + .@player_name$ + "]";
+	mes "Oh no, let's defuse the bomb first before going after them!";
+	unittalk getcharid(3), "" + .@player_name$ + " : Oh no, let's defuse the bomb first before going after them!";
+	close;
+}
+
+1@ffp,171,155,4	duplicate(dummy_disabled_npc)	Otto#dclan03f	4_M_EINMAN
+1@ffp,170,157,4	duplicate(dummy_npc)	Panettiere#dclan03	4_M_SCIENCE
+1@ffp,170,152,1	duplicate(dummy_npc)	Philip#dclan03	4_M_LGTGUARD
+1@ffp,168,156,5	duplicate(dummy_npc)	Louis#dclan03	4_M_MASKMAN
+
+
+// Step 4
+1@ffp,251,52,7	script	Otto#dclan04	4_M_EINMAN,{
+	if ('step != 3)
+		end;
+	.@panettiere_4$ = instance_npcname("Panettiere#dclan04");
+	.@otto_4$ = instance_npcname("Otto#dclan04f");
+	.@philip_4$ = instance_npcname("Philip#dclan04");
+	.@louis_4$ = instance_npcname("Louis#dclan04");
+	.@player_name$ = strcharinfo(0);
+
+	if (is_party_leader() == false) {
+		mes "[Panettiere]";
+		mes "Didn't you hear the sound of a mosquito?";
+		mes "Did I hear it wrong?";
+		close;
+	}
+	disablenpc();
+	enablenpc .@otto_4$;
+	mes "[Panettiere]";
+	mes "That guy was taken care of just now, right?";
+	npctalk "That guy was taken care of just now, right?", .@panettiere_4$;
+	next;
+	mes "[" + .@player_name$ + "]";
+	mes "This is really exhausting!";
+	mes "Where exactly are you all going?";
+	unittalk getcharid(3), "" + .@player_name$ + " : This is really exhausting Where exactly are you all going?";
+	next;
+	mes "[Panettiere]";
+	mes "Wow!! How come it's you again!!";
+	npctalk "Wow!!  How come it's you again!!", .@panettiere_4$;
+	next;
+	mes "[Otto]";
+	mes "How could this happen!!! You took them all..?";
+	npctalk "How could this happen!!! You took them all..?", .@otto_4$;
+	next;
+	mes "[Philip]";
+	mes "How could this happen!!! You got rid of all of them..!!!";
+	npctalk "How could this happen!!! You got rid of all of them..!!!", .@philip_4$;
+	next;
+	mes "[Louis]";
+	mes "If we can't win you over, we'll just have to eliminate you.";
+	npctalk "If we can't win you over, we'll just have to eliminate you.", .@louis_4$;
+	next;
+	mes "[Panettiere]";
+	mes "This time it's your turn to step up, Louis.";
+	npctalk "This time it's your turn to step up, Louis.", .@panettiere_4$;
+	next;
+	mes "[Otto]";
+	mes "I guess this is the only way, Louis.";
+	npctalk "I guess this is the only way, Louis.", .@otto_4$;
+	next;
+	mes "[Philip]";
+	mes "At this point, we really need you to step in, Louis.";
+	npctalk "At this point, we really need you to step in, Louis.", .@philip_4$;
+	next;
+	mes "[Louis]";
+	mes "Alright! Leave it to me! Everyone, step aside!";
+	npctalk "Alright! Leave it to me! Everyone, step aside!", .@louis_4$;
+	next;
+	mes "[Otto]";
+	mes "You're being self-righteous again.";
+	npctalk "You're being self-righteous again.", .@otto_4$;
+	next;
+	mes "[Panettiere]";
+	mes "We already moved aside.";
+	npctalk "We already moved aside.", .@panettiere_4$;
+	next;
+	mes "[Philip]";
+	mes "Of course, we have to follow orders.";
+	npctalk "Of course, we have to follow orders.", .@philip_4$;
+	next;
+	mes "[Louis]";
+	mes "You will never leave alive, so die!";
+	npctalk "You will never leave alive, so die!", .@louis_4$;
+	next;
+	mes "[Louis]";
+	mes "This is a gift for you.";
+	npctalk "This is a gift for you.", .@louis_4$;
+	next;
+	if ('step == 3) {
+		'step = 4;
+		donpcevent instance_npcname("clan_md_mob_spawn_4") + "::OnStart";
+		donpcevent instance_npcname("clan_bomb_round") + "::OnStart";
+
+		disablenpc .@panettiere_4$;
+		disablenpc .@otto_4$;
+		disablenpc .@philip_4$;
+		disablenpc .@louis_4$;
+	}
+	mapannounce 'map_1ffp$, "A bomb has been activated!", bc_map, 0x00ff00;
+	mes "[" + .@player_name$ + "]";
+	mes "Oh no, let's defuse the bomb first before going after them!";
+	unittalk getcharid(3), "" + .@player_name$ + " : Oh no, let's defuse the bomb first before going after them!";
+	close;
+}
+
+1@ffp,251,52,7	duplicate(dummy_disabled_npc)	Otto#dclan04f	4_M_EINMAN
+1@ffp,252,56,5	duplicate(dummy_npc)	Panettiere#dclan04	4_M_SCIENCE
+1@ffp,254,52,1	duplicate(dummy_npc)	Philip#dclan04	4_M_LGTGUARD
+1@ffp,255,56,4	duplicate(dummy_npc)	Louis#dclan04	4_M_MASKMAN
+
+
+// Step 5
+1@ffp,69,61,4	script	Otto#dclan05	4_M_EINMAN,{
+	if ('step != 4)
+		end;
+	if (is_party_leader() == false) {
+		mes "[Panettiere]";
+		mes "Didn't you hear the sound of a mosquito?";
+		mes "Did I hear it wrong?";
+		close;
+	}
+	.@panettiere_5$ = instance_npcname("Panettiere#dclan05");
+	.@otto_5$ = instance_npcname("Otto#dclan05f");
+	.@philip_5$ = instance_npcname("Philip#dclan05");
+	.@louis_5$ = instance_npcname("Louis#dclan05");
+	.@heidrich_5$ = instance_npcname("Heidrich#dclan05");
+	.@player_name$ = strcharinfo(0);
+
+	disablenpc();
+	enablenpc .@otto_5$;
+	mes "[" + .@player_name$ + "]";
+	mes "It seems we've reached the end,";
+	mes "there's no way out, right?";
+	unittalk getcharid(3), "" + .@player_name$ + " : It seems we've reached the end, there's no way out, right?";
+	next;
+	mes "[Panettiere]";
+	mes "You chased me all the way here!!!";
+	mes "Are you a human or a ghost?";
+	npctalk "You chased me all the way here!!! Are you human or a ghost?", .@panettiere_5$;
+	next;
+	mes "[Otto]";
+	mes "There's nothing we can do, it's beyond the scope of what we can handle.";
+	npctalk "There's nothing we can do, it's beyond the scope of what we can handle.", .@otto_5$;
+	next;
+	mes "[Philip]";
+	mes "Let's call the boss!";
+	npctalk "Let's call the boss!", .@philip_5$;
+	next;
+	mes "[Louis]";
+	mes "I've already asked!";
+	npctalk "I've already asked!", .@louis_5$;
+	next;
+	mes "[Panettiere]";
+	mes "Huh? When?";
+	mes "You didn't say it earlier!";
+	npctalk "Huh? When? You didn't say it earlier!", .@panettiere_5$;
+	next;
+	mes "[Otto]";
+	mes "I need to mentally prepare!!!";
+	npctalk "I need to mentally prepare!!!", .@otto_5$;
+	next;
+	mes "[Heidrich]";
+	mes "Who woke me up? Didn't I say not to wake me up if there's nothing urgent?";
+	mes "I need enough sleep.";
+	enablenpc .@heidrich_5$;
+	npctalk "Who woke me up? Didn't I say not to wake me up if there's nothing urgent? I need enough sleep.", .@heidrich_5$;
+	next;
+	mes "[Panettiere]";
+	mes "Boss, boss!";
+	mes "We... know...";
+	npctalk "Boss, boss!  We... know...", .@panettiere_5$;
+	next;
+	mes "[Otto]";
+	mes "We only woke you up because we had no other choice...";
+	npctalk "We only woke you up because we had no other choice..", .@otto_5$;
+	next;
+	mes "[Philip]";
+	mes "Help us teach him a lesson!";
+	npctalk "Help us teach him a lesson!", .@philip_5$;
+	next;
+	mes "[Heidrich]";
+	mes "What?";
+	npctalk "What?", .@heidrich_5$;
+	next;
+	mes "[Louis]";
+	mes "There are intruders.";
+	npctalk "There are intruders.", .@louis_5$;
+	next;
+	mes "[Heidrich]";
+	mes "Didn't I tell you to stop the intruders?";
+	npctalk "Didn't I tell you to stop the intruders?", .@heidrich_5$;
+	next;
+	mes "[Louis]";
+	mes "This is because he broke through all the defenses.";
+	npctalk "This is because he broke through all the defenses.", .@louis_5$;
+	next;
+	mes "[Heidrich]";
+	mes "There are actually such amazing people?";
+	mes "This kind of person should be brought over to our side!";
+	npctalk "There are actually such amazing people? This kind of person should be brought over to our side!", .@heidrich_5$;
+	next;
+	mes "[Louis]";
+	mes "We've tried to persuade him too!";
+	mes "Rejected.";
+	npctalk "We've tried to persuade him too! Rejected.", .@louis_5$;
+	next;
+	mes "[Heidrich]";
+	mes "Are you the intruder?";
+	npctalk "Are you the intruder?", .@heidrich_5$;
+	next;
+	mes "[" + .@player_name$ + "]";
+	mes "I'm not an intruder,";
+	mes "I'm performing my duties.";
+	unittalk getcharid(3), "" + .@player_name$ + " : I'm not an intruder, I'm performing my duties.";
+	next;
+	mes "[Otto]";
+	mes "It's him! The representative Clan member from the Kingdom!!!";
+	npctalk "It's him! The representative Clan member of the kingdom!!!", .@otto_5$;
+	next;
+	mes "[Philip]";
+	mes "We also tried to win him over, but he said he wasn't interested.";
+	npctalk "We also tried to win him over, but he said he wasn't interested.", .@philip_5$;
+	next;
+	mes "[Heidrich]";
+	mes "The representative Clan of the kingdom... I didn't expect them to keep pursuing us.";
+	mes "It's really unfortunate to meet you under these circumstances.";
+	npctalk "The representative Clan of the kingdom... I didn't expect them to keep pursuing us.", .@heidrich_5$;
+	next;
+	mes "[Louis]";
+	mes "To avoid future trouble, let's get rid of him quickly, boss!";
+	next;
+	npctalk "To avoid future troubles, let's get rid of him quickly, boss!", .@louis_5$;
+	next;
+	mes "[Heidrich]";
+	mes "I have been preparing for revenge on those four people for a long time,";
+	mes "and today is the perfect time for you to check it out!";
+	npctalk "I have been preparing for revenge on those four people for a long time, and today is the perfect time for you to check it out!", .@heidrich_5$;
+	next;
+	mes "[Otto]";
+	mes "Boss is awesome!";
+	npctalk "Boss is awesome!", .@otto_5$;
+	next;
+	mes "[Panettiere]";
+	mes "That guy is really impressive.";
+	mes "Please be careful!";
+	npctalk "That guy is really impressive, please be careful!", .@panettiere_5$;
+	next;
+	mes "[Philip]";
+	mes "He's very persistent, be careful!";
+	npctalk "He's very persistent, be careful!", .@philip_5$;
+	next;
+	mes "[Louis]";
+	mes "I'll help too.";
+	npctalk "I'll help too.", .@louis_5$;
+	next;
+	mes "[Heidrich]";
+	mes "No need, this is my battle!";
+	mes "Back off.";
+	npctalk "No need, this is my battle! Back off.", .@heidrich_5$;
+	next;
+	mes "[Panettiere]";
+	mes "Boss, we're counting on you!";
+	npctalk "Boss, we're counting on you!", .@panettiere_5$;
+	next;
+	mes "[Otto]";
+	mes "Boss! Let's finish this quickly!";
+	mes "I'll prepare something delicious for you!";
+	npctalk "Boss! Let's finish this quickly! I'll prepare something delicious for you!", .@otto_5$;
+	next;
+	mes "[Philip]";
+	mes "I'll choose the dishes!";
+	mes "Trust my taste, okay?";
+	npctalk "I'll choose the dishes! Trust my taste, okay?", .@philip_5$;
+	next;
+	mes "[Louis]";
+	mes "Good luck!";
+	npctalk "Good luck!", .@louis_5$;
+	disablenpc .@panettiere_5$;
+	disablenpc .@otto_5$;
+	disablenpc .@philip_5$;
+	disablenpc .@louis_5$;
+	next;
+	mes "[Heidrich]";
+	mes "Come on, come on! Let's have a fight, shall we?";
+	next;
+	mes "[" + .@player_name$ + "]";
+	mes "My pleasure.";
+	if ('step != 4)
+		mes "Currently summoning the BOSS.";
+	else {
+		'step = 5;
+		disablenpc .@heidrich_5$;
+		donpcevent instance_npcname("Heidrich#cbocon01") + "::OnStart";
+	}
+	close;
+}
+
+1@ffp,69,61,4	duplicate(dummy_disabled_npc)	Otto#dclan05f	4_M_EINMAN
+1@ffp,68,63,4	duplicate(dummy_npc)	Panettiere#dclan05	4_M_SCIENCE
+1@ffp,66,61,5	duplicate(dummy_npc)	Philip#dclan05	4_M_LGTGUARD
+1@ffp,66,59,7	duplicate(dummy_npc)	Louis#dclan05	4_M_MASKMAN
+1@ffp,65,64,5	duplicate(dummy_disabled_npc)	Heidrich#dclan05	4_M_04
+
+
+// Step 6 - Boss
+1@ffp,1,1,4	script	Heidrich#cbocon01	HIDDEN_NPC,{
+	end;
+OnStart:
+	initnpctimer;
+	end;
+OnTimer1000:
+	.@event$ = instance_npcname("Heidrich#cbocon01") + "::OnMobDead";
+	killmonster 'map_1ffp$, .@event$;
+	monster 'map_1ffp$,63,59,"--en--","HEYDRICH",1, .@event$;
+	mapannounce 'map_1ffp$, "Heidrich: I have no ill will towards you, but I have no choice but to take action!" , bc_map, 0x00ff00;
+	stopnpctimer;
+	end;
+OnMobDead:
+	if (mobcount('map_1ffp$, instance_npcname("Heidrich#cbocon01") + "::OnMobDead") < 1)
+		donpcevent instance_npcname("Heidrich#cbocon02") + "::OnStart";
+	end;
+}
+
+1@ffp,1,2,4	script	Heidrich#cbocon02	HIDDEN_NPC,{
+	end;
+OnStart:
+	initnpctimer;
+	end;
+OnTimer3000:
+	enablenpc instance_npcname("#clanpt01");
+	mapannounce 'map_1ffp$, "Heidrich: Woo! How could this happen? The exit has been opened for you. I admit defeat...", bc_map, 0x00ff00;
+	end;
+OnTimer200000:
+	mapannounce 'map_1ffp$, "Base Guard: The base will be closing soon, please evacuate as soon as possible!" , bc_map, 0x00ff00;
+	end;
+OnTimer300000:
+	stopnpctimer;
+
+	'step = 0;
+
+	// Warp out
+	disablenpc instance_npcname("#clanpt01");
+
+	// Step 1
+	enablenpc instance_npcname("Panettiere#dclan01");
+	enablenpc instance_npcname("Otto#dclan01");
+	enablenpc instance_npcname("Philip#dclan01");
+	enablenpc instance_npcname("Louis#dclan01");
+
+	// Step 2
+	enablenpc instance_npcname("Panettiere#dclan02");
+	enablenpc instance_npcname("Otto#dclan02");
+	enablenpc instance_npcname("Philip#dclan02");
+	enablenpc instance_npcname("Louis#dclan02");
+
+	// Step 3
+	enablenpc instance_npcname("Panettiere#dclan03");
+	enablenpc instance_npcname("Otto#dclan03");
+	enablenpc instance_npcname("Philip#dclan03");
+	enablenpc instance_npcname("Louis#dclan03");
+
+	// Step 4
+	enablenpc instance_npcname("Panettiere#dclan04");
+	enablenpc instance_npcname("Otto#dclan04");
+	enablenpc instance_npcname("Philip#dclan04");
+	enablenpc instance_npcname("Louis#dclan04");
+
+	// Step 5
+	enablenpc instance_npcname("Panettiere#dclan05");
+	enablenpc instance_npcname("Otto#dclan05");
+	enablenpc instance_npcname("Philip#dclan05");
+	enablenpc instance_npcname("Louis#dclan05");
+
+	// Added wall
+	donpcevent instance_npcname("#clan1br01") + "::OnEnable";
+	donpcevent instance_npcname("#clan2br01") + "::OnEnable";
+	donpcevent instance_npcname("#clan3br01") + "::OnEnable";
+	donpcevent instance_npcname("#clan4br01") + "::OnEnable";
+
+	mapwarp 'map_1ffp$,"prontera",155,88;
+	end;
+}
+
+// Step 7 (final) - Warp out
+1@ffp,30,64,4	script(DISABLED)	#clanpt01	WARPNPC,5,5,{
+	end;
+OnTouch:
+	if (isbegin_quest(14312) == 1) {
+		erasequest 14312;
+		setquest 14313;
+	}
+	else if (isbegin_quest(14356) == 1) {
+		erasequest 14356;
+		setquest 14357;
+	}
+	else if (isbegin_quest(14414) == 1) {
+		erasequest 14414;
+		setquest 14415;
+	}
+	else if (isbegin_quest(14326) == 1) {
+		erasequest 14326;
+		setquest 14327;
+	}
+	warp "izlude",178,213;
+	end;
+}
+
+
+// Mechanics
+1@ffp,167,262,4	script	Landmine#clan1jr01	4_CRACK,1,1,{
+	end;
+OnTouch:
+	specialeffect EF_FIREPILLARBOMB;
+	percentheal -1,0;
+	end;
+}
+1@ffp,167,256,4	duplicate(Landmine#clan1jr01)	Landmine#clan1jr02	4_CRACK,1,1
+1@ffp,151,262,4	duplicate(Landmine#clan1jr01)	Landmine#clan1jr03	4_CRACK,1,1
+1@ffp,155,255,4	duplicate(Landmine#clan1jr01)	Landmine#clan1jr04	4_CRACK,1,1
+1@ffp,210,242,4	duplicate(Landmine#clan1jr01)	Landmine#clan1jr05	4_CRACK,1,1
+1@ffp,207,237,4	duplicate(Landmine#clan1jr01)	Landmine#clan1jr06	4_CRACK,1,1
+1@ffp,179,262,4	duplicate(Landmine#clan1jr01)	Landmine#clan1jr07	4_CRACK,1,1
+
+1@ffp,60,224,4	duplicate(Landmine#clan1jr01)	Landmine#clan2jr01	4_CRACK,1,1
+1@ffp,91,214,4	duplicate(Landmine#clan1jr01)	Landmine#clan2jr02	4_CRACK,1,1
+1@ffp,81,208,4	duplicate(Landmine#clan1jr01)	Landmine#clan2jr03	4_CRACK,1,1
+1@ffp,70,189,4	duplicate(Landmine#clan1jr01)	Landmine#clan2jr04	4_CRACK,1,1
+1@ffp,65,180,4	duplicate(Landmine#clan1jr01)	Landmine#clan2jr05	4_CRACK,1,1
+1@ffp,70,170,4	duplicate(Landmine#clan1jr01)	Landmine#clan2jr06	4_CRACK,1,1
+1@ffp,47,157,4	duplicate(Landmine#clan1jr01)	Landmine#clan2jr07	4_CRACK,1,1
+1@ffp,97,131,4	duplicate(Landmine#clan1jr01)	Landmine#clan2jr08	4_CRACK,1,1
+1@ffp,95,133,4	duplicate(Landmine#clan1jr01)	Landmine#clan2jr09	4_CRACK,1,1
+1@ffp,91,138,4	duplicate(Landmine#clan1jr01)	Landmine#clan2jr10	4_CRACK,1,1
+1@ffp,89,144,4	duplicate(Landmine#clan1jr01)	Landmine#clan2jr11	4_CRACK,1,1
+
+1@ffp,185,134,4	duplicate(Landmine#clan1jr01)	Landmine#clan3jr01	4_CRACK,1,1
+1@ffp,189,136,4	duplicate(Landmine#clan1jr01)	Landmine#clan3jr02	4_CRACK,1,1
+1@ffp,187,147,4	duplicate(Landmine#clan1jr01)	Landmine#clan3jr03	4_CRACK,1,1
+1@ffp,183,144,4	duplicate(Landmine#clan1jr01)	Landmine#clan3jr04	4_CRACK,1,1
+1@ffp,200,158,4	duplicate(Landmine#clan1jr01)	Landmine#clan3jr05	4_CRACK,1,1
+1@ffp,209,150,4	duplicate(Landmine#clan1jr01)	Landmine#clan3jr06	4_CRACK,1,1
+1@ffp,203,186,4	duplicate(Landmine#clan1jr01)	Landmine#clan3jr07	4_CRACK,1,1
+1@ffp,216,184,4	duplicate(Landmine#clan1jr01)	Landmine#clan3jr08	4_CRACK,1,1
+1@ffp,218,195,4	duplicate(Landmine#clan1jr01)	Landmine#clan3jr09	4_CRACK,1,1
+1@ffp,213,157,4	duplicate(Landmine#clan1jr01)	Landmine#clan3jr10	4_CRACK,1,1
+1@ffp,216,146,4	duplicate(Landmine#clan1jr01)	Landmine#clan3jr11	4_CRACK,1,1
+1@ffp,247,145,4	duplicate(Landmine#clan1jr01)	Landmine#clan3jr12	4_CRACK,1,1
+1@ffp,260,156,4	duplicate(Landmine#clan1jr01)	Landmine#clan3jr13	4_CRACK,1,1
+1@ffp,259,160,4	duplicate(Landmine#clan1jr01)	Landmine#clan3jr14	4_CRACK,1,1
+
+1@ffp,242,45,4	duplicate(Landmine#clan1jr01)	Landmine#clan4jr01	4_CRACK,1,1
+1@ffp,232,39,4	duplicate(Landmine#clan1jr01)	Landmine#clan4jr02	4_CRACK,1,1
+1@ffp,229,45,4	duplicate(Landmine#clan1jr01)	Landmine#clan4jr03	4_CRACK,1,1
+1@ffp,228,33,4	duplicate(Landmine#clan1jr01)	Landmine#clan4jr04	4_CRACK,1,1
+1@ffp,225,36,4	duplicate(Landmine#clan1jr01)	Landmine#clan4jr05	4_CRACK,1,1
+1@ffp,212,44,4	duplicate(Landmine#clan1jr01)	Landmine#clan4jr06	4_CRACK,1,1
+1@ffp,203,42,4	duplicate(Landmine#clan1jr01)	Landmine#clan4jr07	4_CRACK,1,1
+1@ffp,154,53,4	duplicate(Landmine#clan1jr01)	Landmine#clan4jr08	4_CRACK,1,1
+1@ffp,156,55,4	duplicate(Landmine#clan1jr01)	Landmine#clan4jr09	4_CRACK,1,1
+1@ffp,159,69,4	duplicate(Landmine#clan1jr01)	Landmine#clan4jr10	4_CRACK,1,1
+1@ffp,138,62,4	duplicate(Landmine#clan1jr01)	Landmine#clan4jr11	4_CRACK,1,1
+1@ffp,127,64,4	duplicate(Landmine#clan1jr01)	Landmine#clan4jr12	4_CRACK,1,1
+1@ffp,140,50,4	duplicate(Landmine#clan1jr01)	Landmine#clan4jr13	4_CRACK,1,1
+1@ffp,131,41,4	duplicate(Landmine#clan1jr01)	Landmine#clan4jr14	4_CRACK,1,1
+1@ffp,148,100,4	duplicate(Landmine#clan1jr01)	Landmine#clan4jr15	4_CRACK,1,1
+1@ffp,149,96,4	duplicate(Landmine#clan1jr01)	Landmine#clan4jr16	4_CRACK,1,1
+1@ffp,150,95,4	duplicate(Landmine#clan1jr01)	Landmine#clan4jr17	4_CRACK,1,1
+
+
+1@ffp,155,251,4	script(DISABLED)	Bomb#1bomb01	4_SOIL,5,5,{
+	mes "Do you want to defuse the bomb?";
+	next;
+	if (select( "Yes", "No" ) == 2) {
+		mes "There is still a bomb to defuse.";
+		close;
+	}
+	disablenpc();
+	killmonster 'map_1ffp$, instance_npcname( strnpcinfo(0) ) + "::OnMobDead";
+	mes "The bomb has been defused.";
+	next;
+	sscanf( strnpcinfo(2), "%dbomb0%d", .@round, .@npc_num );
+	.@var_name$ = sprintf( "'bomb0%d[%d]", .@npc_num, 'step );
+	setd( .@var_name$, 1 );
+
+	if ('bomb01['step] == 1 && 'bomb02['step] == 1 && 'bomb03['step] == 1) {
+		killmonster 'map_1ffp$, instance_npcname("clan_md_mob_spawn_" + 'step) + "::OnMobDead";
+		donpcevent instance_npcname("#clan" + 'step + "br01") + "::OnDisable";	// Remove wall
+		donpcevent instance_npcname("clan_bomb_round") + "::OnStop";
+
+		mes "All bombs have been defused.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Great, keep chasing them!";
+		close;
+	}
+	mes "There is still a bomb to defuse.";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "We need to quickly find and defuse the bomb before it explodes!";
+	close;
+
+OnTouch_:
+	.@event$ = instance_npcname( strnpcinfo(0) ) + "::OnMobDead";
+	.@num = atoi( replacestr(strnpcinfo(2), "bomb0", "") );
+	switch( .@num ) {
+	case 11:
+		monster 'map_1ffp$,157,251,"--en--","G_DESERT_WOLF",1, .@event$;
+		monster 'map_1ffp$,155,253,"--en--","G_DESERT_WOLF",1, .@event$;
+		monster 'map_1ffp$,153,252,"--en--","G_DESERT_WOLF",1, .@event$;
+		break;
+	case 12:
+		monster 'map_1ffp$,137,271,"--en--","G_DESERT_WOLF",1, .@event$;
+		monster 'map_1ffp$,135,269,"--en--","G_DESERT_WOLF",1, .@event$;
+		monster 'map_1ffp$,137,269,"--en--","G_DESERT_WOLF",1, .@event$;
+		break;
+	case 13:
+		monster 'map_1ffp$,211,238,"--en--","G_DESERT_WOLF",1, .@event$;
+		monster 'map_1ffp$,209,237,"--en--","G_DESERT_WOLF",1, .@event$;
+		monster 'map_1ffp$,210,235,"--en--","G_DESERT_WOLF",1, .@event$;
+		break;
+	case 21:
+		monster 'map_1ffp$,59,231,"--en--","G_ARCHDAM",1, .@event$;
+		monster 'map_1ffp$,58,229,"--en--","G_ARCHDAM",1, .@event$;
+		monster 'map_1ffp$,60,224,"--en--","G_ARCHDAM",1, .@event$;
+		break;
+	case 22:
+		monster 'map_1ffp$,41,159,"--en--","G_ARCHDAM",1, .@event$;
+		monster 'map_1ffp$,43,157,"--en--","G_ARCHDAM",1, .@event$;
+		monster 'map_1ffp$,44,160,"--en--","G_ARCHDAM",1, .@event$;
+		break;
+	case 23:
+		monster 'map_1ffp$,95,129,"--en--","G_ARCHDAM",1, .@event$;
+		monster 'map_1ffp$,97,133,"--en--","G_ARCHDAM",1, .@event$;
+		monster 'map_1ffp$,95,123,"--en--","G_ARCHDAM",1, .@event$;
+		break;
+	case 31:
+		monster 'map_1ffp$,186,132,"--en--","G_WILD_RIDER",1, .@event$;
+		monster 'map_1ffp$,184,133,"--en--","G_WILD_RIDER",1, .@event$;
+		monster 'map_1ffp$,181,132,"--en--","G_WILD_RIDER",1, .@event$;
+		break;
+	case 32:
+		monster 'map_1ffp$,219,186,"--en--","G_WILD_RIDER",1, .@event$;
+		monster 'map_1ffp$,217,185,"--en--","G_WILD_RIDER",1, .@event$;
+		monster 'map_1ffp$,218,182,"--en--","G_WILD_RIDER",1, .@event$;
+		break;
+	case 33:
+		monster 'map_1ffp$,260,160,"--en--","G_WILD_RIDER",1, .@event$;
+		monster 'map_1ffp$,260,158,"--en--","G_WILD_RIDER",1, .@event$;
+		monster 'map_1ffp$,262,158,"--en--","G_WILD_RIDER",1, .@event$;
+		break;
+	case 41:
+		monster 'map_1ffp$,224,33,"--en--","G_ANCIENT_MUMMY",1, .@event$;
+		monster 'map_1ffp$,227,31,"--en--","G_ANCIENT_MUMMY",1, .@event$;
+		monster 'map_1ffp$,223,34,"--en--","G_ANCIENT_MUMMY",1, .@event$;
+		break;
+	case 42:
+		monster 'map_1ffp$,154,51,"--en--","G_ANCIENT_MUMMY",1, .@event$;
+		monster 'map_1ffp$,155,52,"--en--","G_ANCIENT_MUMMY",1, .@event$;
+		monster 'map_1ffp$,157,52,"--en--","G_ANCIENT_MUMMY",1, .@event$;
+		break;
+	case 43:
+		monster 'map_1ffp$,145,100,"--en--","G_ANCIENT_MUMMY",1, .@event$;
+		monster 'map_1ffp$,148,102,"--en--","G_ANCIENT_MUMMY",1, .@event$;
+		monster 'map_1ffp$,147,104,"--en--","G_ANCIENT_MUMMY",1, .@event$;
+		break;
+	}
+	end;
+}
+1@ffp,137,271,4	duplicate(Bomb#1bomb01)	Bomb#1bomb02	4_SOIL,5,5
+1@ffp,212,236,4	duplicate(Bomb#1bomb01)	Bomb#1bomb03	4_SOIL,5,5
+
+1@ffp,57,231,4	duplicate(Bomb#1bomb01)	Bomb#2bomb01	4_SOIL,5,5
+1@ffp,43,159,4	duplicate(Bomb#1bomb01)	Bomb#2bomb02	4_SOIL,5,5
+1@ffp,95,125,4	duplicate(Bomb#1bomb01)	Bomb#2bomb03	4_SOIL,5,5
+
+1@ffp,184,130,4	duplicate(Bomb#1bomb01)	Bomb#3bomb01	4_SOIL,5,5
+1@ffp,219,184,4	duplicate(Bomb#1bomb01)	Bomb#3bomb02	4_SOIL,5,5
+1@ffp,262,160,4	duplicate(Bomb#1bomb01)	Bomb#3bomb03	4_SOIL,5,5
+
+1@ffp,225,31,4	duplicate(Bomb#1bomb01)	Bomb#4bomb01	4_SOIL,5,5
+1@ffp,156,49,4	duplicate(Bomb#1bomb01)	Bomb#4bomb02	4_SOIL,5,5
+1@ffp,144,102,4	duplicate(Bomb#1bomb01)	Bomb#4bomb03	4_SOIL,5,5
+
+
+1@ffp,1,1,4	script	clan_bomb_round	-1,{
+	end;
+OnStart:
+	'bomb01['step] = 0;
+	'bomb02['step] = 0;
+	'bomb03['step] = 0;
+
+	enablenpc instance_npcname("Bomb#" + 'step + "bomb01");
+	enablenpc instance_npcname("Bomb#" + 'step + "bomb02");
+	enablenpc instance_npcname("Bomb#" + 'step + "bomb03");
+	initnpctimer;
+	end;
+
+OnTimer550000:
+	mapannounce 'map_1ffp$, "A bomb is about to explode, defuse or take cover before it explodes!", bc_map, 0x00ff00;
+	end;
+OnTimer595000:
+	enablenpc instance_npcname("Bomb#" + 'step + "bomb01");	// (custom) allow to  display effect from specialeffect
+	enablenpc instance_npcname("Bomb#" + 'step + "bomb02");
+	enablenpc instance_npcname("Bomb#" + 'step + "bomb03");
+	specialeffect EF_NAPALMBEAT, AREA, instance_npcname("Bomb#" + 'step + "bomb01");
+	specialeffect EF_NAPALMBEAT, AREA, instance_npcname("Bomb#" + 'step + "bomb02");
+	specialeffect EF_NAPALMBEAT, AREA, instance_npcname("Bomb#" + 'step + "bomb03");
+	disablenpc instance_npcname("Bomb#" + 'step + "bomb01");
+	disablenpc instance_npcname("Bomb#" + 'step + "bomb02");
+	disablenpc instance_npcname("Bomb#" + 'step + "bomb03");
+	end;
+OnTimer600000:
+	// Reset bomb npcs
+	disablenpc instance_npcname("Bomb#" + 'step + "bomb01");
+	disablenpc instance_npcname("Bomb#" + 'step + "bomb02");
+	disablenpc instance_npcname("Bomb#" + 'step + "bomb03");
+	killmonster 'map_1ffp$, instance_npcname("Bomb#" + 'step + "bomb01") + "::OnMobDead";
+	killmonster 'map_1ffp$, instance_npcname("Bomb#" + 'step + "bomb02") + "::OnMobDead";
+	killmonster 'map_1ffp$, instance_npcname("Bomb#" + 'step + "bomb03") + "::OnMobDead";
+
+	killmonster 'map_1ffp$, instance_npcname("clan_md_mob_spawn_1") + "::OnMobDead";
+	killmonster 'map_1ffp$, instance_npcname("clan_md_mob_spawn_2") + "::OnMobDead";
+	killmonster 'map_1ffp$, instance_npcname("clan_md_mob_spawn_3") + "::OnMobDead";
+	killmonster 'map_1ffp$, instance_npcname("clan_md_mob_spawn_4") + "::OnMobDead";
+
+	if ('step >= 4) {	// Reset step 4
+		enablenpc instance_npcname("Panettiere#dclan04");
+		enablenpc instance_npcname("Otto#dclan04");
+		enablenpc instance_npcname("Philip#dclan04");
+		enablenpc instance_npcname("Louis#dclan04");
+		donpcevent instance_npcname("#clan4br01") + "::OnEnable";
+	}
+	if ('step >= 3) {	// Reset step 3
+		enablenpc instance_npcname("Panettiere#dclan03");
+		enablenpc instance_npcname("Otto#dclan03");
+		enablenpc instance_npcname("Philip#dclan03");
+		enablenpc instance_npcname("Louis#dclan03");
+		donpcevent instance_npcname("#clan3br01") + "::OnEnable";
+	}
+	if ('step >= 2) {	// Reset step 2
+		enablenpc instance_npcname("Panettiere#dclan02");
+		enablenpc instance_npcname("Otto#dclan02");
+		enablenpc instance_npcname("Philip#dclan02");
+		enablenpc instance_npcname("Louis#dclan02");
+		donpcevent instance_npcname("#clan2br01") + "::OnEnable";
+	}
+	if ('step >= 1) {	// Reset step 1
+		enablenpc instance_npcname("Panettiere#dclan01");
+		enablenpc instance_npcname("Otto#dclan01");
+		enablenpc instance_npcname("Philip#dclan01");
+		enablenpc instance_npcname("Louis#dclan01");
+		donpcevent instance_npcname("#clan1br01") + "::OnEnable";
+	}
+	mapwarp 'map_1ffp$,"prontera",155,88;
+	stopnpctimer;
+	'step = 0;
+	end;
+
+OnStop:
+	'bomb01['step] = 0;
+	'bomb02['step] = 0;
+	'bomb03['step] = 0;
+	stopnpctimer;
+	end;
+
+OnMobDead:
+	end;
+}
+
+
+1@ffp,112,270,4	script	#clan1br01	2_MONEMUS,{
+	end;
+OnEnable:
+	setcell 'map_1ffp$,112,270,112,262,cell_walkable,0;
+	cloakoffnpc();
+
+	for ( .@i = 2; .@i < 10; ++.@i )
+		cloakoffnpc instance_npcname("#clan1br0" + .@i);
+	end;
+OnDisable:
+	setcell 'map_1ffp$,112,270,112,262,cell_walkable,1;
+	// disablenpc();	// changed to cloakonnpc to display effect properly on rAthena
+	cloakonnpc();
+	specialeffect EF_MAPPILLAR;
+
+	for ( .@i = 2; .@i < 10; ++.@i )
+		donpcevent instance_npcname("#clan1br0" + .@i) + "::OnDisable";
+	end;
+}
+
+1@ffp,151,147,4	script	#clan2br01	2_MONEMUS,{
+	end;
+OnEnable:
+	setcell 'map_1ffp$,151,147,146,152,cell_walkable,0;
+	cloakoffnpc();
+
+	for ( .@i = 2; .@i < 7; ++.@i )
+		cloakoffnpc instance_npcname("#clan2br0" + .@i);
+	end;
+OnDisable:
+	setcell 'map_1ffp$,151,147,146,152,cell_walkable,1;
+	// disablenpc();
+	cloakonnpc();
+	specialeffect EF_MAPPILLAR;
+
+	for ( .@i = 2; .@i < 7; ++.@i )
+		donpcevent instance_npcname("#clan2br0" + .@i) + "::OnDisable";
+	end;
+}
+
+1@ffp,256,76,4	script	#clan3br01	2_MONEMUS,{
+	end;
+OnEnable:
+	setcell 'map_1ffp$,256,76,248,76,cell_walkable,0;
+	cloakoffnpc();
+
+	for ( .@i = 2; .@i < 10; ++.@i )
+		cloakoffnpc instance_npcname("#clan3br0" + .@i);
+	end;
+OnDisable:
+	setcell 'map_1ffp$,256,76,248,76,cell_walkable,1;
+	// disablenpc();
+	cloakonnpc();
+	specialeffect EF_MAPPILLAR;
+
+	for ( .@i = 2; .@i < 10; ++.@i )
+		donpcevent instance_npcname("#clan3br0" + .@i) + "::OnDisable";
+	end;
+}
+
+1@ffp,99,63,4	script	#clan4br01	2_MONEMUS,{
+	end;
+OnEnable:
+	setcell 'map_1ffp$,99,56,99,64,cell_walkable,0;
+	cloakoffnpc();
+
+	for ( .@i = 2; .@i < 9; ++.@i )
+		cloakoffnpc instance_npcname("#clan4br0" + .@i);
+	end;
+OnDisable:
+	setcell 'map_1ffp$,99,56,99,64,cell_walkable,1;
+	// disablenpc();
+	cloakonnpc();
+	specialeffect EF_MAPPILLAR;
+
+	for ( .@i = 2; .@i < 9; ++.@i )
+		donpcevent instance_npcname("#clan4br0" + .@i) + "::OnDisable";
+	end;
+}
+
+1@ffp,112,269,4	script	#clan1br02	2_MONEMUS,{
+	end;
+OnDisable:
+	// disablenpc();
+	cloakonnpc();
+	specialeffect EF_MAPPILLAR;
+	end;
+}
+1@ffp,112,268,4	duplicate(#clan1br02)	#clan1br03	2_MONEMUS
+1@ffp,112,267,4	duplicate(#clan1br02)	#clan1br04	2_MONEMUS
+1@ffp,112,266,4	duplicate(#clan1br02)	#clan1br05	2_MONEMUS
+1@ffp,112,265,4	duplicate(#clan1br02)	#clan1br06	2_MONEMUS
+1@ffp,112,264,4	duplicate(#clan1br02)	#clan1br07	2_MONEMUS
+1@ffp,112,263,4	duplicate(#clan1br02)	#clan1br08	2_MONEMUS
+1@ffp,112,262,4	duplicate(#clan1br02)	#clan1br09	2_MONEMUS
+
+1@ffp,150,148,4	duplicate(#clan1br02)	#clan2br02	2_MONEMUS
+1@ffp,149,149,4	duplicate(#clan1br02)	#clan2br03	2_MONEMUS
+1@ffp,148,150,4	duplicate(#clan1br02)	#clan2br04	2_MONEMUS
+1@ffp,147,151,4	duplicate(#clan1br02)	#clan2br05	2_MONEMUS
+1@ffp,146,152,4	duplicate(#clan1br02)	#clan2br06	2_MONEMUS
+
+1@ffp,255,76,4	duplicate(#clan1br02)	#clan3br02	2_MONEMUS
+1@ffp,254,76,4	duplicate(#clan1br02)	#clan3br03	2_MONEMUS
+1@ffp,253,76,4	duplicate(#clan1br02)	#clan3br04	2_MONEMUS
+1@ffp,252,76,4	duplicate(#clan1br02)	#clan3br05	2_MONEMUS
+1@ffp,251,76,4	duplicate(#clan1br02)	#clan3br06	2_MONEMUS
+1@ffp,250,76,4	duplicate(#clan1br02)	#clan3br07	2_MONEMUS
+1@ffp,249,76,4	duplicate(#clan1br02)	#clan3br08	2_MONEMUS
+1@ffp,248,76,4	duplicate(#clan1br02)	#clan3br09	2_MONEMUS
+
+1@ffp,99,62,4	duplicate(#clan1br02)	#clan4br02	2_MONEMUS
+1@ffp,99,61,4	duplicate(#clan1br02)	#clan4br03	2_MONEMUS
+1@ffp,99,60,4	duplicate(#clan1br02)	#clan4br04	2_MONEMUS
+1@ffp,99,59,4	duplicate(#clan1br02)	#clan4br05	2_MONEMUS
+1@ffp,99,58,4	duplicate(#clan1br02)	#clan4br06	2_MONEMUS
+1@ffp,99,57,4	duplicate(#clan1br02)	#clan4br07	2_MONEMUS
+1@ffp,99,56,4	duplicate(#clan1br02)	#clan4br08	2_MONEMUS
+
+
+1@ffp,1,1,4	script	clan_md_mob_spawn_1	-1,{
+	end;
+OnStart:
+	initnpctimer;
+	end;
+OnTimer1000:
+	stopnpctimer;
+	killmonster 'map_1ffp$, instance_npcname("clan_md_mob_spawn_1") + "::OnMobDead";
+
+	callsub( S_Spawn, "GALION", 218,240, 251,255 );
+	callsub( S_Spawn, "HILL_WIND_1", 218,240, 251,255 );
+
+	callsub( S_Spawn, "ANOPHELES", 179,203, 256,264 );
+	callsub( S_Spawn, "HILL_WIND_1", 179,203, 256,264 );
+	callsub( S_Spawn, "CRAMP", 179,203, 256,264 );
+
+	callsub( S_Spawn, "CRAMP", 136,160, 256,269 );
+	callsub( S_Spawn, "ARCLOUSE", 136,160, 256,269 );
+	end;
+
+S_Spawn:
+	.@event$ = instance_npcname("clan_md_mob_spawn_1") + "::OnMobDead";
+
+	for ( .@i = 0; .@i < 4; ++.@i ) {
+		.@x = rand( getarg(1), getarg(2) );
+		.@y = rand( getarg(3), getarg(4) );
+		monster 'map_1ffp$,.@x,.@y,"--en--", getarg(0),1, .@event$;
+	}
+	return;
+
+OnMobDead:
+	end;
+}
+
+1@ffp,1,1,4	script	clan_md_mob_spawn_2	-1,{
+	end;
+OnStart:
+	initnpctimer;
+	end;
+OnTimer1000:
+	stopnpctimer;
+	killmonster 'map_1ffp$, instance_npcname("clan_md_mob_spawn_2") + "::OnMobDead";
+
+	callsub( S_Spawn, "WASTE_STOVE", 95,110, 208,218 );
+
+	callsub( S_Spawn, "VENATU_1", 51,77, 145,160 );
+	callsub( S_Spawn, "DIMIK_1", 51,77, 145,160 );
+	callsub( S_Spawn, "OBSIDIAN", 51,77, 145,160 );
+
+	callsub( S_Spawn, "OBSIDIAN", 98,116, 144,156 );
+	callsub( S_Spawn, "CONSTANT", 98,116, 144,156 );
+
+	callsub( S_Spawn, "VENATU_1", 64,71, 169,199 );
+	callsub( S_Spawn, "DIMIK_1", 64,71, 169,199 );
+	end;
+
+S_Spawn:
+	.@event$ = instance_npcname("clan_md_mob_spawn_2") + "::OnMobDead";
+
+	for ( .@i = 0; .@i < 4; ++.@i ) {
+		.@x = rand( getarg(1), getarg(2) );
+		.@y = rand( getarg(3), getarg(4) );
+		monster 'map_1ffp$,.@x,.@y,"--en--", getarg(0),1, .@event$;
+	}
+	return;
+
+OnMobDead:
+	end;
+}
+
+1@ffp,1,1,4	script	clan_md_mob_spawn_3	-1,{
+	end;
+OnStart:
+	initnpctimer;
+	end;
+OnTimer1000:
+	stopnpctimer;
+	killmonster 'map_1ffp$, instance_npcname("clan_md_mob_spawn_3") + "::OnMobDead";
+
+	callsub( S_Spawn, "ELDER", 173,217, 147,160 );
+	callsub( S_Spawn, "KOBOLD_3", 173,217, 147,160 );
+
+	callsub( S_Spawn, "KOBOLD_1", 248,261, 102,115 );
+	callsub( S_Spawn, "KOBOLD_2", 248,261, 102,115 );
+	callsub( S_Spawn, "KOBOLD_3", 248,261, 102,115 );
+
+	callsub( S_Spawn, "KOBOLD_1", 244,259, 87,97 );
+	callsub( S_Spawn, "KOBOLD_ARCHER", 244,259, 87,97 );
+
+	callsub( S_Spawn, "KOBOLD_2", 208,218, 183,198 );
+	callsub( S_Spawn, "KOBOLD_3", 208,218, 183,198 );
+	end;
+
+S_Spawn:
+	.@event$ = instance_npcname("clan_md_mob_spawn_3") + "::OnMobDead";
+
+	for ( .@i = 0; .@i < 4; ++.@i ) {
+		.@x = rand( getarg(1), getarg(2) );
+		.@y = rand( getarg(3), getarg(4) );
+		monster 'map_1ffp$,.@x,.@y,"--en--", getarg(0),1, .@event$;
+	}
+	return;
+
+OnMobDead:
+	end;
+}
+
+1@ffp,1,1,4	script	clan_md_mob_spawn_4	-1,{
+	end;
+OnStart:
+	initnpctimer;
+	end;
+OnTimer1000:
+	stopnpctimer;
+	killmonster 'map_1ffp$, instance_npcname("clan_md_mob_spawn_4") + "::OnMobDead";
+
+	callsub( S_Spawn, "QUVE", 232,246, 43,49 );
+	callsub( S_Spawn, "BLAZZER", 232,246, 43,49 );
+
+	callsub( S_Spawn, "BLAZZER", 142,170, 66,74 );
+	callsub( S_Spawn, "HYLOZOIST", 142,170, 66,74 );
+	callsub( S_Spawn, "DULLAHAN", 142,170, 66,74 );
+
+	callsub( S_Spawn, "DULLAHAN", 108,129, 57,85 );
+	callsub( S_Spawn, "RAYDRIC", 108,129, 57,85 );
+
+	callsub( S_Spawn, "BLAZZER", 181,199, 37,59 );
+	callsub( S_Spawn, "HYLOZOIST", 181,199, 37,59 );
+	end;
+
+S_Spawn:
+	.@event$ = instance_npcname("clan_md_mob_spawn_4") + "::OnMobDead";
+
+	for ( .@i = 0; .@i < 4; ++.@i ) {
+		.@x = rand( getarg(1), getarg(2) );
+		.@y = rand( getarg(3), getarg(4) );
+		monster 'map_1ffp$,.@x,.@y,"--en--", getarg(0),1, .@event$;
+	}
+	return;
+
+OnMobDead:
+	end;
+}
