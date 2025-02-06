@@ -1887,6 +1887,12 @@ struct PACKET_ZC_GM_CHECKER{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_GM_CHECKER, 0xc0c);
 
+struct PACKET_ZC_DIVORCE{
+	int16 packetType;
+	char name[NAME_LENGTH];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_DIVORCE, 0x205);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
