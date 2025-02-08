@@ -1606,7 +1606,7 @@ int32 skill_additional_effect( struct block_list* src, struct block_list *bl, ui
 
 	case BD_LULLABY:
 #ifndef RENEWAL
-		if (sc && sc->getSCE(SC_DANCING)) {
+		if (sc != nullptr && sc->getSCE(SC_DANCING) != nullptr) {
 			block_list* partner = map_id2bl(sc->getSCE(SC_DANCING)->val4);
 			if (partner == nullptr)
 				break;
