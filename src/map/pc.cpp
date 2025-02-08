@@ -1802,6 +1802,7 @@ uint8 pc_isequip(map_session_data *sd,int32 n)
 				case W_DAGGER: //All level 4 - Daggers
 				case W_1HSWORD: //All level 4 - 1H Swords
 				case W_1HAXE: //All level 4 - 1H Axes
+				case W_2HAXE: // All level 4 - 2H Axes (works, but low ASPD)
 				case W_MACE: //All level 4 - 1H Maces
 				case W_STAFF: //All level 4 - 1H Staves
 				case W_2HSTAFF: //All level 4 - 2H Staves
