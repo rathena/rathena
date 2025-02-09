@@ -10392,7 +10392,7 @@ void clif_msg_value( map_session_data& sd, e_clif_messages msg_id, int32 value )
 	PACKET_ZC_MSG_VALUE p{};
 
 	p.packetType = HEADER_ZC_MSG_VALUE;
-	p.message = static_cast<decltype(p.message)>( msg_id );
+	p.message = msg_id;
 	p.value = value;
 
 	clif_send( &p, sizeof( p ), &sd.bl, SELF );
