@@ -531,7 +531,7 @@ enum clif_equipitemack_flag : uint8_t {
 
 //! NOTE: These values below need client version validation
 // These values correspond to the msgstringtable line number minus 1
-enum e_clif_messages : uint16_t {
+enum e_clif_messages : uint16 {
 
 	// You cannot carry more items because you are overweight.
 	MSI_CANT_GET_ITEM_BECAUSE_WEIGHT = 52,

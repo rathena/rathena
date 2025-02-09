@@ -10400,7 +10400,7 @@ void clif_msg_value(map_session_data* sd, uint16 id, int32 value)
 }
 
 
-/// Displays msgstringtable.txt string, prefixed with a skill name..
+/// Displays msgstringtable.txt string, prefixed with a skill name.
 /// 07e6 <skill id>.W <msg id>.L (ZC_MSG_SKILL)
 ///
 /// NOTE: Message has following format and is printed in color 0xCDCDFF (purple):
@@ -10411,7 +10411,7 @@ void clif_msg_skill( map_session_data& sd, uint16 skill_id, e_clif_messages msg_
 
 	p.packetType = HEADER_ZC_MSG_SKILL;
 	p.skillId = skill_id;
-	p.msgId = static_cast<decltype(p.msgId)>( msg_id );
+	p.msgId = msg_id;
 
 	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 #endif
