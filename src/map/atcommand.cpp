@@ -7840,7 +7840,7 @@ ACMD_FUNC(mute)
 		status_change_end(&pl_sd->bl, SC_NOCHAT);
 	}
 
-	clif_GM_silence( *sd, *pl_sd, (manner > 0 ? true : false) );
+	clif_GM_silence( *sd, *pl_sd, manner > 0 );
 
 	return 0;
 }
