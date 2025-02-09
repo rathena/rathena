@@ -10416,14 +10416,14 @@ void clif_msg_skill(map_session_data* sd, uint16 skill_id, int32 msg_id)
 	WFIFOSET(fd, packet_len(0x7e6));
 }
 
-/// Displays msgstringtable.txt string in a color..
+/// Displays msgstringtable.txt string in a color.
 /// 09cd <msg id>.W <color>.L (ZC_MSG_COLOR)
 void clif_msg_color( map_session_data& sd, e_clif_messages msg_id, uint32 color ){
 #if PACKETVER >= 20130807
 	PACKET_ZC_MSG_COLOR p{};
 
 	p.PacketType = HEADER_ZC_MSG_COLOR;
-	p.MessageId = static_cast<decltype(p.MessageId)>( msg_id );
+	p.MessageId = msg_id;
 	p.MessageColor = color;
 
 	clif_send( &p, sizeof( p ), &sd.bl, SELF );
