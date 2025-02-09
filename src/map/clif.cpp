@@ -10378,7 +10378,7 @@ void clif_msg( map_session_data& sd, e_clif_messages msg_id ){
 	PACKET_ZC_MSG p{};
 
 	p.packetType = HEADER_ZC_MSG;
-	p.msgId = static_cast<decltype(p.msgId)>( msg_id );  // zero-based msgstringtable.txt index
+	p.msgId = msg_id; // zero-based msgstringtable.txt index
 
 	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 #endif
