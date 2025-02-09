@@ -10164,7 +10164,7 @@ void clif_party_xy_remove(map_session_data* sd)
 }
 
 
-/// Displays a skill message (thanks to Rayce).
+/// Displays a skill message.
 /// 0215 <msg id>.L (ZC_SKILLMSG)
 /// msg id:
 ///     0x15 = End all negative status (PA_GOSPEL)
