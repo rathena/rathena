@@ -1889,7 +1889,7 @@ DEFINE_PACKET_HEADER(ZC_GM_CHECKER, 0xc0c);
 
 struct PACKET_ZC_EMOTION {
 	int16 packetType;
-	int32 AID;
+	int32 GID;
 	uint8 type;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_EMOTION, 0xc0);

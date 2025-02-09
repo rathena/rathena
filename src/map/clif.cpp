@@ -9387,7 +9387,7 @@ void clif_emotion( block_list& bl, emotion_type type ){
 	PACKET_ZC_EMOTION p{};
 
 	p.packetType = HEADER_ZC_EMOTION;
-	p.AID = bl.id;
+	p.GID = bl.id;
 	p.type = static_cast<decltype(p.type)>( type );
 
 	clif_send( &p, sizeof(p), &bl, AREA );
