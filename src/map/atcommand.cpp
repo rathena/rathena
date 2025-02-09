@@ -6658,7 +6658,7 @@ ACMD_FUNC(marry)
 
 	if (pc_marriage(sd, pl_sd)) {
 		clif_displaymessage(fd, msg_txt(sd,1173)); // They are married... wish them well.
-		clif_wedding_effect( pl_sd->bl ); //wedding effect and music [Lupus]
+		clif_wedding_effect( pl_sd->bl );
 		if( pl_sd->bl.m != sd->bl.m )
 			clif_wedding_effect( sd->bl );
 		getring(sd); // Auto-give named rings (Aru)

@@ -9418,7 +9418,7 @@ void clif_wedding_effect( block_list& bl ){
 	PACKET_ZC_CONGRATULATION p{};
 
 	p.packetType = HEADER_ZC_CONGRATULATION;
-	p.AID = bl.id;
+	p.GID = bl.id;
 
 	clif_send( &p, sizeof(p), &bl, AREA );
 }
