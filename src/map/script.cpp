@@ -14378,7 +14378,7 @@ BUILDIN_FUNC(wedding_effect)
 		bl=map_id2bl(st->oid);
 	} else
 		bl=&sd->bl;
-	clif_wedding_effect(bl);
+	clif_wedding_effect( *bl );
 	return SCRIPT_CMD_SUCCESS;
 }
 

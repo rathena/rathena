@@ -253,7 +253,6 @@
 	packet(0x01e6,26);
 	parseable_packet(0x01e7,2,clif_parse_NoviceDoriDori,0);
 	parseable_packet( HEADER_CZ_MAKE_GROUP2, sizeof( PACKET_CZ_MAKE_GROUP2 ), clif_parse_CreateParty2, 0 );
-	packet(0x01ea,6);
 	packet(0x01ec,26);
 	parseable_packet(0x01ed,2,clif_parse_NoviceExplosionSpirits,0);
 	packet(0x01f0,-1);
@@ -934,7 +933,6 @@
 	parseable_packet(0x02d6,6,clif_parse_ViewPlayerEquip,2);
 	parseable_packet(0x02d8,10,clif_parse_configuration,2,6);
 	packet(0x02d9,10);
-	packet(0x02da,3);
 	parseable_packet(0x02db,-1,clif_parse_BattleChat,2,4);
 	packet(0x02dc,-1);
 	packet(0x02dd,32);
