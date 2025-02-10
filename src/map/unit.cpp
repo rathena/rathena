@@ -638,10 +638,11 @@ static TIMER_FUNC(unit_walktoxy_timer)
 			// To make sure we check one skill per second on average, we substract half the speed as ms
 			if(!ud->state.force_walk && tid != INVALID_TIMER &&
 				DIFF_TICK(tick, md->last_skillcheck) > MOB_SKILL_INTERVAL - md->status.speed / 2 &&
-				DIFF_TICK(tick, md->last_thinktime) > 0 &&
+				//TODO: Full fix requires to move casting of chase skills to nextcell function
+				//DIFF_TICK(tick, md->last_thinktime) > 0 &&
 				map[bl->m].users > 0 &&
 				mobskill_use(md, tick, -1)) {
-				if (!(ud->skill_id == NPC_SELFDESTRUCTION && ud->skilltimer != INVALID_TIMER)
+				if ((ud->skill_id != NPC_SPEEDUP || md->trickcasting == 0) //Stop only when trickcasting expired
 					&& ud->skill_id != NPC_EMOTION && ud->skill_id != NPC_EMOTION_ON //NPC_EMOTION doesn't make the monster stop
 					&& md->state.skillstate != MSS_WALK) //Walk skills are supposed to be used while walking
 				{ // Skill used, abort walking
@@ -1741,18 +1742,16 @@ int32 unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int32
 		if (DIFF_TICK(ud->canmove_tick, tick+delay) > 0)
 			return 0;
 	} else {
+		if (bl->type == BL_MOB) {
+			mob_data* md = BL_CAST(BL_MOB, bl);
+			// Mob needs to escape, don't stop it
+			if (md && md->state.can_escape == 1)
+				return 0;
+		}
 		// Don't set walk delays when already trapped.
 		if (!unit_can_move(bl)) {
-			if (bl->type == BL_MOB) {
-				mob_data *md = BL_CAST(BL_MOB, bl);
-
-				if (md && md->state.can_escape == 1) // Mob needs to escape, don't stop it
-					return 0;
-			}
-
 			// Unit might still be moving even though it can't move
 			unit_stop_walking( bl, USW_MOVE_FULL_CELL );
-
 			return 0;
 		}
 		//Immune to being stopped for double the flinch time
