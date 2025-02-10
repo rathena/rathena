@@ -1829,7 +1829,7 @@ uint8 pc_isequip(map_session_data *sd,int32 n)
 		switch (item->subtype) {
 			case AMMO_ARROW:
 				if (battle_config.ammo_check_weapon && sd->status.weapon != W_BOW && sd->status.weapon != W_MUSICAL && sd->status.weapon != W_WHIP) {
-					clif_msg(sd, MSI_FAIL_NEED_EQUIPPED_BOW);
+					clif_msg( *sd, MSI_FAIL_NEED_EQUIPPED_BOW );
 					return ITEM_EQUIP_ACK_FAIL;
 				}
 				break;
@@ -1844,26 +1844,26 @@ uint8 pc_isequip(map_session_data *sd,int32 n)
 					&& sd->status.weapon != W_GRENADE
 #endif
 					) {
-					clif_msg(sd, MSI_WRONG_BULLET);
+					clif_msg( *sd, MSI_WRONG_BULLET );
 					return ITEM_EQUIP_ACK_FAIL;
 				}
 				break;
 #ifndef RENEWAL
 			case AMMO_GRENADE:
 				if (battle_config.ammo_check_weapon && sd->status.weapon != W_GRENADE) {
-					clif_msg(sd, MSI_WRONG_BULLET);
+					clif_msg( *sd, MSI_WRONG_BULLET );
 					return ITEM_EQUIP_ACK_FAIL;
 				}
 				break;
 #endif
 			case AMMO_CANNONBALL:
 				if (!pc_ismadogear(sd) && (sd->status.class_ == JOB_MECHANIC_T || sd->status.class_ == JOB_MECHANIC)) {
-					clif_msg(sd, MSI_USESKILL_FAIL_MADOGEAR); // Item can only be used when Mado Gear is mounted.
+					clif_msg( *sd, MSI_USESKILL_FAIL_MADOGEAR ); // Item can only be used when Mado Gear is mounted.
 					return ITEM_EQUIP_ACK_FAIL;
 				}
 				if (sd->state.active && !pc_iscarton(sd) && //Check if sc data is already loaded
 					(sd->status.class_ == JOB_GENETIC_T || sd->status.class_ == JOB_GENETIC)) {
-					clif_msg(sd, MSI_USESKILL_FAIL_CART); // Only available when cart is mounted.
+					clif_msg( *sd, MSI_USESKILL_FAIL_CART ); // Only available when cart is mounted.
 					return ITEM_EQUIP_ACK_FAIL;
 				}
 				break;
@@ -6175,7 +6175,7 @@ bool pc_isUseitem(map_session_data *sd,int32 n)
 		return false;
 
 	if( (item->item_usage.sitting) && (pc_issit(sd) == 1) && (pc_get_group_level(sd) < item->item_usage.override) ) {
-		clif_msg(sd, MSI_CANT_USE_WHEN_SITDOWN);
+		clif_msg( *sd, MSI_CANT_USE_WHEN_SITDOWN );
 		return false; // You cannot use this item while sitting.
 	}
 
@@ -6220,7 +6220,7 @@ bool pc_isUseitem(map_session_data *sd,int32 n)
 
 			// User is not party leader
 			if( i == MAX_PARTY ){
-				clif_msg( sd, MSI_CANNOT_PARTYCALL);
+				clif_msg( *sd, MSI_CANNOT_PARTYCALL );
 				return false;
 			}
 
@@ -6228,11 +6228,11 @@ bool pc_isUseitem(map_session_data *sd,int32 n)
 
 			// No party members found on same map
 			if( i == MAX_PARTY ){
-				clif_msg( sd, MSI_NO_PARTYMEM_ON_THISMAP );
+				clif_msg( *sd, MSI_NO_PARTYMEM_ON_THISMAP );
 				return false;
 			}
 		}else{
-			clif_msg( sd, MSI_CANNOT_PARTYCALL);
+			clif_msg( *sd, MSI_CANNOT_PARTYCALL );
 			return false;
 		}
 	}
@@ -6268,14 +6268,14 @@ bool pc_isUseitem(map_session_data *sd,int32 n)
 		// Check if the player is not overweighted
 		// In Renewal the limit is 70% weight and gives the same error message
 		if (pc_is70overweight(sd)) {
-			clif_msg_color(sd, MSI_PICKUP_FAILED_ITEMCREATE, color_table[COLOR_RED]);
+			clif_msg_color( *sd, MSI_PICKUP_FAILED_ITEMCREATE, color_table[COLOR_RED] );
 			return 0;
 		}
 #else
 		// Check if the player is not overweighted
 		// In Pre-Renewal the limit is 50% weight and gives a specific error message
 		if (pc_is50overweight(sd)) {
-			clif_msg_color(sd, MSI_CANT_GET_ITEM_BECAUSE_WEIGHT, color_table[COLOR_RED]);
+			clif_msg_color( *sd, MSI_CANT_GET_ITEM_BECAUSE_WEIGHT, color_table[COLOR_RED] );
 			return 0;
 		}
 #endif
@@ -6286,9 +6286,9 @@ bool pc_isUseitem(map_session_data *sd,int32 n)
 		// TODO: Count the items the player will get and check for the actual inventory space required std::max<size_t>( count, 10 )
 		if (pc_inventoryblank(sd) <= 10) {
 #ifdef RENEWAL
-			clif_msg_color(sd, MSI_PICKUP_FAILED_ITEMCREATE, color_table[COLOR_RED]);
+			clif_msg_color( *sd, MSI_PICKUP_FAILED_ITEMCREATE, color_table[COLOR_RED] );
 #else
-			clif_msg_color(sd, MSI_CANT_GET_ITEM_BECAUSE_COUNT, color_table[COLOR_RED]);
+			clif_msg_color( *sd, MSI_CANT_GET_ITEM_BECAUSE_COUNT, color_table[COLOR_RED] );
 #endif
 			return 0;
 		}
@@ -6348,7 +6348,7 @@ int32 pc_useitem(map_session_data *sd,int32 n)
 
 		if( pc_hasprogress( sd, WIP_DISABLE_SKILLITEM ) || !sd->npc_item_flag ){
 #ifdef RENEWAL
-			clif_msg( sd, MSI_BUSY);
+			clif_msg( *sd, MSI_BUSY );
 #endif
 			return 0;
 		}
@@ -6387,7 +6387,7 @@ int32 pc_useitem(map_session_data *sd,int32 n)
 
 	/* on restricted maps the item is consumed but the effect is not used */
 	if (!pc_has_permission(sd,PC_PERM_ITEM_UNCONDITIONAL) && itemdb_isNoEquip(id,sd->bl.m)) {
-		clif_msg(sd, MSI_IMPOSSIBLE_USEITEM_AREA); // This item cannot be used within this area
+		clif_msg( *sd, MSI_IMPOSSIBLE_USEITEM_AREA ); // This item cannot be used within this area
 		if( battle_config.allow_consume_restricted_item && id->flag.delay_consume > 0 ) { //need confirmation for delayed consumption items
 			clif_useitemack(sd,n,item.amount-1,true);
 			pc_delitem(sd,n,1,1,0,LOG_TYPE_CONSUME);
@@ -6552,7 +6552,7 @@ void pc_putitemtocart(map_session_data *sd,int32 idx,int32 amount)
 		return;
 
 	if( item_data->equipSwitch ){
-		clif_msg( sd, MSI_SWAP_EQUIPITEM_UNREGISTER_FIRST );
+		clif_msg( *sd, MSI_SWAP_EQUIPITEM_UNREGISTER_FIRST );
 		return;
 	}
 
@@ -12719,8 +12719,8 @@ bool pc_divorce(map_session_data *sd)
 			pc_delitem(p_sd, i, 1, 0, 0, LOG_TYPE_OTHER);
 	}
 
-	clif_divorced(sd, p_sd->status.name);
-	clif_divorced(p_sd, sd->status.name);
+	clif_divorced( *sd, p_sd->status.name );
+	clif_divorced( *p_sd, sd->status.name );
 
 	return true;
 }

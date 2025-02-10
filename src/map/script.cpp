@@ -12660,7 +12660,7 @@ BUILDIN_FUNC(homunculus_evolution)
 		if (sd->hd->homunculus.intimacy >= battle_config.homunculus_evo_intimacy_need)
 			hom_evolution(sd->hd);
 		else
-			clif_emotion(&sd->hd->bl, ET_SWEAT);
+			clif_emotion( sd->hd->bl, ET_SWEAT );
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -12695,9 +12695,9 @@ BUILDIN_FUNC(homunculus_mutate)
 			script_pushint(st, 1);
 			return SCRIPT_CMD_SUCCESS;
 		} else
-			clif_emotion(&sd->bl, ET_SWEAT);
+			clif_emotion( sd->bl, ET_SWEAT );
 	} else
-		clif_emotion(&sd->bl, ET_SWEAT);
+		clif_emotion( sd->bl, ET_SWEAT );
 
 	script_pushint(st, 0);
 
@@ -12727,16 +12727,16 @@ BUILDIN_FUNC(morphembryo)
 
 			if( (i = pc_additem(sd, &item_tmp, 1, LOG_TYPE_SCRIPT)) ) {
 				clif_additem(sd, 0, 0, i);
-				clif_emotion(&sd->bl, ET_SWEAT); // Fail to avoid item drop exploit.
+				clif_emotion( sd->bl, ET_SWEAT ); // Fail to avoid item drop exploit.
 			} else {
 				hom_vaporize(sd, HOM_ST_MORPH);
 				script_pushint(st, 1);
 				return SCRIPT_CMD_SUCCESS;
 			}
 		} else
-			clif_emotion(&sd->hd->bl, ET_SWEAT);
+			clif_emotion( sd->hd->bl, ET_SWEAT );
 	} else
-		clif_emotion(&sd->bl, ET_SWEAT);
+		clif_emotion( sd->bl, ET_SWEAT );
 
 	script_pushint(st, 0);
 
@@ -13783,7 +13783,7 @@ BUILDIN_FUNC(emotion)
 	if (!bl)
 		bl = map_id2bl(st->oid);
 
-	clif_emotion(bl, type);
+	clif_emotion( *bl, static_cast<emotion_type>( type ) );
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -14378,7 +14378,7 @@ BUILDIN_FUNC(wedding_effect)
 		bl=map_id2bl(st->oid);
 	} else
 		bl=&sd->bl;
-	clif_wedding_effect(bl);
+	clif_wedding_effect( *bl );
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -22336,7 +22336,7 @@ static int32 buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 	else
 		unit_skilluse_id2(&md->bl, tbl->id, skill_id, skill_lv, casttime, cancel);
 
-	clif_emotion(&md->bl, emotion);
+	clif_emotion( md->bl, static_cast<emotion_type>( emotion ) );
 
 	return 1;
 }
@@ -22778,7 +22778,7 @@ BUILDIN_FUNC(setmounting) {
 	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
 	if( sd->sc.option&(OPTION_WUGRIDER|OPTION_RIDING|OPTION_DRAGON|OPTION_MADOGEAR) ) {
-		clif_msg(sd, MSI_FAIELD_RIDING_OVERLAPPED);
+		clif_msg( *sd, MSI_FAIELD_RIDING_OVERLAPPED );
 		script_pushint(st,0); //can't mount with one of these
 	} else if (sd->sc.getSCE(SC_CLOAKING) || sd->sc.getSCE(SC_CHASEWALK) || sd->sc.getSCE(SC_CLOAKINGEXCEED) || sd->sc.getSCE(SC_CAMOUFLAGE) || sd->sc.getSCE(SC_STEALTHFIELD) || sd->sc.getSCE(SC__FEINTBOMB)) {
 		// SC_HIDING, SC__INVISIBILITY, SC__SHADOWFORM, SC_SUHIDE already disable item usage
