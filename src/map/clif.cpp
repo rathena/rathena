@@ -9604,26 +9604,22 @@ void clif_wisexin( map_session_data& sd, uint8 type, uint8 flag ){
 	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 }
 
-/// Notifies the client about the result of a request to allow/deny whispers from anyone (ZC_SETTING_WHISPER_STATE).
-/// 00d2 <type>.B <result>.B
+/// Notifies the client about the result of a request to allow/deny whispers from anyone.
+/// 00d2 <type>.B <result>.B (ZC_SETTING_WHISPER_STATE)
 /// type:
 ///     0 = /exall (deny)
 ///     1 = /inall (allow)
 /// result:
 ///     0 = success
 ///     1 = failure
-void clif_wisall(map_session_data *sd,int32 type,int32 flag)
-{
-	int32 fd;
+void clif_wisall( map_session_data& sd, uint8 type, uint8 flag ){
+	PACKET_ZC_SETTING_WHISPER_STATE p{};
 
-	nullpo_retv(sd);
+	p.packetType = HEADER_ZC_SETTING_WHISPER_STATE;
+	p.type = type;
+	p.result = flag;
 
-	fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0xd2));
-	WFIFOW(fd,0)=0xd2;
-	WFIFOB(fd,2)=type;
-	WFIFOB(fd,3)=flag;
-	WFIFOSET(fd,packet_len(0xd2));
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 }
 
 /// Play a BGM! [Rikter/Yommy] (ZC_PLAY_NPC_BGM).
@@ -15169,7 +15165,7 @@ void clif_parse_PMIgnore(int32 fd, map_session_data* sd)
 ///     1 = (/inall) allow all speech
 void clif_parse_PMIgnoreAll(int32 fd, map_session_data *sd)
 {
-	int32 type = RFIFOB(fd,packet_db[RFIFOW(fd,0)].pos[0]), flag;
+	uint8 type = RFIFOB(fd,packet_db[RFIFOW(fd,0)].pos[0]), flag;
 
 	if( type == 0 ) {// Deny all
 		if( sd->state.ignoreAll ) {
@@ -15193,7 +15189,7 @@ void clif_parse_PMIgnoreAll(int32 fd, map_session_data *sd)
 		}
 	}
 
-	clif_wisall(sd, type, flag);
+	clif_wisall( *sd, type, flag );
 }
 
 
