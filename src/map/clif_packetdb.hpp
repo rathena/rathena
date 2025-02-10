@@ -1279,7 +1279,6 @@
 #if PACKETVER >= 20090818
 	packet(0x07e3,6);
 	parseable_packet(0x07e4,-1,clif_parse_ItemListWindowSelected,2,4,8,12);
-	packet(0x07e6,8);
 #endif
 
 // 2009-08-25aRagexeRE
@@ -1290,7 +1289,6 @@
 // 2009-09-22aRagexeRE
 #if PACKETVER >= 20090922
 	packet(0x07e5,8);
-	packet(0x07e6,8);
 	packet(0x07e7,32);
 	packet(0x07e8,-1);
 	packet(0x07e9,5);
