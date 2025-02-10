@@ -1959,6 +1959,12 @@ struct PACKET_ZC_SETTING_WHISPER_STATE {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_SETTING_WHISPER_STATE, 0xd2);
 
+struct PACKET_ZC_SKILLMSG {
+	int16 packetType;
+	int32 msgId;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_SKILLMSG, 0x215);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
