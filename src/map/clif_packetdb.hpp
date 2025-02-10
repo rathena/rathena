@@ -272,7 +272,6 @@
 	parseable_packet(0x0202,26,clif_parse_FriendsListAdd,2);
 	parseable_packet(0x0203,10,clif_parse_FriendsListRemove,2,6);
 	packet(0x0204,18);
-	packet(0x0205,26);
 	packet(0x0207,34);
 	parseable_packet(0x0208,11,clif_parse_FriendsListReply,2,6,10);
 	packet(0x0209,36);

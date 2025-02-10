@@ -9463,18 +9463,15 @@ void clif_marriage_process(map_session_data *sd)
 */
 
 
-/// Notice of divorce (ZC_DIVORCE).
-/// 0205 <partner name>.24B
-void clif_divorced(map_session_data* sd, const char* name)
-{
-	int32 fd;
-	nullpo_retv(sd);
+/// Notice of divorce.
+/// 0205 <partner name>.24B (ZC_DIVORCE)
+void clif_divorced( map_session_data& sd, const char* name ){
+	PACKET_ZC_DIVORCE p{};
 
-	fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0x205));
-	WFIFOW(fd,0)=0x205;
-	safestrncpy(WFIFOCP(fd,2), name, NAME_LENGTH);
-	WFIFOSET(fd, packet_len(0x205));
+	p.packetType = HEADER_ZC_DIVORCE;
+	safestrncpy( p.name, name, NAME_LENGTH );
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 }
 
 

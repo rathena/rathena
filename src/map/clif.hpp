@@ -939,7 +939,7 @@ void clif_refresh(map_session_data *sd);	// self
 void clif_emotion(struct block_list *bl,int32 type);
 void clif_talkiebox(struct block_list* bl, const char* talkie);
 void clif_wedding_effect( block_list& bl );
-void clif_divorced(map_session_data* sd, const char* name);
+void clif_divorced( map_session_data& sd, const char* name );
 void clif_callpartner(map_session_data& sd);
 void clif_playBGM( map_session_data& sd, const char* name );
 void clif_soundeffect( struct block_list& bl, const char* name, int32 type, enum send_target target );
