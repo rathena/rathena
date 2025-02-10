@@ -1887,6 +1887,51 @@ struct PACKET_ZC_GM_CHECKER{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_GM_CHECKER, 0xc0c);
 
+struct PACKET_ZC_CONFIG_NOTIFY {
+	int16 packetType;
+	uint8 flag;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_CONFIG_NOTIFY, 0x2da);
+
+struct PACKET_ZC_CONGRATULATION {
+	int16 packetType;
+	int32 GID;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_CONGRATULATION, 0x1ea);
+
+struct PACKET_ZC_DIVORCE{
+	int16 packetType;
+	char name[NAME_LENGTH];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_DIVORCE, 0x205);
+
+struct PACKET_ZC_EMOTION {
+	int16 packetType;
+	int32 GID;
+	uint8 type;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_EMOTION, 0xc0);
+
+struct PACKET_ZC_MSG {
+	int16 packetType;
+	uint16 msgId;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_MSG, 0x291);
+
+struct PACKET_ZC_MSG_SKILL {
+	int16 packetType;
+	uint16 skillId;
+	int32 msgId;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_MSG_SKILL, 0x7e6);
+
+struct PACKET_ZC_MSG_VALUE {
+	int16 packetType;
+	uint16 message;
+	int32 value;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_MSG_VALUE, 0x7e2);
+
 struct PACKET_ZC_NOTIFY_MANNER_POINT_GIVEN {
 	int16 packetType;
 	uint8 type;
@@ -1945,6 +1990,7 @@ DEFINE_PACKET_HEADER(ZC_WARPLIST, 0xabe)
 #else
 DEFINE_PACKET_HEADER(ZC_WARPLIST, 0x11c)
 #endif
+DEFINE_PACKET_HEADER(ZC_MSG_COLOR, 0x9cd);
 
 
 const int16 MAX_INVENTORY_ITEM_PACKET_NORMAL = ( ( INT16_MAX - ( sizeof( struct packet_itemlist_normal ) - ( sizeof( struct NORMALITEM_INFO ) * MAX_ITEMLIST) ) ) / sizeof( struct NORMALITEM_INFO ) );
