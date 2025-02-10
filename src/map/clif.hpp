@@ -1178,7 +1178,7 @@ void clif_specialeffect_value(struct block_list* bl, int32 effect_id, int32 num,
 void clif_GM_kickack(map_session_data *sd, int32 id);
 void clif_GM_kick(map_session_data *sd,map_session_data *tsd);
 void clif_manner_message(map_session_data* sd, uint32 type);
-void clif_GM_silence(map_session_data* sd, map_session_data* tsd, uint8 type);
+void clif_GM_silence( map_session_data& sd, map_session_data& tsd, bool muted );
 
 void clif_disp_overhead_(struct block_list *bl, const char* mes, enum send_target flag);
 #define clif_disp_overhead(bl, mes) clif_disp_overhead_(bl, mes, AREA)
