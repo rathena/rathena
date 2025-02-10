@@ -936,10 +936,10 @@ void clif_changechatstatus(chat_data& cd);
 void clif_refresh_storagewindow(map_session_data *sd);
 void clif_refresh(map_session_data *sd);	// self
 
-void clif_emotion(struct block_list *bl,int32 type);
+void clif_emotion( block_list& bl, emotion_type type );
 void clif_talkiebox(struct block_list* bl, const char* talkie);
-void clif_wedding_effect(struct block_list *bl);
-void clif_divorced(map_session_data* sd, const char* name);
+void clif_wedding_effect( block_list& bl );
+void clif_divorced( map_session_data& sd, const char* name );
 void clif_callpartner(map_session_data& sd);
 void clif_playBGM( map_session_data& sd, const char* name );
 void clif_soundeffect( struct block_list& bl, const char* name, int32 type, enum send_target target );
@@ -1204,7 +1204,7 @@ void clif_homunculus_updatestatus(map_session_data& sd, _sp type);
 
 void clif_configuration( map_session_data* sd, enum e_config_type type, bool enabled );
 void clif_viewequip_ack( map_session_data& sd, map_session_data& tsd );
-void clif_equipcheckbox(map_session_data* sd);
+void clif_equipcheckbox( map_session_data& sd );
 
 void clif_msg( map_session_data& sd, e_clif_messages msg_id );
 void clif_msg_value(map_session_data* sd, uint16 id, int32 value);

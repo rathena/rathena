@@ -12719,8 +12719,8 @@ bool pc_divorce(map_session_data *sd)
 			pc_delitem(p_sd, i, 1, 0, 0, LOG_TYPE_OTHER);
 	}
 
-	clif_divorced(sd, p_sd->status.name);
-	clif_divorced(p_sd, sd->status.name);
+	clif_divorced( *sd, p_sd->status.name );
+	clif_divorced( *p_sd, sd->status.name );
 
 	return true;
 }
