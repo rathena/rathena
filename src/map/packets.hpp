@@ -1945,6 +1945,13 @@ struct PACKET_ZC_NOTIFY_TIME {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_NOTIFY_TIME, 0x7f);
 
+struct PACKET_ZC_SETTING_WHISPER_PC {
+	int16 packetType;
+	uint8 type;
+	uint8 result;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_SETTING_WHISPER_PC, 0xd1);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )

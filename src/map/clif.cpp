@@ -9585,8 +9585,8 @@ void clif_GM_silence( map_session_data& sd, map_session_data& tsd, bool muted ){
 	clif_send( &p, sizeof( p ), &tsd.bl, SELF );
 }
 
-/// Notifies the client about the result of a request to allow/deny whispers from a player (ZC_SETTING_WHISPER_PC).
-/// 00d1 <type>.B <result>.B
+/// Notifies the client about the result of a request to allow/deny whispers from a player.
+/// 00d1 <type>.B <result>.B (ZC_SETTING_WHISPER_PC)
 /// type:
 ///     0 = /ex (deny)
 ///     1 = /in (allow)
@@ -9594,18 +9594,14 @@ void clif_GM_silence( map_session_data& sd, map_session_data& tsd, bool muted ){
 ///     0 = success
 ///     1 = failure
 ///     2 = too many blocks
-void clif_wisexin(map_session_data *sd,int32 type,int32 flag)
-{
-	int32 fd;
+void clif_wisexin( map_session_data& sd, uint8 type, uint8 flag ){
+	PACKET_ZC_SETTING_WHISPER_PC p{};
 
-	nullpo_retv(sd);
+	p.packetType = HEADER_ZC_SETTING_WHISPER_PC;
+	p.type = type;
+	p.result = flag;
 
-	fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0xd1));
-	WFIFOW(fd,0)=0xd1;
-	WFIFOB(fd,2)=type;
-	WFIFOB(fd,3)=flag;
-	WFIFOSET(fd,packet_len(0xd1));
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 }
 
 /// Notifies the client about the result of a request to allow/deny whispers from anyone (ZC_SETTING_WHISPER_STATE).
@@ -15130,18 +15126,18 @@ void clif_parse_PMIgnore(int32 fd, map_session_data* sd)
 
 	if( type == 0 ) { // Add name to ignore list (block)
 		if (strcmp(wisp_server_name, nick) == 0) {
-			clif_wisexin(sd, type, 1); // fail
+			clif_wisexin( *sd, type, 1 ); // fail
 			return;
 		}
 
 		// try to find a free spot, while checking for duplicates at the same time
 		ARR_FIND( 0, MAX_IGNORE_LIST, i, sd->ignore[i].name[0] == '\0' || strcmp(sd->ignore[i].name, nick) == 0 );
 		if( i == MAX_IGNORE_LIST ) {// no space for new entry
-			clif_wisexin(sd, type, 2); // too many blocks
+			clif_wisexin( *sd, type, 2 ); // too many blocks
 			return;
 		}
 		if( sd->ignore[i].name[0] != '\0' ) {// name already exists
-			clif_wisexin(sd, type, 0); // Aegis reports success.
+			clif_wisexin( *sd, type, 0 ); // Aegis reports success.
 			return;
 		}
 
@@ -15152,7 +15148,7 @@ void clif_parse_PMIgnore(int32 fd, map_session_data* sd)
 		// find entry
 		ARR_FIND( 0, MAX_IGNORE_LIST, i, sd->ignore[i].name[0] == '\0' || strcmp(sd->ignore[i].name, nick) == 0 );
 		if( i == MAX_IGNORE_LIST || sd->ignore[i].name[0] == '\0' ) { //Not found
-			clif_wisexin(sd, type, 1); // fail
+			clif_wisexin( *sd, type, 1 ); // fail
 			return;
 		}
 		// move everything one place down to overwrite removed entry
@@ -15161,7 +15157,7 @@ void clif_parse_PMIgnore(int32 fd, map_session_data* sd)
 		memset(sd->ignore[MAX_IGNORE_LIST-1].name, 0, sizeof(sd->ignore[0].name));
 	}
 
-	clif_wisexin(sd, type, 0); // success
+	clif_wisexin( *sd, type, 0 ); // success
 }
 
 
