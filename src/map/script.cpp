@@ -22778,7 +22778,7 @@ BUILDIN_FUNC(setmounting) {
 	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
 	if( sd->sc.option&(OPTION_WUGRIDER|OPTION_RIDING|OPTION_DRAGON|OPTION_MADOGEAR) ) {
-		clif_msg(sd, MSI_FAIELD_RIDING_OVERLAPPED);
+		clif_msg( *sd, MSI_FAIELD_RIDING_OVERLAPPED );
 		script_pushint(st,0); //can't mount with one of these
 	} else if (sd->sc.getSCE(SC_CLOAKING) || sd->sc.getSCE(SC_CHASEWALK) || sd->sc.getSCE(SC_CLOAKINGEXCEED) || sd->sc.getSCE(SC_CAMOUFLAGE) || sd->sc.getSCE(SC_STEALTHFIELD) || sd->sc.getSCE(SC__FEINTBOMB)) {
 		// SC_HIDING, SC__INVISIBILITY, SC__SHADOWFORM, SC_SUHIDE already disable item usage

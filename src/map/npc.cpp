@@ -2196,7 +2196,7 @@ int32 npc_click(map_session_data* sd, struct npc_data* nd)
 	}
 
 	if (sd->state.block_action & PCBLOCK_NPCCLICK) {
-		clif_msg(sd, MSI_BUSY);
+		clif_msg( *sd, MSI_BUSY );
 		return 1;
 	}
 
