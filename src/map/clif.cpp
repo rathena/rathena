@@ -9412,17 +9412,15 @@ void clif_talkiebox( struct block_list* bl, const char* talkie ){
 }
 
 
-/// Displays wedding effect centered on an object (ZC_CONGRATULATION).
-/// 01ea <id>.L
-void clif_wedding_effect(struct block_list *bl)
-{
-	unsigned char buf[6];
+/// Displays wedding effect centered on an object.
+/// 01ea <id>.L (ZC_CONGRATULATION)
+void clif_wedding_effect( block_list& bl ){
+	PACKET_ZC_CONGRATULATION p{};
 
-	nullpo_retv(bl);
+	p.packetType = HEADER_ZC_CONGRATULATION;
+	p.GID = bl.id;
 
-	WBUFW(buf,0) = 0x1ea;
-	WBUFL(buf,2) = bl->id;
-	clif_send(buf, packet_len(0x1ea), bl, AREA);
+	clif_send( &p, sizeof(p), &bl, AREA );
 }
 
 
