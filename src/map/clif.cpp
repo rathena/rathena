@@ -9379,20 +9379,18 @@ void clif_guild_position_selected(map_session_data& sd)
 }
 
 
-/// Displays emotion on an object (ZC_EMOTION).
-/// 00c0 <id>.L <type>.B
+/// Displays emotion on an object.
+/// 00c0 <id>.L <type>.B (ZC_EMOTION)
 /// type:
 ///     enum emotion_type
-void clif_emotion(struct block_list *bl,int32 type)
-{
-	unsigned char buf[8];
+void clif_emotion( block_list& bl, emotion_type type ){
+	PACKET_ZC_EMOTION p{};
 
-	nullpo_retv(bl);
+	p.packetType = HEADER_ZC_EMOTION;
+	p.GID = bl.id;
+	p.type = static_cast<decltype(p.type)>( type );
 
-	WBUFW(buf,0)=0xc0;
-	WBUFL(buf,2)=bl->id;
-	WBUFB(buf,6)=type;
-	clif_send(buf,packet_len(0xc0),bl,AREA);
+	clif_send( &p, sizeof(p), &bl, AREA );
 }
 
 
@@ -9412,17 +9410,15 @@ void clif_talkiebox( struct block_list* bl, const char* talkie ){
 }
 
 
-/// Displays wedding effect centered on an object (ZC_CONGRATULATION).
-/// 01ea <id>.L
-void clif_wedding_effect(struct block_list *bl)
-{
-	unsigned char buf[6];
+/// Displays wedding effect centered on an object.
+/// 01ea <id>.L (ZC_CONGRATULATION)
+void clif_wedding_effect( block_list& bl ){
+	PACKET_ZC_CONGRATULATION p{};
 
-	nullpo_retv(bl);
+	p.packetType = HEADER_ZC_CONGRATULATION;
+	p.GID = bl.id;
 
-	WBUFW(buf,0) = 0x1ea;
-	WBUFL(buf,2) = bl->id;
-	clif_send(buf, packet_len(0x1ea), bl, AREA);
+	clif_send( &p, sizeof(p), &bl, AREA );
 }
 
 
@@ -9465,18 +9461,15 @@ void clif_marriage_process(map_session_data *sd)
 */
 
 
-/// Notice of divorce (ZC_DIVORCE).
-/// 0205 <partner name>.24B
-void clif_divorced(map_session_data* sd, const char* name)
-{
-	int32 fd;
-	nullpo_retv(sd);
+/// Notice of divorce.
+/// 0205 <partner name>.24B (ZC_DIVORCE)
+void clif_divorced( map_session_data& sd, const char* name ){
+	PACKET_ZC_DIVORCE p{};
 
-	fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0x205));
-	WFIFOW(fd,0)=0x205;
-	safestrncpy(WFIFOCP(fd,2), name, NAME_LENGTH);
-	WFIFOSET(fd, packet_len(0x205));
+	p.packetType = HEADER_ZC_DIVORCE;
+	safestrncpy( p.name, name, NAME_LENGTH );
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 }
 
 
@@ -10368,18 +10361,17 @@ void clif_viewequip_ack( map_session_data& sd, map_session_data& tsd ){
 }
 
 
-/// Display msgstringtable.txt string (ZC_MSG).
-/// 0291 <message>.W
-void clif_msg(map_session_data* sd, uint16 id)
-{
-	int32 fd;
-	nullpo_retv(sd);
-	fd = sd->fd;
+/// Display msgstringtable.txt string.
+/// 0291 <message>.W (ZC_MSG)
+void clif_msg( map_session_data& sd, e_clif_messages msg_id ){
+#if PACKETVER >= 20060424
+	PACKET_ZC_MSG p{};
 
-	WFIFOHEAD(fd, packet_len(0x291));
-	WFIFOW(fd, 0) = 0x291;
-	WFIFOW(fd, 2) = id;  // zero-based msgstringtable.txt index
-	WFIFOSET(fd, packet_len(0x291));
+	p.packetType = HEADER_ZC_MSG;
+	p.msgId = msg_id; // zero-based msgstringtable.txt index
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
 }
 
 
@@ -10414,19 +10406,18 @@ void clif_msg_skill( map_session_data& sd, uint16 skill_id, e_clif_messages msg_
 #endif
 }
 
-/// Displays msgstringtable.txt string in a color. (ZC_MSG_COLOR).
-/// 09cd <msg id>.W <color>.L
-void clif_msg_color( map_session_data *sd, uint16 msg_id, uint32 color ){
-	nullpo_retv(sd);
+/// Displays msgstringtable.txt string in a color.
+/// 09cd <msg id>.W <color>.L (ZC_MSG_COLOR)
+void clif_msg_color( map_session_data& sd, e_clif_messages msg_id, uint32 color ){
+#if PACKETVER >= 20130807
+	PACKET_ZC_MSG_COLOR p{};
 
-	int32 fd = sd->fd;
+	p.PacketType = HEADER_ZC_MSG_COLOR;
+	p.MessageId = msg_id;
+	p.MessageColor = color;
 
-	WFIFOHEAD(fd, packet_len(0x9cd));
-	WFIFOW(fd, 0) = 0x9cd;
-	WFIFOW(fd, 2) = msg_id;
-	WFIFOL(fd, 4) = color;
-
-	WFIFOSET(fd, packet_len(0x9cd));
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
 }
 
 /// Validates one global/guild/party/whisper message packet and tries to recognize its components.
@@ -11658,7 +11649,7 @@ void clif_parse_Emotion(int32 fd, map_session_data *sd){
 			emoticon = rnd()%6+ET_DICE1;
 		}
 
-		clif_emotion(&sd->bl, emoticon);
+		clif_emotion( sd->bl, static_cast<emotion_type>( emoticon ) );
 	} else
 		clif_skill_fail( *sd, 1, USESKILL_FAIL_LEVEL, 1 );
 }
@@ -12081,7 +12072,7 @@ void clif_parse_UseItem(int32 fd, map_session_data *sd)
 	}
 
 	if ( (!sd->npc_id && pc_istrading(sd)) || sd->chatID || (sd->state.block_action & PCBLOCK_USEITEM) ) {
-		clif_msg(sd, MSI_BUSY);
+		clif_msg( *sd, MSI_BUSY );
 		return;
 	}
 
@@ -12119,7 +12110,7 @@ void clif_parse_EquipItem( int32 fd, map_session_data* sd ){
 	}
 
 	if((sd->npc_id && !sd->npc_item_flag) || (sd->state.block_action & PCBLOCK_EQUIP)) {
-		clif_msg_color( sd, MSI_CAN_NOT_EQUIP_ITEM, color_table[COLOR_RED] );
+		clif_msg_color( *sd, MSI_CAN_NOT_EQUIP_ITEM, color_table[COLOR_RED] );
 		return;
 	} else if (sd->state.storage_flag || sd->sc.opt1)
 		; //You can equip/unequip stuff while storage is open/under status changes
@@ -12167,7 +12158,7 @@ void clif_parse_UnequipItem(int32 fd,map_session_data *sd)
 	}
 
 	if((sd->npc_id && !sd->npc_item_flag) || (sd->state.block_action & PCBLOCK_EQUIP)) {
-		clif_msg_color( sd, MSI_CAN_NOT_EQUIP_ITEM, color_table[COLOR_RED] );
+		clif_msg_color( *sd, MSI_CAN_NOT_EQUIP_ITEM, color_table[COLOR_RED] );
 		return;
 	} else if (sd->state.storage_flag || sd->sc.opt1)
 		; //You can equip/unequip stuff while storage is open/under status changes
@@ -12205,7 +12196,7 @@ void clif_parse_NpcClicked( int32 fd, map_session_data* sd ){
 
 	if( pc_cant_act2(sd) || sd->npc_id || pc_hasprogress( sd, WIP_DISABLE_NPC ) ){
 #ifdef RENEWAL
-		clif_msg( sd, MSI_BUSY);
+		clif_msg( *sd, MSI_BUSY );
 #endif
 		return;
 	}
@@ -12227,7 +12218,7 @@ void clif_parse_NpcClicked( int32 fd, map_session_data* sd ){
 		case BL_NPC:
 #ifdef RENEWAL
 			if (sd->ud.skill_id < RK_ENCHANTBLADE && sd->ud.skilltimer != INVALID_TIMER) { // Should only show an error message for non-3rd job skills with a running timer
-				clif_msg(sd, MSI_BUSY);
+				clif_msg( *sd, MSI_BUSY );
 				break;
 			}
 #endif
@@ -12681,7 +12672,7 @@ void clif_parse_ChangeCart(int32 fd,map_session_data *sd)
 
 #ifdef RENEWAL
 	if (sd->npc_id || pc_hasprogress(sd, WIP_DISABLE_SKILLITEM)) {
-		clif_msg(sd, MSI_BUSY);
+		clif_msg( *sd, MSI_BUSY );
 		return;
 	}
 #endif
@@ -12760,7 +12751,7 @@ static void clif_parse_UseSkillToId_homun(struct homun_data *hd, map_session_dat
 	if( !hd )
 		return;
 	if( skill_isNotOk_hom(hd, skill_id, skill_lv) ) {
-		clif_emotion(&hd->bl, ET_THINK);
+		clif_emotion( hd->bl, ET_THINK );
 		return;
 	}
 	if( hd->bl.id != target_id && skill_get_inf(skill_id)&INF_SELF_SKILL )
@@ -12768,7 +12759,7 @@ static void clif_parse_UseSkillToId_homun(struct homun_data *hd, map_session_dat
 	if( hd->ud.skilltimer != INVALID_TIMER ) {
 		if( skill_id != SA_CASTCANCEL && skill_id != SO_SPELLFIST ) return;
 	} else if( DIFF_TICK(tick, hd->ud.canact_tick) < 0 ) {
-		clif_emotion(&hd->bl, ET_THINK);
+		clif_emotion( hd->bl, ET_THINK );
 		if (hd->master)
 			clif_skill_fail( *hd->master, skill_id, USESKILL_FAIL_SKILLINTERVAL );
 		return;
@@ -12787,13 +12778,13 @@ static void clif_parse_UseSkillToPos_homun(struct homun_data *hd, map_session_da
 	if( !hd )
 		return;
 	if( skill_isNotOk_hom(hd, skill_id, skill_lv) ) {
-		clif_emotion(&hd->bl, ET_THINK);
+		clif_emotion( hd->bl, ET_THINK );
 		return;
 	}
 	if( hd->ud.skilltimer != INVALID_TIMER ) {
 		if( skill_id != SA_CASTCANCEL && skill_id != SO_SPELLFIST ) return;
 	} else if( DIFF_TICK(tick, hd->ud.canact_tick) < 0 ) {
-		clif_emotion(&hd->bl, ET_THINK);
+		clif_emotion( hd->bl, ET_THINK );
 		if (hd->master)
 			clif_skill_fail( *hd->master, skill_id, USESKILL_FAIL_SKILLINTERVAL );
 		return;
@@ -12879,7 +12870,7 @@ void clif_parse_skill_toid( map_session_data* sd, uint16 skill_id, uint16 skill_
 		return; //Using a ground/passive skill on a target? WRONG.
 
 	if (sd->state.block_action & PCBLOCK_SKILL) {
-		clif_msg(sd, MSI_BUSY);
+		clif_msg( *sd, MSI_BUSY );
 		return;
 	}
 
@@ -12905,7 +12896,7 @@ void clif_parse_skill_toid( map_session_data* sd, uint16 skill_id, uint16 skill_
 	if( sd->npc_id ){
 		if( pc_hasprogress( sd, WIP_DISABLE_SKILLITEM ) || !sd->npc_item_flag || !( inf & INF_SELF_SKILL ) ){
 #ifdef RENEWAL
-			clif_msg( sd, MSI_BUSY);
+			clif_msg( *sd, MSI_BUSY );
 #endif
 			return;
 		}
@@ -13005,7 +12996,7 @@ static void clif_parse_UseSkillToPosSub( int32 fd, map_session_data& sd, uint16 
 		return; //Using a target skill on the ground? WRONG.
 
 	if (sd.state.block_action & PCBLOCK_SKILL) {
-		clif_msg(&sd, MSI_BUSY);
+		clif_msg( sd, MSI_BUSY );
 		return;
 	}
 
@@ -13021,7 +13012,7 @@ static void clif_parse_UseSkillToPosSub( int32 fd, map_session_data& sd, uint16 
 
 	if( pc_hasprogress( &sd, WIP_DISABLE_SKILLITEM ) ){
 #ifdef RENEWAL
-		clif_msg( &sd, MSI_BUSY);
+		clif_msg( sd, MSI_BUSY );
 #endif
 		return;
 	}
@@ -13630,7 +13621,7 @@ void clif_parse_MoveToKafra(int32 fd, map_session_data *sd)
 	if (item_index < 0 || item_index >= MAX_INVENTORY || item_amount < 1)
 		return;
 	if( sd->inventory.u.items_inventory[item_index].equipSwitch ){
-		clif_msg( sd, MSI_SWAP_EQUIPITEM_UNREGISTER_FIRST );
+		clif_msg( *sd, MSI_SWAP_EQUIPITEM_UNREGISTER_FIRST );
 		return;
 	}
 
@@ -14361,12 +14352,12 @@ void clif_parse_GuildChangeMemberPosition( int32 fd, map_session_data *sd ){
 		// Guild leadership change
 		if( entry.position == 0 ){
 			if( !battle_config.guild_leaderchange_woe && is_agit_start() ){
-				clif_msg( sd, MSI_IMPOSSIBLE_CHANGE_GUILD_MASTER_IN_SIEGE_TIME );
+				clif_msg( *sd, MSI_IMPOSSIBLE_CHANGE_GUILD_MASTER_IN_SIEGE_TIME );
 				return;
 			}
 
 			if( battle_config.guild_leaderchange_delay && DIFF_TICK( time( nullptr ),sd->guild->guild.last_leader_change ) < battle_config.guild_leaderchange_delay ){
-				clif_msg( sd, MSI_IMPOSSIBLE_CHANGE_GUILD_MASTER_NOT_TIME );
+				clif_msg( *sd, MSI_IMPOSSIBLE_CHANGE_GUILD_MASTER_NOT_TIME );
 				return;
 			}
 
@@ -16744,7 +16735,7 @@ void clif_parse_Mail_setattach(int32 fd, map_session_data *sd){
 	flag = mail_setitem(sd, idx, amount);
 
 	if( flag == MAIL_ATTACH_EQUIPSWITCH ){
-		clif_msg( sd, MSI_SWAP_EQUIPITEM_UNREGISTER_FIRST );
+		clif_msg( *sd, MSI_SWAP_EQUIPITEM_UNREGISTER_FIRST );
 	}else{
 		clif_Mail_setattachment(sd,idx,amount,flag);
 	}
@@ -17693,7 +17684,7 @@ void clif_parse_ViewPlayerEquip(int32 fd, map_session_data* sd)
 	else if( tsd->status.show_equip || pc_has_permission(sd, PC_PERM_VIEW_EQUIPMENT) )
 		clif_viewequip_ack( *sd, *tsd );
 	else
-		clif_msg(sd, MSI_OPEN_EQUIPEDITEM_REFUSED);
+		clif_msg( *sd, MSI_OPEN_EQUIPEDITEM_REFUSED );
 }
 
 
@@ -21203,7 +21194,7 @@ void clif_merge_item_open( map_session_data& sd ){
 
 	// No item need to be merged
 	if( n < 2 ){
-		clif_msg( &sd, MSI_NOT_EXIST_MERGE_ITEM );
+		clif_msg( sd, MSI_NOT_EXIST_MERGE_ITEM );
 		return;
 	}
 
@@ -21224,7 +21215,7 @@ void clif_parse_merge_item_req( int32 fd, map_session_data* sd ){
 
 	// No item need to be merged
 	if( count < 2 ){
-		clif_msg( sd, MSI_NOT_EXIST_MERGE_ITEM );
+		clif_msg( *sd, MSI_NOT_EXIST_MERGE_ITEM );
 		return;
 	}
 
@@ -21235,7 +21226,7 @@ void clif_parse_merge_item_req( int32 fd, map_session_data* sd ){
 	}
 
 	if( !clif_merge_item_check( sd->inventory_data[idx_main], &sd->inventory.u.items_inventory[idx_main] ) ){
-		clif_msg( sd, MSI_NOT_EXIST_MERGE_ITEM );
+		clif_msg( *sd, MSI_NOT_EXIST_MERGE_ITEM );
 		return;
 	}
 
@@ -21259,7 +21250,7 @@ void clif_parse_merge_item_req( int32 fd, map_session_data* sd ){
 		}
 
 		if( !clif_merge_item_check( sd->inventory_data[idx], &sd->inventory.u.items_inventory[idx] ) ){
-			clif_msg( sd, MSI_NOT_EXIST_MERGE_ITEM );
+			clif_msg( *sd, MSI_NOT_EXIST_MERGE_ITEM );
 			return;
 		}
 
@@ -21267,7 +21258,7 @@ void clif_parse_merge_item_req( int32 fd, map_session_data* sd ){
 	}
 
 	if( indices.empty() ){
-		clif_msg( sd, MSI_NOT_EXIST_MERGE_ITEM );
+		clif_msg( *sd, MSI_NOT_EXIST_MERGE_ITEM );
 		return;
 	}
 
@@ -21977,7 +21968,7 @@ void clif_parse_open_ui( int32 fd, map_session_data* sd ){
 			}else if( pc_attendance_enabled() ){
 				clif_ui_open( *sd, OUT_UI_ATTENDANCE, pc_attendance_counter( sd ) );
 			}else{
-				clif_msg_color( sd, MSI_CHECK_ATTENDANCE_NOT_EVENT, color_table[COLOR_RED] );
+				clif_msg_color( *sd, MSI_CHECK_ATTENDANCE_NOT_EVENT, color_table[COLOR_RED] );
 			}
 			break;
 #if PACKETVER >= 20160316
@@ -22390,7 +22381,7 @@ void clif_parse_equipswitch_request_single( int32 fd, map_session_data* sd ){
 		if( sd->npc_id ){
 #ifdef RENEWAL
 			if( pc_hasprogress( sd, WIP_DISABLE_SKILLITEM ) ){
-				clif_msg( sd, MSI_BUSY);
+				clif_msg( *sd, MSI_BUSY );
 				return;
 			}
 #endif
@@ -24458,7 +24449,7 @@ void clif_enchantwindow_open( map_session_data& sd, uint64 clientLuaIndex ){
 #if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
 	// Hardcoded clientside check
 	if( sd.weight > ( ( sd.max_weight * 70 ) / 100 ) ){
-		clif_msg_color( &sd, MSI_ENCHANT_FAILED_OVER_WEIGHT, color_table[COLOR_RED] );
+		clif_msg_color( sd, MSI_ENCHANT_FAILED_OVER_WEIGHT, color_table[COLOR_RED] );
 		sd.state.item_enchant_index = 0;
 		return;
 		
