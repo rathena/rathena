@@ -597,7 +597,7 @@ int32 hom_evolution(struct homun_data *hd)
 	nullpo_ret(hd);
 
 	if(!hd->homunculusDB->evo_class || hd->homunculus.class_ == hd->homunculusDB->evo_class) {
-		clif_emotion(&hd->bl, ET_SCRATCH);
+		clif_emotion( hd->bl, ET_SCRATCH );
 		return 0 ;
 	}
 
@@ -661,7 +661,7 @@ int32 hom_mutate(struct homun_data *hd, int32 homun_id)
 	m_id    = hom_class2mapid(homun_id);
 
 	if( m_class == -1 || m_id == -1 || !(m_class&HOM_EVO) || !(m_id&HOM_S) ) {
-		clif_emotion(&hd->bl, ET_SCRATCH);
+		clif_emotion( hd->bl, ET_SCRATCH );
 		return 0;
 	}
 
@@ -910,7 +910,7 @@ int32 hom_food(map_session_data *sd, struct homun_data *hd)
 
 	log_feeding(sd, LOG_FEED_HOMUNCULUS, foodID);
 
-	clif_emotion(&hd->bl,emotion);
+	clif_emotion( hd->bl, static_cast<emotion_type>( emotion ) );
 	clif_send_homdata( *hd, SP_HUNGRY );
 	clif_send_homdata( *hd, SP_INTIMATE );
 	clif_hom_food( *sd, foodID, 1 );
@@ -945,11 +945,11 @@ static TIMER_FUNC(hom_hungry){
 
 	hd->homunculus.hunger--;
 	if(hd->homunculus.hunger <= 10) {
-		clif_emotion(&hd->bl, ET_FRET);
+		clif_emotion( hd->bl, ET_FRET );
 	} else if(hd->homunculus.hunger == 25) {
-		clif_emotion(&hd->bl, ET_SCRATCH);
+		clif_emotion( hd->bl, ET_SCRATCH );
 	} else if(hd->homunculus.hunger == 75) {
-		clif_emotion(&hd->bl, ET_OK);
+		clif_emotion( hd->bl, ET_OK );
 	}
 
 	if( battle_config.feature_homunculus_autofeed && hd->homunculus.autofeed && hd->homunculus.hunger <= battle_config.feature_homunculus_autofeed_rate ){
