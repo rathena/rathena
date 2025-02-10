@@ -1684,7 +1684,6 @@
 #if PACKETVER >= 20130807
 	// Merge Item
 	parseable_packet(0x0974,2,clif_parse_merge_item_cancel,0); // CZ_CANCEL_MERGE_ITEM
-	packet(0x9CD,8); // ZC_MSG_COLOR
 #endif
 
 // 2013-08-21bRagexe

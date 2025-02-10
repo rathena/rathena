@@ -6268,14 +6268,14 @@ bool pc_isUseitem(map_session_data *sd,int32 n)
 		// Check if the player is not overweighted
 		// In Renewal the limit is 70% weight and gives the same error message
 		if (pc_is70overweight(sd)) {
-			clif_msg_color(sd, MSI_PICKUP_FAILED_ITEMCREATE, color_table[COLOR_RED]);
+			clif_msg_color( *sd, MSI_PICKUP_FAILED_ITEMCREATE, color_table[COLOR_RED] );
 			return 0;
 		}
 #else
 		// Check if the player is not overweighted
 		// In Pre-Renewal the limit is 50% weight and gives a specific error message
 		if (pc_is50overweight(sd)) {
-			clif_msg_color(sd, MSI_CANT_GET_ITEM_BECAUSE_WEIGHT, color_table[COLOR_RED]);
+			clif_msg_color( *sd, MSI_CANT_GET_ITEM_BECAUSE_WEIGHT, color_table[COLOR_RED] );
 			return 0;
 		}
 #endif
@@ -6286,9 +6286,9 @@ bool pc_isUseitem(map_session_data *sd,int32 n)
 		// TODO: Count the items the player will get and check for the actual inventory space required std::max<size_t>( count, 10 )
 		if (pc_inventoryblank(sd) <= 10) {
 #ifdef RENEWAL
-			clif_msg_color(sd, MSI_PICKUP_FAILED_ITEMCREATE, color_table[COLOR_RED]);
+			clif_msg_color( *sd, MSI_PICKUP_FAILED_ITEMCREATE, color_table[COLOR_RED] );
 #else
-			clif_msg_color(sd, MSI_CANT_GET_ITEM_BECAUSE_COUNT, color_table[COLOR_RED]);
+			clif_msg_color( *sd, MSI_CANT_GET_ITEM_BECAUSE_COUNT, color_table[COLOR_RED] );
 #endif
 			return 0;
 		}

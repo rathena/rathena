@@ -10405,19 +10405,18 @@ void clif_msg_skill(map_session_data* sd, uint16 skill_id, int32 msg_id)
 	WFIFOSET(fd, packet_len(0x7e6));
 }
 
-/// Displays msgstringtable.txt string in a color. (ZC_MSG_COLOR).
-/// 09cd <msg id>.W <color>.L
-void clif_msg_color( map_session_data *sd, uint16 msg_id, uint32 color ){
-	nullpo_retv(sd);
+/// Displays msgstringtable.txt string in a color.
+/// 09cd <msg id>.W <color>.L (ZC_MSG_COLOR)
+void clif_msg_color( map_session_data& sd, e_clif_messages msg_id, uint32 color ){
+#if PACKETVER >= 20130807
+	PACKET_ZC_MSG_COLOR p{};
 
-	int32 fd = sd->fd;
+	p.PacketType = HEADER_ZC_MSG_COLOR;
+	p.MessageId = msg_id;
+	p.MessageColor = color;
 
-	WFIFOHEAD(fd, packet_len(0x9cd));
-	WFIFOW(fd, 0) = 0x9cd;
-	WFIFOW(fd, 2) = msg_id;
-	WFIFOL(fd, 4) = color;
-
-	WFIFOSET(fd, packet_len(0x9cd));
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
 }
 
 /// Validates one global/guild/party/whisper message packet and tries to recognize its components.
@@ -12110,7 +12109,7 @@ void clif_parse_EquipItem( int32 fd, map_session_data* sd ){
 	}
 
 	if((sd->npc_id && !sd->npc_item_flag) || (sd->state.block_action & PCBLOCK_EQUIP)) {
-		clif_msg_color( sd, MSI_CAN_NOT_EQUIP_ITEM, color_table[COLOR_RED] );
+		clif_msg_color( *sd, MSI_CAN_NOT_EQUIP_ITEM, color_table[COLOR_RED] );
 		return;
 	} else if (sd->state.storage_flag || sd->sc.opt1)
 		; //You can equip/unequip stuff while storage is open/under status changes
@@ -12158,7 +12157,7 @@ void clif_parse_UnequipItem(int32 fd,map_session_data *sd)
 	}
 
 	if((sd->npc_id && !sd->npc_item_flag) || (sd->state.block_action & PCBLOCK_EQUIP)) {
-		clif_msg_color( sd, MSI_CAN_NOT_EQUIP_ITEM, color_table[COLOR_RED] );
+		clif_msg_color( *sd, MSI_CAN_NOT_EQUIP_ITEM, color_table[COLOR_RED] );
 		return;
 	} else if (sd->state.storage_flag || sd->sc.opt1)
 		; //You can equip/unequip stuff while storage is open/under status changes
@@ -21968,7 +21967,7 @@ void clif_parse_open_ui( int32 fd, map_session_data* sd ){
 			}else if( pc_attendance_enabled() ){
 				clif_ui_open( *sd, OUT_UI_ATTENDANCE, pc_attendance_counter( sd ) );
 			}else{
-				clif_msg_color( sd, MSI_CHECK_ATTENDANCE_NOT_EVENT, color_table[COLOR_RED] );
+				clif_msg_color( *sd, MSI_CHECK_ATTENDANCE_NOT_EVENT, color_table[COLOR_RED] );
 			}
 			break;
 #if PACKETVER >= 20160316
@@ -24449,7 +24448,7 @@ void clif_enchantwindow_open( map_session_data& sd, uint64 clientLuaIndex ){
 #if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
 	// Hardcoded clientside check
 	if( sd.weight > ( ( sd.max_weight * 70 ) / 100 ) ){
-		clif_msg_color( &sd, MSI_ENCHANT_FAILED_OVER_WEIGHT, color_table[COLOR_RED] );
+		clif_msg_color( sd, MSI_ENCHANT_FAILED_OVER_WEIGHT, color_table[COLOR_RED] );
 		sd.state.item_enchant_index = 0;
 		return;
 		

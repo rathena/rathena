@@ -1311,7 +1311,7 @@ void pet_catch_process_end( map_session_data& sd, int32 target_id ){
 	if (!pc_inventoryblank(&sd)) {
 		clif_pet_roulette(sd, false);
 		pet_catchprocesses.erase( sd.status.char_id );
-		clif_msg_color(&sd, MSI_CANT_GET_ITEM_BECAUSE_COUNT, color_table[COLOR_RED]);
+		clif_msg_color( sd, MSI_CANT_GET_ITEM_BECAUSE_COUNT, color_table[COLOR_RED] );
 
 		return;
 	}
