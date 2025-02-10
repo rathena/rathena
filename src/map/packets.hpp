@@ -1887,6 +1887,24 @@ struct PACKET_ZC_GM_CHECKER{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_GM_CHECKER, 0xc0c);
 
+struct PACKET_ZC_CONFIG_NOTIFY {
+	int16 packetType;
+	uint8 flag;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_CONFIG_NOTIFY, 0x2da);
+
+struct PACKET_ZC_CONGRATULATION {
+	int16 packetType;
+	int32 GID;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_CONGRATULATION, 0x1ea);
+
+struct PACKET_ZC_DIVORCE{
+	int16 packetType;
+	char name[NAME_LENGTH];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_DIVORCE, 0x205);
+
 struct PACKET_ZC_EMOTION {
 	int16 packetType;
 	int32 GID;
