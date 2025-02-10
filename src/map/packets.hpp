@@ -1925,6 +1925,13 @@ struct PACKET_ZC_MSG_SKILL {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_MSG_SKILL, 0x7e6);
 
+struct PACKET_ZC_MSG_VALUE {
+	int16 packetType;
+	uint16 message;
+	int32 value;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_MSG_VALUE, 0x7e2);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )

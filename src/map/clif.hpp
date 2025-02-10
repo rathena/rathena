@@ -1207,7 +1207,7 @@ void clif_viewequip_ack( map_session_data& sd, map_session_data& tsd );
 void clif_equipcheckbox( map_session_data& sd );
 
 void clif_msg( map_session_data& sd, e_clif_messages msg_id );
-void clif_msg_value(map_session_data* sd, uint16 id, int32 value);
+void clif_msg_value( map_session_data& sd, e_clif_messages msg_id, int32 value );
 void clif_msg_skill( map_session_data& sd, uint16 skill_id, e_clif_messages msg_id );
 void clif_msg_color( map_session_data& sd, e_clif_messages msg_id, uint32 color );
 

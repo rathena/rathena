@@ -10375,17 +10375,16 @@ void clif_msg( map_session_data& sd, e_clif_messages msg_id ){
 }
 
 
-/// Display msgstringtable.txt string and fill in a valid for %d format (ZC_MSG_VALUE).
-/// 0x7e2 <message>.W <value>.L
-void clif_msg_value(map_session_data* sd, uint16 id, int32 value)
-{
-	int32 fd = sd->fd;
+/// Display msgstringtable.txt string and fill in a valid for %d format.
+/// 0x7e2 <message>.W <value>.L (ZC_MSG_VALUE)
+void clif_msg_value( map_session_data& sd, e_clif_messages msg_id, int32 value ){
+	PACKET_ZC_MSG_VALUE p{};
 
-	WFIFOHEAD(fd, packet_len(0x7e2));
-	WFIFOW(fd,0) = 0x7e2;
-	WFIFOW(fd,2) = id;
-	WFIFOL(fd,4) = value;
-	WFIFOSET(fd, packet_len(0x7e2));
+	p.packetType = HEADER_ZC_MSG_VALUE;
+	p.message = msg_id;
+	p.value = value;
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 }
 
 
