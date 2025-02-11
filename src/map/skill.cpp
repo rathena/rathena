@@ -10144,7 +10144,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			// Monster cannot be stopped while moving
 			md->state.can_escape = 1;
 			// Move up to 8 cells
-			unit_escape(&md->bl, bl, 8, 2);
+			unit_escape(&md->bl, bl, 8, 3);
 		}
 		break;
 
@@ -10191,7 +10191,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 				md->state.can_escape = 1;
 				mob_unlocktarget(md, tick);
 				// Official distance is 7, if level > 1, distance = level
-				t_tick time = unit_escape(src, tbl, skill_lv > 1 ? skill_lv : 7, 2);
+				t_tick time = unit_escape(src, tbl, skill_lv > 1 ? skill_lv : 7, 3);
 
 				if (time) {
 					// Need to set state here as it's not set otherwise

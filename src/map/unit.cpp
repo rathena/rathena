@@ -1092,19 +1092,28 @@ t_tick unit_get_walkpath_time(struct block_list& bl)
 }
 
 /**
- * Makes unit attempt to run away from target using hard paths
+ * Makes unit attempt to run away from target in a straight line or using hard paths
  * @param bl: Object that is running away from target
  * @param target: Target
  * @param dist: How far bl should run
- * @param flag: unit_walktoxy flag
+ * @param flag: unit_walktoxy flag (&1 = straight line escape)
  * @return The duration the unit will run (0 on fail)
  */
 t_tick unit_escape(struct block_list *bl, struct block_list *target, int16 dist, uint8 flag)
 {
 	uint8 dir = map_calc_dir(target, bl->x, bl->y);
 
-	while( dist > 0 && map_getcell(bl->m, bl->x + dist*dirx[dir], bl->y + dist*diry[dir], CELL_CHKNOREACH) )
-		dist--;
+	if (flag&1) {
+		// Keep moving until we hit an unreachable cell
+		for (int i = 1; i <= dist; i++) {
+			if (map_getcell(bl->m, bl->x + i*dirx[dir], bl->y + i*diry[dir], CELL_CHKNOREACH))
+				dist = i - 1;
+		}
+	} else {
+		// Find the furthest reachable cell (then find a walkpath to it)
+		while( dist > 0 && map_getcell(bl->m, bl->x + dist*dirx[dir], bl->y + dist*diry[dir], CELL_CHKNOREACH) )
+			dist--;
+	}
 
 	if (dist > 0 && unit_walktoxy(bl, bl->x + dist * dirx[dir], bl->y + dist * diry[dir], flag))
 		return unit_get_walkpath_time(*bl);
