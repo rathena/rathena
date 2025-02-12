@@ -3129,6 +3129,106 @@ Valid types are:
 
 See the sample in 'doc/sample/getiteminfo.txt'.
 
+Returned values and their constants (constant = value),
+one can use either the value or the constants for your checks:
+
+	ITEMINFO_TYPE:
+		IT_HEALING 		= 0
+		IT_UNKNOWN 		= 1
+		IT_USABLE  		= 2
+		IT_ETC     		= 3
+		IT_ARMOR   		= 4
+		IT_WEAPON  		= 5
+		IT_CARD    		= 6
+		IT_PETEGG  		= 7
+		IT_PETARMOR 	= 8
+		IT_UNKNOWN2 	= 9
+		IT_AMMO     	= 10
+		IT_DELAYCONSUME = 11
+		IT_SHADOWGEAR	= 12
+		IT_CASH 		= 18
+		
+	ITEMINFO_SUBTYPE:
+		Weapons
+			W_FIST		= 0 //Bare hands
+			W_DAGGER	= 1
+			W_1HSWORD	= 2
+			W_2HSWORD	= 3
+			W_1HSPEAR	= 4
+			W_2HSPEAR	= 5
+			W_1HAXE		= 6
+			W_2HAXE		= 7
+			W_MACE		= 8
+			W_2HMACE	= 9 (unused)
+			W_STAFF		= 10
+			W_BOW		= 11
+			W_KNUCKLE	= 12
+			W_MUSICAL	= 13
+			W_WHIP		= 14
+			W_BOOK		= 15
+			W_KATAR		= 16
+			W_REVOLVER	= 17
+			W_RIFLE		= 18
+			W_GATLING	= 19
+			W_SHOTGUN	= 20
+			W_GRENADE	= 21
+			W_HUUMA		= 22
+			W_2HSTAFF	= 23
+			// dual-wield constants
+			W_DOUBLE_DD = 25 // 2 daggers
+			W_DOUBLE_SS = 26 // 2 swords
+			W_DOUBLE_AA = 27 // 2 axes
+			W_DOUBLE_DS = 28 // dagger + sword
+			W_DOUBLE_DA = 29 // dagger + axe
+			W_DOUBLE_SA = 30 // sword + axe
+		
+		Ammo
+			AMMO_NONE			= 0
+			AMMO_ARROW			= 1
+			AMMO_DAGGER			= 2
+			AMMO_BULLET			= 3
+			AMMO_SHELL			= 4
+			AMMO_GRENADE		= 5
+			AMMO_SHURIKEN		= 6
+			AMMO_KUNAI			= 7
+			AMMO_CANNONBALL		= 8
+			AMMO_THROWWEAPON	= 9
+		
+	ITEMINFO_GENDER
+		SEX_FEMALE = 0
+		SEX_MALE = 1
+		SEX_BOTH = 2
+		
+	ITEMINFO_LOCATIONS		
+		EQP_HEAD_LOW			= 1
+		EQP_HEAD_MID			= 512
+		EQP_HEAD_TOP			= 256
+		EQP_HAND_R				= 2
+		EQP_HAND_L				= 32
+		EQP_ARMOR				= 16
+		EQP_SHOES				= 64
+		EQP_GARMENT				= 4
+		EQP_ACC_R				= 8
+		EQP_ACC_L				= 128
+		EQP_COSTUME_HEAD_TOP	= 1024
+		EQP_COSTUME_HEAD_MID	= 2048
+		EQP_COSTUME_HEAD_LOW	= 4096
+		EQP_COSTUME_GARMENT		= 8192
+		EQP_COSTUME_FLOOR		= 16384
+		EQP_AMMO				= 32768
+		EQP_SHADOW_ARMOR		= 65536
+		EQP_SHADOW_WEAPON		= 131072
+		EQP_SHADOW_SHIELD		= 262144
+		EQP_SHADOW_SHOES		= 524288
+		EQP_SHADOW_ACC_R		= 1048576
+		EQP_SHADOW_ACC_L 		= 2097152
+		
+		// Combined
+		EQP_ACC_RL				= 136:
+			EQP_ACC_R + EQP_ACC_L (8+128)
+		EQP_SHADOW_ACC_RL		= 3145728:
+			EQP_SHADOW_ACC_R + EQP_SHADOW_ACC_L (1048576 + 2097152)
+
 ---------------------------------------
 
 *getequipcardid(<equipment slot>,<card slot>)

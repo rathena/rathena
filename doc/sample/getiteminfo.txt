@@ -3,7 +3,10 @@
 //===== By: ==================================================
 //= Lupus
 //===== Last Updated: ========================================
-//= 20140208
+//= 20250212
+//===== Changelog: =====================================
+//= 1.1 Enhanced the script generally by displaying the constants,
+//      for the command and output. [llchrisll]
 //===== Description: ========================================= 
 //= Demonstrates the 'getiteminfo' command.
 //============================================================
@@ -13,28 +16,170 @@ prontera,156,179,6	script	test_getiteminfo	117,{
 	case 1:
 		mes "Please enter an item ID.";
 		input .@value;
-
+		if(getiteminfo(.@value,ITEMINFO_ID) == -1) { // Item doesn't exist, so end the script
+			mes "Unknown Item, please type the ID of an existing item.";
+			end;
+		}
 		// This line uses an INTERNAL function of your client to show item name by its ID!
 		// ^nItemID^XXXX -> Item Name
 		mes "Item ID: " + .@value + " ^nItemID^" + .@value;
-
-		mes "Current item info:";
-		for(.@id = 0; .@id <= 18; .@id++)
-			mes " getiteminfo(" + .@value + "," + .@id + ") = " + getiteminfo(.@value,.@id);
-		close;
+		break;
 	case 2:
 		mes "Please enter an english item name.";
 		input .@value$;
+		if(getiteminfo(.@value$,ITEMINFO_ID) == -1) { // Item doesn't exist, so end the script
+			mes "Unknown Item, please type the english name of an existing item.";
+			end;
+		}
 		mes "english item name: " + .@value$;
 		break;
 	case 3:
 		mes "Please enter an aegis item name.";
 		input .@value$;
+		if(getiteminfo(.@value$,ITEMINFO_ID) == -1) { // Item doesn't exist, so end the script
+			mes "Unknown Item, please type the aegis name of an existing item.";
+			end;
+		}
 		mes "aegis item name: " + .@value$;
 		break;
 	}
+	if(!.@value && .@value$ != "") // To prevent to duplicate the loop
+		.@value = getiteminfo(.@value$,ITEMINFO_ID);
 	mes "Current item info:";
-	for(.@id = 0; .@id <= 18; .@id++)
-		mes " getiteminfo(" + .@value$ + "," + .@id + ") = " + getiteminfo(.@value$,.@id);
+	for(.@id = 0; .@id < getarraysize(.IT_Info$); .@id++) {
+		mes .IT_Info$[.@id]+" ("+.@id+") = " + getiteminfo(.@value,.@id);
+		
+		if(.@id == ITEMINFO_TYPE) {
+			mes ">  "+.IT_Types$[getiteminfo(.@value,.@id)];
+		
+		} else if(.@id == ITEMINFO_GENDER) {
+			switch(getiteminfo(.@value,.@id)) {
+				case SEX_FEMALE: mes ">  Female only";
+				case SEX_MALE: mes ">  Male only";
+				case SEX_BOTH: mes ">  Both Gender";
+			}
+		} else if(.@id == ITEMINFO_LOCATIONS) {
+			.@loc = getiteminfo(.@value,.@id);
+			if(.@loc&EQP_COSTUME_HEAD_TOP) mes ">  EQP_COSTUME_HEAD_TOP";
+			if(.@loc&EQP_COSTUME_HEAD_MID) mes ">  EQP_COSTUME_HEAD_MID";
+			if(.@loc&EQP_COSTUME_HEAD_LOW) mes ">  EQP_COSTUME_HEAD_LOW";
+			if(.@loc&EQP_COSTUME_GARMENT) mes ">  EQP_COSTUME_GARMENT";
+			if(.@loc&EQP_SHADOW_ARMOR) mes ">  EQP_SHADOW_ARMOR";
+			if(.@loc&EQP_SHADOW_WEAPON) mes ">  EQP_SHADOW_WEAPON";
+			if(.@loc&EQP_SHADOW_SHIELD) mes ">  EQP_SHADOW_SHIELD";
+			if(.@loc&EQP_SHADOW_SHOES) mes ">  EQP_SHADOW_SHOES";
+			if(.@loc&EQP_SHADOW_ACC_R) mes ">  EQP_SHADOW_ACC_R";
+			if(.@loc&EQP_SHADOW_ACC_L) mes ">  EQP_SHADOW_ACC_L";
+			if(.@loc&EQP_ACC_L) mes ">  EQP_ACC_L";
+			if(.@loc&EQP_ACC_R) mes ">  EQP_ACC_R";
+			if(.@loc&EQP_SHOES) mes ">  EQP_SHOES";
+			if(.@loc&EQP_GARMENT) mes ">  EQP_GARMENT";
+			if(.@loc&EQP_HEAD_LOW) mes ">  EQP_HEAD_LOW";
+			if(.@loc&EQP_HEAD_MID) mes ">  EQP_HEAD_MID";
+			if(.@loc&EQP_HEAD_TOP) mes ">  EQP_HEAD_TOP";
+			if(.@loc&EQP_ARMOR) mes ">  EQP_ARMOR";
+			if(.@loc&EQP_HAND_L) mes ">  EQP_HAND_L";
+			if(.@loc&EQP_HAND_R) mes ">  EQP_HAND_R";
+			if(.@loc&EQP_ARMS) mes ">  EQP_ARMS";
+			if(.@loc&EQP_ACC_RL) mes ">  EQP_ACC_RL";
+			if(.@loc&EQP_SHADOW_ACC_RL) mes ">  EQP_SHADOW_ACC_RL";
+		
+		} else if(.@id == ITEMINFO_SUBTYPE) {
+			if(getiteminfo(.@value,ITEMINFO_TYPE) == IT_WEAPON || getiteminfo(.@value,ITEMINFO_TYPE) == IT_AMMO) {
+				mes ">  "+.IT_WSubTypes$[getiteminfo(.@value,.@id)];
+			}
+		}
+	}
 	close;
+	
+	OnInit:
+	setarray .IT_Info$[0],
+		"ITEMINFO_BUY",
+		"ITEMINFO_SELL",
+		"ITEMINFO_TYPE",
+		"ITEMINFO_MAXCHANCE",
+		"ITEMINFO_GENDER",
+		"ITEMINFO_LOCATIONS",
+		"ITEMINFO_WEIGHT",
+		"ITEMINFO_ATTACK",
+		"ITEMINFO_DEFENSE",
+		"ITEMINFO_RANGE",
+		"ITEMINFO_SLOT",
+		"ITEMINFO_VIEW",
+		"ITEMINFO_EQUIPLEVELMIN",
+		"ITEMINFO_WEAPONLEVEL",
+		"ITEMINFO_ALIASNAME",
+		"ITEMINFO_EQUIPLEVELMAX",
+		"ITEMINFO_MAGICATTACK",
+		"ITEMINFO_ID",
+		"ITEMINFO_AEGISNAME",
+		"ITEMINFO_ARMORLEVEL",
+		"ITEMINFO_SUBTYPE";
+		
+	setarray .IT_Types$[0],
+		"IT_HEALING",
+		"IT_UNKNOWN",
+		"IT_USABLE",
+		"IT_ETC",
+		"IT_ARMOR",
+		"IT_WEAPON",
+		"IT_CARD",
+		"IT_PETEGG",
+		"IT_PETARMOR",
+		"IT_UNKNOWN2",
+		"IT_AMMO",
+		"IT_DELAYCONSUME",
+		"IT_SHADOWGEAR",
+		" ",
+		" ",
+		" ",
+		" ",
+		" ",
+		"IT_CASH";
+	
+	setarray .IT_WSubTypes$[0],
+		"W_FIST",
+		"W_DAGGER",
+		"W_1HSWORD",
+		"W_2HSWORD",
+		"W_1HSPEAR",
+		"W_2HSPEAR",
+		"W_1HAXE",
+		"W_2HAXE",
+		"W_MACE",
+		"W_2HMACE",
+		"W_STAFF",
+		"W_BOW",
+		"W_KNUCKLE",
+		"W_MUSICAL",
+		"W_WHIP",
+		"W_BOOK",
+		"W_KATAR",
+		"W_REVOLVER",
+		"W_RIFLE",
+		"W_GATLING",
+		"W_SHOTGUN",
+		"W_GRENADE",
+		"W_HUUMA",
+		"W_2HSTAFF",
+		" ",
+		"W_DOUBLE_DD", // 2 daggers
+		"W_DOUBLE_SS", // 2 swords
+		"W_DOUBLE_AA", // 2 axes
+		"W_DOUBLE_DS", // dagger + sword
+		"W_DOUBLE_DA", // dagger + axe
+		"W_DOUBLE_SA"; // sword + axe
+	
+	setarray .IT_ASubTypes$[0],
+		"AMMO_NONE",
+		"AMMO_ARROW",
+		"AMMO_DAGGER",
+		"AMMO_BULLET",
+		"AMMO_SHELL",
+		"AMMO_GRENADE",
+		"AMMO_SHURIKEN",
+		"AMMO_KUNAI",
+		"AMMO_CANNONBALL",
+		"AMMO_THROWWEAPON";
+	end;
 }
