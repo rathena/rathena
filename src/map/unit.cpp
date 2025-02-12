@@ -638,10 +638,11 @@ static TIMER_FUNC(unit_walktoxy_timer)
 			// To make sure we check one skill per second on average, we substract half the speed as ms
 			if(!ud->state.force_walk && tid != INVALID_TIMER &&
 				DIFF_TICK(tick, md->last_skillcheck) > MOB_SKILL_INTERVAL - md->status.speed / 2 &&
-				DIFF_TICK(tick, md->last_thinktime) > 0 &&
+				//TODO: Full fix requires to move casting of chase skills to nextcell function
+				//DIFF_TICK(tick, md->last_thinktime) > 0 &&
 				map[bl->m].users > 0 &&
 				mobskill_use(md, tick, -1)) {
-				if (!(ud->skill_id == NPC_SELFDESTRUCTION && ud->skilltimer != INVALID_TIMER)
+				if ((ud->skill_id != NPC_SPEEDUP || md->trickcasting == 0) //Stop only when trickcasting expired
 					&& ud->skill_id != NPC_EMOTION && ud->skill_id != NPC_EMOTION_ON //NPC_EMOTION doesn't make the monster stop
 					&& md->state.skillstate != MSS_WALK) //Walk skills are supposed to be used while walking
 				{ // Skill used, abort walking
@@ -1091,19 +1092,28 @@ t_tick unit_get_walkpath_time(struct block_list& bl)
 }
 
 /**
- * Makes unit attempt to run away from target using hard paths
+ * Makes unit attempt to run away from target in a straight line or using hard paths
  * @param bl: Object that is running away from target
  * @param target: Target
  * @param dist: How far bl should run
- * @param flag: unit_walktoxy flag
+ * @param flag: unit_walktoxy flag (&1 = straight line escape)
  * @return The duration the unit will run (0 on fail)
  */
 t_tick unit_escape(struct block_list *bl, struct block_list *target, int16 dist, uint8 flag)
 {
 	uint8 dir = map_calc_dir(target, bl->x, bl->y);
 
-	while( dist > 0 && map_getcell(bl->m, bl->x + dist*dirx[dir], bl->y + dist*diry[dir], CELL_CHKNOREACH) )
-		dist--;
+	if (flag&1) {
+		// Keep moving until we hit an unreachable cell
+		for (int i = 1; i <= dist; i++) {
+			if (map_getcell(bl->m, bl->x + i*dirx[dir], bl->y + i*diry[dir], CELL_CHKNOREACH))
+				dist = i - 1;
+		}
+	} else {
+		// Find the furthest reachable cell (then find a walkpath to it)
+		while( dist > 0 && map_getcell(bl->m, bl->x + dist*dirx[dir], bl->y + dist*diry[dir], CELL_CHKNOREACH) )
+			dist--;
+	}
 
 	if (dist > 0 && unit_walktoxy(bl, bl->x + dist * dirx[dir], bl->y + dist * diry[dir], flag))
 		return unit_get_walkpath_time(*bl);
@@ -1741,18 +1751,16 @@ int32 unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int32
 		if (DIFF_TICK(ud->canmove_tick, tick+delay) > 0)
 			return 0;
 	} else {
+		if (bl->type == BL_MOB) {
+			mob_data* md = BL_CAST(BL_MOB, bl);
+			// Mob needs to escape, don't stop it
+			if (md && md->state.can_escape == 1)
+				return 0;
+		}
 		// Don't set walk delays when already trapped.
 		if (!unit_can_move(bl)) {
-			if (bl->type == BL_MOB) {
-				mob_data *md = BL_CAST(BL_MOB, bl);
-
-				if (md && md->state.can_escape == 1) // Mob needs to escape, don't stop it
-					return 0;
-			}
-
 			// Unit might still be moving even though it can't move
 			unit_stop_walking( bl, USW_MOVE_FULL_CELL );
-
 			return 0;
 		}
 		//Immune to being stopped for double the flinch time
