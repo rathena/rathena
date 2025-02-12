@@ -5233,7 +5233,8 @@ int32 clif_damage(block_list& src, block_list& dst, t_tick tick, int32 sdelay, i
 	int32 damage = (int32)cap_value(sdamage,INT_MIN,INT_MAX);
 	int32 damage2 = (int32)cap_value(sdamage2,INT_MIN,INT_MAX);
 
-	type = clif_calc_delay( dst, type, div, damage+damage2, ddelay );
+	if (type != DMG_MULTI_HIT_CRITICAL)
+		type = clif_calc_delay( dst, type, div, damage+damage2, ddelay );
 
 	damage = static_cast<decltype(damage)>(clif_hallucination_damage(dst, damage));
 	damage2 = static_cast<decltype(damage2)>(clif_hallucination_damage(dst, damage2));
@@ -5304,6 +5305,8 @@ int32 clif_damage(block_list& src, block_list& dst, t_tick tick, int32 sdelay, i
 	if(&src == &dst) 
 		unit_setdir(&src, unit_getdir(&src));
 
+	// In case this assignment is bypassed by DMG_MULTI_HIT_CRITICAL
+	type = clif_calc_delay( dst, type, div, damage+damage2, ddelay );
 	//Return adjusted can't walk delay for further processing.
 	return clif_calc_walkdelay(dst, ddelay, type, damage+damage2, div);
 }
