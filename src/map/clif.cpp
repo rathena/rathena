@@ -5119,7 +5119,7 @@ static enum e_damage_type clif_calc_delay(block_list& bl, e_damage_type type, in
 		return type;
 
 	// Currently we set dmotion to 0 to mark situations that should use the endure effect
-	// However, this also impacts units that natually have 0 dmotion
+	// However, this also impacts units that naturally have 0 dmotion
 	// TODO: Collect all possible situations that create the endure effect and implement function
 	if (delay != 0)
 		return type;
