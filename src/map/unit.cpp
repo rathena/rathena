@@ -1104,8 +1104,9 @@ t_tick unit_escape(struct block_list *bl, struct block_list *target, int16 dist,
 	uint8 dir = map_calc_dir(target, bl->x, bl->y);
 
 	if (flag&1) {
+		// Straight line escape
 		// Keep moving until we hit an unreachable cell
-		for (int i = 1; i <= dist; i++) {
+		for (int16 i = 1; i <= dist; i++) {
 			if (map_getcell(bl->m, bl->x + i*dirx[dir], bl->y + i*diry[dir], CELL_CHKNOREACH))
 				dist = i - 1;
 		}
@@ -1752,9 +1753,10 @@ int32 unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int32
 			return 0;
 	} else {
 		if (bl->type == BL_MOB) {
-			mob_data* md = BL_CAST(BL_MOB, bl);
+			mob_data& md = *reinterpret_cast<mob_data*>(bl);
+
 			// Mob needs to escape, don't stop it
-			if (md && md->state.can_escape == 1)
+			if (md.state.can_escape == 1)
 				return 0;
 		}
 		// Don't set walk delays when already trapped.
