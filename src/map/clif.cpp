@@ -5306,7 +5306,10 @@ int32 clif_damage(block_list& src, block_list& dst, t_tick tick, int32 sdelay, i
 		unit_setdir(&src, unit_getdir(&src));
 
 	// In case this assignment is bypassed by DMG_MULTI_HIT_CRITICAL
-	type = clif_calc_delay( dst, type, div, damage+damage2, ddelay );
+	if( type == DMG_MULTI_HIT_CRITICAL ){
+		type = clif_calc_delay( dst, type, div, damage+damage2, ddelay );
+	}
+
 	//Return adjusted can't walk delay for further processing.
 	return clif_calc_walkdelay(dst, ddelay, type, damage+damage2, div);
 }
