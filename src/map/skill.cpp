@@ -10136,11 +10136,11 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		break;
 
 	case NPC_RANDOMMOVE:
-		if (md) {
+		if (md != nullptr) {
 			// This skill creates fake casting state where a monster moves while showing a cast bar
 			int32 tricktime = MOB_SKILL_INTERVAL * 3;
 			md->trickcasting = tick + tricktime;
-			clif_skillcasting(src, src->id, src->id, 0, 0, skill_id, skill_lv, ELE_FIRE, tricktime + 500);
+			clif_skillcasting(src, src->id, src->id, 0, 0, skill_id, skill_lv, ELE_FIRE, tricktime + MOB_SKILL_INTERVAL / 2);
 			// Monster cannot be stopped while moving
 			md->state.can_escape = 1;
 			// Move up to 8 cells
@@ -10149,7 +10149,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		break;
 
 	case NPC_SPEEDUP:
-		if (md) {
+		if (md != nullptr) {
 			// Officially, trickcasting continues as long as there are more than 700ms left
 			int32 trickstop = (MOB_SKILL_INTERVAL * 7) / 10;
 			if (DIFF_TICK(md->trickcasting, tick) >= trickstop) {

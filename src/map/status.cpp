@@ -2784,7 +2784,7 @@ int32 status_calc_mob_(struct mob_data* md, uint8 opt)
 	if (flag&8 && mbl) {
 		struct status_data *mstatus = status_get_base_status(mbl);
 
-		if (mstatus && md->special_state.ai != AI_SPHERE &&
+		if (mstatus != nullptr && md->special_state.ai != AI_SPHERE &&
 			battle_config.slaves_inherit_speed&(status_has_mode(mstatus,MD_CANMOVE)?1:2))
 			status->speed = mstatus->speed;
 		if (status->speed < MIN_WALK_SPEED)
