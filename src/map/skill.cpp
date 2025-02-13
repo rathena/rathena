@@ -5156,12 +5156,12 @@ bool skill_mirage_cast( block_list& src, block_list* bl, uint16 skill_id, uint16
 				}
 				clif_skill_poseffect( su->bl, skill_id, skill_lv, x, y, tick );
 				int32 range = skill_get_splash( skill_id, skill_lv );
-				map_foreachinallarea( skill_area_sub, src.m, x - range, y - range, x + range, y + range, BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SKILL_ALTDMG_FLAG | 1, skill_castend_damage_id );
+				map_foreachinallarea( skill_area_sub, src.m, x - range, y - range, x + range, y + range, BL_CHAR, &src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SKILL_ALTDMG_FLAG | 1, skill_castend_damage_id );
 				} break;
 			case SS_KAGENOMAI://nodamage splash
 			case SS_ANTENPOU://nodamage splash
 				clif_skill_nodamage( &su->bl, su->bl, skill_id, skill_lv, tick );
-				map_foreachinrange( skill_area_sub, &su->bl, skill_get_splash( skill_id, skill_lv ), BL_CHAR, src, skill_id, skill_lv, tick, BCT_ENEMY | SD_SPLASH | SD_ANIMATION | SKILL_ALTDMG_FLAG | 1, skill_castend_damage_id );
+				map_foreachinrange( skill_area_sub, &su->bl, skill_get_splash( skill_id, skill_lv ), BL_CHAR, &src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | SD_ANIMATION | SKILL_ALTDMG_FLAG | 1, skill_castend_damage_id );
 				break;
 			case SS_KAGEGISSEN://damage splash
 				x = bl->x;
@@ -5170,9 +5170,9 @@ bool skill_mirage_cast( block_list& src, block_list* bl, uint16 skill_id, uint16
 				clif_skill_nodamage( &su->bl, *bl, skill_id, skill_lv, tick );
 				if (battle_config.skill_eightpath_algorithm) {
 					//Use official AoE algorithm
-					map_foreachindir( skill_attack_area, su->bl.m, su->bl.x, su->bl.y, x, y, skill_get_splash( skill_id, skill_lv ), skill_get_maxcount( skill_id, skill_lv ), 0, splash_target( &src ), skill_get_type( skill_id ), src, src, skill_id, skill_lv, tick, SKILL_ALTDMG_FLAG, BCT_ENEMY );
+					map_foreachindir( skill_attack_area, su->bl.m, su->bl.x, su->bl.y, x, y, skill_get_splash( skill_id, skill_lv ), skill_get_maxcount( skill_id, skill_lv ), 0, splash_target( &src ), skill_get_type( skill_id ), &src, &src, skill_id, skill_lv, tick, SKILL_ALTDMG_FLAG, BCT_ENEMY );
 				} else {
-					map_foreachinpath( skill_attack_area, su->bl.m, su->bl.x, su->bl.y, x, y, skill_get_splash( skill_id, skill_lv ), skill_get_maxcount( skill_id, skill_lv ), splash_target( &src ), skill_get_type( skill_id ), src, src, skill_id, skill_lv, tick, SKILL_ALTDMG_FLAG, BCT_ENEMY );
+					map_foreachinpath( skill_attack_area, su->bl.m, su->bl.x, su->bl.y, x, y, skill_get_splash( skill_id, skill_lv ), skill_get_maxcount( skill_id, skill_lv ), splash_target( &src ), skill_get_type( skill_id ), &src, &src, skill_id, skill_lv, tick, SKILL_ALTDMG_FLAG, BCT_ENEMY );
 				}
 				break;
 		}
@@ -6089,7 +6089,7 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 					sc_start(src,src,skill_get_sc(skill_id),100,skill_lv,skill_get_time(skill_id,skill_lv));
 					break;
 				case SS_KINRYUUHOU:
-					skill_mirage_cast(*src, nullptr, SS_ANTENPOU, skill_lv, 0, 0, tick, flag);
+					skill_mirage_cast(*src, nullptr, SS_ANTENPOU, skill_lv, 0, 0, tick, flag | BCT_WOS);
 					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 					break;
 			}
@@ -13578,7 +13578,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 
 	case SS_ANTENPOU:
 	case SS_KAGENOMAI:
-		skill_mirage_cast(*src, bl,skill_id, skill_lv, 0, 0, tick,flag);
+		skill_mirage_cast(*src, nullptr,skill_id, skill_lv, 0, 0, tick, flag | BCT_WOS);
 		[[fallthrough]];
 	case SS_KAGEAKUMU:
 	case SS_ANKOKURYUUAKUMU:
@@ -15504,7 +15504,7 @@ int32 skill_castend_pos2(struct block_list* src, int32 x, int32 y, uint16 skill_
 	case SS_RAIDENPOU:
 	case SS_SEKIENHOU:
 		skill_area_temp[1] = 0;
-		skill_mirage_cast(*src, nullptr, SS_ANTENPOU, skill_lv, x, y, tick, flag);
+		skill_mirage_cast(*src, nullptr, SS_ANTENPOU, skill_lv, x, y, tick, flag | BCT_WOS);
 		if (map_getcell(src->m, x, y, CELL_CHKLANDPROTECTOR)) {
 			clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
 			return 0;
@@ -15534,7 +15534,7 @@ int32 skill_castend_pos2(struct block_list* src, int32 x, int32 y, uint16 skill_
 			src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1, skill_castend_damage_id);
 		break;
 	case SS_REIKETSUHOU:
-		skill_mirage_cast(*src, nullptr, SS_ANTENPOU, skill_lv, 0, 0, tick, flag);
+		skill_mirage_cast(*src, nullptr, SS_ANTENPOU, skill_lv, 0, 0, tick, flag | BCT_WOS);
 		if (map_getcell(src->m, x, y, CELL_CHKLANDPROTECTOR)) {
 			clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
 			return 0;
@@ -15544,7 +15544,7 @@ int32 skill_castend_pos2(struct block_list* src, int32 x, int32 y, uint16 skill_
 			src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1, skill_castend_damage_id);
 		break;
 	case SS_KUNAIWAIKYOKU:
-		skill_mirage_cast(*src, nullptr, skill_id, skill_lv, x, y, tick, flag);
+		skill_mirage_cast(*src, nullptr, skill_id, skill_lv, x, y, tick, flag | BCT_WOS);
 		i = skill_get_splash(skill_id, skill_lv);
 		map_foreachinallarea(skill_area_sub, src->m, x - i, y - i, x + i, y + i, BL_CHAR,
 			src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1, skill_castend_damage_id);
