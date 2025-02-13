@@ -44228,7 +44228,7 @@ Body:
           Size: 3
         - Level: 5
           Size: 4
-      Interval: 250
+      Interval: 500
       Target: Enemy
       Flag:
         PathCheck: true

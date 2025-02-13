@@ -1773,7 +1773,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 		if( tsc->getSCE( SC_SHADOW_CLOCK ) != nullptr && ( flag&(BF_WEAPON|BF_MAGIC) ) ){
 			// TODO: exact reduction unknown [Muh]
-			damage -= damage / 4;
+			damage = damage * 85 / 100;
 		}
 
 		if (tsc->getSCE(SC_DEFENDER) &&
