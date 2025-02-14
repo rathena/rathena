@@ -45236,7 +45236,6 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-    CastCancel: true
     CastTime: 1000   # TODO
     Cooldown:
       - Level: 1
