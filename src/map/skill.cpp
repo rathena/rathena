@@ -9038,7 +9038,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 	case NPC_SELFDESTRUCTION:
 		//Self Destruction hits everyone in range (allies+enemies)
 		//Except for Summoned Marine spheres on non-versus maps, where it's just enemies and your own slaves.
-		if ((!md || md->special_state.ai == AI_SPHERE) && !map_flag_vs(src->m)) {
+		if ((md == nullptr || md->special_state.ai == AI_SPHERE) && !map_flag_vs(src->m)) {
 			if (battle_config.alchemist_summon_setting&8)
 				i = BCT_ENEMY|BCT_SLAVE;
 			else
