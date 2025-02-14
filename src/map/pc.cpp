@@ -11483,7 +11483,7 @@ bool pc_setreg2(map_session_data *sd, const char *reg, int64 val) {
 
 	if( !not_server_variable( prefix ) ){
 		ShowError( "pc_setreg2: Invalid variable scope '%s'.\n", reg );
-		return 0;
+		return false;
 	}
 
 	val = cap_value(val, INT_MIN, INT_MAX);
