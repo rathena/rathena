@@ -706,6 +706,12 @@ int32 logchrif_parse_reqvipdata(int32 fd) {
 			accounts->save(accounts,&acc, false);
 			if( flag&1 )
 				logchrif_sendvipdata(fd,&acc,((isvip)?0x1:0)|((flag&0x8)?0x4:0),mapfd);
+
+			if( isvip ){
+				accounts->enable_monitor_vip( accounts, aid, vip_time );
+			}else{
+				accounts->disable_monitor_vip( accounts, aid );
+			}
 		}
 	}
 #endif

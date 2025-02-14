@@ -2455,8 +2455,6 @@ Body:
     CalcFlags:
       Def2: true
       MDef2: true
-      Speed: true
-      Aspd: true
     Opt3:
       SteelBody: true
     Flags:
@@ -9746,3 +9744,32 @@ Body:
       Rising_Moon: true
       Midnight_Moon: true
       Dawn_Moon: true
+  - Status: Wild_Walk
+    Icon: EFST_WILD_WALK
+    DurationLookup: WH_WILD_WALK
+    CalcFlags:
+      Flee: true
+      Speed: true
+    Flags:
+      NoRemoveOnDead: true
+      NoSave: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+  - Status: Shadow_Clock
+    Icon: EFST_SHADOW_CLOCK
+    DurationLookup: SS_TOKEDASU
+    CalcFlags:
+      Speed: true
+  - Status: Shinkirou_Call
+    Icon: EFST_SBUNSHIN
+    DurationLookup: SS_SHINKIROU
+    CalcFlags:
+      Speed: true
+  - Status: Nightmare
+    Icon: EFST_NIGHTMARE
+    DurationLookup: SS_KAGEGARI
+    Flags:
+      Debuff: true
+      BlEffect: true
+      DisplayPc: true

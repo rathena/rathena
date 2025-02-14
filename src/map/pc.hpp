@@ -128,8 +128,11 @@ enum e_lr_flag : uint8 {
 	LR_FLAG_SHIELD
 };
 
-#ifndef CAPTCHA_ANSWER_SIZE
-	#define CAPTCHA_ANSWER_SIZE 16
+#ifndef CAPTCHA_ANSWER_SIZE_MIN
+	#define CAPTCHA_ANSWER_SIZE_MIN 1
+#endif
+#ifndef CAPTCHA_ANSWER_SIZE_MAX
+	#define CAPTCHA_ANSWER_SIZE_MAX 16
 #endif
 #ifndef CAPTCHA_BMP_SIZE
 	#define CAPTCHA_BMP_SIZE (2 + 52 + (3 * 220 * 90)) // sizeof("BM") + sizeof(BITMAPV2INFOHEADER) + 24bits 220x90 BMP
@@ -142,7 +145,7 @@ struct s_captcha_data {
 	uint16 index;
 	uint16 image_size;
 	char image_data[CAPTCHA_BMP_SIZE];
-	char captcha_answer[CAPTCHA_ANSWER_SIZE];
+	char captcha_answer[CAPTCHA_ANSWER_SIZE_MAX];
 	script_code *bonus_script;
 
 	~s_captcha_data() {
@@ -240,13 +243,13 @@ struct s_item_bonus {
 
 /// AddEle bonus struct
 struct s_addele2 {
-	short flag, rate;
+	int16 flag, rate;
 	unsigned char ele;
 };
 
 /// AddRace bonus struct
 struct s_addrace2 {
-	short flag, rate;
+	int16 flag, rate;
 	unsigned char race;
 };
 
@@ -268,14 +271,14 @@ struct weapon_data {
 	int32 addclass[CLASS_MAX];
 	int32 addrace2[RC2_MAX];
 	int32 addsize[SZ_MAX];
-	short hp_drain_race[RC_MAX];
-	short sp_drain_race[RC_MAX];
-	short hp_drain_class[CLASS_MAX];
-	short sp_drain_class[CLASS_MAX];
+	int16 hp_drain_race[RC_MAX];
+	int16 sp_drain_race[RC_MAX];
+	int16 hp_drain_class[CLASS_MAX];
+	int16 sp_drain_class[CLASS_MAX];
 
 	struct drain_data {
-		short rate; ///< Success rate 10000 = 100%
-		short per;  ///< Drain value/rate per attack
+		int16 rate; ///< Success rate 10000 = 100%
+		int16 per;  ///< Drain value/rate per attack
 	} hp_drain_rate, sp_drain_rate;
 
 	std::vector<s_item_bonus> add_dmg;
@@ -293,7 +296,7 @@ enum e_autospell_flags{
 /// AutoSpell bonus struct
 struct s_autospell {
 	uint16 id, lv, trigger_skill;
-	short rate, battle_flag;
+	int16 rate, battle_flag;
 	t_itemid card_id;
 	uint8 flag;
 	bool lock;  // bAutoSpellOnSkill: blocks autospell from triggering again, while being executed
@@ -303,7 +306,7 @@ struct s_autospell {
 struct s_addeffect {
 	enum sc_type sc; /// SC type/effect
 	int32 rate; /// Rate
-	short arrow_rate; /// Arrow rate
+	int16 arrow_rate; /// Arrow rate
 	unsigned char flag; /// Flag
 	uint32 duration; /// Duration the effect applied
 };
@@ -312,7 +315,7 @@ struct s_addeffect {
 struct s_addeffectonskill {
 	enum sc_type sc; /// SC type/effect
 	int32 rate; /// Rate
-	short skill_id; /// Skill ID
+	int16 skill_id; /// Skill ID
 	unsigned char target; /// Target
 	uint32 duration; /// Duration the effect applied
 };
@@ -322,7 +325,7 @@ struct s_add_drop {
 	t_itemid nameid; ///Item ID
 	uint16 group; ///Group ID
 	int32 rate; ///Rate, 1 ~ 10000, -1 ~ -100000
-	short race; ///Target Race, bitwise value of 1<<x. if < 0 means Monster ID
+	int16 race; ///Target Race, bitwise value of 1<<x. if < 0 means Monster ID
 	uint16 class_; ///Target Class, bitwise value of 1<<x
 };
 
@@ -334,7 +337,7 @@ struct s_vanish_bonus {
 
 /// AutoBonus bonus struct
 struct s_autobonus {
-	short rate;
+	int16 rate;
 	uint16 atk_type;
 	uint32 duration;
 	char *bonus_script, *other_script;
@@ -357,7 +360,7 @@ struct s_bonus_script_entry {
 
 /// HP/SP bonus struct
 struct s_regen {
-	short value;
+	int16 value;
 	int32 rate;
 	int32 tick;
 };
@@ -421,7 +424,7 @@ public:
 		uint32 noks : 3; // [Zeph Kill Steal Protection]
 		uint32 changemap : 1;
 		uint32 callshop : 1; // flag to indicate that a script used callshop; on a shop
-		short pmap; // Previous map on Map Change
+		int16 pmap; // Previous map on Map Change
 		uint16 autoloot;
 		t_itemid autolootid[AUTOLOOTITEM_SIZE]; // [Zephyrus]
 		uint16 autoloottype;
@@ -488,8 +491,8 @@ public:
 	struct s_storage cart;
 
 	struct item_data* inventory_data[MAX_INVENTORY]; // direct pointers to itemdb entries (faster than doing item_id lookups)
-	short equip_index[EQI_MAX];
-	short equip_switch_index[EQI_MAX];
+	int16 equip_index[EQI_MAX];
+	int16 equip_switch_index[EQI_MAX];
 	uint32 weight,max_weight,add_max_weight;
 	int32 cart_weight,cart_num,cart_weight_max;
 	int32 fd;
@@ -497,8 +500,8 @@ public:
 	unsigned char head_dir; //0: Look forward. 1: Look right, 2: Look left.
 	t_tick client_tick;
 	int32 npc_id,npc_shopid; //for script follow scriptoid;   ,npcid
-	std::vector<int> npc_id_dynamic;
-	std::vector<int> areanpc, npc_ontouch_;	///< Array of OnTouch and OnTouch_ NPC ID
+	std::vector<int32> npc_id_dynamic;
+	std::vector<int32> areanpc, npc_ontouch_;	///< Array of OnTouch and OnTouch_ NPC ID
 	int32 npc_item_flag; //Marks the npc_id with which you can use items during interactions with said npc (see script command enable_itemuse)
 	int32 npc_menu; // internal variable, used in npc menu handling
 	int32 npc_amount;
@@ -524,12 +527,12 @@ public:
 
 	time_t emotionlasttime; // to limit flood with emotion packets
 
-	short skillitem,skillitemlv;
+	int16 skillitem,skillitemlv;
 	bool skillitem_keep_requirement;
 	uint16 skill_id_old,skill_lv_old;
 	uint16 skill_id_dance,skill_lv_dance;
 	uint16 skill_id_song, skill_lv_song;
-	short cook_mastery; // range: [0,1999] [Inkfish]
+	int16 cook_mastery; // range: [0,1999] [Inkfish]
 	std::unordered_map<uint16, int32> scd; // Skill Cooldown
 	uint16 cloneskill_idx, ///Stores index of copied skill by Intimidate/Plagiarism
 		reproduceskill_idx; ///Stores index of copied skill by Reproduce
@@ -551,8 +554,8 @@ public:
 		t_tick tick;
 	} item_delay[MAX_ITEMDELAYS]; // [Paradox924X]
 
-	short weapontype1,weapontype2;
-	short disguise; // [Valaris]
+	int16 weapontype1,weapontype2;
+	int16 disguise; // [Valaris]
 
 	struct weapon_data right_weapon, left_weapon;
 
@@ -566,11 +569,11 @@ public:
 		int32 subclass[CLASS_MAX];
 		int32 subrace2[RC2_MAX];
 		int32 subsize[SZ_MAX];
-		short coma_class[CLASS_MAX];
-		short coma_race[RC_MAX];
-		short weapon_coma_ele[ELE_MAX];
-		short weapon_coma_race[RC_MAX];
-		short weapon_coma_class[CLASS_MAX];
+		int16 coma_class[CLASS_MAX];
+		int16 coma_race[RC_MAX];
+		int16 weapon_coma_ele[ELE_MAX];
+		int16 weapon_coma_race[RC_MAX];
+		int16 weapon_coma_class[CLASS_MAX];
 		int32 weapon_atk[16];
 		int32 weapon_damage_rate[16];
 		int32 arrow_addele[ELE_MAX];
@@ -592,7 +595,7 @@ public:
 		int32 ignore_mdef_by_class[CLASS_MAX];
 		int32 ignore_def_by_race[RC_MAX];
 		int32 ignore_def_by_class[CLASS_MAX];
-		short sp_gain_race[RC_MAX];
+		int16 sp_gain_race[RC_MAX];
 		int32 magic_addrace2[RC2_MAX];
 		int32 ignore_mdef_by_race2[RC2_MAX];
 		int32 dropaddrace[RC_MAX];
@@ -616,16 +619,16 @@ public:
 
 	// zeroed structures start here
 	struct s_regen {
-		short value;
+		int16 value;
 		int32 rate;
 		t_tick tick;
 	} hp_loss, sp_loss, hp_regen, sp_regen, percent_hp_regen, percent_sp_regen;
 	struct {
-		short value;
+		int16 value;
 		int32 rate, tick;
 	} def_set_race[RC_MAX], mdef_set_race[RC_MAX], norecover_state_race[RC_MAX];
 	struct s_bonus_vanish_gain {
-		short rate,	///< Success rate 0 - 1000 (100%)
+		int16 rate,	///< Success rate 0 - 1000 (100%)
 			per;	///< % HP/SP vanished/gained
 	} hp_vanish_race[RC_MAX], sp_vanish_race[RC_MAX];
 	// zeroed structures end here
@@ -660,8 +663,8 @@ public:
 		int32 shieldmdef;//royal guard's
 		uint32 setitem_hash, setitem_hash2; //Split in 2 because shift operations only work on int32 ranges. [Skotlex]
 
-		short splash_range, splash_add_range;
-		short add_steal_rate;
+		int16 splash_range, splash_add_range;
+		int16 add_steal_rate;
 		int32 add_heal_rate, add_heal2_rate;
 		int32 sp_gain_value, hp_gain_value, magic_sp_gain_value, magic_hp_gain_value, long_sp_gain_value, long_hp_gain_value;
 		uint16 unbreakable;	// chance to prevent ANY equipment breaking [celest]
@@ -673,8 +676,8 @@ public:
 		int32 eatk; // atk bonus from equipment
 		uint8 absorb_dmg_maxhp; // [Cydh]
 		uint8 absorb_dmg_maxhp2;
-		short critical_rangeatk;
-		short weapon_atk_rate, weapon_matk_rate;
+		int16 critical_rangeatk;
+		int16 weapon_atk_rate, weapon_matk_rate;
 	} bonus;
 	// zeroed vars end here.
 
@@ -685,11 +688,11 @@ public:
 	int32 patk_rate,smatk_rate,res_rate,mres_rate,hplus_rate,crate_rate;
 
 	t_itemid itemid;
-	short itemindex;	//Used item's index in sd->inventory [Skotlex]
+	int16 itemindex;	//Used item's index in sd->inventory [Skotlex]
 
 	int8 spiritball, spiritball_old;
 	int32 spirit_timer[MAX_SPIRITBALL];
-	short spiritcharm; //No. of spirit
+	int16 spiritcharm; //No. of spirit
 	int32 spiritcharm_type; //Spirit type
 	int32 spiritcharm_timer[MAX_SPIRITCHARM];
 	int8 soulball, soulball_old;
@@ -698,7 +701,7 @@ public:
 
 	unsigned char potion_success_counter; //Potion successes in row counter
 	unsigned char mission_count; //Stores the bounty kill count for TK_MISSION
-	short mission_mobid; //Stores the target mob_id for TK_MISSION
+	int16 mission_mobid; //Stores the target mob_id for TK_MISSION
 	int32 die_counter; //Total number of times you've died
 	int32 devotion[MAX_DEVOTION]; //Stores the account IDs of chars devoted to.
 	int32 stellar_mark[MAX_STELLAR_MARKS]; // Stores the account ID's of character's with a stellar mark.
@@ -712,7 +715,7 @@ public:
 
 	struct s_deal {
 		struct s_item {
-			short index, amount;
+			int16 index, amount;
 		} item[10];
 		int32 zeny, weight;
 	} deal;
@@ -725,7 +728,7 @@ public:
 	std::shared_ptr<MapGuild> guild; // [Ind] speed everything up
 	int32 guild_invite,guild_invite_account;
 	int32 guild_emblem_id,guild_alliance,guild_alliance_account;
-	short guild_x,guild_y; // For guildmate position display. [Skotlex] should be short [zzo]
+	int16 guild_x,guild_y; // For guildmate position display. [Skotlex]
 	int32 guildspy; // [Syrus22]
 	int32 partyspy; // [Syrus22]
 	int32 clanspy;
@@ -753,10 +756,10 @@ public:
 		int32  m; //-1 - none, other: map index corresponding to map name.
 		uint16 index; //map index
 	} feel_map[3];// 0 - Sun; 1 - Moon; 2 - Stars
-	short hate_mob[3];
+	int16 hate_mob[3];
 
 	int32 pvp_timer;
-	short pvp_point;
+	int16 pvp_point;
 	uint16 pvp_rank, pvp_lastusers;
 	uint16 pvp_won, pvp_lost;
 
@@ -815,9 +818,9 @@ public:
 	} achievement_data;
 
 	// Title system
-	std::vector<int> titles;
+	std::vector<int32> titles;
 
-	std::vector<int> cloaked_npc;
+	std::vector<int32> cloaked_npc;
 
 	/* ShowEvent Data Cache flags from map */
 	std::vector<s_qi_display> qi_display;
@@ -897,7 +900,7 @@ public:
 	int32 expiration_tid;
 	time_t expiration_time;
 
-	short last_addeditem_index; /// Index of latest item added
+	int16 last_addeditem_index; /// Index of latest item added
 	int32 autotrade_tid;
 	int32 respawn_tid;
 	int32 bank_vault; ///< Bank Vault
@@ -911,10 +914,10 @@ public:
 	} roulette_point;
 
 	struct {
-		short stage;
+		int16 stage;
 		int8 prizeIdx;
 		t_itemid bonusItemID;
-		short prizeStage;
+		int16 prizeStage;
 		bool claimPrize;
 		t_tick tick;
 	} roulette;
@@ -922,7 +925,7 @@ public:
 	int32 instance_id;
 	e_instance_mode instance_mode; ///< Mode of instance player last leaves from (used for instance destruction button)
 
-	short setlook_head_top, setlook_head_mid, setlook_head_bottom, setlook_robe; ///< Stores 'setlook' script command values.
+	int16 setlook_head_top, setlook_head_mid, setlook_head_bottom, setlook_robe; ///< Stores 'setlook' script command values.
 
 #if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
 	std::vector<int16> hatEffects;
@@ -1079,8 +1082,17 @@ public:
 };
 
 struct s_job_info {
-	std::vector<uint32> base_hp, base_sp, base_ap; //Storage for the first calculation with hp/sp/ap factor and multiplicator
-	uint32 hp_factor, hp_increase, sp_increase, max_weight_base;
+	uint16 job_id;
+	std::vector<uint32> base_hp;
+	std::vector<uint32> base_sp;
+	std::vector<uint32> base_ap;
+	uint32 hp_factor;
+	uint32 hp_increase;
+	uint32 sp_factor;
+	uint32 sp_increase;
+	uint32 ap_factor;
+	uint32 ap_increase;
+	uint32 max_weight_base;
 	std::vector<std::array<uint16,PARAM_MAX>> job_bonus;
 	std::vector<int16> aspd_base;
 	t_exp base_exp[MAX_LEVEL], job_exp[MAX_LEVEL];
@@ -1094,7 +1106,7 @@ struct s_job_info {
 
 class JobDatabase : public TypesafeCachedYamlDatabase<uint16, s_job_info> {
 public:
-	JobDatabase() : TypesafeCachedYamlDatabase("JOB_STATS", 2) {
+	JobDatabase() : TypesafeCachedYamlDatabase( "JOB_STATS", 3, 2 ){
 
 	}
 
@@ -1108,6 +1120,11 @@ public:
 	t_exp get_baseExp(uint16 job_id, uint32 level);
 	t_exp get_jobExp(uint16 job_id, uint32 level);
 	int32 get_maxWeight(uint16 job_id);
+
+private:
+	uint32 calc_basehp( const uint16 level, const std::shared_ptr<s_job_info>& job );
+	uint32 calc_basesp( const uint16 level, const std::shared_ptr<s_job_info>& job );
+	uint32 calc_baseap( const uint16 level, const std::shared_ptr<s_job_info>& job );
 };
 
 extern JobDatabase job_db;
@@ -1131,7 +1148,7 @@ extern JobDatabase job_db;
 #endif
 
 #define pc_setdead(sd)        ( (sd)->state.dead_sit = (sd)->vd.dead_sit = 1 )
-#define pc_setsit(sd)         { pc_stop_walking((sd), 1|4); pc_stop_attack((sd)); (sd)->state.dead_sit = (sd)->vd.dead_sit = 2; }
+#define pc_setsit(sd)         { unit_stop_walking( &(sd)->bl, USW_FIXPOS|USW_MOVE_FULL_CELL ); unit_stop_attack( &(sd)->bl ); (sd)->state.dead_sit = (sd)->vd.dead_sit = 2; }
 #define pc_isdead(sd)         ( (sd)->state.dead_sit == 1 )
 #define pc_issit(sd)          ( (sd)->vd.dead_sit == 2 )
 #define pc_isidle_party(sd)   ( (sd)->chatID || (sd)->state.vending || (sd)->state.buyingstore || DIFF_TICK(last_tick, (sd)->idletime) >= battle_config.idle_no_share )
@@ -1180,7 +1197,7 @@ static inline bool pc_hasprogress(map_session_data *sd, enum e_wip_block progres
 }
 
 uint16 pc_maxparameter(map_session_data *sd, e_params param);
-short pc_maxaspd(map_session_data *sd);
+int16 pc_maxaspd(map_session_data *sd);
 
 /**
  * Ranger
@@ -1198,9 +1215,6 @@ enum e_mado_type : uint16 {
 #define pc_ismadogear(sd) ( (sd)->sc.option&OPTION_MADOGEAR )
 // Rune Knight Dragon
 #define pc_isridingdragon(sd) ( (sd)->sc.option&OPTION_DRAGON )
-
-#define pc_stop_walking(sd, type) unit_stop_walking(&(sd)->bl, type)
-#define pc_stop_attack(sd) unit_stop_attack(&(sd)->bl)
 
 //Weapon check considering dual wielding.
 #define pc_check_weapontype(sd, type) ((type)&((sd)->status.weapon < MAX_WEAPON_TYPE? \
@@ -1397,8 +1411,8 @@ int32 pc_get_skillcooldown(map_session_data *sd, uint16 skill_id, uint16 skill_l
 uint8 pc_checkskill(map_session_data *sd,uint16 skill_id);
 e_skill_flag pc_checkskill_flag(map_session_data &sd, uint16 skill_id);
 uint8 pc_checkskill_summoner(map_session_data *sd, e_summoner_power_type type);
-uint8 pc_checkskill_imperial_guard(map_session_data *sd, short flag);
-short pc_checkequip(map_session_data *sd,int32 pos,bool checkall=false);
+uint8 pc_checkskill_imperial_guard(map_session_data *sd, int16 flag);
+int16 pc_checkequip(map_session_data *sd,int32 pos,bool checkall=false);
 bool pc_checkequip2(map_session_data *sd, t_itemid nameid, int32 min, int32 max);
 
 void pc_scdata_received(map_session_data *sd);
@@ -1423,17 +1437,17 @@ enum e_setpos{
 
 enum e_setpos pc_setpos(map_session_data* sd, uint16 mapindex, int32 x, int32 y, clr_type clrtype);
 enum e_setpos pc_setpos_savepoint( map_session_data& sd, clr_type clrtype = CLR_TELEPORT );
-void pc_setsavepoint(map_session_data *sd, short mapindex,int32 x,int32 y);
+void pc_setsavepoint(map_session_data *sd, int16 mapindex,int32 x,int32 y);
 char pc_randomwarp(map_session_data *sd,clr_type type,bool ignore_mapflag = false);
 bool pc_memo(map_session_data* sd, int32 pos);
 
 char pc_checkadditem(map_session_data *sd, t_itemid nameid, int32 amount);
 uint8 pc_inventoryblank(map_session_data *sd);
-short pc_search_inventory(map_session_data *sd, t_itemid nameid);
+int16 pc_search_inventory(map_session_data *sd, t_itemid nameid);
 char pc_payzeny(map_session_data *sd, int32 zeny, enum e_log_pick_type type, uint32 log_charid = 0);
 enum e_additem_result pc_additem(map_session_data *sd, struct item *item, int32 amount, e_log_pick_type log_type);
 char pc_getzeny(map_session_data *sd, int32 zeny, enum e_log_pick_type type, uint32 log_charid = 0);
-char pc_delitem(map_session_data *sd, int32 n, int32 amount, int32 type, short reason, e_log_pick_type log_type);
+char pc_delitem(map_session_data *sd, int32 n, int32 amount, int32 type, int16 reason, e_log_pick_type log_type);
 
 uint64 pc_generate_unique_id(map_session_data *sd);
 
@@ -1459,7 +1473,7 @@ bool pc_adoption(map_session_data *p1_sd, map_session_data *p2_sd, map_session_d
 
 void pc_updateweightstatus(map_session_data *sd);
 
-bool pc_addautobonus(std::vector<std::shared_ptr<s_autobonus>> &bonus, const char *script, short rate, uint32 dur, uint16 atk_type, const char *o_script, uint32 pos, bool onskill);
+bool pc_addautobonus(std::vector<std::shared_ptr<s_autobonus>> &bonus, const char *script, int16 rate, uint32 dur, uint16 atk_type, const char *o_script, uint32 pos, bool onskill);
 void pc_exeautobonus(map_session_data &sd, std::vector<std::shared_ptr<s_autobonus>> *bonus, std::shared_ptr<s_autobonus> autobonus);
 TIMER_FUNC(pc_endautobonus);
 void pc_delautobonus(map_session_data &sd, std::vector<std::shared_ptr<s_autobonus>> &bonus, bool restore);
@@ -1522,7 +1536,7 @@ int32 pc_resetstate(map_session_data*);
 int32 pc_resetskill(map_session_data*, int32);
 int32 pc_resetfeel(map_session_data*);
 int32 pc_resethate(map_session_data*);
-bool pc_equipitem(map_session_data *sd, short n, int32 req_pos, bool equipswitch=false);
+bool pc_equipitem(map_session_data *sd, int16 n, int32 req_pos, bool equipswitch=false);
 bool pc_unequipitem(map_session_data*,int32,int32);
 int32 pc_equipswitch( map_session_data* sd, int32 index );
 void pc_equipswitch_remove( map_session_data* sd, int32 index );
@@ -1635,9 +1649,9 @@ public:
 extern SkillTreeDatabase skill_tree_db;
 
 struct sg_data {
-	short anger_id;
-	short bless_id;
-	short comfort_id;
+	int16 anger_id;
+	int16 bless_id;
+	int16 comfort_id;
 	char feel_var[NAME_LENGTH];
 	char hate_var[NAME_LENGTH];
 	bool (*day_func)(void);
@@ -1715,10 +1729,10 @@ void pc_bonus_script_clear(map_session_data *sd, uint32 flag);
 
 void pc_cell_basilica(map_session_data *sd);
 
-short pc_get_itemgroup_bonus(map_session_data* sd, t_itemid nameid, std::vector<s_item_bonus>& bonuses);
-short pc_get_itemgroup_bonus_group(map_session_data* sd, uint16 group_id, std::vector<s_item_bonus>& bonuses);
+int16 pc_get_itemgroup_bonus(map_session_data* sd, t_itemid nameid, std::vector<s_item_bonus>& bonuses);
+int16 pc_get_itemgroup_bonus_group(map_session_data* sd, uint16 group_id, std::vector<s_item_bonus>& bonuses);
 
-bool pc_is_same_equip_index(enum equip_index eqi, short *equip_index, short index);
+bool pc_is_same_equip_index(enum equip_index eqi, int16 *equip_index, int16 index);
 /// Check if player is Taekwon Ranker and the level is >= 90 (battle_config.taekwon_ranker_min_lv)
 #define pc_is_taekwon_ranker(sd) (((sd)->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && (sd)->status.base_level >= battle_config.taekwon_ranker_min_lv && pc_famerank((sd)->status.char_id,MAPID_TAEKWON))
 
@@ -1742,12 +1756,12 @@ void pc_attendance_claim_reward( map_session_data* sd );
 void pc_jail(map_session_data &sd, int32 duration = INT_MAX);
 
 // Captcha Register
-void pc_macro_captcha_register(map_session_data &sd, uint16 image_size, const char captcha_answer[CAPTCHA_ANSWER_SIZE]);
+void pc_macro_captcha_register(map_session_data &sd, uint16 image_size, const char captcha_answer[CAPTCHA_ANSWER_SIZE_MAX]);
 void pc_macro_captcha_register_upload(map_session_data & sd, uint16 upload_size, const char *upload_data);
 
 // Macro Detector
 TIMER_FUNC(pc_macro_detector_timeout);
-void pc_macro_detector_process_answer(map_session_data &sd, const char captcha_answer[CAPTCHA_ANSWER_SIZE]);
+void pc_macro_detector_process_answer(map_session_data &sd, const char captcha_answer[CAPTCHA_ANSWER_SIZE_MAX]);
 void pc_macro_detector_disconnect(map_session_data &sd);
 
 // Macro Reporter

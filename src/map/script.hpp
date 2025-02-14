@@ -2210,6 +2210,20 @@ enum e_eleminfo : uint8 {
 	ELEMINFO_CLASS,
 };
 
+/* getguildinfo script command */
+enum e_guildinfo : uint8 {
+	GUILDINFO_NAME = 1,
+	GUILDINFO_LEVEL,
+	GUILDINFO_AVERAGELEVEL,
+	GUILDINFO_ONLINECOUNT,
+	GUILDINFO_MEMBERCOUNT,
+	GUILDINFO_MAXMEMBERCOUNT,
+	GUILDINFO_EXP,
+	GUILDINFO_NEXTEXP,
+	GUILDINFO_MASTERID,
+	GUILDINFO_MASTERNAME,
+};
+
 class ConstantDatabase : public YamlDatabase {
 public:
 	ConstantDatabase() : YamlDatabase("CONSTANT_DB", 1) {
@@ -2274,7 +2288,7 @@ void script_set_constant_(const char* name, int64 value, const char* constant_na
 void script_hardcoded_constants(void);
 
 void script_cleararray_pc(map_session_data* sd, const char* varname);
-void script_setarray_pc(map_session_data* sd, const char* varname, uint32 idx, int64 value, int* refcache);
+void script_setarray_pc(map_session_data* sd, const char* varname, uint32 idx, int64 value, int32* refcache);
 
 int32 script_config_read(const char *cfgName);
 void do_init_script(void);

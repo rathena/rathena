@@ -153,8 +153,8 @@ void vending_purchasereq(map_session_data* sd, int32 aid, int32 uid, const uint8
 	z = 0.; // zeny counter
 	w = 0;  // weight counter
 	for( i = 0; i < count; i++ ) {
-		short amount = *(uint16*)(data + 4*i + 0);
-		short idx    = *(uint16*)(data + 4*i + 2);
+		int16 amount = *(uint16*)(data + 4*i + 0);
+		int16 idx    = *(uint16*)(data + 4*i + 2);
 		idx -= 2;
 
 		if( amount <= 0 )
@@ -219,8 +219,8 @@ void vending_purchasereq(map_session_data* sd, int32 aid, int32 uid, const uint8
 	pc_getzeny(vsd, (int32)z, LOG_TYPE_VENDING, sd->status.char_id);
 
 	for( i = 0; i < count; i++ ) {
-		short amount = *(uint16*)(data + 4*i + 0);
-		short idx    = *(uint16*)(data + 4*i + 2);
+		int16 amount = *(uint16*)(data + 4*i + 0);
+		int16 idx    = *(uint16*)(data + 4*i + 2);
 		idx -= 2;
 		z = 0.; // zeny counter
 
@@ -332,8 +332,8 @@ int8 vending_openvending( map_session_data& sd, const char* message, const uint8
 	i = 0;
 	int64 total = 0;
 	for( j = 0; j < count; j++ ) {
-		short index        = *(uint16*)(data + 8*j + 0);
-		short amount       = *(uint16*)(data + 8*j + 2);
+		int16 index        = *(uint16*)(data + 8*j + 0);
+		int16 amount       = *(uint16*)(data + 8*j + 2);
 		uint32 value       = *(uint32*)(data + 8*j + 4);
 
 		index -= 2; // offset adjustment (client says that the first cart position is 2)
@@ -358,7 +358,7 @@ int8 vending_openvending( map_session_data& sd, const char* message, const uint8
 	// check if the total value of the items plus the current zeny is over the limit
 	if ( !battle_config.vending_over_max && (static_cast<int64>(sd.status.zeny) + total) > MAX_ZENY ) {
 #if PACKETVER >= 20200819
-		clif_msg_color( &sd, MSI_MERCHANTSHOP_TOTA_LOVER_ZENY_ERR, color_table[COLOR_RED] );
+		clif_msg_color( sd, MSI_MERCHANTSHOP_TOTA_LOVER_ZENY_ERR, color_table[COLOR_RED] );
 #endif
 		clif_skill_fail( sd, MC_VENDING );
 		sd.state.prevend = 0;

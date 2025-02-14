@@ -82,7 +82,6 @@ enum item_itemid : t_itemid
 	ITEMID_PHRACON						= 1010,
 	ITEMID_EMVERETARCON					= 1011,
 	ITEMID_TRAP							= 1065,
-	ITEMID_ANGRA_MANYU					= 1599,
 	ITEMID_PAINT_BRUSH					= 6122,
 	ITEMID_MAGIC_GEAR_FUEL				= 6146,
 	ITEMID_NEW_INSURANCE				= 6413,
@@ -3245,7 +3244,7 @@ struct item_data
 		uint16 override;
 		bool sitting;
 	} item_usage;
-	short gm_lv_trade_override;	//GM-level to override trade_restriction
+	int16 gm_lv_trade_override;	//GM-level to override trade_restriction
 	std::vector<std::shared_ptr<s_item_combo>> combos;
 	struct {
 		uint32 duration;
