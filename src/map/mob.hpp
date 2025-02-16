@@ -366,6 +366,7 @@ struct mob_data {
 	int32 bg_id; // BattleGround System
 
 	t_tick next_walktime,last_thinktime,last_linktime,last_pcneartime,dmgtick,last_canmove,last_skillcheck;
+	t_tick trickcasting; // Special state where you show a fake castbar while moving
 	int16 move_fail_count;
 	int16 lootitem_count;
 	unsigned char walktoxy_fail_count; //Pathfinding succeeds but the actual walking failed (e.g. Icewall lock)
@@ -467,6 +468,7 @@ enum e_mob_skill_condition {
 	MSC_MOBNEARBYGT,
 	MSC_GROUNDATTACKED,
 	MSC_DAMAGEDGT,
+	MSC_TRICKCASTING,
 };
 
 // The data structures for storing delayed item drops
@@ -535,7 +537,7 @@ int32 mob_warpslave(struct block_list *bl, int32 range);
 int32 mob_linksearch(struct block_list *bl,va_list ap);
 
 bool mob_chat_display_message (mob_data &md, uint16 msg_id);
-int32 mobskill_use(struct mob_data *md,t_tick tick,int32 event, int64 damage = 0);
+bool mobskill_use(struct mob_data *md,t_tick tick,int32 event, int64 damage = 0);
 int32 mobskill_event(struct mob_data *md,struct block_list *src,t_tick tick, int32 flag, int64 damage = 0);
 int32 mob_summonslave(struct mob_data *md2,int32 *value,int32 amount,uint16 skill_id);
 int32 mob_countslave(struct block_list *bl);

@@ -308,12 +308,12 @@ int32 mercenary_delete(s_mercenary_data *md, int32 reply) {
 		case 0:
 			// +1 Loyalty on Contract ends.
 			mercenary_set_faith(md, 1);
-			clif_msg(sd, MSI_MER_FINISH);
+			clif_msg( *sd, MSI_MER_FINISH );
 			break; 
 		case 1:
 			// -1 Loyalty on Mercenary killed
 			mercenary_set_faith(md, -1);
-			clif_msg(sd, MSI_MER_DIE);
+			clif_msg( *sd, MSI_MER_DIE );
 			break; 
 	}
 

@@ -47,6 +47,8 @@
 //	mobnearbygt		When monsters in range become greater than specified number.
 //	groundattacked		When mob is hit by ground targeted skill (no condition value).
 //	damagedgt		When single attack deals greater damage than specified number.
+//	alchemist		When mob has a special AI, is not trickcasting, and is wounded (no condition value).
+//	trickcasting		Used once mob started moving through NPC_RANDOMMOVE until disabled (no condition value).
 //
 //	Status abnormalities specified through the statuson/statusoff system:
 //	    anybad (any type of state change) / stone / freeze / stun / sleep /
@@ -719,11 +721,11 @@
 1141,Marina@NPC_CRITICALSLASH,attack,170,1,500,500,5000,no,target,always,0,,,,,,6,
 1141,Marina@NPC_EMOTION,walk,197,1,2000,0,5000,yes,self,always,0,19,,,,,,
 1141,Marina@NPC_WATERATTACK,attack,184,2,500,500,5000,no,target,always,0,,,,,,6,
-1142,Marine Sphere@NPC_RANDOMMOVE,idle,331,1,10000,0,30000,no,master,alchemist,,,,,,,,
-1142,Marine Sphere@NPC_SELFDESTRUCTION,idle,173,1,10000,3000,0,no,self,afterskill,331,,,,,,,
+1142,Marine Sphere@NPC_RANDOMMOVE,idle,331,1,10000,0,30000,no,target,alchemist,,,,,,,,
 1142,Marine Sphere@NPC_SELFDESTRUCTION,idle,173,1,500,2000,5000,no,self,myhpltmaxrate,99,,,,,,,
 1142,Marine Sphere@NPC_SELFDESTRUCTION,idle,173,1,10000,2000,5000,no,self,skillused,173,,,,,,,
-1142,Marine Sphere@NPC_SPEEDUP,idle,332,1,10000,0,700,yes,target,always,,,,,,,,
+1142,Marine Sphere@NPC_SELFDESTRUCTION,idle,173,1,10000,0,0,yes,self,alchemist,,,,,,,,
+1142,Marine Sphere@NPC_SPEEDUP,idle,332,1,10000,0,700,yes,self,trickcasting,,,,,,,,
 1143,Marionette@HT_FREEZINGTRAP,idle,121,5,500,0,300000,yes,around2,always,0,,,,,,29,
 1143,Marionette@MG_FIREWALL,chase,18,5,500,500,5000,yes,target,always,0,,,,,,2,
 1143,Marionette@NPC_TELEKINESISATTACK,attack,191,5,500,0,5000,yes,target,always,0,,,,,,6,

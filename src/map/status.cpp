@@ -2070,7 +2070,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 				unit_data *wink_ud = unit_bl2ud(src);
 				if (wink_ud != nullptr && wink_ud->walktimer == INVALID_TIMER)
 					unit_walktobl(src, map_id2bl(sc->getSCE(SC_WINKCHARM)->val2), 3, 1);
-				clif_emotion(src, ET_THROB);
+				clif_emotion( *src, ET_THROB );
 				return false;
 			} else
 				status_change_end(src, SC_WINKCHARM);
@@ -2339,7 +2339,7 @@ int32 status_base_amotion_pc(map_session_data* sd, struct status_data* status)
 			temp_aspd = status->dex * status->dex / 5.0f + status->agi * status->agi * 0.5f;
 			break;
 	}
-	temp_aspd = (float)(sqrt(temp_aspd) * 0.25f) + 0xc4;
+	temp_aspd = (float)(sqrt(temp_aspd) * 0.25f) + 196;
 	if ((skill_lv = pc_checkskill(sd,SA_ADVANCEDBOOK)) > 0 && sd->status.weapon == W_BOOK)
 		val += (skill_lv - 1) / 2 + 1;
 	if ((skill_lv = pc_checkskill(sd, SG_DEVIL)) > 0 && ((sd->class_&MAPID_THIRDMASK) == MAPID_STAR_EMPEROR || pc_is_maxjoblv(sd)))
@@ -2355,10 +2355,6 @@ int32 status_base_amotion_pc(map_session_data* sd, struct status_data* status)
 #else
 	if (job == nullptr)
 		return AMOTION_ZERO_ASPD;
-
-	// Angra Manyu disregards aspd_base and similar
-	if (pc_checkequip2(sd, ITEMID_ANGRA_MANYU, EQI_ACC_L, EQI_MAX))
-		return 0;
 
 	// Base weapon delay
 	int32 amotion = (sd->status.weapon < MAX_WEAPON_TYPE)
@@ -2788,11 +2784,11 @@ int32 status_calc_mob_(struct mob_data* md, uint8 opt)
 	if (flag&8 && mbl) {
 		struct status_data *mstatus = status_get_base_status(mbl);
 
-		if (mstatus &&
+		if (mstatus != nullptr && md->special_state.ai != AI_SPHERE &&
 			battle_config.slaves_inherit_speed&(status_has_mode(mstatus,MD_CANMOVE)?1:2))
 			status->speed = mstatus->speed;
-		if( status->speed < 2 ) // Minimum for the unit to function properly
-			status->speed = 2;
+		if (status->speed < MIN_WALK_SPEED)
+			status->speed = MIN_WALK_SPEED;
 	}
 
 	if (flag&32)
@@ -6166,7 +6162,7 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 
 #ifdef RENEWAL_ASPD
 			// RE ASPD % modifier
-			amotion += (max(0xc3 - amotion, 2) * (status->aspd_rate2 + status_calc_aspd(&bl, sc, false))) / 100;
+			amotion += (max(195 - amotion, 2) * (status->aspd_rate2 + status_calc_aspd(&bl, sc, false))) / 100;
 
 			// Renewal base value is actually ASPD and not amotion, so we need to convert it
 			amotion = AMOTION_ZERO_ASPD - amotion * AMOTION_INTERVAL;
@@ -7906,6 +7902,9 @@ static uint16 status_calc_speed(struct block_list *bl, status_change *sc, int32 
 				val = max(val, 20);
 			if (sc->getSCE(SC_GROUNDGRAVITY))
 				val = max(val, 20);
+			if( sc->getSCE( SC_SHADOW_CLOCK ) != nullptr ){
+				val = max( val, 30 );
+			}
 
 			if( sd && sd->bonus.speed_rate + sd->bonus.speed_add_rate > 0 ) // Permanent item-based speedup
 				val = max( val, sd->bonus.speed_rate + sd->bonus.speed_add_rate );
@@ -8148,7 +8147,7 @@ static int16 status_calc_fix_aspd(struct block_list *bl, status_change *sc, int3
 	if (sc == nullptr || sc->empty())
 		return cap_value(aspd, 1, MIN_ASPD);
 	if (sc->getSCE(SC_OVERED_BOOST))
-		return cap_value(2000 - sc->getSCE(SC_OVERED_BOOST)->val3 * 10, 0, 2000);
+		return cap_value(AMOTION_ZERO_ASPD - sc->getSCE(SC_OVERED_BOOST)->val3 * AMOTION_INTERVAL, 1, MIN_ASPD);
 
 	if ((sc->getSCE(SC_GUST_OPTION) || sc->getSCE(SC_BLAST_OPTION) || sc->getSCE(SC_WILD_STORM_OPTION)))
 		aspd -= 50; // +5 ASPD
@@ -10514,7 +10513,7 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 		case SC_SIGNUMCRUCIS:
 			val2 = 10 + 4*val1; // Def reduction
 			tick = INFINITE_TICK;
-			clif_emotion(bl, ET_SWEAT);
+			clif_emotion( *bl, ET_SWEAT );
 			break;
 		case SC_MAXIMIZEPOWER:
 			tick_time = val2 = tick>0?tick:60000;
@@ -10848,7 +10847,7 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 
 		case SC_CONFUSION:
 			if (!val4)
-				clif_emotion(bl,ET_QUESTION);
+				clif_emotion( *bl, ET_QUESTION );
 			break;
 		case SC_GRADUAL_GRAVITY:
 			val2 = 10 * val1;
@@ -12098,7 +12097,7 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 		case SC_REBOUND:
 			tick_time = 2000;
 			val4 = tick / tick_time;
-			clif_emotion(bl, ET_SWEAT);
+			clif_emotion( *bl, ET_SWEAT );
 			break;
 		case SC_KINGS_GRACE:
 			val2 = 3 + val1; //HP Recover rate
@@ -13937,7 +13936,7 @@ TIMER_FUNC(status_change_timer){
 						break;
 					}
 				}
-				clif_emotion(bl, ET_SMILE);
+				clif_emotion( *bl, ET_SMILE );
 			}
 		}
 		break;
@@ -14153,7 +14152,7 @@ TIMER_FUNC(status_change_timer){
 		
 	case SC_OBLIVIONCURSE:
 		if( --(sce->val4) >= 0 ) {
-			clif_emotion(bl,ET_QUESTION);
+			clif_emotion( *bl, ET_QUESTION );
 			sc_timer_next(3000 + tick);
 			return 0;
 		}
@@ -14278,7 +14277,7 @@ TIMER_FUNC(status_change_timer){
 
 	case SC_VOICEOFSIREN:
 		if( --(sce->val4) >= 0 ) {
-			clif_emotion(bl,ET_THROB);
+			clif_emotion( *bl, ET_THROB );
 			sc_timer_next(2000 + tick);
 			return 0;
 		}
@@ -14467,7 +14466,7 @@ TIMER_FUNC(status_change_timer){
 		break;
 	case SC_TEARGAS_SOB:
 		if( --(sce->val4) >= 0 ) {
-			clif_emotion(bl, ET_CRY);
+			clif_emotion( *bl, ET_CRY );
 			sc_timer_next(3000 + tick);
 			return 0;
 		}
@@ -14531,7 +14530,7 @@ TIMER_FUNC(status_change_timer){
 		break;
 	case SC_REBOUND:
 		if( --(sce->val4) >= 0 ) {
-			clif_emotion(bl, ET_SWEAT);
+			clif_emotion( *bl, ET_SWEAT );
 			sc_timer_next(2000 + tick);
 			return 0;
 		}

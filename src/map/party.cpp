@@ -408,7 +408,7 @@ bool party_invite( map_session_data& sd, map_session_data *tsd ){
 		return false;
 	}
 
-	if( tsd == NULL ){
+	if( tsd == nullptr ){
 		clif_party_invite_reply( sd, "", PARTY_REPLY_OFFLINE );
 		return false;
 	}
@@ -976,7 +976,7 @@ int32 party_changeleader(map_session_data *sd, map_session_data *tsd, struct par
 			return 0; // Shouldn't happen
 
 		if( battle_config.change_party_leader_samemap && strncmp( p->party.member[mi].map, p->party.member[tmi].map, sizeof( p->party.member[mi].map ) ) != 0 ){
-			clif_msg(sd, MSI_PARTY_MASTER_CHANGE_SAME_MAP);
+			clif_msg( *sd, MSI_PARTY_MASTER_CHANGE_SAME_MAP );
 			return 0;
 		}
 	} else {

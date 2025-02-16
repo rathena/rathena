@@ -8167,10 +8167,11 @@ Body:
     Unit:
       Id: Lullaby
       Layout: 4
-      Interval: 4000
+      Interval: 6000
       Target: Enemy
       Flag:
         Ensemble: true
+    Status: Sleep
   - Id: 307
     Name: BD_RICHMANKIM
     Description: Mental Sensing

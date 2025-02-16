@@ -1964,6 +1964,10 @@
 	export_constant(SC_STAR_BURST);
 	export_constant(SC_SKY_ENCHANT);
 	export_constant(SC_WILD_WALK);
+	export_constant(SC_SHADOW_CLOCK);
+	export_constant(SC_SHINKIROU_CALL);
+	export_constant(SC_NIGHTMARE);
+	export_constant(SC_SBUNSHIN);
 
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
 /// @APIHOOK_START(EFST_CONST)
@@ -10289,6 +10293,7 @@
 	export_constant(UNT_GROUND_GRAVITATION);
 	export_constant(UNT_KUNAIWAIKYOKU);
 	export_constant(UNT_STAR_BURST);
+	export_constant(UNT_KUNAIKAITEN);
 	export_constant(UNT_GD_LEADERSHIP);
 	export_constant(UNT_GD_GLORYWOUNDS);
 	export_constant(UNT_GD_SOULCOLD);
