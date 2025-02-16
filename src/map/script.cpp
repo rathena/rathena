@@ -17572,11 +17572,13 @@ BUILDIN_FUNC(sscanf){
 				CREATE(ref_str, char, strlen(str)+1);
 			}
 			if (auto ret = sscanf(str, buf, ref_str); ret == 0 || ret == EOF) {
+				ShowError("buildin_sscanf: sscanf failed to scan string.\n");
 				break;
 			}
 			set_reg_str( st, sd, reference_uid( reference_getid( data ), reference_getindex( data ) ), buf_p, ref_str, reference_getref( data ) );
 		} else {  // Number
 			if (auto ret = sscanf(str, buf, &ref_int); ret == 0 || ret == EOF) {
+				ShowError("buildin_sscanf: sscanf failed to scan string.\n");
 				break;
 			}
 			set_reg_num( st, sd, reference_uid( reference_getid( data ), reference_getindex( data ) ), buf_p, ref_int, reference_getref( data ) );
