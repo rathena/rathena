@@ -1,6 +1,5 @@
 name: Build servers with MSVS
-# build_servers_msbuild_old.yml
-# to be removed once the new build system is in place
+# build_servers_msbuild.yml
 
 concurrency:
   group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}
