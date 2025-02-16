@@ -2899,6 +2899,11 @@ static int32 unit_attack_timer_sub(struct block_list* src, int32 tid, t_tick tic
 	if( src == nullptr || src->prev == nullptr || target==nullptr || target->prev == nullptr )
 		return 0;
 
+	// Monsters have a special visibility check at the end of their attack delay
+	// We don't want this to trigger on direct calls of the timer function
+	if (src->type == BL_MOB && tid != INVALID_TIMER && !status_check_visibility(src, target, true))
+		return 0;
+
 	if( status_isdead(*src) || status_isdead(*target) ||
 			battle_check_target(src,target,BCT_ENEMY) <= 0 || !status_check_skilluse(src, target, 0, 0)
 #ifdef OFFICIAL_WALKPATH
@@ -3054,20 +3059,6 @@ static TIMER_FUNC(unit_attack_timer){
 	bl = map_id2bl(id);
 
 	if (bl != nullptr) {
-		// Monsters have a special visibility check at the end of their attack delay
-		// We don't want this to trigger on direct calls of this function
-		if (bl->type == BL_MOB && tid != INVALID_TIMER) {
-			unit_data* ud = unit_bl2ud(bl);
-			if (ud == nullptr)
-				return 0;
-			block_list* tbl = map_id2bl(ud->target);
-			if (tbl == nullptr)
-				return 0;
-			if (!status_check_visibility(bl, tbl, true)) {
-				unit_unattackable(bl);
-				return 0;
-			}
-		}
 		// Execute attack
 		if (unit_attack_timer_sub(bl, tid, tick) == 0)
 			unit_unattackable(bl);
