@@ -5629,7 +5629,7 @@ int32 clif_outsight(struct block_list *bl,va_list ap)
 					clif_dispchat(*cd);
 			}
 			if(sd->state.vending)
-				clif_closevendingboard(bl,tsd->fd);
+				clif_closevendingboard( *bl, SELF, &tsd->bl );
 			if(sd->state.buyingstore)
 				clif_buyingstore_disappear_entry( *sd, &tsd->bl );
 			break;
@@ -7614,23 +7614,20 @@ void clif_showvendingboard( map_session_data& sd, enum send_target target, struc
 }
 
 
-/// Removes a vending board from screen (ZC_DISAPPEAR_ENTRY).
-/// 0132 <owner id>.L
-void clif_closevendingboard(struct block_list* bl, int32 fd)
-{
-	unsigned char buf[16];
-
-	nullpo_retv(bl);
-
-	WBUFW(buf,0) = 0x132;
-	WBUFL(buf,2) = bl->id;
-	if( session_isActive(fd) ) {
-		WFIFOHEAD(fd,packet_len(0x132));
-		memcpy(WFIFOP(fd,0),buf,packet_len(0x132));
-		WFIFOSET(fd,packet_len(0x132));
-	} else {
-		clif_send(buf,packet_len(0x132),bl,AREA_WOS);
+/// Removes a vending board from screen.
+/// 0132 <owner id>.L (ZC_DISAPPEAR_ENTRY)
+void clif_closevendingboard( block_list& bl, send_target target, block_list* tbl ){
+	if( tbl == nullptr ){
+		tbl = &bl;
+		target = AREA_WOS;
 	}
+
+	PACKET_ZC_DISAPPEAR_ENTRY p = {};
+
+	p.packetType = HEADER_ZC_DISAPPEAR_ENTRY;
+	p.GID = bl.id;
+
+	clif_send( &p, sizeof( p ), tbl, target );
 }
 
 

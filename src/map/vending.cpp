@@ -67,7 +67,7 @@ void vending_closevending(map_session_data* sd)
 
 		sd->state.vending = false;
 		sd->vender_id = 0;
-		clif_closevendingboard(&sd->bl, 0);
+		clif_closevendingboard( sd->bl );
 		idb_remove(vending_db, sd->status.char_id);
 	}
 }
