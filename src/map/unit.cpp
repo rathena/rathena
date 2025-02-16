@@ -79,6 +79,20 @@ struct unit_data* unit_bl2ud(struct block_list *bl)
 }
 
 /**
+ * Sets a mob's CHASE/FOLLOW state
+ * This should not be done if there's no path to reach
+ * @param bl: Mob to set state on
+ * @param flag: Whether to set state or not
+ */
+static inline void set_mobstate(struct block_list* bl, int32 flag)
+{
+	struct mob_data* md = BL_CAST(BL_MOB, bl);
+
+	if (md != nullptr && flag)
+		md->state.skillstate = md->state.aggressive ? MSS_FOLLOW : MSS_RUSH;
+}
+
+/**
  * Updates chase depending on situation:
  * If target in attack range -> attack
  * If target out of sight -> drop target
@@ -128,9 +142,11 @@ bool unit_update_chase(block_list& bl, t_tick tick, bool fullcheck) {
 		return true;
 	}
 	// Update chase path
-	else if (fullcheck && ud->walkpath.path_pos > 0) {
-		unit_walktobl(&bl, tbl, ud->chaserange, ud->state.walk_easy | (ud->state.attack_continue ? 2 : 0));
-		return true;
+	else if (fullcheck && ud->walkpath.path_pos > 0 && DIFF_TICK(ud->canmove_tick, tick) <= 0) {
+		// We call this only when we know there is no walk delay to prevent it pre-planning a chase
+		// If the call here fails, the unit should continue its current path
+		if(unit_walktobl(&bl, tbl, ud->chaserange, ud->state.walk_easy | (ud->state.attack_continue ? 2 : 0)))
+			return true;
 	}
 
 	return false;
@@ -149,28 +165,52 @@ bool unit_walktoxy_nextcell(block_list& bl, bool sendMove, t_tick tick) {
 	if (ud == nullptr)
 		return true;
 
-	int32 speed;
-
 	// Reached end of walkpath
 	if (ud->walkpath.path_pos >= ud->walkpath.path_len)
 		return false;
 
+	// Monsters first check for a chase skill and if they didn't use one if their target is in range each cell after checking for a chase skill
+	if (bl.type == BL_MOB) {
+		mob_data* md = reinterpret_cast<mob_data*>(&bl);
+		// Walk skills are triggered regardless of target due to the idle-walk mob state.
+		// But avoid triggering when already reached the end of the walkpath.
+		// Monsters use walk/chase skills every second, but we only get here every "speed" ms
+		// To make sure we check one skill per second on average, we substract half the speed as ms
+		if (!ud->state.force_walk &&
+			DIFF_TICK(tick, md->last_skillcheck) > MOB_SKILL_INTERVAL - md->status.speed / 2 &&
+			mobskill_use(md, tick, -1)) {
+			if ((ud->skill_id != NPC_SPEEDUP || md->trickcasting == 0) //Stop only when trickcasting expired
+				&& ud->skill_id != NPC_EMOTION && ud->skill_id != NPC_EMOTION_ON //NPC_EMOTION doesn't make the monster stop
+				&& md->state.skillstate != MSS_WALK) //Walk skills are supposed to be used while walking
+			{
+				// Skill used, abort walking
+				// Fix position as walk has been cancelled.
+				clif_fixpos(bl);
+				// Movement was initialized, so we need to return true even though it was stopped
+				// Monsters only start moving or drop target when they stop using chase skills that stop them
+				return true;
+			}
+			// Resend walk packet for proper Self Destruction display
+			sendMove = true;
+		}
+		if (ud->target_to != 0) {
+			int16 tx = ud->to_x;
+			int16 ty = ud->to_y;
+			// Monsters update their chase path one cell before reaching their final destination
+			if (unit_update_chase(bl, tick, (ud->walkpath.path_pos == ud->walkpath.path_len - 1)))
+				return true;
+			// Continue moving, restore to_x and to_y
+			ud->to_x = tx;
+			ud->to_y = ty;
+		}
+	}
+
+	// Get current speed
+	int32 speed;
 	if (direction_diagonal(ud->walkpath.path[ud->walkpath.path_pos]))
 		speed = status_get_speed(&bl) * MOVE_DIAGONAL_COST / MOVE_COST;
 	else
 		speed = status_get_speed(&bl);
-
-	// Monsters check if their target is in range each cell
-	if (bl.type == BL_MOB && ud->target_to != 0) {
-		int16 tx = ud->to_x;
-		int16 ty = ud->to_y;
-		// Monsters update their chase path one cell before reaching their final destination
-		if (unit_update_chase(bl, tick, (ud->walkpath.path_pos == ud->walkpath.path_len - 1)))
-			return true;
-		// Continue moving, restore to_x and to_y
-		ud->to_x = tx;
-		ud->to_y = ty;
-	}
 
 	// Make sure there is no active walktimer
 	if (ud->walktimer != INVALID_TIMER) {
@@ -246,6 +286,11 @@ int32 unit_walktoxy_sub(struct block_list *bl)
 		unit_refresh( bl, true );
 	}
 #endif
+
+	// Set mobstate here already as chase skills can be used on the first frame of movement
+	// If we don't set it now the monster will always move a full cell before checking
+	set_mobstate(bl, ud->state.attack_continue);
+
 	unit_walktoxy_nextcell(*bl, true, gettick());
 
 	return 1;
@@ -632,27 +677,6 @@ static TIMER_FUNC(unit_walktoxy_timer)
 					return 0; // Warped
 			} else
 				md->areanpc_id = 0;
-			// Walk skills are triggered regardless of target due to the idle-walk mob state.
-			// But avoid triggering on stop-walk calls.
-			// Monsters use walk/chase skills every second, but we only get here every "speed" ms
-			// To make sure we check one skill per second on average, we substract half the speed as ms
-			if(!ud->state.force_walk && tid != INVALID_TIMER &&
-				DIFF_TICK(tick, md->last_skillcheck) > MOB_SKILL_INTERVAL - md->status.speed / 2 &&
-				//TODO: Full fix requires to move casting of chase skills to nextcell function
-				//DIFF_TICK(tick, md->last_thinktime) > 0 &&
-				map[bl->m].users > 0 &&
-				mobskill_use(md, tick, -1)) {
-				if ((ud->skill_id != NPC_SPEEDUP || md->trickcasting == 0) //Stop only when trickcasting expired
-					&& ud->skill_id != NPC_EMOTION && ud->skill_id != NPC_EMOTION_ON //NPC_EMOTION doesn't make the monster stop
-					&& md->state.skillstate != MSS_WALK) //Walk skills are supposed to be used while walking
-				{ // Skill used, abort walking
-					// Fix position as walk has been cancelled.
-					clif_fixpos( *bl );
-					return 0;
-				}
-				// Resend walk packet for proper Self Destruction display.
-				clif_move( *ud );
-			}
 			break;
 		case BL_NPC:
 			if (nd->is_invisible)
@@ -867,20 +891,6 @@ int32 unit_walktoxy( struct block_list *bl, int16 x, int16 y, unsigned char flag
 }
 
 /**
- * Sets a mob's CHASE/FOLLOW state
- * This should not be done if there's no path to reach
- * @param bl: Mob to set state on
- * @param flag: Whether to set state or not
- */
-static inline void set_mobstate(struct block_list* bl, int32 flag)
-{
-	struct mob_data* md = BL_CAST(BL_MOB,bl);
-
-	if( md && flag )
-		md->state.skillstate = md->state.aggressive ? MSS_FOLLOW : MSS_RUSH;
-}
-
-/**
  * Timer to walking a unit to another unit's location
  * Calls unit_walktoxy_sub once determined the unit can move
  * @param tid: Object's timer ID
@@ -895,10 +905,8 @@ static TIMER_FUNC(unit_walktobl_sub){
 	if (ud != nullptr && ud->walktimer == INVALID_TIMER && ud->target_to != 0 && ud->target_to == data) {
 		if (DIFF_TICK(ud->canmove_tick, tick) > 0) // Keep waiting?
 			add_timer(ud->canmove_tick+1, unit_walktobl_sub, id, data);
-		else if (unit_can_move(bl)) {
-			if (unit_walktoxy_sub(bl))
-				set_mobstate(bl, ud->state.attack_continue);
-		}
+		else if (unit_can_move(bl))
+			unit_walktoxy_sub(bl);
 	}
 
 	return 0;
@@ -967,11 +975,8 @@ int32 unit_walktobl(struct block_list *bl, struct block_list *tbl, int32 range, 
 	if(!unit_can_move(bl))
 		return 0;
 
-	if (unit_walktoxy_sub(bl)) {
-		set_mobstate(bl, flag&2);
-
+	if (unit_walktoxy_sub(bl))
 		return 1;
-	}
 
 	return 0;
 }
