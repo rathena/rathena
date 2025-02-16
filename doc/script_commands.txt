@@ -3103,29 +3103,29 @@ and return the info set by TYPE argument.
 It will return -1 if there is no such item or "" if the aegis item name is requested.
 
 Valid types are:
-	ITEMINFO_BUY             (0)   -  Buy Price
-	ITEMINFO_SELL            (1)   -  Sell Price
-	ITEMINFO_TYPE            (2)   -  Type
-	ITEMINFO_MAXCHANCE       (3)   -  maxchance (max drop chance of this item, e.g. 1 = 0.01%)
-		                        if = 0, then monsters don't drop it at all (rare or a quest item)
-		                        if = 10000, then this item is sold in NPC shops only
-	ITEMINFO_GENDER          (4)   -  Gender
-	ITEMINFO_LOCATIONS       (5)   -  Location(s)
-	ITEMINFO_WEIGHT          (6)   -  Weight
-	ITEMINFO_ATTACK          (7)   -  ATK
-	ITEMINFO_DEFENSE         (8)   -  DEF
-	ITEMINFO_RANGE           (9)   -  Range
-	ITEMINFO_SLOT           (10)   -  Slot
-	ITEMINFO_VIEW           (11)   -  View
-	ITEMINFO_EQUIPLEVELMIN  (12)   -  equipment LV
-	ITEMINFO_WEAPONLEVEL    (13)   -  weapon LV
-	ITEMINFO_ALIASNAME      (14)   -  AliasName
-	ITEMINFO_EQUIPLEVELMAX  (15)   -  equipment LV Max
-	ITEMINFO_MAGICATTACK    (16)   -  matk if RENEWAL is defined
-	ITEMINFO_ID             (17)   -  item ID
-	ITEMINFO_AEGISNAME      (18)   -  aegis item name
-	ITEMINFO_ARMORLEVEL     (19)   -  armor LV
-	ITEMINFO_SUBTYPE        (20)   -  Subtype
+	ITEMINFO_BUY              -  Buy Price
+	ITEMINFO_SELL             -  Sell Price
+	ITEMINFO_TYPE             -  Type
+	ITEMINFO_MAXCHANCE        -  maxchance (max drop chance of this item, e.g. 1 = 0.01%)
+		                         if = 0, then monsters don't drop it at all (rare or a quest item)
+		                         if = 10000, then this item is sold in NPC shops only
+	ITEMINFO_GENDER           -  Gender
+	ITEMINFO_LOCATIONS        -  Location(s)
+	ITEMINFO_WEIGHT           -  Weight
+	ITEMINFO_ATTACK           -  ATK
+	ITEMINFO_DEFENSE          -  DEF
+	ITEMINFO_RANGE            -  Range
+	ITEMINFO_SLOT             -  Slot
+	ITEMINFO_VIEW             -  View
+	ITEMINFO_EQUIPLEVELMIN    -  equipment LV
+	ITEMINFO_WEAPONLEVEL      -  weapon LV
+	ITEMINFO_ALIASNAME        -  AliasName
+	ITEMINFO_EQUIPLEVELMAX    -  equipment LV Max
+	ITEMINFO_MAGICATTACK      -  matk if RENEWAL is defined
+	ITEMINFO_ID               -  item ID
+	ITEMINFO_AEGISNAME        -  aegis item name
+	ITEMINFO_ARMORLEVEL       -  armor LV
+	ITEMINFO_SUBTYPE          -  Subtype
 
 See the sample in 'doc/sample/getiteminfo.txt'.
 
@@ -3133,101 +3133,99 @@ Returned values and their constants (constant = value),
 one can use either the value or the constants for your checks:
 
 	ITEMINFO_TYPE:
-		IT_HEALING 		= 0
-		IT_UNKNOWN 		= 1
-		IT_USABLE  		= 2
-		IT_ETC     		= 3
-		IT_ARMOR   		= 4
-		IT_WEAPON  		= 5
-		IT_CARD    		= 6
-		IT_PETEGG  		= 7
-		IT_PETARMOR 	= 8
-		IT_UNKNOWN2 	= 9
-		IT_AMMO     	= 10
-		IT_DELAYCONSUME = 11
-		IT_SHADOWGEAR	= 12
-		IT_CASH 		= 18
+		IT_HEALING
+		IT_UNKNOWN
+		IT_USABLE
+		IT_ETC
+		IT_ARMOR
+		IT_WEAPON
+		IT_CARD
+		IT_PETEGG
+		IT_PETARMOR
+		IT_UNKNOWN2
+		IT_AMMO
+		IT_DELAYCONSUME
+		IT_SHADOWGEAR
+		IT_CASH
 		
 	ITEMINFO_SUBTYPE:
 		Weapons
-			W_FIST		= 0 //Bare hands
-			W_DAGGER	= 1
-			W_1HSWORD	= 2
-			W_2HSWORD	= 3
-			W_1HSPEAR	= 4
-			W_2HSPEAR	= 5
-			W_1HAXE		= 6
-			W_2HAXE		= 7
-			W_MACE		= 8
-			W_2HMACE	= 9 (unused)
-			W_STAFF		= 10
-			W_BOW		= 11
-			W_KNUCKLE	= 12
-			W_MUSICAL	= 13
-			W_WHIP		= 14
-			W_BOOK		= 15
-			W_KATAR		= 16
-			W_REVOLVER	= 17
-			W_RIFLE		= 18
-			W_GATLING	= 19
-			W_SHOTGUN	= 20
-			W_GRENADE	= 21
-			W_HUUMA		= 22
-			W_2HSTAFF	= 23
+			W_FIST //Bare hands
+			W_DAGGER
+			W_1HSWORD
+			W_2HSWORD
+			W_1HSPEAR
+			W_2HSPEAR
+			W_1HAXE
+			W_2HAXE
+			W_MACE
+			W_2HMACE //unused
+			W_STAFF
+			W_BOW
+			W_KNUCKLE
+			W_MUSICAL
+			W_WHIP
+			W_BOOK
+			W_KATAR
+			W_REVOLVER
+			W_RIFLE
+			W_GATLING
+			W_SHOTGUN
+			W_GRENADE
+			W_HUUMA
+			W_2HSTAFF
 			// dual-wield constants
-			W_DOUBLE_DD = 25 // 2 daggers
-			W_DOUBLE_SS = 26 // 2 swords
-			W_DOUBLE_AA = 27 // 2 axes
-			W_DOUBLE_DS = 28 // dagger + sword
-			W_DOUBLE_DA = 29 // dagger + axe
-			W_DOUBLE_SA = 30 // sword + axe
+			W_DOUBLE_DD // 2 daggers
+			W_DOUBLE_SS // 2 swords
+			W_DOUBLE_AA // 2 axes
+			W_DOUBLE_DS // dagger + sword
+			W_DOUBLE_DA // dagger + axe
+			W_DOUBLE_SA // sword + axe
 		
 		Ammo
-			AMMO_NONE			= 0
-			AMMO_ARROW			= 1
-			AMMO_DAGGER			= 2
-			AMMO_BULLET			= 3
-			AMMO_SHELL			= 4
-			AMMO_GRENADE		= 5
-			AMMO_SHURIKEN		= 6
-			AMMO_KUNAI			= 7
-			AMMO_CANNONBALL		= 8
-			AMMO_THROWWEAPON	= 9
+			AMMO_NONE
+			AMMO_ARROW
+			AMMO_DAGGER
+			AMMO_BULLET
+			AMMO_SHELL
+			AMMO_GRENADE
+			AMMO_SHURIKEN
+			AMMO_KUNAI
+			AMMO_CANNONBALL
+			AMMO_THROWWEAPON
 		
-	ITEMINFO_GENDER
-		SEX_FEMALE = 0
-		SEX_MALE = 1
-		SEX_BOTH = 2
+	ITEMINFO_GENDER:
+		SEX_FEMALE
+		SEX_MALE
+		SEX_BOTH
 		
-	ITEMINFO_LOCATIONS		
-		EQP_HEAD_LOW			= 1
-		EQP_HEAD_MID			= 512
-		EQP_HEAD_TOP			= 256
-		EQP_HAND_R				= 2
-		EQP_HAND_L				= 32
-		EQP_ARMOR				= 16
-		EQP_SHOES				= 64
-		EQP_GARMENT				= 4
-		EQP_ACC_R				= 8
-		EQP_ACC_L				= 128
-		EQP_COSTUME_HEAD_TOP	= 1024
-		EQP_COSTUME_HEAD_MID	= 2048
-		EQP_COSTUME_HEAD_LOW	= 4096
-		EQP_COSTUME_GARMENT		= 8192
-		EQP_COSTUME_FLOOR		= 16384
-		EQP_AMMO				= 32768
-		EQP_SHADOW_ARMOR		= 65536
-		EQP_SHADOW_WEAPON		= 131072
-		EQP_SHADOW_SHIELD		= 262144
-		EQP_SHADOW_SHOES		= 524288
-		EQP_SHADOW_ACC_R		= 1048576
-		EQP_SHADOW_ACC_L 		= 2097152
+	ITEMINFO_LOCATIONS:
+		EQP_HEAD_LOW
+		EQP_HEAD_MID
+		EQP_HEAD_TOP
+		EQP_HAND_R
+		EQP_HAND_L
+		EQP_ARMOR
+		EQP_SHOES
+		EQP_GARMENT
+		EQP_ACC_R
+		EQP_ACC_L
+		EQP_COSTUME_HEAD_TOP
+		EQP_COSTUME_HEAD_MID
+		EQP_COSTUME_HEAD_LOW
+		EQP_COSTUME_GARMENT
+		EQP_COSTUME_FLOOR
+		EQP_AMMO
+		EQP_SHADOW_ARMOR
+		EQP_SHADOW_WEAPON
+		EQP_SHADOW_SHIELD
+		EQP_SHADOW_SHOES
+		EQP_SHADOW_ACC_R
+		EQP_SHADOW_ACC_L
 		
 		// Combined
-		EQP_ACC_RL				= 136:
-			EQP_ACC_R + EQP_ACC_L (8+128)
-		EQP_SHADOW_ACC_RL		= 3145728:
-			EQP_SHADOW_ACC_R + EQP_SHADOW_ACC_L (1048576 + 2097152)
+		EQP_ACC_RL (EQP_ACC_R + EQP_ACC_L)
+		EQP_SHADOW_ACC_RL (EQP_SHADOW_ACC_R + EQP_SHADOW_ACC_L)
 
 ---------------------------------------
 
