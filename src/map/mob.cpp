@@ -6078,7 +6078,7 @@ static bool mob_parse_row_mobskilldb( char** str, size_t columns, size_t current
 	if( j < ARRAYLENGTH(state) )
 		ms->state = state[j].id;
 	else {
-		ShowError("mob_parse_row_mobskilldb: Unrecognized state '%s' in line %d\n", str[2], current);
+		ShowError("mob_parse_row_mobskilldb: Unrecognized state '%s' in line %" PRIu64 "\n", str[2], current);
 		return false;
 	}
 
