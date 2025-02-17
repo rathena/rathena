@@ -171,17 +171,17 @@ bool unit_walktoxy_nextcell(block_list& bl, bool sendMove, t_tick tick) {
 
 	// Monsters first check for a chase skill and if they didn't use one if their target is in range each cell after checking for a chase skill
 	if (bl.type == BL_MOB) {
-		mob_data* md = reinterpret_cast<mob_data*>(&bl);
+		mob_data& md = reinterpret_cast<mob_data&>(bl);
 		// Walk skills are triggered regardless of target due to the idle-walk mob state.
 		// But avoid triggering when already reached the end of the walkpath.
 		// Monsters use walk/chase skills every second, but we only get here every "speed" ms
 		// To make sure we check one skill per second on average, we substract half the speed as ms
 		if (!ud->state.force_walk &&
-			DIFF_TICK(tick, md->last_skillcheck) > MOB_SKILL_INTERVAL - md->status.speed / 2 &&
-			mobskill_use(md, tick, -1)) {
-			if ((ud->skill_id != NPC_SPEEDUP || md->trickcasting == 0) //Stop only when trickcasting expired
+			DIFF_TICK(tick, md.last_skillcheck) > MOB_SKILL_INTERVAL - md.status.speed / 2 &&
+			mobskill_use(&md, tick, -1)) {
+			if ((ud->skill_id != NPC_SPEEDUP || md.trickcasting == 0) //Stop only when trickcasting expired
 				&& ud->skill_id != NPC_EMOTION && ud->skill_id != NPC_EMOTION_ON //NPC_EMOTION doesn't make the monster stop
-				&& md->state.skillstate != MSS_WALK) //Walk skills are supposed to be used while walking
+				&& md.state.skillstate != MSS_WALK) //Walk skills are supposed to be used while walking
 			{
 				// Skill used, abort walking
 				// Fix position as walk has been cancelled.
