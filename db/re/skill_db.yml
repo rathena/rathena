@@ -16706,10 +16706,13 @@ Body:
   - Id: 692
     Name: ALL_CATCRY
     Description: Cat Cry
-    MaxLevel: 9
+    MaxLevel: 1
+    TargetType: Self
     Flags:
       IsNpc: true
     AfterCastActDelay: 5000
+    Requires:
+      SpCost: 50
   - Id: 693
     Name: ALL_PARTYFLEE
     Description: Party Flee
