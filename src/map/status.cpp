@@ -12805,16 +12805,6 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 		calc_flag.reset(SCB_DYE);
 	}
 
-	/*if (calc_flag[SCB_BODY])// Might be needed in the future. [Rytech]
-	{	//Reset body style
-		if (vd && vd->body_style)
-		{
-			val4 = vd->body_style;
-			clif_changelook(bl,LOOK_BODY2,0);
-		}
-		calc_flag.reset(SCB_BODY);
-	}*/
-
 	if (!(flag&SCSTART_NOICON) && !(flag&SCSTART_LOADED && scdb->flag[SCF_DISPLAYPC] || scdb->flag[SCF_DISPLAYNPC])) {
 		int32 status_icon = scdb->icon;
 
@@ -13682,13 +13672,6 @@ int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid)
 			clif_changelook(bl,LOOK_CLOTHES_COLOR,sce->val4);
 		calc_flag.reset(SCB_DYE);
 	}
-
-	/*if (calc_flag[SCB_BODY])// Might be needed in the future. [Rytech]
-	{	//Restore body style
-		if (vd && !vd->body_style && sce->val4)
-			clif_changelook(bl,LOOK_BODY2,sce->val4);
-		calc_flag.reset(SCB_BODY);
-	}*/
 
 	// On Aegis, when turning off a status change, first goes the sc packet, then the option packet.
 	int32 status_icon = scdb->icon;
