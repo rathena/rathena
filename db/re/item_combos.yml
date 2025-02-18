@@ -56886,7 +56886,7 @@ Body:
           - Hermit_Shoes_US    # 470292
     Script: |
       bonus bAllStats,30;
-      bonus2 bAddClass,Class_All,30;
+      bonus bAtkRate,30;
       bonus bMatkRate,30;
   - Combos:
       - Combo:
@@ -56894,7 +56894,7 @@ Body:
           - Hermit_Shoes_US    # 470292
     Script: |
       bonus bAllStats,10;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus bMatkRate,10;
   - Combos:
       - Combo:
@@ -56933,7 +56933,7 @@ Body:
           - Pecopeco_Card    # 4031
           - Peco_Warrior_Hat_US    # 400667
     Script: |
-      bonus2 bAddClass,Class_All,15;
+      bonus bAtkRate,15;
       bonus bMaxHPrate,15;
       bonus bUnbreakableArmor;
       bonus bUnbreakableWeapon;
@@ -57602,7 +57602,12 @@ Body:
           - Khaliz_Knightage_Card    # 4609
           - Neptune_Uniform_LT    # 450387
     Script: |
-      bonus2 bAddClass,Class_All,12;
+      bonus bAtkRate,12;
+  - Combos:
+      - Combo:
+          - C_Khaliz_Knight_Card    # 27385
+          - Neptune_Uniform_LT    # 450387
+    Script: |
       bonus bMatkRate,12;
   - Combos:
       - Combo:
@@ -57610,7 +57615,7 @@ Body:
           - Neptune_Uniform_LT    # 450387
     Script: |
       bonus2 bSubSize,Size_All,30;
-      bonus2 bAddClass,Class_All,15;
+      bonus bAtkRate,15;
       bonus bMatkRate,15;
   - Combos:
       - Combo:
@@ -57965,4 +57970,4 @@ Body:
     Script: |
       bonus bMaxHPrate,40;
       bonus2 bAddClass,Class_All,30;
-      bonus bMatkRate,30;
+      bonus2 bMagicAddClass,Class_All,30;

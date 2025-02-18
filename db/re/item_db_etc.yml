@@ -83600,7 +83600,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
   - Id: 313222
     AegisName: Z_Hemel_MHP_P_1
     Name: Valkyrie Essence (MHP) Ⅰ
