@@ -9798,6 +9798,18 @@
 	export_constant(FOOTPRINT_EF_DOGFOOT);
 	export_constant(HAT_EF_C_AUSPICLOUD);
 	export_constant(HAT_EF_AURA_OF_GHOST_S);
+	export_constant(HAT_EF_C_ROS2024_WING_1);
+	export_constant(FOOTPRINT_EF_DUMPLING);
+	export_constant(FOOTPRINT_EF_PANDA_BASIC);
+	export_constant(FOOTPRINT_EF_PANDA_COLOR);
+	export_constant(HAT_EF_ATQUE_POENITENTIA);
+	export_constant(HAT_EF_PERM_FROST_OBLIVION);
+	export_constant(HAT_EF_ATQUE_POENITENTIA2);
+	export_constant(HAT_EF_GUIDE_OF_DEAD_TEXT);
+	export_constant(HAT_EF_MEDJED_TEXT);
+	export_constant(HAT_EF_INKPAINTING_DAY);
+	export_constant(HAT_EF_INKPAINTING_NIGHT);
+	export_constant(HAT_EF_KUNG_FU_PANDA);
 
 	/* pet catch */
 	export_constant(PET_CATCH_UNIVERSAL_NO_BOSS);
