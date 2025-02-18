@@ -9616,12 +9616,12 @@ void clif_wisexin( map_session_data& sd, uint8 type, uint8 flag ){
 /// result:
 ///     0 = success
 ///     1 = failure
-void clif_wisall( map_session_data& sd, uint8 type, uint8 flag ){
+void clif_wisall( map_session_data& sd, uint8 type, bool failure ){
 	PACKET_ZC_SETTING_WHISPER_STATE p{};
 
 	p.packetType = HEADER_ZC_SETTING_WHISPER_STATE;
 	p.type = type;
-	p.result = flag;
+	p.result = failure;
 
 	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 }
@@ -15162,39 +15162,39 @@ void clif_parse_PMIgnore(int32 fd, map_session_data* sd)
 }
 
 
-/// /inall /exall (CZ_SETTING_WHISPER_STATE).
+/// /inall /exall.
 /// Request to allow/deny all whispers.
-/// 00d0 <type>.B
+/// 00d0 <type>.B (CZ_SETTING_WHISPER_STATE)
 /// type:
 ///     0 = (/exall) deny all speech
 ///     1 = (/inall) allow all speech
-void clif_parse_PMIgnoreAll(int32 fd, map_session_data *sd)
-{
-	uint8 type = RFIFOB(fd,packet_db[RFIFOW(fd,0)].pos[0]), flag;
+void clif_parse_PMIgnoreAll( int32 fd, map_session_data* sd ){
+	const PACKET_CZ_SETTING_WHISPER_STATE* p = reinterpret_cast<PACKET_CZ_SETTING_WHISPER_STATE*>( RFIFOP( fd, 0 ) );
+	bool failure;
 
-	if( type == 0 ) {// Deny all
+	if( p->type == 0 ) {// Deny all
 		if( sd->state.ignoreAll ) {
-			flag = 1; // fail
+			failure = true;
 		} else {
 			sd->state.ignoreAll = 1;
-			flag = 0; // success
+			failure = false;
 		}
 	} else {//Unblock everyone
 		if( sd->state.ignoreAll ) {
 			sd->state.ignoreAll = 0;
-			flag = 0; // success
+			failure = false;
 		} else {
 			if (sd->ignore[0].name[0] != '\0')
 			{  //Wipe the ignore list.
 				memset(sd->ignore, 0, sizeof(sd->ignore));
-				flag = 0; // success
+				failure = false;
 			} else {
-				flag = 1; // fail
+				failure = true;
 			}
 		}
 	}
 
-	clif_wisall( *sd, type, flag );
+	clif_wisall( *sd, p->type, failure );
 }
 
 
