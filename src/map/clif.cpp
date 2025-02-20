@@ -1667,6 +1667,28 @@ static inline bool clif_npc_mayapurple(block_list *bl) {
 	return false;
 }
 
+/// For the stupid cloth-dye bug. Resends the given view data to the area specified by bl.
+void clif_refresh_clothcolor( block_list& bl, enum send_target target, block_list* tbl = nullptr ){
+// Unconfirmed when this was fixed, if you encounter any problems, feel free to report them
+#if PACKETVER < 20091103
+	view_data* vd = status_get_viewdata( &bl );
+
+	if( vd == nullptr ){
+		return;
+	}
+
+	if( vd->cloth_color == 0 ){
+		return;
+	}
+
+	if( tbl == nullptr ){
+		tbl = &bl;
+	}
+
+	clif_sprite_change( tbl, bl.id, LOOK_CLOTHES_COLOR, vd->cloth_color, 0, target );
+#endif
+}
+
 /**
  * Main function to spawn a unit on the client (player/mob/pet/etc)
  **/
@@ -1687,10 +1709,7 @@ int32 clif_spawn( struct block_list *bl, bool walking ){
 		clif_spawn_unit( bl, AREA_WOS );
 	}
 
-	if (vd->cloth_color)
-		clif_refreshlook(bl,bl->id,LOOK_CLOTHES_COLOR,vd->cloth_color,AREA_WOS);
-	if (vd->body_style)
-		clif_refreshlook(bl,bl->id,LOOK_BODY2,vd->body_style,AREA_WOS);
+	clif_refresh_clothcolor( *bl, AREA_WOS );
 
 	switch (bl->type)
 	{
@@ -1716,8 +1735,6 @@ int32 clif_spawn( struct block_list *bl, bool walking ){
 				clif_sendbgemblem_area(sd);
 			if (sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm > 0)
 				clif_spiritcharm( *sd );
-			if (sd->status.robe)
-				clif_refreshlook(bl,bl->id,LOOK_ROBE,sd->status.robe,AREA);
 			clif_efst_status_change_sub(bl, bl, AREA);
 			clif_hat_effects( *sd, sd->bl, AREA );
 		}
@@ -2076,10 +2093,7 @@ void clif_move( struct unit_data& ud )
 
 	clif_set_unit_walking( *bl, nullptr, ud, AREA_WOS );
 
-	if (vd->cloth_color)
-		clif_refreshlook(bl, bl->id, LOOK_CLOTHES_COLOR, vd->cloth_color, AREA_WOS);
-	if (vd->body_style)
-		clif_refreshlook(bl, bl->id, LOOK_BODY2, vd->body_style, AREA_WOS);
+	clif_refresh_clothcolor( *bl, AREA_WOS );
 
 	switch (bl->type) {
 	case BL_PC:
@@ -2089,8 +2103,6 @@ void clif_move( struct unit_data& ud )
 				clif_specialeffect(&sd->bl, EF_GIANTBODY2, AREA);
 			else if (sd->state.size == SZ_MEDIUM)
 				clif_specialeffect(&sd->bl, EF_BABYBODY2, AREA);
-			if (sd->status.robe)
-				clif_refreshlook(bl, bl->id, LOOK_ROBE, sd->status.robe, AREA);
 		}
 	break;
 	case BL_MOB:
@@ -4097,12 +4109,6 @@ void clif_changetraplook(struct block_list *bl,int32 val) {
 	clif_sprite_change(bl, bl->id, LOOK_BASE, val, 0, AREA);
 }
 
-
-/// For the stupid cloth-dye bug. Resends the given view data to the area specified by bl.
-void clif_refreshlook(struct block_list *bl, int32 id, int32 type, int32 val, enum send_target target) {
-	clif_sprite_change(bl, id, type, val, 0, target);
-}
-
 /// Character status (ZC_STATUS).
 /// 00bd <stpoint>.W <str>.B <need str>.B <agi>.B <need agi>.B <vit>.B <need vit>.B
 ///     <int>.B <need int>.B <dex>.B <need dex>.B <luk>.B <need luk>.B <atk>.W <atk2>.W
@@ -5035,10 +5041,7 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 		clif_set_unit_idle( bl, false, SELF, &sd->bl );
 	}
 
-	if (vd->cloth_color)
-		clif_refreshlook(&sd->bl,bl->id,LOOK_CLOTHES_COLOR,vd->cloth_color,SELF);
-	if (vd->body_style)
-		clif_refreshlook(&sd->bl,bl->id,LOOK_BODY2,vd->body_style,SELF);
+	clif_refresh_clothcolor( *bl, SELF, &sd->bl );
 
 	switch (bl->type)
 	{
@@ -5053,8 +5056,6 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 				clif_specialeffect_single(bl,EF_BABYBODY2,sd->fd);
 			if( tsd->bg_id && map_getmapflag(tsd->bl.m, MF_BATTLEGROUND) )
 				clif_sendbgemblem_single(sd->fd,tsd);
-			if ( tsd->status.robe )
-				clif_refreshlook(&sd->bl,bl->id,LOOK_ROBE,tsd->status.robe,SELF);
 			clif_efst_status_change_sub(&sd->bl, bl, SELF);
 			clif_hat_effects( *sd, tsd->bl, SELF );
 		}
@@ -9852,10 +9853,7 @@ void clif_refresh(map_session_data *sd)
 		clif_servantball( *sd, &sd->bl, SELF );
 	if (sd->abyssball)
 		clif_abyssball( *sd, &sd->bl, SELF );
-	if (sd->vd.cloth_color)
-		clif_refreshlook(&sd->bl,sd->bl.id,LOOK_CLOTHES_COLOR,sd->vd.cloth_color,SELF);
-	if (sd->vd.body_style)
-		clif_refreshlook(&sd->bl,sd->bl.id,LOOK_BODY2,sd->vd.body_style,SELF);
+	clif_refresh_clothcolor( sd->bl, SELF );
 	if(hom_is_active(sd->hd))
 		clif_send_homdata( *sd->hd, SP_ACK );
 	if( sd->md ) {
@@ -10751,10 +10749,7 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 #endif
 	pc_set_costume_view(sd);
 
-	if(sd->vd.cloth_color)
-		clif_refreshlook(&sd->bl,sd->bl.id,LOOK_CLOTHES_COLOR,sd->vd.cloth_color,SELF);
-	if(sd->vd.body_style)
-		clif_refreshlook(&sd->bl,sd->bl.id,LOOK_BODY2,sd->vd.body_style,SELF);
+	clif_refresh_clothcolor( sd->bl, SELF );
 
 	// item
 	clif_inventorylist(sd);  // inventory list first, otherwise deleted items in pc_checkitem show up as 'unknown item'
