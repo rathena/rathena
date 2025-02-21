@@ -6879,34 +6879,84 @@ BUILDIN_FUNC(setlook)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-BUILDIN_FUNC(changelook)
-{ // As setlook but only client side
-	int32 type,val;
-	TBL_PC* sd;
-
-	type = script_getnum(st,2);
-	val = script_getnum(st,3);
+// As setlook but only client side
+BUILDIN_FUNC(changelook){
+	map_session_data* sd;
 
 	if (!script_charid2sd(4,sd))
-		return SCRIPT_CMD_SUCCESS;
+		return SCRIPT_CMD_FAILURE;
 
-	switch(type) {
-	case LOOK_HAIR:
-		val = cap_value(val, MIN_HAIR_STYLE, MAX_HAIR_STYLE);
-		break;
-	case LOOK_HAIR_COLOR:
-		val = cap_value(val, MIN_HAIR_COLOR, MAX_HAIR_COLOR);
-		break;
-	case LOOK_CLOTHES_COLOR:
-		val = cap_value(val, MIN_CLOTH_COLOR, MAX_CLOTH_COLOR);
-		break;
-	case LOOK_BODY2:
-		val = cap_value(val, MIN_BODY_STYLE, MAX_BODY_STYLE);
-		break;
-	default:
-		break;
+	int32 type = script_getnum( st, 2 );
+	int32 val = script_getnum( st, 3 );
+
+	switch( type ){
+		case LOOK_HAIR:
+			if( val < MIN_HAIR_STYLE ){
+				ShowError( "buildin_changelook: Invalid hair style. Minimum: %d\n", MIN_HAIR_STYLE );
+				return SCRIPT_CMD_FAILURE;
+			}
+
+			if( val > MAX_HAIR_STYLE ){
+				ShowError( "buildin_changelook: Invalid hair style. Maximum: %d\n", MAX_HAIR_STYLE );
+				return SCRIPT_CMD_FAILURE;
+			}
+			break;
+
+		case LOOK_HAIR_COLOR:
+			if( val < MIN_HAIR_COLOR ){
+				ShowError( "buildin_changelook: Invalid hair color. Minimum: %d\n", MIN_HAIR_COLOR );
+				return SCRIPT_CMD_FAILURE;
+			}
+
+			if( val > MAX_HAIR_COLOR ){
+				ShowError( "buildin_changelook: Invalid hair color. Maximum: %d\n", MAX_HAIR_COLOR );
+				return SCRIPT_CMD_FAILURE;
+			}
+			break;
+
+		case LOOK_CLOTHES_COLOR:
+			if( val < MIN_CLOTH_COLOR ){
+				ShowError( "buildin_changelook: Invalid cloth color. Minimum: %d\n", MIN_CLOTH_COLOR );
+				return SCRIPT_CMD_FAILURE;
+			}
+
+			if( val > MAX_CLOTH_COLOR ){
+				ShowError( "buildin_changelook: Invalid cloth color. Maximum: %d\n", MAX_CLOTH_COLOR );
+				return SCRIPT_CMD_FAILURE;
+			}
+			break;
+
+		case LOOK_BODY2:
+			if( val < MIN_BODY_STYLE ){
+				ShowError( "buildin_changelook: Invalid body style. Minimum: %d\n", MIN_BODY_STYLE );
+				return SCRIPT_CMD_FAILURE;
+			}
+
+			if( val > MAX_BODY_STYLE ){
+				ShowError( "buildin_changelook: Invalid body style. Maximum: %d\n", MAX_BODY_STYLE );
+				return SCRIPT_CMD_FAILURE;
+			}
+			break;
+
+		case LOOK_BASE:
+		case LOOK_WEAPON:
+		case LOOK_HEAD_BOTTOM:
+		case LOOK_HEAD_TOP:
+		case LOOK_HEAD_MID:
+		case LOOK_SHIELD:
+		case LOOK_SHOES:
+		case LOOK_BODY:
+		case LOOK_RESET_COSTUMES:
+		case LOOK_ROBE:
+			// No value cap at the moment
+			break;
+
+		default:
+			ShowError( "buildin_changelook: Unknown look type %d\n", type );
+			return SCRIPT_CMD_FAILURE;
 	}
-	clif_changelook(&sd->bl, type, val);
+
+	clif_changelook( &sd->bl, type, val );
 
 	return SCRIPT_CMD_SUCCESS;
 }
