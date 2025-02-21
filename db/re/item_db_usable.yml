@@ -9288,7 +9288,7 @@ Body:
     AegisName: RepairA
     Name: Repair A
     Type: Usable
-    Buy: 275
+    Buy: 200
     Weight: 1
     Jobs:
       Blacksmith: true
@@ -9305,7 +9305,7 @@ Body:
     AegisName: RepairB
     Name: Repair B
     Type: Usable
-    Buy: 625
+    Buy: 500
     Weight: 1
     Jobs:
       Blacksmith: true
