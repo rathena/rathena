@@ -8041,7 +8041,7 @@ void clif_party_message( struct party_data& party, uint32 account_id, const char
 	}
 
 	if (len > CHAT_SIZE_MAX) {
-		ShowWarning( "clif_party_message: Truncated message '%s' (len=%d, max=%" PRIuPTR ", party_id=%d).\n", mes, len, CHAT_SIZE_MAX, party.party.party_id );
+		ShowWarning( "clif_party_message: Truncated message '%s' (len=%" PRIuPTR ", max=%" PRIuPTR ", party_id=%d).\n", mes, len, CHAT_SIZE_MAX, party.party.party_id );
 		len = CHAT_SIZE_MAX;
 	}
 
@@ -9505,7 +9505,7 @@ void clif_disp_message(struct block_list* src, const char* mes, size_t len, enum
 	if( len == 0 ) {
 		return;
 	} else if( len > sizeof(buf)-5 ) {
-		ShowWarning("clif_disp_message: Truncated message '%s' (len=%d, max=%" PRIuPTR ", aid=%d).\n", mes, len, sizeof(buf)-5, src->id);
+		ShowWarning("clif_disp_message: Truncated message '%s' (len=%" PRIuPTR ", max=%" PRIuPTR ", aid=%d).\n", mes, len, sizeof(buf)-5, src->id);
 		len = sizeof(buf)-5;
 	}
 
