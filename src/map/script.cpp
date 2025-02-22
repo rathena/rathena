@@ -17563,23 +17563,37 @@ BUILDIN_FUNC(sscanf){
 			script_pushint(st, -1);
 			if(buf) aFree(buf);
 			if(ref_str) aFree(ref_str);
-			return SCRIPT_CMD_SUCCESS;
+			return SCRIPT_CMD_FAILURE;
 		}
 
 		// Save value if any
-		if(buf_p[strlen(buf_p)-1]=='$'){  // String
+		if( is_string_variable( buf_p ) ){
 			if(ref_str==nullptr){
 				CREATE(ref_str, char, strlen(str)+1);
 			}
-			if (auto ret = sscanf(str, buf, ref_str); ret == 0 || ret == EOF) {
-				ShowError("buildin_sscanf: sscanf failed to scan string.\n");
-				break;
+			if( sscanf( str, buf, &ref_str ) != 1 ){
+				ShowError( "buildin_sscanf: sscanf failed to scan value for string variable \"%s\".\n", buf_p );
+				script_pushint( st, -1 );
+				if( buf != nullptr ){
+					aFree( buf );
+				}
+				if( ref_str != nullptr ){
+					aFree( ref_str );
+				}
+				return SCRIPT_CMD_FAILURE;
 			}
 			set_reg_str( st, sd, reference_uid( reference_getid( data ), reference_getindex( data ) ), buf_p, ref_str, reference_getref( data ) );
-		} else {  // Number
-			if (auto ret = sscanf(str, buf, &ref_int); ret == 0 || ret == EOF) {
-				ShowError("buildin_sscanf: sscanf failed to scan string.\n");
-				break;
+		} else {
+			if( sscanf( str, buf, &ref_int ) !=1 ){
+				ShowError( "buildin_sscanf: sscanf failed to scan value for integer variable \"%s\".\n", buf_p );
+				script_pushint( st, -1 );
+				if( buf != nullptr ){
+					aFree( buf );
+				}
+				if( ref_str != nullptr ){
+					aFree( ref_str );
+				}
+				return SCRIPT_CMD_FAILURE;
 			}
 			set_reg_num( st, sd, reference_uid( reference_getid( data ), reference_getindex( data ) ), buf_p, ref_int, reference_getref( data ) );
 		}
