@@ -64,7 +64,7 @@ jobs:
         run: ./tools/ci/sql.sh
 
       - name: Configure CMake
-        run: cmake -B build -DENABLE_PRERENEWAL=${{env.PRERE}} -DPACKETVER=${{matrix.packetver}} -DENABLE_EXTRA_BUILDBOT_CODE=ON
+        run: cmake -B build -DENABLE_PRERE=${{env.PRERE}} -DPACKETVER=${{matrix.packetver}} -DENABLE_EXTRA_BUILDBOT_CODE=ON
 
       - name: Build
         run: cmake --build build -j4

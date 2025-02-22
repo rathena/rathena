@@ -173,7 +173,7 @@ endif()
 
 target_compile_definitions(common PUBLIC "-DPACKETVER=${PACKETVER}")
 
-if(ENABLE_PRERENEWAL)
+if(ENABLE_PRERE)
 	target_compile_definitions(common PUBLIC "-DPRERE")
 	target_compile_definitions(minicore PUBLIC "-DPRERE")
 endif()

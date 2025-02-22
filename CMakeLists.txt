@@ -11,7 +11,7 @@ list(APPEND CMAKE_MODULE_PATH
 # options
 set(PACKETVER 20211103 CACHE STRING "Sets the PACKETVER define of the servers (see src/common/mmo.hpp)")
 set(MAXCONN CACHE STRING "Sets the MAXCONN define of the servers. (see src/common/socket.hpp)")
-option(ENABLE_PRERENEWAL "Whether or not to enable Pre-renewal (default=OFF)" OFF)
+option(ENABLE_PRERE "Whether or not to enable Pre-renewal (default=OFF)" OFF)
 option(ENABLE_WEB_SERVER "Build web-server (default=ON)" ON)
 option(ENABLE_RDTSC "Enable RDTSC instruction as a timing source (default=OFF)" OFF)
 option(ENABLE_EXTRA_DEBUG_CODE "Enable extra debug code (default=OFF)" OFF)
