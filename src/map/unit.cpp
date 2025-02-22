@@ -2969,6 +2969,8 @@ static int32 unit_attack_timer_sub(struct block_list* src, int32 tid, t_tick tic
 		// This code can usually only be reached if OFFICIAL_WALKPATH is disabled
 		if (ud->state.attack_continue && ud->chaserange > 1) {
 			ud->chaserange = std::max(1, ud->chaserange - 2);
+
+			// Walk around the obstacle and start attacking once you are in range
 			unit_walktobl(src,target,ud->chaserange,ud->state.walk_easy|2);
 			return 1;
 		}
