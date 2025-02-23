@@ -1920,8 +1920,8 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 	{
 		int32 prev_id = md->target_id;
 		map_foreachinallrange (mob_ai_sub_hard_activesearch, &md->bl, view_range, DEFAULT_ENEMY_TYPE(md), md, &tbl, mode);
-		// If a monster finds a target through search that is already in attack range it switches to berserk mode
-		// This behavior overrides even angry mode and other mode-specific behavior
+		// If a monster finds a new target that is already in attack range it behaves as if it was attacked
+		// This will result in the monster switching into Berserk mode instead of Angry mode later on in this AI interation
 		if (tbl != nullptr && prev_id != md->target_id && battle_check_range(&md->bl, tbl, md->status.rhw.range))
 			md->state.aggressive = 0;
 	}

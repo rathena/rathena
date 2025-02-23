@@ -2893,6 +2893,9 @@ static int32 unit_attack_timer_sub(struct block_list* src, int32 tid, t_tick tic
 		return 0;
 	}
 
+	sd = BL_CAST(BL_PC, src);
+	md = BL_CAST(BL_MOB, src);
+
 	// Make sure attacktimer is removed before doing anything else
 	ud->attacktimer = INVALID_TIMER;
 
@@ -2901,13 +2904,9 @@ static int32 unit_attack_timer_sub(struct block_list* src, int32 tid, t_tick tic
 	// However, for a clean implementation we still should channel through the whole AI code so the same rules
 	// apply as usual and we don't need to code extra rules. Currently we resolved this only for monsters.
 	// We don't want this to trigger on direct calls of the timer function as that should just execute the attack.
-	if (src->type == BL_MOB && tid != INVALID_TIMER) {
-		mob_data* md = reinterpret_cast<mob_data*>(src);
+	if (md != nullptr && tid != INVALID_TIMER)
 		return mob_ai_sub_hard_attacktimer(*md, tick);
-	}
 
-	sd = BL_CAST(BL_PC, src);
-	md = BL_CAST(BL_MOB, src);
 	target = map_id2bl(ud->target);
 
 	if( src == nullptr || src->prev == nullptr || target==nullptr || target->prev == nullptr )
