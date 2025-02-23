@@ -37,7 +37,7 @@ const t_tick MIN_MOBLINKTIME = 1000;
 //Min time between random walks
 const t_tick MIN_RANDOMWALKTIME = 4000;
 
-// How often a monster will check for using a skill on non-berserk non-dead states (in ms)
+// How often a monster will check for using a skill on non-berserk and non-dead states (in ms)
 const t_tick MOB_SKILL_INTERVAL = 1000;
 
 //Distance that slaves should keep from their master.

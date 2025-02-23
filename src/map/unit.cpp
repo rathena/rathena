@@ -275,8 +275,8 @@ int32 unit_walktoxy_sub(struct block_list *bl)
 	// Set mobstate here already as chase skills can be used on the first frame of movement
 	// If we don't set it now the monster will always move a full cell before checking
 	else if (bl->type == BL_MOB && ud->state.attack_continue) {
-		mob_data* md = reinterpret_cast<mob_data*>(bl);
-		mob_setstate(*md, MSS_RUSH);
+		mob_data& md = reinterpret_cast<mob_data&>(*bl);
+		mob_setstate(md, MSS_RUSH);
 	}
 
 	unit_walktoxy_nextcell(*bl, true, gettick());
@@ -950,8 +950,8 @@ int32 unit_walktobl(struct block_list *bl, struct block_list *tbl, int32 range, 
 
 		// New target, make sure a monster is still in chase state
 		if (bl->type == BL_MOB && ud->state.attack_continue) {
-			mob_data* md = reinterpret_cast<mob_data*>(bl);
-			mob_setstate(*md, MSS_RUSH);
+			mob_data& md = reinterpret_cast<mob_data&>(*bl);
+			mob_setstate(md, MSS_RUSH);
 		}
 
 		return 1;
@@ -2671,8 +2671,8 @@ int32 unit_attack(struct block_list *src,int32 target_id,int32 continuous)
 	// Monster state is set regardless of whether the attack is executed now or later
 	// The check is here because unit_attack can be called from both the monster AI and the walking logic
 	if (src->type == BL_MOB) {
-		mob_data* md = reinterpret_cast<mob_data*>(src);
-		mob_setstate(*md, MSS_BERSERK);
+		mob_data& md = reinterpret_cast<mob_data&>(*src);
+		mob_setstate(md, MSS_BERSERK);
 	}
 
 	return 0;
@@ -3158,11 +3158,11 @@ int32 unit_skillcastcancel(struct block_list *bl, char type)
 	}
 
 	if (bl->type == BL_MOB) {
-		mob_data* md = reinterpret_cast<mob_data*>(bl);
+		mob_data& md = reinterpret_cast<mob_data&>(*bl);
 		// Sets cooldowns and attack delay
 		// This needs to happen even if the cast was cancelled
-		mobskill_end(*md, tick);
-		md->skill_idx = -1;
+		mobskill_end(md, tick);
+		md.skill_idx = -1;
 	}
 
 	clif_skillcastcancel( *bl );

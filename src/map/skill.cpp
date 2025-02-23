@@ -14173,7 +14173,7 @@ TIMER_FUNC(skill_castend_id){
 			}
 		}
 		if (skill_get_state(ud->skill_id) != ST_MOVE_ENABLE) {
-			// Monsters don't need a default walk delay as their AI in inactivate after using a skill in general
+			// Monsters don't need a default walk delay as their AI is inactive after using a skill in general
 			if (src->type == BL_MOB)
 				unit_set_walkdelay(src, tick, skill_get_walkdelay(ud->skill_id, ud->skill_lv), 1);
 			else
@@ -14392,7 +14392,7 @@ TIMER_FUNC(skill_castend_pos){
 //				break;
 //			}
 //		}
-		// Monsters don't need a default walk delay as their AI in inactivate after using a skill in general
+		// Monsters don't need a default walk delay as their AI is inactive after using a skill in general
 		if (src->type == BL_MOB)
 			unit_set_walkdelay(src, tick, skill_get_walkdelay(ud->skill_id, ud->skill_lv), 1);
 		else

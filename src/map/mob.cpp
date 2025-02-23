@@ -1521,10 +1521,11 @@ static int32 mob_ai_sub_hard_slavemob(struct mob_data *md,t_tick tick)
 			}
 			else if (bl->type == BL_MOB) {
 				// If master is a monster, it might still have a target after using a skill
-				mob_data* mmd = reinterpret_cast<mob_data*>(bl);
-				if (mmd->target_id > 0)
-					tbl = map_id2bl(mmd->target_id);
+				mob_data& mmd = reinterpret_cast<mob_data&>(*bl);
+				if (mmd.target_id > 0)
+					tbl = map_id2bl(mmd.target_id);
 			}
+
 			if (tbl != nullptr) {
 				md->last_linktime = tick;
 				if (status_check_skilluse(&md->bl, tbl, 0, 0)) {
