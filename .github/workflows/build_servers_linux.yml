@@ -1,5 +1,5 @@
-name: Build servers with CMake
-# build_servers_cmake.yml
+name: Build servers on Linux
+# build_servers_linux.yml
 
 concurrency:
   group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}
@@ -29,25 +29,28 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-          # The ubuntu-latest label currently points to ubuntu-22.04.
-          # Available: ubuntu-22.04, ubuntu-20.04
           os: [ubuntu-latest]
+          compiler:
+            - cxx: g++-13
+              cc: gcc-13
+            - cxx: g++-14
+              cc: gcc-14
+            - cxx: clang++-17
+              cc: clang-17
+            - cxx: clang++-18
+              cc: clang-18
 
     steps:
       - uses: actions/checkout@v4
 
-      # Install latest CMake.
-      - uses: lukka/get-cmake@latest
-
-      - name: Create build directory
-        run: mkdir cbuild
-
-      - name: Create Unix Makefiles
+      - name: Update & Install compilers
         run: |
-          cd cbuild
-          cmake -G "Unix Makefiles" ..
+          sudo apt update
+          sudo apt install zlib1g-dev libpcre3-dev
 
-      - name: Command - make
-        run: |
-          cd cbuild
-          make
+      - name: Configure CMake
+        run: CXX=${{matrix.compiler.cxx}} CC=${{matrix.compiler.cc}} cmake -B build
+
+      - name: Build
+        # Execute the build.  You can specify a specific target with "--target <NAME>"
+        run: cmake --build build -j4 --target server tools
