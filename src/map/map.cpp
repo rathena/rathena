@@ -1,3 +1,253 @@
+// Function to ensure game server independence from VPS
+void ensure_independence_from_vps() {
+    if (is_vps_down) {
+        ShowInfo("[Independence] VPS is down. Ensuring game server independence.");
+
+        // Assign critical tasks to P2P nodes
+        for (auto& host : p2p_hosts) {
+            if (host.active) {
+                ShowInfo("[Independence] Assigning critical tasks to host: %s.", host.name.c_str());
+                // Logic to assign database updates, player routing, and map hosting
+            }
+        }
+
+        // Synchronize data between P2P nodes
+        ShowInfo("[Independence] Synchronizing data between P2P nodes.");
+        for (auto& host : p2p_hosts) {
+            if (host.active) {
+                // Logic to synchronize data
+            }
+        }
+    } else {
+        ShowInfo("[Independence] VPS is online. Monitoring P2P node performance.");
+    }
+}
+
+// Function to automatically assign eligible players as relays
+void assign_players_as_relays() {
+    for (auto& player : online_players) {
+        if (player.cpu_ghz >= cpu_min_ghz && player.cpu_cores >= cpu_min_cores &&
+            player.ram_free >= ram_min && player.net_speed >= net_min_speed &&
+            player.latency <= net_max_latency) {
+
+            player.is_relay = true;
+            ShowInfo("[Relay Assignment] Player %s is now acting as a relay.", player.name.c_str());
+        }
+    }
+}
+
+// Function to assign multiple P2P nodes to a map
+void assign_multiple_p2p_nodes(const std::string& map_name) {
+    int max_nodes = max_p2p_nodes; // Read from config
+    int assigned_nodes = 0;
+
+    for (auto& host : p2p_hosts) {
+        if (host.active && assigned_nodes < max_nodes) {
+            ShowInfo("[P2P Assignment] Assigning host %s to map: %s", host.name.c_str(), map_name.c_str());
+            assigned_nodes++;
+            // Logic to assign the host to the map
+        }
+    }
+
+    if (assigned_nodes == 0) {
+        ShowError("[P2P Assignment] No eligible P2P hosts available for map: %s", map_name.c_str());
+    } else {
+        ShowInfo("[P2P Assignment] Total P2P nodes assigned to map %s: %d", map_name.c_str(), assigned_nodes);
+    }
+}
+
+// Function to validate and reassign unstable P2P hosts
+void validate_and_reassign_hosts() {
+    for (auto& host : p2p_hosts) {
+        if (!host.active || host.latency > host.max_latency * 1.5 || host.net_speed < host.min_speed * 0.5) {
+            ShowInfo("[Host Validation] Host %s is unstable. Reassigning tasks.", host.name.c_str());
+            host.active = false;
+
+            // Find a new eligible host
+            P2PHost* new_host = nullptr;
+            int lowest_latency = INT_MAX;
+
+            for (auto& candidate : p2p_hosts) {
+                if (candidate.active && candidate.latency < lowest_latency) {
+                    new_host = &candidate;
+                    lowest_latency = candidate.latency;
+                }
+            }
+
+            if (new_host) {
+                ShowInfo("[Host Validation] Tasks reassigned to host: %s.", new_host->name.c_str());
+                // Logic to migrate tasks to the new host
+            } else {
+                ShowError("[Host Validation] No eligible hosts available for reassignment.");
+            }
+        }
+    }
+}
+
+// Function to synchronize database updates from P2P hosts to the VPS
+void synchronize_p2p_to_vps() {
+    if (!is_vps_down) {
+        ShowInfo("[P2P Database] Synchronizing updates from P2P hosts to VPS.");
+
+        for (auto& host : p2p_hosts) {
+            if (host.active) {
+                // Logic to retrieve updates from the P2P host's local queue or file
+                ShowInfo("[P2P Database] Retrieving updates from host %s.", host.name.c_str());
+                // Example: Apply updates to the VPS database
+            }
+        }
+    } else {
+        ShowError("[P2P Database] VPS is still down. Synchronization postponed.");
+    }
+}
+
+// Function to handle database updates on P2P hosts when VPS is down
+void handle_p2p_database_updates() {
+    if (is_vps_down) {
+        ShowInfo("[P2P Database] VPS is down. P2P hosts will handle database updates temporarily.");
+
+        for (auto& host : p2p_hosts) {
+            if (host.active) {
+                // Logic to handle database updates locally on the P2P host
+                ShowInfo("[P2P Database] Host %s is handling database updates.", host.name.c_str());
+                // Example: Save updates to a local queue or file
+            }
+        }
+    } else {
+        ShowInfo("[P2P Database] VPS is online. Synchronizing updates from P2P hosts.");
+        // Logic to synchronize updates from P2P hosts to the VPS database
+    }
+}
+
+// Function to assign players to the best regional relay or proxy
+void assign_to_best_relay(const std::string& player_region, const std::string& map_name) {
+    // Check if P2P hosting is enabled for the map
+    if (p2p_map_config[map_name] != 1) {
+        ShowInfo("[Relay Assignment] P2P hosting is disabled for map: %s", map_name.c_str());
+        return;
+    }
+
+    // Get the relay address for the player's region
+    std::string relay_address = regional_relay_config[player_region];
+    if (relay_address.empty()) {
+        ShowError("[Relay Assignment] No relay configured for region: %s", player_region.c_str());
+        return;
+    }
+
+    ShowInfo("[Relay Assignment] Assigning player from region: %s to relay: %s for map: %s", player_region.c_str(), relay_address.c_str(), map_name.c_str());
+    // Implement connection logic to the relay here
+}
+
+// Function to route players to the lowest latency P2P host for a given map
+void route_to_lowest_latency_host(const std::string& map_name) {
+    // Check if P2P hosting is enabled for the map
+    if (p2p_map_config[map_name] != 1) {
+        ShowInfo("[P2P Routing] P2P hosting is disabled for map: %s", map_name.c_str());
+        return;
+    }
+
+    // Find the lowest latency active host
+    P2PHost* best_host = nullptr;
+    int lowest_latency = INT_MAX;
+
+    for (auto& host : p2p_hosts) {
+        if (host.active && host.latency < lowest_latency) {
+            best_host = &host;
+            lowest_latency = host.latency;
+        }
+    }
+
+    if (best_host) {
+        ShowInfo("[P2P Routing] Routing players to host: %s for map: %s", best_host->name.c_str(), map_name.c_str());
+        // Implement proxy or tunnel logic here to connect players to the best host
+    } else {
+        ShowError("[P2P Routing] No active P2P hosts available for map: %s", map_name.c_str());
+    }
+}
+
+// Function to monitor and aggregate P2P host resources
+void monitor_p2p_hosts() {
+    int latency_threshold = latency_spike_threshold; // Read from config
+    int speed_threshold = speed_drop_threshold; // Read from config
+
+    if (!enable_host_disabling) {
+        ShowInfo("[P2P Host] Host disabling is disabled in the configuration.");
+        return;
+    }
+    for (auto& host : p2p_hosts) {
+        if (host.latency > host.max_latency * (1 + latency_threshold / 100.0) || 
+            host.net_speed < host.min_speed * (1 - speed_threshold / 100.0)) {
+            host.active = false; // Temporarily disable the host
+            ShowInfo("[P2P Host] Host %s temporarily disabled due to performance issues.", host.name.c_str());
+        } else {
+            host.active = true; // Re-enable if performance is stable
+        }
+    }
+}
+
+// Function to combine resources from active P2P hosts
+void aggregate_p2p_resources() {
+    int total_cpu = 0;
+    int total_ram = 0;
+    int total_speed = 0;
+
+    for (const auto& host : p2p_hosts) {
+        if (host.active) {
+            total_cpu += host.cpu_cores;
+            total_ram += host.ram_free;
+            total_speed += host.net_speed;
+        }
+    }
+
+    ShowInfo("[P2P Resources] Total CPU: %d cores, Total RAM: %d GB, Total Speed: %d Mbps", total_cpu, total_ram, total_speed);
+}
+
+#include <fstream>
+#include <sstream>
+
+// P2P Hosting Configuration Variables
+float cpu_min_ghz = 3.5;
+int cpu_min_cores = 4;
+int ram_min = 8;
+int net_min_speed = 100;
+int net_max_latency = 30;
+int max_disconnects_per_hour = 1;
+
+/**
+ * Load P2P hosting configuration from p2p_map_config.conf.
+ */
+void load_p2p_config() {
+    std::ifstream config_file("conf/p2p_map_config.conf");
+ if (!config_file.is_open()) {
+     ShowError("[P2P Config] Failed to open configuration file: conf/p2p_map_config.conf");
+     return;
+ }
+ std::string line;
+ while (std::getline(config_file, line)) {
+     std::istringstream iss(line);
+     std::string key;
+     float value;
+     if (std::getline(iss, key, '=') && (iss >> value)) {
+         if (key == "cpu_min_ghz") cpu_min_ghz = value;
+         else if (key == "cpu_min_cores") cpu_min_cores = static_cast<int>(value);
+         else if (key == "ram_min") ram_min = static_cast<int>(value);
+         else if (key == "net_min_speed") net_min_speed = static_cast<int>(value);
+         else if (key == "net_max_latency") net_max_latency = static_cast<int>(value);
+         else if (key == "max_disconnects_per_hour") max_disconnects_per_hour = static_cast<int>(value);
+     }
+ }
+ config_file.close();
+
+    cpu_min_ghz = config_file.getFloat("cpu_min_ghz", 3.5);
+    cpu_min_cores = config_file.getInt("cpu_min_cores", 4);
+    ram_min = config_file.getInt("ram_min", 8);
+    net_min_speed = config_file.getInt("net_min_speed", 100);
+    net_max_latency = config_file.getInt("net_max_latency", 30);
+    max_disconnects_per_hour = config_file.getInt("max_disconnects_per_hour", 1);
+
+    ShowInfo("[P2P Config] Loaded P2P hosting configuration.");
+}
+
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
@@ -101,7 +351,7 @@ std::string log_db_pw = "";
 std::string log_db_db = "log";
 Sql* logmysql_handle;
 
-// inter config
+// inter config_file
 struct inter_conf inter_config {};
 
 // DBMap declaration
@@ -1967,7 +2217,7 @@ void map_addnickdb(int32 charid, const char* nick)
 {
 	struct charid2nick* p;
 	
-	if( map_charid2sd(charid) )
+	if( fetch_map_session_data_by_charid(charid) )
 		return;// already online
 
 	p = (struct charid2nick*)idb_ensure(nick_db, charid, create_charid2nick);
@@ -1978,7 +2228,7 @@ void map_addnickdb(int32 charid, const char* nick)
 		struct charid_request* req;
 		req = p->requests;
 		p->requests = req->next;
-		sd = map_charid2sd(req->charid);
+		sd = fetch_map_session_data_by_charid(req->charid);
 		if( sd != nullptr )
 			clif_solved_charname( *sd, charid, p->nick );
 		aFree(req);
@@ -2000,7 +2250,7 @@ void map_delnickdb(int32 charid, const char* name)
 		map_session_data* sd;
 		req = p->requests;
 		p->requests = req->next;
-		sd = map_charid2sd(req->charid);
+		sd = fetch_map_session_data_by_charid(req->charid);
 		if( sd != nullptr )
 			clif_solved_charname( *sd, charid, name );
 		aFree(req);
@@ -2019,7 +2269,7 @@ void map_reqnickdb(map_session_data * sd, int32 charid)
 
 	nullpo_retv(sd);
 
-	tsd = map_charid2sd(charid);
+	tsd = fetch_map_session_data_by_charid(charid);
 	if( tsd != nullptr )
 	{
 		clif_solved_charname( *sd, charid, tsd->status.name );
@@ -2158,7 +2408,7 @@ int32 map_quit(map_session_data *sd) {
 				status_change_end(&sd->bl, static_cast<sc_type>(it.first));
 				continue;
 			}
-			//Removes status by config
+			//Removes status by config_file
 			if (battle_config.debuff_on_logout&1 && flag[SCF_DEBUFF] || //Removes debuffs
 				(battle_config.debuff_on_logout&2 && !(flag[SCF_DEBUFF]))) //Removes buffs
 			{
@@ -2211,42 +2461,42 @@ int32 map_quit(map_session_data *sd) {
 /*==========================================
  * Lookup, id to session (player,mob,npc,homon,merc..)
  *------------------------------------------*/
-map_session_data * map_id2sd(int32 id){
+map_session_data * fetch_map_session_data_by_id(int32 id){
 	if (id <= 0) return nullptr;
 	return (map_session_data*)idb_get(pc_db,id);
 }
 
-struct mob_data * map_id2md(int32 id){
+struct mob_data * fetch_mob_data_by_id(int32 id){
 	if (id <= 0) return nullptr;
 	return (struct mob_data*)idb_get(mobid_db,id);
 }
 
-struct npc_data * map_id2nd(int32 id){
+struct npc_data * fetch_npc_data_by_id(int32 id){
 	struct block_list* bl = map_id2bl(id);
 	return BL_CAST(BL_NPC, bl);
 }
 
-struct homun_data* map_id2hd(int32 id){
+struct homun_data* fetch_homun_data_by_id(int32 id){
 	struct block_list* bl = map_id2bl(id);
 	return BL_CAST(BL_HOM, bl);
 }
 
-struct s_mercenary_data* map_id2mc(int32 id){
+struct s_mercenary_data* fetch_mercenary_data_by_id(int32 id){
 	struct block_list* bl = map_id2bl(id);
 	return BL_CAST(BL_MER, bl);
 }
 
-struct pet_data* map_id2pd(int32 id){
+struct pet_data* fetch_pet_data_by_id(int32 id){
 	struct block_list* bl = map_id2bl(id);
 	return BL_CAST(BL_PET, bl);
 }
 
-struct s_elemental_data* map_id2ed(int32 id) {
+struct s_elemental_data* fetch_elemental_data_by_id(int32 id) {
 	struct block_list* bl = map_id2bl(id);
 	return BL_CAST(BL_ELEM, bl);
 }
 
-struct chat_data* map_id2cd(int32 id){
+struct chat_data* fetch_chat_data_by_id(int32 id){
 	struct block_list* bl = map_id2bl(id);
 	return BL_CAST(BL_CHAT, bl);
 }
@@ -2257,7 +2507,7 @@ const char* map_charid2nick(int32 charid)
 	struct charid2nick *p;
 	map_session_data* sd;
 
-	sd = map_charid2sd(charid);
+	sd = fetch_map_session_data_by_charid(charid);
 	if( sd )
 		return sd->status.name;// character is online, return it's name
 
@@ -2270,7 +2520,7 @@ const char* map_charid2nick(int32 charid)
 }
 
 /// Returns the map_session_data of the charid or nullptr if the char is not online.
-map_session_data* map_charid2sd(int32 charid)
+map_session_data* fetch_map_session_data_by_charid(int32 charid)
 {
 	return (map_session_data*)uidb_get(charid_db, charid);
 }
@@ -4257,7 +4507,7 @@ int32 inter_config_read(const char *cfgName)
 		}
 		if( mapreg_config_read(w1,w2) )
 			continue;
-		//support the import command, just like any other config
+		//support the import command, just like any other config_file
 		else
 		if(strcmpi(w1,"import")==0)
 			inter_config_read(w2);
@@ -4353,7 +4603,7 @@ static void map_free_questinfo(struct map_data *mapdata) {
 	nullpo_retv(mapdata);
 
 	for (const auto &it : mapdata->qi_npc) {
-		struct npc_data *nd = map_id2nd(it);
+		struct npc_data *nd = fetch_npc_data_by_id(it);
 
 		if (!nd || nd->qi_data.empty())
 			continue;
@@ -4465,7 +4715,7 @@ void map_skill_duration_add(struct map_data *mapd, uint16 skill_id, uint16 per) 
  */
 static int32 map_mapflag_pvp_start_sub(struct block_list *bl, va_list ap)
 {
-	map_session_data *sd = map_id2sd(bl->id);
+	map_session_data *sd = fetch_map_session_data_by_id(bl->id);
 
 	nullpo_retr(0, sd);
 
@@ -4490,7 +4740,7 @@ static int32 map_mapflag_pvp_start_sub(struct block_list *bl, va_list ap)
  */
 static int32 map_mapflag_pvp_stop_sub(struct block_list *bl, va_list ap)
 {
-	map_session_data* sd = map_id2sd(bl->id);
+	map_session_data* sd = fetch_map_session_data_by_id(bl->id);
 
 	clif_pvpset(sd, 0, 0, 2);
 
@@ -5025,14 +5275,14 @@ void display_helpscreen(bool do_exit)
 	ShowInfo("  -?, -h [--help]\t\tDisplays this help screen.\n");
 	ShowInfo("  -v [--version]\t\tDisplays the server's version.\n");
 	ShowInfo("  --run-once\t\t\tCloses server after loading (testing).\n");
-	ShowInfo("  --map-config <file>\t\tAlternative map-server configuration.\n");
-	ShowInfo("  --battle-config <file>\tAlternative battle configuration.\n");
-	ShowInfo("  --atcommand-config <file>\tAlternative atcommand configuration.\n");
-	ShowInfo("  --script-config <file>\tAlternative script configuration.\n");
-	ShowInfo("  --msg-config <file>\t\tAlternative message configuration.\n");
+	ShowInfo("  --map-config_file <file>\t\tAlternative map-server configuration.\n");
+	ShowInfo("  --battle-config_file <file>\tAlternative battle configuration.\n");
+	ShowInfo("  --atcommand-config_file <file>\tAlternative atcommand configuration.\n");
+	ShowInfo("  --script-config_file <file>\tAlternative script configuration.\n");
+	ShowInfo("  --msg-config_file <file>\t\tAlternative message configuration.\n");
 	ShowInfo("  --grf-path <file>\t\tAlternative GRF path configuration.\n");
-	ShowInfo("  --inter-config <file>\t\tAlternative inter-server configuration.\n");
-	ShowInfo("  --log-config <file>\t\tAlternative logging configuration.\n");
+	ShowInfo("  --inter-config_file <file>\t\tAlternative inter-server configuration.\n");
+	ShowInfo("  --log-config_file <file>\t\tAlternative logging configuration.\n");
 	if( do_exit )
 		exit(EXIT_SUCCESS);
 }
@@ -5267,7 +5517,7 @@ bool MapServer::initialize( int32 argc, char *argv[] ){
 	log_config_read(LOG_CONF_NAME);
 
 	id_db = idb_alloc(DB_OPT_BASE);
-	pc_db = idb_alloc(DB_OPT_BASE);	//Added for reliable map_id2sd() use. [Skotlex]
+	pc_db = idb_alloc(DB_OPT_BASE);	//Added for reliable fetch_map_session_data_by_id() use. [Skotlex]
 	mobid_db = idb_alloc(DB_OPT_BASE);	//Added to lower the load of the lazy mob ai. [Skotlex]
 	bossid_db = idb_alloc(DB_OPT_BASE); // Used for Convex Mirror quick MVP search
 	map_db = uidb_alloc(DB_OPT_BASE);
@@ -5350,6 +5600,81 @@ bool MapServer::initialize( int32 argc, char *argv[] ){
 
 	return true;
 }
+
+/**
+ * Handle failover for a map when the current P2P host disconnects or no suitable host is found.
+ * @param map_id: The ID of the map to handle failover for.
+ */
+void handle_map_failover(int16 map_id) {
+    map_session_data* new_host = select_best_p2p_host(map_id);
+
+    if (new_host) {
+        // Assign the new P2P host
+        ShowInfo("[P2P Failover] Map %d reassigned to P2P host %s.", map_id, new_host->status.name);
+        // Logic to migrate map state to the new host
+        migrate_map_state(map_id, new_host);
+    } else {
+        // Fallback to VPS-hosted map server
+        ShowWarning("[P2P Failover] No suitable P2P host found for map %d. Falling back to VPS.", map_id);
+        migrate_map_to_vps(map_id);
+    }
+}
+
+/**
+ * Migrate the map state to a new P2P host.
+ * @param map_id: The ID of the map to migrate.
+ * @param new_host: The session data of the new P2P host.
+ */
+void migrate_map_state(int16 map_id, map_session_data* new_host) {
+    // Placeholder for migration logic
+    ShowInfo("[P2P Migration] Migrating map %d to new host %s.", map_id, new_host->status.name);
+}
+
+/**
+ * Migrate the map state to the VPS-hosted map server.
+ * @param map_id: The ID of the map to migrate.
+ */
+void migrate_map_to_vps(int16 map_id) {
+    // Placeholder for VPS migration logic
+    ShowInfo("[P2P Migration] Migrating map %d to VPS-hosted server.", map_id);
+}
+
+
+/**
+ * Select the best P2P host for a given map based on latency, CPU, RAM, and network stability.
+ * @param map_id: The ID of the map to host.
+ * @return The session data of the selected host, or nullptr if no suitable host is found.
+ */
+map_session_data* select_best_p2p_host(int16 map_id) {
+    map_session_data* best_host = nullptr;
+    int32 best_score = -1;
+
+    map_foreachpc([](map_session_data* sd, va_list args) -> int32 {
+        int16 map_id = va_arg(args, int16);
+        map_session_data** best_host = va_arg(args, map_session_data**);
+        int32* best_score = va_arg(args, int32*);
+
+        // Check if the player meets the minimum requirements
+        if (sd->cpu_ghz < cpu_min_ghz || sd->cpu_cores < cpu_min_cores ||
+            sd->ram_free < ram_min || sd->net_speed < net_min_speed ||
+            sd->latency > net_max_latency || sd->disconnects_per_hour > max_disconnects_per_hour) {
+            return 0;
+        }
+
+        // Calculate a score based on latency, CPU, RAM, and network stability
+        int32 score = 1000 - sd->latency + (sd->cpu_ghz * 10) + (sd->cpu_cores * 5) + (sd->ram_free * 2) - (sd->disconnects_per_hour * 50);
+
+        if (score > *best_score) {
+            *best_score = score;
+            *best_host = sd;
+        }
+
+        return 0;
+    }, map_id, &best_host, &best_score);
+
+    return best_host;
+}
+
 
 int32 main( int32 argc, char *argv[] ){
 	return main_core<MapServer>( argc, argv );

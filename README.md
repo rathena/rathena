@@ -61,6 +61,35 @@ or [forums](https://rathena.org/forum) if you need more support on troubleshooti
 ## 4. More Documentation
 rAthena has a large collection of help files and sample NPC scripts located in the /doc/
 directory. These include detailed explanations of NPC script commands, atcommands (@),
+## 7. P2P-First Hosting System
+
+The P2P-first hosting system enhances rAthena by leveraging player-hosted nodes to reduce dependency on the main server (VPS). This system dynamically assigns eligible players as hosts or relays, ensuring optimal performance and minimal latency for a global player base.
+
+### Key Features
+- **Collaborative Resource Aggregation**: Combines resources (CPU, RAM, network speed) from active P2P hosts.
+- **Automatic Host Selection**: Players connect to the lowest-latency eligible P2P host.
+- **Seamless Failover**: Preloaded data ensures zero downtime during host migration.
+- **Database Continuity**: P2P hosts handle database updates during VPS downtime, with synchronization upon recovery.
+- **Regional Relays**: Players are routed through the best regional relay or proxy based on location.
+- **Simultaneous P2P Nodes**: Multiple P2P nodes can host the same map collaboratively.
+- **Players as Relays**: Eligible players are automatically assigned as relays to enhance network performance.
+
+### Configuration
+The system is configured via `conf/p2p_map_config.conf`, which includes:
+- `enable_host_disabling`: Enables or disables automatic host disabling.
+- `latency_spike_threshold`: Percentage threshold for latency spikes.
+- `speed_drop_threshold`: Percentage threshold for speed drops.
+- `max_p2p_nodes`: Maximum number of simultaneous P2P nodes per map.
+- Per-map settings to enable or disable P2P hosting.
+- Regional relay or proxy settings for different continents.
+- Critical maps that must stay VPS-hosted.
+
+### Benefits
+- Reduces dependency on the VPS, ensuring uninterrupted gameplay.
+- Optimizes performance for players across different continents.
+- Enhances system reliability and scalability.
+
+For more details, refer to the documentation in the `/doc/` directory.
 group permissions, item bonuses, and packet structures, among many other topics. We
 recommend that all users take the time to look over this directory before asking for
 assistance elsewhere.

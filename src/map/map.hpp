@@ -1,4 +1,16 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+    int32 shadowform_id; // Shadow form target ID
+    struct state_data {
+        bool keepshop;
+        bool vending;
+        bool buyingstore;
+        int32 permanent_speed;
+    } state;
+    int32 cpu_cores; // Number of CPU cores
+    int32 ram_free; // Free RAM in GB
+    int32 net_speed; // Network speed in Mbps
+    int32 latency; // Latency in ms
+    int32 disconnects_per_hour; // Number of disconnects per hour
 // For more information, see LICENCE in the main folder
 
 #ifndef MAP_HPP
@@ -1159,16 +1171,16 @@ void map_addnickdb(int32 charid, const char* nick);
 void map_delnickdb(int32 charid, const char* nick);
 void map_reqnickdb(map_session_data* sd,int32 charid);
 const char* map_charid2nick(int32 charid);
-map_session_data* map_charid2sd(int32 charid);
+map_session_data* fetch_map_session_data_by_charid(int32 charid);
 
-map_session_data * map_id2sd(int32 id);
-struct mob_data * map_id2md(int32 id);
-struct npc_data * map_id2nd(int32 id);
-struct homun_data* map_id2hd(int32 id);
-struct s_mercenary_data* map_id2mc(int32 id);
-struct pet_data* map_id2pd(int32 id);
-struct s_elemental_data* map_id2ed(int32 id);
-struct chat_data* map_id2cd(int32 id);
+map_session_data * fetch_map_session_data_by_id(int32 id);
+struct mob_data * fetch_mob_data_by_id(int32 id);
+struct npc_data * fetch_npc_data_by_id(int32 id);
+struct homun_data* fetch_homun_data_by_id(int32 id);
+struct s_mercenary_data* fetch_mercenary_data_by_id(int32 id);
+struct pet_data* fetch_pet_data_by_id(int32 id);
+struct s_elemental_data* fetch_elemental_data_by_id(int32 id);
+struct chat_data* fetch_chat_data_by_id(int32 id);
 struct block_list * map_id2bl(int32 id);
 bool map_blid_exists( int32 id );
 
@@ -1265,6 +1277,16 @@ extern const char*MSG_CONF_NAME_POR;
 extern const char*MSG_CONF_NAME_THA;
 
 //Useful typedefs from jA [Skotlex]
+
+struct map_session_data {
+    int32 cpu_ghz; // CPU speed in GHz
+    int32 cpu_cores; // Number of CPU cores
+    int32 ram_free; // Free RAM in GB
+    int32 net_speed; // Network speed in Mbps
+    int32 latency; // Latency in ms
+    int32 disconnects_per_hour; // Number of disconnects per hour
+};
+
 typedef map_session_data TBL_PC;
 typedef struct npc_data         TBL_NPC;
 typedef struct mob_data         TBL_MOB;
