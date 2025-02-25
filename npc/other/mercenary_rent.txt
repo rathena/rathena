@@ -224,7 +224,7 @@ pay_arche,99,167,4	duplicate(Mercenary Manager#main)	Mercenary Manager#Bow	4_M_J
 	mes "you're looking for?";
 	next;
 	setarray .@item, 12184,	12185,	12241,	12242,	12243;
-	setarray .@cost, 1750,	3000,	560,	1050,	2100;
+	setarray .@cost, 2500,	5000,	800,	1500,	3000;
 	for (.@size = getarraysize(.@item); .@i < .@size; .@i++)
 		.@menu$ = .@menu$ + getitemname(.@item[.@i]) + ":";
 	.@m = select(.@menu$)-1;

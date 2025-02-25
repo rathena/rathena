@@ -15,17 +15,14 @@
 	next;
 	switch ( select( "Buy Arrows", "Quiver Exchange", "Sell Items", "Cancel" )) {
 	case 1:
-		close2;
 		callshop "Arrow_Archer", 1;
-		break;
+		close;
 	case 2:
-		close2;
 		callshop "Quiver_Archer", 1;
-		break;
+		close;
 	case 3:
-		close2;
 		callshop "Selling_Items", 2;
-		break;
+		close;
 	case 4:
 		mes "[Arrow Merchant]";
 		mes "You can take a look at other things more calmly.";
@@ -90,17 +87,14 @@ OnInit:
 	next;
 	switch ( select( "Buy Ninjutsu Tool", "Parchment Exchange", "Sell Items", "Cancel" )) {
 	case 1:
-		close2;
 		callshop "Weapons_Ninja", 1;
-		break;
+		close;
 	case 2:
-		close2;	
 		callshop "Box_Exchange_Ninja", 1;
-		break;
+		close;
 	case 3:
-		close2;	
 		callshop "Selling_Items", 2;
-		break;
+		close;
 	case 4:
 		break;
 	}
@@ -199,7 +193,7 @@ OnInit:
 -	marketshop	Ammunition_Gunslinger	HIDDEN_NPC,13200:-1:-1,13221:-1:-1,13228:-1:-1,13229:-1:-1,13230:-1:-1,13231:-1:-1,13232:-1:-1,13222:-1:-1,13215:-1:-1,13216:-1:-1,13217:-1:-1,13218:-1:-1,13219:-1:-1,13220:-1:-1,7663:-1:-1,7665:15:-1,7664:-1:-1,25187:-1:-1,1000564:-1:-1
 
 //= Ninja
--	marketshop	Weapons_Ninja	HIDDEN_NPC,1220001:-1:-1,1220002:-1:-1,1220003:30:-1,1220004:-1:-1,13258:-1:-1,13257:-1:-1,13255:-1:-1,13256:-1:-1,13259:-1:-1,13294:-1:-1,6512:-1:-1,6513:-1:-1,6514:-1:-1,13250:-1:-1,13251:-1:-1,13252:-1:-1,13253:-1:-1,13254:-1:-1,7521:-1:-1,7522:-1:-1,7523:-1:-1,7524:-1:-1,1000565:-1:-1,1000566:-1:-1,1000567:-1:-1,1000568:-1:-1,1000569:-1:-1
+-	marketshop	Weapons_Ninja	HIDDEN_NPC,1220001:-1:-1,1220002:-1:-1,1220003:30:-1,1220004:-1:-1,13258:-1:-1,13257:-1:-1,13255:-1:-1,13256:-1:-1,13259:-1:-1,13294:-1:-1,6512:-1:-1,6515:-1:-1,6513:-1:-1,6514:-1:-1,13250:-1:-1,13251:-1:-1,13252:-1:-1,13253:-1:-1,13254:-1:-1,7521:-1:-1,7522:-1:-1,7523:-1:-1,7524:-1:-1,1000565:-1:-1,1000566:-1:-1,1000567:-1:-1,1000568:-1:-1,1000569:-1:-1
 
 //= Merchant
 -	shop	Weapons_Mechanic	-1,2139:-1,2800:-1,2801:-1,2802:-1,2803:-1,2805:-1,2806:-1,6186:-1,2808:-1,2807:-1
