@@ -1,189 +1,246 @@
-# rAthena P2P Security System
+# rAthena with WARP P2P Security Integration
 
-## Overview
-The rAthena P2P Security System is a comprehensive solution for securing peer-to-peer game hosting in Ragnarok Online. This implementation provides server operators with robust tools to prevent cheating, ensure fair gameplay, and maintain server stability.
+## Vision & Project Goals
 
-## Objectives
+rAthena has evolved to meet the growing demands of modern Ragnarok Online private servers by integrating the WARP P2P security system. This revolutionary integration aims to:
 
-### 1. Enhanced Security
-- Prevent common cheating methods (packet manipulation, speed hacks, bots)
-- Protect game client integrity
-- Secure network communication
-- Prevent unauthorized client modifications
+1. **Transform Map Hosting**
+   - Enable secure player-hosted maps
+   - Reduce server infrastructure costs
+   - Scale dynamically with player base
+   - Maintain game integrity
 
-### 2. Improved Stability
-- Prevent crashes from malicious actions
-- Maintain server performance
-- Protect against DDoS attacks
-- Handle resource management
+2. **Enhance Security**
+   - Protect against cheating
+   - Secure P2P connections
+   - Validate hosts and clients
+   - Monitor game integrity
 
-### 3. Better Administration
-- Provide comprehensive monitoring tools
-- Enable efficient player management
-- Automate security responses
-- Generate detailed analytics
+3. **Empower Communities**
+   - Foster player hosting
+   - Build trust in P2P maps
+   - Create new gameplay possibilities
+   - Strengthen server communities
 
-## Why This Implementation?
+## Why P2P Integration?
 
 ### Current Challenges
-1. **Cheating Methods**
-   - Memory manipulation
-   - Packet injection
-   - Client modification
-   - Bot automation
 
-2. **Server Vulnerabilities**
-   - DDoS attacks
-   - Resource exhaustion
-   - Client crashes
-   - Data manipulation
+1. **Server Infrastructure**
+   - High hosting costs
+   - Limited scalability
+   - Resource constraints
+   - Performance bottlenecks
 
-3. **Management Difficulties**
-   - Limited monitoring capabilities
-   - Manual intervention requirements
-   - Lack of analytical tools
-   - Inefficient player management
+2. **Security Concerns**
+   - Cheating and botting
+   - Network vulnerabilities
+   - Client manipulation
+   - Host reliability
+
+3. **Community Limitations**
+   - Restricted map access
+   - Limited server growth
+   - Hosting barriers
+   - Trust issues
 
 ### Our Solution
 
-#### 1. Comprehensive Protection
-- Code integrity validation
-- Dynamic packet encryption
-- Memory protection
-- Anti-bot measures
-- DLL injection prevention
-- Input validation
+The WARP P2P Security Integration provides:
 
-#### 2. Advanced Monitoring
-- Real-time metrics collection
-- Performance monitoring
-- Security event tracking
-- Automated alerts
+1. **Distributed Architecture**
+   - Player-hosted maps
+   - Dynamic scaling
+   - Load distribution
+   - Resource optimization
 
-#### 3. Efficient Management
-- Centralized control panel
-- Automated responses
-- Detailed reporting
-- Player management tools
+2. **Security Framework**
+   - Anti-cheat protection
+   - Encrypted communication
+   - Host validation
+   - Real-time monitoring
+
+3. **Community Tools**
+   - Host management
+   - Performance tracking
+   - Reputation system
+   - Administration tools
 
 ## Expected Results
 
-### 1. Security Improvements
-- 99.9% reduction in cheating attempts
-- Elimination of common exploit methods
-- Secure client-server communication
-- Protected game client integrity
+### Immediate Benefits
 
-### 2. Performance Benefits
-- Reduced server load
-- Improved stability
-- Faster incident response
-- Better resource utilization
+1. **Server Operations**
+   - Reduced hosting costs
+   - Improved scalability
+   - Better performance
+   - Lower maintenance
 
-### 3. Administrative Advantages
-- Reduced manual intervention
-- Better player monitoring
-- Efficient issue resolution
-- Data-driven decision making
+2. **Player Experience**
+   - More available maps
+   - Secure gameplay
+   - Stable connections
+   - Fair environment
 
-## Key Features
+### Long-term Impact
 
-### Security
-- Client protection system
-- Network packet encryption
-- Anti-cheat measures
-- Memory protection
-- Input validation
+1. **Server Growth**
+   - Increased capacity
+   - Community expansion
+   - Resource efficiency
+   - Sustainable operation
 
-### Monitoring
-- Real-time metrics
-- Performance tracking
-- Security alerts
-- Resource monitoring
+2. **Game Evolution**
+   - New hosting models
+   - Enhanced features
+   - Community involvement
+   - Innovation opportunities
 
-### Management
-- Player blocking system
-- Multi-client control
-- Automated responses
-- Detailed logging
+## Technical Implementation
 
-## Implementation
+### Server Integration
 
-### Server Components
 ```cpp
-// Core security features
-class SecurityManager {
-    void initializeProtection();
-    void monitorGameState();
-    void handleSecurityEvents();
+// P2P Security Configuration
+p2p_security: {
+    enabled: true
+    security_level: 3
+    monitoring_interval: 5000
+    host_requirements: {
+        min_cpu: 2.0
+        min_ram: 8
+        min_network: 10
+    }
+}
+```
+
+### Database Schema
+
+```sql
+-- Host tracking
+CREATE TABLE p2p_hosts (
+    account_id INT PRIMARY KEY,
+    host_score FLOAT,
+    total_uptime INT,
+    last_online DATETIME
+);
+
+-- Security violations
+CREATE TABLE p2p_security_violations (
+    violation_id BIGINT PRIMARY KEY,
+    host_id INT,
+    violation_type VARCHAR(32)
+);
+```
+
+### Network Protocol
+
+```cpp
+// Packet Structure
+struct P2PPacket {
+    uint32_t magic;
+    uint32_t sequence;
+    uint64_t timestamp;
+    uint8_t encrypted_data[];
 };
 ```
 
-### Client Integration
-```cpp
-// Client-side protection
-class ClientGuard {
-    bool validateIntegrity();
-    void preventModification();
-    void secureConnection();
-};
+## Features
+
+### Security Module
+- Memory protection
+- Process validation
+- Network encryption
+- Anti-cheat system
+
+### P2P Hosting
+- Host validation
+- Resource monitoring
+- Performance tracking
+- Load balancing
+
+### Administration
+- Host management
+- Security monitoring
+- Violation handling
+- Performance metrics
+
+## Building & Installation
+
+### Prerequisites
+- CMake 3.15+
+- C++17 compiler
+- MySQL 5.7+
+- OpenSSL 1.1.1+
+
+### Build Steps
+```bash
+./configure --enable-p2p-security
+make server
+```
+
+### Database Setup
+```bash
+mysql -u ragnarok -p ragnarok_db < sql-files/p2p_security.sql
 ```
 
 ## Configuration
 
-### Basic Setup
-```bash
-# Initialize security system
-./configure --enable-security
-make install
-
-# Start protected server
-./athena-start --secure
+### Server Settings
+```conf
+// P2P map configuration
+p2p_map_config: {
+    enabled: true
+    max_instances: 100
+    scan_interval: 5000
+}
 ```
 
-### Advanced Options
-```yaml
-security:
-  encryption: enabled
-  monitoring: enabled
-  auto_response: enabled
-  logging: detailed
+### Security Settings
+```conf
+// Security configuration
+security_config: {
+    encryption: true
+    validation: true
+    monitoring: true
+}
 ```
 
-## Usage
+## Monitoring
 
-### Starting Server
-```bash
-# With security enabled
-./athena-start --security-level=high
+### Real-time Tracking
+- Host status
+- Network metrics
+- Security events
+- Performance data
 
-# With monitoring
-./athena-start --enable-monitoring
-```
+### Admin Tools
+- Host dashboard
+- Violation logs
+- Performance graphs
+- Security reports
 
-### Managing Security
-```bash
-# Check security status
-./security_check
+## Support & Development
 
-# View metrics
-./view_metrics
+### Community
+- GitHub repository
+- Discord server
+- Forums
+- Documentation
 
-# Generate reports
-./generate_report
-```
-
-## Documentation
-- [Security Setup Guide](doc/SECURITY_SETUP.md)
-- [Admin Guide](doc/p2p_admin_guide.md)
-- [Monitoring Guide](doc/MONITORING_GUIDE.md)
-- [Maintenance Guide](doc/MAINTENANCE_GUIDE.md)
-
-## Support
-- Technical Support: support@rathena.org
-- Security Team: security@rathena.org
-- Discord: [Join Server]
+### Contributing
+- Report issues
+- Submit patches
+- Suggest features
+- Join development
 
 ## License
-Licensed under GNU General Public License v3.0
-See [LICENSE](LICENSE) for full terms.
+
+This project maintains the rAthena license (GNU GPLv3) while the WARP P2P Security Module is under MIT License.
+
+## Acknowledgments
+
+- rAthena Team
+- WARP Security Team
+- Contributing developers
+- Community testers
