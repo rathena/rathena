@@ -1,0 +1,125 @@
+// P2P System Management Script
+// Handles client metric reporting and P2P host management
+
+-	script	P2PMetricsReporter	-1,{
+OnInit:
+    // Initialize variables
+    setarray .min_req[0], 3000, 4, 8192, 100; // MHz, cores, MB RAM, Mbps
+    end;
+
+OnPCLoginEvent:
+    // Start periodic system check
+    if (!getvariableofnpc(.checking, "P2PMetricsReporter")) {
+        .checking = 1;
+        addtimer 5000, "P2PMetricsReporter::OnCheckSystem";
+    }
+    end;
+
+OnCheckSystem:
+    // Check if client meets minimum requirements
+    // These would normally be collected from the client
+    // For demonstration, we'll use placeholder checks
+    .cpu_speed = getvar(VAR_CLIENT_CPU_SPEED, @client_cpu_speed);
+    .cpu_cores = getvar(VAR_CLIENT_CPU_CORES, @client_cpu_cores);
+    .free_ram = getvar(VAR_CLIENT_FREE_RAM, @client_free_ram);
+    .net_speed = getvar(VAR_CLIENT_NET_SPEED, @client_net_speed);
+    
+    // Compare with minimum requirements
+    if (.cpu_speed >= .min_req[0] && 
+        .cpu_cores >= .min_req[1] && 
+        .free_ram >= .min_req[2] && 
+        .net_speed >= .min_req[3]) {
+        
+        // Eligible for P2P hosting
+        if (!getvar(VAR_IS_P2P_HOST)) {
+            registerp2phost();
+            setvar(VAR_IS_P2P_HOST, 1);
+            message strcharinfo(0), "Your system meets P2P hosting requirements. You are now eligible to host maps.";
+        }
+    } else {
+        // Not eligible
+        if (getvar(VAR_IS_P2P_HOST)) {
+            unregisterp2phost();
+            setvar(VAR_IS_P2P_HOST, 0);
+            message strcharinfo(0), "Your system no longer meets P2P hosting requirements.";
+        }
+    }
+    
+    // Schedule next check
+    if (.checking) {
+        addtimer 30000, "P2PMetricsReporter::OnCheckSystem";
+    }
+    end;
+
+OnPCLogoutEvent:
+    .checking = 0;
+    if (getvar(VAR_IS_P2P_HOST)) {
+        unregisterp2phost();
+        setvar(VAR_IS_P2P_HOST, 0);
+    }
+    end;
+}
+
+// P2P Test Map
+p2p_test,100,100,4	script	P2P Test	FAKE_NPC,{
+    mes "[P2P Test]";
+    mes "Welcome to the P2P test map!";
+    mes "This map demonstrates P2P hosting capabilities.";
+    mes "Current status:";
+    
+    // Get host information
+    .host_id = getp2phostid();
+    if (.host_id) {
+        mes "Map is P2P hosted by: " + .host_id;
+        .stats = getp2phoststats(.host_id);
+        mes "Host CPU: " + .stats[0] + " GHz, " + .stats[1] + " cores";
+        mes "Host RAM: " + (.stats[2]/1024) + " GB free";
+        mes "Host Network: " + .stats[3] + " Mbps";
+        mes "Current Latency: " + .stats[4] + " ms";
+    } else {
+        mes "Map is VPS hosted";
+        if (getvar(VAR_IS_P2P_HOST)) {
+            mes "You are eligible to become the host.";
+            next;
+            if (select("Become host:Cancel") == 1) {
+                mes "[P2P Test]";
+                if (requestp2phost()) {
+                    mes "You are now hosting this map!";
+                } else {
+                    mes "Unable to become host at this time.";
+                }
+            }
+        }
+    }
+    close;
+}
+
+// P2P Status Display
+-	script	P2PStatus	-1,{
+OnInit:
+    bindatcmd("p2pstatus", "P2PStatus::OnCommand");
+    end;
+
+OnCommand:
+    mes "^FF5555[P2P System Status]^000000";
+    mes "Your system:";
+    mes "CPU: " + getvar(VAR_CLIENT_CPU_SPEED)/1000 + " GHz, " + 
+        getvar(VAR_CLIENT_CPU_CORES) + " cores";
+    mes "RAM: " + getvar(VAR_CLIENT_FREE_RAM)/1024 + " GB free";
+    mes "Network: " + getvar(VAR_CLIENT_NET_SPEED) + " Mbps";
+    
+    if (getvar(VAR_IS_P2P_HOST)) {
+        mes "^00FF00You are eligible for P2P hosting^000000";
+        .hosting = getp2phostingmaps();
+        if (.hosting[0]) {
+            mes "Currently hosting maps:";
+            for (.i = 0; .i < getarraysize(.hosting); .i++) {
+                mes "- " + .hosting[.i];
+            }
+        }
+    } else {
+        mes "^FF0000You do not meet P2P hosting requirements^000000";
+    }
+    
+    close;
+}

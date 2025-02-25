@@ -1,72 +1,185 @@
-# P2P-First Hosting System Documentation
+# Quick Start Guide: P2P Map Hosting
 
-## Overview
-The P2P-first hosting system enhances rAthena by leveraging player-hosted nodes to reduce dependency on the main server (VPS). This system dynamically assigns eligible players as hosts or relays, ensuring optimal performance and minimal latency for a global player base.
+This guide helps you get started with hosting maps in rAthena's P2P-first system.
 
-## Key Features
-- **Collaborative Resource Aggregation**: Combines resources (CPU, RAM, network speed) from active P2P hosts.
-- **Automatic Host Selection**: Players connect to the lowest-latency eligible P2P host.
-- **Seamless Failover**: Preloaded data ensures zero downtime during host migration.
-- **Database Continuity**: P2P hosts handle database updates during VPS downtime, with synchronization upon recovery.
-- **Regional Relays**: Players are routed through the best regional relay or proxy based on location.
-- **Simultaneous P2P Nodes**: Multiple P2P nodes can host the same map collaboratively.
-- **Players as Relays**: Eligible players are automatically assigned as relays to enhance network performance.
+## Requirements
 
-## Configuration
-The system is configured via `conf/p2p_map_config.conf`. Key settings include:
-- `enable_host_disabling`: Enables or disables automatic host disabling.
-- `latency_spike_threshold`: Percentage threshold for latency spikes.
-- `speed_drop_threshold`: Percentage threshold for speed drops.
-- `max_p2p_nodes`: Maximum number of simultaneous P2P nodes per map.
-- Per-map settings to enable or disable P2P hosting.
-- Regional relay or proxy settings for different continents.
-- Critical maps that must stay VPS-hosted.
+### Basic Hosting (Level 1)
+- CPU: 3.0 GHz or better
+- Cores: 4 or more
+- RAM: 8GB minimum
+- Network: 100 Mbps minimum
+- Latency: Under 100ms to server
 
-## How to Use
-1. **Enable P2P Hosting**:
-   - Open `conf/p2p_map_config.conf`.
-   - Set `enable_p2p_maps = 1` to enable P2P hosting.
-   - Configure per-map settings to enable or disable P2P hosting for specific maps.
+### Enhanced Hosting (Level 2)
+- CPU: 3.5 GHz or better
+- Cores: 6 or more
+- RAM: 16GB minimum
+- Network: 200 Mbps minimum
+- Latency: Under 50ms to server
 
-2. **Set Host Criteria**:
-   - Define minimum requirements for P2P hosts:
-     - `cpu_min_ghz`: Minimum CPU speed in GHz.
-     - `cpu_min_cores`: Minimum number of CPU cores.
-     - `ram_min`: Minimum free RAM in GB.
-     - `net_min_speed`: Minimum network speed in Mbps.
-     - `net_max_latency`: Maximum allowed latency in ms.
+### Premium Hosting (Level 3)
+- CPU: 4.0 GHz or better
+- Cores: 8 or more
+- RAM: 32GB minimum
+- Network: 1000 Mbps minimum
+- Latency: Under 20ms to server
 
-3. **Configure Regional Relays**:
-   - Add relay addresses for different regions in `conf/p2p_map_config.conf`:
-     ```
-     NA = na-relay.example.com
-     EU = eu-relay.example.com
-     ASIA = asia-relay.example.com
-     ```
+## Getting Started
 
-4. **Monitor and Manage Hosts**:
-   - Use the system's automated monitoring to validate and reassign unstable hosts.
-   - Check logs for real-time feedback on host status and task assignments.
+1. **Check Eligibility**
+   ```
+   @p2pstatus
+   ```
+   This command shows if your system meets hosting requirements.
 
-## Troubleshooting
-- **No Eligible Hosts**:
-  - Ensure P2P hosting is enabled and host criteria are correctly configured.
-  - Verify that players meet the minimum requirements for hosting.
+2. **Register as Host**
+   ```
+   @p2phost register
+   ```
+   The system will verify your system specs and network connection.
 
-- **High Latency**:
-  - Check regional relay configurations and ensure players are routed through the best relay.
+3. **View Available Maps**
+   ```
+   @p2plist maps
+   ```
+   Shows maps eligible for P2P hosting at your level.
 
-- **VPS Downtime**:
-  - Ensure P2P nodes are handling database updates and synchronizing data upon VPS recovery.
+4. **Start Hosting**
+   ```
+   @p2phost start <map_name>
+   ```
+   Begin hosting a specific map.
+
+## Monitoring Your Hosting
+
+### Performance Metrics
+```
+@p2pmetrics
+```
+Shows:
+- CPU usage
+- Memory usage
+- Network stats
+- Player count
+- Active NPCs
+
+### Security Status
+```
+@p2pvalidate
+```
+Verifies:
+- Spawn rates
+- Drop rates
+- Monster stats
+- Movement validation
+- Skill usage
 
 ## Best Practices
-- Regularly update `conf/p2p_map_config.conf` to reflect changes in host criteria and regional relay configurations.
-- Monitor system logs to identify and address performance issues promptly.
-- Use the `max_p2p_nodes` setting to balance load across multiple P2P nodes.
 
-## Benefits
-- Reduces dependency on the VPS, ensuring uninterrupted gameplay.
-- Optimizes performance for players across different continents.
-- Enhances system reliability and scalability.
+### Resource Management
+1. Don't run intensive programs while hosting
+2. Ensure stable internet connection
+3. Monitor system temperatures
+4. Keep background processes minimal
 
-For further assistance, refer to the main documentation in the `/doc/` directory or contact the rAthena community.
+### Network Optimization
+1. Use wired connection when possible
+2. Configure QoS settings for game traffic
+3. Monitor bandwidth usage
+4. Choose regional relay servers
+
+### Performance Tips
+1. Close unnecessary applications
+2. Update system drivers
+3. Monitor system resources
+4. Keep OS and game updated
+
+## Common Issues
+
+### High Latency
+1. Check internet connection
+2. Use network diagnostics
+3. Try different relay servers
+4. Monitor network traffic
+
+### Resource Issues
+1. Check system resources
+2. Close background applications
+3. Monitor temperature
+4. Check for system updates
+
+### Connection Drops
+1. Verify network stability
+2. Check firewall settings
+3. Update network drivers
+4. Monitor connection logs
+
+## Security Guidelines
+
+### DO:
+- Keep system updated
+- Monitor performance metrics
+- Report suspicious activity
+- Follow server rules
+- Back up host settings
+
+### DON'T:
+- Use game modifications
+- Run unauthorized scripts
+- Share hosting credentials
+- Bypass security checks
+- Host restricted maps
+
+## Support
+
+### Community Help
+- Discord: #p2p-hosting
+- Forums: P2P Hosting Section
+- In-game: @p2phelp
+
+### Technical Support
+- Report issues: @p2preport
+- Contact GMs: @p2padmin
+- Emergency: @p2pemergency
+
+## Next Steps
+
+1. Read the full [Admin Guide](p2p_admin_guide.md)
+2. Join P2P hosting community
+3. Learn advanced features
+4. Help other hosts
+
+## Quick Reference
+
+### Essential Commands
+```
+@p2pstatus          - Check system status
+@p2phost register   - Register as host
+@p2phost start      - Start hosting
+@p2phost stop       - Stop hosting
+@p2pmetrics         - View performance
+@p2pvalidate        - Security check
+@p2phelp           - Get help
+```
+
+### Status Codes
+```
+READY     - Ready to host
+ACTIVE    - Currently hosting
+STANDBY   - Available backup
+WARNING   - Performance issues
+ERROR     - Security problem
+BLOCKED   - Hosting disabled
+```
+
+### Performance Indicators
+```
+Green   - Excellent
+Yellow  - Warning
+Red     - Critical
+Blue    - Initializing
+Gray    - Inactive
+```
+
+Remember: P2P hosting is a community service. Follow guidelines and maintain good performance to help create a better gaming experience for everyone.
