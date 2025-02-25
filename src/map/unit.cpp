@@ -113,7 +113,7 @@ bool unit_update_chase(block_list& bl, t_tick tick, bool fullcheck) {
 		tbl = map_id2bl(ud->target_to);
 
 	// Reached destination, start attacking
-	if (tbl != nullptr && tbl->m == bl.m && check_distance_bl(&bl, tbl, ud->chaserange) && status_check_visibility(&bl, tbl, false)) {
+	if (tbl != nullptr && tbl->m == bl.m && ud->walkpath.path_pos > 0 && check_distance_bl(&bl, tbl, ud->chaserange) && status_check_visibility(&bl, tbl, false)) {
 		ud->to_x = bl.x;
 		ud->to_y = bl.y;
 		ud->target_to = 0;
