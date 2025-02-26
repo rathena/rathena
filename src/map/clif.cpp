@@ -5125,6 +5125,12 @@ static enum e_damage_type clif_calc_delay(block_list& bl, e_damage_type type, in
 	if (delay != 0)
 		return type;
 
+	// General change of type based on div against target with endure effect
+	if (div > 1 && type == DMG_SINGLE)
+		type = DMG_MULTI_HIT;
+	else if (div < 2 && type == DMG_MULTI_HIT)
+		type = DMG_SINGLE;
+
 	switch( type ) {
 		case DMG_ENDURE:
 		case DMG_MULTI_HIT_ENDURE:
