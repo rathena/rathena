@@ -1,9 +1,44 @@
-# rAthena AI World - P2P Network Security System
+# rAthena AI World
 
 ## Overview
-Advanced P2P network security and monitoring system for rAthena, providing robust protection, performance optimization, and real-time monitoring capabilities.
+Advanced AI-driven gameplay enhancement and P2P network security system for rAthena, providing intelligent NPCs, dynamic world evolution, and robust protection.
 
 ## ✨ Implemented Features
+
+### AI Agents
+
+#### AI Legends System
+- 36 unique AI Legend characters representing each final job class
+- Progressive character development from novice to final job classes
+- Contrasting MBTI personalities for unique character interactions
+- Detailed backstories and relationships between characters
+- MVP battle assistance for the 5 weakest parties
+- PvP challenges with same-class players
+- Global chat interactions between AI characters
+- Secret skills that can be taught to worthy players
+
+#### The Nameless Beggar
+- Mysterious master character connecting all AI Legends
+- Daily city-roaming system visiting different locations
+- Food request and reward system encouraging player interaction
+- Feeding streak system rewarding consistent interaction
+- Special event triggered by collecting 100 Ancient Scroll Fragments
+- Narrative connection revealing all AI Legends as the Beggar's disciples
+
+#### Mayor AI Agent
+- Weekly server statistics analysis
+- Dynamic event creation based on player behavior
+- Player retention and acquisition strategies
+- Comprehensive reporting on server health and trends
+- Tailored events for different player segments
+- Event creation system with various types and difficulties
+- Integration with other AI systems for coordinated experiences
+
+#### AI Integration
+- Support for Azure OpenAI, OpenAI, and DeepSeek V3 providers
+- LangChain integration for context memory management
+- Dynamic configuration systems for each AI character
+- Fallback mechanisms for offline operation
 
 ### Network Security
 - Thread-safe packet monitoring
@@ -36,6 +71,7 @@ Advanced P2P network security and monitoring system for rAthena, providing robus
 - MySQL 5.7+
 - libconfig
 - nlohmann-json
+- Azure OpenAI, OpenAI, or DeepSeek API key (for AI features)
 
 ### Building
 
@@ -63,6 +99,53 @@ cmake --build . --config Release
 
 ## 🔧 Configuration
 
+### AI Providers Configuration
+```ini
+ai_providers: {
+    azure_openai: {
+        enabled: true
+        api_key: "your-api-key"
+        endpoint: "your-endpoint"
+        deployment: "gpt-4o"
+        api_version: "2023-05-15"
+    }
+    openai: {
+        enabled: true
+        api_key: "your-api-key"
+        model: "gpt-4o"
+    }
+    deepseek: {
+        enabled: true
+        api_key: "your-api-key"
+        model: "deepseek-v3"
+    }
+}
+```
+
+### AI Legends Configuration
+```ini
+ai_legends_enabled: true
+ai_legends_provider: "azure_openai"
+ai_legends_model: "gpt-4o"
+ai_legends_power_advantage: 8
+```
+
+### Beggar Configuration
+```ini
+ai_beggar_enabled: true
+ai_beggar_provider: "azure_openai"
+ai_beggar_model: "gpt-4o"
+ai_beggar_cities: ["prontera", "geffen", "payon", "morocc", "alberta"]
+```
+
+### Mayor Configuration
+```ini
+ai_mayor_enabled: true
+ai_mayor_provider: "azure_openai"
+ai_mayor_model: "gpt-4o"
+ai_mayor_analysis_frequency: "weekly"
+```
+
 ### Network Monitor Settings
 ```ini
 network_monitor: {
@@ -84,6 +167,13 @@ security: {
 ```
 
 ## 📊 Monitoring
+
+### AI System Monitoring
+- Character interactions
+- Player engagement metrics
+- Event participation
+- AI response performance
+- Memory usage statistics
 
 ### Performance Metrics
 - Packet rates
@@ -140,12 +230,35 @@ drmemory.exe -light -- network_tests.exe
 
 ## 📚 Documentation
 
+### AI Systems
+- [AI Legends System](docs/AI_LEGENDS.md)
+- [AI Legends Profiles](docs/AI_LEGENDS_PROFILES.md)
+- [Nameless Beggar System](docs/AI_BEGGAR.md)
+- [Mayor Agent System](docs/AI_MAYOR.md)
+- [AI Development Roadmap](docs/AI_DEVELOPMENT_ROADMAP.md)
+- [AI Agents Overview](docs/AI_AGENTS.md)
+- [AI Implementation Summary](docs/AI_IMPLEMENTATION_SUMMARY.md)
+- [AI Agents Optimization](docs/AI_AGENTS_OPTIMIZATION.md)
+
+### Network & Security
 - [Security Review](docs/SECURITY_REVIEW.md)
 - [P2P Hosting Guide](docs/P2P_HOSTING.md)
 - [Future Features](docs/FUTURE_FEATURES.md)
 - [Feature Details](docs/FEATURE_DETAILS.md)
 
 ## 🔜 Upcoming Features
+
+### AI Systems
+- Cross-Class Synthesis system
+- Dynamic World Evolution
+- Legend Bloodlines system
+- Economic Ecosystem
+- Social Dynamics system
+- Advanced Combat Mechanics
+- Personal Housing system
+- Time Manipulation system
+- Guild Evolution system
+- Dimensional Warfare
 
 ### Security
 - TLS implementation
