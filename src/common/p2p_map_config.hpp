@@ -34,6 +34,20 @@ struct P2PMapConfig {
         uint16 max_disconnects_per_hour;
     } host_requirements;
 
+    // Real-time gaming experience settings
+    struct {
+        bool prioritize_realtime;
+        uint16 max_jitter_ms;
+        uint32 min_packet_rate;
+        uint16 realtime_sync_interval_ms;
+        uint16 max_frame_time_ms;
+        float latency_weight;
+        float network_speed_weight;
+        float cpu_weight;
+        float ram_weight;
+        float stability_weight;
+    } realtime_gaming;
+
     // Map eligibility
     std::map<std::string, bool> p2p_eligible_maps;
 

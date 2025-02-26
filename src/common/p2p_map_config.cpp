@@ -24,6 +24,18 @@ P2PMapConfigParser::P2PMapConfigParser() {
     config.host_requirements.net_max_latency = 30;
     config.host_requirements.max_disconnects_per_hour = 1;
 
+    // Initialize real-time gaming experience settings with default values
+    config.realtime_gaming.prioritize_realtime = true;
+    config.realtime_gaming.max_jitter_ms = 15;
+    config.realtime_gaming.min_packet_rate = 100;
+    config.realtime_gaming.realtime_sync_interval_ms = 50;
+    config.realtime_gaming.max_frame_time_ms = 16;
+    config.realtime_gaming.latency_weight = 0.35f;
+    config.realtime_gaming.network_speed_weight = 0.25f;
+    config.realtime_gaming.cpu_weight = 0.15f;
+    config.realtime_gaming.ram_weight = 0.15f;
+    config.realtime_gaming.stability_weight = 0.10f;
+
     config.task_distribution.max_tasks_per_node = 3;
     config.task_distribution.reassignment_interval = 30;
 
@@ -71,6 +83,22 @@ bool P2PMapConfigParser::load(const char* filename) {
             config.host_requirements.net_min_speed = requirements["net_min_speed"].as<uint32>(100);
             config.host_requirements.net_max_latency = requirements["net_max_latency"].as<uint16>(30);
             config.host_requirements.max_disconnects_per_hour = requirements["max_disconnects_per_hour"].as<uint16>(1);
+        }
+
+        // Parse real-time gaming experience settings
+        if (yaml["realtime_gaming"]) {
+            auto realtime = yaml["realtime_gaming"];
+            config.realtime_gaming.prioritize_realtime = realtime["prioritize_realtime"].as<int>(1) != 0;
+            config.realtime_gaming.max_jitter_ms = realtime["max_jitter_ms"].as<uint16>(15);
+            config.realtime_gaming.min_packet_rate = realtime["min_packet_rate"].as<uint32>(100);
+            config.realtime_gaming.realtime_sync_interval_ms = realtime["realtime_sync_interval_ms"].as<uint16>(50);
+            config.realtime_gaming.max_frame_time_ms = realtime["max_frame_time_ms"].as<uint16>(16);
+            
+            config.realtime_gaming.latency_weight = realtime["latency_weight"].as<float>(0.35f);
+            config.realtime_gaming.network_speed_weight = realtime["network_speed_weight"].as<float>(0.25f);
+            config.realtime_gaming.cpu_weight = realtime["cpu_weight"].as<float>(0.15f);
+            config.realtime_gaming.ram_weight = realtime["ram_weight"].as<float>(0.15f);
+            config.realtime_gaming.stability_weight = realtime["stability_weight"].as<float>(0.10f);
         }
 
         // Parse P2P-eligible maps

@@ -21,7 +21,19 @@ P2PHost::P2PHost(uint32 account_id, const P2PHostStats& stats)
     : account_id(account_id)
     , stats(stats)
     , status(Status::STANDBY)
-    , last_update(std::chrono::system_clock::now()) {
+    , last_update(std::chrono::system_clock::now()) 
+{
+    // Initialize real-time gaming metrics if not already set
+    if (this->stats.jitter_ms == 0) {
+        this->stats.jitter_ms = 0;
+    }
+    if (this->stats.packet_rate == 0) {
+        this->stats.packet_rate = 1000; // Default to 1000 packets per second
+    }
+    if (this->stats.frame_time_ms == 0) {
+        this->stats.frame_time_ms = 16; // Default to 60 FPS (16.67ms per frame)
+    }
+    
     // Initialize security validation
     security.spawn_rate_valid = true;
     security.drop_rate_valid = true;
@@ -39,33 +51,58 @@ P2PHost::~P2PHost() {
 }
 
 bool P2PHost::isEligible(const P2PHostConfig& config) const {
-    return stats.cpu_ghz >= config.min_cpu_ghz &&
+    // Get the P2P map configuration
+    const auto& p2p_config = rathena::P2PMapConfigParser::getInstance().getConfig();
+    
+    // Basic eligibility checks
+    bool basic_eligible = stats.cpu_ghz >= config.min_cpu_ghz &&
            stats.cpu_cores >= config.min_cpu_cores &&
            stats.free_ram_mb >= config.min_ram_mb &&
            stats.network_speed_mbps >= config.min_network_mbps &&
            stats.latency_ms <= config.max_latency_ms &&
            stats.disconnects_per_hour <= config.max_disconnects_per_hour &&
            isSecurityValid();
+    
+    // If real-time gaming is prioritized, perform additional checks
+    if (basic_eligible && p2p_config.realtime_gaming.prioritize_realtime) {
+        // Check jitter (network stability)
+        if (stats.jitter_ms > p2p_config.realtime_gaming.max_jitter_ms) {
+            return false;
+        }
+        // Check packet processing rate
+        if (stats.packet_rate < p2p_config.realtime_gaming.min_packet_rate) {
+            return false;
+        }
+    }
+    
+    return basic_eligible;
 }
 
 bool P2PHost::validateHosting(ValidationType type) {
+    bool result = true;
     switch(type) {
         case ValidationType::SPAWN_RATE:
             security.spawn_rate_valid = validateSpawnRates();
+            result = security.spawn_rate_valid;
             break;
         case ValidationType::DROP_RATE:
             security.drop_rate_valid = validateDropRates();
+            result = security.drop_rate_valid;
             break;
         case ValidationType::MONSTER_STATS:
             security.monster_stats_valid = validateMonsterStats();
+            result = security.monster_stats_valid;
             break;
         case ValidationType::PLAYER_MOVEMENT:
             security.player_movement_valid = validatePlayerMovement();
+            result = security.player_movement_valid;
             break;
         case ValidationType::SKILL_USAGE:
             security.skill_usage_valid = validateSkillUsage();
+            result = security.skill_usage_valid;
             break;
     }
+    
     security.validation_timestamp = (uint32)time(nullptr);
     
     // Synchronize validation result to the main server
@@ -352,18 +389,48 @@ bool P2PHostManager::migrateMap(const std::string& map_name, uint32 from_host, u
 double P2PHostManager::calculateHostScore(const std::shared_ptr<P2PHost>& host) const {
     if (!host) return 0.0;
     
+    // Get the host stats and configuration
     const auto& stats = host->getStats();
+    const auto& p2p_config = rathena::P2PMapConfigParser::getInstance().getConfig();
     
-    // Calculate score based on performance metrics
-    // Higher score = better host
+    // Calculate base scores for each metric
     double cpu_score = (stats.cpu_ghz * stats.cpu_cores) / config.min_cpu_ghz;
     double ram_score = static_cast<double>(stats.free_ram_mb) / config.min_ram_mb;
     double network_score = static_cast<double>(stats.network_speed_mbps) / config.min_network_mbps;
-    double latency_score = config.max_latency_ms > 0 ? static_cast<double>(config.max_latency_ms) / (stats.latency_ms + 1) : 1.0;
+    
+    // Latency is critical for real-time gaming experience - use an exponential decay function
+    // to heavily penalize high latency, which is essential for real-time gaming
+    double latency_score = 0.0;
+    if (config.max_latency_ms > 0) {
+        if (p2p_config.realtime_gaming.prioritize_realtime) {
+            // Exponential decay: score = e^(-latency/max_latency)
+            // This gives much higher weight to low-latency hosts
+            latency_score = std::exp(-static_cast<double>(stats.latency_ms) / config.max_latency_ms);
+        } else {
+            // Linear scaling for non-realtime prioritized mode
+            latency_score = config.max_latency_ms > 0 ? 
+                static_cast<double>(config.max_latency_ms) / (stats.latency_ms + 1) : 1.0;
+        }
+    } else {
+        latency_score = 1.0;
+    }
+    
+    // Stability is also critical for real-time gaming experience
     double stability_score = config.max_disconnects_per_hour > 0 ? 1.0 - (static_cast<double>(stats.disconnects_per_hour) / config.max_disconnects_per_hour) : 1.0;
     
-    // Combine scores with weights
-    double score = (cpu_score * 0.2) + (ram_score * 0.2) + (network_score * 0.2) + (latency_score * 0.3) + (stability_score * 0.1);
+    // Use weights from configuration if real-time gaming is prioritized
+    double score;
+    if (p2p_config.realtime_gaming.prioritize_realtime) {
+        score = (cpu_score * p2p_config.realtime_gaming.cpu_weight) +
+                (ram_score * p2p_config.realtime_gaming.ram_weight) +
+                (network_score * p2p_config.realtime_gaming.network_speed_weight) +
+                (latency_score * p2p_config.realtime_gaming.latency_weight) +
+                (stability_score * p2p_config.realtime_gaming.stability_weight);
+    } else {
+        // Default weights if real-time gaming is not prioritized
+        score = (cpu_score * 0.2) + (ram_score * 0.2) + (network_score * 0.2) + 
+                (latency_score * 0.3) + (stability_score * 0.1);
+    }
     
     return score;
 }
@@ -446,6 +513,17 @@ void P2PHostManager::loadPersistentData() {
             stats.disconnects_per_hour = host_node["disconnects_per_hour"].as<uint32>();
             stats.vps_connection_active = host_node["vps_connection_active"].as<bool>();
             
+            // Load real-time gaming metrics if available
+            if (host_node["jitter_ms"]) {
+                stats.jitter_ms = host_node["jitter_ms"].as<uint16>();
+            }
+            if (host_node["packet_rate"]) {
+                stats.packet_rate = host_node["packet_rate"].as<uint32>();
+            }
+            if (host_node["frame_time_ms"]) {
+                stats.frame_time_ms = host_node["frame_time_ms"].as<uint16>();
+            }
+            
             // Load regional latencies
             if (host_node["regional_latencies"]) {
                 for (const auto& latency_node : host_node["regional_latencies"]) {
@@ -490,6 +568,11 @@ void P2PHostManager::savePersistentData() {
             host_node["latency_ms"] = stats.latency_ms;
             host_node["disconnects_per_hour"] = stats.disconnects_per_hour;
             host_node["vps_connection_active"] = stats.vps_connection_active;
+            
+            // Save real-time gaming metrics
+            host_node["jitter_ms"] = stats.jitter_ms;
+            host_node["packet_rate"] = stats.packet_rate;
+            host_node["frame_time_ms"] = stats.frame_time_ms;
             
             // Save regional latencies
             YAML::Node latencies_node;
@@ -549,6 +632,8 @@ bool P2PHostManager::loadConfig() {
 }
 
 void P2PHostManager::redistributeLoad() {
+    const auto& p2p_config = rathena::P2PMapConfigParser::getInstance().getConfig();
+    
     // Get all maps that are currently P2P hosted
     std::vector<std::string> hosted_maps;
     for (const auto& pair : map_hosts) {
@@ -556,6 +641,7 @@ void P2PHostManager::redistributeLoad() {
             hosted_maps.push_back(pair.first);
         }
     }
+    ShowInfo("Redistributing load for %d P2P-hosted maps\n", (int)hosted_maps.size());
     
     // For each map, check if there's a better host available
     for (const auto& map_name : hosted_maps) {
@@ -572,9 +658,22 @@ void P2PHostManager::redistributeLoad() {
             auto host = pair.second;
             double score = calculateHostScore(host);
             
-            if (score > best_score * 1.2) { // Only migrate if new host is at least 20% better
+            // Determine migration threshold based on real-time gaming priority
+            double migration_threshold;
+            if (p2p_config.realtime_gaming.prioritize_realtime) {
+                // Lower threshold (10%) for real-time gaming to ensure optimal experience
+                migration_threshold = 1.1;
+            } else {
+                // Higher threshold (20%) for non-real-time to reduce unnecessary migrations
+                migration_threshold = 1.2;
+            }
+            
+            // Migrate if the new host is better by the threshold percentage
+            if (score > best_score * migration_threshold) {
                 best_host = host;
                 best_score = score;
+                ShowInfo("Found better host for map %s (score: %.2f vs %.2f)\n", 
+                         map_name.c_str(), score, calculateHostScore(current_host));
             }
         }
     }

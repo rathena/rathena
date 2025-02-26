@@ -28,9 +28,12 @@ struct P2PHostStats {
     uint32 network_speed_mbps;
     uint16 latency_ms;
     uint32 disconnects_per_hour;
+    uint16 jitter_ms;                // Network jitter (variation in latency)
+    uint32 packet_rate;              // Packets processed per second
     std::chrono::system_clock::time_point last_health_check;
     uint16 consecutive_failed_checks;
     std::vector<RegionalLatency> regional_latencies;
+    uint16 frame_time_ms;            // Average frame processing time
     bool vps_connection_active;
 };
 
