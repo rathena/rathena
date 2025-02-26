@@ -52590,7 +52590,7 @@ Body:
             Item: C_Foxtail
             Rate: 50
           - Index: 5
-            Item: aegis_400496
+            Item: C_Horo_Ears_WH
             Rate: 50
           - Index: 6
             Item: C_Fluttering_Haze
@@ -52620,7 +52620,7 @@ Body:
             Item: C_Helmet_Of_Siegfried_J
             Rate: 50
           - Index: 15
-            Item: aegis_420181
+            Item: C_Eis_Spinne
             Rate: 50
           - Index: 16
             Item: C_Little_Abyss_Dragon
@@ -64826,7 +64826,7 @@ Body:
             Rate: 10
             Announced: true
           - Index: 8
-            Item: aegis_410232
+            Item: Gambler_Seal_KR
             Rate: 10
             Announced: true
           - Index: 9
@@ -92629,7 +92629,7 @@ Body:
             Rate: 10
             Announced: true
           - Index: 17
-            Item: aegis_410232
+            Item: Gambler_Seal_KR
             Rate: 10
             Announced: true
           - Index: 18
@@ -93872,7 +93872,7 @@ Body:
             Item: C_Crushed_Snow_Man
             Rate: 50
           - Index: 15
-            Item: aegis_400373
+            Item: C_Frozen_Laurel
             Rate: 50
   - Group: SECURITY_CAMPAIGN_BOX
     SubGroups:

@@ -2330,8 +2330,6 @@ Body:
     CalcFlags:
       Def2: true
       MDef2: true
-      Speed: true
-      Aspd: true
     Opt3:
       SteelBody: true
     Flags:
@@ -5974,6 +5972,8 @@ Body:
       MaxSp: true
   - Status: Norecover_State
     Icon: EFST_HANDICAPSTATE_NORECOVER
+    CalcFlags:
+      Regen: true
   - Status: Suhide
     Icon: EFST_SUHIDE
     DurationLookup: SU_HIDE

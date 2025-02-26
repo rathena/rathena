@@ -27,7 +27,10 @@
 #   MaxWeight                Base maximum weight. (Default: 20000)
 #   HpFactor                 Exponential HP increase. Per base level: [HpFactor * BaseLv / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 0)
 #   HpIncrease               Linear HP increase. Per base level: [HpIncrease / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 500)
+#   SpFactor                 Exponential SP increase. Per base level: [SpFactor * BaseLv / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 0)
 #   SpIncrease               Linear SP increase. Per base level: [SpIncrease / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 100)
+#   ApFactor                 Exponential AP increase. Per base level: [ApFactor * BaseLv / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 0)
+#   ApIncrease               Linear AP increase. Per base level: [ApIncrease / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 0)
 #   BaseASPD:                Base ASPD for each weapon type. (Default: 2000)
 #     Weapon                 Weapon type with associated ASPD.
 #   BonusStats:              Job level bonus stats/traits.
@@ -78,7 +81,7 @@
 
 Header:
   Type: JOB_STATS
-  Version: 2
+  Version: 3
 
 Body:
   - Jobs:
@@ -25501,3 +25504,182 @@ Body:
         Sp: 630
       - Level: 275
         Sp: 630
+  - Jobs:
+      Hyper_Novice: true
+      Dragon_Knight: true
+      Dragon_Knight2: true
+      Arch_Mage: true
+      Windhawk: true
+      Windhawk2: true
+      Cardinal: true
+      Meister: true
+      Meister2: true
+      Shadow_Cross: true
+      Sky_Emperor: true
+      Sky_Emperor2: true
+      Night_Watch: true
+      Shinkiro: true
+      Shiranui: true
+      Spirit_Handler: true
+      Imperial_Guard: true
+      Imperial_Guard2: true
+      Elemental_Master: true
+      Troubadour: true
+      Trouvere: true
+      Inquisitor: true
+      Biolo: true
+      Abyss_Chaser: true
+      Soul_Ascetic: true
+    BaseAp:
+      - Level: 200
+        Ap: 200
+      - Level: 201
+        Ap: 200
+      - Level: 202
+        Ap: 200
+      - Level: 203
+        Ap: 200
+      - Level: 204
+        Ap: 200
+      - Level: 205
+        Ap: 200
+      - Level: 206
+        Ap: 200
+      - Level: 207
+        Ap: 200
+      - Level: 208
+        Ap: 200
+      - Level: 209
+        Ap: 200
+      - Level: 210
+        Ap: 200
+      - Level: 211
+        Ap: 200
+      - Level: 212
+        Ap: 200
+      - Level: 213
+        Ap: 200
+      - Level: 214
+        Ap: 200
+      - Level: 215
+        Ap: 200
+      - Level: 216
+        Ap: 200
+      - Level: 217
+        Ap: 200
+      - Level: 218
+        Ap: 200
+      - Level: 219
+        Ap: 200
+      - Level: 220
+        Ap: 200
+      - Level: 221
+        Ap: 200
+      - Level: 222
+        Ap: 200
+      - Level: 223
+        Ap: 200
+      - Level: 224
+        Ap: 200
+      - Level: 225
+        Ap: 200
+      - Level: 226
+        Ap: 200
+      - Level: 227
+        Ap: 200
+      - Level: 228
+        Ap: 200
+      - Level: 229
+        Ap: 200
+      - Level: 230
+        Ap: 200
+      - Level: 231
+        Ap: 200
+      - Level: 232
+        Ap: 200
+      - Level: 233
+        Ap: 200
+      - Level: 234
+        Ap: 200
+      - Level: 235
+        Ap: 200
+      - Level: 236
+        Ap: 200
+      - Level: 237
+        Ap: 200
+      - Level: 238
+        Ap: 200
+      - Level: 239
+        Ap: 200
+      - Level: 240
+        Ap: 200
+      - Level: 241
+        Ap: 200
+      - Level: 242
+        Ap: 200
+      - Level: 243
+        Ap: 200
+      - Level: 244
+        Ap: 200
+      - Level: 245
+        Ap: 200
+      - Level: 246
+        Ap: 200
+      - Level: 247
+        Ap: 200
+      - Level: 248
+        Ap: 200
+      - Level: 249
+        Ap: 200
+      - Level: 250
+        Ap: 200
+      - Level: 251
+        Ap: 200
+      - Level: 252
+        Ap: 200
+      - Level: 253
+        Ap: 200
+      - Level: 254
+        Ap: 200
+      - Level: 255
+        Ap: 200
+      - Level: 256
+        Ap: 200
+      - Level: 257
+        Ap: 200
+      - Level: 258
+        Ap: 200
+      - Level: 259
+        Ap: 200
+      - Level: 260
+        Ap: 200
+      - Level: 261
+        Ap: 200
+      - Level: 262
+        Ap: 200
+      - Level: 263
+        Ap: 200
+      - Level: 264
+        Ap: 200
+      - Level: 265
+        Ap: 200
+      - Level: 266
+        Ap: 200
+      - Level: 267
+        Ap: 200
+      - Level: 268
+        Ap: 200
+      - Level: 269
+        Ap: 200
+      - Level: 270
+        Ap: 200
+      - Level: 271
+        Ap: 200
+      - Level: 272
+        Ap: 200
+      - Level: 273
+        Ap: 200
+      - Level: 274
+        Ap: 200
+      - Level: 275
+        Ap: 200

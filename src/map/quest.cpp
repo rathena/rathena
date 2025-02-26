@@ -28,7 +28,7 @@
 
 using namespace rathena;
 
-static int32 split_exact_quest_time(char* modif_p, int* week, int* day, int* hour, int* minute, int32 *second);
+static int32 split_exact_quest_time(char* modif_p, int32* week, int32* day, int32* hour, int32* minute, int32 *second);
 
 const std::string QuestDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/quest_db.yml";
@@ -446,7 +446,7 @@ uint64 QuestDatabase::parseBodyNode(const ryml::NodeRef& node) {
 }
 
 
-static int32 split_exact_quest_time(char* modif_p, int* week, int* day, int* hour, int* minute, int32 *second) {
+static int32 split_exact_quest_time(char* modif_p, int32* week, int32* day, int32* hour, int32* minute, int32 *second) {
 	int32 w = -1, d = -1, h = -1, mn = -1, s = -1;
 
 	nullpo_retr(0, modif_p);

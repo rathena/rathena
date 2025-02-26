@@ -308,12 +308,12 @@ int32 mercenary_delete(s_mercenary_data *md, int32 reply) {
 		case 0:
 			// +1 Loyalty on Contract ends.
 			mercenary_set_faith(md, 1);
-			clif_msg(sd, MSI_MER_FINISH);
+			clif_msg( *sd, MSI_MER_FINISH );
 			break; 
 		case 1:
 			// -1 Loyalty on Mercenary killed
 			mercenary_set_faith(md, -1);
-			clif_msg(sd, MSI_MER_DIE);
+			clif_msg( *sd, MSI_MER_DIE );
 			break; 
 	}
 
@@ -864,7 +864,7 @@ uint64 MercenaryDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (!this->asUInt16(node, "AttackDelay", speed))
 			return 0;
 
-		mercenary->status.adelay = cap_value(speed, 0, 4000);
+		mercenary->status.adelay = cap_value(speed, MAX_ASPD_NOPC, MIN_ASPD);
 	} else {
 		if (!exists)
 			mercenary->status.adelay = 4000;
@@ -876,7 +876,8 @@ uint64 MercenaryDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (!this->asUInt16(node, "AttackMotion", speed))
 			return 0;
 
-		mercenary->status.amotion = cap_value(speed, 0, 2000);
+		// amotion is only capped to MAX_ASPD_NOPC when receiving buffs/debuffs
+		mercenary->status.amotion = cap_value(speed, 1, MIN_ASPD/AMOTION_DIVIDER_NOPC);
 	} else {
 		if (!exists)
 			mercenary->status.amotion = 2000;
