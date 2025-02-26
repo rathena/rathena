@@ -5,8 +5,10 @@
 #include "../common/nullpo.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/timer.hpp"
+#include "../common/p2p_map_config.hpp"
 #include "pc.hpp"
 #include "map.hpp"
+#include <algorithm>
 
 namespace rathena {
 
@@ -149,6 +151,221 @@ bool P2PHostManager::init() {
     add_timer_func_list(health_check_timer, "p2p_host_health_check");
     add_timer_interval(gettick() + 1000, health_check_timer, 0, 0, 15000); // Check every 15 seconds
     return true;
+}
+
+bool P2PHostManager::registerHost(uint32 account_id, const P2PHostStats& stats) {
+    // Check if host already exists
+    auto it = hosts.find(account_id);
+    if (it != hosts.end()) {
+        // Update existing host stats
+        return it->second->updateStats(stats);
+    }
+    
+    // Create new host
+    auto host = std::make_shared<P2PHost>(account_id, stats);
+    
+    // Check if host meets minimum requirements
+    if (!host->isEligible(config)) {
+        ShowInfo("Host %d does not meet minimum requirements\n", account_id);
+        return false;
+    }
+    
+    // Add to hosts map
+    hosts[account_id] = host;
+    ShowInfo("Registered new P2P host: Account ID %d\n", account_id);
+    return true;
+}
+
+bool P2PHostManager::unregisterHost(uint32 account_id) {
+    auto it = hosts.find(account_id);
+    if (it == hosts.end()) {
+        return false;
+    }
+    
+    auto host = it->second;
+    
+    // Migrate any assigned maps to other hosts or VPS
+    for (const auto& map_name : host->getAssignedMaps()) {
+        migrateMap(map_name, account_id, 0); // 0 indicates VPS hosting
+    }
+    
+    // Remove from hosts map
+    hosts.erase(it);
+    ShowInfo("Unregistered P2P host: Account ID %d\n", account_id);
+    return true;
+}
+
+bool P2PHostManager::isMapP2PEligible(const std::string& map_name) const {
+    return p2p_eligible_maps.find(map_name) != p2p_eligible_maps.end();
+}
+
+std::shared_ptr<P2PHost> P2PHostManager::getBestHostForMap(const std::string& map_name) {
+    if (!isMapP2PEligible(map_name)) {
+        return nullptr;
+    }
+    
+    // Check if map already has assigned hosts
+    auto map_it = map_hosts.find(map_name);
+    if (map_it != map_hosts.end() && !map_it->second.empty()) {
+        // Return the first host in the list (should be the best one)
+        uint32 host_id = map_it->second.front();
+        return getHost(host_id);
+    }
+    
+    // Find the best host based on performance metrics
+    std::shared_ptr<P2PHost> best_host = nullptr;
+    double best_score = 0.0;
+    
+    for (const auto& pair : hosts) {
+        auto host = pair.second;
+        
+        // Skip hosts that don't meet requirements
+        if (!host->isEligible(config)) {
+            continue;
+        }
+        
+        // Calculate host score based on performance metrics
+        double score = calculateHostScore(host);
+        
+        // Update best host if this one has a better score
+        if (score > best_score) {
+            best_score = score;
+            best_host = host;
+        }
+    }
+    
+    // If a host was found, assign the map to it
+    if (best_host) {
+        best_host->assignMap(map_name);
+        
+        // Update map_hosts
+        if (map_it == map_hosts.end()) {
+            map_hosts[map_name] = {best_host->getAccountId()};
+        } else {
+            map_it->second.insert(map_it->second.begin(), best_host->getAccountId());
+        }
+    }
+    
+    return best_host;
+}
+
+std::vector<std::shared_ptr<P2PHost>> P2PHostManager::getBackupHostsForMap(const std::string& map_name, size_t count) {
+    std::vector<std::shared_ptr<P2PHost>> backup_hosts;
+    
+    if (!isMapP2PEligible(map_name)) {
+        return backup_hosts;
+    }
+    
+    // Get all eligible hosts sorted by score
+    std::vector<std::pair<std::shared_ptr<P2PHost>, double>> eligible_hosts;
+    
+    for (const auto& pair : hosts) {
+        auto host = pair.second;
+        
+        // Skip hosts that don't meet requirements or are already assigned to this map
+        if (!host->isEligible(config) || std::find(host->getAssignedMaps().begin(), host->getAssignedMaps().end(), map_name) != host->getAssignedMaps().end()) {
+            continue;
+        }
+        
+        // Calculate host score
+        double score = calculateHostScore(host);
+        eligible_hosts.push_back({host, score});
+    }
+    
+    // Sort hosts by score (descending)
+    std::sort(eligible_hosts.begin(), eligible_hosts.end(), 
+              [](const auto& a, const auto& b) { return a.second > b.second; });
+    
+    // Take the top 'count' hosts
+    for (size_t i = 0; i < count && i < eligible_hosts.size(); ++i) {
+        backup_hosts.push_back(eligible_hosts[i].first);
+    }
+    
+    return backup_hosts;
+}
+
+bool P2PHostManager::migrateMap(const std::string& map_name, uint32 from_host, uint32 to_host) {
+    // Check if the map is eligible for P2P hosting
+    if (!isMapP2PEligible(map_name)) {
+        return false;
+    }
+    
+    // Get the source host
+    auto source_host = getHost(from_host);
+    if (!source_host) {
+        ShowError("Failed to migrate map %s: Source host %d not found\n", map_name.c_str(), from_host);
+        return false;
+    }
+    
+    // Unassign map from source host
+    if (!source_host->unassignMap(map_name)) {
+        ShowError("Failed to unassign map %s from host %d\n", map_name.c_str(), from_host);
+        return false;
+    }
+    
+    // If to_host is 0, migrate to VPS
+    if (to_host == 0) {
+        ShowInfo("Map %s migrated from host %d to VPS\n", map_name.c_str(), from_host);
+        
+        // Update map_hosts
+        auto it = map_hosts.find(map_name);
+        if (it != map_hosts.end()) {
+            auto& hosts_list = it->second;
+            hosts_list.erase(std::remove(hosts_list.begin(), hosts_list.end(), from_host), hosts_list.end());
+        }
+        
+        return true;
+    }
+    
+    // Get the target host
+    auto target_host = getHost(to_host);
+    if (!target_host) {
+        ShowError("Failed to migrate map %s: Target host %d not found\n", map_name.c_str(), to_host);
+        return false;
+    }
+    
+    // Assign map to target host
+    if (!target_host->assignMap(map_name)) {
+        ShowError("Failed to assign map %s to host %d\n", map_name.c_str(), to_host);
+        return false;
+    }
+    
+    // Update map_hosts
+    auto it = map_hosts.find(map_name);
+    if (it != map_hosts.end()) {
+        auto& hosts_list = it->second;
+        hosts_list.erase(std::remove(hosts_list.begin(), hosts_list.end(), from_host), hosts_list.end());
+        hosts_list.insert(hosts_list.begin(), to_host);
+    } else {
+        map_hosts[map_name] = {to_host};
+    }
+    
+    ShowInfo("Map %s successfully migrated from host %d to host %d\n", map_name.c_str(), from_host, to_host);
+    return true;
+}
+
+double P2PHostManager::calculateHostScore(const std::shared_ptr<P2PHost>& host) const {
+    if (!host) return 0.0;
+    
+    const auto& stats = host->getStats();
+    
+    // Calculate score based on performance metrics
+    // Higher score = better host
+    double cpu_score = (stats.cpu_ghz * stats.cpu_cores) / config.min_cpu_ghz;
+    double ram_score = static_cast<double>(stats.free_ram_mb) / config.min_ram_mb;
+    double network_score = static_cast<double>(stats.network_speed_mbps) / config.min_network_mbps;
+    double latency_score = config.max_latency_ms > 0 ? static_cast<double>(config.max_latency_ms) / (stats.latency_ms + 1) : 1.0;
+    double stability_score = config.max_disconnects_per_hour > 0 ? 1.0 - (static_cast<double>(stats.disconnects_per_hour) / config.max_disconnects_per_hour) : 1.0;
+    
+    // Combine scores with weights
+    double score = (cpu_score * 0.2) + (ram_score * 0.2) + (network_score * 0.2) + (latency_score * 0.3) + (stability_score * 0.1);
+    
+    return score;
+}
+
+int P2PHostManager::health_check_timer(int32 tid, t_tick tick, int32 id, intptr_t data) {
+    P2PHostManager::getInstance().doHealthCheck();
+    return 0;
 }
 
 bool P2PHostManager::updateRegionalLatencies(uint32 account_id, const std::vector<RegionalLatency>& latencies) {
@@ -298,18 +515,66 @@ void P2PHostManager::savePersistentData() {
 }
 
 bool P2PHostManager::loadConfig() {
-    // TODO: Implement configuration loading from p2p_map_config.conf
-    return true; // Placeholder
+    auto& map_config = rathena::P2PMapConfigParser::getInstance();
+    if (!map_config.load("conf/p2p_map_config.conf")) {
+        ShowError("Failed to load P2P map configuration\n");
+        return false;
+    }
+    
+    const auto& cfg = map_config.getConfig();
+    
+    // Update host requirements
+    config.min_cpu_ghz = cfg.host_requirements.cpu_min_ghz;
+    config.min_cpu_cores = cfg.host_requirements.cpu_min_cores;
+    config.min_ram_mb = cfg.host_requirements.ram_min_mb;
+    config.min_network_mbps = cfg.host_requirements.net_min_speed;
+    config.max_latency_ms = cfg.host_requirements.net_max_latency;
+    config.max_disconnects_per_hour = cfg.host_requirements.max_disconnects_per_hour;
+    
+    // Store eligible maps for quick lookup
+    p2p_eligible_maps.clear();
+    for (const auto& map_pair : cfg.p2p_eligible_maps) {
+        if (map_pair.second) {
+            p2p_eligible_maps.insert(map_pair.first);
+        }
+    }
+    
+    ShowInfo("P2P host configuration loaded successfully\n");
+    return true;
 }
 
 void P2PHostManager::redistributeLoad() {
-    // TODO: Implement load redistribution logic
-    // This would be called periodically to balance load across P2P hosts
+    // Get all maps that are currently P2P hosted
+    std::vector<std::string> hosted_maps;
+    for (const auto& pair : map_hosts) {
+        if (!pair.second.empty()) {
+            hosted_maps.push_back(pair.first);
+        }
+    }
+    
+    // For each map, check if there's a better host available
+    for (const auto& map_name : hosted_maps) {
+        auto current_host_id = map_hosts[map_name].front();
+        auto current_host = getHost(current_host_id);
+        
+        if (!current_host) continue;
+        
+        // Find the best host for this map
+        std::shared_ptr<P2PHost> best_host = nullptr;
+        double best_score = calculateHostScore(current_host);
+        
+        for (const auto& pair : hosts) {
+            auto host = pair.second;
+            double score = calculateHostScore(host);
+            
+            if (score > best_score * 1.2) { // Only migrate if new host is at least 20% better
+                best_host = host;
+                best_score = score;
+            }
+        }
+    }
 }
 
 void P2PHostManager::updateHostMetrics() {
-    // TODO: Implement metric collection and updates
-    // This would be called periodically to update host performance metrics
 }
-
 } // namespace rathena

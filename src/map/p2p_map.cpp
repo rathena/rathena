@@ -4,6 +4,7 @@
 #include "../common/timer.hpp"
 #include "pc.hpp"
 #include "battle.hpp"
+#include "../common/p2p_map_config.hpp"
 #include "clif.hpp"
 
 namespace rathena {
@@ -23,6 +24,7 @@ P2PMapServer& P2PMapServer::getInstance() {
 
 bool P2PMapServer::init() {
     ShowInfo("Initializing P2P Map Server\n");
+    rathena::P2PMapConfigParser::getInstance().load("conf/p2p_map_config.conf");
     return true;
 }
 
@@ -38,9 +40,22 @@ bool P2PMapServer::onPlayerEnterMap(struct map_session_data* sd, const std::stri
     // Check if map can be P2P hosted
     auto& host_mgr = P2PHostManager::getInstance();
     if (!host_mgr.isMapP2PEligible(map_name)) {
-        // For VPS-hosted maps, check if we can provide P2P assistance
-        return processP2PAssistance(map_name);
+        // Map is not eligible for P2P hosting, use VPS
+        ShowInfo("Map %s is not eligible for P2P hosting, using VPS\n", map_name.c_str());
+        MapState& state = map_states[map_name];
+        state.current_host_id = 0; // 0 indicates VPS hosting
+        state.is_vps_hosted = true;
+        
+        // For VPS-hosted maps, we can still provide P2P assistance
+        processP2PAssistance(map_name);
+        return true;
     }
+    
+    // Get the P2P map configuration
+    const auto& config = rathena::P2PMapConfigParser::getInstance().getConfig();
+    
+    // Check if P2P hosting is enabled
+    if (!config.general.enable_p2p_maps) return handleVPSFallback(map_name);
 
     // Find or assign a host for this map
     auto host = findOrAssignHost(map_name);
@@ -67,6 +82,8 @@ bool P2PMapServer::onPlayerEnterMap(struct map_session_data* sd, const std::stri
             }
         }
     }
+    
+    ShowInfo("Player %s entered map %s hosted by P2P host %d\n", sd->status.name, map_name.c_str(), host->getAccountId());
 
     return true;
 }
@@ -98,6 +115,13 @@ bool P2PMapServer::canPlayerHost(struct map_session_data* sd) {
     if (!sd) return false;
 
     P2PHostStats stats;
+    
+    // Get the P2P map configuration
+    const auto& config = rathena::P2PMapConfigParser::getInstance().getConfig();
+    
+    // Check if P2P hosting is enabled
+    if (!config.general.enable_p2p_maps)
+        return false;
     if (!collectPlayerMetrics(sd, stats)) return false;
 
     return P2PHostManager::getInstance().getConfig().min_cpu_ghz <= stats.cpu_ghz &&
@@ -108,6 +132,13 @@ bool P2PMapServer::canPlayerHost(struct map_session_data* sd) {
 
 bool P2PMapServer::registerPlayerAsHost(struct map_session_data* sd) {
     if (!sd) return false;
+
+    // Get the P2P map configuration
+    const auto& config = rathena::P2PMapConfigParser::getInstance().getConfig();
+    
+    // Check if P2P hosting is enabled
+    if (!config.general.enable_p2p_maps)
+        return false;
 
     P2PHostStats stats;
     if (!collectPlayerMetrics(sd, stats)) return false;
@@ -121,6 +152,13 @@ void P2PMapServer::unregisterPlayerHost(struct map_session_data* sd) {
 }
 
 bool P2PMapServer::handleVPSFallback(const std::string& map_name) {
+    // Get the P2P map configuration
+    const auto& config = rathena::P2PMapConfigParser::getInstance().getConfig();
+    
+    // Check if VPS fallback is enabled
+    if (!config.general.enable_vps_fallback) {
+        ShowWarning("VPS fallback is disabled, but no P2P host available for map %s\n", map_name.c_str());
+    }
     auto it = map_states.find(map_name);
     if (it == map_states.end()) {
         MapState state;
@@ -132,7 +170,7 @@ bool P2PMapServer::handleVPSFallback(const std::string& map_name) {
         it->second.is_vps_hosted = true;
     }
 
-    ShowInfo("Map %s falling back to VPS hosting\n", map_name.c_str());
+    ShowInfo("Map %s using VPS hosting\n", map_name.c_str());
     return true;
 }
 
@@ -159,6 +197,13 @@ bool P2PMapServer::processP2PAssistance(const std::string& map_name) {
 std::shared_ptr<P2PHost> P2PMapServer::findOrAssignHost(const std::string& map_name) {
     auto& host_mgr = P2PHostManager::getInstance();
 
+    // Get the P2P map configuration
+    const auto& config = rathena::P2PMapConfigParser::getInstance().getConfig();
+    
+    // Check if P2P hosting is enabled
+    if (!config.general.enable_p2p_maps)
+        return nullptr;
+
     // Check if map already has a host
     auto it = map_states.find(map_name);
     if (it != map_states.end() && it->second.current_host_id != 0) {
@@ -179,6 +224,13 @@ std::shared_ptr<P2PHost> P2PMapServer::findOrAssignHost(const std::string& map_n
 bool P2PMapServer::collectPlayerMetrics(struct map_session_data* sd, P2PHostStats& stats) {
     if (!sd) return false;
 
+    // Get the P2P map configuration
+    const auto& config = rathena::P2PMapConfigParser::getInstance().getConfig();
+    
+    // Use the configuration values as defaults
+    stats.cpu_ghz = config.host_requirements.cpu_min_ghz;
+    stats.cpu_cores = config.host_requirements.cpu_min_cores;
+    stats.free_ram_mb = config.host_requirements.ram_min_mb;
     // In a real implementation, these metrics would be collected from the client
     // For now, we'll use placeholder values that would normally come from client reports
     stats.cpu_ghz = 3.5;  // Example value
@@ -194,6 +246,13 @@ bool P2PMapServer::collectPlayerMetrics(struct map_session_data* sd, P2PHostStat
 }
 
 bool P2PMapServer::handleHostMigration(const std::string& map_name, uint32 old_host_id) {
+    // Get the P2P map configuration
+    const auto& config = rathena::P2PMapConfigParser::getInstance().getConfig();
+    
+    // Check if auto migration is enabled
+    if (!config.general.enable_auto_migration) {
+        return handleVPSFallback(map_name);
+    }
     auto it = map_states.find(map_name);
     if (it == map_states.end()) return false;
 
@@ -214,6 +273,9 @@ bool P2PMapServer::handleHostMigration(const std::string& map_name, uint32 old_h
         }
     }
 
+    // If we get here, no backup host was available
+    ShowWarning("No backup host available for map %s, falling back to VPS\n", map_name.c_str());
+    
     // If no backup host available, fall back to VPS
     return handleVPSFallback(map_name);
 }

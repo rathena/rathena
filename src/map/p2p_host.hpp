@@ -6,6 +6,7 @@
 #include <map>
 #include <memory>
 #include <chrono>
+#include <set>
 #include "../common/timer.hpp"
 #include "../common/cbasetypes.hpp"
 #include "../common/db.hpp"
@@ -145,6 +146,9 @@ public:
     bool updateRegionalLatencies(uint32 account_id, const std::vector<RegionalLatency>& latencies);
     std::vector<RegionalLatency> getRegionalLatencies(uint32 account_id) const;
 
+    // Calculate host score based on performance metrics
+    double calculateHostScore(const std::shared_ptr<P2PHost>& host) const;
+
     static int health_check_timer(int32 tid, t_tick tick, int32 id, intptr_t data);
 
 private:
@@ -158,6 +162,7 @@ private:
     
     std::map<uint32, std::shared_ptr<P2PHost>> hosts;
     std::map<std::string, std::vector<uint32>> map_hosts;
+    std::set<std::string> p2p_eligible_maps;
     P2PHostConfig config;
     bool vps_connected;
     

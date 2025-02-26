@@ -1,12 +1,13 @@
-#include "p2p_config_parser.hpp"
+#include "p2p_map_config.hpp"
 #include "showmsg.hpp"
-#include "utils.hpp"
 #include <fstream>
 #include <yaml-cpp/yaml.h>
 
 namespace rathena {
 
-P2PConfigParser::P2PConfigParser() {
+P2PMapConfigParser* P2PMapConfigParser::instance = nullptr;
+
+P2PMapConfigParser::P2PMapConfigParser() {
     // Initialize with default values
     config.general.enable_p2p_maps = true;
     config.general.prefer_low_latency = true;
@@ -37,8 +38,16 @@ P2PConfigParser::P2PConfigParser() {
     config.monitoring.alert_on_failure = true;
 }
 
-bool P2PConfigParser::load(const std::string& filename) {
+P2PMapConfigParser& P2PMapConfigParser::getInstance() {
+    if (!instance) {
+        instance = new P2PMapConfigParser();
+    }
+    return *instance;
+}
+
+bool P2PMapConfigParser::load(const char* filename) {
     try {
+        last_filename = filename;
         YAML::Node yaml = YAML::LoadFile(filename);
 
         // Parse general settings
@@ -108,7 +117,7 @@ bool P2PConfigParser::load(const std::string& filename) {
             config.monitoring.alert_on_failure = monitoring["alert_on_failure"].as<int>(1) != 0;
         }
 
-        ShowInfo("Loaded P2P map configuration from %s\n", filename.c_str());
+        ShowInfo("Loaded P2P map configuration from %s\n", filename);
         return true;
     } catch (const std::exception& e) {
         ShowError("Failed to load P2P map configuration: %s\n", e.what());
@@ -116,7 +125,13 @@ bool P2PConfigParser::load(const std::string& filename) {
     }
 }
 
-const P2PConfig& P2PConfigParser::getConfig() const {
+void P2PMapConfigParser::reload() {
+    if (!last_filename.empty()) {
+        load(last_filename.c_str());
+    }
+}
+
+const P2PMapConfig& P2PMapConfigParser::getConfig() const {
     return config;
 }
 
