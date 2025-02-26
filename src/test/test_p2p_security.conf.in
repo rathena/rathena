@@ -1,0 +1,136 @@
+//================= Test P2P Security Configuration ===================
+
+network_monitor: {
+    enabled: true
+    update_interval: 60
+    cleanup_interval: 300
+
+    metrics: {
+        store_duration: 86400
+        alert_timeout: 3600
+        max_samples: 1000
+    }
+}
+
+security: {
+    ddos_protection: {
+        enabled: true
+        packet_rate: 1000
+        connection_rate: 100
+        bandwidth_limit: 1048576
+        burst_threshold: 2000
+        blacklist_duration: 3600
+    }
+
+    packet_validation: {
+        enabled: true
+        max_size: 65536
+        encryption: true
+        checksum: true
+    }
+
+    threat_detection: {
+        enabled: true
+        scan_interval: 300
+        alert_threshold: 10
+        auto_blacklist: true
+    }
+}
+
+host_requirements: {
+    minimum: {
+        cpu_cores: 2
+        ram_gb: 4
+        bandwidth_mbps: 10
+        storage_gb: 20
+        uptime_percent: 95
+    }
+
+    limits: {
+        max_maps: 5
+        max_players: 100
+        max_instances: 3
+        bandwidth_limit: 100
+        storage_limit: 50
+    }
+}
+
+optimization: {
+    compression: {
+        enabled: true
+        threshold: 512
+        level: 6
+    }
+
+    packet_priority: {
+        enabled: true
+        levels: 4
+        queue_size: 1000
+    }
+
+    connection_pool: {
+        enabled: true
+        size: 1000
+        timeout: 300
+    }
+}
+
+thresholds: {
+    critical: {
+        cpu_usage: 90
+        memory_usage: 90
+        network_usage: 90
+        packet_loss: 5
+        latency: 200
+    }
+
+    warning: {
+        cpu_usage: 80
+        memory_usage: 80
+        network_usage: 80
+        packet_loss: 2
+        latency: 150
+    }
+}
+
+database: {
+    cleanup: {
+        performance_data: 86400
+        security_events: 604800
+        metrics: 2592000
+        alerts: 7776000
+    }
+
+    backup: {
+        enabled: true
+        interval: 86400
+        keep_count: 7
+    }
+}
+
+logging: {
+    security_events: true
+    performance_metrics: true
+    network_stats: true
+    host_status: true
+    debug_info: false
+}
+
+notifications: {
+    email: {
+        enabled: false
+        server: "smtp.test.com"
+        port: 587
+        username: "test_user"
+        password: "test_pass"
+        from: "noreply@test.com"
+        to: "admin@test.com"
+    }
+
+    discord: {
+        enabled: false
+        webhook_url: "https://discord.com/api/webhooks/test"
+        username: "P2P Security"
+        avatar_url: "https://test.com/avatar.png"
+    }
+}

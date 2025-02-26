@@ -1,0 +1,82 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+
+# Find dependencies
+find_dependency(ZLIB REQUIRED)
+find_dependency(MySQL REQUIRED)
+find_dependency(nlohmann_json REQUIRED)
+find_dependency(Threads REQUIRED)
+
+# Path to the installed libraries
+set_and_check(COMMON_INCLUDE_DIR "@PACKAGE_INCLUDE_INSTALL_DIR@")
+set_and_check(COMMON_LIB_DIR "@PACKAGE_LIB_INSTALL_DIR@")
+
+# Import targets
+include("${CMAKE_CURRENT_LIST_DIR}/CommonTargets.cmake")
+
+# Define common configuration variables
+set(COMMON_VERSION "@PROJECT_VERSION@")
+set(COMMON_VERSION_MAJOR "@PROJECT_VERSION_MAJOR@")
+set(COMMON_VERSION_MINOR "@PROJECT_VERSION_MINOR@")
+set(COMMON_VERSION_PATCH "@PROJECT_VERSION_PATCH@")
+
+# MySQL configuration
+set(MYSQL_VERSION "@MYSQL_VERSION@")
+set(MYSQL_INCLUDE_DIR "@MYSQL_INCLUDE_DIR@")
+set(MYSQL_LIBRARY_DIR "@MYSQL_LIBRARY_DIR@")
+
+# Configure paths for runtime
+if(WIN32)
+    set(COMMON_RUNTIME_DIR "${COMMON_LIB_DIR}")
+    set(MYSQL_RUNTIME_DIR "${MYSQL_LIBRARY_DIR}")
+else()
+    set(COMMON_RUNTIME_DIR "${COMMON_LIB_DIR}")
+    set(MYSQL_RUNTIME_DIR "${MYSQL_LIBRARY_DIR}")
+endif()
+
+# Set library paths for linking
+set(COMMON_LIBRARIES common)
+
+# Check if all required components are found
+check_required_components(Common)
+
+# Function to copy runtime dependencies
+function(copy_common_runtime_deps TARGET_NAME)
+    if(WIN32)
+        # Copy DLLs to target directory on Windows
+        add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "${MYSQL_RUNTIME_DIR}/libmysql.dll"
+                $<TARGET_FILE_DIR:${TARGET_NAME}>
+        )
+    endif()
+endfunction()
+
+# Macro for setting up common build flags
+macro(setup_common_build_flags)
+    if(MSVC)
+        add_compile_options(
+            /W4
+            /wd4100  # Unreferenced formal parameter
+            /wd4245  # Conversion from 'type1' to 'type2', signed/unsigned mismatch
+            /wd4458  # Declaration of 'identifier' hides class member
+        )
+    else()
+        add_compile_options(
+            -Wall
+            -Wextra
+            -Werror
+            -Wno-unused-parameter
+            -Wno-sign-compare
+        )
+    endif()
+endmacro()
+
+# Helper function to set up a target with common settings
+function(setup_common_target TARGET_NAME)
+    target_link_libraries(${TARGET_NAME} PRIVATE ${COMMON_LIBRARIES})
+    target_include_directories(${TARGET_NAME} PRIVATE ${COMMON_INCLUDE_DIR})
+    setup_common_build_flags()
+    copy_common_runtime_deps(${TARGET_NAME})
+endfunction()

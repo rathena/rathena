@@ -1,246 +1,179 @@
-# rAthena with WARP P2P Security Integration
+# rAthena AI World - P2P Network Security System
 
-## Vision & Project Goals
+## Overview
+Advanced P2P network security and monitoring system for rAthena, providing robust protection, performance optimization, and real-time monitoring capabilities.
 
-rAthena has evolved to meet the growing demands of modern Ragnarok Online private servers by integrating the WARP P2P security system. This revolutionary integration aims to:
+## ✨ Implemented Features
 
-1. **Transform Map Hosting**
-   - Enable secure player-hosted maps
-   - Reduce server infrastructure costs
-   - Scale dynamically with player base
-   - Maintain game integrity
+### Network Security
+- Thread-safe packet monitoring
+- Resource usage tracking
+- Performance metrics collection
+- Host statistics monitoring
+- SQL injection prevention
+- Memory safety improvements
+- Basic DDoS protection
 
-2. **Enhance Security**
-   - Protect against cheating
-   - Secure P2P connections
-   - Validate hosts and clients
-   - Monitor game integrity
+### Monitoring System
+- Real-time connection tracking
+- Resource usage monitoring
+- Performance metrics collection
+- Security event logging
+- Host status tracking
 
-3. **Empower Communities**
-   - Foster player hosting
-   - Build trust in P2P maps
-   - Create new gameplay possibilities
-   - Strengthen server communities
+### Development Tools
+- Cross-platform build system
+- Comprehensive test suite
+- Memory leak detection
+- Thread safety verification
+- Performance testing
 
-## Why P2P Integration?
-
-### Current Challenges
-
-1. **Server Infrastructure**
-   - High hosting costs
-   - Limited scalability
-   - Resource constraints
-   - Performance bottlenecks
-
-2. **Security Concerns**
-   - Cheating and botting
-   - Network vulnerabilities
-   - Client manipulation
-   - Host reliability
-
-3. **Community Limitations**
-   - Restricted map access
-   - Limited server growth
-   - Hosting barriers
-   - Trust issues
-
-### Our Solution
-
-The WARP P2P Security Integration provides:
-
-1. **Distributed Architecture**
-   - Player-hosted maps
-   - Dynamic scaling
-   - Load distribution
-   - Resource optimization
-
-2. **Security Framework**
-   - Anti-cheat protection
-   - Encrypted communication
-   - Host validation
-   - Real-time monitoring
-
-3. **Community Tools**
-   - Host management
-   - Performance tracking
-   - Reputation system
-   - Administration tools
-
-## Expected Results
-
-### Immediate Benefits
-
-1. **Server Operations**
-   - Reduced hosting costs
-   - Improved scalability
-   - Better performance
-   - Lower maintenance
-
-2. **Player Experience**
-   - More available maps
-   - Secure gameplay
-   - Stable connections
-   - Fair environment
-
-### Long-term Impact
-
-1. **Server Growth**
-   - Increased capacity
-   - Community expansion
-   - Resource efficiency
-   - Sustainable operation
-
-2. **Game Evolution**
-   - New hosting models
-   - Enhanced features
-   - Community involvement
-   - Innovation opportunities
-
-## Technical Implementation
-
-### Server Integration
-
-```cpp
-// P2P Security Configuration
-p2p_security: {
-    enabled: true
-    security_level: 3
-    monitoring_interval: 5000
-    host_requirements: {
-        min_cpu: 2.0
-        min_ram: 8
-        min_network: 10
-    }
-}
-```
-
-### Database Schema
-
-```sql
--- Host tracking
-CREATE TABLE p2p_hosts (
-    account_id INT PRIMARY KEY,
-    host_score FLOAT,
-    total_uptime INT,
-    last_online DATETIME
-);
-
--- Security violations
-CREATE TABLE p2p_security_violations (
-    violation_id BIGINT PRIMARY KEY,
-    host_id INT,
-    violation_type VARCHAR(32)
-);
-```
-
-### Network Protocol
-
-```cpp
-// Packet Structure
-struct P2PPacket {
-    uint32_t magic;
-    uint32_t sequence;
-    uint64_t timestamp;
-    uint8_t encrypted_data[];
-};
-```
-
-## Features
-
-### Security Module
-- Memory protection
-- Process validation
-- Network encryption
-- Anti-cheat system
-
-### P2P Hosting
-- Host validation
-- Resource monitoring
-- Performance tracking
-- Load balancing
-
-### Administration
-- Host management
-- Security monitoring
-- Violation handling
-- Performance metrics
-
-## Building & Installation
+## 🚀 Getting Started
 
 ### Prerequisites
 - CMake 3.15+
-- C++17 compiler
+- C++17 compliant compiler
 - MySQL 5.7+
-- OpenSSL 1.1.1+
+- libconfig
+- nlohmann-json
 
-### Build Steps
+### Building
+
+#### Linux
 ```bash
-./configure --enable-p2p-security
-make server
+# Build and test
+./test_build.sh
+
+# Build only
+mkdir build && cd build
+cmake -DBUILD_TESTING=ON ..
+make
 ```
 
-### Database Setup
-```bash
-mysql -u ragnarok -p ragnarok_db < sql-files/p2p_security.sql
+#### Windows
+```batch
+# Build and test
+test_build.bat
+
+# Build only
+mkdir build && cd build
+cmake -DBUILD_TESTING=ON -G "Visual Studio 16 2019" ..
+cmake --build . --config Release
 ```
 
-## Configuration
+## 🔧 Configuration
 
-### Server Settings
-```conf
-// P2P map configuration
-p2p_map_config: {
+### Network Monitor Settings
+```ini
+network_monitor: {
     enabled: true
-    max_instances: 100
-    scan_interval: 5000
+    update_interval: 60
+    cleanup_interval: 300
 }
 ```
 
 ### Security Settings
-```conf
-// Security configuration
-security_config: {
-    encryption: true
-    validation: true
-    monitoring: true
+```ini
+security: {
+    ddos_protection: {
+        enabled: true
+        packet_rate: 1000
+        connection_rate: 100
+    }
 }
 ```
 
-## Monitoring
+## 📊 Monitoring
 
-### Real-time Tracking
-- Host status
-- Network metrics
+### Performance Metrics
+- Packet rates
+- Bandwidth usage
+- Connection counts
+- Resource utilization
 - Security events
-- Performance data
 
-### Admin Tools
-- Host dashboard
-- Violation logs
-- Performance graphs
-- Security reports
+### Host Statistics
+- CPU usage
+- Memory usage
+- Network usage
+- Connected players
+- System status
 
-## Support & Development
+## 🔒 Security Features
 
-### Community
-- GitHub repository
-- Discord server
-- Forums
-- Documentation
+### Protection
+- SQL injection prevention
+- Memory safety
+- Thread safety
+- Resource management
+- Input validation
 
-### Contributing
-- Report issues
-- Submit patches
-- Suggest features
-- Join development
+### Monitoring
+- Security event logging
+- Resource tracking
+- Connection monitoring
+- Performance tracking
+- Alert generation
 
-## License
+## 🧪 Testing
 
-This project maintains the rAthena license (GNU GPLv3) while the WARP P2P Security Module is under MIT License.
+### Running Tests
+```bash
+# Full test suite
+cd build/src/test
+./network_tests
 
-## Acknowledgments
+# Specific tests
+./network_tests --gtest_filter=NetworkMonitorTest.*
+./network_tests --gtest_filter=SyncTest.*
+./network_tests --gtest_filter=P2PConfigParserTest.*
+```
 
-- rAthena Team
-- WARP Security Team
-- Contributing developers
-- Community testers
+### Memory Testing
+```bash
+# Linux (Valgrind)
+valgrind --leak-check=full ./network_tests
+
+# Windows (Dr. Memory)
+drmemory.exe -light -- network_tests.exe
+```
+
+## 📚 Documentation
+
+- [Security Review](docs/SECURITY_REVIEW.md)
+- [P2P Hosting Guide](docs/P2P_HOSTING.md)
+- [Future Features](docs/FUTURE_FEATURES.md)
+- [Feature Details](docs/FEATURE_DETAILS.md)
+
+## 🔜 Upcoming Features
+
+### Security
+- TLS implementation
+- Advanced DDoS protection
+- Certificate management
+- Packet encryption
+
+### Monitoring
+- Real-time dashboard
+- Advanced analytics
+- Predictive monitoring
+- Custom metrics
+
+### Performance
+- Advanced caching
+- Load balancing
+- Dynamic scaling
+- Resource optimization
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Run tests (`./test_build.sh` or `test_build.bat`)
+4. Commit changes (`git commit -m 'Add amazing feature'`)
+5. Push to branch (`git push origin feature/amazing-feature`)
+6. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details.

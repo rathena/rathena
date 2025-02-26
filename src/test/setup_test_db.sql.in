@@ -1,0 +1,78 @@
+-- Create test database
+CREATE DATABASE IF NOT EXISTS test_rathena;
+USE test_rathena;
+
+-- Create test tables (mirror of production schema)
+CREATE TABLE IF NOT EXISTS `p2p_performance` (
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `account_id` INT UNSIGNED NOT NULL,
+    `packets_sent` INT UNSIGNED NOT NULL DEFAULT 0,
+    `packets_received` INT UNSIGNED NOT NULL DEFAULT 0,
+    `bytes_sent` BIGINT UNSIGNED NOT NULL DEFAULT 0,
+    `bytes_received` BIGINT UNSIGNED NOT NULL DEFAULT 0,
+    `packets_lost` INT UNSIGNED NOT NULL DEFAULT 0,
+    `avg_latency` FLOAT NOT NULL DEFAULT 0,
+    `timestamp` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    KEY `account_id` (`account_id`),
+    KEY `timestamp` (`timestamp`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `p2p_system_metrics` (
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `account_id` INT UNSIGNED,
+    `metrics_data` JSON NOT NULL,
+    `connected_players` INT UNSIGNED NOT NULL DEFAULT 0,
+    `timestamp` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    KEY `account_id` (`account_id`),
+    KEY `timestamp` (`timestamp`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `p2p_connections` (
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `host_account_id` INT UNSIGNED NOT NULL,
+    `client_account_id` INT UNSIGNED NOT NULL,
+    `connected_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `disconnected_at` DATETIME,
+    PRIMARY KEY (`id`),
+    KEY `host_account_id` (`host_account_id`),
+    KEY `client_account_id` (`client_account_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `p2p_security_events` (
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `event_type` VARCHAR(32) NOT NULL,
+    `account_id` INT UNSIGNED,
+    `details` TEXT,
+    `timestamp` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    KEY `event_type` (`event_type`),
+    KEY `account_id` (`account_id`),
+    KEY `timestamp` (`timestamp`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `p2p_security_alerts` (
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `alert_type` VARCHAR(32) NOT NULL,
+    `severity` ENUM('low', 'medium', 'high', 'critical') NOT NULL,
+    `message` TEXT NOT NULL,
+    `timestamp` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    KEY `alert_type` (`alert_type`),
+    KEY `severity` (`severity`),
+    KEY `timestamp` (`timestamp`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Create test accounts for unit tests
+INSERT IGNORE INTO `login` (`account_id`, `userid`, `user_pass`) VALUES
+(1000, 'test_host_1', ''),
+(1001, 'test_host_2', ''),
+(1002, 'test_host_3', ''),
+(2000, 'test_client_1', ''),
+(2001, 'test_client_2', ''),
+(2002, 'test_client_3', '');
+
+-- Grant test user permissions
+GRANT ALL PRIVILEGES ON test_rathena.* TO '@TEST_DB_USER@'@'localhost';
+FLUSH PRIVILEGES;
