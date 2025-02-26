@@ -5,6 +5,7 @@
 #include "../common/cbasetypes.hpp"
 #include "map.hpp"
 #include "p2p_host.hpp"
+#include "../common/p2p_data_sync.hpp"
 
 namespace rathena {
 
@@ -36,6 +37,15 @@ public:
     // Process P2P task distribution for VPS-hosted maps
     bool processP2PAssistance(const std::string& map_name);
 
+    // Synchronize map state to the main server (is_critical for real-time performance)
+    bool syncMapState(const std::string& map_name, uint32 host_id, bool is_critical = false);
+    
+    // Synchronize player data to the main server (is_critical for real-time performance)
+    bool syncPlayerData(struct map_session_data* sd, const std::string& map_name, bool is_critical = false);
+    
+    // Synchronize security validation results to the main server (is_critical for real-time performance)
+    bool syncSecurityValidation(uint32 host_id, const std::string& map_name, P2PHost::ValidationType type, bool result, bool is_critical = false);
+
 private:
     P2PMapServer();
     ~P2PMapServer();
@@ -51,6 +61,12 @@ private:
     
     // Validate map data from P2P hosts
     bool validateMapData(const std::string& map_name, uint32 host_id);
+    
+    // Create JSON representation of map state
+    std::string createMapStateJson(const std::string& map_name);
+    
+    // Create JSON representation of player data
+    std::string createPlayerDataJson(struct map_session_data* sd);
     
     // Internal map state tracking
     struct MapState {

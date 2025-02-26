@@ -6,6 +6,7 @@
 #include "battle.hpp"
 #include "../common/p2p_map_config.hpp"
 #include "clif.hpp"
+#include <nlohmann/json.hpp>
 
 namespace rathena {
 
@@ -25,6 +26,9 @@ P2PMapServer& P2PMapServer::getInstance() {
 bool P2PMapServer::init() {
     ShowInfo("Initializing P2P Map Server\n");
     rathena::P2PMapConfigParser::getInstance().load("conf/p2p_map_config.conf");
+    
+    // Initialize the P2P data synchronization system
+    P2PDataSync::getInstance().init("conf/p2p_data_sync.conf");
     return true;
 }
 
@@ -32,6 +36,9 @@ void P2PMapServer::final() {
     ShowInfo("Finalizing P2P Map Server\n");
     delete instance;
     instance = nullptr;
+    
+    // Finalize the P2P data synchronization system
+    P2PDataSync::getInstance().final();
 }
 
 bool P2PMapServer::onPlayerEnterMap(struct map_session_data* sd, const std::string& map_name) {
@@ -84,6 +91,12 @@ bool P2PMapServer::onPlayerEnterMap(struct map_session_data* sd, const std::stri
     }
     
     ShowInfo("Player %s entered map %s hosted by P2P host %d\n", sd->status.name, map_name.c_str(), host->getAccountId());
+    
+    // Synchronize map state to the main server
+    syncMapState(map_name, host->getAccountId(), true); // Critical operation
+    
+    // Synchronize player data to the main server
+    syncPlayerData(sd, map_name, true); // Critical operation
 
     return true;
 }
@@ -109,6 +122,9 @@ void P2PMapServer::onPlayerLeaveMap(struct map_session_data* sd, const std::stri
 
     // Unregister as P2P host
     unregisterPlayerHost(sd);
+    
+    // Synchronize map state to the main server
+    syncMapState(map_name, state.current_host_id, true); // Critical operation
 }
 
 bool P2PMapServer::canPlayerHost(struct map_session_data* sd) {
@@ -284,6 +300,170 @@ bool P2PMapServer::validateMapData(const std::string& map_name, uint32 host_id) 
     // In a real implementation, this would validate map state, monster positions, etc.
     // For now, we'll just return true as a placeholder
     return true;
+}
+
+bool P2PMapServer::syncMapState(const std::string& map_name, uint32 host_id, bool is_critical) {
+    if (map_name.empty()) {
+        return false;
+    }
+    
+    // Create JSON representation of map state
+    std::string map_state_json = createMapStateJson(map_name);
+    
+    std::string operation_id;
+    
+    if (is_critical) {
+        // Use critical sync for real-time performance
+        operation_id = P2PDataSync::getInstance().syncCriticalData(
+            SyncDataType::MAP_STATE,
+            host_id,
+            map_name,
+            map_state_json,
+            true // priority
+        );
+        
+        // Wait for the result to ensure real-time performance
+        P2PDataSync::getInstance().waitForSyncResult(operation_id, 500); // 500ms timeout
+    } else {
+        // Use regular sync for non-critical updates
+        operation_id = P2PDataSync::getInstance().syncToMainServer(
+            SyncDataType::MAP_STATE,
+            host_id,
+            map_name,
+            map_state_json,
+            false // not priority
+        );
+    }
+    
+    // We don't wait for the result here, as it's processed asynchronously
+    return true;
+}
+
+bool P2PMapServer::syncPlayerData(struct map_session_data* sd, const std::string& map_name, bool is_critical) {
+    if (!sd || map_name.empty()) {
+        return false;
+    }
+    
+    // Create JSON representation of player data
+    std::string player_data_json = createPlayerDataJson(sd);
+    
+    std::string operation_id;
+    
+    if (is_critical) {
+        // Use critical sync for real-time performance
+        operation_id = P2PDataSync::getInstance().syncCriticalData(
+            SyncDataType::PLAYER_POSITION,
+            sd->status.account_id,
+            map_name,
+            player_data_json,
+            true // priority
+        );
+        
+        // Wait for the result to ensure real-time performance
+        P2PDataSync::getInstance().waitForSyncResult(operation_id, 500); // 500ms timeout
+    } else {
+        // Use regular sync for non-critical updates
+        operation_id = P2PDataSync::getInstance().syncToMainServer(
+            SyncDataType::PLAYER_POSITION,
+            sd->status.account_id,
+            map_name,
+            player_data_json,
+            false // not priority
+        );
+    }
+    
+    // We don't wait for the result here, as it's processed asynchronously
+    return true;
+}
+
+bool P2PMapServer::syncSecurityValidation(uint32 host_id, const std::string& map_name, P2PHost::ValidationType type, bool result, bool is_critical) {
+    if (host_id == 0 || map_name.empty()) {
+        return false;
+    }
+    
+    // Create JSON representation of security validation
+    nlohmann::json validation_json;
+    validation_json["host_id"] = host_id;
+    validation_json["map_name"] = map_name;
+    validation_json["validation_type"] = static_cast<int>(type);
+    validation_json["result"] = result;
+    validation_json["timestamp"] = std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::system_clock::now().time_since_epoch()).count();
+    
+    std::string operation_id;
+    
+    if (is_critical) {
+        // Use critical sync for real-time performance
+        operation_id = P2PDataSync::getInstance().syncCriticalData(
+            SyncDataType::SECURITY_VALIDATION,
+            host_id,
+            map_name,
+            validation_json.dump(),
+            true // priority
+        );
+        
+        // Wait for the result to ensure real-time performance
+        P2PDataSync::getInstance().waitForSyncResult(operation_id, 500); // 500ms timeout
+    } else {
+        // Use regular sync for non-critical updates
+        operation_id = P2PDataSync::getInstance().syncToMainServer(
+            SyncDataType::SECURITY_VALIDATION,
+            host_id,
+            map_name,
+            validation_json.dump(),
+            true // priority
+        );
+    }
+    
+    // We don't wait for the result here, as it's processed asynchronously
+    return true;
+}
+
+std::string P2PMapServer::createMapStateJson(const std::string& map_name) {
+    auto it = map_states.find(map_name);
+    if (it == map_states.end()) {
+        return "{}";
+    }
+    
+    const auto& state = it->second;
+    
+    nlohmann::json map_state;
+    map_state["map_name"] = map_name;
+    map_state["host_id"] = state.current_host_id;
+    map_state["is_vps_hosted"] = state.is_vps_hosted;
+    map_state["backup_host_ids"] = state.backup_host_ids;
+    map_state["assistance_host_ids"] = state.assistance_host_ids;
+    map_state["timestamp"] = std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::system_clock::now().time_since_epoch()).count();
+    
+    return map_state.dump();
+}
+
+std::string P2PMapServer::createPlayerDataJson(struct map_session_data* sd) {
+    if (!sd) {
+        return "{}";
+    }
+    
+    nlohmann::json player_data;
+    player_data["account_id"] = sd->status.account_id;
+    player_data["char_id"] = sd->status.char_id;
+    player_data["name"] = sd->status.name;
+    player_data["class"] = sd->status.class_;
+    player_data["base_level"] = sd->status.base_level;
+    player_data["job_level"] = sd->status.job_level;
+    player_data["hp"] = sd->status.hp;
+    player_data["max_hp"] = sd->status.max_hp;
+    player_data["sp"] = sd->status.sp;
+    player_data["max_sp"] = sd->status.max_sp;
+    player_data["position"] = {
+        {"x", sd->bl.x},
+        {"y", sd->bl.y},
+        {"m", sd->bl.m}
+    };
+    player_data["timestamp"] = std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::system_clock::now().time_since_epoch()).count();
+    
+    return player_data.dump();
 }
 
 } // namespace rathena

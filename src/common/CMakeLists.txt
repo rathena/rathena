@@ -3,13 +3,24 @@ find_package(ZLIB REQUIRED)
 find_package(MySQL REQUIRED)
 find_package(nlohmann_json REQUIRED)
 find_package(Threads REQUIRED)
+find_package(CURL REQUIRED)
+find_package(OpenSSL REQUIRED)
+
+# Find Redis and PostgreSQL with pgvector
+find_path(HIREDIS_INCLUDE_DIR hiredis/hiredis.h)
+find_library(HIREDIS_LIBRARY NAMES hiredis)
+
+find_path(LIBPQ_INCLUDE_DIR libpq-fe.h)
+find_library(LIBPQ_LIBRARY NAMES pq)
 
 # Add network monitoring sources
 set(COMMON_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/network_monitor.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network_security.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/network_optimization.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/p2p_map_config.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/p2p_config_parser.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/p2p_data_sync.cpp
 )
 
 # Add header files
@@ -19,7 +30,9 @@ set(COMMON_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/network_optimization.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/thread_guard.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/sync.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/p2p_map_config.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/p2p_config_parser.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/p2p_data_sync.hpp
 )
 
 # Library configuration
@@ -31,6 +44,10 @@ target_include_directories(common PUBLIC
     ${ZLIB_INCLUDE_DIRS}
     ${MYSQL_INCLUDE_DIR}
     ${LIBCONFIG_INCLUDE_DIR}
+    ${CURL_INCLUDE_DIRS}
+    ${OPENSSL_INCLUDE_DIR}
+    ${HIREDIS_INCLUDE_DIR}
+    ${LIBPQ_INCLUDE_DIR}
 )
 
 target_link_libraries(common PUBLIC
@@ -39,6 +56,10 @@ target_link_libraries(common PUBLIC
     nlohmann_json::nlohmann_json
     Threads::Threads
     libconfig
+    ${CURL_LIBRARIES}
+    ${OPENSSL_LIBRARIES}
+    ${HIREDIS_LIBRARY}
+    ${LIBPQ_LIBRARY}
 )
 
 # Compiler flags

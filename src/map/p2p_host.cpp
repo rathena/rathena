@@ -8,6 +8,7 @@
 #include "../common/p2p_map_config.hpp"
 #include "pc.hpp"
 #include "map.hpp"
+#include "p2p_map.hpp"
 #include <algorithm>
 
 namespace rathena {
@@ -66,6 +67,10 @@ bool P2PHost::validateHosting(ValidationType type) {
             break;
     }
     security.validation_timestamp = (uint32)time(nullptr);
+    
+    // Synchronize validation result to the main server
+    P2PMapServer::getInstance().syncSecurityValidation(account_id, assigned_maps.empty() ? "" : assigned_maps[0], type, result, true); // Use critical sync for security validation
+    
     return isSecurityValid();
 }
 
