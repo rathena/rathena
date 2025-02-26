@@ -65,11 +65,13 @@ Players who feed the Beggar consistently can earn additional rewards:
 ### Special Event
 
 When a player collects 100 Ancient Scroll Fragments, a special event is triggered:
-1. All AI Legends appear at a designated location
-2. The player is challenged to a special battle
+1. All AI Legends appear at a designated location, forming multiple parties
+2. A grand PK fight is initiated between all AI Legends and their master (the Nameless Beggar)
 3. The AI Legends reveal that they are all disciples of the Nameless Beggar
-4. Regardless of the outcome, the player receives a fragment of a special passive skill
-5. The AI Legends engage in conversation with each other, revealing their relationships and personalities
+4. The fight is intense and lasts randomly between 8-18 minutes
+5. Despite the AI Legends' coordinated efforts, the master wins due to perfect skill combinations from various job classes
+6. The player who triggered the event receives a fragment of a special passive skill regardless of the outcome
+7. The AI Legends engage in conversation with each other, revealing their relationships and personalities
 
 During this event, the AI Legends demonstrate remarkable teamwork despite their verbal conflicts, showing that they have trained together under the Beggar's tutelage.
 

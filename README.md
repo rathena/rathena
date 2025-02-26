@@ -13,7 +13,7 @@ Advanced AI-driven gameplay enhancement and P2P network security system for rAth
 - Contrasting MBTI personalities for unique character interactions
 - Detailed backstories and relationships between characters
 - MVP battle assistance for the 5 weakest parties
-- PvP challenges with same-class players
+- 1v1 PvP duels with same-class players
 - Global chat interactions between AI characters
 - Secret skills that can be taught to worthy players
 
@@ -23,6 +23,8 @@ Advanced AI-driven gameplay enhancement and P2P network security system for rAth
 - Food request and reward system encouraging player interaction
 - Feeding streak system rewarding consistent interaction
 - Special event triggered by collecting 100 Ancient Scroll Fragments
+- Epic grand PK fight between all AI Legends and their master lasting 8-18 minutes
+- Master's victory through perfect skill combinations from all job classes
 - Narrative connection revealing all AI Legends as the Beggar's disciples
 
 #### Mayor AI Agent

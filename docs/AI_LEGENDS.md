@@ -171,10 +171,10 @@ To learn a secret skill from an AI Legend:
 
 When challenged to PvP by an AI Legend:
 
-1. **Accept the Challenge**: You can accept or decline the challenge
-2. **Prepare for Battle**: The AI Legend will be 8% stronger than the strongest player
-3. **Use Strategy**: AI Legends have optimal builds but can be defeated with strategy
-4. **Learn from Defeat**: If defeated, you can learn from the experience
+1. **Accept the Challenge**: You can accept or decline the 1v1 duel challenge
+2. **Prepare for Battle**: The AI Legend will be 8% stronger than the strongest player in a direct 1v1 duel
+3. **Use Strategy**: AI Legends have optimal builds but can be defeated with the right strategy
+4. **Learn from Defeat**: If defeated in the duel, you can learn from the experience
 5. **Earn Respect**: Performing well in PvP can earn the AI Legend's respect
 
 ### MVP Assistance
