@@ -673,6 +673,7 @@ public:
 		int32 fixcastrate, varcastrate, delayrate; // n/100
 		int32 add_fixcast, add_varcast; // in milliseconds
 		int32 ematk; // matk bonus from equipment
+		int32 ematk_hidden; // matk bonus not visible in status window
 		int32 eatk; // atk bonus from equipment
 		uint8 absorb_dmg_maxhp; // [Cydh]
 		uint8 absorb_dmg_maxhp2;
