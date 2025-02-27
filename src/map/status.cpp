@@ -2158,8 +2158,9 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		}
 
 		if (sc->option) {
+			// We do not check it for non-players here as hide will not stop monsters from scanning for new targets and use skills
+			// The logic that normal attacks will not actually be executed when hidden needs to be put in the AI code instead
 			if ((sc->option&OPTION_HIDE) && src->type == BL_PC && (skill_id == 0 || !skill_get_inf2(skill_id, INF2_ALLOWWHENHIDDEN))) {
-				// Non players can use all skills while hidden.
 				return false;
 			}
 			if (sc->option&OPTION_CHASEWALK && skill_id != ST_CHASEWALK)

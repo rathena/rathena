@@ -1920,10 +1920,12 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 	{
 		int32 prev_id = md->target_id;
 		map_foreachinallrange (mob_ai_sub_hard_activesearch, &md->bl, view_range, DEFAULT_ENEMY_TYPE(md), md, &tbl, mode);
-		// If a monster finds a new target that is already in attack range it behaves as if it was attacked
-		// This will result in the monster switching into Berserk mode instead of Angry mode later on in this AI interation
-		if (tbl != nullptr && prev_id != md->target_id && battle_check_range(&md->bl, tbl, md->status.rhw.range))
+		// If a monster finds a new target that is already in attack range it immediately switches to rush mode
+		// This behavior overrides even angry mode and other mode-specific behavior
+		if (tbl != nullptr && prev_id != md->target_id && battle_check_range(&md->bl, tbl, md->status.rhw.range)) {
 			md->state.aggressive = 0;
+			mob_setstate(*md, MSS_RUSH);
+		}
 	}
 	else
 	if (mode&MD_CHANGECHASE && (md->state.skillstate == MSS_RUSH || md->state.skillstate == MSS_FOLLOW))
@@ -2030,7 +2032,8 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 		md->ud.target_to = 0;
 
 		// Hiding is a special case because it prevents normal attacks but allows skill usage
-		// TODO: Some other states also have this behavior and should be investigated (e.g. NPC_SR_CURSEDCIRCLE)
+		// TODO: Some other states also have this behavior and should be investigated
+		// TODO: EFST_AUTOCOUNTER, EFST_BLADESTOP, NPC_SR_CURSEDCIRCLE
 		if (!(md->sc.option&OPTION_HIDE)) {
 			// Target within range and potentially able to use normal attack, engage
 			if (md->ud.target != tbl->id || md->ud.attacktimer == INVALID_TIMER)
@@ -2046,6 +2049,11 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 					}
 				}
 			}
+		}
+		else {
+			// These status changes pretend the attack was successful without attempting it
+			// This results in the monster going into an attack state despite not attacking
+			mob_setstate(*md, MSS_BERSERK);
 		}
 		//Target still in attack range, no need to chase the target
 		return true;
