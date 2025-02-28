@@ -1588,9 +1588,10 @@ int32 mob_unlocktarget(struct mob_data *md, t_tick tick)
 	}
 	if (md->target_id) {
 		md->target_id=0;
-		md->ud.target_to = 0;
 		unit_set_target(&md->ud, 0);
 	}
+	md->ud.state.attack_continue = 0;
+	md->ud.target_to = 0;
 	
 	if (!md->ud.state.ignore_cell_stack_limit && battle_config.official_cell_stack_limit > 0
 		&& (chasestate || battle_config.mob_ai & 0x8)
