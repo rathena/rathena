@@ -1548,9 +1548,6 @@ int32 mob_unlocktarget(struct mob_data *md, t_tick tick)
 {
 	nullpo_ret(md);
 
-	// Remember if the monster was in a "chasing" state
-	bool chasestate = mob_is_chasing(md->state.skillstate);
-
 	switch (md->state.skillstate) {
 	case MSS_WALK:
 		if (md->ud.walktimer != INVALID_TIMER)
@@ -1580,7 +1577,7 @@ int32 mob_unlocktarget(struct mob_data *md, t_tick tick)
 	md->ud.target_to = 0;
 	
 	if (!md->ud.state.ignore_cell_stack_limit && battle_config.official_cell_stack_limit > 0
-		&& (chasestate || battle_config.mob_ai & 0x8)
+		&& (battle_config.mob_ai & 0x8)
 		&& map_count_oncell(md->bl.m, md->bl.x, md->bl.y, BL_CHAR | BL_NPC, 1) > battle_config.official_cell_stack_limit) {
 		unit_walktoxy(&md->bl, md->bl.x, md->bl.y, 8);
 	}
