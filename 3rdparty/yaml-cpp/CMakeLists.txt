@@ -71,7 +71,7 @@ add_library(yaml-cpp STATIC EXCLUDE_FROM_ALL ${YAML_SOURCES})
 
 target_include_directories(yaml-cpp PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
-target_compile_definitions(yaml-cpp PUBLIC "-DYAML_CPP_STATIC_DEFINE")
+target_compile_definitions(yaml-cpp PUBLIC "YAML_CPP_STATIC_DEFINE")
 
 if(WIN32)
 	set_target_properties(yaml-cpp PROPERTIES FOLDER "3rdparty")

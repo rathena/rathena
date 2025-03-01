@@ -62,7 +62,7 @@ jobs:
         run: ./tools/ci/sql.sh
 
       - name: Configure CMake
-        run: cmake -B build -DENABLE_PRERE=${{env.PRERE}} -DENABLE_EXTRA_BUILDBOT_CODE=ON -DENABLE_VIP=ON
+        run: cmake -B build -DENABLE_PRERE=${{env.PRERE}} -DENABLE_BUILDBOT=ON -DENABLE_VIP=ON
 
       - name: Build
         run: cmake --build build -j4 --target server

@@ -142,9 +142,6 @@ Thumbs.db
 
 # Linux script tools
 /athena-start.sh
-# /function.sh
-# /install.sh
-# /uninstall.sh
 
 # dlls
 /libmysql.dll

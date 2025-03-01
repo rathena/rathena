@@ -14,13 +14,13 @@ set(MAXCONN CACHE STRING "Sets the MAXCONN define of the servers. (see src/commo
 option(ENABLE_PRERE "Whether or not to enable Pre-renewal (default=OFF)" OFF)
 option(ENABLE_WEB_SERVER "Build web-server (default=ON)" ON)
 option(ENABLE_RDTSC "Enable RDTSC instruction as a timing source (default=OFF)" OFF)
-option(ENABLE_EXTRA_DEBUG_CODE "Enable extra debug code (default=OFF)" OFF)
+option(ENABLE_DEBUG "Enable extra debug code (default=OFF)" OFF)
 option(ENABLE_MEMMGR "Enable memory manager (default=ON)" ON)
 # TODO(vstumpf): If no one uses this, we can just remove it
 # set(ENABLE_MEMORY "system" CACHE STRING "Enable memory library (default=system)")
 option(ENABLE_PROFILER "Enable profiler (default=OFF)" OFF)
-option(ENABLE_EXTRA_BUILDBOT_CODE "Enable extra buildbot code (default=OFF)" OFF)
-option(ENABLE_EPOLL "Use epoll instead of select (default=OFF)" OFF)
+option(ENABLE_BUILDBOT "Enable extra buildbot code (default=OFF)" OFF)
+option(ENABLE_SOCKET_EPOLL "Use epoll instead of select (default=OFF)" OFF)
 option(ENABLE_VIP "Enable VIP system (default=OFF)" OFF)
 
 

@@ -79,7 +79,7 @@ jobs:
       #    project uses a compiled language
 
       - name: Configure CMake
-        run: cmake -B build -DENABLE_PRERE=${{env.PRERE}} -DENABLE_EXTRA_BUILDBOT_CODE=ON
+        run: cmake -B build -DENABLE_PRERE=${{env.PRERE}} -DENABLE_BUILDBOT=ON
 
       - name: Build
         run: cmake --build build -j4 --target all

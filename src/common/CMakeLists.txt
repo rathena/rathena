@@ -20,7 +20,7 @@ CHECK_C_SOURCE_RUNS("${_SOURCE}" HAVE_MONOTONIC_CLOCK)
 if(HAVE_MONOTONIC_CLOCK)
 	message(STATUS "Check for monotonic clock - yes")
 	set(MONOTONIC_CLOCK_LIBRARIES ${RT_LIBRARY})
-	set(MONOTONIC_CLOCK_DEFINITIONS "-DHAVE_MONOTONIC_CLOCK")
+	set(MONOTONIC_CLOCK_DEFINITIONS "HAVE_MONOTONIC_CLOCK")
 else()
 	message(STATUS "Check for monotonic clock - no")
 endif()
@@ -84,7 +84,7 @@ if(WIN32)
 endif()
 
 target_compile_definitions(minicore PRIVATE
-	"-DMINICORE"
+	"MINICORE"
 	${MONOTONIC_CLOCK_DEFINITIONS}
 )
 
@@ -158,55 +158,55 @@ endif()
 target_compile_definitions(common PRIVATE ${MONOTONIC_CLOCK_DEFINITIONS})
 
 if(ENABLE_RDTSC)
-	target_compile_definitions(common PRIVATE "-DENABLE_RDTSC")
+	target_compile_definitions(common PRIVATE "ENABLE_RDTSC")
 endif()
 
 
 # Propagated defines
 if(ENABLE_MEMMGR)
-	target_compile_definitions(common PUBLIC "-DUSE_MEMMGR")
-	target_compile_definitions(minicore PUBLIC "-DUSE_MEMMGR")
+	target_compile_definitions(common PUBLIC "USE_MEMMGR")
+	target_compile_definitions(minicore PUBLIC "USE_MEMMGR")
 else()
-	target_compile_definitions(common PUBLIC "-DNO_MEMMGR")
-	target_compile_definitions(minicore PUBLIC "-DNO_MEMMGR")
+	target_compile_definitions(common PUBLIC "NO_MEMMGR")
+	target_compile_definitions(minicore PUBLIC "NO_MEMMGR")
 endif()
 
-target_compile_definitions(common PUBLIC "-DPACKETVER=${PACKETVER}")
+target_compile_definitions(common PUBLIC "PACKETVER=${PACKETVER}")
 
 if(ENABLE_PRERE)
-	target_compile_definitions(common PUBLIC "-DPRERE")
-	target_compile_definitions(minicore PUBLIC "-DPRERE")
+	target_compile_definitions(common PUBLIC "PRERE")
+	target_compile_definitions(minicore PUBLIC "PRERE")
 endif()
 
-if(ENABLE_EXTRA_DEBUG_CODE)
-	target_compile_definitions(common PUBLIC "-DDEBUG")
+if(ENABLE_DEBUG)
+	target_compile_definitions(common PUBLIC "DEBUG")
 endif()
 
-if(ENABLE_EXTRA_BUILDBOT_CODE)
-	target_compile_definitions(common PUBLIC "-DBUILDBOT")
+if(ENABLE_BUILDBOT)
+	target_compile_definitions(common PUBLIC "BUILDBOT")
 endif()
 
-if(ENABLE_EPOLL)
-	target_compile_definitions(common PRIVATE "-DSOCKET_EPOLL")
+if(ENABLE_SOCKET_EPOLL)
+	target_compile_definitions(common PRIVATE "SOCKET_EPOLL")
 endif()
 
 if(ENABLE_VIP)
-	target_compile_definitions(common INTERFACE "-DVIP_ENABLE")
+	target_compile_definitions(common INTERFACE "VIP_ENABLE")
 endif()
 
 if(MAXCONN)
-    target_compile_definitions(common PUBLIC "-DMAXCONN=${MAXCONN}")
+    target_compile_definitions(common PUBLIC "MAXCONN=${MAXCONN}")
 endif()
 
 CHECK_FUNCTION_EXISTS(setrlimit HAVE_SETRLIMIT)
 if (HAVE_SETRLIMIT)
-	target_compile_definitions(common PUBLIC "-DHAVE_SETRLIMIT")
+	target_compile_definitions(common PUBLIC "HAVE_SETRLIMIT")
 endif()
 
 CHECK_FUNCTION_EXISTS(strnlen HAVE_STRNLEN)
 if (HAVE_STRNLEN)
-	target_compile_definitions(common PUBLIC "-DHAVE_STRNLEN")
-	target_compile_definitions(minicore PUBLIC "-DHAVE_STRNLEN")
+	target_compile_definitions(common PUBLIC "HAVE_STRNLEN")
+	target_compile_definitions(minicore PUBLIC "HAVE_STRNLEN")
 endif()
 
 target_include_directories(common PUBLIC

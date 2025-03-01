@@ -112,7 +112,7 @@ target_include_directories(map-server PUBLIC
 )
 
 if(WITH_PCRE)
-	target_compile_definitions(map-server PUBLIC "-DPCRE_SUPPORT")
+	target_compile_definitions(map-server PUBLIC "PCRE_SUPPORT")
 endif()
 
 # map-server-generator
@@ -125,7 +125,7 @@ if(WIN32)
 	set_target_properties(map-server-generator PROPERTIES FOLDER "Tools")
 endif()
 
-target_compile_definitions(map-server-generator PUBLIC "-DMAP_GENERATOR")
+target_compile_definitions(map-server-generator PUBLIC "MAP_GENERATOR")
 
 target_link_libraries(map-server-generator PUBLIC
 	common
@@ -137,6 +137,6 @@ target_include_directories(map-server-generator PUBLIC
 	${PCRE_INCLUDE_DIRS}
 )
 
-if(PCRE_FOUND)
-	target_compile_definitions(map-server-generator PUBLIC "-DPCRE_SUPPORT")
+if(WITH_PCRE)
+	target_compile_definitions(map-server-generator PUBLIC "PCRE_SUPPORT")
 endif()

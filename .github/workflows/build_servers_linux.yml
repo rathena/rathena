@@ -53,4 +53,4 @@ jobs:
 
       - name: Build
         # Execute the build.  You can specify a specific target with "--target <NAME>"
-        run: cmake --build build -j4 --target server tools
+        run: cmake --build build -j4 --target all

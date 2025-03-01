@@ -11,7 +11,7 @@ target_sources(libconfig PRIVATE
 
 target_include_directories(libconfig PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
 
-target_compile_definitions(libconfig PUBLIC "-DLIBCONFIG_STATIC")
+target_compile_definitions(libconfig PUBLIC "LIBCONFIG_STATIC")
 
 if(WIN32)
 	target_sources(libconfig PRIVATE
