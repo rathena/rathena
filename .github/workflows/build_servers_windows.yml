@@ -39,4 +39,4 @@ jobs:
 
       - name: Build
         # Execute the build.  You can specify a specific target with "--target <NAME>"
-        run: cmake --build build -j $NUMBER_OF_PROCESSORS --target all
+        run: cmake --build build -j 4 --target all
