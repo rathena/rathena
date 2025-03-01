@@ -82,7 +82,7 @@ jobs:
         run: cmake -B build -DENABLE_PRERE=${{env.PRERE}} -DENABLE_BUILDBOT=ON
 
       - name: Build
-        run: cmake --build build -j4 --target all
+        run: cmake --build build -j $(nproc) --target all
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3

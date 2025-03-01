@@ -53,4 +53,4 @@ jobs:
 
       - name: Build
         # Execute the build.  You can specify a specific target with "--target <NAME>"
-        run: cmake --build build -j4 --target all
+        run: cmake --build build -j $(nproc) --target all

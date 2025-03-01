@@ -21,8 +21,6 @@ on:
       # This workflow should run when a file in either the db/ or npc/ directory has been modified.
       - 'db/**'
       - 'npc/**'
-      # This workflow should run whenever a CMake related file has been modified
-      - '**/CMakeLists.txt'
 
 jobs:
   build:
@@ -68,7 +66,7 @@ jobs:
         run: cmake -B build -DENABLE_PRERE=${{env.PRERE}} -DENABLE_BUILDBOT=ON
 
       - name: Build
-        run: cmake --build build -j4 --target map-server
+        run: cmake --build build -j $(nproc) --target map-server
 
       # npc.sh enables all NPC scripts in the custom and test folders.
       - name: Enable All NPCs for Testing

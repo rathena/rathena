@@ -65,7 +65,7 @@ jobs:
         run: cmake -B build -DENABLE_PRERE=${{env.PRERE}} -DENABLE_BUILDBOT=ON -DENABLE_VIP=ON
 
       - name: Build
-        run: cmake --build build -j4 --target server
+        run: cmake --build build -j $(nproc) --target server
 
       - name: Run Once - login-server
         run: ./login-server --run-once
