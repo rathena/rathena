@@ -1429,14 +1429,15 @@ int32 pc_equippoint(map_session_data *sd,int32 n){
  * @param sd : player session
  * @return 0 sucess, 1:invalid sd
  */
-void pc_setinventorydata(map_session_data *sd)
-{
-	uint8 i;
-	nullpo_retv(sd);
+void pc_setinventorydata( map_session_data& sd ){
+	for( size_t i = 0; i < MAX_INVENTORY; i++ ){
+		t_itemid id = sd.inventory.u.items_inventory[i].nameid;
 
-	for(i = 0; i < MAX_INVENTORY; i++) {
-		t_itemid id = sd->inventory.u.items_inventory[i].nameid;
-		sd->inventory_data[i] = id?itemdb_search(id):nullptr;
+		if( id != 0 ){
+			sd.inventory_data[i] = itemdb_search( id );
+		}else{
+			sd.inventory_data[i] = nullptr;
+		}
 	}
 }
 
