@@ -803,7 +803,7 @@ int32 unit_walktoxy( struct block_list *bl, int16 x, int16 y, unsigned char flag
 	if (ud == nullptr)
 		return 0;
 
-	if ((flag&8) && !map_nearby_freecell(bl->m, &x, &y, BL_CHAR|BL_NPC, 1)) //This might change x and y
+	if ((flag&8) && !map_nearby_freecell(bl->m, x, y, BL_CHAR|BL_NPC, 1)) //This might change x and y
 		return 0;
 
 	walkpath_data wpd = { 0 };
