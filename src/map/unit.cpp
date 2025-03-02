@@ -1488,8 +1488,18 @@ void unit_stop_walking_soon(struct block_list& bl)
 	if (ud == nullptr)
 		return;
 
-	if (ud->walkpath.path_pos + 1 >= ud->walkpath.path_len)
+	// Less than 1 cell left to walk
+	// We need to make sure to_x and to_y are reset to match the walk path in case they were modified
+	if (ud->walkpath.path_pos + 1 >= ud->walkpath.path_len) {
+		ud->to_x = bl.x;
+		ud->to_y = bl.y;
+		// One more cell to move
+		if (ud->walkpath.path_pos + 1 == ud->walkpath.path_len) {
+			ud->to_x += dirx[ud->walkpath.path[ud->walkpath.path_pos]];
+			ud->to_y += diry[ud->walkpath.path[ud->walkpath.path_pos]];
+		}
 		return;
+	}
 
 	// Get how much percent we traversed on the timer
 	// If timer is invalid, we are exactly on cell center (0% traversed)
