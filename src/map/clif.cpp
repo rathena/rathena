@@ -1500,11 +1500,15 @@ void clif_class_change( block_list& bl, int32 class_, enum send_target target, m
 	p.type = 0;
 	p.class_ = class_;
 
+	block_list* tbl;
+
 	if( sd != nullptr ){
-		bl = sd->bl;
+		tbl = &sd->bl;
+	}else{
+		tbl = &bl;
 	}
 
-	clif_send( &p, sizeof( p ), &bl, target );
+	clif_send( &p, sizeof( p ), tbl, target );
 }
 
 void clif_servantball( map_session_data& sd, struct block_list* target, enum send_target send_target ){
