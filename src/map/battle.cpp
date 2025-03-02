@@ -2868,12 +2868,12 @@ static bool is_skill_using_arrow(struct block_list *src, int32 skill_id)
 	if (sd == nullptr && skill_id != 0) {
 		if (skill_get_ammotype(skill_id) != 0)
 			return true;
-
-		status_data* sstatus = status_get_status_data(*src);
-
-		if (sstatus->rhw.range > 3)
-			return true;
 	}
+
+	status_data* sstatus = status_get_status_data(*src);
+
+	if (sstatus->rhw.range > 3)
+		return true;
 
 	switch( skill_id ) {
 		case HT_PHANTASMIC:
