@@ -1427,7 +1427,6 @@ int32 pc_equippoint(map_session_data *sd,int32 n){
 /**
  * Fill inventory_data with struct *item_data through inventory (fill with struct *item)
  * @param sd : player session
- * @return 0 sucess, 1:invalid sd
  */
 void pc_setinventorydata( map_session_data& sd ){
 	for( size_t i = 0; i < MAX_INVENTORY; i++ ){
