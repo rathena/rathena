@@ -26,9 +26,9 @@ function	script	F_ep19_checkTransform	{
 }
 
 // Main Quest: Step 1
-wolfvill,223,83,3	script	Gray Wolf Villager#ep19	4_EP18_GW_MAN02,{ 
+wolfvill,223,83,3	script	Grey Wolf Villager#ep19	4_EP18_GW_MAN02,{ 
 	if (BaseLevel < 200) {
-		mes "[Greywolf Villager]";
+		mes "[Grey Wolf Villager]";
 		mes "Did you come to help our village today?";
 		mes "Thank you as always.";
 		next;
@@ -36,119 +36,120 @@ wolfvill,223,83,3	script	Gray Wolf Villager#ep19	4_EP18_GW_MAN02,{
 		close;
 	}
 	if (ep19_main == 0 && ep18_main == 57) {
-		mes "[Greywolf Villager]";
-		mes "Would you like to wait a minute?";
+		mes "[Grey Wolf Villager]";
+		mes "You, can you wait for a bit?";
 		mes "Maram was looking for you.";
-		mes "Wait a minute here. I'll be back soon.";
+		mes "Wait here for a while. He'll be here soon.";
 		next;
-		mes "[Greywolf Villager]";
-		mes "By the way, did you give him the doll you used to put on your head for a while?";
-		mes "Someone was talking to a doll that looked like that.";
+		mes "[Grey Wolf Villager]";
+		mes "Come to think of it, did you gave him the doll that you've been carrying on your head for a while?";
+		mes "He was talking to a doll that looked like that.";
 		next;
-		mes "[Greywolf Villager]";
-		mes "I thought Maram was very busy, so he was de-stressing?";
-		mes "By the way, did you talk to the doll too?";
+		mes "[Grey Wolf Villager]";
+		mes "Do you think Maram was so busy that he's relieving stress?";
+		mes "This reminds me, were you talking to that doll too?";
 		next;
 		cloakoffnpcself( "Maram#ep19maram01" );
-		npctalk "Maram: Did you wait long?", "Maram#ep19maram01", bc_self;
-		mes "[Greywolf Villager]";
+		npctalk "Maram: Have you waited long?", "Maram#ep19maram01", bc_self;
+		mes "[Grey Wolf Villager]";
 		mes "Maram is here.";
-		mes "Then let's talk.";
+		mes "Then, let's share our conversation.";
 		next;
 		npctalk "Maram: Thanks!", "Maram#ep19maram01", bc_self;
 		mes "[Maram]";
-		mes "Didn't you wait a long time?";
+		mes "Have you been waiting for a while?";
 		cutin "ep18_maram_01.png",2;
 		next;
-		select( "Did you talk to the doll?" );
+		select( "We're you talking to the doll?" );
 		mes "[Maram]";
-		mes "Oh, no, that's right. As a result, you're talking to the doll. That's right.";
-		mes "But it was Elly?";
+		mes "Ah, yes. You're right, I was talking to the doll after the result. It's true.";
+		mes "Ellie, was it?";
 		cutin "ep18_maram_02.png",2;
 		next;
 		cloakoffnpcself( "Miriam#ep19miriam01" );
-		mes "[Miriam]";
-		mes "So what's the reason you called everyone, Maram?";
-		cutin "ep18_miriam_01.png",0;
-		next;
 		cloakoffnpcself( "Suad#ep19suad01" );
-		mes "[Suad]";
-		mes "I'm sorry, but I can't take the time. I have to go to Niren. Because of parliamentary problems.";
-		cutin "ep18_suad_01.png",0;
-		next;
-		mes "[Maram]";
-		mes "Now that we've all gathered, I'll explain them one by one.";
-		mes "First of all, the adventurer was gathered by Elly...";
-		cutin "ep18_maram_01.png",2;
-		next;
-		mes "[Maram]";
-		mes "The adventurer came to Rachel without fear in the form of Mini Elly.";
-		mes "I met a local kid on the way to the temple with a guide.";
-		next;
-		mes "[Maram]";
-		mes "After that, Elly went back to the northern part where Bagot passed, that is, the place where Jormungand was sealed.";
-		mes "They said they found the route.";
-		next;
-		mes "[Maram]";
-		mes "You asked me to tell you that you came all the way here to inform the adventurer.";
-		next;
+		npctalk "Suad: Fortunately, we didn't cross roads.", "Suad#ep19suad01", bc_self;
 		mes "[Miriam]";
-		mes "Then can you find Ymir's heart piece?";
-		mes "Where is Elly now?";
-		cutin "ep18_miriam_01.png",0;
-		next;
-		mes "[Maram]";
-		mes "Like I did to the adventurer last time, the connection was lost and it became like a cotton ball.";
-		mes "At first, I was concerned. I brought him to my room...";
-		cutin "ep18_maram_01.png",2;
-		next;
-		mes "[Suad]";
-		mes "Where did she tell her to come then?";
-		mes "If you go north, you can find a piece of Ymir's heart and punish Bagot.";
-		cutin "ep18_suad_01.png",0;
-		next;
-		mes "[Miriam]";
-		mes "Suad guards here.";
-		mes "I'll be there.";
-		mes "Can't Maram contact me in the middle?";
+		mes "What's the reason you're all here together, Maram?";
 		cutin "ep18_miriam_01.png",0;
 		next;
 		mes "[Suad]";
-		mes "..... I don't like it, but I can't help it.";
-		mes "This is an important time for the gray wolf village and the natives.";
+		mes "I'm sorry but I don't have much time. I have to go to Niren. Because of the problems with the parliament.";
+		cutin "ep18_suad_01.png",0;
+		next;
+		mes "[Maram]";
+		mes "Now that we're all here, I'll explain everything detail by detail.";
+		mes "First of all, I called for the adventurer because Ellie came...";
+		cutin "ep18_maram_01.png",2;
+		next;
+		mes "[Maram]";
+		mes "She came to Rachel without any fear on her Mini Ellie form.";
+		mes "She had a local kid that she met on the way to the temple as her guide.";
+		next;
+		mes "[Maram]";
+		mes "Ellie went to north where Bagot passed through, it's the place where Jormungandr was sealed.";
+		mes "She said they figured out their route.";
+		next;
+		mes "[Maram]";
+		mes "She asked me to come all the way here to tell the adventurer the news.";
+		next;
+		mes "[Miriam]";
+		mes "So, can we find the Fragment of Ymir's Heart?";
+		mes "Where's Ellie now?";
+		cutin "ep18_miriam_01.png",0;
+		next;
+		mes "[Maram]";
+		mes "Like what happened to the adventurer last time, the connection was cut off and it transformed to something like a cotton ball.";
+		mes "I was concern at first. So I brought it to my room....";
+		cutin "ep18_maram_01.png",2;
+		next;
+		mes "[Suad]";
+		mes "Then, where did she tell you to go?";
+		mes "We should go north, find the Fragment of Ymir's Heart and punish that man named Bagot.";
+		cutin "ep18_suad_01.png",0;
+		next;
+		mes "[Miriam]";
+		mes "Stay here Suad.";
+		mes "I'll go instead.";
+		mes "Maram, can you be the one to contact in the middle?";
+		cutin "ep18_miriam_01.png",0;
+		next;
+		mes "[Suad]";
+		mes "..... I don't like it, but there's no helping it.";
+		mes "This is an important time for the Grey Wolf Village and the natives.";
 		cutin "ep18_suad_01.png",0;
 		next;
 		mes "[Suad]";
-		mes "Even if Parliament was formed, things wouldn't change overnight.";
-		mes "For the time being, there must be people in the middle who say that this is normal.";
+		mes "Even if a parliament was formed, things won't change overnight.";
+		mes "For the time being, there should be a person who coordinate everything from the middle as if it's natural.";
 		next;
-		mes "[Maram]";
-		mes "Yes, that's why your mother believes in you and goes ahead with your work.";
-		mes "I'll give you the news, so trust Miriam and the adventurer and wait.";
 		cutin "ep18_maram_01.png",2;
+		mes "[Maram]";
+		mes "Yes, that's why my mother trusts you and she's doing her best to work on it.";
+		mes "I'll keep you informed, just wait and trust Miriam and the adventurer.";
 		next;
 		mes "[Suad]";
 		mes "I can't help it.";
-		mes "I want to talk more, but I have to go to the temple.";
-		mes "Please take good care of me";
+		mes "I'd love to talk more, but I have to go to the temple.";
+		mes "I'm counting on you.";
 		cutin "ep18_suad_01.png",0;
 		next;
 		mes "[Miriam]";
-		mes "Then where should we go?";
-		mes "Do you know adventurers?";
+		mes "So, where do we go?";
+		mes "Do you know where, adventurer?";
 		cutin "ep18_miriam_01.png",0;
 		next;
-		mes "[Maram]";
-		mes "I think you told me to come to the main building of the Barmund Mansion.";
-		mes "May I ask for directions?";
 		cutin "ep18_maram_01.png",2;
-		setquest 18119;
+		mes "[Maram]";
+		mes "She told me to come to the main building of the Varmundt's mansion.";
+		mes "Can you lead the way?";
 		ep19_main = 1;
+		setquest 18119;
 		close3;
 	}
 	mes "[Grey Wolf Villager]";
 	mes "I've been hearing a lot about you lately.";
-	mes "Thank you for doing it for our village.";
+	mes "Thank you for doing it for my village.";
 	close;
 
 OnInit:
@@ -157,27 +158,128 @@ OnInit:
 }
 
 wolfvill,220,85,3	script(CLOAKED)	Maram#ep19maram01	4_EP18_MARAM,{
+	if (ep19_main == 0 && ep18_main == 57 && BaseLevel >= 200) {
+		cutin "ep18_maram_01.png",2;
+		mes "[Maram]";
+		mes "Have you been waiting for a while?";
+		mes "Miriam and Suad will be here soon.";
+		mes "Oh, it seems they have arrived.";
+		next;
+		cloakoffnpcself( "Miriam#ep19miriam01" );
+		cloakoffnpcself( "Suad#ep19suad01" );
+		npctalk "Suad: Fortunately, we didn't cross roads.", "Suad#ep19suad01", bc_self;
+		mes "[Miriam]";
+		mes "What's the reason you're all here together, Maram?";
+		cutin "ep18_miriam_01.png",0;
+		next;
+		mes "[Suad]";
+		mes "I'm sorry but I don't have much time. I have to go to Niren. Because of the problems with the parliament.";
+		cutin "ep18_suad_01.png",0;
+		next;
+		mes "[Maram]";
+		mes "Now that we're all here, I'll explain everything detail by detail.";
+		mes "First of all, I called for the adventurer because Ellie came...";
+		cutin "ep18_maram_01.png",2;
+		next;
+		mes "[Maram]";
+		mes "She came to Rachel without any fear on her Mini Ellie form.";
+		mes "She had a local kid that she met on the way to the temple as her guide.";
+		next;
+		mes "[Maram]";
+		mes "Ellie went to north where Bagot passed through, it's the place where Jormungandr was sealed.";
+		mes "She said they figured out their route.";
+		next;
+		mes "[Maram]";
+		mes "She asked me to come all the way here to tell the adventurer the news.";
+		next;
+		mes "[Miriam]";
+		mes "So, can we find the Fragment of Ymir's Heart?";
+		mes "Where's Ellie now?";
+		cutin "ep18_miriam_01.png",0;
+		next;
+		mes "[Maram]";
+		mes "Like what happened to the adventurer last time, the connection was cut off and it transformed to something like a cotton ball.";
+		mes "I was concern at first. So I brought it to my room....";
+		cutin "ep18_maram_01.png",2;
+		next;
+		mes "[Suad]";
+		mes "Then, where did she tell you to go?";
+		mes "We should go north, find the Fragment of Ymir's Heart and punish that man named Bagot.";
+		cutin "ep18_suad_01.png",0;
+		next;
+		mes "[Miriam]";
+		mes "Stay here Suad.";
+		mes "I'll go instead.";
+		mes "Maram, can you be the one to contact in the middle?";
+		cutin "ep18_miriam_01.png",0;
+		next;
+		mes "[Suad]";
+		mes "..... I don't like it, but there's no helping it.";
+		mes "This is an important time for the Grey Wolf Village and the natives.";
+		cutin "ep18_suad_01.png",0;
+		next;
+		mes "[Suad]";
+		mes "Even if a parliament was formed, things won't change overnight.";
+		mes "For the time being, there should be a person who coordinate everything from the middle as if it's natural.";
+		next;
+		cutin "ep18_maram_01.png",2;
+		mes "[Maram]";
+		mes "Yes, that's why my mother trusts you and she's doing her best to work on it.";
+		mes "I'll keep you informed, just wait and trust Miriam and the adventurer.";
+		next;
+		mes "[Suad]";
+		mes "I can't help it.";
+		mes "I'd love to talk more, but I have to go to the temple.";
+		mes "I'm counting on you.";
+		cutin "ep18_suad_01.png",0;
+		next;
+		mes "[Miriam]";
+		mes "So, where do we go?";
+		mes "Do you know where, adventurer?";
+		cutin "ep18_miriam_01.png",0;
+		next;
+		cutin "ep18_maram_01.png",2;
+		mes "[Maram]";
+		mes "She told me to come to the main building of the Varmundt's mansion.";
+		mes "Can you lead the way?";
+		ep19_main = 1;
+		setquest 18119;
+		close3;
+	}
 	cutin "ep18_maram_01.png",2;
 	mes "[Maram]";
-	mes "Shall we go then?";
-	mes "I'm looking forward to Barmund mansion.";
-	mes "If you leave first, I will follow you!";
+	mes "Shall we go?";
+	mes "I'm looking forward to Varmundt's Mansion.";
+	mes "You can leave first, I'll follow you!";
 	close3;
 }
 
 wolfvill,216,85,5	script(CLOAKED)	Miriam#ep19miriam01	4_EP18_MIRIAM,{
+	if (ep19_main == 0) {
+		cutin "ep18_miriam_01.png",0;
+		mes "[Miriam]";
+		mes "Let's listen to Maram first.";
+		mes "Calling us here, it must be something important.";
+		close3;
+	}
 	cutin "ep18_miriam_01.png",0;
 	mes "[Miriam]";
-	mes "I am indebted to you on this journey.";
-	mes "I wish you all the best in the future.";
+	mes "I'm on your care for this journey.";
+	mes "I look forward to working with you.";
 	close3;
 }
 
 wolfvill,213,84,5	script(CLOAKED)	Suad#ep19suad01	4_EP18_SUAD,{
+	if (ep19_main == 0) {
+		cutin "ep18_suad_01.png",0;
+		mes "[Suad]";
+		mes "I have a lot of things I want to say, but let's listen to Maram for now.";
+		close3;
+	}
 	cutin "ep18_suad_01.png",0;
 	mes "[Suad]";
-	mes "Whoa.... why can't we do these important things together...";
-	mes "I'm sorry, but I can't help you.";
+	mes "Sigh.... Why can't we just do these important things together....";
+	mes "Sorry, I can't help it.";
 	close3;
 }
 
@@ -186,7 +288,7 @@ ba_in01,375,102,0	script	#ep19evt01	HIDDEN_WARP_NPC,3,3,{
 	end;
 OnTouch:
 	if (ep19_main == 1) {
-		cloakoffnpcself( "Smart Elly#ep19elly01" );
+		cloakoffnpcself( "Smart Ellie#ep19elly01" );
 		cloakoffnpcself( "Lazy#ep19lazy01" );
 		cloakoffnpcself( "Crux#ep19crux01" );
 		cloakoffnpcself( "Miriam#ep19miriam02" );
@@ -194,7 +296,7 @@ OnTouch:
 		end;
 	}
 	if (ep19_main == 2) {
-		cloakoffnpcself( "Smart Elly#ep19elly01" );
+		cloakoffnpcself( "Smart Ellie#ep19elly01" );
 		cloakoffnpcself( "Lazy#ep19lazy01" );
 		cloakoffnpcself( "Crux#ep19crux01" );
 		cloakoffnpcself( "Miriam#ep19miriam02" );
@@ -205,168 +307,168 @@ OnTouch:
 	end;
 }
 
-ba_in01,384,114,4	script(CLOAKED)	Smart Elly#ep19elly01	4_EP17_TABLET,{
+ba_in01,384,114,4	script(CLOAKED)	Smart Ellie#ep19elly01	4_EP17_TABLET,{
 	if (ep19_main == 1) {
 		cutin "ep172_beta.png",2;
-		mes "[Elly]";
-		mes "Welcome, customer.";
-		mes "Others are already here.";
-		mes "I have explained the outline of the whole story in advance.";
+		mes "[Ellie]";
+		mes "Welcome, guest.";
+		mes "The others are already here.";
+		mes "I explained the situation to them in advance.";
 		next;
 		cutin "ep16_crux_findel02.png",1;
 		mes "[Crux]";
 		mes "Long time no see.";
-		mes "I came here for regular contact and just heard about it.";
+		mes "I came here for the regular report and heard about what happened.";
 		next;
 		cutin "16lei_01.png",0;
 		mes "[Lazy]";
-		mes "What happened in Rachel?";
-		mes "I also stopped by for regular visits and heard great stories.";
+		mes "I heard that something big happened in Rachel?";
+		mes "I also just stopped by for the regular report and heard some amazing stories.";
 		next;
 		mes "[Lazy]";
-		mes "Thanks to you, I met a valuable guest from Rachel, and I came here because I insisted on coming instead of Tess, but I think I did well~";
+		mes "I met the valuable guests from Rachel, I only came here because Tess insisted that I come in his stead, I think I did well~";
 		next;
 		mes "[Lazy]";
-		mes "You two, if you've been to Schwarzwald, have you been to Yuno?";
-		mes "Oh? You stopped by while transferring? Then go one more time. Go twice!";
+		mes "You two, have you been to Yuno before going into Schwarzwald?";
+		mes "No? You dropped by while transferring? Then, go one more time. No, go twice!";
 		next;
 		mes "[Maram]";
-		mes "Haha! Lazy? You are a very pleasant person!";
-		mes "Okay. Can you tell me about Yuno's restaurant later?";
-		mes "I think I will be indebted to you a lot in the future. Please take care of me.";
+		mes "Haha! Lazy? You're a very funny person!";
+		mes "Sure. Can you tell me about Yuno's good restaurants later?";
+		mes "I think I'm going to stay a lot from now on, please take care of me.";
 		cutin "ep18_maram_02.png",2;
 		next;
 		mes "[Miriam]";
-		mes "Thank you for your attention.";
-		mes "After work, I will definitely visit Yuno.";
+		mes "Thank you so much for your care.";
+		mes "I will definitely visit Yuno after work.";
 		cutin "ep18_miriam_01.png",0;
 		next;
 		mes "[Miriam]";
-		mes "By the way, I know that Bagot have a lot of collaborators.";
-		mes "According to the information I got from my father.";
+		mes "Anyway, I know that Bagot has more colleagues that cooperates with him.";
+		mes "It's according to the information that I got out from my father.";
 		next;
 		mes "[Miriam]";
-		mes "Perhaps Bagot left to join his comrade...";
+		mes "Maybe Bagot had left to join his colleagues....";
 		next;
 		cutin "16lei_01.png",1;
 		mes "[Lazy]";
-		mes "Did you say that place was north, or Isgard?";
-		mes "You mean there?";
+		mes "You mentioned it was north, something about Isgard, correct?";
+		mes "Do you mean they're over there?";
 		next;
 		cutin "ep172_beta.png",2;
-		mes "[Elly]";
-		mes "Exactly.";
-		mes "He mentioned the legendary Jormungand, so the only northern continent associated with Jormungand is Isgard.";
+		mes "[Ellie]";
+		mes "Exactly right.";
+		mes "He mentioned the Legend of Jormungandr, the only northern continent that is associated with Jormungandr is Isgard.";
 		next;
-		mes "[Elly]";
-		mes "And their Master's Collection No. 3 they took was an aircraft with a record of Isgard's voyage.";
+		mes "[Ellie]";
+		mes "And the Master collection No.3 that they took, is an aircraft with a record of a voyage to Isgard.";
 		next;
 		cutin "ep18_miriam_01.png",0;
 		mes "[Miriam]";
-		mes "So you mean Bagot had Isgard in mind even before he talked to his father?";
+		mes "So Bagot had Isgard in mind before he even talk to my father?";
 		next;
 		cutin "ep172_beta.png",2;
-		mes "[Elly]";
-		mes "Probably so, new guest.";
-		mes "It is presumed that the Illusion discovered the route stored in the airship and put it up as a candidate.";
+		mes "[Ellie]";
+		mes "Most likely, New guest.";
+		mes "It was presumed that the Illusions discovered a route stored in the airship and made it as their target candidate.";
 		next;
-		mes "[Elly]";
-		mes "While you all were active at Arunafelds, the Airship was quite busy.";
-		mes "Arunafelz, Schwalzwald, and other parts of the Midgard continent, always left a trace towards the north at the end.";
+		mes "[Ellie]";
+		mes "While the guests were active in Arunafeltz, the airship was quite busy.";
+		mes "It traveled all over the continent of Midgard including Arunafeltz and Schwarzwald, and it always left a trail toward north after.";
 		next;
-		mes "[Elly]";
-		mes "Wil (1), the master's collection #3.";
-		mes "Disconnected from the core of Wyl (1), but somehow managed to crack the password.";
+		mes "[Ellie]";
+		mes "Wile(1), is the name of Master collection No. 3.";
+		mes "They managed to decrypt Wile(1) and they disconnected it from the core.";
 		close2;
 		// (dialog doesn't stop)
 		cloakoffnpcself( "Navigator Ginger#ep19gg02" );
-		sleep2 500;
-		npctalk "Ginger: Report. It's normal!", "Navigator Ginger#ep19gg02", bc_self;
-		mes "[Elly]";
-		mes "You just arrived.";
-		mes "Ginger will inform you of the test flight results.";
+		npctalk "Ginger: Reporting. Everything is normal!", "Navigator Ginger#ep19gg02", bc_self;
+		sleep2 1000;
+		mes "[Ellie]";
+		mes "You've arrived just in time.";
+		mes "Ginger will tell us about the flight routes.";
 		cutin "ep172_beta.png",2;
 		next;
-		mes "[Gingerbread]";
-		mes "Uh, you reported it, it's normal!";
-		mes "Isgard's wall confirmed.";
-		mes "Entry is not allowed.";
+		mes "[Ginger]";
+		mes "Eh, The report, Everything is normal!";
+		mes "I have checked the wall in Isgard.";
+		mes "Entry is not possible.";
 		cutin "ep172_beta.png",0;
 		next;
-		mes "[Gingerbread]";
-		mes "I found a high energy flow near the barrier. Traces of the Weil (1).";
-		mes "But how did you get along with the wale(1), master?";
+		mes "[Ginger]";
+		mes "I have found a high flow of energy near the barrier. And traces of Wile(1).";
+		mes "But how did the master come and go using Wile(1)?";
 		next;
 		cutin "16lei_01.png",1;
 		mes "[Lazy]";
-		mes "Because Barmund is a great sage. He must have used something special?";
-		mes "For example, the power of Ymir's heart fragment.";
+		mes "Varmundt is a great sage. Wouldn't he have used a special method?";
+		mes "The power of the Fragment of Ymir's Heart for example.";
 		next;
 		cutin "ep16_crux_findel02.png",0;
 		mes "[Crux]";
-		mes "I'm sorry for saying that, but wouldn't it be better to seek help from the royal family if it's related to Jormungand?";
+		mes "I apologize for interrupting, but if it's related to Jormungandr, wouldn't it be better to ask the members of royal family for help?";
 		next;
 		cutin "16lei_01.png",1;
 		mes "[Lazy]";
-		mes "On Rune-Midgartz? Why?";
+		mes "Rune-Midgarts? Why?";
 		next;
 		cutin "ep16_crux_findel02.png",0;
 		mes "[Crux]";
-		mes "If you know the secret of the founding of Rune-Midgarz, it would be natural, but it is inextricably linked with Jormungand.";
+		mes "Ff you know the secret of the establishing of Rune-Midgarts, the true nature of the story is inextricably linked to Jormungandr.";
 		next;
 		mes "[Crux]";
-		mes "I know that some of the Geoborgs are going north to study Jormungand";
-		mes "I wonder if that place is not the Isgard you are talking about...";
+		mes "I know that the Gaebolgs are heading north to research Jormungandr";
+		mes "I wonder if the that place is the Isgard that you're talking about...";
 		next;
 		mes "[Maram]";
-		mes "The curse of Jormungand!";
-		mes "Certainly, the Geoborg family has a lot of information about Jormungand.";
+		mes "The curse of Jormungandr!";
+		mes "Surely the Gaebolgs have a lof of information abot Jormungandr.";
 		cutin "ep18_maram_01.png",2;
 		next;
 		cutin "ep172_beta.png",0;
-		mes "[Elly]";
-		mes "During your remarks, you said that you were researching while traveling to and from the northern lands?";
-		mes "Then can they go freely beyond the barriers?";
+		mes "[Ellie]";
+		mes "You mention that they're researching on the northern, right?";
+		mes "Does that mean that they're free to come and go beyond the barrier?";
 		next;
-		mes "[Elly]";
-		mes "Humans, we have set a course and all that is left is to clear the road blocked by the barrier.";
-		mes "Go ahead and find a way.";
+		mes "[Ellie]";
+		mes "Humans, we've established the course and all that's left is to clear the path towards the barrier.";
+		mes "Go ahead and find a way to do it.";
 		mes "Ginger and I will maintain the airship.";
 		next;
 		cutin "16lei_01.png",1;
 		mes "[Lazy]";
-		mes "Yeah. This wasn't the time to talk like this.";
-		mes "Hey, Crooks, you're like thatYou should have done this sooner!";
+		mes "Okay. This is not the time for long discussions.";
+		mes "Hey, You should have mentioned that earlier, Crux!";
 		next;
 		cutin "ep16_crux_findel02.png",0;
 		mes "[Crux]";
-		mes "That's because... the royal family's business shouldn't be moved around.";
-		mes "Please tell me so I don't get scolded later.";
+		mes "Well... An affair related to the Royal family should not simply be discussed around.";
+		mes "Please explain it to them well so that I won't get scolded later.";
 		next;
 		cutin "16lei_01.png",1;
 		mes "[Lazy]";
-		mes "Then let's do this.";
-		mes "" + strcharinfo(0) + " You go to Prontera with Crooks.";
-		mes "Elly and Ginger will fix the airship, and I will arrange a trip with people from Rachel.";
+		mes "Let's do it like this.";
+		mes "" + strcharinfo(0) + ", go to Prontera with Crux.";
+		mes "Ellie and Giner will be the one in charge of the airship, and I will prepare for the trip with the people from Rachel.";
 		next;
 		mes "[Maram]";
-		mes "That would be better.";
-		mes "Because we can't easily enter the Rune-Midgartz Kingdom.";
+		mes "That would be nice.";
+		mes "We can't easily enter the Kingdom of Rune-Midgarts.";
 		cutin "ep18_maram_01.png",2;
 		next;
 		cutin "ep18_miriam_01.png",0;
 		mes "[Miriam]";
-		mes "I will learn a lot while preparing here.";
-		mes "Come here.";
+		mes "I will be learning a lot while preparing here.";
+		mes "See you later.";
 		next;
 		cutin "ep172_beta.png",2;
-		mes "[Elly]";
-		mes "Well then, will Elly and Ginger go to fix the airship?";
+		mes "[Ellie]";
+		mes "Well, then Ginger and I should start fixing the airship, yes?";
 		next;
 		cutin "ep16_crux_findel02.png",0;
 		mes "[Crux]";
-		mes "Then I will take you to Prontera.";
-		mes "Tell me when you're ready.";
+		mes "I'll take you to Prontera.";
+		mes "Let me know when you're ready.";
 		erasequest 18119;
 		setquest 18120;
 		ep19_main = 2;
@@ -374,9 +476,9 @@ ba_in01,384,114,4	script(CLOAKED)	Smart Elly#ep19elly01	4_EP17_TABLET,{
 	}
 	if (ep19_main == 2) {
 		cutin "ep172_beta.png",2;
-		mes "[Elly]";
-		mes "Then guests, do your own thing.";
-		mes "We're going to check the route we've piloted as our own.";
+		mes "[Ellie]";
+		mes "Then guest, do your own thing.";
+		mes "We're going to be determining the route that we're going to use.";
 		close3;
 	}
 	end;
@@ -390,16 +492,16 @@ ba_in01,383,104,1	script(CLOAKED)	Maram#ep19maram02	4_EP18_MARAM,{
 	if (ep19_main == 1) {
 		cutin "ep18_maram_01.png",2;
 		mes "[Maram]";
-		mes "I live and live, I see all of these places.";
-		mes "Oh my God...";
-		mes "There must have been a reason Elly was proud of her master. Hahaha.";
+		mes "In my lifetime I've been into many places, but never to a place like this before.";
+		mes "What in the world....";
+		mes "This is the reason why Ellie likes to brag about her master. Hahaha.";
 		close3;
 	}
 	if (ep19_main == 2) {
 		cutin "ep18_maram_01.png",2;
 		mes "[Maram]";
-		mes "I will prepare well for the trip.";
-		mes "Go!";
+		mes "I will do my best to prepare for the trip.";
+		mes "See you!";
 		close3;
 	}
 	end;
@@ -409,15 +511,15 @@ ba_in01,386,107,3	script(CLOAKED)	Miriam#ep19miriam02	4_EP18_MIRIAM,{
 	if (ep19_main == 1) {
 		cutin "ep18_miriam_01.png",0;
 		mes "[Miriam]";
-		mes "I think you can see how amazing Varmundt is.";
-		mes "You can tell just by looking at the grandeur of the mansion.";
+		mes "You can tell how amazing Varmundt is.";
+		mes "You can tell by just looking at this magnificent mansion.";
 		close3;
 	}
 	if (ep19_main == 2) {
 		cutin "ep18_miriam_01.png",0;
 		mes "[Miriam]";
-		mes "During your visit to Prontera, I will also contact Suad and check the future schedule one more time.";
-		mes "The necessary items can be prepared with Lazy's advice, right?";
+		mes "I will contact Suad to check future schedules while you're in Prontera.";
+		mes "We can prepare the necessary items with Lazy's advice, right?";
 		close3;
 	}
 	end;
@@ -428,18 +530,18 @@ ba_in01,386,113,3	script(CLOAKED)	Lazy#ep19lazy01	4_M_LAZY,{
 		cutin "16lei_01.png",2;
 		mes "[Lazy]";
 		mes "How was Rachel?";
-		mes "Isn't Yuno the best?";
+		mes "Yuno is the best, right?";
 		close3;
 	}
 	if (ep19_main == 2) {
 		cutin "16lei_01.png",2;
 		mes "[Lazy]";
-		mes "I heard you have to cross the Oreum Mountains and cross the sea?";
-		mes "Then you are going to go farther than Lutie, so it must be very cold?";
+		mes "Is it true that we have to cross mountains and the sea?";
+		mes "So we're talking about a place farther than Lutie, it must be really cold, right?";
 		next;
 		mes "[Lazy]";
-		mes "I need to do some shopping while you go to Prontera.";
-		mes "I think I should go to the Lighthalzen department store with Rachel's people.";
+		mes "I'm going to do some shopping while you're at Prontera.";
+		mes "I will go to Lighthalzen's department store with the people from Rachel.";
 		close3;
 	}
 	end;
@@ -449,8 +551,8 @@ ba_in01,380,111,7	script(CLOAKED)	Navigator Ginger#ep19gg02	4_EP17_TABLET,{
 	if (ep19_main == 1) {
 		cutin "ep172_beta.png",2;
 		mes "[Ginger]";
-		mes "Another analysis of what went up to the wall.";
-		mes "Simulating a few more predicted routes will determine a stable route.";
+		mes "I will analyze once more when you are near the barrier.";
+		mes "By simulating a few more of the predicted routes, a stable route might be determined.";
 		next;
 		mes "[Ginger]";
 		mes "Ginger is busy~!";
@@ -465,27 +567,25 @@ ba_in01,386,110,3	script(CLOAKED)	Crux#ep19crux01	4_EP16_CRUX,{
 		cutin "ep16_crux_findel02.png",1;
 		mes "[Crux]";
 		mes "Long time no see.";
-		mes "Spica, Skia asked me to give you my regards.";
-		mes "It's nice to see you still.";
+		mes "My lady Spica and Skia sends their regards.";
+		mes "I'm glad to see that you're still the same.";
 		close3;
 	}
 	if (ep19_main == 2) {
 		cutin "ep16_crux_findel02.png",1;
 		mes "[Crux]";
-		mes "Then can I take you to the Royal Palace of Prontera?";
+		mes "Then, Shall I take you to the Prontera Castle?";
 		next;
-		switch( select( "Let's go now!", "Wait a minute." ) ) {
-		case 1:
+		if (select( "Let's go right now!", "Wait for a while." ) == 2) {
 			mes "[Crux]";
-			mes "Okay. I will take you to the royal palace immediately.";
-			close2;
-			warp "prt_cas",146,337;
-			end;
-		case 2:
-			mes "[Crux]";
-			mes "Let me know when you're ready.";
-			close;
+			mes "Let me know when you are ready.";
+			close3;
 		}
+		mes "[Crux]";
+		mes "Alright. I will take you to the royal palace immediately.";
+		close2;
+		warp "prt_cas",147,338;
+		end;
 	}
 	end;
 
@@ -500,10 +600,10 @@ prt_cas,147,337,0	script	#ep19_evt02	HIDDEN_WARP_NPC,3,3,{
 	end;
 OnTouch:
 	if (ep19_main == 2) {
-		cutin "ep16_crux_findel02.png",1;
+		cutin "ep16_crux_findel02.png",2;
 		mes "[Crux]";
-		mes "I have already signed up for an audience.";
-		mes "Let's go inside.";
+		mes "I already requested for an audience.";
+		mes "Let's go inside to join the meal.";
 		close2;
 		cutin "",255;
 		navigateto("prt_cas",320,270);
@@ -543,144 +643,143 @@ prt_cas,320,270,4	script(CLOAKED)	Crux#ep19crux02	4_EP16_CRUX,{
 	if (ep19_main == 2) {
 		cutin "ep16_crux_findel02.png",1;
 		mes "[Crux]";
-		mes "As I said before, " + strcharinfo(0) + " was looking for information about the area where Jormungand was sealed, so we brought you here.";
+		mes "As I mentioned before, I brought " + strcharinfo(0) + " here since they are looking for information about where Jormungandr is sealed.";
 		next;
 		cutin "ep171_nihil01.png",2;
 		mes "[Nihil]";
-		mes "The day has come when I will be of your help.";
-		mes "Strictly speaking, it's a royal secret, though it's a Geoborg family thing.";
-		mes "All seven royal families of Rune-Midgarts are responsible for their work.";
+		mes "The day has come when I can be of help to you.";
+		mes "Strictly speaking, it's a secret of the Gaebolg family, everyone in the royal family is tangled with the affair.";
+		mes "The seven royal families of Rune-Midgarts are all responsible for that";
 		next;
 		cutin "ep16gao_1.bmp",0;
 		mes "[Catherine]";
-		mes "I heard that Jormungand is looking for the Sealed Lands.";
+		mes "I heard that you're looking for the lands sealed by Jormungandr.";
 		mes "Do you really want to go to that land?";
 		next;
-		select( "You have to go!" );
+		select( "We must go!" );
 		mes "[Catherine]";
-		mes "It is known that the Geoborgs were cursed by Jormungand.";
-		mes "Everyone here knows this.";
+		mes "It is known that Gaebolg family were cursed by Jormungandr.";
+		mes "Everyone in this room knows it.";
 		next;
 		mes "[Catherine]";
-		mes "Thanks to you, Geoborg is the closest to Jormungand on the continent of Midgard.";
-		mes "There is so much more to know than what is known to the world.";
+		mes "Thank to this, the Gaebolgs are the most related thing to Jormungandr in the continent of Midgard.";
+		mes "That is why we know other things that is not known to the world.";
 		next;
 		mes "[Catherine]";
-		mes "When the Jormungand Church disappeared from this land, not everyone died and disappeared.";
+		mes "When the church of Jormungandr disappeared from this land, not everyone died and disappeared.";
 		next;
 		mes "[Catherine]";
-		mes "They were trapped in a land of ice beyond the sea, and the land was sealed by an unknown force.";
-		mes "And there are guardians of the seals.";
+		mes "They were trapped in a land of ice beyond the sea, and that land was sealed by an unknown forces.";
+		mes "And there are guardians who protects the seal.";
 		next;
-		select( "A Guardian?!" );
+		select( "Guardians?!" );
 		cutin "ep171_nihil01.png",2;
 		mes "[Nihil]";
-		mes "Aren't you surprised? After I officially ascended the throne, I learned about it from the remarks of the royal palace.";
+		mes "Are you surprised? After I was officially crowned, I learned about it from a remark in the royal palace.";
 		next;
 		mes "[Nihil]";
-		mes "More surprising is that Jormungand was sealed in Isgard, the land of ice.";
+		mes "What's even more surprising is, Jormungandr was sealed in the Land of Ice, Isgard.";
 		next;
 		mes "[Nihil]";
-		mes "It is said that members of the Geoborgs were traveling to and from Isgard before.";
-		mes "It is for this reason that the former Queen Catherine is here today.";
+		mes "It is told that the members of the Gaebolg family were traveling back and forth to Isgard before.";
+		mes "That is why I have called for Queen Catherine here today.";
 		next;
 		cutin "ep16gao_1.bmp",0;
 		mes "[Catherine]";
-		mes "Yes.";
-		mes "Tristan III has three sisters.";
-		mes "Two of them are now in Isgard.";
+		mes "That is right.";
+		mes "Tristan III has 3 sisters.";
+		mes "Two of them are currently in Isgard.";
 		next;
 		select( "How? No, why?" );
 		mes "[Catherine]";
-		mes "Of course, to break the curse of Jormungand.";
-		mes "It was because of the curse that Tristan III became so.";
-		mes "It happened after chasing after the curse of Jormungand.";
+		mes "Of course, it's to break the curse of Jormungandr.";
+		mes "The reason why Tristan III became to what he is now is because of the curse.";
+		mes "It happened after he tried to chase after the curse of Jormungandr.";
 		next;
 		mes "[Catherine]";
 		mes "It is sad to see the death of a blood relative.";
-		mes "It is not strange that the princesses set out to lift the curse.";
+		mes "It is not strange to see the other princesses set out to break the curse.";
 		next;
 		mes "[Catherine]";
-		mes "His nephew will be here by the way, so listen to him.";
-		mes "Actually a kid going to and from Isgard, he knows how to get there.";
+		mes "My nephew will be here soon, listen to his story.";
+		mes "He is a kid who actually come and go to Isgard, so he will know how to get there.";
 		next;
 		cutin "ep171_nihil01.png",2;
 		mes "[Nihil]";
-		mes "I have sent you a message to come here right away.";
-		mes "Wait a minute and I'll come.";
+		mes "I had a messaged pass to him to come straight here.";
+		mes "He'll be here in a moment.";
 		next;
 		cutin "ep16gao_1.bmp",0;
 		mes "[Catherine]";
-		mes "...I wish I had known about the box sooner.";
+		mes "...I wish I had known about that box earlier.";
 		next;
 		cloakoffnpcself( "Lehar#ep19lehar01" );
 		mes "[Lehar]";
-		mes "Did you find me?";
-		mes "Oh, there was your aunt too. Were there Crooks too?";
+		mes "You called for me?";
+		mes "Oh, my aunt is here too. Why is Crux also here?";
 		cutin "ep19_lehar02.png",1;
 		next;
 		cutin "ep16_crux_findel02.png",0;
 		mes "[Crux]";
-		mes "Long time no see";
-		mes "You are still in good health.";
-		mes "Everyone has been waiting for a long time.";
+		mes "Long time no see.";
+		mes "I'm glad to see you in good health.";
+		mes "Everyone waited for some time.";
 		next;
 		cutin "ep19_lehar01.png",1;
 		mes "[Lehar]";
-		mes "Ah, yes, yes.";
-		mes "Brother Nihil, no His Majesty? Your Majesty?";
-		mes "Ah, I'm not used to this.";
-		mes "Why did you call me anyway?";
-		mes "I'm a little late for running errands for my aunts.";
-		npctalk "Catherine: Lehar, the court manners are surprisingly the same as when you were young.", "Catherine#ep19c01", bc_self;
-		npctalk "Lehar: I'm sorry...", "Lehar#ep19lehar01", bc_self;
+		mes "Oh, yes. Yes.";
+		mes "Brother Nihil, your highness? Your majesty?";
+		mes "I'm still not used to this.";
+		mes "Anyway, why did you call for me?";
+		mes "I was a little late because I was running errands for my aunt.";
+		npctalk "Catherine: Lehar, your court manners are surprisingly the same from when you were young.", "Catherine#ep19c01", bc_self;
+		npctalk "Lehar: I apologize...", "Lehar#ep19lehar01", bc_self;
 		next;
 		cutin "ep171_nihil02.png",2;
 		mes "[Nihil]";
-		mes "Frankly speaking, you're leaving for Isgard soon, aren't you?";
-		mes "then I wish I could take this guy and his comrades together";
+		mes "To put it bluntly, are you leaving for Isgard soon?";
+		mes "If you do, I want you to take this person and " + (Sex ? "his" : "her") + " colleagues with you." ;
 		next;
 		cutin "ep19_lehar05.png",1;
 		mes "[Lehar]";
-		mes "Huh? Suddenly? No, why is it happening?";
-		mes "Isn't it a secret???";
-		mes "Is it okay to say it?!";
+		mes "Huh? Why so sudden? Why, what's going on?";
+		mes "Wasn't it a secret???";
+		mes "Was it okay to say it?!!!!";
 		next;
 		cutin "ep16gao_1.bmp",0;
 		mes "[Catherine]";
 		mes "Lehar. Calm down.";
-		mes "This man must go to Isgard for a reason.";
+		mes "This person must go to Isgard for a reason.";
 		next;
-		select( "Tell me the story of Illusion" );
+		select( "Tell the story of the Illusions." );
 		cutin "ep19_lehar01.png",1;
 		mes "[Lehar]";
-		mes "Then that's a big deal.";
-		mes "Then I'll use some Guardian's Chests.";
-		mes "Please allow me";
+		mes "If so, then it's a big deal.";
+		mes "I'll have to use the Guardians Box.";
+		mes "Please allow it.";
 		next;
 		cutin "ep171_nihil01.png",2;
 		mes "[Nihil]";
-		mes "Yes. Then " + strcharinfo(0) + ", let's move to the next room.";
-		mes "Because the Guardian's Chest is there.";
+		mes "Sure. " + strcharinfo(0) + ", let's move to the next room.";
+		mes "The Guardians Box is there.";
 		next;
 		cutin "ep16gao_1.bmp",0;
 		mes "[Catherine]";
-		mes "I'll just leave.";
+		mes "I will be on my way.";
 		mes "I hope you achieve what you want.";
-		mes "Lehar, say hello to your mother.";
-		npctalk "Lehar: Sure! May your mother always be at peace.", "Lehar#ep19lehar01", bc_self;
+		mes "Lehar, say hello to your mother for me.";
+		npctalk "Lehar: I will! My mother is always at peace.", "Lehar#ep19lehar01", bc_self;
 		next;
 		cutin "ep16_crux_findel02.png",0;
 		mes "[Crux]";
-		mes "I will take care of the former queen.";
-		mes "Then I look forward to seeing you next time.";
+		mes "I will escort the queen.";
+		mes "I look forward to seeing you next time.";
 		next;
 		cloakonnpcself( "Crux#ep19crux02" );
-		sleep2 400;
 		cloakonnpcself( "Catherine#ep19c01" );
 		cutin "ep19_lehar01.png",1;
 		mes "[Lehar]";
-		mes "Are we going too? It's just the right time.";
+		mes "Shall we go? The time is just right.";
 		erasequest 18120;
 		setquest 18121;
 		ep19_main = 3;
@@ -702,19 +801,19 @@ prt_cas,317,266,6	script(CLOAKED)	Lehar#ep19lehar01	4_EP19_LEHAR,{
 	if (ep19_main == 3) {
 		cutin "ep19_lehar01.png",0;
 		mes "[Lehar]";
-		mes "Nihil hyung ahYour Majesty's private room.";
-		mes "Come on.";
+		mes "Let us go.";
+		mes "To brother Nihil's, Ah no, I mean his majesty's private room.";
 		next;
 		cutin "ep171_nihil02.png",2;
 		mes "[Nihil]";
-		mes "When we're together, just call me hyung.";
-		mes "After all, you're not even bound by a palace...";
+		mes "You can just call me brother when we're together.";
+		mes "You're not tied to the palace rules anyway...";
 		next;
 		cutin "ep19_lehar07.png",0;
 		mes "[Lehar]";
-		mes "Oh, then please don't come to my mother.";
+		mes "Oh, but please don't tell my mother.";
 		mes "I really hate studying etiquette!";
-		npctalk "Lehar: I'd rather do exorcism in a monastery.", "", bc_self;
+		npctalk "Lehar: I would rather perform an exorcism in a monastery.", "", bc_self;
 		close2;
 		cutin "",255;
 		navigateto("prt_cas",331,343);
@@ -741,101 +840,103 @@ OnTouch:
 
 prt_cas,331,343,4	script(CLOAKED)	Nihil#ep19nh01	4_EP17_NIHIL_K,{
 	if (ep19_main == 3) {
-		cutin "ep171_nihil01.png",0;
 		mes "[Nihil]";
-		mes "What looks like a plain book is a Guardian's Box.";
-		mes "Opening the cover reveals a space like a box.";
+		mes "This is a Guardian Box, it looks like a normal book.";
+		mes "Opening the cover the box-shaped space inside.";
 		next;
 		mes "[Nihil]";
-		mes "Only direct descendants of the seven royal families are actually available.";
-		mes "In this case, we need the seals of me and Lehar.";
+		mes "Only direct descendants of the seven royal family can use it.";
+		mes "In this case, we'll need my seal and from Lehar.";
 		next;
 		cutin "ep19_lehar02.png",2;
 		mes "[Lehar]";
-		mes "In order to enter Isgard, you must receive an invitation^000000 ^4d4dff.";
-		mes "How many colleagues will you go with Adventurer?";
+		mes "You need to get an ^4D4DFFinvitation^000000 to enter Isgard.";
+		mes "Adventurer, how many colleagues are going with you?";
 		next;
 		select( "I have a lot of colleagues." );
 		cutin "ep19_lehar01.png",2;
 		mes "[Lehar]";
-		mes "Uh...then it would be impossible to use Hellock.";
-		mes "I have to cross the sea, do you want to take a boat?";
+		mes "Well... it would be too much by land.";
+		mes "We have to cross the sea, are you planning on taking a boat?";
 		next;
-		select( "I will ride Barmund's Airship." );
+		select( "We're going to ride Varmundt's airship." );
 		mes "[Lehar]";
-		mes "Ah! Unfair! Nice.";
-		mes "Then I will send you a request for permission to enter.";
+		mes "Oh! An airship! That's great.";
+		mes "Then, I will send a request to get permission for your entry.";
 		next;
 		cutin "",255;
-		mes "Lehar began to write something on fine paper with the royal seal.";
-		mes "It seems that the knee-heel is correcting the expression from time to time next to me.";
+		mes "Lehar began to write something on a fine paper with the royal seal.";
+		mes "From time to time, Nihil is correcting the expressions he's writing.";
 		next;
 		cutin "ep19_lehar01.png",2;
 		mes "[Lehar]";
-		mes "Oh, done!";
-		mes "Then I will seal it and put the letter in the box.";
-		mes "Now you just have to wait.";
+		mes "Ah, it's done!";
+		mes "Then, I'll stamp the seal and put the letter in the box.";
+		mes "Now we just have to wait.";
 		next;
 		cutin "ep171_nihil01.png",0;
 		mes "[Nihil]";
-		mes "I hope they find this in time.";
+		mes "I hope they find it in time.";
 		next;
-		select( "What is the principle?" );
+		select( "What is this?" );
 		mes "[Nihil]";
-		mes "This box was left by the first Tristan Geoborg.";
-		mes "It is a relic that was kept in the royal treasury under the name of his cherished possession.";
+		mes "This is a box that was left behind by Tristan Gaebolg I.";
+		mes "It's a relic that was kept in the royal treasury as one of his treasured possessions.";
 		next;
 		mes "[Nihil]";
-		mes "According to the records, it is said that the Founding King's favorite letter box.";
-		mes "Some of the priests put in a letter saying that the usage is just to write a letter and keep it, but nothing happened.";
+		mes "According to the records, it is a letter box that was used by the founding king.";
+		mes "Some of his subjects tried to write letters and store it inside since they believed that it was just a box for letters, nothing happened that time.";
 		next;
 		cutin "ep19_lehar01.png",2;
 		mes "[Lehar]";
-		mes "That's why it was recorded under the name of the letter box.";
-		mes "It was actually a magical item that reacted to the magic of a specific person.";
+		mes "That's why in the records it was named as the letter box.";
+		mes "It was actually a magical relic that only responses to certain people's mana.";
 		next;
 		mes "[Lehar]";
-		mes "My aunt, who was cleaning out the library, was looking through the records and found out about the existence of this box and tried to put the letter in";
+		mes "My aunt who was organizing the library records and found out about the existence of this box, so she tried putting a letter in it.";
 		next;
 		select( "Did it work?" );
 		mes "[Lehar]";
-		mes "That's it.";
-		mes "It was the people who kept the seals of Isgard who sent the reply.";
-		mes "If you have an invitation with their blessings, you can go in and out.";
+		mes "It did.";
+		mes "The people who replied were the Guardians of Isgard.";
+		mes "If you have an invitation with their blessing, you'll be able to go in and out.";
 		next;
-		specialeffect EF_BEGINSPELL3, AREA, "Bookbox#ep19box0";
-		sleep2 500;
-		specialeffect EF_SPHERE, AREA, "Bookbox#ep19box0";
+		specialeffect EF_BEGINSPELL3, AREA, "Book-shaped Box#ep19box0";
+		specialeffect EF_SPHERE, AREA, "Book-shaped Box#ep19box0";
 		cutin "ep171_nihil01.png",0;
 		mes "[Nihil]";
-		mes "Looks like you got a reply.";
+		mes "It looks like we got a reply.";
 		next;
 		cutin "ep19_lehar02.png",2;
 		mes "[Lehar]";
-		mes "An invitation! Oh, here's another letter.";
-		mes "It says welcome";
-		mes "You say it's been a while since Barmund's airship?";
+		mes "It's an invitation! Oh, it came with another letter.";
+		mes "It says welcome.";
+		mes "They say it's been a while since Varmundt Airship last came, it has been there before?";
 		next;
 		cutin "ep19_lehar02.png",2;
 		mes "[Lehar]";
-		mes "Okay. With this, you and your companions can go to Isgard.";
+		mes "Alright. With this, you and your colleagues can go to Isgard.";
 		next;
 		cutin "ep19_lehar01.png",2;
 		mes "[Lehar]";
-		mes "They say you can leave this to the child who manages the airship.";
+		mes "They also said that we can leave it everything to the one who manages the airship.";
 		next;
 		cutin "ep171_nihil01.png",0;
 		mes "[Nihil]";
-		mes "Things seem to have worked out.";
+		mes "It looks like everything worked out.";
 		next;
 		cutin "ep19_lehar01.png",2;
 		mes "[Lehar]";
-		mes "Can I board the plane too?";
-		mes "I'll stop by the monastery and the cathedral before going.";
+		mes "Can I board the airship too?";
+		mes "I will stop by the monastery and the cathedral before going.";
 		next;
 		cutin "ep171_nihil01.png",0;
 		mes "[Nihil]";
-		mes "Lehar, ask Crooks for directions to Barmund's mansion.";
+		mes "Lehar, ask Crux to guide you to Varmundt's Mansion.";
+		next;
+		mes "[Nihil]";
+		mes "It will be better if Lehar join because you will need a guide in Isgard.";
+		mes "Are you going right away?";
 		next;
 		erasequest 18121;
 		setquest 18122;
@@ -847,25 +948,22 @@ prt_cas,331,343,4	script(CLOAKED)	Nihil#ep19nh01	4_EP17_NIHIL_K,{
 		mes "You'll need a guide in Isgard, so you'd better be with Lehar.";
 		mes "Do you want to go right away?";
 		next;
-		switch( select( "Go back to the Barmund mansion.", "I will stop by Prontera." ) ) {
+		switch( select( "Return to Varmundt Mansion.", "I'm going to stop by Prontera." ) ) {
 		case 1:
 			cutin "ep19_lehar01.png",2;
 			mes "[Lehar]";
-			mes "Then let's go out together.";
-			mes "I have to go to church.";
-			mes "See you later at Barmund's mansion!";
+			mes "Then, I will go to Varmundt's mansion on my own, so let's ride the airship together!";
+			mes "I'm looking forward to it.";
 			close2;
-			cutin "",255;
 			warp "ba_maison",0,0;
 			end;
 		case 2:
 			cutin "ep19_lehar01.png",2;
 			mes "[Lehar]";
-			mes "Then let's go out together.";
-			mes "I have to go to church.";
-			mes "See you later at Barmund's mansion!";
+			mes "Then let's head out together.";
+			mes "I have to go to the cathedral.";
+			mes "I'll see you later at Varmundt's Mansion!";
 			close2;
-			cutin "",255;
 			warp "prontera",155,320;
 			end;
 		}
@@ -878,7 +976,7 @@ OnInit:
 	end;
 }
 
-prt_cas,331,342,3	duplicate(dummy_npc)	Bookbox#ep19box0	4_POINT_WHITE
+prt_cas,331,342,3	duplicate(dummy_npc)	Book-shaped Box#ep19box0	4_POINT_WHITE
 prt_cas,334,342,3	duplicate(dummy_cloaked_npc)	Lehar#ep19lehar02	4_EP19_LEHAR
 
 // unknown effect
@@ -891,93 +989,93 @@ ba_maison,186,251,0	script	#ep19_evt05	HIDDEN_WARP_NPC,3,3,{
 OnTouch:
 	if (ep19_main == 4) {
 		cutin "ep172_beta.png",2;
-		mes "[Gingerbread]";
-		mes "Ah, it was nice to meet you.";
-		mes "While waiting for guests, the plane is ready to depart.";
-		mes "Other guests were waiting to be sent to the airship landing as soon as they arrived.";
+		mes "[Ginger]";
+		mes "I'm glad we me just in time.";
+		mes "I finished the preparation for the airship while waiting for the other guests.";
+		mes "I'm waiting for the other guests to arrive to guide them to the airship boarding area.";
 		next;
-		mes "[Gingerbread]";
-		mes "A guest named Lehar came to me and asked me to guide her, so she guided me well";
-		mes "Guest, do you know anything about him?";
+		mes "[Ginger]";
+		mes "A guest named Lehar also came and asked me to guide him, I'll guide him.";
+		mes "Guest, Do you know anything about him?";
 		next;
 		select( "Lehar is our new companion." );
-		mes "[Gingerbread]";
-		mes "Aha. Well then, the new guests are well taken care of, so you don't have to worry.";
+		mes "[Ginger]";
+		mes "I see. Then you don't have to worry, I will guide him well.";
 		next;
-		mes "[Gingerbread]";
-		mes "There are other guests here.";
+		mes "[Ginger]";
+		mes "The other customers are coming.";
 		next;
 		cutin "16lei_01.png",0;
 		mes "[Lazy]";
-		mes "Hey, did you wait long?";
-		mes "Isn't it? Did we come on time?";
+		mes "Hey, Did you wait long?";
+		mes "No, right? We came right in time, right?";
 		next;
 		cutin "ep18_maram_01.png",2;
 		mes "[Maram]";
-		mes "I have come to bring news to Suad and his mother.";
-		mes "We are all set";
+		mes "I've brought the news to Suad and mother.";
+		mes "We're all set for the departure.";
 		next;
 		cutin "ep18_miriam_01.png",0;
 		mes "[Miriam]";
-		mes "You may leave at any time.";
-		mes "You said you'd find a way to enter Isgard from Prontera. How did you go?";
+		mes "We can leave anytime.";
+		mes "You said you'd go to Prontera to get information on how to get to Isgard, how did it go?";
 		next;
-		select( "Show the Guardian's invitation" );
+		select( "Show the Guardian's Invitation." );
 		cutin "16lei_01.png",0;
 		mes "[Lazy]";
-		mes "So that's the right-of-way, right?";
-		mes "Magic, so convenient.";
-		mes "Are we leaving now?";
+		mes "So that's our ticket in?";
+		mes "It's like magic, it's very convenient.";
+		mes "So, are we leaving now?";
 		next;
-		select( "There are more parties." );
+		select( "There's more company." );
 		cutin "ep19_lehar01.png",1;
 		mes "[Lehar]";
-		mes "" + strcharinfo(0) + " sir!";
+		mes "" + strcharinfo(0) + "!";
 		mes "Am I late?";
-		mes "Isn't it?";
-		mes "These are the colleagues you mentioned before!";
+		mes "Is that them?";
+		mes "These are the colleagues you mentioned earlier!";
 		next;
 		mes "[Lehar]";
-		mes "Hello";
-		mes "This is Lehar who will guide you to Isgard.";
-		mes "Please take care of me.";
+		mes "Hello.";
+		mes "I'm Lehar, the one who'll guide you to Isgard.";
+		mes "I look forward to working with you.";
 		next;
 		cutin "ep172_beta.png",2;
-		mes "[Gingerbread]";
-		mes "Guests, shall we leave then?";
-		mes "Come on, make a quick decision!";
+		mes "[Ginger]";
+		mes "Guests, shall we go?";
+		mes "Please hurry and make a decision!";
 		next;
 		cutin "16lei_01.png",0;
 		mes "[Lazy]";
 		mes "Why are you in such a hurry?";
-		mes "You haven't even said hello yet.";
+		mes "We haven't even said our introductions yet.";
 		mes "My name is Lazy.";
 		mes "Have you ever been to Yuno?";
 		next;
 		cutin "ep19_lehar01.png",2;
 		mes "[Lehar]";
-		mes "Yes? That's right. I came from Yuno.";
-		mes "For now, uh.. I'll check the occupants for a moment.";
+		mes "What? Of course. I transferred from Yuno.";
+		mes "First, uhm.. let me check the passengers for a bit.";
 		next;
 		mes "[Lehar]";
-		mes "Ah, there's a long-haired woman in a veil.";
-		mes "Are you all here?";
-		mes "I think we should go. Where are we going?";
+		mes "Oh, there's the woman with the long hair and veil.";
+		mes "We're all here, right?";
+		mes "I think we're set to go. Where should we go?";
 		next;
 		cutin "ep18_miriam_01.png",0;
 		mes "[Miriam]";
 		mes ".....?";
-		mes "Do you know me well?";
+		mes "Do you know me?";
 		next;
 		cutin "ep19_lehar02.png",2;
 		mes "[Lehar]";
-		mes "No? Of course I don't know.";
+		mes "No? Of course not.";
 		mes "Nice to meet you!";
 		next;
 		cutin "ep172_beta.png",1;
-		mes "[Gingerbread]";
-		mes "Then guests, go to the airship platform.";
-		mes "Ginger serves as a special express!";
+		mes "[Ginger]";
+		mes "Then guests, please move to the airship boarding area.";
+		mes "Ginger will take you on a special express~!";
 		erasequest 18122;
 		setquest 18123;
 		navigateto("ba_in01",30,264);
@@ -993,27 +1091,23 @@ OnInit:
 
 
 // Main Quest: Step 7
-ba_in01,30,264,4	script	Navigator Ginger Lee#ep19gg01	4_EP17_TABLET,{
+ba_in01,30,264,4	script	Navigator Ginger#ep19gg01	4_EP17_TABLET,{
 	if (ep19_main >= 5) {
-		cutin "ep172_beta.png",2;
-		mes "[Gingerbread]";
-		mes "We go to If Horoisgard";
-		mes "Are you going to ride right now?";
+		mes "[Ginger]";
+		mes "We are going to Isgard if you're ready.";
+		mes "Are you going to board right now?";
 		next;
-		switch( select( "Get on the airship!", "Wait a minute." ) ) {
-		case 1:
-			mes "[Gingerbread]";
-			mes "This is the guest.";
-			close2;
-			cutin "",255;
-			warp "air_if",53,71;
-			navigateto("air_if",32,63);
-			end;
-		case 2:
-			mes "[Gingerbread]";
-			mes "When you're ready, we'll leave.";
+		if (select( "Board the airship!", "Give me a minute." ) == 2) {
+			mes "[Ginger]";
+			mes "Let us go when you're ready.";
 			close3;
 		}
+		mes "[Ginger]";
+		mes "This way guest.";
+		close2;
+		warp "air_if",53,71;
+		navigateto("air_if",32,63);
+		end;
 	}
 	end;
 
@@ -1023,29 +1117,29 @@ OnInit:
 }
 
 // Main Quest: Step 8, 10
-air_if,46,71,4	script	Navigator Gingeri#ep19gg03	4_EP17_TABLET,{
+air_if,46,71,4	script	Navigator Ginger#ep19gg03	4_EP17_TABLET,{
 	if (ep19_main < 5)
 		end;
 	if (ep19_main == 5) {
 		cutin "ep172_beta.png",2;
-		mes "[Gingerbread]";
-		mes "We are going to fly to the final point where we did the test flight at once.";
-		mes "Oh, where's the way over the barrier?";
+		mes "[Ginger]";
+		mes "We are going to fly to the final point where our test flight was conducted.";
+		mes "Also, where is the way to cross the barrier?";
 		next;
 		cutin "ep19_lehar01.png",0;
-		mes "[Lehar]";
-		mes "Did you give me an invitation to visit the ice castle?";
-		mes "You should pass it on to the person who manages the airship...";
+		mes "[Ginger]";
+		mes "Didn't I gave you an invitation to visit the Ice Castle?";
+		mes "You need to give that invitation to the one managing the airship...";
 		next;
-		select( "Give Ginger an invitation" );
+		select( "Give the invitation to Ginger." );
 		cutin "ep172_beta.png",2;
-		mes "[Gingerbread]";
-		mes "Ah! Puzzle piece!";
-		mes "A specific wavelength code is detected in the invitation.";
+		mes "[Ginger]";
+		mes "Ah! It's a puzzle piece!";
+		mes "A specific wavelength code is detected in the invitation..";
 		next;
-		mes "[Gingerbread]";
-		mes "Yes. I know how to do it.";
-		mes "The guests are resting until they arrive.";
+		mes "[Ginger]";
+		mes "Yes. I know what to do with it.";
+		mes "The guests can rest until we arrive.";
 		if (countitem(1000607) > 0)
 			delitem 1000607,1;	// Ep19_Letter
 		erasequest 18123;
@@ -1055,52 +1149,46 @@ air_if,46,71,4	script	Navigator Gingeri#ep19gg03	4_EP17_TABLET,{
 	}
 	if (ep19_main == 6) {
 		cutin "ep172_beta.png",2;
-		mes "[Gingerbread]";
-		mes "You are running on the best route.";
-		mes "The guest rests until they reach their destination.";
+		mes "[Ginger]";
+		mes "We are flying on the best route.";
+		mes "The guests can rest until we arrive at the destination.";
 		close3;
 	}
 	if (ep19_main == 7) {
 		cutin "ep172_beta.png",2;
-		mes "[Gingerbread]";
-		mes "Guest, this way.";
-		mes "Ginger is here to protect If Ho.";
-		mes "If you want to return to the Barmund mansion, ask me anytime.";
+		mes "[Ginger]";
+		mes "Guest, This way.";
+		mes "I will stay here to protect the airship.";
+		mes "Feel free to ask if you want to return to the Varmundt Mansion.";
 		next;
-		switch( select( "Get off now", "Get off after a while." ) ) {
-		case 1:
-			mes "[Gingerbread]";
-			mes "Okay then~";
-			close2;
-			cutin "",255;
-			warp "jor_tail",219,53;
-			end;
-		case 2:
-			mes "[Gingerbread]";
-			mes "I got it";
+		if (select( "Get off now.", "Get off later." ) == 2) {
+			mes "[Ginger]";
+			mes "Okay.";
 			mes "Tell me later.";
 			close3;
 		}
+		mes "[Ginger]";
+		mes "Then *Shh*~";
+		close2;
+		warp "jor_tail",219,53;
 		end;
 	}
 	cutin "ep172_beta.png",2;
-	mes "[Gingerbread]";
-	mes "Aircraft is always operational.";
-	mes "Where would you like to take me?";
+	mes "[Ginger]";
+	mes "The Airship is always operational.";
+	mes "Where should I take you?";
 	next;
-	switch( select( "Barmund Mansion", "Isgard" ) ) {
+	switch( select( "Varmundt Mansion", "Isgard" ) ) {
 	case 1:
-		mes "[Gingerbread]";
-		mes "Then shhhhhhhhh";
+		mes "[Ginger]";
+		mes "Then *Swoosh*~";
 		close2;
-		cutin "",255;
 		warp "ba_in01",30,262;
 		end;
 	case 2:
-		mes "[Gingerbread]";
-		mes "Okay then~";
+		mes "[Ginger]";
+		mes "Then *Shh*~";
 		close2;
-		cutin "",255;
 		warp "jor_tail",219,53;
 		end;
 	}
@@ -1151,7 +1239,6 @@ air_if,30,70,5	script(CLOAKED)	Maram#ep19maramair	4_EP18_MARAM,{
 		mes "[Gingerbread]";
 		mes "Now is the guest to come to Rachel.";
 		close2;
-		cutin "",255;
 		warp "rachel",267,126;
 		end;
 	case 2:
@@ -1180,7 +1267,6 @@ air_if,35,72,3	script(CLOAKED)	Lazy#ep19lazyair	4_EP19_LAZY,{
 		mes "[Gingerbread]";
 		mes "Now is the guest to get off at Yuno.";
 		close2;
-		cutin "",255;
 		warp "yuno",157,123;
 		end;
 	case 2:
@@ -1195,23 +1281,23 @@ air_if,31,58,1	script(CLOAKED)	Lazy#ep19lazy02	4_EP19_LAZY,{
 	if (ep19_main == 5) {
 		cutin "ep19_leizi01.png",2;
 		mes "[Lazy]";
-		mes "Woohoo. The Airship of the Great Sage is different from the inside.";
-		mes "I've been on Valkyrie Airways a few times, but not this much.";
+		mes "Woah. The airship of the great sage is truly different from the inside out.";
+		mes "I've been into Valkyrie Air's Airship a few times, but it wasn't to this extent.";
 		close3;
 	}
 	if (ep19_main == 6) {
 		cutin "ep19_leizi01.png",2;
 		mes "[Lazy]";
-		mes "Do you know what airport fashion is?";
-		mes "How cool are you?";
+		mes "What do you think about my flying fashion?";
+		mes "Is it cool?";
 		next;
 		mes "[Lazy]";
 		mes "Is it cold there?";
-		mes "You should pack your winter clothes tightly.";
+		mes "You should wear your winter clothes tightly.";
 		close3;
 	}
 	if (ep19_main == 7) {
-		npctalk "Lazy: Landing already? My trump card is going to shine!", "", bc_self;
+		npctalk "Lazy: Is it landing already? My secret winter clothes will shine!", "", bc_self;
 		end;
 	}
 	end;
@@ -1219,15 +1305,15 @@ air_if,31,58,1	script(CLOAKED)	Lazy#ep19lazy02	4_EP19_LAZY,{
 
 air_if,29,59,6	script(CLOAKED)	Miriam#ep19miriam03	4_EP18_MIRIAM,{
 	if (ep19_main == 5) {
-		npctalk "Miriam: It's my first time on such a long trip, so I'm a little nervous.", "", bc_self;
+		npctalk "Miriam: It's the first time on such a long trip, I'm a little nervous.", "", bc_self;
 		end;
 	}
 	if (ep19_main == 6) {
-		npctalk "Miriam: I feel more excited than nervous. Is my training insufficient?", "", bc_self;
+		npctalk "Miriam: I feel excited more then being nervous. I hope I can perform sufficiently.", "", bc_self;
 		end;
 	}
 	if (ep19_main == 7) {
-		npctalk "Miriam: I'm a little nervous. Will it be very cold?", "", bc_self;
+		npctalk "Miriam: I'm a little nervous. Will it be cold?", "", bc_self;
 		end;
 	}
 	end;
@@ -1235,18 +1321,18 @@ air_if,29,59,6	script(CLOAKED)	Miriam#ep19miriam03	4_EP18_MIRIAM,{
 
 air_if,29,62,5	script(CLOAKED)	Maram#ep19maram03	4_EP18_MARAM,{
 	if (ep19_main == 5) {
-		npctalk "Maram: You can't even compare it to a commercial plane. This is a private plane...!", "", bc_self;
+		npctalk "Maram: You can't even begin to compare it to a public airship. This airship is...!", "", bc_self;
 		end;
 	}
 	if (ep19_main == 6) {
 		cutin "ep18_maram_01.png",2;
 		mes "[Maram]";
-		mes "Later, Ginger will discuss with you to see if I can use the airship periodically.";
-		mes "If you need a lot of resources, you'll need someone to deliver, right?";
+		mes "I'm going to discuss something later with Ginger, I will ask if I can use the airship from time to time.";
+		mes "You will need someone to deliver if you need various resources, right?";
 		close3;
 	}
 	if (ep19_main == 7) {
-		npctalk "Maram: It's finally here? I need to take a deep breath and get off.", "", bc_self;
+		npctalk "Maram: Are we finally here? I need to take a deep breath before getting off.", "", bc_self;
 		end;
 	}
 	end;
@@ -1257,119 +1343,119 @@ air_if,32,63,3	script(CLOAKED)	Lehar#ep19lehar03	4_EP19_LEHAR,{
 	if (ep19_main == 5) {
 		cutin "ep19_lehar01.png",2;
 		mes "[Lehar]";
-		mes "Please deliver the invitation from the royal palace to Ginger.";
-		mes "You will be able to recognize the entire aircraft as being a licensed entity.";
+		mes "Give the invitation from the royal palace to Ginger.";
+		mes "She will be able to make it so that the entire airship will be recognize as one authorized entity.";
 		close3;
 	}
 	if (ep19_main == 6) {
 		cutin "ep19_lehar01.png",2;
 		mes "[Lehar]";
-		mes "Weren't you in a hurry to get on board before?";
-		mes "Lehar of the Monastery of St. Capitolina.";
+		mes "I didn't introduce myself properly since we were in a hurry to board, right?";
+		mes "I'm Lehar from the Saint Capitolina Monastery.";
 		next;
 		mes "[Lehar]";
-		mes "While helping with research related to Jormungand, I happened to be traveling to and from Isgard, and this is how I got to meet you.";
+		mes "I just happened to be going to Isgard too, and I'll be there to help you with your research on Jormungandr.";
 		next;
 		cutin "ep19_leizi01.png",0;
 		mes "[Lazy]";
-		mes "He's a bright, rookie-like young man!";
-		mes "I like you";
-		mes "Call me Lazy.";
+		mes "You're bright, you're like that young man, Rookie!";
+		mes "I like you.";
+		mes "Feel free to call me Lazy.";
 		next;
 		cutin "ep18_maram_01.png",2;
 		mes "[Maram]";
-		mes "This is Maram. I'm here to help on this journey.";
-		mes "If it's to deliver goods or news, I'll be good at it.";
+		mes "I'm Maram. I'm also here to help them on this journey.";
+		mes "I will surely do well as long it's about delivering supplies or news.";
 		next;
 		cutin "ep18_miriam_01.png",0;
 		mes "[Miriam]";
-		mes "This is Miriam.";
-		mes "I came with Maram";
-		mes "I wish you all the best in the future.";
+		mes "I'm Miriam.";
+		mes "I came here with Maram.";
+		mes "I'm looking forward to working with you.";
 		next;
 		cutin "ep19_lehar02.png",2;
 		mes "[Lehar]";
 		mes "Miriam?";
-		mes "Oh, mysticism~";
-		mes "I'll pretend I don't know.";
+		mes "Oh, how mysterious~";
+		mes "I'll pretend I didn't hear that.";
 		next;
 		cutin "ep18_miriam_03.png",0;
 		mes "[Miriam]";
-		mes "Hmm?";
+		mes "Hm?";
 		mes "Is that so...";
 		next;
 		cutin "ep19_leizi01.png",0;
 		mes "[Lazy]";
-		mes "Hey, young friend.";
-		mes "Looking at your clothes, are you of the exorcism family?";
+		mes "Hey, young man.";
+		mes "Judging by your outfit, are you from the exorcism family?";
 		next;
 		cutin "ep19_lehar01.png",2;
 		mes "[Lehar]";
-		mes "Yes? Oh, yes. It is!";
-		mes "I've been at the Capitoline Monastery since I was little...";
+		mes "What? Oh, yes. That's right!";
+		mes "I've been living in the Capitolina Monastery since I was a kid...";
 		next;
 		cutin "ep19_leizi01.png",0;
 		mes "[Lazy]";
-		mes "Then you are a servant of the gods, what does that have to do with the Geoborg royal family?";
-		mes "Hey, are you going to be a prince?";
+		mes "So what's your connection with the Gaebolg Family?";
+		mes "Oh, are you a prince?";
 		next;
 		cutin "ep19_lehar01.png",2;
 		mes "[Lehar]";
-		mes "What a prince. No.";
-		mes "Her mother was the youngest princess of Geoborg, the brother of the previous king.";
+		mes "A prince. That I'm not.";
+		mes "My mother was the brother of the king and the youngest princess of the Gaebolg.";
 		next;
 		mes "[Lehar]";
-		mes "Her mother cares about your family's curse, so she entrusted her to the monastery and raised her...";
-		mes "In the monastery was also her aunt ...";
+		mes "My mother raised me in a monastery because she was concerned about the curse of the family...";
+		mes "Her aunt was also in the monastery...";
 		next;
 		cutin "ep18_maram_01.png",0;
 		mes "[Maram]";
-		mes "Were you in the monastery to break the curse?";
+		mes "Were you at the monastery to break the curse?";
 		next;
 		cutin "ep19_lehar04.png",2;
 		mes "[Lehar]";
-		mes "Yes. Eventually, the curse was manifested in the direct son of the previous king, and the aunts despaired.";
+		mes "Yes. In the end, the curse was manifested by the son of the previous king, and my ended up in despair.";
 		next;
 		cutin "ep19_lehar01.png",2;
 		mes "[Lehar]";
-		mes "I was determined to break the curse of the family myself, but I got an opportunity and went to Isgard, the origin of Jormungand.";
+		mes "He was determined to break the curse of the family himself, then an opportunity arose and he went to Isgard, the origin of Jormungandr.";
 		next;
 		cutin "ep18_miriam_01.png",0;
 		mes "[Miriam]";
-		mes "Where is Isgard?";
+		mes "What kind of place is Isgard?";
 		next;
 		cutin "ep19_lehar01.png",2;
 		mes "[Lehar]";
-		mes "It's frozen land.";
-		mes "Wherever you look, there are only snow, ice and glaciers.";
-		mes "Ah, it's still warm inside the ice castle.";
+		mes "It's a frozen land.";
+		mes "It's a place full of snow, ice, and glaciers everywhere.";
+		mes "Oh, but it's warm inside the castle.";
 		next;
 		cutin "ep19_lehar02.png",2;
 		mes "[Lehar]";
-		mes "He said, I heard that Leon dealt with some kind of magic.";
+		mes "For how they do it, I heard Leon is handling it with some kind of magic.";
 		mes "Hahahaha...";
 		mes "I don't remember.";
 		next;
 		cutin "ep19_leizi01.png",0;
 		mes "[Lazy]";
 		mes "Is there anything we should be careful about?";
-		mes "If it was Illusion, it would have been four months or so.";
+		mes "I'm sure the Illusions are up to something.";
 		next;
 		cutin "ep19_lehar01.png",2;
 		mes "[Lehar]";
-		mes "Recently, the number of organoids has increased dramatically, does that have anything to do with it?";
-		mes "It would be better to go and see for yourself...";
+		mes "The numbers of Rgans has dramatically increased recently, do you they have something to do with it?";
+		mes "I think it would better to go see it for yourself...";
 		next;
 		cutin "ep172_beta.png",1;
-		mes "[Gingerbread]";
-		mes "Aircraft if ho.";
-		mes "I'll be landing soon.";
-		mes "Please be prepared for any unexpected shocks.";
+		mes "[Ginger]";
+		mes "The airship.";
+		mes "Is about to land.";
+		mes "Please prepare for a possible shock.";
 		next;
 		cutin "ep19_lehar01.png",2;
 		mes "[Lehar]";
-		mes "Oh! You have arrived!";
-		mes "Then shall we go to the Ice Castle?";
+		mes "Oh! We're here!";
+		mes "Shall we go to the Ice Castle?";
 		erasequest 18129;
 		setquest 18124;
 		ep19_main = 7;
@@ -1378,9 +1464,9 @@ air_if,32,63,3	script(CLOAKED)	Lehar#ep19lehar03	4_EP19_LEHAR,{
 	if (ep19_main == 7) {
 		cutin "ep19_lehar01.png",2;
 		mes "[Lehar]";
-		mes "I like Helock's sleigh, but the airship is better?";
-		mes "Would you like to get off at once?";
-		mes "I will guide you to the Ice Castle!";
+		mes "Herlock's sleigh is good, but isn't the airship better?";
+		mes "Shall we get off first?";
+		mes "I'll take you to the Ice Castle!";
 		close3;
 	}
 	end;
@@ -1391,33 +1477,31 @@ OnInit:
 }
 
 // Main Quest: Step 10
-// air_if,46,71,4	script	Navigator Gingeri#ep19gg03	4_EP17_TABLET,{
+// air_if,46,71,4	script	Navigator Ginger#ep19gg03	4_EP17_TABLET,{
 
 // Main Quest: Step 11
-jor_tail,216,51,5	script	Navigator Gingeri#ep19gg04	4_EP17_TABLET,4,4,{
+jor_tail,216,51,5	script	Navigator Ginger#ep19gg04	4_EP17_TABLET,4,4,{
 	if (ep19_main <= 7) {
 		cutin "ep172_beta.png",2;
-		mes "[Gingerbread]";
-		mes "Ginger waits here.";
-		mes "Air flight is possible at any time!";
+		mes "[Ginger]";
+		mes "Ginger will be waiting here.";
+		mes "It's so that the airship can be available anytime!";
 		close3;
 	}
-	mes "[Gingerbread]";
-	mes "Are you going to ride the airship?";
+	cutin "ep172_beta.png",2;
+	mes "[Ginger]";
+	mes "Are you going to use the airship?";
 	next;
-	switch( select( "Please", "No, I won't go back" ) ) {
-	case 1:
-		mes "[Gingerbread]";
-		mes "It's cold, so let's go inside.";
-		mes "Departure is possible at any time.";
-		close2;
-		warp "air_if",53,71;
-		end;
-	case 2:
-		mes "[Gingerbread]";
+	if (select( "Yes, please.", "No, I won't." ) == 2) {
+		mes "[Ginger]";
 		mes "Okay.";
-		close;
+		close3;
 	}
+	mes "[Ginger]";
+	mes "It's cold here, so come on in.";
+	mes "Departure is possible at any time.";
+	close2;
+	warp "air_if",53,71;
 	end;
 
 OnTouch:
@@ -1432,17 +1516,17 @@ OnTouch:
 }
 
 jor_tail,216,54,5	script(CLOAKED)	Lazy#ep19lazyjt	4_EP19_LAZY,{
-	npctalk "Lazy: Whoa whoa! This is it! Winter sea!!!", "", bc_self;
+	npctalk "Lazy: Wo~hoo~! This is it! Winter paradise!!!", "", bc_self;
 	end;
 }
 
 jor_tail,220,51,7	script(CLOAKED)	Maram#ep19maramjt	4_EP18_MARAM,{
-	npctalk "Maram: Oh my.. I've never seen a place full of ice like this..!!", "", bc_self;
+	npctalk "Maram: Unbelievable.. I've never seen a place full of ice before..!!", "", bc_self;
 	end;
 }
 
 jor_tail,223,50,7	script(CLOAKED)	Miriam#ep19miriamjt	4_EP18_MIRIAM,{
-	npctalk "Miriam: When Lazy asked me to buy clothes... I should have listened carefully...", "", bc_self;
+	npctalk "Miriam: When Lazy asked me to buy clothes.. I should have listened carefully...", "", bc_self;
 	end;
 }
 
@@ -1450,30 +1534,30 @@ jor_tail,221,53,3	script(CLOAKED)	Lehar#ep19lehar04	4_EP19_LEHAR,{
 	if (ep19_main == 7) {
 		cutin "ep19_lehar01.png",0;
 		mes "[Lehar]";
-		mes "Ah, fortunately we landed close to the ice castle.";
+		mes "Ah, we luckily landed close2; to the Ice Castle.";
 		mes "I usually go this way.";
 		next;
 		mes "[Lehar]";
-		mes "I just came to meet you at the Ice Castle!";
+		mes "They went out of the Ice Castle to meet us!";
 		next;
 		cutin "ep19_iwin11.png",2;
 		mes "[Iwin Soldier]";
-		mes "what is it";
-		mes "Should have been Lehar?";
-		mes "I thought it was a miscellaneous thing because something suspicious flew in.";
+		mes "What is this";
+		mes "Is it Lehar?";
+		mes "A suspicious thing flew in, so I thought it was something hostile.";
 		next;
 		mes "[Iwin Soldier]";
-		mes "What is it?";
-		mes "Lehar friend?";
-		mes "Who's dabbling and ondamsy, contributing?";
+		mes "Who are they?";
+		mes "Are they your friends, Lehar?";
+		mes "Who called for them, will they contribute?";
 		next;
 		cutin "ep19_lehar01.png",0;
 		mes "[Lehar]";
-		mes "That's right. It's all my party!";
-		mes "Leon also gave permission, so let's go to the Ice Castle.";
+		mes "Yes, yes. They're all in my party!";
+		mes "Sice Leon also gave the permission, let's go to the Ice Castle.";
 		next;
 		mes "[Lehar]";
-		mes "Let's go to a safe place first.";
+		mes "Let's go somewhere safe for now.";
 		mes "Follow me!";
 		erasequest 18124;
 		setquest 18125;
@@ -1486,7 +1570,7 @@ jor_tail,221,53,3	script(CLOAKED)	Lehar#ep19lehar04	4_EP19_LEHAR,{
 	if (ep19_main == 8) {
 		cutin "ep19_lehar01.png",0;
 		mes "[Lehar]";
-		mes "Let's go to a safe place first.";
+		mes "Let's go somewhere safe for now.";
 		mes "Follow me!";
 		close2;
 		cutin "",255;
@@ -1547,184 +1631,180 @@ icas_in,141,216,3	script	Lehar#ep19lehar06	4_EP19_LEHAR,{
 		close3;
 	}
 	if (ep19_main == 8) {
-		.@char_id = getcharid(0);
 		cutin "ep19_lehar01.png",2;
 		mes "[Lehar]";
-		mes "This way.";
-		mes "This is an ice castle, isn't it colder inside than you think?";
+		mes "This is the place.";
+		mes "This is an Ice Castle, but it's not cold inside, right?";
 		cloakoffnpcself( "Lazy#ep19lazy03" );
 		cloakoffnpcself( "Maram#ep19maram04" );
 		cloakoffnpcself( "Miriam#ep19miriam04" );
 		next;
 		cloakoffnpcself( "Guardian Leon#ep19leon01" );
-		sleep2 500;
 		cloakoffnpcself( "Guardian Aurelie#ep19arl01" );
-		npctalk "Leon: Lehar. It seems that those who asked for permission by invitation came.", "Guardian Leon#ep19leon01", bc_self;
+		npctalk "Leon: Lehar. I guess these are the people who asked for the permission to get an invitation.", "Guardian Leon#ep19leon01", bc_self;
 		next;
 		cutin "ep19_leon01.png",2;
 		mes "[Leon Petit]";
-		mes "This is Leon of the Petites.";
-		mes "Somehow, I am the guardian of the Ice Castle.";
+		mes "I am Leon from the Petit family.";
+		mes "I am playing the role of the guardian of this Ice Castle.";
 		mes "Please feel free to call me Leon.";
 		next;
 		cutin "ep19_aurelie01.png",0;
 		mes "[Aurelie Petit]";
-		mes "You can call me Aurelia.";
-		mes "You're still a brilliant adventurer.";
-		mes "It's been a long time since I've seen an adventurer.";
+		mes "You can call me Aurilie.";
+		mes "You are a brilliant adventurer.";
+		mes "It has been a long time since I saw an adventurer.";
 		next;
 		cutin "ep19_leon03.png",2;
 		mes "[Leon Petit]";
-		mes "Lehar's letter said it was related to the recent Isgard events";
-		mes "Can you be specific about that?";
+		mes "According to Lehar Letter, that it has something to do with Isgard's recent problems.";
+		mes "Can you tell me the details of the story?";
 		next;
-		select( "Talk about Illusion and Bagot" );
+		select( "Talk about the Illusion and Bagot." );
 		cutin "ep19_aurelie03.png",0;
 		mes "[Aurelie Petit]";
-		mes "You took Ymir's heart piece?";
-		mes "Then the suspicious omen that has always been seen...";
+		mes "They took Fragment of Ymir's heart?";
+		mes "Then, those suspicious dreams that I've been seeing ...";
 		next;
 		cutin "ep19_leon04.png",2;
 		mes "[Leon Petit]";
 		mes "It seems certain that part of the barrier has been breached.";
-		mes "how much greater change occurred while asleep ...";
+		mes "How much more has changed while you were asleep. ...";
 		next;
 		cutin "ep19_aurelie03.png",0;
 		mes "[Aurelie Petit]";
-		mes "Then it's highly likely that those Illusions colluded with Rgan.";
-		mes "I'll have to make sure I'm monitoring you.";
+		mes "There is a high possiblity that those people called the Illusions have colluded with the Rgans.";
+		mes "We need to keep an eye on them.";
 		next;
 		cutin "ep19_leon01.png",2;
 		mes "[Leon Petit]";
-		mes "Rgan itself hasn't been able to get out of the barrier yet, so I guess he's lucky.";
+		mes "So far the Rgans haven't been able to cross the barrier yet, so that's ong good thing.";
 		next;
 		cutin "ep19_aurelie01.png",0;
 		mes "[Aurelie Petit]";
-		mes "But it's a matter of time.";
-		mes "We also need a countermeasure.";
-		mes "To maintain the barrier.";
+		mes "I think it's just a matter of time.";
+		mes "We need to prepare countermeasures.";
+		mes "We also need to maintain the barrier.";
 		next;
 		cloakoffnpcself( "Vellgunde#ep19vell01" );
-		sleep2 400;
 		cloakoffnpcself( "Voglinde#ep19vog01" );
 		cutin "ep19_vellgunde01.png",2;
 		mes "[Vellgunde]";
-		mes "Who's this when I said what's so noisy?";
-		mes "Lehar, have you been to town?";
-		npctalk "Lazy: Who else is this time?", "Lazy#ep19lazy03", bc_self;
-		npctalk "Lehar: Little Aunt...", "Lehar#ep19lehar06", bc_self;
+		mes "I was wondering who was making all those noises.";
+		mes "Lehar, have you been into the city?";
+		npctalk "Lazy: Who is it this time?", "Lazy#ep19lazy03", bc_self;
+		npctalk "Lehar: My aunt...", "Lehar#ep19lehar06", bc_self;
 		next;
 		cutin "ep19_voglinde01.png",0;
 		mes "[Voglinde]";
-		mes "Yes. Did the errands go well?";
-		mes "There are a lot of babies I haven't seen.";
-		mes "Leon, Aurely, did you all say your common name?";
+		mes "So. How was your errand?";
+		mes "There are a lot of childrens I haven't seen before.";
+		mes "Leon, Aurelie, have they introduce themselves?";
 		next;
 		cutin "ep19_leon02.png",2;
 		mes "[Leon Petit]";
-		mes "Ah, did I make a mistake?";
-		mes "I didn't think of other people because I asked questions first.";
-		mes "It's been a long time since I've dealt with people like this...";
+		mes "Oh, I made a mistake.";
+		mes "I did not think of it before asking them questions.";
+		mes "It has been a while since I have dealt with people...";
 		next;
 		cutin "ep19_aurelie04.png",0;
 		mes "[Aurelie Petit]";
-		mes "Same. I'm sorry.";
-		mes "It's a serious problem here, too.";
+		mes "It is the same for me. I am sorry.";
+		mes "The problems here are too serious too.";
 		next;
 		cutin "ep19_leizi01.png",2;
 		mes "[Lazy]";
-		mes "Aww, it could be.";
-		mes "And the details you want will be more detailed later by me and my friends.";
-		mes "Goodbye late. This is Lazy from Schwarzwald.";
+		mes "Oh, don't worry.";
+		mes "We will tell you all the details from me and my friends here all you want later.";
+		mes "I apologize for the late greetings. I'm Lazy from Schwarzwald.";
 		next;
 		cutin "ep18_miriam_02.png",0;
 		mes "[Miriam]";
-		mes "Thank you for your hospitality";
-		mes "This is Miriam of Arunafeltz.";
+		mes "Thank you for your hospitality.";
+		mes "I'm Miriam from Arunafeltz.";
 		next;
 		cutin "ep18_maram_01.png",2;
 		mes "[Maram]";
-		mes "Like the Maram of Arunafelz.";
-		mes "I think I will be indebted to you often in the future. Please take good care of me in the future.";
+		mes "I'm Maram, I'm also from Arunafeltz.";
+		mes "I think I'll be indebted to you in the future. I look forward to working with you.";
 		next;
 		cutin "ep19_voglinde01.png",0;
 		mes "[Voglinde]";
-		mes "From Schwarzwald to Arunafelz...";
-		mes "I don't think it's a short story.";
+		mes "From Schwarzwald and Arunafeltz....";
+		mes "It must have been a long story.";
 		next;
 		mes "[Voglinde]";
-		mes "New girls, do you have a fight?";
-		mes "It's because the neighborhood here is barren, so it's difficult if you're weak?";
+		mes "Childrens, can you fight?";
+		mes "This place is barren, won't it be difficult if you're weak?";
 		next;
 		cutin "ep19_leizi01.png",2;
 		mes "[Lazy]";
-		mes "Aww, these are strong babies~";
-		mes "Haha, your mother is also correcting it!";
+		mes "We are strong~";
+		mes "Haha, your aunt is very interesting!";
 		next;
 		cutin "ep19_voglinde01.png",0;
 		mes "[Voglinde]";
-		mes "Oh my gosh, look at what this girl is saying.";
-		mes "Feel free to call me Aunt. I am Aunt Lehar.";
+		mes "Oh look at you talking.";
+		mes "I'm Lehar's aunt. So feel free to call me Aunt. ";
 		next;
 		mes "[Voglinde]";
-		mes "Aww, I don't know if I can eat a spoonful or not.";
-		mes "By the way, Lehar, did you finish my errands?";
+		mes "I don't know if they can eat a spoonful of these green things properly.";
+		mes "By the way, Lehar, have you finished the errand that I gave you?";
 		next;
 		cutin "ep19_lehar02.png",2;
 		mes "[Lehar]";
-		mes "Oh yes. I did everything my aunt asked me to do. Can I tell you about it later?";
+		mes "Oh, yes. I did everything you asked. Should I tell you the details later?";
 		next;
 		cutin "ep19_voglinde01.png",0;
 		mes "[Voglinde]";
-		mes "Yes. Let's talk later.";
-		mes "First of all, the children will be entertained.";
-		mes "I don't know if I've eaten properly.";
+		mes "Yes. Let's leave it for later.";
+		mes "The reception for the childrens come first.";
+		mes "I don't know if they have eaten properly yet.";
 		next;
 		mes "[Voglinde]";
-		mes "Oh yes.";
-		mes "I am Boklind of Geoborg.";
-		mes "I'm holding the Rgan here.";
-		mes "I'm glad that they all look talented.";
+		mes "Oh, right.";
+		mes "I'm Voglinde from the Gaebolg family.";
+		mes "I'm in charge of holding out the Rgans here.";
+		mes "I'm glad to see that you're all talented children.";
 		next;
 		cutin "ep19_vellgunde01.png",2;
 		mes "[Vellgunde]";
-		mes "Ah, this older sister says she has children too.";
-		mes "Like the Vellgunde of Geoborg.";
+		mes "Oh, she's just being silly because she's meeting young ones again.";
+		mes "I'm Vellgunde, I'm also from the Gaebolg family.";
 		mes "I'm doing a lot of research here.";
 		next;
 		mes "[Vellgunde]";
-		mes "Mainly researches Jormungand and Lgan's magic and magic.";
-		mes "I want to get a clue to the curse.";
-		mes "Thanks to you, I learned a bit about the magic structure of the Rgans.";
+		mes "I mainly research about the mana of Jormungandr and Rgans.";
+		mes "I want to find a clue to the curse.";
+		mes "Thanks to this, we also learned a little about the mana structure of the Rgans.";
 		next;
 		cutin "ep19_aurelie01.png",0;
 		mes "[Aurelie Petit]";
-		mes "It's crazy because there are so many people.";
-		mes "Did you say that there was Lazy?";
-		mes "Can I get information about Illusion?";
+		mes "It is a bit chaotic here since there are a lot of people.";
+		mes "Lazy, was it?";
+		mes "Can you share more information about the Illusions?";
 		next;
 		cutin "ep19_leizi01.png",2;
 		mes "[Lazy]";
-		mes "That's right. I've prepared thick papers just in case.";
-		mes "Call me anytime.";
+		mes "Sure. I prepared a thick document just in case you ask.";
+		mes "Please call me anytime.";
 		next;
 		cutin "ep19_vellgunde01.png",1;
 		mes "[Vellgunde]";
-		mes "Hmm. Then I'll go back to my seat.";
-		mes "As I said before, I'm doing my research here.";
+		mes "Hmm. Then, I'll go back to my laboratory.";
+		mes "As I said, I'm doing my research here.";
 		next;
 		cutin "ep19_vellgunde03.png",1;
 		mes "[Vellgunde]";
-		mes "One side of Iwin's barracks is being used as a laboratory.";
-		mes "If you want to talk more, come to me.";
+		mes "I'm using one side of the Iwin's barracks as a laboratory.";
+		mes "Come and see me, if you want to talk more.";
 		next;
 		cutin "ep19_voglinde01.png",0;
 		mes "[Voglinde]";
-		mes "The girls over there come over and have a drink or rice.";
+		mes "When you children are done talking, come over and have a meal.";
 		close2;
 		setpcblock PCBLOCK_NPC, true;
 		cloakonnpcself( "Vellgunde#ep19vell01" );
-		sleep2 500;
 		cloakonnpcself( "Voglinde#ep19vog01" );
 		setpcblock PCBLOCK_NPC, false;
 		erasequest 18125;
@@ -1734,21 +1814,29 @@ icas_in,141,216,3	script	Lehar#ep19lehar06	4_EP19_LEHAR,{
 		end;
 	}
 	if (ep19_main == 9) {
-		.@char_id = getcharid(0);
 		cloakoffnpcself( "Lazy#ep19lazy03" );
 		cloakoffnpcself( "Maram#ep19maram04" );
 		cloakoffnpcself( "Miriam#ep19miriam04" );
 		cloakoffnpcself( "Guardian Leon#ep19leon01" );
 		cloakoffnpcself( "Guardian Aurelie#ep19arl01" );
-		npctalk "Lehar: Leon is waiting for you.", "", bc_self;
+		npctalk "Lehar: Leon is waiting.", "Lehar#ep19lehar06", bc_self;
 		end;
 	}
+	if (ep19_side_saint == 1) {// todo check
+		cutin "ep19_lehar01.png",2;
+		mes "[Lehar]";
+		mes "The Iwin patrol unit is outside.";
+		mes "They always patrol around here and monitor the Rgans.";
+		mes "If you want to get to know the geography of the area, it'll be great to assist the Iwin patrol unit.";
+		close3;
+	}
+	// todo check
 	if (ep19_main < 100) {	// final unlock side quest
 		cutin "ep19_lehar01.png",2;
 		mes "[Lehar]";
-		mes "I have a few things left to organize.";
-		mes "Can you go to Aunt first?";
-		mes "I'll talk to Iwin and I'll follow you soon.";
+		mes "I have some things that needs sorting out.";
+		mes "Can you go and talk to my aunt first?";
+		mes "I'll talk to the Iwins and catch up with you soon.";
 		close3;
 	}
 	switch( isbegin_quest(18132) ) {
@@ -1756,8 +1844,8 @@ icas_in,141,216,3	script	Lehar#ep19lehar06	4_EP19_LEHAR,{
 		cloakoffnpcself( "Miriam#ep19miriam04" );
 		cutin "ep19_lehar01.png",2;
 		mes "[Lehar]";
-		mes "You are welcome.";
-		mes "Leon said he needed someone, but there are two of them.";
+		mes "You're just in time.";
+		mes "Leon said he needs some people, but there are only the two of us here.";
 		next;
 		mes "[Lehar]";
 		mes "Where is Maram?";
@@ -1765,20 +1853,20 @@ icas_in,141,216,3	script	Lehar#ep19lehar06	4_EP19_LEHAR,{
 		next;
 		cutin "ep18_miriam_01.png",0;
 		mes "[Miriam]";
-		mes "Maram seems to be in charge of procurement and transportation of materials.";
-		mes "I'm working hard to carry something with an airship, or I'm helping Vellgunde.";
+		mes "Maram seems to be in charge of procurement and transporting supplies.";
+		mes "I'm carrying stuffs or helping Vellgunde.";
 		next;
 		cutin "ep19_lehar01.png",2;
 		mes "[Lehar]";
 		mes "Is that so?";
-		mes "First of all, two people.";
-		mes "Can you two go to Leon?";
-		mes "Something needs a human hand.";
-		mes "I have other business...";
+		mes "I think two people is enough.";
+		mes "Can the two of you go to Leon?";
+		mes "I guess he really needs a hand.";
+		mes "I have something else to do...";
 		next;
 		cutin "ep18_miriam_01.png",0;
 		mes "[Miriam]";
-		mes "If Leon called you, you should go.";
+		mes "If Leon called for me, then I'll go.";
 		mes "Shall we go together?";
 		setquest 18132;
 		close2;
@@ -1788,19 +1876,19 @@ icas_in,141,216,3	script	Lehar#ep19lehar06	4_EP19_LEHAR,{
 	case 1:
 		cutin "ep19_lehar01.png",2;
 		mes "[Lehar]";
-		mes "Leon will be in your room.";
-		mes "Go up the stairs to the left room.";
-		mes "Miriam is already gone.";
+		mes "Leon is probably in his room.";
+		mes "The room on the left upstairs.";
+		mes "Miriam already went there.";
 		close3;
 	case 2:
 		cutin "ep19_lehar01.png",2;
 		mes "[Lehar]";
-		mes "I stay here, and when my aunts call me, I go and help with miscellaneous things.";
-		mes "Actually, my mother wanted to be with me, but she was weak...";
+		mes "I stay here and help out my aunt with different things when she calls for me.";
+		mes "Actually, my mother wanted to be with me, but her body was weak...";
 		next;
 		cutin "ep19_lehar02.png",2;
 		mes "[Lehar]";
-		mes "It's nice to have some spare time now that Adventurer helps me with my work!";
+		mes "It's nice to have a spare time now that the adventurer is helping me with my work!";
 		close3;
 	}
 	end;
@@ -1818,105 +1906,105 @@ icas_in,138,220,4	script(CLOAKED)	Guardian Leon#ep19leon01	4_EP19_LEON,{
 	if (ep19_main == 9) {
 		cutin "ep19_leon03.png",2;
 		mes "[Leon Petit]";
-		mes "Haha.. is it organized?";
-		mes "Now let me tell you a little about Isgard.";
+		mes "Haha.. Is everything in order?";
+		mes "Now, let me tell you a little about Isgard.";
 		next;
 		cutin "ep19_leon03.png",2;
 		mes "[Leon Petit]";
-		mes "Isgard is literally a land of ice, but it's not really the land you know.";
-		mes "So geologically.";
+		mes "Isgard is literally the lance of ice, but it's not really a land.";
+		mes "By that, I mean geologically.";
 		next;
 		cutin "ep19_aurelie01.png",0;
 		mes "[Aurelie Petit]";
-		mes "Isgard is a land made by the frozen body of Jormungand.";
-		mes "And the Jormungand Church's main pillar, the Rgan, was bound here.";
+		mes "Isgard is a land that formed from the frozen body of Jormungandr.";
+		mes "And the Rgans, who was the main pillars of the Jormungandr church is also sealed here.";
 		next;
-		select( "Then what is the role of the barrier?" );
+		select( "What's the role of the barrier?" );
 		cutin "ep19_leon01.png",2;
 		mes "[Leon Petit]";
-		mes "It's not a barrier that seals Jormungand, but a huge prison that prevents the Rgan bound to this land from leaving.";
+		mes "The barrier is not to seal Jormungandr, It is a huge prison that prevents the Rgans from leaving this land.";
 		next;
 		cutin "ep18_maram_01.png",2;
 		mes "[Maram]";
-		mes "Then what role do you two play?";
-		mes "This ice castle...?";
+		mes "What's your role in here?";
+		mes "Is it just Ice Castle...?";
 		next;
 		cutin "ep19_leizi01.png",0;
 		mes "[Lazy]";
-		mes "If this is a huge prison, are these guards?";
+		mes "If this is a huge prison, then the residents here are the guards?";
 		next;
 		cutin "ep19_leon01.png",2;
 		mes "[Leon Petit]";
-		mes "You're not wrong.";
-		mes "But call me a Guardian if possible.";
-		mes "Iwin take great pride in being called guardians.";
+		mes "You are not wrong.";
+		mes "But please call them guardians if possible.";
+		mes "Because calling the Iwins guardians makes them very proud.";
 		next;
 		cutin "ep18_miriam_01.png",0;
 		mes "[Miriam]";
-		mes "If it's Iwin, you mean those who look like giant birds?";
-		mes "I'm sorry.";
+		mes "Iwin is the giant birds.. are you talking about them?";
+		mes "It's my first time seeing them .. I'm sorry. It seems that my knowledge is lacking.";
 		next;
 		cutin "ep19_aurelie04.png",0;
 		mes "[Aurelie Petit]";
-		mes "Hahahahaha. Iwin is a bird.";
-		mes "Actually, it was a group of migratory birds that roamed the Oreum Mountains";
+		mes "Hahahaha. Iwins was a bird by nature.";
+		mes "In fact, they were a group of migratory birds that is traveling back and forth across the sea and mountains.";
 		next;
 		cutin "ep19_aurelie02.png",0;
 		mes "[Aurelie Petit]";
-		mes "I stayed in Isgard for a while to rest and got caught in the seal.";
-		mes "Since then, we have been guarding this place while monitoring the barrier.";
+		mes "They were staying in Isgard to rest for a while, then got caught up in the seal.";
+		mes "Ever since then, they have been helping us guard this place and monitor the barrier.";
 		next;
 		cutin "ep19_leon01.png",2;
 		mes "[Leon Petit]";
-		mes "Would you like to meet Iwin after talking?";
-		mes "I always patrol Isgard, so it would be helpful to hear their stories.";
+		mes "That reminds me, would you like to meet the Iwins?";
+		mes "They always patrol Isgard, so it would be helpful to hear their stories.";
 		next;
 		cutin "ep19_leon03.png",2;
 		mes "[Leon Petit]";
-		mes "Be comfortable with others.";
-		mes "Fortunately, the places that Barmund made when he came and gone are still there.It remains...";
+		mes "Make yourself at home.";
+		mes "Fortunately, the places that was made for Varmundt when he was still coming is still there...";
 		next;
-		select( "Barmund?" );
+		select( "Varmundt?" );
 		cutin "ep19_aurelie01.png",0;
 		mes "[Aurelie Petit]";
-		mes "He hasn't been here for a while.";
-		mes "How are you doing?";
-		mes "You've come this far anyway, so I hope you can find what you're looking for.";
+		mes "It has been a while since he last came.";
+		mes "Do you think he's doing well somewhere?";
+		mes "Anyway, since you have come all the way here, I hope you can find what you are looking for.";
 		next;
 		cutin "ep19_leizi01.png",2;
 		mes "[Lazy]";
-		mes "Then " + strcharinfo(0) + ", you should meet Iwin.";
-		mes "Me, Maram, and Miriam, let's talk a little bit about what to do here.";
+		mes "Then, " + strcharinfo(0) + ", you should meet the Iwins.";
+		mes "Me, Maram, and Miriam will discuss about what we're going to do here.";
 		next;
 		cutin "ep18_miriam_01.png",0;
 		mes "[Miriam]";
-		mes "I'd love to do that";
-		mes "We will also visit this place and find countermeasures.";
+		mes "That's a good idea.";
+		mes "We will also explore the place and find countermeasures.";
 		next;
 		cutin "ep18_maram_01.png",2;
 		mes "[Maram]";
-		mes "Then I'll check the supplies here.";
-		mes "If you need something, you should make a route so that you can procure it without inconvenience.";
+		mes "Then, I'll take look into the situation of our supplies.";
+		mes "If you need anything, I will make a route so that you can procure it without any inconvenience.";
 		next;
 		mes "[Maram]";
-		mes "I should discuss it with Ginger.";
-		mes "Don't worry about us, do what adventurers do first.";
+		mes "I'll have to discuss it with Ginger.";
+		mes "Don't worry about us and do what you have to do first.";
 		next;
 		cutin "ep19_aurelie02.png",0;
 		mes "[Aurelie Petit]";
-		mes "Lehar, give it to me.";
-		mes "Then can you give other people an insider guide?";
+		mes "Lehar, give it to them.";
+		mes "And can you give the others a tour?";
 		next;
-		select( "Is that so?" );
+		select( "What is this?" );
 		cutin "ep19_lehar01.png",2;
 		mes "[Lehar]";
-		mes "It is the story of the petals of a fairy tale.";
-		mes "You will need this to live here.";
-		mes "Magic power is crystallized like a flower, and here it is used almost universally.";
+		mes "It's a petal of a Snow Flower.";
+		mes "You'll need it to live here.";
+		mes "It's a crystallized mana that is like a flower, and it is used here for almost anything.";
 		next;
 		mes "[Lehar]";
-		mes "I'll give you some, if you find something useful, please write it.";
-		mes "If you help Iwin's work, you might get paid.";
+		mes "I'll give you some, if you find anything useful, you can try using it.";
+		mes "If you help the Iwins with their work also, they will reward you with this.";
 		ep19_main = 10;
 		ep19_side_saint = 1;
 		erasequest 18126;
@@ -1926,7 +2014,7 @@ icas_in,138,220,4	script(CLOAKED)	Guardian Leon#ep19leon01	4_EP19_LEON,{
 		getitem 1000608,40;	// Ep19_Snow_Flower
 		next;
 		mes "[Lehar]";
-		mes "Then I'll go take care of this and that for a while.";
+		mes "Then, I'll go and take care of the other things for a while.";
 		close2;
 		cutin "",255;
 		cloakonnpcself( "Lazy#ep19lazy03" );
@@ -8492,7 +8580,6 @@ jor_tail,211,63,5	script	Hellock#ep19	4_EP19_HEALROCK,{
 			setquest 11798;
 			ep19_side_saint = 6;
 			close2;
-			cutin "",255;
 			warp "aldebaran",104,105;
 			end;
 		case 2:
@@ -8521,7 +8608,6 @@ jor_tail,211,63,5	script	Hellock#ep19	4_EP19_HEALROCK,{
 			mes "Then let's go.";
 			mes "Hold on tight!";
 			close2;
-			cutin "",255;
 			warp "aldebaran",104,105;
 			end;
 		case 2:
@@ -8616,7 +8702,6 @@ aldebaran,102,103,5	script	Helock#ep19_a	4_EP19_HEALROCK,{
 		setquest 11809;
 		ep19_side_saint = 17;
 		close2;
-		cutin "",255;
 		warp "jor_tail",212,60;
 		end;
 	}
@@ -8652,7 +8737,6 @@ aldebaran,102,103,5	script	Helock#ep19_a	4_EP19_HEALROCK,{
 		mes "my... my huh...";
 		cutin "ep19_healrock03.png",2;
 		close2;
-		cutin "",255;
 		warp "jor_tail",212,60;
 		end;
 	}
@@ -8684,7 +8768,7 @@ prontera,254,309,3	script	copy officer#ep19	4_F_ACOLYTE,{
 		mes "...";
 		cutin "acact_03.bmp",2;
 		next;
-		select("Saint");
+		select( "Saint" );
 		mes "[Elise Copier]";
 		mes "If you know that far, there is no need to hide it.";
 		cutin "acact_01.bmp",2;
@@ -16621,7 +16705,6 @@ icecastle,55,124,3	script	Shayala#ep19iwin06	EP19_NPC_IWIN_SY,{
 		mes "It was really fun. I remembered the road well.";
 		mes "I'll blow you right into the nest entrance, so hurry in. Okay?";
 		close2;
-		cutin "",255;
 		warp "jor_nest",275,19;
 		end;
 	case 2:
