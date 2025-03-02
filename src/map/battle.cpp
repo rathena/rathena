@@ -2876,6 +2876,7 @@ static bool is_skill_using_arrow(struct block_list *src, int32 skill_id)
 	}
 
 	switch( skill_id ) {
+		case HT_FREEZINGTRAP:
 		case HT_PHANTASMIC:
 		case GS_GROUNDDRIFT:
 		case SS_KUNAIKUSSETSU:
