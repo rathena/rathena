@@ -3971,6 +3971,14 @@ bool mob_chat_display_message(mob_data &md, uint16 msg_id) {
  */
 void mobskill_end(mob_data& md, t_tick tick)
 {
+	// After a skill a monster cannot attack for its attack delay
+	// We make sure to not reduce it in case it was set by a skill for another purpose
+	md.ud.attackabletime = i64max(tick + md.status.adelay, md.ud.attackabletime);
+
+	// If skill was used by a script, do not apply any skill delay
+	if (md.skill_idx < 0)
+		return;
+
 	std::vector<std::shared_ptr<s_mob_skill>>& ms = md.db->skill;
 
 	if (ms.empty())
@@ -3998,10 +4006,6 @@ void mobskill_end(mob_data& md, t_tick tick)
 	}
 	else
 		md.skilldelay[md.skill_idx] = tick + ms[md.skill_idx]->delay;
-
-	// After a skill a monster cannot attack for its attack delay
-	// We make sure to not reduce it in case it was set by a skill for another purpose
-	md.ud.attackabletime = i64max(tick + md.status.adelay, md.ud.attackabletime);
 }
 
 /*==========================================
