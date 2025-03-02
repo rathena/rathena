@@ -1559,9 +1559,12 @@ int32 mob_unlocktarget(struct mob_data *md, t_tick tick)
 		if (md->ud.walktimer == INVALID_TIMER && md->idle_event[0] && npc_event_do_id(md->idle_event, md->bl.id) > 0)
 			md->idle_event[0] = 0;
 		break;
+	case MSS_LOOT:
+		// Looters that lost their target stop after 0.5-1.5 cells moved
+		unit_stop_walking_soon(md->bl);
+		[[fallthrough]];
 	default:
 		unit_stop_attack( &md->bl );
-		unit_stop_walking_soon(md->bl); //Stop chasing.
 		mob_setstate(*md, MSS_IDLE);
 		if(battle_config.mob_ai&0x8) //Walk instantly after dropping target
 			md->next_walktime = tick+rnd()%1000;
@@ -1684,6 +1687,12 @@ int32 mob_randomwalk(struct mob_data *md,t_tick tick)
 	return 1;
 }
 
+/**
+ * Makes a monster move to the closest warp if corresponding configs are set
+ * @param md: Mob that should move to the warp
+ * @param target: Target the mob should follow
+ * @return 0: Do not warp chase, 1: Do warp chase, 2: Already warp chasing
+ */
 int32 mob_warpchase(struct mob_data *md, struct block_list *target)
 {
 	struct npc_data *warp = nullptr;
@@ -1696,7 +1705,7 @@ int32 mob_warpchase(struct mob_data *md, struct block_list *target)
 
 	if (md->ud.walktimer != INVALID_TIMER &&
 		map_getcell(md->bl.m,md->ud.to_x,md->ud.to_y,CELL_CHKNPC))
-		return 1; //Already walking to a warp.
+		return 2; //Already walking to a warp.
 
 	//Search for warps within mob's viewing range.
 	map_foreachinallrange(mob_warpchase_sub, &md->bl,

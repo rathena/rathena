@@ -100,31 +100,32 @@ bool unit_update_chase(block_list& bl, t_tick tick, bool fullcheck) {
 
 	// Reached destination, start attacking
 	if (tbl != nullptr && tbl->type != BL_ITEM && tbl->m == bl.m && ud->walkpath.path_pos > 0 && check_distance_bl(&bl, tbl, ud->chaserange)) {
-		ud->to_x = bl.x;
-		ud->to_y = bl.y;
-		ud->target_to = 0;
 		// We need to make sure the walkpath is cleared here so a monster doesn't continue walking in case it unlocks its target
-		unit_stop_walking(&bl, USW_FIXPOS|USW_FORCE_STOP);
+		unit_stop_walking(&bl, USW_FIXPOS|USW_FORCE_STOP|USW_RELEASE_TARGET);
 		if (ud->state.attack_continue)
 			unit_attack(&bl, tbl->id, ud->state.attack_continue);
 		return true;
 	}
 	// Cancel chase
 	else if (tbl == nullptr || (fullcheck && !status_check_visibility(&bl, tbl, (bl.type == BL_MOB)))) {
-		ud->to_x = bl.x;
-		ud->to_y = bl.y;
-
 		// Looted items will have no tbl but target ID is still set, that's why we need to check for the ID here
 		if (ud->target_to != 0 && bl.type == BL_MOB) {
 			mob_data& md = reinterpret_cast<mob_data&>(bl);
-			if (tbl != nullptr && mob_warpchase(&md, tbl))
-				return true;
+			if (tbl != nullptr) {
+				int32 warp = mob_warpchase(&md, tbl);
+				// Do warp chase
+				if (warp == 1)
+					return true;
+				// Continue moving to warp
+				else if (warp == 2)
+					return false;
+			}
 			// Make sure monsters properly unlock their target, but still continue movement
 			mob_unlocktarget(&md, tick);
 			return false;
 		}
 
-		ud->target_to = 0;
+		unit_stop_walking(&bl, USW_FIXPOS|USW_FORCE_STOP|USW_RELEASE_TARGET);
 		return true;
 	}
 	// Update chase path
@@ -180,14 +181,9 @@ bool unit_walktoxy_nextcell(block_list& bl, bool sendMove, t_tick tick) {
 			sendMove = true;
 		}
 		if (ud->target_to != 0) {
-			int16 tx = ud->to_x;
-			int16 ty = ud->to_y;
 			// Monsters update their chase path one cell before reaching their final destination
 			if (unit_update_chase(bl, tick, (ud->walkpath.path_pos == ud->walkpath.path_len - 1)))
 				return true;
-			// Continue moving, restore to_x and to_y
-			ud->to_x = tx;
-			ud->to_y = ty;
 		}
 	}
 
