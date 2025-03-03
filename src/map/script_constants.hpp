@@ -786,6 +786,7 @@
 	export_constant2("bMagicHPGainValue",SP_MAGIC_HP_GAIN_VALUE);
 	export_constant2("bAddMonsterIdDropItem",SP_ADD_MONSTER_ID_DROP_ITEM);
 	export_constant2("bMatk",SP_EMATK);
+	export_constant2("bMatk2",SP_EMATK_HIDDEN);
 	export_constant2("bComaClass",SP_COMA_CLASS);
 	export_constant2("bComaRace",SP_COMA_RACE);
 	export_constant2("bSkillUseSPrate",SP_SKILL_USE_SP_RATE);
