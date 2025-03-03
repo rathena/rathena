@@ -3093,7 +3093,7 @@ void clif_inventorylist( map_session_data *sd ){
 		if( !itemdb_isstackable2( sd->inventory_data[i] ) ){
 			clif_item_equip( client_index( i ), &itemlist_equip.list[equip++], &sd->inventory.u.items_inventory[i], sd->inventory_data[i], pc_equippoint( sd, i ) );
 
-			if( equip == MAX_INVENTORY_ITEM_PACKET_NORMAL ){
+			if( equip == MAX_INVENTORY_ITEM_PACKET_EQUIP ){
 				itemlist_equip.PacketType  = inventorylistequipType;
 				itemlist_equip.PacketLength = static_cast<decltype(itemlist_equip.PacketLength)>( ( sizeof( itemlist_equip ) - sizeof( itemlist_equip.list ) ) + ( sizeof( struct EQUIPITEM_INFO ) * equip ) );
 #if PACKETVER_RE_NUM >= 20180912 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
