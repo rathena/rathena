@@ -99,32 +99,33 @@ bool unit_update_chase(block_list& bl, t_tick tick, bool fullcheck) {
 		tbl = map_id2bl(ud->target_to);
 
 	// Reached destination, start attacking
-	if (tbl != nullptr && tbl->m == bl.m && ud->walkpath.path_pos > 0 && check_distance_bl(&bl, tbl, ud->chaserange) && status_check_visibility(&bl, tbl, false)) {
-		ud->to_x = bl.x;
-		ud->to_y = bl.y;
-		ud->target_to = 0;
-		// Aegis uses one before every attack, we should
-		// only need this one for syncing purposes.
-		clif_fixpos(bl);
+	if (tbl != nullptr && tbl->type != BL_ITEM && tbl->m == bl.m && ud->walkpath.path_pos > 0 && check_distance_bl(&bl, tbl, ud->chaserange)) {
+		// We need to make sure the walkpath is cleared here so a monster doesn't continue walking in case it unlocks its target
+		unit_stop_walking(&bl, USW_FIXPOS|USW_FORCE_STOP|USW_RELEASE_TARGET);
 		if (ud->state.attack_continue)
 			unit_attack(&bl, tbl->id, ud->state.attack_continue);
 		return true;
 	}
 	// Cancel chase
 	else if (tbl == nullptr || (fullcheck && !status_check_visibility(&bl, tbl, (bl.type == BL_MOB)))) {
-		ud->to_x = bl.x;
-		ud->to_y = bl.y;
-
-		if (tbl != nullptr && bl.type == BL_MOB) {
+		// Looted items will have no tbl but target ID is still set, that's why we need to check for the ID here
+		if (ud->target_to != 0 && bl.type == BL_MOB) {
 			mob_data& md = reinterpret_cast<mob_data&>(bl);
-			if (mob_warpchase(&md, tbl))
-				return true;
+			if (tbl != nullptr) {
+				int32 warp = mob_warpchase(&md, tbl);
+				// Do warp chase
+				if (warp == 1)
+					return true;
+				// Continue moving to warp
+				else if (warp == 2)
+					return false;
+			}
 			// Make sure monsters properly unlock their target, but still continue movement
 			mob_unlocktarget(&md, tick);
 			return false;
 		}
 
-		ud->target_to = 0;
+		unit_stop_walking(&bl, USW_FIXPOS|USW_FORCE_STOP|USW_RELEASE_TARGET);
 		return true;
 	}
 	// Update chase path
@@ -180,14 +181,9 @@ bool unit_walktoxy_nextcell(block_list& bl, bool sendMove, t_tick tick) {
 			sendMove = true;
 		}
 		if (ud->target_to != 0) {
-			int16 tx = ud->to_x;
-			int16 ty = ud->to_y;
 			// Monsters update their chase path one cell before reaching their final destination
 			if (unit_update_chase(bl, tick, (ud->walkpath.path_pos == ud->walkpath.path_len - 1)))
 				return true;
-			// Continue moving, restore to_x and to_y
-			ud->to_x = tx;
-			ud->to_y = ty;
 		}
 	}
 
@@ -807,7 +803,7 @@ int32 unit_walktoxy( struct block_list *bl, int16 x, int16 y, unsigned char flag
 	if (ud == nullptr)
 		return 0;
 
-	if ((flag&8) && !map_closest_freecell(bl->m, &x, &y, BL_CHAR|BL_NPC, 1)) //This might change x and y
+	if ((flag&8) && !map_nearby_freecell(bl->m, x, y, BL_CHAR|BL_NPC, 1)) //This might change x and y
 		return 0;
 
 	walkpath_data wpd = { 0 };
@@ -1492,19 +1488,31 @@ void unit_stop_walking_soon(struct block_list& bl)
 	if (ud == nullptr)
 		return;
 
-	if (ud->walktimer == INVALID_TIMER)
+	// Less than 1 cell left to walk
+	// We need to make sure to_x and to_y are reset to match the walk path in case they were modified
+	if (ud->walkpath.path_pos + 1 >= ud->walkpath.path_len) {
+		ud->to_x = bl.x;
+		ud->to_y = bl.y;
+		// One more cell to move
+		if (ud->walkpath.path_pos + 1 == ud->walkpath.path_len) {
+			ud->to_x += dirx[ud->walkpath.path[ud->walkpath.path_pos]];
+			ud->to_y += diry[ud->walkpath.path[ud->walkpath.path_pos]];
+		}
 		return;
-
-	if (ud->walkpath.path_pos + 1 >= ud->walkpath.path_len)
-		return;
-
-	const struct TimerData* td = get_timer(ud->walktimer);
-
-	if (td == nullptr)
-		return;
+	}
 
 	// Get how much percent we traversed on the timer
-	double cell_percent = 1.0 - ((double)DIFF_TICK(td->tick, gettick()) / (double)td->data);
+	// If timer is invalid, we are exactly on cell center (0% traversed)
+	double cell_percent = 0.0;
+	if (ud->walktimer != INVALID_TIMER) {
+		const struct TimerData* td = get_timer(ud->walktimer);
+
+		if (td == nullptr)
+			return;
+
+		// Get how much percent we traversed on the timer
+		cell_percent = 1.0 - ((double)DIFF_TICK(td->tick, gettick()) / (double)td->data);
+	}
 
 	int16 ox = bl.x, oy = bl.y; // Remember original x and y coordinates
 	int16 path_remain = 1; // Remaining path to walk
