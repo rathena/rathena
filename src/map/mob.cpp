@@ -1413,31 +1413,66 @@ static int32 mob_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
 }
 
 static int32 mob_warpchase_sub(struct block_list *bl,va_list ap) {
-	struct block_list *target;
-	struct npc_data **target_nd;
-	struct npc_data *nd;
+	block_list *target;
+	block_list **target_warp;
 	int32 *min_distance;
 	int32 cur_distance;
 
 	target= va_arg(ap, struct block_list*);
-	target_nd= va_arg(ap, struct npc_data**);
+	target_warp= va_arg(ap, struct block_list**);
 	min_distance= va_arg(ap, int32*);
 
-	nd = (TBL_NPC*) bl;
+	// NPC Warp
+	if (bl->type == BL_NPC) {
+		npc_data *nd = reinterpret_cast<npc_data*>(bl);
 
-	if(nd->subtype != NPCTYPE_WARP)
-		return 0; //Not a warp
+		// Not a warp
+		if (nd->subtype != NPCTYPE_WARP)
+			return 0;
 
-	if(nd->u.warp.mapindex != map_getmapdata(target->m)->index)
-		return 0; //Does not lead to the same map.
+		// Does not lead to the same map
+		if (nd->u.warp.mapindex != map_getmapdata(target->m)->index)
+			return 0;
 
-	cur_distance = distance_blxy(target, nd->u.warp.x, nd->u.warp.y);
-	if (cur_distance < *min_distance)
-	{	//Pick warp that leads closest to target.
-		*target_nd = nd;
-		*min_distance = cur_distance;
-		return 1;
+		// Get distance from warp exit to target
+		cur_distance = distance_blxy(target, nd->u.warp.x, nd->u.warp.y);
+
+		//Pick warp that leads closest to target
+		if (cur_distance < *min_distance) {
+			*target_warp = &nd->bl;
+			*min_distance = cur_distance;
+			return 1;
+		}
 	}
+
+	// Skill Warp
+	if (bl->type == BL_SKILL) {
+		skill_unit *su = reinterpret_cast<skill_unit*>(bl);
+
+		if (su->group == nullptr)
+			return 0;
+
+		switch (su->group->unit_id) {
+			case UNT_WARP_WAITING:
+				// Does not lead to the same map.
+				if (su->group->val3 != map_getmapdata(target->m)->index)
+					return 0;
+				// Get distance from warp exit to target
+				cur_distance = distance_blxy(target, su->group->val2>>16, su->group->val2&0xffff);
+				break;
+			default:
+				// Skill cannot warp
+				return 0;
+		}
+
+		//Pick warp that leads closest to target.
+		if (cur_distance < *min_distance) {
+			*target_warp = &su->bl;
+			*min_distance = cur_distance;
+			return 1;
+		}
+	}
+
 	return 0;
 }
 /*==========================================
@@ -1688,6 +1723,36 @@ int32 mob_randomwalk(struct mob_data *md,t_tick tick)
 }
 
 /**
+ * Makes a monster inactive and immune to damage during the warp invincibility of its target
+ * @param md: Mob that should be become inactive and invincible
+ */
+void mob_warpchase_invincible(mob_data& md) {
+	if (!(battle_config.mob_warp&16))
+		return;
+
+	if (md.target_id == 0)
+		return;
+
+	map_session_data *sd = map_id2sd(md.target_id);
+	if (sd == nullptr)
+		return;
+
+	const TimerData* timer = get_timer(sd->invincible_timer);
+	if (timer == nullptr)
+		return;
+
+	t_tick duration = DIFF_TICK(timer->tick, gettick());
+	if (duration <= 0)
+		return;
+
+	// To prevent the monster losing the target, we make the monster AI inactive for the pc invincibility duration
+	md.next_thinktime = timer->tick + TIMER_MIN_INTERVAL;
+
+	// To prevent exploits the monster is immune to damage during that time
+	sc_start(&md.bl, &md.bl, SC_BARRIER, 100, 1, duration);
+}
+
+/**
  * Makes a monster move to the closest warp if corresponding configs are set
  * @param md: Mob that should move to the warp
  * @param target: Target the mob should follow
@@ -1695,9 +1760,16 @@ int32 mob_randomwalk(struct mob_data *md,t_tick tick)
  */
 int32 mob_warpchase(struct mob_data *md, struct block_list *target)
 {
-	struct npc_data *warp = nullptr;
+	block_list *warp = nullptr;
 	int32 distance = AREA_SIZE;
-	if (!(target && battle_config.mob_ai&0x40 && battle_config.mob_warp&1))
+
+	int32 type = BL_NUL;
+	if (battle_config.mob_warp&1)
+		type |= BL_NPC;
+	if (battle_config.mob_warp&2)
+		type |= BL_SKILL;
+
+	if (!(target && battle_config.mob_ai&0x40 && type != BL_NUL))
 		return 0; //Can't warp chase.
 
 	if (target->m == md->bl.m && check_distance_bl(&md->bl, target, AREA_SIZE))
@@ -1709,9 +1781,9 @@ int32 mob_warpchase(struct mob_data *md, struct block_list *target)
 
 	//Search for warps within mob's viewing range.
 	map_foreachinallrange(mob_warpchase_sub, &md->bl,
-		md->db->range2, BL_NPC, target, &warp, &distance);
+		md->db->range2, type, target, &warp, &distance);
 
-	if (warp && unit_walktobl(&md->bl, &warp->bl, 1, 1))
+	if (warp && unit_walktobl(&md->bl, warp, 0, 0))
 		return 1;
 	return 0;
 }
@@ -1815,7 +1887,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 				((((TBL_PC*)tbl)->state.gangsterparadise && !(mode&MD_STATUSIMMUNE)) ||
 				((TBL_PC*)tbl)->invincible_timer != INVALID_TIMER)
 		)) {	//No valid target
-			if (mob_warpchase(md, tbl))
+			if (mob_warpchase(md, tbl) > 0)
 				return true; //Chasing this target.
 			if (tbl && md->ud.walktimer != INVALID_TIMER && (!can_move || md->ud.walkpath.path_pos <= battle_config.mob_chase_refresh))
 				return true; //Walk at least "mob_chase_refresh" cells before dropping the target unless target is non-existent
@@ -2129,9 +2201,13 @@ bool mob_ai_sub_hard_attacktimer(mob_data &md, t_tick tick)
 	if (target == nullptr)
 		return false;
 
+	// Check for warp chase
+	if (mob_warpchase(&md, target) > 0)
+		return true;
+
 	// Monsters have a special visibility check at the end of their attack delay
 	// If they still have a target, but it is not visible, they drop the target
-	if (target != nullptr && !status_check_visibility(&md.bl, target, true))
+	if (!status_check_visibility(&md.bl, target, true))
 		return false;
 
 	// Go through the whole monster AI
@@ -2217,6 +2293,13 @@ static int32 mob_ai_sub_lazy(struct mob_data *md, va_list args)
 	if (DIFF_TICK(tick, md->last_skillcheck) < MOB_SKILL_INTERVAL)
 		return 0;
 
+	// Check for warp chase if there's still a target
+	if (md->target_id > 0) {
+		block_list* tbl = map_id2bl(md->target_id);
+		if (tbl != nullptr && mob_warpchase(md, tbl) > 0)
+			return 0;
+	}
+
 	if (md->master_id) {
 		if (!mob_is_spotted(md)) {
 			if (battle_config.slave_active_with_master == 0)
@@ -2231,14 +2314,9 @@ static int32 mob_ai_sub_lazy(struct mob_data *md, va_list args)
 		return 0;
 	}
 
-	if (md->ud.walktimer == INVALID_TIMER) {
-		// Because it is not unset when the mob finishes walking.
-		mob_setstate(*md, MSS_IDLE);
-		if (md->idle_event[0] && npc_event_do_id( md->idle_event, md->bl.id ) > 0) {
-			md->idle_event[0] = 0;
-			return 0;
-		}
-	}
+	// Remove target and set to idle state when movement was finished
+	// This also triggers the idle NPC event
+	mob_unlocktarget(md, tick);
 
 	if( DIFF_TICK(md->next_walktime,tick) < 0 && status_has_mode(&md->status,MD_CANMOVE) && unit_can_move(&md->bl) )
 	{

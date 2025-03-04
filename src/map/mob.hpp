@@ -509,6 +509,7 @@ int32 mob_spawn_bg(const char* mapname, int16 x, int16 y, const char* mobname, i
 int32 mob_guardian_guildchange(struct mob_data *md); //Change Guardian's ownership. [Skotlex]
 
 int32 mob_randomwalk(struct mob_data *md,t_tick tick);
+void mob_warpchase_invincible(mob_data& md);
 int32 mob_warpchase(struct mob_data *md, struct block_list *target);
 void mob_setstate(mob_data& md, MobSkillState skillstate);
 bool mob_ai_sub_hard_attacktimer(mob_data &md, t_tick tick);

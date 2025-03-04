@@ -2004,8 +2004,10 @@ int32 npc_touch_areanpc2(struct mob_data *md)
 
 					if( warp_m < 0 )
 						break; // Cannot Warp between map servers
-					if( unit_warp(&md->bl, warp_m, mapdata->npc[i]->u.warp.x, mapdata->npc[i]->u.warp.y, CLR_OUTSIGHT) == 0 )
+					if( unit_warp(&md->bl, warp_m, mapdata->npc[i]->u.warp.x, mapdata->npc[i]->u.warp.y, CLR_OUTSIGHT) == 0 ) {
+						mob_warpchase_invincible(*md);
 						return 1; // Warped
+					}
 				}
 					break;
 				case NPCTYPE_SCRIPT:

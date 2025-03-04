@@ -2936,13 +2936,6 @@ static int32 unit_attack_timer_sub(struct block_list* src, int32 tid, t_tick tic
 	   || !unit_can_attack(src, target->id) )
 		return 0; // Can't attack under these conditions
 
-	if( src->m != target->m ) {
-		if( src->type == BL_MOB && mob_warpchase((TBL_MOB*)src, target) )
-			return 1; // Follow up.
-
-		return 0;
-	}
-
 	if( ud->skilltimer != INVALID_TIMER && !(sd && pc_checkskill(sd,SA_FREECAST) > 0) )
 		return 0; // Can't attack while casting
 

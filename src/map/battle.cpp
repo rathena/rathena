@@ -2841,7 +2841,7 @@ bool is_infinite_defense(struct block_list *target, int32 flag)
 		return true;
 
 	status_change* tsc = status_get_sc(target);
-	if (tsc && tsc->getSCE(SC_INVINCIBLE))
+	if (tsc && (tsc->getSCE(SC_INVINCIBLE) || tsc->getSCE(SC_BARRIER)))
 		return true;
 
 	return false;
@@ -11669,7 +11669,7 @@ static const struct _battle_data {
 	{ "produce_item_name_input",            &battle_config.produce_item_name_input,         0x1|0x2, 0,     0x9F,           },
 	{ "display_skill_fail",                 &battle_config.display_skill_fail,              2,      0,      1|2|4|8,        },
 	{ "chat_warpportal",                    &battle_config.chat_warpportal,                 0,      0,      1,              },
-	{ "mob_warp",                           &battle_config.mob_warp,                        0,      0,      1|2|4|8,          },
+	{ "mob_warp",                           &battle_config.mob_warp,                        0,      0,      1|2|4|8|16,     },
 	{ "dead_branch_active",                 &battle_config.dead_branch_active,              1,      0,      1,              },
 	{ "vending_max_value",                  &battle_config.vending_max_value,               10000000, 1,    MAX_ZENY,       },
 	{ "vending_over_max",                   &battle_config.vending_over_max,                1,      0,      1,              },
