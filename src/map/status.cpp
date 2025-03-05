@@ -1054,10 +1054,16 @@ bool StatusDatabase::hasSCF(status_change *sc, e_status_change_flag flag) {
 	if (sc == nullptr || sc->empty() || flag == SCF_NONE)
 		return false;
 
-	for (const auto &status_it : *this) {
-		std::shared_ptr<s_status_change_db> status = status_it.second;
+	// Build cache first if it doesn't exist
+	if (SCFMap.find(flag) == SCFMap.end()) {
+		for (const auto& [_, status] : *this) {
+			if (status->flag[flag])
+				SCFMap[flag].insert(status->type);
+		}
+	}
 
-		if (sc->getSCE(status->type) && status->flag[flag])
+	for (const auto& sc_type : SCFMap.at(flag)) {
+		if (sc->getSCE(sc_type))
 			return true;
 	}
 

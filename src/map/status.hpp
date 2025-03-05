@@ -9,6 +9,7 @@
 #include <memory>
 #include <unordered_map>
 #include <vector>
+#include <set>
 
 #include <common/database.hpp>
 #include <common/mmo.hpp>
@@ -3283,6 +3284,7 @@ public:
 
 private:
 	std::bitset<SCB_MAX> SCB_BATTLE, SCB_ALL;
+	std::map<e_status_change_flag, std::set<sc_type>> SCFMap; // Make cache to speed up hasSCF
 };
 
 extern StatusDatabase status_db;
