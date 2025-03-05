@@ -82,7 +82,7 @@ int32 mail_fromsql(uint32 char_id, struct mail_data* md)
 int32 mail_savemessage(struct mail_message* msg)
 {
 	StringBuf buf;
-	SqlStmt* stmt;
+	SqlStmt stmt{ *sql_handle };
 	int32 i, j;
 	bool found = false;
 
@@ -98,22 +98,19 @@ int32 mail_savemessage(struct mail_message* msg)
 	StringBuf_AppendStr(&buf, ")");
 
 	// prepare and execute query
-	stmt = SqlStmt_Malloc(sql_handle);
-	if( SQL_SUCCESS != SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf))
-	||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 0, SQLDT_STRING, msg->send_name, strnlen(msg->send_name, NAME_LENGTH))
-	||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 1, SQLDT_STRING, msg->dest_name, strnlen(msg->dest_name, NAME_LENGTH))
-	||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 2, SQLDT_STRING, msg->title, strnlen(msg->title, MAIL_TITLE_LENGTH))
-	||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 3, SQLDT_STRING, msg->body, strnlen(msg->body, MAIL_BODY_LENGTH))
-	||  SQL_SUCCESS != SqlStmt_Execute(stmt) )
+	if( SQL_SUCCESS != stmt.PrepareStr(StringBuf_Value(&buf))
+	||  SQL_SUCCESS != stmt.BindParam(0, SQLDT_STRING, msg->send_name, strnlen(msg->send_name, NAME_LENGTH))
+	||  SQL_SUCCESS != stmt.BindParam(1, SQLDT_STRING, msg->dest_name, strnlen(msg->dest_name, NAME_LENGTH))
+	||  SQL_SUCCESS != stmt.BindParam(2, SQLDT_STRING, msg->title, strnlen(msg->title, MAIL_TITLE_LENGTH))
+	||  SQL_SUCCESS != stmt.BindParam(3, SQLDT_STRING, msg->body, strnlen(msg->body, MAIL_BODY_LENGTH))
+	||  SQL_SUCCESS != stmt.Execute() )
 	{
 		SqlStmt_ShowDebug(stmt);
 		StringBuf_Destroy(&buf);
 		Sql_QueryStr( sql_handle, "ROLLBACK" );
 		return msg->id = 0;
 	} else
-		msg->id = (int)SqlStmt_LastInsertId(stmt);
-
-	SqlStmt_Free(stmt);
+		msg->id = (int32)stmt.LastInsertId();
 	
 	StringBuf_Clear(&buf);
 	StringBuf_Printf(&buf,"INSERT INTO `%s` (`id`, `index`, `amount`, `nameid`, `refine`, `attribute`, `identify`, `unique_id`, `bound`, `enchantgrade`", schema_config.mail_attachment_db);
@@ -225,7 +222,7 @@ bool mail_loadmessage(int32 mail_id, struct mail_message* msg)
 	memset(msg->item, 0, sizeof(struct item) * MAIL_MAX_ITEM);
 
 	for( i = 0; i < MAIL_MAX_ITEM && SQL_SUCCESS == Sql_NextRow(sql_handle); i++ ){
-		Sql_GetData(sql_handle,0, &data, nullptr); msg->item[i].amount = (short)atoi(data);
+		Sql_GetData(sql_handle,0, &data, nullptr); msg->item[i].amount = (int16)atoi(data);
 		Sql_GetData(sql_handle,1, &data, nullptr); msg->item[i].nameid = strtoul(data, nullptr, 10);
 		Sql_GetData(sql_handle,2, &data, nullptr); msg->item[i].refine = atoi(data);
 		Sql_GetData(sql_handle,3, &data, nullptr); msg->item[i].attribute = atoi(data);

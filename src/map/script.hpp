@@ -79,7 +79,7 @@
 
 /// Returns if the script data is a string
 #define data_isstring(data) ( (data)->type == C_STR || (data)->type == C_CONSTSTR )
-/// Returns if the script data is an int32
+/// Returns if the script data is an int
 #define data_isint(data) ( (data)->type == C_INT )
 /// Returns if the script data is a reference
 #define data_isreference(data) ( (data)->type == C_NAME )
@@ -295,7 +295,7 @@ struct script_code {
 	int32 script_size;
 	unsigned char* script_buf;
 	struct reg_db local;
-	unsigned short instances;
+	uint16 instances;
 };
 
 struct script_stack {
@@ -2145,6 +2145,18 @@ enum e_hat_effects : int16{
 	FOOTPRINT_EF_DOGFOOT,
 	HAT_EF_C_AUSPICLOUD,
 	HAT_EF_AURA_OF_GHOST_S,
+	HAT_EF_C_ROS2024_WING_1,
+	FOOTPRINT_EF_DUMPLING,
+	FOOTPRINT_EF_PANDA_BASIC,
+	FOOTPRINT_EF_PANDA_COLOR,
+	HAT_EF_ATQUE_POENITENTIA,
+	HAT_EF_PERM_FROST_OBLIVION,
+	HAT_EF_ATQUE_POENITENTIA2,
+	HAT_EF_GUIDE_OF_DEAD_TEXT,
+	HAT_EF_MEDJED_TEXT,
+	HAT_EF_INKPAINTING_DAY,
+	HAT_EF_INKPAINTING_NIGHT,
+	HAT_EF_KUNG_FU_PANDA,
 	HAT_EF_MAX
 };
 
@@ -2208,6 +2220,20 @@ enum e_eleminfo : uint8 {
 	ELEMINFO_ID = 0,
 	ELEMINFO_GAMEID,
 	ELEMINFO_CLASS,
+};
+
+/* getguildinfo script command */
+enum e_guildinfo : uint8 {
+	GUILDINFO_NAME = 1,
+	GUILDINFO_LEVEL,
+	GUILDINFO_AVERAGELEVEL,
+	GUILDINFO_ONLINECOUNT,
+	GUILDINFO_MEMBERCOUNT,
+	GUILDINFO_MAXMEMBERCOUNT,
+	GUILDINFO_EXP,
+	GUILDINFO_NEXTEXP,
+	GUILDINFO_MASTERID,
+	GUILDINFO_MASTERNAME,
 };
 
 class ConstantDatabase : public YamlDatabase {
@@ -2274,7 +2300,7 @@ void script_set_constant_(const char* name, int64 value, const char* constant_na
 void script_hardcoded_constants(void);
 
 void script_cleararray_pc(map_session_data* sd, const char* varname);
-void script_setarray_pc(map_session_data* sd, const char* varname, uint32 idx, int64 value, int* refcache);
+void script_setarray_pc(map_session_data* sd, const char* varname, uint32 idx, int64 value, int32* refcache);
 
 int32 script_config_read(const char *cfgName);
 void do_init_script(void);

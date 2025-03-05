@@ -29,7 +29,7 @@
 using namespace rathena;
 
 BattlegroundDatabase battleground_db;
-std::unordered_map<int, std::shared_ptr<s_battleground_data>> bg_team_db;
+std::unordered_map<int32, std::shared_ptr<s_battleground_data>> bg_team_db;
 std::vector<std::shared_ptr<s_battleground_queue>> bg_queues;
 int32 bg_queue_count = 1;
 
@@ -482,7 +482,7 @@ bool bg_team_delete(int32 bg_id)
  * @param y: Y coordinate
  * @return True on success or false otherwise
  */
-bool bg_team_warp(int32 bg_id, unsigned short mapindex, short x, short y)
+bool bg_team_warp(int32 bg_id, uint16 mapindex, int16 x, int16 y)
 {
 	std::shared_ptr<s_battleground_data> bgteam = util::umap_find(bg_team_db, bg_id);
 
@@ -612,7 +612,7 @@ int32 bg_team_leave(map_session_data *sd, bool quit, bool deserter)
 				sc_start(nullptr, &sd->bl, SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT, 100, 1, static_cast<t_tick>(bg->deserter_time) * 1000); // Deserter timer
 		}
 
-		return static_cast<int>( bgteam->members.size() );
+		return static_cast<int32>( bgteam->members.size() );
 	}
 
 	return -1;
@@ -780,7 +780,7 @@ TIMER_FUNC(bg_send_xy_timer)
  */
 static TIMER_FUNC(bg_on_ready_loopback)
 {
-	int32 queue_id = (int)data;
+	int32 queue_id = (int32)data;
 	std::shared_ptr<s_battleground_queue> queue = bg_search_queue(queue_id);
 
 	if (queue == nullptr) {
@@ -808,7 +808,7 @@ static TIMER_FUNC(bg_on_ready_loopback)
  */
 static TIMER_FUNC(bg_on_ready_expire)
 {
-	int32 queue_id = (int)data;
+	int32 queue_id = (int32)data;
 	std::shared_ptr<s_battleground_queue> queue = bg_search_queue(queue_id);
 
 	if (queue == nullptr) {
@@ -841,7 +841,7 @@ static TIMER_FUNC(bg_on_ready_expire)
  */
 static TIMER_FUNC(bg_on_ready_start)
 {
-	int32 queue_id = (int)data;
+	int32 queue_id = (int32)data;
 	std::shared_ptr<s_battleground_queue> queue = bg_search_queue(queue_id);
 
 	if (queue == nullptr) {
@@ -1395,7 +1395,7 @@ void bg_join_active(map_session_data *sd, std::shared_ptr<s_battleground_queue> 
 
 	pc_delete_bg_queue_timer(sd); // Cancel timer so player doesn't leave the queue.
 
-	int32 bg_id_team_1 = static_cast<int>(mapreg_readreg(add_str(queue->map->team1.bg_id_var.c_str())));
+	int32 bg_id_team_1 = static_cast<int32>(mapreg_readreg(add_str(queue->map->team1.bg_id_var.c_str())));
 	std::shared_ptr<s_battleground_data> bgteam_1 = util::umap_find(bg_team_db, bg_id_team_1);
 
 	for (auto &pl_sd : queue->teama_members) {
@@ -1415,7 +1415,7 @@ void bg_join_active(map_session_data *sd, std::shared_ptr<s_battleground_queue> 
 		return;
 	}
 
-	int32 bg_id_team_2 = static_cast<int>(mapreg_readreg(add_str(queue->map->team2.bg_id_var.c_str())));
+	int32 bg_id_team_2 = static_cast<int32>(mapreg_readreg(add_str(queue->map->team2.bg_id_var.c_str())));
 	std::shared_ptr<s_battleground_data> bgteam_2 = util::umap_find(bg_team_db, bg_id_team_2);
 
 	for (auto &pl_sd : queue->teamb_members) {

@@ -114,7 +114,7 @@ public:
 
 extern InstanceDatabase instance_db;
 
-extern std::unordered_map<int, std::shared_ptr<s_instance_data>> instances;
+extern std::unordered_map<int32, std::shared_ptr<s_instance_data>> instances;
 
 std::shared_ptr<s_instance_db> instance_search_db_name(const char* name);
 void instance_getsd(int32 instance_id, map_session_data *&sd, enum send_target *target);
@@ -122,7 +122,7 @@ void instance_getsd(int32 instance_id, map_session_data *&sd, enum send_target *
 int32 instance_create(int32 owner_id, const char *name, e_instance_mode mode);
 bool instance_destroy(int32 instance_id);
 void instance_destroy_command(map_session_data *sd);
-e_instance_enter instance_enter(map_session_data *sd, int32 instance_id, const char *name, short x, short y);
+e_instance_enter instance_enter(map_session_data *sd, int32 instance_id, const char *name, int16 x, int16 y);
 bool instance_reqinfo(map_session_data *sd, int32 instance_id);
 bool instance_addusers(int32 instance_id);
 bool instance_delusers(int32 instance_id);

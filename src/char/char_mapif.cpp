@@ -517,7 +517,7 @@ int32 chmapif_parse_req_saveskillcooldown(int32 fd){
 		count = RFIFOW(fd,12);
 		if( count > 0 )
 		{
-			struct skill_cooldown_data data;
+			s_skill_cooldown_data data;
 			StringBuf buf;
 			int32 i;
 
@@ -525,7 +525,7 @@ int32 chmapif_parse_req_saveskillcooldown(int32 fd){
 			StringBuf_Printf(&buf, "INSERT INTO `%s` (`account_id`, `char_id`, `skill`, `tick`) VALUES ", schema_config.skillcooldown_db);
 			for( i = 0; i < count; ++i )
 			{
-				memcpy(&data,RFIFOP(fd,14+i*sizeof(struct skill_cooldown_data)),sizeof(struct skill_cooldown_data));
+				memcpy(&data,RFIFOP(fd,14+i*sizeof(s_skill_cooldown_data)),sizeof(s_skill_cooldown_data));
 				if( i > 0 )
 					StringBuf_AppendStr(&buf, ", ");
 				StringBuf_Printf(&buf, "('%d','%d','%d','%" PRtf "')", aid, cid, data.skill_id, data.tick);
@@ -558,9 +558,9 @@ int32 chmapif_parse_req_skillcooldown(int32 fd){
 		{
 			int32 count;
 			char* data;
-			struct skill_cooldown_data scd;
+			s_skill_cooldown_data scd;
 
-			WFIFOHEAD(fd,14 + MAX_SKILLCOOLDOWN * sizeof(struct skill_cooldown_data));
+			WFIFOHEAD(fd,14 + MAX_SKILLCOOLDOWN * sizeof(s_skill_cooldown_data));
 			WFIFOW(fd,0) = 0x2b0b;
 			WFIFOL(fd,4) = aid;
 			WFIFOL(fd,8) = cid;
@@ -568,13 +568,13 @@ int32 chmapif_parse_req_skillcooldown(int32 fd){
 			{
 				Sql_GetData(sql_handle, 0, &data, nullptr); scd.skill_id = atoi(data);
 				Sql_GetData(sql_handle, 1, &data, nullptr); scd.tick = strtoll( data, nullptr, 10 );
-				memcpy(WFIFOP(fd,14+count*sizeof(struct skill_cooldown_data)), &scd, sizeof(struct skill_cooldown_data));
+				memcpy(WFIFOP(fd,14+count*sizeof(s_skill_cooldown_data)), &scd, sizeof(s_skill_cooldown_data));
 			}
 			if( count >= MAX_SKILLCOOLDOWN )
 				ShowWarning("Too many skillcooldowns for %d:%d, some of them were not loaded.\n", aid, cid);
 			if( count > 0 )
 			{
-				WFIFOW( fd, 2 ) = static_cast<int16>( 14 + count * sizeof( struct skill_cooldown_data ) );
+				WFIFOW( fd, 2 ) = static_cast<int16>( 14 + count * sizeof( s_skill_cooldown_data ) );
 				WFIFOW(fd,12) = count;
 				WFIFOSET(fd,WFIFOW(fd,2));
 				//Clear the data once loaded.
@@ -715,7 +715,7 @@ int32 chmapif_parse_reqcharname(int32 fd){
 	WFIFOHEAD(fd,30);
 	WFIFOW(fd,0) = 0x2b09;
 	WFIFOL(fd,2) = RFIFOL(fd,2);
-	char_loadName((int)RFIFOL(fd,2), WFIFOCP(fd,6));
+	char_loadName((int32)RFIFOL(fd,2), WFIFOCP(fd,6));
 	WFIFOSET(fd,30);
 
 	RFIFOSKIP(fd,6);
@@ -1207,7 +1207,7 @@ int32 chmapif_parse_reqcharban(int32 fd){
 			char* data;
 			time_t unban_time;
 			time_t now = time(nullptr);
-			SqlStmt* stmt = SqlStmt_Malloc(sql_handle);
+			SqlStmt stmt{ *sql_handle };
 
 			Sql_GetData(sql_handle, 0, &data, nullptr); t_aid = atoi(data);
 			Sql_GetData(sql_handle, 1, &data, nullptr); t_cid = atoi(data);
@@ -1220,20 +1220,18 @@ int32 chmapif_parse_reqcharban(int32 fd){
 			unban_time += timediff; //alterate the time
 			if( unban_time < now ) unban_time=0; //we have totally reduce the time
 
-			if( SQL_SUCCESS != SqlStmt_Prepare(stmt,
+			if( SQL_SUCCESS != stmt.Prepare(
 					  "UPDATE `%s` SET `unban_time` = ? WHERE `char_id` = ? LIMIT 1",
 					  schema_config.char_db)
-				|| SQL_SUCCESS != SqlStmt_BindParam(stmt,  0, SQLDT_LONG,   (void*)&unban_time,   sizeof(unban_time))
-				|| SQL_SUCCESS != SqlStmt_BindParam(stmt,  1, SQLDT_INT,    (void*)&t_cid,     sizeof(t_cid))
-				|| SQL_SUCCESS != SqlStmt_Execute(stmt)
+				|| SQL_SUCCESS != stmt.BindParam(0, SQLDT_LONG,   (void*)&unban_time,   sizeof(unban_time))
+				|| SQL_SUCCESS != stmt.BindParam(1, SQLDT_INT32,    (void*)&t_cid,     sizeof(t_cid))
+				|| SQL_SUCCESS != stmt.Execute()
 
 				)
 			{
 				SqlStmt_ShowDebug(stmt);
-				SqlStmt_Free(stmt);
 				return 1;
 			}
-			SqlStmt_Free(stmt);
 
 			// condition applies; send to all map-servers to disconnect the player
 			if( unban_time > now ) {
@@ -1284,27 +1282,26 @@ int32 chmapif_bonus_script_get(int32 fd) {
 		uint8 num_rows = 0;
 		uint32 cid = RFIFOL(fd,2);
 		struct bonus_script_data tmp_bsdata;
-		SqlStmt* stmt = SqlStmt_Malloc(sql_handle);
+		SqlStmt stmt{ *sql_handle };
 
 		RFIFOSKIP(fd,6);
 
-		if (SQL_ERROR == SqlStmt_Prepare(stmt,
+		if (SQL_ERROR == stmt.Prepare(
 			"SELECT `script`, `tick`, `flag`, `type`, `icon` FROM `%s` WHERE `char_id` = '%d' LIMIT %d",
 			schema_config.bonus_script_db, cid, MAX_PC_BONUS_SCRIPT) ||
-			SQL_ERROR == SqlStmt_Execute(stmt) ||
-			SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_STRING, &tmp_bsdata.script_str, sizeof(tmp_bsdata.script_str), nullptr, nullptr) ||
-			SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_INT64, &tmp_bsdata.tick, 0, nullptr, nullptr) ||
-			SQL_ERROR == SqlStmt_BindColumn(stmt, 2, SQLDT_UINT16, &tmp_bsdata.flag, 0, nullptr, nullptr) ||
-			SQL_ERROR == SqlStmt_BindColumn(stmt, 3, SQLDT_UINT8,  &tmp_bsdata.type, 0, nullptr, nullptr) ||
-			SQL_ERROR == SqlStmt_BindColumn(stmt, 4, SQLDT_INT16,  &tmp_bsdata.icon, 0, nullptr, nullptr)
+			SQL_ERROR == stmt.Execute() ||
+			SQL_ERROR == stmt.BindColumn(0, SQLDT_STRING, &tmp_bsdata.script_str, sizeof(tmp_bsdata.script_str), nullptr, nullptr) ||
+			SQL_ERROR == stmt.BindColumn(1, SQLDT_INT64, &tmp_bsdata.tick, 0, nullptr, nullptr) ||
+			SQL_ERROR == stmt.BindColumn(2, SQLDT_UINT16, &tmp_bsdata.flag, 0, nullptr, nullptr) ||
+			SQL_ERROR == stmt.BindColumn(3, SQLDT_UINT8,  &tmp_bsdata.type, 0, nullptr, nullptr) ||
+			SQL_ERROR == stmt.BindColumn(4, SQLDT_INT16,  &tmp_bsdata.icon, 0, nullptr, nullptr)
 			)
 		{
 			SqlStmt_ShowDebug(stmt);
-			SqlStmt_Free(stmt);
 			return 1;
 		}
 
-		if ((num_rows = (uint8)SqlStmt_NumRows(stmt)) > 0) {
+		if ((num_rows = (uint8)stmt.NumRows()) > 0) {
 			uint8 i;
 			uint32 size = 9 + num_rows * sizeof(struct bonus_script_data);
 
@@ -1314,7 +1311,7 @@ int32 chmapif_bonus_script_get(int32 fd) {
 			WFIFOL(fd, 4) = cid;
 			WFIFOB(fd, 8) = num_rows;
 
-			for (i = 0; i < num_rows && SQL_SUCCESS == SqlStmt_NextRow(stmt); i++) {
+			for (i = 0; i < num_rows && SQL_SUCCESS == stmt.NextRow(); i++) {
 				struct bonus_script_data bsdata;
 				memset(&bsdata, 0, sizeof(bsdata));
 				memset(bsdata.script_str, '\0', sizeof(bsdata.script_str));
@@ -1331,11 +1328,10 @@ int32 chmapif_bonus_script_get(int32 fd) {
 
 			ShowInfo("Bonus Script loaded for CID=%d. Total: %d.\n", cid, i);
 
-			if (SQL_ERROR == SqlStmt_Prepare(stmt,"DELETE FROM `%s` WHERE `char_id`='%d'",schema_config.bonus_script_db,cid) ||
-				SQL_ERROR == SqlStmt_Execute(stmt))
+			if (SQL_ERROR == stmt.Prepare("DELETE FROM `%s` WHERE `char_id`='%d'",schema_config.bonus_script_db,cid) ||
+				SQL_ERROR == stmt.Execute())
 				SqlStmt_ShowDebug(stmt);
 		}
-		SqlStmt_Free(stmt);
 	}
 	return 1;
 }

@@ -112,7 +112,7 @@ t_exp HomExpDatabase::get_nextexp(uint16 level) {
 * @param skill_id
 * @return -1 if invalid skill or skill index for homunculus skill in s_homunculus::hskill
 */
-short hom_skill_get_index(uint16 skill_id) {
+int16 hom_skill_get_index(uint16 skill_id) {
 	if (!SKILL_CHK_HOMUN(skill_id))
 		return -1;
 	skill_id -= HM_SKILLBASE;
@@ -277,8 +277,7 @@ int32 hom_vaporize(map_session_data *sd, int32 flag)
 	hom_hungry_timer_delete(hd);
 	hd->homunculus.vaporize = flag ? flag : HOM_ST_REST;
 	if (battle_config.hom_delay_reset_vaporize) {
-		hd->blockskill.clear();
-		hd->blockskill.shrink_to_fit();
+		skill_blockhomun_clear(*hd);
 	}
 	status_change_clear(&hd->bl, 1);
 	clif_hominfo(sd, sd->hd, 0);
@@ -325,7 +324,7 @@ void hom_calc_skilltree_sub(homun_data &hd, std::vector<s_homun_skill_tree_entry
 
 	for (const auto &skit : skill_tree) {
 		uint16 skill_id = skit.id;
-		short idx = hom_skill_get_index(skill_id);
+		int16 idx = hom_skill_get_index(skill_id);
 
 		if (skill_id == 0 || idx == -1)
 			continue;
@@ -386,9 +385,9 @@ void hom_calc_skilltree(homun_data *hd) {
 * @param skill_id
 * @return Skill Level or 0 if invalid or unlearned skill
 */
-short hom_checkskill(struct homun_data *hd,uint16 skill_id)
+int16 hom_checkskill(struct homun_data *hd,uint16 skill_id)
 {
-	short idx = hom_skill_get_index(skill_id);
+	int16 idx = hom_skill_get_index(skill_id);
 	if (idx < 0) // Invalid skill
 		return 0;
 
@@ -448,7 +447,7 @@ uint16 hom_skill_get_min_level(int32 class_, uint16 skill_id) {
  */
 void hom_skillup(struct homun_data *hd, uint16 skill_id)
 {
-	short idx = 0;
+	int16 idx = 0;
 	nullpo_retv(hd);
 
 	if (hd->homunculus.vaporize)
@@ -598,7 +597,7 @@ int32 hom_evolution(struct homun_data *hd)
 	nullpo_ret(hd);
 
 	if(!hd->homunculusDB->evo_class || hd->homunculus.class_ == hd->homunculusDB->evo_class) {
-		clif_emotion(&hd->bl, ET_SCRATCH);
+		clif_emotion( hd->bl, ET_SCRATCH );
 		return 0 ;
 	}
 
@@ -662,7 +661,7 @@ int32 hom_mutate(struct homun_data *hd, int32 homun_id)
 	m_id    = hom_class2mapid(homun_id);
 
 	if( m_class == -1 || m_id == -1 || !(m_class&HOM_EVO) || !(m_id&HOM_S) ) {
-		clif_emotion(&hd->bl, ET_SCRATCH);
+		clif_emotion( hd->bl, ET_SCRATCH );
 		return 0;
 	}
 
@@ -816,6 +815,26 @@ void hom_save(struct homun_data *hd)
 	//calculation on login)
 	hd->homunculus.hp = hd->battle_status.hp;
 	hd->homunculus.sp = hd->battle_status.sp;
+
+	// Clear skill cooldown array.
+	for (uint16 i = 0; i < MAX_SKILLCOOLDOWN; i++)
+		hd->homunculus.scd[i] = {};
+
+	// Store current cooldown entries.
+	uint16 count = 0;
+	t_tick tick = gettick();
+
+	for (const auto &entry : hd->scd) {
+		const TimerData *timer = get_timer(entry.second);
+
+		if (timer == nullptr || timer->func != skill_blockhomun_end || DIFF_TICK(timer->tick, tick) < 0)
+			continue;
+
+		hd->homunculus.scd[count] = { entry.first, DIFF_TICK(timer->tick, tick) };
+
+		count++;
+	}
+
 	intif_homunculus_requestsave(sd->status.account_id, &hd->homunculus);
 }
 
@@ -891,7 +910,7 @@ int32 hom_food(map_session_data *sd, struct homun_data *hd)
 
 	log_feeding(sd, LOG_FEED_HOMUNCULUS, foodID);
 
-	clif_emotion(&hd->bl,emotion);
+	clif_emotion( hd->bl, static_cast<emotion_type>( emotion ) );
 	clif_send_homdata( *hd, SP_HUNGRY );
 	clif_send_homdata( *hd, SP_INTIMATE );
 	clif_hom_food( *sd, foodID, 1 );
@@ -926,11 +945,11 @@ static TIMER_FUNC(hom_hungry){
 
 	hd->homunculus.hunger--;
 	if(hd->homunculus.hunger <= 10) {
-		clif_emotion(&hd->bl, ET_FRET);
+		clif_emotion( hd->bl, ET_FRET );
 	} else if(hd->homunculus.hunger == 25) {
-		clif_emotion(&hd->bl, ET_SCRATCH);
+		clif_emotion( hd->bl, ET_SCRATCH );
 	} else if(hd->homunculus.hunger == 75) {
-		clif_emotion(&hd->bl, ET_OK);
+		clif_emotion( hd->bl, ET_OK );
 	}
 
 	if( battle_config.feature_homunculus_autofeed && hd->homunculus.autofeed && hd->homunculus.hunger <= battle_config.feature_homunculus_autofeed_rate ){
@@ -1039,6 +1058,8 @@ void hom_alloc(map_session_data *sd, struct s_homunculus *hom)
 	t_tick tick = gettick();
 
 	sd->hd = hd = (struct homun_data*)aCalloc(1,sizeof(struct homun_data));
+	new (sd->hd) homun_data();
+
 	hd->bl.type = BL_HOM;
 	hd->bl.id = npc_get_new_npc_id();
 
@@ -1133,6 +1154,11 @@ bool hom_call(map_session_data *sd)
 		//Warp him to master.
 		unit_warp(&hd->bl,sd->bl.m, sd->bl.x, sd->bl.y,CLR_OUTSIGHT);
 
+	// Apply any active skill cooldowns.
+	for (const auto &entry : hd->scd) {
+		skill_blockhomun_start(*hd, entry.first, entry.second);
+	}
+
 #ifdef RENEWAL
 	sc_start(&sd->bl, &sd->bl, SC_HOMUN_TIME, 100, 1, skill_get_time(AM_CALLHOMUN, 1));
 #endif
@@ -1200,6 +1226,11 @@ int32 hom_recv_data(uint32 account_id, struct s_homunculus *sh, int32 flag)
 #endif
 	}
 
+	// Apply any active skill cooldowns.
+	for (uint16 i = 0; i < ARRAYLENGTH(hd->homunculus.scd); i++) {
+		skill_blockhomun_start(*hd, hd->homunculus.scd[i].skill_id, hd->homunculus.scd[i].tick);
+	}
+
 	return 1;
 }
 
@@ -1255,7 +1286,7 @@ bool hom_create_request(map_session_data *sd, int32 class_)
  * @param y : Y map coordinate
  * @return 0:failure, 1:success
  */
-int32 hom_ressurect(map_session_data* sd, unsigned char per, short x, short y)
+int32 hom_ressurect(map_session_data* sd, unsigned char per, int16 x, int16 y)
 {
 	struct homun_data* hd;
 	nullpo_ret(sd);
@@ -1287,6 +1318,11 @@ int32 hom_ressurect(map_session_data* sd, unsigned char per, short x, short y)
 	}
 
 	hd->ud.state.blockedmove = false;
+
+	// Apply any active skill cooldowns.
+	for (const auto &entry : hd->scd) {
+		skill_blockhomun_start(*hd, entry.first, entry.second);
+	}
 
 #ifdef RENEWAL
 	sc_start(&sd->bl, &sd->bl, SC_HOMUN_TIME, 100, 1, skill_get_time(AM_CALLHOMUN, 1));
@@ -1648,9 +1684,9 @@ uint64 HomunculusDatabase::parseBodyNode(const ryml::NodeRef &node) {
 		if (!this->asUInt16(node, "AttackDelay", aspd))
 			return 0;
 
-		if (aspd > 2000) {
-			this->invalidWarning(node["AttackDelay"], "Homunculus AttackDelay %hu exceeds 2000, capping.\n", aspd);
-			aspd = 2000;
+		if (aspd > MIN_ASPD) {
+			this->invalidWarning(node["AttackDelay"], "Homunculus AttackDelay %hu exceeds %d, capping.\n", aspd, MIN_ASPD);
+			aspd = MIN_ASPD;
 		}
 
 		hom->baseASPD = aspd;

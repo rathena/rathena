@@ -299,7 +299,7 @@ void mapif_itembound_ack(int32 fd, int32 account_id, int32 guild_id)
  * @param count
  * @author [Cydh]
  */
-void mapif_itembound_store2gstorage(int32 fd, int32 guild_id, struct item items[], unsigned short count) {
+void mapif_itembound_store2gstorage(int32 fd, int32 guild_id, struct item items[], uint16 count) {
 	int32 size = 8 + sizeof(struct item) * MAX_INVENTORY, i;
 
 	WFIFOHEAD(fd, size);
@@ -323,8 +323,8 @@ void mapif_itembound_store2gstorage(int32 fd, int32 guild_id, struct item items[
 bool mapif_parse_itembound_retrieve(int32 fd)
 {
 	StringBuf buf;
-	SqlStmt* stmt;
-	unsigned short i = 0, count = 0;
+	SqlStmt stmt{ *sql_handle };
+	uint16 i = 0, count = 0;
 	struct item item, items[MAX_INVENTORY];
 	int32 j, guild_id = RFIFOW(fd,10);
 	uint32 char_id = RFIFOL(fd,2), account_id = RFIFOL(fd,6);
@@ -342,44 +342,41 @@ bool mapif_parse_itembound_retrieve(int32 fd)
 	}
 	StringBuf_Printf(&buf, " FROM `%s` WHERE `char_id`='%d' AND `bound` = %d", schema_config.inventory_db,char_id, BOUND_GUILD);
 
-	stmt = SqlStmt_Malloc(sql_handle);
-	if( SQL_ERROR == SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf)) ||
-		SQL_ERROR == SqlStmt_Execute(stmt) )
+	if( SQL_ERROR == stmt.PrepareStr(StringBuf_Value(&buf)) ||
+		SQL_ERROR == stmt.Execute() )
 	{
 		SqlStmt_ShowDebug(stmt);
-		SqlStmt_Free(stmt);
 		StringBuf_Destroy(&buf);
 		mapif_itembound_ack(fd,account_id,guild_id);
 		return true;
 	}
 
-	SqlStmt_BindColumn(stmt, 0, SQLDT_INT,       &item.id,           0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 1, SQLDT_UINT,      &item.nameid,       0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 2, SQLDT_SHORT,     &item.amount,       0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 3, SQLDT_UINT,      &item.equip,        0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 4, SQLDT_CHAR,      &item.identify,     0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 5, SQLDT_CHAR,      &item.refine,       0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 6, SQLDT_CHAR,      &item.attribute,    0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 7, SQLDT_UINT,      &item.expire_time,  0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 8, SQLDT_CHAR,      &item.bound,        0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 9, SQLDT_ULONGLONG, &item.unique_id,    0, nullptr, nullptr);
-	SqlStmt_BindColumn(stmt, 10, SQLDT_INT8,     &item.enchantgrade, 0, nullptr, nullptr);
+	stmt.BindColumn(0, SQLDT_INT32,       &item.id,           0, nullptr, nullptr);
+	stmt.BindColumn(1, SQLDT_UINT32,      &item.nameid,       0, nullptr, nullptr);
+	stmt.BindColumn(2, SQLDT_INT16,     &item.amount,       0, nullptr, nullptr);
+	stmt.BindColumn(3, SQLDT_UINT32,      &item.equip,        0, nullptr, nullptr);
+	stmt.BindColumn(4, SQLDT_CHAR,      &item.identify,     0, nullptr, nullptr);
+	stmt.BindColumn(5, SQLDT_CHAR,      &item.refine,       0, nullptr, nullptr);
+	stmt.BindColumn(6, SQLDT_CHAR,      &item.attribute,    0, nullptr, nullptr);
+	stmt.BindColumn(7, SQLDT_UINT32,      &item.expire_time,  0, nullptr, nullptr);
+	stmt.BindColumn(8, SQLDT_CHAR,      &item.bound,        0, nullptr, nullptr);
+	stmt.BindColumn(9, SQLDT_ULONGLONG, &item.unique_id,    0, nullptr, nullptr);
+	stmt.BindColumn(10, SQLDT_INT8,     &item.enchantgrade, 0, nullptr, nullptr);
 	for( j = 0; j < MAX_SLOTS; ++j )
-		SqlStmt_BindColumn(stmt,11+j, SQLDT_UINT, &item.card[j], 0, nullptr, nullptr);
+		stmt.BindColumn(11+j, SQLDT_UINT32, &item.card[j], 0, nullptr, nullptr);
 	for( j = 0; j < MAX_ITEM_RDM_OPT; ++j ) {
-		SqlStmt_BindColumn(stmt, 11+MAX_SLOTS+j*3, SQLDT_SHORT, &item.option[j].id, 0, nullptr, nullptr);
-		SqlStmt_BindColumn(stmt, 12+MAX_SLOTS+j*3, SQLDT_SHORT, &item.option[j].value, 0, nullptr, nullptr);
-		SqlStmt_BindColumn(stmt, 13+MAX_SLOTS+j*3, SQLDT_CHAR, &item.option[j].param, 0, nullptr, nullptr);
+		stmt.BindColumn(11+MAX_SLOTS+j*3, SQLDT_INT16, &item.option[j].id, 0, nullptr, nullptr);
+		stmt.BindColumn(12+MAX_SLOTS+j*3, SQLDT_INT16, &item.option[j].value, 0, nullptr, nullptr);
+		stmt.BindColumn(13+MAX_SLOTS+j*3, SQLDT_CHAR, &item.option[j].param, 0, nullptr, nullptr);
 	}
 	memset(&items, 0, sizeof(items));
-	while( SQL_SUCCESS == SqlStmt_NextRow(stmt) )
+	while( SQL_SUCCESS == stmt.NextRow() )
 		memcpy(&items[count++], &item, sizeof(struct item));
 	Sql_FreeResult(sql_handle);
 
 	ShowInfo("Found '" CL_WHITE "%d" CL_RESET "' guild bound item(s) from CID = " CL_WHITE "%d" CL_RESET ", AID = %d, Guild ID = " CL_WHITE "%d" CL_RESET ".\n", count, char_id, account_id, guild_id);
 	if (!count) { //No items found - No need to continue
 		StringBuf_Destroy(&buf);
-		SqlStmt_Free(stmt);
 		mapif_itembound_ack(fd,account_id,guild_id);
 		return true;
 	}
@@ -389,11 +386,10 @@ bool mapif_parse_itembound_retrieve(int32 fd)
 	// Delete bound items from player's inventory
 	StringBuf_Clear(&buf);
 	StringBuf_Printf(&buf, "DELETE FROM `%s` WHERE `char_id` = %d AND `bound` = %d",schema_config.inventory_db, char_id, BOUND_GUILD);
-	if( SQL_ERROR == SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf)) ||
-		SQL_ERROR == SqlStmt_Execute(stmt) )
+	if( SQL_ERROR == stmt.PrepareStr(StringBuf_Value(&buf)) ||
+		SQL_ERROR == stmt.Execute() )
 	{
 		SqlStmt_ShowDebug(stmt);
-		SqlStmt_Free(stmt);
 		StringBuf_Destroy(&buf);
 		mapif_itembound_ack(fd,account_id,guild_id);
 		return true;
@@ -434,11 +430,10 @@ bool mapif_parse_itembound_retrieve(int32 fd)
 		StringBuf_Init(&buf2);
 		StringBuf_Printf(&buf2, "UPDATE `%s` SET %s WHERE `char_id`='%d'", schema_config.char_db, StringBuf_Value(&buf), char_id);
 
-		if( SQL_ERROR == SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf2)) ||
-			SQL_ERROR == SqlStmt_Execute(stmt) )
+		if( SQL_ERROR == stmt.PrepareStr(StringBuf_Value(&buf2)) ||
+			SQL_ERROR == stmt.Execute() )
 		{
 			SqlStmt_ShowDebug(stmt);
-			SqlStmt_Free(stmt);
 			StringBuf_Destroy(&buf);
 			StringBuf_Destroy(&buf2);
 			mapif_itembound_ack(fd,account_id,guild_id);
@@ -448,7 +443,6 @@ bool mapif_parse_itembound_retrieve(int32 fd)
 	}
 
 	StringBuf_Destroy(&buf);
-	SqlStmt_Free(stmt);
 
 	char_unset_session_flag(account_id, 1);
 	return false;

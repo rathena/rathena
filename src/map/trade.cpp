@@ -71,7 +71,7 @@ void trade_traderequest(map_session_data *sd, map_session_data *target_sd)
 	}
 
 	if (!pc_can_give_items(sd) || !pc_can_give_items(target_sd)) { // check if both GMs are allowed to trade
-		clif_displaymessage(sd->fd, msg_txt(sd,246));
+		clif_displaymessage( sd->fd, msg_txt( sd, 246 ) ); // Your GM level doesn't authorize you to perform this action.
 		clif_traderesponse(*sd, TRADE_ACK_FAILED); // GM is not allowed to trade
 		return;
 	}
@@ -263,7 +263,7 @@ int32 trade_check(map_session_data *sd, map_session_data *tsd)
 
 	// check free slot in both inventory
 	for(trade_i = 0; trade_i < 10; trade_i++) {
-		short amount;
+		int16 amount;
 
 		amount = sd->deal.item[trade_i].amount;
 
@@ -348,7 +348,7 @@ int32 trade_check(map_session_data *sd, map_session_data *tsd)
  * @param index : index of item in inventory
  * @param amount : amount of item to add from index
  */
-void trade_tradeadditem(map_session_data *sd, short index, short amount)
+void trade_tradeadditem(map_session_data *sd, int16 index, int16 amount)
 {
 	map_session_data *target_sd;
 	struct item *item;
@@ -403,7 +403,7 @@ void trade_tradeadditem(map_session_data *sd, short index, short amount)
 	}
 
 	if( item->equipSwitch ){
-		clif_msg(sd, MSI_SWAP_EQUIPITEM_UNREGISTER_FIRST);
+		clif_msg( *sd, MSI_SWAP_EQUIPITEM_UNREGISTER_FIRST );
 		return;
 	}
 

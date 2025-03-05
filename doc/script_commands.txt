@@ -1,4 +1,4 @@
-﻿//===== rAthena Documentation================================
+//===== rAthena Documentation================================
 //= rAthena Script Commands
 //===== By:==================================================
 //= rAthena Dev Team
@@ -1187,6 +1187,11 @@ The following sample will open a preview window for Red Potion:
 	mes "Did you ever consume a <ITEM>Red Potion<INFO>501</INFO></ITEM>?";
 
 NOTE: Be aware that item links are broken in some 2015 clients.
+
+In 2023 the syntax ^i[Item ID] was introduced to display an item icon inside a NPC dialog.
+We created a script command "mesitemicon" that allows you to create the correct syntax
+depending on your configured packet version. We recommend that you use this script command
+instead of hardcoding the other syntax. For more details see the documentation for "mesitemicon".
 
 URLs
 ----
@@ -3507,6 +3512,36 @@ guild specified by the ID. 0 if the character is not a guild master of any guild
 
 ---------------------------------------
 
+*getguildinfo(<guild ID>, <type>);
+
+This function will look up and return the request type of guild information.
+
+Types:
+	GUILDINFO_NAME              - Guild's Name
+	GUILDINFO_LEVEL             - Guild's Level
+	GUILDINFO_AVERAGELEVEL      - Guild's Average Level
+	GUILDINFO_ONLINECOUNT       - Guild's Online Member Count
+	GUILDINFO_MEMBERCOUNT       - Guild's Current Member Count
+	GUILDINFO_MAXMEMBERCOUNT    - Guild's Max Member Count
+	GUILDINFO_EXP               - Guild's Current EXP
+	GUILDINFO_NEXTEXP           - Guild's Required EXP to Level
+	GUILDINFO_MASTERID          - Guild Master Character ID
+	GUILDINFO_MASTERNAME        - Guild Master Name
+
+Note: Make sure to use the requestguildinfo script command to load the guild data from the char-server.
+Example Case ( Newly formed guild ):
+
+.@gid = 1234;
+
+getguildinfo( .@gid, GUILDINFO_LEVEL ); //Returns 0
+
+requestguildinfo( .@gid );
+getguildinfo( .@gid, GUILDINFO_LEVEL ); //Returns current guild level
+
+See the sample in 'doc/sample/getguildinfo.txt'.
+
+---------------------------------------
+
 *is_guild_leader({<guild ID>})
 
 This command will return true if the player attached to the script is the leader
@@ -4765,6 +4800,12 @@ wall), the character is pushed only up to the obstacle.
 
 ---------------------------------------
 
+*kick({<char_id>});
+
+This command kicks the attached character (or character provided by <char_id>) from the map server, just like @kick.
+
+---------------------------------------
+
 *recalculatestat;
 
 This command will force a stat recalculation for the attached player.
@@ -5389,7 +5430,11 @@ example, for a random pet lure:
 getitem groupranditem(IG_Taming),1;
 
 'sub_group' is used to get the available random items of item group from specified random
-group. 0 for 'must' item group, and random item group is 1 until 5 (MAX_ITEMGROUP_RANDGROUP+1).
+group. If 'sub_group' is not defined the value will be 1. Make sure the group has defined a
+sub group with the given value.
+The algorithm specified in the sub group determines how the item is picked.
+If the sub group algorithm is "All", then a random item in the group will be returned with
+each item having the same chance of being picked.
 
 More info, see doc/item_group.txt.
 
@@ -5397,14 +5442,13 @@ More info, see doc/item_group.txt.
 
 *getrandgroupitem <group_id>{,<quantity>{,<sub_group>{,<identify>{,<char_id>}}}};
 
-Similar to the above example, this command allows players to obtain the specified
+Similar to "groupranditem", this command allows players to obtain the specified
 quantity of a random item from the group "<group id>". The different groups and
 their group number are specified in db/(pre-)re/item_group_db.yml
 
 If 'quantity' is not defined or 0, it will uses defined amount from Item Group list.
 
-If 'sub_group' is not defined the value will be 1 (since random group is 1 ~ 5, and 0 is
-'must' item group).
+Sub groups and their algorithm work the same way as explained for "groupranditem".
 
 For item with type IT_WEAPON, IT_ARMOR, IT_PETARMOR, and IT_SHADOWGEAR will be given
 as unidentified item (as defined by itemdb_isidentified in src/map/itemdb.cpp) except
@@ -5423,6 +5467,9 @@ item group & sub_group.
 For item with type IT_WEAPON, IT_ARMOR, IT_PETARMOR, and IT_SHADOWGEAR will be given
 as unidentified item (as defined by itemdb_isidentified in src/map/itemdb.cpp) except
 if 'identify' is defined with value 1.
+
+For each sub group defined for the item group, items will be given out according to
+their corresponding algorithm.
 
 More info, see doc/item_group.txt.
 
@@ -10429,19 +10476,25 @@ This is still usable outside item scripts.
 
 ---------------------------------------
 
-*pet <pet id>;
-*catchpet <pet id>;
+*pet {<item_id>{,flag}};
+*catchpet {<item_id>{,flag}};
 
-This command is used in all the item scripts for taming items. Running this
-command will make the pet catching cursor appear on the client connected to the
-invoking character, usable on the monsters with the specified pet ID number. It
-will still work outside an item script.
-If the <pet id> is PET_CATCH_UNIVERSAL the item will attempt to catch the targeted
-monster as long as it is in the pet database and does not have the MD_STATUS_IMMUNE
-monster mode.
-If the <pet id> is PET_CATCH_UNIVERSAL_ITEM the item will attempt to catch the targeted
-monster as long as it is in the pet database and the targeted monster requires the lure
-item used.
+This command is used in all the item scripts for taming items.
+Running this command will make the pet catching cursor appear on the client of the invoking character
+and the player can then attempt to catch a monster.
+
+If the item ID is not specified, the command will use the item ID from the invoking item script.
+It will also work outside of an item script, if the item ID is provided.
+
+The following constants can be used as <flag> parameter:
+
+	PET_CATCH_NORMAL:				Will attempt to catch the targeted monster as long as it is in the pet database and
+									the taming item corresponds with the required taming item in the pet database.
+									This is the default if <flag> is not specified.
+	PET_CATCH_UNIVERSAL_NO_BOSS:	Will attempt to catch the targeted monster as long as it is in the pet database and
+									does not have the MD_STATUS_IMMUNE monster mode.
+	PET_CATCH_UNIVERSAL_ALL:		Will attempt to catch the targeted monster as long as it is in the pet database.
+
 See 'doc/mob_db_mode_list.txt' for more information about monster modes.
 
 A full list of pet IDs can be found inside 'db/(pre-)re/pet_db.yml'.
@@ -11019,17 +11072,14 @@ The command returns 1 upon success, and these values upon failure:
 
 ---------------------------------------
 
-*opendressroom(<flag>{,<char_id>});
+*opendressroom({<char_id>});
 
 This will open the Dress Room window on the client connected to the invoking character.
 
 	mes "Close this window to open the Dress Room window.";
 	close2;
-	opendressroom(1);
+	opendressroom();
 	end;
-
-Valid flag are:
- 1 - Open the Dress Room window
 
 ---------------------------------------
 
@@ -11178,6 +11228,7 @@ client (and server) supports the Item Random Options feature (PACKETVER >= 20150
 ---------------------------------------
 
 *mesitemlink(<item_id>{,<use_brackets>{,<display_name>});
+*mesitemlink(<"item_name">{,<use_brackets>{,<display_name>});
 
 Generates an itemlink string for an item and can be used with NPC's mes command.
 The NPC message will show the item's name which will be clickable and opens the
@@ -11189,9 +11240,25 @@ but in some cases it might be necessary to overwrite the <display_name> with som
 Examples:
 
 	mes mesitemlink( 1201 ); // Will display "[Knife]" and will be clickable. If clicked it opens the description for Knife [3]
+	mes mesitemlink( "Knife" ); // Will display "[Knife]" and will be clickable. If clicked it opens the description for Knife [3]
 	mes "Bring me a " + mesitemlink( 1201 ) + "."; // Will display "Bring me a [Knife]." and "[Knife]" will be clickable.
 	mes "Bring me a " + mesitemlink( 1201, false ) + "."; // Will display "Bring me a Knife." and "Knife" will be clickable.
 	mes "Bring me a " + mesitemlink( 1201, true, "Super cutting knife" ) + "."; // Will display "Bring me a [Super cutting knife]." and "[Super cutting knife]" will be clickable.
+
+---------------------------------------
+
+*mesitemicon(<item_id>{,<display_name>});
+
+Generates an itemicon string for an item and can be used with NPC's mes command.
+The NPC message will show the item's icon which will be clickable and opens the
+item description client side.
+
+If the feature is disabled, by default the database name of the item will be used.
+However if you provide a <display_name>, this name will be displayed instead.
+
+Examples:
+
+	mes mesitemicon( 1201 ); // Will display a Knife icon and will be clickable. If clicked it opens the description for Knife [3]
 
 ========================
 |14.- Channel commands.|

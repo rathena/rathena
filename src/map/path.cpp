@@ -32,11 +32,11 @@
 /// Path node
 struct path_node {
 	struct path_node *parent; ///< pointer to parent (for path reconstruction)
-	short x; ///< X-coordinate
-	short y; ///< Y-coordinate
-	short g_cost; ///< Actual cost from start to this node
-	short f_cost; ///< g_cost + heuristic(this, goal)
-	short flag; ///< SET_OPEN / SET_CLOSED
+	int16 x; ///< X-coordinate
+	int16 y; ///< Y-coordinate
+	int16 g_cost; ///< Actual cost from start to this node
+	int16 f_cost; ///< g_cost + heuristic(this, goal)
+	int16 flag; ///< SET_OPEN / SET_CLOSED
 };
 
 /// Binary heap of path nodes
@@ -506,7 +506,7 @@ int32 distance_client(int32 dx, int32 dy)
 
 	if(temp_dist < 0) temp_dist = 0;
 
-	return ((int)temp_dist);
+	return ((int32)temp_dist);
 }
 
 bool direction_diagonal( enum directions direction ){

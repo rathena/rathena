@@ -237,6 +237,25 @@ void mercenary_save(s_mercenary_data *md) {
 	md->mercenary.sp = md->battle_status.sp;
 	md->mercenary.life_time = mercenary_get_lifetime(md);
 
+	// Clear skill cooldown array.
+	for (uint16 i = 0; i < MAX_SKILLCOOLDOWN; i++)
+		md->mercenary.scd[i] = {};
+	
+	// Store current cooldown entries.
+	uint16 count = 0;
+	t_tick tick = gettick();
+
+	for (const auto &entry : md->scd) {
+		const TimerData *timer = get_timer(entry.second);
+
+		if (timer == nullptr || timer->func != skill_blockmerc_end || DIFF_TICK(timer->tick, tick) < 0)
+			continue;
+
+		md->mercenary.scd[count] = { entry.first, DIFF_TICK(timer->tick, tick) };
+
+		count++;
+	}
+
 	intif_mercenary_save(&md->mercenary);
 }
 
@@ -289,12 +308,12 @@ int32 mercenary_delete(s_mercenary_data *md, int32 reply) {
 		case 0:
 			// +1 Loyalty on Contract ends.
 			mercenary_set_faith(md, 1);
-			clif_msg(sd, MSI_MER_FINISH);
+			clif_msg( *sd, MSI_MER_FINISH );
 			break; 
 		case 1:
 			// -1 Loyalty on Mercenary killed
 			mercenary_set_faith(md, -1);
-			clif_msg(sd, MSI_MER_DIE);
+			clif_msg( *sd, MSI_MER_DIE );
 			break; 
 	}
 
@@ -348,6 +367,8 @@ bool mercenary_recv_data(s_mercenary *merc, bool flag)
 
 	if( !sd->md ) {
 		sd->md = md = (s_mercenary_data*)aCalloc(1,sizeof(s_mercenary_data));
+		new (sd->md) s_mercenary_data();
+
 		md->bl.type = BL_MER;
 		md->bl.id = npc_get_new_npc_id();
 		md->devotion_flag = 0;
@@ -391,6 +412,11 @@ bool mercenary_recv_data(s_mercenary *merc, bool flag)
 		clif_spawn(&md->bl);
 		clif_mercenary_info(sd);
 		clif_mercenary_skillblock(sd);
+	}
+
+	// Apply any active skill cooldowns.
+	for (uint16 i = 0; i < ARRAYLENGTH(md->mercenary.scd); i++) {
+		skill_blockmerc_start(*md, md->mercenary.scd[i].skill_id, md->mercenary.scd[i].tick);
 	}
 
 	return true;
@@ -838,7 +864,7 @@ uint64 MercenaryDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (!this->asUInt16(node, "AttackDelay", speed))
 			return 0;
 
-		mercenary->status.adelay = cap_value(speed, 0, 4000);
+		mercenary->status.adelay = cap_value(speed, MAX_ASPD_NOPC, MIN_ASPD);
 	} else {
 		if (!exists)
 			mercenary->status.adelay = 4000;
@@ -850,7 +876,8 @@ uint64 MercenaryDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (!this->asUInt16(node, "AttackMotion", speed))
 			return 0;
 
-		mercenary->status.amotion = cap_value(speed, 0, 2000);
+		// amotion is only capped to MAX_ASPD_NOPC when receiving buffs/debuffs
+		mercenary->status.amotion = cap_value(speed, 1, MIN_ASPD/AMOTION_DIVIDER_NOPC);
 	} else {
 		if (!exists)
 			mercenary->status.amotion = 2000;

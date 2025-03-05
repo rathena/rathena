@@ -96,7 +96,7 @@ int32 chat_createpcchat(map_session_data* sd, const char* title, const char* pas
 		return 0;
 	}
 
-	pc_stop_walking(sd,1);
+	unit_stop_walking( &sd->bl, USW_FIXPOS );
 
 	cd = chat_createchat(&sd->bl, title, pass, limit, pub, 0, "", 0, 1, MAX_LEVEL);
 
@@ -104,9 +104,9 @@ int32 chat_createpcchat(map_session_data* sd, const char* title, const char* pas
 		cd->users = 1;
 		cd->usersd[0] = sd;
 		pc_setchatid(sd,cd->bl.id);
-		pc_stop_attack(sd);
+		unit_stop_attack( &sd->bl );
 		clif_createchat( *sd, CREATEROOM_SUCCESS );
-		clif_dispchat(cd,0);
+		clif_dispchat(*cd);
 
 		if (status_isdead(sd->bl))
 			achievement_update_objective(sd, AG_CHATTING_DYING, 1, 1);
@@ -162,7 +162,7 @@ int32 chat_joinchat(map_session_data* sd, int32 chatid, const char* pass)
 		return 0;
 	}
 
-	pc_stop_walking(sd,1);
+	unit_stop_walking( &sd->bl, USW_FIXPOS );
 	cd->usersd[cd->users] = sd;
 	cd->users++;
 
@@ -172,7 +172,7 @@ int32 chat_joinchat(map_session_data* sd, int32 chatid, const char* pass)
 	clif_joinchatok(*sd, *cd);
 	// Reports to the persons, who already are in the chat
 	clif_addchat( *cd, *sd );
-	clif_dispchat(cd, 0); //Reported number of changes to the people around
+	clif_dispchat(*cd); //Reported number of changes to the people around
 
 	if (cd->owner->type == BL_PC)
 		achievement_update_objective(map_id2sd(cd->owner->id), AG_CHATTING_COUNT, 1, cd->users);
@@ -246,9 +246,9 @@ int32 chat_leavechat(map_session_data* sd, bool kicked)
 		if(map_addblock( &cd->bl ))
 			return 1;
 
-		clif_dispchat(cd,0);
+		clif_dispchat(*cd);
 	} else
-		clif_dispchat(cd,0); // refresh chatroom
+		clif_dispchat(*cd); // refresh chatroom
 
 	return 0;
 }
@@ -299,7 +299,7 @@ int32 chat_changechatowner(map_session_data* sd, const char* nextownername)
 		return 1;
 
 	// and display again
-	clif_dispchat(cd,0);
+	clif_dispchat(*cd);
 
 	return 0;
 }
@@ -330,7 +330,7 @@ int32 chat_changechatstatus(map_session_data* sd, const char* title, const char*
 	cd->pub = pub;
 
 	clif_changechatstatus(*cd);
-	clif_dispchat(cd,0);
+	clif_dispchat(*cd);
 
 	return 0;
 }
@@ -416,9 +416,9 @@ int32 chat_createnpcchat(struct npc_data* nd, const char* title, int32 limit, bo
 
 	cd = chat_createchat(&nd->bl, title, "", limit, pub, trigger, ev, zeny, minLvl, maxLvl);
 
-	if( cd ) {
+	if( cd != nullptr ){
 		nd->chat_id = cd->bl.id;
-		clif_dispchat(cd,0);
+		clif_dispchat(*cd);
 	}
 
 	return 0;

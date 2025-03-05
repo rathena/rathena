@@ -93,7 +93,7 @@ struct Channel* channel_create_simple(char *name, char *pass, enum Channel_Type 
 	switch (chantype) {
 		case CHAN_TYPE_ALLY:
 			memcpy(&tmp_chan, &channel_config.ally_tmpl, sizeof(channel_config.ally_tmpl));
-			tmp_chan.gid = (int)owner;
+			tmp_chan.gid = (int32)owner;
 			break;
 		case CHAN_TYPE_MAP:
 			memcpy(&tmp_chan, &channel_config.map_tmpl, sizeof(channel_config.map_tmpl));
@@ -1251,7 +1251,7 @@ int32 channel_pcsetopt(map_session_data *sd, char *chname, const char *option, c
  * @return True on success or false on failure
  */
 bool channel_pccheckgroup(struct Channel *channel, int32 group_id) {
-	unsigned short i;
+	uint16 i;
 
 	nullpo_ret(channel);
 
@@ -1372,7 +1372,7 @@ bool channel_read_sub(config_setting_t *chan, struct Channel *tmp_chan, uint8 i)
 
 	if ((group_list = config_setting_get_member(chan, "groupid")) && (group_count = config_setting_length(group_list)) > 0) {
 		int32 j;
-		CREATE(tmp_chan->groups, unsigned short, group_count);
+		CREATE(tmp_chan->groups, uint16, group_count);
 		tmp_chan->group_count = group_count;
 		for (j = 0; j < group_count; j++) {
 			int32 groupid = config_setting_get_int_elem(group_list, j);

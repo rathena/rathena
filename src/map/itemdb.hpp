@@ -82,7 +82,6 @@ enum item_itemid : t_itemid
 	ITEMID_PHRACON						= 1010,
 	ITEMID_EMVERETARCON					= 1011,
 	ITEMID_TRAP							= 1065,
-	ITEMID_ANGRA_MANYU					= 1599,
 	ITEMID_PAINT_BRUSH					= 6122,
 	ITEMID_MAGIC_GEAR_FUEL				= 6146,
 	ITEMID_NEW_INSURANCE				= 6413,
@@ -240,7 +239,6 @@ enum e_random_item_group {
 	IG_CARDALBUM,
 	IG_GIFTBOX,
 	IG_SCROLLBOX,
-	IG_FINDINGORE,
 	IG_COOKIEBAG,
 	IG_FIRSTAID,
 	IG_HERB,
@@ -697,7 +695,7 @@ enum e_random_item_group {
 	IG_LASTANGEL_LUCKYSCROLL,
 	IG_VALKYRIE_LUCKY_SCROLL,
 	IG_SPLASH_RAINBOW_LUCKY_SCROLL,
-	IG_SHAPESHIFTER_COSTUME,
+	IG_COSTAMA_EGG22,
 	IG_JULY_LUCKY_SCROLL,
 	IG_COSTAMA_EGG23,
 	IG_COSTAMA_EGG28,
@@ -2958,6 +2956,21 @@ enum e_random_item_group {
 	IG_LI_NYANGVINE_BOX1_37,
 	IG_LI_NYANGVINE_BOX2_37,
 	IG_LI_NYANGVINE_BOX3_37,
+	IG_JANUARYGIFTBOX,
+	IG_FEBRUARYGIFTBOX,
+	IG_MARCHGIFTBOX,
+	IG_MAYGIFTBOX,
+	IG_JUNEGIFTBOX,
+	IG_JULYGIFTBOX,
+	IG_AUGUSTGIFTBOX,
+	IG_OCTOBERGIFTBOX,
+	IG_DECEMBERGIFTBOX,
+	IG_2024GOLDPCBOX,
+	IG_E_CARD_PACK,
+	IG_TRUE_HUNTING_SET,
+	IG_REGIA_HUNTING_SET,
+	IG_MYSTERIOUS_FRUIT_BOX,
+	IG_ZONDA_SUPPORT_PACKAGE,
 
 	IG_MAX,
 };
@@ -3007,6 +3020,15 @@ enum e_delay_consume : uint8 {
 	DELAYCONSUME_NONE = 0x0,
 	DELAYCONSUME_TEMP = 0x1, // Items that are not consumed immediately upon double-click
 	DELAYCONSUME_NOCONSUME = 0x2, // Items that are not removed upon double-click
+};
+
+/// Enum for different ways to search an item group
+enum e_group_algorithm_type : uint8 {
+	GROUP_ALGORITHM_USEDB, // Use algorithm defined in the database for the sub group (All, Random or SharedPool).
+	GROUP_ALGORITHM_DROP, // Pick one item from the group and use rate as drop rate, on fail, do not return any item.
+	GROUP_ALGORITHM_ALL, // All items have an equal chance to be returned. Using getgroupitem will return all items in the group.
+	GROUP_ALGORITHM_RANDOM, // Always return an item from the group, rate determines which item is more likely to be returned.
+	GROUP_ALGORITHM_SHAREDPOOL, // Rate is the amount of items in the group, return a random item and remove it from the group.
 };
 
 /// Item combo struct
@@ -3118,6 +3140,8 @@ struct s_item_group_entry
 {
 	t_itemid nameid; /// Item ID
 	uint16 rate;
+	uint16 adj_rate; /// Rate adjusted by the battle_config.item_group_rate
+	uint16 given; /// Amount of times this item has already been given out
 	uint16 duration, /// Duration if item as rental item (in minutes)
 		amount; /// Amount of item will be obtained
 	bool isAnnounced, /// Broadcast if player get this item
@@ -3134,9 +3158,9 @@ struct s_item_group_entry
 struct s_item_group_random
 {
 	uint32 total_rate;
+	uint32 total_given; /// Amount of times an item from this group has been given out
+	e_group_algorithm_type algorithm;
 	std::unordered_map<uint32, std::shared_ptr<s_item_group_entry>> data; /// index, s_item_group_entry
-
-	std::shared_ptr<s_item_group_entry> get_random_itemsubgroup();
 };
 
 /// Struct of item group that will be used for db
@@ -3149,7 +3173,7 @@ struct s_item_group_db
 /// Struct of Roulette db
 struct s_roulette_db {
 	t_itemid *nameid[MAX_ROULETTE_LEVEL]; /// Item ID
-	unsigned short *qty[MAX_ROULETTE_LEVEL]; /// Amount of Item ID
+	uint16 *qty[MAX_ROULETTE_LEVEL]; /// Amount of Item ID
 	int32 *flag[MAX_ROULETTE_LEVEL]; /// Whether the item is for loss or win
 	int32 items[MAX_ROULETTE_LEVEL]; /// Number of items in the list for each
 };
@@ -3220,7 +3244,7 @@ struct item_data
 		uint16 override;
 		bool sitting;
 	} item_usage;
-	short gm_lv_trade_override;	//GM-level to override trade_restriction
+	int16 gm_lv_trade_override;	//GM-level to override trade_restriction
 	std::vector<std::shared_ptr<s_item_combo>> combos;
 	struct {
 		uint32 duration;
@@ -3287,13 +3311,14 @@ public:
 	std::string create_item_link(struct item& item);
 	std::string create_item_link( std::shared_ptr<item_data>& data );
 	std::string create_item_link_for_mes( std::shared_ptr<item_data>& data, bool use_brackets, const char* name );
+	std::string create_item_icon_for_mes( std::shared_ptr<item_data>& data, const char* name );
 };
 
 extern ItemDatabase item_db;
 
 class ItemGroupDatabase : public TypesafeCachedYamlDatabase<uint16, s_item_group_db> {
 public:
-	ItemGroupDatabase() : TypesafeCachedYamlDatabase("ITEM_GROUP_DB", 3, 1) {
+	ItemGroupDatabase() : TypesafeCachedYamlDatabase("ITEM_GROUP_DB", 4, 1) {
 
 	}
 
@@ -3304,11 +3329,11 @@ public:
 	// Additional
 	bool item_exists(uint16 group_id, t_itemid nameid);
 	int16 item_exists_pc(map_session_data *sd, uint16 group_id);
-	t_itemid get_random_item_id(uint16 group_id, uint8 sub_group);
-	std::shared_ptr<s_item_group_entry> get_random_entry(uint16 group_id, uint8 sub_group);
+	std::shared_ptr<s_item_group_entry> get_random_entry(uint16 group_id, uint8 sub_group, e_group_algorithm_type algorithm = GROUP_ALGORITHM_USEDB);
 	uint8 pc_get_itemgroup( uint16 group_id, bool identify, map_session_data& sd );
 
 private:
+	std::shared_ptr<s_item_group_entry> get_random_itemsubgroup(std::shared_ptr<s_item_group_random> random, e_group_algorithm_type algorithm = GROUP_ALGORITHM_USEDB);
 	void pc_get_itemgroup_sub( map_session_data& sd, bool identify, std::shared_ptr<s_item_group_entry> data );
 };
 
@@ -3536,7 +3561,7 @@ bool itemdb_canstore_sub(struct item_data *itd, int32 gmlv, int32 unused);
 bool itemdb_canguildstore_sub(struct item_data *itd, int32 gmlv, int32 unused);
 bool itemdb_canmail_sub(struct item_data *itd, int32 gmlv, int32 unused);
 bool itemdb_canauction_sub(struct item_data *itd, int32 gmlv, int32 unused);
-bool itemdb_isrestricted(struct item* item, int32 gmlv, int32 gmlv2, bool (*func)(struct item_data*, int, int));
+bool itemdb_isrestricted(struct item* item, int32 gmlv, int32 gmlv2, bool (*func)(struct item_data*, int32, int32));
 bool itemdb_ishatched_egg(struct item* item);
 #define itemdb_isdropable(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_isdropable_sub)
 #define itemdb_cantrade(item, gmlv, gmlv2) itemdb_isrestricted(item, gmlv, gmlv2, itemdb_cantrade_sub)

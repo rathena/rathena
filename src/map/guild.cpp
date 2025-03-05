@@ -34,7 +34,7 @@
 
 using namespace rathena;
 
-std::unordered_map<int, std::shared_ptr<MapGuild>> guild_db;
+std::unordered_map<int32, std::shared_ptr<MapGuild>> guild_db;
 CastleDatabase castle_db;
 
 static DBMap* guild_expcache_db; // uint32 char_id -> struct guild_expcache*
@@ -197,14 +197,14 @@ static TIMER_FUNC(guild_send_xy_timer);
 
 /* guild flags cache */
 struct npc_data **guild_flags;
-unsigned short guild_flags_count;
+uint16 guild_flags_count;
 
 /**
  * Get guild skill index in guild structure of mmo.hpp
  * @param skill_id
  * @return Index in skill_tree or -1
  **/
-static short guild_skill_get_index(uint16 skill_id) {
+static int16 guild_skill_get_index(uint16 skill_id) {
 	if (!SKILL_CHK_GUILD(skill_id))
 		return -1;
 	skill_id -= GD_SKILLBASE;
@@ -1487,7 +1487,7 @@ int32 guild_recv_message( int32 guild_id, uint32 account_id, const char *mes, si
 /*====================================================
  * Member changing position in guild
  *---------------------------------------------------*/
-int32 guild_change_memberposition(int32 guild_id,uint32 account_id,uint32 char_id,short idx) {
+int32 guild_change_memberposition(int32 guild_id,uint32 account_id,uint32 char_id,int16 idx) {
 	return intif_guild_change_memberinfo(guild_id,account_id,char_id,GMI_POSITION,&idx,sizeof(idx));
 }
 
@@ -1726,8 +1726,8 @@ t_exp guild_getexp(map_session_data *sd,t_exp exp) {
  * Ask to increase guildskill skill_id
  *---------------------------------------------------*/
 void guild_skillup(map_session_data* sd, uint16 skill_id) {
-	short idx = guild_skill_get_index(skill_id);
-	short max = 0;
+	int16 idx = guild_skill_get_index(skill_id);
+	int16 max = 0;
 
 	nullpo_retv(sd);
 
@@ -1755,14 +1755,14 @@ int32 guild_skillupack(int32 guild_id,uint16 skill_id,uint32 account_id) {
 	map_session_data *sd = map_id2sd(account_id);
 	auto g = guild_search(guild_id);
 	int32 i;
-	short idx = guild_skill_get_index(skill_id);
+	int16 idx = guild_skill_get_index(skill_id);
 
 	if (g == nullptr || idx == -1)
 		return 0;
 	if (sd != nullptr) {
-		int32 lv = g->guild.skill[idx].lv;
+		uint16 lv = g->guild.skill[idx].lv;
 		int32 range = skill_get_range(skill_id, lv);
-		clif_skillup(sd,skill_id,lv,range,1);
+		clif_skillup( *sd, skill_id,lv, range, true );
 
 		/* Guild Aura handling */
 		switch( skill_id ) {
@@ -1826,7 +1826,7 @@ void guild_block_skill(map_session_data *sd, int32 time) {
 	uint16 skill_id[] = { GD_BATTLEORDER, GD_REGENERATION, GD_RESTORE, GD_EMERGENCYCALL };
 	int32 i;
 	for (i = 0; i < 4; i++)
-		skill_blockpc_start(sd, skill_id[i], time);
+		skill_blockpc_start(*sd, skill_id[i], time);
 }
 
 /*====================================================
@@ -2448,8 +2448,8 @@ int32 guild_castledatasave(int32 castle_id, int32 index, int32 value) {
 }
 
 void guild_castle_reconnect_sub(void *key, void *data, va_list ap) {
-	int32 castle_id = GetWord((int)__64BPRTSIZE(key), 0);
-	int32 index = GetWord((int)__64BPRTSIZE(key), 1);
+	int32 castle_id = GetWord((int32)__64BPRTSIZE(key), 0);
+	int32 index = GetWord((int32)__64BPRTSIZE(key), 1);
 	intif_guild_castle_datasave(castle_id, index, *(int32 *)data);
 	aFree(data);
 }
@@ -2470,7 +2470,7 @@ void guild_castle_reconnect(int32 castle_id, int32 index, int32 value) {
 		linkdb_final(&gc_save_pending);
 	} else {
 		int32 *data;
-		CREATE(data, int, 1);
+		CREATE(data, int32, 1);
 		*data = value;
 		linkdb_replace(&gc_save_pending, (void*)__64BPRTSIZE((MakeDWord(castle_id, index))), data);
 	}

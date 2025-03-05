@@ -93,8 +93,10 @@ struct Schema_Config {
 	char quest_db[DB_NAME_LEN];
 	char homunculus_db[DB_NAME_LEN];
 	char skill_homunculus_db[DB_NAME_LEN];
+	char skillcooldown_homunculus_db[DB_NAME_LEN];
 	char mercenary_db[DB_NAME_LEN];
 	char mercenary_owner_db[DB_NAME_LEN];
+	char skillcooldown_mercenary_db[DB_NAME_LEN];
 	char elemental_db[DB_NAME_LEN];
 	char bonus_script_db[DB_NAME_LEN];
 	char acc_reg_num_table[DB_NAME_LEN];
@@ -188,7 +190,7 @@ struct CharServ_Config {
 	int32 char_check_db;	///cheking sql-table at begining ?
 
 	struct s_point_str start_point[MAX_STARTPOINT], start_point_doram[MAX_STARTPOINT]; // Initial position the player will spawn on the server
-	short start_point_count, start_point_count_doram; // Number of positions read
+	int16 start_point_count, start_point_count_doram; // Number of positions read
 	struct startitem start_items[MAX_STARTITEM], start_items_doram[MAX_STARTITEM]; // Initial items the player with spawn with on the server
 	uint32 start_status_points;
 	int32 console;
@@ -240,7 +242,7 @@ struct online_char_data {
 	uint32 char_id;
 	int32 fd;
 	int32 waiting_disconnect;
-	short server; // -2: unknown server, -1: not connected, 0+: id of server
+	int16 server; // -2: unknown server, -1: not connected, 0+: id of server
 	bool pincode_success;
 
 public: 
@@ -326,7 +328,7 @@ void char_auth_ok(int32 fd, struct char_session_data *sd);
 void char_set_charselect(uint32 account_id);
 void char_read_fame_list(void);
 
-int32 char_make_new_char( struct char_session_data* sd, char* name_, int32 str, int32 agi, int32 vit, int32 int_, int32 dex, int32 luk, int32 slot, int32 hair_color, int32 hair_style, short start_job, int32 sex );
+int32 char_make_new_char( struct char_session_data* sd, char* name_, int32 str, int32 agi, int32 vit, int32 int_, int32 dex, int32 luk, int32 slot, int32 hair_color, int32 hair_style, int16 start_job, int32 sex );
 
 void char_set_session_flag_(int32 account_id, int32 val, bool set);
 #define char_set_session_flag(account_id, val)   ( char_set_session_flag_((account_id), (val), true)  )

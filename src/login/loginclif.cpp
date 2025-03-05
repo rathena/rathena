@@ -12,7 +12,7 @@
 #include <common/random.hpp>
 #include <common/showmsg.hpp> //show notice
 #include <common/socket.hpp> //wfifo session
-#include <common/strlib.hpp> //safeprint32
+#include <common/strlib.hpp> //safeprint
 #include <common/timer.hpp> //difftick
 #include <common/utils.hpp>
 

@@ -205,7 +205,7 @@ int32	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 	if(!fmt || !*fmt)
 		return 0;
 
-	// Print32 everything to the buffer
+	// Print everything to the buffer
 	BUFVPRINTF(tempbuf,fmt,argptr);
 
 	if( !is_console(handle) && stdout_with_ansisequence )
@@ -377,7 +377,7 @@ int32	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 
 					uint8 num = (numbers[numpoint]>>4)*10+(numbers[numpoint]&0x0F);
 					COORD origin = {0,info.dwCursorPosition.Y}; //warning C4204
-					SHORT cnt;
+					int16 cnt;
 					DWORD tmp;
 					if(num==1)
 					{
@@ -542,14 +542,14 @@ int32	VFPRINTF(FILE *file, const char *fmt, va_list argptr)
 		return 0;
 	}
 
-	// Print32 everything to the buffer
+	// Print everything to the buffer
 	BUFVPRINTF(tempbuf,fmt,argptr);
 
 	// start with processing
 	p = BUFVAL(tempbuf);
 	while ((q = strchr(p, 0x1b)) != nullptr)
 	{	// find the escape character
-		fprintf(file, "%.*s", (int)(q-p), p); // write up to the escape
+		fprintf(file, "%.*s", (int32)(q-p), p); // write up to the escape
 		if( q[1]!='[' )
 		{	// write the escape char (whatever purpose it has) 
 			fprintf(file, "%.*s", 1, q);
@@ -716,7 +716,7 @@ int32 _vShowMessage(enum msg_type flag, const char *string, va_list ap)
 	    (flag == MSG_SQL && msg_silent&16) ||
 	    (flag == MSG_DEBUG && msg_silent&32)
 	)
-		return 0; //Do not print32 it.
+		return 0; //Do not print it.
 
 	if (timestamp_format[0] && flag != MSG_NONE)
 	{	//Display time format. [Skotlex]

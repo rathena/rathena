@@ -41,11 +41,11 @@ std::string filePrefix = "generated/clientside/data/luafiles514/lua files/naviga
 // Path node
 struct path_node {
 	struct path_node *parent; // pointer to parent
-	short x; // x coord
-	short y; // y coord
-	short g_cost; // Actual cost from start to this node
-	short f_cost; // g_cost + heuristic(this, goal)
-	short flag; // SET_OPEN / SET_CLOSED
+	int16 x; // x coord
+	int16 y; // y coord
+	int16 g_cost; // Actual cost from start to this node
+	int16 f_cost; // g_cost + heuristic(this, goal)
+	int16 flag; // SET_OPEN / SET_CLOSED
 };
 
 /// Binary heap of path nodes
@@ -362,7 +362,7 @@ void write_warp(std::ostream& os, const struct navi_link &nl) {
 	// 205 = airport  (currently we only support warps)
 	os << ((nl.npc->subtype == NPCTYPE_WARP) ? 200 : 201) << ", ";
 	// sprite id, 99999 = warp portal
-	os << ((nl.npc->vd.class_ == JT_WARPNPC) ? 99999 : (int)nl.npc->vd.class_) << ", ";
+	os << ((nl.npc->vd.class_ == JT_WARPNPC) ? 99999 : (int32)nl.npc->vd.class_) << ", ";
 	if (nl.name.empty())
 		os << "\"" << msrc->name << "_" << mdest->name << "_" << nl.id << "\", ";
 	else

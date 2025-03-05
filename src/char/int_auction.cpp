@@ -49,7 +49,7 @@ int32 auction_count(uint32 char_id, bool buy)
 void auction_save( std::shared_ptr<struct auction_data> auction ){
 	int32 j;
 	StringBuf buf;
-	SqlStmt* stmt;
+	SqlStmt stmt{ *sql_handle };
 
 	if( !auction )
 		return;
@@ -66,24 +66,22 @@ void auction_save( std::shared_ptr<struct auction_data> auction ){
 	}
 	StringBuf_Printf(&buf, " WHERE `auction_id` = '%d'", auction->auction_id);
 
-	stmt = SqlStmt_Malloc(sql_handle);
-	if( SQL_SUCCESS != SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf))
-	||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 0, SQLDT_STRING, auction->seller_name, strnlen(auction->seller_name, NAME_LENGTH))
-	||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 1, SQLDT_STRING, auction->buyer_name, strnlen(auction->buyer_name, NAME_LENGTH))
-	||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 2, SQLDT_STRING, auction->item_name, strnlen(auction->item_name, ITEM_NAME_LENGTH))
-	||  SQL_SUCCESS != SqlStmt_Execute(stmt) )
+	if( SQL_SUCCESS != stmt.PrepareStr(StringBuf_Value(&buf))
+	||  SQL_SUCCESS != stmt.BindParam(0, SQLDT_STRING, auction->seller_name, strnlen(auction->seller_name, NAME_LENGTH))
+	||  SQL_SUCCESS != stmt.BindParam(1, SQLDT_STRING, auction->buyer_name, strnlen(auction->buyer_name, NAME_LENGTH))
+	||  SQL_SUCCESS != stmt.BindParam(2, SQLDT_STRING, auction->item_name, strnlen(auction->item_name, ITEM_NAME_LENGTH))
+	||  SQL_SUCCESS != stmt.Execute() )
 	{
 		SqlStmt_ShowDebug(stmt);
 	}
 
-	SqlStmt_Free(stmt);
 	StringBuf_Destroy(&buf);
 }
 
 uint32 auction_create( std::shared_ptr<struct auction_data> auction ){
 	int32 j;
 	StringBuf buf;
-	SqlStmt* stmt;
+	SqlStmt stmt{ *sql_handle };
 
 	if( !auction )
 		return false;
@@ -110,12 +108,11 @@ uint32 auction_create( std::shared_ptr<struct auction_data> auction ){
 	}
 	StringBuf_AppendStr(&buf, ")");
 
-	stmt = SqlStmt_Malloc(sql_handle);
-	if( SQL_SUCCESS != SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf))
-	||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 0, SQLDT_STRING, auction->seller_name, strnlen(auction->seller_name, NAME_LENGTH))
-	||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 1, SQLDT_STRING, auction->buyer_name, strnlen(auction->buyer_name, NAME_LENGTH))
-	||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 2, SQLDT_STRING, auction->item_name, strnlen(auction->item_name, ITEM_NAME_LENGTH))
-	||  SQL_SUCCESS != SqlStmt_Execute(stmt) )
+	if( SQL_SUCCESS != stmt.PrepareStr(StringBuf_Value(&buf))
+	||  SQL_SUCCESS != stmt.BindParam(0, SQLDT_STRING, auction->seller_name, strnlen(auction->seller_name, NAME_LENGTH))
+	||  SQL_SUCCESS != stmt.BindParam(1, SQLDT_STRING, auction->buyer_name, strnlen(auction->buyer_name, NAME_LENGTH))
+	||  SQL_SUCCESS != stmt.BindParam(2, SQLDT_STRING, auction->item_name, strnlen(auction->item_name, ITEM_NAME_LENGTH))
+	||  SQL_SUCCESS != stmt.Execute() )
 	{
 		SqlStmt_ShowDebug(stmt);
 		auction->auction_id = 0;
@@ -128,14 +125,13 @@ uint32 auction_create( std::shared_ptr<struct auction_data> auction ){
 		auction->item.identify = 1;
 		auction->item.expire_time = 0;
 
-		auction->auction_id = (uint32)SqlStmt_LastInsertId(stmt);
+		auction->auction_id = (uint32)stmt.LastInsertId();
 		auction->auction_end_timer = add_timer( gettick() + tick , auction_end_timer, auction->auction_id, 0);
 		ShowInfo("New Auction %u | time left %" PRtf " ms | By %s.\n", auction->auction_id, tick, auction->seller_name);
 
 		auction_db[auction->auction_id] = auction;
 	}
 
-	SqlStmt_Free(stmt);
 	StringBuf_Destroy(&buf);
 
 	return auction->auction_id;
@@ -267,7 +263,7 @@ void inter_auctions_fromsql(void)
 	Sql_FreeResult(sql_handle);
 }
 
-void mapif_Auction_sendlist(int32 fd, uint32 char_id, short count, short pages, unsigned char *buf)
+void mapif_Auction_sendlist(int32 fd, uint32 char_id, int16 count, int16 pages, unsigned char *buf)
 {
 	int32 len = (sizeof(struct auction_data) * count) + 12;
 
@@ -286,9 +282,9 @@ void mapif_parse_Auction_requestlist(int32 fd)
 	char searchtext[NAME_LENGTH];
 	uint32 char_id = RFIFOL(fd,4), len = sizeof(struct auction_data);
 	int32 price = RFIFOL(fd,10);
-	short type = RFIFOW(fd,8), page = max(1,RFIFOW(fd,14));
+	int16 type = RFIFOW(fd,8), page = max(1,RFIFOW(fd,14));
 	unsigned char buf[5 * sizeof(struct auction_data)];
-	short i = 0, j = 0, pages = 1;
+	int16 i = 0, j = 0, pages = 1;
 
 	memcpy(searchtext, RFIFOP(fd,16), NAME_LENGTH);
 

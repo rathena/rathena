@@ -36,7 +36,7 @@ void mail_clear(map_session_data *sd)
 	return;
 }
 
-int32 mail_removeitem(map_session_data *sd, short flag, int32 idx, int32 amount)
+int32 mail_removeitem(map_session_data *sd, int16 flag, int32 idx, int32 amount)
 {
 	int32 i;
 
@@ -159,7 +159,7 @@ bool mail_removezeny( map_session_data *sd, bool flag ){
 * @param amount : amout of zeny or number of item
 * @return see enum mail_attach_result in mail.hpp
 */
-enum mail_attach_result mail_setitem(map_session_data *sd, short idx, uint32 amount) {
+enum mail_attach_result mail_setitem(map_session_data *sd, int16 idx, uint32 amount) {
 	if( pc_istrading(sd) )
 		return MAIL_ATTACH_ERROR;
 

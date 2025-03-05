@@ -1447,6 +1447,34 @@ std::string ItemDatabase::create_item_link_for_mes( std::shared_ptr<item_data>& 
 	}
 }
 
+std::string ItemDatabase::create_item_icon_for_mes( std::shared_ptr<item_data>& data, const char* name ){
+	if( data == nullptr ){
+		return "Unknown item";
+	}
+
+	// Feature is disabled
+	if( !battle_config.feature_mesitemicon ){
+		if( name != nullptr && !battle_config.feature_mesitemicon_dbname ){
+			// Name was forcefully overwritten
+			return name;
+		}else{
+			// Use database name
+			return data->ename;
+		}
+	}
+
+	const std::string start_tag = "^i[";
+	const std::string closing_tag = "]";
+
+	std::string itemstr;
+
+	itemstr += start_tag;
+	itemstr += std::to_string( data->nameid );
+	itemstr += closing_tag;
+
+	return itemstr;
+}
+
 ItemDatabase item_db;
 
 /**
@@ -2888,27 +2916,86 @@ uint16 itemdb_searchname_array(std::map<t_itemid, std::shared_ptr<item_data>> &d
 	return static_cast<uint16>(data.size());
 }
 
-std::shared_ptr<s_item_group_entry> get_random_itemsubgroup(std::shared_ptr<s_item_group_random> random) {
+std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_itemsubgroup(std::shared_ptr<s_item_group_random> random, e_group_algorithm_type algorithm) {
 	if (random == nullptr)
 		return nullptr;
 
-	for (size_t j = 0, max = random->data.size() * 3; j < max; j++) {
-		std::shared_ptr<s_item_group_entry> entry = util::umap_random(random->data);
+	// Use algorithm defined for the sub group
+	if (algorithm == GROUP_ALGORITHM_USEDB)
+		algorithm = random->algorithm;
 
-		if (entry->rate == 0 || rnd_chance<uint32>(entry->rate, random->total_rate))	// always return entry for rate 0 ('must' item)
-			return entry;
+	switch( algorithm ) {
+		case GROUP_ALGORITHM_DROP: {
+			// We pick a random item from the group and then do a drop check based on the rate. On fail, do not return any item
+			std::shared_ptr<s_item_group_entry> entry = util::umap_random(random->data);
+			if (rnd_chance_official<uint16>(entry->adj_rate, 10000))
+				return entry;
+			break;
+		}
+		case GROUP_ALGORITHM_ALL:
+			// This group algorithm is usually used to return all items in the group
+			// The code here is only reached when using this algorithm in a command that expects to return only one item
+			// In this case, we return a random item in the group
+			return util::umap_random(random->data);
+		case GROUP_ALGORITHM_RANDOM: {
+			// Each item has x positions whereas x is the rate defined for the item in the umap
+			// We pick a random position and find the item that is at this position
+			uint32 pos = rnd_value<uint32>(1, random->total_rate);
+			uint32 current_pos = 1;
+			// Iterate through each item in the umap
+			for (const auto& [index, entry] : random->data) {
+				if (entry == nullptr)
+					return nullptr;
+				// We move "rate" positions
+				current_pos += entry->rate;
+				// If we passed the target position, entry is the item we are looking for
+				if (current_pos > pos)
+					return entry;
+			}
+			break;
+		}
+		case GROUP_ALGORITHM_SHAREDPOOL: {
+			// By default, each item has x positions whereas x is the rate defined for the item in the umap
+			// Each time an item is picked, it has one of its positions removed until no positions remain in the group
+			// We pick a random position from all remaining positions and find the item that is at this position
+			uint32 pos = rnd_value<uint32>(1, random->total_rate - random->total_given);
+			uint32 current_pos = 1;
+			// Iterate through each item in the umap
+			for (const auto& [index, entry] : random->data) {
+				if (entry == nullptr)
+					return nullptr;
+				// We move as many positions as this item has left
+				current_pos += (entry->rate - entry->given);
+				// If we passed the target position, entry is the item we are looking for
+				if (current_pos > pos) {
+					// Increase amount item has been given out
+					entry->given++;
+					random->total_given++;
+					// All items have been given out, reset all entries in the group
+					if (random->total_given >= random->total_rate) {
+						random->total_given = 0;
+						for (const auto& [reset_index, reset_entry] : random->data) {
+							reset_entry->given = 0;
+						}
+					}
+					return entry;
+				}
+			}
+			break;
+		}
 	}
-
-	return util::umap_random(random->data);
+	// Return nullptr on fail
+	return nullptr;
 }
 
 /**
 * Return a random group entry from Item Group
 * @param group_id
-* @param sub_group: 0 is 'must' item group, random groups start from 1
+* @param sub_group
+* @param search_type: see e_group_algorithm_type
 * @return Item group entry or nullptr on fail
 */
-std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_entry(uint16 group_id, uint8 sub_group) {
+std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_entry(uint16 group_id, uint8 sub_group, e_group_algorithm_type algorithm) {
 	std::shared_ptr<s_item_group_db> group = this->find(group_id);
 
 	if (group == nullptr) {
@@ -2924,25 +3011,14 @@ std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_entry(uint16 g
 		return nullptr;
 	}
 
-	return get_random_itemsubgroup(group->random[sub_group]);
-}
-
-/**
-* Return a random Item ID from Item Group
-* @param group_id
-* @param sub_group: 0 is 'must' item group, random groups start from 1
-* @return Item ID or UNKNOWN_ITEM_ID on fail
-*/
-t_itemid ItemGroupDatabase::get_random_item_id(uint16 group_id, uint8 sub_group) {
-	std::shared_ptr<s_item_group_entry> entry = this->get_random_entry(group_id, sub_group);
-	return entry != nullptr ? entry->nameid : UNKNOWN_ITEM_ID;
+	return this->get_random_itemsubgroup(group->random[sub_group], algorithm);
 }
 
 /** [Cydh]
 * Gives item(s) to the player based on item group
 * @param sd: Player that obtains item from item group
-* @param group_id: The group ID of item that obtained by player
-* @param *group: struct s_item_group from itemgroup_db[group_id].random[idx] or itemgroup_db[group_id].must[sub_group][idx]
+* @param identify
+* @param data: item data selected in a subgroup
 */
 void ItemGroupDatabase::pc_get_itemgroup_sub( map_session_data& sd, bool identify, std::shared_ptr<s_item_group_entry> data ){
 	if (data == nullptr)
@@ -3020,21 +3096,17 @@ uint8 ItemGroupDatabase::pc_get_itemgroup( uint16 group_id, bool identify, map_s
 	if (group->random.empty())
 		return 0;
 
-	// Get all the 'must' item(s) (subgroup 0)
-	std::shared_ptr<s_item_group_random> must = util::umap_find(group->random, static_cast<uint16>(0));
-	if( must != nullptr ){
-		for (const auto &it : must->data)
-			this->pc_get_itemgroup_sub( sd, identify, it.second );
-	}
-
-	// Get 1 'random' item from each subgroup
 	for (const auto &random : group->random) {
-		// Skip the 'must' group
-		if( random.first == 0 ){
-			continue;
+		switch( random.second->algorithm ) {
+			case GROUP_ALGORITHM_RANDOM:
+			case GROUP_ALGORITHM_SHAREDPOOL:
+				this->pc_get_itemgroup_sub( sd, identify, this->get_random_itemsubgroup( random.second ) );
+				break;
+			case GROUP_ALGORITHM_ALL:
+				for (const auto &it : random.second->data)
+					this->pc_get_itemgroup_sub( sd, identify, it.second );
+				break;
 		}
-
-		this->pc_get_itemgroup_sub( sd, identify, get_random_itemsubgroup( random.second ) );
 	}
 
 	return 0;
@@ -3207,7 +3279,7 @@ bool itemdb_canauction_sub(struct item_data* item, int32 gmlv, int32 unused) {
 	return (item && (!(item->flag.trade_restriction.auction) || gmlv >= item->gm_lv_trade_override));
 }
 
-bool itemdb_isrestricted(struct item* item, int32 gmlv, int32 gmlv2, bool (*func)(struct item_data*, int, int))
+bool itemdb_isrestricted(struct item* item, int32 gmlv, int32 gmlv2, bool (*func)(struct item_data*, int32, int32))
 {
 	struct item_data* item_data = itemdb_search(item->nameid);
 	int32 i;
@@ -3306,18 +3378,36 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 			uint16 subgroup;
 
-			if (this->nodeExists(subit, "SubGroup")) {
-				if (!this->asUInt16(subit, "SubGroup", subgroup))
-					continue;
-			} else {
-				subgroup = 1;
-			}
+			if (!this->asUInt16(subit, "SubGroup", subgroup))
+				continue;
 
 			std::shared_ptr<s_item_group_random> random = util::umap_find(group->random, subgroup);
+			bool random_exists = random != nullptr;
 
-			if (random == nullptr) {
+			if (!random_exists) {
 				random = std::make_shared<s_item_group_random>();
 				group->random[subgroup] = random;
+			}
+
+			if (this->nodeExists(subit, "Algorithm")) {
+				std::string sub_str;
+
+				if (!this->asString(subit, "Algorithm", sub_str))
+					return 0;
+
+				std::string sub_constant_str = "GROUP_ALGORITHM_" + sub_str;
+				int64 constant_str;
+
+				if (!script_get_constant(sub_constant_str.c_str(), &constant_str)) {
+					this->invalidWarning(subit["Algorithm"], "Invalid algorithm %s.\n", sub_str.c_str());
+					continue;
+				}
+
+				random->algorithm = static_cast<e_group_algorithm_type>(constant_str);
+			} else {
+				if (!random_exists) {
+					random->algorithm = GROUP_ALGORITHM_SHAREDPOOL;
+				}
 			}
 
 			const auto& listNode = subit["List"];
@@ -3391,14 +3481,21 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 						entry->rate = 0;
 				}
 
-				if (subgroup == 0 && entry->rate > 0) {
-					this->invalidWarning(listit["Item"], "SubGroup 0 is reserved for item without Rate ('must' item). Defaulting Rate to 0.\n");
+				if (random->algorithm == GROUP_ALGORITHM_ALL && entry->rate > 0) {
+					this->invalidWarning(listit["Item"], "Item cannot have a rate with \"All\" algorithm. Defaulting Rate to 0.\n");
 					entry->rate = 0;
 				}
-				if (subgroup != 0 && entry->rate == 0) {
-					this->invalidWarning(listit["Item"], "Entry must have a Rate for group above 0, skipping.\n");
+				if (random->algorithm != GROUP_ALGORITHM_ALL && entry->rate == 0) {
+					this->invalidWarning(listit["Item"], "Missing rate, item skipped.\n");
 					continue;
 				}
+
+				// Adjusted rate
+				entry->adj_rate = (entry->rate * battle_config.item_group_rate) / 100;
+				entry->adj_rate = cap_value(entry->adj_rate, battle_config.item_group_drop_min, battle_config.item_group_drop_max);
+
+				// Reset amount given
+				entry->given = 0;
 
 				if (this->nodeExists(listit, "Amount")) {
 					uint16 amount;
@@ -3577,6 +3674,7 @@ void ItemGroupDatabase::loadingFinished() {
 	for (const auto &group : *this) {
 		for (const auto &random : group.second->random) {
 			random.second->total_rate = 0;
+			random.second->total_given = 0;
 			for (const auto &it : random.second->data) {
 				random.second->total_rate += it.second->rate;
 			}
@@ -3790,7 +3888,7 @@ bool itemdb_parse_roulette_db(void)
 		for (k = 0; k < limit && SQL_SUCCESS == Sql_NextRow(mmysql_handle); k++) {
 			char* data;
 			t_itemid item_id;
-			unsigned short amount;
+			uint16 amount;
 			int32 level, flag;
 
 			Sql_GetData(mmysql_handle, 1, &data, nullptr); level = atoi(data);
@@ -3813,8 +3911,8 @@ bool itemdb_parse_roulette_db(void)
 
 			j = rd.items[i];
 			RECREATE(rd.nameid[i], t_itemid, ++rd.items[i]);
-			RECREATE(rd.qty[i], unsigned short, rd.items[i]);
-			RECREATE(rd.flag[i], int, rd.items[i]);
+			RECREATE(rd.qty[i], uint16, rd.items[i]);
+			RECREATE(rd.flag[i], int32, rd.items[i]);
 
 			rd.nameid[i][j] = item_id;
 			rd.qty[i][j] = amount;
@@ -3844,8 +3942,8 @@ bool itemdb_parse_roulette_db(void)
 
 		rd.items[i] = limit;
 		RECREATE(rd.nameid[i], t_itemid, rd.items[i]);
-		RECREATE(rd.qty[i], unsigned short, rd.items[i]);
-		RECREATE(rd.flag[i], int, rd.items[i]);
+		RECREATE(rd.qty[i], uint16, rd.items[i]);
+		RECREATE(rd.flag[i], int32, rd.items[i]);
 
 		for (j = 0; j < MAX_ROULETTE_COLUMNS - i; j++) {
 			if (rd.qty[i][j])

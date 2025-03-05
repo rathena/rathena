@@ -102,7 +102,7 @@ static char *npc_last_path;
 
 struct npc_path_data {
 	char* path;
-	unsigned short references;
+	uint16 references;
 };
 struct npc_path_data *npc_last_npd;
 static DBMap *npc_path_db;
@@ -885,7 +885,7 @@ int32 npc_isnear_sub(struct block_list* bl, va_list args) {
 		return 0;
 	}
 
-	int32 skill_id = va_arg(args, int);
+	int32 skill_id = va_arg(args, int32);
 
 	if (skill_id > 0) { //If skill_id > 0 that means is used for INF2_DISABLENEARNPC [Cydh]
 		std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
@@ -986,7 +986,7 @@ static int32 npc_cloaked_sub(struct block_list *bl, va_list ap)
 
 	nullpo_ret(bl);
 	nullpo_ret(sd = (map_session_data *)bl);
-	int32 id = va_arg(ap, int);
+	int32 id = va_arg(ap, int32);
 
 	auto it = std::find(sd->cloaked_npc.begin(), sd->cloaked_npc.end(), id);
 
@@ -1222,14 +1222,14 @@ int32 npc_event_doall_sub(DBKey key, DBData *data, va_list ap)
 {
 	const char* p = key.str;
 	struct event_data* ev;
-	int* c;
+	int32* c;
 	const char* name;
 	int32 rid;
 
 	nullpo_ret(ev = (struct event_data*)db_data2ptr(data));
 	nullpo_ret(c = va_arg(ap, int32 *));
 	nullpo_ret(name = va_arg(ap, const char *));
-	rid = va_arg(ap, int);
+	rid = va_arg(ap, int32);
 
 	p = strchr(p, ':'); // match only the event name
 	if( p && strcmpi(name, p) == 0 /* && !ev->nd->src_id */ ) // Do not run on duplicates. [Paradox924X]
@@ -1251,13 +1251,13 @@ static int32 npc_event_do_sub(DBKey key, DBData *data, va_list ap)
 {
 	const char* p = key.str;
 	struct event_data* ev;
-	int* c, rid;
+	int32* c, rid;
 	const char* name;
 
 	nullpo_ret(ev = (struct event_data*)db_data2ptr(data));
 	nullpo_ret(c = va_arg(ap, int32 *));
 	nullpo_ret(name = va_arg(ap, const char *));
-	rid = va_arg(ap, int);
+	rid = va_arg(ap, int32);
 
 	if( p && strcmpi(name, p) == 0 )
 	{
@@ -1800,7 +1800,7 @@ int32 npc_touch_areanpc_sub(struct block_list *bl, va_list ap)
 	nullpo_ret(bl);
 	nullpo_ret((sd = map_id2sd(bl->id)));
 
-	pc_id = va_arg(ap,int);
+	pc_id = va_arg(ap,int32);
 	name = va_arg(ap,char*);
 
 	if( sd->state.warping )
@@ -2196,7 +2196,7 @@ int32 npc_click(map_session_data* sd, struct npc_data* nd)
 	}
 
 	if (sd->state.block_action & PCBLOCK_NPCCLICK) {
-		clif_msg(sd, MSI_BUSY);
+		clif_msg( *sd, MSI_BUSY );
 		return 1;
 	}
 
@@ -2216,7 +2216,7 @@ int32 npc_click(map_session_data* sd, struct npc_data* nd)
 		case NPCTYPE_MARKETSHOP:
 #if PACKETVER >= 20131223
 			 {
-				unsigned short i;
+				uint16 i;
 
 				for (i = 0; i < nd->u.shop.count; i++) {
 					if (nd->u.shop.shop_item[i].qty)
@@ -2270,8 +2270,8 @@ bool npc_scriptcont(map_session_data* sd, int32 id, bool closing){
 		TBL_NPC* nd_sd = (TBL_NPC*)map_id2bl(sd->npc_id);
 
 		ShowDebug("npc_scriptcont: %s (sd->npc_id=%d) is not %s (id=%d).\n",
-			nd_sd?(char*)nd_sd->name:"'Unknown NPC'", (int)sd->npc_id,
-			nd?(char*)nd->name:"'Unknown NPC'", (int)id);
+			nd_sd?(char*)nd_sd->name:"'Unknown NPC'", (int32)sd->npc_id,
+			nd?(char*)nd->name:"'Unknown NPC'", (int32)id);
 		return true;
 	}
 
@@ -2553,7 +2553,7 @@ int32 npc_cashshop_buylist( map_session_data *sd, int32 points, std::vector<s_np
 
 		if( !pet_create_egg(sd,nameid) ) {
 			struct item item_tmp;
-			unsigned short get_amt = amount;
+			uint16 get_amt = amount;
 
 			memset(&item_tmp, 0, sizeof(item_tmp));
 			item_tmp.nameid = nameid;
@@ -2622,11 +2622,11 @@ void npc_shop_currency_type(map_session_data *sd, struct npc_data *nd, int32 cos
 
 				memset(output, '\0', sizeof(output));
 
-				sprintf(output, msg_txt(sd, 715), nd->u.shop.pointshop_str); // Point32 Shop List: '%s'
+				sprintf(output, msg_txt(sd, 715), nd->u.shop.pointshop_str); // Point Shop List: '%s'
 				clif_broadcast(&sd->bl, output, strlen(output) + 1, BC_BLUE,SELF);
 			}
 			
-			cost[0] = static_cast<int>(pc_readreg2(sd, nd->u.shop.pointshop_str));
+			cost[0] = static_cast<int32>(pc_readreg2(sd, nd->u.shop.pointshop_str));
 			break;
 	}
 }
@@ -2707,7 +2707,7 @@ int32 npc_cashshop_buy(map_session_data *sd, t_itemid nameid, int32 amount, int3
 		return res;
 
 	if( !pet_create_egg(sd, nameid) ) {
-		unsigned short get_amt = amount;
+		uint16 get_amt = amount;
 
 		struct item item_tmp = {};
 
@@ -2787,7 +2787,7 @@ e_purchase_result npc_buylist( map_session_data* sd, std::vector<s_npc_buy_list>
 	// process entries in buy list, one by one
 	for( int32 i = 0; i < item_list.size(); ++i ){
 		t_itemid nameid;
-		unsigned short amount;
+		uint16 amount;
 		int32 value;
 
 		// find this entry in the shop's sell list
@@ -2858,11 +2858,11 @@ e_purchase_result npc_buylist( map_session_data* sd, std::vector<s_npc_buy_list>
 	if( pc_inventoryblank(sd) < new_ )
 		return e_purchase_result::PURCHASE_FAIL_COUNT;	// Not enough space to store items
 
-	pc_payzeny(sd, (int)z, LOG_TYPE_NPC);
+	pc_payzeny(sd, (int32)z, LOG_TYPE_NPC);
 
 	for( int32 i = 0; i < item_list.size(); ++i ) {
 		t_itemid nameid = item_list[i].nameid;
-		unsigned short amount = item_list[i].qty;
+		uint16 amount = item_list[i].qty;
 
 #if PACKETVER >= 20131223
 		if (nd->subtype == NPCTYPE_MARKETSHOP) {
@@ -2880,7 +2880,7 @@ e_purchase_result npc_buylist( map_session_data* sd, std::vector<s_npc_buy_list>
 		if (itemdb_type(nameid) == IT_PETEGG)
 			pet_create_egg(sd, nameid);
 		else {
-			unsigned short get_amt = amount;
+			uint16 get_amt = amount;
 
 			if ((itemdb_search(nameid))->flag.guid)
 				get_amt = 1;
@@ -2906,7 +2906,7 @@ e_purchase_result npc_buylist( map_session_data* sd, std::vector<s_npc_buy_list>
 			z = z * (double)skill * (double)battle_config.shop_exp/10000.;
 			if( z < 1 )
 				z = 1;
-			pc_gainexp(sd,nullptr,0,(int)z, 0);
+			pc_gainexp(sd,nullptr,0,(int32)z, 0);
 		}
 	}
 
@@ -3082,7 +3082,7 @@ uint8 npc_selllist(map_session_data* sd, int32 list_length, const PACKET_CZ_PC_S
 	if( z > MAX_ZENY )
 		z = MAX_ZENY;
 
-	pc_getzeny(sd, (int)z, LOG_TYPE_NPC);
+	pc_getzeny(sd, (int32)z, LOG_TYPE_NPC);
 
 	// custom merchant shop exp bonus
 	if( battle_config.shop_exp > 0 && z > 0 && ( skill = pc_checkskill(sd,MC_OVERCHARGE) ) > 0)
@@ -3096,7 +3096,7 @@ uint8 npc_selllist(map_session_data* sd, int32 list_length, const PACKET_CZ_PC_S
 			z = z * (double)skill * (double)battle_config.shop_exp/10000.;
 			if( z < 1 )
 				z = 1;
-			pc_gainexp(sd, nullptr, 0, (int)z, 0);
+			pc_gainexp(sd, nullptr, 0, (int32)z, 0);
 		}
 	}
 
@@ -3315,7 +3315,7 @@ e_purchase_result npc_barter_purchase( map_session_data& sd, std::shared_ptr<s_n
 		}
 	}
 
-	if( pc_payzeny( &sd, (int)requiredZeny, LOG_TYPE_BARTER ) != 0 ){
+	if( pc_payzeny( &sd, (int32)requiredZeny, LOG_TYPE_BARTER ) != 0 ){
 		return e_purchase_result::PURCHASE_FAIL_MONEY;
 	}
 
@@ -3425,7 +3425,7 @@ static int32 npc_unload_dup_sub(struct npc_data* nd, va_list args)
 {
 	int32 src_id;
 
-	src_id = va_arg(args, int);
+	src_id = va_arg(args, int32);
 	if (nd->src_id == src_id)
 		npc_unload(nd, true);
 	return 0;
@@ -3738,13 +3738,13 @@ int32 npc_parseview(const char* w4, const char* start, const char* buffer, const
 		if(!script_get_constant(viewid, &val_tmp)) {
 			std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname(viewid);
 			if (mob != nullptr)
-				val = static_cast<int>(mob->id);
+				val = static_cast<int32>(mob->id);
 			else {
 				ShowWarning("npc_parseview: Invalid NPC constant '%s' specified in file '%s', line'%d'. Defaulting to INVISIBLE. \n", viewid, filepath, strline(buffer,start-buffer));
 				val = JT_INVISIBLE;
 			}
 		} else
-			val = static_cast<int>(val_tmp);
+			val = static_cast<int32>(val_tmp);
 	}
 
 	return val;
@@ -3798,7 +3798,7 @@ struct npc_data *npc_create_npc(int16 m, int16 x, int16 y){
  * @param to_y : y coordinate to warp to
  * @return nullptr:failed creation, npc_data* new warp
  */
-struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short from_y, short xs, short ys, unsigned short to_mapindex, short to_x, short to_y)
+struct npc_data* npc_add_warp(char* name, int16 from_mapid, int16 from_x, int16 from_y, int16 xs, int16 ys, uint16 to_mapindex, int16 to_x, int16 to_y)
 {
 	int32 i, flag = 0;
 	struct npc_data *nd;
@@ -3859,7 +3859,7 @@ struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short 
  */
 static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
-	short x, y, xs, ys, to_x, to_y;
+	int16 x, y, xs, ys, to_x, to_y;
 	char mapname[MAP_NAME_LENGTH_EXT], to_mapname[MAP_NAME_LENGTH_EXT];
 
 	// w1=<from map name>,<fromX>,<fromY>,<facing>
@@ -3870,7 +3870,7 @@ static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const 
 	}
 
 	int32 m = map_mapname2mapid(mapname);
-	unsigned short i = mapindex_name2id(to_mapname);
+	uint16 i = mapindex_name2id(to_mapname);
 
 	if( i == 0 ) {
 		ShowError("npc_parse_warp: Unknown destination map in file '%s', line '%d' : %s\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), to_mapname, w1, w2, w3, w4);
@@ -3971,7 +3971,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 	char *p, point_str[32];
 	int32 m, is_discount = 0;
 	uint16 dir;
-	short x, y;
+	int16 x, y;
 	t_itemid nameid = 0;
 	struct npc_data *nd;
 	enum npc_subtype type;
@@ -4120,7 +4120,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		}
 		if( ( type == NPCTYPE_SHOP || type == NPCTYPE_MARKETSHOP ) && value*0.75 < id->value_sell*1.24 ) { // Exploit possible: you can buy and sell back with profit
 			ShowWarning("npc_parse_shop: Item %s [%u] discounted buying price (%d->%d) is less than overcharged selling price (%d->%d) at file '%s', line '%d'.\n",
-				id->name.c_str(), nameid2, value, (int)(value*0.75), id->value_sell, (int)(id->value_sell*1.24), filepath, strline(buffer,start-buffer));
+				id->name.c_str(), nameid2, value, (int32)(value*0.75), id->value_sell, (int32)(id->value_sell*1.24), filepath, strline(buffer,start-buffer));
 		}
 		if (type == NPCTYPE_MARKETSHOP && qty < -1) {
 			ShowWarning("npc_parse_shop: Item %s [%u] is stocked with invalid value %hd, changed to unlimited (-1). File '%s', line '%d'.\n",
@@ -4168,7 +4168,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		// Item shop currency
 		nd->u.shop.itemshop_nameid = nameid;
 	}else if( type == NPCTYPE_POINTSHOP ){
-		// Point32 shop currency
+		// Point shop currency
 		safestrncpy( nd->u.shop.pointshop_str, point_str, strlen( point_str ) + 1 );
 	}
 
@@ -4237,13 +4237,13 @@ int32 npc_convertlabel_db(DBKey key, DBData *data, va_list ap)
 	const char* lname = (const char*)key.str;
 	int32 lpos = db_data2i(data);
 	struct npc_label_list** label_list;
-	int* label_list_num;
+	int32* label_list_num;
 	const char* filepath;
 	struct npc_label_list* label;
 	const char *p;
 
 	nullpo_ret(label_list = va_arg(ap,struct npc_label_list**));
-	nullpo_ret(label_list_num = va_arg(ap,int*));
+	nullpo_ret(label_list_num = va_arg(ap,int32*));
 	nullpo_ret(filepath = va_arg(ap,const char*));
 
 	// In case of labels not terminated with ':', for user defined function support
@@ -4348,7 +4348,7 @@ static const char* npc_skip_script(const char* start, const char* buffer, const 
  */
 static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath) {
 	int16 dir = 0;
-	short m, x, y, xs = 0, ys = 0; // [Valaris] thanks to fov
+	int16 m, x, y, xs = 0, ys = 0; // [Valaris] thanks to fov
 	struct script_code *script;
 	int32 i;
 	const char* end;
@@ -4492,7 +4492,7 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 /// npc: -%TAB%duplicate(<name of target>)%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>
 /// npc: <map name>,<x>,<y>,<facing>%TAB%duplicate(<name of target>)%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>
 const char* npc_parse_duplicate( char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath, map_session_data* owner = nullptr ){
-	short x, y, m, xs = -1, ys = -1;
+	int16 x, y, m, xs = -1, ys = -1;
 	int16 dir;
 	char srcname[128];
 	int32 i;
@@ -4764,12 +4764,11 @@ int32 npc_instancedestroy(struct npc_data* nd)
  * @param qty Stock
  **/
 void npc_market_tosql(const char *exname, struct npc_item_list *list) {
-	SqlStmt* stmt = SqlStmt_Malloc(mmysql_handle);
-	if (SQL_ERROR == SqlStmt_Prepare(stmt, "REPLACE INTO `%s` (`name`,`nameid`,`price`,`amount`,`flag`) VALUES ('%s','%u','%d','%d','%" PRIu8 "')",
+	SqlStmt stmt{ *mmysql_handle };
+	if (SQL_ERROR == stmt.Prepare("REPLACE INTO `%s` (`name`,`nameid`,`price`,`amount`,`flag`) VALUES ('%s','%u','%d','%d','%" PRIu8 "')",
 		market_table, exname, list->nameid, list->value, list->qty, list->flag) ||
-		SQL_ERROR == SqlStmt_Execute(stmt))
+		SQL_ERROR == stmt.Execute())
 		SqlStmt_ShowDebug(stmt);
-	SqlStmt_Free(stmt);
 }
 
 /**
@@ -4779,17 +4778,16 @@ void npc_market_tosql(const char *exname, struct npc_item_list *list) {
  * @param clear True: will removes all records related with the NPC
  **/
 void npc_market_delfromsql_(const char *exname, t_itemid nameid, bool clear) {
-	SqlStmt* stmt = SqlStmt_Malloc(mmysql_handle);
+	SqlStmt stmt{ *mmysql_handle };
 	if (clear) {
-		if( SQL_ERROR == SqlStmt_Prepare(stmt, "DELETE FROM `%s` WHERE `name`='%s'", market_table, exname) ||
-			SQL_ERROR == SqlStmt_Execute(stmt))
+		if( SQL_ERROR == stmt.Prepare("DELETE FROM `%s` WHERE `name`='%s'", market_table, exname) ||
+			SQL_ERROR == stmt.Execute())
 			SqlStmt_ShowDebug(stmt);
 	} else {
-		if (SQL_ERROR == SqlStmt_Prepare(stmt, "DELETE FROM `%s` WHERE `name`='%s' AND `nameid`='%u' LIMIT 1", market_table, exname, nameid) ||
-			SQL_ERROR == SqlStmt_Execute(stmt))
+		if (SQL_ERROR == stmt.Prepare("DELETE FROM `%s` WHERE `name`='%s' AND `nameid`='%u' LIMIT 1", market_table, exname, nameid) ||
+			SQL_ERROR == stmt.Execute())
 			SqlStmt_ShowDebug(stmt);
 	}
-	SqlStmt_Free(stmt);
 }
 
 /**
@@ -4927,7 +4925,7 @@ static void npc_market_fromsql(void) {
 
 		if (list.value * 0.75 < id->value_sell * 1.24) { // Exploit possible: you can buy and sell back with profit
 			ShowWarning("npc_market_fromsql: Item %s [%u] discounted buying price (%d->%d) is less than overcharged selling price (%d->%d) in table '%s'. Assigning to current sell value.\n",
-						id->name.c_str(), list.nameid, list.value, (int)(list.value * 0.75), id->value_sell, (int)(id->value_sell * 1.24), market_table);
+						id->name.c_str(), list.nameid, list.value, (int32)(list.value * 0.75), id->value_sell, (int32)(id->value_sell * 1.24), market_table);
 			list.value = id->value_sell;
 		}
 
@@ -4976,7 +4974,7 @@ void npc_setcells(struct npc_data* nd)
 int32 npc_unsetcells_sub(struct block_list* bl, va_list ap)
 {
 	struct npc_data *nd = (struct npc_data*)bl;
-	int32 id =  va_arg(ap,int);
+	int32 id =  va_arg(ap,int32);
 	if (nd->bl.id == id) return 0;
 	npc_setcells(nd);
 	return 1;
@@ -5050,7 +5048,7 @@ void npc_setdisplayname(struct npc_data* nd, const char* newname)
 ///
 /// @param nd Target npc
 /// @param class_ New display class
-void npc_setclass(struct npc_data* nd, short class_)
+void npc_setclass(struct npc_data* nd, int16 class_)
 {
 	nullpo_retv(nd);
 
@@ -5191,7 +5189,7 @@ void npc_parse_mob2(struct spawn_data* mob)
 static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
 	int32 num, mob_id, mob_lv = -1, delay = 5000, size = -1, w1count, w4count;
-	short m, x = 0, y = 0, xs = 0, ys = 0;
+	int16 m, x = 0, y = 0, xs = 0, ys = 0;
 	char mapname[MAP_NAME_LENGTH_EXT], mobname[NAME_LENGTH], sprite[NAME_LENGTH];
 	struct spawn_data mob, *data;
 	int32 ai = AI_NONE; // mob_ai
@@ -5218,7 +5216,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	m =  map_mapname2mapid(mapname);
 	if( m < 0 )//Not loaded on this map-server instance.
 		return strchr(start,'\n');// skip and continue
-	mob.m = (unsigned short)m;
+	mob.m = (uint16)m;
 
 	struct map_data *mapdata = map_getmapdata(m);
 
@@ -5277,13 +5275,13 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 		return strchr(start, '\n');
 	}
 
-	mob.num = (unsigned short)num;
+	mob.num = (uint16)num;
 	mob.active = 0;
-	mob.id = (short) mob_id;
-	mob.x = (unsigned short)x;
-	mob.y = (unsigned short)y;
-	mob.xs = (signed short)xs;
-	mob.ys = (signed short)ys;
+	mob.id = (int16) mob_id;
+	mob.x = (uint16)x;
+	mob.y = (uint16)y;
+	mob.xs = (int16)xs;
+	mob.ys = (int16)ys;
 	if (mob_lv > 0 && mob_lv <= MAX_LEVEL)
 		mob.level = mob_lv;
 	if (size > SZ_SMALL && size <= SZ_BIG)
@@ -5662,7 +5660,7 @@ int32 npc_parsesrcfile(const char* filepath)
 
 		// fill w1
 		if( pos[3]-pos[2] > ARRAYLENGTH(w1)-1 )
-			ShowWarning("npc_parsesrcfile: w1 truncated, too much data (%d) in file '%s', line '%d'.\n", pos[3]-pos[2], filepath, strline(buffer,p-buffer));
+			ShowWarning("npc_parsesrcfile: w1 truncated, too much data (%" PRIuPTR ") in file '%s', line '%d'.\n", pos[3]-pos[2], filepath, strline(buffer,p-buffer));
 
 		size_t index = std::min( pos[3] - pos[2], ARRAYLENGTH( w1 ) - 1 );
 		memcpy( w1, p + pos[2], index * sizeof( char ) );
@@ -5670,7 +5668,7 @@ int32 npc_parsesrcfile(const char* filepath)
 
 		// fill w2
 		if( pos[5]-pos[4] > ARRAYLENGTH(w2)-1 )
-			ShowWarning("npc_parsesrcfile: w2 truncated, too much data (%d) in file '%s', line '%d'.\n", pos[5]-pos[4], filepath, strline(buffer,p-buffer));
+			ShowWarning("npc_parsesrcfile: w2 truncated, too much data (%" PRIuPTR ") in file '%s', line '%d'.\n", pos[5]-pos[4], filepath, strline(buffer,p-buffer));
 
 		index = std::min( pos[5] - pos[4], ARRAYLENGTH( w2 ) - 1 );
 		memcpy( w2, p + pos[4], index * sizeof( char ) );
@@ -5678,7 +5676,7 @@ int32 npc_parsesrcfile(const char* filepath)
 
 		// fill w3
 		if( pos[7]-pos[6] > ARRAYLENGTH(w3)-1 )
-			ShowWarning("npc_parsesrcfile: w3 truncated, too much data (%d) in file '%s', line '%d'.\n", pos[7]-pos[6], filepath, strline(buffer,p-buffer));
+			ShowWarning("npc_parsesrcfile: w3 truncated, too much data (%" PRIuPTR ") in file '%s', line '%d'.\n", pos[7]-pos[6], filepath, strline(buffer,p-buffer));
 
 		index = std::min( pos[7] - pos[6], ARRAYLENGTH( w3 ) - 1 );
 		memcpy( w3, p + pos[6], index * sizeof( char ) );
@@ -5686,7 +5684,7 @@ int32 npc_parsesrcfile(const char* filepath)
 
 		// fill w4 (to end of line)
 		if( pos[1]-pos[8] > ARRAYLENGTH(w4)-1 )
-			ShowWarning("npc_parsesrcfile: w4 truncated, too much data (%d) in file '%s', line '%d'.\n", pos[1]-pos[8], filepath, strline(buffer,p-buffer));
+			ShowWarning("npc_parsesrcfile: w4 truncated, too much data (%" PRIuPTR ") in file '%s', line '%d'.\n", pos[1]-pos[8], filepath, strline(buffer,p-buffer));
 		if (pos[8] != -1) {
 			index = std::min( pos[1] - pos[8], ARRAYLENGTH( w4 ) - 1 );
 			memcpy( w4, p + pos[8], index * sizeof( char ) );
@@ -5994,7 +5992,7 @@ void npc_read_event_script(void)
 	}
 
 	if (battle_config.etc_log) {
-		//Print32 summary.
+		//Print summary.
 		for (i = 0; i < NPCE_MAX; i++)
 			ShowInfo("%" PRIuPTR " '%s' events.\n", script_event[static_cast<enum npce_event>(i)].size(), npc_get_script_event_name(i));
 	}

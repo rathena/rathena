@@ -757,7 +757,7 @@ int32 map_foreachinshootrange(int32 (*func)(struct block_list*,va_list),struct b
  * @param y1: North end of area
  * @param type: Type of bl to search for
 *------------------------------------------*/
-int32 map_foreachinareaV(int(*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int32 type, va_list ap, bool wall_check)
+int32 map_foreachinareaV(int32 (*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int32 type, va_list ap, bool wall_check)
 {
 	int32 bx, by, cx, cy;
 	int32 returnCount = 0;	//total sum of returned values of func()
@@ -845,7 +845,7 @@ int32 map_foreachinallarea(int32 (*func)(struct block_list*,va_list), int16 m, i
 	return returnCount;
 }
 
-int32 map_foreachinshootarea(int(*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int32 type, ...)
+int32 map_foreachinshootarea(int32 (*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int32 type, ...)
 {
 	int32 returnCount = 0;
 	va_list ap;
@@ -854,7 +854,7 @@ int32 map_foreachinshootarea(int(*func)(struct block_list*, va_list), int16 m, i
  	va_end(ap);
 	return returnCount;
 }
-int32 map_foreachinarea(int(*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int32 type, ...)
+int32 map_foreachinarea(int32 (*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int32 type, ...)
 {
 	int32 returnCount = 0;
 	va_list ap;
@@ -1237,7 +1237,7 @@ int32 map_foreachinpath(int32 (*func)(struct block_list*,va_list),int16 m,int16 
 
 	if ( length ) { //Adjust final position to fit in the given area.
 		//TODO: Find an alternate method which does not requires a square root calculation.
-		k = (int)sqrt((float)magnitude2);
+		k = (int32)sqrt((float)magnitude2);
 		mx1 = x0 + (x1 - x0) * length / k;
 		my1 = y0 + (y1 - y0) * length / k;
 		len_limit = MAGNITUDE2(x0, y0, mx1, my1);
@@ -1377,7 +1377,7 @@ int32 map_foreachinpath(int32 (*func)(struct block_list*,va_list),int16 m,int16 
 * @param offset: Moves the whole path, half-length for diagonal paths
 * @param type: Type of bl to search for
 *------------------------------------------*/
-int32 map_foreachindir(int(*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int16 range, int32 length, int32 offset, int32 type, ...)
+int32 map_foreachindir(int32 (*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int16 range, int32 length, int32 offset, int32 type, ...)
 {
 	int32 returnCount = 0;  //Total sum of returned values of func()
 
@@ -1386,8 +1386,8 @@ int32 map_foreachindir(int(*func)(struct block_list*, va_list), int16 m, int16 x
 	int32 bx, by;
 	int32 mx0, mx1, my0, my1, rx, ry;
 	uint8 dir = map_calc_dir_xy( x0, y0, x1, y1, DIR_EAST );
-	short dx = dirx[dir];
-	short dy = diry[dir];
+	int16 dx = dirx[dir];
+	int16 dy = diry[dir];
 	va_list ap;
 
 	if (m < 0)
@@ -1818,8 +1818,8 @@ bool map_closest_freecell(int16 m, int16 *x, int16 *y, int32 type, int32 flag)
 
 	//Algorithm only works up to costrange of 34
 	while(costrange <= 34) {
-		short dx = dirx[dir];
-		short dy = diry[dir];
+		int16 dx = dirx[dir];
+		int16 dy = diry[dir];
 
 		//Linear search
 		if( !direction_diagonal( (directions)dir ) && costrange % MOVE_COST == 0 ){
@@ -1878,6 +1878,47 @@ bool map_closest_freecell(int16 m, int16 *x, int16 *y, int32 type, int32 flag)
 }
 
 /*==========================================
+ * Locates a nearby, walkable cell with no blocks of a certain type on it
+ * This one uses the official algorithm the find a free cell
+ * Returns true on success and sets x and y to cell found.
+ * Otherwise returns false and x and y are not changed.
+ * type: Types of block to count
+ * flag: 
+ *		0x1 - only count standing units
+ *------------------------------------------*/
+bool map_nearby_freecell(int16 m, int16 &x, int16 &y, int32 type, int32 flag)
+{
+	int16 tx = x;
+	int16 ty = y;
+
+	if(!map_count_oncell(m, tx, ty, type, flag))
+		return true; //Current cell is free
+
+	// One of two possible orders of direction processing is used at random
+	directions dir[2][DIR_MAX] = {
+		{DIR_NORTHEAST, DIR_EAST, DIR_SOUTHEAST, DIR_SOUTH, DIR_NORTH, DIR_SOUTHWEST, DIR_WEST, DIR_NORTHWEST},
+		{DIR_SOUTHWEST, DIR_WEST, DIR_NORTHWEST, DIR_NORTH, DIR_SOUTH, DIR_NORTHEAST, DIR_EAST, DIR_SOUTHEAST}
+	};
+	uint16 array_idx = rnd_value<decltype(array_idx)>(0, ARRAYLENGTH(dir) - 1);
+
+	// Try each direction in the selected array in order
+	for(uint8 dir_idx = 0; dir_idx < DIR_MAX; dir_idx++) {
+		int16 dx = dirx[dir[array_idx][dir_idx]];
+		int16 dy = diry[dir[array_idx][dir_idx]];
+
+		tx = x + dx;
+		ty = y + dy;
+		if (!map_count_oncell(m, tx, ty, type, flag) && map_getcell(m, tx, ty, CELL_CHKPASS)) {
+			x = tx;
+			y = ty;
+			return true;
+		}
+	}
+
+	return false;
+}
+
+/*==========================================
  * Add an item in floor to location (m,x,y) and add restriction for those who could pickup later
  * NB : If charids are null their no restriction for pickup
  * @param item_data : item attributes
@@ -1895,7 +1936,7 @@ bool map_closest_freecell(int16 m, int16 *x, int16 *y, int32 type, int32 flag)
  * @param type: types of block the item should not stack on
  * @return 0:failure, x:item_gid [MIN_FLOORITEM;MAX_FLOORITEM]==[2;START_ACCOUNT_NUM]
  *------------------------------------------*/
-int32 map_addflooritem(struct item *item, int32 amount, int16 m, int16 x, int16 y, int32 first_charid, int32 second_charid, int32 third_charid, int32 flags, unsigned short mob_id, bool canShowEffect, enum directions dir, int32 type)
+int32 map_addflooritem(struct item *item, int32 amount, int16 m, int16 x, int16 y, int32 first_charid, int32 second_charid, int32 third_charid, int32 flags, uint16 mob_id, bool canShowEffect, enum directions dir, int32 type)
 {
 	struct flooritem_data *fitem = nullptr;
 
@@ -1979,8 +2020,8 @@ void map_addnickdb(int32 charid, const char* nick)
 		req = p->requests;
 		p->requests = req->next;
 		sd = map_charid2sd(req->charid);
-		if( sd )
-			clif_solved_charname(sd->fd, charid, p->nick);
+		if( sd != nullptr )
+			clif_solved_charname( *sd, charid, p->nick );
 		aFree(req);
 	}
 }
@@ -2001,8 +2042,8 @@ void map_delnickdb(int32 charid, const char* name)
 		req = p->requests;
 		p->requests = req->next;
 		sd = map_charid2sd(req->charid);
-		if( sd )
-			clif_solved_charname(sd->fd, charid, name);
+		if( sd != nullptr )
+			clif_solved_charname( *sd, charid, name );
 		aFree(req);
 	}
 	aFree(p);
@@ -2020,16 +2061,16 @@ void map_reqnickdb(map_session_data * sd, int32 charid)
 	nullpo_retv(sd);
 
 	tsd = map_charid2sd(charid);
-	if( tsd )
+	if( tsd != nullptr )
 	{
-		clif_solved_charname(sd->fd, charid, tsd->status.name);
+		clif_solved_charname( *sd, charid, tsd->status.name );
 		return;
 	}
 
 	p = (struct charid2nick*)idb_ensure(nick_db, charid, create_charid2nick);
 	if( *p->nick )
 	{
-		clif_solved_charname(sd->fd, charid, p->nick);
+		clif_solved_charname( *sd, charid, p->nick );
 		return;
 	}
 	// not in cache, request it
@@ -2198,7 +2239,6 @@ int32 map_quit(map_session_data *sd) {
 	if (sd->state.buyingstore)
 		idb_remove(buyingstore_getdb(), sd->status.char_id);
 
-	pc_damage_log_clear(sd,0);
 	party_booking_delete(sd); // Party Booking [Spiria]
 	pc_makesavestatus(sd);
 	pc_clean_skilltree(sd);
@@ -2865,7 +2905,7 @@ int32 map_delinstancemap(int32 m)
  *-----------------------------------------*/
 // Stores the spawn data entry in the mob list.
 // Returns the index of successful, or -1 if the list was full.
-int32 map_addmobtolist(unsigned short m, struct spawn_data *spawn)
+int32 map_addmobtolist(uint16 m, struct spawn_data *spawn)
 {
 	size_t i;
 	struct map_data *mapdata = map_getmapdata(m);
@@ -2874,7 +2914,7 @@ int32 map_addmobtolist(unsigned short m, struct spawn_data *spawn)
 	if( i < MAX_MOB_LIST_PER_MAP )
 	{
 		mapdata->moblist[i] = spawn;
-		return static_cast<int>(i);
+		return static_cast<int32>(i);
 	}
 	return -1;
 }
@@ -3007,7 +3047,7 @@ const char* map_mapid2mapname(int32 m)
  *------------------------------------------*/
 int16 map_mapname2mapid(const char* name)
 {
-	unsigned short map_index;
+	uint16 map_index;
 	map_index = mapindex_name2id(name);
 	if (!map_index)
 		return -1;
@@ -3017,7 +3057,7 @@ int16 map_mapname2mapid(const char* name)
 /*==========================================
  * Returns the map of the given mapindex. [Skotlex]
  *------------------------------------------*/
-int16 map_mapindex2mapid(unsigned short mapindex)
+int16 map_mapindex2mapid(uint16 mapindex)
 {
 	struct map_data *md=nullptr;
 
@@ -3033,7 +3073,7 @@ int16 map_mapindex2mapid(unsigned short mapindex)
 /*==========================================
  * Switching Ip, port ? (like changing map_server) get ip/port from map_name
  *------------------------------------------*/
-int32 map_mapname2ipport(unsigned short name, uint32* ip, uint16* port)
+int32 map_mapname2ipport(uint16 name, uint32* ip, uint16* port)
 {
 	struct map_data_other_server *mdos;
 
@@ -3128,19 +3168,19 @@ uint8 map_calc_dir_xy(int16 srcx, int16 srcy, int16 x, int16 y, uint8 srcdir) {
  *------------------------------------------*/
 int32 map_random_dir(struct block_list *bl, int16 *x, int16 *y)
 {
-	short xi = *x-bl->x;
-	short yi = *y-bl->y;
-	short i=0;
+	int16 xi = *x-bl->x;
+	int16 yi = *y-bl->y;
+	int16 i=0;
 	int32 dist2 = xi*xi + yi*yi;
-	short dist = (short)sqrt((float)dist2);
+	int16 dist = (int16)sqrt((float)dist2);
 
 	if (dist < 1) dist =1;
 
 	do {
 		directions j = static_cast<directions>(1 + 2 * rnd_value(0, 3)); //Pick a random diagonal direction
-		short segment = rnd_value((short)1, dist); //Pick a random interval from the whole vector in that direction
+		int16 segment = rnd_value((int16)1, dist); //Pick a random interval from the whole vector in that direction
 		xi = bl->x + segment*dirx[j];
-		segment = (short)sqrt((float)(dist2 - segment*segment)); //The complement of the previously picked segment
+		segment = (int16)sqrt((float)(dist2 - segment*segment)); //The complement of the previously picked segment
 		yi = bl->y + segment*diry[j];
 	} while (
 		(map_getcell(bl->m,xi,yi,CELL_CHKNOPASS) || !path_search(nullptr,bl->m,bl->x,bl->y,xi,yi,1,CELL_CHKNOREACH))
@@ -3301,7 +3341,7 @@ void map_setcell(int16 m, int16 x, int16 y, cell_t cell, bool flag)
 		case CELL_ICEWALL:		 mapdata->cell[j].icewall = flag;		  break;
 		case CELL_NOBUYINGSTORE: mapdata->cell[j].nobuyingstore = flag; break;
 		default:
-			ShowWarning("map_setcell: invalid cell type '%d'\n", (int)cell);
+			ShowWarning("map_setcell: invalid cell type '%d'\n", (int32)cell);
 			break;
 	}
 }
@@ -3384,7 +3424,7 @@ bool map_iwall_set(int16 m, int16 x, int16 y, int32 size, int8 dir, bool shootab
 		map_setcell(m, x1, y1, CELL_WALKABLE, false);
 		map_setcell(m, x1, y1, CELL_SHOOTABLE, shootable);
 
-		clif_changemapcell(0, m, x1, y1, map_getcell(m, x1, y1, CELL_GETTYPE), ALL_SAMEMAP);
+		clif_changemapcell( m, x1, y1, map_getcell( m, x1, y1, CELL_GETTYPE ) );
 	}
 
 	iwall->size = i;
@@ -3411,7 +3451,7 @@ void map_iwall_get(map_session_data *sd) {
 
 		for( i = 0; i < iwall->size; i++ ) {
 			map_iwall_nextxy(iwall->x, iwall->y, iwall->dir, i, &x1, &y1);
-			clif_changemapcell(sd->fd, iwall->m, x1, y1, map_getcell(iwall->m, x1, y1, CELL_GETTYPE), SELF);
+			clif_changemapcell( iwall->m, x1, y1, map_getcell( iwall->m, x1, y1, CELL_GETTYPE ), SELF, &sd->bl );
 		}
 	}
 	dbi_destroy(iter);
@@ -3431,7 +3471,7 @@ bool map_iwall_remove(const char *wall_name)
 		map_setcell(iwall->m, x1, y1, CELL_SHOOTABLE, true);
 		map_setcell(iwall->m, x1, y1, CELL_WALKABLE, true);
 
-		clif_changemapcell(0, iwall->m, x1, y1, map_getcell(iwall->m, x1, y1, CELL_GETTYPE), ALL_SAMEMAP);
+		clif_changemapcell( iwall->m, x1, y1, map_getcell( iwall->m, x1, y1, CELL_GETTYPE ) );
 	}
 
 	map_getmapdata(iwall->m)->iwall_num--;
@@ -3445,7 +3485,7 @@ bool map_iwall_remove(const char *wall_name)
 static DBData create_map_data_other_server(DBKey key, va_list args)
 {
 	struct map_data_other_server *mdos;
-	unsigned short mapindex = (unsigned short)key.ui;
+	uint16 mapindex = (uint16)key.ui;
 	mdos=(struct map_data_other_server *)aCalloc(1,sizeof(struct map_data_other_server));
 	mdos->index = mapindex;
 	memcpy(mdos->name, mapindex_id2name(mapindex), MAP_NAME_LENGTH);
@@ -3455,7 +3495,7 @@ static DBData create_map_data_other_server(DBKey key, va_list args)
 /*==========================================
  * Add mapindex to db of another map server
  *------------------------------------------*/
-int32 map_setipport(unsigned short mapindex, uint32 ip, uint16 port)
+int32 map_setipport(uint16 mapindex, uint32 ip, uint16 port)
 {
 	struct map_data_other_server *mdos;
 
@@ -3496,7 +3536,7 @@ int32 map_eraseallipport(void)
 /*==========================================
  * Delete mapindex from db of another map server
  *------------------------------------------*/
-int32 map_eraseipport(unsigned short mapindex, uint32 ip, uint16 port)
+int32 map_eraseipport(uint16 mapindex, uint32 ip, uint16 port)
 {
 	struct map_data_other_server *mdos;
 
@@ -3829,7 +3869,7 @@ int32 map_readallmaps (void)
 	for (int32 i = 0; i < map_num; i++) {
 		size_t size;
 		bool success = false;
-		unsigned short idx = 0;
+		uint16 idx = 0;
 		struct map_data *mapdata = &map[i];
 		char map_cache_decode_buffer[MAX_MAP_SIZE];
 

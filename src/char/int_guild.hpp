@@ -51,7 +51,7 @@ public:
 class CharGuild {
 public:
 	struct mmo_guild guild;
-	unsigned short save_flag;
+	uint16 save_flag;
 };
 
 int32 inter_guild_parse_frommap(int32 fd);
@@ -60,7 +60,7 @@ void inter_guild_sql_final(void);
 int32 inter_guild_leave(int32 guild_id,uint32 account_id,uint32 char_id);
 int32 mapif_parse_BreakGuild(int32 fd,int32 guild_id);
 int32 inter_guild_broken(int32 guild_id);
-int32 inter_guild_sex_changed(int32 guild_id,uint32 account_id,uint32 char_id, short gender);
+int32 inter_guild_sex_changed(int32 guild_id,uint32 account_id,uint32 char_id, int16 gender);
 int32 inter_guild_charname_changed(int32 guild_id,uint32 account_id, uint32 char_id, char *name);
 int32 inter_guild_CharOnline(uint32 char_id, int32 guild_id);
 int32 inter_guild_CharOffline(uint32 char_id, int32 guild_id);
