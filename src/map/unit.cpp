@@ -715,10 +715,14 @@ static TIMER_FUNC(unit_walktoxy_timer)
 	} else if(ud->state.running) { // Keep trying to run.
 		if (!(unit_run(bl, nullptr, SC_RUN) || unit_run(bl, sd, SC_WUGDASH)) )
 			ud->state.running = 0;
-	} else if (!ud->stepaction && ud->target_to) {
-		// Update target trajectory.
-		unit_update_chase(*bl, tick, true);
-	} else { // Stopped walking. Update to_x and to_y to current location [Skotlex]
+	} else {
+		if (!ud->stepaction && ud->target_to > 0) {
+			// Update target trajectory.
+			if(unit_update_chase(*bl, tick, true))
+				return 0;
+		}
+
+		// Stopped walking. Update to_x and to_y to current location
 		ud->to_x = bl->x;
 		ud->to_y = bl->y;
 
@@ -726,13 +730,17 @@ static TIMER_FUNC(unit_walktoxy_timer)
 			&& !ud->state.ignore_cell_stack_limit
 			&& battle_config.official_cell_stack_limit > 0
 			&& map_count_oncell(bl->m, x, y, BL_CHAR|BL_NPC, 1) > battle_config.official_cell_stack_limit) {
+
 			//Walked on occupied cell, call unit_walktoxy again
-			if(ud->steptimer != INVALID_TIMER) {
+			if(unit_walktoxy(bl, x, y, 8)) {
 				//Execute step timer on next step instead
-				delete_timer(ud->steptimer, unit_step_timer);
-				ud->steptimer = INVALID_TIMER;
+				if (ud->steptimer != INVALID_TIMER) {
+					//Execute step timer on next step instead
+					delete_timer(ud->steptimer, unit_step_timer);
+					ud->steptimer = INVALID_TIMER;
+				}
+				return 1;
 			}
-			return unit_walktoxy(bl, x, y, 8);
 		}
 	}
 
@@ -1542,7 +1550,7 @@ void unit_stop_walking_soon(struct block_list& bl)
 		path_remain = 2;
 	}
 	// Shorten walkpath
-	if (ud->walkpath.path_pos + path_remain < ud->walkpath.path_len) {
+	if (ud->walkpath.path_pos + path_remain <= ud->walkpath.path_len) {
 		ud->walkpath.path_len = ud->walkpath.path_pos + path_remain;
 		ud->to_x = ox;
 		ud->to_y = oy;
