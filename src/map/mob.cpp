@@ -1422,55 +1422,61 @@ static int32 mob_warpchase_sub(struct block_list *bl,va_list ap) {
 	target_warp= va_arg(ap, struct block_list**);
 	min_distance= va_arg(ap, int32*);
 
-	// NPC Warp
-	if (bl->type == BL_NPC) {
-		npc_data *nd = reinterpret_cast<npc_data*>(bl);
+	switch (bl->type) {
+		case BL_NPC:
+		{
+			// NPC Warp
+			npc_data* nd = reinterpret_cast<npc_data*>(bl);
 
-		// Not a warp
-		if (nd->subtype != NPCTYPE_WARP)
-			return 0;
-
-		// Does not lead to the same map
-		if (nd->u.warp.mapindex != map_getmapdata(target->m)->index)
-			return 0;
-
-		// Get distance from warp exit to target
-		cur_distance = distance_blxy(target, nd->u.warp.x, nd->u.warp.y);
-
-		//Pick warp that leads closest to target
-		if (cur_distance < *min_distance) {
-			*target_warp = &nd->bl;
-			*min_distance = cur_distance;
-			return 1;
-		}
-	}
-
-	// Skill Warp
-	if (bl->type == BL_SKILL) {
-		skill_unit *su = reinterpret_cast<skill_unit*>(bl);
-
-		if (su->group == nullptr)
-			return 0;
-
-		switch (su->group->unit_id) {
-			case UNT_WARP_WAITING:
-				// Does not lead to the same map.
-				if (su->group->val3 != map_getmapdata(target->m)->index)
-					return 0;
-				// Get distance from warp exit to target
-				cur_distance = distance_blxy(target, su->group->val2>>16, su->group->val2&0xffff);
-				break;
-			default:
-				// Skill cannot warp
+			// Not a warp
+			if (nd->subtype != NPCTYPE_WARP)
 				return 0;
-		}
 
-		//Pick warp that leads closest to target.
-		if (cur_distance < *min_distance) {
-			*target_warp = &su->bl;
-			*min_distance = cur_distance;
-			return 1;
+			// Does not lead to the same map
+			if (nd->u.warp.mapindex != map_getmapdata(target->m)->index)
+				return 0;
+
+			// Get distance from warp exit to target
+			cur_distance = distance_blxy(target, nd->u.warp.x, nd->u.warp.y);
+
+			//Pick warp that leads closest to target
+			if (cur_distance < *min_distance) {
+				*target_warp = &nd->bl;
+				*min_distance = cur_distance;
+				return 1;
+			}
 		}
+		break;
+
+		case BL_SKILL:
+		{
+			// Skill Warp
+			skill_unit* su = reinterpret_cast<skill_unit*>(bl);
+
+			if (su->group == nullptr)
+				return 0;
+
+			switch (su->group->unit_id) {
+				case UNT_WARP_WAITING:
+					// Does not lead to the same map.
+					if (su->group->val3 != map_getmapdata(target->m)->index)
+						return 0;
+					// Get distance from warp exit to target
+					cur_distance = distance_blxy(target, su->group->val2 >> 16, su->group->val2 & 0xffff);
+					break;
+				default:
+					// Skill cannot warp
+					return 0;
+			}
+
+			//Pick warp that leads closest to target.
+			if (cur_distance < *min_distance) {
+				*target_warp = &su->bl;
+				*min_distance = cur_distance;
+				return 1;
+			}
+		}
+		break;
 	}
 
 	return 0;
@@ -1783,7 +1789,7 @@ int32 mob_warpchase(struct mob_data *md, struct block_list *target)
 	map_foreachinallrange(mob_warpchase_sub, &md->bl,
 		md->db->range2, type, target, &warp, &distance);
 
-	if (warp && unit_walktobl(&md->bl, warp, 0, 0))
+	if (warp != nullptr && unit_walktobl(&md->bl, warp, 0, 0))
 		return 1;
 	return 0;
 }
