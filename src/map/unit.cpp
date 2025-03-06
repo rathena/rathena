@@ -1628,6 +1628,8 @@ void unit_stop_walking_soon(struct block_list& bl, t_tick tick)
 		ud->to_x += dirx[ud->walkpath.path[ud->walkpath.path_pos + i]];
 		ud->to_y += diry[ud->walkpath.path[ud->walkpath.path_pos + i]];
 	}
+	// To prevent sending a pointless walk command
+	ud->state.change_walk_target = 0;
 
 	// Send movement packet with calculated coordinates and subcoordinates
 	// Only need to send if walkpath was shortened
