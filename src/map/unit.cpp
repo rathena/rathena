@@ -1597,41 +1597,43 @@ void unit_stop_walking_soon(struct block_list& bl, t_tick tick)
 	if (ud == nullptr)
 		return;
 
-	// Less than 1 cell left to walk
-	// We need to make sure to_x and to_y are reset to match the walk path in case they were modified
-	if (ud->walkpath.path_pos + 1 >= ud->walkpath.path_len) {
-		ud->to_x = bl.x;
-		ud->to_y = bl.y;
-		// One more cell to move
-		if (ud->walkpath.path_pos + 1 == ud->walkpath.path_len) {
-			ud->to_x += dirx[ud->walkpath.path[ud->walkpath.path_pos]];
-			ud->to_y += diry[ud->walkpath.path[ud->walkpath.path_pos]];
-		}
-		return;
-	}
-
 	int16 ox = bl.x, oy = bl.y; // Remember original x and y coordinates
 	int16 path_remain = 1; // Remaining path to walk
+	bool shortened = false;
 
-	// Set coordinates to exact coordinates
-	unit_pos(bl, tick, bl.x, bl.y, ud->sx, ud->sy);
-
-	// If x or y already changed, we need to move one more cell
-	if (ox != bl.x || oy != bl.y)
-		path_remain = 2;
-
-	// Shorten walkpath
-	if (ud->walkpath.path_pos + path_remain <= ud->walkpath.path_len) {
-		ud->walkpath.path_len = ud->walkpath.path_pos + path_remain;
-		ud->to_x = ox;
-		ud->to_y = oy;
-		for (int32 i = 0; i < path_remain; i++) {
-			ud->to_x += dirx[ud->walkpath.path[ud->walkpath.path_pos + i]];
-			ud->to_y += diry[ud->walkpath.path[ud->walkpath.path_pos + i]];
-		}
-		// Send movement packet with calculated coordinates and subcoordinates
-		clif_move(*ud);
+	if (ud->walkpath.path_pos + 1 >= ud->walkpath.path_len) {
+		// Less than 1 cell left to walk so no need to shorten the path
+		// Since we don't need to resend the move packet, we don't need to calculate the exact coordinates
+		path_remain = ud->walkpath.path_len - ud->walkpath.path_pos;
 	}
+	else {
+		// Set coordinates to exact coordinates
+		unit_pos(bl, tick, bl.x, bl.y, ud->sx, ud->sy);
+
+		// If x or y already changed, we need to move one more cell
+		if (ox != bl.x || oy != bl.y)
+			path_remain = 2;
+
+		// Shorten walkpath
+		if (ud->walkpath.path_pos + path_remain < ud->walkpath.path_len) {
+			ud->walkpath.path_len = ud->walkpath.path_pos + path_remain;
+			shortened = true;
+		}
+	}
+
+	// Make sure to_x and to_y match the walk path even if not shortened in case they were modified
+	ud->to_x = ox;
+	ud->to_y = oy;
+	for (int32 i = 0; i < path_remain; i++) {
+		ud->to_x += dirx[ud->walkpath.path[ud->walkpath.path_pos + i]];
+		ud->to_y += diry[ud->walkpath.path[ud->walkpath.path_pos + i]];
+	}
+
+	// Send movement packet with calculated coordinates and subcoordinates
+	// Only need to send if walkpath was shortened
+	if (shortened)
+		clif_move(*ud);
+
 	// Reset coordinates
 	bl.x = ox;
 	bl.y = oy;
