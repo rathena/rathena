@@ -17621,7 +17621,7 @@ BUILDIN_FUNC(sscanf){
 			if(ref_str==nullptr){
 				CREATE(ref_str, char, strlen(str)+1);
 			}
-			if( sscanf( str, buf, &ref_str ) != 1 ){
+			if( sscanf( str, buf, ref_str ) != 1 ){
 				ShowError( "buildin_sscanf: sscanf failed to scan value for string variable \"%s\".\n", buf_p );
 				script_pushint( st, -1 );
 				if( buf != nullptr ){
