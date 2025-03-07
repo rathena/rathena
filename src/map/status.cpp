@@ -5655,7 +5655,7 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 
 	// Can't chat
 	if( scdb->state[SCS_NOCHAT] ) {
-		status_calc_state_sub( bl, sc, start, scdb, sc.cant.cast, SCS_NOCHAT, SCS_NOCHATCOND, []( block_list& bl, status_change& sc, bool& restriction, const sc_type type, const status_change_entry& sce ) -> bool {
+		status_calc_state_sub( bl, sc, start, scdb, sc.cant.chat, SCS_NOCHAT, SCS_NOCHATCOND, []( block_list& bl, status_change& sc, bool& restriction, const sc_type type, const status_change_entry& sce ) -> bool {
 			// Check the specific conditions
 			switch( type ){
 				case SC_NOCHAT:
@@ -5686,7 +5686,7 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 	if( bl.type == BL_PC ) {
 		// Can't pick-up items
 		if( scdb->state[SCS_NOPICKITEM] ){
-			status_calc_state_sub( bl, sc, start, scdb, sc.cant.cast, SCS_NOPICKITEM, SCS_NOPICKITEMCOND, []( block_list& bl, status_change& sc, bool& restriction, const sc_type type, const status_change_entry& sce ) -> bool {
+			status_calc_state_sub( bl, sc, start, scdb, sc.cant.pickup, SCS_NOPICKITEM, SCS_NOPICKITEMCOND, []( block_list& bl, status_change& sc, bool& restriction, const sc_type type, const status_change_entry& sce ) -> bool {
 				// Check the specific conditions
 				switch( type ){
 					case SC_NOCHAT:
@@ -5705,7 +5705,7 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 
 		// Can't drop items
 		if( scdb->state[SCS_NODROPITEM] ){
-			status_calc_state_sub( bl, sc, start, scdb, sc.cant.cast, SCS_NODROPITEM, SCS_NODROPITEMCOND, []( block_list& bl, status_change& sc, bool& restriction, const sc_type type, const status_change_entry& sce ) -> bool {
+			status_calc_state_sub( bl, sc, start, scdb, sc.cant.drop, SCS_NODROPITEM, SCS_NODROPITEMCOND, []( block_list& bl, status_change& sc, bool& restriction, const sc_type type, const status_change_entry& sce ) -> bool {
 				// Check the specific conditions
 				switch( type ){
 					case SC_NOCHAT:
@@ -5724,17 +5724,17 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 
 		// Can't equip item
 		if( scdb->state[SCS_NOEQUIPITEM] ){
-			status_calc_state_sub( bl, sc, start, scdb, sc.cant.warp, SCS_NOEQUIPITEM, SCS_NOEQUIPITEMCOND, func_not_impl );
+			status_calc_state_sub( bl, sc, start, scdb, sc.cant.equip, SCS_NOEQUIPITEM, SCS_NOEQUIPITEMCOND, func_not_impl );
 		}
 
 		// Can't unequip item
 		if( scdb->state[SCS_NOUNEQUIPITEM] ){
-			status_calc_state_sub( bl, sc, start, scdb, sc.cant.warp, SCS_NOUNEQUIPITEM, SCS_NOUNEQUIPITEMCOND, func_not_impl );
+			status_calc_state_sub( bl, sc, start, scdb, sc.cant.unequip, SCS_NOUNEQUIPITEM, SCS_NOUNEQUIPITEMCOND, func_not_impl );
 		}
 
 		// Can't consume item
 		if( scdb->state[SCS_NOCONSUMEITEM] ){
-			status_calc_state_sub( bl, sc, start, scdb, sc.cant.cast, SCS_NOCONSUMEITEM, SCS_NOCONSUMEITEMCOND, []( block_list& bl, status_change& sc, bool& restriction, const sc_type type, const status_change_entry& sce ) -> bool {
+			status_calc_state_sub( bl, sc, start, scdb, sc.cant.consume, SCS_NOCONSUMEITEM, SCS_NOCONSUMEITEMCOND, []( block_list& bl, status_change& sc, bool& restriction, const sc_type type, const status_change_entry& sce ) -> bool {
 				// Check the specific conditions
 				switch( type ){
 					case SC_GRAVITATION:
@@ -5759,12 +5759,12 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 
 		// Can't lose exp
 		if( scdb->state[SCS_NODEATHPENALTY] ){
-			status_calc_state_sub( bl, sc, start, scdb, sc.cant.warp, SCS_NODEATHPENALTY, SCS_NODEATHPENALTYCOND, func_not_impl );
+			status_calc_state_sub( bl, sc, start, scdb, sc.cant.deathpenalty, SCS_NODEATHPENALTY, SCS_NODEATHPENALTYCOND, func_not_impl );
 		}
 
 		// Can't sit/stand/talk to NPC
 		if( scdb->state[SCS_NOINTERACT] ){
-			status_calc_state_sub( bl, sc, start, scdb, sc.cant.warp, SCS_NOINTERACT, SCS_NOINTERACTCOND, func_not_impl );
+			status_calc_state_sub( bl, sc, start, scdb, sc.cant.interact, SCS_NOINTERACT, SCS_NOINTERACTCOND, func_not_impl );
 		}
 	}
 }
