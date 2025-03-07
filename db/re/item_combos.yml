@@ -25476,7 +25476,7 @@ Body:
       - Combo:
           - Principles_Of_Magic     # 1572
           - Librarian_Glove     # 2716
-          - Pocket_Watch     # 2971
+          - Pocket_Watch__     # 2971
     Script: |
       bonus bInt,5;
       bonus bMaxHP,700;

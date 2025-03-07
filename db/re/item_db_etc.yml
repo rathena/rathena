@@ -51942,7 +51942,7 @@ Body:
       bonus bMaxSPrate,-50;
   - Id: 300346
     AegisName: SLD_Ill_Dracula_Card_J
-    Name: Furious Dracula Card
+    Name: Sealed Furious Dracula Card
     Type: Card
     Buy: 20
     Weight: 10
