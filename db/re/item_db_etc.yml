@@ -211,7 +211,7 @@ Body:
     AegisName: Flower
     Name: Flower
     Type: Etc
-    Buy: 2
+    Buy: 1
     Weight: 10
     Flags:
       BuyingStore: true
@@ -251,7 +251,7 @@ Body:
     AegisName: Blue_Gemstone
     Name: Blue Gemstone
     Type: Etc
-    Buy: 1500
+    Buy: 450
     Weight: 1
     Flags:
       BuyingStore: true
@@ -387,7 +387,7 @@ Body:
     AegisName: Red_Frame
     Name: Red Frame
     Type: Etc
-    Buy: 3000
+    Buy: 2250
     Weight: 200
     Flags:
       BuyingStore: true
@@ -395,7 +395,7 @@ Body:
     AegisName: Blue_Porcelain
     Name: Chung Jah
     Type: Etc
-    Buy: 5000
+    Buy: 3750
     Weight: 500
     Flags:
       BuyingStore: true
@@ -403,7 +403,7 @@ Body:
     AegisName: White_Platter
     Name: China
     Type: Etc
-    Buy: 1000
+    Buy: 750
     Weight: 300
     Flags:
       BuyingStore: true
@@ -411,7 +411,7 @@ Body:
     AegisName: Black_Ladle
     Name: Black Ladle
     Type: Etc
-    Buy: 400
+    Buy: 300
     Weight: 50
     Flags:
       BuyingStore: true
@@ -467,7 +467,7 @@ Body:
     AegisName: Bunch_Of_Flowers
     Name: Bouquet
     Type: Etc
-    Buy: 2000
+    Buy: 1500
     Weight: 50
     Flags:
       BuyingStore: true
@@ -477,7 +477,7 @@ Body:
     AegisName: Wedding_Bouquet
     Name: Wedding Bouquet
     Type: Etc
-    Buy: 12000
+    Buy: 9000
     Weight: 50
     Flags:
       BuyingStore: true
@@ -487,7 +487,7 @@ Body:
     AegisName: Glass_Bead
     Name: Glass Bead
     Type: Etc
-    Buy: 1400
+    Buy: 1050
     Weight: 50
     Flags:
       BuyingStore: true
@@ -687,7 +687,7 @@ Body:
     AegisName: Garlet
     Name: Garlet
     Type: Etc
-    Buy: 40
+    Buy: 30
     Weight: 10
     Flags:
       BuyingStore: true
@@ -703,7 +703,7 @@ Body:
     AegisName: Zargon
     Name: Zargon
     Type: Etc
-    Buy: 480
+    Buy: 360
     Weight: 10
     Flags:
       BuyingStore: true
@@ -1905,7 +1905,7 @@ Body:
     AegisName: Booby_Trap
     Name: Trap
     Type: Etc
-    Buy: 75
+    Buy: 50
     Sell: 0
     Weight: 2
     Flags:
@@ -20208,7 +20208,8 @@ Body:
     AegisName: Charm_Fire
     Name: Fire Amulet
     Type: Etc
-    Buy: 100
+    Buy: 50
+    Sell: 0
     Weight: 1
     Flags:
       BuyingStore: true
@@ -20216,7 +20217,8 @@ Body:
     AegisName: Charm_Ice
     Name: Ice Amulet
     Type: Etc
-    Buy: 100
+    Buy: 50
+    Sell: 0
     Weight: 1
     Flags:
       BuyingStore: true
@@ -20224,7 +20226,8 @@ Body:
     AegisName: Charm_Wind
     Name: Wind Amulet
     Type: Etc
-    Buy: 100
+    Buy: 50
+    Sell: 0
     Weight: 1
     Flags:
       BuyingStore: true
@@ -20232,7 +20235,8 @@ Body:
     AegisName: Charm_Earth
     Name: Earth Amulet
     Type: Etc
-    Buy: 100
+    Buy: 50
+    Sell: 0
     Weight: 1
     Flags:
       BuyingStore: true
@@ -28055,7 +28059,8 @@ Body:
     AegisName: Flame_Stone
     Name: Flame Stone
     Type: Etc
-    Buy: 112
+    Buy: 50
+    Sell: 0
     Weight: 1
     Flags:
       BuyingStore: true
@@ -28063,7 +28068,8 @@ Body:
     AegisName: Ice_Stone
     Name: Ice Stone
     Type: Etc
-    Buy: 112
+    Buy: 50
+    Sell: 0
     Weight: 1
     Flags:
       BuyingStore: true
@@ -28071,7 +28077,8 @@ Body:
     AegisName: Wind_Stone
     Name: Wind Stone
     Type: Etc
-    Buy: 112
+    Buy: 50
+    Sell: 0
     Weight: 1
     Flags:
       BuyingStore: true
@@ -28079,7 +28086,8 @@ Body:
     AegisName: Shadow_Orb
     Name: Shadow Orb
     Type: Etc
-    Buy: 225
+    Buy: 200
+    Sell: 0
     Weight: 1
     Flags:
       BuyingStore: true
@@ -29170,7 +29178,7 @@ Body:
     AegisName: Full_Metal_Jacket
     Name: Full Metal Jacket
     Type: Etc
-    Buy: 5
+    Buy: 15
     Weight: 1
   - Id: 7664
     AegisName: Shooting_Mine
@@ -31390,7 +31398,7 @@ Body:
     AegisName: Special_Alloy_Trap
     Name: Special Alloy Trap
     Type: Etc
-    Buy: 300
+    Buy: 100
     Sell: 0
     Weight: 2
     Flags:
@@ -32633,7 +32641,7 @@ Body:
     Name: Bloody Shell
     Type: Ammo
     SubType: Bullet
-    Buy: 10
+    Buy: 5
     Weight: 1
     Attack: 30
     Jobs:
@@ -32801,7 +32809,8 @@ Body:
     Name: Shuriken
     Type: Ammo
     SubType: Shuriken
-    Buy: 4
+    Buy: 2
+    Sell: 0
     Weight: 1
     Attack: 10
     Jobs:
@@ -32815,7 +32824,8 @@ Body:
     Name: Nimbus Shuriken
     Type: Ammo
     SubType: Shuriken
-    Buy: 10
+    Buy: 4
+    Sell: 0
     Weight: 1
     Attack: 30
     Jobs:
@@ -32829,7 +32839,8 @@ Body:
     Name: Flash Shuriken
     Type: Ammo
     SubType: Shuriken
-    Buy: 20
+    Buy: 6
+    Sell: 0
     Weight: 1
     Attack: 45
     Jobs:
@@ -32843,7 +32854,8 @@ Body:
     Name: Sharp Leaf Shuriken
     Type: Ammo
     SubType: Shuriken
-    Buy: 40
+    Buy: 12
+    Sell: 0
     Weight: 1
     Attack: 70
     Jobs:
@@ -32857,7 +32869,8 @@ Body:
     Name: Thorn Needle Shuriken
     Type: Ammo
     SubType: Shuriken
-    Buy: 100
+    Buy: 20
+    Sell: 0
     Weight: 1
     Attack: 100
     Jobs:
@@ -33585,7 +33598,7 @@ Body:
     Name: Cannon Ball
     Type: Ammo
     SubType: Cannonball
-    Buy: 100
+    Buy: 30
     Weight: 1
     Attack: 100
     Jobs:
@@ -33602,7 +33615,7 @@ Body:
     Name: Holy Cannon Ball
     Type: Ammo
     SubType: Cannonball
-    Buy: 200
+    Buy: 50
     Weight: 1
     Attack: 120
     Jobs:
@@ -33621,7 +33634,7 @@ Body:
     Name: Dark Cannon Ball
     Type: Ammo
     SubType: Cannonball
-    Buy: 200
+    Buy: 50
     Weight: 1
     Attack: 120
     Jobs:
@@ -33640,7 +33653,7 @@ Body:
     Name: Soul Cannon Ball
     Type: Ammo
     SubType: Cannonball
-    Buy: 200
+    Buy: 50
     Weight: 1
     Attack: 120
     Jobs:
@@ -33659,7 +33672,7 @@ Body:
     Name: Iron Cannon Ball
     Type: Ammo
     SubType: Cannonball
-    Buy: 500
+    Buy: 80
     Weight: 1
     Attack: 250
     Jobs:
