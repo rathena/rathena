@@ -58277,7 +58277,7 @@ Body:
     Script: |
       bonus2 bSkillCooldown,"CG_ARROWVULCAN",-700;
       bonus2 bSkillAtk,"CG_ARROWVULCAN",20;
-      bonus2 bSkillAtk,"TR_ROSEBLOSSOM",20;
+      bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",20;
   - Combos:
       - Combo:
           - EC_Boots__LT_TW    # 470269
@@ -58475,8 +58475,8 @@ Body:
           - KarduiEar_BR    # 19252
     Script: |
       .@type = getiteminfo(getequipid(EQI_COMPOUND_ON), ITEMINFO_VIEW);
-      .@r = getequiprefinerycnt(EQI_HAND_R);
       if (.@type == W_BOOK || .@type == W_STAFF || .@type == W_2HSTAFF) {
+         .@r = getequiprefinerycnt(EQI_HAND_R);
          bonus2 bMagicAddRace,RC_Player_Doram,2*(min(.@r,14)/2);
          bonus2 bMagicAddRace,RC_Player_Human,2*(min(.@r,14)/2);
       }
@@ -58612,3 +58612,4 @@ Body:
       bonus2 bSkillAtk,"NJ_KOUENKA",15;
       bonus2 bSkillAtk,"NJ_HYOUSENSOU",15;
       bonus2 bSkillAtk,"NJ_HUUJIN",15;
+      
