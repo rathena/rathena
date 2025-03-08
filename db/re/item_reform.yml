@@ -1,5 +1,5 @@
 # This file is a part of rAthena.
-#   Copyright(C) 2024 rAthena Development Team
+#   Copyright(C) 2025 rAthena Development Team
 #   https://rathena.org - https://github.com/rathena
 #
 # This program is free software: you can redistribute it and/or modify
@@ -12141,6 +12141,174 @@ Body:
             Amount: 2
         ResultItem: S_SKE_SB_Shoes
         #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_EM_CO_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_EM_CO_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_EM_CO_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_EM_CO_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_EM_LS_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_EM_LS_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_EM_LS_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_EM_LS_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_ABC_AF_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_ABC_AF_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_ABC_AF_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_ABC_AF_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_ABC_FA_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_ABC_FA_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_ABC_FA_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_ABC_FA_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_SOA_TOWB_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_SOA_TOWB_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_SOA_TOWB_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_SOA_TOWB_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_SOA_TOFG_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_SOA_TOFG_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_SOA_TOFG_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_SOA_TOFG_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_Magical_M_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_Magical_M_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_Magical_M_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_Magical_M_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_Magical_M_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_Magical_M_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_Magical_M_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_Magical_M_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_Spell_M_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_Spell_M_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_Spell_M_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_Spell_M_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_Spell_M_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_Spell_M_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_Spell_M_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_Spell_M_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_Sorcery_M_Armor
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_Sorcery_M_Armor
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_Sorcery_M_Shoes
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_Sorcery_M_Shoes
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_Sorcery_M_Earring
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_Sorcery_M_Earring
+        #RandomOptionGroup: NSU # TODO: translate to our group names
+      - BaseItem: S_Sorcery_M_Pendant
+        MaximumRefine: 10
+        Materials:
+          - Material: S_Enchant_Essence
+            Amount: 2
+        ResultItem: S_Sorcery_M_Pendant
+        #RandomOptionGroup: NSU # TODO: translate to our group names
   - Item: Time_Gap_Refine_Hammer
     BaseItems:
       - BaseItem: Time_Gap_Spear_IG
@@ -12312,6 +12480,46 @@ Body:
           - Material: Time_D_Ma_Rune
             Amount: 2
         ResultItem: Time_Gap_SH_Foxtail
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_EM_S_Book
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 12
+          - Material: Time_D_Ma_Rune
+            Amount: 2
+        ResultItem: Time_Gap_EM_S_Book
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_SS_Dagger1
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 12
+          - Material: Time_D_Ma_Rune
+            Amount: 2
+        ResultItem: Time_Gap_SS_Dagger1
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_SS_Dagger2
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 12
+          - Material: Time_D_Ma_Rune
+            Amount: 2
+        ResultItem: Time_Gap_SS_Dagger2
+        ChangeRefine: 1
+      - BaseItem: Time_Gap_WH_Bow
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 12
+          - Material: Time_D_Ma_Rune
+            Amount: 2
+        ResultItem: Time_Gap_WH_Bow
         ChangeRefine: 1
   - Item: Yorscalp_Refin_Hammer
     BaseItems:
