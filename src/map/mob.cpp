@@ -1978,7 +1978,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 		int32 loot_range = 0;
 		if (md->ud.walktimer != INVALID_TIMER) {
 			// Ready to loot
-			if (unit_getx(md->bl, tick) == tbl->x && unit_gety(md->bl, tick) == tbl->y)
+			if (md->ud.getx(tick) == tbl->x && md->ud.gety(tick) == tbl->y)
 				loot_range = 1;
 			// Already moving to target item
 			else if (md->ud.target == tbl->id)
