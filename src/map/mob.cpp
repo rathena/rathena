@@ -1736,6 +1736,10 @@ int32 mob_randomwalk(struct mob_data *md,t_tick tick)
  */
 int32 mob_warpchase(struct mob_data *md, struct block_list *target)
 {
+	if( battle_config.mob_warp == 0 ){
+		return 0;
+	}
+	
 	block_list *warp = nullptr;
 	int32 distance = AREA_SIZE;
 
