@@ -1437,7 +1437,8 @@ static int32 mob_warpchase_sub(struct block_list *bl,va_list ap) {
 				return 0;
 
 			// Leads to a different map that is set to not be accessible through warp chase
-			if (nd->u.warp.mapindex != bl->m && map_getmapflag(nd->u.warp.mapindex, MF_NOBRANCH) && battle_config.mob_warp&4)
+			int16 warp_m = map_mapindex2mapid(nd->u.warp.mapindex);
+			if (warp_m != bl->m && map_getmapflag(warp_m, MF_NOBRANCH) && battle_config.mob_warp&4)
 				return 0;
 
 			// Get distance from warp exit to target
@@ -1460,6 +1461,8 @@ static int32 mob_warpchase_sub(struct block_list *bl,va_list ap) {
 			if (su->group == nullptr)
 				return 0;
 
+			int16 warp_m = map_mapindex2mapid(su->group->val3);
+
 			switch (su->group->unit_id) {
 				case UNT_WARP_WAITING:
 					// Monsters cannot use priest warps
@@ -1471,7 +1474,7 @@ static int32 mob_warpchase_sub(struct block_list *bl,va_list ap) {
 						return 0;
 
 					// Leads to a different map that is set to not be accessible through warp chase
-					if (su->group->val3 != bl->m && map_getmapflag(su->group->val3, MF_NOBRANCH) && battle_config.mob_warp&4)
+					if (warp_m != bl->m && map_getmapflag(warp_m, MF_NOBRANCH) && battle_config.mob_warp&4)
 						return 0;
 
 					// Get distance from warp exit to target
