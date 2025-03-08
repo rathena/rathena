@@ -93067,6 +93067,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Plant
+    RaceGroups:
+      Lasagna: true
     Element: Water
     ElementLevel: 1
     WalkSpeed: 200
@@ -93115,6 +93117,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Brute
+    RaceGroups:
+      Lasagna: true
     Element: Earth
     ElementLevel: 1
     WalkSpeed: 300
@@ -93163,6 +93167,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Brute
+    RaceGroups:
+      Lasagna: true
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 250
@@ -93211,6 +93217,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Brute
+    RaceGroups:
+      Lasagna: true
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 250
@@ -93314,6 +93322,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Plant
+    RaceGroups:
+      Lasagna: true
     Element: Earth
     ElementLevel: 3
     WalkSpeed: 1000
@@ -93362,6 +93372,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Insect
+    RaceGroups:
+      Lasagna: true
     Element: Earth
     ElementLevel: 3
     WalkSpeed: 250
@@ -102421,6 +102433,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Glast_Heim_Abyss: true
     Element: Dark
     ElementLevel: 3
     WalkSpeed: 120
@@ -102466,6 +102480,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Glast_Heim_Abyss: true
     Element: Dark
     ElementLevel: 3
     WalkSpeed: 150
@@ -102508,6 +102524,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demon
+    RaceGroups:
+      Glast_Heim_Abyss: true
     Element: Water
     ElementLevel: 3
     WalkSpeed: 150
@@ -102558,6 +102576,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Formless
+    RaceGroups:
+      Glast_Heim_Abyss: true
     Element: Earth
     ElementLevel: 3
     WalkSpeed: 200
@@ -102604,6 +102624,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Glast_Heim_Abyss: true
     Element: Undead
     ElementLevel: 2
     WalkSpeed: 150
@@ -103000,6 +103022,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demon
+    RaceGroups:
+      Glast_Heim_Abyss: true
     Element: Water
     ElementLevel: 3
     WalkSpeed: 150
@@ -103049,6 +103073,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demon
+    RaceGroups:
+      Glast_Heim_Abyss: true
     Element: Fire
     ElementLevel: 3
     WalkSpeed: 150
@@ -103315,6 +103341,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demon
+    RaceGroups:
+      Glast_Heim_Abyss: true
     Element: Wind
     ElementLevel: 2
     WalkSpeed: 100
@@ -103365,6 +103393,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Demon
+    RaceGroups:
+      Glast_Heim_Abyss: true
     Element: Dark
     ElementLevel: 3
     WalkSpeed: 150
@@ -103422,6 +103452,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Undead
+    RaceGroups:
+      Glast_Heim_Abyss: true
     Element: Undead
     ElementLevel: 3
     WalkSpeed: 100

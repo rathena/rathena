@@ -2763,8 +2763,11 @@ Body:
       - Combo:
           - Bison_Horn    # 2702
           - Thorny_Shoes    # 22064
+      - Combo:
+          - Bison_Horn    # 2702
+          - Thorny_Shoes_BR    # 22149
     Script: |
-      if (readparam(bAgi) > 120)
+      if (readparam(bAgi) >= 120)
          bonus bAspd,1;
   - Combos:
       - Combo:
@@ -7381,7 +7384,7 @@ Body:
     Script: |
       .@type = getiteminfo(getequipid(EQI_COMPOUND_ON), ITEMINFO_VIEW);
       if (.@type == W_BOOK || .@type == W_STAFF || .@type == W_2HSTAFF) {
-         bonus2 bMagicAddRace,RC_Player_Human, getequiprefinerycnt(EQI_HAND_R)*2;
+         bonus2 bMagicAddRace,RC_Player_Human,getequiprefinerycnt(EQI_HAND_R)*2;
       }
   - Combos:
       - Combo:
@@ -25473,7 +25476,7 @@ Body:
       - Combo:
           - Principles_Of_Magic     # 1572
           - Librarian_Glove     # 2716
-          - Pocket_Watch     # 2971
+          - Pocket_Watch__     # 2971
     Script: |
       bonus bInt,5;
       bonus bMaxHP,700;
@@ -57971,3 +57974,643 @@ Body:
       bonus bMaxHPrate,40;
       bonus2 bAddClass,Class_All,30;
       bonus2 bMagicAddClass,Class_All,30;
+  - Combos:
+      - Combo:
+          - Turtle_General_Card    # 4305
+          - Royal_Nightwatch_US    # 480539
+      - Combo:
+          - Drake_Card    # 4137
+          - Royal_Alberta_US    # 480540
+    Script: |
+      bonus2 bAddClass,Class_Boss,40;
+      if (getequiprefinerycnt(EQI_GARMENT)>=14)
+         autobonus "{ bonus bStr,250; bonus bDex,250; bonus bLuk,250; }",50,10000,BF_SHORT|BF_LONG;
+  - Combos:
+      - Combo:
+          - Pirate_Skel_Card    # 4073
+          - Royal_Alberta_US    # 480540
+    Script: |
+      bonus bMaxHPrate,15;
+      bonus bLongAtkRate,20;
+      if (getequiprefinerycnt(EQI_GARMENT)>=10) {
+         bonus bHPGainValue,250;
+         bonus bSPGainValue,25;
+      }
+  - Combos:
+      - Combo:
+          - Baphomet_Card    # 4147
+          - Royal_Prontera_US    # 480479
+    Script: |
+      bonus2 bAddClass,Class_Boss,40;
+      if (getequiprefinerycnt(EQI_GARMENT)>=14)
+         autobonus "{ bonus bStr,250; bonus bDex,250; bonus bLuk,250; }",50,10000,BF_WEAPON|BF_NORMAL;
+  - Combos:
+      - Combo:
+          - Chaos_Ba_Jr_Card    # 27335
+          - Royal_Prontera_US    # 480479
+    Script: |
+      bonus bAtkRate,15;
+      bonus bMaxHPrate,15;
+      if (getequiprefinerycnt(EQI_GARMENT)>=10) {
+         bonus bHPGainValue,250;
+         bonus bSPGainValue,25;
+      }
+  - Combos:
+      - Combo:
+          - Cat_O_Nine_Tail_Card    # 4290
+          - Mythical_Moonlight_US    # 470266
+    Script: |
+      bonus2 bMagicAddClass,Class_Boss,15;
+      if (getequiprefinerycnt(EQI_SHOES)>=13)
+         autobonus "{ bonus bInt,150; bonus bDex,150; bonus bLuk,150; }",50,10000,BF_WEAPON|BF_MAGIC;
+  - Combos:
+      - Combo:
+          - Moonlight_Flower_Card    # 4131
+          - Mythical_Moonlight_US    # 470266
+    Script: |
+      bonus2 bMagicAddClass,Class_Boss,40;
+      if (getequiprefinerycnt(EQI_SHOES)>=13)
+         autobonus "{ bonus bInt,250; bonus bDex,250; bonus bLuk,250; }",50,10000,BF_WEAPON|BF_MAGIC;
+  - Combos:
+      - Combo:
+          - Elemental_BootsK    # 470033
+          - 4Element_magic_ring    # 490570
+    Script: |
+      bonus bMatk,40;
+      bonus bMatkRate,3;
+      bonus bInt,20;
+      bonus2 bMagicAtkEle,Ele_Earth,20;
+      bonus2 bMagicAtkEle,Ele_Fire,20;
+      bonus2 bMagicAtkEle,Ele_Water,20;
+      bonus2 bMagicAtkEle,Ele_Wind,20;
+      if (getequiprefinerycnt(EQI_SHOES)>=13)
+         autobonus "{ bonus2 bIgnoreMdefClassRate,Class_All,100; }",50,5000,BF_MAGIC;
+  - Combos:
+      - Combo:
+          - Elemental_Sword    # 13414
+          - 4Element_magic_ring    # 490570
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus bMatk,60;
+      bonus bMatkRate,5;
+      bonus bAspd,5;
+      bonus2 bMagicAddSize,Size_All,15;
+      if (.@r>=12) {
+         bonus3 bAutoSpell,"WL_SUMMONFB",1,300;
+         bonus3 bAutoSpell,"WL_SUMMONWB",1,300;
+         bonus3 bAutoSpell,"WL_SUMMONBL",1,300;
+         bonus3 bAutoSpell,"WL_SUMMONSTONE",1,300;
+         if (.@r>=14) {
+             bonus3 bAutoSpell,"WL_RELEASE",2,300;
+         }
+      }
+  - Combos:
+      - Combo:
+          - Elemental_Sword    # 13414
+          - Elemental_BootsK    # 470033
+          - 4Element_magic_ring    # 490570
+    Script: |
+      bonus bMatk,120;
+      bonus2 bMagicAddClass,Class_All,30;
+      if (getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_SHOES)>=26) {
+         bonus bMatkRate,7;
+         bonus bSpl,10;
+         bonus bSMatk,10;
+         bonus3 bAutoSpell,"WL_RECOGNIZEDSPELL",1,50;
+         bonus3 bAutoSpell,"WL_TETRAVORTEX",10,300;
+      }
+  - Combos:
+      - Combo:
+          - Yellow_Poring_Clip    # 18632
+          - aegis_410349    # 410349
+    Script: |
+      bonus bBaseAtk,15;
+      bonus2 bSkillAtk,"AC_DOUBLE",20;
+      bonus2 bSkillAtk,"TK_COUNTER",20;
+      bonus2 bSkillAtk,"TK_TURNKICK",20;
+  - Combos:
+      - Combo:
+          - Blue_Poring_Clip    # 18635
+          - aegis_410349    # 410349
+    Script: |
+      bonus bNoCastCancel;
+      bonus2 bSkillAtk,"MG_FIREBALL",20;
+      bonus2 bSkillAtk,"AL_HOLYLIGHT",20;
+      bonus2 bSkillAtk,"MG_COLDBOLT",20;
+  - Combos:
+      - Combo:
+          - Pink_Poring_Clip    # 18633
+          - aegis_410349    # 410349
+    Script: |
+      bonus bAspd,1;
+      bonus2 bSkillAtk,"TF_POISON",20;
+      bonus2 bSkillAtk,"SM_BASH",20;
+      bonus2 bSkillAtk,"MC_MAMMONITE",20;
+  - Combos:
+      - Combo:
+          - Green_Poring_Clip    # 18634
+          - aegis_410349    # 410349
+    Script: |
+      bonus bLongAtkRate,7;
+      bonus2 bSkillAtk,"GS_RAPIDSHOWER",20;
+      bonus2 bSkillAtk,"NJ_KUNAI",20;
+      bonus2 bSkillAtk,"SU_PICKYPECK",20;
+  - Combos:
+      - Combo:
+          - Incant_Samurai_Card    # 4263
+          - Magic_Sword_J    # 500005
+    Script: |
+      bonus bAspdRate,10;
+      bonus bAtkRate,20;
+      autobonus3 "{ bonus bFlee2,100; }",1000,3000,"ASC_BREAKER";
+  - Combos:
+      - Combo:
+          - aegis_300403    # 300403
+          - Magic_Sword_J    # 500005
+    Script: |
+      bonus bAspdRate,10;
+      bonus bAtkRate,20;
+      autobonus3 "{ bonus bFlee2,30; }",1000,3000,"ASC_BREAKER";
+  - Combos:
+      - Combo:
+          - S_Circlet_Of_Time_NV    # 19491
+          - Time_B_Limit_Nec    # 490575
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus2 bMagicAtkEle,Ele_All,8;
+      bonus bShortAtkRate,8;
+      bonus bLongAtkRate,8;
+      bonus bAtkRate,2*(.@r/2);
+      bonus bMatkRate,2*(.@r/2);
+      bonus2 bSkillAtk,"HN_MEGA_SONIC_BLOW",8*(.@r/3);
+      bonus2 bSkillAtk,"HN_HELLS_DRIVE",8*(.@r/3);
+  - Combos:
+      - Combo:
+          - S_Circlet_Of_Time_NV    # 19491
+          - Time_Jewely_Int_2    # 29682
+          - Time_B_Limit_Nec    # 490575
+      - Combo:
+          - S_Circlet_Of_Time_NV    # 19491
+          - Time_Jewely_Int_3    # 29683
+          - Time_B_Limit_Nec    # 490575
+    Script: |
+      bonus2 bMagicAddRace,RC_All,8;
+  - Combos:
+      - Combo:
+          - S_Circlet_Of_Time_NV    # 19491
+          - Time_Jewely_Str_2    # 29673
+          - Time_B_Limit_Nec    # 490575
+      - Combo:
+          - S_Circlet_Of_Time_NV    # 19491
+          - Time_Jewely_Str_3    # 29674
+          - Time_B_Limit_Nec    # 490575
+    Script: |
+      bonus2 bAddRace,RC_All,8;
+  - Combos:
+      - Combo:
+          - Pray_Dusk_Bell_SS    # 490573
+          - Vivatus_F_Humma    # 650022
+    Script: |
+      bonus bLongAtkRate,10;
+      if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A) {
+         bonus2 bAddClass,Class_All,12;
+         bonus2 bSkillAtk,"SS_FUUMASHOUAKU",20;
+      }
+  - Combos:
+      - Combo:
+          - Pray_Dusk_Bell_SS    # 490573
+          - Vivatus_F_C_Humma    # 650021
+    Script: |
+      bonus bLongAtkRate,10;
+      if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A) {
+         bonus2 bAddClass,Class_All,12;
+         bonus2 bSkillAtk,"SS_KUNAIKAITEN",20;
+      }
+  - Combos:
+      - Combo:
+          - Handiness_Telescope_LT    # 410339
+          - Rescue_whistle_LT    # 420343
+    Script: |
+      bonus bDelayrate,-15;
+      bonus bFixedCast,-200;
+      bonus2 bSkillCooldown,"NV_FIRSTAID",5000;
+      bonus5 bAutoSpellOnSkill,"NV_FIRSTAID","MG_SAFETYWALL",5,1000,1;
+  - Combos:
+      - Combo:
+          - Old_Blazing_Soul    # 18979
+          - Battle_Aura_Manteau_LT    # 480454
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus2 bSkillAtk,"IQ_SECOND_FLAME",15*(.@r/3);
+      bonus2 bSkillAtk,"IQ_THIRD_FLAME_BOMB",15*(.@r/3);
+      if (.@r>=13)
+         bonus bMaxHPrate,25;
+  - Combos:
+      - Combo:
+          - Ifrit_Card    # 4430
+          - Battle_Aura_Manteau_LT    # 480454
+    Script: |
+      bonus2 bAddRace,RC_Angel,40;
+      bonus2 bAddRace,RC_DemiHuman,40;
+      bonus2 bAddRace,RC_Demon,40;
+      bonus2 bAddRace,RC_Player_Doram,40;
+      bonus2 bAddRace,RC_Player_Human,40;
+      bonus2 bSubEle,Ele_Fire,50;
+      bonus2 bSubEle,Ele_Water,-30;
+      skill "MO_EXPLOSIONSPIRITS",5;
+      bonus2 bSkillCooldown,"MO_EXPLOSIONSPIRITS",20000;
+      autobonus3 "{ bonus bBaseAtk,200; }",1000,10000,"MO_EXPLOSIONSPIRITS";
+  - Combos:
+      - Combo:
+          - Old_Protect_Of_Crown    # 18983
+          - Tristan_Cape_LT    # 480453
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      bonus2 bSkillAtk,"LG_BANISHINGPOINT",25*(.@r/3);
+      bonus2 bSkillAtk,"LG_CANNONSPEAR",25*(.@r/3);
+      if (.@r>=13)
+         bonus2 bSkillCooldown,"LG_CANNONSPEAR",-1500;
+  - Combos:
+      - Combo:
+          - Berzebub_Card    # 4145
+          - Tristan_Cape_LT    # 480453
+    Script: |
+      bonus2 bAddClass,Class_Boss,30;
+      skill "LG_REFLECTDAMAGE",3;
+      bonus2 bSubRace,RC_Undead,50;
+      bonus2 bSubEle,Ele_Ghost,-30;
+  - Combos:
+      - Combo:
+          - Cowraiders1_Card    # 27170
+          - Royal_Nightwatch_US    # 480539
+    Script: |
+      bonus bMaxHPrate,15;
+      bonus bLongAtkRate,20;
+      bonus2 bSkillAtk,"RL_BANISHING_BUSTER",30;
+  - Combos:
+      - Combo:
+          - Cowraiders2_Card    # 27171
+          - Royal_Nightwatch_US    # 480539
+    Script: |
+      bonus bMaxHPrate,15;
+      bonus bLongAtkRate,20;
+      bonus2 bSkillAtk,"RL_FIREDANCE",30;
+  - Combos:
+      - Combo:
+          - Emerald_Ring_LT    # 490526
+          - Emerald_Earring_LT_TW    # 490527
+    Script: |
+      bonus2 bAddSize,Size_All,12;
+      bonus2 bMagicAddSize,Size_All,12;
+  - Combos:
+      - Combo:
+          - EC_Boots__LT_TW    # 470269
+          - Emerald_Ring_LT    # 490526
+    Script: |
+      bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-1000;
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",20;
+      bonus2 bSkillAtk,"TR_METALIC_FURY",20;
+  - Combos:
+      - Combo:
+          - EC_Boots__LT_TW    # 470269
+          - Emerald_Earring_LT_TW    # 490527
+    Script: |
+      bonus2 bSkillCooldown,"CG_ARROWVULCAN",-700;
+      bonus2 bSkillAtk,"CG_ARROWVULCAN",20;
+      bonus2 bSkillAtk,"TR_ROSEBLOSSOM",20;
+      bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",20;
+  - Combos:
+      - Combo:
+          - EC_Boots__LT_TW    # 470269
+          - Emerald_Ring_LT    # 490526
+          - Emerald_Earring_LT_TW    # 490527
+    Script: |
+      bonus2 bAddClass,Class_All,15;
+      bonus2 bMagicAddClass,Class_All,15;
+  - Combos:
+      - Combo:
+          - Faceworm_L_Card    # 27167
+          - Occult_Nature_Cape_LT    # 480526
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Water,10;
+      if (getequiprefinerycnt(EQI_GARMENT)>=14) {
+         if (eaclass()&EAJL_FOURTH && BaseJob == Job_Wizard) {
+             skill "EM_DIAMOND_STORM",4;
+         }
+         if (eaclass()&EAJL_FOURTH && BaseJob == Job_Sage) {
+             skill "AG_RAIN_OF_CRYSTAL",4;
+         }
+      }
+  - Combos:
+      - Combo:
+          - Arc_Elder_Card    # 4629
+          - Occult_Nature_Cape_LT    # 480526
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Earth,10;
+      if (getequiprefinerycnt(EQI_GARMENT)>=14) {
+         if (eaclass()&EAJL_FOURTH && BaseJob == Job_Wizard) {
+             skill "EM_TERRA_DRIVE",4;
+         }
+         if (eaclass()&EAJL_FOURTH && BaseJob == Job_Sage) {
+             skill "AG_STRANTUM_TREMOR",4;
+         }
+      }
+  - Combos:
+      - Combo:
+          - Polluted_Spi_Q_Card    # 27362
+          - Occult_Nature_Cape_LT    # 480526
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Earth,30;
+      bonus2 bMagicAtkEle,Ele_Water,30;
+      bonus2 bSubEle,Ele_All,20;
+      if (getequiprefinerycnt(EQI_GARMENT)>=14) {
+         if (eaclass()&EAJL_FOURTH && BaseJob == Job_Wizard) {
+             skill "EM_DIAMOND_STORM",5;
+             skill "EM_TERRA_DRIVE",5;
+         }
+         if (eaclass()&EAJL_FOURTH && BaseJob == Job_Sage) {
+             skill "AG_RAIN_OF_CRYSTAL",5;
+             skill "AG_STRANTUM_TREMOR",5;
+         }
+      }
+  - Combos:
+      - Combo:
+          - Celine_Brooch    # 28513
+          - Cel_Design_Pendant    # 490482
+    Script: |
+      bonus2 bMagicAddEle,Ele_All,25;
+  - Combos:
+      - Combo:
+          - Celines_Ribbon    # 18849
+          - Cel_Design_Pendant    # 490482
+    Script: |
+      bonus2 bMagicAddRace,RC_All,3*(getequiprefinerycnt(EQI_HEAD_TOP)/2);
+  - Combos:
+      - Combo:
+          - Ahat_Card    # 27322
+          - 2023Seppay_01    # 490452
+      - Combo:
+          - Shnaim_Card    # 27323
+          - 2023Seppay_01    # 490452
+    Script: |
+      bonus bMaxHPrate,5;
+      bonus bBaseAtk,50;
+      bonus bMatk,50;
+  - Combos:
+      - Combo:
+          - Force3    # 4910
+          - 2023Seppay_01    # 490452
+    Script: |
+      bonus bPow,5;
+      bonus bShortAtkRate,8;
+  - Combos:
+      - Combo:
+          - Intellect3    # 4913
+          - 2023Seppay_01    # 490452
+    Script: |
+      bonus bSpl,5;
+      bonus2 bMagicAtkEle,Ele_All,10;
+  - Combos:
+      - Combo:
+          - Artful3    # 4922
+          - 2023Seppay_01    # 490452
+    Script: |
+      bonus bCon,5;
+      bonus bLongAtkRate,8;
+  - Combos:
+      - Combo:
+          - Swiftness3    # 4916
+          - 2023Seppay_01    # 490452
+    Script: |
+      bonus bAspd,1;
+      bonus bDelayrate,-5;
+  - Combos:
+      - Combo:
+          - Fortune3    # 4925
+          - 2023Seppay_01    # 490452
+    Script: |
+      bonus bCRate,5;
+      bonus bCritAtkRate,10;
+  - Combos:
+      - Combo:
+          - Tough3    # 4919
+          - 2023Seppay_01    # 490452
+    Script: |
+      bonus bRes,20;
+      bonus bMRes,20;
+      bonus bMaxHPrate,5;
+  - Combos:
+      - Combo:
+          - Hero    # 29509
+          - aegis_313447    # 313447
+    Script: |
+      bonus2 bSkillCooldown,"DK_DRAGONIC_BREATH",-100;
+  - Combos:
+      - Combo:
+          - Release_Of_Magic    # 29371
+          - aegis_313448    # 313448
+    Script: |
+      bonus2 bSkillCooldown,"AG_MYSTERY_ILLUSION",-1000;
+  - Combos:
+      - Combo:
+          - Hero    # 29509
+          - aegis_313454    # 313454
+    Script: |
+      bonus2 bSkillCooldown,"MT_MIGHTY_SMASH",-100;
+  - Combos:
+      - Combo:
+          - Hero    # 29509
+          - aegis_313476    # 313476
+    Script: |
+      bonus2 bSkillCooldown,"NW_WILD_FIRE",-300;
+  - Combos:
+      - Combo:
+          - Hero    # 29509
+          - aegis_312973    # 312973
+    Script: |
+      bonus2 bSkillCooldown,"SS_KAGENOMAI",-200;
+  - Combos:
+      - Combo:
+          - Hero    # 29509
+          - aegis_312972    # 312972
+    Script: |
+      autobonus "{ bonus2 bSkillUseSP,\"SS_KAGEGARI\",229; bonus2 bSkillUseSP,\"SS_KAGENOMAI\",189; bonus2 bSkillUseSP,\"SS_KAGEGISSEN\",189; bonus2 bSkillUseSP,\"SS_KAGEAKUMU\",279; }",30,20000,BF_WEAPON;
+  - Combos:
+      - Combo:
+          - Release_Of_Magic    # 29371
+          - aegis_312974    # 312974
+    Script: |
+      bonus2 bSkillCooldown,"SS_SEKIENHOU",-300;
+      bonus2 bSkillCooldown,"SS_RAIDENPOU",-300;
+  - Combos:
+      - Combo:
+          - Hero    # 29509
+          - aegis_312975    # 312975
+    Script: |
+      bonus2 bSkillCooldown,"SH_CHUL_HO_SONIC_CLAW",-200;
+      bonus2 bSkillCooldown,"SH_HOGOGONG_STRIKE",-200;
+  - Combos:
+      - Combo:
+          - Thorny_Buckler    # 2124
+          - Thorny_Shoes_BR    # 22149
+    Script: |
+      bonus bAspdRate,6*(min(getequiprefinerycnt(EQI_HAND_L),9)/3);
+  - Combos:
+      - Combo:
+          - Bloody_Cross    # 16017
+          - Beelzebub_Hat    # 19319
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus bBaseAtk,25*(.@r/3);
+      bonus bMatk,25*(.@r/3);
+      bonus2 bSkillAtk,"NPC_DARKCROSS",20*(.@r/3);
+      bonus5 bAutoSpell,"NPC_DARKCROSS",max(getskilllv("AB_DUPLELIGHT"),1),500,BF_MAGIC,1;
+      autobonus "{ bonus3 bAutoSpell,\"NPC_VAMPIRE_GIFT\",3,200; }",8,5000,BF_WEAPON,"{ active_transform 1874,5000; }";
+      if (getskilllv("AB_DUPLELIGHT")>=1)
+         bonus3 bAutoSpell,"NPC_DARKCROSS",getskilllv("AB_DUPLELIGHT"),500;
+      if (.@r>=12)
+         bonus2 bSkillAtk,"NPC_DARKCROSS",100;
+  - Combos:
+      - Combo:
+          - Tendrilion_Card    # 4463
+          - KarduiEar_BR    # 19252
+    Script: |
+      .@type = getiteminfo(getequipid(EQI_COMPOUND_ON), ITEMINFO_VIEW);
+      if (.@type == W_BOOK || .@type == W_STAFF || .@type == W_2HSTAFF) {
+         .@r = getequiprefinerycnt(EQI_HAND_R);
+         bonus2 bMagicAddRace,RC_Player_Doram,2*(min(.@r,14)/2);
+         bonus2 bMagicAddRace,RC_Player_Human,2*(min(.@r,14)/2);
+      }
+  - Combos:
+      - Combo:
+          - KarduiEar_BR    # 19252
+          - Tree_Of_Sprout_JP    # 19299
+    Script: |
+      .@a = readparam(bDex);
+      bonus bMatk,10;
+      bonus bVariableCastrate,-2;
+      bonus2 bSubRace,RC_Player_Doram,2;
+      bonus2 bSubRace,RC_Player_Human,2;
+      if (.@a >= 108) {
+         bonus bMatk,20;
+         bonus bVariableCastrate,-3;
+         bonus2 bSubRace,RC_Player_Doram,2;
+         bonus2 bSubRace,RC_Player_Human,2;
+      }
+      if (.@a >= 120) {
+         bonus bMatk,30;
+         bonus bVariableCastrate,-5;
+         bonus2 bSubRace,RC_Player_Doram,4;
+         bonus2 bSubRace,RC_Player_Human,4;
+      }
+  - Combos:
+      - Combo:
+          - Imperial_Feather    # 18823
+          - Royalguard_Necklace_BR    # 19318
+    Script: |
+      .@a = readparam(bAgi);
+      bonus bBaseAtk,10;
+      bonus bAspdRate,3;
+      bonus2 bResEff,Eff_Blind,10000;
+      bonus2 bResEff,Eff_Silence,10000;
+      bonus2 bSubRace,RC_Player_Doram,2;
+      bonus2 bSubRace,RC_Player_Human,2;
+      if (.@a>=108) {
+         bonus bBaseAtk,20;
+         bonus bAspdRate,5;
+         bonus2 bSubRace,RC_Player_Doram,2;
+         bonus2 bSubRace,RC_Player_Human,2;
+      }
+      if (.@a>=120) {
+         bonus bBaseAtk,40;
+         bonus bAspdRate,7;
+         bonus2 bSubRace,RC_Player_Doram,4;
+         bonus2 bSubRace,RC_Player_Human,4;
+      }
+  - Combos:
+      - Combo:
+          - Phreeoni_Card    # 4121
+          - Phreeoni_Wing_BR    # 15372
+    Script: |
+      bonus bFlee,-100;
+      bonus bPerfectHitAddRate,50;
+      bonus2 bResEff,Eff_Stone,10000;
+  - Combos:
+      - Combo:
+          - Pole_Axe_IL    # 32005
+          - aegis_420252    # 420252
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      skill "CR_SPEARQUICKEN",5;
+      bonus2 bSkillAtk,"LK_SPIRALPIERCE",8*(.@r/2);
+      bonus2 bSkillAtk,"KN_BRANDISHSPEAR",8*(.@r/2);
+  - Combos:
+      - Combo:
+          - War_Axe_IL    # 1326
+          - aegis_420252    # 420252
+    Script: |
+      bonus2 bSkillCooldown,"NC_AXETORNADO",-1000;
+      bonus2 bSkillCooldown,"GN_CART_TORNADO",-1000;
+      bonus2 bAddSize,Size_All,2*(getequiprefinerycnt(EQI_HAND_R)/2);
+  - Combos:
+      - Combo:
+          - Iron_Driver_IL    # 16065
+          - aegis_420252    # 420252
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus bMatk,110;
+      bonus3 bAutoSpell,"NPC_DARKSTRIKE",getskilllv("AB_DUPLELIGHT"),300;
+      bonus2 bSkillAtk,"NPC_DARKSTRIKE",6*(.@r/2);
+      if (.@r>=9) {
+         bonus2 bAddEle,Ele_Holy,10;
+         bonus2 bMagicAddEle,Ele_Holy,10;
+         if (.@r>=11) {
+             bonus2 bMagicAtkEle,Ele_Dark,15;
+         }
+      }
+  - Combos:
+      - Combo:
+          - Republic_Hat    # 19115
+          - aegis_420253    # 420253
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bAspd,1;
+      bonus bBaseAtk,15*(.@r/2);
+      bonus bCritAtkRate,4*(.@r/2);
+      if (.@r>=7) {
+         bonus bCriticalLong,30;
+         bonus bAspdRate,10;
+         if (.@r>=9) {
+             bonus2 bAddSize,Size_All,10;
+         }
+      }
+  - Combos:
+      - Combo:
+          - EXODUS_JOKER_XIII    # 28214
+          - aegis_420253    # 420253
+    Script: |
+      bonus bAspd,1;
+      bonus5 bAutoSpell,"RA_UNLIMIT",1,20,BF_LONG,0;
+      bonus2 bSkillAtk,"ASC_BREAKER",10*(getequiprefinerycnt(EQI_HAND_R)/3);
+    UnEquipScript: |
+      sc_end SC_UNLIMIT;
+  - Combos:
+      - Combo:
+          - Mercenary_Ring_A    # 28425
+          - aegis_420253    # 420253
+    Script: |
+      bonus bBaseAtk,30;
+      bonus2 bSkillAtk,"TK_COUNTER",15;
+      bonus2 bSkillAtk,"TK_DOWNKICK",15;
+      bonus2 bSkillAtk,"TK_TURNKICK",15;
+      bonus2 bSkillAtk,"SO_VACUUM_EXTREME",15;
+  - Combos:
+      - Combo:
+          - Mercenary_Ring_B    # 28426
+          - aegis_420253    # 420253
+    Script: |
+      bonus bMatk,30;
+      bonus2 bSkillAtk,"NJ_KOUENKA",15;
+      bonus2 bSkillAtk,"NJ_HYOUSENSOU",15;
+      bonus2 bSkillAtk,"NJ_HUUJIN",15;
+      
