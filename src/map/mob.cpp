@@ -1561,7 +1561,7 @@ int32 mob_unlocktarget(struct mob_data *md, t_tick tick)
 		break;
 	case MSS_LOOT:
 		// Looters that lost their target stop after 0.5-1.5 cells moved
-		unit_stop_walking_soon(md->bl);
+		unit_stop_walking_soon(md->bl, tick);
 		[[fallthrough]];
 	default:
 		unit_stop_attack( &md->bl );
@@ -1975,14 +1975,21 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 	if (tbl->type == BL_ITEM)
 	{	//Loot time.
 		struct flooritem_data *fitem;
-		if (md->ud.target == tbl->id && md->ud.walktimer != INVALID_TIMER)
-			return true; //Already locked.
+		int32 loot_range = 0;
+		if (md->ud.walktimer != INVALID_TIMER) {
+			// Ready to loot
+			if (unit_getx(md->bl, tick) == tbl->x && unit_gety(md->bl, tick) == tbl->y)
+				loot_range = 1;
+			// Already moving to target item
+			else if (md->ud.target == tbl->id)
+				return true;
+		}
 		if (md->lootitems == nullptr)
 		{	//Can't loot...
 			mob_unlocktarget(md, tick);
 			return true;
 		}
-		if (!check_distance_bl(&md->bl, tbl, 0))
+		if (!check_distance_bl(&md->bl, tbl, loot_range))
 		{	//Still not within loot range.
 			if (!(mode&MD_CANMOVE))
 			{	//A looter that can't move? Real smart.

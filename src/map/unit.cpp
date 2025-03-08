@@ -1485,82 +1485,157 @@ int32 unit_warp(struct block_list *bl,int16 m,int16 x,int16 y,clr_type type)
 }
 
 /**
+ * Calculates the exact coordinates of a bl considering the walktimer
+ * This is needed because we only update X/Y when finishing movement to the next cell
+ * Officially, however, the coordinates update when crossing the border to the next cell
+ * @param bl: Object to get the coordinates of
+ * @param tick: Tick based on which we calculate the coordinates
+ * @param x: Will be set to the exact X value of the bl
+ * @param y: Will be set to the exact Y value of the bl
+ * @param sx: Will be set to the exact subcell X value of the bl
+ * @param sy: Will be set to the exact subcell Y value of the bl
+ * @return Whether the coordinates were set (true) or retrieving them failed (false)
+ */
+bool unit_pos(block_list& bl, t_tick tick, int16 &x, int16 &y, uint8 &sx, uint8 &sy)
+{
+	unit_data* ud = unit_bl2ud(&bl);
+
+	if (ud == nullptr)
+		return false;
+
+	if (ud->walkpath.path_pos >= ud->walkpath.path_len)
+		return false;
+
+	if (ud->walktimer == INVALID_TIMER)
+		return false;
+
+	const TimerData* td = get_timer(ud->walktimer);
+
+	if (td == nullptr)
+		return false;
+
+	// Set initial coordinates
+	x = bl.x;
+	y = bl.y;
+	sx = 8;
+	sy = 8;
+
+	// Get how much percent we traversed on the timer
+	double cell_percent = 1.0 - ((double)DIFF_TICK(td->tick, gettick()) / (double)td->data);
+
+	if (cell_percent > 0.0 && cell_percent < 1.0) {
+		// Set subcell coordinates according to timer
+		// This gives a value between 8 and 39
+		sx = static_cast<uint8>(24.0 + dirx[ud->walkpath.path[ud->walkpath.path_pos]] * 16.0 * cell_percent);
+		sy = static_cast<uint8>(24.0 + diry[ud->walkpath.path[ud->walkpath.path_pos]] * 16.0 * cell_percent);
+		// 16-31 reflect sub position 0-15 on the current cell
+		// 8-15 reflect sub position 8-15 at -1 main coordinate
+		// 32-39 reflect sub position 0-7 at +1 main coordinate
+		if (sx < 16 || sy < 16 || sx > 31 || sy > 31) {
+			if (sx < 16) x--;
+			if (sy < 16) y--;
+			if (sx > 31) x++;
+			if (sy > 31) y++;
+		}
+		sx %= 16;
+		sy %= 16;
+	}
+	else if (cell_percent >= 1.0) {
+		// Assume exactly one cell moved
+		x += dirx[ud->walkpath.path[ud->walkpath.path_pos]];
+		y += diry[ud->walkpath.path[ud->walkpath.path_pos]];
+	}
+
+	return true;
+}
+
+/**
+ * Helper function to get the exact X coordinate
+ * @param bl: Object to get the X coordinate of
+ * @param tick: Tick based on which we calculate the coordinate
+ * @return The exact X coordinate
+ */
+int16 unit_getx(block_list& bl, t_tick tick) {
+	int16 x, y;
+	uint8 sx, sy;
+
+	// Get exact coordinates
+	if (unit_pos(bl, tick, x, y, sx, sy))
+		return x;
+
+	// If above failed, object is probably not moving, so just return current X
+	return bl.x;
+}
+
+/**
+ * Helper function to get the exact Y coordinate
+ * @param bl: Object to get the Y coordinate of
+ * @param tick: Tick based on which we calculate the coordinate
+ * @return The exact Y coordinate
+ */
+int16 unit_gety(block_list& bl, t_tick tick) {
+	int16 x, y;
+	uint8 sx, sy;
+
+	// Get exact coordinates
+	if (unit_pos(bl, tick, x, y, sx, sy))
+		return y;
+
+	// If above failed, object is probably not moving, so just return current Y
+	return bl.y;
+}
+
+/**
  * Updates the walkpath of a unit to end after 0.5-1.5 cells moved
  * Sends required packet for proper display on the client using subcoordinates
  * @param bl: Object to stop walking
  */
-void unit_stop_walking_soon(struct block_list& bl)
+void unit_stop_walking_soon(struct block_list& bl, t_tick tick)
 {
 	struct unit_data* ud = unit_bl2ud(&bl);
 
 	if (ud == nullptr)
 		return;
 
-	// Less than 1 cell left to walk
-	// We need to make sure to_x and to_y are reset to match the walk path in case they were modified
-	if (ud->walkpath.path_pos + 1 >= ud->walkpath.path_len) {
-		ud->to_x = bl.x;
-		ud->to_y = bl.y;
-		// One more cell to move
-		if (ud->walkpath.path_pos + 1 == ud->walkpath.path_len) {
-			ud->to_x += dirx[ud->walkpath.path[ud->walkpath.path_pos]];
-			ud->to_y += diry[ud->walkpath.path[ud->walkpath.path_pos]];
-		}
-		return;
-	}
-
-	// Get how much percent we traversed on the timer
-	// If timer is invalid, we are exactly on cell center (0% traversed)
-	double cell_percent = 0.0;
-	if (ud->walktimer != INVALID_TIMER) {
-		const struct TimerData* td = get_timer(ud->walktimer);
-
-		if (td == nullptr)
-			return;
-
-		// Get how much percent we traversed on the timer
-		cell_percent = 1.0 - ((double)DIFF_TICK(td->tick, gettick()) / (double)td->data);
-	}
-
 	int16 ox = bl.x, oy = bl.y; // Remember original x and y coordinates
 	int16 path_remain = 1; // Remaining path to walk
+	bool shortened = false;
 
-	if (cell_percent > 0.0 && cell_percent < 1.0) {
-		// Set subcell coordinates according to timer
-		// This gives a value between 8 and 39
-		ud->sx = static_cast<decltype(ud->sx)>(24.0 + dirx[ud->walkpath.path[ud->walkpath.path_pos]] * 16.0 * cell_percent);
-		ud->sy = static_cast<decltype(ud->sy)>(24.0 + diry[ud->walkpath.path[ud->walkpath.path_pos]] * 16.0 * cell_percent);
-		// 16-31 reflect sub position 0-15 on the current cell
-		// 8-15 reflect sub position 8-15 at -1 main coordinate
-		// 32-39 reflect sub position 0-7 at +1 main coordinate
-		if (ud->sx < 16 || ud->sy < 16 || ud->sx > 31 || ud->sy > 31) {
+	if (ud->walkpath.path_pos + 1 >= ud->walkpath.path_len) {
+		// Less than 1 cell left to walk so no need to shorten the path
+		// Since we don't need to resend the move packet, we don't need to calculate the exact coordinates
+		path_remain = ud->walkpath.path_len - ud->walkpath.path_pos;
+	}
+	else {
+		// Set coordinates to exact coordinates
+		unit_pos(bl, tick, bl.x, bl.y, ud->sx, ud->sy);
+
+		// If x or y already changed, we need to move one more cell
+		if (ox != bl.x || oy != bl.y)
 			path_remain = 2;
-			if (ud->sx < 16) bl.x--;
-			if (ud->sy < 16) bl.y--;
-			if (ud->sx > 31) bl.x++;
-			if (ud->sy > 31) bl.y++;
+
+		// Shorten walkpath
+		if (ud->walkpath.path_pos + path_remain < ud->walkpath.path_len) {
+			ud->walkpath.path_len = ud->walkpath.path_pos + path_remain;
+			shortened = true;
 		}
-		ud->sx %= 16;
-		ud->sy %= 16;
 	}
-	else if (cell_percent >= 1.0) {
-		// Assume exactly one cell moved
-		bl.x += dirx[ud->walkpath.path[ud->walkpath.path_pos]];
-		bl.y += diry[ud->walkpath.path[ud->walkpath.path_pos]];
-		path_remain = 2;
+
+	// Make sure to_x and to_y match the walk path even if not shortened in case they were modified
+	ud->to_x = ox;
+	ud->to_y = oy;
+	for (int32 i = 0; i < path_remain; i++) {
+		ud->to_x += dirx[ud->walkpath.path[ud->walkpath.path_pos + i]];
+		ud->to_y += diry[ud->walkpath.path[ud->walkpath.path_pos + i]];
 	}
-	// Shorten walkpath
-	if (ud->walkpath.path_pos + path_remain <= ud->walkpath.path_len) {
-		ud->walkpath.path_len = ud->walkpath.path_pos + path_remain;
-		ud->to_x = ox;
-		ud->to_y = oy;
-		for (int32 i = 0; i < path_remain; i++) {
-			ud->to_x += dirx[ud->walkpath.path[ud->walkpath.path_pos + i]];
-			ud->to_y += diry[ud->walkpath.path[ud->walkpath.path_pos + i]];
-		}
-		// Send movement packet with calculated coordinates and subcoordinates
+	// To prevent sending a pointless walk command
+	ud->state.change_walk_target = 0;
+
+	// Send movement packet with calculated coordinates and subcoordinates
+	// Only need to send if walkpath was shortened
+	if (shortened)
 		clif_move(*ud);
-	}
+
 	// Reset coordinates
 	bl.x = ox;
 	bl.y = oy;
