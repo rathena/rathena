@@ -10366,9 +10366,9 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 
 				if (time) {
 					// Need to set state here as it's not set otherwise
-					md->state.skillstate = MSS_WALK;
+					mob_setstate(*md, MSS_WALK);
 					// Set AI to inactive for the duration of this movement
-					md->last_thinktime = tick + time;
+					md->next_thinktime = tick + time;
 				}
 			}
 		}
@@ -14013,7 +14013,9 @@ TIMER_FUNC(skill_castend_id){
 			break;
 
 		if(md) {
-			md->last_thinktime=tick +MIN_MOBTHINKTIME;
+			// When a monster uses a skill, its AI will be inactive for its attack motion
+			// This is also the reason why it doesn't move during this time
+			md->next_thinktime = tick + status_get_amotion(src);
 			if(md->skill_idx >= 0 && md->db->skill[md->skill_idx]->emotion >= 0)
 				clif_emotion( *src, static_cast<emotion_type>( md->db->skill[md->skill_idx]->emotion ) );
 		}
@@ -14114,6 +14116,10 @@ TIMER_FUNC(skill_castend_id){
 					skill_blockpc_start(*sd, ud->skill_id, cooldown);
 			}
 			break;
+			case BL_MOB:
+				// Sets cooldowns and attack delay
+				mobskill_end(*md, tick);
+			break;
 			case BL_HOM:
 			{
 				homun_data &hd = reinterpret_cast<homun_data &>(*src);
@@ -14167,10 +14173,9 @@ TIMER_FUNC(skill_castend_id){
 			}
 		}
 		if (skill_get_state(ud->skill_id) != ST_MOVE_ENABLE) {
-			// When monsters used a skill they won't walk for amotion, this does not apply to players
-			// This is also important for monster skill usage behavior
+			// Monsters don't need a default walk delay as their AI is inactive after using a skill in general
 			if (src->type == BL_MOB)
-				unit_set_walkdelay(src, tick, max((int32)status_get_amotion(src), skill_get_walkdelay(ud->skill_id, ud->skill_lv)), 1);
+				unit_set_walkdelay(src, tick, skill_get_walkdelay(ud->skill_id, ud->skill_lv), 1);
 			else
 				unit_set_walkdelay(src, tick, battle_config.default_walk_delay + skill_get_walkdelay(ud->skill_id, ud->skill_lv), 1);
 		}
@@ -14352,7 +14357,9 @@ TIMER_FUNC(skill_castend_pos){
 			break;
 
 		if(md) {
-			md->last_thinktime=tick +MIN_MOBTHINKTIME;
+			// When a monster uses a skill, its AI will be inactive for its attack motion
+			// This is also the reason why it doesn't move during this time
+			md->next_thinktime = tick + status_get_amotion(src);
 			if(md->skill_idx >= 0 && md->db->skill[md->skill_idx]->emotion >= 0)
 				clif_emotion( *src, static_cast<emotion_type>( md->db->skill[md->skill_idx]->emotion ) );
 		}
@@ -14370,6 +14377,10 @@ TIMER_FUNC(skill_castend_pos){
 			int32 cooldown = pc_get_skillcooldown(sd,ud->skill_id, ud->skill_lv);
 			if(cooldown) skill_blockpc_start(*sd, ud->skill_id, cooldown);
 		}
+		else if (md != nullptr) {
+			// Sets cooldowns and attack delay
+			mobskill_end(*md, tick);
+		}
 		if( battle_config.display_status_timers && sd )
 			clif_status_change(src, EFST_POSTDELAY, 1, skill_delayfix(src, ud->skill_id, ud->skill_lv), 0, 0, 0);
 //		if( sd )
@@ -14381,10 +14392,9 @@ TIMER_FUNC(skill_castend_pos){
 //				break;
 //			}
 //		}
-		// When monsters used a skill they won't walk for amotion, this does not apply to players
-		// This is also important for monster skill usage behavior
+		// Monsters don't need a default walk delay as their AI is inactive after using a skill in general
 		if (src->type == BL_MOB)
-			unit_set_walkdelay(src, tick, max((int32)status_get_amotion(src), skill_get_walkdelay(ud->skill_id, ud->skill_lv)), 1);
+			unit_set_walkdelay(src, tick, skill_get_walkdelay(ud->skill_id, ud->skill_lv), 1);
 		else
 			unit_set_walkdelay(src, tick, battle_config.default_walk_delay + skill_get_walkdelay(ud->skill_id, ud->skill_lv), 1);
 		map_freeblock_lock();
