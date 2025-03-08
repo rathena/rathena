@@ -1965,6 +1965,12 @@ struct PACKET_ZC_SKILLMSG {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_SKILLMSG, 0x215);
 
+struct PACKET_CZ_REQ_EMOTION_EXPANSION{
+	int16 packetType;
+	uint8 unknown[4];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_EMOTION_EXPANSION, 0xbe9);
+
 #if PACKETVER >= 20120618
 struct PACKET_ZC_EFST_SET_ENTER{
 	uint16 packetType;

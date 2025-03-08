@@ -1416,6 +1416,12 @@ enum sc_type : int16 {
 	SC_SKY_ENCHANT,
 	SC_WILD_WALK,
 
+	// Shinkiro/Shiranui
+	SC_SHADOW_CLOCK,
+	SC_SHINKIROU_CALL,
+	SC_NIGHTMARE,
+	SC_SBUNSHIN,
+
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 

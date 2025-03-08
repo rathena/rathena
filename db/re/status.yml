@@ -765,7 +765,7 @@ Body:
       OverlapIgnoreLevel: true
       RemoveOnHermode: true
     Script: |
-      bonus bMatk, getstatus(SC_MATKPOTION, 1);  /* TODO: hidden in status window */
+      bonus bMatk2, getstatus(SC_MATKPOTION, 1);
   - Status: Wedding
     States:
       NoAttack: true
@@ -9756,3 +9756,20 @@ Body:
       NoBanishingBuster: true
       NoDispell: true
       NoClearance: true
+  - Status: Shadow_Clock
+    Icon: EFST_SHADOW_CLOCK
+    DurationLookup: SS_TOKEDASU
+    CalcFlags:
+      Speed: true
+  - Status: Shinkirou_Call
+    Icon: EFST_SBUNSHIN
+    DurationLookup: SS_SHINKIROU
+    CalcFlags:
+      Speed: true
+  - Status: Nightmare
+    Icon: EFST_NIGHTMARE
+    DurationLookup: SS_KAGEGARI
+    Flags:
+      Debuff: true
+      BlEffect: true
+      DisplayPc: true

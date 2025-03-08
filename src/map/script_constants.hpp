@@ -786,6 +786,7 @@
 	export_constant2("bMagicHPGainValue",SP_MAGIC_HP_GAIN_VALUE);
 	export_constant2("bAddMonsterIdDropItem",SP_ADD_MONSTER_ID_DROP_ITEM);
 	export_constant2("bMatk",SP_EMATK);
+	export_constant2("bMatk2",SP_EMATK_HIDDEN);
 	export_constant2("bComaClass",SP_COMA_CLASS);
 	export_constant2("bComaRace",SP_COMA_RACE);
 	export_constant2("bSkillUseSPrate",SP_SKILL_USE_SP_RATE);
@@ -1964,6 +1965,10 @@
 	export_constant(SC_STAR_BURST);
 	export_constant(SC_SKY_ENCHANT);
 	export_constant(SC_WILD_WALK);
+	export_constant(SC_SHADOW_CLOCK);
+	export_constant(SC_SHINKIROU_CALL);
+	export_constant(SC_NIGHTMARE);
+	export_constant(SC_SBUNSHIN);
 
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
 /// @APIHOOK_START(EFST_CONST)
@@ -9794,6 +9799,18 @@
 	export_constant(FOOTPRINT_EF_DOGFOOT);
 	export_constant(HAT_EF_C_AUSPICLOUD);
 	export_constant(HAT_EF_AURA_OF_GHOST_S);
+	export_constant(HAT_EF_C_ROS2024_WING_1);
+	export_constant(FOOTPRINT_EF_DUMPLING);
+	export_constant(FOOTPRINT_EF_PANDA_BASIC);
+	export_constant(FOOTPRINT_EF_PANDA_COLOR);
+	export_constant(HAT_EF_ATQUE_POENITENTIA);
+	export_constant(HAT_EF_PERM_FROST_OBLIVION);
+	export_constant(HAT_EF_ATQUE_POENITENTIA2);
+	export_constant(HAT_EF_GUIDE_OF_DEAD_TEXT);
+	export_constant(HAT_EF_MEDJED_TEXT);
+	export_constant(HAT_EF_INKPAINTING_DAY);
+	export_constant(HAT_EF_INKPAINTING_NIGHT);
+	export_constant(HAT_EF_KUNG_FU_PANDA);
 
 	/* pet catch */
 	export_constant(PET_CATCH_UNIVERSAL_NO_BOSS);
@@ -10289,6 +10306,7 @@
 	export_constant(UNT_GROUND_GRAVITATION);
 	export_constant(UNT_KUNAIWAIKYOKU);
 	export_constant(UNT_STAR_BURST);
+	export_constant(UNT_KUNAIKAITEN);
 	export_constant(UNT_GD_LEADERSHIP);
 	export_constant(UNT_GD_GLORYWOUNDS);
 	export_constant(UNT_GD_SOULCOLD);

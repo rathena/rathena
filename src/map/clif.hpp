@@ -911,7 +911,6 @@ void clif_standing(block_list& bl);
 void clif_sprite_change(struct block_list *bl, int32 id, int32 type, int32 val, int32 val2, enum send_target target);
 void clif_changelook(struct block_list *bl,int32 type,int32 val);	// area
 void clif_changetraplook(struct block_list *bl,int32 val); // area
-void clif_refreshlook(struct block_list *bl,int32 id,int32 type,int32 val,enum send_target target); //area specified in 'target'
 void clif_arrowequip( map_session_data& sd );
 void clif_arrow_fail( map_session_data& sd, e_action_failure type );
 void clif_arrow_create_list( map_session_data& sd );
