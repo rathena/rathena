@@ -58277,6 +58277,7 @@ Body:
     Script: |
       bonus2 bSkillCooldown,"CG_ARROWVULCAN",-700;
       bonus2 bSkillAtk,"CG_ARROWVULCAN",20;
+      bonus2 bSkillAtk,"TR_ROSEBLOSSOM",20;
       bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",20;
   - Combos:
       - Combo:
