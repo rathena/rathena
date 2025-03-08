@@ -1729,36 +1729,6 @@ int32 mob_randomwalk(struct mob_data *md,t_tick tick)
 }
 
 /**
- * Makes a monster inactive and immune to damage during the warp invincibility of its target
- * @param md: Mob that should be become inactive and invincible
- */
-void mob_warpchase_invincible(mob_data& md) {
-	if (!(battle_config.mob_warp&16))
-		return;
-
-	if (md.target_id == 0)
-		return;
-
-	map_session_data *sd = map_id2sd(md.target_id);
-	if (sd == nullptr)
-		return;
-
-	const TimerData* timer = get_timer(sd->invincible_timer);
-	if (timer == nullptr)
-		return;
-
-	t_tick duration = DIFF_TICK(timer->tick, gettick());
-	if (duration <= 0)
-		return;
-
-	// To prevent the monster losing the target, we make the monster AI inactive for the pc invincibility duration
-	md.next_thinktime = timer->tick + TIMER_MIN_INTERVAL;
-
-	// To prevent exploits the monster is immune to damage during that time
-	sc_start(&md.bl, &md.bl, SC_BARRIER, 100, 1, duration);
-}
-
-/**
  * Makes a monster move to the closest warp if corresponding configs are set
  * @param md: Mob that should move to the warp
  * @param target: Target the mob should follow

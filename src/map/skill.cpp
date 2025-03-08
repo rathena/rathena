@@ -16640,11 +16640,7 @@ static int32 skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, 
 			} else if(bl->type == BL_MOB && battle_config.mob_warp&2) {
 				int16 m = map_mapindex2mapid(sg->val3);
 				if (m < 0) break; //Map not available on this map-server.
-
-				if (unit_warp(bl, m, sg->val2>>16, sg->val2&0xffff, CLR_TELEPORT) == 0) {
-					mob_data& md = reinterpret_cast<mob_data&>(*bl);
-					mob_warpchase_invincible(md);
-				}
+				unit_warp(bl,m,sg->val2>>16,sg->val2&0xffff,CLR_TELEPORT);
 			}
 		}
 			break;

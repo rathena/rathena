@@ -23,13 +23,6 @@ const t_tick INFINITE_TICK = -1;
 #define INVALID_TIMER -1
 #define CLIF_WALK_TIMER -2
 
-// If the server can't handle processing thousands of monsters
-// or many connected clients, please increase TIMER_MIN_INTERVAL.
-// The official interval of 20ms is however strongly recommended,
-// as it is needed for perfect server-client syncing.
-const t_tick TIMER_MIN_INTERVAL = 20;
-const t_tick TIMER_MAX_INTERVAL = 1000;
-
 // timer flags
 enum {
 	TIMER_ONCE_AUTODEL = 0x01,
