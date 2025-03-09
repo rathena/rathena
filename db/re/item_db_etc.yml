@@ -51942,7 +51942,7 @@ Body:
       bonus bMaxSPrate,-50;
   - Id: 300346
     AegisName: SLD_Ill_Dracula_Card_J
-    Name: Furious Dracula Card
+    Name: Sealed Furious Dracula Card
     Type: Card
     Buy: 20
     Weight: 10
@@ -81605,6 +81605,26 @@ Body:
     Name: Latent Release (Night Watch IV)
     Type: Card
     SubType: Enchant
+  - Id: 312972
+    AegisName: aegis_312972
+    Name: Latent Release (Shinkiro & Shiranui II)
+    Type: Card
+    SubType: Enchant
+  - Id: 312973
+    AegisName: aegis_312973
+    Name: Latent Release (Shinkiro & Shiranui III)
+    Type: Card
+    SubType: Enchant
+  - Id: 312974
+    AegisName: aegis_312974
+    Name: Latent Release (Shinkiro & Shiranui IV)
+    Type: Card
+    SubType: Enchant
+  - Id: 312975
+    AegisName: aegis_312975
+    Name: Latent Release (Spirit Handler II)
+    Type: Card
+    SubType: Enchant
   - Id: 312978
     AegisName: aegis_312978
     Name: Latent Release (Meister V)
@@ -85108,9 +85128,29 @@ Body:
     Name: Latent Release (Dragon Knight X)
     Type: Card
     SubType: Enchant
+  - Id: 313447
+    AegisName: aegis_313447
+    Name: Latent Release (Dragon Knight XI)
+    Type: Card
+    SubType: Enchant
+  - Id: 313448
+    AegisName: aegis_313448
+    Name: Latent Release (Archmage X)
+    Type: Card
+    SubType: Enchant
+  - Id: 313454
+    AegisName: aegis_313454
+    Name: Latent Release (Meister XII)
+    Type: Card
+    SubType: Enchant
   - Id: 313460
     AegisName: aegis_313460
     Name: Latent Release (Imperial Guard XI)
+    Type: Card
+    SubType: Enchant
+  - Id: 313476
+    AegisName: aegis_313476
+    Name: Latent Release (Night Watch IX)
     Type: Card
     SubType: Enchant
   - Id: 313520
