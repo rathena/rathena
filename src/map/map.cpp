@@ -3284,6 +3284,11 @@ int32 map_getcellp(struct map_data* m,int16 x,int16 y,cell_chk cellchk)
 			return (cell.maelstrom);
 		case CELL_CHKICEWALL:
 			return (cell.icewall);
+			
+#ifdef SAFEZONE
+		case CELL_CHKSAFEZONE:
+			return (cell.safezone);
+#endif
 
 		// special checks
 		case CELL_CHKPASS:
@@ -3340,6 +3345,9 @@ void map_setcell(int16 m, int16 x, int16 y, cell_t cell, bool flag)
 		case CELL_MAELSTROM:	 mapdata->cell[j].maelstrom = flag;	  break;
 		case CELL_ICEWALL:		 mapdata->cell[j].icewall = flag;		  break;
 		case CELL_NOBUYINGSTORE: mapdata->cell[j].nobuyingstore = flag; break;
+#ifdef SAFEZONE
+		case CELL_SAFEZONE:		 mapdata->cell[j].safezone = flag;		  break;
+#endif
 		default:
 			ShowWarning("map_setcell: invalid cell type '%d'\n", (int32)cell);
 			break;

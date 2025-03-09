@@ -11232,6 +11232,11 @@ int32 battle_check_target( struct block_list *src, struct block_list *target,int
 			sd = BL_CAST(BL_PC, t_bl);
 			sc = status_get_sc(t_bl);
 
+#ifdef SAFEZONE
+			if(map_getcell(t_bl->m, t_bl->x, t_bl->y, CELL_CHKSAFEZONE) && s_bl->type != BL_PC)
+				return 0;
+#endif
+
 			if( ((sd->state.block_action & PCBLOCK_IMMUNE) || (sc->getSCE(SC_KINGS_GRACE) && s_bl->type != BL_PC)) && flag&BCT_ENEMY )
 				return 0; // Global immunity only to Attacks
 			if( sd->status.karma && s_bl->type == BL_PC && ((TBL_PC*)s_bl)->status.karma )
@@ -11245,6 +11250,11 @@ int32 battle_check_target( struct block_list *src, struct block_list *target,int
 		case BL_MOB:
 		{
 			struct mob_data *md = BL_CAST(BL_MOB, t_bl);
+			
+#ifdef SAFEZONE
+			if(map_getcell(t_bl->m, t_bl->x, t_bl->y, CELL_CHKSAFEZONE))
+				return 0;
+#endif
 
 			if( md->guardian_data && md->guardian_data->guild_id && !mapdata_flag_gvg(mapdata) )
 				return 0; // Disable guardians/emperiums owned by Guilds on non-woe times.
@@ -11298,6 +11308,18 @@ int32 battle_check_target( struct block_list *src, struct block_list *target,int
 			map_session_data *sd = BL_CAST(BL_PC, s_bl);
 			if( s_bl != t_bl )
 			{
+
+#ifdef SAFEZONE
+				if(map_getcell(s_bl->m, s_bl->x, s_bl->y, CELL_CHKSAFEZONE) && t_bl->type != BL_PC)
+					return 0;
+				
+				if(sd->safezone_tick) {
+					t_tick tick = gettick();
+					if((DIFF_TICK(tick, sd->safezone_tick) < 5000))
+						return 0;
+				}
+#endif
+
 				if( sd->state.killer )
 				{
 					state |= BCT_ENEMY; // Can kill anything

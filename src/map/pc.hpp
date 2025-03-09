@@ -548,7 +548,8 @@ public:
 	t_tick cansendmail_tick; // [Mail System Flood Protection]
 	t_tick ks_floodprotect_tick; // [Kill Steal Protection]
 	t_tick equipswitch_tick; // Equip switch
-
+	t_tick safezone_tick; // Safezone Walkout
+	
 	struct s_item_delay {
 		t_itemid nameid;
 		t_tick tick;

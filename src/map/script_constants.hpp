@@ -535,6 +535,9 @@
 	export_constant(CELL_MAELSTROM);
 	export_constant(CELL_ICEWALL);
 	export_constant(CELL_NOBUYINGSTORE);
+#ifdef SAFEZONE
+	export_constant(CELL_SAFEZONE);
+#endif
 
 	/* getcell types */
 	export_constant(CELL_CHKWALL);
@@ -554,6 +557,9 @@
 	export_constant(CELL_CHKMAELSTROM);
 	export_constant(CELL_CHKICEWALL);
 	export_constant(CELL_CHKNOBUYINGSTORE);
+#ifdef SAFEZONE
+	export_constant(CELL_CHKSAFEZONE);
+#endif
 
 	/* parameters */
 	export_parameter("StatusPoint",SP_STATUSPOINT);

@@ -846,6 +846,17 @@ int32 unit_walktoxy( struct block_list *bl, int16 x, int16 y, unsigned char flag
 	if(!(flag&2) && (!status_bl_has_mode(bl,MD_CANMOVE) || !unit_can_move(bl)))
 		return 0;
 
+#ifdef SAFEZONE
+	if (bl->type == BL_PC) {
+		map_session_data* sd = (TBL_PC*)bl;
+		if(safezone_walkout(sd, x , y))
+			return 0;
+	} else if (bl->type == BL_MOB) {
+		if(map_getcell( bl->m, x, y, CELL_CHKSAFEZONE ))
+			return 0;
+	}
+#endif
+
 	ud->state.walk_easy = flag&1;
 	ud->to_x = x;
 	ud->to_y = y;
@@ -878,6 +889,32 @@ int32 unit_walktoxy( struct block_list *bl, int16 x, int16 y, unsigned char flag
 
 	return unit_walktoxy_sub(bl);
 }
+
+#ifdef SAFEZONE
+bool safezone_walkout( map_session_data *sd, short x, short y )
+{
+	if(sd) {
+		bool at_xy = map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKSAFEZONE);
+		bool to_xy = map_getcell(sd->bl.m, x, y, CELL_CHKSAFEZONE);
+		bool at_to = path_search(NULL, sd->bl.m, sd->bl.x, sd->bl.y, x, y, 1, CELL_CHKSAFEZONE);
+		if(at_xy && !to_xy) {
+			sd->safezone_tick = gettick();
+			clif_messagecolor(&sd->bl, color_table[COLOR_WHITE], "[Safe Zone] Within 5 seconds you will be able to deal damage.", false, SELF);
+		} else if(sd->safezone_tick && !at_xy && (to_xy || !at_to)) {
+			t_tick tick = gettick();
+			if (DIFF_TICK(tick, sd->safezone_tick) < 5000) {
+				int e_tick = (5000 - DIFF_TICK( tick, sd->safezone_tick))/1000;
+				char e_msg[150];
+				snprintf(e_msg, sizeof(e_msg), "[Safe Zone] You must wait %d seconds to return to the safe zone.", e_tick+1);
+				clif_messagecolor(&sd->bl, color_table[COLOR_WHITE], e_msg, false, SELF);
+				return 1;
+			}
+			sd->safezone_tick = 0;
+		}
+	}
+	return 0;
+}
+#endif
 
 /**
  * Timer to walking a unit to another unit's location
@@ -924,7 +961,17 @@ int32 unit_walktobl(struct block_list *bl, struct block_list *tbl, int32 range, 
 	if (!status_bl_has_mode(bl,MD_CANMOVE))
 		return 0;
 
+#ifdef SAFEZONE
+	if (bl->type == BL_MOB && map_getcell(tbl->m,tbl->x,tbl->y,CELL_CHKSAFEZONE)){
+		ud->to_x = bl->x;
+		ud->to_y = bl->y;
+		ud->target_to = 0;
+
+		return 0;
+	} else if (!unit_can_reach_bl(bl, tbl, distance_bl(bl, tbl)+1, flag&1, &ud->to_x, &ud->to_y)) {
+#else
 	if (!unit_can_reach_bl(bl, tbl, distance_bl(bl, tbl)+1, flag&1, &ud->to_x, &ud->to_y)) {
+#endif
 		ud->to_x = bl->x;
 		ud->to_y = bl->y;
 		ud->target_to = 0;
@@ -1146,6 +1193,16 @@ bool unit_movepos(struct block_list *bl, int16 dst_x, int16 dst_y, int32 easy, b
 
 	if(ud == nullptr)
 		return false;
+
+#ifdef SAFEZONE
+	if (sd && safezone_walkout(sd, dst_x, dst_y))
+			return false;
+		
+	if (bl->type == BL_MOB) {
+		if(map_getcell( bl->m, dst_x, dst_y, CELL_CHKSAFEZONE ))
+			return false;
+	}
+#endif
 
 	unit_stop_walking( bl, USW_FIXPOS );
 	unit_stop_attack(bl);

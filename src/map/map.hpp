@@ -748,6 +748,11 @@ enum cell_t{
 	CELL_MAELSTROM,
 	CELL_ICEWALL,
 	CELL_NOBUYINGSTORE,
+	
+#ifdef SAFEZONE
+	CELL_SAFEZONE,
+#endif
+
 };
 
 // used by map_getcell()
@@ -772,6 +777,10 @@ enum cell_chk : uint8 {
 	CELL_CHKMAELSTROM,		// Whether the cell has Maelstrom
 	CELL_CHKICEWALL,		// Whether the cell has Ice Wall
 	CELL_CHKNOBUYINGSTORE,	// Whether the cell denies ALL_BUYING_STORE skill
+	
+#ifdef SAFEZONE
+	CELL_CHKSAFEZONE,
+#endif
 
 };
 
@@ -792,6 +801,10 @@ struct mapcell
 		nochat : 1,
 		maelstrom : 1,
 		icewall : 1,
+		
+#ifdef SAFEZONE
+		safezone : 1,
+#endif
 		nobuyingstore : 1;
 
 #ifdef CELL_NOSTACK
