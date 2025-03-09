@@ -1814,6 +1814,38 @@ TIMER_FUNC(unit_resume_running){
 }
 
 /**
+ * Sets the delays that prevent attacks and skill usage considering the bl type
+ * Officially it just remembers the last attack time here and applies the delays during the comparison
+ * But we pre-calculate the delays instead and store them in attackabletime and canact_tick
+ * Currently these delays are only applied to PCs
+ * TODO: This function should also be called on attacks and cast begin
+ * @param bl Object to apply attack delay to
+ * @param tick Current tick
+ */
+void unit_set_attackdelay(block_list& bl, t_tick tick)
+{
+	unit_data* ud = unit_bl2ud(&bl);
+
+	if (ud == nullptr)
+		return;
+
+	switch (bl.type) {
+		case BL_PC:
+			ud->attackabletime = tick + status_get_adelay(&bl);
+			// A fixed delay is added here which is equal to the minimum attack motion you can get
+			// This ensures that at max ASPD attackabletime and canact_tick are equal
+			ud->canact_tick = tick + status_get_amotion(&bl) + pc_maxaspd(reinterpret_cast<map_session_data*>(&bl));
+			break;
+		case BL_MER:
+			// TODO: Should set this, but only for ground skills
+			break;
+		default:
+			// Not applicable
+			break;
+	}
+}
+
+/**
  * Applies a walk delay to a unit
  * @param bl: Object to apply walk delay to
  * @param tick: Current tick
