@@ -56,9 +56,9 @@ void chlogif_pincode_start(int32 fd, struct char_session_data* sd){
 		if( sd->pincode[0] == '\0' ){
 			// No PIN code has been set yet
 			if( charserv_config.pincode_config.pincode_force ){
-				chclif_pincode_sendstate( fd, sd, PINCODE_NEW );
+				chclif_pincode_sendstate( fd, *sd, PINCODE_NEW );
 			}else{
-				chclif_pincode_sendstate( fd, sd, PINCODE_PASSED );
+				chclif_pincode_sendstate( fd, *sd, PINCODE_PASSED );
 			}
 		}else{
 			if( !(charserv_config.pincode_config.pincode_changetime)
@@ -67,20 +67,20 @@ void chlogif_pincode_start(int32 fd, struct char_session_data* sd){
 
 				if( node != nullptr && node->pincode_success ){
 					// User has already passed the check
-					chclif_pincode_sendstate( fd, sd, PINCODE_PASSED );
+					chclif_pincode_sendstate( fd, *sd, PINCODE_PASSED );
 				}else{
 					// Ask user for his PIN code
-					chclif_pincode_sendstate( fd, sd, PINCODE_ASK );
+					chclif_pincode_sendstate( fd, *sd, PINCODE_ASK );
 				}
 			}else{
 				// User hasnt changed his PIN code too long
-				chclif_pincode_sendstate( fd, sd, PINCODE_EXPIRED );
+				chclif_pincode_sendstate( fd, *sd, PINCODE_EXPIRED );
 			}
 		}
 	}else{
 		// PIN code system disabled
 		//ShowInfo("Pincode is disabled.\n");
-		chclif_pincode_sendstate( fd, sd, PINCODE_OK );
+		chclif_pincode_sendstate( fd, *sd, PINCODE_OK );
 	}
 }
 #endif
@@ -360,7 +360,7 @@ int32 chlogif_parse_reqaccdata(int32 fd){
 			chclif_reject(u_fd,0);
 		} else {
 			// send characters to player
-			chclif_mmo_char_send(u_fd, sd);
+			chclif_mmo_char_send( u_fd, *sd );
 #if PACKETVER_SUPPORTS_PINCODE
 			chlogif_pincode_start(u_fd,sd);
 #endif
