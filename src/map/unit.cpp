@@ -1834,7 +1834,7 @@ void unit_set_attackdelay(block_list& bl, t_tick tick)
 			ud->attackabletime = tick + status_get_adelay(&bl);
 			// A fixed delay is added here which is equal to the minimum attack motion you can get
 			// This ensures that at max ASPD attackabletime and canact_tick are equal
-			ud->canact_tick = tick + status_get_amotion(&bl) + pc_maxaspd(reinterpret_cast<map_session_data*>(&bl));
+			ud->canact_tick = tick + status_get_amotion(&bl) + (pc_maxaspd(reinterpret_cast<map_session_data*>(&bl)) / AMOTION_DIVIDER_PC);
 			break;
 		case BL_MER:
 			// TODO: Should set this, but only for ground skills
