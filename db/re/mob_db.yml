@@ -117642,10 +117642,20 @@ Body:
 #    AegisName: EP21_B_YORTUS_A_H
 #  - Id: 22422
 #    AegisName: EP21_B_YORTUS_B_H
+#  - Id: 22423
+#    AegisName: 2501_EV_MATJALAL
+#  - Id: 22424
+#    AegisName: 2501_EV_ACARI
 #  - Id: 22425
 #    AegisName: E_LEADER_SHEEP
 #  - Id: 22426
 #    AegisName: E_WINTER_SAVAGE
+#  - Id: 22427
+#    AegisName: MANDURING
+#  - Id: 22429
+#    AegisName: KINGMANDURING
+#  - Id: 22430
+#    AegisName: E_WINTER_KEEPER
 #  - Id: 22431
 #    AegisName: TATSI
 #  - Id: 22432

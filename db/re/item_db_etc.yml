@@ -55482,6 +55482,22 @@ Body:
             bonus bVariableCastrate,-5;
          }
       }
+  - Id: 300618
+    AegisName: aegis_300618
+    Name: Kung Fu Panda Collaboration Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@val = min(20, BaseLevel/10);
+      bonus bMdef,2*.@val;
+      bonus bDef,5*.@val;
+      bonus bMaxHP,200*.@val;
+      bonus bMaxSP,50*.@val;
   - Id: 300619
     AegisName: aegis_300619
     Name: Upgrade Osiris Card
@@ -83636,28 +83652,28 @@ Body:
       bonus bAtkRate,10;
   - Id: 313222
     AegisName: Z_Hemel_MHP_P_1
-    Name: Valkyrie Essence (MHP) Ⅰ
+    Name: Valkyrie Essence (MHP) I
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMaxHPrate,2;
   - Id: 313223
     AegisName: Z_Hemel_MHP_P_2
-    Name: Valkyrie Essence (MHP) ⅠI
+    Name: Valkyrie Essence (MHP) II
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMaxHPrate,4;
   - Id: 313224
     AegisName: Z_Hemel_MHP_P_3
-    Name: Valkyrie Essence (MHP) ⅠII
+    Name: Valkyrie Essence (MHP) III
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMaxHPrate,6;
   - Id: 313225
     AegisName: Z_Hemel_MHP_P_4
-    Name: Valkyrie Essence (MHP) ⅠV
+    Name: Valkyrie Essence (MHP) IV
     Type: Card
     SubType: Enchant
     Script: |
@@ -83671,28 +83687,28 @@ Body:
       bonus bMaxHPrate,10;
   - Id: 313227
     AegisName: Z_Hemel_MSP_P_1
-    Name: Valkyrie Essence (MSP) Ⅰ
+    Name: Valkyrie Essence (MSP) I
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMaxSPrate,2;
   - Id: 313228
     AegisName: Z_Hemel_MSP_P_2
-    Name: Valkyrie Essence (MSP) ⅠI
+    Name: Valkyrie Essence (MSP) II
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMaxSPrate,4;
   - Id: 313229
     AegisName: Z_Hemel_MSP_P_3
-    Name: Valkyrie Essence (MSP) ⅠII
+    Name: Valkyrie Essence (MSP) III
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMaxSPrate,6;
   - Id: 313230
     AegisName: Z_Hemel_MSP_P_4
-    Name: Valkyrie Essence (MSP) ⅠV
+    Name: Valkyrie Essence (MSP) IV
     Type: Card
     SubType: Enchant
     Script: |
@@ -85379,6 +85395,21 @@ Body:
       if (getrefine()>=7) {
          bonus bFixedCast,-200;
       }
+  - Id: 313558
+    AegisName: aegis_313558
+    Name: Dumpling Footprint    # !todo check english name
+    Type: Card
+    SubType: Enchant
+  - Id: 313559
+    AegisName: aegis_313559
+    Name: Panda Footprint    # !todo check english name
+    Type: Card
+    SubType: Enchant
+  - Id: 313560
+    AegisName: aegis_313560
+    Name: Panda Color Footprint    # !todo check english name
+    Type: Card
+    SubType: Enchant
   - Id: 313561
     AegisName: DK_Soul_DP
     Name: Dragon Knight Soul (Dragonic Pierce)
@@ -85446,12 +85477,374 @@ Body:
       bonus2 bSkillAtk,"SH_CHUL_HO_BATTERING",2+(getrefine()/2);
   - Id: 313572
     AegisName: SH_Soul_HRSP
-#   Name: Soul of the Soul Master (Hyunrok's Spiritual Power Unleashed)
     Name: Spirit Handler Soul (Hyunrok Spirit Power)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bSkillAtk,"SH_HYUN_ROK_SPIRIT_POWER",2+(getrefine()/2);
+  - Id: 313725
+    AegisName: aegis_313725
+    Name: Critical Rate Stone (Garment)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCRate,2;
+      bonus bCritical,3;
+  - Id: 313726
+    AegisName: aegis_313726
+    Name: Rune Knight Stone II (Upper)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,2*getskilllv("RK_DRAGONTRAINING");
+      bonus bShortAtkRate,2*getskilllv("RK_DRAGONTRAINING");
+  - Id: 313727
+    AegisName: aegis_313727
+    Name: Rune Knight Stone II (Middle)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"RK_WINDCUTTER",5*getskilllv("RK_RUNEMASTERY");
+  - Id: 313728
+    AegisName: aegis_313728
+    Name: Rune Knight Stone II (Lower)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,getskilllv("RK_ENCHANTBLADE");
+  - Id: 313729
+    AegisName: aegis_313729
+    Name: Wondermint Stone II (Upper)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",5*(getskilllv("WM_LESSON")/2);
+      bonus2 bSkillAtk,"WM_METALICSOUND",5*(getskilllv("WM_LESSON")/2);
+  - Id: 313730
+    AegisName: aegis_313730
+    Name: Wondermint Stone II (Middle)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddSize,Size_All,3*getskilllv("WM_SIRCLEOFNATURE");
+      bonus2 bMagicAddSize,Size_All,3*getskilllv("WM_SIRCLEOFNATURE");
+  - Id: 313731
+    AegisName: aegis_313731
+    Name: Wondermint Stone II (Lower)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bFixedCast,-100*getskilllv("WM_REVERBERATION");
+  - Id: 313732
+    AegisName: aegis_313732
+    Name: Summoner Stone II (Upper)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bFixedCast,-100*getskilllv("SU_FRESHSHRIMP");
+  - Id: 313733
+    AegisName: aegis_313733
+    Name: Summoner Stone II (Middle)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SU_PICKYPECK",7*getskilllv("SU_LUNATICCARROTBEAT");
+  - Id: 313734
+    AegisName: aegis_313734
+    Name: Summoner Stone II (Lower)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SU_CN_METEOR",7*getskilllv("SU_SV_STEMSPEAR");
+  - Id: 313735
+    AegisName: aegis_313735
+    Name: Dragon Knight Stone II (Garment)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"DK_MADNESS_CRUSHER",15;
+  - Id: 313736
+    AegisName: aegis_313736
+    Name: Troubadour & Trouble Stone II (Garment)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,2*getskilllv("TR_SOUNDBLEND");
+  - Id: 313737
+    AegisName: aegis_313737
+    Name: Spirit Master Stone II (Garment)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAddRace,RC_All,3*(getskilllv("SH_MYSTICAL_CREATURE_MASTERY")/2);
+      bonus2 bMagicAddRace,RC_Player_Human,-3*(getskilllv("SH_MYSTICAL_CREATURE_MASTERY")/2);
+      bonus2 bMagicAddRace,RC_Player_Doram,-3*(getskilllv("SH_MYSTICAL_CREATURE_MASTERY")/2);
+  - Id: 313798
+    AegisName: Glacier_F_Orb_168
+    Name: Snow Flower Magic (Dragonic Pierce)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"DK_DRAGONIC_PIERCE",10+5*(.@r/4);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"DK_DRAGONIC_PIERCE",10;
+      }
+  - Id: 313799
+    AegisName: Glacier_F_Orb_169
+    Name: Snowflakes Magic (Radiant Spear)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"IG_RADIANT_SPEAR",10+5*(.@r/4);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"IG_RADIANT_SPEAR",10;
+      }
+  - Id: 313800
+    AegisName: Glacier_F_Orb_170
+    Name: Snowflakes Magic (Imperial Cross)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"IG_IMPERIAL_CROSS",10+5*(.@r/4);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"IG_IMPERIAL_CROSS",10;
+      }
+  - Id: 313801
+    AegisName: Glacier_F_Orb_171
+    Name: Snowflakes Magic (Imperial Pressure)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"IG_IMPERIAL_PRESSURE",10+5*(.@r/4);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"IG_IMPERIAL_PRESSURE",10;
+      }
+  - Id: 313802
+    AegisName: Glacier_F_Orb_172
+    Name: Snowflakes Magic (Rush Strike)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"MT_RUSH_STRIKE",10+5*(.@r/4);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"MT_RUSH_STRIKE",10;
+      }
+  - Id: 313803
+    AegisName: Glacier_F_Orb_173
+    Name: Snowflakes Magic (Powerful Swing)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"MT_POWERFUL_SWING",10+5*(.@r/4);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"MT_POWERFUL_SWING",10;
+      }
+  - Id: 313804
+    AegisName: Glacier_F_Orb_174
+    Name: Snowflakes Magic (Energy Cannonade)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"MT_ENERGY_CANNONADE",10+5*(.@r/4);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"MT_ENERGY_CANNONADE",10;
+      }
+  - Id: 313805
+    AegisName: Glacier_F_Orb_175
+    Name: Snowflakes Magic (Mystery Powder)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"BO_MYSTERY_POWDER",10+5*(.@r/4);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"BO_MYSTERY_POWDER",10;
+      }
+  - Id: 313806
+    AegisName: Glacier_F_Orb_176
+    Name: Snowflakes Magic (Dust Explosion)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"BO_DUST_EXPLOSION",10+5*(.@r/4);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"BO_DUST_EXPLOSION",10;
+      }
+  - Id: 313807
+    AegisName: Glacier_F_Orb_177
+    Name: Snowflakes Magic (Cross Slash)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SHC_CROSS_SLASH",10+5*(.@r/4);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"SHC_CROSS_SLASH",10;
+      }
+  - Id: 313808
+    AegisName: Glacier_F_Orb_178
+    Name: Snowflakes Magic (Heat and Sliding)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"ABC_HIT_AND_SLIDING",10+5*(.@r/4);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"ABC_HIT_AND_SLIDING",10;
+      }
+  - Id: 313809
+    AegisName: Glacier_F_Orb_179
+    Name: Snowflakes Magic (Chasing Break)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"ABC_CHASING_BREAK",10+5*(.@r/4);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"ABC_CHASING_BREAK",10;
+      }
+  - Id: 313810
+    AegisName: Glacier_F_Orb_180
+    Name: Snowflakes Magic (Chasing Shot)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"ABC_CHASING_SHOT",10+5*(.@r/4);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"ABC_CHASING_SHOT",10;
+      }
+  - Id: 313811
+    AegisName: Glacier_F_Orb_181
+    Name: Snowflakes Magic (Abyss Flame)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"ABC_ABYSS_FLAME_ATK",10+5*(.@r/4);
+      bonus2 bSkillAtk,"ABC_ABYSS_FLAME",10+5*(.@r/4);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"ABC_ABYSS_FLAME_ATK",10;
+         bonus2 bSkillAtk,"ABC_ABYSS_FLAME",10;
+      }
+  - Id: 313812
+    AegisName: Glacier_F_Orb_182
+    Name: Snowflakes Magic (Divinus Flos)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"CD_DIVINUS_FLOS",10+5*(.@r/4);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"CD_DIVINUS_FLOS",10;
+      }
+  - Id: 313813
+    AegisName: Glacier_F_Orb_183
+    Name: Snow Flower Magic (Heat Fire Bullet)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"IQ_BLAZING_FLAME_BLAST",10+5*(.@r/4);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"IQ_BLAZING_FLAME_BLAST",10;
+      }
+  - Id: 313814
+    AegisName: Glacier_F_Orb_184
+    Name: Snow Flower Magic (Rhythmic Wave)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"TR_RHYTHMICAL_WAVE",10+5*(.@r/4);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"TR_RHYTHMICAL_WAVE",10;
+      }
+  - Id: 313815
+    AegisName: Glacier_F_Orb_185
+    Name: Snow Flower Magic (Wild Shot)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"NW_WILD_SHOT",10+5*(.@r/4);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"NW_WILD_SHOT",10;
+      }
+  - Id: 313816
+    AegisName: Glacier_F_Orb_186
+    Name: Snow Flower Magic (Midnight Fallen)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"NW_MIDNIGHT_FALLEN",10+5*(.@r/4);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"NW_MIDNIGHT_FALLEN",10;
+      }
+  - Id: 313817
+    AegisName: Glacier_F_Orb_187
+    Name: Snow Flower Magic (Cheon Ki Shin Yang)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SKE_SKY_SUN",10+5*(.@r/4);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"SKE_SKY_SUN",10;
+      }
+  - Id: 313818
+    AegisName: Glacier_F_Orb_188
+    Name: Snow Flower Magic (Cheon Ki Shin Moon)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SKE_SKY_MOON",10+5*(.@r/4);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"SKE_SKY_MOON",10;
+      }
+  - Id: 313819
+    AegisName: Glacier_F_Orb_189
+    Name: Snow Flower Magic (Cheon Seong Ji Haeng)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SKE_STAR_LIGHT_KICK",10+5*(.@r/4);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"SKE_STAR_LIGHT_KICK",10;
+      }
+  - Id: 313820
+    AegisName: Glacier_F_Orb_190
+    Name: Snow Flower Magic (Iron Tiger Rampage)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SH_CHUL_HO_BATTERING",10+5*(.@r/4);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"SH_CHUL_HO_BATTERING",10;
+      }
+  - Id: 313821
+    AegisName: Glacier_F_Orb_191
+    Name: Snow Flower Magic (Hyeon Rok's Spiritual Power)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SH_HYUN_ROK_SPIRIT_POWER",10+5*(.@r/4);
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"SH_HYUN_ROK_SPIRIT_POWER",10;
+      }
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event
@@ -94317,6 +94710,122 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1001886
+    AegisName: aegis_1001886
+    Name: Panda Collaboration Coin    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1001903
+    AegisName: E_Snowflake_Coin
+    Name: Cold Snow Flower    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001904
+    AegisName: E_Wish_Envelope
+    Name: Wish Card Envelope    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001905
+    AegisName: aegis_1001905
+    Name: Small Part Piece    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001907
+    AegisName: aegis_1001907
+    Name: Dumpling Footprint (Garment)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1001908
+    AegisName: aegis_1001908
+    Name: Panda Footprint (Garment)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1001909
+    AegisName: aegis_1001909
+    Name: Panda Color Footprint (Garment)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1001938
+    AegisName: aegis_1001938
+    Name: Critical Rate Stone (Garment)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1001939
+    AegisName: aegis_1001939
+    Name: Rune Knight Stone II (Upper)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1001940
+    AegisName: aegis_1001940
+    Name: Rune Knight Stone II (Middle)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1001941
+    AegisName: aegis_1001941
+    Name: Rune Knight Stone II (Lower)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1001942
+    AegisName: aegis_1001942
+    Name: Wondermint Stone II (Upper)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1001943
+    AegisName: aegis_1001943
+    Name: Wondermint Stone II (Middle)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1001944
+    AegisName: aegis_1001944
+    Name: Wondermint Stone II (Lower)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1001945
+    AegisName: aegis_1001945
+    Name: Summoner Stone II (Upper)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1001946
+    AegisName: aegis_1001946
+    Name: Summoner Stone II (Middle)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1001947
+    AegisName: aegis_1001947
+    Name: Summoner Stone II (Lower)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1001948
+    AegisName: aegis_1001948
+    Name: Dragon Knight Stone II (Garment)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1001949
+    AegisName: aegis_1001949
+    Name: Troubadour & Trouble Stone II (Garment)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1001950
+    AegisName: aegis_1001950
+    Name: Spirit Master Stone II (Garment)    # !todo check english name
+    Type: Etc
+    Weight: 100
   - Id: 1200000
     AegisName: IDTest_arrow
     Name: IDTest arrow
