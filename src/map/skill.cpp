@@ -804,7 +804,7 @@ int8 skill_isCopyable(map_session_data *sd, uint16 skill_id) {
 		return 2;
 
 	//Plagiarism only able to copy skill while SC_PRESERVE is not active and skill is copyable by Plagiarism
-	if (copyable.option & SKILL_COPY_PLAGIARISM && pc_checkskill(sd,RG_PLAGIARISM) && !sd->sc.getSCE(SC_PRESERVE))
+	if (copyable.option & SKILL_COPY_PLAGIARISM && pc_checkskill(sd,RG_PLAGIARISM) > 0 && sd->sc.getSCE(SC_PRESERVE) == nullptr)
 		return 1;
 
 	return 0;
@@ -3415,44 +3415,46 @@ static void skill_do_copy(struct block_list* src,struct block_list *bl, uint16 s
 			return;
 
 		switch ( skill_isCopyable(tsd, skill_id) ) {
-			case 1: { //Copied by Plagiarism
-					//Delete reproduced skill when the plagiarized skill id is the same
-					if ( tsd->reproduceskill_idx && tsd->status.skill[tsd->reproduceskill_idx].flag == SKILL_FLAG_PLAGIARIZED && tsd->status.skill[tsd->reproduceskill_idx].id == skill_id ) {
-						pc_skill_plagiarism_reset(*tsd, 2);
-					}
+			case 1: //Copied by Plagiarism
+				//Delete reproduced skill when the plagiarized skill id is the same
+				if ( tsd->reproduceskill_idx && tsd->status.skill[tsd->reproduceskill_idx].flag == SKILL_FLAG_PLAGIARIZED && tsd->status.skill[tsd->reproduceskill_idx].id == skill_id ) {
+					pc_skill_plagiarism_reset(*tsd, 2);
+				}
 
-					pc_skill_plagiarism_reset(*tsd, 1);
+				pc_skill_plagiarism_reset(*tsd, 1);
 
-					//Cap level to RG_PLAGIARISM level
-					lv = min(skill_lv, pc_checkskill(tsd, RG_PLAGIARISM));
+				//Cap level to RG_PLAGIARISM level
+				lv = min(skill_lv, pc_checkskill(tsd, RG_PLAGIARISM));
 
-					tsd->cloneskill_idx = idx;
-					pc_setglobalreg(tsd, add_str(SKILL_VAR_PLAGIARISM), skill_id);
-					pc_setglobalreg(tsd, add_str(SKILL_VAR_PLAGIARISM_LV), lv);
-				} 
+				tsd->cloneskill_idx = idx;
+				pc_setglobalreg(tsd, add_str(SKILL_VAR_PLAGIARISM), skill_id);
+				pc_setglobalreg(tsd, add_str(SKILL_VAR_PLAGIARISM_LV), lv);
 				break;
 
-			case 2: { //Copied by Reproduce
-					//Delete plagiarized skill when the reproduced skill id is the same
-					if ( tsd->cloneskill_idx > 0 && tsd->status.skill[tsd->cloneskill_idx].flag == SKILL_FLAG_PLAGIARIZED && tsd->status.skill[tsd->cloneskill_idx].id == skill_id ) {
-						pc_skill_plagiarism_reset(*tsd, 1);
-					}
+			case 2: //Copied by Reproduce
+				//Delete plagiarized skill when the reproduced skill id is the same
+				if ( tsd->cloneskill_idx > 0 && tsd->status.skill[tsd->cloneskill_idx].flag == SKILL_FLAG_PLAGIARIZED && tsd->status.skill[tsd->cloneskill_idx].id == skill_id ) {
+					pc_skill_plagiarism_reset(*tsd, 1);
+				}
 
-					status_change *tsc = status_get_sc(bl);
-					lv = (tsc) ? tsc->getSCE(SC__REPRODUCE)->val1 : 1;
+				pc_skill_plagiarism_reset(*tsd, 2);
 
-					pc_skill_plagiarism_reset(*tsd, 2);
+				//Copied skill level depends on the Reproduce level used
+				if( status_change* tsc = status_get_sc( bl ); tsc != nullptr && tsc->getSCE( SC__REPRODUCE ) != nullptr ) {
+					lv = tsc->getSCE( SC__REPRODUCE )->val1;
+				} else {
+					lv = 1;
+				}
 
-					//Cap level depending on the src type
-					if (src->type == BL_PC)
-						lv = min(lv, skill_get_max(skill_id));
-					else
-						lv = min(lv, skill_lv);
+				//Cap level depending on the src type
+				if (src->type == BL_PC) 
+					lv = min(lv, skill_get_max(skill_id)); //If player, max skill level is skill_get_max(skill_id)
+				else
+					lv = min(lv, skill_lv); //Monster might used skill level > allowed player max skill lv. Ex. Drake with Waterball lv. 10
 
-					tsd->reproduceskill_idx = idx;
-					pc_setglobalreg(tsd, add_str(SKILL_VAR_REPRODUCE), skill_id);
-					pc_setglobalreg(tsd, add_str(SKILL_VAR_REPRODUCE_LV), lv);
-				} 
+				tsd->reproduceskill_idx = idx;
+				pc_setglobalreg(tsd, add_str(SKILL_VAR_REPRODUCE), skill_id);
+				pc_setglobalreg(tsd, add_str(SKILL_VAR_REPRODUCE_LV), lv);
 				break;
 
 			default: 
