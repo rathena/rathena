@@ -13957,7 +13957,7 @@ TIMER_FUNC(skill_castend_id){
 			break;
 
 		// These actions happen even if the skill fails except when the caster is already dead
-		if (md) {
+		if (md != nullptr) {
 			// When a monster uses a skill, its AI will be inactive for its attack motion
 			// This is also the reason why it doesn't move during this time
 			md->next_thinktime = tick + status_get_amotion(src);
@@ -14335,7 +14335,7 @@ TIMER_FUNC(skill_castend_pos){
 			break;
 
 		// These actions happen even if the skill fails except when the caster is already dead
-		if (md) {
+		if (md != nullptr) {
 			// When a monster uses a skill, its AI will be inactive for its attack motion
 			// This is also the reason why it doesn't move during this time
 			md->next_thinktime = tick + status_get_amotion(src);
