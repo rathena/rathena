@@ -13962,7 +13962,7 @@ TIMER_FUNC(skill_castend_id){
 			// This is also the reason why it doesn't move during this time
 			md->next_thinktime = tick + status_get_amotion(src);
 
-			if (md->skill_idx >= 0 && md->db->skill[md->skill_idx]->emotion >= 0)
+			if (md->skill_idx >= 0 && md->db->skill[md->skill_idx]->emotion >= ET_SURPRISE && md->db->skill[md->skill_idx]->emotion < ET_MAX)
 				clif_emotion(*src, static_cast<emotion_type>(md->db->skill[md->skill_idx]->emotion));
 
 			// Sets cooldowns and attack delay
@@ -14340,7 +14340,7 @@ TIMER_FUNC(skill_castend_pos){
 			// This is also the reason why it doesn't move during this time
 			md->next_thinktime = tick + status_get_amotion(src);
 
-			if (md->skill_idx >= 0 && md->db->skill[md->skill_idx]->emotion >= 0)
+			if (md->skill_idx >= 0 && md->db->skill[md->skill_idx]->emotion >= ET_SURPRISE && md->db->skill[md->skill_idx]->emotion < ET_MAX)
 				clif_emotion(*src, static_cast<emotion_type>(md->db->skill[md->skill_idx]->emotion));
 
 			// Sets cooldowns and attack delay
