@@ -6116,8 +6116,8 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 			//special case: Venom Splasher uses a different range for searching than for splashing
 			if (flag&SD_LEVEL || skill_get_nk(skill_id, NK_SPLASHSPLIT)) {
 				skill_area_temp[0] = map_foreachinallrange(skill_area_sub, bl, (skill_id == AS_SPLASHER)?1:splash_size, BL_CHAR, src, skill_id, skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
-				// If no chars are in the area, then it always counts as if there was one target
-				// This happens when targetting skills such as icewall
+				// If there are no characters in the area, then it always counts as if there was one target
+				// This happens when targetting skill units such as icewall
 				skill_area_temp[0] = std::max(1, skill_area_temp[0]);
 			}
 
