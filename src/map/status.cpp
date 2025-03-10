@@ -14793,6 +14793,17 @@ TIMER_FUNC(status_change_timer){
 		break;
 	}
 
+	bl = map_id2bl( id );
+
+	// Probably already dead and freed
+	if( bl == nullptr ){
+		if( dounlock ){
+			map_freeblock_unlock();
+		}
+
+		return 0;
+	}
+
 	// If status has an interval and there is at least 100ms remaining time, wait for next interval
 	if(interval > 0 && sc->getSCE(type) && sce->val4 >= 100) {
 		sc_timer_next(min(sce->val4,interval)+tick);
