@@ -1286,9 +1286,7 @@ int32 chrif_save_scdata(map_session_data *sd) { //parses the sc_data of the play
 	WFIFOL(char_fd,4) = sd->status.account_id;
 	WFIFOL(char_fd,8) = sd->status.char_id;
 
-	for( const auto& it : *sc ){
-		const status_change_entry& sce = it.second;
-
+	for( const auto& [type, sce] : *sc ){
 		if (sce.timer != INVALID_TIMER) {
 			timer = get_timer(sce.timer);
 			if (timer == nullptr || timer->func != status_change_timer)
@@ -1299,7 +1297,7 @@ int32 chrif_save_scdata(map_session_data *sd) { //parses the sc_data of the play
 				data.tick = 0; //Negative tick does not necessarily mean that sc has expired
 		} else
 			data.tick = INFINITE_TICK; //Infinite duration
-		data.type = it.first;
+		data.type = type;
 		data.val1 = sce.val1;
 		data.val2 = sce.val2;
 		data.val3 = sce.val3;
