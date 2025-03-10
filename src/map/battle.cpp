@@ -1532,13 +1532,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 
 	if ((sce = sc->getSCE(SC_PARRYING)) && flag&BF_WEAPON && skill_id != WS_CARTTERMINATION && rnd() % 100 < sce->val2) {
 		clif_skill_nodamage(target, *target, LK_PARRYING, sce->val1);
-
-		if (skill_id == LK_PARRYING) {
-			unit_data *ud = unit_bl2ud(target);
-
-			if (ud != nullptr) // Delay the next attack
-				ud->attackabletime = gettick() + status_get_adelay(target);
-		}
+		unit_set_attackdelay(*target, gettick());
 		return false;
 	}
 

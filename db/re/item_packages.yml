@@ -1,5 +1,5 @@
 # This file is a part of rAthena.
-#   Copyright(C) 2024 rAthena Development Team
+#   Copyright(C) 2025 rAthena Development Team
 #   https://rathena.org - https://github.com/rathena
 #
 # This program is free software: you can redistribute it and/or modify
@@ -1048,14 +1048,70 @@ Body:
         Items:
           - Item: HD_Oridecon
             Amount: 26
-#  - Item: Calender_Costume_Box
+  - Item: Calender_Costume_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: C_berry_Prince_Crown
+      - Group: 1
+        Items:
+          - Item: C_Loki_Nidhogg_Hat
+      - Group: 2
+        Items:
+          - Item: C_Firinto_Scarf
+#  - Item: C_CLB_KP_Select_Box1
 #    Groups:
 #      - Group: 0
 #        Items:
-#          - Item: C_berry_Prince_Crown
+#          - Item: C_CLB_KP_DC
 #      - Group: 1
 #        Items:
-#          - Item: C_Loki_Nidhogg_Hat
-#      - Group: 2
+#          - Item: C_CLB_KP_DMS
+#  - Item: C_CLB_KP_Select_Box2
+#    Groups:
+#      - Group: 0
 #        Items:
-#          - Item: C_Firinto_Scarf
+#          - Item: C_CLB_KP_SF
+#      - Group: 1
+#        Items:
+#          - Item: C_CLB_KP_Ta
+#  - Item: InkPainting_Select_Box
+#    Groups:
+#      - Group: 0
+#        Items:
+#          - Item: C_InkPainting_Day
+#      - Group: 1
+#        Items:
+#          - Item: C_InkPainting_Night
+#  - Item: Panda_Foot_Select_Box
+#    Groups:
+#      - Group: 0
+#        Items:
+#          - Item: aegis_1001908
+#      - Group: 1
+#        Items:
+#          - Item: aegis_1001909
+#  - Item: Eypgt_Costume_Select1
+#    Groups:
+#      - Group: 0
+#        Items:
+#          - Item: aegis_400749
+#      - Group: 1
+#        Items:
+#          - Item: aegis_400760
+#  - Item: Eypgt_Costume_Select2
+#    Groups:
+#      - Group: 0
+#        Items:
+#          - Item: aegis_410385
+#      - Group: 1
+#        Items:
+#          - Item: aegis_480523
+#  - Item: Eypgt_Costume_Select3
+#    Groups:
+#      - Group: 0
+#        Items:
+#          - Item: aegis_420430
+#      - Group: 1
+#        Items:
+#          - Item: aegis_420429

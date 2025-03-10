@@ -1971,6 +1971,12 @@ struct PACKET_CZ_REQ_EMOTION_EXPANSION{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_REQ_EMOTION_EXPANSION, 0xbe9);
 
+struct PACKET_ZC_DISAPPEAR_ENTRY{
+	int16 packetType;
+	int32 GID;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_DISAPPEAR_ENTRY, 0x132);
+
 #if PACKETVER >= 20120618
 struct PACKET_ZC_EFST_SET_ENTER{
 	uint16 packetType;
