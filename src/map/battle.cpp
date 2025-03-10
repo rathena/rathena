@@ -9652,9 +9652,9 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			md.damage = 200 + 200 * skill_lv;
 			md.dmotion = 0; //No flinch animation
 			if (target->type == BL_MOB) {
-				mob_data* mob = reinterpret_cast<mob_data*>(target);
+				mob_data& mob = *reinterpret_cast<mob_data*>(target);
 				// Deals 400 damage to Emperium on all levels
-				if (mob != nullptr && mob->mob_id == MOBID_EMPERIUM)
+				if (mob.mob_id == MOBID_EMPERIUM)
 					md.damage = 400;
 			}
 			break;
