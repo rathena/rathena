@@ -1219,11 +1219,11 @@ size_t status_change::size(){
 	return this->data.size();
 }
 
-std::unordered_map<enum sc_type, status_change_entry>::iterator status_change::begin(){
+std::unordered_map<enum sc_type, status_change_entry>::const_iterator status_change::begin(){
 	return this->data.begin();
 }
 
-std::unordered_map<enum sc_type, status_change_entry>::iterator status_change::end(){
+std::unordered_map<enum sc_type, status_change_entry>::const_iterator status_change::end(){
 	return this->data.end();
 }
 
