@@ -3731,9 +3731,9 @@ Valid types are:
 	MOB_DEX           - monster's dex
 	MOB_LUK           - monster's luk
 	MOB_SPEED         - monster's speed
-	MOB_ATKRANGE      - monster's range
-	MOB_SKILLRANGE    - monster's range2
-	MOB_CHASERANGE    - monster's range3
+	MOB_ATKRANGE      - monster's attack range
+	MOB_SKILLRANGE    - monster's skill cast range
+	MOB_CHASERANGE    - monster's chase range
 	MOB_SIZE          - monster's size
 	MOB_RACE          - monster's race
 	MOB_ELEMENT       - monster's element
