@@ -2158,8 +2158,9 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		}
 
 		if (sc->option) {
+			// We do not check it for non-players here as hide will not stop monsters from scanning for new targets and use skills
+			// The logic that normal attacks will not actually be executed when hidden needs to be put in the AI code instead
 			if ((sc->option&OPTION_HIDE) && src->type == BL_PC && (skill_id == 0 || !skill_get_inf2(skill_id, INF2_ALLOWWHENHIDDEN))) {
-				// Non players can use all skills while hidden.
 				return false;
 			}
 			if (sc->option&OPTION_CHASEWALK && skill_id != ST_CHASEWALK)
@@ -6010,12 +6011,17 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 		int32 matk_min = status_base_matk_min(status);
 		int32 matk_max = status_base_matk_max(status);
 	
-		matk_min += (sd != nullptr ? sd->bonus.ematk : 0);
-		matk_max += (sd != nullptr ? sd->bonus.ematk : 0);
+		if (sd != nullptr) {
+			matk_min += sd->bonus.ematk;
+			matk_max += sd->bonus.ematk;
 
-		if (sd != nullptr && sd->matk_rate != 100) {
-			matk_min = matk_min * sd->matk_rate / 100;
-			matk_max = matk_max * sd->matk_rate / 100;
+			matk_min += sd->bonus.ematk_hidden;
+			matk_max += sd->bonus.ematk_hidden;
+
+			if (sd->matk_rate != 100) {
+				matk_min = matk_min * sd->matk_rate / 100;
+				matk_max = matk_max * sd->matk_rate / 100;
+			}
 		}
 
 		// Apply Recognized Spell buff - custom support (renewal status change)
@@ -6101,9 +6107,15 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 		// Bonuses from ExtraMATK are separated in order to order them (order has no impact)
 
 		// EquipMATK (flat MATK from equipments)
-		if (sd != nullptr && sd->bonus.ematk > 0) {
+		if (sd != nullptr && sd->bonus.ematk != 0) {
 			matk_min += sd->bonus.ematk;
 			matk_max += sd->bonus.ematk;
+		}
+
+		// Flat MATK not visible in status window
+		if (sd != nullptr && sd->bonus.ematk_hidden != 0) {
+			matk_min += sd->bonus.ematk_hidden;
+			matk_max += sd->bonus.ematk_hidden;
 		}
 
 		// PseudoBuffMATK (flat MATK from skills)
@@ -7521,8 +7533,6 @@ static defType status_calc_def(struct block_list *bl, status_change *sc, int32 d
 	if(sc->getSCE(SC_ETERNALCHAOS))
 		return 0;
 #endif
-	if(sc->getSCE(SC_BARRIER))
-		return 100;
 	if(sc->getSCE(SC_KEEPING))
 		return 90;
 #ifndef RENEWAL /// Steel Body does not provide 90 DEF in [RENEWAL]
@@ -7694,8 +7704,6 @@ static defType status_calc_mdef(struct block_list *bl, status_change *sc, int32 
 
 	if(sc->getSCE(SC_BERSERK))
 		return 0;
-	if(sc->getSCE(SC_BARRIER))
-		return 100;
 
 #ifndef RENEWAL /// Steel Body does not provide 90 MDEF in [RENEWAL]
 	if(sc->getSCE(SC_STEELBODY))
@@ -7902,6 +7910,9 @@ static uint16 status_calc_speed(struct block_list *bl, status_change *sc, int32 
 				val = max(val, 20);
 			if (sc->getSCE(SC_GROUNDGRAVITY))
 				val = max(val, 20);
+			if( sc->getSCE( SC_SHADOW_CLOCK ) != nullptr ){
+				val = max( val, 30 );
+			}
 
 			if( sd && sd->bonus.speed_rate + sd->bonus.speed_add_rate > 0 ) // Permanent item-based speedup
 				val = max( val, sd->bonus.speed_rate + sd->bonus.speed_add_rate );
@@ -12802,16 +12813,6 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 		calc_flag.reset(SCB_DYE);
 	}
 
-	/*if (calc_flag[SCB_BODY])// Might be needed in the future. [Rytech]
-	{	//Reset body style
-		if (vd && vd->body_style)
-		{
-			val4 = vd->body_style;
-			clif_changelook(bl,LOOK_BODY2,0);
-		}
-		calc_flag.reset(SCB_BODY);
-	}*/
-
 	if (!(flag&SCSTART_NOICON) && !(flag&SCSTART_LOADED && scdb->flag[SCF_DISPLAYPC] || scdb->flag[SCF_DISPLAYNPC])) {
 		int32 status_icon = scdb->icon;
 
@@ -13679,13 +13680,6 @@ int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid)
 			clif_changelook(bl,LOOK_CLOTHES_COLOR,sce->val4);
 		calc_flag.reset(SCB_DYE);
 	}
-
-	/*if (calc_flag[SCB_BODY])// Might be needed in the future. [Rytech]
-	{	//Restore body style
-		if (vd && !vd->body_style && sce->val4)
-			clif_changelook(bl,LOOK_BODY2,sce->val4);
-		calc_flag.reset(SCB_BODY);
-	}*/
 
 	// On Aegis, when turning off a status change, first goes the sc packet, then the option packet.
 	int32 status_icon = scdb->icon;

@@ -765,7 +765,7 @@ Body:
       OverlapIgnoreLevel: true
       RemoveOnHermode: true
     Script: |
-      bonus bMatk, getstatus(SC_MATKPOTION, 1);  /* TODO: hidden in status window */
+      bonus bMatk2, getstatus(SC_MATKPOTION, 1);
   - Status: Wedding
     States:
       NoAttack: true
@@ -804,9 +804,6 @@ Body:
   - Status: Barrier
     Icon: EFST_BARRIER
     DurationLookup: NPC_BARRIER
-    CalcFlags:
-      Mdef: true
-      Def: true
     Flags:
       RemoveOnHermode: true
   - Status: Stripweapon
@@ -9756,3 +9753,41 @@ Body:
       NoBanishingBuster: true
       NoDispell: true
       NoClearance: true
+  - Status: Shadow_Clock
+    Icon: EFST_SHADOW_CLOCK
+    DurationLookup: SS_TOKEDASU
+    CalcFlags:
+      Speed: true
+  - Status: Shinkirou_Call
+    Icon: EFST_SBUNSHIN
+    DurationLookup: SS_SHINKIROU
+    CalcFlags:
+      Speed: true
+  - Status: Nightmare
+    Icon: EFST_NIGHTMARE
+    DurationLookup: SS_KAGEGARI
+    Flags:
+      Debuff: true
+      BlEffect: true
+      DisplayPc: true
+  - Status: Contents_34
+    Icon: EFST_CONTENTS_34
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      bonus bAspdRate, getstatus(SC_CONTENTS_34, 1);
+      bonus bCritical, getstatus(SC_CONTENTS_34, 2);
+  - Status: Contents_35
+    Icon: EFST_CONTENTS_35
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_CONTENTS_35, 1);
+      bonus bMatk, .@val1;
+      bonus bBaseAtk, .@val1;

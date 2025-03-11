@@ -673,6 +673,7 @@ public:
 		int32 fixcastrate, varcastrate, delayrate; // n/100
 		int32 add_fixcast, add_varcast; // in milliseconds
 		int32 ematk; // matk bonus from equipment
+		int32 ematk_hidden; // matk bonus not visible in status window
 		int32 eatk; // atk bonus from equipment
 		uint8 absorb_dmg_maxhp; // [Cydh]
 		uint8 absorb_dmg_maxhp2;
@@ -1405,7 +1406,7 @@ void pc_setequipindex(map_session_data *sd);
 uint8 pc_isequip(map_session_data *sd,int32 n);
 int32 pc_equippoint(map_session_data *sd,int32 n);
 int32 pc_equippoint_sub(map_session_data *sd, struct item_data* id);
-void pc_setinventorydata(map_session_data *sd);
+void pc_setinventorydata( map_session_data& sd );
 
 int32 pc_get_skillcooldown(map_session_data *sd, uint16 skill_id, uint16 skill_lv);
 uint8 pc_checkskill(map_session_data *sd,uint16 skill_id);

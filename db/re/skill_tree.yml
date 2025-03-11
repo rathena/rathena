@@ -7019,6 +7019,13 @@ Body:
         Requires:
           - Name: AG_RAIN_OF_CRYSTAL
             Level: 1
+      - Name: AG_ENERGY_CONVERSION
+        MaxLevel: 5
+        Requires:
+          - Name: WL_RECOGNIZEDSPELL
+            Level: 2
+          - Name: AG_CLIMAX
+            Level: 1
   - Job: Cardinal
     Inherit:
       Novice: true
@@ -8394,3 +8401,209 @@ Body:
       Star_Gladiator: true
       Star_Emperor: true
       Sky_Emperor: true
+  - Job: Shinkiro
+    Inherit:
+      Novice: true
+      Ninja: true
+      Kagerou: true
+    Tree:
+      - Name: SS_SHINKIROU
+        MaxLevel: 1
+      - Name: SS_SEKIENHOU
+        MaxLevel: 10
+      - Name: SS_SHIMIRU
+        MaxLevel: 5
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+      - Name: SS_KUNAIWAIKYOKU
+        MaxLevel: 10
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+      - Name: SS_KAGEGARI
+        MaxLevel: 10
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+      - Name: SS_REIKETSUHOU
+        MaxLevel: 10
+      - Name: SS_TOKEDASU
+        MaxLevel: 5
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+      - Name: SS_KUNAIKAITEN
+        MaxLevel: 5
+        Requires:
+          - Name: SS_KUNAIWAIKYOKU
+            Level: 3
+      - Name: SS_FUUMASHOUAKU
+        MaxLevel: 10
+        Requires:
+          - Name: SS_KUNAIWAIKYOKU
+            Level: 3
+      - Name: SS_KAGENOMAI
+        MaxLevel: 10
+        Requires:
+          - Name: SS_KAGEGARI
+            Level: 3
+      - Name: SS_RAIDENPOU
+        MaxLevel: 10
+      - Name: SS_AKUMUKESU
+        MaxLevel: 1
+      - Name: SS_KUNAIKUSSETSU
+        MaxLevel: 10
+        Requires:
+          - Name: SS_KUNAIKAITEN
+            Level: 5
+      - Name: SS_FUUMAKOUCHIKU
+        MaxLevel: 10
+        Requires:
+          - Name: SS_FUUMASHOUAKU
+            Level: 5
+      - Name: SS_KAGEGISSEN
+        MaxLevel: 10
+        Requires:
+          - Name: SS_KAGENOMAI
+            Level: 5
+      - Name: SS_KINRYUUHOU
+        MaxLevel: 10
+      - Name: SS_HITOUAKUMU
+        MaxLevel: 1
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+          - Name: SS_KUNAIWAIKYOKU
+            Level: 5
+          - Name: SS_KUNAIKAITEN
+            Level: 5
+          - Name: SS_KUNAIKUSSETSU
+            Level: 5
+      - Name: SS_KAGEAKUMU
+        MaxLevel: 1
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+          - Name: SS_KAGEGISSEN
+            Level: 7
+      - Name: SS_ANTENPOU
+        MaxLevel: 10
+      - Name: SS_ANKOKURYUUAKUMU
+        MaxLevel: 1
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+          - Name: SS_SEKIENHOU
+            Level: 5
+          - Name: SS_REIKETSUHOU
+            Level: 5
+          - Name: SS_RAIDENPOU
+            Level: 5
+          - Name: SS_KINRYUUHOU
+            Level: 5
+          - Name: SS_ANTENPOU
+            Level: 5
+  - Job: Shiranui
+    Inherit:
+      Novice: true
+      Ninja: true
+      Oboro: true
+    Tree:
+      - Name: SS_SHINKIROU
+        MaxLevel: 1
+      - Name: SS_SEKIENHOU
+        MaxLevel: 10
+      - Name: SS_SHIMIRU
+        MaxLevel: 5
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+      - Name: SS_KUNAIWAIKYOKU
+        MaxLevel: 10
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+      - Name: SS_KAGEGARI
+        MaxLevel: 10
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+      - Name: SS_REIKETSUHOU
+        MaxLevel: 10
+      - Name: SS_TOKEDASU
+        MaxLevel: 5
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+      - Name: SS_KUNAIKAITEN
+        MaxLevel: 5
+        Requires:
+          - Name: SS_KUNAIWAIKYOKU
+            Level: 3
+      - Name: SS_FUUMASHOUAKU
+        MaxLevel: 10
+        Requires:
+          - Name: SS_KUNAIWAIKYOKU
+            Level: 3
+      - Name: SS_KAGENOMAI
+        MaxLevel: 10
+        Requires:
+          - Name: SS_KAGEGARI
+            Level: 3
+      - Name: SS_RAIDENPOU
+        MaxLevel: 10
+      - Name: SS_AKUMUKESU
+        MaxLevel: 1
+      - Name: SS_KUNAIKUSSETSU
+        MaxLevel: 10
+        Requires:
+          - Name: SS_KUNAIKAITEN
+            Level: 5
+      - Name: SS_FUUMAKOUCHIKU
+        MaxLevel: 10
+        Requires:
+          - Name: SS_FUUMASHOUAKU
+            Level: 5
+      - Name: SS_KAGEGISSEN
+        MaxLevel: 10
+        Requires:
+          - Name: SS_KAGENOMAI
+            Level: 5
+      - Name: SS_KINRYUUHOU
+        MaxLevel: 10
+      - Name: SS_HITOUAKUMU
+        MaxLevel: 1
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+          - Name: SS_KUNAIWAIKYOKU
+            Level: 5
+          - Name: SS_KUNAIKAITEN
+            Level: 5
+          - Name: SS_KUNAIKUSSETSU
+            Level: 5
+      - Name: SS_KAGEAKUMU
+        MaxLevel: 1
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+          - Name: SS_KAGEGISSEN
+            Level: 7
+      - Name: SS_ANTENPOU
+        MaxLevel: 10
+      - Name: SS_ANKOKURYUUAKUMU
+        MaxLevel: 1
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+          - Name: SS_SEKIENHOU
+            Level: 5
+          - Name: SS_REIKETSUHOU
+            Level: 5
+          - Name: SS_RAIDENPOU
+            Level: 5
+          - Name: SS_KINRYUUHOU
+            Level: 5
+          - Name: SS_ANTENPOU
+            Level: 5
