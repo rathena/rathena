@@ -1434,9 +1434,11 @@ static int32 mob_warpchase_sub(struct block_list *bl,va_list ap) {
 				return 0;
 
 			// Leads to a different map that is set to not be accessible through warp chase
-			int16 warp_m = map_mapindex2mapid(nd->u.warp.mapindex);
-			if (warp_m != bl->m && map_getmapflag(warp_m, MF_NOBRANCH) && battle_config.mob_warp&4)
-				return 0;
+			if (battle_config.mob_warp&4) {
+				int16 warp_m = map_mapindex2mapid(nd->u.warp.mapindex);
+				if (warp_m != bl->m && map_getmapflag(warp_m, MF_NOBRANCH))
+					return 0;
+			}
 
 			// Get distance from warp exit to target
 			cur_distance = distance_blxy(target, nd->u.warp.x, nd->u.warp.y);
@@ -1458,8 +1460,6 @@ static int32 mob_warpchase_sub(struct block_list *bl,va_list ap) {
 			if (su->group == nullptr)
 				return 0;
 
-			int16 warp_m = map_mapindex2mapid(su->group->val3);
-
 			switch (su->group->unit_id) {
 				case UNT_WARP_WAITING:
 					// Monsters cannot use priest warps
@@ -1471,8 +1471,11 @@ static int32 mob_warpchase_sub(struct block_list *bl,va_list ap) {
 						return 0;
 
 					// Leads to a different map that is set to not be accessible through warp chase
-					if (warp_m != bl->m && map_getmapflag(warp_m, MF_NOBRANCH) && battle_config.mob_warp&4)
-						return 0;
+					if (battle_config.mob_warp&4) {
+						int16 warp_m = map_mapindex2mapid(su->group->val3);
+						if (warp_m != bl->m && map_getmapflag(warp_m, MF_NOBRANCH))
+							return 0;
+					}
 
 					// Get distance from warp exit to target
 					cur_distance = distance_blxy(target, su->group->val2 >> 16, su->group->val2 & 0xffff);
@@ -1752,12 +1755,14 @@ int32 mob_randomwalk(struct mob_data *md,t_tick tick)
  */
 int32 mob_warpchase(struct mob_data *md, struct block_list *target)
 {
-	if( battle_config.mob_warp == 0 ){
-		return 0;
-	}
-	
-	block_list *warp = nullptr;
-	int32 distance = AREA_SIZE;
+	if ((battle_config.mob_ai&0x40) == 0)
+		return 0; // Warp chase disabled
+
+	if (target == nullptr)
+		return 0; // No target
+
+	if (target->m < 0)
+		return 0; // Target isn't on any map
 
 	int32 type = BL_NUL;
 	if (battle_config.mob_warp&1)
@@ -1765,8 +1770,8 @@ int32 mob_warpchase(struct mob_data *md, struct block_list *target)
 	if (battle_config.mob_warp&2)
 		type |= BL_SKILL;
 
-	if (!(target && battle_config.mob_ai&0x40 && type != BL_NUL))
-		return 0; //Can't warp chase.
+	if (type == BL_NUL)
+		return 0; // No warp types to search for
 
 	if (target->m == md->bl.m && check_distance_bl(&md->bl, target, AREA_SIZE))
 		return 0; //No need to do a warp chase.
@@ -1774,6 +1779,9 @@ int32 mob_warpchase(struct mob_data *md, struct block_list *target)
 	if (md->ud.walktimer != INVALID_TIMER &&
 		map_getcell(md->bl.m,md->ud.to_x,md->ud.to_y,CELL_CHKNPC))
 		return 2; //Already walking to a warp.
+
+	block_list* warp = nullptr;
+	int32 distance = AREA_SIZE;
 
 	//Search for warps within mob's viewing range.
 	map_foreachinallrange(mob_warpchase_sub, &md->bl,
