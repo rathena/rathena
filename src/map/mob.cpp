@@ -1413,14 +1413,11 @@ static int32 mob_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
 }
 
 static int32 mob_warpchase_sub(struct block_list *bl,va_list ap) {
-	block_list *target;
-	block_list **target_warp;
-	int32 *min_distance;
 	int32 cur_distance;
 
-	target= va_arg(ap, struct block_list*);
-	target_warp= va_arg(ap, struct block_list**);
-	min_distance= va_arg(ap, int32*);
+	block_list* target= va_arg(ap, struct block_list*);
+	block_list** target_warp= va_arg(ap, struct block_list**);
+	int32* min_distance= va_arg(ap, int32*);
 
 	switch (bl->type) {
 		case BL_NPC:
