@@ -1416,6 +1416,15 @@ enum sc_type : int16 {
 	SC_SKY_ENCHANT,
 	SC_WILD_WALK,
 
+	// Shinkiro/Shiranui
+	SC_SHADOW_CLOCK,
+	SC_SHINKIROU_CALL,
+	SC_NIGHTMARE,
+	SC_SBUNSHIN,
+
+	SC_CONTENTS_34,
+	SC_CONTENTS_35,
+
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 
@@ -2879,7 +2888,9 @@ enum efst_type : int16{
 	EFST_CONTENTS_30,
 	EFST_CONTENTS_31,
 	EFST_CONTENTS_32,
-	EFST_CONTENTS_33,	//1491
+	EFST_CONTENTS_33,
+	EFST_CONTENTS_34,
+	EFST_CONTENTS_35,	//1493
 
 	EFST_C_BUFF_1 = 1509,
 	EFST_C_BUFF_2,

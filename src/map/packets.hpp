@@ -1965,6 +1965,43 @@ struct PACKET_ZC_SKILLMSG {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_SKILLMSG, 0x215);
 
+struct PACKET_CZ_REQ_EMOTION_EXPANSION{
+	int16 packetType;
+	uint8 unknown[4];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_EMOTION_EXPANSION, 0xbe9);
+
+struct PACKET_ZC_DISAPPEAR_ENTRY{
+	int16 packetType;
+	int32 GID;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_DISAPPEAR_ENTRY, 0x132);
+
+#if PACKETVER >= 20120618
+struct PACKET_ZC_EFST_SET_ENTER{
+	uint16 packetType;
+	uint32 targetID;
+	uint16 type;
+	uint32 duration;
+	uint32 duration2;
+	int32 val1;
+	int32 val2;
+	int32 val3;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_EFST_SET_ENTER, 0x984)
+#else
+struct PACKET_ZC_EFST_SET_ENTER{
+	uint16 packetType;
+	uint32 targetID;
+	uint16 type;
+	uint32 duration;
+	int32 val1;
+	int32 val2;
+	int32 val3;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_EFST_SET_ENTER, 0x8ff)
+#endif
+
 struct PACKET_CZ_SETTING_WHISPER_STATE{
 	int16 packetType;
 	int8 type;

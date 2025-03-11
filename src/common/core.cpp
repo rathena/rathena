@@ -272,7 +272,7 @@ const char *get_git_hash (void) {
 		char line[64];
 		char *rev = (char*)malloc(sizeof(char) * 50);
 
-		if( fgets(line, sizeof(line), fp) && sscanf(line, "%40s", rev) )
+		if (fgets(line, sizeof(line), fp) != nullptr && sscanf(line, "%40s", rev) == 1)
 			snprintf(GitHash, sizeof(GitHash), "%s", rev);
 
 		free(rev);

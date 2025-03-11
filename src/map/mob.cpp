@@ -1121,7 +1121,7 @@ int32 mob_spawn (struct mob_data *md)
 	int32 i=0;
 	t_tick tick = gettick();
 
-	md->last_thinktime = tick;
+	md->next_thinktime = tick;
 	if (md->bl.prev != nullptr)
 		unit_remove_map(&md->bl,CLR_RESPAWN);
 	else
@@ -1187,21 +1187,18 @@ int32 mob_spawn (struct mob_data *md)
 //	md->master_id = 0;
 	md->master_dist = 0;
 
-	md->state.aggressive = status_has_mode(&md->status,MD_ANGRY)?1:0;
-	md->state.skillstate = MSS_IDLE;
+	mob_setstate(*md, MSS_IDLE);
 	md->ud.state.blockedmove = false;
 	md->next_walktime = tick+rnd()%1000+MIN_RANDOMWALKTIME;
-	md->last_linktime = tick;
+	md->last_linktime = 0;
 	md->dmgtick = tick - 5000;
 	md->last_pcneartime = 0;
 	md->last_canmove = tick;
-	md->last_skillcheck = 0;
+	md->last_skillcheck = tick;
 	md->trickcasting = 0;
 
-	t_tick c = tick - MOB_MAX_DELAY;
-
 	for (i = 0; i < MAX_MOBSKILL; i++)
-		md->skilldelay[i] = c;
+		md->skilldelay[i] = 0;
 	for (i = 0; i < DAMAGELOG_SIZE; i++)
 		md->spotted_log[i] = 0;
 
@@ -1416,31 +1413,91 @@ static int32 mob_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
 }
 
 static int32 mob_warpchase_sub(struct block_list *bl,va_list ap) {
-	struct block_list *target;
-	struct npc_data **target_nd;
-	struct npc_data *nd;
-	int32 *min_distance;
 	int32 cur_distance;
 
-	target= va_arg(ap, struct block_list*);
-	target_nd= va_arg(ap, struct npc_data**);
-	min_distance= va_arg(ap, int32*);
+	block_list* target= va_arg(ap, struct block_list*);
+	block_list** target_warp= va_arg(ap, struct block_list**);
+	int32* min_distance= va_arg(ap, int32*);
 
-	nd = (TBL_NPC*) bl;
+	switch (bl->type) {
+		case BL_NPC:
+		{
+			// NPC Warp
+			npc_data* nd = reinterpret_cast<npc_data*>(bl);
 
-	if(nd->subtype != NPCTYPE_WARP)
-		return 0; //Not a warp
+			// Not a warp
+			if (nd->subtype != NPCTYPE_WARP)
+				return 0;
 
-	if(nd->u.warp.mapindex != map_getmapdata(target->m)->index)
-		return 0; //Does not lead to the same map.
+			// Does not lead to the same map as target
+			if (nd->u.warp.mapindex != map_getmapdata(target->m)->index)
+				return 0;
 
-	cur_distance = distance_blxy(target, nd->u.warp.x, nd->u.warp.y);
-	if (cur_distance < *min_distance)
-	{	//Pick warp that leads closest to target.
-		*target_nd = nd;
-		*min_distance = cur_distance;
-		return 1;
+			// Leads to a different map that is set to not be accessible through warp chase
+			if (battle_config.mob_warp&4) {
+				int16 warp_m = map_mapindex2mapid(nd->u.warp.mapindex);
+				if (warp_m != bl->m && map_getmapflag(warp_m, MF_NOBRANCH))
+					return 0;
+			}
+
+			// Get distance from warp exit to target
+			cur_distance = distance_blxy(target, nd->u.warp.x, nd->u.warp.y);
+
+			//Pick warp that leads closest to target
+			if (cur_distance < *min_distance) {
+				*target_warp = &nd->bl;
+				*min_distance = cur_distance;
+				return 1;
+			}
+		}
+		break;
+
+		case BL_SKILL:
+		{
+			// Skill Warp
+			skill_unit* su = reinterpret_cast<skill_unit*>(bl);
+
+			if (su->group == nullptr)
+				return 0;
+
+			switch (su->group->unit_id) {
+				case UNT_WARP_WAITING:
+					// Monsters cannot use priest warps
+					if (!(battle_config.mob_warp&2))
+						return 0;
+
+					// Does not lead to the same map as target
+					if (su->group->val3 != map_getmapdata(target->m)->index)
+						return 0;
+
+					// Leads to a different map that is set to not be accessible through warp chase
+					if (battle_config.mob_warp&4) {
+						int16 warp_m = map_mapindex2mapid(su->group->val3);
+						if (warp_m != bl->m && map_getmapflag(warp_m, MF_NOBRANCH))
+							return 0;
+					}
+
+					// Get distance from warp exit to target
+					cur_distance = distance_blxy(target, su->group->val2 >> 16, su->group->val2 & 0xffff);
+					break;
+				case UNT_DIMENSIONDOOR:
+					// Not used for warp chase as the target coordinates are random
+					return 0;
+				default:
+					// Skill cannot warp
+					return 0;
+			}
+
+			//Pick warp that leads closest to target.
+			if (cur_distance < *min_distance) {
+				*target_warp = &su->bl;
+				*min_distance = cur_distance;
+				return 1;
+			}
+		}
+		break;
 	}
+
 	return 0;
 }
 /*==========================================
@@ -1509,7 +1566,6 @@ static int32 mob_ai_sub_hard_slavemob(struct mob_data *md,t_tick tick)
 	if (DIFF_TICK(tick, md->last_linktime) >= MIN_MOBLINKTIME && !md->target_id)
   	{
 		struct unit_data *ud = unit_bl2ud(bl);
-		md->last_linktime = tick;
 
 		if (ud) {
 			struct block_list *tbl=nullptr;
@@ -1523,9 +1579,19 @@ static int32 mob_ai_sub_hard_slavemob(struct mob_data *md,t_tick tick)
 				if (tbl && battle_check_target(&md->bl, tbl, BCT_ENEMY) <= 0)
 					tbl = nullptr;
 			}
-			if (tbl && status_check_skilluse(&md->bl, tbl, 0, 0)) {
-				md->target_id=tbl->id;
-				return 1;
+			else if (bl->type == BL_MOB) {
+				// If master is a monster, it might still have a target after using a skill
+				mob_data& mmd = reinterpret_cast<mob_data&>(*bl);
+				if (mmd.target_id > 0)
+					tbl = map_id2bl(mmd.target_id);
+			}
+
+			if (tbl != nullptr) {
+				md->last_linktime = tick;
+				if (status_check_skilluse(&md->bl, tbl, 0, 0)) {
+					md->target_id = tbl->id;
+					return 1;
+				}
 			}
 		}
 	}
@@ -1542,44 +1608,24 @@ int32 mob_unlocktarget(struct mob_data *md, t_tick tick)
 {
 	nullpo_ret(md);
 
-	// Remember if the monster was in a "chasing" state
-	bool chasestate = mob_is_chasing(md->state.skillstate);
-
 	switch (md->state.skillstate) {
 	case MSS_WALK:
 		if (md->ud.walktimer != INVALID_TIMER)
 			break;
 		//Because it is not unset when the mob finishes walking.
-		md->state.skillstate = MSS_IDLE;
+		mob_setstate(*md, MSS_IDLE);
 		[[fallthrough]];
 	case MSS_IDLE:
-		// When walking we want to trigger the idle skills through the walk routine so we can prevent stopping
-		// This situation happens when an immobile monster uses a skill to move
-		if (md->ud.walktimer != INVALID_TIMER)
-			break;
-		if (md->idle_event[0] && npc_event_do_id(md->idle_event, md->bl.id) > 0) {
+		if (md->ud.walktimer == INVALID_TIMER && md->idle_event[0] && npc_event_do_id(md->idle_event, md->bl.id) > 0)
 			md->idle_event[0] = 0;
-			break;
-		}
-		// Idle skill.
-		if (DIFF_TICK(tick, md->last_skillcheck) >= MOB_SKILL_INTERVAL && mobskill_use(md, tick, -1))
-			break;
-		//Random walk.
-		if (!md->master_id &&
-			DIFF_TICK(md->next_walktime, tick) <= 0 &&
-			!mob_randomwalk(md,tick))
-			//Delay next random walk when this one failed.
-			if (md->next_walktime < md->ud.canmove_tick)
-				md->next_walktime = md->ud.canmove_tick;
-			else
-				md->next_walktime = tick+rnd()%1000;
 		break;
+	case MSS_LOOT:
+		// Looters that lost their target stop after 0.5-1.5 cells moved
+		unit_stop_walking_soon(md->bl, tick);
+		[[fallthrough]];
 	default:
 		unit_stop_attack( &md->bl );
-		unit_stop_walking_soon(md->bl); //Stop chasing.
-		if (status_has_mode(&md->status,MD_ANGRY) && !md->state.aggressive)
-			md->state.aggressive = 1; //Restore angry state when switching to idle
-		md->state.skillstate = MSS_IDLE;
+		mob_setstate(*md, MSS_IDLE);
 		if(battle_config.mob_ai&0x8) //Walk instantly after dropping target
 			md->next_walktime = tick+rnd()%1000;
 		else
@@ -1588,12 +1634,13 @@ int32 mob_unlocktarget(struct mob_data *md, t_tick tick)
 	}
 	if (md->target_id) {
 		md->target_id=0;
-		md->ud.target_to = 0;
 		unit_set_target(&md->ud, 0);
 	}
+	md->ud.state.attack_continue = 0;
+	md->ud.target_to = 0;
 	
 	if (!md->ud.state.ignore_cell_stack_limit && battle_config.official_cell_stack_limit > 0
-		&& (chasestate || battle_config.mob_ai & 0x8)
+		&& (battle_config.mob_ai & 0x8)
 		&& map_count_oncell(md->bl.m, md->bl.x, md->bl.y, BL_CHAR | BL_NPC, 1) > battle_config.official_cell_stack_limit) {
 		unit_walktoxy(&md->bl, md->bl.x, md->bl.y, 8);
 	}
@@ -1623,6 +1670,7 @@ int32 mob_randomwalk(struct mob_data *md,t_tick tick)
 		return 0;
 
 	// Make sure the monster has no target anymore, otherwise the walkpath will check for it
+	md->ud.state.attack_continue = 0;
 	md->ud.target_to = 0;
 
 	r=rnd();
@@ -1693,33 +1741,78 @@ int32 mob_randomwalk(struct mob_data *md,t_tick tick)
 		}
 		return 0;
 	}
-	md->state.skillstate=MSS_WALK;
+	mob_setstate(*md, MSS_WALK);
 	md->move_fail_count=0;
 	md->next_walktime = tick+rnd()%1000+MIN_RANDOMWALKTIME + unit_get_walkpath_time(md->bl);
 	return 1;
 }
 
+/**
+ * Makes a monster move to the closest warp if corresponding configs are set
+ * @param md: Mob that should move to the warp
+ * @param target: Target the mob should follow
+ * @return 0: Do not warp chase, 1: Do warp chase, 2: Already warp chasing
+ */
 int32 mob_warpchase(struct mob_data *md, struct block_list *target)
 {
-	struct npc_data *warp = nullptr;
-	int32 distance = AREA_SIZE;
-	if (!(target && battle_config.mob_ai&0x40 && battle_config.mob_warp&1))
-		return 0; //Can't warp chase.
+	if ((battle_config.mob_ai&0x40) == 0)
+		return 0; // Warp chase disabled
+
+	if (target == nullptr)
+		return 0; // No target
+
+	if (target->m < 0)
+		return 0; // Target isn't on any map
+
+	int32 type = BL_NUL;
+	if (battle_config.mob_warp&1)
+		type |= BL_NPC;
+	if (battle_config.mob_warp&2)
+		type |= BL_SKILL;
+
+	if (type == BL_NUL)
+		return 0; // No warp types to search for
 
 	if (target->m == md->bl.m && check_distance_bl(&md->bl, target, AREA_SIZE))
 		return 0; //No need to do a warp chase.
 
 	if (md->ud.walktimer != INVALID_TIMER &&
 		map_getcell(md->bl.m,md->ud.to_x,md->ud.to_y,CELL_CHKNPC))
-		return 1; //Already walking to a warp.
+		return 2; //Already walking to a warp.
+
+	block_list* warp = nullptr;
+	int32 distance = AREA_SIZE;
 
 	//Search for warps within mob's viewing range.
 	map_foreachinallrange(mob_warpchase_sub, &md->bl,
-		md->db->range2, BL_NPC, target, &warp, &distance);
+		md->db->range2, type, target, &warp, &distance);
 
-	if (warp && unit_walktobl(&md->bl, &warp->bl, 1, 1))
+	if (warp != nullptr && unit_walktobl(&md->bl, warp, 0, 0))
 		return 1;
 	return 0;
+}
+
+/**
+ * Sets a mob's state considering the aggressive bit
+ * @param md: Mob to set state on
+ * @param skillstate: Target state of the monster
+ */
+void mob_setstate(mob_data& md, MobSkillState skillstate) {
+	switch (skillstate) {
+		case MSS_BERSERK:
+		case MSS_ANGRY:
+			md.state.skillstate = md.state.aggressive?MSS_ANGRY:MSS_BERSERK;
+			break;
+		case MSS_RUSH:
+		case MSS_FOLLOW:
+			md.state.skillstate = md.state.aggressive?MSS_FOLLOW:MSS_RUSH;
+			break;
+		default:
+			// When going to any state other than BERSERK/RUSH, aggressive should be reset
+			md.state.aggressive = status_has_mode(&md.status, MD_ANGRY)?1:0;
+			md.state.skillstate = skillstate;
+			break;
+	}
 }
 
 /*==========================================
@@ -1738,10 +1831,11 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 	if (md->ud.state.force_walk)
 		return false;
 
-	if (DIFF_TICK(tick, md->last_thinktime) < MIN_MOBTHINKTIME)
+	if (DIFF_TICK(tick, md->next_thinktime) < 0)
 		return false;
 
-	md->last_thinktime = tick;
+	// This prevents the lazy AI from being executed at the same time
+	md->next_thinktime = tick;
 
 	if (md->ud.skilltimer != INVALID_TIMER)
 		return false;
@@ -1751,6 +1845,31 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 		md->target_id = md->attacked_id = md->norm_attacked_id = 0;
 		return false;
 	}
+
+	// Before a monster processes its AI, it will check for a skill
+	// It it uses a skill it will not process its AI further until the next interval
+	// Until we implement subcell movement, casting while moving still needs to be done in unit.cpp
+	// Dead and Berserk states have special interval rules
+	// TODO: Monster AI for dead state is not implemented at the moment
+	if (md->ud.walktimer == INVALID_TIMER) {
+		bool skill_ready = false;
+		switch (md->state.skillstate) {
+			case MSS_BERSERK:
+				skill_ready = (DIFF_TICK(tick, md->ud.attackabletime) >= 0);
+				break;
+//			case MSS_DEAD:
+//				skill_ready = (DIFF_TICK(tick, md->last_skillcheck) >= 300);
+//				break;
+			default:
+				skill_ready = (DIFF_TICK(tick, md->last_skillcheck) >= MOB_SKILL_INTERVAL);
+				break;
+		}
+		if (skill_ready && mobskill_use(md, tick, -1))
+			return true;
+	}
+
+	// Note: Anything below this point should actually be using a Finite-state machine (FSM)
+	// But we don't have the FSM data in the database at the moment, so we cannot get a fully correct execution order
 
 	if (md->sc.getSCE(SC_BLIND))
 		view_range = 1;
@@ -1772,12 +1891,25 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 				((((TBL_PC*)tbl)->state.gangsterparadise && !(mode&MD_STATUSIMMUNE)) ||
 				((TBL_PC*)tbl)->invincible_timer != INVALID_TIMER)
 		)) {	//No valid target
-			if (mob_warpchase(md, tbl))
+			if (mob_warpchase(md, tbl) > 0)
 				return true; //Chasing this target.
 			if (tbl && md->ud.walktimer != INVALID_TIMER && (!can_move || md->ud.walkpath.path_pos <= battle_config.mob_chase_refresh))
 				return true; //Walk at least "mob_chase_refresh" cells before dropping the target unless target is non-existent
 			mob_unlocktarget(md, tick); //Unlock target
 			tbl = nullptr;
+		}
+		// Monsters in chase state that are not moving will recheck their target
+		// This usually happens when they used a skill that stopped them or they were hit while chasing
+		// Items are handled later in this function
+		if (tbl != nullptr && tbl->type != BL_ITEM && md->ud.walktimer == INVALID_TIMER && mob_is_chasing(md->state.skillstate)) {
+			// But don't do this if they stopped because target is already in attack range
+			if (!battle_check_range(&md->bl, tbl, md->status.rhw.range)) {
+				// If target is no longer visible, target is dropped and the monster waits for next iteration to continue
+				if (!status_check_visibility(&md->bl, tbl, true)) {
+					mob_unlocktarget(md, tick);
+					return true;
+				}
+			}
 		}
 	}
 
@@ -1871,11 +2003,11 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 	{
 		int32 prev_id = md->target_id;
 		map_foreachinallrange (mob_ai_sub_hard_activesearch, &md->bl, view_range, DEFAULT_ENEMY_TYPE(md), md, &tbl, mode);
-		// If a monster finds a target through search that is already in attack range it immediately switches to berserk mode
+		// If a monster finds a new target that is already in attack range it immediately switches to rush mode
 		// This behavior overrides even angry mode and other mode-specific behavior
 		if (tbl != nullptr && prev_id != md->target_id && battle_check_range(&md->bl, tbl, md->status.rhw.range)) {
 			md->state.aggressive = 0;
-			md->state.skillstate = MSS_BERSERK;
+			mob_setstate(*md, MSS_RUSH);
 		}
 	}
 	else
@@ -1898,8 +2030,20 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 			}
 		}
 
-		//This handles triggering idle/walk skill.
+		// Make sure target is unlocked
 		mob_unlocktarget(md, tick);
+
+		// Random walk
+		if (!md->master_id &&
+			DIFF_TICK(md->next_walktime, tick) <= 0 &&
+			!mob_randomwalk(md, tick)) {
+			// Delay next random walk when this one failed
+			if (md->next_walktime < md->ud.canmove_tick)
+				md->next_walktime = md->ud.canmove_tick;
+			else
+				md->next_walktime = tick + rnd()%1000;
+		}
+
 		return true;
 	}
 
@@ -1907,14 +2051,21 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 	if (tbl->type == BL_ITEM)
 	{	//Loot time.
 		struct flooritem_data *fitem;
-		if (md->ud.target == tbl->id && md->ud.walktimer != INVALID_TIMER)
-			return true; //Already locked.
+		int32 loot_range = 0;
+		if (md->ud.walktimer != INVALID_TIMER) {
+			// Ready to loot
+			if (unit_getx(md->bl, tick) == tbl->x && unit_gety(md->bl, tick) == tbl->y)
+				loot_range = 1;
+			// Already moving to target item
+			else if (md->ud.target == tbl->id)
+				return true;
+		}
 		if (md->lootitems == nullptr)
 		{	//Can't loot...
 			mob_unlocktarget(md, tick);
 			return true;
 		}
-		if (!check_distance_bl(&md->bl, tbl, 0))
+		if (!check_distance_bl(&md->bl, tbl, loot_range))
 		{	//Still not within loot range.
 			if (!(mode&MD_CANMOVE))
 			{	//A looter that can't move? Real smart.
@@ -1923,7 +2074,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 			}
 			if (!can_move) //Stuck. Wait before walking.
 				return true;
-			md->state.skillstate = MSS_LOOT;
+			mob_setstate(*md, MSS_LOOT);
 			if (!unit_walktobl(&md->bl, tbl, 0, 0))
 				mob_unlocktarget(md, tick); //Can't loot...
 			else
@@ -1964,20 +2115,6 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 
 	// At this point we know the target is attackable, attempt to attack
 
-	// Monsters in angry state, after having used a normal attack, will always attempt a skill
-	if (md->ud.walktimer == INVALID_TIMER && md->state.skillstate == MSS_ANGRY && md->ud.skill_id == 0)
-	{
-		// Only use skill if able to walk on next tick and not attempted a skill the last second
-		if (DIFF_TICK(md->ud.canmove_tick, tick) <= MIN_MOBTHINKTIME && DIFF_TICK(tick, md->last_skillcheck) >= MOB_SKILL_INTERVAL){
-			if (mobskill_use(md, tick, -1)) {
-				// After the monster used an angry skill, it will not attack for aDelay
-				// Setting the delay here because not all monster skill use situations will cause an attack delay
-				md->ud.attackabletime = tick + md->status.adelay;
-				return true;
-			}
-		}
-	}
-
 	// Normal attack / berserk skill is only used when target is in range
 	if (battle_check_range(&md->bl, tbl, md->status.rhw.range))
 	{
@@ -1985,7 +2122,8 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 		md->ud.target_to = 0;
 
 		// Hiding is a special case because it prevents normal attacks but allows skill usage
-		// TODO: Some other states also have this behavior and should be investigated (e.g. NPC_SR_CURSEDCIRCLE)
+		// TODO: Some other states also have this behavior and should be investigated
+		// TODO: EFST_AUTOCOUNTER, EFST_BLADESTOP, NPC_SR_CURSEDCIRCLE
 		if (!(md->sc.option&OPTION_HIDE)) {
 			// Target within range and potentially able to use normal attack, engage
 			if (md->ud.target != tbl->id || md->ud.attacktimer == INVALID_TIMER)
@@ -2002,14 +2140,10 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 				}
 			}
 		}
-		else if (md->state.skillstate == MSS_BERSERK && DIFF_TICK(md->ud.attackabletime, tick) <= 0) {
-			// Target within range and no attack delay, but unable to use normal attack, check for skill
-			// On official servers this check happens every 20ms
-			// If you want fully official behavior you will need to set MIN_MOBTHINKTIME to 20
-			if (mobskill_use(md, tick, -1)) {
-				// When a skill was used, the attack delay is applied
-				md->ud.attackabletime = tick + md->status.adelay;
-			}
+		else {
+			// These status changes pretend the attack was successful without attempting it
+			// This results in the monster going into an attack state despite not attacking
+			mob_setstate(*md, MSS_BERSERK);
 		}
 		//Target still in attack range, no need to chase the target
 		return true;
@@ -2026,14 +2160,12 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 		if (md->ud.attacktimer == INVALID_TIMER)
 		{ // Only switch mode if no more attack delay left
 			if (DIFF_TICK(tick, md->last_canmove) > battle_config.mob_unlock_time) {
-				// Unlock target or use idle/walk skill
+				// Unlock target
 				mob_unlocktarget(md, tick);
 			}
 			else {
-				// Use idle skill but keep target for now
-				md->state.skillstate = MSS_IDLE;
-				if (DIFF_TICK(tick, md->last_skillcheck) >= MOB_SKILL_INTERVAL)
-					mobskill_use(md, tick, -1);
+				// Set to use idle skill next interval but keep target for now
+				mob_setstate(*md, MSS_IDLE);
 			}
 		}
 		return true;
@@ -2052,41 +2184,45 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 
 	// Follow up if possible.
 
-	// Officially when a monster cannot act, move or attack, the AI isn't processed at all.
-	// The attacked ID remains unprocessed, so that once the monster can act again it will process it at this point.
-	// Our code works quite different from that and we try to plan a chase ahead of time.
-	// If we would go ahead now and initiate a chase, it will kill the attack timer which is not good because we
-	// need to check for visibility at the end of it for monsters because that's when they actually drop target.
-	// However, we only process a monster's AI every 100ms instead of every 20ms like on official servers, so
-	// without planning a chase, a monster is easy to hitlock.
-	// For now we prevent processing this part of the code if an attack timer is still running and the monster
-	// cannot move yet.
-	if (md->ud.walktimer == INVALID_TIMER
-		&& md->ud.attacktimer != INVALID_TIMER
-		&& DIFF_TICK(md->ud.canmove_tick, tick) > 0)
-		return true;
-
 	// Monsters in Angry state only start chasing when target is in chase range
 	if (md->state.skillstate == MSS_ANGRY && !mob_can_reach(md, tbl, md->db->range3)) {
 		mob_unlocktarget(md, tick);
 		return true;
 	}
 
-	// Monsters can use chase skills before starting to walk
-	// So we need to change the state and check for a skill here already
-	// But only use skill if able to walk on next tick and not attempted a skill the last second
-	// Skills during movement are handled in the walktobl routine
-	if (md->ud.walktimer == INVALID_TIMER
-		&& DIFF_TICK(md->ud.canmove_tick, tick) <= MIN_MOBTHINKTIME
-		&& DIFF_TICK(tick, md->last_skillcheck) >= MOB_SKILL_INTERVAL) {
-		md->state.skillstate = md->state.aggressive ? MSS_FOLLOW : MSS_RUSH;
-		if (mobskill_use(md, tick, -1))
-			return true;
-	}
-
 	if(!unit_walktobl(&md->bl, tbl, md->status.rhw.range, 2))
 		mob_unlocktarget(md, tick);
 
+	return true;
+}
+
+/**
+ * End of attack timer event
+ * This is so we can call the mob AI at the end of an attack timer and don't need to wait until the next AI interval
+ * Also, mob AI checks that are triggered at the end of attack delay are currently handled here
+ * @param md Monster to execute the AI for
+ * @param tick Current tick
+ * @return Whether the AI was executed (true) or the attack should be cancelled (false)
+ */
+bool mob_ai_sub_hard_attacktimer(mob_data &md, t_tick tick)
+{
+	block_list* target = map_id2bl(md.ud.target);
+
+	// No target anymore
+	if (target == nullptr)
+		return false;
+
+	// Check for warp chase
+	if (mob_warpchase(&md, target) > 0)
+		return true;
+
+	// Monsters have a special visibility check at the end of their attack delay
+	// If they still have a target, but it is not visible, they drop the target
+	if (!status_check_visibility(&md.bl, target, true))
+		return false;
+
+	// Go through the whole monster AI
+	mob_ai_sub_hard(&md, tick);
 	return true;
 }
 
@@ -2139,7 +2275,7 @@ static int32 mob_ai_sub_lazy(struct mob_data *md, va_list args)
 	if(battle_config.mob_active_time &&
 		md->last_pcneartime &&
  		!status_has_mode(&md->status,MD_STATUSIMMUNE) &&
-		DIFF_TICK(tick,md->last_thinktime) > MIN_MOBTHINKTIME)
+		DIFF_TICK(tick,md->next_thinktime) > 0) // No need to trigger on the same tick again
 	{
 		if (DIFF_TICK(tick,md->last_pcneartime) < battle_config.mob_active_time)
 			return (int32)mob_ai_sub_hard(md, tick);
@@ -2149,7 +2285,7 @@ static int32 mob_ai_sub_lazy(struct mob_data *md, va_list args)
 	if(battle_config.boss_active_time &&
 		md->last_pcneartime &&
 		status_has_mode(&md->status,MD_STATUSIMMUNE) &&
-		DIFF_TICK(tick,md->last_thinktime) > MIN_MOBTHINKTIME)
+		DIFF_TICK(tick,md->next_thinktime) > 0) // No need to trigger on the same tick again
 	{
 		if (DIFF_TICK(tick,md->last_pcneartime) < battle_config.boss_active_time)
 			return (int32)mob_ai_sub_hard(md, tick);
@@ -2159,10 +2295,21 @@ static int32 mob_ai_sub_lazy(struct mob_data *md, va_list args)
 	//Clean the spotted log
 	mob_clean_spotted(md);
 
-	if(DIFF_TICK(tick,md->last_thinktime) < MOB_SKILL_INTERVAL)
+	// Don't continue if the hard AI was executed recently
+	// We use twice the hard AI interval to account for lag
+	if (DIFF_TICK(tick, md->next_thinktime) < MIN_MOBTHINKTIME*2)
 		return 0;
 
-	md->last_thinktime=tick;
+	// Don't continue if skills cannot be used yet
+	if (DIFF_TICK(tick, md->last_skillcheck) < MOB_SKILL_INTERVAL)
+		return 0;
+
+	// Check for warp chase if there's still a target
+	if (md->target_id > 0) {
+		block_list* tbl = map_id2bl(md->target_id);
+		if (tbl != nullptr && mob_warpchase(md, tbl) > 0)
+			return 0;
+	}
 
 	if (md->master_id) {
 		if (!mob_is_spotted(md)) {
@@ -2178,14 +2325,9 @@ static int32 mob_ai_sub_lazy(struct mob_data *md, va_list args)
 		return 0;
 	}
 
-	if (md->ud.walktimer == INVALID_TIMER) {
-		// Because it is not unset when the mob finishes walking.
-		md->state.skillstate = MSS_IDLE;
-		if (md->idle_event[0] && npc_event_do_id( md->idle_event, md->bl.id ) > 0) {
-			md->idle_event[0] = 0;
-			return 0;
-		}
-	}
+	// Remove target and set to idle state when movement was finished
+	// This also triggers the idle NPC event
+	mob_unlocktarget(md, tick);
 
 	if( DIFF_TICK(md->next_walktime,tick) < 0 && status_has_mode(&md->status,MD_CANMOVE) && unit_can_move(&md->bl) )
 	{
@@ -2695,7 +2837,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 
 	if( src ) { // Use Dead skill only if not killed by Script or Command
 		md->status.hp = 1;
-		md->state.skillstate = MSS_DEAD;
+		mob_setstate(*md, MSS_DEAD);
 		mobskill_use(md,tick,-1);
 		md->status.hp = 0;
 	}
@@ -3356,8 +3498,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 void mob_revive(struct mob_data *md, uint32 hp)
 {
 	t_tick tick = gettick();
-	md->state.skillstate = MSS_IDLE;
-	md->last_thinktime = tick;
+	mob_setstate(*md, MSS_IDLE);
 	md->next_walktime = tick+rnd()%1000+MIN_RANDOMWALKTIME;
 	md->last_linktime = tick;
 	md->last_pcneartime = 0;
@@ -3549,10 +3690,8 @@ int32 mob_class_change (struct mob_data *md, int32 mob_id)
 		if(md->status.hp < 1) md->status.hp = 1;
 	}
 
-	t_tick c = tick - MOB_MAX_DELAY;
-
 	for(i=0;i<MAX_MOBSKILL;i++)
-		md->skilldelay[i] = c;
+		md->skilldelay[i] = 0;
 
 	if (md->lootitems == nullptr && status_has_mode(&md->db->status,MD_LOOTER))
 		md->lootitems = (struct s_mob_lootitem *)aCalloc(LOOTITEM_SIZE,sizeof(struct s_mob_lootitem));
@@ -3918,6 +4057,52 @@ bool mob_chat_display_message(mob_data &md, uint16 msg_id) {
 	return false;
 }
 
+
+/**
+ * This function handles actions that should be done at the end of a skill
+ * This needs to happen whether the skill was cast successfully or cast-cancelled
+ * It handles setting the skill delays and the normal attack wait time
+ * @param bl: Mob data
+ */
+void mobskill_end(mob_data& md, t_tick tick)
+{
+	// After a skill a monster cannot attack for its attack delay
+	// We make sure to not reduce it in case it was set by a skill for another purpose
+	md.ud.attackabletime = i64max(tick + md.status.adelay, md.ud.attackabletime);
+
+	// If skill was used by a script, do not apply any skill delay
+	if (md.skill_idx < 0)
+		return;
+
+	std::vector<std::shared_ptr<s_mob_skill>>& ms = md.db->skill;
+
+	if (ms.empty())
+		return;
+
+	// Officially the skill delay is per skill rather than per skill db entry
+	// We simulate this by setting the delay for all entries of the same skill
+	// We have an optional mob AI setting to only set the delay for one entry
+	if (!(battle_config.mob_ai&0x200)) {
+		// Even though we already know which skill was picked as we stored that in skill_idx
+		// Officially it actually tries to find the skill again using the monster's current state
+		// If the skill cannot be found anymore because the monster's state has changed no delay will be applied
+		int32 delay = 0;
+		for (int32 i = 0; i < ms.size(); i++) {
+			if (ms[i]->state == md.state.skillstate && ms[i]->skill_id == ms[md.skill_idx]->skill_id) {
+				// State and skill match, use the first delay found
+				delay = ms[i]->delay;
+				break;
+			}
+		}
+		// Apply delay found to all entries of the skill
+		for (int32 i = 0; i < ms.size(); i++)
+			if (ms[i]->skill_id == ms[md.skill_idx]->skill_id)
+				md.skilldelay[i] = tick + delay;
+	}
+	else
+		md.skilldelay[md.skill_idx] = tick + ms[md.skill_idx]->delay;
+}
+
 /*==========================================
  * Skill use judging
  *------------------------------------------*/
@@ -3949,7 +4134,7 @@ bool mobskill_use(struct mob_data *md, t_tick tick, int32 event, int64 damage)
 		if (i == ms.size())
 			i = 0;
 
-		if (DIFF_TICK(tick, md->skilldelay[i]) < ms[i]->delay)
+		if (DIFF_TICK(tick, md->skilldelay[i]) < 0)
 			continue;
 
 		c2 = ms[i]->cond2;
@@ -4148,12 +4333,6 @@ bool mobskill_use(struct mob_data *md, t_tick tick, int32 event, int64 damage)
 		if ( ms[i]->msg_id ){ //Display color message [SnakeDrak]
 			mob_chat_display_message(*md, ms[i]->msg_id);
 		}
-		if(!(battle_config.mob_ai&0x200)) { //pass on delay to same skill.
-			for (j = 0; j < ms.size(); j++)
-				if (ms[j]->skill_id == ms[i]->skill_id)
-					md->skilldelay[j]=tick;
-		} else
-			md->skilldelay[i]=tick;
 		map_freeblock_unlock();
 		return true;
 	}
@@ -5412,7 +5591,7 @@ static int32 mob_read_sqldb(void)
 	for( uint8 fi = 0; fi < ARRAYLENGTH(mob_db_name); ++fi ) {
 		// retrieve all rows from the mob database
 		if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT `id`,`name_aegis`,`name_english`,`name_japanese`,`level`,`hp`,`sp`,`base_exp`,`job_exp`,`mvp_exp`,`attack`,`attack2`,`defense`,`magic_defense`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,`attack_range`,`skill_range`,`chase_range`,`size`,`race`,"
-			"`racegroup_goblin`,`racegroup_kobold`,`racegroup_orc`,`racegroup_golem`,`racegroup_guardian`,`racegroup_ninja`,`racegroup_gvg`,`racegroup_battlefield`,`racegroup_treasure`,`racegroup_biolab`,`racegroup_manuk`,`racegroup_splendide`,`racegroup_scaraba`,`racegroup_ogh_atk_def`,`racegroup_ogh_hidden`,`racegroup_bio5_swordman_thief`,`racegroup_bio5_acolyte_merchant`,`racegroup_bio5_mage_archer`,`racegroup_bio5_mvp`,`racegroup_clocktower`,`racegroup_thanatos`,`racegroup_faceworm`,`racegroup_hearthunter`,`racegroup_rockridge`,`racegroup_werner_lab`,`racegroup_temple_demon`,`racegroup_illusion_vampire`,`racegroup_malangdo`,`racegroup_ep172alpha`,`racegroup_ep172beta`,`racegroup_ep172bath`,`racegroup_illusion_turtle`,`racegroup_rachel_sanctuary`,`racegroup_illusion_luanda`,`racegroup_illusion_frozen`,`racegroup_illusion_moonlight`,`racegroup_ep16_def`,`racegroup_edda_arunafeltz`,"
+			"`racegroup_goblin`,`racegroup_kobold`,`racegroup_orc`,`racegroup_golem`,`racegroup_guardian`,`racegroup_ninja`,`racegroup_gvg`,`racegroup_battlefield`,`racegroup_treasure`,`racegroup_biolab`,`racegroup_manuk`,`racegroup_splendide`,`racegroup_scaraba`,`racegroup_ogh_atk_def`,`racegroup_ogh_hidden`,`racegroup_bio5_swordman_thief`,`racegroup_bio5_acolyte_merchant`,`racegroup_bio5_mage_archer`,`racegroup_bio5_mvp`,`racegroup_clocktower`,`racegroup_thanatos`,`racegroup_faceworm`,`racegroup_hearthunter`,`racegroup_rockridge`,`racegroup_werner_lab`,`racegroup_temple_demon`,`racegroup_illusion_vampire`,`racegroup_malangdo`,`racegroup_ep172alpha`,`racegroup_ep172beta`,`racegroup_ep172bath`,`racegroup_illusion_turtle`,`racegroup_rachel_sanctuary`,`racegroup_illusion_luanda`,`racegroup_illusion_frozen`,`racegroup_illusion_moonlight`,`racegroup_ep16_def`,`racegroup_edda_arunafeltz`,`racegroup_lasagna`,`racegroup_glast_heim_abyss`,"
 			"`element`,`element_level`,`walk_speed`,`attack_delay`,`attack_motion`,`damage_motion`,`damage_taken`,`ai`,`class`,"
 			"`mode_canmove`,`mode_looter`,`mode_aggressive`,`mode_assist`,`mode_castsensoridle`,`mode_norandomwalk`,`mode_nocast`,`mode_canattack`,`mode_castsensorchase`,`mode_changechase`,`mode_angry`,`mode_changetargetmelee`,`mode_changetargetchase`,`mode_targetweak`,`mode_randomtarget`,`mode_ignoremelee`,`mode_ignoremagic`,`mode_ignoreranged`,`mode_mvp`,`mode_ignoremisc`,`mode_knockbackimmune`,`mode_teleportblock`,`mode_fixeditemdrop`,`mode_detector`,`mode_statusimmune`,`mode_skillimmune`,"
 			"`mvpdrop1_item`,`mvpdrop1_rate`,`mvpdrop1_option`,`mvpdrop1_index`,`mvpdrop2_item`,`mvpdrop2_rate`,`mvpdrop2_option`,`mvpdrop2_index`,`mvpdrop3_item`,`mvpdrop3_rate`,`mvpdrop3_option`,`mvpdrop3_index`,"
@@ -6078,7 +6257,7 @@ static bool mob_parse_row_mobskilldb( char** str, size_t columns, size_t current
 	if( j < ARRAYLENGTH(state) )
 		ms->state = state[j].id;
 	else {
-		ShowError("mob_parse_row_mobskilldb: Unrecognized state '%s' in line %d\n", str[2], current);
+		ShowError("mob_parse_row_mobskilldb: Unrecognized state '%s' in line %" PRIuPTR "\n", str[2], current);
 		return false;
 	}
 

@@ -181,7 +181,6 @@ struct Battle_Config
 	int32 defnotenemy;
 	int32 vs_traps_bctall;
 	int32 traps_setting;
-	int32 summon_flora; //[Skotlex]
 	int32 clear_unit_ondeath; //[Skotlex]
 	int32 clear_unit_onwarp; //[Skotlex]
 	int32 random_monster_checklv;
@@ -768,6 +767,7 @@ struct Battle_Config
 	int32 item_stacking;
 	int32 hom_delay_reset_vaporize;
 	int32 hom_delay_reset_warp;
+	int32 alchemist_summon_setting;
 	int32 loot_range;
 	int32 assist_range;
 

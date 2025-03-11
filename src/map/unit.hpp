@@ -116,11 +116,17 @@ int32 unit_calc_pos(struct block_list *bl, int32 tx, int32 ty, uint8 dir);
 TIMER_FUNC(unit_delay_walktoxy_timer);
 TIMER_FUNC(unit_delay_walktobl_timer);
 
-void unit_stop_walking_soon(struct block_list& bl);
+int16 unit_getx(block_list& bl, t_tick tick = gettick());
+int16 unit_gety(block_list& bl, t_tick tick = gettick());
+
+void unit_stop_walking_soon(struct block_list& bl, t_tick tick = gettick());
 // Causes the target object to stop moving.
 bool unit_stop_walking( block_list* bl, int32 type, t_tick canmove_delay = 0 );
 bool unit_can_move(struct block_list *bl);
 int32 unit_is_walking(struct block_list *bl);
+
+// Delay functions
+void unit_set_attackdelay(block_list& bl, t_tick tick);
 int32 unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int32 type);
 
 t_tick unit_get_walkpath_time(struct block_list& bl);

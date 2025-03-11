@@ -1427,16 +1427,16 @@ int32 pc_equippoint(map_session_data *sd,int32 n){
 /**
  * Fill inventory_data with struct *item_data through inventory (fill with struct *item)
  * @param sd : player session
- * @return 0 sucess, 1:invalid sd
  */
-void pc_setinventorydata(map_session_data *sd)
-{
-	uint8 i;
-	nullpo_retv(sd);
+void pc_setinventorydata( map_session_data& sd ){
+	for( size_t i = 0; i < MAX_INVENTORY; i++ ){
+		t_itemid id = sd.inventory.u.items_inventory[i].nameid;
 
-	for(i = 0; i < MAX_INVENTORY; i++) {
-		t_itemid id = sd->inventory.u.items_inventory[i].nameid;
-		sd->inventory_data[i] = id?itemdb_search(id):nullptr;
+		if( id != 0 ){
+			sd.inventory_data[i] = itemdb_search( id );
+		}else{
+			sd.inventory_data[i] = nullptr;
+		}
 	}
 }
 
@@ -4315,6 +4315,10 @@ void pc_bonus(map_session_data *sd,int32 type,int32 val)
 		case SP_EMATK:
 			if (sd->state.lr_flag != LR_FLAG_ARROW)
 				sd->bonus.ematk += val;
+			break;
+		case SP_EMATK_HIDDEN:
+			if (sd->state.lr_flag != LR_FLAG_ARROW)
+				sd->bonus.ematk_hidden += val;
 			break;
 		case SP_ADD_VARIABLECAST:
 			if (sd->state.lr_flag != LR_FLAG_ARROW)
@@ -10239,6 +10243,7 @@ int64 pc_readparam(map_session_data* sd,int64 type)
 		case SP_ADD_HEAL2_RATE:  val = sd->bonus.add_heal2_rate; break;
 		case SP_ADD_ITEM_HEAL_RATE: val = sd->bonus.itemhealrate2; break;
 		case SP_EMATK:           val = sd->bonus.ematk; break;
+		case SP_EMATK_HIDDEN:    val = sd->bonus.ematk_hidden; break;
 		case SP_FIXCASTRATE:     val = sd->bonus.fixcastrate; break;
 		case SP_ADD_FIXEDCAST:   val = sd->bonus.add_fixcast; break;
 		case SP_ADD_VARIABLECAST:  val = sd->bonus.add_varcast; break;
@@ -11477,19 +11482,19 @@ bool pc_setreg2(map_session_data *sd, const char *reg, int64 val) {
 
 	nullpo_retr(false, sd);
 
-	if (reg[strlen(reg)-1] == '$') {
-		ShowError("pc_setreg2: Invalid variable scope '%s'\n", reg);
+	if( is_string_variable( reg ) ){
+		ShowError( "pc_setreg2: Invalid variable '%s'. String type variables are not supported.\n", reg );
+		return false;
+	}
+
+	if( !not_server_variable( prefix ) ){
+		ShowError( "pc_setreg2: Invalid variable scope '%s'.\n", reg );
 		return false;
 	}
 
 	val = cap_value(val, INT_MIN, INT_MAX);
 
 	switch (prefix) {
-		case '.':
-		case '\'':
-		case '$':
-			ShowError("pc_setreg2: Invalid variable scope '%s'\n", reg);
-			return false;
 		case '@':
 			return pc_setreg(sd, add_str(reg), val);
 		case '#':
@@ -11497,8 +11502,6 @@ bool pc_setreg2(map_session_data *sd, const char *reg, int64 val) {
 		default:
 			return pc_setglobalreg(sd, add_str(reg), val);
 	}
-
-	return false;
 }
 
 /**
@@ -11512,17 +11515,17 @@ int64 pc_readreg2(map_session_data *sd, const char *reg) {
 
 	nullpo_ret(sd);
 
-	if (reg[strlen(reg)-1] == '$') {
-		ShowError("pc_readreg2: Invalid variable scope '%s'\n", reg);
+	if( is_string_variable( reg ) ){
+		ShowError( "pc_readreg2: Invalid variable '%s'. String type variables are not supported.\n", reg );
+		return 0;
+	}
+
+	if( !not_server_variable( prefix ) ){
+		ShowError( "pc_readreg2: Invalid variable scope '%s'.\n", reg );
 		return 0;
 	}
 
 	switch (prefix) {
-		case '.':
-		case '\'':
-		case '$':
-			ShowError("pc_readreg2: Invalid variable scope '%s'\n", reg);
-			return 0;
 		case '@':
 			return pc_readreg(sd, add_str(reg));
 		case '#':
@@ -11530,8 +11533,6 @@ int64 pc_readreg2(map_session_data *sd, const char *reg) {
 		default:
 			return pc_readglobalreg(sd, add_str(reg));
 	}
-
-	return 0;
 }
 
 /*==========================================
