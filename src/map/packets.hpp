@@ -2002,6 +2002,12 @@ struct PACKET_ZC_EFST_SET_ENTER{
 DEFINE_PACKET_HEADER(ZC_EFST_SET_ENTER, 0x8ff)
 #endif
 
+struct PACKET_CZ_SETTING_WHISPER_STATE{
+	int16 packetType;
+	int8 type;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_SETTING_WHISPER_STATE, 0xd0);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
