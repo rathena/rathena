@@ -5336,8 +5336,6 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	//Use db names instead of the spawn file ones.
 	if(battle_config.override_mob_names==1)
 		strcpy(mob.name,"--en--");
-	else if (battle_config.override_mob_names==2)
-		strcpy(mob.name,"--ja--");
 	else
 		safestrncpy(mob.name, mobname, sizeof(mob.name));
 

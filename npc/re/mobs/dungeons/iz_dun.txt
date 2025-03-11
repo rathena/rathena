@@ -142,7 +142,7 @@ OnMobDead:
 			killmonster "iz_d04_i", "iz_d04_i_boss::OnBossDeath";
 			// mapannounce "iz_d04_i", "", bc_map;	// todo
 			getunitdata( killedgid, .@data );
-			monster "iz_d04_i", .@data[UMOB_X], .@data[UMOB_Y], "--ja--", 20811,1, "iz_d04_i_boss::OnBossDeath";	// ILL_KRAKEN
+			monster "iz_d04_i", .@data[UMOB_X], .@data[UMOB_Y], "--en--", 20811,1, "iz_d04_i_boss::OnBossDeath";	// ILL_KRAKEN
 			end;
 		}
 	}
@@ -178,7 +178,7 @@ OnMobDead:
 			killmonster "iz_d05_i", "iz_d05_i_boss::OnBossDeath";
 			// mapannounce "iz_d05_i", "", bc_map;	// todo
 			getunitdata( killedgid, .@data );
-			monster "iz_d05_i", .@data[UMOB_X], .@data[UMOB_Y], "--ja--", 20843,1, "iz_d05_i_boss::OnBossDeath";	// ILL_ABYSMAL_WITCH
+			monster "iz_d05_i", .@data[UMOB_X], .@data[UMOB_Y], "--en--", 20843,1, "iz_d05_i_boss::OnBossDeath";	// ILL_ABYSMAL_WITCH
 			end;
 		}
 	}

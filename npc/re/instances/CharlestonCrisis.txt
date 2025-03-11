@@ -2176,8 +2176,8 @@ OnInstanceInit:
 
 	// workaround for permanent monsters
 	.@event$ = instance_npcname("Charleston Assistant#1") + "::OnMyMobDead";
-	monster 'map_name$,0,0,"--ja--", 3125,100, .@event$;	// STEP
-	monster 'map_name$,0,0,"--ja--", 3128,20, .@event$;		// KICK_AND_KICK
+	monster 'map_name$,0,0,"--en--", 3125,100, .@event$;	// STEP
+	monster 'map_name$,0,0,"--en--", 3128,20, .@event$;		// KICK_AND_KICK
 	end;
 
 OnMyMobDead:
@@ -2186,6 +2186,6 @@ OnMyMobDead:
 	.@time = 120000 + rand(60000);
 	.@mob_id = killedrid;
 	sleep .@time;
-	monster 'map_name$,0,0,"--ja--", .@mob_id,1, instance_npcname("Charleston Assistant#1") + "::OnMyMobDead";
+	monster 'map_name$,0,0,"--en--", .@mob_id,1, instance_npcname("Charleston Assistant#1") + "::OnMyMobDead";
 	end;
 }

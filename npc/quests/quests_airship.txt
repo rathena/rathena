@@ -1492,9 +1492,9 @@ OnTimer48000:
 	// it's possible this is an error, but in aegis it stops resetting the random var.
 	setarray .@mob_list[0], 1111, 1392, 1005, 1049, 1042;
 	.@mob_id = .@mob_list[ rand(5) ];
-	monster "airplane_01",243,60,"--ja--",.@mob_id,1,"Airship#airplane02::OnMyMobDead";
-	monster "airplane_01",228,54,"--ja--",.@mob_id,1,"Airship#airplane02::OnMyMobDead";
-	monster "airplane_01",232,41,"--ja--",.@mob_id,1,"Airship#airplane02::OnMyMobDead";
+	monster "airplane_01",243,60,"--en--",.@mob_id,1,"Airship#airplane02::OnMyMobDead";
+	monster "airplane_01",228,54,"--en--",.@mob_id,1,"Airship#airplane02::OnMyMobDead";
+	monster "airplane_01",232,41,"--en--",.@mob_id,1,"Airship#airplane02::OnMyMobDead";
 	end;
 OnTimer48010:
 	monster "airplane_01",238,56,"Gremlin",1632,1,"Airship#airplane02::OnCaptainMobDead";

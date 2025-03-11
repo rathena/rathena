@@ -275,13 +275,11 @@ static bool mobdb_searchname_sub(uint16 mob_id, const char * const str, bool ful
 		return false; // Monsters with no base/job exp and no spawn point are, by this criteria, considered "slave mobs" and excluded from search results
 	if( full_cmp ) {
 		// str must equal the db value
-		if( strcmpi(mob->name.c_str(), str) == 0 || 
-			strcmpi(mob->jname.c_str(), str) == 0)
+		if(strcmpi(mob->name.c_str(), str) == 0)
 			return true;
 	} else {
 		// str must be in the db value
 		if( stristr(mob->name.c_str(), str) != nullptr ||
-			stristr(mob->jname.c_str(), str) != nullptr ||
 			stristr(mob->sprite.c_str(), str) != nullptr )
 			return true;
 	}
@@ -454,8 +452,10 @@ int32 mob_parse_dataset(struct spawn_data *data)
 
 	if(strcmp(data->name,"--en--")==0)
 		safestrncpy(data->name, mob_db.find(data->id)->name.c_str(), sizeof(data->name));
-	else if(strcmp(data->name,"--ja--")==0)
-		safestrncpy(data->name, mob_db.find(data->id)->jname.c_str(), sizeof(data->name));
+	else if (strcmp(data->name,"--ja--") == 0) {
+		ShowError("mob_parse_dataset: \"--ja--\" is no longer supported, defaulting to \"--en--\".");
+		safestrncpy(data->name, mob_db.find(data->id)->name.c_str(), sizeof(data->name));
+	}
 
 	return 1;
 }
@@ -648,11 +648,8 @@ struct mob_data *mob_once_spawn_sub(struct block_list *bl, int16 m, int16 x, int
 
 	if (mobname)
 		safestrncpy(data.name, mobname, sizeof(data.name));
-	else
-		if (battle_config.override_mob_names == 1)
-			strcpy(data.name, "--en--");
-		else
-			strcpy(data.name, "--ja--");
+	else if (battle_config.override_mob_names == 1)
+		strcpy(data.name, "--en--");
 
 	if (event)
 		safestrncpy(data.eventname, event, sizeof(data.eventname));
@@ -3381,9 +3378,8 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 		if (sd) {
 			std::shared_ptr<s_mob_db> mission_mdb = mob_db.find(sd->mission_mobid), mob = mob_db.find(md->mob_id);
 
-			if ((sd->mission_mobid == md->mob_id) || (mission_mdb != nullptr &&
-				((battle_config.taekwon_mission_mobname == 1 && util::vector_exists(status_get_race2(&md->bl), RC2_GOBLIN) && util::vector_exists(mission_mdb->race2, RC2_GOBLIN)) ||
-				(battle_config.taekwon_mission_mobname == 2 && mob->jname.compare(mission_mdb->jname) == 0))))
+			if (sd->mission_mobid == md->mob_id || mission_mdb != nullptr &&
+				battle_config.taekwon_mission_mobname == 1 && util::vector_exists(status_get_race2(&md->bl), RC2_GOBLIN) && util::vector_exists(mission_mdb->race2, RC2_GOBLIN))
 			{ //TK_MISSION [Skotlex]
 				if (++(sd->mission_count) >= 100 && (temp = mob_get_random_id(MOBG_BRANCH_OF_DEAD_TREE, static_cast<e_random_monster_flags>(RMF_CHECK_MOB_LV|RMF_MOB_NOT_BOSS|RMF_MOB_NOT_SPAWN), sd->status.base_level)))
 				{
@@ -3657,8 +3653,6 @@ int32 mob_class_change (struct mob_data *md, int32 mob_id)
 	md->db = mob_db.find(mob_id);
 	if (battle_config.override_mob_names==1)
 		memcpy(md->name,md->db->name.c_str(),NAME_LENGTH);
-	else
-		memcpy(md->name,md->db->jname.c_str(),NAME_LENGTH);
 
 	status_change_end(&md->bl,SC_KEEPING); // End before calling status_calc_mob().
 	status_change_end(&md->bl,SC_BARRIER);
@@ -3853,8 +3847,6 @@ int32 mob_summonslave(struct mob_data *md2,int32 *value,int32 amount,uint16 skil
 		//These two need to be loaded from the db for each slave.
 		if(battle_config.override_mob_names==1)
 			strcpy(data.name,"--en--");
-		else
-			strcpy(data.name,"--ja--");
 
 		if (!mob_parse_dataset(&data))
 			continue;
@@ -4414,7 +4406,6 @@ int32 mob_clone_spawn(map_session_data *sd, int16 m, int16 x, int16 y, const cha
 	status = &db->status;
 	db->sprite = sd->status.name;
 	db->name = sd->status.name;
-	db->jname = sd->status.name;
 	db->lv=status_get_lv(&sd->bl);
 	memcpy(status, &sd->base_status, sizeof(struct status_data));
 	status->rhw.atk2= status->dex + status->rhw.atk + status->rhw.atk2; //Max ATK
@@ -4745,7 +4736,6 @@ s_mob_db::s_mob_db()
 	this->id = {};
 	this->sprite = {};
 	this->name = {};
-	this->jname = {};
 	this->base_exp = {};
 	this->job_exp = {};
 	this->mexp = {};
@@ -4830,22 +4820,6 @@ uint64 MobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 		name.resize(NAME_LENGTH);
 		mob->name = name;
-	}
-
-	if (this->nodeExists(node, "JapaneseName")) {
-		std::string name;
-
-		if (!this->asString(node, "JapaneseName", name))
-			return 0;
-
-		if (name.size() > NAME_LENGTH) {
-			this->invalidWarning(node["JapaneseName"], "JapaneseName \"%s\" exceeds maximum of %d characters, capping...\n", name.c_str(), NAME_LENGTH - 1);
-		}
-
-		name.resize(NAME_LENGTH);
-		mob->jname = name;
-	} else if (!exists) {
-		mob->jname = mob->name;
 	}
 
 	if (this->nodeExists(node, "Level")) {
@@ -5398,8 +5372,6 @@ static bool mob_read_sqldb_sub(std::vector<std::string> str) {
 		node["AegisName"] << str[index];
 	if (!str[++index].empty())
 		node["Name"] << str[index];
-	if (!str[++index].empty())
-		node["JapaneseName"] << str[index];
 	if (!str[++index].empty() && std::stoi(str[index]) > 1)
 		node["Level"] << str[index];
 	if (!str[++index].empty() && std::stoul(str[index]) > 1)
@@ -5603,7 +5575,7 @@ static int32 mob_read_sqldb(void)
 
 	for( uint8 fi = 0; fi < ARRAYLENGTH(mob_db_name); ++fi ) {
 		// retrieve all rows from the mob database
-		if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT `id`,`name_aegis`,`name_english`,`name_japanese`,`level`,`hp`,`sp`,`base_exp`,`job_exp`,`mvp_exp`,`attack`,`attack2`,`defense`,`magic_defense`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,`attack_range`,`skill_range`,`chase_range`,`size`,`race`,"
+		if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT `id`,`name_aegis`,`name_english`,`level`,`hp`,`sp`,`base_exp`,`job_exp`,`mvp_exp`,`attack`,`attack2`,`defense`,`magic_defense`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,`attack_range`,`skill_range`,`chase_range`,`size`,`race`,"
 			"`racegroup_goblin`,`racegroup_kobold`,`racegroup_orc`,`racegroup_golem`,`racegroup_guardian`,`racegroup_ninja`,`racegroup_gvg`,`racegroup_battlefield`,`racegroup_treasure`,`racegroup_biolab`,`racegroup_manuk`,`racegroup_splendide`,`racegroup_scaraba`,`racegroup_ogh_atk_def`,`racegroup_ogh_hidden`,`racegroup_bio5_swordman_thief`,`racegroup_bio5_acolyte_merchant`,`racegroup_bio5_mage_archer`,`racegroup_bio5_mvp`,`racegroup_clocktower`,`racegroup_thanatos`,`racegroup_faceworm`,`racegroup_hearthunter`,`racegroup_rockridge`,`racegroup_werner_lab`,`racegroup_temple_demon`,`racegroup_illusion_vampire`,`racegroup_malangdo`,`racegroup_ep172alpha`,`racegroup_ep172beta`,`racegroup_ep172bath`,`racegroup_illusion_turtle`,`racegroup_rachel_sanctuary`,`racegroup_illusion_luanda`,`racegroup_illusion_frozen`,`racegroup_illusion_moonlight`,`racegroup_ep16_def`,`racegroup_edda_arunafeltz`,`racegroup_lasagna`,`racegroup_glast_heim_abyss`,"
 			"`element`,`element_level`,`walk_speed`,`attack_delay`,`attack_motion`,`damage_motion`,`damage_taken`,`ai`,`class`,"
 			"`mode_canmove`,`mode_looter`,`mode_aggressive`,`mode_assist`,`mode_castsensoridle`,`mode_norandomwalk`,`mode_nocast`,`mode_canattack`,`mode_castsensorchase`,`mode_changechase`,`mode_angry`,`mode_changetargetmelee`,`mode_changetargetchase`,`mode_targetweak`,`mode_randomtarget`,`mode_ignoremelee`,`mode_ignoremagic`,`mode_ignoreranged`,`mode_mvp`,`mode_ignoremisc`,`mode_knockbackimmune`,`mode_teleportblock`,`mode_fixeditemdrop`,`mode_detector`,`mode_statusimmune`,`mode_skillimmune`,"

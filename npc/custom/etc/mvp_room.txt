@@ -147,7 +147,7 @@ OnInit:
 		close2;
 		if ( Zeny < .mvpcost ) end;
 		Zeny -= .mvpcost;
-		monster "this", 0, 0, "--ja--", .mvpid[.@menu], 1, strnpcinfo(3)+"::OnMobDead";
+		monster "this", 0, 0, "--en--", .mvpid[.@menu], 1, strnpcinfo(3)+"::OnMobDead";
 		end;
 	case 3:
 		if ( mobcount( "this", strnpcinfo(3)+"::OnMobDead" ) ) {
@@ -172,7 +172,7 @@ OnInit:
 		close2;
 		if ( Zeny < .bosscost ) end;
 		Zeny -= .bosscost;
-		monster "this", 0, 0, "--ja--", .bossid[.@menu], 1, strnpcinfo(3)+"::OnMobDead";
+		monster "this", 0, 0, "--en--", .bossid[.@menu], 1, strnpcinfo(3)+"::OnMobDead";
 		end;
 	case 4:
 		if ( mobcount( "this", strnpcinfo(3)+"::OnMobDead" ) > 0 ) {

@@ -57,7 +57,7 @@ OnTimer12000:
 	stopnpctimer;
 OnCommandOn:
 	callsub S_Coord, .@item_id, .@mob_id, .@coord;
-	monster strnpcinfo(4), rand( .@coord[0],.@coord[1] ), rand( .@coord[2],.@coord[3] ),"--ja--",.@mob_id,1,strnpcinfo(0) + "::OnMyMobDead";
+	monster strnpcinfo(4), rand( .@coord[0],.@coord[1] ), rand( .@coord[2],.@coord[3] ),"--en--",.@mob_id,1,strnpcinfo(0) + "::OnMyMobDead";
 	end;
 
 OnReset:

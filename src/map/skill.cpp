@@ -7976,7 +7976,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 	case SA_SUMMONMONSTER:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 		if (sd)
-			mob_once_spawn(sd, src->m, src->x, src->y,"--ja--", -1, 1, "", SZ_SMALL, AI_NONE);
+			mob_once_spawn(sd, src->m, src->x, src->y,"--en--", -1, 1, "", SZ_SMALL, AI_NONE);
 		break;
 	case SA_LEVELUP:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
@@ -13338,7 +13338,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 
-			mob_data *md = mob_once_spawn_sub(src, src->m, src->x, src->y, "--ja--", abrs[3 - (MT_SUMMON_ABR_INFINITY - skill_id)], "", SZ_SMALL, AI_ABR);
+			mob_data *md = mob_once_spawn_sub(src, src->m, src->x, src->y, "--en--", abrs[3 - (MT_SUMMON_ABR_INFINITY - skill_id)], "", SZ_SMALL, AI_ABR);
 
 			if (md) {
 				md->master_id = src->id;
@@ -13361,7 +13361,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 
-			mob_data *md = mob_once_spawn_sub(src, src->m, src->x, src->y, "--ja--", bionics[4 - (BO_HELLTREE - skill_id)], "", SZ_SMALL, AI_BIONIC);
+			mob_data *md = mob_once_spawn_sub(src, src->m, src->x, src->y, "--en--", bionics[4 - (BO_HELLTREE - skill_id)], "", SZ_SMALL, AI_BIONIC);
 
 			if (md) {
 				md->master_id = src->id;
@@ -14989,7 +14989,7 @@ int32 skill_castend_pos2(struct block_list* src, int32 x, int32 y, uint16 skill_
 						mob_id = MOBID_SHINING_PLANT;
 				}
 
-				md = mob_once_spawn_sub(src, src->m, x, y, "--ja--", mob_id, "", SZ_SMALL, AI_NONE);
+				md = mob_once_spawn_sub(src, src->m, x, y, "--en--", mob_id, "", SZ_SMALL, AI_NONE);
 				if (!md)
 					break;
 				if ((t = skill_get_time(skill_id, skill_lv)) > 0)

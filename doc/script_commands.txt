@@ -159,10 +159,8 @@ battle config. (See /conf/battle/monster.conf::randomize_center_cell.)
 Monster name is the name the monsters will have on screen, and has no relation
 whatsoever to their names anywhere else. It's the mob id that counts, which
 identifies monster record in 'mob_db.yml' database of monsters. If the mob name
-is given as "--ja--", the 'japanese name' field from the monster database is
-used, (which, in rAthena, actually contains an English name) if it's "--en--",
-it's the 'english name' from the monster database (which contains an uppercase
-name used to summon the monster with a GM command).
+is given as "--en--", the 'english name' field from the monster database (which
+contains an uppercase name used to summon the monster with a GM command).
 
 You can specify a custom level to use for the mob different from the one of
 the database by adjoining the level after the name with a comma. eg:
@@ -3713,7 +3711,7 @@ It will return -1 if there is no such monster (or the type value is invalid),
 or "null" if you requested the monster's name.
 
 Valid types are:
-	MOB_NAME          - monster's japanese name
+	MOB_NAME          - monster's english name
 	MOB_LV            - monster's level
 	MOB_MAXHP         - monster's maximum hp
 	MOB_BASEEXP       - monster's base experience
@@ -6976,7 +6974,6 @@ run as if by 'donpcevent'.
 Returned value is the game ID of the spawned monster.
 
 // Will summon a dead branch-style monster to fight for the character.
-summon "--ja--",-1;
 
 ---------------------------------------
 
