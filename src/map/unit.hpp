@@ -124,6 +124,9 @@ void unit_stop_walking_soon(struct block_list& bl, t_tick tick = gettick());
 bool unit_stop_walking( block_list* bl, int32 type, t_tick canmove_delay = 0 );
 bool unit_can_move(struct block_list *bl);
 int32 unit_is_walking(struct block_list *bl);
+
+// Delay functions
+void unit_set_attackdelay(block_list& bl, t_tick tick);
 int32 unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int32 type);
 
 t_tick unit_get_walkpath_time(struct block_list& bl);

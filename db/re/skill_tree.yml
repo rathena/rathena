@@ -7019,6 +7019,13 @@ Body:
         Requires:
           - Name: AG_RAIN_OF_CRYSTAL
             Level: 1
+      - Name: AG_ENERGY_CONVERSION
+        MaxLevel: 5
+        Requires:
+          - Name: WL_RECOGNIZEDSPELL
+            Level: 2
+          - Name: AG_CLIMAX
+            Level: 1
   - Job: Cardinal
     Inherit:
       Novice: true

@@ -804,9 +804,6 @@ Body:
   - Status: Barrier
     Icon: EFST_BARRIER
     DurationLookup: NPC_BARRIER
-    CalcFlags:
-      Mdef: true
-      Def: true
     Flags:
       RemoveOnHermode: true
   - Status: Stripweapon
@@ -9773,3 +9770,24 @@ Body:
       Debuff: true
       BlEffect: true
       DisplayPc: true
+  - Status: Contents_34
+    Icon: EFST_CONTENTS_34
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      bonus bAspdRate, getstatus(SC_CONTENTS_34, 1);
+      bonus bCritical, getstatus(SC_CONTENTS_34, 2);
+  - Status: Contents_35
+    Icon: EFST_CONTENTS_35
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_CONTENTS_35, 1);
+      bonus bMatk, .@val1;
+      bonus bBaseAtk, .@val1;

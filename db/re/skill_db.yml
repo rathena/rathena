@@ -16706,10 +16706,13 @@ Body:
   - Id: 692
     Name: ALL_CATCRY
     Description: Cat Cry
-    MaxLevel: 9
+    MaxLevel: 1
+    TargetType: Self
     Flags:
       IsNpc: true
     AfterCastActDelay: 5000
+    Requires:
+      SpCost: 50
   - Id: 693
     Name: ALL_PARTYFLEE
     Description: Party Flee
@@ -45228,6 +45231,41 @@ Body:
           Amount: 76
       Status:
         Mystery_Powder: true
+  - Id: 6516
+    Name: AG_ENERGY_CONVERSION
+    Description: Energy Conversion
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    CastTime: 1000   # TODO
+    Cooldown:
+      - Level: 1
+        Time: 15000
+      - Level: 2
+        Time: 12000
+      - Level: 3
+        Time: 9000
+      - Level: 4
+        Time: 6000
+      - Level: 5
+        Time: 3000
+    FixedCastTime: 1500
+    AfterCastActDelay: 500
+    Requires:
+      SpCost: 10
+      ApCost:
+        - Level: 1
+          Amount: 22
+        - Level: 2
+          Amount: 19
+        - Level: 3
+          Amount: 16
+        - Level: 4
+          Amount: 13
+        - Level: 5
+          Amount: 10
   - Id: 6511
     Name: SHC_CROSS_SLASH
     Description: Cross Slash

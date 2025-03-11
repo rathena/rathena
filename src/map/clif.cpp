@@ -5640,7 +5640,7 @@ int32 clif_outsight(struct block_list *bl,va_list ap)
 					clif_dispchat(*cd);
 			}
 			if(sd->state.vending)
-				clif_closevendingboard(bl,tsd->fd);
+				clif_closevendingboard( *bl, SELF, &tsd->bl );
 			if(sd->state.buyingstore)
 				clif_buyingstore_disappear_entry( *sd, &tsd->bl );
 			break;
@@ -6553,6 +6553,34 @@ void clif_status_change(struct block_list *bl, int32 type, int32 flag, t_tick ti
 	clif_status_change_sub(bl, bl->id, type, flag, tick, val1, val2, val3, ((sd ? (pc_isinvisible(sd) ? SELF : AREA) : AREA_WOS)));
 }
 
+/// Notifies the client when a player enters the screen with an active EFST.
+/// 08ff <id>.L <index>.W <remain msec>.L { <val>.L }*3  (ZC_EFST_SET_ENTER) (PACKETVER >= 20111108)
+/// 0984 <id>.L <index>.W <total msec>.L <remain msec>.L { <val>.L }*3 (ZC_EFST_SET_ENTER2) (PACKETVER >= 20120618)
+void clif_efst_status_change( block_list& bl, block_list& tbl, enum send_target target, efst_type type, t_tick tick, int32 val1, int32 val2, int32 val3 ){
+#if PACKETVER >= 20111108
+	if (type == EFST_BLANK)
+		return;
+
+	if (tick <= 0)
+		tick = 9999;
+
+	PACKET_ZC_EFST_SET_ENTER p{};
+
+	p.packetType = HEADER_ZC_EFST_SET_ENTER;
+	p.targetID = tbl.id;
+	p.type = type;
+	p.duration = client_tick( tick );
+#if PACKETVER >= 20120618
+	p.duration2 = p.duration;
+#endif
+	p.val1 = val1;
+	p.val2 = val2;
+	p.val3 = val3;
+
+	clif_send( &p, sizeof( p ), &bl, target );
+#endif
+}
+
 /**
  * Send any active EFST to those around.
  * @param tbl: Unit to send the packet to
@@ -6616,49 +6644,11 @@ void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, 
 		}
 
 #if PACKETVER > 20120418
-		clif_efst_status_change(tbl, bl->id, target, status_db.getIcon(type), tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3);
+		clif_efst_status_change( *tbl, *bl, target, status_db.getIcon( type ), tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3 );
 #else
 		clif_status_change_sub(tbl, bl->id, status_db.getIcon(type), 1, tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3, target);
 #endif
 	}
-}
-
-/// Notifies the client when a player enters the screen with an active EFST.
-/// 08ff <id>.L <index>.W <remain msec>.L { <val>.L }*3  (ZC_EFST_SET_ENTER) (PACKETVER >= 20111108)
-/// 0984 <id>.L <index>.W <total msec>.L <remain msec>.L { <val>.L }*3 (ZC_EFST_SET_ENTER2) (PACKETVER >= 20120618)
-void clif_efst_status_change(struct block_list *bl, int32 tid, enum send_target target, int32 type, t_tick tick, int32 val1, int32 val2, int32 val3) {
-#if PACKETVER >= 20111108
-	unsigned char buf[32];
-#if PACKETVER >= 20120618
-	const int32 cmd = 0x984;
-#elif PACKETVER >= 20111108
-	const int32 cmd = 0x8ff;
-#endif
-	int32 offset = 0;
-
-	if (type == EFST_BLANK)
-		return;
-
-	nullpo_retv(bl);
-
-	if (tick <= 0)
-		tick = 9999;
-
-	WBUFW(buf,offset + 0) = cmd;
-	WBUFL(buf,offset + 2) = tid;
-	WBUFW(buf,offset + 6) = type;
-#if PACKETVER >= 20111108
-	WBUFL(buf,offset + 8) = client_tick(tick); // Set remaining status duration [exneval]
-#if PACKETVER >= 20120618
-	WBUFL(buf,offset + 12) = client_tick(tick);
-	offset += 4;
-#endif
-	WBUFL(buf,offset + 12) = val1;
-	WBUFL(buf,offset + 16) = val2;
-	WBUFL(buf,offset + 20) = val3;
-#endif
-	clif_send(buf,packet_len(cmd),bl,target);
-#endif
 }
 
 /// Send message (modified by [Yor]) (ZC_NOTIFY_PLAYERCHAT).
@@ -7625,23 +7615,20 @@ void clif_showvendingboard( map_session_data& sd, enum send_target target, struc
 }
 
 
-/// Removes a vending board from screen (ZC_DISAPPEAR_ENTRY).
-/// 0132 <owner id>.L
-void clif_closevendingboard(struct block_list* bl, int32 fd)
-{
-	unsigned char buf[16];
-
-	nullpo_retv(bl);
-
-	WBUFW(buf,0) = 0x132;
-	WBUFL(buf,2) = bl->id;
-	if( session_isActive(fd) ) {
-		WFIFOHEAD(fd,packet_len(0x132));
-		memcpy(WFIFOP(fd,0),buf,packet_len(0x132));
-		WFIFOSET(fd,packet_len(0x132));
-	} else {
-		clif_send(buf,packet_len(0x132),bl,AREA_WOS);
+/// Removes a vending board from screen.
+/// 0132 <owner id>.L (ZC_DISAPPEAR_ENTRY)
+void clif_closevendingboard( block_list& bl, send_target target, block_list* tbl ){
+	if( tbl == nullptr ){
+		tbl = &bl;
+		target = AREA_WOS;
 	}
+
+	PACKET_ZC_DISAPPEAR_ENTRY p = {};
+
+	p.packetType = HEADER_ZC_DISAPPEAR_ENTRY;
+	p.GID = bl.id;
+
+	clif_send( &p, sizeof( p ), tbl, target );
 }
 
 
