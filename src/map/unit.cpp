@@ -1815,14 +1815,16 @@ TIMER_FUNC(unit_resume_running){
 
 /**
  * Sets the delays that prevent attacks and skill usage considering the bl type
- * Officially it just remembers the last attack time here and applies the delays during the comparison
+ * Officially for players it just remembers the last attack time here and applies the delays during the comparison
  * But we pre-calculate the delays instead and store them in attackabletime and canact_tick
- * Currently these delays are only applied to PCs
- * TODO: This function should also be called on attacks and cast begin
+ * For ground skills this also applies to mercenaries
+ * For non-PCs this function also handles setting of attack delay (which we also store in attackabletime)
+ * TODO: Currently this function is only called for normal attacks and parry events and is a work-in-progress
  * @param bl Object to apply attack delay to
  * @param tick Current tick
+ * @param event The event that resulted in calling this function
  */
-void unit_set_attackdelay(block_list& bl, t_tick tick)
+void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event)
 {
 	unit_data* ud = unit_bl2ud(&bl);
 
@@ -1831,16 +1833,35 @@ void unit_set_attackdelay(block_list& bl, t_tick tick)
 
 	switch (bl.type) {
 		case BL_PC:
-			ud->attackabletime = tick + status_get_adelay(&bl);
-			// A fixed delay is added here which is equal to the minimum attack motion you can get
-			// This ensures that at max ASPD attackabletime and canact_tick are equal
-			ud->canact_tick = tick + status_get_amotion(&bl) + (pc_maxaspd(reinterpret_cast<map_session_data*>(&bl)) / AMOTION_DIVIDER_PC);
+			switch (event) {
+				case DELAY_EVENT_ATTACK:
+				//case DELAY_EVENT_CASTBEGIN_ID:
+				//case DELAY_EVENT_CASTBEGIN_POS:
+				case DELAY_EVENT_PARRY:
+					ud->attackabletime = tick + status_get_adelay(&bl);
+					// A fixed delay is added here which is equal to the minimum attack motion you can get
+					// This ensures that at max ASPD attackabletime and canact_tick are equal
+					ud->canact_tick = tick + status_get_amotion(&bl) + (pc_maxaspd(reinterpret_cast<map_session_data*>(&bl)) / AMOTION_DIVIDER_PC);
+					break;
+			}
 			break;
 		case BL_MER:
-			// TODO: Should set this, but only for ground skills
+			switch (event) {
+				case DELAY_EVENT_ATTACK:
+					ud->attackabletime = tick + status_get_adelay(&bl);
+					break;
+				//case DELAY_EVENT_CASTBEGIN_POS:
+				//	ud->attackabletime = tick + status_get_adelay(&bl);
+				//	ud->canact_tick = tick + status_get_amotion(&bl) + MAX_ASPD_NOPC;
+				//	break;
+			}
 			break;
 		default:
-			// Not applicable
+			switch (event) {
+				case DELAY_EVENT_ATTACK:
+					ud->attackabletime = tick + status_get_adelay(&bl);
+					break;
+			}
 			break;
 	}
 }
@@ -3134,7 +3155,7 @@ static int32 unit_attack_timer_sub(struct block_list* src, int32 tid, t_tick tic
 		if( ud->attacktarget_lv == ATK_NONE )
 			return 1;
 
-		ud->attackabletime = tick + sstatus->adelay;
+		unit_set_attackdelay(*src, tick, DELAY_EVENT_ATTACK);
 
 		// Only reset skill_id here if no skilltimer is currently ongoing
 		if (ud->skilltimer == INVALID_TIMER)
