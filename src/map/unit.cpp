@@ -44,6 +44,12 @@ using namespace rathena;
 	#define MAX_SHADOW_SCAR 100 /// Max Shadow Scars
 #endif
 
+// How many milliseconds need to pass before we calculated the exact position of a unit
+// Calculation will only happen on demand and when at least the time defined here has passed
+#ifndef MIN_POS_INTERVAL
+	#define MIN_POS_INTERVAL 20
+#endif
+
 // Directions values
 // 1 0 7
 // 2 . 6
@@ -1488,101 +1494,108 @@ int32 unit_warp(struct block_list *bl,int16 m,int16 x,int16 y,clr_type type)
  * Calculates the exact coordinates of a bl considering the walktimer
  * This is needed because we only update X/Y when finishing movement to the next cell
  * Officially, however, the coordinates update when crossing the border to the next cell
- * @param bl: Object to get the coordinates of
+ * The coordinates are stored in unit_data.pos together with the tick based on which they were calculated
+ * Access to these coordinates is only allowed through corresponding unit_data class functions
+ * This function makes sure calculation only happens when it's needed to save performance
  * @param tick: Tick based on which we calculate the coordinates
- * @param x: Will be set to the exact X value of the bl
- * @param y: Will be set to the exact Y value of the bl
- * @param sx: Will be set to the exact subcell X value of the bl
- * @param sy: Will be set to the exact subcell Y value of the bl
- * @return Whether the coordinates were set (true) or retrieving them failed (false)
  */
-bool unit_pos(block_list& bl, t_tick tick, int16 &x, int16 &y, uint8 &sx, uint8 &sy)
+void unit_data::update_pos(t_tick tick)
 {
-	unit_data* ud = unit_bl2ud(&bl);
+	// Check if coordinates are still up-to-date
+	if (DIFF_TICK(tick, this->pos.tick) < MIN_POS_INTERVAL)
+		return;
 
-	if (ud == nullptr)
-		return false;
-
-	if (ud->walkpath.path_pos >= ud->walkpath.path_len)
-		return false;
-
-	if (ud->walktimer == INVALID_TIMER)
-		return false;
-
-	const TimerData* td = get_timer(ud->walktimer);
-
-	if (td == nullptr)
-		return false;
+	if (this->bl == nullptr)
+		return;
 
 	// Set initial coordinates
-	x = bl.x;
-	y = bl.y;
-	sx = 8;
-	sy = 8;
+	this->pos.x = this->bl->x;
+	this->pos.y = this->bl->y;
+	this->pos.sx = 8;
+	this->pos.sy = 8;
+
+	// Remember time at which we did the last calculation
+	this->pos.tick = tick;
+
+	if (this->walkpath.path_pos >= this->walkpath.path_len)
+		return;
+
+	if (this->walktimer == INVALID_TIMER)
+		return;
+
+	const TimerData* td = get_timer(this->walktimer);
+
+	if (td == nullptr)
+		return;
 
 	// Get how much percent we traversed on the timer
-	double cell_percent = 1.0 - ((double)DIFF_TICK(td->tick, gettick()) / (double)td->data);
+	double cell_percent = 1.0 - ((double)DIFF_TICK(td->tick, tick) / (double)td->data);
 
 	if (cell_percent > 0.0 && cell_percent < 1.0) {
 		// Set subcell coordinates according to timer
 		// This gives a value between 8 and 39
-		sx = static_cast<uint8>(24.0 + dirx[ud->walkpath.path[ud->walkpath.path_pos]] * 16.0 * cell_percent);
-		sy = static_cast<uint8>(24.0 + diry[ud->walkpath.path[ud->walkpath.path_pos]] * 16.0 * cell_percent);
+		this->pos.sx = static_cast<uint8>(24.0 + dirx[this->walkpath.path[this->walkpath.path_pos]] * 16.0 * cell_percent);
+		this->pos.sy = static_cast<uint8>(24.0 + diry[this->walkpath.path[this->walkpath.path_pos]] * 16.0 * cell_percent);
 		// 16-31 reflect sub position 0-15 on the current cell
 		// 8-15 reflect sub position 8-15 at -1 main coordinate
 		// 32-39 reflect sub position 0-7 at +1 main coordinate
-		if (sx < 16 || sy < 16 || sx > 31 || sy > 31) {
-			if (sx < 16) x--;
-			if (sy < 16) y--;
-			if (sx > 31) x++;
-			if (sy > 31) y++;
+		if (this->pos.sx < 16 || this->pos.sy < 16 || this->pos.sx > 31 || this->pos.sy > 31) {
+			if (this->pos.sx < 16) this->pos.x--;
+			if (this->pos.sy < 16) this->pos.y--;
+			if (this->pos.sx > 31) this->pos.x++;
+			if (this->pos.sy > 31) this->pos.y++;
 		}
-		sx %= 16;
-		sy %= 16;
+		this->pos.sx %= 16;
+		this->pos.sy %= 16;
 	}
 	else if (cell_percent >= 1.0) {
 		// Assume exactly one cell moved
-		x += dirx[ud->walkpath.path[ud->walkpath.path_pos]];
-		y += diry[ud->walkpath.path[ud->walkpath.path_pos]];
+		this->pos.x += dirx[this->walkpath.path[this->walkpath.path_pos]];
+		this->pos.y += diry[this->walkpath.path[this->walkpath.path_pos]];
 	}
-
-	return true;
 }
 
 /**
  * Helper function to get the exact X coordinate
- * @param bl: Object to get the X coordinate of
+ * This ensures that the coordinate is calculated when needed
  * @param tick: Tick based on which we calculate the coordinate
  * @return The exact X coordinate
  */
-int16 unit_getx(block_list& bl, t_tick tick) {
-	int16 x, y;
-	uint8 sx, sy;
-
-	// Get exact coordinates
-	if (unit_pos(bl, tick, x, y, sx, sy))
-		return x;
-
-	// If above failed, object is probably not moving, so just return current X
-	return bl.x;
+int16 unit_data::getx(t_tick tick) {
+	// Make sure exact coordinates are up-to-date
+	this->update_pos(tick);
+	return this->pos.x;
 }
 
 /**
  * Helper function to get the exact Y coordinate
- * @param bl: Object to get the Y coordinate of
+ * This ensures that the coordinate is calculated when needed
  * @param tick: Tick based on which we calculate the coordinate
  * @return The exact Y coordinate
  */
-int16 unit_gety(block_list& bl, t_tick tick) {
-	int16 x, y;
-	uint8 sx, sy;
+int16 unit_data::gety(t_tick tick) {
+	// Make sure exact coordinates are up-to-date
+	this->update_pos(tick);
+	return this->pos.y;
+}
 
-	// Get exact coordinates
-	if (unit_pos(bl, tick, x, y, sx, sy))
-		return y;
-
-	// If above failed, object is probably not moving, so just return current Y
-	return bl.y;
+/**
+ * Helper function to get exact coordinates
+ * This ensures that the coordinates are calculated when needed
+ * @param x: Will be set to the exact X value of the bl
+ * @param y: Will be set to the exact Y value of the bl
+ * @param sx: Will be set to the exact subcell X value of the bl
+ * @param sy: Will be set to the exact subcell Y value of the bl
+ * @param tick: Tick based on which we calculate the coordinate
+ * @return The exact Y coordinate
+ */
+void unit_data::getpos(int16 &x, int16 &y, uint8 &sx, uint8 &sy, t_tick tick) {
+	// Make sure exact coordinates are up-to-date
+	this->update_pos(tick);
+	x = this->pos.x;
+	y = this->pos.y;
+	sx = this->pos.sx;
+	sy = this->pos.sy;
 }
 
 /**
@@ -1608,7 +1621,7 @@ void unit_stop_walking_soon(struct block_list& bl, t_tick tick)
 	}
 	else {
 		// Set coordinates to exact coordinates
-		unit_pos(bl, tick, bl.x, bl.y, ud->sx, ud->sy);
+		ud->getpos(bl.x, bl.y, ud->sx, ud->sy, tick);
 
 		// If x or y already changed, we need to move one more cell
 		if (ox != bl.x || oy != bl.y)
