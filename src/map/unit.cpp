@@ -1529,7 +1529,7 @@ void unit_data::update_pos(t_tick tick)
 		return;
 
 	// Get how much percent we traversed on the timer
-	double cell_percent = 1.0 - ((double)DIFF_TICK(td->tick, gettick()) / (double)td->data);
+	double cell_percent = 1.0 - ((double)DIFF_TICK(td->tick, tick) / (double)td->data);
 
 	if (cell_percent > 0.0 && cell_percent < 1.0) {
 		// Set subcell coordinates according to timer

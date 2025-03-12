@@ -66,9 +66,9 @@ struct unit_data {
 	std::vector<int32> shadow_scar_timer;
 
 	// Functions and struct to calculate and store exact position at a certain tick
-	int16 getx(t_tick tick = gettick());
-	int16 gety(t_tick tick = gettick());
-	void getpos(int16 &x, int16 &y, uint8 &sx, uint8 &sy, t_tick tick = gettick());
+	int16 getx(t_tick tick);
+	int16 gety(t_tick tick);
+	void getpos(int16 &x, int16 &y, uint8 &sx, uint8 &sy, t_tick tick);
 private:
 	void update_pos(t_tick tick);
 	struct {
