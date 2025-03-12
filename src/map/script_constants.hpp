@@ -3776,10 +3776,11 @@
 	export_constant(MOB_NAME);
 	export_constant(MOB_LV);
 	export_constant(MOB_MAXHP);
+	export_constant(MOB_MAXSP);
 	export_constant(MOB_BASEEXP);
 	export_constant(MOB_JOBEXP);
-	export_constant(MOB_ATK1);
-	export_constant(MOB_ATK2);
+	export_constant(MOB_ATKMIN);
+	export_constant(MOB_ATKMAX);
 	export_constant(MOB_DEF);
 	export_constant(MOB_MDEF);
 	export_constant(MOB_RES);
@@ -3790,15 +3791,24 @@
 	export_constant(MOB_INT);
 	export_constant(MOB_DEX);
 	export_constant(MOB_LUK);
-	export_constant(MOB_RANGE);
-	export_constant(MOB_RANGE2);
-	export_constant(MOB_RANGE3);
+	export_constant(MOB_SPEED);
+	export_constant(MOB_ATKRANGE);
+	export_constant(MOB_SKILLRANGE);
+	export_constant(MOB_CHASERANGE);
 	export_constant(MOB_SIZE);
 	export_constant(MOB_RACE);
 	export_constant(MOB_ELEMENT);
+	export_constant(MOB_ELEMENTLV);
 	export_constant(MOB_MODE);
 	export_constant(MOB_MVPEXP);
 	export_constant(MOB_ID);
+
+	// Renamed monsterinfo types - 2025-03-11
+	export_deprecated_constant2("MOB_ATK1",MOB_ATKMIN); 
+	export_deprecated_constant2("MOB_ATK2",MOB_ATKMAX);
+	export_deprecated_constant2("MOB_RANGE",MOB_ATKRANGE);
+	export_deprecated_constant2("MOB_RANGE2",MOB_SKILLRANGE);
+	export_deprecated_constant2("MOB_RANGE3",MOB_CHASERANGE);
 
 	/* petinfo types */
 	export_constant(PETINFO_ID);

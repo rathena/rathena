@@ -18694,44 +18694,52 @@ BUILDIN_FUNC(getmonsterinfo)
 			mob = mob_db.find(mob_id);
 		}
 	}
+	
+	int32 type = script_getnum(st, 3);
 
 	if (mob == nullptr) {
 		//ShowError("buildin_getmonsterinfo: Wrong Monster ID: %i\n", mob_id);
-		if (script_getnum(st, 3) == MOB_NAME) // requested the name
+		if ( type == MOB_NAME ) // requested the name
 			script_pushconststr(st, "null");
 		else
 			script_pushint(st, -1);
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	switch ( script_getnum(st, 3) ) {
-		case MOB_NAME:		script_pushstrcopy(st,mob->jname.c_str()); break;
-		case MOB_LV:		script_pushint(st,mob->lv); break;
-		case MOB_MAXHP:		script_pushint(st,mob->status.max_hp); break;
-		case MOB_BASEEXP:	script_pushint(st,mob->base_exp); break;
-		case MOB_JOBEXP:	script_pushint(st,mob->job_exp); break;
-		case MOB_ATK1:		script_pushint(st,mob->status.rhw.atk); break;
-		case MOB_ATK2:		script_pushint(st,mob->status.rhw.atk2); break;
-		case MOB_DEF:		script_pushint(st,mob->status.def); break;
-		case MOB_MDEF:		script_pushint(st,mob->status.mdef); break;
-		case MOB_RES:		script_pushint(st, mob->status.res); break;
-		case MOB_MRES:		script_pushint(st, mob->status.mres); break;
-		case MOB_STR:		script_pushint(st,mob->status.str); break;
-		case MOB_AGI:		script_pushint(st,mob->status.agi); break;
-		case MOB_VIT:		script_pushint(st,mob->status.vit); break;
-		case MOB_INT:		script_pushint(st,mob->status.int_); break;
-		case MOB_DEX:		script_pushint(st,mob->status.dex); break;
-		case MOB_LUK:		script_pushint(st,mob->status.luk); break;
-		case MOB_RANGE:		script_pushint(st,mob->status.rhw.range); break;
-		case MOB_RANGE2:	script_pushint(st,mob->range2); break;
-		case MOB_RANGE3:	script_pushint(st,mob->range3); break;
-		case MOB_SIZE:		script_pushint(st,mob->status.size); break;
-		case MOB_RACE:		script_pushint(st,mob->status.race); break;
-		case MOB_ELEMENT:	script_pushint(st,mob->status.def_ele); break;
-		case MOB_MODE:		script_pushint(st,mob->status.mode); break;
-		case MOB_MVPEXP:	script_pushint(st,mob->mexp); break;
-		case MOB_ID:		script_pushint(st,mob->id); break;
-		default: script_pushint(st,-1); //wrong Index
+	switch ( type ) {
+		case MOB_NAME:       script_pushstrcopy(st, mob->jname.c_str()); break;
+		case MOB_LV:         script_pushint(st, mob->lv); break;
+		case MOB_MAXHP:      script_pushint(st, mob->status.max_hp); break;
+		case MOB_MAXSP:      script_pushint(st, mob->status.max_sp); break;
+		case MOB_BASEEXP:    script_pushint(st, mob->base_exp); break;
+		case MOB_JOBEXP:     script_pushint(st, mob->job_exp); break;
+		case MOB_ATKMIN:     script_pushint(st, mob->status.rhw.atk); break;
+		case MOB_ATKMAX:     script_pushint(st, mob->status.rhw.atk2); break;
+		case MOB_DEF:        script_pushint(st, mob->status.def); break;
+		case MOB_MDEF:       script_pushint(st, mob->status.mdef); break;
+		case MOB_RES:        script_pushint(st, mob->status.res); break;
+		case MOB_MRES:       script_pushint(st, mob->status.mres); break;
+		case MOB_STR:        script_pushint(st, mob->status.str); break;
+		case MOB_AGI:        script_pushint(st, mob->status.agi); break;
+		case MOB_VIT:        script_pushint(st, mob->status.vit); break;
+		case MOB_INT:        script_pushint(st, mob->status.int_); break;
+		case MOB_DEX:        script_pushint(st, mob->status.dex); break;
+		case MOB_LUK:        script_pushint(st, mob->status.luk); break;
+		case MOB_SPEED:      script_pushint(st, mob->status.speed); break;
+		case MOB_ATKRANGE:   script_pushint(st, mob->status.rhw.range); break;
+		case MOB_SKILLRANGE: script_pushint(st, mob->range2); break;
+		case MOB_CHASERANGE: script_pushint(st, mob->range3); break;
+		case MOB_SIZE:	     script_pushint(st, mob->status.size); break;
+		case MOB_RACE:	     script_pushint(st, mob->status.race); break;
+		case MOB_ELEMENT:    script_pushint(st, mob->status.def_ele); break;
+		case MOB_ELEMENTLV:  script_pushint(st, mob->status.ele_lv); break;
+		case MOB_MODE:       script_pushint(st, mob->status.mode); break;
+		case MOB_MVPEXP:     script_pushint(st, mob->mexp); break;
+		case MOB_ID:         script_pushint(st, mob->id); break;
+		default:
+			ShowError( "buildin_getmonsterinfo: Invalid getmonsterinfo type '%d'.\n", type );
+			st->state = END;
+			return SCRIPT_CMD_FAILURE;
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -28027,7 +28035,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(playBGMall,"s?????"),
 	BUILDIN_DEF(soundeffect,"si"),
 	BUILDIN_DEF(soundeffectall,"si?????"),	// SoundEffectAll [Codemaster]
-	BUILDIN_DEF(strmobinfo,"ii"),	// display mob data [Valaris]
+	BUILDIN_DEF2_DEPRECATED(strmobinfo, "getmonsterinfo", "ii", "2025-03-11"),
 	BUILDIN_DEF(guardian,"siisi??"),	// summon guardians
 	BUILDIN_DEF(guardianinfo,"sii"),	// display guardian data [Valaris]
 	BUILDIN_DEF(petskillbonus,"iiii"), // [Valaris]

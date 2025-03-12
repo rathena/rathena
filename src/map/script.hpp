@@ -356,14 +356,15 @@ enum script_parse_options {
 	SCRIPT_RETURN_EMPTY_SCRIPT = 0x4// returns the script object instead of nullptr for empty scripts
 };
 
-enum monsterinfo_types {
-	MOB_NAME = 0,
+enum e_monsterinfo_types : uint8 {
+	MOB_NAME = 1,
 	MOB_LV,
 	MOB_MAXHP,
+	MOB_MAXSP,
 	MOB_BASEEXP,
 	MOB_JOBEXP,
-	MOB_ATK1,
-	MOB_ATK2,
+	MOB_ATKMIN,
+	MOB_ATKMAX,
 	MOB_DEF,
 	MOB_MDEF,
 	MOB_RES,
@@ -374,12 +375,14 @@ enum monsterinfo_types {
 	MOB_INT,
 	MOB_DEX,
 	MOB_LUK,
-	MOB_RANGE,
-	MOB_RANGE2,
-	MOB_RANGE3,
+	MOB_SPEED,
+	MOB_ATKRANGE,
+	MOB_SKILLRANGE,
+	MOB_CHASERANGE,
 	MOB_SIZE,
 	MOB_RACE,
 	MOB_ELEMENT,
+	MOB_ELEMENTLV,
 	MOB_MODE,
 	MOB_MVPEXP,
 	MOB_ID,
