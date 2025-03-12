@@ -18737,7 +18737,7 @@ BUILDIN_FUNC(getmonsterinfo)
 		case MOB_MVPEXP:     script_pushint(st, mob->mexp); break;
 		case MOB_ID:         script_pushint(st, mob->id); break;
 		default:
-			ShowError( "buildin_getmonsterinfo: Invalid getmonsterinfo type '%d'. \n", type );
+			ShowError( "buildin_getmonsterinfo: Invalid getmonsterinfo type '%d'.\n", type );
 			st->state = END;
 			return SCRIPT_CMD_FAILURE;
 	}
