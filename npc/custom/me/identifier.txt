@@ -1,0 +1,25 @@
+prontera,142,182,5	script	Items identify	465,{
+	mes .npc$;
+	//cutin "3rd_wl_queen01" ,2;
+	mes "Hi, I Can Identify your items for you. For Free.";
+	next;
+	switch(select("Yes Please","No Thank you")) {
+		case 1:
+			getinventorylist;
+			for( set .@i,0; .@i < @inventorylist_count; set .@i, .@i + 1 ) {
+				if ( @inventorylist_identify[.@i] == 1 ) continue;
+				delitem2 @inventorylist_id[.@i],1,0,0,0,0,0,0,0;
+				getitem @inventorylist_id[.@i],1;
+			}
+		break;
+		//cutin "" ,255;
+		close;
+		case2:
+			mes "good Bye";
+		close;
+		//cutin "" ,255;
+		close;
+	}
+	close;
+	//cutin "" ,255;
+}

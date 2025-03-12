@@ -1,0 +1,67 @@
+-	script	buff_cmd	-1,{
+OnInit:
+	bindatcmd "buffexp", strnpcinfo(0)+"::OnCommandEXP";
+	bindatcmd "buff", strnpcinfo(0)+"::OnCommandBUFF";
+	end;
+
+OnCommandEXP:
+	.@price = 0; // 1m per buff
+	mes "Exp Buff Price is "+F_InsertComma(.@price)+"";
+	if ( getmapflag(strcharinfo(3),MF_PVP) || getmapflag(strcharinfo(3),MF_BATTLEGROUND) ||  getmapflag(strcharinfo(3),MF_GVG) ) {
+		mes "Doesnt work on PVP/BG/WOE maps";
+		close;
+	}
+	if ( Zeny < .@price ) {
+		mes "You need "+F_InsertComma(.@price)+"z.";
+		close;
+	}
+	if ( select("Buff Me!","Dont buff me!")==2 ) {
+		mes "Ok";
+		close;
+	}
+	Zeny -= .@price;
+
+	// This will bestow the effect of Level 10 Blessing.
+	sc_start SC_JEXPBOOST,3600000,300;
+	sc_start SC_EXPBOOST,3600000,300;
+	mes "done!";
+	close;
+	
+OnCommandBUFF:
+	.@price = 0; // 1m per buff
+	mes "Buff Price is "+F_InsertComma(.@price)+"";
+	if ( getmapflag(strcharinfo(3),MF_PVP) || getmapflag(strcharinfo(3),MF_BATTLEGROUND) ||  getmapflag(strcharinfo(3),MF_GVG) ) {
+		mes "Doesnt work on PVP/BG/WOE maps";
+		close;
+	}
+	if ( Zeny < .@price ) {
+		mes "You need "+F_InsertComma(.@price)+"z.";
+		close;
+	}
+	if ( select("Buff Me!","Dont buff me!")==2 ) {
+		mes "Ok";
+		close;
+	}
+	Zeny -= .@price;
+
+	// This will bestow the effect of Level 10 Blessing.
+	sc_start SC_INCREASEAGI,240000,10;
+	sc_start SC_BLESSING,240000,10;
+	sc_start SC_CP_WEAPON,1200000,5;
+	sc_start SC_CP_HELM,1200000,5;
+	sc_start SC_CP_ARMOR,1200000,5;
+	sc_start SC_CP_SHIELD,1200000,5;
+	sc_start SC_STRFOOD,1200000,10;
+	sc_start SC_AGIFOOD,1200000,10;
+	sc_start SC_VITFOOD,1200000,10;
+	sc_start SC_INTFOOD,1200000,10;
+	sc_start SC_DEXFOOD,1200000,10;
+	sc_start SC_LUKFOOD,1200000,10;
+	sc_start SC_RAISINGDRAGON,1200000,10;
+	sc_start SC_KYRIE,1200000,10;
+	sc_start SC_SHRIMP,1200000,5;
+	sc_start SC_GLORIA,1200000,5;
+	percentheal 100,100;
+	mes "done!";
+	close;
+}

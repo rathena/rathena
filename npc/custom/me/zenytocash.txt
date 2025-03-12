@@ -1,0 +1,73 @@
+prontera,141,176,5	script	Cash Converter	10295,{
+
+	.@name$ = strcharinfo(0);			// Char Name
+	.@item = 30343;						// Item ID
+	.@amount = 100;						// Cash Points per Item
+	.@zeny_rate = 1000;				// Zeny required per Cash Point
+	.@countitem = countitem(.@item);	// Count item
+
+	mes "[ Cash Converter ]";
+	mes "Hello! I can exchange your items or Zeny for Cash Points.";
+	mes "What would you like to do?";
+	next;
+
+	.@choice = select("- Convert Items","- Convert Zeny","- Cancel");
+
+	if (.@choice == 1) { // Item Conversion
+		if (.@countitem < 1) {
+			mes "[ Cash Converter ]";
+			mes "You don't have any ^0000FF"+getitemname(.@item)+"^000000 in your inventory.";
+			close;
+		}
+
+		mes "[ Cash Converter ]";
+		mes "You currently have "+.@countitem+" ^0000FF"+getitemname(.@item)+"^000000.";
+		mes "Each converts to "+.@amount+" Cash Points.";
+		mes "How many would you like to convert?";
+		input .@convert_amount;
+
+		if (.@convert_amount < 1 || .@convert_amount > .@countitem) {
+			mes "Invalid amount!";
+			close;
+		}
+
+		progressbar "0x11CC99",1;
+		specialeffect2 EF_REMOVETRAP;
+		delitem .@item, .@convert_amount;
+		#CASHPOINTS += (.@convert_amount * .@amount);
+		message .@name$, "You received "+ (.@convert_amount * .@amount) +" Cash Points.";
+		mes "[ Cash Converter ]";
+		mes "Exchange successful!";
+		close;
+	}
+
+	else if (.@choice == 2) { // Zeny Conversion
+		mes "[ Cash Converter ]";
+		mes "Exchange Rate: ^0000FF"+.@zeny_rate+"^000000 Zeny = 1 Cash Point.";
+		mes "How many Cash Points do you want to purchase?";
+		input .@convert_cash;
+
+		.@required_zeny = .@convert_cash * .@zeny_rate;
+		.@player_zeny = Zeny;
+
+		if (.@required_zeny > .@player_zeny) {
+			mes "You don't have enough Zeny!";
+			close;
+		}
+		if (.@convert_cash < 1) {
+			mes "Invalid amount!";
+			close;
+		}
+
+		progressbar "0x11CC99",1;
+		specialeffect2 EF_REMOVETRAP;
+		Zeny -= .@required_zeny;
+		#CASHPOINTS += .@convert_cash;
+		message .@name$, "You received "+ .@convert_cash +" Cash Points.";
+		mes "[ Cash Converter ]";
+		mes "Zeny successfully converted!";
+		close;
+	}
+
+	close;
+}

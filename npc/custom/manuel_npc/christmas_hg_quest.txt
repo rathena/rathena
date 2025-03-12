@@ -1,0 +1,472 @@
+//===== By:==================================================
+//= Manuel Sintos
+// @reloadnpc npc/custom/manuel_npc/christmas_hg_quest.txt
+
+xmas,120,151,5	script	Xmas Headgear Quest	26,{
+	// NOTE: Configuration for the quest HG
+	// 1. C_Chilly_Breath
+	// 2. C_Snowman_Hat
+	// 3. C_Snow_Bear_Hood
+	// 4. C_Snow_Fox
+	// 5. C_Snow_Ice_Hair
+	// 6. C_Snow_Rabbit_Knit_Hat
+	// 7. C_Snownow_Hat
+	setarray .questRewardItemID, 19992, 20231, 31440, 31620, 31905, 19990, 20242;
+
+	// Required items for C_Chilly_Breath
+	// 1. Ice Cubic
+	// 2. Ice Scale
+	// 3. Platinum Coin
+	// 4. TCG
+	// 5. Event Token
+	// 6. Activity Token
+	setarray .requiredItemID0, 7066, 7562, 677, 7227, 30341, 30343;
+	setarray .requiredAmount0, 350, 10, 1, 15, 20, 20;
+
+	// Required items for C_Snowman_Hat
+	// 1. Small Snow Flower (Buyable at Pet Groomer)
+	// 2. White Dyestuff
+	// 3. Platinum Coin
+	// 4. TCG
+	// 5. Event Token
+	// 6. Activity Token
+	setarray .requiredItemID1, 6098, 982, 677, 7227, 30341, 30343;
+	setarray .requiredAmount1, 5000, 20, 1, 15, 20, 20;
+
+	// Required items for C_Snow_Bear_Hood
+	// 1. Frozen Rose
+	// 2. Mystic Frozen
+	// 3. Platinum Coin
+	// 4. TCG
+	// 5. Event Token
+	// 6. Activity Token
+	setarray .requiredItemID2, 749, 995, 677, 7227, 30341, 30343;
+	setarray .requiredAmount2, 100, 50, 1, 15, 20, 20;
+
+	// Required items for C_Snow_Fox
+	// 1. Immortal Heart
+	// 2. Nine Tails
+	// 3. Platinum Coin
+	// 4. TCG
+	// 5. Event Token
+	// 6. Activity Token
+	setarray .requiredItemID3, 929, 1022, 677, 7227, 30341, 30343;
+	setarray .requiredAmount3, 350, 1000, 2, 15, 20, 20;
+
+	// Required items for C_Snow_Ice_Hair
+	// 1. Sea-Otter Fur
+	// 2. White Dyestuff
+	// 3. Platinum Coin
+	// 4. TCG
+	// 5. Event Token
+	// 6. Activity Token
+	setarray .requiredItemID4, 7065, 982, 677, 7227, 30341, 30343;
+	setarray .requiredAmount4, 530, 120, 2, 15, 20, 20;
+
+	// Required items for C_Snow_Rabbit_Knit_Hat
+	// 1. Soft Feather
+	// 2. White Dyestuff
+	// 3. Platinum Coin
+	// 4. TCG
+	// 5. Event Token
+	// 6. Activity Token
+	setarray .requiredItemID5, 7063, 982, 677, 7227, 30341, 30343;
+	setarray .requiredAmount5, 300, 110, 3, 15, 20, 20;
+
+	// Required items for C_Snownow_Hat
+	// 1. Small Snow Flower (Buyable at Pet Groomer)
+	// 2. White Dyestuff
+	// 3. Platinum Coin
+	// 4. TCG
+	// 5. Event Token
+	// 6. Activity Token
+	setarray .requiredItemID6, 6098, 982, 677, 7227, 30341, 30343;
+	setarray .requiredAmount6, 8000, 100, 5, 15, 20, 20;
+
+	// Set name of the NPC
+	set @name$, "[ ^1100AASaint Michaela^000000 ]";
+
+	mes @name$;
+	mes "Ho ho ho! It's the season of giving!";
+	mes "I can craft special Christmas headgears for you, if you bring the right materials!";
+	next;
+	mes @name$;
+	mes "Which headgear would you like to craft?";
+	
+	switch(select(
+		getitemname(.questRewardItemID[0]) + ":" +
+		getitemname(.questRewardItemID[1]) + ":" +
+		getitemname(.questRewardItemID[2]) + ":" +
+		getitemname(.questRewardItemID[3]) + ":" +
+		getitemname(.questRewardItemID[4]) + ":" +
+		getitemname(.questRewardItemID[5]) + ":" +
+		getitemname(.questRewardItemID[6])
+	)) {
+
+		case 1:
+			next;
+
+			mes @name$;
+			mes "To craft a ^1100AA" + getitemname(.questRewardItemID[0]) + "^000000, you need to bring the following items:";
+			next;
+
+			mes @name$;
+			// Loop through the required items and display the correct "pc" or "pcs" based on the amount
+			for (.@i = 0; .@i < getarraysize(.requiredItemID0); .@i++) {
+				mes .requiredAmount0[.@i] + ((.requiredAmount0[.@i] == 1) ? "pc - " : "pcs - ") + getitemname(.requiredItemID0[.@i]);
+			}
+			next;
+
+			mes @name$;
+			mes "Do you have them...? Let me see...";
+			next;
+
+			.@isMissingItem = false;
+
+			// Check if player has all required items using a loop
+			for (.@i = 0; .@i < getarraysize(.requiredItemID0); .@i++) {
+				if (countitem(.requiredItemID0[.@i]) < .requiredAmount0[.@i]) {
+					.@missingItem = true; // Set to true if any item is missing
+					break; // Exit loop as soon as we find a missing item
+				}
+			}
+
+			if (.@missingItem) {
+				emotion ET_SCRATCH;
+				mes @name$;
+				mes "Hmm... you don't have everything...";
+				mes "Return when you have gathered them...";
+				close;
+			}
+			else {
+				mes @name$;
+				mes "Ah... you do have them...";
+				mes "Please wait for a while...";
+				next;
+
+				// Delete item item requirements and get the reward costume
+				for( .@j = 0; .@j < getarraysize(.requiredItemID0); .@j++ ) {
+					delitem .requiredItemID0[.@j], .requiredAmount0[.@j];
+				}
+				getitem .questRewardItemID[0], 1;
+				mes @name$;
+				mes "Here is your ^1100AA" + getitemname(.questRewardItemID[0]) + "^000000...";
+				mes "Enjoy!";
+				close;
+			}
+		break;
+
+		case 2:
+			next;
+
+			mes @name$;
+			mes "To craft a ^1100AA" + getitemname(.questRewardItemID[1]) + "^000000, you need to bring the following items:";
+			next;
+
+			mes @name$;
+			// Loop through the required items and display the correct "pc" or "pcs" based on the amount
+			for (.@i = 0; .@i < getarraysize(.requiredItemID1); .@i++) {
+				mes .requiredAmount1[.@i] + ((.requiredAmount1[.@i] == 1) ? "pc - " : "pcs - ") + getitemname(.requiredItemID1[.@i]);
+			}
+			next;
+
+			mes @name$;
+			mes "Do you have them...? Let me see...";
+			next;
+
+			.@isMissingItem = false;
+
+			// Check if player has all required items using a loop
+			for (.@i = 0; .@i < getarraysize(.requiredItemID1); .@i++) {
+				if (countitem(.requiredItemID1[.@i]) < .requiredAmount1[.@i]) {
+					.@missingItem = true; // Set to true if any item is missing
+					break; // Exit loop as soon as we find a missing item
+				}
+			}
+
+			if (.@missingItem) {
+				emotion ET_SCRATCH;
+				mes @name$;
+				mes "Hmm... you don't have everything...";
+				mes "Return when you have gathered them...";
+				close;
+			}
+			else {
+				mes @name$;
+				mes "Ah... you do have them...";
+				mes "Please wait for a while...";
+				next;
+
+				// Delete item item requirements and get the reward costume
+				for( .@j = 0; .@j < getarraysize(.requiredItemID1); .@j++ ) {
+					delitem .requiredItemID1[.@j], .requiredAmount1[.@j];
+				}
+				getitem .questRewardItemID[1], 1;
+				mes @name$;
+				mes "Here is your ^1100AA" + getitemname(.questRewardItemID[1]) + "^000000...";
+				mes "Enjoy!";
+				close;
+			}
+		break;
+		case 3:
+			next;
+
+			mes @name$;
+			mes "To craft a ^1100AA" + getitemname(.questRewardItemID[2]) + "^000000, you need to bring the following items:";
+			next;
+
+			mes @name$;
+			// Loop through the required items and display the correct "pc" or "pcs" based on the amount
+			for (.@i = 0; .@i < getarraysize(.requiredItemID2); .@i++) {
+				mes .requiredAmount2[.@i] + ((.requiredAmount2[.@i] == 1) ? "pc - " : "pcs - ") + getitemname(.requiredItemID2[.@i]);
+			}
+			next;
+
+			mes @name$;
+			mes "Do you have them...? Let me see...";
+			next;
+
+			.@isMissingItem = false;
+
+			// Check if player has all required items using a loop
+			for (.@i = 0; .@i < getarraysize(.requiredItemID2); .@i++) {
+				if (countitem(.requiredItemID2[.@i]) < .requiredAmount2[.@i]) {
+					.@missingItem = true; // Set to true if any item is missing
+					break; // Exit loop as soon as we find a missing item
+				}
+			}
+
+			if (.@missingItem) {
+				emotion ET_SCRATCH;
+				mes @name$;
+				mes "Hmm... you don't have everything...";
+				mes "Return when you have gathered them...";
+				close;
+			}
+			else {
+				mes @name$;
+				mes "Ah... you do have them...";
+				mes "Please wait for a while...";
+				next;
+
+				// Delete item item requirements and get the reward costume
+				for( .@j = 0; .@j < getarraysize(.requiredItemID2); .@j++ ) {
+					delitem .requiredItemID2[.@j], .requiredAmount2[.@j];
+				}
+				getitem .questRewardItemID[2], 1;
+				mes @name$;
+				mes "Here is your ^1100AA" + getitemname(.questRewardItemID[2]) + "^000000...";
+				mes "Enjoy!";
+				close;
+			}
+		break;
+		case 4:
+			next;
+
+			mes @name$;
+			mes "To craft a ^1100AA" + getitemname(.questRewardItemID[3]) + "^000000, you need to bring the following items:";
+			next;
+
+			mes @name$;
+			// Loop through the required items and display the correct "pc" or "pcs" based on the amount
+			for (.@i = 0; .@i < getarraysize(.requiredItemID3); .@i++) {
+				mes .requiredAmount3[.@i] + ((.requiredAmount3[.@i] == 1) ? "pc - " : "pcs - ") + getitemname(.requiredItemID3[.@i]);
+			}
+			next;
+
+			mes @name$;
+			mes "Do you have them...? Let me see...";
+			next;
+
+			.@isMissingItem = false;
+
+			// Check if player has all required items using a loop
+			for (.@i = 0; .@i < getarraysize(.requiredItemID3); .@i++) {
+				if (countitem(.requiredItemID3[.@i]) < .requiredAmount3[.@i]) {
+					.@missingItem = true; // Set to true if any item is missing
+					break; // Exit loop as soon as we find a missing item
+				}
+			}
+
+			if (.@missingItem) {
+				emotion ET_SCRATCH;
+				mes @name$;
+				mes "Hmm... you don't have everything...";
+				mes "Return when you have gathered them...";
+				close;
+			}
+			else {
+				mes @name$;
+				mes "Ah... you do have them...";
+				mes "Please wait for a while...";
+				next;
+
+				// Delete item item requirements and get the reward costume
+				for( .@j = 0; .@j < getarraysize(.requiredItemID3); .@j++ ) {
+					delitem .requiredItemID3[.@j], .requiredAmount3[.@j];
+				}
+				getitem .questRewardItemID[3], 1;
+				mes @name$;
+				mes "Here is your ^1100AA" + getitemname(.questRewardItemID[3]) + "^000000...";
+				mes "Enjoy!";
+				close;
+			}
+		break;
+		case 5:
+			next;
+
+			mes @name$;
+			mes "To craft a ^1100AA" + getitemname(.questRewardItemID[4]) + "^000000, you need to bring the following items:";
+			next;
+
+			mes @name$;
+			// Loop through the required items and display the correct "pc" or "pcs" based on the amount
+			for (.@i = 0; .@i < getarraysize(.requiredItemID4); .@i++) {
+				mes .requiredAmount4[.@i] + ((.requiredAmount4[.@i] == 1) ? "pc - " : "pcs - ") + getitemname(.requiredItemID4[.@i]);
+			}
+			next;
+
+			mes @name$;
+			mes "Do you have them...? Let me see...";
+			next;
+
+			.@isMissingItem = false;
+
+			// Check if player has all required items using a loop
+			for (.@i = 0; .@i < getarraysize(.requiredItemID4); .@i++) {
+				if (countitem(.requiredItemID4[.@i]) < .requiredAmount4[.@i]) {
+					.@missingItem = true; // Set to true if any item is missing
+					break; // Exit loop as soon as we find a missing item
+				}
+			}
+
+			if (.@missingItem) {
+				emotion ET_SCRATCH;
+				mes @name$;
+				mes "Hmm... you don't have everything...";
+				mes "Return when you have gathered them...";
+				close;
+			}
+			else {
+				mes @name$;
+				mes "Ah... you do have them...";
+				mes "Please wait for a while...";
+				next;
+
+				// Delete item item requirements and get the reward costume
+				for( .@j = 0; .@j < getarraysize(.requiredItemID4); .@j++ ) {
+					delitem .requiredItemID4[.@j], .requiredAmount4[.@j];
+				}
+				getitem .questRewardItemID[4], 1;
+				mes @name$;
+				mes "Here is your ^1100AA" + getitemname(.questRewardItemID[4]) + "^000000...";
+				mes "Enjoy!";
+				close;
+			}
+		break;
+		case 6:
+			next;
+
+			mes @name$;
+			mes "To craft a ^1100AA" + getitemname(.questRewardItemID[5]) + "^000000, you need to bring the following items:";
+			next;
+
+			mes @name$;
+			// Loop through the required items and display the correct "pc" or "pcs" based on the amount
+			for (.@i = 0; .@i < getarraysize(.requiredItemID5); .@i++) {
+				mes .requiredAmount5[.@i] + ((.requiredAmount5[.@i] == 1) ? "pc - " : "pcs - ") + getitemname(.requiredItemID5[.@i]);
+			}
+			next;
+
+			mes @name$;
+			mes "Do you have them...? Let me see...";
+			next;
+
+			.@isMissingItem = false;
+
+			// Check if player has all required items using a loop
+			for (.@i = 0; .@i < getarraysize(.requiredItemID5); .@i++) {
+				if (countitem(.requiredItemID5[.@i]) < .requiredAmount5[.@i]) {
+					.@missingItem = true; // Set to true if any item is missing
+					break; // Exit loop as soon as we find a missing item
+				}
+			}
+
+			if (.@missingItem) {
+				emotion ET_SCRATCH;
+				mes @name$;
+				mes "Hmm... you don't have everything...";
+				mes "Return when you have gathered them...";
+				close;
+			}
+			else {
+				mes @name$;
+				mes "Ah... you do have them...";
+				mes "Please wait for a while...";
+				next;
+
+				// Delete item item requirements and get the reward costume
+				for( .@j = 0; .@j < getarraysize(.requiredItemID5); .@j++ ) {
+					delitem .requiredItemID5[.@j], .requiredAmount5[.@j];
+				}
+				getitem .questRewardItemID[5], 1;
+				mes @name$;
+				mes "Here is your ^1100AA" + getitemname(.questRewardItemID[5]) + "^000000...";
+				mes "Enjoy!";
+				close;
+			}
+		break;
+		case 7:
+			next;
+
+			mes @name$;
+			mes "To craft a ^1100AA" + getitemname(.questRewardItemID[6]) + "^000000, you need to bring the following items:";
+			next;
+
+			mes @name$;
+			// Loop through the required items and display the correct "pc" or "pcs" based on the amount
+			for (.@i = 0; .@i < getarraysize(.requiredItemID6); .@i++) {
+				mes .requiredAmount6[.@i] + ((.requiredAmount6[.@i] == 1) ? "pc - " : "pcs - ") + getitemname(.requiredItemID6[.@i]);
+			}
+			next;
+
+			mes @name$;
+			mes "Do you have them...? Let me see...";
+			next;
+
+			.@isMissingItem = false;
+
+			// Check if player has all required items using a loop
+			for (.@i = 0; .@i < getarraysize(.requiredItemID6); .@i++) {
+				if (countitem(.requiredItemID6[.@i]) < .requiredAmount6[.@i]) {
+					.@missingItem = true; // Set to true if any item is missing
+					break; // Exit loop as soon as we find a missing item
+				}
+			}
+
+			if (.@missingItem) {
+				emotion ET_SCRATCH;
+				mes @name$;
+				mes "Hmm... you don't have everything...";
+				mes "Return when you have gathered them...";
+				close;
+			}
+			else {
+				mes @name$;
+				mes "Ah... you do have them...";
+				mes "Please wait for a while...";
+				next;
+
+				// Delete item item requirements and get the reward costume
+				for( .@j = 0; .@j < getarraysize(.requiredItemID6); .@j++ ) {
+					delitem .requiredItemID6[.@j], .requiredAmount6[.@j];
+				}
+				getitem .questRewardItemID[6], 1;
+				mes @name$;
+				mes "Here is your ^1100AA" + getitemname(.questRewardItemID[6]) + "^000000...";
+				mes "Enjoy!";
+				close;
+			}
+		break;
+	}
+}

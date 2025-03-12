@@ -1,0 +1,21 @@
+//===== By:==================================================
+//= Manuel Sintos
+// @reloadnpc npc/custom/manuel_npc/shadow_item_trader.txt
+
+prontera,164,164,3	script	Shadow Item Trader	564,{
+	
+	switch(select("Costume Shadow Item")) {
+		case 1:
+			callshop "cShadowItem",0;
+			end;
+		break;
+	}
+
+	OnInit:
+		waitingroom "Shadow Item Trader",0;
+	end;
+
+}
+
+// The hidden npc which holds the function
+-	itemshop	cShadowItem	-1,7615,24243:10,24244:10,24245:10,24230:10,24229:10,24228:10,24227:10,24226:10,24225:10,24224:10,24223:10,24186:10,24012:10,24013:10,24014:10,24015:10,24016:10,24017:10

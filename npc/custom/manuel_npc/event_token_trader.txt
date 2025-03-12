@@ -1,0 +1,22 @@
+
+//===== By:==================================================
+//= Manuel Sintos
+
+prontera,164,161,3	script	Event Token Trader	564,{
+
+	switch(select("Siege Set")) {
+		case 1:
+			callshop "siegeSet",0;
+			end;
+		break;
+	}
+
+	OnInit:
+		waitingroom "Event Token Trader",0;
+	end;
+}
+
+//The hidden npc which holds the function
+-	itemshop	siegeSet	-1,30341,2586:50,2587:50,15046:50,15047:50,15048:50,2483:50,2484:50,2485:50
+
+

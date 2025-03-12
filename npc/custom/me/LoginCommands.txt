@@ -1,0 +1,90 @@
+// Autoload atcommand for players on login
+prontera,149,162,5	script	Login Commands	403,{
+	//cutin "wish_maiden11" ,2;
+	mes .npc$;
+	mes "Hi, you can select command that auto enable when you login.";
+	next;
+	switch(select("Select commands","Close")) {
+		case 1:
+			callsub(OnSelectCommand);
+			break;
+	}
+	close;
+
+	OnSelectCommand:
+		mes .npc$;
+		mes "Please select command from menu.";
+		.@menu$ = "";
+		for (.@i = 0; .@i < .CmdListCnt; .@i++) {
+			if (callsub(OnCheckCmd,.CmdList$[.@i]) != -1) {
+				.@st$ = " - ^33CC33Enabled^000000";
+			} else {
+				.@st$ = " - ^999999Disabled^000000";
+			}
+			.@menu$ = .@menu$+":"+.CmdList$[.@i]+" "+.@st$;
+		}
+		.@menu$ = .@menu$+":Close";
+		.@sel = select(.@menu$)-2;
+		if (.@sel != .@i) {
+			.@idx = callsub(OnCheckCmd,.CmdList$[.@sel]);
+			mes "Atcommand ^3399FF"+.CmdList$[.@sel]+"^000000:";
+			if (.@idx < 0) { // Enable it
+				#AutoAtcommand$[getarraysize(#AutoAtcommand$)] = .CmdList$[.@sel];
+				mes "  ^33CC33Auto-enabled on login^000000";
+			} else { // Disable it
+				callsub(OnClearRemoveCmd,#AutoAtcommand$[.@idx]);
+				mes "  ^FF0000Not enabled on login^000000";
+			}
+			next;
+			callsub(OnSelectCommand);
+		}
+		return;
+
+	OnCheckCmd:
+		.@cmd$ = getarg(0);
+		for (.@i = 0; .@i < getarraysize(#AutoAtcommand$); .@i++) {
+			if (#AutoAtcommand$[.@i] == .@cmd$)
+				return .@i;
+		}
+		return -1;
+
+	OnClearRemoveCmd:
+		.@cmd$ = getarg(0);
+		.@size = getarraysize(#AutoAtcommand$);
+		for (.@i = 0; .@i < .@size; .@i++) {
+			if (#AutoAtcommand$[.@i] == .@cmd$)
+				break;
+		}
+		if (.@i != .@size) {
+			#AutoAtcommand$[.@i] = "";
+			.@j = 0;
+			for (.@i = 0; .@i < .@size; .@i++) {
+				if (#AutoAtcommand$[.@i] == "")
+					continue;
+				if (.@i != .@j) {
+					#AutoAtcommand$[.@j] = #AutoAtcommand$[.@i];
+					#AutoAtcommand$[.@i] = "";
+				}
+				.@j++;
+			}
+		}
+		return 1;
+
+	OnPCLoginEvent:
+		.@j = 0;
+		for (.@i = 0; .@i < getarraysize(#AutoAtcommand$); .@i++) {
+			if (#AutoAtcommand$[.@i] != "") {
+				dispbottom "[ Auto command: "+#AutoAtcommand$[.@i]+" ]";
+				atcommand ""+#AutoAtcommand$[.@i]+"";
+				.@j++;
+			}
+		}
+		end;
+
+	OnInit:
+		.npc$ = "[ Kafra ]";
+		setarray .CmdList$[0],"@autoloot","@noks","@showexp";
+		.CmdListCnt = getarraysize(.CmdList$);
+		end;
+	//cutin "" ,255;
+}

@@ -16,7 +16,7 @@
 -	script	Healer	-1,{
 
 	.@Price = 0;	// Zeny required for heal
-	.@Buffs = 0;	// Also buff players? (1: yes / 0: no)
+	.@Buffs = 1;	// Also buff players? (1: yes / 0: no)
 	.@Delay = 0;	// Heal delay, in seconds
 
 	if (@HD > gettimetick(2))
@@ -36,6 +36,33 @@
 		sc_start SC_INCREASEAGI,240000,10;
 		specialeffect2 EF_BLESSING;
 		sc_start SC_BLESSING,240000,10;
+
+		sc_start SC_RAISINGDRAGON,1200000,10;
+		sc_start SC_KYRIE,1200000,10;
+		sc_start SC_SHRIMP,1200000,5;
+		sc_start SC_GLORIA,1200000,5;
+		//sc_start SC_FULL_THROTTLE,1200000,5;
+		sc_start SC_SPEEDUP1,1200000,50;
+		
+		// For GM Buffs only
+		// or the Player who has a Healer Buffs Ticket
+		if (getgroupid() > 0 || countitem(30334) > 0) {
+		    // for chemical protection buffs
+			specialeffect2 300;
+			sc_start SC_CP_WEAPON,1200000,5;
+			sc_start SC_CP_HELM,1200000,5;
+			sc_start SC_CP_ARMOR,1200000,5;
+			sc_start SC_CP_SHIELD,1200000,5;
+
+			// for +10 Food buffs
+			sc_start SC_STRFOOD,1200000,10;
+			sc_start SC_AGIFOOD,1200000,10;
+			sc_start SC_VITFOOD,1200000,10;
+			sc_start SC_INTFOOD,1200000,10;
+			sc_start SC_DEXFOOD,1200000,10;
+			sc_start SC_LUKFOOD,1200000,10;
+		}
+		percentheal 100,100;
 	}
 	if (.@Delay)
 		@HD = gettimetick(2) + .@Delay;

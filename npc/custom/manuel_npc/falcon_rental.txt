@@ -1,0 +1,97 @@
+//===== rAthena Script =======================================
+//= Falcon Rental NPC
+//===== By: ==================================================
+//= Manuel Sintos
+//===== Current Version: =====================================
+//= 1.0
+//===== Description: =========================================
+//= Falcon Rental NPC. Rent and Remove the Falcon
+//===== Additional Comments: =================================
+// @reloadnpc npc/custom/manuel_npc/falcon_rental.txt
+
+prontera,128,211,5	script	Falcon Rental Master	105,{
+	
+	set .cost, 100000;
+
+	// Check if the player's job is Hunter
+    if (BaseJob == Job_Hunter) {
+    	mes "[ Falcon Rental Master ]";
+        mes "Welcome, Would you like to rent a Falcon for " + callfunc("F_InsertComma", .cost) + " zeny? It could be a great companion for your adventures.";
+        next;
+
+        // Check if the player has enough Zeny
+        if (Zeny < .cost) {
+        	mes "[ Falcon Rental Master ]";
+            mes "I'm sorry, but it looks like you don't have enough zeny.";
+        } 
+        else {
+            // Check if the player has the Falcon skill
+            if (getskilllv("HT_FALCON")) {
+                // Menu for Falcon options
+                switch (select("Rent a Falcon:Remove the Falcon:Exit")) {
+                    case 1: // Rent a Falcon
+                        // Check if the player does not have Wug or Wugrider options
+                        if (!checkoption(Option_Wug) && !checkoption(Option_Wugrider)) {
+                            // If the player does not have a Falcon, set one
+                            if (!checkfalcon()) {
+                                next;
+
+                                Zeny -= .cost; // Deduct zeny
+                                setfalcon(1); // Set a Falcon
+                                mes "[ Falcon Rental Master ]";
+                                mes "Your Falcon has been set! Please take care of it.";
+                            } 
+                            else {
+                                next;
+
+                                mes "[ Falcon Rental Master ]";
+                                mes "You already have a Falcon with you.";
+                            }
+                        } 
+                        else {
+                            next;
+
+                            mes "[ Falcon Rental Master ]";
+                            mes "I'm afraid you cannot rent a Falcon while using a Warg or Wargrider.";
+                        }
+                    	break;
+
+                    case 2: // Remove Falcon
+                        // Check if the player has a Falcon
+                        if (checkfalcon()) {
+                            next;
+
+                            setfalcon(0); // Remove the Falcon
+                            mes "[ Falcon Rental Master ]";
+                            mes "Your Falcon has been removed. Come back soon!";
+                        } 
+                        else {
+                            next;
+
+                            mes "[ Falcon Rental Master ]";
+                            mes "It seems you don't have a Falcon to remove.";
+                        }
+                        break;
+
+                    case 3: // Exit
+                        next;
+
+                        mes "[ Falcon Rental Master ]";
+                        mes "Thank you for stopping by! Feel free to return anytime.";
+                        break;
+                }
+            } 
+            else {
+                mes "[ Falcon Rental Master ]";
+                mes "You need to learn Falcon Training first if you wish to rent a Falcon.";
+            }
+        }
+    } 
+    else {
+        mes "[ Falcon Rental Master ]";
+        mes "I'm sorry, but only Hunters, Snipers, Rangers, and Winhawks can rent a Falcon. Please return when you have become one of those classes.";
+    }
+    
+    // Finalize the conversation
+    close;
+}

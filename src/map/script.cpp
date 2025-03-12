@@ -6879,84 +6879,34 @@ BUILDIN_FUNC(setlook)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-// As setlook but only client side
-BUILDIN_FUNC(changelook){
-	map_session_data* sd;
+BUILDIN_FUNC(changelook)
+{ // As setlook but only client side
+	int32 type,val;
+	TBL_PC* sd;
+
+	type = script_getnum(st,2);
+	val = script_getnum(st,3);
 
 	if (!script_charid2sd(4,sd))
-		return SCRIPT_CMD_FAILURE;
+		return SCRIPT_CMD_SUCCESS;
 
-	int32 type = script_getnum( st, 2 );
-	int32 val = script_getnum( st, 3 );
-
-	switch( type ){
-		case LOOK_HAIR:
-			if( val < MIN_HAIR_STYLE ){
-				ShowError( "buildin_changelook: Invalid hair style. Minimum: %d\n", MIN_HAIR_STYLE );
-				return SCRIPT_CMD_FAILURE;
-			}
-
-			if( val > MAX_HAIR_STYLE ){
-				ShowError( "buildin_changelook: Invalid hair style. Maximum: %d\n", MAX_HAIR_STYLE );
-				return SCRIPT_CMD_FAILURE;
-			}
-			break;
-
-		case LOOK_HAIR_COLOR:
-			if( val < MIN_HAIR_COLOR ){
-				ShowError( "buildin_changelook: Invalid hair color. Minimum: %d\n", MIN_HAIR_COLOR );
-				return SCRIPT_CMD_FAILURE;
-			}
-
-			if( val > MAX_HAIR_COLOR ){
-				ShowError( "buildin_changelook: Invalid hair color. Maximum: %d\n", MAX_HAIR_COLOR );
-				return SCRIPT_CMD_FAILURE;
-			}
-			break;
-
-		case LOOK_CLOTHES_COLOR:
-			if( val < MIN_CLOTH_COLOR ){
-				ShowError( "buildin_changelook: Invalid cloth color. Minimum: %d\n", MIN_CLOTH_COLOR );
-				return SCRIPT_CMD_FAILURE;
-			}
-
-			if( val > MAX_CLOTH_COLOR ){
-				ShowError( "buildin_changelook: Invalid cloth color. Maximum: %d\n", MAX_CLOTH_COLOR );
-				return SCRIPT_CMD_FAILURE;
-			}
-			break;
-
-		case LOOK_BODY2:
-			if( val < MIN_BODY_STYLE ){
-				ShowError( "buildin_changelook: Invalid body style. Minimum: %d\n", MIN_BODY_STYLE );
-				return SCRIPT_CMD_FAILURE;
-			}
-
-			if( val > MAX_BODY_STYLE ){
-				ShowError( "buildin_changelook: Invalid body style. Maximum: %d\n", MAX_BODY_STYLE );
-				return SCRIPT_CMD_FAILURE;
-			}
-			break;
-
-		case LOOK_BASE:
-		case LOOK_WEAPON:
-		case LOOK_HEAD_BOTTOM:
-		case LOOK_HEAD_TOP:
-		case LOOK_HEAD_MID:
-		case LOOK_SHIELD:
-		case LOOK_SHOES:
-		case LOOK_BODY:
-		case LOOK_RESET_COSTUMES:
-		case LOOK_ROBE:
-			// No value cap at the moment
-			break;
-
-		default:
-			ShowError( "buildin_changelook: Unknown look type %d\n", type );
-			return SCRIPT_CMD_FAILURE;
+	switch(type) {
+	case LOOK_HAIR:
+		val = cap_value(val, MIN_HAIR_STYLE, MAX_HAIR_STYLE);
+		break;
+	case LOOK_HAIR_COLOR:
+		val = cap_value(val, MIN_HAIR_COLOR, MAX_HAIR_COLOR);
+		break;
+	case LOOK_CLOTHES_COLOR:
+		val = cap_value(val, MIN_CLOTH_COLOR, MAX_CLOTH_COLOR);
+		break;
+	case LOOK_BODY2:
+		val = cap_value(val, MIN_BODY_STYLE, MAX_BODY_STYLE);
+		break;
+	default:
+		break;
 	}
-
-	clif_changelook( &sd->bl, type, val );
+	clif_changelook(&sd->bl, type, val);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -12710,7 +12660,7 @@ BUILDIN_FUNC(homunculus_evolution)
 		if (sd->hd->homunculus.intimacy >= battle_config.homunculus_evo_intimacy_need)
 			hom_evolution(sd->hd);
 		else
-			clif_emotion( sd->hd->bl, ET_SWEAT );
+			clif_emotion(&sd->hd->bl, ET_SWEAT);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -12745,9 +12695,9 @@ BUILDIN_FUNC(homunculus_mutate)
 			script_pushint(st, 1);
 			return SCRIPT_CMD_SUCCESS;
 		} else
-			clif_emotion( sd->bl, ET_SWEAT );
+			clif_emotion(&sd->bl, ET_SWEAT);
 	} else
-		clif_emotion( sd->bl, ET_SWEAT );
+		clif_emotion(&sd->bl, ET_SWEAT);
 
 	script_pushint(st, 0);
 
@@ -12777,16 +12727,16 @@ BUILDIN_FUNC(morphembryo)
 
 			if( (i = pc_additem(sd, &item_tmp, 1, LOG_TYPE_SCRIPT)) ) {
 				clif_additem(sd, 0, 0, i);
-				clif_emotion( sd->bl, ET_SWEAT ); // Fail to avoid item drop exploit.
+				clif_emotion(&sd->bl, ET_SWEAT); // Fail to avoid item drop exploit.
 			} else {
 				hom_vaporize(sd, HOM_ST_MORPH);
 				script_pushint(st, 1);
 				return SCRIPT_CMD_SUCCESS;
 			}
 		} else
-			clif_emotion( sd->hd->bl, ET_SWEAT );
+			clif_emotion(&sd->hd->bl, ET_SWEAT);
 	} else
-		clif_emotion( sd->bl, ET_SWEAT );
+		clif_emotion(&sd->bl, ET_SWEAT);
 
 	script_pushint(st, 0);
 
@@ -13833,7 +13783,7 @@ BUILDIN_FUNC(emotion)
 	if (!bl)
 		bl = map_id2bl(st->oid);
 
-	clif_emotion( *bl, static_cast<emotion_type>( type ) );
+	clif_emotion(bl, type);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -14428,7 +14378,7 @@ BUILDIN_FUNC(wedding_effect)
 		bl=map_id2bl(st->oid);
 	} else
 		bl=&sd->bl;
-	clif_wedding_effect( *bl );
+	clif_wedding_effect(bl);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -17613,37 +17563,21 @@ BUILDIN_FUNC(sscanf){
 			script_pushint(st, -1);
 			if(buf) aFree(buf);
 			if(ref_str) aFree(ref_str);
-			return SCRIPT_CMD_FAILURE;
+			return SCRIPT_CMD_SUCCESS;
 		}
 
 		// Save value if any
-		if( is_string_variable( buf_p ) ){
+		if(buf_p[strlen(buf_p)-1]=='$'){  // String
 			if(ref_str==nullptr){
 				CREATE(ref_str, char, strlen(str)+1);
 			}
-			if( sscanf( str, buf, ref_str ) != 1 ){
-				ShowError( "buildin_sscanf: sscanf failed to scan value for string variable \"%s\".\n", buf_p );
-				script_pushint( st, -1 );
-				if( buf != nullptr ){
-					aFree( buf );
-				}
-				if( ref_str != nullptr ){
-					aFree( ref_str );
-				}
-				return SCRIPT_CMD_FAILURE;
+			if(sscanf(str, buf, ref_str)==0){
+				break;
 			}
 			set_reg_str( st, sd, reference_uid( reference_getid( data ), reference_getindex( data ) ), buf_p, ref_str, reference_getref( data ) );
-		} else {
-			if( sscanf( str, buf, &ref_int ) !=1 ){
-				ShowError( "buildin_sscanf: sscanf failed to scan value for integer variable \"%s\".\n", buf_p );
-				script_pushint( st, -1 );
-				if( buf != nullptr ){
-					aFree( buf );
-				}
-				if( ref_str != nullptr ){
-					aFree( ref_str );
-				}
-				return SCRIPT_CMD_FAILURE;
+		} else {  // Number
+			if(sscanf(str, buf, &ref_int)==0){
+				break;
 			}
 			set_reg_num( st, sd, reference_uid( reference_getid( data ), reference_getindex( data ) ), buf_p, ref_int, reference_getref( data ) );
 		}
@@ -18694,52 +18628,44 @@ BUILDIN_FUNC(getmonsterinfo)
 			mob = mob_db.find(mob_id);
 		}
 	}
-	
-	int32 type = script_getnum(st, 3);
 
 	if (mob == nullptr) {
 		//ShowError("buildin_getmonsterinfo: Wrong Monster ID: %i\n", mob_id);
-		if ( type == MOB_NAME ) // requested the name
+		if (script_getnum(st, 3) == MOB_NAME) // requested the name
 			script_pushconststr(st, "null");
 		else
 			script_pushint(st, -1);
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	switch ( type ) {
-		case MOB_NAME:       script_pushstrcopy(st, mob->jname.c_str()); break;
-		case MOB_LV:         script_pushint(st, mob->lv); break;
-		case MOB_MAXHP:      script_pushint(st, mob->status.max_hp); break;
-		case MOB_MAXSP:      script_pushint(st, mob->status.max_sp); break;
-		case MOB_BASEEXP:    script_pushint(st, mob->base_exp); break;
-		case MOB_JOBEXP:     script_pushint(st, mob->job_exp); break;
-		case MOB_ATKMIN:     script_pushint(st, mob->status.rhw.atk); break;
-		case MOB_ATKMAX:     script_pushint(st, mob->status.rhw.atk2); break;
-		case MOB_DEF:        script_pushint(st, mob->status.def); break;
-		case MOB_MDEF:       script_pushint(st, mob->status.mdef); break;
-		case MOB_RES:        script_pushint(st, mob->status.res); break;
-		case MOB_MRES:       script_pushint(st, mob->status.mres); break;
-		case MOB_STR:        script_pushint(st, mob->status.str); break;
-		case MOB_AGI:        script_pushint(st, mob->status.agi); break;
-		case MOB_VIT:        script_pushint(st, mob->status.vit); break;
-		case MOB_INT:        script_pushint(st, mob->status.int_); break;
-		case MOB_DEX:        script_pushint(st, mob->status.dex); break;
-		case MOB_LUK:        script_pushint(st, mob->status.luk); break;
-		case MOB_SPEED:      script_pushint(st, mob->status.speed); break;
-		case MOB_ATKRANGE:   script_pushint(st, mob->status.rhw.range); break;
-		case MOB_SKILLRANGE: script_pushint(st, mob->range2); break;
-		case MOB_CHASERANGE: script_pushint(st, mob->range3); break;
-		case MOB_SIZE:	     script_pushint(st, mob->status.size); break;
-		case MOB_RACE:	     script_pushint(st, mob->status.race); break;
-		case MOB_ELEMENT:    script_pushint(st, mob->status.def_ele); break;
-		case MOB_ELEMENTLV:  script_pushint(st, mob->status.ele_lv); break;
-		case MOB_MODE:       script_pushint(st, mob->status.mode); break;
-		case MOB_MVPEXP:     script_pushint(st, mob->mexp); break;
-		case MOB_ID:         script_pushint(st, mob->id); break;
-		default:
-			ShowError( "buildin_getmonsterinfo: Invalid getmonsterinfo type '%d'.\n", type );
-			st->state = END;
-			return SCRIPT_CMD_FAILURE;
+	switch ( script_getnum(st, 3) ) {
+		case MOB_NAME:		script_pushstrcopy(st,mob->jname.c_str()); break;
+		case MOB_LV:		script_pushint(st,mob->lv); break;
+		case MOB_MAXHP:		script_pushint(st,mob->status.max_hp); break;
+		case MOB_BASEEXP:	script_pushint(st,mob->base_exp); break;
+		case MOB_JOBEXP:	script_pushint(st,mob->job_exp); break;
+		case MOB_ATK1:		script_pushint(st,mob->status.rhw.atk); break;
+		case MOB_ATK2:		script_pushint(st,mob->status.rhw.atk2); break;
+		case MOB_DEF:		script_pushint(st,mob->status.def); break;
+		case MOB_MDEF:		script_pushint(st,mob->status.mdef); break;
+		case MOB_RES:		script_pushint(st, mob->status.res); break;
+		case MOB_MRES:		script_pushint(st, mob->status.mres); break;
+		case MOB_STR:		script_pushint(st,mob->status.str); break;
+		case MOB_AGI:		script_pushint(st,mob->status.agi); break;
+		case MOB_VIT:		script_pushint(st,mob->status.vit); break;
+		case MOB_INT:		script_pushint(st,mob->status.int_); break;
+		case MOB_DEX:		script_pushint(st,mob->status.dex); break;
+		case MOB_LUK:		script_pushint(st,mob->status.luk); break;
+		case MOB_RANGE:		script_pushint(st,mob->status.rhw.range); break;
+		case MOB_RANGE2:	script_pushint(st,mob->range2); break;
+		case MOB_RANGE3:	script_pushint(st,mob->range3); break;
+		case MOB_SIZE:		script_pushint(st,mob->status.size); break;
+		case MOB_RACE:		script_pushint(st,mob->status.race); break;
+		case MOB_ELEMENT:	script_pushint(st,mob->status.def_ele); break;
+		case MOB_MODE:		script_pushint(st,mob->status.mode); break;
+		case MOB_MVPEXP:	script_pushint(st,mob->mexp); break;
+		case MOB_ID:		script_pushint(st,mob->id); break;
+		default: script_pushint(st,-1); //wrong Index
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -22410,7 +22336,7 @@ static int32 buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 	else
 		unit_skilluse_id2(&md->bl, tbl->id, skill_id, skill_lv, casttime, cancel);
 
-	clif_emotion( md->bl, static_cast<emotion_type>( emotion ) );
+	clif_emotion(&md->bl, emotion);
 
 	return 1;
 }
@@ -22852,7 +22778,7 @@ BUILDIN_FUNC(setmounting) {
 	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
 	if( sd->sc.option&(OPTION_WUGRIDER|OPTION_RIDING|OPTION_DRAGON|OPTION_MADOGEAR) ) {
-		clif_msg( *sd, MSI_FAIELD_RIDING_OVERLAPPED );
+		clif_msg(sd, MSI_FAIELD_RIDING_OVERLAPPED);
 		script_pushint(st,0); //can't mount with one of these
 	} else if (sd->sc.getSCE(SC_CLOAKING) || sd->sc.getSCE(SC_CHASEWALK) || sd->sc.getSCE(SC_CLOAKINGEXCEED) || sd->sc.getSCE(SC_CAMOUFLAGE) || sd->sc.getSCE(SC_STEALTHFIELD) || sd->sc.getSCE(SC__FEINTBOMB)) {
 		// SC_HIDING, SC__INVISIBILITY, SC__SHADOWFORM, SC_SUHIDE already disable item usage
@@ -28035,7 +27961,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(playBGMall,"s?????"),
 	BUILDIN_DEF(soundeffect,"si"),
 	BUILDIN_DEF(soundeffectall,"si?????"),	// SoundEffectAll [Codemaster]
-	BUILDIN_DEF2_DEPRECATED(strmobinfo, "getmonsterinfo", "ii", "2025-03-11"),
+	BUILDIN_DEF(strmobinfo,"ii"),	// display mob data [Valaris]
 	BUILDIN_DEF(guardian,"siisi??"),	// summon guardians
 	BUILDIN_DEF(guardianinfo,"sii"),	// display guardian data [Valaris]
 	BUILDIN_DEF(petskillbonus,"iiii"), // [Valaris]

@@ -1,0 +1,364 @@
+//===== By:==================================================
+//= Manuel Sintos
+// @reloadnpc npc/custom/manuel_npc/costume_enchanter.txt
+
+prt_in,57,54,3	script	Costume Enchanter	494,{
+	set @name$, "[^1100AA Costume Enchanter ^000000]";
+
+	.stats_stone = 30336;
+	.stats_stone_plus_10 = 30335;
+	.stats_stoneRequiredAmount = 1;
+
+	setarray .paymentItemID, 7227;
+	.paymentAmount = 50;
+	.paymentAmount_plus_10 = 100;
+
+	set @successMes$, "This item has been successfully enchanted!";
+
+	mes @name$;
+	mes "Hello, I can enchant your costume items in different location ^990099(Top, Mid, Low, Garment)^000000 that will add Stats!";
+	next;
+
+	mes @name$;
+    mes "Please remember, do not bring any duplicate items in your inventory!";
+    mes "any duplicate items you bring might be consume.";
+    next;
+
+	mes @name$;
+	mes "Please choose the costume location that you wanted to enchant.";
+
+	switch(select("Costume Headgear (Upper):Costume Headgear (Middle):Costume Headgear (Lower):Costume Garments")) {
+		case 1:
+			next;
+
+			mes @name$;
+			mes "You will also need the following items:";
+			mes .stats_stoneRequiredAmount + "pc - " + getitemname(.stats_stone);
+			mes .paymentAmount + "pc - " + getitemname(.paymentItemID[0]);
+			next;
+
+			// Check if you are wearing any costume item (Lower)
+			if (getequipid(EQI_COSTUME_HEAD_TOP) == null || getequipid(EQI_COSTUME_HEAD_TOP) == 0 || getequipid(EQI_COSTUME_HEAD_TOP) == -1) {
+			    mes @name$;
+			    mes "You are not wearing any Costume (Upper).";
+			    close;
+			}
+
+			// Check if you are wearing any costume item (Lower)
+			if (getequipid(EQI_COSTUME_HEAD_TOP) == 19038) {
+			   	mes @name$;
+			    mes "Ah, I see you have the powerful ^1100AA" + getitemname(19038) + "^000000 equipped.";
+			    mes "Unfortunately, I cannot enchant this item for you.";
+			    next;
+			    mes @name$;
+			    mes "You know why?";
+			    next;
+			    mes @name$;
+			    mes "Well, this piece of equipment is already so overpowered that adding any further enchantments would upset the balance of the world!";
+			    next;
+			    mes @name$;
+			    mes "In fact, it's considered one of the most sought-after items by adventurers far and wide.";
+			    next;
+			    mes @name$;
+			    mes "Enhancing it would not only be unnecessary, but it could also lead to unpredictable consequences!";
+			    mes "Please cherish its power as it is!";
+				close;
+			}
+
+			set CostumeHeadTopID, getequipid(EQI_COSTUME_HEAD_TOP);
+
+			mes @name$;
+			mes "Are you sure you want to enchant the ^1100AA" + getitemname(CostumeHeadTopID) + "^000000?";
+			next;
+
+			switch(select("Yes please!:No.")) {
+				case 1:
+					// Check if the item has already been enchanted with the +5 Stats Stone
+			        if (getequipcardid(EQI_COSTUME_HEAD_TOP, 0) == .stats_stone || 
+			            getequipcardid(EQI_COSTUME_HEAD_TOP, 1) == .stats_stone || 
+			            getequipcardid(EQI_COSTUME_HEAD_TOP, 2) == .stats_stone || 
+			            getequipcardid(EQI_COSTUME_HEAD_TOP, 3) == .stats_stone) {
+			            mes @name$;
+			            mes "This item is already enchanted with a +5 Stats Stone!";
+			            close;
+			        }
+
+			        if (!countitem(.stats_stone)) {
+						mes @name$;
+						mes "Ohh, you don't have a +5 Stats Stone in your inventory.";
+						close;
+					}
+					else if (countitem(.paymentItemID[0]) < .paymentAmount) {
+						mes @name$;
+						mes "You don't have enough " + getitemname(.paymentItemID[0]) + ". You need " + .paymentAmount + "pcs of it.";
+						close;
+					}
+					else {
+						mes @name$;
+						mes "Ah, perfect! You've got everything!";
+						mes "Give me a moment to work on this ...";
+						next;
+						
+						delitem CostumeHeadTopID, 1;
+						delitem .stats_stone, .stats_stoneRequiredAmount;
+						delitem .paymentItemID[0], .paymentAmount;
+
+						getitem2 CostumeHeadTopID, 1, 1, 0, 0, 0, 0, 0, .stats_stone;
+
+						message strcharinfo(0), @successMes$;
+						specialeffect2 154;
+
+						mes @name$;
+						mes "Here's your new enchanted costume item! Hope you like it!";
+						close;
+					}	
+				break;
+
+				case 2:
+					mes @name$;
+					mes "No worries, please comeback anytime!";
+					close;
+				break;
+			}
+		break;
+		case 2:
+			next;
+
+			mes @name$;
+			mes "You will also need the following items:";
+			mes .stats_stoneRequiredAmount + "pc - " + getitemname(.stats_stone);
+			mes .paymentAmount + "pc - " + getitemname(.paymentItemID[0]);
+			next;
+
+			// Check if you are wearing any costume item (Lower)
+			if (getequipid(EQI_COSTUME_HEAD_MID) == null || getequipid(EQI_COSTUME_HEAD_MID) == 0 || getequipid(EQI_COSTUME_HEAD_MID) == -1) {
+			    mes @name$;
+			    mes "You are not wearing any Costume (Upper).";
+			    close;
+			}
+
+			// Check if you are wearing any costume item (Lower)
+			if (getequipid(EQI_COSTUME_HEAD_MID) == 19039) {
+			   	mes @name$;
+			    mes "Ah, I see you have the powerful ^1100AA" + getitemname(19039) + "^000000 equipped.";
+			    mes "Unfortunately, I cannot enchant this item for you.";
+			    next;
+			    mes @name$;
+			    mes "You know why?";
+			    next;
+			    mes @name$;
+			    mes "Well, this piece of equipment is already so overpowered that adding any further enchantments would upset the balance of the world!";
+			    next;
+			    mes @name$;
+			    mes "In fact, it's considered one of the most sought-after items by adventurers far and wide.";
+			    next;
+			    mes @name$;
+			    mes "Enhancing it would not only be unnecessary, but it could also lead to unpredictable consequences!";
+			    mes "Please cherish its power as it is!";
+				close;
+			}
+			
+			set CostumeHeadMidID, getequipid(EQI_COSTUME_HEAD_MID);
+
+			mes @name$;
+			mes "Are you sure you want to enchant the ^1100AA" + getitemname(CostumeHeadMidID) + "^000000?";
+			next;
+
+			switch(select("Yes please!:No.")) {
+				case 1:
+					// Check if the item has already been enchanted with the +5 Stats Stone
+			        if (getequipcardid(EQI_COSTUME_HEAD_MID, 0) == .stats_stone || 
+			            getequipcardid(EQI_COSTUME_HEAD_MID, 1) == .stats_stone || 
+			            getequipcardid(EQI_COSTUME_HEAD_MID, 2) == .stats_stone || 
+			            getequipcardid(EQI_COSTUME_HEAD_MID, 3) == .stats_stone) {
+			            mes @name$;
+			            mes "This item is already enchanted with a +5 Stats Stone!";
+			            close;
+			        }
+
+			        if (!countitem(.stats_stone)) {
+						mes @name$;
+						mes "Ohh, you don't have a +5 Stats Stone in your inventory.";
+						close;
+					}
+					else if (countitem(.paymentItemID[0]) < .paymentAmount) {
+						mes @name$;
+						mes "You don't have enough " + getitemname(.paymentItemID[0]) + ". You need " + .paymentAmount + "pcs of it.";
+						close;
+					}
+					else {
+						mes @name$;
+						mes "Ah, perfect! You've got everything!";
+						mes "Give me a moment to work on this ...";
+						next;
+
+						delitem CostumeHeadMidID, 1;
+						delitem .stats_stone, .stats_stoneRequiredAmount;
+						delitem .paymentItemID[0], .paymentAmount;
+
+						getitem2 CostumeHeadMidID, 1, 1, 0, 0, 0, 0, 0, .stats_stone;
+
+						message strcharinfo(0), @successMes$;
+						specialeffect2 154;
+
+						mes @name$;
+						mes "Here's your new enchanted costume item! Hope you like it!";
+						close;
+					}	
+				break;
+
+				case 2:
+					mes @name$;
+					mes "No worries, please comeback anytime!";
+					close;
+				break;
+			}
+		break;
+		case 3:
+			next;
+
+			mes @name$;
+			mes "You will also need the following items:";
+			mes .stats_stoneRequiredAmount + "pc - " + getitemname(.stats_stone);
+			mes .paymentAmount + "pc - " + getitemname(.paymentItemID[0]);
+			next;
+
+			// Check if you are wearing any costume item (Lower)
+			if (getequipid(EQI_COSTUME_HEAD_LOW) == null || getequipid(EQI_COSTUME_HEAD_LOW) == 0 || getequipid(EQI_COSTUME_HEAD_LOW) == -1) {
+			    mes @name$;
+			    mes "You are not wearing any Costume (Lower).";
+			    close;
+			}
+
+			set CostumeHeadLowID, getequipid(EQI_COSTUME_HEAD_LOW);
+
+			mes @name$;
+			mes "Are you sure you want to enchant the ^1100AA" + getitemname(CostumeHeadLowID) + "^000000?";
+			next;
+
+			switch(select("Yes please!:No.")) {
+				case 1:
+					// Check if the item has already been enchanted with the +5 Stats Stone
+			        if (getequipcardid(EQI_COSTUME_HEAD_LOW, 0) == .stats_stone || 
+			            getequipcardid(EQI_COSTUME_HEAD_LOW, 1) == .stats_stone || 
+			            getequipcardid(EQI_COSTUME_HEAD_LOW, 2) == .stats_stone || 
+			            getequipcardid(EQI_COSTUME_HEAD_LOW, 3) == .stats_stone) {
+			            mes @name$;
+			            mes "This item is already enchanted with a +5 Stats Stone!";
+			            close;
+			        }
+
+			        if (!countitem(.stats_stone)) {
+						mes @name$;
+						mes "Ohh, you don't have a +5 Stats Stone in your inventory.";
+						close;
+					}
+					else if (countitem(.paymentItemID[0]) < .paymentAmount) {
+						mes @name$;
+						mes "You don't have enough " + getitemname(.paymentItemID[0]) + ". You need " + .paymentAmount + "pcs of it.";
+						close;
+					}
+					else {
+						mes @name$;
+						mes "Ah, perfect! You've got everything!";
+						mes "Give me a moment to work on this ...";
+						next;
+
+						delitem CostumeHeadLowID, 1;
+						delitem .stats_stone, .stats_stoneRequiredAmount;
+						delitem .paymentItemID[0], .paymentAmount;
+
+						getitem2 CostumeHeadLowID, 1, 1, 0, 0, 0, 0, 0, .stats_stone;
+
+						message strcharinfo(0), @successMes$;
+						specialeffect2 154;
+
+						mes @name$;
+						mes "Here's your new enchanted costume item! Hope you like it!";
+						close;
+					}	
+				break;
+
+				case 2:
+					mes @name$;
+					mes "No worries, please comeback anytime!";
+					close;
+				break;
+			}
+		break;
+		case 4:
+			next;
+
+			mes @name$;
+			mes "You will also need the following items:";
+			mes .stats_stoneRequiredAmount + "pc - " + getitemname(.stats_stone_plus_10);
+			mes .paymentAmount_plus_10 + "pcs - " + getitemname(.paymentItemID[0]);
+			next;
+
+			// Check if you are wearing any costume item (garment)
+			if (getequipid(EQI_COSTUME_GARMENT) == null || getequipid(EQI_COSTUME_GARMENT) == 0 || getequipid(EQI_COSTUME_GARMENT) == -1) {
+			    mes @name$;
+			    mes "You are not wearing any costume (garment).";
+			    close;
+			}
+
+			set CostumeGarmentID, getequipid(EQI_COSTUME_GARMENT);
+
+			mes @name$;
+			mes "Are you sure you want to enchant the ^1100AA" + getitemname(CostumeGarmentID) + "^000000?";
+			next;
+
+			switch(select("Yes please!:No.")) {
+				case 1:
+					// Check if the item has already been enchanted with the +5 Stats Stone
+			        if (getequipcardid(EQI_COSTUME_GARMENT, 0) == .stats_stone_plus_10 || 
+			            getequipcardid(EQI_COSTUME_GARMENT, 1) == .stats_stone_plus_10 || 
+			            getequipcardid(EQI_COSTUME_GARMENT, 2) == .stats_stone_plus_10 || 
+			            getequipcardid(EQI_COSTUME_GARMENT, 3) == .stats_stone_plus_10) {
+			            mes @name$;
+			            mes "This item is already enchanted with a +10 Stats Stone!";
+			            close;
+			        }
+
+			        if (!countitem(.stats_stone_plus_10)) {
+						mes @name$;
+						mes "Ohh, you don't have a +10 Stats Stone in your inventory.";
+						close;
+					}
+					else if (countitem(.paymentItemID[0]) < .paymentAmount_plus_10) {
+						mes @name$;
+						mes "You don't have enough " + getitemname(.paymentItemID[0]) + ". You need " + .paymentAmount_plus_10 + "pcs of it.";
+						close;
+					}
+					else {
+
+						mes @name$;
+						mes "Ah, perfect! You've got everything!";
+						mes "Give me a moment to work on this ...";
+						next;
+
+						delitem CostumeGarmentID, 1;
+						delitem .stats_stone_plus_10, .stats_stoneRequiredAmount;
+						delitem .paymentItemID[0], .paymentAmount_plus_10;
+
+						getitem2 CostumeGarmentID, 1, 1, 0, 0, 0, 0, 0, .stats_stone_plus_10;
+
+						message strcharinfo(0), @successMes$;
+						specialeffect2 154;
+
+						mes @name$;
+						mes "Here's your new enchanted costume item! Hope you like it!";
+						close;
+					}	
+				break;
+
+				case 2:
+					mes @name$;
+					mes "No worries, please comeback anytime!";
+					close;
+				break;
+			}
+		break;
+	}
+}
+

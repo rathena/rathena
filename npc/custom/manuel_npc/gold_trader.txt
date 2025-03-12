@@ -1,0 +1,34 @@
+//===== rAthena Script =======================================
+//= Gold Trader
+//===== By: ==================================================
+//= Manuel Sintos
+//===== Current Version: =====================================
+//= 1.0
+//===== Additional Comments: =================================
+// @reloadnpc npc/custom/manuel_npc/gold_trader.txt
+
+prontera,141,167,5	script	Gold Trader	10300,{
+	
+	switch(select("Bloody Branch and TCG Card:Gold Buy")) {
+		case 1:
+			callshop "bbAndTCG",0;
+			end;
+		break;
+		case 2:
+			callshop "GoldBuy",1;
+			end;
+		break;
+	}
+
+	OnInit:
+		waitingroom "Gold Trader",0;
+	end;
+}
+
+
+
+//The hidden npc which holds the function
+-	itemshop	bbAndTCG	-1,969,7227:500,12103:100
+-	shop	GoldBuy	-1,969:180000
+	
+	

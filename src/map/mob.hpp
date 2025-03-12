@@ -33,11 +33,11 @@ struct guardian_data;
 //Min time between AI executions
 const t_tick MIN_MOBTHINKTIME = 100;
 //Min time before mobs do a check to call nearby friends for help (or for slaves to support their master)
-const t_tick MIN_MOBLINKTIME = 1000;
+const t_tick MIN_MOBLINKTIME = 300;
 //Min time between random walks
 const t_tick MIN_RANDOMWALKTIME = 4000;
 
-// How often a monster will check for using a skill on non-berserk and non-dead states (in ms)
+// How often a monster will check for using a skill on non-attack states (in ms)
 const t_tick MOB_SKILL_INTERVAL = 1000;
 
 //Distance that slaves should keep from their master.
@@ -365,8 +365,7 @@ struct mob_data {
 	int32 areanpc_id; //Required in OnTouchNPC (to avoid multiple area touchs)
 	int32 bg_id; // BattleGround System
 
-	t_tick next_walktime,next_thinktime,last_linktime,last_pcneartime,dmgtick,last_canmove,last_skillcheck;
-	t_tick trickcasting; // Special state where you show a fake castbar while moving
+	t_tick next_walktime,last_thinktime,last_linktime,last_pcneartime,dmgtick,last_canmove,last_skillcheck;
 	int16 move_fail_count;
 	int16 lootitem_count;
 	unsigned char walktoxy_fail_count; //Pathfinding succeeds but the actual walking failed (e.g. Icewall lock)
@@ -468,7 +467,6 @@ enum e_mob_skill_condition {
 	MSC_MOBNEARBYGT,
 	MSC_GROUNDATTACKED,
 	MSC_DAMAGEDGT,
-	MSC_TRICKCASTING,
 };
 
 // The data structures for storing delayed item drops
@@ -510,8 +508,6 @@ int32 mob_guardian_guildchange(struct mob_data *md); //Change Guardian's ownersh
 
 int32 mob_randomwalk(struct mob_data *md,t_tick tick);
 int32 mob_warpchase(struct mob_data *md, struct block_list *target);
-void mob_setstate(mob_data& md, MobSkillState skillstate);
-bool mob_ai_sub_hard_attacktimer(mob_data &md, t_tick tick);
 int32 mob_target(struct mob_data *md,struct block_list *bl,int32 dist);
 int32 mob_unlocktarget(struct mob_data *md, t_tick tick);
 struct mob_data* mob_spawn_dataset(struct spawn_data *data);
@@ -539,8 +535,7 @@ int32 mob_warpslave(struct block_list *bl, int32 range);
 int32 mob_linksearch(struct block_list *bl,va_list ap);
 
 bool mob_chat_display_message (mob_data &md, uint16 msg_id);
-void mobskill_end(mob_data& md, t_tick tick);
-bool mobskill_use(struct mob_data *md,t_tick tick,int32 event, int64 damage = 0);
+int32 mobskill_use(struct mob_data *md,t_tick tick,int32 event, int64 damage = 0);
 int32 mobskill_event(struct mob_data *md,struct block_list *src,t_tick tick, int32 flag, int64 damage = 0);
 int32 mob_summonslave(struct mob_data *md2,int32 *value,int32 amount,uint16 skill_id);
 int32 mob_countslave(struct block_list *bl);

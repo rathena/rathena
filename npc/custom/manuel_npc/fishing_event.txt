@@ -1,0 +1,278 @@
+//===== rAthena Script =======================================
+//= Fishing Event
+//===== By: ==================================================
+//= Manuel Sintos
+//===== Current Version: =====================================
+//= 1.0
+//===== Description: =========================================
+//= Some items are created to fit this fishing event
+//===== Additional Comments: =================================
+//= 1.1 Added Fishing Spot, Trader, and Item Seller at Hugel
+// @reloadnpc npc/custom/manuel_npc/fishing_event.txt
+
+
+ayothaya,261,95,3	script	Fishing Spot	10065,{
+	// Fishing Event item name
+	// 1. Fishing Rod (30006)
+	// 2. Fishing Bots (2443)
+	// 3. Fishing Muffler (2550)
+	// 4. Fishing Hat (30005)
+	// 5. Artificial Lure (30340)
+	setarray .fishingItems, 30006, 2443, 2550, 30005, 30340;
+
+	// For itemID caught fish.
+	// 1. Tuna (6771)
+	// 2. Octopus (6772)
+	// 3. Snapper (6773)
+	// 4. Salmon (6775)
+	// 5. Squid (6778)
+	// 6. Shark (6770)
+	// 7. Marlin (30338)
+	setarray .caughtFish, 6771, 6772, 6773, 6775, 6778, 6770, 30338;
+
+	// Get the character ID of the player who is fishing
+	.@char_id = getcharid(3);
+
+	// Script to check if the player has the Fishing Rod weapon equipped
+	// and has an artificial lure
+	if (isequipped(.fishingItems[0])) {
+		if (countitem(.fishingItems[4]) == 0) {
+			mes "You do not have a ^1100AAArtificial Lure^000000.";
+	    	close;
+		}
+		else {
+			if (isFishing[.@char_id]) {
+				// Show some messege above the head of character
+				showscript "You're currently fishing! Please wait until it's done.", .@char_id, self;
+				end;
+			}
+			else {
+				// Casting time for Fishing
+				set .@fcast,9;
+
+				if (isequipped(.fishingItems[0])) { //Fishing Rod
+					set .@fcast,.@fcast - 3;
+				}
+				if (isequipped(.fishingItems[1])) { //Fishing Boots
+					set .@fcast,.@fcast - 2;
+				}
+				if (isequipped(.fishingItems[2])) { //Fishing Muffler
+					set .@fcast,.@fcast - 2;
+				}
+				if (isequipped(.fishingItems[3])) { //Fishing Hat
+					set .@fcast,.@fcast - 1;
+				}
+
+				// Show a message above the character's head indicating the action
+				showscript "Throwing lure!", .@char_id, self;
+
+				// Display a progress bar to indicate casting time
+				progressbar "ffffff", .@fcast;
+
+				// Prevents the current char from moving away.
+				pcblockmove .@char_id,1;
+
+				// Set the flag to indicate that this player is currently fishing
+				set isFishing[.@char_id], 1;
+
+				// Show some messege above the head of character
+				showscript "You're fishing!", .@char_id, self;
+
+				// Trigger a bubble special effect at the fishing spot
+				// and Play a water splash sound effect
+				specialeffect EF_BUBBLE,"Fishing Spot";
+				soundeffect "splash_water.wav", 0;
+
+				// Display a fishing cutin image (image must be in the correct directory)
+				cutin "2013_summer_fish_1_edit", 1;
+				// Wait for a short moment for effect
+				sleep2 500;
+				cutin "2013_summer_fish_1_edit", 255;
+				cutin "2013_summer_fish_2_edit", 1;
+				sleep2 800;
+				cutin "2013_summer_fish_2_edit", 255;
+				cutin "2013_summer_fish_3_edit", 1;
+				sleep2 800;
+				cutin "2013_summer_fish_3_edit", 255;
+				cutin "2013_summer_fish_4_edit", 1;
+				sleep2 800;
+				cutin "2013_summer_fish_4_edit", 255;
+
+				// Random chance for catching a fish (0-99)
+				.@rand = rand(100);
+
+				// Catch logic based on fish strength and rarity
+				if (.@rand < 20) {
+					cutin "2013_summer_fish_5_edit", 1; // Have Catched
+					// Tuna with Catch Rate: 20%
+					// specialeffect 610,"Fishing Spot";
+					getitem .caughtFish[0], 1;
+				} else if (.@rand < 35) { 
+					cutin "2013_summer_fish_5_edit", 1; // Have Catched
+					// Octopus with Catch Rate: 15%
+					// specialeffect 610,"Fishing Spot";
+					getitem .caughtFish[1], 1;
+				} else if (.@rand < 50) { 
+					cutin "2013_summer_fish_5_edit", 1; // Have Catched
+					// Snapper with Catch Rate: 15%
+					// specialeffect 610,"Fishing Spot";
+					getitem .caughtFish[2], 1;
+				} else if (.@rand < 60) {
+					cutin "2013_summer_fish_5_edit", 1; // Have Catched
+					// Salmon with Catch Rate: 10%
+					// specialeffect 610,"Fishing Spot";
+					getitem .caughtFish[3], 1;
+				} else if (.@rand < 70) {
+					cutin "2013_summer_fish_5_edit", 1; // Have Catched
+					// Squid with Catch Rate: 10%
+					// specialeffect 610,"Fishing Spot";
+					getitem .caughtFish[4], 1;
+				} else if (.@rand < 75) {
+					cutin "2013_summer_fish_5_edit", 1; // Have Catched
+					// Shark with Catch Rate: 5%
+					// specialeffect 610,"Fishing Spot";
+					getitem .caughtFish[5], 1;
+				} else if (.@rand < 85) {
+					cutin "2013_summer_fish_5_edit", 1; // Have Catched 
+					// Marlin with Catch Rate: 5%
+					// specialeffect 610,"Fishing Spot";
+					getitem .caughtFish[6], 1;
+				} else {
+					specialeffect2 611;
+					cutin "2013_summer_fish_6_edit", 1; // No Catched 
+					// You didn't catch anything this time. 20% chance
+				}
+
+				// Play a sound effect for players when a fish is caught
+				soundeffect "catched_fish.wav", 0;
+				
+				// Remove 1 piece of lure from the player's inventory after fishing
+				delitem .fishingItems[4], 1;
+
+				sleep2 800;
+				cutin "", 255;
+				goto L_Fishing_Complete;
+			}
+		}
+	} else {
+	    mes "You do not have the ^1100AASmall Fishing Rod^000000 weapon equipped.";
+	    close;
+	}
+
+	// Fishing completion logic after sleep
+	L_Fishing_Complete:
+		// Reset the flag after fishing is done
+		set isFishing[.@char_id], 0;
+
+		// Show some messege above the head of character
+		showscript "You finished fishing!", .@char_id, self;
+
+		// Enables the current char to move again.
+		pcblockmove .@char_id,0;
+	end;
+}
+
+// Duplicate Fishing Spot NPC
+ayothaya,261,105,3	duplicate(Fishing Spot)	Fishing Spot#fs2	10065
+ayothaya,255,105,3	duplicate(Fishing Spot)	Fishing Spot#fs3	10065
+ayothaya,247,105,3	duplicate(Fishing Spot)	Fishing Spot#fs4	10065
+ayothaya,239,105,3	duplicate(Fishing Spot)	Fishing Spot#fs5	10065
+ayothaya,239,88,3	duplicate(Fishing Spot)	Fishing Spot#fs6	10065
+ayothaya,247,88,3	duplicate(Fishing Spot)	Fishing Spot#fs7	10065
+ayothaya,257,88,3	duplicate(Fishing Spot)	Fishing Spot#fs8	10065
+ayothaya,188,67,3	duplicate(Fishing Spot)	Fishing Spot#fs9	10065
+ayothaya,193,69,3	duplicate(Fishing Spot)	Fishing Spot#fs10	10065
+hugel,214,191,3	duplicate(Fishing Spot)	Fishing Spot#fs11	10065
+hugel,216,197,3	duplicate(Fishing Spot)	Fishing Spot#fs12	10065
+hugel,224,224,3	duplicate(Fishing Spot)	Fishing Spot#fs13	10065
+hugel,223,233,3	duplicate(Fishing Spot)	Fishing Spot#fs14	10065
+
+// Fishing Item Seller NPC
+ayothaya,230,81,7	script	Fishing Items Seller	843,{
+	// Get the character ID of the player who is fishing
+	if (isFishing[getcharid(3)]) {
+		// Show some messege above the head of character
+		showscript "You're currently fishing! Please wait until it's done.", getcharid(3), self;
+		end;
+	}
+
+	callshop "itemForFishing",1; end; 
+
+	OnInit:
+		waitingroom "Fishing Items Seller", 0;
+	end;
+}
+-	shop	itemForFishing	-1,30006:320000000,2443:250000000,2550:250000000,30005:200000000,30340:500000;
+
+// Duplicate NPC
+hugel,202,221,5	duplicate(Fishing Items Seller)	Fishing Items Seller#fis2	578
+
+// Fishing Trader NPC
+ayothaya,221,94,7	script	Fish Trader	842,{
+	// Get the character ID of the player who is fishing
+	if (isFishing[getcharid(3)]) {
+		// Show some messege above the head of character
+		showscript "You're currently fishing! Please wait until it's done.", getcharid(3), self;
+		end;
+	}
+
+	switch(select("Tuna:Octopus:Snapper:Salmon:Squid:Shark:Marlin")) {
+		case 1: callshop "Tuna",0; end; break;
+		case 2: callshop "Octopus",0; end; break;
+		case 3: callshop "Snapper",0; end; break;
+		case 4: callshop "Salmon",0; end; break;
+		case 5: callshop "Squid",0; end; break;
+		case 6: callshop "Shark",0; end; break;
+		case 7: callshop "Marlin",0; end; break;
+	}
+
+	OnInit:
+		waitingroom "Fish Trader", 0;
+	end;
+}
+
+-	itemshop	Tuna	-1,6771,16394:100,16396:100
+-	itemshop	Octopus	-1,6772,16394:100,16396:100
+-	itemshop	Snapper	-1,6773,16394:90,16396:90
+-	itemshop	Salmon	-1,6775,16394:80,16396:80
+-	itemshop	Squid	-1,6778,16394:60,16396:60
+-	itemshop	Shark	-1,6770,16394:50,16396:50
+-	itemshop	Marlin	-1,30338,16394:50,16396:50
+
+// Duplicate NPC
+hugel,198,214,5	duplicate(Fish Trader)	Fish Trader#ft2	850
+
+
+-	script	joinFishing	-,{
+	
+	OnInit:
+		bindatcmd "joinfishing", strnpcinfo(3) + "::OnFishing";
+	end;
+
+	OnFishing:
+		// Attach the player who used the command
+		attachrid(getcharid(3));
+
+		// Define coordinates and maps
+		setarray .@hugelCoordinates[0], 205, 208;
+		setarray .@ayothayaCoordinates[0], 231, 100;
+		setarray .@map$, "ayothaya", "hugel";
+
+		// Randomly choose Ayothaya or Hugel
+		.@choice = rand(2);
+		
+		// Set coordinates based on choice
+		if (.@choice == 0) {
+			.@map$ = .@map$[0];
+			.@x = .@ayothayaCoordinates[0];
+			.@y = .@ayothayaCoordinates[1];
+		} else {
+			.@map$ = .@map$[1];
+			.@x = .@hugelCoordinates[0];
+			.@y = .@hugelCoordinates[1];
+		}
+
+		// Warp the player
+		warp .@map$, .@x, .@y;
+	end;
+}

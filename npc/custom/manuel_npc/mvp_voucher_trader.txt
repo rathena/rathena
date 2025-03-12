@@ -1,0 +1,34 @@
+//===== By:==================================================
+//= Manuel Sintos
+// @reloadnpc npc/custom/manuel_npc/mvp_voucher_trader.txt
+
+prontera,141,164,5	script	MVP Voucher Trader	564,{
+	
+	switch(select("Headgear:Kaho:Misc")) {
+		case 1:
+			callshop "mvpVoucherRareHG",0;
+			end;
+		break;
+		case 2:
+			callshop "kaho",0;
+			end;
+		break;
+		case 3:
+			callshop "statStone",0;
+			end;
+		break;
+	}
+
+	OnInit:
+		waitingroom "MVP Voucher Trader",0;
+	end;
+}
+
+
+
+//The hidden npc which holds the function
+-	itemshop	kaho	-1,7615,5490:200, 5372:200,5579:200, 5453:200, 5452:200, 5451:200, 5591:200, 18891:200, 18506:200, 5501:200, 18841:200, 5469:200, 5529:200, 5690:200, 5754:200, 5749:200, 5760:200, 5751:200, 5121:200, 5748:200, 18534:200, 5753:200, 5758:200, 5756:200, 5746:200, 5656:200, 18542:200, 5094:200, 5181:200, 5505:200, 5654:200, 19134:200, 5476:200, 5747:200, 5750:200, 5757:200, 5752:200, 18574:200, 18827:200, 5518:200, 18842:200, 18561:200, 5762:200, 18803:200
+-	itemshop	statStone	-1,7615,30335:100,30336:50
+-	itemshop	mvpVoucherRareHG	-1,7615,18779:200,18780:180,18781:160,18796:140
+	
+	

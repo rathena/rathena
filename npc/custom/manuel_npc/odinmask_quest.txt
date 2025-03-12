@@ -1,0 +1,95 @@
+
+// Requirements item for ODIN MASK Quest
+// 	1. Rune of Darkness - 3000pcs (7511)
+// 	2. Blinker - 10pcs (2295)
+// 	3. Activity Token - 70pcs (30343)
+// 	4. Event Token - 50pcs (30341)
+// 	5. MVP Voucher - 100pcs (7615)
+
+// Made by Sintos Manuel
+// Feb 17, 2021
+
+hugel,96,231,5	script	Odin Temple Scholar	47,{
+	
+	set @name$, "[^FF0000 Manuel ^000000]";
+	setarray .requiredItemID, 7511, 2295, 30343, 30341, 7615;
+	setarray .requiredItemAmount, 3000, 10, 70, 50, 100;
+
+	@odinmaskItemID = 5483;
+	@odinmaskItemAmount = 1;
+
+	mes @name$;
+	mes "Oh, hello there!";
+	mes "You've come just at the right time! My name is Manuel, and I've been studying the ancient Odin Temple for quite a while now.";
+	next;
+
+	mes @name$;
+	mes "There's so much mystery surrounding that place! Artifacts, lost knowledge, secrets hidden in its depths... it's all fascinating!";
+	next;
+
+	mes "[ " +  strcharinfo(0) + " ]";
+	mes "I actually heard that you might be able to craft an Odin Mask. Is that true?";
+	next;
+
+	mes @name$;
+	mes "Ah, the Odin Mask! Yes, you've heard right.";
+	mes "It's a rare artifact we uncovered during one of our expeditions into the temple. Quite a powerful relic, really.";
+	next;
+
+	mes @name$;
+	mes "I can remake it for you, but it won't be easy. It requires some very specific items to recreate.";
+	mes "You'll have to bring them to me if you want me to work on it.";
+	next;
+
+	mes @name$;
+	for( .@i = 0; .@i < getarraysize(.requiredItemID); .@i++ ) {
+		mes .requiredItemAmount[.@i] + "pcs - " + getitemname(.requiredItemID[.@i]) + ".";
+	}
+	next;
+
+	switch(select("Here I have the required items:Maybe I will gather the required items")) {
+		case 1:
+			.@isMissingItem = false;
+
+			// Check if player has all required items using a loop
+	        for (.@i = 0; .@i < getarraysize(.requiredItemID); .@i++) {
+	            if (countitem(.requiredItemID[.@i]) < .requiredItemAmount[.@i]) {
+	                .@missingItem = true; // Set to true if any item is missing
+	                break; // Exit loop as soon as we find a missing item
+	            }
+	        }
+
+			if (.@missingItem) {
+				mes @name$;
+				mes "Hmm, it looks like you don't have everything I need.";
+				mes "Come back once you've gathered all the items, alright? I'll be here waiting.";
+				close;
+			}
+			else {
+				mes @name$;
+				mes "Ah, perfect! You've got everything!";
+				mes "Give me a moment to work on this ...";
+				next;
+
+				for( .@j = 0; .@j < getarraysize(.requiredItemID); .@j++ ) {
+					delitem .requiredItemID[.@j], .requiredItemAmount[.@j];
+				}
+				getitem @odinmaskItemID, @odinmaskItemAmount; // odinmask id
+
+				mes @name$;
+				mes "There we go! One freshly recreated Odin Mask, just for you.";
+				mes "Wear it well! It's not just a mask. it carries the legacy of the Odin Temple with it.";
+				mes "Good luck, adventurer!";
+				close;
+			}
+		break;
+
+		case 2:
+			mes @name$;
+			mes "Make sure you gather everything exactly as listed. If you don't have the right amounts, I won't be able to help you.";
+			close;
+		break;
+	}
+
+	
+}

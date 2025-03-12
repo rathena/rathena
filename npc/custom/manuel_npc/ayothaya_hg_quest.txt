@@ -1,0 +1,198 @@
+//===== By:==================================================
+//= Manuel Sintos
+// @reloadnpc npc/custom/manuel_npc/ayothaya_hg_quest.txt
+
+
+
+ayothaya,217,189,4	script	Sinfloti	953,5,5,{ //5,5, is range of npc will trigger the npctalk ontouch
+	set @name$, "[^1100AA Sinfloti ^000000]";
+
+	// quests items
+	setarray .questItems, 5372, 5377, 5375;
+
+	// for Koneko Hat requirement quest
+	setarray .KHrequiredItemID, 5058, 982, 4290;
+	setarray .KHrequiredAmount, 1, 10, 5;
+
+	// for Gentle'sman Pipe requirement quest
+	setarray .GPrequiredItemID, 2268, 7150, 7035, 7194, 7122;
+	setarray .GPrequiredAmount, 1, 50, 30, 300, 500;
+
+	// for Orc Hero Hairdress requirement quest
+	setarray .OHHrequiredItemID, 909, 931, 968, 1304;
+	setarray .OHHrequiredAmount, 5000, 5000, 200, 1;
+
+	mes @name$;
+	mes "Hello there, " + strcharinfo(0) + "!";
+	mes "How can I help you today?";
+
+	switch(select("I want some cool headgears:Nothing for now")) {
+		case 1:
+			next;
+			mes @name$;
+			mes "Great! Which one are you interested in?";
+			
+			switch(select(
+				getitemname(.questItems[0])	+ ":" +
+				getitemname(.questItems[1])	+ ":" +
+				getitemname(.questItems[2])
+			)) {
+				case 1:
+					next;
+
+					mes @name$;
+					mes "Alright! If you bring me these items, I'll trade you for the " + getitemname(.questItems[0]);
+					// Loop through the required items and display the correct "pc" or "pcs" based on the amount
+					for (.@i = 0; .@i < getarraysize(.KHrequiredItemID); .@i++) {
+						mes .KHrequiredAmount[.@i] + ((.KHrequiredAmount[.@i] == 1) ? "pc - " : "pcs - ") + getitemname(.KHrequiredItemID[.@i]);
+					}
+					next;
+
+					mes @name$;
+					mes "Are you sure you want the " + getitemname(.questItems[0]) + "?";
+					switch(select("Yes, let's do it!:No, I've changed my mind.")) {
+						case 1:
+							next;
+
+							// validate if there is no items
+							if (countitem(.KHrequiredItemID[0]) < .KHrequiredAmount[0] ||
+								countitem(.KHrequiredItemID[1]) < .KHrequiredAmount[1] ||
+								countitem(.KHrequiredItemID[2]) < .KHrequiredAmount[2]) {
+								mes @name$;
+								mes "Uh-oh! It seems like you don't have enough items. Come back when you're ready!";
+								close;
+							}
+							else
+
+								for( .@z = 0; .@z < getarraysize(.KHrequiredItemID); .@z++ ) {
+									delitem .KHrequiredItemID[.@z], .KHrequiredAmount[.@z];
+								}
+								getitem .questItems[0], 1;
+
+								mes @name$;
+								mes "Here's your new headgear! Hope you like it!";
+								close;
+
+
+						break;
+						case 2:
+							next;
+
+							mes @name$;
+							mes "No worries! Feel free to come back anytime.";
+							close;
+						break;
+					}
+
+				break;
+
+				case 2:
+					next;
+
+					mes @name$;
+					mes "Alright! If you bring me these items, I'll trade you for the " + getitemname(.questItems[1]);
+					// Loop through the required items and display the correct "pc" or "pcs" based on the amount
+					for (.@i = 0; .@i < getarraysize(.GPrequiredItemID); .@i++) {
+						mes .GPrequiredAmount[.@i] + ((.GPrequiredAmount[.@i] == 1) ? "pc - " : "pcs - ") + getitemname(.GPrequiredItemID[.@i]);
+					}
+					next;
+
+					mes @name$;
+					mes "Are you sure you want the " + getitemname(.questItems[1]) + "?";
+					switch(select("Yes, let's do it!:No, I've changed my mind.")) {
+						case 1:
+							next;
+
+							// validate if there is no items
+							if (countitem(.GPrequiredItemID[0]) < .GPrequiredAmount[0] ||
+								countitem(.GPrequiredItemID[1]) < .GPrequiredAmount[1] ||
+								countitem(.GPrequiredItemID[2]) < .GPrequiredAmount[2]) {
+								mes @name$;
+								mes "Uh-oh! It seems like you don't have enough items. Come back when you're ready!";
+								close;
+							}
+							else
+
+								for( .@z = 0; .@z < getarraysize(.GPrequiredItemID); .@z++ ) {
+									delitem .GPrequiredItemID[.@z], .GPrequiredAmount[.@z];
+								}
+								getitem .questItems[1], 1;
+
+								mes @name$;
+								mes "Here's your new headgear! Hope you like it!";
+								close;
+						break;
+						case 2:
+							next;
+
+							mes @name$;
+							mes "No worries! Feel free to come back anytime.";
+							close;
+						break;
+					}
+				break;
+
+				case 3:
+					next;
+
+					mes @name$;
+					mes "If you will give me these items, I will give you the " + getitemname(.questItems[2]);
+					// Loop through the required items and display the correct "pc" or "pcs" based on the amount
+					for (.@i = 0; .@i < getarraysize(.OHHrequiredItemID); .@i++) {
+						mes .OHHrequiredAmount[.@i] + ((.OHHrequiredAmount[.@i] == 1) ? "pc - " : "pcs - ") + getitemname(.OHHrequiredItemID[.@i]);
+					}
+					next;
+
+					mes @name$;
+					mes "Are you sure you want the " + getitemname(.questItems[2]) + "?";
+					switch(select("Yes, let's do it!:No, I've changed my mind.")) {
+						case 1:
+							next;
+
+							// validate if there is no items
+							if (countitem(.OHHrequiredItemID[0]) < .OHHrequiredAmount[0] ||
+								countitem(.OHHrequiredItemID[1]) < .OHHrequiredAmount[1] ||
+								countitem(.OHHrequiredItemID[2]) < .OHHrequiredAmount[2] ||
+								countitem(.OHHrequiredItemID[3]) < .OHHrequiredAmount[3]) {
+								mes @name$;
+								mes "Uh-oh! It seems like you don't have enough items. Come back when you're ready!";
+								close;
+							}
+							else
+
+								for( .@z = 0; .@z < getarraysize(.OHHrequiredItemID); .@z++ ) {
+									delitem .OHHrequiredItemID[.@z], .OHHrequiredAmount[.@z];
+								}
+								getitem .questItems[2], 1;
+
+								mes @name$;
+								mes "Here's your new headgear! Hope you like it!";
+								close;
+						break;
+						case 2:
+							next;
+
+							mes @name$;
+							mes "No worries! Feel free to come back anytime.";
+							close;
+						break;
+					}
+				break;
+			}
+		break;
+		case 2:
+			next;
+
+			mes @name$;
+			mes "No worries! Feel free to come back anytime.";
+			close;
+		break;
+	}
+
+	
+	OnTouch:
+		npctalk "Sinfloti : Headgear Quest here!", "", bc_self;
+	end;
+
+
+}

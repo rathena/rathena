@@ -1,0 +1,44 @@
+//===== rAthena Script ===========================================================
+//= Enable PvP on @go Maps (1-35)
+//===== By: ======================================================================
+//= Manuel Sintos
+//===== Current Version: =========================================================
+//= 1.0
+//===== Description: =============================================================
+//= Enables PvP on selected @go maps
+//= Except @go 0 (prontera) and 3 (payon)
+//===== Additional Comments: =====================================================
+//= This script sets the PvP map flag on the specified @go maps.
+
+morocc	mapflag	pvp	on
+geffen	mapflag	pvp	on
+alberta	mapflag	pvp	on
+izlude	mapflag	pvp	on
+aldebaran	mapflag	pvp	on
+xmas	mapflag	pvp	on
+comodo	mapflag	pvp	on
+yuno	mapflag	pvp	on
+amatsu	mapflag	pvp	on
+gonryun	mapflag	pvp	on
+umbala	mapflag	pvp	on
+niflheim	mapflag	pvp	on
+louyang	mapflag	pvp	on
+pay_arche	mapflag	pvp	on
+jawaii	mapflag	pvp	on
+ayothaya	mapflag	pvp	on
+einbroch	mapflag	pvp	on
+einbech	mapflag	pvp	on
+lighthalzen	mapflag	pvp	on
+hugel	mapflag	pvp	on
+rachel	mapflag	pvp	on
+veins	mapflag	pvp	on
+mid_camp	mapflag	pvp	on
+manuk	mapflag	pvp	on
+splendide	mapflag	pvp	on
+brasilis	mapflag	pvp	on
+dicastes01	mapflag	pvp	on
+mora	mapflag	pvp	on
+dewata	mapflag	pvp	on
+malangdo	mapflag	pvp	on
+malaya	mapflag	pvp	on
+eclage	mapflag	pvp	on

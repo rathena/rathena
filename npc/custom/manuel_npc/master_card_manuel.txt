@@ -1,0 +1,129 @@
+//===== By:==================================================
+//= Manuel Sintos
+// @reloadnpc npc/custom/manuel_npc/master_card_manuel.txt
+
+prontera,150,180,5	script	Card Master Manuel	812,{
+	
+	set @name$, "[ Card Master Manuel ]";
+
+	mes "[Card Master Manuel]";
+	mes "Welcome to my table, adventurer!";
+	mes "Do you wish to play a game of Lucky 9?";
+	next;
+	
+	switch(select("Yes, let's play!:No, maybe later.")) {
+		case 1:
+			mes @name$;
+			mes "Great! Let's see if luck is on your side.";
+			mes "How much Zeny would you like to bet?";
+			input @bet, 1, Zeny; // Input the amount the player wants to bet, limited to available Zeny
+			
+			if(@bet > Zeny) {
+				mes "It seems you don't have enough Zeny for that bet.";
+				close;
+			}
+			
+			set Zeny, Zeny - @bet; // Deduct the bet from the player's Zeny
+			mes "You bet " + callfunc("F_InsertComma", @bet) + " Zeny. Let's begin!";
+			next;
+			
+			set @player_card1, rand(1,9);
+			set @player_card2, rand(1,9);
+			set @npc_card1, rand(1,9);
+			set @npc_card2, rand(1,9);
+			
+			set @player_total, (@player_card1 + @player_card2) % 10;
+			set @npc_total, (@npc_card1 + @npc_card2) % 10;
+
+			mes "You draw: " + @player_card1 + " and " + @player_card2 + ".";
+			mes "Your total is: " + @player_total;
+			next;
+
+			switch(select("Draw a third card.:Stand")) {
+				case 1:
+					set @player_card3, rand(1,9);
+					set @player_total, (@player_total + @player_card3) % 10;
+
+					mes "You draw a " + @player_card3 + ".";
+					mes "Your new total is: " + @player_total;
+					next;
+
+					mes @name$;
+					mes "My turn now.";
+					next;
+
+					mes @name$;
+					mes "I draw: " + @npc_card1 + " and " + @npc_card2 + ".";
+					mes "My total is: " + @npc_total;
+					next;
+
+					if(@npc_total < 7) {
+						set @npc_card3, rand(1,9);
+						set @npc_total, (@npc_total + @npc_card3) % 10;
+
+						mes @name$;
+						mes "I will Draw my Third Card.";
+						next;
+
+						mes @name$;
+						mes "I draw a " + @npc_card3 + ".";
+						mes "My new total is: " + @npc_total;
+					}
+					next;
+
+				break;
+
+				case 2:
+					mes @name$;
+					mes "My turn now.";
+					next;
+
+					mes @name$;
+					mes "I draw: " + @npc_card1 + " and " + @npc_card2 + ".";
+					mes "My total is: " + @npc_total;
+					next;
+
+					if(@npc_total < 7) {
+						set @npc_card3, rand(1,9);
+						set @npc_total, (@npc_total + @npc_card3) % 10;
+
+						mes @name$;
+						mes "I will Draw my Third Card.";
+						next;
+
+						mes @name$;
+						mes "I draw a " + @npc_card3 + ".";
+						mes "My new total is: " + @npc_total;
+					}
+					next;
+				break;
+			}
+
+			if(@player_total > @npc_total) {
+				mes @name$;
+				mes "Congratulations! You win!";
+				specialeffect2 EF_HOLY_AVENGE; // Example visual effect
+				set Zeny, Zeny + @bet * 2; // Double the player's bet and give it as a reward
+				mes "You've won " + callfunc("F_InsertComma", @bet * 2) + " Zeny!";
+			} else if (@player_total == @npc_total) {
+				mes @name$;
+				mes "It's a tie! Your bet is returned.";
+				set Zeny, Zeny + @bet; // Return the bet in case of a tie
+			} else {
+				mes @name$;
+				mes "I win! Better luck next time.";
+				specialeffect2 EF_STUN; // Example of a loss visual effect
+			}
+			close;
+			
+		break;
+
+		case 2:
+			mes @name$;
+			mes "No worries, come back anytime if you change your mind.";
+			close;
+		break;
+	}
+}
+
+cmd_in02,168,89,1	duplicate(Card Master Manuel)	Card Master Manuel#cmd	812

@@ -1,0 +1,24 @@
+//===== rAthena Script =======================================
+//= Server Announcement
+//===== By: ==================================================
+//= Manuel Sintos
+//===== Current Version: =====================================
+//= 1.0
+//===== Description: =========================================
+//= Server Announcement
+//===== Additional Comments: =================================
+// @reloadnpc npc/custom/manuel_npc/serverannouncement.txt
+
+-	script	serverAnnouncement	-,{
+	OnInit:
+		OnTimer3600000: //every 60mins
+		initnpctimer;
+		announce "Server: Welcome! Have fun, because your adventure awaits!", 0;
+		sleep 2000;
+		announce "Check out my YouTube channel: https://www.youtube.com/@jinunpanda127! Don't forget to subscribe!", 0;
+		sleep 20000;
+		announce "To all new players! Claim your Solo Pack items by typing @solopack or by talking to the NPC in Prontera, near the Stats Seller.", 0, 0xf7be6e;
+		sleep 60000;
+		announce "Do you want to go fishing? Type @joinfishing or Head to the right side of Ayothaya and Hugel. There's a fishing spot there!", 0;
+	end;
+}

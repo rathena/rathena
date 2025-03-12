@@ -27,6 +27,8 @@ menu	"Last Warp ^777777["+lastwarp$+"]^000000",-,
     	" ~ Towns",Towns,
     	" ~ Fields",Fields,
     	" ~ Dungeons",Dungeons,
+		" ~ ^FF0000Illusion Dungeons^000000",iDungeons,
+		" ~ ^FF0000Nightmare Dungeons^000000",nDungeons,
     	" ~ Guild Castles",Castles,
     	" ~ Guild Dungeons",Guild_Dungeons,
     	" ~ Instances",Instances,
@@ -248,8 +250,8 @@ F9: Restrict("RE");
 	setarray @c[2],143,132,143,217;
 	Disp("El Dicastes Field",1,2); Pick("dic_fild");
 F10: Restrict("RE");
-	 setarray @c[2],378,223,223,18,365,241,140,280;
-	 Disp("Frozen Scale Hill:Frozen Scale Plains:Frozen Scale Glacier:Frozen Tail"); Pick("","jor_back1","jor_back2","jor_back3","jor_tail");
+	 setarray @c[2],378,230,230,18,365,241,140,280,270,20,339,15,387,261,52,63,212,122;
+	 Disp("Frozen Scale Hill:Frozen Scale Plains:Frozen Scale Glacier:Frozen Tail:Frozen Scale Beach:Ancient Ice Canyon East:Ancient Ice Canyon West:Drift Ice Zone:Twig's Nest"); Pick("","jor_back1","jor_back2","jor_back3","jor_tail","jor_back4","jor_back5","jor_back6","jor_twice","jor_twig");
 F11: Restrict("Pre-RE",13,15);
 	 setarray @c[0],46,199,213,204,195,212,257,192,188,171,166,263,248,158,195,191,186,183,221,117,178,218,136,328,240,181,235,235,211,185;
 	 Disp("Geffen Field",0,14); Pick("gef_fild",1);
@@ -492,6 +494,116 @@ D52: Restrict("RE");
 D53: Restrict("RE");
 	 setarray @c[2],244,61,72,20,122,22;
 	 Disp("Lab-OPTATIO:R&D-WISH:Verus Center Square"); Pick("verus");
+
+// --------------------------------------------------
+	iDungeons:
+// --------------------------------------------------
+@idun = true;
+menu	
+		"Illusion Dungeon",iD1;
+
+iD1: menu	
+			 "Illusion of Moonlight 100",iSubD5, 
+			 "Illusion of Frozen 120",iSubD2, 
+			 "Illusion of Vampire 130",iSubD9,
+			 "Illusion of Teddy Bear 150",iSubD6, 
+			 "Illusion of Abyss 150",iSubD1, 
+			 "Illusion of Luanda 160",iSubD4, 
+			 "Illusion of Twins 160",iSubD7,  
+			 "Illusion of Labyrinth 170",iSubD3,
+			 "Illusion of Underwater 140/180",iSubD8;
+	iSubD1: Restrict("RE");
+		   setarray @c[2],132,189,99,186;
+		   Disp("Desolate Village:Bleak Turtle Palace"); Pick("","tur_d03_i","tur_d04_i");
+	iSubD2: Restrict("RE");
+		   Go("ice_d03_i",149,22);
+	iSubD3: Restrict("RE");
+		   Go("prt_mz03_i",100,100);
+	iSubD4: Restrict("RE");
+		   Go("com_d02_i",250,245);
+	iSubD5: Restrict("RE");
+		   Go("pay_d03_i",140,44);
+	iSubD6: Restrict("RE");
+		   Go("ein_d02_i",164,184);
+	iSubD7: Restrict("RE");
+		   Go("ant_d02_i",168,170);
+	iSubD8: Restrict("RE");
+		   setarray @c[2],130,230,141,188;
+		   Disp("Deep Sea Cave",1,2); Pick("","iz_d04_i","iz_d05_i");
+	iSubD9: Restrict("RE");
+		   Go("gef_d01_i",114,216);
+
+// --------------------------------------------------
+	nDungeons:
+// --------------------------------------------------
+@ndun = true;
+menu	
+		"Pyramids 100",nD40,
+		"Bio Labs 100",nD8, 
+		"Glast Heim 100-175",nD20, 
+		"Scaraba Hole 130",nD44, 
+		"Clock Tower 150-240",nD11, 
+		"Magma Dungeon 175",nD30, 
+		"Einbroch Dungeon 180",nD16, 
+		"Odin Temple 180",nD35, 
+		"Thanatos Tower 180",nD47,
+		"Abyss Lakes 190",nD2, 
+		"Rudus Dungeon 200",nD43, 
+		"Abandoned Lab Amicitia 215-230",nD1, 
+		"Niflheim Dungeon 200-240",nD34, 
+		"Varmundt's Dungeon 230+",nD52;
+		
+nD1: Restrict("RE");
+	setarray @c[2],253,244,145,278;
+	Disp("1st Floor - Comprehensive Lab:2nd Floor - Intensive Culture Room"); Pick("","amicitia1","amicitia2");
+nD2: Restrict("RE");
+	Go("abyss_04",169,159);
+
+nD8: Restrict("RE");
+	Go("lhz_dun_n",100,202);
+
+nD11: Restrict("RE",9,10,11);
+	 setarray @c[2],266,27,60,142,79,39;
+	 Disp("Nightmare Clock Tower F1 :Nightmare Clock Tower F2:Unknown Basement");
+	 Pick("","c_tower2_","c_tower3_","clock_01");
+
+nD16: Restrict("RE");
+	  Go("ein_dun3",269,279);
+	
+nD20: Restrict("RE",1,2,3);
+	 setarray @c[2],104,31,148,144,199,29;
+	 Disp("Castle 2 - Nightmare Mode:Churchyard - Nightmare Mode:Abyss Glastheim Castle F1");
+	 Pick("","gl_cas02_","gl_chyard_","gl_cas01_");
+
+nD30: Restrict("RE");
+	  Go("mag_dun3",118,113);
+
+nD34: Restrict("RE");
+	 setarray @c[2],145,90,150,20;
+	 Disp("Niflheim Dungeon - 1st Floor:Niflheim Dungeon - 2nd Floor"); Pick("nif_dun");
+
+nD35: Restrict("RE");
+	 Go("odin_past",276,236);
+	 
+nD40: Restrict("RE");
+	 setarray @c[2],94,96,192,8;
+	 Disp("Basement 1 - Nightmare Mode:Basement 2 - Nightmare Mode");
+	 Pick("","moc_prydn1","moc_prydn2");
+	
+nD43: Restrict("RE");
+	 Go("sp_rudus4",378,178);
+	 
+nD44: Restrict("RE");
+	 Go("dic_dun3",101,141);
+
+nD47: Restrict("RE"); 
+	 setarray @c[2],29,107,159,138,19,20,130,52;
+	 Disp("Thanatos Tower 9:Thanatos Tower 10:Thanatos Tower 11:Thanatos Tower 12"); Pick("","tha_t9","tha_t10","tha_t11","tha_t12");
+
+nD52: Restrict("RE");
+	 setarray @c[2],314,64,163,18,156,20,39,81;
+	 Disp("Death Rune:Fire Rune:Grass Rune:Ice Rune"); Pick("","bl_death","bl_lava","bl_grass","bl_ice");
+
 
 // --------------------------------------------------
 	Castles:

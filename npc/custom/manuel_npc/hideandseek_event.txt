@@ -1,0 +1,72 @@
+//===== By:==================================================
+// @reloadnpc npc/custom/manuel_npc/hideandseek_event.txt
+
+prontera,143,178,5	script	Hide and Seek Event	769,{
+	// Set name of the NPC
+	set @name$, "[^1100AA Manuel ^000000]";
+
+	OnTouch:
+		// If Hide and Seek Event is not running
+		if (.isHaS_Event == 0) {
+			mes @name$;
+			mes "Hi, I'm Manuel! I'll be hiding somewhere in one specific map. If you find me, I'll give you a reward!";
+			close;
+		}
+
+		// When a player touches the NPC
+		else if (.isHaS_Event == 1) {
+			// Reset the Event
+			set .isHaS_Event, 0;
+
+			// delete a notify room
+			delwaitingroom;
+
+			npctalk "Manuel : Yaay! you found me.";
+
+			// Announce that the NPC is Found!
+			announce "[ " + strcharinfo(0) + " ] has found the Hide and Seek NPC and won the event! Congratulations!", 0;
+
+			// Move the NPC to his original coordinates
+			unitwarp(getnpcid(0), "prontera", 143, 178);
+
+			// Reward the player of TCG and Event Token
+			callfunc("eventRewards");
+		}
+	end;
+
+	OnFindNPC:
+		// delete a notify room
+		delwaitingroom;
+
+		// set the event running
+		set .isHaS_Event, 1;
+
+		setarray .@maps$, "prontera", "morocc", "geffen", "gef_fild10", "payon", "pay_arche", "alberta", "izlude", "aldebaran", "xmas", "comodo", "yuno", "amatsu", "gonryun", "umbala", "niflheim", "louyang", "ayothaya", "jawaii", "einbroch", "lighthalzen", "einbech", "hugel", "rachel", "veins", "moscovia", "mid_camp", "manuk", "splendide", "brasilis", "dicastes01", "mora", "dewata", "malangdo", "malaya", "eclage", "lasagna";
+
+		// Get a random map index from the array
+		.randIndex = rand( getarraysize(.@maps$) );
+
+		// Get the map name using the random index
+		.@randMap$ = .@maps$[.randIndex];
+
+		// Find a random empty cell in Prontera and store it within .@x and .@y
+		getfreecell(.@randMap$,.@x,.@y); 
+
+		// Warp the NPC to the selected map and coordinates
+		unitwarp(getnpcid(0), .@randMap$, .@x, .@y);
+
+		// add a notify
+		waitingroom "I'm here!",0;
+
+		// Announce to all players that the Hide and Seek event has started
+		announce "Hide and Seek event has started! Find the NPC hiding somewhere in " + .@randMap$ + " for a reward!", 0;
+	end;
+
+	OnInit:
+		// Start a every 60-minute before respawning the treasure box
+		OnTimer3600000:
+		initnpctimer;
+
+		goto OnFindNPC;
+	end;
+}

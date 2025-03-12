@@ -1,0 +1,9 @@
+//@reloadnpc npc/custom/manuel_npc/Global_PlayerHP_Config.txt
+
+-	script	Global_PlayerHP_Config	-1,{
+	OnPCStatCalcEvent:
+	if (BaseJob == Job_Wizard) {
+		bonus bMaxHPrate,60;
+	}
+	end;
+}

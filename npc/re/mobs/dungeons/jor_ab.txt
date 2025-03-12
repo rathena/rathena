@@ -1,0 +1,47 @@
+//===== rAthena Script =======================================
+//= Issgard Dungeon Monster Spawn Script
+//===== By: ==================================================
+//= Manuel Sintos
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Official kRO monster spawns
+//===== Additional Comments: =================================
+//= 1.0 First Release
+//============================================================
+
+//==================================================
+// jor_ab01 - Abandon Pit 1st Floor
+//==================================================
+jor_ab01,0,0	monster	Cave Calmaring	21540,70,5000
+jor_ab01,0,0	monster	Cave Flower	21541,60,5000
+jor_ab01,0,0	monster	Discarded Primitive Rgan	21538,70,5000
+jor_ab01,0,0	monster	Hallucigenia Baby	21543,60,5000
+jor_ab01,0,0	monster	Renovated Superior Rgan	21600,10,5000
+
+//==================================================
+// jor_ab02 - Abandon Pit 2nd Floor
+//==================================================
+jor_ab02,0,0	monster	One Eye Dollocaris	21544,60,5000
+jor_ab02,0,0	monster	Hallucigenia	21542,70,5000
+jor_ab02,0,0	monster	Entangled Intermediate Rgan	21601,10,5000
+jor_ab02,0,0	monster	Discarded Intermediate Rgan	21539,70,5000
+jor_ab02,0,0	monster	Two Eyes Dollocaris	21545,60,5000
+
+//==================================================
+// jor_dun01 - Snake God's Warmth 1st Floor
+//==================================================
+jor_dun01,0,0	monster	Primitive Rgan	21526,110,5000
+jor_dun01,0,0	monster	Heart Hunter AT	21599,10,5000
+jor_dun01,0,0	monster	Lowest Rgan	21527,60,5000
+jor_dun01,0,0	monster	Junior Rgan	21528,20,5000
+
+//==================================================
+// jor_dun02 - Snake God's Warmth 2nd Floor
+//==================================================
+jor_dun02,0,0	monster	Heart Hunter AT	21599,10,5000
+jor_dun02,0,0	monster	Lowest Rgan	21527,90,5000
+jor_dun02,0,0	monster	Junior Rgan	21528,80,5000
+jor_dun02,0,0	monster	Intermediate Rgan	21529,20,5000

@@ -1,0 +1,180 @@
+//===== By:==================================================
+//= Manuel Sintos
+
+prontera,149,170,5	script	Coin Exchanger	55,{
+	
+	set @name$,"[^1100AA Coin Exchanger ^000000]";
+	setarray .coinID, 7915, 7916, 7517, 674, 677;
+	setarray .coinValue, 10000000, 30000000, 100000000, 300000000, 500000000;
+	set @ts$, "Trade Successfully.";
+
+	mes @name$;
+	mes "Hello " + strcharinfo(0) + ". How can I help you?";
+	next;
+
+
+	switch(select("Zeny to Coin:Coin to Zeny")) {
+		// zeny to coin
+		case 1:
+
+			mes @name$;
+			mes "Exchange Rate:";
+			mes "^1100AA10,000,000^000000z - Bronze Coin";
+			mes "^1100AA30,000,000^000000z - Silver Coin";
+			mes "^1100AA100,000,000^000000z - Gold Coin";
+			mes "^1100AA300,000,000^000000z - Mithril Coin";
+			mes "^1100AA500,000,000^000000z - Platinum Coin";
+			next;
+
+			switch(select("10,000,000:30,000,000:100,000,000:300,000,000:500,000,000")) {
+				case 1:
+					if (Zeny < .coinValue[0]) {
+						mes @name$;
+		                mes "Not Enough Zeny to Convert.";
+		                close;
+		            }
+		            else
+		            	Zeny -= .coinValue[0];
+		            	getitem .coinID[0], 1;
+
+		            	message strcharinfo(0), @ts$;
+		            	end;
+				break;
+				case 2:
+					if (Zeny < .coinValue[1]) {
+						mes @name$;
+		                mes "Not Enough Zeny to Convert.";
+		                close;
+		            }
+		            else
+		            	Zeny -= .coinValue[1];
+		            	getitem .coinID[1], 1;
+
+		            	message strcharinfo(0), @ts$;
+		            	end;
+				break;
+				case 3:
+					if (Zeny < .coinValue[2]) {
+						mes @name$;
+		                mes "Not Enough Zeny to Convert.";
+		                close;
+		            }
+		            else
+		            	Zeny -= .coinValue[2];
+		            	getitem .coinID[2], 1;
+
+		            	message strcharinfo(0), @ts$;
+		            	end;
+				break;
+				case 4:
+					if (Zeny < .coinValue[3]) {
+						mes @name$;
+		                mes "Not Enough Zeny to Convert.";
+		                close;
+		            }
+		            else
+		            	Zeny -= .coinValue[3];
+		            	getitem .coinID[3], 1;
+
+		            	message strcharinfo(0), @ts$;
+		            	end;
+				break;
+				case 5:
+					if (Zeny < .coinValue[4]) {
+						mes @name$;
+		                mes "Not Enough Zeny to Convert.";
+		                close;
+		            }
+		            else
+		            	Zeny -= .coinValue[4];
+		            	getitem .coinID[4], 1;
+
+		            	message strcharinfo(0), @ts$;
+		            	end;
+				break;
+			}
+		break;
+
+		// coin to zeny
+		case 2:
+
+			mes @name$;
+			mes "Exchange Rate:";
+			mes "^1100AABronze Coin^000000 - 10,000,000z";
+			mes "^1100AASilver Coin^000000 - 30,000,000z";
+			mes "^1100AAGold Coin^000000 - 100,000,000z";
+			mes "^1100AAMithril Coin^000000 - 300,000,000z";
+			mes "^1100AAPlatinum Coin^000000 - 500,000,000z";
+			next;
+
+			switch(select("Bronze Coin:Silver Coin:Gold Coin:Mithril Coin:Platinum Coin")) {
+				case 1:
+						if (!countitem(.coinID[0])) {
+							mes @name$;
+			                mes "You have no Bronze coin at your Inventory.";
+			                close;
+			            }
+			            else
+			            	Zeny += .coinValue[0];
+			            	delitem .coinID[0], 1;
+
+			            	message strcharinfo(0), @ts$;
+		            		end;
+				break;
+				case 2:
+						if (!countitem(.coinID[1])) {
+							mes @name$;
+			                mes "You have no Silver coin at your Inventory.";
+			                close;
+			            }
+			            else
+			            	Zeny += .coinValue[1];
+			            	delitem .coinID[1], 1;
+
+			            	message strcharinfo(0), @ts$;
+		            		end;
+				break;
+				case 3:
+						if (!countitem(.coinID[2])) {
+							mes @name$;
+			                mes "You have no Gold coin at your Inventory.";
+			                close;
+			            }
+			            else
+			            	Zeny += .coinValue[2];
+			            	delitem .coinID[2], 1;
+
+			            	message strcharinfo(0), @ts$;
+		            		end;
+				break;
+				case 4:
+						if (!countitem(.coinID[3])) {
+							mes @name$;
+			                mes "You have no Mithril coin at your Inventory.";
+			                close;
+			            }
+			            else
+			            	Zeny += .coinValue[3];
+			            	delitem .coinID[3], 1;
+
+			            	message strcharinfo(0), @ts$;
+		            		end;
+				break;
+				case 5:
+						if (!countitem(.coinID[4])) {
+							mes @name$;
+			                mes "You have no Platinum coin at your Inventory.";
+			                close;
+			            }
+			            else
+			            	Zeny += .coinValue[4];
+			            	delitem .coinID[4], 1;
+
+			            	message strcharinfo(0), @ts$;
+		            		end;
+				break;
+				
+			}
+		break;
+	}
+}

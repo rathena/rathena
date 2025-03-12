@@ -1,0 +1,58 @@
+prontera,173,186,4	script	ExpRateChanger	124,{
+    // EXP rate options in Zeny
+    setarray .@Rates, 5000, 10000, 25000, 50000, 100000, 1000000; // Prices for x2, x5, x10, x50, x100, x1000
+    
+    mes "[EXP Rate Changer]";
+    mes "Welcome to the EXP/JE Rate Changer.";
+    mes "Here are the available options for changing your EXP rate:";
+    mes "x2 (200%) - "+callfunc("F_InsertComma", .@Rates[0])+"z";
+    mes "x5 (500%) - "+callfunc("F_InsertComma", .@Rates[1])+"z";
+    mes "x10 (1000%) - "+callfunc("F_InsertComma", .@Rates[2])+"z";
+    mes "x50 (5000%) - "+callfunc("F_InsertComma", .@Rates[3])+"z";
+    mes "x100 (10000%) - "+callfunc("F_InsertComma", .@Rates[4])+"z";
+    mes "x1000 (100000%) - "+callfunc("F_InsertComma", .@Rates[5])+"z";
+    mes "If you want to remove the buff, select the last option.";
+    next;
+    
+    // Select the EXP rate option
+    set .@i, select("x2 (200%)", "x5 (500%)", "x10 (1000%)", "x50 (5000%)", "x100 (10000%)", "x1000 (100000%)", "Remove Buff") - 1;
+
+    // Check if player has enough Zeny
+    if (.@i < 6) { // Not the remove option
+        if (Zeny < .@Rates[.@i]) {
+            mes "Sorry, you don't have enough Zeny.";
+            close;
+        }
+        // Deduct the cost for the EXP rate change
+        set Zeny, Zeny - .@Rates[.@i];
+    } else { // Remove buff option
+        sc_end SC_EXPBOOST;
+		sc_end SC_JEXPBOOST;
+        mes "Your EXP rate has been reset to normal (1x).";
+        close;
+    }
+
+    // Apply the EXP rate multiplier based on selected option
+    if (.@i == 0) {
+        set #EXP_RATE, 200; // x2 = 200% EXP
+    } else if (.@i == 1) {
+        set #EXP_RATE, 500; // x5 = 500% EXP
+    } else if (.@i == 2) {
+        set #EXP_RATE, 1000; // x10 = 1000% EXP
+    } else if (.@i == 3) {
+        set #EXP_RATE, 5000; // x50 = 5000% EXP
+    } else if (.@i == 4) {
+        set #EXP_RATE, 10000; // x100 = 10000% EXP
+    } else if (.@i == 5) {
+        set #EXP_RATE, 100000; // x1000 = 100000% EXP
+    }
+
+    // Apply the new EXP rate multiplier for 24 hours
+    sc_end SC_EXPBOOST;
+    sc_start SC_EXPBOOST, 86400000, #EXP_RATE;
+    sc_start SC_JEXPBOOST, 86400000, #EXP_RATE;
+
+    mes "Your EXP rate has been set to " + callfunc("F_InsertComma", #EXP_RATE) + "%!";
+    mes "This bonus will last for 24 hours.";
+    close;
+}

@@ -1,0 +1,31 @@
+//===== eAthena Script =======================================
+//= Item Rewards NPC
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.8
+//===== Description: =========================================
+//= Useful for event rewards, when a player is not necessarily online.
+//= Logging is available, if needed (holds 128 names).
+//= Note: Unclaimed rewards are limited to 64 at a time.
+//============================================================
+
+prontera,156,195,6	script	Item Rewards	512,{
+	if( !Freebiees ){
+	set Freebiees,1;
+	mes "Welcome...this is your gift...";
+	// utility
+	getitem 17229,5; //flywing
+	getitem 23763,50; //eggs
+	getitem 23900,1; //Temproal Set
+	getitem 23897,1; //Box with buffs
+	getitem 25793,10; //invtory expantion
+	getitem 22522,1; //levelup box
+	
+	Zeny += 10000000;
+	
+	}else{
+	mes "You already claimed your starter gift on this character.";
+	}
+	close;
+}

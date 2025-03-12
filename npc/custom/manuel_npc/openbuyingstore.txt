@@ -1,0 +1,13 @@
+//===== By:==================================================
+//= Manuel Sintos
+// @reloadnpc npc/custom/manuel_npc/openbuyingstore.txt
+
+
+-	script	openbuyingstore	-1,{
+	OnInit:
+		bindatcmd "openbuyingstore", strnpcinfo(3) + "::OnAtcommand";
+	end;
+	OnAtcommand:
+		buyingstore 2;
+	end;
+}

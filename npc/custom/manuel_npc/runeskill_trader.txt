@@ -1,0 +1,25 @@
+//===== By:==================================================
+//= Manuel Sintos
+// @reloadnpc npc/custom/manuel_npc/runeskill_trader.txt
+
+// for Test
+// directly call the shop mid_camp,250,239,3	shop	Rune Stone Trader	735,969:180000
+
+mid_camp,250,239,3	script	Rune Stone Trader	735,{
+	set @name$, "[^1100AA Marvin ^000000]";
+
+	mes @name$;
+	mes "Hello!, my name is Marvin";
+	mes "I create and sell Rune Stone Items.";
+	mes "Look and Choose whatever you want.";
+	next;
+
+	callshop "Bokie_Shop",1;
+	end;
+}
+
+// Define the shop
+-	shop	Bokie_Shop	-,12732:50000,12725:50000,12726:50000,12727:50000,12728:50000,12729:50000,12730:50000,12731:50000,12733:50000;
+
+// Duplicate
+// prontera,171,225,3	duplicate(Rune Stone Trader)	Rune Stone Trader#rst1	735

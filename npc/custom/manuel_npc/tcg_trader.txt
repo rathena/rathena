@@ -1,0 +1,39 @@
+//===== rAthena Script =======================================
+//= TCG Trader
+//===== By: ==================================================
+//= Manuel Sintos
+//===== Current Version: =====================================
+//= 1.0
+//===== Description: =========================================
+//= A special NPC that exchanges Trading Card Game (TCG)
+//===== Additional Comments: =================================
+// @reloadnpc npc/custom/manuel_npc/tcg_trader.txt
+
+prontera,149,174,5	script	TCG Trader	531,{
+
+	switch(select("Gods item:Consumable:Misc")) {
+		case 1:
+			callshop "GodsItem",0;
+			end;
+		break;
+		case 2:
+			callshop "Consumable",0;
+			end;
+		break;
+		case 3:
+			callshop "Misc",0;
+			end;
+		break;
+	}
+
+	OnInit:
+		waitingroom "TCG Trader",0;
+	end;
+}
+
+//The hidden npc which holds the function
+-	itemshop	GodsItem	-1,7227,1530:15,5013:20,2410:20,2541:20,2629:20,30004:20,30000:20,30002:20,30003:20,30001:20,2630:15,2383:15,2899:15
+-	itemshop	Consumable	-1,7227,30600:5,12221:1,12912:15
+-	itemshop	Misc	-1,7227,6238:50,6239:50,30334:100
+
+

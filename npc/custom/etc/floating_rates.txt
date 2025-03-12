@@ -23,9 +23,9 @@ OnHour06:
 OnHour12:
 OnHour18:
 //-------------------
-	set $@brate,rand(100,150);
-	set $@jrate,rand(100,150);
-	set $@drate,rand(100,150);
+	set $@brate,rand(1000,2000);
+	set $@jrate,rand(1000,2000);
+	set $@drate,rand(5000,8000);
 	//Base exp
 	setbattleflag("base_exp_rate",$@brate);
 	//Job exp

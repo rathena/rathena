@@ -1,0 +1,98 @@
+// @reloadnpc npc/custom/manuel_npc/body_style_changer.txt
+// for this npc
+
+prontera,168,178,3	script	Body Style Changer#sc	77,{
+	
+	function RestrictClass;
+	function HasjROCostume;
+
+	set @name$, "[ Body Style Changer ]";
+	set .cost, 10000;
+
+	function RestrictClass {
+        .@eac = eaclass();
+        if (Class == Job_Imperial_Guard || Class == Job_Dragon_Knight || Class == Job_Arch_Mage || Class == Job_Windhawk || Class == Job_Cardinal || Class == Job_Meister || Class == Job_Shadow_Cross || Class == Job_Elemental_Master || Class == Job_Troubadour || Class == Job_Trouvere || Class == Job_Inquisitor || Class == Job_Biolo || Class == Job_Abyss_Chaser) {
+        	return 0;
+        }
+        if(.@eac&EAJL_THIRD) {
+            return 1;
+        }
+
+        return 0;
+	}
+
+	function HasjROCostume {
+	    switch(roclass(eaclass()&EAJ_UPPERMASK|EAJL_THIRD)) {
+            case Job_Guillotine_Cross:
+            case Job_Genetic:
+            case Job_Royal_Guard:
+            case Job_Arch_Bishop:
+            case Job_Mechanic:
+            case Job_Ranger:
+            case Job_Minstrel:
+            case Job_Wanderer:
+            case Job_Warlock:
+            case Job_Sorcerer:
+            case Job_Sura:
+            case Job_Rune_Knight:
+            case Job_Shadow_Chaser:
+                return 1;
+            default:
+                return 0;
+	    }
+	}
+
+	if(!RestrictClass()){
+		mes @name$;
+        mes "Only third jobs are allowed to use my services.";
+        close;
+    }
+    if(!HasjROCostume()){
+    	mes @name$;
+        mes "Sorry, I don't have a costume for your class right now.";
+        close;
+    }
+
+	mes @name$;
+	mes "I can change your Job Appearance to an alternative costume at a cost of ^FF0000" + callfunc("F_InsertComma",.cost) + "^000000z!";
+	next;
+
+	switch(select("Original Appearance:New JRo Costume")) {
+		case 1:
+			if(Zeny < .cost) {
+                mes @name$;
+                mes "You don't have enough Zeny.";
+                close;
+       	 	}
+       	 	else {
+       	 		Zeny -= .cost;
+       	 		setlook LOOK_CLOTHES_COLOR,0;
+        		setlook LOOK_BODY2,0;
+
+				message strcharinfo(0), "Appearance Change.";
+				mes @name$;
+				mes "Here you are!";
+				close;
+       	 	}
+		break;
+
+		case 2:
+			if(Zeny < .cost) {
+                mes @name$;
+                mes "You don't have enough Zeny.";
+                close;
+       	 	}
+       	 	else {
+       	 		Zeny -= .cost;
+       	 		setlook LOOK_CLOTHES_COLOR,0;
+        		setlook LOOK_BODY2,1;
+
+				message strcharinfo(0), "Appearance Change.";
+				mes @name$;
+				mes "Here you are!";
+				close;
+       	 	}
+		break;
+	}
+}
+

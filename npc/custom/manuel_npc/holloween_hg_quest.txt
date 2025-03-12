@@ -1,0 +1,212 @@
+//===== By:==================================================
+// @reloadnpc npc/custom/manuel_npc/holloween_hg_quest.txt
+
+niflheim,39,166,3	script	Dead Magician	792,{
+	// Configuration for the quest HG
+	// You can change this base to your preference
+	// 1. C_Pumpkin_Hat
+	// 2. C_Skull_Hood
+	// 3. C_Black_Witch_Hat
+	setarray .questRewardItemID, 19917, 20168, 20395;
+
+	// Required items for C_Pumpkin_Hat
+	// 1. Pumpkin - 4000pcs (Can buy at Vendors)
+	// 2. Fabric - 200pcs
+	// 3. TCG - 1pc
+	// 4. Activity Token - 10pcs (You can change this base to your preference)
+	setarray .requiredItemID0, 535, 1059, 7227, 30343;
+	setarray .requiredAmount0, 4000, 200, 1, 10;
+
+	// Required items for C_Skull_Hood
+	// 1. Skull - 200pcs
+	// 2. Emperium - 50pcs
+	// 3. TCG - 1pc
+	// 4. Activity Token - 10pcs (You can change this base to your preference)
+	setarray .requiredItemID1, 7005, 714, 7227, 30343;
+	setarray .requiredAmount1, 200, 50, 1, 10;
+
+	// Required items for C_Black_Witch_Hat
+	// 1. Witched Starsand - 200pcs
+	// 2. Mystical Card Album - 100pcs
+	// 3. TCG - 1pc
+	// 4. Activity Token - 10pcs (You can change this base to your preference)
+	setarray .requiredItemID2, 1061, 12246, 7227, 30343;
+	setarray .requiredAmount2, 200, 100, 1, 10;
+
+	// Set name of the NPC
+	set @name$, "[ ^FF0000Dead Magician^000000 ]";
+
+	mes @name$;
+	mes "Oh... a living soul approaches...";
+	mes "What brings you to a place like this?";
+	mes "Are you here for... something... spooky?";
+	next;
+	mes @name$;
+	mes "I once had great power... but now... I linger between worlds...";
+	mes "But I can still craft some headgear for you... if you dare...";
+	mes "Which one shall it be?";
+	next;
+	mes @name$;
+	mes "I can make you:";
+	mes "^FF8000" + getitemname(.questRewardItemID[0]) + "^000000... something I conjured from the harvest...";
+	mes "^1100AA" + getitemname(.questRewardItemID[1]) + "^000000... from those who have long since perished...";
+	mes "^9900FF" + getitemname(.questRewardItemID[2]) + "^000000... a relic of my former life...";
+	
+	switch(select(getitemname(.questRewardItemID[0]) + ":" + getitemname(.questRewardItemID[1]) + ":" + getitemname(.questRewardItemID[2]))) {
+		case 1:
+			next;
+
+			mes @name$;
+			mes "The ^FF8000" + getitemname(.questRewardItemID[0]) + "^000000...";
+			mes "I need the essence of the harvest...";
+			mes "Bring me:";
+			// Loop through the required items and display the correct "pc" or "pcs" based on the amount
+			for (.@i = 0; .@i < getarraysize(.requiredItemID0); .@i++) {
+				mes .requiredAmount0[.@i] + ((.requiredAmount0[.@i] == 1) ? "pc - " : "pcs - ") + getitemname(.requiredItemID0[.@i]);
+			}
+			next;
+
+			mes @name$;
+			mes "Do you have them...? Let me see...";
+			next;
+
+			.@isMissingItem = false;
+
+			// Check if player has all required items using a loop
+			for (.@i = 0; .@i < getarraysize(.requiredItemID0); .@i++) {
+				if (countitem(.requiredItemID0[.@i]) < .requiredAmount0[.@i]) {
+					.@missingItem = true; // Set to true if any item is missing
+					break; // Exit loop as soon as we find a missing item
+				}
+			}
+
+			if (.@missingItem) {
+				emotion ET_SCRATCH;
+				mes @name$;
+				mes "Hmm... you don't have everything...";
+				mes "I need all the items to work my magic...";
+				close;
+			}
+			else {
+				mes @name$;
+				mes "Ah... you do have them...";
+				mes "Let me... weave my remaining magic...";
+				next;
+
+				// Delete item item requirements and get the reward costume
+				for( .@j = 0; .@j < getarraysize(.requiredItemID0); .@j++ ) {
+					delitem .requiredItemID0[.@j], .requiredAmount0[.@j];
+				}
+				getitem .questRewardItemID[0], 1;
+				mes @name$;
+				mes "Here is your ^FF8000" + getitemname(.questRewardItemID[0]) + "^000000...";
+				mes "Take it... while I fade... further...";
+				close;
+			}
+		break;
+
+		case 2:
+			next;
+
+			mes @name$;
+			mes "The ^1100AA" + getitemname(.questRewardItemID[1]) + "^000000...";
+			mes "Ah... skulls from the dead...";
+			mes "Bring me:";
+			// Loop through the required items and display the correct "pc" or "pcs" based on the amount
+			for (.@i = 0; .@i < getarraysize(.requiredItemID1); .@i++) {
+				mes .requiredAmount1[.@i] + ((.requiredAmount1[.@i] == 1) ? "pc - " : "pcs - ") + getitemname(.requiredItemID1[.@i]);
+			}
+			next;
+
+			mes @name$;
+			mes "Do you have them...? Let me see...";
+			next;
+
+			.@isMissingItem = false;
+
+			// Check if player has all required items using a loop
+			for (.@i = 0; .@i < getarraysize(.requiredItemID1); .@i++) {
+				if (countitem(.requiredItemID1[.@i]) < .requiredAmount1[.@i]) {
+					.@missingItem = true; // Set to true if any item is missing
+					break; // Exit loop as soon as we find a missing item
+				}
+			}
+
+			if (.@missingItem) {
+				emotion ET_SCRATCH;
+				mes @name$;
+				mes "I sense... you lack the required items...";
+				mes "Return when you have gathered them...";
+				close;
+			}
+			else {
+				mes @name$;
+				mes "Ahh... the items... yes...";
+				mes "Let me... weave my remaining magic...";
+				next;
+
+				// Delete item item requirements and get the reward costume
+				for( .@j = 0; .@j < getarraysize(.requiredItemID1); .@j++ ) {
+					delitem .requiredItemID1[.@j], .requiredAmount1[.@j];
+				}
+				getitem .questRewardItemID[1], 1;
+				mes @name$;
+				mes "Here is your ^1100AA" + getitemname(.questRewardItemID[1]) + "^000000...";
+				mes "A hood... of those who have fallen...";
+				close;
+			}
+		break;
+
+		case 3:
+			next;
+
+			mes @name$;
+			mes "The ^9900FF" + getitemname(.questRewardItemID[2]) + "^000000...";
+			mes "Ahh... memories of my time... alive...";
+			mes "I need:";
+			// Loop through the required items and display the correct "pc" or "pcs" based on the amount
+			for (.@i = 0; .@i < getarraysize(.requiredItemID2); .@i++) {
+				mes .requiredAmount2[.@i] + ((.requiredAmount2[.@i] == 1) ? "pc - " : "pcs - ") + getitemname(.requiredItemID2[.@i]);
+			}
+			next;
+
+			mes @name$;
+			mes "Do you have them...? Let me see...";
+			next;
+
+			.@isMissingItem = false;
+
+			// Check if player has all required items using a loop
+			for (.@i = 0; .@i < getarraysize(.requiredItemID2); .@i++) {
+				if (countitem(.requiredItemID2[.@i]) < .requiredAmount2[.@i]) {
+					.@missingItem = true; // Set to true if any item is missing
+					break; // Exit loop as soon as we find a missing item
+				}
+			}
+
+			if (.@missingItem) {
+				emotion ET_SCRATCH;
+				mes @name$;
+				mes "Hmm... you don't have everything...";
+				mes "I need all the items... or my magic will fail...";
+				close;
+			}
+			else {
+				mes @name$;
+				mes "Ah... you do have them...";
+				mes "Let me... weave my remaining magic...";
+				next;
+
+				// Delete item item requirements and get the reward costume
+				for( .@j = 0; .@j < getarraysize(.requiredItemID2); .@j++ ) {
+					delitem .requiredItemID2[.@j], .requiredAmount2[.@j];
+				}
+				getitem .questRewardItemID[2], 1;
+				mes @name$;
+				mes "Here is your ^9900FF" + getitemname(.questRewardItemID[2]) + "^000000...";
+				mes "My magic fades... with every passing moment...";
+				close;
+			}
+		break;
+	}
+}

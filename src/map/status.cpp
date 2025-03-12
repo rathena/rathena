@@ -2070,7 +2070,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 				unit_data *wink_ud = unit_bl2ud(src);
 				if (wink_ud != nullptr && wink_ud->walktimer == INVALID_TIMER)
 					unit_walktobl(src, map_id2bl(sc->getSCE(SC_WINKCHARM)->val2), 3, 1);
-				clif_emotion( *src, ET_THROB );
+				clif_emotion(src, ET_THROB);
 				return false;
 			} else
 				status_change_end(src, SC_WINKCHARM);
@@ -2158,9 +2158,8 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		}
 
 		if (sc->option) {
-			// We do not check it for non-players here as hide will not stop monsters from scanning for new targets and use skills
-			// The logic that normal attacks will not actually be executed when hidden needs to be put in the AI code instead
 			if ((sc->option&OPTION_HIDE) && src->type == BL_PC && (skill_id == 0 || !skill_get_inf2(skill_id, INF2_ALLOWWHENHIDDEN))) {
+				// Non players can use all skills while hidden.
 				return false;
 			}
 			if (sc->option&OPTION_CHASEWALK && skill_id != ST_CHASEWALK)
@@ -2785,11 +2784,11 @@ int32 status_calc_mob_(struct mob_data* md, uint8 opt)
 	if (flag&8 && mbl) {
 		struct status_data *mstatus = status_get_base_status(mbl);
 
-		if (mstatus != nullptr && md->special_state.ai != AI_SPHERE &&
+		if (mstatus &&
 			battle_config.slaves_inherit_speed&(status_has_mode(mstatus,MD_CANMOVE)?1:2))
 			status->speed = mstatus->speed;
-		if (status->speed < MIN_WALK_SPEED)
-			status->speed = MIN_WALK_SPEED;
+		if( status->speed < 2 ) // Minimum for the unit to function properly
+			status->speed = 2;
 	}
 
 	if (flag&32)
@@ -6011,17 +6010,12 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 		int32 matk_min = status_base_matk_min(status);
 		int32 matk_max = status_base_matk_max(status);
 	
-		if (sd != nullptr) {
-			matk_min += sd->bonus.ematk;
-			matk_max += sd->bonus.ematk;
+		matk_min += (sd != nullptr ? sd->bonus.ematk : 0);
+		matk_max += (sd != nullptr ? sd->bonus.ematk : 0);
 
-			matk_min += sd->bonus.ematk_hidden;
-			matk_max += sd->bonus.ematk_hidden;
-
-			if (sd->matk_rate != 100) {
-				matk_min = matk_min * sd->matk_rate / 100;
-				matk_max = matk_max * sd->matk_rate / 100;
-			}
+		if (sd != nullptr && sd->matk_rate != 100) {
+			matk_min = matk_min * sd->matk_rate / 100;
+			matk_max = matk_max * sd->matk_rate / 100;
 		}
 
 		// Apply Recognized Spell buff - custom support (renewal status change)
@@ -6107,15 +6101,9 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 		// Bonuses from ExtraMATK are separated in order to order them (order has no impact)
 
 		// EquipMATK (flat MATK from equipments)
-		if (sd != nullptr && sd->bonus.ematk != 0) {
+		if (sd != nullptr && sd->bonus.ematk > 0) {
 			matk_min += sd->bonus.ematk;
 			matk_max += sd->bonus.ematk;
-		}
-
-		// Flat MATK not visible in status window
-		if (sd != nullptr && sd->bonus.ematk_hidden != 0) {
-			matk_min += sd->bonus.ematk_hidden;
-			matk_max += sd->bonus.ematk_hidden;
 		}
 
 		// PseudoBuffMATK (flat MATK from skills)
@@ -7533,6 +7521,8 @@ static defType status_calc_def(struct block_list *bl, status_change *sc, int32 d
 	if(sc->getSCE(SC_ETERNALCHAOS))
 		return 0;
 #endif
+	if(sc->getSCE(SC_BARRIER))
+		return 100;
 	if(sc->getSCE(SC_KEEPING))
 		return 90;
 #ifndef RENEWAL /// Steel Body does not provide 90 DEF in [RENEWAL]
@@ -7704,6 +7694,8 @@ static defType status_calc_mdef(struct block_list *bl, status_change *sc, int32 
 
 	if(sc->getSCE(SC_BERSERK))
 		return 0;
+	if(sc->getSCE(SC_BARRIER))
+		return 100;
 
 #ifndef RENEWAL /// Steel Body does not provide 90 MDEF in [RENEWAL]
 	if(sc->getSCE(SC_STEELBODY))
@@ -7910,9 +7902,6 @@ static uint16 status_calc_speed(struct block_list *bl, status_change *sc, int32 
 				val = max(val, 20);
 			if (sc->getSCE(SC_GROUNDGRAVITY))
 				val = max(val, 20);
-			if( sc->getSCE( SC_SHADOW_CLOCK ) != nullptr ){
-				val = max( val, 30 );
-			}
 
 			if( sd && sd->bonus.speed_rate + sd->bonus.speed_add_rate > 0 ) // Permanent item-based speedup
 				val = max( val, sd->bonus.speed_rate + sd->bonus.speed_add_rate );
@@ -10521,7 +10510,7 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 		case SC_SIGNUMCRUCIS:
 			val2 = 10 + 4*val1; // Def reduction
 			tick = INFINITE_TICK;
-			clif_emotion( *bl, ET_SWEAT );
+			clif_emotion(bl, ET_SWEAT);
 			break;
 		case SC_MAXIMIZEPOWER:
 			tick_time = val2 = tick>0?tick:60000;
@@ -10855,7 +10844,7 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 
 		case SC_CONFUSION:
 			if (!val4)
-				clif_emotion( *bl, ET_QUESTION );
+				clif_emotion(bl,ET_QUESTION);
 			break;
 		case SC_GRADUAL_GRAVITY:
 			val2 = 10 * val1;
@@ -12105,7 +12094,7 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 		case SC_REBOUND:
 			tick_time = 2000;
 			val4 = tick / tick_time;
-			clif_emotion( *bl, ET_SWEAT );
+			clif_emotion(bl, ET_SWEAT);
 			break;
 		case SC_KINGS_GRACE:
 			val2 = 3 + val1; //HP Recover rate
@@ -12812,6 +12801,16 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 		}
 		calc_flag.reset(SCB_DYE);
 	}
+
+	/*if (calc_flag[SCB_BODY])// Might be needed in the future. [Rytech]
+	{	//Reset body style
+		if (vd && vd->body_style)
+		{
+			val4 = vd->body_style;
+			clif_changelook(bl,LOOK_BODY2,0);
+		}
+		calc_flag.reset(SCB_BODY);
+	}*/
 
 	if (!(flag&SCSTART_NOICON) && !(flag&SCSTART_LOADED && scdb->flag[SCF_DISPLAYPC] || scdb->flag[SCF_DISPLAYNPC])) {
 		int32 status_icon = scdb->icon;
@@ -13681,6 +13680,13 @@ int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid)
 		calc_flag.reset(SCB_DYE);
 	}
 
+	/*if (calc_flag[SCB_BODY])// Might be needed in the future. [Rytech]
+	{	//Restore body style
+		if (vd && !vd->body_style && sce->val4)
+			clif_changelook(bl,LOOK_BODY2,sce->val4);
+		calc_flag.reset(SCB_BODY);
+	}*/
+
 	// On Aegis, when turning off a status change, first goes the sc packet, then the option packet.
 	int32 status_icon = scdb->icon;
 
@@ -13927,7 +13933,7 @@ TIMER_FUNC(status_change_timer){
 						break;
 					}
 				}
-				clif_emotion( *bl, ET_SMILE );
+				clif_emotion(bl, ET_SMILE);
 			}
 		}
 		break;
@@ -14143,7 +14149,7 @@ TIMER_FUNC(status_change_timer){
 		
 	case SC_OBLIVIONCURSE:
 		if( --(sce->val4) >= 0 ) {
-			clif_emotion( *bl, ET_QUESTION );
+			clif_emotion(bl,ET_QUESTION);
 			sc_timer_next(3000 + tick);
 			return 0;
 		}
@@ -14268,7 +14274,7 @@ TIMER_FUNC(status_change_timer){
 
 	case SC_VOICEOFSIREN:
 		if( --(sce->val4) >= 0 ) {
-			clif_emotion( *bl, ET_THROB );
+			clif_emotion(bl,ET_THROB);
 			sc_timer_next(2000 + tick);
 			return 0;
 		}
@@ -14457,7 +14463,7 @@ TIMER_FUNC(status_change_timer){
 		break;
 	case SC_TEARGAS_SOB:
 		if( --(sce->val4) >= 0 ) {
-			clif_emotion( *bl, ET_CRY );
+			clif_emotion(bl, ET_CRY);
 			sc_timer_next(3000 + tick);
 			return 0;
 		}
@@ -14521,7 +14527,7 @@ TIMER_FUNC(status_change_timer){
 		break;
 	case SC_REBOUND:
 		if( --(sce->val4) >= 0 ) {
-			clif_emotion( *bl, ET_SWEAT );
+			clif_emotion(bl, ET_SWEAT);
 			sc_timer_next(2000 + tick);
 			return 0;
 		}
