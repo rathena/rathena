@@ -5096,7 +5096,7 @@ uint64 MobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				continue;
 			}
 
-			if (constant < RC2_NONE || constant >= RC2_MAX) {
+			if (constant <= RC2_NONE || constant >= RC2_MAX) {
 				this->invalidWarning(raceNode[raceit.key()], "Invalid monster race group %s, skipping.\n", raceName.c_str());
 				continue;
 			}
