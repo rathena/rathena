@@ -1815,10 +1815,6 @@ TIMER_FUNC(unit_resume_running){
 
 /**
  * Sets the delays that prevent attacks and skill usage considering the bl type
- * Officially for players it just remembers the last attack time here and applies the delays during the comparison
- * But we pre-calculate the delays instead and store them in attackabletime and canact_tick
- * For ground skills this also applies to mercenaries
- * For non-PCs this function also handles setting of attack delay (which we also store in attackabletime)
  * TODO: Currently this function is only called for normal attacks and parry events and is a work-in-progress
  * @param bl Object to apply attack delay to
  * @param tick Current tick
@@ -1835,9 +1831,10 @@ void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event)
 		case BL_PC:
 			switch (event) {
 				case DELAY_EVENT_ATTACK:
-				//case DELAY_EVENT_CASTBEGIN_ID:
-				//case DELAY_EVENT_CASTBEGIN_POS:
 				case DELAY_EVENT_PARRY:
+					// TODO: This should also happen on cast begin
+					// Officially for players it just remembers the last attack time here and applies the delays during the comparison
+					// But we pre-calculate the delays instead and store them in attackabletime and canact_tick
 					ud->attackabletime = tick + status_get_adelay(&bl);
 					// A fixed delay is added here which is equal to the minimum attack motion you can get
 					// This ensures that at max ASPD attackabletime and canact_tick are equal
@@ -1845,20 +1842,10 @@ void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event)
 					break;
 			}
 			break;
-		case BL_MER:
-			switch (event) {
-				case DELAY_EVENT_ATTACK:
-					ud->attackabletime = tick + status_get_adelay(&bl);
-					break;
-				//case DELAY_EVENT_CASTBEGIN_POS:
-				//	ud->attackabletime = tick + status_get_adelay(&bl);
-				//	ud->canact_tick = tick + status_get_amotion(&bl) + MAX_ASPD_NOPC;
-				//	break;
-			}
-			break;
 		default:
 			switch (event) {
 				case DELAY_EVENT_ATTACK:
+					// This represents setting of attack delay (recharge time) that happens for non-PCs
 					ud->attackabletime = tick + status_get_adelay(&bl);
 					break;
 			}
