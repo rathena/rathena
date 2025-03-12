@@ -71,7 +71,7 @@ struct unit_data {
 	void getpos(int16 &x, int16 &y, uint8 &sx, uint8 &sy, t_tick tick = gettick());
 private:
 	void update_pos(t_tick tick);
-	struct s_udPos {
+	struct {
 		int16 x;
 		int16 y;
 		uint8 sx;
