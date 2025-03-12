@@ -4,6 +4,7 @@
 #ifndef MOB_HPP
 #define MOB_HPP
 
+#include <deque>
 #include <vector>
 
 #include <common/database.hpp>
@@ -30,8 +31,6 @@ struct guardian_data;
 	#define MAX_MVP_DROP 3
 #endif
 
-#define MAX_MINCHASE 30	//Max minimum chase value to use for mobs.
-
 //Min time between AI executions
 const t_tick MIN_MOBTHINKTIME = 100;
 //Min time before mobs do a check to call nearby friends for help (or for slaves to support their master)
@@ -39,7 +38,7 @@ const t_tick MIN_MOBLINKTIME = 1000;
 //Min time between random walks
 const t_tick MIN_RANDOMWALKTIME = 4000;
 
-// How often a monster will check for using a skill on non-attack states (in ms)
+// How often a monster will check for using a skill on non-berserk and non-dead states (in ms)
 const t_tick MOB_SKILL_INTERVAL = 1000;
 
 //Distance that slaves should keep from their master.
@@ -194,15 +193,15 @@ enum e_aegis_monsterclass : int8 {
 struct s_mob_skill {
 	enum MobSkillState state;
 	uint16 skill_id,skill_lv;
-	short permillage;
+	int16 permillage;
 	int32 casttime,delay;
-	short cancel;
-	short cond1;
+	int16 cancel;
+	int16 cond1;
 	int64 cond2;
-	short target;
+	int16 target;
 	int32 val[5];
-	short emotion;
-	unsigned short msg_id;
+	int16 emotion;
+	uint16 msg_id;
 };
 
 struct s_mob_chat {
@@ -238,14 +237,14 @@ public:
 };
 
 struct spawn_info {
-	unsigned short mapindex;
-	unsigned short qty;
+	uint16 mapindex;
+	uint16 qty;
 };
 
 /// Loooitem struct
 struct s_mob_lootitem {
 	struct item item;	   ///< Item info
-	unsigned short mob_id; ///< ID of monster that dropped the item
+	uint16 mob_id; ///< ID of monster that dropped the item
 };
 
 /// Struct for monster's drop item
@@ -323,6 +322,13 @@ private:
 extern MapDropDatabase map_drop_db;
 extern std::unordered_map<uint16, std::vector<spawn_info>> mob_spawn_data;
 
+struct s_dmglog{
+	int32 id; //char id
+	int64 dmg;
+	int64 dmg_tanked; //Damage tanked from normal attacks of the monster, MVP is the player with highest dmg+dmg_tanked
+	uint32 flag : 2; //0: Normal. 1: Homunc exp. 2: Pet exp
+};
+
 struct mob_data {
 	struct block_list bl;
 	struct unit_data  ud;
@@ -352,28 +358,22 @@ struct mob_data {
 		int32 provoke_flag; // Celest
 	} state;
 	struct guardian_data* guardian_data;
-	struct s_dmglog {
-		int32 id; //char id
-		uint32 dmg;
-		uint32 dmg_tanked; //Damage tanked from normal attacks of the monster, MVP is the player with highest dmg+dmg_tanked
-		uint32 flag : 2; //0: Normal. 1: Homunc exp. 2: Pet exp. 3: Self.
-	} dmglog[DAMAGELOG_SIZE];
+	std::deque<s_dmglog> dmglog;
 	uint32 spotted_log[DAMAGELOG_SIZE];
 	struct spawn_data *spawn; //Spawn data.
 	int32 spawn_timer; //Required for Convex Mirror
 	int16 centerX, centerY; // Spawn center of this individual monster
 	struct s_mob_lootitem *lootitems;
-	short mob_id;
-	uint32 tdmg; //Stores total damage given to the mob, for exp calculations. [Skotlex]
+	int16 mob_id;
 	int32 level;
 	int32 target_id,attacked_id,norm_attacked_id;
 	int32 areanpc_id; //Required in OnTouchNPC (to avoid multiple area touchs)
 	int32 bg_id; // BattleGround System
 
-	t_tick next_walktime,last_thinktime,last_linktime,last_pcneartime,dmgtick,last_canmove,last_skillcheck;
-	short move_fail_count;
-	short lootitem_count;
-	short min_chase;
+	t_tick next_walktime,next_thinktime,last_linktime,last_pcneartime,dmgtick,last_canmove,last_skillcheck;
+	t_tick trickcasting; // Special state where you show a fake castbar while moving
+	int16 move_fail_count;
+	int16 lootitem_count;
 	unsigned char walktoxy_fail_count; //Pathfinding succeeds but the actual walking failed (e.g. Icewall lock)
 
 	int32 deletetimer;
@@ -473,12 +473,13 @@ enum e_mob_skill_condition {
 	MSC_MOBNEARBYGT,
 	MSC_GROUNDATTACKED,
 	MSC_DAMAGEDGT,
+	MSC_TRICKCASTING,
 };
 
 // The data structures for storing delayed item drops
 struct s_item_drop{
 	struct item item_data;
-	unsigned short mob_id;
+	uint16 mob_id;
 	enum bl_type src_type;
 };
 
@@ -514,6 +515,8 @@ int32 mob_guardian_guildchange(struct mob_data *md); //Change Guardian's ownersh
 
 int32 mob_randomwalk(struct mob_data *md,t_tick tick);
 int32 mob_warpchase(struct mob_data *md, struct block_list *target);
+void mob_setstate(mob_data& md, MobSkillState skillstate);
+bool mob_ai_sub_hard_attacktimer(mob_data &md, t_tick tick);
 int32 mob_target(struct mob_data *md,struct block_list *bl,int32 dist);
 int32 mob_unlocktarget(struct mob_data *md, t_tick tick);
 struct mob_data* mob_spawn_dataset(struct spawn_data *data);
@@ -521,14 +524,11 @@ int32 mob_spawn(struct mob_data *md);
 TIMER_FUNC(mob_delayspawn);
 int32 mob_setdelayspawn(struct mob_data *md);
 int32 mob_parse_dataset(struct spawn_data *data);
-void mob_log_damage(mob_data* md, block_list* src, int32 damage, int32 damage_tanked = 0);
+void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_tanked = 0);
 void mob_damage(struct mob_data *md, struct block_list *src, int32 damage);
 int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type);
 void mob_revive(struct mob_data *md, uint32 hp);
 void mob_heal(struct mob_data *md,uint32 heal);
-
-#define mob_stop_walking(md, type) unit_stop_walking(&(md)->bl, type)
-#define mob_stop_attack(md) unit_stop_attack(&(md)->bl)
 
 void mob_clear_spawninfo();
 void do_init_mob(void);
@@ -544,7 +544,8 @@ int32 mob_warpslave(struct block_list *bl, int32 range);
 int32 mob_linksearch(struct block_list *bl,va_list ap);
 
 bool mob_chat_display_message (mob_data &md, uint16 msg_id);
-int32 mobskill_use(struct mob_data *md,t_tick tick,int32 event, int64 damage = 0);
+void mobskill_end(mob_data& md, t_tick tick);
+bool mobskill_use(struct mob_data *md,t_tick tick,int32 event, int64 damage = 0);
 int32 mobskill_event(struct mob_data *md,struct block_list *src,t_tick tick, int32 flag, int64 damage = 0);
 int32 mob_summonslave(struct mob_data *md2,int32 *value,int32 amount,uint16 skill_id);
 int32 mob_countslave(struct block_list *bl);

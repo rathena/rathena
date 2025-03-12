@@ -95,7 +95,7 @@ typedef enum DBRelease {
  * @see #db_default_cmp(DBType)
  * @see #db_default_hash(DBType)
  * @see #db_default_release(DBType,DBOptions)
- * @see #db_alloc(const char *,int32,DBType,DBOptions,unsigned short)
+ * @see #db_alloc(const char *,int32,DBType,DBOptions,uint16)
  */
 typedef enum DBType {
 	DB_INT,
@@ -125,7 +125,7 @@ typedef enum DBType {
  * @public
  * @see #db_fix_options(DBType,DBOptions)
  * @see #db_default_release(DBType,DBOptions)
- * @see #db_alloc(const char *,int32,DBType,DBOptions,unsigned short)
+ * @see #db_alloc(const char *,int32,DBType,DBOptions,uint16)
  */
 typedef enum DBOptions {
 	DB_OPT_BASE            = 0x00,
@@ -245,7 +245,7 @@ typedef int32 (*DBMatcher)(DBKey key, DBData data, va_list args);
  * @public
  * @see #db_default_cmp(DBType)
  */
-typedef int32 (*DBComparator)(DBKey key1, DBKey key2, unsigned short maxlen);
+typedef int32 (*DBComparator)(DBKey key1, DBKey key2, uint16 maxlen);
 
 /**
  * Format of the hashers used internally by the database system.
@@ -257,7 +257,7 @@ typedef int32 (*DBComparator)(DBKey key1, DBKey key2, unsigned short maxlen);
  * @public
  * @see #db_default_hash(DBType)
  */
-typedef uint64 (*DBHasher)(DBKey key, unsigned short maxlen);
+typedef uint64 (*DBHasher)(DBKey key, uint16 maxlen);
 
 /**
  * Format of the releaser used by the database system.
@@ -372,7 +372,7 @@ struct DBIterator
  * Public interface of a database. Only contains functions.
  * All the functions take the interface as the first argument.
  * @public
- * @see #db_alloc(const char*,int32,DBType,DBOptions,unsigned short)
+ * @see #db_alloc(const char*,int32,DBType,DBOptions,uint16)
  */
 struct DBMap {
 
@@ -826,7 +826,7 @@ DBReleaser db_custom_release(DBRelease which);
  * @see #db_default_release(DBType,DBOptions)
  * @see #db_fix_options(DBType,DBOptions)
  */
-DBMap* db_alloc(const char *file, const char *func, int32 line, DBType type, DBOptions options, unsigned short maxlen);
+DBMap* db_alloc(const char *file, const char *func, int32 line, DBType type, DBOptions options, uint16 maxlen);
 
 /**
  * Manual cast from 'int' to the union DBKey.

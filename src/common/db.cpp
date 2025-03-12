@@ -178,7 +178,7 @@ struct db_free {
  * @param maxlen Maximum length of strings in DB_STRING and DB_ISTRING databases
  * @param global_lock Global lock of the database
  * @private
- * @see #db_alloc(const char*,int32,DBType,DBOptions,unsigned short)
+ * @see #db_alloc(const char*,int32,DBType,DBOptions,uint16)
  */
 typedef struct DBMap_impl {
 	// Database interface
@@ -201,7 +201,7 @@ typedef struct DBMap_impl {
 	DBType type;
 	DBOptions options;
 	uint32 item_count;
-	unsigned short maxlen;
+	uint16 maxlen;
 	unsigned global_lock : 1;
 } DBMap_impl;
 
@@ -871,7 +871,7 @@ static void db_free_unlock(DBMap_impl* db)
  * @see #DBComparator
  * @see #db_default_cmp(DBType)
  */
-static int32 db_int_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
+static int32 db_int_cmp(DBKey key1, DBKey key2, uint16 maxlen)
 {
 	(void)maxlen;//not used
 	DB_COUNTSTAT(db_int_cmp);
@@ -893,7 +893,7 @@ static int32 db_int_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
  * @see #DBComparator
  * @see #db_default_cmp(DBType)
  */
-static int32 db_uint_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
+static int32 db_uint_cmp(DBKey key1, DBKey key2, uint16 maxlen)
 {
 	(void)maxlen;//not used
 	DB_COUNTSTAT(db_uint_cmp);
@@ -914,7 +914,7 @@ static int32 db_uint_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
  * @see #DBComparator
  * @see #db_default_cmp(DBType)
  */
-static int32 db_string_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
+static int32 db_string_cmp(DBKey key1, DBKey key2, uint16 maxlen)
 {
 	DB_COUNTSTAT(db_string_cmp);
 	return strncmp((const char *)key1.str, (const char *)key2.str, maxlen);
@@ -932,7 +932,7 @@ static int32 db_string_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
  * @see #DBComparator
  * @see #db_default_cmp(DBType)
  */
-static int32 db_istring_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
+static int32 db_istring_cmp(DBKey key1, DBKey key2, uint16 maxlen)
 {
 	DB_COUNTSTAT(db_istring_cmp);
 	return strncasecmp((const char *)key1.str, (const char *)key2.str, maxlen);
@@ -951,7 +951,7 @@ static int32 db_istring_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
  * @see #DBComparator
  * @see #db_default_cmp(DBType)
  */
-static int32 db_int64_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
+static int32 db_int64_cmp(DBKey key1, DBKey key2, uint16 maxlen)
 {
 	(void)maxlen;//not used
 	DB_COUNTSTAT(db_int64_cmp);
@@ -973,7 +973,7 @@ static int32 db_int64_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
  * @see #DBComparator
  * @see #db_default_cmp(DBType)
  */
-static int32 db_uint64_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
+static int32 db_uint64_cmp(DBKey key1, DBKey key2, uint16 maxlen)
 {
 	(void)maxlen;//not used
 	DB_COUNTSTAT(db_uint64_cmp);
@@ -994,7 +994,7 @@ static int32 db_uint64_cmp(DBKey key1, DBKey key2, unsigned short maxlen)
  * @see #DBHasher
  * @see #db_default_hash(DBType)
  */
-static uint64 db_int_hash(DBKey key, unsigned short maxlen)
+static uint64 db_int_hash(DBKey key, uint16 maxlen)
 {
 	(void)maxlen;//not used
 	DB_COUNTSTAT(db_int_hash);
@@ -1012,7 +1012,7 @@ static uint64 db_int_hash(DBKey key, unsigned short maxlen)
  * @see #DBHasher
  * @see #db_default_hash(DBType)
  */
-static uint64 db_uint_hash(DBKey key, unsigned short maxlen)
+static uint64 db_uint_hash(DBKey key, uint16 maxlen)
 {
 	(void)maxlen;//not used
 	DB_COUNTSTAT(db_uint_hash);
@@ -1028,11 +1028,11 @@ static uint64 db_uint_hash(DBKey key, unsigned short maxlen)
  * @see #DBHasher
  * @see #db_default_hash(DBType)
  */
-static uint64 db_string_hash(DBKey key, unsigned short maxlen)
+static uint64 db_string_hash(DBKey key, uint16 maxlen)
 {
 	const char *k = key.str;
 	uint32 hash = 0;
-	unsigned short i;
+	uint16 i;
 
 	DB_COUNTSTAT(db_string_hash);
 
@@ -1054,11 +1054,11 @@ static uint64 db_string_hash(DBKey key, unsigned short maxlen)
  * @see DBType#DB_ISTRING
  * @see #db_default_hash(DBType)
  */
-static uint64 db_istring_hash(DBKey key, unsigned short maxlen)
+static uint64 db_istring_hash(DBKey key, uint16 maxlen)
 {
 	const char *k = key.str;
 	uint32 hash = 0;
-	unsigned short i;
+	uint16 i;
 
 	DB_COUNTSTAT(db_istring_hash);
 
@@ -1083,7 +1083,7 @@ static uint64 db_istring_hash(DBKey key, unsigned short maxlen)
  * @see #DBHasher
  * @see #db_default_hash(DBType)
  */
-static uint64 db_int64_hash(DBKey key, unsigned short maxlen)
+static uint64 db_int64_hash(DBKey key, uint16 maxlen)
 {
 	(void)maxlen;//not used
 	DB_COUNTSTAT(db_int64_hash);
@@ -1101,7 +1101,7 @@ static uint64 db_int64_hash(DBKey key, unsigned short maxlen)
  * @see #DBHasher
  * @see #db_default_hash(DBType)
  */
-static uint64 db_uint64_hash(DBKey key, unsigned short maxlen)
+static uint64 db_uint64_hash(DBKey key, uint16 maxlen)
 {
 	(void)maxlen;//not used
 	DB_COUNTSTAT(db_uint64_hash);
@@ -2373,7 +2373,7 @@ static DBOptions db_obj_options(DBMap* self)
  * @return Fixed options of the database
  * @private
  * @see #db_default_release(DBType,DBOptions)
- * @see #db_alloc(const char *,int32,DBType,DBOptions,unsigned short)
+ * @see #db_alloc(const char *,int32,DBType,DBOptions,uint16)
  */
 DBOptions db_fix_options(DBType type, DBOptions options)
 {
@@ -2399,12 +2399,12 @@ DBOptions db_fix_options(DBType type, DBOptions options)
  * @param type Type of database
  * @return Comparator for the type of database or nullptr if unknown database
  * @public
- * @see #db_int_cmp(DBKey,DBKey,unsigned short)
- * @see #db_uint_cmp(DBKey,DBKey,unsigned short)
- * @see #db_string_cmp(DBKey,DBKey,unsigned short)
- * @see #db_istring_cmp(DBKey,DBKey,unsigned short)
- * @see #db_int64_cmp(DBKey,DBKey,unsigned short)
- * @see #db_uint64_cmp(DBKey,DBKey,unsigned short)
+ * @see #db_int_cmp(DBKey,DBKey,uint16)
+ * @see #db_uint_cmp(DBKey,DBKey,uint16)
+ * @see #db_string_cmp(DBKey,DBKey,uint16)
+ * @see #db_istring_cmp(DBKey,DBKey,uint16)
+ * @see #db_int64_cmp(DBKey,DBKey,uint16)
+ * @see #db_uint64_cmp(DBKey,DBKey,uint16)
  */
 DBComparator db_default_cmp(DBType type)
 {
@@ -2427,12 +2427,12 @@ DBComparator db_default_cmp(DBType type)
  * @param type Type of database
  * @return Hasher of the type of database or nullptr if unknown database
  * @public
- * @see #db_int_hash(DBKey,unsigned short)
- * @see #db_uint_hash(DBKey,unsigned short)
- * @see #db_string_hash(DBKey,unsigned short)
- * @see #db_istring_hash(DBKey,unsigned short)
- * @see #db_int64_hash(DBKey,unsigned short)
- * @see #db_uint64_hash(DBKey,unsigned short)
+ * @see #db_int_hash(DBKey,uint16)
+ * @see #db_uint_hash(DBKey,uint16)
+ * @see #db_string_hash(DBKey,uint16)
+ * @see #db_istring_hash(DBKey,uint16)
+ * @see #db_int64_hash(DBKey,uint16)
+ * @see #db_uint64_hash(DBKey,uint16)
  */
 DBHasher db_default_hash(DBType type)
 {
@@ -2519,7 +2519,7 @@ DBReleaser db_custom_release(DBRelease which)
  * @see #DBMap_impl
  * @see #db_fix_options(DBType,DBOptions)
  */
-DBMap* db_alloc(const char *file, const char *func, int32 line, DBType type, DBOptions options, unsigned short maxlen) {
+DBMap* db_alloc(const char *file, const char *func, int32 line, DBType type, DBOptions options, uint16 maxlen) {
 	DBMap_impl* db;
 	uint32 i;
 	char ers_name[50];

@@ -32,7 +32,7 @@ This list contains all available constants referenced in the 'bonus' commands.
 	RC2_Clocktower, RC2_Thanatos, RC2_Faceworm, RC2_Hearthunter, RC2_Rockridge, RC2_Werner_Lab,
 	RC2_Temple_Demon, RC2_Illusion_Vampire, RC2_Malangdo, RC2_EP172ALPHA, RC2_EP172BETA, RC2_EP172BATH,
 	RC2_Illusion_Turtle, RC2_Rachel_Sanctuary, RC2_Illusion_Luanda, RC2_Illusion_Frozen, RC2_Illusion_Moonlight,
-	RC2_Ep16_def, RC2_Edda_Arunafeltz
+	RC2_Ep16_def, RC2_Edda_Arunafeltz, RC2_Lasagna, RC2_Glast_Heim_Abyss
 
 * Class (c)
 	Class_Normal, Class_Boss, Class_Guardian, Class_All
@@ -130,6 +130,7 @@ bonus bAtk2,n;     			ATK2 + n
 bonus bAtkRate,n;  			ATK + n% that won't interfere with Damage modifier and SC_EDP (renewal mode only)
 bonus bWeaponAtkRate,n; 	Weapon ATK + n%
 bonus bMatk,n;     			Magical attack power + n
+bonus bMatk2,n;     		Magical attack power + n (not visible in status window)
 bonus bMatkRate,n; 			Magical attack power + n%
 bonus bWeaponMatkRate,n;	Weapon Magical ATK + n% (renewal mode only)
 bonus bDef,n;      			Equipment DEF + n

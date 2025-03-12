@@ -16,7 +16,7 @@ class map_session_data;
 struct s_buyingstore_item
 {
 	int32 price;
-	unsigned short amount;
+	uint16 amount;
 	t_itemid nameid;
 };
 

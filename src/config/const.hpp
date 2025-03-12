@@ -46,7 +46,7 @@
  * DefType
  **/
 #ifdef RENEWAL
-	typedef short defType;
+	typedef int16 defType;
 	#define DEFTYPE_MIN SHRT_MIN
 	#define DEFTYPE_MAX SHRT_MAX
 #else

@@ -69,7 +69,8 @@ enum e_battle_check_target : uint32 {
 
 	BCT_ALL			= 0x3F0000, ///< All targets
 
-	BCT_WOS			= 0x400000, ///< Except self (currently used for skipping if src == bl in skill_area_sub)
+	BCT_WOS			= 0x400000, ///< Except self and your master
+	BCT_SLAVE		= BCT_SELF|BCT_WOS,				///< Does not hit yourself/master, but hits your/master's slaves
 	BCT_GUILD		= BCT_SAMEGUILD|BCT_GUILDALLY,	///< Guild AND Allies (BCT_SAMEGUILD|BCT_GUILDALLY)
 	BCT_NOGUILD		= BCT_ALL&~BCT_GUILD,			///< Except guildmates
 	BCT_NOPARTY		= BCT_ALL&~BCT_PARTY,			///< Except party members
@@ -95,7 +96,7 @@ struct Damage {
 	int64 damage, /// Right hand damage
 		damage2; /// Left hand damage
 	enum e_damage_type type; /// Check clif_damage for type
-	short div_; /// Number of hit
+	int16 div_; /// Number of hit
 	int32 amotion,
 		dmotion;
 	int32 blewcount; /// Number of knockback
@@ -122,7 +123,7 @@ int64 battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int64 
 int64 battle_calc_bg_damage(struct block_list *src,struct block_list *bl,int64 damage,uint16 skill_id,int32 flag);
 int64 battle_calc_pk_damage(block_list &src, block_list &bl, int64 damage, uint16 skill_id, int32 flag);
 
-int32 battle_damage(struct block_list *src, struct block_list *target, int64 damage, t_tick delay, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, unsigned short attack_type, bool additional_effects, t_tick tick, bool spdamage);
+int32 battle_damage(struct block_list *src, struct block_list *target, int64 damage, t_tick delay, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, uint16 attack_type, bool additional_effects, t_tick tick, bool spdamage);
 int32 battle_delay_damage (t_tick tick, int32 amotion, struct block_list *src, struct block_list *target, int32 attack_type, uint16 skill_id, uint16 skill_lv, int64 damage, enum damage_lv dmg_lv, t_tick ddelay, bool additional_effects, bool spdamage);
 int32 battle_fix_damage(struct block_list* src, struct block_list* target, int64 damage, t_tick walkdelay, uint16 skill_id);
 
@@ -180,7 +181,6 @@ struct Battle_Config
 	int32 defnotenemy;
 	int32 vs_traps_bctall;
 	int32 traps_setting;
-	int32 summon_flora; //[Skotlex]
 	int32 clear_unit_ondeath; //[Skotlex]
 	int32 clear_unit_onwarp; //[Skotlex]
 	int32 random_monster_checklv;
@@ -205,7 +205,6 @@ struct Battle_Config
 	int32 mvp_exp_rate;
 	int32 mvp_hp_rate;
 	int32 monster_hp_rate;
-	int32 monster_max_aspd;
 	int32 view_range_rate;
 	int32 chase_range_rate;
 	int32 atc_spawn_quantity_limit;
@@ -589,6 +588,8 @@ struct Battle_Config
 	int32 feature_mesitemlink;
 	int32 feature_mesitemlink_brackets;
 	int32 feature_mesitemlink_dbname;
+	int32 feature_mesitemicon;
+	int32 feature_mesitemicon_dbname;
 
 	// autotrade persistency
 	int32 feature_autotrade;
@@ -708,6 +709,7 @@ struct Battle_Config
 	int32 show_skill_scale;
 	int32 achievement_mob_share;
 	int32 slave_stick_with_master;
+	int32 slave_active_with_master;
 	int32 at_logout_event;
 	int32 homunculus_starving_rate;
 	int32 homunculus_starving_delay;
@@ -746,6 +748,7 @@ struct Battle_Config
 	int32 macro_detection_timeout;
 	int32 macro_detection_punishment;
 	int32 macro_detection_punishment_time;
+	int32 macrochecker_delay;
 
 	int32 feature_dynamicnpc_timeout;
 	int32 feature_dynamicnpc_rangex;
@@ -764,6 +767,9 @@ struct Battle_Config
 	int32 item_stacking;
 	int32 hom_delay_reset_vaporize;
 	int32 hom_delay_reset_warp;
+	int32 alchemist_summon_setting;
+	int32 loot_range;
+	int32 assist_range;
 
 #include <custom/battle_config_struct.inc>
 };

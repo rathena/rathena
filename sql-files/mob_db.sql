@@ -67,6 +67,8 @@ CREATE TABLE `mob_db` (
   `racegroup_illusion_moonlight` tinyint(1) unsigned DEFAULT NULL,
   `racegroup_ep16_def` tinyint(1) unsigned DEFAULT NULL,
   `racegroup_edda_arunafeltz` tinyint(1) unsigned DEFAULT NULL,
+  `racegroup_lasagna` tinyint(1) unsigned DEFAULT NULL,
+  `racegroup_glast_heim_abyss` tinyint(1) unsigned DEFAULT NULL,
   `element` varchar(24) DEFAULT NULL,
   `element_level` tinyint(4) unsigned DEFAULT NULL,
   `walk_speed` smallint(6) unsigned DEFAULT NULL,

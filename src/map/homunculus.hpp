@@ -44,7 +44,7 @@ public:
 
 struct s_hom_stats {
 	uint32 HP, SP;
-	unsigned short str, agi, vit, int_, dex, luk;
+	uint16 str, agi, vit, int_, dex, luk;
 };
 
 /// Homunculus skill entry [Celest]
@@ -210,7 +210,7 @@ enum homun_type hom_class2type(int32 class_);
 int32 hom_dead(struct homun_data *hd);
 void hom_skillup(struct homun_data *hd,uint16 skill_id);
 void hom_calc_skilltree(homun_data *hd);
-short hom_checkskill(struct homun_data *hd,uint16 skill_id);
+int16 hom_checkskill(struct homun_data *hd,uint16 skill_id);
 uint16 hom_skill_get_min_level(int32 class_, uint16 skill_id);
 void hom_gainexp(struct homun_data *hd,t_exp exp);
 int32 hom_levelup(struct homun_data *hd);
@@ -218,7 +218,7 @@ int32 hom_evolution(struct homun_data *hd);
 int32 hom_mutate(struct homun_data *hd,int32 homun_id);
 void hom_heal(homun_data& hd, bool hp, bool sp);
 int32 hom_vaporize(map_session_data *sd, int32 flag);
-int32 hom_ressurect(map_session_data *sd, unsigned char per, short x, short y);
+int32 hom_ressurect(map_session_data *sd, unsigned char per, int16 x, int16 y);
 void hom_revive(struct homun_data *hd, uint32 hp, uint32 sp);
 void hom_reset_stats(struct homun_data *hd);
 int32 hom_shuffle(struct homun_data *hd); // [Zephyrus]
@@ -230,8 +230,6 @@ int32 hom_food(map_session_data *sd, struct homun_data *hd);
 int32 hom_hungry_timer_delete(struct homun_data *hd);
 int32 hom_change_name(map_session_data *sd,char *name);
 void hom_change_name_ack(map_session_data *sd, char* name, int32 flag);
-#define hom_stop_walking(hd, type) unit_stop_walking(&(hd)->bl, type)
-#define hom_stop_attack(hd) unit_stop_attack(&(hd)->bl)
 int32 hom_increase_intimacy(struct homun_data * hd, uint32 value);
 int32 hom_decrease_intimacy(struct homun_data * hd, uint32 value);
 int32 hom_skill_tree_get_max(int32 skill_id, int32 b_class);
@@ -245,7 +243,7 @@ uint8 hom_get_intimacy_grade(struct homun_data *hd);
 uint32 hom_intimacy_grade2intimacy(enum e_homun_grade grade);
 enum e_homun_grade hom_intimacy_intimacy2grade(uint32 intimacy);
 
-short hom_skill_get_index(uint16 skill_id);
+int16 hom_skill_get_index(uint16 skill_id);
 
 void do_final_homunculus(void);
 void do_init_homunculus(void);
