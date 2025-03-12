@@ -1502,20 +1502,20 @@ int32 unit_warp(struct block_list *bl,int16 m,int16 x,int16 y,clr_type type)
 void unit_data::update_pos(t_tick tick)
 {
 	// Check if coordinates are still up-to-date
-	if (DIFF_TICK(tick, pos.tick) < MIN_POS_INTERVAL)
+	if (DIFF_TICK(tick, this->pos.tick) < MIN_POS_INTERVAL)
 		return;
 
 	if (this->bl == nullptr)
 		return;
 
 	// Set initial coordinates
-	pos.x = this->bl->x;
-	pos.y = this->bl->y;
-	pos.sx = 8;
-	pos.sy = 8;
+	this->pos.x = this->bl->x;
+	this->pos.y = this->bl->y;
+	this->pos.sx = 8;
+	this->pos.sy = 8;
 
 	// Remember time at which we did the last calculation
-	pos.tick = tick;
+	this->pos.tick = tick;
 
 	if (this->walkpath.path_pos >= this->walkpath.path_len)
 		return;
@@ -1534,24 +1534,24 @@ void unit_data::update_pos(t_tick tick)
 	if (cell_percent > 0.0 && cell_percent < 1.0) {
 		// Set subcell coordinates according to timer
 		// This gives a value between 8 and 39
-		pos.sx = static_cast<uint8>(24.0 + dirx[this->walkpath.path[this->walkpath.path_pos]] * 16.0 * cell_percent);
-		pos.sy = static_cast<uint8>(24.0 + diry[this->walkpath.path[this->walkpath.path_pos]] * 16.0 * cell_percent);
+		this->pos.sx = static_cast<uint8>(24.0 + dirx[this->walkpath.path[this->walkpath.path_pos]] * 16.0 * cell_percent);
+		this->pos.sy = static_cast<uint8>(24.0 + diry[this->walkpath.path[this->walkpath.path_pos]] * 16.0 * cell_percent);
 		// 16-31 reflect sub position 0-15 on the current cell
 		// 8-15 reflect sub position 8-15 at -1 main coordinate
 		// 32-39 reflect sub position 0-7 at +1 main coordinate
-		if (pos.sx < 16 || pos.sy < 16 || pos.sx > 31 || pos.sy > 31) {
-			if (pos.sx < 16) pos.x--;
-			if (pos.sy < 16) pos.y--;
-			if (pos.sx > 31) pos.x++;
-			if (pos.sy > 31) pos.y++;
+		if (this->pos.sx < 16 || this->pos.sy < 16 || this->pos.sx > 31 || this->pos.sy > 31) {
+			if (this->pos.sx < 16) this->pos.x--;
+			if (this->pos.sy < 16) this->pos.y--;
+			if (this->pos.sx > 31) this->pos.x++;
+			if (this->pos.sy > 31) this->pos.y++;
 		}
-		pos.sx %= 16;
-		pos.sy %= 16;
+		this->pos.sx %= 16;
+		this->pos.sy %= 16;
 	}
 	else if (cell_percent >= 1.0) {
 		// Assume exactly one cell moved
-		pos.x += dirx[this->walkpath.path[this->walkpath.path_pos]];
-		pos.y += diry[this->walkpath.path[this->walkpath.path_pos]];
+		this->pos.x += dirx[this->walkpath.path[this->walkpath.path_pos]];
+		this->pos.y += diry[this->walkpath.path[this->walkpath.path_pos]];
 	}
 }
 
@@ -1563,8 +1563,8 @@ void unit_data::update_pos(t_tick tick)
  */
 int16 unit_data::getx(t_tick tick) {
 	// Make sure exact coordinates are up-to-date
-	update_pos(tick);
-	return pos.x;
+	this->update_pos(tick);
+	return this->pos.x;
 }
 
 /**
@@ -1575,8 +1575,8 @@ int16 unit_data::getx(t_tick tick) {
  */
 int16 unit_data::gety(t_tick tick) {
 	// Make sure exact coordinates are up-to-date
-	update_pos(tick);
-	return pos.y;
+	this->update_pos(tick);
+	return this->pos.y;
 }
 
 /**
@@ -1591,11 +1591,11 @@ int16 unit_data::gety(t_tick tick) {
  */
 void unit_data::getpos(int16 &x, int16 &y, uint8 &sx, uint8 &sy, t_tick tick) {
 	// Make sure exact coordinates are up-to-date
-	update_pos(tick);
-	x = pos.x;
-	y = pos.y;
-	sx = pos.sx;
-	sy = pos.sy;
+	this->update_pos(tick);
+	x = this->pos.x;
+	y = this->pos.y;
+	sx = this->pos.sx;
+	sy = this->pos.sy;
 }
 
 /**
