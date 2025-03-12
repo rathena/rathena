@@ -3803,6 +3803,13 @@
 	export_constant(MOB_MVPEXP);
 	export_constant(MOB_ID);
 
+	// Renamed monsterinfo types - 2025-03-11
+	export_deprecated_constant2("MOB_ATK1",MOB_ATKMIN); 
+	export_deprecated_constant2("MOB_ATK2",MOB_ATKMAX);
+	export_deprecated_constant2("MOB_RANGE",MOB_ATKRANGE);
+	export_deprecated_constant2("MOB_RANGE2",MOB_SKILLRANGE);
+	export_deprecated_constant2("MOB_RANGE3",MOB_CHASERANGE);
+
 	/* petinfo types */
 	export_constant(PETINFO_ID);
 	export_constant(PETINFO_CLASS);

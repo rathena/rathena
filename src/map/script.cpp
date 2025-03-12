@@ -14556,6 +14556,41 @@ BUILDIN_FUNC(warppartner)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/*================================================
+ * Script for Displaying MOB Information [Valaris]
+ *------------------------------------------------*/
+BUILDIN_FUNC(strmobinfo)
+{
+
+	int32 num=script_getnum(st,2);
+	int32 class_=script_getnum(st,3);
+
+	if(!mobdb_checkid(class_))
+	{
+		if (num < 3) //requested a string
+			script_pushconststr(st,"");
+		else
+			script_pushint(st,0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	std::shared_ptr<s_mob_db> mob = mob_db.find(class_);
+
+	switch (num) {
+	case 1: script_pushstrcopy(st,mob->name.c_str()); break;
+	case 2: script_pushstrcopy(st, mob->jname.c_str()); break;
+	case 3: script_pushint(st,mob->lv); break;
+	case 4: script_pushint(st,mob->status.max_hp); break;
+	case 5: script_pushint(st,mob->status.max_sp); break;
+	case 6: script_pushint(st,mob->base_exp); break;
+	case 7: script_pushint(st,mob->job_exp); break;
+	default:
+		script_pushint(st,0);
+		break;
+	}
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /*==========================================
  * Summon guardians [Valaris]
  * guardian("<map name>",<x>,<y>,"<name to show>",<mob id>{,"<event label>"}{,<guardian index>}) -> <id>
@@ -18702,7 +18737,7 @@ BUILDIN_FUNC(getmonsterinfo)
 		case MOB_MVPEXP:     script_pushint(st, mob->mexp); break;
 		case MOB_ID:         script_pushint(st, mob->id); break;
 		default:
-			ShowError( "buildin_getmonsterinfo: Invalid getmonsterinfo type. \n", type );
+			ShowError( "buildin_getmonsterinfo: Invalid getmonsterinfo type '%d'. \n", type );
 			st->state = END;
 			return SCRIPT_CMD_FAILURE;
 	}
@@ -28000,6 +28035,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(playBGMall,"s?????"),
 	BUILDIN_DEF(soundeffect,"si"),
 	BUILDIN_DEF(soundeffectall,"si?????"),	// SoundEffectAll [Codemaster]
+	BUILDIN_DEF2_DEPRECATED(strmobinfo, "getmonsterinfo", "ii", "2025-03-11"),
 	BUILDIN_DEF(guardian,"siisi??"),	// summon guardians
 	BUILDIN_DEF(guardianinfo,"sii"),	// display guardian data [Valaris]
 	BUILDIN_DEF(petskillbonus,"iiii"), // [Valaris]
