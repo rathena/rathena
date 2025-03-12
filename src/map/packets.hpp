@@ -2008,6 +2008,17 @@ struct PACKET_CZ_SETTING_WHISPER_STATE{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_SETTING_WHISPER_STATE, 0xd0);
 
+struct PACKET_ZC_WHISPER_LIST_sub{
+	char name[NAME_LENGTH];
+} __attribute__((packed));
+
+struct PACKET_ZC_WHISPER_LIST{
+	int16 packetType;
+	uint16 packetSize;
+	PACKET_ZC_WHISPER_LIST_sub names[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_WHISPER_LIST, 0xd4);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
