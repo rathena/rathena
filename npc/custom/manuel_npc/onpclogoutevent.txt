@@ -1,0 +1,13 @@
+// @reloadnpc npc/custom/manuel_npc/onpclogoutevent.txt
+
+-	script	LogoutHandler	-,{
+	
+	OnPCLogoutEvent:
+		// If the player is fishing while do a logout event
+		if (isFishing[getcharid(3)]) {
+			// Reset the flag
+			isFishing[getcharid(3)] = 0;
+			debugmes "" + strcharinfo(0) + " has logout when doing fishing!";
+		}
+	end;
+}

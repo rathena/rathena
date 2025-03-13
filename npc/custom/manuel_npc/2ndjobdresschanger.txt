@@ -1,0 +1,128 @@
+//===== rAthena Script ===================================================
+//= Costume Dress Changer for Transcendence Job
+//===== By: ==============================================================
+//= Manuel Sintos
+//===== Current Version: =================================================
+//= 1.0
+//===== Description: =====================================================
+//= Costume Dress Changer for Transcendence Job
+//===== Additional Comments: =============================================
+// The code for this NPC is fully complete and ready for implementation.
+// However, before it can function as intended, we need to set up
+// the costume sprites for each Transcendence job class.
+// This includes both male and female versions, as well as ensuring all 
+// Transcendence job classes with costumes are properly configured within.
+// The costume_1 folder at the GRF.
+// Once these sprite files are in place, the NPC will be fully operational.
+//
+// @reloadnpc npc/custom/manuel_npc/2ndjobdresschanger.txt
+
+
+prontera,136,204,3	script	Dress Changer	77,{
+	
+	function RestrictClass;
+	function HasjROCostume;
+
+	set @name$, "[ Dress Changer ]";
+	set .cost, 10000;
+
+	function RestrictClass {
+		switch(Class) {
+			case Job_Lord_Knight:
+			case Job_High_Priest:
+			case Job_High_Wizard:
+			case Job_WhiteSmith:
+			case Job_Sniper:
+			case Job_Assassin_Cross:
+			case Job_Paladin:
+			case Job_Champion:
+			case Job_Professor:
+			case Job_Stalker:
+			case Job_Creator:
+			case Job_Clown:
+			case Job_Gypsy:
+				return 1;
+			break;
+			default:
+				return 0;
+			break;
+		}
+	}
+
+	function HasjROCostume {
+		switch(Class) {
+			case Job_Lord_Knight:
+			case Job_High_Priest:
+			case Job_High_Wizard:
+			case Job_WhiteSmith:
+			case Job_Sniper:
+			case Job_Assassin_Cross:
+			case Job_Paladin:
+			case Job_Champion:
+			case Job_Professor:
+			case Job_Stalker:
+			case Job_Creator:
+			case Job_Clown:
+			case Job_Gypsy:
+				return 1;
+			break;
+			default:
+				return 0;
+			break;
+		}
+	}
+
+
+	if(!RestrictClass()){
+		mes @name$;
+        mes "Only Transcendence jobs are allowed to use my services.";
+        close;
+    }
+    if(!HasjROCostume()){
+    	mes @name$;
+        mes "Sorry, I don't have a costume for your class right now.";
+        close;
+    }
+
+    mes @name$;
+	mes "I can change your Job Appearance to an alternative costume at a cost of ^FF0000" + callfunc("F_InsertComma",.cost) + "^000000z!";
+	next;
+
+	switch(select("Original Appearance:New JRo Costume")) {
+		case 1:
+			if(Zeny < .cost) {
+                mes @name$;
+                mes "You don't have enough Zeny.";
+                close;
+       	 	}
+       	 	else {
+       	 		Zeny -= .cost;
+       	 		setlook LOOK_CLOTHES_COLOR,0;
+        		setlook LOOK_BODY2,0;
+
+				message strcharinfo(0), "Appearance Change.";
+				mes @name$;
+				mes "Here you are!";
+				close;
+       	 	}
+		break;
+
+		case 2:
+			if(Zeny < .cost) {
+                mes @name$;
+                mes "You don't have enough Zeny.";
+                close;
+       	 	}
+       	 	else {
+       	 		Zeny -= .cost;
+       	 		setlook LOOK_CLOTHES_COLOR,0;
+        		setlook LOOK_BODY2,1;
+
+				message strcharinfo(0), "Appearance Change.";
+				mes @name$;
+				mes "Here you are!";
+				close;
+       	 	}
+		break;
+	}
+}

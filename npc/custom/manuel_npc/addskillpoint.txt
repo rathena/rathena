@@ -1,0 +1,16 @@
+prontera,155,180,5	script	SkillPointMaster	100,{
+	mes "[SkillPoint Master]";
+	mes "Hello there!";
+	mes "I can help you add skill points to your character. " + BaseClass;
+	mes "How many skill points would you like to add?";
+	input .@points;
+
+	if (.@points <= 0) {
+		mes "You must enter a positive number.";
+		close;
+	}
+
+	set SkillPoint, SkillPoint + .@points;
+	mes "Success! You now have ^0055FF" + SkillPoint + "^000000 skill points.";
+	close;
+}

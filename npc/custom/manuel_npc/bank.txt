@@ -1,0 +1,80 @@
+//===== By:==================================================
+//= @Author Bokiebok
+// @reloadnpc npc/custom/manuel_npc/bank.txt
+
+-	script	bank_function	-1,{
+	OnInit:
+		bindatcmd "bank", strnpcinfo(3) + "::OnAtcommand";
+		end;
+	OnAtcommand:
+		mes "[ Bank ]";
+		mes "";
+		mes "In Bank: ^1100AA" + callfunc("F_InsertComma",#bank_balance) + "^000000z";
+		mes "On Hand: ^1100AA" + callfunc("F_InsertComma",Zeny) + "^000000z";
+		mes "";
+		next;
+		switch (select("Deposit","Withdraw","Exit")) {
+			case 1:
+				input .@deposit, 1, Zeny;
+				
+				if (.@deposit < 1000) {
+					mes "[Bank Test]";
+					mes "The minimum deposit is 1000z";
+					close;
+				}
+				if (.@deposit > Zeny) {
+					mes "[Bank Test]";
+					mes "You don't have enough money.";
+					close;
+				}
+				Zeny -= .@deposit;
+				// store the bank account balance. even you will restart the server.
+				// the amount will bind at your account	
+				#bank_balance += .@deposit;
+
+				mes "[ Bank ]";
+				mes "";
+				mes "In Bank: ^1100AA" + callfunc("F_InsertComma",#bank_balance) + "^000000z";
+				mes "On Hand: ^1100AA" + callfunc("F_InsertComma",Zeny) + "^000000z";
+				mes "";
+				close;
+			break;
+			case 2:
+				if (#bank_balance == 0) {
+					mes "[ Bank ]";
+					mes "Your bank account is currently empty, you can't withdraw.";
+					close;
+				}
+
+				mes "[ Bank ]";
+				mes "";
+				mes "In Bank: ^1100AA" + callfunc("F_InsertComma",#bank_balance) + "^000000z";
+				mes "On Hand: ^1100AA" + callfunc("F_InsertComma",Zeny) + "^000000z";
+				mes "";
+				next;
+
+				input .@withdraw, 1, #bank_balance;
+
+				if (.@withdraw > #bank_balance) {
+					mes "[ Bank ]";
+					mes "You can't withdraw more than ^1100AA"+ callfunc("F_InsertComma",#bank_balance) + "^000000z.";
+					close;
+				}
+
+				#bank_balance -= .@withdraw;
+				Zeny += .@withdraw;
+
+				mes "[ Bank ]";
+				mes "";
+				mes "In Bank: ^1100AA" + callfunc("F_InsertComma",#bank_balance) + "^000000z";
+				mes "On Hand: ^1100AA" + callfunc("F_InsertComma",Zeny) + "^000000z";
+				mes "";
+				close;
+
+			break;
+			case 3:
+				close;
+			break;
+		}
+	end;
+}

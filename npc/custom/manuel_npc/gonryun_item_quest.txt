@@ -1,0 +1,220 @@
+//===== By:==================================================
+//= Manuel Sintos
+// @reloadnpc npc/custom/manuel_npc/gonryun_item_quest.txt
+
+gonryun,40,18,5	script	President Green	735,{
+	set @name$, "[ President Green ]";
+
+	// for Spiked scarf requirement quest
+	setarray .SSrequiredItemID, 7205, 7156, 4425;
+	setarray .SSrequiredAmount, 330, 260, 1;
+	@SSitemID = 5462;
+
+	// for Rainbow scarf requirement quest
+	setarray .RSrequiredItemID, 1059, 978, 976, 980, 975, 981, 979, 4266;
+	setarray .RSrequiredAmount, 440, 2, 2, 2, 2, 2, 2, 4;
+	@RSitemID = 5463;
+
+	// for Cube Mask requirement quest
+	setarray .CMrequiredItemID, 2297, 978, 983, 4294;
+	setarray .CMrequiredAmount, 1, 13, 13, 13;
+	@CMitemID = 5475;
+
+	// for Fox Hat requirement quest
+	setarray .FHrequiredItemID, 5069, 4290, 7200;
+	setarray .FHrequiredAmount, 1, 9, 2;
+	@FHitemID = 5400;
+	
+	mes @name$;
+	mes "I specialize in masks, Which one would you like?";
+	next;
+
+	switch(select("Spiked Scarf:Rainbow Scarf:Cube Mask:Fox Hat")) {
+		case 1:
+
+			mes @name$;
+			mes "for the Spiked Scarf you need:";
+			for (.@i = 0; .@i < getarraysize(.SSrequiredItemID); .@i++) {
+				mes .SSrequiredAmount[.@i] + "pcs - " + getitemname(.SSrequiredItemID[.@i]);
+			}
+			next;
+
+			mes @name$;
+			mes "Do you have what I need?";
+			next;
+
+			switch(select("Yes:No")) {
+				case 1:
+					
+					// validate if there is no items
+					if (countitem(.SSrequiredItemID[0]) < .SSrequiredAmount[0] ||
+						countitem(.SSrequiredItemID[1]) < .SSrequiredAmount[1] ||
+						countitem(.SSrequiredItemID[2]) < .SSrequiredAmount[2]) {
+						mes @name$;
+						mes "You don't have enough items. Comeback if you have them.";
+						close;
+					}
+					else
+
+						for( .@z = 0; .@z < getarraysize(.SSrequiredItemID); .@z++ ) {
+							delitem .SSrequiredItemID[.@z], .SSrequiredAmount[.@z];
+						}
+						getitem @SSitemID, 1;
+
+						mes @name$;
+						mes "Here is your item. Have a good day!";
+						close;
+				break;
+				case 2:
+
+					mes @name$;
+					mes "Comeback if you have the items.";
+					close;
+
+				break;
+			}
+
+		break;
+		case 2:
+
+			mes @name$;
+			mes "for the Rainbow Scarf you need:";
+			for (.@i = 0; .@i < getarraysize(.RSrequiredItemID); .@i++) {
+				mes .RSrequiredAmount[.@i] + "pcs - " + getitemname(.RSrequiredItemID[.@i]);
+			}
+			next;
+
+			mes @name$;
+			mes "Do you have what I need?";
+			next;
+
+			switch(select("Yes:No")) {
+				case 1:
+					
+					// validate if there is no items
+					if (countitem(.RSrequiredItemID[0]) < .RSrequiredAmount[0] ||
+						countitem(.RSrequiredItemID[1]) < .RSrequiredAmount[1] ||
+						countitem(.RSrequiredItemID[2]) < .RSrequiredAmount[2] ||
+						countitem(.RSrequiredItemID[3]) < .RSrequiredAmount[3] ||
+						countitem(.RSrequiredItemID[4]) < .RSrequiredAmount[4] ||
+						countitem(.RSrequiredItemID[5]) < .RSrequiredAmount[5] ||
+						countitem(.RSrequiredItemID[6]) < .RSrequiredAmount[6] ||
+						countitem(.RSrequiredItemID[7]) < .RSrequiredAmount[7]) {
+						mes @name$;
+						mes "You don't have enough items. Comeback if you have them.";
+						close;
+					}
+					else
+
+						for( .@z = 0; .@z < getarraysize(.RSrequiredItemID); .@z++ ) {
+							delitem .RSrequiredItemID[.@z], .RSrequiredAmount[.@z];
+						}
+						getitem @RSitemID, 1;
+
+						mes @name$;
+						mes "Here is your item. Have a good day!";
+						close;
+				break;
+				case 2:
+
+					mes @name$;
+					mes "Comeback if you have the items.";
+					close;
+
+				break;
+			}
+
+		break;
+		case 3:
+
+			mes @name$;
+			mes "for the Cube Mask you need:";
+			for (.@i = 0; .@i < getarraysize(.CMrequiredItemID); .@i++) {
+				mes .CMrequiredAmount[.@i] + "pcs - " + getitemname(.CMrequiredItemID[.@i]);
+			}
+			next;
+
+			mes @name$;
+			mes "Do you have what I need?";
+			next;
+
+			switch(select("Yes:No")) {
+				case 1:
+					
+					// validate if there is no items
+					if (countitem(.CMrequiredItemID[0]) < .CMrequiredAmount[0] ||
+						countitem(.CMrequiredItemID[1]) < .CMrequiredAmount[1] ||
+						countitem(.CMrequiredItemID[2]) < .CMrequiredAmount[2] ||
+						countitem(.CMrequiredItemID[3]) < .CMrequiredAmount[3]) {
+						mes @name$;
+						mes "You don't have enough items. Comeback if you have them.";
+						close;
+					}
+					else
+
+						for( .@z = 0; .@z < getarraysize(.CMrequiredItemID); .@z++ ) {
+							delitem .CMrequiredItemID[.@z], .CMrequiredAmount[.@z];
+						}
+						getitem @CMitemID, 1;
+
+						mes @name$;
+						mes "Here is your item. Have a good day!";
+						close;
+				break;
+				case 2:
+
+					mes @name$;
+					mes "Comeback if you have the items.";
+					close;
+
+				break;
+			}
+
+		break;
+		case 4:
+
+			mes @name$;
+			mes "for the Fox Hat you need:";
+			for (.@i = 0; .@i < getarraysize(.FHrequiredItemID); .@i++) {
+				mes .FHrequiredAmount[.@i] + "pcs - " + getitemname(.FHrequiredItemID[.@i]);
+			}
+			next;
+
+			mes @name$;
+			mes "Do you have what I need?";
+			next;
+
+			switch(select("Yes:No")) {
+				case 1:
+					
+					// validate if there is no items
+					if (countitem(.FHrequiredItemID[0]) < .FHrequiredAmount[0] ||
+						countitem(.FHrequiredItemID[1]) < .FHrequiredAmount[1] ||
+						countitem(.FHrequiredItemID[2]) < .FHrequiredAmount[2]) {
+						mes @name$;
+						mes "You don't have enough items. Comeback if you have them.";
+						close;
+					}
+					else
+
+						for( .@z = 0; .@z < getarraysize(.FHrequiredItemID); .@z++ ) {
+							delitem .FHrequiredItemID[.@z], .FHrequiredAmount[.@z];
+						}
+						getitem @FHitemID, 1;
+
+						mes @name$;
+						mes "Here is your item. Have a good day!";
+						close;
+				break;
+				case 2:
+
+					mes @name$;
+					mes "Comeback if you have the items.";
+					close;
+
+				break;
+			}
+			
+		break;
+	}
+}

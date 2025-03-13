@@ -1,0 +1,46 @@
+//===== By:==================================================
+//= Manuel Sintos
+// @reloadnpc npc/custom/manuel_npc/berry_ticket_seller.txt
+
+prontera,164,147,3	script	Berry Ticket Seller	831,{
+	set @name$, "[^1100AA Berry Ticket Seller ^000000]";
+
+	.goldCoinItemID = 7517;
+	.ticketItemID = 30339;
+
+	mes @name$;
+	mes "Hey there! Would you like to buy a Berry Ticket?";
+	mes "It's just ^1100AA1 Gold Coin^000000 in exchange for a ^1100AA100 Berry Ticket^000000. What do you say?";
+	
+	switch(select("Nope:Yes, I'd love to buy one!")) {
+		case 1:
+			next;
+
+			mes @name$;
+			mes "No worries! If you change your mind, just come back and let me know.";
+			close;
+		break;
+		case 2:
+			next;
+			
+			if (countitem(.goldCoinItemID) < 1) {
+
+				mes @name$;
+				mes "Oops! It looks like you don't have a ^1100AA1 Gold Coin^000000.";
+				mes "Make sure to bring me that before you decide to buy.";
+				close;
+			}
+			else
+				delitem .goldCoinItemID, 1;
+				getitem .ticketItemID, 100;
+
+				mes @name$;
+				mes "Awesome! Here's your Berry Ticket. Enjoy!";
+				close;
+		break;
+	}
+
+	OnInit:
+		waitingroom "Berry Ticket Here!!",0;
+	end;
+}

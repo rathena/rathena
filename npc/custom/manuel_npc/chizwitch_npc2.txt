@@ -1,0 +1,176 @@
+//===== By:==================================================
+//= Manuel Sintos
+// @reloadnpc npc/custom/manuel_npc/chizwitch_npc.txt
+
+payon,191,113,3	script	cHiZWiTcH	10247,{
+	set @name$, "[^1100AA cHiZWiTcH ^000000]";
+
+	// quests items
+	// 1. Hairband of Reginleif
+	// 2. Dragon Helm
+	// 3. Sigrun Wings
+	setarray .questItems, 5471, 5467, 5592;
+
+	// for Hairband of Reginleif requirement quest
+	setarray .requiredItemID0, 7510, 710, 7300;
+	setarray .requiredAmount0, 200, 100, 20;
+
+	// for Dragon Helm requirement quest
+	setarray .requiredItemID1, 7451, 7562, 7443, 7022;
+	setarray .requiredAmount1, 20, 20, 40, 10;
+
+	// for Sigrun Wings requirement quest
+	setarray .requiredItemID2, 7018, 751, 7021, 7513;
+	setarray .requiredAmount2, 5, 5, 100, 20;
+
+	/*	
+	mes @name$;
+	mes "Hello there, " + strcharinfo(0) + "!";
+	mes "Are you interested to my items?";
+	*/
+	emotion ET_THINK;
+	npctalk "cHiZWiTcH : Hello there, " + strcharinfo(0) + "!. Are you interested to my items?";
+
+	switch(select("Yes! I am interested.:Sorry, I don't have time.")) {
+		case 1:
+
+			/*
+			next;
+			mes @name$;
+			mes "Great! Which one are you interested in?";
+			*/
+
+			unittalk getcharid(3), strcharinfo(0) + " : Yes! I am interested.",bc_area;
+			sleep2 2000;
+
+			npctalk "cHiZWiTcH : Great! Which one are you interested in?";
+			sleep2 2000;
+			npctalk "cHiZWiTcH : " + getitemname(.questItems[0]) + "?";
+			sleep2 2000;
+			npctalk "cHiZWiTcH : " + getitemname(.questItems[1]) + "?";
+			sleep2 2000;
+			npctalk "cHiZWiTcH : or " + getitemname(.questItems[2]) + "?";
+			sleep2 2000;
+
+			switch(select(
+				getitemname(.questItems[0])	+ ":" +
+				getitemname(.questItems[1])	+ ":" +
+				getitemname(.questItems[2])
+			)) {
+				case 1:
+					/*
+					next;
+
+					mes @name$;
+					mes "Alright! If you bring me these items, I'll trade you for the ^1100AA" + getitemname(.questItems[0]) + "^000000:";
+					mes "";
+					// Loop through the required items and display the correct "pc" or "pcs" based on the amount
+					for (.@i = 0; .@i < getarraysize(.requiredItemID0); .@i++) {
+						mes .requiredAmount0[.@i] + ((.requiredAmount0[.@i] == 1) ? "pc - " : "pcs - ") + getitemname(.requiredItemID0[.@i]);
+					}
+					next;
+					*/
+
+					unittalk getcharid(3), strcharinfo(0) + " : The " + getitemname(.questItems[0]) + "",bc_area;
+					sleep2 2000;
+
+					npctalk "cHiZWiTcH : Alright! If you bring me these items, I'll trade you for the " + getitemname(.questItems[0]);
+					sleep2 2000;
+					npctalk "cHiZWiTcH : " + .requiredAmount0[0] + "pcs of " + getitemname(.requiredItemID0[0]) + ".";
+					sleep2 2000;
+					npctalk "cHiZWiTcH : " + .requiredAmount0[1] + "pcs of " + getitemname(.requiredItemID0[1]) + ".";
+					sleep2 2000;
+					npctalk "cHiZWiTcH : " + .requiredAmount0[2] + "pcs of " + getitemname(.requiredItemID0[2]) + ".";
+					sleep2 2000;
+
+					/*
+					mes @name$;
+					mes "Are you sure you want the " + getitemname(.questItems[0]) + "?";
+					*/
+
+					npctalk "cHiZWiTcH : Are you sure you want the " + getitemname(.questItems[0]) + "?";
+
+					switch(select("Yes, let's do it!:No, I've changed my mind.")) {
+						case 1:
+							/*
+							next;
+							*/
+
+							unittalk getcharid(3), strcharinfo(0) + " : Yes, let's do it!",bc_area;
+							sleep2 2000;
+
+							// validate if there is no items
+							if (countitem(.requiredItemID0[0]) < .requiredAmount0[0] ||
+								countitem(.requiredItemID0[1]) < .requiredAmount0[1] ||
+								countitem(.requiredItemID0[2]) < .requiredAmount0[2]) {
+								emotion ET_SCRATCH;
+
+								/*
+								mes @name$;
+								mes "Uh-oh! It seems like you don't have enough items. Come back when you're ready!";
+								close;
+								*/
+
+								npctalk "cHiZWiTcH : Uh-oh! It seems like you don't have enough items. Come back when you're ready!";
+
+								end;
+							}
+							else
+
+								for( .@z = 0; .@z < getarraysize(.requiredItemID0); .@z++ ) {
+									delitem .requiredItemID0[.@z], .requiredAmount0[.@z];
+								}
+
+								/*
+								mes @name$;
+								mes "Here's your new headgear! Hope you like it!";
+								close;
+								*/
+
+								npctalk "cHiZWiTcH : Here's your new headgear! Hope you like it!";
+								sleep2 2000;
+								getitem .questItems[0], 1;
+								emotion ET_BEST;
+
+								end;
+
+						break;
+						case 2:
+							/*
+							next;
+
+							mes @name$;
+							mes "No worries! Feel free to come back anytime.";
+							close;
+							*/
+
+							unittalk getcharid(3), strcharinfo(0) + " : No, I've changed my mind.",bc_area;
+							sleep2 2000;
+
+							npctalk "cHiZWiTcH : No worries! Feel free to come back anytime.";
+
+							end;
+						break;
+					}
+
+
+
+				break;
+				case 2:
+					close;
+				break;
+				case 3:
+					close;
+				break;
+			}
+		break;
+		case 2:
+			next;
+
+			mes @name$;
+			mes "No worries! Feel free to come back anytime.";
+			close;
+		break;
+	}
+
+}

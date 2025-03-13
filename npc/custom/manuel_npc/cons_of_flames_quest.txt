@@ -1,0 +1,322 @@
+//===== By:==================================================
+// @reloadnpc npc/custom/manuel_npc/cons_of_flames_quest.txt
+
+// NPC 1: Starting NPC (Friendly Villager) in Prontera
+veins,135,56,3	script	Friendly Villager	85,{
+	
+	set @name$, "[^1100AA Friendly Villager ^000000]";
+
+	if (gettimetick(2) < quest_cooldown) {
+		mes @name$;
+	    mes "Thank you for helping us adventurer!";
+	    close;
+	}
+
+	if(quest_started == 1) {
+		navigateto "pay_fild01",319,352;
+		mes @name$;
+		mes "Please, hurry to Payon and find Elda.";
+		mes "He's been worried sick about these flames.";
+		mes "The longer we wait, the more damage they cause.";
+		close;
+	}
+
+	mes @name$;
+	mes "Adventurer! Just the person I needed.";
+	mes "I can see the determination in your eyes. I hope you're up for a challenge.";
+	next;
+	mes @name$;
+	mes "Strange flames have been appearing all across the land. At first, we thought it was just an oddity, but the fires... they're spreading.";
+	mes "Some say it's the work of a powerful being, but we're not sure.";
+	next;
+	mes @name$;
+	mes "If you're brave enough, we need your help.";
+	mes "Can we count on you to investigate the source of these flames and put an end to this disaster?";
+	next;
+	if(select("Yes, I'll help!:No, not now.") == 2) {
+		mes @name$;
+		mes "I understand. This isn't a task for the faint of heart.";
+		mes "Please come back if you change your mind. We could really use someone like you.";
+		close;
+	}
+	navigateto "pay_fild01",319,352;
+	mes @name$;
+	mes "Thank you, brave soul!";
+	mes "Head to Payon Forest and find Elda, one of our scouts. He's been investigating the flames and should have more information.";
+	mes "Good luck, and may fortune favor you!";
+	set quest_started, 1;
+	close;
+}
+
+// NPC 2: Scout Elda (Quest progression NPC) in Payon Forest
+pay_fild01,319,352,3	script	Scout Elda	753,{
+	
+	set @name$, "[^1100AA Scout Elda ^000000]";
+
+	// NOTE: CONFIGURATION FOR QUEST COSTUME
+	// You can adjust this base to your preference
+	// Flame heart item ID.
+	.reqItemID = 994;
+
+	if (gettimetick(2) < quest_cooldown) {
+		mes @name$;
+	    mes "Thank you for your hardwork adventurer!";
+	    close;
+	}
+
+	if(quest_started != 1) {
+		mes @name$;
+		mes "I'm sorry, but I don't have time to talk right now. The flames ... they're getting worse.";
+		close;
+	}
+	if(quest_progress == 1) {
+		mes @name$;
+		mes "I'm counting on you to help us at the volcano! Don't waste time, let's stop Ardor!";
+		close;
+	}
+
+	// Check if the player has already talked to the NPC
+	if(isAlreadyTalk == 1) {
+		// Check if the player has the required items
+		if(countitem(.reqItemID) < 10) {
+			mes @name$;
+			mes "You're back, but we're still waiting on those ^1100AAFlame Hearts^000000. Please hurry.";
+			close;
+		}
+		
+		// If the player has the items, proceed with the quest completion
+		delitem .reqItemID,10;
+		navigateto "ve_fild03",150,150;
+		mes @name$;
+		mes "You've done well! With these, we can craft the fireproof potions.";
+		mes "Now, it's time. We must head to the volcano where Ardor is hiding. Be careful, and don't underestimate him.";
+		
+		// Update quest progress and reset isAlreadyTalk
+		set quest_progress, 1;
+		set isAlreadyTalk, 0;
+		close;
+	}
+	
+	// Mark the player as having talked to the NPC
+	set isAlreadyTalk, 1;
+
+	mes @name$;
+	mes "You must be the one the villager sent. Thank you for coming!";
+	mes "The flames are spreading faster than we anticipated, and I fear it's the work of Ardor, the legendary flame spirit.";
+	next;
+	mes @name$;
+	mes "The stories say that Ardor was once a protector, using his flames to warm and protect villages in the harshest winters.";
+	mes "But something has changed. He's become enraged, and now his flames destroy everything in their path.";
+	next;
+	mes @name$;
+	mes "Before we confront him, we need protection.";
+	mes "I need you to gather ^1100AA10 Flame Hearts^000000 from the local fire spirits. They contain a material we can use to craft potions that will shield us from the flames.";
+	next;
+	if(countitem(.reqItemID) < 10) {
+		mes @name$;
+		mes "It seems you don't have all the ^1100AAFlame Hearts^000000 yet.";
+		mes "Please, time is running out. We need them to have any chance of survival.";
+		close;
+	}
+	delitem .reqItemID,10;
+	navigateto "ve_fild03",150,150;
+	mes @name$;
+	mes "You've done well! With these, we can craft the fireproof potions.";
+	mes "Now, it's time. We must head to the volcano where Ardor is hiding. Be careful, and don't underestimate him.";
+	// Update quest progress and reset isAlreadyTalk
+	set quest_progress, 1;
+	set isAlreadyTalk, 0;
+	close;
+}
+
+// NPC 3: Final NPC (Ardor) in Volcano Field
+ve_fild03,150,150,3	script	Ardor	10548,{
+	
+	// NOTE: CONFIGURATION FOR QUEST COSTUME
+	// Required Item ID to get the Quest HG.
+	// 1. Red Blood (990)
+	// 2. Burning Heart (7097)
+	// 3. TCG (7227)
+	// 4. Activity Token (Custom Item) - You can adjust this base to your preference
+	// 5. Event Token (Costum Id) - You can adjust this base to your preference
+	setarray .requiredItemID0, 990, 7097, 7227, 30343, 30341;
+	setarray .requiredAmount0, 150, 120, 50, 20, 10;
+
+	// Cons of Master Flames
+	.questRewardItemID = 31719;
+
+	if(quest_progress != 1) {
+		mes "[Ardor]";
+		mes "Who dares enter my domain? These lands belong to the flames!";
+		close;
+	}
+
+	if(alreadyTalkArdor == 1) {
+		mes "[Ardor]";
+		mes "You're back, did you change your mind to present the following worthy tribute?";
+		next;
+
+		mes "[Ardor]";
+		for( .@i = 0; .@i < getarraysize(.requiredItemID0); .@i++ ) {
+			mes .requiredAmount0[.@i] + "pcs - " + getitemname(.requiredItemID0[.@i]) + ".";
+		}
+		next;
+
+		mes "[Ardor]";
+		mes "Have you brought the items I require?";
+		next;
+
+		switch(select("Yes:No")) {
+			case 1:
+				.@isMissingItem = false;
+				// Check if player has all required items using a loop
+				for (.@i = 0; .@i < getarraysize(.requiredItemID0); .@i++) {
+				    if (countitem(.requiredItemID0[.@i]) < .requiredAmount0[.@i]) {
+				        .@missingItem = true; // Set to true if any item is missing
+				        break; // Exit loop as soon as we find a missing item
+				    }
+				}
+
+				if (.@missingItem) {
+					mes "[Ardor]";
+					mes "Your tribute is incomplete, mortal.";
+					close;
+				}
+				else {
+					mes "[Ardor]";
+					mes "You have brought everything I asked for. Your tribute is worthy.";
+					mes "I shall grant you my gift. Remember, mortal, the flames watch all.";
+					next;
+
+					mes "[Ardor]";
+					mes "Take this token of my flames. Use it wisely.";
+					// Remove items if all are present
+					for (.@i = 0; .@i < getarraysize(.requiredItemID0); .@i++) {
+						delitem .requiredItemID0[.@i], .requiredAmount0[.@i];
+					}
+					// Mark the quest as complete and give the reward
+					set quest_complete, 1;
+					set quest_started, 0;
+					set quest_progress, 0;
+
+					// Set a cooldown of 60 minutes (3600 seconds)
+					set quest_cooldown, gettimetick(2) + 3600;
+
+					// Quest Rewards
+					if (quest_complete == 1) {
+						getitem .questRewardItemID, 1; // Costume Flame Master
+						set quest_complete, 0; // Reset quest state (optional)
+						set alreadyTalkArdor, 0; // reset the counter
+					}
+					close;
+				}
+			break;
+			case 2:
+				mes "[Ardor]";
+				mes "Leave this place you mortal!";
+				close;
+			break;
+		}
+	}
+
+	// Mark the player as having talked to the NPC
+	set alreadyTalkArdor, 1;
+
+	mes "[Ardor]";
+	mes "You are the one who seeks to douse my flames? Foolish mortal!";
+	mes "Do you truly believe you can extinguish the power of Ardor, the master of fire? I have burned brighter than the sun for eons!";
+	next;
+	mes "[Ardor]";
+	mes "Long ago, I protected these lands with my flames.";
+	mes "But you humans... you are never satisfied. You took my warmth, yet gave nothing in return.";
+	next;
+	mes "[Ardor]";
+	mes "Now, I burn with anger. And you seek to stop me?";
+	mes "Tell me, why should I spare your kind?";
+	next;
+
+	// Dialogue option
+	if(select("I believe there's still good in you.:You're nothing but a monster!") == 1) {
+		mes "[Ardor]";
+		mes "Hmph. Your words are bold, human.";
+		mes "Perhaps you're different from the rest of your kind... Perhaps not.";
+		next;
+		mes "[Ardor]";
+		mes "Very well. I will cease the flames, but know this: I will be watching.";
+		mes "Abuse the gifts of fire again, and I will return.";
+	} else {
+		mes "[Ardor]";
+		mes "A monster, am I? Then you shall feel my wrath!";
+		mes "But... no. You are not worth my flames.";
+		mes "Leave this place before I change my mind.";
+	}
+	next;
+
+	// Sacrificial item check
+	mes "[Ardor]";
+	mes "Before I extinguish my flames, you must present the following worthy tribute.";
+	next;
+
+	mes "[Ardor]";
+	for( .@i = 0; .@i < getarraysize(.requiredItemID0); .@i++ ) {
+		mes .requiredAmount0[.@i] + "pcs - " + getitemname(.requiredItemID0[.@i]) + ".";
+	}
+	next;
+
+	mes "[Ardor]";
+	mes "Have you brought the items I require?";
+	next;
+
+	switch(select("Yes:No")) {
+		case 1:
+			.@isMissingItem = false;
+			// Check if player has all required items using a loop
+			for (.@i = 0; .@i < getarraysize(.requiredItemID0); .@i++) {
+			    if (countitem(.requiredItemID0[.@i]) < .requiredAmount0[.@i]) {
+			        .@missingItem = true; // Set to true if any item is missing
+			        break; // Exit loop as soon as we find a missing item
+			    }
+			}
+
+			if (.@missingItem) {
+				mes "[Ardor]";
+				mes "Your tribute is incomplete, mortal.";
+				close;
+			}
+			else {
+				mes "[Ardor]";
+				mes "You have brought everything I asked for. Your tribute is worthy.";
+				mes "I shall grant you my gift. Remember, mortal, the flames watch all.";
+				next;
+
+				mes "[Ardor]";
+				mes "Take this token of my flames. Use it wisely.";
+				// Remove items if all are present
+				for (.@i = 0; .@i < getarraysize(.requiredItemID0); .@i++) {
+					delitem .requiredItemID0[.@i], .requiredAmount0[.@i];
+				}
+				// Mark the quest as complete and give the reward
+				set quest_complete, 1;
+				set quest_started, 0;
+				set quest_progress, 0;
+
+				// Set a cooldown of 60 minutes (3600 seconds)
+				set quest_cooldown, gettimetick(2) + 3600;
+
+				// Quest Rewards
+				if (quest_complete == 1) {
+					getitem .questRewardItemID, 1; // Costume Flame Master
+					set quest_complete, 0; // Reset quest state (optional)
+					set alreadyTalkArdor, 0; // reset the counter
+				}
+				close;
+			}
+		break;
+		case 2:
+			mes "[Ardor]";
+			mes "Leave this place you mortal!";
+			close;
+		break;
+	}
+}
+

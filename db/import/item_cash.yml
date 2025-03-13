@@ -1,0 +1,167 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2022 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Item Cash Database
+###########################################################################
+#
+# Item Cash Settings
+#
+###########################################################################
+# - Tab                     Cash shop tab. Available tabs are New, Hot, Limited, Rental, Permanent, Scrolls, Consumables, Other, Sale.
+#   Items:                  List of possible items.
+#     - Item                Item name.
+#       Price               Item cost in cash points (#CASHPOINTS).
+###########################################################################
+
+Header:
+  Type: ITEM_CASH_DB
+  Version: 1
+
+Body:
+  - Tab: New
+    Items:
+      - Item: Cons_Of_Earth
+        Price: 2000
+      - Item: C_Cons_Of_Darkness
+        Price: 2000
+      - Item: C_Cons_Of_Water
+        Price: 2000
+      - Item: C_Cons_Of_Fire
+        Price: 2000
+      - Item: C_Cons_Of_Wind
+        Price: 2000
+      - Item: C_Cons_Of_Light_Dark
+        Price: 2000
+  - Tab: Hot
+    Items:
+      - Item: C_Great_Pyrenees
+        Price: 4000
+      - Item: C_Ragdoll1
+        Price: 4000
+      - Item: High_Refine_Guarantee
+        Price: 50000
+      
+  - Tab: Other
+    Items:
+      - Item: Champion_Card
+        Price: 3000
+      - Item: Creator_Card
+        Price: 3000
+      - Item: Stalker_Card
+        Price: 3000
+      - Item: Paladin_Card
+        Price: 3000
+      - Item: B_Eremes_Card
+        Price: 2500
+      - Item: B_Seyren_Card
+        Price: 2500
+      - Item: B_Katrinn_Card
+        Price: 2500
+      - Item: B_Harword_Card
+        Price: 2500
+      - Item: Orc_Hero_Card
+        Price: 2000
+      - Item: Dark_Snake_Lord_Card
+        Price: 2000
+      - Item: Marduk_Card
+        Price: 500
+      - Item: Giearth_Card
+        Price: 500
+  - Tab: Scrolls
+    Items:
+      - Item: Mysterious_Egg
+        Price: 1000
+      - Item: Mysterious_Egg2
+        Price: 1000
+      - Item: Mysterious_Egg3
+        Price: 1000
+      - Item: Mad_Bunny_Scroll
+        Price: 1000
+      - Item: Invisible_Scroll
+        Price: 1000
+      - Item: Undead_Egg
+        Price: 1000
+      - Item: Cru_Scroll
+        Price: 1000
+      - Item: Sealed_Scroll2 
+        Price: 1000
+      - Item: Main_Lucky_Box
+        Price: 1000
+      - Item: StarSoul_Scroll
+        Price: 1000
+      - Item: 2017_GStar_CostumeBox
+        Price: 1000
+      - Item: P_Booster230_Gift
+        Price: 1000
+      - Item: Cat_Scroll
+        Price: 1000
+      - Item: Pump_Of_Spirit_Scroll2
+        Price: 1000
+      - Item: Ice_Scroll
+        Price: 1000
+      - Item: Infinity_Scroll
+        Price: 1000
+      - Item: May_Gold_Scroll 
+        Price: 1000
+      - Item: Love_Scroll
+        Price: 1000
+      - Item: Lapine_Scroll
+        Price: 1000
+      - Item: New_Hat_Scroll2 
+        Price: 1000
+      - Item: Gunslinger_Scroll
+        Price: 1000
+      - Item: Sigrun_Scroll
+        Price: 1000
+      - Item: Amistr_Scroll
+        Price: 1000
+      - Item: Poring_Scroll
+        Price: 1000
+
+  - Tab: Limited
+    Items:
+      - Item: Temporal_Manteau_Box
+        Price: 10000
+      - Item: Season_Evt_Reward_11
+        Price: 10000
+      - Item: Main_Lucky_Box_
+        Price: 10000
+  - Tab: Permanent
+    Items:
+      - Item: Sigrun's_Wing_
+        Price: 3500
+      - Item: Robo_Eye_
+        Price: 3000
+      - Item: Angel_Spirit_
+        Price: 3000
+      - Item: Binoculars_
+        Price: 3000
+      - Item: Blinker_
+        Price: 3000
+      - Item: Opera_Ghost_Mask_
+        Price: 3500
+      - Item: Machoman_Glasses_
+        Price: 3000
+      - Item: Mr_Smile_
+        Price: 3000
+      - Item: Alarm_Mask_
+        Price: 3000
+      - Item: Magical_Booster_K
+        Price: 3000
+      - Item: Blush_
+        Price: 3000

@@ -15,6 +15,7 @@
 //= 1.6 Added Illusion of Underwater [Capuche]
 //= 1.7 Added Illusion of Twins [Capuche]
 //= 1.8 Added Illusion of Teddy Bear [Atemo]
+//= 1.9 Added Illusion of Labyrinth [Atemo]
 //============================================================
 
 //============================================================
@@ -11830,7 +11831,7 @@ einbroch,149,242,5	script	Coughing young man#ITB	4_M_NFMAN,3,3,{
 		mes "Why haven't you come back yet...";
 		mes "Cough Cough!!";
 		next;
-		mes "^ff0000¡Ø You can start this quest from level 150.^000000";
+		mes "^ff0000Â¡Ã˜ You can start this quest from level 150.^000000";
 		close;
 	}
 	if (ill_teddy == 0) {
@@ -12805,3 +12806,738 @@ ein_d02_i,169,244,1	script	Sirumsireum Teddy Bear#ITBz02	4_TEDDY_BEAR_B_L,{
 	npctalk "Teddy Bear: What have you done to me...", "", bc_self;
 	end;
 }
+
+
+//============================================================
+//= Illusion of Labyrinth
+//============================================================
+prt_maze01,99,27,0	script	#iol000	HIDDEN_WARP_NPC,4,4,{
+	end;
+OnTouch:
+	if (BaseLevel < 170)
+		end;
+	.@npc_name$ = "Twisted Crack#1";
+	removespecialeffect EF_GROUNDSAMPLE, AREA, .@npc_name$;
+	removespecialeffect EF_ICEWALL, AREA, .@npc_name$;
+	specialeffect EF_GROUNDSAMPLE, AREA, .@npc_name$;
+	specialeffect EF_ICEWALL, AREA, .@npc_name$;
+
+	cloakoffnpcself( .@npc_name$ );
+
+	if (ill_laby < 2) {
+		cloakoffnpcself( "Irene#1" );
+		end;
+	}
+	if (ill_laby == 2) {
+		cloakoffnpcself( "Irene#1" );
+		cloakoffnpcself( "Esmeralda#1" );
+		end;
+	}
+	if (ill_laby < 5) {
+		cloakoffnpcself( "Esmeralda#1" );
+		end;
+	}
+	cloakoffnpcself( "Andrea#1" );
+	cloakoffnpcself( "Anes#1" );
+	cloakoffnpcself( "Silvano#1" );
+	cloakoffnpcself( "Cecilia#1" );
+	end;
+}
+
+prt_maze01,97,21,7	script(CLOAKED)	Andrea#1	4_M_ANDREA,{
+	if (ill_laby < 5)
+		end;
+	if (ill_laby == 5) {
+		mes "[Andrea]";
+		mes "I heard the story from the guild leader Esmeralda. You are the one who saved us.";
+		next;
+		select( "It's not like I did anything great particularly." );
+		mes "[Andrea]";
+		mes "What humble words these are. I almost couldn't come back to life even as a soul. Thank you so much.";
+		next;
+		select( "Where did Esmeralda go?" );
+		mes "[Andrea]";
+		mes "Oh, the guild leader said she had a few things to prepare and headed to the guild base for a moment. She said she would head straight to the entrance of the labyrinth.";
+		next;
+		mes "[Andrea]";
+		mes "Also, she asked me whether " + strcharinfo(0) + " wants to join us as a guest member of the guild.";
+		next;
+		mes "[Andrea]";
+		mes "We don't have the manpower to raise funds for the guild's revival. So, we are in a situation where even one hand is helping.";
+		next;
+		mes "[Andrea]";
+		mes "If we can conquer this newly revealed Twisted Labyrinth, it will be a spark that can revive our guild. The only person around guild who can do that is " + strcharinfo(0) + ".";
+		next;
+		mes "[Andrea]";
+		mes strcharinfo(0) + ", would you be able to work as a guest guild member for our guild?";
+		next;
+		if (select( "I guess that's too much.", "What are the benefits of being one?" ) == 1) {
+			mes "[Andrea]";
+			mes "Ah... right, I think it was a bit of an unreasonable request.";
+			close;
+		}
+		mes "[Andrea]";
+		mes "Even though we are only souls, we have gained a lot of knowledge, while wandering through this Twisted Labyrinth.";
+		next;
+		mes "[Andrea]";
+		mes "We will give you several requests and provide you with appropriate compensation. Would you like to work as a guest guild member?";
+		next;
+		if (select( "I think I'll pass", "Yes for compensation!" ) == 1) {
+			mes "[Andrea]";
+			mes "Ah... right, I think it was a bit of an unreasonable request.";
+			close;
+		}
+		mes "[Andrea]";
+		mes "Thank you. Now, on behalf of the guild, we would like to ask " + strcharinfo(0) + " a request related to this Twisted Labyrinth.";
+		ill_laby = 6;
+		completequest 12489;
+		close;
+	}
+	switch( checkquest(12490,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "[Andrea]";
+		mes "It's not time to make a new request yet. For now, please complete the previous request first.";
+		close;
+	case 2:
+		erasequest 12490;
+		break;
+	}
+	mes "[Andrea]";
+	if (F_queststatus(HAVEQUEST,12470,12471,12472,12473,12474,12475,12476,12477) != 0)
+		mes "You still have quests you couldn't complete yesterday. ^ff0000If you accept a new quest now, the quest you couldn't complete yesterday will be continued today.^000000 Do you want to accept all of today's quests?";
+	else
+		mes strcharinfo(0) + ", I have a lot of requests for you. Do you want to accept all requests?";
+	next;
+	if (select( "Not now", "Accept all" ) == 1) {
+		mes "[Andrea]";
+		mes "Please come back when you are ready to receive another request.";
+		close;
+	}
+	setquest 12490;
+	for ( .@quest_id = 12470; .@quest_id <= 12477; ++.@quest_id ) {
+		if (isbegin_quest(.@quest_id) == 0)
+			setquest .@quest_id;
+	}
+	mes "[Andrea]";
+	mes "Please work hard today as well.";
+	mes "Thank you always.";
+	close;
+
+OnInit:
+	setunittitle( getnpcid(0), "<Priest Guild New Member>" );
+
+	// Main quest
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(12489) == 1" );
+
+	// Daily quest
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "ill_laby == 6 && checkquest(12490,PLAYTIME) == -1" );	// note: no questinfo when playtime == 2
+	end;
+}
+
+prt_maze01,101,25,3	script(CLOAKED)	Silvano#1	4_M_SILVANO,{
+	if (checkweight(1201,3) == 0) {
+		mes "You seem to have too many types or weights of items. Please clean up your inventory.";
+		close;
+	}
+	removespecialeffect 1090;
+
+	if (ill_laby < 6) {
+		mes "[Silvano]";
+		mes "Thank you for your help, " + strcharinfo(0) + ". Guild leader left a message through ^0000ffAndrea^000000.";
+		close;
+	}
+	mes "[Silvano]";
+	mes "If you have completed a quest, you can receive a reward. Would you like to receive it now?";
+	next;
+	if (select( "Not now", "Yes, please" ) == 1) {
+		mes "[Silvano]";
+		mes "I'll wait as long as I can.";
+		close;
+	}
+	.@quest_12470 = checkquest(12470,HUNTING);
+	.@quest_12471 = checkquest(12471,HUNTING);
+	.@quest_12472 = checkquest(12472,HUNTING);
+	.@quest_12473 = checkquest(12473,HUNTING);
+	.@quest_12474 = checkquest(12474,HUNTING);
+	.@quest_12475 = checkquest(12475,HUNTING);
+	.@quest_12476 = checkquest(12476,HUNTING);
+	.@quest_12477 = checkquest(12477,HUNTING);
+	.@quest_12478 = checkquest(12478,HUNTING);
+	.@quest_12479 = checkquest(12479,HUNTING);
+	.@quest_12480 = checkquest(12480,HUNTING);
+	.@quest_12481 = checkquest(12481,HUNTING);
+
+	if (.@quest_12470 != 2 && .@quest_12471 != 2 && .@quest_12472 != 2 && .@quest_12473 != 2 && .@quest_12474 != 2 && .@quest_12475 != 2 && .@quest_12476 != 2 && .@quest_12477 != 2 && .@quest_12478 != 2 && .@quest_12479 != 2 && .@quest_12480 != 2 && .@quest_12481 != 2) {	// no daily quest done
+		mes "[Silvano]";
+		mes "There are no completed quests. Please come back to me after completing at least one request.";
+		close;
+	}
+	if (.@quest_12470 == 2) {
+		getexp 1750000,1137500;
+		getitem 25271,1;	// IllusionStone
+		erasequest 12470;
+		mes "^0000ff[Daily] Andrea's Revenge I^000000 completed";
+		next;
+	}
+	if (.@quest_12471 == 2) {
+		getexp 1750000,1137500;
+		getitem 25271,1;	// IllusionStone
+		erasequest 12471;
+		mes "^0000ff[Daily] Andrea's Revenge II^000000 completed";
+		next;
+	}
+	if (.@quest_12472 == 2) {
+		getexp 1750000,1137500;
+		getitem 25271,1;	// IllusionStone
+		erasequest 12472;
+		mes "^0000ff[Daily] Anes' Revenge I^000000 completed";
+		next;
+	}
+	if (.@quest_12473 == 2) {
+		getexp 1750000,1137500;
+		getitem 25271,1;	// IllusionStone
+		erasequest 12473;
+		mes "^0000ff[Daily] Anes' Revenge II^000000 completed";
+		next;
+	}
+	if (.@quest_12474 == 2) {
+		getexp 1750000,1137500;
+		getitem 25781,1;	// Little_Lovely_Candle
+		erasequest 12474;
+		mes "^0000ff[Daily] Silvano's Revenge I^000000 completed";
+		next;
+	}
+	if (.@quest_12475 == 2) {
+		getexp 1750000,1137500;
+		getitem 25782,1;	// Medicinal_Stuff
+		erasequest 12475;
+		mes "^0000ff[Daily] Silvano's Revenge II^000000 completed";
+		next;
+	}
+	if (.@quest_12476 == 2) {
+		getexp 1750000,1137500;
+		getitem 25783,1;	// Cold_Holy_Water
+		erasequest 12476;
+		mes "^0000ff[Daily] Cecilia's Revenge I^000000 completed";
+		next;
+	}
+	if (.@quest_12477 == 2) {
+		getexp 1750000,1137500;
+		getitem 25784,1;	// Small_Flashlight
+		erasequest 12477;
+		mes "^0000ff[Daily] Cecilia's Revenge II^000000 completed";
+		next;
+	}
+	if (.@quest_12478 == 2) {
+		getexp 2500000,1625000;
+		getitem 25781,3;
+		erasequest 12478;
+		mes "^0000ff[Weekly] Soul Purification - Andrea^000000 completed";
+		next;
+	}
+	if (.@quest_12479 == 2) {
+		getexp 2500000,1625000;
+		getitem 25782,3;
+		erasequest 12479;
+		mes "^0000ff[Weekly] Soul Purification - Anes^000000 completed";
+		next;
+	}
+	if (.@quest_12480 == 2) {
+		getexp 2500000,1625000;
+		getitem 25783,3;
+		erasequest 12480;
+		mes "^0000ff[Weekly] Soul Purification - Silvano^000000 completed";
+		next;
+	}
+	if (.@quest_12481 == 2) {
+		getexp 2500000,1625000;
+		getitem 25784,3;	// Small_Flashlight
+		erasequest 12481;
+		mes "^0000ff[Weekly] Soul Purification - Cecilia^000000 completed";
+		next;
+	}
+	mes "[Silvano]";
+	mes "All compensation payments for completed quests have been completed.";
+	close;
+
+OnInit:
+	setunittitle( getnpcid(0), "<Priest Guild New Member>" );
+
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(12470,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(12471,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(12472,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(12473,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(12474,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(12475,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(12476,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(12477,HUNTING) == 2" );
+	end;
+}
+
+prt_maze01,101,21,1	script(CLOAKED)	Cecilia#1	4_F_CECILIA,{
+	if (ill_laby < 6) {
+		mes "[Cecilia]";
+		mes "Thank you for your help, " + strcharinfo(0) + ". Guild leader left a message through ^0000ffAndrea^000000.";
+		close;
+	}
+	mes "[Cecilia]";
+	mes "Is there anything I can help you with?";
+	next;
+	if (select( "Nothing", "Can you send me outside?" ) == 1) {
+		mes "[Cecilia]";
+		mes "I'm sorry I couldn't help you.";
+		close;
+	}
+	warp "prt_fild01",136,365;
+	end;
+
+OnInit:
+	setunittitle( getnpcid(0), "<Priest Guild New Member>" );
+	end;
+}
+
+prt_maze01,97,25,5	script(CLOAKED)	Anes#1	4_F_ANES,{
+	if (checkweight(1201,3) == 0) {
+		mes "You seem to have too many types or weights of items. Please clean up your inventory.";
+		close;
+	}
+	if (ill_laby < 5)
+		end;
+	if (ill_laby == 5) {
+		mes "[Anes]";
+		mes "Thank you for your help, " + strcharinfo(0) + ". Guild leader left a message through ^0000ffAndrea^000000.";
+		close;
+	}
+	.@quest_12478 = checkquest(12478,HUNTING);
+	.@quest_12479 = checkquest(12479,HUNTING);
+	.@quest_12480 = checkquest(12480,HUNTING);
+	.@quest_12481 = checkquest(12481,HUNTING);
+
+	if (.@quest_12478 == -1 && .@quest_12479 == -1 && .@quest_12480 == -1 && .@quest_12481 == -1)
+		.@state = 0;
+	else if (.@quest_12478 == 2 || .@quest_12479 == 2 || .@quest_12480 == 2 || .@quest_12481 == 2)
+		.@state = 2;
+	else
+		.@state = 1;
+
+	switch( checkquest(12491,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "[Anes]";
+		mes "It's not time to make a new request yet. For now, please complete the previous quest first.";
+		close;
+	case 2:
+		erasequest 12491;
+		break;
+	}
+
+	switch( .@state ) {
+	case 0:
+		mes "[Anes]";
+		mes strcharinfo(0) + ", there is one weekly request that you can receive weekly. Would you like to receive it?";
+		next;
+		if (select( "Not now", "Receive 1 weekly request" ) == 1) {
+			mes "[Anes]";
+			mes "Please come back when you are ready to receive another request.";
+			close;
+		}
+		setquest 12491;
+		setquest rand(12478, 12481);
+		mes "[Anes]";
+		mes "I hope that God's blessings will be with you this week as well.";
+		close;
+	case 1:
+		mes "[Anes]";
+		mes "There are still uncompleted quests. ^ff0000If you accept new quests now, the unfinished quests from last week will be deleted.^000000 Would you like to accept new weekly quests?";
+		next;
+		if (select( "Cancel", "Receive the weekly request" ) == 1) {
+			mes "[Anes]";
+			mes "Come back when you're ready to accept the quest.";
+			close;
+		}
+		if (isbegin_quest(12478) > 0)
+			erasequest 12478;
+		if (isbegin_quest(12479) > 0)
+			erasequest 12479;
+		if (isbegin_quest(12480) > 0)
+			erasequest 12480;
+		if (isbegin_quest(12481) > 0)
+			erasequest 12481;
+		setquest 12491;
+		setquest rand(12478, 12481);
+		mes "[Anes]";
+		mes "May God bless you this week as well.";
+		close;
+	case 2:
+		end;
+	}
+	end;
+
+OnInit:
+	setunittitle( getnpcid(0), "<Priest Guild New Member>" );
+
+	questinfo( QTYPE_EVENT, QMARK_YELLOW, "ill_laby == 6 && checkquest(12491,PLAYTIME) == -1" );	// note: type event is not a mistake
+
+	// no questinfo when playtime 2
+	// questinfo( QTYPE_EVENT, QMARK_YELLOW, "checkquest(12491,PLAYTIME) == 2" );
+
+	// unknown questinfo hunting completed
+	end;
+}
+
+prt_maze01,99,23,5	script(CLOAKED)	Twisted Crack#1	CLEAR_NPC,{
+	if (BaseLevel < 170)
+		end;
+	if (ill_laby < 2) {
+		mes "Beyond the twisted crack, a familiar yet unfamiliar labyrinth unfolds.";
+		close;
+	}
+	mes "Beyond the twisted crack, a familiar yet unfamiliar labyrinth unfolds.";
+	mes "^ff0000If you step in, you may not be able to get out again.^000000";
+	next;
+	if (select( "Pretend you didn't see it", "Enter through the crack" ) == 1) {
+		mes "^0000ffCuriosity killed the cat. Let's bury it quietly.^000000";
+		close;
+	}
+	warp "prt_mz03_i",99,26;
+	end;
+
+OnInit:
+	questinfo( QTYPE_CLICKME, QMARK_YELLOW, "isbegin_quest(12484) == 1 || isbegin_quest(12485) == 1 || isbegin_quest(12486) == 1 || isbegin_quest(12487) == 1" );
+	end;
+}
+
+prt_maze01,97,26,5	script(CLOAKED)	Irene#1	4_F_ERENE,2,2,{
+	if (BaseLevel < 170)
+		end;
+	if (ill_laby == 0) {
+		mes "[Irene]";
+		mes "Ouch! Sorry. I didn't mean to surprise you!";
+		next;
+		select( "Whoua! You surprised me!" );
+		mes "[Irene]";
+		mes "Please don't point your weapon at me and hear me out! Please.";
+		next;
+		select( "Calm down." );
+		mes "[Irene]";
+		mes "Thank you. My name is Irene, member of the Prontera Priest Guild. Ah.. There is a bit of reason why this is happening right now.";
+		next;
+		select( "Did you die while hunting?" );
+		mes "[Irene]";
+		mes "Yes... I found this suspicious crack during training with 4 other new guild members. They rushed into this place, so I followed them...";
+		next;
+		mes "[Irene]";
+		mes "Please, I would like you to inform our guild leader of the current situation. We are currently recruiting people near the cathedral in Prontera. I will wait for other guild members who might come out of here...";
+		next;
+		if (select( "Sorry, I can't help you.", "Alright, no problem." ) == 1) {
+			mes "[Irene]";
+			mes "Well yeah.. it must have been an unreasonable request... sorry..";
+			close;
+		}
+		mes "[Irene]";
+		mes "Thank you! Here's a note with the guild leader's location! Please!";
+		next;
+		select( "Let's go outside first." );
+		ill_laby = 1;
+		setquest 12482;
+		warp "prt_fild01",136,365;
+		end;
+	}
+	if (ill_laby == 1) {
+		mes "[Irene]";
+		mes "If you look at the note I gave you, the guild leader's location is written down.";
+		close2;
+		warp "prt_fild01",136,365;
+		end;
+	}
+	if (ill_laby == 2) {
+		mes "[Irene]";
+		mes "Ugh, it looks like there's no trace of my remains...";
+		next;
+		mes "[Esmeralda]";
+		mes "Fortunately, your guardian relic is stored in the guild, so resurrection is possible. It might cost some money, though.";
+		next;
+		mes "[Irene]";
+		mes "I'm sorry...";
+		close;
+	}
+	if (ill_laby == 3) {
+		mes "[Irene]";
+		mes "I need to go back to the guild soon. It's quite embarrassing because of the state of my soul.";
+		close2;
+		cloakonnpcself();
+		end;
+	}
+	end;
+
+OnTouch:
+	if (ill_laby == 0) {
+		npctalk "Ouch! Sorry. I didn't mean to surprise you!", "", bc_self;
+		end;
+	}
+	end;
+
+OnInit:
+	setunittitle( getnpcid(0), "<Priest Guild Member>" );
+
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 170 && ill_laby == 0" );
+	end;
+}
+
+prt_maze01,101,26,3	script(CLOAKED)	Esmeralda#1	4_GEFFEN_09,{
+	if (ill_laby < 2)
+		end;
+	if (ill_laby == 2) {
+		mes "[Esmeralda]";
+		mes "Irene, stop crying and come to your senses.";
+		next;
+		mes "[Esmeralda]";
+		mes "Fortunately, your guardian relic is stored in the guild, so resurrection is possible. It might cost some money, though.";
+		next;
+		mes "[Irene]";
+		mes "I'm sorry...";
+		next;
+		mes "[Esmeralda]";
+		mes "We need to resurrect this troublemaker as soon as possible, so I'll send her back to the guild first.";
+		next;
+		mes "[Esmeralda]";
+		mes "I have to say thank you, but since you have already helped me, can I ask you one more favor?";
+		next;
+		if (select( "You really have no shame.", "Uh... of course." ) == 1) {
+			mes "[Esmeralda]";
+			mes "Ah, I guess that's it. I really have no shame. We'll take care of the rest.";
+			close;
+		}
+		mes "[Esmeralda]";
+		mes "Irene made a soul contract with the guardian relic a long time ago, so I don't think there will be any problems with her resurrection.";
+		next;
+		mes "[Esmeralda]";
+		mes "There are a total of 4 more people missing. These guys don't have a contract with the guardian relic, so they don't appear in spirit form. Ha... really...";
+		next;
+		select( "Is signing a contract with a guardian relic like insurance?" );
+		mes "[Esmeralda]";
+		mes "Yes, since our guild is made up of only priests, fatal accidents are unexpectedly rare, but they are very frequent.";
+		next;
+		mes "[Esmeralda]";
+		mes "As soon as you join, you enter into a contract with a guardian relic and undergo a ceremony that completely resurrects your soul and body even after death.";
+		next;
+		mes "[Esmeralda]";
+		mes "The problem is, that the 4 new recruits, who disappeared today, didn't even go through that process.";
+		next;
+		select( "Do I have to retrieve the remains and bring them back?" );
+		mes "[Esmeralda]";
+		mes "Ah... well, even the smallest traces of the body are fine. The more intact it is, the cheaper the resurrection price will be, but you have to save it first.";
+		next;
+		select( "(It feels like furniture repair)" );
+		mes "[Esmeralda]";
+		mes "Priests train in various things. During the training process, there are many things that are not quite beautiful.";
+		next;
+		if (select( "Well, it looks dangerous so I...", "Alright, I will do it" ) == 1) {
+			mes "[Esmeralda]";
+			mes "Ah, I guess that's it. We'll take care of the rest.";
+			close;
+		}
+		mes "[Esmeralda]";
+		mes "Thank you. I've collected information about the 4 guild members, so if you need anything, please check it. Perhaps traces of my members lie beyond this twisted rift.";
+		close2;
+		ill_laby = 3;
+		erasequest 12483;
+		setquest 12484;
+		setquest 12485;
+		setquest 12486;
+		setquest 12487;
+		end;
+	}
+	if (ill_laby == 3) {
+		mes "[Esmeralda]";
+		mes "I've collected information about the 4 guild members, so if you need anything, please check it. Perhaps traces of my members lie beyond this twisted rift.";
+		close;
+	}
+	if (ill_laby == 4) {
+		mes "[Esmeralda]";
+		mes "Oh, thank you. I almost gave up, but you really saved all of our new recruits.";
+		next;
+		select( "(Can these remains really be called new recruits?)" );
+		mes "[Esmeralda]";
+		mes "Thank you so much. First, we need to summon the souls of our guild members to this area. I think this place will be better than the city until complete revival work is done.";
+		next;
+		mes "[Esmeralda]";
+		mes "Oh, and it's a bit difficult to show our guild's soul summoning process if you're not a member of the guild. Could you please go outside the dungeon for a moment?";
+		next;
+		if (select( "Can't I just watch?", "Of course" ) == 1) {
+			mes "[Esmeralda]";
+			mes "Ah, it would be a bit awkward to show this to someone outside the guild...";
+			close;
+		}
+		mes "[Esmeralda]";
+		mes "Thank you for your consideration. Then I'll send you outside for a while.";
+		close2;
+		ill_laby = 5;
+		erasequest 12488;
+		setquest 12489;
+		warp "prt_fild01",136,365;
+		end;
+	}
+	end;
+
+OnInit:
+	setunittitle( getnpcid(0), "<Priest Guild Leader>" );
+
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(12483) == 1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(12488) == 1" );
+	end;
+}
+
+prontera,212,320,0	script	#iol002	HIDDEN_WARP_NPC,4,4,{
+	end;
+OnTouch:
+	if (ill_laby == 1) {
+		cloakoffnpcself( "Esmeralda#2" );
+		end;
+	}
+	end;
+}
+
+prontera,212,320,3	script(CLOAKED)	Esmeralda#2	4_GEFFEN_09,2,3,{
+	if (ill_laby == 1) {
+		mes "[Esmeralda]";
+		mes "Huh? What's going on? Did something happen to our guild members?";
+		next;
+		select( "(Inform her about the terrible thing that happened to the priest guild)" );
+		mes "[Esmeralda]";
+		mes "Our new recruits are missing?";
+		mes "Sigh... Is it a guild tradition? It is always like this every year...";
+		next;
+		mes "[Esmeralda]";
+		mes "Thanks for telling me. I guess I'll have to go take care of these guys. God's blessings be with you, adventurer...";
+		close2;
+		ill_laby = 2;
+		erasequest 12482;
+		setquest 12483;
+		cloakonnpcself();
+		end;
+	}
+	end;
+
+OnTouch:
+	if (ill_laby == 1) {
+		npctalk "Guided by the light, the Prontera Priest Guild is recruiting new guild members", "", bc_self;
+		end;
+	}
+	end;
+
+OnInit:
+	setunittitle( getnpcid(0), "<Priest Guild Leader>" );
+
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(12482) == 1" );
+	end;
+}
+
+prt_mz03_i,107,104,0	script	#iold01	HIDDEN_WARP_NPC,4,4,{
+	end;
+OnTouch:
+	if (ill_laby == 3 && isbegin_quest(12484) == 1) {
+		cloakoffnpcself( "Trace of Andrea#D" );
+		end;
+	}
+	end;
+}
+
+prt_mz03_i,10,18,0	script	#iold02	HIDDEN_WARP_NPC,4,4,{
+	end;
+OnTouch:
+	if (ill_laby == 3 && isbegin_quest(12485) == 1) {
+		cloakoffnpcself( "Trace of Anes#D" );
+		end;
+	}
+	end;
+}
+
+prt_mz03_i,135,68,0	script	#iold03	HIDDEN_WARP_NPC,4,4,{
+	end;
+OnTouch:
+	if (ill_laby == 3 && isbegin_quest(12486) == 1) {
+		cloakoffnpcself( "Trace of Silvano#D" );
+		end;
+	}
+	end;
+}
+
+prt_mz03_i,183,26,0	script	#iold04	HIDDEN_WARP_NPC,4,4,{
+	end;
+OnTouch:
+	if (ill_laby == 3 && isbegin_quest(12487) == 1) {
+		cloakoffnpcself( "Trace of Cecilia#D" );
+		end;
+	}
+	end;
+}
+
+prt_mz03_i,107,104,3	script(CLOAKED)	Trace of Andrea#D	4_M_ANDREA_D,{
+	getmapxy .@map$,.@x,.@y, BL_NPC;
+
+	switch( .@x ) {
+	case 107:	// Trace of Andrea#D
+		.@quest_id = 12484;
+		break;
+	case 10:	// Trace of Anes#D
+		.@quest_id = 12485;
+		break;
+	case 135:	// Trace of Silvano#D
+		.@quest_id = 12486;
+		break;
+	case 183:	// Trace of Cecilia#D
+		.@quest_id = 12487;
+		break;
+	}
+	if (ill_laby == 3 && isbegin_quest(.@quest_id) == 1) {
+		mes "^0000ffYou found the " + strnpcinfo(1) + ". Would you like to take care of it?^000000";
+		next;
+		if (select( "Cancel", "Take care of it" ) == 1) {
+			mes "^0000ffCancelled the process.^000000";
+			close;
+		}
+		progressbar "FFFF00",5;
+		specialeffect EF_HO_UP;
+		erasequest .@quest_id;
+		cloakonnpcself();
+		if (F_queststatus(HAVEQUEST,12484,12485,12486,12487) == 0) {
+			ill_laby = 4;
+			setquest 12488;
+			mes "^0000ffYou found traces of guild members. Let's go find Esmeralda inside the labyrinth.^000000";
+			close2;
+			warp "prt_fild01",136,365;
+			end;
+		}
+		end;
+	}
+	end;
+
+OnInit:
+	getmapxy .@map$,.@x,.@y, BL_NPC;
+
+	switch( .@x ) {
+	case 107:	// Trace of Andrea#D
+		.@quest_id = 12484;
+		break;
+	case 10:	// Trace of Anes#D
+		.@quest_id = 12485;
+		break;
+	case 135:	// Trace of Silvano#D
+		.@quest_id = 12486;
+		break;
+	case 183:	// Trace of Cecilia#D
+		.@quest_id = 12487;
+		break;
+	}
+	questinfo( QTYPE_CLICKME, QMARK_YELLOW, "isbegin_quest(" + .@quest_id + ") == 1" );
+	end;
+}
+prt_mz03_i,10,18,3	duplicate(Trace of Andrea#D)	Trace of Anes#D	4_F_ANES_D
+prt_mz03_i,135,68,3	duplicate(Trace of Andrea#D)	Trace of Silvano#D	4_M_SILVANO_D
+prt_mz03_i,183,26,3	duplicate(Trace of Andrea#D)	Trace of Cecilia#D	4_F_CECILIA_D

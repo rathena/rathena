@@ -1,0 +1,30 @@
+//===== rAthena Script =======================================
+//= Ice Castle Warp Script
+//===== By: ==================================================
+//= Manuel Sintos
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Warp Points for Ice Castle
+//============================================================
+
+
+icecastle,5,128,0	warp	icecastle0001	2,2,jor_back1,383,230
+jor_back1,387,230,0	warp	icecastle0002	2,2,icecastle,9,128
+
+jor_back1,217,392,0	warp	icecastle0003	2,2,jor_back2,231,9
+jor_back2,231,5,0	warp	icecastle0004	2,2,jor_back1,217,388
+
+jor_back1,222,18,0	warp	icecastle0005	2,2,jor_tail,220,291
+jor_tail,219,295,0	warp	icecastle0006	2,2,jor_back1,223,22
+
+jor_back1,131,8,0	warp	icecastle0007	2,2,jor_tail,135,281
+jor_tail,131,284,0	warp	icecastle0008	2,2,jor_back1,131,13
+
+jor_back1,98,9,0	warp	icecastle0009	2,2,jor_tail,98,284
+jor_tail,99,288,0	warp	icecastle0010	2,2,jor_back1,98,14
+
+jor_back2,9,246,0	warp	icecastle0011	2,2,jor_back3,366,246
+jor_back3,371,247,0	warp	icecastle0012	2,2,jor_back2,13,247

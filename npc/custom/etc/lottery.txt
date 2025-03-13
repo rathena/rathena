@@ -19,14 +19,14 @@
 
 -	script	lotterygenerator	-1,{
 OnInit:
-	set $L_TicketPrice,4750; // TICKET COST
-	set $L_Prize_Money,5000000; // JACKPOT AMOUNT
-	set $L_Prize_Money_Small,1000000; // SECONDARY PRIZE
+	set $L_TicketPrice,5000; // TICKET COST
+	set $L_Prize_Money,50000000; // JACKPOT AMOUNT
+	set $L_Prize_Money_Small,10000000; // SECONDARY PRIZE
 	if ($LID == 0) goto L_GenID;
 	end;
 
 	//Modify for own time
-OnClock2045:
+OnClock2200:
 	// CHECKS IF LOTTERY IS RIGGED
 	if ($L_Rigged == 1) goto L_Rigged_Draw;
 	// GENERATES RANDOM NUMBERS 1-40
@@ -88,7 +88,7 @@ L_Rigged_Draw:
 	goto L_Broadcast;
 }
 
-prontera,141,182,5	script	Lottery	76,{
+prontera,139,180,5	script	Lottery	76,{
 L_Begin:
 	mes "[Lottery]";
 	mes "Winning Lotto Numbers ("+$LID2+"):";
@@ -228,7 +228,7 @@ L_Confirm:
 	set #LID,$LID;
 L_Confirm2:
 	mes "[Lottery]";
-	mes "The live broadcasted draw is at 9pm.";
+	mes "The live broadcasted draw is at 10pm.";
 	mes "You can claim your ticket between then and the next draw.";
 	next;
 	mes "[Lottery]";

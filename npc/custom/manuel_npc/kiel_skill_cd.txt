@@ -1,0 +1,6 @@
+
+function	script	reduceSkillCD	{
+	bonus2 bSkillCooldown,"WZ_STORMGUST",-21*10;
+	bonus2 bSkillCooldown,"WL_CRIMSONROCK",-21*10;
+	bonus2 bSkillCooldown,"WL_CHAINLIGHTNING",-21*10;
+}

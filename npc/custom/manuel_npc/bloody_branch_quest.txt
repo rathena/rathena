@@ -1,0 +1,134 @@
+
+// @reloadnpc npc/custom/manuel_npc/bloody_branch_quest.txt
+
+prontera,155,238,3	script	Bloody Branch Quest	635,{
+	// Set name of the NPC
+	set @name$, "[^1100AA Bloody Branch Quest ^000000]";
+
+	// Set a cooldown of 60 minutes (3600 seconds)
+	set .questCoolDown, 3600;
+
+	OnTouch:
+		// Event label for counting Porings
+    	set .@poringCount, mobcount("lhz_dun03", "Bloody Branch Quest::OnPoringKilled");
+
+		if (isPoringKilled == 1) {
+			// If the player who talks to the NPC is the same as the killer
+			if (@poringKillerID == getcharid(0)) {
+				// Give the reward to the killer
+				getitem 12103, 1; // Bloody Branch (ID: 12103)
+				mes @name$;
+				mes "Here is your reward for killing the Poring!";
+				// Reset all relevant quest flags and variables
+				set isPoringKilled, 0;
+				set isBBQuestStart, 0;
+				set isBBQuestProgress, 0;
+				set @summonerID, 0;
+				set @poringKillerID, 0;
+				close;
+			} else {
+				// If someone else talks to the NPC, tell them no reward is available
+				mes @name$;
+				mes "You didn't kill the Poring, so no reward for you.";
+				close;
+			}
+		}
+
+		if (gettimetick(2) < quest_cooldownBBQuest) {
+			mes @name$;
+			mes "Go back after 1 hour!";
+		 	close;
+		}
+
+		if (isBBQuestProgress == 1) {
+			if (.@poringCount == 0) {
+				set quest_cooldownBBQuest, gettimetick(2) + .questCoolDown;
+
+				set isBBQuestStart, 0;
+				set isBBQuestProgress, 0;
+
+				mes @name$;
+	    		mes "Its seems someone already killed pet poring!";
+				close;
+			}
+
+			mes @name$;
+	    	mes "Go! find the pet poring and kill it!";
+			close;
+		}
+
+		if (isBBQuestStart != 1) {
+			mes @name$;
+			mes "There is pet Poring by someone we didn't know inside Somatology Laboratory lvl 3.";
+			mes "if you found and killed it. Go back to me and I'll give you the reward.";
+			next;
+			mes @name$;
+			mes "But first you need to pay me for ^1100AA10,000,000^000000 Zeny.";
+
+			switch(select("Okay, I'll pay you:Nope")) {
+				case 1:
+					next;
+					if (Zeny < 10000000) {
+						mes @name$;
+						mes "You don't have enough money.";
+						close;
+					}
+					else {
+						// Deduct Zeny here
+						set Zeny, Zeny - 10000000;
+
+						mes @name$;
+						mes "Now, Go find the pet Poring at Somatology Laboratory lvl 3!";
+
+						// call the OnSummonPoring Event
+						callsub OnSummonPoring;
+						close;
+					}
+				break;
+
+				case 2:
+					next;
+					mes @name$;
+					mes "No worries mate!";
+					mes "You can comeback anytime.";
+					close;
+				break;
+			}
+		}
+	end;
+
+	OnSummonPoring:
+		// set the flag the the BB Quest have started
+		set isBBQuestStart, 1;
+		// set the flag of the Progress of killing the pet poring
+		set isBBQuestProgress, 1;
+
+		// Store the ID of the player who initiates the quest (the summoner)
+		set @summonerID, getcharid(0); // Get the character ID of the summoner
+		set @summonerName$, strcharinfo(0); // Get the summoner's name
+
+		.@map$ = "lhz_dun03";
+		getfreecell("lhz_dun03",.@x,.@y);
+
+		// Summon the Poring randomly in target map
+		monster .@map$, .@x, .@y, "Poring Pet", 1002, 1, "Bloody Branch Quest::OnPoringKilled";
+
+		// For Debugging
+		// announce "The player: " + @summonerName$ + " summoned the Poring Pet (" + .@x + ", " + .@y + ") at " + .@map$, 0;
+	end;
+
+	OnPoringKilled:
+		set quest_cooldownBBQuest, gettimetick(2) + .questCoolDown;
+
+		// This label is called when the Poring is killed
+		set isPoringKilled, 1; // Set the flag that the Poring is killed
+
+		// This label is called when the Poring is killed
+		set @poringKillerName$, strcharinfo(0); // Get the killer's name
+		set @poringKillerID, getcharid(0); // Get the killer's character ID
+
+		// Announce the Poring was killed and by whom
+		mapannounce "lhz_dun03", "The Poring Pet has been killed by " + @poringKillerName$ + "!", 0;
+	end;
+
+}

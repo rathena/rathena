@@ -1,0 +1,31 @@
+
+//===== By:==================================================
+//= Manuel Sintos
+// @reloadnpc npc/custom/manuel_npc/activity_token_trader.txt
+
+prontera,164,158,3	script	Activity Token Trader	564,{
+
+	switch(select("Costume Headgear (Upper):Costume Headgear (Middle):Costume Headgear (Lower)")) {
+		case 1:
+			callshop "cHGupper",0;
+			end;
+		break;
+		case 2:
+			callshop "cHGmiddle",0;
+			end;
+		break;
+		case 3:
+			callshop "cHGlower",0;
+			end;
+		break;
+	}
+
+	OnInit:
+		waitingroom "Activity Token Trader",0;
+	end;
+}
+
+//The hidden npc which holds the function
+-	itemshop	cHGupper	-1,30343,20052:50,20401:50,31396:50,20218:50,31978:50,31979:50
+-	itemshop	cHGmiddle	-1,30343,19550:50
+-	itemshop	cHGlower	-1,30343,31057:50,31545:50,20405:50,31186:50,20315:50,31625:50,420047:50,20132:20,20407:20,31395:50,31568:50,30050:50

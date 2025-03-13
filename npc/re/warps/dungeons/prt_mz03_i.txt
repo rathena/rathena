@@ -1,0 +1,144 @@
+//===== rAthena Script ======================================= 
+//= Illusion of Labyrinth Warp Script
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Atemo]
+//============================================================
+
+prt_mz03_i,5,186,0	warp2	3maze1a1_3maze2d2	1,1,prt_mz03_i,151,134
+prt_mz03_i,22,194,0	warp2	3maze1a2_3maze4e1	1,1,prt_mz03_i,175,48
+prt_mz03_i,85,174,0	warp2	3maze1c1_3maze4a3	1,1,prt_mz03_i,14,48
+prt_mz03_i,102,165,0	warp2	3maze1c2_3maze4d2	1,1,prt_mz03_i,137,71
+prt_mz03_i,125,171,0	warp2	3maze1d1_3maze3c2	1,1,prt_mz03_i,105,111
+prt_mz03_i,154,181,0	warp2	3maze1d2_3maze4d1	1,1,prt_mz03_i,139,48
+prt_mz03_i,175,165,0	warp2	3maze1e1_3maze5b3	1,1,prt_mz03_i,71,12
+prt_mz03_i,194,175,0	warp2	3maze1e2_3maze2e2	1,1,prt_mz03_i,191,139
+prt_mz03_i,5,140,0	warp2	3maze2a1_3maze4c4	1,1,prt_mz03_i,111,56
+prt_mz03_i,18,154,0	warp2	3maze2a2_3maze5b1	1,1,prt_mz03_i,48,21
+prt_mz03_i,23,125,0	warp2	3maze2a3_3maze4e2	1,1,prt_mz03_i,177,71
+prt_mz03_i,54,154,0	warp2	3maze2b1_3maze3d2	1,1,prt_mz03_i,142,111
+prt_mz03_i,63,125,0	warp2	3maze2b2_3maze3c1	1,1,prt_mz03_i,88,97
+prt_mz03_i,85,146,0	warp2	3maze2c1_3maze3a2	1,1,prt_mz03_i,22,88
+prt_mz03_i,98,154,0	warp2	3maze2c2_3maze5c2	1,1,prt_mz03_i,99,31
+prt_mz03_i,114,145,0	warp2	3maze2c3_3maze5e1	1,1,prt_mz03_i,168,22
+prt_mz03_i,137,125,0	warp2	3maze2d1_3maze4b2	1,1,prt_mz03_i,71,71
+prt_mz03_i,154,134,0	warp2	3maze2d2_3maze1a1	1,1,prt_mz03_i,8,186
+prt_mz03_i,166,139,0	warp2	3maze2e1_3maze3b4	1,1,prt_mz03_i,63,88
+prt_mz03_i,194,139,0	warp2	3maze2e2_3maze1e2	1,1,prt_mz03_i,191,175
+prt_mz03_i,17,114,0	warp2	3maze3a1_3maze3d1	1,1,prt_mz03_i,129,102
+prt_mz03_i,22,85,0	warp2	3maze3a2_3maze2c1	1,1,prt_mz03_i,88,146
+prt_mz03_i,45,104,0	warp2	3maze3b1_3maze4c3	1,1,prt_mz03_i,96,48
+prt_mz03_i,63,114,0	warp2	3maze3b2_3maze4a2	1,1,prt_mz03_i,14,71
+prt_mz03_i,74,97,0	warp2	3maze3b3_3maze5b2	1,1,prt_mz03_i,56,8
+prt_mz03_i,63,85,0	warp2	3maze3b4_3maze2e1	1,1,prt_mz03_i,169,139
+prt_mz03_i,85,97,0	warp2	3maze3c1_3maze2b2	1,1,prt_mz03_i,63,128
+prt_mz03_i,105,114,0	warp2	3maze3c2_3maze1d1	1,1,prt_mz03_i,128,174
+prt_mz03_i,114,95,0	warp2	3maze3c3_3maze5e2	1,1,prt_mz03_i,176,8
+prt_mz03_i,125,105,0	warp2	3maze3d1_3maze1b1	1,1,prt_mz03_i,58,191
+prt_mz03_i,142,114,0	warp2	3maze3d2_3maze2b1	1,1,prt_mz03_i,54,151
+prt_mz03_i,168,94,0	warp2	3maze3e1_3maze4e3	1,1,prt_mz03_i,191,54
+prt_mz03_i,182,85,0	warp2	3maze3e2_23maze3	1,1,prt_maze02,100,179
+prt_mz03_i,194,94,0	warp2	3maze3e3_3maze5d1	1,1,prt_mz03_i,151,22
+prt_mz03_i,5,58,0	warp2	3maze4a1_3maze5e4	1,1,prt_mz03_i,191,15
+prt_mz03_i,14,74,0	warp2	3maze4a2_3maze3b2	1,1,prt_mz03_i,63,111
+prt_mz03_i,14,45,0	warp2	3maze4a3_3maze1c1	1,1,prt_mz03_i,88,174
+prt_mz03_i,52,45,0	warp2	3maze4b1_3maze5a2	1,1,prt_mz03_i,16,31
+prt_mz03_i,85,56,0	warp2	3maze4c1_3maze5e3	1,1,prt_mz03_i,176,31
+prt_mz03_i,104,74,0	warp2	3maze4c2_3maze5c3	1,1,prt_mz03_i,111,22
+prt_mz03_i,96,45,0	warp2	3maze4c3_3maze3b1	1,1,prt_mz03_i,48,104
+prt_mz03_i,114,56,0	warp2	3maze4c4_3maze2a1	1,1,prt_mz03_i,8,140
+prt_mz03_i,137,74,0	warp2	3maze4d2_3maze1c2	1,1,prt_mz03_i,102,168
+prt_mz03_i,175,45,0	warp2	3maze4e1_3maze1a2	1,1,prt_mz03_i,22,191
+prt_mz03_i,177,74,0	warp2	3maze4e2_3maze2a3	1,1,prt_mz03_i,23,128
+prt_mz03_i,194,54,0	warp2	3maze4e3_3maze3e1	1,1,prt_mz03_i,171,94
+prt_mz03_i,23,5,0	warp2	3maze5a1_3maze5c1	1,1,prt_mz03_i,88,13
+prt_mz03_i,16,34,0	warp2	3maze5a2_3maze4b1	1,1,prt_mz03_i,52,48
+prt_mz03_i,45,21,0	warp2	3maze5b1_3maze2a2	1,1,prt_mz03_i,18,151
+prt_mz03_i,54,5,0	warp2	3maze5b2_3maze3b3	1,1,prt_mz03_i,71,97
+prt_mz03_i,74,12,0	warp2	3maze5b3_3maze1e1	1,1,prt_mz03_i,175,168
+prt_mz03_i,85,13,0	warp2	3maze5c1_3maze5a1	1,1,prt_mz03_i,23,8
+prt_mz03_i,99,34,0	warp2	3maze5c2_3maze2c2	1,1,prt_mz03_i,98,151
+prt_mz03_i,114,22,0	warp2	3maze5c3_3maze4c2	1,1,prt_mz03_i,104,71
+prt_mz03_i,165,22,0	warp2	3maze5e1_3maze2c3	1,1,prt_mz03_i,111,146
+prt_mz03_i,176,5,0	warp2	3maze5e2_3maze3c3	1,1,prt_mz03_i,111,95
+prt_mz03_i,176,34,0	warp2	3maze5e3_3maze4c1	1,1,prt_mz03_i,88,56
+prt_mz03_i,194,15,0	warp2	3maze5e4_3maze4a1	1,1,prt_mz03_i,8,58
+
+prt_mz03_i,58,194,0	script	3maze1b1_Random1	WARPNPC,1,1,{
+	end;
+OnTouch:
+	switch( rand(1,4) ) {
+	case 1:
+		warp "prt_mz03_i",88,146;
+		end;
+	case 2:
+		warp "prt_mz03_i",8,58;
+		end;
+	case 3:
+		warp "prt_mz03_i",137,128;
+		end;
+	case 4:
+		warp "prt_mz03_i",48,21;
+		end;
+	}
+	end;
+}
+
+prt_mz03_i,74,74,0	script	3maze4b2_Random2	WARPNPC,1,1,{
+	end;
+OnTouch:
+	switch( rand(1,4) ) {
+	case 1:
+		warp "prt_mz03_i",88,146;
+		end;
+	case 2:
+		warp "prt_mz03_i",8,58;
+		end;
+	case 3:
+		warp "prt_mz03_i",137,128;
+		end;
+	case 4:
+		warp "prt_mz03_i",48,21;
+		end;
+	}
+	end;
+}
+
+prt_mz03_i,139,45,0	script	3maze4d1_Random3	WARPNPC,1,1,{
+	end;
+OnTouch:
+	switch( rand(1,4) ) {
+	case 1:
+		warp "prt_mz03_i",88,146;
+		end;
+	case 2:
+		warp "prt_mz03_i",8,58;
+		end;
+	case 3:
+		warp "prt_mz03_i",137,128;
+		end;
+	case 4:
+		warp "prt_mz03_i",48,21;
+		end;
+	}
+	end;
+}
+
+prt_mz03_i,154,22,0	script	3maze5d1_Random4	WARPNPC,1,1,{
+	end;
+OnTouch:
+	switch( rand(1,4) ) {
+	case 1:
+		warp "prt_mz03_i",88,146;
+		end;
+	case 2:
+		warp "prt_mz03_i",8,58;
+		end;
+	case 3:
+		warp "prt_mz03_i",137,128;
+		end;
+	case 4:
+		warp "prt_mz03_i",48,21;
+		end;
+	}
+	end;
+}

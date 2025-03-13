@@ -1,0 +1,44 @@
+//===== By:==================================================
+//= Manuel Sintos
+// @reloadnpc npc/custom/manuel_npc/autofp.txt
+// Need Item: Glistening Coat (7139)
+
+-	script	autoFP	-,{
+	OnAutoFP:
+		// Attach the player who used the command
+		attachrid(getcharid(3));
+
+		// Get the character ID
+		.@char_id = getcharid(3);
+
+		// Get the current map name where the player is located
+		.@map$ = strcharinfo(3);
+
+		// Define an array of skill IDs.
+		setarray .useSkill[0], 479;
+
+
+
+
+		switch(BaseJob) {
+
+			case Job_Alchemist:
+
+			break;
+
+			default:
+				mes "Please become a Alchemist First!";
+				close;
+			break;
+		}
+
+
+
+
+	end;
+	
+	OnInit:
+		bindatcmd "autofp", strnpcinfo(3) + "::OnAutoFP";
+		bindatcmd "autofpoff", strnpcinfo(3) + "::OnAutoFP";
+	end;
+}

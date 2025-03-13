@@ -1,0 +1,94 @@
+//===== By:==================================================
+//= Manuel Sintos
+// @reloadnpc npc/custom/manuel_npc/autofarm.txt
+
+-	script	AutoFarm	-,{
+	
+	OnInit:
+		bindatcmd "autofarm", strnpcinfo(3) + "::OnAutoFarmCmd";
+		bindatcmd "autofarmoff", strnpcinfo(3) + "::OnAutoFarmOffCmd";
+	end;
+
+	OnAutoFarmCmd:
+		// Attach the player who used the command
+		attachrid(getcharid(3));
+
+		// Get the character ID
+		.@char_id = getcharid(3);
+
+		// Get the current map name where the player is located
+		.@map$ = strcharinfo(3);
+
+		// Define an array of skill IDs. 85=Lord of Vermillion and 89=Storm Gust
+		setarray .useSkill[0], 85, 89;
+
+		// Get the player's job name based on their class ID
+		.job$ = jobname(Class);
+
+		// Check if the player is already autofarming
+		if (.isAutofarming[.@char_id]) {
+			message strcharinfo(0), "You are already using the @autofarm.";
+		    end;
+		}
+
+		// Lets restrict for High Wizard and Arc Mage job only
+		if (.job$ == "High Wizard" || .job$ == "Arch Mage") {
+			// Set the autofarming flag to true (1)
+			.isAutofarming[.@char_id] = 1;
+
+			message strcharinfo(0), "Autofarm is On.";
+
+			// infinitely loop the action unless the player log out or cancel it using the @autofarmoff
+			while(.isAutofarming[.@char_id]) {
+				// Randomly select one skill from the array
+				set .@randomSkill, .useSkill[rand(getarraysize(.useSkill))];
+
+				// Find an random empty cell on the current map and store it to .@x and .@y
+				getfreecell(.@map$, .@x, .@y);
+
+				// Warp the player
+				unitwarp(.@char_id, .@map$, .@x, .@y);
+
+				// Pause for 1 seconds before executing the next action
+				sleep 1000;
+
+				// Use the skill base on the randomSkill selected by lvl 10
+				unitskillusepos .@char_id, .@randomSkill, 10, .@x, .@y;
+
+				// Loop again after 1 second
+				sleep 1000;
+			}
+
+		}
+		else {
+			mes "Please become a High Wizard first!";
+			close;
+		}
+	end;
+
+	OnAutoFarmOffCmd:
+		// Attach the player who use the command
+		attachrid(getcharid(3));
+
+		// Get the player character ID
+		.@char_id = getcharid(3);
+
+		// Manually turn off the autofarming by setting the flaf = 0
+		if (.isAutofarming[.@char_id]) {
+			.isAutofarming[.@char_id] = 0;
+			message strcharinfo(0), "Autofarm is Off.";
+		}
+		else {
+			message strcharinfo(0), "Autofarm is already Off.";
+		}
+		end;
+	end;
+
+	OnPCLogoutEvent:
+		if (.isAutofarming[getcharid(3)]) {
+			.isAutofarming[getcharid(3)] = 0;
+			debugmes "" + strcharinfo(0) + " has logout when doing autofarming!";
+			
+		}
+	end;
+}

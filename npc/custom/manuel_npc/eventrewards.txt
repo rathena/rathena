@@ -1,0 +1,10 @@
+//===== By:==================================================
+// @reloadnpc npc/custom/manuel_npc/eventrewards.txt
+
+function	script	eventRewards	{
+	//reward for winning
+	getitem 7227, 10;
+	getitem 30341, 10;
+	getitem 30343, 10;
+	getitem 23763, 5;
+}
