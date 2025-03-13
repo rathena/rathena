@@ -411,7 +411,7 @@ function	Get_Job_Equip	{
 			case Job_Wizard:
 				getitem 5753,1;	break;	//	Magic Stone Hat [1]
 			case Job_Hunter:
-				getitem 5748,1;	break;	//	Sniper Goggle [1]
+				getitem 5748,1; getitem 6124,1;	break;	//	Sniper Goggle [1]
 			case Job_Priest:
 				getitem 5747,1;	break;	//	Mitra [1]
 			case Job_Blacksmith:

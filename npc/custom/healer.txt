@@ -42,7 +42,7 @@
 		sc_start SC_SHRIMP,1200000,5;
 		sc_start SC_GLORIA,1200000,5;
 		//sc_start SC_FULL_THROTTLE,1200000,5;
-		sc_start SC_SPEEDUP1,1200000,50;
+		//sc_start SC_SPEEDUP1,1200000,50;
 		
 		// For GM Buffs only
 		// or the Player who has a Healer Buffs Ticket
