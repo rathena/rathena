@@ -50,6 +50,12 @@ using namespace rathena;
 	#define MIN_POS_INTERVAL 20
 #endif
 
+// Minimum delay after which new client-sided commands for slaves are accepted
+// Applies to mercenaries and homunculus
+#ifndef MIN_DELAY_SLAVE
+	#define MIN_DELAY_SLAVE MAX_ASPD_NOPC * 2
+#endif
+
 // Directions values
 // 1 0 7
 // 2 . 6
@@ -1828,7 +1834,7 @@ TIMER_FUNC(unit_resume_running){
 
 /**
  * Sets the delays that prevent attacks and skill usage considering the bl type
- * TODO: Currently this function is only called for normal attacks and parry events and is a work-in-progress
+ * Currently this function only handles normal attacks, cast begin and parry events
  * @param bl Object to apply attack delay to
  * @param tick Current tick
  * @param event The event that resulted in calling this function
@@ -1844,8 +1850,9 @@ void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event)
 		case BL_PC:
 			switch (event) {
 				case DELAY_EVENT_ATTACK:
+				case DELAY_EVENT_CASTBEGIN_ID:
+				case DELAY_EVENT_CASTBEGIN_POS:
 				case DELAY_EVENT_PARRY:
-					// TODO: This should also happen on cast begin
 					// Officially for players it just remembers the last attack time here and applies the delays during the comparison
 					// But we pre-calculate the delays instead and store them in attackabletime and canact_tick
 					ud->attackabletime = tick + status_get_adelay(&bl);
@@ -1855,7 +1862,7 @@ void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event)
 					break;
 			}
 			break;
-		default:
+		case BL_MOB:
 			switch (event) {
 				case DELAY_EVENT_ATTACK:
 					// This represents setting of attack delay (recharge time) that happens for non-PCs
@@ -1863,7 +1870,76 @@ void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event)
 					break;
 			}
 			break;
+		case BL_HOM:
+			switch (event) {
+				case DELAY_EVENT_ATTACK:
+					// This represents setting of attack delay (recharge time) that happens for non-PCs
+					ud->attackabletime = tick + status_get_adelay(&bl);
+					break;
+				case DELAY_EVENT_CASTBEGIN_ID:
+				case DELAY_EVENT_CASTBEGIN_POS:
+					// For non-PCs that can be controlled from the client, there is a security delay of 200ms
+					// However to prevent tricks to use skills faster, we have a config to use amotion instead
+					if (battle_config.amotion_min_skill_delay == 1 && status_get_amotion(&bl) > MIN_DELAY_SLAVE)
+						ud->canact_tick = tick + status_get_amotion(&bl);
+					else
+						ud->canact_tick = tick + MIN_DELAY_SLAVE;
+					break;
+			}
+			break;
+		case BL_MER:
+			switch (event) {
+				case DELAY_EVENT_ATTACK:
+					// This represents setting of attack delay (recharge time) that happens for non-PCs
+					ud->attackabletime = tick + status_get_adelay(&bl);
+					break;
+				case DELAY_EVENT_CASTBEGIN_ID:
+					// For non-PCs that can be controlled from the client, there is a security delay of 200ms
+					// However to prevent tricks to use skills faster, we have a config to use amotion instead
+					if (battle_config.amotion_min_skill_delay == 1 && status_get_amotion(&bl) > MIN_DELAY_SLAVE)
+						ud->canact_tick = tick + status_get_amotion(&bl);
+					else
+						ud->canact_tick = tick + MIN_DELAY_SLAVE;
+					break;
+				case DELAY_EVENT_CASTBEGIN_POS:
+					// For ground skills, mercenaries work similar to players
+					ud->attackabletime = tick + status_get_adelay(&bl);
+					ud->canact_tick = tick + status_get_amotion(&bl) + MAX_ASPD_NOPC;
+					break;
+			}
+			break;
+		default:
+			// Fallback to original behavior as unit type is not fully integrated yet
+			switch (event) {
+				case DELAY_EVENT_ATTACK:
+					ud->attackabletime = tick + status_get_adelay(&bl);
+					break;
+				case DELAY_EVENT_CASTBEGIN_ID:
+				case DELAY_EVENT_CASTBEGIN_POS:
+					ud->canact_tick = tick + status_get_amotion(&bl);
+					break;
+			}
+			break;
 	}
+}
+
+/**
+ * Updates skill delays according to cast time and minimum delay, and applies security casttime
+ * @param bl Object to apply update delay for
+ * @param tick Current tick
+ * @param event The event that resulted in calling this function
+ */
+void unit_set_castdelay(unit_data& ud, t_tick tick, int32 casttime) {
+	// Use casttime if that is longer than previous delay
+	if (casttime > 0 && DIFF_TICK(tick + casttime, ud.canact_tick) > 0)
+		ud.canact_tick = tick + casttime;
+
+	// Use minimum delay if that is longer
+	if (DIFF_TICK(tick + battle_config.min_skill_delay_limit, ud.canact_tick) > 0)
+		ud.canact_tick = tick + battle_config.min_skill_delay_limit;
+
+	// Security delay that will be removed at castend again
+	ud.canact_tick = ud.canact_tick + SECURITY_CASTTIME;
 }
 
 /**
@@ -2378,8 +2454,13 @@ int32 unit_skilluse_id2(struct block_list *src, int32 target_id, uint16 skill_id
 	if( casttime <= 0 )
 		ud->state.skillcastcancel = 0;
 
-	if (!sd || sd->skillitem != skill_id || skill_get_cast(skill_id, skill_lv))
-		ud->canact_tick = tick + i64max(casttime, max(status_get_amotion(src), battle_config.min_skill_delay_limit)) + SECURITY_CASTTIME;
+	// Skills used from items don't seem to give any attack or act delay
+	if (sd == nullptr || sd->skillitem != skill_id) {
+		// Set attack and act delays
+		unit_set_attackdelay(*src, tick, DELAY_EVENT_CASTBEGIN_ID);
+	}
+	// Apply cast time and general delays
+	unit_set_castdelay(*ud, tick, (skill_get_cast(skill_id, skill_lv) != 0) ? casttime : 0);
 
 	if( sd ) {
 		switch( skill_id ) {
@@ -2561,8 +2642,14 @@ int32 unit_skilluse_pos2( struct block_list *src, int16 skill_x, int16 skill_y, 
 #endif
 
 	ud->state.skillcastcancel = castcancel&&casttime>0?1:0;
-	if (!sd || sd->skillitem != skill_id || skill_get_cast(skill_id, skill_lv))
-		ud->canact_tick = tick + i64max(casttime, max(status_get_amotion(src), battle_config.min_skill_delay_limit)) + SECURITY_CASTTIME;
+
+	// Skills used from items don't seem to give any attack or act delay
+	if (sd == nullptr || sd->skillitem != skill_id) {
+		// Set attack and act delays
+		unit_set_attackdelay(*src, tick, DELAY_EVENT_CASTBEGIN_POS);
+	}
+	// Apply cast time and general delays
+	unit_set_castdelay(*ud, tick, (skill_get_cast(skill_id, skill_lv) != 0) ? casttime : 0);
 
 // 	if( sd )
 // 	{
