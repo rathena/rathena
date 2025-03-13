@@ -138,7 +138,7 @@ Body:
       - Item: Temporal_Manteau_Box
         Price: 10000
       - Item: Season_Evt_Reward_11
-        Price: 1000
+        Price: 10000
       - Item: Main_Lucky_Box_
         Price: 10000
   - Tab: Permanent
