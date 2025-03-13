@@ -6974,6 +6974,7 @@ run as if by 'donpcevent'.
 Returned value is the game ID of the spawned monster.
 
 // Will summon a dead branch-style monster to fight for the character.
+summon "--en--",-1;
 
 ---------------------------------------
 
