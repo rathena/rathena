@@ -1834,6 +1834,7 @@ TIMER_FUNC(unit_resume_running){
 
 /**
  * Sets the delays that prevent attacks and skill usage considering the bl type
+ * Makes sure that delays are not decreased in case they are already higher
  * Currently this function only handles normal attacks, cast begin and parry events
  * @param bl Object to apply attack delay to
  * @param tick Current tick
@@ -1846,6 +1847,9 @@ void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event)
 	if (ud == nullptr)
 		return;
 
+	uint16 attack_delay = 0;
+	uint16 act_delay = 0;
+
 	switch (bl.type) {
 		case BL_PC:
 			switch (event) {
@@ -1855,10 +1859,10 @@ void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event)
 				case DELAY_EVENT_PARRY:
 					// Officially for players it just remembers the last attack time here and applies the delays during the comparison
 					// But we pre-calculate the delays instead and store them in attackabletime and canact_tick
-					ud->attackabletime = tick + status_get_adelay(&bl);
+					attack_delay = status_get_adelay(&bl);
 					// A fixed delay is added here which is equal to the minimum attack motion you can get
 					// This ensures that at max ASPD attackabletime and canact_tick are equal
-					ud->canact_tick = tick + status_get_amotion(&bl) + (pc_maxaspd(reinterpret_cast<map_session_data*>(&bl)) / AMOTION_DIVIDER_PC);
+					act_delay = status_get_amotion(&bl) + (pc_maxaspd(reinterpret_cast<map_session_data*>(&bl)) / AMOTION_DIVIDER_PC);
 					break;
 			}
 			break;
@@ -1866,7 +1870,7 @@ void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event)
 			switch (event) {
 				case DELAY_EVENT_ATTACK:
 					// This represents setting of attack delay (recharge time) that happens for non-PCs
-					ud->attackabletime = tick + status_get_adelay(&bl);
+					attack_delay = status_get_adelay(&bl);
 					break;
 			}
 			break;
@@ -1874,16 +1878,16 @@ void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event)
 			switch (event) {
 				case DELAY_EVENT_ATTACK:
 					// This represents setting of attack delay (recharge time) that happens for non-PCs
-					ud->attackabletime = tick + status_get_adelay(&bl);
+					attack_delay = status_get_adelay(&bl);
 					break;
 				case DELAY_EVENT_CASTBEGIN_ID:
 				case DELAY_EVENT_CASTBEGIN_POS:
 					// For non-PCs that can be controlled from the client, there is a security delay of 200ms
 					// However to prevent tricks to use skills faster, we have a config to use amotion instead
 					if (battle_config.amotion_min_skill_delay == 1 && status_get_amotion(&bl) > MIN_DELAY_SLAVE)
-						ud->canact_tick = tick + status_get_amotion(&bl);
+						act_delay = status_get_amotion(&bl);
 					else
-						ud->canact_tick = tick + MIN_DELAY_SLAVE;
+						act_delay = MIN_DELAY_SLAVE;
 					break;
 			}
 			break;
@@ -1891,20 +1895,20 @@ void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event)
 			switch (event) {
 				case DELAY_EVENT_ATTACK:
 					// This represents setting of attack delay (recharge time) that happens for non-PCs
-					ud->attackabletime = tick + status_get_adelay(&bl);
+					attack_delay = status_get_adelay(&bl);
 					break;
 				case DELAY_EVENT_CASTBEGIN_ID:
 					// For non-PCs that can be controlled from the client, there is a security delay of 200ms
 					// However to prevent tricks to use skills faster, we have a config to use amotion instead
 					if (battle_config.amotion_min_skill_delay == 1 && status_get_amotion(&bl) > MIN_DELAY_SLAVE)
-						ud->canact_tick = tick + status_get_amotion(&bl);
+						act_delay = status_get_amotion(&bl);
 					else
-						ud->canact_tick = tick + MIN_DELAY_SLAVE;
+						act_delay = MIN_DELAY_SLAVE;
 					break;
 				case DELAY_EVENT_CASTBEGIN_POS:
 					// For ground skills, mercenaries work similar to players
-					ud->attackabletime = tick + status_get_adelay(&bl);
-					ud->canact_tick = tick + status_get_amotion(&bl) + MAX_ASPD_NOPC;
+					attack_delay = status_get_adelay(&bl);
+					act_delay = status_get_amotion(&bl) + MAX_ASPD_NOPC;
 					break;
 			}
 			break;
@@ -1912,15 +1916,21 @@ void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event)
 			// Fallback to original behavior as unit type is not fully integrated yet
 			switch (event) {
 				case DELAY_EVENT_ATTACK:
-					ud->attackabletime = tick + status_get_adelay(&bl);
+					attack_delay = status_get_adelay(&bl);
 					break;
 				case DELAY_EVENT_CASTBEGIN_ID:
 				case DELAY_EVENT_CASTBEGIN_POS:
-					ud->canact_tick = tick + status_get_amotion(&bl);
+					act_delay = status_get_amotion(&bl);
 					break;
 			}
 			break;
 	}
+
+	// When setting delays, we need to make sure not to decrease them in case they've been set by another source already
+	if (attack_delay > 0)
+		ud->attackabletime = i64max(tick + attack_delay, ud->attackabletime);
+	if (act_delay > 0)
+		ud->canact_tick = i64max(tick + act_delay, ud->canact_tick);
 }
 
 /**
@@ -2300,8 +2310,6 @@ int32 unit_skilluse_id2(struct block_list *src, int32 target_id, uint16 skill_id
 
 	if (!combo) // Stop attack on non-combo skills [Skotlex]
 		unit_stop_attack(src);
-	else if(ud->attacktimer != INVALID_TIMER) // Elsewise, delay current attack sequence
-		ud->attackabletime = tick + status_get_adelay(src);
 
 	ud->state.skillcastcancel = castcancel;
 
