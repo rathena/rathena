@@ -4,6 +4,7 @@
 #include "atcommand.hpp"
 
 #include <cmath>
+#include <cstdio>
 #include <cstdlib>
 #include <set>
 #include <unordered_map>
@@ -9065,14 +9066,51 @@ ACMD_FUNC(mapflag) {
  *-----------------------------------*/
 ACMD_FUNC(showexp)
 {
-	if (sd->state.showexp) {
+	nullpo_retr(-1, sd);
+
+	if(message && *message)
+	{
+		// Has parameters
+		int32 minute_count;
+		if(sscanf(message, "%d", &minute_count) != 1)
+		{
+			return -1;
+		} else if(minute_count < 1)
+		{
+			return -1;
+		}
+		t_tick new_interval = minute_count * 60 * 1000;
+
+		int32 new_timer = add_timer_interval(gettick() + new_interval, pc_showexp_timer, 0, (intptr_t)sd, new_interval);
+		if(new_timer == INVALID_TIMER)
+		{
+			return -1;
+		}
+		if(sd->showexp_state.timer != INVALID_TIMER && delete_timer(sd->showexp_state.timer, pc_showexp_timer))
+		{
+			return -1;
+		}
+		sd->showexp_state.timer = new_timer;
+		sd->showexp_state.last_base_exp = sd->status.base_exp;
+		sd->showexp_state.last_job_exp = sd->status.job_exp;
+
+		// Do not return here
+
+	} else if (sd->state.showexp) {
 		sd->state.showexp = 0;
 		clif_displaymessage(fd, msg_txt(sd,1316)); // Gained exp will not be shown.
+
+		if(sd->showexp_state.timer != INVALID_TIMER && delete_timer(sd->showexp_state.timer, pc_showexp_timer))
+		{
+			return -1;
+		}
 		return 0;
 	}
 
-	sd->state.showexp = 1;
-	clif_displaymessage(fd, msg_txt(sd,1317)); // Gained exp is now shown.
+	if(!sd->state.showexp) {
+		sd->state.showexp = 1;
+		clif_displaymessage(fd, msg_txt(sd,1317)); // Gained exp is now shown.
+	}
 	return 0;
 }
 

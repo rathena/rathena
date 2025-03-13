@@ -485,6 +485,12 @@ public:
 	int32 langtype;
 	struct mmo_charstatus status;
 
+	struct s_showexp_state {
+		int32 timer;
+		t_exp last_base_exp;
+		t_exp last_job_exp;
+	} showexp_state;
+
 	// Item Storages
 	struct s_storage storage, premiumStorage;
 	struct s_storage inventory;
@@ -1516,7 +1522,7 @@ bool pc_is_maxjoblv(map_session_data *sd);
 int32 pc_checkbaselevelup(map_session_data *sd);
 int32 pc_checkjoblevelup(map_session_data *sd);
 void pc_gainexp(map_session_data *sd, struct block_list *src, t_exp base_exp, t_exp job_exp, uint8 exp_flag);
-void pc_gainexp_disp(map_session_data *sd, t_exp base_exp, t_exp next_base_exp, t_exp job_exp, t_exp next_job_exp, bool lost);
+void pc_gainexp_disp(map_session_data *sd, t_exp base_exp, t_exp next_base_exp, t_exp job_exp, t_exp next_job_exp, bool lost_base_exp, bool lost_job_exp);
 void pc_lostexp(map_session_data *sd, t_exp base_exp, t_exp job_exp);
 t_exp pc_nextbaseexp(map_session_data *sd);
 t_exp pc_nextjobexp(map_session_data *sd);
@@ -1544,6 +1550,8 @@ void pc_equipswitch_remove( map_session_data* sd, int32 index );
 void pc_checkitem(map_session_data*);
 void pc_check_available_item(map_session_data *sd, uint8 type);
 int32 pc_useitem(map_session_data*,int32);
+
+TIMER_FUNC(pc_showexp_timer);
 
 int32 pc_skillatk_bonus(map_session_data *sd, uint16 skill_id);
 int32 pc_sub_skillatk_bonus(map_session_data *sd, uint16 skill_id);
