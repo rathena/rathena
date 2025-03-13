@@ -97274,10 +97274,6 @@ Body:
     Drops:
       - Item: Carnium
         Rate: 5000
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Vampire_Box_IL
-        Rate: 1000
       - Item: Tooth_Of_Bat
         Rate: 5000
       - Item: Red_Jewel
@@ -97323,10 +97319,6 @@ Body:
     DamageMotion: 288
     Ai: 04
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Vampire_Box_IL
-        Rate: 1000
       - Item: Dried_Leaf_Of_Ygg
         Rate: 2000
       - Item: Cardinal_Jewel_
@@ -97376,10 +97368,6 @@ Body:
     DamageMotion: 288
     Ai: 04
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Vampire_Box_IL
-        Rate: 1000
       - Item: Dried_Leaf_Of_Ygg
         Rate: 1500
       - Item: Cardinal_Jewel_
@@ -97425,10 +97413,6 @@ Body:
     DamageMotion: 504
     Ai: 04
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Vampire_Box_IL
-        Rate: 1000
       - Item: Dried_Leaf_Of_Ygg
         Rate: 2000
       - Item: Bradium
@@ -97482,10 +97466,6 @@ Body:
     Modes:
       Detector: true
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Vampire_Box_IL
-        Rate: 1000
       - Item: Horseshoe
         Rate: 5000
       - Item: Blue_Potion
@@ -97525,10 +97505,6 @@ Body:
     ClientAttackMotion: 576
     Ai: 06
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Vampire_Box_IL
-        Rate: 1000
       - Item: Alchol
         Rate: 50
       - Item: Detrimindexta
@@ -97579,10 +97555,6 @@ Body:
     Modes:
       IgnoreMisc: true
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Vampire_Box_IL
-        Rate: 1000
       - Item: Dark_Red_Jewel
         Rate: 2000
       - Item: Vampire's_Servant
@@ -97643,10 +97615,6 @@ Body:
       - Item: IllusionStone
         Rate: 500
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Vampire_Box_IL
-        Rate: 1000
       - Item: Yggdrasilberry
         Rate: 5000
       - Item: Dried_Clover
@@ -97708,10 +97676,6 @@ Body:
       - Item: IllusionStone
         Rate: 500
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Moonlight_Box_IL
-        Rate: 1000
       - Item: Bradium
         Rate: 5000
       - Item: HazyDream
@@ -97761,10 +97725,6 @@ Body:
     DamageMotion: 480
     Ai: 21
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Moonlight_Box_IL
-        Rate: 1000
       - Item: Fox_Tail
         Rate: 3000
       - Item: Glass_Bead
@@ -97814,10 +97774,6 @@ Body:
     DamageMotion: 288
     Ai: 04
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Moonlight_Box_IL
-        Rate: 1000
       - Item: HazyMooncake
         Index: 0
         Rate: 1000
@@ -97874,10 +97830,6 @@ Body:
     DamageMotion: 420
     Ai: 04
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Moonlight_Box_IL
-        Rate: 1000
       - Item: HazyMooncake
         Rate: 1750
       - Item: Old_Portrait
@@ -97929,10 +97881,6 @@ Body:
     Modes:
       Detector: true
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Moonlight_Box_IL
-        Rate: 1000
       - Item: Bloody_LoveLetter
         Rate: 2000
       - Item: Skirt_Of_Virgin
@@ -97984,10 +97932,6 @@ Body:
     DamageMotion: 576
     Ai: 04
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Moonlight_Box_IL
-        Rate: 1000
       - Item: BrokenArrow
         Index: 0
         Rate: 2000
@@ -98047,10 +97991,6 @@ Body:
     DamageMotion: 288
     Ai: 01
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Moonlight_Box_IL
-        Rate: 1000
       - Item: Red_Gemstone
         Rate: 3000
       - Item: Yellow_Gemstone
@@ -98102,10 +98042,6 @@ Body:
     DamageMotion: 288
     Ai: 21
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Moonlight_Box_IL
-        Rate: 1000
       - Item: SubjugationFlyer
         Rate: 2000
       - Item: Light_Granule
@@ -98341,10 +98277,6 @@ Body:
     Modes:
       Detector: true
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Frozen_Box_IL
-        Rate: 1000
       - Item: Frozen_PieceOfRock
         Rate: 1000
       - Item: Bradium
@@ -98391,10 +98323,6 @@ Body:
     DamageMotion: 420
     Ai: 04
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Frozen_Box_IL
-        Rate: 1000
       - Item: Snowball
         Rate: 1000
       - Item: Ice_Heart
@@ -98441,10 +98369,6 @@ Body:
     DamageMotion: 144
     Ai: 04
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Frozen_Box_IL
-        Rate: 1000
       - Item: SpritJewel
         Rate: 1000
       - Item: Ice_Piece
@@ -98485,10 +98409,6 @@ Body:
     ClientAttackMotion: 1152
     Ai: 10
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Frozen_Box_IL
-        Rate: 1000
       - Item: Frozen_PieceOfRock
         Index: 0
         Rate: 200
@@ -98561,10 +98481,6 @@ Body:
         Index: 2
         Rate: 5000
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Frozen_Box_IL
-        Rate: 1000
       - Item: KTULLANUXsEye
         Rate: 4000
       - Item: Clack_Of_Servival
@@ -98676,10 +98592,6 @@ Body:
     Modes:
       Detector: true
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Turtle_Is_Box_IL
-        Rate: 1000
       - Item: OldShell
         Rate: 1000
       - Item: PieceOfBlackSpirit
@@ -98731,10 +98643,6 @@ Body:
     DamageMotion: 528
     Ai: 21
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Turtle_Is_Box_IL
-        Rate: 1000
       - Item: OldShell
         Rate: 1000
       - Item: PieceOfBlackSpirit
@@ -98786,10 +98694,6 @@ Body:
     DamageMotion: 672
     Ai: 21
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Turtle_Is_Box_IL
-        Rate: 1000
       - Item: OldShell
         Rate: 1000
       - Item: PieceOfBlackSpirit
@@ -98841,10 +98745,6 @@ Body:
     DamageMotion: 528
     Ai: 21
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Turtle_Is_Box_IL
-        Rate: 1000
       - Item: OldShell
         Rate: 1000
       - Item: PieceOfBlackSpirit
@@ -98896,10 +98796,6 @@ Body:
     DamageMotion: 528
     Ai: 21
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Turtle_Is_Box_IL
-        Rate: 1000
       - Item: OldShell
         Rate: 1000
       - Item: PieceOfBlackSpirit
@@ -98965,10 +98861,6 @@ Body:
         Index: 2
         Rate: 2000
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Turtle_Is_Box_IL
-        Rate: 1000
       - Item: ShipsLog
         Rate: 4000
       - Item: Iron_Driver
@@ -100242,10 +100134,6 @@ Body:
     DamageMotion: 504
     Ai: 04
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Teddy_Bear_Box_IL
-        Rate: 1000
       - Item: NasariansSoulstone
         Rate: 1000
       - Item: Iron_Ore
@@ -100290,10 +100178,6 @@ Body:
     DamageMotion: 504
     Ai: 04
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Teddy_Bear_Box_IL
-        Rate: 1000
       - Item: Bearopy
         Rate: 1500
       - Item: NasariansSoulstone
@@ -100338,10 +100222,6 @@ Body:
     DamageMotion: 504
     Ai: 04
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Teddy_Bear_Box_IL
-        Rate: 1000
       - Item: Bearopy
         Rate: 1500
       - Item: NasariansSoulstone
@@ -100384,10 +100264,6 @@ Body:
     DamageMotion: 504
     Ai: 04
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Teddy_Bear_Box_IL
-        Rate: 1000
       - Item: Bearopy
         Rate: 2500
       - Item: NasariansSoulstone
@@ -100432,10 +100308,6 @@ Body:
     DamageMotion: 504
     Ai: 04
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Teddy_Bear_Box_IL
-        Rate: 1000
       - Item: Bearopy
         Rate: 1500
       - Item: Screw
@@ -100480,10 +100352,6 @@ Body:
     DamageMotion: 504
     Ai: 21
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Teddy_Bear_Box_IL
-        Rate: 1000
       - Item: Elunium
         Rate: 2000
       - Item: Oridecon
@@ -100526,10 +100394,6 @@ Body:
     DamageMotion: 300
     Ai: 04
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Teddy_Bear_Box_IL
-        Rate: 1000
       - Item: Old_Pick
         Rate: 1500
       - Item: Old_Steel_Plate
@@ -100574,10 +100438,6 @@ Body:
     DamageMotion: 360
     Ai: 04
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Teddy_Bear_Box_IL
-        Rate: 1000
       - Item: Fragment_Of_Crystal
         Rate: 2500
       - Item: Golden_Jewel
@@ -100619,10 +100479,6 @@ Body:
     DamageMotion: 504
     Ai: 04
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Teddy_Bear_Box_IL
-        Rate: 1000
       - Item: Dark_Crystal_Fragment
         Rate: 1500
       - Item: Crystal_Jewel
@@ -100840,10 +100696,6 @@ Body:
     Modes:
       Detector: true
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Luanda_Box_IL
-        Rate: 1000
       - Item: Cyfar
         Rate: 1500
       - Item: Solid_Shell
@@ -100894,10 +100746,6 @@ Body:
     DamageMotion: 288
     Ai: 04
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Luanda_Box_IL
-        Rate: 1000
       - Item: Hard_Mud
         Rate: 1000
       - Item: Brigan
@@ -100948,10 +100796,6 @@ Body:
     DamageMotion: 672
     Ai: 10
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Luanda_Box_IL
-        Rate: 1000
       - Item: Zargon
         Rate: 1500
       - Item: Stone
@@ -101011,10 +100855,6 @@ Body:
       - Item: Elunium
         Rate: 6000
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Luanda_Box_IL
-        Rate: 1000
       - Item: Gemstone
         Rate: 2425
       - Item: Fragment_Of_Rock
@@ -101065,10 +100905,6 @@ Body:
     DamageMotion: 768
     Ai: 04
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Luanda_Box_IL
-        Rate: 1000
       - Item: Solid_Twig
         Rate: 2500
       - Item: Log
@@ -101119,10 +100955,6 @@ Body:
     DamageMotion: 576
     Ai: 05
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Luanda_Box_IL
-        Rate: 1000
       - Item: Air_Rifle
         Rate: 2250
       - Item: Flexible_String
@@ -101173,10 +101005,6 @@ Body:
     DamageMotion: 480
     Ai: 04
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Luanda_Box_IL
-        Rate: 1000
       - Item: Wootan_F_Fur
         Rate: 1000
       - Item: Shoulder_Protection
@@ -101238,10 +101066,6 @@ Body:
       - Item: Oridecon
         Rate: 6000
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Luanda_Box_IL
-        Rate: 1000
       - Item: Wootan_D_S_Piece
         Rate: 2250
       - Item: Shoulder_Protection
@@ -106385,6 +106209,7 @@ Body:
     Race: Formless
     RaceGroups:
       EP172ALPHA: true
+      EP172ALPHA: true
     Element: Neutral
     ElementLevel: 2
     WalkSpeed: 200
@@ -109125,10 +108950,6 @@ Body:
     DamageMotion: 576
     Ai: 04
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Underwater_Box_IL
-        Rate: 100
       - Item: Fin
         Rate: 2500
       - Item: Blue_Herb
@@ -109176,10 +108997,6 @@ Body:
     DamageMotion: 672
     Ai: 04
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Underwater_Box_IL
-        Rate: 100
       - Item: Heart_Of_Mermaid
         Rate: 2500
       - Item: Fin
@@ -109227,10 +109044,6 @@ Body:
     DamageMotion: 770
     Ai: 04
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Underwater_Box_IL
-        Rate: 100
       - Item: Mistic_Frozen
         Rate: 10
       - Item: Tooth_Of_Ancient_Fish
@@ -109278,10 +109091,6 @@ Body:
     DamageMotion: 485
     Ai: 04
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Underwater_Box_IL
-        Rate: 100
       - Item: Chinese_Ink
         Rate: 2500
       - Item: Tentacle
@@ -109331,10 +109140,6 @@ Body:
     DamageMotion: 675
     Ai: 04
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Underwater_Box_IL
-        Rate: 100
       - Item: Lip_Of_Ancient_Fish
         Rate: 1000
       - Item: Mistic_Frozen
@@ -109381,10 +109186,6 @@ Body:
     DamageMotion: 578
     Ai: 04
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Underwater_Box_IL
-        Rate: 100
       - Item: Tentacle
         Rate: 2000
       - Item: Chinese_Ink
@@ -109434,10 +109235,6 @@ Body:
     DamageMotion: 384
     Ai: 04
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Underwater_Box_IL
-        Rate: 100
       - Item: Sharp_Scale
         Rate: 2000
       - Item: Gill
@@ -109487,10 +109284,6 @@ Body:
     DamageMotion: 384
     Ai: 04
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Underwater_Box_IL
-        Rate: 100
       - Item: Fin
         Rate: 2000
       - Item: Skyblue_Jewel
@@ -109540,10 +109333,6 @@ Body:
     DamageMotion: 865
     Ai: 04
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Underwater_Box_IL
-        Rate: 100
       - Item: Sharp_Scale
         Rate: 2000
       - Item: Fin
@@ -109592,10 +109381,6 @@ Body:
     DamageMotion: 970
     Ai: 04
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Underwater_Box_IL
-        Rate: 100
       - Item: Nipper
         Rate: 1500
       - Item: Solid_Shell
@@ -109653,10 +109438,6 @@ Body:
       - Item: Old_Violet_Box
         Rate: 3000
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Underwater_Box_IL
-        Rate: 100
       - Item: Tentacle
         Rate: 3000
       - Item: Mistic_Frozen
@@ -109868,10 +109649,6 @@ Body:
       - Item: Old_Violet_Box
         Rate: 3000
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Underwater_Box_IL
-        Rate: 100
       - Item: Crown_Of_Witch
         Rate: 3000
       - Item: Mistic_Frozen
@@ -114107,10 +113884,6 @@ Body:
     Modes:
       Detector: true
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Twins_Box_IL
-        Rate: 100
       - Item: Excalibur
         Rate: 5
       - Item: IL_Twins_Feeler
@@ -114161,10 +113934,6 @@ Body:
     Modes:
       Detector: true
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Twins_Box_IL
-        Rate: 100
       - Item: Doom_Slayer
         Rate: 5
       - Item: IL_Twins_Jaw
@@ -114215,10 +113984,6 @@ Body:
     Modes:
       Detector: true
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Twins_Box_IL
-        Rate: 100
       - Item: Sprint_Glove
         Rate: 5
       - Item: Guard
@@ -114265,10 +114030,6 @@ Body:
     Modes:
       Detector: true
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Twins_Box_IL
-        Rate: 100
       - Item: Sprint_Mail
         Rate: 5
       - Item: IL_Twins_Feeler
@@ -114319,10 +114080,6 @@ Body:
     Modes:
       Detector: true
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Twins_Box_IL
-        Rate: 100
       - Item: Gelerdria
         Rate: 5
       - Item: IL_Twins_Jaw
@@ -114359,10 +114116,6 @@ Body:
     ClientAttackMotion: 672
     Ai: 06
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Twins_Box_IL
-        Rate: 100
       - Item: Sprint_Shoes
         Rate: 5
       - Item: Siver_Guard
@@ -114413,10 +114166,6 @@ Body:
     Modes:
       Detector: true
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Twins_Box_IL
-        Rate: 100
       - Item: Thorn_Staff
         Rate: 5
       - Item: IL_Twins_Hat
@@ -114465,10 +114214,6 @@ Body:
     DamageMotion: 384
     Ai: 21
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Twins_Box_IL
-        Rate: 100
       - Item: Ancient_Dagger
         Rate: 5
       - Item: IL_Twins_Fang
@@ -114517,10 +114262,6 @@ Body:
     Modes:
       Detector: true
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Twins_Box_IL
-        Rate: 100
       - Item: Sprint_Ring
         Rate: 5
       - Item: IL_Twins_Acid
@@ -114580,10 +114321,6 @@ Body:
       - Item: Old_Violet_Box
         Rate: 3000
     Drops:
-      - Item: IllusionStone
-        Rate: 3000
-      - Item: Twins_Box_IL
-        Rate: 100
       - Item: Dea_Staff
         Rate: 300
       - Item: IL_Twins_Acid
