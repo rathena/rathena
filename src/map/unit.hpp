@@ -119,6 +119,17 @@ enum e_unit_stop_walking {
 	USW_ALL = 0x1f,
 };
 
+/// Enum for delay events
+enum e_delay_event {
+	DELAY_EVENT_ATTACK = 1, /// Executed a normal attack
+	DELAY_EVENT_CASTBEGIN_ID, /// Started casting a target skill
+	DELAY_EVENT_CASTBEGIN_POS, /// Started casting a ground skill
+	DELAY_EVENT_CASTEND, /// Finished casting a skill
+	DELAY_EVENT_CASTCANCEL, /// Skill cast was cancelled
+	DELAY_EVENT_DAMAGED, /// Got damaged
+	DELAY_EVENT_PARRY, /// Parry activated
+};
+
 // PC, MOB, PET
 
 // Does walk action for unit
@@ -135,6 +146,9 @@ void unit_stop_walking_soon(struct block_list& bl, t_tick tick = gettick());
 bool unit_stop_walking( block_list* bl, int32 type, t_tick canmove_delay = 0 );
 bool unit_can_move(struct block_list *bl);
 int32 unit_is_walking(struct block_list *bl);
+
+// Delay functions
+void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event);
 int32 unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int32 type);
 
 t_tick unit_get_walkpath_time(struct block_list& bl);
