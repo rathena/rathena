@@ -6668,7 +6668,6 @@ int32 pc_show_steal(struct block_list *bl,va_list ap)
  */
 bool pc_steal_item(map_session_data *sd,struct block_list *bl, uint16 skill_lv)
 {
-	int32 i;
 	t_itemid itemid;
 	double rate;
 	unsigned char flag = 0;
@@ -6705,25 +6704,43 @@ bool pc_steal_item(map_session_data *sd,struct block_list *bl, uint16 skill_lv)
 	)
 		return false;
 
-	// Try dropping one item, in the order from first to last possible slot.
-	// Droprate is affected by the skill success rate.
-	for( i = 0; i < MAX_MOB_DROP; i++ )
-		if( item_db.exists(md->db->dropitem[i].nameid) && !md->db->dropitem[i].steal_protected && rnd() % 10000 < md->db->dropitem[i].rate
-#ifndef RENEWAL
-		* rate/100.
-#endif
-		)
-			break;
-	if( i == MAX_MOB_DROP )
-		return false;
+	std::shared_ptr<s_mob_drop> drop = nullptr;
 
-	itemid = md->db->dropitem[i].nameid;
+	// Try dropping one item.
+	for( std::shared_ptr<s_mob_drop>& entry : md->db->dropitem ){
+		if( entry->steal_protected ){
+			continue;
+		}
+
+		if( !item_db.exists( entry->nameid ) ){
+			continue;
+		}
+
+#ifdef RENEWAL
+		if( rnd() % 10000 < entry->rate ){
+			drop = entry;
+			break;
+		}
+#else
+		// Droprate is affected by the skill success rate.
+		if( rnd() % 10000 < entry->rate * rate / 100. ){
+			drop = entry;
+			break;
+		}
+#endif
+	}
+
+	if( drop == nullptr ){
+		return false;
+	}
+
+	itemid = drop->nameid;
 	struct item tmp_item = {};
 	tmp_item.nameid = itemid;
 	tmp_item.amount = 1;
 	tmp_item.identify = itemdb_isidentified(itemid);
 	if( battle_config.skill_steal_random_options ){
-		mob_setdropitem_option( tmp_item, md->db->dropitem[i] );
+		mob_setdropitem_option( tmp_item, drop );
 	}
 	flag = pc_additem(sd,&tmp_item,1,LOG_TYPE_PICKDROP_PLAYER);
 
@@ -6742,11 +6759,11 @@ bool pc_steal_item(map_session_data *sd,struct block_list *bl, uint16 skill_lv)
 	log_pick_mob(md, LOG_TYPE_STEAL, -1, &tmp_item);
 
 	//A Rare Steal Global Announce by Lupus
-	if(md->db->dropitem[i].rate <= battle_config.rare_drop_announce) {
+	if(drop->rate <= battle_config.rare_drop_announce) {
 		struct item_data *i_data;
 		char message[128];
 		i_data = itemdb_search(itemid);
-		sprintf (message, msg_txt(sd,542), (sd->status.name[0])?sd->status.name :"GM", md->db->jname.c_str(), i_data->ename.c_str(), (float)md->db->dropitem[i].rate / 100);
+		sprintf (message, msg_txt(sd,542), (sd->status.name[0])?sd->status.name :"GM", md->db->jname.c_str(), i_data->ename.c_str(), (float)drop->rate / 100);
 		//MSG: "'%s' stole %s's %s (chance: %0.02f%%)"
 		intif_broadcast(message, strlen(message) + 1, BC_DEFAULT);
 	}
