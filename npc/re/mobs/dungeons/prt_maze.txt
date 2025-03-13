@@ -11,6 +11,7 @@
 //= 1.3 Some small fixes [Playtester]
 //= 1.4 Corrected MVP spawn variance. [L0ne_W0lf]
 //= 1.5 Correct Spawn by Navigation's mob data. [attackjom]
+//= 1.6 Added Illusion of Labyrinth. [Atemo]
 //============================================================
 
 //==================================================
@@ -101,3 +102,56 @@ prt_maze03,99,21,10,10	monster	Black Mushroom	1084,3,180000,90000
 prt_maze03,54,15,10,10	monster	Black Mushroom	1084,3,180000,90000
 prt_maze03,171,180,3,3	monster	Red Mushroom	1085,2,180000,90000
 prt_maze03,174,187,3,3	monster	Red Mushroom	1085,3,180000,90000
+
+//==================================================
+// Added Illusion of Labyrinth
+//==================================================
+prt_mz03_i	monster	Chaos Poporing	20531,10,5000
+prt_mz03_i	monster	Chaos Side Winder	20526,10,5000
+prt_mz03_i	monster	Chaos Hunter Fly	20527,10,5000
+prt_mz03_i	monster	Chaos Ghostring	20529,4,5000
+prt_mz03_i	monster	Chaos Killer Mantis	20530,10,5000
+prt_mz03_i	monster	Chaos Mantis	20528,10,5000
+prt_mz03_i	monster	Chaos Baphomet Jr.	20525,10,5000
+prt_mz03_i	monster	Chaotic Stem Worm	20532,6,5000
+
+prt_mz03_i	monster	Chaotic Andrea	20521,1,3600000,0,"prt_mz03_i_boss::OnMobDead"
+prt_mz03_i	monster	Chaotic Anes	20522,1,3600000,0,"prt_mz03_i_boss::OnMobDead"
+prt_mz03_i	monster	Chaotic Silvano	20523,1,3600000,0,"prt_mz03_i_boss::OnMobDead"
+prt_mz03_i	monster	Chaotic Cecilia	20524,1,3600000,0,"prt_mz03_i_boss::OnMobDead"
+
+-	script	prt_mz03_i_boss	-1,{
+	end;
+OnMobDead:
+	if (playerattached() < 1)
+		end;
+	if (.boss_spawn || .cooldown || .count[killedrid] == 1)
+		end;
+	.count[killedrid] = 1;
+
+	if (.count[20521] == 1 && .count[20522] == 1 && .count[20523] == 1 && .count[20524] == 1) {
+		.boss_spawn = true;
+		.count[20521] = 0;
+		.count[20522] = 0;
+		.count[20523] = 0;
+		.count[20524] = 0;
+		killmonster "prt_mz03_i", "prt_mz03_i_boss::OnBossDeath";
+		mapannounce "prt_mz03_i", "A terrible presence has descended from beyond the chaos of the deep abyss.", bc_map, 0x70dbdb;
+		getunitdata( killedgid, .@data );
+		monster "prt_mz03_i", .@data[UMOB_X], .@data[UMOB_Y], "--ja--", 20520,1, "prt_mz03_i_boss::OnBossDeath";	// ILL_BAPHOMET
+		end;
+	}
+	end;
+OnBossDeath:
+	mapannounce "prt_mz03_i", "The Invincible state of Chaos Baphomet has been lifted.", bc_map, 0x70dbdb;
+	killmonster "prt_mz03_i", "prt_mz03_i_boss::OnBossDeath";
+	.boss_spawn = false;
+	.cooldown = true;
+	initnpctimer;
+	end;
+
+OnTimer7200000:
+	.cooldown = false;
+	stopnpctimer;
+	end;
+}

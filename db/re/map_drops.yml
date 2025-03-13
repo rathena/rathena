@@ -2428,3 +2428,137 @@ Body:
           - Index: 8
             Item: Evilspirit_Gloves
             Rate: 50
+  - Map: prt_mz03_i
+    SpecificDrops:
+      - Monster: ILL_BAPHOMET
+        Drops:
+          - Index: 0
+            Item: Bazerald_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_MAGIC_BOSS
+          - Index: 1
+            Item: Butcher_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 2
+            Item: Gold_Lux_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 3
+            Item: Morpheus_Armlet_IL
+            Rate: 5000
+          - Index: 4
+            Item: Morpheus_Hood_IL
+            Rate: 5000
+          - Index: 5
+            Item: Morpheus_Ring_IL
+            Rate: 5000
+          - Index: 6
+            Item: Morpheus_Shawl_IL
+            Rate: 5000
+          - Index: 7
+            Item: IllusionStone
+            Rate: 15000
+          - Index: 8
+            Item: Taegoolyeon_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 9
+            Item: S_Teddy_Labyrinth_IL
+            Rate: 150
+      - Monster: ILL_BAPHOMET_J
+        Drops:
+          - Index: 0
+            Item: Gold_Lux_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Labyrinth_Box_IL
+            Rate: 5
+      - Monster: ILL_SIDE_WINDER
+        Drops:
+          - Index: 0
+            Item: Bazerald_IL
+            Rate: 25
+            RandomOptionGroup: ILL_MAGIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Labyrinth_Box_IL
+            Rate: 5
+      - Monster: ILL_HUNTER_FLY
+        Drops:
+          - Index: 0
+            Item: IllusionStone
+            Rate: 10
+          - Index: 1
+            Item: Taegoolyeon_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 2
+            Item: Labyrinth_Box_IL
+            Rate: 5
+      - Monster: ILL_MANTIS
+        Drops:
+          - Index: 0
+            Item: Butcher_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Labyrinth_Box_IL
+            Rate: 5
+      - Monster: ILL_GHOSTRING
+        Drops:
+          - Index: 0
+            Item: IllusionStone
+            Rate: 10
+          - Index: 1
+            Item: Taegoolyeon_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 2
+            Item: Labyrinth_Box_IL
+            Rate: 5
+      - Monster: ILL_KILLER_MANTIS
+        Drops:
+          - Index: 0
+            Item: Butcher_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Labyrinth_Box_IL
+            Rate: 5
+      - Monster: ILL_POPORING
+        Drops:
+          - Index: 0
+            Item: Bazerald_IL
+            Rate: 25
+            RandomOptionGroup: ILL_MAGIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Labyrinth_Box_IL
+            Rate: 5
+      - Monster: ILL_STEM_WORM
+        Drops:
+          - Index: 0
+            Item: Gold_Lux_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Labyrinth_Box_IL
+            Rate: 5
