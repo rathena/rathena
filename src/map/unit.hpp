@@ -64,20 +64,6 @@ struct unit_data {
 	int32 group_id;
 
 	std::vector<int32> shadow_scar_timer;
-
-	// Functions and struct to calculate and store exact position at a certain tick
-	int16 getx(t_tick tick);
-	int16 gety(t_tick tick);
-	void getpos(int16 &x, int16 &y, uint8 &sx, uint8 &sy, t_tick tick);
-private:
-	void update_pos(t_tick tick);
-	struct {
-		int16 x;
-		int16 y;
-		uint8 sx;
-		uint8 sy;
-		t_tick tick;
-	} pos;
 };
 
 struct view_data {
@@ -141,7 +127,7 @@ int32 unit_calc_pos(struct block_list *bl, int32 tx, int32 ty, uint8 dir);
 TIMER_FUNC(unit_delay_walktoxy_timer);
 TIMER_FUNC(unit_delay_walktobl_timer);
 
-void unit_stop_walking_soon(struct block_list& bl, t_tick tick = gettick());
+void unit_stop_walking_soon(struct block_list& bl);
 // Causes the target object to stop moving.
 bool unit_stop_walking( block_list* bl, int32 type, t_tick canmove_delay = 0 );
 bool unit_can_move(struct block_list *bl);

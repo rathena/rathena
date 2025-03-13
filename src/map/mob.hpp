@@ -22,14 +22,13 @@ struct guardian_data;
 //Note: The range is unlimited unless this define is set.
 //#define AUTOLOOT_DISTANCE AREA_SIZE
 
-// The number of drops all mobs can have
-#ifndef MAX_MOB_DROP
-	#define MAX_MOB_DROP 10
-#endif
-// The number of MVP drops all mobs can have
-#ifndef MAX_MVP_DROP
-	#define MAX_MVP_DROP 3
-#endif
+//The number of drops all mobs have and the max drop-slot that the steal skill will attempt to steal from.
+#define MAX_MOB_DROP 10
+#define MAX_MVP_DROP 3
+#define MAX_MOB_DROP_ADD 5
+#define MAX_MVP_DROP_ADD 2
+#define MAX_MOB_DROP_TOTAL (MAX_MOB_DROP+MAX_MOB_DROP_ADD)
+#define MAX_MVP_DROP_TOTAL (MAX_MVP_DROP+MAX_MVP_DROP_ADD)
 
 //Min time between AI executions
 const t_tick MIN_MOBTHINKTIME = 100;
@@ -256,24 +255,20 @@ struct s_mob_drop {
 };
 
 struct s_mob_db {
-	uint32 id;
-	std::string sprite;
-	std::string name;
-	std::string jname;
-	t_exp base_exp;
-	t_exp job_exp;
-	t_exp mexp;
-	uint16 range2;
-	uint16 range3;
-	std::vector<e_race2> race2;
-	uint16 lv;
-	std::vector<std::shared_ptr<s_mob_drop>> dropitem;
-	std::vector<std::shared_ptr<s_mob_drop>> mvpitem;
-	status_data status;
-	view_data vd;
-	uint32 option;
-	std::vector<std::shared_ptr<s_mob_skill>> skill;
-	uint16 damagetaken;
+	uint32 id{};
+	std::string sprite{}, name{}, jname{};
+	t_exp base_exp{};
+	t_exp job_exp{};
+	t_exp mexp{};
+	uint16 range2{}, range3{};
+	std::vector<e_race2> race2{};	// celest
+	uint16 lv{ 1 };
+	s_mob_drop dropitem[MAX_MOB_DROP_TOTAL]{}, mvpitem[MAX_MVP_DROP_TOTAL]{};
+	status_data status{};
+	view_data vd{};
+	uint32 option{};
+	std::vector<std::shared_ptr<s_mob_skill>> skill{};
+	uint16 damagetaken{ 100 };
 
 	e_mob_bosstype get_bosstype();
 	s_mob_db();
@@ -281,7 +276,7 @@ struct s_mob_db {
 
 class MobDatabase : public TypesafeCachedYamlDatabase <uint32, s_mob_db> {
 private:
-	bool parseDropNode( std::string nodeName, const ryml::NodeRef& node, uint8 max, std::vector<std::shared_ptr<s_mob_drop>>& drops );
+	bool parseDropNode(std::string nodeName, const ryml::NodeRef& node, uint8 max, s_mob_drop *drops);
 
 public:
 	MobDatabase() : TypesafeCachedYamlDatabase("MOB_DB", 4, 1) {
@@ -566,7 +561,7 @@ TIMER_FUNC(mvptomb_delayspawn);
 void mvptomb_create(struct mob_data *md, char *killer, time_t time);
 void mvptomb_destroy(struct mob_data *md);
 
-void mob_setdropitem_option( item& itm, const std::shared_ptr<s_mob_drop>& mobdrop );
+void mob_setdropitem_option( item& itm, s_mob_drop& mobdrop );
 
 #define CHK_MOBSIZE(size) ((size) >= SZ_SMALL && (size) < SZ_MAX) /// Check valid Monster Size
 

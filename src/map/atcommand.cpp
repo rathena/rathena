@@ -8058,83 +8058,74 @@ ACMD_FUNC(mobinfo)
 		// drops
 		clif_displaymessage(fd, msg_txt(sd,1245)); //  Drops:
 		strcpy(atcmd_output, " ");
-
-		if( mob->dropitem.empty() ){
-			clif_displaymessage(fd, msg_txt(sd,1246)); // This monster has no drops.
-		}else{
-			uint32 j = 0;
-			int32 drop_modifier = 100;
+		uint32 j = 0;
+		int32 drop_modifier = 100;
 #ifdef RENEWAL_DROP
-			if( battle_config.atcommand_mobinfo_type ){
-				drop_modifier = pc_level_penalty_mod( sd, PENALTY_DROP, mob );
-			}
+		if( battle_config.atcommand_mobinfo_type ){
+			drop_modifier = pc_level_penalty_mod( sd, PENALTY_DROP, mob );
+		}
 #endif
 
-			for( const std::shared_ptr<s_mob_drop>& entry : mob->dropitem ){
-				if (entry->nameid == 0 || entry->rate < 1)
+		for (i = 0; i < MAX_MOB_DROP_TOTAL; i++) {
+
+			if (mob->dropitem[i].nameid == 0 || mob->dropitem[i].rate < 1)
+				continue;
+
+			std::shared_ptr<item_data> id = item_db.find(mob->dropitem[i].nameid);
+
+			if (id == nullptr)
+				continue;
+
+			int32 droprate = mob_getdroprate( &sd->bl, mob, mob->dropitem[i].rate, drop_modifier );
+
+			sprintf(atcmd_output2, " - %s  %02.02f%%", item_db.create_item_link( id ).c_str(), (float)droprate / 100);
+			strcat(atcmd_output, atcmd_output2);
+			if (++j % 3 == 0) {
+				clif_displaymessage(fd, atcmd_output);
+				strcpy(atcmd_output, " ");
+			}
+		}
+		if (j == 0)
+			clif_displaymessage(fd, msg_txt(sd,1246)); // This monster has no drops.
+		else if (j % 3 != 0)
+			clif_displaymessage(fd, atcmd_output);
+		// mvp
+		if( mob->get_bosstype() == BOSSTYPE_MVP ){
+			float mvppercent, mvpremain;
+			sprintf(atcmd_output, msg_txt(sd,1247), mob->mexp); //  MVP Bonus EXP:%llu
+			clif_displaymessage(fd, atcmd_output);
+			strcpy(atcmd_output, msg_txt(sd,1248)); //  MVP Items:
+			mvpremain = 100.0; //Remaining drop chance for official mvp drop mode
+			j = 0;
+			for (i = 0; i < MAX_MVP_DROP_TOTAL; i++) {
+
+				if (mob->mvpitem[i].nameid == 0)
 					continue;
 
-				std::shared_ptr<item_data> id = item_db.find(entry->nameid);
+				std::shared_ptr<item_data> id = item_db.find(mob->mvpitem[i].nameid);
 
 				if (id == nullptr)
 					continue;
 
-				int32 droprate = mob_getdroprate( &sd->bl, mob, entry->rate, drop_modifier );
-
-				sprintf(atcmd_output2, " - %s  %02.02f%%", item_db.create_item_link( id ).c_str(), (float)droprate / 100);
-				strcat(atcmd_output, atcmd_output2);
-				if (++j % 3 == 0) {
-					clif_displaymessage(fd, atcmd_output);
-					strcpy(atcmd_output, " ");
+				//Because if there are 3 MVP drops at 50%, the first has a chance of 50%, the second 25% and the third 12.5%
+				mvppercent = (float)mob->mvpitem[i].rate * mvpremain / 10000.0f;
+				if(battle_config.item_drop_mvp_mode == 0) {
+					mvpremain -= mvppercent;
 				}
-			}
-
-			if( j % 3 != 0 ){
-				clif_displaymessage(fd, atcmd_output);
-			}
-		}
-
-		// mvp
-		if( mob->get_bosstype() == BOSSTYPE_MVP ){
-			sprintf(atcmd_output, msg_txt(sd,1247), mob->mexp); //  MVP Bonus EXP:%llu
-			clif_displaymessage(fd, atcmd_output);
-			clif_displaymessage(fd, msg_txt(sd,1248)); //  MVP drops:
-			strcpy(atcmd_output, " ");
-
-			if( mob->mvpitem.empty() ){
-				clif_displaymessage(fd, msg_txt(sd,1249)); // This monster has no MVP drops.
-			}else{
-				float mvpremain = 100.0; //Remaining drop chance for official mvp drop mode
-				uint32 j = 0;
-
-				for( const std::shared_ptr<s_mob_drop>& entry : mob->mvpitem ){
-					if (entry->nameid == 0)
-						continue;
-
-					std::shared_ptr<item_data> id = item_db.find(entry->nameid);
-
-					if (id == nullptr)
-						continue;
-
-					//Because if there are 3 MVP drops at 50%, the first has a chance of 50%, the second 25% and the third 12.5%
-					float mvppercent = (float)entry->rate * mvpremain / 10000.0f;
-					if(battle_config.item_drop_mvp_mode == 0) {
-						mvpremain -= mvppercent;
-					}
-					if (mvppercent > 0) {
+				if (mvppercent > 0) {
+					j++;
+					if (j == 1) {
+						sprintf(atcmd_output2, " %s  %02.02f%%", item_db.create_item_link( id ).c_str(), mvppercent);
+					} else {
 						sprintf(atcmd_output2, " - %s  %02.02f%%", item_db.create_item_link( id ).c_str(), mvppercent);
-						strcat(atcmd_output, atcmd_output2);
-						if (++j % 3 == 0) {
-							clif_displaymessage(fd, atcmd_output);
-							strcpy(atcmd_output, " ");
-						}
 					}
-				}
-
-				if( j % 3 != 0 ){
-					clif_displaymessage(fd, atcmd_output);
+					strcat(atcmd_output, atcmd_output2);
 				}
 			}
+			if (j == 0)
+				clif_displaymessage(fd, msg_txt(sd,1249)); // This monster has no MVP prizes.
+			else
+				clif_displaymessage(fd, atcmd_output);
 		}
 	}
 	return 0;

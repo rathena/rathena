@@ -11270,7 +11270,7 @@ BUILDIN_FUNC(monster)
 BUILDIN_FUNC(getmobdrops)
 {
 	int32 class_ = script_getnum(st,2);
-	int32 j = 0;
+	int32 i, j = 0;
 
 	if( !mobdb_checkid(class_) )
 	{
@@ -11280,16 +11280,17 @@ BUILDIN_FUNC(getmobdrops)
 
 	std::shared_ptr<s_mob_db> mob = mob_db.find(class_);
 
-	for( const std::shared_ptr<s_mob_drop>& entry : mob->dropitem ){
-		if( entry->nameid == 0 )
+	for( i = 0; i < MAX_MOB_DROP_TOTAL; i++ )
+	{
+		if( mob->dropitem[i].nameid == 0 )
 			continue;
-		if( !item_db.exists(entry->nameid) )
+		if( !item_db.exists(mob->dropitem[i].nameid) )
 			continue;
 
-		mapreg_setreg(reference_uid(add_str("$@MobDrop_item"), j), entry->nameid);
-		mapreg_setreg(reference_uid(add_str("$@MobDrop_rate"), j), entry->rate);
-		mapreg_setreg(reference_uid(add_str("$@MobDrop_nosteal"), j), entry->steal_protected);
-		mapreg_setreg(reference_uid(add_str("$@MobDrop_randomopt"), j), entry->randomopt_group);
+		mapreg_setreg(reference_uid(add_str("$@MobDrop_item"), j), mob->dropitem[i].nameid);
+		mapreg_setreg(reference_uid(add_str("$@MobDrop_rate"), j), mob->dropitem[i].rate);
+		mapreg_setreg(reference_uid(add_str("$@MobDrop_nosteal"), j), mob->dropitem[i].steal_protected);
+		mapreg_setreg(reference_uid(add_str("$@MobDrop_randomopt"), j), mob->dropitem[i].randomopt_group);
 
 		j++;
 	}
@@ -18465,24 +18466,22 @@ BUILDIN_FUNC(addmonsterdrop)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	std::shared_ptr<s_mob_drop> drop = nullptr;
+	uint16 c = 0;
 
-	for( std::shared_ptr<s_mob_drop>& entry : mob->dropitem ){
-		// If it equals item_id we update that drop
-		if( entry->nameid == item_id ){
-			drop = entry;
-			break;
+	for (uint16 i = 0; i < MAX_MOB_DROP_TOTAL; i++) {
+		if (mob->dropitem[i].nameid > 0) {
+			if (mob->dropitem[i].nameid == item_id) { // If it equals item_id we update that drop
+				c = i;
+				break;
+			}
+			continue;
 		}
+		if (c == 0) // Accept first available slot only
+			c = i;
 	}
-
-	if( drop == nullptr ){
-		// No place to put the new drop
-		if( mob->dropitem.size() == MAX_MOB_DROP ){
-			script_pushint(st, false);
-			return SCRIPT_CMD_SUCCESS;
-		}
-
-		drop = std::make_shared<s_mob_drop>();
+	if (c == 0) { // No place to put the new drop
+		script_pushint(st, false);
+		return SCRIPT_CMD_SUCCESS;
 	}
 
 	int32 steal_protected = 0;
@@ -18506,10 +18505,10 @@ BUILDIN_FUNC(addmonsterdrop)
 	}
 
 	// Fill in the slot with the item and rate
-	drop->nameid = item_id;
-	drop->rate = rate;
-	drop->steal_protected = steal_protected > 0;
-	drop->randomopt_group = group;
+	mob->dropitem[c].nameid = item_id;
+	mob->dropitem[c].rate = rate;
+	mob->dropitem[c].steal_protected = steal_protected > 0;
+	mob->dropitem[c].randomopt_group = group;
 	mob_reload_itemmob_data(); // Reload the mob search data stored in the item_data
 
 	script_pushint(st, true);
@@ -18542,25 +18541,20 @@ BUILDIN_FUNC(delmonsterdrop)
 	}
 
 	if(mob) { //We got a valid monster, check for item drop on monster
-		bool found = false;
-
-		for( auto it = mob->dropitem.begin(); it != mob->dropitem.end(); ){
-			if( (*it)->nameid == item_id) {
-				it = mob->dropitem.erase( it );
-				found = true;
-			}else{
-				it++;
+		unsigned char i;
+		for(i = 0; i < MAX_MOB_DROP_TOTAL; i++) {
+			if(mob->dropitem[i].nameid == item_id) {
+				mob->dropitem[i].nameid = 0;
+				mob->dropitem[i].rate = 0;
+				mob->dropitem[i].steal_protected = false;
+				mob->dropitem[i].randomopt_group = 0;
+				mob_reload_itemmob_data(); // Reload the mob search data stored in the item_data
+				script_pushint(st,1);
+				return SCRIPT_CMD_SUCCESS;
 			}
 		}
-
-		if( found ){
-			// Reload the mob search data stored in the item_data
-			mob_reload_itemmob_data();
-			script_pushint(st,1);
-		}else{
-			//No drop on that monster
-			script_pushint(st,0);
-		}
+		//No drop on that monster
+		script_pushint(st,0);
 	} else {
 		ShowWarning("delmonsterdrop: bad mob id given %d\n",script_getnum(st,2));
 		return SCRIPT_CMD_FAILURE;
