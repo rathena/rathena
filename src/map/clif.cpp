@@ -6051,7 +6051,7 @@ int32 clif_skill_damage( block_list& src, block_list& dst, t_tick tick, int32 sd
 	packet.attackMT = sdelay;
 	packet.attackedMT = ddelay;
 
-	auto damage = std::min( static_cast<decltype(packet.damage)>( sdamage ), std::numeric_limits<decltype(packet.damage)>::max() );
+	auto damage = static_cast<decltype(packet.damage)>( std::min<decltype( sdamage )>( sdamage, std::numeric_limits<decltype(packet.damage)>::max() ) );
 
 	if (battle_config.hide_woe_damage && map_flag_gvg(src.m)) {
 		packet.damage = static_cast<decltype(packet.damage)>(damage ? div : 0);
@@ -6157,7 +6157,7 @@ bool clif_skill_nodamage( block_list* src, block_list& dst, uint16 skill_id, int
 
 	p.PacketType = HEADER_ZC_USE_SKILL;
 	p.SKID = skill_id;
-	p.level = std::min( static_cast<decltype(p.level)>( heal ), std::numeric_limits<decltype(p.level)>::max() );
+	p.level = static_cast<decltype(p.level)>( std::min<decltype( heal )>( heal, std::numeric_limits<decltype(p.level)>::max() ) );
 	p.targetAID = dst.id;
 	p.result = success;
 	if(src != nullptr){
@@ -6834,7 +6834,7 @@ void clif_heal( map_session_data& sd, int32 type, uint32 val ) {
 
 	packet.packetType = HEADER_ZC_RECOVERY;
 	packet.type = static_cast<decltype(packet.type)>(type);
-	packet.amount = std::min( static_cast<decltype(packet.amount)>( val ), std::numeric_limits<decltype(packet.amount)>::max() );
+	packet.amount = static_cast<decltype(packet.amount)>( std::min<decltype( val )>( val, std::numeric_limits<decltype(packet.amount)>::max() ) );
 
 	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
@@ -8599,7 +8599,7 @@ void clif_mvp_exp( map_session_data& sd, t_exp exp ){
 	PACKET_ZC_MVP_GETTING_SPECIAL_EXP packet{};
 
 	packet.packetType = HEADER_ZC_MVP_GETTING_SPECIAL_EXP;
-	packet.exp = std::min( static_cast<decltype(packet.exp)>( exp ), MAX_EXP );
+	packet.exp = static_cast<decltype(packet.exp)>( std::min<decltype( exp )>( exp, MAX_EXP ) );
 
 	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 #endif
