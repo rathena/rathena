@@ -1406,7 +1406,7 @@ static int32 mob_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
 	}
 	else if( !battle_config.monster_loot_search_type ){
 		// Stop walking immediately if item is no longer on the ground.
-		unit_stop_walking( &md->bl, USW_FIXPOS );
+		unit_stop_walking_soon(md->bl, USW_FIXPOS);
 	}
 
 	return 0;
