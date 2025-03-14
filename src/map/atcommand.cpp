@@ -9068,50 +9068,35 @@ ACMD_FUNC(showexp)
 {
 	nullpo_retr(-1, sd);
 
-	if(message && *message)
-	{
+	if(message && *message) {
 		// Has parameters
 		int32 minute_count;
-		if(sscanf(message, "%d", &minute_count) != 1)
-		{
+		if(sscanf(message, "%d", &minute_count) != 1) {
 			return -1;
-		} else if(minute_count < 1)
-		{
+		} else if(minute_count < 1) {
 			return -1;
 		}
-		t_tick new_interval = minute_count * 60 * 1000;
 
-		int32 new_timer = add_timer_interval(gettick() + new_interval, pc_showexp_timer, 0, (intptr_t)sd, new_interval);
-		if(new_timer == INVALID_TIMER)
-		{
-			return -1;
-		}
-		if(sd->showexp_state.timer != INVALID_TIMER && delete_timer(sd->showexp_state.timer, pc_showexp_timer))
-		{
-			return -1;
-		}
-		sd->showexp_state.timer = new_timer;
-		sd->showexp_state.last_base_exp = sd->status.base_exp;
-		sd->showexp_state.last_job_exp = sd->status.job_exp;
+		pc_set_showexp_timer(sd, minute_count * 60 * 1000);
+		pc_reset_accumulated_exp(sd);
+		sd->state.showexp = 1;
 
-		// Do not return here
+		char output[CHAT_SIZE_MAX] = {0};
+		sprintf(output, msg_txt(sd, 1539), minute_count); // Gained exp is now shown every %d minutes
+		clif_displaymessage(fd, output);
+		return 0;
 
 	} else if (sd->state.showexp) {
 		sd->state.showexp = 0;
 		clif_displaymessage(fd, msg_txt(sd,1316)); // Gained exp will not be shown.
-
-		if(sd->showexp_state.timer != INVALID_TIMER && delete_timer(sd->showexp_state.timer, pc_showexp_timer))
-		{
-			return -1;
-		}
+		pc_delete_showexp_timer(sd);
 		return 0;
-	}
 
-	if(!sd->state.showexp) {
+	} else {
 		sd->state.showexp = 1;
 		clif_displaymessage(fd, msg_txt(sd,1317)); // Gained exp is now shown.
+		return 0;
 	}
-	return 0;
 }
 
 ACMD_FUNC(showzeny)

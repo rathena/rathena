@@ -487,8 +487,10 @@ public:
 
 	struct s_showexp_state {
 		int32 timer;
-		t_exp last_base_exp;
-		t_exp last_job_exp;
+		t_exp base_exp_delta;
+		t_exp job_exp_delta;
+		bool base_exp_delta_negative;
+		bool job_exp_delta_negative;
 	} showexp_state;
 
 	// Item Storages
@@ -1522,7 +1524,10 @@ bool pc_is_maxjoblv(map_session_data *sd);
 int32 pc_checkbaselevelup(map_session_data *sd);
 int32 pc_checkjoblevelup(map_session_data *sd);
 void pc_gainexp(map_session_data *sd, struct block_list *src, t_exp base_exp, t_exp job_exp, uint8 exp_flag);
-void pc_gainexp_disp(map_session_data *sd, t_exp base_exp, t_exp next_base_exp, t_exp job_exp, t_exp next_job_exp, bool lost_base_exp, bool lost_job_exp);
+void pc_gainexp_disp(map_session_data *sd, t_exp base_exp, t_exp next_base_exp, t_exp job_exp, t_exp next_job_exp, bool lost);
+void pc_gainexp_disp_accumulated(map_session_data* sd);
+void pc_reset_accumulated_exp(map_session_data* sd);
+void pc_update_accumulated_exp(map_session_data* sd, t_exp base_exp, t_exp job_exp, bool lost);
 void pc_lostexp(map_session_data *sd, t_exp base_exp, t_exp job_exp);
 t_exp pc_nextbaseexp(map_session_data *sd);
 t_exp pc_nextjobexp(map_session_data *sd);
@@ -1672,6 +1677,9 @@ void pc_delete_bg_queue_timer(map_session_data *sd);
 
 void pc_setinvincibletimer(map_session_data* sd, int32 val);
 void pc_delinvincibletimer(map_session_data* sd);
+
+void pc_set_showexp_timer(map_session_data* sd, t_tick interval);
+void pc_delete_showexp_timer(map_session_data* sd);
 
 void pc_addspiritball(map_session_data *sd,int32 interval,int32 max);
 void pc_delspiritball(map_session_data *sd,int32 count,int32 type);

@@ -1259,7 +1259,9 @@ Body:
       Shows/hides the "There is a delay after this skill" message.
   - Command: showexp
     Help: |
+      Params: <time>
       Displays/hides experience gained.
+      If time parameter is provided, displays experience change per specified period.
   - Command: showmobs
     Help: |
       Params: <monster ID>

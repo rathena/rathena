@@ -4,6 +4,7 @@
 #include "pc.hpp"
 
 #include <cmath>
+#include <cstdio>
 #include <cstdlib>
 #include <map>
 
@@ -8312,30 +8313,70 @@ static void pc_calcexp(map_session_data *sd, t_exp *base_exp, t_exp *job_exp, st
  * @param next_job_exp Job EXP needed for next job level
  * @param lost True:EXP penalty, lose EXP
  **/
-void pc_gainexp_disp(map_session_data *sd, t_exp base_exp, t_exp next_base_exp, t_exp job_exp, t_exp next_job_exp, bool lost_base_exp, bool lost_job_exp) {
+void pc_gainexp_disp(map_session_data *sd, t_exp base_exp, t_exp next_base_exp, t_exp job_exp, t_exp next_job_exp, bool lost) {
 	char output[CHAT_SIZE_MAX];
 
 	nullpo_retv(sd);
 
-	const char* base_status_msg = "";
-	if(base_exp)
-	{
-		base_status_msg = lost_base_exp ? msg_txt(sd, 742) : msg_txt(sd, 741);
-	}
-
-	const char* job_status_msg = "";
-	if(job_exp)
-	{
-		lost_job_exp? msg_txt(sd, 742) : msg_txt(sd, 741);
-	}
-
-
-	sprintf(output, msg_txt(sd,743), // Experience Base: %s %ld (%0.2f%%) Job: %s %ld (%0.2f%%)
-		base_status_msg,
-		(long)base_exp * (lost_base_exp ? -1 : 1), (base_exp / (float)next_base_exp * 100 * (lost_base_exp ? -1 : 1)),
-		job_status_msg,
-		(long)job_exp * (lost_job_exp ? -1 : 1), (job_exp / (float)next_job_exp * 100 * (lost_job_exp ? -1 : 1)));
+	sprintf(output, msg_txt(sd,743), // Experience %s Base: %ld (%0.2f%%) Job: %ld (%0.2f%%)
+		lost? msg_txt(sd, 742) : msg_txt(sd, 741),
+		(long)base_exp * (lost? -1 : 1), (base_exp / (float)next_base_exp * 100 * (lost? -1 : 1)),
+		(long)job_exp * (lost? -1 : 1), (job_exp / (float)next_job_exp * 100 * (lost? -1 : 1)));
 	clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
+}
+
+void pc_gainexp_disp_accumulated(map_session_data* sd) {
+	nullpo_retv(sd);
+
+	char output[CHAT_SIZE_MAX] = {0};
+
+	const char* base_msg = "";
+	if(sd->showexp_state.base_exp_delta) {
+		base_msg = sd->showexp_state.base_exp_delta_negative ? msg_txt(sd, 742) : msg_txt(sd, 741);
+	}
+
+	const char* job_msg = "";
+	if(sd->showexp_state.job_exp_delta) {
+		job_msg = sd->showexp_state.job_exp_delta_negative ? msg_txt(sd, 742) : msg_txt(sd, 741);
+	}
+
+	sprintf(output, msg_txt(sd, 1540), //Experience %s Base: %ld %s Job: %ld
+		base_msg,
+		(long)sd->showexp_state.base_exp_delta * (sd->showexp_state.base_exp_delta_negative? -1 : 1),
+		job_msg,
+		(long)sd->showexp_state.job_exp_delta * (sd->showexp_state.job_exp_delta_negative? -1 : 1));
+	clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
+}
+
+static inline t_exp pc_absolute_exp_difference(t_exp lhs, t_exp rhs) {
+	return lhs > rhs ? lhs - rhs : rhs - lhs;
+}
+
+void pc_reset_accumulated_exp(map_session_data* sd) {
+	nullpo_retv(sd);
+
+	sd->showexp_state.base_exp_delta = 0;
+	sd->showexp_state.base_exp_delta_negative = false;
+	sd->showexp_state.job_exp_delta = 0;
+	sd->showexp_state.job_exp_delta_negative = false;
+}
+
+void pc_update_accumulated_exp(map_session_data* sd, t_exp base_exp, t_exp job_exp, bool lost) {
+	nullpo_retv(sd);
+
+	if(sd->showexp_state.base_exp_delta_negative == lost) {
+		sd->showexp_state.base_exp_delta = util::safe_addition_cap(sd->showexp_state.base_exp_delta, base_exp, MAX_EXP);
+	} else {
+		sd->showexp_state.base_exp_delta = pc_absolute_exp_difference(sd->showexp_state.base_exp_delta, base_exp);
+		sd->showexp_state.base_exp_delta_negative = !sd->showexp_state.base_exp_delta_negative;
+	}
+
+	if(sd->showexp_state.job_exp_delta_negative == lost) {
+		sd->showexp_state.job_exp_delta = util::safe_addition_cap(sd->showexp_state.job_exp_delta, job_exp, MAX_EXP);
+	} else {
+		sd->showexp_state.job_exp_delta = pc_absolute_exp_difference(sd->showexp_state.job_exp_delta, job_exp);
+		sd->showexp_state.job_exp_delta_negative = !sd->showexp_state.job_exp_delta_negative;
+	}
 }
 
 /**
@@ -8426,8 +8467,13 @@ void pc_gainexp(map_session_data *sd, struct block_list *src, t_exp base_exp, t_
 	if (flag&2)
 		clif_displayexp(sd, (flag&8) ? 0 : job_exp,  SP_JOBEXP, exp_flag&1, false);
 
-	if (sd->state.showexp && (base_exp || job_exp))
-		pc_gainexp_disp(sd, base_exp, nextb, job_exp, nextj, false, false);
+	if(base_exp || job_exp) {
+		if(sd->showexp_state.timer != INVALID_TIMER) {
+			pc_update_accumulated_exp(sd, base_exp, job_exp, false);
+		} else if (sd->state.showexp) {
+			pc_gainexp_disp(sd, base_exp, pc_nextbaseexp(sd), job_exp, pc_nextjobexp(sd), false);
+		}
+	}
 }
 
 /**
@@ -8454,12 +8500,34 @@ void pc_lostexp(map_session_data *sd, t_exp base_exp, t_exp job_exp) {
 		clif_updatestatus(*sd, SP_JOBEXP);
 	}
 
-	if (sd->state.showexp && (base_exp || job_exp))
-		pc_gainexp_disp(sd, base_exp, pc_nextbaseexp(sd), job_exp, pc_nextjobexp(sd), true, true);
+	if(base_exp || job_exp) {
+		if(sd->showexp_state.timer != INVALID_TIMER) {
+			pc_update_accumulated_exp(sd, base_exp, job_exp, true);
+		} else if (sd->state.showexp) {
+			pc_gainexp_disp(sd, base_exp, pc_nextbaseexp(sd), job_exp, pc_nextjobexp(sd), true);
+		}
+	}
 }
 
-static inline bool pc_showexp_update_exp(t_exp* delta, t_exp* last_exp, t_exp current_exp)
-{
+void pc_set_showexp_timer(map_session_data* sd, t_tick interval) {
+	nullpo_retv(sd);
+
+	if(sd->showexp_state.timer != INVALID_TIMER) {
+		delete_timer(sd->showexp_state.timer, pc_showexp_timer);
+	}
+	sd->showexp_state.timer = add_timer_interval(gettick() + interval, pc_showexp_timer, 0, (intptr_t)sd, interval);
+}
+
+void pc_delete_showexp_timer(map_session_data* sd) {
+	nullpo_retv(sd);
+
+	if(sd->showexp_state.timer != INVALID_TIMER) {
+		delete_timer(sd->showexp_state.timer, pc_showexp_timer);
+		sd->showexp_state.timer = INVALID_TIMER;
+	}
+}
+
+static inline bool pc_showexp_update_exp(t_exp* delta, t_exp* last_exp, t_exp current_exp) {
 	nullpo_retr(false, delta);
 	*delta = 0;
 
@@ -8480,16 +8548,11 @@ TIMER_FUNC(pc_showexp_timer) {
 	map_session_data* sd = (map_session_data*)data;
 	nullpo_retr(-1, sd);
 
-	t_exp base_delta = 0;
-	bool lost_base = pc_showexp_update_exp(&base_delta, &sd->showexp_state.last_base_exp, sd->status.base_exp);
-
-	t_exp job_delta = 0;
-	bool lost_job = pc_showexp_update_exp(&job_delta, &sd->showexp_state.last_job_exp, sd->status.job_exp);
-
-	if(base_delta || job_delta)
-	{
-		pc_gainexp_disp(sd, base_delta, pc_nextbaseexp(sd), job_delta, pc_nextjobexp(sd), lost_base, lost_job);
+	if(sd->showexp_state.base_exp_delta || sd->showexp_state.job_exp_delta) {
+		pc_gainexp_disp_accumulated(sd);
 	}
+
+	pc_reset_accumulated_exp(sd);
 
 	return 0;
 }

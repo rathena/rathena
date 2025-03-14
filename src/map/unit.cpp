@@ -3774,6 +3774,7 @@ int32 unit_free(struct block_list *bl, clr_type clrtype)
 				pc_setrestartvalue(sd,2);
 
 			pc_delinvincibletimer(sd);
+			pc_delete_showexp_timer(sd);
 
 			pc_delautobonus(*sd, sd->autobonus, false);
 			pc_delautobonus(*sd, sd->autobonus2, false);
