@@ -761,8 +761,6 @@ static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
 			column.append("`name_aegis`,");
 		if (appendEntry(input["Name"], value, true))
 			column.append("`name_english`,");
-		if (appendEntry(input["Name"], value, true))
-			column.append("`name_japanese`,");
 		if (appendEntry(input["Level"], value))
 			column.append("`level`,");
 		if (appendEntry(input["Hp"], value))

@@ -259,7 +259,6 @@ struct s_mob_db {
 	uint32 id;
 	std::string sprite;
 	std::string name;
-	std::string jname;
 	t_exp base_exp;
 	t_exp job_exp;
 	t_exp mexp;
