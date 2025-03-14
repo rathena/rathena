@@ -44,101 +44,133 @@ Header:
   Version: 2
 
 Body:
-  - Map: tur_d03_i
+  - Map: ein_d02_i
     SpecificDrops:
-      - Monster: ILL_ASSULTER
+      - Monster: ILL_TEDDY_BEAR_B 
         Drops:
           - Index: 0
             Item: IllusionStone
             Rate: 10
           - Index: 1
-            Item: Huuma_Bird_Wing_IL
+            Item: Survival_Staff_IL
             Rate: 25
-            RandomOptionGroup: ILL_PHYSIC_NORMAL
+            RandomOptionGroup: ILL_MAGIC_NORMAL
           - Index: 2
-            Item: Turtle_Is_Box_IL
+            Item: Teddy_Bear_Box_IL
             Rate: 5
-      - Monster: ILL_PERMETER
+      - Monster: ILL_MINERAL
         Drops:
           - Index: 0
-            Item: Fancy_Flower_IL
-            Rate: 25
-          - Index: 1
             Item: IllusionStone
             Rate: 10
+          - Index: 1
+            Item: Survival_Staff_IL
+            Rate: 25
+            RandomOptionGroup: ILL_MAGIC_NORMAL
           - Index: 2
-            Item: Turtle_Is_Box_IL
+            Item: Teddy_Bear_Box_IL
             Rate: 5
-      - Monster: ILL_FREEZER
+      - Monster: ILL_PITMAN
         Drops:
           - Index: 0
-            Item: Immaterial_Sword_IL
+            Item: Gate_KeeperDD_IL
             Rate: 25
             RandomOptionGroup: ILL_PHYSIC_NORMAL
           - Index: 1
             Item: IllusionStone
             Rate: 10
           - Index: 2
-            Item: Turtle_Is_Box_IL
+            Item: Teddy_Bear_Box_IL
             Rate: 5
-      - Monster: ILL_SOLIDER
+      - Monster: ILL_TEDDY_BEAR_R
         Drops:
           - Index: 0
-            Item: Iron_Driver_IL
+            Item: Headband_Of_Power_IL
+            Rate: 25
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Teddy_Bear_Box_IL
+            Rate: 5
+      - Monster: ILL_TEDDY_BEAR_Y
+        Drops:
+          - Index: 0
+            Item: Boots_IL
+            Rate: 25
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Teddy_Bear_Box_IL
+            Rate: 5
+      - Monster: ILL_TEDDY_BEAR_W
+        Drops:
+          - Index: 0
+            Item: Counter_Dagger_IL
             Rate: 25
             RandomOptionGroup: ILL_PHYSIC_NORMAL
           - Index: 1
             Item: IllusionStone
             Rate: 10
           - Index: 2
-            Item: War_Axe_IL
+            Item: Teddy_Bear_Box_IL
+            Rate: 5
+      - Monster: ILL_OBSIDIAN
+        Drops:
+          - Index: 0
+            Item: Counter_Dagger_IL
             Rate: 25
             RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Teddy_Bear_Box_IL
+            Rate: 5
+      - Monster: ILL_TEDDY_BEAR_G
+        Drops:
+          - Index: 0
+            Item: Gate_KeeperDD_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Teddy_Bear_Box_IL
+            Rate: 5
+      - Monster: ILL_TEDDY_BEAR_S
+        Drops:
+          - Index: 0
+            Item: Boots_IL
+            Rate: 5000
+          - Index: 1
+            Item: Counter_Dagger_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 2
+            Item: Gate_KeeperDD_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
           - Index: 3
-            Item: Turtle_Is_Box_IL
-            Rate: 5
-      - Monster: ILL_HEATER
-        Drops:
-          - Index: 0
-            Item: Pole_Axe_IL
-            Rate: 25
-            RandomOptionGroup: ILL_PHYSIC_NORMAL
-          - Index: 1
-            Item: IllusionStone
-            Rate: 10
-          - Index: 2
-            Item: Turtle_Is_Box_IL
-            Rate: 5
-      - Monster: ILL_TURTLE_GENERAL
-        Drops:
-          - Index: 0
-            Item: Fancy_Flower_IL
+            Item: Headband_Of_Power_IL
             Rate: 5000
-          - Index: 1
-            Item: Immaterial_Sword_IL
-            Rate: 5000
-            RandomOptionGroup: ILL_PHYSIC_BOSS
-          - Index: 2
-            Item: Iron_Driver_IL
-            Rate: 5000
-            RandomOptionGroup: ILL_PHYSIC_BOSS
-          - Index: 3
-            Item: Pole_Axe_IL
-            Rate: 5000
-            RandomOptionGroup: ILL_PHYSIC_BOSS
           - Index: 4
             Item: IllusionStone
-            Rate: 15000
+            Rate: 5000
           - Index: 5
-            Item: War_Axe_IL
-            Rate: 5000
-            RandomOptionGroup: ILL_PHYSIC_BOSS
+            Item: IllusionStone
+            Rate: 10000
           - Index: 6
-            Item: Huuma_Bird_Wing_IL
-            Rate: 5000
-            RandomOptionGroup: ILL_PHYSIC_BOSS
+            Item: IllusionStone
+            Rate: 15000
           - Index: 7
-            Item: S_Turtle_Is_Box_IL
+            Item: Survival_Staff_IL
+            Rate: 25
+            RandomOptionGroup: ILL_MAGIC_NORMAL
+          - Index: 8
+            Item: S_Teddy_Bear_Box_IL
             Rate: 150
   - Map: tur_d04_i
     SpecificDrops:
