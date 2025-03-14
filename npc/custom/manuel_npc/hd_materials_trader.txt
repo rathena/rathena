@@ -1,0 +1,27 @@
+//===== By:==================================================
+//= Manuel Sintos
+
+prt_in,54,67,5	script	HD Material Trader	564,{
+
+	switch(select("Elunium to HD Elunium:Oridecon to HD Oridecon")) {
+		case 1:
+			callshop "hdElu",0;
+			end;
+		break;
+		case 2:
+			callshop "hdOri",0;
+			end;
+		break;
+	}
+
+	OnInit:
+		waitingroom "HD Materials Trader",0;
+	end;
+}
+
+//The hidden npc which holds the function
+prt_in,1,1,5	itemshop	hdElu	564,985,6241:10
+prt_in,1,1,5	itemshop	hdOri	564,984,6240:10
+
+
+

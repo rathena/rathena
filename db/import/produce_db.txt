@@ -1,0 +1,12 @@
+// Item Produce Database
+//
+// Structure of Database:
+// ID,ProduceItemID,ItemLV,RequireSkill,RequireSkillLv,MaterialID1,MaterialAmount1,......
+//
+// Notes:
+// - ID is used to identify item order that will be used for overwriting on db/import.
+//   Value is started from 0 until 269 (MAX_PRODUCE_RESOURCE-1). Use same ID on import file to overwrite original result & requirements
+// - To remove entry by importing, put 0 on 'ProduceItemID'
+// - If MaterialAmount is 0, the player must have that item in their inventory (i.e. guides).
+//   For example, Mine Bottle requires 0x Marine Sphere Creation Guide (ID 7131).
+

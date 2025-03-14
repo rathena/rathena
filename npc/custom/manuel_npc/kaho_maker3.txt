@@ -1,0 +1,897 @@
+//===== By:==================================================
+//= Manuel Sintos
+// @reloadnpc npc/custom/manuel_npc/kaho_maker3.txt
+
+splendide,167,256,5	script	Patry	621,{
+	
+	set @name$, "[ ^1100AAPatry^000000 ]";
+	
+	setarray .itemIDQuest, 30196, 30197, 30198, 30199, 30200, 30201, 30202, 30203, 30204, 30205, 30206, 30207, 30208;
+
+	setarray .requiredItemID0, 19134, 2410, 7227;
+	setarray .requiredAmount0, 1, 1, 50;
+
+	setarray .requiredItemID1, 5476, 2410, 7227;
+	setarray .requiredAmount1, 1, 1, 50;
+
+	setarray .requiredItemID2, 5747, 2410, 7227;
+	setarray .requiredAmount2, 1, 1, 50;
+
+	setarray .requiredItemID3, 5750, 2410, 7227;
+	setarray .requiredAmount3, 1, 1, 50;
+
+	setarray .requiredItemID4, 5757, 2410, 7227;
+	setarray .requiredAmount4, 1, 1, 50;
+
+	setarray .requiredItemID5, 5752, 2410, 7227;
+	setarray .requiredAmount5, 1, 1, 50;
+
+	setarray .requiredItemID6, 18574, 2410, 7227;
+	setarray .requiredAmount6, 1, 1, 50;
+
+	setarray .requiredItemID7, 18827, 2410, 7227;
+	setarray .requiredAmount7, 1, 1, 50;
+
+	setarray .requiredItemID8, 5518, 2410, 7227;
+	setarray .requiredAmount8, 1, 1, 50;
+
+	setarray .requiredItemID9, 18842, 2410, 7227;
+	setarray .requiredAmount9, 1, 1, 50;
+
+	setarray .requiredItemID10, 18561, 2410, 7227;
+	setarray .requiredAmount10, 1, 1, 50;
+
+	setarray .requiredItemID11, 5762, 2410, 7227;
+	setarray .requiredAmount11, 1, 1, 50;
+
+	setarray .requiredItemID12, 18803, 2410, 7227;
+	setarray .requiredAmount12, 1, 1, 50;
+	
+	mes @name$;
+	mes "Nice to meet ya, I'm Patry";
+	next;
+
+	mes @name$;
+	mes "Among the Kaho makers, I am the one who makes new one.";
+	next;
+
+	mes @name$;
+	mes "look, If there is anything you like me to make for you.";
+
+	switch (select(
+		getitemname(.itemIDQuest[0]) + ":" +
+		getitemname(.itemIDQuest[1]) + ":" +
+		getitemname(.itemIDQuest[2]) + ":" +
+		getitemname(.itemIDQuest[3]) + ":" +
+		getitemname(.itemIDQuest[4]) + ":" +
+		getitemname(.itemIDQuest[5]) + ":" +
+		getitemname(.itemIDQuest[6]) + ":" +
+		getitemname(.itemIDQuest[7]) + ":" +
+		getitemname(.itemIDQuest[8]) + ":" +
+		getitemname(.itemIDQuest[9]) + ":" +
+		getitemname(.itemIDQuest[10]) + ":" +
+		getitemname(.itemIDQuest[11]) + ":" +
+		getitemname(.itemIDQuest[12])
+	)) {
+		case 1:
+			next;
+
+			mes @name$;
+			mes "To make this Kaho. You will need the following:";
+			mes .requiredAmount0[0] + "pc - " + getitemname(.requiredItemID0[0]);
+			mes .requiredAmount0[1] + "pc - " + getitemname(.requiredItemID0[1]);
+			mes .requiredAmount0[2] + "pcs - " + getitemname(.requiredItemID0[2]);
+			next;
+
+			mes @name$;
+			mes "Do you want me to continue?";
+			switch(select("No:Yes")) {
+				case 1:
+					next;
+
+					mes @name$;
+					mes "Comeback if you're ready.";
+					close;
+				break;
+				case 2:
+					next;
+
+					mes @name$;
+					mes "You will lose any card  and upgrade that on your item.";
+					mes "Also bring me the items that want me to turn into Kaho, any duplicate items you bring might be consume.";
+					next;
+
+					mes @name$;
+					mes "Tell if me you are sure you want it.";
+					next;
+					
+					switch(select("STOOOOP:Make it to Kaho")) {
+						case 1:
+							mes @name$;
+							mes "Alright.";
+							close;
+						break;
+						case 2:
+							if (countitem(.requiredItemID0[0]) < .requiredAmount0[0] ||
+								countitem(.requiredItemID0[1]) < .requiredAmount0[1] ||
+								countitem(.requiredItemID0[2]) < .requiredAmount0[2]) {
+								specialeffect2 155;
+								emotion ET_SCRATCH;
+								mes @name$;
+								mes "Check the items.";
+								close;
+							}
+							else
+								for( .@j = 0; .@j < getarraysize(.requiredItemID0); .@j++ ) {
+									delitem .requiredItemID0[.@j], .requiredAmount0[.@j];
+								}
+								getitem .itemIDQuest[0], 1;
+								specialeffect2 154;
+								mes @name$;
+								mes "Here you ~";
+								mes "Congrats to your new Kaho.";
+								close;
+						break;
+					}
+				break;
+			}
+		break;
+		case 2:
+			next;
+
+			mes @name$;
+			mes "To make this Kaho. You will need the following:";
+			mes .requiredAmount1[0] + "pc - " + getitemname(.requiredItemID1[0]);
+			mes .requiredAmount1[1] + "pc - " + getitemname(.requiredItemID1[1]);
+			mes .requiredAmount1[2] + "pcs - " + getitemname(.requiredItemID1[2]);
+			next;
+
+			mes @name$;
+			mes "Do you want me to continue?";
+			switch(select("No:Yes")) {
+				case 1:
+					next;
+
+					mes @name$;
+					mes "Comeback if you're ready.";
+					close;
+				break;
+				case 2:
+					next;
+
+					mes @name$;
+					mes "You will lose any card  and upgrade that on your item.";
+					mes "Also bring me the items that want me to turn into Kaho, any duplicate items you bring might be consume.";
+					next;
+
+					mes @name$;
+					mes "Tell if me you are sure you want it.";
+					next;
+					
+					switch(select("STOOOOP:Make it to Kaho")) {
+						case 1:
+							mes @name$;
+							mes "Alright.";
+							close;
+						break;
+						case 2:
+							if (countitem(.requiredItemID1[0]) < .requiredAmount1[0] ||
+								countitem(.requiredItemID1[1]) < .requiredAmount1[1] ||
+								countitem(.requiredItemID1[2]) < .requiredAmount1[2]) {
+								specialeffect2 155;
+								emotion ET_SCRATCH;
+								mes @name$;
+								mes "Check the items.";
+								close;
+							}
+							else
+								for( .@j = 0; .@j < getarraysize(.requiredItemID1); .@j++ ) {
+									delitem .requiredItemID1[.@j], .requiredAmount1[.@j];
+								}
+								getitem .itemIDQuest[1], 1;
+								specialeffect2 154;
+								mes @name$;
+								mes "Here you ~";
+								mes "Congrats to your new Kaho.";
+								close;
+						break;
+					}
+				break;
+			}
+		break;
+		case 3:
+			next;
+
+			mes @name$;
+			mes "To make this Kaho. You will need the following:";
+			mes .requiredAmount2[0] + "pc - " + getitemname(.requiredItemID2[0]);
+			mes .requiredAmount2[1] + "pc - " + getitemname(.requiredItemID2[1]);
+			mes .requiredAmount2[2] + "pcs - " + getitemname(.requiredItemID2[2]);
+			next;
+
+			mes @name$;
+			mes "Do you want me to continue?";
+			switch(select("No:Yes")) {
+				case 1:
+					next;
+
+					mes @name$;
+					mes "Comeback if you're ready.";
+					close;
+				break;
+				case 2:
+					next;
+
+					mes @name$;
+					mes "You will lose any card  and upgrade that on your item.";
+					mes "Also bring me the items that want me to turn into Kaho, any duplicate items you bring might be consume.";
+					next;
+
+					mes @name$;
+					mes "Tell if me you are sure you want it.";
+					next;
+					
+					switch(select("STOOOOP:Make it to Kaho")) {
+						case 1:
+							mes @name$;
+							mes "Alright.";
+							close;
+						break;
+						case 2:
+							if (countitem(.requiredItemID2[0]) < .requiredAmount2[0] ||
+								countitem(.requiredItemID2[1]) < .requiredAmount2[1] ||
+								countitem(.requiredItemID2[2]) < .requiredAmount2[2]) {
+								specialeffect2 155;
+								emotion ET_SCRATCH;
+								mes @name$;
+								mes "Check the items.";
+								close;
+							}
+							else
+								for( .@j = 0; .@j < getarraysize(.requiredItemID2); .@j++ ) {
+									delitem .requiredItemID2[.@j], .requiredAmount2[.@j];
+								}
+								getitem .itemIDQuest[2], 1;
+								specialeffect2 154;
+								mes @name$;
+								mes "Here you ~";
+								mes "Congrats to your new Kaho.";
+								close;
+						break;
+					}
+				break;
+			}
+		break;
+		case 4:
+			next;
+
+			mes @name$;
+			mes "To make this Kaho. You will need the following:";
+			mes .requiredAmount3[0] + "pc - " + getitemname(.requiredItemID3[0]);
+			mes .requiredAmount3[1] + "pc - " + getitemname(.requiredItemID3[1]);
+			mes .requiredAmount3[2] + "pcs - " + getitemname(.requiredItemID3[2]);
+			next;
+
+			mes @name$;
+			mes "Do you want me to continue?";
+			switch(select("No:Yes")) {
+				case 1:
+					next;
+
+					mes @name$;
+					mes "Comeback if you're ready.";
+					close;
+				break;
+				case 2:
+					next;
+
+					mes @name$;
+					mes "You will lose any card  and upgrade that on your item.";
+					mes "Also bring me the items that want me to turn into Kaho, any duplicate items you bring might be consume.";
+					next;
+
+					mes @name$;
+					mes "Tell if me you are sure you want it.";
+					next;
+					
+					switch(select("STOOOOP:Make it to Kaho")) {
+						case 1:
+							mes @name$;
+							mes "Alright.";
+							close;
+						break;
+						case 2:
+							if (countitem(.requiredItemID3[0]) < .requiredAmount3[0] ||
+								countitem(.requiredItemID3[1]) < .requiredAmount3[1] ||
+								countitem(.requiredItemID3[2]) < .requiredAmount3[2]) {
+								specialeffect2 155;
+								emotion ET_SCRATCH;
+								mes @name$;
+								mes "Check the items.";
+								close;
+							}
+							else
+								for( .@j = 0; .@j < getarraysize(.requiredItemID3); .@j++ ) {
+									delitem .requiredItemID3[.@j], .requiredAmount3[.@j];
+								}
+								getitem .itemIDQuest[3], 1;
+								specialeffect2 154;
+								mes @name$;
+								mes "Here you ~";
+								mes "Congrats to your new Kaho.";
+								close;
+						break;
+					}
+				break;
+			}
+		break;
+		case 5:
+			next;
+
+			mes @name$;
+			mes "To make this Kaho. You will need the following:";
+			mes .requiredAmount4[0] + "pc - " + getitemname(.requiredItemID4[0]);
+			mes .requiredAmount4[1] + "pc - " + getitemname(.requiredItemID4[1]);
+			mes .requiredAmount4[2] + "pcs - " + getitemname(.requiredItemID4[2]);
+			next;
+
+			mes @name$;
+			mes "Do you want me to continue?";
+			switch(select("No:Yes")) {
+				case 1:
+					next;
+
+					mes @name$;
+					mes "Comeback if you're ready.";
+					close;
+				break;
+				case 2:
+					next;
+
+					mes @name$;
+					mes "You will lose any card  and upgrade that on your item.";
+					mes "Also bring me the items that want me to turn into Kaho, any duplicate items you bring might be consume.";
+					next;
+
+					mes @name$;
+					mes "Tell if me you are sure you want it.";
+					next;
+					
+					switch(select("STOOOOP:Make it to Kaho")) {
+						case 1:
+							mes @name$;
+							mes "Alright.";
+							close;
+						break;
+						case 2:
+							if (countitem(.requiredItemID4[0]) < .requiredAmount4[0] ||
+								countitem(.requiredItemID4[1]) < .requiredAmount4[1] ||
+								countitem(.requiredItemID4[2]) < .requiredAmount4[2]) {
+								specialeffect2 155;
+								emotion ET_SCRATCH;
+								mes @name$;
+								mes "Check the items.";
+								close;
+							}
+							else
+								for( .@j = 0; .@j < getarraysize(.requiredItemID4); .@j++ ) {
+									delitem .requiredItemID4[.@j], .requiredAmount4[.@j];
+								}
+								getitem .itemIDQuest[4], 1;
+								specialeffect2 154;
+								mes @name$;
+								mes "Here you ~";
+								mes "Congrats to your new Kaho.";
+								close;
+						break;
+					}
+				break;
+			}
+		break;
+		case 6:
+			next;
+
+			mes @name$;
+			mes "To make this Kaho. You will need the following:";
+			mes .requiredAmount5[0] + "pc - " + getitemname(.requiredItemID5[0]);
+			mes .requiredAmount5[1] + "pc - " + getitemname(.requiredItemID5[1]);
+			mes .requiredAmount5[2] + "pcs - " + getitemname(.requiredItemID5[2]);
+			next;
+
+			mes @name$;
+			mes "Do you want me to continue?";
+			switch(select("No:Yes")) {
+				case 1:
+					next;
+
+					mes @name$;
+					mes "Comeback if you're ready.";
+					close;
+				break;
+				case 2:
+					next;
+
+					mes @name$;
+					mes "You will lose any card  and upgrade that on your item.";
+					mes "Also bring me the items that want me to turn into Kaho, any duplicate items you bring might be consume.";
+					next;
+
+					mes @name$;
+					mes "Tell if me you are sure you want it.";
+					next;
+					
+					switch(select("STOOOOP:Make it to Kaho")) {
+						case 1:
+							mes @name$;
+							mes "Alright.";
+							close;
+						break;
+						case 2:
+							if (countitem(.requiredItemID5[0]) < .requiredAmount5[0] ||
+								countitem(.requiredItemID5[1]) < .requiredAmount5[1] ||
+								countitem(.requiredItemID5[2]) < .requiredAmount5[2]) {
+								specialeffect2 155;
+								emotion ET_SCRATCH;
+								mes @name$;
+								mes "Check the items.";
+								close;
+							}
+							else
+								for( .@j = 0; .@j < getarraysize(.requiredItemID5); .@j++ ) {
+									delitem .requiredItemID5[.@j], .requiredAmount5[.@j];
+								}
+								getitem .itemIDQuest[5], 1;
+								specialeffect2 154;
+								mes @name$;
+								mes "Here you ~";
+								mes "Congrats to your new Kaho.";
+								close;
+						break;
+					}
+				break;
+			}
+		break;
+		case 7:
+			next;
+
+			mes @name$;
+			mes "To make this Kaho. You will need the following:";
+			mes .requiredAmount6[0] + "pc - " + getitemname(.requiredItemID6[0]);
+			mes .requiredAmount6[1] + "pc - " + getitemname(.requiredItemID6[1]);
+			mes .requiredAmount6[2] + "pcs - " + getitemname(.requiredItemID6[2]);
+			next;
+
+			mes @name$;
+			mes "Do you want me to continue?";
+			switch(select("No:Yes")) {
+				case 1:
+					next;
+
+					mes @name$;
+					mes "Comeback if you're ready.";
+					close;
+				break;
+				case 2:
+					next;
+
+					mes @name$;
+					mes "You will lose any card  and upgrade that on your item.";
+					mes "Also bring me the items that want me to turn into Kaho, any duplicate items you bring might be consume.";
+					next;
+
+					mes @name$;
+					mes "Tell if me you are sure you want it.";
+					next;
+					
+					switch(select("STOOOOP:Make it to Kaho")) {
+						case 1:
+							mes @name$;
+							mes "Alright.";
+							close;
+						break;
+						case 2:
+							if (countitem(.requiredItemID6[0]) < .requiredAmount6[0] ||
+								countitem(.requiredItemID6[1]) < .requiredAmount6[1] ||
+								countitem(.requiredItemID6[2]) < .requiredAmount6[2]) {
+								specialeffect2 155;
+								emotion ET_SCRATCH;
+								mes @name$;
+								mes "Check the items.";
+								close;
+							}
+							else
+								for( .@j = 0; .@j < getarraysize(.requiredItemID6); .@j++ ) {
+									delitem .requiredItemID6[.@j], .requiredAmount6[.@j];
+								}
+								getitem .itemIDQuest[6], 1;
+								specialeffect2 154;
+								mes @name$;
+								mes "Here you ~";
+								mes "Congrats to your new Kaho.";
+								close;
+						break;
+					}
+				break;
+			}
+		break;
+		case 8:
+			next;
+
+			mes @name$;
+			mes "To make this Kaho. You will need the following:";
+			mes .requiredAmount7[0] + "pc - " + getitemname(.requiredItemID7[0]);
+			mes .requiredAmount7[1] + "pc - " + getitemname(.requiredItemID7[1]);
+			mes .requiredAmount7[2] + "pcs - " + getitemname(.requiredItemID7[2]);
+			next;
+
+			mes @name$;
+			mes "Do you want me to continue?";
+			switch(select("No:Yes")) {
+				case 1:
+					next;
+
+					mes @name$;
+					mes "Comeback if you're ready.";
+					close;
+				break;
+				case 2:
+					next;
+
+					mes @name$;
+					mes "You will lose any card  and upgrade that on your item.";
+					mes "Also bring me the items that want me to turn into Kaho, any duplicate items you bring might be consume.";
+					next;
+
+					mes @name$;
+					mes "Tell if me you are sure you want it.";
+					next;
+					
+					switch(select("STOOOOP:Make it to Kaho")) {
+						case 1:
+							mes @name$;
+							mes "Alright.";
+							close;
+						break;
+						case 2:
+							if (countitem(.requiredItemID7[0]) < .requiredAmount7[0] ||
+								countitem(.requiredItemID7[1]) < .requiredAmount7[1] ||
+								countitem(.requiredItemID7[2]) < .requiredAmount7[2]) {
+								specialeffect2 155;
+								emotion ET_SCRATCH;
+								mes @name$;
+								mes "Check the items.";
+								close;
+							}
+							else
+								for( .@j = 0; .@j < getarraysize(.requiredItemID7); .@j++ ) {
+									delitem .requiredItemID7[.@j], .requiredAmount7[.@j];
+								}
+								getitem .itemIDQuest[7], 1;
+								specialeffect2 154;
+								mes @name$;
+								mes "Here you ~";
+								mes "Congrats to your new Kaho.";
+								close;
+						break;
+					}
+				break;
+			}
+		break;
+		case 9:
+			next;
+
+			mes @name$;
+			mes "To make this Kaho. You will need the following:";
+			mes .requiredAmount8[0] + "pc - " + getitemname(.requiredItemID8[0]);
+			mes .requiredAmount8[1] + "pc - " + getitemname(.requiredItemID8[1]);
+			mes .requiredAmount8[2] + "pcs - " + getitemname(.requiredItemID8[2]);
+			next;
+
+			mes @name$;
+			mes "Do you want me to continue?";
+			switch(select("No:Yes")) {
+				case 1:
+					next;
+
+					mes @name$;
+					mes "Comeback if you're ready.";
+					close;
+				break;
+				case 2:
+					next;
+
+					mes @name$;
+					mes "You will lose any card  and upgrade that on your item.";
+					mes "Also bring me the items that want me to turn into Kaho, any duplicate items you bring might be consume.";
+					next;
+
+					mes @name$;
+					mes "Tell if me you are sure you want it.";
+					next;
+					
+					switch(select("STOOOOP:Make it to Kaho")) {
+						case 1:
+							mes @name$;
+							mes "Alright.";
+							close;
+						break;
+						case 2:
+							if (countitem(.requiredItemID8[0]) < .requiredAmount8[0] ||
+								countitem(.requiredItemID8[1]) < .requiredAmount8[1] ||
+								countitem(.requiredItemID8[2]) < .requiredAmount8[2]) {
+								specialeffect2 155;
+								emotion ET_SCRATCH;
+								mes @name$;
+								mes "Check the items.";
+								close;
+							}
+							else
+								for( .@j = 0; .@j < getarraysize(.requiredItemID8); .@j++ ) {
+									delitem .requiredItemID8[.@j], .requiredAmount8[.@j];
+								}
+								getitem .itemIDQuest[8], 1;
+								specialeffect2 154;
+								mes @name$;
+								mes "Here you ~";
+								mes "Congrats to your new Kaho.";
+								close;
+						break;
+					}
+				break;
+			}
+		break;
+		case 10:
+			next;
+
+			mes @name$;
+			mes "To make this Kaho. You will need the following:";
+			mes .requiredAmount9[0] + "pc - " + getitemname(.requiredItemID9[0]);
+			mes .requiredAmount9[1] + "pc - " + getitemname(.requiredItemID9[1]);
+			mes .requiredAmount9[2] + "pcs - " + getitemname(.requiredItemID9[2]);
+			next;
+
+			mes @name$;
+			mes "Do you want me to continue?";
+			switch(select("No:Yes")) {
+				case 1:
+					next;
+
+					mes @name$;
+					mes "Comeback if you're ready.";
+					close;
+				break;
+				case 2:
+					next;
+
+					mes @name$;
+					mes "You will lose any card  and upgrade that on your item.";
+					mes "Also bring me the items that want me to turn into Kaho, any duplicate items you bring might be consume.";
+					next;
+
+					mes @name$;
+					mes "Tell if me you are sure you want it.";
+					next;
+					
+					switch(select("STOOOOP:Make it to Kaho")) {
+						case 1:
+							mes @name$;
+							mes "Alright.";
+							close;
+						break;
+						case 2:
+							if (countitem(.requiredItemID9[0]) < .requiredAmount9[0] ||
+								countitem(.requiredItemID9[1]) < .requiredAmount9[1] ||
+								countitem(.requiredItemID9[2]) < .requiredAmount9[2]) {
+								specialeffect2 155;
+								emotion ET_SCRATCH;
+								mes @name$;
+								mes "Check the items.";
+								close;
+							}
+							else
+								for( .@j = 0; .@j < getarraysize(.requiredItemID9); .@j++ ) {
+									delitem .requiredItemID9[.@j], .requiredAmount9[.@j];
+								}
+								getitem .itemIDQuest[9], 1;
+								specialeffect2 154;
+								mes @name$;
+								mes "Here you ~";
+								mes "Congrats to your new Kaho.";
+								close;
+						break;
+					}
+				break;
+			}
+		break;
+		case 11:
+			next;
+
+			mes @name$;
+			mes "To make this Kaho. You will need the following:";
+			mes .requiredAmount10[0] + "pc - " + getitemname(.requiredItemID10[0]);
+			mes .requiredAmount10[1] + "pc - " + getitemname(.requiredItemID10[1]);
+			mes .requiredAmount10[2] + "pcs - " + getitemname(.requiredItemID10[2]);
+			next;
+
+			mes @name$;
+			mes "Do you want me to continue?";
+			switch(select("No:Yes")) {
+				case 1:
+					next;
+
+					mes @name$;
+					mes "Comeback if you're ready.";
+					close;
+				break;
+				case 2:
+					next;
+
+					mes @name$;
+					mes "You will lose any card  and upgrade that on your item.";
+					mes "Also bring me the items that want me to turn into Kaho, any duplicate items you bring might be consume.";
+					next;
+
+					mes @name$;
+					mes "Tell if me you are sure you want it.";
+					next;
+					
+					switch(select("STOOOOP:Make it to Kaho")) {
+						case 1:
+							mes @name$;
+							mes "Alright.";
+							close;
+						break;
+						case 2:
+							if (countitem(.requiredItemID10[0]) < .requiredAmount10[0] ||
+								countitem(.requiredItemID10[1]) < .requiredAmount10[1] ||
+								countitem(.requiredItemID10[2]) < .requiredAmount10[2]) {
+								specialeffect2 155;
+								emotion ET_SCRATCH;
+								mes @name$;
+								mes "Check the items.";
+								close;
+							}
+							else
+								for( .@j = 0; .@j < getarraysize(.requiredItemID10); .@j++ ) {
+									delitem .requiredItemID10[.@j], .requiredAmount10[.@j];
+								}
+								getitem .itemIDQuest[10], 1;
+								specialeffect2 154;
+								mes @name$;
+								mes "Here you ~";
+								mes "Congrats to your new Kaho.";
+								close;
+						break;
+					}
+				break;
+			}
+		break;
+		case 12:
+			next;
+
+			mes @name$;
+			mes "To make this Kaho. You will need the following:";
+			mes .requiredAmount11[0] + "pc - " + getitemname(.requiredItemID11[0]);
+			mes .requiredAmount11[1] + "pc - " + getitemname(.requiredItemID11[1]);
+			mes .requiredAmount11[2] + "pcs - " + getitemname(.requiredItemID11[2]);
+			next;
+
+			mes @name$;
+			mes "Do you want me to continue?";
+			switch(select("No:Yes")) {
+				case 1:
+					next;
+
+					mes @name$;
+					mes "Comeback if you're ready.";
+					close;
+				break;
+				case 2:
+					next;
+
+					mes @name$;
+					mes "You will lose any card  and upgrade that on your item.";
+					mes "Also bring me the items that want me to turn into Kaho, any duplicate items you bring might be consume.";
+					next;
+
+					mes @name$;
+					mes "Tell if me you are sure you want it.";
+					next;
+					
+					switch(select("STOOOOP:Make it to Kaho")) {
+						case 1:
+							mes @name$;
+							mes "Alright.";
+							close;
+						break;
+						case 2:
+							if (countitem(.requiredItemID11[0]) < .requiredAmount11[0] ||
+								countitem(.requiredItemID11[1]) < .requiredAmount11[1] ||
+								countitem(.requiredItemID11[2]) < .requiredAmount11[2]) {
+								specialeffect2 155;
+								emotion ET_SCRATCH;
+								mes @name$;
+								mes "Check the items.";
+								close;
+							}
+							else
+								for( .@j = 0; .@j < getarraysize(.requiredItemID11); .@j++ ) {
+									delitem .requiredItemID11[.@j], .requiredAmount11[.@j];
+								}
+								getitem .itemIDQuest[11], 1;
+								specialeffect2 154;
+								mes @name$;
+								mes "Here you ~";
+								mes "Congrats to your new Kaho.";
+								close;
+						break;
+					}
+				break;
+			}
+		break;
+		case 13:
+			next;
+
+			mes @name$;
+			mes "To make this Kaho. You will need the following:";
+			mes .requiredAmount12[0] + "pc - " + getitemname(.requiredItemID12[0]);
+			mes .requiredAmount12[1] + "pc - " + getitemname(.requiredItemID12[1]);
+			mes .requiredAmount12[2] + "pcs - " + getitemname(.requiredItemID12[2]);
+			next;
+
+			mes @name$;
+			mes "Do you want me to continue?";
+			switch(select("No:Yes")) {
+				case 1:
+					next;
+
+					mes @name$;
+					mes "Comeback if you're ready.";
+					close;
+				break;
+				case 2:
+					next;
+
+					mes @name$;
+					mes "You will lose any card  and upgrade that on your item.";
+					mes "Also bring me the items that want me to turn into Kaho, any duplicate items you bring might be consume.";
+					next;
+
+					mes @name$;
+					mes "Tell if me you are sure you want it.";
+					next;
+					
+					switch(select("STOOOOP:Make it to Kaho")) {
+						case 1:
+							mes @name$;
+							mes "Alright.";
+							close;
+						break;
+						case 2:
+							if (countitem(.requiredItemID12[0]) < .requiredAmount12[0] ||
+								countitem(.requiredItemID12[1]) < .requiredAmount12[1] ||
+								countitem(.requiredItemID12[2]) < .requiredAmount12[2]) {
+								specialeffect2 155;
+								emotion ET_SCRATCH;
+								mes @name$;
+								mes "Check the items.";
+								close;
+							}
+							else
+								for( .@j = 0; .@j < getarraysize(.requiredItemID12); .@j++ ) {
+									delitem .requiredItemID12[.@j], .requiredAmount12[.@j];
+								}
+								getitem .itemIDQuest[12], 1;
+								specialeffect2 154;
+								mes @name$;
+								mes "Here you ~";
+								mes "Congrats to your new Kaho.";
+								close;
+						break;
+					}
+				break;
+			}
+		break;
+	}
+
+}

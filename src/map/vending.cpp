@@ -67,7 +67,7 @@ void vending_closevending(map_session_data* sd)
 
 		sd->state.vending = false;
 		sd->vender_id = 0;
-		clif_closevendingboard( sd->bl, AREA_WOS, nullptr );
+		clif_closevendingboard(&sd->bl, 0);
 		idb_remove(vending_db, sd->status.char_id);
 	}
 }
@@ -358,7 +358,7 @@ int8 vending_openvending( map_session_data& sd, const char* message, const uint8
 	// check if the total value of the items plus the current zeny is over the limit
 	if ( !battle_config.vending_over_max && (static_cast<int64>(sd.status.zeny) + total) > MAX_ZENY ) {
 #if PACKETVER >= 20200819
-		clif_msg_color( sd, MSI_MERCHANTSHOP_TOTA_LOVER_ZENY_ERR, color_table[COLOR_RED] );
+		clif_msg_color( &sd, MSI_MERCHANTSHOP_TOTA_LOVER_ZENY_ERR, color_table[COLOR_RED] );
 #endif
 		clif_skill_fail( sd, MC_VENDING );
 		sd.state.prevend = 0;

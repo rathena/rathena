@@ -1,0 +1,41 @@
+//===== By:==================================================
+//= Manuel Sintos
+// @reloadnpc npc/custom/manuel_npc/unitwalks.txt
+
+-	script	Bomtarat	-,{
+	OnInit:
+		bindatcmd "unitwalks", strnpcinfo(3) + "::OnUnitWalksCommand";
+    end;
+
+    OnUnitWalksCommand:
+    	// Log the player out but keep the character in-game
+    	atcommand("@afk");
+
+    	// Get the player's character ID
+		.@char_id = getcharid(3);
+
+        // Define the roaming area (Prontera coordinates)
+        .@min_x = 140;  // Minimum X coordinate for roaming
+        .@max_x = 170;  // Maximum X coordinate for roaming
+        .@min_y = 180;  // Minimum Y coordinate for roaming
+        .@max_y = 200;  // Maximum Y coordinate for roaming
+
+        // Loop indefinitely for roaming
+        while (1) {
+            // Generate random coordinates within the defined range
+            .@target_x = rand(.@min_x, .@max_x);
+            .@target_y = rand(.@min_y, .@max_y);
+
+            // Try to move the character to the generated target coordinates
+            if (unitwalk(.@char_id, .@target_x, .@target_y)) {
+                dispbottom "Walking to (" + .@target_x + ", " + .@target_y + ")...";
+            } else {
+                dispbottom "Coordinates (" + .@target_x + ", " + .@target_y + ") are not walkable. Trying again...";
+            }
+
+            // Wait for a random time between movements (between 3 to 5 seconds)
+            sleep2 rand(3000, 5000);
+        }
+    end;
+}
+

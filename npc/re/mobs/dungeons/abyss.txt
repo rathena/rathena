@@ -11,6 +11,7 @@
 //= 1.1 More official spawns [Playtester]
 //= 1.2 Official X.3 spawns [Playtester]
 //= 1.3 Corrected MVP spawn variance. [L0ne_W0lf]
+//= 1.4 Added abyss_04 spawns [Manuel Sintos]
 //============================================================
 
 //==================================================
@@ -49,3 +50,10 @@ abyss_03,0,0	monster	Ferus	1714,10,5000
 abyss_03,0,0	monster	Ferus	1717,10,5000
 abyss_03,0,0	monster	Hydrolancer	1720,3,5000
 abyss_03,0,0,0,0	boss_monster	Detardeurus	1719,1,10800000,600000,0
+
+//==================================================
+// abyss_04 - Abyss Lake Underground Cave
+//==================================================
+abyss_04,0,0	monster	Bone Ferus	20616,110,5000
+abyss_04,0,0	monster	Bone Acidus	20617,110,5000
+abyss_04,0,0,0,0	boss_monster	Bone Detardeurus	20618,1,10800000,600000,0

@@ -1,0 +1,40 @@
+//===== By:==================================================
+// @reloadnpc npc/custom/manuel_npc/tbox_spawner.txt
+
+prontera,214,219,3	script	Treasure Box Spawner	735,{
+	mes "[ Treasure Box Spawner ]";
+	mes "Hi there! I'm the Treasure Box Spawner.";
+	mes "Every hour, after you destroyed the box, a treasure box will appear in random locations.";
+	mes "Good luck in finding them!";
+	close;
+
+	OnInit:
+		// Start a every 60-minute before respawning the treasure box
+		OnTimer3600000:
+		initnpctimer;
+		goto OnSpawnTreasureBox;
+	end;
+
+	OnTBoxDestroyed:
+		// Announce someone destroyed the Tbox		
+		announce "The Treasure Box has been found and destroyed by [ " + strcharinfo(0) + "! ]", 0;
+		
+		// Reward the player who killed the treasure box
+		callfunc("eventRewards");
+	end;
+
+	OnSpawnTreasureBox:
+		// Variables to hold random coordinates
+		.@map$ = "prontera";
+		// Find a random empty cell in Prontera and store it within .@x and .@y
+		getfreecell("prontera",.@x,.@y); 
+
+		// Spawn the treasure box at the random walkable location
+		monster .@map$, .@x, .@y, "Treasure Box", 2288, 1, "Treasure Box Spawner::OnTBoxDestroyed";
+
+		// Announce that the treasure box has respawned
+		announce "A new Treasure Box has appeared in Prontera!", 0;
+		// Note: This is for debugging. 
+		// announce "A new Treasure Box has appeared in Prontera! (" + .@x + ", " + .@y + ")", 0;
+	end;
+}

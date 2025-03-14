@@ -1,0 +1,91 @@
+//===== rAthena Script =======================================
+//= Frozen Scale Field Monster Spawn Script
+//===== By: ==================================================
+//= Manuel Sintos
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Official kRO monster spawns
+//===== Additional Comments: =================================
+//= 1.0 First Release
+//============================================================
+
+//==================================================
+// jor_tail - Frozen Tail
+//==================================================
+jor_tail,0,0	monster	Ice Gangu	21525,90,5000
+jor_tail,0,0	monster	Shining Seaweed	21524,80,5000
+
+//==================================================
+// jor_back1 - Frozen Scale Hill
+//==================================================
+jor_back1,0,0	monster	Ice Gangu	21525,60,5000
+jor_back1,0,0	monster	Shining Seaweed	21524,60,5000
+jor_back1,0,0	monster	Ice Straw	21523,80,5000
+
+//==================================================
+// jor_back2 - Frozen Scale Plains
+//==================================================
+jor_back2,0,0	monster	Ice Gangu	21525,25,5000
+jor_back2,0,0	monster	Ice Straw	21523,35,5000
+jor_back2,0,0	monster	Unfrost Flower	21521,70,5000
+jor_back2,0,0	monster	Limacina	21520,70,5000
+
+//==================================================
+// jor_back3 - Frozen Scale Glacier
+//==================================================
+jor_back3,0,0	monster	Ice Gangu	21525,20,5000
+jor_back3,0,0	monster	Calmaring	21522,70,5000
+jor_back3,0,0	monster	Primitive Rgan	21526,30,5000
+jor_back3,0,0	monster	Lowest Rgan	21527,15,5000
+jor_back3,0,0	monster	Limacina	21520,70,5000
+jor_back3,0,0,0,0	boss_monster	Ultra Limacina	21537,1,3600000,600000,1
+
+//==================================================
+// jor_back4 - Frozen Scale Beach
+//==================================================
+jor_back4,0,0	monster	Calmaring	21522,10,5000
+jor_back4,0,0	monster	Ice Straw	21523,10,5000
+jor_back4,0,0	monster	Snow Rabbit Slug	21969,50,5000
+jor_back4,0,0	monster	Angel Iceslug	21983,50,5000
+jor_back4,0,0	monster	Suspicious Private Awin	21976,30,5000
+jor_back4,0,0	monster	Suspicious Corporal Awin	21977,30,5000
+jor_back4,0,0	monster	Suspicious Awin Disease	21978,20,5000
+jor_back4,0,0,0,0	boss_monster	Snowstorm Angel	21996,1,3600000,600000,1
+
+//==================================================
+// jor_back5 - Ancient Ice Canyon East
+//==================================================
+jor_back5,0,0	monster	Shining Seaweed	21524,10,5000
+jor_back5,0,0	monster	Icewind Egg	21984,10,5000
+jor_back5,0,0	monster	Copo	21965,40,5000
+jor_back5,0,0	monster	Grey Icewind	21966,60,5000
+jor_back5,0,0	monster	Suspicious Awin Trainee	21974,20,5000
+jor_back5,0,0	monster	Suspicious Private Arwin	21975,20,5000
+jor_back5,0,0	monster	Suspicious Private Arwin	21975,20,5000
+
+//==================================================
+// jor_back6 - Ancient Ice Canyon West
+//==================================================
+jor_back6,0,0	monster	Shining Seaweed	21524,10,5000
+jor_back6,0,0	monster	Suspicious Awin Disease	21978,20,5000
+jor_back6,0,0	monster	Bear Bug	21971,75,5000
+jor_back6,0,0	monster	Strong Copo	23060,55,5000
+jor_back6,0,0	monster	Icewind	21967,100,5000
+
+//==================================================
+// jor_twice - Drift Ice Zone
+//==================================================
+jor_twice,0,0	monster	Snow Rabbit Slug	21969,60,5000
+jor_twice,0,0	monster	Angel Iceslug	21983,60,5000
+jor_twice,0,0	monster	Jormungandr Guardian-P	21972,20,5000
+jor_twice,0,0	monster	Jormungandr Guardian-Y	21973,20,5000
+jor_twice,0,0	monster	Jormungandr Church Warlock	21987,40,5000
+
+//==================================================
+// jor_twig - Twig's Nest
+//==================================================
+jor_twig,0,0	monster	Jormungandr Guardian-P	21972,20,5000
+jor_twig,0,0	monster	Jormungandr Guardian-Y	21973,20,5000

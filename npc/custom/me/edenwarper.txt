@@ -1,0 +1,24 @@
+//===== rAthena Script =======================================
+//= Eden Group Warper
+//===== By: ==================================================
+//= FornoGamer
+//===== Current Version: =====================================
+//= 0.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Warps you to eden group
+//===== Additional Comments: =================================
+//= 
+//============================================================
+
+prontera,164,168,3	script	Eden Warper	714,{
+	mes "Warper";
+	mes "Hey there";
+	mes "with my secret arts i can warp you to eden group.";
+	next;
+	switch(select("Warp Me Please :no thank you")) {
+	case 1: warp ("moc_para01",30,15); break; 
+	}
+	end;
+}

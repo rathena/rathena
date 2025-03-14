@@ -1,0 +1,162 @@
+//===== By:==================================================
+//= Manuel Sintos
+// @reloadnpc npc/custom/manuel_npc/lfw_event.txt
+// Last Fallen Warrior Event
+
+-	script	LFWE_Event	-,{
+	OnInit:
+		set .lfw_start, 0;
+		goto OnLWEEventAnnouncement;
+	end;
+
+	OnLWEEventAnnouncement:
+
+		killmonsterall "quiz_01";
+		initnpctimer;
+		announce "LFW Event: We are going to have a Last Fallen Warrior Event!", 0;
+		end;
+		OnTimer3000:
+			announce "LFW Event: For those who want to join, please come to Prontera Town!", 0;
+		end;
+		OnTimer5000:
+			announce "LFW Event: The Warper will be open for 1 minute.", 0;
+		end;
+		// 35000
+		OnTimer38000:
+			announce "LFW Event: Last 30 Seconds until the warper closes.", 0;
+		end;
+		// 65000
+		OnTimer65000:
+			stopnpctimer;
+			sleep 1000;
+			announce "LFW Event: The Event will close in 5 seconds.", 0;
+			sleep 1000;
+			announce "LFW Event: The Event will close in 4 seconds.", 0;
+			sleep 1000;
+			announce "LFW Event: The Event will close in 3 seconds.", 0;
+			sleep 1000;
+			announce "LFW Event: The Event will close in 2 seconds.", 0;
+			sleep 1000;
+			announce "LFW Event: The Event will close in 1 second.", 0;
+			sleep 1000;
+			announce "LFW Event: Warper Closed.", 0;
+			disablenpc "LFW Event Warper";
+			// Call the LFWEEvent
+			goto OnLFWEEvent;
+		end;
+	end;
+
+	OnLFWEEvent:
+		// add delay
+		sleep 3000;
+
+		// Check if no player join the LFWE
+		if (getmapusers("quiz_01") == 0) {
+	        killmonsterall "quiz_01";
+	        announce "LFW Event: Event has ended. No players participated.", 0;
+
+	        // Reset to the LFW Event in 40 minutes!
+			sleep 2400000;
+			enablenpc "LFW Event Warper";
+			goto OnLWEEventAnnouncement;
+	        end; // end here the function OnLFWEEvent and the below won't run
+	    }
+
+	    // Countdown announcements before starting the event
+	    mapannounce "quiz_01", "LFW Event Announcer: The event will start in 5 seconds!", 0, 0x00FF00;
+	    sleep 1000;
+	    mapannounce "quiz_01", "LFW Event Announcer: 4 seconds remaining!", 0, 0x00FF00;
+	    sleep 1000;
+	    mapannounce "quiz_01", "LFW Event Announcer: 3 seconds remaining!", 0, 0x00FF00;
+	    sleep 1000;
+	    mapannounce "quiz_01", "LFW Event Announcer: 2 seconds remaining!", 0, 0x00FF00;
+	    sleep 1000;
+	    mapannounce "quiz_01", "LFW Event Announcer: 1 second remaining!", 0, 0x00FF00;
+	    sleep 1000;
+	    mapannounce "quiz_01", "LFW Event Announcer: Let the battle begin!", 0, 0x00FF00;
+
+	    set .lfw_start, 1;
+	    
+		monster "quiz_01", 42, 369, "Champion Chen", 2238, 1;
+		monster "quiz_01", 27, 373, "Champion Chen", 2238, 1;
+		monster "quiz_01", 26, 365, "Champion Chen", 2238, 1;
+		monster "quiz_01", 36, 364, "Champion Chen", 2238, 1;
+		monster "quiz_01", 36, 373, "Champion Chen", 2238, 1;
+		monster "quiz_01", 47, 373, "Champion Chen", 2238, 1;
+		monster "quiz_01", 57, 372, "Champion Chen", 2238, 1;
+		monster "quiz_01", 58, 365, "Champion Chen", 2238, 1;
+		monster "quiz_01", 48, 364, "Champion Chen", 2238, 1;
+
+		// Check every 10 seconds how many players are still surviving
+	    while (1) {
+	        if (getmapusers("quiz_01") > 0) {
+	        	// Announce the number of remaining players in the event
+	            mapannounce "quiz_01", "LFW Event Announcer: " + getmapusers("quiz_01") + " players are still surviving in the event.", 0, 0x00FF00; // Announce number of players
+	        } else {
+	            break; // Exit the loop if no players remain
+	        }
+
+	        // Delay 10 seconds before checking again
+	        sleep 10000; 
+	    }
+	end;
+
+	OnPCDieEvent:
+
+		if (.lfw_start == 1) {
+			set .lfw_start, 0;
+			
+			// Get the player's name who died
+			.dead_player$ = strcharinfo(0);
+
+			// Announce the player's elimination
+			mapannounce "quiz_01","LFW Event Announcer: " + .dead_player$ + " has been fallen.",0,0x00FF00;
+
+			// Check if there is only 1 player is alive, then announce that he is the winner after it died.
+			if (getmapusers("quiz_01") == 1) {
+				killmonsterall "quiz_01";
+				
+				announce "Congratulation to " + .dead_player$ + " for winning the Last Fallen Warrior Event!",0;
+				//reward for winning
+				getitem 7227, 10;
+				getitem 30341, 10;
+				getitem 30343, 10;
+				getitem 23763, 5;
+
+				// Warp the winner out of the event map
+				warp "prontera", 149, 161;
+
+				// Reset to the LFW Event in 40 minutes!
+				sleep 2400000;
+				enablenpc "LFW Event Warper";
+				goto OnLWEEventAnnouncement;
+				end; // end here the code below won't run
+			}
+
+			// Warp the eliminated player out of the event map
+			warp "prontera", 149, 161;
+		}		
+	end;
+}
+
+prontera,156,172,3	script	LFW Event Warper	811,{
+	// Declare the event map and initial coordinates
+	set .event_map$, "quiz_01";
+	set .event_x, 42;
+	set .event_y, 369;
+
+	// Declare variables for the event
+	set .@player_count, 0;
+	setarray .@player_names$, "";
+
+	warp .event_map$, .event_x, .event_y;
+}
+
+// Mapflags
+quiz_01	mapflag	nogo
+quiz_01	mapflag	nomemo
+quiz_01	mapflag	noreturn
+quiz_01	mapflag	nowarp
+quiz_01	mapflag	nowarpto
+quiz_01	mapflag	nosave
+quiz_01	mapflag	nobranch

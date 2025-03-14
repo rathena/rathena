@@ -112,6 +112,7 @@ prt_fild08,144,147,70,70	monster	Fabre	1007,20,10000
 prt_fild08,263,79,90,90	monster	Fabre	1007,20,10000
 prt_fild08,336,113,40,40	monster	Pupa	1008,20,10000
 prt_fild08,330,269,40,40	monster	Little Poring	2398,20,10000
+prt_fild08,0,0,0,0	boss_monster	King Poring	3810,1,3600000,600000,1
 
 //==================================================
 // prt_fild09 - Prontera Field

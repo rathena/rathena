@@ -1427,16 +1427,16 @@ int32 pc_equippoint(map_session_data *sd,int32 n){
 /**
  * Fill inventory_data with struct *item_data through inventory (fill with struct *item)
  * @param sd : player session
+ * @return 0 sucess, 1:invalid sd
  */
-void pc_setinventorydata( map_session_data& sd ){
-	for( size_t i = 0; i < MAX_INVENTORY; i++ ){
-		t_itemid id = sd.inventory.u.items_inventory[i].nameid;
+void pc_setinventorydata(map_session_data *sd)
+{
+	uint8 i;
+	nullpo_retv(sd);
 
-		if( id != 0 ){
-			sd.inventory_data[i] = itemdb_search( id );
-		}else{
-			sd.inventory_data[i] = nullptr;
-		}
+	for(i = 0; i < MAX_INVENTORY; i++) {
+		t_itemid id = sd->inventory.u.items_inventory[i].nameid;
+		sd->inventory_data[i] = id?itemdb_search(id):nullptr;
 	}
 }
 
@@ -1829,7 +1829,7 @@ uint8 pc_isequip(map_session_data *sd,int32 n)
 		switch (item->subtype) {
 			case AMMO_ARROW:
 				if (battle_config.ammo_check_weapon && sd->status.weapon != W_BOW && sd->status.weapon != W_MUSICAL && sd->status.weapon != W_WHIP) {
-					clif_msg( *sd, MSI_FAIL_NEED_EQUIPPED_BOW );
+					clif_msg(sd, MSI_FAIL_NEED_EQUIPPED_BOW);
 					return ITEM_EQUIP_ACK_FAIL;
 				}
 				break;
@@ -1844,26 +1844,26 @@ uint8 pc_isequip(map_session_data *sd,int32 n)
 					&& sd->status.weapon != W_GRENADE
 #endif
 					) {
-					clif_msg( *sd, MSI_WRONG_BULLET );
+					clif_msg(sd, MSI_WRONG_BULLET);
 					return ITEM_EQUIP_ACK_FAIL;
 				}
 				break;
 #ifndef RENEWAL
 			case AMMO_GRENADE:
 				if (battle_config.ammo_check_weapon && sd->status.weapon != W_GRENADE) {
-					clif_msg( *sd, MSI_WRONG_BULLET );
+					clif_msg(sd, MSI_WRONG_BULLET);
 					return ITEM_EQUIP_ACK_FAIL;
 				}
 				break;
 #endif
 			case AMMO_CANNONBALL:
 				if (!pc_ismadogear(sd) && (sd->status.class_ == JOB_MECHANIC_T || sd->status.class_ == JOB_MECHANIC)) {
-					clif_msg( *sd, MSI_USESKILL_FAIL_MADOGEAR ); // Item can only be used when Mado Gear is mounted.
+					clif_msg(sd, MSI_USESKILL_FAIL_MADOGEAR); // Item can only be used when Mado Gear is mounted.
 					return ITEM_EQUIP_ACK_FAIL;
 				}
 				if (sd->state.active && !pc_iscarton(sd) && //Check if sc data is already loaded
 					(sd->status.class_ == JOB_GENETIC_T || sd->status.class_ == JOB_GENETIC)) {
-					clif_msg( *sd, MSI_USESKILL_FAIL_CART ); // Only available when cart is mounted.
+					clif_msg(sd, MSI_USESKILL_FAIL_CART); // Only available when cart is mounted.
 					return ITEM_EQUIP_ACK_FAIL;
 				}
 				break;
@@ -4316,10 +4316,6 @@ void pc_bonus(map_session_data *sd,int32 type,int32 val)
 			if (sd->state.lr_flag != LR_FLAG_ARROW)
 				sd->bonus.ematk += val;
 			break;
-		case SP_EMATK_HIDDEN:
-			if (sd->state.lr_flag != LR_FLAG_ARROW)
-				sd->bonus.ematk_hidden += val;
-			break;
 		case SP_ADD_VARIABLECAST:
 			if (sd->state.lr_flag != LR_FLAG_ARROW)
 				sd->bonus.add_varcast += val;
@@ -6179,7 +6175,7 @@ bool pc_isUseitem(map_session_data *sd,int32 n)
 		return false;
 
 	if( (item->item_usage.sitting) && (pc_issit(sd) == 1) && (pc_get_group_level(sd) < item->item_usage.override) ) {
-		clif_msg( *sd, MSI_CANT_USE_WHEN_SITDOWN );
+		clif_msg(sd, MSI_CANT_USE_WHEN_SITDOWN);
 		return false; // You cannot use this item while sitting.
 	}
 
@@ -6224,7 +6220,7 @@ bool pc_isUseitem(map_session_data *sd,int32 n)
 
 			// User is not party leader
 			if( i == MAX_PARTY ){
-				clif_msg( *sd, MSI_CANNOT_PARTYCALL );
+				clif_msg( sd, MSI_CANNOT_PARTYCALL);
 				return false;
 			}
 
@@ -6232,11 +6228,11 @@ bool pc_isUseitem(map_session_data *sd,int32 n)
 
 			// No party members found on same map
 			if( i == MAX_PARTY ){
-				clif_msg( *sd, MSI_NO_PARTYMEM_ON_THISMAP );
+				clif_msg( sd, MSI_NO_PARTYMEM_ON_THISMAP );
 				return false;
 			}
 		}else{
-			clif_msg( *sd, MSI_CANNOT_PARTYCALL );
+			clif_msg( sd, MSI_CANNOT_PARTYCALL);
 			return false;
 		}
 	}
@@ -6272,14 +6268,14 @@ bool pc_isUseitem(map_session_data *sd,int32 n)
 		// Check if the player is not overweighted
 		// In Renewal the limit is 70% weight and gives the same error message
 		if (pc_is70overweight(sd)) {
-			clif_msg_color( *sd, MSI_PICKUP_FAILED_ITEMCREATE, color_table[COLOR_RED] );
+			clif_msg_color(sd, MSI_PICKUP_FAILED_ITEMCREATE, color_table[COLOR_RED]);
 			return 0;
 		}
 #else
 		// Check if the player is not overweighted
 		// In Pre-Renewal the limit is 50% weight and gives a specific error message
 		if (pc_is50overweight(sd)) {
-			clif_msg_color( *sd, MSI_CANT_GET_ITEM_BECAUSE_WEIGHT, color_table[COLOR_RED] );
+			clif_msg_color(sd, MSI_CANT_GET_ITEM_BECAUSE_WEIGHT, color_table[COLOR_RED]);
 			return 0;
 		}
 #endif
@@ -6290,9 +6286,9 @@ bool pc_isUseitem(map_session_data *sd,int32 n)
 		// TODO: Count the items the player will get and check for the actual inventory space required std::max<size_t>( count, 10 )
 		if (pc_inventoryblank(sd) <= 10) {
 #ifdef RENEWAL
-			clif_msg_color( *sd, MSI_PICKUP_FAILED_ITEMCREATE, color_table[COLOR_RED] );
+			clif_msg_color(sd, MSI_PICKUP_FAILED_ITEMCREATE, color_table[COLOR_RED]);
 #else
-			clif_msg_color( *sd, MSI_CANT_GET_ITEM_BECAUSE_COUNT, color_table[COLOR_RED] );
+			clif_msg_color(sd, MSI_CANT_GET_ITEM_BECAUSE_COUNT, color_table[COLOR_RED]);
 #endif
 			return 0;
 		}
@@ -6352,7 +6348,7 @@ int32 pc_useitem(map_session_data *sd,int32 n)
 
 		if( pc_hasprogress( sd, WIP_DISABLE_SKILLITEM ) || !sd->npc_item_flag ){
 #ifdef RENEWAL
-			clif_msg( *sd, MSI_BUSY );
+			clif_msg( sd, MSI_BUSY);
 #endif
 			return 0;
 		}
@@ -6391,7 +6387,7 @@ int32 pc_useitem(map_session_data *sd,int32 n)
 
 	/* on restricted maps the item is consumed but the effect is not used */
 	if (!pc_has_permission(sd,PC_PERM_ITEM_UNCONDITIONAL) && itemdb_isNoEquip(id,sd->bl.m)) {
-		clif_msg( *sd, MSI_IMPOSSIBLE_USEITEM_AREA ); // This item cannot be used within this area
+		clif_msg(sd, MSI_IMPOSSIBLE_USEITEM_AREA); // This item cannot be used within this area
 		if( battle_config.allow_consume_restricted_item && id->flag.delay_consume > 0 ) { //need confirmation for delayed consumption items
 			clif_useitemack(sd,n,item.amount-1,true);
 			pc_delitem(sd,n,1,1,0,LOG_TYPE_CONSUME);
@@ -6556,7 +6552,7 @@ void pc_putitemtocart(map_session_data *sd,int32 idx,int32 amount)
 		return;
 
 	if( item_data->equipSwitch ){
-		clif_msg( *sd, MSI_SWAP_EQUIPITEM_UNREGISTER_FIRST );
+		clif_msg( sd, MSI_SWAP_EQUIPITEM_UNREGISTER_FIRST );
 		return;
 	}
 
@@ -6672,6 +6668,7 @@ int32 pc_show_steal(struct block_list *bl,va_list ap)
  */
 bool pc_steal_item(map_session_data *sd,struct block_list *bl, uint16 skill_lv)
 {
+	int32 i;
 	t_itemid itemid;
 	double rate;
 	unsigned char flag = 0;
@@ -6708,43 +6705,25 @@ bool pc_steal_item(map_session_data *sd,struct block_list *bl, uint16 skill_lv)
 	)
 		return false;
 
-	std::shared_ptr<s_mob_drop> drop = nullptr;
-
-	// Try dropping one item.
-	for( std::shared_ptr<s_mob_drop>& entry : md->db->dropitem ){
-		if( entry->steal_protected ){
-			continue;
-		}
-
-		if( !item_db.exists( entry->nameid ) ){
-			continue;
-		}
-
-#ifdef RENEWAL
-		if( rnd() % 10000 < entry->rate ){
-			drop = entry;
-			break;
-		}
-#else
-		// Droprate is affected by the skill success rate.
-		if( rnd() % 10000 < entry->rate * rate / 100. ){
-			drop = entry;
-			break;
-		}
+	// Try dropping one item, in the order from first to last possible slot.
+	// Droprate is affected by the skill success rate.
+	for( i = 0; i < MAX_MOB_DROP; i++ )
+		if( item_db.exists(md->db->dropitem[i].nameid) && !md->db->dropitem[i].steal_protected && rnd() % 10000 < md->db->dropitem[i].rate
+#ifndef RENEWAL
+		* rate/100.
 #endif
-	}
-
-	if( drop == nullptr ){
+		)
+			break;
+	if( i == MAX_MOB_DROP )
 		return false;
-	}
 
-	itemid = drop->nameid;
+	itemid = md->db->dropitem[i].nameid;
 	struct item tmp_item = {};
 	tmp_item.nameid = itemid;
 	tmp_item.amount = 1;
 	tmp_item.identify = itemdb_isidentified(itemid);
 	if( battle_config.skill_steal_random_options ){
-		mob_setdropitem_option( tmp_item, drop );
+		mob_setdropitem_option( tmp_item, md->db->dropitem[i] );
 	}
 	flag = pc_additem(sd,&tmp_item,1,LOG_TYPE_PICKDROP_PLAYER);
 
@@ -6763,11 +6742,11 @@ bool pc_steal_item(map_session_data *sd,struct block_list *bl, uint16 skill_lv)
 	log_pick_mob(md, LOG_TYPE_STEAL, -1, &tmp_item);
 
 	//A Rare Steal Global Announce by Lupus
-	if(drop->rate <= battle_config.rare_drop_announce) {
+	if(md->db->dropitem[i].rate <= battle_config.rare_drop_announce) {
 		struct item_data *i_data;
 		char message[128];
 		i_data = itemdb_search(itemid);
-		sprintf (message, msg_txt(sd,542), (sd->status.name[0])?sd->status.name :"GM", md->db->jname.c_str(), i_data->ename.c_str(), (float)drop->rate / 100);
+		sprintf (message, msg_txt(sd,542), (sd->status.name[0])?sd->status.name :"GM", md->db->jname.c_str(), i_data->ename.c_str(), (float)md->db->dropitem[i].rate / 100);
 		//MSG: "'%s' stole %s's %s (chance: %0.02f%%)"
 		intif_broadcast(message, strlen(message) + 1, BC_DEFAULT);
 	}
@@ -10260,7 +10239,6 @@ int64 pc_readparam(map_session_data* sd,int64 type)
 		case SP_ADD_HEAL2_RATE:  val = sd->bonus.add_heal2_rate; break;
 		case SP_ADD_ITEM_HEAL_RATE: val = sd->bonus.itemhealrate2; break;
 		case SP_EMATK:           val = sd->bonus.ematk; break;
-		case SP_EMATK_HIDDEN:    val = sd->bonus.ematk_hidden; break;
 		case SP_FIXCASTRATE:     val = sd->bonus.fixcastrate; break;
 		case SP_ADD_FIXEDCAST:   val = sd->bonus.add_fixcast; break;
 		case SP_ADD_VARIABLECAST:  val = sd->bonus.add_varcast; break;
@@ -11499,19 +11477,19 @@ bool pc_setreg2(map_session_data *sd, const char *reg, int64 val) {
 
 	nullpo_retr(false, sd);
 
-	if( is_string_variable( reg ) ){
-		ShowError( "pc_setreg2: Invalid variable '%s'. String type variables are not supported.\n", reg );
-		return false;
-	}
-
-	if( !not_server_variable( prefix ) ){
-		ShowError( "pc_setreg2: Invalid variable scope '%s'.\n", reg );
+	if (reg[strlen(reg)-1] == '$') {
+		ShowError("pc_setreg2: Invalid variable scope '%s'\n", reg);
 		return false;
 	}
 
 	val = cap_value(val, INT_MIN, INT_MAX);
 
 	switch (prefix) {
+		case '.':
+		case '\'':
+		case '$':
+			ShowError("pc_setreg2: Invalid variable scope '%s'\n", reg);
+			return false;
 		case '@':
 			return pc_setreg(sd, add_str(reg), val);
 		case '#':
@@ -11519,6 +11497,8 @@ bool pc_setreg2(map_session_data *sd, const char *reg, int64 val) {
 		default:
 			return pc_setglobalreg(sd, add_str(reg), val);
 	}
+
+	return false;
 }
 
 /**
@@ -11532,17 +11512,17 @@ int64 pc_readreg2(map_session_data *sd, const char *reg) {
 
 	nullpo_ret(sd);
 
-	if( is_string_variable( reg ) ){
-		ShowError( "pc_readreg2: Invalid variable '%s'. String type variables are not supported.\n", reg );
-		return 0;
-	}
-
-	if( !not_server_variable( prefix ) ){
-		ShowError( "pc_readreg2: Invalid variable scope '%s'.\n", reg );
+	if (reg[strlen(reg)-1] == '$') {
+		ShowError("pc_readreg2: Invalid variable scope '%s'\n", reg);
 		return 0;
 	}
 
 	switch (prefix) {
+		case '.':
+		case '\'':
+		case '$':
+			ShowError("pc_readreg2: Invalid variable scope '%s'\n", reg);
+			return 0;
 		case '@':
 			return pc_readreg(sd, add_str(reg));
 		case '#':
@@ -11550,6 +11530,8 @@ int64 pc_readreg2(map_session_data *sd, const char *reg) {
 		default:
 			return pc_readglobalreg(sd, add_str(reg));
 	}
+
+	return 0;
 }
 
 /*==========================================
@@ -12737,8 +12719,8 @@ bool pc_divorce(map_session_data *sd)
 			pc_delitem(p_sd, i, 1, 0, 0, LOG_TYPE_OTHER);
 	}
 
-	clif_divorced( *sd, p_sd->status.name );
-	clif_divorced( *p_sd, sd->status.name );
+	clif_divorced(sd, p_sd->status.name);
+	clif_divorced(p_sd, sd->status.name);
 
 	return true;
 }
@@ -14616,7 +14598,7 @@ uint8 pc_itemcd_check(map_session_data *sd, struct item_data *id, t_tick tick, u
 	// Send reply of delay remains
 	if (sc->getSCE(id->delay.sc)) {
 		const struct TimerData *timer = get_timer(sc->getSCE(id->delay.sc)->timer);
-		clif_msg_value( *sd, MSI_ITEM_REUSE_LIMIT_SECOND, (int32)(timer ? DIFF_TICK(timer->tick, tick) / 1000 : 99) );
+		clif_msg_value(sd, MSI_ITEM_REUSE_LIMIT_SECOND, (int32)(timer ? DIFF_TICK(timer->tick, tick) / 1000 : 99));
 		return 1;
 	}
 

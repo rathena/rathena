@@ -1,0 +1,505 @@
+//===== rAthena Script =======================================================
+//= Costume Enchanter
+//===== By: ==================================================================
+//= Manuel Sintos
+//===== Current Version: =====================================================
+//= 1.0
+//===== Description: =========================================================
+//= This NPC allows players to enchant costume items with specific attributes.
+//===== Additional Comments: =================================================
+// @reloadnpc npc/custom/manuel_npc/cheap_c_enchanter.txt
+
+prt_in,94,66,3	script	Cheap Costume Enchanter	494,{
+	set .name$, "[^1100AA Cheap Costume Enchanter ^000000]";
+
+	// Array of item IDs representing different enchantment stats
+	setarray .stats, 4701, 4702, 4703, 4730, 4731, 4732, 4740, 4741, 4742, 4710, 4711, 4712, 4720, 4721, 4722, 4750, 4751, 4752, 4760, 4761, 4762, 4764, 4766, 4786, 4787, 4791, 4792, 4795, 4796, 4801, 4802, 4805, 4810, 4811, 4814, 4815, 4817, 4818, 4819, 4832, 4842;
+
+	// NOTE: Add here for the restricted items
+	// Array of restricted item IDs that cannot be enchanted
+	setarray .restrictedItemID, 19038, 19039;
+
+	// Get the equipped item ID in the costume headgear slot
+	set C_HeadTopID, getequipid(EQI_COSTUME_HEAD_TOP);
+	set C_HeadMidID, getequipid(EQI_COSTUME_HEAD_MID);
+	set C_HeadLowID, getequipid(EQI_COSTUME_HEAD_LOW);
+
+	// Payment requirements: Item ID and quantity for enchanting service
+	set .paymentItemID, 7227;
+	set .paymentAmount, 10;
+
+	// Success message to display after successful enchantment
+	set .successMes$, "This item has been successfully enchanted!";
+
+	mes .name$;
+	mes "Hello, I can enchant your costume items in different location ^990099(Top, Mid, Low)^000000 for just:";
+	mes .paymentAmount + "pcs - " + getitemname(.paymentItemID);
+	next;
+
+	mes .name$;
+    mes "Please remember, do not bring any duplicate items in your inventory!";
+    mes "any duplicate items you bring might be consume.";
+    next;
+
+	mes .name$;
+	mes "Please choose the costume location that you wanted to enchant.";
+	switch(select("Costume Headgear (Upper):Costume Headgear (Middle):Costume Headgear (Lower)")) {
+		case 1:
+			// Enchant logic for Upper Headgear
+			next;
+
+			// Check if you are wearing any costume item (Lower)
+			if (getequipid(EQI_COSTUME_HEAD_TOP) == -1) {
+			    mes .name$;
+			    mes "You are not wearing any Costume Headgear (Lower).";
+			    close;
+			}
+
+			// Loop through the restricted items to see if the equipped item matches any restricted ID
+			for (set .@i, 0; .@i < getarraysize(.restrictedItemID); .@i++) {
+			    if (getequipid(EQI_COSTUME_HEAD_TOP) == .restrictedItemID[.@i]) {
+			        // Add your code here if the item is restricted
+			        mes .name$;
+			        mes "Sorry! this item cannot be enchanted.";
+			        close;
+			    }
+			}
+
+			mes .name$;
+			mes "Are you sure you want to enchant the ^1100AA" + getitemname(C_HeadTopID) + "^000000?";
+			next;
+
+			switch(select("Yes please!:No.")) {
+				case 1:
+					// Check if the item has already been enchanted with any stat in the .stats array
+					set .currentEnchant, getequipcardid(EQI_COSTUME_HEAD_TOP, 3);
+					// Check if the item has already been enchanted
+			        for (set .@i, 0; .@i < getarraysize(.stats); .@i++) {
+					    if (.currentEnchant == .stats[.@i]) {
+					        mes .name$;
+					        mes "Sorry! this item is already enchanted! with ^990099" + getitemname(.currentEnchant) + "^000000?";
+					        close;
+					    }
+					}
+
+			        if (countitem(.paymentItemID) < .paymentAmount) {
+						mes .name$;
+						mes "You don't have enough " + getitemname(.paymentItemID);
+						mes "You need " + .paymentAmount + "pcs.";
+						close;
+					}
+					else {
+						// Choose a random stat from the array
+						set .randomStat, .stats[rand(getarraysize(.stats))];
+
+						mes .name$;
+						mes "Ah, perfect! You've got everything!";
+						mes "Give me a moment to work on this ...";
+						next;
+
+						delitem C_HeadTopID, 1;
+						delitem .paymentItemID, .paymentAmount;
+
+						getitem2 C_HeadTopID, 1, 1, 0, 0, 0, 0, 0, .randomStat;
+						message strcharinfo(0), @successMes$;
+						specialeffect2 154;
+
+						mes .name$;
+						mes "Here's your new enchanted costume item! Hope you like it!";
+						close;
+					}
+				break;
+				case 2:
+					mes .name$;
+					mes "No worries, please comeback anytime!";
+					close;
+				break;
+			}
+		break;
+		case 2:
+			// Enchant logic for Middle Headgear
+			next;
+
+			// Check if you are wearing any costume item (Lower)
+			if (getequipid(EQI_COSTUME_HEAD_MID) == -1) {
+			    mes .name$;
+			    mes "You are not wearing any Costume Headgear (Lower).";
+			    close;
+			}
+
+			// Loop through the restricted items to see if the equipped item matches any restricted ID
+			for (set .@i, 0; .@i < getarraysize(.restrictedItemID); .@i++) {
+			    if (getequipid(EQI_COSTUME_HEAD_MID) == .restrictedItemID[.@i]) {
+			        // Add your code here if the item is restricted
+			        mes .name$;
+			        mes "Sorry! this item cannot be enchanted.";
+			        close;
+			    }
+			}
+
+			mes .name$;
+			mes "Are you sure you want to enchant the ^1100AA" + getitemname(C_HeadMidID) + "^000000?";
+			next;
+
+			switch(select("Yes please!:No.")) {
+				case 1:
+					// Check if the item has already been enchanted with any stat in the .stats array
+					set .currentEnchant, getequipcardid(EQI_COSTUME_HEAD_MID, 3);
+					// Check if the item has already been enchanted
+			        for (set .@i, 0; .@i < getarraysize(.stats); .@i++) {
+					    if (.currentEnchant == .stats[.@i]) {
+					        mes .name$;
+					        mes "Sorry! this item is already enchanted! with ^990099" + getitemname(.currentEnchant) + "^000000?";
+					        close;
+					    }
+					}
+
+			        if (countitem(.paymentItemID) < .paymentAmount) {
+						mes .name$;
+						mes "You don't have enough " + getitemname(.paymentItemID);
+						mes "You need " + .paymentAmount + "pcs.";
+						close;
+					}
+					else {
+						// Choose a random stat from the array
+						set .randomStat, .stats[rand(getarraysize(.stats))];
+
+						mes .name$;
+						mes "Ah, perfect! You've got everything!";
+						mes "Give me a moment to work on this ...";
+						next;
+
+						delitem C_HeadMidID, 1;
+						delitem .paymentItemID, .paymentAmount;
+
+						getitem2 C_HeadMidID, 1, 1, 0, 0, 0, 0, 0, .randomStat;
+						message strcharinfo(0), @successMes$;
+						specialeffect2 154;
+
+						mes .name$;
+						mes "Here's your new enchanted costume item! Hope you like it!";
+						close;
+					}
+				break;
+				case 2:
+					mes .name$;
+					mes "No worries, please comeback anytime!";
+					close;
+				break;
+			}
+		break;
+		case 3:
+			// Enchant logic for Lower Headgear
+			next;
+
+			// Check if you are wearing any costume item (Lower)
+			if (getequipid(EQI_COSTUME_HEAD_LOW) == -1) {
+			    mes .name$;
+			    mes "You are not wearing any Costume Headgear (Lower).";
+			    close;
+			}
+
+			// Loop through the restricted items to see if the equipped item matches any restricted ID
+			for (set .@i, 0; .@i < getarraysize(.restrictedItemID); .@i++) {
+			    if (getequipid(EQI_COSTUME_HEAD_LOW) == .restrictedItemID[.@i]) {
+			        // Add your code here if the item is restricted
+			        mes .name$;
+			        mes "Sorry! this item cannot be enchanted.";
+			        close;
+			    }
+			}
+
+			mes .name$;
+			mes "Are you sure you want to enchant the ^1100AA" + getitemname(C_HeadLowID) + "^000000?";
+			next;
+
+			switch(select("Yes please!:No.")) {
+				case 1:
+					// Check if the item has already been enchanted with any stat in the .stats array
+					set .currentEnchant, getequipcardid(EQI_COSTUME_HEAD_LOW, 3);
+					// Check if the item has already been enchanted
+			        for (set .@i, 0; .@i < getarraysize(.stats); .@i++) {
+					    if (.currentEnchant == .stats[.@i]) {
+					        mes .name$;
+					        mes "Sorry! this item is already enchanted! with ^990099" + getitemname(.currentEnchant) + "^000000?";
+					        close;
+					    }
+					}
+
+			        if (countitem(.paymentItemID) < .paymentAmount) {
+						mes .name$;
+						mes "You don't have enough " + getitemname(.paymentItemID);
+						mes "You need " + .paymentAmount + "pcs.";
+						close;
+					}
+					else {
+						// Choose a random stat from the array
+						set .randomStat, .stats[rand(getarraysize(.stats))];
+
+						mes .name$;
+						mes "Ah, perfect! You've got everything!";
+						mes "Give me a moment to work on this ...";
+						next;
+
+						delitem C_HeadLowID, 1;
+						delitem .paymentItemID, .paymentAmount;
+
+						getitem2 C_HeadLowID, 1, 1, 0, 0, 0, 0, 0, .randomStat;
+						message strcharinfo(0), @successMes$;
+						specialeffect2 154;
+
+						mes .name$;
+						mes "Here's your new enchanted costume item! Hope you like it!";
+						close;
+					}
+				break;
+				case 2:
+					mes .name$;
+					mes "No worries, please comeback anytime!";
+					close;
+				break;
+			}
+		break;
+	}
+}
+
+
+prt_in,94,63,3	script	Costume Enchant Remover	494,{
+	set .name$, "[^1100AA Costume Enchant Remover ^000000]";
+
+	// Get the equipped item ID in the costume headgear slot
+	set C_HeadTopID, getequipid(EQI_COSTUME_HEAD_TOP);
+	set C_HeadMidID, getequipid(EQI_COSTUME_HEAD_MID);
+	set C_HeadLowID, getequipid(EQI_COSTUME_HEAD_LOW);
+	set C_GarmentID, getequipid(EQI_COSTUME_GARMENT);
+
+	// Payment requirements: Item ID and quantity for enchanting service
+	set .paymentItemID, 7227;
+	set .paymentAmount, 10;
+
+	mes .name$;
+    mes "Hello, I can remove enchantments from your costume items for " + .paymentAmount + "pcs - " + getitemname(.paymentItemID);
+    next;
+
+    mes .name$;
+    mes "Please remember, do not bring any duplicate items in your inventory!";
+    mes "any duplicate items you bring might be consume.";
+    next;
+
+    mes .name$;
+	mes "Please choose the costume location that you wanted to remove the enchant.";
+	switch(select("Costume Headgear (Upper):Costume Headgear (Middle):Costume Headgear (Lower):Costume Garment")) {
+		case 1:
+			next;
+
+			// Check if you are wearing any costume item (Upper)
+			if (getequipid(EQI_COSTUME_HEAD_TOP) == -1) {
+			    mes .name$;
+			    mes "You are not wearing any Costume Headgear (Upper).";
+			    close;
+			}
+
+			// Check if player has an enchanted item in the desired slot
+		    set .currentEnchant, getequipcardid(EQI_COSTUME_HEAD_TOP, 3);
+		    if (.currentEnchant == null) {
+		    	mes .name$;
+		        mes "You don't have any enchantment on your costume headgear (Upper) that I can remove.";
+		        close;
+		    }
+
+		    mes .name$;
+		    mes "You currently have enchant: ^990099" + getitemname(.currentEnchant) + "^000000 on your costume headgear (Upper).";
+		    mes "Are you sure do you want to remove the enchant?";
+		    next;
+
+		    switch(select("Yes please!:No.")) {
+		    	case 1:
+		    		if (countitem(.paymentItemID) < .paymentAmount) {
+						mes .name$;
+						mes "You don't have enough " + getitemname(.paymentItemID);
+						mes "You need " + .paymentAmount + "pcs.";
+						close;
+					}
+
+		    		mes .name$;
+					mes "Okay!";
+					mes "Give me a moment to work on this ...";
+					next;
+
+		    		delitem C_HeadTopID, 1;
+					delitem .paymentItemID, .paymentAmount;
+					getitem2 C_HeadTopID, 1, 1, 0, 0, 0, 0, 0, 0;
+					specialeffect2 154;
+
+					mes .name$;
+					mes "Here's your clean costume item! Enjoy!";
+					close;
+		    	break;
+		    	case 2:
+		    		mes .name$;
+					mes "No worries, please comeback anytime!";
+					close;
+		    	break;
+		    }
+		break;
+		case 2:
+			next;
+
+			// Check if you are wearing any costume item (Middle)
+			if (getequipid(EQI_COSTUME_HEAD_MID) == -1) {
+			    mes .name$;
+			    mes "You are not wearing any Costume Headgear (Middle).";
+			    close;
+			}
+
+			// Check if player has an enchanted item in the desired slot
+		    set .currentEnchant, getequipcardid(EQI_COSTUME_HEAD_MID, 3);
+		    if (.currentEnchant == null) {
+		    	mes .name$;
+		        mes "You don't have any enchantment on your costume headgear (Middle) that I can remove.";
+		        close;
+		    }
+
+		    mes .name$;
+		    mes "You currently have enchant: ^990099" + getitemname(.currentEnchant) + "^000000 on your costume headgear (Middle).";
+		    mes "Are you sure do you want to remove the enchant?";
+		    next;
+
+		    switch(select("Yes please!:No.")) {
+		    	case 1:
+		    		if (countitem(.paymentItemID) < .paymentAmount) {
+						mes .name$;
+						mes "You don't have enough " + getitemname(.paymentItemID);
+						mes "You need " + .paymentAmount + "pcs.";
+						close;
+					}
+
+		    		mes .name$;
+					mes "Okay!";
+					mes "Give me a moment to work on this ...";
+					next;
+
+		    		delitem C_HeadMidID, 1;
+					delitem .paymentItemID, .paymentAmount;
+					getitem2 C_HeadMidID, 1, 1, 0, 0, 0, 0, 0, 0;
+					specialeffect2 154;
+
+					mes .name$;
+					mes "Here's your clean costume item! Enjoy!";
+					close;
+		    	break;
+		    	case 2:
+		    		mes .name$;
+					mes "No worries, please comeback anytime!";
+					close;
+		    	break;
+		    }
+		break;
+		case 3:
+			next;
+
+			// Check if you are wearing any costume item (Lower)
+			if (getequipid(EQI_COSTUME_HEAD_LOW) == -1) {
+			    mes .name$;
+			    mes "You are not wearing any Costume Headgear (Lower).";
+			    close;
+			}
+
+			// Check if player has an enchanted item in the desired slot
+		    set .currentEnchant, getequipcardid(EQI_COSTUME_HEAD_LOW, 3);
+		    if (.currentEnchant == null) {
+		    	mes .name$;
+		        mes "You don't have any enchantment on your costume headgear (Lower) that I can remove.";
+		        close;
+		    }
+
+		    mes .name$;
+		    mes "You currently have enchant: ^990099" + getitemname(.currentEnchant) + "^000000 on your costume headgear (Lower).";
+		    mes "Are you sure do you want to remove the enchant?";
+		    next;
+
+		    switch(select("Yes please!:No.")) {
+		    	case 1:
+		    		if (countitem(.paymentItemID) < .paymentAmount) {
+						mes .name$;
+						mes "You don't have enough " + getitemname(.paymentItemID);
+						mes "You need " + .paymentAmount + "pcs.";
+						close;
+					}
+
+		    		mes .name$;
+					mes "Okay!";
+					mes "Give me a moment to work on this ...";
+					next;
+
+		    		delitem C_HeadLowID, 1;
+					delitem .paymentItemID, .paymentAmount;
+					getitem2 C_HeadLowID, 1, 1, 0, 0, 0, 0, 0, 0;
+					specialeffect2 154;
+
+					mes .name$;
+					mes "Here's your clean costume item! Enjoy!";
+					close;
+		    	break;
+		    	case 2:
+		    		mes .name$;
+					mes "No worries, please comeback anytime!";
+					close;
+		    	break;
+		    }
+		break;
+		case 4:
+			next;
+
+			// Check if you are wearing any costume item (Garment)
+			if (getequipid(EQI_COSTUME_GARMENT) == -1) {
+			    mes .name$;
+			    mes "You are not wearing any Costume Garment.";
+			    close;
+			}
+
+			// Check if player has an enchanted item in the desired slot
+		    set .currentEnchant, getequipcardid(EQI_COSTUME_GARMENT, 3);
+		    if (.currentEnchant == null) {
+		    	mes .name$;
+		        mes "You don't have any enchantment on your Costume Garment that I can remove.";
+		        close;
+		    }
+
+		    mes .name$;
+		    mes "You currently have enchant: ^990099" + getitemname(.currentEnchant) + "^000000 on your Costume Garment.";
+		    mes "Are you sure do you want to remove the enchant?";
+		    next;
+
+		    switch(select("Yes please!:No.")) {
+		    	case 1:
+		    		if (countitem(.paymentItemID) < .paymentAmount) {
+						mes .name$;
+						mes "You don't have enough " + getitemname(.paymentItemID);
+						mes "You need " + .paymentAmount + "pcs.";
+						close;
+					}
+
+		    		mes .name$;
+					mes "Okay!";
+					mes "Give me a moment to work on this ...";
+					next;
+
+		    		delitem C_GarmentID, 1;
+					delitem .paymentItemID, .paymentAmount;
+					getitem2 C_GarmentID, 1, 1, 0, 0, 0, 0, 0, 0;
+					specialeffect2 154;
+
+					mes .name$;
+					mes "Here's your clean costume item! Enjoy!";
+					close;
+		    	break;
+		    	case 2:
+		    		mes .name$;
+					mes "No worries, please comeback anytime!";
+					close;
+		    	break;
+		    }
+		break;
+	}
+}

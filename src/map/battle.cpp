@@ -1532,7 +1532,13 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 
 	if ((sce = sc->getSCE(SC_PARRYING)) && flag&BF_WEAPON && skill_id != WS_CARTTERMINATION && rnd() % 100 < sce->val2) {
 		clif_skill_nodamage(target, *target, LK_PARRYING, sce->val1);
-		unit_set_attackdelay(*target, gettick(), DELAY_EVENT_PARRY);
+
+		if (skill_id == LK_PARRYING) {
+			unit_data *ud = unit_bl2ud(target);
+
+			if (ud != nullptr) // Delay the next attack
+				ud->attackabletime = gettick() + status_get_adelay(target);
+		}
 		return false;
 	}
 
@@ -1667,11 +1673,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	}
 
 	if( tsc != nullptr && !tsc->empty() ) {
-		// Barrier just sets damage to 1 per hit and prevents the rest of the code from being processed
-		// But only if the damage at this point is greater than 0
-		if (damage > 0 && tsc->getSCE(SC_BARRIER) != nullptr)
-			return div_;
-
 		// Damage increasing effects
 #ifdef RENEWAL // Flat +400% damage from melee
 		if (tsc->getSCE(SC_KAITE) && (flag&(BF_SHORT|BF_MAGIC)) == BF_SHORT)
@@ -1769,10 +1770,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 				damage /= 2; //Receive 50% damage
 		}
 #endif
-
-		if( tsc->getSCE( SC_SHADOW_CLOCK ) != nullptr && ( flag&(BF_WEAPON|BF_MAGIC) ) ){
-			damage = damage * 85 / 100;
-		}
 
 		if (tsc->getSCE(SC_DEFENDER) &&
 			skill_id != NJ_ZENYNAGE && skill_id != KO_MUCHANAGE &&
@@ -2625,10 +2622,6 @@ static int32 battle_range_type(struct block_list *src, struct block_list *target
 		case BO_ACIDIFIED_ZONE_GROUND_ATK:
 		case BO_ACIDIFIED_ZONE_WIND_ATK:
 		case NW_THE_VIGILANTE_AT_NIGHT:
-		case SS_FUUMAKOUCHIKU:
-		case SS_KUNAIKAITEN:
-		case SS_KUNAIKUSSETSU:
-		case SS_HITOUAKUMU:
 			return BF_LONG;
 		case NJ_KIRIKAGE: // Cast range mimics NJ_SHADOWJUMP but damage is considered melee
 		case GC_CROSSIMPACT: // Cast range is 7 cells and player jumps to target but skill is considered melee
@@ -2641,7 +2634,6 @@ static int32 battle_range_type(struct block_list *src, struct block_list *target
 		case MH_THE_ONE_FIGHTER_RISES: // 7 cell cast range.
 		//case ABC_DEFT_STAB: // 2 cell cast range???
 		case NPC_MAXPAIN_ATK:
-		case SS_SHIMIRU: // 11 cell cast range.
 			return BF_SHORT;
 		case CD_PETITIO: { // Skill range is 2 but damage is melee with books and ranged with mace.
 			map_session_data *sd = BL_CAST(BL_PC, src);
@@ -2856,37 +2848,14 @@ bool is_infinite_defense(struct block_list *target, int32 flag)
  */
 static bool is_skill_using_arrow(struct block_list *src, int32 skill_id)
 {
-	if (src == nullptr)
-		return false;
-
-	map_session_data *sd = BL_CAST(BL_PC, src);
-
-	if( sd != nullptr ){
-		if( sd->state.arrow_atk ){
-			return true;
-		}
-	}else{
-		if( skill_id != 0 && skill_get_ammotype( skill_id ) != AMMO_NONE ){
-			return true;
-		}
-
+	if(src != nullptr) {
 		status_data* sstatus = status_get_status_data(*src);
+		map_session_data *sd = BL_CAST(BL_PC, src);
 
-		if( sstatus != nullptr && sstatus->rhw.range > 3 ){
-			return true;
-		}
-	}
-
-	switch( skill_id ) {
-		case HT_FREEZINGTRAP:
-		case HT_PHANTASMIC:
-		case GS_GROUNDDRIFT:
-		case SS_KUNAIKUSSETSU:
-		case SS_KUNAIKAITEN:
-			return true;
-	}
-
-	return false;
+		return ((sd && sd->state.arrow_atk) || (!sd && ((skill_id && skill_get_ammotype(skill_id)) || sstatus->rhw.range>3))
+			|| skill_id == HT_FREEZINGTRAP || (skill_id == HT_PHANTASMIC) || (skill_id == GS_GROUNDDRIFT));
+	} else
+		return false;
 }
 
 /*=========================================
@@ -3559,12 +3528,6 @@ int32 battle_get_weapon_element(struct Damage* wd, struct block_list *src, struc
 				}
 			}
 			break;
-		case SS_FUUMASHOUAKU:
-		case SS_FUUMAKOUCHIKU:
-			if( sd != nullptr ){
-				element = sd->bonus.arrow_ele;
-			}
-			break;
 	}
 
 	if (sc && sc->getSCE(SC_GOLDENE_FERSE) && ((!skill_id && (rnd() % 100 < sc->getSCE(SC_GOLDENE_FERSE)->val4)) || skill_id == MH_STAHL_HORN))
@@ -3665,10 +3628,6 @@ int32 battle_get_magic_element(struct block_list* src, struct block_list* target
 					element = ELE_HOLY;
 				}
 			}
-			break;
-		case SS_ANKOKURYUUAKUMU:
-			if (mflag & SKILL_ALTDMG_FLAG)
-				element = ELE_FIRE;
 			break;
 	}
 
@@ -6522,78 +6481,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			skillratio += 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
-		case SS_SHIMIRU:
-			skillratio += -100 + 700 * skill_lv;
-			skillratio += 5 * sstatus->con;
-			RE_LVL_DMOD(100);
-			break;
-		case SS_KAGEGARI:
-			skillratio += -100 + 500 + 400 * skill_lv;
-			skillratio += pc_checkskill( sd, SS_KAGEGISSEN ) * 5 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case SS_KAGEAKUMU:
-		case SS_HITOUAKUMU:
-			skillratio += -100 + 18000 + 5 * sstatus->pow;
-
-			if( tsc != nullptr && tsc->getSCE( SC_NIGHTMARE ) != nullptr ){
-				skillratio += skillratio / 2;
-			}
-
-			RE_LVL_DMOD(100);
-			break;
-		case SS_KAGENOMAI:
-			skillratio += -100 + 400 + 550 * skill_lv;
-			skillratio += pc_checkskill( sd, SS_KAGEGARI ) * 50 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			if (wd->miscflag & SKILL_ALTDMG_FLAG)
-				skillratio = skillratio * 3 / 10;
-			break;
-		case SS_FUUMASHOUAKU:
-			skillratio += -100 + 700 + 200 * skill_lv;
-			skillratio += pc_checkskill( sd, SS_FUUMAKOUCHIKU ) * 5 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case SS_FUUMAKOUCHIKU:
-			skillratio += -100 + 600 + 400 * skill_lv;
-			if( wd->miscflag&SKILL_ALTDMG_FLAG ){
-				skillratio += 200;
-			}
-			skillratio += pc_checkskill( sd, SS_FUUMASHOUAKU ) * 30 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case SS_KUNAIWAIKYOKU:
-			skillratio += -100 + 300 + 600 * skill_lv;
-			skillratio += pc_checkskill( sd, SS_KUNAIKUSSETSU ) * 10 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			if (wd->miscflag & SKILL_ALTDMG_FLAG)
-				skillratio = skillratio * 3 / 10;
-			break;
-		case SS_KUNAIKUSSETSU:
-			skillratio += -100 + 200 + 360 * skill_lv;
-			skillratio += pc_checkskill( sd, SS_KUNAIKAITEN ) * 10 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case SS_KUNAIKAITEN:
-			skillratio += -100 + 800 + 700 * skill_lv;
-			skillratio += pc_checkskill( sd, SS_KUNAIWAIKYOKU ) * 70 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case SS_KAGEGISSEN:
-			skillratio += -100 + 1600 + 700 * skill_lv;
-			skillratio += pc_checkskill( sd, SS_KAGENOMAI ) * 100 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			if (wd->miscflag & SKILL_ALTDMG_FLAG)
-				skillratio = skillratio * 3 / 10;
-			break;
 	}
 	return skillratio;
 }
@@ -9180,47 +9067,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						}
 						RE_LVL_DMOD(100);
 						break;
-					case SS_TOKEDASU:
-						skillratio += -100 + 700 * skill_lv;
-						skillratio += 5 * sstatus->con;
-						RE_LVL_DMOD(100);
-						break;
-					case SS_SEKIENHOU:
-						skillratio += -100 + 850 + 1250 * skill_lv;
-						skillratio += 70 * pc_checkskill( sd, SS_ANTENPOU ) * skill_lv;
-						skillratio += 5 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						break;
-					case SS_REIKETSUHOU:
-						skillratio += -100 + 250 + 550 * skill_lv;
-						skillratio += 40 * pc_checkskill( sd, SS_ANTENPOU ) * skill_lv;
-						skillratio += 5 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						break;
-					case SS_KINRYUUHOU:
-						skillratio += -100 + 300 + 400 * skill_lv;
-						skillratio += 15 * pc_checkskill( sd, SS_ANTENPOU ) * skill_lv;
-						skillratio += 5 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						break;
-					case SS_ANKOKURYUUAKUMU:
-						skillratio += -100 + 15500 * skill_lv;
-						skillratio += 5 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						break;
-					case SS_RAIDENPOU:
-						skillratio += -100 + 600 + 1300 * skill_lv;
-						skillratio += 70 * pc_checkskill( sd, SS_ANTENPOU ) * skill_lv;
-						skillratio += 5 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						break;
-					case SS_ANTENPOU:
-						skillratio += -100 + 450 + 950 * skill_lv;
-						skillratio += 5 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						if (mflag & SKILL_ALTDMG_FLAG)
-							skillratio = skillratio * 3 / 10;
-						break;
 				}
 
 				if (sc) {// Insignia's increases the damage of offensive magic by a fixed percentage depending on the element.
@@ -9651,12 +9497,6 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		case HW_GRAVITATION:
 			md.damage = 200 + 200 * skill_lv;
 			md.dmotion = 0; //No flinch animation
-			if (target->type == BL_MOB) {
-				mob_data& mob = *reinterpret_cast<mob_data*>(target);
-				// Deals 400 damage to Emperium on all levels
-				if (mob.mob_id == MOBID_EMPERIUM)
-					md.damage = 400;
-			}
 			break;
 		case PA_PRESSURE:
 			md.damage = 500 + 300 * skill_lv;
@@ -11114,10 +10954,6 @@ int32 battle_check_target( struct block_list *src, struct block_list *target,int
 	if( (s_bl = battle_get_master(src)) == nullptr )
 		s_bl = src;
 
-	// Can't hit self and master, but can hit other slaves
-	if (flag&BCT_WOS && (src == target || s_bl == target))
-		return -1;
-
 	if ( s_bl->type == BL_PC ) {
 		switch( t_bl->type ) {
 			case BL_MOB: // Source => PC, Target => MOB
@@ -11153,8 +10989,8 @@ int32 battle_check_target( struct block_list *src, struct block_list *target,int
 
 			if (ud && ud->immune_attack)
 				return 0;
-			if((((md->special_state.ai == AI_SPHERE && battle_config.alchemist_summon_setting&2) || //Marine Spheres
-				 (md->special_state.ai == AI_FLORA && battle_config.alchemist_summon_setting&1)) && s_bl->type == BL_PC && src->type != BL_MOB) || //Floras
+			if(((md->special_state.ai == AI_SPHERE || //Marine Spheres
+				(md->special_state.ai == AI_FLORA && battle_config.summon_flora&1)) && s_bl->type == BL_PC && src->type != BL_MOB) || //Floras
 				(md->special_state.ai == AI_ZANZOU && t_bl->id != s_bl->id) || //Zanzou
 				(md->special_state.ai == AI_FAW && (t_bl->id != s_bl->id || (s_bl->type == BL_PC && src->type != BL_MOB)))
 			){	//Targettable by players
@@ -11505,6 +11341,7 @@ static const struct _battle_data {
 #else
 	{ "traps_setting",                      &battle_config.traps_setting,                   0,      0,      2,              },
 #endif
+	{ "summon_flora_setting",               &battle_config.summon_flora,                    1|2,    0,      1|2,            },
 	{ "clear_skills_on_death",              &battle_config.clear_unit_ondeath,              BL_NUL, BL_NUL, BL_ALL,         },
 	{ "clear_skills_on_warp",               &battle_config.clear_unit_onwarp,               BL_ALL, BL_NUL, BL_ALL,         },
 	{ "random_monster_checklv",             &battle_config.random_monster_checklv,          0,      0,      1,              },
@@ -12112,11 +11949,9 @@ static const struct _battle_data {
 #ifdef RENEWAL
 	{ "hom_delay_reset_vaporize",           &battle_config.hom_delay_reset_vaporize,        0,      0,      1,              },
 	{ "hom_delay_reset_warp",               &battle_config.hom_delay_reset_warp,            0,      0,      1,              },
-	{ "alchemist_summon_setting",           &battle_config.alchemist_summon_setting,        12,     0,      15,             },
 #else
 	{ "hom_delay_reset_vaporize",           &battle_config.hom_delay_reset_vaporize,        1,      0,      1,              },
 	{ "hom_delay_reset_warp",               &battle_config.hom_delay_reset_warp,            1,      0,      1,              },
-	{ "alchemist_summon_setting",           &battle_config.alchemist_summon_setting,        15,     0,      15,             },
 #endif
 	{ "loot_range",                         &battle_config.loot_range,                      12,     1,      MAX_WALKPATH,   },
 	{ "assist_range",                       &battle_config.assist_range,                    11,     1,      MAX_WALKPATH,   },

@@ -475,13 +475,13 @@ Body:
       Params: <city name|number>
       Warps you to a city.
       -3: (Memo point 2)  14: louyang         31: mora
-      -2: (Memo point 1)  15: start point     32: dewata
-      -1: (Memo point 0)  16: prison/jail     33: malangdo island
+      -2: (Memo point 1)  15: gef_fild10     32: dewata
+      -1: (Memo point 0)  16: pay_arche     33: malangdo island
        0: prontera              17: jawaii             34: malaya port
        1: morocc                18: ayothaya       35: eclage
        2: geffen                  19: einbroch       36: lasagna
-       3: payon                  20: lighthalzen
-       4: alberta                 21: einbech
+       3: payon                  20: lighthalzen      37: ice castle
+       4: alberta                 21: einbech       38: starting point
        5: izlude                   22: hugel
        6: aldebaran           23: rachel
        7: xmas (lutie)        24: veins

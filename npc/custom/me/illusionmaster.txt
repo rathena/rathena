@@ -1,0 +1,37 @@
+prontera,147,147,5	script	Illusion Dungeon Master	10180,{
+    waitingroom "Illusion Dungeons", 0;
+	mes "[Illusion Dungeons Master]";
+	mes "Greetings, traveler! I can grant you access to the Illusion Dungeons.";
+	mes "However, you must be at least Level 100.";
+	next;
+
+	if (BaseLevel < 100) {
+		mes "[Illusion Dungeons Master]";
+		mes "You need to be at least Level 100 to proceed!";
+		close;
+	}
+
+	// Check if the player has already completed quest 3470
+	if (checkquest(3470, PLAYTIME_COMPLETE)) {
+		mes "[Illusion Dungeons Master]";
+		mes "You have already joined us. No need to register again.";
+		close;
+	}
+
+	mes "[Illusion Dungeons Master]";
+	mes "You meet the level requirement.";
+	mes "Would you like to proceed?";
+	next;
+
+	if (select("Yes, grant me access!:No, maybe later.") == 1) {
+		mes "[Illusion Dungeons Master]";
+		mes "Very well! You are now granted access.";
+		setquest 3470;
+		completequest 3470;
+		close;
+	}
+
+	mes "[Illusion Dungeons Master]";
+	mes "Come back whenever you're ready.";
+	close;
+}

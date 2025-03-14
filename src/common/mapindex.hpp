@@ -36,9 +36,13 @@
 #define MAP_JAIL "sec_pri"
 #ifdef RENEWAL
 	#define MAP_NOVICE "iz_int"
+	#define MAP_NOVICE2 "int_land"
 #else
 	#define MAP_NOVICE "new_1-1"
+	#define MAP_NOVICE2 "int_land"
 #endif
+#define MAP_GEF_FILD10 "gef_fild10"
+#define MAP_PAY_ARCHE "pay_arche"
 #define MAP_MOSCOVIA "moscovia"
 #define MAP_MIDCAMP "mid_camp"
 #define MAP_MANUK "manuk"
@@ -52,6 +56,7 @@
 #define MAP_ECLAGE "eclage"
 #define MAP_ECLAGE_IN "ecl_in01"
 #define MAP_LASAGNA "lasagna"
+#define MAP_ICECASTLE "icecastle"
 #define MAP_GLASTHEIM "glast_01"
 #define MAP_THANATOS "hu_fild01"
 

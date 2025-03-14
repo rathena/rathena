@@ -1,0 +1,47 @@
+//===== By:==================================================
+//= Manuel Sintos
+// @reloadnpc npc/custom/manuel_npc/jobs_item_dealer.txt
+
+// Alchemist Dealer
+prontera,148,273,5	script	Alchemist Item Dealer	749,{
+	callshop "alchItemDealer",1;
+	end;
+
+	OnInit:
+		waitingroom "Alchemist Item Dealer",0;
+	end;
+}
+-	shop	alchItemDealer	-1,7135:500,7136:500,7137:500,7138:1500,7139:200,7144:500000,7143:5000,7134:100,7127:100000,7128:100000,7129:100000,7130:100000,7131:100000,7132:100000,7133:240000;
+
+// Archer Dealer
+prontera,148,276,5	script	Archer Item Dealer	634,{
+	callshop "archerItemDealer",1;
+	end;
+
+	OnInit:
+		waitingroom "Archer Item Dealer",0;
+	end;
+}
+-	shop	archerItemDealer	-1,533:250,6124:50000,1750:100,1751:100,1752:100,1753:100,1754:100,1755:100,1756:100,1757:100,1758:100,1759:100,1760:100,1761:200,1762:200,1763:200,1764:200,1765:150,1766:150,1767:200,1768:200,1769:200,1770:200,12004:50000,12005:50000,12006:50000,12007:50000,12008:50000,12009:50000,12010:50000,12011:50000,12012:50000,12013:50000,12014:50000,12015:50000;
+
+// Ninja Dealer
+prontera,163,273,5	script	Ninja Item Dealer	637,{
+	callshop "ninjaItemDealer",1;
+	end;
+
+	OnInit:
+		waitingroom "Ninja Item Dealer",0;
+	end;
+}
+-	shop	ninjaItemDealer	-1,2117:10000,13000:150000,13006:400000,13007:100000,13009:100000,13010:100000,13250:5,13251:15,13252:25,13253:55,13254:125,13255:250,13256:250,13257:250,13258:250,13259:250,13301:75000,7521:200,7522:200,7523:200,7524:200,6512:100,6513:100,6514:100,6515:100;
+
+// Assassin Dealer
+prontera,163,276,5	script	Assassin Item Dealer	615,{
+	callshop "assassinItemDealer",1;
+	end;
+
+	OnInit:
+		waitingroom "GX Item Dealer",0;
+	end;
+}
+-	shop	assassinItemDealer	-1,678:100000,657:4500,713:200000,937:200000,939:200000,952:200000,972:200000,7033:200000;

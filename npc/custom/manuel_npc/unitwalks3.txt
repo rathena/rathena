@@ -1,0 +1,40 @@
+
+-	script	unitWalks3	-,{
+	OnInit:
+        bindatcmd "unitwalks3", strnpcinfo(3) + "::OnUnitWalks3Command";
+    end;
+
+    OnUnitWalks3Command:
+        // Log the player out but keep the character in-game
+        atcommand("@afk");
+
+        // Get the player's character ID
+        .@char_id = getcharid(3);
+
+        // Target coordinates (arrays)
+        setarray .@target_x[0], 151, 148, 140, 139, 147, 150, 163, 157, 165, 171, 171, 165, 158, 157;
+        setarray .@target_y[0], 178, 186, 195, 209, 215, 226, 122, 211, 215, 206, 196, 189, 182, 170;
+
+        // Define the number of points to move to
+        .@array_size = getarraysize(.@target_x);
+
+        .isWalking[getcharid(3)] = 1;
+
+        // Loop through the array of coordinates indefinitely
+        while (.isWalking[getcharid(3)]) {
+            // Loop through the array of coordinates
+            for (.@i = 0; .@i < .@array_size; .@i++) {
+                // Try to move the character to the current target coordinates
+                if (unitwalk(.@char_id, .@target_x[.@i], .@target_y[.@i])) {
+                    dispbottom "Walking to (" + .@target_x[.@i] + ", " + .@target_y[.@i] + ")...";
+                } else {
+                    dispbottom "That's too far away, man.";
+                }
+                
+                // unittalk getcharid(3), strcharinfo(0) + " : I am moving to (" + .@target_x[.@i] + ", " + .@target_y[.@i] + ") coordinates...",bc_area;
+                // Wait for 3 seconds (3000 ms) before moving to the next point
+                sleep2 3000;
+            }
+        }
+    end;
+}

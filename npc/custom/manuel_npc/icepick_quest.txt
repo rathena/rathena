@@ -1,0 +1,97 @@
+//===== By:==================================================
+//= Manuel Sintos
+// @reloadnpc npc/custom/manuel_npc/icepick_quest.txt
+
+prt_in,125,65,5	script	Icepick Quest	813,{
+	set @name$, "[^1100AA Gandalf ^000000]";
+
+	// Icepick Item ID
+	@IcePickItemId = 1230;
+
+	setarray .requiredItemID, 7227, 30341, 30343;
+	setarray .requiredAmount, 100, 50, 50;
+
+
+	mes @name$;
+	mes "What do you want? Can't you see I'm busy? Don't waste my time!";
+	next;
+
+	switch(select("Forged Ice Pick:Disassembly")) {
+		case 1:
+			mes @name$;
+			mes "Forge an " + getitemname(@IcePickItemId) + "? You must be joking. Kid, forging " + getitemname(@IcePickItemId) + " isn't something you can just ask for. If you're serious, you'd better bring me the right materials!";
+			next;
+
+			mes @name$;
+			for (.@i = 0; .@i < getarraysize(.requiredItemID); .@i++) {
+				mes .requiredAmount[.@i] + ((.requiredAmount[.@i] == 1) ? "pc - " : "pcs - ") + getitemname(.requiredItemID[.@i]);
+			}
+			next;
+
+			mes @name$;
+			mes "Got what I need, or are you wasting my time?";
+			next;
+
+			switch(select("Yes, I have everything:No, not yet")) {
+				case 1:
+					
+					// validate if there is no items
+					if (countitem(.requiredItemID[0]) < .requiredAmount[0] ||
+						countitem(.requiredItemID[1]) < .requiredAmount[1] ||
+						countitem(.requiredItemID[2]) < .requiredAmount[2]) {
+						mes @name$;
+						mes "Tsk, you don't even have the materials. Come back when you're ready.";
+						close;
+					}
+					else
+						for( .@z = 0; .@z < getarraysize(.requiredItemID); .@z++ ) {
+							delitem .requiredItemID[.@z], .requiredAmount[.@z];
+						}
+						getitem @IcePickItemId, 1;
+
+						announce "" + strcharinfo(0) + " has forged " + getitemname(@IcePickItemId) + "!",bc_yellow;
+
+						mes @name$;
+						mes "Here's your " + getitemname(@IcePickItemId) + ". Try not to break it too quickly.";
+						close;
+				break;
+				case 2:
+					mes @name$;
+					mes "Then stop wasting my time! Come back when you're ready.";
+					close;
+				break;
+			}
+		break;
+
+		case 2:
+			mes @name$;
+			mes "Wait, you want to disassemble your " + getitemname(@IcePickItemId) + "? Are you sure about that?";
+			
+			switch(select("Yes, break it down:No, I've changed my mind")) {
+				case 1:
+					next;
+					if (countitem(@IcePickItemId) < 1) {
+						mes @name$;
+						mes "Seriously? You don't even have an " + getitemname(@IcePickItemId) + " in your inventory!";
+						close;
+					}
+					else {
+						delitem @IcePickItemId, 1;
+						getitem .requiredItemID[0],100;
+
+						mes @name$;
+						mes "Alright, it's done. Here's your stuff.";
+						close;
+					}
+				break;
+
+				case 2:
+					next;
+					mes @name$;
+					mes "Changed your mind, huh? Fine, come back if you decide otherwise.";
+					close;
+				break;
+			}
+		break;
+	}
+}

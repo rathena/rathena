@@ -1,0 +1,147 @@
+//===== By:==================================================
+// @reloadnpc npc/custom/manuel_npc/gts_event.txt
+
+// TODO:
+// 1. Prevent user from logout and login hack, to immediately go to the summit.
+// 2. the /memo
+// 3. warp skill use restriction
+
+gef_tower,104,32,5	script	GTS Event	871,{
+
+	OnTouch:
+		freeloop(1);
+		for(.@i = 1; .@i < 1400; .@i++) {
+			.@map$ = mapid2name(.@i);
+			if (.@map$ != "") {
+				removemapflag .@map$, mf_restricted, 10;
+			}
+		}
+		freeloop(0);
+
+		killmonsterall "gef_tower";
+
+		announce "Congrats to " + strcharinfo(0) + " for winning the Geffen Tower Summit Event! You're the first to reach the GTS Event NPC!", 0;
+		
+
+		disablenpc "GTS Event";
+
+		// Disable mapflag
+        removemapflag "gef_tower", mf_noskill;
+
+        callfunc("eventRewards");
+	end;
+
+	OnGTS_EventStart:
+		// add a notify
+		waitingroom "Geffen Tower Summit Event!", 0;
+
+		// Enable mapflag
+        setmapflag "gef_tower", mf_noskill;
+
+		// warp out all players outside the geffen tower, when the GTS event is started
+		mapwarp "gef_tower","geffen",120,104,0;
+
+		sleep 2000;
+		// enable the npc becasue we will disable the npc once the player reach the summit
+		enablenpc "GTS Event";
+
+		// summon monsters each floor
+		monster "gef_tower", 113, 73, "Paladin Randel", 2235, 1;
+		monster "gef_tower", 102, 75, "Paladin Randel", 2235, 1;
+		monster "gef_tower", 111, 72, "Paladin Randel", 2235, 1;
+
+		monster "gef_tower", 108, 108, "Paladin Randel", 2235, 1;
+		monster "gef_tower", 120, 107, "Paladin Randel", 2235, 1;
+		monster "gef_tower", 112, 108, "Paladin Randel", 2235, 1;
+
+		monster "gef_tower", 119, 168, "Paladin Randel", 2235, 1;
+		monster "gef_tower", 105, 167, "Paladin Randel", 2235, 1;
+		monster "gef_tower", 113, 166, "Paladin Randel", 2235, 1;
+
+		monster "gef_tower", 36, 33, "Paladin Randel", 2235, 1;
+		monster "gef_tower", 53, 33, "Paladin Randel", 2235, 1;
+		monster "gef_tower", 65, 28, "Paladin Randel", 2235, 1;
+
+		monster "gef_tower", 60, 98, "Paladin Randel", 2235, 1;
+		monster "gef_tower", 46, 99, "Paladin Randel", 2235, 1;
+		monster "gef_tower", 41, 98, "Paladin Randel", 2235, 1;
+	end;
+
+	OnGTS_EventAnnouncement:
+		freeloop(1);
+		for(.@i = 1; .@i < 1400; .@i++) {
+			.@map$ = mapid2name(.@i);
+			if (.@map$ != "") {
+				setmapflag .@map$, mf_restricted, 10;
+			}
+		}
+		freeloop(0);
+		
+		set .gts_start, 1;
+
+		// delete a notify room first
+		delwaitingroom;
+
+		// Remove mapflag first
+        removemapflag "gef_tower", mf_noskill;
+
+		killmonsterall "gef_tower";
+
+		// Disable the npc before enabling to avoid exploit
+		disablenpc "GTS Event";
+
+		announce "GTS Event: We are going to have a Geffen Tower Summit Event!", 0;
+		end;
+		OnTimer3000:
+			announce "GTS Event: For those who want to join, please come to Geffen Tower!", 0;
+		end;
+		OnTimer5000:
+			announce "GTS Event: Whoever to reach first the summit and click the GTS Event NPC will win!.", 0;
+		end;
+		// 35000
+		OnTimer10000:
+			announce "GTS Event: Last 30 Seconds until the event will start.", 0;
+		end;
+		// 65000
+		OnTimer15000:
+			sleep 1000;
+			announce "GTS Event: The Event will start in 5 seconds.", 0;
+			sleep 1000;
+			announce "GTS Event: The Event will start in 4 seconds.", 0;
+			sleep 1000;
+			announce "GTS Event: The Event will start in 3 seconds.", 0;
+			sleep 1000;
+			announce "GTS Event: The Event will start in 2 seconds.", 0;
+			sleep 1000;
+			announce "GTS Event: The Event will start in 1 second.", 0;
+			sleep 1000;
+			announce "GTS Event: lets the GTS Event begin!", 0;
+
+			// Call the GTS start event
+			goto OnGTS_EventStart;
+		end;
+	end;
+
+	OnInit:
+		// Call it first the OnGTS_EventAnnouncement after I reload the script
+		// then, the timer will Start a every 1hr and 30-minute the "OnGTS_EventAnnouncement"
+		OnTimer5400000:
+		initnpctimer;
+
+		goto OnGTS_EventAnnouncement;
+	end;
+
+	// Prevent user from logout and login hack, to immediately go to the summit.
+	OnPCLoginEvent:
+		if (.gts_start == 1) {
+			// warp players outside the geffen tower, when the GTS event is started
+			mapwarp "gef_tower","geffen",120,104,0;
+		}
+	end;
+}
+
+// Mapflags
+gef_tower	mapflag	nowarp
+gef_tower	mapflag	nowarpto
+gef_tower	mapflag	nomemo
+gef_tower	mapflag	noreturn

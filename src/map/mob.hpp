@@ -22,23 +22,22 @@ struct guardian_data;
 //Note: The range is unlimited unless this define is set.
 //#define AUTOLOOT_DISTANCE AREA_SIZE
 
-// The number of drops all mobs can have
-#ifndef MAX_MOB_DROP
-	#define MAX_MOB_DROP 10
-#endif
-// The number of MVP drops all mobs can have
-#ifndef MAX_MVP_DROP
-	#define MAX_MVP_DROP 3
-#endif
+//The number of drops all mobs have and the max drop-slot that the steal skill will attempt to steal from.
+#define MAX_MOB_DROP 10
+#define MAX_MVP_DROP 3
+#define MAX_MOB_DROP_ADD 5
+#define MAX_MVP_DROP_ADD 2
+#define MAX_MOB_DROP_TOTAL (MAX_MOB_DROP+MAX_MOB_DROP_ADD)
+#define MAX_MVP_DROP_TOTAL (MAX_MVP_DROP+MAX_MVP_DROP_ADD)
 
 //Min time between AI executions
 const t_tick MIN_MOBTHINKTIME = 100;
 //Min time before mobs do a check to call nearby friends for help (or for slaves to support their master)
-const t_tick MIN_MOBLINKTIME = 1000;
+const t_tick MIN_MOBLINKTIME = 300;
 //Min time between random walks
 const t_tick MIN_RANDOMWALKTIME = 4000;
 
-// How often a monster will check for using a skill on non-berserk and non-dead states (in ms)
+// How often a monster will check for using a skill on non-attack states (in ms)
 const t_tick MOB_SKILL_INTERVAL = 1000;
 
 //Distance that slaves should keep from their master.
@@ -256,24 +255,20 @@ struct s_mob_drop {
 };
 
 struct s_mob_db {
-	uint32 id;
-	std::string sprite;
-	std::string name;
-	std::string jname;
-	t_exp base_exp;
-	t_exp job_exp;
-	t_exp mexp;
-	uint16 range2;
-	uint16 range3;
-	std::vector<e_race2> race2;
-	uint16 lv;
-	std::vector<std::shared_ptr<s_mob_drop>> dropitem;
-	std::vector<std::shared_ptr<s_mob_drop>> mvpitem;
-	status_data status;
-	view_data vd;
-	uint32 option;
-	std::vector<std::shared_ptr<s_mob_skill>> skill;
-	uint16 damagetaken;
+	uint32 id{};
+	std::string sprite{}, name{}, jname{};
+	t_exp base_exp{};
+	t_exp job_exp{};
+	t_exp mexp{};
+	uint16 range2{}, range3{};
+	std::vector<e_race2> race2{};	// celest
+	uint16 lv{ 1 };
+	s_mob_drop dropitem[MAX_MOB_DROP_TOTAL]{}, mvpitem[MAX_MVP_DROP_TOTAL]{};
+	status_data status{};
+	view_data vd{};
+	uint32 option{};
+	std::vector<std::shared_ptr<s_mob_skill>> skill{};
+	uint16 damagetaken{ 100 };
 
 	e_mob_bosstype get_bosstype();
 	s_mob_db();
@@ -281,7 +276,7 @@ struct s_mob_db {
 
 class MobDatabase : public TypesafeCachedYamlDatabase <uint32, s_mob_db> {
 private:
-	bool parseDropNode( std::string nodeName, const ryml::NodeRef& node, uint8 max, std::vector<std::shared_ptr<s_mob_drop>>& drops );
+	bool parseDropNode(std::string nodeName, const ryml::NodeRef& node, uint8 max, s_mob_drop *drops);
 
 public:
 	MobDatabase() : TypesafeCachedYamlDatabase("MOB_DB", 4, 1) {
@@ -370,8 +365,7 @@ struct mob_data {
 	int32 areanpc_id; //Required in OnTouchNPC (to avoid multiple area touchs)
 	int32 bg_id; // BattleGround System
 
-	t_tick next_walktime,next_thinktime,last_linktime,last_pcneartime,dmgtick,last_canmove,last_skillcheck;
-	t_tick trickcasting; // Special state where you show a fake castbar while moving
+	t_tick next_walktime,last_thinktime,last_linktime,last_pcneartime,dmgtick,last_canmove,last_skillcheck;
 	int16 move_fail_count;
 	int16 lootitem_count;
 	unsigned char walktoxy_fail_count; //Pathfinding succeeds but the actual walking failed (e.g. Icewall lock)
@@ -473,7 +467,6 @@ enum e_mob_skill_condition {
 	MSC_MOBNEARBYGT,
 	MSC_GROUNDATTACKED,
 	MSC_DAMAGEDGT,
-	MSC_TRICKCASTING,
 };
 
 // The data structures for storing delayed item drops
@@ -515,8 +508,6 @@ int32 mob_guardian_guildchange(struct mob_data *md); //Change Guardian's ownersh
 
 int32 mob_randomwalk(struct mob_data *md,t_tick tick);
 int32 mob_warpchase(struct mob_data *md, struct block_list *target);
-void mob_setstate(mob_data& md, MobSkillState skillstate);
-bool mob_ai_sub_hard_attacktimer(mob_data &md, t_tick tick);
 int32 mob_target(struct mob_data *md,struct block_list *bl,int32 dist);
 int32 mob_unlocktarget(struct mob_data *md, t_tick tick);
 struct mob_data* mob_spawn_dataset(struct spawn_data *data);
@@ -544,8 +535,7 @@ int32 mob_warpslave(struct block_list *bl, int32 range);
 int32 mob_linksearch(struct block_list *bl,va_list ap);
 
 bool mob_chat_display_message (mob_data &md, uint16 msg_id);
-void mobskill_end(mob_data& md, t_tick tick);
-bool mobskill_use(struct mob_data *md,t_tick tick,int32 event, int64 damage = 0);
+int32 mobskill_use(struct mob_data *md,t_tick tick,int32 event, int64 damage = 0);
 int32 mobskill_event(struct mob_data *md,struct block_list *src,t_tick tick, int32 flag, int64 damage = 0);
 int32 mob_summonslave(struct mob_data *md2,int32 *value,int32 amount,uint16 skill_id);
 int32 mob_countslave(struct block_list *bl);
@@ -571,7 +561,7 @@ TIMER_FUNC(mvptomb_delayspawn);
 void mvptomb_create(struct mob_data *md, char *killer, time_t time);
 void mvptomb_destroy(struct mob_data *md);
 
-void mob_setdropitem_option( item& itm, const std::shared_ptr<s_mob_drop>& mobdrop );
+void mob_setdropitem_option( item& itm, s_mob_drop& mobdrop );
 
 #define CHK_MOBSIZE(size) ((size) >= SZ_SMALL && (size) < SZ_MAX) /// Check valid Monster Size
 

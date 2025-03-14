@@ -1,0 +1,186 @@
+//===== By:==================================================
+//= Manuel Sintos
+// @reloadnpc npc/custom/manuel_npc/kaho_maker4.txt
+
+ayothaya,82,173,5	script	Bok	51,{
+	
+	set @name$, "[ ^1100AABok^000000 ]";
+	
+	// Koneko Hat Kaho, Anubis Helm Kaho
+	setarray .itemIDQuest, 30209, 30210;
+	
+	// for Koneko Hat Kaho requirement quest
+	setarray .requiredItemID0, 5013, 5372, 7615, 7227;
+	setarray .requiredAmount0, 1, 1, 10, 50;
+
+	// for Anubis Helm Kaho requirement quest
+	setarray .requiredItemID1, 5013, 5490, 7615, 7227;
+	setarray .requiredAmount1, 1, 1, 10, 50;
+
+	mes @name$;
+	mes "Hey there! Nice to meet you, I'm Bok.";
+	next;
+
+	mes @name$;
+	mes "Among the Kaho makers, I take pride in crafting the newest and finest ones!";
+	next;
+
+	mes @name$;
+	mes "So, what can I do for you today? Looking to craft something special? Let me know!";
+
+	switch (select(
+		getitemname(.itemIDQuest[0]) + ":" +
+		getitemname(.itemIDQuest[1])
+	)) {
+
+		case 1:
+			next;
+
+			mes @name$;
+			mes "To make this special Kaho, you'll need the following materials:";
+			// Loop through the required items and display the correct "pc" or "pcs" based on the amount
+			for (.@i = 0; .@i < getarraysize(.requiredItemID0); .@i++) {
+				mes .requiredAmount0[.@i] + ((.requiredAmount0[.@i] == 1) ? "pc - " : "pcs - ") + getitemname(.requiredItemID0[.@i]);
+			}
+			next;
+
+			mes @name$;
+			mes "So, what do you think? Should I go ahead and make it for you?";
+			switch(select("No, I need more time:Yes, let's do it!")) {
+				case 1:
+					next;
+
+					mes @name$;
+					mes "No worries, take your time. Come back when you're ready!";
+					close;
+				break;
+				case 2:
+					next;
+
+					mes @name$;
+					mes "Alright, but just so you know, you will lose any cards and upgrades on the item you provide.";
+					mes "Also, bring the item you want turned into a Kaho. Any duplicate items you bring might also be consumed.";
+					next;
+
+					mes @name$;
+					mes "Are you sure you want to go through with it?";
+					next;
+					
+					switch(select("STOOOOP:Yes, make it!")) {
+						case 1:
+							mes @name$;
+							mes "Got it, no problem! Take your time.";
+							close;
+						break;
+						case 2:
+							.@isMissingItem = false;
+
+							// Check if player has all required items using a loop
+					        for (.@i = 0; .@i < getarraysize(.requiredItemID0); .@i++) {
+					            if (countitem(.requiredItemID0[.@i]) < .requiredAmount0[.@i]) {
+					                .@missingItem = true; // Set to true if any item is missing
+					                break; // Exit loop as soon as we find a missing item
+					            }
+					        }
+
+							if (.@missingItem) {
+								specialeffect2 155;
+								emotion ET_SCRATCH;
+								mes @name$;
+								mes "Hmm... looks like you're missing some items.";
+								mes "Please check your inventory and come back when you have everything.";
+								close;
+							}
+							else {
+								for( .@j = 0; .@j < getarraysize(.requiredItemID0); .@j++ ) {
+									delitem .requiredItemID0[.@j], .requiredAmount0[.@j];
+								}
+								getitem .itemIDQuest[0], 1;
+								specialeffect2 154;
+								mes @name$;
+								mes "Alright, it's done! Here's your new Kaho.";
+								mes "Wear it proudly, adventurer. Congrats!";
+								close;
+							}
+						break;
+					}
+				break;
+			}
+		break;
+
+		case 2:
+			next;
+
+			mes @name$;
+			mes "To make this special Kaho, you'll need the following materials:";
+			// Loop through the required items and display the correct "pc" or "pcs" based on the amount
+			for (.@i = 0; .@i < getarraysize(.requiredItemID1); .@i++) {
+				mes .requiredAmount1[.@i] + ((.requiredAmount1[.@i] == 1) ? "pc - " : "pcs - ") + getitemname(.requiredItemID1[.@i]);
+			}
+			next;
+
+			mes @name$;
+			mes "So, what do you think? Should I go ahead and make it for you?";
+			switch(select("No, I need more time:Yes, let's do it!")) {
+				case 1:
+					next;
+
+					mes @name$;
+					mes "No worries, take your time. Come back when you're ready!";
+					close;
+				break;
+				case 2:
+					next;
+
+					mes @name$;
+					mes "Alright, but just so you know, you will lose any cards and upgrades on the item you provide.";
+					mes "Also, bring the item you want turned into a Kaho. Any duplicate items you bring might also be consumed.";
+					next;
+
+					mes @name$;
+					mes "Are you sure you want to go through with it?";
+					next;
+					
+					switch(select("STOOOOP:Yes, make it!")) {
+						case 1:
+							mes @name$;
+							mes "Got it, no problem! Take your time.";
+							close;
+						break;
+						case 2:
+							.@isMissingItem = false;
+
+							// Check if player has all required items using a loop
+					        for (.@i = 0; .@i < getarraysize(.requiredItemID1); .@i++) {
+					            if (countitem(.requiredItemID1[.@i]) < .requiredAmount1[.@i]) {
+					                .@missingItem = true; // Set to true if any item is missing
+					                break; // Exit loop as soon as we find a missing item
+					            }
+					        }
+
+							if (.@missingItem) {
+								specialeffect2 155;
+								emotion ET_SCRATCH;
+								mes @name$;
+								mes "Hmm... looks like you're missing some items.";
+								mes "Please check your inventory and come back when you have everything.";
+								close;
+							}
+							else {
+								for( .@j = 0; .@j < getarraysize(.requiredItemID1); .@j++ ) {
+									delitem .requiredItemID1[.@j], .requiredAmount1[.@j];
+								}
+								getitem .itemIDQuest[1], 1;
+								specialeffect2 154;
+								mes @name$;
+								mes "Alright, it's done! Here's your new Kaho.";
+								mes "Wear it proudly, adventurer. Congrats!";
+								close;
+							}
+						break;
+					}
+				break;
+			}
+		break;
+	}
+}

@@ -1,0 +1,16 @@
+//===== rAthena Script =======================================
+//= Shop Street
+//===== By: ==================================================
+//= Masao(Shopstreet) - Original Mall Script
+//= Virtue(All in 1 Mall NPC)
+//===== Current Version: =====================================
+//= 1.0 [Masao]
+//===== Compatible With: =====================================
+//= rAthena SVN
+//= Judas SVN
+//===== Description: =========================================
+// Street Mall in One NPC
+// Change "BudgieRo" to BudgieRo or whhat ever you desire"
+//============================================================
+
+prontera,163,170,4	shop	Tool Dealer	531,601:60,602:300,506:40,547:3000,545:300,645:1000,656:1500,657:3000,1065:100,522:8500,505:5000,610:5000,1750:2,1751:3,1752:3;

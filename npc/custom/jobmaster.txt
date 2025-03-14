@@ -411,7 +411,7 @@ function	Get_Job_Equip	{
 			case Job_Wizard:
 				getitem 5753,1;	break;	//	Magic Stone Hat [1]
 			case Job_Hunter:
-				getitem 5748,1;	break;	//	Sniper Goggle [1]
+				getitem 5748,1; getitem 6124,1;	break;	//	Sniper Goggle [1]
 			case Job_Priest:
 				getitem 5747,1;	break;	//	Mitra [1]
 			case Job_Blacksmith:
@@ -516,7 +516,7 @@ OnInit:
 	.LastJob = true;					// Enforce linear class changes?
 	.SkillPointCheck = true;			// Force player to use up all skill points?
 	.Platinum = true;					// Get platinum skills automatically?
-	.GetJobEquip = false;				// Get job equipment (mostly weapons) on job change?
+	.GetJobEquip = true;				// Get job equipment (mostly weapons) on job change?
 
 	// Level Requirements
 	setarray .Req_First[0],1,10; 		// Minimum base level, job level to turn into 1st class

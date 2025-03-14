@@ -1,0 +1,1949 @@
+//===== By:==================================================
+//= Manuel Sintos
+// @reloadnpc npc/custom/manuel_npc/prontera_item_quest.txt
+
+prontera,165,83,3	script	Forseti	908,{
+	
+	set @name$, "[ Forseti ]";
+
+	setarray .itemIDQuest, 5203, 5310, 5311, 5315, 5508, 5333, 5397, 5398, 5399;
+
+	// item requirements quest
+	setarray .requiredItemID0, 2278, 1015;
+	setarray .requiredAmount0, 1, 1;
+
+	// item requirements quest
+	setarray .requiredItemID1, 5034, 7327;
+	setarray .requiredAmount1, 1, 320;
+
+	// item requirements quest
+	setarray .requiredItemID2, 7198, 7510;
+	setarray .requiredAmount2, 1000, 10;
+
+	// item requirements quest
+	setarray .requiredItemID3, 7095, 7353;
+	setarray .requiredAmount3, 770, 250;
+
+	// item requirements quest
+	setarray .requiredItemID4, 7327, 7355, 5175;
+	setarray .requiredAmount4, 850, 250, 1;
+
+	// item requirements quest
+	setarray .requiredItemID5, 7095, 7354, 996;
+	setarray .requiredAmount5, 688, 250, 313;
+
+	// item requirements quest
+	setarray .requiredItemID6, 7355, 7352;
+	setarray .requiredAmount6, 75, 50;
+
+	// item requirements quest
+	setarray .requiredItemID7, 10001, 7448, 7451;
+	setarray .requiredAmount7, 1, 1200, 5;
+	
+	// item requirements quest
+	setarray .requiredItemID8, 7188, 7222;
+	setarray .requiredAmount8, 560, 432;
+
+	mes @name$;
+	mes "Hello, What can I do for you?";
+	next;
+
+	switch(select("I want headgears:Nothing")) {
+		case 1:
+
+			next;
+
+			mes @name$;
+			mes "If you will give me some items.";
+			mes "Then I can make headgears for you.";
+			mes "If you have any questions, go ahead and take a look";
+			next;
+			
+			switch(select(""+ 
+				getitemname(.itemIDQuest[0]) + ":" + 
+				getitemname(.itemIDQuest[1]) + ":" +
+				getitemname(.itemIDQuest[2]) + ":" +
+				getitemname(.itemIDQuest[3]) + ":" +
+				getitemname(.itemIDQuest[4]) + ":" +
+				getitemname(.itemIDQuest[5]) + ":" +
+				getitemname(.itemIDQuest[6]) + ":" +
+				getitemname(.itemIDQuest[7]) + ":" +
+				getitemname(.itemIDQuest[8]))) {
+
+				case 1:
+					
+					next;
+
+					mes @name$;
+					mes "You have chosen " + getitemname(.itemIDQuest[0]) + ".";
+					mes "There are some item needed to make this headgear.";
+					next;
+
+					mes @name$;
+					mes "I will need the following:";
+					mes "1pc - Mr. Smile";
+					mes "1pc - Tongue";
+					mes "5,000,000 - Zeny";
+					next;
+
+					if (countitem(.requiredItemID0[0]) < .requiredAmount0[0] ||
+						countitem(.requiredItemID0[1]) < .requiredAmount0[1]) {
+						mes @name$;
+						mes "If you bring all the items then I will make it for you right away.";
+						mes "See you then ~";
+						close;
+					}
+					else if (Zeny < 5000000) {
+						mes @name$;
+						mes "You don't have a zeny.";
+						close;
+					}
+					else
+						Zeny -= 5000000;
+						delitem .requiredItemID0[0], .requiredAmount0[0];
+						delitem .requiredItemID0[1], .requiredAmount0[1];
+						getitem .itemIDQuest[0], 1;
+
+						mes @name$;
+						mes "Thank you and have a nice day.";
+						close;
+				break;
+				case 2:
+					
+					next;
+
+					mes @name$;
+					mes "You have chosen " + getitemname(.itemIDQuest[1]) + ".";
+					mes "There are some item needed to make this headgear.";
+					next;
+
+					mes @name$;
+					mes "I will need the following:";
+					mes "1pc - " + getitemname(.requiredItemID1[0]);
+					mes "320pcs - " + getitemname(.requiredItemID1[1]);
+					next;
+
+					if (countitem(.requiredItemID1[0]) < .requiredAmount1[0] ||
+						countitem(.requiredItemID1[1]) < .requiredAmount1[1]) {
+						mes @name$;
+						mes "If you bring all the items then I will make it for you right away.";
+						mes "See you then ~";
+						close;
+					}
+					else
+						delitem .requiredItemID1[0], .requiredAmount1[0];
+						delitem .requiredItemID1[1], .requiredAmount1[1];
+						getitem .itemIDQuest[1], 1;
+
+						mes @name$;
+						mes "Thank you and have a nice day.";
+						close;
+				break;
+				case 3:
+					
+					next;
+
+					mes @name$;
+					mes "You have chosen " + getitemname(.itemIDQuest[2]) + ".";
+					mes "There are some item needed to make this headgear.";
+					next;
+
+					mes @name$;
+					mes "I will need the following:";
+					mes .requiredAmount2[0] + "pcs - " + getitemname(.requiredItemID2[0]);
+					mes .requiredAmount2[1] + "pcs - " + getitemname(.requiredItemID2[1]);
+					next;
+
+					if (countitem(.requiredItemID2[0]) < .requiredAmount2[0] ||
+						countitem(.requiredItemID2[1]) < .requiredAmount2[1]) {
+						mes @name$;
+						mes "If you bring all the items then I will make it for you right away.";
+						mes "See you then ~";
+						close;
+					}
+					else
+						delitem .requiredItemID2[0], .requiredAmount2[0];
+						delitem .requiredItemID2[1], .requiredAmount2[1];
+						getitem .itemIDQuest[2], 1;
+
+						mes @name$;
+						mes "Thank you and have a nice day.";
+						close;
+
+				break;
+				case 4:
+
+					next;
+
+					mes @name$;
+					mes "You have chosen " + getitemname(.itemIDQuest[3]) + ".";
+					mes "There are some item needed to make this headgear.";
+					next;
+
+					mes @name$;
+					mes "I will need the following:";
+					mes .requiredAmount3[0] + "pcs - " + getitemname(.requiredItemID3[0]);
+					mes .requiredAmount3[1] + "pcs - " + getitemname(.requiredItemID3[1]) + " (Red)";
+					next;
+
+					if (countitem(.requiredItemID3[0]) < .requiredAmount3[0] ||
+						countitem(.requiredItemID3[1]) < .requiredAmount3[1]) {
+						mes @name$;
+						mes "If you bring all the items then I will make it for you right away.";
+						mes "See you then ~";
+						close;
+					}
+					else
+						delitem .requiredItemID3[0], .requiredAmount3[0];
+						delitem .requiredItemID3[1], .requiredAmount3[1];
+						getitem .itemIDQuest[3], 1;
+
+						mes @name$;
+						mes "Thank you and have a nice day.";
+						close;
+				break;
+				case 5:
+					
+					next;
+
+					mes @name$;
+					mes "You have chosen " + getitemname(.itemIDQuest[4]) + ".";
+					mes "There are some item needed to make this headgear.";
+					next;
+
+					mes @name$;
+					mes "I will need the following:";
+					mes .requiredAmount4[0] + "pcs - " + getitemname(.requiredItemID4[0]);
+					mes .requiredAmount4[1] + "pcs - " + getitemname(.requiredItemID4[1]) + " (Blue)";
+					mes .requiredAmount4[2] + "pc - " + getitemname(.requiredItemID4[2]);
+					next;
+
+					if (countitem(.requiredItemID4[0]) < .requiredAmount4[0] ||
+						countitem(.requiredItemID4[1]) < .requiredAmount4[1] ||
+						countitem(.requiredItemID4[2]) < .requiredAmount4[2]) {
+						mes @name$;
+						mes "If you bring all the items then I will make it for you right away.";
+						mes "See you then ~";
+						close;
+					}
+					else
+						delitem .requiredItemID4[0], .requiredAmount4[0];
+						delitem .requiredItemID4[1], .requiredAmount4[1];
+						delitem .requiredItemID4[2], .requiredAmount4[2];
+						getitem .itemIDQuest[4], 1;
+
+						mes @name$;
+						mes "Thank you and have a nice day.";
+						close;
+
+				break;
+				case 6:
+					
+					next;
+
+					mes @name$;
+					mes "You have chosen " + getitemname(.itemIDQuest[5]) + ".";
+					mes "There are some item needed to make this headgear.";
+					next;
+
+					mes @name$;
+					mes "I will need the following:";
+					mes .requiredAmount5[0] + "pcs - " + getitemname(.requiredItemID5[0]);
+					mes .requiredAmount5[1] + "pcs - " + getitemname(.requiredItemID5[1]) + " (Yellow)";
+					mes .requiredAmount5[2] + "pcs - " + getitemname(.requiredItemID5[2]);
+					next;
+
+					if (countitem(.requiredItemID5[0]) < .requiredAmount5[0] ||
+						countitem(.requiredItemID5[1]) < .requiredAmount5[1] ||
+						countitem(.requiredItemID5[2]) < .requiredAmount5[2]) {
+						mes @name$;
+						mes "If you bring all the items then I will make it for you right away.";
+						mes "See you then ~";
+						close;
+					}
+					else
+						delitem .requiredItemID5[0], .requiredAmount5[0];
+						delitem .requiredItemID5[1], .requiredAmount5[1];
+						delitem .requiredItemID5[2], .requiredAmount5[2];
+						getitem .itemIDQuest[5], 1;
+
+						mes @name$;
+						mes "Thank you and have a nice day.";
+						close;
+
+				break;
+				case 7:
+					
+					next;
+
+					mes @name$;
+					mes "You have chosen " + getitemname(.itemIDQuest[6]) + ".";
+					mes "There are some item needed to make this headgear.";
+					next;
+
+					mes @name$;
+					mes "I will need the following:";
+					mes .requiredAmount6[0] + "pcs - " + getitemname(.requiredItemID6[0]) + " (Blue)";
+					mes .requiredAmount6[1] + "pcs - " + getitemname(.requiredItemID6[1]) + " (Green)";
+					mes "15,000,000 - Zeny";
+					next;
+
+					if (countitem(.requiredItemID6[0]) < .requiredAmount6[0] ||
+						countitem(.requiredItemID6[1]) < .requiredAmount6[1]) {
+						mes @name$;
+						mes "If you bring all the items then I will make it for you right away.";
+						mes "See you then ~";
+						close;
+					}
+					else if (Zeny < 15000000) {
+						mes @name$;
+						mes "You don't have a zeny.";
+						close;
+					}
+					else
+						Zeny -= 15000000;
+						delitem .requiredItemID6[0], .requiredAmount6[0];
+						delitem .requiredItemID6[1], .requiredAmount6[1];
+						getitem .itemIDQuest[6], 1;
+
+						mes @name$;
+						mes "Thank you and have a nice day.";
+						close;
+
+				break;
+				case 8:
+					
+					next;
+
+					mes @name$;
+					mes "You have chosen " + getitemname(.itemIDQuest[7]) + ".";
+					mes "There are some item needed to make this headgear.";
+					next;
+
+					mes @name$;
+					mes "I will need the following:";
+					mes .requiredAmount7[0] + "pc - " + getitemname(.requiredItemID7[0]);
+					mes .requiredAmount7[1] + "pcs - " + getitemname(.requiredItemID7[1]);
+					mes .requiredAmount7[2] + "pcs - " + getitemname(.requiredItemID7[2]);
+					next;
+
+					if (countitem(.requiredItemID7[0]) < .requiredAmount7[0] ||
+						countitem(.requiredItemID7[1]) < .requiredAmount7[1] ||
+						countitem(.requiredItemID7[2]) < .requiredAmount7[2]) {
+						mes @name$;
+						mes "If you bring all the items then I will make it for you right away.";
+						mes "See you then ~";
+						close;
+					}
+					else
+						delitem .requiredItemID7[0], .requiredAmount7[0];
+						delitem .requiredItemID7[1], .requiredAmount7[1];
+						delitem .requiredItemID7[2], .requiredAmount7[2];
+						getitem .itemIDQuest[7], 1;
+
+						mes @name$;
+						mes "Thank you and have a nice day.";
+						close;
+
+				break;
+				case 9:
+					
+					next;
+
+					mes @name$;
+					mes "You have chosen " + getitemname(.itemIDQuest[8]) + ".";
+					mes "There are some item needed to make this headgear.";
+					next;
+
+					mes @name$;
+					mes "I will need the following:";
+					mes .requiredAmount8[0] + "pcs - " + getitemname(.requiredItemID8[0]);
+					mes .requiredAmount8[1] + "pcs - " + getitemname(.requiredItemID8[1]);
+					next;
+
+					if (countitem(.requiredItemID8[0]) < .requiredAmount8[0] ||
+						countitem(.requiredItemID8[1]) < .requiredAmount8[1]) {
+						mes @name$;
+						mes "If you bring all the items then I will make it for you right away.";
+						mes "See you then ~";
+						close;
+					}
+					else
+						delitem .requiredItemID8[0], .requiredAmount8[0];
+						delitem .requiredItemID8[1], .requiredAmount8[1];
+						getitem .itemIDQuest[8], 1;
+
+						mes @name$;
+						mes "Thank you and have a nice day.";
+						close;
+
+				break;
+			}
+		break;
+		case 2:
+			mes @name$;
+			mes "See you around.";
+			close;
+		break;
+	}
+
+}
+
+
+prontera,165,86,3	script	Andvari	501,{
+	
+	set @name$, "[ Andvari ]";
+	setarray .itemIDQuest, 5208, 5450, 5385, 5099, 5396, 5352, 5362, 5365, 5371;
+
+	// item requirements quest
+	setarray .requiredItemID0, 1097;
+	setarray .requiredAmount0, 491;
+
+	// item requirements quest
+	setarray .requiredItemID1, 7094;
+	setarray .requiredAmount1, 712;
+
+	// item requirements quest
+	setarray .requiredItemID2, 753, 7011;
+	setarray .requiredAmount2, 1, 140;
+
+	// item requirements quest
+	setarray .requiredItemID3, 5020, 2286, 7047;
+	setarray .requiredAmount3, 1, 1, 445;
+
+	// item requirements quest
+	setarray .requiredItemID4, 5124, 7300, 7315;
+	setarray .requiredAmount4, 1, 1, 369;
+
+	// item requirements quest
+	setarray .requiredItemID5, 5035, 979;
+	setarray .requiredAmount5, 1, 1;
+
+	// item requirements quest
+	setarray .requiredItemID6, 618, 7099;
+	setarray .requiredAmount6, 434, 800;
+
+	// item requirements quest
+	setarray .requiredItemID7, 7031, 574;
+	setarray .requiredAmount7, 822, 155;
+
+	// item requirements quest
+	setarray .requiredItemID8, 5122, 7291, 7445;
+	setarray .requiredAmount8, 1, 5, 10;
+
+	mes @name$;
+	mes "Hi, How are you young man!?";
+	mes "Are you here to make items?";
+	mes "I can make items for you.";
+	mes "But, you need to bring me the materials needed.";
+	mes "What do you want to do?";
+
+	switch(select(
+		getitemname(.itemIDQuest[0]) + ":" +
+		getitemname(.itemIDQuest[1]) + ":" +
+		getitemname(.itemIDQuest[2]) + ":" +
+		getitemname(.itemIDQuest[3]) + ":" +
+		getitemname(.itemIDQuest[4]) + ":" +
+		getitemname(.itemIDQuest[5]) + ":" +
+		getitemname(.itemIDQuest[6]) + ":" +
+		getitemname(.itemIDQuest[7]) + ":" +
+		getitemname(.itemIDQuest[8]))) {
+		case 1:
+			
+			next;
+
+			mes @name$;
+			mes "Ill need.";
+			mes .requiredAmount0[0] + "pcs - " + getitemname(.requiredItemID0[0]);
+			next;
+
+			if (countitem(.requiredItemID0[0]) < .requiredAmount0[0]) {
+				mes @name$;
+				mes "Make sure you bring me the correct amount of requirements.";
+				close;
+			}
+			else
+				delitem .requiredItemID0[0], .requiredAmount0[0];
+				getitem .itemIDQuest[0], 1;
+
+				mes @name$;
+				mes "Thank you and have a nice day.";
+				close;
+		break;
+		case 2:
+			
+			next;
+
+			mes @name$;
+			mes "Ill need.";
+			mes .requiredAmount1[0] + "pcs - " + getitemname(.requiredItemID1[0]);
+			next;
+
+			if (countitem(.requiredItemID1[0]) < .requiredAmount1[0]) {
+				mes @name$;
+				mes "Make sure you bring me the correct amount of requirements.";
+				close;
+			}
+			else
+				delitem .requiredItemID1[0], .requiredAmount1[0];
+				getitem .itemIDQuest[1], 1;
+
+				mes @name$;
+				mes "Thank you and have a nice day.";
+				close;
+
+		break;
+		case 3:
+			
+			next;
+
+			mes @name$;
+			mes "Ill need.";
+			mes .requiredAmount2[0] + "pcs - " + getitemname(.requiredItemID2[0]);
+			mes .requiredAmount2[1] + "pcs - " + getitemname(.requiredItemID2[1]);
+			next;
+
+			if (countitem(.requiredItemID2[0]) < .requiredAmount2[0] ||
+				countitem(.requiredItemID2[1]) < .requiredAmount2[1]) {
+				mes @name$;
+				mes "Make sure you bring me the correct amount of requirements.";
+				close;
+			}
+			else
+				delitem .requiredItemID2[0], .requiredAmount2[0];
+				delitem .requiredItemID2[1], .requiredAmount2[1];
+				getitem .itemIDQuest[2], 1;
+
+				mes @name$;
+				mes "Thank you and have a nice day.";
+				close;
+
+		break;
+		case 4:
+			
+			next;
+
+			mes @name$;
+			mes "Ill need.";
+			mes .requiredAmount3[0] + "pc - " + getitemname(.requiredItemID3[0]);
+			mes .requiredAmount3[1] + "pc - " + getitemname(.requiredItemID3[1]);
+			mes .requiredAmount3[2] + "pcs - " + getitemname(.requiredItemID3[2]);
+			next;
+
+			if (countitem(.requiredItemID3[0]) < .requiredAmount3[0] ||
+				countitem(.requiredItemID3[1]) < .requiredAmount3[1] ||
+				countitem(.requiredItemID3[2]) < .requiredAmount3[2]) {
+				mes @name$;
+				mes "Make sure you bring me the correct amount of requirements.";
+				close;
+			}
+			else
+				delitem .requiredItemID3[0], .requiredAmount3[0];
+				delitem .requiredItemID3[1], .requiredAmount3[1];
+				delitem .requiredItemID3[2], .requiredAmount3[2];
+				getitem .itemIDQuest[3], 1;
+
+				mes @name$;
+				mes "Thank you and have a nice day.";
+				close;
+
+		break;
+		case 5:
+			
+			next;
+
+			mes @name$;
+			mes "Ill need.";
+			mes .requiredAmount4[0] + "pc - " + getitemname(.requiredItemID4[0]);
+			mes .requiredAmount4[1] + "pc - " + getitemname(.requiredItemID4[1]);
+			mes .requiredAmount4[2] + "pcs - " + getitemname(.requiredItemID4[2]);
+			next;
+
+			if (countitem(.requiredItemID4[0]) < .requiredAmount4[0] ||
+				countitem(.requiredItemID4[1]) < .requiredAmount4[1] ||
+				countitem(.requiredItemID4[2]) < .requiredAmount4[2]) {
+				mes @name$;
+				mes "Make sure you bring me the correct amount of requirements.";
+				close;
+			}
+			else
+				delitem .requiredItemID4[0], .requiredAmount4[0];
+				delitem .requiredItemID4[1], .requiredAmount4[1];
+				delitem .requiredItemID4[2], .requiredAmount4[2];
+				getitem .itemIDQuest[4], 1;
+
+				mes @name$;
+				mes "Thank you and have a nice day.";
+				close;
+
+		break;
+		case 6:
+			
+			next;
+
+			mes @name$;
+			mes "Ill need.";
+			mes .requiredAmount5[0] + "pc - " + getitemname(.requiredItemID5[0]);
+			mes .requiredAmount5[1] + "pc - " + getitemname(.requiredItemID5[1]);
+			next;
+
+			if (countitem(.requiredItemID5[0]) < .requiredAmount5[0] ||
+				countitem(.requiredItemID5[1]) < .requiredAmount5[1]) {
+				mes @name$;
+				mes "Make sure you bring me the correct amount of requirements.";
+				close;
+			}
+			else
+				delitem .requiredItemID5[0], .requiredAmount5[0];
+				delitem .requiredItemID5[1], .requiredAmount5[1];
+				getitem .itemIDQuest[5], 1;
+
+				mes @name$;
+				mes "Thank you and have a nice day.";
+				close;
+
+		break;
+		case 7:
+			
+			next;
+
+			mes @name$;
+			mes "Ill need.";
+			mes .requiredAmount6[0] + "pcs - " + getitemname(.requiredItemID6[0]);
+			mes .requiredAmount6[1] + "pcs - " + getitemname(.requiredItemID6[1]);
+			next;
+
+			if (countitem(.requiredItemID6[0]) < .requiredAmount6[0] ||
+				countitem(.requiredItemID6[1]) < .requiredAmount6[1]) {
+				mes @name$;
+				mes "Make sure you bring me the correct amount of requirements.";
+				close;
+			}
+			else
+				delitem .requiredItemID6[0], .requiredAmount6[0];
+				delitem .requiredItemID6[1], .requiredAmount6[1];
+				getitem .itemIDQuest[6], 1;
+
+				mes @name$;
+				mes "Thank you and have a nice day.";
+				close;
+
+		break;
+		case 8:
+			
+			next;
+
+			mes @name$;
+			mes "Ill need.";
+			mes .requiredAmount7[0] + "pcs - " + getitemname(.requiredItemID7[0]);
+			mes .requiredAmount7[1] + "pcs - " + getitemname(.requiredItemID7[1]);
+			next;
+
+			if (countitem(.requiredItemID7[0]) < .requiredAmount7[0] ||
+				countitem(.requiredItemID7[1]) < .requiredAmount7[1]) {
+				mes @name$;
+				mes "Make sure you bring me the correct amount of requirements.";
+				close;
+			}
+			else
+				delitem .requiredItemID7[0], .requiredAmount7[0];
+				delitem .requiredItemID7[1], .requiredAmount7[1];
+				getitem .itemIDQuest[7], 1;
+
+				mes @name$;
+				mes "Thank you and have a nice day.";
+				close;
+
+		break;
+		case 9:
+			
+			next;
+
+			mes @name$;
+			mes "Ill need.";
+			mes .requiredAmount8[0] + "pc - " + getitemname(.requiredItemID8[0]);
+			mes .requiredAmount8[1] + "pcs - " + getitemname(.requiredItemID8[1]);
+			mes .requiredAmount8[2] + "pcs - " + getitemname(.requiredItemID8[2]);
+			next;
+
+			if (countitem(.requiredItemID8[0]) < .requiredAmount8[0] ||
+				countitem(.requiredItemID8[1]) < .requiredAmount8[1] ||
+				countitem(.requiredItemID8[2]) < .requiredAmount8[2]) {
+				mes @name$;
+				mes "Make sure you bring me the correct amount of requirements.";
+				close;
+			}
+			else
+				delitem .requiredItemID8[0], .requiredAmount8[0];
+				delitem .requiredItemID8[1], .requiredAmount8[1];
+				delitem .requiredItemID8[2], .requiredAmount8[2];
+				getitem .itemIDQuest[8], 1;
+
+				mes @name$;
+				mes "Thank you and have a nice day.";
+				close;
+
+		break;
+	}
+
+}
+
+prontera,86,287,3	script	Doggy	81,{
+	
+	set @name$, "[ Doggy ]";
+
+	setarray .itemIDQuest, 5288, 2204;
+
+	// quest requirements
+	setarray .requiredItemID0, 5047, 975, 713, 678, 7227;
+	setarray .requiredAmount0, 1, 10, 200, 25, 2;
+
+	// quest requirements
+	setarray .requiredItemID1, 2203, 713, 603, 617;
+	setarray .requiredAmount1, 1, 250, 25, 25;
+
+	mes @name$;
+	mes "Woof! Woof!";
+	mes "Your eyes looks kinda bad. Do you need glasses?";
+
+	switch(select("Woah! A talking dog!, What glasses?:My eyesight is fine.")) {
+		case 1:
+			next;
+
+			mes @name$;
+			mes "Yes I can make some glasses.";
+			next;
+
+			mes @name$;
+			mes "Which pair would you like?";
+			
+			switch(select("Red Glasses:Glasses[1]:I'll go elsewhere for my glasses")) {
+				case 1:
+					next;
+
+					mes @name$;
+					mes "You choose Red Glasses.";
+					next;
+
+					mes @name$;
+					mes "I will need this items:";
+					for( .@i = 0; .@i < getarraysize(.requiredItemID0); .@i++ ) {
+						mes .requiredAmount0[.@i] + "pcs - " + getitemname(.requiredItemID0[.@i]) + ".";
+					}
+					mes ".";
+					mes "Do you still want this Red Glasses?";
+
+					switch(select("Yes, Please.:No thanks.")) {
+						case 1:
+							next;
+							
+							if (countitem(.requiredItemID0[0]) < .requiredAmount0[0] ||
+								countitem(.requiredItemID0[1]) < .requiredAmount0[1] ||
+								countitem(.requiredItemID0[2]) < .requiredAmount0[2] ||
+								countitem(.requiredItemID0[3]) < .requiredAmount0[3] ||
+								countitem(.requiredItemID0[4]) < .requiredAmount0[4]) {
+								mes @name$;
+								mes "Don't think I won't bite your leg off if you try to scam me.";
+								close;
+							}
+							else
+								for( .@j = 0; .@j < getarraysize(.requiredItemID0); .@j++ ) {
+									delitem .requiredItemID0[.@j], .requiredAmount0[.@j];
+								}
+								getitem .itemIDQuest[0], 1;
+
+								mes @name$;
+								mes "Woof! Woof!";
+								mes "Here is your glasses and have a nice day.";
+								close;
+					
+						break;
+						case 2:
+							next;
+
+							mes @name$;
+							mes "Bye bye.";
+							close;
+						break;
+					}
+
+				break;
+				case 2:
+					next;
+
+					mes @name$;
+					mes "You choose Glasses[1].";
+					next;
+
+					mes @name$;
+					mes "I will need this items:";
+					for( .@i = 0; .@i < getarraysize(.requiredItemID1); .@i++ ) {
+						mes .requiredAmount1[.@i] + "pcs - " + getitemname(.requiredItemID1[.@i]) + ".";
+					}
+					mes ".";
+					mes "Do you still want this Glasses[1]?";
+
+					switch(select("Yes, Please.:No thanks.")) {
+						case 1:
+							next;
+							
+							if (countitem(.requiredItemID1[0]) < .requiredAmount1[0] ||
+								countitem(.requiredItemID1[1]) < .requiredAmount1[1] ||
+								countitem(.requiredItemID1[2]) < .requiredAmount1[2] ||
+								countitem(.requiredItemID1[3]) < .requiredAmount1[3]) {
+								mes @name$;
+								mes "Don't think I won't bite your leg off if you try to scam me.";
+								close;
+							}
+							else
+								for( .@j = 0; .@j < getarraysize(.requiredAmount1); .@j++ ) {
+									delitem .requiredItemID1[.@j], .requiredAmount1[.@j];
+								}
+								getitem .itemIDQuest[1], 1;
+
+								mes @name$;
+								mes "Woof! Woof!";
+								mes "Here is your glasses and have a nice day.";
+								close;
+					
+						break;
+						case 2:
+							next;
+
+							mes @name$;
+							mes "Bye bye.";
+							close;
+						break;
+					}
+
+				break;
+				case 3:
+					next;
+
+					mes @name$;
+					mes "Bye bye.";
+					close;
+				break;
+			}
+
+		break;
+		case 2:
+			next;
+
+			mes @name$;
+			mes "Woof! Really?";
+			mes "Well you almost tripped over me.";
+			mes "But, Whatever!";
+			close;
+		break;
+	}
+}
+
+
+prontera,89,286,3	script	Botter	82,{
+
+	set @name$, "[ Botter ]";
+
+	setarray .itemIDQuest, 5800, 5283, 5303, 5302, 5458, 5293, 5456, 5289, 5284;
+
+	// item requirements quest
+	setarray .requiredItemID0, 7047, 661, 7227;
+	setarray .requiredAmount0, 500, 10, 1;
+
+	// item requirements quest
+	setarray .requiredItemID1, 7063, 7101, 925, 976, 7227;
+	setarray .requiredAmount1, 400, 200, 100, 10, 1;
+
+	// item requirements quest
+	setarray .requiredItemID2, 7298, 7198, 2270, 710, 7227;
+	setarray .requiredAmount2, 100, 100, 1, 20, 1;
+
+	// item requirements quest
+	setarray .requiredItemID3, 509, 511, 7510, 7227;
+	setarray .requiredAmount3, 100, 50, 50, 1;
+
+	// item requirements quest
+	setarray .requiredItemID4, 5048, 2250, 7440, 7441;
+	setarray .requiredAmount4, 1, 1, 20, 20;
+
+	// item requirements quest
+	setarray .requiredItemID5, 550, 607, 535, 567, 12129;
+	setarray .requiredAmount5, 300, 100, 100, 100, 1;
+
+	// item requirements quest
+	setarray .requiredItemID6, 5032, 7227, 976, 978, 1059;
+	setarray .requiredAmount6, 1, 1, 20, 10, 300;
+
+	// item requirements quest
+	setarray .requiredItemID7, 526, 7142, 5038;
+	setarray .requiredAmount7, 200, 20, 1;
+
+	// item requirements quest
+	setarray .requiredItemID8, 2269, 2270, 2235, 507, 511, 508, 975, 979;
+	setarray .requiredAmount8, 10, 10, 1, 50, 50, 50, 5, 5;
+
+	mes @name$;
+	mes "Hello, you look like you need a new hat.";
+	mes "Do you want me to make you something?";
+	next;
+
+	switch(select("What hats do you make?:No thank you")) {
+		case 1:
+			mes @name$;
+			mes "I make 9 different hats.";
+			next;
+
+			mes @name$;
+			mes "Which one would you like?";
+			
+			switch(select(
+				getitemname(.itemIDQuest[0]) + ":" +
+				getitemname(.itemIDQuest[1]) + ":" +
+				getitemname(.itemIDQuest[2]) + ":" +
+				getitemname(.itemIDQuest[3]) + ":" +
+				getitemname(.itemIDQuest[4]) + ":" +
+				getitemname(.itemIDQuest[5]) + ":" +
+				getitemname(.itemIDQuest[6]) + ":" +
+				getitemname(.itemIDQuest[7]) + ":" +
+				getitemname(.itemIDQuest[8]))) {
+				case 1:
+					next;
+
+					mes @name$;
+					mes "You choose " + getitemname(.itemIDQuest[0]);
+					next;
+
+					mes @name$;
+					mes "I will need this items:";
+					for( .@i = 0; .@i < getarraysize(.requiredItemID0); .@i++ ) {
+						mes .requiredAmount0[.@i] + "pcs - " + getitemname(.requiredItemID0[.@i]) + ".";
+					}
+					next;
+
+					mes @name$;
+					mes "Do you still want this items?";
+
+					switch(select("Yes please:No thank you")) {
+						case 1:
+							next;
+
+							if (countitem(.requiredItemID0[0]) < .requiredAmount0[0] ||
+								countitem(.requiredItemID0[1]) < .requiredAmount0[1] ||
+								countitem(.requiredItemID0[2]) < .requiredAmount0[2]) {
+								mes @name$;
+								mes "Don't try to scam me or you might be reported to GM.";
+								close;
+							}
+							else
+								for( .@z = 0; .@z < getarraysize(.requiredItemID0); .@z++ ) {
+									delitem .requiredItemID0[.@z], .requiredAmount0[.@z];
+								}
+								getitem .itemIDQuest[0], 1;
+
+								mes @name$;
+								mes "Here you go ~";
+								close;
+							
+						break;
+						case 2:
+							next;
+
+							mes @name$;
+							mes "Bye bye then ~";
+							close;
+						break;
+					}
+
+				break;
+				case 2:
+					next;
+
+					mes @name$;
+					mes "You choose " + getitemname(.itemIDQuest[1]);
+					next;
+
+					mes @name$;
+					mes "I will need this items:";
+					for( .@i = 0; .@i < getarraysize(.requiredItemID1); .@i++ ) {
+						mes .requiredAmount1[.@i] + "pcs - " + getitemname(.requiredItemID1[.@i]) + ".";
+					}
+					next;
+
+					mes @name$;
+					mes "Do you still want this items?";
+
+					switch(select("Yes please:No thank you")) {
+						case 1:
+							next;
+
+							if (countitem(.requiredItemID1[0]) < .requiredAmount1[0] ||
+								countitem(.requiredItemID1[1]) < .requiredAmount1[1] ||
+								countitem(.requiredItemID1[2]) < .requiredAmount1[2] ||
+								countitem(.requiredItemID1[3]) < .requiredAmount1[3] ||
+								countitem(.requiredItemID1[4]) < .requiredAmount1[4]) {
+								mes @name$;
+								mes "Don't try to scam me or you might be reported to GM.";
+								close;
+							}
+							else
+								for( .@z = 0; .@z < getarraysize(.requiredItemID1); .@z++ ) {
+										delitem .requiredItemID1[.@z], .requiredAmount1[.@z];
+								}
+								getitem .itemIDQuest[1], 1;
+
+								mes @name$;
+								mes "Here you go ~";
+								close;
+							
+						break;
+						case 2:
+							next;
+
+							mes @name$;
+							mes "Bye bye then ~";
+							close;
+						break;
+					}
+				break;
+				case 3:
+					next;
+
+					mes @name$;
+					mes "You choose " + getitemname(.itemIDQuest[2]);
+					next;
+
+					mes @name$;
+					mes "I will need this items:";
+					for( .@i = 0; .@i < getarraysize(.requiredItemID2); .@i++ ) {
+						mes .requiredAmount2[.@i] + "pcs - " + getitemname(.requiredItemID2[.@i]) + ".";
+					}
+					next;
+
+					mes @name$;
+					mes "Do you still want this items?";
+
+					switch(select("Yes please:No thank you")) {
+						case 1:
+							next;
+
+							
+								if (countitem(.requiredItemID2[0]) < .requiredAmount2[0] ||
+									countitem(.requiredItemID2[1]) < .requiredAmount2[1] ||
+									countitem(.requiredItemID2[2]) < .requiredAmount2[2] ||
+									countitem(.requiredItemID2[3]) < .requiredAmount2[3] ||
+									countitem(.requiredItemID2[4]) < .requiredAmount2[4]) {
+									mes @name$;
+									mes "Don't try to scam me or you might be reported to GM.";
+									close;
+								}
+								else
+									for( .@z = 0; .@z < getarraysize(.requiredItemID2); .@z++ ) {
+										delitem .requiredItemID2[.@z], .requiredAmount2[.@z];
+									}
+									getitem .itemIDQuest[2], 1;
+
+									mes @name$;
+									mes "Here you go ~";
+									close;
+							
+							
+						break;
+						case 2:
+							next;
+
+							mes @name$;
+							mes "Bye bye then ~";
+							close;
+						break;
+					}
+				break;
+				case 4:
+					next;
+
+					mes @name$;
+					mes "You choose " + getitemname(.itemIDQuest[3]);
+					next;
+
+					mes @name$;
+					mes "I will need this items:";
+					for( .@i = 0; .@i < getarraysize(.requiredItemID3); .@i++ ) {
+						mes .requiredAmount3[.@i] + "pcs - " + getitemname(.requiredItemID3[.@i]) + ".";
+					}
+					next;
+
+					mes @name$;
+					mes "Do you still want this items?";
+
+					switch(select("Yes please:No thank you")) {
+						case 1:
+							next;
+
+								if (countitem(.requiredItemID3[0]) < .requiredAmount3[0] ||
+									countitem(.requiredItemID3[1]) < .requiredAmount3[1] ||
+									countitem(.requiredItemID3[2]) < .requiredAmount3[2] ||
+									countitem(.requiredItemID3[3]) < .requiredAmount3[3]) {
+									mes @name$;
+									mes "Don't try to scam me or you might be reported to GM.";
+									close;
+								}
+								else
+									for( .@z = 0; .@z < getarraysize(.requiredItemID3); .@z++ ) {
+										delitem .requiredItemID3[.@z], .requiredAmount3[.@z];
+									}
+									getitem .itemIDQuest[3], 1;
+
+									mes @name$;
+									mes "Here you go ~";
+									close;		
+						break;
+						case 2:
+							next;
+
+							mes @name$;
+							mes "Bye bye then ~";
+							close;
+						break;
+					}
+				break;
+				case 5:
+					next;
+
+					mes @name$;
+					mes "You choose " + getitemname(.itemIDQuest[4]);
+					next;
+
+					mes @name$;
+					mes "I will need this items:";
+					for( .@i = 0; .@i < getarraysize(.requiredItemID4); .@i++ ) {
+						mes .requiredAmount4[.@i] + "pcs - " + getitemname(.requiredItemID4[.@i]) + ".";
+					}
+					next;
+
+					mes @name$;
+					mes "Do you still want this items?";
+
+					switch(select("Yes please:No thank you")) {
+						case 1:
+							next;
+
+								if (countitem(.requiredItemID4[0]) < .requiredAmount4[0] ||
+									countitem(.requiredItemID4[1]) < .requiredAmount4[1] ||
+									countitem(.requiredItemID4[2]) < .requiredAmount4[2] ||
+									countitem(.requiredItemID4[3]) < .requiredAmount4[3]) {
+									mes @name$;
+									mes "Don't try to scam me or you might be reported to GM.";
+									close;
+								}
+								else
+									for( .@z = 0; .@z < getarraysize(.requiredItemID4); .@z++ ) {
+										delitem .requiredItemID4[.@z], .requiredAmount4[.@z];
+									}
+									getitem .itemIDQuest[4], 1;
+
+									mes @name$;
+									mes "Here you go ~";
+									close;
+							
+						break;
+						case 2:
+							next;
+
+							mes @name$;
+							mes "Bye bye then ~";
+							close;
+						break;
+					}
+				break;
+				case 6:
+					next;
+
+					mes @name$;
+					mes "You choose " + getitemname(.itemIDQuest[5]);
+					next;
+
+					mes @name$;
+					mes "I will need this items:";
+					for( .@i = 0; .@i < getarraysize(.requiredItemID5); .@i++ ) {
+						mes .requiredAmount5[.@i] + "pcs - " + getitemname(.requiredItemID5[.@i]) + ".";
+					}
+					next;
+
+					mes @name$;
+					mes "Do you still want this items?";
+
+					switch(select("Yes please:No thank you")) {
+						case 1:
+							next;
+
+								if (countitem(.requiredItemID5[0]) < .requiredAmount5[0] ||
+									countitem(.requiredItemID5[1]) < .requiredAmount5[1] ||
+									countitem(.requiredItemID5[2]) < .requiredAmount5[2] ||
+									countitem(.requiredItemID5[3]) < .requiredAmount5[3] ||
+									countitem(.requiredItemID5[4]) < .requiredAmount5[4]) {
+									mes @name$;
+									mes "Don't try to scam me or you might be reported to GM.";
+									close;
+								}
+								else
+									for( .@z = 0; .@z < getarraysize(.requiredItemID5); .@z++ ) {
+										delitem .requiredItemID5[.@z], .requiredAmount5[.@z];
+									}
+									getitem .itemIDQuest[5], 1;
+
+									mes @name$;
+									mes "Here you go ~";
+									close;
+							
+						break;
+						case 2:
+							next;
+
+							mes @name$;
+							mes "Bye bye then ~";
+							close;
+						break;
+					}
+				break;
+				case 7:
+					next;
+
+					mes @name$;
+					mes "You choose " + getitemname(.itemIDQuest[6]);
+					next;
+
+					mes @name$;
+					mes "I will need this items:";
+					for( .@i = 0; .@i < getarraysize(.requiredItemID6); .@i++ ) {
+						mes .requiredAmount6[.@i] + "pcs - " + getitemname(.requiredItemID6[.@i]) + ".";
+					}
+					next;
+
+					mes @name$;
+					mes "Do you still want this items?";
+
+					switch(select("Yes please:No thank you")) {
+						case 1:
+							next;
+
+								if (countitem(.requiredItemID6[0]) < .requiredAmount6[0] ||
+									countitem(.requiredItemID6[1]) < .requiredAmount6[1] ||
+									countitem(.requiredItemID6[2]) < .requiredAmount6[2] ||
+									countitem(.requiredItemID6[3]) < .requiredAmount6[3] ||
+									countitem(.requiredItemID6[4]) < .requiredAmount6[4]) {
+									mes @name$;
+									mes "Don't try to scam me or you might be reported to GM.";
+									close;
+								}
+								else
+									for( .@z = 0; .@z < getarraysize(.requiredItemID6); .@z++ ) {
+										delitem .requiredItemID6[.@z], .requiredAmount6[.@z];
+									}
+									getitem .itemIDQuest[6], 1;
+
+									mes @name$;
+									mes "Here you go ~";
+									close;
+							
+						break;
+						case 2:
+							next;
+
+							mes @name$;
+							mes "Bye bye then ~";
+							close;
+						break;
+					}
+				break;
+				case 8:
+					next;
+
+					mes @name$;
+					mes "You choose " + getitemname(.itemIDQuest[7]);
+					next;
+
+					mes @name$;
+					mes "I will need this items:";
+					for( .@i = 0; .@i < getarraysize(.requiredItemID7); .@i++ ) {
+						mes .requiredAmount7[.@i] + "pcs - " + getitemname(.requiredItemID7[.@i]) + ".";
+					}
+					next;
+
+					mes @name$;
+					mes "Do you still want this items?";
+
+					switch(select("Yes please:No thank you")) {
+						case 1:
+							next;
+
+								if (countitem(.requiredItemID7[0]) < .requiredAmount7[0] ||
+									countitem(.requiredItemID7[1]) < .requiredAmount7[1] ||
+									countitem(.requiredItemID7[2]) < .requiredAmount7[2]) {
+									mes @name$;
+									mes "Don't try to scam me or you might be reported to GM.";
+									close;
+								}
+								else
+									for( .@z = 0; .@z < getarraysize(.requiredItemID7); .@z++ ) {
+										delitem .requiredItemID7[.@z], .requiredAmount7[.@z];
+									}
+									getitem .itemIDQuest[7], 1;
+
+									mes @name$;
+									mes "Here you go ~";
+									close;
+							
+						break;
+						case 2:
+							next;
+
+							mes @name$;
+							mes "Bye bye then ~";
+							close;
+						break;
+					}
+				break;
+				case 9:
+					next;
+
+					mes @name$;
+					mes "You choose " + getitemname(.itemIDQuest[8]);
+					next;
+
+					mes @name$;
+					mes "I will need this items:";
+					for( .@i = 0; .@i < getarraysize(.requiredItemID8); .@i++ ) {
+						mes .requiredAmount8[.@i] + "pcs - " + getitemname(.requiredItemID8[.@i]) + ".";
+					}
+					next;
+
+					mes @name$;
+					mes "Do you still want this items?";
+
+					switch(select("Yes please:No thank you")) {
+						case 1:
+							next;
+
+								if (countitem(.requiredItemID8[0]) < .requiredAmount8[0] ||
+									countitem(.requiredItemID8[1]) < .requiredAmount8[1] ||
+									countitem(.requiredItemID8[2]) < .requiredAmount8[2] ||
+									countitem(.requiredItemID8[3]) < .requiredAmount8[3] ||
+									countitem(.requiredItemID8[4]) < .requiredAmount8[4] ||
+									countitem(.requiredItemID8[5]) < .requiredAmount8[5] ||
+									countitem(.requiredItemID8[6]) < .requiredAmount8[6] ||
+									countitem(.requiredItemID8[7]) < .requiredAmount8[7]) {
+									mes @name$;
+									mes "Don't try to scam me or you might be reported to GM.";
+									close;
+								}
+								else
+									for( .@z = 0; .@z < getarraysize(.requiredItemID8); .@z++ ) {
+										delitem .requiredItemID8[.@z], .requiredAmount8[.@z];
+									}
+									getitem .itemIDQuest[8], 1;
+
+									mes @name$;
+									mes "Here you go ~";
+									close;
+							
+						break;
+						case 2:
+							next;
+
+							mes @name$;
+							mes "Bye bye then ~";
+							close;
+						break;
+					}
+				break;
+			}
+
+		break;
+		case 2:
+			mes @name$;
+			mes "Ohhh, Okay okay.";
+			mes "I thought you are a person who want to look stylish.";
+			mes "Bye bye.";
+			close;
+		break;
+	}
+
+}
+
+
+prontera,90,284,3	script	Baggot	97,{
+	
+	set @name$, "[ Baggot ]";
+
+	setarray .itemIDQuest, 5264, 5150, 5300, 5131, 5292, 5205, 5502, 5291, 5286, 5294;
+
+	// item requirements quest
+	setarray .requiredItemID0, 5016, 999, 7166, 978, 975, 982;
+	setarray .requiredAmount0, 1, 100, 200, 15, 5, 5;
+
+	// item requirements quest
+	setarray .requiredItemID1, 5003, 7166, 981, 979, 976;
+	setarray .requiredAmount1, 1, 200, 10, 10, 10;
+
+	// item requirements quest 0-4pcs
+	setarray .requiredItemID2, 969, 999, 721, 2256, 2299;
+	setarray .requiredAmount2, 200, 100, 10, 1, 1;
+
+	// item requirements quest 0-2pcs
+	setarray .requiredItemID3, 969, 2299, 978;
+	setarray .requiredAmount3, 100, 1, 10;
+
+	// item requirements quest 0-4pcs
+	setarray .requiredItemID4, 969, 2229, 7005, 932, 7266;
+	setarray .requiredAmount4, 1, 1, 200, 200, 200;
+
+	// item requirements quest 0-4pcs
+	setarray .requiredItemID5, 521, 511, 2210, 979, 949;
+	setarray .requiredAmount5, 200, 100, 1, 10, 200;
+
+	// item requirements quest 0-5pc
+	setarray .requiredItemID6, 7017, 1059, 983, 981, 1363, 7227;
+	setarray .requiredAmount6, 50, 500, 5, 10, 1, 1;
+
+	// item requirements quest 0-3pc
+	setarray .requiredItemID7, 7323, 12020, 523, 999;
+	setarray .requiredAmount7, 200, 100, 100, 100;
+
+	// item requirements quest 0-4pc
+	setarray .requiredItemID8, 4031, 7101, 2213, 7063, 925;
+	setarray .requiredAmount8, 10, 200, 1, 100, 100;
+
+	// item requirements quest 0-5pc
+	setarray .requiredItemID9, 4303, 4102, 4047, 1059, 1141, 7268;
+	setarray .requiredAmount9, 5, 5, 1, 300, 1, 50;
+
+	mes @name$;
+	mes "Hello, Do you want something from me?";
+
+	switch(select("I want a new hat:No, Thank you sir")) {
+		case 1:
+			next;
+
+			mes @name$;
+			mes "I have the ability to make " + getarraysize(.itemIDQuest) + " different hats.";
+			mes "All I ask is you need to bring me some simple items.";
+			next;
+
+			mes @name$;
+			mes "Which one would you like?";
+
+			switch(select(
+				getitemname(.itemIDQuest[0]) + ":" +
+				"Brazilian Joker Jester" 	 + ":" +
+				getitemname(.itemIDQuest[2]) + ":" +
+				getitemname(.itemIDQuest[3]) + ":" +
+				getitemname(.itemIDQuest[4]) + ":" +
+				getitemname(.itemIDQuest[5]) + ":" +
+				getitemname(.itemIDQuest[6]) + ":" +
+				getitemname(.itemIDQuest[7]) + ":" +
+				getitemname(.itemIDQuest[8]) + ":" +
+				getitemname(.itemIDQuest[9]))) {
+				case 1:
+					next;
+
+					mes @name$;
+					mes "You want " + getitemname(.itemIDQuest[0]) + "?";
+					next;
+
+					mes @name$;
+					mes "Then I will need this items:";
+					for( .@i = 0; .@i < getarraysize(.requiredItemID0); .@i++ ) {
+						mes .requiredAmount0[.@i] + "pcs - " + getitemname(.requiredItemID0[.@i]) + ".";
+					}
+					next;
+
+					mes @name$;
+					mes "Do you still want this items?";
+
+					switch(select("Yes please:No thank you")) {
+						case 1:
+							next;
+
+							if (countitem(.requiredItemID0[0]) < .requiredAmount0[0] ||
+								countitem(.requiredItemID0[1]) < .requiredAmount0[1] ||
+								countitem(.requiredItemID0[2]) < .requiredAmount0[2] ||
+								countitem(.requiredItemID0[3]) < .requiredAmount0[3] ||
+								countitem(.requiredItemID0[4]) < .requiredAmount0[4] ||
+								countitem(.requiredItemID0[5]) < .requiredAmount0[5]) {
+								mes @name$;
+								mes "You are not fooling anyone. Go and get the items!";
+								close;
+							}
+							else
+								for( .@z = 0; .@z < getarraysize(.requiredItemID0); .@z++ ) {
+									delitem .requiredItemID0[.@z], .requiredAmount0[.@z];
+								}
+								getitem .itemIDQuest[0], 1;
+
+								mes @name$;
+								mes "Here you go ~";
+								close;
+						break;
+						case 2:
+							next;
+
+							mes @name$;
+							mes "Bye bye then ~";
+							close;
+						break;
+					}
+
+				break;
+				case 2:
+					next;
+
+					mes @name$;
+					mes "You want Brazilian Joker Jester?";
+					next;
+
+					mes @name$;
+					mes "Then I will need this items:";
+					for( .@i = 0; .@i < getarraysize(.requiredItemID1); .@i++ ) {
+						mes .requiredAmount1[.@i] + "pcs - " + getitemname(.requiredItemID1[.@i]) + ".";
+					}
+					next;
+
+					mes @name$;
+					mes "Do you still want this items?";
+
+					switch(select("Yes please:No thank you")) {
+						case 1:
+							next;
+
+							if (countitem(.requiredItemID1[0]) < .requiredAmount1[0] ||
+								countitem(.requiredItemID1[1]) < .requiredAmount1[1] ||
+								countitem(.requiredItemID1[2]) < .requiredAmount1[2] ||
+								countitem(.requiredItemID1[3]) < .requiredAmount1[3] ||
+								countitem(.requiredItemID1[4]) < .requiredAmount1[4]) {
+								mes @name$;
+								mes "You are not fooling anyone. Go and get the items!";
+								close;
+							}
+							else
+								for( .@z = 0; .@z < getarraysize(.requiredItemID1); .@z++ ) {
+									delitem .requiredItemID1[.@z], .requiredAmount1[.@z];
+								}
+								getitem .itemIDQuest[1], 1;
+
+								mes @name$;
+								mes "Here you go ~";
+								close;
+						break;
+						case 2:
+							next;
+
+							mes @name$;
+							mes "Bye bye then ~";
+							close;
+						break;
+					}
+				break;
+				case 3:
+					next;
+
+					mes @name$;
+					mes "You want " + getitemname(.itemIDQuest[2]) + "?";
+					next;
+
+					mes @name$;
+					mes "Then I will need this items:";
+					for( .@i = 0; .@i < getarraysize(.requiredItemID2); .@i++ ) {
+						mes .requiredAmount2[.@i] + "pcs - " + getitemname(.requiredItemID2[.@i]) + ".";
+					}
+					next;
+
+					mes @name$;
+					mes "Do you still want this items?";
+
+					switch(select("Yes please:No thank you")) {
+						case 1:
+							next;
+
+							if (countitem(.requiredItemID2[0]) < .requiredAmount2[0] ||
+								countitem(.requiredItemID2[1]) < .requiredAmount2[1] ||
+								countitem(.requiredItemID2[2]) < .requiredAmount2[2] ||
+								countitem(.requiredItemID2[3]) < .requiredAmount2[3] ||
+								countitem(.requiredItemID2[4]) < .requiredAmount2[4]) {
+								mes @name$;
+								mes "You are not fooling anyone. Go and get the items!";
+								close;
+							}
+							else
+								for( .@z = 0; .@z < getarraysize(.requiredItemID2); .@z++ ) {
+									delitem .requiredItemID2[.@z], .requiredAmount2[.@z];
+								}
+								getitem .itemIDQuest[2], 1;
+
+								mes @name$;
+								mes "Here you go ~";
+								close;
+						break;
+						case 2:
+							next;
+
+							mes @name$;
+							mes "Bye bye then ~";
+							close;
+						break;
+					}
+				break;
+				case 4:
+					next;
+
+					mes @name$;
+					mes "You want " + getitemname(.itemIDQuest[3]) + "?";
+					next;
+
+					mes @name$;
+					mes "Then I will need this items:";
+					for( .@i = 0; .@i < getarraysize(.requiredItemID3); .@i++ ) {
+						mes .requiredAmount3[.@i] + "pcs - " + getitemname(.requiredItemID3[.@i]) + ".";
+					}
+					next;
+
+					mes @name$;
+					mes "Do you still want this items?";
+
+					switch(select("Yes please:No thank you")) {
+						case 1:
+							next;
+
+							if (countitem(.requiredItemID3[0]) < .requiredAmount3[0] ||
+								countitem(.requiredItemID3[1]) < .requiredAmount3[1] ||
+								countitem(.requiredItemID3[2]) < .requiredAmount3[2]) {
+								mes @name$;
+								mes "You are not fooling anyone. Go and get the items!";
+								close;
+							}
+							else
+								for( .@z = 0; .@z < getarraysize(.requiredItemID3); .@z++ ) {
+									delitem .requiredItemID3[.@z], .requiredAmount3[.@z];
+								}
+								getitem .itemIDQuest[3], 1;
+
+								mes @name$;
+								mes "Here you go ~";
+								close;
+						break;
+						case 2:
+							next;
+
+							mes @name$;
+							mes "Bye bye then ~";
+							close;
+						break;
+					}
+				break;
+				case 5:
+					next;
+
+					mes @name$;
+					mes "You want " + getitemname(.itemIDQuest[4]) + "?";
+					next;
+
+					mes @name$;
+					mes "Then I will need this items:";
+					for( .@i = 0; .@i < getarraysize(.requiredItemID4); .@i++ ) {
+						mes .requiredAmount4[.@i] + "pcs - " + getitemname(.requiredItemID4[.@i]) + ".";
+					}
+					next;
+
+					mes @name$;
+					mes "Do you still want this items?";
+
+					switch(select("Yes please:No thank you")) {
+						case 1:
+							next;
+
+							if (countitem(.requiredItemID4[0]) < .requiredAmount4[0] ||
+								countitem(.requiredItemID4[1]) < .requiredAmount4[1] ||
+								countitem(.requiredItemID4[2]) < .requiredAmount4[2] ||
+								countitem(.requiredItemID4[3]) < .requiredAmount4[3] ||
+								countitem(.requiredItemID4[4]) < .requiredAmount4[4]) {
+								mes @name$;
+								mes "You are not fooling anyone. Go and get the items!";
+								close;
+							}
+							else
+								for( .@z = 0; .@z < getarraysize(.requiredItemID4); .@z++ ) {
+									delitem .requiredItemID4[.@z], .requiredAmount4[.@z];
+								}
+								getitem .itemIDQuest[4], 1;
+
+								mes @name$;
+								mes "Here you go ~";
+								close;
+						break;
+						case 2:
+							next;
+
+							mes @name$;
+							mes "Bye bye then ~";
+							close;
+						break;
+					}
+				break;
+				case 6:
+					next;
+
+					mes @name$;
+					mes "You want " + getitemname(.itemIDQuest[5]) + "?";
+					next;
+
+					mes @name$;
+					mes "Then I will need this items:";
+					for( .@i = 0; .@i < getarraysize(.requiredItemID5); .@i++ ) {
+						mes .requiredAmount5[.@i] + "pcs - " + getitemname(.requiredItemID5[.@i]) + ".";
+					}
+					next;
+
+					mes @name$;
+					mes "Do you still want this items?";
+
+					switch(select("Yes please:No thank you")) {
+						case 1:
+							next;
+
+							if (countitem(.requiredItemID5[0]) < .requiredAmount5[0] ||
+								countitem(.requiredItemID5[1]) < .requiredAmount5[1] ||
+								countitem(.requiredItemID5[2]) < .requiredAmount5[2] ||
+								countitem(.requiredItemID5[3]) < .requiredAmount5[3] ||
+								countitem(.requiredItemID5[4]) < .requiredAmount5[4]) {
+								mes @name$;
+								mes "You are not fooling anyone. Go and get the items!";
+								close;
+							}
+							else
+								for( .@z = 0; .@z < getarraysize(.requiredItemID5); .@z++ ) {
+									delitem .requiredItemID5[.@z], .requiredAmount5[.@z];
+								}
+								getitem .itemIDQuest[5], 1;
+
+								mes @name$;
+								mes "Here you go ~";
+								close;
+						break;
+						case 2:
+							next;
+
+							mes @name$;
+							mes "Bye bye then ~";
+							close;
+						break;
+					}
+				break;
+				case 7:
+					next;
+
+					mes @name$;
+					mes "You want " + getitemname(.itemIDQuest[6]) + "?";
+					next;
+
+					mes @name$;
+					mes "Then I will need this items:";
+					for( .@i = 0; .@i < getarraysize(.requiredItemID6); .@i++ ) {
+						mes .requiredAmount6[.@i] + "pcs - " + getitemname(.requiredItemID6[.@i]) + ".";
+					}
+					next;
+
+					mes @name$;
+					mes "Do you still want this items?";
+
+					switch(select("Yes please:No thank you")) {
+						case 1:
+							next;
+
+							if (countitem(.requiredItemID6[0]) < .requiredAmount6[0] ||
+								countitem(.requiredItemID6[1]) < .requiredAmount6[1] ||
+								countitem(.requiredItemID6[2]) < .requiredAmount6[2] ||
+								countitem(.requiredItemID6[3]) < .requiredAmount6[3] ||
+								countitem(.requiredItemID6[4]) < .requiredAmount6[4] ||
+								countitem(.requiredItemID6[5]) < .requiredAmount6[5]) {
+								mes @name$;
+								mes "You are not fooling anyone. Go and get the items!";
+								close;
+							}
+							else
+								for( .@z = 0; .@z < getarraysize(.requiredItemID6); .@z++ ) {
+									delitem .requiredItemID6[.@z], .requiredAmount6[.@z];
+								}
+								getitem .itemIDQuest[6], 1;
+
+								mes @name$;
+								mes "Here you go ~";
+								close;
+						break;
+						case 2:
+							next;
+
+							mes @name$;
+							mes "Bye bye then ~";
+							close;
+						break;
+					}
+				break;
+				case 8:
+					next;
+
+					mes @name$;
+					mes "You want " + getitemname(.itemIDQuest[7]) + "?";
+					next;
+
+					mes @name$;
+					mes "Then I will need this items:";
+					for( .@i = 0; .@i < getarraysize(.requiredItemID7); .@i++ ) {
+						mes .requiredAmount7[.@i] + "pcs - " + getitemname(.requiredItemID7[.@i]) + ".";
+					}
+					next;
+
+					mes @name$;
+					mes "Do you still want this items?";
+
+					switch(select("Yes please:No thank you")) {
+						case 1:
+							next;
+
+							if (countitem(.requiredItemID7[0]) < .requiredAmount7[0] ||
+								countitem(.requiredItemID7[1]) < .requiredAmount7[1] ||
+								countitem(.requiredItemID7[2]) < .requiredAmount7[2] ||
+								countitem(.requiredItemID7[3]) < .requiredAmount7[3]) {
+								mes @name$;
+								mes "You are not fooling anyone. Go and get the items!";
+								close;
+							}
+							else
+								for( .@z = 0; .@z < getarraysize(.requiredItemID7); .@z++ ) {
+									delitem .requiredItemID7[.@z], .requiredAmount7[.@z];
+								}
+								getitem .itemIDQuest[7], 1;
+
+								mes @name$;
+								mes "Here you go ~";
+								close;
+						break;
+						case 2:
+							next;
+
+							mes @name$;
+							mes "Bye bye then ~";
+							close;
+						break;
+					}
+				break;
+				case 9:
+					next;
+
+					mes @name$;
+					mes "You want " + getitemname(.itemIDQuest[8]) + "?";
+					next;
+
+					mes @name$;
+					mes "Then I will need this items:";
+					for( .@i = 0; .@i < getarraysize(.requiredItemID8); .@i++ ) {
+						mes .requiredAmount8[.@i] + "pcs - " + getitemname(.requiredItemID8[.@i]) + ".";
+					}
+					next;
+
+					mes @name$;
+					mes "Do you still want this items?";
+
+					switch(select("Yes please:No thank you")) {
+						case 1:
+							next;
+
+							if (countitem(.requiredItemID8[0]) < .requiredAmount8[0] ||
+								countitem(.requiredItemID8[1]) < .requiredAmount8[1] ||
+								countitem(.requiredItemID8[2]) < .requiredAmount8[2] ||
+								countitem(.requiredItemID8[3]) < .requiredAmount8[3] ||
+								countitem(.requiredItemID8[4]) < .requiredAmount8[4]) {
+								mes @name$;
+								mes "You are not fooling anyone. Go and get the items!";
+								close;
+							}
+							else
+								for( .@z = 0; .@z < getarraysize(.requiredItemID8); .@z++ ) {
+									delitem .requiredItemID8[.@z], .requiredAmount8[.@z];
+								}
+								getitem .itemIDQuest[8], 1;
+
+								mes @name$;
+								mes "Here you go ~";
+								close;
+						break;
+						case 2:
+							next;
+
+							mes @name$;
+							mes "Bye bye then ~";
+							close;
+						break;
+					}
+				break;
+				case 10:
+					next;
+
+					mes @name$;
+					mes "You want " + getitemname(.itemIDQuest[9]) + "?";
+					next;
+
+					mes @name$;
+					mes "Then I will need this items:";
+					for( .@i = 0; .@i < getarraysize(.requiredItemID9); .@i++ ) {
+						mes .requiredAmount9[.@i] + "pcs - " + getitemname(.requiredItemID9[.@i]) + ".";
+					}
+					next;
+
+					mes @name$;
+					mes "Do you still want this items?";
+
+					switch(select("Yes please:No thank you")) {
+						case 1:
+							next;
+
+							if (countitem(.requiredItemID9[0]) < .requiredAmount9[0] ||
+								countitem(.requiredItemID9[1]) < .requiredAmount9[1] ||
+								countitem(.requiredItemID9[2]) < .requiredAmount9[2] ||
+								countitem(.requiredItemID9[3]) < .requiredAmount9[3] ||
+								countitem(.requiredItemID9[4]) < .requiredAmount9[4] ||
+								countitem(.requiredItemID9[5]) < .requiredAmount9[5]) {
+								mes @name$;
+								mes "You are not fooling anyone. Go and get the items!";
+								close;
+							}
+							else
+								for( .@z = 0; .@z < getarraysize(.requiredItemID9); .@z++ ) {
+									delitem .requiredItemID9[.@z], .requiredAmount9[.@z];
+								}
+								getitem .itemIDQuest[9], 1;
+
+								mes @name$;
+								mes "Here you go ~";
+								close;
+						break;
+						case 2:
+							next;
+
+							mes @name$;
+							mes "Bye bye then ~";
+							close;
+						break;
+					}
+				break;
+
+			}
+
+		break;
+		case 2:
+			next;
+
+			mes @name$;
+			mes "Bye then.";
+			close;
+		break;
+	}
+
+}

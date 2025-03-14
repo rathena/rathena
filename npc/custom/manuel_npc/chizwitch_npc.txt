@@ -1,0 +1,256 @@
+//===== By:==================================================
+//= Manuel Sintos
+// @reloadnpc npc/custom/manuel_npc/chizwitch_npc.txt
+
+payon,191,113,3	script	cHiZWiTcH	10247,{
+	set @name$, "[^1100AA cHiZWiTcH ^000000]";
+
+	// quests items
+	// 1. Hairband of Reginleif
+	// 2. Dragon Helm
+	// 3. Sigrun Wings
+	// 4. Handkerchief in Mouth
+	setarray .questItems, 5471, 5467, 5592, 18670;
+
+	// for Hairband of Reginleif requirement quest
+	setarray .requiredItemID0, 7510, 710, 7300;
+	setarray .requiredAmount0, 200, 100, 20;
+
+	// for Dragon Helm requirement quest
+	setarray .requiredItemID1, 7451, 7562, 7443, 7022;
+	setarray .requiredAmount1, 20, 20, 40, 10;
+
+	// for Sigrun Wings requirement quest
+	setarray .requiredItemID2, 7018, 751, 7021, 7513;
+	setarray .requiredAmount2, 5, 5, 100, 20;
+
+	// for Handkerchief in Mouth requirement quest
+	setarray .requiredItemID3, 1059, 982, 7166;
+	setarray .requiredAmount3, 200, 20, 200;
+
+	emotion ET_THINK;
+	mes @name$;
+	mes "Hello there, " + strcharinfo(0) + "!";
+	mes "Are you interested to my items?";
+
+	switch(select("Yes! I am interested.:Sorry, I don't have time.")) {
+		case 1:
+			next;
+
+			mes @name$;
+			mes "Great! Which one are you interested in?";
+
+			switch(select(
+				getitemname(.questItems[0])	+ ":" +
+				getitemname(.questItems[1])	+ ":" +
+				getitemname(.questItems[2])	+ ":" +
+				getitemname(.questItems[3])
+			)) {
+				case 1:
+					next;
+
+					mes @name$;
+					mes "Alright! If you bring me these items, I'll trade you for the ^1100AA" + getitemname(.questItems[0]) + "^000000:";
+					mes "";
+					// Loop through the required items and display the correct "pc" or "pcs" based on the amount
+					for (.@i = 0; .@i < getarraysize(.requiredItemID0); .@i++) {
+						mes .requiredAmount0[.@i] + ((.requiredAmount0[.@i] == 1) ? "pc - " : "pcs - ") + getitemname(.requiredItemID0[.@i]);
+					}
+					next;
+
+					mes @name$;
+					mes "Are you sure you want the " + getitemname(.questItems[0]) + "?";
+
+					switch(select("Yes, let's do it!:No, I've changed my mind.")) {
+						case 1:
+							next;
+
+							// validate if there is no items
+							if (countitem(.requiredItemID0[0]) < .requiredAmount0[0] ||
+								countitem(.requiredItemID0[1]) < .requiredAmount0[1] ||
+								countitem(.requiredItemID0[2]) < .requiredAmount0[2]) {
+								emotion ET_SCRATCH;
+								mes @name$;
+								mes "Uh-oh! It seems like you don't have enough items. Come back when you're ready!";
+								close;
+							}
+							else {
+								for( .@z = 0; .@z < getarraysize(.requiredItemID0); .@z++ ) {
+									delitem .requiredItemID0[.@z], .requiredAmount0[.@z];
+								}
+								getitem .questItems[0], 1;
+								emotion ET_BEST;
+
+								mes @name$;
+								mes "Here's your new headgear! Hope you like it!";
+								close;
+							}
+						break;
+						case 2:
+							next;
+
+							mes @name$;
+							mes "No worries! Feel free to come back anytime.";
+							close;
+						break;
+					}
+				break;
+				case 2:
+					next;
+
+					mes @name$;
+					mes "Alright! If you bring me these items, I'll trade you for the ^1100AA" + getitemname(.questItems[1]) + "^000000:";
+					mes "";
+					// Loop through the required items and display the correct "pc" or "pcs" based on the amount
+					for (.@i = 0; .@i < getarraysize(.requiredItemID1); .@i++) {
+						mes .requiredAmount1[.@i] + ((.requiredAmount1[.@i] == 1) ? "pc - " : "pcs - ") + getitemname(.requiredItemID1[.@i]);
+					}
+					next;
+
+					mes @name$;
+					mes "Are you sure you want the " + getitemname(.questItems[1]) + "?";
+
+					switch(select("Yes, let's do it!:No, I've changed my mind.")) {
+						case 1:
+							next;
+
+							// validate if there is no items
+							if (countitem(.requiredItemID1[0]) < .requiredAmount1[0] ||
+								countitem(.requiredItemID1[1]) < .requiredAmount1[1] ||
+								countitem(.requiredItemID1[2]) < .requiredAmount1[2]) {
+								emotion ET_SCRATCH;
+								mes @name$;
+								mes "Uh-oh! It seems like you don't have enough items. Come back when you're ready!";
+								close;
+							}
+							else {
+								for( .@z = 0; .@z < getarraysize(.requiredItemID1); .@z++ ) {
+									delitem .requiredItemID1[.@z], .requiredAmount1[.@z];
+								}
+								getitem .questItems[1], 1;
+								emotion ET_BEST;
+
+								mes @name$;
+								mes "Here's your new headgear! Hope you like it!";
+								close;
+							}
+						break;
+						case 2:
+							next;
+
+							mes @name$;
+							mes "No worries! Feel free to come back anytime.";
+							close;
+						break;
+					}
+				break;
+				case 3:
+					next;
+
+					mes @name$;
+					mes "Alright! If you bring me these items, I'll trade you for the ^1100AA" + getitemname(.questItems[2]) + "^000000:";
+					mes "";
+					// Loop through the required items and display the correct "pc" or "pcs" based on the amount
+					for (.@i = 0; .@i < getarraysize(.requiredItemID2); .@i++) {
+						mes .requiredAmount2[.@i] + ((.requiredAmount2[.@i] == 1) ? "pc - " : "pcs - ") + getitemname(.requiredItemID2[.@i]);
+					}
+					next;
+
+					mes @name$;
+					mes "Are you sure you want the " + getitemname(.questItems[2]) + "?";
+
+					switch(select("Yes, let's do it!:No, I've changed my mind.")) {
+						case 1:
+							next;
+
+							// validate if there is no items
+							if (countitem(.requiredItemID2[0]) < .requiredAmount2[0] ||
+								countitem(.requiredItemID2[1]) < .requiredAmount2[1] ||
+								countitem(.requiredItemID2[2]) < .requiredAmount2[2]) {
+								emotion ET_SCRATCH;
+								mes @name$;
+								mes "Uh-oh! It seems like you don't have enough items. Come back when you're ready!";
+								close;
+							}
+							else {
+								for( .@z = 0; .@z < getarraysize(.requiredItemID2); .@z++ ) {
+									delitem .requiredItemID2[.@z], .requiredAmount2[.@z];
+								}
+								getitem .questItems[2], 1;
+								emotion ET_BEST;
+
+								mes @name$;
+								mes "Here's your new headgear! Hope you like it!";
+								close;
+							}
+						break;
+						case 2:
+							next;
+
+							mes @name$;
+							mes "No worries! Feel free to come back anytime.";
+							close;
+						break;
+					}
+				break;
+				case 4:
+					next;
+
+					mes @name$;
+					mes "Alright! If you bring me these items, I'll trade you for the ^1100AA" + getitemname(.questItems[3]) + "^000000:";
+					mes "";
+					// Loop through the required items and display the correct "pc" or "pcs" based on the amount
+					for (.@i = 0; .@i < getarraysize(.requiredItemID3); .@i++) {
+						mes .requiredAmount3[.@i] + ((.requiredAmount3[.@i] == 1) ? "pc - " : "pcs - ") + getitemname(.requiredItemID3[.@i]);
+					}
+					next;
+
+					mes @name$;
+					mes "Are you sure you want the " + getitemname(.questItems[3]) + "?";
+
+					switch(select("Yes, let's do it!:No, I've changed my mind.")) {
+						case 1:
+							next;
+
+							// validate if there is no items
+							if (countitem(.requiredItemID3[0]) < .requiredAmount3[0] ||
+								countitem(.requiredItemID3[1]) < .requiredAmount3[1] ||
+								countitem(.requiredItemID3[2]) < .requiredAmount3[2]) {
+								emotion ET_SCRATCH;
+								mes @name$;
+								mes "Uh-oh! It seems like you don't have enough items. Come back when you're ready!";
+								close;
+							}
+							else {
+								for( .@z = 0; .@z < getarraysize(.requiredItemID3); .@z++ ) {
+									delitem .requiredItemID3[.@z], .requiredAmount3[.@z];
+								}
+								getitem .questItems[3], 1;
+								emotion ET_BEST;
+
+								mes @name$;
+								mes "Here's your new headgear! Hope you like it!";
+								close;
+							}
+						break;
+						case 2:
+							next;
+
+							mes @name$;
+							mes "No worries! Feel free to come back anytime.";
+							close;
+						break;
+					}
+				break;
+			}
+		break;
+		case 2:
+			next;
+
+			mes @name$;
+			mes "No worries! Feel free to come back anytime.";
+			close;
+		break;
+	}
+
+}

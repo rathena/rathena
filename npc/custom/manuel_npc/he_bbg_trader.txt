@@ -1,0 +1,82 @@
+//===== By:==================================================
+//= Manuel Sintos
+// @reloadnpc npc/custom/manuel_npc/he_bbg_trader.txt
+
+prontera,149,166,5	script	HE Bubble Gum Trader	67,{
+	
+	set @name$, "[^1100AA Trader ^000000]";
+	set @success_mes$, "Thank you for trading.";
+
+	// Required items for trading (Sleipner, Asprika, Megingjard)
+	setarray .requiredItemID, 2410, 2541, 2629;
+	@requiredItemAmount = 1;
+
+	// Item to be traded (HE Bubble Gum). You can change it the amount if you want
+	@tradedItemID = 12412;
+	@tradedItemAmount = 10;
+
+	// validate if there is a rental item
+	getinventorylist;
+    for (.@i = 0; .@i < @inventorylist_count; .@i++) {
+        if (@inventorylist_id[.@i]) {
+            if (@inventorylist_expire[.@i] > 0) {
+                mes "Sorry, but rental items cannot be traded.";
+                close;
+            }
+        }
+    }
+
+    mes @name$;
+    mes "Hello there! Looking to trade one of your God items for some HE Bubble Gum?";
+    next;
+
+    mes @name$;
+    mes "Pick the God item you want to trade:";
+    next;
+
+    switch(select("Sleipner:Asprika:Megingjard (Str)")) {
+    	case 1:
+    		if (!countitem(.requiredItemID[0])) {
+    			mes @name$;
+                mes "It seems that you don't have a " + getitemname(.requiredItemID[0]) + ".";
+                close;
+            }
+            else
+            	mes @name$;
+                mes @success_mes$;
+                getitem @tradedItemID, @tradedItemAmount;
+                delitem .requiredItemID[0], @requiredItemAmount;
+                close;
+    	break;
+    	case 2:
+    		if (!countitem(.requiredItemID[1])) {
+    			mes @name$;
+                mes "It seems that you don't have a " + getitemname(.requiredItemID[1]) + ".";
+                close;
+            }
+            else
+            	mes @name$;
+                mes @success_mes$;
+                getitem @tradedItemID, @tradedItemAmount;
+                delitem .requiredItemID[1], @requiredItemAmount;
+                close;
+    	break;
+    	case 3:
+    		if (!countitem(.requiredItemID[2])) {
+    			mes @name$;
+                mes "It seems that you don't have a " + getitemname(.requiredItemID[2]) + ".";
+                close;
+            }
+            else
+            	mes @name$;
+                mes @success_mes$;
+                getitem @tradedItemID, @tradedItemAmount;
+                delitem .requiredItemID[2], @requiredItemAmount;
+                close;
+    	break;
+    }
+
+	OnInit:
+		waitingroom "Trade HE Bubble Gum Here!",0;
+	end;
+}

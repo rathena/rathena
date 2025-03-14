@@ -1,0 +1,36 @@
+//===== By:==================================================
+//= Manuel Sintos
+// @reloadnpc npc/custom/manuel_npc/ezaor_npc.txt
+// 483 sprite number
+// Guide to input new NPC to server.
+// open jobname.lub and add base from the sprite file
+// npcidentity.lub edit it the npcID
+// saveit at job4.grf
+
+prontera,168,196,3	script	EZAOR	10548,{
+    
+    set .@i, 30167; // Start with the first item ID
+	while (.@i <= 30209) { // Continue as long as the item ID is less than or equal to 30209
+	    getitem .@i, 1; // Give the item to the player
+	    set .@i, .@i + 1; // Increment the item ID by 1
+	}
+	end;
+	
+	// Ask the player to input an AID (Account ID)
+	mes "[AID Name Finder]";
+	mes "Please enter the Account ID (AID):";
+	input .@aid;
+
+	// SQL query to fetch the character name based on the provided AID
+	set .@num, query_sql("SELECT `name` FROM `char` WHERE `account_id` = " + .@aid, .@char_name$);
+
+	// Check if any character was found
+	if (.@num > 0) {
+		mes "The character name associated with AID " + .@aid + " is:";
+		mes .@char_name$[0]; // Show the first character name found for this AID
+	} else {
+		mes "No character found for the given AID.";
+	}
+	
+	close;
+}

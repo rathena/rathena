@@ -1,0 +1,93 @@
+//===== By:==================================================
+//= Manuel Sintos
+
+-	script	Berry Exchanger	-1,{
+
+	set @name$, "[^1100AA Berry Exchanger ^000000]";
+	set @failed_mes1$, "Insufficient Yggdrasil Berry.";
+	set @failed_mes2$, "Insufficient Berry Ticket.";
+
+	// the amount item you'll get or consume after you exchange
+	// for 100 yggberry = 1 berry ticket vice versa
+	@yggAmount = 100;	
+	@ticketAmount = 1; 	
+
+	@yggItemID = 607;
+	@ticketItemID = 30339;
+
+	mes @name$;
+	mes "Good day, " + strcharinfo(0) + ".";
+	mes "You may exchange your ";
+	mes "^1100AA" + @yggAmount + " Yggdrasil Berry^000000 to ^1100AA" + @ticketAmount + " Berry Ticket^000000 and vice versa.";
+	next;
+
+	switch(select("Exchange ^1100AAYggdrasil Berry^000000:Exchange ^1100AABerry Ticket^000000")) {
+		case 1:
+			if (!countitem(@yggItemID) || countitem(@yggItemID) < @yggAmount) {
+                message strcharinfo(0), @failed_mes1$;
+                close;
+            }
+            else
+            	getitem @ticketItemID, @ticketAmount;
+				delitem @yggItemID, @yggAmount;
+
+				mes @name$;
+				mes "Please comeback again.";
+				close;
+		break;
+		case 2:
+			if (!countitem(@ticketItemID) || countitem(@ticketItemID) < @ticketAmount) {
+                message strcharinfo(0), @failed_mes2$;
+                close;
+            }
+            else
+            	getitem @yggItemID, @yggAmount;
+				delitem @ticketItemID, @ticketAmount;
+				
+				mes @name$;
+				mes "Please comeback again.";
+				close;
+		break;
+	}
+}
+
+// Duplicates
+//============================================================
+prontera,152,190,5	duplicate(Berry Exchanger)	Berry Exchanger#prt	894
+morocc,149,105,5	duplicate(Berry Exchanger)	Berry Exchanger#mor	894
+geffen,125,70,3	duplicate(Berry Exchanger)	Berry Exchanger#gef	894
+gef_fild10,79,344,3	duplicate(Berry Exchanger)	Berry Exchanger#geffildten	894
+payon,184,104,4	duplicate(Berry Exchanger)	Berry Exchanger#pay	894
+pay_arche,55,120,4	duplicate(Berry Exchanger)	Berry Exchanger#payarche	894
+alberta,30,240,4	duplicate(Berry Exchanger)	Berry Exchanger#alb	894
+izlude,118,147,5	duplicate(Berry Exchanger)	Berry Exchanger#izl	894	//Pre-RE: (125,118)
+aldebaran,146,115,3	duplicate(Berry Exchanger)	Berry Exchanger#alde	894
+xmas,138,127,5	duplicate(Berry Exchanger)	Berry Exchanger#xmas	894
+comodo,192,156,3	duplicate(Berry Exchanger)	Berry Exchanger#com	894
+yuno,152,51,5	duplicate(Berry Exchanger)	Berry Exchanger#yuno	894
+amatsu,193,89,5	duplicate(Berry Exchanger)	Berry Exchanger#ama	894
+gonryun,154,122,5	duplicate(Berry Exchanger)	Berry Exchanger#gon	894
+umbala,95,162,3	duplicate(Berry Exchanger)	Berry Exchanger#umb	894
+niflheim,207,178,3	duplicate(Berry Exchanger)	Berry Exchanger#nif	894
+louyang,228,104,3	duplicate(Berry Exchanger)	Berry Exchanger#lou	894
+ayothaya,212,174,5	duplicate(Berry Exchanger)	Berry Exchanger#ayo	894
+einbroch,227,203,5	duplicate(Berry Exchanger)	Berry Exchanger#einbr	894
+lighthalzen,148,103,6	duplicate(Berry Exchanger)	Berry Exchanger#lhz	894
+einbech,173,134,5	duplicate(Berry Exchanger)	Berry Exchanger#einbe	894
+hugel,101,147,3	duplicate(Berry Exchanger)	Berry Exchanger#hug	894
+rachel,121,119,5	duplicate(Berry Exchanger)	Berry Exchanger#rac	894
+veins,211,121,5	duplicate(Berry Exchanger)	Berry Exchanger#ve	894
+moscovia,230,198,3	duplicate(Berry Exchanger)	Berry Exchanger#mos	894
+manuk,269,143,5	duplicate(Berry Exchanger)	Berry Exchanger#man	894
+splendide,193,153,5	duplicate(Berry Exchanger)	Berry Exchanger#spl	894
+
+
+// Duplicates (Renewal)
+//============================================================
+brasilis,191,221,5	duplicate(Berry Exchanger)	Berry Exchanger#bra	894
+dicastes01,198,192,5	duplicate(Berry Exchanger)	Berry Exchanger#dic	894
+mora,41,146,5	duplicate(Berry Exchanger)	Berry Exchanger#mora	894
+dewata,200,184,3	duplicate(Berry Exchanger)	Berry Exchanger#dew	894
+malangdo,144,123,3	duplicate(Berry Exchanger)	Berry Exchanger#mal	894
+malaya,237,205,3	duplicate(Berry Exchanger)	Berry Exchanger#ma	894
+

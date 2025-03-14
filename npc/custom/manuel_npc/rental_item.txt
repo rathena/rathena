@@ -1,0 +1,9 @@
+//===== By:==================================================
+//= Manuel Sintos
+// @reloadnpc npc/custom/manuel_npc/rental_item.txt
+
+prontera,147,230,5	script	Rental Item	873,{
+	
+	rentitem 5013,10; // rent LKH for 10 seconds
+
+}

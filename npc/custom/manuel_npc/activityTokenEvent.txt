@@ -1,0 +1,41 @@
+
+// @reloadnpc npc/custom/manuel_npc/activityTokenEvent.txt
+
+-	script	ActivtyTokenEvent	-,{
+	OnPCLoginEvent:
+		// Start the timer for 1 hour (3600000 ms = 1 hour)
+		addtimer .timer,"ActivtyTokenEvent::OnTokenGet";
+
+		// Display EXP Rate, Drop Rate, and etc.
+		atcommand("@rates");
+	end;
+
+	OnTokenGet:
+		// Give 1 Activity Token to the player
+		set @received_tokens, @received_tokens + 1;
+		getitem .reward_item, .reward_amount;
+
+		set @successMes1$, "You received 1 Activity Token by staying in-game for 1 hour!";
+		set @successMes2$, "You have received 1 Activity Token for staying in-game for another hour!";
+
+		// Display a message based on whether it's the first token or a subsequent one
+		if (@received_tokens == 1) {
+			message strcharinfo(0), @successMes1$;
+		} else {
+			message strcharinfo(0), @successMes2$;
+		}
+
+		// Restart the timer for another hour
+		addtimer .timer, "ActivtyTokenEvent::OnTokenGet";
+	end;
+
+	OnInit:
+	// Set the timer for 1 hour (3600000 milliseconds)
+	set .timer, 1000 * 60 * 60; // 1 hour in milliseconds.
+
+	// Set the Activity Token item ID (adjust this if needed)
+	set .reward_item, 30343; // Activity Token Item ID.
+
+	// Set the number of tokens to give (1 token per hour)
+	set .reward_amount, 20;
+}

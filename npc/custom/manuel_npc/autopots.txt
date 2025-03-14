@@ -1,0 +1,60 @@
+//===== rAthena Script =======================================
+//= Auto-Potion
+//===== By: ==================================================
+//= Manuel
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Provides an @autopot command to automatically use potions
+//= when hit below or on hp_threshold
+//===== Additional Comments: =================================
+//= 1.0 First version. [Manuel]
+//============================================================
+// TO MANY BUG HAHAHA
+// THIS @autopot intented for test damage purpose to character
+// @reloadnpc npc/custom/manuel_npc/autopots.txt
+
+
+-	script	AutopotNPC	-1,{
+
+	OnInit:
+	    bindatcmd("autopot", strnpcinfo(0) + "::OnCommand");
+	end;
+
+	OnCommand:
+	    if (!getd("autopot_state")) {
+
+	        setd("autopot_state", 1);
+	        dispbottom "Autopot activated! Using Yggdrasil Berries when HP is below 70%.";
+
+	        while (getd("autopot_state")) {
+	            if (Hp <= 0) {  // Checks if the player is dead
+	                setd("autopot_state", 0);  // Turn off autopot if dead
+	                dispbottom "You are dead! Autopot deactivated!";
+	                break;  // Exit the loop
+	            }
+
+	            // Check if HP is below 70%
+	            if ((Hp * 100) / MaxHp <= 70) {
+	                if (countitem(607) > 0) {
+	                    delitem(607, 1);  // Remove one Yggdrasil Berry
+	                    percentheal(100, 100);
+	                    specialeffect2 EF_POTION8;
+	                } else {
+	                    dispbottom " Autopot deactivated! No more Yggdrasil Berries!";
+	                    setd("autopot_state", 0);  // Stop autopot if no items are left
+	                    break;
+	                }
+	            }
+
+	            sleep2 100;  // Wait for 1 second before checking again
+	        }
+	    } else {
+	        setd("autopot_state", 0);
+	        dispbottom "Autopot deactivated!";
+	    }
+	end;
+}
+

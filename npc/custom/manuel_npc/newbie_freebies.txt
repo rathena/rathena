@@ -1,0 +1,423 @@
+//===== rAthena Script =======================================
+//= Solo Pack Item
+//===== By: ==================================================
+//= Manuel Sintos
+//===== Current Version: =====================================
+//= 1.0
+//===== Description: =========================================
+//= Solo pack items for newbies. Use the command @solopack
+//===== Additional Comments: =================================
+// @reloadnpc npc/custom/manuel_npc/newbie_freebies.txt
+
+prontera,181,216,4	script	Adventurer Solo Pack	871,{
+	// Call the Functions for the flow converse	
+	callfunc("Solo_Pack_Converse");
+
+	OnInit:
+		while (1) {
+			showscript "To Newbie Players!", getnpcid(0, "Adventurer Solo Pack"), AREA;
+			sleep 3000;
+			showscript "Claim your Solo Pack here!", getnpcid(0, "Adventurer Solo Pack"), AREA;
+			sleep 3000;
+			showscript "or Type @solopack!", getnpcid(0, "Adventurer Solo Pack"), AREA;
+			sleep 6000;
+		}
+	end;
+}
+
+-	script	Adventurer_Solo_Pack_Cmd	-,{
+	OnSoloPackCmd:
+		// Call the Functions for the flow converse	
+		callfunc("Solo_Pack_Converse");
+	end;
+	
+	OnInit:
+		bindatcmd "solopack", strnpcinfo(3) + "::OnSoloPackCmd";
+	end;
+}
+
+function	script	Solo_Pack_Converse	{
+	// Get the list of items in your inventory.
+	getinventorylist;
+	
+	// Get the weight of the player
+	.@weight = 100 * Weight / MaxWeight;
+
+	// Get the character id of the player who is this command
+	.@char_id = getcharid(3);
+
+	if (alreadyReceived[.@char_id]) {
+		mes "[ Solo Pack Distributor ]";
+    	mes "You have already received your Solo Pack items!";
+		mes "^FF0000* Remember! All items is character bound!! *^000000";
+    	close;
+	}
+	
+	// Check the Weight of player
+	if(.@weight > 50){
+		mes "[ Solo Pack Distributor ]";
+		mes "^FF0000You must atleast have 50 percent extra weight to receive solo pack.^000000";
+		mes " ";
+		mes "You are currently at " + .@weight + " percent of your maximum weight.";
+		close;
+	}
+
+	// Check the status of the player first if they have to many items at inventory
+	if ( @inventorylist_count > 40 ) {
+		mes "[ Solo Pack Distributor ]";
+		mes "You have 40 different items in your inventory.";
+		mes "Please store them in Kafra Storage first!";
+		close;
+	}
+
+	mes "[ Solo Pack Distributor ]";
+    mes "Hello! Would you like to receive your Solo Pack items?";
+    next;
+		
+	if(select("Yes:No") == 2) {
+		mes "[ Solo Pack Distributor ]";        	
+		mes "Alright, come back if you change your mind.";
+        close;
+    }
+
+    // Flag for player that he/she already received the Gpack
+    // For Debug. Just put it below the .char_id and set it to 0
+	set alreadyReceived[.@char_id], 1;
+
+	// Call the Function for giving the job-specific solo pack item
+	callfunc("Solo_Pack_Func");
+}
+
+
+// Function should be call it once or else you will get an error
+// [Info]: npc_parse_function: Overwriting user function [Solo_Pack_Func]
+function	script	Solo_Pack_Func	{
+	// Get the character id of the player who use this command
+	.@char_id = getcharid(3);
+
+	// Give the job-specific solo pack item
+    switch(BaseJob) {
+       	// Second Class
+        case Job_Knight:
+            // Weapon
+			getitembound2 1230, 1, 1, 8, 0, 0, 0, 0, 0, BOUND_CHAR, getcharid(3);	// +8 Icepick
+				
+			// Armor set (STR)
+			setarray .@OptID[0],RDMOPT_VAR_STRAMOUNT;
+			setarray .@OptVal[0],5;
+			setarray .@OptParam[0],0;
+			getitembound3 2404, 1, 1, 8, 0, 4352, 0, 0, 0, BOUND_CHAR, .@OptID, .@OptVal, .@OptParam, getcharid(3);	// +8 Shoes [1] (+5 str) with Boss Egnigem
+
+			// HG and Acce
+			getitembound 2629,2, BOUND_CHAR, getcharid(3); 		// Meg (str)
+			getitembound 5483, 1, BOUND_CHAR, getcharid(3);		// Odin Mask
+		break; 
+
+		case Job_Priest:
+		    // Weapon
+			getitembound2 1602, 1, 1, 10, 0, 4474, 4474, 4474, 4474, BOUND_CHAR, getcharid(3);	// +10 Rod [4] with 4 Zakudam
+
+		    // V.Set (INT)
+			setarray .@OptID[0],RDMOPT_VAR_INTAMOUNT;
+			setarray .@OptVal[0],5;
+			setarray .@OptParam[0],0;
+			getitembound3 2404, 1, 1, 8, 0, 4352, 0, 0, 0, BOUND_CHAR, .@OptID, .@OptVal, .@OptParam, getcharid(3);	// +8 Shoes [1] (+5 int) with Boss Egnigem
+			getitembound2 5013, 1, 1, 8, 0, 4374, 4374, 4374, 4374, BOUND_CHAR, getcharid(3);	// +8 LKH [4] with 4 White Lady
+
+			// HG and Acce
+			getitembound 30002,2, BOUND_CHAR, getcharid(3); 	// Meg (int)
+			getitembound 19086, 1, BOUND_CHAR, getcharid(3);	// Robo Eye [1]
+		break; 
+		             
+		case Job_Wizard:
+		    // Weapon
+			getitembound2 1602, 1, 1, 10, 0, 4474, 4474, 4474, 4474, BOUND_CHAR, getcharid(3);	// +10 Rod [4] with 4 Zakudam
+				
+			// V.Set (INT)
+			setarray .@OptID[0],RDMOPT_VAR_INTAMOUNT;
+			setarray .@OptVal[0],5;
+			setarray .@OptParam[0],0;
+			getitembound3 2404, 1, 1, 8, 0, 4441, 0, 0, 0, BOUND_CHAR, .@OptID, .@OptVal, .@OptParam, getcharid(3);	// +8 Shoes [1] (+5 int) with Fallen Bishop
+			
+			// HG and Acce
+			getitembound 30002,2, BOUND_CHAR, getcharid(3); 	// Meg (int)
+			getitembound 19086, 1, BOUND_CHAR, getcharid(3);	// Robo Eye [1]
+		break;
+
+		case Job_Blacksmith:
+		    // Weapon
+			getitembound2 1230, 1, 1, 8, 0, 0, 0, 0, 0, BOUND_CHAR, getcharid(3);	// +8 Icepick
+				
+			// Armor set (STR)
+			setarray .@OptID[0],RDMOPT_VAR_STRAMOUNT;
+			setarray .@OptVal[0],5;
+			setarray .@OptParam[0],0;
+			getitembound3 2404, 1, 1, 8, 0, 4352, 0, 0, 0, BOUND_CHAR, .@OptID, .@OptVal, .@OptParam, getcharid(3);	// +8 Shoes [1] (+5 str) with Boss Egnigem
+
+			// HG and Acce
+			getitembound 2629,2, BOUND_CHAR, getcharid(3); 		// Meg (str)
+			getitembound 5483, 1, BOUND_CHAR, getcharid(3);		// Odin Mask
+		break;
+
+		case Job_Hunter:
+		    // Weapon
+			getitembound2 1702, 1, 1, 10, 0, 4305, 4305, 4399, 4399, BOUND_CHAR, getcharid(3);	// +10 Bow [4] with 2 TG and 2 Thana
+		        
+		    // V.Set (STR)
+			setarray .@OptID[0],RDMOPT_VAR_STRAMOUNT;
+			setarray .@OptVal[0],5;
+			setarray .@OptParam[0],0;
+			getitembound3 2404, 1, 1, 8, 0, 4352, 0, 0, 0, BOUND_CHAR, .@OptID, .@OptVal, .@OptParam, getcharid(3);	// +8 Shoes [1] (+5 str) with Boss Egnigem
+			getitembound2 5013, 1, 1, 8, 0, 4374, 4374, 4374, 4374, BOUND_CHAR, getcharid(3);	// +8 LKH [4] with 4 Vesper
+
+			// HG and Acce
+			getitembound 30003,2, BOUND_CHAR, getcharid(3); 	// Meg (dex)
+			getitembound 5483, 1, BOUND_CHAR, getcharid(3);		// Odin Mask
+		break;    
+
+		case Job_Assassin:
+		    // Weapon
+			getitembound2 1230, 1, 1, 8, 0, 0, 0, 0, 0, BOUND_CHAR, getcharid(3);	// +8 Icepick
+			getitembound2 1208, 1, 1, 10, 0, 4305, 4305, 4399, 4399, BOUND_CHAR, getcharid(3); // +10 Main Gauche [4] with 2 TG and 2 Thana
+
+			// V.Set (STR)
+			setarray .@OptID[0],RDMOPT_VAR_STRAMOUNT;
+			setarray .@OptVal[0],5;
+			setarray .@OptParam[0],0;
+			getitembound3 2404, 1, 1, 8, 0, 4352, 0, 0, 0, BOUND_CHAR, .@OptID, .@OptVal, .@OptParam, getcharid(3);	// +8 Shoes [1] (+5 str) with Boss Egnigem
+			getitembound2 5013, 1, 1, 8, 0, 4372, 4372, 4372, 4372, BOUND_CHAR, getcharid(3);	// +8 LKH [4] with 4 Kiel-D-01
+
+			// HG and Acce
+			getitembound 2629,2, BOUND_CHAR, getcharid(3); 		// Meg (str)
+			getitembound 5483, 1, BOUND_CHAR, getcharid(3);		// Odin Mask
+		break;   
+
+		case Job_Crusader:
+		    // Weapon
+			getitembound2 1228, 1, 1, 9, 0, 0, 0, 0, 0, BOUND_CHAR, getcharid(3);	// +8 Combat Knife
+			getitembound2 1237, 1, 1, 9, 0, 0, 0, 0, 0, BOUND_CHAR, getcharid(3); 	// +9 Grimtooth
+
+			// V.Set (VIT)
+			setarray .@OptID[0],RDMOPT_VAR_VITAMOUNT;
+			setarray .@OptVal[0],5;
+			setarray .@OptParam[0],0;
+			getitembound3 2404, 1, 1, 8, 0, 4352, 0, 0, 0, BOUND_CHAR, .@OptID, .@OptVal, .@OptParam, getcharid(3);	// +8 Shoes [1] (+5 str) with Boss Egnigem
+
+			// HG and Acce
+			getitembound 30000,2, BOUND_CHAR, getcharid(3); 	// Meg (vit)
+			getitembound 5483, 1, BOUND_CHAR, getcharid(3);		// Odin Mask
+		break;
+
+		case Job_Monk:
+			// Items
+			getitembound2 1505, 1, 1, 10, 0, 4305, 4305, 4399, 4399, BOUND_CHAR, getcharid(3); // +10 Mace [4] with 2 TG and 2 Thana
+
+			// V.Set (STR)
+			setarray .@OptID[0],RDMOPT_VAR_STRAMOUNT;
+			setarray .@OptVal[0],5;
+			setarray .@OptParam[0],0;
+			getitembound3 2404, 1, 1, 8, 0, 4352, 0, 0, 0, BOUND_CHAR, .@OptID, .@OptVal, .@OptParam, getcharid(3);	// +8 Shoes [1] (+5 str) with Boss Egnigem
+
+			// HG and Acce
+			getitembound 2629,2, BOUND_CHAR, getcharid(3); 		// Meg (str)
+			getitembound 5483, 1, BOUND_CHAR, getcharid(3);		// Odin Mask
+		break;    
+				
+		case Job_Sage:
+		    // Weapon
+			getitembound2 1602, 1, 1, 10, 0, 4474, 4474, 4474, 4474, BOUND_CHAR, getcharid(3);	// +10 Rod [4] with 4 Zakudam
+				
+			// V.Set (INT)
+			setarray .@OptID[0],RDMOPT_VAR_INTAMOUNT;
+			setarray .@OptVal[0],5;
+			setarray .@OptParam[0],0;
+			getitembound3 2404, 1, 1, 8, 0, 4441, 0, 0, 0, BOUND_CHAR, .@OptID, .@OptVal, .@OptParam, getcharid(3);	// +8 Shoes [1] (+5 int) with Fallen Bishop
+			
+			// HG and Acce
+			getitembound 30002,2, BOUND_CHAR, getcharid(3); 	// Meg (int)
+			getitembound 19086, 1, BOUND_CHAR, getcharid(3);	// Robo Eye [1]
+		break;
+
+		case Job_Rogue:
+		    // Weapon
+			getitembound2 1230, 1, 1, 8, 0, 0, 0, 0, 0, BOUND_CHAR, getcharid(3);	// +8 Icepick
+			getitembound2 1208, 1, 1, 10, 0, 4305, 4305, 4399, 4399, BOUND_CHAR, getcharid(3); // +10 Main Gauche [4] with 2 TG and 2 Thana
+
+			// V.Set (STR)
+			setarray .@OptID[0],RDMOPT_VAR_STRAMOUNT;
+			setarray .@OptVal[0],5;
+			setarray .@OptParam[0],0;
+			getitembound3 2404, 1, 1, 8, 0, 4352, 0, 0, 0, BOUND_CHAR, .@OptID, .@OptVal, .@OptParam, getcharid(3);	// +8 Shoes [1] (+5 str) with Boss Egnigem
+			getitembound2 5013, 1, 1, 8, 0, 4403, 4403, 4403, 4403, BOUND_CHAR, getcharid(3);	// +8 LKH [4] with 4 Kiel-D-01
+
+			// HG and Acce
+			getitembound 2629,2, BOUND_CHAR, getcharid(3); 		// Meg (str)
+			getitembound 5483, 1, BOUND_CHAR, getcharid(3);		// Odin Mask
+		break;
+
+		case Job_Alchemist:
+		    // Weapon
+			getitembound2 1230, 1, 1, 8, 0, 0, 0, 0, 0, BOUND_CHAR, getcharid(3);	// +8 Icepick
+			getitembound2 1208, 1, 1, 10, 0, 4305, 4305, 4399, 4399, BOUND_CHAR, getcharid(3); // +10 Main Gauche [4] with 2 TG and 2 Thana
+
+			// V.Set (STR)
+			setarray .@OptID[0],RDMOPT_VAR_STRAMOUNT;
+			setarray .@OptVal[0],5;
+			setarray .@OptParam[0],0;
+			getitembound3 2404, 1, 1, 8, 0, 4352, 0, 0, 0, BOUND_CHAR, .@OptID, .@OptVal, .@OptParam, getcharid(3);	// +8 Shoes [1] (+5 str) with Boss Egnigem
+			getitembound2 5013, 1, 1, 8, 0, 4403, 4403, 4403, 4403, BOUND_CHAR, getcharid(3);	// +8 LKH [4] with 4 Kiel-D-01
+
+			// HG and Acce
+			getitembound 2629,2, BOUND_CHAR, getcharid(3); 		// Meg (str)
+			getitembound 5483, 1, BOUND_CHAR, getcharid(3);		// Odin Mask
+		break;
+
+		case Job_Bard:
+		    // Weapon
+			getitembound2 1902, 1, 1, 10, 0, 4305, 4305, 4399, 4399, BOUND_CHAR, getcharid(3);	// +10 Violin [4] with 2 TG and 2 Thana
+		       	
+		    // V.Set (DEX)
+			setarray .@OptID[0],RDMOPT_VAR_DEXAMOUNT;
+			setarray .@OptVal[0],5;
+			setarray .@OptParam[0],0;
+			getitembound3 2404, 1, 1, 8, 0, 4352, 0, 0, 0, BOUND_CHAR, .@OptID, .@OptVal, .@OptParam, getcharid(3);	// +8 Shoes [1] (+5 str) with Boss Egnigem
+			getitembound2 5013, 1, 1, 8, 0, 4403, 4403, 4403, 4403, BOUND_CHAR, getcharid(3);	// +8 LKH [4] with 4 Kiel-D-01
+
+			// HG and Acce
+			getitembound 30003,2, BOUND_CHAR, getcharid(3); 	// Meg (dex)
+			getitembound 5483, 1, BOUND_CHAR, getcharid(3);		// Odin Mask   	
+		break;
+
+		case Job_Dancer:
+		    // Weapon
+			getitembound2 1902, 1, 1, 10, 0, 4305, 4305, 4399, 4399, BOUND_CHAR, getcharid(3);	// +10 Violin [4] with 2 TG and 2 Thana
+		       	
+		    // V.Set (DEX)
+			setarray .@OptID[0],RDMOPT_VAR_DEXAMOUNT;
+			setarray .@OptVal[0],5;
+			setarray .@OptParam[0],0;
+			getitembound3 2404, 1, 1, 8, 0, 4352, 0, 0, 0, BOUND_CHAR, .@OptID, .@OptVal, .@OptParam, getcharid(3);	// +8 Shoes [1] (+5 str) with Boss Egnigem
+			getitembound2 5013, 1, 1, 8, 0, 4403, 4403, 4403, 4403, BOUND_CHAR, getcharid(3);	// +8 LKH [4] with 4 Kiel-D-01
+
+			// HG and Acce
+			getitembound 30003,2, BOUND_CHAR, getcharid(3); 	// Meg (dex)
+			getitembound 5483, 1, BOUND_CHAR, getcharid(3);		// Odin Mask 
+		break;
+
+		case Job_Super_Novice:
+		    // Weapon
+			getitembound2 1602, 1, 1, 10, 0, 4474, 4474, 4474, 4474, BOUND_CHAR, getcharid(3);	// +10 Rod [4] with 4 Zakudam
+				
+			// V.Set (INT)
+			setarray .@OptID[0],RDMOPT_VAR_INTAMOUNT;
+			setarray .@OptVal[0],5;
+			setarray .@OptParam[0],0;
+			getitembound3 2404, 1, 1, 8, 0, 4441, 0, 0, 0, BOUND_CHAR, .@OptID, .@OptVal, .@OptParam, getcharid(3);	// +8 Shoes [1] (+5 int) with Fallen Bishop
+			
+			// HG and Acce
+			getitembound 30002,2, BOUND_CHAR, getcharid(3); 	// Meg (int)
+			getitembound 19086, 1, BOUND_CHAR, getcharid(3);	// Robo Eye [1]
+		break;
+
+		case Job_Taekwon:
+		case Job_Star_Gladiator:
+		    // Weapon
+			getitembound2 1579, 1, 1, 10, 0, 4305, 4399, 0, 0, BOUND_CHAR, getcharid(3);	// +10 Book of the Dead [2] with TG and Thana
+				
+			// V.Set (STR)
+			setarray .@OptID[0],RDMOPT_VAR_STRAMOUNT;
+			setarray .@OptVal[0],5;
+			setarray .@OptParam[0],0;
+			getitembound3 2404, 1, 1, 8, 0, 4352, 0, 0, 0, BOUND_CHAR, .@OptID, .@OptVal, .@OptParam, getcharid(3);	// +8 Shoes [1] (+5 str) with Boss Egnigem
+
+			// HG and Acce
+			getitembound 2629,2, BOUND_CHAR, getcharid(3); 		// Meg (str)
+			getitembound 5483, 1, BOUND_CHAR, getcharid(3);		// Odin Mask
+		break;
+
+		case Job_Soul_Linker:
+		    // Weapon
+			getitembound2 1602, 1, 1, 10, 0, 4474, 4474, 4474, 4474, BOUND_CHAR, getcharid(3);	// +10 Rod [4] with 4 Zakudam
+				
+			// V.Set (INT)
+			setarray .@OptID[0],RDMOPT_VAR_INTAMOUNT;
+			setarray .@OptVal[0],5;
+			setarray .@OptParam[0],0;
+			getitembound3 2404, 1, 1, 8, 0, 4441, 0, 0, 0, BOUND_CHAR, .@OptID, .@OptVal, .@OptParam, getcharid(3);	// +8 Shoes [1] (+5 int) with Fallen Bishop
+			
+			// HG and Acce
+			getitembound 30002,2, BOUND_CHAR, getcharid(3); 	// Meg (int)
+			getitembound 19086, 1, BOUND_CHAR, getcharid(3);	// Robo Eye [1]
+		break;
+		
+		case Job_Gunslinger:
+			// Weapon
+			getitembound2 13107, 1, 1, 10, 0, 4305, 4399, 0, 0, BOUND_CHAR, getcharid(3);	// +10 Western Outlaw [2] with TG and Thana
+
+			// V.Set (STR)
+			setarray .@OptID[0],RDMOPT_VAR_STRAMOUNT;
+			setarray .@OptVal[0],5;
+			setarray .@OptParam[0],0;
+			getitembound3 2404, 1, 1, 8, 0, 4352, 0, 0, 0, BOUND_CHAR, .@OptID, .@OptVal, .@OptParam, getcharid(3);	// +8 Shoes [1] (+5 str) with Boss Egnigem
+
+			// HG and Acce
+			getitembound 2629,2, BOUND_CHAR, getcharid(3); 		// Meg (str)
+			getitembound 5483, 1, BOUND_CHAR, getcharid(3);		// Odin Mask
+		break;
+
+		case Job_Ninja:
+			// Weapon
+			getitembound2 28717, 1, 1, 10, 0, 4474, 4474, 4474, 4474, BOUND_CHAR, getcharid(3);	// +10 V.Knife with 4 Zakudam
+				
+			// V.Set (INT)
+			setarray .@OptID[0],RDMOPT_VAR_INTAMOUNT;
+			setarray .@OptVal[0],5;
+			setarray .@OptParam[0],0;
+			getitembound3 2404, 1, 1, 8, 0, 4441, 0, 0, 0, BOUND_CHAR, .@OptID, .@OptVal, .@OptParam, getcharid(3);	// +8 Shoes [1] (+5 int) with Fallen Bishop
+			
+			// HG and Acce
+			getitembound 30002,2, BOUND_CHAR, getcharid(3); 	// Meg (int)
+			getitembound 19086, 1, BOUND_CHAR, getcharid(3);	// Robo Eye [1]
+		break;
+
+		default:
+		    // Reset the Flag
+			set alreadyReceived[.@char_id], 0;
+
+		    mes "[ Solo Pack Distributor ]";
+		    mes "^FF0000Please complete a class change job first!^000000";
+			mes "^FF0000I will provide you with a Solo Pack based on your Class Job.^000000";
+			close;
+		break;
+    }
+
+    // Random option stats equipment for all jobs
+    getitembound3 2311, 1, 1, 8, 0, 4565, 0, 0, 0, BOUND_CHAR, .@OptID, .@OptVal, .@OptParam, getcharid(3);	// +8 Mink Coat [1] (+5 str) with Paladin
+	getitembound3 2311, 1, 1, 8, 0, 4302, 0, 0, 0, BOUND_CHAR, .@OptID, .@OptVal, .@OptParam, getcharid(3);	// +8 Mink Coat [1] (+5 str) with Tao Gunka
+	getitembound3 2311, 1, 1, 8, 0, 4047, 0, 0, 0, BOUND_CHAR, .@OptID, .@OptVal, .@OptParam, getcharid(3);	// +8 Mink Coat [1] (+5 str) with Ghostring
+	getitembound3 2504, 1, 1, 8, 0, 4174, 0, 0, 0, BOUND_CHAR, .@OptID, .@OptVal, .@OptParam, getcharid(3); // +8 Muffler [1] (+5 str) with Devilring
+	getitembound3 2115, 1, 1, 8, 0, 4128, 0, 0, 0, BOUND_CHAR, .@OptID, .@OptVal, .@OptParam, getcharid(3); // +8 V.Shield [1] (+5 str) with GTB
+	getitembound3 2115, 1, 1, 8, 0, 4058, 0, 0, 0, BOUND_CHAR, .@OptID, .@OptVal, .@OptParam, getcharid(3); // +8 V.Shield [1] (+5 str) with Thara Frog
+
+    // For HG and Accessories All Jobs
+	getitembound2 5013, 1, 1, 8, 0, 4143, 4330, 4112, 4087, BOUND_CHAR, getcharid(3);	// LKH [4] with OH, DSL, Marduk, and Giearth
+	getitembound2 2202, 1, 1, 0, 0, 4198, 0, 0, 0, BOUND_CHAR, getcharid(3);	// Sunglasses [1] with Maya Purple
+	getitembound 2541, 1, BOUND_CHAR, getcharid(3);	// Asprika
+	getitembound 2410, 1, BOUND_CHAR, getcharid(3);	// Sleipner
+	getitembound 5800, 1, BOUND_CHAR, getcharid(3);	// Blush of Groom
+	getitembound 18670, 1, BOUND_CHAR, getcharid(3);// Hanke in Mouth
+
+    // Consumables Boxes for all class jobs
+	getitembound 30339, 100, BOUND_CHAR, getcharid(3);	// Berry Ticket
+	getitembound 12903, 10, BOUND_CHAR, getcharid(3); 	// Steamed Tongue Box
+	getitembound 12904, 10, BOUND_CHAR, getcharid(3); 	// Steamed Scorpion Box
+	getitembound 12905, 10, BOUND_CHAR, getcharid(3); 	// Dragon Breath Cocktail
+	getitembound 12906, 10, BOUND_CHAR, getcharid(3);	// Hwergelmir's Tonic Box
+	getitembound 12907, 10, BOUND_CHAR, getcharid(3); 	// Nine Tail Dish Box
+	getitembound 12908, 10, BOUND_CHAR, getcharid(3); 	// Stew of Immortality Box
+
+    mes "[ Solo Pack Distributor ]";
+    mes "Here's your Solo Pack items base to your Class!";
+	mes "^FF0000* Remember! All items is character bound!! *^000000";
+    close;
+}

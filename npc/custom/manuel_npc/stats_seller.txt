@@ -1,0 +1,402 @@
+//===== By:==================================================
+//
+
+prontera,172,182,5	script	Stats Seller	408,{
+
+	set @name$, "[^1100AA Stats Seller ^000000]";
+
+	@addStats = 1;
+	@priceStats = 400000;
+
+	mes @name$;
+    mes "Hello, I sell " + @addStats + " stats for " + callfunc("F_InsertComma", @priceStats) + "z";
+    mes "Would you like to Buy?";
+    next;
+
+    switch(select("Yes")) {
+    	case 1:
+
+    		switch(select("Buy STR:Buy AGI:Buy VIT:Buy INT:Buy DEX:Buy LUK")) {
+		    	case 1:
+		    		if (readparam(bStr) == getbattleflag("max_parameter") || readparam(bStr) > getbattleflag("max_parameter")) {
+		    			message strcharinfo(0), "STR is in max status.";
+		    			close;
+		    		}
+		    		else
+			    		input @strAmount, 0, getbattleflag("max_parameter");
+			    		@needStr = getbattleflag("max_parameter") - readparam(bStr);
+			    		@totalPrice = @strAmount * @priceStats;
+
+			    		if (@strAmount == @needStr || @strAmount > @needStr) {
+
+			    			if (Zeny < @totalPrice) {
+						    	message strcharinfo(0), "Not Enough Zeny.";
+								close;
+						    }
+						    
+			    			mes @name$;
+				    		mes "Stats : STR +" + @needStr;
+				    		mes "Price : " + callfunc("F_InsertComma", @needStr * @priceStats) + "z";
+						    mes "Do you want to continue?";
+				    		next;
+
+				    		switch(select("BUY STR+" + @needStr)) {
+				    			case 1:
+					    			// minus the zeny
+					    			Zeny -= @needStr * @priceStats;
+
+					    			// add the status STR
+						    		statusup2 bStr, (@needStr);
+						    		message strcharinfo(0), "STR Increased.";
+						    		close;
+				    			break;
+				    		}
+			    		}
+			    		else if (@strAmount < 1) {
+			    			message strcharinfo(0), "Please put your desired number of stats.";
+					    	close;
+			    		}
+			    		else if (Zeny < @totalPrice) {
+			    			message strcharinfo(0), "Not Enough Zeny.";
+					    	close;
+			    		}
+			    		else
+			    			mes @name$;
+				    		mes "Stats : STR +" + @strAmount;
+				    		mes "Price : " + callfunc("F_InsertComma", @strAmount * @priceStats) + "z";
+						    mes "Do you want to continue?";
+				    		next;
+
+				    		switch(select("BUY STR+" + @strAmount)) {
+				    			case 1:
+					    			// minus the zeny
+					    			Zeny -= @strAmount * @priceStats;
+
+					    			// add the status STR
+						    		statusup2 bStr, (@strAmount);
+						    		message strcharinfo(0), "STR Increased.";
+						    		close;
+				    			break;
+				    		}
+
+		    	break;
+		    	case 2:
+		    		if (readparam(bAgi) == getbattleflag("max_parameter") || readparam(bAgi) > getbattleflag("max_parameter")) {
+		    			message strcharinfo(0), "AGI is in max status.";
+		    			close;
+		    		}
+		    		else
+			    		input @agiAmount, 0, getbattleflag("max_parameter");
+			    		@needAgi = getbattleflag("max_parameter") - readparam(bAgi);
+			    		@totalPrice = @agiAmount * @priceStats;
+
+			    		if (@agiAmount == @needAgi || @agiAmount > @needAgi) {
+
+			    			if (Zeny < @totalPrice) {
+						    	message strcharinfo(0), "Not Enough Zeny.";
+								close;
+						    }
+
+			    			mes @name$;
+				    		mes "Stats : AGI +" + @needAgi;
+				    		mes "Price : " + callfunc("F_InsertComma", @needAgi * @priceStats) + "z";
+						    mes "Do you want to continue?";
+				    		next;
+
+				    		switch(select("BUY AGI+" + @needAgi)) {
+				    			case 1:
+					    			// minus the zeny
+					    			Zeny -= @needAgi * @priceStats;
+
+					    			// add the status AGI
+						    		statusup2 bAgi, (@needAgi);
+						    		message strcharinfo(0), "AGI Increased.";
+						    		close;
+				    			break;
+				    		}
+			    		}
+			    		else if (@agiAmount < 1) {
+			    			message strcharinfo(0), "Please put your desired number of stats.";
+					    	close;
+			    		}
+			    		else if (Zeny < @totalPrice) {
+			    			message strcharinfo(0), "Not Enough Zeny.";
+					    	close;
+			    		}
+			    		else
+			    			mes @name$;
+				    		mes "Stats : AGI +" + @agiAmount;
+				    		mes "Price : " + callfunc("F_InsertComma", @agiAmount * @priceStats) + "z";
+						    mes "Do you want to continue?";
+				    		next;
+
+				    		switch(select("BUY AGI+" + @agiAmount)) {
+				    			case 1:
+					    			// minus the zeny
+					    			Zeny -= @agiAmount * @priceStats;
+
+					    			// add the status AGI
+						    		statusup2 bAgi, (@agiAmount);
+						    		message strcharinfo(0), "AGI Increased.";
+						    		close;
+				    			break;
+				    		}
+		    	break;
+		    	case 3:
+		    		if (readparam(bVit) == getbattleflag("max_parameter") || readparam(bVit) > getbattleflag("max_parameter")) {
+		    			message strcharinfo(0), "VIT is in max status.";
+		    			close;
+		    		}
+		    		else
+			    		input @vitAmount, 0, getbattleflag("max_parameter");
+			    		@needVit = getbattleflag("max_parameter") - readparam(bVit);
+			    		@totalPrice = @vitAmount * @priceStats;
+
+			    		if (@vitAmount == @needVit || @vitAmount > @needVit) {
+
+			    			if (Zeny < @totalPrice) {
+						    	message strcharinfo(0), "Not Enough Zeny.";
+								close;
+						    }
+
+			    			mes @name$;
+				    		mes "Stats : VIT +" + @needVit;
+				    		mes "Price : " + callfunc("F_InsertComma", @needVit * @priceStats) + "z";
+						    mes "Do you want to continue?";
+				    		next;
+
+				    		switch(select("BUY VIT+" + @needVit)) {
+				    			case 1:
+					    			// minus the zeny
+					    			Zeny -= @needVit * @priceStats;
+
+					    			// add the status VIT
+						    		statusup2 bVit, (@needVit);
+						    		message strcharinfo(0), "VIT Increased.";
+						    		close;
+				    			break;
+				    		}
+			    		}
+			    		else if (@vitAmount < 1) {
+			    			message strcharinfo(0), "Please put your desired number of stats.";
+					    	close;
+			    		}
+			    		else if (Zeny < @totalPrice) {
+			    			message strcharinfo(0), "Not Enough Zeny.";
+					    	close;
+			    		}
+			    		else
+			    			mes @name$;
+				    		mes "Stats : VIT +" + @vitAmount;
+				    		mes "Price : " + callfunc("F_InsertComma", @vitAmount * @priceStats) + "z";
+						    mes "Do you want to continue?";
+				    		next;
+
+				    		switch(select("BUY VIT+" + @vitAmount)) {
+				    			case 1:
+					    			// minus the zeny
+					    			Zeny -= @vitAmount * @priceStats;
+
+					    			// add the status VIT
+						    		statusup2 bVit, (@vitAmount);
+						    		message strcharinfo(0), "VIT Increased.";
+						    		close;
+				    			break;
+				    		}
+		    	break;
+		    	case 4:
+		    		if (readparam(bInt) == getbattleflag("max_parameter") || readparam(bInt) > getbattleflag("max_parameter")) {
+		    			message strcharinfo(0), "INT is in max status.";
+		    			close;
+		    		}
+		    		else
+			    		input @intAmount, 0, getbattleflag("max_parameter");
+			    		@needInt = getbattleflag("max_parameter") - readparam(bInt);
+			    		@totalPrice = @intAmount * @priceStats;
+
+			    		if (@intAmount == @needInt || @intAmount > @needInt) {
+
+			    			if (Zeny < @totalPrice) {
+						    	message strcharinfo(0), "Not Enough Zeny.";
+								close;
+						    }
+
+			    			mes @name$;
+				    		mes "Stats : INT +" + @needInt;
+				    		mes "Price : " + callfunc("F_InsertComma", @needInt * @priceStats) + "z";
+						    mes "Do you want to continue?";
+				    		next;
+
+				    		switch(select("BUY INT+" + @needInt)) {
+				    			case 1:
+					    			// minus the zeny
+					    			Zeny -= @needInt * @priceStats;
+
+					    			// add the status INT
+						    		statusup2 bInt, (@needInt);
+						    		message strcharinfo(0), "INT Increased.";
+						    		close;
+				    			break;
+				    		}
+			    		}
+			    		else if (@intAmount < 1) {
+			    			message strcharinfo(0), "Please put your desired number of stats.";
+					    	close;
+			    		}
+			    		else if (Zeny < @totalPrice) {
+			    			message strcharinfo(0), "Not Enough Zeny.";
+					    	close;
+			    		}
+			    		else
+			    			mes @name$;
+				    		mes "Stats : INT +" + @intAmount;
+				    		mes "Price : " + callfunc("F_InsertComma", @intAmount * @priceStats) + "z";
+						    mes "Do you want to continue?";
+				    		next;
+
+				    		switch(select("BUY INT+" + @intAmount)) {
+				    			case 1:
+					    			// minus the zeny
+					    			Zeny -= @intAmount * @priceStats;
+
+					    			// add the status INT
+						    		statusup2 bInt, (@intAmount);
+						    		message strcharinfo(0), "INT Increased.";
+						    		close;
+				    			break;
+				    		}
+		    	break;
+		    	case 5:
+		    		if (readparam(bDex) == getbattleflag("max_parameter") || readparam(bDex) > getbattleflag("max_parameter")) {
+		    			message strcharinfo(0), "DEX is in max status.";
+		    			close;
+		    		}
+		    		else
+			    		input @dexAmount, 0, getbattleflag("max_parameter");
+			    		@needDex = getbattleflag("max_parameter") - readparam(bDex);
+			    		@totalPrice = @dexAmount * @priceStats;
+
+			    		if (@dexAmount == @needDex || @dexAmount > @needDex) {
+
+			    			if (Zeny < @totalPrice) {
+						    	message strcharinfo(0), "Not Enough Zeny.";
+								close;
+						    }
+
+			    			mes @name$;
+				    		mes "Stats : DEX +" + @needDex;
+				    		mes "Price : " + callfunc("F_InsertComma", @needDex * @priceStats) + "z";
+						    mes "Do you want to continue?";
+				    		next;
+
+				    		switch(select("BUY DEX+" + @needDex)) {
+				    			case 1:
+					    			// minus the zeny
+					    			Zeny -= @needDex * @priceStats;
+
+					    			// add the status DEX
+						    		statusup2 bDex, (@needDex);
+						    		message strcharinfo(0), "DEX Increased.";
+						    		close;
+				    			break;
+				    		}
+			    		}
+			    		else if (@dexAmount < 1) {
+			    			message strcharinfo(0), "Please put your desired number of stats.";
+					    	close;
+			    		}
+			    		else if (Zeny < @totalPrice) {
+			    			message strcharinfo(0), "Not Enough Zeny.";
+					    	close;
+			    		}
+			    		else
+			    			mes @name$;
+				    		mes "Stats : DEX +" + @dexAmount;
+				    		mes "Price : " + callfunc("F_InsertComma", @dexAmount * @priceStats) + "z";
+						    mes "Do you want to continue?";
+				    		next;
+
+				    		switch(select("BUY DEX+" + @dexAmount)) {
+				    			case 1:
+					    			// minus the zeny
+					    			Zeny -= @dexAmount * @priceStats;
+
+					    			// add the status DEX
+						    		statusup2 bDex, (@dexAmount);
+						    		message strcharinfo(0), "DEX Increased.";
+						    		close;
+				    			break;
+				    		}
+		    	break;
+		    	case 6:
+		    		if (readparam(bLuk) == getbattleflag("max_parameter") || readparam(bLuk) > getbattleflag("max_parameter")) {
+		    			message strcharinfo(0), "LUK is in max status.";
+		    			close;
+		    		}
+		    		else
+			    		input @lukAmount, 0, getbattleflag("max_parameter");
+			    		@needLuk = getbattleflag("max_parameter") - readparam(bLuk);
+			    		@totalPrice = @lukAmount * @priceStats;
+
+			    		if (@lukAmount == @needLuk || @lukAmount > @needLuk) {
+
+			    			if (Zeny < @totalPrice) {
+						    	message strcharinfo(0), "Not Enough Zeny.";
+								close;
+						    }
+
+			    			mes @name$;
+				    		mes "Stats : LUK +" + @needLuk;
+				    		mes "Price : " + callfunc("F_InsertComma", @needLuk * @priceStats) + "z";
+						    mes "Do you want to continue?";
+				    		next;
+
+				    		switch(select("BUY LUK+" + @needLuk)) {
+				    			case 1:
+					    			// minus the zeny
+					    			Zeny -= @needLuk * @priceStats;
+
+					    			// add the status LUK
+						    		statusup2 bLuk, (@needLuk);
+						    		message strcharinfo(0), "LUK Increased.";
+						    		close;
+				    			break;
+				    		}
+			    		}
+			    		else if (@lukAmount < 1) {
+			    			message strcharinfo(0), "Please put your desired number of stats.";
+					    	close;
+			    		}
+			    		else if (Zeny < @totalPrice) {
+			    			message strcharinfo(0), "Not Enough Zeny.";
+					    	close;
+			    		}
+			    		else
+			    			mes @name$;
+				    		mes "Stats : LUK +" + @lukAmount;
+				    		mes "Price : " + callfunc("F_InsertComma", @lukAmount * @priceStats) + "z";
+						    mes "Do you want to continue?";
+				    		next;
+
+				    		switch(select("BUY LUK+" + @lukAmount)) {
+				    			case 1:
+					    			// minus the zeny
+					    			Zeny -= @lukAmount * @priceStats;
+
+					    			// add the status LUK
+						    		statusup2 bLuk, (@lukAmount);
+						    		message strcharinfo(0), "LUK Increased.";
+						    		close;
+				    			break;
+				    		}
+		    	break;
+		    }
+
+    	break;
+    }
+
+    OnInit:
+    	waitingroom "Stats Seller", 0;
+    end;
+	
+}
