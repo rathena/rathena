@@ -8527,23 +8527,6 @@ void pc_delete_showexp_timer(map_session_data* sd) {
 	}
 }
 
-static inline bool pc_showexp_update_exp(t_exp* delta, t_exp* last_exp, t_exp current_exp) {
-	nullpo_retr(false, delta);
-	*delta = 0;
-
-	nullpo_retr(false, last_exp);
-
-	*delta = current_exp - *last_exp;
-	bool lost = false;
-	if(current_exp < *last_exp) {
-		lost = true;
-		*delta = -(*delta);
-	}
-	*last_exp = current_exp;
-
-	return lost;
-}
-
 TIMER_FUNC(pc_showexp_timer) {
 	map_session_data* sd = (map_session_data*)data;
 	nullpo_retr(-1, sd);
