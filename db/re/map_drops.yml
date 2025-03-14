@@ -2552,7 +2552,7 @@ Body:
           - Index: 7
             Item: Survival_Staff_IL
             Rate: 25
-            RandomOptionGroup: ILL_MAGIC_NORMAL
+            RandomOptionGroup: ILL_MAGIC_BOSS
           - Index: 8
             Item: S_Teddy_Bear_Box_IL
             Rate: 150
