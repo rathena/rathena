@@ -8515,7 +8515,8 @@ void pc_set_showexp_timer(map_session_data* sd, t_tick interval) {
 	if(sd->showexp_state.timer != INVALID_TIMER) {
 		delete_timer(sd->showexp_state.timer, pc_showexp_timer);
 	}
-	sd->showexp_state.timer = add_timer_interval(gettick() + interval, pc_showexp_timer, 0, (intptr_t)sd, interval);
+	sd->showexp_state.timer_interval = interval;
+	sd->showexp_state.timer = add_timer(gettick() + interval, pc_showexp_timer, sd->bl.id, 0);
 }
 
 void pc_delete_showexp_timer(map_session_data* sd) {
@@ -8524,12 +8525,13 @@ void pc_delete_showexp_timer(map_session_data* sd) {
 	if(sd->showexp_state.timer != INVALID_TIMER) {
 		delete_timer(sd->showexp_state.timer, pc_showexp_timer);
 		sd->showexp_state.timer = INVALID_TIMER;
+		sd->showexp_state.timer_interval = 0;
 	}
 }
 
 TIMER_FUNC(pc_showexp_timer) {
-	map_session_data* sd = (map_session_data*)data;
-	nullpo_retr(-1, sd);
+	map_session_data* sd = map_id2sd(id);
+	nullpo_ret(sd);
 
 	if(sd->showexp_state.base_exp_delta || sd->showexp_state.job_exp_delta) {
 		pc_gainexp_disp_accumulated(sd);
@@ -8537,6 +8539,7 @@ TIMER_FUNC(pc_showexp_timer) {
 
 	pc_reset_accumulated_exp(sd);
 
+	pc_set_showexp_timer(sd, sd->showexp_state.timer_interval);
 	return 0;
 }
 

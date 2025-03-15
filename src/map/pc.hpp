@@ -487,6 +487,7 @@ public:
 
 	struct s_showexp_state {
 		int32 timer;
+		t_tick timer_interval;
 		t_exp base_exp_delta;
 		t_exp job_exp_delta;
 		bool base_exp_delta_negative;
