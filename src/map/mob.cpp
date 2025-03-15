@@ -1994,7 +1994,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 	if (can_move && mode&MD_LOOTER && md->lootitems && DIFF_TICK(tick, md->ud.canact_tick) > 0 &&
 		(md->lootitem_count < LOOTITEM_SIZE || battle_config.monster_loot_type != 1))
 	{
-		if (!tbl) {
+		if (tbl == nullptr) {
 			// Search for items in loot range
 			map_foreachinshootrange(mob_ai_sub_hard_lootsearch, &md->bl, battle_config.loot_range, BL_ITEM, md, &tbl);
 		}
