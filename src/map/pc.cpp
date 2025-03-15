@@ -8318,10 +8318,10 @@ void pc_gainexp_disp(map_session_data *sd, t_exp base_exp, t_exp next_base_exp, 
 
 	nullpo_retv(sd);
 
-	sprintf(output, msg_txt(sd,743), // Experience %s Base: %ld (%0.2f%%) Job: %ld (%0.2f%%)
-		lost? msg_txt(sd, 742) : msg_txt(sd, 741),
-		(long)base_exp * (lost? -1 : 1), (base_exp / (float)next_base_exp * 100 * (lost? -1 : 1)),
-		(long)job_exp * (lost? -1 : 1), (job_exp / (float)next_job_exp * 100 * (lost? -1 : 1)));
+	sprintf(output, msg_txt(sd,743), // Experience %s Base:%ld (%0.2f%%) Job:%ld (%0.2f%%)
+		(lost) ? msg_txt(sd,742) : msg_txt(sd,741),
+		(long)base_exp * (lost ? -1 : 1), (base_exp / (float)next_base_exp * 100 * (lost ? -1 : 1)),
+		(long)job_exp * (lost ? -1 : 1), (job_exp / (float)next_job_exp * 100 * (lost ? -1 : 1)));
 	clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 }
 
