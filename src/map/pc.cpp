@@ -8531,7 +8531,9 @@ void pc_delete_showexp_timer(map_session_data* sd) {
 
 TIMER_FUNC(pc_showexp_timer) {
 	map_session_data* sd = map_id2sd(id);
-	nullpo_ret(sd);
+	if(!sd) {
+		return 0;
+	}
 
 	if(sd->showexp_state.base_exp_delta || sd->showexp_state.job_exp_delta) {
 		pc_gainexp_disp_accumulated(sd);
