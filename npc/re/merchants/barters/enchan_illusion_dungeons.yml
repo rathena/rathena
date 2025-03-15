@@ -945,3 +945,117 @@ Body:
           - Index: 4
             Item: Clay_Doll
             Amount: 5
+  - Name: barter_ill_labyrinth
+    Items:
+      - Index: 0
+        Item: Morpheus_Hood_IL
+        RequiredItems:
+          - Index: 0
+            Item: Morpheus's_Hood
+            Refine: 9
+          - Index: 1
+            Item: IllusionStone
+            Amount: 100
+          - Index: 2
+            Item: Soft_Scarf
+            Amount: 100
+          - Index: 3
+            Item: Cold_Holy_Water
+            Amount: 50
+      - Index: 1
+        Item: Morpheus_Shawl_IL
+        RequiredItems:
+          - Index: 0
+            Item: Morpheus's_Shawl
+            Refine: 9
+          - Index: 1
+            Item: IllusionStone
+            Amount: 100
+          - Index: 2
+            Item: Brilliant_Jelly
+            Amount: 100
+          - Index: 3
+            Item: Medicinal_Stuff
+            Amount: 50
+      - Index: 2
+        Item: Morpheus_Ring_IL
+        RequiredItems:
+          - Index: 0
+            Item: Morpheus's_Ring
+          - Index: 1
+            Item: IllusionStone
+            Amount: 100
+          - Index: 2
+            Item: Purple_Solid_Shell
+            Amount: 100
+          - Index: 3
+            Item: Little_Lovely_Candle
+            Amount: 50
+          - Index: 4
+            Item: Essence_Of_Demon
+            Amount: 15
+      - Index: 3
+        Item: Morpheus_Armlet_IL
+        RequiredItems:
+          - Index: 0
+            Item: Morpheus's_Armlet
+          - Index: 1
+            Item: IllusionStone
+            Amount: 100
+          - Index: 2
+            Item: Suspicious_Sap
+            Amount: 100
+          - Index: 3
+            Item: Small_Flashlight
+            Amount: 50
+          - Index: 4
+            Item: Essence_Of_Demon
+            Amount: 15
+      - Index: 4
+        Item: Butcher_IL
+        RequiredItems:
+          - Index: 0
+            Item: Butcher_
+            Refine: 9
+          - Index: 1
+            Item: IllusionStone
+            Amount: 120
+          - Index: 2
+            Item: Delicious_Juice
+            Amount: 150
+      - Index: 5
+        Item: Taegoolyeon_IL
+        RequiredItems:
+          - Index: 0
+            Item: Tae_Goo_Lyeon
+            Refine: 9
+          - Index: 1
+            Item: IllusionStone
+            Amount: 120
+          - Index: 2
+            Item: Short_Rope
+            Amount: 150
+      - Index: 6
+        Item: Gold_Lux_IL
+        RequiredItems:
+          - Index: 0
+            Item: Gold_Lux
+            Refine: 9
+          - Index: 1
+            Item: IllusionStone
+            Amount: 120
+          - Index: 2
+            Item: Snake_Deadly_Poison
+            Amount: 150
+      - Index: 7
+        Item: Bazerald_IL
+        RequiredItems:
+          - Index: 0
+            Item: Bazerald
+            Refine: 9
+          - Index: 1
+            Item: IllusionStone
+            Amount: 120
+          - Index: 2
+            Item: Mantis_Flower
+            Amount: 150
