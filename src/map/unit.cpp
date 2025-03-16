@@ -1888,8 +1888,8 @@ void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event)
 				case DELAY_EVENT_CASTBEGIN_POS:
 					// For non-PCs that can be controlled from the client, there is a security delay of 200ms
 					// However to prevent tricks to use skills faster, we have a config to use amotion instead
-					if (battle_config.amotion_min_skill_delay == 1 && status_get_amotion(&bl) > MIN_DELAY_SLAVE)
-						act_delay = status_get_amotion(&bl);
+					if (battle_config.amotion_min_skill_delay == 1)
+						act_delay = status_get_amotion(&bl) + MAX_ASPD_NOPC;
 					else
 						act_delay = MIN_DELAY_SLAVE;
 					break;
@@ -1904,8 +1904,8 @@ void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event)
 				case DELAY_EVENT_CASTBEGIN_ID:
 					// For non-PCs that can be controlled from the client, there is a security delay of 200ms
 					// However to prevent tricks to use skills faster, we have a config to use amotion instead
-					if (battle_config.amotion_min_skill_delay == 1 && status_get_amotion(&bl) > MIN_DELAY_SLAVE)
-						act_delay = status_get_amotion(&bl);
+					if (battle_config.amotion_min_skill_delay == 1)
+						act_delay = status_get_amotion(&bl) + MAX_ASPD_NOPC;
 					else
 						act_delay = MIN_DELAY_SLAVE;
 					break;
