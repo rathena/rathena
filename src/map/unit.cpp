@@ -1847,8 +1847,8 @@ void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event)
 	if (ud == nullptr)
 		return;
 
-	uint16 attack_delay = 0;
-	uint16 act_delay = 0;
+	t_tick attack_delay = 0;
+	t_tick act_delay = 0;
 
 	switch (bl.type) {
 		case BL_PC:
