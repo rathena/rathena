@@ -1404,10 +1404,6 @@ static int32 mob_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
 		(*target) = bl;
 		md->target_id = bl->id;
 	}
-	else if( !battle_config.monster_loot_search_type ){
-		// Stop walking after 0.5-1.5 cells if item is no longer on the ground.
-		unit_stop_walking_soon(md->bl, gettick());
-	}
 
 	return 0;
 }
@@ -1993,10 +1989,21 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 	}
 
 	// Scan area for targets
-	if (!tbl && can_move && mode&MD_LOOTER && md->lootitems && DIFF_TICK(tick, md->ud.canact_tick) > 0 &&
+
+	// Scan area for items to loot, avoid trying to loot if the mob is full and can't consume the items.
+	if (can_move && mode&MD_LOOTER && md->lootitems && DIFF_TICK(tick, md->ud.canact_tick) > 0 &&
 		(md->lootitem_count < LOOTITEM_SIZE || battle_config.monster_loot_type != 1))
-	{	// Scan area for items to loot, avoid trying to loot if the mob is full and can't consume the items.
-		map_foreachinshootrange (mob_ai_sub_hard_lootsearch, &md->bl, battle_config.loot_range, BL_ITEM, md, &tbl);
+	{
+		if (tbl == nullptr) {
+			// Search for items in loot range
+			map_foreachinshootrange(mob_ai_sub_hard_lootsearch, &md->bl, battle_config.loot_range, BL_ITEM, md, &tbl);
+		}
+		else if (tbl->type == BL_ITEM && battle_config.monster_loot_search_type == 0) {
+			// Looter already has a target item, but we want to check if there is an item that's closer
+			int16 dist = distance_bl(&md->bl, tbl) - 1;
+			if (dist > 0)
+				map_foreachinshootrange(mob_ai_sub_hard_lootsearch, &md->bl, dist, BL_ITEM, md, &tbl);
+		}
 	}
 
 	if ((mode&MD_AGGRESSIVE && (!tbl || slave_lost_target)) || md->state.skillstate == MSS_FOLLOW)
