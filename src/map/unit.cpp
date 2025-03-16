@@ -1857,7 +1857,7 @@ void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event)
 				case DELAY_EVENT_CASTBEGIN_POS:
 					if (reinterpret_cast<map_session_data*>(&bl)->skillitem == ud->skill_id) {
 						// Skills used from items don't seem to give any attack or act delay
-						break;
+						return;
 					}
 					[[fallthrough]];
 				case DELAY_EVENT_ATTACK:
@@ -1949,16 +1949,14 @@ void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event)
  * @param event The event that resulted in calling this function
  */
 void unit_set_castdelay(unit_data& ud, t_tick tick, int32 casttime) {
-	// Use casttime if that is longer than previous delay
-	if (casttime > 0 && DIFF_TICK(tick + casttime, ud.canact_tick) > 0)
-		ud.canact_tick = tick + casttime;
+	// Use casttime or minimum delay, whatever is longer
+	t_tick cast_delay = i64max(casttime, battle_config.min_skill_delay_limit);
 
-	// Use minimum delay if that is longer
-	if (DIFF_TICK(tick + battle_config.min_skill_delay_limit, ud.canact_tick) > 0)
-		ud.canact_tick = tick + battle_config.min_skill_delay_limit;
+	// Only apply the cast delay, if it is longer than the act delay (set by unit_set_attackdelay)
+	ud.canact_tick = i64max(ud.canact_tick, tick + cast_delay);
 
 	// Security delay that will be removed at castend again
-	ud.canact_tick = ud.canact_tick + SECURITY_CASTTIME;
+	ud.canact_tick += SECURITY_CASTTIME;
 }
 
 /**
