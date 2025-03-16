@@ -1853,9 +1853,14 @@ void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event)
 	switch (bl.type) {
 		case BL_PC:
 			switch (event) {
-				case DELAY_EVENT_ATTACK:
 				case DELAY_EVENT_CASTBEGIN_ID:
 				case DELAY_EVENT_CASTBEGIN_POS:
+					if (reinterpret_cast<map_session_data*>(&bl)->skillitem == ud->skill_id) {
+						// Skills used from items don't seem to give any attack or act delay
+						break;
+					}
+					[[fallthrough]];
+				case DELAY_EVENT_ATTACK:
 				case DELAY_EVENT_PARRY:
 					// Officially for players it just remembers the last attack time here and applies the delays during the comparison
 					// But we pre-calculate the delays instead and store them in attackabletime and canact_tick
@@ -2466,14 +2471,6 @@ int32 unit_skilluse_id2(struct block_list *src, int32 target_id, uint16 skill_id
 	if( casttime <= 0 )
 		ud->state.skillcastcancel = 0;
 
-	// Skills used from items don't seem to give any attack or act delay
-	if (sd == nullptr || sd->skillitem != skill_id) {
-		// Set attack and act delays
-		unit_set_attackdelay(*src, tick, DELAY_EVENT_CASTBEGIN_ID);
-	}
-	// Apply cast time and general delays
-	unit_set_castdelay(*ud, tick, (skill_get_cast(skill_id, skill_lv) != 0) ? casttime : 0);
-
 	if( sd ) {
 		switch( skill_id ) {
 			case CG_ARROWVULCAN:
@@ -2487,6 +2484,12 @@ int32 unit_skilluse_id2(struct block_list *src, int32 target_id, uint16 skill_id
 	ud->skilly       = 0;
 	ud->skill_id      = skill_id;
 	ud->skill_lv      = skill_lv;
+
+	// Set attack and act delays
+	// Please note that the call below relies on ud->skill_id being set!
+	unit_set_attackdelay(*src, tick, DELAY_EVENT_CASTBEGIN_ID);
+	// Apply cast time and general delays
+	unit_set_castdelay(*ud, tick, (skill_get_cast(skill_id, skill_lv) != 0) ? casttime : 0);
 
 	if( sc ) {
 		// These 3 status do not stack, so it's efficient to use if-else
@@ -2655,14 +2658,6 @@ int32 unit_skilluse_pos2( struct block_list *src, int16 skill_x, int16 skill_y, 
 
 	ud->state.skillcastcancel = castcancel&&casttime>0?1:0;
 
-	// Skills used from items don't seem to give any attack or act delay
-	if (sd == nullptr || sd->skillitem != skill_id) {
-		// Set attack and act delays
-		unit_set_attackdelay(*src, tick, DELAY_EVENT_CASTBEGIN_POS);
-	}
-	// Apply cast time and general delays
-	unit_set_castdelay(*ud, tick, (skill_get_cast(skill_id, skill_lv) != 0) ? casttime : 0);
-
 // 	if( sd )
 // 	{
 // 		switch( skill_id )
@@ -2677,6 +2672,12 @@ int32 unit_skilluse_pos2( struct block_list *src, int16 skill_x, int16 skill_y, 
 	ud->skillx      = skill_x;
 	ud->skilly      = skill_y;
 	ud->skilltarget = 0;
+
+	// Set attack and act delays
+	// Please note that the call below relies on ud->skill_id being set!
+	unit_set_attackdelay(*src, tick, DELAY_EVENT_CASTBEGIN_POS);
+	// Apply cast time and general delays
+	unit_set_castdelay(*ud, tick, (skill_get_cast(skill_id, skill_lv) != 0) ? casttime : 0);
 
 	if( sc ) {
 		// These 3 status do not stack, so it's efficient to use if-else
