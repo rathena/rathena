@@ -1872,6 +1872,10 @@ void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event)
 					// This represents setting of attack delay (recharge time) that happens for non-PCs
 					attack_delay = status_get_adelay(&bl);
 					break;
+				case DELAY_EVENT_CASTBEGIN_ID:
+				case DELAY_EVENT_CASTBEGIN_POS:
+					// When monsters use skills, they only get delays on cast end and cast cancel
+					break;
 			}
 			break;
 		case BL_HOM:
