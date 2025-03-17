@@ -58610,7 +58610,6 @@ Body:
       bonus2 bSkillAtk,"NJ_KOUENKA",15;
       bonus2 bSkillAtk,"NJ_HYOUSENSOU",15;
       bonus2 bSkillAtk,"NJ_HUUJIN",15;
-            bonus2 bMagicAddClass,Class_All,30;
   - Combos:
       - Combo:
           - S_EM_CO_Earring   # 24979

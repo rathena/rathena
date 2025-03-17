@@ -3034,7 +3034,7 @@ int32 pc_disguise(map_session_data *sd, int32 class_)
 /// Check for valid Race, break & show error message if invalid Race
 #define PC_BONUS_CHK_RACE(rc,bonus) { if (!CHK_RACE((rc))) { PC_BONUS_SHOW_ERROR((bonus),Race,(rc)); }}
 /// Check for valid Race2, break & show error message if invalid Race2
-#define PC_BONUS_CHK_RACE2(rc2,bonus) { if (!CHK_RACE2((rc2))) { PC_BONUS_SHOW_ERROR((bonus),Race2,(rc2)); }}
+#define PC_BONUS_CHK_RACE2(rc2,bonus) { if ((rc2) <= RC2_NONE || (rc2) >= RC2_MAX) { PC_BONUS_SHOW_ERROR((bonus),Race2,(rc2)); }}
 /// Check for valid Class, break & show error message if invalid Class
 #define PC_BONUS_CHK_CLASS(cl,bonus) { if (!CHK_CLASS((cl))) { PC_BONUS_SHOW_ERROR((bonus),Class,(cl)); }}
 /// Check for valid Size, break & show error message if invalid Size
