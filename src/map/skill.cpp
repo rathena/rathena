@@ -3251,23 +3251,23 @@ void skill_combo_toggle_inf(struct block_list* bl, uint16 skill_id, int32 inf){
 		case CH_TIGERFIST:
 		case CH_CHAINCRUSH:
 			if( sd != nullptr ){
-				clif_skillinfo( *sd, MO_EXTREMITYFIST );
+				clif_skillinfo( *sd, MO_EXTREMITYFIST, inf );
 			}
 			break;
 		case TK_JUMPKICK:
 			if( sd != nullptr ){
-				clif_skillinfo( *sd, TK_JUMPKICK );
+				clif_skillinfo( *sd, TK_JUMPKICK, inf );
 			}
 			break;
 		case MO_TRIPLEATTACK:
 			if( sd != nullptr && pc_checkskill( sd, SR_DRAGONCOMBO) > 0 ){
-				clif_skillinfo( *sd, SR_DRAGONCOMBO );
+				clif_skillinfo( *sd, SR_DRAGONCOMBO, inf );
 			}
 			break;
 		case SR_FALLENEMPIRE:
 			if (sd != nullptr){
-				clif_skillinfo( *sd, SR_GATEOFHELL );
-				clif_skillinfo( *sd, SR_TIGERCANNON );
+				clif_skillinfo( *sd, SR_GATEOFHELL, inf );
+				clif_skillinfo( *sd, SR_TIGERCANNON, inf );
 			}
 			break;
 	}
