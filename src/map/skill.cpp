@@ -7295,7 +7295,7 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 
 	case RL_QD_SHOT:
 		// Except for main target, only units marked with crimson marker are valid targets
-		if (skill_area_temp[1] == bl->id || (tsc && tsc->getSCE(SC_C_MARKER)))
+		if (skill_area_temp[1] == bl->id || (tsc != nullptr && tsc->getSCE(SC_C_MARKER) != nullptr))
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
 	case RL_D_TAIL:
