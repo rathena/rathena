@@ -433,6 +433,7 @@ struct Battle_Config
 	int32 exp_bonus_attacker;
 	int32 exp_bonus_max_attacker;
 	int32 min_skill_delay_limit;
+	int32 amotion_min_skill_delay;
 	int32 default_walk_delay;
 	int32 no_skill_delay;
 	int32 attack_walk_delay;
