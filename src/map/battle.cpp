@@ -4483,7 +4483,7 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 			wd->div_ = (sd ? max(1, skill_lv) : 1);
 			break;
 		case RL_QD_SHOT:
-			wd->div_ = 1 + (sd ? sd->status.job_level : 1) / 20 + (tsc && tsc->getSCE(SC_C_MARKER) ? 2 : 0);
+			wd->div_ = 1 + (sd ? sd->status.job_level : 1) / 20;
 			break;
 		case KO_JYUMONJIKIRI:
 			if( tsc && tsc->getSCE(SC_JYUMONJIKIRI) )
