@@ -18454,7 +18454,7 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 			return true;
 	}
 
-	if( sc != nullptr && sc->getSCE(SC_WEIGHT90) ) {
+	if( sc != nullptr && sc->getSCE(SC_WEIGHT90) != nullptr ) {
 		clif_skill_fail( sd, skill_id, USESKILL_FAIL_WEIGHTOVER );
 		return false;
 	}
@@ -19494,7 +19494,7 @@ bool skill_check_condition_castend( map_session_data& sd, uint16 skill_id, uint1
 	if (sc->empty())
 		sc = nullptr;
 
-	if (sc != nullptr && sc->getSCE(SC_WEIGHT90)) {
+	if ( sc != nullptr && sc->getSCE(SC_WEIGHT90) != nullptr ) {
 		clif_skill_fail(sd, skill_id, USESKILL_FAIL_WEIGHTOVER);
 		return false;
 	}

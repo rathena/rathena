@@ -2956,7 +2956,7 @@ uint8 pc_getpercentweight(map_session_data &sd)
  */
 void pc_updateweightstatus(map_session_data &sd)
 {
-	uint8 old_overweight = (sd.sc.getSCE(SC_WEIGHT90)) ? 2 : (sd.sc.getSCE(SC_WEIGHT50)) ? 1 : 0;
+	uint8 old_overweight = (sd.sc.getSCE(SC_WEIGHT90) != nullptr) ? 2 : (sd.sc.getSCE(SC_WEIGHT50) != nullptr) ? 1 : 0;
 	uint8 overweight_percent = pc_getpercentweight(sd);
 	uint8 new_overweight = (overweight_percent >= battle_config.major_overweight_rate) ? 2 : (overweight_percent >= battle_config.natural_heal_weight_rate) ? 1 : 0;
 
