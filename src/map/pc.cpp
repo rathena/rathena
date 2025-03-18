@@ -2942,44 +2942,51 @@ uint64 pc_calc_skilltree_normalize_job( map_session_data *sd ){
 	return c;
 }
 
+uint8 pc_getpercentweight(map_session_data &sd)
+{
+	return static_cast<uint8>(sd.weight * 100 / sd.max_weight);
+}
+
 /*==========================================
  * Updates the weight status
  *------------------------------------------
  * 1: overweight 50% for pre-renewal and 70% for renewal
- * 2: overweight 90%
+ * 2: major overweight 90%
  * It's assumed that SC_WEIGHT50 and SC_WEIGHT90 are only started/stopped here.
  */
-void pc_updateweightstatus(map_session_data *sd)
+void pc_updateweightstatus(map_session_data &sd)
 {
-	int32 old_overweight;
-	int32 new_overweight;
+	uint8 old_overweight = (sd.sc.getSCE(SC_WEIGHT90)) ? 2 : (sd.sc.getSCE(SC_WEIGHT50)) ? 1 : 0;
+	uint8 overweight_percent = pc_getpercentweight(sd);
+	uint8 new_overweight = (overweight_percent >= battle_config.major_overweight_rate) ? 2 : (overweight_percent >= battle_config.natural_heal_weight_rate) ? 1 : 0;
 
-	nullpo_retv(sd);
-
-	old_overweight = (sd->sc.getSCE(SC_WEIGHT90)) ? 2 : (sd->sc.getSCE(SC_WEIGHT50)) ? 1 : 0;
-#ifdef RENEWAL
-	new_overweight = (pc_is90overweight(sd)) ? 2 : (pc_is70overweight(sd)) ? 1 : 0;
-#else
-	new_overweight = (pc_is90overweight(sd)) ? 2 : (pc_is50overweight(sd)) ? 1 : 0;
-#endif
-
+	// No change
 	if( old_overweight == new_overweight )
-		return; // no change
+		return;
 
-	// stop old status change
-	if( old_overweight == 1 )
-		status_change_end(&sd->bl, SC_WEIGHT50);
-	else if( old_overweight == 2 )
-		status_change_end(&sd->bl, SC_WEIGHT90);
+	// Stop old status change
+	switch (old_overweight) {
+	case 1:
+		status_change_end(&sd.bl, SC_WEIGHT50);
+		break;
+	case 2:
+		status_change_end(&sd.bl, SC_WEIGHT90);
+		break;
+	}
 
-	// start new status change
-	if( new_overweight == 1 )
-		sc_start(&sd->bl,&sd->bl, SC_WEIGHT50, 100, 0, 0);
-	else if( new_overweight == 2 )
-		sc_start(&sd->bl,&sd->bl, SC_WEIGHT90, 100, 0, 0);
+	// Start new status change
+	switch (new_overweight) {
+	case 1:
+		sc_start(&sd.bl, &sd.bl, SC_WEIGHT50, 100, 0, 0);
+		break;
+	case 2:
+		sc_start(&sd.bl, &sd.bl, SC_WEIGHT90, 100, 0, 0);
+		break;
+	}
 
-	// update overweight status
-	sd->regen.state.overweight = new_overweight;
+
+	// Update overweight status
+	sd.regen.state.overweight = new_overweight;
 }
 
 int32 pc_disguise(map_session_data *sd, int32 class_)
@@ -6268,21 +6275,16 @@ bool pc_isUseitem(map_session_data *sd,int32 n)
 
 	// Safe check type cash disappear when overweight [Napster]
 	if( item->flag.group || item->type == IT_CASH ){
+		// Check if the player is not overweighted
+		// On official servers both renewal and pre-renewal check for 70% overweight
+		if (pc_getpercentweight(*sd) >= battle_config.open_box_weight_rate) {
 #ifdef RENEWAL
-		// Check if the player is not overweighted
-		// In Renewal the limit is 70% weight and gives the same error message
-		if (pc_is70overweight(sd)) {
 			clif_msg_color( *sd, MSI_PICKUP_FAILED_ITEMCREATE, color_table[COLOR_RED] );
-			return 0;
-		}
 #else
-		// Check if the player is not overweighted
-		// In Pre-Renewal the limit is 50% weight and gives a specific error message
-		if (pc_is50overweight(sd)) {
 			clif_msg_color( *sd, MSI_CANT_GET_ITEM_BECAUSE_WEIGHT, color_table[COLOR_RED] );
+#endif
 			return 0;
 		}
-#endif
 
 		// Check if the player has enough free spaces in the inventory
 		// Official servers use 10 as the minimum amount of slots required to get the items

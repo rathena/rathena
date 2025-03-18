@@ -3647,7 +3647,7 @@ bool status_calc_weight(map_session_data *sd, enum e_status_calc_weight_opt flag
 		clif_updatestatus(*sd, SP_WEIGHT);
 	if (b_max_weight != sd->max_weight) {
 		clif_updatestatus(*sd, SP_MAXWEIGHT);
-		pc_updateweightstatus(sd);
+		pc_updateweightstatus(*sd);
 	}
 
 	return true;
