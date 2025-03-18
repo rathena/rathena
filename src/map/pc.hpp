@@ -1469,7 +1469,7 @@ bool pc_isequipped(map_session_data *sd, t_itemid nameid);
 enum adopt_responses pc_try_adopt(map_session_data *p1_sd, map_session_data *p2_sd, map_session_data *b_sd);
 bool pc_adoption(map_session_data *p1_sd, map_session_data *p2_sd, map_session_data *b_sd);
 
-uint8 pc_getpercentweight(map_session_data& sd);
+uint16 pc_getpercentweight(map_session_data& sd);
 void pc_updateweightstatus(map_session_data &sd);
 
 bool pc_addautobonus(std::vector<std::shared_ptr<s_autobonus>> &bonus, const char *script, int16 rate, uint32 dur, uint16 atk_type, const char *o_script, uint32 pos, bool onskill);

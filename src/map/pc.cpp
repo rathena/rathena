@@ -2942,9 +2942,9 @@ uint64 pc_calc_skilltree_normalize_job( map_session_data *sd ){
 	return c;
 }
 
-uint8 pc_getpercentweight(map_session_data &sd)
+uint16 pc_getpercentweight(map_session_data &sd)
 {
-	return static_cast<uint8>(sd.weight * 100 / sd.max_weight);
+	return static_cast<uint16>(sd.weight * 100 / sd.max_weight);
 }
 
 /*==========================================
@@ -2957,7 +2957,7 @@ uint8 pc_getpercentweight(map_session_data &sd)
 void pc_updateweightstatus(map_session_data &sd)
 {
 	uint8 old_overweight = (sd.sc.getSCE(SC_WEIGHT90) != nullptr) ? 2 : (sd.sc.getSCE(SC_WEIGHT50) != nullptr) ? 1 : 0;
-	uint8 overweight_percent = pc_getpercentweight(sd);
+	uint16 overweight_percent = pc_getpercentweight(sd);
 	uint8 new_overweight = (overweight_percent >= battle_config.major_overweight_rate) ? 2 : (overweight_percent >= battle_config.natural_heal_weight_rate) ? 1 : 0;
 
 	// No change
