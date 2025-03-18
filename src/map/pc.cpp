@@ -2942,9 +2942,16 @@ uint64 pc_calc_skilltree_normalize_job( map_session_data *sd ){
 	return c;
 }
 
-uint16 pc_getpercentweight(map_session_data &sd)
+/**
+ * Calculate the weight percentage of a player
+ * @param sd: Player data
+ * @param weight: (optional) Weight to check, if 0, player's current weight is used
+ */
+uint16 pc_getpercentweight(map_session_data& sd, uint32 weight)
 {
-	return static_cast<uint16>(sd.weight * 100 / sd.max_weight);
+	if (weight == 0)
+		weight = sd.weight;
+	return static_cast<uint16>(weight * 100 / sd.max_weight);
 }
 
 /*==========================================
@@ -2954,7 +2961,7 @@ uint16 pc_getpercentweight(map_session_data &sd)
  * 2: major overweight 90%
  * It's assumed that SC_WEIGHT50 and SC_WEIGHT90 are only started/stopped here.
  */
-void pc_updateweightstatus(map_session_data &sd)
+void pc_updateweightstatus(map_session_data& sd)
 {
 	uint8 old_overweight = (sd.sc.getSCE(SC_WEIGHT90) != nullptr) ? 2 : (sd.sc.getSCE(SC_WEIGHT50) != nullptr) ? 1 : 0;
 	uint16 overweight_percent = pc_getpercentweight(sd);
