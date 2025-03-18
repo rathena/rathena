@@ -4528,16 +4528,6 @@ static int32 skill_check_condition_mercenary(struct block_list *bl, uint16 skill
  *------------------------------------------*/
 int32 skill_area_sub_count (struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv, t_tick tick, int32 flag)
 {
-	switch (skill_id) {
-		case RL_QD_SHOT:
-			{
-				if (src->type == BL_PC && BL_CAST(BL_PC,src)) {
-					struct unit_data *ud = unit_bl2ud(src);
-					if (ud && ud->target == target->id)
-						return 1;
-				}
-			}
-	}
 	return 1;
 }
 
@@ -7304,10 +7294,9 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 		break;
 
 	case RL_QD_SHOT:
-		if (skill_area_temp[1] == bl->id)
-			break;
-		if (flag&1 && tsc && tsc->getSCE(SC_C_MARKER))
-			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag|SD_ANIMATION);
+		// Except for main target, only units marked with crimson marker are valid targets
+		if (skill_area_temp[1] == bl->id || (tsc != nullptr && tsc->getSCE(SC_C_MARKER) != nullptr))
+			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
 	case RL_D_TAIL:
 	case RL_HAMMER_OF_GOD:
@@ -12959,22 +12948,12 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		}
 		break;
 	case RL_QD_SHOT:
-		if (sd) {
-			skill_area_temp[1] = bl->id;
-			// Check surrounding
-			skill_area_temp[0] = map_foreachinrange(skill_area_sub, src, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
-			if (skill_area_temp[0])
-				map_foreachinallrange(skill_area_sub, src, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
-
-			// Main target always receives damage
-			clif_skill_nodamage(src, *src, skill_id, skill_lv);
-			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_LEVEL);
-		} else {
-			clif_skill_nodamage(src, *src, skill_id, skill_lv);
-			map_foreachinrange(skill_area_sub, src, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
-		}
-		status_change_end(src, SC_QD_SHOT_READY); // End here to prevent spamming of the skill onto the target.
-		skill_area_temp[0] = 0;
+		// Remember main target as it will always be hit by this skill
+		skill_area_temp[1] = bl->id;
+		// Iterate through all enemies in the area
+		map_foreachinallrange(skill_area_sub, src, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_damage_id);
+		// End here to prevent spamming of the skill onto the target
+		status_change_end(src, SC_QD_SHOT_READY);
 		skill_area_temp[1] = 0;
 		break;
 	case RL_FLICKER:
