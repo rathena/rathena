@@ -16,22 +16,23 @@ prontera,156,179,6	script	test_getiteminfo	117,{
 		// This line uses an INTERNAL function of your client to show item name by its ID!
 		// ^nItemID^XXXX -> Item Name
 		mes "Item ID: " + .@value + " ^nItemID^" + .@value;
+		// Check if the item ID is valid
+		.@value = getiteminfo(.@value,ITEMINFO_ID);
 		break;
 	case 2:
 		mes "Please enter an english item name.";
 		input .@value$;
+		.@value = getiteminfo(.@value$,ITEMINFO_ID);
 		mes "english item name: " + .@value$;
 		break;
 	case 3:
 		mes "Please enter an aegis item name.";
 		input .@value$;
+		.@value = getiteminfo(.@value$,ITEMINFO_ID);
 		mes "aegis item name: " + .@value$;
 		break;
 	}
-	if(!.@value && .@value$ != "") // To prevent to duplicate the output below
-		.@value = getiteminfo(.@value$,ITEMINFO_ID);
-	
-	if(getiteminfo(.@value,ITEMINFO_ID) == -1) {
+	if(.@value == -1) {
 		mes "Unknown Item, please input an existing item.";
 		end;
 	}
@@ -53,6 +54,7 @@ prontera,156,179,6	script	test_getiteminfo	117,{
 		case IT_DELAYCONSUME: mes ">  IT_DELAYCONSUME"; break;
 		case IT_SHADOWGEAR: mes ">  IT_SHADOWGEAR"; break;
 		case IT_CASH: mes ">  IT_CASH"; break;
+		default: mes "Unknown item type"; break;
 	}
 	mes "ITEMINFO_MAXCHANCE = " + getiteminfo(.@value,ITEMINFO_MAXCHANCE);
 	mes "ITEMINFO_GENDER = " + getiteminfo(.@value,ITEMINFO_GENDER);
@@ -60,6 +62,7 @@ prontera,156,179,6	script	test_getiteminfo	117,{
 		case SEX_FEMALE: mes ">  Female only"; break;
 		case SEX_MALE: mes ">  Male only"; break;
 		case SEX_BOTH: mes ">  Both Genders"; break;
+		default: mes "Unknown gender"; break;
 	}
 	mes "ITEMINFO_LOCATIONS = " + getiteminfo(.@value,ITEMINFO_LOCATIONS);
 	.@loc = getiteminfo(.@value,ITEMINFO_LOCATIONS);
@@ -133,6 +136,7 @@ prontera,156,179,6	script	test_getiteminfo	117,{
 			case W_DOUBLE_DS: mes ">  W_DOUBLE_DS"; break; // dagger + sword
 			case W_DOUBLE_DA: mes ">  W_DOUBLE_DA"; break; // dagger + axe
 			case W_DOUBLE_SA: mes ">  W_DOUBLE_SA"; break; // sword + axe
+			default: mes "Unknown subtype of weapon"; break;
 		}
 	} else if(getiteminfo(.@value,ITEMINFO_TYPE) == IT_AMMO) {
 		switch(getiteminfo(.@value,ITEMINFO_SUBTYPE)) {
@@ -145,6 +149,7 @@ prontera,156,179,6	script	test_getiteminfo	117,{
 			case AMMO_KUNAI: mes ">  AMMO_KUNAI"; break;
 			case AMMO_CANNONBALL: mes ">  AMMO_CANNONBALL"; break;
 			case AMMO_THROWWEAPON: mes ">  AMMO_THROWWEAPON"; break;
+			default: mes "Unknow subtype of ammo"; break;
 		}
 	}
 	close;
