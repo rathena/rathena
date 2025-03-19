@@ -1876,6 +1876,10 @@ void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event)
 				case DELAY_EVENT_ATTACK:
 					// This represents setting of attack delay (recharge time) that happens for non-PCs
 					attack_delay = status_get_adelay(&bl);
+					[[fallthrough]];
+				case DELAY_EVENT_CASTEND:
+					// A monster's AI is inactive for its attack motion after attacking or finish casting a skill
+					act_delay = status_get_amotion(&bl);
 					break;
 				case DELAY_EVENT_CASTBEGIN_ID:
 				case DELAY_EVENT_CASTBEGIN_POS:
@@ -1938,8 +1942,17 @@ void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event)
 	// When setting delays, we need to make sure not to decrease them in case they've been set by another source already
 	if (attack_delay > 0)
 		ud->attackabletime = i64max(tick + attack_delay, ud->attackabletime);
-	if (act_delay > 0)
-		ud->canact_tick = i64max(tick + act_delay, ud->canact_tick);
+	if (act_delay > 0) {
+		if (bl.type == BL_MOB && !(battle_config.mob_ai&0x2000)) {
+			// Monsters don't process their AI for this duration instead of having a canact_tick
+			// This is also the reason why they don't move during this time
+			mob_data& md = reinterpret_cast<mob_data&>(bl);
+			md.next_thinktime = i64max(tick + act_delay, md.next_thinktime);
+		}
+		else if(bl.type != BL_MOB) {
+			ud->canact_tick = i64max(tick + act_delay, ud->canact_tick);
+		}
+	}
 }
 
 /**
@@ -3260,13 +3273,8 @@ static int32 unit_attack_timer_sub(struct block_list* src, int32 tid, t_tick tic
 			ud->skill_id = 0;
 
 		// You can't move during your attack motion
-		if (src->type&battle_config.attack_walk_delay) {
-			// Monsters set their AI inactive instead of having a walkdelay
-			if (md != nullptr)
-				md->next_thinktime = tick + status_get_amotion(src);
-			else
-				unit_set_walkdelay(src, tick, sstatus->amotion, 1);
-		}
+		if (src->type&battle_config.attack_walk_delay)
+			unit_set_walkdelay(src, tick, sstatus->amotion, 1);
 	}
 
 	if(ud->state.attack_continue) {
