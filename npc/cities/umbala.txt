@@ -379,10 +379,16 @@ umbala,59,243,5	script	Utan Kid#1	787,{
 				mes "Meat? Thanks! I will pay you";
 				mes "back with these.";
 				delitem 517,1;// Meat
-				switch (rand(1,3)) {
-					case 1: getitem 909,3; break; // Jellopy
-					case 2: getitem 914,3; break; // Fluff
-					case 3: getitem 705,3; break; // Clover
+				if ( checkre(0) ) {
+					switch (rand(1,3)) {
+						case 1: getitem 909,3; break; // Jellopy
+						case 2: getitem 914,3; break; // Fluff
+						case 3: getitem 705,3; break; // Clover
+					}
+				} else {
+					getitem 909,2; // Jellopy
+					getitem 914,2; // Fluff
+					getitem 705,2; // Clover
 				}
 				emotion ET_SCISSOR;
 				close;
@@ -418,10 +424,16 @@ umbala,59,243,5	script	Utan Kid#1	787,{
 				mes "Umbaumbaumbabababah.";
 				mes "Umbababahum.";
 				delitem 517,1;// Meat
-				switch (rand(1,3)) {
-					case 1: getitem 909,3; break; // Jellopy
-					case 2: getitem 914,3; break; // Fluff
-					case 3: getitem 705,3; break; // Clover
+				if ( checkre(0) ) {
+					switch (rand(1,3)) {
+						case 1: getitem 909,3; break; // Jellopy
+						case 2: getitem 914,3; break; // Fluff
+						case 3: getitem 705,3; break; // Clover
+					}
+				} else {
+					getitem 909,2; // Jellopy
+					getitem 914,2; // Fluff
+					getitem 705,2; // Clover
 				}
 				emotion ET_SCISSOR;
 				close;
