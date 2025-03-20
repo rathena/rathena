@@ -13943,9 +13943,6 @@ TIMER_FUNC(skill_castend_id){
 		if (md != nullptr) {
 			if (md->skill_idx >= 0 && md->db->skill[md->skill_idx]->emotion >= ET_SURPRISE && md->db->skill[md->skill_idx]->emotion < ET_MAX)
 				clif_emotion(*src, static_cast<emotion_type>(md->db->skill[md->skill_idx]->emotion));
-
-			// Sets cooldowns and attack delay
-			mobskill_end(*md, tick);
 		}
 
 		if (!target || target->prev == nullptr)
@@ -14318,9 +14315,6 @@ TIMER_FUNC(skill_castend_pos){
 		if (md != nullptr) {
 			if (md->skill_idx >= 0 && md->db->skill[md->skill_idx]->emotion >= ET_SURPRISE && md->db->skill[md->skill_idx]->emotion < ET_MAX)
 				clif_emotion(*src, static_cast<emotion_type>(md->db->skill[md->skill_idx]->emotion));
-
-			// Sets cooldowns and attack delay
-			mobskill_end(*md, tick);
 		}
 
 		if (!skill_pos_maxcount_check(src, ud->skillx, ud->skilly, ud->skill_id, ud->skill_lv, src->type, true))

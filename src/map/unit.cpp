@@ -1835,7 +1835,7 @@ TIMER_FUNC(unit_resume_running){
 /**
  * Sets the delays that prevent attacks and skill usage considering the bl type
  * Makes sure that delays are not decreased in case they are already higher
- * Currently this function only handles normal attacks, cast begin and parry events
+ * Will also invoke bl type specific delay functions when required
  * @param bl Object to apply attack delay to
  * @param tick Current tick
  * @param event The event that resulted in calling this function
@@ -1874,18 +1874,18 @@ void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event)
 		case BL_MOB:
 			switch (event) {
 				case DELAY_EVENT_ATTACK:
+				case DELAY_EVENT_CASTEND:
+				case DELAY_EVENT_CASTCANCEL:
 					// This represents setting of attack delay (recharge time) that happens for non-PCs
 					attack_delay = status_get_adelay(&bl);
-					[[fallthrough]];
-				case DELAY_EVENT_CASTEND:
-					// A monster's AI is inactive for its attack motion after attacking or finish casting a skill
-					act_delay = status_get_amotion(&bl);
 					break;
 				case DELAY_EVENT_CASTBEGIN_ID:
 				case DELAY_EVENT_CASTBEGIN_POS:
 					// When monsters use skills, they only get delays on cast end and cast cancel
 					break;
 			}
+			// Set monster-specific delays (inactive AI time, monster skill delays)
+			mob_set_delay(reinterpret_cast<mob_data&>(bl), tick, event);
 			break;
 		case BL_HOM:
 			switch (event) {
@@ -1942,17 +1942,8 @@ void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event)
 	// When setting delays, we need to make sure not to decrease them in case they've been set by another source already
 	if (attack_delay > 0)
 		ud->attackabletime = i64max(tick + attack_delay, ud->attackabletime);
-	if (act_delay > 0) {
-		if (bl.type == BL_MOB && !(battle_config.mob_ai&0x2000)) {
-			// Monsters don't process their AI for this duration instead of having a canact_tick
-			// This is also the reason why they don't move during this time
-			mob_data& md = reinterpret_cast<mob_data&>(bl);
-			md.next_thinktime = i64max(tick + act_delay, md.next_thinktime);
-		}
-		else if(bl.type != BL_MOB) {
-			ud->canact_tick = i64max(tick + act_delay, ud->canact_tick);
-		}
-	}
+	if (act_delay > 0)
+		ud->canact_tick = i64max(tick + act_delay, ud->canact_tick);
 }
 
 /**
@@ -3400,11 +3391,10 @@ int32 unit_skillcastcancel(struct block_list *bl, char type)
 		}
 	}
 
+	unit_set_attackdelay(*bl, tick, DELAY_EVENT_CASTCANCEL);
+
 	if (bl->type == BL_MOB) {
 		mob_data& md = reinterpret_cast<mob_data&>(*bl);
-		// Sets cooldowns and attack delay
-		// This needs to happen even if the cast was cancelled
-		mobskill_end(md, tick);
 		md.skill_idx = -1;
 	}
 
