@@ -3759,6 +3759,9 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 
 	if (sd->special_state.no_walk_delay)
 		clif_status_load(&sd->bl, EFST_ENDURE, 0);
+	
+	if (sd->special_state.move_haste)
+		clif_status_load(&sd->bl, EFST_MOVHASTE_INFINITY, 0);
 
 	memset(&sd->special_state,0,sizeof(sd->special_state));
 
@@ -4276,6 +4279,9 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		clif_status_load(&sd->bl, EFST_ENDURE, 1);
 		base_status->mdef++;
 	}
+	
+	if (sd->special_state.move_haste)
+		clif_status_load(&sd->bl, EFST_MOVHASTE_INFINITY, 1);
 
 // ----- CONCENTRATION CALCULATION -----
 	if ((skill = pc_checkskill(sd, NW_GRENADE_MASTERY)) > 0)
@@ -7914,8 +7920,12 @@ static uint16 status_calc_speed(struct block_list *bl, status_change *sc, int32 
 				val = max( val, 30 );
 			}
 
-			if( sd && sd->bonus.speed_rate + sd->bonus.speed_add_rate > 0 ) // Permanent item-based speedup
-				val = max( val, sd->bonus.speed_rate + sd->bonus.speed_add_rate );
+			// Permanent item-based speed up
+			if( sd != nullptr && sd->bonus.speed_rate > 0 )
+				val = max( val, sd->bonus.speed_rate );
+			// Permanent item-based additional speed
+			if ( sd != nullptr && sd->bonus.speed_add_rate > 0 )
+				val += sd->bonus.speed_add_rate;
 		}
 		speed_rate += val;
 		val = 0;
@@ -7972,9 +7982,15 @@ static uint16 status_calc_speed(struct block_list *bl, status_change *sc, int32 
 		if( sc->getSCE(SC_WILD_WALK) != nullptr )
 			val = max( val, sc->getSCE(SC_WILD_WALK)->val2 );
 
-		// !FIXME: official items use a single bonus for this [ultramage]
-		if( sd && sd->bonus.speed_rate + sd->bonus.speed_add_rate < 0 ) // Permanent item-based speedup
-			val = max( val, -(sd->bonus.speed_rate + sd->bonus.speed_add_rate) );
+		// Hasted status
+		if ( sd != nullptr && sd->special_state.move_haste )
+			val = max( val, 25 );
+		// Permanent item-based speed up
+		if( sd != nullptr && sd->bonus.speed_rate < 0 )
+			val = max( val, -(sd->bonus.speed_rate) );
+		// Permanent item-based additional speed
+		if( sd != nullptr && sd->bonus.speed_add_rate < 0 )
+			val += -(sd->bonus.speed_add_rate);
 
 		speed_rate -= val;
 
