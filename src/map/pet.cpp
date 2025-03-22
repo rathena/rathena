@@ -681,7 +681,7 @@ bool pet_create_egg(map_session_data *sd, t_itemid item_id)
 	if (!pc_inventoryblank(sd))
 		return false; // Inventory full
 
-	intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->jname.c_str());
+	intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->name.c_str());
 
 	return true;
 }
@@ -1063,7 +1063,7 @@ bool pet_data_init(map_session_data *sd, struct s_pet *pet)
 	pd->masterteleport_timer = INVALID_TIMER;
 
 	if( !pet->rename_flag ){
-		safestrncpy( sd->pd->pet.name, pd->db->jname.c_str(), NAME_LENGTH );
+		safestrncpy( sd->pd->pet.name, pd->db->name.c_str(), NAME_LENGTH );
 	}
 
 	return true;
@@ -1346,7 +1346,7 @@ void pet_catch_process_end( map_session_data& sd, int32 target_id ){
 
 		std::shared_ptr<s_mob_db> mdb = mob_db.find(pet->class_);
 
-		intif_create_pet(sd.status.account_id, sd.status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->jname.c_str());
+		intif_create_pet(sd.status.account_id, sd.status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->name.c_str());
 	} else {
 		clif_pet_roulette( sd, false );
 	}
@@ -2328,7 +2328,7 @@ void pet_evolution(map_session_data *sd, int16 pet_id) {
 	if( !sd->pd->pet.rename_flag ){
 		std::shared_ptr<s_mob_db> mdb = mob_db.find( pet_id );
 
-		safestrncpy(sd->pd->pet.name, mdb->jname.c_str(), NAME_LENGTH);
+		safestrncpy(sd->pd->pet.name, mdb->name.c_str(), NAME_LENGTH);
 	}
 	status_set_viewdata(&sd->pd->bl, pet_id);
 

@@ -75,7 +75,7 @@ OnMobDead:
 			killmonster "ein_d02_i", "ein_d02_i_boss::OnBossDeath";
 			// mapannounce "ein_d02_i", "", bc_map;	// Unknown text
 			getunitdata( killedgid, .@data );
-			monster "ein_d02_i", .@data[UMOB_X], .@data[UMOB_Y], "--ja--", 20260,1, "ein_d02_i_boss::OnBossDeath";	// ILL_TEDDY_BEAR_S
+			monster "ein_d02_i", .@data[UMOB_X], .@data[UMOB_Y], "--en--", 20260,1, "ein_d02_i_boss::OnBossDeath";	// ILL_TEDDY_BEAR_S
 			end;
 		}
 	}
