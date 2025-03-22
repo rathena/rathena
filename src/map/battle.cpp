@@ -9630,7 +9630,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		case BA_DISSONANCE:
 			md.damage = 30 + skill_lv * 10;
 			if (sd)
-				md.damage += 3 * pc_checkskill(sd,BA_MUSICALLESSON);
+				md.damage += skill_lv * pc_checkskill(sd,BA_MUSICALLESSON);
 			break;
 #endif
 		case NPC_SELFDESTRUCTION:
