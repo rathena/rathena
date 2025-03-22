@@ -3527,6 +3527,8 @@
 	export_constant(MONSTER_TYPE_25);
 	export_constant(MONSTER_TYPE_26);
 	export_constant(MONSTER_TYPE_27);
+	export_constant(MONSTER_TYPE_ABR_PASSIVE);
+	export_constant(MONSTER_TYPE_ABR_OFFENSIVE);
 
 	/* classes */
 	export_constant(CLASS_NONE);

@@ -176,6 +176,9 @@ enum e_aegis_monstertype : uint16 {
 	MONSTER_TYPE_25 = 0x1,
 	MONSTER_TYPE_26 = 0xB695,
 	MONSTER_TYPE_27 = 0x8084,
+	// Special AI
+	MONSTER_TYPE_ABR_PASSIVE = 0x21,
+	MONSTER_TYPE_ABR_OFFENSIVE = 0xA5,
 };
 
 /// Aegis monster class types
