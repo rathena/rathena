@@ -3647,7 +3647,7 @@ bool status_calc_weight(map_session_data *sd, enum e_status_calc_weight_opt flag
 		clif_updatestatus(*sd, SP_WEIGHT);
 	if (b_max_weight != sd->max_weight) {
 		clif_updatestatus(*sd, SP_MAXWEIGHT);
-		pc_updateweightstatus(sd);
+		pc_updateweightstatus(*sd);
 	}
 
 	return true;
@@ -5381,7 +5381,7 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, sta
 		regen->flag &= ~RGN_SP;
 
 	if (sc->getSCE(SC_TENSIONRELAX)) {
-		if (sc->getSCE(SC_WEIGHT50) || sc->getSCE(SC_WEIGHT90))
+		if ( sc->getSCE(SC_WEIGHT50) != nullptr || sc->getSCE(SC_WEIGHT90) != nullptr )
 			regen->state.overweight = 0; // 1x HP regen
 		else {
 			regen->rate.hp += 200;
@@ -13418,7 +13418,7 @@ int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid)
 			}
 			break;
 		case SC_TENSIONRELAX:
-			if (sc && (sc->getSCE(SC_WEIGHT50) || sc->getSCE(SC_WEIGHT90)))
+			if ( sc != nullptr && ( sc->getSCE(SC_WEIGHT50) != nullptr || sc->getSCE(SC_WEIGHT90) != nullptr ) )
 				status_get_regen_data(bl)->state.overweight = 1; // Add the overweight flag back
 			break;
 		case SC_MONSTER_TRANSFORM:
