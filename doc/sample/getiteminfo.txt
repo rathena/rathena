@@ -34,7 +34,7 @@ prontera,156,179,6	script	test_getiteminfo	117,{
 	}
 	if(.@value == -1) {
 		mes "Unknown Item, please input an existing item.";
-		end;
+		close;
 	}
 	
 	mes "Current item info:";
