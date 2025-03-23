@@ -15785,7 +15785,7 @@ static int32 skill_dance_overlap_sub(struct block_list* bl, va_list ap)
 {
 	struct skill_unit* target = (struct skill_unit*)bl;
 	struct skill_unit* src = va_arg(ap, struct skill_unit*);
-	int32 flag = va_arg(ap, int32);
+	bool flag = va_arg(ap, int32) != 0;
 
 	if (src == nullptr || target == nullptr)
 		return 0;
@@ -15799,24 +15799,26 @@ static int32 skill_dance_overlap_sub(struct block_list* bl, va_list ap)
 		return 0;
 
 	// These action needs to happen for both target (0) and the src (1)
-	for (int16 i = 0; i < 2; i++) {
-		skill_unit* unit = (i==0)?target:src;
-
-		if (flag && !(unit->val2&(1 << UF_ENSEMBLE))) {
-			// Set dissonance
-			// Need to delete previous unit on the client as it can't handle unit_id changes
-			clif_skill_delunit(*unit);
-			// Add ensemble to signal this unit is overlapping.
-			unit->val2 |= (1 << UF_ENSEMBLE);
+	for( skill_unit* unit : { target, src } ){
+		if (flag) {
+			if (!(unit->val2&(1 << UF_ENSEMBLE)) {
+				// Set dissonance
+				// Need to delete previous unit on the client as it can't handle unit_id changes
+				clif_skill_delunit(*unit);
+				// Add ensemble to signal this unit is overlapping.
+				unit->val2 |= (1 << UF_ENSEMBLE);
+			}
 		}
-		else if (!flag && (unit->val2&(1 << UF_ENSEMBLE))) {
-			// Remove dissonance
-			// Need to delete previous unit on the client as it can't handle unit_id changes
-			clif_skill_delunit(*unit);
-			// Remove overlap signal
-			unit->val2 &= ~(1 << UF_ENSEMBLE);
-			// If the unit is removed because overlap dissonance killed the caster, we need to reset it here
-			skill_dance_switch(unit, 1);
+		else {
+			if ((unit->val2&(1 << UF_ENSEMBLE)) {
+				// Remove dissonance
+				// Need to delete previous unit on the client as it can't handle unit_id changes
+				clif_skill_delunit(*unit);
+				// Remove overlap signal
+				unit->val2 &= ~(1 << UF_ENSEMBLE);
+				// If the unit is removed because overlap dissonance killed the caster, we need to reset it here
+				skill_dance_switch(unit, 1);
+			}
 		}
 		skill_getareachar_skillunit_visibilty(unit, AREA);
 	}
@@ -15840,7 +15842,7 @@ int32 skill_dance_overlap(struct skill_unit* unit, int32 flag)
 /**
  * Converts this group information so that it is handled as a Dissonance or Ugly Dance cell.
  * @param unit Skill unit data (from BA_DISSONANCE or DC_UGLYDANCE)
- * @param revert 0 = Convert, 1 = Revert
+ * @param revert false = Convert, true = Revert
  * @return Whether the unit is currently overlapping with another song/dance (causing dissonance) or not
  * @TODO: This should be completely removed later and rewritten
  *	The entire execution of the overlapping songs instances is dirty and hacked together
