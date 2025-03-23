@@ -8454,6 +8454,7 @@ Body:
       Target: Enemy
       Flag:
         Song: true
+        NoOverlap: true
   - Id: 318
     Name: BA_FROSTJOKER
     Description: Unbarring Octave
