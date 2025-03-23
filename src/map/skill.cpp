@@ -15801,7 +15801,7 @@ static int32 skill_dance_overlap_sub(struct block_list* bl, va_list ap)
 	// These action needs to happen for both target (0) and the src (1)
 	for( skill_unit* unit : { target, src } ){
 		if (flag) {
-			if (!(unit->val2&(1 << UF_ENSEMBLE)) {
+			if (!(unit->val2&(1 << UF_ENSEMBLE))) {
 				// Set dissonance
 				// Need to delete previous unit on the client as it can't handle unit_id changes
 				clif_skill_delunit(*unit);
@@ -15810,14 +15810,14 @@ static int32 skill_dance_overlap_sub(struct block_list* bl, va_list ap)
 			}
 		}
 		else {
-			if ((unit->val2&(1 << UF_ENSEMBLE)) {
+			if ((unit->val2&(1 << UF_ENSEMBLE))) {
 				// Remove dissonance
 				// Need to delete previous unit on the client as it can't handle unit_id changes
 				clif_skill_delunit(*unit);
 				// Remove overlap signal
 				unit->val2 &= ~(1 << UF_ENSEMBLE);
 				// If the unit is removed because overlap dissonance killed the caster, we need to reset it here
-				skill_dance_switch(unit, 1);
+				skill_dance_switch(unit, true);
 			}
 		}
 		skill_getareachar_skillunit_visibilty(unit, AREA);
