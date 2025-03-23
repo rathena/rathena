@@ -15807,6 +15807,7 @@ static int32 skill_dance_overlap_sub(struct block_list* bl, va_list ap)
 				clif_skill_delunit(*unit);
 				// Add ensemble to signal this unit is overlapping.
 				unit->val2 |= (1 << UF_ENSEMBLE);
+				skill_getareachar_skillunit_visibilty(unit, AREA);
 			}
 		}
 		else {
@@ -15818,9 +15819,9 @@ static int32 skill_dance_overlap_sub(struct block_list* bl, va_list ap)
 				unit->val2 &= ~(1 << UF_ENSEMBLE);
 				// If the unit is removed because overlap dissonance killed the caster, we need to reset it here
 				skill_dance_switch(unit, true);
+				skill_getareachar_skillunit_visibilty(unit, AREA);
 			}
 		}
-		skill_getareachar_skillunit_visibilty(unit, AREA);
 	}
 
 	return 1;
