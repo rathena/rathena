@@ -1629,12 +1629,7 @@ int32 skill_additional_effect( struct block_list* src, struct block_list *bl, ui
 #else
 	case DC_UGLYDANCE: {
 		int32 rate = 5 + 5 * skill_lv;
-		int32 skill = pc_checkskill( sd, DC_DANCINGLESSON );
-
-		if( skill > 0 ){
-			rate += 5 + skill;
-		}
-
+		rate += skill_lv * pc_checkskill(sd, DC_DANCINGLESSON);
 		status_zap( bl, 0, rate );
 		} break;
 #endif
