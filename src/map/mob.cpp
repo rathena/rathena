@@ -7023,7 +7023,7 @@ void mob_reload_itemmob_data(void) {
 		}
 
 		for( const std::shared_ptr<s_mob_drop>& entry : pair.second->dropitem ){
-			if( entry->nameid )
+			if( !entry->nameid )
 				continue;
 
 			item_data* id = itemdb_search(entry->nameid);
