@@ -9169,6 +9169,7 @@ void status_set_viewdata(struct block_list *bl, int32 class_)
 				sd->vd.cloth_color = cap_value(sd->status.clothes_color, MIN_CLOTH_COLOR, MAX_CLOTH_COLOR);
 				sd->vd.body_style = cap_value(sd->status.body, MIN_BODY_STYLE, MAX_BODY_STYLE);
 				sd->vd.sex = sd->status.sex;
+				sd->vd.robe = sd->status.robe;
 
 				if (sd->vd.cloth_color) {
 					if(sd->sc.option&OPTION_WEDDING && battle_config.wedding_ignorepalette)
