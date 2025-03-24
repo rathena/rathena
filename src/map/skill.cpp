@@ -13934,16 +13934,10 @@ TIMER_FUNC(skill_castend_id){
 			break;
 
 		// These actions happen even if the skill fails except when the caster is already dead
+		unit_set_attackdelay(*src, tick, DELAY_EVENT_CASTEND);
 		if (md != nullptr) {
-			// When a monster uses a skill, its AI will be inactive for its attack motion
-			// This is also the reason why it doesn't move during this time
-			md->next_thinktime = tick + status_get_amotion(src);
-
 			if (md->skill_idx >= 0 && md->db->skill[md->skill_idx]->emotion >= ET_SURPRISE && md->db->skill[md->skill_idx]->emotion < ET_MAX)
 				clif_emotion(*src, static_cast<emotion_type>(md->db->skill[md->skill_idx]->emotion));
-
-			// Sets cooldowns and attack delay
-			mobskill_end(*md, tick);
 		}
 
 		if (!target || target->prev == nullptr)
@@ -14312,16 +14306,10 @@ TIMER_FUNC(skill_castend_pos){
 			break;
 
 		// These actions happen even if the skill fails except when the caster is already dead
+		unit_set_attackdelay(*src, tick, DELAY_EVENT_CASTEND);
 		if (md != nullptr) {
-			// When a monster uses a skill, its AI will be inactive for its attack motion
-			// This is also the reason why it doesn't move during this time
-			md->next_thinktime = tick + status_get_amotion(src);
-
 			if (md->skill_idx >= 0 && md->db->skill[md->skill_idx]->emotion >= ET_SURPRISE && md->db->skill[md->skill_idx]->emotion < ET_MAX)
 				clif_emotion(*src, static_cast<emotion_type>(md->db->skill[md->skill_idx]->emotion));
-
-			// Sets cooldowns and attack delay
-			mobskill_end(*md, tick);
 		}
 
 		if (!skill_pos_maxcount_check(src, ud->skillx, ud->skilly, ud->skill_id, ud->skill_lv, src->type, true))
