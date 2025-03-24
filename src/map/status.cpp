@@ -5381,7 +5381,7 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, sta
 		regen->flag &= ~RGN_SP;
 
 	if (sc->getSCE(SC_TENSIONRELAX)) {
-		if ( sc->getSCE(SC_WEIGHT50) != nullptr || sc->getSCE(SC_WEIGHT90) != nullptr )
+		if (sc->getSCE(SC_WEIGHT50) || sc->getSCE(SC_WEIGHT90))
 			regen->state.overweight = 0; // 1x HP regen
 		else {
 			regen->rate.hp += 200;
@@ -13418,7 +13418,7 @@ int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid)
 			}
 			break;
 		case SC_TENSIONRELAX:
-			if ( sc != nullptr && ( sc->getSCE(SC_WEIGHT50) != nullptr || sc->getSCE(SC_WEIGHT90) != nullptr ) )
+			if (sc && (sc->getSCE(SC_WEIGHT50) || sc->getSCE(SC_WEIGHT90)))
 				status_get_regen_data(bl)->state.overweight = 1; // Add the overweight flag back
 			break;
 		case SC_MONSTER_TRANSFORM:

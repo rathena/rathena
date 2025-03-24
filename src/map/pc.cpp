@@ -2993,7 +2993,7 @@ void pc_updateweightstatus(map_session_data& sd)
 
 
 	// Update overweight status
-	sd.regen.state.overweight = new_overweight;
+	sd.regen.state.overweight = new_overweight != 0;
 }
 
 int32 pc_disguise(map_session_data *sd, int32 class_)
@@ -6283,7 +6283,6 @@ bool pc_isUseitem(map_session_data *sd,int32 n)
 	// Safe check type cash disappear when overweight [Napster]
 	if( item->flag.group || item->type == IT_CASH ){
 		// Check if the player is not overweighted
-		// On official servers both renewal and pre-renewal check for 70% overweight
 		if (pc_getpercentweight(*sd) >= battle_config.open_box_weight_rate) {
 #ifdef RENEWAL
 			clif_msg_color( *sd, MSI_PICKUP_FAILED_ITEMCREATE, color_table[COLOR_RED] );
