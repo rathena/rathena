@@ -4372,7 +4372,7 @@ void mob_set_delay(mob_data& md, t_tick tick, e_delay_event event)
 {
 	// A monster's AI is inactive for its attack motion after attacking or finish casting a skill
 	if (!(battle_config.mob_ai&0x2000) && (event == DELAY_EVENT_ATTACK || event == DELAY_EVENT_CASTEND))
-		md.next_thinktime = tick + md.status.amotion;
+		md.next_thinktime = i64max(tick + md.status.amotion, md.next_thinktime);
 
 	// On cast end and cast cancel, the monster skill delays are set
 	if (event == DELAY_EVENT_CASTEND || event == DELAY_EVENT_CASTCANCEL)
