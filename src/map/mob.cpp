@@ -4050,19 +4050,13 @@ bool mob_chat_display_message(mob_data &md, uint16 msg_id) {
 	return false;
 }
 
-
 /**
- * This function handles actions that should be done at the end of a skill
+ * This function sets the monster skill delays
  * This needs to happen whether the skill was cast successfully or cast-cancelled
- * It handles setting the skill delays and the normal attack wait time
  * @param bl: Mob data
  */
-void mobskill_end(mob_data& md, t_tick tick)
+void mobskill_delay(mob_data& md, t_tick tick)
 {
-	// After a skill a monster cannot attack for its attack delay
-	// We make sure to not reduce it in case it was set by a skill for another purpose
-	md.ud.attackabletime = i64max(tick + md.status.adelay, md.ud.attackabletime);
-
 	// If skill was used by a script, do not apply any skill delay
 	if (md.skill_idx < 0)
 		return;
@@ -4366,6 +4360,23 @@ int32 mobskill_event(struct mob_data *md, struct block_list *src, t_tick tick, i
 		md->target_id = target_id;
 
 	return res;
+}
+
+/**
+ * This function sets the monster-specific delays based on the delay event
+ * @param md Monster to apply delays to
+ * @param tick Current tick
+ * @param event The event that resulted in calling this function
+ */
+void mob_set_delay(mob_data& md, t_tick tick, e_delay_event event)
+{
+	// A monster's AI is inactive for its attack motion after attacking or finish casting a skill
+	if (!(battle_config.mob_ai&0x2000) && (event == DELAY_EVENT_ATTACK || event == DELAY_EVENT_CASTEND))
+		md.next_thinktime = i64max(tick + md.status.amotion, md.next_thinktime);
+
+	// On cast end and cast cancel, the monster skill delays are set
+	if (event == DELAY_EVENT_CASTEND || event == DELAY_EVENT_CASTCANCEL)
+		mobskill_delay(md, tick);
 }
 
 // Player cloned mobs. [Valaris]
@@ -7023,7 +7034,7 @@ void mob_reload_itemmob_data(void) {
 		}
 
 		for( const std::shared_ptr<s_mob_drop>& entry : pair.second->dropitem ){
-			if( entry->nameid )
+			if( !entry->nameid )
 				continue;
 
 			item_data* id = itemdb_search(entry->nameid);
