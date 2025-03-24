@@ -19191,7 +19191,7 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 			}
 			break;
 		case ST_RECOVER_WEIGHT_RATE:
-			if( sc != nullptr && (sc->getSCE(SC_WEIGHT50) != nullptr || sc->getSCE(SC_WEIGHT90) != nullptr) ) {
+			if( sd.regen.state.overweight ) {
 				clif_skill_fail( sd, skill_id );
 				return false;
 			}
