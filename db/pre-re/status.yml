@@ -662,6 +662,8 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       NoForcedEnd: true
+    EndOnStart:
+      Weight90: true
   - Status: Weight90
     Icon: EFST_WEIGHTOVER90
     Flags:
@@ -673,6 +675,8 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       NoForcedEnd: true
+    EndOnStart:
+      Weight50: true
   - Status: Aspdpotion0
     Icon: EFST_ATTHASTE_POTION1
     CalcFlags:

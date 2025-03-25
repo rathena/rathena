@@ -18423,7 +18423,7 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 			return true;
 	}
 
-	if( pc_is90overweight(&sd) ) {
+	if( sc != nullptr && sc->getSCE(SC_WEIGHT90) != nullptr ) {
 		clif_skill_fail( sd, skill_id, USESKILL_FAIL_WEIGHTOVER );
 		return false;
 	}
@@ -19160,11 +19160,7 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 			}
 			break;
 		case ST_RECOVER_WEIGHT_RATE:
-#ifdef RENEWAL
-			if(pc_is70overweight(&sd)) {
-#else
-			if(pc_is50overweight(&sd)) {
-#endif
+			if( sd.regen.state.overweight ) {
 				clif_skill_fail( sd, skill_id );
 				return false;
 			}
@@ -19463,14 +19459,14 @@ bool skill_check_condition_castend( map_session_data& sd, uint16 skill_id, uint1
 	if( sd.skillitem == skill_id && !sd.skillitem_keep_requirement ) // Casting finished (Item skill or Hocus-Pocus)
 		return true;
 
-	if( pc_is90overweight(&sd) ) {
-		clif_skill_fail( sd, skill_id, USESKILL_FAIL_WEIGHTOVER );
-		return false;
-	}
-
 	status_change* sc = &sd.sc;
 	if (sc->empty())
 		sc = nullptr;
+
+	if ( sc != nullptr && sc->getSCE(SC_WEIGHT90) != nullptr ) {
+		clif_skill_fail(sd, skill_id, USESKILL_FAIL_WEIGHTOVER);
+		return false;
+	}
 
 	// perform skill-specific checks (and actions)
 	switch( skill_id ) {
