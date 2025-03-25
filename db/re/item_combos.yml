@@ -60672,3 +60672,4 @@ Body:
       skill "WL_HELLINFERNO",3;
       bonus bMatk,7*.@r;
       bonus bAspdRate,.@r;
+      
