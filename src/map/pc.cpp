@@ -2971,18 +2971,11 @@ void pc_updateweightstatus(map_session_data& sd)
 	if( old_overweight == new_overweight )
 		return;
 
-	// Stop old status change
-	switch (old_overweight) {
-	case 1:
+	switch (new_overweight) {
+	case 0:
 		status_change_end(&sd.bl, SC_WEIGHT50);
-		break;
-	case 2:
 		status_change_end(&sd.bl, SC_WEIGHT90);
 		break;
-	}
-
-	// Start new status change
-	switch (new_overweight) {
 	case 1:
 		sc_start(&sd.bl, &sd.bl, SC_WEIGHT50, 100, 0, 0);
 		break;
@@ -2990,7 +2983,6 @@ void pc_updateweightstatus(map_session_data& sd)
 		sc_start(&sd.bl, &sd.bl, SC_WEIGHT90, 100, 0, 0);
 		break;
 	}
-
 
 	// Update overweight status
 	sd.regen.state.overweight = new_overweight != 0;
