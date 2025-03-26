@@ -15,7 +15,7 @@
 	next;
 	switch ( select( "Buy Arrows", "Quiver Exchange", "Sell Items", "Cancel" )) {
 	case 1:
-		close2;
+		close2;	// !Fix me: official server uses "callshop" then "close"
 		callshop "Arrow_Archer", 1;
 		break;
 	case 2:
