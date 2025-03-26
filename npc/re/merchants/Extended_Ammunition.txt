@@ -19,7 +19,7 @@
 		callshop "Arrow_Archer", 1;
 		break;
 	case 2:
-		close2;
+		close2;	// !Fix me: official server uses "callshop" then "close"
 		callshop "Quiver_Archer", 1;
 		break;
 	case 3:
