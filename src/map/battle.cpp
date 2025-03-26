@@ -1238,7 +1238,9 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 			else
 				damage = -sce->val2;
 		}
-		if ((--sce->val3) <= 0 || (sce->val2 <= 0) || skill_id == AL_HOLYLIGHT)
+		// Pressure usually won't reach this code in pre-renewal and does consequently not remove Kyrie
+		// But it's still coded to do that - this reflects how it is done officially
+		if ((--sce->val3) <= 0 || (sce->val2 <= 0) || skill_id == AL_HOLYLIGHT || skill_id == PA_PRESSURE)
 			status_change_end(target, SC_KYRIE);
 	}
 
