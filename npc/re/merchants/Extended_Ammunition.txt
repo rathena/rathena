@@ -15,14 +15,17 @@
 	next;
 	switch ( select( "Buy Arrows", "Quiver Exchange", "Sell Items", "Cancel" )) {
 	case 1:
+		close2;	// !Fix me: official server uses "callshop" then "close"
 		callshop "Arrow_Archer", 1;
-		close;
+		break;
 	case 2:
+		close2;	// !Fix me: official server uses "callshop" then "close"
 		callshop "Quiver_Archer", 1;
-		close;
+		break;
 	case 3:
+		close2;	// !Fix me: official server uses "callshop" then "close"
 		callshop "Selling_Items", 2;
-		close;
+		break;
 	case 4:
 		mes "[Arrow Merchant]";
 		mes "You can take a look at other things more calmly.";
@@ -87,14 +90,17 @@ OnInit:
 	next;
 	switch ( select( "Buy Ninjutsu Tool", "Parchment Exchange", "Sell Items", "Cancel" )) {
 	case 1:
+		close2;	// !Fix me: official server uses "callshop" then "close"
 		callshop "Weapons_Ninja", 1;
-		close;
+		break;
 	case 2:
+		close2;	// !Fix me: official server uses "callshop" then "close"
 		callshop "Box_Exchange_Ninja", 1;
-		close;
+		break;
 	case 3:
+		close2;	// !Fix me: official server uses "callshop" then "close"
 		callshop "Selling_Items", 2;
-		close;
+		break;
 	case 4:
 		break;
 	}
