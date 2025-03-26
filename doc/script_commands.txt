@@ -3713,32 +3713,34 @@ It will return -1 if there is no such monster (or the type value is invalid),
 or "null" if you requested the monster's name.
 
 Valid types are:
-	MOB_NAME - monster's japanese name, if there is no such monster "null" is returned
-	MOB_LV - monster's level
-	MOB_MAXHP - monster's maximum hp
-	MOB_BASEEXP - monster's base experience
-	MOB_JOBEXP - monster's job experience
-	MOB_ATK1 - monster's atk
-	MOB_ATK2 - monster's atk2
-	MOB_DEF - monster's def
-	MOB_MDEF - monster's mdef
-	MOB_RES - monster's res
-	MOB_MRES - monster's mres
-	MOB_STR - monster's str
-	MOB_AGI - monster's agi
-	MOB_VIT - monster's vit
-	MOB_INT - monster's int
-	MOB_DEX - monster's dex
-	MOB_LUK - monster's luk
-	MOB_RANGE - monster's range
-	MOB_RANGE2 - monster's range2
-	MOB_RANGE3 - monster's range3
-	MOB_SIZE - monster's size
-	MOB_RACE - monster's race
-	MOB_ELEMENT - monster's element(doesn't return the element level, only the element ID)
-	MOB_MODE - monster's mode
-	MOB_MVPEXP - monster's mvp experience
-	MOB_ID - monster's ID
+	MOB_NAME          - monster's japanese name
+	MOB_LV            - monster's level
+	MOB_MAXHP         - monster's maximum hp
+	MOB_BASEEXP       - monster's base experience
+	MOB_JOBEXP        - monster's job experience
+	MOB_ATKMIN        - monster's minimum atk
+	MOB_ATKMAX        - monster's maximum atk
+	MOB_DEF           - monster's def
+	MOB_MDEF          - monster's mdef
+	MOB_RES           - monster's res
+	MOB_MRES          - monster's mres
+	MOB_STR           - monster's str
+	MOB_AGI           - monster's agi
+	MOB_VIT           - monster's vit
+	MOB_INT           - monster's int
+	MOB_DEX           - monster's dex
+	MOB_LUK           - monster's luk
+	MOB_SPEED         - monster's speed
+	MOB_ATKRANGE      - monster's attack range
+	MOB_SKILLRANGE    - monster's skill cast range
+	MOB_CHASERANGE    - monster's chase range
+	MOB_SIZE          - monster's size
+	MOB_RACE          - monster's race
+	MOB_ELEMENT       - monster's element
+	MOB_ELEMENTLV     - monster's element level
+	MOB_MODE          - monster's mode
+	MOB_MVPEXP        - monster's mvp experience
+	MOB_ID            - monster's ID
 
 For more details, see the sample in 'doc/sample/getmonsterinfo.txt'.
 
@@ -6907,24 +6909,6 @@ Using this the normal/old way means labels don't trigger when a player didn't
 attack/kill a monster. This is because it breaks compatibility with older scripts if
 forced to use the new method. However, if you wish to use the new label type with this
 command, simply use 1 for type. Any other number won't be recognized.
-
----------------------------------------
-
-*strmobinfo(<type>,<monster id>);
-
-This function will return information about a monster record in the database, as
-per 'db/(pre-)re/mob_db.yml'. Type is the kind of information returned. Valid types are:
-It will return 0 if there is no such monster (or the type value is invalid),
-or an empty string if you requested the monster's name.
-
- 1 - 'english name' field in the database, a string.
- 2 - 'japanese name' field in the database, a string.
-     All other returned values are numbers:
- 3 - Level.
- 4 - Maximum HP.
- 5 - Maximum SP.
- 6 - Experience reward.
- 7 - Job experience reward.
 
 ---------------------------------------
 
