@@ -98,7 +98,7 @@ OnInit:
 		callshop "Box_Exchange_Ninja", 1;
 		break;
 	case 3:
-		close2;
+		close2;	// !Fix me: official server uses "callshop" then "close"
 		callshop "Selling_Items", 2;
 		break;
 	case 4:
