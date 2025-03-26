@@ -198,7 +198,14 @@ bonus2 bSkillUseSPrate,sk,n;		Decreases SP consumption of skill sk by n%
 Atk/Def
 -------
 bonus2 bSkillAtk,sk,n;    		Increases damage of skill sk by n%
-bonus bSkillRatio,n;			Adds n to the skillratio of all attacks/skills that use it
+bonus bSkillRatio,n;			Adds n to the skillratio of all attacks/skills
+					Detailed Explanation (all examples assume n=5):
+					- Normal attacks will have their skillratio increased (100% -> 105%)
+					- Only skills that have a skill ratio are affected, skills that deal fixed damage are not affected
+					- Both physical and magical skills are affected
+					- Bonus benefits skills with low skill ratio more (200% -> 205%, 800% -> 805%)
+					- Bonus is applied to each hit of skills that multiply damage by number of hits (100%*8 -> 105%*8)
+					- This bonus works the same way as status changes like Provoke in renewal and stacks linearly with them
 bonus bShortAtkRate,n;			Increases damage of short ranged attacks by n%
 bonus bLongAtkRate,n;     		Increases damage of long ranged attacks by n%
 bonus bCritAtkRate,n;     		Increases critical damage by +n%
