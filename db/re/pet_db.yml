@@ -3312,7 +3312,7 @@ Body:
 #    Script: >
 #      .@i = getpetinfo(PETINFO_INTIMATE);
 #
-#      if (.@i >= PET_INTIMATE_LOYAL || .@i >= PET_INTIMATE_CORDIAL) {
+#      if (.@i >= PET_INTIMATE_CORDIAL) {
 #         bonus bMaxHP,75;
 #         bonus bLuk,2;
 #      }
@@ -3330,7 +3330,7 @@ Body:
 #
 #      bonus bDex,3;
 #
-#      if (.@i >= PET_INTIMATE_LOYAL || .@i >= PET_INTIMATE_CORDIAL) {
+#      if (.@i >= PET_INTIMATE_CORDIAL) {
 #         bonus bDex,3;
 #      }
 #
@@ -3347,7 +3347,7 @@ Body:
 #
 #      bonus bStr,2;
 #
-#      if (.@i >= PET_INTIMATE_LOYAL || .@i >= PET_INTIMATE_CORDIAL) {
+#      if (.@i >= PET_INTIMATE_CORDIAL) {
 #         bonus bBaseAtk,10;
 #      }
 #
@@ -3364,7 +3364,7 @@ Body:
 #
 #      bonus bMaxSP,10;
 #
-#      if (.@i >= PET_INTIMATE_LOYAL || .@i >= PET_INTIMATE_CORDIAL) {
+#      if (.@i >= PET_INTIMATE_CORDIAL) {
 #         bonus bInt,3;
 #      }
 #
@@ -3381,7 +3381,7 @@ Body:
 #
 #      bonus bMaxHP,100;
 #
-#      if (.@i >= PET_INTIMATE_LOYAL || .@i >= PET_INTIMATE_CORDIAL) {
+#      if (.@i >= PET_INTIMATE_CORDIAL) {
 #         bonus bVit,3;
 #      }
 #
@@ -3396,7 +3396,7 @@ Body:
 #    Script: >
 #      .@i = getpetinfo(PETINFO_INTIMATE);
 #
-#      if (.@i >= PET_INTIMATE_LOYAL || .@i >= PET_INTIMATE_CORDIAL) {
+#      if (.@i >= PET_INTIMATE_CORDIAL) {
 #         bonus bBaseAtk,10;
 #      }
 #
@@ -3411,7 +3411,7 @@ Body:
 #    Script: >
 #      .@i = getpetinfo(PETINFO_INTIMATE);
 #
-#      if (.@i >= PET_INTIMATE_LOYAL || .@i >= PET_INTIMATE_CORDIAL) {
+#      if (.@i >= PET_INTIMATE_CORDIAL) {
 #         bonus bMaxHP,100;
 #      }
 #
@@ -3426,7 +3426,7 @@ Body:
 #    Script: >
 #      .@i = getpetinfo(PETINFO_INTIMATE);
 #
-#      if (.@i >= PET_INTIMATE_LOYAL || .@i >= PET_INTIMATE_CORDIAL) {
+#      if (.@i >= PET_INTIMATE_CORDIAL) {
 #         bonus bMaxHP,50;
 #         bonus bMaxSP,25;
 #      }
@@ -3442,7 +3442,7 @@ Body:
 #    Script: >
 #      .@i = getpetinfo(PETINFO_INTIMATE);
 #
-#      if (.@i >= PET_INTIMATE_LOYAL || .@i >= PET_INTIMATE_CORDIAL) {
+#      if (.@i >= PET_INTIMATE_CORDIAL) {
 #         bonus bMaxSP,50;
 #      }
 #
@@ -3457,7 +3457,7 @@ Body:
 #    Script: >
 #      .@i = getpetinfo(PETINFO_INTIMATE);
 #
-#      if (.@i >= PET_INTIMATE_LOYAL || .@i >= PET_INTIMATE_CORDIAL) {
+#      if (.@i >= PET_INTIMATE_CORDIAL) {
 #         bonus bMatk,10;
 #      }
 #
@@ -3472,7 +3472,7 @@ Body:
 #    Script: >
 #      .@i = getpetinfo(PETINFO_INTIMATE);
 #
-#      if (.@i >= PET_INTIMATE_LOYAL || .@i >= PET_INTIMATE_CORDIAL) {
+#      if (.@i >= PET_INTIMATE_CORDIAL) {
 #         bonus bAllStats,1;
 #      }
 #
@@ -3515,7 +3515,7 @@ Body:
 #      else if (.@i >= PET_INTIMATE_NEUTRAL) {
 #         bonus bBaseAtk,20;
 #      }
-#      else if (.@i >= PET_INTIMATE_AWKWARD || .@i >= PET_INTIMATE_SHY) {
+#      else {
 #         bonus bBaseAtk,10;
 #         bonus bDef,-3;
 #      }
@@ -3543,7 +3543,7 @@ Body:
 #         bonus bMatk,10;
 #         bonus bBaseAtk,10;
 #      }
-#      else if (.@i >= PET_INTIMATE_AWKWARD || .@i >= PET_INTIMATE_SHY) {
+#      else {
 #         bonus bBaseAtk,10;
 #         bonus bDef,-3;
 #      }
