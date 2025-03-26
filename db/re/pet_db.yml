@@ -762,6 +762,7 @@ Body:
           - Item: Alice_Card
             Amount: 1
   - Mob: EVENT_RICECAKE
+    TameItem: Mysterious_Rice_Powder
     EggItem: Rice_Cake_Egg
     FoodItem: Green_Herb
     Fullness: 3
