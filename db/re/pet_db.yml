@@ -2425,6 +2425,7 @@ Body:
 #          - Item: Cookies_Bat
 #            Amount: 100
   - Mob: WILOW
+    #TameItem: Dew_Of_Old_Tree
     EggItem: Wilow_Egg
     FoodItem: Tree_Of_Archer_1
     Fullness: 2   # unknown
@@ -2442,6 +2443,7 @@ Body:
          bonus bInt,2;
       }
   - Mob: ROWEEN
+    #TameItem: Foul_Rotten_Meat
     EggItem: Roween_Egg
     FoodItem: Rotten_Meat
     Fullness: 2   # unknown
@@ -2556,12 +2558,13 @@ Body:
 #      }
 #
   - Mob: DARK_PRIEST
+    TameItem: Darkness_Bible
     EggItem: Dark_Priest_Egg
     FoodItem: Evil_Water
     Fullness: 2   # unknown
     HungryDelay: 120   # unknown
     IntimacyFed: 15   # unknown
-    CaptureRate: 0   # unknown
+    CaptureRate: 200   # unknown
     SpecialPerformance: false   # unknown
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
