@@ -3280,3 +3280,266 @@ Body:
 #         bonus2 bAddClass,Class_Normal,1;
 #      }
 #
+#  - Mob: DOMOVOI
+#    EggItem: Brownie_Egg
+#    FoodItem: Pet_Food   # unknown
+#    Fullness: 2   # unknown
+#    HungryDelay: 120   # unknown
+#    IntimacyFed: 15   # unknown
+#    CaptureRate: 0   # unknown
+#    SpecialPerformance: false   # unknown
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#
+#      if (.@i >= PET_INTIMATE_LOYAL) {
+#         bonus2 bAddRace,RC_DemiHuman,1;
+#         bonus2 bMagicAddRace,RC_DemiHuman,1;
+#         bonus2 bSubRace,RC_DemiHuman,1;
+#      }
+#
+#  - Mob: WOODIE
+#    EggItem: Woodie_Egg
+#    FoodItem: Pet_Food   # unknown
+#    Fullness: 2   # unknown
+#    HungryDelay: 120   # unknown
+#    IntimacyFed: 15   # unknown
+#    CaptureRate: 0   # unknown
+#    SpecialPerformance: false   # unknown
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#
+#      if (.@i >= PET_INTIMATE_LOYAL || .@i >= PET_INTIMATE_CORDIAL) {
+#         bonus bMaxHP,75;
+#         bonus bLuk,2;
+#      }
+#
+#  - Mob: ELEPHANT
+#    EggItem: Elephant_Egg
+#    FoodItem: Pet_Food   # unknown
+#    Fullness: 2   # unknown
+#    HungryDelay: 120   # unknown
+#    IntimacyFed: 15   # unknown
+#    CaptureRate: 0   # unknown
+#    SpecialPerformance: false   # unknown
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#
+#      bonus bDex,3;
+#
+#      if (.@i >= PET_INTIMATE_LOYAL || .@i >= PET_INTIMATE_CORDIAL) {
+#         bonus bDex,3;
+#      }
+#
+#  - Mob: GORILLA
+#    EggItem: Gorilla_Egg
+#    FoodItem: Pet_Food   # unknown
+#    Fullness: 2   # unknown
+#    HungryDelay: 120   # unknown
+#    IntimacyFed: 15   # unknown
+#    CaptureRate: 0   # unknown
+#    SpecialPerformance: false   # unknown
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#
+#      bonus bStr,2;
+#
+#      if (.@i >= PET_INTIMATE_LOYAL || .@i >= PET_INTIMATE_CORDIAL) {
+#         bonus bBaseAtk,10;
+#      }
+#
+#  - Mob: LION
+#    EggItem: Lion_Egg
+#    FoodItem: Pet_Food   # unknown
+#    Fullness: 2   # unknown
+#    HungryDelay: 120   # unknown
+#    IntimacyFed: 15   # unknown
+#    CaptureRate: 0   # unknown
+#    SpecialPerformance: false   # unknown
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#
+#      bonus bMaxSP,10;
+#
+#      if (.@i >= PET_INTIMATE_LOYAL || .@i >= PET_INTIMATE_CORDIAL) {
+#         bonus bInt,3;
+#      }
+#
+#  - Mob: RHINO
+#    EggItem: Rhino_Egg
+#    FoodItem: Pet_Food   # unknown
+#    Fullness: 2   # unknown
+#    HungryDelay: 120   # unknown
+#    IntimacyFed: 15   # unknown
+#    CaptureRate: 0   # unknown
+#    SpecialPerformance: false   # unknown
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#
+#      bonus bMaxHP,100;
+#
+#      if (.@i >= PET_INTIMATE_LOYAL || .@i >= PET_INTIMATE_CORDIAL) {
+#         bonus bVit,3;
+#      }
+#
+#  - Mob: PAD_RUBYLIT
+#    EggItem: Rubylit_Egg
+#    FoodItem: Pet_Food   # unknown
+#    Fullness: 2   # unknown
+#    HungryDelay: 120   # unknown
+#    IntimacyFed: 15   # unknown
+#    CaptureRate: 0   # unknown
+#    SpecialPerformance: false   # unknown
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#
+#      if (.@i >= PET_INTIMATE_LOYAL || .@i >= PET_INTIMATE_CORDIAL) {
+#         bonus bBaseAtk,10;
+#      }
+#
+#  - Mob: PAD_SAPPHILIT
+#    EggItem: Sapphilit_Egg
+#    FoodItem: Pet_Food   # unknown
+#    Fullness: 2   # unknown
+#    HungryDelay: 120   # unknown
+#    IntimacyFed: 15   # unknown
+#    CaptureRate: 0   # unknown
+#    SpecialPerformance: false   # unknown
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#
+#      if (.@i >= PET_INTIMATE_LOYAL || .@i >= PET_INTIMATE_CORDIAL) {
+#         bonus bMaxHP,100;
+#      }
+#
+#  - Mob: PAD_EMELIT
+#    EggItem: Emelit_Egg
+#    FoodItem: Pet_Food   # unknown
+#    Fullness: 2   # unknown
+#    HungryDelay: 120   # unknown
+#    IntimacyFed: 15   # unknown
+#    CaptureRate: 0   # unknown
+#    SpecialPerformance: false   # unknown
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#
+#      if (.@i >= PET_INTIMATE_LOYAL || .@i >= PET_INTIMATE_CORDIAL) {
+#         bonus bMaxHP,50;
+#         bonus bMaxSP,25;
+#      }
+#
+#  - Mob: PAD_TOPALIT
+#    EggItem: Topalit_Egg
+#    FoodItem: Pet_Food   # unknown
+#    Fullness: 2   # unknown
+#    HungryDelay: 120   # unknown
+#    IntimacyFed: 15   # unknown
+#    CaptureRate: 0   # unknown
+#    SpecialPerformance: false   # unknown
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#
+#      if (.@i >= PET_INTIMATE_LOYAL || .@i >= PET_INTIMATE_CORDIAL) {
+#         bonus bMaxSP,50;
+#      }
+#
+#  - Mob: PAD_AMELIT
+#    EggItem: Amelit_Egg
+#    FoodItem: Pet_Food   # unknown
+#    Fullness: 2   # unknown
+#    HungryDelay: 120   # unknown
+#    IntimacyFed: 15   # unknown
+#    CaptureRate: 0   # unknown
+#    SpecialPerformance: false   # unknown
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#
+#      if (.@i >= PET_INTIMATE_LOYAL || .@i >= PET_INTIMATE_CORDIAL) {
+#         bonus bMatk,10;
+#      }
+#
+#  - Mob: PAD_MYTHLIT
+#    EggItem: Mythlit_Egg
+#    FoodItem: Pet_Food   # unknown
+#    Fullness: 2   # unknown
+#    HungryDelay: 120   # unknown
+#    IntimacyFed: 15   # unknown
+#    CaptureRate: 0   # unknown
+#    SpecialPerformance: false   # unknown
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#
+#      if (.@i >= PET_INTIMATE_LOYAL || .@i >= PET_INTIMATE_CORDIAL) {
+#         bonus bAllStats,1;
+#      }
+#
+#  - Mob: PAD_TAMADORA
+#    EggItem: Tamadora_Egg
+#    FoodItem: Pet_Food   # unknown
+#    Fullness: 2   # unknown
+#    HungryDelay: 120   # unknown
+#    IntimacyFed: 15   # unknown
+#    CaptureRate: 0   # unknown
+#    SpecialPerformance: false   # unknown
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#
+#      if (.@i >= PET_INTIMATE_LOYAL) {
+#         bonus3 bAutoSpell,"AL_HEAL",1,10;
+#         skill "AL_HEAL",1;
+#      }
+#      else if (.@i >= PET_INTIMATE_CORDIAL) {
+#         bonus3 bAutoSpell,"AL_HEAL",1,10;
+#      }
+#
+#  - Mob: ORK_HERO
+#    EggItem: Orc_Hero_Egg
+#    FoodItem: Pet_Food   # unknown
+#    Fullness: 2   # unknown
+#    HungryDelay: 120   # unknown
+#    IntimacyFed: 15   # unknown
+#    CaptureRate: 0   # unknown
+#    SpecialPerformance: false   # unknown
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#
+#      if (.@i >= PET_INTIMATE_LOYAL) {
+#         bonus bBaseAtk,40;
+#      }
+#      else if (.@i >= PET_INTIMATE_CORDIAL) {
+#         bonus bBaseAtk,30;
+#      }
+#      else if (.@i >= PET_INTIMATE_NEUTRAL) {
+#         bonus bBaseAtk,20;
+#      }
+#      else if (.@i >= PET_INTIMATE_AWKWARD || .@i >= PET_INTIMATE_SHY) {
+#         bonus bBaseAtk,10;
+#         bonus bDef,-3;
+#      }
+#
+#  - Mob: ORC_LORD
+#    EggItem: Orc_Lord_Egg
+#    FoodItem: Pet_Food   # unknown
+#    Fullness: 2   # unknown
+#    HungryDelay: 120   # unknown
+#    IntimacyFed: 15   # unknown
+#    CaptureRate: 0   # unknown
+#    SpecialPerformance: false   # unknown
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#
+#      if (.@i >= PET_INTIMATE_LOYAL) {
+#         bonus bMatk,20;
+#         bonus bBaseAtk,20;
+#      }
+#      else if (.@i >= PET_INTIMATE_CORDIAL) {
+#         bonus bMatk,15;
+#         bonus bBaseAtk,15;
+#      }
+#      else if (.@i >= PET_INTIMATE_NEUTRAL) {
+#         bonus bMatk,10;
+#         bonus bBaseAtk,10;
+#      }
+#      else if (.@i >= PET_INTIMATE_AWKWARD || .@i >= PET_INTIMATE_SHY) {
+#         bonus bBaseAtk,10;
+#         bonus bDef,-3;
+#      }
