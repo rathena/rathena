@@ -6720,6 +6720,11 @@ Body:
             Level: 5
           - Name: DK_TWOHANDDEF
             Level: 10
+      - Name: DK_DRAGONIC_PIERCE
+        MaxLevel: 5
+        Requires:
+          - Name: DK_HACKANDSLASHER
+            Level: 7
   - Job: Meister
     Inherit:
       Novice: true
