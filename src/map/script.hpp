@@ -356,14 +356,15 @@ enum script_parse_options {
 	SCRIPT_RETURN_EMPTY_SCRIPT = 0x4// returns the script object instead of nullptr for empty scripts
 };
 
-enum monsterinfo_types {
-	MOB_NAME = 0,
+enum e_monsterinfo_types : uint8 {
+	MOB_NAME = 1,
 	MOB_LV,
 	MOB_MAXHP,
+	MOB_MAXSP,
 	MOB_BASEEXP,
 	MOB_JOBEXP,
-	MOB_ATK1,
-	MOB_ATK2,
+	MOB_ATKMIN,
+	MOB_ATKMAX,
 	MOB_DEF,
 	MOB_MDEF,
 	MOB_RES,
@@ -374,12 +375,14 @@ enum monsterinfo_types {
 	MOB_INT,
 	MOB_DEX,
 	MOB_LUK,
-	MOB_RANGE,
-	MOB_RANGE2,
-	MOB_RANGE3,
+	MOB_SPEED,
+	MOB_ATKRANGE,
+	MOB_SKILLRANGE,
+	MOB_CHASERANGE,
 	MOB_SIZE,
 	MOB_RACE,
 	MOB_ELEMENT,
+	MOB_ELEMENTLV,
 	MOB_MODE,
 	MOB_MVPEXP,
 	MOB_ID,
@@ -2145,6 +2148,19 @@ enum e_hat_effects : int16{
 	FOOTPRINT_EF_DOGFOOT,
 	HAT_EF_C_AUSPICLOUD,
 	HAT_EF_AURA_OF_GHOST_S,
+	HAT_EF_C_ROS2024_WING_1,
+	FOOTPRINT_EF_DUMPLING,
+	FOOTPRINT_EF_PANDA_BASIC,
+	FOOTPRINT_EF_PANDA_COLOR,
+	HAT_EF_ATQUE_POENITENTIA,
+	HAT_EF_PERM_FROST_OBLIVION,
+	HAT_EF_ATQUE_POENITENTIA2,
+	HAT_EF_GUIDE_OF_DEAD_TEXT,
+	HAT_EF_MEDJED_TEXT,
+	HAT_EF_INKPAINTING_DAY,
+	HAT_EF_INKPAINTING_NIGHT,
+	HAT_EF_KUNG_FU_PANDA,
+	HAT_EF_C_MGSGPH_POTARL,
 	HAT_EF_MAX
 };
 
@@ -2208,6 +2224,20 @@ enum e_eleminfo : uint8 {
 	ELEMINFO_ID = 0,
 	ELEMINFO_GAMEID,
 	ELEMINFO_CLASS,
+};
+
+/* getguildinfo script command */
+enum e_guildinfo : uint8 {
+	GUILDINFO_NAME = 1,
+	GUILDINFO_LEVEL,
+	GUILDINFO_AVERAGELEVEL,
+	GUILDINFO_ONLINECOUNT,
+	GUILDINFO_MEMBERCOUNT,
+	GUILDINFO_MAXMEMBERCOUNT,
+	GUILDINFO_EXP,
+	GUILDINFO_NEXTEXP,
+	GUILDINFO_MASTERID,
+	GUILDINFO_MASTERNAME,
 };
 
 class ConstantDatabase : public YamlDatabase {
@@ -2274,7 +2304,7 @@ void script_set_constant_(const char* name, int64 value, const char* constant_na
 void script_hardcoded_constants(void);
 
 void script_cleararray_pc(map_session_data* sd, const char* varname);
-void script_setarray_pc(map_session_data* sd, const char* varname, uint32 idx, int64 value, int* refcache);
+void script_setarray_pc(map_session_data* sd, const char* varname, uint32 idx, int64 value, int32* refcache);
 
 int32 script_config_read(const char *cfgName);
 void do_init_script(void);

@@ -29,7 +29,7 @@ using namespace rathena;
 
 /// Instance Idle Queue data
 struct s_instance_wait {
-	std::deque<int> id;
+	std::deque<int32> id;
 	int32 timer;
 } instance_wait;
 
@@ -1048,7 +1048,7 @@ bool instance_destroy(int32 instance_id)
  * @param y: Y coordinate
  * @return e_instance_enter value
  */
-e_instance_enter instance_enter(map_session_data *sd, int32 instance_id, const char *name, short x, short y)
+e_instance_enter instance_enter(map_session_data *sd, int32 instance_id, const char *name, int16 x, int16 y)
 {
 	nullpo_retr(IE_OTHER, sd);
 	

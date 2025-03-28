@@ -69,7 +69,8 @@ enum e_battle_check_target : uint32 {
 
 	BCT_ALL			= 0x3F0000, ///< All targets
 
-	BCT_WOS			= 0x400000, ///< Except self (currently used for skipping if src == bl in skill_area_sub)
+	BCT_WOS			= 0x400000, ///< Except self and your master
+	BCT_SLAVE		= BCT_SELF|BCT_WOS,				///< Does not hit yourself/master, but hits your/master's slaves
 	BCT_GUILD		= BCT_SAMEGUILD|BCT_GUILDALLY,	///< Guild AND Allies (BCT_SAMEGUILD|BCT_GUILDALLY)
 	BCT_NOGUILD		= BCT_ALL&~BCT_GUILD,			///< Except guildmates
 	BCT_NOPARTY		= BCT_ALL&~BCT_PARTY,			///< Except party members
@@ -95,7 +96,7 @@ struct Damage {
 	int64 damage, /// Right hand damage
 		damage2; /// Left hand damage
 	enum e_damage_type type; /// Check clif_damage for type
-	short div_; /// Number of hit
+	int16 div_; /// Number of hit
 	int32 amotion,
 		dmotion;
 	int32 blewcount; /// Number of knockback
@@ -180,7 +181,6 @@ struct Battle_Config
 	int32 defnotenemy;
 	int32 vs_traps_bctall;
 	int32 traps_setting;
-	int32 summon_flora; //[Skotlex]
 	int32 clear_unit_ondeath; //[Skotlex]
 	int32 clear_unit_onwarp; //[Skotlex]
 	int32 random_monster_checklv;
@@ -205,7 +205,6 @@ struct Battle_Config
 	int32 mvp_exp_rate;
 	int32 mvp_hp_rate;
 	int32 monster_hp_rate;
-	int32 monster_max_aspd;
 	int32 view_range_rate;
 	int32 chase_range_rate;
 	int32 atc_spawn_quantity_limit;
@@ -284,7 +283,6 @@ struct Battle_Config
 	int32 natural_healsp_interval;
 	int32 natural_heal_skill_interval;
 	int32 natural_heal_weight_rate;
-	int32 natural_heal_weight_rate_renewal;
 	int32 arrow_decrement;
 	int32 ammo_unequip;
 	int32 ammo_check_weapon;
@@ -434,6 +432,7 @@ struct Battle_Config
 	int32 exp_bonus_attacker;
 	int32 exp_bonus_max_attacker;
 	int32 min_skill_delay_limit;
+	int32 amotion_min_skill_delay;
 	int32 default_walk_delay;
 	int32 no_skill_delay;
 	int32 attack_walk_delay;
@@ -710,6 +709,7 @@ struct Battle_Config
 	int32 show_skill_scale;
 	int32 achievement_mob_share;
 	int32 slave_stick_with_master;
+	int32 slave_active_with_master;
 	int32 at_logout_event;
 	int32 homunculus_starving_rate;
 	int32 homunculus_starving_delay;
@@ -748,6 +748,7 @@ struct Battle_Config
 	int32 macro_detection_timeout;
 	int32 macro_detection_punishment;
 	int32 macro_detection_punishment_time;
+	int32 macrochecker_delay;
 
 	int32 feature_dynamicnpc_timeout;
 	int32 feature_dynamicnpc_rangex;
@@ -766,6 +767,11 @@ struct Battle_Config
 	int32 item_stacking;
 	int32 hom_delay_reset_vaporize;
 	int32 hom_delay_reset_warp;
+	int32 alchemist_summon_setting;
+	int32 loot_range;
+	int32 assist_range;
+	int32 open_box_weight_rate;
+	int32 major_overweight_rate;
 
 #include <custom/battle_config_struct.inc>
 };

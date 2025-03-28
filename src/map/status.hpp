@@ -36,6 +36,36 @@ class status_change;
 #	define MAX_REFINE 10
 #endif
 
+/**
+ * Minimum ASPD (maximum delay between attacks)
+ * Default value of 8000 effectively results in a minimum ASPD of -200 for players
+ */
+#ifndef MIN_ASPD
+	#define MIN_ASPD 8000
+#endif
+
+/**
+ * Maximum ASPD for non-players (minimum delay between attacks)
+ * This is applied after ASPD adjustments, so a monster can theoretically be naturally faster than this
+ * Officially no buff can reduce the delay below 100ms
+ * This is also the default value for monsters if AttackMotion and AttackDelay are not defined
+ * The maximum ASPD for players is defined in player.conf
+ */
+#ifndef MAX_ASPD_NOPC
+	#define MAX_ASPD_NOPC 100
+#endif
+
+// DO NOT MODIFY THESE!
+// The amotion divider defines the relation between amotion and adelay
+// For players amotion is half of adelay
+#define AMOTION_DIVIDER_PC 2
+// For monsters, homunculus, mercenaries and elementals, amotion and adelay are equal or independent
+#define AMOTION_DIVIDER_NOPC 1
+// Value for amotion that is represented as 0 ASPD on the client
+#define AMOTION_ZERO_ASPD 2000
+// Value that represents by how much each ASPD point reduces amotion
+#define AMOTION_INTERVAL 10
+
 /// Refine type
 enum e_refine_type : uint16{
 	REFINE_TYPE_ARMOR = 0,
@@ -1384,12 +1414,22 @@ enum sc_type : int16 {
 	SC_DAWN_MOON,
 	SC_STAR_BURST,
 	SC_SKY_ENCHANT,
+	SC_WILD_WALK,
+
+	// Shinkiro/Shiranui
+	SC_SHADOW_CLOCK,
+	SC_SHINKIROU_CALL,
+	SC_NIGHTMARE,
+	SC_SBUNSHIN,
+
+	SC_CONTENTS_34,
+	SC_CONTENTS_35,
 
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 
 /// Official status change ids, used to display status icons on the client.
-enum efst_type : short{
+enum efst_type : int16{
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
 /// @APIHOOK_START(EFST_ENUM)
 	EFST_BLANK = -1,
@@ -2848,7 +2888,9 @@ enum efst_type : short{
 	EFST_CONTENTS_30,
 	EFST_CONTENTS_31,
 	EFST_CONTENTS_32,
-	EFST_CONTENTS_33,	//1491
+	EFST_CONTENTS_33,
+	EFST_CONTENTS_34,
+	EFST_CONTENTS_35,	//1493
 
 	EFST_C_BUFF_1 = 1509,
 	EFST_C_BUFF_2,
@@ -2878,10 +2920,10 @@ enum e_joint_break : uint8 {
 	BREAK_FLAGS = BREAK_ANKLE | BREAK_WRIST | BREAK_KNEE | BREAK_SHOULDER | BREAK_WAIST | BREAK_NECK,
 };
 
-extern short current_equip_item_index;
+extern int16 current_equip_item_index;
 extern uint32 current_equip_combo_pos;
 extern int32 current_equip_card_id;
-extern short current_equip_opt_index;
+extern int16 current_equip_opt_index;
 
 //Status change option definitions (options are what makes status changes visible to chars
 //who were not on your field of sight when it happened)
@@ -3296,7 +3338,7 @@ struct status_data {
 	uint32 max_hp;
 	uint32 max_sp;
 	uint32 max_ap;
-	short
+	int16
 		str, agi, vit, int_, dex, luk,
 		pow, sta, wis, spl, con, crt,
 		eatk;
@@ -3310,7 +3352,7 @@ struct status_data {
 		speed,
 		amotion, clientamotion, adelay, dmotion;
 	int32 mode;
-	short
+	int16
 		hit, flee, cri, flee2,
 		def2, mdef2,
 #ifdef RENEWAL_ASPD
@@ -3371,7 +3413,7 @@ struct regen_data {
 	struct {
 		unsigned walk:1; //Can you regen even when walking?
 		unsigned gc:1;	//Tags when you should have double regen due to GVG castle
-		unsigned overweight :2; //overweight state (1: 50%, 2: 90%)
+		bool overweight; //overweight state
 		unsigned block :2; //Block regen flag (1: Hp, 2: Sp)
 	} state;
 
@@ -3417,7 +3459,7 @@ public:
 		uint8 interact;
 	} cant;/* status change state flags */
 	//int32 sg_id; //ID of the previous Storm gust that hit you
-	short comet_x, comet_y; // Point where src casted Comet - required to calculate damage from this point
+	int16 comet_x, comet_y; // Point where src casted Comet - required to calculate damage from this point
 /**
  * The Storm Gust counter was dropped in renewal
  **/
@@ -3632,7 +3674,7 @@ void status_calc_state(struct block_list *bl, status_change *sc, std::bitset<SCS
 void status_calc_slave_mode(mob_data& md);
 
 bool status_check_skilluse(struct block_list *src, struct block_list *target, uint16 skill_id, int32 flag);
-int32 status_check_visibility(struct block_list *src, struct block_list *target);
+bool status_check_visibility(block_list* src, block_list* target, bool checkblind);
 
 int32 status_change_spread(block_list *src, block_list *bl);
 

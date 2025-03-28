@@ -126,7 +126,7 @@ int32 sock2newfd(SOCKET s)
 	return fd;
 }
 
-int32 sAccept(int32 fd, struct sockaddr* addr, int* addrlen)
+int32 sAccept(int32 fd, struct sockaddr* addr, int32* addrlen)
 {
 	SOCKET s;
 

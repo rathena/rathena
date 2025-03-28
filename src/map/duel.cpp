@@ -93,7 +93,7 @@ bool duel_check_player_limit(struct duel& pDuel)
 static int32 duel_showinfo_sub(map_session_data* sd, va_list va)
 {
 	map_session_data *ssd = va_arg(va, map_session_data*);
-	int32 *p = va_arg(va, int*);
+	int32 *p = va_arg(va, int32*);
 
 	if (sd->duel_group != ssd->duel_group) 
 		return 0;

@@ -13,8 +13,8 @@ struct s_search_store_search;
 struct s_autotrader;
 
 struct s_vending {
-	short index; /// cart index (return item data)
-	short amount; ///amout of the item for vending
+	int16 index; /// cart index (return item data)
+	int16 amount; ///amout of the item for vending
 	uint32 value; ///at which price
 };
 

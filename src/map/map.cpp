@@ -1386,8 +1386,8 @@ int32 map_foreachindir(int32 (*func)(struct block_list*, va_list), int16 m, int1
 	int32 bx, by;
 	int32 mx0, mx1, my0, my1, rx, ry;
 	uint8 dir = map_calc_dir_xy( x0, y0, x1, y1, DIR_EAST );
-	short dx = dirx[dir];
-	short dy = diry[dir];
+	int16 dx = dirx[dir];
+	int16 dy = diry[dir];
 	va_list ap;
 
 	if (m < 0)
@@ -1818,8 +1818,8 @@ bool map_closest_freecell(int16 m, int16 *x, int16 *y, int32 type, int32 flag)
 
 	//Algorithm only works up to costrange of 34
 	while(costrange <= 34) {
-		short dx = dirx[dir];
-		short dy = diry[dir];
+		int16 dx = dirx[dir];
+		int16 dy = diry[dir];
 
 		//Linear search
 		if( !direction_diagonal( (directions)dir ) && costrange % MOVE_COST == 0 ){
@@ -1871,6 +1871,47 @@ bool map_closest_freecell(int16 m, int16 *x, int16 *y, int32 type, int32 flag)
 			dir = DIR_NORTHEAST;
 		} else {
 			dir = ( dir + 2 ) % DIR_MAX;
+		}
+	}
+
+	return false;
+}
+
+/*==========================================
+ * Locates a nearby, walkable cell with no blocks of a certain type on it
+ * This one uses the official algorithm the find a free cell
+ * Returns true on success and sets x and y to cell found.
+ * Otherwise returns false and x and y are not changed.
+ * type: Types of block to count
+ * flag: 
+ *		0x1 - only count standing units
+ *------------------------------------------*/
+bool map_nearby_freecell(int16 m, int16 &x, int16 &y, int32 type, int32 flag)
+{
+	int16 tx = x;
+	int16 ty = y;
+
+	if(!map_count_oncell(m, tx, ty, type, flag))
+		return true; //Current cell is free
+
+	// One of two possible orders of direction processing is used at random
+	directions dir[2][DIR_MAX] = {
+		{DIR_NORTHEAST, DIR_EAST, DIR_SOUTHEAST, DIR_SOUTH, DIR_NORTH, DIR_SOUTHWEST, DIR_WEST, DIR_NORTHWEST},
+		{DIR_SOUTHWEST, DIR_WEST, DIR_NORTHWEST, DIR_NORTH, DIR_SOUTH, DIR_NORTHEAST, DIR_EAST, DIR_SOUTHEAST}
+	};
+	uint16 array_idx = rnd_value<decltype(array_idx)>(0, ARRAYLENGTH(dir) - 1);
+
+	// Try each direction in the selected array in order
+	for(uint8 dir_idx = 0; dir_idx < DIR_MAX; dir_idx++) {
+		int16 dx = dirx[dir[array_idx][dir_idx]];
+		int16 dy = diry[dir[array_idx][dir_idx]];
+
+		tx = x + dx;
+		ty = y + dy;
+		if (!map_count_oncell(m, tx, ty, type, flag) && map_getcell(m, tx, ty, CELL_CHKPASS)) {
+			x = tx;
+			y = ty;
+			return true;
 		}
 	}
 
@@ -3127,19 +3168,19 @@ uint8 map_calc_dir_xy(int16 srcx, int16 srcy, int16 x, int16 y, uint8 srcdir) {
  *------------------------------------------*/
 int32 map_random_dir(struct block_list *bl, int16 *x, int16 *y)
 {
-	short xi = *x-bl->x;
-	short yi = *y-bl->y;
-	short i=0;
+	int16 xi = *x-bl->x;
+	int16 yi = *y-bl->y;
+	int16 i=0;
 	int32 dist2 = xi*xi + yi*yi;
-	short dist = (short)sqrt((float)dist2);
+	int16 dist = (int16)sqrt((float)dist2);
 
 	if (dist < 1) dist =1;
 
 	do {
 		directions j = static_cast<directions>(1 + 2 * rnd_value(0, 3)); //Pick a random diagonal direction
-		short segment = rnd_value((short)1, dist); //Pick a random interval from the whole vector in that direction
+		int16 segment = rnd_value((int16)1, dist); //Pick a random interval from the whole vector in that direction
 		xi = bl->x + segment*dirx[j];
-		segment = (short)sqrt((float)(dist2 - segment*segment)); //The complement of the previously picked segment
+		segment = (int16)sqrt((float)(dist2 - segment*segment)); //The complement of the previously picked segment
 		yi = bl->y + segment*diry[j];
 	} while (
 		(map_getcell(bl->m,xi,yi,CELL_CHKNOPASS) || !path_search(nullptr,bl->m,bl->x,bl->y,xi,yi,1,CELL_CHKNOREACH))
