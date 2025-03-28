@@ -3793,7 +3793,6 @@ int32 unit_free(struct block_list *bl, clr_type clrtype)
 
 			skill_clear_unitgroup(bl);
 			status_change_clear(bl,1);
-			pd->~pet_data();
 			break;
 		}
 		case BL_MOB: {
@@ -3858,7 +3857,6 @@ int32 unit_free(struct block_list *bl, clr_type clrtype)
 
 			if( md->tomb_nid )
 				mvptomb_destroy(md);
-			md->~mob_data();
 			break;
 		}
 		case BL_HOM:
@@ -3889,8 +3887,6 @@ int32 unit_free(struct block_list *bl, clr_type clrtype)
 
 			skill_clear_unitgroup(bl);
 			status_change_clear(bl,1);
-
-			hd->~homun_data();
 			break;
 		}
 		case BL_MER: {
@@ -3915,8 +3911,6 @@ int32 unit_free(struct block_list *bl, clr_type clrtype)
 
 			skill_clear_unitgroup(bl);
 			status_change_clear(bl,1);
-
-			md->~s_mercenary_data();
 			break;
 		}
 		case BL_ELEM: {
