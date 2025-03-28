@@ -164,10 +164,10 @@ Mission_Status:
 	deletearray .@j[0], getarraysize(.@j);
 	for (.@i = 0; .@i < .Quests; .@i++) {
 		.@j[.@i] = getd("Mission" + .@i);
-		.@j[.Quests] = .@j[.Quests] + strmobinfo(3,.@j[.@i]);
-		.@j[.Quests+1] = .@j[.Quests+1] + (strmobinfo(6,.@j[.@i]) / (getbattleflag("base_exp_rate") / 100) * .Modifier[0]);
-		.@j[.Quests+2] = .@j[.Quests+2] + (strmobinfo(7,.@j[.@i]) / (getbattleflag("job_exp_rate") / 100) * .Modifier[1]);
-		mes " > "+Chk(getd("Mission"+.@i+"_"),#Mission_Count) + strmobinfo(1,.@j[.@i]) + " (" + getd("Mission"+.@i+"_") + "/" + #Mission_Count + ")^000000";
+		.@j[.Quests] = .@j[.Quests] + getmonsterinfo(.@j[.@i], MOB_LV);
+		.@j[.Quests+1] = .@j[.Quests+1] + (getmonsterinfo(.@j[.@i], MOB_BASEEXP) / (getbattleflag("base_exp_rate") / 100) * .Modifier[0]);
+		.@j[.Quests+2] = .@j[.Quests+2] + (getmonsterinfo(.@j[.@i], MOB_JOBEXP) / (getbattleflag("job_exp_rate") / 100) * .Modifier[1]);
+		mes " > "+Chk(getd("Mission"+.@i+"_"),#Mission_Count) + getmonsterinfo(.@j[.@i], MOB_NAME) + " (" + getd("Mission"+.@i+"_") + "/" + #Mission_Count + ")^000000";
 	}
 
 	// Reward formulas:
@@ -268,10 +268,10 @@ OnNPCKillEvent:
 	if (!getcharid(1) || !.Party) {
 		if (!#Mission_Count || !Mission0) end;
 		for (.@i = 0; .@i < .Quests; .@i++) {
-			if (strmobinfo(1,killedrid) == strmobinfo(1,getd("Mission" + .@i))) {
+			if (getmonsterinfo(killedrid, MOB_NAME) == getmonsterinfo(getd("Mission" + .@i), MOB_NAME)) {
 				if (getd("Mission" + .@i + "_") < #Mission_Count) {
 					dispbottom "[Hunting Mission] Killed " + (set(getd("Mission" + .@i + "_"),getd("Mission" + .@i + "_") + 1)) +
-					           " of " + #Mission_Count + " " + strmobinfo(1,killedrid) + ".";
+					           " of " + #Mission_Count + " " + getmonsterinfo(killedrid, MOB_NAME) + ".";
 					end;
 				}
 			}
@@ -293,10 +293,10 @@ OnNPCKillEvent:
 						for (.@j = 0; .@j < .Quests; .@j++) {
 							.@my_mob_id = getvar( getd("Mission"+.@j),$@partymembercid[.@i] );
 							.@my_count = getvar( getd("Mission"+.@j+"_"), $@partymembercid[.@i] );
-							if (strmobinfo(1,.@mob) == strmobinfo(1,.@my_mob_id)) {
+							if (getmonsterinfo(.@mob, MOB_NAME) == getmonsterinfo(.@my_mob_id, MOB_NAME)) {
 								if (.@my_count < .@Mission_Count) {
 									setd "Mission"+.@j+"_", (.@my_count+1), $@partymembercid[.@i];
-									dispbottom "[Hunting Mission] Killed " + (.@my_count+1) + " of " + .@Mission_Count + " " + strmobinfo(1,.@mob) + ".", 0x777777, $@partymembercid[.@i];
+									dispbottom "[Hunting Mission] Killed " + (.@my_count+1) + " of " + .@Mission_Count + " " + getmonsterinfo(.@mob, MOB_NAME) + ".", 0x777777, $@partymembercid[.@i];
 									break;
 								}
 							}

@@ -373,6 +373,8 @@ enum e_race2 : uint8{
 	RC2_ILLUSION_MOONLIGHT,
 	RC2_EP16_DEF,
 	RC2_EDDA_ARUNAFELTZ,
+	RC2_LASAGNA,
+	RC2_GLAST_HEIM_ABYSS,
 	RC2_MAX
 };
 
@@ -1251,7 +1253,6 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 #define CHK_ELEMENT(ele) ((ele) > ELE_NONE && (ele) < ELE_MAX) /// Check valid Element
 #define CHK_ELEMENT_LEVEL(lv) ((lv) >= 1 && (lv) <= MAX_ELE_LEVEL) /// Check valid element level
 #define CHK_RACE(race) ((race) > RC_NONE_ && (race) < RC_MAX) /// Check valid Race
-#define CHK_RACE2(race2) ((race2) >= RC2_NONE && (race2) < RC2_MAX) /// Check valid Race2
 #define CHK_CLASS(class_) ((class_) > CLASS_NONE && (class_) < CLASS_MAX) /// Check valid Class
 
 //Other languages supported

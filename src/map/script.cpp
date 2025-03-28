@@ -11320,7 +11320,7 @@ BUILDIN_FUNC(monster)
 BUILDIN_FUNC(getmobdrops)
 {
 	int32 class_ = script_getnum(st,2);
-	int32 i, j = 0;
+	int32 j = 0;
 
 	if( !mobdb_checkid(class_) )
 	{
@@ -11330,17 +11330,16 @@ BUILDIN_FUNC(getmobdrops)
 
 	std::shared_ptr<s_mob_db> mob = mob_db.find(class_);
 
-	for( i = 0; i < MAX_MOB_DROP_TOTAL; i++ )
-	{
-		if( mob->dropitem[i].nameid == 0 )
+	for( const std::shared_ptr<s_mob_drop>& entry : mob->dropitem ){
+		if( entry->nameid == 0 )
 			continue;
-		if( !item_db.exists(mob->dropitem[i].nameid) )
+		if( !item_db.exists(entry->nameid) )
 			continue;
 
-		mapreg_setreg(reference_uid(add_str("$@MobDrop_item"), j), mob->dropitem[i].nameid);
-		mapreg_setreg(reference_uid(add_str("$@MobDrop_rate"), j), mob->dropitem[i].rate);
-		mapreg_setreg(reference_uid(add_str("$@MobDrop_nosteal"), j), mob->dropitem[i].steal_protected);
-		mapreg_setreg(reference_uid(add_str("$@MobDrop_randomopt"), j), mob->dropitem[i].randomopt_group);
+		mapreg_setreg(reference_uid(add_str("$@MobDrop_item"), j), entry->nameid);
+		mapreg_setreg(reference_uid(add_str("$@MobDrop_rate"), j), entry->rate);
+		mapreg_setreg(reference_uid(add_str("$@MobDrop_nosteal"), j), entry->steal_protected);
+		mapreg_setreg(reference_uid(add_str("$@MobDrop_randomopt"), j), entry->randomopt_group);
 
 		j++;
 	}
@@ -17621,7 +17620,7 @@ BUILDIN_FUNC(sscanf){
 			if(ref_str==nullptr){
 				CREATE(ref_str, char, strlen(str)+1);
 			}
-			if( sscanf( str, buf, &ref_str ) != 1 ){
+			if( sscanf( str, buf, ref_str ) != 1 ){
 				ShowError( "buildin_sscanf: sscanf failed to scan value for string variable \"%s\".\n", buf_p );
 				script_pushint( st, -1 );
 				if( buf != nullptr ){
@@ -18532,22 +18531,24 @@ BUILDIN_FUNC(addmonsterdrop)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	uint16 c = 0;
+	std::shared_ptr<s_mob_drop> drop = nullptr;
 
-	for (uint16 i = 0; i < MAX_MOB_DROP_TOTAL; i++) {
-		if (mob->dropitem[i].nameid > 0) {
-			if (mob->dropitem[i].nameid == item_id) { // If it equals item_id we update that drop
-				c = i;
-				break;
-			}
-			continue;
+	for( std::shared_ptr<s_mob_drop>& entry : mob->dropitem ){
+		// If it equals item_id we update that drop
+		if( entry->nameid == item_id ){
+			drop = entry;
+			break;
 		}
-		if (c == 0) // Accept first available slot only
-			c = i;
 	}
-	if (c == 0) { // No place to put the new drop
-		script_pushint(st, false);
-		return SCRIPT_CMD_SUCCESS;
+
+	if( drop == nullptr ){
+		// No place to put the new drop
+		if( mob->dropitem.size() == MAX_MOB_DROP ){
+			script_pushint(st, false);
+			return SCRIPT_CMD_SUCCESS;
+		}
+
+		drop = std::make_shared<s_mob_drop>();
 	}
 
 	int32 steal_protected = 0;
@@ -18571,10 +18572,10 @@ BUILDIN_FUNC(addmonsterdrop)
 	}
 
 	// Fill in the slot with the item and rate
-	mob->dropitem[c].nameid = item_id;
-	mob->dropitem[c].rate = rate;
-	mob->dropitem[c].steal_protected = steal_protected > 0;
-	mob->dropitem[c].randomopt_group = group;
+	drop->nameid = item_id;
+	drop->rate = rate;
+	drop->steal_protected = steal_protected > 0;
+	drop->randomopt_group = group;
 	mob_reload_itemmob_data(); // Reload the mob search data stored in the item_data
 
 	script_pushint(st, true);
@@ -18607,20 +18608,25 @@ BUILDIN_FUNC(delmonsterdrop)
 	}
 
 	if(mob) { //We got a valid monster, check for item drop on monster
-		unsigned char i;
-		for(i = 0; i < MAX_MOB_DROP_TOTAL; i++) {
-			if(mob->dropitem[i].nameid == item_id) {
-				mob->dropitem[i].nameid = 0;
-				mob->dropitem[i].rate = 0;
-				mob->dropitem[i].steal_protected = false;
-				mob->dropitem[i].randomopt_group = 0;
-				mob_reload_itemmob_data(); // Reload the mob search data stored in the item_data
-				script_pushint(st,1);
-				return SCRIPT_CMD_SUCCESS;
+		bool found = false;
+
+		for( auto it = mob->dropitem.begin(); it != mob->dropitem.end(); ){
+			if( (*it)->nameid == item_id) {
+				it = mob->dropitem.erase( it );
+				found = true;
+			}else{
+				it++;
 			}
 		}
-		//No drop on that monster
-		script_pushint(st,0);
+
+		if( found ){
+			// Reload the mob search data stored in the item_data
+			mob_reload_itemmob_data();
+			script_pushint(st,1);
+		}else{
+			//No drop on that monster
+			script_pushint(st,0);
+		}
 	} else {
 		ShowWarning("delmonsterdrop: bad mob id given %d\n",script_getnum(st,2));
 		return SCRIPT_CMD_FAILURE;
@@ -18694,44 +18700,52 @@ BUILDIN_FUNC(getmonsterinfo)
 			mob = mob_db.find(mob_id);
 		}
 	}
+	
+	int32 type = script_getnum(st, 3);
 
 	if (mob == nullptr) {
 		//ShowError("buildin_getmonsterinfo: Wrong Monster ID: %i\n", mob_id);
-		if (script_getnum(st, 3) == MOB_NAME) // requested the name
+		if ( type == MOB_NAME ) // requested the name
 			script_pushconststr(st, "null");
 		else
 			script_pushint(st, -1);
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	switch ( script_getnum(st, 3) ) {
-		case MOB_NAME:		script_pushstrcopy(st,mob->jname.c_str()); break;
-		case MOB_LV:		script_pushint(st,mob->lv); break;
-		case MOB_MAXHP:		script_pushint(st,mob->status.max_hp); break;
-		case MOB_BASEEXP:	script_pushint(st,mob->base_exp); break;
-		case MOB_JOBEXP:	script_pushint(st,mob->job_exp); break;
-		case MOB_ATK1:		script_pushint(st,mob->status.rhw.atk); break;
-		case MOB_ATK2:		script_pushint(st,mob->status.rhw.atk2); break;
-		case MOB_DEF:		script_pushint(st,mob->status.def); break;
-		case MOB_MDEF:		script_pushint(st,mob->status.mdef); break;
-		case MOB_RES:		script_pushint(st, mob->status.res); break;
-		case MOB_MRES:		script_pushint(st, mob->status.mres); break;
-		case MOB_STR:		script_pushint(st,mob->status.str); break;
-		case MOB_AGI:		script_pushint(st,mob->status.agi); break;
-		case MOB_VIT:		script_pushint(st,mob->status.vit); break;
-		case MOB_INT:		script_pushint(st,mob->status.int_); break;
-		case MOB_DEX:		script_pushint(st,mob->status.dex); break;
-		case MOB_LUK:		script_pushint(st,mob->status.luk); break;
-		case MOB_RANGE:		script_pushint(st,mob->status.rhw.range); break;
-		case MOB_RANGE2:	script_pushint(st,mob->range2); break;
-		case MOB_RANGE3:	script_pushint(st,mob->range3); break;
-		case MOB_SIZE:		script_pushint(st,mob->status.size); break;
-		case MOB_RACE:		script_pushint(st,mob->status.race); break;
-		case MOB_ELEMENT:	script_pushint(st,mob->status.def_ele); break;
-		case MOB_MODE:		script_pushint(st,mob->status.mode); break;
-		case MOB_MVPEXP:	script_pushint(st,mob->mexp); break;
-		case MOB_ID:		script_pushint(st,mob->id); break;
-		default: script_pushint(st,-1); //wrong Index
+	switch ( type ) {
+		case MOB_NAME:       script_pushstrcopy(st, mob->jname.c_str()); break;
+		case MOB_LV:         script_pushint(st, mob->lv); break;
+		case MOB_MAXHP:      script_pushint(st, mob->status.max_hp); break;
+		case MOB_MAXSP:      script_pushint(st, mob->status.max_sp); break;
+		case MOB_BASEEXP:    script_pushint(st, mob->base_exp); break;
+		case MOB_JOBEXP:     script_pushint(st, mob->job_exp); break;
+		case MOB_ATKMIN:     script_pushint(st, mob->status.rhw.atk); break;
+		case MOB_ATKMAX:     script_pushint(st, mob->status.rhw.atk2); break;
+		case MOB_DEF:        script_pushint(st, mob->status.def); break;
+		case MOB_MDEF:       script_pushint(st, mob->status.mdef); break;
+		case MOB_RES:        script_pushint(st, mob->status.res); break;
+		case MOB_MRES:       script_pushint(st, mob->status.mres); break;
+		case MOB_STR:        script_pushint(st, mob->status.str); break;
+		case MOB_AGI:        script_pushint(st, mob->status.agi); break;
+		case MOB_VIT:        script_pushint(st, mob->status.vit); break;
+		case MOB_INT:        script_pushint(st, mob->status.int_); break;
+		case MOB_DEX:        script_pushint(st, mob->status.dex); break;
+		case MOB_LUK:        script_pushint(st, mob->status.luk); break;
+		case MOB_SPEED:      script_pushint(st, mob->status.speed); break;
+		case MOB_ATKRANGE:   script_pushint(st, mob->status.rhw.range); break;
+		case MOB_SKILLRANGE: script_pushint(st, mob->range2); break;
+		case MOB_CHASERANGE: script_pushint(st, mob->range3); break;
+		case MOB_SIZE:	     script_pushint(st, mob->status.size); break;
+		case MOB_RACE:	     script_pushint(st, mob->status.race); break;
+		case MOB_ELEMENT:    script_pushint(st, mob->status.def_ele); break;
+		case MOB_ELEMENTLV:  script_pushint(st, mob->status.ele_lv); break;
+		case MOB_MODE:       script_pushint(st, mob->status.mode); break;
+		case MOB_MVPEXP:     script_pushint(st, mob->mexp); break;
+		case MOB_ID:         script_pushint(st, mob->id); break;
+		default:
+			ShowError( "buildin_getmonsterinfo: Invalid getmonsterinfo type '%d'.\n", type );
+			st->state = END;
+			return SCRIPT_CMD_FAILURE;
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -28027,7 +28041,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(playBGMall,"s?????"),
 	BUILDIN_DEF(soundeffect,"si"),
 	BUILDIN_DEF(soundeffectall,"si?????"),	// SoundEffectAll [Codemaster]
-	BUILDIN_DEF(strmobinfo,"ii"),	// display mob data [Valaris]
+	BUILDIN_DEF2_DEPRECATED(strmobinfo, "getmonsterinfo", "ii", "2025-03-11"),
 	BUILDIN_DEF(guardian,"siisi??"),	// summon guardians
 	BUILDIN_DEF(guardianinfo,"sii"),	// display guardian data [Valaris]
 	BUILDIN_DEF(petskillbonus,"iiii"), // [Valaris]

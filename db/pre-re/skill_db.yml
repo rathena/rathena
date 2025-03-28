@@ -8454,6 +8454,7 @@ Body:
       Target: Enemy
       Flag:
         Song: true
+        NoOverlap: true
   - Id: 318
     Name: BA_FROSTJOKER
     Description: Unbarring Octave
@@ -8746,6 +8747,7 @@ Body:
       Target: Enemy
       Flag:
         Dance: true
+        NoOverlap: true
   - Id: 326
     Name: DC_SCREAM
     Description: Dazzler

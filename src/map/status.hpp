@@ -1422,6 +1422,9 @@ enum sc_type : int16 {
 	SC_NIGHTMARE,
 	SC_SBUNSHIN,
 
+	SC_CONTENTS_34,
+	SC_CONTENTS_35,
+
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 
@@ -2885,7 +2888,9 @@ enum efst_type : int16{
 	EFST_CONTENTS_30,
 	EFST_CONTENTS_31,
 	EFST_CONTENTS_32,
-	EFST_CONTENTS_33,	//1491
+	EFST_CONTENTS_33,
+	EFST_CONTENTS_34,
+	EFST_CONTENTS_35,	//1493
 
 	EFST_C_BUFF_1 = 1509,
 	EFST_C_BUFF_2,
@@ -3408,7 +3413,7 @@ struct regen_data {
 	struct {
 		unsigned walk:1; //Can you regen even when walking?
 		unsigned gc:1;	//Tags when you should have double regen due to GVG castle
-		unsigned overweight :2; //overweight state (1: 50%, 2: 90%)
+		bool overweight; //overweight state
 		unsigned block :2; //Block regen flag (1: Hp, 2: Sp)
 	} state;
 

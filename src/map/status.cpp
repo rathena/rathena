@@ -3672,7 +3672,7 @@ bool status_calc_weight(map_session_data *sd, enum e_status_calc_weight_opt flag
 		clif_updatestatus(*sd, SP_WEIGHT);
 	if (b_max_weight != sd->max_weight) {
 		clif_updatestatus(*sd, SP_MAXWEIGHT);
-		pc_updateweightstatus(sd);
+		pc_updateweightstatus(*sd);
 	}
 
 	return true;
@@ -5404,8 +5404,8 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, sta
 		regen->flag &= ~RGN_SP;
 
 	if (sc->getSCE(SC_TENSIONRELAX)) {
-		if (sc->getSCE(SC_WEIGHT50) || sc->getSCE(SC_WEIGHT90))
-			regen->state.overweight = 0; // 1x HP regen
+		if (regen->state.overweight)
+			regen->state.overweight = false; // 1x HP regen
 		else {
 			regen->rate.hp += 200;
 			if (regen->sregen)
@@ -7704,8 +7704,6 @@ static defType status_calc_def(struct block_list *bl, status_change *sc, int32 d
 	if(sc->getSCE(SC_ETERNALCHAOS))
 		return 0;
 #endif
-	if(sc->getSCE(SC_BARRIER))
-		return 100;
 	if(sc->getSCE(SC_KEEPING))
 		return 90;
 #ifndef RENEWAL /// Steel Body does not provide 90 DEF in [RENEWAL]
@@ -7877,8 +7875,6 @@ static defType status_calc_mdef(struct block_list *bl, status_change *sc, int32 
 
 	if(sc->getSCE(SC_BERSERK))
 		return 0;
-	if(sc->getSCE(SC_BARRIER))
-		return 100;
 
 #ifndef RENEWAL /// Steel Body does not provide 90 MDEF in [RENEWAL]
 	if(sc->getSCE(SC_STEELBODY))
@@ -13108,19 +13104,19 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 		case SC_COMBO:
 			switch(sce->val1) {
 			case TK_STORMKICK:
-				skill_combo_toggle_inf(bl, TK_JUMPKICK, 0);
+				skill_combo_toggle_inf( bl, TK_JUMPKICK, INF_PASSIVE_SKILL );
 				clif_skill_nodamage(bl,*bl,TK_READYSTORM,1);
 				break;
 			case TK_DOWNKICK:
-				skill_combo_toggle_inf(bl, TK_JUMPKICK, 0);
+				skill_combo_toggle_inf( bl, TK_JUMPKICK, INF_PASSIVE_SKILL );
 				clif_skill_nodamage(bl,*bl,TK_READYDOWN,1);
 				break;
 			case TK_TURNKICK:
-				skill_combo_toggle_inf(bl, TK_JUMPKICK, 0);
+				skill_combo_toggle_inf( bl, TK_JUMPKICK, INF_PASSIVE_SKILL );
 				clif_skill_nodamage(bl,*bl,TK_READYTURN,1);
 				break;
 			case TK_COUNTER:
-				skill_combo_toggle_inf(bl, TK_JUMPKICK, 0);
+				skill_combo_toggle_inf( bl, TK_JUMPKICK, INF_PASSIVE_SKILL );
 				clif_skill_nodamage(bl,*bl,TK_READYCOUNTER,1);
 				break;
 			default: // Rest just toggle inf to enable autotarget
@@ -13499,7 +13495,7 @@ int32 status_change_end( struct block_list* bl, enum sc_type type, int32 tid ){
 			}
 			break;
 		case SC_COMBO:
-			skill_combo_toggle_inf(bl,val1,0);
+			skill_combo_toggle_inf( bl, val1, INF_PASSIVE_SKILL );
 			break;
 		case SC_MARIONETTE:
 		case SC_MARIONETTE2: // Marionette target
@@ -13608,7 +13604,7 @@ int32 status_change_end( struct block_list* bl, enum sc_type type, int32 tid ){
 			break;
 		case SC_TENSIONRELAX:
 			if (sc && (sc->getSCE(SC_WEIGHT50) || sc->getSCE(SC_WEIGHT90)))
-				status_get_regen_data(bl)->state.overweight = 1; // Add the overweight flag back
+				status_get_regen_data(bl)->state.overweight = true; // Add the overweight flag back
 			break;
 		case SC_MONSTER_TRANSFORM:
 		case SC_ACTIVE_MONSTER_TRANSFORM:

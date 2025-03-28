@@ -14,6 +14,7 @@
 
 #include "packets.hpp"
 #include "script.hpp"
+#include "skill.hpp"
 #include "trade.hpp"
 
 struct Channel;
@@ -970,7 +971,7 @@ void clif_class_change( block_list& bl, int32 class_, enum send_target target = 
 
 void clif_skillinfoblock(map_session_data *sd);
 void clif_skillup( map_session_data& sd, uint16 skill_id, uint16 lv, uint16 range, bool upgradable );
-void clif_skillinfo( map_session_data& sd, uint16 skill_id );
+void clif_skillinfo( map_session_data& sd, uint16 skill_id, int32 inf = INF_PASSIVE_SKILL );
 void clif_addskill(map_session_data& sd, uint16 skill_id);
 void clif_deleteskill(map_session_data& sd, uint16 skill_id, bool skip_infoblock = false);
 
@@ -1009,7 +1010,6 @@ void clif_changemapcell( int16 m, int16 x, int16 y, int16 type, send_target targ
 
 #define clif_status_load(bl, type, flag) clif_status_change((bl), (type), (flag), 0, 0, 0, 0)
 void clif_status_change(struct block_list *bl, int32 type, int32 flag, t_tick tick, int32 val1, int32 val2, int32 val3);
-void clif_efst_status_change(struct block_list *bl, int32 tid, enum send_target target, int32 type, t_tick tick, int32 val1, int32 val2, int32 val3);
 void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, enum send_target target);
 
 void clif_wis_message(map_session_data* sd, const char* nick, const char* mes, size_t mes_len, int32 gmlvl);
@@ -1052,7 +1052,7 @@ void clif_changed_dir(block_list& bl, enum send_target target);
 // vending
 void clif_openvendingreq( map_session_data& sd, uint16 num );
 void clif_showvendingboard( map_session_data& sd, enum send_target target = AREA_WOS, struct block_list* tbl = nullptr );
-void clif_closevendingboard(struct block_list* bl, int32 fd);
+void clif_closevendingboard( block_list& bl, send_target target, block_list* tbl );
 void clif_vendinglist( map_session_data& sd, map_session_data& vsd );
 void clif_buyvending( map_session_data& sd, uint16 index, uint16 amount, e_pc_purchase_result_frommc result );
 void clif_openvending( map_session_data& sd );
