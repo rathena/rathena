@@ -1183,7 +1183,7 @@ Body:
     EquipLevelMin: 68
     Refineable: true
     Script: |
-      bonus2 bAddMonsterDropItemGroup,IG_Jewel,100;
+      bonus2 bAddMonsterDropItemGroup,IG_Jewel,10000;
   - Id: 1143
     AegisName: Gaia_Sword
     Name: Gaia Sword
@@ -1209,7 +1209,7 @@ Body:
     EquipLevelMin: 74
     Refineable: true
     Script: |
-      bonus2 bAddMonsterDropItemGroup,IG_Ore,30;
+      bonus2 bAddMonsterDropItemGroup,IG_Ore,10000;
   - Id: 1144
     AegisName: Sasimi
     Name: Sashimi
@@ -9800,6 +9800,7 @@ Body:
       bonus2 bHPDrainRate,1000,100;
       bonus2 bSPDrainRate,1000,20;
       bonus bHealPower,200;
+      bonus bAspdRate,100;
       bonus2 bAddClass,Class_All,100;
       skill "WZ_STORMGUST",10;
       Skill "WZ_METEOR",10;
@@ -15229,11 +15230,11 @@ Body:
       Left_Hand: true
     ArmorLevel: 1
     EquipLevelMin: 1
-    Refineable: true
     View: 1
     Script: |
       bonus bAllStats,50;
       bonus bMdef,99;
+      bonus bUnbreakableShield;
       bonus bShortWeaponDamageReturn,100;
       bonus2 bSubRace,RC_DemiHuman,95;
       bonus2 bSubRace,RC_Player_Human,95;
@@ -20587,16 +20588,7 @@ Body:
     EquipLevelMin: 94
     Script: |
       bonus bMdef,5;
-      bonus3 bSubEle,Ele_Neutral,30,BF_SHORT;
-      bonus3 bSubEle,Ele_Water,30,BF_SHORT;
-      bonus3 bSubEle,Ele_Earth,30,BF_SHORT;
-      bonus3 bSubEle,Ele_Fire,30,BF_SHORT;
-      bonus3 bSubEle,Ele_Wind,30,BF_SHORT;
-      bonus3 bSubEle,Ele_Poison,30,BF_SHORT;
-      bonus3 bSubEle,Ele_Holy,30,BF_SHORT;
-      bonus3 bSubEle,Ele_Dark,30,BF_SHORT;
-      bonus3 bSubEle,Ele_Ghost,30,BF_SHORT;
-      bonus3 bSubEle,Ele_Undead,30,BF_SHORT;
+      bonus3 bSubEle,Ele_All,30,BF_WEAPON;
       bonus bFlee,30;
       skill "AL_TELEPORT",1;
       bonus bUnbreakableGarment;
@@ -22801,7 +22793,7 @@ Body:
       Both_Accessory: true
     ArmorLevel: 1
     Script: |
-      bonus bAtkRate,5;
+      bonus2 bAddClass,Class_All,5;
       bonus bMatkRate,5;
   - Id: 2710
     AegisName: Bloody_Iron_Ball_C
@@ -23686,7 +23678,7 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bAddClass,Class_All,5;
-      bonus bMatkrate,5;
+      bonus bMatkRate,5;
   - Id: 2753
     AegisName: Beholder_Ring
     Name: Beholder Ring
@@ -23892,8 +23884,8 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 95
     Script: |
-      bonus bAtkRate,5;
-      bonus bMatkrate,5;
+      bonus2 bAddClass,Class_All,5;
+      bonus bMatkRate,5;
       bonus bMaxHPrate,5;
       bonus2 bSkillHeal,"AL_HEAL",5;
       skill "MG_SIGHT",1;
@@ -39839,7 +39831,7 @@ Body:
     WeaponLevel: 4
     Script: |
       bonus bAtkEle,Ele_Fire;
-      bonus bHPDrainRate,1;
+      bonus2 bHPDrainRate,1000,1;
       bonus2 bSPLossRate,15,10000;
   - Id: 13404
     AegisName: Platinum_Shotel
@@ -40808,7 +40800,7 @@ Body:
     EquipLevelMin: 1
     View: 562
     Script: |
-      bonus bAtkRate,5;
+      bonus2 bAddClass,Class_All,5;
       bonus bMatkRate,5;
       bonus bMaxHPRate,10;
       bonus bMaxSPRate,10;
@@ -40948,18 +40940,12 @@ Body:
     Refineable: true
     View: 761
     Script: |
-      bonus bAtkRate,5;
-      if (getrefine() > 5 && getrefine() <= 12) {
+      bonus2 bAddClass,Class_All,5;
+      if (getrefine() > 5) {
          bonus2 bAddRace,RC_DemiHuman,(getrefine() - 5);
          bonus2 bSubRace,RC_DemiHuman,(getrefine() - 5);
          bonus2 bAddRace,RC_Player_Human,(getrefine() - 5);
          bonus2 bSubRace,RC_Player_Human,(getrefine() - 5);
-      }
-      if (getrefine() > 12) {
-         bonus2 bAddRace,RC_DemiHuman,7;
-         bonus2 bAddRace,RC_Player_Human,7;
-         bonus2 bSubRace,RC_DemiHuman,7;
-         bonus2 bSubRace,RC_Player_Human,7;
       }
   - Id: 18612
     AegisName: White_Musang_Hat

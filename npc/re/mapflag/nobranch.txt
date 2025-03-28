@@ -43,12 +43,6 @@ job3_war02	mapflag	nobranch
 jupe_core2	mapflag	nobranch
 
 //============================================================
-// Brasilis
-//============================================================
-brasilis	mapflag	nobranch
-bra_in01	mapflag	nobranch
-
-//============================================================
 // Episode 13.3
 //============================================================
 dicastes01	mapflag	nobranch
@@ -327,6 +321,11 @@ ba_in01	mapflag	nobranch
 job4_bio	mapflag	nobranch
 job4_mag	mapflag	nobranch
 job4_tro	mapflag	nobranch
+
+//============================================================
+// Spirit Handler Job Change
+//============================================================
+1@exsh	mapflag	nobranch
 
 //============================================================
 // Geffen Night Arena

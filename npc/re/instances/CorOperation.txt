@@ -444,7 +444,7 @@ OnTimer17000:
 		setd("'rf_" + strnpcinfo(2),1);
 		specialeffect2 EF_ENHANCE;
 		specialeffect2 EF_LIGHTSPHERE_STAR;
-		sc_start SC_GLASTHEIM_STATE,30000,1,10000,SCSTART_NOTICKDEF;
+		sc_start SC_GLASTHEIM_STATE,30000,20,10000,SCSTART_NOTICKDEF;
 		npctalk "Power, Overwhelming power!";
 		unittalk getcharid(3),strcharinfo(0) + " : My whole body is full of power!",bc_self;
 		sleep 1500;
@@ -890,7 +890,7 @@ OnTouch:
 		setd("'rf_" + strnpcinfo(2),1);
 		specialeffect2 EF_ENHANCE;
 		specialeffect2 EF_LIGHTSPHERE_STAR;
-		sc_start SC_GLASTHEIM_STATE,30000,1,10000,SCSTART_NOTICKDEF;
+		sc_start SC_GLASTHEIM_STATE,30000,20,10000,SCSTART_NOTICKDEF;
 		npctalk "Power, Overwhelming power!";
 		unittalk getcharid(3),strcharinfo(0) + " : My whole body is full of power!",bc_self;
 		sleep 1500;

@@ -4,8 +4,8 @@
 #pragma warning(disable:4800)
 #include "login.hpp"
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 #include <string>
 #include <unordered_map>
 
@@ -44,19 +44,19 @@ std::unordered_map<uint32,struct online_login_data> online_db;
 std::unordered_map<uint32,struct auth_node> auth_db;
 
 // account database
-AccountDB* accounts = NULL;
+AccountDB* accounts = nullptr;
 // Advanced subnet check [LuzZza]
 struct s_subnet {
 	uint32 mask;
 	uint32 char_ip;
 	uint32 map_ip;
 } subnet[16];
-int subnet_count = 0; //number of subnet config
+int32 subnet_count = 0; //number of subnet config
 
-int login_fd; // login server file descriptor socket
+int32 login_fd; // login server file descriptor socket
 
 //early declaration
-bool login_check_password(const char* md5key, int passwdenc, const char* passwd, const char* refpass);
+bool login_check_password( struct login_session_data& sd, struct mmo_account& acc );
 
 ///Accessors
 AccountDB* login_get_accounts_db(void){
@@ -65,7 +65,7 @@ AccountDB* login_get_accounts_db(void){
 
 // Console Command Parser [Wizputer]
 //FIXME to be remove (moved to cnslif / will be done once map/char/login, all have their cnslif interface ready)
-int parse_console(const char* buf){
+int32 parse_console(const char* buf){
 	return cnslif_parse(buf);
 }
 
@@ -80,7 +80,7 @@ struct online_login_data* login_get_online_user( uint32 account_id ){
  * @param account_id : aid connected
  * @return the new online_login_data for that user
  */
-struct online_login_data* login_add_online_user(int char_server, uint32 account_id){
+struct online_login_data* login_add_online_user(int32 char_server, uint32 account_id){
 	struct online_login_data* p = login_get_online_user( account_id );
 
 	if( p == nullptr ){
@@ -90,6 +90,9 @@ struct online_login_data* login_add_online_user(int char_server, uint32 account_
 		p->account_id = account_id;
 		p->char_server = char_server;
 		p->waiting_disconnect = INVALID_TIMER;
+#ifdef VIP_ENABLE
+		p->vip_timeout_tid = INVALID_TIMER;
+#endif
 	}else{
 		p->char_server = char_server;
 
@@ -170,7 +173,7 @@ TIMER_FUNC(login_waiting_disconnect_timer){
 	return 0;
 }
 
-void login_online_db_setoffline( int char_server ){
+void login_online_db_setoffline( int32 char_server ){
 	for( std::pair<uint32,struct online_login_data> pair : online_db ){
 		if( char_server == -1 ){
 			pair.second.char_server = -1;
@@ -218,8 +221,8 @@ static TIMER_FUNC(login_online_data_cleanup){
  *	1: incorrect pass or userid (userid|pass too short or already exist);
  *	3: registration limit exceeded;
  */
-int login_mmo_auth_new(const char* userid, const char* pass, const char sex, const char* last_ip) {
-	static int num_regs = 0; // registration counter
+int32 login_mmo_auth_new(const char* userid, const char* pass, const char sex, const char* last_ip) {
+	static int32 num_regs = 0; // registration counter
 	static t_tick new_reg_tick = 0;
 	t_tick tick = gettick();
 	struct mmo_account acc;
@@ -232,7 +235,7 @@ int login_mmo_auth_new(const char* userid, const char* pass, const char sex, con
 		return 3;
 	}
 
-	if( login_config.new_acc_length_limit && ( strlen(userid) < 4 || strlen(pass) < 4 ) )
+	if( strlen(userid) < login_config.acc_name_min_length || strlen(pass) < login_config.password_min_length)
 		return 1;
 
 	// check for invalid inputs
@@ -251,7 +254,7 @@ int login_mmo_auth_new(const char* userid, const char* pass, const char sex, con
 	safestrncpy(acc.pass, pass, sizeof(acc.pass));
 	acc.sex = sex;
 	safestrncpy(acc.email, "a@a.com", sizeof(acc.email));
-	acc.expiration_time = ( login_config.start_limited_time != -1 ) ? time(NULL) + login_config.start_limited_time : 0;
+	acc.expiration_time = ( login_config.start_limited_time != -1 ) ? time(nullptr) + login_config.start_limited_time : 0;
 	safestrncpy(acc.lastlogin, "", sizeof(acc.lastlogin));
 	safestrncpy(acc.last_ip, last_ip, sizeof(acc.last_ip));
 	safestrncpy(acc.birthdate, "", sizeof(acc.birthdate));
@@ -290,9 +293,8 @@ int login_mmo_auth_new(const char* userid, const char* pass, const char sex, con
  *	6: banned
  *	x: acc state (TODO document me deeper)
  */
-int login_mmo_auth(struct login_session_data* sd, bool isServer) {
+int32 login_mmo_auth(struct login_session_data* sd, bool isServer) {
 	struct mmo_account acc;
-	int len;
 
 	char ip[16];
 	ip2str(session[sd->fd]->client_addr, ip);
@@ -306,7 +308,7 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 
 		sprintf(r_ip, "%u.%u.%u.%u", sin_addr[0], sin_addr[1], sin_addr[2], sin_addr[3]);
 
-		for( dnsbl_serv = strtok(login_config.dnsbl_servs,","); dnsbl_serv != NULL; dnsbl_serv = strtok(NULL,",") ) {
+		for( dnsbl_serv = strtok(login_config.dnsbl_servs,","); dnsbl_serv != nullptr; dnsbl_serv = strtok(nullptr,",") ) {
 			sprintf(ip_dnsbl, "%s.%s", r_ip, trim(dnsbl_serv));
 			if( host2ip(ip_dnsbl) ) {
 				ShowInfo("DNSBL: (%s) Blacklisted. User Kicked.\n", r_ip);
@@ -316,7 +318,7 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 
 	}
 
-	len = strnlen(sd->userid, NAME_LENGTH);
+	size_t len = strnlen(sd->userid, NAME_LENGTH);
 
 	// Account creation with _M/_F
 	if( login_config.new_account_flag ) {
@@ -329,7 +331,7 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 				return 0; // unregistered id
 			}
 
-			int result;
+			int32 result;
 			// remove the _M/_F suffix
 			len -= 2;
 			sd->userid[len] = '\0';
@@ -345,17 +347,22 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 		return 0; // 0 = Unregistered ID
 	}
 
-	if( !login_check_password(sd->md5key, sd->passwdenc, sd->passwd, acc.pass) ) {
+	if( !isServer && sex_str2num( acc.sex ) == SEX_SERVER ){
+		ShowWarning( "Connection refused: ip %s tried to log into server account '%s'\n", ip, sd->userid );
+		return 0; // 0 = Unregistered ID
+	}
+
+	if( !login_check_password( *sd, acc ) ) {
 		ShowNotice("Invalid password (account: '%s', ip: %s)\n", sd->userid, ip);
 		return 1; // 1 = Incorrect Password
 	}
 
-	if( acc.expiration_time != 0 && acc.expiration_time < time(NULL) ) {
+	if( acc.expiration_time != 0 && acc.expiration_time < time(nullptr) ) {
 		ShowNotice("Connection refused (account: %s, expired ID, ip: %s)\n", sd->userid, ip);
 		return 2; // 2 = This ID is expired
 	}
 
-	if( acc.unban_time != 0 && acc.unban_time > time(NULL) ) {
+	if( acc.unban_time != 0 && acc.unban_time > time(nullptr) ) {
 		char tmpstr[24];
 		timestamp2string(tmpstr, sizeof(tmpstr), acc.unban_time, login_config.date_format);
 		ShowNotice("Connection refused (account: %s, banned until %s, ip: %s)\n", sd->userid, tmpstr, ip);
@@ -368,7 +375,7 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 	}
 
 	if( login_config.client_hash_check && !isServer ) {
-		struct client_hash_node *node = NULL;
+		struct client_hash_node *node = nullptr;
 		bool match = false;
 
 		for( node = login_config.client_hash_nodes; node; node = node->next ) {
@@ -384,7 +391,7 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 
 		if( !match ) {
 			char smd5[33];
-			int i;
+			int32 i;
 
 			if( !sd->has_client_hash ) {
 				ShowNotice("Client didn't send client hash (account: %s, ip: %s)\n", sd->userid, ip);
@@ -403,14 +410,14 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 
 	// update session data
 	sd->account_id = acc.account_id;
-	sd->login_id1 = rnd() + 1;
-	sd->login_id2 = rnd() + 1;
+	sd->login_id1 = rnd_value(1u, UINT32_MAX);
+	sd->login_id2 = rnd_value(1u, UINT32_MAX);
 	safestrncpy(sd->lastlogin, acc.lastlogin, sizeof(sd->lastlogin));
 	sd->sex = acc.sex;
 	sd->group_id = acc.group_id;
 
 	// update account data
-	timestamp2string(acc.lastlogin, sizeof(acc.lastlogin), time(NULL), "%Y-%m-%d %H:%M:%S");
+	timestamp2string(acc.lastlogin, sizeof(acc.lastlogin), time(nullptr), "%Y-%m-%d %H:%M:%S");
 	safestrncpy(acc.last_ip, ip, sizeof(acc.last_ip));
 	acc.unban_time = 0;
 	acc.logincount++;
@@ -427,24 +434,6 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 }
 
 /**
- * Sub function of login_check_password.
- *  Checking if password matches the one in db hashed with client md5key.
- *  Test if(md5(str1+str2)==passwd).
- * @param str1: string (atm:md5key or dbpass)
- * @param str2: string (atm:md5key or dbpass)
- * @param passwd: pass to check
- * @return true if matching else false
- */
-bool login_check_encrypted(const char* str1, const char* str2, const char* passwd) {
-	char tmpstr[64+1], md5str[32+1];
-
-	safesnprintf(tmpstr, sizeof(tmpstr), "%s%s", str1, str2);
-	MD5_String(tmpstr, md5str);
-
-	return (0==strcmp(passwd, md5str));
-}
-
-/**
  * Verify if a password is correct.
  * @param md5key: md5key of client
  * @param passwdenc: encode key of client
@@ -452,19 +441,47 @@ bool login_check_encrypted(const char* str1, const char* str2, const char* passw
  * @param refpass: pass register in db
  * @return true if matching else false
  */
-bool login_check_password(const char* md5key, int passwdenc, const char* passwd, const char* refpass) {
-	if(passwdenc == 0){
-		return (0==strcmp(passwd, refpass));
+bool login_check_password( struct login_session_data& sd, struct mmo_account& acc ){
+	if( sd.passwdenc == 0 ){
+		return 0 == strcmp( sd.passwd, acc.pass );
 	}
-	else {
-		// password mode set to 1 -> md5(md5key, refpass) enable with <passwordencrypt></passwordencrypt>
-		// password mode set to 2 -> md5(refpass, md5key) enable with <passwordencrypt2></passwordencrypt2>
-		return ((passwdenc&0x01) && login_check_encrypted(md5key, refpass, passwd)) ||
-		       ((passwdenc&0x02) && login_check_encrypted(refpass, md5key, passwd));
+
+	// password mode set to 1 -> md5(md5key, refpass) enable with <passwordencrypt></passwordencrypt>
+	if( sd.passwdenc & 0x01 ){
+		std::string pwd;
+
+		pwd.append( sd.md5key, sd.md5keylen );
+		pwd.append( acc.pass );
+
+		char md5str[32 + 1];
+
+		MD5_String( pwd.c_str(), md5str );
+
+		if( 0 == strcmp( sd.passwd, md5str ) ){
+			return true;
+		}
 	}
+
+	// password mode set to 2 -> md5(refpass, md5key) enable with <passwordencrypt2></passwordencrypt2>
+	if( sd.passwdenc & 0x02 ){
+		std::string pwd;
+
+		pwd.append( acc.pass );
+		pwd.append( sd.md5key, sd.md5keylen );
+
+		char md5str[32 + 1];
+
+		MD5_String( pwd.c_str(), md5str );
+
+		if( 0 == strcmp( sd.passwd, md5str ) ){
+			return true;
+		}
+	}
+
+	return false;
 }
 
-int login_get_usercount( int users ){
+int32 login_get_usercount( int32 users ){
 #if PACKETVER >= 20170726
 	if( login_config.usercount_disable ){
 		return 4; // Removes count and colorization completely
@@ -487,8 +504,8 @@ int login_get_usercount( int users ){
  * @param ip: ip to check if in auth network
  * @return 0 if from wan, or subnet_char_ip if lan
  */
-int lan_subnetcheck(uint32 ip) {
-	int i;
+int32 lan_subnetcheck(uint32 ip) {
+	int32 i;
 	ARR_FIND( 0, subnet_count, i, (subnet[i].char_ip & subnet[i].mask) == (ip & subnet[i].mask) );
 	return ( i < subnet_count ) ? subnet[i].char_ip : 0;
 }
@@ -497,10 +514,10 @@ int lan_subnetcheck(uint32 ip) {
 
 
 /// Msg_conf tayloring
-int login_msg_config_read(char *cfgName){
+int32 login_msg_config_read(const char *cfgName){
 	return _msg_config_read(cfgName,LOGIN_MAX_MSG,msg_table);
 }
-const char* login_msg_txt(int msg_number){
+const char* login_msg_txt(int32 msg_number){
 	return _msg_txt(msg_number,LOGIN_MAX_MSG,msg_table);
 }
 void login_do_final_msg(void){
@@ -517,12 +534,12 @@ void login_do_final_msg(void){
  * @param lancfgName: Name of the lan configuration (could be fullpath)
  * @return 0:success, 1:failure (file not found|readable)
  */
-int login_lan_config_read(const char *lancfgName) {
+int32 login_lan_config_read(const char *lancfgName) {
 	FILE *fp;
-	int line_num = 0, s_subnet=ARRAYLENGTH(subnet);
+	int32 line_num = 0, s_subnet=ARRAYLENGTH(subnet);
 	char line[1024], w1[64], w2[64], w3[64], w4[64];
 
-	if((fp = fopen(lancfgName, "r")) == NULL) {
+	if((fp = fopen(lancfgName, "r")) == nullptr) {
 		ShowWarning("LAN Support configuration file is not found: %s\n", lancfgName);
 		return 1;
 	}
@@ -574,7 +591,7 @@ int login_lan_config_read(const char *lancfgName) {
 bool login_config_read(const char* cfgName, bool normal) {
 	char line[1024], w1[32], w2[1024];
 	FILE* fp = fopen(cfgName, "r");
-	if (fp == NULL) {
+	if (fp == nullptr) {
 		ShowError("Configuration file (%s) not found.\n", cfgName);
 		return false;
 	}
@@ -619,8 +636,10 @@ bool login_config_read(const char* cfgName, bool normal) {
 			login_config.log_login = (bool)config_switch(w2);
 		else if(!strcmpi(w1, "new_account"))
 			login_config.new_account_flag = (bool)config_switch(w2);
-		else if(!strcmpi(w1, "new_acc_length_limit"))
-			login_config.new_acc_length_limit = (bool)config_switch(w2);
+		else if(!strcmpi(w1, "acc_name_min_length"))
+			login_config.acc_name_min_length = cap_value(atoi(w2), 0, NAME_LENGTH - 1);
+		else if(!strcmpi(w1, "password_min_length"))
+			login_config.password_min_length = cap_value(atoi(w2), 0, PASSWD_LENGTH - 1);
 		else if(!strcmpi(w1, "start_limited_time"))
 			login_config.start_limited_time = atoi(w2);
 		else if(!strcmpi(w1, "use_MD5_passwords"))
@@ -640,9 +659,9 @@ bool login_config_read(const char* cfgName, bool normal) {
 		else if(!strcmpi(w1, "dnsbl_servers"))
 			safestrncpy(login_config.dnsbl_servs, w2, sizeof(login_config.dnsbl_servs));
 		else if(!strcmpi(w1, "ipban_cleanup_interval"))
-			login_config.ipban_cleanup_interval = (unsigned int)atoi(w2);
+			login_config.ipban_cleanup_interval = (uint32)atoi(w2);
 		else if(!strcmpi(w1, "ip_sync_interval"))
-			login_config.ip_sync_interval = (unsigned int)1000*60*atoi(w2); //w2 comes in minutes.
+			login_config.ip_sync_interval = (uint32)1000*60*atoi(w2); //w2 comes in minutes.
 		else if(!strcmpi(w1, "client_hash_check"))
 			login_config.client_hash_check = config_switch(w2);
 		else if(!strcmpi(w1, "use_web_auth_token"))
@@ -650,7 +669,7 @@ bool login_config_read(const char* cfgName, bool normal) {
 		else if (!strcmpi(w1, "disable_webtoken_delay"))
 			login_config.disable_webtoken_delay = cap_value(atoi(w2), 0, INT_MAX);
 		else if(!strcmpi(w1, "client_hash")) {
-			int group = 0;
+			int32 group = 0;
 			char md5[33];
 
 			if (sscanf(w2, "%3d, %32s", &group, md5) == 2) {
@@ -659,10 +678,10 @@ bool login_config_read(const char* cfgName, bool normal) {
 				if (strcmpi(md5, "disabled") == 0) {
 					nnode->hash[0] = '\0';
 				} else {
-					int i;
+					int32 i;
 					for (i = 0; i < 32; i += 2) {
 						char buf[3];
-						unsigned int byte;
+						uint32 byte;
 
 						memcpy(buf, &md5[i], 2);
 						buf[2] = 0;
@@ -701,7 +720,7 @@ bool login_config_read(const char* cfgName, bool normal) {
 				login_config.vip_sys.char_increase = MAX_CHAR_VIP;
 			else
 				login_config.vip_sys.char_increase = atoi(w2);
-			if (login_config.vip_sys.char_increase > (unsigned int) MAX_CHARS-login_config.char_per_account) {
+			if (login_config.vip_sys.char_increase > (uint32)MAX_CHARS-login_config.char_per_account) {
 				ShowWarning("vip_char_increase too high, can only go up to %d, according to your char_per_account config %d\n",
 					MAX_CHARS-login_config.char_per_account,login_config.char_per_account);
 				login_config.vip_sys.char_increase = MAX_CHARS-login_config.char_per_account;
@@ -737,7 +756,13 @@ void login_set_defaults() {
 	safestrncpy(login_config.date_format, "%Y-%m-%d %H:%M:%S", sizeof(login_config.date_format));
 	login_config.console = false;
 	login_config.new_account_flag = true;
-	login_config.new_acc_length_limit = true;
+#if PACKETVER >= 20181114
+	login_config.acc_name_min_length = 6;
+	login_config.password_min_length = 6;
+#else
+	login_config.acc_name_min_length = 4;
+	login_config.password_min_length = 4;
+#endif
 	login_config.use_md5_passwds = false;
 	login_config.group_id_to_connect = -1;
 	login_config.min_group_id_to_connect = -1;
@@ -753,7 +778,7 @@ void login_set_defaults() {
 	login_config.time_allowed = 10; //in second
 
 	login_config.client_hash_check = 0;
-	login_config.client_hash_nodes = NULL;
+	login_config.client_hash_nodes = nullptr;
 	login_config.usercount_disable = false;
 	login_config.usercount_low = 200;
 	login_config.usercount_medium = 500;
@@ -765,11 +790,6 @@ void login_set_defaults() {
 #endif
 	login_config.use_web_auth_token = true;
 	login_config.disable_webtoken_delay = 10000;
-
-	//other default conf
-	safestrncpy(login_config.loginconf_name, "conf/login_athena.conf", sizeof(login_config.loginconf_name));
-	safestrncpy(login_config.lanconf_name, "conf/subnet_athena.conf", sizeof(login_config.lanconf_name));
-	safestrncpy(login_config.msgconf_name, "conf/msg_conf/login_msg.conf", sizeof(login_config.msgconf_name));
 }
 
 
@@ -805,10 +825,10 @@ void LoginServer::finalize(){
 
 	if (db) { // destroy account engine
 		db->destroy(db);
-		db = NULL;
+		db = nullptr;
 	}
 
-	accounts = NULL; // destroyed in account_engine
+	accounts = nullptr; // destroyed in account_engine
 	online_db.clear();
 	auth_db.clear();
 
@@ -830,7 +850,7 @@ void LoginServer::handle_shutdown(){
 	flush_fifos();
 }
 
-bool LoginServer::initialize( int argc, char* argv[] ){
+bool LoginServer::initialize( int32 argc, char* argv[] ){
 	// Init default value
 	safestrncpy(console_log_filepath, "./log/login-msg_log.log", sizeof(console_log_filepath));
 
@@ -839,14 +859,12 @@ bool LoginServer::initialize( int argc, char* argv[] ){
 
 	// read login-server configuration
 	login_set_defaults();
-	logcnslif_get_options(argc,argv);
+	cli_get_options(argc,argv);
 
-	login_config_read(login_config.loginconf_name, true);
-	msg_config_read(login_config.msgconf_name);
-	login_lan_config_read(login_config.lanconf_name);
+	login_config_read(LOGIN_CONF_NAME, true);
+	msg_config_read(LOGIN_MSG_CONF_NAME);
+	login_lan_config_read(LAN_CONF_NAME);
 	//end config
-
-	rnd_init();
 
 	do_init_loginclif();
 	do_init_loginchrif();
@@ -868,7 +886,7 @@ bool LoginServer::initialize( int argc, char* argv[] ){
 	add_timer_interval(gettick() + 600*1000, login_online_data_cleanup, 0, 0, 600*1000);
 
 	// Account database init
-	if( accounts == NULL ) {
+	if( accounts == nullptr ) {
 		ShowFatalError("do_init: account engine not found.\n");
 		return false;
 	} else {
@@ -892,6 +910,6 @@ bool LoginServer::initialize( int argc, char* argv[] ){
 	return true;
 }
 
-int main( int argc, char *argv[] ){
+int32 main( int32 argc, char *argv[] ){
 	return main_core<LoginServer>( argc, argv );
 }

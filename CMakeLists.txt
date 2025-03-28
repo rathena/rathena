@@ -236,7 +236,7 @@ option( ENABLE_WEB_SERVER "Build web-server (default=ON)" ON )
 #
 TEST_BIG_ENDIAN( BIG_ENDIAN )
 if( NOT DEFINED BIG_ENDIAN )
-	message( WARNING "unable to determine endianess, only LITTLE ENDIAN is supported" )
+	message( WARNING "unable to determine endianness, only LITTLE ENDIAN is supported" )
 elseif( BIG_ENDIAN )
 	message( FATAL_ERROR "bigendian is not supported" )
 endif()

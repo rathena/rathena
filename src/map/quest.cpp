@@ -3,7 +3,7 @@
 
 #include "quest.hpp"
 
-#include <stdlib.h>
+#include <cstdlib>
 
 #include <common/cbasetypes.hpp>
 #include <common/malloc.hpp>
@@ -28,7 +28,7 @@
 
 using namespace rathena;
 
-static int split_exact_quest_time(char* modif_p, int* day, int* hour, int* minute, int *second);
+static int32 split_exact_quest_time(char* modif_p, int32* week, int32* day, int32* hour, int32* minute, int32 *second);
 
 const std::string QuestDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/quest_db.yml";
@@ -81,20 +81,25 @@ uint64 QuestDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			quest->time = static_cast<time_t>(timediff);
 		}
 		else {// '+' not found, set to specific time
-			int32 day, hour, minute, second;
+			int32 day, hour, minute, second, week;
 
-			if (split_exact_quest_time(const_cast<char *>(time.c_str()), &day, &hour, &minute, &second) == 0) {
+			if (split_exact_quest_time(const_cast<char *>(time.c_str()), &week, &day, &hour, &minute, &second) == 0) {
 				this->invalidWarning(node["TimeLimit"], "Incorrect TimeLimit format %s given, skipping.\n", time.c_str());
 				return 0;
 			}
-			quest->time = day * 86400 + hour * 3600 + minute * 60 + second;
+			if (week > 0)
+				quest->time = hour * 3600 + minute * 60 + second;
+			else
+				quest->time = day * 86400 + hour * 3600 + minute * 60 + second;
 			quest->time_at = true;
+			quest->time_week = week;
 		}
 
 	} else {
 		if (!exists) {
 			quest->time = 0;
 			quest->time_at = false;
+			quest->time_week = -1;
 		}
 	}
 
@@ -237,7 +242,7 @@ uint64 QuestDatabase::parseBodyNode(const ryml::NodeRef& node) {
 					}
 
 					if (constant < SZ_SMALL || constant > SZ_ALL) {
-						this->invalidWarning(targetNode["size"], "Unsupported size %s, skipping.\n", size_.c_str());
+						this->invalidWarning(targetNode["Size"], "Unsupported size %s, skipping.\n", size_.c_str());
 						return 0;
 					}
 
@@ -380,7 +385,7 @@ uint64 QuestDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				}
 
 				if (!this->nodeExists(dropNode, "Rate")) {
-					this->invalidWarning(dropNode["Item"], "Drops has no Rate value specified, skipping.\n");
+					this->invalidWarning(dropNode["Rate"], "Drops has no Rate value specified, skipping.\n");
 					continue;
 				}
 
@@ -441,19 +446,40 @@ uint64 QuestDatabase::parseBodyNode(const ryml::NodeRef& node) {
 }
 
 
-static int split_exact_quest_time(char* modif_p, int* day, int* hour, int* minute, int *second) {
-	int d = -1, h = -1, mn = -1, s = -1;
+static int32 split_exact_quest_time(char* modif_p, int32* week, int32* day, int32* hour, int32* minute, int32 *second) {
+	int32 w = -1, d = -1, h = -1, mn = -1, s = -1;
 
 	nullpo_retr(0, modif_p);
 
 	while (modif_p[0] != '\0') {
-		int value = atoi(modif_p);
+		int32 value = atoi(modif_p);
 
 		if (modif_p[0] == '-' || modif_p[0] == '+')
 			modif_p++;
 		while (modif_p[0] >= '0' && modif_p[0] <= '9')
 			modif_p++;
-		if (modif_p[0] == 's') {
+		if (strncasecmp(modif_p, "SUNDAY", 6) == 0) {
+			w = 0;
+			modif_p = modif_p + 6;
+		} else if (strncasecmp(modif_p, "MONDAY", 6) == 0) {
+			w = 1;
+			modif_p = modif_p + 6;
+		} else if (strncasecmp(modif_p, "TUESDAY", 7) == 0) {
+			w = 2;
+			modif_p = modif_p + 7;
+		} else if (strncasecmp(modif_p, "WEDNESDAY", 9) == 0) {
+			w = 3;
+			modif_p = modif_p + 9;
+		} else if (strncasecmp(modif_p, "THURSDAY", 8) == 0) {
+			w = 4;
+			modif_p = modif_p + 8;
+		} else if (strncasecmp(modif_p, "FRIDAY", 6) == 0) {
+			w = 5;
+			modif_p = modif_p + 6;
+		} else if (strncasecmp(modif_p, "SATURDAY", 8) == 0) {
+			w = 6;
+			modif_p = modif_p + 8;
+		} else if (modif_p[0] == 's') {
 			s = value;
 			modif_p++;
 		} else if (modif_p[0] == 'm' && modif_p[1] == 'n') {
@@ -473,6 +499,7 @@ static int split_exact_quest_time(char* modif_p, int* day, int* hour, int* minut
 	if (h < 0 || h > 23 || mn > 59 || s > 59)	// hour is required
 		return 0;
 
+	*week = w;
 	*day = max(0,d);
 	*hour = h;
 	*minute = max(0,mn);
@@ -486,7 +513,7 @@ static int split_exact_quest_time(char* modif_p, int* day, int* hour, int* minut
  * @param quest_id : ID to lookup
  * @return Quest entry or nullptr on failure
  */
-std::shared_ptr<s_quest_db> quest_search(int quest_id)
+std::shared_ptr<s_quest_db> quest_search(int32 quest_id)
 {
 	auto quest = quest_db.find(quest_id);
 
@@ -501,7 +528,7 @@ std::shared_ptr<s_quest_db> quest_search(int quest_id)
  * @param sd : Player's data
  * @return 0 in case of success, nonzero otherwise (i.e. the player has no quests)
  */
-int quest_pc_login(map_session_data *sd)
+int32 quest_pc_login(map_session_data *sd)
 {
 	if (!sd->avail_quests)
 		return 1;
@@ -512,7 +539,7 @@ int quest_pc_login(map_session_data *sd)
 	clif_quest_send_mission(sd);
 
 	//@TODO[Haru]: Is this necessary? Does quest_send_mission not take care of this?
-	for (int i = 0; i < sd->avail_quests; i++)
+	for (int32 i = 0; i < sd->avail_quests; i++)
 		clif_quest_update_objective(sd, &sd->quest_log[i]);
 #endif
 
@@ -536,10 +563,18 @@ static time_t quest_time(std::shared_ptr<s_quest_db> qi)
 		struct tm *lt = localtime(&t);
 		uint32 time_today = lt->tm_hour * 3600 + lt->tm_min * 60 + lt->tm_sec;
 
-		if (time_today < (qi->time % 86400))
-			return static_cast<time_t>(t + qi->time - time_today);
-		else // Carry over to the next day
-			return static_cast<time_t>(t + 86400 + qi->time - time_today);
+		int32 day_shift = 0;
+
+		if (time_today >= (qi->time % 86400)) // Carry over to the next day
+			day_shift = 1;
+
+		if (qi->time_week > -1) {
+			if (qi->time_week < (lt->tm_wday + day_shift))
+				day_shift = qi->time_week + 7 - lt->tm_wday;
+			else
+				day_shift = qi->time_week - lt->tm_wday;
+		}
+		return static_cast<time_t>(t + (day_shift * 86400) + qi->time - time_today);
 	}
 
 	return 0;
@@ -552,7 +587,7 @@ static time_t quest_time(std::shared_ptr<s_quest_db> qi)
  * @param quest_id : ID of the quest to add.
  * @return 0 in case of success, nonzero otherwise
  */
-int quest_add(map_session_data *sd, int quest_id)
+int32 quest_add(map_session_data *sd, int32 quest_id)
 {
 	std::shared_ptr<s_quest_db> qi = quest_search(quest_id);
 
@@ -566,7 +601,7 @@ int quest_add(map_session_data *sd, int quest_id)
 		return -1;
 	}
 
-	int n = sd->avail_quests; //Insertion point
+	int32 n = sd->avail_quests; //Insertion point
 
 	sd->num_quests++;
 	sd->avail_quests++;
@@ -598,7 +633,7 @@ int quest_add(map_session_data *sd, int quest_id)
  * @param qid2 : New quest to add
  * @return 0 in case of success, nonzero otherwise
  */
-int quest_change(map_session_data *sd, int qid1, int qid2)
+int32 quest_change(map_session_data *sd, int32 qid1, int32 qid2)
 {
 	std::shared_ptr<s_quest_db> qi = quest_search(qid2);
 
@@ -617,7 +652,7 @@ int quest_change(map_session_data *sd, int qid1, int qid2)
 		return -1;
 	}
 
-	int i;
+	int32 i;
 
 	ARR_FIND(0, sd->avail_quests, i, sd->quest_log[i].quest_id == qid1);
 	if (i == sd->avail_quests) {
@@ -647,9 +682,9 @@ int quest_change(map_session_data *sd, int qid1, int qid2)
  * @param quest_id : ID of the quest to remove
  * @return 0 in case of success, nonzero otherwise
  */
-int quest_delete(map_session_data *sd, int quest_id)
+int32 quest_delete(map_session_data *sd, int32 quest_id)
 {
-	int i;
+	int32 i;
 
 	//Search for quest
 	ARR_FIND(0, sd->num_quests, i, sd->quest_log[i].quest_id == quest_id);
@@ -666,7 +701,7 @@ int quest_delete(map_session_data *sd, int quest_id)
 
 	if (sd->num_quests == 0) {
 		aFree(sd->quest_log);
-		sd->quest_log = NULL;
+		sd->quest_log = nullptr;
 	} else
 		RECREATE(sd->quest_log, struct quest, sd->num_quests);
 
@@ -684,14 +719,14 @@ int quest_delete(map_session_data *sd, int quest_id)
  * Map iterator subroutine to update quest objectives for a party after killing a monster.
  * @see map_foreachinrange
  * @param ap : Argument list, expecting:
- *   int Party ID
- *   int Mob ID
- *   int Mob Level
- *   int Mob Race
- *   int Mob Size
- *   int Mob Element
+ *   int32 Party ID
+ *   int32 Mob ID
+ *   int32 Mob Level
+ *   int32 Mob Race
+ *   int32 Mob Size
+ *   int32 Mob Element
  */
-int quest_update_objective_sub(struct block_list *bl, va_list ap)
+int32 quest_update_objective_sub(struct block_list *bl, va_list ap)
 {
 	nullpo_ret(bl);
 
@@ -702,7 +737,7 @@ int quest_update_objective_sub(struct block_list *bl, va_list ap)
 	if( !sd->avail_quests )
 		return 0;
 	
-	if( sd->status.party_id != va_arg(ap, int))
+	if( sd->status.party_id != va_arg(ap, int32))
 		return 0;
 
 	quest_update_objective(sd, va_arg(ap, struct mob_data*));
@@ -723,7 +758,7 @@ void quest_update_objective(map_session_data *sd, struct mob_data* md)
 {
 	nullpo_retv(sd);
 
-	for (int i = 0; i < sd->avail_quests; i++) {
+	for (int32 i = 0; i < sd->avail_quests; i++) {
 		if (sd->quest_log[i].state == Q_COMPLETE) // Skip complete quests
 			continue;
 
@@ -734,7 +769,7 @@ void quest_update_objective(map_session_data *sd, struct mob_data* md)
 		// Process quest objectives
 		uint8 total_check = 7; // Must pass all checks
 
-		for (int j = 0; j < qi->objectives.size(); j++) {
+		for (int32 j = 0; j < qi->objectives.size(); j++) {
 			uint8 objective_check = 0;
 
 			if (qi->objectives[j]->mob_id == md->mob_id)
@@ -775,7 +810,7 @@ void quest_update_objective(map_session_data *sd, struct mob_data* md)
 		for (const auto &it : qi->dropitem) {
 			if (it->mob_id != 0 && it->mob_id != md->mob_id)
 				continue;
-			if (it->rate < 10000 && rnd()%10000 >= it->rate)
+			if (it->rate < 10000 && !rnd_chance<uint16>(it->rate, 10000))
 				continue; // TODO: Should this be affected by server rates?
 			if (!item_db.exists(it->nameid))
 				continue;
@@ -811,9 +846,9 @@ void quest_update_objective(map_session_data *sd, struct mob_data* md)
  * @return 0 in case of success, nonzero otherwise
  * @author [Inkfish]
  */
-int quest_update_status(map_session_data *sd, int quest_id, e_quest_state status)
+int32 quest_update_status(map_session_data *sd, int32 quest_id, e_quest_state status)
 {
-	int i;
+	int32 i;
 
 	ARR_FIND(0, sd->avail_quests, i, sd->quest_log[i].quest_id == quest_id);
 	if (i == sd->avail_quests) {
@@ -860,9 +895,9 @@ int quest_update_status(map_session_data *sd, int quest_id, e_quest_state status
  *              1 if the quest's timeout has expired
  *              0 otherwise
  */
-int quest_check(map_session_data *sd, int quest_id, e_quest_check_type type)
+int32 quest_check(map_session_data *sd, int32 quest_id, e_quest_check_type type)
 {
-	int i;
+	int32 i;
 
 	ARR_FIND(0, sd->num_quests, i, sd->quest_log[i].quest_id == quest_id);
 	if (i == sd->num_quests)
@@ -874,16 +909,16 @@ int quest_check(map_session_data *sd, int quest_id, e_quest_check_type type)
 				return 1;
 			return sd->quest_log[i].state;
 		case PLAYTIME:
-			return (sd->quest_log[i].time < (unsigned int)time(nullptr) ? 2 : sd->quest_log[i].state == Q_COMPLETE ? 1 : 0);
+			return (sd->quest_log[i].time < (uint32)time(nullptr) ? 2 : sd->quest_log[i].state == Q_COMPLETE ? 1 : 0);
 		case HUNTING:
 			if (sd->quest_log[i].state == Q_INACTIVE || sd->quest_log[i].state == Q_ACTIVE) {
-				int j;
+				int32 j;
 				std::shared_ptr<s_quest_db> qi = quest_search(sd->quest_log[i].quest_id);
 
 				ARR_FIND(0, qi->objectives.size(), j, sd->quest_log[i].count[j] < qi->objectives[j]->count);
 				if (j == qi->objectives.size())
 					return 2;
-				if (sd->quest_log[i].time < (unsigned int)time(nullptr))
+				if (sd->quest_log[i].time < (uint32)time(nullptr))
 					return 1;
 			}
 			return 0;
@@ -902,11 +937,11 @@ int quest_check(map_session_data *sd, int quest_id, e_quest_check_type type)
  * @param sd : Character's data
  * @param ap : Ignored
  */
-static int quest_reload_check_sub(map_session_data *sd, va_list ap)
+static int32 quest_reload_check_sub(map_session_data *sd, va_list ap)
 {
 	nullpo_ret(sd);
 
-	int i, j = 0;
+	int32 i, j = 0;
 
 	for (i = 0; i < sd->num_quests; i++) {
 		std::shared_ptr<s_quest_db> qi = quest_search(sd->quest_log[i].quest_id);

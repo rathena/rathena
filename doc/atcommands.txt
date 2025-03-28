@@ -780,6 +780,28 @@ To drop all weapons in inventory...
 
 ---------------------------------------
 
+@stockall {<item type>}
+
+Transfer all items from cart to inventory based on the item type.
+
+Valid item types:
+    -1 = All (default)
+     0 = Healing
+     2 = Usable
+     3 = Etc
+     4 = Armors
+     5 = Weapons
+     6 = Cards
+     7 = Pet Eggs
+     8 = Pet Armors
+     10 = Ammunition
+
+Example:
+To transfer all weapons from cart to inventory...
+@stockall 5
+
+---------------------------------------
+
 @storeall
 
 Places all inventory and equipped items directly into your Kafra Storage.
@@ -1227,6 +1249,11 @@ Adds a card or enchant to the specific slot of the equipment.
 <card_id>: Can actually be any existing card or enchant item. Put 0 to remove it.
 
 ---------------------------------------
+
+@resetcooltime
+/resetcooltime
+
+Resets the cooldown of all skills of the player and if active also of the homunculus or the mercenary.
 
 ==============================
 | 5. Administrative Commands |

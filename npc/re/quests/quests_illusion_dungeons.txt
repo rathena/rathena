@@ -14,6 +14,7 @@
 //= 1.5 Added Illusion of Luanda [Capuche]
 //= 1.6 Added Illusion of Underwater [Capuche]
 //= 1.7 Added Illusion of Twins [Capuche]
+//= 1.8 Added Illusion of Teddy Bear [Atemo]
 //============================================================
 
 //============================================================
@@ -9563,6 +9564,7 @@ iz_d04_i,127,228,4	script	Jerrymon#jerry3	1_M_01,{
 			.@menu$[0] = "^999999" + getitemname(25899) + " Collection - Pending^000000";
 			break;
 		case 2:
+			.@menu$[0] = "Collect " + getitemname(25899) + "";
 			break;
 		}
 
@@ -9586,6 +9588,7 @@ iz_d04_i,127,228,4	script	Jerrymon#jerry3	1_M_01,{
 			.@menu$[1] = "^999999Deep Sea Creatures Killed - Pending^000000";
 			break;
 		case 2:
+			.@menu$[1] = "Kill Deep Sea Creatures";
 			break;
 		}
 
@@ -11809,3 +11812,996 @@ ant_d02_i,125,73,6	script(CLOAKED)	Vitata#part9	ILL_VITATA,{
 
 ant_d02_i,128,73,6	duplicate(dummy_cloaked_npc)	Quiet Maya#part10	ILL_MAYA
 ant_d02_i,129,73,2	duplicate(dummy_cloaked_npc)	Vitata#part11	ILL_VITATA
+
+
+//============================================================
+//= Illusion of Teddy Bear
+//============================================================
+
+ein_d02_i,161,189,3	script	Exit#IBTin	4_ENERGY_BLUE,{
+	warp "ein_dun01",189,80;
+	end;
+}
+
+einbroch,149,242,5	script	Coughing young man#ITB	4_M_NFMAN,3,3,{
+	if (BaseLevel < 150) {
+		mes "[Coughing young man]";
+		mes "The time has passed...";
+		mes "Why haven't you come back yet...";
+		mes "Cough Cough!!";
+		next;
+		mes "^ff0000¡Ø You can start this quest from level 150.^000000";
+		close;
+	}
+	if (ill_teddy == 0) {
+		mes "[Coughing young man]";
+		mes "The time has passed...";
+		mes "Why haven't you come back yet...";
+		mes "Cough Cough!!";
+		next;
+		mes "[Coughing young man]";
+		mes "Cough...cough...cough...";
+		mes "Ha ha ha... did something happen?";
+		mes "If I don't go and check it myself...";
+		mes "Cough cough";
+		mes "Cough...lucky...";
+		next;
+		mes "-plop-";
+		next;
+		if (select( "Help him", "Ignore" ) == 2) {
+			mes "[Coughing young man]";
+			mes "...cough...";
+			mes "Cough cough... cough";
+			close;
+		}
+		mes "[Coughing young man]";
+		mes "...cough...";
+		mes "Thank you.";
+		mes "Cough cough... cough";
+		next;
+		select( "You'd better take a break" );
+		mes "[Coughing young man]";
+		mes "Cough...";
+		mes "That's true, but... Cough... My friend who went to the mine for work hasn't come back yet... Cough.";
+		next;
+		mes "[Coughing young man]";
+		mes "A few days ago, as soon as work was over... he left... he said he would come back...";
+		mes "He hasn't come back...cough...yet.";
+		next;
+		mes "[Coughing young man]";
+		mes "Cough...cough cough...cough";
+		mes "I've talked to the guards, but...cough...cough...they didn't take it seriously...";
+		next;
+		mes "[Coughing young man]";
+		mes "^ff0000Steven^000000 is not that kind of guy...Cough cough";
+		mes "If he hasn't contacted me yet, something must have happened.";
+		next;
+		mes "[Coughing young man]";
+		mes "It seemed like he was going to ^ff0000the first floor of the mine in Einbech^000000.";
+		mes "If you look around, maybe you'll find a clue...even if it's just a small thing?";
+		ill_teddy = 1;
+		setquest 11556;
+		close;
+	}
+	if (ill_teddy == 1) {
+		mes "[Coughing young man]";
+		mes "A few days ago, as soon as work was over... he left... he said he would come back...";
+		mes "He hasn't come back...cough...yet.";
+		next;
+		mes "[Coughing young man]";
+		mes "Cough...cough cough...cough";
+		mes "I've talked to the guards, but...cough...cough...they didn't take it seriously...";
+		next;
+		mes "[Coughing young man]";
+		mes "^ff0000Steven^000000 is not that kind of guy...Cough cough";
+		mes "If he hasn't contacted me yet, something must have happened.";
+		next;
+		mes "[Coughing young man]";
+		mes "It seemed like he was going to ^ff0000the first floor of the mine in Einbech^000000.";
+		mes "If you look around, maybe you'll find a clue...even if it's just a small thing?";
+		close;
+	}
+	if (ill_teddy < 5) {
+		mes "[Coughing young man]";
+		mes "Ah! Cough Cough!";
+		mes "You're back!";
+		mes "Steven is...cough";
+		mes "Did you find him?";
+		close;
+	}
+	if (ill_teddy == 5) {
+		mes "[Acid]";
+		mes "Ah! Cough Cough!";
+		mes "You're back!";
+		mes "Steven is...cough";
+		mes "Did you find him?";
+		next;
+		select( "Pass the money" );
+		mes "[Acid]";
+		mes "....";
+		mes "As expected...cough cough...what happened?";
+		next;
+		mes "[Acid]";
+		mes "There's no way they just sent money like this when nothing happened.";
+		next;
+		mes "[Acid]";
+		mes "I ..cough..must go myself...cough..cough..";
+		mes "Maybe it doesn't help much, but...cough";
+		mes "My dearest friend...cough..may be in danger, but I can't stay still!...cluck";
+		next;
+		mes "[Acid]";
+		mes "Cough cough..Adventurer..Cough..Take me with you!";
+		mes "Please!";
+		ill_teddy = 6;
+		erasequest 11560;
+		setquest 11561;
+		close;
+	}
+	if (ill_teddy == 6) {
+		mes "[Acid]";
+		mes "I ..cough..must go myself...cough..cough..";
+		mes "Maybe it doesn't help much, but...cough";
+		mes "My dearest friend...cough..may be in danger, but I can't stay still!...cluck";
+		next;
+		mes "[Acid]";
+		mes "Cough cough..Adventurer..Cough..Take me with you!";
+		mes "Please!";
+		close;
+	}
+	mes "[Acid]";
+	mes "I've been in the mines for most of these days, so my cough seems to be getting better.";
+	mes "My body has become healthy!";
+	mes "The air here is worse than the mine... Cough";
+	close;
+
+OnTouch:
+	if (BaseLevel >= 150 && ill_teddy == 0)
+		npctalk "Coughing young man: Cough Cough!!", "", bc_self;
+	end;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 150 && ill_teddy == 0" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(11560) == 1" );
+	end;
+}
+
+ein_dun01,198,79,3	script	Teddy Bear#ITB10	4_NASARIAN,{
+	if (ill_teddy == 1) {
+		mes "[Teddy Bear in line]";
+		mes "Stand in line!";
+		next;
+		select( "Why are you standing here?" );
+		mes "[Teddy Bear in line]";
+		mes "What?";
+		mes "Do you think I'd give such advanced information to a stranger I am seeing for the first time?";
+		next;
+		mes "[Teddy Bear in line]";
+		mes "If you're that curious, stand behind me and wait for your turn!";
+		next;
+		mes "[Teddy Bear in line]";
+		mes "Information isn't something you get for free.";
+		mes "All the time and effort...";
+		next;
+		mes "[???????????]";
+		mes "AAAAAAAAAA!!!!";
+		mes "Let go!!!!";
+		mes "You furry bastards!!!!";
+		next;
+		mes "- A man's scream is heard from the front of the line. Let's check the situation at the front. -";
+		ill_teddy = 2;
+		erasequest 11556;
+		setquest 11557;
+		close;
+	}
+	if (ill_teddy == 2) {
+		mes "[Teddy Bear in line]";
+		mes "Have you heard something strange?";
+		next;
+		mes "- A man's scream is heard from the front of the line. Let's check the situation at the front. -";
+		close;
+	}
+	mes "[Teddy Bear in line]";
+	mes "Stand in line!";
+	close;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(11556) == 1" );
+	end;
+}
+
+ein_dun01,189,84,7	script	Bear#3	4_NASARIAN,{
+	mes "[Teddy Bear in line]";
+	mes "Hey there!!! Don't cut in line!!!";
+	close;
+}
+
+ein_dun01,189,82,7	duplicate(dummy_npc)	Bear#4	4_NASARIAN
+ein_dun01,190,80,7	duplicate(dummy_npc)	Bear#5	4_NASARIAN
+ein_dun01,191,80,5	duplicate(dummy_npc)	Bear#6	4_NASARIAN
+
+ein_dun01,195,80,5	script	Resident#8	4_M_EINMAN2,{
+	mes "[Resident]";
+	mes "One day, everyone started queuing up here, so I stood here too.";
+	mes "What's in front?";
+	mes "Well? I'm just here because I'm curious...";
+	close;
+}
+
+ein_dun01,196,80,1	script	Bear#9	4_NASARIAN,{
+	mes "[Teddy Bear in line]";
+	mes "Everyone stands in line for days waiting for their turn.";
+	close;
+}
+
+ein_dun01,189,85,7	script	Teddy Bear#IBT1	4_NASARIAN,{
+	if (ill_teddy < 2) {
+		mes "[Teddy Bear in line]";
+		mes "Whoops, it's my turn to go in soon.";
+		close;
+	}
+	if (ill_teddy == 2) {
+		mes "[Teddy Bear in line]";
+		mes "Whh..what happened?";
+		mes "I heard a scream when the man in front of me just entered.";
+		next;
+		select( "About the man." );
+		mes "[Teddy Bear in line]";
+		mes "What?";
+		mes "I didn't even have time to look at that!";
+		next;
+		mes "[Teddy Bear in line]";
+		mes "Flaw... Hehe... .";
+		mes "I've been waiting in line for days, but suddenly I'm not interested anymore...";
+		next;
+		mes "[Teddy Bear in line]";
+		mes "If you're really curious, I'll give you my position. Why don't you go in and check it out?";
+		next;
+		mes "[Teddy Bear in line]";
+		mes "I...it's not because I'm scared!";
+		mes "I just... I guess what is inside is boring for me now.";
+		mes "Because I've lost interest?!";
+		ill_teddy = 3;
+		erasequest 11557;
+		setquest 11558;
+		close;
+	}
+	if (ill_teddy == 3) {
+		mes "[Teddy Bear in line]";
+		mes "Flaw... Hehe... .";
+		mes "I've been waiting in line for days, but suddenly I'm not interested anymore...";
+		next;
+		mes "[Teddy Bear in line]";
+		mes "If you're really curious, I'll give you my position. Why don't you go in and check it out?";
+		next;
+		mes "[Teddy Bear in line]";
+		mes "I...it's not because I'm scared!";
+		mes "I just... I guess what is inside is boring for me now.";
+		mes "Because I've lost interest?!";
+		close;
+	}
+	mes "[Teddy Bear in line]";
+	mes "What?";
+	mes "The guy in front has already ran away!";
+	mes "Don't get confused!";
+	close;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(11557) == 1" );
+	end;
+}
+
+ein_dun01,189,87,3	script	An entrance somewhere#IBTin	4_ENERGY_BLUE,{
+	if (ill_teddy < 3) {
+		mes "- Can't get in yet -";
+		close;
+	}
+	warp "ein_d02_i",168,197;
+	end;
+}
+
+
+ein_d02_i,170,193,5	script	Steven#IBT	4W_M_02,3,3,{
+	if (checkweight(1201,3) == 0) {
+		mes "- Wait a moment!!";
+		mes "- You have too many items. -";
+		mes "- You can't receive this. -";
+		mes "- Lighten your weight and -";
+		mes "- try again. -";
+		close;
+	}
+	if (ill_teddy < 3)
+		end;
+	if (ill_teddy == 3) {
+		mes "[Steven]";
+		mes "Can't you let me go?!";
+		mes "Let me go!";
+		mes "This sucks!!!!";
+		npctalk "Steven: Can't you let me go?!", "", bc_self;
+		cloakoffnpcself( "White Teddy Bear#IBT" );
+		cloakoffnpcself( "Teddy Bear#IBT" );
+		next;
+		mes "[Teddy Bear]";
+		mes "Oops!";
+		mes "Caught, I got caught!";
+		mes "Let's run!!!!";
+		npctalk "White Teddy Bear: Caught, I got caught!", "White Teddy Bear#IBT", bc_self;
+		npctalk "Teddy Bear: Let's Run!!!!", "Teddy Bear#IBT", bc_self;
+		ill_teddy = 4;
+		erasequest 11558;
+		setquest 11559;
+		close2;
+		cloakonnpcself( "White Teddy Bear#IBT" );
+		cloakonnpcself( "Teddy Bear#IBT" );
+		end;
+	}
+	if (ill_teddy == 4) {
+		mes "[Steven]";
+		mes "What...";
+		mes "That's...";
+		next;
+		mes "[Steven]";
+		mes "Hey!";
+		mes "You there!";
+		mes "Did you see that too?";
+		mes "The Teddy Bear just...";
+		next;
+		select( "Tell him about the coughing young man." );
+		mes "[Steven]";
+		mes "Huh? The coughing young man in Einbroch asked you to find me?";
+		mes "Is it Acid...";
+		next;
+		mes "[Steven]";
+		mes "I told him I'd come back right away, but what the hell was the rumor about? There were a lot of people and monsters waiting in line.";
+		next;
+		mes "[Steven]";
+		mes "So how was Acid?";
+		mes "He couldn't sleep well because his cough got so bad.";
+		next;
+		mes "[Steven]";
+		mes "I have to go back and send him to the hospital, but...";
+		mes "If I'm not mistaken, that's...";
+		next;
+		mes "[Steven]";
+		mes "Ugh...things got messy...";
+		next;
+		mes "[Steven]";
+		mes "Hey.";
+		mes "Do me a favor.";
+		mes "He has to go to the hospital today and won't have enough money.";
+		next;
+		mes "[Steven]";
+		mes "I think I need to do some work here.";
+		mes "You go back and tell him that I'm all right.";
+		mes "Give him this money too.";
+		next;
+		mes "[Steven]";
+		mes "Please.";
+		mes "When I go back... I don't have anything, but I'll give you something in return.";
+		npctalk "Steven: Please.", "", bc_self;
+		ill_teddy = 5;
+		erasequest 11559;
+		setquest 11560;
+		close;
+	}
+	if (ill_teddy == 5) {
+		mes "[Steven]";
+		mes "Hey.";
+		mes "Do me a favor.";
+		mes "He has to go to the hospital today and won't have enough money.";
+		next;
+		mes "[Steven]";
+		mes "I think I need to do some work here.";
+		mes "You go back and tell him that I'm all right.";
+		mes "Give him this money too.";
+		next;
+		mes "[Steven]";
+		mes "Please.";
+		mes "When I go back... I don't have anything, but I'll give you something in return.";
+		npctalk "Steven: Please.", "", bc_self;
+		close;
+	}
+	if (ill_teddy == 6) {
+		mes "[Steven]";
+		mes "Oh you are here?";
+		mes "Did he go to the hospital?";
+		next;
+		mes "[Acid]";
+		mes "Steven!";
+		mes "Why make people so worried...";
+		cloakoffnpcself( "Acid#IBT_inN01" );
+		next;
+		mes "[Steven]";
+		mes "No... why are you here?";
+		mes "Go to the hospital!";
+		next;
+		mes "[Acid]";
+		mes "Do I have a hospital or a shop now?!";
+		next;
+		mes "[Steven]";
+		mes "Ugh...";
+		mes "Okay...okay!";
+		mes "Be quiet for now!";
+		mes "Can you hear something strange coming from the north?";
+		npctalk "Steven: Ugh... nagging...", "", bc_self;
+		ill_teddy = 7;
+		erasequest 11561;
+		setquest 11562;
+		close2;
+		cloakonnpcself( "Acid#IBT_inN01" );
+		end;
+	}
+	if (ill_teddy == 7) {
+		mes "[Steven]";
+		mes "Ugh...";
+		mes "Okay!";
+		mes "Be quiet for now!";
+		mes "Can you hear something strange coming from the north?";
+		npctalk "Steven: Ugh... nagging...", "", bc_self;
+		close;
+	}
+	if (ill_teddy == 8) {
+		if (checkquest(11563,HUNTING) != 2 || checkquest(11564,HUNTING) != 2) {
+			mes "[Steven]";
+			mes "Too many of them.";
+			mes "This is too dangerous.";
+			mes "Let's clear things up and talk again.";
+			close;
+		}
+		mes "[Steven]";
+		mes "Whoa...";
+		mes "Did you send them out?";
+		next;
+		mes "[Acid]";
+		mes "Aren't those just Teddy Bears?";
+		mes "Invading... they called themselves Nazarians, right?";
+		cloakoffnpcself( "Acid#IBT_inN01" );
+		next;
+		mes "[Steven]";
+		mes "What the hell is going on...";
+		mes "I'm out of my mind...";
+		next;
+		select( "About Teddy Bear" );
+		mes "[Acid]";
+		mes "Steven brought it because he said he was looking for something salty to eat at home.";
+		next;
+		mes "[Acid]";
+		mes "The pay is so good compared to the job, and the delivery place is also a mine, so it was a bit suspicious...";
+		next;
+		mes "[Acid]";
+		mes "I've been told that idiot is excited.";
+		next;
+		mes "[Steven]";
+		mes "What an idiot!";
+		mes "Thanks to you, I get hospital bills and your cough...";
+		mes "Oh... Come to think of it, you don't cough anymore, do you?";
+		npctalk "Steven: What an idiot!", "", bc_self;
+		next;
+		mes "[Acid]";
+		mes "Uh... is that so?";
+		mes "Come to think of it, I feel like I can breathe easier!";
+		next;
+		mes "[Steven]";
+		mes "No matter how many times I went to the hospital, there was no improvement...";
+		mes "Maybe it was just the bad air!";
+		npctalk "Steven: Air worse than in the mine...", "", bc_self;
+		next;
+		mes "[Acid]";
+		mes "No, that's not important right now...";
+		mes "The doll we made is alive and moving!";
+		mes "They even tried to kidnap you!";
+		next;
+		mes "[Steven]";
+		mes "Kidnapped... Come to think of it, I helped a man who was being chased by a terrific Teddy Bear on the way back.";
+		next;
+		mes "[Steven]";
+		mes "...I'm not the only one brought here, am I?";
+		mes "I guess I'll have to stay here and watch the situation.";
+		mes "Acid! You can go back to the village for now.";
+		next;
+		mes "[Steven]";
+		mes "Thank you for helping me too.";
+		mes "I can't give you much, but I'll give you the rare ore I found earlier.";
+		mes "It might come in handy somewhere!";
+		ill_teddy = 9;
+		erasequest 11563;
+		erasequest 11564;
+		getitem 25271,5; // IllusionStone
+		getexp 3500000,2500000;
+		close2;
+		cloakonnpcself( "Acid#IBT_inN01" );
+		end;
+	}
+
+	// daily
+	switch( checkquest(11566,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "[Steven]";
+		mes "Get some rest";
+		mes "If you overdo it, you'll only ruin your health.";
+		close;
+	case 2:
+		erasequest 11566;
+		break;
+	}
+	switch( checkquest(11565,HUNTING) ) {
+	case -1:
+		mes "[Steven]";
+		mes "Ugh...";
+		mes "Where do these guys keep popping up?";
+		next;
+		mes "[Steven]";
+		mes "If you're familiar with combat, puppeteers who aren't familiar with combat won't find it easy to get out of here.";
+		next;
+		mes "[Steven]";
+		mes "For now, I'm also taking care of it, but I'm not good enough alone.";
+		mes "If you're not busy right now, help me defeat " + getmonsterinfo("ILL_PITMAN", MOB_NAME) + ", " + getmonsterinfo("ILL_MINERAL", MOB_NAME) + ", and " + getmonsterinfo("ILL_OBSIDIAN", MOB_NAME) + ".";
+		mes "I think I'll be able to breathe a little more if I catch 10 of them.";
+		next;
+		if (select( "Accept", "Quit" ) == 2) {
+			mes "[Steven]";
+			mes "Okay...";
+			close;
+		}
+		mes "[Steven]";
+		mes "Then please help me defeat";
+		mes "10 " + getmonsterinfo("ILL_PITMAN", MOB_NAME) + ", " + getmonsterinfo("ILL_MINERAL", MOB_NAME) + ", and " + getmonsterinfo("ILL_OBSIDIAN", MOB_NAME) + "!";
+		setquest 11565;
+		close;
+	case 0:
+	case 1:
+		mes "[Steven]";
+		mes "How are you?";
+		mes "How are things going with " + getmonsterinfo("ILL_PITMAN", MOB_NAME) + ", " + getmonsterinfo("ILL_MINERAL", MOB_NAME) + ", and " + getmonsterinfo("ILL_OBSIDIAN", MOB_NAME) + "?";
+		close;
+	case 2:
+		mes "[Steven]";
+		mes "Whoa...";
+		mes "Good job!";
+		mes "Are you feeling a little safer now?";
+		erasequest 11565;
+		setquest 11566;
+		getitem 25271,1; // IllusionStone
+		getexp 1000000,900000;
+		close;
+	}
+	end;
+
+OnTouch:
+	if (ill_teddy == 3) {
+		mes "[Steven]";
+		mes "Can't you let me go?!";
+		mes "Let me go!";
+		mes "This sucks!!!!";
+		npctalk "Steven: Can't you let me go?!", "", bc_self;
+		cloakoffnpcself( "White Teddy Bear#IBT" );
+		cloakoffnpcself( "Teddy Bear#IBT" );
+		next;
+		mes "[Teddy Bear]";
+		mes "Oops!";
+		mes "Caught, I got caught!";
+		mes "Let's run!!!!";
+		npctalk "White Teddy Bear: Caught, I got caught!", "White Teddy Bear#IBT", bc_self;
+		npctalk "Teddy Bear: Let's Run!!!!", "Teddy Bear#IBT", bc_self;
+		ill_teddy = 4;
+		erasequest 11558;
+		setquest 11559;
+		close2;
+		cloakonnpcself( "White Teddy Bear#IBT" );
+		cloakonnpcself( "Teddy Bear#IBT" );
+		end;
+	}
+	end;
+
+OnInit:
+	// main quest
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(11558) == 1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(11559) == 1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(11561) == 1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(11563,HUNTING) == 2 && checkquest(11564,HUNTING) == 2" );
+
+	// daily
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ill_teddy == 9 && checkquest(11565,HUNTING) == -1 && checkquest(11566,PLAYTIME) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(11565,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(11566,PLAYTIME) == 2" );
+	end;
+}
+
+ein_d02_i,135,229,1	duplicate(dummy_cloaked_npc)	Acid#IBT_inN	4_M_NFMAN
+ein_d02_i,169,193,5	duplicate(dummy_cloaked_npc)	White Teddy Bear#IBT	4_TEDDY_BEAR_W
+ein_d02_i,171,193,3	duplicate(dummy_cloaked_npc)	Teddy Bear#IBT	4_NASARIAN
+ein_d02_i,172,192,1	duplicate(dummy_cloaked_npc)	Acid#IBT_inN01	4_M_NFMAN
+
+ein_d02_i,132,233,0	script	#ITBSuspicious place	HIDDEN_WARP_NPC,3,3,{
+	end;
+OnTouch:
+	if (ill_teddy == 7) {
+		mes "[??????]";
+		mes "Um hahahahahahahahaha!!!!";
+		mes "Listen, people!";
+		mes "Finally the day has come when we will rise again!";
+		cloakoffnpcself( "??????#IBT_inB01" );
+		cloakoffnpcself( "??????#IBT_inB02_1" );
+		cloakoffnpcself( "??????#IBT_inB03" );
+		cloakoffnpcself( "??????#IBT_inB04" );
+		cloakoffnpcself( "??????#IBT_inB05" );
+		cloakoffnpcself( "??????#IBT_inB06" );
+		cloakoffnpcself( "??????#IBT_inB07" );
+		cloakoffnpcself( "??????#IBT_inB08" );
+		cloakoffnpcself( "??????#IBT_inB09" );
+		cloakoffnpcself( "??????#IBT_inB10" );
+		cloakoffnpcself( "??????#IBT_inB11" );
+		cloakoffnpcself( "??????#IBT_inB12" );
+		cloakoffnpcself( "??????#IBT_inB13" );
+		cloakoffnpcself( "??????#IBT_inB15" );
+		cloakoffnpcself( "??????#IBT_inB16" );
+		cloakoffnpcself( "??????#IBT_inB17" );
+		cloakoffnpcself( "??????#IBT_inB18" );
+		cloakoffnpcself( "??????#IBT_inB19" );
+		cloakoffnpcself( "??????#IBT_inB20" );
+		cloakoffnpcself( "??????#IBT_inB21" );
+		cloakoffnpcself( "??????#IBT_inB22" );
+		npctalk "?????? : Mmmhahahahahahahahahaha!!!!", "??????#IBT_inB01", bc_self;
+		next;
+		mes "[??????]";
+		mes "Forget the shameful past of being trapped in the dark and damp ground.";
+		npctalk "?????? : Forget the shameful past of being trapped in the dark and damp ground.", "????????#IBT_inB01", bc_self;
+		next;
+		mes "[??????]";
+		mes "This land!!!";
+		npctalk "?????? : This land!!!", "????????#IBT_inB01", bc_self;
+		sleep2 500;
+		mes "This world!!!!";
+		npctalk "?????? : This world!!!!", "??????#IBT_inB01", bc_self;
+		sleep2 500;
+		mes "Until the day they are at our feet, us Nazarians!!!!";
+		npctalk "?????? : Until the day they are at our feet, us Nazarians!!!!", "??????#IBT_inB01", bc_self;
+		sleep2 500;
+		mes "Will not stop the invasion!";
+		npctalk "?????? : Will not stop the invasion!", "??????#IBT_inB01", bc_self;
+		next;
+		mes "[Nazarians]";
+		mes "Okay! A new body has arrived!";
+		mes "We will plant our holy core into the body that is only an empty shell!";
+		next;
+		mes "[??????]";
+		mes "Drivius! Come on get it!!!";
+		next;
+		mes "[Drivius]";
+		mes "Yes!!! His Majesty is here!!!";
+		next;
+		mes "[Emperor of Nazarians]";
+		mes "Ha ha... look!";
+		mes "This bright and beautiful figure...";
+		next;
+		mes "[Emperor of Nazarians]";
+		mes "People!!!";
+		mes "Welcome!";
+		mes "Brave newly born soldiers!!!!";
+		cloakonnpcself( "??????#IBT_inB02_1" );
+		cloakoffnpcself( "??????#IBT_inB02_2" );
+		npctalk "?????? : ...oh...ahah...", "??????#IBT_inB01", bc_self;
+		next;
+		mes "[Nazarians]";
+		mes "Waaaaaaaa!!!!";
+		mes "Long live the Emperor!!!!";
+		next;
+		mes "[Nazarians]";
+		mes "Hooray!!! Hooray!!!";
+		next;
+		mes "[Nazarians]";
+		mes "Look at those dashing soldiers over there!!!";
+		mes "Awesome!!!!";
+		next;
+		mes "[Emperor of Nazarians]";
+		mes "The world will bow before the mighty power of the Nazarians!!!!!";
+		next;
+		mes "[Nazarians]";
+		mes "Waaaaaaaa!!!!";
+		mes "Long live the Emperor!!!!";
+		mes "Hooray!!! Hooray!!!";
+		cloakoffnpcself( "Steven#IBT_inN" );
+		cloakoffnpcself( "Acid#IBT_inN" );
+		next;
+		mes "[Steven]";
+		mes "Wait what's that?";
+		mes "Isn't that the doll we made?";
+		next;
+		mes "[Acid]";
+		mes "I guess so?";
+		next;
+		mes "[Steven]";
+		mes "It does not only look like that, it is the one we made!";
+		next;
+		mes "[Steven]";
+		mes "It's the one who made a mess because you sewed wrong?? Yes!";
+		next;
+		mes "[Acid]";
+		mes "What a mess...";
+		mes "That one has its own cuteness point?";
+		next;
+		mes "[Steven]";
+		mes "...cute horns...";
+		next;
+		mes "[Emperor of Nazarians]";
+		mes "Hmm...";
+		mes "Oops...";
+		next;
+		mes "[Emperor of Nazarians]";
+		mes "It looks like a rat has lurked into the sacred assembly.";
+		next;
+		mes "[Emperor of Nazarians]";
+		mes "Warriors of Nazarians!!!!";
+		mes "Punish the intruder!!!";
+		next;
+		mes "[Nazarians]";
+		mes "From our name!";
+		mes "We'll do it!";
+		next;
+		mes "[Nazarians]";
+		mes "Waaaaaaa!!!";
+		mes "Punish them!";
+		mes "It's an intruder!!!";
+		next;
+		mes "[Steven]";
+		mes "Oops!";
+		mes "Looks like we got caught?!";
+		next;
+		mes "[Steven]";
+		mes "Hey!";
+		mes "There are many enemies, so let's scatter and run away!";
+		next;
+		mes "[Steven]";
+		mes "Take care of those chasing us appropriately.";
+		mes "Then see you near the exit in a minute!";
+		ill_teddy = 8;
+		erasequest 11562;
+		setquest 11563;
+		setquest 11564;
+		close2;
+		cloakonnpcself( "Steven#IBT_inN" );
+		cloakonnpcself( "Acid#IBT_inN" );
+		cloakonnpcself( "??????#IBT_inB01" );
+		cloakonnpcself( "??????#IBT_inB02_2" );
+		cloakonnpcself( "??????#IBT_inB03" );
+		cloakonnpcself( "??????#IBT_inB04" );
+		cloakonnpcself( "??????#IBT_inB05" );
+		cloakonnpcself( "??????#IBT_inB06" );
+		cloakonnpcself( "??????#IBT_inB07" );
+		cloakonnpcself( "??????#IBT_inB08" );
+		cloakonnpcself( "??????#IBT_inB09" );
+		cloakonnpcself( "??????#IBT_inB10" );
+		cloakonnpcself( "??????#IBT_inB11" );
+		cloakonnpcself( "??????#IBT_inB12" );
+		cloakonnpcself( "??????#IBT_inB13" );
+		cloakonnpcself( "??????#IBT_inB15" );
+		cloakonnpcself( "??????#IBT_inB16" );
+		cloakonnpcself( "??????#IBT_inB17" );
+		cloakonnpcself( "??????#IBT_inB18" );
+		cloakonnpcself( "??????#IBT_inB19" );
+		cloakonnpcself( "??????#IBT_inB20" );
+		cloakonnpcself( "??????#IBT_inB21" );
+		cloakonnpcself( "??????#IBT_inB22" );
+		end;
+	}
+	end;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(11562) == 1" );
+	end;
+}
+
+ein_d02_i,142,244,3	duplicate(dummy_cloaked_npc)	??????#IBT_inB01	4_NASARIAN_EM
+ein_d02_i,141,244,5	duplicate(dummy_cloaked_npc)	??????#IBT_inB02_1	4_TEDDY_BEAR_B_L
+ein_d02_i,141,244,5	duplicate(dummy_cloaked_npc)	??????#IBT_inB02_2	4_TEDDY_BEAR_B
+ein_d02_i,140,244,7	duplicate(dummy_cloaked_npc)	??????#IBT_inB03	4_TEDDY_BEAR_W
+ein_d02_i,141,240,5	duplicate(dummy_cloaked_npc)	??????#IBT_inB04	4_NASARIAN
+ein_d02_i,139,240,5	duplicate(dummy_cloaked_npc)	??????#IBT_inB05	4_TEDDY_BEAR_W
+ein_d02_i,140,238,5	duplicate(dummy_cloaked_npc)	??????#IBT_inB06	4_NASARIAN
+ein_d02_i,136,240,5	duplicate(dummy_cloaked_npc)	??????#IBT_inB07	4_TEDDY_BEAR_W
+ein_d02_i,133,240,7	duplicate(dummy_cloaked_npc)	??????#IBT_inB08	4_TEDDY_BEAR_B
+ein_d02_i,142,237,7	duplicate(dummy_cloaked_npc)	??????#IBT_inB09	4_NASARIAN
+ein_d02_i,140,236,7	duplicate(dummy_cloaked_npc)	??????#IBT_inB10	4_TEDDY_BEAR_W
+ein_d02_i,142,243,1	duplicate(dummy_cloaked_npc)	??????#IBT_inB11	4_NASARIAN
+ein_d02_i,144,242,3	duplicate(dummy_cloaked_npc)	??????#IBT_inB12	4_NASARIAN
+ein_d02_i,144,240,1	duplicate(dummy_cloaked_npc)	??????#IBT_inB13	4_NASARIAN
+ein_d02_i,141,246,5	duplicate(dummy_cloaked_npc)	??????#IBT_inB14	4_TEDDY_BEAR_W
+ein_d02_i,141,237,7	duplicate(dummy_cloaked_npc)	??????#IBT_inB15	4_NASARIAN
+ein_d02_i,141,242,7	duplicate(dummy_cloaked_npc)	??????#IBT_inB16	4_TEDDY_BEAR_B
+ein_d02_i,137,240,7	duplicate(dummy_cloaked_npc)	??????#IBT_inB17	4_NASARIAN
+ein_d02_i,136,238,7	duplicate(dummy_cloaked_npc)	??????#IBT_inB18	4_NASARIAN
+ein_d02_i,138,238,7	duplicate(dummy_cloaked_npc)	??????#IBT_inB19	4_NASARIAN
+ein_d02_i,141,241,7	duplicate(dummy_cloaked_npc)	??????#IBT_inB20	4_TEDDY_BEAR_B
+ein_d02_i,145,241,1	duplicate(dummy_cloaked_npc)	??????#IBT_inB21	4_NASARIAN
+ein_d02_i,140,243,5	duplicate(dummy_cloaked_npc)	??????#IBT_inB22	4_NASARIAN
+ein_d02_i,133,233,7	duplicate(dummy_cloaked_npc)	Steven#IBT_inN	4W_M_02
+
+ein_d02_i,168,206,5	script	Gloomy Teddy Bear#ITB	4_TEDDY_BEAR_B_L,{
+	if (checkweight(1201,3) == 0) {
+		mes "- Wait a moment!!";
+		mes "- You have too many items. -";
+		mes "- You can't receive this. -";
+		mes "- Lighten your weight and -";
+		mes "- try again. -";
+		close;
+	}
+	if (ill_teddy < 9) {
+		mes "[Gloomy Teddy Bear]";
+		mes "Ah...";
+		mes "Is this a dream or reality...";
+		mes "Am I dead... or am I alive...";
+		next;
+		mes "[Gloomy Teddy Bear]";
+		mes "We're... not supposed to come back...";
+		mes "I have to go back...";
+		close;
+	}
+	switch( checkquest(11569,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "[Gloomy Teddy Bear]";
+		mes "Whoops...don't rush me like that...";
+		close;
+	case 2:
+		erasequest 11569;
+		break;
+	}
+	switch( checkquest(11567,HUNTING) ) {
+	case -1:
+		mes "[Gloomy Teddy Bear]";
+		mes "Ah...";
+		mes "Is this a dream or reality...";
+		mes "Am I dead... or am I alive...";
+		next;
+		mes "[Gloomy Teddy Bear]";
+		mes "We're... not supposed to come back...";
+		mes "I have to go back...";
+		next;
+		mes "[Gloomy Teddy Bear]";
+		mes "Hey... don't just stand there, help me...";
+		mes "Me... the Nazarians...";
+		next;
+		mes "[Gloomy Teddy Bear]";
+		mes "^ff0000Kill 10 " + getmonsterinfo("ILL_TEDDY_BEAR_R", MOB_NAME) + ", " + getmonsterinfo("ILL_TEDDY_BEAR_Y", MOB_NAME) + ", " + getmonsterinfo("ILL_TEDDY_BEAR_G", MOB_NAME) + ", " + getmonsterinfo("ILL_TEDDY_BEAR_B", MOB_NAME) + ", and " + getmonsterinfo("ILL_TEDDY_BEAR_W", MOB_NAME) + "^000000 and return them to the depths... to rest...";
+		next;
+		if (select( "Accept", "Quit" ) == 2) {
+			mes "[Gloomy Teddy Bear]";
+			mes "...Ah...";
+			close;
+		}
+		mes "[Gloomy Teddy Bear]";
+		mes "I want to end this... infernal nightmare...";
+		mes "Come on...";
+		setquest 11567;
+		setquest 11568;
+		close;
+	case 0:
+	case 1:
+		mes "[Gloomy Teddy Bear]";
+		mes "Ah... When will the peaceful rest...";
+		mes "...is the request yet...";
+		close;
+	case 2:
+		switch( checkquest(11568,HUNTING) ) {
+		case -1:
+			end;
+		case 0:
+		case 1:
+			mes "[Gloomy Teddy Bear]";
+			mes "Ah... When will the peaceful rest...";
+			mes "...is the request yet...";
+			close;
+		case 2:
+			mes "[Gloomy Teddy Bear]";
+			mes "Why is it still... not going away...";
+			mes "This horrible nightmare...";
+			erasequest 11567;
+			erasequest 11568;
+			setquest 11569;
+			getitem 25271,1; // IllusionStone
+			getexp 1300000,1000000;
+			close;
+		}
+		end;
+	}
+	end;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ill_teddy == 9 && checkquest(11569,PLAYTIME) == -1 && checkquest(11567,HUNTING) == -1 && checkquest(11568,HUNTING) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(11569,PLAYTIME) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(11567,HUNTING) == 2 && checkquest(11568,HUNTING) == 2" );
+	end;
+}
+
+
+ein_d02_i,191,192,3	script	Porcelain Doll Craftsman#ITB	4_F_HUWOMAN,{
+	if (checkweight(1201,3) == 0) {
+		mes "- Wait a moment!!";
+		mes "- You have too many items. -";
+		mes "- You can't receive this. -";
+		mes "- Lighten your weight and -";
+		mes "- try again. -";
+		close;
+	}
+	if (ill_teddy < 9) {
+		mes "[Porcelain Doll Craftsman]";
+		mes "Kyaaaaaa!!!!!";
+		mes "You were surprised!";
+		close;
+	}
+	switch( checkquest(11571,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "[Porcelain Doll Craftsman]";
+		mes "Adventurer, welcome back.";
+		mes "Thanks to you, I have been able to continue my studies in the deep parts of the mine.";
+		mes "Please come back again at dawn.";
+		close;
+	case 2:
+		erasequest 11571;
+		break;
+	}
+	switch( checkquest(11570,HUNTING) ) {
+	case -1:
+		mes "[Porcelain Doll Craftsman]";
+		mes "Kyaaaaaa!!!!!";
+		mes "You were surprised!";
+		next;
+		mes "[Porcelain Doll Craftsman]";
+		mes "Have you ever seen a huge ^ff0000" + getmonsterinfo("ILL_TEDDY_BEAR_S", MOB_NAME) + "^000000 nearby?";
+		mes "I barely made it to the entrance, but when I try to leave, he shows up and has been hiding here for days.";
+		next;
+		if (select( "Help", "Quit" ) == 2) {
+			mes "[Porcelain Doll Craftsman]";
+			mes "Sob!";
+			mes "It's over!!!";
+			mes "I'm stuck here forever!";
+			close;
+		}
+		mes "[Porcelain Doll Craftsman]";
+		mes "Alive!!!";
+		mes "Did you see that?";
+		mes "It's a huge ^ff0000" + getmonsterinfo("ILL_TEDDY_BEAR_S", MOB_NAME) + "^000000.";
+		mes "You must kill it!";
+		setquest 11570;
+		close;
+	case 0:
+	case 1:
+		mes "[Porcelain Doll Craftsman]";
+		mes "How are you?";
+		mes "Have you killed ^ff0000" + getmonsterinfo("ILL_TEDDY_BEAR_S", MOB_NAME) + "^000000?";
+		close;
+	case 2:
+		// unknown text
+		erasequest 11570;
+		setquest 11571;
+		getitem 25271,1; // IllusionStone
+		getexp 1500000,1100000;
+		end;
+	}
+	end;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ill_teddy == 9 && checkquest(11571,PLAYTIME) == -1 && checkquest(11570,HUNTING) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(11571,PLAYTIME) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(11570,HUNTING) == 2" );
+	end;
+}
+
+ein_d02_i,169,244,1	script	White Bear#ITBz01	4_TEDDY_BEAR_W,3,3,{
+	end;
+OnTouch:
+	npctalk "White Teddy Bear: Ah... dear Charlotte... to be in a place like this...", "", bc_self;
+	end;
+}
+
+ein_d02_i,169,244,1	script	Sirumsireum Teddy Bear#ITBz02	4_TEDDY_BEAR_B_L,{
+	npctalk "Teddy Bear: What have you done to me...", "", bc_self;
+	end;
+}

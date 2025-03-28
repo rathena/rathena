@@ -22,18 +22,18 @@ struct npc_data;
 struct view_data;
 
 struct npc_timerevent_list {
-	int timer,pos;
+	int32 timer,pos;
 };
 
 struct npc_label_list {
 	char name[NAME_LENGTH+1];
-	int pos;
+	int32 pos;
 };
 
 /// Item list for NPC sell/buy list
 struct npc_item_list {
 	t_itemid nameid;
-	unsigned int value;
+	uint32 value;
 #if PACKETVER >= 20131223
 	int32 qty; ///< Stock counter (Market shop)
 	uint8 flag; ///< 1: Item added by npcshopitem/npcshopadditem, force load! (Market shop)
@@ -160,37 +160,37 @@ struct npc_data {
 	struct view_data vd;
 	status_change sc; //They can't have status changes, but.. they want the visual opt values.
 	struct npc_data *master_nd;
-	short class_,speed;
+	int16 class_,speed;
 	char name[NPC_NAME_LENGTH+1];// display name
 	char exname[NPC_NAME_LENGTH+1];// unique npc name
-	int chat_id,touching_id;
-	unsigned int next_walktime;
-	int instance_id;
+	int32 chat_id,touching_id;
+	uint32 next_walktime;
+	int32 instance_id;
 	e_npcv_status state{NPCVIEW_ENABLE};
 
 	unsigned size : 2;
 
 	struct status_data status;
-	unsigned int level,stat_point;
+	uint32 level,stat_point;
 	struct s_npc_params {
-		unsigned short str, agi, vit, int_, dex, luk;
+		uint16 str, agi, vit, int_, dex, luk;
 	} params;
 
 	void* chatdb; // pointer to a npc_parse struct (see npc_chat.cpp)
 	char* path;/* path dir */
 	enum npc_subtype subtype;
 	bool trigger_on_hidden;
-	int src_id;
+	int32 src_id;
 	union {
 		struct {
 			struct script_code *script;
-			short xs,ys; // OnTouch area radius
-			int guild_id;
+			int16 xs,ys; // OnTouch area radius
+			int32 guild_id;
 			t_tick timer;
-			int timerid,timeramount,rid;
+			int32 timerid,timeramount,rid;
 			t_tick timertick;
 			struct npc_timerevent_list *timer_event;
-			int label_list_num;
+			int32 label_list_num;
 			struct npc_label_list *label_list;
 		} scr;
 		struct {
@@ -201,15 +201,15 @@ struct npc_data {
 			bool discount;
 		} shop;
 		struct {
-			short xs,ys; // OnTouch area radius
-			short x,y; // destination coords
-			unsigned short mapindex; // destination map
+			int16 xs,ys; // OnTouch area radius
+			int16 x,y; // destination coords
+			uint16 mapindex; // destination map
 		} warp;
 		struct {
 			struct mob_data *md;
 			time_t kill_time;
 			char killer_name[NAME_LENGTH];
-			int spawn_timer;
+			int32 spawn_timer;
 		} tomb;
 		struct {
 			bool extended;
@@ -229,7 +229,7 @@ struct npc_data {
 	struct{
 		uint32 owner_char_id;
 		t_tick last_interaction;
-		int removal_tid;
+		int32 removal_tid;
 	} dynamicnpc;
 
 #ifdef MAP_GENERATOR
@@ -1469,6 +1469,78 @@ enum e_job_types
 	JT_4_HERO_SAUSAGE,
 	JT_4_PRINCESS_SAUSAGE,
 
+	JT_4_EP20_LASGAND = 10536,
+	JT_4_EP20_NYAR,
+	JT_4_EP20_DEVICE_BLUE,
+	JT_4_EP20_DEVICE_RED,
+	JT_4_EP20_DEVICE_BLACK,
+
+	JT_4_GACHA_MACHINE = 10545,
+	JT_4_VR_CHAO,
+	JT_4_RUNESTONE,
+	JT_4_EM_ARDOR,
+	JT_4_EM_DILUVIO,
+	JT_4_EM_PROCELLA,
+	JT_4_EM_TERREMOTUS,
+	JT_4_EM_SERPENS,
+	JT_4_SNOWDOG,
+	JT_1_SHADOW_RED,
+	JT_1_SHADOW_ORANGE,
+	JT_1_SHADOW_YELLOW,
+	JT_1_SHADOW_GREEN,
+	JT_1_SHADOW_BLUE,
+	JT_1_SHADOW_INDIGO,
+	JT_1_SHADOW_VIOLET,
+	JT_4_EVT_LAMMIR,
+	JT_4_EVT_SULKI,
+	JT_4_EVT_KKAT,
+
+	JT_4_EP21_SOLDIER_A = 10564,
+	JT_4_EP21_SOLDIER_B,
+	JT_4_EP21_M_WORKER_A,
+	JT_4_EP21_M_WORKER_B,
+	JT_4_EP21_F_WORKER_A,
+	JT_4_EP21_F_WORKER_B,
+	JT_4_EP21_WORKER_KID_A,
+	JT_4_EP21_WORKER_KID_B,
+	JT_4_EP21_TAN,
+	JT_4_EP21_TRIS,
+	JT_4_EP21_NADOYO,
+	JT_4_EP21_REINHARDT,
+	JT_4_EP21_WILHELM,
+	JT_4_EP21_MARISTELLA,
+	JT_4_EP21_YOHAN,
+	JT_4_EP21_RICHARD,
+	JT_4_EP21_VALDARIS,
+	JT_4_EP21_GUNTER,
+	JT_4_EP21_GALAXIA_A,
+	JT_4_EP21_GALAXIA_B,
+	JT_4_EP21_IVAN,
+	JT_4_EP21_LALAILA,
+	JT_4_EP21_ILSE,
+	JT_4_EP21_HOWELL,
+	JT_4_EP21_EPESTO,
+	JT_4_EP21_HEINE_TAB,
+	JT_4_EP21_IANA,
+	JT_4_EP21_LEE,
+	JT_4_EP21_AURELIE,
+	JT_4_EP21_HOWELL_S,
+	JT_4_EP21_TAN_S,
+
+	JT_4_M_VACATION_MARAM = 10595,
+	JT_4_CLB_SS_FC,
+	JT_4_CLB_SS_TZ,
+	JT_4_CLB_SS_AJ,
+	JT_4_CLB_SS_LK,
+	JT_4_SMART_ANDRE,
+
+	JT_4_ALEXSANDER = 10601,
+	JT_4_KASANDRA,
+	JT_4_CLB_KP_P1,
+
+	JT_4_CLB_KP_SF = 10607,
+	JT_4_CLB_KP_ZH,
+
 	JT_ROZ_MQ_XAVIER = 13000,
 	JT_ROZ_MQ_MOCLORD,
 	JT_ROZ_MQ_SKULD,
@@ -1487,7 +1559,7 @@ enum e_job_types
 #define MAX_NPC_CLASS2_START NPC_RANGE3_START
 #define MAX_NPC_CLASS2_END NPC_RANGE3_END
 
-//Checks if a given id is a valid npc id. [Skotlex]
+//Checks if a given id is a valid npc id.
 //Since new npcs are added all the time, the max valid value is the one before the first mob (Scorpion = 1001)
 #define npcdb_checkid(id) ( ( (id) > NPC_RANGE1_START && (id) < NPC_RANGE1_END ) || (id) == JT_HIDDEN_WARP_NPC || ( (id) > NPC_RANGE2_START && (id) < NPC_RANGE2_END ) || (id) == JT_INVISIBLE || ( (id) > NPC_RANGE3_START && (id) < NPC_RANGE3_END ) )
 
@@ -1508,28 +1580,28 @@ enum npce_event : uint8 {
 	NPCE_MAX
 };
 
-struct view_data* npc_get_viewdata(int class_);
-int npc_chat_sub(struct block_list* bl, va_list ap);
-int npc_event_dequeue(map_session_data* sd,bool free_script_stack=true);
-int npc_event(map_session_data* sd, const char* eventname, int ontouch);
-int npc_touch_areanpc(map_session_data* sd, int16 m, int16 x, int16 y, struct npc_data* nd);
-int npc_touch_area_allnpc(map_session_data* sd, int16 m, int16 x, int16 y);
-int npc_touch_areanpc2(struct mob_data *md); // [Skotlex]
-int npc_check_areanpc(int flag, int16 m, int16 x, int16 y, int16 range);
-int npc_touchnext_areanpc(map_session_data* sd,bool leavemap);
-int npc_click(map_session_data* sd, struct npc_data* nd);
-bool npc_scriptcont(map_session_data* sd, int id, bool closing);
+struct view_data* npc_get_viewdata(int32 class_);
+int32 npc_chat_sub(struct block_list* bl, va_list ap);
+int32 npc_event_dequeue(map_session_data* sd,bool free_script_stack=true);
+int32 npc_event(map_session_data* sd, const char* eventname, int32 ontouch);
+int32 npc_touch_areanpc(map_session_data* sd, int16 m, int16 x, int16 y, struct npc_data* nd);
+int32 npc_touch_area_allnpc(map_session_data* sd, int16 m, int16 x, int16 y);
+int32 npc_touch_areanpc2(struct mob_data *md); // [Skotlex]
+int32 npc_check_areanpc(int32 flag, int16 m, int16 x, int16 y, int16 range);
+int32 npc_touchnext_areanpc(map_session_data* sd,bool leavemap);
+int32 npc_click(map_session_data* sd, struct npc_data* nd);
+bool npc_scriptcont(map_session_data* sd, int32 id, bool closing);
 struct npc_data* npc_checknear(map_session_data* sd, struct block_list* bl);
-int npc_buysellsel(map_session_data* sd, int id, int type);
+int32 npc_buysellsel(map_session_data* sd, int32 id, int32 type);
 e_purchase_result npc_buylist(map_session_data* sd, std::vector<s_npc_buy_list>& item_list);
-static int npc_buylist_sub(map_session_data* sd, std::vector<s_npc_buy_list>& item_list, struct npc_data* nd);
-uint8 npc_selllist(map_session_data* sd, int list_length, PACKET_CZ_PC_SELL_ITEMLIST_sub* item_list);
+static int32 npc_buylist_sub(map_session_data* sd, std::vector<s_npc_buy_list>& item_list, struct npc_data* nd);
+uint8 npc_selllist(map_session_data* sd, int32 list_length, const PACKET_CZ_PC_SELL_ITEMLIST_sub* item_list);
 e_purchase_result npc_barter_purchase( map_session_data& sd, std::shared_ptr<s_npc_barter> barter, std::vector<s_barter_purchase>& purchases );
 void npc_parse_mob2(struct spawn_data* mob);
-struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short from_y, short xs, short ys, unsigned short to_mapindex, short to_x, short to_y);
-int npc_globalmessage(const char* name,const char* mes);
-const char *npc_get_script_event_name(int npce_index);
-npc_data* npc_duplicate_npc( npc_data& nd, char name[NPC_NAME_LENGTH + 1], int16 mapid, int16 x, int16 y, int class_, uint8 dir, int16 xs, int16 ys, map_session_data* owner = nullptr );
+struct npc_data* npc_add_warp(char* name, int16 from_mapid, int16 from_x, int16 from_y, int16 xs, int16 ys, uint16 to_mapindex, int16 to_x, int16 to_y);
+int32 npc_globalmessage(const char* name,const char* mes);
+const char *npc_get_script_event_name(int32 npce_index);
+npc_data* npc_duplicate_npc( npc_data& nd, char name[NPC_NAME_LENGTH + 1], int16 mapid, int16 x, int16 y, int32 class_, uint8 dir, int16 xs, int16 ys, map_session_data* owner = nullptr );
 struct npc_data* npc_duplicate_npc_for_player( struct npc_data& nd, map_session_data& sd );
 
 void npc_setcells(struct npc_data* nd);
@@ -1540,50 +1612,50 @@ bool npc_is_hidden_dynamicnpc( struct npc_data& nd, map_session_data& tsd );
 bool npc_enable_target(npc_data& nd, uint32 char_id, e_npcv_status flag);
 #define npc_enable(nd, flag) npc_enable_target(nd, 0, flag)
 void npc_setdisplayname(struct npc_data* nd, const char* newname);
-void npc_setclass(struct npc_data* nd, short class_);
+void npc_setclass(struct npc_data* nd, int16 class_);
 struct npc_data* npc_name2id(const char* name);
-int npc_isnear_sub(struct block_list* bl, va_list args);
+int32 npc_isnear_sub(struct block_list* bl, va_list args);
 bool npc_isnear(struct block_list * bl);
 
-int npc_get_new_npc_id(void);
+int32 npc_get_new_npc_id(void);
 
-int npc_addsrcfile(const char* name, bool loadscript);
+int32 npc_addsrcfile(const char* name, bool loadscript);
 void npc_delsrcfile(const char* name);
-int npc_parsesrcfile(const char* filepath);
+int32 npc_parsesrcfile(const char* filepath);
 void do_clear_npc(void);
 void do_final_npc(void);
 void do_init_npc(void);
 void npc_event_do_oninit(void);
 
-int npc_event_do(const char* name);
-int npc_event_do_id(const char* name, int rid);
-int npc_event_doall(const char* name);
+int32 npc_event_do(const char* name);
+int32 npc_event_do_id(const char* name, int32 rid);
+int32 npc_event_doall(const char* name);
 void npc_event_runall( const char* eventname );
-int npc_event_doall_id(const char* name, int rid);
-int npc_event_doall_path(const char* event_name, const char* path);
+int32 npc_event_doall_id(const char* name, int32 rid);
+int32 npc_event_doall_path(const char* event_name, const char* path);
 
-int npc_timerevent_start(struct npc_data* nd, int rid);
-int npc_timerevent_stop(struct npc_data* nd);
+int32 npc_timerevent_start(struct npc_data* nd, int32 rid);
+int32 npc_timerevent_stop(struct npc_data* nd);
 void npc_timerevent_quit(map_session_data* sd);
 t_tick npc_gettimerevent_tick(struct npc_data* nd);
-int npc_settimerevent_tick(struct npc_data* nd, int newtimer);
-int npc_remove_map(struct npc_data* nd);
+int32 npc_settimerevent_tick(struct npc_data* nd, int32 newtimer);
+int32 npc_remove_map(struct npc_data* nd);
 void npc_unload_duplicates (struct npc_data* nd);
-int npc_unload(struct npc_data* nd, bool single);
-int npc_reload(void);
+int32 npc_unload(struct npc_data* nd, bool single);
+int32 npc_reload(void);
 void npc_read_event_script(void);
-int npc_script_event(map_session_data* sd, enum npce_event type);
+size_t npc_script_event( map_session_data& sd, enum npce_event type );
 
-int npc_duplicate4instance(struct npc_data *snd, int16 m);
-int npc_instanceinit(struct npc_data* nd);
-int npc_instancedestroy(struct npc_data* nd);
-int npc_cashshop_buy(map_session_data *sd, t_itemid nameid, int amount, int points);
+int32 npc_duplicate4instance(struct npc_data *snd, int16 m);
+int32 npc_instanceinit(struct npc_data* nd);
+int32 npc_instancedestroy(struct npc_data* nd);
+int32 npc_cashshop_buy(map_session_data *sd, t_itemid nameid, int32 amount, int32 points);
 
-void npc_shop_currency_type(map_session_data *sd, struct npc_data *nd, int cost[2], bool display);
+void npc_shop_currency_type(map_session_data *sd, struct npc_data *nd, int32 cost[2], bool display);
 
 extern struct npc_data* fake_nd;
 
-int npc_cashshop_buylist( map_session_data *sd, int points, std::vector<s_npc_buy_list>& item_list );
+int32 npc_cashshop_buylist( map_session_data *sd, int32 points, std::vector<s_npc_buy_list>& item_list );
 bool npc_shop_discount(struct npc_data* nd);
 
 #if PACKETVER >= 20131223
@@ -1596,8 +1668,9 @@ void npc_market_delfromsql_(const char *exname, t_itemid nameid, bool clear);
 #endif
 
 // @commands (script-based)
-int npc_do_atcmd_event(map_session_data* sd, const char* command, const char* message, const char* eventname);
+int32 npc_do_atcmd_event(map_session_data* sd, const char* command, const char* message, const char* eventname);
 
 bool npc_unloadfile( const char* path );
+bool npc_remove_mob_spawns(const char* path);
 
 #endif /* NPC_HPP */

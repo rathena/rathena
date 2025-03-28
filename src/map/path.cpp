@@ -3,10 +3,10 @@
 
 #include "path.hpp"
 
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cmath>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
 #include <common/cbasetypes.hpp>
 #include <common/db.hpp>
@@ -32,11 +32,11 @@
 /// Path node
 struct path_node {
 	struct path_node *parent; ///< pointer to parent (for path reconstruction)
-	short x; ///< X-coordinate
-	short y; ///< Y-coordinate
-	short g_cost; ///< Actual cost from start to this node
-	short f_cost; ///< g_cost + heuristic(this, goal)
-	short flag; ///< SET_OPEN / SET_CLOSED
+	int16 x; ///< X-coordinate
+	int16 y; ///< Y-coordinate
+	int16 g_cost; ///< Actual cost from start to this node
+	int16 f_cost; ///< g_cost + heuristic(this, goal)
+	int16 flag; ///< SET_OPEN / SET_CLOSED
 };
 
 /// Binary heap of path nodes
@@ -77,7 +77,7 @@ void do_final_path(){
  * Find the closest reachable cell, 'count' cells away from (x0,y0) in direction (dx,dy).
  * Income after the coordinates of the blow
  *------------------------------------------*/
-int path_blownpos(int16 m,int16 x0,int16 y0,int16 dx,int16 dy,int count)
+int32 path_blownpos(int16 m,int16 x0,int16 y0,int16 dx,int16 dy,int32 count)
 {
 	struct map_data *mapdata = map_getmapdata(m);
 
@@ -102,11 +102,11 @@ int path_blownpos(int16 m,int16 x0,int16 y0,int16 dx,int16 dy,int count)
 				break;
 			else
 			{// attempt partial movement
-				int fx = ( dx != 0 && map_getcellp(mapdata,x0+dx,y0,CELL_CHKPASS) );
-				int fy = ( dy != 0 && map_getcellp(mapdata,x0,y0+dy,CELL_CHKPASS) );
+				int32 fx = ( dx != 0 && map_getcellp(mapdata,x0+dx,y0,CELL_CHKPASS) );
+				int32 fy = ( dy != 0 && map_getcellp(mapdata,x0,y0+dy,CELL_CHKPASS) );
 				if( fx && fy )
 				{
-					if(rnd()&1)
+					if(rnd_chance(50, 100))
 						dx=0;
 					else
 						dy=0;
@@ -131,13 +131,13 @@ int path_blownpos(int16 m,int16 x0,int16 y0,int16 dx,int16 dy,int count)
  *------------------------------------------*/
 bool path_search_long(struct shootpath_data *spd,int16 m,int16 x0,int16 y0,int16 x1,int16 y1,cell_chk cell)
 {
-	int dx, dy;
-	int wx = 0, wy = 0;
-	int weight;
+	int32 dx, dy;
+	int32 wx = 0, wy = 0;
+	int32 weight;
 	struct map_data *mapdata = map_getmapdata(m);
 	struct shootpath_data s_spd;
 
-	if( spd == NULL )
+	if( spd == nullptr )
 		spd = &s_spd; // use dummy output variable
 
 	if (!mapdata->cell)
@@ -145,8 +145,8 @@ bool path_search_long(struct shootpath_data *spd,int16 m,int16 x0,int16 y0,int16
 
 	dx = (x1 - x0);
 	if (dx < 0) {
-		SWAP(x0, x1);
-		SWAP(y0, y1);
+		std::swap(x0, x1);
+		std::swap(y0, y1);
 		dx = -dx;
 	}
 	dy = (y1 - y0);
@@ -198,34 +198,32 @@ bool path_search_long(struct shootpath_data *spd,int16 m,int16 x0,int16 y0,int16
 /// Pushes path_node to the binary node_heap.
 /// Ensures there is enough space in array to store new element.
 
-#define swap_ptrcast_pathnode(a, b) swap_ptrcast(struct path_node *, a, b)
-
 static void heap_push_node(struct node_heap *heap, struct path_node *node)
 {
 #ifndef __clang_analyzer__ // TODO: Figure out why clang's static analyzer doesn't like this
 	BHEAP_ENSURE2(*heap, 1, 256, struct path_node **);
-	BHEAP_PUSH2(*heap, node, NODE_MINTOPCMP, swap_ptrcast_pathnode);
+	BHEAP_PUSH2(*heap, node, NODE_MINTOPCMP);
 #endif // __clang_analyzer__
 }
 
 /// Updates path_node in the binary node_heap.
-static int heap_update_node(struct node_heap *heap, struct path_node *node)
+static int32 heap_update_node(struct node_heap *heap, struct path_node *node)
 {
-	int i;
+	int32 i;
 	ARR_FIND(0, BHEAP_LENGTH(*heap), i, BHEAP_DATA(*heap)[i] == node);
 	if (i == BHEAP_LENGTH(*heap)) {
 		ShowError("heap_update_node: node not found\n");
 		return 1;
 	}
-	BHEAP_UPDATE(*heap, i, NODE_MINTOPCMP, swap_ptrcast_pathnode);
+	BHEAP_UPDATE(*heap, i, NODE_MINTOPCMP);
 	return 0;
 }
 
 /// Path_node processing in A* pathfinding.
 /// Adds new node to heap and updates/re-adds old ones if necessary.
-static int add_path(struct node_heap *heap, struct path_node *tp, int16 x, int16 y, int g_cost, struct path_node *parent, int h_cost)
+static int32 add_path(struct node_heap *heap, struct path_node *tp, int16 x, int16 y, int32 g_cost, struct path_node *parent, int32 h_cost)
 {
-	int i = calc_index(x, y);
+	int32 i = calc_index(x, y);
 
 	if (tp[i].x == x && tp[i].y == y) { // We processed this node before
 		if (g_cost < tp[i].g_cost) { // New path to this node is better than old one
@@ -268,16 +266,16 @@ static int add_path(struct node_heap *heap, struct path_node *tp, int16 x, int16
  *
  * Note: uses global g_open_set, therefore this method can't be called in parallel or recursivly.
  *------------------------------------------*/
-bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int flag, cell_chk cell)
+bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int32 flag, cell_chk cell)
 {
-	int i, x, y, dx = 0, dy = 0;
+	int32 i, x, y, dx = 0, dy = 0;
 	struct map_data *mapdata = map_getmapdata(m);
 	struct walkpath_data s_wpd;
 
 	if (flag&2)
-		return path_search_long(NULL, m, x0, y0, x1, y1, cell);
+		return path_search_long(nullptr, m, x0, y0, x1, y1, cell);
 
-	if (wpd == NULL)
+	if (wpd == nullptr)
 		wpd = &s_wpd; // use dummy output variable
 
 	if (!mapdata->cell)
@@ -331,10 +329,10 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 		// Figure out more proper size or another way to keep track of known nodes.
 		struct path_node tp[MAX_WALKPATH * MAX_WALKPATH];
 		struct path_node *current, *it;
-		int xs = mapdata->xs - 1;
-		int ys = mapdata->ys - 1;
-		int len = 0;
-		int j;
+		int32 xs = mapdata->xs - 1;
+		int32 ys = mapdata->ys - 1;
+		int32 len = 0;
+		int32 j;
 
 		// A* (A-star) pathfinding
 		// We always use A* for finding walkpaths because it is what game client uses.
@@ -345,7 +343,7 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 
 		// Start node
 		i = calc_index(x0, y0);
-		tp[i].parent = NULL;
+		tp[i].parent = nullptr;
 		tp[i].x      = x0;
 		tp[i].y      = y0;
 		tp[i].g_cost = 0;
@@ -355,7 +353,7 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 		heap_push_node(&g_open_set, &tp[i]); // Put start node to 'open' set
 
 		for(;;) {
-			int e = 0; // error flag
+			int32 e = 0; // error flag
 
 			// Saves allowed directions for the current cell. Diagonal directions
 			// are only allowed if both directions around it are allowed. This is
@@ -363,16 +361,16 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 			// For example, you can only go NW from the current cell, if you can
 			// go N *and* you can go W. Otherwise you need to walk around the
 			// (corner of the) non-walkable cell.
-			int allowed_dirs = 0;
+			int32 allowed_dirs = 0;
 
-			int g_cost;
+			int32 g_cost;
 
 			if (BHEAP_LENGTH(g_open_set) == 0) {
 				return false;
 			}
 
 			current = BHEAP_PEEK(g_open_set); // Look for the lowest f_cost node in the 'open' set
-			BHEAP_POP2(g_open_set, NODE_MINTOPCMP, swap_ptrcast_pathnode); // Remove it from 'open' set
+			BHEAP_POP2(g_open_set, NODE_MINTOPCMP); // Remove it from 'open' set
 
 			x      = current->x;
 			y      = current->y;
@@ -413,7 +411,7 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 			}
 		}
 
-		for (it = current; it->parent != NULL; it = it->parent, len++);
+		for (it = current; it->parent != nullptr; it = it->parent, len++);
 		if (len > sizeof(wpd->path))
 			return false;
 
@@ -435,7 +433,7 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 
 
 //Distance functions, taken from http://www.flipcode.com/articles/article_fastdistance.shtml
-bool check_distance(int dx, int dy, int distance)
+bool check_distance(int32 dx, int32 dy, int32 distance)
 {
 #ifdef CIRCULAR_AREA
 	//In this case, we just do a square comparison. Add 1 tile grace for diagonal range checks.
@@ -447,10 +445,10 @@ bool check_distance(int dx, int dy, int distance)
 #endif
 }
 
-unsigned int distance(int dx, int dy)
+uint32 distance(int32 dx, int32 dy)
 {
 #ifdef CIRCULAR_AREA
-	unsigned int min, max;
+	uint32 min, max;
 
 	if ( dx < 0 ) dx = -dx;
 	if ( dy < 0 ) dy = -dy;
@@ -484,7 +482,7 @@ unsigned int distance(int dx, int dy)
  * @param distance: Distance to check against
  * @return Within distance(1); Not within distance(0);
  */
-bool check_distance_client(int dx, int dy, int distance)
+bool check_distance_client(int32 dx, int32 dy, int32 distance)
 {
 	if(distance < 0) distance = 0;
 
@@ -498,7 +496,7 @@ bool check_distance_client(int dx, int dy, int distance)
  * @param dy: Vertical distance
  * @return Circular distance
  */
-int distance_client(int dx, int dy)
+int32 distance_client(int32 dx, int32 dy)
 {
 	double temp_dist = sqrt((double)(dx*dx + dy*dy));
 
@@ -508,7 +506,7 @@ int distance_client(int dx, int dy)
 
 	if(temp_dist < 0) temp_dist = 0;
 
-	return ((int)temp_dist);
+	return ((int32)temp_dist);
 }
 
 bool direction_diagonal( enum directions direction ){
