@@ -474,6 +474,7 @@ public:
 		uint32 bonus_coma : 1;
 		uint32 no_mado_fuel : 1; // Disable Magic_Gear_Fuel consumption [Secret]
 		uint32 no_walk_delay : 1;
+		uint32 move_haste : 1;
 	} special_state;
 	uint32 login_id1, login_id2;
 	uint64 class_;	//This is the internal job ID used by the map server to simplify comparisons/queries/etc. [Skotlex]

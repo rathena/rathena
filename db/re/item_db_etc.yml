@@ -4468,7 +4468,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus bSpeedRate,25;
+      bonus bMoveHaste;
   - Id: 4132
     AegisName: Mistress_Card
     Name: Mistress Card
