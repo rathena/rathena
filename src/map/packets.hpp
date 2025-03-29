@@ -2019,6 +2019,12 @@ struct PACKET_ZC_WHISPER_LIST{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_WHISPER_LIST, 0xd4);
 
+struct PACKET_CZ_ALLY_CHAT{
+	int16 packetType;
+	int16 packetLength;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_ALLY_CHAT, 0xbdd);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
