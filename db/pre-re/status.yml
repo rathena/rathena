@@ -1708,6 +1708,7 @@ Body:
       Aspd: true
     States:
       NoMove: true
+      NoMoveCond: true
   - Status: Hermode
     Icon: EFST_HERMODE
     DurationLookup: CG_HERMODE
