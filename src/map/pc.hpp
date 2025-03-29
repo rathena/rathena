@@ -679,6 +679,7 @@ public:
 		uint8 absorb_dmg_maxhp2;
 		int16 critical_rangeatk;
 		int16 weapon_atk_rate, weapon_matk_rate;
+		int32 skill_ratio;
 	} bonus;
 	// zeroed vars end here.
 
