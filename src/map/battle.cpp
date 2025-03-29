@@ -3652,7 +3652,7 @@ int32 battle_get_magic_element(struct block_list* src, struct block_list* target
 		case SU_CN_METEOR2:
 		case SH_HYUN_ROKS_BREEZE:
 		case SH_HYUN_ROK_CANNON:
-			if( sc != nullptr && sc->count > 0 ){
+			if( sc != nullptr && !sc->empty() ){
 				if( sc->getSCE( SC_COLORS_OF_HYUN_ROK_1 ) != nullptr ){
 					element = ELE_WATER;
 				}else if( sc->getSCE( SC_COLORS_OF_HYUN_ROK_2 ) != nullptr ){
