@@ -2025,6 +2025,12 @@ struct PACKET_CZ_ALLY_CHAT{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_ALLY_CHAT, 0xbdd);
 
+struct PACKET_CZ_REQ_REPORT_USER{
+	int16 packetType;
+	uint8 unknown[135];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_REPORT_USER, 0xbe2);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
