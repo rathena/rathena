@@ -5610,9 +5610,16 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 					break;
 
 				case SC_DANCING:
-					if( sce.val4 != 0 && ( ( sce.val1 & 0xFFFF ) == CG_MOONLIT || ( sce.val1 & 0xFFFF ) == CG_HERMODE ) ){
-#ifndef RENEWAL
-						if( sc.getSCE( SC_LONGING ) != nullptr ){
+					if( sce.val4 != 0 ){
+#ifdef RENEWAL
+						// In Renewal the restiction only applies for CG_MOONLIT and CG_HERMODE
+						if( ( sce.val1 & 0xFFFF ) != CG_MOONLIT && ( sce.val1 & 0xFFFF ) != CG_HERMODE ){
+							break;
+						}
+#else
+						// In Pre-Renewal all Ensambles should apply the restriction.
+						// Unless you have SC_LONGING, then the restiction only applies for CG_MOONLIT and CG_HERMODE
+						if( sc.getSCE( SC_LONGING ) != nullptr && ( sce.val1 & 0xFFFF ) != CG_MOONLIT && ( sce.val1 & 0xFFFF ) != CG_HERMODE ){
 							break;
 						}
 #endif
