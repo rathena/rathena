@@ -3349,8 +3349,6 @@ static bool mob_readdb_sub( char *fields[], size_t columns, size_t current ){
 	body << YAML::Key << "Id" << YAML::Value << mob_id;
 	body << YAML::Key << "AegisName" << YAML::Value << fields[1];
 	body << YAML::Key << "Name" << YAML::Value << fields[3];
-	if (strcmp(fields[3], fields[2]) != 0)
-		body << YAML::Key << "JapaneseName" << YAML::Value << fields[2];
 	if (strtol(fields[4], nullptr, 10) > 0)
 		body << YAML::Key << "Level" << YAML::Value << fields[4];
 	if (strtol(fields[5], nullptr, 10) > 1)

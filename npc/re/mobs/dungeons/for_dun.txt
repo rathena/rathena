@@ -6,39 +6,39 @@
 //= 1.0 First version. [Atemo]
 //============================================================
 
-for_dun01	monster	--ja--	22192,12	// SPIRIT_G_LAND_S
-for_dun01	monster	--ja--	22193,16	// SPIRIT_G_LAND_M
-for_dun01	monster	--ja--	22194,18	// SPIRIT_G_LAND_L
-for_dun01	monster	--ja--	22196,12	// SPIRIT_B_FLAME_S
-for_dun01	monster	--ja--	22197,16	// SPIRIT_B_FLAME_M
-for_dun01	monster	--ja--	22198,18	// SPIRIT_B_FLAME_L
-for_dun01	monster	--ja--	22200,12	// SPIRIT_S_WIND_S
-for_dun01	monster	--ja--	22201,16	// SPIRIT_S_WIND_M
-for_dun01	monster	--ja--	22202,18	// SPIRIT_S_WIND_L
-for_dun01	monster	--ja--	22204,12	// SPIRIT_I_WATER_S
-for_dun01	monster	--ja--	22205,16	// SPIRIT_I_WATER_M
-for_dun01	monster	--ja--	22206,18	// SPIRIT_I_WATER_L
-for_dun01	monster	--ja--	22195,4	// SPIRIT_G_LAND_SL
-for_dun01	monster	--ja--	22199,4	// SPIRIT_B_FLAME_SL
-for_dun01	monster	--ja--	22203,4	// SPIRIT_S_WIND_SL
-for_dun01	monster	--ja--	22207,4	// SPIRIT_I_WATER_SL
+for_dun01	monster	--en--	22192,12	// SPIRIT_G_LAND_S
+for_dun01	monster	--en--	22193,16	// SPIRIT_G_LAND_M
+for_dun01	monster	--en--	22194,18	// SPIRIT_G_LAND_L
+for_dun01	monster	--en--	22196,12	// SPIRIT_B_FLAME_S
+for_dun01	monster	--en--	22197,16	// SPIRIT_B_FLAME_M
+for_dun01	monster	--en--	22198,18	// SPIRIT_B_FLAME_L
+for_dun01	monster	--en--	22200,12	// SPIRIT_S_WIND_S
+for_dun01	monster	--en--	22201,16	// SPIRIT_S_WIND_M
+for_dun01	monster	--en--	22202,18	// SPIRIT_S_WIND_L
+for_dun01	monster	--en--	22204,12	// SPIRIT_I_WATER_S
+for_dun01	monster	--en--	22205,16	// SPIRIT_I_WATER_M
+for_dun01	monster	--en--	22206,18	// SPIRIT_I_WATER_L
+for_dun01	monster	--en--	22195,4	// SPIRIT_G_LAND_SL
+for_dun01	monster	--en--	22199,4	// SPIRIT_B_FLAME_SL
+for_dun01	monster	--en--	22203,4	// SPIRIT_S_WIND_SL
+for_dun01	monster	--en--	22207,4	// SPIRIT_I_WATER_SL
 
-for_dun02	monster	--ja--	22216,24	// SPIRIT_H_WATER_S
-for_dun02	monster	--ja--	22217,28	// SPIRIT_H_WATER_M
-for_dun02	monster	--ja--	22218,32	// SPIRIT_H_WATER_L
-for_dun02	monster	--ja--	22220,24	// SPIRIT_D_WIND_S
-for_dun02	monster	--ja--	22221,28	// SPIRIT_D_WIND_M
-for_dun02	monster	--ja--	22222,32	// SPIRIT_D_WIND_L
-for_dun02	monster	--ja--	22224,24	// SPIRIT_R_FLAME_S
-for_dun02	monster	--ja--	22225,28	// SPIRIT_R_FLAME_M
-for_dun02	monster	--ja--	22226,32	// SPIRIT_R_FLAME_L
-for_dun02	monster	--ja--	22228,24	// SPIRIT_F_LAND_S
-for_dun02	monster	--ja--	22229,28	// SPIRIT_F_LAND_M
-for_dun02	monster	--ja--	22230,32	// SPIRIT_F_LAND_L
-for_dun02	monster	--ja--	22219,7	// SPIRIT_H_WATER_SL
-for_dun02	monster	--ja--	22223,7	// SPIRIT_D_WIND_SL
-for_dun02	monster	--ja--	22227,7	// SPIRIT_R_FLAME_SL
-for_dun02	monster	--ja--	22231,7	// SPIRIT_F_LAND_SL
+for_dun02	monster	--en--	22216,24	// SPIRIT_H_WATER_S
+for_dun02	monster	--en--	22217,28	// SPIRIT_H_WATER_M
+for_dun02	monster	--en--	22218,32	// SPIRIT_H_WATER_L
+for_dun02	monster	--en--	22220,24	// SPIRIT_D_WIND_S
+for_dun02	monster	--en--	22221,28	// SPIRIT_D_WIND_M
+for_dun02	monster	--en--	22222,32	// SPIRIT_D_WIND_L
+for_dun02	monster	--en--	22224,24	// SPIRIT_R_FLAME_S
+for_dun02	monster	--en--	22225,28	// SPIRIT_R_FLAME_M
+for_dun02	monster	--en--	22226,32	// SPIRIT_R_FLAME_L
+for_dun02	monster	--en--	22228,24	// SPIRIT_F_LAND_S
+for_dun02	monster	--en--	22229,28	// SPIRIT_F_LAND_M
+for_dun02	monster	--en--	22230,32	// SPIRIT_F_LAND_L
+for_dun02	monster	--en--	22219,7	// SPIRIT_H_WATER_SL
+for_dun02	monster	--en--	22223,7	// SPIRIT_D_WIND_SL
+for_dun02	monster	--en--	22227,7	// SPIRIT_R_FLAME_SL
+for_dun02	monster	--en--	22231,7	// SPIRIT_F_LAND_SL
 
 t_garden,1,1,0	script	control_t_garden	HIDDEN_WARP_NPC,{
 	end;
@@ -90,7 +90,7 @@ S_Spawn:
 	.@amount = getarg(3);
 
 	for ( .@i = .@id_min; .@i <= .@id_max; ++.@i )
-		monster .@map$,0,0,"--ja--",.@i,.@amount, "control_t_garden::OnMob" + .@i;
+		monster .@map$,0,0,"--en--",.@i,.@amount, "control_t_garden::OnMob" + .@i;
 	return;
 
 OnMob22210: callsub( S_Mob, "for_dun01", 22210 );
@@ -112,6 +112,6 @@ OnMob22236: callsub( S_Mob, "for_dun02", 22236 );
 OnMob22239: callsub( S_Mob, "for_dun02", 22239 );
 
 S_Mob:
-	monster getarg(0),0,0,"--ja--",getarg(1),1, "control_t_garden::OnMob" + getarg(1);
+	monster getarg(0),0,0,"--en--",getarg(1),1, "control_t_garden::OnMob" + getarg(1);
 	end;
 }
