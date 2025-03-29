@@ -3413,7 +3413,7 @@ struct regen_data {
 	struct {
 		unsigned walk:1; //Can you regen even when walking?
 		unsigned gc:1;	//Tags when you should have double regen due to GVG castle
-		unsigned overweight :2; //overweight state (1: 50%, 2: 90%)
+		bool overweight; //overweight state
 		unsigned block :2; //Block regen flag (1: Hp, 2: Sp)
 	} state;
 
@@ -3431,6 +3431,9 @@ struct sc_display_entry {
 struct status_change_entry {
 	int32 timer;
 	int32 val1,val2,val3,val4;
+
+	status_change_entry();
+	~status_change_entry();
 };
 
 ///Status change
@@ -3440,23 +3443,22 @@ public:
 	uint32 opt3;// skill state (bitfield)
 	uint16 opt1;// body state
 	uint16 opt2;// health state (bitfield)
-	unsigned char count;
 	sc_type lastEffect; // Used to check for stacking damageable SC on the same attack
 	int32 lastEffectTimer; // Timer for lastEffect
 	//! TODO: See if it is possible to implement the following SC's without requiring extra parameters while the SC is inactive.
 	struct {
-		uint8 move;
-		uint8 pickup;
-		uint8 drop;
-		uint8 cast;
-		uint8 chat;
-		uint8 equip;
-		uint8 unequip;
-		uint8 consume;
-		uint8 attack;
-		uint8 warp;
-		uint8 deathpenalty;
-		uint8 interact;
+		bool move;
+		bool pickup;
+		bool drop;
+		bool cast;
+		bool chat;
+		bool equip;
+		bool unequip;
+		bool consume;
+		bool attack;
+		bool warp;
+		bool deathpenalty;
+		bool interact;
 	} cant;/* status change state flags */
 	//int32 sg_id; //ID of the previous Storm gust that hit you
 	int16 comet_x, comet_y; // Point where src casted Comet - required to calculate damage from this point
@@ -3467,18 +3469,20 @@ public:
 	unsigned char sg_counter; //Storm gust counter (previous hits from storm gust)
 #endif
 private:
-	struct status_change_entry *data[SC_MAX];
-	std::pair<enum sc_type, struct status_change_entry *> lastStatus; // last-fetched status
+	std::unordered_map<enum sc_type, status_change_entry> data;
+	std::pair<enum sc_type, status_change_entry*> lastStatus; // last-fetched status
 
 public:
 	status_change();
 
-	status_change_entry * getSCE(enum sc_type type);
-	status_change_entry * getSCE(uint32 type);
-	status_change_entry * createSCE(enum sc_type type);
+	status_change_entry* getSCE( enum sc_type type );
+	status_change_entry* getSCE( uint32 type );
+	status_change_entry* createSCE( enum sc_type type );
 	void deleteSCE(enum sc_type type);
-	void clearSCE(enum sc_type type);
 	bool empty();
+	size_t size();
+	std::unordered_map<enum sc_type, status_change_entry>::const_iterator begin();
+	std::unordered_map<enum sc_type, status_change_entry>::const_iterator end();
 };
 #ifndef ONLY_CONSTANTS
 int32 status_damage( struct block_list *src, struct block_list *target, int64 dhp, int64 dsp, int64 dap, t_tick walkdelay, int32 flag, uint16 skill_id );

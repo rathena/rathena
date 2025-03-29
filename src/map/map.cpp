@@ -228,6 +228,60 @@ int32 map_usercount(void)
 	return pc_db->size(pc_db);
 }
 
+void map_destroyblock( block_list* bl ){
+	if( bl == nullptr ){
+		return;
+	}
+
+	switch( bl->type ){
+		case BL_PC:
+			// Do not call the destructor here, it will be done in chrif_auth_delete
+			//reinterpret_cast<map_session_data*>( bl )->~map_session_data();
+			break;
+
+		case BL_MOB:
+			reinterpret_cast<mob_data*>( bl )->~mob_data();
+			break;
+
+		case BL_PET:
+			reinterpret_cast<pet_data*>( bl )->~pet_data();
+			break;
+
+		case BL_HOM:
+			reinterpret_cast<homun_data*>( bl )->~homun_data();
+			break;
+
+		case BL_MER:
+			reinterpret_cast<s_mercenary_data*>( bl )->~s_mercenary_data();
+			break;
+
+		case BL_ITEM:
+			reinterpret_cast<flooritem_data*>( bl )->~flooritem_data();
+			break;
+
+		case BL_SKILL:
+			reinterpret_cast<skill_unit*>( bl )->~skill_unit();
+			break;
+
+		case BL_NPC:
+			reinterpret_cast<npc_data*>( bl )->~npc_data();
+			break;
+
+		case BL_CHAT:
+			reinterpret_cast<chat_data*>( bl )->~chat_data();
+			break;
+
+		case BL_ELEM:
+			reinterpret_cast<s_elemental_data*>( bl )->~s_elemental_data();
+			break;
+
+		default:
+			ShowError( "map_destroyblock: unknown type %d\n", bl->type );
+			break;
+	}
+
+	aFree( bl );
+}
 
 /*==========================================
  * Attempt to free a map blocklist
@@ -237,7 +291,7 @@ int32 map_freeblock (struct block_list *bl)
 	nullpo_retr(block_free_lock, bl);
 	if (block_free_lock == 0 || block_free_count >= block_free_max)
 	{
-		aFree(bl);
+		map_destroyblock( bl );
 		bl = nullptr;
 		if (block_free_count >= block_free_max)
 			ShowWarning("map_freeblock: too many free block! %d %d\n", block_free_count, block_free_lock);
@@ -263,7 +317,7 @@ int32 map_freeblock_unlock (void)
 		int32 i;
 		for (i = 0; i < block_free_count; i++)
 		{
-			aFree(block_free[i]);
+			map_destroyblock( block_free[i] );
 			block_free[i] = nullptr;
 		}
 		block_free_count = 0;
