@@ -22624,7 +22624,10 @@ int32 skill_unit_move_sub(struct block_list* bl, va_list ap)
 
 	//Target-type check.
 	if( !(group->bl_flag&target->type && battle_check_target(&unit->bl,target,group->target_flag) > 0) ) {
-		if( group->src_id == target->id && group->state.song_dance&0x2 ) { //Ensemble check to see if they went out/in of the area [Skotlex]
+		status_change* tsc = status_get_sc( target );
+
+		// Ensemble check to see if the caster or the partner went out/in of the area
+		if( group->state.song_dance&0x2 && ( group->src_id == target->id || ( tsc != nullptr && tsc->getSCE( SC_DANCING ) != nullptr && group->src_id == tsc->getSCE( SC_DANCING )->val4 ) ) ){
 			if( flag&1 ) {
 				if( flag&2 ) { //Clear this skill id.
 					util::vector_erase_if_exists(skill_unit_cell, skill_id);
