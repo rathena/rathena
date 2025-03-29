@@ -3421,7 +3421,8 @@ void unit_dataset(struct block_list *bl)
 	ud->steptimer      = INVALID_TIMER;
 	ud->attackabletime =
 	ud->canact_tick    =
-	ud->canmove_tick   = gettick();
+	ud->canmove_tick   =
+	ud->endure_tick    = gettick();
 	ud->sx = 8;
 	ud->sy = 8;
 }

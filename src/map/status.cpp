@@ -81,7 +81,6 @@ static defType status_calc_mdef(struct block_list *bl, status_change *sc, int32)
 static int16 status_calc_mdef2(struct block_list *,status_change *,int32);
 static uint16 status_calc_speed(struct block_list *,status_change *,int32);
 static int16 status_calc_aspd_rate(struct block_list *,status_change *,int32);
-static uint16 status_calc_dmotion(struct block_list *bl, status_change *sc, int32 dmotion);
 #ifdef RENEWAL_ASPD
 static int16 status_calc_aspd(struct block_list *bl, status_change *sc, bool fixed);
 #endif
@@ -4296,8 +4295,10 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 				sc->getSCE(SC_ENDURE)->val4 = 0;
 			status_change_end(&sd->bl, SC_ENDURE);
 		}
-		clif_status_load(&sd->bl, EFST_ENDURE, 1);
-		base_status->mdef++;
+		if (!status_change_isDisabledOnMap(SC_ENDURE, map_getmapdata(sd->bl.m))) {
+			clif_status_load(&sd->bl, EFST_ENDURE, 1);
+			base_status->mdef++;
+		}
 	}
 
 // ----- CONCENTRATION CALCULATION -----
@@ -6382,22 +6383,15 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 	if(flag[SCB_DSPD]) {
 		int32 dmotion;
 		if( bl.type == BL_PC ) {
-			if (b_status->agi == status->agi)
-				status->dmotion = status_calc_dmotion(&bl, sc, b_status->dmotion);
-			else {
+			if (b_status->agi != status->agi) {
 				dmotion = 800-status->agi*4;
 				status->dmotion = cap_value(dmotion, 400, 800);
 				if(battle_config.pc_damage_delay_rate != 100)
 					status->dmotion = status->dmotion*battle_config.pc_damage_delay_rate/100;
-				// It's safe to ignore b_status->dmotion since no bonus affects it.
-				status->dmotion = status_calc_dmotion(&bl, sc, status->dmotion);
 			}
 		} else if( bl.type == BL_HOM ) {
 			dmotion = 800-status->agi*4;
 			status->dmotion = cap_value(dmotion, 400, 800);
-			status->dmotion = status_calc_dmotion(&bl, sc, b_status->dmotion);
-		} else { // Mercenary and mobs
-			status->dmotion = status_calc_dmotion(&bl, sc, b_status->dmotion);
 		}
 	}
 
@@ -8494,34 +8488,6 @@ static int16 status_calc_aspd_rate(struct block_list *bl, status_change *sc, int
 }
 
 /**
- * Modifies the damage delay time based on status changes
- * The lower your delay, the quicker you can act after taking damage
- * @param bl: Object to change aspd [PC|MOB|HOM|MER|ELEM]
- * @param sc: Object's status change information
- * @param dmotion: Object's current damage delay
- * @return modified delay rate
- */
-static uint16 status_calc_dmotion(struct block_list *bl, status_change *sc, int32 dmotion)
-{
-	/// It has been confirmed on official servers that MvP mobs have no dmotion even without endure
-	if( bl->type == BL_MOB && status_get_class_(bl) == CLASS_BOSS )
-		return 0;
-
-	if (bl->type == BL_PC) {
-		if (map_flag_gvg2(bl->m) || map_getmapflag(bl->m, MF_BATTLEGROUND))
-			return (uint16)cap_value(dmotion, 0, USHRT_MAX);
-
-		if (((TBL_PC *)bl)->special_state.no_walk_delay)
-			return 0;
-	}
-
-	if (sc != nullptr && !sc->empty() && (sc->getSCE(SC_ENDURE) || sc->getSCE(SC_RUN) || sc->getSCE(SC_WUGDASH)))
-		return 0;
-
-	return (uint16)cap_value(dmotion,0,USHRT_MAX);
-}
-
-/**
 * Adds power atk modifications based on status changes
 * @param bl: Object to change patk [PC|MOB|HOM|MER|ELEM]
 * @param sc: Object's status change information
@@ -9264,6 +9230,43 @@ int32 status_isimmune(struct block_list *bl)
 		((TBL_PC*)bl)->special_state.no_magic_damage >= battle_config.gtb_sc_immunity)
 		return ((TBL_PC*)bl)->special_state.no_magic_damage;
 	return 0;
+}
+
+/**
+ * Returns whether object can be stopped by damage or not
+ * This does not only include the status change "Endure" but also all other endure effects
+ * @param bl: Object to check [PC|MOB|HOM|MER|ELEM]
+ * @param tick: Current tick
+ * @return Whether object can be stopped (false) or not (true)
+ */
+bool status_isendure(block_list& bl, t_tick tick)
+{
+	// In renewal, bosses always have endure
+#ifdef RENEWAL
+	if( bl.type == BL_MOB && status_get_class_(&bl) == CLASS_BOSS )
+		return true;
+#endif
+
+	// Officially the bonus "no_walk_delay" is actually just SC_ENDURE with unlimited duration
+	// Endure is forbidden on some maps, but we don't apply this on this bonus
+	// That's why we need to check it here
+	if (bl.type == BL_PC && !status_change_isDisabledOnMap(SC_ENDURE, map_getmapdata(bl.m))) {
+		if (reinterpret_cast<map_session_data&>(bl).special_state.no_walk_delay)
+			return true;
+	}
+
+	unit_data* ud = unit_bl2ud(&bl);
+	if (ud != nullptr && DIFF_TICK(ud->endure_tick, tick) > 0)
+		return true;
+
+	// Officially everything uses endure_tick, even SC_ENDURE sets it
+	// However, we have a lot of extra logic for infinite endure, so we use the status change for now
+	// TODO: SC_RUN and SC_WUDDASH should use a different implementation as they prevent stopping but don't send endure to the client
+	status_change* sc = status_get_sc(&bl);
+	if (sc != nullptr && !sc->empty() && (sc->getSCE(SC_ENDURE) || sc->getSCE(SC_RUN) || sc->getSCE(SC_WUGDASH)))
+		return true;
+
+	return false;
 }
 
 /**
@@ -10659,7 +10662,7 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 			unit_data *ud = unit_bl2ud(bl);
 
 			if (ud)
-				ud->attackabletime = ud->canact_tick = ud->canmove_tick = gettick() + tick;
+				ud->attackabletime = ud->canact_tick = ud->canmove_tick = ud->endure_tick = gettick() + tick;
 		}
 			break;
 		case SC_DECREASEAGI:
@@ -13331,7 +13334,7 @@ int32 status_change_end( struct block_list* bl, enum sc_type type, int32 tid ){
 			unit_data *ud = unit_bl2ud(bl);
 
 			if (ud)
-				ud->attackabletime = ud->canact_tick = ud->canmove_tick = gettick();
+				ud->attackabletime = ud->canact_tick = ud->canmove_tick = ud->endure_tick = gettick();
 		}
 			break;
 		case SC_GRANITIC_ARMOR:
