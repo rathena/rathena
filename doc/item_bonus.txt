@@ -157,7 +157,7 @@ bonus bFlee2Rate,n;   			Perfect Dodge + n%
 bonus bPerfectHitRate,n;		On-target impact attack probability n% (only the highest among all is applied)
 bonus bPerfectHitAddRate,n;		On-target impact attack probability + n%
 bonus bSpeedRate,n;   			Movement speed + n% (only the highest among all is applied, won't be stacked with SC_SPEEDUP0, SC_SPEEDUP1)
-bonus bSpeedAddRate,n;			Movement speed + n%
+bonus bSpeedAddRate,n;			Additional Movement speed + n%
 bonus bAspd,n;        			Attack speed + n
 bonus bAspdRate,n;    			Attack speed + n%
 bonus bAtkRange,n;    			Attack range + n
@@ -493,19 +493,22 @@ bonus2 bAddGetZenyNum,x,n;		Adds a n% chance of gaining 1~x zeny when killing a 
 
 Misc effects
 ------------
-bonus bDoubleRate,n;      		Double Attack probability n% (works with all weapons | only the highest among all is applied)
-bonus bDoubleAddRate,n;   		Double Attack probability + n% (works with all weapons)
-bonus bSplashRange,n;     		Splash attack radius + n (only the highest among all is applied)
-bonus bSplashAddRange,n;  		Splash attack radius + n
-                          		NOTE: n=1 makes a 3*3 cells area, n=2 a 5*5 area, etc.
-bonus2 bAddSkillBlow,sk,n;		Knock back the target by n cells when using skill sk
-bonus bNoKnockback;     		Character is no longer knocked back by enemy skills with such effect
-bonus bNoGemStone;      		Skills requiring Gemstones do not require them
-                          		NOTE: Hocus Pocus still requires 1 Yellow Gemstone, Ganbantein requirements not reduced
-bonus bIntravision;     		Always see Hiding and Cloaking players/mobs
-bonus bPerfectHide;     		Hidden/cloaked character is no longer detected by monsters with 'detector' mode
-bonus bRestartFullRecover;	When reviving, HP and SP are fully healed
-bonus bClassChange,n;     		Gives a n/100% chance to change the attacked monster's class with normal attack
-bonus bAddStealRate,n;    		Increases success rate of Steal skill by n/100%
-bonus bNoMadoFuel;			Nullify Magic Gear Fuel requirement for skills.
-bonus bNoWalkDelay;				Give infinite Endure.
+bonus bDoubleRate,n;            Double Attack probability n% (works with all weapons | only the highest among all is applied)
+bonus bDoubleAddRate,n;         Double Attack probability + n% (works with all weapons)
+bonus bSplashRange,n;           Splash attack radius + n (only the highest among all is applied)
+bonus bSplashAddRange,n;        Splash attack radius + n
+                                NOTE: n=1 makes a 3*3 cells area, n=2 a 5*5 area, etc.
+bonus2 bAddSkillBlow,sk,n;      Knock back the target by n cells when using skill sk
+bonus bNoKnockback;             Character is no longer knocked back by enemy skills with such effect
+bonus bNoGemStone;              Skills requiring Gemstones do not require them
+                                NOTE: Hocus Pocus still requires 1 Yellow Gemstone, Ganbantein requirements not reduced
+bonus bIntravision;             Always see Hiding and Cloaking players/mobs
+bonus bPerfectHide;             Hidden/cloaked character is no longer detected by monsters with 'detector' mode
+bonus bRestartFullRecover;      When reviving, HP and SP are fully healed
+bonus bClassChange,n;           Gives a n/100% chance to change the attacked monster's class with normal attack
+bonus bAddStealRate,n;          Increases success rate of Steal skill by n/100%
+bonus bNoMadoFuel;              Nullify Magic Gear Fuel requirement for skills.
+bonus bNoWalkDelay              Give infinite Endure.
+bonus bMoveHaste;               Increases movement speed by 25% with EFST_MOVHASTE_INFINITY displayed, 
+                                Used in Moonlight Flower Card and several other items.
+                                The speed given is equivalent to 'bonus bSpeedRate,25'

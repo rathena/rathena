@@ -11976,7 +11976,7 @@ Body:
     Script: |
       bonus bFlee,5;
       if (getequiprefinerycnt(EQI_SHADOW_SHOES)+getequiprefinerycnt(EQI_SHADOW_ARMOR) >= 15)
-         bonus bSpeedRate,25;
+         bonus bMoveHaste;
   - Combos:
       - Combo:
           - S_Hasty_Armor    # 24197
@@ -11984,7 +11984,7 @@ Body:
     Script: |
       bonus bFlee,5;
       if ((getequiprefinerycnt(EQI_SHADOW_ARMOR) + getequiprefinerycnt(EQI_SHADOW_SHOES)) >= 15) {
-         bonus bSpeedRate,25;
+         bonus bMoveHaste;
       }
   - Combos:
       - Combo:

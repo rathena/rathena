@@ -3891,7 +3891,7 @@ void pc_bonus(map_session_data *sd,int32 type,int32 val)
 			if (sd->state.lr_flag != LR_FLAG_ARROW)
 				sd->bonus.speed_rate = min(sd->bonus.speed_rate, -val);
 			break;
-		case SP_SPEED_ADDRATE:	//Stackable increase
+		case SP_SPEED_ADDRATE: //Additional increase
 			if (sd->state.lr_flag != LR_FLAG_ARROW)
 				sd->bonus.speed_add_rate -= val;
 			break;
@@ -4390,6 +4390,10 @@ void pc_bonus(map_session_data *sd,int32 type,int32 val)
 		case SP_ADD_ITEM_SPHEAL_RATE:
 			if (sd->state.lr_flag != LR_FLAG_ARROW)
 				sd->bonus.itemsphealrate2 += val;
+			break;
+		case SP_MOVE_HASTE:
+			if (sd->state.lr_flag != LR_FLAG_ARROW)
+				sd->special_state.move_haste = 1;
 			break;
 		default:
 			if (current_equip_combo_pos > 0) {
@@ -10273,6 +10277,7 @@ int64 pc_readparam(map_session_data* sd,int64 type)
 #endif
 		case SP_CRIT_DEF_RATE: val = sd->bonus.crit_def_rate; break;
 		case SP_ADD_ITEM_SPHEAL_RATE: val = sd->bonus.itemsphealrate2; break;
+		case SP_MOVE_HASTE: val = sd->special_state.move_haste ? 1 : 0; break;
 		default:
 			ShowError("pc_readparam: Attempt to read unknown parameter '%lld'.\n", type);
 			return -1;
