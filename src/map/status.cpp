@@ -5627,6 +5627,10 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 					}
 					break;
 
+				case SC_LONGING:
+					// Does not do anything. SC_LONGING is just defined with SCS_NOMOVECOND to trigger a recalculation with the conditions under SC_DANCING above
+					return true;
+
 				case SC_CRYSTALIZE:
 					if( bl.type != BL_MOB ){
 						restriction = true;
