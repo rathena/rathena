@@ -1706,6 +1706,11 @@ Body:
     CalcFlags:
       Speed: true
       Aspd: true
+    States:
+      NoMove: true
+      NoMoveCond: true
+      NoAttack: true
+      NoAttackCond: true
   - Status: Hermode
     Icon: EFST_HERMODE
     DurationLookup: CG_HERMODE
@@ -1770,6 +1775,8 @@ Body:
     States:
       NoMove: true
       NoMoveCond: true
+      NoAttack: true
+      NoAttackCond: true
     CalcFlags:
       Speed: true
       Regen: true
@@ -1781,6 +1788,7 @@ Body:
       RemoveOnChangeMap: true
       RequireWeapon: true
       OverlapIgnoreLevel: true
+      StopAttacking: true
     EndOnEnd:
       Longing: true
   - Status: Elementalchange

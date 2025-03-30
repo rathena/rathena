@@ -2124,7 +2124,8 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 			}
 		}
 
-		if (sc->getSCE(SC_DANCING) && flag!=2) {
+		// Only do skill specific checks here, normal attacks should have been checked already (additionally the skill db lookup would fail)
+		if( sc->getSCE( SC_DANCING ) != nullptr && flag != 2 && skill_id != 0 ){
 			std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
 
 			if (!skill)
@@ -5627,6 +5628,10 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 					}
 					break;
 
+				case SC_LONGING:
+					// Does not do anything. SC_LONGING is just defined with SCS_NOMOVECOND to trigger a recalculation with the conditions under SC_DANCING above
+					break;
+
 				case SC_CRYSTALIZE:
 					if( bl.type != BL_MOB ){
 						restriction = true;
@@ -5681,7 +5686,31 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 
 	// Can't attack
 	if( scdb->state[SCS_NOATTACK] ){
-		status_calc_state_sub( bl, sc, start, scdb, sc.cant.attack, SCS_NOATTACK, SCS_NOATTACKCOND, func_not_impl );
+		status_calc_state_sub( bl, sc, start, scdb, sc.cant.attack, SCS_NOATTACK, SCS_NOATTACKCOND, []( block_list& bl, status_change& sc, bool& restriction, const sc_type type, const status_change_entry& sce ) -> bool {
+			// Check the specific conditions
+			switch( type ){
+				case SC_DANCING:
+					if( sce.val4 != 0 ){
+#ifndef RENEWAL
+						// In Pre-Renewal you can attack when SC_LONGING is active
+						if( sc.getSCE( SC_LONGING ) != nullptr ){
+							break;
+						}
+#endif
+						restriction = true;
+					}
+					break;
+
+				case SC_LONGING:
+					// Does not do anything. SC_LONGING is just defined with SCS_NOATTACKCOND to trigger a recalculation with the conditions under SC_DANCING above
+					break;
+
+				default:
+					return false;
+			}
+
+			return true;
+		} );
 	}
 
 	// Can't warp
