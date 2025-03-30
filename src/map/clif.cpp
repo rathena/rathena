@@ -5167,6 +5167,17 @@ static int32 clif_calc_walkdelay( block_list &bl, int32 delay, e_damage_type typ
 			return 0;
 	}
 
+	// TODO: This logic is only temporary until we refactor this function, we should check this when the unit is stopped instead!
+	// Below are situations that don't send "Endure" to the client, but still prevent being stopped
+	// This includes bosses in renewal (episode 20+) and running / dashing units
+#ifdef RENEWAL
+	if (bl.type == BL_MOB && status_get_class_(&bl) == CLASS_BOSS)
+		return 0;
+#endif
+	status_change* sc = status_get_sc(&bl);
+	if (sc != nullptr && !sc->empty() && (sc->getSCE(SC_RUN) || sc->getSCE(SC_WUGDASH)))
+		return 0;
+
 	if (bl.type == BL_PC) {
 		if (battle_config.pc_walk_delay_rate != 100)
 			delay = delay*battle_config.pc_walk_delay_rate/100;

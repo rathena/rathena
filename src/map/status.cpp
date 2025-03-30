@@ -9241,12 +9241,6 @@ int32 status_isimmune(struct block_list *bl)
  */
 bool status_isendure(block_list& bl, t_tick tick)
 {
-	// In renewal, bosses always have endure
-#ifdef RENEWAL
-	if( bl.type == BL_MOB && status_get_class_(&bl) == CLASS_BOSS )
-		return true;
-#endif
-
 	// Officially the bonus "no_walk_delay" is actually just SC_ENDURE with unlimited duration
 	// Endure is forbidden on some maps, but we don't apply this on this bonus
 	// That's why we need to check it here
@@ -9261,9 +9255,8 @@ bool status_isendure(block_list& bl, t_tick tick)
 
 	// Officially everything uses endure_tick, even SC_ENDURE sets it
 	// However, we have a lot of extra logic for infinite endure, so we use the status change for now
-	// TODO: SC_RUN and SC_WUDDASH should use a different implementation as they prevent stopping but don't send endure to the client
 	status_change* sc = status_get_sc(&bl);
-	if (sc != nullptr && !sc->empty() && (sc->getSCE(SC_ENDURE) || sc->getSCE(SC_RUN) || sc->getSCE(SC_WUGDASH)))
+	if (sc != nullptr && !sc->empty() && (sc->getSCE(SC_ENDURE)))
 		return true;
 
 	return false;
