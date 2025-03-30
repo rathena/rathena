@@ -21800,8 +21800,13 @@ BUILDIN_FUNC(instance_npcname)
 
 	if( instance_id > 0 && (nd = npc_name2id(str)) != nullptr ) {
 		static char npcname[NAME_LENGTH];
-		snprintf(npcname, sizeof(npcname), "dup_%d_%d", instance_id, nd->bl.id);
-		script_pushconststr(st,npcname);
+		if(nd->instance_id > 0){
+			strncpy(npcname,str,NAME_LENGTH);
+			ShowWarning("buildin_instance_npcname: npc is already in instance and its name has a duplicate format, returning input name (instance_id: %d, NPC name: \"%s\".)\n", instance_id, str);
+		}else{
+			snprintf(npcname, sizeof(npcname), "dup_%d_%d", instance_id, nd->bl.id);
+		}
+		script_pushconststr(st, npcname);
 	} else {
 		ShowError("buildin_instance_npcname: Invalid instance NPC (instance_id: %d, NPC name: \"%s\".)\n", instance_id, str);
 		st->state = END;
