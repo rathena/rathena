@@ -1833,8 +1833,10 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 	// This prevents the lazy AI from being executed at the same time
 	md->next_thinktime = tick;
 
-	if (md->ud.skilltimer != INVALID_TIMER)
+	if (md->ud.skilltimer != INVALID_TIMER) {
+		md->attacked_id = md->norm_attacked_id = 0;
 		return false;
+	}
 
 	// Abnormalities
 	if(( md->sc.opt1 && md->sc.opt1 != OPT1_STONEWAIT && md->sc.opt1 != OPT1_BURNING ) || status_db.hasSCF(&md->sc, SCF_MOBLOSETARGET)) {//Should reset targets.
