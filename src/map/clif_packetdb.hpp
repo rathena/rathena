@@ -2034,7 +2034,7 @@
 #endif
 
 #if PACKETVER_MAIN_NUM >= 20230607
-	parseable_packet( HEADER_CZ_ALLY_CHAT, -1, clif_parse_dull, 0 );
+	parseable_packet( HEADER_CZ_ALLY_CHAT, -1, clif_parse_guild_alliance_message, 2, 4 );
 #endif
 
 #if PACKETVER_MAIN_NUM >= 20230705

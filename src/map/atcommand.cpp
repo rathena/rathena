@@ -11868,21 +11868,21 @@ bool is_atcommand(const int32 fd, map_session_data* sd, const char* message, int
 	if ( *message != atcommand_symbol && *message != charcommand_symbol )
 		return false;
 
-	// type value 0|2 = script|console invoked: bypass restrictions
-	if ( type == 1 || type == 3) {
-		//Commands are disabled on maps flagged as 'nocommand'
-		if ( pc_get_group_level(sd) < map_getmapflag(sd->bl.m, MF_NOCOMMAND) ) {
-			clif_displaymessage(fd, msg_txt(sd,143)); // Commands are disabled on this map.
-			return false;
-		}
-	}
-
 	if (*message == charcommand_symbol)
 		is_atcommand = false;
 
 	if (is_atcommand) { // @command
 		sprintf(atcmd_msg, "%s", message);
 		ssd = sd;
+
+		// type value 0|2 = script|console invoked: bypass restrictions
+		if ( type == 1 || type == 3) {
+			//Commands are disabled on maps flagged as 'nocommand'
+			if ( pc_get_group_level(sd) < map_getmapflag(sd->bl.m, MF_NOCOMMAND) ) {
+				clif_displaymessage(fd, msg_txt(sd,143)); // Commands are disabled on this map.
+				return false;
+			}
+		}
 	} else { // #command
 		char charname[NAME_LENGTH];
 		int32 n;
@@ -11891,18 +11891,34 @@ bool is_atcommand(const int32 fd, map_session_data* sd, const char* message, int
 		if ((n = sscanf(message, "%255s \"%23[^\"]\" %255[^\n]", command, charname, params)) < 2
 		 && (n = sscanf(message, "%255s %23s %255[^\n]", command, charname, params)) < 2
 		) {
-			if (pc_get_group_level(sd) == 0) {
-				if (n < 1)
-					return false; // No command found. Display as normal message.
+			if (n < 1)
+				return false; // No command found. Display as normal message.
 
-				info = get_atcommandinfo_byname(atcommand_alias_db.checkAlias(command + 1));
-				if (!info || info->char_groups[sd->group->index] == 0)  // If we can't use or doesn't exist: don't even display the command failed message
+			info = get_atcommandinfo_byname(atcommand_alias_db.checkAlias(command + 1));
+			if (!info || info->char_groups[sd->group->index] == 0)  // If we can't use or doesn't exist: don't even display the command failed message
+				return false;
+
+			// type value 0|2 = script|console invoked: bypass restrictions
+			if ( type == 1 || type == 3) {
+				//Commands are disabled on maps flagged as 'nocommand'
+				if ( pc_get_group_level(sd) < map_getmapflag(sd->bl.m, MF_NOCOMMAND) ) {
+					clif_displaymessage(fd, msg_txt(sd,143)); // Commands are disabled on this map.
 					return false;
+				}
 			}
 
 			sprintf(output, msg_txt(sd,1388), charcommand_symbol); // Charcommand failed (usage: %c<command> <char name> <parameters>).
 			clif_displaymessage(fd, output);
 			return true;
+		}
+
+		// type value 0|2 = script|console invoked: bypass restrictions
+		if ( type == 1 || type == 3) {
+			//Commands are disabled on maps flagged as 'nocommand'
+			if ( pc_get_group_level(sd) < map_getmapflag(sd->bl.m, MF_NOCOMMAND) ) {
+				clif_displaymessage(fd, msg_txt(sd,143)); // Commands are disabled on this map.
+				return false;
+			}
 		}
 
 		ssd = map_nick2sd(charname,true);

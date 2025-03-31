@@ -640,7 +640,10 @@ int32 clif_send(const void* buf, int32 len, struct block_list* bl, enum send_tar
 	case GUILD_SAMEMAP_WOS:
 	case GUILD:
 	case GUILD_WOS:
-	case GUILD_NOBG: {
+	case GUILD_NOBG:
+	case GUILD_ALLIANCES:
+	case GUILD_ALLIANCES_FRIEND:
+	case GUILD_ALLIANCES_ENEMY: {
 		if (!sd || !sd->status.guild_id || !sd->guild)
 			break;
 
@@ -656,7 +659,7 @@ int32 clif_send(const void* buf, int32 len, struct block_list* bl, enum send_tar
 				if( sd->bl.id == bl->id && (type == GUILD_WOS || type == GUILD_SAMEMAP_WOS || type == GUILD_AREA_WOS) )
 					continue;
 
-				if( type != GUILD && type != GUILD_NOBG && type != GUILD_WOS && sd->bl.m != bl->m )
+				if( type != GUILD && type != GUILD_NOBG && type != GUILD_WOS && type != GUILD_ALLIANCES && type != GUILD_ALLIANCES_FRIEND && type != GUILD_ALLIANCES_ENEMY && sd->bl.m != bl->m )
 					continue;
 
 				if( (type == GUILD_AREA || type == GUILD_AREA_WOS) && (sd->bl.x < x0 || sd->bl.y < y0 || sd->bl.x > x1 || sd->bl.y > y1) )
@@ -667,6 +670,52 @@ int32 clif_send(const void* buf, int32 len, struct block_list* bl, enum send_tar
 				WFIFOSET(fd,len);
 			}
 		}
+
+		if( type == GUILD_ALLIANCES || type == GUILD_ALLIANCES_FRIEND || type == GUILD_ALLIANCES_ENEMY ){
+			for( const guild_alliance& alliance : g.alliance ){
+				if( alliance.guild_id == 0 ){
+					continue;
+				}
+
+				switch( type ){
+					case GUILD_ALLIANCES:
+						// Send it to both friends and enemies
+						break;
+
+					case GUILD_ALLIANCES_FRIEND:
+						// Only send it to friends
+						if( alliance.opposition != 0 ){
+							// Skip enemies
+							continue;
+						}
+						break;
+
+					case GUILD_ALLIANCES_ENEMY:
+						// Only send it to enemies
+						if( alliance.opposition == 0 ){
+							// Skip friends
+							continue;
+						}
+						break;
+				}
+
+				std::shared_ptr<MapGuild> alliance_guild = guild_search( alliance.guild_id );
+
+				if( alliance_guild == nullptr ){
+					continue;
+				}
+
+				map_session_data* alliance_sd = guild_getavailablesd( alliance_guild->guild );
+
+				if( alliance_sd == nullptr ){
+					continue;
+				}
+
+				// Send the packet to the alliance guild via clif_send again, in case a GM enabled guildspy on them
+				clif_send( buf, len, &alliance_sd->bl, GUILD );
+			}
+		}
+
 		if (!enable_spy) //Skip unnecessary parsing. [Skotlex]
 			break;
 
@@ -25573,6 +25622,91 @@ void clif_parse_macro_checker( int32 fd, map_session_data* sd ){
 	safesnprintf( command, sizeof( command ),"%cmacrochecker %s", atcommand_symbol, mapname );
 
 	is_atcommand( sd->fd, sd, command, 1 );
+#endif
+}
+
+void clif_guild_alliance_message( std::shared_ptr<MapGuild> guild, const char* message, size_t length ){
+#if PACKETVER_MAIN_NUM >= 20230607
+	// Check if it was an empty message
+	if( length == 0 ){
+		return;
+	}
+
+	map_session_data* sd = guild_getavailablesd( guild->guild );
+
+	if( sd == nullptr ){
+		return;
+	}
+
+	// Zero termination
+	length += 1;
+
+	if( length >= CHAT_SIZE_MAX ){
+		ShowWarning( "clif_guild_alliance_message: Truncated message '%s' (length=%" PRIuPTR ", CHAT_SIZE_MAX=% " PRIuPTR ", guild_id = % d).\n", message, length, CHAT_SIZE_MAX, guild->guild.guild_id );
+		length = CHAT_SIZE_MAX;
+	}
+
+	PACKET_ZC_ALLY_CHAT* p = reinterpret_cast<PACKET_ZC_ALLY_CHAT*>( packet_buffer );
+
+	p->packetType = HEADER_ZC_ALLY_CHAT;
+	p->packetLength = sizeof( *p );
+
+	static size_t maximum = static_cast<size_t>( std::numeric_limits<decltype( p->packetLength )>::max() ) - sizeof( *p );
+
+	if( length >= maximum ){
+		ShowWarning( "clif_guild_alliance_message: Truncated message '%s' (length=%" PRIuPTR ", maximum=% " PRIuPTR ", guild_id = % d).\n", message, length, maximum, guild->guild.guild_id );
+		length = maximum;
+	}
+
+	safestrncpy( p->message, message, length );
+	p->packetLength += static_cast<decltype( p->packetLength )>( length );
+
+	clif_send( p, p->packetLength, &sd->bl, GUILD_ALLIANCES_FRIEND );
+#endif
+}
+
+void clif_parse_guild_alliance_message( int fd, map_session_data* sd ){
+#if PACKETVER_MAIN_NUM >= 20230607
+	if( sd == nullptr ){
+		return;
+	}
+
+	// This packet is sent if the message starts with #
+	// Therefore if either the atcommand or the charcommand symbol is a #, we have to do the guild check later
+	if( atcommand_symbol != '#' && charcommand_symbol != '#' ){
+		// Check if the player is in a guild
+		if( sd->guild == nullptr ){
+			// Not in a guild, return early
+			return;
+		}
+	}
+
+	char name[NAME_LENGTH], message[CHAT_SIZE_MAX], output[CHAT_SIZE_MAX+NAME_LENGTH*2];
+
+	// Validate packet and retrieve name and message
+	if( !clif_process_message( sd, false, name, message, output ) ){
+		return;
+	}
+
+	// If either the atcommand or the charcommand symbol is a #, we have to try to parse the command
+	if( atcommand_symbol == '#' || charcommand_symbol == '#' ){
+		char cmd[CHAT_SIZE_MAX];
+
+		safesnprintf( cmd, sizeof( cmd ), "#%s", message );
+
+		// Check if the message contained a command
+		if( is_atcommand( fd, sd, cmd, 1 ) ){
+			// It was a command, no need to send it to the allicances
+			return;
+		}
+
+		// This check has to be done after clif_process_message, because the player may have used a command
+		if( sd->guild == nullptr ){
+			return;
+		}
+	}
+
+	clif_guild_alliance_message( sd->guild, output, strlen( output ) );
 #endif
 }
 
