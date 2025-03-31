@@ -2031,6 +2031,12 @@ struct PACKET_CZ_REQ_REPORT_USER{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_REQ_REPORT_USER, 0xbe2);
 
+struct PACKET_CZ_QUEST_STATUS_REQ{
+	int16 packetType;
+	int16 packetLength;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_QUEST_STATUS_REQ, 0xbf3);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
