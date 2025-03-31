@@ -8153,9 +8153,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		case MG_FIREWALL:
 			if (tstatus->def_ele == ELE_FIRE || battle_check_undead(tstatus->race, tstatus->def_ele)) {
 				ad.blewcount = 0; //No knockback
-				unit_data* ud = unit_bl2ud(target);
 				// Fire and undead units hit by firewall cannot be stopped for 2 seconds
-				if (ud != nullptr)
+				if (unit_data* ud = unit_bl2ud(target); ud != nullptr)
 					ud->endure_tick = gettick() + 2000;
 				break;
 			}

@@ -4295,7 +4295,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 				sc->getSCE(SC_ENDURE)->val4 = 0;
 			status_change_end(&sd->bl, SC_ENDURE);
 		}
-		if (!status_change_isDisabledOnMap(SC_ENDURE, map_getmapdata(sd->bl.m))) {
+		if (sd->bl.m >= 0 && !status_change_isDisabledOnMap(SC_ENDURE, map_getmapdata(sd->bl.m))) {
 			clif_status_load(&sd->bl, EFST_ENDURE, 1);
 			base_status->mdef++;
 		}
@@ -9244,7 +9244,7 @@ bool status_isendure(block_list& bl, t_tick tick)
 	// Officially the bonus "no_walk_delay" is actually just SC_ENDURE with unlimited duration
 	// Endure is forbidden on some maps, but we don't apply this on this bonus
 	// That's why we need to check it here
-	if (bl.type == BL_PC && !status_change_isDisabledOnMap(SC_ENDURE, map_getmapdata(bl.m))) {
+	if (bl.m >= 0 && bl.type == BL_PC && !status_change_isDisabledOnMap(SC_ENDURE, map_getmapdata(bl.m))) {
 		if (reinterpret_cast<map_session_data&>(bl).special_state.no_walk_delay)
 			return true;
 	}
