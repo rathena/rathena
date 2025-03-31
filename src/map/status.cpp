@@ -9237,9 +9237,10 @@ int32 status_isimmune(struct block_list *bl)
  * This does not only include the status change "Endure" but also all other endure effects
  * @param bl: Object to check [PC|MOB|HOM|MER|ELEM]
  * @param tick: Current tick
+ * @param visible: If true, function returns if the endure effect should be shown on the client
  * @return Whether object can be stopped (false) or not (true)
  */
-bool status_isendure(block_list& bl, t_tick tick)
+bool status_isendure(block_list& bl, t_tick tick, bool visible)
 {
 	// Officially the bonus "no_walk_delay" is actually just SC_ENDURE with unlimited duration
 	// Endure is forbidden on some maps, but we don't apply this on this bonus
@@ -9253,11 +9254,23 @@ bool status_isendure(block_list& bl, t_tick tick)
 	if (ud != nullptr && DIFF_TICK(ud->endure_tick, tick) > 0)
 		return true;
 
-	// Officially everything uses endure_tick, even SC_ENDURE sets it
-	// However, we have a lot of extra logic for infinite endure, so we use the status change for now
 	status_change* sc = status_get_sc(&bl);
-	if (sc != nullptr && !sc->empty() && (sc->getSCE(SC_ENDURE)))
+	if (sc != nullptr && !sc->empty()) {
+		// Officially endure also sets endure_tick
+		// However, we have a lot of extra logic for infinite endure, so we use the status change for now
+		if (sc->getSCE(SC_ENDURE))
+			return true;
+
+		// These status changes don't send "Endure" to the client, but still prevent being stopped
+		if (!visible && (sc->getSCE(SC_RUN) || sc->getSCE(SC_WUGDASH)))
+			return true;
+	}
+
+	// Bosses in renewal (episode 20+) cannot be stopped by damage, but still show damage normally
+#ifdef RENEWAL
+	if (!visible && bl.type == BL_MOB && status_get_class_(&bl) == CLASS_BOSS)
 		return true;
+#endif
 
 	return false;
 }

@@ -5119,12 +5119,12 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 
 //Modifies the type of damage according to target status changes [Skotlex]
 //Aegis data specifies that: 4 endure against single hit sources, 9 against multi-hit.
-static enum e_damage_type clif_calc_delay(block_list& bl, e_damage_type type, int32 div, int64 damage, int32 delay) {
+static enum e_damage_type clif_calc_delay(block_list& bl, e_damage_type type, int32 div, int64 damage, int32 delay, t_tick tick) {
 	if (damage < 1)
 		return type;
 
 	// Check if unit has endure
-	if (!status_isendure(bl, gettick()))
+	if (!status_isendure(bl, tick, true))
 		return type;
 
 	// General change of type based on div against target with endure effect
@@ -5156,26 +5156,12 @@ static enum e_damage_type clif_calc_delay(block_list& bl, e_damage_type type, in
 /*==========================================
  * Estimates walk delay based on the damage criteria. [Skotlex]
  *------------------------------------------*/
-static int32 clif_calc_walkdelay( block_list &bl, int32 delay, e_damage_type type, int64 damage, int32 div_ ) {
+static int32 clif_calc_walkdelay(block_list &bl, int32 delay, e_damage_type type, int64 damage, int32 div_, t_tick tick) {
 	if (damage < 1)
 		return 0;
 
-	switch( type ) {
-		case DMG_ENDURE:
-		case DMG_MULTI_HIT_ENDURE:
-		case DMG_SPLASH_ENDURE:
-			return 0;
-	}
-
-	// TODO: This logic is only temporary until we refactor this function, we should check this when the unit is stopped instead!
-	// Below are situations that don't send "Endure" to the client, but still prevent being stopped
-	// This includes bosses in renewal (episode 20+) and running / dashing units
-#ifdef RENEWAL
-	if (bl.type == BL_MOB && status_get_class_(&bl) == CLASS_BOSS)
-		return 0;
-#endif
-	status_change* sc = status_get_sc(&bl);
-	if (sc != nullptr && !sc->empty() && (sc->getSCE(SC_RUN) || sc->getSCE(SC_WUGDASH)))
+	// Check if unit can be stopped by damage
+	if (status_isendure(bl, tick, false))
 		return 0;
 
 	if (bl.type == BL_PC) {
@@ -5253,8 +5239,7 @@ int32 clif_damage(block_list& src, block_list& dst, t_tick tick, int32 sdelay, i
 	int32 damage = (int32)cap_value(sdamage,INT_MIN,INT_MAX);
 	int32 damage2 = (int32)cap_value(sdamage2,INT_MIN,INT_MAX);
 
-	if (type != DMG_MULTI_HIT_CRITICAL)
-		type = clif_calc_delay( dst, type, div, damage+damage2, ddelay );
+	type = clif_calc_delay(dst, type, div, damage+damage2, ddelay, tick);
 
 	damage = static_cast<decltype(damage)>(clif_hallucination_damage(dst, damage));
 	damage2 = static_cast<decltype(damage2)>(clif_hallucination_damage(dst, damage2));
@@ -5325,13 +5310,8 @@ int32 clif_damage(block_list& src, block_list& dst, t_tick tick, int32 sdelay, i
 	if(&src == &dst) 
 		unit_setdir(&src, unit_getdir(&src));
 
-	// In case this assignment is bypassed by DMG_MULTI_HIT_CRITICAL
-	if( type == DMG_MULTI_HIT_CRITICAL ){
-		type = clif_calc_delay( dst, type, div, damage+damage2, ddelay );
-	}
-
 	//Return adjusted can't walk delay for further processing.
-	return clif_calc_walkdelay(dst, ddelay, type, damage+damage2, div);
+	return clif_calc_walkdelay(dst, ddelay, type, damage+damage2, div, tick);
 }
 
 /*==========================================
@@ -6051,7 +6031,7 @@ void clif_skill_cooldown( map_session_data &sd, uint16 skill_id, t_tick tick ){
 /// 0114 <skill id>.W <src id>.L <dst id>.L <tick>.L <src delay>.L <dst delay>.L <damage>.W <level>.W <div>.W <type>.B (ZC_NOTIFY_SKILL)
 /// 01de <skill id>.W <src id>.L <dst id>.L <tick>.L <src delay>.L <dst delay>.L <damage>.L <level>.W <div>.W <type>.B (ZC_NOTIFY_SKILL2)
 int32 clif_skill_damage( block_list& src, block_list& dst, t_tick tick, int32 sdelay, int32 ddelay, int64 sdamage, int32 div, uint16 skill_id, uint16 skill_lv, e_damage_type type ){
-	type = clif_calc_delay( dst, type, div, sdamage, ddelay );
+	type = clif_calc_delay(dst, type, div, sdamage, ddelay, tick);
 	sdamage = clif_hallucination_damage( dst, sdamage );
 
 	PACKET_ZC_NOTIFY_SKILL packet{};
@@ -6104,7 +6084,7 @@ int32 clif_skill_damage( block_list& src, block_list& dst, t_tick tick, int32 sd
 	}
 
 	//Because the damage delay must be synced with the client, here is where the can-walk tick must be updated. [Skotlex]
-	return clif_calc_walkdelay( dst, ddelay, type, damage, div );
+	return clif_calc_walkdelay(dst, ddelay, type, damage, div, tick);
 }
 
 
