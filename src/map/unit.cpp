@@ -3979,9 +3979,6 @@ int32 unit_free(struct block_list *bl, clr_type clrtype)
 
 			skill_clear_unitgroup(bl);
 			status_change_clear(bl,1);
-
-			// Do not call the destructor here, it will be done in chrif_auth_delete
-			// sd->~map_session_data();
 			break;
 		}
 		case BL_PET: {
@@ -4151,8 +4148,6 @@ int32 unit_free(struct block_list *bl, clr_type clrtype)
 
 			skill_clear_unitgroup(bl);
 			status_change_clear(bl,1);
-
-			ed->~s_elemental_data();
 			break;
 		}
 	}
