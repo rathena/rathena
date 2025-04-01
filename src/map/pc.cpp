@@ -2951,7 +2951,7 @@ uint16 pc_getpercentweight(map_session_data& sd, uint32 weight)
 {
 	if (weight == 0)
 		weight = sd.weight;
-	return static_cast<uint16>(weight * 100 / sd.max_weight);
+	return static_cast<uint16>(weight * 100 / std::max<uint32>(sd.max_weight, 1));
 }
 
 /*==========================================
@@ -4210,6 +4210,10 @@ void pc_bonus(map_session_data *sd,int32 type,int32 val)
 		case SP_CLASSCHANGE: // [Valaris]
 			if (sd->state.lr_flag != LR_FLAG_ARROW)
 				sd->bonus.classchange=val;
+			break;
+		case SP_SKILL_RATIO:
+			if (sd->state.lr_flag != LR_FLAG_ARROW)
+				sd->bonus.skill_ratio += val;
 			break;
 		case SP_SHORT_ATK_RATE:
 			if (sd->state.lr_flag != LR_FLAG_ARROW)	//[Lupus] it should stack, too. As any other cards rate bonuses
@@ -10236,6 +10240,7 @@ int64 pc_readparam(map_session_data* sd,int64 type)
 		case SP_UNBREAKABLE_GARMENT: val = (sd->bonus.unbreakable_equip&EQP_GARMENT)?1:0; break;
 		case SP_UNBREAKABLE_SHOES: val = (sd->bonus.unbreakable_equip&EQP_SHOES)?1:0; break;
 		case SP_CLASSCHANGE:     val = sd->bonus.classchange; break;
+		case SP_SKILL_RATIO:     val = sd->bonus.skill_ratio; break;
 		case SP_SHORT_ATK_RATE:  val = sd->bonus.short_attack_atk_rate; break;
 		case SP_LONG_ATK_RATE:   val = sd->bonus.long_attack_atk_rate; break;
 		case SP_BREAK_WEAPON_RATE: val = sd->bonus.break_weapon_rate; break;
