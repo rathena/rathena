@@ -5721,7 +5721,7 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 	// Player-only states
 	if( bl.type == BL_PC ) {
 		// Can't pick-up items
-		if( scdb->state[SCS_NOPICKITEM] ){
+		if( scdb->state[SCS_NOPICKITEM] || scdb->state[SCS_NOPICKITEMCOND] ){
 			status_calc_state_sub( bl, sc, start, scdb, sc.cant.pickup, SCS_NOPICKITEM, SCS_NOPICKITEMCOND, []( block_list& bl, status_change& sc, bool& restriction, const sc_type type, const status_change_entry& sce ) -> bool {
 				// Check the specific conditions
 				switch( type ){
