@@ -5714,7 +5714,7 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 	}
 
 	// Can't warp
-	if( scdb->state[SCS_NOWARP] ){
+	if( scdb->state[SCS_NOWARP] || scdb->state[SCS_NOWARPCOND] ){
 		status_calc_state_sub( bl, sc, start, scdb, sc.cant.warp, SCS_NOWARP, SCS_NOWARPCOND, func_not_impl );
 	}
 
