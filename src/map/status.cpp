@@ -5647,7 +5647,7 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 	}
 
 	// Can't use skills
-	if( scdb->state[SCS_NOCAST] ){
+	if( scdb->state[SCS_NOCAST] || scdb->state[SCS_NOCASTCOND] ){
 		status_calc_state_sub( bl, sc, start, scdb, sc.cant.cast, SCS_NOCAST, SCS_NOCASTCOND, []( block_list& bl, status_change& sc, bool& restriction, const sc_type type, const status_change_entry& sce ) -> bool {
 			// Check the specific conditions
 			switch( type ){

@@ -3689,8 +3689,7 @@ Body:
   - Status: Oblivioncurse
     Icon: EFST_OBLIVIONCURSE
     States:
-      NoCast: true
-      Nocastcond: true
+      NoCastCond: true
     CalcFlags:
       Regen: true
     Flags:
@@ -3836,7 +3835,6 @@ Body:
     DurationLookup: SO_DIAMONDDUST
     States:
       NoMoveCond: true
-      NoCast: true
       NoCastCond: true
       NoConsumeItem: true
       NoAttack: true
