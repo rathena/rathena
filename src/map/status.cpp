@@ -5685,7 +5685,7 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 	}
 
 	// Can't attack
-	if( scdb->state[SCS_NOATTACK] ){
+	if( scdb->state[SCS_NOATTACK] || scdb->state[SCS_NOATTACKCOND] ){
 		status_calc_state_sub( bl, sc, start, scdb, sc.cant.attack, SCS_NOATTACK, SCS_NOATTACKCOND, []( block_list& bl, status_change& sc, bool& restriction, const sc_type type, const status_change_entry& sce ) -> bool {
 			// Check the specific conditions
 			switch( type ){

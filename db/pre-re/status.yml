@@ -1703,7 +1703,6 @@ Body:
       Aspd: true
     States:
       NoMoveCond: true
-      NoAttack: true
       NoAttackCond: true
   - Status: Hermode
     Icon: EFST_HERMODE
@@ -1768,7 +1767,6 @@ Body:
     DurationLookup: BD_ENCORE
     States:
       NoMoveCond: true
-      NoAttack: true
       NoAttackCond: true
     CalcFlags:
       Speed: true
