@@ -1145,7 +1145,6 @@ Body:
   - Status: Nochat
     States:
       NoPickItemCond: true
-      NoDropItem: true
       NoDropItemCond: true
       NoChatCond: true
       NoConsumeItem: true
