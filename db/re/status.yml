@@ -1282,8 +1282,6 @@ Body:
     DurationLookup: HP_BASILICA
     CalcFlags:
       All: true
-    States:
-      NoAttack: true
     Flags:
       NoSave: true
       NoClearance: true
