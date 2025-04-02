@@ -1148,7 +1148,6 @@ Body:
       NoPickItemCond: true
       NoDropItem: true
       NoDropItemCond: true
-      NoChat: true
       NoChatCond: true
       NoConsumeItem: true
       NoConsumeItemCond: true

@@ -5666,7 +5666,7 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 	}
 
 	// Can't chat
-	if( scdb->state[SCS_NOCHAT] ) {
+	if( scdb->state[SCS_NOCHAT] || scdb->state[SCS_NOCHATCOND] ){
 		status_calc_state_sub( bl, sc, start, scdb, sc.cant.chat, SCS_NOCHAT, SCS_NOCHATCOND, []( block_list& bl, status_change& sc, bool& restriction, const sc_type type, const status_change_entry& sce ) -> bool {
 			// Check the specific conditions
 			switch( type ){
