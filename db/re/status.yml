@@ -1176,7 +1176,6 @@ Body:
       NoPickItemCond: true
       NoDropItemCond: true
       NoChatCond: true
-      NoConsumeItem: true
       NoConsumeItemCond: true
     Flags:
       NoRemoveOnDead: true

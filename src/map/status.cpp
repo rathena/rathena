@@ -5769,7 +5769,7 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 		}
 
 		// Can't consume item
-		if( scdb->state[SCS_NOCONSUMEITEM] ){
+		if( scdb->state[SCS_NOCONSUMEITEM] || scdb->state[SCS_NOCONSUMEITEMCOND] ){
 			status_calc_state_sub( bl, sc, start, scdb, sc.cant.consume, SCS_NOCONSUMEITEM, SCS_NOCONSUMEITEMCOND, []( block_list& bl, status_change& sc, bool& restriction, const sc_type type, const status_change_entry& sce ) -> bool {
 				// Check the specific conditions
 				switch( type ){

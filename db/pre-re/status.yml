@@ -1147,7 +1147,6 @@ Body:
       NoPickItemCond: true
       NoDropItemCond: true
       NoChatCond: true
-      NoConsumeItem: true
       NoConsumeItemCond: true
     Flags:
       NoRemoveOnDead: true
@@ -1673,7 +1672,6 @@ Body:
     DurationLookup: HW_GRAVITATION
     States:
       NoMoveCond: true
-      NoConsumeItem: true
       NoConsumeItemCond: true
     CalcFlags:
       Aspd: true
