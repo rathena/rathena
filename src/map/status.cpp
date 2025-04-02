@@ -5759,7 +5759,7 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 		}
 
 		// Can't equip item
-		if( scdb->state[SCS_NOEQUIPITEM] ){
+		if( scdb->state[SCS_NOEQUIPITEM] || scdb->state[SCS_NOEQUIPITEMCOND] ){
 			status_calc_state_sub( bl, sc, start, scdb, sc.cant.equip, SCS_NOEQUIPITEM, SCS_NOEQUIPITEMCOND, func_not_impl );
 		}
 
