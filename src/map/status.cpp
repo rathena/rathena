@@ -9250,12 +9250,10 @@ bool status_isendure(block_list& bl, t_tick tick, bool visible)
 			return true;
 	}
 
-	unit_data* ud = unit_bl2ud(&bl);
-	if (ud != nullptr && DIFF_TICK(ud->endure_tick, tick) > 0)
+	if (unit_data* ud = unit_bl2ud(&bl); ud != nullptr && DIFF_TICK(ud->endure_tick, tick) > 0)
 		return true;
 
-	status_change* sc = status_get_sc(&bl);
-	if (sc != nullptr && !sc->empty()) {
+	if (status_change* sc = status_get_sc(&bl); sc != nullptr && !sc->empty()) {
 		// Officially endure also sets endure_tick
 		// However, we have a lot of extra logic for infinite endure, so we use the status change for now
 		if (sc->getSCE(SC_ENDURE))
@@ -9266,8 +9264,8 @@ bool status_isendure(block_list& bl, t_tick tick, bool visible)
 			return true;
 	}
 
-	// Bosses in renewal (episode 20+) cannot be stopped by damage, but still show damage normally
 #ifdef RENEWAL
+	// Bosses in renewal (episode 20+) cannot be stopped by damage, but still show damage normally
 	if (!visible && bl.type == BL_MOB && status_get_class_(&bl) == CLASS_BOSS)
 		return true;
 #endif
