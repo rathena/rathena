@@ -5794,7 +5794,7 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 		}
 
 		// Can't lose exp
-		if( scdb->state[SCS_NODEATHPENALTY] ){
+		if( scdb->state[SCS_NODEATHPENALTY] || scdb->state[SCS_NODEATHPENALTYCOND] ){
 			status_calc_state_sub( bl, sc, start, scdb, sc.cant.deathpenalty, SCS_NODEATHPENALTY, SCS_NODEATHPENALTYCOND, func_not_impl );
 		}
 
