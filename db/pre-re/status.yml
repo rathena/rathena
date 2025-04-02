@@ -319,7 +319,6 @@ Body:
     Icon: EFST_HIDING
     DurationLookup: TF_HIDING
     States:
-      NoMove: true
       NoMoveCond: true
       NoPickItem: true
       NoConsumeItem: true
@@ -1232,7 +1231,6 @@ Body:
     Icon: EFST_GOSPEL
     DurationLookup: PA_GOSPEL
     States:
-      NoMove: true
       NoMoveCond: true
     CalcFlags:
       Speed: true
@@ -1253,7 +1251,6 @@ Body:
   - Status: Basilica
     DurationLookup: HP_BASILICA
     States:
-      NoMove: true
       NoMoveCond: true
       NoAttack: true
     Flags:
@@ -1678,7 +1675,6 @@ Body:
     Icon: EFST_GRAVITATION
     DurationLookup: HW_GRAVITATION
     States:
-      NoMove: true
       NoMoveCond: true
       NoConsumeItem: true
       NoConsumeItemCond: true
@@ -1707,7 +1703,6 @@ Body:
       Speed: true
       Aspd: true
     States:
-      NoMove: true
       NoMoveCond: true
       NoAttack: true
       NoAttackCond: true
@@ -1773,7 +1768,6 @@ Body:
     Icon: EFST_BDPLAYING
     DurationLookup: BD_ENCORE
     States:
-      NoMove: true
       NoMoveCond: true
       NoAttack: true
       NoAttackCond: true
@@ -3000,7 +2994,6 @@ Body:
   - Status: Fear
     DurationLookup: RK_WINDCUTTER
     States:
-      NoMove: true
       NoMoveCond: true
     CalcFlags:
       Flee: true
@@ -3363,7 +3356,6 @@ Body:
     Icon: EFST_CAMOUFLAGE
     DurationLookup: RA_CAMOUFLAGE
     States:
-      NoMove: true
       NoMoveCond: true
     CalcFlags:
       Speed: true
@@ -3843,7 +3835,6 @@ Body:
     Icon: EFST_COLD
     DurationLookup: SO_DIAMONDDUST
     States:
-      NoMove: true
       NoMoveCond: true
       NoCast: true
       NoCastCond: true
