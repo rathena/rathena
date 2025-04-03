@@ -156,6 +156,14 @@ static void skilltree_txt_data(const std::string &modePath, const std::string &f
 		sv_readdb(modePath.c_str(), "skill_tree.txt", ',', 3 + MAX_PC_SKILL_REQUIRE * 2, 5 + MAX_PC_SKILL_REQUIRE * 2, -1, pc_readdb_skilltree, false);
 }
 
+// Mob Skill database data to memory
+static void mob_skill_txt_data(const std::string &modePath, const std::string &fixedPath) {
+	mob_skill_db.clear();
+
+	if (fileExists(modePath + "/mob_skill_db.txt"))
+		sv_readdb(modePath.c_str(), "mob_skill_db.txt", ',', 19, 19, -1, mob_parse_row_mobskilldb, false);
+}
+
 template<typename Func>
 bool process( const std::string& type, uint32 version, const std::vector<std::string>& paths, const std::string& name, Func lambda, const std::string& rename = "" ){
 	for( const std::string& path : paths ){
@@ -567,6 +575,20 @@ bool Csv2YamlTool::initialize( int32 argc, char* argv[] ){
 	homunculus_txt_data(path_db_import, path_db_import);
 	if (!process("HOMUNCULUS_DB", 1, { path_db_import }, "homunculus_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 50, 50, MAX_HOMUNCULUS_CLASS, read_homunculusdb, false);
+	})) {
+		return 0;
+	}
+
+	mob_skill_txt_data(path_db_mode, path_db);
+	if (!process("MOB_SKILL_DB", 1, { path_db_mode }, "mob_skill_db", [](const std::string &path, const std::string &name_ext) -> bool {
+		return mob_parse_row_mobskilldb_yaml();
+	})) {
+		return 0;
+	}
+
+	mob_skill_txt_data(path_db_import, path_db_import);
+	if (!process("MOB_SKILL_DB", 1, { path_db_import }, "mob_skill_db", [](const std::string &path, const std::string &name_ext) -> bool {
+		return mob_parse_row_mobskilldb_yaml();
 	})) {
 		return 0;
 	}
@@ -5274,6 +5296,232 @@ static bool read_homunculusdb( char* str[], size_t columns, size_t current ){
 
 	body << YAML::EndMap;
 
+	return true;
+}
+
+static bool mob_parse_row_mobskilldb(char** str, size_t columns, size_t current) {
+	int32 id = strtol(str[0], nullptr, 10);
+	std::string mob_name;
+
+	if (id == -3)
+		mob_name = "ALL";
+	else if (id == -2)
+		mob_name = "ALL_NORMAL";
+	else if (id == -1)
+		mob_name = "ALL_BOSS";
+	else {
+		uint16 mob_id = static_cast<uint16>(id);
+		std::string* name = util::umap_find( aegis_mobnames, mob_id );
+
+		if (name == nullptr) {
+			ShowWarning( "mob_parse_row_mobskilldb: Non existant Mob id %hu.\n", mob_id );
+			return true;
+		}
+		mob_name = *name;
+	}
+	
+	if (strcmp(str[1], "clear") == 0) {
+		body << YAML::BeginMap;
+		body << YAML::Key << "Remove" << YAML::Value << mob_name;
+		body << YAML::EndMap;
+		return true;
+	}
+
+	std::vector<s_mob_skill_csv> *skills = util::umap_find(mob_skill_db, mob_name);
+	bool exists = skills != nullptr;
+
+	s_mob_skill_csv entry;
+
+	std::string state_name = str[2];
+	std::transform(state_name.begin(), state_name.end(), state_name.begin(), ::toupper);
+	entry.state_name = state_name;
+
+	// Skill ID
+	uint16 skill_id = atoi(str[3]);
+	std::string* skill_name = util::umap_find( aegis_skillnames, skill_id );
+
+	if( skill_name == nullptr ){
+		ShowError( "Skill name for skill id %hu is not known.\n", atoi(str[3]) );
+		return false;
+	}
+	entry.skill_name = *skill_name;
+	
+	entry.skill_lv = static_cast<uint16>(atoi(str[4]));
+	entry.permillage = static_cast<int16>(atoi(str[5]));
+	entry.casttime = static_cast<int32>(atoi(str[6]));
+	entry.delay = static_cast<int32>(atoi(str[7]));
+	if (strcmp(str[8],"yes") == 0)
+		entry.cancel = true;
+	else
+		entry.cancel = false;
+
+	// Target
+	std::string target_name = str[9];
+	std::transform(target_name.begin(), target_name.end(), target_name.begin(), ::toupper);
+	entry.target_name = target_name;
+
+	// Cond1
+	std::string cond1 = str[10];
+	std::transform(cond1.begin(), cond1.end(), cond1.begin(), ::toupper);
+	entry.cond1_name = cond1;
+
+	// Cond2
+	std::string cond2(str[11]);
+	if (cond1 == "MYSTATUSON" || cond1 == "MYSTATUSOFF" || cond1 == "FRIENDSTATUSON" || cond1 == "FRIENDSTATUSOFF") {	// SC_ status
+		std::transform(cond2.begin(), cond2.end(), cond2.begin(), ::toupper);
+		entry.cond2_name = "SC_" + cond2;
+	}
+	else if (atoi(str[11]) > 0) {
+		if (cond1 != "SKILLUSED" && cond1 != "AFTERSKILL")	// Number
+			entry.cond2_name = cond2;
+		else {	// Aegis skill name
+			uint16 tmp_skill_id = atoi(str[11]);
+			std::string* tmp_skill_name = util::umap_find( aegis_skillnames, tmp_skill_id );
+
+			if( tmp_skill_name == nullptr ){
+				ShowError( "Invalid specified skill %hu for %s (source: skill id %hu).\n", tmp_skill_id, cond1.c_str(), atoi(str[3]) );
+				return false;
+			}
+			entry.cond2_name = *tmp_skill_name;
+		}
+	}
+
+	entry.cond3 = 0;
+
+	for (uint16 i = 0; i < 5; ++i) {
+		uint16 index = 12 + i;
+		if (*str[index]) {
+			int32 val = (int)strtol(str[index],NULL,0);
+			if (val < 1)
+				continue;
+
+			std::string val_name = std::to_string(val);
+
+			if (i == 0 && (cond1 == "MYHPINRATE" || cond1 == "FRIENDHPINRATE")) {	// Upper bound now stored in cond3 instead of val 1
+				entry.cond3 = val;
+				continue;
+			}
+
+			switch( skill_id ) {
+				case NPC_METAMORPHOSIS:
+				case NPC_SUMMONSLAVE:
+				case NPC_SUMMONMONSTER:
+				case NPC_DEATHSUMMON: {
+					std::string* mob_name_val = util::umap_find( aegis_mobnames, static_cast<uint16>(val) );
+
+					if (mob_name_val == nullptr) {
+						ShowError( "Mob name for skill id %hu is not known.\n", val );
+						return false;
+					}
+					val_name = *mob_name_val;
+
+					entry.val.insert({ i, val_name });
+					continue;
+				}
+				case NPC_EMOTION:
+				case NPC_EMOTION_ON:
+					if (i == 0) {	// Emoticon is now stored in entry.emotion instead of val 1
+						char *constant = const_cast<char *>(constant_lookup(val, "ET_"));
+
+						if (constant != nullptr)
+							entry.emotion = constant;
+						else {
+							std::string emotion(str[val]);
+							entry.emotion = emotion;
+						}
+						continue;
+					}
+					break;
+				default:
+					break;
+			}
+
+			// In any case the remain values should be the ai
+			std::string *ai = util::umap_find( um_mob_mode2ai, val );
+
+			if (ai == nullptr || strncasecmp(str[index], "0x", 2) != 0) {
+				ShowError( "Unknown Ai for mode %s.\n", str[index] );
+				return false;
+			}
+			entry.mob_ai = *ai;
+		}
+	}
+
+	if (*str[17]) {
+		char *constant = const_cast<char *>(constant_lookup(atoi(str[17]), "ET_"));
+
+		if (constant != nullptr)
+			entry.emotion = constant;
+		else {
+			std::string emotion(str[17]);
+			entry.emotion = emotion;
+		}
+	}
+	entry.msg_id = static_cast<uint16>(atoi(str[18]));
+
+	if (exists)
+		skills->push_back(entry);
+	else {
+		std::vector<s_mob_skill_csv> skill;
+		skill.push_back(entry);
+		mob_skill_db.insert({ mob_name, skill });
+	}
+
+	return true;
+}
+
+static bool mob_parse_row_mobskilldb_yaml(void) {
+	for (const auto &mobit : mob_skill_db) {
+		body << YAML::BeginMap;
+		body << YAML::Key << "Mob" << YAML::Value << mobit.first;
+		body << YAML::Key << "Skills";
+		body << YAML::BeginSeq;
+		uint16 count = 0;
+
+		for (const auto &mob_skill : mobit.second) {
+			body << YAML::BeginMap;
+			body << YAML::Key << "Index" << YAML::Value << count;
+			body << YAML::Key << "Name" << YAML::Value << mob_skill.skill_name;
+			body << YAML::Key << "Level" << YAML::Value << mob_skill.skill_lv;
+			body << YAML::Key << "State" << YAML::Value << mob_skill.state_name;
+			body << YAML::Key << "CastRate" << YAML::Value << mob_skill.permillage;
+			body << YAML::Key << "CastTime" << YAML::Value << mob_skill.casttime;
+			body << YAML::Key << "CastDelay" << YAML::Value << mob_skill.delay;
+			body << YAML::Key << "CastCancel" << YAML::Value << ( !mob_skill.cancel ? "false" : "true" );
+			body << YAML::Key << "Target" << YAML::Value << mob_skill.target_name;
+			body << YAML::Key << "Condition" << YAML::Value << mob_skill.cond1_name;
+
+			if (!mob_skill.cond2_name.empty())
+				body << YAML::Key << "ConditionValue1" << YAML::Value << mob_skill.cond2_name;
+			if (mob_skill.cond3 > 0)
+				body << YAML::Key << "ConditionValue2" << YAML::Value << mob_skill.cond3;
+			if (!mob_skill.mob_ai.empty())
+				body << YAML::Key << "Ai" << YAML::Value << mob_skill.mob_ai;
+
+			if (!mob_skill.val.empty()) {
+				body << YAML::Key << "Summon";
+				body << YAML::BeginSeq;
+
+				for (const auto &valit : mob_skill.val) {
+					body << YAML::BeginMap;
+					body << YAML::Key << "Index" << YAML::Value << valit.first;
+					body << YAML::Key << "Mob" << YAML::Value << valit.second;
+					body << YAML::EndMap;
+				}
+
+				body << YAML::EndSeq;
+			}
+
+			if (!mob_skill.emotion.empty())
+				body << YAML::Key << "Emotion" << YAML::Value << mob_skill.emotion;
+			if (mob_skill.msg_id > 0)
+				body << YAML::Key << "Chat" << YAML::Value << mob_skill.msg_id;
+			body << YAML::EndMap;
+			count++;
+		}
+		body << YAML::EndSeq;
+		body << YAML::EndMap;
+	}
 	return true;
 }
 
