@@ -1,0 +1,3846 @@
+//===== rAthena Script =======================================
+//= Juno Monster Society
+//===== Description: =========================================
+//= [Walkthrough Conversion]
+//= NPCs that give hunting quests in exchange for experience.
+//===== Changelog: ===========================================
+//= 1.0 First version. [Capuche]
+//============================================================
+
+-	marketshop	market_soda	-1,1000374:50000:-1
+
+rachel,142,155,3	script	Carbonated Water Vending Machine#ra	4_VENDING_MACHINE2,{
+	.@item_name$ = getitemname(1000374);
+
+	mes "[Carbonated Water Vending Machine]";
+	mes "<font color = 2ECCFA>Clean</font> through your <font color = DF0101>cramped</font> stomach with a glass of <i>refreshing</i> <b>" + .@item_name$ + "</b>!";
+	mes "It has an <b>excellent effect</b> on urgency, overeating and indigestion.";
+	next;
+	mes "[Carbonated Water Vending Machine]";
+	mes "<font size = 10, color = DF0101>Caution: There is a report that excessive consumption of the product in a state of accumulated fatigue due to its strong carbonation effect may cause temporary memory loss.</font>";
+	next;
+	callshop "market_soda";
+	end;
+}
+prontera,170,125,3	duplicate(Carbonated Water Vending Machine#ra)	Carbonated Water Vending Machine#prt	4_VENDING_MACHINE2
+alberta,127,59,3	duplicate(Carbonated Water Vending Machine#ra)	Carbonated Water Vending Machine#alb	4_VENDING_MACHINE2
+einbroch,249,186,3	duplicate(Carbonated Water Vending Machine#ra)	Carbonated Water Vending Machine#ein	4_VENDING_MACHINE2
+geffen,153,70,3	duplicate(Carbonated Water Vending Machine#ra)	Carbonated Water Vending Machine#gef	4_VENDING_MACHINE2
+yuno,177,182,3	duplicate(Carbonated Water Vending Machine#ra)	Carbonated Water Vending Machine#yu	4_VENDING_MACHINE2
+veins,218,122,3	duplicate(Carbonated Water Vending Machine#ra)	Carbonated Water Vending Machine#ve	4_VENDING_MACHINE2
+lighthalzen,173,108,3	duplicate(Carbonated Water Vending Machine#ra)	Carbonated Water Vending Machine#lig	4_VENDING_MACHINE2
+
+
+function	script	F_Brilliant_Soda	{
+	next;
+	switch( select( "Level 70-79", "Level 80-89", "Level 90+", "Cancel" ) ) {
+	case 1:
+		callsub( S_Menu,
+			70, "Einbroch Northeast Field", "ein_fild06", 253,351,
+			71, "Geffen Northwest Field", "gef_fild06",214,31,
+			71, "Lighthalzen North Field", "lhz_fild01", 240,103,
+			75, "Turtle Island", "tur_dun01",155,46,
+			75, "In front of Thanatos Tower", "hu_fild01", 137,157,
+			75, "Starlight Coral Zone", "mal_dun01",146,126,
+			76, "Einbroch Northwest Field", "ein_fild03",135,50,
+			77, "Lighthalzen East Field", "lhz_fild03", 167,340
+		);
+		return;
+	case 2:
+		// Official menu text seems wrong
+		callsub( S_Menu,
+			// 80, "Turtle Island Dungeon", "ra_fild08",164,47,
+			80, "Rachel Northeast", "ra_fild08",164,47,
+			80, "Ice dungeon", "ice_dun01",158,18,
+			// 80, "Rachel East Ida Plain", "ra_fild03",363,183,
+			80, "Rachel North Ida Plain", "ra_fild03",363,183,
+			85, "Rachel Northeast of the plain", "ra_fild04", 269,69,
+			// 85, "Rachel Ice Cave 1st Floor", "ve_fild07",158,350,
+			85, "Veins South", "ve_fild07",158,350,
+			86, "Rachel's North Ida Plain", "ra_fild05", 53,356,
+			86, "Rachel Northeast North Audumrah Grassland", "ra_fild01", 229,319,
+			// 86, "Veins South Field", "ra_fild12", 54,219,
+			86, "Rachel East Field", "ra_fild12", 54,219,
+			// 87, "Rachel North North East Audumla Grassland", "tur_dun03", 130,186,
+			// 88, "Rachel North East North Audumla Grassland", "tur_dun02", 146,256
+			87, "Turtle Island Dungeon 2", "tur_dun03", 130,186,
+			88, "Turtle Island Dungeon 3", "tur_dun02", 146,256
+		);
+		return;
+	case 3:
+		callsub( S_Menu,
+			// 90, "Rachel Southwest Field", "ve_fild01", 354,276,
+			90, "Veins North North Field", "ve_fild01", 354,276,
+			90, "Veins North Field", "ve_fild04", 52,247,
+			93, "Lighthalzen North Porto Luna", "ra_fild06", 287,39,
+			95, "In front of Thor Volcano", "ve_fild03", 348,226
+		);
+		return;
+	case 4:
+		return;
+	}
+	end;
+
+S_Menu:
+	.@count = getargcount();
+	.@cancel_index = .@count / 5;
+
+	for ( .@i = 0; .@i < .@count; .@i += 5 )
+		.@menu$ += "[" + getarg(.@i) + "] " + getarg(.@i+1) + ":";
+	.@menu$ += "Cancel";
+
+	.@s = select(.@menu$) - 1;
+	if (.@s == .@cancel_index)	// cancel
+		return;
+	.@s = .@s * 5;
+	if (BaseLevel < getarg(.@s)) {
+		mes " - Available only for levels higher than " + getarg(.@s) + " - ";
+		close;
+	}
+	delitem 1000374,1;	// Brilliant_Soda
+	warp getarg(.@s+2), getarg(.@s+3),getarg(.@s+4);
+	end;
+}
+
+rachel,142,152,5	script	Assistant Mumuz#ra	4_M_CRU_HEAD,{
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
+	.@item_name$ = getitemname(1000374);
+
+	if (isbegin_quest(16547) == 0) {
+		mes .@npc_name$;
+		mes "Would you like to participate in the monster subjugation event hosted by the Juno Monster Society?";
+		mes "We will take you directly to your desired location!";
+		next;
+		mes .@npc_name$;
+		mes "I'm Mumuz, Assistant Superintendent of the Juno Monster Society.";
+		mes "I'm here to promote the monster subjugation event to you.";
+		next;
+		select( "Monster subjugation?", "Juno Monster Society?" );	// note: same text
+		mes .@npc_name$;
+		mes "The Juno Monster Society is literally a conference that researches and studies monsters with Juno as a base.";
+		mes "These days, some local monsters have become overly ferocious or have a large number.";
+		next;
+		mes .@npc_name$;
+		mes "That's why we're dispatching Map Examiners to various places to subdue monsters.";
+		next;
+		mes .@npc_name$;
+		mes "I was tasked with assisting Map Examiners in promoting the Monster Society in the city and managing " + .@item_name$ + " vending machines.";
+		mes "Yes, I can take you to the inspector's place";
+		setquest 16547;
+		completequest 16547;
+		next;
+	}
+	mes .@npc_name$;
+	mes "Hey, I'm Mumuz, the assistant of the Juno Monster Society.";
+	mes "How can I help you?";
+	next;
+	if (select( "Guide to the Map Examiner's place.", "Listen to the work of the Juno Monster Association." ) == 2) {
+		mes .@npc_name$;
+		mes "The Juno Monster Society is literally a monster research facility in Juno.";
+		next;
+		mes .@npc_name$;
+		mes "The Society has recently determined that some regional monsters have become excessively ferocious or have increased their numbers.";
+		mes "That's why we're dispatching Map Examiners to various places to subdue monsters.";
+		next;
+		mes .@npc_name$;
+		mes "I promote the work of the Monster Society in the city to assist Map Examiners...";
+		mes "I'm in charge of managing the Carbonated Water Vending Machine or guiding you to the place where the inspector is.";
+		close;
+	}
+	mes .@npc_name$;
+	mes "Well, it's just a little difficult...";
+	mes "Yes, if you buy me a bottle of " + .@item_name$ + ", I will warp it in a cool and refreshing way.";
+	next;
+	if (select( "Give me a bottle of " + .@item_name$ + ".", "I refuse." ) == 2) {
+		mes .@npc_name$;
+		mes "You're not going? Heck, I'm sorry..";
+		close;
+	}
+	if (countitem(1000374) < 1) {
+		mes .@npc_name$;
+		mes "You seem to have finished drinking the " + .@item_name$ + "?";
+		mes "Jaja, you can purchase more " + .@item_name$ + " by using this vending machine right next to me.";
+		close;
+	}
+	mes .@npc_name$;
+	mes "Wooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo fresh!";
+	mes "Now, where shall we take you?";
+	callfunc( "F_Brilliant_Soda" );
+	mes .@npc_name$;
+	mes "You're not going? Heuk, I'll give you back the " + .@item_name$ + ". You haven't drank it yet.";
+	close;
+
+OnInit:
+	setunittitle getnpcid(0), "<Juno Monster Society>";
+	end;
+}
+
+alberta,124,59,5	script	Assistant Dunea#alb	4_M_CRU_HEAD,{
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
+	.@item_name$ = getitemname(1000374);
+
+	if (isbegin_quest(16547) == 0) {
+		mes .@npc_name$;
+		mes "Would you like to participate in the monster subjugation event hosted by the Juno Monster Society?";
+		mes "We will take you directly to your desired location!";
+		next;
+		mes .@npc_name$;
+		mes "I'm Dunea, Assistant Superintendent of the Juno Monster Society.";
+		mes "I'm here to promote the monster subjugation event to you.";
+		next;
+		select( "Monster subjugation?", "Juno Monster Society?" );	// note: same text
+		mes .@npc_name$;
+		mes "The Juno Monster Society is literally a conference that researches and studies monsters with Juno as a base.";
+		mes "These days, some local monsters have become overly ferocious or have a large number.";
+		next;
+		mes .@npc_name$;
+		mes "That's why we're dispatching Map Examiners to various places to subdue monsters.";
+		next;
+		mes .@npc_name$;
+		mes "I was tasked with assisting Map Examiners in promoting the Monster Society in the city and managing " + .@item_name$ + " vending machines.";
+		mes "Yes, I can take you to the inspector's place";
+		setquest 16547;
+		completequest 16547;
+		next;
+	}
+	mes .@npc_name$;
+	mes "I, Dunea, assistant to the Juno Monster Society!";
+	mes "I will assist adventurers for the sake of the world.";
+	next;
+	if (select( "Guide to the Map Examiner's place.", "Listen to the work of the Juno Monster Association." ) == 2) {
+		mes .@npc_name$;
+		mes "The Juno Monster Society is literally a conference that researches and studies monsters with Juno as a base.";
+		mes "These days, some local monsters have become overly ferocious or have a large number.";
+		next;
+		mes .@npc_name$;
+		mes "That's why we're dispatching Map Examiners to various places to subdue monsters.";
+		next;
+		mes .@npc_name$;
+		mes "I was tasked with assisting Map Examiners in promoting the Monster Society in the city and managing " + .@item_name$ + " vending machines.";
+		mes "Yes, I can take you to the inspector's place";
+		close;
+	}
+	mes .@npc_name$;
+	mes "Um, I'd like to pick you up right away, but I'm a little underwhelmed.";
+	mes "Can I drink a bottle of " + .@item_name$ + "?";
+	next;
+	if (select( "Give me a bottle of " + .@item_name$ + ".", "I refuse." ) == 2) {
+		mes .@npc_name$;
+		mes "It's for the world, don't you go?";
+		close;
+	}
+	if (countitem(1000374) < 1) {
+		mes .@npc_name$;
+		mes "You don't have " + .@item_name$ + ".";
+		mes "Here is a vending machine for soda water! You can refill it here!";
+		close;
+	}
+	mes .@npc_name$;
+	mes "I feel refreshed just by receiving " + .@item_name$ + ".";
+	mes "Where can I take you?";
+	callfunc( "F_Brilliant_Soda" );
+	mes .@npc_name$;
+	mes "It's for the world, don't you go?";
+	mes "I can't help it. I'll return the " + .@item_name$ + " here.";
+	close;
+
+OnInit:
+	setunittitle getnpcid(0), "<Juno Monster Society>";
+	end;
+}
+
+einbroch,246,186,5	script	Assistant Remain#ein	4_M_CRU_HEAD,{
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
+	.@item_name$ = getitemname(1000374);
+
+	if (isbegin_quest(16547) == 0) {
+		mes .@npc_name$;
+		mes "Would you like to participate in the monster subjugation event hosted by the Juno Monster Society?";
+		mes "We will take you directly to your desired location!";
+		next;
+		mes .@npc_name$;
+		mes "I'm Remain, Assistant Superintendent of the Juno Monster Society.";
+		mes "I'm here to promote the monster subjugation event to you.";
+		next;
+		select( "Monster subjugation?", "Juno Monster Society?" );	// note: same text
+		mes .@npc_name$;
+		mes "The Juno Monster Society is literally a conference that researches and studies monsters with Juno as a base.";
+		mes "These days, some local monsters have become overly ferocious or have a large number.";
+		next;
+		mes .@npc_name$;
+		mes "That's why we're dispatching Map Examiners to various places to subdue monsters.";
+		next;
+		mes .@npc_name$;
+		mes "I was tasked with assisting Map Examiners in promoting the Monster Society in the city and managing " + .@item_name$ + " vending machines.";
+		mes "Yes, I can take you to the inspector's place";
+		setquest 16547;
+		completequest 16547;
+		next;
+	}
+	mes .@npc_name$;
+	mes "This is Remain, the assistant of the Juno Monster Society!";
+	mes "How can I help you?";
+	next;
+	if (select( "Guide to the Map Examiner's place.", "Listen to the work of the Juno Monster Association." ) == 2) {
+		mes .@npc_name$;
+		mes "The Juno Monster Society is literally a monster research facility in Juno.";
+		mes "According to recent investigations, it has been found that some regional monsters have become excessively ferocious or have increased their numbers.";
+		next;
+		mes .@npc_name$;
+		mes "That's why we're sending Map Examiners to such an area to subdue monsters.";
+		mes "I'm Lemaine, the assistant to the Map Examiners!";
+		next;
+		mes .@npc_name$;
+		mes "Promoting the work of the Juno Monster Society for righteous people like this from the city...";
+		mes "I will promote the Carbonated Water Vending Machineor guide you to the place where the inspector is!";
+		close;
+	}
+	mes .@npc_name$;
+	mes "It's a bit difficult to just send... I can't get any money.";
+	mes "Yes, give me a bottle of " + .@item_name$ + " and I'll give you a warp service!";
+	next;
+	if (select( "Give me a bottle of " + .@item_name$ + ".", "I refuse." ) == 2) {
+		mes .@npc_name$;
+		mes "Uh, you're not going now? Then you won't be serving " + .@item_name$ + ". I'm sorry.";
+		close;
+	}
+	if (countitem(1000374) < 1) {
+		mes .@npc_name$;
+		mes "" + .@item_name$ + " is sold at this vending machine that looks cool and refreshing.";
+		mes "You just need to buy some cool " + .@item_name$ + " and give it to me.";
+		close;
+	}
+	mes .@npc_name$;
+	mes "Wow! Thank you. A bottle of this " + .@item_name$ + " will take away your fatigue.";
+	mes "Where shall we take you then?";
+	callfunc( "F_Brilliant_Soda" );
+	mes .@npc_name$;
+	mes "Oh, you're not going now? Then I'll return the " + .@item_name$ + ".";
+	close;
+
+OnInit:
+	setunittitle getnpcid(0), "<Juno Monster Society>";
+	end;
+}
+
+geffen,151,68,5	script	Assistant Kihana#gef	4_M_CRU_HEAD,{
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
+	.@item_name$ = getitemname(1000374);
+
+	if (isbegin_quest(16547) == 0) {
+		mes .@npc_name$;
+		mes "Would you like to participate in the monster subjugation event hosted by the Juno Monster Society?";
+		mes "We will take you directly to your desired location!";
+		next;
+		mes .@npc_name$;
+		mes "I'm Kihana, Assistant Superintendent of the Juno Monster Society.";
+		mes "I'm here to promote the monster subjugation event to you.";
+		next;
+		select( "Monster subjugation?", "Juno Monster Society?" );	// note: same text
+		mes .@npc_name$;
+		mes "The Juno Monster Society is literally a conference that researches and studies monsters with Juno as a base.";
+		mes "These days, some local monsters have become overly ferocious or have a large number.";
+		next;
+		mes .@npc_name$;
+		mes "That's why we're dispatching Map Examiners to various places to subdue monsters.";
+		next;
+		mes .@npc_name$;
+		mes "I was tasked with assisting Map Examiners in promoting the Monster Society in the city and managing " + .@item_name$ + " vending machines.";
+		mes "Yes, I can take you to the inspector's place";
+		setquest 16547;
+		completequest 16547;
+		next;
+	}
+	mes .@npc_name$;
+	mes "I, Kihana, an assistant to the Juno Monster Society!";
+	mes "Nice to meet you. How can I help you?";
+	next;
+	if (select( "Guide to the Map Examiner's place.", "Listen to the work of the Juno Monster Association." ) == 2) {
+		mes .@npc_name$;
+		mes "The Juno Monster Society is literally a conference that researches and studies monsters with Juno as a base.";
+		mes "These days, some local monsters have become overly ferocious or have a large number.";
+		next;
+		mes .@npc_name$;
+		mes "That's why we're dispatching Map Examiners to various places to subdue monsters.";
+		next;
+		mes .@npc_name$;
+		mes "I was tasked with assisting Map Examiners in promoting the Monster Society in the city and managing " + .@item_name$ + " vending machines.";
+		mes "Yes, I can take you to the inspector's place";
+		close;
+	}
+	mes .@npc_name$;
+	mes "Gee, I just can't send it!";
+	mes "If you give me a bottle of " + .@item_name$ + ", I will provide you with a warp!";
+	next;
+	if (select( "Give me a bottle of " + .@item_name$ + ".", "I refuse." ) == 2) {
+		mes .@npc_name$;
+		mes "You mean you're not going? Hmm, then there's nothing you can do!";
+		close;
+	}
+	if (countitem(1000374) < 1) {
+		mes .@npc_name$;
+		mes "You don't have " + .@item_name$ + " in your bag!";
+		mes "Please use the Carbonated Water Vending Machine next to me!";
+		close;
+	}
+	mes .@npc_name$;
+	mes "Ahaha, a bottle of " + .@item_name$ + ", well received!";
+	mes "Where can I take you?";
+	callfunc( "F_Brilliant_Soda" );
+	mes .@npc_name$;
+	mes "Are you saying you won't go without giving me " + .@item_name$ + "?";
+	mes "Hmm, then you can't take this!";
+	close;
+
+OnInit:
+	setunittitle getnpcid(0), "<Juno Monster Society>";
+	end;
+}
+
+yuno,177,179,3	script	Assistant Avery#yu	4_M_CRU_HEAD,{
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
+	.@item_name$ = getitemname(1000374);
+
+	if (isbegin_quest(16547) == 0) {
+		mes .@npc_name$;
+		mes "Would you like to participate in the monster subjugation event hosted by the Juno Monster Society?";
+		mes "We will take you directly to your desired location!";
+		next;
+		mes .@npc_name$;
+		mes "I'm Avery, Assistant Superintendent of the Juno Monster Society.";
+		mes "I'm here to promote the monster subjugation event to you.";
+		next;
+		select( "Monster subjugation?", "Juno Monster Society?" );	// note: same text
+		mes .@npc_name$;
+		mes "The Juno Monster Society is literally a conference that researches and studies monsters with Juno as a base.";
+		mes "These days, some local monsters have become overly ferocious or have a large number.";
+		next;
+		mes .@npc_name$;
+		mes "That's why we're dispatching Map Examiners to various places to subdue monsters.";
+		next;
+		mes .@npc_name$;
+		mes "I was tasked with assisting Map Examiners in promoting the Monster Society in the city and managing " + .@item_name$ + " vending machines.";
+		mes "Yes, I can take you to the inspector's place";
+		setquest 16547;
+		completequest 16547;
+		next;
+	}
+	mes .@npc_name$;
+	mes "This is Avery, the assistant of the Juno Monster Society!";
+	mes "Hey, how can I help you?";
+	next;
+	if (select( "Guide to the Map Examiner's place.", "Listen to the work of the Juno Monster Association." ) == 2) {
+		mes .@npc_name$;
+		mes "The Juno Monster Society is literally a conference that researches and studies monsters with Juno as a base.";
+		mes "These days, some local monsters have become overly ferocious or have a large number.";
+		next;
+		mes .@npc_name$;
+		mes "That's why we're dispatching Map Examiners to various places to subdue monsters.";
+		next;
+		mes .@npc_name$;
+		mes "I was tasked with assisting Map Examiners in promoting the Monster Society in the city and managing " + .@item_name$ + " vending machines.";
+		mes "Yes, I can take you to the inspector's place";
+		close;
+	}
+	mes .@npc_name$;
+	mes "Oh, sorry. It's not free...";
+	mes "Okay, can you give me a bottle of " + .@item_name$ + "? Then I'll warp you!";
+	next;
+	if (select( "Give me a bottle of " + .@item_name$ + ".", "I refuse." ) == 2) {
+		mes .@npc_name$;
+		mes "Aren't you going? It's for the public good!";
+		close;
+	}
+	if (countitem(1000374) < 1) {
+		mes .@npc_name$;
+		mes "You don't have " + .@item_name$ + " in your bag.";
+		mes "If you need more, please use the refreshing Carbonated Water Vending Machine here.";
+		close;
+	}
+	mes .@npc_name$;
+	mes "Ah! Fresh and cool " + .@item_name$ + "!";
+	mes "You should drink it sparingly... Huh, where should I take you?";
+	callfunc( "F_Brilliant_Soda" );
+	mes .@npc_name$;
+	mes "Aren't you going? It's for the public good!";
+	mes "Ugh... I'll return the " + .@item_name$ + "...";
+	close;
+
+OnInit:
+	setunittitle getnpcid(0), "<Juno Monster Society>";
+	end;
+}
+
+veins,215,122,5	script	Assistant Eureka#ve	4_M_CRU_HEAD,{
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
+	.@item_name$ = getitemname(1000374);
+
+	if (isbegin_quest(16547) == 0) {
+		mes .@npc_name$;
+		mes "Would you like to participate in the monster subjugation event hosted by the Juno Monster Society?";
+		mes "We will take you directly to your desired location!";
+		next;
+		mes .@npc_name$;
+		mes "I'm Eureka, Assistant Superintendent of the Juno Monster Society.";
+		mes "I'm here to promote the monster subjugation event to you.";
+		next;
+		select( "Monster subjugation?", "Juno Monster Society?" );	// note: same text
+		mes .@npc_name$;
+		mes "The Juno Monster Society is literally a conference that researches and studies monsters with Juno as a base.";
+		mes "These days, some local monsters have become overly ferocious or have a large number.";
+		next;
+		mes .@npc_name$;
+		mes "That's why we're dispatching Map Examiners to various places to subdue monsters.";
+		next;
+		mes .@npc_name$;
+		mes "I was tasked with assisting Map Examiners in promoting the Monster Society in the city and managing " + .@item_name$ + " vending machines.";
+		mes "Yes, I can take you to the inspector's place";
+		setquest 16547;
+		completequest 16547;
+		next;
+	}
+	mes .@npc_name$;
+	mes "This is Eureka, an assistant to the Juno Monster Society.";
+	mes "How can I help you?";
+	next;
+	if (select( "Guide to the Map Examiner's place.", "Listen to the work of the Juno Monster Association." ) == 2) {
+		mes .@npc_name$;
+		mes "These days, some local monsters have become overly ferocious or have increased numbers.";
+		mes "So we came to the Juno Monster Society to coordinate this.";
+		next;
+		mes .@npc_name$;
+		mes "Juno Monster Society is a monster research facility based in Juno.";
+		mes "We are dispatching Map Examiners to various places to subdue monsters.";
+		next;
+		mes .@npc_name$;
+		mes "How are you? Are you interested?";
+		mes "I am responsible for promoting the work of the Juno Monster Society, managing the " + .@item_name$ + " vending machines, and guiding you to the places where the Map Examiners connect.";
+		close;
+	}
+	mes .@npc_name$;
+	mes "It's hard for me to just send it, but I can't even get money...";
+	mes "Okay, can you give me a glass of " + .@item_name$ + "? I'll warp it right away.";
+	next;
+	if (select( "Give me a bottle of " + .@item_name$ + ".", "I refuse." ) == 2) {
+		mes .@npc_name$;
+		mes "Aren't you going?";
+		close;
+	}
+	if (countitem(1000374) < 1) {
+		mes .@npc_name$;
+		mes "I manage the " + .@item_name$ + " vending machine.";
+		mes "WKi, you can purchase as many as you like by using the Carbonated Water Vending Machine next to me.";
+		close;
+	}
+	mes .@npc_name$;
+	mes "Ah, it's refreshing, cool, and really nice.";
+	mes "Now, where shall we take you?";
+	callfunc( "F_Brilliant_Soda" );
+	mes .@npc_name$;
+	mes "Aren't you going? Then, the " + .@item_name$ + "... Here, I'll return it.";
+	close;
+
+OnInit:
+	setunittitle getnpcid(0), "<Juno Monster Society>";
+	end;
+}
+
+lighthalzen,171,106,5	script	Assistant Staff#lig	4_M_CRU_HEAD,{
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
+	.@item_name$ = getitemname(1000374);
+
+	if (isbegin_quest(16547) == 0) {
+		mes .@npc_name$;
+		mes "Would you like to participate in the monster subjugation event hosted by the Juno Monster Society?";
+		mes "We will take you directly to your desired location!";
+		next;
+		mes .@npc_name$;
+		mes "I'm Staff, Assistant Superintendent of the Juno Monster Society.";
+		mes "I'm here to promote the monster subjugation event to you.";
+		next;
+		select( "Monster subjugation?", "Juno Monster Society?" );	// note: same text
+		mes .@npc_name$;
+		mes "The Juno Monster Society is literally a conference that researches and studies monsters with Juno as a base.";
+		mes "These days, some local monsters have become overly ferocious or have a large number.";
+		next;
+		mes .@npc_name$;
+		mes "That's why we're dispatching Map Examiners to various places to subdue monsters.";
+		next;
+		mes .@npc_name$;
+		mes "I was tasked with assisting Map Examiners in promoting the Monster Society in the city and managing " + .@item_name$ + " vending machines.";
+		mes "Yes, I can take you to the inspector's place";
+		setquest 16547;
+		completequest 16547;
+		next;
+	}
+	mes .@npc_name$;
+	mes "Staff, the assistant of the Juno Monster Society!!!";
+	mes "Do you need my help!!!";
+	next;
+	if (select( "Guide to the Map Examiner's place.", "Listen to the work of the Juno Monster Association." ) == 2) {
+		mes .@npc_name$;
+		mes "The Juno Monster Society is literally a conference that studies monsters!!!";
+		mes "...and in Juno.";
+		next;
+		mes "Recently, some local monsters have become excessively ferocious or their numbers have increased!!!";
+		mes "That's why Map Examiners dispatched to different places are giving adventurers a quest to subdue monsters!!!";
+		next;
+		mes .@npc_name$;
+		mes "I'm your assistant, Staff!!";
+		next;
+		mes .@npc_name$;
+		mes "Promoting the work of the Monster Society in the city, gathering adventurers...";
+		mes "And, we warp the adventurers who came to the place where the Map Examiner is!!!";
+		close;
+	}
+	mes .@npc_name$;
+	mes "Okay!!! The price is a bottle of " + .@item_name$ + "!!!";
+	mes "You didn't think I'd warp you for nothing!!!";
+	next;
+	if (select( "Give me a bottle of " + .@item_name$ + ".", "I refuse." ) == 2) {
+		mes .@npc_name$;
+		mes "What...? I'm not going to subjugate!!!";
+		close;
+	}
+	if (countitem(1000374) < 1) {
+		mes .@npc_name$;
+		mes "If you need " + .@item_name$ + ", face this vending machine that I manage!!!";
+		mes "Pay the price and win!!!";
+		close;
+	}
+	mes .@npc_name$;
+	mes "Your " + .@item_name$ + ", I gladly received it!!!";
+	mes "Now, where do you want to dive into monster subjugation!!!";
+	callfunc( "F_Brilliant_Soda" );
+	mes .@npc_name$;
+	mes "What...? I'm not going to subjugate!!!";
+	mes "Don't say two words with one mouth!!! ...I'll give you back the " + .@item_name$ + ".";
+	close;
+
+OnInit:
+	setunittitle getnpcid(0), "<Juno Monster Society>";
+	end;
+}
+
+prontera,168,125,5	script	Assistant Alonzo#prt	4_M_CRU_HEAD,{
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
+	.@item_name$ = getitemname(1000374);
+
+	if (isbegin_quest(16547) == 0) {
+		mes .@npc_name$;
+		mes "Would you like to participate in the monster subjugation event hosted by the Juno Monster Society?";
+		mes "We will take you directly to your desired location!";
+		next;
+		mes .@npc_name$;
+		mes "I'm Alonzo, Assistant Superintendent of the Juno Monster Society.";
+		mes "I'm here to promote the monster subjugation event to you.";
+		next;
+		select( "Monster subjugation?", "Juno Monster Society?" );	// note: same text
+		mes .@npc_name$;
+		mes "The Juno Monster Society is literally a conference that researches and studies monsters with Juno as a base.";
+		mes "These days, some local monsters have become overly ferocious or have a large number.";
+		next;
+		mes .@npc_name$;
+		mes "That's why we're dispatching Map Examiners to various places to subdue monsters.";
+		next;
+		mes .@npc_name$;
+		mes "I was tasked with assisting Map Examiners in promoting the Monster Society in the city and managing " + .@item_name$ + " vending machines.";
+		mes "Yes, I can take you to the inspector's place";
+		setquest 16547;
+		completequest 16547;
+		next;
+	}
+	mes .@npc_name$;
+	mes "This is Alonzo, assistant to the Juno Monster Society!";
+	mes "How can I help you?";
+	next;
+	if (select( "Guide to the Map Examiner's place.", "Listen to the work of the Juno Monster Association." ) == 2) {
+		mes .@npc_name$;
+		mes "The Juno Monster Society is literally a conference that researches and studies monsters with Juno as a base.";
+		mes "These days, some local monsters have become overly ferocious or have a large number.";
+		next;
+		mes .@npc_name$;
+		mes "That's why we're dispatching Map Examiners to various places to subdue monsters.";
+		next;
+		mes .@npc_name$;
+		mes "I was tasked with assisting Map Examiners in promoting the Monster Society in the city and managing " + .@item_name$ + " vending machines.";
+		mes "Yes, I can take you to the inspector's place";
+		close;
+	}
+	mes .@npc_name$;
+	mes "It's a bit difficult to just send it. I'm tired too.";
+	mes "Can you give me a bottle of " + .@item_name$ + "? That will give me energy.";
+	next;
+	if (select( "Give me a bottle of " + .@item_name$ + ".", "I refuse." ) == 2) {
+		mes .@npc_name$;
+		mes "Oh, aren't you going?";
+		close;
+	}
+	if (countitem(1000374) < 1) {
+		mes .@npc_name$;
+		mes "If you do not have " + .@item_name$ + ", you can purchase it.";
+		mes "Please use the Carbonated Water Vending Machine here.";
+		close;
+	}
+	mes .@npc_name$;
+	mes "Okay, " + .@item_name$ + " will definitely give you energy.";
+	mes "Where can I take you?";
+	callfunc( "F_Brilliant_Soda" );
+	mes .@npc_name$;
+	mes "Oh, aren't you going?";
+	mes "Then I will return the " + .@item_name$ + ".";
+	close;
+
+OnInit:
+	setunittitle getnpcid(0), "<Juno Monster Society>";
+	end;
+}
+
+
+// Quests
+
+ein_fild06,257,351,4	script	Map Examiner Bast#yma	4_F_CHNDRESS1,{
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
+	.@item_name$ = getitemname(1000374);
+
+	if (BaseLevel < 70) {
+		mes .@npc_name$;
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		close;
+	}
+	switch( checkquest(5917,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "BNP is tired from overwork, so please come tomorrow. Subjugation quests can only be made once a day.";
+		next;
+		switch( select( "You look tired. Would you like a drink?", "Teleport to a nearby city." ) ) {
+		case 1:
+			if (countitem(1000374) < 3) {
+				mes .@npc_name$;
+				mes "Where is the " + .@item_name$ + "? Hing- It's good. I thought I'd get about three.";
+				close;
+			}
+			delitem 1000374,3;	// Brilliant_Soda
+			erasequest 5917;
+			mes .@npc_name$;
+			mes "Thank you. I was tired but it worked out.";
+			next;
+			npctalk "gulp-gulp-", "", bc_self;
+			sleep2 500;
+			specialeffect EF_FLASHER;
+			mes .@npc_name$;
+			mes "Huh? I must have fallen asleep. Did I tell you about the subjugation quest, huh? Can you talk to me again after waking me up a bit?";
+			close;
+		case 2:
+			mes .@npc_name$;
+			mes "Can I move it to Einbroch? Give me one " + mesitemlink( 1000374 ) + " and I can teleport you.";
+			next;
+			select( "Give me 1 " + .@item_name$ + "." );
+			if (countitem(1000374) < 1) {
+				mes .@npc_name$;
+				mes "You don't have " + .@item_name$ + ", but why did the Juno Monster Society ask you to get this? It's just a drink.";
+				close;
+			}
+			mes .@npc_name$;
+			mes "Bye-bye~ See you next time.";
+			close2;
+			delitem 1000374,1;	// Brilliant_Soda
+			warp "einbroch",239,197;
+			end;
+		}
+		end;
+	case 2:
+		erasequest 5917;
+		mes .@npc_name$;
+		mes "You can proceed with the subjugation quest again.";
+		close;
+	}
+	switch( checkquest(5916,HUNTING) ) {
+	case -1:
+		mes .@npc_name$;
+		mes "Hello~ Adventurer~ I'm an INPU from the Juno Monster Society.";
+		next;
+		switch( select( "Receive a subjugation quest.", "Subjugation quest?", "Teleport to a nearby city.", "Greetings." ) ) {
+		case 1:
+			setquest 5916;
+			mes .@npc_name$;
+			mes "Wow! Really? The quest is simple. It's about catching 80 monsters here in Einbroch Field.";
+			next;
+			mes .@npc_name$;
+			mes "If you are an adventurer, you can easily solve it and come back? I'm looking forward to it.";
+			close;
+		case 2:
+			mes .@npc_name$;
+			mes "Recently, we have detected an expansion of the monster colony.";
+			next;
+			mes .@npc_name$;
+			mes "I think it's because the number of monsters has increased, but I think it's because I haven't been subjugating monsters as much as I used to.";
+			next;
+			mes .@npc_name$;
+			mes "In order to prevent further expansion of the monster colony, the Juno Monster Society is planning a massive subjugation.";
+			next;
+			mes .@npc_name$;
+			mes "If colonies with increased population collide, it can cause damage to nearby residents.";
+			close;
+		case 3:
+			mes .@npc_name$;
+			mes "Can I move it to Einbroch? Give me one " + mesitemlink( 1000374 ) + " and I can teleport you.";
+			next;
+			select( "Give me 1 " + .@item_name$ + "." );
+			if (countitem(1000374) < 1) {
+				mes .@npc_name$;
+				mes "You don't have " + .@item_name$ + ", but why did the Juno Monster Society ask you to get this? It's just a drink.";
+				close;
+			}
+			mes .@npc_name$;
+			mes "Bye-bye~ See you next time.";
+			close2;
+			delitem 1000374,1;	// Brilliant_Soda
+			warp "einbroch",239,197;
+			end;
+		case 4:
+			mes .@npc_name$;
+			mes "Nice to meet you. Do you think it would be more pleasant if you Accept the subjugation quest?";
+			close;
+		}
+		end;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "All you have to do is catch 80 monsters here in Einbroch Field. After you catch them all, come back to me and get your reward.";
+		close;
+	case 2:
+		getexp 121320,110520;
+		erasequest 5916;
+		setquest 5917;
+		mes .@npc_name$;
+		mes "Thank you and you worked hard.";
+		mes "These days, they criticize me for not being able to perform well. It's exhausting and hard to come out of this desolate place.";
+		next;
+		mes .@npc_name$;
+		mes "I'm sorry. Thank you so much, I tried to complain for a while. If you help me tomorrow, I'll be twice as grateful, please take care of me.";
+		close;
+	}
+	end;
+
+OnInit:
+	setunittitle getnpcid(0), "<Juno Monster Society>";
+
+	questinfo( QTYPE_CLICKME, QMARK_YELLOW, "(checkquest(5917,PLAYTIME) == 0 || checkquest(5917,PLAYTIME) == 1) && countitem(1000374) > 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "BaseLevel >= 70 && checkquest(5916,HUNTING) == -1 && checkquest(5917,PLAYTIME) == -1" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(5916,HUNTING) == 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(5917,PLAYTIME) == 2" );
+	end;
+}
+
+gef_fild06,209,31,6	script	Map Examiner Gefil#yma	4_M_MIDDLE,{
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
+	.@item_name$ = getitemname(1000374);
+
+	if (BaseLevel < 71) {
+		mes .@npc_name$;
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		close;
+	}
+	switch( checkquest(5921,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "You can carry out the subjugation quest again tomorrow. You must be tired, so return to the city and rest.";
+		next;
+		switch( select( "You look tired. Would you like a drink?", "Teleport to a nearby city." ) ) {
+		case 1:
+			if (countitem(1000374) < 3) {
+				mes .@npc_name$;
+				mes "You don't have " + .@item_name$ + ". Only three drinks.";
+				close;
+			}
+			delitem 1000374,3;	// Brilliant_Soda
+			erasequest 5921;
+			mes .@npc_name$;
+			mes "Ah! Is this " + .@item_name$ + " popular these days? I'll drink it well.";
+			next;
+			npctalk "gulp-gulp-", "", bc_self;
+			specialeffect EF_FLASHER;
+			mes .@npc_name$;
+			mes "Huh?! Where are you? Ah! Did you fall asleep? You have a guest.";
+			close;
+		case 2:
+			mes .@npc_name$;
+			mes "Give me 1 " + mesitemlink( 1000374 ) + " and I can teleport you to Geffen.";
+			next;
+			select( "Give me 1 " + .@item_name$ + "." );
+			if (countitem(1000374) < 1) {
+				mes .@npc_name$;
+				mes "You don't have " + .@item_name$ + ". It's just a drink.";
+				close;
+			}
+			mes .@npc_name$;
+			mes "I'll see you next time. Have a nice trip..";
+			close2;
+			delitem 1000374,1;	// Brilliant_Soda
+			warp "geffen",119,37;
+			end;
+		}
+	case 2:
+		erasequest 5921;
+		mes .@npc_name$;
+		mes "You can proceed with the subjugation quest again.";
+		close;
+	}
+	switch( checkquest(5920,HUNTING) ) {
+	case -1:
+		mes .@npc_name$;
+		mes "The Juno Monster Society is looking for people to submit subjugation quests.";
+		next;
+		switch( select( "Receive a subjugation quest.", "Subjugation quest?", "Teleport to a nearby city.", "You seem to be able to afford it?" ) ) {
+		case 1:
+			setquest 5920;
+			mes .@npc_name$;
+			mes "Thank you. All you have to do is catch 80 monsters here in Geffen Field. If you catch them all, please come and report to me.";
+			close;
+		case 2:
+			mes .@npc_name$;
+			mes "Recently, the number of monsters is increasing.";
+			next;
+			mes .@npc_name$;
+			mes "As the number of monsters increases, the colony expands, and if monsters collide for power, humans can avoid them.";
+			next;
+			mes .@npc_name$;
+			mes "It is a level of prevention in advance.";
+			close;
+		case 3:
+			mes .@npc_name$;
+			mes "Give me 1 " + mesitemlink( 1000374 ) + " and I can teleport you to Geffen.";
+			next;
+			select( "Give me 1 " + .@item_name$ + "." );
+			if (countitem(1000374) < 1) {
+				mes .@npc_name$;
+				mes "You don't have " + .@item_name$ + ". It's just a drink.";
+				close;
+			}
+			mes .@npc_name$;
+			mes "I'll see you next time. Have a nice trip..";
+			close2;
+			delitem 1000374,1;	// Brilliant_Soda
+			warp "geffen",119,37;
+			end;
+		case 4:
+			mes .@npc_name$;
+			mes "Ah! Do you see that? You're the type of person who is always tired. Maybe it's because you put everything down and Accepted your tiredness? What the hell am I talking about?";
+			next;
+			mes .@npc_name$;
+			mes "I'm tired, so I say everything.";
+			close;
+		}
+		end;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "Catch 80 monsters here in Geffen Field, then come and report to me.";
+		close;
+	case 2:
+		getexp 64133,57253;
+		erasequest 5920;
+		setquest 5921;
+		mes .@npc_name$;
+		mes "You worked hard. I'm relieved again for a while. I can rest now. Subjugation quests are available again tomorrow, so if you have time, please drop by again.";
+		close;
+	}
+	end;
+
+OnInit:
+	setunittitle getnpcid(0), "<Juno Monster Society>";
+
+	questinfo( QTYPE_CLICKME, QMARK_YELLOW, "(checkquest(5921,PLAYTIME) == 0 || checkquest(5921,PLAYTIME) == 1) && countitem(1000374) > 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "BaseLevel >= 71 && checkquest(5920,HUNTING) == -1 && checkquest(5921,PLAYTIME) == -1" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(5920,HUNTING) == 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(5921,PLAYTIME) == 2" );
+	end;
+}
+
+lhz_fild01,240,107,4	script	Map Examiner Lipiri#yma	4_M_HUBOY,{
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
+	.@item_name$ = getitemname(1000374);
+
+	if (BaseLevel < 71) {
+		mes .@npc_name$;
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		close;
+	}
+	switch( checkquest(5919,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "You can do the Lighthalzen Field subjugation quest again tomorrow. You must be tired, go in and rest. I'm a little tired too.";
+		next;
+		switch( select( "You look tired. Would you like a drink?", "Teleport to a nearby city." ) ) {
+		case 1:
+			if (countitem(1000374) < 3) {
+				mes .@npc_name$;
+				mes "Wow... I'm still tired, so don't make fun of me. I think I'll be less tired if I drink three.";
+				close;
+			}
+			delitem 1000374,3;	// Brilliant_Soda
+			erasequest 5919;
+			mes .@npc_name$;
+			mes "Really?! I've only heard of it, I've never tried it, but I heard that it works so well.";
+			next;
+			npctalk "Gulp- ??- Kyaa~", "", bc_self;
+			sleep2 500;
+			specialeffect EF_FLASHER;
+			mes .@npc_name$;
+			mes "Huh?! Oh, that's right. Were you working part-time? Ah! It's the Juno Monster Society. Welcome!";
+			close;
+		case 2:
+			mes .@npc_name$;
+			mes "If it's a nearby city, it's Lighthalzen. Give me one " + mesitemlink( 1000374 ) + " and I can teleport you.";
+			next;
+			select( "Give me 1 " + .@item_name$ + "." );
+			if (countitem(1000374) < 1) {
+				mes .@npc_name$;
+				mes "Eh? Where is the " + .@item_name$ + "?";
+				close;
+			}
+			mes .@npc_name$;
+			mes "See you next time~";
+			close2;
+			delitem 1000374,1;	// Brilliant_Soda
+			warp "lighthalzen",192,314;
+			end;
+		}
+		end;
+	case 2:
+		erasequest 5919;
+		mes .@npc_name$;
+		mes "You can proceed with the subjugation quest again.";
+		close;
+	}
+	switch( checkquest(5918,HUNTING) ) {
+	case -1:
+		mes .@npc_name$;
+		mes "This is the Juno Monster Society.";
+		next;
+		switch( select( "Receive a subjugation quest.", "Subjugation quest?", "Teleport to a nearby city.", "Why are you so blunt?" ) ) {
+		case 1:
+			setquest 5918;
+			mes .@npc_name$;
+			mes "You just need to catch 80 monsters in the Lighthalzen Field here.";
+			next;
+			mes .@npc_name$;
+			mes "Thank you and thank you. It's working.";
+			close;
+		case 2:
+			mes .@npc_name$;
+			mes "I'm also on a part-time job. I don't know the details.";
+			next;
+			mes .@npc_name$;
+			mes "I heard it when I started explaining about the monster colonies and the number of individuals...";
+			next;
+			mes .@npc_name$;
+			mes "I get a little sleepy while listening to the explanation. It's too difficult to explain.";
+			next;
+			mes .@npc_name$;
+			mes "Isn't it important to catch monsters in Lighthalzen Field and get rewards?";
+			close;
+		case 3:
+			mes .@npc_name$;
+			mes "If it's a nearby city, it's Lighthalzen. Give me one " + mesitemlink( 1000374 ) + " and I can teleport you.";
+			next;
+			select( "Give me 1 " + .@item_name$ + "." );
+			if (countitem(1000374) < 1) {
+				mes .@npc_name$;
+				mes "Eh? Where is the " + .@item_name$ + "?";
+				close;
+			}
+			mes .@npc_name$;
+			mes "See you next time~";
+			close2;
+			delitem 1000374,1;	// Brilliant_Soda
+			warp "lighthalzen",192,314;
+			end;
+		case 4:
+			mes .@npc_name$;
+			mes "I'm sorry. I'm so sleepy. I got a part-time job because the pay was good";
+			next;
+			mes .@npc_name$;
+			mes "Without a substitute.. I'm going to keep it up all day.. First, I'll work steadily and then I'll sue you after I quit.";
+			close;
+		}
+		end;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "All you have to do is catch 80 monsters in Lighthalzen Field. If you catch them all, ask me to confirm and receive your reward.";
+		close;
+	case 2:
+		getexp 81120,74560;
+		erasequest 5918;
+		setquest 5919;
+		mes .@npc_name$;
+		mes "You worked hard. Uh.. Due to the problem of the number of individuals, you can only do the subjugation quest once a day, so you can do it again tomorrow.";
+		next;
+		mes .@npc_name$;
+		mes "Oh, I'm so tired. I wish I could get some substitutes...";
+		close;
+	}
+	end;
+
+OnInit:
+	setunittitle getnpcid(0), "<Juno Monster Society>";
+
+	questinfo( QTYPE_CLICKME, QMARK_YELLOW, "(checkquest(5919,PLAYTIME) == 0 || checkquest(5919,PLAYTIME) == 1) && countitem(1000374) > 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "BaseLevel >= 71 && checkquest(5920,HUNTING) == -1 && checkquest(5921,PLAYTIME) == -1" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(5918,HUNTING) == 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(5919,PLAYTIME) == 2" );
+	end;
+}
+
+mal_dun01,141,126,4	script	Map Examiner Mother One#yma	4_F_TAEKWON,{
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
+	.@item_name$ = getitemname(1000374);
+
+	if (BaseLevel < 75) {
+		mes .@npc_name$;
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		close;
+	}
+	switch( checkquest(5927,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "Can you do the subjugation quest tomorrow? I'm tired, so please don't talk to me?";
+		next;
+		switch( select( "You look tired. Would you like a drink?", "Teleport to a nearby city." ) ) {
+		case 1:
+			if (countitem(1000374) < 3) {
+				mes .@npc_name$;
+				mes "What? Where did my 3 " + .@item_name$ + " go?";
+				close;
+			}
+			delitem 1000374,3;	// Brilliant_Soda
+			erasequest 5927;
+			mes .@npc_name$;
+			mes "Really? Nothing else to say later?";
+			next;
+			npctalk "Ugh~ Exciting..", "", bc_self;
+			sleep2 500;
+			specialeffect EF_FLASHER;
+			mes .@npc_name$;
+			mes "Ah! She... She says it again. Aye, what are you talking about?";
+			close;
+		case 2:
+			mes .@npc_name$;
+			mes "Malangdo? If you want to go, give me one " + .@item_name$ + ". But isn't it better to walk from here?";
+			next;
+			select( "Give me 1 " + .@item_name$ + "." );
+			if (countitem(1000374) < 1) {
+				mes .@npc_name$;
+				mes "One " + .@item_name$ + ". But I recommend just walking.";
+				close;
+			}
+			mes .@npc_name$;
+			mes "Good! Goodbye~ See you next time~";
+			close2;
+			delitem 1000374,1;	// Brilliant_Soda
+			warp "malangdo",141,118;
+			end;
+		}
+	case 2:
+		erasequest 5927;
+		mes .@npc_name$;
+		mes "Ah! I can do the subjugation quest again. Is it time for me to work?";
+		close;
+	}
+	switch( checkquest(5926,HUNTING) ) {
+	case -1:
+		mes .@npc_name$;
+		mes "Because I'm busy right now. Only those who want to make a subjugation quest talk to me.";
+		next;
+		switch( select( "Receive a subjugation quest.", "Subjugation quest?", "Teleport to a nearby city.", "What are you doing?" ) ) {
+		case 1:
+			setquest 5926;
+			mes .@npc_name$;
+			mes "Were you a guest? Then you should be kind.";
+			mes "All you have to do is catch 80 monsters in the Starlight Coral Zone, because even if you catch shellfish, crab, and ester, they don't count! You don't have to catch them. Then, hard work!!";
+			close;
+		case 2:
+			mes .@npc_name$;
+			mes "Ah?! You're disturbing me like this again. You can still be a guest, so be kind.";
+			next;
+			mes .@npc_name$;
+			mes "This is a quest to catch monsters in the Starlight Coral to control the number of individuals.";
+			next;
+			mes .@npc_name$;
+			mes "Clams, crabs, and esters do not need to be caught because there is no need to control the population.";
+			next;
+			mes .@npc_name$;
+			mes "Don't ask why. I don't know because I work part-time. Customer!";
+			close;
+		case 3:
+			mes .@npc_name$;
+			mes "Malangdo? If you want to go, give me one " + .@item_name$ + ". But isn't it better to walk from here?";
+			next;
+			select( "Give me 1 " + .@item_name$ + "." );
+			if (countitem(1000374) < 1) {
+				mes .@npc_name$;
+				mes "One " + .@item_name$ + ". But I recommend just walking.";
+				close;
+			}
+			mes .@npc_name$;
+			mes "Okay! Goodbye~ See you next time~";
+			close2;
+			delitem 1000374,1;	// Brilliant_Soda
+			warp "malangdo",141,118;
+			end;
+		case 4:
+			mes .@npc_name$;
+			mes "Ahhh?! Really!! They are so disturbing. Do you see Esther standing over there? You must be able to speak, but when I talk to you, you don't answer?";
+			next;
+			mes .@npc_name$;
+			mes "Obviously, when you see adventurers passing by, you seem to be having a conversation. Are you shy? Why don't you talk to me?";
+			close;
+		}
+		end;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "If you catch 80 monsters in the Starlight Coral Zone, talk to me.";
+		next;
+		mes .@npc_name$;
+		mes "Clams, crabs, and esters are not counted even if you catch them, so don't come and ask them later.";
+		close;
+	case 2:
+		getexp 90880,85440;
+		erasequest 5926;
+		setquest 5927;
+		mes .@npc_name$;
+		mes "Oh! You did a great job. Subjugation quests can be done tomorrow as well. Whether you come or not when you are free.";
+		close;
+	}
+	end;
+
+OnInit:
+	setunittitle getnpcid(0), "<Juno Monster Society>";
+
+	questinfo( QTYPE_CLICKME, QMARK_YELLOW, "(checkquest(5927,PLAYTIME) == 0 || checkquest(5927,PLAYTIME) == 1) && countitem(1000374) > 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "BaseLevel >= 75 && checkquest(5926,HUNTING) == -1 && checkquest(5927,PLAYTIME) == -1" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(5926,HUNTING) == 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(5927,PLAYTIME) == 2" );
+	end;
+}
+
+hu_fild01,133,157,6	script	Map Examiner Huf#yma	4_MAL_CAPTAIN,{
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
+	.@item_name$ = getitemname(1000374);
+
+	if (BaseLevel < 75) {
+		mes .@npc_name$;
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		close;
+	}
+	switch( checkquest(5925,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "I've been standing here alone for a few days, and I hope someone will come to take over tomorrow.";
+		next;
+		switch( select( "You look tired. Would you like a drink?", "Teleport to a nearby city." ) ) {
+		case 1:
+			if (countitem(1000374) < 3) {
+				mes .@npc_name$;
+				mes "Aren't you going to give me 3 " + .@item_name$ + "?";
+				close;
+			}
+			delitem 1000374,3;	// Brilliant_Soda
+			erasequest 5925;
+			mes .@npc_name$;
+			mes "Is this your first drink? It's always fun to try new flavors. Thank you.";
+			next;
+			npctalk "Wow- oh! It's quite tasty..", "", bc_self;
+			sleep2 500;
+			specialeffect EF_FLASHER;
+			mes .@npc_name$;
+			mes "Huh?! A guest came in a moment's glance.";
+			close;
+		case 2:
+			mes .@npc_name$;
+			mes "Are you going home? Hugel is the nearest city. I need 1 piece of " + mesitemlink( 1000374 ) + ".";
+			next;
+			select( "Give me 1 " + .@item_name$ + "." );
+			if (countitem(1000374) < 1) {
+				mes .@npc_name$;
+				mes "Nearest cities require 1 " + .@item_name$ + ".";
+				close;
+			}
+			mes .@npc_name$;
+			mes "Have a nice trip.";
+			close2;
+			delitem 1000374,1;	// Brilliant_Soda
+			warp "hugel",97,154;
+			end;
+		}
+		end;
+	case 2:
+		erasequest 5925;
+		mes .@npc_name$;
+		mes "You can do the subjugation quest again.";
+		close;
+	}
+	switch( checkquest(5924,HUNTING) ) {
+	case -1:
+		mes .@npc_name$;
+		mes "The Juno Monster Society is conducting a subjugation quest.";
+		next;
+		switch( select( "Receive a subjugation quest.", "Subjugation quest?", "Teleport to a nearby city.", "Are you from Port Malaya?" ) ) {
+		case 1:
+			setquest 5924;
+			mes .@npc_name$;
+			mes "You can catch 80 monsters in the field in front of Thanatos Tower in this place. After you catch them all, report to me.";
+			close;
+		case 2:
+			mes .@npc_name$;
+			mes "This is a subjugation quest to reduce the number of monsters in front of Thanatos.";
+			next;
+			mes .@npc_name$;
+			mes "The number of monsters may increase and damage may occur, so it seems to be intended to reduce the number of monsters in advance.";
+			next;
+			mes .@npc_name$;
+			mes "Before the part-time job, I thought that the Monster Society was just a game, but it seems to be working.";
+			close;
+		case 3:
+			mes .@npc_name$;
+			mes "Are you going home? Hugel is the nearest city. I need 1 piece of " + mesitemlink( 1000374 ) + ".";
+			next;
+			select( "Give me 1 " + .@item_name$ + "." );
+			if (countitem(1000374) < 1) {
+				mes .@npc_name$;
+				mes "Nearest cities require 1 " + .@item_name$ + ".";
+				close;
+			}
+			mes .@npc_name$;
+			mes "Have a nice trip.";
+			close2;
+			delitem 1000374,1;	// Brilliant_Soda
+			warp "hugel",97,154;
+			end;
+		case 4:
+			mes .@npc_name$;
+			mes "Hahaha.. Do you know Port Malaya? It's a great place.";
+			next;
+			mes .@npc_name$;
+			mes "In case you misunderstood, I am not the captain of the port of Malaya.";
+			next;
+			mes .@npc_name$;
+			mes "This captain's outfit is so cool, so I wanted to wear it, but if I wear it there, it becomes an impersonation. I'm just leaving my hometown and wearing it.";
+			next;
+			mes .@npc_name$;
+			mes "Ah .. I want to go home all of a sudden. When my mother left home, she said that she had a hard time, but it really was.";
+			close;
+		}
+		end;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "Catch 80 monsters in front of Thanatos Tower and report it to me.";
+		close;
+	case 2:
+		getexp 110760,104040;
+		erasequest 5924;
+		setquest 5925;
+		mes .@npc_name$;
+		mes "You worked hard. Subjugation quests are available every day, so if you have time, please come again.";
+		close;
+	}
+	end;
+
+OnInit:
+	setunittitle getnpcid(0), "<Juno Monster Society>";
+
+	questinfo( QTYPE_CLICKME, QMARK_YELLOW, "(checkquest(5925,PLAYTIME) == 0 || checkquest(5925,PLAYTIME) == 1) && countitem(1000374) > 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "BaseLevel >= 75 && checkquest(5924,HUNTING) == -1 && checkquest(5925,PLAYTIME) == -1" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(5924,HUNTING) == 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(5925,PLAYTIME) == 2" );
+	end;
+}
+
+tur_dun01,159,46,4	script	Map Examiner Tural#yma	4_M_BRZ_MAN1,{
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
+	.@item_name$ = getitemname(1000374);
+
+	if (BaseLevel < 75) {
+		mes .@npc_name$;
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		close;
+	}
+	switch( checkquest(5923,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "You can do the Turtle Island subjugation quest again tomorrow. When will I be able to return to being a chef?";
+		next;
+		switch( select( "You look tired. Would you like a drink?", "Teleport to a nearby city." ) ) {
+		case 1:
+			if (countitem(1000374) < 3) {
+				mes .@npc_name$;
+				mes "You don't have " + .@item_name$ + ". You'll have to give it three to get tired.";
+				close;
+			}
+			delitem 1000374,3;	// Brilliant_Soda
+			erasequest 5923;
+			mes .@npc_name$;
+			mes "Oh! " + .@item_name$ + "?! I heard that the person who made this made a lot of money, I'll drink it well.";
+			next;
+			npctalk "Wow.. it's thrilling.", "", bc_self;
+			specialeffect EF_FLASHER;
+			mes .@npc_name$;
+			mes "Heh heh.. I thought it was a monster. Why are you standing there without a sign?";
+			close;
+		case 2:
+			mes .@npc_name$;
+			mes "Give me one " + mesitemlink( 1000374 ) + " and I can teleport you to Alberta.";
+			next;
+			select( "Give me 1 " + .@item_name$ + "." );
+			if (countitem(1000374) < 1) {
+				mes .@npc_name$;
+				mes "If you give me " + .@item_name$ + ", I will teleport you to Alberta.";
+				close;
+			}
+			mes .@npc_name$;
+			mes "I want to go too. Goodbye then.";
+			close2;
+			delitem 1000374,1;	// Brilliant_Soda
+			warp "alberta",117,55;
+			end;
+		}
+	case 2:
+		erasequest 5923;
+		mes .@npc_name$;
+		mes "You can do the Turtle Island subjugation quest again.";
+		close;
+	}
+	switch( checkquest(5922,HUNTING) ) {
+	case -1:
+		mes .@npc_name$;
+		mes "Hey heh.. I thought it was a monster. Did you come to receive a subjugation quest?";
+		next;
+		switch( select( "Receive a subjugation quest.", "Subjugation quest?", "Teleport to a nearby city.", "Are you not a cook?" ) ) {
+		case 1:
+			setquest 5922;
+			mes .@npc_name$;
+			mes "Except for Tara Frog, you can catch 80 monsters on Turtle Island. If you catch them all, come to me and receive a reward.";
+			close;
+		case 2:
+			mes .@npc_name$;
+			mes "This is a quest that requires you to catch 80 monsters on Turtle Island.";
+			next;
+			mes .@npc_name$;
+			mes "Ah! By the way, even if you catch Tara Frog, it doesn't count. If you don't touch anything, it's a gentle monster, so you can avoid it.";
+			close;
+		case 3:
+			mes .@npc_name$;
+			mes "Give me one " + mesitemlink( 1000374 ) + " and I can teleport you to Alberta.";
+			next;
+			select( "Give me 1 " + .@item_name$ + "." );
+			if (countitem(1000374) < 1) {
+				mes .@npc_name$;
+				mes "If you give me " + .@item_name$ + ", I will teleport you to Alberta.";
+				close;
+			}
+			mes .@npc_name$;
+			mes "I want to go too. Goodbye then.";
+			close2;
+			delitem 1000374,1;	// Brilliant_Soda
+			warp "alberta",117,55;
+			end;
+		case 4:
+			mes .@npc_name$;
+			mes "Yes, I am. I'm a cook. I'm tired from work I'm not used to right now, so I can't remember.";
+			next;
+			mes .@npc_name$;
+			mes "I feel like I wrote in the document that I was definitely looking for a part-time job as a kitchen assistant. When I woke up, somehow, I was working here as an Map Examiner for subjugation.";
+			next;
+			mes .@npc_name$;
+			mes "Really why? I can't do this roughly, I'd be thrilled.";
+			close;
+		}
+		end;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "Other than Tara Frog, catch 80 monsters on Turtle Island and come to me to receive a reward.";
+		close;
+	case 2:
+		getexp 86920,80660;
+		erasequest 5922;
+		setquest 5923;
+		mes .@npc_name$;
+		mes "This is the promised reward. The subjugation quest can be resumed tomorrow, so if you have time, please come.";
+		close;
+	}
+	end;
+
+OnInit:
+	setunittitle getnpcid(0), "<Juno Monster Society>";
+
+	questinfo( QTYPE_CLICKME, QMARK_YELLOW, "(checkquest(5925,PLAYTIME) == 0 || checkquest(5925,PLAYTIME) == 1) && countitem(1000374) > 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "BaseLevel >= 75 && checkquest(5922,HUNTING) == -1 && checkquest(5923,PLAYTIME) == -1" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(5922,HUNTING) == 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(5923,PLAYTIME) == 2" );
+	end;
+}
+
+// note: all mobs increase the hunt count
+ein_fild03,135,46,5	script	Map Examiner Tailing#tailing	1_M_YOUNGKNIGHT,{
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
+	.@item_name$ = getitemname(1000374);
+
+	if (BaseLevel < 76) {
+		mes .@npc_name$;
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		close;
+	}
+	switch( checkquest(3472,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "Ah, that's enough for today's subjugation!";
+		next;
+		mes .@npc_name$;
+		mes "I would appreciate it if you come again tomorrow and help subdue monsters!!";
+		next;
+		if (select( "Send " + .@item_name$ + ".", "Do not pass." ) == 2)
+			end;
+		if (countitem(1000374) < 3) {
+			mes " - Requires 3 " + .@item_name$ + ". - ";
+			close;
+		}
+		delitem 1000374,3;	// Brilliant_Soda
+		erasequest 3472;
+		mes .@npc_name$;
+		mes "Ah~!! Thank you so much~ I was very thirsty at the time~";
+		next;
+		mes .@npc_name$;
+		mes "gulp~ gulp~~~";
+		next;
+		specialeffect EF_FLASHER;
+		mes .@npc_name$;
+		mes "Huh... this intense flavor...!";
+		next;
+		mes .@npc_name$;
+		mes "Eh.. you're new to me, wait a minute. I'm going to drink some of this too, so can you talk to me after a minute?";
+		close;
+	case 2:
+		erasequest 3472;
+		break;
+	}
+	switch( checkquest(3471,HUNTING) ) {
+	case -1:
+		mes .@npc_name$;
+		mes "Hello!! You're here again! This is Map Examiner Tailing from the Juno Monster Society!";
+		next;
+		switch( select( "Receive a subjugation quest.", "Teleport to a nearby city.", "Ask about a subjugation quest.", "Come next." ) ) {
+		case 1:
+			mes .@npc_name$;
+			mes "Oh, would you like a commission?";
+			next;
+			mes .@npc_name$;
+			mes "You just need to kill 80 monsters on this field where I am.";
+			next;
+			setquest 3471;
+			mes .@npc_name$;
+			mes "Then I'll be waiting for you, I hope you come back safely.";
+			close;
+		case 2:
+			mes .@npc_name$;
+			mes "The nearest city from here is Einbroch!";
+			next;
+			mes .@npc_name$;
+			mes "If you give me one " + .@item_name$ + ", I will send it right away!";
+			next;
+			if (select( "Move", "Do not move" ) == 2) {
+				mes .@npc_name$;
+				mes "Yes, please tell me if you need teleportation!!";
+				close;
+			}
+			if (countitem(1000374) < 1) {
+				mes .@npc_name$;
+				mes "Hey, don't you have " + .@item_name$ + "~";
+				next;
+				mes .@npc_name$;
+				mes "Teleporting requires 1 " + .@item_name$ + ".";
+				close;
+			}
+			mes .@npc_name$;
+			mes "Yes! Then we will move you!!";
+			close2;
+			delitem 1000374,1;	// Brilliant_Soda
+			warp "einbroch",146,49;
+			end;
+		case 3:
+			mes .@npc_name$;
+			mes "Sometimes ago, the phenomenon of monster colonies expanding was discovered.";
+			next;
+			mes .@npc_name$;
+			mes "At one time, subjugation was actively carried out, but these days, it can be seen as a result of a little neglect.";
+			next;
+			mes .@npc_name$;
+			mes "If this phenomenon continues, it is dangerous, so the Juno Monster Society has decided to carry out a full-scale subjugation.";
+			next;
+			mes .@npc_name$;
+			mes "This means that subjugation is proceeding by placing Map Examiners in each area that needs subjugation!";
+			close;
+		case 4:
+			mes .@npc_name$;
+			mes "Ah, where are you going?";
+			close;
+		}
+		end;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "You just need to subdue 80 monsters of any type in this area.";
+		next;
+		mes .@npc_name$;
+		mes "After subjugation, come to me and get your reward!!";
+		close;
+	case 2:
+		getexp 146520,131880;
+		erasequest 3471;
+		setquest 3472;
+		mes .@npc_name$;
+		mes "You're back safely!";
+		next;
+		mes .@npc_name$;
+		mes "I barely achieved today's goal like this...";
+		next;
+		mes .@npc_name$;
+		mes "If you can afford it tomorrow, please come again!!";
+		close;
+	}
+	end;
+
+OnInit:
+	setunittitle getnpcid(0), "<Juno Monster Society>";
+
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 76 && checkquest(3471,HUNTING) == -1" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(3471,HUNTING) == 2" );
+	end;
+}
+
+// note: all mobs increase the hunt count
+lhz_fild03,167,344,3	script	Map Examiner Modaka#madaka	4_F_JOB_KNIGHT,{
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
+	.@item_name$ = getitemname(1000374);
+
+	if (BaseLevel < 77) {
+		mes .@npc_name$;
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		close;
+	}
+	switch( checkquest(3474,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "Ah, that's enough for today's subjugation!";
+		next;
+		mes .@npc_name$;
+		mes "I would appreciate it if you come again tomorrow and help subdue monsters!!";
+		next;
+		if (select( "Send " + .@item_name$ + ".", "Do not pass." ) == 2)
+			end;
+		if (countitem(1000374) < 3) {
+			mes " - Requires 3 " + .@item_name$ + ". - ";
+			close;
+		}
+		delitem 1000374,3;	// Brilliant_Soda
+		erasequest 3474;
+		mes .@npc_name$;
+		mes "Ummm, thank you so much~ It's refreshing carbonated water~?";
+		next;
+		mes .@npc_name$;
+		mes "Cuckoo~ Clap~";
+		next;
+		mes .@npc_name$;
+		mes "Ah, that's cool~!";
+		next;
+		mes .@npc_name$;
+		mes "Oh, adventurer, wait a minute~ Give me time to wrap this around my neck, please talk to me again after a while~";
+		close;
+	case 2:
+		erasequest 3474;
+		break;
+	}
+	switch( checkquest(3473,HUNTING) ) {
+	case -1:
+		mes .@npc_name$;
+		mes "Hello!! You're here again! I'm Modaka, an Map Examiner dispatched from the Juno Monster Society!";
+		next;
+		switch( select( "Receive a subjugation quest.", "Teleport to a nearby city.", "Ask about a subjugation quest.", "Come next." ) ) {
+		case 1:
+			mes .@npc_name$;
+			mes "Oh, would you like to take a quest?";
+			next;
+			mes .@npc_name$;
+			mes "You just need to kill 80 monsters in this field where I am located~";
+			next;
+			setquest 3473;
+			mes .@npc_name$;
+			mes "Then I'll be waiting here, please be careful~!";
+			close;
+		case 2:
+			mes .@npc_name$;
+			mes "The nearest city from here is Lighthalzen~";
+			next;
+			mes .@npc_name$;
+			mes "If you give me one " + .@item_name$ + ", I will send it right away!";
+			next;
+			if (select( "Move", "Do not move" ) == 2) {
+				mes .@npc_name$;
+				mes "Yes, if you need teleportation, please let me know!";
+				close;
+			}
+			if (countitem(1000374) < 1) {
+				mes .@npc_name$;
+				mes "Hey, don't you have " + .@item_name$ + "~";
+				next;
+				mes .@npc_name$;
+				mes "Teleporting requires 1 " + .@item_name$ + ".";
+				close;
+			}
+			mes .@npc_name$;
+			mes "Yes, then I will move you!!";
+			close2;
+			delitem 1000374,1;	// Brilliant_Soda
+			warp "lighthalzen",214,319;
+			end;
+		case 3:
+			mes .@npc_name$;
+			mes "Sometimes ago, the phenomenon of monster colonies expanding was discovered.";
+			next;
+			mes .@npc_name$;
+			mes "At one time, subjugation was actively carried out, but these days, it can be seen as a result of a little neglect.";
+			next;
+			mes .@npc_name$;
+			mes "If this phenomenon continues, it is dangerous, so the Juno Monster Society has decided to carry out a full-scale subjugation.";
+			next;
+			mes .@npc_name$;
+			mes "This means that subjugation is proceeding by placing Map Examiners in each area that needs subjugation!";
+			close;
+		case 4:
+			mes .@npc_name$;
+			mes "Ah, where are you going?";
+			close;
+		}
+		end;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "You just need to subdue 80 monsters in my area regardless of type~";
+		next;
+		mes .@npc_name$;
+		mes "After subjugating, please come back to me~";
+		close;
+	case 2:
+		getexp 148560,140040;
+		erasequest 3473;
+		setquest 3474;
+		mes .@npc_name$;
+		mes "You're here~";
+		next;
+		mes .@npc_name$;
+		mes "I think today's goal has been achieved. Thank you~";
+		next;
+		mes .@npc_name$;
+		mes "I hope you can come tomorrow too!!!";
+		close;
+	}
+	end;
+
+OnInit:
+	setunittitle getnpcid(0), "<Juno Monster Society>";
+
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 77 && checkquest(3473,HUNTING) == -1" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(3473,HUNTING) == 2" );
+	end;
+}
+
+tur_dun02,151,256,4	script	Map Examiner Tidun#yma	4_M_NINJA_BLUE,{
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
+	.@item_name$ = getitemname(1000374);
+
+	if (BaseLevel < 80) {
+		mes .@npc_name$;
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		close;
+	}
+	switch( checkquest(5929,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "You can do the quest to subdue the Turtle Island dungeon again tomorrow. You must be tired, so go home and rest.";
+		next;
+		switch( select( "You look tired. Would you like a drink?", "Teleport to a nearby city." ) ) {
+		case 1:
+			if (countitem(1000374) < 3) {
+				mes .@npc_name$;
+				mes "I think I heard that they give you 3 " + .@item_name$ + ", but I must have heard it wrong.";
+				close;
+			}
+			delitem 1000374,3;	// Brilliant_Soda
+			erasequest 5929;
+			mes .@npc_name$;
+			mes "Oh! Thank you. You are so kind. I'll drink.";
+			next;
+			npctalk "I feel engulfed in a sense of freshness.", "", bc_self;
+			specialeffect EF_FLASHER;
+			mes .@npc_name$;
+			mes "Hmm! I think a guest has arrived.";
+			close;
+		case 2:
+			mes .@npc_name$;
+			mes "If you give me one " + mesitemlink( 1000374 ) + ", I can teleport you to the nearby city, Alberta.";
+			next;
+			select( "Give me 1 " + .@item_name$ + "." );
+			if (countitem(1000374) < 1) {
+				mes .@npc_name$;
+				mes "Teleportation to a nearby city is receiving 1 " + .@item_name$ + ", so I just want to send it to you, but it's the official price..";
+				close;
+			}
+			mes .@npc_name$;
+			mes "Have a nice trip.";
+			close2;
+			delitem 1000374,1;	// Brilliant_Soda
+			warp "alberta",117,55;
+			end;
+		}
+		end;
+	case 2:
+		erasequest 5929;
+		mes .@npc_name$;
+		mes "You can do the subjugation of the Turtle Island dungeon again.";
+		close;
+	}
+	switch( checkquest(5928,HUNTING) ) {
+	case -1:
+		mes .@npc_name$;
+		mes "The Juno Monster Society prepared a quest to subdue the Turtle Island dungeon. Do you have any thoughts?";
+		next;
+		switch( select( "Receive a subjugation quest.", "Subjugation quest?", "Teleport to a nearby city.", "third" ) ) {
+		case 1:
+			setquest 5928;
+			mes .@npc_name$;
+			mes "After catching 80 monsters in the Turtle Island dungeon, come and report to me. Then I wish you good luck.";
+			close;
+		case 2:
+			mes .@npc_name$;
+			mes "I was looking for a quiet place, and I found a suitable job, so I applied as an Map Examiner.";
+			next;
+			mes .@npc_name$;
+			mes "The problem is that my stay is getting longer than I expected.";
+			next;
+			mes .@npc_name$;
+			mes "I want to go home soon..";
+			close;
+		case 3:
+			mes .@npc_name$;
+			mes "If you give me one " + mesitemlink( 1000374 ) + ", I can teleport you to the nearby city, Alberta.";
+			next;
+			select( "Give me 1 " + .@item_name$ + "." );
+			if (countitem(1000374) < 1) {
+				mes .@npc_name$;
+				mes "Teleportation to a nearby city is receiving 1 " + .@item_name$ + ", so I just want to send it to you, but it's the official price..";
+				close;
+			}
+			mes .@npc_name$;
+			mes "Have a nice trip.";
+			close2;
+			delitem 1000374,1;	// Brilliant_Soda
+			warp "alberta",117,55;
+			end;
+		case 4:
+			mes .@npc_name$;
+			mes "I heard that a collision between colonies is predicted due to an increase in the number of monsters.";
+			next;
+			mes .@npc_name$;
+			mes "If the monster colonies collide with each other, don't humans try to reduce the number of them in advance?";
+			close;
+		}
+		end;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "After catching 80 monsters in the Turtle Island dungeon, come and report to me. I'll be waiting for you.";
+		close;
+	case 2:
+		getexp 95240,88580;
+		erasequest 5928;
+		setquest 5929;
+		mes .@npc_name$;
+		mes "You solved it quickly. It's great. I can do this subjugation quest again tomorrow, so I'll see you again if I have time.";
+		close;
+	}
+	end;
+
+OnInit:
+	setunittitle getnpcid(0), "<Juno Monster Society>";
+
+	questinfo( QTYPE_CLICKME, QMARK_YELLOW, "(checkquest(5929,PLAYTIME) == 0 || checkquest(5929,PLAYTIME) == 1) && countitem(1000374) > 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "BaseLevel >= 80 && checkquest(5928,HUNTING) == -1 && checkquest(5929,PLAYTIME) == -1" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(5929,PLAYTIME) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(5928,HUNTING) == 2" );
+	end;
+}
+
+tur_dun03,125,186,6	script	Map Examiner Tsensor#yma	4_M_SIT_NOVICE,{
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
+	.@item_name$ = getitemname(1000374);
+
+	if (BaseLevel < 80) {
+		mes .@npc_name$;
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		close;
+	}
+	switch( checkquest(5931,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "You don't have anything to do? You're coming tomorrow, so why are you talking to me again?";
+		next;
+		switch( select( "You look tired. Would you like a drink?", "Teleport to a nearby city." ) ) {
+		case 1:
+			if (countitem(1000374) < 3) {
+				mes .@npc_name$;
+				mes "Haha.. How expensive is " + .@item_name$ + ", I can't give you three of them.";
+				close;
+			}
+			delitem 1000374,3;	// Brilliant_Soda
+			erasequest 5931;
+			mes .@npc_name$;
+			mes "Oh, you know something? I'll drink well. I wanted to try it, but I couldn't drink it because it was expensive.";
+			next;
+			npctalk "Wow, it tasted like this.", "", bc_self;
+			specialeffect EF_FLASHER;
+			mes .@npc_name$;
+			mes "Huh?! Friends, have we seen each other? Isn't it? It's like we're seeing each other for the first time...";
+			close;
+		case 2:
+			mes .@npc_name$;
+			mes "Alberta Express 1 " + mesitemlink( 1000374 ) + ", left immediately.";
+			next;
+			select( "Give me 1 " + .@item_name$ + "." );
+			if (countitem(1000374) < 1) {
+				mes .@npc_name$;
+				mes "Sorry. If you don't give me one " + .@item_name$ + ", I won't send it. Good work.";
+				close;
+			}
+			mes .@npc_name$;
+			mes "Alberta Express is departing. Good work~";
+			close2;
+			delitem 1000374,1;	// Brilliant_Soda
+			warp "alberta",117,55;
+			end;
+		}
+		end;
+	case 2:
+		erasequest 5931;
+		mes .@npc_name$;
+		mes "Woah~ I can do the subjugation quest again. Do you have any thoughts?";
+		close;
+	}
+	switch( checkquest(5930,HUNTING) ) {
+	case -1:
+		mes .@npc_name$;
+		mes "Come on! Do you have any intention of subjugating?";
+		next;
+		switch( select( "Receive a subjugation quest.", "Subjugation quest?", "Teleport to a nearby city.", "Nobis?" ) ) {
+		case 1:
+			setquest 5930;
+			mes .@npc_name$;
+			mes "Yeah! Yeah! I tell you to go and catch 80 monsters in Yanggeochon here, and when you catch them all, they report and come to me.";
+			close;
+		case 2:
+			mes .@npc_name$;
+			mes "What are you talking about? It's just a quest to catch monsters.";
+			next;
+			mes .@npc_name$;
+			mes "But what! You received a request for 20 permuters and 20 freezers, and you got all the permuters, but there are still five freezers?";
+			next;
+			mes .@npc_name$;
+			mes "How good is it to just kill all the monsters in this neighborhood so this doesn't happen? Isn't it?";
+			close;
+		case 3:
+			mes .@npc_name$;
+			mes "Alberta Express 1 " + mesitemlink( 1000374 ) + ", left immediately.";
+			next;
+			select( "Give me 1 " + .@item_name$ + "." );
+			if (countitem(1000374) < 1) {
+				mes .@npc_name$;
+				mes "Sorry. If you don't give me one " + .@item_name$ + ", I won't send it. Good work.";
+				close;
+			}
+			mes .@npc_name$;
+			mes "Alberta Express is departing. Good work~";
+			close2;
+			delitem 1000374,1;	// Brilliant_Soda
+			warp "alberta",117,55;
+			end;
+		case 4:
+			mes .@npc_name$;
+			mes "Huh? Is this your first time seeing Novice?";
+			next;
+			mes .@npc_name$;
+			mes "When I was a Novice, even though it was like a living dungeon, I just said that I went there. It's gum.";
+			close;
+		}
+		end;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "What are you doing? Why don't you go and catch 80 monsters in Yanggeochon?";
+		close;
+	case 2:
+		getexp 102260,96700;
+		erasequest 5930;
+		setquest 5931;
+		mes .@npc_name$;
+		mes "Well, I'm not as good as I am, but my skills aren't that bad. I'm going to stay here, even if I want to do a subjugation quest tomorrow as well.";
+		close;
+	}
+	end;
+
+OnInit:
+	setunittitle getnpcid(0), "<Juno Monster Society>";
+
+	questinfo( QTYPE_CLICKME, QMARK_YELLOW, "(checkquest(5931,PLAYTIME) == 0 || checkquest(5931,PLAYTIME) == 1) && countitem(1000374) > 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "BaseLevel >= 80 && checkquest(5930,HUNTING) == -1 && checkquest(5931,PLAYTIME) == -1" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(5931,PLAYTIME) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(5930,HUNTING) == 2" );
+	end;
+}
+
+// note: all mobs increase the hunt count
+ra_fild12,50,219,1	script	Map Examiner Chakari#chakari	4_F_JOB_ASSASSIN,{
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
+	.@item_name$ = getitemname(1000374);
+
+	if (BaseLevel < 80) {
+		mes .@npc_name$;
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		close;
+	}
+	switch( checkquest(3476,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "Today is fine now!!";
+		next;
+		mes .@npc_name$;
+		mes "If you want to do more subjugation, please come back tomorrow!!";
+		next;
+		if (select( "Send " + .@item_name$ + ".", "Do not pass." ) == 2)
+			end;
+		if (countitem(1000374) < 3) {
+			mes " - Requires 3 " + .@item_name$ + ". - ";
+			close;
+		}
+		delitem 1000374,3;	// Brilliant_Soda
+		erasequest 3476;
+		mes .@npc_name$;
+		mes "Are you giving it to me~?? I'll drink it well!!";
+		next;
+		mes .@npc_name$;
+		mes "Gulp~ Gulp~~~!!!!";
+		next;
+		specialeffect EF_FLASHER;
+		mes .@npc_name$;
+		mes "Ugh...?? What is this subtle taste...";
+		next;
+		mes .@npc_name$;
+		mes "Uh... I'm a bit hazy right now, but could you talk to me again after a while??";
+		close;
+	case 2:
+		erasequest 3476;
+		break;
+	}
+	switch( checkquest(3475,HUNTING) ) {
+	case -1:
+		mes .@npc_name$;
+		mes "Hello! I'm Chakarina, an Map Examiner dispatched from the Juno Monster Society~!";
+		next;
+		switch( select( "Receive a subjugation quest.", "Teleport to a nearby city.", "Ask about a subjugation quest.", "Come next." ) ) {
+		case 1:
+			mes .@npc_name$;
+			mes "Are you Accepting requests?!";
+			next;
+			mes .@npc_name$;
+			mes "You just need to kill 80 monsters in this field where I am located!";
+			next;
+			setquest 3475;
+			mes .@npc_name$;
+			mes "I'll trust you to finish it quickly!!";
+			close;
+		case 2:
+			mes .@npc_name$;
+			mes "Rachel is the closest to here!!";
+			next;
+			mes .@npc_name$;
+			mes "If you give me one " + .@item_name$ + ", I'll send it right away!";
+			next;
+			if (select( "Move", "Do not move" ) == 2) {
+				mes .@npc_name$;
+				mes "Yes, if you need teleportation, please let me know!!";
+				close;
+			}
+			if (countitem(1000374) < 1) {
+				mes .@npc_name$;
+				mes "Huh? You don't have " + .@item_name$ + "!!";
+				next;
+				mes .@npc_name$;
+				mes "You need 1 " + .@item_name$ + " to teleport!";
+				close;
+			}
+			mes .@npc_name$;
+			mes "Yes! Then get ready~!!";
+			close2;
+			delitem 1000374,1;	// Brilliant_Soda
+			warp "rachel",130,30;
+			end;
+		case 3:
+			mes .@npc_name$;
+			mes "Have you ever heard of a monster colony expansion?";
+			next;
+			mes .@npc_name$;
+			mes "It should have been a continuous subjugation, but I think it was on the verge of a dangerous situation due to a brief hiatus.";
+			next;
+			mes .@npc_name$;
+			mes "So the Juno Monster Society dispatched several Map Examiners, and that's why I came here.";
+			close;
+		case 4:
+			mes .@npc_name$;
+			mes "See you again!!";
+			close;
+		}
+		end;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "You just need to subdue 80 monsters of any type in this area.";
+		next;
+		mes .@npc_name$;
+		mes "If you come after subjugating, I will give you a good reward~!!";
+		close;
+	case 2:
+		getexp 155040,146520;
+		erasequest 3475;
+		setquest 3476;
+		mes .@npc_name$;
+		mes "After all, you came to finish quickly!!";
+		next;
+		mes .@npc_name$;
+		mes "I don't think there will be any problems with subjugation if only you have an adventurer...";
+		next;
+		mes .@npc_name$;
+		mes "I hope you can come and help me tomorrow too...!";
+		close;
+	}
+	end;
+
+OnInit:
+	setunittitle getnpcid(0), "<Juno Monster Society>";
+
+	// note: ! displayed when playtime ongoing
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 80 && checkquest(3475,HUNTING) == -1" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(3475,HUNTING) == 2" );
+	end;
+}
+
+// note: all mobs increase the hunt count
+ice_dun01,161,13,3	script	Map Examiner Dove#dove123	8_F_GIRL,{
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
+	.@item_name$ = getitemname(1000374);
+
+	if (BaseLevel < 85) {
+		mes .@npc_name$;
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		close;
+	}
+	switch( checkquest(3484,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "Ah, that's enough for today's subjugation!";
+		next;
+		mes .@npc_name$;
+		mes "I would appreciate it if you come again tomorrow and help subdue monsters!!";
+		next;
+		if (select( "Send " + .@item_name$ + ".", "Do not pass." ) == 2)
+			end;
+		if (countitem(1000374) < 3) {
+			mes " - Requires 3 " + .@item_name$ + ". - ";
+			close;
+		}
+		delitem 1000374,3;	// Brilliant_Soda
+		erasequest 3484;
+		mes .@npc_name$;
+		mes "Ah~!! Thank you so much~ I was very thirsty at the time~";
+		next;
+		mes .@npc_name$;
+		mes "gulp~ gulp~~~";
+		next;
+		specialeffect EF_FLASHER;
+		mes .@npc_name$;
+		mes "Huh... this intense flavor...!";
+		next;
+		mes .@npc_name$;
+		mes "Eh.. you're new to me, wait a minute. I'm going to drink some of this too, so can you talk to me after a minute?";
+		close;
+	case 2:
+		erasequest 3484;
+		break;
+	}
+	switch( checkquest(3483,HUNTING) ) {
+	case -1:
+		mes .@npc_name$;
+		mes "Hello!! You're here again! I'm Dove, an Map Examiner dispatched from the Juno Monster Society!";
+		next;
+		switch( select( "Receive a subjugation quest.", "Teleport to a nearby city.", "Ask about a subjugation quest.", "Come next." ) ) {
+		case 1:
+			mes .@npc_name$;
+			mes "Oh, would you like a commission?";
+			next;
+			mes .@npc_name$;
+			mes "You just need to kill 80 monsters on this field where I am.";
+			next;
+			setquest 3483;
+			mes .@npc_name$;
+			mes "Then I'll be waiting for you, I hope you come back safely.";
+			close;
+		case 2:
+			mes .@npc_name$;
+			mes "The nearest city from here is Einbroch!";
+			next;
+			mes .@npc_name$;
+			mes "If you give me one " + .@item_name$ + ", I will send it right away!";
+			next;
+			if (select( "Move", "Do not move" ) == 2) {
+				mes .@npc_name$;
+				mes "Yes, please tell me if you need teleportation!!";
+				close;
+			}
+			if (countitem(1000374) < 1) {
+				mes .@npc_name$;
+				mes "Hey, don't you have " + .@item_name$ + "~";
+				next;
+				mes .@npc_name$;
+				mes "Teleporting requires 1 " + .@item_name$ + ".";
+				close;
+			}
+			mes .@npc_name$;
+			mes "Yes! Then we will move you!!";
+			close2;
+			delitem 1000374,1;	// Brilliant_Soda
+			warp "rachel",130,30;
+			end;
+		case 3:
+			mes .@npc_name$;
+			mes "Sometimes ago, the phenomenon of monster colonies expanding was discovered.";
+			next;
+			mes .@npc_name$;
+			mes "At one time, subjugation was actively carried out, but these days, it can be seen as a result of a little neglect.";
+			next;
+			mes .@npc_name$;
+			mes "If this phenomenon continues, it is dangerous, so the Juno Monster Society has decided to carry out a full-scale subjugation.";
+			next;
+			mes .@npc_name$;
+			mes "This means that subjugation is proceeding by placing Map Examiners in each area that needs subjugation!";
+			close;
+		case 4:
+			mes .@npc_name$;
+			mes "Ah, where are you going?";
+			close;
+		}
+		end;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "You just need to subdue 80 monsters of any type in this area.";
+		next;
+		mes .@npc_name$;
+		mes "After subjugation, come to me and get your reward!!";
+		close;
+	case 2:
+		getexp 140296,132912;
+		erasequest 3483;
+		setquest 3484;
+		mes .@npc_name$;
+		mes "You're back safely!";
+		next;
+		mes .@npc_name$;
+		mes "I barely achieved today's goal like this...";
+		next;
+		mes .@npc_name$;
+		mes "If you can afford it tomorrow, please come again!!";
+		close;
+	}
+	end;
+
+OnInit:
+	setunittitle getnpcid(0), "<Juno Monster Society>";
+
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 85 && checkquest(3483,HUNTING) == -1" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(3483,HUNTING) == 2" );
+	end;
+}
+
+// note: all mobs increase the hunt count
+ra_fild08,163,47,5	script	Map Examiner Lucia#rsia	4_F_04,{
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
+	.@item_name$ = getitemname(1000374);
+
+	if (BaseLevel < 85) {
+		mes .@npc_name$;
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		close;
+	}
+	switch( checkquest(3480,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "Today, you're done.";
+		next;
+		mes .@npc_name$;
+		mes "Please come back tomorrow.";
+		next;
+		if (select( "Send " + .@item_name$ + ".", "Do not pass." ) == 2)
+			end;
+		if (countitem(1000374) < 3) {
+			mes " - Requires 3 " + .@item_name$ + ". - ";
+			close;
+		}
+		delitem 1000374,3;	// Brilliant_Soda
+		erasequest 3480;
+		mes .@npc_name$;
+		mes "Um... I'm thirsty... is it okay to drink this?";
+		next;
+		mes .@npc_name$;
+		mes "Clap.";
+		next;
+		specialeffect EF_FLASHER;
+		mes .@npc_name$;
+		mes "Ummm... I feel weird...!";
+		next;
+		mes "[Map Examiner Lucia]";
+		mes "Um... did you come to receive a request? Did you receive it...?";
+		next;
+		mes .@npc_name$;
+		mes "I'm a bit dazed right now, so please wait for a while and talk to me.";
+		close;
+	case 2:
+		erasequest 3480;
+		break;
+	}
+	switch( checkquest(3479,HUNTING) ) {
+	case -1:
+		mes .@npc_name$;
+		mes "See you again, this is Lucia from the Juno Monster Society.";
+		next;
+		switch( select( "Receive a subjugation quest.", "Teleport to a nearby city.", "Ask about a subjugation quest.", "Come next." ) ) {
+		case 1:
+			mes .@npc_name$;
+			mes "I was desperate for a helping hand.";
+			next;
+			mes .@npc_name$;
+			mes "Please kill 80 monsters that inhabit this field.";
+			next;
+			setquest 3479;
+			mes .@npc_name$;
+			mes "I hope you come back unharmed.";
+			close;
+		case 2:
+			mes .@npc_name$;
+			mes "Rachel is the closest.";
+			next;
+			mes .@npc_name$;
+			mes "If you give me one " + .@item_name$ + ", I will help.";
+			next;
+			if (select( "Move", "Do not move" ) == 2) {
+				mes .@npc_name$;
+				mes "Tell me back when you need it.";
+				close;
+			}
+			if (countitem(1000374) < 1) {
+				mes .@npc_name$;
+				mes "It seems you don't have " + .@item_name$ + ".";
+				next;
+				mes .@npc_name$;
+				mes "You need 1 " + .@item_name$ + " to teleport.";
+				close;
+			}
+			mes .@npc_name$;
+			mes "Then please prepare.";
+			close2;
+			delitem 1000374,1;	// Brilliant_Soda
+			warp "rachel",130,30;
+			end;
+		case 3:
+			mes .@npc_name$;
+			mes "Someday... It's been quite some time since I left the monsters increasing in number little by little.";
+			next;
+			mes .@npc_name$;
+			mes "Now we have reached a critical level.";
+			next;
+			mes .@npc_name$;
+			mes "I had no choice but to move at the Juno Monster Society.";
+			next;
+			mes .@npc_name$;
+			mes "This is how we dispatched Map Examiners to each area in need of subjugation.";
+			close;
+		case 4:
+			mes .@npc_name$;
+			mes "Goodbye";
+			close;
+		}
+		end;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "Please kill 80 monsters that inhabit this field.";
+		next;
+		mes .@npc_name$;
+		mes "Please come back to me when it's all over.";
+		close;
+	case 2:
+		getexp 166440,157920;
+		erasequest 3479;
+		setquest 3480;
+		mes .@npc_name$;
+		mes "I'm glad you came back unharmed.";
+		next;
+		mes .@npc_name$;
+		mes "I think it will be fine for a while.";
+		next;
+		mes .@npc_name$;
+		mes "I hope you can come tomorrow as well.";
+		close;
+	}
+	end;
+
+OnInit:
+	setunittitle getnpcid(0), "<Juno Monster Society>";
+
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 85 && checkquest(3479,HUNTING) == -1" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(3479,HUNTING) == 2" );
+	end;
+}
+
+ra_fild04,274,69,5	script	Map Examiner Sukumari#85	4_M_MOC_SOLDIER,{
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
+	.@item_name$ = getitemname(1000374);
+
+	if (BaseLevel < 86) {
+		mes .@npc_name$;
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		close;
+	}
+	switch( checkquest(8667,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		if (countitem(1000374) < 3) {
+			mes .@npc_name$;
+			mes "In principle, subjugation quests are limited to once a day.";
+			mes "Today, rest for a while, next time...";
+			close;
+		}
+		mes .@npc_name$;
+		mes "In principle, subjugation quests are limited to once a day.";
+		mes "Today, rest for a while, next time...";
+		next;
+		if (select( "I recommend " + .@item_name$ + "", "See you tomorrow" ) == 2) {
+			mes .@npc_name$;
+			mes "Yes! See you tomorrow.";
+			close;
+		}
+		delitem 1000374,3;	// Brilliant_Soda
+		erasequest 8667;
+		mes .@npc_name$;
+		mes "Oh, this is my favorite " + .@item_name$ + "!";
+		mes "Can I take this? Thank you!";
+		mes "Kick Knock Kick...";
+		next;
+		specialeffect EF_FLASHER;
+		mes .@npc_name$;
+		mes "It's refreshing!";
+		mes "Kyaha~...";
+		mes "...";
+		mes "Ah! Adventurer!";
+		next;
+		mes .@npc_name$;
+		.@skip = true;
+		break;
+	case 2:
+		mes .@npc_name$;
+		mes "Hello. You came today!";
+		erasequest 8667;
+		break;
+	}
+	switch( checkquest(8668,HUNTING) ) {
+	case -1:
+		if (!.@skip) {
+			mes .@npc_name$;
+			mes "Hello. You came today!";
+		}
+		mes "I'm sending a monster subjugation investigation request to the adventurers who pass by here, how about it?";
+		mes "Or, if you are nearby, we also support teleportation service.";
+		next;
+		switch( select( "Subjugation Quest", "Move to a nearby city", "Stop" ) ) {
+		case 1:
+			mes .@npc_name$;
+			mes "If you kill 80 monsters in this Audumla meadow, this field that I can see, our society will recognize your achievements and give you experience points.";
+			next;
+			if (select( "Accept", "Refuse" ) == 2) {
+				mes .@npc_name$;
+				mes "It's mutually beneficial, so why do you refuse...";
+				close;
+			}
+			setquest 8668;
+			mes .@npc_name$;
+			mes "I like it, I like it.";
+			mes "I'm going to check to see if there is enough population control here.";
+			close;
+		case 2:
+			mes .@npc_name$;
+			mes "The nearest place here is ^0033FFRachel^000000,";
+			mes "If you have " + .@item_name$ + ", please give me one... and I'll teleport you.";
+			mes "Ha~ It's popular these days, but I can't go buy it.";
+			next;
+			if (select( "Give me 1 " + .@item_name$ + ", Rachel", "No" ) == 2) {
+				mes .@npc_name$;
+				mes "Ah... Then what can I do?";
+				mes "When will I try again...";
+				close;
+			}
+			if (countitem(1000374) < 1) {
+				mes .@npc_name$;
+				mes "You don't seem to have " + .@item_name$ + "?";
+				mes "I'm standing... I'm sorry.";
+				close;
+			}
+			delitem 1000374,1;	// Brilliant_Soda
+			warp "rachel",113,136;
+			end;
+		case 3:
+			mes .@npc_name$;
+			mes "It's mutually beneficial, so why do you refuse...";
+			close;
+		}
+		end;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "Please kill 80 monsters around here.";
+		mes "...Yes? Mobility service?";
+		next;
+		mes .@npc_name$;
+		mes "The nearest place here is ^0033FFRachel^000000,";
+		mes "If you have " + .@item_name$ + ", please give me one... and I'll teleport you.";
+		mes "Ha~ It's popular these days, but I can't go buy it.";
+		next;
+		if (select( "Give me 1 " + .@item_name$ + ", Rachel", "No" ) == 2) {
+			mes .@npc_name$;
+			mes "Ah... Then what can I do?";
+			mes "When will I try again...";
+			close;
+		}
+		if (countitem(1000374) < 1) {
+			mes .@npc_name$;
+			mes "You don't seem to have " + .@item_name$ + "?";
+			mes "I'm standing... I'm sorry.";
+			close;
+		}
+		delitem 1000374,1;	// Brilliant_Soda
+		warp "rachel",113,136;
+		end;
+	case 2:
+		mes .@npc_name$;
+		mes "Ah, adventurer! I saw your performance well enough. Thank you for your hard work.";
+		next;
+		mes .@npc_name$;
+		mes "I think the right amount is really important for anything, right?";
+		getexp 171420,162480;
+		erasequest 8668;
+		setquest 8667;
+		close;
+	}
+	end;
+
+OnInit:
+	setunittitle getnpcid(0), "<Juno Monster Society>";
+
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "BaseLevel >= 86 && checkquest(8668,HUNTING) == -1 && checkquest(8667,PLAYTIME) == -1" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8667,PLAYTIME) == 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8668,HUNTING) == 2" );
+
+	// (no questinfo when playtime ongoing)
+	end;
+}
+
+// note: all mobs increase the hunt count
+ve_fild07,158,354,3	script	Map Examiner Shevko#chevco	2_M_DYEINGER,{
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
+	.@item_name$ = getitemname(1000374);
+
+	if (BaseLevel < 86) {
+		mes .@npc_name$;
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		close;
+	}
+	switch( checkquest(3478,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "Today's request is closed.";
+		next;
+		mes .@npc_name$;
+		mes "I'll take it again tomorrow, so I'll see you then.";
+		next;
+		if (select( "Send " + .@item_name$ + ".", "Do not pass." ) == 2)
+			end;
+		if (countitem(1000374) < 3) {
+			mes " - Requires 3 " + .@item_name$ + ". - ";
+			close;
+		}
+		delitem 1000374,3;	// Brilliant_Soda
+		erasequest 3478;
+		mes .@npc_name$;
+		mes "Um? What is this? I'll drink it first.";
+		next;
+		mes .@npc_name$;
+		mes "Woooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo~~~";
+		next;
+		specialeffect EF_FLASHER;
+		mes .@npc_name$;
+		mes "Hmm!!! It's a strange taste, but this is... er...";
+		next;
+		mes .@npc_name$;
+		mes ".........";
+		next;
+		mes .@npc_name$;
+		mes "I'm sorry, I fell asleep for a while. I think I'll be able to come to my senses soon, so please wait for a while.";
+		close;
+	case 2:
+		erasequest 3478;
+		break;
+	}
+	switch( checkquest(3477,HUNTING) ) {
+	case -1:
+		mes .@npc_name$;
+		mes "Nice to meet you, I'm Shevko, Map Examiner of the Juno Monster Society.";
+		next;
+		switch( select( "Receive a subjugation quest.", "Teleport to a nearby city.", "Ask about a subjugation quest.", "Come next." ) ) {
+		case 1:
+			mes .@npc_name$;
+			mes "Would you like to receive a subjugation quest?";
+			next;
+			mes .@npc_name$;
+			mes "You just need to kill 80 monsters in this field where we are currently located.";
+			next;
+			setquest 3477;
+			mes .@npc_name$;
+			mes "Then I wish you good luck.";
+			close;
+		case 2:
+			mes .@npc_name$;
+			mes "The nearest city to this is Veins.";
+			next;
+			mes .@npc_name$;
+			mes "If you give me 1 " + .@item_name$ + ", I will move it right away.";
+			next;
+			if (select( "Move", "Do not move" ) == 2) {
+				mes .@npc_name$;
+				mes "If you need anything, please let me know.";
+				close;
+			}
+			if (countitem(1000374) < 1) {
+				mes .@npc_name$;
+				mes "You don't have " + .@item_name$ + ".";
+				next;
+				mes .@npc_name$;
+				mes "Teleporting requires 1 " + .@item_name$ + ".";
+				close;
+			}
+			mes .@npc_name$;
+			mes "Okay then, let's go.";
+			close2;
+			delitem 1000374,1;	// Brilliant_Soda
+			warp "veins",146,32;
+			end;
+		case 3:
+			mes .@npc_name$;
+			mes "At some point the number of monsters inhabiting each field started to increase.";
+			next;
+			mes .@npc_name$;
+			mes "I knew that the number of monsters was gradually increasing, but it was a result of not taking it seriously.";
+			next;
+			mes .@npc_name$;
+			mes "In order to restore it back to its former state, the Juno Monster Society has dispatched Map Examiners to various places.";
+			next;
+			mes .@npc_name$;
+			mes "I am one of those Map Examiners, and I am waiting for the subjugation of the brave adventurers.";
+			close;
+		case 4:
+			mes .@npc_name$;
+			mes "Have a nice day";
+			close;
+		}
+		end;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "You just need to subdue 80 monsters of any type in this area.";
+		next;
+		mes .@npc_name$;
+		mes "After subjugation, please do not forget and let me know.";
+		close;
+	case 2:
+		getexp 148560,140040;
+		erasequest 3477;
+		setquest 3478;
+		mes .@npc_name$;
+		mes "You came back unscathed... You must have been a great person.";
+		next;
+		mes .@npc_name$;
+		mes "Thanks to you, I was able to successfully achieve today's subjugation goal, thank you.";
+		next;
+		mes .@npc_name$;
+		mes "I hope to see you again tomorrow if possible.";
+		close;
+	}
+	end;
+
+OnInit:
+	setunittitle getnpcid(0), "<Juno Monster Society>";
+
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 86 && checkquest(3477,HUNTING) == -1" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(3477,HUNTING) == 2" );
+	end;
+}
+
+ra_fild03,368,183,5	script	Map Examiner Lauren#85	4_M_MOC_SOLDIER,{
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
+	.@item_name$ = getitemname(1000374);
+
+	if (BaseLevel < 86) {
+		mes .@npc_name$;
+		mes "Juno MonsterThe Society is in the process of subjugation quests. But you still look a little weak to carry out the quest.";
+		close;
+	}
+	switch( checkquest(8664,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		if (countitem(1000374) < 3) {
+			mes .@npc_name$;
+			mes "In principle, subjugation quests are limited to once a day.";
+			mes "Today, rest for a while, next time...";
+			close;
+		}
+		mes .@npc_name$;
+		mes "In principle, subjugation quests are limited to once a day.";
+		mes "Today, rest for a while, next time...";
+		next;
+		if (select( "I recommend " + .@item_name$ + "", "See you tomorrow" ) == 2) {
+			mes .@npc_name$;
+			mes "Yes! See you tomorrow.";
+			close;
+		}
+		delitem 1000374,3;	// Brilliant_Soda
+		erasequest 8664;
+		mes .@npc_name$;
+		mes "Oh, this is my favorite " + .@item_name$ + "!";
+		mes "Can I take this? Thank you!";
+		mes "Kick Knock Kick...";
+		next;
+		specialeffect EF_FLASHER;
+		mes .@npc_name$;
+		mes "!";
+		mes "Kyaha~...";
+		mes "...";
+		next;
+		mes .@npc_name$;
+		mes "Ah, adventurer! I'm requesting a monster subjugation investigation, how about it?";
+		.@skip = true;
+		break;
+	case 2:
+		erasequest 8664;
+		break;
+	}
+	switch( checkquest(8665,HUNTING) ) {
+	case -1:
+		if (!.@skip) {
+			mes .@npc_name$;
+			mes "Hello. You came today!";
+			mes "I'm sending a monster subjugation investigation request to the adventurers who pass by here, how about it?";
+		}
+		mes "Or, if you are nearby, we also support teleportation service.";
+		next;
+		switch( select( "Subjugation Quest", "Move to a nearby city", "Stop" ) ) {
+		case 1:
+			mes .@npc_name$;
+			mes "Iida Plain, if you kill 80 monsters within this field that I can see, our society will recognize your achievements and give you experience points.";
+			next;
+			if (select( "Accept", "Refuse" ) == 2) {
+				mes .@npc_name$;
+				mes "If it can't be done...";
+				close;
+			}
+			setquest 8665;
+			mes .@npc_name$;
+			mes "I like it, I like it.";
+			mes "I'm going to check to see if there is enough population control here.";
+			close;
+		case 2:
+			mes .@npc_name$;
+			mes "The nearest place here is ^0033FFRachel^000000,";
+			mes "If you have " + .@item_name$ + ", please give me one... and I'll teleport you.";
+			mes "It's the saddest thing to be here.";
+			next;
+			if (select( "Give me 1 " + .@item_name$ + ", Rachel", "No" ) == 2) {
+				mes .@npc_name$;
+				mes "Ah... Then what can I do?";
+				close;
+			}
+			if (countitem(1000374) < 1) {
+				mes .@npc_name$;
+				mes "You don't seem to have " + .@item_name$ + "?";
+				close;
+			}
+			delitem 1000374,1;	// Brilliant_Soda
+			warp "rachel",113,136;
+			end;
+		case 3:
+			mes .@npc_name$;
+			mes "It's mutually beneficial, so why do you refuse...";
+			close;
+		}
+		end;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "Please kill 80 monsters around here.";
+		mes "...Yes? Mobility service?";
+		next;
+		mes .@npc_name$;
+		mes "The nearest place here is ^0033FFRachel^000000,";
+		mes "If you have " + .@item_name$ + ", please give me one... and I'll teleport you.";
+		mes "Ha~ It's popular these days, but I can't go buy it.";
+		next;
+		if (select( "Give me 1 " + .@item_name$ + ", Rachel", "No" ) == 2) {
+			mes .@npc_name$;
+			mes "Ah... Then what can I do?";
+			mes "When will I try again...";
+			close;
+		}
+		if (countitem(1000374) < 1) {
+			mes .@npc_name$;
+			mes "You don't seem to have " + .@item_name$ + "?";
+			close;
+		}
+		delitem 1000374,1;	// Brilliant_Soda
+		warp "rachel",113,136;
+		end;
+	case 2:
+		mes .@npc_name$;
+		mes "Ah, adventurer! I saw your performance well enough. Thank you for your hard work.";
+		next;
+		mes .@npc_name$;
+		mes "I think the right amount is really important for anything, right?";
+		getexp 165480,156750;
+		erasequest 8665;
+		setquest 8664;
+		close;
+	}
+	end;
+
+OnInit:
+	setunittitle getnpcid(0), "<Juno Monster Society>";
+
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "BaseLevel >= 86 && checkquest(8665,HUNTING) == -1 && checkquest(8664,PLAYTIME) == -1" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8664,PLAYTIME) == 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8665,HUNTING) == 2" );
+
+	// (no questinfo when playtime ongoing)
+	end;
+}
+
+ra_fild05,48,356,5	script	Map Examiner Valenzela#85	4_M_MOC_SOLDIER,{
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
+	.@item_name$ = getitemname(1000374);
+
+	if (BaseLevel < 87) {
+		mes .@npc_name$;
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		close;
+	}
+	switch( checkquest(8670,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		if (countitem(1000374) < 3) {
+			mes .@npc_name$;
+			mes "In principle, subjugation quests are limited to once a day.";
+			mes "Today, rest for a while, next time...";
+			close;
+		}
+		mes .@npc_name$;
+		mes "In principle, subjugation quests are limited to once a day.";
+		mes "Today, rest for a while, next time...";
+		next;
+		if (select( "I recommend " + .@item_name$ + "", "See you tomorrow" ) == 2) {
+			mes .@npc_name$;
+			mes "Yes! See you tomorrow.";
+			close;
+		}
+		delitem 1000374,3;	// Brilliant_Soda
+		erasequest 8670;
+		mes .@npc_name$;
+		mes "Oh, this is my favorite " + .@item_name$ + "!";
+		mes "Can I take this? Thank you!";
+		mes "Kick Knock Kick...";
+		next;
+		specialeffect EF_FLASHER;
+		mes .@npc_name$;
+		mes "It's refreshing!";
+		mes "Kyaha~...";
+		mes "...";
+		mes "Ah! Adventurer!";
+		next;
+		mes .@npc_name$;
+		.@skip = true;
+		break;
+	case 2:
+		erasequest 8670;
+		break;
+	}
+	switch( checkquest(8671,HUNTING) ) {
+	case -1:
+		if (!.@skip) {
+			mes .@npc_name$;
+			mes "Hello. You came today!";
+		}
+		mes "I'm sending a monster subjugation investigation request to the adventurers who pass by here, how about it?";
+		mes "Or, if you are nearby, we also support teleportation service.";
+		next;
+		switch( select( "Subjugation Quest", "Move to a nearby city", "Stop" ) ) {
+		case 1:
+			mes .@npc_name$;
+			mes "If you kill 80 monsters in this Audumla meadow, this field that I can see, our society will recognize your achievements and give you experience points.";
+			next;
+			if (select( "Accept", "Refuse" ) == 2) {
+				mes .@npc_name$;
+				mes "It's mutually beneficial, so why do you refuse...";
+				close;
+			}
+			setquest 8671;
+			mes .@npc_name$;
+			mes "I like it, I like it.";
+			mes "I'm going to check to see if there is enough population control here.";
+			close;
+		case 2:
+			mes .@npc_name$;
+			mes "The nearest place here is ^0033FFRachel^000000,";
+			mes "If you have " + .@item_name$ + ", please give me one... and I'll teleport you.";
+			mes "Ha~ It's popular these days, but I can't go buy it.";
+			next;
+			if (select( "Give me 1 " + .@item_name$ + ", Rachel", "No" ) == 2) {
+				mes .@npc_name$;
+				mes "Ah... Then what can I do?";
+				mes "When will I try again...";
+				close;
+			}
+			if (countitem(1000374) < 1) {
+				mes .@npc_name$;
+				mes "You don't seem to have " + .@item_name$ + "?";
+				mes "I'm standing... I'm sorry.";
+				close;
+			}
+			delitem 1000374,1;	// Brilliant_Soda
+			warp "rachel",113,136;
+			end;
+		case 3:
+			mes .@npc_name$;
+			mes "It's mutually beneficial, so why do you refuse...";
+			close;
+		}
+		end;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "Please kill 80 monsters around here.";
+		mes "...Yes? Mobility service?";
+		next;
+		mes .@npc_name$;
+		mes "The nearest place here is ^0033FFRachel^000000,";
+		mes "If you have " + .@item_name$ + ", please give me one... and I'll teleport you.";
+		mes "Ha~ It's popular these days, but I can't go buy it.";
+		next;
+		if (select( "Give me 1 " + .@item_name$ + ", Rachel", "No" ) == 2) {
+			mes .@npc_name$;
+			mes "Ah... Then what can I do?";
+			mes "When will I try again...";
+			close;
+		}
+		if (countitem(1000374) < 1) {
+			mes .@npc_name$;
+			mes "You don't seem to have " + .@item_name$ + "?";
+			mes "I'm standing... I'm sorry.";
+			close;
+		}
+		delitem 1000374,1;	// Brilliant_Soda
+		warp "rachel",113,136;
+		end;
+	case 2:
+		mes .@npc_name$;
+		mes "Ah, adventurer! I saw your performance well enough. Thank you for your hard work.";
+		next;
+		mes .@npc_name$;
+		mes "I think the right amount is really important for anything, right?";
+		getexp 187410,178020;
+		erasequest 8671;
+		setquest 8670;
+		close;
+	}
+	end;
+
+OnInit:
+	setunittitle getnpcid(0), "<Juno Monster Society>";
+
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "BaseLevel >= 87 && checkquest(8671,HUNTING) == -1 && checkquest(8670,PLAYTIME) == -1" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8670,PLAYTIME) == 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8671,HUNTING) == 2" );
+
+	// (no questinfo when playtime ongoing)
+	end;
+}
+
+ra_fild01,224,319,5	script	Map Examiner Ciara#85	4_M_MOC_SOLDIER,{
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
+	.@item_name$ = getitemname(1000374);
+
+	if (BaseLevel < 88) {
+		mes .@npc_name$;
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		close;
+	}
+	switch( checkquest(8661,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		if (countitem(1000374) < 3) {
+			mes .@npc_name$;
+			mes "Adventurer, it's dangerous here.";
+			mes "I don't know if my life is not worth it...";
+			close;
+		}
+		mes .@npc_name$;
+		mes "In principle, subjugation quests are limited to once a day.";
+		mes "Today, rest for a while, next time...";
+		next;
+		if (select( "I recommend " + .@item_name$ + "", "See you tomorrow" ) == 2) {
+			mes .@npc_name$;
+			mes "Yes! See you tomorrow.";
+			close;
+		}
+		delitem 1000374,3;	// Brilliant_Soda
+		erasequest 8661;
+		mes .@npc_name$;
+		mes "Oh, this is my favorite " + .@item_name$ + "!";
+		mes "Can I take this? Thank you!";
+		mes "Kick Knock Kick...";
+		next;
+		specialeffect EF_FLASHER;
+		mes .@npc_name$;
+		mes "It's refreshing!";
+		mes "Kyaha~...";
+		mes "...";
+		mes "Ah! Adventurer!";
+		next;
+		mes .@npc_name$;
+		mes "It's really good. We're asking adventurers who pass by here to investigate monster subjugation, how about it?";
+		.@skip = true;
+		break;
+	case 2:
+		erasequest 8661;
+		break;
+	}
+	switch( checkquest(8662,HUNTING) ) {
+	case -1:
+		if (!.@skip) {
+			mes .@npc_name$;
+			mes "Hello. You came today!";
+			mes "I'm sending a monster subjugation investigation request to the adventurers who pass by here, how about it?";
+		}
+		mes "Or, if you are nearby, we also support teleportation service.";
+		next;
+		switch( select( "Subjugation Quest", "Move to a nearby city", "Stop" ) ) {
+		case 1:
+			mes .@npc_name$;
+			mes "If you kill 80 monsters in this Audumla meadow, this field that I can see, our society will recognize your achievements and give you experience points.";
+			next;
+			if (select( "Accept", "Refuse" ) == 2) {
+				mes .@npc_name$;
+				mes "It's mutually beneficial, so why do you refuse...";
+				close;
+			}
+			setquest 8662;
+			mes .@npc_name$;
+			mes "I like it, I like it.";
+			mes "I'm going to check to see if there is enough population control here.";
+			close;
+		case 2:
+			mes .@npc_name$;
+			mes "The nearest place here is ^0033FFRachel^000000,";
+			mes "If you have " + .@item_name$ + ", please give me one... and I'll teleport you.";
+			mes "Ha~ It's popular these days, but I can't go buy it.";
+			next;
+			if (select( "Give me 1 " + .@item_name$ + ", Rachel", "No" ) == 2) {
+				mes .@npc_name$;
+				mes "Oh... Then what can I do?no.";
+				mes "When will I try again...";
+				close;
+			}
+			if (countitem(1000374) < 1) {
+				mes .@npc_name$;
+				mes "You don't seem to have " + .@item_name$ + "?";
+				mes "I'm standing... I'm sorry.";
+				close;
+			}
+			delitem 1000374,1;	// Brilliant_Soda
+			warp "rachel",113,136;
+			end;
+		case 3:
+			mes .@npc_name$;
+			mes "It's mutually beneficial, so why do you refuse...";
+			close;
+		}
+		end;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "Please kill 80 monsters around here.";
+		mes "...Yes? Mobility service?";
+		next;
+		mes .@npc_name$;
+		mes "The nearest place here is ^0033FFRachel^000000,";
+		mes "If you have " + .@item_name$ + ", please give me one... and I'll teleport you.";
+		mes "Ha~ It's popular these days, but I can't go buy it.";
+		next;
+		if (select( "Give me 1 " + .@item_name$ + ", Rachel", "No" ) == 2) {
+			mes .@npc_name$;
+			mes "Ah... Then what can I do?";
+			mes "When will I try again...";
+			close;
+		}
+		if (countitem(1000374) < 1) {
+			mes .@npc_name$;
+			mes "You don't seem to have " + .@item_name$ + "?";
+			mes "I'm standing... I'm sorry.";
+			close;
+		}
+		delitem 1000374,1;	// Brilliant_Soda
+		warp "rachel",113,136;
+		end;
+	case 2:
+		mes .@npc_name$;
+		mes "Ah, adventurer! I saw your performance well enough. Thank you for your hard work.";
+		next;
+		mes .@npc_name$;
+		mes "I think the right amount is really important for anything, right?";
+		getexp 166760,157960;
+		erasequest 8662;
+		setquest 8661;
+		close;
+	}
+	end;
+
+OnInit:
+	setunittitle getnpcid(0), "<Juno Monster Society>";
+
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "BaseLevel >= 88 && checkquest(8662,HUNTING) == -1 && checkquest(8661,PLAYTIME) == -1" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8661,PLAYTIME) == 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8662,HUNTING) == 2" );
+
+	// (no questinfo when playtime ongoing)
+	end;
+}
+
+// note: all mobs increase the hunt count
+ve_fild01,354,280,3	script	Map Examiner Yirun Seo#suiroon	4_F_SISTER,{
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
+	.@item_name$ = getitemname(1000374);
+
+	if (BaseLevel < 90) {
+		mes .@npc_name$;
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		close;
+	}
+	switch( checkquest(3482,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "Ah, that's enough for today's subjugation!";
+		next;
+		mes .@npc_name$;
+		mes "I would appreciate it if you come again tomorrow and help subdue monsters!!";
+		next;
+		if (select( "Send " + .@item_name$ + ".", "Do not pass." ) == 2)
+			end;
+		if (countitem(1000374) < 3) {
+			mes " - Requires 3 " + .@item_name$ + ". - ";
+			close;
+		}
+		delitem 1000374,3;	// Brilliant_Soda
+		erasequest 3482;
+		mes .@npc_name$;
+		mes "Ah~!! Thank you so much~ I was very thirsty at the time~";
+		next;
+		mes .@npc_name$;
+		mes "gulp~ gulp~~~";
+		next;
+		specialeffect EF_FLASHER;
+		mes .@npc_name$;
+		mes "Huh... this intense flavor...!";
+		next;
+		mes .@npc_name$;
+		mes "Eh.. you're new to me, wait a minute. I'm going to drink some of this too, so can you talk to me after a minute?";
+		close;
+	case 2:
+		erasequest 3482;
+		break;
+	}
+	switch( checkquest(3481,HUNTING) ) {
+	case -1:
+		mes .@npc_name$;
+		mes "Hello!! My name is Irun Seo, an Map Examiner dispatched from the Juno Monster Society!";
+		next;
+		switch( select( "Receive a subjugation quest.", "Teleport to a nearby city.", "Ask about a subjugation quest.", "Come next." ) ) {
+		case 1:
+			mes .@npc_name$;
+			mes "Oh, would you like a commission?";
+			next;
+			mes .@npc_name$;
+			mes "You just need to kill 80 monsters on this field where I am.";
+			next;
+			setquest 3481;
+			mes .@npc_name$;
+			mes "Then I'll be waiting for you, I hope you come back safely.";
+			close;
+		case 2:
+			mes .@npc_name$;
+			mes "The nearest city from here is Einbroch!";
+			next;
+			mes .@npc_name$;
+			mes "If you give me one " + .@item_name$ + ", I will send it right away!";
+			next;
+			if (select( "Move", "Do not move" ) == 2) {
+				mes .@npc_name$;
+				mes "Yes, please tell me if you need teleportation!!";
+				close;
+			}
+			if (countitem(1000374) < 1) {
+				mes .@npc_name$;
+				mes "Hey, don't you have " + .@item_name$ + "~";
+				next;
+				mes .@npc_name$;
+				mes "Teleporting requires 1 " + .@item_name$ + ".";
+				close;
+			}
+			mes .@npc_name$;
+			mes "Yes! Then we will move you!!";
+			close2;
+			delitem 1000374,1;	// Brilliant_Soda
+			warp "veins",146,32;
+			end;
+		case 3:
+			mes .@npc_name$;
+			mes "Sometimes ago, the phenomenon of monster colonies expanding was discovered.";
+			next;
+			mes .@npc_name$;
+			mes "At one time, subjugation was actively carried out, but these days, it can be seen as a result of a little neglect.";
+			next;
+			mes .@npc_name$;
+			mes "If this phenomenon continues, it is dangerous, so the Juno Monster Society has decided to carry out a full-scale subjugation.";
+			next;
+			mes .@npc_name$;
+			mes "This means that subjugation is proceeding by placing Map Examiners in each area that needs subjugation!";
+			close;
+		case 4:
+			mes .@npc_name$;
+			mes "Ah, where are you going?";
+			close;
+		}
+		end;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "You just need to subdue 80 monsters of any type in this area.";
+		next;
+		mes .@npc_name$;
+		mes "After subjugation, come to me and get your reward!!";
+		close;
+	case 2:
+		getexp 209440,157920;
+		erasequest 3481;
+		setquest 3482;
+		mes .@npc_name$;
+		mes "You're back safely!";
+		next;
+		mes .@npc_name$;
+		mes "I barely achieved today's goal like this...";
+		next;
+		mes .@npc_name$;
+		mes "If you can afford it tomorrow, please come again!!";
+		close;
+	}
+	end;
+
+OnInit:
+	setunittitle getnpcid(0), "<Juno Monster Society>";
+
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 90 && checkquest(3481,HUNTING) == -1 && checkquest(3482,PLAYTIME) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(3482,PLAYTIME) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(3481,HUNTING) == 2" );
+
+	// (no questinfo when playtime ongoing)
+	end;
+}
+
+ve_fild04,52,242,5	script	Map Examiner Rana#85	4_M_MOC_SOLDIER,{
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
+	.@item_name$ = getitemname(1000374);
+
+	if (BaseLevel < 90) {
+		mes .@npc_name$;
+		mes "Adventurer, it's dangerous here.";
+		mes "I don't know if my life is not worth it...";
+		close;
+	}
+	switch( checkquest(8676,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		if (countitem(1000374) < 3) {
+			mes .@npc_name$;
+			mes "In principle, subjugation quests are limited to once a day.";
+			mes "Today, rest for a while, next time...";
+			close;
+		}
+		mes .@npc_name$;
+		mes "In principle, subjugation quests are limited to once a day.";
+		mes "Today, rest for a while, next time...";
+		next;
+		if (select( "I recommend " + .@item_name$ + "", "See you tomorrow" ) == 2) {
+			mes .@npc_name$;
+			mes "Yes! See you tomorrow.";
+			close;
+		}
+		delitem 1000374,3;	// Brilliant_Soda
+		erasequest 8676;
+		mes .@npc_name$;
+		mes "Oh, this is my favorite " + .@item_name$ + "!";
+		mes "Can I take this? Thank you!";
+		mes "Kick Knock Kick...";
+		next;
+		specialeffect EF_FLASHER;
+		mes .@npc_name$;
+		mes "It's refreshing!";
+		mes "...";
+		mes "Ah! Adventurer!";
+		next;
+		mes .@npc_name$;
+		mes "I'm sending a monster subjugation investigation request to the adventurers who pass by here, how about it?";
+		callsub( S_Quest, 8677, 2 );	// no text
+	case 2:
+		erasequest 8676;
+		break;
+	}
+	if (isbegin_quest(8675) < 2) {
+		switch( checkquest(8675,HUNTING) ) {	// first time
+		case -1:
+			callsub( S_Quest, 8675, 0 );
+		case 0:
+		case 1:
+			mes .@npc_name$;
+			mes "Please kill 80 monsters around here.";
+			mes "...Yes? Mobility service?";
+			next;
+			callsub( S_Warp );
+		case 2:
+			mes .@npc_name$;
+			mes "Ah, adventurer! I saw your performance well enough. Thank you for your hard work.";
+			getexp 188600,173200;
+			completequest 8675;
+			setquest 8676;
+			close;
+		}
+	}
+	switch( checkquest(8677,HUNTING) ) {
+	case -1:
+		callsub( S_Quest, 8677, 1 );
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "Please kill 80 monsters around here.";
+		mes "...Yes? Mobility service?";
+		next;
+		callsub( S_Warp );
+	case 2:
+		mes .@npc_name$;
+		mes "Ah, adventurer! I saw your performance well enough. Thank you for your hard work.";
+		getexp 188600,173200;
+		erasequest 8677;
+		setquest 8676;
+		close;
+	}
+	end;
+
+S_Quest:
+	.@quest_id = getarg(0);
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
+
+	switch( getarg(1) ) {
+	case 0:	// quest 8675
+		mes .@npc_name$;
+		mes "Hello. This is Ranya from the Juno Monster Society.";
+		mes "I am asking adventurers to investigate monster subjugation, how do you feel?";
+		break;
+	case 1:	// quest 8677
+		mes .@npc_name$;
+		mes "Hello. You're here today!";
+		mes "I'm requesting monster subjugation investigations from adventurers passing by here. How is it?";
+		break;
+	case 2:	// quest 8677 but no text
+		break;
+	}
+	mes "Or, if you are nearby, we also support teleportation service.";
+	next;
+	switch( select( "Listen to the situation", "Move to a nearby city", "Stop" ) ) {
+	case 1:
+		if (.@quest_id == 8675) {
+			mes .@npc_name$;
+			mes "Recently, the number of monsters is increasing in some areas, including around this area.";
+			mes "I think the reason is that there are fewer people than before...";
+			next;
+			mes .@npc_name$;
+			mes "It already means that you can't control the object naturally.";
+			mes "To prevent further colonization from expanding, our Juno Monster Society has planned a massive subjugation.";
+			next;
+			mes .@npc_name$;
+			mes "No matter how many adventurers visit, it's a big deal if you come down to where people live...";
+			mes "So, can I ask you to subdue me?";
+			next;
+		}
+		mes .@npc_name$;
+		mes "If you kill 80 monsters in this Veins Field, this field that I can see, our society will recognize your achievements and give you experience points.";
+		next;
+		if (select( "Accept", "Refuse" ) == 2) {
+			mes .@npc_name$;
+			mes "It's mutually beneficial, so why do you refuse...";
+			close;
+		}
+		setquest .@quest_id;
+		mes .@npc_name$;
+		mes "Good. I'll wait here.";
+		close;
+	case 2:
+		callsub( S_Warp );
+	case 3:
+		mes .@npc_name$;
+		mes "It's mutually beneficial, so why do you refuse...";
+		close;
+	}
+	end;
+
+S_Warp:
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
+	.@item_name$ = getitemname(1000374);
+
+	mes .@npc_name$;
+	mes "The nearest place here is ^0033FFVeins^000000,";
+	mes "If you have " + .@item_name$ + ", please give me one... and I'll teleport you.";
+	next;
+	if (select( "Give me 1 " + .@item_name$ + " with Veins", "No" ) == 2) {
+		mes .@npc_name$;
+		mes "Ah... Then what can I do?";
+		close;
+	}
+	if (countitem(1000374) < 1) {
+		mes .@npc_name$;
+		mes "You don't seem to have " + .@item_name$ + "?";
+		close;
+	}
+	delitem 1000374,1;	// Brilliant_Soda
+	warp "veins",208,124;
+	end;
+
+OnInit:
+	setunittitle getnpcid(0), "<Juno Monster Society>";
+
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "BaseLevel >= 90 && checkquest(8675,HUNTING) == -1" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(8675) == 2 && checkquest(8677,HUNTING) == -1 && checkquest(8676,PLAYTIME) == -1" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8676,PLAYTIME) == 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8675,HUNTING) == 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8677,HUNTING) == 2" );
+
+	// (no questinfo when playtime ongoing)
+	end;
+}
+
+ra_fild06,292,39,5	script	Map Examiner Kantu#85	4_M_MOC_SOLDIER,{
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
+	.@item_name$ = getitemname(1000374);
+
+	if (BaseLevel < 93) {
+		mes .@npc_name$;
+		mes "The Juno Monster Society is in the process of subjugation quests. But you still seem a little weak to carry out the quests.";
+		close;
+	}
+	switch( checkquest(8673,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		if (countitem(1000374) < 3) {
+			mes .@npc_name$;
+			mes "In principle, subjugation quests are limited to once a day.";
+			mes "Today, rest for a while, next time...";
+			close;
+		}
+		mes .@npc_name$;
+		mes "In principle, subjugation quests are limited to once a day.";
+		mes "Today, rest for a while, next time...";
+		next;
+		if (select( "I recommend " + .@item_name$ + "", "See you tomorrow" ) == 2) {
+			mes .@npc_name$;
+			mes "Yes! See you tomorrow.";
+			close;
+		}
+		delitem 1000374,3;	// Brilliant_Soda
+		erasequest 8673;
+		mes .@npc_name$;
+		mes "Oh, this is my favorite " + .@item_name$ + "!";
+		mes "Can I take this? Thank you!";
+		next;
+		specialeffect EF_FLASHER;
+		mes .@npc_name$;
+		mes "It's refreshing!";
+		mes "Kyaha~...";
+		next;
+		mes .@npc_name$;
+		mes "Ah, adventurer. I'm taking a monster subjugation investigation request today, how is it?";
+		.@skip = true;
+		break;
+	case 2:
+		erasequest 8673;
+		break;
+	}
+	if (isbegin_quest(8672) == 2)
+		.@quest_id = 8674;
+	else
+		.@quest_id = 8672;
+
+	switch( checkquest(.@quest_id,HUNTING) ) {
+	case -1:
+		if (!.@skip) {
+			mes .@npc_name$;
+			mes "Hello, adventurer! I'm Kantu from the Juno Monster Society.";
+			mes "I am asking adventurers to investigate monster subjugation, how do you feel?";
+			next;
+			mes .@npc_name$;
+		}
+		mes "Or, if you are nearby, we will support you with a teleportation service.";
+		next;
+		switch( select( "Listen to the situation", "Move to a nearby city", "Stop" ) ) {
+		case 1:
+			if (.@quest_id == 8672) {
+				mes .@npc_name$;
+				mes "Recently, the number of monsters is increasing in some areas, including around this area.";
+				mes "It already means that you can't control the object naturally.";
+				next;
+				mes .@npc_name$;
+				mes "To prevent further colonization from expanding, our Juno Monster Society has planned a massive subjugation.";
+				mes "No matter how many adventurers visit, it's a big deal if you come down to where people live...";
+				next;
+			}
+			mes .@npc_name$;
+			mes "So, can I ask you to subdue me?";
+			mes "This Porto Luna, if you kill 80 monsters within this field that I can see, our society will recognize your achievements and give you experience points.";
+			next;
+			if (select( "Accept", "Refuse" ) == 2) {
+				mes .@npc_name$;
+				mes "Ah... can you help us?";
+				close;
+			}
+			setquest .@quest_id;
+			mes .@npc_name$;
+			mes "Yes, I have registered!";
+			mes "I'm going to check if the population is throttled here.";
+			close;
+		case 2:
+			mes .@npc_name$;
+			mes "The nearest place here is ^0033FFRachel^000000,";
+			mes "If you have " + .@item_name$ + ", please give me one... and I'll teleport you.";
+			mes "Ha~ It's popular these days, but I can't go buy it.";
+			next;
+			if (select( "Give me 1 " + .@item_name$ + ", Rachel", "No" ) == 2) {
+				mes .@npc_name$;
+				mes "I can't help it.";
+				close;
+			}
+			if (countitem(1000374) < 1) {
+				mes .@npc_name$;
+				mes "You don't seem to have " + .@item_name$ + "?";
+				mes "I'm standing... I'm sorry.";
+				close;
+			}
+			delitem 1000374,1;	// Brilliant_Soda
+			warp "rachel",113,136;
+			end;
+		case 3:
+			mes .@npc_name$;
+			mes "Ah... Please help us...";
+			close;
+		}
+		end;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "Please kill 80 monsters around here.";
+		mes "...Yes? Mobility service?";
+		next;
+		mes .@npc_name$;
+		mes "The nearest place here is ^0033FFRachel^000000,";
+		mes "If you have " + .@item_name$ + ", please give me one... and I'll teleport you.";
+		next;
+		if (select( "Give me 1 " + .@item_name$ + ", Rachel", "No" ) == 2) {
+			mes .@npc_name$;
+			mes "I can't help it.";
+			close;
+		}
+		if (countitem(1000374) < 1) {
+			mes .@npc_name$;
+			mes "You don't seem to have " + .@item_name$ + "?";
+			mes "I'm standing... I'm sorry.";
+			close;
+		}
+		delitem 1000374,1;	// Brilliant_Soda
+		warp "rachel",113,136;
+		end;
+	case 2:
+		mes .@npc_name$;
+		mes "Hello, adventurer! I'm Kantu from the Juno Monster Society.";
+		mes "I am asking adventurers to investigate monster subjugation, how do you feel?";
+		next;
+		getexp 194712,185136;
+		mes .@npc_name$;
+		mes "Ah, adventurer! I saw your performance well enough. Thank you for your hard work.";
+		if (.@quest_id == 8672)
+			completequest 8672;
+		else
+			erasequest 8674;
+		setquest 8673;
+		close;
+	}
+	end;
+
+OnInit:
+	setunittitle getnpcid(0), "<Juno Monster Society>";
+
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "BaseLevel >= 93 && checkquest(8672,HUNTING) == -1 && checkquest(8673,PLAYTIME) == -1" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(8672) == 2 && checkquest(8674,HUNTING) == -1 && checkquest(8673,PLAYTIME) == -1" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8673,PLAYTIME) == 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8672,HUNTING) == 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8674,HUNTING) == 2" );
+	end;
+}
+
+ve_fild03,348,230,5	script	Map Examiner Dew#85	4_M_MOC_SOLDIER,{
+	.@npc_name$ = "[" + strnpcinfo(1) + "]";
+	.@item_name$ = getitemname(1000374);
+
+	if (BaseLevel < 95) {
+		mes .@npc_name$;
+		mes "Adventurer, it's dangerous here.";
+		mes "I don't know if my life is not worth it...";
+		close;
+	}
+	switch( checkquest(8679,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		if (countitem(1000374) < 3) {
+			mes .@npc_name$;
+			mes "In principle, subjugation quests are limited to once a day.";
+			mes "Today, rest for a while, next time...";
+			close;
+		}
+		mes .@npc_name$;
+		mes "In principle, subjugation quests are limited to once a day.";
+		mes "Today, rest for a while, next time...";
+		next;
+		if (select( "I recommend " + .@item_name$ + "", "See you tomorrow" ) == 2) {
+			mes .@npc_name$;
+			mes "Yes! See you tomorrow.";
+			close;
+		}
+		delitem 1000374,3;	// Brilliant_Soda
+		erasequest 8679;
+		mes .@npc_name$;
+		mes "Oh, this is my favorite " + .@item_name$ + "!";
+		mes "Can I take this? Thank you!";
+		mes "Kick Knock Kick...";
+		next;
+		specialeffect EF_FLASHER;
+		mes .@npc_name$;
+		mes "It's refreshing!";
+		mes "ļ~...";
+		next;
+		mes .@npc_name$;
+		mes "I am asking adventurers to investigate monster subjugation, how do you feel?";
+		.@skip = true;
+		break;
+	case 2:
+		erasequest 8679;
+		break;
+	}
+	switch( checkquest(8680,HUNTING) ) {
+	case -1:
+		if (!.@skip) {
+			mes .@npc_name$;
+			mes "Hello. You came today!";
+			mes "I'm sending a monster subjugation investigation request to the adventurers who pass by here, how about it?";
+		}
+		mes "Or, if you are nearby, we also support teleportation service.";
+		next;
+		switch( select( "Subjugation Quest", "Move to a nearby city", "Stop" ) ) {
+		case 1:
+			mes .@npc_name$;
+			mes "If you kill 80 monsters in this Veins Field, this field that I can see, our society will recognize your achievements and give you experience points.";
+			next;
+			if (select( "Accept", "Refuse" ) == 2) {
+				mes .@npc_name$;
+				mes "I'm sorry";
+				close;
+			}
+			setquest 8680;
+			mes .@npc_name$;
+			mes "Good.";
+			mes "I'm checking to see if the population is being controlled here.";
+			close;
+		case 2:
+			mes .@npc_name$;
+			mes "The nearest place here is ^0033FF Veins^000000,";
+			mes "If you have " + .@item_name$ + ", please give me one... and I'll teleport you.";
+			next;
+			if (select( "Give me 1 " + .@item_name$ + " with Veins", "No" ) == 2) {
+				mes .@npc_name$;
+				mes "Ah... Then what can I do?";
+				close;
+			}
+			if (countitem(1000374) < 1) {
+				mes .@npc_name$;
+				mes "You don't seem to have " + .@item_name$ + "?";
+				close;
+			}
+			delitem 1000374,1;	// Brilliant_Soda
+			warp "veins",208,124;
+			end;
+		case 3:
+			mes .@npc_name$;
+			mes "I'm sorry";
+			close;
+		}
+		end;
+	case 0:
+	case 1:
+		mes .@npc_name$;
+		mes "Please kill 80 monsters around here.";
+		mes "...Yes? Mobility service?";
+		next;
+		mes .@npc_name$;
+		mes "The nearest place here is ^0033FFVeins^000000,";
+		mes "If you have " + .@item_name$ + ", please give me one... and I'll teleport you.";
+		mes "Ha~ It's popular these days, but I can't go buy it.";
+		next;
+		if (select( "Give me 1 " + .@item_name$ + " with Veins", "No" ) == 2) {
+			mes .@npc_name$;
+			mes "Ah... Then what can I do?";
+			close;
+		}
+		if (countitem(1000374) < 1) {
+			mes .@npc_name$;
+			mes "You don't seem to have " + .@item_name$ + "?";
+			close;
+		}
+		delitem 1000374,1;	// Brilliant_Soda
+		warp "veins",208,124;
+		end;
+	case 2:
+		mes .@npc_name$;
+		mes "Ah, adventurer! I saw your performance well enough. Thank you for your hard work.";
+		next;
+		mes .@npc_name$;
+		mes "I think the right amount is really important for anything, right?";
+		erasequest 8680;
+		setquest 8679;
+		getexp 209440,193440;
+		close;
+	}
+	end;
+
+OnInit:
+	setunittitle getnpcid(0), "<Juno Monster Society>";
+
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "BaseLevel >= 95 && checkquest(8680,HUNTING) == -1 && checkquest(8679,PLAYTIME) == -1" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8679,PLAYTIME) == 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(8680,HUNTING) == 2" );
+	end;
+}

@@ -1,0 +1,32 @@
+//===== rAthena Script =======================================
+//= Brasilis Town Warps
+//===== Changelog: ===========================================
+//= 1.0 First version. [L0ne_W0lf]
+//= 1.1 Fixed warps according to official. [Protimus]
+//= 1.1a Added Field warp according to official. [Jguy]
+//= 1.2 Added missing warps & removed duplicated one. [Daegaladh]
+//============================================================
+
+//Museum
+brasilis,146,162,0	warp	brasilis_bra_in01	1,1,bra_in01,17,137
+bra_in01,17,134,0	warp	bra_in01_brasilis	1,1,brasilis,148,161
+bra_in01,50,145,0	warp	bra_in01_bra_in01#2	1,1,bra_in01,81,143
+bra_in01,79,142,0	warp	bra_in01_bra_in01#3	1,1,bra_in01,47,144
+bra_in01,50,171,0	warp	bra_in01_bra_in01#4	1,1,bra_in01,82,168
+bra_in01,79,169,0	warp	bra_in01_bra_in01#5	1,1,bra_in01,46,170
+bra_in01,138,174,0	warp	bra_in01_bra_in01#6	1,1,bra_in01,12,183
+bra_in01,206,98,0	warp	bra_in01_bra_in01#7	1,1,bra_in01,138,176
+
+//Inn
+brasilis,274,153,0	warp	brasilis_bra_in01#1	1,1,bra_in01,38,9
+bra_in01,39,7,0	warp	bra_in01_brasilis#1	1,1,brasilis,273,151
+bra_in01,52,27,0	warp	bra_in01_bra_in01#8	1,1,bra_in01,85,26
+bra_in01,83,27,0	warp	bra_in01_bra_in01#9	1,1,bra_in01,50,27
+bra_in01,9,67,0	warp	bra_in01_bra_in01#10	1,1,bra_in01,154,22
+bra_in01,156,23,0	warp	bra_in01_bra_in01#11	1,1,bra_in01,11,65
+bra_in01,52,67,0	warp	bra_in01_bra_in01#12	1,1,bra_in01,87,66
+bra_in01,85,67,0	warp	bra_in01_bra_in01#13	1,1,bra_in01,50,66
+bra_in01,31,29,0	warp	bra_in01_bra_in01#14	1,1,bra_in01,23,70
+bra_in01,25,70,0	warp	bra_in01_bra_in01#15	1,1,bra_in01,32,26
+bra_in01,31,74,0	warp	bra_in01_bra_in01#16	1,1,bra_in01,148,59
+bra_in01,148,57,0	warp	bra_in01_bra_in01#17	1,1,bra_in01,31,72

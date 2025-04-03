@@ -11,6 +11,7 @@ OnInit:
 	.HP_Option = true;	//Allow HP option
 	.SP_Option = true;	//Allow SP option
 	.MinDelay = 100;	//Minimum Delay Allowed in milliseconds (Default and Recommended: 100) [lower values will increase server strain]
+	.MaxDelay = 1000;	//Maximum Delay Allowed in milliseconds (Default and Recommended: 1000)
 	setarray .blackList[0],0;	//Array of black listed item ID
 
 	if(!.HP_Option && !.SP_Option){
@@ -24,11 +25,11 @@ end;
 L_Help:
 	dispbottom "Available commands:";
 	if(.HP_Option && .SP_Option){
-		dispbottom "    @autopot <hp|sp> <item id> {<min hp|sp % [1..100]> {<delay [" + .MinDelay + "..1000]>}}";
+		dispbottom "    @autopot <hp|sp> <item id> {<min hp|sp % [1..100]> {<delay [" + .MinDelay + ".."+.MaxDelay+"]>}}";
 		dispbottom "    @autopot <hp|sp> list";
 		dispbottom "    @autopot <hp|sp> <on|off>";
 	}else{
-		dispbottom "    @autopot <" + (.HP_Option?"hp":"sp") + "> <item id> {<min " + (.HP_Option?"hp":"sp") + " % [1..100]> {<delay [" + .MinDelay + "..1000]>}}";
+		dispbottom "    @autopot <" + (.HP_Option?"hp":"sp") + "> <item id> {<min " + (.HP_Option?"hp":"sp") + " % [1..100]> {<delay [" + .MinDelay + ".."+.MaxDelay+"]>}}";
 		dispbottom "    @autopot <" + (.HP_Option?"hp":"sp") + "> list";
 		dispbottom "    @autopot <" + (.HP_Option?"hp":"sp") + "> <on|off>";
 	}
@@ -56,10 +57,11 @@ L_Start:
 	.@type$  = getarg(0,0);
 	.@potion = getarg(1,0);
 	setd "@autopot_" + .@type$ + "_Min",getarg(2,0);
-	@autopot_delay = getarg(3,0);
+	@autopot_delay = getarg(3,.MinDelay);
 
 	if (getd("@autopot_" + .@type$ + "_Min")   < 1  || getd("@autopot_" + .@type$ + "_Min") > 100)  setd "@autopot_" + .@type$ + "_Min",90;
-	if (@autopot_delay < 50 || @autopot_delay > 1000) @autopot_delay = .MinDelay;
+	if (@autopot_delay < .MinDelay) @autopot_delay = .MinDelay;
+	if (@autopot_delay > .MaxDelay) @autopot_delay = .MaxDelay;
 	if (getiteminfo(.@potion, ITEMINFO_TYPE) != IT_HEALING) {
 		dispbottom getitemname(.@potion) + " is not a healing item.";
 		end;
@@ -74,7 +76,7 @@ L_Start:
 	}
 	setd "@autopot_" + .@type$ + "_ID",.@potion;
 	setd "@autopot_" + .@type$ + "_Active",true;
-	addtimer .@delay,strnpcinfo(3) + "::OnStart";
+	addtimer @autopot_delay,strnpcinfo(3) + "::OnStart";
 	message strcharinfo(0), "Auto-Potion " + strtoupper(.@type$) + " enabled.";
 	callsub L_Info;
 	return;

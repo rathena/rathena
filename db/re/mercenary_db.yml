@@ -611,3 +611,69 @@ Body:
     Skills:
       - Name: MER_INVINCIBLEOFF2
         MaxLevel: 1
+  - Id: 3569
+    AegisName: POPE_MD_H_MERC_NORMAL
+    Name: Official Pope
+    Level: 120
+    Hp: 120000
+    Sp: 200
+    Attack: 123
+    Defense: 999
+    MagicDefense: 105
+    Str: 2
+    Vit: 400
+    Int: 10
+    Dex: 110
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 100
+    AttackDelay: 576
+    AttackMotion: 750
+    DamageMotion: 384
+    Skills:
+      - Name: MER_MAGNIFICAT
+        MaxLevel: 1
+      - Name: MER_DECAGI
+        MaxLevel: 1
+      - Name: MER_TENDER
+        MaxLevel: 1
+      - Name: MER_BLESSING
+        MaxLevel: 3
+  - Id: 3570
+    AegisName: POPE_MD_H_MERC_CASUAL
+    Name: Casual Pope
+    Level: 120
+    Hp: 120000
+    Sp: 200
+    Attack: 123
+    Defense: 999
+    MagicDefense: 105
+    Str: 2
+    Vit: 400
+    Int: 10
+    Dex: 110
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 100
+    AttackDelay: 576
+    AttackMotion: 750
+    DamageMotion: 384
+    Skills:
+      - Name: MER_MAGNIFICAT
+        MaxLevel: 1
+      - Name: MER_DECAGI
+        MaxLevel: 1
+      - Name: MER_TENDER
+        MaxLevel: 1
+      - Name: MER_BLESSING
+        MaxLevel: 3

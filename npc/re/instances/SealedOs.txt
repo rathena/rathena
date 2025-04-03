@@ -1,0 +1,620 @@
+//===== rAthena Script =======================================
+//= Sealed OS
+//===== Description: =========================================
+//= [Walkthrough Conversion]
+//= Episode 17.1 - Sealed OS
+//===== Changelog: ===========================================
+//= 1.0 Initial release [crazyarashi]
+//= 1.1 Optimizations and cleanup [Everade]
+//============================================================
+
+1@os_b,1,1,0	script	#171_sealedos_control	-1,{
+	end;
+
+OnInstanceInit:
+	'map$ = instance_mapname("1@os_b");
+	'seal_os = 'lock = 0;
+	hideonnpc instance_npcname("Dien#171_os_0");
+	hideonnpc instance_npcname("Cotnes#171_os_0");
+	hideonnpc instance_npcname("Dien#171_os_1");
+	hideonnpc instance_npcname("Ridsh#171_os_1");
+	hideonnpc instance_npcname("Cotnes#171_os_1");
+	disablenpc instance_npcname("Suspicious Device#171_os");
+	disablenpc instance_npcname("Thick Wire#171_os_0");
+	disablenpc instance_npcname("Thick Wire#171_os_1");
+	disablenpc instance_npcname("Thick Wire#171_os_2");
+	disablenpc instance_npcname("Dien#171_os_2");
+	disablenpc instance_npcname("Cotnes#171_os_2");
+	disablenpc instance_npcname("Dien#171_os_3");
+	hideonnpc instance_npcname("Est#171_os_0");
+	hideonnpc instance_npcname("Cotnes#171_os_3");
+	hideonnpc instance_npcname("Dien#171_os_4");
+	disablenpc instance_npcname("Ridsh#171_os_2");
+	disablenpc instance_npcname("#171_sos_dummy_6");
+	disablenpc instance_npcname("#171_sos_dummy_7");
+	disablenpc instance_npcname("Ridsh#171_os_3");
+	disablenpc instance_npcname("Est#171_os_1");
+	disablenpc instance_npcname("Cotnes#171_os_4");
+	disablenpc instance_npcname("Dien#171_os_5");
+	end;
+
+OnEvent01:
+	disablenpc instance_npcname("Ridsh#171_os_0");
+	disablenpc instance_npcname("Dien#171_os_0");
+	disablenpc instance_npcname("Cotnes#171_os_0");
+	disablenpc instance_npcname("#171_os_warp_1");
+	disablenpc instance_npcname("#171_os_warp_2");
+	hideoffnpc instance_npcname("Dien#171_os_1");
+	hideoffnpc instance_npcname("Ridsh#171_os_1");
+	hideoffnpc instance_npcname("Cotnes#171_os_1");
+	donpcevent instance_npcname("#171_sealedos_mob") + "::OnSummon00";
+	end;
+
+OnEvent02:
+	for (.@i = 0; .@i < 6; .@i++)
+		disablenpc instance_npcname("#171_sos_dummy_" +.@i);
+	disablenpc instance_npcname("Suspicious Device#171_os");
+	disablenpc instance_npcname("Dien#171_os_1");
+	disablenpc instance_npcname("Ridsh#171_os_1");
+	disablenpc instance_npcname("Cotnes#171_os_1");
+	disablenpc instance_npcname("#171_os_warp_0");
+	enablenpc instance_npcname("Thick Wire#171_os_0");
+	enablenpc instance_npcname("Thick Wire#171_os_1");
+	enablenpc instance_npcname("Thick Wire#171_os_2");
+	enablenpc instance_npcname("Dien#171_os_2");
+	end;
+
+OnEvent03:
+	disablenpc instance_npcname("Dien#171_os_2");
+	enablenpc instance_npcname("Cotnes#171_os_2");
+	enablenpc instance_npcname("Dien#171_os_3");
+	enablenpc instance_npcname("Ridsh#171_os_2");
+	end;
+
+OnEvent04:
+	'unlocked = 1;
+	disablenpc instance_npcname("#171_os_warp_3");
+	enablenpc instance_npcname("Ridsh#171_os_2");
+	enablenpc instance_npcname("#171_sos_dummy_6");
+	enablenpc instance_npcname("#171_sos_dummy_7");
+	end;
+
+OnEvent05:
+	disablenpc instance_npcname("Ridsh#171_os_2");
+	disablenpc instance_npcname("Est#171_os_0");
+	disablenpc instance_npcname("Cotnes#171_os_3");
+	disablenpc instance_npcname("Dien#171_os_4");
+	disablenpc instance_npcname("#171_os_warp_5");
+	enablenpc instance_npcname("Ridsh#171_os_3");
+	enablenpc instance_npcname("Est#171_os_1");
+	enablenpc instance_npcname("Cotnes#171_os_4");
+	enablenpc instance_npcname("Dien#171_os_5");
+	end;
+}
+
+1@os_b,188,45,5	script	Ridsh#171_os_0	4_F_LEEDSH,{
+	if (!is_party_leader())
+		end;
+	.@dien$ =  instance_npcname("Dien#171_os_0");
+	.@cot$ = instance_npcname("Cotnes#171_os_0");
+	cutin "ep162_rds01",2;
+	mes "[Ridsh]";
+	mes "Oh?";
+	mes "What are you doing here?";
+	npctalk "Ridsh : Oh? What are you doing here.";
+	next;
+	cutin "ep162_rds05",2;
+	mes "[Ridsh]";
+	mes "We're in trouble~~";
+	mes "We can't have anyone know we're here~~";
+	npctalk "Ridsh : We're in trouble~~ We can't have anyone know we're here~~";
+	next;
+	hideoffnpc .@dien$;
+	hideoffnpc .@cot$;
+	cutin "ep162_dn03",2;
+	mes "[Dien]";
+	mes "The adventurer is here too!";
+	mes "Why are you scared!";
+	npctalk "Dien : The adventurer is here too!  Why are you scared!",.@dien$;
+	next;
+	mes "[Dien]";
+	mes "Hello " + strcharinfo(0) + ".";
+	sleep2 2000;
+	cutin "ep162_dn01",2;
+	mes "We've came here to do something... It was too troublesome to tell the youngsters.";
+	npctalk "Dien : We've came here to do something... It was too troublesome to tell the youngsters.",.@dien$;
+	next;
+	mes "[Dien]";
+	mes "If you keep it a secret that you saw us...";
+	npctalk "Dien : If you keep it a secret that you saw us...",.@dien$;
+	sleep2 1000;
+	specialeffect EF_BLASTMINEBOMB,AREA,instance_npcname("#171_os_warp_1");
+	sleep2 600;
+	specialeffect EF_BLASTMINEBOMB,AREA,instance_npcname("#171_os_warp_1");
+	sleep2 600;
+	specialeffect EF_BLASTMINEBOMB,AREA,instance_npcname("#171_os_warp_2");
+	next;
+	cutin "ep162_rds04",2;
+	mes "[Ridsh]";
+	mes "Sister~~";
+	mes "What are you talking about, I don't see the adventurer!";
+	npctalk "Ridsh : Sister~~ What are you talking about, I don't see the adventurer!";
+	next;
+	cutin "ep162_ctn01",2;
+	mes "[Cotnes]";
+	mes "Oh~";
+	mes "Yeah?";
+	mes "I don't see the adventurer either~";
+	npctalk "Cotnes : Oh~ Yeah? I don't see the adventurer either~",.@cot$;
+	next;
+	mes "[Cotnes]";
+	mes "So what now?";
+	mes "We're already inside.";
+	npctalk "Cotnes : So what now? We're already inside.",.@cot$;
+	next;
+	cutin "ep162_rds05",2;
+	mes "[Ridsh]";
+	mes "It can't be helped~~";
+	mes "We have to go with the adventurer.";
+	npctalk "Ridsh : It can't be helped~~ We have to go with the adventurer.";
+	next;
+	cutin "ep162_dn01",2;
+	mes "[Dien]";
+	mes "It's dangerous, so please come with us.";
+	npctalk "Dien :  It's dangerous so please come with us.",.@dien$;
+	close2;
+	cutin "",255;
+	if ('seal_os == 0) {
+		'seal_os = 1;
+		donpcevent instance_npcname("#171_sealedos_control") + "::OnEvent01";
+	}
+	end;
+}
+
+1@os_b,212,41,0	script	Suspicious Device#171_os	4_ENERGY_BLUE,{
+	mes "- There is a pipe going through the floor. -";
+	next;
+	if (select("Crush it.:Put it down.") == 2) {
+		mes "- Nothing happened. -";
+		close;
+	}
+	mes "- The machine stopped with a strange noise when the pipe was broken. -";
+	specialeffect EF_BLASTMINEBOMB;
+	close2;
+	mapannounce 'map$,"Ridsh : Alright! Let's move up along the railroad tracks!",bc_map,0xFF0000;
+	if ('seal_os == 1) {
+		'seal_os = 2;
+		donpcevent instance_npcname("#171_sealedos_control") + "::OnEvent02";
+	}
+	end;
+}
+
+1@os_b,1,1,0	script	#171_sealedos_mob	HIDDEN_WARP_NPC,{
+	end;
+
+OnSummon00:
+	.@event$ = instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	npctalk "Cotnes : Over here~~.",instance_npcname("Dien#171_os_1");
+	sleep 1000;
+	npctalk "Dien : Oh my... what a surprise!",instance_npcname("Dien#171_os_1");
+	sleep 1000;
+	npctalk "Dien : We will take care of this side. Please take care of the disgusting ones there!",instance_npcname("Dien#171_os_1");
+	monster 'map$,205,46,"Dolor",20361,1,.@event$;
+	monster 'map$,200,45,"Twin Caput",20365,1,.@event$;
+	end;
+
+OnMobKill:
+	.@event$ = instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	if (!mobcount('map$,.@event$)) {
+		disablenpc();
+		enablenpc instance_npcname("Suspicious Device#171_os");
+		mapannounce 'map$,"Ridsh : Turn off the device at the bottom, while we deal with the enemies.",bc_map,0xFF0000;
+	}
+	end;
+}
+
+1@os_b,112,108,5	script	Dien#171_os_2	4_F_DIENE,{
+	cutin "ep162_dn01",2;
+	mes "[Dien]";
+	mes "Oh my! What's that thing in the front?";
+	close3;
+}
+
+1@os_b,115,112,3	script	Dangerous-Looking Device#s_os_0	1_SHADOW_NPC,3,3,{
+	end;
+
+OnTouch:
+	mes "[Dien]";
+	mes "Oh my! I think it's precise device that's placed here in the abandoned mine.";
+	next;
+	mes "[Dien]";
+	mes "If you don't break the machine on the other side, we will not be able pass it!";
+	next;
+	mes "[Dien]";
+	mes "It's dangerous to go through right now, so let's turn around and go where the device is!";
+	close2;
+	warp 'map$,115,104;
+	sleep2 2000;
+	npctalk "Dien : If you don't break the machine on the other side, we will not be able pass it!",instance_npcname("Dien#171_os_2");
+	end;
+}
+
+1@os_b,115,126,3	duplicate(Dangerous-Looking Device#s_os_0)	Dangerous-Looking Device#s_os_1	1_SHADOW_NPC,3,3
+1@os_b,115,144,3	duplicate(Dangerous-Looking Device#s_os_0)	Dangerous-Looking Device#s_os_2	1_SHADOW_NPC,3,3
+
+1@os_b,137,107,0	script	Thick Wire#171_os_0	4_ENERGY_BLUE,{
+	.@id = atoi(replacestr(strnpcinfo(2),"171_os_",""));
+	'lock += 1;
+	disablenpc();
+	disablenpc instance_npcname("Dangerous-Looking Device#s_os_" + .@id);
+	if ('lock < 3)
+		mapannounce 'map$,"Ridsh : The device hasn't turned off yet. Please take a look above for me.",bc_map,0xFF0000;
+	else {
+		mapannounce 'map$,"Ridsh : Great! The road is open. Let's move along the railroad tracks!",bc_map,0xFF0000;
+		if ('seal_os == 2) {
+			'seal_os = 3;
+			donpcevent instance_npcname("#171_sealedos_control") + "::OnEvent03";
+		}
+	}
+	end;
+}
+
+1@os_b,137,123,0	duplicate(Thick Wire#171_os_0)	Thick Wire#171_os_1	4_ENERGY_BLUE
+1@os_b,137,139,0	duplicate(Thick Wire#171_os_0)	Thick Wire#171_os_2	4_ENERGY_BLUE
+
+1@os_b,122,212,5	script	Dien#171_os_3	4_F_DIENE,{
+	cutin "ep162_dn01",2;
+	mes "[Dien]";
+	mes "Oh!";
+	mes "If you go to the right, I think you can go back on the railroad without having to break the door.";
+	npctalk "Dien : Oh! If you go to the right, I think you can go back on the railroad without having to break the door";
+	if (!'unlocked)
+		donpcevent instance_npcname("#171_sealedos_control") + "::OnEvent04";
+	close3;
+}
+
+1@os_b,114,217,0	script	Cotnes#171_os_2	4_F_COATNEIS,{
+	cutin "ep162_ctn01",2;
+	mes "[Cotnes]";
+	mes "Oh, is this gate too hard?";
+	mes "It will take some time to break it~";
+	npctalk "Cotnes : Oh, is this gate too hard? It will take some time to break it.";
+	next;
+	cutin "ep162_dn01",2;
+	mes "[Dien]";
+	mes "Oh!";
+	mes "If you go to the right, I think you can go back on the railroad without having to break the door.";
+	npctalk "Dien : Oh! If you go to the right, I think you can go back on the railroad without having to break the door";
+	if (!'unlocked)
+		donpcevent instance_npcname("#171_sealedos_control") + "::OnEvent04";
+	close3;
+}
+
+1@os_b,146,221,7	script	Ridsh#171_os_2	4_F_LEEDSH,{
+	if ('seal_os != 3)
+		end;
+	cutin "ep162_rds04",2;
+	mes "[Ridsh]";
+	mes "Argh!";
+	npctalk "Ridsh : Argh!";
+	next;
+	.@est$ = instance_npcname("Est#171_os_0");
+	hideoffnpc .@est$;
+	sleep2 500;
+	specialeffect EF_BLASTMINEBOMB,AREA,instance_npcname("#171_sos_dummy_6");
+	sleep2 500;
+	disablenpc instance_npcname("#171_sos_dummy_6");
+	specialeffect EF_BLASTMINEBOMB,AREA,instance_npcname("#171_sos_dummy_7");
+	cutin "ep162_est01",2;
+	mes "[Est]";
+	mes "Oh...";
+	mes "I'm in a hurry, what are you doing here?";
+	npctalk "Est : I'm in a hurry, what are you doing here?",.@est$;
+	disablenpc instance_npcname("#171_sos_dummy_7");
+	next;
+	cutin "ep162_est02",2;
+	mes "[Est]";
+	mes "Please go back and enjoy your tea gracefully.";
+	npctalk "Est : Please go back and enjoy your tea gracefully.",.@est$;
+	next;
+	cutin "ep162_rds02",2;
+	mes "[Ridsh]";
+	mes "Huh!";
+	mes "How did you sneak in here anyway?";
+	npctalk "Ridsh : Huh! How did you sneak in here anyway?";
+	next;
+	cutin "ep162_est02",2;
+	mes "[Est]";
+	mes "This is only a surveillance routine.";
+	mes "If you close your eyes for a second, you may run into an accident.";
+	npctalk "Est : This is only a surveillance routine.",.@est$;
+	sleep2 2000;
+	npctalk "Est : If you close your eyes for a second, you may run into an accident.",.@est$;
+	next;
+	cutin "ep162_rds02",2;
+	mes "[Ridsh]";
+	mes "What makes you think we need your help?";
+	npctalk "Ridsh : What makes you think we need your help?";
+	next;
+	cutin "ep162_est02",2;
+	mes "[Est]";
+	mes "Didn't you just did now?";
+	mes "I don't think I heard that wrong. Did I?";
+	next;
+	disablenpc instance_npcname("Cotnes#171_os_2");
+	.@cot$ = instance_npcname("Cotnes#171_os_3");
+	hideoffnpc .@cot$;
+	cutin "ep162_ctn01",2;
+	mes "[Cotnes]";
+	mes "You two really~";
+	mes "Please stop fighting.";
+	npctalk "Cotnes : You two really~ Please stop fighting.",.@cot$;
+	next;
+	disablenpc instance_npcname("Dien#171_os_3");
+	.@dien$ = instance_npcname("Dien#171_os_4");
+	hideoffnpc .@dien$;
+	cutin "ep162_dn03",2;
+	mes "[Dien]";
+	mes "How do you always fight like that?";
+	npctalk "Dien : How do you always fight like that?",.@dien$;
+	next;
+	cutin "ep162_ctn01",2;
+	mes "[Cotnes]";
+	mes "I'm so excited about this~ I'm getting old and I'm tired of fighting.";
+	npctalk "Cotnes : I'm so excited about this~ I'm getting old and I'm tired of fighting.",.@cot$;
+	next;
+	cutin "ep162_dn03",1;
+	mes "[Dien]";
+	mes "Is that so?";
+	npctalk "Dien : Is that so?",.@dien$;
+	next;
+	cutin "ep162_ctn01",2;
+	mes "[Cotnes]";
+	mes "Yeah~";
+	mes "I'm tired of fighting, let's go back to work.";
+	mes "The road is open now.";
+	npctalk "Cotnes : Yeah~ I'm tired of fighting, let's go back to work. The road is open now.",.@cot$;
+	close2;
+	cutin "",255;
+	if ('seal_os == 3) {
+		'seal_os = 4;
+		donpcevent instance_npcname("#171_sealedos_control") + "::OnEvent05";
+	}
+	end;
+}
+
+1@os_b,259,360,5	script	Dien#171_os_5	4_F_DIENE,{
+	if ('seal_os != 4)
+		end;
+	cutin "ep162_dn03",2;
+	mes "[Dien]";
+	mes "Finally..";
+	mes "If you cross this door...";
+	next;
+	cutin "ep162_est01",2;
+	mes "[Est]";
+	mes "Let's head back now before they gather more troops.";
+	next;
+	cutin "ep162_dn03",2;
+	mes "[Dien]";
+	mes "Excuse me.";
+	next;
+	cutin "ep162_est01",2;
+	mes "[Est]";
+	mes "?";
+	next;
+	cutin "ep162_rds01",2;
+	mes "[Ridsh]";
+	mes "Why?";
+	next;
+	cutin "ep162_dn03",2;
+	mes "[Dien]";
+	mes "Oh my, oh my!";
+	mes "What should we do!";
+	next;
+	cutin "ep162_rds04",2;
+	mes "[Ridsh]";
+	mes "Why, what's going on?";
+	next;
+	cutin "ep162_dn03",2;
+	mes "[Dien]";
+	mes "I think I've left it.";
+	next;
+	cutin "ep162_rds01",2;
+	mes "[Ridsh]";
+	mes "Left what?";
+	next;
+	cutin "ep162_dn03",2;
+	mes "[Dien]";
+	mes "My protection charm!";
+	mes "I get nervous if I don't have it with me.";
+	next;
+	cutin "ep162_rds04",2;
+	mes "[Ridsh]";
+	mes "You've been fine so far without it?!";
+	next;
+	cutin "ep162_dn03",2;
+	mes "[Dien]";
+	mes "...";
+	next;
+	cutin "ep162_rds01",2;
+	mes "[Ridsh]";
+	mes "Ah... Sorry..";
+	mes "Alright.";
+	next;
+	mes "[Ridsh]";
+	mes "While we open the last door, would you mind going back to ^FF0000Clana Nemieri^000000?";
+	next;
+	mes "[Ridsh]";
+	mes "I have to contact a few people anyway, and Dien won't go anywhere until she gets her protection charm.";
+	next;
+	mes "[Ridsh]";
+	mes "Sister, tell me where it is.";
+	next;
+	cutin "ep162_dn02",2;
+	mes "[Dien]";
+	mes "Oh!";
+	mes "Thank you so much for that";
+	next;
+	mes "[Dien]";
+	mes "It's hard for me to get it back because it's far...";
+	mes "Please do me a favor.";
+	next;
+	cutin "ep162_dn01",2;
+	mes "[Dien]";
+	mes "^FF0000Go back to my room and look for a chest on the left side of the window, near a vase.";
+	next;
+	mes "[Dien]";
+	mes "It should be easy to get since we're here.";
+	next;
+	cutin "ep162_rds05",2;
+	mes "[Ridsh]";
+	mes "Oh!";
+	mes "Shouldn't we tell them where we are?";
+	if (isbegin_quest(11600) == 1) {
+		completequest 11600;
+		setquest 11601;
+		getitem 25669,25;
+		getexp 600000,600000;
+	}
+	close2;
+	warp "ein_fild03",258,267;
+	end;
+
+OnInstanceInit:
+	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(11600) == 1");
+	end;
+}
+
+1@os_b,260,363,5	script	Cotnes#171_os_4	4_F_COATNEIS,{
+	cutin "ep162_ctn01",2;
+	mes "[Cotnes]";
+	mes "It's good sometimes to take a quick walk like this~";
+	close3;
+}
+
+1@os_b,262,362,4	script	Est#171_os_1	4_F_ESTLOVELOY,{
+	cutin "ep162_est01",2;
+	mes "[Est]";
+	mes "I eager to explore the area beyond here.";
+	close3;
+}
+
+1@os_b,261,358,3	script	Ridsh#171_os_3	4_F_LEEDSH,{
+	cutin "ep162_rds01",2;
+	mes "[Ridsh]";
+	mes "I'm tired!";
+	mes "I want to go home.";
+	close3;
+}
+
+1@os_b,187,52,0	script	#171_os_warp_0	WARPNPC,4,4,{
+	end;
+
+OnTouch:
+	.@id = atoi(replacestr(strnpcinfo(2),"171_os_warp_",""));
+	switch (.@id) {
+	case 0:
+	case 1:
+	case 2:
+		warp 'map$,188,41;
+		break;
+	case 3:
+	case 4:
+		if (!'unlocked) {
+			cutin "ep162_dn01",2;
+			mes "[Dien]";
+			mes "It would be better to just go around the door.";
+			npctalk "Dien : It would be better to just go around the door.",instance_npcname("Dien#171_os_4"),bc_map;
+			close2;
+			cutin "",255;
+		}
+		warp 'map$,114,204;
+		break;
+	case 5:
+		warp 'map$,142,220;
+	}
+	end;
+}
+
+1@os_b,204,266,0	script	#171_os_trap_0	1_SHADOW_NPC,4,4,{
+	end;
+
+OnTouch:
+	.@id = atoi(replacestr(strnpcinfo(2),"171_os_trap_",""));
+	if (getd("'" + strnpcinfo(2)))
+		end;
+	switch (.@id) {
+		case 0: setarray .@xy,209,264,20363,209,268,20355; break;
+		case 1: setarray .@xy,234,269,20357,236,266,20357; break;
+		case 2: setarray .@xy,250,268,20363,252,266,20355; break;
+		case 3: setarray .@xy,263,285,20361,259,286,20365; break;
+		case 4: setarray .@xy,262,303,20355,258,306,20355; break;
+		case 5: setarray .@xy,262,318,20363,259,320,20361; break;
+		case 6: setarray .@xy,258,336,20365,263,338,20355;
+	}
+	setd("'" + strnpcinfo(2),1);
+	for (.@i = 0; .@i < getarraysize(.@xy); .@i += 3)
+		monster 'map$,.@xy[.@i],.@xy[.@i+1],"--ja--",.@xy[.@i+2],1,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	end;
+
+OnMobKill:
+	.@event$ = instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	if (!mobcount('map$,.@event$))
+		disablenpc();
+	end;
+}
+
+1@os_b,148,217,3	duplicate(dummy_npc)	Est#171_os_0	4_F_ESTLOVELOY
+1@os_b,142,225,6	duplicate(dummy_npc)	Cotnes#171_os_3	4_F_COATNEIS
+1@os_b,143,222,5	duplicate(dummy_npc)	Dien#171_os_4	4_F_DIENE
+
+1@os_b,229,267,5	duplicate(#171_os_trap_0)	#171_os_trap_1	1_SHADOW_NPC,4,4
+1@os_b,244,267,5	duplicate(#171_os_trap_0)	#171_os_trap_2	1_SHADOW_NPC,4,4
+1@os_b,261,281,5	duplicate(#171_os_trap_0)	#171_os_trap_3	1_SHADOW_NPC,4,4
+1@os_b,261,299,5	duplicate(#171_os_trap_0)	#171_os_trap_4	1_SHADOW_NPC,4,4
+1@os_b,261,314,5	duplicate(#171_os_trap_0)	#171_os_trap_5	1_SHADOW_NPC,4,4
+1@os_b,261,332,5	duplicate(#171_os_trap_0)	#171_os_trap_6	1_SHADOW_NPC,4,4
+
+1@os_b,191,46,0	duplicate(#171_os_warp_0)	#171_os_warp_1	WARPNPC,3,3
+1@os_b,192,49,0	duplicate(#171_os_warp_0)	#171_os_warp_2	WARPNPC,3,3
+1@os_b,118,209,0	duplicate(#171_os_warp_0)	#171_os_warp_3	WARPNPC,3,3
+1@os_b,119,215,0	duplicate(#171_os_warp_0)	#171_os_warp_4	WARPNPC,3,3
+1@os_b,147,224,0	duplicate(#171_os_warp_0)	#171_os_warp_5	WARPNPC,3,3
+
+1@os_b,190,44,3	duplicate(dummy_npc)	Dien#171_os_0	4_F_DIENE
+1@os_b,190,47,6	duplicate(dummy_npc)	Cotnes#171_os_0	4_F_COATNEIS
+1@os_b,199,51,7	duplicate(dummy_npc)	Dien#171_os_1	4_F_DIENE
+1@os_b,201,49,3	duplicate(dummy_npc)	Cotnes#171_os_1	4_F_COATNEIS
+1@os_b,203,51,0	duplicate(dummy_npc)	Ridsh#171_os_1	4_F_LEEDSH
+1@os_b,199,56,5	duplicate(dummy_npc)	#171_sos_dummy_0	20355
+1@os_b,202,56,3	duplicate(dummy_npc)	#171_sos_dummy_1	20357
+1@os_b,198,53,3	duplicate(dummy_npc)	#171_sos_dummy_2	20355
+1@os_b,200,54,4	duplicate(dummy_npc)	#171_sos_dummy_3	20361
+1@os_b,203,54,5	duplicate(dummy_npc)	#171_sos_dummy_4	20357
+1@os_b,201,52,3	duplicate(dummy_npc)	#171_sos_dummy_5	20363
+1@os_b,144,221,5	duplicate(dummy_npc)	#171_sos_dummy_6	20363
+1@os_b,148,221,3	duplicate(dummy_npc)	#171_sos_dummy_7	20365
+1@os_b,200,276,5	duplicate(dummy_npc)	#171_sos_dummy_8	20361
+1@os_b,207,275,3	duplicate(dummy_npc)	#171_sos_dummy_9	20363
+1@os_b,205,258,3	duplicate(dummy_npc)	#171_sos_dummy_10	20365
+1@os_b,213,257,2	duplicate(dummy_npc)	#171_sos_dummy_11	20357
+1@os_b,231,274,5	duplicate(dummy_npc)	#171_sos_dummy_12	20361
+1@os_b,234,276,5	duplicate(dummy_npc)	#171_sos_dummy_13	20365
+1@os_b,244,275,3	duplicate(dummy_npc)	#171_sos_dummy_14	20361
+1@os_b,242,276,3	duplicate(dummy_npc)	#171_sos_dummy_15	20365
+1@os_b,253,286,5	duplicate(dummy_npc)	#171_sos_dummy_16	20363
+1@os_b,265,284,3	duplicate(dummy_npc)	#171_sos_dummy_17	20355
+1@os_b,252,302,5	duplicate(dummy_npc)	#171_sos_dummy_18	20363
+1@os_b,251,300,5	duplicate(dummy_npc)	#171_sos_dummy_19	20361
+1@os_b,61,263,3	duplicate(dummy_npc)	#171_sos_dummy_20	20365
+1@os_b,264,267,3	duplicate(dummy_npc)	#171_sos_dummy_21	20361
+1@os_b,263,262,3	duplicate(dummy_npc)	#171_sos_dummy_22	20363
+1@os_b,192,276,5	duplicate(dummy_npc)	#171_sos_dummy_23	20365
+1@os_b,194,250,5	duplicate(dummy_npc)	#171_sos_dummy_24	20355
+1@os_b,196,251,3	duplicate(dummy_npc)	#171_sos_dummy_25	20363
+1@os_b,197,250,3	duplicate(dummy_npc)	#171_sos_dummy_26	20357
+1@os_b,124,230,5	duplicate(dummy_npc)	#171_sos_dummy_27	20365
+1@os_b,126,232,5	duplicate(dummy_npc)	#171_sos_dummy_28	20365
+1@os_b,128,231,5	duplicate(dummy_npc)	#171_sos_dummy_29	20361
+1@os_b,134,230,3	duplicate(dummy_npc)	#171_sos_dummy_30	20363

@@ -1,0 +1,43 @@
+
+HTTPLIB_OBJ =  $(shell find * -type f -name "*.cc" | sed -e "s/\.cc/\.o/g")
+HTTPLIB_DIR_OBJ = $(HTTPLIB_OBJ:%=obj/%)
+HTTPLIB_H =  $(shell find * -type f -name "*.h")
+HTTPLIB_AR = obj/httplib.a
+
+CXXFLAG =-std=c++11
+
+HTTPLIB_DEPENDS=httplib
+
+@SET_MAKE@
+
+#####################################################################
+.PHONY : all clean help httplib
+
+all: $(HTTPLIB_DEPENDS)
+
+clean:
+	@echo "	CLEAN	httplib"
+	@rm -rf obj *.o
+
+help:
+	@echo "possible targets are 'all' 'clean' 'help'"
+	@echo "'httplib' - build $(HTTPLIB_AR)
+	@echo "'all'       - builds $(HTTPLIB_DIR_OBJ)"
+	@echo "'clean'     - deletes $(HTTPLIB_DIR_OBJ)"
+	@echo "'help'      - outputs this message"
+
+#####################################################################
+
+obj:
+	@echo "	MKDIR	obj"
+	@mkdir -p obj
+	
+obj/%.o: %.cc $(HTTPLIB_H)
+	@echo "	CXX	$<"
+	@@CXX@ $(CXXFLAG) @CFLAGS_AR@ @CPPFLAGS@ -DCPPHTTPLIB_SEND_FLAGS=MSG_NOSIGNAL -g -c $(OUTPUT_OPTION) $<
+
+httplib: obj $(HTTPLIB_DIR_OBJ) $(HTTPLIB_AR)
+
+$(HTTPLIB_AR): $(HTTPLIB_DIR_OBJ)
+	@echo "	AR	$@"
+	@@AR@ rcs obj/httplib.a $(HTTPLIB_DIR_OBJ)

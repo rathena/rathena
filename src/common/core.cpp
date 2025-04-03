@@ -3,7 +3,10 @@
 
 #include "core.hpp"
 
-#include "../config/core.hpp"
+#include <cstdlib>
+#include <csignal>
+
+#include <config/core.hpp>
 
 #ifndef MINICORE
 #include "database.hpp"
@@ -12,8 +15,7 @@
 #include "timer.hpp"
 #include "sql.hpp"
 #endif
-#include <stdlib.h>
-#include <signal.h>
+
 #ifndef _WIN32
 #include <unistd.h>
 #else
@@ -28,28 +30,27 @@
 #include "strlib.hpp"
 
 #ifndef DEPRECATED_COMPILER_SUPPORT
-	#if defined( _MSC_VER ) && _MSC_VER < 1900
-		#error "Visual Studio versions older than Visual Studio 2015 are not officially supported anymore"
-	#elif defined( __clang__ ) && __clang_major__ < 4 && !( __clang_major__ == 3 && __clang_minor__ >= 7 )
-		#error "clang versions older than clang 3.7 are not officially supported anymore"
-	#elif !defined( __clang__ ) && defined( __GNUC__ ) && __GNUC__ < 5
-		#error "GCC versions older than GCC 5 are not officially supported anymore"
+	#if defined( _MSC_VER ) && _MSC_VER < 1914
+		#error "Visual Studio versions older than Visual Studio 2017 are not officially supported anymore"
+	#elif defined( __clang__ ) && __clang_major__ < 6
+		#error "clang versions older than clang 6.0 are not officially supported anymore"
+	#elif !defined( __clang__ ) && defined( __GNUC__ ) && __GNUC__ < 6
+		#error "GCC versions older than GCC 6 are not officially supported anymore"
 	#endif
 #endif
 
-/// Called when a terminate signal is received.
-void (*shutdown_callback)(void) = NULL;
+using namespace rathena::server_core;
+
+Core* global_core = nullptr;
 
 #if defined(BUILDBOT)
-	int buildbotflag = 0;
+	int32 buildbotflag = 0;
 #endif
 
-int runflag = CORE_ST_RUN;
 char db_path[12] = "db"; /// relative path for db from server
 char conf_path[12] = "conf"; /// relative path for conf from server
 
-char *SERVER_NAME = NULL;
-char SERVER_TYPE = ATHENA_SERVER_NONE;
+char *SERVER_NAME = nullptr;
 
 #ifndef MINICORE	// minimalist Core
 // Added by Gabuzomeu
@@ -65,7 +66,7 @@ char SERVER_TYPE = ATHENA_SERVER_NONE;
 #ifndef POSIX
 #define compat_signal(signo, func) signal(signo, func)
 #else
-sigfunc *compat_signal(int signo, sigfunc *func) {
+sigfunc *compat_signal(int32 signo, sigfunc *func) {
 	struct sigaction sact, oact;
 
 	sact.sa_handler = func;
@@ -91,10 +92,9 @@ static BOOL WINAPI console_handler(DWORD c_event) {
     case CTRL_CLOSE_EVENT:
     case CTRL_LOGOFF_EVENT:
     case CTRL_SHUTDOWN_EVENT:
-		if( shutdown_callback != NULL )
-			shutdown_callback();
-		else
-			runflag = CORE_ST_STOP;// auto-shutdown
+		if( global_core != nullptr ){
+			global_core->signal_shutdown();
+		}
         break;
 	default:
 		return FALSE;
@@ -111,22 +111,23 @@ static void cevents_init() {
 /*======================================
  *	CORE : Signal Sub Function
  *--------------------------------------*/
-static void sig_proc(int sn) {
-	static int is_called = 0;
+static void sig_proc(int32 sn) {
+	static int32 is_called = 0;
 
 	switch (sn) {
 	case SIGINT:
 	case SIGTERM:
 		if (++is_called > 3)
 			exit(EXIT_SUCCESS);
-		if( shutdown_callback != NULL )
-			shutdown_callback();
-		else
-			runflag = CORE_ST_STOP;// auto-shutdown
+		if( global_core != nullptr ){
+			global_core->signal_shutdown();
+		}
 		break;
 	case SIGSEGV:
 	case SIGFPE:
-		do_abort();
+		if( global_core != nullptr ){
+			global_core->signal_crash();
+		}
 		// Pass the signal to the system's default handler
 		compat_signal(sn, SIG_DFL);
 		raise(sn);
@@ -176,7 +177,7 @@ const char* get_svn_revision(void) {
 	// - ignores database file structure
 	// - assumes the data in NODES.dav_cache column ends with "!svn/ver/<revision>/<path>)"
 	// - since it's a cache column, the data might not even exist
-	if( (fp = fopen(".svn" PATHSEP_STR "wc.db", "rb")) != NULL || (fp = fopen(".." PATHSEP_STR ".svn" PATHSEP_STR "wc.db", "rb")) != NULL )
+	if( (fp = fopen(".svn" PATHSEP_STR "wc.db", "rb")) != nullptr || (fp = fopen(".." PATHSEP_STR ".svn" PATHSEP_STR "wc.db", "rb")) != nullptr )
 	{
 	#ifndef SVNNODEPATH
 		//not sure how to handle branches, so i'll leave this overridable define until a better solution comes up
@@ -219,10 +220,10 @@ const char* get_svn_revision(void) {
 	}
 
 	// subversion 1.6 and older?
-	if ((fp = fopen(".svn/entries", "r")) != NULL)
+	if ((fp = fopen(".svn/entries", "r")) != nullptr)
 	{
 		char line[1024];
-		int rev;
+		int32 rev;
 		// Check the version
 		if (fgets(line, sizeof(line), fp))
 		{
@@ -238,8 +239,8 @@ const char* get_svn_revision(void) {
 			else
 			{
 				// Bin File format
-				if ( fgets(line, sizeof(line), fp) == NULL ) { printf("Can't get bin name\n"); } // Get the name
-				if ( fgets(line, sizeof(line), fp) == NULL ) { printf("Can't get entries kind\n"); } // Get the entries kind
+				if ( fgets(line, sizeof(line), fp) == nullptr ) { printf("Can't get bin name\n"); } // Get the name
+				if ( fgets(line, sizeof(line), fp) == nullptr ) { printf("Can't get entries kind\n"); } // Get the entries kind
 				if(fgets(line, sizeof(line), fp)) // Get the rev numver
 				{
 					snprintf(svn_version_buffer, sizeof(svn_version_buffer), "%d", atoi(line));
@@ -266,12 +267,12 @@ const char *get_git_hash (void) {
 	if( GitHash[0] != '\0' )
 		return GitHash;
 
-	if( (fp = fopen(".git/refs/remotes/origin/master", "r")) != NULL || // Already pulled once
-		(fp = fopen(".git/refs/heads/master", "r")) != NULL ) { // Cloned only
+	if( (fp = fopen(".git/refs/remotes/origin/master", "r")) != nullptr || // Already pulled once
+		(fp = fopen(".git/refs/heads/master", "r")) != nullptr ) { // Cloned only
 		char line[64];
 		char *rev = (char*)malloc(sizeof(char) * 50);
 
-		if( fgets(line, sizeof(line), fp) && sscanf(line, "%40s", rev) )
+		if (fgets(line, sizeof(line), fp) != nullptr && sscanf(line, "%40s", rev) == 1)
 			snprintf(GitHash, sizeof(GitHash), "%s", rev);
 
 		free(rev);
@@ -329,18 +330,20 @@ void usercheck(void)
 #endif
 }
 
-/*======================================
- *	CORE : MAINROUTINE
- *--------------------------------------*/
-int main (int argc, char **argv)
-{
+int32 Core::start( int32 argc, char **argv ){
+	if( this->get_status() != e_core_status::NOT_STARTED) {
+		ShowFatalError( "Core was already started and cannot be started again!\n" );
+		return EXIT_FAILURE;
+	}
+
+	this->set_status( e_core_status::CORE_INITIALIZING );
+
 	{// initialize program arguments
 		char *p1;
-		if((p1 = strrchr(argv[0], '/')) != NULL ||  (p1 = strrchr(argv[0], '\\')) != NULL ){
-			char *pwd = NULL; //path working directory
-			int n=0;
+		if((p1 = strrchr(argv[0], '/')) != nullptr ||  (p1 = strrchr(argv[0], '\\')) != nullptr ){
+			char *pwd = nullptr; //path working directory
 			SERVER_NAME = ++p1;
-			n = p1-argv[0]; //calc dir name len
+			size_t n = p1-argv[0]; //calc dir name len
 			pwd = safestrncpy((char*)malloc(n + 1), argv[0], n);
 			if(chdir(pwd) != 0)
 				ShowError("Couldn't change working directory to %s for %s, runtime will probably fail",pwd,SERVER_NAME);
@@ -352,38 +355,52 @@ int main (int argc, char **argv)
 	}
 
 	malloc_init();// needed for Show* in display_title() [FlavioJS]
-
-#ifdef MINICORE // minimalist Core
-	display_title();
-	usercheck();
-	do_init(argc,argv);
-	do_final();
-#else// not MINICORE
-	set_server_type();
 	display_title();
 	usercheck();
 
+#ifndef MINICORE
 	Sql_Init();
 	db_init();
 	signals_init();
-
+	do_init_database();
 #ifdef _WIN32
 	cevents_init();
 #endif
-
 	timer_init();
 	socket_init();
+#endif
 
-	do_init(argc,argv);
+	this->set_status( e_core_status::CORE_INITIALIZED );
 
-	// Main runtime cycle
-	while (runflag != CORE_ST_STOP) { 
-		t_tick next = do_timer(gettick_nocache());
-		do_sockets(next);
+	this->set_status( e_core_status::SERVER_INITIALIZING );
+	if( !this->initialize( argc, argv ) ){
+		return EXIT_FAILURE;
 	}
 
-	do_final();
+	// If initialization did not trigger shutdown
+	if( this->m_status != e_core_status::STOPPING ){
+		this->set_status( e_core_status::SERVER_INITIALIZED );
 
+		this->set_status( e_core_status::RUNNING );
+#ifndef MINICORE
+		if( !this->m_run_once ){
+			// Main runtime cycle
+			while( this->get_status() == e_core_status::RUNNING ){
+				t_tick next = do_timer( gettick_nocache() );
+
+				this->handle_main( next );
+			}
+		}
+#endif
+		this->set_status( e_core_status::STOPPING );
+	}
+
+	this->set_status( e_core_status::SERVER_FINALIZING );
+	this->finalize();
+	this->set_status( e_core_status::SERVER_FINALIZED );
+
+	this->set_status( e_core_status::CORE_FINALIZING );
+#ifndef MINICORE
 	timer_final();
 	socket_final();
 	db_final();
@@ -391,6 +408,7 @@ int main (int argc, char **argv)
 #endif
 
 	malloc_final();
+	this->set_status( e_core_status::CORE_FINALIZED );
 
 #if defined(BUILDBOT)
 	if( buildbotflag ){
@@ -398,5 +416,69 @@ int main (int argc, char **argv)
 	}
 #endif
 
-	return 0;
+	this->set_status( e_core_status::STOPPED );
+
+	return EXIT_SUCCESS;
+}
+
+bool Core::initialize( int32 argc, char* argv[] ){
+	// Do nothing
+	return true;
+}
+
+void Core::handle_main( t_tick next ){
+#ifndef MINICORE
+	// By default we handle all socket packets
+	do_sockets( next );
+#endif
+}
+
+void Core::handle_crash(){
+	// Do nothing
+}
+
+void Core::handle_shutdown(){
+	// Do nothing
+}
+
+void Core::finalize(){
+	// Do nothing
+}
+
+void Core::set_status( e_core_status status ){
+	this->m_status = status;
+}
+
+e_core_status Core::get_status(){
+	return this->m_status;
+}
+
+e_core_type Core::get_type(){
+	return this->m_type;
+}
+
+bool Core::is_running(){
+	return this->get_status() == e_core_status::RUNNING;
+}
+
+void Core::set_run_once( bool run_once ){
+	this->m_run_once = run_once;
+}
+
+void Core::signal_crash(){
+	this->set_status( e_core_status::STOPPING );
+
+	if( this->m_crashed ){
+		ShowFatalError( "Received another crash signal, while trying to handle the last crash!\n" );
+	}else{
+		ShowFatalError( "Received a crash signal, trying to handle it as good as possible!\n" );
+		this->m_crashed = true;
+		this->handle_crash();
+	}
+
+}
+
+void Core::signal_shutdown(){
+	this->set_status( e_core_status::STOPPING );
+	this->handle_shutdown();
 }

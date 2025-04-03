@@ -30,6 +30,8 @@
 #           Bonus                       Refinement bonus. (Default: 0)
 #           RandomBonus                 Extra refinement bonus of 0~RandomBonus stacked on Bonus. (Default: 0)
 #           BlacksmithBlessingAmount    Amount of Blacksmith Blessing required. (Default: 0)
+#           BroadcastSuccess            Broadcast to the whole server when a refine attempt at this level succeeds. (Default: false)
+#           BroadcastFailure            Broadcast to the whole server when a refine attempt at this level fails. (Default: false)
 #           Chances:                    Success chance based on cost type. (Default: null)
 #             - Type                    Refinement cost type based on ore used.
 #               Rate                    Chance of success out of 0~10000. (Default: 0)
@@ -41,7 +43,7 @@
 
 Header:
   Type: REFINE_DB
-  Version: 1
+  Version: 2
 
 Body:
   - Group: Armor
@@ -49,7 +51,7 @@ Body:
       - Level: 1
         RefineLevels:
           - Level: 1
-            Bonus: 66
+            Bonus: 70
             Chances:
               - Type: Normal
                 Rate: 10000
@@ -60,7 +62,7 @@ Body:
                 Price: 2000
                 Material: Enriched_Elunium
           - Level: 2
-            Bonus: 132
+            Bonus: 140
             Chances:
               - Type: Normal
                 Rate: 10000
@@ -71,7 +73,7 @@ Body:
                 Price: 2000
                 Material: Enriched_Elunium
           - Level: 3
-            Bonus: 198
+            Bonus: 210
             Chances:
               - Type: Normal
                 Rate: 10000
@@ -82,7 +84,7 @@ Body:
                 Price: 2000
                 Material: Enriched_Elunium
           - Level: 4
-            Bonus: 264
+            Bonus: 280
             Chances:
               - Type: Normal
                 Rate: 10000
@@ -93,7 +95,7 @@ Body:
                 Price: 2000
                 Material: Enriched_Elunium
           - Level: 5
-            Bonus: 330
+            Bonus: 350
             Chances:
               - Type: Normal
                 Rate: 6000
@@ -106,7 +108,7 @@ Body:
                 Material: Enriched_Elunium
                 BreakingRate: 10000
           - Level: 6
-            Bonus: 396
+            Bonus: 420
             Chances:
               - Type: Normal
                 Rate: 4000
@@ -119,7 +121,7 @@ Body:
                 Material: Enriched_Elunium
                 BreakingRate: 10000
           - Level: 7
-            Bonus: 462
+            Bonus: 490
             Chances:
               - Type: Normal
                 Rate: 4000
@@ -132,7 +134,7 @@ Body:
                 Material: Enriched_Elunium
                 BreakingRate: 10000
           - Level: 8
-            Bonus: 528
+            Bonus: 560
             BlacksmithBlessingAmount: 1
             Chances:
               - Type: Normal
@@ -146,7 +148,7 @@ Body:
                 Material: Enriched_Elunium
                 BreakingRate: 10000
           - Level: 9
-            Bonus: 594
+            Bonus: 630
             BlacksmithBlessingAmount: 2
             Chances:
               - Type: Normal
@@ -160,11 +162,11 @@ Body:
                 Material: Enriched_Elunium
                 BreakingRate: 10000
           - Level: 10
-            Bonus: 660
+            Bonus: 700
             BlacksmithBlessingAmount: 4
             Chances:
               - Type: Normal
-                Rate: 900
+                Rate: 1000
                 Price: 2000
                 Material: Elunium
                 BreakingRate: 10000
@@ -290,7 +292,7 @@ Body:
             BlacksmithBlessingAmount: 4
             Chances:
               - Type: Normal
-                Rate: 1900
+                Rate: 2000
                 Price: 50
                 Material: Phracon
                 BreakingRate: 10000
@@ -417,7 +419,7 @@ Body:
             BlacksmithBlessingAmount: 4
             Chances:
               - Type: Normal
-                Rate: 1900
+                Rate: 2000
                 Price: 200
                 Material: Emveretarcon
                 BreakingRate: 10000
@@ -547,7 +549,7 @@ Body:
             BlacksmithBlessingAmount: 4
             Chances:
               - Type: Normal
-                Rate: 1900
+                Rate: 2000
                 Price: 5000
                 Material: Oridecon
                 BreakingRate: 10000
@@ -681,7 +683,7 @@ Body:
             BlacksmithBlessingAmount: 4
             Chances:
               - Type: Normal
-                Rate: 900
+                Rate: 1000
                 Price: 20000
                 Material: Oridecon
                 BreakingRate: 10000

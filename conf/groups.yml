@@ -1,0 +1,248 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2022 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Player Group Database
+###########################################################################
+#
+# Player Group Settings
+#
+###########################################################################
+# - Id                    Group ID.
+#   Name                  Group name.
+#   Level                 GM Level used for ranking groups. (Default: 0)
+#   LogCommands           Whether atcommands should be logged or not. (Default: false)
+#   Commands:             List of atcommands that can be used by this group. (Default: none)
+#     <atcommand name>    Whether the specified atcommand can be used by this group or not.
+#   CharCommands:         List of charcommands that can be used by this group. (Default: none)
+#     <charcommand name>  Whether the specified charcommand can be used by this group or not.
+#   Permissions:          List of permissions the group has. (Default: none)
+#     <permission name>   Whether the group has this permission or not.
+#   Inherit:              List of groups that will be inherited. (Default: none)
+#     <group name>        Whether this group will be inherited or not.
+###########################################################################
+
+Header:
+  Type: PLAYER_GROUP_DB
+  Version: 1
+
+Body:
+  - Id: 0
+    # group 0 is the default group for every new account
+    Name: Player
+    Level: 0
+    Commands:
+      changedress: true
+      resurrect: true
+    Permissions:
+      # without this basic permissions regular players could not trade or party
+      can_trade: true
+      can_party: true
+      attendance: true
+  - Id: 1
+    Name: Super Player
+    # Can do everything Players can and more
+    Inherit:
+      Player: true
+    Level: 0
+    Commands:
+      # Informational commands
+      commands: true
+      charcommands: true
+      help: true
+      rates: true
+      uptime: true
+      showdelay: true
+      exp: true
+      mobinfo: true
+      iteminfo: true
+      whodrops: true
+      servertime: true
+      jailtime: true
+      hominfo: true
+      homstats: true
+      showexp: true
+      showzeny: true
+      whereis: true
+      # Feature commands
+      refresh: true
+      noask: true
+      noks: true
+      autoloot: true
+      alootid: true
+      autoloottype: true
+      autotrade: true
+      request: true
+      go: true
+      breakguild: true
+      channel: true
+      langtype: true
+    Permissions:
+      attendance: false
+  - Id: 2
+    Name: Support
+    Inherit:
+      Super Player: true
+    Level: 1
+    Commands:
+      version: true
+      where: true
+      jumpto: true
+      who: true
+      who2: true
+      who3: true
+      whomap: true
+      whomap2: true
+      whomap3: true
+      users: true
+      broadcast: true
+      localbroadcast: true
+    LogCommands: true
+    Permissions:
+      receive_requests: true
+      view_equipment: true
+  - Id: 3
+    Name: Script Manager
+    Inherit:
+      Support: true
+    Level: 1
+    Commands:
+      tonpc: true
+      hidenpc: true
+      shownpc: true
+      loadnpc: true
+      unloadnpc: true
+      npcmove: true
+      addwarp: true
+    LogCommands: true
+    Permissions:
+      any_warp: true
+  - Id: 4
+    Name: Event Manager
+    Inherit:
+      Support: true
+    Level: 1
+    Commands:
+      monster: true
+      monstersmall: true
+      monsterbig: true
+      killmonster2: true
+      cleanarea: true
+      cleanmap: true
+      item: true
+      zeny: true
+      disguise: true
+      undisguise: true
+      size: true
+      raise: true
+      raisemap: true
+      day: true
+      night: true
+      skillon: true
+      skilloff: true
+      pvpon: true
+      pvpoff: true
+      gvgon: true
+      gvgoff: true
+      allowks: true
+      me: true
+      marry: true
+      divorce: true
+      refreshall: true
+    CharCommands:
+      item: true
+      zeny: true
+      disguise: true
+      undisguise: true
+      size: true
+    LogCommands: true
+    Permissions:
+      can_trade: false
+      any_warp: true
+  - Id: 5
+    Name: VIP
+    # Can do everything Players can
+    Inherit:
+      Player: true
+    Level: 0
+    Commands:
+      rates: true
+      who: true
+  - Id: 10
+    Name: Law Enforcement
+    Inherit:
+      Support: true
+    Level: 2
+    Commands:
+      hide: true
+      follow: true
+      kick: true
+      disguise: true
+      fakename: true
+      option: true
+      speed: true
+      mapmove: true
+      kill: true
+      recall: true
+      ban: true
+      block: true
+      jail: true
+      jailfor: true
+      mute: true
+      storagelist: true
+      cartlist: true
+      itemlist: true
+      stats: true
+    LogCommands: true
+    Permissions:
+      join_chat: true
+      kick_chat: true
+      hide_session: true
+      who_display_aid: true
+      hack_info: true
+      any_warp: true
+      view_hpmeter: true
+      macro_detect: true
+  - Id: 99
+    Name: Admin
+    Level: 99
+    Inherit:
+      Support: true
+      Law Enforcement: true
+    LogCommands: true
+    Permissions:
+      can_trade: true
+      can_party: true
+      command_enable: true
+      all_skill: false
+      all_equipment: false
+      skill_unconditional: false
+      use_check: true
+      use_changemaptype: true
+      all_commands: true
+      channel_admin: true
+      can_trade_bounded: true
+      item_unconditional: false
+      bypass_stat_onclone: true
+      bypass_max_stat: true
+      macro_register: true
+      trade_unconditional: true
+      #all_permission: true
+
+Footer:
+  Imports:
+  - Path: conf/import/groups.yml

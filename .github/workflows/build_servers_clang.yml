@@ -1,7 +1,12 @@
 name: Build servers with Clang
 # build_servers_clang.yml
 
+concurrency:
+  group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
+
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
@@ -22,14 +27,14 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-          # The ubuntu-latest label currently points to ubuntu-18.04.
-          # Available: ubuntu-20.04, ubuntu-18.04
-          os: [ubuntu-18.04]
+          # The ubuntu-latest label currently points to ubuntu-22.04.
+          # Available: ubuntu-22.04, ubuntu-20.04
+          os: [ubuntu-20.04]
           # Version list can be found on https://github.com/marketplace/actions/install-clang
-          clang: ['3.9', '4.0', '5.0', '6.0', '7', '8', '9', '10', '11'] #, '12', '13']
+          clang: ['6.0', '7', '8', '9', '10', '11'] #, '12', '13']
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Set up Clang
         uses: egor-tensin/setup-clang@v1

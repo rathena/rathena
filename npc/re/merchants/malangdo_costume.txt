@@ -1401,11 +1401,11 @@ mal_in01,20,107,3	script	Lace La Zard#cos_ect	4_FROG,{
 		25797, 29427, "Increases damage of Knuckle Arrow by 15%.",	// SuraStone_Robe2	SuraStone_Robe2_
 		25801, 29614, "Increases damage of Diamond Dust by 15%.",	// SorcererStone_Robe2	SorcererStone_Robe2_
 		25805, 29618, "Increases damage of Fatal Menace by 15%.",	// ShadowchaserStone_Robe2	ShadowchaserStone_Robe2_
-		25842, 29654, "Increases damage of Eswhoo by 20%.",	// SoulReaperStone_Robe	SoulReaperStone_Robe_
-		25849, 29658, "Increases damage of Falling Star, Solar Burst and Full Moon Kick by 20%.",	// StarEmperorStone_Garment	StarEmperorStone_Garment_
+		25842, 29654, "Increases damage of Eswhoo by 20%.",	// SoulReaperStone_Robe	Soulreaper_Robe
+		25849, 29658, "Increases damage of Falling Star, Solar Burst and Full Moon Kick by 20%.",	// StarEmperorStone_Garment	Staremperor_Robe
 		25853, 29662, "Increases damage of Swirling Petal by 25%.",	// KagerouStone_Robe	KagerouStone_Robe_
 		25854, 29663, "Increases damage of Flaming Petals by 20%.",	// OboroStone_Robe	OboroStone_Robe_
-		25858, 29667, "Increases damage of Hammer of God and Round Trip by 20%.",	// GunslingerStone_Robe	GunslingerStone_Robe_
+		25858, 29667, "Increases damage of Hammer of God and Round Trip by 20%.",	// GunslingerStone_Robe	Rebellion_Robe
 		25862, 29671, "Increases damage of Picky Peck and Catnip Meteor by 20%.",	// DoramStone_Robe	DoramStone_Robe_
 		1000011, 310003, "Increases damage of Aimed Bolt by 15%.",	// RangerStone_II_Garment	Ranger_Robe2
 		1000015, 310007, "Increases damage of Arms Cannon by 15%.",	// MechanicStone_II_Garment	Mechanic_Robe2

@@ -1,0 +1,32 @@
+name: Feature Request
+description: Suggest an idea for this project
+labels: ["type:enhancement"]
+body:
+  - type: dropdown
+    id: missing
+    attributes:
+      label: Is your request related to a missing official feature?
+      options:
+        - "Yes"
+        - "No"
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Describe the solution you'd like
+      description: Provide a clear and concise description of what you want to happen.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Describe alternatives you've considered
+      description: Let us know about other solutions you've tried or researched.
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: |
+        Is there anything else you can add about the proposal?
+        You might want to link to related issues here if you haven't already.

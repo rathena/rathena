@@ -83,7 +83,7 @@ Body:
   - Id: 13
     Option: VAR_ATKPERCENT
     Script: |
-      bonus2 bAddClass,Class_All,getrandomoptinfo(ROA_VALUE);
+      bonus bAtkRate,getrandomoptinfo(ROA_VALUE);
   - Id: 14
     Option: VAR_MAGICATKPERCENT
     Script: |

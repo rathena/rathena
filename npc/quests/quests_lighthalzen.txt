@@ -6399,7 +6399,7 @@ lighthalzen,179,170,4	script	Ordinary Man	4W_M_02,{
 				mes "Ghalstein that you";
 				mes "just heard, he reacted";
 				mes "pretty strongly to what";
-				mes "you said to to him. Almost";
+				mes "you said to him. Almost";
 				mes "as if he had something to hide... ^000000";
 				close;
 		}
@@ -11164,7 +11164,7 @@ airplane_01,96,48,3	script	Man#Lyozien	4_M_LGTMAN,{
 		mes "Oh good, you're back.";
 		mes "Mr. Ahman just left and";
 		mes "picked up his goods. We're";
-		mes "done here, so you have to";
+		mes "done here, so all you have to";
 		mes "do now is report to my";
 		mes "brother in Lighthalzen.";
 		next;

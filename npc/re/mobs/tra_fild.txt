@@ -1,0 +1,49 @@
+//===== rAthena Script =======================================
+//= Training Zone
+//===== Description: =========================================
+//= Training Dummy monster spawn script.
+//===== Changelog: ===========================================
+//= 1.0 Initial Release [Capuche]
+//============================================================
+
+tra_fild,57,159	monster	Dummy (Small)	21064,1
+tra_fild,57,145	monster	Dummy (Small)	21064,1
+tra_fild,57,131	monster	Dummy (Small)	21064,1
+tra_fild,70,159	monster	Dummy (Medium)	21065,1
+tra_fild,70,145	monster	Dummy (Medium)	21065,1
+tra_fild,70,131	monster	Dummy (Medium)	21065,1
+tra_fild,83,159	monster	Dummy (Large)	21066,1
+tra_fild,83,145	monster	Dummy (Large)	21066,1
+tra_fild,83,131	monster	Dummy (Large)	21066,1
+
+tra_fild,101,159	monster	Dummy (Small)	21064,1
+tra_fild,101,145	monster	Dummy (Small)	21064,1
+tra_fild,101,131	monster	Dummy (Small)	21064,1
+tra_fild,114,159	monster	Dummy (Medium)	21065,1
+tra_fild,114,145	monster	Dummy (Medium)	21065,1
+tra_fild,114,131	monster	Dummy (Medium)	21065,1
+tra_fild,127,159	monster	Dummy (Large)	21066,1
+tra_fild,127,145	monster	Dummy (Large)	21066,1
+tra_fild,127,131	monster	Dummy (Large)	21066,1
+
+tra_fild,66,70	monster	Dummy (Neutral Lv1)	21077,1
+tra_fild,74,70	monster	Dummy (Water Lv1)	21078,1
+tra_fild,82,70	monster	Dummy (Earth Lv1)	21079,1
+tra_fild,90,70	monster	Dummy (Fire Lv1)	21080,1
+tra_fild,98,70	monster	Dummy (Wind Lv1)	21081,1
+tra_fild,106,70	monster	Dummy (Poison Lv1)	21082,1
+tra_fild,114,70	monster	Dummy (Holy Lv1)	21083,1
+tra_fild,122,70	monster	Dummy (Dark Lv1)	21084,1
+tra_fild,130,70	monster	Dummy (Ghost Lv1)	21085,1
+tra_fild,138,70	monster	Dummy (Undead Lv1)	21086,1
+    
+tra_fild,66,50	monster	Dummy (Neutral)	21067,1
+tra_fild,74,50	monster	Dummy (Dragon)	21068,1
+tra_fild,82,50	monster	Dummy (Brute)	21069,1
+tra_fild,90,50	monster	Dummy (Human)	21070,1
+tra_fild,98,50	monster	Dummy (Insect)	21071,1
+tra_fild,106,50	monster	Dummy (Fish)	21072,1
+tra_fild,114,50	monster	Dummy (Demon)	21073,1
+tra_fild,122,50	monster	Dummy (Plant)	21074,1
+tra_fild,130,50	monster	Dummy (Angel)	21075,1
+tra_fild,138,50	monster	Dummy (Undead)	21076,1

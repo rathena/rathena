@@ -5,18 +5,20 @@
 #define HOMUNCULUS_HPP
 
 #include <string>
-#include "../common/cbasetypes.hpp"
-#include "../common/database.hpp"
 
+#include <common/cbasetypes.hpp>
+#include <common/database.hpp>
+
+#include "mob.hpp"
 #include "status.hpp" // struct status_data, struct status_change
 #include "unit.hpp" // struct unit_data
 
 #ifdef RENEWAL
 	#define	HOMUN_LEVEL_STATWEIGHT_VALUE 0
 	#define APPLY_HOMUN_LEVEL_STATWEIGHT()( \
-		hom->str_value = hom->agi_value = \
-		hom->vit_value = hom->int_value = \
-		hom->dex_value = hom->luk_value = hom->level / 10 - HOMUN_LEVEL_STATWEIGHT_VALUE \
+		hom.str_value = hom.agi_value = \
+		hom.vit_value = hom.int_value = \
+		hom.dex_value = hom.luk_value = hom.level / 10 - HOMUN_LEVEL_STATWEIGHT_VALUE \
 		)
 #else
 	#define APPLY_HOMUN_LEVEL_STATWEIGHT()
@@ -34,29 +36,39 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const ryml::NodeRef node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 
 	// Additional
 	t_exp get_nextexp(uint16 level);
 };
 
-struct h_stats {
-	unsigned int HP, SP;
-	unsigned short str, agi, vit, int_, dex, luk;
+struct s_hom_stats {
+	uint32 HP, SP;
+	uint16 str, agi, vit, int_, dex, luk;
+};
+
+/// Homunculus skill entry [Celest]
+struct s_homun_skill_tree_entry {
+	uint16 id;			///< Skill ID
+	uint16 max;			///< Max level for this tree
+	uint16 need_level;	///< Homunculus level required
+	uint32 intimacy;	///< Intimacy required (n/100)
+	bool evolution;		///< Require evolution to show on skill tree
+	std::unordered_map<uint16, uint16> need; ///< Skills needed
 };
 
 struct s_homunculus_db {
-	int base_class, evo_class;
+	int32 base_class, evo_class;
 	char name[NAME_LENGTH];
-	struct h_stats base, gmin, gmax, emin, emax;
-	int foodID;
-	int baseASPD;
-	long hungryDelay;
-	unsigned char element, race, base_size, evo_size;
+	struct s_hom_stats base, gmin, gmax, emin, emax;
+	int32 foodID;
+	uint16 baseASPD;
+	int32 hungryDelay;
+	e_element element;
+	e_race race;
+	e_size base_size, evo_size;
+	std::vector<s_homun_skill_tree_entry> skill_tree;
 };
-extern struct s_homunculus_db homunculus_db[MAX_HOMUNCULUS_CLASS];
-
-enum e_hom_search_type : uint8  { HOMUNCULUS_CLASS, HOMUNCULUS_FOOD };
 
 enum e_hom_mode : uint8  { MH_MD_FIGHTING = 1, MH_MD_GRAPPLING };
 
@@ -77,31 +89,16 @@ struct homun_data {
 	struct unit_data  ud;
 	struct view_data *vd;
 	struct status_data base_status, battle_status;
-	struct status_change sc;
+	status_change sc;
 	struct regen_data regen;
-	struct s_homunculus_db *homunculusDB;	//[orn]
+	std::shared_ptr<s_homunculus_db> homunculusDB;	//[orn]
 	struct s_homunculus homunculus;	//[orn]
 
-	int masterteleport_timer;
-	struct map_session_data *master; //pointer back to its master
-	int hungry_timer;	//[orn]
+	int32 masterteleport_timer;
+	map_session_data *master; //pointer back to its master
+	int32 hungry_timer;	//[orn]
 	t_exp exp_next;
-	std::vector<uint16> blockskill;	// [orn]
-};
-
-#define MAX_HOM_SKILL_REQUIRE 5
-#define MAX_HOM_SKILL_TREE 8
-
-/// Homunculus skill entry [Celest]
-struct homun_skill_tree_entry {
-	uint16 id;			///< Skill ID
-	uint8 max;			///< Max level for this tree
-	uint8 need_level;	///< Homunculus level required
-	uint16 intimacy;	///< Intimacy required (n/100)
-	struct {
-		uint16 id;		///< Skill ID
-		uint8 lv;		///< Level of skill
-	} need[MAX_HOM_SKILL_REQUIRE]; ///< Skills needed
+	std::unordered_map<uint16, int32> scd;
 };
 
 #define HOM_EVO 0x100 //256
@@ -128,6 +125,33 @@ enum homun_mapid {
 	MAPID_ELANOR,
 };
 
+/// Homunculus class constants
+enum e_homun_classid : uint16 {
+	MER_LIF = 6001,
+	MER_AMISTR,
+	MER_FILIR,
+	MER_VANILMIRTH,
+	MER_LIF2,
+	MER_AMISTR2,
+	MER_FILIR2,
+	MER_VANILMIRTH2,
+	MER_LIF_H,
+	MER_AMISTR_H,
+	MER_FILIR_H,
+	MER_VANILMIRTH_H,
+	MER_LIF_H2,
+	MER_AMISTR_H2,
+	MER_FILIR_H2,
+	MER_VANILMIRTH_H2,
+
+	// Homunculus S
+	MER_EIRA = 6048,
+	MER_BAYERI,
+	MER_SERA,
+	MER_DIETER,
+	MER_ELEANOR,
+};
+
 /// Homunculus type
 enum homun_type : int8 {
 	HT_REG		= 0x1,
@@ -144,8 +168,6 @@ enum homun_setting : uint8 {
 	HOMSET_COPY_SPEED					= 0x08, /// Copy their master's speed on spawn/map-change
 	HOMSET_DISPLAY_LUK					= 0x10, /// They display luk/3+1 instead of their actual critical in the stat window, by default they don't crit
 	HOMSET_SAME_MATK					= 0x20, /// Their Min-Matk is always the same as their max
-	HOMSET_RESET_REUSESKILL_VAPORIZED	= 0x40, /// Skill re-use delay is reset when they are vaporized.
-	HOMSET_RESET_REUSESKILL_TELEPORTED	= 0x80, /// Skill re-use delay is reset when they are warped (by skill or item) with player.
 };
 
 enum e_homun_grade : uint8 {
@@ -158,57 +180,70 @@ enum e_homun_grade : uint8 {
 	HOMGRADE_LOYAL,
 };
 
+class HomunculusDatabase : public TypesafeYamlDatabase<int32, s_homunculus_db> {
+private:
+	bool parseStatusNode(const std::string &nodeName, const std::string &subNodeName, const ryml::NodeRef &node, s_hom_stats &bonus);
+
+public:
+	HomunculusDatabase() : TypesafeYamlDatabase("HOMUNCULUS_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const ryml::NodeRef& node);
+
+	// Additional
+	std::shared_ptr<s_homunculus_db> homun_search(int32 class_);
+};
+
+extern HomunculusDatabase homunculus_db;
+
 /// Check Homunculus Class ID
 #define homdb_checkid(id) ((id) >=  HM_CLASS_BASE && (id) <= HM_CLASS_MAX)
 
 // merc_is_hom_alive(struct homun_data *)
 #define hom_is_active(x) ((x) && (x)->homunculus.vaporize == HOM_ST_ACTIVE && (x)->battle_status.hp > 0)
-int hom_recv_data(uint32 account_id, struct s_homunculus *sh, int flag); //albator
-struct view_data* hom_get_viewdata(int class_);
-int hom_class2mapid(int hom_class);
-enum homun_type hom_class2type(int class_);
-void hom_damage(struct homun_data *hd);
-int hom_dead(struct homun_data *hd);
+int32 hom_recv_data(uint32 account_id, struct s_homunculus *sh, int32 flag); //albator
+struct view_data* hom_get_viewdata(int32 class_);
+int32 hom_class2mapid(int32 hom_class);
+enum homun_type hom_class2type(int32 class_);
+int32 hom_dead(struct homun_data *hd);
 void hom_skillup(struct homun_data *hd,uint16 skill_id);
-void hom_calc_skilltree(struct homun_data *hd, bool flag_evolve);
-short hom_checkskill(struct homun_data *hd,uint16 skill_id);
-uint8 hom_skill_get_min_level(int class_, uint16 skill_id);
+void hom_calc_skilltree(homun_data *hd);
+int16 hom_checkskill(struct homun_data *hd,uint16 skill_id);
+uint16 hom_skill_get_min_level(int32 class_, uint16 skill_id);
 void hom_gainexp(struct homun_data *hd,t_exp exp);
-int hom_levelup(struct homun_data *hd);
-int hom_evolution(struct homun_data *hd);
-int hom_mutate(struct homun_data *hd,int homun_id);
-void hom_heal(struct homun_data *hd);
-int hom_vaporize(struct map_session_data *sd, int flag);
-int hom_ressurect(struct map_session_data *sd, unsigned char per, short x, short y);
-void hom_revive(struct homun_data *hd, unsigned int hp, unsigned int sp);
+int32 hom_levelup(struct homun_data *hd);
+int32 hom_evolution(struct homun_data *hd);
+int32 hom_mutate(struct homun_data *hd,int32 homun_id);
+void hom_heal(homun_data& hd, bool hp, bool sp);
+int32 hom_vaporize(map_session_data *sd, int32 flag);
+int32 hom_ressurect(map_session_data *sd, unsigned char per, int16 x, int16 y);
+void hom_revive(struct homun_data *hd, uint32 hp, uint32 sp);
 void hom_reset_stats(struct homun_data *hd);
-int hom_shuffle(struct homun_data *hd); // [Zephyrus]
+int32 hom_shuffle(struct homun_data *hd); // [Zephyrus]
 void hom_save(struct homun_data *hd);
-bool hom_call(struct map_session_data *sd);
-bool hom_create_request(struct map_session_data *sd, int class_);
-int hom_search(int key,int type);
-void hom_menu(struct map_session_data *sd,int type);
-int hom_food(struct map_session_data *sd, struct homun_data *hd);
-int hom_hungry_timer_delete(struct homun_data *hd);
-int hom_change_name(struct map_session_data *sd,char *name);
-void hom_change_name_ack(struct map_session_data *sd, char* name, int flag);
-#define hom_stop_walking(hd, type) unit_stop_walking(&(hd)->bl, type)
-#define hom_stop_attack(hd) unit_stop_attack(&(hd)->bl)
-int hom_increase_intimacy(struct homun_data * hd, unsigned int value);
-int hom_decrease_intimacy(struct homun_data * hd, unsigned int value);
-int hom_skill_tree_get_max(int skill_id, int b_class);
+bool hom_call(map_session_data *sd);
+bool hom_create_request(map_session_data *sd, int32 class_);
+void hom_menu(map_session_data *sd,int32 type);
+int32 hom_food(map_session_data *sd, struct homun_data *hd);
+int32 hom_hungry_timer_delete(struct homun_data *hd);
+int32 hom_change_name(map_session_data *sd,char *name);
+void hom_change_name_ack(map_session_data *sd, char* name, int32 flag);
+int32 hom_increase_intimacy(struct homun_data * hd, uint32 value);
+int32 hom_decrease_intimacy(struct homun_data * hd, uint32 value);
+int32 hom_skill_tree_get_max(int32 skill_id, int32 b_class);
 void hom_init_timers(struct homun_data * hd);
-void hom_reload_skill(void);
 void hom_reload(void);
 
-void hom_addspiritball(TBL_HOM *hd, int max);
-void hom_delspiritball(TBL_HOM *hd, int count, int type);
+void hom_addspiritball(TBL_HOM *hd, int32 max);
+void hom_delspiritball(TBL_HOM *hd, int32 count, int32 type);
 
 uint8 hom_get_intimacy_grade(struct homun_data *hd);
 uint32 hom_intimacy_grade2intimacy(enum e_homun_grade grade);
 enum e_homun_grade hom_intimacy_intimacy2grade(uint32 intimacy);
 
-short hom_skill_get_index(uint16 skill_id);
+int16 hom_skill_get_index(uint16 skill_id);
 
 void do_final_homunculus(void);
 void do_init_homunculus(void);

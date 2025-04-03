@@ -43,8 +43,12 @@ GroupID: See the "Item Group ID" section in 'src/map/itemdb.hpp' and the "item g
 
 ---------------------------------------
 
+Index: Unique number that can be used to add the same Item with different data in the list.
+
+---------------------------------------
+
 Item: Available item that will be obtained from this item group.
-        Requires the AegisName of the item.
+      Requires the AegisName of the item.
 
 ---------------------------------------
 
@@ -52,12 +56,14 @@ Rate: Probability to get the item. Not a percentage value!
 
 Examples:
   - Group: MyItemGroup
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
-          - Item: Knife
+          - Index: 0
+            Item: Knife
             Rate: 5
-          - Item: Dagger
+          - Index: 1
+            Item: Dagger
             Rate: 1
 
 	- Knife has chance 5/6 (83.3%) to be obtained
@@ -69,27 +75,54 @@ Amount: Amount of item that will be obtained.
 
 ---------------------------------------
 
-SubGroup: Setting this to '0' makes the item always obtainable ("must" item).
-		  SubGroup value will allocate where the item will be stored at random group.
+SubGroup: Unique number to create a list of item.
 
+---------------------------------------
+
+Algorithm: Type of algorithm associated with SubGroup.
+
+Random            - A random item is picked from the sub group using rate as chance for an item being picked.
+                    The chance remains the same every time.
+All               - All items in this sub group shall be picked.
+                    If you use a command that is supposed to return only one item with such a sub group, then a random item is returned instead, with each
+                    item having the same chance to be picked.
+                    When using this algorithm, the rate must remain unspecified (0).
+SharedPool        - Rate is the amount of items of this item ID in the sub group. A random item is picked from all the items in the group and then removed
+                    from the sub group. That means each time an item is returned from the sub group, it will have a lower chance to be returned again and if
+                    no more items of this item ID remain in the sub group, it cannot be returned at all anymore. This also means that if the server requests
+                    an item from this sub group as often as there are total items in this sub group, it will get exactly the amounts specified under "rate".
+                    Only when the group is completely empty or the server restarts, the group refills.
+
+Default: SharedPool
+
+Example:
 	Item Group:
       - Group: MyItemGroup
-        Contain:
+        SubGroups:
           - SubGroup: 0
+            Algorithm: All
             List:
-              - Item: Knife       # "must" item(s)
-              - Item: Dagger      # "must" item(s)
+              - Index: 0
+                Item: Knife       # "must" item(s)
+              - Index: 1
+                Item: Dagger      # "must" item(s)
           - SubGroup: 1
+            Algorithm: Random
             List:
-              - Item: Stiletto    # random at SubGroup 1
+              - Index: 0
+                Item: Stiletto    # random at SubGroup 1
                 Rate: 5
-              - Item: Stiletto_   # random at SubGroup 1
+              - Index: 1
+                Item: Stiletto_   # random at SubGroup 1
                 Rate: 2
           - SubGroup: 2
+            Algorithm: Random
             List:
-              - Item: Stiletto    # random at SubGroup 2
+              - Index: 0
+                Item: Stiletto    # random at SubGroup 2
                 Rate: 5
-              - Item: Dagger_     # random at SubGroup 2
+              - Index: 1
+                Item: Dagger_     # random at SubGroup 2
                 Rate: 4
 
 	Usages:
@@ -138,6 +171,59 @@ SubGroup: Setting this to '0' makes the item always obtainable ("must" item).
 		- Returns Item ID of Knife by chance 5/7 from 'must' SubGroup
 		- Returns Item ID of Dagger by chance 2/7 from 'must' SubGroup
 		- 'SubGroup 1' and 'SubGroup 2' are ignored
+
+Example #2:
+
+	Item Group:
+	  - Group: MyItemGroup2
+	    SubGroups:
+	      - SubGroup: 1
+	        Algorithm: SharedPool
+	        List:
+	          - Index: 0
+	            Item: Milk
+	            Rate: 10
+	            Amount: 3
+	          - Index: 1
+	            Item: Well_Baked_Cookie
+	            Rate: 5
+	            Amount: 2
+	          - Index: 2
+	            Item: Gift_Box
+	            Rate: 1
+
+(Note: Specifying the "SharedPool" algorithm is optional, as it defaults to SharedPool if not specified.)
+
+You can interpret this as within MyItemGroup2 there are 10 packs of 3x Milk, 5 packs of 2x Well_Baked_Cookie and 1 Gift_Box; 16 packs in total.
+
+Usages:
+'getgroupitem(IG_MyItemGroup2);'
+'getrandgroupitem(IG_MyItemGroup2);'
+
+The first time one of the two commands above are called:
+	- Player has chance to get 3x Milk by chance 10/16
+	- Player has chance to get 2x Well_Baked_Cookie by chance 5/16
+	- Player has chance to get 1x Gift_Box by chance 1/16
+
+Let's say a pack of Well_Baked_Cookie was received from the group. That means only 4 packs of Well_Baked_Cookie remain in the group.
+
+The second time one of the two commands above are called:
+	- Player has chance to get 3x Milk by chance 10/15
+	- Player has chance to get 2x Well_Baked_Cookie by chance 4/15
+	- Player has chance to get 1x Gift_Box by chance 1/15
+
+Now a Gift_Box is received from the group. That means no more Gift_Box are remaining in the group.
+
+The third time one of the two commands above are called:
+	- Player has chance to get 3x Milk by chance 10/14
+	- Player has chance to get 2x Well_Baked_Cookie by chance 4/14
+
+After the two commands were called 16 times, the server will always have given out exactly:
+	- 30 Milk (10 packs of 3x Milk)
+	- 10 Well_Baked_Cookie (5 packs of 2x Well_Baked_Cookie)
+	- 1 Gift_Box
+
+Now the group is refilled and the next time the command is called, it will behave similar to the first time.
 
 ---------------------------------------
 

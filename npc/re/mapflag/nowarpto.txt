@@ -190,6 +190,12 @@ rockmi1	mapflag	nowarpto
 rockmi2	mapflag	nowarpto
 
 //============================================================
+// Memorial day
+//============================================================
+1@md_gef	mapflag	nowarpto
+1@md_pay	mapflag	nowarpto
+
+//============================================================
 // Lasagna
 //============================================================
 lasa_in01	mapflag	nowarpto
@@ -320,6 +326,11 @@ iz_d05_i	mapflag	nowarpto
 job4_bio	mapflag	nowarpto
 job4_mag	mapflag	nowarpto
 job4_tro	mapflag	nowarpto
+
+//============================================================
+// Spirit Handler Job Change
+//============================================================
+1@exsh	mapflag	nowarpto
 
 //============================================================
 // Geffen Night Arena

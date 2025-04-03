@@ -3,8 +3,16 @@
 
 #include "yamlupgrade.hpp"
 
+using namespace rathena::tool_yamlupgrade;
+
 static bool upgrade_achievement_db(std::string file, const uint32 source_version);
 static bool upgrade_item_db(std::string file, const uint32 source_version);
+static bool upgrade_job_stats(std::string file, const uint32 source_version);
+static bool upgrade_status_db(std::string file, const uint32 source_version);
+static bool upgrade_map_drops_db(std::string file, const uint32 source_version);
+static bool upgrade_enchantgrade_db( std::string file, const uint32 source_version );
+static bool upgrade_item_group_db( std::string file, const uint32 source_version );
+static bool upgrade_skill_db( std::string file, const uint32 source_version );
 
 template<typename Func>
 bool process(const std::string &type, uint32 version, const std::vector<std::string> &paths, const std::string &name, Func lambda) {
@@ -68,7 +76,7 @@ bool process(const std::string &type, uint32 version, const std::vector<std::str
 	return true;
 }
 
-int do_init(int argc, char** argv) {
+bool YamlUpgradeTool::initialize( int32 argc, char* argv[] ){
 	const std::string path_db = std::string(db_path);
 	const std::string path_db_mode = path_db + "/" + DBPATH;
 	const std::string path_db_import = path_db + "/" + DBIMPORT;
@@ -95,7 +103,7 @@ int do_init(int argc, char** argv) {
 
 	// Load constants
 	#define export_constant_npc(a) export_constant(a)
-	#include "../map/script_constants.hpp"
+	#include <map/script_constants.hpp>
 
 	std::vector<std::string> root_paths = {
 		path_db,
@@ -106,19 +114,51 @@ int do_init(int argc, char** argv) {
 	if (!process("ACHIEVEMENT_DB", 2, root_paths, "achievement_db", [](const std::string &path, const std::string &name_ext, uint32 source_version) -> bool {
 		return upgrade_achievement_db(path + name_ext, source_version);
 	})) {
-		return 0;
+		return false;
 	}
 
-	if (!process("ITEM_DB", 2, root_paths, "item_db", [](const std::string& path, const std::string& name_ext, uint32 source_version) -> bool {
+	if (!process("ITEM_DB", 3, root_paths, "item_db", [](const std::string& path, const std::string& name_ext, uint32 source_version) -> bool {
 		return upgrade_item_db(path + name_ext, source_version);
+		})) {
+		return false;
+	}
+
+	if (!process("JOB_STATS", 2, root_paths, "job_stats", [](const std::string& path, const std::string& name_ext, uint32 source_version) -> bool {
+		return upgrade_job_stats(path + name_ext, source_version);
+		})) {
+		return false;
+	}
+	
+	if (!process("STATUS_DB", 3, root_paths, "status", [](const std::string& path, const std::string& name_ext, uint32 source_version) -> bool {
+		return upgrade_status_db(path + name_ext, source_version);
+		})) {
+		return false;
+	}
+	
+	if (!process("MAP_DROP_DB", 2, root_paths, "map_drops", [](const std::string& path, const std::string& name_ext, uint32 source_version) -> bool {
+		return upgrade_map_drops_db(path + name_ext, source_version);
 		})) {
 		return 0;
 	}
 
-	return 0;
-}
+	if( !process( "ENCHANTGRADE_DB", 3, root_paths, "enchantgrade", []( const std::string& path, const std::string& name_ext, uint32 source_version ) -> bool {
+		return upgrade_enchantgrade_db( path + name_ext, source_version );
+		} ) ){
+		return false;
+	}
+	if( !process( "ITEM_GROUP_DB", 4, root_paths, "item_group_db", []( const std::string& path, const std::string& name_ext, uint32 source_version ) -> bool {
+		return upgrade_item_group_db( path + name_ext, source_version );
+		} ) ){
+		return false;
+	}
 
-void do_final(void) {
+	if( !process( "SKILL_DB", 4, root_paths, "skill_db", []( const std::string& path, const std::string& name_ext, uint32 source_version ) -> bool {
+		return upgrade_skill_db( path + name_ext, source_version );
+		} ) ){
+		return false;
+	}
+
+	return true;
 }
 
 // Implementation of the upgrade functions
@@ -247,4 +287,278 @@ static bool upgrade_item_db(std::string file, const uint32 source_version) {
 	ShowStatus("Done converting/upgrading '" CL_WHITE "%zu" CL_RESET "' items in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
 
 	return true;
+}
+
+static bool upgrade_job_stats(std::string file, const uint32 source_version) {
+	size_t entries = 0;
+
+	for (auto input : inNode["Body"]) {
+		// If under version 2
+		if (source_version < 2) {
+			// Field name changes
+			if (input["HPFactor"].IsDefined()) {
+				input["HpFactor"] = input["HPFactor"].as<uint32>();
+				input.remove("HPFactor");
+			}
+			if (input["HpMultiplicator"].IsDefined()) {
+				input["HpIncrease"] = input["HpMultiplicator"].as<uint32>();
+				input.remove("HpMultiplicator");
+			}
+			if (input["HPMultiplicator"].IsDefined()) {
+				input["HpIncrease"] = input["HPMultiplicator"].as<uint32>();
+				input.remove("HPMultiplicator");
+			}
+			if (input["SpFactor"].IsDefined()) {
+				input["SpIncrease"] = input["SpFactor"].as<uint32>();
+				input.remove("SpFactor");
+			}
+			if (input["SPFactor"].IsDefined()) {
+				input["SpIncrease"] = input["SPFactor"].as<uint32>();
+				input.remove("SPFactor");
+			}
+		}
+
+		body << input;
+		entries++;
+	}
+
+	ShowStatus("Done converting/upgrading '" CL_WHITE "%zu" CL_RESET "' job stats in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
+
+	return true;
+}
+
+static bool upgrade_status_db(std::string file, const uint32 source_version) {
+	size_t entries = 0;
+
+	for (auto input : inNode["Body"]) {
+		// If under version 3
+		if (source_version < 3) {
+			// Rename End to EndOnStart
+			if (input["End"].IsDefined()) {
+				input["EndOnStart"] = input["End"];
+				input.remove("End");
+			}
+		}
+
+		body << input;
+		entries++;
+	}
+
+	ShowStatus("Done converting/upgrading '" CL_WHITE "%zu" CL_RESET "' statuses in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
+
+	return true;
+}
+
+static bool upgrade_map_drops_db(std::string file, const uint32 source_version) {
+	size_t entries = 0;
+
+	for( auto input : inNode["Body"] ){
+		// If under version 2, adjust the rates from n/10000 to n/100000
+		if( source_version < 2 ){
+			if (input["GlobalDrops"].IsDefined()) {
+				for( auto GlobalDrops : input["GlobalDrops"] ){
+					if (GlobalDrops["Rate"].IsDefined()) {
+						uint32 val = GlobalDrops["Rate"].as<uint32>() * 10;
+						GlobalDrops["Rate"] = val;
+					}
+				}
+			}
+			if (input["SpecificDrops"].IsDefined()) {
+				for( auto SpecificDrops : input["SpecificDrops"] ){
+					if (SpecificDrops["Drops"].IsDefined()) {
+						for( auto Drops : SpecificDrops["Drops"] ){
+							if (Drops["Rate"].IsDefined()) {
+								uint32 val = Drops["Rate"].as<uint32>() * 10;
+								Drops["Rate"] = val;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		body << input;
+		entries++;
+	}
+
+	ShowStatus("Done converting/upgrading '" CL_WHITE "%zu" CL_RESET "' rates in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
+
+	return true;
+}
+
+static bool upgrade_enchantgrade_db( std::string file, const uint32 source_version ){
+	size_t entries = 0;
+
+	for( auto input : inNode["Body"] ){
+		// If under version 3
+		if( source_version < 3 ){
+			if( input["Levels"].IsDefined() ){
+				for( auto levelNode : input["Levels"] ){
+					if( levelNode["Grades"].IsDefined() ){
+						for( auto gradeNode : levelNode["Grades"] ){
+							// Convert Refine + Chance to a Chances array
+							if( gradeNode["Refine"].IsDefined() && !gradeNode["Chance"].IsDefined() ){
+								ShowError( "Cannot upgrade automatically, because Refine is specified, but Chance is missing" );
+								return false;
+							}
+
+							if( gradeNode["Chance"].IsDefined() && !gradeNode["Refine"].IsDefined() ){
+								ShowError( "Cannot upgrade automatically, because Chance is specified, but Refine is missing" );
+								return false;
+							}
+
+							uint16 refine = gradeNode["Refine"].as<uint16>();
+							uint16 chance = gradeNode["Chance"].as<uint16>();
+
+							auto chancesNode = gradeNode["Chances"];
+
+							for( int32 i = refine, j = 0; i <= MAX_REFINE; i++, j++ ){
+								auto chanceNode = chancesNode[j];
+
+								chanceNode["Refine"] = i;
+								chanceNode["Chance"] = chance;
+							}
+
+							// Remove the existing Refine entry
+							gradeNode.remove( "Refine" );
+
+							// Remove the existing Chance entry
+							gradeNode.remove( "Chance" );
+						}
+					}
+				}
+			}
+		}
+
+		body << input;
+		entries++;
+	}
+
+	ShowStatus( "Done converting/upgrading '" CL_WHITE "%zu" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str() );
+
+	return true;
+}
+
+static bool upgrade_item_group_db( std::string file, const uint32 source_version ){
+	size_t entries = 0;
+
+	for( const auto input : inNode["Body"] ){
+		if( source_version < 4 ){
+			body << YAML::BeginMap;
+			body << YAML::Key << "Group" << YAML::Value << input["Group"];
+
+			if( input["SubGroups"].IsDefined() ){
+				body << YAML::Key << "SubGroups";
+				body << YAML::BeginSeq;
+
+				for (const auto &it : input["SubGroups"]) {
+					body << YAML::BeginMap;
+					if( !it["SubGroup"].IsDefined() ){
+						ShowError( "Cannot upgrade automatically, SubGroup is missing." );
+						return false;
+					}
+					body << YAML::Key << "SubGroup" << YAML::Value << it["SubGroup"];
+
+					if (it["SubGroup"].as<uint16>() == 0)
+						body << YAML::Key << "Algorithm" << YAML::Value << "All";
+					else if (it["SubGroup"].as<uint16>() == 6)
+						body << YAML::Key << "Algorithm" << YAML::Value << "Random";
+					// else
+						// body << YAML::Key << "Algorithm" << YAML::Value << "SharedPool";
+
+					if( it["List"].IsDefined() )
+						body << YAML::Key << "List";{
+						body << YAML::BeginSeq;
+
+						uint32 index = 0;
+
+						for( auto ListNode : it["List"] ){
+							if( !ListNode["Item"].IsDefined() ){
+								ShowError( "Cannot upgrade automatically, Item is missing" );
+								return false;
+							}
+							body << YAML::BeginMap;
+
+							body << YAML::Key << "Index" << YAML::Value << index;
+							body << YAML::Key << "Item" << YAML::Value << ListNode["Item"];
+
+							if( ListNode["Rate"].IsDefined() )
+								body << YAML::Key << "Rate" << YAML::Value << ListNode["Rate"];
+							if( ListNode["Amount"].IsDefined() )
+								body << YAML::Key << "Amount" << YAML::Value << ListNode["Amount"];
+							if( ListNode["Duration"].IsDefined() )
+								body << YAML::Key << "Duration" << YAML::Value << ListNode["Duration"];
+							if( ListNode["Announced"].IsDefined() )
+								body << YAML::Key << "Announced" << YAML::Value << ListNode["Announced"];
+							if( ListNode["UniqueId"].IsDefined() )
+								body << YAML::Key << "UniqueId" << YAML::Value << ListNode["UniqueId"];
+							if( ListNode["Stacked"].IsDefined() )
+								body << YAML::Key << "Stacked" << YAML::Value << ListNode["Stacked"];
+							if( ListNode["Named"].IsDefined() )
+								body << YAML::Key << "Named" << YAML::Value << ListNode["Named"];
+							if( ListNode["Bound"].IsDefined() )
+								body << YAML::Key << "Bound" << YAML::Value << ListNode["Bound"];
+							if( ListNode["RandomOptionGroup"].IsDefined() )
+								body << YAML::Key << "RandomOptionGroup" << YAML::Value << ListNode["RandomOptionGroup"];
+							if( ListNode["RefineMinimum"].IsDefined() )
+								body << YAML::Key << "RefineMinimum" << YAML::Value << ListNode["RefineMinimum"];
+							if( ListNode["RefineMaximum"].IsDefined() )
+								body << YAML::Key << "RefineMaximum" << YAML::Value << ListNode["RefineMaximum"];
+							if( ListNode["Clear"].IsDefined() )
+								body << YAML::Key << "Clear" << YAML::Value << ListNode["Clear"];
+
+							index++;
+							body << YAML::EndMap;
+						}
+
+						body << YAML::EndSeq;
+					}
+					if( it["Clear"].IsDefined() )
+						body << YAML::Key << "Clear" << YAML::Value << it["Clear"];
+
+					body << YAML::EndMap;
+				}
+				body << YAML::EndSeq;
+			}
+			body << YAML::EndMap;
+		}
+
+		entries++;
+	}
+
+	ShowStatus( "Done converting/upgrading '" CL_WHITE "%zu" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str() );
+
+	return true;
+}
+
+static bool upgrade_skill_db( std::string file, const uint32 source_version ){
+	size_t entries = 0;
+
+	for( auto input : inNode["Body"] ){
+		// If under version 4
+		if( source_version < 4 ){
+			if( input["CastCancel"].IsDefined() ){
+				// If CastCancel was true (new default value)
+				if( input["CastCancel"].as<bool>() ){
+					// Remove it
+					input.remove( "CastCancel" );
+				}
+			}else{
+				if( input["CastTime"].IsDefined() || input["FixedCastTime"].IsDefined() ){
+					input.force_insert( "CastCancel", false );
+				}
+			}
+		}
+
+		body << input;
+		entries++;
+	}
+
+	ShowStatus( "Done converting/upgrading '" CL_WHITE "%zu" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str() );
+
+	return true;
+}
+
+int32 main( int32 argc, char *argv[] ){
+	return main_core<YamlUpgradeTool>( argc, argv );
 }

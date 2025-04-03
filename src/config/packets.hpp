@@ -19,7 +19,7 @@
 #ifndef PACKETVER_RE
 	/// From November 2015 only RagexeRE are supported.
 	/// After July 2018 only Ragexe are supported.
-	#if ( PACKETVER > 20151104 && PACKETVER < 20180704 ) || PACKETVER >= 20200902
+	#if ( PACKETVER > 20151104 && PACKETVER < 20180704 ) || ( PACKETVER >= 20200902 && PACKETVER <= 20211118 )
 		#define PACKETVER_RE
 	#endif
 #endif
@@ -87,5 +87,8 @@
 
 /// Check if the specified packetvresion supports the cashshop sale system
 #define PACKETVER_SUPPORTS_SALES PACKETVER >= 20131223
+
+/// Use web service?
+#define WEB_SERVER_ENABLE PACKETVER > 20200300
 
 #endif /* CONFIG_PACKETS_HPP */

@@ -1,0 +1,42 @@
+//===== rAthena Script ======================================= 
+//= Emperium Seller
+//===== By: ================================================== 
+//= Pokye
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Sell Emperium
+//===== Additional Comments: ================================= 
+//= 1.0 Special thanks for Balfear and Everade
+//============================================================ 
+
+prt_in,212,169,3	script	Guild Clerk	4_M_04,{
+	if (gettime(DT_DAYOFWEEK) >= 1 && gettime(DT_DAYOFWEEK) <= 6 && gettime(DT_HOUR) >= 18 && gettime(DT_HOUR) <= 23) {
+		mes "[Guild Clerk]";
+		mes "The Emperium to be distributed to the guild office today has arrived. If you want to purchase, please put as many as you want~";
+		next;
+		mes "[Guild Clerk]";
+		mes "It seems that many people are looking for Emperium today. It's just a personal feeling.";
+		close2;                                                                                                         
+		callshop "emp_seller#slo";
+		end;
+	}
+	mes "[Guild Clerk]";
+	mes "Our guild office actively supports the smooth gathering of adventurers.";
+	next;
+	mes "[Guild Clerk]";
+	mes "As part of that,";
+	mes "we are selling a limited quantity of 100 " + mesitemlink( 714, false ) + " every day";
+	mes "from ^0000ff18:00 to 23:59^000000 from ^0000ffMonday to Saturday^000000.";
+	next;
+	mes "[Guild Clerk]";
+	mes "Please note that our guild office does not sell all the time because we have to run around to supply Emperium outside of the hours.";
+	close;
+
+OnHour00:
+	npcshopupdate "emp_seller#slo",714,0,100;
+	end;
+}
+-	marketshop	emp_seller#slo	FAKE_NPC,714:1000000:100

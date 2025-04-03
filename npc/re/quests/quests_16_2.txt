@@ -3,8 +3,9 @@
 //===== Description: =========================================
 //= [Walkthrough Conversion]
 //--- NPCs quests for Episode 16.2
-//===== Changelogs: ==========================================
+//===== Changelog: ===========================================
 //= 1.0 First version. [Capuche]
+//= 1.1 Updated with some iRO NPC names. [Everade]
 //============================================================
 
 prt_cas_q,29,28,0	script	#ep162_evt_npc_con	HIDDEN_WARP_NPC,2,2,{
@@ -13,20 +14,20 @@ OnTouch:
 	if (ep16_royal < 17)	// pre-req : access to room of consciousness (first time)
 		end;
 	if (terra_gloria_main == 0) {
-		cloakoffnpc "Nihil M. Heine#ep162_01", getcharid(0);
-		cloakoffnpc "Skia Nerius#ep162_02", getcharid(0);
+		cloakoffnpcself( "Nihil M. Heine#ep162_01" );
+		cloakoffnpcself( "Skia Nerius#ep162_02" );
 	}
 	else if (terra_gloria_main == 1 || terra_gloria_main == 2) {
-		cloakoffnpc "Nihil M. Heine#ep162_01", getcharid(0);
-		cloakoffnpc "Skia Nerius#ep162_02", getcharid(0);
-		cloakoffnpc "Spica Nerius#ep162_01", getcharid(0);
+		cloakoffnpcself( "Nihil M. Heine#ep162_01" );
+		cloakoffnpcself( "Skia Nerius#ep162_02" );
+		cloakoffnpcself( "Spica Nerius#ep162_01" );
 	}
 	else if (terra_gloria_main == 6) {	// first back from Lighthalzen
-		cloakoffnpc "Nihil M. Heine#ep162_01", getcharid(0);
-		cloakoffnpc "Spica Nerius#ep162_01", getcharid(0);
+		cloakoffnpcself( "Nihil M. Heine#ep162_01" );
+		cloakoffnpcself( "Spica Nerius#ep162_01" );
 	}
 	else if (terra_gloria_main == 23)
-		cloakoffnpc "Skia Nerius#ep162_01", getcharid(0);
+		cloakoffnpcself( "Skia Nerius#ep162_01" );
 	end;
 }
 
@@ -88,7 +89,7 @@ prt_cas_q,21,39,3	script	Nihil M. Heine#ep162_01	4_EP16_NIHIL,{
 		sleep2 2000;
 		npctalk "She has arrived.", "Nihil M. Heine#ep162_01", bc_self;
 		npctalk "Thank you for coming.", "Spica Nerius#ep162_01", bc_self;
-		cloakoffnpc "Spica Nerius#ep162_01", getcharid(0);
+		cloakoffnpcself( "Spica Nerius#ep162_01" );
 		terra_gloria_main = 1;
 		sleep2 2000;
 		setpcblock PCBLOCK_NPC, false;
@@ -149,9 +150,9 @@ prt_cas_q,21,39,3	script	Nihil M. Heine#ep162_01	4_EP16_NIHIL,{
 		mes "Now, please excuse me.";
 		close2;
 		cutin "",255;
-		cloakonnpc "Nihil M. Heine#ep162_01", getcharid(0);
-		cloakonnpc "Spica Nerius#ep162_01", getcharid(0);
-		cloakonnpc "Skia Nerius#ep162_02", getcharid(0);
+		cloakonnpcself( "Nihil M. Heine#ep162_01" );
+		cloakonnpcself( "Spica Nerius#ep162_01" );
+		cloakonnpcself( "Skia Nerius#ep162_02" );
 		end;
 	}
 	if (terra_gloria_main == 6) {
@@ -202,7 +203,7 @@ prt_cas_q,21,39,3	script	Nihil M. Heine#ep162_01	4_EP16_NIHIL,{
 		cutin "ep16_spica_nerius06.bmp",1;
 		mes "[Spica]";
 		mes "Because I trust Crux.";
-		cloakoffnpc "Crux#ep162_03", getcharid(0);
+		cloakoffnpcself( "Crux#ep162_03" );
 		next;
 		cutin "ep16_crux_findel01.bmp",0;
 		mes "[Crux]";
@@ -316,7 +317,7 @@ prt_cas_q,21,39,3	script	Nihil M. Heine#ep162_01	4_EP16_NIHIL,{
 		mes "It depends on how the Schwartz government reacts to us.";
 		cutin "ep16_nihi_miseria_heine04.bmp",2;
 		next;
-		cloakonnpc "Crux#ep162_03", getcharid(0);
+		cloakonnpcself( "Crux#ep162_03" );
 		cutin "ep16_spica_nerius07.bmp",1;
 		mes "[Spica]";
 		mes "For that issue, please trust the next leader of the Nerius family.";
@@ -332,8 +333,8 @@ prt_cas_q,21,39,3	script	Nihil M. Heine#ep162_01	4_EP16_NIHIL,{
 		npctalk "I am going too.", "", bc_self;
 		sleep2 2000;
 		setpcblock PCBLOCK_NPC, false;
-		cloakonnpc "Nihil M. Heine#ep162_01", getcharid(0);
-		cloakonnpc "Spica Nerius#ep162_01", getcharid(0);
+		cloakonnpcself( "Nihil M. Heine#ep162_01" );
+		cloakonnpcself( "Spica Nerius#ep162_01" );
 		cutin "",255;
 		end;
 	}
@@ -459,9 +460,9 @@ prt_cas_q,23,36,3	script	Spica Nerius#ep162_01	4_EP16_SPICA,{
 		mes "Now, please excuse me.";
 		close2;
 		cutin "",255;
-		cloakonnpc "Nihil M. Heine#ep162_01", getcharid(0);
-		cloakonnpc "Spica Nerius#ep162_01", getcharid(0);
-		cloakonnpc "Skia Nerius#ep162_02", getcharid(0);
+		cloakonnpcself( "Nihil M. Heine#ep162_01" );
+		cloakonnpcself( "Spica Nerius#ep162_01" );
+		cloakonnpcself( "Skia Nerius#ep162_02" );
 		end;
 	}
 }
@@ -534,7 +535,7 @@ prt_cas_q,18,37,5	script	Skia Nerius#ep162_01	4_EP16_SKIA,{
 		}
 		cutin "ep16_spica_nerius01.bmp",1;
 		next;
-		cloakoffnpc "Spica Nerius#ep162_01", getcharid(0);
+		cloakoffnpcself( "Spica Nerius#ep162_01" );
 		npctalk "Could you tell me slowly?", "Spica Nerius#ep162_01", bc_self;
 		mes "Skia told Spica about her symptoms.";
 		next;
@@ -566,7 +567,7 @@ prt_cas_q,18,37,5	script	Skia Nerius#ep162_01	4_EP16_SKIA,{
 		mes "[Bel]";
 		mes "Prince Grantz has arrived.";
 		next;
-		cloakoffnpc "Kronecker G. Heine#ep162", getcharid(0);
+		cloakoffnpcself( "Kronecker G. Heine#ep162" );
 		mes "[Kronecker]";
 		mes "Hmm. The esteemed daughters of the Nerius family are here too.";
 		mes "First of all, " + strcharinfo(0) + " I have come to show my gratitude to you.";
@@ -631,7 +632,7 @@ prt_cas_q,18,37,5	script	Skia Nerius#ep162_01	4_EP16_SKIA,{
 		mes "See you later. I will contact you.";
 		npctalk "I will be waiting.", "Kronecker G. Heine#ep162", bc_self;
 		next;
-		cloakonnpc "Kronecker G. Heine#ep162", getcharid(0);
+		cloakonnpcself( "Kronecker G. Heine#ep162" );
 		mes "[Spica]";
 		mes "Skia?";
 		mes "Why don't you have a quiet conversation with me?";
@@ -662,8 +663,8 @@ prt_cas_q,18,37,5	script	Skia Nerius#ep162_01	4_EP16_SKIA,{
 		unittalk getcharid(3), "" + strcharinfo(0) + " : ....", bc_self;
 		sleep2 2000;
 		setpcblock PCBLOCK_NPC, false;
-		cloakonnpc "Skia Nerius#ep162_01", getcharid(0);
-		cloakonnpc "Spica Nerius#ep162_01", getcharid(0);
+		cloakonnpcself( "Skia Nerius#ep162_01" );
+		cloakonnpcself( "Spica Nerius#ep162_01" );
 		end;
 	}
 	end;
@@ -700,7 +701,7 @@ lhz_airport,189,39,3	script	Crux#ep162_01	4_EP16_CRUX,{
 		mes "Have you come alone?";
 		mes "I heard Skia was coming too ...";
 		next;
-		cloakoffnpc "Skia#ep162_03", getcharid(0);
+		cloakoffnpcself( "Skia#ep162_03" );
 		npctalk "I'm here!", "Skia#ep162_03", bc_self;
 		mes "[Crux]";
 		mes "Oh! You've arrived.";
@@ -756,7 +757,7 @@ lhz_airport,189,39,3	script	Crux#ep162_01	4_EP16_CRUX,{
 		setquest 7732;// Searching the suspect
 		terra_gloria_main = 4;
 		close2;
-		cloakonnpc "Skia#ep162_03", getcharid(0);
+		cloakonnpcself( "Skia#ep162_03" );
 		cutin "",255;
 		end;
 	}
@@ -867,8 +868,8 @@ OnTouch:
 		setpcblock PCBLOCK_NPC, true;
 		unittalk getcharid(3), "" + strcharinfo(0) + " : .....! Those people?!", bc_self;
 		sleep2 1000;
-		cloakoffnpc "Man#ep162_01", getcharid(0);
-		cloakoffnpc "Scientist#ep162_01", getcharid(0);
+		cloakoffnpcself( "Man#ep162_01" );
+		cloakoffnpcself( "Scientist#ep162_01" );
 		npctalk "Haven't we completed our business already?", "Scientist#ep162_01", bc_self;
 		sleep2 3000;
 		npctalk "Why did you come all the way here and call me out?", "Scientist#ep162_01", bc_self;
@@ -891,7 +892,7 @@ OnTouch:
 		sleep2 3000;
 		npctalk "I will wait.", "Man#ep162_01", bc_self;
 		sleep2 1000;
-		cloakonnpc "Man#ep162_01", getcharid(0);
+		cloakonnpcself( "Man#ep162_01" );
 		sleep2 1000;
 		npctalk "Hey, get rid of him.", "Scientist#ep162_01", bc_self;
 		sleep2 2000;
@@ -905,7 +906,7 @@ OnTouch:
 		terra_gloria_main = 5;
 		sleep2 3000;
 		setpcblock PCBLOCK_NPC, false;
-		cloakonnpc "Scientist#ep162_01", getcharid(0);
+		cloakonnpcself( "Scientist#ep162_01" );
 		unittalk getcharid(3), "" + strcharinfo(0) + " : I must tell Skia about this and head to the slum right away!", bc_self;
 		end;
 	}
@@ -944,7 +945,7 @@ lighthalzen,309,263,3	script	Man#ep162_02	1_M_01,{
 		sleep2 1000;
 		npctalk "Who are you? Why do you call me?", "", bc_self;
 		sleep2 1000;
-		cloakoffnpc "Suspicious mercenary#ep", getcharid(0);
+		cloakoffnpcself( "Suspicious mercenary#ep" );
 		npctalk "We are in trouble.", "Suspicious mercenary#ep", bc_self;
 		sleep2 2000;
 		npctalk ".... Heart ... Heart Hunter! What is a Heart Hunter doing here?!", "", bc_self;
@@ -957,8 +958,8 @@ lighthalzen,309,263,3	script	Man#ep162_02	1_M_01,{
 		sleep2 2000;
 		npctalk "Now, die.", "Suspicious mercenary#ep", bc_self;
 		sleep2 500;
-		cloakoffnpc "Skia#ep162_04", getcharid(0);
-		cloakoffnpc "Crux#ep162_02", getcharid(0);
+		cloakoffnpcself( "Skia#ep162_04" );
+		cloakoffnpcself( "Crux#ep162_02" );
 		specialeffect EF_NPC_STOP, AREA, "Suspicious mercenary#ep";
 		specialeffect EF_HIT3, AREA, "Suspicious mercenary#ep";
 		sleep2 300;
@@ -983,7 +984,7 @@ lighthalzen,309,263,3	script	Man#ep162_02	1_M_01,{
 		specialeffect EF_GUARD, AREA, "Skia#ep162_04";
 		specialeffect EF_GUARD;
 		sleep2 1000;
-		cloakonnpc "Suspicious mercenary#ep", getcharid(0);
+		cloakonnpcself( "Suspicious mercenary#ep" );
 		monster "lighthalzen",307,265, "Suspicious mercenary", 3454,1, "Man#ep162_02::OnMobDead";
 		killmonster "lighthalzen", "Man#ep162_02::OnMobDead";
 		sleep2 2000;
@@ -1011,8 +1012,8 @@ lighthalzen,309,263,3	script	Man#ep162_02	1_M_01,{
 		npctalk "Yes, lady. See you in the palace.", "Crux#ep162_02", bc_self;
 		sleep2 2000;
 		setpcblock PCBLOCK_NPC, false;
-		cloakonnpc "Crux#ep162_02", getcharid(0);
-		cloakonnpc "Man#ep162_02", getcharid(0);
+		cloakonnpcself( "Crux#ep162_02" );
+		cloakonnpcself( "Man#ep162_02" );
 		erasequest 7733;// Pursuit!
 		setquest 7734;// Arrest
 		terra_gloria_main = 6;
@@ -1127,9 +1128,9 @@ lhz_in02,238,150,0	script	#ep162_lhz_evt02	HIDDEN_WARP_NPC,1,1,{
 	end;
 OnTouch:
 	if (terra_gloria_main == 8) {
-		cloakoffnpc "Spica Nerius#ep162_02", getcharid(0);
-		cloakoffnpc "Philopontess#ep162_01", getcharid(0);
-		cloakoffnpc "Crux#ep162_05", getcharid(0);
+		cloakoffnpcself( "Spica Nerius#ep162_02" );
+		cloakoffnpcself( "Philopontess#ep162_01" );
+		cloakoffnpcself( "Crux#ep162_05" );
 	}
 	end;
 }
@@ -1361,7 +1362,7 @@ lhz_in02,239,148,4	script	Philopontess#ep162_01	4_M_PHILOFONTES,{
 		mes "Thank you for your support in advance.";
 		mes "I will go to the president for a report.";
 		next;
-		cloakonnpc "Philopontess#ep162_01", getcharid(0);
+		cloakonnpcself( "Philopontess#ep162_01" );
 		cutin "ep16_spica_nerius05.bmp",0;
 		mes "[Spica]";
 		mes "... What a straightforward man.";
@@ -1384,8 +1385,8 @@ lhz_in02,239,148,4	script	Philopontess#ep162_01	4_M_PHILOFONTES,{
 		npctalk "I will see you later.", "Crux#ep162_05", bc_self;
 		sleep2 2000;
 		setpcblock PCBLOCK_NPC, false;
-		cloakonnpc "Spica Nerius#ep162_02", getcharid(0);
-		cloakonnpc "Crux#ep162_05", getcharid(0);
+		cloakonnpcself( "Spica Nerius#ep162_02" );
+		cloakonnpcself( "Crux#ep162_05" );
 		cutin "",255;
 		end;
 	}
@@ -1404,7 +1405,7 @@ einbroch,239,269,0	script	#16nego15	HIDDEN_WARP_NPC,3,0,{
 	end;
 OnTouch:
 	if (terra_gloria_main > 9)
-		cloakonnpc "Unusual person#16nego01", getcharid(0);
+		cloakonnpcself( "Unusual person#16nego01" );
 	end;
 }
 einbroch,226,276,0	duplicate(#16nego15)	#16nego16	HIDDEN_WARP_NPC,3,0
@@ -1658,8 +1659,8 @@ einbroch,239,269,3	script	Unusual person#16nego01	4_M_LAZY,{
 		close2;
 		navigateto( "einbroch",267,268,NAV_NONE,1 );
 		cutin "",255;
-		cloakonnpc "Unusual person#16nego01", getcharid(0);
-		cloakoffnpc "Lazy#16nego06", getcharid(0);
+		cloakonnpcself( "Unusual person#16nego01" );
+		cloakoffnpcself( "Lazy#16nego06" );
 		end;
 	}
 	if (terra_gloria_main == 10) {
@@ -1669,8 +1670,8 @@ einbroch,239,269,3	script	Unusual person#16nego01	4_M_LAZY,{
 		close2;
 		navigateto( "einbroch",267,268,NAV_NONE,1 );
 		cutin "",255;
-		cloakonnpc "Unusual person#16nego01", getcharid(0);
-		cloakoffnpc "Lazy#16nego06", getcharid(0);
+		cloakonnpcself( "Unusual person#16nego01" );
+		cloakoffnpcself( "Lazy#16nego06" );
 		end;
 	}
 	if (terra_gloria_main == 11) {
@@ -1679,7 +1680,7 @@ einbroch,239,269,3	script	Unusual person#16nego01	4_M_LAZY,{
 		mes "Long time no see! I'm going to another mission spot. Got it? See you later!";
 		close2;
 		cutin "",255;
-		cloakonnpc "Unusual person#16nego01", getcharid(0);
+		cloakonnpcself( "Unusual person#16nego01" );
 		end;
 	}
 	if (terra_gloria_main < 17) {
@@ -1688,7 +1689,7 @@ einbroch,239,269,3	script	Unusual person#16nego01	4_M_LAZY,{
 		mes "Are you okay to be here now?";
 		close2;
 		cutin "",255;
-		cloakonnpc "Unusual person#16nego01", getcharid(0);
+		cloakonnpcself( "Unusual person#16nego01" );
 		end;
 	}
 	cutin "16lei_01.bmp",2;
@@ -1696,7 +1697,7 @@ einbroch,239,269,3	script	Unusual person#16nego01	4_M_LAZY,{
 	mes "Long time no see! I'm going to another mission spot. Got it? See you later!";
 	close2;
 	cutin "",255;
-	cloakonnpc "Unusual person#16nego01", getcharid(0);
+	cloakonnpcself( "Unusual person#16nego01" );
 	end;
 
 OnInit:
@@ -1706,8 +1707,8 @@ OnInit:
 
 einbroch,270,267,5	script	Very small hole#16nego0	4_CRACK,5,5,{
 	if (terra_gloria_main != 10 && terra_gloria_main != 11) {
-		cloakonnpc "Very small hole#16nego0", getcharid(0);
-		cloakonnpc "Lazy#16nego06", getcharid(0);
+		cloakonnpcself( "Very small hole#16nego0" );
+		cloakonnpcself( "Lazy#16nego06" );
 		end;
 	}
 	if (terra_gloria_main == 10) {
@@ -1721,13 +1722,13 @@ einbroch,270,267,5	script	Very small hole#16nego0	4_CRACK,5,5,{
 
 OnTouch:
 	if (terra_gloria_main == 10 || terra_gloria_main == 11)
-		cloakoffnpc "Very small hole#16nego0", getcharid(0);
+		cloakoffnpcself( "Very small hole#16nego0" );
 	end;
 }
 
 einbroch,270,268,3	script	Lazy#16nego06	4_M_LAZY,{
 	if (terra_gloria_main != 10) {
-		cloakonnpc "Lazy#16nego06", getcharid(0);
+		cloakonnpcself( "Lazy#16nego06" );
 		end;
 	}
 	cutin "16lei_01.bmp",2;
@@ -1767,7 +1768,7 @@ einbroch,270,268,3	script	Lazy#16nego06	4_M_LAZY,{
 	terra_gloria_main = 11;
 	close2;
 	cutin "",255;
-	cloakonnpc "Lazy#16nego06", getcharid(0);
+	cloakonnpcself( "Lazy#16nego06" );
 	end;
 
 OnInit:
@@ -1781,7 +1782,7 @@ einbech,44,207,0	script	#16negobok06	HIDDEN_WARP_NPC,5,5,{
 OnTouch:
 	if (terra_gloria_main == 10 || terra_gloria_main == 11)
 		end;
-	cloakonnpc "Lazy#16nego01", getcharid(0);
+	cloakonnpcself( "Lazy#16nego01" );
 	end;
 }
 einbech,66,208,0	duplicate(#16negobok06)	#16negobok13	HIDDEN_WARP_NPC,5,5
@@ -1800,7 +1801,7 @@ einbech,46,208,3	script	Lazy#16nego01	4_M_LAZY,{
 		mes "He told me he'd come here. Maybe he's still in Einbroch train station? I have to go there again.";
 		close2;
 		cutin "",255;
-		cloakonnpc "Lazy#16nego01", getcharid(0);
+		cloakonnpcself( "Lazy#16nego01" );
 		end;
 	}
 	if (terra_gloria_main == 10 || terra_gloria_main == 11) {
@@ -1890,7 +1891,7 @@ einbech,46,208,3	script	Lazy#16nego01	4_M_LAZY,{
 		cutin "",255;
 		viewpoint 1,74,129,1,0x4D4DFF00;
 		navigateto( "einbech",74,129,NAV_NONE,1 );
-		cloakonnpc "Lazy#16nego01", getcharid(0);
+		cloakonnpcself( "Lazy#16nego01" );
 		end;
 	}
 	if (terra_gloria_main == 12) {
@@ -1901,7 +1902,7 @@ einbech,46,208,3	script	Lazy#16nego01	4_M_LAZY,{
 		cutin "",255;
 		viewpoint 1,74,129,1,0x4D4DFF00;
 		navigateto( "einbech",74,129,NAV_NONE,1 );
-		cloakonnpc "Lazy#16nego01", getcharid(0);
+		cloakonnpcself( "Lazy#16nego01" );
 		end;
 	}
 	if (terra_gloria_main < 17) {
@@ -1911,7 +1912,7 @@ einbech,46,208,3	script	Lazy#16nego01	4_M_LAZY,{
 		mes "We must go to the rebellion.";
 		close2;
 		cutin "",255;
-		cloakonnpc "Lazy#16nego01", getcharid(0);
+		cloakonnpcself( "Lazy#16nego01" );
 		end;
 	}
 	cutin "16lei_01.bmp",2;
@@ -1919,7 +1920,7 @@ einbech,46,208,3	script	Lazy#16nego01	4_M_LAZY,{
 	mes "Long time no see! I'm going to another mission spot. Got it? See you later!";
 	close2;
 	cutin "",255;
-	cloakonnpc "Lazy#16nego01", getcharid(0);
+	cloakonnpcself( "Lazy#16nego01" );
 	end;
 }
 
@@ -1928,8 +1929,8 @@ einbech,94,127,0	script	#16negobok08	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch:
 	if (terra_gloria_main == 12) {
-		cloakoffnpc "Lazy#16nego02", getcharid(0);
-		cloakoffnpc "Enormous stack#16nego01", getcharid(0);
+		cloakoffnpcself( "Lazy#16nego02" );
+		cloakoffnpcself( "Enormous stack#16nego01" );
 	}
 	end;
 }
@@ -1956,8 +1957,8 @@ einbech,76,131,3	script	Lazy#16nego02	4_M_LAZY,{
 		mes "If I get rid of this and that...!";
 		npctalk "Come and help me!", "", bc_self;
 		next;
-		cloakonnpc "Enormous stack#16nego01", getcharid(0);
-		cloakoffnpc "Collapsed person#16nego", getcharid(0);
+		cloakonnpcself( "Enormous stack#16nego01" );
+		cloakoffnpcself( "Collapsed person#16nego" );
 		cutin "16lei_01.bmp",2;
 		mes "[Lazy]";
 		mes "Wow... I think today is a lucky day. This mission is going to be easier than we thought.";
@@ -2056,8 +2057,8 @@ einbech,76,131,3	script	Lazy#16nego02	4_M_LAZY,{
 		close2;
 		cutin "",255;
 		navigateto( "einbech",217,82,NAV_NONE,1 );
-		cloakonnpc "Lazy#16nego02", getcharid(0);
-		cloakonnpc "Collapsed person#16nego", getcharid(0);
+		cloakonnpcself( "Lazy#16nego02" );
+		cloakonnpcself( "Collapsed person#16nego" );
 		end;
 	}
 	if (terra_gloria_main == 13) {
@@ -2068,8 +2069,8 @@ einbech,76,131,3	script	Lazy#16nego02	4_M_LAZY,{
 		cutin "",255;
 		viewpoint 1,217,82,1,0x4D4DFF00;
 		navigateto( "einbech",217,82,NAV_NONE,1 );
-		cloakonnpc "Lazy#16nego02", getcharid(0);
-		cloakonnpc "Collapsed person#16nego", getcharid(0);
+		cloakonnpcself( "Lazy#16nego02" );
+		cloakonnpcself( "Collapsed person#16nego" );
 		end;
 	}
 	end;
@@ -2083,7 +2084,7 @@ einbech,200,79,0	script	#16negobok12	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch:
 	if (terra_gloria_main == 13)
-		cloakoffnpc "Lazy#16nego03", getcharid(0);
+		cloakoffnpcself( "Lazy#16nego03" );
 	end;
 }
 
@@ -2110,7 +2111,7 @@ einbech,217,82,3	script	Lazy#16nego03	4_M_LAZY,{
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Arrgh...";
-		cloakoffnpc "Gonie#16nego02", getcharid(0);
+		cloakoffnpcself( "Gonie#16nego02" );
 		unittalk getcharid(3), "" + strcharinfo(0) + " : Oh, I feel alive now.", bc_self;
 		npctalk "You are exaggerating your pain.", "", bc_self;
 		next;
@@ -2172,7 +2173,7 @@ einbech,217,82,3	script	Lazy#16nego03	4_M_LAZY,{
 		setquest 14598;// Invisible entrance
 		terra_gloria_main = 14;
 		close2;
-		cloakonnpc "Lazy#16nego03", getcharid(0);
+		cloakonnpcself( "Lazy#16nego03" );
 		cutin "",255;
 		end;
 	}
@@ -2182,7 +2183,7 @@ einbech,217,82,3	script	Lazy#16nego03	4_M_LAZY,{
 		mes "What are you doing? Come in!";
 		close2;
 		cutin "",255;
-		cloakonnpc "Lazy#16nego03", getcharid(0);
+		cloakonnpcself( "Lazy#16nego03" );
 		end;
 	}
 	end;
@@ -2222,7 +2223,7 @@ rebel_in,21,41,0	script	#16negobok05	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch:
 	if (terra_gloria_main != 14)
-		cloakonnpc "Lazy#16nego04", getcharid(0);
+		cloakonnpcself( "Lazy#16nego04" );
 	end;
 }
 
@@ -2232,7 +2233,7 @@ rebel_in,23,43,5	script	Gonie#16nego03	4_M_FALLENGONY,{
 	mes "......";
 	close2;
 	cutin "",255;
-	cloakonnpc "Gonie#16nego03", getcharid(0);
+	cloakonnpcself( "Gonie#16nego03" );
 	end;
 OnInit:
 	cloakonnpc();
@@ -2416,7 +2417,7 @@ rebel_in,21,45,5	script	Lazy#16nego04	4_M_LAZY,{
 		next;
 		mes "[Shopkeeper]";
 		mes "I won't tolerate you if you're playing shallow tricks.";
-		cloakonnpc "Nemi#16nego01", getcharid(0);
+		cloakonnpcself( "Nemi#16nego01" );
 		next;
 		cutin "16lei_02.bmp",2;
 		mes "[Lazy]";
@@ -2435,8 +2436,8 @@ rebel_in,21,45,5	script	Lazy#16nego04	4_M_LAZY,{
 		sleep2 500;
 		unittalk getcharid(3), "" + strcharinfo(0) + " : What! What is it? Why did you stop talking?", bc_self;
 		next;
-		cloakoffnpc "Nemi#16nego01", getcharid(0);
-		cloakoffnpc "Gonie#16nego03", getcharid(0);
+		cloakoffnpcself( "Nemi#16nego01" );
+		cloakoffnpcself( "Gonie#16nego03" );
 		mes "[Shopkeeper]";
 		mes "Arrgh...";
 		next;
@@ -2452,7 +2453,7 @@ rebel_in,21,45,5	script	Lazy#16nego04	4_M_LAZY,{
 		mes "Lucky?";
 		emotion ET_QUESTION;
 		next;
-		cloakonnpc "Eri#16nego01", getcharid(0);
+		cloakonnpcself( "Eri#16nego01" );
 		mes "[Shopkeeper]";
 		mes "Hey, what did you to this guy?";
 		next;
@@ -2485,8 +2486,8 @@ rebel_in,21,45,5	script	Lazy#16nego04	4_M_LAZY,{
 		emotion ET_CRY;
 		next;
 		cutin "16loo_01.bmp",0;
-		cloakoffnpc "Eri#16nego01", getcharid(0);
-		cloakoffnpc "Lucky#16nego01", getcharid(0);
+		cloakoffnpcself( "Eri#16nego01" );
+		cloakoffnpcself( "Lucky#16nego01" );
 		mes "[Lucky]";
 		mes "Nemi, what happened? Is Gonie dead?";
 		emotion ET_STARE_ABOUT, getnpcid(0, "Lucky#16nego01");
@@ -2650,9 +2651,9 @@ rebel_in,21,45,5	script	Lazy#16nego04	4_M_LAZY,{
 		cutin "16lei_03.bmp",2;
 		mes "[Lazy]";
 		mes "Wait! They're sending us away like this? Seems like they are. Did I get it wrong?";
-		cloakonnpc "Nemi#16nego01", getcharid(0);
-		cloakonnpc "Lucky#16nego01", getcharid(0);
-		cloakonnpc "Gonie#16nego03", getcharid(0);
+		cloakonnpcself( "Nemi#16nego01" );
+		cloakonnpcself( "Lucky#16nego01" );
+		cloakonnpcself( "Gonie#16nego03" );
 		next;
 		mes "[Lazy]";
 		mes "Oops? They went inside! Come on!";
@@ -2688,8 +2689,8 @@ rebel_in,21,45,5	script	Lazy#16nego04	4_M_LAZY,{
 		mes "Who kicks me out! That's impossible! I will lie down here! Come out!";
 		unittalk getcharid(3), "" + strcharinfo(0) + " : I am so ashamed...", bc_self;
 		next;
-		cloakoffnpc "Nemi#16nego01", getcharid(0);
-		cloakoffnpc "Lucky#16nego01", getcharid(0);
+		cloakoffnpcself( "Nemi#16nego01" );
+		cloakoffnpcself( "Lucky#16nego01" );
 		cutin "16loo_03.bmp",0;
 		mes "[Lucky]";
 		mes "Phew...";
@@ -2729,8 +2730,8 @@ rebel_in,21,45,5	script	Lazy#16nego04	4_M_LAZY,{
 		cutin "16loo_01.bmp",0;
 		mes "[Lucky]";
 		mes "Follow me. It's this way.";
-		cloakonnpc "Lucky#16nego01", getcharid(0);
-		cloakonnpc "Lazy#16nego04", getcharid(0);
+		cloakonnpcself( "Lucky#16nego01" );
+		cloakonnpcself( "Lazy#16nego04" );
 		erasequest 14598;// Invisible entrance
 		setquest 14599;// A glass of tea gratitude
 		terra_gloria_main = 15;
@@ -2783,7 +2784,7 @@ rebel_in,65,46,5	script	Rebellion Squadder#ep16	4_M_GUNSLINGER2,3,3,{
 		mes "Someone has come, and I think he is looking for you.";
 		mes "I let him come in, even though I had a bad feeling about it.";
 		next;
-		cloakoffnpc "Philopontess#ep162_02", getcharid(0);
+		cloakoffnpcself( "Philopontess#ep162_02" );
 		npctalk "Hoo ...", "Philopontess#ep162_02", bc_self;
 		mes "[Tess]";
 		mes "These people are really rude.";
@@ -2844,7 +2845,7 @@ rebel_in,65,46,5	script	Rebellion Squadder#ep16	4_M_GUNSLINGER2,3,3,{
 		mes "Now you know the direction.";
 		npctalk "I will be waiting in the hotel.", "Philopontess#ep162_02", bc_self;
 		close2;
-		cloakonnpc "Philopontess#ep162_02", getcharid(0);
+		cloakonnpcself( "Philopontess#ep162_02" );
 		if (.@s == 1)
 			warp "einbech",68,208;
 		end;
@@ -3034,11 +3035,11 @@ ein_in01,273,275,0	script	#ep162_evt04	HIDDEN_WARP_NPC,1,1,{
 OnTouch:
 	if (terra_gloria_main == 18) {
 		setpcblock PCBLOCK_NPC, true;
-		cloakoffnpc "Nihil#ep162_02", getcharid(0);
-		cloakoffnpc "Philopontess#ep162_03", getcharid(0);
-		cloakoffnpc "Skia#ep162_05", getcharid(0);
-		cloakoffnpc "Rookie#ep162_01", getcharid(0);
-		cloakoffnpc "Lazy#ep162_01", getcharid(0);
+		cloakoffnpcself( "Nihil#ep162_02" );
+		cloakoffnpcself( "Philopontess#ep162_03" );
+		cloakoffnpcself( "Skia#ep162_05" );
+		cloakoffnpcself( "Rookie#ep162_01" );
+		cloakoffnpcself( "Lazy#ep162_01" );
 		npctalk "Mr. Lazy, was that a joke?", "Philopontess#ep162_03", bc_self;
 		sleep2 2000;
 		npctalk "Uhm? Break-in or ambush ...", "Lazy#ep162_01", bc_self;
@@ -3060,9 +3061,9 @@ OnTouch:
 		end;
 	}
 	if (terra_gloria_main == 22) {
-		cloakoffnpc "Nihil#ep162_02", getcharid(0);
-		cloakoffnpc "Philopontess#ep162_03", getcharid(0);
-		cloakoffnpc "Skia#ep162_05", getcharid(0);
+		cloakoffnpcself( "Nihil#ep162_02" );
+		cloakoffnpcself( "Philopontess#ep162_03" );
+		cloakoffnpcself( "Skia#ep162_05" );
 	}
 	end;
 }
@@ -3423,7 +3424,7 @@ que_swat,150,58,3	script	Rookie#ep162_03	4_M_ROOKIE,{
 		cutin "16loo_01.bmp",2;
 		mes "[Rookie]";
 		mes "Wow, welcome back.";
-		cloakoffnpc "Skia#ep162_07", getcharid(0);
+		cloakoffnpcself( "Skia#ep162_07" );
 		npctalk "Hero!", "Skia#ep162_07", bc_self;
 		next;
 		mes "[Skia]";
@@ -3455,7 +3456,7 @@ que_swat,150,58,3	script	Rookie#ep162_03	4_M_ROOKIE,{
 		mes "[Rookie]";
 		mes "Damn, go away!";
 		close2;
-		cloakonnpc "Skia#ep162_07", getcharid(0);
+		cloakonnpcself( "Skia#ep162_07" );
 		warp "ein_fild04",279,339;
 		end;
 	}
@@ -3649,6 +3650,7 @@ que_swat,145,57,3	script	Philopontess#ep162_04	4_M_PHILOFONTES,{
 		terra_gloria_main = 25;
 		questinfo_refresh();
 		close2;
+		cutin "",255;
 		npctalk "Oh, please come here for a moment.", "Rookie#ep162_03", bc_self;
 		end;
 	}
@@ -3668,7 +3670,7 @@ que_swat,145,57,3	script	Philopontess#ep162_04	4_M_PHILOFONTES,{
 				mes "[Tess]";
 				mes "Not now?";
 				mes "Then get some rest and come back please.";
-				close;
+				close3;
 			}
 			mes "[Tess]";
 			mes "Since we don't know where they are hiding, start looking in corners such as cabinets and boxes.";
@@ -3848,7 +3850,7 @@ OnInit:
 }
 
 // Part Elena - Fight
-rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
+rebel_in,70,78,3	script	Elena Volkova#16.2rm	4_F_ELENA,{
 	if (terra_gloria_main < 16) {
 		cutin "162elena_01.bmp",2;
 		mes "[USU commander Elena]";
@@ -3875,7 +3877,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 		if (countitem(25161) < 1) {
 			mes "[USU commander Elena]";
 			mes "...Why are you empty-handed? Where is the cookie?";
-			close;
+			close3;
 		}
 		emotion ET_DELIGHT;
 		mes "[USU commander Elena]";
@@ -3901,7 +3903,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			mes "[USU commander Elena]";
 			mes "Tell me exactly how you got here and where you came from unless you want to die. ";
 			sleep2 300;
-			npctalk "Elena Bolkova: Otherwise I will have some fun and you won't.", "", bc_self;
+			npctalk "Elena Volkova: Otherwise I will have some fun and you won't.", "", bc_self;
 			next;
 			cutin "",255;
 			mes "[" + strcharinfo(0) + "]";
@@ -3956,7 +3958,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			next;
 			if (select( "Fight Elena.", "I don't listen to someone weaker than me." ) == 1) {
 				mes "[" + strcharinfo(0) + "]";
-				mes "(I have no choice. Let's prepare for the fight and talk to Elena Bolkova again.)";
+				mes "(I have no choice. Let's prepare for the fight and talk to Elena Volkova again.)";
 				setquest 16060;	// Fighting is the language of warmonger
 				setquest 16061;	// Fair and equitable result
 				close3;
@@ -3968,7 +3970,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			emotion ET_SMILE;
 			mes "[USU commander Elena]";
 			mes "Hmm? I misheard something. Haha, could you repeat it?";
-			npctalk "Elena Bolkova: Well, it should have been some dogs barking.", "", bc_self;
+			npctalk "Elena Volkova: Well, it should have been some dogs barking.", "", bc_self;
 			next;
 			cutin "",255;
 			mes "[" + strcharinfo(0) + "]";
@@ -4074,7 +4076,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 					next;
 					mes "[USU commander Elena]";
 					mes "I don't mess with clerics. I don't feel good after fighting them.";
-					npctalk "Elena Bolkova: My mom told me I shouldn't beat a cleric.", "Elena Bolkova#16.2rm"; // 116
+					npctalk "Elena Volkova: My mom told me I shouldn't beat a cleric.", "Elena Volkova#16.2rm"; // 116
 					next;
 					mes "[USU commander Elena]";
 					mes "So I'll support the cooperation with the Secret Wings. Do you need my signature?";
@@ -4214,7 +4216,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 				mes "Good. ...... By the way,";
 				mes "If you have time, visit the arena any time.";
 				mes "I will fight you even if you come every day.";
-				npctalk "Elena Bolkova: Make sure you come back here.", "", bc_self;
+				npctalk "Elena Volkova: Make sure you come back here.", "", bc_self;
 				next;
 				mes "[USU commander Elena]";
 				mes "Since you are our cooperator now, go around and see if there is anyone who has any problem.";
@@ -4488,7 +4490,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 		}
 		if (lebedev_quest_16_2 == 0) {
 			mes "[USU commander Elena]";
-			mes "Not busy? That's a good news.";
+			mes "Not busy? That's good news.";
 			mes "Apart from fighting... I would like to ask you for a favor.";
 			next;
 			mes "[USU commander Elena]";
@@ -4583,7 +4585,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			mes "[USU commander Elena]";
 			mes "In case you don't get any outcome after talking to them, talk to other fellows.";
 			mes "The mess personnel... and another fellow in the outside store seems to want to say something.";
-			npctalk "Elena Bolkova: Are they it Mason and Milo in Clana Nemieri..?", "", bc_self;
+			npctalk "Elena Volkova: Are they it Mason and Milo in Clana Nemieri..?", "", bc_self;
 			setquest 16012;// Troublesome twin
 			lebedev_quest_16_2 = 1;
 			questinfo_refresh();
@@ -4605,7 +4607,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			next;
 			mes "[USU commander Elena]";
 			mes "If you cannot judge it easily, you can talk to ^0000CDother fellows around them^000000.";
-			npctalk "Elena Bolkova: Seems like Milo and Mason have many things to say.", "", bc_self;
+			npctalk "Elena Volkova: Seems like Milo and Mason have many things to say.", "", bc_self;
 			close3;
 		}
 		if (lebedev_quest_16_2 == 5) {
@@ -4620,7 +4622,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			mes "[USU commander Elena]";
 			mes "...There's someone you should talk to lastly.";
 			mes "I didn't want to do this.";
-			npctalk "Elena Bolkova: I wanted to solve this problem myself if possible.", "", bc_self;
+			npctalk "Elena Volkova: I wanted to solve this problem myself if possible.", "", bc_self;
 			next;
 			mes "[USU commander Elena]";
 			mes "Go downstairs and find ^0000CDEricsson Adler, commander of a detached force^000000. He must be nearby the fireplace.";
@@ -4641,7 +4643,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			next;
 			mes "[USU commander Elena]";
 			mes "He's a former boss of the twins.";
-			npctalk "Elena Bolkova: I didn't want to do this.", "", bc_self;
+			npctalk "Elena Volkova: I didn't want to do this.", "", bc_self;
 			close3;
 		}
 		if (lebedev_quest_16_2 == 7) {
@@ -4651,7 +4653,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 		}
 		if (lebedev_quest_16_2 == 8) {
 			cutin "",255;
-			mes "You told Elena Bolkova what Lebedev twins told you.";
+			mes "You told Elena Volkova what Lebedev twins told you.";
 			next;
 			cutin "162elena_01.bmp",2;
 			mes "[USU commander Elena]";
@@ -4690,8 +4692,8 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			mes "[USU commander Elena]";
 			mes "So you're all here? I've heard the whole story.";
 			next;
-			cloakoffnpc "Ilya Lebedev#16.2rms", getcharid(0);
-			cloakoffnpc "Jana Levedeva#16.2rms", getcharid(0);
+			cloakoffnpcself( "Ilya Lebedev#16.2rms" );
+			cloakoffnpcself( "Jana Levedeva#16.2rms" );
 			cutin "",255;
 			mes "[Ilya Lebedev]";
 			mes "Yes.";
@@ -4705,7 +4707,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			npctalk "Jana Levedeva: Yes!", "Jana Levedeva#16.2rms", bc_self;
 			npctalk "Ilya Lebedev: Yes! Yep!", "Ilya Lebedev#16.2rms", bc_self;
 			next;
-			emotion ET_ANGER, getnpcid(0, "Elena Bolkova#16.2rm");
+			emotion ET_ANGER, getnpcid(0, "Elena Volkova#16.2rm");
 			mes "[USU commander Elena]";
 			mes "Are you insane? You ran away from the unit for a private reason. And you hurt your companion!";
 			next;
@@ -4732,7 +4734,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			mes "[USU commander Elena]";
 			mes "This is totally my fault and my mistake.";
 			mes "I apologize. You had a rough time of it.";
-			npctalk "Elena Bolkova: I sincerely apologize.", "", bc_self;
+			npctalk "Elena Volkova: I sincerely apologize.", "", bc_self;
 			next;
 			cutin "",255;
 			mes "[Lebedev twins]";
@@ -4775,7 +4777,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			mes "[Ilya Lebedev]";
 			mes "Oh... Thank you so much!";
 			mes "And... Sorry.";
-			npctalk "Ilya Lebedev: I'm sorry... Commander Bolkova...", "Ilya Lebedev#16.2rms", bc_self;
+			npctalk "Ilya Lebedev: I'm sorry... Commander Volkova...", "Ilya Lebedev#16.2rms", bc_self;
 			next;
 			mes "[Jana Levedeva]";
 			mes "Thank you, commander...!";
@@ -4790,8 +4792,8 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			mes "[Lebedev twins]";
 			mes "Yes!";
 			next;
-			cloakonnpc "Ilya Lebedev#16.2rms", getcharid(0);
-			cloakonnpc "Jana Levedeva#16.2rms", getcharid(0);
+			cloakonnpcself( "Ilya Lebedev#16.2rms" );
+			cloakonnpcself( "Jana Levedeva#16.2rms" );
 			cutin "162elena_01.bmp",2;
 			mes "[USU commander Elena]";
 			mes "Phew...";
@@ -4898,7 +4900,7 @@ OnTouch:
 	.base_job = BaseJob;
 	end;
 OnStart:
-	monster "rebel_in",201,19, "Elena Bolkova",3630,1, "#job_rmA::OnMobDead";	// EP16_2_E_BOLKOBA
+	monster "rebel_in",201,19, "Elena Volkova",3630,1, "#job_rmA::OnMobDead";	// EP16_2_E_BOLKOBA
 	if (.base_job == Job_Priest)
 		setunitdata $@mobid[0], UMOB_HP, 19000;
 	else
@@ -4925,7 +4927,7 @@ OnTimer4000:
 	npctalk "Milo River: Hel, hello. I am Milo River, the referee of this fight.";
 	end;
 OnTimer6000:
-	npctalk "Milo River: The fight starts after 10 seconds. If you defeat commander Bolkova in two minutes, you win.";
+	npctalk "Milo River: The fight starts after 10 seconds. If you defeat commander Volkova in two minutes, you win.";
 	end;
 OnTimer11000:
 	npctalk "Milo River: Five more seconds.";
@@ -5164,7 +5166,7 @@ rebel_in,122,71,3	script	Rebellion leader#162gmb	4_M_RUPERT,{
 		mes "[Rebellion leader Rupert]";
 		mes "If I didn't see a ghost, you are living a pretty long life. Aren't you?";
 		next;
-		cloakoffnpc "Rebellion Guard leader#4", getcharid(0);
+		cloakoffnpcself( "Rebellion Guard leader#4" );
 		mes "[Rebellion Guard leader Larcis]";
 		mes "Sir!";
 		next;
@@ -5230,7 +5232,7 @@ rebel_in,122,71,3	script	Rebellion leader#162gmb	4_M_RUPERT,{
 		mes "I think I have seen a phantom. Would you like to read it?";
 		emotion ET_HUM;
 		next;
-		cloakoffnpc "Rebellion Guard leader#4", getcharid(0);
+		cloakoffnpcself( "Rebellion Guard leader#4" );
 		mes "[Rebellion Guard leader Larcis]";
 		mes "Yeah?";
 		mes "Yes! Sir!";
@@ -5276,7 +5278,7 @@ rebel_in,122,71,3	script	Rebellion leader#162gmb	4_M_RUPERT,{
 		mes "You don't have to come in, Rupert.";
 		mes "It was so noisy outside, so I came out. It was you.";
 		emotion ET_HNG, getnpcid(0, "Dien#162gmbs2");
-		cloakoffnpc "Dien#162gmbs2", getcharid(0);
+		cloakoffnpcself( "Dien#162gmbs2" );
 		erasequest 11460;// Doubt
 		setquest 11461;// Doubt
 		terra_gloria_lady_part = 8;
@@ -5292,7 +5294,7 @@ rebel_in,122,71,3	script	Rebellion leader#162gmb	4_M_RUPERT,{
 		mes "Where is Dien?";
 		mes "In the room?";
 		next;
-		cloakoffnpc "Dien#162gmbs2", getcharid(0);
+		cloakoffnpcself( "Dien#162gmbs2" );
 		mes "[Dien]";
 		mes "You don't have to come in, Rupert.";
 		mes "It was so noisy outside, so I came out. It was you.";
@@ -5300,9 +5302,9 @@ rebel_in,122,71,3	script	Rebellion leader#162gmb	4_M_RUPERT,{
 		close;
 	}
 	if (terra_gloria_lady_part == 9 || terra_gloria_lady_part == 10) {
-		cloakoffnpc "Dien#162gmbs2", getcharid(0);
+		cloakoffnpcself( "Dien#162gmbs2" );
 		if (terra_gloria_lady_part == 9) {
-			cloakoffnpc "Rebellion Guard leader#4", getcharid(0);
+			cloakoffnpcself( "Rebellion Guard leader#4" );
 			mes "[Rebellion leader Rupert]";
 			mes "Guard leader!";
 			mes "What are you doing!";
@@ -5435,7 +5437,7 @@ rebel_in,122,71,3	script	Rebellion leader#162gmb	4_M_RUPERT,{
 			cutin "ep162_dn01.bmp",2;
 			next;
 			cutin "",255;
-			cloakonnpc "Rebellion Guard leader#4", getcharid(0);
+			cloakonnpcself( "Rebellion Guard leader#4" );
 		}
 		mes "[Rebellion leader Rupert]";
 		mes "No...";
@@ -5469,7 +5471,7 @@ rebel_in,122,71,3	script	Rebellion leader#162gmb	4_M_RUPERT,{
 		npctalk "Dien : It's so important... It won't take long.", "Dien#162gmbs2", bc_self;
 		emotion ET_COMEON, getnpcid(0, "Dien#162gmbs2");
 		cutin "ep162_dn03.bmp",2;
-		cloakonnpc "Dien#162gmbs2", getcharid(0);
+		cloakonnpcself( "Dien#162gmbs2" );
 		if (terra_gloria_lady_part == 9) {
 			getitem 25155,10;	// Swz_Honor_Token
 			getexp 200000,200000;
@@ -5703,12 +5705,12 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		mes "[Lucky]";
 		mes "I can't figure out what you want. Have a sit there anyway. I will give you a cup of tea that you desired.";
 		next;
-		cloakoffnpc "Magenta#16nego01", getcharid(0);
+		cloakoffnpcself( "Magenta#16nego01" );
 		mes "[Magenta]";
 		mes "Lucky~~~ Where have you been!! I've been waiting for a while! I'm going out for a mission and wish me a good luck.";
 		npctalk "Come on. The spell of fortune~", "Magenta#16nego01", bc_self;
 		next;
-		cloakoffnpc "Denny#16nego03", getcharid(0);
+		cloakoffnpcself( "Denny#16nego03" );
 		mes "[Denny]";
 		mes "Rookie!!!! Help me arrange the warehouse quickly. There are bunch of them and I can't do it alone. Hurry up.";
 		npctalk "Hurry up! Lend me your magical hand!", "Denny#16nego03", bc_self;
@@ -5737,9 +5739,9 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		npctalk "Didn't you say you were in a hurry?", "Magenta#16nego01", bc_self;
 		sleep2 300;
 		npctalk "He says he's busy now! I will leave first so you have to come to me first!", "Denny#16nego03", bc_self;
-		cloakonnpc "Denny#16nego03", getcharid(0);
+		cloakonnpcself( "Denny#16nego03" );
 		npctalk "Lucky! Me first!!!", "Magenta#16nego01", bc_self;
-		cloakonnpc "Magenta#16nego01", getcharid(0);
+		cloakonnpcself( "Magenta#16nego01" );
 		next;
 		cutin "16lei_01.bmp",2;
 		mes "[Lazy]";
@@ -5747,8 +5749,8 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		npctalk "Maybe that's why your name is Lucky?", "", bc_self;
 		next;
 		cutin "",255;
-		cloakoffnpc "Senior#16nego01", getcharid(0);
-		cloakoffnpc "Senior#16nego04", getcharid(0);
+		cloakoffnpcself( "Senior#16nego01" );
+		cloakoffnpcself( "Senior#16nego04" );
 		mes "[Senior]";
 		mes "Rookie, where have you been? Everyone's looking for you.";
 		next;
@@ -5759,7 +5761,7 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		sleep2 500;
 		npctalk "Don't you know Rookie is the busiest person here?", "Senior#16nego04", bc_self;
 		next;
-		cloakoffnpc "Senior#16nego02", getcharid(0);
+		cloakoffnpcself( "Senior#16nego02" );
 		mes "[Senior]";
 		mes "Lucky, bring a cup of tea.";
 		npctalk "Mine too.", "Senior#16nego01", bc_self;
@@ -5768,7 +5770,7 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		sleep2 300;
 		npctalk "What? You, step outside.", "Senior#16nego01", bc_self;
 		next;
-		cloakoffnpc "Senior#16nego03", getcharid(0);
+		cloakoffnpcself( "Senior#16nego03" );
 		mes "[Senior]";
 		mes "Lucky, they are strangers. Who are they?";
 		npctalk "A cup of tea for me too.", "Senior#16nego03", bc_self;
@@ -5923,7 +5925,7 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		npctalk "Where are you going!", "Senior#16nego01", bc_self;
 		npctalk "That guy has a great sense and wits.", "", bc_self;
 		next;
-		cloakonnpc "Rookie#16nego02", getcharid(0);
+		cloakonnpcself( "Rookie#16nego02" );
 		cutin "16lei_01.bmp",2;
 		mes "[Lazy]";
 		mes "Hahaha! Nice to meet you. Did I surprise you by coming in all of a sudden in leisure hours?";
@@ -5956,7 +5958,7 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		mes "President? Since I heard that unpleasant word, let me wash my ears!";
 		npctalk "I am precious, so I should see and listen to good things.", "Senior#16nego04", bc_self;
 		sleep2 300;
-		cloakonnpc "Senior#16nego04", getcharid(0);
+		cloakonnpcself( "Senior#16nego04" );
 		next;
 		mes "[Senior]";
 		mes "What is a spoiled crow of the President doing here?";
@@ -5993,7 +5995,7 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		npctalk "Please... Let's just talk...", "", bc_self;
 		next;
 		cutin "16loo_02.bmp",0;
-		cloakoffnpc "Rookie#16nego02", getcharid(0);
+		cloakoffnpcself( "Rookie#16nego02" );
 		mes "[Rookie]";
 		mes "Drink tea, please.";
 		next;
@@ -6156,14 +6158,14 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		mes "Lucky, thanks for the tea. Send them now. Let the crow go back to its nest.";
 		npctalk "Make sure they never come back!!", "Senior#16nego01", bc_self;
 		next;
-		cloakonnpc "Senior#16nego01", getcharid(0);
+		cloakonnpcself( "Senior#16nego01" );
 		mes "[Senior]";
 		mes "We will never see them again. So send them gently. Rookie.";
 		npctalk "Do not make any fuss.", "Senior#16nego02", bc_self;
 		next;
-		cloakonnpc "Senior#16nego02", getcharid(0);
+		cloakonnpcself( "Senior#16nego02" );
 		sleep2 1000;
-		cloakonnpc "Senior#16nego03", getcharid(0);
+		cloakonnpcself( "Senior#16nego03" );
 		cutin "16lei_03.bmp",2;
 		mes "[Lazy]";
 		mes "Please, you can't leave like this...!!!";
@@ -6477,10 +6479,10 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		mes "Not a housekeeping. A sort of cleaning-up?";
 		next;
 		cutin "",255;
-		cloakoffnpc "Senior#16nego01", getcharid(0);
-		cloakoffnpc "Senior#16nego02", getcharid(0);
-		cloakoffnpc "Senior#16nego03", getcharid(0);
-		cloakoffnpc "Senior#16nego04", getcharid(0);
+		cloakoffnpcself( "Senior#16nego01" );
+		cloakoffnpcself( "Senior#16nego02" );
+		cloakoffnpcself( "Senior#16nego03" );
+		cloakoffnpcself( "Senior#16nego04" );
 		mes "[Senior]";
 		mes "Hey Rookie. Why did you bring those jerks in here? They are wandering around and humiliating us! Rookie, are you a spy from the government?";
 		emotion ET_FRET, getnpcid(0, "Senior#16nego01");
@@ -6537,7 +6539,7 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		sleep2 500;
 		npctalk "Get them out.", "Senior#16nego03", bc_self;
 		next;
-		cloakoffnpc "Gonie#16nego04", getcharid(0);
+		cloakoffnpcself( "Gonie#16nego04" );
 		cutin "16go_03.bmp",2;
 		mes "[Gonie]";
 		mes "......";
@@ -6640,7 +6642,7 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		mes "But I will never trust you guys! I will keep my eyes on you!!!";
 		next;
 		cutin "16lei_02.bmp",2;
-		cloakonnpc "Senior#16nego01", getcharid(0);
+		cloakonnpcself( "Senior#16nego01" );
 		mes "[Lazy]";
 		mes "Oh, what a passionate propose. I've never had anything like this in my life. I feel a little shy.";
 		npctalk "That's so cool.", "", bc_self;
@@ -6654,9 +6656,9 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		sleep2 500;
 		npctalk "Well, I have to carry him.", "Senior#16nego04", bc_self;
 		next;
-		cloakonnpc "Senior#16nego02", getcharid(0);
-		cloakonnpc "Senior#16nego03", getcharid(0);
-		cloakonnpc "Senior#16nego04", getcharid(0);
+		cloakonnpcself( "Senior#16nego02" );
+		cloakonnpcself( "Senior#16nego03" );
+		cloakonnpcself( "Senior#16nego04" );
 		cutin "16go_03.bmp",2;
 		mes "[Gonie]";
 		mes "......";
@@ -6666,7 +6668,7 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		mes "Yes. Let me handle this place. You go inside and get ready.";
 		next;
 		cutin "16lei_01.bmp",0;
-		cloakonnpc "Gonie#16nego04", getcharid(0);
+		cloakonnpcself( "Gonie#16nego04" );
 		mes "[Lazy]";
 		mes "I've never imagined that this would be done so perfectly. I owe you for this. Thanks.";
 		npctalk "The happiness is always with me.", "", bc_self;
@@ -6760,7 +6762,7 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		unittalk getcharid(3), "" + strcharinfo(0) + " : I think you are regarding him as an item.", bc_self;
 		next;
 		cutin "16go_03.bmp",2;
-		cloakoffnpc "Gonie#16nego04", getcharid(0);
+		cloakoffnpcself( "Gonie#16nego04" );
 		mes "[Gonie]";
 		mes "......";
 		next;
@@ -6780,7 +6782,7 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		mes "[Rookie]";
 		mes "He says we have prepared someone to proceed the cooperation. If you go to the passage to the store, you can meet that person.";
 		npctalk "Thanks.", "Rookie#16nego02", bc_self;
-		cloakonnpc "Gonie#16nego04", getcharid(0);
+		cloakonnpcself( "Gonie#16nego04" );
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Yes. I will meet that person and listen.";
@@ -6850,7 +6852,7 @@ function	script	F_TerraGloria_Lady	{
 		mes "Although he sent you here, you cannot enter.";
 		mes "Please go back.";
 		next;
-		cloakoffnpc "Rebellion Guard leader#1", getcharid(0);
+		cloakoffnpcself( "Rebellion Guard leader#1" );
 		mes "[Rebellion Guard leader]";
 		mes "Why is it so noisy here?";
 		npctalk "Rebellion Guard leader : Be quiet!", "Rebellion Guard leader#1", bc_self;
@@ -6919,7 +6921,7 @@ function	script	F_TerraGloria_Lady	{
 			mes "A good idea.";
 			mes "The exit is downstairs. Go there.";
 			npctalk "Rebellion Guard leader : Hey~ Hey~ Go away!", "Rebellion Guard leader#1", bc_self;
-			cloakonnpc "Rebellion Guard leader#1", getcharid(0);
+			cloakonnpcself( "Rebellion Guard leader#1" );
 			close;
 		}
 		mes "[Rebellion Guard leader Larcis]";
@@ -6953,7 +6955,7 @@ function	script	F_TerraGloria_Lady	{
 		mes "[Rebellion Guard leader Larcis]";
 		mes "If you behave rudely, you won't go back alive.";
 		npctalk "Rebellion Guard leader : If anything goes wrong, we will die together!", "Rebellion Guard leader#1", bc_self;
-		cloakonnpc "Rebellion Guard leader#1", getcharid(0);
+		cloakonnpcself( "Rebellion Guard leader#1" );
 		erasequest 11454;// Doubt
 		setquest 11455;// Doubt
 		terra_gloria_lady_part = 2;
@@ -7793,7 +7795,7 @@ rebel_in,210,89,5	script	Special Force commander	4_F_ESTLOVELOY,{
 		mes "I haven't seen you before.";
 		emotion ET_FRET;
 		next;
-		cloakoffnpc "Rebellion Guard leader#3", getcharid(0);
+		cloakoffnpcself( "Rebellion Guard leader#3" );
 		cutin "",255;
 		mes "[Rebellion Guard leader Larcis]";
 		mes "Ah.. that is....";
@@ -7884,7 +7886,7 @@ rebel_in,210,89,5	script	Special Force commander	4_F_ESTLOVELOY,{
 		mes "[Special Force commander Erst]";
 		mes "Let's agree with it.";
 		mes "For now.";
-		cloakonnpc "Rebellion Guard leader#3", getcharid(0);
+		cloakonnpcself( "Rebellion Guard leader#3" );
 		erasequest 11457;// Doubt
 		setquest 11458;// Doubt
 		completequest 14613;// Erst on second floor
@@ -7963,7 +7965,7 @@ rebel_in,82,68,2	script	Arinoa Yurhik#TFQ01	4_F_GUNSLINGER,{
 		next;
 		switch( checkquest(5727,PLAYTIME) ) {
 		case -1:
-			cloakoffnpc "Arivero Yurhik#TFQ02", getcharid(0);
+			cloakoffnpcself( "Arivero Yurhik#TFQ02" );
 			npctalk "Are you the adventurer who is making a fuss in Clana Nemieri?", "Arivero Yurhik#TFQ02", bc_self;
 			mes "[Strange man]";
 			mes "Are you the adventurer who is making a fuss in Clana Nemieri?";
@@ -7980,7 +7982,7 @@ rebel_in,82,68,2	script	Arinoa Yurhik#TFQ01	4_F_GUNSLINGER,{
 		case 2:
 			mes "It is time. Let me talk to them now.";
 			next;
-			cloakoffnpc "Arivero Yurhik#TFQ02", getcharid(0);
+			cloakoffnpcself( "Arivero Yurhik#TFQ02" );
 			npctalk "Oops?! Here are you. Have you arrived already?", "Arivero Yurhik#TFQ02", bc_self;
 			mes "[Arivero Yurhik]";
 			mes "Oops?! Here are you. Have you arrived already?";
@@ -7991,7 +7993,7 @@ rebel_in,82,68,2	script	Arinoa Yurhik#TFQ01	4_F_GUNSLINGER,{
 		emotion ET_THINK;
 		mes "The poker-faced Gunslinger girl who was fishing around books and documents stole a glance at me. Then she resumed fishing around books and documents again.";
 		next;
-		cloakoffnpc "Arivero Yurhik#TFQ02", getcharid(0);
+		cloakoffnpcself( "Arivero Yurhik#TFQ02" );
 		npctalk "You have to talk to me. Not to the elder sister.", "Arivero Yurhik#TFQ02", bc_self;
 		mes "[Arivero Yurhik]";
 		mes "You have to talk to me. Not to the elder sister.";
@@ -8005,7 +8007,7 @@ rebel_in,82,68,2	script	Arinoa Yurhik#TFQ01	4_F_GUNSLINGER,{
 		emotion ET_THINK;
 		mes "The poker-faced Gunslinger girl who was fishing around books and documents stole a glance at me. Then she resumed fishing around books and documents again.";
 		next;
-		cloakoffnpc "Arivero Yurhik#TFQ02", getcharid(0);
+		cloakoffnpcself( "Arivero Yurhik#TFQ02" );
 		npctalk "Kahaha. Welcome, pal.", "Arivero Yurhik#TFQ02", bc_self;
 		mes "[Arivero Yurhik]";
 		mes "Kahaha. Welcome, pal.";
@@ -8022,7 +8024,7 @@ rebel_in,82,68,2	script	Arinoa Yurhik#TFQ01	4_F_GUNSLINGER,{
 		emotion ET_THINK;
 		mes "The poker-faced Gunslinger girl who was fishing around books and documents stole a glance at me. Then she resumed fishing around books and documents again.";
 		next;
-		cloakoffnpc "Arivero Yurhik#TFQ02", getcharid(0);
+		cloakoffnpcself( "Arivero Yurhik#TFQ02" );
 		npctalk "Have you brought the Star Crumb?", "Arivero Yurhik#TFQ02", bc_self;
 		mes "[Arivero Yurhik]";
 		mes "Have you brought the Star Crumb?";
@@ -8040,7 +8042,7 @@ rebel_in,82,68,2	script	Arinoa Yurhik#TFQ01	4_F_GUNSLINGER,{
 		emotion ET_THINK;
 		mes "The poker-faced Gunslinger girl is looking at books and documents, as usual.";
 		next;
-		cloakoffnpc "Rebellion leader#TFQ15", getcharid(0);
+		cloakoffnpcself( "Rebellion leader#TFQ15" );
 		npctalk "I have seen you talking to that kid lately.";
 		mes "[Rebellion leader]";
 		mes "I have seen you talking to that kid lately. Do you care about her?";
@@ -8139,7 +8141,7 @@ rebel_in,78,66,6	script	Arivero Yurhik#TFQ02	4_M_GUNSLINGER,{
 			mes "[Arivero Yurhik]";
 			mes "I will be fully ready after 4:00 am tomorrow. Once you are ready after that time, tell my elder sister. Then I will get here quickly.";
 			close2;
-			cloakonnpc "Arivero Yurhik#TFQ02", getcharid(0);
+			cloakonnpcself( "Arivero Yurhik#TFQ02" );
 			end;
 		case 0:
 		case 1:
@@ -8334,7 +8336,7 @@ rebel_in,78,66,6	script	Arivero Yurhik#TFQ02	4_M_GUNSLINGER,{
 		mes "[Arivero Yurhik]";
 		mes "See you at the end of the freight train.";
 		close2;
-		cloakonnpc "Arivero Yurhik#TFQ02", getcharid(0);
+		cloakonnpcself( "Arivero Yurhik#TFQ02" );
 		end;
 	}
 	if (yurhik_quest == 4) {
@@ -8418,7 +8420,7 @@ rebel_in,78,66,6	script	Arivero Yurhik#TFQ02	4_M_GUNSLINGER,{
 		mes "Oh!";
 		mes "Hey, let's get down to the business. Bring the materials and see you in Lighthalzen.";
 		close2;
-		cloakonnpc "Arivero Yurhik#TFQ02", getcharid(0);
+		cloakonnpcself( "Arivero Yurhik#TFQ02" );
 		end;
 	}
 	if (yurhik_quest == 6) {
@@ -8468,7 +8470,7 @@ rebel_in,78,66,6	script	Arivero Yurhik#TFQ02	4_M_GUNSLINGER,{
 		mes "All we have to do is to insert the Star Crumb. So once you bring it, we can leave right away.";
 		mes "Regarding the location and required attribute stone, I will inform you then. I haven't finished collecting the information yet. I will count on you.";
 		close2;
-		cloakonnpc "Arivero Yurhik#TFQ02", getcharid(0);
+		cloakonnpcself( "Arivero Yurhik#TFQ02" );
 		end;
 	}
 	if (yurhik_quest == 7) {
@@ -8525,7 +8527,7 @@ rebel_in,78,66,6	script	Arivero Yurhik#TFQ02	4_M_GUNSLINGER,{
 		mes "[Arivero Yurhik]";
 		mes "See you in Yuno.";
 		close2;
-		cloakonnpc "Arivero Yurhik#TFQ02", getcharid(0);
+		cloakonnpcself( "Arivero Yurhik#TFQ02" );
 		end;
 	}
 	end;
@@ -8596,7 +8598,7 @@ rebel_in,78,63,6	script	Rebellion leader#TFQ15	4_M_RUPERT,{
 		mes "[Rebellion leader]";
 		mes "Let's say this is a small compensation for your great work.";
 		next;
-		cloakonnpc "Rebellion leader#TFQ15", getcharid(0);
+		cloakonnpcself( "Rebellion leader#TFQ15" );
 		mes "The Rebellion leader disappeared like that.";
 		mes "What the hell happened to me?";
 		mes "I will remember this as a mission with various questions remaining.";
@@ -8629,7 +8631,7 @@ einbech,212,212,6	script	Arivero Yurhik#TFQ04	4_M_GUNSLINGER,{
 		mes "[Arivero Yurhik]";
 		mes "Shall I try? Let's see. This seems to be the place the agent told us about. Now we have to break the Flame Heart you brought into pieces..";
 		next;
-		cloakoffnpc "Teleport Prohibition equipment#1", getcharid(0);
+		cloakoffnpcself( "Teleport Prohibition equipment#1" );
 		specialeffect EF_FLAMELAUNCHER, AREA, "Teleport Prohibition equipment#1";
 		mes "[Arivero Yurhik]";
 		mes "Yeah~ Great. It's a success.";
@@ -8708,7 +8710,7 @@ einbech,212,212,6	script	Arivero Yurhik#TFQ04	4_M_GUNSLINGER,{
 		npctalk "Bang!", "Teleport Prohibition equipment#1", bc_self;
 		sleep2 2000;
 		specialeffect EF_LORD, AREA, "Teleport Prohibition equipment#1";
-		cloakonnpc "Teleport Prohibition equipment#1", getcharid(0);
+		cloakonnpcself( "Teleport Prohibition equipment#1" );
 		sleep2 1000;
 		mes "[Arivero Yurhik]";
 		mes "Great! We destroyed the equipment.";
@@ -8727,7 +8729,7 @@ einbech,212,212,6	script	Arivero Yurhik#TFQ04	4_M_GUNSLINGER,{
 		mes "[Arivero Yurhik]";
 		mes "We destroyed the prohibition equipment. Now let's go back to Clana Nemieri.";
 		close2;
-		cloakonnpc "Arivero Yurhik#TFQ04", getcharid(0);
+		cloakonnpcself( "Arivero Yurhik#TFQ04" );
 		end;
 	}
 	end;
@@ -8740,9 +8742,9 @@ einbech,215,210,0	script	Einbech Prohibition equipment	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch:
 	if (yurhik_quest < 4)
-		cloakoffnpc "Arivero Yurhik#TFQ04", getcharid(0);
+		cloakoffnpcself( "Arivero Yurhik#TFQ04" );
 	if (yurhik_quest == 3)
-		cloakoffnpc "Teleport Prohibition equipment#1", getcharid(0);
+		cloakoffnpcself( "Teleport Prohibition equipment#1" );
 	end;
 }
 
@@ -8770,7 +8772,7 @@ lighthalzen,135,233,6	script	Arivero Yurhik#TFQ07	4_M_GUNSLINGER,{
 			mes "Oops! There's someone passing by.";
 			mes "I might look suspicious, so I will hide myself.";
 			close2;
-			cloakonnpc "Arivero Yurhik#TFQ07", getcharid(0);
+			cloakonnpcself( "Arivero Yurhik#TFQ07" );
 			end;
 		}
 		mes "[Arivero Yurhik]";
@@ -8810,7 +8812,7 @@ lighthalzen,135,233,6	script	Arivero Yurhik#TFQ07	4_M_GUNSLINGER,{
 		npctalk "Bang!", "Teleport Prohibition equipment#2", bc_self;
 		sleep2 1000;
 		specialeffect EF_LORD, AREA, "Teleport Prohibition equipment#2";
-		cloakonnpc "Teleport Prohibition equipment#2", getcharid(0);
+		cloakonnpcself( "Teleport Prohibition equipment#2" );
 		sleep2 1000;
 		mes "[Arivero Yurhik]";
 		mes "Nevertheless, the first one is always tough and it is easier from the second one. Now let us disappear with teleporting..";
@@ -8837,7 +8839,7 @@ lighthalzen,135,233,6	script	Arivero Yurhik#TFQ07	4_M_GUNSLINGER,{
 		mes "To avoid getting caught, let's scatter.";
 		mes "See you in Clana Nemieri.";
 		close2;
-		cloakonnpc "Arivero Yurhik#TFQ07", getcharid(0);
+		cloakonnpcself( "Arivero Yurhik#TFQ07" );
 		end;
 	}
 	end;
@@ -8850,10 +8852,10 @@ lighthalzen,137,231,0	script	Rihrtarzen Prohibition equipment 	HIDDEN_WARP_NPC,5
 	end;
 OnTouch:
 	if (yurhik_quest == 5) {
-		cloakoffnpc "Teleport Prohibition equipment#2", getcharid(0);
+		cloakoffnpcself( "Teleport Prohibition equipment#2" );
 		mes "Is this it? The mansion surrounded by water? According to the condition, it seems like it.";
 		next;
-		cloakoffnpc "Arivero Yurhik#TFQ07", getcharid(0);
+		cloakoffnpcself( "Arivero Yurhik#TFQ07" );
 		npctalk "Oops?! My hot friend has already arrived.", "Arivero Yurhik#TFQ07", bc_self;
 		mes "[Arivero Yurhik]";
 		mes "Oops?! My hot friend has already arrived.";
@@ -8904,7 +8906,7 @@ yuno,204,226,6	script	Arivero Yurhik#TFQ10	4_M_GUNSLINGER,{
 		npctalk "Bang!", "Teleport Prohibition equipment#3", bc_self;
 		sleep2 1000;
 		specialeffect EF_LORD, AREA, "Teleport Prohibition equipment#3";
-		cloakonnpc "Teleport Prohibition equipment#3", getcharid(0);
+		cloakonnpcself( "Teleport Prohibition equipment#3" );
 		mes "[Arivero Yurhik]";
 		mes "We destroyed the prohibition equipment and there appear to be.. no eyewitnesses. Just in case, let's scatter and move to Einbroch.";
 		next;
@@ -8917,7 +8919,7 @@ yuno,204,226,6	script	Arivero Yurhik#TFQ10	4_M_GUNSLINGER,{
 		mes "Oh! I haven't told you the location.";
 		mes "It is the place where Einbroch Wind turbine is located. You bring three Flame Hearts and one remaining Great Nature. We will use them to destroy the equipment.";
 		next;
-		cloakonnpc "Arivero Yurhik#TFQ10", getcharid(0);
+		cloakonnpcself( "Arivero Yurhik#TFQ10" );
 		mes "Vero disappeared in a hurry, as if he was being chased by something. Take three Flame Hearts and one Great Nature and go to Einbroch.";
 		close;
 	}
@@ -8931,8 +8933,8 @@ yuno,206,224,0	script	Yuno Prohibition equipment	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch:
 	if (yurhik_quest == 8) {
-		cloakoffnpc "Arivero Yurhik#TFQ10", getcharid(0);
-		cloakoffnpc "Teleport Prohibition equipment#3", getcharid(0);
+		cloakoffnpcself( "Arivero Yurhik#TFQ10" );
+		cloakoffnpcself( "Teleport Prohibition equipment#3" );
 	}
 	end;
 }
@@ -8959,7 +8961,7 @@ einbroch,262,42,4	script	Arivero Yurhik#TFQ13	4_M_GUNSLINGER,{
 		mes "His voice betrays his panic. And he also asked me to do the job that he had been doing by himself. Is there something wrong? I was curious. I broke the Great Nature into pieces as he asked.";
 		next;
 		specialeffect EF_SEISMICWEAPON, AREA, "Teleport Prohibition equipment#4";
-		cloakoffnpc "Teleport Prohibition equipment#4", getcharid(0);
+		cloakoffnpcself( "Teleport Prohibition equipment#4" );
 		emotion ET_BLABLA;
 		mes "[Arivero Yurhik]";
 		mes "Now! Time to use the Flame Heart!";
@@ -8988,7 +8990,7 @@ einbroch,262,42,4	script	Arivero Yurhik#TFQ13	4_M_GUNSLINGER,{
 		npctalk "Arrggh.. I can only go this far......", "", bc_self;
 		sleep2 1000;
 		specialeffect EF_LORD, AREA, "Teleport Prohibition equipment#4";
-		cloakonnpc "Teleport Prohibition equipment#4", getcharid(0);
+		cloakonnpcself( "Teleport Prohibition equipment#4" );
 		sleep2 1000;
 		mes "The equipment was destroyed quickly. Then I realized that Vero looked a bit abnormal. Is he sick or something?";
 		next;
@@ -9016,7 +9018,7 @@ einbroch,262,42,4	script	Arivero Yurhik#TFQ13	4_M_GUNSLINGER,{
 		specialeffect EF_MAPPILLAR;
 		sleep2 4000;
 		npctalk "Oh..", "Arivero Yurhik#TFQ13", bc_self;
-		cloakonnpc "Arivero Yurhik#TFQ13", getcharid(0);
+		cloakonnpcself( "Arivero Yurhik#TFQ13" );
 		delitem 997,1;// Great Nature
 		delitem 994,3;// Flame Heart
 		erasequest 5736;	// To Einbroch
@@ -9036,7 +9038,7 @@ einbroch,260,40,0	script	Einbroch Prohibition equipment	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch:
 	if (yurhik_quest == 9) {
-		cloakoffnpc "Arivero Yurhik#TFQ13", getcharid(0);
+		cloakoffnpcself( "Arivero Yurhik#TFQ13" );
 		npctalk "Friend! You've arrived!", "Arivero Yurhik#TFQ13", bc_self;
 	}
 	end;
@@ -9056,21 +9058,21 @@ rebel_in,91,67,3	script	Ericsson Adler#16.2rm	4_MAL_CAPTAIN,{
 		mes "You... You're the adventurer who showed up with the Secret Wings.";
 		mes "What can I do for you?";
 		next;
-		mes "You told him what you heard from Elena Bolkova and asked him for a consultation.";
+		mes "You told him what you heard from Elena Volkova and asked him for a consultation.";
 		next;
 		mes "[Detached Force commander Ericsson]";
 		mes "If it was about the Secret Wings, I would not have mentioned anything. But for that issue, I will help you.";
-		mes "As commander Bolkova said, I brought those kids.";
+		mes "As commander Volkova said, I brought those kids.";
 		next;
 		mes "[Detached Force commander Ericsson]";
 		mes "...I heard what happened to them lately. But I didn't know they were suffering like that.";
 		next;
 		mes "[Detached Force commander Ericsson]";
-		mes "I want to talk to Lebedev twins myself. But it is an arrogation and it will be bad for Commander Bolkova.";
-		mes "Commander Bolkova knows that too. That's why she sent you.";
+		mes "I want to talk to Lebedev twins myself. But it is an arrogation and it will be bad for Commander Volkova.";
+		mes "Commander Volkova knows that too. That's why she sent you.";
 		next;
 		mes "[Detached Force commander Ericsson]";
-		mes "There are some people who do not like commander Bolkova.";
+		mes "There are some people who do not like commander Volkova.";
 		mes "Her unit is USU. The commander didn't manage to take care of her squadders so the squadders talked to their former commander? It's a bad scenario.";
 		next;
 		mes "[Detached Force commander Ericsson]";
@@ -9595,7 +9597,7 @@ rebel_in,19,48,5	script	Mason Bender#16.2rm	4_M_KHMAN,{
 			mes "I am not interested in you and the noisy tourist either.";
 			next;
 			mes "[Mason Bender]";
-			mes "......Phew, a request from commander Bolkova... I have no choice but to answer you. But I can only tell you negative things about those kids.";
+			mes "......Phew, a request from commander Volkova... I have no choice but to answer you. But I can only tell you negative things about those kids.";
 			next;
 			mes "[Mason Bender]";
 			mes "There's nothing they can do properly. Plus, they don't even listen to us.";
@@ -10414,14 +10416,14 @@ rebel_in,108,27,3	script	Milo River#16.2rm	4_M_GUNSLINGER2,{
 				}
 			}
 		case 1:
-			cloakoffnpc "Charity#16.2rm", getcharid(0);
+			cloakoffnpcself( "Charity#16.2rm" );
 			mes "[Charity]";
 			mes "Meow~";
 			if (isbegin_quest(16041) == 1) {// daily
-				cloakoffnpc "Morana Rudel#16.2rm", getcharid(0);
+				cloakoffnpcself( "Morana Rudel#16.2rm" );
 				npctalk "Miss Charity! She's ruturned!", "Morana Rudel#16.2rm", bc_self;
 				sleep2 1000;
-				cloakoffnpc "Nice Looking Gun#16.2rm", getcharid(0);
+				cloakoffnpcself( "Nice Looking Gun#16.2rm" );
 				npctalk "Miss Charity! You are beautiful as usual!", "Nice Looking Gun#16.2rm", bc_self;
 				sleep2 1000;
 				npctalk "Miss Charity! I love you!!!", "Morana Rudel#16.2rm", bc_self;
@@ -10491,8 +10493,8 @@ rebel_in,108,27,3	script	Milo River#16.2rm	4_M_GUNSLINGER2,{
 				sleep2 1000;
 				npctalk "Oh, Miss Charity. Look at her shape and voice. She is great!";
 			}
-			cloakonnpc "Morana Rudel#16.2rm", getcharid(0);
-			cloakonnpc "Nice Looking Gun#16.2rm", getcharid(0);
+			cloakonnpcself( "Morana Rudel#16.2rm" );
+			cloakonnpcself( "Nice Looking Gun#16.2rm" );
 			if (countitem(25162) > 0)
 				delitem 25162,1;	// Anchovy_cookie
 			erasequest 16044;// In charge of Charity
@@ -10502,7 +10504,7 @@ rebel_in,108,27,3	script	Milo River#16.2rm	4_M_GUNSLINGER2,{
 			next;
 			mes "[Charity]";
 			mes "Meow~";
-			cloakonnpc "Charity#16.2rm", getcharid(0);
+			cloakonnpcself( "Charity#16.2rm" );
 			close;
 		case 2:
 			end;
@@ -10590,9 +10592,9 @@ einbech,34,209,3	script	Empty bench#16.2rm2	HIDDEN_NPC,{
 			close;
 		}
 		if (strnpcinfo(0) == "Empty bench#16.2rm2")
-			cloakoffnpc "Charity#16.2rmb2", getcharid(0);
+			cloakoffnpcself( "Charity#16.2rmb2" );
 		else
-			cloakoffnpc "Charity#16.2rmb3", getcharid(0);
+			cloakoffnpcself( "Charity#16.2rmb3" );
 		mes "[Charity]";
 		mes "Meow~";
 		next;
@@ -10606,9 +10608,9 @@ einbech,34,209,3	script	Empty bench#16.2rm2	HIDDEN_NPC,{
 		close2;
 	}
 	if (strnpcinfo(0) == "Empty bench#16.2rm2")
-		cloakonnpc "Charity#16.2rmb2", getcharid(0);
+		cloakonnpcself( "Charity#16.2rmb2" );
 	else
-		cloakonnpc "Charity#16.2rmb3", getcharid(0);
+		cloakonnpcself( "Charity#16.2rmb3" );
 	end;
 
 OnTimer30000:
@@ -11374,6 +11376,105 @@ rebel_in,90,40,5	script	Hogar#pa0829	4_M_MASKMAN,{
 }
 
 // Exchanges
+rebel_in,100,40,4	script	Butterfly Merchant#rebel_in	4_M_ORIENT02,{
+	mes "[Butterfly Merchant]";
+	mes "... ... ... ... ...";
+	mes "Do you need " + getitemname(100904) + "?";	// Teleport_Ep16_01
+	close2;
+	callshop "shop_rebel_in";
+	end;
+}
+
+rebel_in,99,51,3	script	Imperial Operator#ext162	4_M_REPAIR,{
+	mes "[Imperial Operator]";
+	mes "Hello.";
+	mes "We have ^4d4dffImperial^000000 equipment that can be exchanged for " + mesitemlink( 6919, false ) + ".";
+	mes "I will guide you to exchange items according to your job.";
+	close2;
+	switch( eaclass() & EAJ_THIRDMASK ) {
+	case EAJ_RUNE_KNIGHT:
+		.@str$ = "JOB_RUNE_KNIGHT";
+		break;
+	case EAJ_WARLOCK:
+		.@str$ = "JOB_WARLOCK";
+		break;
+	case EAJ_RANGER:
+		.@str$ = "JOB_RANGER";
+		break;
+	case EAJ_ARCH_BISHOP:
+		.@str$ = "JOB_ARCH_BISHOP";
+		break;
+	case EAJ_MECHANIC:
+		.@str$ = "JOB_MECHANIC";
+		break;
+	case EAJ_GUILLOTINE_CROSS:
+		.@str$ = "JOB_GUILLOTINE_CROSS";
+		break;
+	case EAJ_ROYAL_GUARD:
+		.@str$ = "JOB_ROYAL_GUARD";
+		break;
+	case EAJ_SORCERER:
+		.@str$ = "JOB_SORCERER";
+		break;
+	case EAJ_MINSTRELWANDERER:
+		.@str$ = "JOB_MINSTREL";
+		break;
+	case EAJ_SURA:
+		.@str$ = "JOB_SURA";
+		break;
+	case EAJ_GENETIC:
+		.@str$ = "JOB_GENETIC";
+		break;
+	case EAJ_SHADOW_CHASER:
+		.@str$ = "JOB_SHADOW_CHASER";
+		break;
+	default:
+		switch( Class ) {
+		case JOB_SUPER_NOVICE_E:
+		case JOB_SUPER_BABY_E:
+		case JOB_HYPER_NOVICE:
+			.@str$ = "JOB_SUPER_NOVICE_E";
+			break;
+		case JOB_KAGEROU:
+		case JOB_OBORO:
+		case JOB_BABY_KAGEROU:
+		case JOB_BABY_OBORO:
+		case JOB_SHINKIRO:
+		case JOB_SHIRANUI:
+			.@str$ = "JOB_KAGEROU";
+			break;
+		case JOB_REBELLION:
+		case JOB_BABY_REBELLION:
+		case JOB_NIGHT_WATCH:
+			.@str$ = "JOB_REBELLION";
+			break;
+		case JOB_SUMMONER:
+		case JOB_BABY_SUMMONER:
+		case JOB_SPIRIT_HANDLER:
+			.@str$ = "JOB_SUMMONER";
+			break;
+		case JOB_STAR_EMPEROR:
+		case JOB_BABY_STAR_EMPEROR:
+		case JOB_STAR_EMPEROR2:
+		case JOB_BABY_STAR_EMPEROR2:
+		case JOB_SKY_EMPEROR:
+		case JOB_SKY_EMPEROR2:
+			.@str$ = "JOB_STAR_EMPEROR";
+			break;
+		case JOB_SOUL_REAPER:
+		case JOB_BABY_SOUL_REAPER:
+		case JOB_SOUL_ASCETIC:
+			.@str$ = "JOB_SOUL_REAPER";
+			break;
+		default:
+			end;
+		}
+		break;
+	}
+	callshop "shop_ext162_" + .@str$;
+	end;
+}
+
 rebel_in,74,67,5	script	Strasse#rebel_in	4_M_TATIO,{
 	disable_items;
 	if (checkweight(501,1) == 0) {
@@ -11419,7 +11520,7 @@ rebel_in,74,67,5	script	Strasse#rebel_in	4_M_TATIO,{
 
 	.@s = (select( "Agenda Robe", "Consultation Robe", "Costume Combat Vestige", "Hat of Republic", "Mercenary Ring A type", "Mercenary Ring B type" ) - 1) * 2;
 	mes "[Strasse]";
-	mes "<ITEM>" + getitemname(.@item[.@s]) + "<INFO>" + .@item[.@s] + "</INFO></ITEM>? I got it.";
+	mes mesitemlink( .@item[.@s], false ) + "? I got it.";
 	mes "You need " + .@item[.@s+1] + " Schwartz Honor Tokens.";
 	mes "Are you sure you want this?";
 	next;
@@ -11436,7 +11537,7 @@ rebel_in,74,67,5	script	Strasse#rebel_in	4_M_TATIO,{
 	}
 	// custom text
 	mes "[Strasse]";
-	mes "Here is your <ITEM>" + getitemname(.@item[.@s]) + "<INFO>" + .@item[.@s] + "</INFO></ITEM>.";
+	mes "Here is your " + mesitemlink( .@item[.@s], false ) + ".";
 	delitem 25155, .@item[.@s+1];
 	getitem .@item[.@s],1;
 	close;
@@ -11702,7 +11803,7 @@ rebel_in,108,36,3	script	Master#16nego02	4_F_HUWOMAN,{
 		mes "[Master]";
 		mes "By the way, he should be here now.";
 		next;
-		cloakoffnpc "Daryl#16nego01", getcharid(0);
+		cloakoffnpcself( "Daryl#16nego01" );
 		mes "[Daryl]";
 		mes "I'm here.";
 		next;
@@ -11782,8 +11883,8 @@ rebel_in,108,36,3	script	Master#16nego02	4_F_HUWOMAN,{
 		mes "[Master]";
 		mes "We will keep your Lady for a while. You reflect on yourself in the training room for some time!";
 		next;
-		cloakoffnpc "Trainee#16nego01", getcharid(0);
-		cloakoffnpc "Trainee#16nego02", getcharid(0);
+		cloakoffnpcself( "Trainee#16nego01" );
+		cloakoffnpcself( "Trainee#16nego02" );
 		mes "[Master]";
 		mes "Trainees!!!";
 		npctalk "Yes!!", "Trainee#16nego01", bc_self;
@@ -11801,9 +11902,9 @@ rebel_in,108,36,3	script	Master#16nego02	4_F_HUWOMAN,{
 		npctalk "Let's go.", "Trainee#16nego01", bc_self;
 		npctalk "This time, I will make no mistake in shooting.", "Trainee#16nego02", bc_self;
 		next;
-		cloakonnpc "Trainee#16nego01", getcharid(0);
-		cloakonnpc "Trainee#16nego02", getcharid(0);
-		cloakonnpc "Daryl#16nego01", getcharid(0);
+		cloakonnpcself( "Trainee#16nego01" );
+		cloakonnpcself( "Trainee#16nego02" );
+		cloakonnpcself( "Daryl#16nego01" );
 		mes "[Master]";
 		mes "You must be so tired by now. Take some rest. Can we count on you tomorrow? If you are interested, come back to us after the dawn.";
 		emotion ET_SWEAT, playerattached();
@@ -11999,7 +12100,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[" + strcharinfo(0) + "]";
 			mes "...You told me I had to come here, didn't you?";
 			next;
-			cloakoffnpc "Denny#16nego01", getcharid(0);
+			cloakoffnpcself( "Denny#16nego01" );
 			mes "[Denny]";
 			mes "Here come Denny again, the superstar!!!";
 			next;
@@ -12007,8 +12108,8 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Rookie]";
 			mes "Well, speak of the devil.";
 			next;
-			cloakonnpc "Denny#16nego01", getcharid(0);
-			cloakoffnpc "Denny#16nego02", getcharid(0);
+			cloakonnpcself( "Denny#16nego01" );
+			cloakoffnpcself( "Denny#16nego02" );
 			mes "[Denny]";
 			mes "Yikes! It's cold!";
 			next;
@@ -12024,8 +12125,8 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Rookie]";
 			mes "It's me.";
 			next;
-			cloakonnpc "Denny#16nego02", getcharid(0);
-			cloakoffnpc "Denny#16nego03", getcharid(0);
+			cloakonnpcself( "Denny#16nego02" );
+			cloakoffnpcself( "Denny#16nego03" );
 			mes "[Denny]";
 			mes "Hey! How can you do this to me?";
 			emotion ET_FRET, getnpcid(0, "Denny#16nego03");
@@ -12223,7 +12324,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 				mes "[Denny]";
 				mes "I'm so sad!!!!!!";
 				next;
-				cloakonnpc "Denny#16nego03", getcharid(0);
+				cloakonnpcself( "Denny#16nego03" );
 				cutin "16loo_03.bmp",2;
 				mes "[Rookie]";
 				mes "Phew, he's so rude. We have no choice. I will look for someone else to do it. You don't have to worry about this.";
@@ -12245,7 +12346,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Denny]";
 			mes "Yes! We will be waiting!";
 			next;
-			cloakonnpc "Denny#16nego03", getcharid(0);
+			cloakonnpcself( "Denny#16nego03" );
 			cutin "16loo_01.bmp",2;
 			mes "[Rookie]";
 			mes "Be careful!";
@@ -12256,12 +12357,12 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Rookie]";
 			mes "Great job, adventurer. I must have been hard for you to take that job all of a sudden.";
 			next;
-			cloakoffnpc "Denny#16nego01", getcharid(0);
+			cloakoffnpcself( "Denny#16nego01" );
 			mes "[Denny]";
 			mes "Here come Denny again, the superstar!!!";
 			next;
-			cloakonnpc "Denny#16nego01", getcharid(0);
-			cloakoffnpc "Denny#16nego03", getcharid(0);
+			cloakonnpcself( "Denny#16nego01" );
+			cloakoffnpcself( "Denny#16nego03" );
 			mes "[Denny]";
 			mes "Adventurer! Have you brought them all? Let me see.";
 			next;
@@ -12278,7 +12379,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 				mes "[Denny]";
 				mes "Superstar Denny is going home now!";
 				next;
-				cloakonnpc "Denny#16nego03", getcharid(0);
+				cloakonnpcself( "Denny#16nego03" );
 				cutin "16loo_01.bmp",2;
 				mes "[Rookie]";
 				mes "What kind of superstar is that? After all, we are counting on you. He is more persistent than he looks. So I am saying this for you.";
@@ -12297,7 +12398,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 				mes "[Denny]";
 				mes "Superstar Denny is going home now!";
 				next;
-				cloakonnpc "Denny#16nego03", getcharid(0);
+				cloakonnpcself( "Denny#16nego03" );
 				cutin "16loo_01.bmp",2;
 				mes "[Rookie]";
 				mes "What kind of superstar is that? After all, we are counting on you. He is more persistent than he looks. So I am saying this for you.";
@@ -12312,7 +12413,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Denny]";
 			mes "Then I will go and prepare for repairing! I will count on you again!";
 			next;
-			cloakonnpc "Denny#16nego03", getcharid(0);
+			cloakonnpcself( "Denny#16nego03" );
 			cutin "16loo_03.bmp",2;
 			mes "[Rookie]";
 			mes "He went back only after saying what he wants. How spoiled! But I didn't educate him like that.";
@@ -12344,7 +12445,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[" + strcharinfo(0) + "]";
 			mes "...You told me I had to come here, didn't you?";
 			next;
-			cloakoffnpc "Cyan#16nego02", getcharid(0);
+			cloakoffnpcself( "Cyan#16nego02" );
 			mes "[Cyan]";
 			mes "Yikes, it's so cold!";
 			next;
@@ -12363,16 +12464,16 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "Oh! When did I get dressed like this!";
 			emotion ET_HUK;
 			next;
-			cloakonnpc "Cyan#16nego02", getcharid(0);
-			cloakoffnpc "Cyan#16nego01", getcharid(0);
+			cloakonnpcself( "Cyan#16nego02" );
+			cloakoffnpcself( "Cyan#16nego01" );
 			mes "[Cyan]";
 			mes "Let's see... I thought so. The fireplace is weaker now. No firewood?";
 			next;
 			mes "[Rookie]";
 			mes "Well, it's true.";
 			next;
-			cloakoffnpc "Cyan#16nego02", getcharid(0);
-			cloakonnpc "Cyan#16nego01", getcharid(0);
+			cloakoffnpcself( "Cyan#16nego02" );
+			cloakonnpcself( "Cyan#16nego01" );
 			mes "[Cyan]";
 			mes "Once this last firewood is burnt out, I will die... Last... firewood...";
 			next;
@@ -12461,7 +12562,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 				mes "[Cyan]";
 				mes "My dear, come back if you miss me!";
 				next;
-				cloakonnpc "Cyan#16nego02", getcharid(0);
+				cloakonnpcself( "Cyan#16nego02" );
 				mes "[" + strcharinfo(0) + "]";
 				mes "Yes. I will.";
 				close3;
@@ -12507,7 +12608,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "Be careful, my dear~";
 			next;
 			cutin "16loo_01.bmp",2;
-			cloakonnpc "Cyan#16nego02", getcharid(0);
+			cloakonnpcself( "Cyan#16nego02" );
 			emotion ET_PROFUSELY_SWEAT, playerattached();
 			mes "[Rookie]";
 			mes "Phew... We will count on you anyway. Regardless of what that fellow told you, everyone will get a cold once the fire goes out.";
@@ -12518,7 +12619,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Rookie]";
 			mes "Adventurer, seems like you gave so much effort!";
 			next;
-			cloakoffnpc "Cyan#16nego02", getcharid(0);
+			cloakoffnpcself( "Cyan#16nego02" );
 			mes "[Cyan]";
 			mes "Welcome back, dear!!! Have you got them all for me? Right?";
 			next;
@@ -12532,7 +12633,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 				mes "[Cyan]";
 				mes "And don't forget to defeat about 10 Waste Stoves! I will be sleeping in by bed. It's so cold!";
 				next;
-				cloakonnpc "Cyan#16nego02", getcharid(0);
+				cloakonnpcself( "Cyan#16nego02" );
 				cutin "16loo_03.bmp",2;
 				mes "[Rookie]";
 				mes "That's so spoiled. Adventurer, We will count on you again. If you don't bring them, Cyan will pester you all day long.";
@@ -12548,7 +12649,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 				mes "[Cyan]";
 				mes "Defeat ^0000cd10 Waste Stoves^000000. I will be sleeping in by bed. It's so cold!";
 				next;
-				cloakonnpc "Cyan#16nego02", getcharid(0);
+				cloakonnpcself( "Cyan#16nego02" );
 				cutin "16loo_03.bmp",2;
 				mes "[Rookie]";
 				mes "That's so spoiled. Adventurer, We will count on you again. If you don't bring them, Cyan will pester you all day long.";
@@ -12557,7 +12658,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Cyan]";
 			mes "Wow! You've brought all of them! My dear, you are so reliable!";
 			next;
-			cloakoffnpc "#16negofire", getcharid(0);
+			cloakoffnpcself( "#16negofire" );
 			mes "[Cyan]";
 			mes "Okay. Put the wood and coal in... Fire!!!!!!!!";
 			specialeffect EF_FIREWALL, AREA, "#16negofire";
@@ -12601,8 +12702,8 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Cyan]";
 			mes "Now I will go in and sleep. See you!";
 			next;
-			cloakonnpc "#16negofire", getcharid(0);
-			cloakonnpc "Cyan#16nego02", getcharid(0);
+			cloakonnpcself( "#16negofire" );
+			cloakonnpcself( "Cyan#16nego02" );
 			mes "[Rookie]";
 			mes "Phew, I am exhausted as well. Please take a good rest now and come back after the ^0000cddawn^000000.";
 			erasequest 14604;// National Fuel Solar Fuel
@@ -12629,7 +12730,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[" + strcharinfo(0) + "]";
 			mes "... You told me I had to come here, didn't you?";
 			next;
-			cloakoffnpc "Magenta#16nego01", getcharid(0);
+			cloakoffnpcself( "Magenta#16nego01" );
 			mes "[Magenta]";
 			mes "Twinkle twinkle little star~ My shooting star, you are still beautiful.";
 			next;
@@ -12761,7 +12862,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 				mes "[Magenta]";
 				mes "I see... Please come back if you remember it later on. I will be waiting for you. Bye... then.";
 				next;
-				cloakonnpc "Magenta#16nego01", getcharid(0);
+				cloakonnpcself( "Magenta#16nego01" );
 				mes "[Rookie]";
 				mes "See you later. Be careful.";
 				close3;
@@ -12784,7 +12885,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Magenta]";
 			mes "Please bring ^0000cd 10 pieces of crystal and 10 pieces of black crystal^000000. You can get them by defeating ^0000cdObsidians and Minerals^000000. Be careful!";
 			next;
-			cloakonnpc "Magenta#16nego01", getcharid(0);
+			cloakonnpcself( "Magenta#16nego01" );
 			mes "[Rookie]";
 			mes "Phew. He's so loud. I will count on you, adventurer.";
 			setquest 14605;// Sparkling things
@@ -12795,7 +12896,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Rookie]";
 			mes "Welcome back, adventurer. I know you are suffering from the weird guy.";
 			next;
-			cloakoffnpc "Magenta#16nego01", getcharid(0);
+			cloakoffnpcself( "Magenta#16nego01" );
 			mes "[Magenta]";
 			mes "You've come! Have you brought everything I asked for? Let me see!";
 			next;
@@ -12809,7 +12910,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 				mes "[Magenta]";
 				mes "You can get them from ^0000cdObsidians and Mineral^000000. So defeat them. I have to go now. See you!";
 				next;
-				cloakonnpc "Magenta#16nego01", getcharid(0);
+				cloakonnpcself( "Magenta#16nego01" );
 				cutin "16loo_03.bmp",2;
 				mes "[Rookie]";
 				mes "Phew, so complicated. We will count on you. That fellow is so persistent.";
@@ -12825,7 +12926,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 				mes "[Magenta]";
 				mes "Sorry to request you again, adventurer. Please defeat ^0000cd10 Obsidians and 10 Minerals^000000. I will count on you.";
 				next;
-				cloakonnpc "Magenta#16nego01", getcharid(0);
+				cloakonnpcself( "Magenta#16nego01" );
 				cutin "16loo_03.bmp",2;
 				mes "[Rookie]";
 				mes "Phew, so complicated. We will count on you. That fellow is so persistent.";
@@ -12876,7 +12977,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Magenta]";
 			mes "Thank you so much! I should start working. Be careful!";
 			next;
-			cloakonnpc "Magenta#16nego01", getcharid(0);
+			cloakonnpcself( "Magenta#16nego01" );
 			cutin "16loo_03.bmp",2;
 			mes "[Rookie]";
 			mes "That fellow is really loud, isn't he? I apologize on behalf of him. Please take a good rest and come back ^0000cdafter the dawn^000000.";
@@ -12902,7 +13003,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[" + strcharinfo(0) + "]";
 			mes "...You told me I had to come here, didn't you?";
 			next;
-			cloakoffnpc "Denny#16nego01", getcharid(0);
+			cloakoffnpcself( "Denny#16nego01" );
 			mes "[Denny]";
 			mes "Here come Denny again, the superstar!!!";
 			next;
@@ -12924,7 +13025,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Denny]";
 			mes "Cheer up!";
 			next;
-			cloakonnpc "Denny#16nego03", getcharid(0);
+			cloakonnpcself( "Denny#16nego03" );
 			mes "[Rookie]";
 			mes "Ouch, I'm so busy. Sorry to request you again. Go, adventurer!";
 			erasequest 14609;// Quiet time
@@ -12936,15 +13037,15 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Rookie]";
 			mes "Welcome back, adventurer. Thank you for your support. Our silly kid gave you some trouble.";
 			next;
-			cloakoffnpc "Denny#16nego01", getcharid(0);
+			cloakoffnpcself( "Denny#16nego01" );
 			mes "[Denny]";
 			mes "The adventurer is here?";
 			next;
 			mes "[Denny]";
 			mes "Here come Denny again, the superstar!!!";
 			next;
-			cloakonnpc "Denny#16nego01", getcharid(0);
-			cloakoffnpc "Denny#16nego03", getcharid(0);
+			cloakonnpcself( "Denny#16nego01" );
+			cloakoffnpcself( "Denny#16nego03" );
 			mes "[Denny]";
 			mes "Adventurer! Have you brought them all? Let me see.";
 			next;
@@ -12961,7 +13062,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 				mes "[Denny]";
 				mes "Superstar Denny is going home now!";
 				next;
-				cloakonnpc "Denny#16nego03", getcharid(0);
+				cloakonnpcself( "Denny#16nego03" );
 				cutin "16loo_03.bmp",2;
 				mes "[Rookie]";
 				mes "What a spoiled kid. I apologize on behalf of him. We will count on you for the rest items.";
@@ -12980,7 +13081,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 				mes "[Denny]";
 				mes "Superstar Denny is going home now!";
 				next;
-				cloakonnpc "Denny#16nego03", getcharid(0);
+				cloakonnpcself( "Denny#16nego03" );
 				cutin "16loo_03.bmp",2;
 				mes "[Rookie]";
 				mes "What a spoiled kid. I apologize on behalf of him. We will count on you for the rest items.";
@@ -12995,7 +13096,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Denny]";
 			mes "Then I will go and prepare for repairing! I will count on you again!";
 			next;
-			cloakonnpc "Denny#16nego03", getcharid(0);
+			cloakonnpcself( "Denny#16nego03" );
 			cutin "16loo_03.bmp",2;
 			mes "[Rookie]";
 			mes "He went back only after saying what he wants. How spoiled! But I didn't educate him like that.";
@@ -13025,7 +13126,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[" + strcharinfo(0) + "]";
 			mes "...You told me I had to come here, didn't you?";
 			next;
-			cloakoffnpc "Cyan#16nego02", getcharid(0);
+			cloakoffnpcself( "Cyan#16nego02" );
 			mes "[Cyan]";
 			mes "Yikes, it's so cold!";
 			next;
@@ -13044,16 +13145,16 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "Oh! When did I get dressed like this!";
 			emotion ET_HUK;
 			next;
-			cloakonnpc "Cyan#16nego02", getcharid(0);
-			cloakoffnpc "Cyan#16nego01", getcharid(0);
+			cloakonnpcself( "Cyan#16nego02" );
+			cloakoffnpcself( "Cyan#16nego01" );
 			mes "[Cyan]";
 			mes "Let's see... I thought so. The fireplace is weaker now. No firewood?";
 			next;
 			mes "[Rookie]";
 			mes "Well, it's true.";
 			next;
-			cloakoffnpc "Cyan#16nego02", getcharid(0);
-			cloakonnpc "Cyan#16nego01", getcharid(0);
+			cloakoffnpcself( "Cyan#16nego02" );
+			cloakonnpcself( "Cyan#16nego01" );
 			mes "[Cyan]";
 			mes "Once this last firewood is burnt out, I will die... Last... firewood...";
 			next;
@@ -13166,7 +13267,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Cyan]";
 			mes "Be careful, my dear~";
 			next;
-			cloakonnpc "Cyan#16nego02", getcharid(0);
+			cloakonnpcself( "Cyan#16nego02" );
 			emotion ET_SWEAT, playerattached();
 			mes "[Rookie]";
 			mes "Phew... We will count on you anyway. Regardless of what that fellow told you, everyone will get a cold once the fire goes out.";
@@ -13182,7 +13283,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Cyan]";
 			mes "What? Adventurer? My dear?";
 			next;
-			cloakoffnpc "Cyan#16nego02", getcharid(0);
+			cloakoffnpcself( "Cyan#16nego02" );
 			mes "[Cyan]";
 			mes "My dear~~~ You're late! I've been waiting for you for a long time! Have you brought the right one again? I mean, the firewood.";
 			next;
@@ -13196,7 +13297,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 				mes "[Cyan]";
 				mes "And don't forget to defeat about 10 Waste Stoves! I will be sleeping in by bed. It's so cold!";
 				next;
-				cloakonnpc "Cyan#16nego02", getcharid(0);
+				cloakonnpcself( "Cyan#16nego02" );
 				cutin "16loo_03.bmp",2;
 				mes "[Rookie]";
 				mes "Sorry. Some of our kids are spoiled... We will count on you.";
@@ -13212,7 +13313,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 				mes "[Cyan]";
 				mes "Defeat ^0000cd10 Waste Stoves^000000. I will be sleeping in by bed. It's so cold!";
 				next;
-				cloakonnpc "Cyan#16nego02", getcharid(0);
+				cloakonnpcself( "Cyan#16nego02" );
 				cutin "16loo_03.bmp",2;
 				mes "[Rookie]";
 				mes "Sorry. Some of our kids are spoiled... We will count on you.";
@@ -13221,9 +13322,9 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Cyan]";
 			mes "Burnt Tree and coal, you have everything! That's why I like you, dear!";
 			next;
-			cloakonnpc "Cyan#16nego02", getcharid(0);
-			cloakoffnpc "Cyan#16nego01", getcharid(0);
-			cloakoffnpc "#16negofire", getcharid(0);
+			cloakonnpcself( "Cyan#16nego02" );
+			cloakoffnpcself( "Cyan#16nego01" );
+			cloakoffnpcself( "#16negofire" );
 			mes "[Cyan]";
 			mes "Okay. Put the wood and coal in... Fire!!!!!!!!";
 			specialeffect EF_FIREWALL, AREA, "#16negofire";
@@ -13231,14 +13332,14 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Cyan]";
 			mes "Oh, it's warm now. As warm as your love~";
 			next;
-			cloakonnpc "Cyan#16nego01", getcharid(0);
-			cloakoffnpc "Cyan#16nego02", getcharid(0);
-			cloakonnpc "#16negofire", getcharid(0);
+			cloakonnpcself( "Cyan#16nego01" );
+			cloakoffnpcself( "Cyan#16nego02" );
+			cloakonnpcself( "#16negofire" );
 			next;
 			mes "[Cyan]";
 			mes "Thank you so much! I will count you again later on! MY DEAR!";
 			next;
-			cloakonnpc "Cyan#16nego02", getcharid(0);
+			cloakonnpcself( "Cyan#16nego02" );
 			cutin "16loo_03.bmp",2;
 			mes "[Rookie]";
 			mes "There he leaves again without saying goodbye to you. Sorry about him. Some of our kids are spoiled. But not every Rebellion is like that.";
@@ -13268,7 +13369,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[" + strcharinfo(0) + "]";
 			mes "...You told me I had to come here, didn't you?";
 			next;
-			cloakoffnpc "Magenta#16nego01", getcharid(0);
+			cloakoffnpcself( "Magenta#16nego01" );
 			mes "[Magenta]";
 			mes "Wait!!! Adventurer! Please talk to me!";
 			next;
@@ -13284,7 +13385,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Magenta]";
 			mes "Eee you later! I have to go and arrange the stuffs I made. I will count on you!";
 			next;
-			cloakonnpc "Magenta#16nego01", getcharid(0);
+			cloakonnpcself( "Magenta#16nego01" );
 			cutin "16loo_03.bmp",2;
 			mes "[Rookie]";
 			mes "Ouch, Sorry to request you again. It must be tough for you now.";
@@ -13297,7 +13398,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Rookie]";
 			mes "Welcome back, adventurer. Thank you for your support. That flake gave you some trouble.";
 			next;
-			cloakoffnpc "Magenta#16nego01", getcharid(0);
+			cloakoffnpcself( "Magenta#16nego01" );
 			mes "[Magenta]";
 			mes "You've come! Have you brought everything I asked for? Let me see!";
 			next;
@@ -13311,7 +13412,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 				mes "[Magenta]";
 				mes "You can get them from ^0000cdObsidians and Mineral^000000. So defeat them. I have to go now. See you!";
 				next;
-				cloakonnpc "Magenta#16nego01", getcharid(0);
+				cloakonnpcself( "Magenta#16nego01" );
 				cutin "16loo_03.bmp",2;
 				mes "[Rookie]";
 				mes "Sorry. Some of our kids are spoiled... We will count on you.";
@@ -13327,7 +13428,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 				mes "[Magenta]";
 				mes "Sorry to request you again, adventurer. Please defeat ^0000cd10 Obsidians and 10 Minerals^000000. I will count on you.";
 				next;
-				cloakonnpc "Magenta#16nego01", getcharid(0);
+				cloakonnpcself( "Magenta#16nego01" );
 				cutin "16loo_03.bmp",2;
 				mes "[Rookie]";
 				mes "Sorry. Some of our kids are spoiled... We will count on you.";
@@ -13339,7 +13440,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Magenta]";
 			mes "Thank you so much! Can I ask you for a favor again next time? This is great!!!";
 			next;
-			cloakonnpc "Magenta#16nego01", getcharid(0);
+			cloakonnpcself( "Magenta#16nego01" );
 			cutin "16loo_03.bmp",2;
 			mes "[Rookie]";
 			mes "There he leaves again without saying goodbye to you. Sorry about him. Some of our kids are spoiled. But not every Rebellion is like that.";
@@ -13655,7 +13756,7 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 		emotion ET_FRET;
 		mes "[Jana Levedeva]";
 		mes "...We'll become adults in the near future.";
-		mes "We are not that much younger compared to other people here. Does putting on several years make any diffrence?";
+		mes "We are not that much younger compared to other people here. Does putting on several years make any difference?";
 		next;
 		mes "[Jana Levedeva]";
 		mes "They all know that we have better abilities than adults.";
@@ -13719,7 +13820,7 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 			npctalk "Ilya Lebedev: Don't listen, Jaja...!!", "Ilya Lebedev#16.2rm", bc_self;
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			mes "(......Looks like a huge mistake. Let's go back to ^0000CDElena Bolkova^000000.)";
+			mes "(......Looks like a huge mistake. Let's go back to ^0000CDElena Volkova^000000.)";
 		}
 		else {
 			mes "[" + strcharinfo(0) + "]";
@@ -13737,7 +13838,7 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 			npctalk "Ilya Lebedev: ......", "Ilya Lebedev#16.2rm", bc_self;
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			mes "(......This is getting difficult. Let's go back to ^0000CDElena Bolkova^000000.)";
+			mes "(......This is getting difficult. Let's go back to ^0000CDElena Volkova^000000.)";
 		}
 		setquest 16015;// The cause of failure is a careless attempt
 		lebedev_quest_16_2 = 5;
@@ -13798,7 +13899,7 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "As I told you earlier, please think about commander Adler.";
-		mes "He's so worried about you. So am I, and so is commander Bolkova.";
+		mes "He's so worried about you. So am I, and so is commander Volkova.";
 		next;
 		mes "[Jana Levedeva]";
 		mes "We...";
@@ -13876,7 +13977,7 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 		npctalk "Ilya Lebedev: Yes. please.", "Ilya Lebedev#16.2rm", bc_self;
 		npctalk "Jana Levedeva: Yes...", "", bc_self;
 		mes "[" + strcharinfo(0) + "]";
-		mes "(You heard their story. Let's go to ^0000CDElena Bolkova^000000 and tell her.)";
+		mes "(You heard their story. Let's go to ^0000CDElena Volkova^000000 and tell her.)";
 		lebedev_quest_16_2 = 8;
 		delitem 25161,1;// Handmade_cookie2
 		erasequest 16033;// Bring dessert and listen the story

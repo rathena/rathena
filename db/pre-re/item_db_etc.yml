@@ -44,6 +44,7 @@
 #   EquipLevelMin           Minimum required level to equip. (Default: 0)
 #   EquipLevelMax           Maximum level that can equip. (Default: 0)
 #   Refineable              If the item can be refined. (Default: false)
+#   Gradable                If the item can be graded. (Default: false)
 #   View                    View sprite of an item. (Default: 0)
 #   AliasName               Another item's AegisName that will be sent to the client instead of this item's AegisName. (Default: null)
 #   Flags:                  Item flags. (Default: null)
@@ -85,7 +86,7 @@
 
 Header:
   Type: ITEM_DB
-  Version: 2
+  Version: 3
 
 Body:
   - Id: 670
@@ -4026,7 +4027,6 @@ Body:
       BuyingStore: true
     Script: |
       skill "TF_DOUBLE",1;
-      bonus bDoubleRate,5;
   - Id: 4118
     AegisName: Petit_Card
     Name: Earth Petite Card
@@ -5320,7 +5320,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      bonus2 bAddMonsterDropItemGroup,IG_Food,600;
+      bonus2 bAddMonsterDropItemGroup,IG_Food,10000;
   - Id: 4216
     AegisName: Sasquatch_Card
     Name: Sasquatch Card
@@ -6230,7 +6230,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      bonus2 bAddMonsterDropItemGroup,IG_Recovery,600;
+      bonus2 bAddMonsterDropItemGroup,IG_Recovery,10000;
   - Id: 4283
     AegisName: Greatest_General_Card
     Name: Greatest General Card
@@ -6451,8 +6451,6 @@ Body:
       BuyingStore: true
     Script: |
       bonus3 bAutoSpellWhenHit,"CR_AUTOGUARD",3+7*(getskilllv("CR_AUTOGUARD") == 10),30;
-    UnEquipScript: |
-      sc_end SC_AUTOGUARD;
   - Id: 4300
     AegisName: Chimera_Card
     Name: Chimera Card
@@ -17932,7 +17930,7 @@ Body:
     Weight: 10
   - Id: 7773
     AegisName: War_Badge
-    Name: Wat Badge
+    Name: War Badge
     Type: Etc
     Trade:
       NoDrop: true

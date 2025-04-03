@@ -9,28 +9,6 @@
 //= 2.0 Official Conversion. [Capuche]
 //============================================================
 
-function	script	F_Mysterious_box	{
-	.@r = rand(1,1000);
-	if (.@r < 122) getitem 6919,8;
-	else if (.@r < 321) getitem 6919,16;
-	else if (.@r < 356) getitem 6919,55;
-	else if (.@r < 402) getitem 6936,3;
-	else if (.@r < 453) getitem 6937,3;
-	else if (.@r < 513) getitem 6938,3;
-	else if (.@r < 552) getitem 6939,3;
-	else if (.@r < 606) getitem 6940,3;
-	else if (.@r < 623) getitem 6941,1;
-	else if (.@r < 671) getitem 6942,3;
-	else if (.@r < 705) getitem 11600,2;
-	else if (.@r < 797) getitem 22847,3;
-	else if (.@r < 844) getitem 22848,1;
-	else if (.@r < 887) getitem 22849,1;
-	else if (.@r < 888) getitem 22854,1;
-	else if (.@r < 892) getitem 22856,1;
-	else getitem 22899,2;
-	return;
-}
-
 // Main Quest
 prontera,121,72,3	script	Royal Messenger#e16_pr	4_M_ZONDAOYAJI,5,5,{
 	if (checkweight(1301,5) == 0) {
@@ -186,7 +164,7 @@ prt_cas,215,146,0	script	#ep16_evt_01_on	HIDDEN_WARP_NPC,1,1,{
 	end;
 OnTouch:
 	if (isbegin_quest(7681) == 1) {
-		cloakoffnpc "Chamberlain Bell#ep16_01", getcharid(0);
+		cloakoffnpcself( "Chamberlain Bell#ep16_01" );
 		setpcblock PCBLOCK_NPC, true;
 		sleep2 3000;
 		setpcblock PCBLOCK_NPC, false;
@@ -215,7 +193,7 @@ prt_cas,217,150,3	script	Chamberlain Bell#ep16_01	4_M_RUSMAN1,{
 		mes "Let me go ahead and mall all the preparations.";
 		mes "Come with me, please.";
 		close2;
-		cloakonnpc "Chamberlain Bell#ep16_01", getcharid(0);
+		cloakonnpcself( "Chamberlain Bell#ep16_01" );
 		end;
 	}
 	end;
@@ -231,7 +209,7 @@ prt_cas,163,163,0	script	#ep16_evt_02_on	HIDDEN_WARP_NPC,3,3,{
 	end;
 OnTouch:
 	if (isbegin_quest(7681) == 1) {
-		cloakoffnpc "Chamberlain Bell#ep16_02", getcharid(0);
+		cloakoffnpcself( "Chamberlain Bell#ep16_02" );
 		npctalk "This way. Sir " + strcharinfo(0) + "...", "Chamberlain Bell#ep16_02", bc_self;
 	}
 	end;
@@ -247,7 +225,7 @@ prt_cas,155,165,4	script	Chamberlain Bell#ep16_02	4_M_RUSMAN1,{
 		mes "Let me tell you the story in detail after moving into the room.";
 		mes "Come this way.";
 		close2;
-		cloakonnpc "Chamberlain Bell#ep16_02", getcharid(0);
+		cloakonnpcself( "Chamberlain Bell#ep16_02" );
 	}
 	end;
 }
@@ -256,7 +234,7 @@ prt_cas_q,150,8,0	script	#ep16_evt_03_on	HIDDEN_WARP_NPC,1,1,{
 	end;
 OnTouch:
 	if (isbegin_quest(7681) == 1) {
-		cloakoffnpc "Chamberlain Bell#ep16_03", getcharid(0);
+		cloakoffnpcself( "Chamberlain Bell#ep16_03" );
 		npctalk "This way. Sir " + strcharinfo(0) + "...", "Chamberlain Bell#ep16_03", bc_self;
 	}
 	end;
@@ -274,7 +252,7 @@ prt_cas_q,135,10,4	script	Chamberlain Bell#ep16_03	4_M_RUSMAN1,{
 		mes "You may find me when you need a help.";
 	}
 	close2;
-	cloakonnpc "Chamberlain Bell#ep16_03", getcharid(0);
+	cloakonnpcself( "Chamberlain Bell#ep16_03" );
 	end;
 }
 
@@ -454,7 +432,7 @@ prt_cas_q,26,30,3	script	Chamberlain Bell#ep16_main	4_M_RUSMAN1,{
 		mes "By the way, the Court Mage has visited just before.";
 		mes "The Court Magician will be back soon after visiting other families.";
 		next;
-		cloakoffnpc "Court Mage Nillem#ep16_wiz01", getcharid(0);
+		cloakoffnpcself( "Court Mage Nillem#ep16_wiz01" );
 		npctalk "Yeah! Here comes Nillem the genius mage!", "Court Mage Nillem#ep16_wiz01", bc_self;
 		sleep2 1000;
 		mes "[Belle]";
@@ -493,7 +471,7 @@ prt_cas_q,26,30,3	script	Chamberlain Bell#ep16_main	4_M_RUSMAN1,{
 		npctalk "You are back already?", "", bc_self;
 		setpcblock PCBLOCK_NPC, true;
 		sleep2 1000;
-		cloakoffnpc "Court Mage Nillem#ep16_wiz01", getcharid(0);
+		cloakoffnpcself( "Court Mage Nillem#ep16_wiz01" );
 		npctalk "Oh! Here you are!", "Court Mage Nillem#ep16_wiz01", bc_self;
 		sleep2 500;
 		npctalk "Eh?", "", bc_self;
@@ -600,7 +578,7 @@ prt_cas_q,26,30,3	script	Chamberlain Bell#ep16_main	4_M_RUSMAN1,{
 		mes "Court Mage Nillem opened the door and left right away.";
 		mes "Saying, 'Where are you?' " + strcharinfo(0) + " The magician must be looking for you.";
 		close2;
-		cloakoffnpc "Court Mage Nillem#ep16_wiz01", getcharid(0);
+		cloakoffnpcself( "Court Mage Nillem#ep16_wiz01" );
 		npctalk "There you are!", "Court Mage Nillem#ep16_wiz01", bc_self;
 		setpcblock PCBLOCK_NPC, true;
 		sleep2 500;
@@ -620,7 +598,7 @@ prt_cas_q,26,30,3	script	Chamberlain Bell#ep16_main	4_M_RUSMAN1,{
 			close2;
 			setpcblock PCBLOCK_NPC, true;
 			sleep2 500;
-			cloakoffnpc "Court Mage Nillem#ep16_wiz01", getcharid(0);
+			cloakoffnpcself( "Court Mage Nillem#ep16_wiz01" );
 			sleep2 500;
 			if (ep16_royal < 24) {
 				npctalk "Thank you for using the million-call ticket today!", "Court Mage Nillem#ep16_wiz01", bc_self;
@@ -691,7 +669,7 @@ prt_cas_q,26,30,3	script	Chamberlain Bell#ep16_main	4_M_RUSMAN1,{
 				setpcblock PCBLOCK_NPC, true;
 				sleep2 500;
 				setpcblock PCBLOCK_NPC, false;
-				cloakoffnpc "Kafra Employee#ep16_s01", getcharid(0);
+				cloakoffnpcself( "Kafra Employee#ep16_s01" );
 				npctalk "Kafra Service.", "Kafra Employee#ep16_s01", bc_self;
 				end;
 			case 2:
@@ -702,15 +680,15 @@ prt_cas_q,26,30,3	script	Chamberlain Bell#ep16_main	4_M_RUSMAN1,{
 				setpcblock PCBLOCK_NPC, true;
 				sleep2 500;
 				setpcblock PCBLOCK_NPC, false;
-				cloakoffnpc "Giant Beast Manager#ep16_s02", getcharid(0);
+				cloakoffnpcself( "Giant Beast Manager#ep16_s02" );
 				npctalk "I am at your service.", "Giant Beast Manager#ep16_s02", bc_self;
 				end;
 			case 3:
 				mes "[Belle]";
 				mes "I see.";
 				close2;
-				cloakonnpc "Kafra Employee#ep16_s01", getcharid(0);
-				cloakonnpc "Giant Beast Manager#ep16_s02", getcharid(0);
+				cloakonnpcself( "Kafra Employee#ep16_s01" );
+				cloakonnpcself( "Giant Beast Manager#ep16_s02" );
 				end;
 			}
 		}
@@ -734,7 +712,7 @@ prt_cas_q,29,30,3	script	Giant Beast Manager#ep16_s02	8W_SOLDIER,{
 		mes "[Giant Beast Manager]";
 		mes "I see. Then, good bye.";
 		close2;
-		cloakonnpc "Giant Beast Manager#ep16_s02", getcharid(0);
+		cloakonnpcself( "Giant Beast Manager#ep16_s02" );
 		end;
 	}
 	if (getskilllv("KN_RIDING") < 1) {
@@ -834,7 +812,7 @@ prt_cas_q,28,30,3	script	Kafra Employee#ep16_s01	4_F_KAFRA2,{
 		mes "Thank you for using Kafra Service as always.";
 		close2;
 		cutin "",255;
-		cloakonnpc "Kafra Employee#ep16_s01", getcharid(0);
+		cloakonnpcself( "Kafra Employee#ep16_s01" );
 		end;
 	}
 	end;
@@ -942,8 +920,8 @@ OnTouch:
 	if (ep16_royal == 3) {
 		mes "I hear voices from somewhere.";
 		sleep2 2000;
-		cloakoffnpc "Mysterious Guest#ep16_01", getcharid(0);
-		cloakoffnpc "Chamberlain#ep16_01", getcharid(0);
+		cloakoffnpcself( "Mysterious Guest#ep16_01" );
+		cloakoffnpcself( "Chamberlain#ep16_01" );
 		npctalk "The story you just have told must be true, right?", "Mysterious Guest#ep16_01", bc_self;
 		sleep2 3000;
 		npctalk "Sure. It will meet the condition you are looking for just right.", "Chamberlain#ep16_01", bc_self;
@@ -960,11 +938,11 @@ OnTouch:
 		sleep2 3000;
 		npctalk "Right. I'll see you later. Don't you dare disappoint me.", "Mysterious Guest#ep16_01", bc_self;
 		sleep2 3000;
-		cloakonnpc "Mysterious Guest#ep16_01", getcharid(0);
+		cloakonnpcself( "Mysterious Guest#ep16_01" );
 		sleep2 1000;
 		npctalk "What a bossy pants...", "Chamberlain#ep16_01", bc_self;
 		sleep2 1000;
-		cloakonnpc "Chamberlain#ep16_01", getcharid(0);
+		cloakonnpcself( "Chamberlain#ep16_01" );
 		next;
 		mes "I happen to eavesdrop on a fishy conversation.";
 		ep16_royal = 4;
@@ -975,6 +953,8 @@ OnTouch:
 OnInit:
 	cloakonnpc "Mysterious Guest#ep16_01";
 	cloakonnpc "Chamberlain#ep16_01";
+
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(7687) == 1" );
 	end;
 }
 prt_cas,179,155,6	script	Mysterious Guest#ep16_01	4_LGTSCIENCE,{ end; }
@@ -1042,7 +1022,7 @@ function	script	F_banquet_main_4_spica	{
 	mes "Oh, you are right? Nyhill! This way!";
 	npctalk "Nyhill?", "Spica Nerius#ep16_02", bc_self;
 	next;
-	cloakoffnpc "Nyhill M. Heine#ep16_02", .@char_id;
+	cloakoffnpcself( "Nyhill M. Heine#ep16_02" );
 	cutin "ep16_nihi_miseria_heine01",2;
 	mes "[Nyhill]";
 	mes "You don't have to scream like that, Skia.";
@@ -1082,7 +1062,7 @@ function	script	F_banquet_main_4_spica	{
 	next;
 	npctalk "You must have done something wrong, right?", "Spica Nerius#ep16_02", bc_self;
 	sleep2 1000;
-	cloakoffnpc "Violeta#ep16_02", .@char_id;
+	cloakoffnpcself( "Violeta#ep16_02" );
 	npctalk "I am not surprised since it was Mijeria who had nothing!", "Violeta#ep16_02", bc_self;
 	cutin "",255;
 	mes "[Drunk Woman]";
@@ -1140,7 +1120,7 @@ function	script	F_banquet_main_4_spica	{
 	mes "Well, I'll get back.";
 	mes "Since things have turned out this way, you better go to join the Nerius family, then! He!";
 	next;
-	cloakonnpc "Violeta#ep16_02", .@char_id;
+	cloakonnpcself( "Violeta#ep16_02" );
 	cutin "ep16_skia_nerius01",0;
 	mes "[Skia]";
 	mes "How does the story go that way?";
@@ -1168,7 +1148,7 @@ function	script	F_banquet_main_4_spica	{
 	cutin "",255;
 	mes "[Nyhill]";
 	mes "Skia, it is the same for you. You sometimes have to become a shadow yourself.";
-	cloakoffnpc "Royal Chamberlain#ep16_02", .@char_id;
+	cloakoffnpcself( "Royal Chamberlain#ep16_02" );
 	npctalk "Light champagne. Would you like some?", "Royal Chamberlain#ep16_02", bc_self;
 	next;
 	npctalk "Thanks.", "Nyhill M. Heine#ep16_02", bc_self;
@@ -1177,7 +1157,7 @@ function	script	F_banquet_main_4_spica	{
 	mes "[Spica]";
 	mes "However, I didn't know you have been treated like that by the members of your own family.";
 	next;
-	cloakonnpc "Royal Chamberlain#ep16_02", .@char_id;
+	cloakonnpcself( "Royal Chamberlain#ep16_02" );
 	npctalk ".....", "Nyhill M. Heine#ep16_02", bc_self;
 	cutin "ep16_nihi_miseria_heine04",2;
 	mes "[Nyhill]";
@@ -1196,7 +1176,7 @@ function	script	F_banquet_main_4_spica	{
 	npctalk "It was fun!", "Skia Nerius#ep16_02", bc_self;
 	npctalk "...Which part of it was fun...?", "Crux Findel#ep16_02", bc_self;
 	next;
-	cloakonnpc "Nyhill M. Heine#ep16_02", .@char_id;
+	cloakonnpcself( "Nyhill M. Heine#ep16_02" );
 	cutin "ep16_spica_nerius01",2;
 	mes "[Spica]";
 	mes "...Hum...";
@@ -1255,8 +1235,8 @@ function	script	F_banquet_main_4_spica	{
 	sleep2 1000;
 	npctalk "Yes, my lady.", "Crux Findel#ep16_02", bc_self;
 	next;
-	cloakonnpc "Spica Nerius#ep16_02", .@char_id;
-	cloakonnpc "Crux Findel#ep16_02", .@char_id;
+	cloakonnpcself( "Spica Nerius#ep16_02" );
+	cloakonnpcself( "Crux Findel#ep16_02" );
 	npctalk "How cold-hearted...", "Skia Nerius#ep16_02", bc_self;
 	mes "[Skia]";
 	mes "Well, hero?";
@@ -1453,8 +1433,8 @@ OnTouch:
 		unittalk getcharid(3), "" + .@name$ + " : ...Hum? Who's coming?", bc_self;
 		setpcblock PCBLOCK_NPC, true;
 		sleep2 2000;
-		cloakoffnpc "#ep16_7689_01", .@char_id;
-		cloakoffnpc "#ep16_7689_02", .@char_id;
+		cloakoffnpcself( "#ep16_7689_01" );
+		cloakoffnpcself( "#ep16_7689_02" );
 		npctalk "How did it go?", "#ep16_7689_02", bc_self;
 		sleep2 2000;
 		npctalk "Hum... Not as much as I have wanted, but I seem to have a clue now.", "#ep16_7689_01", bc_self;
@@ -1473,9 +1453,9 @@ OnTouch:
 		sleep2 3000;
 		npctalk "Then, let's get prepared for the big event.", "#ep16_7689_01", bc_self;
 		sleep2 1000;
-		cloakonnpc "#ep16_7689_01", .@char_id;
-		cloakonnpc "#ep16_7689_02", .@char_id;
-		cloakoffnpc "Skia Nerius#ep16_7689", .@char_id;
+		cloakonnpcself( "#ep16_7689_01" );
+		cloakonnpcself( "#ep16_7689_02" );
+		cloakoffnpcself( "Skia Nerius#ep16_7689" );
 		npctalk "Did you find Nyhill?", "Skia Nerius#ep16_7689", bc_self;
 		sleep2 1000;
 		unittalk getcharid(3), "" + .@name$ + " : What the!", bc_self;
@@ -1494,13 +1474,15 @@ OnTouch:
 		}
 		sleep2 3000;
 		setpcblock PCBLOCK_NPC, false;
-		cloakonnpc "Skia Nerius#ep16_7689", .@char_id;
+		cloakonnpcself( "Skia Nerius#ep16_7689" );
 	}
 	end;
 OnInit:
 	cloakonnpc "Skia Nerius#ep16_7689";
 	cloakonnpc "#ep16_7689_02";
 	cloakonnpc "#ep16_7689_01";
+
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(7690) == 1" );
 	end;
 }
 prt_cas,186,163,3	script	Skia Nerius#ep16_7689	4_EP16_SKIA,{ end; }
@@ -1560,7 +1542,7 @@ prt_cas,25,35,5	script	Skia Nerius#ep16_7690	4_EP16_SKIA,{
 		mes "[Nyhill]";
 		mes "Well, then. Please excuse me.";
 		next;
-		cloakonnpc "Unstable Nyhill#ep16_7690", getcharid(0);
+		cloakonnpcself( "Unstable Nyhill#ep16_7690" );
 		cutin "ep16_skia_nerius03",0;
 		mes "[Skia]";
 		mes "Whoa! He is fast.";
@@ -1588,8 +1570,8 @@ prt_cas,27,43,0	script	#ep16_evt_7690	HIDDEN_WARP_NPC,1,1,{
 	end;
 OnTouch:
 	if (ep16_royal == 6) {
-		cloakoffnpc "Unstable Nyhill#ep16_7690", getcharid(0);
-		cloakoffnpc "Skia Nerius#ep16_7690", getcharid(0);
+		cloakoffnpcself( "Unstable Nyhill#ep16_7690" );
+		cloakoffnpcself( "Skia Nerius#ep16_7690" );
 		setpcblock PCBLOCK_NPC, true;
 		sleep2 1000;
 		setpcblock PCBLOCK_NPC, false;
@@ -1680,7 +1662,7 @@ prt_lib,91,85,3	script	Mage Nillem#ep16_warp	4_M_JOB_WIZARD,{
 		mes "[Nillem]";
 		mes "Whoa! The gate to the next area has been activated!";
 		mes "Well, let's get in there!";
-		cloakoffnpc "Room of Consciousness#evt_gate01", getcharid(0);
+		cloakoffnpcself( "Room of Consciousness#evt_gate01" );
 		close;
 	case 9:
 		mes "[Nillem]";
@@ -1795,7 +1777,7 @@ prt_lib,91,85,3	script	Mage Nillem#ep16_warp	4_M_JOB_WIZARD,{
 		mes "I wonder what we are going to see this time!";
 		setquest 7700;// Once More!
 		erasequest 7699;// To the Past
-		cloakoffnpc "Dimension Warper MkII#ep16_lib", getcharid(0);
+		cloakoffnpcself( "Dimension Warper MkII#ep16_lib" );
 		close;
 	case 19:
 	case 20:
@@ -1804,7 +1786,7 @@ prt_lib,91,85,3	script	Mage Nillem#ep16_warp	4_M_JOB_WIZARD,{
 		mes "We haven't solved all the secrets yet!";
 		mes "Well, we have to go back!";
 		next;
-		cloakoffnpc "Dimension Warper MkII#ep16_lib", getcharid(0);
+		cloakoffnpcself( "Dimension Warper MkII#ep16_lib" );
 		mes "[Nillem]";
 		mes "Let's finish it off this time!";
 		close;
@@ -1813,7 +1795,7 @@ prt_lib,91,85,3	script	Mage Nillem#ep16_warp	4_M_JOB_WIZARD,{
 		mes "What are you doing?";
 		mes "Go grill the librarian to dig out the truth!";
 		next;
-		cloakoffnpc "Kronecker G. Heine#ep16_01_lib01", getcharid(0);
+		cloakoffnpcself( "Kronecker G. Heine#ep16_01_lib01" );
 		mes "[Nillem]";
 		mes "What did we go through all the trouble for?";
 		mes "Look, there is Archduke Grantz.";
@@ -1839,7 +1821,7 @@ prt_lib,91,85,3	script	Mage Nillem#ep16_warp	4_M_JOB_WIZARD,{
 		mes "What would be waiting for us today?";
 		mes "I guess this would end up a failure again, though.";
 		mes "Hahaha-";
-		cloakoffnpc "Dimension Warper MkII#ep16_lib", getcharid(0);
+		cloakoffnpcself( "Dimension Warper MkII#ep16_lib" );
 		close;
 	}
 }
@@ -1919,11 +1901,11 @@ prt_lib,88,80,0	script	#ep16_lib_evt01	HIDDEN_WARP_NPC,1,1,{
 	end;
 OnTouch:
 	if (ep16_royal == 9) {
-		cloakoffnpc "Ian Walther#ep16_lib01", getcharid(0);
-		cloakoffnpc "Levuiere Wigner#ep16_lib01", getcharid(0);
-		cloakoffnpc "Maximilian Roegenburg#ep16_lib01", getcharid(0);
-		cloakoffnpc "Kronecker G. Heine#ep16_01_lib01", getcharid(0);
-		cloakoffnpc "Nyhill M. Heine#ep16_lib01", getcharid(0);
+		cloakoffnpcself( "Ian Walther#ep16_lib01" );
+		cloakoffnpcself( "Levuiere Wigner#ep16_lib01" );
+		cloakoffnpcself( "Maximilian Roegenburg#ep16_lib01" );
+		cloakoffnpcself( "Kronecker G. Heine#ep16_01_lib01" );
+		cloakoffnpcself( "Nyhill M. Heine#ep16_lib01" );
 		setpcblock PCBLOCK_NPC, true;
 		sleep2 2000;
 		npctalk "You are here at last.", "Ian Walther#ep16_lib01", bc_self;
@@ -1932,7 +1914,7 @@ OnTouch:
 		npctalk "I have something to tell you, special guest.", "Ian Walther#ep16_lib01", bc_self;
 	}
 	if (ep16_royal == 22)
-		cloakoffnpc "Kronecker G. Heine#ep16_01_lib01", getcharid(0);
+		cloakoffnpcself( "Kronecker G. Heine#ep16_01_lib01" );
 	end;
 OnInit:
 	cloakonnpc "Ian Walther#ep16_lib01";
@@ -2144,8 +2126,8 @@ prt_lib,85,82,5	script	Ian Walther#ep16_lib01	1_M_JOBTESTER,{
 		mes "[Nyhill]";
 		mes "That must be...";
 		next;
-		cloakonnpc "Kronecker G. Heine#ep16_01_lib01", .@char_id;
-		cloakoffnpc "Kronecker G. Heine#ep16_01_lib02", .@char_id;
+		cloakonnpcself( "Kronecker G. Heine#ep16_01_lib01" );
+		cloakoffnpcself( "Kronecker G. Heine#ep16_01_lib02" );
 		mes "[Kronecker]";
 		mes "How troublesome.";
 		mes "Have you seen this document before?";
@@ -2314,16 +2296,16 @@ prt_lib,85,82,5	script	Ian Walther#ep16_lib01	1_M_JOBTESTER,{
 		sleep2 3000;
 		npctalk "Is that so? Well, then. Please excuse me.", "Ian Walther#ep16_lib01", bc_self;
 		sleep2 3000;
-		cloakonnpc "Ian Walther#ep16_lib01", .@char_id;
+		cloakonnpcself( "Ian Walther#ep16_lib01" );
 		sleep2 500;
-		cloakonnpc "Levuiere Wigner#ep16_lib01", .@char_id;
-		cloakonnpc "Maximilian Roegenburg#ep16_lib01", .@char_id;
+		cloakonnpcself( "Levuiere Wigner#ep16_lib01" );
+		cloakonnpcself( "Maximilian Roegenburg#ep16_lib01" );
 		sleep2 500;
 		npctalk "Nyhill, come with me.", "Kronecker G. Heine#ep16_01_lib02", bc_self;
 		sleep2 3000;
 		setpcblock PCBLOCK_NPC, false;
-		cloakonnpc "Kronecker G. Heine#ep16_01_lib02", .@char_id;
-		cloakonnpc "Nyhill M. Heine#ep16_lib01", .@char_id;
+		cloakonnpcself( "Kronecker G. Heine#ep16_01_lib02" );
+		cloakonnpcself( "Nyhill M. Heine#ep16_lib01" );
 		end;
 	}
 	mes "[Ian Walther]";
@@ -2336,16 +2318,16 @@ prt_lib,85,82,5	script	Ian Walther#ep16_lib01	1_M_JOBTESTER,{
 	sleep2 3000;
 	npctalk "Is that so? Well, then. Please excuse me.", "Ian Walther#ep16_lib01", bc_self;
 	sleep2 3000;
-	cloakonnpc "Ian Walther#ep16_lib01", .@char_id;
+	cloakonnpcself( "Ian Walther#ep16_lib01" );
 	sleep2 500;
-	cloakonnpc "Levuiere Wigner#ep16_lib01", .@char_id;
-	cloakonnpc "Maximilian Roegenburg#ep16_lib01", .@char_id;
+	cloakonnpcself( "Levuiere Wigner#ep16_lib01" );
+	cloakonnpcself( "Maximilian Roegenburg#ep16_lib01" );
 	sleep2 500;
 	npctalk "Nyhill, come with me.", "Kronecker G. Heine#ep16_01_lib02", bc_self;
 	sleep2 3000;
 	setpcblock PCBLOCK_NPC, false;
-	cloakonnpc "Kronecker G. Heine#ep16_01_lib02", .@char_id;
-	cloakonnpc "Nyhill M. Heine#ep16_lib01", .@char_id;
+	cloakonnpcself( "Kronecker G. Heine#ep16_01_lib02" );
+	cloakonnpcself( "Nyhill M. Heine#ep16_lib01" );
 	end;
 }
 prt_lib,88,83,4	duplicate(Ian Walther#ep16_lib01)	Levuiere Wigner#ep16_lib01	4_EP16_LOUVIERE
@@ -2404,7 +2386,7 @@ prt_lib_q,91,85,3	script	Nillem#ep16_lib_q	4_M_JOB_WIZARD,{
 		npctalk "Humph-!", bc_self;
 		specialeffect EF_BEGINSPELL;
 		next;
-		cloakoffnpc "Swaying Space#evt_gate02", getcharid(0);
+		cloakoffnpcself( "Swaying Space#evt_gate02" );
 		mes "[Nillem]";
 		mes "Connect the spaces by force!";
 		mes "Well, let's see what has happened here.";
@@ -2416,7 +2398,7 @@ prt_lib_q,91,85,3	script	Nillem#ep16_lib_q	4_M_JOB_WIZARD,{
 		close;
 	}
 	if (ep16_royal == 19) {
-		cloakoffnpc "Swaying Space#evt_gate02", getcharid(0);
+		cloakoffnpcself( "Swaying Space#evt_gate02" );
 		if (getcharid(1) == 0 || is_party_leader() == false) {
 			mes "^4d4dffIt is an event which proceeds as a memorial.";
 			mes "Only the party leader can proceed with a memorial event. Try again after forming a party.^000000";
@@ -2447,7 +2429,7 @@ prt_lib_q,91,85,3	script	Nillem#ep16_lib_q	4_M_JOB_WIZARD,{
 		mes "[Nillem]";
 		mes "Whoa! The gate to the next area has been activated!";
 		mes "Well, let's get in there!";
-		cloakoffnpc "Swaying Space#evt_gate02", getcharid(0);
+		cloakoffnpcself( "Swaying Space#evt_gate02" );
 		close;
 	}
 	if (ep16_royal == 20) {
@@ -2639,7 +2621,7 @@ prt_lib_q,91,85,3	script	Nillem#ep16_lib_q	4_M_JOB_WIZARD,{
 				mes "[Nillem]";
 				mes "Whoa! The gate to the next area has been activated!";
 				mes "Well, let's get in there!";
-				cloakoffnpc "Swaying Space#evt_gate02", getcharid(0);
+				cloakoffnpcself( "Swaying Space#evt_gate02" );
 				close;
 			case 2:
 				mes "[Nillem]";
@@ -2680,7 +2662,7 @@ prt_lib_q,88,90,1	script	Swaying Space#evt_gate02	4_ENERGY_RED,{
 	if (checkquest(7706,PLAYTIME) > 0 || checkquest(7705,HUNTING) > 1) {
 		mes "The uneasy flow of magical power can be sensed near the twisted space.";
 		mes "The gap connected by force disappeared after serving its duty.";
-		cloakonnpc "Swaying Space#evt_gate02", getcharid(0);
+		cloakonnpcself( "Swaying Space#evt_gate02" );
 		close;
 	}
 	if (getcharid(1) == 0 || is_party_leader() == false) {// solo instance
@@ -3931,18 +3913,18 @@ prt_cas_q,30,128,0	script	#ep16_evt_neriusroom	HIDDEN_WARP_NPC,2,2,{
 	end;
 OnTouch:
 	if (ep16_royal == 15) {
-		cloakonnpc "Bodyguard Crux#ep16_room01", getcharid(0);
-		cloakonnpc "Spica Nerius#ep16_room01", getcharid(0);
-		cloakonnpc "Skia Nerius#ep16_room01", getcharid(0);
-		cloakoffnpc "Spica Nerius#ep16_room02", getcharid(0);
+		cloakonnpcself( "Bodyguard Crux#ep16_room01" );
+		cloakonnpcself( "Spica Nerius#ep16_room01" );
+		cloakonnpcself( "Skia Nerius#ep16_room01" );
+		cloakoffnpcself( "Spica Nerius#ep16_room02" );
 	}
 	else if (ep16_royal > 2 && ep16_royal < 7) {
-		cloakonnpc "Bodyguard Crux#ep16_room01", getcharid(0);
-		cloakonnpc "Spica Nerius#ep16_room01", getcharid(0);
-		cloakonnpc "Skia Nerius#ep16_room01", getcharid(0);
+		cloakonnpcself( "Bodyguard Crux#ep16_room01" );
+		cloakonnpcself( "Spica Nerius#ep16_room01" );
+		cloakonnpcself( "Skia Nerius#ep16_room01" );
 	}
 	else if (ep16_royal > 17)
-		cloakonnpc "Skia Nerius#ep16_room01", getcharid(0);
+		cloakonnpcself( "Skia Nerius#ep16_room01" );
 	end;
 }
 
@@ -4075,7 +4057,7 @@ prt_cas_q,20,139,3	script	Spica Nerius#ep16_room01	4_EP16_SPICA,{
 				next;
 				mes "[Spica]";
 				mes "" + strcharinfo(0) + ", why don't you go back to your room and wait for the message?";
-				close;
+				close3;
 			}
 			mes "[Spica]";
 			mes "Why don't you go visit other families if you have not visited them all?";
@@ -4123,7 +4105,7 @@ prt_cas_q,20,139,3	script	Spica Nerius#ep16_room01	4_EP16_SPICA,{
 			next;
 			mes "[Spica]";
 			mes "I wonder if the old folks would hear me out though.";
-			close;
+			close3;
 		}
 		mes "[Spica]";
 		mes "Skia told me something similar to that.";
@@ -4231,7 +4213,7 @@ prt_cas_q,18,136,3	script	Spica Nerius#ep16_room02	4_EP16_SPICA,{
 		mes "I invited you for no special reason.";
 		mes "Since they keep calling for meetings to discuss what has happened during the ritual.";
 		next;
-		cloakoffnpc "Nyhill M. Heine#ep16_nroom01", getcharid(0);
+		cloakoffnpcself( "Nyhill M. Heine#ep16_nroom01" );
 		mes "[Spica]";
 		mes "There comes lord of the Heine family.";
 		mes "You seem to move around rather freely considering that you are under confinement.";
@@ -4435,7 +4417,7 @@ prt_cas_q,20,184,3	script	Ian Walther#ep16wal	1_M_JOBTESTER,5,5,{
 
 S_Mysterious:
 	if (isbegin_quest(14516) != 2) {
-		cloakoffnpc "Mysterious Person#ep16wal", getcharid(0);
+		cloakoffnpcself( "Mysterious Person#ep16wal" );
 		mes "[Man from the Richard]";
 		mes "Long time no see, Ian.";
 		next;
@@ -4498,7 +4480,7 @@ S_Mysterious:
 		mes "[Man from the Richard]";
 		mes "Well, I cannot be absent for so long anyway. Let me head back now.";
 		next;
-		cloakonnpc "Mysterious Person#ep16wal", getcharid(0);
+		cloakonnpcself( "Mysterious Person#ep16wal" );
 		mes "[Ian]";
 		mes "Argh... How dare...!";
 		mes "I shouldn't have worked with him in the first place. I lost my poor nephew for nothing.";
@@ -4647,7 +4629,7 @@ prt_cas_q,14,184,5	script	Isenhonor Walther#ep16wal	4_M_1STPRIN1,{
 		mes "Adventurer, how did your meeting with the Guardian Knight in Alberta go? Not that I expect too much...";
 		next;
 		mes "[Isenhonor]";
-		mes "However, still, I have hoped to hear a good news from you...";
+		mes "However, still, I have hoped to hear good news from you...";
 		close;
 	}
 	if (ep16_wal == 6) {
@@ -5266,17 +5248,17 @@ prt_cas_q,30,78,0	script	#ep16_heine_evt01	HIDDEN_WARP_NPC,1,1,{
 	end;
 OnTouch:
 	if (ep16_royal == 2 && isbegin_quest(7683) == 0) {
-		cloakoffnpc "Nyhill M. Heine#ep16_01", getcharid(0);
-		cloakoffnpc "Peter Heine#ep16_01", getcharid(0);
-		cloakonnpc "Peter Heine#ep16_02", getcharid(0);
+		cloakoffnpcself( "Nyhill M. Heine#ep16_01" );
+		cloakoffnpcself( "Peter Heine#ep16_01" );
+		cloakonnpcself( "Peter Heine#ep16_02" );
 	}
 	else if (ep16_royal < 10) {
-		cloakoffnpc "Peter Heine#ep16_01", getcharid(0);
-		cloakonnpc "Peter Heine#ep16_02", getcharid(0);
+		cloakoffnpcself( "Peter Heine#ep16_01" );
+		cloakonnpcself( "Peter Heine#ep16_02" );
 	}
 	else if (ep16_royal > 9) {
-		cloakonnpc "Peter Heine#ep16_01", getcharid(0);
-		cloakoffnpc "Peter Heine#ep16_02", getcharid(0);
+		cloakonnpcself( "Peter Heine#ep16_01" );
+		cloakoffnpcself( "Peter Heine#ep16_02" );
 	}
 	end;
 }
@@ -5807,7 +5789,7 @@ OnTouch:
 		sleep2 3000;
 		npctalk "However, I have to bear all the responsibilities. I can't take it anymore.", "Nyhill M. Heine#ep16_0", bc_self;
 		sleep2 1000;
-		cloakonnpc "Nyhill M. Heine#ep16_01", getcharid(0);
+		cloakonnpcself( "Nyhill M. Heine#ep16_01" );
 		sleep2 500;
 		unittalk getcharid(3), "" + strcharinfo(0) + " : Oh, he left.", bc_self;
 		sleep2 1000;
@@ -5829,8 +5811,8 @@ prt_cas_q,141,36,0	script	#ep16_evt_7686	HIDDEN_WARP_NPC,3,1,{
 	end;
 OnTouch:
 	if (isbegin_quest(7683) == 2 && isbegin_quest(7686) == 0) {
-		cloakoffnpc "Skia#ep16_7686", getcharid(0);
-		cloakoffnpc "Nyhill#ep16_7686", getcharid(0);
+		cloakoffnpcself( "Skia#ep16_7686" );
+		cloakoffnpcself( "Nyhill#ep16_7686" );
 		setpcblock PCBLOCK_NPC, true;
 		sleep2 2000;
 		npctalk "Are you the shadow princess whom people talk about?", "Nyhill#ep16_7686", bc_self;
@@ -5879,12 +5861,12 @@ OnTouch:
 		sleep2 3000;
 		npctalk "Please excuse me now.", "Skia#ep16_7686", bc_self;
 		sleep2 1000;
-		cloakonnpc "Skia#ep16_7686", getcharid(0);
+		cloakonnpcself( "Skia#ep16_7686" );
 		sleep2 3000;
 		npctalk "...Skia... There is an interesting lady in the Nerius family.", "Nyhill#ep16_7686", bc_self;
 		sleep2 3000;
 		setpcblock PCBLOCK_NPC, false;
-		cloakonnpc "Nyhill#ep16_7686", getcharid(0);
+		cloakonnpcself( "Nyhill#ep16_7686" );
 		if (isbegin_quest(7686) == 0) {
 			setquest 7686;// Nyhill and Skia
 			completequest 7686;// Nyhill and Skia
@@ -7102,7 +7084,7 @@ prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
 		mes "[Wolf]";
 		mes "Agnes, don't say that. it is not appropriate. We are telling the adventurer of the story of the Roegenburg...";
 		next;
-		cloakoffnpc "Myer Roegenburg#ep16lug", getcharid(0);
+		cloakoffnpcself( "Myer Roegenburg#ep16lug" );
 		cutin "16mye_nor",1;
 		mes "[Myer]";
 		mes "Now, will my prince come with me?";
@@ -7159,7 +7141,7 @@ prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
 		mes "[Myer]";
 		mes "Yes, you are right. I think I am the unwelcome guest. I'd better leave. Agnes, I'll come back later.";
 		next;
-		cloakonnpc "Myer Roegenburg#ep16lug", getcharid(0);
+		cloakonnpcself( "Myer Roegenburg#ep16lug" );
 		cutin "16agn_nor",2;
 		mes "[Agnes]";
 		mes "Oh my god, I forgot. I have to make preparations!";
@@ -7229,7 +7211,7 @@ prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
 			mes "You just go to the ^0000cdWigner and bring a thing from Isaac^000000.";
 			close3;
 		}
-		cloakoffnpc "Myer Roegenburg#ep16lug", getcharid(0);
+		cloakoffnpcself( "Myer Roegenburg#ep16lug" );
 		cutin "16wol_nor",2;
 		mes "[Wolf]";
 		mes "Dear adventurer, did you bring the thing? Oh, you have brought it. Thank you very much.";
@@ -7560,7 +7542,7 @@ prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
 		mes "[Myer]";
 		mes "...Excuse me.";
 		next;
-		cloakonnpc "Myer Roegenburg#ep16lug", getcharid(0);
+		cloakonnpcself( "Myer Roegenburg#ep16lug" );
 		cutin "16agn_ang",2;
 		mes "[Agnes]";
 		mes "Myer! where are you going? Are going to leave the family again?";
@@ -7589,12 +7571,12 @@ prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
 		mes "......";
 		mes "Excuse me too.";
 		next;
-		cloakonnpc "Helmut Roegenburg#ep16lug", getcharid(0);
+		cloakonnpcself( "Helmut Roegenburg#ep16lug" );
 		cutin "",255;
 		mes "[Kalbern]";
 		mes "Lord Helmut! where are you going?";
 		next;
-		cloakonnpc "Kalbern#ep16lug", getcharid(0);
+		cloakonnpcself( "Kalbern#ep16lug" );
 		cutin "16wol_nor",2;
 		mes "[Wolf]";
 		mes "......";
@@ -7827,13 +7809,13 @@ prt_cas_q,90,184,7	script	#ep16lug004	HIDDEN_NPC,5,5,{
 	end;
 OnTouch:
 	if (ep16_lug < 3)
-		cloakonnpc "Myer Roegenburg#ep16lug", getcharid(0);
+		cloakonnpcself( "Myer Roegenburg#ep16lug" );
 	else if (ep16_lug > 2 && ep16_lug < 7)
-		cloakoffnpc "Myer Roegenburg#ep16lug", getcharid(0);
+		cloakoffnpcself( "Myer Roegenburg#ep16lug" );
 	else if (ep16_lug > 6) {
-		cloakonnpc "Helmut Roegenburg#ep16lug", getcharid(0);
-		cloakonnpc "Myer Roegenburg#ep16lug", getcharid(0);
-		cloakonnpc "Kalbern#ep16lug", getcharid(0);
+		cloakonnpcself( "Helmut Roegenburg#ep16lug" );
+		cloakonnpcself( "Myer Roegenburg#ep16lug" );
+		cloakonnpcself( "Kalbern#ep16lug" );
 	}
 	end;
 }
@@ -7867,13 +7849,13 @@ prt_cas_q,74,189,5	script	#ep16lug000	HIDDEN_NPC,5,5,{
 	end;
 OnTouch:
 	if (ep16_lug < 3)
-		cloakonnpc "Myer Roegenburg#ep16lug", getcharid(0);
+		cloakonnpcself( "Myer Roegenburg#ep16lug" );
 	else if (ep16_lug > 2 && ep16_lug < 7)
-		cloakoffnpc "Myer Roegenburg#ep16lug", getcharid(0);
+		cloakoffnpcself( "Myer Roegenburg#ep16lug" );
 	else if (ep16_lug > 6) {
-		cloakonnpc "Helmut Roegenburg#ep16lug", getcharid(0);
-		cloakonnpc "Myer Roegenburg#ep16lug", getcharid(0);
-		cloakonnpc "Kalbern#ep16lug", getcharid(0);
+		cloakonnpcself( "Helmut Roegenburg#ep16lug" );
+		cloakonnpcself( "Myer Roegenburg#ep16lug" );
+		cloakonnpcself( "Kalbern#ep16lug" );
 	}
 	end;
 }
@@ -8182,7 +8164,7 @@ function	script	F_kids_roegenburg_quest	{
 		mes "[Harriet]";
 		mes "Ah, there he comes!, Jonathan! We have a guest.";
 		next;
-		cloakoffnpc "Ordinary Man#ep16lug02", getcharid(0);
+		cloakoffnpcself( "Ordinary Man#ep16lug02" );
 		mes "[Myer]";
 		mes "Dear adventurer. What has brought you here?";
 		next;
@@ -8435,7 +8417,7 @@ prontera,271,68,1	script	Kiddo#ep16lug02	4_M_KID1,5,5,{
 
 OnTouch:
 	if (ep16_lug >= 12)
-		cloakoffnpc "Ordinary Man#ep16lug02", getcharid(0);
+		cloakoffnpcself( "Ordinary Man#ep16lug02" );
 	end;
 }
 
@@ -8986,7 +8968,7 @@ prt_cas_q,93,74,4	script	Po Richard#EP161GAM	4_M_6THPRIN1,{
 			emotion ET_OTL;
 			mes "[Po Richard]";
 			mes "I guess the offer hasn't been attractive to you. I am sorry, but come back later when you change your mind.";
-			close;
+			close3;
 		}
 		emotion ET_OK;
 		mes "[Po Richard]";
@@ -9686,6 +9668,10 @@ OnTouch:
 		ep16_gaobs = 7;
 		close;
 	}
+	end;
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11405) == 1" );
+	end;
 }
 
 prt_cas,84,232,0	script	#ep16_1Whisper2	HIDDEN_WARP_NPC,3,3,{
@@ -9703,6 +9689,10 @@ OnTouch:
 		ep16_gaobs = 8;
 		close;
 	}
+	end;
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11406) == 1" );
+	end;
 }
 
 prt_cas,110,242,0	script	#ep16_1Whisper3	HIDDEN_WARP_NPC,3,3,{
@@ -9731,6 +9721,10 @@ OnTouch:
 		ep16_gaobs = 9;
 		close;
 	}
+	end;
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11407) == 1" );
+	end;
 }
 
 prt_cas,111,218,0	script	#ep16_1Whisper4	HIDDEN_WARP_NPC,3,3,{
@@ -9744,6 +9738,10 @@ OnTouch:
 		ep16_gaobs = 10;
 		close;
 	}
+	end;
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11408) == 1" );
+	end;
 }
 
 prt_cas,92,224,0	script	#ep16_1Whisper5	HIDDEN_WARP_NPC,3,3,{
@@ -9760,6 +9758,10 @@ OnTouch:
 		ep16_gaobs = 11;
 		close;
 	}
+	end;
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11409) == 1" );
+	end;
 }
 
 prt_cas,77,223,0	script	#ep16_1Whisper6	HIDDEN_WARP_NPC,3,3,{
@@ -9784,6 +9786,10 @@ OnTouch:
 		ep16_gaobs = 12;
 		close;
 	}
+	end;
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11410) == 1" );
+	end;
 }
 
 prt_cas,93,226,0	script	#ep16_1Whisper7	HIDDEN_WARP_NPC,3,3,{
@@ -9801,6 +9807,10 @@ OnTouch:
 		ep16_gaobs = 13;
 		close;
 	}
+	end;
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11411) == 1" );
+	end;
 }
 
 // At room entrance
@@ -10037,8 +10047,8 @@ prt_cas_q,82,21,1	script	Levuiere Wigner#ep16wig	4_EP16_LOUVIERE,{
 		mes "Please visit our manor too if you have the time, dear adventurer. You are always welcome.";
 		mes "Where is ^0000cdJurgen^000000 now?";
 		next;
-		cloakoffnpc "Jurgen Wigner#ep16wig00", getcharid(0);
-		cloakonnpc "Jurgen Wigner#ep16wig", getcharid(0);
+		cloakoffnpcself( "Jurgen Wigner#ep16wig00" );
+		cloakonnpcself( "Jurgen Wigner#ep16wig" );
 		cutin "16jur_nor",0;
 		mes "[Jurgen]";
 		mes "Are you looking for me?";
@@ -10060,8 +10070,8 @@ prt_cas_q,82,21,1	script	Levuiere Wigner#ep16wig	4_EP16_LOUVIERE,{
 		mes "[Jurgen]";
 		mes "Then, please excuse me.";
 		next;
-		cloakonnpc "Jurgen Wigner#ep16wig00", getcharid(0);
-		cloakoffnpc "Jurgen Wigner#ep16wig", getcharid(0);
+		cloakonnpcself( "Jurgen Wigner#ep16wig00" );
+		cloakoffnpcself( "Jurgen Wigner#ep16wig" );
 		cutin "",255;
 		mes "[Levuiere]";
 		mes "Tut, I am worried that he lacks sociability. He would have to meet a lot of people as the heir of the house, you know. Dear adventurer, please excuse my son's discourtesy.";
@@ -10192,7 +10202,7 @@ prt_cas_q,82,21,1	script	Levuiere Wigner#ep16wig	4_EP16_LOUVIERE,{
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "You two stay here. It might be dangerous. Let me go take a look first.";
-		cloakonnpc "Isaac Wigner#ep16wig", getcharid(0);
+		cloakonnpcself( "Isaac Wigner#ep16wig" );
 		erasequest 14476;// To Levuiere and His Wife
 		setquest 14477;// What Is Going on?
 		ep16_wig = 3;
@@ -10451,7 +10461,7 @@ prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
 		else {
 			mes "Oh, there he goes again. I should get going now. Dear adventurer, I would like to see you later.";
 			next;
-			cloakonnpc "Isaac Wigner#ep16wig", getcharid(0);
+			cloakonnpcself( "Isaac Wigner#ep16wig" );
 		}
 		cutin "16kat_nor",2;
 		mes "[Katrin]";
@@ -10537,7 +10547,7 @@ prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
 		mes "[Jurgen]";
 		mes "What a nonsense! Phew... This is exactly why I have told her to open her heart to others and talk more...";
 		next;
-		cloakoffnpc "Katrin Wigner#ep16wig", getcharid(0);
+		cloakoffnpcself( "Katrin Wigner#ep16wig" );
 		cutin "16kat_nor",2;
 		mes "[Katrin]";
 		mes "Why should I do that? I don't care about the people who don't know me well anyway.";
@@ -10617,7 +10627,7 @@ prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
 		mes "[" + strcharinfo(0) + "]";
 		mes "Both of you should calm down.";
 		next;
-		cloakoffnpc "Isaac Wigner#ep16wig", getcharid(0);
+		cloakoffnpcself( "Isaac Wigner#ep16wig" );
 		cutin "16isa",1;
 		mes "[Isaac]";
 		mes "Yes. Whatever it is, you'd better calm down. I could hear you yelling at each other from the other end of the hallway.";
@@ -10690,7 +10700,7 @@ prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
 		mes "[Katrin]";
 		mes "That's all right now. I'll forget it all. You don't have to care about it either.";
 		next;
-		cloakonnpc "Katrin Wigner#ep16wig", getcharid(0);
+		cloakonnpcself( "Katrin Wigner#ep16wig" );
 		cutin "16isa",1;
 		mes "[Isaac]";
 		mes "She walks so fast. What was it all about?";
@@ -10985,7 +10995,7 @@ prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
 		mes "[Isaac]";
 		mes "I have already called her.";
 		next;
-		cloakoffnpc "Katrin Wigner#ep16wig", getcharid(0);
+		cloakoffnpcself( "Katrin Wigner#ep16wig" );
 		cutin "16kat_nor",2;
 		mes "[Katrin]";
 		mes "Why do you keep calling me? Please leave me alone for that I am not mad at you any more.";
@@ -11084,7 +11094,7 @@ prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
 			mes "Thanks to your help, we have never been better than this.";
 			mes "I've been talking to my sister much more, and..";
 			next;
-			cloakoffnpc "Maid#ep16wig01", getcharid(0);
+			cloakoffnpcself( "Maid#ep16wig01" );
 			cutin "",255;
 			mes "[Maid]";
 			mes "Excuse me.";
@@ -11135,7 +11145,7 @@ prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
 			mes "Then, I should get going.";
 			mes "I am supposed to clean the room when there is no one inside anyway. Please excuse me.";
 			next;
-			cloakonnpc "Maid#ep16wig01", getcharid(0);
+			cloakonnpcself( "Maid#ep16wig01" );
 			cutin "16jur_sim",0;
 			mes "[Jurgen]";
 			mes "You shouldn't have to... Well, she's gone...";
@@ -11608,7 +11618,7 @@ prt_cas_q,96,7,1	script	Katrin Wigner#ep16wig	4_EP16_POE,{
 		mes "Should I...";
 		mes "Then, please help me, dear adventurer. I'll go search other pleases then.";
 		next;
-		cloakonnpc "Katrin Wigner#ep16wig", getcharid(0);
+		cloakonnpcself( "Katrin Wigner#ep16wig" );
 		cutin "16jur_nor",0;
 		mes "[Jurgen]";
 		mes "Please, help her. I have heard that ^0000cdthe maids are in the kitchen^000000.";
@@ -11749,7 +11759,7 @@ prt_cas_q,94,7,7	script	Isaac Wigner#ep16wig	4_EP16_ISAAC,{
 			next;
 			mes "[Isaac]";
 			mes "Please excuse me then.";
-			cloakonnpc "Isaac Wigner#ep16wig", getcharid(0);
+			cloakonnpcself( "Isaac Wigner#ep16wig" );
 		}
 		erasequest 14496;// To Isaac
 		setquest 14497;// Delivery for Wolf
@@ -11768,7 +11778,7 @@ prt_cas_q,94,7,7	script	Isaac Wigner#ep16wig	4_EP16_ISAAC,{
 			next;
 			mes "[Isaac]";
 			mes "Please excuse me then.";
-			cloakonnpc "Isaac Wigner#ep16wig", getcharid(0);
+			cloakonnpcself( "Isaac Wigner#ep16wig" );
 		}
 		close3;
 	}
@@ -11813,7 +11823,7 @@ prt_cas_q,94,7,7	script	Isaac Wigner#ep16wig	4_EP16_ISAAC,{
 			next;
 			mes "[Isaac]";
 			mes "Please excuse me then.";
-			cloakonnpc "Isaac Wigner#ep16wig", getcharid(0);
+			cloakonnpcself( "Isaac Wigner#ep16wig" );
 		}
 		delitem 6931,1;// Secret_Documents
 		erasequest 14502;// To Isaac
@@ -11837,7 +11847,7 @@ prt_cas_q,94,7,7	script	Isaac Wigner#ep16wig	4_EP16_ISAAC,{
 			next;
 			mes "[Isaac]";
 			mes "Please excuse me then.";
-			cloakonnpc "Isaac Wigner#ep16wig", getcharid(0);
+			cloakonnpcself( "Isaac Wigner#ep16wig" );
 		}
 		close3;
 	}
@@ -11996,26 +12006,26 @@ prt_cas_q,74,21,5	script	#ep16wig003	HIDDEN_NPC,5,5,{
 	end;
 OnTouch:
 	if (ep16_wig == 2 || ep16_wig == 3) {
-		cloakoffnpc "Katrin Wigner#ep16wig", getcharid(0);
+		cloakoffnpcself( "Katrin Wigner#ep16wig" );
 		if (ep16_lug == 2 || ep16_lug == 7)
-			cloakoffnpc "Isaac Wigner#ep16wig", getcharid(0);
+			cloakoffnpcself( "Isaac Wigner#ep16wig" );
 		else
-			cloakonnpc "Isaac Wigner#ep16wig", getcharid(0);
+			cloakonnpcself( "Isaac Wigner#ep16wig" );
 	}
 	else if (ep16_wig > 3 && ep16_wig < 15) {
-		cloakonnpc "Katrin Wigner#ep16wig", getcharid(0);
+		cloakonnpcself( "Katrin Wigner#ep16wig" );
 		if (ep16_lug == 2 || ep16_lug == 7)
-			cloakoffnpc "Isaac Wigner#ep16wig", getcharid(0);
+			cloakoffnpcself( "Isaac Wigner#ep16wig" );
 		else
-			cloakonnpc "Isaac Wigner#ep16wig", getcharid(0);
+			cloakonnpcself( "Isaac Wigner#ep16wig" );
 	}
 	else if (ep16_wig == 15) {
-		cloakonnpc "Katrin Wigner#ep16wig", getcharid(0);
-		cloakoffnpc "Isaac Wigner#ep16wig", getcharid(0);
+		cloakonnpcself( "Katrin Wigner#ep16wig" );
+		cloakoffnpcself( "Isaac Wigner#ep16wig" );
 	}
 	else {
-		cloakoffnpc "Katrin Wigner#ep16wig", getcharid(0);
-		cloakoffnpc "Isaac Wigner#ep16wig", getcharid(0);
+		cloakoffnpcself( "Katrin Wigner#ep16wig" );
+		cloakoffnpcself( "Isaac Wigner#ep16wig" );
 	}
 	end;
 }
@@ -12024,26 +12034,26 @@ prt_cas_q,95,7,5	script	#ep16wig004	HIDDEN_NPC,5,5,{
 	end;
 OnTouch:
 	if (ep16_wig == 2 || ep16_wig == 3) {
-		cloakoffnpc "Katrin Wigner#ep16wig", getcharid(0);
+		cloakoffnpcself( "Katrin Wigner#ep16wig" );
 		if (ep16_lug == 2 || ep16_lug == 7)
-			cloakoffnpc "Isaac Wigner#ep16wig", getcharid(0);
+			cloakoffnpcself( "Isaac Wigner#ep16wig" );
 		else
-			cloakonnpc "Isaac Wigner#ep16wig", getcharid(0);
+			cloakonnpcself( "Isaac Wigner#ep16wig" );
 	}
 	else if (ep16_wig > 3 && ep16_wig < 15) {
-		cloakonnpc "Katrin Wigner#ep16wig", getcharid(0);
+		cloakonnpcself( "Katrin Wigner#ep16wig" );
 		if (ep16_lug == 2 || ep16_lug == 7)
-			cloakoffnpc "Isaac Wigner#ep16wig", getcharid(0);
+			cloakoffnpcself( "Isaac Wigner#ep16wig" );
 		else
-			cloakonnpc "Isaac Wigner#ep16wig", getcharid(0);
+			cloakonnpcself( "Isaac Wigner#ep16wig" );
 	}
 	else if (ep16_wig == 15) {
-		cloakonnpc "Katrin Wigner#ep16wig", getcharid(0);
-		cloakoffnpc "Isaac Wigner#ep16wig", getcharid(0);
+		cloakonnpcself( "Katrin Wigner#ep16wig" );
+		cloakoffnpcself( "Isaac Wigner#ep16wig" );
 	}
 	else {
-		cloakoffnpc "Katrin Wigner#ep16wig", getcharid(0);
-		cloakoffnpc "Isaac Wigner#ep16wig", getcharid(0);
+		cloakoffnpcself( "Katrin Wigner#ep16wig" );
+		cloakoffnpcself( "Isaac Wigner#ep16wig" );
 	}
 	end;
 }
@@ -14223,6 +14233,96 @@ prt_cas,161,168,5	script	Royal Guardian Knight#02	4_M_CRU,{
 prt_cas,270,168,3	duplicate(Royal Guardian Knight#02)	Royal Guardian Knight#03	4_M_CRU
 
 // Exchanges and enchants npc
+prt_cas,165,260,6	script	Noblesse Operator#ext161	4_F_CRU,{
+	mes "[Noblesse Operator]";
+	mes "Hello.";
+	mes "We have ^4d4dffNoblesse^000000 equipment that can be exchanged for " + mesitemlink( 6919 ) + ".";
+	mes "I will guide you to exchange items according to your job.";
+	close2;
+	switch( eaclass() & EAJ_THIRDMASK ) {
+	case EAJ_RUNE_KNIGHT:
+		.@str$ = "JOB_RUNE_KNIGHT";
+		break;
+	case EAJ_WARLOCK:
+		.@str$ = "JOB_WARLOCK";
+		break;
+	case EAJ_RANGER:
+		.@str$ = "JOB_RANGER";
+		break;
+	case EAJ_ARCH_BISHOP:
+		.@str$ = "JOB_ARCH_BISHOP";
+		break;
+	case EAJ_MECHANIC:
+		.@str$ = "JOB_MECHANIC";
+		break;
+	case EAJ_GUILLOTINE_CROSS:
+		.@str$ = "JOB_GUILLOTINE_CROSS";
+		break;
+	case EAJ_ROYAL_GUARD:
+		.@str$ = "JOB_ROYAL_GUARD";
+		break;
+	case EAJ_SORCERER:
+		.@str$ = "JOB_SORCERER";
+		break;
+	case EAJ_MINSTRELWANDERER:
+		.@str$ = "JOB_MINSTREL";
+		break;
+	case EAJ_SURA:
+		.@str$ = "JOB_SURA";
+		break;
+	case EAJ_GENETIC:
+		.@str$ = "JOB_GENETIC";
+		break;
+	case EAJ_SHADOW_CHASER:
+		.@str$ = "JOB_SHADOW_CHASER";
+		break;
+	default:
+		switch( Class ) {
+		case JOB_SUPER_NOVICE_E:
+		case JOB_SUPER_BABY_E:
+		case JOB_HYPER_NOVICE:
+			.@str$ = "JOB_SUPER_NOVICE_E";
+			break;
+		case JOB_KAGEROU:
+		case JOB_OBORO:
+		case JOB_BABY_KAGEROU:
+		case JOB_BABY_OBORO:
+		case JOB_SHINKIRO:
+		case JOB_SHIRANUI:
+			.@str$ = "JOB_KAGEROU";
+			break;
+		case JOB_REBELLION:
+		case JOB_BABY_REBELLION:
+		case JOB_NIGHT_WATCH:
+			.@str$ = "JOB_REBELLION";
+			break;
+		case JOB_SUMMONER:
+		case JOB_BABY_SUMMONER:
+		case JOB_SPIRIT_HANDLER:
+			.@str$ = "JOB_SUMMONER";
+			break;
+		case JOB_STAR_EMPEROR:
+		case JOB_BABY_STAR_EMPEROR:
+		case JOB_STAR_EMPEROR2:
+		case JOB_BABY_STAR_EMPEROR2:
+		case JOB_SKY_EMPEROR:
+		case JOB_SKY_EMPEROR2:
+			.@str$ = "JOB_STAR_EMPEROR";
+			break;
+		case JOB_SOUL_REAPER:
+		case JOB_BABY_SOUL_REAPER:
+		case JOB_SOUL_ASCETIC:
+			.@str$ = "JOB_SOUL_REAPER";
+			break;
+		default:
+			end;
+		}
+		break;
+	}
+	callshop "shop_ext161_" + .@str$;
+	end;
+}
+
 prt_cas,165,255,7	script	Commissary#ep16	4_M_JOB_KNIGHT2,{
 	mes "[Commissary Arner]";
 	mes "You can exchange the Honor Marks given by the noble people of Rune-Midgarts as the token of trust with some valuable items of Prontera.";
@@ -14808,7 +14908,7 @@ prt_q,221,193,0	script	Lad Quest_START#EP161QU01	HIDDEN_WARP_NPC,6,6,{
 	end;
 OnTouch:
 	if (isbegin_quest(5448) == 1) {
-		cloakoffnpc "Village Lad#EP161HO01", getcharid(0);
+		cloakoffnpcself( "Village Lad#EP161HO01" );
 		npctalk "Village Lad: Arghhhhhh!", "Village Lad#EP161HO01", bc_self;
 	}
 	end;
@@ -14842,7 +14942,7 @@ prt_q,221,193,4	script	Village Lad#EP161HO01	4_M_03,{
 		mes "Do you see me? How strange. I am not supposed to be seen.";
 		close2;
 	}
-	cloakonnpc "Village Lad#EP161HO01", getcharid(0);
+	cloakonnpcself( "Village Lad#EP161HO01" );
 	end;
 
 OnInit:
@@ -14882,9 +14982,9 @@ prt_q,79,96,7	script	Soldier#EP161HO02	8W_SOLDIER,5,5,{
 
 OnTouch:
 	if (isbegin_quest(5453) == 1 || isbegin_quest(5455) == 1)
-		cloakoffnpc "Village Lad#EP161HO03", getcharid(0);
+		cloakoffnpcself( "Village Lad#EP161HO03" );
 	if (isbegin_quest(5461) == 1)
-		cloakoffnpc "Soldier#EP161HU03", getcharid(0);
+		cloakoffnpcself( "Soldier#EP161HU03" );
 	end;
 }
 
@@ -14922,7 +15022,7 @@ prt_q,77,98,8	script	Village Lad#EP161HO03	4_M_03,{
 		mes "[Village Lad]";
 		mes "Oh! Never mind. I am counting on you.";
 		close2;
-		cloakonnpc "Village Lad#EP161HO03", getcharid(0);
+		cloakonnpcself( "Village Lad#EP161HO03" );
 		end;
 	}
 	if (isbegin_quest(5455) == 1) {
@@ -14943,13 +15043,13 @@ prt_q,77,98,8	script	Village Lad#EP161HO03	4_M_03,{
 		mes "[Village Lad]";
 		mes "Thank you. Farewell.";
 		close2;
-		cloakonnpc "Village Lad#EP161HO03", getcharid(0);
+		cloakonnpcself( "Village Lad#EP161HO03" );
 		end;
 	}
 	mes "[Village Lad]";
 	mes "Do you see me? How strange. I am not supposed to be seen.";
 	close2;
-	cloakonnpc "Village Lad#EP161HO03", getcharid(0);
+	cloakonnpcself( "Village Lad#EP161HO03" );
 	end;
 
 OnInit:
@@ -15086,7 +15186,7 @@ prt_q,276,242,0	script	Girl Quest_START#EP161QU02	HIDDEN_WARP_NPC,6,6,{
 	end;
 OnTouch:
 	if (isbegin_quest(5449) == 1 && isbegin_quest(5457) == 0) {
-		cloakoffnpc "Girl#EP161GU01", getcharid(0);
+		cloakoffnpcself( "Girl#EP161GU01" );
 		npctalk "Girl: Awwww...", "Girl#EP161GU01", bc_self;
 	}
 	end;
@@ -15117,13 +15217,13 @@ prt_q,276,242,4	script	Girl#EP161GU01	4_F_RUSCHILD,{
 		mes "[Lowen]";
 		mes "We promised to meet at the cathedral when we are lost. I believe she would be there in the church.";
 		close2;
-		cloakonnpc "Girl#EP161GU01", getcharid(0);
+		cloakonnpcself( "Girl#EP161GU01" );
 		end;
 	}
 	mes "[Lowen]";
 	mes "Oh? Do you see me? How strange. I am not supposed to be seen.";
 	close2;
-	cloakonnpc "Girl#EP161GU01", getcharid(0);
+	cloakonnpcself( "Girl#EP161GU01" );
 	end;
 
 OnInit:
@@ -15190,12 +15290,12 @@ prt_q,235,315,4	script	Cathedral Knight#EP161GU04	4_F_CRU,5,5,{
 
 OnTouch:
 	if (isbegin_quest(5457) == 1)
-		cloakoffnpc "Girl#EP161GU03", getcharid(0);
+		cloakoffnpcself( "Girl#EP161GU03" );
 	if (isbegin_quest(5463) == 1 || isbegin_quest(5467) == 1)
-		cloakoffnpc "Eryus#EP161BU02", getcharid(0);
+		cloakoffnpcself( "Eryus#EP161BU02" );
 	else if (isbegin_quest(5465) == 1) {
-		cloakoffnpc "Eryus#EP161BU02", getcharid(0);
-		cloakoffnpc "Female#EP161BU04", getcharid(0);
+		cloakoffnpcself( "Eryus#EP161BU02" );
+		cloakoffnpcself( "Female#EP161BU04" );
 	}
 	end;
 }
@@ -15323,13 +15423,13 @@ prt_q,229,317,6	script	Girl#EP161GU03	4_F_RUSCHILD,{
 		mes "[PecoPeco Mechanic]";
 		mes "Thank you. Please take care of her.";
 		close2;
-		cloakonnpc "Girl#EP161GU03", getcharid(0);
+		cloakonnpcself( "Girl#EP161GU03" );
 		end;
 	}
 	mes "[Lowen]";
 	mes "Oh? Do you see me? How strange. I am not supposed to be seen.";
 	close2;
-	cloakonnpc "Girl#EP161GU03", getcharid(0);
+	cloakonnpcself( "Girl#EP161GU03" );
 	end;
 
 OnInit:
@@ -15363,11 +15463,11 @@ prt_q,52,340,6	script	Knight Gray#EP161GU05	2_M_SWORDMASTER,7,7,{
 
 OnTouch:
 	if (isbegin_quest(5458) == 1) {
-		cloakoffnpc "Girl#EP161GU06", getcharid(0);
-		cloakoffnpc "Rosa Erinin#EP161GU07", getcharid(0);
+		cloakoffnpcself( "Girl#EP161GU06" );
+		cloakoffnpcself( "Rosa Erinin#EP161GU07" );
 	}
 	if (isbegin_quest(5460) == 1) {
-		cloakoffnpc "Soldier#EP161HU02", getcharid(0);
+		cloakoffnpcself( "Soldier#EP161HU02" );
 		npctalk "Soldier: Hey you! Here! This way...", "Soldier#EP161HU02", bc_self;
 	}
 	end;
@@ -15412,21 +15512,21 @@ prt_q,55,347,6	script	Rosa Erinin#EP161GU07	4W_F_01,{
 		mes "[Lowen]";
 		mes "Thank you. Goodbye!";
 		close2;
-		cloakonnpc "Rosa Erinin#EP161GU07", getcharid(0);
-		cloakonnpc "Girl#EP161GU06", getcharid(0);
+		cloakonnpcself( "Rosa Erinin#EP161GU07" );
+		cloakonnpcself( "Girl#EP161GU06" );
 		end;
 	}
 	if (strnpcinfo(1) == "Girl") {
 		mes "[Lowen]";
 		mes "Oh? Do you see me? How strange. I am not supposed to be seen.";
 		close2;
-		cloakonnpc "Girl#EP161GU06", getcharid(0);
+		cloakonnpcself( "Girl#EP161GU06" );
 		end;
 	}
 	mes "[Rosa Erinin]";
 	mes "Dear adventurer, do you see me? Strange. I am not supposed to be seen.";
 	close2;
-	cloakonnpc "Rosa Erinin#EP161GU07", getcharid(0);
+	cloakonnpcself( "Rosa Erinin#EP161GU07" );
 	end;
 
 OnInit:
@@ -15440,7 +15540,7 @@ prt_q,140,304,0	script	Soldier Quest_START#EP161QU03	HIDDEN_WARP_NPC,7,7,{
 	end;
 OnTouch:
 	if (isbegin_quest(5450) == 1) {
-		cloakoffnpc "Soldier#EP161HU01", getcharid(0);
+		cloakoffnpcself( "Soldier#EP161HU01" );
 		npctalk "Soldier: Argh! Don't come this way!", "Soldier#EP161HU01", bc_self;
 	}
 }
@@ -15487,13 +15587,13 @@ prt_q,140,304,6	script	Soldier#EP161HU01	4_M_GEF_SOLDIER,{
 		mes "[Soldier]";
 		mes "Good. Since I am tired from the previous battle, please escort me to the Knight's building.";
 		close2;
-		cloakonnpc "Soldier#EP161HU01", getcharid(0);
+		cloakonnpcself( "Soldier#EP161HU01" );
 		end;
 	}
 	mes "[Soldier]";
 	mes "Haha, do you see me? Strange. I am not supposed to be seen.";
 	close2;
-	cloakonnpc "Soldier#EP161HU01", getcharid(0);
+	cloakonnpcself( "Soldier#EP161HU01" );
 	end;
 }
 
@@ -15523,13 +15623,13 @@ prt_q,68,336,4	script	Soldier#EP161HU02	4_M_GEF_SOLDIER,{
 		mes "[Soldier]";
 		mes "Since I want to save my energy for the battle, please escort me to the village office.";
 		close2;
-		cloakonnpc "Soldier#EP161HU02", getcharid(0);
+		cloakonnpcself( "Soldier#EP161HU02" );
 		end;
 	}
 	mes "[Soldier]";
 	mes "Haha, do you see me? Strange. I am not supposed to be seen.";
 	close2;
-	cloakonnpc "Soldier#EP161HU02", getcharid(0);
+	cloakonnpcself( "Soldier#EP161HU02" );
 	end;
 
 OnInit:
@@ -15587,13 +15687,13 @@ prt_q,79,102,8	script	Soldier#EP161HU03	4_M_GEF_SOLDIER,{
 		mes "[Soldier]";
 		mes "Good luck.";
 		close2;
-		cloakonnpc "Soldier#EP161HU03", getcharid(0);
+		cloakonnpcself( "Soldier#EP161HU03" );
 		end;
 	}
 	mes "[Soldier]";
 	mes "Haha, do you see me? Strange. I am not supposed to be seen.";
 	close2;
-	cloakonnpc "Soldier#EP161HU03", getcharid(0);
+	cloakonnpcself( "Soldier#EP161HU03" );
 	end;
 
 OnInit:
@@ -15606,7 +15706,7 @@ prt_q,38,261,0	script	Married couple Quest_START#EP161QU04	HIDDEN_WARP_NPC,6,6,{
 	end;
 OnTouch:
 	if (isbegin_quest(5451) == 1) {
-		cloakoffnpc "Eryus#EP161BU01", getcharid(0);
+		cloakoffnpcself( "Eryus#EP161BU01" );
 		npctalk "Eryus: Ellie! Where are you? Honey! My love!", "Eryus#EP161BU01", bc_self;
 	}
 	end;
@@ -15657,13 +15757,13 @@ prt_q,38,261,6	script	Eryus#EP161BU01	4_F_03,{
 		mes "[Eryus]";
 		mes "Awww... Please help me. Please find my wife.";
 		close2;
-		cloakonnpc "Eryus#EP161BU01", getcharid(0);
+		cloakonnpcself( "Eryus#EP161BU01" );
 		end;
 	}
 	mes "[Eryus]";
 	mes "Awww... I need to find my wife... And I am not supposed to be seen.";
 	close2;
-	cloakonnpc "Eryus#EP161BU01", getcharid(0);
+	cloakonnpcself( "Eryus#EP161BU01" );
 	end;
 
 OnInit:
@@ -15743,7 +15843,7 @@ prt_q,231,310,4	script	Eryus#EP161BU02	4_F_03,{
 		mes "[Eryus]";
 		mes "Would you do that for us? Please. We are running out of time. Ellie. hold on...";
 		close2;
-		cloakonnpc "Female#EP161BU04", getcharid(0);
+		cloakonnpcself( "Female#EP161BU04" );
 		end;
 	}
 	if (isbegin_quest(5466) == 1) {
@@ -15764,13 +15864,13 @@ prt_q,231,310,4	script	Eryus#EP161BU02	4_F_03,{
 		mes "[Eryus]";
 		mes "Thank you so much. God bless your journey...";
 		close2;
-		cloakonnpc "Eryus#EP161BU02", getcharid(0);
+		cloakonnpcself( "Eryus#EP161BU02" );
 		end;
 	}
 	mes "[Eryus]";
 	mes "Awww... I need to find my wife... And I am not supposed to be seen.";
 	close2;
-	cloakonnpc "Eryus#EP161BU02", getcharid(0);
+	cloakonnpcself( "Eryus#EP161BU02" );
 	end;
 
 OnInit:
@@ -15805,10 +15905,10 @@ prt_q,108,164,4	script	Female#EP161BU03	4W_F_01,{
 		mes "[Ellie]";
 		mes "Thank you, dear adventurer.";
 		close2;
-		cloakonnpc "Female#EP161BU03", getcharid(0);
+		cloakonnpcself( "Female#EP161BU03" );
 		end;
 	}
-	cloakonnpc "Female#EP161BU03", getcharid(0);
+	cloakonnpcself( "Female#EP161BU03" );
 	mes "[Ellie]";
 	mes "Dear adventurer, do you see me? This is not good.";
 	close;
@@ -15858,20 +15958,20 @@ prt_q,229,310,6	script	Female#EP161BU04	4W_F_01,{
 		mes "[Eryus]";
 		mes "Would you do that for us? Please. We are running out of time. Ellie. hold on...";
 		close2;
-		cloakonnpc "Female#EP161BU04", getcharid(0);
+		cloakonnpcself( "Female#EP161BU04" );
 		end;
 	}
 	if (isbegin_quest(5466) == 1) {
 		mes "[Ellie]";
 		mes "Cough... Cough... Cough...";
 		close2;
-		cloakonnpc "Female#EP161BU04", getcharid(0);
+		cloakonnpcself( "Female#EP161BU04" );
 		end;
 	}
 	mes "[Ellie]";
 	mes "Dear adventurer, do you see me? This is not good.";
 	close2;
-	cloakonnpc "Female#EP161BU04", getcharid(0);
+	cloakonnpcself( "Female#EP161BU04" );
 	end;
 
 OnInit:
@@ -15883,7 +15983,7 @@ prt_q,111,166,0	script	Emergency Medicine#EP161BU05	HIDDEN_WARP_NPC,6,6,{
 	end;
 OnTouch:
 	if (isbegin_quest(5464) == 1)
-		cloakoffnpc "Female#EP161BU03", getcharid(0);
+		cloakoffnpcself( "Female#EP161BU03" );
 	else if (isbegin_quest(5466) == 1) {
 		mes "It seems to be the bundle of medicine dropped by Ellie while running.";
 		next;
