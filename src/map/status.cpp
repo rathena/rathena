@@ -9256,11 +9256,11 @@ bool status_isendure(block_list& bl, t_tick tick, bool visible)
 	if (status_change* sc = status_get_sc(&bl); sc != nullptr && !sc->empty()) {
 		// Officially endure also sets endure_tick
 		// However, we have a lot of extra logic for infinite endure, so we use the status change for now
-		if (sc->getSCE(SC_ENDURE))
+		if (sc->getSCE(SC_ENDURE) != nullptr)
 			return true;
 
 		// These status changes don't send "Endure" to the client, but still prevent being stopped
-		if (!visible && (sc->getSCE(SC_RUN) || sc->getSCE(SC_WUGDASH)))
+		if (!visible && (sc->getSCE(SC_RUN) != nullptr || sc->getSCE(SC_WUGDASH) != nullptr))
 			return true;
 	}
 
