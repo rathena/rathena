@@ -5487,7 +5487,7 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, sta
 
 void status_calc_state_sub( block_list& bl, status_change& sc, bool start, std::shared_ptr<s_status_change_db> scdb_main, bool& restriction, e_scs_flag flag, e_scs_flag flag_conditional, std::function<bool ( block_list&, status_change&, bool&, const sc_type, const status_change_entry& )> func_switch ){
 	// If starting and unconditional no further checks are needed
-	if( start && !scdb_main->state[flag_conditional] ){
+	if( start && scdb_main->state[flag] ){
 		restriction = true;
 		return;
 	}
@@ -5503,17 +5503,18 @@ void status_calc_state_sub( block_list& bl, status_change& sc, bool start, std::
 			continue;
 		}
 
-		// If there is no restriction, skip the status change
-		if( !scdb_other->state[flag] ){
-			continue;
-		}
-
 		// If it is unconditional we can already restore the restriction and return early
-		if( !scdb_other->state[flag_conditional] ){
+		if( scdb_other->state[flag] ){
 			restriction = true;
 			return;
 		}
 
+		// If there is no conditional restriction, skip the status change
+		if( !scdb_other->state[flag_conditional] ){
+			continue;
+		}
+
+		// Check the conditional restrictions
 		if( !func_switch( bl, sc, restriction, it.first, it.second ) ){
 			const char* constant_sc = script_get_constant_str( "SC_", it.first );
 
