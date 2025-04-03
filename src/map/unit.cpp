@@ -3419,9 +3419,11 @@ void unit_dataset(struct block_list *bl)
 	ud->skilltimer     = INVALID_TIMER;
 	ud->attacktimer    = INVALID_TIMER;
 	ud->steptimer      = INVALID_TIMER;
-	ud->attackabletime =
-	ud->canact_tick    =
-	ud->canmove_tick   = gettick();
+	t_tick tick = gettick();
+	ud->attackabletime = tick;
+	ud->canact_tick = tick;
+	ud->canmove_tick = tick;
+	ud->endure_tick = tick;
 	ud->sx = 8;
 	ud->sy = 8;
 }
@@ -3979,9 +3981,6 @@ int32 unit_free(struct block_list *bl, clr_type clrtype)
 
 			skill_clear_unitgroup(bl);
 			status_change_clear(bl,1);
-
-			// Do not call the destructor here, it will be done in chrif_auth_delete
-			// sd->~map_session_data();
 			break;
 		}
 		case BL_PET: {
@@ -4151,8 +4150,6 @@ int32 unit_free(struct block_list *bl, clr_type clrtype)
 
 			skill_clear_unitgroup(bl);
 			status_change_clear(bl,1);
-
-			ed->~s_elemental_data();
 			break;
 		}
 	}
