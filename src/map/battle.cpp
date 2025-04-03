@@ -8153,12 +8153,18 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 
 	switch(skill_id) {
 		case MG_FIREWALL:
-			if ( tstatus->def_ele == ELE_FIRE || battle_check_undead(tstatus->race, tstatus->def_ele) )
+			if (tstatus->def_ele == ELE_FIRE || battle_check_undead(tstatus->race, tstatus->def_ele)) {
 				ad.blewcount = 0; //No knockback
+				// Fire and undead units hit by firewall cannot be stopped for 2 seconds
+				if (unit_data* ud = unit_bl2ud(target); ud != nullptr)
+					ud->endure_tick = gettick() + 2000;
+				break;
+			}
 			[[fallthrough]];
 		case NJ_KAENSIN:
 		case PR_SANCTUARY:
-			ad.dmotion = 1; //No flinch animation.
+			// TODO: This code is a temporary workaround because right now we stop monsters for their dmotion which is not official
+			ad.dmotion = 1;
 			break;
 	}
 
