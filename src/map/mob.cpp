@@ -1786,7 +1786,7 @@ int32 mob_warpchase(struct mob_data *md, struct block_list *target)
  * @param md: Mob to set state on
  * @param skillstate: Target state of the monster
  */
-void mob_setstate(mob_data& md, MobSkillState skillstate) {
+void mob_setstate(mob_data& md, e_MobSkillState skillstate) {
 	switch (skillstate) {
 		case MSS_BERSERK:
 		case MSS_ANGRY:
@@ -3817,8 +3817,8 @@ int mob_summonslave(mob_data *md2, std::unordered_map<uint16, int> summons, int 
 	if (summons_available.empty())
 		return 0;
 
-	int k = 0, hp_rate = 0;
-	int count = summons_available.size();
+	int32 k = 0, hp_rate = 0;
+	int32 count = summons_available.size();
 	spawn_data data;
 
 	memset(&data, 0, sizeof(struct spawn_data));
@@ -4029,7 +4029,6 @@ int mob_getfriendstatus_sub(struct block_list *bl,va_list ap)
 
 struct mob_data *mob_getfriendstatus(struct mob_data *md,int64 cond1,int64 cond2)
 {
-	struct mob_data* fr = nullptr;
 	nullpo_ret(md);
 	struct mob_data* fr = nullptr;
 
@@ -4126,8 +4125,8 @@ bool mobskill_use(struct mob_data *md, t_tick tick, int32 event, int64 damage)
 		if (DIFF_TICK(tick, md->skilldelay[i]) < 0)
 			continue;
 
-		int c2 = ms[i]->cond2;
-		int c3 = ms[i]->cond3;
+		int32 c2 = ms[i]->cond2;
+		int32 c3 = ms[i]->cond3;
 
 		if (ms[i]->state != md->state.skillstate) {
 			if (md->state.skillstate != MSS_DEAD && (ms[i]->state == MSS_ANY ||
@@ -4140,7 +4139,7 @@ bool mobskill_use(struct mob_data *md, t_tick tick, int32 event, int64 damage)
 		if (rnd() % 10000 > ms[i]->permillage) //Lupus (max value = 10000)
 			continue;
 
-		int flag = 0;
+		int32 flag = 0;
 
 		if (ms[i]->cond1 == event)
 			flag = 1; //Trigger skill.
@@ -6175,7 +6174,7 @@ const std::string MobSkillDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 MobSkillDatabase::parseBodyNode(const ryml::NodeRef node) {
+uint64 MobSkillDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	std::string mob_name;
 
 	if (!this->asString( node, "Mob", mob_name ))

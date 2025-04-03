@@ -237,6 +237,10 @@ enum e_mob_skill_condition {
 	MSC_MASTERATTACKED,
 	MSC_ALCHEMIST,
 	MSC_SPAWN,
+	MSC_MOBNEARBYGT,
+	MSC_GROUNDATTACKED,
+	MSC_DAMAGEDGT,
+	MSC_TRICKCASTING,
 };
 
 struct s_mob_skill {
@@ -267,7 +271,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const ryml::NodeRef node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 	void loadingFinished() override;
 };
 
@@ -535,7 +539,7 @@ int32 mob_guardian_guildchange(struct mob_data *md); //Change Guardian's ownersh
 
 int32 mob_randomwalk(struct mob_data *md,t_tick tick);
 int32 mob_warpchase(struct mob_data *md, struct block_list *target);
-void mob_setstate(mob_data& md, MobSkillState skillstate);
+void mob_setstate(mob_data& md, e_MobSkillState skillstate);
 bool mob_ai_sub_hard_attacktimer(mob_data &md, t_tick tick);
 int32 mob_target(struct mob_data *md,struct block_list *bl,int32 dist);
 int32 mob_unlocktarget(struct mob_data *md, t_tick tick);
@@ -557,7 +561,7 @@ void do_final_mob(bool is_reload);
 TIMER_FUNC(mob_timer_delete);
 int32 mob_deleteslave(struct mob_data *md);
 
-int32 mob_random_class (int32 *value, size_t count);
+int32 mob_random_class(std::unordered_map<uint16, int32> summons);
 int32 mob_get_random_id(int32 type, enum e_random_monster_flags flag, int32 lv);
 int32 mob_class_change(struct mob_data *md,int32 mob_id);
 int32 mob_warpslave(struct block_list *bl, int32 range);
@@ -568,7 +572,7 @@ void mobskill_delay(mob_data& md, t_tick tick);
 bool mobskill_use(struct mob_data *md,t_tick tick,int32 event, int64 damage = 0);
 int32 mobskill_event(struct mob_data *md,struct block_list *src,t_tick tick, int32 flag, int64 damage = 0);
 void mob_set_delay(mob_data& md, t_tick tick, e_delay_event event);
-int32 mob_summonslave(struct mob_data *md2,int32 *value,int32 amount,uint16 skill_id);
+int32 mob_summonslave(mob_data *md2, std::unordered_map<uint16, int32> summons, int32 amount, uint16 skill_id);
 int32 mob_countslave(struct block_list *bl);
 int32 mob_count_sub(struct block_list *bl, va_list ap);
 int32 mob_removeslaves(block_list* bl);

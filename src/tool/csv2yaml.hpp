@@ -571,7 +571,7 @@ static bool itemdb_read_combos(const char* file);
 static bool cashshop_parse_dbrow( char* fields[], size_t columns, size_t current );
 static bool read_homunculus_skilldb( char* split[], size_t columns, size_t current );
 static bool read_homunculusdb( char* str[], size_t columns, size_t current );
-static bool mob_parse_row_mobskilldb(char* str[], int columns, int current);
+static bool mob_parse_row_mobskilldb(char* str[], size_t columns, size_t current);
 static bool mob_parse_row_mobskilldb_yaml(void);
 
 #endif /* CSV2YAML_HPP */

@@ -5299,11 +5299,7 @@ static bool read_homunculusdb( char* str[], size_t columns, size_t current ){
 	return true;
 }
 
-int32 main( int32 argc, char *argv[] ){
-	return main_core<Csv2YamlTool>( argc, argv );
-}
-
-static bool mob_parse_row_mobskilldb(char** str, int columns, int current) {
+static bool mob_parse_row_mobskilldb(char** str, size_t columns, size_t current) {
 	int32 id = strtol(str[0], nullptr, 10);
 	std::string mob_name;
 
@@ -5395,7 +5391,7 @@ static bool mob_parse_row_mobskilldb(char** str, int columns, int current) {
 	for (uint16 i = 0; i < 5; ++i) {
 		uint16 index = 12 + i;
 		if (*str[index]) {
-			int val = (int)strtol(str[index],NULL,0);
+			int32 val = (int)strtol(str[index],NULL,0);
 			if (val < 1)
 				continue;
 
@@ -5527,4 +5523,8 @@ static bool mob_parse_row_mobskilldb_yaml(void) {
 		body << YAML::EndMap;
 	}
 	return true;
+}
+
+int32 main( int32 argc, char *argv[] ){
+	return main_core<Csv2YamlTool>( argc, argv );
 }

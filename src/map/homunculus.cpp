@@ -303,9 +303,6 @@ int32 hom_delete(struct homun_data *hd)
 	if (!sd)
 		return unit_free(&hd->bl,CLR_DEAD);
 
-	if (emote > ET_NONE && emote < ET_MAX)
-		clif_emotion(&sd->bl, emote);
-
 	//This makes it be deleted right away.
 	hd->homunculus.intimacy = 0;
 	// Send homunculus_dead to client

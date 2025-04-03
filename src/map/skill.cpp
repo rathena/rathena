@@ -184,7 +184,7 @@ int32 skill_get_walkdelay( uint16 skill_id ,uint16 skill_lv )        { skill_get
 int32 skill_get_time( uint16 skill_id ,uint16 skill_lv )             { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->upkeep_time); }
 int32 skill_get_time2( uint16 skill_id ,uint16 skill_lv )            { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->upkeep_time2); }
 int32 skill_get_castdef( uint16 skill_id )                           { skill_get(skill_id, skill_db.find(skill_id)->cast_def_rate); }
-int32 skill_get_castcancel( uint16 skill_id )                        { skill_get(skill_id, skill_db.find(skill_id)->castcancel); }
+bool skill_get_castcancel( uint16 skill_id )                        { skill_get(skill_id, skill_db.find(skill_id)->castcancel); }
 int32 skill_get_maxcount( uint16 skill_id ,uint16 skill_lv )         { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->maxcount); }
 int32 skill_get_blewcount( uint16 skill_id ,uint16 skill_lv )        { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->blewcount); }
 int32 skill_get_castnodex( uint16 skill_id )                         { skill_get(skill_id, skill_db.find(skill_id)->castnodex); }
@@ -10382,9 +10382,9 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 	case NPC_EMOTION_ON:
 		//NPC_EMOTION & NPC_EMOTION_ON can change a mob's mode 'permanently' [Skotlex]
 		// NPC_EMOTION_ON adds the mode to the current mode
-		if(md && md->skill_idx >= 0 && tsc)
+		if(md != nullptr && tsc != nullptr && md->skill_idx >= 0)
 		{
-			int mode_passive = (md->db->skill[md->skill_idx]->mob_mode & MD_AGGRESSIVE) ? 0 : MD_AGGRESSIVE;	// Remove aggressive mode when the new mob type is passive.
+			int32 mode_passive = (md->db->skill[md->skill_idx]->mob_mode & MD_AGGRESSIVE) ? 0 : MD_AGGRESSIVE;	// Remove aggressive mode when the new mob type is passive.
 
 			if (md->db->skill[md->skill_idx]->mob_mode > -1)
 				sc_start4(src,src, SC_MODECHANGE, 100, skill_lv,
@@ -13644,7 +13644,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		if (sc) {
 			std::shared_ptr<s_mob_skill> skilltmp = md->db->skill[md->skill_idx];
 
-			if (skilltmp->mob_mode > -1 && sc->data[SC_MODECHANGE])	// asks to delete the previous mode change regardless of the current monster mode since we 'sets' the mode
+			if (skilltmp->mob_mode > -1 && sc->getSCE(SC_MODECHANGE))	// asks to delete the previous mode change regardless of the current monster mode since we 'sets' the mode
 				status_change_end(src, SC_MODECHANGE, INVALID_TIMER);
 
 			//If mode gets set by NPC_EMOTION then the target should be reset [Playtester]
@@ -15650,7 +15650,7 @@ int32 skill_castend_pos2(struct block_list* src, int32 x, int32 y, uint16 skill_
 		std::shared_ptr<s_mob_skill> skilltmp = md->db->skill[md->skill_idx];
 
 		//if (skilltmp->mob_mode > -1 && skilltmp->mob_mode == md->db->status.mode)	// asks to delete the previous mode change
-		if (skilltmp->mob_mode > -1 && sc->data[SC_MODECHANGE])	// asks to delete the previous mode change regardless of the current monster mode since we 'sets' the mode
+		if (skilltmp->mob_mode > -1 && sc->getSCE(SC_MODECHANGE))	// asks to delete the previous mode change regardless of the current monster mode since we 'sets' the mode
 			status_change_end(src, SC_MODECHANGE, INVALID_TIMER);
 
 		if (!battle_config.npc_emotion_behavior && skilltmp->mob_mode > -1 && skilltmp->mob_mode != md->db->status.mode)

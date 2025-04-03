@@ -22434,7 +22434,6 @@ BUILDIN_FUNC(areamobuseskill)
 	}
 
 	block_list center;
-	int skill_id;
 	
 	center.m = m;
 	center.x = script_getnum(st,3);
