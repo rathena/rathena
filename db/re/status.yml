@@ -3981,8 +3981,8 @@ Body:
     Icon: EFST_COLD
     DurationLookup: SO_DIAMONDDUST
     States:
-      NoMoveCond: true
-      NoCastCond: true
+      NoMove: true
+      NoCast: true
       NoConsumeItem: true
       NoAttack: true
     Flags:

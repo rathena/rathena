@@ -3827,8 +3827,8 @@ Body:
     Icon: EFST_COLD
     DurationLookup: SO_DIAMONDDUST
     States:
-      NoMoveCond: true
-      NoCastCond: true
+      NoMove: true
+      NoCast: true
       NoConsumeItem: true
       NoAttack: true
     Flags:
@@ -3839,11 +3839,15 @@ Body:
       RemoveOnLuxAnima: true
       BossResist: true
       StopWalking: true
+      StopWalking: true
+      StopCasting: true
+      SetStand: true
       Debuff: true
     Fail:
       Refresh: true
       Inspiration: true
       Warmer: true
+      Crystalize: true
   - Status: Striking
     Icon: EFST_STRIKING
     DurationLookup: SO_STRIKING
