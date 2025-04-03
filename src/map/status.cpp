@@ -5558,7 +5558,7 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 	};
 
 	// Can't move
-	if( scdb->state[SCS_NOMOVE] ){
+	if( scdb->state[SCS_NOMOVE] || scdb->state[SCS_NOMOVECOND] ){
 		status_calc_state_sub( bl, sc, start, scdb, sc.cant.move, SCS_NOMOVE, SCS_NOMOVECOND, []( block_list& bl, status_change& sc, bool& restriction, const sc_type type, const status_change_entry& sce ) -> bool {
 			// Check the specific conditions
 			switch( type ){
@@ -5647,7 +5647,7 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 	}
 
 	// Can't use skills
-	if( scdb->state[SCS_NOCAST] ){
+	if( scdb->state[SCS_NOCAST] || scdb->state[SCS_NOCASTCOND] ){
 		status_calc_state_sub( bl, sc, start, scdb, sc.cant.cast, SCS_NOCAST, SCS_NOCASTCOND, []( block_list& bl, status_change& sc, bool& restriction, const sc_type type, const status_change_entry& sce ) -> bool {
 			// Check the specific conditions
 			switch( type ){
@@ -5666,7 +5666,7 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 	}
 
 	// Can't chat
-	if( scdb->state[SCS_NOCHAT] ) {
+	if( scdb->state[SCS_NOCHAT] || scdb->state[SCS_NOCHATCOND] ){
 		status_calc_state_sub( bl, sc, start, scdb, sc.cant.chat, SCS_NOCHAT, SCS_NOCHATCOND, []( block_list& bl, status_change& sc, bool& restriction, const sc_type type, const status_change_entry& sce ) -> bool {
 			// Check the specific conditions
 			switch( type ){
@@ -5685,7 +5685,7 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 	}
 
 	// Can't attack
-	if( scdb->state[SCS_NOATTACK] ){
+	if( scdb->state[SCS_NOATTACK] || scdb->state[SCS_NOATTACKCOND] ){
 		status_calc_state_sub( bl, sc, start, scdb, sc.cant.attack, SCS_NOATTACK, SCS_NOATTACKCOND, []( block_list& bl, status_change& sc, bool& restriction, const sc_type type, const status_change_entry& sce ) -> bool {
 			// Check the specific conditions
 			switch( type ){
@@ -5714,14 +5714,14 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 	}
 
 	// Can't warp
-	if( scdb->state[SCS_NOWARP] ){
+	if( scdb->state[SCS_NOWARP] || scdb->state[SCS_NOWARPCOND] ){
 		status_calc_state_sub( bl, sc, start, scdb, sc.cant.warp, SCS_NOWARP, SCS_NOWARPCOND, func_not_impl );
 	}
 
 	// Player-only states
 	if( bl.type == BL_PC ) {
 		// Can't pick-up items
-		if( scdb->state[SCS_NOPICKITEM] ){
+		if( scdb->state[SCS_NOPICKITEM] || scdb->state[SCS_NOPICKITEMCOND] ){
 			status_calc_state_sub( bl, sc, start, scdb, sc.cant.pickup, SCS_NOPICKITEM, SCS_NOPICKITEMCOND, []( block_list& bl, status_change& sc, bool& restriction, const sc_type type, const status_change_entry& sce ) -> bool {
 				// Check the specific conditions
 				switch( type ){
@@ -5740,7 +5740,7 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 		}
 
 		// Can't drop items
-		if( scdb->state[SCS_NODROPITEM] ){
+		if( scdb->state[SCS_NODROPITEM] || scdb->state[SCS_NODROPITEMCOND] ){
 			status_calc_state_sub( bl, sc, start, scdb, sc.cant.drop, SCS_NODROPITEM, SCS_NODROPITEMCOND, []( block_list& bl, status_change& sc, bool& restriction, const sc_type type, const status_change_entry& sce ) -> bool {
 				// Check the specific conditions
 				switch( type ){
@@ -5759,17 +5759,17 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 		}
 
 		// Can't equip item
-		if( scdb->state[SCS_NOEQUIPITEM] ){
+		if( scdb->state[SCS_NOEQUIPITEM] || scdb->state[SCS_NOEQUIPITEMCOND] ){
 			status_calc_state_sub( bl, sc, start, scdb, sc.cant.equip, SCS_NOEQUIPITEM, SCS_NOEQUIPITEMCOND, func_not_impl );
 		}
 
 		// Can't unequip item
-		if( scdb->state[SCS_NOUNEQUIPITEM] ){
+		if( scdb->state[SCS_NOUNEQUIPITEM] || scdb->state[SCS_NOUNEQUIPITEMCOND] ){
 			status_calc_state_sub( bl, sc, start, scdb, sc.cant.unequip, SCS_NOUNEQUIPITEM, SCS_NOUNEQUIPITEMCOND, func_not_impl );
 		}
 
 		// Can't consume item
-		if( scdb->state[SCS_NOCONSUMEITEM] ){
+		if( scdb->state[SCS_NOCONSUMEITEM] || scdb->state[SCS_NOCONSUMEITEMCOND] ){
 			status_calc_state_sub( bl, sc, start, scdb, sc.cant.consume, SCS_NOCONSUMEITEM, SCS_NOCONSUMEITEMCOND, []( block_list& bl, status_change& sc, bool& restriction, const sc_type type, const status_change_entry& sce ) -> bool {
 				// Check the specific conditions
 				switch( type ){
@@ -5794,12 +5794,12 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 		}
 
 		// Can't lose exp
-		if( scdb->state[SCS_NODEATHPENALTY] ){
+		if( scdb->state[SCS_NODEATHPENALTY] || scdb->state[SCS_NODEATHPENALTYCOND] ){
 			status_calc_state_sub( bl, sc, start, scdb, sc.cant.deathpenalty, SCS_NODEATHPENALTY, SCS_NODEATHPENALTYCOND, func_not_impl );
 		}
 
 		// Can't sit/stand/talk to NPC
-		if( scdb->state[SCS_NOINTERACT] ){
+		if( scdb->state[SCS_NOINTERACT] || scdb->state[SCS_NOINTERACTCOND] ){
 			status_calc_state_sub( bl, sc, start, scdb, sc.cant.interact, SCS_NOINTERACT, SCS_NOINTERACTCOND, func_not_impl );
 		}
 	}
