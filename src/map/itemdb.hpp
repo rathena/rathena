@@ -82,7 +82,6 @@ enum item_itemid : t_itemid
 	ITEMID_PHRACON						= 1010,
 	ITEMID_EMVERETARCON					= 1011,
 	ITEMID_TRAP							= 1065,
-	ITEMID_ANGRA_MANYU					= 1599,
 	ITEMID_PAINT_BRUSH					= 6122,
 	ITEMID_MAGIC_GEAR_FUEL				= 6146,
 	ITEMID_NEW_INSURANCE				= 6413,
@@ -2972,6 +2971,61 @@ enum e_random_item_group {
 	IG_REGIA_HUNTING_SET,
 	IG_MYSTERIOUS_FRUIT_BOX,
 	IG_ZONDA_SUPPORT_PACKAGE,
+	IG_AEGIS_103871,
+	IG_AEGIS_103872,
+	IG_IFRIT_SCROLL,
+	IG_IF_COSTUME_SCROLL,
+	IG_AEGIS_103891,
+	IG_AEGIS_103909,
+	IG_AEGIS_103991,
+	IG_NEWSERVER_PACKAGE_1,
+	IG_NEWSERVER_PACKAGE_2,
+	IG_NEWSERVER_PACKAGE_3,
+	IG_NEWSERVER_GROWTHPACK1,
+	IG_NEWSERVER_GROWTHPACK2,
+	IG_NEWSERVER_REFINEPACK1,
+	IG_NEWSERVER_REFINEPACK2,
+	IG_NEWSERVER_NYANGVINEPACK,
+	IG_COSTUMEMILEPACK_37_1,
+	IG_COSTUMEMILEPACK_37_2,
+	IG_COSTUMEMILEPACK_37_3,
+	IG_IF_COSTUME_BOX,
+	IG_IF_ALMIGHTY100_BOX,
+	IG_IF_ALMIGHTY_BOX,
+	IG_IF_REFINE_ORE_BOX_SET,
+	IG_IF_REFINE_ORE_BOX,
+	IG_IF_HD_REFINE_ORE_BOX,
+	IG_IF_HD_ELUNIUM_BOX,
+	IG_IF_HD_ORIDECON_BOX,
+	IG_IF_INFINITY_10_BOX,
+	IG_IF_INFINITY_BOX,
+	IG_IF_UNLIMITED_10_BOX,
+	IG_IF_UNLIMITED_BOX,
+	IG_EYPGT_COSTUME_BOX1,
+	IG_EYPGT_COSTUME_BOX2,
+	IG_EYPGT_COSTUME_BOX3,
+	IG_IF_SPEED_BOOSTER_10_BOX,
+	IG_IF_SPEED_BOOSTER_BOX,
+	IG_IF_FORCE_BOOSTER_10_BOX,
+	IG_IF_FORCE_BOOSTER_BOX,
+	IG_IF_3_LIFE_POTION_10PACK,
+	IG_IF_3_LIFE_POTION_PACK,
+	IG_IF_HD_HIGH_REFINE_BOX,
+	IG_IF_HD_CARNIUM_BOX,
+	IG_IF_HD_BRADIUM_BOX,
+	IG_IF_LIMITPOWERBOOSTER100,
+	IG_IF_LIMITPOWERBOOSTER,
+	IG_CLB_KP_PACK1,
+	IG_CLB_KP_PACK2,
+	IG_2025_COSTUME_BOX1,
+	IG_2025_COSTUME_BOX2,
+	IG_IF_CLB_KP_PACK1,
+	IG_IF_CLB_KP_PACK2,
+	IG_IF_2025_COSTUME_BOX1,
+	IG_IF_2025_COSTUME_BOX2,
+	IG_LI_NYANGVINE_BOX1_38,
+	IG_LI_NYANGVINE_BOX2_38,
+	IG_LI_NYANGVINE_BOX3_38,
 
 	IG_MAX,
 };
@@ -3174,7 +3228,7 @@ struct s_item_group_db
 /// Struct of Roulette db
 struct s_roulette_db {
 	t_itemid *nameid[MAX_ROULETTE_LEVEL]; /// Item ID
-	unsigned short *qty[MAX_ROULETTE_LEVEL]; /// Amount of Item ID
+	uint16 *qty[MAX_ROULETTE_LEVEL]; /// Amount of Item ID
 	int32 *flag[MAX_ROULETTE_LEVEL]; /// Whether the item is for loss or win
 	int32 items[MAX_ROULETTE_LEVEL]; /// Number of items in the list for each
 };
@@ -3245,7 +3299,7 @@ struct item_data
 		uint16 override;
 		bool sitting;
 	} item_usage;
-	short gm_lv_trade_override;	//GM-level to override trade_restriction
+	int16 gm_lv_trade_override;	//GM-level to override trade_restriction
 	std::vector<std::shared_ptr<s_item_combo>> combos;
 	struct {
 		uint32 duration;
@@ -3312,6 +3366,7 @@ public:
 	std::string create_item_link(struct item& item);
 	std::string create_item_link( std::shared_ptr<item_data>& data );
 	std::string create_item_link_for_mes( std::shared_ptr<item_data>& data, bool use_brackets, const char* name );
+	std::string create_item_icon_for_mes( std::shared_ptr<item_data>& data, const char* name );
 };
 
 extern ItemDatabase item_db;

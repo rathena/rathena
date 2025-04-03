@@ -19,7 +19,7 @@ struct item;
 struct party_member_data {
 	map_session_data *sd;
 	uint32 hp; //For HP,x,y refreshing.
-	unsigned short x, y;
+	uint16 x, y;
 };
 
 struct party_data {
@@ -36,9 +36,9 @@ struct party_data {
 };
 
 struct party_booking_detail {
-	short level;
-    short mapid;
-    short job[MAX_PARTY_BOOKING_JOBS];
+	int16 level;
+	int16 mapid;
+	int16 job[MAX_PARTY_BOOKING_JOBS];
 };
 
 struct party_booking_ad_info {
@@ -102,9 +102,9 @@ int32 party_foreachsamemap(int32 (*func)(struct block_list *,va_list),map_sessio
 /*==========================================
  * Party Booking in KRO [Spiria]
  *------------------------------------------*/
-void party_booking_register(map_session_data *sd, short level, short mapid, short* job);
-void party_booking_update(map_session_data *sd, short* job);
-void party_booking_search(map_session_data *sd, short level, short mapid, short job, unsigned long lastindex, short resultcount);
+void party_booking_register(map_session_data *sd, int16 level, int16 mapid, int16* job);
+void party_booking_update(map_session_data *sd, int16* job);
+void party_booking_search(map_session_data *sd, int16 level, int16 mapid, int16 job, unsigned long lastindex, int16 resultcount);
 bool party_booking_delete(map_session_data *sd);
 
 #endif /* PARTY_HPP */

@@ -452,7 +452,7 @@ int32 chrif_changemapserver(map_session_data* sd, uint32 ip, uint16 port) {
 
 /// map-server change (mapserv) request acknowledgement (positive or negative)
 /// R 2b06 <account_id>.L <login_id1>.L <login_id2>.L <char_id>.L <map>.16B <x>.W <y>.W <ip>.L <port>.W
-int32 chrif_changemapserverack(uint32 account_id, int32 login_id1, int32 login_id2, uint32 char_id, const char* map, short x, short y, uint32 ip, uint16 port) {
+int32 chrif_changemapserverack(uint32 account_id, int32 login_id1, int32 login_id2, uint32 char_id, const char* map, int16 x, int16 y, uint32 ip, uint16 port) {
 	struct auth_node *node;
 
 	if ( !( node = chrif_auth_check(account_id, char_id, ST_MAPCHANGE) ) )
@@ -1272,7 +1272,7 @@ int32 chrif_updatefamelist_ack(int32 fd) {
 
 int32 chrif_save_scdata(map_session_data *sd) { //parses the sc_data of the player and sends it to the char-server for saving. [Skotlex]
 #ifdef ENABLE_SC_SAVING
-	int32 i, count=0;
+	int32 count=0;
 	t_tick tick;
 	struct status_change_data data;
 	status_change *sc = &sd->sc;
@@ -1286,12 +1286,9 @@ int32 chrif_save_scdata(map_session_data *sd) { //parses the sc_data of the play
 	WFIFOL(char_fd,4) = sd->status.account_id;
 	WFIFOL(char_fd,8) = sd->status.char_id;
 
-	for (i = 0; i < SC_MAX; i++) {
-		auto sce = sc->getSCE(static_cast<sc_type>(i));
-		if (!sce)
-			continue;
-		if (sce->timer != INVALID_TIMER) {
-			timer = get_timer(sce->timer);
+	for( const auto& [type, sce] : *sc ){
+		if (sce.timer != INVALID_TIMER) {
+			timer = get_timer(sce.timer);
 			if (timer == nullptr || timer->func != status_change_timer)
 				continue;
 			if (DIFF_TICK(timer->tick,tick) > 0)
@@ -1300,11 +1297,11 @@ int32 chrif_save_scdata(map_session_data *sd) { //parses the sc_data of the play
 				data.tick = 0; //Negative tick does not necessarily mean that sc has expired
 		} else
 			data.tick = INFINITE_TICK; //Infinite duration
-		data.type = i;
-		data.val1 = sce->val1;
-		data.val2 = sce->val2;
-		data.val3 = sce->val3;
-		data.val4 = sce->val4;
+		data.type = type;
+		data.val1 = sce.val1;
+		data.val2 = sce.val2;
+		data.val3 = sce.val3;
+		data.val4 = sce.val4;
 		memcpy(WFIFOP(char_fd,14 +count*sizeof(struct status_change_data)),
 			&data, sizeof(struct status_change_data));
 		count++;
@@ -1556,7 +1553,7 @@ void chrif_parse_ack_vipActive(int32 fd) {
 	uint32 vip_time = RFIFOL(fd,6);
 	uint32 groupid = RFIFOL(fd,10);
 	uint8 flag = RFIFOB(fd,14);
-	TBL_PC *sd = map_id2sd(aid);
+	map_session_data* sd = map_id2sd(aid);
 	bool changed = false;
 
 	if(sd == nullptr) return;
@@ -1564,9 +1561,7 @@ void chrif_parse_ack_vipActive(int32 fd) {
 	sd->group_id = groupid;
 	pc_group_pc_load(sd);
 
-	if ((flag&0x2)) //isgm
-		clif_displaymessage(sd->fd,msg_txt(sd,437));
-	else {
+	if (!(flag&0x2)){ //isgm
 		changed = (sd->vip.enabled != (flag&0x1));
 		if((flag&0x1)) { //isvip
 			sd->vip.enabled = 1;
@@ -1577,12 +1572,13 @@ void chrif_parse_ack_vipActive(int32 fd) {
 				ShowError("intif_parse_ack_vipActive: Storage size for player %s (%d:%d) is larger than MAX_STORAGE. Storage size has been set to MAX_STORAGE.\n", sd->status.name, sd->status.account_id, sd->status.char_id);
 				sd->storage.max_amount = MAX_STORAGE;
 			}
+			sd->special_state.no_gemstone = battle_config.vip_gemstone;
 		} else if (sd->vip.enabled) {
 			sd->vip.enabled = 0;
 			sd->vip.time = 0;
 			sd->storage.max_amount = MIN_STORAGE;
 			sd->special_state.no_gemstone = 0;
-			clif_displaymessage(sd->fd,msg_txt(sd,438));
+			clif_displaymessage(sd->fd,msg_txt(sd,438)); // You are no longer VIP.
 		}
 	}
 	// Show info if status changed

@@ -170,7 +170,7 @@ struct s_mercenary_skill_csv {
 
 std::unordered_map<uint16, std::vector<s_mercenary_skill_csv>> mercenary_skill_tree;
 
-static std::map<std::string, int> um_mapid2jobname {
+static std::map<std::string, int32> um_mapid2jobname {
 	{ "Novice", JOB_NOVICE }, // Novice and Super Novice share the same value
 	{ "SuperNovice", JOB_NOVICE },
 	{ "Swordman", JOB_SWORDMAN },

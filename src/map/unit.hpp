@@ -16,8 +16,8 @@ struct unit_data;
 class map_session_data;
 enum clr_type : uint8;
 
-extern const short dirx[DIR_MAX]; ///lookup to know where will move to x according dir
-extern const short diry[DIR_MAX]; ///lookup to know where will move to y according dir
+extern const int16 dirx[DIR_MAX]; ///lookup to know where will move to x according dir
+extern const int16 diry[DIR_MAX]; ///lookup to know where will move to y according dir
 
 struct unit_data {
 	struct block_list *bl; ///link to owner object BL_PC|BL_MOB|BL_PET|BL_NPC|BL_HOM|BL_MER|BL_ELEM
@@ -25,10 +25,10 @@ struct unit_data {
 	struct skill_timerskill *skilltimerskill[MAX_SKILLTIMERSKILL];
 	std::vector<std::shared_ptr<s_skill_unit_group>> skillunits;
 	struct skill_unit_group_tickset skillunittick[MAX_SKILLUNITGROUPTICKSET];
-	short attacktarget_lv;
-	short to_x, to_y;
+	int16 attacktarget_lv;
+	int16 to_x, to_y;
 	uint8 sx, sy; // Subtile position (0-15, with 8 being center of cell)
-	short skillx, skilly;
+	int16 skillx, skilly;
 	uint16 skill_id, skill_lv;
 	int32 skilltarget;
 	int32 skilltimer;
@@ -63,7 +63,21 @@ struct unit_data {
 	char title[NAME_LENGTH];
 	int32 group_id;
 
-	std::vector<int> shadow_scar_timer;
+	std::vector<int32> shadow_scar_timer;
+
+	// Functions and struct to calculate and store exact position at a certain tick
+	int16 getx(t_tick tick);
+	int16 gety(t_tick tick);
+	void getpos(int16 &x, int16 &y, uint8 &sx, uint8 &sy, t_tick tick);
+private:
+	void update_pos(t_tick tick);
+	struct {
+		int16 x;
+		int16 y;
+		uint8 sx;
+		uint8 sy;
+		t_tick tick;
+	} pos;
 };
 
 struct view_data {
@@ -101,13 +115,25 @@ enum e_unit_stop_walking {
 	USW_MOVE_ONCE = 0x2, /// Force the unit to move one cell if it hasn't yet
 	USW_MOVE_FULL_CELL = 0x4, /// Enable moving to the next cell when unit was already half-way there (may cause on-touch/place side-effects, such as a scripted map change)
 	USW_FORCE_STOP = 0x8, /// Force stop moving, even if walktimer is currently INVALID_TIMER
-	USW_ALL = 0xf,
+	USW_RELEASE_TARGET = 0x10, /// Release chase target
+	USW_ALL = 0x1f,
+};
+
+/// Enum for delay events
+enum e_delay_event {
+	DELAY_EVENT_ATTACK = 1, /// Executed a normal attack
+	DELAY_EVENT_CASTBEGIN_ID, /// Started casting a target skill
+	DELAY_EVENT_CASTBEGIN_POS, /// Started casting a ground skill
+	DELAY_EVENT_CASTEND, /// Finished casting a skill
+	DELAY_EVENT_CASTCANCEL, /// Skill cast was cancelled
+	DELAY_EVENT_DAMAGED, /// Got damaged
+	DELAY_EVENT_PARRY, /// Parry activated
 };
 
 // PC, MOB, PET
 
 // Does walk action for unit
-int32 unit_walktoxy(struct block_list *bl, short x, short y, unsigned char flag);
+int32 unit_walktoxy(struct block_list *bl, int16 x, int16 y, unsigned char flag);
 int32 unit_walktobl(struct block_list *bl, struct block_list *target, int32 range, unsigned char flag);
 void unit_run_hit(struct block_list *bl, status_change *sc, map_session_data *sd, enum sc_type type);
 bool unit_run(struct block_list *bl, map_session_data *sd, enum sc_type type);
@@ -115,19 +141,22 @@ int32 unit_calc_pos(struct block_list *bl, int32 tx, int32 ty, uint8 dir);
 TIMER_FUNC(unit_delay_walktoxy_timer);
 TIMER_FUNC(unit_delay_walktobl_timer);
 
-void unit_stop_walking_soon(struct block_list& bl);
+void unit_stop_walking_soon(struct block_list& bl, t_tick tick = gettick());
 // Causes the target object to stop moving.
-int32 unit_stop_walking(struct block_list *bl,int32 type);
+bool unit_stop_walking( block_list* bl, int32 type, t_tick canmove_delay = 0 );
 bool unit_can_move(struct block_list *bl);
 int32 unit_is_walking(struct block_list *bl);
+
+// Delay functions
+void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event);
 int32 unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int32 type);
 
 t_tick unit_get_walkpath_time(struct block_list& bl);
-t_tick unit_escape(struct block_list *bl, struct block_list *target, short dist, uint8 flag = 0);
+t_tick unit_escape(struct block_list *bl, struct block_list *target, int16 dist, uint8 flag = 0);
 
 // Instant unit changes
-bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int32 easy, bool checkpath);
-int32 unit_warp(struct block_list *bl, short map, short x, short y, clr_type type);
+bool unit_movepos(struct block_list *bl, int16 dst_x, int16 dst_y, int32 easy, bool checkpath);
+int32 unit_warp(struct block_list *bl, int16 map, int16 x, int16 y, clr_type type);
 bool unit_setdir(block_list *bl, uint8 dir, bool send_update = true);
 uint8 unit_getdir(struct block_list *bl);
 int32 unit_blown(struct block_list* bl, int32 dx, int32 dy, int32 count, enum e_skill_blown flag);
@@ -135,7 +164,7 @@ enum e_unit_blown unit_blown_immune(struct block_list* bl, uint8 flag);
 
 // Can-reach checks
 bool unit_can_reach_pos(struct block_list *bl,int32 x,int32 y,int32 easy);
-bool unit_can_reach_bl(struct block_list *bl,struct block_list *tbl, int32 range, int32 easy, short *x, short *y);
+bool unit_can_reach_bl(struct block_list *bl,struct block_list *tbl, int32 range, int32 easy, int16 *x, int16 *y);
 
 // Unit attack functions
 int32 unit_stopattack(struct block_list *bl, va_list ap);
@@ -146,9 +175,9 @@ bool unit_can_attack(struct block_list *bl, int32 target_id);
 
 // Cast on a unit
 int32 unit_skilluse_id(struct block_list *src, int32 target_id, uint16 skill_id, uint16 skill_lv);
-int32 unit_skilluse_pos(struct block_list *src, short skill_x, short skill_y, uint16 skill_id, uint16 skill_lv);
+int32 unit_skilluse_pos(struct block_list *src, int16 skill_x, int16 skill_y, uint16 skill_id, uint16 skill_lv);
 int32 unit_skilluse_id2(struct block_list *src, int32 target_id, uint16 skill_id, uint16 skill_lv, int32 casttime, int32 castcancel, bool ignore_range = false);
-int32 unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, uint16 skill_id, uint16 skill_lv, int32 casttime, int32 castcancel, bool ignore_range = false);
+int32 unit_skilluse_pos2( struct block_list *src, int16 skill_x, int16 skill_y, uint16 skill_id, uint16 skill_lv, int32 casttime, int32 castcancel, bool ignore_range = false);
 
 // Step timer used for delayed attack and skill use
 TIMER_FUNC(unit_step_timer);

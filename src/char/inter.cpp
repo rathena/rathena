@@ -455,7 +455,7 @@ void inter_to_fd(int32 fd, int32 u_fd, int32 aid, char* msg, ...) {
 	WFIFOHEAD(fd,12 + len);
 
 	WFIFOW(fd,0) = 0x3807;
-	WFIFOW(fd,2) = 12 + (unsigned short)len;
+	WFIFOW(fd,2) = 12 + (uint16)len;
 	WFIFOL(fd,4) = u_fd;
 	WFIFOL(fd,8) = aid;
 	safestrncpy(WFIFOCP(fd,12), msg_out, len);
@@ -517,7 +517,7 @@ void mapif_parse_accinfo(int32 fd) {
 				inter_to_fd(fd, u_fd, u_aid, (char *)msg_txt(214),(int32)Sql_NumRows(sql_handle)); // Your query returned the following %d results, please be more specific...
 				while ( SQL_SUCCESS == Sql_NextRow(sql_handle) ) {
 					int32 class_;
-					short base_level, job_level, online;
+					int16 base_level, job_level, online;
 					char name[NAME_LENGTH];
 
 					Sql_GetData(sql_handle, 0, &data, nullptr); account_id = atoi(data);
@@ -574,7 +574,7 @@ void mapif_accinfo_ack( bool success, int32 map_fd, int32 u_fd, int32 u_aid, int
 	} else {
 		while ( SQL_SUCCESS == Sql_NextRow(sql_handle) ) {
 			uint32 char_id, class_;
-			short char_num, base_level, job_level, online;
+			int16 char_num, base_level, job_level, online;
 			char name[NAME_LENGTH];
 			char *data;
 
@@ -1055,7 +1055,7 @@ int32 inter_mapif_init(int32 fd)
 //--------------------------------------------------------
 
 // broadcast sending
-int32 mapif_broadcast(unsigned char *mes, int32 len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY, int32 sfd)
+int32 mapif_broadcast(unsigned char *mes, int32 len, unsigned long fontColor, int16 fontType, int16 fontSize, int16 fontAlign, int16 fontY, int32 sfd)
 {
 	unsigned char *buf = (unsigned char*)aMalloc((len)*sizeof(unsigned char));
 

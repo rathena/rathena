@@ -80,7 +80,7 @@ int32 guild_check_alliance(int32 guild_id1, int32 guild_id2, int32 flag);
 
 int32 guild_send_memberinfoshort(map_session_data *sd,int32 online);
 int32 guild_recv_memberinfoshort(int32 guild_id,uint32 account_id,uint32 char_id,int32 online,int32 lv,int32 class_);
-int32 guild_change_memberposition(int32 guild_id,uint32 account_id,uint32 char_id,short idx);
+int32 guild_change_memberposition(int32 guild_id,uint32 account_id,uint32 char_id,int16 idx);
 int32 guild_memberposition_changed(struct mmo_guild &g,int32 idx,int32 pos);
 int32 guild_change_position(int32 guild_id,int32 idx,int32 mode,int32 exp_mode,const char *name);
 int32 guild_position_changed(int32 guild_id,int32 idx,struct guild_position *p);

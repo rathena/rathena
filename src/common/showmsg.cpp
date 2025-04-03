@@ -377,7 +377,7 @@ int32	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 
 					uint8 num = (numbers[numpoint]>>4)*10+(numbers[numpoint]&0x0F);
 					COORD origin = {0,info.dwCursorPosition.Y}; //warning C4204
-					SHORT cnt;
+					int16 cnt;
 					DWORD tmp;
 					if(num==1)
 					{

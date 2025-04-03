@@ -107,7 +107,7 @@ int32 mapindex_addmap(int32 index, const char* name) {
 	return index;
 }
 
-unsigned short mapindex_name2idx(const char* name, const char *func) {
+uint16 mapindex_name2idx(const char* name, const char *func) {
 	int32 i;
 	char map_name[MAP_NAME_LENGTH];
 	mapindex_getmapname(name, map_name);
@@ -120,7 +120,7 @@ unsigned short mapindex_name2idx(const char* name, const char *func) {
 	return 0;
 }
 
-const char* mapindex_idx2name(unsigned short id, const char *func) {
+const char* mapindex_idx2name(uint16 id, const char *func) {
 	if (id >= MAX_MAPINDEX || !mapindex_exists(id)) {
 		ShowDebug("(%s) mapindex_id2name: Requested name for non-existant map index [%d] in cache.\n", func, id);
 		return indexes[0].name; // dummy empty string so that the callee doesn't crash

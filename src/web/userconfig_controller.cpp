@@ -37,7 +37,7 @@ HANDLER_FUNC(userconfig_save) {
 	if (SQL_SUCCESS != stmt.Prepare(
 			"SELECT `data` FROM `%s` WHERE (`account_id` = ? AND `world_name` = ?) LIMIT 1",
 			user_configs_table)
-		|| SQL_SUCCESS != stmt.BindParam(0, SQLDT_INT, &account_id, sizeof(account_id))
+		|| SQL_SUCCESS != stmt.BindParam(0, SQLDT_INT32, &account_id, sizeof(account_id))
 		|| SQL_SUCCESS != stmt.BindParam(1, SQLDT_STRING, (void *)world_name.c_str(), world_name.length())
 		|| SQL_SUCCESS != stmt.Execute()
 	) {
@@ -71,7 +71,7 @@ HANDLER_FUNC(userconfig_save) {
 	if (SQL_SUCCESS != stmt.Prepare(
 			"REPLACE INTO `%s` (`account_id`, `world_name`, `data`) VALUES (?, ?, ?)",
 			user_configs_table)
-		|| SQL_SUCCESS != stmt.BindParam(0, SQLDT_INT, &account_id, sizeof(account_id))
+		|| SQL_SUCCESS != stmt.BindParam(0, SQLDT_INT32, &account_id, sizeof(account_id))
 		|| SQL_SUCCESS != stmt.BindParam(1, SQLDT_STRING, (void *)world_name.c_str(), world_name.length())
 		|| SQL_SUCCESS != stmt.BindParam(2, SQLDT_STRING, (void *)data_str.c_str(), data_str.length())
 		|| SQL_SUCCESS != stmt.Execute()
@@ -112,7 +112,7 @@ HANDLER_FUNC(userconfig_load) {
 	if (SQL_SUCCESS != stmt.Prepare(
 			"SELECT `data` FROM `%s` WHERE (`account_id` = ? AND `world_name` = ?) LIMIT 1",
 			user_configs_table)
-		|| SQL_SUCCESS != stmt.BindParam(0, SQLDT_INT, &account_id, sizeof(account_id))
+		|| SQL_SUCCESS != stmt.BindParam(0, SQLDT_INT32, &account_id, sizeof(account_id))
 		|| SQL_SUCCESS != stmt.BindParam(1, SQLDT_STRING, (void *)world_name, strlen(world_name))
 		|| SQL_SUCCESS != stmt.Execute()
 	) {
@@ -127,7 +127,7 @@ HANDLER_FUNC(userconfig_load) {
 		std::string data = "{\"Type\": 1}";
 
 		if( SQL_SUCCESS != stmt.Prepare( "INSERT INTO `%s` (`account_id`, `world_name`, `data`) VALUES (?, ?, ?)", user_configs_table ) ||
-			SQL_SUCCESS != stmt.BindParam( 0, SQLDT_INT, &account_id, sizeof( account_id ) ) ||
+			SQL_SUCCESS != stmt.BindParam( 0, SQLDT_INT32, &account_id, sizeof( account_id ) ) ||
 			SQL_SUCCESS != stmt.BindParam( 1, SQLDT_STRING, (void *)world_name, strlen( world_name ) ) ||
 			SQL_SUCCESS != stmt.BindParam( 2, SQLDT_STRING, (void *)data.c_str(), strlen( data.c_str() ) ) ||
 			SQL_SUCCESS != stmt.Execute() ){

@@ -400,13 +400,13 @@ Body:
             Item: Shadow_Orb
             Amount: 500
       - Index: 18
-        Item: Shadow_Orb_Bundle
+        Item: SS_Charm_Box
         RequiredItems:
           - Index: 0
-            Item: Shadow_Orb
+            Item: SS_Charm
             Amount: 500
       - Index: 19
-        Item: SS_Charm_Box
+        Item: SS_Charm_F_Box
         RequiredItems:
           - Index: 0
             Item: SS_Charm_F
