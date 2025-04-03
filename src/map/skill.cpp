@@ -10079,8 +10079,8 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 
 	case TF_BACKSLIDING: //This is the correct implementation as per packet logging information. [Skotlex]
 		{
-			// Backsliding makes you immune to being stopped for 200ms, but only if you weren't immune already
-			if (unit_data* ud = unit_bl2ud(bl); ud != nullptr && DIFF_TICK(ud->endure_tick, tick) < 0)
+			// Backsliding makes you immune to being stopped for 200ms, but only if you don't have the endure effect yet
+			if (unit_data* ud = unit_bl2ud(bl); ud != nullptr && !status_isendure(*bl, tick, true))
 				ud->endure_tick = tick + 200;
 
 			int16 blew_count = skill_blown(src,bl,skill_get_blewcount(skill_id,skill_lv),unit_getdir(bl),(enum e_skill_blown)(BLOWN_IGNORE_NO_KNOCKBACK

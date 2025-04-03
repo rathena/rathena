@@ -10662,12 +10662,14 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 			break;
 
 		case SC_KEEPING:
-		case SC_BARRIER: {
-			unit_data *ud = unit_bl2ud(bl);
-
-			if (ud)
-				ud->attackabletime = ud->canact_tick = ud->canmove_tick = ud->endure_tick = gettick() + tick;
-		}
+		case SC_BARRIER:
+			if (unit_data* ud = unit_bl2ud(bl); ud != nullptr) {
+				t_tick endtick = gettick() + tick;
+				ud->attackabletime = endtick;
+				ud->canact_tick = endtick;
+				ud->canmove_tick = endtick;
+				ud->endure_tick = endtick;
+			}
 			break;
 		case SC_DECREASEAGI:
 		case SC_INCREASEAGI:
@@ -13334,12 +13336,14 @@ int32 status_change_end( struct block_list* bl, enum sc_type type, int32 tid ){
 
 	switch(type) {
 		case SC_KEEPING:
-		case SC_BARRIER: {
-			unit_data *ud = unit_bl2ud(bl);
-
-			if (ud)
-				ud->attackabletime = ud->canact_tick = ud->canmove_tick = ud->endure_tick = gettick();
-		}
+		case SC_BARRIER:
+			if (unit_data* ud = unit_bl2ud(bl); ud != nullptr) {
+				t_tick endtick = gettick();
+				ud->attackabletime = endtick;
+				ud->canact_tick = endtick;
+				ud->canmove_tick = endtick;
+				ud->endure_tick = endtick;
+			}
 			break;
 		case SC_GRANITIC_ARMOR:
 			{
