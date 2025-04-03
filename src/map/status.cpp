@@ -9242,9 +9242,9 @@ int32 status_isimmune(struct block_list *bl)
  */
 bool status_isendure(block_list& bl, t_tick tick, bool visible)
 {
-	// Officially the bonus "no_walk_delay" is actually just SC_ENDURE with unlimited duration
-	// Endure is forbidden on some maps, but we don't apply this on this bonus
-	// That's why we need to check it here
+	// Officially the bonus "no_walk_delay" is actually just SC_ENDURE with unlimited duration.
+	// Endure is forbidden on some maps, but the bonus is still set to true on such maps.
+	// That's why we need to check it here and disable the bonus to correctly mimic official behavior.
 	if (bl.m >= 0 && bl.type == BL_PC && !status_change_isDisabledOnMap(SC_ENDURE, map_getmapdata(bl.m))) {
 		if (reinterpret_cast<map_session_data&>(bl).special_state.no_walk_delay)
 			return true;
