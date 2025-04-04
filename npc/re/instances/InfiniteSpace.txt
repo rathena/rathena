@@ -226,7 +226,7 @@ OnSummonPoring:
 	.@event2$ = instance_npcname(strnpcinfo(0)) + "::OnPoringKill";
 	if (!mobcount('map$,.@event2$)) {
 		explode(.@xy$,getd("'xy_" + 'floor + "$"),",");
-		areamonster 'map$,atoi(.@xy$[0]),atoi(.@xy$[1]),atoi(.@xy$[2]),atoi(.@xy$[3]),"--ja--",3494,1,.@event2$;
+		areamonster 'map$,atoi(.@xy$[0]),atoi(.@xy$[1]),atoi(.@xy$[2]),atoi(.@xy$[3]),"--en--",3494,1,.@event2$;
 		initnpctimer;
 	}
 	end;
@@ -496,7 +496,7 @@ OnSummon:
 
 	explode(.@xy$,getd("'xy_" + 'floor + "$"),",");
 	for (.@i = 0; .@i < getarraysize(.@mob); .@i++) {
-		areamonster 'map$,atoi(.@xy$[0]),atoi(.@xy$[1]),atoi(.@xy$[2]),atoi(.@xy$[3]),"--ja--",.@mob[.@i],.@amount[.@i],.@event$;
+		areamonster 'map$,atoi(.@xy$[0]),atoi(.@xy$[1]),atoi(.@xy$[2]),atoi(.@xy$[3]),"--en--",.@mob[.@i],.@amount[.@i],.@event$;
 		if (('floor % 10) == 0) {
 			'boss_id = $@mobid[0];
 			donpcevent instance_npcname(strnpcinfo(0)) + "::OnUnitSpawn";
@@ -508,7 +508,7 @@ OnSummon:
 			while ('last_boss == .@boss_id)
 				.@boss_id = rand(3421,3425);
 			'last_boss = .@boss_id;
-			areamonster 'map$,atoi(.@xy$[0]),atoi(.@xy$[1]),atoi(.@xy$[2]),atoi(.@xy$[3]),"--ja--",.@boss_id,1,.@event$;
+			areamonster 'map$,atoi(.@xy$[0]),atoi(.@xy$[1]),atoi(.@xy$[2]),atoi(.@xy$[3]),"--en--",.@boss_id,1,.@event$;
 		}
 	}
 	end;
@@ -526,7 +526,7 @@ OnUnitSpawn:
 	.@index = inarray(.@mob_id,.@data[UMOB_CLASS]);
 	.@x = .@data[UMOB_X];
 	.@y = .@data[UMOB_Y];
-	areamonster 'map$,.@x,.@y,.@x,.@y,"--ja--",.@spawn[.@index],.@amount[.@index],.@event$;
+	areamonster 'map$,.@x,.@y,.@x,.@y,"--en--",.@spawn[.@index],.@amount[.@index],.@event$;
 	if ('mode == 2) {
 		sleep 10000;
 		while (.@index < getarraysize(.@unit_id)) {
@@ -535,7 +535,7 @@ OnUnitSpawn:
 				getunitdata 'boss_id,.@data;
 				.@x = .@data[UMOB_X];
 				.@y = .@data[UMOB_Y];
-				areamonster 'map$,.@x - 3,.@y - 3,.@x + 3,.@y + 3,"--ja--",.@unit_id[.@index],.@unit_amount[.@index],.@event$;
+				areamonster 'map$,.@x - 3,.@y - 3,.@x + 3,.@y + 3,"--en--",.@unit_id[.@index],.@unit_amount[.@index],.@event$;
 				.@index++;
 			} else 
 				break;
