@@ -3433,7 +3433,7 @@ void unit_dataset(struct block_list *bl)
 	ud->canact_tick = tick;
 	ud->canmove_tick = tick;
 	ud->endure_tick = tick;
-	ud->dmg_tick = tick - MOVE_REFRESH_TIME;
+	ud->dmg_tick = 0;
 	ud->sx = 8;
 	ud->sy = 8;
 }
