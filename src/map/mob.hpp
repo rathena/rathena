@@ -373,7 +373,7 @@ struct mob_data {
 	int32 areanpc_id; //Required in OnTouchNPC (to avoid multiple area touchs)
 	int32 bg_id; // BattleGround System
 
-	t_tick next_walktime,next_thinktime,last_linktime,last_pcneartime,dmgtick,last_canmove,last_skillcheck;
+	t_tick next_walktime,next_thinktime,last_linktime,last_pcneartime,last_canmove,last_skillcheck;
 	t_tick trickcasting; // Special state where you show a fake castbar while moving
 	int16 move_fail_count;
 	int16 lootitem_count;

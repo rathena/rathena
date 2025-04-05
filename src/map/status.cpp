@@ -1572,6 +1572,12 @@ int32 status_damage(struct block_list *src,struct block_list *target,int64 dhp, 
 		if (target->type == BL_PC)
 			pc_bonus_script_clear(BL_CAST(BL_PC,target),BSF_REM_ON_DAMAGED);
 		unit_skillcastcancel(target, 2);
+
+		// Remember last time the unit was hit by a source
+		if (src != nullptr) {
+			if (unit_data* ud = unit_bl2ud(target); ud != nullptr)
+				ud->dmg_tick = gettick();
+		}
 	}
 
 	// We need to log the real damage on exp_calc_type 1

@@ -56,6 +56,12 @@ using namespace rathena;
 	#define MIN_DELAY_SLAVE MAX_ASPD_NOPC * 2
 #endif
 
+// Time frame during which we will send move packets each cell moved after being hit
+// This is needed because damage packets prevent the client from displaying movement for a while
+#ifndef MOVE_REFRESH_TIME
+	#define MOVE_REFRESH_TIME MAX_WALK_SPEED
+#endif
+
 // Directions values
 // 1 0 7
 // 2 . 6
@@ -212,8 +218,13 @@ bool unit_walktoxy_nextcell(block_list& bl, bool sendMove, t_tick tick) {
 		ud->walktimer = INVALID_TIMER;
 	}
 	ud->walktimer = add_timer(tick + speed, unit_walktoxy_timer, bl.id, speed);
-	if (sendMove)
+
+	// Resend move packet when unit was damaged recently
+	if (sendMove || DIFF_TICK(tick, ud->dmg_tick) < MOVE_REFRESH_TIME) {
 		clif_move(*ud);
+		if (bl.type == BL_PC)
+			clif_walkok(reinterpret_cast<map_session_data&>(bl));
+	}
 	return true;
 }
 
@@ -269,9 +280,7 @@ int32 unit_walktoxy_sub(struct block_list *bl)
 
 	if (bl->type == BL_PC) {
 		map_session_data *sd = BL_CAST(BL_PC, bl);
-
 		sd->head_dir = DIR_NORTH;
-		clif_walkok(*sd);
 	}
 #if PACKETVER >= 20170726
 	// If this is a walking NPC and it will use a player sprite
@@ -722,7 +731,7 @@ static TIMER_FUNC(unit_walktoxy_timer)
 
 	ud->walkpath.path_pos++;
 
-	if(unit_walktoxy_nextcell(*bl, (md != nullptr && DIFF_TICK(tick, md->dmgtick) < 3000), tick)) {
+	if(unit_walktoxy_nextcell(*bl, false, tick)) {
 		// Nothing else needs to be done
 	} else if(ud->state.running) { // Keep trying to run.
 		if (!(unit_run(bl, nullptr, SC_RUN) || unit_run(bl, sd, SC_WUGDASH)) )
@@ -3424,6 +3433,7 @@ void unit_dataset(struct block_list *bl)
 	ud->canact_tick = tick;
 	ud->canmove_tick = tick;
 	ud->endure_tick = tick;
+	ud->dmg_tick = 0;
 	ud->sx = 8;
 	ud->sy = 8;
 }
