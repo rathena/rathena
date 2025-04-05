@@ -7141,15 +7141,6 @@ Body:
   - Status: Adaptation
     Icon: EFST_ADAPTATION
     DurationLookup: BD_ADAPTATION
-  - Status: Basilica_Cell
-    States:
-      NoCast: true
-    Flags:
-      NoDispell: true
-      NoBanishingBuster: true
-      NoClearance: true
-      NoClearbuff: true
-      RemoveOnChangeMap: true
   - Status: Entry_Queue_Apply_Delay
     Icon: EFST_ENTRY_QUEUE_APPLY_DELAY
     Flags:
