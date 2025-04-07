@@ -1191,7 +1191,6 @@ int32 mob_spawn (struct mob_data *md)
 	md->ud.state.blockedmove = false;
 	md->next_walktime = tick+rnd()%1000+MIN_RANDOMWALKTIME;
 	md->last_linktime = 0;
-	md->dmgtick = tick - 5000;
 	md->last_pcneartime = 0;
 	md->last_canmove = tick;
 	md->last_skillcheck = tick;
@@ -2701,7 +2700,6 @@ void mob_damage(struct mob_data *md, struct block_list *src, int32 damage)
 			md->state.aggressive = 0;
 		//Log damage
 		mob_log_damage(md, src, static_cast<int64>(damage));
-		md->dmgtick = gettick();
 	}
 
 	if (battle_config.show_mob_info&3)
