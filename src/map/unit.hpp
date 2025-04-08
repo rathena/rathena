@@ -43,6 +43,8 @@ struct unit_data {
 	t_tick attackabletime;
 	t_tick canact_tick;
 	t_tick canmove_tick;
+	t_tick endure_tick; // Time until which unit cannot be stopped
+	t_tick dmg_tick; // Last time the unit was damaged by a source
 	bool immune_attack; ///< Whether the unit is immune to attacks
 	uint8 dir;
 	unsigned char target_count;
