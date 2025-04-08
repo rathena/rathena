@@ -340,7 +340,6 @@ Body:
     Icon: EFST_HIDING
     DurationLookup: TF_HIDING
     States:
-      NoMove: true
       NoMoveCond: true
       NoPickItem: true
       NoConsumeItem: true
@@ -1174,13 +1173,9 @@ Body:
       bonus2 bSubEle,Ele_Wind, getstatus(SC_ARMOR_ELEMENT_WATER, 4);
   - Status: Nochat
     States:
-      NoPickItem: true
       NoPickItemCond: true
-      NoDropItem: true
       NoDropItemCond: true
-      NoChat: true
       NoChatCond: true
-      NoConsumeItem: true
       NoConsumeItemCond: true
     Flags:
       NoRemoveOnDead: true
@@ -1258,7 +1253,6 @@ Body:
     Icon: EFST_GOSPEL
     DurationLookup: PA_GOSPEL
     States:
-      NoMove: true
       NoMoveCond: true
     CalcFlags:
       Speed: true
@@ -1773,7 +1767,6 @@ Body:
     Icon: EFST_BDPLAYING
     DurationLookup: BD_ENCORE
     States:
-      NoMove: true
       NoMoveCond: true
     CalcFlags:
       Speed: true
@@ -3106,7 +3099,6 @@ Body:
   - Status: Fear
     DurationLookup: RK_WINDCUTTER
     States:
-      NoMove: true
       NoMoveCond: true
     CalcFlags:
       Flee: true
@@ -3478,7 +3470,6 @@ Body:
     Icon: EFST_CAMOUFLAGE
     DurationLookup: RA_CAMOUFLAGE
     States:
-      NoMove: true
       NoMoveCond: true
     CalcFlags:
       Speed: true
@@ -3835,8 +3826,7 @@ Body:
   - Status: Oblivioncurse
     Icon: EFST_OBLIVIONCURSE
     States:
-      NoCast: true
-      Nocastcond: true
+      NoCastCond: true
     CalcFlags:
       Regen: true
     Flags:
@@ -3989,9 +3979,7 @@ Body:
     Icon: EFST_COLD
     DurationLookup: SO_DIAMONDDUST
     States:
-      NoMove: true
       NoMoveCond: true
-      NoCast: true
       NoCastCond: true
       NoConsumeItem: true
       NoAttack: true

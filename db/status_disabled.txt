@@ -26,9 +26,13 @@
 // SC_ENDURE,4   // Endure status will be removed when the player enters GvG and WoE Castle maps; Also cannot be inflicted again.
 
 //----------------------------------------------------------------------------
+// Disabled/Removed on all GVG and battleground maps and in WoE:TE Castles
+//----------------------------------------------------------------------------
+SC_ENDURE,28
+
+//----------------------------------------------------------------------------
 // Disabled/Removed statuses in WoE:TE Castles (16)
 //----------------------------------------------------------------------------
-SC_ENDURE,16
 SC_BERSERK,16
 SC_ASSUMPTIO,16
 

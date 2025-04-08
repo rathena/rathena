@@ -234,6 +234,10 @@ void map_destroyblock( block_list* bl ){
 	}
 
 	switch( bl->type ){
+		case BL_NUL:
+			// Dummy type, has no destructor
+			break;
+
 		case BL_PC:
 			// Do not call the destructor here, it will be done in chrif_auth_delete
 			//reinterpret_cast<map_session_data*>( bl )->~map_session_data();
