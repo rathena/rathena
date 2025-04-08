@@ -16177,6 +16177,40 @@ void StatusDatabase::loadingFinished(){
 			status->calc_flag |= this->SCB_ALL;
 		}
 
+		struct{
+			e_scs_flag unconditional;
+			const char* unconditional_str;
+			e_scs_flag conditional;
+			const char* conditional_str;
+		} scs_checks[] = {
+			{ SCS_NOMOVE, QUOTE( SCS_NOMOVE ), SCS_NOMOVECOND, QUOTE( SCS_NOMOVECOND ) },
+			{ SCS_NOPICKITEM, QUOTE( SCS_NOPICKITEM ), SCS_NOPICKITEMCOND, QUOTE( SCS_NOPICKITEMCOND ) },
+			{ SCS_NODROPITEM, QUOTE( SCS_NODROPITEM ), SCS_NODROPITEMCOND, QUOTE( SCS_NODROPITEMCOND ) },
+			{ SCS_NOCAST, QUOTE( SCS_NOCAST ), SCS_NOCASTCOND, QUOTE( SCS_NOCASTCOND ) },
+			{ SCS_NOCHAT, QUOTE( SCS_NOCHAT ), SCS_NOCHATCOND, QUOTE( SCS_NOCHATCOND ) },
+			{ SCS_NOEQUIPITEM, QUOTE( SCS_NOEQUIPITEM ), SCS_NOEQUIPITEMCOND, QUOTE( SCS_NOEQUIPITEMCOND ) },
+			{ SCS_NOUNEQUIPITEM, QUOTE( SCS_NOUNEQUIPITEM ), SCS_NOUNEQUIPITEMCOND, QUOTE( SCS_NOUNEQUIPITEMCOND ) },
+			{ SCS_NOCONSUMEITEM, QUOTE( SCS_NOCONSUMEITEM ), SCS_NOCONSUMEITEMCOND, QUOTE( SCS_NOCONSUMEITEMCOND ) },
+			{ SCS_NOATTACK, QUOTE( SCS_NOATTACK ), SCS_NOATTACKCOND, QUOTE( SCS_NOATTACKCOND ) },
+			{ SCS_NOWARP, QUOTE( SCS_NOWARP ), SCS_NOWARPCOND, QUOTE( SCS_NOWARPCOND ) },
+			{ SCS_NODEATHPENALTY, QUOTE( SCS_NODEATHPENALTY ), SCS_NODEATHPENALTYCOND, QUOTE( SCS_NODEATHPENALTYCOND ) },
+			{ SCS_NOINTERACT, QUOTE( SCS_NOINTERACT ), SCS_NODEATHPENALTYCOND, QUOTE( SCS_NODEATHPENALTYCOND ) }
+		};
+
+		for( const auto& scs_check : scs_checks ){
+			if( status->state[scs_check.conditional] && status->state[scs_check.unconditional] ){
+				const char* constant = script_get_constant_str( "SC_", entry.first );
+
+				if( constant != nullptr ){
+					ShowWarning( "StatusDatabase::loadingFinished: %s and %s defined for status change \"%s\". Removing unconditional...\n", scs_check.conditional_str, scs_check.unconditional_str, constant );
+				}else{
+					ShowWarning( "StatusDatabase::loadingFinished: %s and %s defined for status change \"%d\". Removing unconditional...\n", scs_check.conditional_str, scs_check.unconditional_str, entry.first );
+				}
+
+				status->state.reset( scs_check.conditional );
+			}
+		}
+
 		if (status->type == SC_HALLUCINATION && !battle_config.display_hallucination) // Disable Hallucination.
 			status->icon = EFST_BLANK;
 
