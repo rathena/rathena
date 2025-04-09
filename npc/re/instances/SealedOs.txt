@@ -555,7 +555,7 @@ OnTouch:
 	}
 	setd("'" + strnpcinfo(2),1);
 	for (.@i = 0; .@i < getarraysize(.@xy); .@i += 3)
-		monster 'map$,.@xy[.@i],.@xy[.@i+1],"--ja--",.@xy[.@i+2],1,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+		monster 'map$,.@xy[.@i],.@xy[.@i+1],"--en--",.@xy[.@i+2],1,instance_npcname(strnpcinfo(0))+"::OnMobKill";
 	end;
 
 OnMobKill:
