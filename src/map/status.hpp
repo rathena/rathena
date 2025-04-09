@@ -1031,7 +1031,7 @@ enum sc_type : int16 {
 	SC_WEAPONBLOCK_ON,
 	SC_SPORE_EXPLOSION,
 	SC_ADAPTATION,
-	SC_BASILICA_CELL, // Used in renewal mode for cell_basilica only
+	SC_BASILICA_CELL, // Deprecated
 
 	SC_ENTRY_QUEUE_APPLY_DELAY,
 	SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT,
