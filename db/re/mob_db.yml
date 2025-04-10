@@ -88513,10 +88513,67 @@ Body:
 #    AegisName: GOLD_ANOPHELES
 #  - Id: 3293
 #    AegisName: DAEBAK_GOURD
-#  - Id: 3294
-#    AegisName: HEYDRICH
-#  - Id: 3295
-#    AegisName: G_MOBSTER
+  - Id: 3294
+    AegisName: HEYDRICH
+    Name: Angry Heydrich
+    Level: 126
+    Hp: 3802000
+    BaseExp: 65502
+    JobExp: 41413
+    Attack: 1403
+    Attack2: 1320
+    Defense: 132
+    MagicDefense: 15
+    Str: 144
+    Agi: 66
+    Vit: 77
+    Int: 181
+    Dex: 203
+    Luk: 132
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Dark
+    ElementLevel: 3
+    WalkSpeed: 228
+    AttackDelay: 720
+    AttackMotion: 384
+    DamageMotion: 480
+    Ai: 21
+    Modes:
+      Detector: true
+  - Id: 3295
+    AegisName: G_MOBSTER
+    Name: Boss Guardian
+    Level: 90
+    Hp: 26700
+    Attack: 385
+    Attack2: 162
+    Defense: 88
+    MagicDefense: 37
+    Str: 66
+    Agi: 85
+    Vit: 66
+    Int: 66
+    Dex: 119
+    Luk: 66
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 1220
+    AttackMotion: 1080
+    ClientAttackMotion: 576
+    DamageMotion: 648
+    Ai: 04
+    Modes:
+      FixedItemDrop: true
 #  - Id: 3296
 #    AegisName: HIDDEN_TEST
 #  - Id: 3297
