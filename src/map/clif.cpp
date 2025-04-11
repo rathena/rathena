@@ -5285,9 +5285,6 @@ void clif_damage(block_list& src, block_list& dst, t_tick tick, int32 sdelay, in
 
 	if(&src == &dst) 
 		unit_setdir(&src, unit_getdir(&src));
-
-	//Return adjusted can't walk delay for further processing.
-	//return clif_calc_walkdelay(dst, ddelay, type, damage+damage2, div, tick);
 }
 
 /*==========================================
@@ -6058,9 +6055,6 @@ void clif_skill_damage( block_list& src, block_list& dst, t_tick tick, int32 sde
 		}
 		clif_send( &packet, sizeof( packet ), &src, SELF );
 	}
-
-	//Because the damage delay must be synced with the client, here is where the can-walk tick must be updated. [Skotlex]
-	//return clif_calc_walkdelay(dst, ddelay, type, damage, div, tick);
 }
 
 
