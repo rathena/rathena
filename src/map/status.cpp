@@ -9278,6 +9278,10 @@ int32 status_isimmune(struct block_list *bl)
  */
 bool status_isendure(block_list& bl, t_tick tick, bool visible)
 {
+	// If bl type is set to always have endure, we don't need to check anything else
+	if (battle_config.infinite_endure&bl.type)
+		return true;
+
 	// Officially the bonus "no_walk_delay" is actually just SC_ENDURE with unlimited duration.
 	// Endure is forbidden on some maps, but the bonus is still set to true on such maps.
 	// That's why we need to check it here and disable the bonus to correctly mimic official behavior.
