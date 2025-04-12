@@ -2809,6 +2809,41 @@ int32 mob_getdroprate(struct block_list *src, std::shared_ptr<s_mob_db> mob, int
 	return drop_rate;
 }
 
+/**
+ * Returns the MVP player based on the monster's damage log
+ * This player has the highest value when damage dealt and damage tanked are added together
+ * @return The MVP player
+ */
+map_session_data* mob_data::get_mvp() {
+	// There cannot be an MVP player if the monster is not an MVP
+	if (this->get_bosstype() != BOSSTYPE_MVP)
+		return nullptr;
+
+	int64 mvp_damage = 0;
+	map_session_data* mvp_sd = nullptr;
+
+	for (int32 i = 0; i < this->dmglog.size(); i++) {
+		const s_dmglog& entry = this->dmglog[i];
+
+		map_session_data* tsd = map_charid2sd(entry.id);
+
+		if (tsd == nullptr)
+			continue; // skip players that are offline
+		if (tsd->bl.m != this->bl.m)
+			continue; // skip players not on this map
+		if (pc_isdead(tsd))
+			continue; // skip dead players
+
+		if (mvp_damage >= entry.dmg + entry.dmg_tanked)
+			continue;
+
+		mvp_damage = entry.dmg + entry.dmg_tanked;
+		mvp_sd = tsd;
+	}
+
+	return mvp_sd;
+}
+
 /*==========================================
  * Signals death of mob.
  * type&1 -> no drops, type&2 -> no exp
@@ -2817,7 +2852,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 {
 	struct status_data *status;
 	map_session_data *sd = nullptr, *tmpsd[DAMAGELOG_SIZE];
-	map_session_data *mvp_sd = nullptr, *second_sd = nullptr, *third_sd = nullptr;
+	map_session_data *top_sd = nullptr, *second_sd = nullptr, *third_sd = nullptr;
 
 	struct {
 		struct party_data *p;
@@ -2834,7 +2869,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 
 	if( src && src->type == BL_PC ) {
 		sd = (map_session_data *)src;
-		mvp_sd = sd;
+		top_sd = sd;
 	}
 
 	if( md->guardian_data && md->guardian_data->number >= 0 && md->guardian_data->number < MAX_GUARDIANS )
@@ -2857,8 +2892,15 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 	// filter out entries not eligible for exp distribution
 	memset(tmpsd,0,sizeof(tmpsd));
 
+	// Struct that only contains entries eligible for loot distribution
+	// Also contains combined damage of the players and their slaves
+	struct s_dmg_entry {
+		map_session_data* sd;
+		int64 damage;
+	};
+	std::vector<s_dmg_entry> lootdmg;
+
 	count = 0;
-	int64 mvp_damage = 0;
 	int64 total_damage = 0;
 	for( i = 0; i < md->dmglog.size(); i++ ){
 		const s_dmglog& entry = md->dmglog[i];
@@ -2901,20 +2943,50 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 				break;
 		}
 
-		if( entry.dmg > mvp_damage ){
-			third_sd = second_sd;
-			second_sd = mvp_sd;
-			mvp_sd = tsd;
-			mvp_damage = entry.dmg;
-		}
-
 		tmpsd[i] = tsd; // record as valid damage-log entry
+
+		// Gather data to determine loot priority
+		// Check if player already has an entry
+		auto it = lootdmg.begin();
+		for (it; it != lootdmg.end(); ++it)
+			if (it->sd->bl.id == tsd->bl.id)
+				break;
+
+		if (it == lootdmg.end())
+		{
+			// No matching player found, create new entry for player
+			s_dmg_entry dmg_entry;
+			dmg_entry.sd = tsd;
+			dmg_entry.damage = entry.dmg;
+			lootdmg.push_back(dmg_entry);
+		}
+		else
+		{
+			// Slave damage is added to the player's damage
+			it->damage += entry.dmg;
+		}
+	}
+
+	if (!lootdmg.empty()) {
+		// First player in the damage log gets 30% of total damage as bonus for loot priority
+		lootdmg[0].damage += (total_damage * 30) / 100;
+
+		// Sort list by damage now and determine top 3 damage dealers
+		std::sort(lootdmg.begin(), lootdmg.end(), [](s_dmg_entry& a, s_dmg_entry& b) { return a.damage > b.damage; });
+		top_sd = lootdmg[0].sd;
+		if (lootdmg.size() > 1)
+			second_sd = lootdmg[1].sd;
+		if (lootdmg.size() > 2)
+			third_sd = lootdmg[2].sd;
 	}
 
 	// determines, if the monster was killed by homunculus' damage only
 	homkillonly = (bool)( ( dmgbltypes&BL_HOM ) && !( dmgbltypes&~BL_HOM ) );
 	// determines if the monster was killed by mercenary damage only
 	merckillonly = (bool)((dmgbltypes & BL_MER) && !(dmgbltypes & ~BL_MER));
+
+	// Determine MVP (need to do it here so that it's not influenced by first attacker bonus below)
+	map_session_data* mvp_sd = md->get_mvp();
 
 	if(battle_config.exp_calc_type == 2 && count > 1) {	//Apply first-attacker 200% exp share bonus
 		s_dmglog& entry = md->dmglog[0];
@@ -3082,7 +3154,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 	lootlist->m = md->bl.m;
 	lootlist->x = md->bl.x;
 	lootlist->y = md->bl.y;
-	lootlist->first_charid = (mvp_sd ? mvp_sd->status.char_id : 0);
+	lootlist->first_charid = (top_sd ? top_sd->status.char_id : 0);
 	lootlist->second_charid = (second_sd ? second_sd->status.char_id : 0);
 	lootlist->third_charid = (third_sd ? third_sd->status.char_id : 0);
 
@@ -3103,14 +3175,14 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 		int32 drop_rate, drop_modifier = 100;
 
 #ifdef RENEWAL_DROP
-		drop_modifier = pc_level_penalty_mod( mvp_sd != nullptr ? mvp_sd : second_sd != nullptr ? second_sd : third_sd, PENALTY_DROP, nullptr, md );
+		drop_modifier = pc_level_penalty_mod( top_sd != nullptr ? top_sd : second_sd != nullptr ? second_sd : third_sd, PENALTY_DROP, nullptr, md );
 #endif
 
 		std::shared_ptr<s_item_drop_list> dlist = std::make_shared<s_item_drop_list>();
 		dlist->m = md->bl.m;
 		dlist->x = md->bl.x;
 		dlist->y = md->bl.y;
-		dlist->first_charid = (mvp_sd ? mvp_sd->status.char_id : 0);
+		dlist->first_charid = (top_sd ? top_sd->status.char_id : 0);
 		dlist->second_charid = (second_sd ? second_sd->status.char_id : 0);
 		dlist->third_charid = (third_sd ? third_sd->status.char_id : 0);
 
@@ -3181,17 +3253,17 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 			if (rnd() % 10000 >= drop_rate)
 				continue;
 
-			if (mvp_sd && it->type == IT_PETEGG) {
-				pet_create_egg(mvp_sd, entry->nameid);
+			if (top_sd && it->type == IT_PETEGG) {
+				pet_create_egg(top_sd, entry->nameid);
 				continue;
 			}
 
 			std::shared_ptr<s_item_drop> ditem = mob_setdropitem(entry, 1, md->mob_id);
 
 			//A Rare Drop Global Announce by Lupus
-			if (mvp_sd && entry->rate <= battle_config.rare_drop_announce) {
+			if (top_sd && entry->rate <= battle_config.rare_drop_announce) {
 				char message[128];
-				sprintf(message, msg_txt(nullptr, 541), mvp_sd->status.name, md->name, it->ename.c_str(), (float)drop_rate / 100);
+				sprintf(message, msg_txt(nullptr, 541), top_sd->status.name, md->name, it->ename.c_str(), (float)drop_rate / 100);
 				//MSG: "'%s' won %s's %s (chance: %0.02f%%)"
 				intif_broadcast(message, strlen(message) + 1, BC_DEFAULT);
 			}
@@ -3201,7 +3273,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 		}
 
 		// Ore Discovery (triggers if owner has loot priority, does not require to be the killer)
-		if (mvp_sd && pc_checkskill(mvp_sd, BS_FINDINGORE) > 0) {
+		if (top_sd && pc_checkskill(top_sd, BS_FINDINGORE) > 0) {
 			std::shared_ptr<s_item_group_entry> entry = itemdb_group.get_random_entry(IG_ORE, 1, GROUP_ALGORITHM_DROP);
 			if (entry != nullptr) {
 				std::shared_ptr<s_mob_drop> mobdrop = std::make_shared<s_mob_drop>();
@@ -3264,6 +3336,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 		add_timer(tick + (!battle_config.delay_battle_damage ? 500 : 0), mob_delay_item_drop, md->bl.id, 0);
 	}
 
+	// MVP Reward
 	if( mvp_sd && md->get_bosstype() == BOSSTYPE_MVP ){
 		t_itemid log_mvp_nameid = 0;
 		t_exp log_mvp_exp = 0;
@@ -3367,8 +3440,8 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 	}
 
 	if (type&2 && !sd && md->mob_id == MOBID_EMPERIUM)
-		//Emperium destroyed by script. Discard mvp character. [Skotlex]
-		mvp_sd = nullptr;
+		// Emperium destroyed by script. Discard top damage dealer.
+		top_sd = nullptr;
 
 	rebirth =  ( md->sc.getSCE(SC_KAIZEL) || md->sc.getSCE(SC_ULTIMATE_S) || (md->sc.getSCE(SC_REBIRTH) && !md->state.rebirth) );
 	if( !rebirth ) { // Only trigger event on final kill
@@ -3424,17 +3497,17 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 				pc_setparam(sd, SP_KILLEDRID, md->mob_id);
 				pc_setparam(sd, SP_KILLERRID, sd->bl.id);
 				npc_event(sd,md->npc_event,0);
-			} else if( mvp_sd ) {
-				pc_setparam(mvp_sd, SP_KILLEDGID, md->bl.id);
-				pc_setparam(mvp_sd, SP_KILLEDRID, md->mob_id);
-				pc_setparam(mvp_sd, SP_KILLERRID, sd?sd->bl.id:0);
-				npc_event(mvp_sd,md->npc_event,0);
+			} else if( top_sd ) {
+				pc_setparam(top_sd, SP_KILLEDGID, md->bl.id);
+				pc_setparam(top_sd, SP_KILLEDRID, md->mob_id);
+				pc_setparam(top_sd, SP_KILLERRID, sd?sd->bl.id:0);
+				npc_event(top_sd,md->npc_event,0);
 			} else
 				npc_event_do(md->npc_event);
-		} else if( mvp_sd && !md->state.npc_killmonster ) {
-			pc_setparam(mvp_sd, SP_KILLEDGID, md->bl.id);
-			pc_setparam(mvp_sd, SP_KILLEDRID, md->mob_id);
-			npc_script_event( *mvp_sd, NPCE_KILLNPC );
+		} else if( top_sd && !md->state.npc_killmonster ) {
+			pc_setparam(top_sd, SP_KILLEDGID, md->bl.id);
+			pc_setparam(top_sd, SP_KILLEDRID, md->mob_id);
+			npc_script_event( *top_sd, NPCE_KILLNPC );
 		}
 	}
 
@@ -3474,7 +3547,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 
 	// MvP tomb [GreenBox]
 	if (battle_config.mvp_tomb_enabled && md->spawn->state.boss && map_getmapflag(md->bl.m, MF_NOTOMB) != 1)
-		mvptomb_create(md, mvp_sd ? mvp_sd->status.name : nullptr, time(nullptr));
+		mvptomb_create(md, top_sd ? top_sd->status.name : nullptr, time(nullptr));
 
 	if( !rebirth )
 		mob_setdelayspawn(md); //Set respawning.
