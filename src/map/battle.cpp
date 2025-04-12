@@ -271,7 +271,7 @@ static t_tick battle_calc_walkdelay(block_list& bl, int64 damage, int16 div_, t_
 	if (status_isendure(bl, tick, false))
 		return 0;
 
-	int32 delay = status_get_status_data(bl)->dmotion;	
+	t_tick delay = status_get_status_data(bl)->dmotion;	
 
 	// Multi-hit skills mean higher delays
 	if (div_ > 1) {
@@ -282,12 +282,10 @@ static t_tick battle_calc_walkdelay(block_list& bl, int64 damage, int16 div_, t_
 	}
 
 	if (bl.type == BL_PC) {
-		if (battle_config.pc_walk_delay_rate != 100)
-			delay = delay * battle_config.pc_walk_delay_rate / 100;
+		delay = apply_rate( delay, battle_config.pc_walk_delay_rate );
 	}
 	else
-		if (battle_config.walk_delay_rate != 100)
-			delay = delay * battle_config.walk_delay_rate / 100;
+		delay = apply_rate( delay, battle_config.walk_delay_rate );
 
 	return (delay > 0) ? delay : 1; //Return 1 to specify there should be no noticeable delay, but you should stop walking.
 }
@@ -7354,7 +7352,7 @@ static void battle_calc_weapon_final_atk_modifiers(struct Damage* wd, struct blo
 		ATK_RATER(wd->damage, 50)
 		clif_skill_nodamage(target, *target,ST_REJECTSWORD, tsc->getSCE(SC_REJECTSWORD)->val1);
 		clif_damage(*target, *src, gettick(), 0, 0, wd->damage, 0, DMG_NORMAL, 0, false);
-		battle_fix_damage(target,src,wd->damage,wd->div_,ST_REJECTSWORD);
+		battle_fix_damage(target, src, wd->damage, wd->div_, ST_REJECTSWORD);
 		if (status_isdead(*target))
 			return;
 		if( --(tsc->getSCE(SC_REJECTSWORD)->val3) <= 0 )
@@ -7662,7 +7660,6 @@ void battle_do_reflect(int32 attack_type, struct Damage *wd, struct block_list* 
 				clif_damage(*src, (d_bl == nullptr) ? *src : *d_bl, tick, wd->amotion, sstatus->dmotion, rdamage, 1, DMG_ENDURE, 0, false);
 				if( tsd )
 					battle_drain(tsd, src, rdamage, rdamage, sstatus->race, sstatus->class_);
-				// It appears that official servers give skill reflect damage a longer delay
 				battle_delay_damage(tick, wd->amotion, target, (!d_bl) ? src : d_bl, 0, CR_REFLECTSHIELD, 0, rdamage, ATK_DEF, 1, true, false);
 				skill_additional_effect(target, (!d_bl) ? src : d_bl, CR_REFLECTSHIELD, 1, BF_WEAPON|BF_SHORT|BF_NORMAL, ATK_DEF, tick);
 			}
@@ -10668,7 +10665,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		}
 	}
 
-	clif_damage(*src, *target, tick, wd.amotion, wd.dmotion, wd.damage, wd.div_ , wd.type, wd.damage2, wd.isspdamage);
+	clif_damage(*src, *target, tick, wd.amotion, wd.dmotion, wd.damage, wd.div_, wd.type, wd.damage2, wd.isspdamage);
 
 	if (sd && sd->bonus.splash_range > 0 && damage > 0)
 		skill_castend_damage_id(src, target, 0, 1, tick, 0);
