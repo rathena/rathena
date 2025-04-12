@@ -281,11 +281,10 @@ static t_tick battle_calc_walkdelay(block_list& bl, int64 damage, int16 div_, t_
 		delay += battle_config.multihit_delay * (div_ - 1);
 	}
 
-	if (bl.type == BL_PC) {
-		delay = apply_rate( delay, battle_config.pc_walk_delay_rate );
-	}
+	if (bl.type == BL_PC)
+		delay = apply_rate(delay, battle_config.pc_walk_delay_rate);
 	else
-		delay = apply_rate( delay, battle_config.walk_delay_rate );
+		delay = apply_rate(delay, battle_config.walk_delay_rate);
 
 	return (delay > 0) ? delay : 1; //Return 1 to specify there should be no noticeable delay, but you should stop walking.
 }
