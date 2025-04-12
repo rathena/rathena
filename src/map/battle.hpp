@@ -229,6 +229,7 @@ struct Battle_Config
 	int32 pc_walk_delay_rate; //Adjusts can't walk delay after being hit for players. [Skotlex]
 	int32 walk_delay_rate; //Adjusts can't walk delay after being hit. [Skotlex]
 	int32 multihit_delay;  //Adjusts can't walk delay per hit on multi-hitting skills. [Skotlex]
+	int32 infinite_endure; // Always have endure
 	int32 quest_skill_learn;
 	int32 quest_skill_reset;
 	int32 basic_skill_check;
