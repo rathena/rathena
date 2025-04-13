@@ -4073,10 +4073,19 @@ void mobskill_delay(mob_data& md, t_tick tick)
 		// If the skill cannot be found anymore because the monster's state has changed no delay will be applied
 		int32 delay = 0;
 		for (int32 i = 0; i < ms.size(); i++) {
-			if (ms[i]->state == md.state.skillstate && ms[i]->skill_id == ms[md.skill_idx]->skill_id) {
+			if (ms[i]->skill_id == ms[md.skill_idx]->skill_id) {
+				bool match = false;
+				if (ms[i]->state == md.state.skillstate)
+					match = true;
+				else if (ms[i]->state == MSS_ANY)
+					match = true;
+				else if (ms[i]->state == MSS_ANYTARGET && md.target_id != 0 && md.state.skillstate != MSS_LOOT)
+					match = true;
 				// State and skill match, use the first delay found
-				delay = ms[i]->delay;
-				break;
+				if (match) {
+					delay = ms[i]->delay;
+					break;
+				}
 			}
 		}
 		// Apply delay found to all entries of the skill
