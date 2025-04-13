@@ -2850,7 +2850,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 {
 	struct status_data *status;
 	map_session_data *sd = nullptr, *tmpsd[DAMAGELOG_SIZE];
-	map_session_data *top_sd = nullptr, *second_sd = nullptr, *third_sd = nullptr;
+	map_session_data *first_sd = nullptr, *second_sd = nullptr, *third_sd = nullptr;
 
 	struct {
 		struct party_data *p;
@@ -2867,7 +2867,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 
 	if( src && src->type == BL_PC ) {
 		sd = (map_session_data *)src;
-		top_sd = sd;
+		first_sd = sd;
 	}
 
 	if( md->guardian_data && md->guardian_data->number >= 0 && md->guardian_data->number < MAX_GUARDIANS )
@@ -2970,7 +2970,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 		std::sort(lootdmg.begin(), lootdmg.end(), [](s_dmg_entry& a, s_dmg_entry& b) {
 			return a.damage > b.damage;
 		});
-		top_sd = lootdmg[0].sd;
+		first_sd = lootdmg[0].sd;
 		if (lootdmg.size() > 1)
 			second_sd = lootdmg[1].sd;
 		if (lootdmg.size() > 2)
@@ -3151,7 +3151,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 	lootlist->m = md->bl.m;
 	lootlist->x = md->bl.x;
 	lootlist->y = md->bl.y;
-	lootlist->first_charid = (top_sd != nullptr ? top_sd->status.char_id : 0);
+	lootlist->first_charid = (first_sd != nullptr ? first_sd->status.char_id : 0);
 	lootlist->second_charid = (second_sd ? second_sd->status.char_id : 0);
 	lootlist->third_charid = (third_sd ? third_sd->status.char_id : 0);
 
@@ -3172,14 +3172,14 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 		int32 drop_rate, drop_modifier = 100;
 
 #ifdef RENEWAL_DROP
-		drop_modifier = pc_level_penalty_mod( top_sd != nullptr ? top_sd : second_sd != nullptr ? second_sd : third_sd, PENALTY_DROP, nullptr, md );
+		drop_modifier = pc_level_penalty_mod( first_sd != nullptr ? first_sd : second_sd != nullptr ? second_sd : third_sd, PENALTY_DROP, nullptr, md );
 #endif
 
 		std::shared_ptr<s_item_drop_list> dlist = std::make_shared<s_item_drop_list>();
 		dlist->m = md->bl.m;
 		dlist->x = md->bl.x;
 		dlist->y = md->bl.y;
-		dlist->first_charid = (top_sd != nullptr ? top_sd->status.char_id : 0);
+		dlist->first_charid = (first_sd != nullptr ? first_sd->status.char_id : 0);
 		dlist->second_charid = (second_sd ? second_sd->status.char_id : 0);
 		dlist->third_charid = (third_sd ? third_sd->status.char_id : 0);
 
@@ -3250,17 +3250,17 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 			if (rnd() % 10000 >= drop_rate)
 				continue;
 
-			if (top_sd != nullptr && it->type == IT_PETEGG) {
-				pet_create_egg(top_sd, entry->nameid);
+			if (first_sd != nullptr && it->type == IT_PETEGG) {
+				pet_create_egg(first_sd, entry->nameid);
 				continue;
 			}
 
 			std::shared_ptr<s_item_drop> ditem = mob_setdropitem(entry, 1, md->mob_id);
 
 			//A Rare Drop Global Announce by Lupus
-			if (top_sd != nullptr && entry->rate <= battle_config.rare_drop_announce) {
+			if (first_sd != nullptr && entry->rate <= battle_config.rare_drop_announce) {
 				char message[128];
-				sprintf(message, msg_txt(nullptr, 541), top_sd->status.name, md->name, it->ename.c_str(), (float)drop_rate / 100);
+				sprintf(message, msg_txt(nullptr, 541), first_sd->status.name, md->name, it->ename.c_str(), (float)drop_rate / 100);
 				//MSG: "'%s' won %s's %s (chance: %0.02f%%)"
 				intif_broadcast(message, strlen(message) + 1, BC_DEFAULT);
 			}
@@ -3270,7 +3270,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 		}
 
 		// Ore Discovery (triggers if owner has loot priority, does not require to be the killer)
-		if (top_sd != nullptr && pc_checkskill(top_sd, BS_FINDINGORE) > 0) {
+		if (first_sd != nullptr && pc_checkskill(first_sd, BS_FINDINGORE) > 0) {
 			std::shared_ptr<s_item_group_entry> entry = itemdb_group.get_random_entry(IG_ORE, 1, GROUP_ALGORITHM_DROP);
 			if (entry != nullptr) {
 				std::shared_ptr<s_mob_drop> mobdrop = std::make_shared<s_mob_drop>();
@@ -3438,7 +3438,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 
 	if (type&2 && !sd && md->mob_id == MOBID_EMPERIUM)
 		// Emperium destroyed by script. Discard top damage dealer.
-		top_sd = nullptr;
+		first_sd = nullptr;
 
 	rebirth =  ( md->sc.getSCE(SC_KAIZEL) || md->sc.getSCE(SC_ULTIMATE_S) || (md->sc.getSCE(SC_REBIRTH) && !md->state.rebirth) );
 	if( !rebirth ) { // Only trigger event on final kill
@@ -3494,17 +3494,17 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 				pc_setparam(sd, SP_KILLEDRID, md->mob_id);
 				pc_setparam(sd, SP_KILLERRID, sd->bl.id);
 				npc_event(sd,md->npc_event,0);
-			} else if( top_sd != nullptr ) {
-				pc_setparam(top_sd, SP_KILLEDGID, md->bl.id);
-				pc_setparam(top_sd, SP_KILLEDRID, md->mob_id);
-				pc_setparam(top_sd, SP_KILLERRID, sd?sd->bl.id:0);
-				npc_event(top_sd,md->npc_event,0);
+			} else if( first_sd != nullptr ) {
+				pc_setparam(first_sd, SP_KILLEDGID, md->bl.id);
+				pc_setparam(first_sd, SP_KILLEDRID, md->mob_id);
+				pc_setparam(first_sd, SP_KILLERRID, sd?sd->bl.id:0);
+				npc_event(first_sd,md->npc_event,0);
 			} else
 				npc_event_do(md->npc_event);
-		} else if( top_sd != nullptr && !md->state.npc_killmonster ) {
-			pc_setparam(top_sd, SP_KILLEDGID, md->bl.id);
-			pc_setparam(top_sd, SP_KILLEDRID, md->mob_id);
-			npc_script_event( *top_sd, NPCE_KILLNPC );
+		} else if( first_sd != nullptr && !md->state.npc_killmonster ) {
+			pc_setparam(first_sd, SP_KILLEDGID, md->bl.id);
+			pc_setparam(first_sd, SP_KILLEDRID, md->mob_id);
+			npc_script_event( *first_sd, NPCE_KILLNPC );
 		}
 	}
 
@@ -3544,7 +3544,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 
 	// MvP tomb [GreenBox]
 	if (battle_config.mvp_tomb_enabled && md->spawn->state.boss && map_getmapflag(md->bl.m, MF_NOTOMB) != 1)
-		mvptomb_create(md, mvp_sd != nullptr ? mvp_sd->status.name : (top_sd != nullptr ? top_sd->status.name : nullptr), time(nullptr));
+		mvptomb_create(md, mvp_sd != nullptr ? mvp_sd->status.name : (first_sd != nullptr ? first_sd->status.name : nullptr), time(nullptr));
 
 	if( !rebirth )
 		mob_setdelayspawn(md); //Set respawning.
