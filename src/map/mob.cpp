@@ -4071,27 +4071,57 @@ void mobskill_delay(mob_data& md, t_tick tick)
 		// Even though we already know which skill was picked as we stored that in skill_idx
 		// Officially it actually tries to find the skill again using the monster's current state
 		// If the skill cannot be found anymore because the monster's state has changed no delay will be applied
-		int32 delay = 0;
-		for (int32 i = 0; i < ms.size(); i++) {
-			if (ms[i]->skill_id == ms[md.skill_idx]->skill_id) {
-				bool match = false;
-				if (ms[i]->state == md.state.skillstate)
-					match = true;
-				else if (ms[i]->state == MSS_ANY)
-					match = true;
-				else if (ms[i]->state == MSS_ANYTARGET && md.target_id != 0 && md.state.skillstate != MSS_LOOT)
-					match = true;
-				// State and skill match, use the first delay found
-				if (match) {
-					delay = ms[i]->delay;
-					break;
-				}
+		t_tick delay = 0;
+		for (const auto& it : ms) {
+			// Check if the skill id matches
+			if (it->skill_id != ms[md.skill_idx]->skill_id) {
+				// Skip other skills
+				continue;
+			}
+
+			// Check if the skill state matches the current monster skill state exactly
+			if (it->state == md.state.skillstate) {
+				// Skill matches and state matches exactly too
+				delay = it->delay;
+				// Use the first delay found
+				break;
+			}
+
+			// Check if the skill state applies to any monster skill state
+			if (it->state == MSS_ANY) {
+				// Skill matches and any state applies
+				delay = it->delay;
+				// Use the first delay found
+				break;
+			}
+
+			// Check if the skill state applies to any target skill states
+			// However do not apply it, if the monster already has a target or when the monster is currently looting
+			if (it->state == MSS_ANYTARGET && md.target_id != 0 && md.state.skillstate != MSS_LOOT) {
+				// Skill matches and any target skill state applies
+				delay = it->delay;
+				// Use the first delay found
+				break;
 			}
 		}
-		// Apply delay found to all entries of the skill
-		for (int32 i = 0; i < ms.size(); i++)
-			if (ms[i]->skill_id == ms[md.skill_idx]->skill_id)
-				md.skilldelay[i] = tick + delay;
+
+		// Only calculate the delay, if there is any
+		if (delay > 0) {
+			// Calculate the delay once
+			delay = tick + delay;
+
+			// Apply delay found to all entries of the skill
+			for (size_t i = 0; i < ms.size(); i++) {
+				// Check if the skill id matches
+				if (ms[i]->skill_id != ms[md.skill_idx]->skill_id) {
+					// Skip other skills
+					continue;
+				}
+
+				// Apply the delay
+				md.skilldelay[i] = delay;
+			}
+		}
 	}
 	else
 		md.skilldelay[md.skill_idx] = tick + ms[md.skill_idx]->delay;
