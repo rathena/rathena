@@ -2822,9 +2822,7 @@ map_session_data* mob_data::get_mvp() {
 	int64 mvp_damage = 0;
 	map_session_data* mvp_sd = nullptr;
 
-	for (int32 i = 0; i < this->dmglog.size(); i++) {
-		const s_dmglog& entry = this->dmglog[i];
-
+	for (const s_dmglog& entry : this->dmglog) {
 		map_session_data* tsd = map_charid2sd(entry.id);
 
 		if (tsd == nullptr)
@@ -2948,20 +2946,17 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 		// Gather data to determine loot priority
 		// Check if player already has an entry
 		auto it = lootdmg.begin();
-		for (it; it != lootdmg.end(); ++it)
+		for (; it != lootdmg.end(); ++it)
 			if (it->sd->bl.id == tsd->bl.id)
 				break;
 
-		if (it == lootdmg.end())
-		{
+		if (it == lootdmg.end()) {
 			// No matching player found, create new entry for player
 			s_dmg_entry dmg_entry;
 			dmg_entry.sd = tsd;
 			dmg_entry.damage = entry.dmg;
 			lootdmg.push_back(dmg_entry);
-		}
-		else
-		{
+		} else {
 			// Slave damage is added to the player's damage
 			it->damage += entry.dmg;
 		}
@@ -2972,7 +2967,9 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 		lootdmg[0].damage += (total_damage * 30) / 100;
 
 		// Sort list by damage now and determine top 3 damage dealers
-		std::sort(lootdmg.begin(), lootdmg.end(), [](s_dmg_entry& a, s_dmg_entry& b) { return a.damage > b.damage; });
+		std::sort(lootdmg.begin(), lootdmg.end(), [](s_dmg_entry& a, s_dmg_entry& b) {
+			return a.damage > b.damage;
+		});
 		top_sd = lootdmg[0].sd;
 		if (lootdmg.size() > 1)
 			second_sd = lootdmg[1].sd;
@@ -3337,7 +3334,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 	}
 
 	// MVP Reward
-	if( mvp_sd && md->get_bosstype() == BOSSTYPE_MVP ){
+	if( mvp_sd != nullptr ){
 		t_itemid log_mvp_nameid = 0;
 		t_exp log_mvp_exp = 0;
 
