@@ -3151,7 +3151,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 	lootlist->m = md->bl.m;
 	lootlist->x = md->bl.x;
 	lootlist->y = md->bl.y;
-	lootlist->first_charid = (top_sd ? top_sd->status.char_id : 0);
+	lootlist->first_charid = (top_sd != nullptr ? top_sd->status.char_id : 0);
 	lootlist->second_charid = (second_sd ? second_sd->status.char_id : 0);
 	lootlist->third_charid = (third_sd ? third_sd->status.char_id : 0);
 
@@ -3179,7 +3179,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 		dlist->m = md->bl.m;
 		dlist->x = md->bl.x;
 		dlist->y = md->bl.y;
-		dlist->first_charid = (top_sd ? top_sd->status.char_id : 0);
+		dlist->first_charid = (top_sd != nullptr ? top_sd->status.char_id : 0);
 		dlist->second_charid = (second_sd ? second_sd->status.char_id : 0);
 		dlist->third_charid = (third_sd ? third_sd->status.char_id : 0);
 
@@ -3250,7 +3250,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 			if (rnd() % 10000 >= drop_rate)
 				continue;
 
-			if (top_sd && it->type == IT_PETEGG) {
+			if (top_sd != nullptr && it->type == IT_PETEGG) {
 				pet_create_egg(top_sd, entry->nameid);
 				continue;
 			}
@@ -3258,7 +3258,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 			std::shared_ptr<s_item_drop> ditem = mob_setdropitem(entry, 1, md->mob_id);
 
 			//A Rare Drop Global Announce by Lupus
-			if (top_sd && entry->rate <= battle_config.rare_drop_announce) {
+			if (top_sd != nullptr && entry->rate <= battle_config.rare_drop_announce) {
 				char message[128];
 				sprintf(message, msg_txt(nullptr, 541), top_sd->status.name, md->name, it->ename.c_str(), (float)drop_rate / 100);
 				//MSG: "'%s' won %s's %s (chance: %0.02f%%)"
@@ -3270,7 +3270,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 		}
 
 		// Ore Discovery (triggers if owner has loot priority, does not require to be the killer)
-		if (top_sd && pc_checkskill(top_sd, BS_FINDINGORE) > 0) {
+		if (top_sd != nullptr && pc_checkskill(top_sd, BS_FINDINGORE) > 0) {
 			std::shared_ptr<s_item_group_entry> entry = itemdb_group.get_random_entry(IG_ORE, 1, GROUP_ALGORITHM_DROP);
 			if (entry != nullptr) {
 				std::shared_ptr<s_mob_drop> mobdrop = std::make_shared<s_mob_drop>();
@@ -3494,14 +3494,14 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 				pc_setparam(sd, SP_KILLEDRID, md->mob_id);
 				pc_setparam(sd, SP_KILLERRID, sd->bl.id);
 				npc_event(sd,md->npc_event,0);
-			} else if( top_sd ) {
+			} else if( top_sd != nullptr ) {
 				pc_setparam(top_sd, SP_KILLEDGID, md->bl.id);
 				pc_setparam(top_sd, SP_KILLEDRID, md->mob_id);
 				pc_setparam(top_sd, SP_KILLERRID, sd?sd->bl.id:0);
 				npc_event(top_sd,md->npc_event,0);
 			} else
 				npc_event_do(md->npc_event);
-		} else if( top_sd && !md->state.npc_killmonster ) {
+		} else if( top_sd != nullptr && !md->state.npc_killmonster ) {
 			pc_setparam(top_sd, SP_KILLEDGID, md->bl.id);
 			pc_setparam(top_sd, SP_KILLEDRID, md->mob_id);
 			npc_script_event( *top_sd, NPCE_KILLNPC );
@@ -3544,7 +3544,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 
 	// MvP tomb [GreenBox]
 	if (battle_config.mvp_tomb_enabled && md->spawn->state.boss && map_getmapflag(md->bl.m, MF_NOTOMB) != 1)
-		mvptomb_create(md, mvp_sd ? mvp_sd->status.name : (top_sd ? top_sd->status.name : nullptr), time(nullptr));
+		mvptomb_create(md, mvp_sd != nullptr ? mvp_sd->status.name : (top_sd != nullptr ? top_sd->status.name : nullptr), time(nullptr));
 
 	if( !rebirth )
 		mob_setdelayspawn(md); //Set respawning.
