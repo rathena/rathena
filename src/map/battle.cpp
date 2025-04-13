@@ -7273,7 +7273,7 @@ static void battle_calc_attack_gvg_bg(struct Damage* wd, struct block_list *src,
 				int64 damage = wd->damage + wd->damage2, rdamage = 0;
 				map_session_data *tsd = BL_CAST(BL_PC, target);
 				status_data* sstatus = status_get_status_data(*src);
-				t_tick tick = gettick(), rdelay = 0;
+				t_tick tick = gettick();
 
 				rdamage = battle_calc_return_damage(target, src, &damage, wd->flag, skill_id, false);
 				if( rdamage > 0 ) { //Item reflect gets calculated before any mapflag reducing is applicated
