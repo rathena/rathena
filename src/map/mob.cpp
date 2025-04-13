@@ -2814,7 +2814,7 @@ int32 mob_getdroprate(struct block_list *src, std::shared_ptr<s_mob_db> mob, int
  * This player has the highest value when damage dealt and damage tanked are added together
  * @return The MVP player
  */
-map_session_data* mob_data::get_mvp() {
+map_session_data* mob_data::get_mvp_player() {
 	// There cannot be an MVP player if the monster is not an MVP
 	if (this->get_bosstype() != BOSSTYPE_MVP)
 		return nullptr;
@@ -2823,20 +2823,20 @@ map_session_data* mob_data::get_mvp() {
 	map_session_data* mvp_sd = nullptr;
 
 	for (const s_dmglog& entry : this->dmglog) {
-		map_session_data* tsd = map_charid2sd(entry.id);
+		map_session_data* sd = map_charid2sd(entry.id);
 
-		if (tsd == nullptr)
+		if (sd == nullptr)
 			continue; // skip players that are offline
-		if (tsd->bl.m != this->bl.m)
+		if (sd->bl.m != this->bl.m)
 			continue; // skip players not on this map
-		if (pc_isdead(tsd))
+		if (pc_isdead(sd))
 			continue; // skip dead players
 
 		if (mvp_damage >= entry.dmg + entry.dmg_tanked)
 			continue;
 
-		mvp_damage = entry.dmg + entry.dmg_tanked;
-		mvp_sd = tsd;
+		mvp_damage = util::safe_addition_cap(entry.dmg, entry.dmg_tanked, INT64_MAX);
+		mvp_sd = sd;
 	}
 
 	return mvp_sd;
@@ -2983,7 +2983,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 	merckillonly = (bool)((dmgbltypes & BL_MER) && !(dmgbltypes & ~BL_MER));
 
 	// Determine MVP (need to do it here so that it's not influenced by first attacker bonus below)
-	map_session_data* mvp_sd = md->get_mvp();
+	map_session_data* mvp_sd = md->get_mvp_player();
 
 	if(battle_config.exp_calc_type == 2 && count > 1) {	//Apply first-attacker 200% exp share bonus
 		s_dmglog& entry = md->dmglog[0];
@@ -3544,7 +3544,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 
 	// MvP tomb [GreenBox]
 	if (battle_config.mvp_tomb_enabled && md->spawn->state.boss && map_getmapflag(md->bl.m, MF_NOTOMB) != 1)
-		mvptomb_create(md, top_sd ? top_sd->status.name : nullptr, time(nullptr));
+		mvptomb_create(md, mvp_sd ? mvp_sd->status.name : (top_sd ? top_sd->status.name : nullptr), time(nullptr));
 
 	if( !rebirth )
 		mob_setdelayspawn(md); //Set respawning.
