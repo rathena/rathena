@@ -4105,22 +4105,20 @@ void mobskill_delay(mob_data& md, t_tick tick)
 			}
 		}
 
-		// Only calculate the delay, if there is any
-		if (delay > 0) {
-			// Calculate the delay once
-			delay = tick + delay;
+		// Calculate the delay once
+		// Note: Officially the delay gets set, even if it is 0.
+		delay = tick + delay;
 
-			// Apply delay found to all entries of the skill
-			for (size_t i = 0; i < ms.size(); i++) {
-				// Check if the skill id matches
-				if (ms[i]->skill_id != ms[md.skill_idx]->skill_id) {
-					// Skip other skills
-					continue;
-				}
-
-				// Apply the delay
-				md.skilldelay[i] = delay;
+		// Apply delay found to all entries of the skill
+		for (size_t i = 0; i < ms.size(); i++) {
+			// Check if the skill id matches
+			if (ms[i]->skill_id != ms[md.skill_idx]->skill_id) {
+				// Skip other skills
+				continue;
 			}
+
+			// Apply the delay
+			md.skilldelay[i] = delay;
 		}
 	}
 	else
