@@ -6103,16 +6103,20 @@ bool pc_takeitem(map_session_data *sd,struct flooritem_data *fitem)
 	if (sd->status.party_id)
 		p = party_search(sd->status.party_id);
 
-	if (fitem->first_get_charid > 0 && fitem->first_get_charid != sd->status.char_id) {
-		map_session_data *first_sd = map_charid2sd(fitem->first_get_charid);
+	if (fitem->first_get_charid == 0 || fitem->first_get_charid != sd->status.char_id) {
+		map_session_data* first_sd = nullptr;
+		if (fitem->first_get_charid > 0)
+			first_sd = map_charid2sd(fitem->first_get_charid);
 		if (DIFF_TICK(tick,fitem->first_get_tick) < 0) {
 			if (!(p && p->party.item&1 &&
 				first_sd && first_sd->status.party_id == sd->status.party_id
 				))
 				return false;
 		}
-		else if (fitem->second_get_charid > 0 && fitem->second_get_charid != sd->status.char_id) {
-			map_session_data *second_sd = map_charid2sd(fitem->second_get_charid);
+		else if (fitem->second_get_charid == 0 || fitem->second_get_charid != sd->status.char_id) {
+			map_session_data* second_sd = nullptr;
+			if (fitem->second_get_charid > 0)
+				second_sd = map_charid2sd(fitem->second_get_charid);
 			if (DIFF_TICK(tick, fitem->second_get_tick) < 0) {
 				if (!(p && p->party.item&1 &&
 					((first_sd && first_sd->status.party_id == sd->status.party_id) ||
@@ -6120,8 +6124,10 @@ bool pc_takeitem(map_session_data *sd,struct flooritem_data *fitem)
 					))
 					return false;
 			}
-			else if (fitem->third_get_charid > 0 && fitem->third_get_charid != sd->status.char_id){
-				map_session_data *third_sd = map_charid2sd(fitem->third_get_charid);
+			else if (fitem->third_get_charid == 0 || fitem->third_get_charid != sd->status.char_id) {
+				map_session_data* third_sd = nullptr;
+				if (fitem->third_get_charid > 0)
+					third_sd = map_charid2sd(fitem->third_get_charid);
 				if (DIFF_TICK(tick,fitem->third_get_tick) < 0) {
 					if(!(p && p->party.item&1 &&
 						((first_sd && first_sd->status.party_id == sd->status.party_id) ||

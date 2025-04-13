@@ -2028,12 +2028,21 @@ int32 map_addflooritem(struct item *item, int32 amount, int16 m, int16 x, int16 
 		return 0;
 	}
 
+	// If item is flagged as MVP item or dropped by bosses, it is protected for longer
+	bool extend_protection = (flags&1);
+	if (mob_id > 0) {
+		std::shared_ptr<s_mob_db> mob = mob_db.find(mob_id);
+		// Boss and MVP drops both have prelonged loot protection
+		if (mob != nullptr && mob->get_bosstype() != BOSSTYPE_NONE)
+			extend_protection = true;
+	}
+
 	fitem->first_get_charid = first_charid;
-	fitem->first_get_tick = gettick() + (flags&1 ? battle_config.mvp_item_first_get_time : battle_config.item_first_get_time);
+	fitem->first_get_tick = gettick() + (extend_protection ? battle_config.mvp_item_first_get_time : battle_config.item_first_get_time);
 	fitem->second_get_charid = second_charid;
-	fitem->second_get_tick = fitem->first_get_tick + (flags&1 ? battle_config.mvp_item_second_get_time : battle_config.item_second_get_time);
+	fitem->second_get_tick = fitem->first_get_tick + (extend_protection ? battle_config.mvp_item_second_get_time : battle_config.item_second_get_time);
 	fitem->third_get_charid = third_charid;
-	fitem->third_get_tick = fitem->second_get_tick + (flags&1 ? battle_config.mvp_item_third_get_time : battle_config.item_third_get_time);
+	fitem->third_get_tick = fitem->second_get_tick + (extend_protection ? battle_config.mvp_item_third_get_time : battle_config.item_third_get_time);
 	fitem->mob_id = mob_id;
 
 	memcpy(&fitem->item,item,sizeof(*item));
