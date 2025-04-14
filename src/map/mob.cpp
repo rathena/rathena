@@ -2963,8 +2963,8 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 	}
 
 	if (!lootdmg.empty()) {
-		// First player in the damage log gets 30% of total damage as bonus for loot priority
-		lootdmg[0].damage += (total_damage * 30) / 100;
+		// Officially, the first player in the damage log gets 30% of total damage as bonus for loot priority
+		lootdmg[0].damage += (total_damage * battle_config.first_attack_loot_bonus) / 100;
 
 		// Sort list by damage now and determine top 3 damage dealers
 		std::sort(lootdmg.begin(), lootdmg.end(), [](s_dmg_entry& a, s_dmg_entry& b) {
