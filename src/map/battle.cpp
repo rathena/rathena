@@ -334,7 +334,7 @@ int32 battle_damage(struct block_list *src, struct block_list *target, int64 dam
 		mob_data& md = *reinterpret_cast<mob_data*>(target);
 
 		// Trigger monster skill condition for non-skill attacks.
-		if (!status_isdead(*target) && src != target) {
+		if (src != target && !status_isdead(*target)) {
 			if (damage > 0)
 				mobskill_event(&md, src, tick, attack_type, damage);
 			if (skill_id > 0)
