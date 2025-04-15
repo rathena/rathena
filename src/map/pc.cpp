@@ -15056,13 +15056,10 @@ void pc_bonus_script_clear(map_session_data *sd, uint32 flag) {
  * @param sd: Target player
  */
 void pc_cell_basilica(map_session_data *sd) {
+#ifndef RENEWAL
 	nullpo_retv(sd);
 
-#ifdef RENEWAL
-	enum sc_type type = SC_BASILICA_CELL;
-#else
 	enum sc_type type = SC_BASILICA;
-#endif
 
 	if (!map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKBASILICA)) {
 		if (sd->sc.getSCE(type))
@@ -15070,6 +15067,7 @@ void pc_cell_basilica(map_session_data *sd) {
 	}
 	else if (!sd->sc.getSCE(type))
 		sc_start(&sd->bl,&sd->bl, type,100,0,INFINITE_TICK);
+#endif
 }
 
 /** [Cydh]
