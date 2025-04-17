@@ -1,3 +1,3 @@
 ALTER TABLE `market`
-MODIFY `amount` INT(11) NOT NULL
+MODIFY `amount` int NOT NULL
 ;
