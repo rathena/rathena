@@ -196,9 +196,14 @@ Options: Special option/client effect state when status is active.
 Flags: Various status flags for specific status change events.
 
 	None                  - No special flag. (Default)
-	BlEffect              - Status should have BL_SCEFFECT as relevant effect, must have an EFST (displays on BL_PC, BL_HOM, BL_MER, BL_MOB, BL_ELEM). BL_PC is the default value.
-	DisplayPc             - Displays status effect when player logs in.
-	DislpayNpc            - Displays status effect on a NPC.
+	BlEffect              - Flag to send a visual effect to clients around if the affected unit is BL_PC, BL_HOM, BL_MER, BL_MOB, BL_ELEM or BL_NPC when the status is given.
+	                        The status must have an EFST defined in Icon - other than EFST_BLANK.
+	                        When not defined (default) the status is displayed to clients around when the affected unit is BL_PC (player) only.
+	DisplayPc             - Whether the status is displayed (again) to client around when the affected unit (BL_PC) appears in the client's range.
+	DisplayNpc            - Whether the status is displayed (again) to client around when the affected unit (BL_NPC) appears in the client's range.
+	DisplayMob            - Whether the status is displayed (again) to client around when the affected unit (BL_MOB) appears in the client's range.
+	DisplayAll            - Whether the status is displayed (again) to client around when the affected unit (BL_PC, BL_HOM, BL_MER, BL_MOB, BL_ELEM, BL_NPC or BL_PET) appears in the client's range.
+	                        When defined, other display flags are ignored.
 	Debuff                - Status is considered a debuff. Used in combination with 'battle_config.debuff_on_logout'.
 	SetStand              - Sets player to standing state.
 	OverlapIgnoreLevel    - The status will successfully activate for any level if the status is already active.
@@ -208,9 +213,9 @@ Flags: Various status flags for specific status change events.
 	MobLoseTarget         - When active on a monster it will lose the target.
 	RestartOnMapWarp      - Restarts the timer of a status when warping to another map.
 	SpreadEffect          - Passes the status onto a target when SC_DEADLYINFECT is active.
-	SendVal1              - Notifies the client of a status change (val1).
-	SendVal2              - Notifies the client of a status change (val2).
-	SendVal3              - Notifies the client of a status change (val3).
+	SendVal1              - Whether val1 shouldn't be ignored.
+	SendVal2              - Whether val2 shouldn't be ignored.
+	SendVal3              - Whether val3 shouldn't be ignored.
 
 	NoClearbuff           - Cannot be removed by 'status_change_clear_buffs()', 'sc_end SC_ALL', 'status_change_clear(3)', etc.
 	NoForcedEnd           - Cannot be removed by sc_end.
