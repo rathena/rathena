@@ -308,12 +308,13 @@ static t_tick battle_calc_walkdelay(block_list& bl, int64 damage, int16 div_, t_
 * @return HP+SP+AP (0 if HP/SP/AP remained unchanged)
 */
 int32 battle_damage(struct block_list *src, struct block_list *target, int64 damage, int16 div_, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, uint16 attack_type, bool additional_effects, t_tick tick, bool isspdamage) {
+	if (target == nullptr)
+		return 0;
+
 	int32 dmg_change;
 	map_session_data* sd = nullptr;
 
-	t_tick delay = 0;
-	if (target != nullptr)
-		delay = battle_calc_walkdelay(*target, damage, div_, tick);
+	t_tick delay = battle_calc_walkdelay(*target, damage, div_, tick);
 
 	if (src)
 		sd = BL_CAST(BL_PC, src);
@@ -330,21 +331,19 @@ int32 battle_damage(struct block_list *src, struct block_list *target, int64 dam
 		skill_counter_additional_effect(src, target, skill_id, skill_lv, attack_type, tick);
 	// This is the last place where we have access to the actual damage type, so any monster events depending on type must be placed here
 	if (target->type == BL_MOB && additional_effects) {
-		mob_data *md = BL_CAST(BL_MOB, target);
+		mob_data& md = *reinterpret_cast<mob_data*>(target);
 
-		if (md != nullptr) {
-			// Trigger monster skill condition for non-skill attacks.
-			if (!status_isdead(*target) && src != target) {
-				if (damage > 0)
-					mobskill_event(md, src, tick, attack_type, damage);
-				if (skill_id > 0)
-					mobskill_event(md, src, tick, MSC_SKILLUSED | (skill_id << 16));
-			}
-
-			// Monsters differentiate whether they have been attacked by a skill or a normal attack
-			if (damage > 0 && (attack_type & BF_NORMAL))
-				md->norm_attacked_id = md->attacked_id;
+		// Trigger monster skill condition for non-skill attacks.
+		if (src != target && !status_isdead(*target)) {
+			if (damage > 0)
+				mobskill_event(&md, src, tick, attack_type, damage);
+			if (skill_id > 0)
+				mobskill_event(&md, src, tick, MSC_SKILLUSED | (skill_id << 16));
 		}
+
+		// Monsters differentiate whether they have been attacked by a skill or a normal attack
+		if (damage > 0 && (attack_type&BF_NORMAL))
+			md.norm_attacked_id = md.attacked_id;
 	}
 	map_freeblock_unlock();
 	return dmg_change;
@@ -11558,6 +11557,7 @@ static const struct _battle_data {
 	{ "attribute_recover",                  &battle_config.attr_recover,                    1,      0,      1,              },
 	{ "flooritem_lifetime",                 &battle_config.flooritem_lifetime,              60000,  1000,   INT_MAX,        },
 	{ "item_auto_get",                      &battle_config.item_auto_get,                   0,      0,      1,              },
+	{ "first_attack_loot_bonus",            &battle_config.first_attack_loot_bonus,         30,     0,      100,            },
 	{ "item_first_get_time",                &battle_config.item_first_get_time,             3000,   0,      INT_MAX,        },
 	{ "item_second_get_time",               &battle_config.item_second_get_time,            1000,   0,      INT_MAX,        },
 	{ "item_third_get_time",                &battle_config.item_third_get_time,             1000,   0,      INT_MAX,        },

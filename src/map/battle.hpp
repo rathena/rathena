@@ -187,6 +187,7 @@ struct Battle_Config
 	int32 attr_recover;
 	int32 item_auto_get;
 	int32 flooritem_lifetime;
+	int32 first_attack_loot_bonus;
 	int32 item_first_get_time;
 	int32 item_second_get_time;
 	int32 item_third_get_time;
