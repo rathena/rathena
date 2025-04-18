@@ -303,11 +303,12 @@ static t_tick battle_calc_walkdelay(block_list& bl, int64 damage, int16 div_, t_
 * @param dmg_lv: State of the attack (miss, etc.)
 * @param attack_type: Type of the attack (BF_NORMAL|BF_SKILL|BF_SHORT|BF_LONG|BF_WEAPON|BF_MAGIC|BF_MISC)
 * @param additional_effects: Whether additional effects should be applied (otherwise it's just damage+coma)
-* @param isspdamage: If the damage is done to SP
 * @param tick: Current tick
+* @param isspdamage: If the damage is done to SP
+* @param is_norm_attacked: If it should trigger the special normal attacked event on monsters
 * @return HP+SP+AP (0 if HP/SP/AP remained unchanged)
 */
-int32 battle_damage(struct block_list *src, struct block_list *target, int64 damage, int16 div_, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, uint16 attack_type, bool additional_effects, t_tick tick, bool isspdamage) {
+int32 battle_damage(struct block_list *src, struct block_list *target, int64 damage, int16 div_, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, uint16 attack_type, bool additional_effects, t_tick tick, bool isspdamage, bool is_norm_attacked) {
 	if (target == nullptr)
 		return 0;
 
@@ -330,7 +331,7 @@ int32 battle_damage(struct block_list *src, struct block_list *target, int64 dam
 	if (dmg_lv > ATK_BLOCK && attack_type && additional_effects)
 		skill_counter_additional_effect(src, target, skill_id, skill_lv, attack_type, tick);
 	// This is the last place where we have access to the actual damage type, so any monster events depending on type must be placed here
-	if (target->type == BL_MOB && additional_effects) {
+	if (src != nullptr && target->type == BL_MOB && additional_effects) {
 		mob_data& md = *reinterpret_cast<mob_data*>(target);
 
 		// Trigger monster skill condition for non-skill attacks.
@@ -341,9 +342,13 @@ int32 battle_damage(struct block_list *src, struct block_list *target, int64 dam
 				mobskill_event(&md, src, tick, MSC_SKILLUSED | (skill_id << 16));
 		}
 
-		// Monsters differentiate whether they have been attacked by a skill or a normal attack
-		if (damage > 0 && (attack_type&BF_NORMAL))
-			md.norm_attacked_id = md.attacked_id;
+		// Prepare corresponding attacked event that occurs at the end of the calculated walk delay
+		if (is_norm_attacked) {
+			add_timer(tick + delay, mob_norm_attacked, target->id, src->id);
+		}
+		else {
+			add_timer(tick + delay, mob_attacked, target->id, src->id);
+		}
 	}
 	map_freeblock_unlock();
 	return dmg_change;
@@ -363,6 +368,7 @@ struct delay_damage {
 	bool additional_effects;
 	enum bl_type src_type;
 	bool isspdamage;
+	bool is_norm_attacked;
 };
 
 TIMER_FUNC(battle_delay_damage_sub){
@@ -378,7 +384,7 @@ TIMER_FUNC(battle_delay_damage_sub){
 				check_distance_bl(src, target, dat->distance) ) //Check to see if you haven't teleported. [Skotlex]
 			{
 				//Deal damage
-				battle_damage(src, target, dat->damage, dat->div_, dat->skill_lv, dat->skill_id, dat->dmg_lv, dat->attack_type, dat->additional_effects, tick, dat->isspdamage);
+				battle_damage(src, target, dat->damage, dat->div_, dat->skill_lv, dat->skill_id, dat->dmg_lv, dat->attack_type, dat->additional_effects, tick, dat->isspdamage, dat->is_norm_attacked);
 			} else if( !src && dat->skill_id == CR_REFLECTSHIELD ) { // it was monster reflected damage, and the monster died, we pass the damage to the character as expected
 				battle_fix_damage(target, target, dat->damage, dat->div_, dat->skill_id);
 			}
@@ -395,7 +401,7 @@ TIMER_FUNC(battle_delay_damage_sub){
 	return 0;
 }
 
-int32 battle_delay_damage(t_tick tick, int32 amotion, struct block_list *src, struct block_list *target, int32 attack_type, uint16 skill_id, uint16 skill_lv, int64 damage, enum damage_lv dmg_lv, int16 div_, bool additional_effects, bool isspdamage)
+int32 battle_delay_damage(t_tick tick, int32 amotion, struct block_list *src, struct block_list *target, int32 attack_type, uint16 skill_id, uint16 skill_lv, int64 damage, enum damage_lv dmg_lv, int16 div_, bool additional_effects, bool isspdamage, bool is_norm_attacked)
 {
 	struct delay_damage *dat;
 	status_change *sc;
@@ -461,6 +467,7 @@ int32 battle_delay_damage(t_tick tick, int32 amotion, struct block_list *src, st
 	dat->additional_effects = additional_effects;
 	dat->src_type = src->type;
 	dat->isspdamage = isspdamage;
+	dat->is_norm_attacked = is_norm_attacked;
 
 	if( src->type == BL_PC )
 		((TBL_PC*)src)->delayed_damage++;
@@ -10667,6 +10674,9 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 
 	if (sd && sd->bonus.splash_range > 0 && damage > 0)
 		skill_castend_damage_id(src, target, 0, 1, tick, 0);
+
+	bool is_norm_attacked = false;
+
 	if ( target->type == BL_SKILL && damage > 0 ) {
 		TBL_SKILL *su = (TBL_SKILL*)target;
 
@@ -10679,6 +10689,16 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			}
 		}
 	}
+	else if (target->type == BL_MOB) {
+		// Monsters trigger a special event when they are hit in Berserk state by a normal attack within [attack range+1]
+		// Certain AI types only switch target on this trigger
+		// This event only triggers if the target is not already the current attacker
+		// We need to do this here because it needs to be calculated before waiting for attack motion
+		mob_data& md = *reinterpret_cast<mob_data*>(target);
+		if (md.state.skillstate == MSS_BERSERK && md.target_id != src->id) {
+			is_norm_attacked = ((battle_config.mob_ai&0x4) || check_distance_bl(src, target, md.status.rhw.range + 1));
+		}
+	}
 
 	map_freeblock_lock();
 
@@ -10688,7 +10708,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		if( wd.dmg_lv > ATK_BLOCK )
 			skill_counter_additional_effect(src, target, 0, 0, wd.flag, tick);
 	} else
-		battle_delay_damage(tick, wd.amotion, src, target, wd.flag, 0, 0, damage, wd.dmg_lv, wd.div_, true, wd.isspdamage);
+		battle_delay_damage(tick, wd.amotion, src, target, wd.flag, 0, 0, damage, wd.dmg_lv, wd.div_, true, wd.isspdamage, is_norm_attacked);
 	if( tsc ) {
 		if( tsc->getSCE(SC_DEVOTION) ) {
 			struct status_change_entry *sce = tsc->getSCE(SC_DEVOTION);
