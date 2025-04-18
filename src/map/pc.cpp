@@ -6103,42 +6103,49 @@ bool pc_takeitem(map_session_data *sd,struct flooritem_data *fitem)
 	if (sd->status.party_id)
 		p = party_search(sd->status.party_id);
 
-	if (fitem->first_get_charid == 0 || fitem->first_get_charid != sd->status.char_id) {
+	// Time the player needs to wait until the item can be taken
+	// By default the player needs to wait for top, second and third attacker loot priority times
+	// This applies even if there are no second or third top attackers
+	t_tick item_get_tick = fitem->third_get_tick;
+
+	if (fitem->first_get_charid > 0 && fitem->first_get_charid == sd->status.char_id) {
+		// Top attacker, no wait time
+		item_get_tick = 0;
+	}
+	else if (fitem->second_get_charid > 0 && fitem->second_get_charid == sd->status.char_id) {
+		// Second top attacker, needs to wait for top attacker
+		item_get_tick = fitem->first_get_tick;
+	}
+	else if (fitem->third_get_charid > 0 && fitem->third_get_charid == sd->status.char_id) {
+		// Third top attacker, needs to wait for top and second attacker
+		item_get_tick = fitem->second_get_tick;
+	}
+	else if (p != nullptr && p->party.item&1) {
+		// Party member loot priority
 		map_session_data* first_sd = nullptr;
+		map_session_data* second_sd = nullptr;
+		map_session_data* third_sd = nullptr;
+
+		// Only if the top attackers are still online, party members gain the loot priority
 		if (fitem->first_get_charid > 0)
 			first_sd = map_charid2sd(fitem->first_get_charid);
-		if (DIFF_TICK(tick,fitem->first_get_tick) < 0) {
-			if (!(p && p->party.item&1 &&
-				first_sd && first_sd->status.party_id == sd->status.party_id
-				))
-				return false;
-		}
-		else if (fitem->second_get_charid == 0 || fitem->second_get_charid != sd->status.char_id) {
-			map_session_data* second_sd = nullptr;
-			if (fitem->second_get_charid > 0)
-				second_sd = map_charid2sd(fitem->second_get_charid);
-			if (DIFF_TICK(tick, fitem->second_get_tick) < 0) {
-				if (!(p && p->party.item&1 &&
-					((first_sd && first_sd->status.party_id == sd->status.party_id) ||
-					(second_sd && second_sd->status.party_id == sd->status.party_id))
-					))
-					return false;
-			}
-			else if (fitem->third_get_charid == 0 || fitem->third_get_charid != sd->status.char_id) {
-				map_session_data* third_sd = nullptr;
-				if (fitem->third_get_charid > 0)
-					third_sd = map_charid2sd(fitem->third_get_charid);
-				if (DIFF_TICK(tick,fitem->third_get_tick) < 0) {
-					if(!(p && p->party.item&1 &&
-						((first_sd && first_sd->status.party_id == sd->status.party_id) ||
-						(second_sd && second_sd->status.party_id == sd->status.party_id) ||
-						(third_sd && third_sd->status.party_id == sd->status.party_id))
-						))
-						return false;
-				}
-			}
-		}
+		if (fitem->second_get_charid > 0)
+			second_sd = map_charid2sd(fitem->second_get_charid);
+		if (fitem->third_get_charid > 0)
+			third_sd = map_charid2sd(fitem->third_get_charid);
+
+		// Check if the top attackers are a party member and apply corresponding wait time
+		if (first_sd != nullptr && first_sd->status.party_id == sd->status.party_id)
+			item_get_tick = 0;
+		else if (second_sd != nullptr && second_sd->status.party_id == sd->status.party_id)
+			item_get_tick = fitem->first_get_tick;
+		else if (third_sd != nullptr && third_sd->status.party_id == sd->status.party_id)
+			item_get_tick = fitem->second_get_tick;
 	}
+
+	// Cannot get item when wait time is still active
+	if (DIFF_TICK(tick, item_get_tick) < 0)
+		return false;
 
 	//This function takes care of giving the item to whoever should have it, considering party-share options.
 	if ((flag = party_share_loot(p,sd,&fitem->item, fitem->first_get_charid))) {
