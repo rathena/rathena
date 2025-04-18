@@ -1,3 +1,3 @@
 ALTER TABLE `homunculus`
-	CHANGE COLUMN `sp` `sp` INT(11) UNSIGNED NOT NULL DEFAULT '0',
-	CHANGE COLUMN `max_sp` `max_sp` INT(11) UNSIGNED NOT NULL DEFAULT '0';
+	CHANGE COLUMN `sp` `sp` int unsigned NOT NULL DEFAULT '0',
+	CHANGE COLUMN `max_sp` `max_sp` int unsigned NOT NULL DEFAULT '0';

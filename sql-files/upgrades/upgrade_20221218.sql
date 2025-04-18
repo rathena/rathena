@@ -23,12 +23,12 @@ cancel;
 
 -- Create a temporary table to store the data for the update
 create table `tmp_randomoptionfix` (
-	`id` int(11) unsigned NOT NULL,
-	`new_index` smallint(5) NOT NULL,
-	`old_index` smallint(5) NOT NULL,
-	`option_id` smallint(5) NOT NULL,
-	`option_val` smallint(5) NOT NULL,
-	`option_parm` tinyint(3) NOT NULL,
+	`id` int unsigned NOT NULL,
+	`new_index` smallint NOT NULL,
+	`old_index` smallint NOT NULL,
+	`option_id` smallint NOT NULL,
+	`option_val` smallint NOT NULL,
+	`option_parm` tinyint NOT NULL,
 	PRIMARY KEY ( `id`, `old_index` )
 );
 

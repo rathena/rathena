@@ -1,5 +1,5 @@
 ALTER TABLE `pet`
-	ADD COLUMN `autofeed` tinyint(2) NOT NULL default '0' AFTER `incubate`;
+	ADD COLUMN `autofeed` tinyint NOT NULL DEFAULT '0' AFTER `incubate`;
 
 UPDATE `inventory` `i`
 INNER JOIN `char` `c`
