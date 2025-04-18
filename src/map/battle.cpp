@@ -256,6 +256,39 @@ struct block_list* battle_getenemyarea(struct block_list *src, int32 x, int32 y,
 	return bl_list[rnd()%c];
 }
 
+/*==========================================
+ * Returns the walkdelay a unit receives
+ *------------------------------------------*/
+static t_tick battle_calc_walkdelay(block_list& bl, int64 damage, int16 div_, t_tick tick) {
+	if (damage < 1)
+		return 0;
+
+	// If hits are 0 that means that no walkdelay shall be set
+	if (div_ == 0)
+		return 0;
+
+	// Check if unit can be stopped by damage
+	if (status_isendure(bl, tick, false))
+		return 0;
+
+	t_tick delay = status_get_status_data(bl)->dmotion;	
+
+	// Multi-hit skills mean higher delays
+	if (div_ > 1) {
+		// If there are more than 10 hits, it calculates as 2 hits
+		if (div_ > 10)
+			div_ = 2;
+		delay += battle_config.multihit_delay * (div_ - 1);
+	}
+
+	if (bl.type == BL_PC)
+		delay = apply_rate(delay, battle_config.pc_walk_delay_rate);
+	else
+		delay = apply_rate(delay, battle_config.walk_delay_rate);
+
+	return (delay > 0) ? delay : 1; //Return 1 to specify there should be no noticeable delay, but you should stop walking.
+}
+
 /**
 * Deals damage without delay, applies additional effects and triggers monster events
 * This function is called from battle_delay_damage or battle_delay_damage_sub
@@ -264,7 +297,7 @@ struct block_list* battle_getenemyarea(struct block_list *src, int32 x, int32 y,
 * @param src: Source of damage
 * @param target: Target of damage
 * @param damage: Damage to be dealt
-* @param delay: Damage delay
+* @param div: Number of hits (0 means that no walkdelay shall be applied)
 * @param skill_lv: Level of skill used
 * @param skill_id: ID of skill used
 * @param dmg_lv: State of the attack (miss, etc.)
@@ -274,9 +307,15 @@ struct block_list* battle_getenemyarea(struct block_list *src, int32 x, int32 y,
 * @param tick: Current tick
 * @return HP+SP+AP (0 if HP/SP/AP remained unchanged)
 */
-int32 battle_damage(struct block_list *src, struct block_list *target, int64 damage, t_tick delay, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, uint16 attack_type, bool additional_effects, t_tick tick, bool isspdamage) {
+int32 battle_damage(struct block_list *src, struct block_list *target, int64 damage, int16 div_, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, uint16 attack_type, bool additional_effects, t_tick tick, bool isspdamage) {
+	if (target == nullptr)
+		return 0;
+
 	int32 dmg_change;
 	map_session_data* sd = nullptr;
+
+	t_tick delay = battle_calc_walkdelay(*target, damage, div_, tick);
+
 	if (src)
 		sd = BL_CAST(BL_PC, src);
 	map_freeblock_lock();
@@ -292,21 +331,19 @@ int32 battle_damage(struct block_list *src, struct block_list *target, int64 dam
 		skill_counter_additional_effect(src, target, skill_id, skill_lv, attack_type, tick);
 	// This is the last place where we have access to the actual damage type, so any monster events depending on type must be placed here
 	if (target->type == BL_MOB && additional_effects) {
-		mob_data *md = BL_CAST(BL_MOB, target);
+		mob_data& md = *reinterpret_cast<mob_data*>(target);
 
-		if (md != nullptr) {
-			// Trigger monster skill condition for non-skill attacks.
-			if (!status_isdead(*target) && src != target) {
-				if (damage > 0)
-					mobskill_event(md, src, tick, attack_type, damage);
-				if (skill_id > 0)
-					mobskill_event(md, src, tick, MSC_SKILLUSED | (skill_id << 16));
-			}
-
-			// Monsters differentiate whether they have been attacked by a skill or a normal attack
-			if (damage > 0 && (attack_type & BF_NORMAL))
-				md->norm_attacked_id = md->attacked_id;
+		// Trigger monster skill condition for non-skill attacks.
+		if (src != target && !status_isdead(*target)) {
+			if (damage > 0)
+				mobskill_event(&md, src, tick, attack_type, damage);
+			if (skill_id > 0)
+				mobskill_event(&md, src, tick, MSC_SKILLUSED | (skill_id << 16));
 		}
+
+		// Monsters differentiate whether they have been attacked by a skill or a normal attack
+		if (damage > 0 && (attack_type&BF_NORMAL))
+			md.norm_attacked_id = md.attacked_id;
 	}
 	map_freeblock_unlock();
 	return dmg_change;
@@ -317,7 +354,7 @@ struct delay_damage {
 	int32 src_id;
 	int32 target_id;
 	int64 damage;
-	t_tick delay;
+	int16 div_;
 	uint16 distance;
 	uint16 skill_lv;
 	uint16 skill_id;
@@ -341,9 +378,9 @@ TIMER_FUNC(battle_delay_damage_sub){
 				check_distance_bl(src, target, dat->distance) ) //Check to see if you haven't teleported. [Skotlex]
 			{
 				//Deal damage
-				battle_damage(src, target, dat->damage, dat->delay, dat->skill_lv, dat->skill_id, dat->dmg_lv, dat->attack_type, dat->additional_effects, tick, dat->isspdamage);
+				battle_damage(src, target, dat->damage, dat->div_, dat->skill_lv, dat->skill_id, dat->dmg_lv, dat->attack_type, dat->additional_effects, tick, dat->isspdamage);
 			} else if( !src && dat->skill_id == CR_REFLECTSHIELD ) { // it was monster reflected damage, and the monster died, we pass the damage to the character as expected
-				battle_fix_damage(target, target, dat->damage, dat->delay, dat->skill_id);
+				battle_fix_damage(target, target, dat->damage, dat->div_, dat->skill_id);
 			}
 		}
 
@@ -358,7 +395,7 @@ TIMER_FUNC(battle_delay_damage_sub){
 	return 0;
 }
 
-int32 battle_delay_damage(t_tick tick, int32 amotion, struct block_list *src, struct block_list *target, int32 attack_type, uint16 skill_id, uint16 skill_lv, int64 damage, enum damage_lv dmg_lv, t_tick ddelay, bool additional_effects, bool isspdamage)
+int32 battle_delay_damage(t_tick tick, int32 amotion, struct block_list *src, struct block_list *target, int32 attack_type, uint16 skill_id, uint16 skill_lv, int64 damage, enum damage_lv dmg_lv, int16 div_, bool additional_effects, bool isspdamage)
 {
 	struct delay_damage *dat;
 	status_change *sc;
@@ -408,7 +445,7 @@ int32 battle_delay_damage(t_tick tick, int32 amotion, struct block_list *src, st
 	// Skip creation of timer
 	if (amotion <= 1) {
 		//Deal damage
-		battle_damage(src, target, damage, ddelay, skill_lv, skill_id, dmg_lv, attack_type, additional_effects, gettick(), isspdamage);
+		battle_damage(src, target, damage, div_, skill_lv, skill_id, dmg_lv, attack_type, additional_effects, gettick(), isspdamage);
 		return 0;
 	}
 	dat = ers_alloc(delay_damage_ers, struct delay_damage);
@@ -419,7 +456,7 @@ int32 battle_delay_damage(t_tick tick, int32 amotion, struct block_list *src, st
 	dat->attack_type = attack_type;
 	dat->damage = damage;
 	dat->dmg_lv = dmg_lv;
-	dat->delay = ddelay;
+	dat->div_ = div_;
 	dat->distance = distance_bl(src, target) + (battle_config.snap_dodge ? 10 : AREA_SIZE);
 	dat->additional_effects = additional_effects;
 	dat->src_type = src->type;
@@ -433,8 +470,8 @@ int32 battle_delay_damage(t_tick tick, int32 amotion, struct block_list *src, st
 	return 0;
 }
 
-int32 battle_fix_damage(struct block_list* src, struct block_list* target, int64 damage, t_tick walkdelay, uint16 skill_id) {
-	return battle_damage(src, target, damage, walkdelay, 0, skill_id, ATK_DEF, BF_MISC, false, gettick(), false);
+int32 battle_fix_damage(struct block_list* src, struct block_list* target, int64 damage, int16 div_, uint16 skill_id) {
+	return battle_damage(src, target, damage, div_, 0, skill_id, ATK_DEF, BF_MISC, false, gettick(), false);
 }
 
 /**
@@ -7235,17 +7272,17 @@ static void battle_calc_attack_gvg_bg(struct Damage* wd, struct block_list *src,
 				int64 damage = wd->damage + wd->damage2, rdamage = 0;
 				map_session_data *tsd = BL_CAST(BL_PC, target);
 				status_data* sstatus = status_get_status_data(*src);
-				t_tick tick = gettick(), rdelay = 0;
+				t_tick tick = gettick();
 
 				rdamage = battle_calc_return_damage(target, src, &damage, wd->flag, skill_id, false);
 				if( rdamage > 0 ) { //Item reflect gets calculated before any mapflag reducing is applicated
 					struct block_list *d_bl = battle_check_devotion(src);
 
-					rdelay = clif_damage(*src, (d_bl == nullptr) ? *src : *d_bl, tick, wd->amotion, sstatus->dmotion, rdamage, 1, DMG_ENDURE, 0, false);
+					clif_damage(*src, (d_bl == nullptr) ? *src : *d_bl, tick, wd->amotion, sstatus->dmotion, rdamage, 1, DMG_ENDURE, 0, false);
 					if( tsd )
 						battle_drain(tsd, src, rdamage, rdamage, sstatus->race, sstatus->class_);
 					//Use Reflect Shield to signal this kind of skill trigger [Skotlex]
-					battle_delay_damage(tick, wd->amotion, target, (!d_bl) ? src : d_bl, 0, CR_REFLECTSHIELD, 0, rdamage, ATK_DEF, rdelay, true, false);
+					battle_delay_damage(tick, wd->amotion, target, (!d_bl) ? src : d_bl, 0, CR_REFLECTSHIELD, 0, rdamage, ATK_DEF, 1, true, false);
 					skill_additional_effect(target, (!d_bl) ? src : d_bl, CR_REFLECTSHIELD, 1, BF_WEAPON|BF_SHORT|BF_NORMAL, ATK_DEF, tick);
 				}
 		}
@@ -7312,7 +7349,8 @@ static void battle_calc_weapon_final_atk_modifiers(struct Damage* wd, struct blo
 	{
 		ATK_RATER(wd->damage, 50)
 		clif_skill_nodamage(target, *target,ST_REJECTSWORD, tsc->getSCE(SC_REJECTSWORD)->val1);
-		battle_fix_damage(target,src,wd->damage,clif_damage(*target,*src,gettick(),0,0,wd->damage,0,DMG_NORMAL,0,false),ST_REJECTSWORD);
+		clif_damage(*target, *src, gettick(), 0, 0, wd->damage, 0, DMG_NORMAL, 0, false);
+		battle_fix_damage(target, src, wd->damage, wd->div_, ST_REJECTSWORD);
 		if (status_isdead(*target))
 			return;
 		if( --(tsc->getSCE(SC_REJECTSWORD)->val3) <= 0 )
@@ -7593,7 +7631,7 @@ void battle_do_reflect(int32 attack_type, struct Damage *wd, struct block_list* 
 		status_change *tsc = status_get_sc(target);
 		status_data* sstatus = status_get_status_data(*src);
 		struct unit_data *ud = unit_bl2ud(target);
-		t_tick tick = gettick(), rdelay = 0;
+		t_tick tick = gettick();
 
 		if (!tsc)
 			return;
@@ -7617,11 +7655,10 @@ void battle_do_reflect(int32 attack_type, struct Damage *wd, struct block_list* 
 			if( attack_type == BF_WEAPON && tsc->getSCE(SC_REFLECTDAMAGE) ) // Don't reflect your own damage (Grand Cross)
 				map_foreachinshootrange(battle_damage_area,target,skill_get_splash(LG_REFLECTDAMAGE,1),BL_CHAR,tick,target,wd->amotion,sstatus->dmotion,rdamage,wd->flag);
 			else if( attack_type == BF_WEAPON || attack_type == BF_MISC) {
-				rdelay = clif_damage(*src, (d_bl == nullptr) ? *src : *d_bl, tick, wd->amotion, sstatus->dmotion, rdamage, 1, DMG_ENDURE, 0, false);
+				clif_damage(*src, (d_bl == nullptr) ? *src : *d_bl, tick, wd->amotion, sstatus->dmotion, rdamage, 1, DMG_ENDURE, 0, false);
 				if( tsd )
 					battle_drain(tsd, src, rdamage, rdamage, sstatus->race, sstatus->class_);
-				// It appears that official servers give skill reflect damage a longer delay
-				battle_delay_damage(tick, wd->amotion, target, (!d_bl) ? src : d_bl, 0, CR_REFLECTSHIELD, 0, rdamage, ATK_DEF, rdelay ,true, false);
+				battle_delay_damage(tick, wd->amotion, target, (!d_bl) ? src : d_bl, 0, CR_REFLECTSHIELD, 0, rdamage, ATK_DEF, 1, true, false);
 				skill_additional_effect(target, (!d_bl) ? src : d_bl, CR_REFLECTSHIELD, 1, BF_WEAPON|BF_SHORT|BF_NORMAL, ATK_DEF, tick);
 			}
 		}
@@ -10626,7 +10663,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		}
 	}
 
-	wd.dmotion = clif_damage(*src, *target, tick, wd.amotion, wd.dmotion, wd.damage, wd.div_ , wd.type, wd.damage2, wd.isspdamage);
+	clif_damage(*src, *target, tick, wd.amotion, wd.dmotion, wd.damage, wd.div_, wd.type, wd.damage2, wd.isspdamage);
 
 	if (sd && sd->bonus.splash_range > 0 && damage > 0)
 		skill_castend_damage_id(src, target, 0, 1, tick, 0);
@@ -10651,7 +10688,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		if( wd.dmg_lv > ATK_BLOCK )
 			skill_counter_additional_effect(src, target, 0, 0, wd.flag, tick);
 	} else
-		battle_delay_damage(tick, wd.amotion, src, target, wd.flag, 0, 0, damage, wd.dmg_lv, wd.dmotion, true, wd.isspdamage);
+		battle_delay_damage(tick, wd.amotion, src, target, wd.flag, 0, 0, damage, wd.dmg_lv, wd.div_, true, wd.isspdamage);
 	if( tsc ) {
 		if( tsc->getSCE(SC_DEVOTION) ) {
 			struct status_change_entry *sce = tsc->getSCE(SC_DEVOTION);
@@ -11520,6 +11557,7 @@ static const struct _battle_data {
 	{ "attribute_recover",                  &battle_config.attr_recover,                    1,      0,      1,              },
 	{ "flooritem_lifetime",                 &battle_config.flooritem_lifetime,              60000,  1000,   INT_MAX,        },
 	{ "item_auto_get",                      &battle_config.item_auto_get,                   0,      0,      1,              },
+	{ "first_attack_loot_bonus",            &battle_config.first_attack_loot_bonus,         30,     0,      100,            },
 	{ "item_first_get_time",                &battle_config.item_first_get_time,             3000,   0,      INT_MAX,        },
 	{ "item_second_get_time",               &battle_config.item_second_get_time,            2000,   0,      INT_MAX,        },
 	{ "item_third_get_time",                &battle_config.item_third_get_time,             2000,   0,      INT_MAX,        },

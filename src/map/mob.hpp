@@ -398,6 +398,7 @@ struct mob_data {
 	uint16 damagetaken;
 
 	e_mob_bosstype get_bosstype();
+	map_session_data* get_mvp_player();
 };
 
 class MobAvailDatabase : public YamlDatabase {
