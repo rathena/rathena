@@ -363,7 +363,7 @@ OnSpawn:
 	.@event$ = instance_npcname(strnpcinfo(0))+"::OnMobKill";
 	setarray .@xy,229,229,20341,217,235,20341,222,229,20341;
 	for (.@i = 0; .@i < getarraysize(.@xy); .@i += 3)
-		monster 'map$,.@xy[.@i],.@xy[.@i+1],"--ja--",.@xy[.@i+2],1,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+		monster 'map$,.@xy[.@i],.@xy[.@i+1],"--en--",.@xy[.@i+2],1,instance_npcname(strnpcinfo(0))+"::OnMobKill";
 	initnpctimer;
 	end;
 
@@ -521,7 +521,7 @@ OnSpawn:
 	setd("'" + strnpcinfo(2),1);
 	setarray .@xy,213,175,20342,216,174,20342,219,167,20342;
 	for (.@i = 0; .@i < getarraysize(.@xy); .@i += 3)
-		monster 'map$,.@xy[.@i],.@xy[.@i+1],"--ja--",.@xy[.@i+2],1,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+		monster 'map$,.@xy[.@i],.@xy[.@i+1],"--en--",.@xy[.@i+2],1,instance_npcname(strnpcinfo(0))+"::OnMobKill";
 	initnpctimer;
 	end;
 
@@ -988,7 +988,7 @@ OnTouch:
 		}
 		specialeffect EF_BAKU;
 		for (.@i = 0; .@i < getarraysize(.@xy); .@i += 3)
-			monster 'map$,.@xy[.@i],.@xy[.@i+1],"--ja--",.@xy[.@i+2],1,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+			monster 'map$,.@xy[.@i],.@xy[.@i+1],"--en--",.@xy[.@i+2],1,instance_npcname(strnpcinfo(0))+"::OnMobKill";
 		initnpctimer;
 	}
 	end;
@@ -1073,7 +1073,7 @@ OnTouch:
 		.@event2$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill";
 		getmapxy(.@m$,.@x,.@y,BL_NPC);
 		if (!mobcount('map$,.@event2$))
-			monster 'map$,.@x,.@y,"--ja--",.@mob,1,.@event2$;
+			monster 'map$,.@x,.@y,"--en--",.@mob,1,.@event2$;
 		initnpctimer;
 	}
 	end;
