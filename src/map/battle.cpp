@@ -331,15 +331,16 @@ int32 battle_damage(struct block_list *src, struct block_list *target, int64 dam
 	if (dmg_lv > ATK_BLOCK && attack_type && additional_effects)
 		skill_counter_additional_effect(src, target, skill_id, skill_lv, attack_type, tick);
 	// This is the last place where we have access to the actual damage type, so any monster events depending on type must be placed here
-	if (src != nullptr && target->type == BL_MOB && additional_effects) {
+	// These events trigger when the attack connects
+	if (src != nullptr && target->type == BL_MOB && dmg_lv > ATK_BLOCK) {
 		mob_data& md = *reinterpret_cast<mob_data*>(target);
 
-		// Trigger monster skill condition for non-skill attacks.
+		// Trigger monster skill conditions
 		if (src != target && !status_isdead(*target)) {
 			if (damage > 0)
 				mobskill_event(&md, src, tick, attack_type, damage);
 			if (skill_id > 0)
-				mobskill_event(&md, src, tick, MSC_SKILLUSED | (skill_id << 16));
+				mobskill_event(&md, src, tick, MSC_SKILLUSED | (skill_id << 16), damage);
 		}
 
 		// Prepare corresponding attacked event that occurs at the end of the calculated walk delay
