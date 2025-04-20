@@ -1922,12 +1922,8 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 					)
 					|| !mob_can_reach(md, tbl, md->db->range3)
 				)
-			&&  md->state.attacked_count++ >= RUDE_ATTACKED_COUNT
-			&&  !mobskill_use(md, tick, MSC_RUDEATTACKED) // If can't rude Attack
-			&&  can_move && unit_escape(&md->bl, tbl, rnd()%10 +1)) // Attempt escape
-			{	//Escaped
-				md->attacked_id = md->norm_attacked_id = 0;
-				return true;
+			&&  ++md->state.attacked_count > RUDE_ATTACKED_COUNT) {
+				mobskill_use(md, tick, MSC_RUDEATTACKED);
 			}
 		}
 		else
@@ -1950,13 +1946,8 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 				) )
 			{ // Rude attacked
 				if (abl->id != md->bl.id //Self damage does not cause rude attack
-				&& md->state.attacked_count++ >= RUDE_ATTACKED_COUNT				
-				&& !mobskill_use(md, tick, MSC_RUDEATTACKED) && can_move
-				&& !tbl && unit_escape(&md->bl, abl, rnd()%10 +1))
-				{	//Escaped.
-					//TODO: Maybe it shouldn't attempt to run if it has another, valid target?
-					md->attacked_id = md->norm_attacked_id = 0;
-					return true;
+				&& ++md->state.attacked_count > RUDE_ATTACKED_COUNT) {
+					mobskill_use(md, tick, MSC_RUDEATTACKED);
 				}
 			}
 			else
@@ -2963,8 +2954,8 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 	}
 
 	if (!lootdmg.empty()) {
-		// First player in the damage log gets 30% of total damage as bonus for loot priority
-		lootdmg[0].damage += (total_damage * 30) / 100;
+		// Officially, the first player in the damage log gets 30% of total damage as bonus for loot priority
+		lootdmg[0].damage += (total_damage * battle_config.first_attack_loot_bonus) / 100;
 
 		// Sort list by damage now and determine top 3 damage dealers
 		std::sort(lootdmg.begin(), lootdmg.end(), [](s_dmg_entry& a, s_dmg_entry& b) {
