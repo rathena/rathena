@@ -1922,7 +1922,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 					)
 					|| !mob_can_reach(md, tbl, md->db->range3)
 				)
-			&&  md->state.attacked_count++ >= RUDE_ATTACKED_COUNT) {
+			&&  ++md->state.attacked_count > RUDE_ATTACKED_COUNT) {
 				mobskill_use(md, tick, MSC_RUDEATTACKED);
 			}
 		}
@@ -1946,7 +1946,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 				) )
 			{ // Rude attacked
 				if (abl->id != md->bl.id //Self damage does not cause rude attack
-				&& md->state.attacked_count++ >= RUDE_ATTACKED_COUNT) {
+				&& ++md->state.attacked_count > RUDE_ATTACKED_COUNT) {
 					mobskill_use(md, tick, MSC_RUDEATTACKED);
 				}
 			}
