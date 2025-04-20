@@ -2259,7 +2259,7 @@ void mob_set_attacked_id(int32 src_id, int32 target_id, t_tick tick, bool is_nor
 		case BL_MOB:
 		{
 			struct mob_data& md2 = *reinterpret_cast<mob_data*>(src);
-			// Let players decide whether to retaliate versus the master or the mob
+			// Config to decide whether to retaliate versus the master or the mob
 			if (md2.master_id && battle_config.retaliate_to_master)
 				md->attacked_id = md2.master_id;
 			else
