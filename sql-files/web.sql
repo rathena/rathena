@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `guild_emblems` (
   `guild_id` int unsigned NOT NULL,
   `file_type` varchar(255) NOT NULL,
   `file_data` blob,
-  `version` int unsigned NOT NULL DEFAULT '0',
+  `version` int unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`world_name`, `guild_id`)
 ) ENGINE=MyISAM;
 

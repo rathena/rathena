@@ -4,7 +4,7 @@
 
 DROP TABLE IF EXISTS `item_db2_re`;
 CREATE TABLE `item_db2_re` (
-  `id` int unsigned NOT NULL DEFAULT '0',
+  `id` int unsigned NOT NULL DEFAULT 0,
   `name_aegis` varchar(50) DEFAULT NULL,
   `name_english` varchar(100) DEFAULT NULL,
   `type` varchar(20) DEFAULT NULL,
