@@ -2275,6 +2275,9 @@ void mob_set_attacked_id(int32 src_id, int32 target_id, t_tick tick, bool is_nor
 	if (is_norm_attacked)
 		md->norm_attacked_id = md->attacked_id;
 
+	// As it was attacked, monster leaves aggressive mode
+	md->state.aggressive = 0;
+
 	// Need to call mob AI routine immediately, otherwise the attacked ID might get overwritten before it is processed
 	mob_ai_sub_hard(md, tick);
 }
@@ -2752,8 +2755,6 @@ void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_ta
 void mob_damage(struct mob_data *md, struct block_list *src, int32 damage)
 {
 	if (src && damage > 0) { //Store total damage...
-		if ((src != &md->bl) && md->state.aggressive) //No longer aggressive, change to retaliate AI.
-			md->state.aggressive = 0;
 		//Log damage
 		mob_log_damage(md, src, static_cast<int64>(damage));
 	}
