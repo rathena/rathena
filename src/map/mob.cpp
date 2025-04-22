@@ -1243,7 +1243,11 @@ static int32 mob_can_changetarget(struct mob_data* md, struct block_list* target
 		case MSS_BERSERK:
 			if (!(mode&MD_CHANGETARGETMELEE))
 				return 0;
-			if (!(battle_config.mob_ai&0x80) && md->norm_attacked_id != target->id)
+			// If the special normal attacked event occured, always change target in berserk state
+			if (md->norm_attacked_id == target->id)
+				return 1;
+			// If the special setting to switch target even on skills is set, we need to verify the range here
+			if (!(battle_config.mob_ai&0x80))
 				return 0;
 			return (battle_config.mob_ai&0x4 || check_distance_bl(&md->bl, target, md->status.rhw.range+1));
 		case MSS_RUSH:
@@ -1922,12 +1926,8 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 					)
 					|| !mob_can_reach(md, tbl, md->db->range3)
 				)
-			&&  md->state.attacked_count++ >= RUDE_ATTACKED_COUNT
-			&&  !mobskill_use(md, tick, MSC_RUDEATTACKED) // If can't rude Attack
-			&&  can_move && unit_escape(&md->bl, tbl, rnd()%10 +1)) // Attempt escape
-			{	//Escaped
-				md->attacked_id = md->norm_attacked_id = 0;
-				return true;
+			&&  ++md->state.attacked_count > RUDE_ATTACKED_COUNT) {
+				mobskill_use(md, tick, MSC_RUDEATTACKED);
 			}
 		}
 		else
@@ -1950,13 +1950,8 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 				) )
 			{ // Rude attacked
 				if (abl->id != md->bl.id //Self damage does not cause rude attack
-				&& md->state.attacked_count++ >= RUDE_ATTACKED_COUNT				
-				&& !mobskill_use(md, tick, MSC_RUDEATTACKED) && can_move
-				&& !tbl && unit_escape(&md->bl, abl, rnd()%10 +1))
-				{	//Escaped.
-					//TODO: Maybe it shouldn't attempt to run if it has another, valid target?
-					md->attacked_id = md->norm_attacked_id = 0;
-					return true;
+				&& ++md->state.attacked_count > RUDE_ATTACKED_COUNT) {
+					mobskill_use(md, tick, MSC_RUDEATTACKED);
 				}
 			}
 			else
@@ -2230,6 +2225,86 @@ bool mob_ai_sub_hard_attacktimer(mob_data &md, t_tick tick)
 	// Go through the whole monster AI
 	mob_ai_sub_hard(&md, tick);
 	return true;
+}
+
+/**
+ * Sets attacked ID based on bl type of attacker
+ * Then calls the mob AI to process it immediately
+ * @param src_id: ID of attacker
+ * @param target_id: ID of attacked monster
+ * @param tick: Current tick
+ * @param is_norm_attacked: When true, sets a special normal attacked ID to trigger a target change in attack state
+ */
+void mob_set_attacked_id(int32 src_id, int32 target_id, t_tick tick, bool is_norm_attacked) {
+	block_list* src = map_id2bl(src_id);
+	if (src == nullptr)
+		return;
+
+	mob_data* md = map_id2md(target_id);
+	if (md == nullptr)
+		return;
+
+	switch (src->type)
+	{
+		case BL_PET:
+		{
+			struct pet_data& pd = *reinterpret_cast<pet_data*>(src);
+			if (pd.master)
+			{
+				// Let mobs retaliate against the pet's master
+				md->attacked_id = pd.master->bl.id;
+			}
+			break;
+		}
+		case BL_MOB:
+		{
+			struct mob_data& md2 = *reinterpret_cast<mob_data*>(src);
+			// Config to decide whether to retaliate versus the master or the mob
+			if (md2.master_id && battle_config.retaliate_to_master)
+				md->attacked_id = md2.master_id;
+			else
+				md->attacked_id = src->id;
+			break;
+		}
+		default:
+			// Retaliate against attacker
+			md->attacked_id = src->id;
+			break;
+	}
+
+	if (is_norm_attacked)
+		md->norm_attacked_id = md->attacked_id;
+
+	// Need to call mob AI routine immediately, otherwise the attacked ID might get overwritten before it is processed
+	mob_ai_sub_hard(md, tick);
+}
+
+/**
+ * Timer that triggers after walk delay when a monster was attacked by skills or from outside [attack range+1]
+ * Sets attacked ID and calls the mob AI to process it immediately
+ * @param tid: Timer ID
+ * @param tick: Current tick
+ * @param id: ID of attacked monster
+ * @param data: ID of attacker
+ * @return 0
+ */
+TIMER_FUNC(mob_attacked) {
+	mob_set_attacked_id(data, id, tick, false);
+	return 0;
+}
+
+/**
+ * Timer that triggers after walk delay when a berserk-state monster was attacked by a normal attack from within [attack range+1]
+ * Same as mob_attacked, but sets a special normal attacked ID to trigger a target change in attack state
+ * @param tid: Timer ID
+ * @param tick: Current tick
+ * @param id: ID of attacked monster
+ * @param data: ID of attacker
+ * @return 0
+ */
+TIMER_FUNC(mob_norm_attacked) {
+	mob_set_attacked_id(data, id, tick, true);
+	return 0;
 }
 
 static int32 mob_ai_sub_hard_timer(struct block_list *bl,va_list ap)
@@ -2590,8 +2665,6 @@ void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_ta
 		{
 			map_session_data *sd = (TBL_PC*)src;
 			char_id = sd->status.char_id;
-			if( damage )
-				md->attacked_id = src->id;
 			break;
 		}
 		case BL_HOM:
@@ -2600,8 +2673,6 @@ void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_ta
 			flag = MDLF_HOMUN;
 			if( hd->master )
 				char_id = hd->master->status.char_id;
-			if( damage )
-				md->attacked_id = src->id;
 			break;
 		}
 		case BL_MER:
@@ -2609,8 +2680,6 @@ void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_ta
 			s_mercenary_data *mer = (TBL_MER*)src;
 			if( mer->master )
 				char_id = mer->master->status.char_id;
-			if( damage )
-				md->attacked_id = src->id;
 			break;
 		}
 		case BL_PET:
@@ -2618,11 +2687,7 @@ void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_ta
 			struct pet_data *pd = (TBL_PET*)src;
 			flag = MDLF_PET;
 			if( pd->master )
-			{
 				char_id = pd->master->status.char_id;
-				if( damage ) //Let mobs retaliate against the pet's master [Skotlex]
-					md->attacked_id = pd->master->bl.id;
-			}
 			break;
 		}
 		case BL_MOB:
@@ -2634,13 +2699,6 @@ void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_ta
 				if( msd )
 					char_id = msd->status.char_id;
 			}
-			if( !damage )
-				break;
-			//Let players decide whether to retaliate versus the master or the mob. [Skotlex]
-			if( md2->master_id && battle_config.retaliate_to_master )
-				md->attacked_id = md2->master_id;
-			else
-				md->attacked_id = src->id;
 			break;
 		}
 		case BL_ELEM:
@@ -2648,12 +2706,10 @@ void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_ta
 			s_elemental_data *ele = (TBL_ELEM*)src;
 			if( ele->master )
 				char_id = ele->master->status.char_id;
-			if( damage )
-				md->attacked_id = src->id;
 			break;
 		}
 		default: //For all unhandled types.
-			md->attacked_id = src->id;
+			break;
 	}
 
 	//Self damage increases tap bonus
@@ -7231,6 +7287,8 @@ void do_init_mob(void){
 	add_timer_func_list(mob_spawn_guardian_sub,"mob_spawn_guardian_sub");
 	add_timer_func_list(mob_respawn,"mob_respawn");
 	add_timer_func_list(mvptomb_delayspawn,"mvptomb_delayspawn");
+	add_timer_func_list(mob_attacked, "mob_attacked");
+	add_timer_func_list(mob_norm_attacked, "mob_norm_attacked");
 	add_timer_interval(gettick()+MIN_MOBTHINKTIME,mob_ai_hard,0,0,MIN_MOBTHINKTIME);
 	add_timer_interval(gettick()+MIN_MOBTHINKTIME*10,mob_ai_lazy,0,0,MIN_MOBTHINKTIME*10);
 }
