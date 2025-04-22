@@ -2452,9 +2452,9 @@ int32 unit_skilluse_id2(struct block_list *src, int32 target_id, uint16 skill_id
 	// In official this is triggered even if no cast time.
 	clif_skillcasting(src, src->id, target_id, 0,0, skill_id, skill_lv, skill_get_ele(skill_id, skill_lv), casttime);
 
-	if (sd && target->type == BL_MOB
+	if (sd != nullptr && target->type == BL_MOB
 #ifndef RENEWAL
-		&& (casttime > 0 || combo)
+		&& (casttime > 0 || combo > 0)
 #endif
 	) {
 		TBL_MOB *md = (TBL_MOB*)target;
