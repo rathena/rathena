@@ -1642,8 +1642,7 @@ int32 status_damage(struct block_list *src,struct block_list *target,int64 dhp, 
 	}
 
 	if( status->hp || (flag&8) ) { // Still lives or has been dead before this damage.
-		t_tick tick = gettick();
-		if (walkdelay && !status_isendure(*target, tick, false))
+		if (t_tick tick = gettick(); walkdelay > 0 && !status_isendure(*target, tick, false))
 			unit_set_walkdelay(target, tick, walkdelay, 0);
 		return (int32)(hp+sp+ap);
 	}
