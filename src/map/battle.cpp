@@ -10520,7 +10520,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 #ifndef RENEWAL
 		status_get_class_(src) != CLASS_BOSS &&
 #endif
-		(src->type == BL_PC || distance_bl(src, target) <= 2) )
+		(src->type == BL_PC || check_distance_bl(src, target, 2)) )
 	{
 		uint16 skill_lv = tsc->getSCE(SC_BLADESTOP_WAIT)->val1;
 		int32 duration = skill_get_time2(MO_BLADESTOP,skill_lv);
