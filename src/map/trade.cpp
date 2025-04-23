@@ -418,7 +418,7 @@ void trade_tradeadditem(map_session_data *sd, int16 index, int16 amount)
 
 	// Fail to add the item if the inventory is full
 	if (pc_inventoryblank(target_sd) <= trade_i) {
-#ifdef PACKETVER >= 20110705
+#if PACKETVER >= 20110705
 		clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_OVERCOUNT);
 #else
 		clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_OVERWEIGHT);
@@ -429,7 +429,7 @@ void trade_tradeadditem(map_session_data *sd, int16 index, int16 amount)
 	// Fail to add the item if is stacked over the limit
 	if (itemdb_isstackable(item->nameid)) {
 		if (pc_checkadditem(target_sd, item->nameid, amount) == CHKADDITEM_OVERAMOUNT) {
-#ifdef PACKETVER >= 20110705
+#if PACKETVER >= 20110705
 			clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_EACHITEM_OVERCOUNT);
 #else
 			clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_OVERWEIGHT);
