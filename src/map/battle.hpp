@@ -774,6 +774,7 @@ struct Battle_Config
 	int32 loot_range;
 	int32 assist_range;
 	int32 open_box_weight_rate;
+	int32 trade_weight_rate;
 	int32 major_overweight_rate;
 
 #include <custom/battle_config_struct.inc>

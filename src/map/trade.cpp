@@ -413,12 +413,34 @@ void trade_tradeadditem(map_session_data *sd, int16 index, int16 amount)
 	// Locate a trade position
 	ARR_FIND( 0, 10, trade_i, sd->deal.item[trade_i].index == index || sd->deal.item[trade_i].amount == 0 );
 	if( trade_i == 10 ) { // No space left
-		// clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_OVERWEIGHT); // We do not know if the server respond with this or not since the official client prevents this case client-side.
 		return;
 	}
 
+	// Fail to add the item if the inventory is full
+	if (pc_inventoryblank(target_sd) <= trade_i) {
+#ifdef PACKETVER >= 20110705
+		clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_OVERCOUNT);
+#else
+		clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_OVERWEIGHT);
+#endif
+		return;
+	}
+
+	// Fail to add the item if is stacked over the limit
+	if (itemdb_isstackable(item->nameid)) {
+		if (pc_checkadditem(target_sd, item->nameid, amount) == CHKADDITEM_OVERAMOUNT) {
+#ifdef PACKETVER >= 20110705
+			clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_EACHITEM_OVERCOUNT);
+#else
+			clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_OVERWEIGHT);
+#endif
+			return;
+		}
+	}
+
 	trade_weight = sd->inventory_data[index]->weight * amount;
-	if( target_sd->weight + sd->deal.weight + trade_weight > target_sd->max_weight ) { // fail to add item -- the player was over weighted.
+	// Fail to add the item if the weight limit is reached
+	if (pc_getpercentweight(*target_sd, target_sd->weight + sd->deal.weight + trade_weight) >= battle_config.trade_weight_rate) {
 		clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_OVERWEIGHT);
 		return;
 	}

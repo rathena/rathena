@@ -11685,9 +11685,11 @@ static const struct _battle_data {
 #ifdef RENEWAL
 	{ "natural_heal_weight_rate",           &battle_config.natural_heal_weight_rate,        70,     0,      100             },
 	{ "open_box_weight_rate",               &battle_config.open_box_weight_rate,            90,     0,      100             },
+	{ "trade_weight_rate",                  &battle_config.trade_weight_rate,               100,     0,      100             },
 #else
 	{ "natural_heal_weight_rate",           &battle_config.natural_heal_weight_rate,        50,     0,      100             },
 	{ "open_box_weight_rate",               &battle_config.open_box_weight_rate,            70,     0,      100             },
+	{ "trade_weight_rate",                  &battle_config.trade_weight_rate,               50,     0,      100             },
 #endif
 	{ "arrow_decrement",                    &battle_config.arrow_decrement,                 1,      0,      2,              },
 	{ "ammo_unequip",                       &battle_config.ammo_unequip,                    1,      0,      1,              },
