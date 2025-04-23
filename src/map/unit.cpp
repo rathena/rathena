@@ -1980,9 +1980,10 @@ void unit_set_castdelay(unit_data& ud, t_tick tick, int32 casttime) {
  * @param type: Type of delay
  *	0: Damage induced delay; Do not change previous delay
  *	1: Skill induced delay; Walk delay can only be increased, not decreased
+ * @param skill_id: ID of skill that dealt damage (type 0 only)
  * @return Success(1); Fail(0);
  */
-int32 unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int32 type)
+int32 unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int32 type, uint16 skill_id)
 {
 	struct unit_data *ud = unit_bl2ud(bl);
 
@@ -2010,6 +2011,16 @@ int32 unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int32
 			unit_stop_walking( bl, USW_MOVE_FULL_CELL );
 			return 0;
 		}
+
+		switch (skill_id) {
+			case MG_FIREWALL:
+			case PR_SANCTUARY:
+			case NJ_KAENSIN:
+				// When using legacy walk delay, these skills should just stop the target
+				delay = 1;
+				break;
+		}
+
 		//Immune to being stopped for double the flinch time
 		if (DIFF_TICK(ud->canmove_tick, tick-delay) > 0)
 			return 0;
