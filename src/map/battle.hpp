@@ -439,6 +439,7 @@ struct Battle_Config
 	int32 default_walk_delay;
 	int32 no_skill_delay;
 	int32 attack_walk_delay;
+	int32 damage_walk_delay;
 	int32 require_glory_guild;
 	int32 idle_no_share;
 	int32 party_update_interval;

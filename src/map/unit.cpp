@@ -2004,9 +2004,9 @@ int32 unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int32
 			if (md.state.can_escape == 1)
 				return 0;
 		}
-		// Don't set walk delays when already trapped.
-		if (!unit_can_move(bl)) {
-			// Unit might still be moving even though it can't move
+		// Trapped or legacy walk delay system disabled
+		if (!unit_can_move(bl) || !(bl->type&battle_config.damage_walk_delay)) {
+			// Stop on the closest cell center
 			unit_stop_walking( bl, USW_MOVE_FULL_CELL );
 			return 0;
 		}
@@ -2452,7 +2452,11 @@ int32 unit_skilluse_id2(struct block_list *src, int32 target_id, uint16 skill_id
 	// In official this is triggered even if no cast time.
 	clif_skillcasting(src, src->id, target_id, 0,0, skill_id, skill_lv, skill_get_ele(skill_id, skill_lv), casttime);
 
-	if (sd && target->type == BL_MOB) {
+	if (sd != nullptr && target->type == BL_MOB
+#ifndef RENEWAL
+		&& (casttime > 0 || combo > 0)
+#endif
+	) {
 		TBL_MOB *md = (TBL_MOB*)target;
 
 		mobskill_event(md, src, tick, -1); // Cast targetted skill event.
