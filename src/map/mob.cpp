@@ -2289,7 +2289,7 @@ void mob_set_attacked_id(int32 src_id, int32 target_id, t_tick tick, bool is_nor
  * @return 0
  */
 TIMER_FUNC(mob_attacked) {
-	mob_set_attacked_id(data, id, tick, false);
+	mob_set_attacked_id(static_cast<int32>(data), id, tick, false);
 	return 0;
 }
 
@@ -2303,7 +2303,7 @@ TIMER_FUNC(mob_attacked) {
  * @return 0
  */
 TIMER_FUNC(mob_norm_attacked) {
-	mob_set_attacked_id(data, id, tick, true);
+	mob_set_attacked_id(static_cast<int32>(data), id, tick, true);
 	return 0;
 }
 
