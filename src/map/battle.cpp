@@ -267,10 +267,6 @@ static t_tick battle_calc_walkdelay(block_list& bl, int64 damage, int16 div_, t_
 	if (div_ == 0)
 		return 0;
 
-	// Check if unit can be stopped by damage
-	if (status_isendure(bl, tick, false))
-		return 0;
-
 	t_tick delay = status_get_status_data(bl)->dmotion;	
 
 	// Multi-hit skills mean higher delays
@@ -11862,6 +11858,7 @@ static const struct _battle_data {
 	{ "default_walk_delay",                 &battle_config.default_walk_delay,              300,    0,      INT_MAX,        },
 	{ "no_skill_delay",                     &battle_config.no_skill_delay,                  BL_MOB, BL_NUL, BL_ALL,         },
 	{ "attack_walk_delay",                  &battle_config.attack_walk_delay,               BL_NUL, BL_NUL, BL_ALL,         },
+	{ "damage_walk_delay",                  &battle_config.damage_walk_delay,               BL_NUL, BL_NUL, BL_ALL,         },
 	{ "require_glory_guild",                &battle_config.require_glory_guild,             0,      0,      1,              },
 	{ "idle_no_share",                      &battle_config.idle_no_share,                   0,      0,      INT_MAX,        },
 	{ "party_even_share_bonus",             &battle_config.party_even_share_bonus,          0,      0,      INT_MAX,        },

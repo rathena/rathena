@@ -2004,9 +2004,9 @@ int32 unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int32
 			if (md.state.can_escape == 1)
 				return 0;
 		}
-		// Don't set walk delays when already trapped.
-		if (!unit_can_move(bl)) {
-			// Unit might still be moving even though it can't move
+		// Trapped or legacy walk delay system disabled
+		if (!unit_can_move(bl) || !(bl->type&battle_config.damage_walk_delay)) {
+			// Stop on the closest cell center
 			unit_stop_walking( bl, USW_MOVE_FULL_CELL );
 			return 0;
 		}
