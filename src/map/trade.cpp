@@ -439,8 +439,7 @@ void trade_tradeadditem(map_session_data *sd, int16 index, int16 amount)
 	}
 
 	trade_weight = sd->inventory_data[index]->weight * amount;
-	// Fail to add the item if the weight limit is reached
-	if (pc_getpercentweight(*target_sd, target_sd->weight + sd->deal.weight + trade_weight) >= battle_config.trade_weight_rate) {
+	if( target_sd->weight + sd->deal.weight + trade_weight > target_sd->max_weight ) { // fail to add item -- the player was over weighted.
 		clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_OVERWEIGHT);
 		return;
 	}
