@@ -15794,6 +15794,10 @@ static int32 skill_dance_overlap_sub(struct block_list* bl, va_list ap)
 				// If the unit is removed because overlap dissonance killed the caster, we need to reset it here
 				skill_dance_switch(unit, true);
 				skill_getareachar_skillunit_visibilty(unit, AREA);
+				// Trigger onplace event on all affected units on the cell
+				// Don't do this for src as that unit is to be removed
+				if (unit == target)
+					map_foreachincell(skill_unit_effect, unit->bl.m, unit->bl.x, unit->bl.y, unit->group->bl_flag, &unit->bl, gettick(), 1|8);
 			}
 		}
 	}
