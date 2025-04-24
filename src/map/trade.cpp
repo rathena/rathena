@@ -417,13 +417,13 @@ void trade_tradeadditem(map_session_data *sd, int16 index, int16 amount)
 		return;
 	}
 
-	// Fail to add the item if the inventory is full
+	// Fail to add the item if the inventory will be full, even if the item is stackable and already exists in the inventory
 	if (pc_inventoryblank(target_sd) <= trade_i) {
 		clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_OVERCOUNT);
 		return;
 	}
 
-	// Fail to add the item if is stacked over the limit
+	// Fail to add the item if is stackable and adding the traded amount will exceed the maximum
 	if (itemdb_isstackable(item->nameid)) {
 		if (pc_checkadditem(target_sd, item->nameid, amount) == CHKADDITEM_OVERAMOUNT) {
 			clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_EACHITEM_OVERCOUNT);
