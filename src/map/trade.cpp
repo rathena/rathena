@@ -413,6 +413,7 @@ void trade_tradeadditem(map_session_data *sd, int16 index, int16 amount)
 	// Locate a trade position
 	ARR_FIND( 0, 10, trade_i, sd->deal.item[trade_i].index == index || sd->deal.item[trade_i].amount == 0 );
 	if( trade_i == 10 ) { // No space left
+		// The client does not allow to add more than 10 items, and will show an error message.
 		return;
 	}
 
