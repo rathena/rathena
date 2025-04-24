@@ -4815,6 +4815,10 @@ void clif_tradeitemok(map_session_data& sd, int32 index, e_exitem_add_result res
 	PACKET_ZC_ACK_ADD_EXCHANGE_ITEM p = {};
 	p.packetType = HEADER_ZC_ACK_ADD_EXCHANGE_ITEM;
 	p.index = client_index(index);
+#if PACKETVER < 20110705
+	if (result > EXITEM_ADD_FAILED_CLOSED)
+		result = EXITEM_ADD_FAILED_OVERWEIGHT;
+#endif
 	p.result = static_cast<uint8>(result);
 
 	clif_send(&p, sizeof(p), &sd.bl, SELF);
