@@ -17877,7 +17877,7 @@ int32 skill_unit_onleft(uint16 skill_id, struct block_list *bl, t_tick tick)
 		case DC_DONTFORGETME:
 		case DC_FORTUNEKISS:
 		case DC_SERVICEFORYOU:
-			if (sce && (sce->val4 == 0 || battle_config.refresh_song == 1))
+			if (bl->type == BL_PC && sce && (sce->val4 == 0 || battle_config.refresh_song == 1))
 			{
 				delete_timer(sce->timer, status_change_timer);
 				//NOTE: It'd be nice if we could get the skill_lv for a more accurate extra time, but alas...
@@ -17886,9 +17886,14 @@ int32 skill_unit_onleft(uint16 skill_id, struct block_list *bl, t_tick tick)
 				sce->val4 = 1; //Store the fact that this is a "reduced" duration effect.
 				sce->timer = add_timer(tick + duration, status_change_timer, bl->id, type);
 				// Update icon duration
-				std::shared_ptr<s_status_change_db> scdb = status_db.find(type);
-				clif_status_change(bl, static_cast<int32>(scdb->icon), 1, duration, 1, 0, 0);
+				if (battle_config.refresh_song == 0) {
+					std::shared_ptr<s_status_change_db> scdb = status_db.find(type);
+					clif_status_change(bl, static_cast<int32>(scdb->icon), 1, duration, 1, 0, 0);
+				}
 			}
+			// Non-players don't have lingering effects
+			else if (bl->type != BL_PC)
+				status_change_end(bl, type);
 			break;
 		case PF_FOGWALL:
 			if (sce)
