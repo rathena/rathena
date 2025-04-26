@@ -16697,10 +16697,16 @@ static int32 skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, 
 			if (!sc) return 0;
 			if (!sce)
 				sc_start4(ss, bl,type,100,sg->skill_lv,sg->val1,sg->val2,0,sg->limit);
-			else if (sce->val4 == 1 && battle_config.refresh_song == 1) { //Readjust timers since the effect will not last long.
+			else if (battle_config.refresh_song == 1 && sce->val4 == 1) { //Readjust timers since the effect will not last long.
 				sce->val4 = 0; //remove the mark that we stepped out
 				delete_timer(sce->timer, status_change_timer);
 				sce->timer = add_timer(tick+sg->limit, status_change_timer, bl->id, type); //put duration back to 3min
+				// Update icon duration
+				if (battle_config.refresh_song_icon == 1) {
+					std::shared_ptr<s_status_change_db> scdb = status_db.find(type);
+					if (scdb != nullptr)
+						clif_status_change(bl, static_cast<int32>(scdb->icon), 1, INFINITE_TICK, 1, 0, 0);
+				}
 			}
 			break;
 
@@ -17877,7 +17883,7 @@ int32 skill_unit_onleft(uint16 skill_id, struct block_list *bl, t_tick tick)
 		case DC_DONTFORGETME:
 		case DC_FORTUNEKISS:
 		case DC_SERVICEFORYOU:
-			if (bl->type == BL_PC && sce && (sce->val4 == 0 || battle_config.refresh_song == 1))
+			if (bl->type == BL_PC && sce && (battle_config.refresh_song == 1 || sce->val4 == 0))
 			{
 				delete_timer(sce->timer, status_change_timer);
 				//NOTE: It'd be nice if we could get the skill_lv for a more accurate extra time, but alas...
@@ -17886,9 +17892,10 @@ int32 skill_unit_onleft(uint16 skill_id, struct block_list *bl, t_tick tick)
 				sce->val4 = 1; //Store the fact that this is a "reduced" duration effect.
 				sce->timer = add_timer(tick + duration, status_change_timer, bl->id, type);
 				// Update icon duration
-				if (battle_config.refresh_song == 0) {
+				if (battle_config.refresh_song_icon == 1) {
 					std::shared_ptr<s_status_change_db> scdb = status_db.find(type);
-					clif_status_change(bl, static_cast<int32>(scdb->icon), 1, duration, 1, 0, 0);
+					if (scdb != nullptr)
+						clif_status_change(bl, static_cast<int32>(scdb->icon), 1, duration, 1, 0, 0);
 				}
 			}
 			// Non-players don't have lingering effects

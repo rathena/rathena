@@ -14338,6 +14338,8 @@ TIMER_FUNC(status_change_timer){
 				// Most songs have no interval, but they can expire while the character is still standing in the area of effect
 				// We need to make sure to restore the duration here if that's the case
 				std::shared_ptr<s_status_change_db> scdb = status_db.find(type);
+				if (scdb == nullptr)
+					break;
 				skill_unit* unit = map_find_skill_unit_oncell(bl, bl->x, bl->y, scdb->skill_id, nullptr, 1);
 				// No longer in area
 				if (unit == nullptr || !unit->alive)
@@ -14350,7 +14352,9 @@ TIMER_FUNC(status_change_timer){
 					break;
 				// Restore pseudo-infinite duration
 				sce->val4 = 0;
-				clif_status_change(bl, scdb->icon, 1, -1, 1, 0, 0);
+				// Update icon duration
+				if (battle_config.refresh_song_icon == 1)
+					clif_status_change(bl, static_cast<int32>(scdb->icon), 1, INFINITE_TICK, 1, 0, 0);
 				sc_timer_next(unit->limit + tick);
 				return 0;
 			}
