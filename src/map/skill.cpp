@@ -16707,8 +16707,7 @@ static int32 skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, 
 				sce->timer = add_timer(tick+sg->limit, status_change_timer, bl->id, type); //put duration back to 3min
 				// Update icon duration
 				if (battle_config.refresh_song_icon == 1) {
-					std::shared_ptr<s_status_change_db> scdb = status_db.find(type);
-					if (scdb != nullptr)
+					if (auto scdb = status_db.find(type); scdb != nullptr)
 						clif_status_change(bl, static_cast<int32>(scdb->icon), 1, INFINITE_TICK, 1, 0, 0);
 				}
 			}
@@ -17897,8 +17896,7 @@ int32 skill_unit_onleft(uint16 skill_id, struct block_list *bl, t_tick tick)
 				sce->timer = add_timer(tick + duration, status_change_timer, bl->id, type);
 				// Update icon duration
 				if (battle_config.refresh_song_icon == 1) {
-					std::shared_ptr<s_status_change_db> scdb = status_db.find(type);
-					if (scdb != nullptr)
+					if (auto scdb = status_db.find(type); scdb != nullptr)
 						clif_status_change(bl, static_cast<int32>(scdb->icon), 1, duration, 1, 0, 0);
 				}
 			}
