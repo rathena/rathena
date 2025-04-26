@@ -2032,7 +2032,7 @@ int32 map_addflooritem(struct item *item, int32 amount, int16 m, int16 x, int16 
 	bool extend_protection = (flags&1);
 	if (!extend_protection && mob_id > 0) {
 		// Boss and MVP drops both have prelonged loot protection
-		if (auto mob_db.find(mob_id); mob != nullptr && mob->get_bosstype() != BOSSTYPE_NONE)
+		if (auto mob = mob_db.find(mob_id); mob != nullptr && mob->get_bosstype() != BOSSTYPE_NONE)
 			extend_protection = true;
 	}
 	fitem->first_get_charid = first_charid;
