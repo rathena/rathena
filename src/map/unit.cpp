@@ -171,8 +171,13 @@ bool unit_walktoxy_nextcell(block_list& bl, bool sendMove, t_tick tick) {
 		return true;
 
 	// Reached end of walkpath
-	if (ud->walkpath.path_pos >= ud->walkpath.path_len)
+	if (ud->walkpath.path_pos >= ud->walkpath.path_len) {
+		// We need to send the reply to the client even if already at the target cell
+		// This allows the client to synchronize the position correctly
+		if (sendMove && bl.type == BL_PC)
+			clif_walkok(reinterpret_cast<map_session_data&>(bl));
 		return false;
+	}
 
 	// Monsters first check for a chase skill and if they didn't use one if their target is in range each cell after checking for a chase skill
 	if (bl.type == BL_MOB) {
@@ -699,9 +704,6 @@ static TIMER_FUNC(unit_walktoxy_timer)
 				map_foreachinmap(unit_walktoxy_ontouch, nd->bl.m, BL_PC, nd);
 			break;
 	}
-
-	if(tid == INVALID_TIMER) // A directly invoked timer is from battle_stop_walking, therefore the rest is irrelevant.
-		return 0;
 
 	int32 speed;
 
