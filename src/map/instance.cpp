@@ -1237,8 +1237,15 @@ void do_reload_instance(void)
 			// Create new keep timer
 			std::shared_ptr<s_instance_db> db = instance_db.find(idata->id);
 
-			if (db)
+			if (db != nullptr) {
+				// Save the expire time
 				idata->keep_limit = time(nullptr) + db->limit;
+
+				// Recreate a timer and save the associated timer ID
+				if (idata->keep_timer != INVALID_TIMER)
+					delete_timer(idata->keep_timer, instance_delete_timer);
+				idata->keep_timer = add_timer(gettick() + db->limit * 1000, instance_delete_timer, it.first, 0);
+			}
 		}
 	}
 
