@@ -6108,8 +6108,8 @@ bool pc_takeitem(map_session_data *sd,struct flooritem_data *fitem)
 	// This applies even if there are no second or third top attackers
 	t_tick item_get_tick = fitem->third_get_tick;
 
-	if (fitem->first_get_charid > 0 && fitem->first_get_charid == sd->status.char_id) {
-		// Top attacker, no wait time
+	if (fitem->first_get_charid == 0 || fitem->first_get_charid == sd->status.char_id) {
+		// Top attacker or no attacker, no wait time
 		item_get_tick = 0;
 	}
 	else if (fitem->second_get_charid > 0 && fitem->second_get_charid == sd->status.char_id) {
