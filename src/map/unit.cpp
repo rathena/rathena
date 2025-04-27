@@ -3362,7 +3362,7 @@ bool unit_can_attack(struct block_list *bl, int32 target_id) {
  * Cancels a skill's cast
  * @param bl: Object to cancel cast
  * @param type: Cancel check flag
- *	&1: Cast-Cancel invoked
+ *	&1: Cancel skill stored in sd->skill_id_old instead (used when invoked by Sage skill "Cast Cancel")
  *	&2: Cancel only if skill is cancellable
  * @return Success(1); Fail(0);
  */

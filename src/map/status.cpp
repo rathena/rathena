@@ -14159,7 +14159,7 @@ TIMER_FUNC(status_change_timer){
 						break;
 
 					unit_stop_attack(bl);
-					unit_skillcastcancel(bl, 1);
+					unit_skillcastcancel(bl, 0);
 
 					switch (skill_get_casttype(mushroom_skill_id)) { // Magic Mushroom skills are buffs or area damage
 					case CAST_GROUND:
