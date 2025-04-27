@@ -1781,6 +1781,13 @@ int32 skill_additional_effect( struct block_list* src, struct block_list *bl, ui
 		}
 		break;
 	case TK_TURNKICK:
+		// Note: attack_type is passed as BF_WEAPON for the actual target, BF_MISC for the splash-affected mobs.
+		if (attack_type&BF_MISC) {
+			sc_start(src, bl, SC_STUN, 200, skill_lv, skill_get_time(skill_id, skill_lv));
+			clif_specialeffect(bl, EF_SPINEDBODY, AREA);
+			sc_start(src, bl, SC_NOACTION, 100, 1, skill_get_time2(skill_id, skill_lv));
+		}
+		break;
 	case MO_BALKYOUNG: //Note: attack_type is passed as BF_WEAPON for the actual target, BF_MISC for the splash-affected mobs.
 		if(attack_type&BF_MISC) //70% base stun chance...
 			sc_start(src,bl,SC_STUN,70,skill_lv,skill_get_time2(skill_id,skill_lv));
@@ -6432,14 +6439,17 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 
 	case TK_TURNKICK:
 	case MO_BALKYOUNG: //Active part of the attack. Skill-attack [Skotlex]
-	{
 		skill_area_temp[1] = bl->id; //NOTE: This is used in skill_castend_nodamage_id to avoid affecting the target.
-		if (skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag))
+		if (skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag)) {
+			int32 target_flag = BL_CHAR;
+			if (skill_id == TK_TURNKICK)
+				target_flag = BL_MOB;
+
 			map_foreachinallrange(skill_area_sub,bl,
-				skill_get_splash(skill_id, skill_lv),BL_CHAR,
+				skill_get_splash(skill_id, skill_lv),target_flag,
 				src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,
 				skill_castend_nodamage_id);
-	}
+		}
 		break;
 	case CH_PALMSTRIKE: //	Palm Strike takes effect 1sec after casting. [Skotlex]
 	//	clif_skill_nodamage(src,*bl,skill_id,skill_lv,false); //Can't make this one display the correct attack animation delay :/
