@@ -752,6 +752,7 @@
 	export_constant2("bUnbreakableArmor",SP_UNBREAKABLE_ARMOR);
 	export_constant2("bUnbreakableHelm",SP_UNBREAKABLE_HELM);
 	export_constant2("bUnbreakableShield",SP_UNBREAKABLE_SHIELD);
+	export_constant2("bSkillRatio", SP_SKILL_RATIO);
 	export_constant2("bShortAtkRate",SP_SHORT_ATK_RATE);
 	export_constant2("bLongAtkRate",SP_LONG_ATK_RATE);
 	export_constant2("bCritAtkRate",SP_CRIT_ATK_RATE);
@@ -788,6 +789,7 @@
 	export_constant2("bMagicHPGainValue",SP_MAGIC_HP_GAIN_VALUE);
 	export_constant2("bAddMonsterIdDropItem",SP_ADD_MONSTER_ID_DROP_ITEM);
 	export_constant2("bMatk",SP_EMATK);
+	export_constant2("bMatk2",SP_EMATK_HIDDEN);
 	export_constant2("bComaClass",SP_COMA_CLASS);
 	export_constant2("bComaRace",SP_COMA_RACE);
 	export_constant2("bSkillUseSPrate",SP_SKILL_USE_SP_RATE);
@@ -1651,7 +1653,7 @@
 	export_constant(SC_ENTRY_QUEUE_APPLY_DELAY);
 	export_constant(SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT);
 	export_constant(SC_ADAPTATION);
-	export_constant(SC_BASILICA_CELL);
+	export_deprecated_constant(SC_BASILICA_CELL); // Apr. 2025
 	export_constant(SC_LIGHTOFMOON);
 	export_constant(SC_LIGHTOFSUN);
 	export_constant(SC_LIGHTOFSTAR);
@@ -1970,6 +1972,8 @@
 	export_constant(SC_SHINKIROU_CALL);
 	export_constant(SC_NIGHTMARE);
 	export_constant(SC_SBUNSHIN);
+	export_constant(SC_CONTENTS_34);
+	export_constant(SC_CONTENTS_35);
 
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
 /// @APIHOOK_START(EFST_CONST)
@@ -3416,6 +3420,8 @@
 	export_constant(EFST_CONTENTS_31);
 	export_constant(EFST_CONTENTS_32);
 	export_constant(EFST_CONTENTS_33);
+	export_constant(EFST_CONTENTS_34);
+	export_constant(EFST_CONTENTS_35);
 	export_constant(EFST_C_BUFF_1);
 	export_constant(EFST_C_BUFF_2);
 	export_constant(EFST_CHASING);
@@ -3461,7 +3467,7 @@
 	export_constant(RC_PLAYER_DORAM);
 	export_constant(RC_ALL);
 
-	export_constant(RC2_NONE);
+	export_deprecated_constant(RC2_NONE);	// Mar. 2025
 	export_constant(RC2_GOBLIN);
 	export_constant(RC2_KOBOLD);
 	export_constant(RC2_ORC);
@@ -3498,7 +3504,9 @@
 	export_constant(RC2_ILLUSION_MOONLIGHT);
 	export_constant(RC2_EP16_DEF);
 	export_constant(RC2_EDDA_ARUNAFELTZ);
-	export_constant(RC2_MAX);
+	export_constant(RC2_LASAGNA);
+	export_constant(RC2_GLAST_HEIM_ABYSS);
+	export_deprecated_constant(RC2_MAX);	// Mar. 2025
 
 	/* monster ai */
 	export_constant(MONSTER_TYPE_01);
@@ -3522,6 +3530,8 @@
 	export_constant(MONSTER_TYPE_25);
 	export_constant(MONSTER_TYPE_26);
 	export_constant(MONSTER_TYPE_27);
+	export_constant(MONSTER_TYPE_ABR_PASSIVE);
+	export_constant(MONSTER_TYPE_ABR_OFFENSIVE);
 
 	/* classes */
 	export_constant(CLASS_NONE);
@@ -3771,10 +3781,11 @@
 	export_constant(MOB_NAME);
 	export_constant(MOB_LV);
 	export_constant(MOB_MAXHP);
+	export_constant(MOB_MAXSP);
 	export_constant(MOB_BASEEXP);
 	export_constant(MOB_JOBEXP);
-	export_constant(MOB_ATK1);
-	export_constant(MOB_ATK2);
+	export_constant(MOB_ATKMIN);
+	export_constant(MOB_ATKMAX);
 	export_constant(MOB_DEF);
 	export_constant(MOB_MDEF);
 	export_constant(MOB_RES);
@@ -3785,15 +3796,24 @@
 	export_constant(MOB_INT);
 	export_constant(MOB_DEX);
 	export_constant(MOB_LUK);
-	export_constant(MOB_RANGE);
-	export_constant(MOB_RANGE2);
-	export_constant(MOB_RANGE3);
+	export_constant(MOB_SPEED);
+	export_constant(MOB_ATKRANGE);
+	export_constant(MOB_SKILLRANGE);
+	export_constant(MOB_CHASERANGE);
 	export_constant(MOB_SIZE);
 	export_constant(MOB_RACE);
 	export_constant(MOB_ELEMENT);
+	export_constant(MOB_ELEMENTLV);
 	export_constant(MOB_MODE);
 	export_constant(MOB_MVPEXP);
 	export_constant(MOB_ID);
+
+	// Renamed monsterinfo types - 2025-03-11
+	export_deprecated_constant2("MOB_ATK1",MOB_ATKMIN); 
+	export_deprecated_constant2("MOB_ATK2",MOB_ATKMAX);
+	export_deprecated_constant2("MOB_RANGE",MOB_ATKRANGE);
+	export_deprecated_constant2("MOB_RANGE2",MOB_SKILLRANGE);
+	export_deprecated_constant2("MOB_RANGE3",MOB_CHASERANGE);
 
 	/* petinfo types */
 	export_constant(PETINFO_ID);
@@ -7080,6 +7100,61 @@
 	export_constant(IG_REGIA_HUNTING_SET);
 	export_constant(IG_MYSTERIOUS_FRUIT_BOX);
 	export_constant(IG_ZONDA_SUPPORT_PACKAGE);
+	export_constant(IG_AEGIS_103871);
+	export_constant(IG_AEGIS_103872);
+	export_constant(IG_IFRIT_SCROLL);
+	export_constant(IG_IF_COSTUME_SCROLL);
+	export_constant(IG_AEGIS_103891);
+	export_constant(IG_AEGIS_103909);
+	export_constant(IG_AEGIS_103991);
+	export_constant(IG_NEWSERVER_PACKAGE_1);
+	export_constant(IG_NEWSERVER_PACKAGE_2);
+	export_constant(IG_NEWSERVER_PACKAGE_3);
+	export_constant(IG_NEWSERVER_GROWTHPACK1);
+	export_constant(IG_NEWSERVER_GROWTHPACK2);
+	export_constant(IG_NEWSERVER_REFINEPACK1);
+	export_constant(IG_NEWSERVER_REFINEPACK2);
+	export_constant(IG_NEWSERVER_NYANGVINEPACK);
+	export_constant(IG_COSTUMEMILEPACK_37_1);
+	export_constant(IG_COSTUMEMILEPACK_37_2);
+	export_constant(IG_COSTUMEMILEPACK_37_3);
+	export_constant(IG_IF_COSTUME_BOX);
+	export_constant(IG_IF_ALMIGHTY100_BOX);
+	export_constant(IG_IF_ALMIGHTY_BOX);
+	export_constant(IG_IF_REFINE_ORE_BOX_SET);
+	export_constant(IG_IF_REFINE_ORE_BOX);
+	export_constant(IG_IF_HD_REFINE_ORE_BOX);
+	export_constant(IG_IF_HD_ELUNIUM_BOX);
+	export_constant(IG_IF_HD_ORIDECON_BOX);
+	export_constant(IG_IF_INFINITY_10_BOX);
+	export_constant(IG_IF_INFINITY_BOX);
+	export_constant(IG_IF_UNLIMITED_10_BOX);
+	export_constant(IG_IF_UNLIMITED_BOX);
+	export_constant(IG_EYPGT_COSTUME_BOX1);
+	export_constant(IG_EYPGT_COSTUME_BOX2);
+	export_constant(IG_EYPGT_COSTUME_BOX3);
+	export_constant(IG_IF_SPEED_BOOSTER_10_BOX);
+	export_constant(IG_IF_SPEED_BOOSTER_BOX);
+	export_constant(IG_IF_FORCE_BOOSTER_10_BOX);
+	export_constant(IG_IF_FORCE_BOOSTER_BOX);
+	export_constant(IG_IF_3_LIFE_POTION_10PACK);
+	export_constant(IG_IF_3_LIFE_POTION_PACK);
+	export_constant(IG_IF_HD_HIGH_REFINE_BOX);
+	export_constant(IG_IF_HD_CARNIUM_BOX);
+	export_constant(IG_IF_HD_BRADIUM_BOX);
+	export_constant(IG_IF_LIMITPOWERBOOSTER100);
+	export_constant(IG_IF_LIMITPOWERBOOSTER);
+	export_constant(IG_CLB_KP_PACK1);
+	export_constant(IG_CLB_KP_PACK2);
+	export_constant(IG_2025_COSTUME_BOX1);
+	export_constant(IG_2025_COSTUME_BOX2);
+	export_constant(IG_IF_CLB_KP_PACK1);
+	export_constant(IG_IF_CLB_KP_PACK2);
+	export_constant(IG_IF_2025_COSTUME_BOX1);
+	export_constant(IG_IF_2025_COSTUME_BOX2);
+	export_constant(IG_LI_NYANGVINE_BOX1_38);
+	export_constant(IG_LI_NYANGVINE_BOX2_38);
+	export_constant(IG_LI_NYANGVINE_BOX3_38);
 	export_constant(IG_D_GW_EXTRACTOR);
 
 	/* unit stop walking */
@@ -8420,6 +8495,11 @@
 	export_constant_npc(JT_4_CLB_SS_AJ);
 	export_constant_npc(JT_4_CLB_SS_LK);
 	export_constant_npc(JT_4_SMART_ANDRE);
+	export_constant_npc(JT_4_ALEXSANDER);
+	export_constant_npc(JT_4_KASANDRA);
+	export_constant_npc(JT_4_CLB_KP_P1);
+	export_constant_npc(JT_4_CLB_KP_SF);
+	export_constant_npc(JT_4_CLB_KP_ZH);
 	export_constant_npc(JT_ROZ_MQ_XAVIER);
 	export_constant_npc(JT_ROZ_MQ_MOCLORD);
 	export_constant_npc(JT_ROZ_MQ_SKULD);
@@ -9813,6 +9893,7 @@
 	export_constant(HAT_EF_INKPAINTING_DAY);
 	export_constant(HAT_EF_INKPAINTING_NIGHT);
 	export_constant(HAT_EF_KUNG_FU_PANDA);
+	export_constant(HAT_EF_C_MGSGPH_POTARL);
 
 	/* pet catch */
 	export_constant(PET_CATCH_UNIVERSAL_NO_BOSS);

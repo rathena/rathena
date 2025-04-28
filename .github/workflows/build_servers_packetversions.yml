@@ -27,8 +27,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-          # The ubuntu-latest label currently points to ubuntu-22.04.
-          # Available: ubuntu-22.04, ubuntu-20.04
+          # The ubuntu-latest label currently points to ubuntu-24.04.
+          # Available: ubuntu-24.04, ubuntu-22.04
           os: [ubuntu-latest]
           # Older versions of GCC are not available via unaltered aptitude repo lists.
           gcc: ['11']

@@ -228,6 +228,64 @@ int32 map_usercount(void)
 	return pc_db->size(pc_db);
 }
 
+void map_destroyblock( block_list* bl ){
+	if( bl == nullptr ){
+		return;
+	}
+
+	switch( bl->type ){
+		case BL_NUL:
+			// Dummy type, has no destructor
+			break;
+
+		case BL_PC:
+			// Do not call the destructor here, it will be done in chrif_auth_delete
+			//reinterpret_cast<map_session_data*>( bl )->~map_session_data();
+			break;
+
+		case BL_MOB:
+			reinterpret_cast<mob_data*>( bl )->~mob_data();
+			break;
+
+		case BL_PET:
+			reinterpret_cast<pet_data*>( bl )->~pet_data();
+			break;
+
+		case BL_HOM:
+			reinterpret_cast<homun_data*>( bl )->~homun_data();
+			break;
+
+		case BL_MER:
+			reinterpret_cast<s_mercenary_data*>( bl )->~s_mercenary_data();
+			break;
+
+		case BL_ITEM:
+			reinterpret_cast<flooritem_data*>( bl )->~flooritem_data();
+			break;
+
+		case BL_SKILL:
+			reinterpret_cast<skill_unit*>( bl )->~skill_unit();
+			break;
+
+		case BL_NPC:
+			reinterpret_cast<npc_data*>( bl )->~npc_data();
+			break;
+
+		case BL_CHAT:
+			reinterpret_cast<chat_data*>( bl )->~chat_data();
+			break;
+
+		case BL_ELEM:
+			reinterpret_cast<s_elemental_data*>( bl )->~s_elemental_data();
+			break;
+
+		default:
+			ShowError( "map_destroyblock: unknown type %d\n", bl->type );
+			break;
+	}
+
+	aFree( bl );
+}
 
 /*==========================================
  * Attempt to free a map blocklist
@@ -237,7 +295,7 @@ int32 map_freeblock (struct block_list *bl)
 	nullpo_retr(block_free_lock, bl);
 	if (block_free_lock == 0 || block_free_count >= block_free_max)
 	{
-		aFree(bl);
+		map_destroyblock( bl );
 		bl = nullptr;
 		if (block_free_count >= block_free_max)
 			ShowWarning("map_freeblock: too many free block! %d %d\n", block_free_count, block_free_lock);
@@ -263,7 +321,7 @@ int32 map_freeblock_unlock (void)
 		int32 i;
 		for (i = 0; i < block_free_count; i++)
 		{
-			aFree(block_free[i]);
+			map_destroyblock( block_free[i] );
 			block_free[i] = nullptr;
 		}
 		block_free_count = 0;
@@ -1878,6 +1936,47 @@ bool map_closest_freecell(int16 m, int16 *x, int16 *y, int32 type, int32 flag)
 }
 
 /*==========================================
+ * Locates a nearby, walkable cell with no blocks of a certain type on it
+ * This one uses the official algorithm the find a free cell
+ * Returns true on success and sets x and y to cell found.
+ * Otherwise returns false and x and y are not changed.
+ * type: Types of block to count
+ * flag: 
+ *		0x1 - only count standing units
+ *------------------------------------------*/
+bool map_nearby_freecell(int16 m, int16 &x, int16 &y, int32 type, int32 flag)
+{
+	int16 tx = x;
+	int16 ty = y;
+
+	if(!map_count_oncell(m, tx, ty, type, flag))
+		return true; //Current cell is free
+
+	// One of two possible orders of direction processing is used at random
+	directions dir[2][DIR_MAX] = {
+		{DIR_NORTHEAST, DIR_EAST, DIR_SOUTHEAST, DIR_SOUTH, DIR_NORTH, DIR_SOUTHWEST, DIR_WEST, DIR_NORTHWEST},
+		{DIR_SOUTHWEST, DIR_WEST, DIR_NORTHWEST, DIR_NORTH, DIR_SOUTH, DIR_NORTHEAST, DIR_EAST, DIR_SOUTHEAST}
+	};
+	uint16 array_idx = rnd_value<decltype(array_idx)>(0, ARRAYLENGTH(dir) - 1);
+
+	// Try each direction in the selected array in order
+	for(uint8 dir_idx = 0; dir_idx < DIR_MAX; dir_idx++) {
+		int16 dx = dirx[dir[array_idx][dir_idx]];
+		int16 dy = diry[dir[array_idx][dir_idx]];
+
+		tx = x + dx;
+		ty = y + dy;
+		if (!map_count_oncell(m, tx, ty, type, flag) && map_getcell(m, tx, ty, CELL_CHKPASS)) {
+			x = tx;
+			y = ty;
+			return true;
+		}
+	}
+
+	return false;
+}
+
+/*==========================================
  * Add an item in floor to location (m,x,y) and add restriction for those who could pickup later
  * NB : If charids are null their no restriction for pickup
  * @param item_data : item attributes
@@ -1929,12 +2028,26 @@ int32 map_addflooritem(struct item *item, int32 amount, int16 m, int16 x, int16 
 		return 0;
 	}
 
+	// If item is flagged as MVP item or dropped by bosses, it is protected for longer
+	bool extend_protection = (flags&1);
+	if (!extend_protection && mob_id > 0) {
+		// Boss and MVP drops both have prelonged loot protection
+		if (auto mob = mob_db.find(mob_id); mob != nullptr && mob->get_bosstype() != BOSSTYPE_NONE)
+			extend_protection = true;
+	}
 	fitem->first_get_charid = first_charid;
-	fitem->first_get_tick = gettick() + (flags&1 ? battle_config.mvp_item_first_get_time : battle_config.item_first_get_time);
 	fitem->second_get_charid = second_charid;
-	fitem->second_get_tick = fitem->first_get_tick + (flags&1 ? battle_config.mvp_item_second_get_time : battle_config.item_second_get_time);
 	fitem->third_get_charid = third_charid;
-	fitem->third_get_tick = fitem->second_get_tick + (flags&1 ? battle_config.mvp_item_third_get_time : battle_config.item_third_get_time);
+	if (extend_protection) {
+		fitem->first_get_tick = gettick() + battle_config.mvp_item_first_get_time;
+		fitem->second_get_tick = fitem->first_get_tick + battle_config.mvp_item_second_get_time;
+		fitem->third_get_tick = fitem->second_get_tick + battle_config.mvp_item_third_get_time;
+	}
+	else {
+		fitem->first_get_tick = gettick() + battle_config.item_first_get_time;
+		fitem->second_get_tick = fitem->first_get_tick + battle_config.item_second_get_time;
+		fitem->third_get_tick = fitem->second_get_tick + battle_config.item_third_get_time;
+	}
 	fitem->mob_id = mob_id;
 
 	memcpy(&fitem->item,item,sizeof(*item));

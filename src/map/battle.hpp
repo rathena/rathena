@@ -123,9 +123,9 @@ int64 battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int64 
 int64 battle_calc_bg_damage(struct block_list *src,struct block_list *bl,int64 damage,uint16 skill_id,int32 flag);
 int64 battle_calc_pk_damage(block_list &src, block_list &bl, int64 damage, uint16 skill_id, int32 flag);
 
-int32 battle_damage(struct block_list *src, struct block_list *target, int64 damage, t_tick delay, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, uint16 attack_type, bool additional_effects, t_tick tick, bool spdamage);
-int32 battle_delay_damage (t_tick tick, int32 amotion, struct block_list *src, struct block_list *target, int32 attack_type, uint16 skill_id, uint16 skill_lv, int64 damage, enum damage_lv dmg_lv, t_tick ddelay, bool additional_effects, bool spdamage);
-int32 battle_fix_damage(struct block_list* src, struct block_list* target, int64 damage, t_tick walkdelay, uint16 skill_id);
+int32 battle_damage(struct block_list *src, struct block_list *target, int64 damage, int16 div_, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, uint16 attack_type, bool additional_effects, t_tick tick, bool isspdamage, bool is_norm_attacked = false);
+int32 battle_delay_damage (t_tick tick, int32 amotion, struct block_list *src, struct block_list *target, int32 attack_type, uint16 skill_id, uint16 skill_lv, int64 damage, enum damage_lv dmg_lv, int16 div_, bool additional_effects, bool isspdamage, bool is_norm_attacked = false);
+int32 battle_fix_damage(struct block_list* src, struct block_list* target, int64 damage, int16 div_, uint16 skill_id);
 
 int32 battle_calc_chorusbonus(map_session_data *sd);
 
@@ -187,6 +187,7 @@ struct Battle_Config
 	int32 attr_recover;
 	int32 item_auto_get;
 	int32 flooritem_lifetime;
+	int32 first_attack_loot_bonus;
 	int32 item_first_get_time;
 	int32 item_second_get_time;
 	int32 item_third_get_time;
@@ -229,6 +230,7 @@ struct Battle_Config
 	int32 pc_walk_delay_rate; //Adjusts can't walk delay after being hit for players. [Skotlex]
 	int32 walk_delay_rate; //Adjusts can't walk delay after being hit. [Skotlex]
 	int32 multihit_delay;  //Adjusts can't walk delay per hit on multi-hitting skills. [Skotlex]
+	int32 infinite_endure; // Always have endure
 	int32 quest_skill_learn;
 	int32 quest_skill_reset;
 	int32 basic_skill_check;
@@ -283,7 +285,6 @@ struct Battle_Config
 	int32 natural_healsp_interval;
 	int32 natural_heal_skill_interval;
 	int32 natural_heal_weight_rate;
-	int32 natural_heal_weight_rate_renewal;
 	int32 arrow_decrement;
 	int32 ammo_unequip;
 	int32 ammo_check_weapon;
@@ -432,10 +433,13 @@ struct Battle_Config
 	int32 exp_calc_type;
 	int32 exp_bonus_attacker;
 	int32 exp_bonus_max_attacker;
+	int32 exp_bonus_nodamage_attacker;
 	int32 min_skill_delay_limit;
+	int32 amotion_min_skill_delay;
 	int32 default_walk_delay;
 	int32 no_skill_delay;
 	int32 attack_walk_delay;
+	int32 damage_walk_delay;
 	int32 require_glory_guild;
 	int32 idle_no_share;
 	int32 party_update_interval;
@@ -770,6 +774,8 @@ struct Battle_Config
 	int32 alchemist_summon_setting;
 	int32 loot_range;
 	int32 assist_range;
+	int32 open_box_weight_rate;
+	int32 major_overweight_rate;
 
 #include <custom/battle_config_struct.inc>
 };

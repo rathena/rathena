@@ -673,11 +673,13 @@ public:
 		int32 fixcastrate, varcastrate, delayrate; // n/100
 		int32 add_fixcast, add_varcast; // in milliseconds
 		int32 ematk; // matk bonus from equipment
+		int32 ematk_hidden; // matk bonus not visible in status window
 		int32 eatk; // atk bonus from equipment
 		uint8 absorb_dmg_maxhp; // [Cydh]
 		uint8 absorb_dmg_maxhp2;
 		int16 critical_rangeatk;
 		int16 weapon_atk_rate, weapon_matk_rate;
+		int32 skill_ratio;
 	} bonus;
 	// zeroed vars end here.
 
@@ -1188,9 +1190,6 @@ static bool pc_cant_act( map_session_data* sd ){
 #define pc_isfalcon(sd)       ( (sd)->sc.option&OPTION_FALCON )
 #define pc_isriding(sd)       ( (sd)->sc.option&OPTION_RIDING )
 #define pc_isinvisible(sd)    ( (sd)->sc.option&OPTION_INVISIBLE )
-#define pc_is50overweight(sd) ( (sd)->weight * 100 >= (sd)->max_weight * battle_config.natural_heal_weight_rate )
-#define pc_is70overweight(sd) ( (sd)->weight * 100 >= (sd)->max_weight * battle_config.natural_heal_weight_rate_renewal )
-#define pc_is90overweight(sd) ( (sd)->weight * 10 >= (sd)->max_weight * 9 )
 
 static inline bool pc_hasprogress(map_session_data *sd, enum e_wip_block progress) {
 	return sd == nullptr || (sd->state.workinprogress&progress) == progress;
@@ -1405,7 +1404,7 @@ void pc_setequipindex(map_session_data *sd);
 uint8 pc_isequip(map_session_data *sd,int32 n);
 int32 pc_equippoint(map_session_data *sd,int32 n);
 int32 pc_equippoint_sub(map_session_data *sd, struct item_data* id);
-void pc_setinventorydata(map_session_data *sd);
+void pc_setinventorydata( map_session_data& sd );
 
 int32 pc_get_skillcooldown(map_session_data *sd, uint16 skill_id, uint16 skill_lv);
 uint8 pc_checkskill(map_session_data *sd,uint16 skill_id);
@@ -1471,7 +1470,8 @@ bool pc_isequipped(map_session_data *sd, t_itemid nameid);
 enum adopt_responses pc_try_adopt(map_session_data *p1_sd, map_session_data *p2_sd, map_session_data *b_sd);
 bool pc_adoption(map_session_data *p1_sd, map_session_data *p2_sd, map_session_data *b_sd);
 
-void pc_updateweightstatus(map_session_data *sd);
+uint16 pc_getpercentweight(map_session_data& sd, uint32 weight = 0);
+void pc_updateweightstatus(map_session_data& sd);
 
 bool pc_addautobonus(std::vector<std::shared_ptr<s_autobonus>> &bonus, const char *script, int16 rate, uint32 dur, uint16 atk_type, const char *o_script, uint32 pos, bool onskill);
 void pc_exeautobonus(map_session_data &sd, std::vector<std::shared_ptr<s_autobonus>> *bonus, std::shared_ptr<s_autobonus> autobonus);

@@ -340,7 +340,6 @@ Body:
     Icon: EFST_HIDING
     DurationLookup: TF_HIDING
     States:
-      NoMove: true
       NoMoveCond: true
       NoPickItem: true
       NoConsumeItem: true
@@ -689,6 +688,8 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       NoForcedEnd: true
+    EndOnStart:
+      Weight90: true
   - Status: Weight90
     Icon: EFST_WEIGHTOVER90
     Flags:
@@ -700,6 +701,8 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       NoForcedEnd: true
+    EndOnStart:
+      Weight50: true
   - Status: Aspdpotion0
     Icon: EFST_ATTHASTE_POTION1
     CalcFlags:
@@ -765,7 +768,7 @@ Body:
       OverlapIgnoreLevel: true
       RemoveOnHermode: true
     Script: |
-      bonus bMatk, getstatus(SC_MATKPOTION, 1);  /* TODO: hidden in status window */
+      bonus bMatk2, getstatus(SC_MATKPOTION, 1);
   - Status: Wedding
     States:
       NoAttack: true
@@ -804,9 +807,6 @@ Body:
   - Status: Barrier
     Icon: EFST_BARRIER
     DurationLookup: NPC_BARRIER
-    CalcFlags:
-      Mdef: true
-      Def: true
     Flags:
       RemoveOnHermode: true
   - Status: Stripweapon
@@ -1173,13 +1173,9 @@ Body:
       bonus2 bSubEle,Ele_Wind, getstatus(SC_ARMOR_ELEMENT_WATER, 4);
   - Status: Nochat
     States:
-      NoPickItem: true
       NoPickItemCond: true
-      NoDropItem: true
       NoDropItemCond: true
-      NoChat: true
       NoChatCond: true
-      NoConsumeItem: true
       NoConsumeItemCond: true
     Flags:
       NoRemoveOnDead: true
@@ -1257,7 +1253,6 @@ Body:
     Icon: EFST_GOSPEL
     DurationLookup: PA_GOSPEL
     States:
-      NoMove: true
       NoMoveCond: true
     CalcFlags:
       Speed: true
@@ -1281,8 +1276,6 @@ Body:
     DurationLookup: HP_BASILICA
     CalcFlags:
       All: true
-    States:
-      NoAttack: true
     Flags:
       NoSave: true
       NoClearance: true
@@ -1774,7 +1767,6 @@ Body:
     Icon: EFST_BDPLAYING
     DurationLookup: BD_ENCORE
     States:
-      NoMove: true
       NoMoveCond: true
     CalcFlags:
       Speed: true
@@ -3107,7 +3099,6 @@ Body:
   - Status: Fear
     DurationLookup: RK_WINDCUTTER
     States:
-      NoMove: true
       NoMoveCond: true
     CalcFlags:
       Flee: true
@@ -3479,7 +3470,6 @@ Body:
     Icon: EFST_CAMOUFLAGE
     DurationLookup: RA_CAMOUFLAGE
     States:
-      NoMove: true
       NoMoveCond: true
     CalcFlags:
       Speed: true
@@ -3836,8 +3826,7 @@ Body:
   - Status: Oblivioncurse
     Icon: EFST_OBLIVIONCURSE
     States:
-      NoCast: true
-      Nocastcond: true
+      NoCastCond: true
     CalcFlags:
       Regen: true
     Flags:
@@ -3990,9 +3979,7 @@ Body:
     Icon: EFST_COLD
     DurationLookup: SO_DIAMONDDUST
     States:
-      NoMove: true
       NoMoveCond: true
-      NoCast: true
       NoCastCond: true
       NoConsumeItem: true
       NoAttack: true
@@ -7142,15 +7129,6 @@ Body:
   - Status: Adaptation
     Icon: EFST_ADAPTATION
     DurationLookup: BD_ADAPTATION
-  - Status: Basilica_Cell
-    States:
-      NoCast: true
-    Flags:
-      NoDispell: true
-      NoBanishingBuster: true
-      NoClearance: true
-      NoClearbuff: true
-      RemoveOnChangeMap: true
   - Status: Entry_Queue_Apply_Delay
     Icon: EFST_ENTRY_QUEUE_APPLY_DELAY
     Flags:
@@ -9773,3 +9751,24 @@ Body:
       Debuff: true
       BlEffect: true
       DisplayPc: true
+  - Status: Contents_34
+    Icon: EFST_CONTENTS_34
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      bonus bAspdRate, getstatus(SC_CONTENTS_34, 1);
+      bonus bCritical, getstatus(SC_CONTENTS_34, 2);
+  - Status: Contents_35
+    Icon: EFST_CONTENTS_35
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_CONTENTS_35, 1);
+      bonus bMatk, .@val1;
+      bonus bBaseAtk, .@val1;

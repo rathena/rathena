@@ -242,6 +242,7 @@ int32 elemental_data_received(s_elemental *ele, bool flag) {
 
 	if( !sd->ed ) {	// Initialize it after first summon.
 		sd->ed = ed = (s_elemental_data*)aCalloc(1,sizeof(s_elemental_data));
+		new (sd->ed) s_elemental_data();
 		ed->bl.type = BL_ELEM;
 		ed->bl.id = npc_get_new_npc_id();
 		ed->master = sd;

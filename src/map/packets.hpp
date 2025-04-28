@@ -1965,6 +1965,78 @@ struct PACKET_ZC_SKILLMSG {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_SKILLMSG, 0x215);
 
+struct PACKET_CZ_REQ_EMOTION_EXPANSION{
+	int16 packetType;
+	uint8 unknown[4];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_EMOTION_EXPANSION, 0xbe9);
+
+struct PACKET_ZC_DISAPPEAR_ENTRY{
+	int16 packetType;
+	int32 GID;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_DISAPPEAR_ENTRY, 0x132);
+
+#if PACKETVER >= 20120618
+struct PACKET_ZC_EFST_SET_ENTER{
+	uint16 packetType;
+	uint32 targetID;
+	uint16 type;
+	uint32 duration;
+	uint32 duration2;
+	int32 val1;
+	int32 val2;
+	int32 val3;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_EFST_SET_ENTER, 0x984)
+#else
+struct PACKET_ZC_EFST_SET_ENTER{
+	uint16 packetType;
+	uint32 targetID;
+	uint16 type;
+	uint32 duration;
+	int32 val1;
+	int32 val2;
+	int32 val3;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_EFST_SET_ENTER, 0x8ff)
+#endif
+
+struct PACKET_CZ_SETTING_WHISPER_STATE{
+	int16 packetType;
+	int8 type;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_SETTING_WHISPER_STATE, 0xd0);
+
+struct PACKET_ZC_WHISPER_LIST_sub{
+	char name[NAME_LENGTH];
+} __attribute__((packed));
+
+struct PACKET_ZC_WHISPER_LIST{
+	int16 packetType;
+	uint16 packetSize;
+	PACKET_ZC_WHISPER_LIST_sub names[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_WHISPER_LIST, 0xd4);
+
+struct PACKET_CZ_ALLY_CHAT{
+	int16 packetType;
+	int16 packetLength;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_ALLY_CHAT, 0xbdd);
+
+struct PACKET_CZ_REQ_REPORT_USER{
+	int16 packetType;
+	uint8 unknown[135];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_REPORT_USER, 0xbe2);
+
+struct PACKET_CZ_QUEST_STATUS_REQ{
+	int16 packetType;
+	int16 packetLength;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_QUEST_STATUS_REQ, 0xbf3);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
