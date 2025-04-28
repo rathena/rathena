@@ -408,7 +408,7 @@ bool party_invite( map_session_data& sd, map_session_data *tsd ){
 		return false;
 	}
 
-	if( tsd == NULL ){
+	if( tsd == nullptr ){
 		clif_party_invite_reply( sd, "", PARTY_REPLY_OFFLINE );
 		return false;
 	}
@@ -976,7 +976,7 @@ int32 party_changeleader(map_session_data *sd, map_session_data *tsd, struct par
 			return 0; // Shouldn't happen
 
 		if( battle_config.change_party_leader_samemap && strncmp( p->party.member[mi].map, p->party.member[tmi].map, sizeof( p->party.member[mi].map ) ) != 0 ){
-			clif_msg(sd, MSI_PARTY_MASTER_CHANGE_SAME_MAP);
+			clif_msg( *sd, MSI_PARTY_MASTER_CHANGE_SAME_MAP );
 			return 0;
 		}
 	} else {
@@ -1474,7 +1474,7 @@ static struct party_booking_ad_info* create_party_booking_data(void)
 	return pb_ad;
 }
 
-void party_booking_register(map_session_data *sd, short level, short mapid, short* job)
+void party_booking_register(map_session_data *sd, int16 level, int16 mapid, int16* job)
 {
 	struct party_booking_ad_info *pb_ad;
 	int32 i;
@@ -1503,7 +1503,7 @@ void party_booking_register(map_session_data *sd, short level, short mapid, shor
 	clif_PartyBookingInsertNotify(sd, pb_ad); // Notice
 }
 
-void party_booking_update(map_session_data *sd, short* job)
+void party_booking_update(map_session_data *sd, int16* job)
 {
 	int32 i;
 	struct party_booking_ad_info *pb_ad;
@@ -1524,7 +1524,7 @@ void party_booking_update(map_session_data *sd, short* job)
 	clif_PartyBookingUpdateNotify(sd, pb_ad);
 }
 
-void party_booking_search(map_session_data *sd, short level, short mapid, short job, unsigned long lastindex, short resultcount)
+void party_booking_search(map_session_data *sd, int16 level, int16 mapid, int16 job, unsigned long lastindex, int16 resultcount)
 {
 	struct party_booking_ad_info *pb_ad;
 	int32 i, count=0;

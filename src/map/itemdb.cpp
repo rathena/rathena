@@ -1447,6 +1447,34 @@ std::string ItemDatabase::create_item_link_for_mes( std::shared_ptr<item_data>& 
 	}
 }
 
+std::string ItemDatabase::create_item_icon_for_mes( std::shared_ptr<item_data>& data, const char* name ){
+	if( data == nullptr ){
+		return "Unknown item";
+	}
+
+	// Feature is disabled
+	if( !battle_config.feature_mesitemicon ){
+		if( name != nullptr && !battle_config.feature_mesitemicon_dbname ){
+			// Name was forcefully overwritten
+			return name;
+		}else{
+			// Use database name
+			return data->ename;
+		}
+	}
+
+	const std::string start_tag = "^i[";
+	const std::string closing_tag = "]";
+
+	std::string itemstr;
+
+	itemstr += start_tag;
+	itemstr += std::to_string( data->nameid );
+	itemstr += closing_tag;
+
+	return itemstr;
+}
+
 ItemDatabase item_db;
 
 /**
@@ -3860,7 +3888,7 @@ bool itemdb_parse_roulette_db(void)
 		for (k = 0; k < limit && SQL_SUCCESS == Sql_NextRow(mmysql_handle); k++) {
 			char* data;
 			t_itemid item_id;
-			unsigned short amount;
+			uint16 amount;
 			int32 level, flag;
 
 			Sql_GetData(mmysql_handle, 1, &data, nullptr); level = atoi(data);
@@ -3883,7 +3911,7 @@ bool itemdb_parse_roulette_db(void)
 
 			j = rd.items[i];
 			RECREATE(rd.nameid[i], t_itemid, ++rd.items[i]);
-			RECREATE(rd.qty[i], unsigned short, rd.items[i]);
+			RECREATE(rd.qty[i], uint16, rd.items[i]);
 			RECREATE(rd.flag[i], int32, rd.items[i]);
 
 			rd.nameid[i][j] = item_id;
@@ -3914,7 +3942,7 @@ bool itemdb_parse_roulette_db(void)
 
 		rd.items[i] = limit;
 		RECREATE(rd.nameid[i], t_itemid, rd.items[i]);
-		RECREATE(rd.qty[i], unsigned short, rd.items[i]);
+		RECREATE(rd.qty[i], uint16, rd.items[i]);
 		RECREATE(rd.flag[i], int32, rd.items[i]);
 
 		for (j = 0; j < MAX_ROULETTE_COLUMNS - i; j++) {
@@ -4886,7 +4914,7 @@ void itemdb_reload(void) {
 	for( sd = (map_session_data*)mapit_first(iter); mapit_exists(iter); sd = (map_session_data*)mapit_next(iter) ) {
 		memset(sd->item_delay, 0, sizeof(sd->item_delay));  // reset item delays
 		sd->combos.clear(); // clear combo bonuses
-		pc_setinventorydata(sd);
+		pc_setinventorydata( *sd );
 		pc_check_available_item(sd, ITMCHK_ALL); // Check for invalid(ated) items.
 		pc_load_combo(sd); // Check to see if new combos are available
 		status_calc_pc(sd, SCO_FORCE); // 

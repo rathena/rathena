@@ -52,7 +52,7 @@ HANDLER_FUNC(emblem_download) {
 	if (SQL_SUCCESS != stmt.Prepare(
 			"SELECT `version`, `file_type`, `file_data` FROM `%s` WHERE (`guild_id` = ? AND `world_name` = ?)",
 			guild_emblems_table)
-		|| SQL_SUCCESS != stmt.BindParam( 0, SQLDT_INT, &guild_id, sizeof(guild_id))
+		|| SQL_SUCCESS != stmt.BindParam( 0, SQLDT_INT32, &guild_id, sizeof(guild_id))
 		|| SQL_SUCCESS != stmt.BindParam( 1, SQLDT_STRING, (void *)world_name, strlen(world_name))
 		|| SQL_SUCCESS != stmt.Execute()
 	) {
@@ -227,7 +227,7 @@ HANDLER_FUNC(emblem_upload) {
 	if (SQL_SUCCESS != stmt.Prepare(
 			"SELECT `version` FROM `%s` WHERE (`guild_id` = ? AND `world_name` = ?)",
 			guild_emblems_table)
-		|| SQL_SUCCESS != stmt.BindParam(0, SQLDT_INT, &guild_id, sizeof(guild_id))
+		|| SQL_SUCCESS != stmt.BindParam(0, SQLDT_INT32, &guild_id, sizeof(guild_id))
 		|| SQL_SUCCESS != stmt.BindParam(1, SQLDT_STRING, (void *)world_name, strlen(world_name))
 		|| SQL_SUCCESS != stmt.Execute()
 	) {
@@ -259,7 +259,7 @@ HANDLER_FUNC(emblem_upload) {
 		guild_emblems_table)
 		|| SQL_SUCCESS != stmt.BindParam(0, SQLDT_UINT32, &version, sizeof(version))
 		|| SQL_SUCCESS != stmt.BindParam(1, SQLDT_STRING, (void *)imgtype, strlen(imgtype))
-		|| SQL_SUCCESS != stmt.BindParam(2, SQLDT_INT, &guild_id, sizeof(guild_id))
+		|| SQL_SUCCESS != stmt.BindParam(2, SQLDT_INT32, &guild_id, sizeof(guild_id))
 		|| SQL_SUCCESS != stmt.BindParam(3, SQLDT_STRING, (void *)world_name, strlen(world_name))
 		|| SQL_SUCCESS != stmt.BindParam(4, SQLDT_BLOB, (void *)img.c_str(), length)
 		|| SQL_SUCCESS != stmt.Execute()

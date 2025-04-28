@@ -65,7 +65,7 @@ unsigned long get_uptime(void);
 
 //transform a timestamp to string
 const char* timestamp2string(char* str, size_t size, time_t timestamp, const char* format);
-void split_time(int32 time, int* year, int* month, int* day, int* hour, int* minute, int* second);
+void split_time(int32 time, int32* year, int32* month, int32* day, int32* hour, int32* minute, int32* second);
 double solve_time(char* modif_p);
 
 t_tick do_timer(t_tick tick);
