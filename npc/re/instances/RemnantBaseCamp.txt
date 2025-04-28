@@ -267,7 +267,7 @@ iz_dun03,30,170,6	script	Goalkeeper#dunclan02	4_M_RASWORD,{
 		mes "[Panettiere]";
 		mes "Are you new here? Why are you so slow?";
 		mes "I thought I was starving to death!";
-		npctalk "Are you new here? Are you new here? Why are you so slow? I thought I was starving to death!", .@panettiere_1$;
+		npctalk "Are you new here? Why are you so slow? I thought I was starving to death!", .@panettiere_1$;
 		next;
 		mes "[" + .@player_name$ + "]";
 		mes "I'll feed you till you die,";
@@ -351,7 +351,7 @@ iz_dun03,30,170,6	script	Goalkeeper#dunclan02	4_M_RASWORD,{
 		mes "[Panettiere]";
 		mes "Are you new here? Why are you so slow?";
 		mes "I thought I was starving to death!";
-		npctalk "Are you new here? Are you new here? Why are you so slow? I thought I was starving to death!", .@panettiere_1$;
+		npctalk "Are you new here? Why are you so slow? I thought I was starving to death!", .@panettiere_1$;
 		next;
 		mes "[" + .@player_name$ + "]";
 		mes "It took me a lot of effort to find you,";
