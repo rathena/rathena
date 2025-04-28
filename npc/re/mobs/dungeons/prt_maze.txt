@@ -106,14 +106,15 @@ prt_maze03,174,187,3,3	monster	Red Mushroom	1085,3,180000,90000
 //==================================================
 // Added Illusion of Labyrinth
 //==================================================
-prt_mz03_i	monster	Chaos Poporing	20531,10,5000
-prt_mz03_i	monster	Chaos Side Winder	20526,10,5000
-prt_mz03_i	monster	Chaos Hunter Fly	20527,10,5000
-prt_mz03_i	monster	Chaos Ghostring	20529,4,5000
-prt_mz03_i	monster	Chaos Killer Mantis	20530,10,5000
-prt_mz03_i	monster	Chaos Mantis	20528,10,5000
-prt_mz03_i	monster	Chaos Baphomet Jr.	20525,10,5000
-prt_mz03_i	monster	Chaotic Stem Worm	20532,6,5000
+// !TODO : Each monster has a spawn area, which is unknown
+prt_mz03_i	monster	Chaos Poporing	20531,32,5000
+prt_mz03_i	monster	Chaos Side Winder	20526,32,5000
+prt_mz03_i	monster	Chaos Hunter Fly	20527,32,5000
+prt_mz03_i	monster	Chaos Ghostring	20529,12,5000
+prt_mz03_i	monster	Chaos Killer Mantis	20530,32,5000
+prt_mz03_i	monster	Chaos Mantis	20528,32,5000
+prt_mz03_i	monster	Chaos Baphomet Jr.	20525,35,5000
+prt_mz03_i	monster	Chaotic Stem Worm	20532,12,5000
 
 prt_mz03_i	monster	Chaotic Andrea	20521,1,3600000,0,"prt_mz03_i_boss::OnMobDead"
 prt_mz03_i	monster	Chaotic Anes	20522,1,3600000,0,"prt_mz03_i_boss::OnMobDead"
