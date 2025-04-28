@@ -1427,16 +1427,16 @@ int32 pc_equippoint(map_session_data *sd,int32 n){
 /**
  * Fill inventory_data with struct *item_data through inventory (fill with struct *item)
  * @param sd : player session
- * @return 0 sucess, 1:invalid sd
  */
-void pc_setinventorydata(map_session_data *sd)
-{
-	uint8 i;
-	nullpo_retv(sd);
+void pc_setinventorydata( map_session_data& sd ){
+	for( size_t i = 0; i < MAX_INVENTORY; i++ ){
+		t_itemid id = sd.inventory.u.items_inventory[i].nameid;
 
-	for(i = 0; i < MAX_INVENTORY; i++) {
-		t_itemid id = sd->inventory.u.items_inventory[i].nameid;
-		sd->inventory_data[i] = id?itemdb_search(id):nullptr;
+		if( id != 0 ){
+			sd.inventory_data[i] = itemdb_search( id );
+		}else{
+			sd.inventory_data[i] = nullptr;
+		}
 	}
 }
 
@@ -2942,44 +2942,50 @@ uint64 pc_calc_skilltree_normalize_job( map_session_data *sd ){
 	return c;
 }
 
+/**
+ * Calculate the weight percentage of a player
+ * @param sd: Player data
+ * @param weight: (optional) Weight to check, if 0, player's current weight is used
+ */
+uint16 pc_getpercentweight(map_session_data& sd, uint32 weight)
+{
+	if (weight == 0)
+		weight = sd.weight;
+	return static_cast<uint16>(weight * 100 / std::max<uint32>(sd.max_weight, 1));
+}
+
 /*==========================================
  * Updates the weight status
  *------------------------------------------
  * 1: overweight 50% for pre-renewal and 70% for renewal
- * 2: overweight 90%
+ * 2: major overweight 90%
  * It's assumed that SC_WEIGHT50 and SC_WEIGHT90 are only started/stopped here.
  */
-void pc_updateweightstatus(map_session_data *sd)
+void pc_updateweightstatus(map_session_data& sd)
 {
-	int32 old_overweight;
-	int32 new_overweight;
+	uint8 old_overweight = (sd.sc.getSCE(SC_WEIGHT90) != nullptr) ? 2 : (sd.sc.getSCE(SC_WEIGHT50) != nullptr) ? 1 : 0;
+	uint16 overweight_percent = pc_getpercentweight(sd);
+	uint8 new_overweight = (overweight_percent >= battle_config.major_overweight_rate) ? 2 : (overweight_percent >= battle_config.natural_heal_weight_rate) ? 1 : 0;
 
-	nullpo_retv(sd);
-
-	old_overweight = (sd->sc.getSCE(SC_WEIGHT90)) ? 2 : (sd->sc.getSCE(SC_WEIGHT50)) ? 1 : 0;
-#ifdef RENEWAL
-	new_overweight = (pc_is90overweight(sd)) ? 2 : (pc_is70overweight(sd)) ? 1 : 0;
-#else
-	new_overweight = (pc_is90overweight(sd)) ? 2 : (pc_is50overweight(sd)) ? 1 : 0;
-#endif
-
+	// No change
 	if( old_overweight == new_overweight )
-		return; // no change
+		return;
 
-	// stop old status change
-	if( old_overweight == 1 )
-		status_change_end(&sd->bl, SC_WEIGHT50);
-	else if( old_overweight == 2 )
-		status_change_end(&sd->bl, SC_WEIGHT90);
+	switch (new_overweight) {
+	case 0:
+		status_change_end(&sd.bl, SC_WEIGHT50);
+		status_change_end(&sd.bl, SC_WEIGHT90);
+		break;
+	case 1:
+		sc_start(&sd.bl, &sd.bl, SC_WEIGHT50, 100, 0, 0);
+		break;
+	case 2:
+		sc_start(&sd.bl, &sd.bl, SC_WEIGHT90, 100, 0, 0);
+		break;
+	}
 
-	// start new status change
-	if( new_overweight == 1 )
-		sc_start(&sd->bl,&sd->bl, SC_WEIGHT50, 100, 0, 0);
-	else if( new_overweight == 2 )
-		sc_start(&sd->bl,&sd->bl, SC_WEIGHT90, 100, 0, 0);
-
-	// update overweight status
-	sd->regen.state.overweight = new_overweight;
+	// Update overweight status
+	sd.regen.state.overweight = new_overweight != 0;
 }
 
 int32 pc_disguise(map_session_data *sd, int32 class_)
@@ -3034,7 +3040,7 @@ int32 pc_disguise(map_session_data *sd, int32 class_)
 /// Check for valid Race, break & show error message if invalid Race
 #define PC_BONUS_CHK_RACE(rc,bonus) { if (!CHK_RACE((rc))) { PC_BONUS_SHOW_ERROR((bonus),Race,(rc)); }}
 /// Check for valid Race2, break & show error message if invalid Race2
-#define PC_BONUS_CHK_RACE2(rc2,bonus) { if (!CHK_RACE2((rc2))) { PC_BONUS_SHOW_ERROR((bonus),Race2,(rc2)); }}
+#define PC_BONUS_CHK_RACE2(rc2,bonus) { if ((rc2) <= RC2_NONE || (rc2) >= RC2_MAX) { PC_BONUS_SHOW_ERROR((bonus),Race2,(rc2)); }}
 /// Check for valid Class, break & show error message if invalid Class
 #define PC_BONUS_CHK_CLASS(cl,bonus) { if (!CHK_CLASS((cl))) { PC_BONUS_SHOW_ERROR((bonus),Class,(cl)); }}
 /// Check for valid Size, break & show error message if invalid Size
@@ -4205,6 +4211,10 @@ void pc_bonus(map_session_data *sd,int32 type,int32 val)
 			if (sd->state.lr_flag != LR_FLAG_ARROW)
 				sd->bonus.classchange=val;
 			break;
+		case SP_SKILL_RATIO:
+			if (sd->state.lr_flag != LR_FLAG_ARROW)
+				sd->bonus.skill_ratio += val;
+			break;
 		case SP_SHORT_ATK_RATE:
 			if (sd->state.lr_flag != LR_FLAG_ARROW)	//[Lupus] it should stack, too. As any other cards rate bonuses
 				sd->bonus.short_attack_atk_rate+=val;
@@ -4315,6 +4325,10 @@ void pc_bonus(map_session_data *sd,int32 type,int32 val)
 		case SP_EMATK:
 			if (sd->state.lr_flag != LR_FLAG_ARROW)
 				sd->bonus.ematk += val;
+			break;
+		case SP_EMATK_HIDDEN:
+			if (sd->state.lr_flag != LR_FLAG_ARROW)
+				sd->bonus.ematk_hidden += val;
 			break;
 		case SP_ADD_VARIABLECAST:
 			if (sd->state.lr_flag != LR_FLAG_ARROW)
@@ -6089,36 +6103,49 @@ bool pc_takeitem(map_session_data *sd,struct flooritem_data *fitem)
 	if (sd->status.party_id)
 		p = party_search(sd->status.party_id);
 
-	if (fitem->first_get_charid > 0 && fitem->first_get_charid != sd->status.char_id) {
-		map_session_data *first_sd = map_charid2sd(fitem->first_get_charid);
-		if (DIFF_TICK(tick,fitem->first_get_tick) < 0) {
-			if (!(p && p->party.item&1 &&
-				first_sd && first_sd->status.party_id == sd->status.party_id
-				))
-				return false;
-		}
-		else if (fitem->second_get_charid > 0 && fitem->second_get_charid != sd->status.char_id) {
-			map_session_data *second_sd = map_charid2sd(fitem->second_get_charid);
-			if (DIFF_TICK(tick, fitem->second_get_tick) < 0) {
-				if (!(p && p->party.item&1 &&
-					((first_sd && first_sd->status.party_id == sd->status.party_id) ||
-					(second_sd && second_sd->status.party_id == sd->status.party_id))
-					))
-					return false;
-			}
-			else if (fitem->third_get_charid > 0 && fitem->third_get_charid != sd->status.char_id){
-				map_session_data *third_sd = map_charid2sd(fitem->third_get_charid);
-				if (DIFF_TICK(tick,fitem->third_get_tick) < 0) {
-					if(!(p && p->party.item&1 &&
-						((first_sd && first_sd->status.party_id == sd->status.party_id) ||
-						(second_sd && second_sd->status.party_id == sd->status.party_id) ||
-						(third_sd && third_sd->status.party_id == sd->status.party_id))
-						))
-						return false;
-				}
-			}
-		}
+	// Time the player needs to wait until the item can be taken
+	// By default the player needs to wait for top, second and third attacker loot priority times
+	// This applies even if there are no second or third top attackers
+	t_tick item_get_tick = fitem->third_get_tick;
+
+	if (fitem->first_get_charid == 0 || fitem->first_get_charid == sd->status.char_id) {
+		// Top attacker or no attacker, no wait time
+		item_get_tick = 0;
 	}
+	else if (fitem->second_get_charid > 0 && fitem->second_get_charid == sd->status.char_id) {
+		// Second top attacker, needs to wait for top attacker
+		item_get_tick = fitem->first_get_tick;
+	}
+	else if (fitem->third_get_charid > 0 && fitem->third_get_charid == sd->status.char_id) {
+		// Third top attacker, needs to wait for top and second attacker
+		item_get_tick = fitem->second_get_tick;
+	}
+	else if (p != nullptr && p->party.item&1) {
+		// Party member loot priority
+		map_session_data* first_sd = nullptr;
+		map_session_data* second_sd = nullptr;
+		map_session_data* third_sd = nullptr;
+
+		// Only if the top attackers are still online, party members gain the loot priority
+		if (fitem->first_get_charid > 0)
+			first_sd = map_charid2sd(fitem->first_get_charid);
+		if (fitem->second_get_charid > 0)
+			second_sd = map_charid2sd(fitem->second_get_charid);
+		if (fitem->third_get_charid > 0)
+			third_sd = map_charid2sd(fitem->third_get_charid);
+
+		// Check if the top attackers are a party member and apply corresponding wait time
+		if (first_sd != nullptr && first_sd->status.party_id == sd->status.party_id)
+			item_get_tick = 0;
+		else if (second_sd != nullptr && second_sd->status.party_id == sd->status.party_id)
+			item_get_tick = fitem->first_get_tick;
+		else if (third_sd != nullptr && third_sd->status.party_id == sd->status.party_id)
+			item_get_tick = fitem->second_get_tick;
+	}
+
+	// Cannot get item when wait time is still active
+	if (DIFF_TICK(tick, item_get_tick) < 0)
+		return false;
 
 	//This function takes care of giving the item to whoever should have it, considering party-share options.
 	if ((flag = party_share_loot(p,sd,&fitem->item, fitem->first_get_charid))) {
@@ -6264,21 +6291,15 @@ bool pc_isUseitem(map_session_data *sd,int32 n)
 
 	// Safe check type cash disappear when overweight [Napster]
 	if( item->flag.group || item->type == IT_CASH ){
+		// Check if the player is not overweighted
+		if (pc_getpercentweight(*sd) >= battle_config.open_box_weight_rate) {
 #ifdef RENEWAL
-		// Check if the player is not overweighted
-		// In Renewal the limit is 70% weight and gives the same error message
-		if (pc_is70overweight(sd)) {
 			clif_msg_color( *sd, MSI_PICKUP_FAILED_ITEMCREATE, color_table[COLOR_RED] );
-			return 0;
-		}
 #else
-		// Check if the player is not overweighted
-		// In Pre-Renewal the limit is 50% weight and gives a specific error message
-		if (pc_is50overweight(sd)) {
 			clif_msg_color( *sd, MSI_CANT_GET_ITEM_BECAUSE_WEIGHT, color_table[COLOR_RED] );
+#endif
 			return 0;
 		}
-#endif
 
 		// Check if the player has enough free spaces in the inventory
 		// Official servers use 10 as the minimum amount of slots required to get the items
@@ -6668,7 +6689,6 @@ int32 pc_show_steal(struct block_list *bl,va_list ap)
  */
 bool pc_steal_item(map_session_data *sd,struct block_list *bl, uint16 skill_lv)
 {
-	int32 i;
 	t_itemid itemid;
 	double rate;
 	unsigned char flag = 0;
@@ -6705,25 +6725,43 @@ bool pc_steal_item(map_session_data *sd,struct block_list *bl, uint16 skill_lv)
 	)
 		return false;
 
-	// Try dropping one item, in the order from first to last possible slot.
-	// Droprate is affected by the skill success rate.
-	for( i = 0; i < MAX_MOB_DROP; i++ )
-		if( item_db.exists(md->db->dropitem[i].nameid) && !md->db->dropitem[i].steal_protected && rnd() % 10000 < md->db->dropitem[i].rate
-#ifndef RENEWAL
-		* rate/100.
-#endif
-		)
-			break;
-	if( i == MAX_MOB_DROP )
-		return false;
+	std::shared_ptr<s_mob_drop> drop = nullptr;
 
-	itemid = md->db->dropitem[i].nameid;
+	// Try dropping one item.
+	for( std::shared_ptr<s_mob_drop>& entry : md->db->dropitem ){
+		if( entry->steal_protected ){
+			continue;
+		}
+
+		if( !item_db.exists( entry->nameid ) ){
+			continue;
+		}
+
+#ifdef RENEWAL
+		if( rnd() % 10000 < entry->rate ){
+			drop = entry;
+			break;
+		}
+#else
+		// Droprate is affected by the skill success rate.
+		if( rnd() % 10000 < entry->rate * rate / 100. ){
+			drop = entry;
+			break;
+		}
+#endif
+	}
+
+	if( drop == nullptr ){
+		return false;
+	}
+
+	itemid = drop->nameid;
 	struct item tmp_item = {};
 	tmp_item.nameid = itemid;
 	tmp_item.amount = 1;
 	tmp_item.identify = itemdb_isidentified(itemid);
 	if( battle_config.skill_steal_random_options ){
-		mob_setdropitem_option( tmp_item, md->db->dropitem[i] );
+		mob_setdropitem_option( tmp_item, drop );
 	}
 	flag = pc_additem(sd,&tmp_item,1,LOG_TYPE_PICKDROP_PLAYER);
 
@@ -6742,11 +6780,11 @@ bool pc_steal_item(map_session_data *sd,struct block_list *bl, uint16 skill_lv)
 	log_pick_mob(md, LOG_TYPE_STEAL, -1, &tmp_item);
 
 	//A Rare Steal Global Announce by Lupus
-	if(md->db->dropitem[i].rate <= battle_config.rare_drop_announce) {
+	if(drop->rate <= battle_config.rare_drop_announce) {
 		struct item_data *i_data;
 		char message[128];
 		i_data = itemdb_search(itemid);
-		sprintf (message, msg_txt(sd,542), (sd->status.name[0])?sd->status.name :"GM", md->db->jname.c_str(), i_data->ename.c_str(), (float)md->db->dropitem[i].rate / 100);
+		sprintf (message, msg_txt(sd,542), (sd->status.name[0])?sd->status.name :"GM", md->db->jname.c_str(), i_data->ename.c_str(), (float)drop->rate / 100);
 		//MSG: "'%s' stole %s's %s (chance: %0.02f%%)"
 		intif_broadcast(message, strlen(message) + 1, BC_DEFAULT);
 	}
@@ -10215,6 +10253,7 @@ int64 pc_readparam(map_session_data* sd,int64 type)
 		case SP_UNBREAKABLE_GARMENT: val = (sd->bonus.unbreakable_equip&EQP_GARMENT)?1:0; break;
 		case SP_UNBREAKABLE_SHOES: val = (sd->bonus.unbreakable_equip&EQP_SHOES)?1:0; break;
 		case SP_CLASSCHANGE:     val = sd->bonus.classchange; break;
+		case SP_SKILL_RATIO:     val = sd->bonus.skill_ratio; break;
 		case SP_SHORT_ATK_RATE:  val = sd->bonus.short_attack_atk_rate; break;
 		case SP_LONG_ATK_RATE:   val = sd->bonus.long_attack_atk_rate; break;
 		case SP_BREAK_WEAPON_RATE: val = sd->bonus.break_weapon_rate; break;
@@ -10239,6 +10278,7 @@ int64 pc_readparam(map_session_data* sd,int64 type)
 		case SP_ADD_HEAL2_RATE:  val = sd->bonus.add_heal2_rate; break;
 		case SP_ADD_ITEM_HEAL_RATE: val = sd->bonus.itemhealrate2; break;
 		case SP_EMATK:           val = sd->bonus.ematk; break;
+		case SP_EMATK_HIDDEN:    val = sd->bonus.ematk_hidden; break;
 		case SP_FIXCASTRATE:     val = sd->bonus.fixcastrate; break;
 		case SP_ADD_FIXEDCAST:   val = sd->bonus.add_fixcast; break;
 		case SP_ADD_VARIABLECAST:  val = sd->bonus.add_varcast; break;
@@ -11477,19 +11517,19 @@ bool pc_setreg2(map_session_data *sd, const char *reg, int64 val) {
 
 	nullpo_retr(false, sd);
 
-	if (reg[strlen(reg)-1] == '$') {
-		ShowError("pc_setreg2: Invalid variable scope '%s'\n", reg);
+	if( is_string_variable( reg ) ){
+		ShowError( "pc_setreg2: Invalid variable '%s'. String type variables are not supported.\n", reg );
+		return false;
+	}
+
+	if( !not_server_variable( prefix ) ){
+		ShowError( "pc_setreg2: Invalid variable scope '%s'.\n", reg );
 		return false;
 	}
 
 	val = cap_value(val, INT_MIN, INT_MAX);
 
 	switch (prefix) {
-		case '.':
-		case '\'':
-		case '$':
-			ShowError("pc_setreg2: Invalid variable scope '%s'\n", reg);
-			return false;
 		case '@':
 			return pc_setreg(sd, add_str(reg), val);
 		case '#':
@@ -11497,8 +11537,6 @@ bool pc_setreg2(map_session_data *sd, const char *reg, int64 val) {
 		default:
 			return pc_setglobalreg(sd, add_str(reg), val);
 	}
-
-	return false;
 }
 
 /**
@@ -11512,17 +11550,17 @@ int64 pc_readreg2(map_session_data *sd, const char *reg) {
 
 	nullpo_ret(sd);
 
-	if (reg[strlen(reg)-1] == '$') {
-		ShowError("pc_readreg2: Invalid variable scope '%s'\n", reg);
+	if( is_string_variable( reg ) ){
+		ShowError( "pc_readreg2: Invalid variable '%s'. String type variables are not supported.\n", reg );
+		return 0;
+	}
+
+	if( !not_server_variable( prefix ) ){
+		ShowError( "pc_readreg2: Invalid variable scope '%s'.\n", reg );
 		return 0;
 	}
 
 	switch (prefix) {
-		case '.':
-		case '\'':
-		case '$':
-			ShowError("pc_readreg2: Invalid variable scope '%s'\n", reg);
-			return 0;
 		case '@':
 			return pc_readreg(sd, add_str(reg));
 		case '#':
@@ -11530,8 +11568,6 @@ int64 pc_readreg2(map_session_data *sd, const char *reg) {
 		default:
 			return pc_readglobalreg(sd, add_str(reg));
 	}
-
-	return 0;
 }
 
 /*==========================================
@@ -15033,13 +15069,10 @@ void pc_bonus_script_clear(map_session_data *sd, uint32 flag) {
  * @param sd: Target player
  */
 void pc_cell_basilica(map_session_data *sd) {
+#ifndef RENEWAL
 	nullpo_retv(sd);
 
-#ifdef RENEWAL
-	enum sc_type type = SC_BASILICA_CELL;
-#else
 	enum sc_type type = SC_BASILICA;
-#endif
 
 	if (!map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKBASILICA)) {
 		if (sd->sc.getSCE(type))
@@ -15047,6 +15080,7 @@ void pc_cell_basilica(map_session_data *sd) {
 	}
 	else if (!sd->sc.getSCE(type))
 		sc_start(&sd->bl,&sd->bl, type,100,0,INFINITE_TICK);
+#endif
 }
 
 /** [Cydh]

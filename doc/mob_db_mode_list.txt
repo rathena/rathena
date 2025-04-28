@@ -142,6 +142,11 @@ Aegis/rA (description)
 26: 0xB695 (aggressive, change-target melee/chase, cast sensor idle/chase, chase-change target, random target)
 27: 0x8084 (aggressive, immobile, random target)
 
+Special AI:
+
+ABR_PASSIVE: 0x0021 (passive, does not walk randomly, can't attack)
+ABR_OFFENSIVE: 0x00A5 (aggressive, does not walk randomly)
+
 Aegis Class Types
 -------------------------------------------------------------------------------
 

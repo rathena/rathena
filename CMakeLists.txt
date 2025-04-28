@@ -22,15 +22,8 @@
 #####################################################################
 
 
-#cmake_minimum_required( VERSION 2.8.4 )
-# Functional changes from 2.8.3 to 2.8.4:
-#   string(SUBSTRING) works with length -1 as "rest of string"
-#   changes to some CPack generators
-#   CYGWIN no longer defines WIN32
-#   CMP0017: Prefer files from the CMake module directory when including from there.
-# Update to 3.1 for CMAKE_CXX_STANDARD cross support definition
 set( CMAKE_LEGACY_CYGWIN_WIN32 0 )
-cmake_minimum_required( VERSION 3.1 )
+cmake_minimum_required( VERSION 3.13 )
 project( rAthena )
 if( CYGWIN )
 	unset( WIN32 )
