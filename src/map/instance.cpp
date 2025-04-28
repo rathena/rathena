@@ -1235,9 +1235,7 @@ void do_reload_instance(void)
 				instance_addnpc(idata);
 
 			// Create new keep timer
-			std::shared_ptr<s_instance_db> db = instance_db.find(idata->id);
-
-			if (db != nullptr) {
+			if (std::shared_ptr<s_instance_db> db = instance_db.find(idata->id); db != nullptr) {
 				// Save the expire time
 				idata->keep_limit = time(nullptr) + db->limit;
 
