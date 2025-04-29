@@ -11516,7 +11516,7 @@ Body:
     Hit: Multi_Hit
     HitCount: -3
     Element: Weapon
-    Duration2: 2500
+    Duration2: 3000
     Requires:
       SpCost:
         - Level: 1

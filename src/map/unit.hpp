@@ -151,7 +151,7 @@ int32 unit_is_walking(struct block_list *bl);
 
 // Delay functions
 void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event);
-int32 unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int32 type);
+int32 unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int32 type, uint16 skill_id = 0);
 
 t_tick unit_get_walkpath_time(struct block_list& bl);
 t_tick unit_escape(struct block_list *bl, struct block_list *target, int16 dist, uint8 flag = 0);

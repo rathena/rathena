@@ -171,8 +171,13 @@ bool unit_walktoxy_nextcell(block_list& bl, bool sendMove, t_tick tick) {
 		return true;
 
 	// Reached end of walkpath
-	if (ud->walkpath.path_pos >= ud->walkpath.path_len)
+	if (ud->walkpath.path_pos >= ud->walkpath.path_len) {
+		// We need to send the reply to the client even if already at the target cell
+		// This allows the client to synchronize the position correctly
+		if (sendMove && bl.type == BL_PC)
+			clif_walkok(reinterpret_cast<map_session_data&>(bl));
 		return false;
+	}
 
 	// Monsters first check for a chase skill and if they didn't use one if their target is in range each cell after checking for a chase skill
 	if (bl.type == BL_MOB) {
@@ -699,9 +704,6 @@ static TIMER_FUNC(unit_walktoxy_timer)
 				map_foreachinmap(unit_walktoxy_ontouch, nd->bl.m, BL_PC, nd);
 			break;
 	}
-
-	if(tid == INVALID_TIMER) // A directly invoked timer is from battle_stop_walking, therefore the rest is irrelevant.
-		return 0;
 
 	int32 speed;
 
@@ -1980,9 +1982,10 @@ void unit_set_castdelay(unit_data& ud, t_tick tick, int32 casttime) {
  * @param type: Type of delay
  *	0: Damage induced delay; Do not change previous delay
  *	1: Skill induced delay; Walk delay can only be increased, not decreased
+ * @param skill_id: ID of skill that dealt damage (type 0 only)
  * @return Success(1); Fail(0);
  */
-int32 unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int32 type)
+int32 unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int32 type, uint16 skill_id)
 {
 	struct unit_data *ud = unit_bl2ud(bl);
 
@@ -2004,12 +2007,22 @@ int32 unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int32
 			if (md.state.can_escape == 1)
 				return 0;
 		}
-		// Don't set walk delays when already trapped.
-		if (!unit_can_move(bl)) {
-			// Unit might still be moving even though it can't move
+		// Trapped or legacy walk delay system disabled
+		if (!unit_can_move(bl) || !(bl->type&battle_config.damage_walk_delay)) {
+			// Stop on the closest cell center
 			unit_stop_walking( bl, USW_MOVE_FULL_CELL );
 			return 0;
 		}
+
+		switch (skill_id) {
+			case MG_FIREWALL:
+			case PR_SANCTUARY:
+			case NJ_KAENSIN:
+				// When using legacy walk delay, these skills should just stop the target
+				delay = 1;
+				break;
+		}
+
 		//Immune to being stopped for double the flinch time
 		if (DIFF_TICK(ud->canmove_tick, tick-delay) > 0)
 			return 0;
@@ -2452,7 +2465,11 @@ int32 unit_skilluse_id2(struct block_list *src, int32 target_id, uint16 skill_id
 	// In official this is triggered even if no cast time.
 	clif_skillcasting(src, src->id, target_id, 0,0, skill_id, skill_lv, skill_get_ele(skill_id, skill_lv), casttime);
 
-	if (sd && target->type == BL_MOB) {
+	if (sd != nullptr && target->type == BL_MOB
+#ifndef RENEWAL
+		&& (casttime > 0 || combo > 0)
+#endif
+	) {
 		TBL_MOB *md = (TBL_MOB*)target;
 
 		mobskill_event(md, src, tick, -1); // Cast targetted skill event.
@@ -3345,7 +3362,7 @@ bool unit_can_attack(struct block_list *bl, int32 target_id) {
  * Cancels a skill's cast
  * @param bl: Object to cancel cast
  * @param type: Cancel check flag
- *	&1: Cast-Cancel invoked
+ *	&1: Cancel skill stored in sd->skill_id_old instead
  *	&2: Cancel only if skill is cancellable
  * @return Success(1); Fail(0);
  */

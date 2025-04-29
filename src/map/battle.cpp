@@ -267,10 +267,6 @@ static t_tick battle_calc_walkdelay(block_list& bl, int64 damage, int16 div_, t_
 	if (div_ == 0)
 		return 0;
 
-	// Check if unit can be stopped by damage
-	if (status_isendure(bl, tick, false))
-		return 0;
-
 	t_tick delay = status_get_status_data(bl)->dmotion;	
 
 	// Multi-hit skills mean higher delays
@@ -8200,13 +8196,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				// Fire and undead units hit by firewall cannot be stopped for 2 seconds
 				if (unit_data* ud = unit_bl2ud(target); ud != nullptr)
 					ud->endure_tick = gettick() + 2000;
-				break;
 			}
-			[[fallthrough]];
-		case NJ_KAENSIN:
-		case PR_SANCTUARY:
-			// TODO: This code is a temporary workaround because right now we stop monsters for their dmotion which is not official
-			ad.dmotion = 1;
 			break;
 	}
 
@@ -10520,7 +10510,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 #ifndef RENEWAL
 		status_get_class_(src) != CLASS_BOSS &&
 #endif
-		(src->type == BL_PC || tsd == nullptr || distance_bl(src, target) <= (tsd->status.weapon == W_FIST ? 1 : 2)) )
+		(src->type == BL_PC || check_distance_bl(src, target, 2)) )
 	{
 		uint16 skill_lv = tsc->getSCE(SC_BLADESTOP_WAIT)->val1;
 		int32 duration = skill_get_time2(MO_BLADESTOP,skill_lv);
@@ -11580,8 +11570,8 @@ static const struct _battle_data {
 	{ "item_auto_get",                      &battle_config.item_auto_get,                   0,      0,      1,              },
 	{ "first_attack_loot_bonus",            &battle_config.first_attack_loot_bonus,         30,     0,      100,            },
 	{ "item_first_get_time",                &battle_config.item_first_get_time,             3000,   0,      INT_MAX,        },
-	{ "item_second_get_time",               &battle_config.item_second_get_time,            1000,   0,      INT_MAX,        },
-	{ "item_third_get_time",                &battle_config.item_third_get_time,             1000,   0,      INT_MAX,        },
+	{ "item_second_get_time",               &battle_config.item_second_get_time,            2000,   0,      INT_MAX,        },
+	{ "item_third_get_time",                &battle_config.item_third_get_time,             2000,   0,      INT_MAX,        },
 	{ "mvp_item_first_get_time",            &battle_config.mvp_item_first_get_time,         10000,  0,      INT_MAX,        },
 	{ "mvp_item_second_get_time",           &battle_config.mvp_item_second_get_time,        10000,  0,      INT_MAX,        },
 	{ "mvp_item_third_get_time",            &battle_config.mvp_item_third_get_time,         2000,   0,      INT_MAX,        },
@@ -11862,6 +11852,7 @@ static const struct _battle_data {
 	{ "default_walk_delay",                 &battle_config.default_walk_delay,              300,    0,      INT_MAX,        },
 	{ "no_skill_delay",                     &battle_config.no_skill_delay,                  BL_MOB, BL_NUL, BL_ALL,         },
 	{ "attack_walk_delay",                  &battle_config.attack_walk_delay,               BL_NUL, BL_NUL, BL_ALL,         },
+	{ "damage_walk_delay",                  &battle_config.damage_walk_delay,               BL_NUL, BL_NUL, BL_ALL,         },
 	{ "require_glory_guild",                &battle_config.require_glory_guild,             0,      0,      1,              },
 	{ "idle_no_share",                      &battle_config.idle_no_share,                   0,      0,      INT_MAX,        },
 	{ "party_even_share_bonus",             &battle_config.party_even_share_bonus,          0,      0,      INT_MAX,        },
