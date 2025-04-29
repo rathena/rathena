@@ -417,18 +417,21 @@ void trade_tradeadditem(map_session_data *sd, int16 index, int16 amount)
 		return;
 	}
 
-	// Fail to add the item if the inventory will be full, even if the item is stackable and already exists in the inventory
-	if (pc_inventoryblank(target_sd) <= trade_i) {
-		clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_OVERCOUNT);
+	char add_item = pc_checkadditem(target_sd, item->nameid, amount);
+	// Fail to add the item if is stackable and adding the traded amount will exceed the maximum
+	if (add_item == CHKADDITEM_OVERAMOUNT) {
+		clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_EACHITEM_OVERCOUNT);
 		return;
 	}
 
-	// Fail to add the item if is stackable and adding the traded amount will exceed the maximum
-	if (itemdb_isstackable(item->nameid)) {
-		if (pc_checkadditem(target_sd, item->nameid, amount) == CHKADDITEM_OVERAMOUNT) {
-			clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_EACHITEM_OVERCOUNT);
-			return;
-		}
+	// Determines whether the item should be counted when checking for inventory space.
+	// If the 'trade_count_stackable' config is enabled, the item will be counted separately even if the recipient already has it.
+	bool count = battle_config.trade_count_stackable == 1 || add_item != CHKADDITEM_EXIST;
+
+	// Fail to add the item if the inventory will be full
+	if (pc_inventoryblank(target_sd) < sd->deal.item_count + count) {
+		clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_OVERCOUNT);
+		return;
 	}
 
 	trade_weight = sd->inventory_data[index]->weight * amount;
@@ -450,6 +453,9 @@ void trade_tradeadditem(map_session_data *sd, int16 index, int16 amount)
 	}
 
 	sd->deal.weight += trade_weight;
+
+	if (count)
+		sd->deal.item_count++;
 
 	clif_tradeitemok(*sd, index, EXITEM_ADD_SUCCEED); // Return the index as it was received
 	clif_tradeadditem(sd, target_sd, index+2, amount);
