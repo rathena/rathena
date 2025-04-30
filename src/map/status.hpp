@@ -3343,8 +3343,8 @@ struct status_data {
 		str, agi, vit, int_, dex, luk,
 		pow, sta, wis, spl, con, crt,
 		eatk;
+	int32 batk;
 	uint16
-		batk,
 #ifdef RENEWAL
 		watk,
 		watk2,

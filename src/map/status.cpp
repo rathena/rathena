@@ -69,7 +69,7 @@ static uint16 status_calc_wis(struct block_list *, status_change *, int32);
 static uint16 status_calc_spl(struct block_list *, status_change *, int32);
 static uint16 status_calc_con(struct block_list *, status_change *, int32);
 static uint16 status_calc_crt(struct block_list *, status_change *, int32);
-static uint16 status_calc_batk(struct block_list *,status_change *,int32);
+static int32 status_calc_batk(struct block_list *,status_change *,int32);
 static uint16 status_calc_watk(struct block_list *,status_change *,int32);
 static int16 status_calc_hit(struct block_list *,status_change *,int32);
 static int16 status_calc_critical(struct block_list *,status_change *,int32);
@@ -2724,8 +2724,11 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int32 l
 		status->flee2 = 0;
 
 	if (status->batk) {
-		int32 temp = status->batk + status_base_atk(bl, status, level);
-		status->batk = cap_value(temp, 0, USHRT_MAX);
+		status->batk += status_base_atk(bl, status, level);
+#ifndef RENEWAL
+		if (bl->type != BL_PC)
+			status->batk = cap_value(status->batk, SHRT_MIN, SHRT_MAX);
+#endif
 	} else
 		status->batk = status_base_atk(bl, status, level);
 
@@ -5951,10 +5954,15 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 	if(flag[SCB_BATK] && b_status->batk) {
 		int32 lv = status_get_lv(&bl);
 		status->batk = status_base_atk(&bl, status, lv);
+		// Calculate the difference of old and new base attack in the base status
+		// Then add the same difference to batk of battle status
 		temp = b_status->batk - status_base_atk(&bl, b_status, lv);
 		if (temp) {
-			temp += status->batk;
-			status->batk = cap_value(temp, 0, USHRT_MAX);
+			status->batk += temp;
+#ifndef RENEWAL
+			if (bl.type != BL_PC)
+				status->batk = cap_value(status->batk, SHRT_MIN, SHRT_MAX);
+#endif
 		}
 		status->batk = status_calc_batk(&bl, sc, status->batk);
 	}
@@ -7277,10 +7285,10 @@ static uint16 status_calc_crt(struct block_list *bl, status_change *sc, int32 cr
  * @param batk: Initial batk
  * @return modified batk with cap_value(batk,0,USHRT_MAX)
  */
-static uint16 status_calc_batk(struct block_list *bl, status_change *sc, int32 batk)
+static int32 status_calc_batk(struct block_list *bl, status_change *sc, int32 batk)
 {
 	if(sc == nullptr || sc->empty())
-		return cap_value(batk,0,USHRT_MAX);
+		return batk;
 
 	if (sc->getSCE(SC_VOLCANO))
 		batk += sc->getSCE(SC_VOLCANO)->val2;
@@ -7311,7 +7319,12 @@ static uint16 status_calc_batk(struct block_list *bl, status_change *sc, int32 b
 	if (sc->getSCE(SC_INTENSIVE_AIM))
 		batk += 150;
 
-	return (uint16)cap_value(batk,0,USHRT_MAX);
+#ifndef RENEWAL
+	if (bl->type != BL_PC)
+		batk = cap_value(batk, SHRT_MIN, SHRT_MAX);
+#endif
+
+	return batk;
 }
 
 /**
