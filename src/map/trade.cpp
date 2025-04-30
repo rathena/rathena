@@ -426,10 +426,10 @@ void trade_tradeadditem(map_session_data *sd, int16 index, int16 amount)
 
 	// Determines whether the item should be counted when checking for inventory space.
 	// If the 'trade_count_stackable' config is enabled, the item will be counted separately even if the recipient already has it.
-	bool count = battle_config.trade_count_stackable == 1 || add_item != CHKADDITEM_EXIST;
+	bool count = (battle_config.trade_count_stackable == 1) || (add_item != CHKADDITEM_EXIST);
 
 	// Fail to add the item if the inventory will be full
-	if (pc_inventoryblank(target_sd) < sd->deal.item_count + count) {
+	if (pc_inventoryblank(target_sd) < sd->deal.item_count + static_cast<uint8>(count)) {
 		clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_OVERCOUNT);
 		return;
 	}
