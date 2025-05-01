@@ -16704,7 +16704,7 @@ static int32 skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, 
 			else if (battle_config.refresh_song == 1 && sce->val4 == 1) { //Readjust timers since the effect will not last long.
 				sce->val4 = 0; //remove the mark that we stepped out
 				delete_timer(sce->timer, status_change_timer);
-				sce->timer = add_timer(tick+sg->limit, status_change_timer, bl->id, type); //put duration back to 3min
+				sce->timer = add_timer(tick + sg->limit + SKILLUNITTIMER_INTERVAL, status_change_timer, bl->id, type);
 				// Update icon duration
 				if (battle_config.refresh_song_icon == 1) {
 					if (auto scdb = status_db.find(type); scdb != nullptr)
