@@ -6814,3 +6814,22 @@ Body:
     Script: |
       bonus bAspdRate, getstatus(SC_ACARAJE, 1);
       bonus bHit, getstatus(SC_ACARAJE, 2);
+  - Status: Noaction
+    Icon: EFST_NOACTION
+    DurationLookup: TK_TURNKICK
+    States:
+      NoMove: true
+      NoPickItem: true
+      NoCast: true
+      NoAttack: true
+      NoInteract: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
+      StopAttacking: true
+      StopCasting: true
+      BossResist: true
