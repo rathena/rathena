@@ -18815,7 +18815,7 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 		case AB_ANCILLA: {
 				int32 count = 0;
 
-				for( i = 0; i < MAX_INVENTORY; i++ )
+				for( i = 0; i < sd.status.inventory_slots; i++ )
 					if( sd.inventory.u.items_inventory[i].nameid == ITEMID_ANCILLA )
 						count += sd.inventory.u.items_inventory[i].amount;
 				if( count >= 3 ) {
@@ -20589,7 +20589,7 @@ void skill_repairweapon( map_session_data& sd, int32 idx ){
 
 	if( idx == 0xFFFF ) // No item selected ('Cancel' clicked)
 		return;
-	if( idx < 0 || idx >= MAX_INVENTORY )
+	if( idx < 0 || idx >= sd.status.inventory_slots)
 		return; //Invalid index??
 
 	item = &target_sd->inventory.u.items_inventory[idx];
@@ -20640,7 +20640,7 @@ void skill_identify(map_session_data *sd, int32 idx)
 
 	sd->state.workinprogress = WIP_DISABLE_NONE;
 
-	if(idx >= 0 && idx < MAX_INVENTORY) {
+	if(idx >= 0 && idx < sd->status.inventory_slots) {
 		if(sd->inventory.u.items_inventory[idx].nameid > 0 && sd->inventory.u.items_inventory[idx].identify == 0 ){
 			failure = false;
 			sd->inventory.u.items_inventory[idx].identify = 1;
@@ -20663,7 +20663,7 @@ void skill_weaponrefine( map_session_data& sd, int32 idx ){
 #endif
 	};
 
-	if (idx >= 0 && idx < MAX_INVENTORY)
+	if (idx >= 0 && idx < sd.status.inventory_slots)
 	{
 		struct item_data *ditem = sd.inventory_data[idx];
 		struct item* item = &sd.inventory.u.items_inventory[idx];
@@ -22897,7 +22897,7 @@ int16 skill_can_produce_mix(map_session_data *sd, t_itemid nameid, int32 trigger
 		} else {
 			uint16 idx, amt;
 
-			for (idx = 0, amt = 0; idx < MAX_INVENTORY; idx++)
+			for (idx = 0, amt = 0; idx < sd->status.inventory_slots; idx++)
 				if (sd->inventory.u.items_inventory[idx].nameid == nameid_produce)
 					amt += sd->inventory.u.items_inventory[idx].amount;
 			if (amt < qty * skill_produce_db[i].mat_amount[j])
@@ -23844,7 +23844,7 @@ int32 skill_elementalanalysis( map_session_data& sd, int32 n, uint16 skill_lv, u
 
 		idx = item_list[i*2+0]-2;
 
-		if( idx < 0 || idx >= MAX_INVENTORY ){
+		if( idx < 0 || idx >= sd.status.inventory_slots){
 			return 1;
 		}
 
@@ -23923,7 +23923,7 @@ int32 skill_changematerial(map_session_data *sd, int32 n, uint16 *item_list) {
 						for( k = 0; k < n; k++ ) {
 							int32 idx = item_list[k*2+0]-2;
 
-							if( idx < 0 || idx >= MAX_INVENTORY ){
+							if( idx < 0 || idx >= sd->status.inventory_slots){
 								return 0;
 							}
 

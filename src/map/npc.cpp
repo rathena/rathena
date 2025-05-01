@@ -2422,7 +2422,7 @@ static enum e_CASHSHOP_ACK npc_cashshop_process_payment(struct npc_data *nd, int
 					return ERROR_TYPE_PURCHASE_FAIL;
 				}
 
-				for (i = 0; i < MAX_INVENTORY && delete_amount > 0; i++) {
+				for (i = 0; i < sd->status.inventory_slots && delete_amount > 0; i++) {
 					struct item *it;
 					int32 amount = 0;
 
@@ -2607,7 +2607,7 @@ void npc_shop_currency_type(map_session_data *sd, struct npc_data *nd, int32 cos
 					clif_broadcast(&sd->bl, output, strlen(output) + 1, BC_BLUE,SELF);
 				}
 
-				for (i = 0; i < MAX_INVENTORY; i++) {
+				for (i = 0; i < sd->status.inventory_slots; i++) {
 					if (sd->inventory.u.items_inventory[i].amount > 0 && sd->inventory.u.items_inventory[i].nameid == id->nameid && pc_can_sell_item(sd, &sd->inventory.u.items_inventory[i], nd->subtype))
 						total += sd->inventory.u.items_inventory[i].amount;
 				}
@@ -3019,7 +3019,7 @@ uint8 npc_selllist(map_session_data* sd, int32 list_length, const PACKET_CZ_PC_S
 		idx    = item_list[i].index - 2;
 		amount = item_list[i].amount;
 
-		if( idx >= MAX_INVENTORY || idx < 0 || amount < 0 )
+		if( idx >= sd->status.inventory_slots || idx < 0 || amount < 0 )
 		{
 			return 1;
 		}
@@ -3145,7 +3145,7 @@ e_purchase_result npc_barter_purchase( map_session_data& sd, std::shared_ptr<s_n
 			if( itemdb_isstackable2( id.get() ) ){
 				int32 j;
 
-				for( j = 0; j < MAX_INVENTORY; j++ ){
+				for( j = 0; j < sd.status.inventory_slots; j++ ){
 					if( sd.inventory.u.items_inventory[j].nameid == requirement->nameid ){
 						// Equipped items are not taken into account
 						if( sd.inventory.u.items_inventory[j].equip != 0 ){
@@ -3182,14 +3182,14 @@ e_purchase_result npc_barter_purchase( map_session_data& sd, std::shared_ptr<s_n
 				}
 
 				// Required item not found
-				if( j == MAX_INVENTORY ){
+				if( j == sd.status.inventory_slots){
 					return e_purchase_result::PURCHASE_FAIL_GOODS;
 				}
 			}else{
 				for( int32 i = 0; i < (requirement->amount * amount); i++ ){
 					int32 j;
 
-					for( j = 0; j < MAX_INVENTORY; j++ ){
+					for( j = 0; j < sd.status.inventory_slots; j++ ){
 						if( sd.inventory.u.items_inventory[j].nameid == requirement->nameid ){
 							// Equipped items are not taken into account
 							if( sd.inventory.u.items_inventory[j].equip != 0 ){
@@ -3227,14 +3227,14 @@ e_purchase_result npc_barter_purchase( map_session_data& sd, std::shared_ptr<s_n
 					}
 
 					// Required item not found
-					if( j == MAX_INVENTORY ){
+					if( j == sd.status.inventory_slots){
 						// Maybe the refine level did not match
 						if( requirement->refine >= 0 ){
 							int32 refine;
 
 							// Try to find a higher refine level, going from the next lowest to the highest possible
 							for( refine = requirement->refine + 1; refine <= MAX_REFINE; refine++ ){
-								for( j = 0; j < MAX_INVENTORY; j++ ){
+								for( j = 0; j < sd.status.inventory_slots; j++ ){
 									if( sd.inventory.u.items_inventory[j].nameid == requirement->nameid ){
 										// Equipped items are not taken into account
 										if( sd.inventory.u.items_inventory[j].equip != 0 ){
@@ -3272,7 +3272,7 @@ e_purchase_result npc_barter_purchase( map_session_data& sd, std::shared_ptr<s_n
 								}
 
 								// If a match was found, make sure to cancel the loop
-								if( j < MAX_INVENTORY ){
+								if( j < sd.status.inventory_slots){
 									// Cancel the loop
 									break;
 								}
@@ -3307,7 +3307,7 @@ e_purchase_result npc_barter_purchase( map_session_data& sd, std::shared_ptr<s_n
 		return e_purchase_result::PURCHASE_FAIL_COUNT;
 	}
 
-	for( int32 i = 0; i < MAX_INVENTORY; i++ ){
+	for( int32 i = 0; i < sd.status.inventory_slots; i++ ){
 		if( requiredItems[i] > 0 ){
 			if( pc_delitem( &sd, i, requiredItems[i], 0, 0, LOG_TYPE_BARTER ) != 0 ){
 				return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;

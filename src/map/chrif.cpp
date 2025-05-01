@@ -1039,14 +1039,14 @@ int32 chrif_divorceack(uint32 char_id, int32 partner_id) {
 
 	if( ( sd = map_charid2sd(char_id) ) != nullptr && sd->status.partner_id == partner_id ) {
 		sd->status.partner_id = 0;
-		for(i = 0; i < MAX_INVENTORY; i++)
+		for(i = 0; i < sd->status.inventory_slots; i++)
 			if (sd->inventory.u.items_inventory[i].nameid == WEDDING_RING_M || sd->inventory.u.items_inventory[i].nameid == WEDDING_RING_F)
 				pc_delitem(sd, i, 1, 0, 0, LOG_TYPE_OTHER);
 	}
 
 	if( ( sd = map_charid2sd(partner_id) ) != nullptr && sd->status.partner_id == char_id ) {
 		sd->status.partner_id = 0;
-		for(i = 0; i < MAX_INVENTORY; i++)
+		for(i = 0; i < sd->status.inventory_slots; i++)
 			if (sd->inventory.u.items_inventory[i].nameid == WEDDING_RING_M || sd->inventory.u.items_inventory[i].nameid == WEDDING_RING_F)
 				pc_delitem(sd, i, 1, 0, 0, LOG_TYPE_OTHER);
 	}

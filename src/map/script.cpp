@@ -7262,7 +7262,7 @@ BUILDIN_FUNC(countitem)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	int32 count = script_countitem_sub(sd->inventory.u.items_inventory, id, MAX_INVENTORY, expanded, st, sd);
+	int32 count = script_countitem_sub(sd->inventory.u.items_inventory, id, sd->status.inventory_slots, expanded, st, sd);
 	if (count < 0) {
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
@@ -7466,7 +7466,7 @@ BUILDIN_FUNC(rentalcountitem)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	int32 count = script_countitem_sub(sd->inventory.u.items_inventory, id, MAX_INVENTORY, expanded, st, sd, true);
+	int32 count = script_countitem_sub(sd->inventory.u.items_inventory, id, sd->status.inventory_slots, expanded, st, sd, true);
 	if (count < 0) {
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
@@ -8453,7 +8453,7 @@ static bool buildin_delitem_search(map_session_data* sd, struct item* it, uint8 
 		}
 			break;
 		default: // TABLE_INVENTORY
-			size = MAX_INVENTORY;
+			size = sd->status.inventory_slots;
 			items = sd->inventory.u.items_inventory;
 			break;
 	}
@@ -8793,8 +8793,8 @@ BUILDIN_FUNC(delitemidx) {
 	}
 
 	int32 idx = script_getnum(st, 2);
-	if (idx < 0 || idx >= MAX_INVENTORY) {
-		ShowWarning("buildin_delitemidx: Index %d is out of the range 0-%d.\n", idx, MAX_INVENTORY - 1);
+	if (idx < 0 || idx >= sd->status.inventory_slots) {
+		ShowWarning("buildin_delitemidx: Index %d is out of the range 0-%d.\n", idx, sd->status.inventory_slots - 1);
 		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -9323,7 +9323,7 @@ BUILDIN_FUNC(getequipid)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (i >= 0 && i < MAX_INVENTORY && sd->inventory_data[i])
+	if (i >= 0 && i < sd->status.inventory_slots && sd->inventory_data[i])
 		script_pushint(st, sd->inventory_data[i]->nameid);
 	else
 		script_pushint(st, -1);
@@ -9428,7 +9428,7 @@ BUILDIN_FUNC(getbrokenid)
 	}
 
 	num = script_getnum(st,2);
-	for(i = 0; i < MAX_INVENTORY; i++) {
+	for(i = 0; i < sd->status.inventory_slots; i++) {
 		if( sd->inventory.u.items_inventory[i].attribute == 1 && !itemdb_ishatched_egg( &sd->inventory.u.items_inventory[i] ) ){
 				brokencounter++;
 				if(num == brokencounter){
@@ -9457,7 +9457,7 @@ BUILDIN_FUNC(repair)
 		return SCRIPT_CMD_FAILURE;
 
 	num = script_getnum(st,2);
-	for(i = 0; i < MAX_INVENTORY; i++) {
+	for(i = 0; i < sd->status.inventory_slots; i++) {
 		if( sd->inventory.u.items_inventory[i].attribute == 1 && !itemdb_ishatched_egg( &sd->inventory.u.items_inventory[i] ) ){
 				repaircounter++;
 				if(num == repaircounter) {
@@ -9484,7 +9484,7 @@ BUILDIN_FUNC(repairall)
 	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
 
-	for(i = 0; i < MAX_INVENTORY; i++)
+	for(i = 0; i < sd->status.inventory_slots; i++)
 	{
 		if( sd->inventory.u.items_inventory[i].nameid && sd->inventory.u.items_inventory[i].attribute == 1 && !itemdb_ishatched_egg( &sd->inventory.u.items_inventory[i] ) ){
 			sd->inventory.u.items_inventory[i].attribute = 0;
@@ -15034,7 +15034,7 @@ BUILDIN_FUNC(getinventorylist)
 
 	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
-	for(i=0;i<MAX_INVENTORY;i++){
+	for(i=0;i< sd->status.inventory_slots;i++){
 		if(sd->inventory.u.items_inventory[i].nameid > 0 && sd->inventory.u.items_inventory[i].amount > 0){
 			pc_setreg(sd,reference_uid(add_str("@inventorylist_id"), j),sd->inventory.u.items_inventory[i].nameid);
 			pc_setreg(sd,reference_uid(add_str("@inventorylist_idx"), j),i);
@@ -15102,7 +15102,7 @@ BUILDIN_FUNC(clearitem)
 	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
 
-	for (i=0; i<MAX_INVENTORY; i++) {
+	for (i=0; i<sd->status.inventory_slots; i++) {
 		if (sd->inventory.u.items_inventory[i].amount) {
 			pc_delitem(sd, i, sd->inventory.u.items_inventory[i].amount, 0, 0, LOG_TYPE_SCRIPT);
 		}
@@ -16105,7 +16105,7 @@ BUILDIN_FUNC(checkequipedcard)
 		int32 n,i,c=0;
 		c=script_getnum(st,2);
 
-		for(i=0;i<MAX_INVENTORY;i++){
+		for(i=0;i<sd->status.inventory_slots;i++){
 			if(sd->inventory.u.items_inventory[i].nameid > 0 && sd->inventory.u.items_inventory[i].amount && sd->inventory_data[i]){
 				if (itemdb_isspecial(sd->inventory.u.items_inventory[i].card[0]))
 					continue;
@@ -16953,8 +16953,8 @@ BUILDIN_FUNC(equip) {
 	if (id != nullptr) {
 		int32 i;
 
-		ARR_FIND( 0, MAX_INVENTORY, i, sd->inventory.u.items_inventory[i].nameid == nameid );
-		if (i < MAX_INVENTORY) {
+		ARR_FIND( 0, sd->status.inventory_slots, i, sd->inventory.u.items_inventory[i].nameid == nameid );
+		if (i < sd->status.inventory_slots) {
 			pc_equipitem(sd,i,id->equip);
 			script_pushint(st,1);
 			return SCRIPT_CMD_SUCCESS;
@@ -23445,7 +23445,7 @@ BUILDIN_FUNC(countbound)
 	int32 i, k = 0;
 	int32 type = script_getnum(st,2);
 
-	for( i = 0; i < MAX_INVENTORY; i ++ ) {
+	for( i = 0; i < sd->status.inventory_slots; i ++ ) {
 		if( sd->inventory.u.items_inventory[i].nameid > 0 && (
 			(!type && sd->inventory.u.items_inventory[i].bound) || (type && sd->inventory.u.items_inventory[i].bound == type)
 			))
@@ -24135,7 +24135,7 @@ BUILDIN_FUNC(mergeitem2) {
 		}
 	}
 
-	for (i = 0; i < MAX_INVENTORY; i++) {
+	for (i = 0; i < sd->status.inventory_slots; i++) {
 		struct item *it = &sd->inventory.u.items_inventory[i];
 
 		if (!it || !it->unique_id || it->expire_time || !itemdb_isstackable(it->nameid))
@@ -26754,7 +26754,7 @@ BUILDIN_FUNC(getenchantgrade){
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (index < 0 || index >= MAX_INVENTORY || sd->inventory.u.items_inventory[index].nameid == 0)
+	if (index < 0 || index >= sd->status.inventory_slots || sd->inventory.u.items_inventory[index].nameid == 0)
 		script_pushint(st, -1);
 	else
 		script_pushint(st, sd->inventory.u.items_inventory[index].enchantgrade);

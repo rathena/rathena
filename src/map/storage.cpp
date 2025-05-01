@@ -337,7 +337,7 @@ void storage_storageadd(map_session_data* sd, struct s_storage *stor, int32 inde
 
 	nullpo_retv(sd);
 
-	result = storage_canAddItem(stor, index, sd->inventory.u.items_inventory, amount, MAX_INVENTORY);
+	result = storage_canAddItem(stor, index, sd->inventory.u.items_inventory, amount, sd->status.inventory_slots);
 	if (result == STORAGE_ADD_INVALID)
 		return;
 	else if (result == STORAGE_ADD_OK) {
@@ -879,7 +879,7 @@ void storage_guild_storageadd(map_session_data* sd, int32 index, int32 amount)
 	if( !stor->status || stor->amount > stor->max_amount )
 		return;
 
-	if( index < 0 || index >= MAX_INVENTORY )
+	if( index < 0 || index >= sd->status.inventory_slots)
 		return;
 
 	if( sd->inventory.u.items_inventory[index].nameid == 0 )

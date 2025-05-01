@@ -2289,7 +2289,7 @@ void clif_selllist( map_session_data& sd){
 	packet->packetType = HEADER_ZC_PC_SELL_ITEMLIST;
 	packet->packetLength = sizeof( *packet );
 
-	for( int32 i = 0, c = 0; i < MAX_INVENTORY; i++ ){
+	for( int32 i = 0, c = 0; i < sd.status.inventory_slots; i++ ){
 		if( sd.inventory.u.items_inventory[i].nameid <= 0 ){
 			continue;
 		}
@@ -2859,7 +2859,7 @@ void clif_additem( map_session_data *sd, int32 n, int32 amount, unsigned char fa
 	if( fail ){
 		p = {};
 	}else{
-		if( n < 0 || n >= MAX_INVENTORY || sd->inventory.u.items_inventory[n].nameid == 0 || sd->inventory_data[n] == nullptr ){
+		if( n < 0 || n >= sd->status.inventory_slots || sd->inventory.u.items_inventory[n].nameid == 0 || sd->inventory_data[n] == nullptr ){
 			return;
 		}
 
@@ -3084,7 +3084,7 @@ void clif_inventorylist( map_session_data *sd ){
 
 	storage_sortitem( sd->storage.u.items_inventory, ARRAYLENGTH( sd->storage.u.items_inventory ) );
 
-	for( int32 i = 0; i < MAX_INVENTORY; i++ ){
+	for( int32 i = 0; i < sd->status.inventory_slots; i++ ){
 		if( sd->inventory.u.items_inventory[i].nameid == 0 || sd->inventory_data[i] == nullptr ){
 			continue;
 		}
@@ -3150,7 +3150,7 @@ void clif_inventorylist( map_session_data *sd ){
 #endif
 /* on 20120925 onwards this is a field on clif_item_equip/normal */
 #if PACKETVER >= 20111122 && PACKETVER < 20120925
-	for( int32 i = 0; i < MAX_INVENTORY; i++ ){
+	for( int32 i = 0; i < sd->status.inventory_slots; i++ ){
 		if( sd->inventory.u.items_inventory[i].nameid == 0 || sd->inventory_data[i] == nullptr )
 			continue;
 
@@ -4472,7 +4472,7 @@ void clif_useitemack( map_session_data *sd, int32 index, int32 amount, bool ok )
 		return;
 	}
 
-	if( index < 0 || index >= MAX_INVENTORY || sd->inventory.u.items_inventory[index].nameid == 0 || sd->inventory_data[index] == nullptr ){
+	if( index < 0 || index >= sd->status.inventory_slots || sd->inventory.u.items_inventory[index].nameid == 0 || sd->inventory_data[index] == nullptr ){
 		return;
 	}
 
@@ -4771,7 +4771,7 @@ void clif_tradeadditem( map_session_data* sd, map_session_data* tsd, int32 index
 	if( index ){
 		index = server_index( index );
 
-		if( index >= MAX_INVENTORY || sd->inventory.u.items_inventory[index].nameid == 0 || sd->inventory_data[index] == nullptr ){
+		if( index >= sd->status.inventory_slots || sd->inventory.u.items_inventory[index].nameid == 0 || sd->inventory_data[index] == nullptr ){
 			return;
 		}
 
@@ -7033,17 +7033,17 @@ void clif_use_card(map_session_data *sd,int32 idx)
 	int32 fd=sd->fd;
 
 	nullpo_retv(sd);
-	if (idx < 0 || idx >= MAX_INVENTORY) //Crash-fix from bad packets.
+	if (idx < 0 || idx >= sd->status.inventory_slots) //Crash-fix from bad packets.
 		return;
 
 	if (!sd->inventory_data[idx] || sd->inventory_data[idx]->type != IT_CARD)
 		return; //Avoid parsing invalid item indexes (no card/no item)
 
 	ep=sd->inventory_data[idx]->equip;
-	WFIFOHEAD(fd,MAX_INVENTORY * 2 + 4);
+	WFIFOHEAD(fd, sd->status.inventory_slots * 2 + 4);
 	WFIFOW(fd,0)=0x17b;
 
-	for(i=c=0;i<MAX_INVENTORY;i++){
+	for(i=c=0;i< sd->status.inventory_slots;i++){
 		int32 j;
 
 		if(sd->inventory_data[i] == nullptr)
@@ -7111,9 +7111,9 @@ void clif_item_identify_list(map_session_data *sd)
 
 	fd=sd->fd;
 
-	WFIFOHEAD(fd,MAX_INVENTORY * 2 + 4);
+	WFIFOHEAD(fd, sd->status.inventory_slots * 2 + 4);
 	WFIFOW(fd,0)=0x177;
-	for(i=c=0;i<MAX_INVENTORY;i++){
+	for(i=c=0;i<sd->status.inventory_slots;i++){
 		if(sd->inventory.u.items_inventory[i].nameid > 0 && !sd->inventory.u.items_inventory[i].identify){
 			WFIFOW(fd,c*2+4)=client_index(i);
 			c++;
@@ -7155,7 +7155,7 @@ void clif_item_repair_list( map_session_data& sd, map_session_data& dstsd, uint1
 
 	size_t c = 0;
 
-	for( size_t i = 0; i < MAX_INVENTORY; i++ ){
+	for( size_t i = 0; i < sd.status.inventory_slots; i++ ){
 		if( dstsd.inventory.u.items_inventory[i].nameid > 0 && dstsd.inventory.u.items_inventory[i].attribute != 0 && !itemdb_ishatched_egg( &dstsd.inventory.u.items_inventory[i] ) ){ // && skill_can_repair(sd,nameid)){
 			p->items[c].index = static_cast<decltype( p->items[0].index )>( i );
 			p->items[c].itemId = client_nameid( dstsd.inventory.u.items_inventory[i].nameid );
@@ -7231,7 +7231,7 @@ void clif_item_refine_list( map_session_data& sd ){
 #endif
 
 	int32 count = 0;
-	for( int32 i = 0; i < MAX_INVENTORY; i++ ){
+	for( int32 i = 0; i < sd.status.inventory_slots; i++ ){
 		if( sd.inventory.u.items_inventory[i].nameid > 0 && sd.inventory.u.items_inventory[i].refine < skill_lv &&
 			sd.inventory_data[i] != nullptr && sd.inventory_data[i]->type == IT_WEAPON &&
 			sd.inventory.u.items_inventory[i].identify && sd.inventory_data[i]->weapon_level >= 1 &&
@@ -8204,9 +8204,9 @@ void clif_sendegg(map_session_data *sd)
 		clif_displaymessage(fd, msg_txt(sd,666));
 		return;
 	}
-	WFIFOHEAD(fd, MAX_INVENTORY * 2 + 4);
+	WFIFOHEAD(fd, sd->status.inventory_slots * 2 + 4);
 	WFIFOW(fd,0)=0x1a6;
-	for(i=0,n=0;i<MAX_INVENTORY;i++){
+	for(i=0,n=0;i<sd->status.inventory_slots;i++){
 		if(sd->inventory.u.items_inventory[i].nameid == 0 || sd->inventory_data[i] == nullptr ||
 		   sd->inventory_data[i]->type != IT_PETEGG ||
 		   sd->inventory.u.items_inventory[i].amount <= 0)
@@ -12029,7 +12029,7 @@ void clif_parse_UseItem(int32 fd, map_session_data *sd)
 		sd->idletime_mer = last_tick;
 	n = RFIFOW(fd,packet_db[RFIFOW(fd,0)].pos[0])-2;
 
-	if(n <0 || n >= MAX_INVENTORY)
+	if(n <0 || n >= sd->status.inventory_slots)
 		return;
 	if (!pc_useitem(sd,n))
 		clif_useitemack(sd,n,0,false); //Send an empty ack packet or the client gets stuck.
@@ -12049,7 +12049,7 @@ void clif_parse_EquipItem( int32 fd, map_session_data* sd ){
 
 	uint16 index = server_index( p->index );
 
-	if( index >= MAX_INVENTORY ){
+	if( index >= sd->status.inventory_slots){
 		return;
 	}
 
@@ -13366,7 +13366,7 @@ void clif_parse_ItemIdentify(int32 fd,map_session_data *sd) {
 	// - Invalid item index
 	// - Invalid item ID or item doesn't exist
 	// - Item is already identified
-	if ( idx >= MAX_INVENTORY ||
+	if ( idx >= sd->status.inventory_slots ||
 		sd->inventory.u.items_inventory[idx].nameid == 0 || sd->inventory_data[idx] == nullptr ||
 		sd->inventory.u.items_inventory[idx].identify) {// cancel pressed
 			sd->state.workinprogress = WIP_DISABLE_NONE;
@@ -13440,7 +13440,7 @@ void clif_parse_UseCard(int32 fd,map_session_data *sd)
 	const PACKET_CZ_REQ_ITEMCOMPOSITION_LIST* p = reinterpret_cast<PACKET_CZ_REQ_ITEMCOMPOSITION_LIST*>( RFIFOP( fd, 0 ) );
 	uint16 idx = server_index( p->index );
 
-	if( idx >= MAX_INVENTORY ){
+	if( idx >= sd->status.inventory_slots){
 		return;
 	}
 
@@ -13463,11 +13463,11 @@ void clif_parse_InsertCard(int32 fd,map_session_data *sd)
 	uint16 card_idx = server_index( p->index_card );
 	uint16 equip_idx = server_index( p->index_equip );
 
-	if( card_idx >= MAX_INVENTORY ){
+	if( card_idx >= sd->status.inventory_slots){
 		return;
 	}
 
-	if( equip_idx >= MAX_INVENTORY ){
+	if( equip_idx >= sd->status.inventory_slots){
 		return;
 	}
 
@@ -13558,7 +13558,7 @@ void clif_parse_MoveToKafra(int32 fd, map_session_data *sd)
 
 	item_index = RFIFOW(fd,info->pos[0])-2;
 	item_amount = RFIFOL(fd,info->pos[1]);
-	if (item_index < 0 || item_index >= MAX_INVENTORY || item_amount < 1)
+	if (item_index < 0 || item_index >= sd->status.inventory_slots || item_amount < 1)
 		return;
 	if( sd->inventory.u.items_inventory[item_index].equipSwitch ){
 		clif_msg( *sd, MSI_SWAP_EQUIPITEM_UNREGISTER_FIRST );
@@ -16668,7 +16668,7 @@ void clif_parse_Mail_setattach(int32 fd, map_session_data *sd){
 
 	if( !chrif_isconnected() )
 		return;
-	if (amount < 0 || server_index(idx) >= MAX_INVENTORY)
+	if (amount < 0 || server_index(idx) >= sd->status.inventory_slots)
 		return;
 
 	if (sd->inventory_data[server_index(idx)] == nullptr)
@@ -16914,7 +16914,7 @@ void clif_parse_Auction_setitem(int32 fd, map_session_data *sd){
 	if( sd->auction.amount > 0 )
 		sd->auction.amount = 0;
 
-	if( idx < 0 || idx >= MAX_INVENTORY ) {
+	if( idx < 0 || idx >= sd->status.inventory_slots) {
 		ShowWarning("Character %s trying to set invalid item index in auctions.\n", sd->status.name);
 		return;
 	}
@@ -19644,7 +19644,7 @@ void clif_magicdecoy_list( map_session_data& sd, uint16 skill_lv, int16 x, int16
 	p->packetLength = sizeof( *p );
 
 	size_t count = 0;
-	for( size_t i = 0; i < MAX_INVENTORY; i++ ){
+	for( size_t i = 0; i < sd.status.inventory_slots; i++ ){
 		if( itemdb_group.item_exists( IG_ELEMENT, sd.inventory.u.items_inventory[i].nameid ) ){
 			p->items[count].itemId = client_nameid( sd.inventory.u.items_inventory[i].nameid );
 			p->packetLength += static_cast<decltype(p->packetLength)>( sizeof( p->items[0] ) );
@@ -19673,7 +19673,7 @@ void clif_poison_list( map_session_data& sd, uint16 skill_lv ){
 	p->packetLength = sizeof( *p );
 
 	size_t count = 0;
-	for( size_t i = 0; i < MAX_INVENTORY; i++ ){
+	for( size_t i = 0; i < sd.status.inventory_slots; i++ ){
 		if( itemdb_group.item_exists( IG_POISON, sd.inventory.u.items_inventory[i].nameid ) ){
 			p->items[count].itemId = client_nameid( sd.inventory.u.items_inventory[i].nameid );
 			p->packetLength += static_cast<decltype(p->packetLength)>( sizeof( p->items[0] ) );
@@ -19816,7 +19816,7 @@ void clif_parse_MoveItem( int32 fd, map_session_data* sd ){
 
 	uint16 index = server_index( p->index );
 
-	if( index >= MAX_INVENTORY ){
+	if( index >= sd->status.inventory_slots){
 		return;
 	}
 
@@ -21082,8 +21082,8 @@ static bool clif_merge_item_has_pair(map_session_data *sd, struct item *it) {
 
 	nullpo_retr(false, sd);
 
-	ARR_FIND(0, MAX_INVENTORY, i, (it_ = &sd->inventory.u.items_inventory[i]) && it->nameid == it_->nameid && it->bound == it_->bound && memcmp(it_, it, sizeof(struct item)) != 0);
-	if (i < MAX_INVENTORY)
+	ARR_FIND(0, sd->status.inventory_slots, i, (it_ = &sd->inventory.u.items_inventory[i]) && it->nameid == it_->nameid && it->bound == it_->bound && memcmp(it_, it, sizeof(struct item)) != 0);
+	if (i < sd->status.inventory_slots)
 		return true;
 
 	return false;
@@ -21125,7 +21125,7 @@ void clif_merge_item_open( map_session_data& sd ){
 	int32 n = 0;
 
 	// Get entries
-	for( int32 i = 0; i < MAX_INVENTORY; i++ ){
+	for( int32 i = 0; i < sd.status.inventory_slots; i++ ){
 		struct item* it = &sd.inventory.u.items_inventory[i];
 
 		if( !clif_merge_item_check( sd.inventory_data[i], it ) ){
@@ -21167,7 +21167,7 @@ void clif_parse_merge_item_req( int32 fd, map_session_data* sd ){
 
 	uint16 idx_main = server_index( p->indices[0] );
 
-	if( idx_main >= MAX_INVENTORY ){
+	if( idx_main >= sd->status.inventory_slots){
 		return;
 	}
 
@@ -21182,7 +21182,7 @@ void clif_parse_merge_item_req( int32 fd, map_session_data* sd ){
 	for( int32 i = 1; i < count; i++ ){
 		uint16 idx = server_index( p->indices[i] );
 
-		if( idx >= MAX_INVENTORY ){
+		if( idx >= sd->status.inventory_slots){
 			return;
 		}
 
@@ -21354,7 +21354,7 @@ void clif_parse_Oneclick_Itemidentify(int32 fd, map_session_data *sd) {
 	// - Invalid item index
 	// - Invalid item ID or item doesn't exist
 	// - Item is already identified
-	if (idx < 0 || idx >= MAX_INVENTORY ||
+	if (idx < 0 || idx >= sd->status.inventory_slots ||
 		sd->inventory.u.items_inventory[idx].nameid == 0 || sd->inventory_data[idx] == nullptr ||
 		sd->inventory.u.items_inventory[idx].identify)
 			return;
@@ -22195,7 +22195,7 @@ void clif_parse_equipswitch_remove( int32 fd, map_session_data* sd ){
 	}
 
 	// Check if the index is valid
-	if( index >= MAX_INVENTORY ){
+	if( index >= sd->status.inventory_slots){
 		return;
 	}
 
@@ -22234,7 +22234,7 @@ void clif_parse_equipswitch_add( int32 fd, map_session_data* sd ){
 		return;
 	}
 
-	if( index >= MAX_INVENTORY || sd->inventory_data[index] == nullptr ){
+	if( index >= sd->status.inventory_slots || sd->inventory_data[index] == nullptr ){
 		return;
 	}
 
@@ -22310,7 +22310,7 @@ void clif_parse_equipswitch_request_single( int32 fd, map_session_data* sd ){
 	}
 
 	// Check if the index is valid
-	if( index >= MAX_INVENTORY ){
+	if( index >= sd->status.inventory_slots){
 		return;
 	}
 
@@ -22546,7 +22546,7 @@ void clif_parse_refineui_add( int32 fd, map_session_data* sd ){
 	}
 
 	// Check if the index is valid
-	if( index >= MAX_INVENTORY ){
+	if( index >= sd->status.inventory_slots){
 		return;
 	}
 
@@ -22573,7 +22573,7 @@ void clif_parse_refineui_refine( int32 fd, map_session_data* sd ){
 	}
 
 	// Check if the index is valid
-	if( index >= MAX_INVENTORY ){
+	if( index >= sd->status.inventory_slots){
 		return;
 	}
 
@@ -23537,7 +23537,7 @@ void clif_parse_laphine_synthesis( int32 fd, map_session_data* sd ){
 	for( size_t i = 0; i < count; i++ ){
 		int16 index = server_index( p->items[i].index );
 
-		if( index >= MAX_INVENTORY ){
+		if( index >= sd->status.inventory_slots){
 			return;
 		}
 
@@ -23691,7 +23691,7 @@ void clif_parse_laphine_upgrade( int32 fd, map_session_data* sd ){
 
 	uint16 index = server_index( p->index );
 
-	if( index >= MAX_INVENTORY ){
+	if( index >= sd->status.inventory_slots){
 		return;
 	}
 
@@ -23877,7 +23877,7 @@ void clif_parse_enchantgrade_add( int32 fd, map_session_data* sd ){
 
 	uint16 index = server_index( p->index );
 
-	if( index >= MAX_INVENTORY || sd->inventory_data[index] == nullptr ){
+	if( index >= sd->status.inventory_slots || sd->inventory_data[index] == nullptr ){
 		return;
 	}
 
@@ -23971,7 +23971,7 @@ void clif_parse_enchantgrade_start( int32 fd, map_session_data* sd ){
 
 	uint16 index = server_index( p->index );
 
-	if( index >= MAX_INVENTORY || sd->inventory_data[index] == nullptr ){
+	if( index >= sd->status.inventory_slots || sd->inventory_data[index] == nullptr ){
 		return;
 	}
 
@@ -24249,7 +24249,7 @@ void clif_parse_item_reform_start( int32 fd, map_session_data* sd ){
 
 	uint16 index = server_index( p->index );
 
-	if( index >= MAX_INVENTORY ){
+	if( index >= sd->status.inventory_slots){
 		return;
 	}
 
@@ -24473,7 +24473,7 @@ void clif_parse_enchantwindow_general( int32 fd, map_session_data* sd ){
 
 	uint16 index = server_index( p->index );
 
-	if( index >= MAX_INVENTORY ){
+	if( index >= sd->status.inventory_slots){
 		return;
 	}
 
@@ -24602,7 +24602,7 @@ void clif_parse_enchantwindow_perfect( int32 fd, map_session_data* sd ){
 
 	uint16 index = server_index( p->index );
 
-	if( index >= MAX_INVENTORY ){
+	if( index >= sd->status.inventory_slots){
 		return;
 	}
 
@@ -24702,7 +24702,7 @@ void clif_parse_enchantwindow_upgrade( int32 fd, map_session_data* sd ){
 
 	uint16 index = server_index( p->index );
 
-	if( index >= MAX_INVENTORY ){
+	if( index >= sd->status.inventory_slots){
 		return;
 	}
 
@@ -24799,7 +24799,7 @@ void clif_parse_enchantwindow_reset( int32 fd, map_session_data* sd ){
 
 	uint16 index = server_index( p->index );
 
-	if( index >= MAX_INVENTORY ){
+	if( index >= sd->status.inventory_slots){
 		return;
 	}
 
@@ -24923,7 +24923,7 @@ void clif_parse_itempackage_select( int32 fd, map_session_data* sd ){
 
 	uint16 index = server_index( p->index );
 
-	if( index >= MAX_INVENTORY ){
+	if( index >= sd->status.inventory_slots){
 		return;
 	}
 

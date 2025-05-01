@@ -3649,7 +3649,7 @@ bool status_calc_weight(map_session_data *sd, enum e_status_calc_weight_opt flag
 	if (flag&CALCWT_ITEM) {
 		sd->weight = 0; // Reset current weight
 
-		for(i = 0; i < MAX_INVENTORY; i++) {
+		for(i = 0; i < sd->status.inventory_slots; i++) {
 			if (!sd->inventory.u.items_inventory[i].nameid || sd->inventory_data[i] == nullptr)
 				continue;
 			sd->weight += sd->inventory_data[i]->weight * sd->inventory.u.items_inventory[i].amount;

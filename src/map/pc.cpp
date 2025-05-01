@@ -1131,7 +1131,7 @@ void pc_inventory_rentals(map_session_data *sd)
 	int32 i, c = 0;
 	uint32 next_tick = UINT_MAX;
 
-	for( i = 0; i < MAX_INVENTORY; i++ ) { // Check for Rentals on Inventory
+	for( i = 0; i < sd->status.inventory_slots; i++ ) { // Check for Rentals on Inventory
 		if( sd->inventory.u.items_inventory[i].nameid == 0 )
 			continue; // Nothing here
 		if( sd->inventory.u.items_inventory[i].expire_time == 0 )
@@ -1429,7 +1429,7 @@ int32 pc_equippoint(map_session_data *sd,int32 n){
  * @param sd : player session
  */
 void pc_setinventorydata( map_session_data& sd ){
-	for( size_t i = 0; i < MAX_INVENTORY; i++ ){
+	for( size_t i = 0; i < sd.status.inventory_slots; i++ ){
 		t_itemid id = sd.inventory.u.items_inventory[i].nameid;
 
 		if( id != 0 ){
@@ -1501,7 +1501,7 @@ void pc_setequipindex(map_session_data *sd)
 		sd->equip_switch_index[i] = -1;
 	}
 
-	for (i = 0; i < MAX_INVENTORY; i++) {
+	for (i = 0; i < sd->status.inventory_slots; i++) {
 		if (sd->inventory.u.items_inventory[i].nameid == 0)
 			continue;
 		if (sd->inventory.u.items_inventory[i].equip) {
@@ -5495,10 +5495,10 @@ int32 pc_insert_card(map_session_data* sd, int32 idx_card, int32 idx_equip)
 {
 	nullpo_ret(sd);
 
-	if (idx_equip < 0 || idx_equip >= MAX_INVENTORY) {
+	if (idx_equip < 0 || idx_equip >= sd->status.inventory_slots) {
 		return 0;
 	}
-	if (idx_card < 0 || idx_card >= MAX_INVENTORY) {
+	if (idx_card < 0 || idx_card >= sd->status.inventory_slots) {
 		return 0;
 	}
 
@@ -5564,7 +5564,7 @@ int32 pc_identifyall(map_session_data *sd, bool identify_item)
 {
 	int32 unidentified_count = 0;
 
-	for (int32 i = 0; i < MAX_INVENTORY; i++) {
+	for (int32 i = 0; i < sd->status.inventory_slots; i++) {
 		if (sd->inventory.u.items_inventory[i].nameid > 0 && sd->inventory.u.items_inventory[i].identify != 1) {
 			if (identify_item == true) {
 				sd->inventory.u.items_inventory[i].identify = 1;
@@ -5645,7 +5645,7 @@ char pc_checkadditem(map_session_data *sd, t_itemid nameid, int32 amount)
 	if (data->flag.guid)
 		return CHKADDITEM_NEW;
 
-	for(i=0;i<MAX_INVENTORY;i++){
+	for(i=0;i<sd->status.inventory_slots;i++){
 		// FIXME: This does not consider the checked item's cards, thus could check a wrong slot for stackability.
 		if(sd->inventory.u.items_inventory[i].nameid == nameid){
 			if( amount > MAX_AMOUNT - sd->inventory.u.items_inventory[i].amount || ( data->stack.inventory && amount > data->stack.amount - sd->inventory.u.items_inventory[i].amount ) )
@@ -5867,8 +5867,8 @@ int16 pc_search_inventory(map_session_data *sd, t_itemid nameid) {
 	int16 i;
 	nullpo_retr(-1, sd);
 
-	ARR_FIND( 0, MAX_INVENTORY, i, sd->inventory.u.items_inventory[i].nameid == nameid && (sd->inventory.u.items_inventory[i].amount > 0 || nameid == 0) );
-	return ( i < MAX_INVENTORY ) ? i : -1;
+	ARR_FIND( 0, sd->status.inventory_slots, i, sd->inventory.u.items_inventory[i].nameid == nameid && (sd->inventory.u.items_inventory[i].amount > 0 || nameid == 0) );
+	return ( i < sd->status.inventory_slots) ? i : -1;
 }
 
 /** Attempt to add a new item to player inventory
@@ -5915,7 +5915,7 @@ enum e_additem_result pc_additem(map_session_data *sd,struct item *item,int32 am
 
 	// Stackable | Non Rental
 	if( itemdb_isstackable2(id) && item->expire_time == 0 ) {
-		for( i = 0; i < MAX_INVENTORY; i++ ) {
+		for( i = 0; i < sd->status.inventory_slots; i++ ) {
 			if( sd->inventory.u.items_inventory[i].nameid == item->nameid &&
 				sd->inventory.u.items_inventory[i].bound == item->bound &&
 				sd->inventory.u.items_inventory[i].expire_time == 0 &&
@@ -5933,10 +5933,10 @@ enum e_additem_result pc_additem(map_session_data *sd,struct item *item,int32 am
 			}
 		}
 	}else{
-		i = MAX_INVENTORY;
+		i = sd->status.inventory_slots;
  	}
 
-	if (i >= MAX_INVENTORY) {
+	if (i >= sd->status.inventory_slots) {
 		i = pc_search_inventory(sd,0);
 		if( i < 0 )
 			return ADDITEM_OVERITEM;
@@ -6037,7 +6037,7 @@ bool pc_dropitem(map_session_data *sd,int32 n,int32 amount)
 {
 	nullpo_retr(1, sd);
 
-	if(n < 0 || n >= MAX_INVENTORY)
+	if(n < 0 || n >= sd->status.inventory_slots)
 		return false;
 
 	if(amount <= 0)
@@ -6564,7 +6564,7 @@ void pc_putitemtocart(map_session_data *sd,int32 idx,int32 amount)
 {
 	nullpo_retv(sd);
 
-	if (idx < 0 || idx >= MAX_INVENTORY) //Invalid index check [Skotlex]
+	if (idx < 0 || idx >= sd->status.inventory_slots) //Invalid index check [Skotlex]
 		return;
 
 	struct item *item_data = &sd->inventory.u.items_inventory[idx];
@@ -6648,7 +6648,7 @@ bool pc_getitemfromcart(map_session_data *sd,int32 idx,int32 amount)
 int32 pc_bound_chk(TBL_PC *sd,enum bound_type type,int32 *idxlist)
 {
 	int32 i = 0, j = 0;
-	for(i = 0; i < MAX_INVENTORY; i++) {
+	for(i = 0; i < sd->status.inventory_slots; i++) {
 		if(sd->inventory.u.items_inventory[i].nameid > 0 && sd->inventory.u.items_inventory[i].amount > 0 && sd->inventory.u.items_inventory[i].bound == type) {
 			idxlist[j] = i;
 			j++;
@@ -9960,7 +9960,7 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 			if(id == -1){
 				int32 eq_num=0,eq_n[MAX_INVENTORY];
 				memset(eq_n,0,sizeof(eq_n));
-				for(i=0;i<MAX_INVENTORY;i++) {
+				for(i=0;i<sd->status.inventory_slots;i++) {
 					if( sd->inventory.u.items_inventory[i].nameid == 0 ){
 						continue;
 					}
@@ -9987,7 +9987,7 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 				}
 			}
 			else if(id > 0) {
-				for(i=0;i<MAX_INVENTORY;i++){
+				for(i=0;i<sd->status.inventory_slots;i++){
 					if(sd->inventory.u.items_inventory[i].nameid == id
 						&& pc_candrop( sd, &sd->inventory.u.items_inventory[i] )
 						&& rnd()%10000 < per
@@ -11909,7 +11909,7 @@ bool pc_equipitem(map_session_data *sd,int16 n,int32 req_pos,bool equipswitch)
 
 	nullpo_retr(false,sd);
 
-	if( n < 0 || n >= MAX_INVENTORY ) {
+	if( n < 0 || n >= sd->status.inventory_slots) {
 		if( equipswitch ){
 			clif_equipswitch_add( sd, n, req_pos, ITEM_EQUIP_ACK_FAIL );
 		}else{
@@ -12290,7 +12290,7 @@ bool pc_unequipitem(map_session_data *sd, int32 n, int32 flag) {
 
 	nullpo_retr(false,sd);
 
-	if (n < 0 || n >= MAX_INVENTORY) {
+	if (n < 0 || n >= sd->status.inventory_slots) {
 		clif_unequipitemack(*sd,0,0,false);
 		return false;
 	}
@@ -12509,7 +12509,7 @@ void pc_checkitem(map_session_data *sd) {
 
 	pc_check_available_item(sd, ITMCHK_NONE); // Check for invalid(ated) items.
 
-	for( i = 0; i < MAX_INVENTORY; i++ ) {
+	for( i = 0; i < sd->status.inventory_slots; i++ ) {
 		it = &sd->inventory.u.items_inventory[i];
 
 		if( it->nameid == 0 )
@@ -12529,7 +12529,7 @@ void pc_checkitem(map_session_data *sd) {
 		}
 	}
 
-	for( i = 0; i < MAX_INVENTORY; i++ ) {
+	for( i = 0; i < sd->status.inventory_slots; i++ ) {
 		it = &sd->inventory.u.items_inventory[i];
 
 		if( it->nameid == 0 )
@@ -12574,7 +12574,7 @@ void pc_check_available_item(map_session_data *sd, uint8 type)
 	nullpo_retv(sd);
 
 	if (battle_config.item_check&ITMCHK_INVENTORY && type&ITMCHK_INVENTORY) { // Check for invalid(ated) items in inventory.
-		for(i = 0; i < MAX_INVENTORY; i++) {
+		for(i = 0; i < sd->status.inventory_slots; i++) {
 			nameid = sd->inventory.u.items_inventory[i].nameid;
 
 			if (!nameid)
@@ -12747,7 +12747,7 @@ bool pc_divorce(map_session_data *sd)
 	// Both players online, lets do the divorce manually
 	sd->status.partner_id = 0;
 	p_sd->status.partner_id = 0;
-	for( i = 0; i < MAX_INVENTORY; i++ )
+	for( i = 0; i < sd->status.inventory_slots; i++ )
 	{
 		if( sd->inventory.u.items_inventory[i].nameid == WEDDING_RING_M || sd->inventory.u.items_inventory[i].nameid == WEDDING_RING_F )
 			pc_delitem(sd, i, 1, 0, 0, LOG_TYPE_OTHER);

@@ -1186,7 +1186,7 @@ int32 pet_select_egg(map_session_data *sd,int16 egg_index)
 {
 	nullpo_ret(sd);
 
-	if(egg_index < 0 || egg_index >= MAX_INVENTORY)
+	if(egg_index < 0 || egg_index >= sd->status.inventory_slots)
 		return 0; //Forged packet!
 
 	if(sd->state.trading)	//The player have trade in progress.
@@ -2198,7 +2198,7 @@ TIMER_FUNC(pet_skill_support_timer){
  * @return index of egg in player's inventory or -1 if the egg is not found.
  */
 int32 pet_egg_search(map_session_data* sd, int32 pet_id) {
-	for (int32 i = 0; i < MAX_INVENTORY; i++) {
+	for (int32 i = 0; i < sd->status.inventory_slots; i++) {
 		if (sd->inventory.u.items_inventory[i].card[0] == CARD0_PET &&
 			pet_id == MakeDWord(sd->inventory.u.items_inventory[i].card[1], sd->inventory.u.items_inventory[i].card[2]))
 			return i;
@@ -2227,7 +2227,7 @@ bool pet_evolution_requirements_check(map_session_data *sd, int16 pet_id) {
 
 	for (const auto &requirement : evo_data->second->requirements) {
 		int32 count = 0;
-		for (int32 i = 0; i < MAX_INVENTORY; i++) {
+		for (int32 i = 0; i < sd->status.inventory_slots; i++) {
 			if (sd->inventory.u.items_inventory[i].nameid == requirement.first) {
 				count += sd->inventory.u.items_inventory[i].amount;
 			}
@@ -2281,7 +2281,7 @@ void pet_evolution(map_session_data *sd, int16 pet_id) {
 
 	for (const auto &requirement : pet_db_ptr->evolution_data[pet_id]->requirements) {
 		int32 count = requirement.second;
-		for (int32 i = 0; i < MAX_INVENTORY; i++) {
+		for (int32 i = 0; i < sd->status.inventory_slots; i++) {
 			item *slot = &sd->inventory.u.items_inventory[i];
 			int32 deduction = min(requirement.second, slot->amount);
 			if (slot->nameid == requirement.first) {

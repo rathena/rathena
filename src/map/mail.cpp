@@ -44,7 +44,7 @@ int32 mail_removeitem(map_session_data *sd, int16 flag, int32 idx, int32 amount)
 
 	idx -= 2;
 
-	if( idx < 0 || idx >= MAX_INVENTORY )
+	if( idx < 0 || idx >= sd->status.inventory_slots)
 			return false;
 	if( amount <= 0 || amount > sd->inventory.u.items_inventory[idx].amount )
 			return false;
@@ -186,7 +186,7 @@ enum mail_attach_result mail_setitem(map_session_data *sd, int16 idx, uint32 amo
 
 		idx -= 2;
 
-		if( idx < 0 || idx >= MAX_INVENTORY || sd->inventory_data[idx] == nullptr )
+		if( idx < 0 || idx >= sd->status.inventory_slots || sd->inventory_data[idx] == nullptr )
 			return MAIL_ATTACH_ERROR;
 
 		if (itemdb_ishatched_egg(&sd->inventory.u.items_inventory[idx]))
