@@ -17886,7 +17886,7 @@ int32 skill_unit_onleft(uint16 skill_id, struct block_list *bl, t_tick tick)
 		case DC_DONTFORGETME:
 		case DC_FORTUNEKISS:
 		case DC_SERVICEFORYOU:
-			if (bl->type == BL_PC && sce && (battle_config.refresh_song == 1 || sce->val4 == 0))
+			if (bl->type == BL_PC && sce && sce->val4 == 0)
 			{
 				delete_timer(sce->timer, status_change_timer);
 				//NOTE: It'd be nice if we could get the skill_lv for a more accurate extra time, but alas...
