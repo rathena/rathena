@@ -3280,7 +3280,6 @@ static bool is_attack_hitting(struct Damage* wd, struct block_list *src, struct 
 			case NPC_TELEKINESISATTACK:
 			case NPC_UNDEADATTACK:
 			case NPC_CHANGEUNDEAD:
-			case NPC_EARTHQUAKE:
 			case NPC_POISON:
 			case NPC_BLINDATTACK:
 			case NPC_SILENCEATTACK:
@@ -8196,13 +8195,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				// Fire and undead units hit by firewall cannot be stopped for 2 seconds
 				if (unit_data* ud = unit_bl2ud(target); ud != nullptr)
 					ud->endure_tick = gettick() + 2000;
-				break;
 			}
-			[[fallthrough]];
-		case NJ_KAENSIN:
-		case PR_SANCTUARY:
-			// TODO: This code is a temporary workaround because right now we stop monsters for their dmotion which is not official
-			ad.dmotion = 1;
 			break;
 	}
 
@@ -8277,10 +8270,22 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					mflag &= ~NPC_EARTHQUAKE_FLAG; // Remove before NK_SPLASHSPLIT check
 				}
 
-				if (src->type == BL_PC)
+				// TODO: This code is only accurate for pre-renewal
+				// In renewal, monsters should use NPC_EARTHQUAKE_K instead, but it's not implemented yet
+				if (sd != nullptr) {
+#ifdef RENEWAL
 					ad.damage = sstatus->str * 2 + battle_calc_weapon_attack(src, target, skill_id, skill_lv, mflag).damage;
-				else
+#else
+					ad.damage = sd->battle_status.batk + sd->battle_status.rhw.atk;
+#endif
+				}
+				else {
 					ad.damage = battle_calc_base_damage(src, sstatus, &sstatus->rhw, sc, tstatus->size, 0);
+#ifndef RENEWAL
+					if (sc != nullptr)
+						MATK_RATE(battle_get_atkpercent(*src, skill_id, *sc));
+#endif
+				}
 
 				MATK_RATE(200 + 100 * skill_lv + 100 * (skill_lv / 2) + ((skill_lv > 4) ? 100 : 0));
 
@@ -11576,8 +11581,8 @@ static const struct _battle_data {
 	{ "item_auto_get",                      &battle_config.item_auto_get,                   0,      0,      1,              },
 	{ "first_attack_loot_bonus",            &battle_config.first_attack_loot_bonus,         30,     0,      100,            },
 	{ "item_first_get_time",                &battle_config.item_first_get_time,             3000,   0,      INT_MAX,        },
-	{ "item_second_get_time",               &battle_config.item_second_get_time,            1000,   0,      INT_MAX,        },
-	{ "item_third_get_time",                &battle_config.item_third_get_time,             1000,   0,      INT_MAX,        },
+	{ "item_second_get_time",               &battle_config.item_second_get_time,            2000,   0,      INT_MAX,        },
+	{ "item_third_get_time",                &battle_config.item_third_get_time,             2000,   0,      INT_MAX,        },
 	{ "mvp_item_first_get_time",            &battle_config.mvp_item_first_get_time,         10000,  0,      INT_MAX,        },
 	{ "mvp_item_second_get_time",           &battle_config.mvp_item_second_get_time,        10000,  0,      INT_MAX,        },
 	{ "mvp_item_third_get_time",            &battle_config.mvp_item_third_get_time,         2000,   0,      INT_MAX,        },
