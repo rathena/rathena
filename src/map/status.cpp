@@ -69,7 +69,7 @@ static uint16 status_calc_wis(struct block_list *, status_change *, int32);
 static uint16 status_calc_spl(struct block_list *, status_change *, int32);
 static uint16 status_calc_con(struct block_list *, status_change *, int32);
 static uint16 status_calc_crt(struct block_list *, status_change *, int32);
-static int32 status_calc_batk(struct block_list *,status_change *,int32);
+static int32 status_calc_batk(struct block_list *, status_change *, int32);
 static uint16 status_calc_watk(struct block_list *,status_change *,int32);
 static int16 status_calc_hit(struct block_list *,status_change *,int32);
 static int16 status_calc_critical(struct block_list *,status_change *,int32);
