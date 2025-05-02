@@ -5957,7 +5957,7 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 		// Calculate the difference of old and new base attack in the base status
 		// Then add the same difference to batk of battle status
 		temp = b_status->batk - status_base_atk(&bl, b_status, lv);
-		if (temp) {
+		if (temp != 0) {
 			status->batk += temp;
 #ifndef RENEWAL
 			if (bl.type != BL_PC)
