@@ -664,6 +664,8 @@ struct Battle_Config
 	int32 tarotcard_equal_chance; //Official or equal chance for each card
 	int32 change_party_leader_samemap;
 	int32 dispel_song; //Can songs be dispelled?
+	int32 refresh_song; // Can song durations be refreshed?
+	int32 refresh_song_icon; // Should the song icon duration be refreshed?
 	int32 guild_maprespawn_clones; // Should clones be killed by maprespawnguildid?
 	int32 hide_fav_sell;
 	int32 mail_daily_count;
