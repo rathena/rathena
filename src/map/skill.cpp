@@ -15785,7 +15785,7 @@ static int32 skill_dance_overlap_sub(struct block_list* bl, va_list ap)
 {
 	struct skill_unit* target = (struct skill_unit*)bl;
 	struct skill_unit* src = va_arg(ap, struct skill_unit*);
-	e_dance_overlap flag = va_arg(ap, e_dance_overlap);
+	e_dance_overlap flag = static_cast<e_dance_overlap>(va_arg(ap, int32));
 
 	if (src == nullptr || target == nullptr)
 		return 0;
