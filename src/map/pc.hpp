@@ -720,7 +720,7 @@ public:
 			int16 index, amount;
 		} item[10];
 		int32 zeny, weight;
-		uint8 item_count;
+		uint8 inventory_space;
 	} deal;
 
 	bool party_creating; // whether the char is requesting party creation
