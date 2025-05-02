@@ -3615,6 +3615,7 @@ Body:
     Flags:
       BlEffect: true
       DisplayPc: true
+      DisplayMob: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
@@ -6126,6 +6127,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       NoForcedEnd: true
+      SendVal1: true
     EndReturn:
       All_Riding: true
   - Status: Teargas_Sob

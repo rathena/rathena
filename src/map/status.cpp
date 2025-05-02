@@ -9937,139 +9937,6 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 }
 
 /**
- * Applies SC effect
- * @param bl: Source to apply effect
- * @param type: Status change (SC_*)
- * @param dval1~3: Depends on type of status change
- * Author: Ind
- */
-void status_display_add(struct block_list *bl, enum sc_type type, int32 dval1, int32 dval2, int32 dval3) {
-	struct eri *eri;
-	struct sc_display_entry **sc_display;
-	struct sc_display_entry ***sc_display_ptr;
-	struct sc_display_entry *entry;
-	int32 i;
-	unsigned char sc_display_count;
-	unsigned char *sc_display_count_ptr;
-
-	nullpo_retv(bl);
-
-	switch( bl->type ){
-		case BL_PC: {
-			map_session_data* sd = (map_session_data*)bl;
-
-			sc_display_ptr = &sd->sc_display;
-			sc_display_count_ptr = &sd->sc_display_count;
-			eri = pc_sc_display_ers;
-			}
-			break;
-		case BL_NPC: {
-			struct npc_data* nd = (struct npc_data*)bl;
-
-			sc_display_ptr = &nd->sc_display;
-			sc_display_count_ptr = &nd->sc_display_count;
-			eri = npc_sc_display_ers;
-			}
-			break;
-		default:
-			return;
-	}
-
-	sc_display = *sc_display_ptr;
-	sc_display_count = *sc_display_count_ptr;
-
-	ARR_FIND(0, sc_display_count, i, sc_display[i]->type == type);
-
-	if( i != sc_display_count ) {
-		sc_display[i]->val1 = dval1;
-		sc_display[i]->val2 = dval2;
-		sc_display[i]->val3 = dval3;
-		return;
-	}
-
-	entry = ers_alloc(eri, struct sc_display_entry);
-
-	entry->type = type;
-	entry->val1 = dval1;
-	entry->val2 = dval2;
-	entry->val3 = dval3;
-
-	RECREATE(sc_display, struct sc_display_entry *, ++sc_display_count);
-	sc_display[sc_display_count - 1] = entry;
-	*sc_display_ptr = sc_display;
-	*sc_display_count_ptr = sc_display_count;
-}
-
-/**
- * Removes SC effect
- * @param bl: Source to remove effect
- * @param type: Status change (SC_*)
- * Author: Ind
- */
-void status_display_remove(struct block_list *bl, enum sc_type type) {
-	struct eri *eri;
-	struct sc_display_entry **sc_display;
-	struct sc_display_entry ***sc_display_ptr;
-	int32 i;
-	unsigned char sc_display_count;
-	unsigned char *sc_display_count_ptr;
-
-	nullpo_retv(bl);
-
-	switch( bl->type ){
-		case BL_PC: {
-			map_session_data* sd = (map_session_data*)bl;
-
-			sc_display_ptr = &sd->sc_display;
-			sc_display_count_ptr = &sd->sc_display_count;
-			eri = pc_sc_display_ers;
-			}
-			break;
-		case BL_NPC: {
-			struct npc_data* nd = (struct npc_data*)bl;
-
-			sc_display_ptr = &nd->sc_display;
-			sc_display_count_ptr = &nd->sc_display_count;
-			eri = npc_sc_display_ers;
-			}
-			break;
-		default:
-			return;
-	}
-
-	sc_display = *sc_display_ptr;
-	sc_display_count = *sc_display_count_ptr;
-
-	ARR_FIND(0, sc_display_count, i, sc_display[i]->type == type);
-
-	if( i != sc_display_count ) {
-		int32 cursor;
-
-		ers_free(eri, sc_display[i]);
-		sc_display[i] = nullptr;
-
-		/* The all-mighty compact-o-matic */
-		for( i = 0, cursor = 0; i < sc_display_count; i++ ) {
-			if( sc_display[i] == nullptr )
-				continue;
-
-			if( i != cursor )
-				sc_display[cursor] = sc_display[i];
-
-			cursor++;
-		}
-
-		if( !(sc_display_count = cursor) ) {
-			aFree(sc_display);
-			sc_display = nullptr;
-		}
-
-		*sc_display_ptr = sc_display;
-		*sc_display_count_ptr = sc_display_count;
-	}
-}
-
-/**
  * Applies SC defense to a given status change
  * This function also determines whether or not the status change will be applied
  * @param src: Source of the status change [PC|MOB|HOM|MER|ELEM|NPC]
@@ -12958,24 +12825,10 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 		return 0;
 	}
 
-	/* [Ind] */
-	if (scdb->flag[SCF_DISPLAYPC] || scdb->flag[SCF_DISPLAYNPC]) {
-		int32 dval1 = 0, dval2 = 0, dval3 = 0;
-
-		switch (type) {
-			case SC_ALL_RIDING:
-				dval1 = 1;
-				break;
-			case SC_CLAN_INFO:
-				dval1 = val1;
-				dval2 = val2;
-				dval3 = val3;
-				break;
-			default: /* All others: just copy val1 */
-				dval1 = val1;
-				break;
-		}
-		status_display_add(bl,type,dval1,dval2,dval3);
+	// Save sc to display it again later
+	if (scdb->flag[SCF_DISPLAYALL] || (scdb->flag[SCF_DISPLAYPC] && bl->type == BL_PC || scdb->flag[SCF_DISPLAYNPC] && bl->type == BL_NPC || scdb->flag[SCF_DISPLAYMOB] && bl->type == BL_MOB)) {
+		if (!util::vector_exists(sc->sc_display, type))
+			sc->sc_display.push_back(type);
 	}
 
 	//SC that force player to stand if is sitting
@@ -13052,7 +12905,7 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 		calc_flag.reset(SCB_DYE);
 	}
 
-	if (!(flag&SCSTART_NOICON) && !(flag&SCSTART_LOADED && scdb->flag[SCF_DISPLAYPC] || scdb->flag[SCF_DISPLAYNPC])) {
+	if (!(flag&SCSTART_NOICON) && !(flag&SCSTART_LOADED)) {
 		int32 status_icon = scdb->icon;
 
 #if PACKETVER < 20151104
@@ -13378,8 +13231,8 @@ int32 status_change_end( struct block_list* bl, enum sc_type type, int32 tid ){
 		status_calc_state( *bl, *sc, scdb, false );
 	}
 
-	if (scdb->flag[SCF_DISPLAYPC] || scdb->flag[SCF_DISPLAYNPC])
-		status_display_remove(bl,type);
+	if (scdb->flag[SCF_DISPLAYALL] || (scdb->flag[SCF_DISPLAYPC] && bl->type == BL_PC || scdb->flag[SCF_DISPLAYNPC] && bl->type == BL_NPC || scdb->flag[SCF_DISPLAYMOB] && bl->type == BL_MOB))
+		util::vector_erase_if_exists(sc->sc_display, type);
 
 	map_session_data* sd = BL_CAST( BL_PC, bl );
 	view_data* vd = status_get_viewdata( bl );
