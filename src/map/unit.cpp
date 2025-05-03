@@ -75,6 +75,68 @@ static TIMER_FUNC(unit_attack_timer);
 static TIMER_FUNC(unit_walktoxy_timer);
 int32 unit_unattackable(struct block_list *bl);
 
+void view_data::update( map_session_data& sd, _look look ){
+	int32 val = sd.vd.look[look];
+
+	switch( look ){
+		case LOOK_WEAPON:
+			if( sd.sc.option&OPTION_COSTUME ){
+				val = 0;
+				break;
+			}else{
+				equip_index eqi = EQI_HAND_R;
+
+				if( sd.equip_index[eqi] >= 0 && sd.inventory_data[sd.equip_index[eqi]] != nullptr ){
+					const item_data& id = *sd.inventory_data[sd.equip_index[eqi]];
+
+					if( id.view_id != 0 ){
+						val = id.view_id;
+					}else{
+						val = id.nameid;
+					}
+				}else{
+					// Nothing equipped
+					val = 0;
+				}
+			}
+			break;
+
+		case LOOK_SHIELD:
+			if( sd.sc.option&OPTION_COSTUME ){
+				val = 0;
+				break;
+			}else{
+				equip_index eqi = EQI_HAND_L;
+
+				if( sd.equip_index[eqi] >= 0 && sd.inventory_data[sd.equip_index[eqi]] != nullptr ){
+					if( sd.equip_index[eqi] == sd.equip_index[EQI_HAND_R] ){
+						// 2-handed weapons or 2-handed shields are only sent on LOOK_WEAPON
+						val = 0;
+						break;
+					}
+
+					const item_data& id = *sd.inventory_data[sd.equip_index[eqi]];
+
+					if( id.view_id != 0 ){
+						val = id.view_id;
+					}else{
+						val = id.nameid;
+					}
+				}else{
+					// Nothing equipped
+					val = 0;
+				}
+			}
+			break;
+
+		default:
+			// Do nothing
+			return;
+	}
+
+	sd.vd.look[look] = val;
+}
+
 /**
  * Get the unit_data related to the bl
  * @param bl : Object to get the unit_data from
@@ -289,7 +351,7 @@ int32 unit_walktoxy_sub(struct block_list *bl)
 	}
 #if PACKETVER >= 20170726
 	// If this is a walking NPC and it will use a player sprite
-	else if( bl->type == BL_NPC && pcdb_checkid( status_get_viewdata( bl )->class_ ) ){
+	else if( bl->type == BL_NPC && pcdb_checkid( status_get_viewdata( bl )->look[LOOK_BASE] ) ){
 		// Respawn the NPC as player unit
 		unit_refresh( bl, true );
 	}
@@ -621,7 +683,7 @@ static TIMER_FUNC(unit_walktoxy_timer)
 	if (bl->x == ud->to_x && bl->y == ud->to_y) {
 #if PACKETVER >= 20170726
 		// If this was a walking NPC and it used a player sprite
-		if( bl->type == BL_NPC && pcdb_checkid( status_get_viewdata( bl )->class_ ) ){
+		if( bl->type == BL_NPC && pcdb_checkid( status_get_viewdata( bl )->look[LOOK_BASE] ) ){
 			// Respawn the NPC as NPC unit
 			unit_refresh( bl, false );
 		}

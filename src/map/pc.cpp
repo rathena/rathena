@@ -2430,7 +2430,8 @@ void pc_reg_received(map_session_data *sd)
 		clif_parse_LoadEndAck(sd->fd, sd);
 
 		if( pc_isinvisible( sd ) ){
-			sd->vd.class_ = JT_INVISIBLE;
+			// TODO: use setlook instead?
+			sd->vd.look[LOOK_BASE] = JT_INVISIBLE;
 			clif_displaymessage( sd->fd, msg_txt( sd, 11 ) ); // Invisible: On
 			// decrement the number of pvp players on the map
 			map_getmapdata( sd->bl.m )->users_pvp--;
@@ -10884,15 +10885,15 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 		pc_disguise(sd, 0);
 
 	status_set_viewdata(&sd->bl, job);
-	clif_changelook(&sd->bl,LOOK_BASE,sd->vd.class_); // move sprite update to prevent client crashes with incompatible equipment [Valaris]
+	clif_changelook(&sd->bl,LOOK_BASE,sd->vd.look[LOOK_BASE]); // move sprite update to prevent client crashes with incompatible equipment [Valaris]
 #if PACKETVER >= 20151001
-	clif_changelook(&sd->bl, LOOK_HAIR, sd->vd.hair_style); // Update player's head (only matters when switching to or from Doram)
+	clif_changelook(&sd->bl, LOOK_HAIR, sd->vd.look[LOOK_HAIR]); // Update player's head (only matters when switching to or from Doram)
 #endif
-	if(sd->vd.cloth_color)
-		clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->vd.cloth_color);
+	if(sd->vd.look[LOOK_CLOTHES_COLOR])
+		clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->vd.look[LOOK_CLOTHES_COLOR]);
 	/*
 	if(sd->vd.body_style)
-		clif_changelook(&sd->bl,LOOK_BODY2,sd->vd.body_style);
+		clif_changelook(&sd->bl,LOOK_BODY2,sd->vd.look[LOOK_BODY2]);
 	*/
 	//Update skill tree.
 	pc_calc_skilltree(sd);
@@ -11128,16 +11129,16 @@ void pc_setoption(map_session_data *sd,int32 type, int32 subtype)
 
 	if (new_look < 0) { //Restore normal look.
 		status_set_viewdata(&sd->bl, sd->status.class_);
-		new_look = sd->vd.class_;
+		new_look = sd->vd.look[LOOK_BASE];
 	}
 
 	// Stop attacking on new view change (to prevent wedding/santa attacks).
 	unit_stop_attack( &sd->bl );
 	clif_changelook(&sd->bl,LOOK_BASE,new_look);
-	if (sd->vd.cloth_color)
-		clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->vd.cloth_color);
-	if( sd->vd.body_style )
-		clif_changelook(&sd->bl,LOOK_BODY2,sd->vd.body_style);
+	if (sd->vd.look[LOOK_CLOTHES_COLOR])
+		clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->vd.look[LOOK_CLOTHES_COLOR]);
+	if( sd->vd.look[LOOK_BODY2] )
+		clif_changelook(&sd->bl,LOOK_BODY2,sd->vd.look[LOOK_BODY2]);
 	clif_skillinfoblock(sd); // Skill list needs to be updated after base change.
 }
 

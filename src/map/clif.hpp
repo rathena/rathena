@@ -1182,8 +1182,6 @@ void clif_GM_silence( map_session_data& sd, map_session_data& tsd, bool muted );
 void clif_disp_overhead_(struct block_list *bl, const char* mes, enum send_target flag);
 #define clif_disp_overhead(bl, mes) clif_disp_overhead_(bl, mes, AREA)
 
-void clif_get_weapon_view(map_session_data* sd, t_itemid *rhand, t_itemid *lhand);
-
 void clif_party_xy_remove(map_session_data *sd); //Fix for minimap [Kevin]
 void clif_gospel_info( map_session_data& sd, int32 type );
 void clif_feel_req(int32 fd, map_session_data *sd, uint16 skill_lv);

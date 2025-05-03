@@ -12992,15 +12992,15 @@ BUILDIN_FUNC(changebase)
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	if(!sd->disguise && vclass != sd->vd.class_) {
+	if(!sd->disguise && vclass != sd->vd.look[LOOK_BASE]) {
 		status_set_viewdata(&sd->bl, vclass);
 		//Updated client view. Base, Weapon and Cloth Colors.
-		clif_changelook(&sd->bl,LOOK_BASE,sd->vd.class_);
+		clif_changelook(&sd->bl,LOOK_BASE,sd->vd.look[LOOK_BASE]);
 		clif_changelook(&sd->bl,LOOK_WEAPON,sd->status.weapon);
-		if (sd->vd.cloth_color)
-			clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->vd.cloth_color);
-		if (sd->vd.body_style)
-			clif_changelook(&sd->bl,LOOK_BODY2,sd->vd.body_style);
+		if (sd->vd.look[LOOK_CLOTHES_COLOR])
+			clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->vd.look[LOOK_CLOTHES_COLOR]);
+		if (sd->vd.look[LOOK_BODY2])
+			clif_changelook(&sd->bl,LOOK_BODY2,sd->vd.look[LOOK_BODY2]);
 		clif_skillinfoblock(sd);
 	}
 	return SCRIPT_CMD_SUCCESS;
@@ -19087,15 +19087,15 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UMOB_AI, md->special_state.ai);
 			getunitdata_sub(UMOB_SCOPTION, md->sc.option);
 			getunitdata_sub(UMOB_SEX, md->vd->sex);
-			getunitdata_sub(UMOB_CLASS, md->vd->class_);
-			getunitdata_sub(UMOB_HAIRSTYLE, md->vd->hair_style);
-			getunitdata_sub(UMOB_HAIRCOLOR, md->vd->hair_color);
-			getunitdata_sub(UMOB_HEADBOTTOM, md->vd->head_bottom);
-			getunitdata_sub(UMOB_HEADMIDDLE, md->vd->head_mid);
-			getunitdata_sub(UMOB_HEADTOP, md->vd->head_top);
-			getunitdata_sub(UMOB_CLOTHCOLOR, md->vd->cloth_color);
-			getunitdata_sub(UMOB_SHIELD, md->vd->shield);
-			getunitdata_sub(UMOB_WEAPON, md->vd->weapon);
+			getunitdata_sub(UMOB_CLASS, md->vd->look[LOOK_BASE]);
+			getunitdata_sub(UMOB_HAIRSTYLE, md->vd->look[LOOK_HAIR]);
+			getunitdata_sub(UMOB_HAIRCOLOR, md->vd->look[LOOK_HAIR_COLOR]);
+			getunitdata_sub(UMOB_HEADBOTTOM, md->vd->look[LOOK_HEAD_BOTTOM]);
+			getunitdata_sub(UMOB_HEADMIDDLE, md->vd->look[LOOK_HEAD_MID]);
+			getunitdata_sub(UMOB_HEADTOP, md->vd->look[LOOK_HEAD_TOP]);
+			getunitdata_sub(UMOB_CLOTHCOLOR, md->vd->look[LOOK_CLOTHES_COLOR]);
+			getunitdata_sub(UMOB_SHIELD, md->vd->look[LOOK_SHIELD]);
+			getunitdata_sub(UMOB_WEAPON, md->vd->look[LOOK_WEAPON]);
 			getunitdata_sub(UMOB_LOOKDIR, md->ud.dir);
 			getunitdata_sub(UMOB_CANMOVETICK, md->ud.canmove_tick);
 			getunitdata_sub(UMOB_STR, md->status.str);
@@ -19124,8 +19124,8 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UMOB_ADELAY, md->status.adelay);
 			getunitdata_sub(UMOB_DMOTION, md->status.dmotion);
 			getunitdata_sub(UMOB_TARGETID, md->target_id);
-			getunitdata_sub(UMOB_ROBE, md->vd->robe);
-			getunitdata_sub(UMOB_BODY2, md->vd->body_style);
+			getunitdata_sub(UMOB_ROBE, md->vd->look[LOOK_ROBE]);
+			getunitdata_sub(UMOB_BODY2, md->vd->look[LOOK_BODY2]);
 			getunitdata_sub(UMOB_GROUP_ID, md->ud.group_id);
 			getunitdata_sub(UMOB_IGNORE_CELL_STACK_LIMIT, md->ud.state.ignore_cell_stack_limit);
 			getunitdata_sub(UMOB_RES, md->status.res);
@@ -19346,17 +19346,17 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UNPC_ADELAY, nd->status.adelay);
 			getunitdata_sub(UNPC_DMOTION, nd->status.dmotion);
 			getunitdata_sub(UNPC_SEX, nd->vd.sex);
-			getunitdata_sub(UNPC_CLASS, nd->vd.class_);
-			getunitdata_sub(UNPC_HAIRSTYLE, nd->vd.hair_style);
-			getunitdata_sub(UNPC_HAIRCOLOR, nd->vd.hair_color);
-			getunitdata_sub(UNPC_HEADBOTTOM, nd->vd.head_bottom);
-			getunitdata_sub(UNPC_HEADMIDDLE, nd->vd.head_mid);
-			getunitdata_sub(UNPC_HEADTOP, nd->vd.head_top);
-			getunitdata_sub(UNPC_CLOTHCOLOR, nd->vd.cloth_color);
-			getunitdata_sub(UNPC_SHIELD, nd->vd.shield);
-			getunitdata_sub(UNPC_WEAPON, nd->vd.weapon);
-			getunitdata_sub(UNPC_ROBE, nd->vd.robe);
-			getunitdata_sub(UNPC_BODY2, nd->vd.body_style);
+			getunitdata_sub(UNPC_CLASS, nd->vd.look[LOOK_BASE]);
+			getunitdata_sub(UNPC_HAIRSTYLE, nd->vd.look[LOOK_HAIR]);
+			getunitdata_sub(UNPC_HAIRCOLOR, nd->vd.look[LOOK_HAIR_COLOR]);
+			getunitdata_sub(UNPC_HEADBOTTOM, nd->vd.look[LOOK_HEAD_BOTTOM]);
+			getunitdata_sub(UNPC_HEADMIDDLE, nd->vd.look[LOOK_HEAD_MID]);
+			getunitdata_sub(UNPC_HEADTOP, nd->vd.look[LOOK_HEAD_TOP]);
+			getunitdata_sub(UNPC_CLOTHCOLOR, nd->vd.look[LOOK_CLOTHES_COLOR]);
+			getunitdata_sub(UNPC_SHIELD, nd->vd.look[LOOK_SHIELD]);
+			getunitdata_sub(UNPC_WEAPON, nd->vd.look[LOOK_WEAPON]);
+			getunitdata_sub(UNPC_ROBE, nd->vd.look[LOOK_ROBE]);
+			getunitdata_sub(UNPC_BODY2, nd->vd.look[LOOK_BODY2]);
 			getunitdata_sub(UNPC_DEADSIT, nd->vd.dead_sit);
 			getunitdata_sub(UNPC_GROUP_ID, nd->ud.group_id);
 			} break;
