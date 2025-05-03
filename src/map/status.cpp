@@ -2723,14 +2723,7 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int32 l
 	} else
 		status->flee2 = 0;
 
-	if (status->batk) {
-		status->batk += status_base_atk(bl, status, level);
-#ifndef RENEWAL
-		if (bl->type != BL_PC)
-			status->batk = cap_value(status->batk, SHRT_MIN, SHRT_MAX);
-#endif
-	} else
-		status->batk = status_base_atk(bl, status, level);
+	status->batk += status_base_atk(bl, status, level);
 
 	if (status->cri) {
 		switch (bl->type) {
@@ -5955,15 +5948,10 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 		int32 lv = status_get_lv(&bl);
 		status->batk = status_base_atk(&bl, status, lv);
 		// Calculate the difference of old and new base attack in the base status
-		// Then add the same difference to batk of battle status
+		// Then add the same difference to the base attack of battle status
 		temp = b_status->batk - status_base_atk(&bl, b_status, lv);
-		if (temp != 0) {
-			status->batk += temp;
-#ifndef RENEWAL
-			if (bl.type != BL_PC)
-				status->batk = cap_value(status->batk, SHRT_MIN, SHRT_MAX);
-#endif
-		}
+		status->batk += temp;
+
 		status->batk = status_calc_batk(&bl, sc, status->batk);
 	}
 
@@ -7283,7 +7271,7 @@ static uint16 status_calc_crt(struct block_list *bl, status_change *sc, int32 cr
  * @param bl: Object to change batk [PC|MOB|HOM|MER|ELEM]
  * @param sc: Object's status change information
  * @param batk: Initial batk
- * @return modified batk with cap_value(batk,0,USHRT_MAX)
+ * @return Modified batk
  */
 static int32 status_calc_batk(struct block_list *bl, status_change *sc, int32 batk)
 {
@@ -7318,11 +7306,6 @@ static int32 status_calc_batk(struct block_list *bl, status_change *sc, int32 ba
 		batk += batk * sc->getSCE(SC_SUNSTANCE)->val2 / 100;
 	if (sc->getSCE(SC_INTENSIVE_AIM))
 		batk += 150;
-
-#ifndef RENEWAL
-	if (bl->type != BL_PC)
-		batk = cap_value(batk, SHRT_MIN, SHRT_MAX);
-#endif
 
 	return batk;
 }
