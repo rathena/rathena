@@ -362,7 +362,7 @@ void write_warp(std::ostream& os, const struct navi_link &nl) {
 	// 205 = airport  (currently we only support warps)
 	os << ((nl.npc->subtype == NPCTYPE_WARP) ? 200 : 201) << ", ";
 	// sprite id, 99999 = warp portal
-	os << ((nl.npc->vd.class_ == JT_WARPNPC) ? 99999 : (int32)nl.npc->vd.class_) << ", ";
+	os << ((nl.npc->vd.look[LOOK_BASE] == JT_WARPNPC) ? 99999 : (int32)nl.npc->vd.look[LOOK_BASE]) << ", ";
 	if (nl.name.empty())
 		os << "\"" << msrc->name << "_" << mdest->name << "_" << nl.id << "\", ";
 	else
@@ -405,7 +405,7 @@ void write_spawn(std::ostream &os, const struct map_data * m, const std::shared_
 	os << "" << idx << ", ";
 	os << "" << (mobinfo->mexp ? 301 : 300) << ", ";
 #if PACKETVER >= 20140000
-	os << "" << (amount << 16 | (mobinfo->vd.class_ & 0xFFFF)) << ", ";
+	os << "" << (amount << 16 | (mobinfo->vd.look[LOOK_BASE] & 0xFFFF)) << ", ";
 #else
 	os << "\t\t" << mobinfo->vd.class_ << ", ";
 #endif
