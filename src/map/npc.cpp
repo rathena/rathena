@@ -761,6 +761,12 @@ void BarterDatabase::loadingFinished(){
 				break;
 			}
 
+			// Normal barter cannot have refined items
+			if( itemPair.second->refine > 0 ){
+				extended = true;
+				break;
+			}
+
 			// Normal barter needs to have exchange items defined
 			if( itemPair.second->requirements.empty() ){
 				extended = true;
