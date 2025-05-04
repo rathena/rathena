@@ -4188,7 +4188,7 @@ void mobskill_delay(mob_data& md, t_tick tick)
 
 	std::vector<std::shared_ptr<s_mob_skill>>& ms = md.db->skill;
 
-	if (ms.empty())
+	if (ms.empty() || md.skill_idx >= ms.size())
 		return;
 
 	// Officially the skill delay is per skill rather than per skill db entry
