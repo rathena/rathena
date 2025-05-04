@@ -378,9 +378,8 @@ struct s_qi_display {
 	e_questinfo_markcolor color;
 };
 
-class map_session_data {
+class map_session_data : public block_list {
 public:
-	struct block_list bl;
 	struct unit_data ud;
 	struct view_data vd;
 	struct status_data base_status, battle_status;

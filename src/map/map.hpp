@@ -478,8 +478,7 @@ struct spawn_data {
 	char filepath[256];
 };
 
-struct flooritem_data {
-	struct block_list bl;
+struct flooritem_data : public block_list {
 	unsigned char subx,suby;
 	int32 cleartimer;
 	int32 first_get_charid,second_get_charid,third_get_charid;
