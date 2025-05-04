@@ -4092,7 +4092,7 @@ void clif_changelook(struct block_list *bl, int32 type, int32 val) {
 		target = SELF;
 
 #if PACKETVER < 4
-	if( target != SELF && clif_npc_mayapurple( bl ) ){
+	if( target != SELF && clif_npc_mayapurple( *bl ) ){
 		target = SELF;
 	}
 
