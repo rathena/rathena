@@ -459,7 +459,11 @@ public:
 		t_itemid laphine_upgrade;
 		bool roulette_open;
 		t_itemid item_reform;
-		uint64 item_enchant_index;
+		struct {
+			uint64 clientLuaIndex;
+			t_itemid item_id;
+			int16 itemindex;
+		} item_enchant;
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
@@ -1164,7 +1168,7 @@ static bool pc_cant_act2( map_session_data* sd ){
 		|| sd->state.barter_open || sd->state.barter_extended_open
 		|| sd->state.laphine_synthesis || sd->state.laphine_upgrade
 		|| sd->state.roulette_open || sd->state.enchantgrade_open
-		|| sd->state.item_reform || sd->state.item_enchant_index;
+		|| sd->state.item_reform || sd->state.item_enchant.clientLuaIndex;
 }
 // equals pc_cant_act2 and additionally checks for chat rooms and npcs
 static bool pc_cant_act( map_session_data* sd ){

@@ -6873,7 +6873,7 @@ enum e_setpos pc_setpos(map_session_data* sd, uint16 mapindex, int32 x, int32 y,
 	sd->state.roulette_open = false;
 	sd->state.enchantgrade_open = false;
 	sd->state.item_reform = 0;
-	sd->state.item_enchant_index = 0;
+	sd->state.item_enchant = {};
 
 	if( sd->state.changemap ) { // Misc map-changing settings
 		int32 curr_map_instance_id = map_getmapdata(sd->bl.m)->instance_id, new_map_instance_id = (mapdata ? mapdata->instance_id : 0);
