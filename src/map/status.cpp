@@ -1096,7 +1096,7 @@ void StatusDatabase::changeSkillTree(map_session_data *sd, int32 class_) {
 		sc_type sc = skill_get_sc(skill_id);
 
 		if (sc > SC_COMMON_MAX && sc < SC_MAX && sd->sc.getSCE(sc))
-			status_change_end(&sd->bl, sc);
+			status_change_end(sd, sc);
 	}
 }
 
@@ -2382,7 +2382,7 @@ int32 status_base_amotion_pc(map_session_data* sd, struct status_data* status)
 		val -= 50 - 10 * pc_checkskill(sd, KN_CAVALIERMASTERY);
 	else if (pc_isridingdragon(sd))
 		val -= 25 - 5 * pc_checkskill(sd, RK_DRAGONTRAINING);
-	aspd = ((int32)(temp_aspd + ((float)(status_calc_aspd(&sd->bl, &sd->sc, true) + val) * status->agi / 200)) - min(aspd, 200));
+	aspd = ((int32)(temp_aspd + ((float)(status_calc_aspd(sd, &sd->sc, true) + val) * status->agi / 200)) - min(aspd, 200));
 	return aspd;
 #else
 	if (job == nullptr)
@@ -2876,10 +2876,10 @@ int32 status_calc_mob_(struct mob_data* md, uint8 opt)
 		}
 	}
 
-	status_calc_misc(&md->bl, status, md->level);
+	status_calc_misc(md, status, md->level);
 
 	if(flag&4) { // Strengthen Guardians - custom value +10% / lv
-		struct map_data *mapdata = map_getmapdata(md->bl.m);
+		struct map_data *mapdata = map_getmapdata(md->m);
 		std::shared_ptr<guild_castle> gc = castle_db.mapname2gc(mapdata->name);
 
 		if (gc == nullptr)
@@ -3079,7 +3079,7 @@ void status_calc_pet_(struct pet_data *pd, uint8 opt)
 
 			pd->pet.level = lv;
 			if (!(opt&SCO_FIRST)) // Lv Up animation
-				clif_misceffect( pd->bl, NOTIFYEFFECT_BASE_LEVEL_UP );
+				clif_misceffect( *pd, NOTIFYEFFECT_BASE_LEVEL_UP );
 			status->rhw.atk = (bstat->rhw.atk*lv)/pd->db->lv;
 			status->rhw.atk2 = (bstat->rhw.atk2*lv)/pd->db->lv;
 			status->str = (bstat->str*lv)/pd->db->lv;
@@ -3098,13 +3098,13 @@ void status_calc_pet_(struct pet_data *pd, uint8 opt)
 			status->dex = cap_value(status->dex,1,battle_config.pet_max_stats);
 			status->luk = cap_value(status->luk,1,battle_config.pet_max_stats);
 
-			status_calc_misc(&pd->bl, &pd->status, lv);
+			status_calc_misc(pd, &pd->status, lv);
 
 			if (!(opt&SCO_FIRST)) // Not done the first time because the pet is not visible yet
 				clif_send_petstatus( *sd, *pd );
 		}
 	} else if (opt&SCO_FIRST) {
-		status_calc_misc(&pd->bl, &pd->status, pd->db->lv);
+		status_calc_misc(pd, &pd->status, pd->db->lv);
 		if (!battle_config.pet_lv_rate && pd->pet.level != pd->db->lv)
 			pd->pet.level = pd->db->lv;
 	}
@@ -3517,16 +3517,16 @@ static uint32 status_calc_maxhp_pc( map_session_data& sd, uint32 vit ){
 	// Vit from equip gives +1 additional HP
 	dmax += sd.indexed_bonus.param_equip[PARAM_VIT];
 
-	dmax += status_get_hpbonus( &sd.bl, STATUS_BONUS_FIX );
+	dmax += status_get_hpbonus( &sd, STATUS_BONUS_FIX );
 
 	double equip_bonus = ( dmax * status_get_hpbonus_equip( &sd ) / 100 );
 	// TODO: using bMaxHP* for usable items may cause rounding issue
-	double item_bonus = ( dmax * status_get_hpbonus_item( &sd.bl ) / 100 );
+	double item_bonus = ( dmax * status_get_hpbonus_item( &sd ) / 100 );
 
 	dmax += equip_bonus + item_bonus;
 
 	// Aegis accuracy
-	dmax += static_cast<int64>( dmax * status_get_hpbonus( &sd.bl, STATUS_BONUS_RATE ) / 100 );
+	dmax += static_cast<int64>( dmax * status_get_hpbonus( &sd, STATUS_BONUS_RATE ) / 100 );
 
 	// Make sure it's not negative before casting to uint32
 	if( dmax < 1.0 ){
@@ -3568,16 +3568,16 @@ static uint32 status_calc_maxsp_pc( map_session_data& sd, uint32 int_ ){
 	// Int from equip gives +1 additional SP
 	dmax += sd.indexed_bonus.param_equip[PARAM_INT];
 
-	dmax += status_get_spbonus( &sd.bl, STATUS_BONUS_FIX );
+	dmax += status_get_spbonus( &sd, STATUS_BONUS_FIX );
 
 	double equip_bonus = ( dmax * status_get_spbonus_equip( &sd ) / 100 );
 	// TODO: using bMaxSP* for usable items may cause rounding issue
-	double item_bonus = ( dmax * status_get_spbonus_item( &sd.bl ) / 100 );
+	double item_bonus = ( dmax * status_get_spbonus_item( &sd ) / 100 );
 
 	dmax += equip_bonus + item_bonus;
 
 	// Aegis accuracy
-	dmax += static_cast<int64>( dmax * status_get_spbonus( &sd.bl, STATUS_BONUS_RATE ) / 100 );
+	dmax += static_cast<int64>( dmax * status_get_spbonus( &sd, STATUS_BONUS_RATE ) / 100 );
 
 	// Make sure it's not negative before casting to uint32
 	if( dmax < 1.0 ){
@@ -3607,16 +3607,16 @@ static uint32 status_calc_maxap_pc( map_session_data& sd ){
 	// No stat point dependent bonus
 	// No Upper Class or Taekwon ranker bonus
 
-	dmax += status_get_apbonus( &sd.bl, STATUS_BONUS_FIX );
+	dmax += status_get_apbonus( &sd, STATUS_BONUS_FIX );
 
 	double equip_bonus = ( dmax * status_get_apbonus_equip( &sd ) / 100 );
 	// TODO: using bMaxAP* for usable items may cause rounding issue
-	double item_bonus = ( dmax * status_get_apbonus_item( &sd.bl ) / 100 );
+	double item_bonus = ( dmax * status_get_apbonus_item( &sd ) / 100 );
 
 	dmax += equip_bonus + item_bonus;
 
 	// Aegis accuracy
-	dmax += static_cast<int64>( dmax * status_get_apbonus( &sd.bl, STATUS_BONUS_RATE ) / 100 );
+	dmax += static_cast<int64>( dmax * status_get_apbonus( &sd, STATUS_BONUS_RATE ) / 100 );
 
 	// Make sure it's not negative before casting to uint32
 	if( dmax < 0. ){
@@ -3786,10 +3786,10 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	memset (&sd->left_weapon.overrefine, 0, sizeof(sd->left_weapon) - sizeof(sd->left_weapon.atkmods));
 
 	if (sd->special_state.intravision)
-		clif_status_load(&sd->bl, EFST_CLAIRVOYANCE, 0);
+		clif_status_load(sd, EFST_CLAIRVOYANCE, 0);
 
 	if (sd->special_state.no_walk_delay)
-		clif_status_load(&sd->bl, EFST_ENDURE, 0);
+		clif_status_load(sd, EFST_ENDURE, 0);
 
 	memset(&sd->special_state,0,sizeof(sd->special_state));
 
@@ -3901,8 +3901,8 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 
 		// Items may be equipped, their effects however are nullified.
 		if (opt&SCO_FIRST && sd->inventory_data[index]->equip_script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT)
-			|| !itemdb_isNoEquip(sd->inventory_data[index],sd->bl.m))) { // Execute equip-script on login
-			run_script(sd->inventory_data[index]->equip_script,0,sd->bl.id,0);
+			|| !itemdb_isNoEquip(sd->inventory_data[index],sd->m))) { // Execute equip-script on login
+			run_script(sd->inventory_data[index]->equip_script,0,sd->id,0);
 			if (!calculating)
 				return 1;
 		}
@@ -3970,13 +3970,13 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 			}
 
 			wa->range += sd->inventory_data[index]->range;
-			if(sd->inventory_data[index]->script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(sd->inventory_data[index],sd->bl.m))) {
+			if(sd->inventory_data[index]->script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(sd->inventory_data[index],sd->m))) {
 				if (wd == &sd->left_weapon) {
 					sd->state.lr_flag = LR_FLAG_WEAPON;
-					run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
+					run_script(sd->inventory_data[index]->script,0,sd->id,0);
 					sd->state.lr_flag = LR_FLAG_NONE;
 				} else
-					run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
+					run_script(sd->inventory_data[index]->script,0,sd->id,0);
 				if (!calculating) // Abort, run_script retriggered this. [Skotlex]
 					return 1;
 			}
@@ -4004,18 +4004,18 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 #endif
 			}
 
-			if(sd->inventory_data[index]->script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(sd->inventory_data[index],sd->bl.m))) {
+			if(sd->inventory_data[index]->script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(sd->inventory_data[index],sd->m))) {
 				if( i == EQI_HAND_L ) // Shield
 					sd->state.lr_flag = LR_FLAG_SHIELD;
-				run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
+				run_script(sd->inventory_data[index]->script,0,sd->id,0);
 				if( i == EQI_HAND_L ) // Shield
 					sd->state.lr_flag = LR_FLAG_NONE;
 				if (!calculating) // Abort, run_script retriggered this. [Skotlex]
 					return 1;
 			}
 		} else if( sd->inventory_data[index]->type == IT_SHADOWGEAR ) { // Shadow System
-			if (sd->inventory_data[index]->script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(sd->inventory_data[index],sd->bl.m))) {
-				run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
+			if (sd->inventory_data[index]->script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(sd->inventory_data[index],sd->m))) {
+				run_script(sd->inventory_data[index]->script,0,sd->id,0);
 				if( !calculating )
 					return 1;
 			}
@@ -4028,7 +4028,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 			sd->bonus.arrow_atk += sd->inventory_data[index]->atk;
 			sd->state.lr_flag = LR_FLAG_ARROW;
 			if( !itemdb_group.item_exists(IG_THROWABLE, sd->inventory_data[index]->nameid) ) // Don't run scripts on throwable items
-				run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
+				run_script(sd->inventory_data[index]->script,0,sd->id,0);
 			sd->state.lr_flag = LR_FLAG_NONE;
 			if (!calculating) // Abort, run_script retriggered status_calc_pc. [Skotlex]
 				return 1;
@@ -4054,7 +4054,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 				std::shared_ptr<item_data> id = item_db.find(item_combo->nameid[j]);
 
 				// Don't run the script if at least one of combo's pair has restriction
-				if (id && !pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && itemdb_isNoEquip(id.get(), sd->bl.m)) {
+				if (id && !pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && itemdb_isNoEquip(id.get(), sd->m)) {
 					no_run = true;
 					break;
 				}
@@ -4065,7 +4065,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 			if (no_run)
 				continue;
 
-			run_script(combo->bonus, 0, sd->bl.id, 0);
+			run_script(combo->bonus, 0, sd->id, 0);
 
 			if (!calculating) // Abort, run_script retriggered this
 				return 1;
@@ -4105,21 +4105,21 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 
 				if(!data)
 					continue;
-				if (opt&SCO_FIRST && data->equip_script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(data.get(), sd->bl.m))) {// Execute equip-script on login
-					run_script(data->equip_script,0,sd->bl.id,0);
+				if (opt&SCO_FIRST && data->equip_script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(data.get(), sd->m))) {// Execute equip-script on login
+					run_script(data->equip_script,0,sd->id,0);
 					if (!calculating)
 						return 1;
 				}
 				if(!data->script)
 					continue;
-				if(!pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) && itemdb_isNoEquip(data.get(), sd->bl.m)) // Card restriction checks.
+				if(!pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) && itemdb_isNoEquip(data.get(), sd->m)) // Card restriction checks.
 					continue;
 				if(i == EQI_HAND_L && sd->inventory.u.items_inventory[index].equip == EQP_HAND_L) { // Left hand status.
 					sd->state.lr_flag = LR_FLAG_WEAPON;
-					run_script(data->script,0,sd->bl.id,0);
+					run_script(data->script,0,sd->id,0);
 					sd->state.lr_flag = LR_FLAG_NONE;
 				} else
-					run_script(data->script,0,sd->bl.id,0);
+					run_script(data->script,0,sd->id,0);
 				if (!calculating) // Abort, run_script his function. [Skotlex]
 					return 1;
 			}
@@ -4152,15 +4152,15 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 
 				if (!data || !data->script)
 					continue;
-				if (!pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && itemdb_isNoEquip(sd->inventory_data[index], sd->bl.m))
+				if (!pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && itemdb_isNoEquip(sd->inventory_data[index], sd->m))
 					continue;
 				if (i == EQI_HAND_L && sd->inventory.u.items_inventory[index].equip == EQP_HAND_L) { // Left hand status.
 					sd->state.lr_flag = LR_FLAG_WEAPON;
-					run_script(data->script, 0, sd->bl.id, 0);
+					run_script(data->script, 0, sd->id, 0);
 					sd->state.lr_flag = LR_FLAG_NONE;
 				}
 				else
-					run_script(data->script, 0, sd->bl.id, 0);
+					run_script(data->script, 0, sd->id, 0);
 				if (!calculating)
 					return 1;
 			}
@@ -4173,12 +4173,12 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 			std::shared_ptr<item_data> data = item_db.find(sc->getSCE(SC_ITEMSCRIPT)->val1);
 
 			if (data && data->script)
-				run_script(data->script, 0, sd->bl.id, 0);
+				run_script(data->script, 0, sd->id, 0);
 		}
 
 		for( const auto& it : *sc ){
 			if( std::shared_ptr<s_status_change_db> scdb = status_db.find( it.first ); scdb != nullptr && scdb->script != nullptr ){
-				run_script( scdb->script, 0, sd->bl.id, 0 );
+				run_script( scdb->script, 0, sd->id, 0 );
 			}
 		}
 	}
@@ -4190,7 +4190,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		std::shared_ptr<s_pet_db> pet_db_ptr = pd->get_pet_db();
 
 		if (pet_db_ptr != nullptr && pet_db_ptr->pet_bonus_script)
-			run_script(pet_db_ptr->pet_bonus_script,0,sd->bl.id,0);
+			run_script(pet_db_ptr->pet_bonus_script,0,sd->id,0);
 		if (pet_db_ptr != nullptr && pd->pet.intimate > 0 && (!battle_config.pet_equip_required || pd->pet.equip > 0) && pd->state.skillbonus == 1 && pd->bonus)
 			pc_bonus(sd,pd->bonus->type, pd->bonus->val);
 	}
@@ -4300,10 +4300,10 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		if (sc->getSCE(SC_ENDURE)) {
 			if (sc->getSCE(SC_ENDURE)->val4)
 				sc->getSCE(SC_ENDURE)->val4 = 0;
-			status_change_end(&sd->bl, SC_ENDURE);
+			status_change_end(sd, SC_ENDURE);
 		}
-		if (sd->bl.m >= 0 && !status_change_isDisabledOnMap(SC_ENDURE, map_getmapdata(sd->bl.m))) {
-			clif_status_load(&sd->bl, EFST_ENDURE, 1);
+		if (sd->m >= 0 && !status_change_isDisabledOnMap(SC_ENDURE, map_getmapdata(sd->m))) {
+			clif_status_load(sd, EFST_ENDURE, 1);
 			base_status->mdef++;
 		}
 	}
@@ -4385,7 +4385,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	}
 
 // ----- MISC CALCULATION -----
-	status_calc_misc(&sd->bl, base_status, sd->status.base_level);
+	status_calc_misc(sd, base_status, sd->status.base_level);
 
 	// Equipment modifiers for misc settings
 	if(sd->matk_rate < 0)
@@ -4492,7 +4492,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		base_status->hit += skill * 3;
 
 	if ((skill = pc_checkskill(sd, SU_SOULATTACK)) > 0)
-		base_status->rhw.range += skill_get_range2(&sd->bl, SU_SOULATTACK, skill, true);
+		base_status->rhw.range += skill_get_range2(sd, SU_SOULATTACK, skill, true);
 
 // ----- FLEE CALCULATION -----
 
@@ -4949,7 +4949,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	status_cpy(&sd->battle_status, base_status);
 
 // ----- CLIENT-SIDE REFRESH -----
-	if(!sd->bl.prev) {
+	if(!sd->prev) {
 		// Will update on LoadEndAck
 		calculating = 0;
 		return 0;
@@ -4967,9 +4967,9 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 
 	// If the skill is learned, the status is infinite.
 	if (pc_checkskill(sd, SU_SPRITEMABLE) > 0 && !sd->sc.getSCE(SC_SPRITEMABLE))
-		sc_start(&sd->bl, &sd->bl, SC_SPRITEMABLE, 100, 1, INFINITE_TICK);
+		sc_start(sd, sd, SC_SPRITEMABLE, 100, 1, INFINITE_TICK);
 	if (pc_checkskill(sd, SU_SOULATTACK) > 0 && !sd->sc.getSCE(SC_SOULATTACK))
-		sc_start(&sd->bl, &sd->bl, SC_SOULATTACK, 100, 1, INFINITE_TICK);
+		sc_start(sd, sd, SC_SOULATTACK, 100, 1, INFINITE_TICK);
 
 	calculating = 0;
 
@@ -5014,10 +5014,10 @@ int32 status_calc_mercenary_(s_mercenary_data *md, uint8 opt)
 		md->battle_status.hp = merc->hp;
 		md->battle_status.sp = merc->sp;
 		if (md->master)
-			status->speed = status_get_speed(&md->master->bl);
+			status->speed = status_get_speed(md->master);
 	}
 
-	status_calc_misc(&md->bl, status, md->db->lv);
+	status_calc_misc(md, status, md->db->lv);
 	status_cpy(&md->battle_status, status);
 
 	return 0;
@@ -5057,7 +5057,7 @@ int32 status_calc_homunculus_(struct homun_data *hd, uint8 opt)
 		status->mode = static_cast<e_mode>(MD_CANMOVE|MD_CANATTACK);
 		status->speed = DEFAULT_WALK_SPEED;
 		if (battle_config.hom_setting&HOMSET_COPY_SPEED && hd->master)
-			status->speed = status_get_speed(&hd->master->bl);
+			status->speed = status_get_speed(hd->master);
 
 		status->hp = 1;
 		status->sp = 1;
@@ -5132,7 +5132,7 @@ int32 status_calc_homunculus_(struct homun_data *hd, uint8 opt)
 		hd->battle_status.hp = hom.hp;
 		hd->battle_status.sp = hom.sp;
 		if(hom.class_ == 6052) // Eleanor
-			sc_start(&hd->bl,&hd->bl, SC_STYLE_CHANGE, 100, MH_MD_FIGHTING, INFINITE_TICK);
+			sc_start(hd, hd, SC_STYLE_CHANGE, 100, MH_MD_FIGHTING, INFINITE_TICK);
 	}
 
 #ifndef RENEWAL
@@ -5140,7 +5140,7 @@ int32 status_calc_homunculus_(struct homun_data *hd, uint8 opt)
 	status->rhw.atk2 = status->str + hom.level;
 #endif
 
-	status_calc_misc(&hd->bl, status, hom.level);
+	status_calc_misc(hd, status, hom.level);
 
 	status_cpy(&hd->battle_status, status);
 	return 1;
@@ -5169,7 +5169,7 @@ int32 status_calc_elemental_(s_elemental_data *ed, uint8 opt)
 			status->mode = ele->mode;
 
 		status->class_ = CLASS_NORMAL;
-		status_calc_misc(&ed->bl, status, 0);
+		status_calc_misc(ed, status, 0);
 
 		status->max_hp = ele->max_hp;
 		status->max_sp = ele->max_sp;
@@ -5184,11 +5184,11 @@ int32 status_calc_elemental_(s_elemental_data *ed, uint8 opt)
 		status->hit = ele->hit;
 
 		if (ed->master)
-			status->speed = status_get_speed(&ed->master->bl);
+			status->speed = status_get_speed(ed->master);
 
 		memcpy(&ed->battle_status,status,sizeof(struct status_data));
 	} else {
-		status_calc_misc(&ed->bl, status, 0);
+		status_calc_misc(ed, status, 0);
 		status_cpy(&ed->battle_status, status);
 	}
 
@@ -5231,7 +5231,7 @@ int32 status_calc_npc_(struct npc_data *nd, uint8 opt)
 	status->dex = nd->stat_point + nd->params.dex;
 	status->luk = nd->stat_point + nd->params.luk;
 
-	status_calc_misc(&nd->bl, status, nd->level);
+	status_calc_misc(nd, status, nd->level);
 	status_cpy(&nd->status, status);
 
 	return 0;
@@ -6075,10 +6075,10 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 			// Recalculate homunculus speed if the player receives a speed buff/debuff
 			if (hom_is_active(sd->hd)) {
 				if (battle_config.hom_setting & HOMSET_COPY_SPEED)
-					sd->hd->battle_status.speed = status_get_speed(&sd->bl);
+					sd->hd->battle_status.speed = status_get_speed(sd);
 
 				// Homunculus speed buff/debuffs applies over the current speed
-				sd->hd->battle_status.speed = status_calc_speed(&sd->hd->bl, &sd->hd->sc, sd->hd->battle_status.speed);
+				sd->hd->battle_status.speed = status_calc_speed(sd->hd, &sd->hd->sc, sd->hd->battle_status.speed);
 			}
 #endif
 			break;
@@ -6087,7 +6087,7 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 			pet_data* pd = reinterpret_cast<pet_data*>(&bl);
 
 			if (pd->master != nullptr)
-				status->speed = status_get_speed(&pd->master->bl);
+				status->speed = status_get_speed(pd->master);
 		} break;
 
 		case BL_HOM:{
@@ -6095,7 +6095,7 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 
 			if (hd->master != nullptr) {
 				if (battle_config.hom_setting & HOMSET_COPY_SPEED)
-					status->speed = status_get_speed(&hd->master->bl);
+					status->speed = status_get_speed(hd->master);
 
 				// Homunculus speed buff/debuffs applies over the current speed
 				status->speed = status_calc_speed(&bl, &hd->sc, status->speed);
@@ -6106,14 +6106,14 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 			s_mercenary_data* mc = reinterpret_cast<s_mercenary_data*>(&bl);
 
 			if (mc->master != nullptr)
-				status->speed = status_get_speed(&mc->master->bl);
+				status->speed = status_get_speed(mc->master);
 		} break;
 
 		case BL_ELEM:{
 			s_elemental_data* ed = reinterpret_cast<s_elemental_data*>(&bl);
 
 			if (ed->master != nullptr)
-				status->speed = status_get_speed(&ed->master->bl);
+				status->speed = status_get_speed(ed->master);
 		} break;
 		}
 	}
@@ -8876,20 +8876,20 @@ void status_calc_slave_mode(mob_data& md)
 	switch (battle_config.slaves_inherit_mode) {
 		case 1: //Always aggressive
 			if (!status_has_mode(&md.status,MD_AGGRESSIVE))
-				sc_start4(nullptr, &md.bl, SC_MODECHANGE, 100, 1, 0, MD_AGGRESSIVE, 0, 0);
+				sc_start4(nullptr, &md, SC_MODECHANGE, 100, 1, 0, MD_AGGRESSIVE, 0, 0);
 			break;
 		case 2: //Always passive
 			if (status_has_mode(&md.status,MD_AGGRESSIVE))
-				sc_start4(nullptr, &md.bl, SC_MODECHANGE, 100, 1, 0, 0, MD_AGGRESSIVE, 0);
+				sc_start4(nullptr, &md, SC_MODECHANGE, 100, 1, 0, 0, MD_AGGRESSIVE, 0);
 			break;
 		case 4: // Overwrite with slave mode
-			sc_start4(nullptr, &md.bl, SC_MODECHANGE, 100, 1, MD_CANMOVE|MD_NORANDOMWALK|MD_CANATTACK, 0, 0, 0);
+			sc_start4(nullptr, &md, SC_MODECHANGE, 100, 1, MD_CANMOVE|MD_NORANDOMWALK|MD_CANATTACK, 0, 0, 0);
 			break;
 		default: //Copy master
 			if (block_list* mbl = map_id2bl(md.master_id); mbl != nullptr && status_has_mode(status_get_status_data(*mbl), MD_AGGRESSIVE))
-				sc_start4(nullptr, &md.bl, SC_MODECHANGE, 100, 1, 0, MD_AGGRESSIVE, 0, 0);
+				sc_start4(nullptr, &md, SC_MODECHANGE, 100, 1, 0, MD_AGGRESSIVE, 0, 0);
 			else
-				sc_start4(nullptr, &md.bl, SC_MODECHANGE, 100, 1, 0, 0, MD_AGGRESSIVE, 0);
+				sc_start4(nullptr, &md, SC_MODECHANGE, 100, 1, 0, 0, MD_AGGRESSIVE, 0);
 			break;
 	}
 }
@@ -10731,11 +10731,11 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 					int32 i;
 					for( i = 0; i < MAX_DEVOTION; i++ ) {
 						if( sd->devotion[i] && (tsd = map_id2sd(sd->devotion[i])) )
-							status_change_start(src,&tsd->bl, type, 10000, val1, val2, val3, val4, tick, SCSTART_NOAVOID|SCSTART_NOICON);
+							status_change_start(src,tsd, type, 10000, val1, val2, val3, val4, tick, SCSTART_NOAVOID|SCSTART_NOICON);
 					}
 				}
 				else if( bl->type == BL_MER && ((TBL_MER*)bl)->devotion_flag && (tsd = ((TBL_MER*)bl)->master) )
-					status_change_start(src,&tsd->bl, type, 10000, val1, val2, val3, val4, tick, SCSTART_NOAVOID|SCSTART_NOICON);
+					status_change_start(src,tsd, type, 10000, val1, val2, val3, val4, tick, SCSTART_NOAVOID|SCSTART_NOICON);
 			}
 			if( val4 )
 				tick = INFINITE_TICK;
@@ -10829,11 +10829,11 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 					int32 i;
 					for( i = 0; i < MAX_DEVOTION; i++ ) {
 						if( sd->devotion[i] && (tsd = map_id2sd(sd->devotion[i])) )
-							status_change_start(src,&tsd->bl, type, 10000, val1, val2, 0, 1, tick, SCSTART_NOAVOID|SCSTART_NOICON);
+							status_change_start(src,tsd, type, 10000, val1, val2, 0, 1, tick, SCSTART_NOAVOID|SCSTART_NOICON);
 					}
 				}
 				else if( bl->type == BL_MER && ((TBL_MER*)bl)->devotion_flag && (tsd = ((TBL_MER*)bl)->master) )
-					status_change_start(src,&tsd->bl, type, 10000, val1, val2, 0, 1, tick, SCSTART_NOAVOID|SCSTART_NOICON);
+					status_change_start(src,tsd, type, 10000, val1, val2, 0, 1, tick, SCSTART_NOAVOID|SCSTART_NOICON);
 			}
 			break;
 		case SC_STRIPWEAPON:
@@ -11123,7 +11123,7 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 					return 0;
 				}
 
-				val1 = boss_md->bl.id;
+				val1 = boss_md->id;
 				tick_time = status_get_sc_interval( type );
 				val4 = tick - tick_time; // Remaining time
 			}
@@ -11177,11 +11177,11 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 					if( sd ) {
 						for( i = 0; i < MAX_DEVOTION; i++ ) {
 							if( sd->devotion[i] && (tsd = map_id2sd(sd->devotion[i])) )
-								status_change_start(src,&tsd->bl, type, 10000, val1, val2, 0, 0, tick, SCSTART_NOAVOID|SCSTART_NOICON);
+								status_change_start(src,tsd, type, 10000, val1, val2, 0, 0, tick, SCSTART_NOAVOID|SCSTART_NOICON);
 						}
 					}
 					else if( bl->type == BL_MER && ((TBL_MER*)bl)->devotion_flag && (tsd = ((TBL_MER*)bl)->master) )
-						status_change_start(src,&tsd->bl, type, 10000, val1, val2, 0, 0, tick, SCSTART_NOAVOID|SCSTART_NOICON);
+						status_change_start(src,tsd, type, 10000, val1, val2, 0, 0, tick, SCSTART_NOAVOID|SCSTART_NOICON);
 				}
 			}
 			break;
@@ -11197,7 +11197,7 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 					int32 i;
 					for (i = 0; i < MAX_DEVOTION; i++) { // See if there are devoted characters, and pass the status to them. [Skotlex]
 						if (sd->devotion[i] && (tsd = map_id2sd(sd->devotion[i])))
-							status_change_start(src,&tsd->bl,type,10000,val1,val2,val3,val4,tick,SCSTART_NOAVOID);
+							status_change_start(src,tsd,type,10000,val1,val2,val3,val4,tick,SCSTART_NOAVOID);
 					}
 				}
 			}
@@ -11207,7 +11207,7 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 			if (sd) {
 				pc_setsit(sd);
 				skill_sit(sd, true);
-				clif_sitting(sd->bl);
+				clif_sitting(*sd);
 			}
 			val2 = 12; // SP cost
 			tick_time = 10000; // Decrease at 10secs intervals.
@@ -13141,10 +13141,10 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 				}
 
 				// Not on same map anymore
-				if( sd->bl.m != boss_md->bl.m ){
+				if( sd->m != boss_md->m ){
 					return 0;
 				// Boss is alive
-				}else if( boss_md->bl.prev != nullptr ){
+				}else if( boss_md->prev != nullptr ){
 					sce->val2 = 0;
 					clif_bossmapinfo( *sd, boss_md, BOSS_INFO_ALIVE_WITHMSG );
 				// Boss is dead
@@ -13442,13 +13442,13 @@ int32 status_change_end( struct block_list* bl, enum sc_type type, int32 tid ){
 					int32 i;
 					for( i = 0; i < MAX_DEVOTION; i++ ) {
 						if( sd->devotion[i] && (tsd = map_id2sd(sd->devotion[i])) && tsd->sc.getSCE(type) )
-							status_change_end(&tsd->bl, type);
+							status_change_end(tsd, type);
 					}
 				}
 				else if( bl->type == BL_MER && ((TBL_MER*)bl)->devotion_flag ) { // Clear Status from Master
 					tsd = ((TBL_MER*)bl)->master;
 					if( tsd && tsd->sc.getSCE(type) )
-						status_change_end(&tsd->bl, type);
+						status_change_end(tsd, type);
 				}
 			}
 			break;
@@ -13509,7 +13509,7 @@ int32 status_change_end( struct block_list* bl, enum sc_type type, int32 tid ){
 						// This will prevent recursive loops.
 						dsc->val2 = 0;
 						dsc->val4 = BCT_SELF;
-						status_change_end(&dsd->bl, SC_DANCING);
+						status_change_end(dsd, SC_DANCING);
 					}
 				}
 
@@ -14251,11 +14251,11 @@ TIMER_FUNC(status_change_timer){
 			}
 
 			// Not on same map anymore
-			if( sd->bl.m != boss_md->bl.m ){
+			if( sd->m != boss_md->m ){
 				sce->val4 = 0;
 				break;
 			// Boss is alive - Update X, Y on minimap
-			}else if( boss_md->bl.prev != nullptr ){
+			}else if( boss_md->prev != nullptr ){
 				sce->val2 = 0;
 				clif_bossmapinfo( *sd, boss_md, BOSS_INFO_ALIVE );
 			// Boss is dead
@@ -14839,7 +14839,7 @@ TIMER_FUNC(status_change_timer){
 	case SC_C_MARKER:
 		if( --(sce->val4) >= 0 ) {
 			TBL_PC *caster = map_id2sd(sce->val2);
-			if (!caster || caster->bl.m != bl->m) //End the SC if caster isn't in same map
+			if (!caster || caster->m != bl->m) //End the SC if caster isn't in same map
 				break;
 			sc_timer_next(1000 + tick);
 			clif_crimson_marker( *caster, *bl, false );
@@ -14945,7 +14945,7 @@ TIMER_FUNC(status_change_timer){
 			sc_timer_next(500 + tick);
 
 			// Attack after timer to prevent errors
-			skill_attack(BF_WEAPON, star_caster, &star_aoe->bl, bl, SJ_BOOKOFCREATINGSTAR, sce->val1, tick, 0);
+			skill_attack(BF_WEAPON, star_caster, star_aoe, bl, SJ_BOOKOFCREATINGSTAR, sce->val1, tick, 0);
 			return 0;
 		}
 		break;
@@ -15052,7 +15052,7 @@ TIMER_FUNC(status_change_timer){
 
 			// If the caster is offline, dead, on another map or
 			// if the target is not a player or is in another party
-			if( ssd == nullptr || status_isdead( ssd->bl ) || ssd->bl.m != bl->m || sd == nullptr || ssd->status.party_id != sd->status.party_id ){
+			if( ssd == nullptr || status_isdead(*ssd) || ssd->m != bl->m || sd == nullptr || ssd->status.party_id != sd->status.party_id ){
 				// End the status change
 				sce->val4 = 0;
 				break;
