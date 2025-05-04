@@ -23299,6 +23299,10 @@ void clif_barter_extended_open( map_session_data& sd, struct npc_data& nd ){
 #if PACKETVER_MAIN_NUM >= 20210203 || PACKETVER_RE_NUM >= 20211103
 		item->viewSprite = id->look;
 		item->location = pc_equippoint_sub( &sd, id.get() );
+
+#if PACKETVER_MAIN_NUM >= 20250402
+		item->refine_level = itemPair.second->refine;
+#endif
 #endif
 
 		// Because of a MSVS bug, the currencies have been defined with a fixed array entry, which has to be substracted
