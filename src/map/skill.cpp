@@ -3250,7 +3250,6 @@ void skill_combo_toggle_inf(struct block_list* bl, uint16 skill_id, int32 inf){
 			}
 			break;
 		case MO_COMBOFINISH:
-		case CH_TIGERFIST:
 		case CH_CHAINCRUSH:
 			if( sd != nullptr ){
 				clif_skillinfo( *sd, MO_EXTREMITYFIST, inf );
@@ -3324,24 +3323,30 @@ void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_li
 				target_id = 0; // Will target current auto-target instead
 			}
 			break;
+		case CH_TIGERFIST:
+			if (pc_checkskill(sd, CH_CHAINCRUSH) > 0 && sd->spiritball > 1) {
+				duration = 1;
+				target_id = 0; // Will target current auto-target instead
+			}
+			break;
 		case MO_COMBOFINISH:
 			if (sd->status.party_id > 0) //bonus from SG_FRIEND [Komurka]
 				party_skill_check(sd, sd->status.party_id, MO_COMBOFINISH, skill_lv);
-			if (pc_checkskill(sd, CH_TIGERFIST) > 0 && sd->spiritball > 0) {
+			if (pc_checkskill(sd, CH_CHAINCRUSH) > 0 && sd->spiritball > 1) {
 				duration = 1;
 				target_id = 0; // Will target current auto-target instead
 			}
-			[[fallthrough]]; // so we can possibly cast TigerFist or straight to ExtremityFist
-		case CH_TIGERFIST:
-			if (!duration && pc_checkskill(sd, CH_CHAINCRUSH) > 0 && sd->spiritball > 1) {
-				duration = 1;
-				target_id = 0; // Will target current auto-target instead
-			}
-			[[fallthrough]]; // so we can possibly cast ChainCrush or straight to ExtremityFist
+			[[fallthrough]]; // Can additionally chain into TigerFist and ExtremityFist
 		case CH_CHAINCRUSH:
-			if (!duration && pc_checkskill(sd, MO_EXTREMITYFIST) > 0 && sd->spiritball > 0 && sd->sc.getSCE(SC_EXPLOSIONSPIRITS)) {
-				duration = 1;
-				target_id = 0; // Will target current auto-target instead
+			if (duration == 0 && sd->spiritball > 0) {
+				if (pc_checkskill(sd, CH_TIGERFIST) > 0) {
+					duration = 1;
+					target_id = 0; // Will target current auto-target instead
+				}
+				else if (pc_checkskill(sd, MO_EXTREMITYFIST) > 0 && sd->sc.getSCE(SC_EXPLOSIONSPIRITS) != nullptr) {
+					duration = 1;
+					target_id = 0; // Will target current auto-target instead
+				}
 			}
 			break;
 		case AC_DOUBLE:
@@ -18564,7 +18569,9 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 				return false;
 			break;
 		case CH_TIGERFIST:
-			if(!(sc && sc->getSCE(SC_COMBO) && sc->getSCE(SC_COMBO)->val1 == MO_COMBOFINISH))
+			if (sc == nullptr || sc->getSCE(SC_COMBO) == nullptr)
+				return false;
+			if (sc->getSCE(SC_COMBO)->val1 != MO_COMBOFINISH && sc->getSCE(SC_COMBO)->val1 != CH_CHAINCRUSH)
 				return false;
 			break;
 		case CH_CHAINCRUSH:
@@ -18585,7 +18592,6 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 			if( sc && sc->getSCE(SC_COMBO) ) {
 				switch(sc->getSCE(SC_COMBO)->val1) {
 					case MO_COMBOFINISH:
-					case CH_TIGERFIST:
 					case CH_CHAINCRUSH:
 						break;
 					default:
@@ -20099,9 +20105,6 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 					switch( sc->getSCE(SC_COMBO)->val1 ) {
 						case MO_COMBOFINISH:
 							req.spiritball = 4;
-							break;
-						case CH_TIGERFIST:
-							req.spiritball = 3;
 							break;
 						case CH_CHAINCRUSH: //It should consume whatever is left as long as it's at least 1.
 							req.spiritball = sd->spiritball?sd->spiritball:1;
