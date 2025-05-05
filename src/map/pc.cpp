@@ -3700,8 +3700,7 @@ void pc_bonus(map_session_data *sd,int32 type,int32 val)
 				bonus = sd->bonus.eatk + val;
 				sd->bonus.eatk = cap_value(bonus, SHRT_MIN, SHRT_MAX);
 #else
-				bonus = status->batk + val;
-				status->batk = cap_value(bonus, 0, USHRT_MAX);
+				status->batk += val;
 #endif
 			}
 			break;
@@ -6864,6 +6863,16 @@ enum e_setpos pc_setpos(map_session_data* sd, uint16 mapindex, int32 x, int32 y,
 	sd->state.workinprogress = WIP_DISABLE_NONE;
 	sd->state.mail_writing = false;
 	sd->state.refineui_open = false;
+	sd->state.stylist_open = false;
+	sd->state.inventory_expansion_confirmation = 0;
+	sd->state.barter_open = false;
+	sd->state.barter_extended_open = false;
+	sd->state.laphine_synthesis = 0;
+	sd->state.laphine_upgrade = 0;
+	sd->state.roulette_open = false;
+	sd->state.enchantgrade_open = false;
+	sd->state.item_reform = 0;
+	sd->state.item_enchant_index = 0;
 
 	if( sd->state.changemap ) { // Misc map-changing settings
 		int32 curr_map_instance_id = map_getmapdata(sd->bl.m)->instance_id, new_map_instance_id = (mapdata ? mapdata->instance_id : 0);

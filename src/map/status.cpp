@@ -69,7 +69,7 @@ static uint16 status_calc_wis(struct block_list *, status_change *, int32);
 static uint16 status_calc_spl(struct block_list *, status_change *, int32);
 static uint16 status_calc_con(struct block_list *, status_change *, int32);
 static uint16 status_calc_crt(struct block_list *, status_change *, int32);
-static uint16 status_calc_batk(struct block_list *,status_change *,int32);
+static int32 status_calc_batk(struct block_list *, status_change *, int32);
 static uint16 status_calc_watk(struct block_list *,status_change *,int32);
 static int16 status_calc_hit(struct block_list *,status_change *,int32);
 static int16 status_calc_critical(struct block_list *,status_change *,int32);
@@ -2723,11 +2723,7 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int32 l
 	} else
 		status->flee2 = 0;
 
-	if (status->batk) {
-		int32 temp = status->batk + status_base_atk(bl, status, level);
-		status->batk = cap_value(temp, 0, USHRT_MAX);
-	} else
-		status->batk = status_base_atk(bl, status, level);
+	status->batk += status_base_atk(bl, status, level);
 
 	if (status->cri) {
 		switch (bl->type) {
@@ -5951,11 +5947,11 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 	if(flag[SCB_BATK] && b_status->batk) {
 		int32 lv = status_get_lv(&bl);
 		status->batk = status_base_atk(&bl, status, lv);
+		// Calculate the difference of old and new base attack in the base status
+		// Then add the same difference to the base attack of battle status
 		temp = b_status->batk - status_base_atk(&bl, b_status, lv);
-		if (temp) {
-			temp += status->batk;
-			status->batk = cap_value(temp, 0, USHRT_MAX);
-		}
+		status->batk += temp;
+
 		status->batk = status_calc_batk(&bl, sc, status->batk);
 	}
 
@@ -7275,12 +7271,12 @@ static uint16 status_calc_crt(struct block_list *bl, status_change *sc, int32 cr
  * @param bl: Object to change batk [PC|MOB|HOM|MER|ELEM]
  * @param sc: Object's status change information
  * @param batk: Initial batk
- * @return modified batk with cap_value(batk,0,USHRT_MAX)
+ * @return Modified batk
  */
-static uint16 status_calc_batk(struct block_list *bl, status_change *sc, int32 batk)
+static int32 status_calc_batk(struct block_list *bl, status_change *sc, int32 batk)
 {
 	if(sc == nullptr || sc->empty())
-		return cap_value(batk,0,USHRT_MAX);
+		return batk;
 
 	if (sc->getSCE(SC_VOLCANO))
 		batk += sc->getSCE(SC_VOLCANO)->val2;
@@ -7311,7 +7307,7 @@ static uint16 status_calc_batk(struct block_list *bl, status_change *sc, int32 b
 	if (sc->getSCE(SC_INTENSIVE_AIM))
 		batk += 150;
 
-	return (uint16)cap_value(batk,0,USHRT_MAX);
+	return batk;
 }
 
 /**
@@ -12376,8 +12372,19 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 			val2 = (5 + 2 * val1) + (status_get_vit(src) / 10); //HP Rate: (5 + 2 * skill_lv) + (vit/10) + (BA_MUSICALLESSON level)
 			if (s_sd)
 				val2 += pc_checkskill(s_sd, BA_MUSICALLESSON) / 2;
-			break;
 		}
+		[[fallthrough]];
+		case SC_WHISTLE:
+		case SC_ASSNCROS:
+		case SC_POEMBRAGI:
+		case SC_HUMMING:
+		case SC_DONTFORGETME:
+		case SC_FORTUNE:
+		case SC_SERVICE4U:
+			// Display icon as infinite
+			tick_time = tick;
+			tick = INFINITE_TICK;
+			break;
 #endif
 		case SC_EPICLESIS:
 			val2 = 5 * val1; //HP rate bonus
@@ -14313,6 +14320,43 @@ TIMER_FUNC(status_change_timer){
 			return 0;
 		}
 		break;
+
+#ifndef RENEWAL
+		case SC_WHISTLE:
+		case SC_ASSNCROS:
+		case SC_POEMBRAGI:
+		case SC_APPLEIDUN:
+		case SC_HUMMING:
+		case SC_DONTFORGETME:
+		case SC_FORTUNE:
+		case SC_SERVICE4U:
+			if (battle_config.refresh_song == 0 && !status_isdead(*bl)) {
+				// Most songs have no interval, but they can expire while the character is still standing in the area of effect
+				// We need to make sure to restore the duration here if that's the case
+				std::shared_ptr<s_status_change_db> scdb = status_db.find(type);
+				if (scdb == nullptr)
+					break;
+				skill_unit* unit = map_find_skill_unit_oncell(bl, bl->x, bl->y, scdb->skill_id, nullptr, 1);
+				// No longer in area
+				if (unit == nullptr || !unit->alive)
+					break;
+				// Dissonance marker is set
+				if (unit->val2&(1 << UF_ENSEMBLE))
+					break;
+				// Standing in the area, but cannot affect self
+				if (unit->group->src_id == bl->id && !(sc != nullptr && sc->getSCE(SC_SPIRIT) && sc->getSCE(SC_SPIRIT)->val2 == SL_BARDDANCER))
+					break;
+				// Restore pseudo-infinite duration
+				sce->val4 = 0;
+				// Update icon duration
+				if (battle_config.refresh_song_icon == 1)
+					clif_status_change(bl, static_cast<int32>(scdb->icon), 1, INFINITE_TICK, 1, 0, 0);
+				sc_timer_next(unit->limit + tick);
+				return 0;
+			}
+			break;
+#endif
+
 	case SC_BERSERK:
 		// 5% every 10 seconds [DracoRPG]
 		if( --( sce->val3 ) > 0 && status_charge(bl, sce->val2, 0) && status->hp > 100 ) {
