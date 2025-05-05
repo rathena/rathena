@@ -3339,7 +3339,11 @@ void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_li
 			[[fallthrough]]; // Can additionally chain into TigerFist and ExtremityFist
 		case CH_CHAINCRUSH:
 			if (duration == 0 && sd->spiritball > 0) {
-				if (pc_checkskill(sd, CH_TIGERFIST) > 0) {
+				if (pc_checkskill(sd, CH_TIGERFIST) > 0
+#ifdef RENEWAL
+					&& skill_id == MO_COMBOFINISH // In renewal you can no longer use TigerFist after ChainCrush
+#endif
+				) {
 					duration = 1;
 					target_id = 0; // Will target current auto-target instead
 				}
@@ -18571,7 +18575,11 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 		case CH_TIGERFIST:
 			if (sc == nullptr || sc->getSCE(SC_COMBO) == nullptr)
 				return false;
-			if (sc->getSCE(SC_COMBO)->val1 != MO_COMBOFINISH && sc->getSCE(SC_COMBO)->val1 != CH_CHAINCRUSH)
+			if (sc->getSCE(SC_COMBO)->val1 != MO_COMBOFINISH
+#ifndef RENEWAL
+				&& sc->getSCE(SC_COMBO)->val1 != CH_CHAINCRUSH
+#endif
+			)
 				return false;
 			break;
 		case CH_CHAINCRUSH:
