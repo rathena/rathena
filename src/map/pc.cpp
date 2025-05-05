@@ -3700,8 +3700,7 @@ void pc_bonus(map_session_data *sd,int32 type,int32 val)
 				bonus = sd->bonus.eatk + val;
 				sd->bonus.eatk = cap_value(bonus, SHRT_MIN, SHRT_MAX);
 #else
-				bonus = status->batk + val;
-				status->batk = cap_value(bonus, 0, USHRT_MAX);
+				status->batk += val;
 #endif
 			}
 			break;
