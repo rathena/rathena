@@ -16157,7 +16157,7 @@ Body:
             MaxValue: 20
             Chance: 891
       - Slot: 2
-        Options
+        Options:
           - Option: CLASS_MDAMAGE_BOSS
             MinValue: 1
             MaxValue: 10
