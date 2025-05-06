@@ -3318,13 +3318,7 @@ void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_li
 			}
 			break;
 		case MO_CHAINCOMBO:
-			if (pc_checkskill(sd, MO_COMBOFINISH) > 0 && sd->spiritball > 0) {
-				duration = 1;
-				target_id = 0; // Will target current auto-target instead
-			}
-			break;
-		case CH_TIGERFIST:
-			if (pc_checkskill(sd, CH_CHAINCRUSH) > 0 && sd->spiritball > 1) {
+			if (pc_checkskill(sd, MO_COMBOFINISH) > 0 && sd->spiritball >= 1) {
 				duration = 1;
 				target_id = 0; // Will target current auto-target instead
 			}
@@ -3332,26 +3326,36 @@ void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_li
 		case MO_COMBOFINISH:
 			if (sd->status.party_id > 0) //bonus from SG_FRIEND [Komurka]
 				party_skill_check(sd, sd->status.party_id, MO_COMBOFINISH, skill_lv);
-			if (pc_checkskill(sd, CH_CHAINCRUSH) > 0 && sd->spiritball > 1) {
+			if (pc_checkskill(sd, CH_TIGERFIST) > 0 && sd->spiritball >= 1) {
 				duration = 1;
 				target_id = 0; // Will target current auto-target instead
 			}
-			[[fallthrough]]; // Can additionally chain into TigerFist and ExtremityFist
-		case CH_CHAINCRUSH:
-			if (duration == 0 && sd->spiritball > 0) {
-				if (pc_checkskill(sd, CH_TIGERFIST) > 0
-#ifdef RENEWAL
-					&& skill_id == MO_COMBOFINISH // In renewal you can no longer use TigerFist after ChainCrush
-#endif
-				) {
-					duration = 1;
-					target_id = 0; // Will target current auto-target instead
-				}
-				else if (pc_checkskill(sd, MO_EXTREMITYFIST) > 0 && sd->sc.getSCE(SC_EXPLOSIONSPIRITS) != nullptr) {
-					duration = 1;
-					target_id = 0; // Will target current auto-target instead
-				}
+			else if (pc_checkskill(sd, CH_CHAINCRUSH) > 0 && sd->spiritball >= 2) {
+				duration = 1;
+				target_id = 0; // Will target current auto-target instead
 			}
+			else if (pc_checkskill(sd, MO_EXTREMITYFIST) > 0 && sd->spiritball >= 4 && sd->sc.getSCE(SC_EXPLOSIONSPIRITS) != nullptr) {
+				duration = 1;
+				target_id = 0; // Will target current auto-target instead
+			}
+			break;
+		case CH_TIGERFIST:
+			if (pc_checkskill(sd, CH_CHAINCRUSH) > 0 && sd->spiritball >= 2) {
+				duration = 1;
+				target_id = 0; // Will target current auto-target instead
+			}
+			break;
+		case CH_CHAINCRUSH:
+			if (pc_checkskill(sd, MO_EXTREMITYFIST) > 0 && sd->spiritball >= 1 && sd->sc.getSCE(SC_EXPLOSIONSPIRITS) != nullptr) {
+				duration = 1;
+				target_id = 0; // Will target current auto-target instead
+			}
+#ifndef RENEWAL
+			else if (pc_checkskill(sd, CH_TIGERFIST) > 0 && sd->spiritball >= 1) {
+				duration = 1;
+				target_id = 0; // Will target current auto-target instead
+			}
+#endif
 			break;
 		case AC_DOUBLE:
 			if (pc_checkskill(sd, HT_POWER)) {
