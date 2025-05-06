@@ -54601,7 +54601,7 @@ Body:
   - Combos:
       - Combo:
           - Old_Midas_Whisper    # 18977
-          - aegis_490607    # 490607
+          - Document_Merchant_TH    # 490607
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
       bonus2 bAddMonsterDropItem,6212,50;
