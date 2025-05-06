@@ -54542,7 +54542,7 @@ Body:
   - Combos:
       - Combo:
           - Old_Rune_Circlet    # 18971
-          - aegis_490605    # 490605
+          - Document_Swordsman_TH    # 490605
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
       bonus2 bSkillCooldown,"RK_IGNITIONBREAK",-1500;
@@ -54551,7 +54551,7 @@ Body:
   - Combos:
       - Combo:
           - Old_Protect_Of_Crown    # 18983
-          - aegis_490605    # 490605
+          - Document_Swordsman_TH    # 490605
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
       bonus2 bSkillCooldown,"LG_EARTHDRIVE",-2500;
@@ -54560,7 +54560,7 @@ Body:
   - Combos:
       - Combo:
           - Old_Circlet_Of_Bone    # 18982
-          - aegis_490606    # 490606
+          - Document_Thief_TH    # 490606
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
       bonus2 bSkillCooldown,"GC_DARKCROW",-10000;
@@ -54569,7 +54569,7 @@ Body:
   - Combos:
       - Combo:
           - Old_Shadow_Handicraft    # 18975
-          - aegis_490606    # 490606
+          - Document_Thief_TH    # 490606
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
       skill "RA_UNLIMIT",1;
@@ -54582,7 +54582,7 @@ Body:
   - Combos:
       - Combo:
           - Old_Driver_Band_R    # 18973
-          - aegis_490607    # 490607
+          - Document_Merchant_TH    # 490607
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
       bonus2 bSkillCooldown,"NC_AXETORNADO",-1000;
@@ -54591,7 +54591,7 @@ Body:
   - Combos:
       - Combo:
           - Old_Driver_Band_Y    # 18974
-          - aegis_490607    # 490607
+          - Document_Merchant_TH    # 490607
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
       bonus2 bVariableCastrate,"NC_ARMSCANNON",-100;
@@ -54610,7 +54610,7 @@ Body:
   - Combos:
       - Combo:
           - Old_Magic_Stone_Hat    # 18978
-          - aegis_490608    # 490608
+          - Document_Mage_TH    # 490608
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
       bonus bDelayrate,-15;
@@ -54619,7 +54619,7 @@ Body:
   - Combos:
       - Combo:
           - Old_Wind_Whisper    # 18980
-          - aegis_490608    # 490608
+          - Document_Mage_TH    # 490608
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
       bonus bDelayrate,-15;
@@ -54628,7 +54628,7 @@ Body:
   - Combos:
       - Combo:
           - Old_Camo_RabbitHood    # 18984
-          - aegis_490609    # 490609
+          - Document_Archer_TH    # 490609
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
       bonus bDelayrate,-15;
@@ -54637,10 +54637,10 @@ Body:
   - Combos:
       - Combo:
           - Old_Minstrel_Song_Hat    # 18976
-          - aegis_490609    # 490609
+          - Document_Archer_TH    # 490609
       - Combo:
           - Old_Dying_Swan    # 18981
-          - aegis_490609    # 490609
+          - Document_Archer_TH    # 490609
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
       bonus2 bSkillUseSP,"WM_SEVERE_RAINSTORM",60;
@@ -54649,7 +54649,7 @@ Body:
   - Combos:
       - Combo:
           - Old_Mitra    # 18972
-          - aegis_490610    # 490610
+          - Document_Acolyte_TH    # 490610
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
       bonus bDelayrate,-15;
@@ -54658,7 +54658,7 @@ Body:
   - Combos:
       - Combo:
           - Old_Blazing_Soul    # 18979
-          - aegis_490610    # 490610
+          - Document_Acolyte_TH    # 490610
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
       bonus4 bAutoSpellOnSkill,"SR_RAMPAGEBLASTER","CH_SOULCOLLECT",1,1000;
