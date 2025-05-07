@@ -18587,7 +18587,7 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 			// In Pre-Renewal Tiger Fist can be used after Combo Finish or after Chain Crush Combo
 			if (sc->getSCE(SC_COMBO)->val1 != MO_COMBOFINISH && sc->getSCE(SC_COMBO)->val1 != CH_CHAINCRUSH)
 				return false;
-				return false;
+#endif
 			break;
 		case CH_CHAINCRUSH:
 			if(!(sc && sc->getSCE(SC_COMBO)))
