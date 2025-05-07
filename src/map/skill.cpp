@@ -3325,7 +3325,7 @@ void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_li
 			break;
 		case MO_COMBOFINISH:
 			if (sd->status.party_id > 0) //bonus from SG_FRIEND [Komurka]
-				party_skill_check(sd, sd->status.party_id, MO_COMBOFINISH, skill_lv);
+				party_skill_check(sd, sd->status.party_id, skill_id, skill_lv);
 			if (pc_checkskill(sd, CH_TIGERFIST) > 0 && sd->spiritball >= 1) {
 				duration = 1;
 				target_id = 0; // Will target current auto-target instead
@@ -18579,11 +18579,14 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 		case CH_TIGERFIST:
 			if (sc == nullptr || sc->getSCE(SC_COMBO) == nullptr)
 				return false;
-			if (sc->getSCE(SC_COMBO)->val1 != MO_COMBOFINISH
-#ifndef RENEWAL
-				&& sc->getSCE(SC_COMBO)->val1 != CH_CHAINCRUSH
-#endif
-			)
+#ifdef RENEWAL
+			// In Renewal Tiger Fist can only be used after Combo Finish
+			if (sc->getSCE(SC_COMBO)->val1 != MO_COMBOFINISH)
+				return false;
+#else
+			// In Pre-Renewal Tiger Fist can be used after Combo Finish or after Chain Crush Combo
+			if (sc->getSCE(SC_COMBO)->val1 != MO_COMBOFINISH && sc->getSCE(SC_COMBO)->val1 != CH_CHAINCRUSH)
+				return false;
 				return false;
 			break;
 		case CH_CHAINCRUSH:
