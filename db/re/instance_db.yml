@@ -583,3 +583,9 @@ Body:
       Map: 1@exsh
       X: 90
       Y: 35
+  - Id: 80
+    Name: Remnant's Base Camp
+    Enter:
+      Map: 1@ffp
+      X: 257
+      Y: 246
