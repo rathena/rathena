@@ -27309,6 +27309,11 @@ BUILDIN_FUNC(item_enchant){
 		return SCRIPT_CMD_FAILURE;
 	}
 
+	if( sd->itemid != 0 && item_db.find( sd->itemid )->flag.delay_consume == 0 ){
+		ShowError( "buildin_item_enchant: Called from item %u, which is not a DelayConsume type.\n", sd->itemid );
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	clif_enchantwindow_open( *sd, clientLuaIndex );
 
 	return SCRIPT_CMD_SUCCESS;
