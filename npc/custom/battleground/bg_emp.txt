@@ -41,8 +41,8 @@ OnStart:
 	mapannounce "bat_a01", "Start!", bc_map;
 
 	// spawn Emperiums
-	bg_monster .red,"bat_a01",171,346, "--ja--",1915, strnpcinfo(3)+"::OnRedDown";
-	bg_monster .blue,"bat_a01",162,50, "--ja--",1914, strnpcinfo(3)+"::OnBlueDown";
+	bg_monster .red,"bat_a01",171,346, "--en--",1915, strnpcinfo(3)+"::OnRedDown";
+	bg_monster .blue,"bat_a01",162,50, "--en--",1914, strnpcinfo(3)+"::OnBlueDown";
 	delwall "bg_emp_town_red";
 	delwall "bg_emp_town_blue";
 

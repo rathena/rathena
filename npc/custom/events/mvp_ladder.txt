@@ -183,7 +183,7 @@ OnMvpDead:
 	sleep .delay * 1000;
 	if ( .mvpid[.round] == 1646 )  // pick random Bio3 MVP
 		.mvpid[.round] = rand(1646,1651);
-	monster .eventmap$,0,0, "--ja--", .mvpid[.round], 1, strnpcinfo(0)+"::OnMvpDead";
+	monster .eventmap$,0,0, "--en--", .mvpid[.round], 1, strnpcinfo(0)+"::OnMvpDead";
 	mapannounce .eventmap$, getmonsterinfo( .mvpid[.round], MOB_NAME ) +" has spawned!", bc_map|bc_blue;
 	end;
 

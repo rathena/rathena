@@ -906,24 +906,24 @@ S_Spawn:
 	.@mob_id = getarg(1);
 	.@label$ = instance_npcname("#glast_event_9") + "::OnMobDead";
 	if (getarg(0) == 1) {
-		monster 'map_glast$,43,355, "--ja--", .@mob_id,1, .@label$;
-		monster 'map_glast$,39,361, "--ja--", .@mob_id,1, .@label$;
-		monster 'map_glast$,48,361, "--ja--", .@mob_id,1, .@label$;
-		monster 'map_glast$,43,363, "--ja--", .@mob_id,1, .@label$;
+		monster 'map_glast$,43,355, "--en--", .@mob_id,1, .@label$;
+		monster 'map_glast$,39,361, "--en--", .@mob_id,1, .@label$;
+		monster 'map_glast$,48,361, "--en--", .@mob_id,1, .@label$;
+		monster 'map_glast$,43,363, "--en--", .@mob_id,1, .@label$;
 	}
 	else {
-		monster 'map_glast$,37,360, "--ja--", .@mob_id,1, .@label$;
-		monster 'map_glast$,37,362, "--ja--", .@mob_id,1, .@label$;
-		monster 'map_glast$,37,364, "--ja--", .@mob_id,1, .@label$;
-		monster 'map_glast$,37,366, "--ja--", .@mob_id,1, .@label$;
-		monster 'map_glast$,37,368, "--ja--", .@mob_id,1, .@label$;
-		monster 'map_glast$,41,371, "--ja--", .@mob_id,1, .@label$;
-		monster 'map_glast$,50,360, "--ja--", .@mob_id,1, .@label$;
-		monster 'map_glast$,50,362, "--ja--", .@mob_id,1, .@label$;
-		monster 'map_glast$,50,364, "--ja--", .@mob_id,1, .@label$;
-		monster 'map_glast$,50,366, "--ja--", .@mob_id,1, .@label$;
-		monster 'map_glast$,50,368, "--ja--", .@mob_id,1, .@label$;
-		monster 'map_glast$,46,371, "--ja--", .@mob_id,1, .@label$;
+		monster 'map_glast$,37,360, "--en--", .@mob_id,1, .@label$;
+		monster 'map_glast$,37,362, "--en--", .@mob_id,1, .@label$;
+		monster 'map_glast$,37,364, "--en--", .@mob_id,1, .@label$;
+		monster 'map_glast$,37,366, "--en--", .@mob_id,1, .@label$;
+		monster 'map_glast$,37,368, "--en--", .@mob_id,1, .@label$;
+		monster 'map_glast$,41,371, "--en--", .@mob_id,1, .@label$;
+		monster 'map_glast$,50,360, "--en--", .@mob_id,1, .@label$;
+		monster 'map_glast$,50,362, "--en--", .@mob_id,1, .@label$;
+		monster 'map_glast$,50,364, "--en--", .@mob_id,1, .@label$;
+		monster 'map_glast$,50,366, "--en--", .@mob_id,1, .@label$;
+		monster 'map_glast$,50,368, "--en--", .@mob_id,1, .@label$;
+		monster 'map_glast$,46,371, "--en--", .@mob_id,1, .@label$;
 	}
 	return;
 }
