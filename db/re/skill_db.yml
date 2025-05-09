@@ -5112,6 +5112,7 @@ Body:
         Time: 60000
       - Level: 10
         Time: 60000
+    Duration2: 60000
     Requires:
       SpCost:
         - Level: 1

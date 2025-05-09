@@ -10766,11 +10766,7 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 			}
 			break;
 		case SC_POISONREACT:
-#ifdef RENEWAL
-			val2 = (val1 + 1) / 2; // Number of Envenom autocasts
-#else
 			val2 = val1 / 2; // Number of Envenom autocasts
-#endif
 			val3 = 50; // Chance to autocast Envenom on hit
 			val4 = 0; // 0: Counter Mode; 1: Damage Boost Mode
 			break;

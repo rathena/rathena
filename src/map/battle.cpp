@@ -4649,12 +4649,15 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			skillratio += 200;
 #endif
 		if (!skill_id || skill_id == KN_AUTOCOUNTER) {
-			if (sc->getSCE(SC_POISONREACT) != nullptr && sc->getSCE(SC_POISONREACT)->val4 == 1) {
+			if (status_change_entry* sce = sc->getSCE(SC_POISONREACT); sce != nullptr && sce->val4 == 1) {
 				// Damage boost from poison react (bonus depends on level learned)
 				if (sd != nullptr)
 					skillratio += 30 * pc_checkskill(sd, AS_POISONREACT);
 				else
-					skillratio += 30 * sc->getSCE(SC_POISONREACT)->val1;
+					skillratio += 30 * sce->val1;
+				// This attack has a 50% chance to cause poison
+				// TODO: Effect should be delayed by attack motion
+				sc_start2(src, target, SC_POISON, 50, sce->val1, src->id, skill_get_time2(AS_POISONREACT, sce->val1));
 				status_change_end(src, SC_POISONREACT);
 			}
 			if (sc->getSCE(SC_CRUSHSTRIKE)) {
@@ -8034,6 +8037,17 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 			wd.damage2 += battle_calc_cardfix(BF_WEAPON, src, target, nk, right_element, left_element, wd.damage2, 1, wd.flag);
 	}
 
+	// For some reason the Envenom autocast from Poison React happens at this point rather than after attack motion
+	if (tsc != nullptr && wd.damage + wd.damage2 > 0) {
+		if (status_change_entry* sce = tsc->getSCE(SC_POISONREACT); sce != nullptr && rnd_chance_official(sce->val3, 100)) {
+			// Cast Envenom Level 5
+			if (status_check_skilluse(target, src, TF_POISON, 0))
+				skill_attack(BF_WEAPON, target, target, src, TF_POISON, 5, gettick(), 0);
+			if (--sce->val2 <= 0)
+				status_change_end(target, SC_POISONREACT);
+		}
+	}
+
 	// only do 1 dmg to plant, no need to calculate rest
 	if(infdef){
 		battle_calc_attack_plant(&wd, src, target, skill_id, skill_lv);
@@ -10519,8 +10533,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			sce->val4 = 1;
 
 			// The target will start attacking instead of the source
-			if (tsd != nullptr)
-				clif_movetoattack(*tsd, *src);
+			unit_attack(target, src->id, 0);
 
 			return ATK_BLOCK;
 		}
@@ -11045,18 +11058,6 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				battle_drain(sd, target, wd.damage, wd.damage, tstatus->race, tstatus->class_);
 			else
 				battle_drain(sd, target, wd.damage, wd.damage2, tstatus->race, tstatus->class_);
-		}
-	}
-
-	if (tsc) {
-		if (damage > 0 && tsc->getSCE(SC_POISONREACT) &&
-			rnd()%100 < tsc->getSCE(SC_POISONREACT)->val3 &&
-			status_check_skilluse(target, src, TF_POISON, 0)
-		) {	//Poison React
-			struct status_change_entry *sce = tsc->getSCE(SC_POISONREACT);
-			skill_attack(BF_WEAPON, target, target, src, TF_POISON, 5, tick, 0);
-			if (--sce->val2 <= 0)
-				status_change_end(target, SC_POISONREACT);
 		}
 	}
 
