@@ -635,7 +635,7 @@ int32 map_count_oncell(int16 m, int16 x, int16 y, int32 type, int32 flag)
 			if(bl->x == x && bl->y == y && bl->type&type) {
 				if (bl->type == BL_NPC) {	// Don't count hidden or invisible npc. Cloaked npc are counted
 					npc_data *nd = BL_CAST(BL_NPC, bl);
-					if (nd->bl.m < 0 || nd->sc.option&OPTION_HIDE || nd->dynamicnpc.owner_char_id != 0)
+					if (nd->m < 0 || nd->sc.option&OPTION_HIDE || nd->dynamicnpc.owner_char_id != 0)
 						continue;
 				}
 				if(flag&1) {
@@ -686,7 +686,7 @@ struct skill_unit* map_find_skill_unit_oncell(struct block_list* target,int16 x,
 		unit = (struct skill_unit *) bl;
 		if( unit == out_unit || !unit->alive || !unit->group || unit->group->skill_id != skill_id )
 			continue;
-		if( !(flag&1) || battle_check_target(&unit->bl,target,unit->group->target_flag) > 0 )
+		if( !(flag&1) || battle_check_target(unit,target,unit->group->target_flag) > 0 )
 			return unit;
 	}
 	return nullptr;
@@ -1671,7 +1671,7 @@ int32 map_get_new_object_id(void)
 TIMER_FUNC(map_clearflooritem_timer){
 	struct flooritem_data* fitem = (struct flooritem_data*)idb_get(id_db, id);
 
-	if (fitem == nullptr || fitem->bl.type != BL_ITEM || (fitem->cleartimer != tid)) {
+	if (fitem == nullptr || fitem->type != BL_ITEM || (fitem->cleartimer != tid)) {
 		ShowError("map_clearflooritem_timer : error\n");
 		return 1;
 	}
@@ -1681,9 +1681,9 @@ TIMER_FUNC(map_clearflooritem_timer){
 		intif_delete_petdata(MakeDWord(fitem->item.card[1], fitem->item.card[2]));
 
 	clif_clearflooritem( *fitem );
-	map_deliddb(&fitem->bl);
-	map_delblock(&fitem->bl);
-	map_freeblock(&fitem->bl);
+	map_deliddb(fitem);
+	map_delblock(fitem);
+	map_freeblock(fitem);
 	return 0;
 }
 
@@ -1697,9 +1697,9 @@ void map_clearflooritem(struct block_list *bl) {
 		delete_timer(fitem->cleartimer,map_clearflooritem_timer);
 
 	clif_clearflooritem( *fitem );
-	map_deliddb(&fitem->bl);
-	map_delblock(&fitem->bl);
-	map_freeblock(&fitem->bl);
+	map_deliddb(fitem);
+	map_delblock(fitem);
+	map_freeblock(fitem);
 }
 
 /**
@@ -2017,13 +2017,13 @@ int32 map_addflooritem(struct item *item, int32 amount, int16 m, int16 x, int16 
 	}
 
 	CREATE(fitem, struct flooritem_data, 1);
-	fitem->bl.type=BL_ITEM;
-	fitem->bl.prev = fitem->bl.next = nullptr;
-	fitem->bl.m=m;
-	fitem->bl.x=x;
-	fitem->bl.y=y;
-	fitem->bl.id = map_get_new_object_id();
-	if (fitem->bl.id==0) {
+	fitem->type=BL_ITEM;
+	fitem->prev = fitem->next = nullptr;
+	fitem->m=m;
+	fitem->x=x;
+	fitem->y=y;
+	fitem->id = map_get_new_object_id();
+	if (fitem->id==0) {
 		aFree(fitem);
 		return 0;
 	}
@@ -2054,14 +2054,14 @@ int32 map_addflooritem(struct item *item, int32 amount, int16 m, int16 x, int16 
 	fitem->item.amount = amount;
 	fitem->subx = rnd_value(1, 4) * 3;
 	fitem->suby = rnd_value(1, 4) * 3;
-	fitem->cleartimer = add_timer(gettick()+battle_config.flooritem_lifetime,map_clearflooritem_timer,fitem->bl.id,0);
+	fitem->cleartimer = add_timer(gettick()+battle_config.flooritem_lifetime,map_clearflooritem_timer,fitem->id,0);
 
-	map_addiddb(&fitem->bl);
-	if (map_addblock(&fitem->bl))
+	map_addiddb(fitem);
+	if (map_addblock(fitem))
 		return 0;
 	clif_dropflooritem(fitem,canShowEffect);
 
-	return fitem->bl.id;
+	return fitem->id;
 }
 
 /**
@@ -2162,7 +2162,7 @@ void map_addiddb(struct block_list *bl)
 	if( bl->type == BL_PC )
 	{
 		TBL_PC* sd = (TBL_PC*)bl;
-		idb_put(pc_db,sd->bl.id,sd);
+		idb_put(pc_db,sd->id,sd);
 		uidb_put(charid_db,sd->status.char_id,sd);
 	}
 	else if( bl->type == BL_MOB )
@@ -2190,7 +2190,7 @@ void map_deliddb(struct block_list *bl)
 	if( bl->type == BL_PC )
 	{
 		TBL_PC* sd = (TBL_PC*)bl;
-		idb_remove(pc_db,sd->bl.id);
+		idb_remove(pc_db,sd->id);
 		uidb_remove(charid_db,sd->status.char_id);
 	}
 	else if( bl->type == BL_MOB )
@@ -2262,20 +2262,20 @@ int32 map_quit(map_session_data *sd) {
 
 			//No need to save infinite status
 			if (flag[SCF_NOSAVEINFINITE] && sd->sc.getSCE(it.first) && sd->sc.getSCE(it.first)->val4 > 0) {
-				status_change_end(&sd->bl, static_cast<sc_type>(it.first));
+				status_change_end(sd, static_cast<sc_type>(it.first));
 				continue;
 			}
 
 			//Status that are not saved
 			if (flag[SCF_NOSAVE]) {
-				status_change_end(&sd->bl, static_cast<sc_type>(it.first));
+				status_change_end(sd, static_cast<sc_type>(it.first));
 				continue;
 			}
 			//Removes status by config
 			if (battle_config.debuff_on_logout&1 && flag[SCF_DEBUFF] || //Removes debuffs
 				(battle_config.debuff_on_logout&2 && !(flag[SCF_DEBUFF]))) //Removes buffs
 			{
-				status_change_end(&sd->bl, static_cast<sc_type>(it.first));
+				status_change_end(sd, static_cast<sc_type>(it.first));
 				continue;
 			}
 		}
@@ -2298,7 +2298,7 @@ int32 map_quit(map_session_data *sd) {
 
 	if (sd->state.permanent_speed == 1) sd->state.permanent_speed = 0; // Remove lock so speed is set back to normal at login.
 
-	struct map_data *mapdata = map_getmapdata(sd->bl.m);
+	struct map_data *mapdata = map_getmapdata(sd->m);
 
 	if( mapdata->instance_id > 0 )
 		instance_delusers(mapdata->instance_id);
@@ -2466,7 +2466,7 @@ struct mob_data * map_getmob_boss(int16 m)
 	iter = db_iterator(bossid_db);
 	for( md = (struct mob_data*)dbi_first(iter); dbi_exists(iter); md = (struct mob_data*)dbi_next(iter) )
 	{
-		if( md->bl.m == m )
+		if( md->m == m )
 		{
 			found = true;
 			break;
@@ -2799,7 +2799,7 @@ bool map_addnpc(int16 m,struct npc_data *nd)
 		}
 	}
 	mapdata->npc_num++;
-	idb_put(id_db,nd->bl.id,nd);
+	idb_put(id_db,nd->id,nd);
 	return true;
 }
 
@@ -3037,7 +3037,7 @@ int32 map_removemobs_sub(struct block_list *bl, va_list ap)
 	if( md->get_bosstype() == BOSSTYPE_MVP )
 		return 0;
 
-	unit_free(&md->bl,CLR_OUTSIGHT);
+	unit_free(md,CLR_OUTSIGHT);
 
 	return 1;
 }
@@ -3513,17 +3513,17 @@ void map_iwall_get(map_session_data *sd) {
 	int16 x1, y1;
 	int32 i;
 
-	if( map_getmapdata(sd->bl.m)->iwall_num < 1 )
+	if( map_getmapdata(sd->m)->iwall_num < 1 )
 		return;
 
 	iter = db_iterator(iwall_db);
 	for( iwall = (struct iwall_data *)dbi_first(iter); dbi_exists(iter); iwall = (struct iwall_data *)dbi_next(iter) ) {
-		if( iwall->m != sd->bl.m )
+		if( iwall->m != sd->m )
 			continue;
 
 		for( i = 0; i < iwall->size; i++ ) {
 			map_iwall_nextxy(iwall->x, iwall->y, iwall->dir, i, &x1, &y1);
-			clif_changemapcell( iwall->m, x1, y1, map_getcell( iwall->m, x1, y1, CELL_GETTYPE ), SELF, &sd->bl );
+			clif_changemapcell( iwall->m, x1, y1, map_getcell( iwall->m, x1, y1, CELL_GETTYPE ), SELF, sd );
 		}
 	}
 	dbi_destroy(iter);
@@ -4068,12 +4068,12 @@ int32 parse_console(const char* buf){
 				ShowWarning("Console: Unknown map.\n");
 				return 0;
 			}
-			sd.bl.m = m;
-			map_search_freecell(&sd.bl, m, &sd.bl.x, &sd.bl.y, -1, -1, 0);
+			sd.m = m;
+			map_search_freecell(&sd, m, &sd.x, &sd.y, -1, -1, 0);
 			if( x > 0 )
-				sd.bl.x = x;
+				sd.x = x;
 			if( y > 0 )
-				sd.bl.y = y;
+				sd.y = y;
 			ShowNotice("Now at: '%s' Coords: %d %d\n", mapname, x, y);
 		}
 		else if( !is_atcommand(sd.fd, &sd, command, 2) )
@@ -4458,7 +4458,7 @@ void map_remove_questinfo(int32 m, struct npc_data *nd) {
 	nullpo_retv(nd);
 	nullpo_retv(mapdata);
 
-	util::vector_erase_if_exists(mapdata->qi_npc, nd->bl.id);
+	util::vector_erase_if_exists(mapdata->qi_npc, nd->id);
 	nd->qi_data.clear();
 }
 
@@ -4583,7 +4583,7 @@ static int32 map_mapflag_pvp_start_sub(struct block_list *bl, va_list ap)
 	nullpo_retr(0, sd);
 
 	if (sd->pvp_timer == INVALID_TIMER) {
-		sd->pvp_timer = add_timer(gettick() + 200, pc_calc_pvprank_timer, sd->bl.id, 0);
+		sd->pvp_timer = add_timer(gettick() + 200, pc_calc_pvprank_timer, sd->id, 0);
 		sd->pvp_rank = 0;
 		sd->pvp_lastusers = 0;
 		sd->pvp_point = 5;
@@ -4591,7 +4591,7 @@ static int32 map_mapflag_pvp_start_sub(struct block_list *bl, va_list ap)
 		sd->pvp_lost = 0;
 	}
 
-	clif_map_property(&sd->bl, MAPPROPERTY_FREEPVPZONE, SELF);
+	clif_map_property(sd, MAPPROPERTY_FREEPVPZONE, SELF);
 	return 0;
 }
 

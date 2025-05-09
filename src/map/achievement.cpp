@@ -684,7 +684,7 @@ void achievement_get_reward(map_session_data *sd, int32 achievement_id, time_t r
 	sd->achievement_data.achievements[i].rewarded = rewarded;
 	sd->achievement_data.save = true;
 
-	run_script(adb->rewards.script, 0, sd->bl.id, fake_nd->bl.id);
+	run_script(adb->rewards.script, 0, sd->id, fake_nd->id);
 	if (adb->rewards.title_id) {
 		sd->titles.push_back(adb->rewards.title_id);
 		clif_achievement_list_all(sd);
@@ -882,7 +882,7 @@ bool achievement_check_condition( struct script_code* condition, map_session_dat
 		script_detach_rid(previous_st);
 	}
 
-	run_script( condition, 0, sd->bl.id, fake_nd->bl.id );
+	run_script( condition, 0, sd->id, fake_nd->id );
 
 	struct script_state* st = sd->st;
 
@@ -897,7 +897,7 @@ bool achievement_check_condition( struct script_code* condition, map_session_dat
 	// If an old script is present
 	if( previous_st != nullptr ){
 		// Because of detach the RID will be removed, so we need to restore it
-		previous_st->rid = sd->bl.id;
+		previous_st->rid = sd->id;
 
 		// Reattach the player to it, so that the limitations of that script kick back in
 		script_attach_state( previous_st );

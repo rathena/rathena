@@ -125,7 +125,7 @@ void searchstore_query(map_session_data& sd, e_searchstore_searchtype type, uint
 		return;
 
 	if( ( store_searchall = searchstore_getsearchallfunc(type) ) == nullptr ) {
-		ShowError("searchstore_query: Unknown search type %u (account_id=%d).\n", type, sd.bl.id);
+		ShowError("searchstore_query: Unknown search type %u (account_id=%d).\n", type, sd.id);
 		return;
 	}
 
@@ -189,7 +189,7 @@ void searchstore_query(map_session_data& sd, e_searchstore_searchtype type, uint
 			continue;
 
 		// Skip stores that are not in the map defined by the search
-		if (sd.searchstore.mapid != 0 && pl_sd->bl.m != sd.searchstore.mapid) {
+		if (sd.searchstore.mapid != 0 && pl_sd->m != sd.searchstore.mapid) {
 			continue;
 		}
 
@@ -294,7 +294,7 @@ void searchstore_click(map_session_data& sd, uint32 account_id, int32 store_id, 
 
 	ARR_FIND( 0, sd.searchstore.items.size(), i, sd.searchstore.items[i]->store_id == store_id && sd.searchstore.items[i]->account_id == account_id && sd.searchstore.items[i]->nameid == nameid );
 	if( i == sd.searchstore.items.size() ) { // no such result, crafted
-		ShowWarning("searchstore_click: Received request with item %u of account %d, which is not part of current result set (account_id=%d, char_id=%d).\n", nameid, account_id, sd.bl.id, sd.status.char_id);
+		ShowWarning("searchstore_click: Received request with item %u of account %d, which is not part of current result set (account_id=%d, char_id=%d).\n", nameid, account_id, sd.id, sd.status.char_id);
 		clif_search_store_info_failed(sd, SSI_FAILED_SSILIST_CLICK_TO_OPEN_STORE);
 		return;
 	}
@@ -319,10 +319,10 @@ void searchstore_click(map_session_data& sd, uint32 account_id, int32 store_id, 
 	switch( sd.searchstore.effect ) {
 		case SEARCHSTORE_EFFECT_NORMAL:
 			// display coords
-			if( sd.bl.m != pl_sd->bl.m ) // not on same map, wipe previous marker
+			if( sd.m != pl_sd->m ) // not on same map, wipe previous marker
 				clif_search_store_info_click_ack(sd, -1, -1);
 			else
-				clif_search_store_info_click_ack(sd, pl_sd->bl.x, pl_sd->bl.y);
+				clif_search_store_info_click_ack(sd, pl_sd->x, pl_sd->y);
 			break;
 		case SEARCHSTORE_EFFECT_REMOTE:
 			// open remotely
@@ -336,7 +336,7 @@ void searchstore_click(map_session_data& sd, uint32 account_id, int32 store_id, 
 			break;
 		default:
 			// unknown
-			ShowError("searchstore_click: Unknown search store effect %u (account_id=%d).\n", sd.searchstore.effect, sd.bl.id);
+			ShowError("searchstore_click: Unknown search store effect %u (account_id=%d).\n", sd.searchstore.effect, sd.id);
 	}
 }
 
