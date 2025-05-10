@@ -1170,6 +1170,7 @@ Body:
     Flags:
       NoSave: true
       RequireWeapon: true
+      RemoveOnUnequipWeapon: true
       RemoveOnHermode: true
   - Status: Parrying
     Icon: EFST_PARRYING
@@ -1192,6 +1193,7 @@ Body:
       Quicken: true
     Flags:
       NoSave: true
+      RemoveOnUnequip: true
       RemoveOnHermode: true
   - Status: Tensionrelax
     Icon: EFST_TENSIONRELAX
