@@ -4541,16 +4541,6 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 				wd->div_ = 3;
 			}
 			break;
-#ifdef RENEWAL
-		case AS_POISONREACT:
-			skill_lv = pc_checkskill(sd, TF_DOUBLE);
-			if (skill_lv > 0) {
-				if(rnd()%100 < (7 * skill_lv)) {
-					wd->div_++;
-				}
-			}
-		break;
-#endif
 		case NW_SPIRAL_SHOOTING:
 			if (sd && sd->weapontype1 == W_GRENADE)
 				wd->div_ += 1;
@@ -4659,6 +4649,17 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			skillratio += 200;
 #endif
 		if (!skill_id || skill_id == KN_AUTOCOUNTER) {
+			if (status_change_entry* sce = sc->getSCE(SC_POISONREACT); sce != nullptr && sce->val4 == 1) {
+				// Damage boost from poison react (bonus depends on level learned)
+				if (sd != nullptr)
+					skillratio += 30 * pc_checkskill(sd, AS_POISONREACT);
+				else
+					skillratio += 30 * sce->val1;
+				// This attack has a 50% chance to cause poison
+				// TODO: Effect should be delayed by attack motion
+				sc_start2(src, target, SC_POISON, 50, sce->val1, src->id, skill_get_time2(AS_POISONREACT, sce->val1));
+				status_change_end(src, SC_POISONREACT);
+			}
 			if (sc->getSCE(SC_CRUSHSTRIKE)) {
 				if (sd) { //ATK [{Weapon Level * (Weapon Upgrade Level + 6) * 100} + (Weapon ATK) + (Weapon Weight)]%
 					int16 index = sd->equip_index[EQI_HAND_R];
@@ -4763,9 +4764,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			break;
 		case AS_GRIMTOOTH:
 			skillratio += 20 * skill_lv;
-			break;
-		case AS_POISONREACT:
-			skillratio += 30 * skill_lv;
 			break;
 		case AS_SONICBLOW:
 #ifdef RENEWAL
@@ -8039,6 +8037,17 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 			wd.damage2 += battle_calc_cardfix(BF_WEAPON, src, target, nk, right_element, left_element, wd.damage2, 1, wd.flag);
 	}
 
+	// For some reason the Envenom autocast from Poison React happens at this point rather than after attack motion
+	if (tsc != nullptr && wd.damage + wd.damage2 > 0) {
+		if (status_change_entry* sce = tsc->getSCE(SC_POISONREACT); sce != nullptr && rnd_chance_official(sce->val3, 100)) {
+			// Cast Envenom Level 5
+			if (status_check_skilluse(target, src, TF_POISON, 0))
+				skill_attack(BF_WEAPON, target, target, src, TF_POISON, 5, gettick(), 0);
+			if (--sce->val2 <= 0)
+				status_change_end(target, SC_POISONREACT);
+		}
+	}
+
 	// only do 1 dmg to plant, no need to calculate rest
 	if(infdef){
 		battle_calc_attack_plant(&wd, src, target, skill_id, skill_lv);
@@ -10517,6 +10526,19 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		}
 	}
 
+	// Poison React counter activates on normal poison attacks as well as attacks from poison-element enemies
+	if (tsc != nullptr && (sstatus->def_ele == ELE_POISON || sstatus->rhw.ele == ELE_POISON)) {
+		if (status_change_entry* sce = tsc->getSCE(SC_POISONREACT); sce != nullptr && sce->val4 == 0) {
+			// Next normal attack will receive a damage boost
+			sce->val4 = 1;
+
+			// The target will start attacking instead of the source
+			unit_attack(target, src->id, 0);
+
+			return ATK_BLOCK;
+		}
+	}
+
 	if( tsc && tsc->getSCE(SC_BLADESTOP_WAIT) &&
 #ifndef RENEWAL
 		status_get_class_(src) != CLASS_BOSS &&
@@ -11036,26 +11058,6 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				battle_drain(sd, target, wd.damage, wd.damage, tstatus->race, tstatus->class_);
 			else
 				battle_drain(sd, target, wd.damage, wd.damage2, tstatus->race, tstatus->class_);
-		}
-	}
-
-	if (tsc) {
-		if (damage > 0 && tsc->getSCE(SC_POISONREACT) &&
-			(rnd()%100 < tsc->getSCE(SC_POISONREACT)->val3
-			|| sstatus->def_ele == ELE_POISON) &&
-//			check_distance_bl(src, target, tstatus->rhw.range+1) && Doesn't checks range! o.O;
-			status_check_skilluse(target, src, TF_POISON, 0)
-		) {	//Poison React
-			struct status_change_entry *sce = tsc->getSCE(SC_POISONREACT);
-			if (sstatus->def_ele == ELE_POISON) {
-				sce->val2 = 0;
-				skill_attack(BF_WEAPON,target,target,src,AS_POISONREACT,sce->val1,tick,0);
-			} else {
-				skill_attack(BF_WEAPON,target,target,src,TF_POISON, 5, tick, 0);
-				--sce->val2;
-			}
-			if (sce->val2 <= 0)
-				status_change_end(target, SC_POISONREACT);
 		}
 	}
 
