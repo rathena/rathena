@@ -93,6 +93,7 @@ struct s_npc_barter_item{
 	bool stockLimited;
 	uint32 stock;
 	uint32 price;
+	int8 refine;
 	std::map<uint16, std::shared_ptr<s_npc_barter_requirement>> requirements;
 };
 
@@ -111,7 +112,7 @@ struct s_npc_barter{
 
 class BarterDatabase : public TypesafeYamlDatabase<std::string, s_npc_barter>{
 public:
-	BarterDatabase() : TypesafeYamlDatabase( "BARTER_DB", 1 ){
+	BarterDatabase() : TypesafeYamlDatabase( "BARTER_DB", 2, 1 ){
 
 	}
 
