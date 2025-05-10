@@ -1,0 +1,1538 @@
+//===== rAthena Script =======================================
+//= Instance: Airship Destruction.
+//===== Description: =========================================
+//- [Walkthrough conversion]
+//- Daily instance for episode 19.
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Atemo]
+//============================================================
+
+jor_nest,19,259,6	script	Non-fairy wire#whl	CLEAR_NPC,{ 
+	mes "^0000ffThere is no such thing as an entrance to the airship. I think the only way is to penetrate it through a rope that seems to be used to fix the airship.^000000";
+	close;
+}
+
+// ep19_main = 33 unlock Airship Destruction Instance (step 35).
+jor_nest,22,255,6	script	Rope#whl	4_ROPEPILE,{
+	if (ep19_main < 33) {
+		mes "^0000ffThere is a rope that appears to have been used to secure the aircraft.^000000";
+		close;
+	}
+	if (isbegin_quest(17637) == 0) {
+		select( "Near the rope, open the note that Reiji gave you" );
+		mes "^0000ffThere is a lot of messy graffiti and billing, etc. ^000000";
+		next;
+		while( select( "Open the back of the note and take a closer look", "Should I throw it away because it looks useless?" ) == 2 ) {
+			mes "There are corners that are not quite clear enough to just throw them away.";
+			next;
+		}
+		cutin "ep19_leizi02.png",2;
+		mes "[Reiji]";
+		mes "Oh, you seem to have found some important phrases. I hope you understand that I didn't have time to write in detail, my friend.";
+		next;
+		cutin "ep19_leizi03.png",2;
+		mes "[Reiji]";
+		mes "Let's start with the main point. Illusion is using it as if it were mine. I can't break it.";
+		next;
+		select( "Combine different sentences between doodles." );
+		cutin "ep19_leizi02.png",2;
+		mes "[Reiji]";
+		mes "Oh, that's Ginger's advice. It's not the person who drives and controls the airship.";
+		next;
+		select( "Look at the other slightly discolored parts." );
+		mes "[Reiji]";
+		mes "Let's see. According to Ginger's analysis report, since the energy core type of artificial intelligence capable of infinite self-healing, it is said that this is an energy source with full intelligence.";
+		next;
+		cutin "ep19_leizi03.png",2;
+		mes "[Reiji]";
+		mes "Do you understand? The one that moves the airship is like a bomb capable of generating infinite energy.";
+		next;
+		select( "Look under the part where lunch is calculated." );
+		cutin "ep19_leizi02.png",2;
+		mes "[Reiji]";
+		mes "If you just recklessly destroy it. At least a 10km radius will be devastated without a trace! Fantastico!";
+		next;
+		select( "Look at the last unexpanded part." );
+		cutin "ep19_leizi03.png",2;
+		mes "[Reiji]";
+		mes "If more than a certain level of damage is accumulated, the core is stopped first. In that state, if more damage is accumulated, an explosion occurs. I think this is a defect.";
+		next;
+		cutin "ep19_leizi02.png",2;
+		mes "[Reiji]";
+		mes "Perhaps even Barmund didn't think that the AI ??aircraft would become an active bomb. So, I'm guessing that the same model was not additionally produced.";
+		next;
+		cutin "ep19_leizi03.png",2;
+		mes "[Reiji]";
+		mes "Ginger says ^0000ff[This is your master's sore finger. I don't quite understand what that means]^000000.";
+		next;
+		mes "[Reiji]";
+		mes "It is difficult to destroy it, and it is certain that it will be restored if it is destroyed. Then there is only one thing left. Agitate the interior enough to make the aircraft inoperable and run away!";
+		next;
+		cutin "ep19_leizi02.png",2;
+		mes "[Reiji]";
+		mes "Your expression should look good by now. Anyway, I thought that I would seriously destroy the airship, so thank you for giving advice to the old woman!";
+		next;
+		cutin "ep19_leizi01.png",2;
+		mes "[Reiji]";
+		mes "Then I'll wish you good luck! I'll see you again if I'm alive!";
+		close2;
+		cutin "",255;
+		setquest 17637;
+		completequest 17637;
+		end;
+	}
+	switch( checkquest(12560,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "^0000ffIt seems that there is still time left for the aircraft to recover and move. Let's aim for when the aircraft moves^000000";
+		close;
+	case 2:
+		erasequest 12560;
+		mes "^0000ffThe Airship appears to have started operating. Let's break it down again.^000000";
+		close;
+	}
+	if (getcharid(1) < 1) {
+		mes "^0000ffPlease form a party with at least one person and proceed.^000000";
+		close;
+	}
+
+	//.@md_name$ = "Aircraft Destruction";
+	.@md_name$ = "Airship Destruction";
+
+	if (instance_live_info(ILI_NAME, instance_id(IM_PARTY)) == .@md_name$) {	// Instance created, display "enter" menu
+		mes "It seems that the penetration rope is taut in the airship.";
+		next;
+		select( "Enter using rope" );
+
+		switch( instance_enter(.@md_name$) ) {
+		case IE_OTHER:
+			mes "^ff0000An unknown error occurred.^000000";
+			close;
+		case IE_NOINSTANCE:
+			end;
+		case IE_NOMEMBER:
+			end;
+		case IE_OK:
+			if (isbegin_quest(12561) == 0)
+				setquest 12561;
+			setquest 12560;
+			// warp "1@whl",32,53;
+			end;
+		}
+		end;
+	}
+	// otherwise display "create" menu
+	mes "^0000ffA rope with hooks. It appears to have been used to secure the aircraft.^000000";
+	next;
+	if (select( "Cancel", "Rope to Airship" ) == 1)
+		end;
+	instance_create(.@md_name$);
+	end;
+
+}
+
+1@whl,32,53,0	script	#st_warp	HIDDEN_WARP_NPC,3,3,{
+	end;
+OnTouch:
+	if (is_party_leader() == false)
+		end;
+	disablenpc();
+	donpcevent instance_npcname("#start_control") + "::OnStart";
+	end;
+}
+
+1@whl,46,55,6	script	#start_control	EP17_2_BETA_ITEMKEEPER,{
+	if (is_party_leader() == false)
+		end;
+	if ('event < 1)
+		end;
+	if ('npc_is_moving == 1)
+		end;
+	mes "[Management robot]";
+	mes "Are you a passenger? I will check your seat class. Could you show me your ticket?";
+	mes "------------------";
+	mes "Current Rating - ^0000ff" + 'mode_word$['mode] + " ^000000";
+	next;
+	switch( select( "Wait", "Send out any message", "^0000ffChange seat class^000000" ) ) {
+	case 1:
+		mes "[Management robot]";
+		mes "We provide a service that matches the level of your reservation. Please refer to it for use.";
+		close;
+	case 2:
+		mes "[Management robot]";
+		mes "This. It looks a little different from our ticket. We will inform you again after we go through the verification process. Please wait a moment.";
+		close2;
+		emotion ET_PROFUSELY_SWEAT;
+		if ('npc_is_moving == 0) {
+			'npc_is_moving = 1;
+			donpcevent instance_npcname("#start_control") + "::OnStartRun";
+		}
+		end;
+	case 3:
+		mes "[Management robot]";
+		mes "Services are provided according to the class of the ticket you have booked. Do you want to upgrade your seat?";
+		mes "--------------";
+		mes "Current Rating - ^0000ff" + 'mode_word$['mode] + " ^000000";
+		next;
+		.@s = select( "I quit", "Economy", "Business", "First Class" ) - 2;
+		if (.@s == -1) {
+			mes "[Management robot]";
+			mes "Please think slowly and choose.";
+			close;
+		}
+		if ('mode == .@s) {
+			mes "[Management robot]";
+			mes "^660000You don't want to change your seat?^000000";
+		}
+		else {
+			mes "[Management robot]";
+			mes "Adjust the seat to ^0000ff[" + 'mode_word$[.@s] + "]^000000?";
+			next;
+			if (select( "Stop", "Change" ) == 1) {
+				mes "[Management robot]";
+				mes "^660000You don't want to change your seat?^000000";
+				close;
+			}
+			if ('event == 1)
+				'mode = .@s;
+			mes "[Management robot]";
+			mes "Seat upgrade process is complete. Could you show me your ticket then?";
+		}
+		next;
+		mes "[Management robot]";
+		mes "This. It looks a little different from our ticket. We will inform you again after we go through the verification process. Please wait a moment.";
+		close2;
+		emotion ET_PROFUSELY_SWEAT;
+		if ('npc_is_moving == 0) {
+			'npc_is_moving = 1;
+			donpcevent instance_npcname("#start_control") + "::OnStartRun";
+		}
+		end;
+	}
+
+
+OnStart:
+	enablenpc();
+	'npc_is_moving = 1;
+	sleep 500;
+	unitwalk getnpcid(0),36,54, instance_npcname("#start_control") + "::OnReach1";
+	npctalk "A civilian passenger. I don't know how much this is.";
+	sleep 2000;
+	emotion ET_THROB;
+	end;
+
+OnReach1:
+	'event = 1;
+	'npc_is_moving = 0;
+	end;
+
+OnStartRun:
+	unitwalk getnpcid(0),46,55, instance_npcname("#start_control") + "::OnReach2";
+	npctalk "...This is the first time I've seen a ticket in this form. I'll check it out and come back soon, so please wait for a while.";
+	end;
+
+OnReach2:
+	'event = 2;
+	disablenpc();
+	sleep 4000;
+	mapannounce 'map_whl$, "Flight control robot: Fake ticket occupant occurred in the air plane! All crew robots must enter the free passenger response sequence.", bc_map, 0xFFDDAA;
+	sleep 6000;
+	if ('mode == 2)	// hard
+		mapannounce 'map_whl$, "Aircraft management robot: This person is forging with " + 'mode_word$['mode] + ". Please respond with the maximum available force.", bc_map, 0xFFDDAA;
+	else
+		mapannounce 'map_whl$, "Aircraft management robot: This person is being forged into class " + 'mode_word$['mode] + ". Response level is " + 'mode_letter$['mode] + ".", bc_map, 0xFFDDAA;
+	end;
+
+OnInstanceInit:
+	npcspeed 300;
+
+	'map_whl$ = instance_mapname("1@whl");
+	'event = 0;
+	'DE_BERSERKAIZER = 0;
+	deletearray 'event_type[0];
+	deletearray 'mob_id_cleaner[0],20;
+	deletearray 'count_mob[0], 5;
+
+	disablenpc();
+	disablenpc instance_npcname("#y_1");
+	disablenpc instance_npcname("#y_2");
+
+	disablenpc instance_npcname("#g_1");
+	disablenpc instance_npcname("#g_2");
+	disablenpc instance_npcname("#g_3");
+	disablenpc instance_npcname("#g_4");
+
+	disablenpc instance_npcname("#box_control");
+
+
+	// Settings
+	'mode = 0;	// default: 0 (easy)
+
+	// words to link mode to npc
+	setarray 'mode_word$[0],
+		"economy",		// easy
+		"business",		// medium
+		"first class";	// hard
+
+	// letters to link mode to npc
+	setarray 'mode_letter$[0],
+		"C",	// easy
+		"A",	// medium
+		"S";	// hard
+
+	// mob ~hp by mode
+	setarray 'hp[0],
+		2500000,
+		4000000,
+		5000000;
+
+	// boss hp by mode
+	setarray 'mode_hp_boss[0],
+		300000000,
+		500000000,
+		600000000;
+
+	// boss hp regen/second by mode
+	setarray 'mode_hp_regen_boss[0],
+		100000,
+		1000000,
+		1000000;	// unknown
+
+	// NPC_RELIEVE_ON from boss by mode
+	setarray 'mode_boss_relieve[0],
+		1,
+		5,
+		8;
+
+	// boss res by mode (custom, unknown value)
+	setarray 'mode_res[0],
+		0,
+		100,
+		200;
+
+	// boss mres by mode (custom, unknown value)
+	setarray 'mode_mres[0],
+		0,
+		100,
+		200;
+
+	// [1/value] chance to activate the event from airshipD_DE_BERSERKAIZER by mode every 1s
+	setarray 'rate_event_2[0],
+		15,
+		15,
+		15;
+
+	// [1/value] chance to activate the event from airshipD_RA_UNLIMIT by mode every 1s
+	setarray 'rate_event_3[0],
+		15,
+		15,
+		15;
+
+	// [1/value] chance to activate the event from airshipD_NPC_RELIEVE_ON_10 by mode every 1s
+	setarray 'rate_event_4[0],
+		15,
+		15,
+		15;
+	end;
+}
+
+1@whl,1,1,0	script	airship_destruction_main	-1,{
+	end;
+
+// Room 2
+OnStart_2_C:
+	sleep 2000;
+	mapannounce 'map_whl$, "???: Alert! Unauthorized infiltration from outside the airship! Patrols focus on searching Area 2", bc_map, 0xFFEE66;
+
+	'mob_all_spawn = false;
+	'count_total_mob[2] = 10;
+	callsub( S_Mob, 2, 65,91, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 2, 63,93, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 2, 50,96, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 2, 45,91, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 2, 53,87, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 2, 44,85, "MD_E_EA2S", 1 );
+	callsub( S_Mob, 2, 43,85, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 2, 42,95, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 2, 63,94, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 2, 52,92, "EP17_2_BETA_GUARDS_NG" );
+	'mob_all_spawn = true;
+	end;
+OnStart_2_A:	// Medium
+	sleep 2000;
+	mapannounce 'map_whl$, "???: Alert! Unauthorized infiltration from outside the airship! Patrols focus on searching Area 2", bc_map, 0xFFEE66;
+
+	'mob_all_spawn = false;
+	'count_total_mob[2] = 16;
+	callsub( S_Mob, 2, 46,89, "MD_E_EA2S", 1 );
+	callsub( S_Mob, 2, 65,88, "MD_E_EA2S", 1 );
+	callsub( S_Mob, 2, 55,84, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 2, 54,88, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 2, 62,88, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 2, 61,95, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 2, 50,85, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 2, 58,90, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 2, 46,96, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 2, 46,93, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 2, 64,92, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 2, 45,94, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 2, 41,90, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 2, 40,84, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 2, 40,87, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 2, 61,93, "EP17_2_OMEGA_CLEANER_NG" );
+	'mob_all_spawn = true;
+	end;
+OnStart_2_S:	// Hard
+	sleep 2000;
+	mapannounce 'map_whl$, "???: Alert! Unauthorized infiltration from outside the airship! Patrols focus on searching Area 2", bc_map, 0xFFEE66;
+
+	'mob_all_spawn = false;
+	'count_total_mob[2] = 31;
+	callsub( S_Mob, 2, 44,84, "MD_E_EA2S", 1 );
+	callsub( S_Mob, 2, 55,84, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 2, 53,84, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 2, 56,88, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 2, 50,94, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 2, 47,89, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 2, 51,96, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 2, 41,95, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 2, 55,96, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 2, 66,85, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 2, 58,90, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 2, 50,86, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 2, 53,90, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 2, 67,89, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 2, 43,86, "MD_E_EA2S", 1 );
+	callsub( S_Mob, 2, 57,85, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 2, 46,92, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 2, 60,86, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 2, 53,88, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 2, 42,95, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 2, 46,94, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 2, 58,96, "MD_E_EA2S", 1 );
+	callsub( S_Mob, 2, 48,87, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 2, 51,86, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 2, 51,90, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 2, 62,88, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 2, 62,84, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 2, 50,94, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 2, 60,89, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 2, 64,91, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 2, 56,85, "EP17_2_OMEGA_CLEANER_NG" );
+	'mob_all_spawn = true;
+	end;
+
+// Room 3
+OnStart_3_C:	// Easy
+	mapannounce 'map_whl$, "???: Notify all patrols. Search and deter outsiders entering the cargo hold and the ship's rest area. Repeat again...", bc_map, 0xFFEE66;
+
+	'mob_all_spawn = false;
+	'count_total_mob[3] = 40;
+	callsub( S_Mob, 3, 55,110, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 3, 39,122, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 3, 52,118, "MD_E_EA2S", 1 );
+	callsub( S_Mob, 3, 56,120, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 55,123, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 3, 54,123, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 59,123, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 48,122, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 55,109, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 3, 54,123, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 60,123, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 53,139, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 55,139, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 3, 42,140, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 38,122, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 3, 55,130, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 38,124, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 3, 53,117, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 53,123, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 56,117, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 56,117, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 56,124, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 62,123, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 3, 73,123, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 3, 75,124, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 67,141, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 59,141, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 3, 65,142, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 3, 64,143, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 49,144, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 62,146, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 47,146, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 3, 53,150, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 3, 55,151, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 54,154, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 3, 54,155, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 57,156, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 58,157, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 3, 53,156, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 51,156, "EP17_2_OMEGA_CLEANER_NG" );
+	'mob_all_spawn = true;
+	end;
+OnStart_3_A:	// Medium
+	mapannounce 'map_whl$, "???: Notify all patrols. Search and deter outsiders entering the cargo hold and ship break area. Repeat again...", bc_map, 0xFFEE66;
+
+	'mob_all_spawn = false;
+	'count_total_mob[3] = 47;
+	callsub( S_Mob, 3, 56,122, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 3, 65,123, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 3, 54,112, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 53,129, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 52,119, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 3, 52,123, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 3, 52,121, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 51,132, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 3, 51,124, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 54,122, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 68,124, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 3, 43,122, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 3, 59,123, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 54,122, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 3, 54,117, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 47,122, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 51,111, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 3, 70,123, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 44,122, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 73,123, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 41,124, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 3, 41,124, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 39,123, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 3, 38,122, "MD_E_EA2S", 1 );
+	callsub( S_Mob, 3, 35,122, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 50,140, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 66,141, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 3, 44,141, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 3, 44,141, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 54,143, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 43,144, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 67,144, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 54,145, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 3, 47,146, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 46,146, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 45,146, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 3, 59,149, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 58,150, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 56,150, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 52,150, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 53,157, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 48,155, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 3, 48,158, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 48,154, "MD_E_EA2S", 1 );
+	callsub( S_Mob, 3, 48,159, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 49,159, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 3, 39,144, "MD_BETA_SCISSORE_NG" );
+	'mob_all_spawn = true;
+	end;
+OnStart_3_S:	// Hard
+	mapannounce 'map_whl$, "???: Notify all patrols. Search and deter outsiders entering the cargo hold and ship break area. Repeat again...", bc_map, 0xFFEE66;
+
+	'mob_all_spawn = false;
+	'count_total_mob[3] = 59;
+	callsub( S_Mob, 3, 42,123, "MD_E_EA2S", 1 );
+	callsub( S_Mob, 3, 52,114, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 52,118, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 55,124, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 54,122, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 3, 53,115, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 57,123, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 38,123, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 56,124, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 54,109, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 55,114, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 3, 50,124, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 3, 56,111, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 52,121, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 57,124, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 48,122, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 52,109, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 3, 53,128, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 56,130, "MD_E_EA2S", 1 );
+	callsub( S_Mob, 3, 52,131, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 53,133, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 31,122, "MD_E_EA2S", 1 );
+	callsub( S_Mob, 3, 31,122, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 55,136, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 51,136, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 3, 68,123, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 3, 71,123, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 3, 75,124, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 55,138, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 51,138, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 50,140, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 56,141, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 67,141, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 65,142, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 3, 68,143, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 63,144, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 65,145, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 3, 68,146, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 3, 58,149, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 61,150, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 3, 55,153, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 57,154, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 3, 61,154, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 54,155, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 3, 55,155, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 3, 55,156, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 3, 61,156, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 60,157, "MD_E_EA2S", 1 );
+	callsub( S_Mob, 3, 58,157, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 3, 53,158, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 61,160, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 51,155, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 50,154, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 3, 49,158, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 3, 49,158, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 48,156, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 3, 48,155, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 41,146, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 3, 36,144, "EP17_2_OMEGA_CLEANER_NG" );
+	'mob_all_spawn = true;
+	end;
+
+OnStart_4_C:	// Easy
+	mapannounce 'map_whl$, "???: An outsider infiltrating the rest area heads to the engine room. Cargo compartment searchers also stop all searches and assist the engine room. Repeat...", bc_map, 0xFFEE66;
+
+	'mob_all_spawn = false;
+	'count_total_mob[4] = 9;
+	callsub( S_Mob, 4, 153,34, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 4, 149,38, "MD_E_EA2S", 1 );
+	callsub( S_Mob, 4, 139,37, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 4, 154,36, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 4, 132,36, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 4, 164,36, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 4, 180,32, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 4, 184,31, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 4, 184,36, "EP17_2_BETA_GUARDS_NG" );
+	'mob_all_spawn = true;
+	end;
+OnStart_4_A:	// Medium
+	mapannounce 'map_whl$, "???: An outsider infiltrating the rest area heads to the engine room. Cargo compartment searchers also stop all searches and assist the engine room. Repeat...", bc_map, 0xFFEE66;
+
+	'mob_all_spawn = false;
+	'count_total_mob[4] = 17;
+	callsub( S_Mob, 4, 168,36, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 4, 147,32, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 4, 150,30, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 4, 164,41, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 4, 175,41, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 4, 171,39, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 4, 174,33, "MD_E_EA2S", 1 );
+	callsub( S_Mob, 4, 182,37, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 4, 182,30, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 4, 169,37, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 4, 156,34, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 4, 153,33, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 4, 145,37, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 4, 140,32, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 4, 138,34, "MD_E_EA2S", 1 );
+	callsub( S_Mob, 4, 132,33, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 4, 132,41, "EP17_2_BETA_GUARDS_NG" );
+	'mob_all_spawn = true;
+	end;
+OnStart_4_S:	// Hard
+	mapannounce 'map_whl$, "???: An outsider infiltrating the rest area heads to the engine room. Cargo compartment searchers also stop all searches and assist the engine room. Repeat...", bc_map, 0xFFEE66;
+
+	'mob_all_spawn = false;
+	'count_total_mob[4] = 30;
+	callsub( S_Mob, 4, 145,39, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 4, 158,40, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 4, 145,36, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 4, 140,42, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 4, 137,37, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 4, 146,40, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 4, 137,31, "MD_E_EA2S", 1 );
+	callsub( S_Mob, 4, 137,40, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 4, 138,34, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 4, 159,38, "MD_E_EA2S", 1 );
+	callsub( S_Mob, 4, 159,38, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 4, 159,42, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 4, 160,39, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 4, 165,30, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 4, 165,35, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 4, 166,34, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 4, 167,36, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 4, 168,35, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 4, 168,29, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 4, 168,30, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 4, 169,38, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 4, 172,33, "MD_E_EA2S", 1 );
+	callsub( S_Mob, 4, 173,34, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 4, 175,41, "MD_E_EA2S", 1 );
+	callsub( S_Mob, 4, 176,29, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 4, 176,31, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 4, 177,37, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 4, 185,33, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 4, 185,35, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 4, 185,34, "EP17_2_OMEGA_CLEANER_NG" );
+	'mob_all_spawn = true;
+	end;
+
+OnStart_5_C:	// Easy
+	mapannounce 'map_whl$, "???: Destroy all outsiders infiltrating the engine room. You must prevent them from ever approaching the core. Repeat...", bc_map, 0xFFEE66;
+
+	'mob_all_spawn = false;
+	'count_total_mob[5] = 40;
+	callsub( S_Mob, 5, 182,52, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 5, 182,50, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 166,53, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 5, 166,63, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 5, 160,54, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 158,51, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 5, 158,51, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 5, 159,72, "MD_E_EA2S", 1 );
+	callsub( S_Mob, 5, 162,60, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 5, 162,73, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 168,51, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 171,49, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 5, 169,74, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 5, 161,72, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 175,75, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 160,75, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 161,76, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 148,54, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 5, 163,77, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 5, 173,77, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 146,52, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 164,73, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 5, 147,74, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 5, 154,62, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 5, 171,72, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 162,80, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 5, 165,82, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 152,86, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 169,90, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 158,95, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 155,97, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 174,97, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 5, 170,98, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 5, 152,95, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 155,101, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 151,95, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 151,97, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 144,98, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 5, 143,96, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 178,50, "EP17_2_BETA_GUARDS_NG" );
+	'mob_all_spawn = true;
+	end;
+OnStart_5_A:	// Medium
+	mapannounce 'map_whl$, "???: Destroy all outsiders infiltrating the engine room. You must prevent them from ever approaching the core. Repeat...", bc_map, 0xFFEE66;
+
+	'mob_all_spawn = false;
+	'count_total_mob[5] = 48;
+	callsub( S_Mob, 5, 164,79, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 152,74, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 165,76, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 165,71, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 153,74, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 5, 154,76, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 147,75, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 164,72, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 5, 157,64, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 5, 162,77, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 5, 167,77, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 158,87, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 5, 148,74, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 169,75, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 154,74, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 161,77, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 150,66, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 169,73, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 147,77, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 172,73, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 177,74, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 5, 173,96, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 173,97, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 168,97, "MD_E_EA2S", 1 );
+	callsub( S_Mob, 5, 150,97, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 5, 162,98, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 5, 168,99, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 5, 174,99, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 5, 161,100, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 174,100, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 5, 162,101, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 5, 162,102, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 5, 164,107, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 5, 144,54, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 150,53, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 144,51, "MD_E_EA2S", 1 );
+	callsub( S_Mob, 5, 140,51, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 155,50, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 153,49, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 142,49, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 166,51, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 5, 168,54, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 169,50, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 5, 173,49, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 175,51, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 176,53, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 5, 181,54, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 185,49, "EP17_2_BETA_GUARDS_NG" );
+	'mob_all_spawn = true;
+	end;
+OnStart_5_S:	// Hard
+	mapannounce 'map_whl$, "???: Destroy all outsiders infiltrating the engine room. You must prevent them from ever approaching the core. Repeat...", bc_map, 0xFFEE66;
+
+	'mob_all_spawn = false;
+	'count_total_mob[5] = 60;
+	callsub( S_Mob, 5, 173,51, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 5, 147,51, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 5, 147,54, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 152,52, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 173,54, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 5, 165,53, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 5, 157,54, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 164,54, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 165,55, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 155,60, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 5, 168,50, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 175,50, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 176,52, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 184,51, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 5, 185,50, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 186,54, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 5, 145,51, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 5, 141,53, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 138,54, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 137,51, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 5, 143,72, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 149,73, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 5, 161,73, "MD_E_EA2S", 1 );
+	callsub( S_Mob, 5, 164,73, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 144,76, "MD_E_EA2S", 1 );
+	callsub( S_Mob, 5, 155,76, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 151,76, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 5, 150,77, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 5, 160,77, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 165,77, "MD_E_EA2S", 1 );
+	callsub( S_Mob, 5, 167,76, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 166,77, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 169,73, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 158,84, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 173,73, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 5, 160,87, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 5, 177,77, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 166,89, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 5, 170,95, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 157,96, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 5, 173,96, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 165,96, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 163,96, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 155,96, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 5, 155,96, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 153,96, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 153,92, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 151,90, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 148,96, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 144,97, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 5, 157,98, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 151,98, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 172,98, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 172,99, "MD_BETA_SCISSORE_NG" );
+	callsub( S_Mob, 5, 163,99, "EP17_2_BETA_CLEANER_A" );
+	callsub( S_Mob, 5, 161,100, "EP17_2_OMEGA_CLEANER_NG" );
+	callsub( S_Mob, 5, 165,100, "MD_E_EA2S", 1 );
+	callsub( S_Mob, 5, 172,100, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 166,102, "EP17_2_BETA_GUARDS_NG" );
+	callsub( S_Mob, 5, 163,104, "EP17_2_BETA_CLEANER_A" );
+	'mob_all_spawn = true;
+	end;
+
+S_Mob:
+	sleep rand(250,1000);
+	if ('round != getarg(0))	// shouldn't happen
+		end;
+	.@event$ = instance_npcname("airship_destruction_main") + "::OnMobDead";
+	if (getarg(4,0)) {
+		monster 'map_whl$, getarg(1), getarg(2), 'round + " District Inspector", getarg(3),1, .@event$;
+		unitskilluseid $@mobid[0], 771, 9;	// NPC_RELIEVE_ON
+	}
+	else {
+		monster 'map_whl$, getarg(1), getarg(2), 'round + " Zone Patrol", getarg(3),1, .@event$;
+		unitskilluseid $@mobid[0], 771, 1;	// NPC_RELIEVE_ON
+	}
+	unitskilluseid $@mobid[0], rand(167,168), 1;	// NPC_CHANGEHOLY or NPC_CHANGEDARKNESS
+	setunitdata $@mobid[0], UMOB_MAXHP, 'hp[ 'mode ];
+	setunitdata $@mobid[0], UMOB_HP, 'hp[ 'mode ];
+	return;
+
+OnMobDead:
+	initnpctimer;
+	'count_mob['round]++;
+	end;
+OnTimer100:
+	stopnpctimer;
+
+	switch( rand(140) ) {	// ~1/10 to display a message
+	case 0:
+		mapannounce 'map_whl$, "???: Average survival time per object 3.8 seconds. That's great. It took even longer for this unit to disassemble the patrol's nuts and bolts for maintenance. ?", bc_map, 0xFFDD66;
+		break;
+	case 1:
+		mapannounce 'map_whl$, "???: Are you going to keep moving forward? If you don't stop, you'll be forced to respond with force from this side as well.", bc_map, 0xCCFF;
+		break;
+	case 2:
+		mapannounce 'map_whl$, "???: Do not advance any further. This device does not want to be hostile to foreign organisms.", bc_map, 0xCCFF;
+		break;
+	case 3:
+		mapannounce 'map_whl$, "???: Thank you patrols for not learning the emotion of anger by this device. If you had learned that emotion, you would be powdered with this airship right away.", bc_map, 0xFFDD66;
+		break;
+	case 4:
+		mapannounce 'map_whl$, "???: Based on this unit's calculations, it is estimated that 90% of the patrols deployed on this airship are useless power. There will be a reasonable relocation after this event is over.", bc_map, 0xFFDD66 ;
+		break;
+	case 5:
+		mapannounce 'map_whl$, "???: Records in the learning stats that a strong airship is useless, and that having a combat-priority patrol armed with a powerful heat weapon helps your chances of survival.", bc_map, 0xFFDD66 ;
+		break;
+	case 6:
+		mapannounce 'map_whl$, "???: Destroy the engine room entrance to the right of the crew rest area. I hope there are no stupid patrols to restore it.", bc_map, 0xFFDD66;
+		break;
+	case 7:
+		mapannounce 'map_whl$, "???: Notify foreign organisms. Access to the engine compartment core is not recommended. We recommend that you evacuate immediately.", bc_map, 0xCCFF;
+		break;
+	case 8:
+		mapannounce 'map_whl$, "???: What did you do before entering this airship? External organisms. Destroying patrols is familiar. Was your life collecting scrap metal in the Einbech mines?", bc_map, 0xCCFF ;
+		break;
+	case 9:
+		mapannounce 'map_whl$, "???: Be a little stronger, you poor little patrols. Your fate belongs to this airship. If this device is destroyed, neither will you.", bc_map , 0xFFDD66;
+		break;
+	case 10:
+		mapannounce 'map_whl$, "???: If you go back even now, you won't take the lives of foreign organisms. Choose wisely.", bc_map, 0xCCFF;
+		break;
+	case 11:
+		mapannounce 'map_whl$, "???: The patrol forces block all paths to the engine room. As of this time, they give up their defense elsewhere. Repeat. Block the path to the engine room.", bc_map, 0xFFDD66;
+		break;
+	case 12:
+		mapannounce 'map_whl$, "???: You should ignore the life reactions of the cargo hold. I don't think it's a huge combat power. Attack all foreign organisms heading to the engine room.", bc_map, 0xFFDD66;
+		break;
+	case 13:
+		mapannounce 'map_whl$, "???: How about we have a peaceful conversation with an external organism? Violence doesn't help solve the situation.", bc_map, 0xCCFF;
+		break;
+	case 14:
+		mapannounce 'map_whl$, "???: Average survival time per object 2.2 seconds. That's amazing. It took even longer for this unit to disassemble the patrol's nuts and bolts for maintenance. ?", bc_map, 0xFFDD66;
+		break;
+	default:
+		break;
+	}
+
+	if ('count_total_mob['round] == 0 || 'count_mob['round] < 'count_total_mob['round]) {
+		if ('mob_all_spawn) {	// No announcement until all monsters are summoned
+			.@left = 'count_total_mob['round] - 'count_mob['round];
+			if (.@left <= 10)
+				mapannounce 'map_whl$, "SYSTEM : " + .@left + " patrol units remaining in the area. If things continue like this, defense will be difficult. We need reinforcements.", bc_map, 0xFF99;
+		}
+		end;
+	}
+	mapannounce 'map_whl$, "???: Useless patrols, to be wiped out by such guests.", bc_map, 0xCCFF;
+	killmonster 'map_whl$, instance_npcname("airship_destruction_main") + "::OnMobDead";
+	'count_mob['round] = 'count_total_mob['round] = 0;
+	'event++;
+	end;
+}
+
+
+// To room 2
+//--------------------------------------------
+// 1@whl,53,74,0	script	#wp1	WARPNPC,2,2,{
+1@whl,53,74,0	script	#AirshipDestruction_wp1	WARPNPC,2,2,{
+	end;
+OnTouch:
+	if ('event < 2)
+		end;
+	if ('event == 2 && is_party_leader()) {
+		'event = 3;
+		'round = 2;
+		.@label$ = "::OnStart_" + 'round + "_" + 'mode_letter$['mode];
+		donpcevent instance_npcname("airship_destruction_main") + .@label$;	// start round 2
+	}
+	if ('event < 10)
+		warp 'map_whl$,53,86;
+	else	// direct warp to boss room
+		warp 'map_whl$,160,140;
+	end;
+}
+
+// To room 3
+//--------------------------------------------
+// 1@whl,53,97,0	script	#wp2	WARPNPC,2,2,{
+1@whl,53,97,0	script	#AirshipDestruction_wp2	WARPNPC,2,2,{
+	end;
+OnTouch:
+	if ('event < 4) {
+		mapannounce 'map_whl$, "SYSTEM: movement is prohibited in case of battle in the ship", bc_map, 0xFF4444;
+		end;
+	}
+	if ('event == 4 && is_party_leader()) {
+		'event = 5;
+		'round = 3;
+		.@label$ = "::OnStart_" + 'round + "_" + 'mode_letter$['mode];
+		donpcevent instance_npcname("airship_destruction_main") + .@label$;	// start round 3
+	}
+	warp 'map_whl$,53,110;
+	end;
+}
+
+// To room 4
+//--------------------------------------------
+// 1@whl,37,162,0	script	#wp3	WARPNPC,2,2,{
+1@whl,37,162,0	script	#AirshipDestruction_wp3	WARPNPC,2,2,{
+	end;
+OnTouch:
+	if ('event < 6) {
+		mapannounce 'map_whl$, "SYSTEM: movement is prohibited in case of battle in the ship", bc_map, 0xFF4444;
+		end;
+	}
+	if ('event == 6 && is_party_leader()) {
+		'event = 7;
+		'round = 4;
+		.@label$ = "::OnStart_" + 'round + "_" + 'mode_letter$['mode];
+		donpcevent instance_npcname("airship_destruction_main") + .@label$;	// start round 4
+	}
+	warp 'map_whl$,139,24;
+	end;
+}
+
+// To room 5
+//--------------------------------------------
+// 1@whl,160,43,0	script	#wp4	WARPNPC,2,2,{
+1@whl,160,43,0	script	#AirshipDestruction_wp4	WARPNPC,2,2,{
+	end;
+OnTouch:
+	if ('event < 8) {
+		mapannounce 'map_whl$, "SYSTEM: movement is prohibited in case of battle in the ship", bc_map, 0xFF4444;
+		end;
+	}
+	if ('event == 8 && is_party_leader()) {
+		'event = 9;
+		'round = 5;
+		.@label$ = "::OnStart_" + 'round + "_" + 'mode_letter$['mode];
+		donpcevent instance_npcname("airship_destruction_main") + .@label$;	// start round 5
+	}
+	warp 'map_whl$,160,53;
+	end;
+}
+
+// To Boss room
+//--------------------------------------------
+1@whl,160,117,0	script	#main_control	WARPNPC,2,2,{
+	end;
+OnTouch:
+	if ('event < 10) {
+		mapannounce 'map_whl$, "SYSTEM: movement is prohibited in case of battle in the ship", bc_map, 0xFF4444;
+		end;
+	}
+	warp 'map_whl$,160,140;
+	end;
+}
+
+// 1@whl,160,166,5	script	#boss_control	EP19_MD_AQUILA,1,1,{	// unknown OnTouch effect
+1@whl,160,166,5	script	#boss_control	EP19_MD_AQUILA,{
+	if ('event < 10)
+		end;
+	if (is_party_leader() == false)
+		end;
+	mes "[Aquila]";
+	mes "It's not too late now. If I stop destroying and go back, I won't take any further action either.";
+	next;
+	if (select( "I'll just go back", "I can't?" ) == 1) {
+		mes "[Aquila]";
+		mes "Thought well. ";
+		close2;
+		warp 'map_whl$,31,54;
+		end;
+	}
+	disablenpc();
+	if ('event == 10) {
+		donpcevent instance_npcname("airshipD_hpcheck") + "::OnStart";
+	}
+	end;
+}
+
+1@whl,1,1,0	script	airshipD_hpcheck	-1,{
+	end;
+OnStart:
+	monster 'map_whl$,159,158,"Aquila","EP19_MD_AQUILA",1, instance_npcname("airshipD_hpcheck") + "::OnMyMobDead";
+	'boss_id = $@mobid[0];
+
+	'boss_hp = 'mode_hp_boss[ 'mode ];
+	unitskilluseid 'boss_id, 771, 'mode_boss_relieve[ 'mode ];	// NPC_RELIEVE_ON
+	setunitdata 'boss_id, UMOB_HP, 'boss_hp;
+	setunitdata 'boss_id, UMOB_RES, 'mode_res[ 'mode ];
+	setunitdata 'boss_id, UMOB_MRES, 'mode_mres[ 'mode ];
+
+	initnpctimer;
+	donpcevent instance_npcname("airshipD_hp_regen") + "::OnStart";
+	end;
+
+OnTimer1000:
+	getunitdata 'boss_id, .@data;
+	.@hp = .@data[UMOB_HP];
+	'boss_hp = .@hp;
+
+	.@difference = ('mode_hp_boss[ 'mode ] - .@hp);
+	if (.@difference > 5000000 && 'event_type[0] == false) {
+		donpcevent instance_npcname("airshipD_NPC_MAXPAIN") + "::OnStart";
+	}
+	if (.@difference > 15000000 && 'event_type[1] == false) {
+		donpcevent instance_npcname("airshipD_EP17_2_OMEGA_CLEANER_NG") + "::OnStart";
+	}
+
+	if (.@difference > 5000000 && 'event_type[2] == false && rand('rate_event_2['mode]) == 0) {
+		donpcevent instance_npcname("airshipD_DE_BERSERKAIZER") + "::OnStart";
+	}
+	else if (.@difference > 50000000 && 'event_type[3] == false && rand('rate_event_3['mode]) == 0) {
+		donpcevent instance_npcname("airshipD_RA_UNLIMIT") + "::OnStart";
+	}
+	else if (.@difference > 100000000 && 'event_type[4] == false && rand('rate_event_4['mode]) == 0) {
+		donpcevent instance_npcname("airshipD_NPC_RELIEVE_ON_10") + "::OnStart";
+	}
+	initnpctimer;
+	end;
+
+OnMyMobDead:
+	stopnpctimer;
+	disablenpc();
+	killmonster 'map_whl$, instance_npcname("airshipD_hpcheck") + "::OnMyMobDead";
+
+	donpcevent instance_npcname("airshipD_NPC_MAXPAIN") + "::OnStop";
+	donpcevent instance_npcname("airshipD_DE_BERSERKAIZER") + "::OnStop";
+	// donpcevent instance_npcname("airshipD_EP17_2_OMEGA_CLEANER_NG") + "::OnStop";	// doesn't stop
+	donpcevent instance_npcname("airshipD_RA_UNLIMIT") + "::OnStop";
+	donpcevent instance_npcname("airshipD_NPC_RELIEVE_ON_10") + "::OnStop";
+	donpcevent instance_npcname("airshipD_hp_regen") + "::OnStop";
+	donpcevent instance_npcname("#g_1") + "::OnStop";
+	donpcevent instance_npcname("#g_2") + "::OnStop";
+	donpcevent instance_npcname("#g_3") + "::OnStop";
+	donpcevent instance_npcname("#g_4") + "::OnStop";
+	donpcevent instance_npcname("#y_1") + "::OnStop";
+	donpcevent instance_npcname("#y_2") + "::OnStop";
+
+	// Additional rewards
+	if ('mode == 1)	// medium
+		monster 'map_whl$,160,155,"--ja--","EP19_MD_BOX1",1;
+	else if ('mode == 2)	// hard
+		monster 'map_whl$,160,155,"--ja--","EP19_MD_BOX2",1;
+
+	// Relic
+	if (rand(100) < 10) {
+		getunitdata 'boss_id, .@data;
+
+		if ('mode == 2)	// hard
+			makeitem 102565,1,'map_whl$,.@data[UMOB_X],.@data[UMOB_Y],true;	// Relic of Issgard (Aquila (First Class))
+		else
+			makeitem 102564,1,'map_whl$,.@data[UMOB_X],.@data[UMOB_Y],true;	// Relic of Issgard (Aquila)
+	}
+
+	enablenpc instance_npcname("#box_control");
+	'event = 11;
+	'boss_hp = 0;
+	'boss_id = 0;
+	end;
+}
+
+1@whl,1,1,0	script	airshipD_NPC_MAXPAIN	-1,{
+	end;
+OnStart:
+	initnpctimer;
+	'event_type[0] = true;
+	end;
+OnTimer5000:
+	unittalk 'boss_id, "Activate automatic protection process. Be prepared for shock.";
+	end;
+OnTimer7000:
+	unitskilluseid 'boss_id, "NPC_MAXPAIN",5;
+	end;
+OnTimer150000:
+	'event_type[0] = false;
+	stopnpctimer;
+	end;
+OnStop:
+	stopnpctimer;
+	end;
+}
+
+// Regen the hp per second. The amount of HP depends on the mode.
+1@whl,1,1,0	script	airshipD_hp_regen	-1,{
+	end;
+OnStart:
+	initnpctimer;
+	end;
+OnTimer1000:
+	getunitdata 'boss_id, .@data;
+
+	if (.@data[UMOB_HP] < 'mode_hp_boss[ 'mode ]) {
+		.@new_hp = .@data[UMOB_HP] + 'mode_hp_regen_boss[ 'mode ];
+		if (.@new_hp > 'mode_hp_boss[ 'mode ])
+			.@new_hp = 'mode_hp_boss[ 'mode ];
+		setunitdata 'boss_id, UMOB_HP, .@new_hp;
+		'boss_hp = .@new_hp;
+	}
+	initnpctimer;
+	end;
+OnStop:
+	stopnpctimer;
+	end;
+}
+
+1@whl,1,1,0	script	airshipD_DE_BERSERKAIZER	-1,{
+	end;
+OnStart:
+	initnpctimer;
+	'event_type[2] = true;
+	end;
+OnTimer2000:
+	if (unitisforcewalk('boss_id))	// debug, the unit is idle but should be walking
+		unitstopwalk 'boss_id, USW_FORCE_STOP;
+
+	if ('DE_BERSERKAIZER != 0) {
+		end;
+	}
+	'DE_BERSERKAIZER = 1;
+	setunitdata 'boss_id, UMOB_ATKRANGE, 8;
+	unitskilluseid 'boss_id, "DE_BERSERKAIZER",1;	// only used to display the effect
+
+	// Similiar to NPC_RUN. Currently NPC_RUN doesn't prevent to autoattack while the mob is running unlike official, this part simulates that
+	getunitdata 'boss_id, .@data;
+	if (.@data[UMOB_TARGETID] < 1) {
+		end;
+	}
+	.@target_type = getunittype(.@data[UMOB_TARGETID]);
+	if (.@target_type != BL_PC) {
+		end;
+	}
+	getmapxy .@map$,.@x_target,.@y_target, .@target_type, .@data[UMOB_TARGETID];
+
+	// direction according to boss-target position
+	.@dx = 0;
+	.@dy = 7;	// default DIR_NORTH
+
+	if (.@x_target == .@data[UMOB_X]) {
+		if (.@y_target > .@data[UMOB_Y]) {
+			.@dx = 0;
+			.@dy = -7;	// DIR_SOUTH
+		}
+	}
+	else if (.@y_target == .@data[UMOB_Y]) {
+		if (.@x_target > .@data[UMOB_X]) {
+			.@dx = -7;	// DIR_WEST
+			.@dy = 0;
+		}
+		else {
+			.@dx = 7;	// DIR_EAST
+			.@dy = 0;
+		}
+	}
+	else if (.@x_target > .@data[UMOB_X]) {
+		if (.@y_target > .@data[UMOB_Y]) {
+			.@dx = -7;	// DIR_SOUTHWEST
+			.@dy = -7;
+		}
+		else {
+			.@dx = -7;	// DIR_NORTHWEST
+			.@dy = 7;
+		}
+	}
+	else if (.@x_target < .@data[UMOB_X]) {
+		if (.@y_target > .@data[UMOB_Y]) {
+			.@dx = 7;	// DIR_SOUTHEAST
+			.@dy = -7;
+		}
+		else {
+			.@dx = 7;	// DIR_NORTHEAST
+			.@dy = 7;
+		}
+	}
+	.@x = .@data[UMOB_X] + .@dx;
+	.@y = .@data[UMOB_Y] + .@dy;
+
+	if (checkcell(.@map$,.@x,.@y,cell_chkpass)) {
+		unitstopwalk 'boss_id, USW_FORCE_STOP;
+		unitwalk 'boss_id,.@x,.@y;
+	}
+	end;
+OnTimer5000:
+	if (unitisforcewalk('boss_id))	// debug, the unit is idle but should be walking
+		unitstopwalk 'boss_id, USW_FORCE_STOP;
+	end;
+OnTimer150000:
+	'event_type[2] = false;
+	stopnpctimer;
+	end;
+OnStop:
+	stopnpctimer;
+	'DE_BERSERKAIZER = 0;
+	end;
+}
+
+1@whl,159,173,1	script	#b_memo	CLEAR_NPC,{
+	if ('DE_BERSERKAIZER == 0) {
+		mes "Press this switch when the core goes into remote mode and is out of control.";
+		close;
+	}
+	specialeffect EF_HOMUNCASTING;
+	specialeffect EF_STORMKICK7;
+	progressbar "3132FF",2;
+	removespecialeffect EF_STORMKICK7;
+	specialeffect EF_CHIMTO2;
+
+	skilleffect "MC_CARTREVOLUTION",0;
+	getunitdata 'boss_id, .@data;
+	npcskilleffect "MC_CARTREVOLUTION",0,.@data[UMOB_X],.@data[UMOB_Y];
+
+	if (unitexists('boss_id) == true) {
+		'DE_BERSERKAIZER = 0;
+		setunitdata 'boss_id, UMOB_ATKRANGE, 1;
+		if (unitisforcewalk('boss_id))	// debug
+			unitstopwalk 'boss_id, USW_FORCE_STOP;
+	}
+	end;
+}
+
+1@whl,1,1,0	script	airshipD_EP17_2_OMEGA_CLEANER_NG	-1,{
+	end;
+OnStart:
+	'event_type[1] = true;
+	initnpctimer;
+	end;
+OnTimer10000:
+	mapannounce 'map_whl$, "Unauthorized intrusion into the core management room. Cleaning robots, please proceed with the cleaning procedure immediately", bc_map, 0xFFFF;
+	end;
+OnTimer15000:
+	mapannounce 'map_whl$, "Robots that have completed their area layout should start cleaning themselves in order.", bc_map, 0xFFFF;
+
+	.@event$ = instance_npcname("airshipD_EP17_2_OMEGA_CLEANER_NG") + "::OnMobDead";
+	.@mob_mode = (MD_AGGRESSIVE | MD_NORANDOMWALK | MD_CANATTACK | MD_KNOCKBACKIMMUNE | MD_TELEPORTBLOCK | MD_STATUSIMMUNE | MD_SKILLIMMUNE);
+
+	for ( .@i = 0; .@i < 20; ++.@i ) {
+		areamonster 'map_whl$,133,133,186,186,"Broken cleaning robot","EP17_2_OMEGA_CLEANER_NG",1, .@event$;
+		'mob_id_cleaner[.@i] = $@mobid[0];
+		setunitdata 'mob_id_cleaner[.@i], UMOB_MODE, .@mob_mode;
+		unitskilluseid 'mob_id_cleaner[.@i], "NPC_RELIEVE_ON",10;
+		unitskilluseid 'mob_id_cleaner[.@i], "LK_AURABLADE",1;
+		sleep 300;
+	}
+	end;
+
+OnTimer28000:
+	mapannounce 'map_whl$, "Run cleanup sequence", bc_map, 0xFFFF;
+
+	for ( .@i = 0; .@i < 20; ++.@i ) {
+		if (unitexists('mob_id_cleaner[.@i]) == true) {
+			unittalk 'mob_id_cleaner[.@i], "Cleans pollutants!!";
+			unitskilluseid 'mob_id_cleaner[.@i], "SJ_LIGHTOFSUN",1;
+			sleep 100;
+		}
+	}
+	end;
+
+OnTimer30000:
+	stopnpctimer;
+	if (unitexists('boss_id) == false)	// No explosion if the boss is dead
+		killmonster 'map_whl$, instance_npcname("airshipD_EP17_2_OMEGA_CLEANER_NG") + "::OnMobDead";
+	else {
+		for ( .@i = 0; .@i < 20; ++.@i ) {
+			if (unitexists('mob_id_cleaner[.@i]) == true) {
+				unitskilluseid 'mob_id_cleaner[.@i], "NPC_SELFDESTRUCTION",1;
+				sleep 100;
+			}
+		}
+	}
+	'event_type[1] = false;
+	end;
+
+OnMobDead:
+	end;
+}
+
+// Note: With this event, ATK should kill in one hit after about 30-45 seconds. But setunitdata UMOB_ATKMIN/UMOB_ATKMAX need to be fixed on current rAthena.
+1@whl,1,1,0	script	airshipD_RA_UNLIMIT	-1,{
+	end;
+OnStart:
+	'event_type[3] = true;
+	mapannounce 'map_whl$, "The yellow ether in the core has been depleted due to prolonged operation. Please recharge immediately. Depletion of ether will put the core into overload mode.", bc_map, 0xFFCC00;
+	unitskilluseid 'boss_id, "RA_UNLIMIT",5;
+	unitskilluseid 'boss_id, "SJ_LIGHTOFSUN",3;
+	setunitdata 'boss_id, UMOB_CLASS, 21588;	// change to sprite EP19_MD_AQUILA_B for monster_size_effect
+	.@npc_num = rand(1,2);
+	enablenpc instance_npcname("#y_" + .@npc_num);
+	specialeffect EF_YUFITEL2, AREA, instance_npcname("#y_" + .@npc_num);
+	end;
+OnStop:
+	disablenpc instance_npcname("#y_1");
+	disablenpc instance_npcname("#y_2");
+	'event_type[3] = false;
+	end;
+}
+
+1@whl,173,161,1	script	#y_1	MD_HIDDEN_GROUND02,3,3,{
+	end;
+OnTouchNPC:
+	.@gid = getattachedrid();
+	if (.@gid != 'boss_id)
+		end;
+	disablenpc();
+	initnpctimer;
+	end;
+OnTimer2000:
+	stopnpctimer;
+	sc_end SC_UNLIMIT, 'boss_id;
+	sc_end SC_LIGHTOFSUN, 'boss_id;
+	unitskilluseid 'boss_id, "GC_COUNTERSLASH",1;
+	if (rand(1,2) == 1)
+		unitskilluseid 'boss_id, "NPC_CHANGEHOLY",1;
+	else
+		unitskilluseid 'boss_id, "NPC_CHANGEDARKNESS",1;
+	mapannounce 'map_whl$, "Amber ether is normally supplied to the core to clear the overload state.", bc_map, 0xFF55;
+	donpcevent instance_npcname("airshipD_RA_UNLIMIT") + "::OnStop";
+	setunitdata 'boss_id, UMOB_CLASS, 21531;	// EP19_MD_AQUILA
+	end;
+OnStop:
+	stopnpctimer;
+	end;
+}
+1@whl,146,161,1	duplicate(#y_1)	#y_2	MD_HIDDEN_GROUND02,3,3
+
+
+1@whl,1,1,0	script	airshipD_NPC_RELIEVE_ON_10	-1,{
+	end;
+OnStart:
+	'event_type[4] = true;
+	.@npc_num = rand(1,4);
+	enablenpc instance_npcname("#g_" + .@npc_num);
+	specialeffect EF_YUFITEL2, AREA, instance_npcname("#g_" + .@npc_num);
+	.@hp = 'boss_hp;
+	unitskilluseid 'boss_id, "NPC_RELIEVE_ON",10;
+	mapannounce 'map_whl$, "We run out of green ether for a long time. We will enter defense mode until ether is supplied.", bc_map, 0xFFCC00;
+	unitskilluseid 'boss_id, "LK_BERSERK",1;
+
+	// save hp because of LK_BERSERK
+	setunitdata 'boss_id, UMOB_HP, .@hp;
+	'boss_hp = .@hp;
+	end;
+OnStop:
+	disablenpc instance_npcname("#g_1");
+	disablenpc instance_npcname("#g_2");
+	disablenpc instance_npcname("#g_3");
+	disablenpc instance_npcname("#g_4");
+	end;
+}
+
+1@whl,138,173,1	script	#g_1	MD_HIDDEN_GROUND02,3,3,{
+	end;
+OnTouchNPC:
+	if (getattachedrid() != 'boss_id)
+		end;
+	sc_end SC_RELIEVE_ON, 'boss_id;
+	// unitskilluseid 'boss_id, "WL_TETRAVORTEX_FIRE",1;	// (doesn't work) should be used to display some effect on the boss before and after teleport
+	// unitskilluseid 'boss_id, "WL_TETRAVORTEX_WIND",1;
+	// Approximate coordinates
+	switch( rand(6) ) {
+	case 1:
+		unitwarp 0,'map_whl$,143,167;
+		break;
+	case 2:
+		unitwarp 0,'map_whl$,170,169;
+		break;
+	case 3:
+		unitwarp 0,'map_whl$,182,157;
+		break;
+	case 4:
+		unitwarp 0,'map_whl$,169,140;
+		break;
+	case 5:
+		unitwarp 0,'map_whl$,144,152;
+		break;
+	default:
+		unitwarp 0,'map_whl$,159,182;
+		break;
+	}
+	disablenpc();
+	mapannounce 'map_whl$, "Green ether charging complete. Core's defense will disappear for 5 seconds until fully stabilized. Be careful with core handling.", bc_map, 0xFFFF;
+
+	// unitskilluseid 'boss_id, "WL_TETRAVORTEX_GROUND",1;
+	// unitskilluseid 'boss_id, "WL_TETRAVORTEX_WATER",1;
+	sc_end SC_BERSERK, 'boss_id;
+	donpcevent instance_npcname("airshipD_NPC_RELIEVE_ON_10") + "::OnStop";
+	initnpctimer;
+	end;
+OnTimer5000:
+	stopnpctimer;
+	'event_type[4] = false;
+	unitskilluseid 'boss_id, "NPC_RELIEVE_ON", 'mode_boss_relieve[ 'mode ];
+
+	// if ('event_type[3] == true)
+		// setunitdata 'boss_id, UMOB_CLASS, 21588;
+	// if ('DE_BERSERKAIZER == 1) {
+		// setunitdata 'boss_id, UMOB_ATKRANGE, 8;
+		// unitskilluseid 'boss_id, "DE_BERSERKAIZER",1;	// only used to display the effect
+	// }
+	// setunitdata 'boss_id, UMOB_HP, 'boss_hp;
+	// setunitdata 'boss_id, UMOB_RES, 'mode_res[ 'mode ];
+	// setunitdata 'boss_id, UMOB_MRES, 'mode_mres[ 'mode ];
+	end;
+OnStop:
+	stopnpctimer;
+	end;
+}
+1@whl,138,146,1	duplicate(#g_1)	#g_2	MD_HIDDEN_GROUND02,3,3
+1@whl,181,146,1	duplicate(#g_1)	#g_3	MD_HIDDEN_GROUND02,3,3
+1@whl,181,173,1	duplicate(#g_1)	#g_4	MD_HIDDEN_GROUND02,3,3
+
+
+// 1@whl,160,160,5	script	#box_control	PORTAL,1,1,{// unknown OnTouch effect
+1@whl,160,160,5	script	#box_control	PORTAL,{
+	if ('event != 11)
+		end;
+	if (checkquest(12561,HUNTING) == 2) {
+		if ('mode == 1) {	// Medium
+			.@amount_flower = 9;
+			.@amount_ore = 2;
+			.@reputation = 15;
+		}
+		else if ('mode == 2) {	// Hard
+			.@amount_flower = 9;	// unknown
+			.@amount_ore = 2;	// unknown
+			.@reputation = 15;	// unknown
+		}
+		else {	// Easy
+			.@amount_flower = 4;
+			.@amount_ore = 1;
+			.@reputation = 10;
+		}
+		mes "========= Reward =========";
+		mes "" + .@amount_flower + " " + mesitemlink(1000608) + "";
+		mes "" + .@amount_ore + " " + mesitemlink(1000811) + "";
+		mes "You have gained experience and job experience.";
+		getitem 1000608,.@amount_flower;	// Ep19_Snow_Flower
+		getitem 1000811,.@amount_ore;	// Snow_F_Ore
+		erasequest 12561;
+		add_reputation_points( REPUTATION_EP19, .@reputation );
+		for ( .@i = 0; .@i < 10; ++.@i )
+			getexp2 1605000,0;	// = medium. todo easy
+		getexp 0,3000000;	// unknown jexp
+		if (get_reputation_points(4) >= 3000) {
+			getitem 1000608,2;	// Ep19_Snow_Flower
+			mes "======================";
+			mes "Due to your close relationship with the Ice Castle, you gained 2 additional " + mesitemlink(1000608) + ".";
+		}
+		next;
+		mes "^0000ffIcy castle affinity increased by " + .@reputation + " points.^000000";
+		close;
+	}
+	mes "^0000ffThe outgoing exit was activated when the aircraft's comber went to sleep.^000000";
+	next;
+	if (select( "Cancel", "Exit" ) == 1)
+		end;
+	warp "jor_nest",24,248;
+	end;
+}
+
+
+1@whl,146,181,5	script	#clear_1	CLEAR_NPC,1,1,{
+	mes "If the density of the cleaning robot is high";
+	mes "press this button to send a dispatch signal";
+	mes "to another area.";
+	close;
+}
+1@whl,173,181,5	duplicate(#clear_1)	#clear_2	CLEAR_NPC,1,1
