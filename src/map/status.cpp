@@ -10748,13 +10748,13 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 			clif_emotion( *bl, ET_SWEAT );
 			break;
 		case SC_MAXIMIZEPOWER:
-			if (sd == nullptr) {
-				// Duration is 10 seconds for monsters on all levels
-				tick = 10000;
+			if (bl->type&BL_CONSUME) {
+				tick_time = val2 = tick>0?tick:10000; // SP consumption interval
+				tick = INFINITE_TICK; // Duration sent to the client should be infinite
 			}
 			else {
-				tick_time = val2 = tick>0?tick:10000;
-				tick = INFINITE_TICK; // Duration sent to the client should be infinite
+				// If unit cannot consume SP, the duration is fixed to 10 seconds
+				tick = 10000;
 			}
 			break;
 		case SC_EDP:
@@ -11145,14 +11145,14 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 			if (map_flag_gvg2(bl->m) || map_getmapflag(bl->m, MF_BATTLEGROUND)) val4 *= 5;
 			break;
 		case SC_CLOAKING:
-			if (sd == nullptr) {
-				// Monsters have no walk penalties and the status change lasts for 10 seconds
-				val1 = 10;
-				tick = 10000;
+			if (bl->type&BL_CONSUME) {
+				tick_time = val2 = tick>0?tick:10000; // SP consumption interval
+				tick = INFINITE_TICK; // Duration sent to the client should be infinite
 			}
 			else {
-				tick_time = val2 = tick>0?tick:10000; // SP consumption rate.
-				tick = INFINITE_TICK; // Duration sent to the client should be infinite
+				// If unit cannot consume SP, there are no walk penalties and the duration is fixed to 10 seconds
+				val1 = 10;
+				tick = 10000;
 			}
 			val3 = 0; // Unused, previously walk speed adjustment
 			// val4&1 signals the presence of a wall.
