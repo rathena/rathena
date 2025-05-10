@@ -12246,7 +12246,6 @@ static void pc_unequipitem_sub(map_session_data *sd, int32 n, int32 flag) {
 	}
 
 	if (flag & 1 || status_calc) {
-		pc_checkallowskill(sd);
 		status_calc_pc(sd, SCO_FORCE);
 	}
 
@@ -12291,7 +12290,7 @@ static void pc_unequipitem_sub(map_session_data *sd, int32 n, int32 flag) {
  *  0 - only unequip
  *  1 - calculate status after unequipping
  *  2 - force unequip
- *  4 - unequip by switching equipment
+ *  4 - equip switch (do not end status changes based on weapon/armor requirements)
  * @return True on success or false on failure
  */
 bool pc_unequipitem(map_session_data *sd, int32 n, int32 flag) {
@@ -12386,12 +12385,6 @@ bool pc_unequipitem(map_session_data *sd, int32 n, int32 flag) {
 	if (pos & EQP_ARMOR) {
 		status_db.removeByStatusFlag(&sd->bl, { SCF_REMOVEONUNEQUIPARMOR });
 	}
-
-	// On equipment change
-#ifndef RENEWAL
-	if (!(flag&4))
-		status_change_end(&sd->bl, SC_CONCENTRATION);
-#endif
 
 	// On ammo change
 	if (sd->inventory_data[n]->type == IT_AMMO && (sd->inventory_data[n]->nameid != ITEMID_SILVER_BULLET || sd->inventory_data[n]->nameid != ITEMID_PURIFICATION_BULLET || sd->inventory_data[n]->nameid != ITEMID_SILVER_BULLET_))
