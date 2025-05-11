@@ -1199,6 +1199,7 @@ Body:
     Flags:
       NoSave: true
       RequireWeapon: true
+      RemoveOnUnequipWeapon: true
       RemoveOnHermode: true
   - Status: Parrying
     Icon: EFST_PARRYING
