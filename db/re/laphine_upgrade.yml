@@ -5253,3 +5253,14 @@ Body:
 #      - Item: Glacier_Boots
 #      - Item: Glacier_Shoes
 #      - Item: Glacier_Guard
+  - Item: E_Auto_Up
+    ResultRefine: 11
+    MaximumRefine: 10
+    CardsAllowed: true
+    TargetItems:
+      - Item: E_Auto_Armor_A
+      - Item: E_Auto_Armor_B
+      - Item: E_Auto_Engine_A
+      - Item: E_Auto_Engine_B
+      - Item: E_Auto_Leg_A
+      - Item: E_Auto_Leg_B

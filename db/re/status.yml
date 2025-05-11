@@ -1199,6 +1199,7 @@ Body:
     Flags:
       NoSave: true
       RequireWeapon: true
+      RemoveOnUnequipWeapon: true
       RemoveOnHermode: true
   - Status: Parrying
     Icon: EFST_PARRYING
@@ -9772,3 +9773,22 @@ Body:
       .@val1 = getstatus(SC_CONTENTS_35, 1);
       bonus bMatk, .@val1;
       bonus bBaseAtk, .@val1;
+  - Status: Noaction
+    Icon: EFST_NOACTION
+    DurationLookup: TK_TURNKICK
+    States:
+      NoMove: true
+      NoPickItem: true
+      NoCast: true
+      NoAttack: true
+      NoInteract: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
+      StopAttacking: true
+      StopCasting: true
+      BossResist: true
