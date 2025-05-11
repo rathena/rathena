@@ -413,7 +413,24 @@ void trade_tradeadditem(map_session_data *sd, int16 index, int16 amount)
 	// Locate a trade position
 	ARR_FIND( 0, 10, trade_i, sd->deal.item[trade_i].index == index || sd->deal.item[trade_i].amount == 0 );
 	if( trade_i == 10 ) { // No space left
-		// clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_OVERWEIGHT); // We do not know if the server respond with this or not since the official client prevents this case client-side.
+		// The client does not allow to add more than 10 items, and will show an error message.
+		return;
+	}
+
+	char add_item = pc_checkadditem(target_sd, item->nameid, amount);
+	// Fail to add the item if is stackable and adding the traded amount will exceed the maximum
+	if (add_item == CHKADDITEM_OVERAMOUNT) {
+		clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_EACHITEM_OVERCOUNT);
+		return;
+	}
+
+	// Determines whether the item should be counted when checking for inventory space.
+	// If the 'trade_count_stackable' config is enabled, the item will be counted separately even if the recipient already has it.
+	bool count_stackable = (battle_config.trade_count_stackable == 1) || (add_item != CHKADDITEM_EXIST);
+
+	// Fail to add the item if the inventory will be full
+	if (count_stackable && pc_inventoryblank(target_sd) < sd->deal.inventory_space + 1) {
+		clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_OVERCOUNT);
 		return;
 	}
 
@@ -436,6 +453,9 @@ void trade_tradeadditem(map_session_data *sd, int16 index, int16 amount)
 	}
 
 	sd->deal.weight += trade_weight;
+
+	if (count_stackable)
+		sd->deal.inventory_space++;
 
 	clif_tradeitemok(*sd, index, EXITEM_ADD_SUCCEED); // Return the index as it was received
 	clif_tradeadditem(sd, target_sd, index+2, amount);

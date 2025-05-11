@@ -2365,7 +2365,6 @@ int32 unit_skilluse_id2(struct block_list *src, int32 target_id, uint16 skill_id
 		case MO_EXTREMITYFIST:
 			if (sc && sc->getSCE(SC_COMBO) &&
 			   (sc->getSCE(SC_COMBO)->val1 == MO_COMBOFINISH ||
-				sc->getSCE(SC_COMBO)->val1 == CH_TIGERFIST ||
 				sc->getSCE(SC_COMBO)->val1 == CH_CHAINCRUSH))
 				casttime = -1;
 			combo = 1;
