@@ -10527,7 +10527,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	}
 
 	// Poison React counter activates on normal poison attacks as well as attacks from poison-element enemies
-	if (tsc != nullptr && (sstatus->def_ele == ELE_POISON || sstatus->rhw.ele == ELE_POISON)) {
+	if (tsc != nullptr && ((src->type != BL_PC && sstatus->def_ele == ELE_POISON) || sstatus->rhw.ele == ELE_POISON)) {
 		if (status_change_entry* sce = tsc->getSCE(SC_POISONREACT); sce != nullptr && sce->val4 == 0) {
 			// Next normal attack will receive a damage boost
 			sce->val4 = 1;
