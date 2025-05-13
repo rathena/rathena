@@ -6088,7 +6088,6 @@ bool pc_takeitem(map_session_data *sd,struct flooritem_data *fitem)
 {
 	int32 flag = 0;
 	t_tick tick = gettick();
-	struct party_data *p = nullptr;
 
 	nullpo_ret(sd);
 	nullpo_ret(fitem);
@@ -6099,8 +6098,8 @@ bool pc_takeitem(map_session_data *sd,struct flooritem_data *fitem)
 	if (sd->sc.cant.pickup)
 		return false;
 
-	if (sd->status.party_id)
-		p = party_search(sd->status.party_id);
+	party_data* p = party_search(sd->status.party_id);
+	bool share = (p != nullptr && (p->party.item&1));
 
 	// Time the player needs to wait until the item can be taken
 	// By default the player needs to wait for top, second and third attacker loot priority times
@@ -6111,15 +6110,15 @@ bool pc_takeitem(map_session_data *sd,struct flooritem_data *fitem)
 		// Top attacker or no attacker, no wait time
 		item_get_tick = 0;
 	}
-	else if (fitem->second_get_charid > 0 && fitem->second_get_charid == sd->status.char_id) {
+	else if (fitem->second_get_charid > 0 && fitem->second_get_charid == sd->status.char_id && !share) {
 		// Second top attacker, needs to wait for top attacker
 		item_get_tick = fitem->first_get_tick;
 	}
-	else if (fitem->third_get_charid > 0 && fitem->third_get_charid == sd->status.char_id) {
+	else if (fitem->third_get_charid > 0 && fitem->third_get_charid == sd->status.char_id && !share) {
 		// Third top attacker, needs to wait for top and second attacker
 		item_get_tick = fitem->second_get_tick;
 	}
-	else if (p != nullptr && p->party.item&1) {
+	else if (share) {
 		// Party member loot priority
 		map_session_data* first_sd = nullptr;
 		map_session_data* second_sd = nullptr;
