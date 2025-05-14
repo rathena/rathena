@@ -7358,6 +7358,16 @@ static void battle_calc_weapon_final_atk_modifiers(struct Damage* wd, struct blo
 			status_change_end(target, SC_REJECTSWORD);
 	}
 
+	// Poison React Envenom Level 5 Autocast
+	if (tsc != nullptr && wd->damage > 0) {
+		if (status_change_entry* sce = tsc->getSCE(SC_POISONREACT); sce != nullptr && rnd_chance_official(sce->val3, 100)) {
+			if (status_check_skilluse(target, src, TF_POISON, 0))
+				skill_attack(BF_WEAPON, target, target, src, TF_POISON, 5, gettick(), 0);
+			if (--sce->val2 <= 0)
+				status_change_end(target, SC_POISONREACT);
+		}
+	}
+
 	if( tsc && tsc->getSCE(SC_CRESCENTELBOW) && wd->flag&BF_SHORT && rnd()%100 < tsc->getSCE(SC_CRESCENTELBOW)->val2 ) {
 		//ATK [{(Target HP / 100) x Skill Level} x Caster Base Level / 125] % + [Received damage x {1 + (Skill Level x 0.2)}]
 		int64 rdamage = 0;
@@ -8035,17 +8045,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		wd.damage += battle_calc_cardfix(BF_WEAPON, src, target, nk, right_element, left_element, wd.damage, 0, wd.flag);
 		if(is_attack_left_handed(src, skill_id))
 			wd.damage2 += battle_calc_cardfix(BF_WEAPON, src, target, nk, right_element, left_element, wd.damage2, 1, wd.flag);
-	}
-
-	// For some reason the Envenom autocast from Poison React happens at this point rather than after attack motion
-	if (tsc != nullptr && wd.damage + wd.damage2 > 0) {
-		if (status_change_entry* sce = tsc->getSCE(SC_POISONREACT); sce != nullptr && rnd_chance_official(sce->val3, 100)) {
-			// Cast Envenom Level 5
-			if (status_check_skilluse(target, src, TF_POISON, 0))
-				skill_attack(BF_WEAPON, target, target, src, TF_POISON, 5, gettick(), 0);
-			if (--sce->val2 <= 0)
-				status_change_end(target, SC_POISONREACT);
-		}
 	}
 
 	// only do 1 dmg to plant, no need to calculate rest
