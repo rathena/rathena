@@ -17674,11 +17674,11 @@ void clif_parse_configuration( int32 fd, map_session_data* sd ){
 
 			sd->hd->homunculus.autofeed = flag;
 			break;
-		case CONFIG_DISABLE_COSTUME:
+		case CONFIG_DISABLE_SHOWCOSTUMES:
 			if(flag == true)
-				sd->status.disable_costume = false;
+				sd->status.disable_showcostumes = false;
 			else
-				sd->status.disable_costume = true;
+				sd->status.disable_showcostumes = true;
 			pc_set_costume_view(sd);
 			break;
 		default:

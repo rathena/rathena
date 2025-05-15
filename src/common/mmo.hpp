@@ -612,7 +612,7 @@ struct mmo_charstatus {
 #endif
 	bool show_equip, disable_call;
 	bool disable_partyinvite;
-	bool disable_costume;
+	bool disable_showcostumes;
 	int16 rename;
 
 	time_t delete_date;

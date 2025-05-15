@@ -296,7 +296,7 @@ int32 char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 		(p->rename != cp->rename) || (p->robe != cp->robe) || (p->character_moves != cp->character_moves) ||
 		(p->unban_time != cp->unban_time) || (p->font != cp->font) || (p->uniqueitem_counter != cp->uniqueitem_counter) ||
 		(p->hotkey_rowshift != cp->hotkey_rowshift) || (p->clan_id != cp->clan_id ) || (p->title_id != cp->title_id) ||
-		(p->show_equip != cp->show_equip) || (p->disable_costume != cp->disable_costume) || (p->hotkey_rowshift2 != cp->hotkey_rowshift2) ||
+		(p->show_equip != cp->show_equip) || (p->disable_showcostumes != cp->disable_showcostumes) || (p->hotkey_rowshift2 != cp->hotkey_rowshift2) ||
 		(p->max_ap != cp->max_ap) || (p->ap != cp->ap) || (p->trait_point != cp->trait_point) ||
 		(p->pow != cp->pow) || (p->sta != cp->sta) || (p->wis != cp->wis) ||
 		(p->spl != cp->spl) || (p->con != cp->con) || (p->crt != cp->crt)
@@ -311,7 +311,7 @@ int32 char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 			"`last_map`='%s',`last_x`='%d',`last_y`='%d',`last_instanceid`='%d',"
 			"`save_map`='%s',`save_x`='%d',`save_y`='%d', `rename`='%d',"
 			"`delete_date`='%lu',`robe`='%d',`moves`='%d',`font`='%u',`uniqueitem_counter`='%u',"
-			"`hotkey_rowshift`='%d', `clan_id`='%d', `title_id`='%lu', `show_equip`='%d',  `disable_costume`='%d', `hotkey_rowshift2`='%d',"
+			"`hotkey_rowshift`='%d', `clan_id`='%d', `title_id`='%lu', `show_equip`='%d',  `disable_showcostumes`='%d', `hotkey_rowshift2`='%d',"
 			"`max_ap`='%u',`ap`='%u',`trait_point`='%d',"
 			"`pow`='%d',`sta`='%d',`wis`='%d',`spl`='%d',`con`='%d',`crt`='%d'"
 			" WHERE `account_id`='%d' AND `char_id` = '%d'",
@@ -325,7 +325,7 @@ int32 char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 			p->save_point.map, p->save_point.x, p->save_point.y, p->rename,
 			(unsigned long)p->delete_date, // FIXME: platform-dependent size
 			p->robe, p->character_moves, p->font, p->uniqueitem_counter,
-			p->hotkey_rowshift, p->clan_id, p->title_id, p->show_equip,  p->disable_costume, p->hotkey_rowshift2,
+			p->hotkey_rowshift, p->clan_id, p->title_id, p->show_equip,  p->disable_showcostumes, p->hotkey_rowshift2,
 			p->max_ap, p->ap, p->trait_point,
 			p->pow, p->sta, p->wis, p->spl, p->con, p->crt,
 			p->account_id, p->char_id) )
@@ -921,7 +921,7 @@ int32 char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf, uint8* co
 		"`robe`,`moves`,`unban_time`,`font`,`uniqueitem_counter`,`sex`,`hotkey_rowshift`,`title_id`,`show_equip`,"
 		"`hotkey_rowshift2`,"
 		"`max_ap`,`ap`,`trait_point`,`pow`,`sta`,`wis`,`spl`,`con`,`crt`,"
-		"`inventory_slots`,`body_direction`,`disable_call`,`disable_partyinvite`,`disable_costume`"
+		"`inventory_slots`,`body_direction`,`disable_call`,`disable_partyinvite`,`disable_showcostumes`"
 		" FROM `%s` WHERE `account_id`='%d' AND `char_num` < '%d'", schema_config.char_db, sd->account_id, MAX_CHARS)
 	||	SQL_ERROR == stmt.Execute()
 	||	SQL_ERROR == stmt.BindColumn( 0,  SQLDT_INT32,    &p.char_id, 0, nullptr, nullptr)
@@ -983,7 +983,7 @@ int32 char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf, uint8* co
 	||	SQL_ERROR == stmt.BindColumn( 56, SQLDT_UINT8,  &p.body_direction, 0, nullptr, nullptr)
 	||	SQL_ERROR == stmt.BindColumn( 57, SQLDT_UINT16, &p.disable_call, 0, nullptr, nullptr)
 	||	SQL_ERROR == stmt.BindColumn( 58, SQLDT_UINT8, &p.disable_partyinvite, 0, nullptr, nullptr)
-	||	SQL_ERROR == stmt.BindColumn( 59, SQLDT_UINT16, &p.disable_costume, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 59, SQLDT_UINT16, &p.disable_showcostumes, 0, nullptr, nullptr)
 	)
 	{
 		SqlStmt_ShowDebug(stmt);
@@ -1039,7 +1039,7 @@ int32 char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_
 		"`save_map`,`save_x`,`save_y`,`partner_id`,`father`,`mother`,`child`,`fame`,`rename`,`delete_date`,`robe`, `moves`,"
 		"`unban_time`,`font`,`uniqueitem_counter`,`sex`,`hotkey_rowshift`,`clan_id`,`title_id`,`show_equip`,`hotkey_rowshift2`,"
 		"`max_ap`,`ap`,`trait_point`,`pow`,`sta`,`wis`,`spl`,`con`,`crt`,"
-		"`inventory_slots`,`body_direction`,`disable_call`,`last_instanceid`,`disable_partyinvite`,`disable_costume`"
+		"`inventory_slots`,`body_direction`,`disable_call`,`last_instanceid`,`disable_partyinvite`,`disable_showcostumes`"
 		" FROM `%s` WHERE `char_id`=? LIMIT 1", schema_config.char_db)
 	||	SQL_ERROR == stmt.BindParam(0, SQLDT_INT32, &char_id, 0)
 	||	SQL_ERROR == stmt.Execute()
@@ -1120,7 +1120,7 @@ int32 char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_
 	||	SQL_ERROR == stmt.BindColumn(74, SQLDT_UINT8,	&p->disable_call, 0, nullptr, nullptr)
 	||	SQL_ERROR == stmt.BindColumn(75, SQLDT_INT32,    &p->last_point_instanceid, 0, nullptr, nullptr)
 	||	SQL_ERROR == stmt.BindColumn(76, SQLDT_UINT8,	&p->disable_partyinvite, 0, nullptr, nullptr)
-	||	SQL_ERROR == stmt.BindColumn(77, SQLDT_UINT16,	&p->disable_costume, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(77, SQLDT_UINT16,	&p->disable_showcostumes, 0, nullptr, nullptr)
 	)
 	{
 		SqlStmt_ShowDebug(stmt);
@@ -2320,7 +2320,7 @@ bool char_checkdb(void){
 		"`moves`,`unban_time`,`font`,`sex`,`hotkey_rowshift`,`clan_id`,`last_login`,`title_id`,`show_equip`,"
 		"`hotkey_rowshift2`,"
 		"`max_ap`,`ap`,`trait_point`,`pow`,`sta`,`wis`,`spl`,`con`,`crt`,"
-		"`inventory_slots`,`body_direction`,`disable_call`,`last_instanceid`,`disable_partyinvite`,`disable_costume`"
+		"`inventory_slots`,`body_direction`,`disable_call`,`last_instanceid`,`disable_partyinvite`,`disable_showcostumes`"
 		" FROM `%s` LIMIT 1;", schema_config.char_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
