@@ -409,7 +409,7 @@ void write_spawn(std::ostream &os, const struct map_data * m, const std::shared_
 #else
 	os << "\t\t" << mobinfo->vd.class_ << ", ";
 #endif
-	os << "\"" << mobinfo->jname.c_str() << "\", "; //c_str'ed because the strings have been resized to 24
+	os << "\"" << mobinfo->name.c_str() << "\", "; //c_str'ed because the strings have been resized to 24
 	os << "\"" << mobinfo->sprite.c_str() << "\", ";
 	os << "" << mobinfo->lv << ", ";
 	os << "" << 
