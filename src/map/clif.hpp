@@ -719,7 +719,8 @@ enum e_config_type : uint32 {
 	CONFIG_CALL,
 	CONFIG_PET_AUTOFEED,
 	CONFIG_HOMUNCULUS_AUTOFEED,
-	CONFIG_DISABLE_SHOWCOSTUMES = 5
+	// CONFIG_UNKNOWN,
+	CONFIG_DISABLE_SHOWCOSTUMES = 5,
 };
 
 enum e_memorial_dungeon_command : uint16 {
