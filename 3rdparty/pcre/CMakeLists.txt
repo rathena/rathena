@@ -2,6 +2,8 @@
 #
 # local copy
 #
+cmake_minimum_required(VERSION 3.1...4.0)
+
 if( WIN32 )
 message( STATUS "Detecting local PCRE" )
 find_path( PCRE_LOCAL_INCLUDE_DIRS "pcre.h"

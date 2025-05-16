@@ -1,0 +1,287 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-10-11 22:00+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ls-config.c:49
+#, c-format
+msgid "Configuration file handling\n"
+msgstr ""
+
+#: ls-config.c:51
+#, c-format
+msgid "Usage: ls-config [OPTION]\n"
+msgstr ""
+
+#: ls-config.c:52
+#, c-format
+msgid "Reading and writening data from configuration files\n"
+msgstr ""
+
+#: ls-config.c:53
+#, c-format
+msgid "in libconfig9 format.\n"
+msgstr ""
+
+#: ls-config.c:55
+#, c-format
+msgid "CAUTION: using without given config file are cause error!\n"
+msgstr ""
+
+#: ls-config.c:57
+#, c-format
+msgid "Available options:\n"
+msgstr ""
+
+#: ls-config.c:58
+#, c-format
+msgid "   -f, --file=FILE       Configuration file to handle.\n"
+msgstr ""
+
+#: ls-config.c:60
+#, c-format
+msgid "   -s, --set=PATH        Set configuration variable of given path.\n"
+msgstr ""
+
+#: ls-config.c:61
+#, c-format
+msgid "   -d, --data=DATA       Configuration variable value (only with -s)\n"
+msgstr ""
+
+#: ls-config.c:62
+#, c-format
+msgid "   -p, --type=TYPE       Configuration value type\n"
+msgstr ""
+
+#: ls-config.c:64
+#, c-format
+msgid "   -g, --get=PATH        Get configuration variable of given path.\n"
+msgstr ""
+
+#: ls-config.c:65
+#, c-format
+msgid "   -n, --names           Printout variables names.\n"
+msgstr ""
+
+#: ls-config.c:66
+#, c-format
+msgid "   -t, --types           Printout variables types.\n"
+msgstr ""
+
+#: ls-config.c:67
+#, c-format
+msgid "   -v, --values          Printout variables values.\n"
+msgstr ""
+
+#: ls-config.c:68
+#, c-format
+msgid "   -i, --indexes         Printout variables indexes.\n"
+msgstr ""
+
+#: ls-config.c:69
+#, c-format
+msgid ""
+"   -c, --count           Printout elements count (only: array, list, "
+"group).\n"
+msgstr ""
+
+#: ls-config.c:70
+#, c-format
+msgid "   -b, --bool-string     Printout boolean variables as text.\n"
+msgstr ""
+
+#: ls-config.c:72
+#, c-format
+msgid "   -q, --quiet           Quiet output to use in scripts.\n"
+msgstr ""
+
+#: ls-config.c:73
+#, c-format
+msgid "   -h, --help            Print this help message.\n"
+msgstr ""
+
+#: ls-config.c:75
+#, c-format
+msgid "TYPE:    Variable types:\n"
+msgstr ""
+
+#: ls-config.c:76
+#, c-format
+msgid "         group  - variables group,\n"
+msgstr ""
+
+#: ls-config.c:77
+#, c-format
+msgid "         array  - array of variables,\n"
+msgstr ""
+
+#: ls-config.c:78
+#, c-format
+msgid "         list   - list of variables,\n"
+msgstr ""
+
+#: ls-config.c:79
+#, c-format
+msgid "         int    - integer number,\n"
+msgstr ""
+
+#: ls-config.c:80
+#, c-format
+msgid "         int64  - 64bit integer number,\n"
+msgstr ""
+
+#: ls-config.c:81
+#, c-format
+msgid "         float  - float point number,\n"
+msgstr ""
+
+#: ls-config.c:82
+#, c-format
+msgid "         bool   - boolean value,\n"
+msgstr ""
+
+#: ls-config.c:83
+#, c-format
+msgid "         string - character string.\n"
+msgstr ""
+
+#: ls-config.c:87
+#, c-format
+msgid "Licence: "
+msgstr ""
+
+#: ls-config.c:102 ls-config.c:126 ls-config.c:149 ls-config.c:172
+#, c-format
+msgid "ERROR! Incorrect data format.\n"
+msgstr ""
+
+#: ls-config.c:110 ls-config.c:133 ls-config.c:156 ls-config.c:179
+#: ls-config.c:346 ls-config.c:364 ls-config.c:431 ls-config.c:477
+#: ls-config.c:507 ls-config.c:535 ls-config.c:555 ls-config.c:575
+#: ls-config.c:595 ls-config.c:602 ls-config.c:616 ls-config.c:662
+#: ls-config.c:681 ls-config.c:739
+#, c-format
+msgid "ERROR! Variable set failed.\n"
+msgstr ""
+
+#: ls-config.c:272 ls-config.c:779 ls-config.c:855 ls-config.c:1314
+#, c-format
+msgid "ERROR! Can't read configuration file.\n"
+msgstr ""
+
+#: ls-config.c:279 ls-config.c:785 ls-config.c:1322
+#, c-format
+msgid "ERROR! Conviguration variable path not given.\n"
+msgstr ""
+
+#: ls-config.c:284
+#, c-format
+msgid "ERROR! Configuration variable value not given.\n"
+msgstr ""
+
+#: ls-config.c:303
+#, c-format
+msgid "ERROR! Inavlid configuration variable path.\n"
+msgstr ""
+
+#: ls-config.c:310
+#, c-format
+msgid ""
+"ERROR! New named configuration variable can be added only to group element.\n"
+msgstr ""
+
+#: ls-config.c:316 ls-config.c:454 ls-config.c:634 ls-config.c:705
+#, c-format
+msgid "ERROR! Configuration variable type not given.\n"
+msgstr ""
+
+#: ls-config.c:339 ls-config.c:655 ls-config.c:732
+#, c-format
+msgid "ERROR! Inlegal data type.\n"
+msgstr ""
+
+#: ls-config.c:385 ls-config.c:398 ls-config.c:411 ls-config.c:424
+#: ls-config.c:438 ls-config.c:528 ls-config.c:548 ls-config.c:568
+#: ls-config.c:588 ls-config.c:609
+#, c-format
+msgid "ERROR! inconsistent value type.\n"
+msgstr ""
+
+#: ls-config.c:470
+#, c-format
+msgid "ERROR! Prohibited data type.\n"
+msgstr ""
+
+#: ls-config.c:696 ls-config.c:746
+#, c-format
+msgid "Added element index: %d\n"
+msgstr ""
+
+#: ls-config.c:710
+#, c-format
+msgid "ERROR! Bad name of configuration variable.\n"
+msgstr ""
+
+#: ls-config.c:758 ls-config.c:820
+#, c-format
+msgid "ERROR! Configuration file write failed.\n"
+msgstr ""
+
+#: ls-config.c:792 ls-config.c:867
+#, c-format
+msgid "ERROR! Given variable path not found.\n"
+msgstr ""
+
+#: ls-config.c:799
+#, c-format
+msgid "ERROR! Can't remove root element.\n"
+msgstr ""
+
+#: ls-config.c:806
+#, c-format
+msgid "ERROR! Can't find parent element.\n"
+msgstr ""
+
+#: ls-config.c:813
+#, c-format
+msgid "ERROR! Variable unset failed.\n"
+msgstr ""
+
+#: ls-config.c:1115
+#, c-format
+msgid "Variable name:           %s\n"
+msgstr ""
+
+#: ls-config.c:1118
+#, c-format
+msgid "Variable type:           %s\n"
+msgstr ""
+
+#: ls-config.c:1121
+#, c-format
+msgid "Variable value:          %s\n"
+msgstr ""
+
+#: ls-config.c:1124
+#, c-format
+msgid "Variable index:          %d\n"
+msgstr ""
+
+#: ls-config.c:1127
+#, c-format
+msgid "Variable elements count: %d\n"
+msgstr ""

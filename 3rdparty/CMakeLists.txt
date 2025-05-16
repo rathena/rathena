@@ -1,3 +1,4 @@
+cmake_minimum_required(VERSION 3.1...4.0)
 
 # macro to configure the use of local or system version of a package
 # Uses:
@@ -45,7 +46,6 @@ macro( CONFIGURE_WITH_LOCAL_OR_SYSTEM name )
 	mark_as_advanced( ${name}_LIBRARIES )
 	mark_as_advanced( ${name}_INCLUDE_DIRS )
 endmacro( CONFIGURE_WITH_LOCAL_OR_SYSTEM )
-
 
 add_subdirectory( libconfig )
 add_subdirectory( mysql )

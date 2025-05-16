@@ -62,7 +62,7 @@ set( COMMON_MINI_HEADERS
 	"${COMMON_SOURCE_DIR}/malloc.hpp"
 	"${COMMON_SOURCE_DIR}/showmsg.hpp"
 	"${COMMON_SOURCE_DIR}/strlib.hpp"
-	${LIBCONFIG_HEADERS} # needed by showmsg.hpp
+	#${LIBCONFIG_HEADERS} # needed by showmsg.hpp
 	${COMMON_ADDITIONALL_HPP} # needed by Windows
 	CACHE INTERNAL "" )
 set( COMMON_MINI_SOURCES
@@ -70,7 +70,7 @@ set( COMMON_MINI_SOURCES
 	"${COMMON_SOURCE_DIR}/malloc.cpp"
 	"${COMMON_SOURCE_DIR}/showmsg.cpp"
 	"${COMMON_SOURCE_DIR}/strlib.cpp"
-	${LIBCONFIG_SOURCES} # needed by showmsg.cpp
+	#${LIBCONFIG_SOURCES} # needed by showmsg.cpp
 	${COMMON_ADDITIONALL_CPP} # needed by Windows
 	CACHE INTERNAL "" )
 set( COMMON_MINI_INCLUDE_DIRS ${LIBCONFIG_INCLUDE_DIRS} CACHE INTERNAL "" )
@@ -104,7 +104,7 @@ set( COMMON_BASE_HEADERS
 	"${COMMON_SOURCE_DIR}/msg_conf.hpp"
 	"${COMMON_SOURCE_DIR}/cli.hpp"
 	"${COMMON_SOURCE_DIR}/utilities.hpp"
-	${LIBCONFIG_HEADERS} # needed by conf.hpp/showmsg.hpp
+	#${LIBCONFIG_HEADERS} # needed by conf.hpp/showmsg.hpp
 	${COMMON_ADDITIONALL_HPP} # needed by Windows
 	CACHE INTERNAL "common_base headers" )
 set( COMMON_BASE_SOURCES
@@ -128,7 +128,7 @@ set( COMMON_BASE_SOURCES
 	"${COMMON_SOURCE_DIR}/msg_conf.cpp"
 	"${COMMON_SOURCE_DIR}/cli.cpp"
 	"${COMMON_SOURCE_DIR}/utilities.cpp"
-	${LIBCONFIG_SOURCES} # needed by conf.cpp/showmsg.cpp
+	#${LIBCONFIG_SOURCES} # needed by conf.cpp/showmsg.cpp
 	${COMMON_ADDITIONALL_CPP} # needed by Windows
 	CACHE INTERNAL "common_base sources" )
 set( COMMON_BASE_INCLUDE_DIRS
@@ -138,7 +138,7 @@ set( COMMON_BASE_INCLUDE_DIRS
 set( COMMON_BASE_DEFINITIONS
 	${LIBCONFIG_DEFINITIONS}
 	CACHE INTERNAL "common_base definitions" )
-set( LIBRARIES ${GLOBAL_LIBRARIES} ${ZLIB_LIBRARIES} yaml-cpp )
+set( LIBRARIES ${GLOBAL_LIBRARIES} ${ZLIB_LIBRARIES} yaml-cpp config )
 set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${YAML_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIRS} ${COMMON_BASE_INCLUDE_DIRS}} )
 set( DEFINITIONS "${GLOBAL_DEFINITIONS} ${COMMON_BASE_DEFINITIONS}" )
 set( SOURCE_FILES ${COMMON_BASE_HEADERS} ${COMMON_BASE_SOURCES} )

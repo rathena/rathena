@@ -1,0 +1,3 @@
+examples/c++/example.cfg
+examples/c++/invalid.cfg
+examples/c++/example*.cpp

@@ -1,0 +1,163 @@
+Source: libconfig
+Priority: optional
+Maintainer: Jonathan McCrohan <jmccrohan@gmail.com>
+Uploaders: Jose Luis Tallon <jltallon@adv-solutions.net>
+Build-Depends: debhelper (>= 9), dh-autoreconf, texinfo, g++ (>= 4:5)
+Build-Depends-Indep: texlive-latex-base, texlive-fonts-recommended
+Standards-Version: 3.9.6
+Homepage: http://www.hyperrealm.com/libconfig/
+Section: libs
+
+Package: libconfig9
+Architecture: any
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Multi-Arch: same
+Description: parsing/manipulation of structured configuration files
+ This library features a fully reentrant parser and includes bindings for
+ both the C and C++ programming languages. It runs on modern POSIX-compliant
+ systems such as Linux, Solaris, and Mac OS X (Darwin), as well as on 
+ Microsoft Windows 2000/XP and later (Visual Studio or MinGW).
+ .
+ This library allows parsing, manipulating and writing structured configuration
+ files.
+
+Package: libconfig++9v5
+Architecture: any
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Conflicts: libconfig++9
+Replaces: libconfig++9
+Multi-Arch: same
+Description: parsing/manipulation of structured configuration files (C++ binding)
+ This library features a fully reentrant parser and includes bindings for
+ both the C and C++ programming languages. It runs on modern POSIX-compliant
+ systems such as Linux, Solaris, and Mac OS X (Darwin), as well as on 
+ Microsoft Windows 2000/XP and later (Visual Studio or MinGW).
+ .
+ This library allows parsing, manipulating and writing structured configuration
+ files.
+ .
+ This is the C++ binding.
+
+Package: libconfig-dev
+Section: libdevel
+Architecture: any
+Replaces: libconfig8-dev (<< 1.4.8)
+Breaks: libconfig8-dev (<< 1.4.8)
+Depends: libconfig9 (= ${binary:Version}), pkg-config, ${misc:Depends}
+Recommends: libconfig-doc
+Multi-Arch: same
+Description: parsing/manipulation of structured config files (development)
+ This library features a fully reentrant parser and includes bindings for
+ both the C and C++ programming languages. It runs on modern POSIX-compliant
+ systems such as Linux, Solaris, and Mac OS X (Darwin), as well as on 
+ Microsoft Windows 2000/XP and later (Visual Studio or MinGW).
+ .
+ This library allows parsing, manipulating and writing structured configuration
+ files. Its main features are:
+  - A fully reentrant parser: Multiple configurations can be parsed in
+    concurrent threads at the same time.
+  - A simple, structured configuration file format: more readable and compact
+    than XML and more flexible than Windows' "INI" file format.
+  - A low-footprint implementation
+  - Proper documentation.
+ .
+ This package contains the files needed in order to use libconfig
+ in your own programs.
+
+Package: libconfig8-dev
+Depends: libconfig-dev, ${misc:Depends}
+Architecture: any
+Section: oldlibs
+Priority: extra
+Description: Transitional package for libconfig-dev
+ This is a transitional package for libconfig-dev, and can be safely removed
+ when no other package depends on it.
+
+Package: libconfig++-dev
+Section: libdevel
+Architecture: any
+Replaces: libconfig++8-dev (<< 1.4.8)
+Breaks: libconfig++8-dev (<< 1.4.8)
+Depends: libconfig++9v5 (= ${binary:Version}), libconfig-dev,
+ pkg-config, ${misc:Depends}
+Multi-Arch: same
+Description: parsing/manipulation of structured config files (C++ development)
+ This library features a fully reentrant parser and includes bindings for
+ both the C and C++ programming languages. It runs on modern POSIX-compliant
+ systems such as Linux, Solaris, and Mac OS X (Darwin), as well as on 
+ Microsoft Windows 2000/XP and later (Visual Studio or MinGW).
+ .
+ This library allows parsing, manipulating and writing structured configuration
+ files. Its main features are:
+  - A fully reentrant parser: Multiple configurations can be parsed in
+    concurrent threads at the same time.
+  - A simple, structured configuration file format: more readable and compact
+    than XML and more flexible than Windows' "INI" file format.
+  - A low-footprint implementation
+  - Proper documentation.
+ .
+ This package contains the files needed in order to use libconfig
+ in your own C++ programs.
+
+Package: libconfig++8-dev
+Depends: libconfig++-dev, ${misc:Depends}
+Architecture: any
+Section: oldlibs
+Priority: extra
+Description: Transitional package for libconfig++-dev
+ This is a transitional package for libconfig++-dev, and can be safely removed
+ when no other package depends on it.
+
+
+Package: libconfig-dbg
+Section: debug
+Priority: extra
+Architecture: any
+Depends: libconfig9 (= ${binary:Version}), ${misc:Depends}
+Multi-Arch: same
+Description: parsing/manipulation of structured config files (debug symbols)
+ This library features a fully reentrant parser and includes bindings for
+ both the C and C++ programming languages. It runs on modern POSIX-compliant
+ systems such as Linux, Solaris, and Mac OS X (Darwin), as well as on
+ Microsoft Windows 2000/XP and later (Visual Studio or MinGW).
+ .
+ This library allows parsing, manipulating and writing structured configuration
+ files.
+ .
+ This package provides debugging information for the libconfig library.
+
+Package: libconfig++-dbg
+Section: debug
+Priority: extra
+Architecture: any
+Depends: libconfig9 (= ${binary:Version}), libconfig++9v5 (= ${binary:Version}), ${misc:Depends}
+Multi-Arch: same
+Description: parsing/manipulation of structured config files (C++ debug symbols)
+ This library features a fully reentrant parser and includes bindings for
+ both the C and C++ programming languages. It runs on modern POSIX-compliant
+ systems such as Linux, Solaris, and Mac OS X (Darwin), as well as on
+ Microsoft Windows 2000/XP and later (Visual Studio or MinGW).
+ .
+ This library allows parsing, manipulating and writing structured configuration
+ files.
+ .
+ This package provides debugging information for the libconfig++ library.
+
+Package: libconfig-doc
+Section: doc
+Architecture: all
+Replaces: libconfig-dev (<= 1.4.8)
+Breaks: libconfig-dev (<= 1.4.8)
+Depends: ${misc:Depends}
+Description: parsing/manipulation of structured config files (Documentation)
+ This library features a fully reentrant parser and includes bindings for
+ both the C and C++ programming languages. It runs on modern POSIX-compliant
+ systems such as Linux, Solaris, and Mac OS X (Darwin), as well as on
+ Microsoft Windows 2000/XP and later (Visual Studio or MinGW).
+ .
+ This library allows parsing, manipulating and writing structured configuration
+ files.
+ .
+ This package provides documentation for the libconfig library.

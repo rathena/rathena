@@ -1,0 +1,6 @@
+ls-config usr/share/ls/lib/
+lslib-core usr/share/ls/lib/
+src/locale/* usr/share/locale/
+doc/* usr/share/doc/ls-config/
+sample/* usr/share/doc/ls-config/sample/
+README.md usr/share/doc/ls-config/README.txt

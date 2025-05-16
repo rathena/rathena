@@ -1,0 +1,12 @@
+Package: ls-config
+Version: 1.0.3
+Architecture: i386
+Maintainer: Łukasz A. Grabowski <www@lucas.net.pl>
+Installed-Size: 27
+Section: unknown
+Priority: extra
+Homepage: http://www.lucas.net.pl
+Description: Simple program allo use libconfig style conf in bash
+ This software allo to use libconfig9 style configuration files
+ in bash scripts by invoke this soft. It contain bash library too,
+ witch easying this job.

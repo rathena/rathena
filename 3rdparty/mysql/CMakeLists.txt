@@ -2,6 +2,8 @@
 #
 # local copy
 #
+cmake_minimum_required(VERSION 3.1...4.0)
+
 if( WIN32 )
 message( STATUS "Detecting local MYSQL" )
 find_path( MYSQL_LOCAL_INCLUDE_DIRS "mysql.h"

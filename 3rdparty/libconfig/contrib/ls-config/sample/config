@@ -1,0 +1,23 @@
+grp : 
+{
+  value = 10;
+  name = "sample";
+};
+lst = ( 
+  {
+    name = "sample";
+  }, 
+  {
+    comment = "sample secong group";
+    val = 10.2;
+  } );
+info = "more info about types in libconfig9 documentations";
+arr = [ 10, 20, 30 ];
+integer = 100;
+longint = 100L;
+flo = 100.01;
+boolean : 
+{
+  truevalue = true;
+  falsevalue = false;
+};
