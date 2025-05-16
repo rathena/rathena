@@ -34,11 +34,14 @@
 #           Price            Required zeny. (Default: 0)
 #           RequiredItem     Required item. (Default: None)
 #           RequiredItemBox  Required item box. (Default: None)
+#           RequiredJob      Required item. (Default: any)
+#       RequiredJob:         Required jobs list. (Used for bodystyle for packetver >= 20231220)
+#           Job_Constant     Required job.
 ###########################################################################
 
 Header:
   Type: STYLIST_DB
-  Version: 1
+  Version: 2
 
 Footer:
   Imports:
