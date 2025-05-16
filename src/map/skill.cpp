@@ -21818,7 +21818,7 @@ void skill_getareachar_skillunit_visibilty_single(struct skill_unit *su, struct 
  * @param val2
  * @param range Range of the unit (modern clients use this information for the display size of some units)
  */
-struct skill_unit *skill_initunit(std::shared_ptr<s_skill_unit_group> group, int32 idx, int32 x, int32 y, int32 val1, int32 val2, bool hidden, int32 range)
+skill_unit* skill_initunit(std::shared_ptr<s_skill_unit_group> group, int32 idx, int32 x, int32 y, int32 val1, int32 val2, bool hidden, int32 range)
 {
 	if (group == nullptr || group->unit == nullptr)
 		return nullptr;
