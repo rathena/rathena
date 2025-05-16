@@ -1286,13 +1286,12 @@ void pc_makesavestatus(map_session_data *sd) {
 	if(!battle_config.save_clothcolor)
 		sd->status.clothes_color = 0;
 
-	if(!battle_config.save_body_style) {
+	if(!battle_config.save_body_style)
 #if PACKETVER >= 20231220
 		sd->status.body = sd->status.class_;
 #else
 		sd->status.body = 0;
 #endif
-	}
 
 	//Only copy the Cart/Peco/Falcon options, the rest are handled via
 	//status change load/saving. [Skotlex]
@@ -11072,6 +11071,7 @@ void pc_changelook(map_session_data *sd,int32 type,int32 val) {
 		break;
 	case LOOK_BODY2:
 		val = cap_value(val, MIN_BODY_STYLE, MAX_BODY_STYLE);
+
 		sd->status.body = val;
 		break;
 	}

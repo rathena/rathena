@@ -1493,9 +1493,9 @@ int32 char_make_new_char( struct char_session_data* sd, char* name_, int32 str, 
 #endif
 
 #if PACKETVER >= 20231220
-	int body = start_job;
+	int32 body = start_job;
 #else
-	int body = 0;
+	int32 body = 0;
 #endif
 
 	//Insert the new char entry to the database
