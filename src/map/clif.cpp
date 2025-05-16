@@ -22928,7 +22928,8 @@ void clif_parse_stylist_buy( int32 fd, map_session_data* sd ){
 	}
 
 	clif_stylist_response(sd, false);
-#else if PACKETVER >= 20151104
+#else
+#if PACKETVER >= 20151104
 #if PACKETVER >= 20180516
 	const PACKET_CZ_REQ_STYLE_CHANGE2* p = reinterpret_cast<PACKET_CZ_REQ_STYLE_CHANGE2*>(RFIFOP(fd, 0));
 #else
@@ -22972,6 +22973,7 @@ void clif_parse_stylist_buy( int32 fd, map_session_data* sd ){
 #endif
 
 	clif_stylist_response( sd, false );
+#endif
 #endif
 }
 
