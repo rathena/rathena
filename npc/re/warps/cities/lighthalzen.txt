@@ -1,0 +1,10 @@
+//===== rAthena Script =======================================
+//= Lighthalzen Warp Script
+//===== Description: =========================================
+//= Warp Points for Lighthalzen
+//===== Changelog: ===========================================
+//= 1.0 First Version [crazyarashi]
+//============================================================
+
+// Rekenber Research Institute
+rgsr_in,127,32,0	warp	rekenber_to_lhz	1,1,lighthalzen,53,275

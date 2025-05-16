@@ -1,0 +1,10 @@
+//===== rAthena Script =======================================
+//= Special Border Area warps
+//===== Description: =========================================
+//= Warp Points for Episode 17.1
+//===== Changelog: ===========================================
+//= 1.0 First version. [crazyarashi]
+//============================================================
+
+sp_cor,162,41,0	warp	sp_cor_to_sp_os	1,1,sp_os,260,357
+sp_os,188,30,0	warp	sp_os_exit	1,1,ein_fild03,284,267

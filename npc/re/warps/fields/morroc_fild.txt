@@ -18,7 +18,7 @@
 //= 1.5 Commented moc_fild20 warps replaced with new NPCs. [Euphy]
 //============================================================
 
-//= Sograt Dessert ===========================================
+//= Sograt Desert ===========================================
 //moc_fild01,101,16,0	warp	mocf01-1	15,3,moc_fild04,317,376
 //moc_fild01,101,16,0	warp	mocf01-1	15,3,moc_fild20,210,342
 moc_fild01,22,242,0	warp	mocf005	2,2,prt_fild09,380,237

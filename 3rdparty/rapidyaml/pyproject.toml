@@ -1,0 +1,8 @@
+[build-system]
+requires = [
+         "setuptools>=42",
+         "setuptools_scm[toml]>=3.4",
+         "setuptools-git",
+         "wheel",
+         "ninja",
+         "cmake_build_extension"]

@@ -1,0 +1,937 @@
+//===== rAthena Script =======================================
+//= Episode 16.2 - Illusion Enchants
+//===== Description: =========================================
+//= [Walkthrough Conversion]
+//= Illusion series related merchants and enchanters
+// Note:
+// - Some dialog are missing in Illusion of Luanda exchange NPC.
+//===== Changelog: ===========================================
+//= 1.0 Initial release of Illusion of Moonlight [crazyarashi]
+//= 1.1 Cleanup and improvements [Everade]
+//= 1.2 Added Illusion of Vampire enchanter [Capuche]
+//= 1.3 Added Illusion of Frozen enchanter [Capuche]
+//= 1.4 Added Illusion of Turtle enchanter [Capuche]
+//= 1.5 Added Illusion of Luanda enchanter [Capuche]
+//= 1.6 Added Illusion of Underwater exchange [Capuche]
+//= 1.7 Added Illusion of Twins enchanter [Capuche]
+//= 1.8 Added Illusion Merchant [Haydrich]
+//= 1.9 Added Illusion of Teddy Bear exchange [Atemo]
+//============================================================
+
+//============================================================
+//= Illusion of Moonlight
+//============================================================
+pay_d03_i,160,45,3	script	Gemcutter#ilp20	4_TOWER_17,3,3,{
+	mes "[ Gemcutter ]";
+	mes "Do you have business with me?";
+	next;
+	switch( select( "What are you doing here?", "Upgrade equipments" ) ) {
+	case 1:
+		mes "[ Gemcutter ]";
+		mes "I came to the ruined village,";
+		mes "looking for some materials. Touched some strange light, and now I'm here.";
+		next;
+		mes "[ Gemcutter ]";
+		mes "I've decided to stick around for a little while. Figured I'd be safe so long as I stay close to this soldier.";
+		mes "I have a proposition for you. I want some materials that can only be found in this place.";
+		next;
+		mes "[ Gemcutter ]";
+		mes "Get them for me, and I'll improve your equipment in exchange. Just so you know, I can only improve certain types.";
+		next;
+		mes "[ Gemcutter ]";
+		mes "If you're interested, we can discuss the details of our bargain.";
+		close;
+	case 2:
+		mes "[ Gemcutter ]";
+		mes "Make sure ^0000FFyour equipment is refined to at least +9^000000 before bringing it to me.";
+		mes "That's the minimum requirement for my upgrade service to have any visible effects on your equipment.";
+		next;
+		mes "[ Gemcutter ]";
+		mes "Make sure you're ^0000FFequipped with the item that you want to improve.^000000";
+		mes "Otherwise, I can't evaluate its condition.";
+		next;
+		mes "[ Gemcutter ]";
+		mes "As you may have guessed, your equipment will transform into something new after this.";
+		mes "In other words, ^0000FFIt'll lose its current refining levels, cards and enchantments.^000000";
+		next;
+		mes "[ Gemcutter ]";
+		mes "And I need ^0000FFIllusion Stones and some other materials^000000 to upgrade your equipment.";
+		mes "Pick an item you want and I'll tell you what I need.";
+		close2;
+		callshop( "barter_ill_moonlight" );
+		end;
+	}
+	end;
+
+OnTouch:
+	if (illusion_moonlight > 7)
+		npctalk "What kind of place is this?", "", bc_self;
+	end;
+}
+
+
+//============================================================
+//= Illusion of Vampire
+//============================================================
+gef_dun01,139,228,3	script	Great Merchant#illgef	4_M_HUMERCHANT,{
+	mes "[Great Merchant]";
+	mes "Adventurer, do you have ^0000cdIllusion Stones^000000? If you have a ^0000cdweapon, a piece armor^000000, or ^0000cdan accessory at Refining Level 9 or higher^000000, ";
+	mes "then I can exchange it for something better at the cost of some Illusion Stones and other materials.";
+	next;
+	mes "[Great Merchant]";
+	mes "So, what do you want?";
+	next;
+	switch( select( "Exchange illusion equipment", "What are Illusion Stones?", "Can I strengthen the exchanged item?", "Cancel" ) ) {
+	case 1:
+		specialeffect EF_HFLIMOON3;
+		emotion ET_BEST;
+		mes "[Great Merchant]";
+		mes "Use it well and come see me later if you find more Illusion Stones! *Chuckle*";
+		close2;
+		callshop( "barter_ill_vampire" );
+		end;
+	case 2:
+		mes "[Great Merchant]";
+		mes "What are ^0000cdIllusion Stones^000000, you ask? Well... I don't think anyone knows exactly what they are.";
+		next;
+		mes "[Great Merchant]";
+		mes "I only know they're rare and can only be found in some special places, and I'm here to collect them for my clients.";
+		next;
+		mes "[Great Merchant]";
+		mes "My clients want to figure out what these stones are. They're paying me a lot of money,";
+		next;
+		mes "[Great Merchant]";
+		mes "so I could offer adventurers like you ^0000cdexpensive equipment in exchange for the stones^000000, and still fetch a profit.";
+		next;
+		mes "[Great Merchant]";
+		mes "Bring ^0000cda piece of refined equipment, Illusion Stones^000000, and various materials that are only found in this place. I'll ^0000cdupgrade the equipment, weapon, armor, or accessory?^000000for you.";
+		next;
+		mes "[Great Merchant]";
+		mes "This benefits both of us. Let me know if you're interested in my proposition.";
+		close;
+	case 3:
+		mes "[Great Merchant]";
+		mes "So, you want to reinforce the equipment you get. You're thorough. I like that!";
+		next;
+		mes "[Great Merchant]";
+		mes "A while ago, an adventurer who passed through this place told me that a chemist in Prontera refines the Illusion equipment in exchange for Illusion Stones.";
+		next;
+		mes "[Great Merchant]";
+		mes "It seems Illusion Stones are a popular topic everywhere. Everyone wants to know about what they are.";
+		next;
+		mes "[Great Merchant]";
+		mes "If you want to refine your equipment, then go to the <NAVI>Illusion Enchanter<INFO>prontera,90,115,000,0,</INFO></NAVI> near the Town Office.";
+		close;
+	case 4:
+		mes "[Great Merchant]";
+		mes "Did you find anything you liked? If you need anything, please let me know at any time.";
+		close;
+	}
+	end;
+}
+
+//============================================================
+//= Illusion of Frozen
+//============================================================
+
+// illusion exchange npc - trade items for illusion gears
+ice_dun02,153,18,3	script	Illusion Stone Research	4_M_ALCHE_B,{
+	disable_items;
+	mes "[Illusion Stone Researcher]";
+	mes "Ah, Illusion Stones are truly mysterious...";
+	next;
+	switch( select( "What are you doing here?", "Upgrade equipments", "Cancel" ) ) {
+	case 1:
+		mes "[Illusion Stone Researcher]";
+		mes "I'm here to find some Illusion Stones that I need for my research.";
+		next;
+		mes "[Illusion Stone Researcher]";
+		mes "This cave is very mysterious, but I'm not strong enough to explore it by myself.";
+		mes "If you go in there, could you procure some things for me?";
+		next;
+		mes "[Illusion Stone Researcher]";
+		mes "In exchange, I'll improve your equipment.";
+		mes "What do you say?";
+		close;
+	case 2:
+		mes "[Illusion Stone Researcher]";
+		mes "Make sure ^4d4dffyour equipment is refined to at least +9^000000 before bringing it to me.";
+		mes "Make sure you're ^4d4dffequipped with the item that you want to improve^000000.";
+		next;
+		mes "[Illusion Stone Researcher]";
+		mes "As you may have guessed, your equipment will transform into something new after this.";
+		mes "In other words, ^4d4dffit'll lose its current Refining and Upgrade levels.^000000";
+		next;
+		mes "[Illusion Stone Researcher]";
+		mes "And I need ^4d4dffIllusion Stones and some other materials^000000 to upgrade your equipment.";
+		mes "Pick an item you want. I'll tell you what I need.";
+		close2;
+		callshop( "barter_ill_frozen" );
+		end;
+	case 3:
+		mes "[Illusion Stone Researcher]";
+		mes "It's just hard to get..";
+		close;
+	}
+	end;
+}
+
+
+// illusion enhancing - enhance the illusion gears
+// note: unknown enhance rate
+prontera,90,115,5	script	Illusion Enchanter#0	4_GEFFEN_09,3,3,{
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2000) {
+		mes "I'm overweight. I'd better lighten my bag first.";
+		close;
+	}
+	disable_items;
+	if (isbegin_quest(12415) == 0) {
+		mes "[Illusion Enchanter]";
+		mes "Oh, do you have Illusion equipment?";
+		next;
+		select("No. I don't even know what Illusion equipment is.");
+		mes "[Illusion Enchanter]";
+		mes "Oops, I'm sorry. I should've introduced myself first.";
+		next;
+		mes "[Illusion Enchanter]";
+		mes "I'm a chemist specializing in the study of Illusion Stones, which have been circulating among adventurers.";
+		next;
+		select("Illusion Stones?");
+		mes "[Illusion Enchanter]";
+		mes "You don't know, don't you? They're the hottest trend these days.";
+		next;
+		select("I don't care about trends.");
+		mes "[Illusion Enchanter]";
+		mes "You must have heard about the strange places that have sprung up here and there lately. Illusion Stones are only found in those places,";
+		next;
+		mes "[Illusion Enchanter]";
+		mes "and their atomic structure is unlike any mineral I've seen. *Blah Blah* ...Their chemical chains... *Blah Blah*";
+		next;
+		select("(Uh-oh, he's zoning out!)");
+		mes "[Illusion Enchanter]";
+		mes "Anyway, I can enchant equipment that is exchanged for or purchased with Illusion Stones. I call them the Illusion equipment.";
+		next;
+		select("(He has no sense when it comes to names.)");
+		mes "[Illusion Enchanter]";
+		mes "This equipment at least responds positively to Illusion Stones, or it has the potential to be enchanted successfully.";
+		next;
+		mes "[Illusion Enchanter]";
+		mes "Explore the worlds of illusions, collect Illusion Stones, and exchange them for equipment. I can enchant the equipment for you.";
+		next;
+		mes "[Illusion Enchanter]";
+		mes "This benefits both of us. I need Illusion Stones for my studies, and you need powerful equipment for your adventures.";
+		next;
+		mes "[Illusion Enchanter]";
+		mes "That said, my service is not for free. It requires a few Illusion Stones and Zeny.";
+		next;
+		mes "[Illusion Enchanter]";
+		mes "If you're interested, how'd you like to get a membership for my service? You can get discounts that way!";
+		next;
+		if (select( "Sure!", "Not interested." ) == 2) {
+			mes "[Illusion Enchanter]";
+			mes "Okay, but let me know if you change your mind.";
+			close;
+		}
+		mes "[Illusion Enchanter]";
+		mes "Alright, then I'll add you to my member list. I hope you'll have some Illusion equipment next time I see you.";
+		setquest 12415;
+		completequest 12415;
+		close;
+	}
+	mes "[Illusion Enchanter]";
+	mes "I can enchant Illusion equipment.";
+	next;
+	switch( select( "How much do you charge?", "Add stats to Illusion equipment.", "Reset enchanted Illusion equipment." ) ) {
+	case 1:
+		mes "[Illusion Enchanter]";
+		mes "First, let me tell you that I can only enchant certain types of Illusion equipment.";
+		next;
+		mes "[Illusion Enchanter]";
+		mes "Up to 2 sockets can be enchanted, and enchanting each socket requires 5 Illusion Stones. You can reset enchanted Illusion equipment at any time.";
+		next;
+		mes "[Illusion Enchanter]";
+		mes "Enchanting never fails, but resetting sometimes failes. Even modern science can't change that.";
+		next;
+		mes "[Illusion Enchanter]";
+		mes "Resetting requires a different amount of Zeny depending on the success chance you choose. Select the menu if you'd like to see the available payment options.";
+		close;
+	case 2:
+		.@reset = false;
+		break;
+	case 3:
+		.@reset = true;
+		break;
+	}
+	setarray .@location[0], EQI_HAND_R, EQI_ARMOR, EQI_SHOES, EQI_GARMENT, EQI_ACC_R, EQI_ACC_L, EQI_HEAD_TOP, EQI_HAND_L;
+	.@s = select( "Right-handed Weapon", "Armor", "Shoes", "Garment", "Right Accessory", "Left accessory", "Helm (Upper)", "Left-handed Weapon/Shield" ) - 1;
+	.@loc = .@location[.@s];
+	.@eq_id = getequipid(.@loc);
+
+	switch(.@eq_id) {
+	// Illusion of Moonlight
+		case 15195:	// Puente_Robe_IL
+		case 16063:	// Long_Mace_IL
+		case 19209:	// Nurse_Cap_IL
+		case 20838:	// Muffler_IL
+		case 19210:	// Apple_Of_Archer_IL
+		case 22133:	// Shoes_IL
+		case 26007:	// Spectral_Spear_IL
+		case 26109:	// Staff_Of_Bordeaux_IL
+		case 28725:	// Moonlight_Sword_IL
+	// Illusion of Vampire
+		case 28022:	// Infiltrator_IL
+		case 28023:	// Ghoul_Leg_IL
+		case 2039:	// Wizardy_Staff_IL
+		case 18149:	// Balistar_IL
+		case 28612:	// Book_Of_The_Apo_IL
+		case 20840:	// Cape_Of_Ancient_Lord_IL
+		case 28508:	// Skul_Ring_IL
+		case 28509:	// Ring_IL
+	// Illusion of Frozen
+		case 1846:	// Combo_Battle_Glove_IL
+		case 13337:	// Huuma_Flutter_Snow_IL
+		case 19223:	// Cap_IL
+		case 28922:	// Herald_Of_GOD_IL
+		case 20847:	// Clack_Of_Servival_IL
+	// Illusion of Teddy bear
+		case 28745:	// Illusion_Counter_Dagger
+		case 28244:	// Illusion_Gate_Keeper_DD
+		case 2051:	// Illusion_Survivor's_Staff
+		case 22190:	// Illusion_Boots
+		case 19344:	// Illusion_Hot_blooded_Headband
+	// Illusion of Turtle
+		case 13469:	// Illusion_Immaterial_Sword
+		case 1326:	// Illusion_War_Axe
+		case 32005:	// Illusion_Pole_Axe
+		case 13338:	// Illusion_Wing_Shuriken
+		case 16065:	// Illusion_Iron_Driver
+		case 19247:	// Illusion_Fancy_Flower
+	// Illusion of Twins
+		case 450182:	// Sprint_Mail_IL
+		case 470066:	// Sprint_Shoes_IL
+		case 490120:	// Sprint_Ring_IL
+		case 490121:	// Sprint_Glove_IL
+		case 550030:	// Thorn_Staff_IL
+		case 550031:	// Dea_Staff_IL
+		case 530015:	// Gelerdria_IL
+		case 500030:	// Excalibur_IL
+		case 620010:	// Doom_Slayer_IL
+		case 510034:	// Ancient_Dagger_IL
+		case 460017:	// Guard_IL
+		case 460018:	// Siver_Guard_IL
+	// Illusion of Luanda
+		case 28626:	// Illusion_Tablet
+		case 18174:	// Illusion_Hunter_Bow
+		case 19366:	// Illusion_Goibne_Helm
+		case 15348:	// Illusion_Goibne_Armor
+		case 20923:	// Illusion_Goibne_Spaulders
+		case 22192:	// Illusion_Goibne's_Greaves
+	// Illusion of Labyrinth
+		case 19428:	// Illusion_Morpheus's_Hood
+		case 20948:	// Illusion_Morpheus's_Shawl
+		case 32238:	// Illusion_Morpheus's_Ring
+		case 32239:	// Illusion_Morpheus's_Bracelet
+		case 28254:	// Illusion_Butcher
+		case 21050:	// Illusion_Tae_Goo_Lyeon
+		case 32301:	// Illusion_Gold_Lux
+		case 28762:	// Illusion_Bazerald
+	// Illusion of underwater
+		case 570008:	// Electronic_Guitar_IL
+		case 580008:	// Electric_Eel_IL
+		case 630006:	// Brionac_IL
+		case 610012:	// KatarOfCold_Icicle_IL
+		case 600011:	// Death_Guidance_IL
+		case 630007:	// Zephyrus_IL
+		case 450144:	// Saint_Robe_IL
+		case 450145:	// Water_Sprits_Armor_IL
+		case 450146:	// Chain_Mail_IL
+		case 400053:	// Morrigane's_Helm_IL
+		case 480054:	// Morrigane's_Manteau_IL
+		case 490069:	// Morrigane's_Belt_IL
+		case 490070:	// Morrigane's_Pendant_IL
+			break;
+		case -1:
+			mes "[Illusion Enchanter]";
+			mes "You must be equipped with an item in the selected location to have it enchanted.";
+			close;
+		default:
+			mes "[Illusion Enchanter]";
+			mes "This equipment is not from a world of fantastic illusions. I'm offended that you even showed it to me.";
+			close;
+	}
+
+	for ( .@i = 0; .@i < MAX_ITEM_RDM_OPT-1; ++.@i ) {
+		if (getequiprandomoption(.@loc, .@i, ROA_ID) > 0) {
+			mes "^ff0000Random options are checked for that equipment. The equipment cannot be enchanted.^000000";
+			close;
+		}
+	}
+
+	.@weapon_lvl = getequipweaponlv(.@loc);
+	.@loc_enchant = .@loc;	// variable for enhancing function
+
+	switch(.@weapon_lvl) {
+	case 0:
+		break;
+	case 1:
+	case 2:
+	case 3:
+		if (.@loc_enchant == EQI_HAND_L)
+			.@loc_enchant = EQI_HAND_R;	// the equipment is a weapon so the enchantments must be for weapons
+		break;
+	default:	// illusion weapon level 4 can't be enhanced
+		mes "[Illusion Enchanter]";
+		mes "This is the best of all Illusion equipment. There's no technology available in this day and age that can enchant it. Even the most skilled enchanter can't do that.";
+		next;
+		mes "[Illusion Enchanter]";
+		mes "Well, not unless he's willing to risk his mental and physical health.";
+		next;
+		mes "[Illusion Enchanter]";
+		mes "But who knows? Maybe someday you'll meet someone who is talented enough to handle this precious equipment.";
+		close;
+	}
+
+	.@refine = getequiprefinerycnt(.@loc);
+	.@card[0] = getequipcardid(.@loc,0);
+	.@card[1] = getequipcardid(.@loc,1);
+	.@card[2] = getequipcardid(.@loc,2);
+	.@card[3] = getequipcardid(.@loc,3);
+
+	switch(.@reset) {
+	case false:
+		.@item_req = 25271;	// IllusionStone
+		.@item_req_count = 5;
+
+		if (.@card[2] > 0 && .@card[3] > 0) {
+			mes "[Illusion Enchanter]";
+			mes "This equipment is already enchanted to the maximum limit.";
+			close;
+		}
+		if (.@weapon_lvl > 0) {
+			mes "[Illusion Enchanter]";
+			mes "What kind of effect would you like to add?";
+			next;
+			.@weapon_enchant_type = select( "Melee", "Ranged", "Magic" );
+		}
+		mes "[Illusion Enchanter]";
+		if (.@card[3] > 0) {
+			.@slot = 2;
+			.@string$ = "second";
+		}
+		else {
+			.@slot = 3;
+			.@string$ = "first";
+		}
+		mes "I'll try to enchant the " + .@string$ + " ability for your item. ^ff0000Its existing Refining level and cards will not be damaged. It will not be destroyed, even if this attempt fails.^000000 Do you want to continue?";
+		next;
+		if (select( "I'll come back later.", "Sure!" ) == 1) {
+			mes "[Illusion Enchanter]";
+			mes "No problem. Come back if you change your mind.";
+			close;
+		}
+		if (countitem(.@item_req) < .@item_req_count) {
+			mes "[Illusion Enchanter]";
+			mes "This item requires " + .@item_req_count + " " + getitemname(.@item_req) + ", and you don't have all that I need from you.";
+			close;
+		}
+
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", .@loc, .@eq_id) || callfunc("F_IsEquipCardHack", .@loc, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", .@loc, .@refine))
+			close;
+
+		.@card[.@slot] = callsub( S_Enchant, .@loc_enchant, .@slot, .@weapon_enchant_type );
+		delitem .@item_req, .@item_req_count;
+		delequip .@loc;
+		getitem2 .@eq_id,1,1,.@refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
+		mes "[Illusion Enchanter]";
+		mes "It's done. Please check.";
+		specialeffect2 EF_REPAIRWEAPON;
+		close;
+
+	case true:
+		if (!F_IsCharm(.@card[2]) || !F_IsCharm(.@card[3])) {
+			mes "[Illusion Enchanter]";
+			mes "Only fully enchanted items can be reset. Please enchant it twice, and if you still want to reset it, then bring it to me.";
+			close;
+		}
+		mes "[Illusion Enchanter]";
+		mes "Your resetting chance varies, depending on the amount of Zeny you pay. What would you like to do?";
+		next;
+		.@s = select( "I'll come back later.", "100,000 Zeny (50%)", "200,000 Zeny (60%)", "300,000 Zeny (70%)", "400,000 Zeny (80%)", "500,000 Zeny (90%)" ) - 1;
+		if (.@s == 0) {
+			mes "[Illusion Enchanter]";
+			mes "No problem. Come back if you change your mind.";
+			close;
+		}
+		.@cost = 100000 * .@s;
+		.@rate = 40 + 10 * .@s;
+
+		if (Zeny < .@cost) {
+			mes "[Illusion Enchanter]";
+			mes "You don't have enough money.";
+			close;
+		}
+
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", .@loc, .@eq_id) || callfunc("F_IsEquipCardHack", .@loc, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", .@loc, .@refine))
+			close;
+
+		Zeny -= .@cost;
+		delequip .@loc;
+		if (rand(100) < .@rate) {
+			getitem2 .@eq_id,1,1,.@refine,0,.@card[0],.@card[1],0,0;
+			mes "[Illusion Enchanter]";
+			mes "It's done. Please check.";
+			specialeffect2 EF_REPAIRWEAPON;
+			close;
+		}
+		mes "[Illusion Enchanter]";
+		mes "Ah, that was unfortunate. Well, you can't always be lucky.";
+		specialeffect2 EF_LORD;
+		close;
+	}
+	end;
+
+S_Enchant:
+	.@slot = getarg(1);
+	switch( getarg(0)) {	// location
+	case EQI_HAND_R:
+		switch( getarg(2)) {// weapon enchant type
+		case 1:// Melee
+			switch( .@slot ) {
+			case 2:
+			case 3:
+				// <item ID>, <rate> (unknown)
+				setarray .@item[0],
+					4700, 1,	// Strength1
+					4701, 1,	// Strength2
+					4702, 1,	// Strength3
+					4703, 1,	// Strength4
+					4720, 1,	// Dexterity1
+					4721, 1,	// Dexterity2
+					4722, 1,	// Dexterity3
+					4723, 1,	// Dexterity4
+					4750, 1,	// Luck1
+					4751, 1,	// Luck2
+					4752, 1,	// Luck3
+					4753, 1,	// Luck4
+					4808, 1,	// Fighting_Spirit4
+					4809, 1,	// Fighting_Spirit3
+					4810, 1,	// Fighting_Spirit2
+					4811, 1,	// Fighting_Spirit1
+					4820, 1,	// Fighting_Spirit5
+					29081, 1,	// Expect1Lv
+					29082, 1,	// Expect2Lv
+					29083, 1,	// Expect3Lv
+					29084, 1,	// Expect4Lv
+					29085, 1,	// Expect5Lv
+					29061, 1,	// Ambition1Lv
+					29062, 1,	// Ambition2Lv
+					29063, 1,	// Ambition3Lv
+					29064, 1,	// Ambition4Lv
+					29065, 1,	// Ambition5Lv
+					4807, 1,	// Atk_Speed1
+					4842, 1;	// Atk_Speed2
+				break;
+			default:
+				return 0;
+			}
+			break;
+		case 2:// Ranged
+			switch( .@slot ) {
+			case 2:
+			case 3:
+				// <item ID>, <rate>
+				setarray .@item[0],
+					4730, 1,	// Agility1
+					4731, 1,	// Agility2
+					4732, 1,	// Agility3
+					4733, 1,	// Agility4
+					4720, 1,	// Dexterity1
+					4721, 1,	// Dexterity2
+					4722, 1,	// Dexterity3
+					4723, 1,	// Dexterity4
+					4750, 1,	// Luck1
+					4751, 1,	// Luck2
+					4752, 1,	// Luck3
+					4753, 1,	// Luck4
+					4807, 1,	// Atk_Speed1
+					4842, 1,	// Atk_Speed2
+					4832, 1,	// Expert_Archer1
+					4833, 1,	// Expert_Archer2
+					4834, 1,	// Expert_Archer3
+					4835, 1,	// Expert_Archer4
+					4836, 1,	// Expert_Archer5
+					29091, 1,	// ArchLine1Lv
+					29092, 1,	// ArchLine2Lv
+					29093, 1,	// ArchLine3Lv
+					29094, 1,	// ArchLine4Lv
+					29095, 1,	// ArchLine5Lv
+					29071, 1,	// Tab1Lv
+					29072, 1,	// Tab2Lv
+					29073, 1,	// Tab3Lv
+					29074, 1,	// Tab4Lv
+					29075, 1;	// Tab5Lv
+				break;
+			default:
+				return 0;
+			}
+			break;
+		case 3:// Magic
+			switch( .@slot ) {
+			case 2:
+			case 3:
+				// <item ID>, <rate>
+				setarray .@item[0],
+					4710, 1,	// Inteligence1
+					4711, 1,	// Inteligence2
+					4712, 1,	// Inteligence3
+					4713, 1,	// Inteligence4
+					4720, 1,	// Dexterity1
+					4721, 1,	// Dexterity2
+					4722, 1,	// Dexterity3
+					4723, 1,	// Dexterity4
+					4750, 1,	// Luck1
+					4751, 1,	// Luck2
+					4752, 1,	// Luck3
+					4753, 1,	// Luck4
+					4812, 1,	// Spell4
+					4813, 1,	// Spell3
+					4814, 1,	// Spell2
+					4815, 1,	// Spell1
+					4826, 1,	// Spell5
+					4805, 1,	// Heal_Amount2
+					4850, 1;	// Heal_Amount3
+				break;
+			default:
+				return 0;
+			}
+			break;
+		default:
+			return 0;
+		}
+		break;
+	case EQI_ARMOR:
+	case EQI_SHOES:
+	case EQI_GARMENT:
+	case EQI_HAND_L:
+	case EQI_HEAD_TOP:
+		switch( .@slot ) {
+		case 2:
+		case 3:
+			// <item ID>, <rate>
+			setarray .@item[0],
+				4700, 700,	// Strength1
+				4701, 600,	// Strength2
+				4702, 500,	// Strength3
+				4703, 200,	// Strength4
+				4740, 700,	// Vitality1
+				4741, 600,	// Vitality2
+				4742, 500,	// Vitality3
+				4743, 200,	// Vitality4
+				4710, 700,	// Inteligence1
+				4711, 600,	// Inteligence2
+				4712, 500,	// Inteligence3
+				4713, 200,	// Inteligence4
+				4750, 700,	// Luck1
+				4751, 600,	// Luck2
+				4752, 500,	// Luck3
+				4753, 200,	// Luck4
+				4994, 10,	// Rune of Strength Lv 1
+				4995, 10,	// Rune of Strength Lv 2
+				4997, 10,	// Rune of Agility Lv 1
+				4998, 10,	// Rune of Agility Lv 2
+				29009, 10,	// Rune of Vitality Lv 1
+				29010, 10,	// Rune of Vitality Lv 2
+				29000, 10,	// Rune of Intellect Lv 1
+				29001, 10,	// Rune of Intellect Lv 2
+				29003, 10,	// Rune of Dexterity Lv 1
+				29004, 10,	// Rune of Dexterity Lv 2
+				29006, 10,	// Rune of Luck Lv 1
+				29007, 10,	// Rune of Luck Lv 2
+				4861, 700,	// MHP1
+				4862, 600,	// MHP2
+				4867, 440,	// MHP3
+				4868, 100,	// MHP4
+				4992, 10,	// HPAbsorb1_Supplement_Reactor
+				4993, 10,	// SPAbsorb1_Supplement_Reactor
+				29208, 10,	// SP_Absorption_2
+				29210, 10;	// HP_Absorption_23
+			break;
+		default:
+			return 0;
+		}
+		break;
+	case EQI_ACC_L:
+	case EQI_ACC_R:
+		switch( .@slot ) {
+		case 2:
+		case 3:
+			// <item ID>, <rate>
+			setarray .@item[0],
+				4700, 576,	// Strength1
+				4701, 460,	// Strength2
+				4702, 115,	// Strength3
+				4703, 11,	// Strength4
+				4730, 576,	// Agility1
+				4731, 460,	// Agility2
+				4732, 115,	// Agility3
+				4733, 11,	// Agility4
+				4740, 576,	// Vitality1
+				4741, 460,	// Vitality2
+				4742, 115,	// Vitality3
+				4743, 11,	// Vitality4
+				4710, 576,	// Inteligence1
+				4711, 460,	// Inteligence2
+				4712, 115,	// Inteligence3
+				4713, 11,	// Inteligence4
+				4720, 576,	// Dexterity1
+				4721, 460,	// Dexterity2
+				4722, 115,	// Dexterity3
+				4723, 11,	// Dexterity4
+				4750, 576,	// Luck1
+				4751, 460,	// Luck2
+				4752, 115,	// Luck3
+				4753, 11,	// Luck4
+				4928, 576,	// SP10
+				4870, 460,	// SP25
+				4800, 345,	// SP50
+				4871, 115,	// SP75
+				4801, 11,	// SP100
+				4795, 576,	// HP100
+				4796, 460,	// HP200
+				4797, 345,	// HP300
+				4798, 115,	// HP400
+				4799, 11;	// HP500
+			break;
+		default:
+			return 0;
+		}
+		break;
+	default:
+		return 0;
+	}
+	.@size = getarraysize(.@item);
+	for ( .@i = 0; .@i < .@size; .@i += 2 )
+		.@total_rate += .@item[.@i+1];
+	.@r = rand(.@total_rate);
+	for ( .@i = 0; .@i < .@size; .@i += 2 ) {
+		.@rate_tmp += .@item[.@i+1];
+		if (.@r < .@rate_tmp)
+			break;
+	}
+	return .@item[.@i];
+
+OnTouch:
+	if (isbegin_quest(12415) == 0)
+		npctalk "Illusion Enchanter: Come talk to me if you're interested in the Illusion equipment!", "", bc_self;
+	end;
+}
+
+
+//============================================================
+//= Illusion of Turtle
+//============================================================
+
+// Exchange npc
+alberta,226,28,3	script	Equipment Researcher	4_TOWER_15,{
+	.@illusion_stone_name$ = getitemname(25271);
+
+	mes "[Equipment Researcher]";
+	mes "I'm the one who researches " + .@illusion_stone_name$ + " to enhance armors and weapons.";
+	mes "If you have the materials I need for my research, wouldn't you hand them over?";
+	mes "If you give me some equipment and some materials, I'll exchange them for my reinforced equipment.";
+	next;
+	switch( select( "What are you doing here?", "Exchange equipment" ) ) {
+	case 1:
+		mes "[Equipment Researcher]";
+		mes "I'm working on how to use an " + .@illusion_stone_name$ + " to strengthen equipment.";
+		mes "I went to go to the place where " + .@illusion_stone_name$ + " was found, and I barely got back..";
+		next;
+		mes "[Equipment Researcher]";
+		mes "I think I met a girl...";
+		mes "Anyway, after that, I couldn't find a way to go back.";
+		mes "Here, we're getting research materials from adventurers with " + .@illusion_stone_name$ + ", and I'm offering enhanced equipment instead.";
+		close;
+	case 2:
+		mes "[Equipment Researcher]";
+		mes "What are the equipment I can exchange? Wait a minute. I'll let you know.";
+		next;
+		mes "[Equipment Researcher]";
+		mes "As a material, you can bring ^0000CDexisting equipment that have been refined to +9 or higher.^000000";
+		mes "And I need some ^0000CD" + .@illusion_stone_name$ + " and other materials.^000000";
+		next;
+		mes "[Equipment Researcher]";
+		mes "Of course, we're giving you new equipment, so don't forget that all the existing ^0000CDsmelting and enchantments^000000 will disappear.";
+		mes "So, what kind of weapon do you want?";
+		close2;
+		callshop( "barter_ill_turtle" );
+		end;
+	}
+}
+
+
+//============================================================
+//= Illusion of Luanda
+//============================================================
+
+// Exchange npc
+com_d02_i,234,266,6	script	Village Soap#Lu	4_M_ORIENT01,{
+	mes "[Village Soap]";
+	mes "I've also rolled up my sleeves for the adventurers who work hard for the village. Can I make your equipment stronger? Is there anything on the list you want?";
+	next;
+	if (select( "Look at the illusion equipment", "Cancel" ) == 2) {
+		mes "[Village Soap]";
+		mes "Please come later. Just bring the ingredients and I'll make it for you.";
+		close;
+	}
+	mes "[Village Soap]";
+	mes "Who made it? It might be useful for you to take it with you.";
+	close2;
+	callshop( "barter_ill_luanda" );
+	end;
+}
+
+
+//============================================================
+//= Illusion of Underwater
+//============================================================
+
+iz_d04_i,134,228,4	script	Horen#Horen	4_M_BIBI,{
+	if (checkweight(1201,3) == 0) {
+		mes "Conversation cannot proceed because you have too many items.";
+		mes "Please clean up your inventory and try again.";
+		close;
+	}
+	mes "[Horen]";
+	mes "Hello. If you have rare materials from this place, I can enhance your equipment.";
+	next;
+	mes "[Horen]";
+	mes "Would you like to see upgradeable equipment?";
+	next;
+	if (select( "Yes", "No" ) == 2) {
+		mes "[Horen]";
+		mes "Come back if interested.";
+		close;
+	}
+	mes "[Horen]";
+	mes "There are many types, so take your time. If you want something, I can enhance it right away.";
+	close2;
+	callshop( "barter_ill_underwater" );
+	end;
+}
+
+//============================================================
+//= Illusion of Twins
+//============================================================
+// ant_d02_i,175,186,3	script	From#iltw	MECHANIC,{
+ant_d02_i,175,186,3	script	From#iltw	HIDDEN_NPC,{
+	if (checkweight(1201,3) == 0) {
+		mes "- You cannot proceed with the quest because you have too many items. -";
+		close;
+	}
+	mes "[From]";
+	mes "I feel like I'm going crazy.";
+	mes "It's because of my mood. I'm human and it's not like you're mistaken.";
+	mes "I'll help you if you get a lot here.";
+	mes "Do you want to enhance your equipment?";
+	close2;
+	callshop( "barter_ill_twins" );
+	end;
+
+OnInit:
+	.@npc_id = getnpcid(0);
+	setunitdata .@npc_id, UNPC_CLASS, 4058;
+	setunitdata .@npc_id, UNPC_SEX, SEX_MALE;
+	setunitdata .@npc_id, UNPC_CLOTHCOLOR, 1;
+	setunitdata .@npc_id, UNPC_HAIRSTYLE, 11;
+	setunitdata .@npc_id, UNPC_HAIRCOLOR, 6;
+	end;
+}
+
+//============================================================
+//= Illusion Merchant
+//============================================================
+-	marketshop	market_resonance_stone	-1,100003:2000000:99999,100004:2000000:99999
+prontera,88,113,5	script	Illusion Merchant#0829	HIDDEN_NPC,{
+	mes "[Illusion Merchant]";
+	mes "I'm selling two random optional weapon grant scrolls that I made myself. You can choose the payment method you like.";
+	next;
+	switch( select( "Purchase with Zeny.", "Purchase with Illusion Stones" )) {
+		case 1:
+			mes "[Illusion Merchant]";
+			mes "I hope you like it.";
+			close2;
+			callshop "market_resonance_stone";
+			end;
+		case 2:
+			mes "[Illusion Merchant]";
+			mes "I hope you like it.";
+			close2;
+			callshop "resonance_stone_barter";
+			end;
+	}
+OnInit:
+	.@npc_id = getnpcid(0);
+	setunitdata .@npc_id,UNPC_CLASS, JOB_MAGE_HIGH;
+	setunitdata .@npc_id,UNPC_SEX,SEX_FEMALE;
+	setunitdata .@npc_id,UNPC_HEADTOP,142;
+	setunitdata .@npc_id,UNPC_HEADMIDDLE,92;
+	setunitdata .@npc_id,UNPC_HAIRSTYLE,2;
+	setunitdata .@npc_id,UNPC_HAIRCOLOR,2;
+
+	// Restock
+	npcshopupdate "market_resonance_stone",100003,2000000,99999;
+	npcshopupdate "market_resonance_stone",100004,2000000,99999;
+	end;
+}
+
+
+//============================================================
+//= Illusion of Teddy Bear
+//============================================================
+
+ein_d02_i,177,158,3	script	Bear Wanting Illusion Stone#ITB	4_NASARIAN,{
+	.@item_name$ = getitemname(25271); // IllusionStone
+	mes "[Bear Wanting " + .@item_name$ + "]";
+	mes "If you give me an " + .@item_name$ + ", I'll do something nice for you!";
+	next;
+	switch( select( "Reason for being here", "Good thing [Illusion equipment]", "Quit" ) ) {
+	case 1:
+		mes "[Bear Wanting " + .@item_name$ + "]";
+		mes "I don't know why...!";
+		mes "The other teddy bears were in line, so I was in line too!";
+		mes "Whoaaaaaa!!!!";
+		mes "I didn't know it was here!";
+		next;
+		mes "[Bear Wanting " + .@item_name$ + "]";
+		mes "A teddy bear with an " + .@item_name$ + "!";
+		mes "Strong!";
+		mes "I don't have any " + .@item_name$ + "s!";
+		mes "Less... stronger...";
+		next;
+		mes "[Bear Wanting " + .@item_name$ + "]";
+		mes "What are " + .@item_name$ + "s?";
+		mes "I don't know but I want some!";
+		close;
+	case 2:
+		mes "[Bear Wanting " + .@item_name$ + "]";
+		mes "Makes you good with what you have!";
+		next;
+		mes "[Bear Wanting " + .@item_name$ + "]";
+		mes "If you want to do well, bring equipment refined to ^ff0000+9 or higher. It'll all disappear... haha?^000000";
+		next;
+		mes "[Bear Wanting " + .@item_name$ + "]";
+		mes "^ff0000" + .@item_name$ + "^000000!!! " + .@item_name$ + " is the most important thing, but... other materials are also needed.";
+		mes "For every good thing you need another good thing.";
+		next;
+		close2;
+		callshop( "barter_ill_teddy" );
+		end;
+	case 3:
+		mes "[Bear Wanting " + .@item_name$ + "]";
+		mes "Okay...";
+		close;
+	}
+	end;
+}

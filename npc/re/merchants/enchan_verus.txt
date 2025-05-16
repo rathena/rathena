@@ -762,10 +762,10 @@ verus04,71,106,5	script	Mass Charleston#2	4_F_CHARLESTON01,{
 		}
 	case 2:	// Reset
 		// Note: the NPC doesn't check if the equipment is already enhanced
-		if (F_IsCharm(.@card[0]) == true) .@card[0] = 0;
-		if (F_IsCharm(.@card[1]) == true) .@card[1] = 0;
-		if (F_IsCharm(.@card[2]) == true) .@card[2] = 0;
-		if (F_IsCharm(.@card[3]) == true) .@card[3] = 0;
+		if (getiteminfo(.@card[0], ITEMINFO_SUBTYPE) == CARD_ENCHANT) .@card[0] = 0;
+		if (getiteminfo(.@card[1], ITEMINFO_SUBTYPE) == CARD_ENCHANT) .@card[1] = 0;
+		if (getiteminfo(.@card[2], ITEMINFO_SUBTYPE) == CARD_ENCHANT) .@card[2] = 0;
+		if (getiteminfo(.@card[3], ITEMINFO_SUBTYPE) == CARD_ENCHANT) .@card[3] = 0;
 		specialeffect2 EF_REPAIRWEAPON;
 		mes "[Mass Charleston]";
 		mes "Reset the product's abilities.";
@@ -1242,7 +1242,7 @@ verus04,165,217,4	script	MARS_01#pa0829	4_SCR_MT_ROBOTS,{
 		mes "If you bring aak Seri Wong propulsion wing, aak Seri Wong jacket equipment and strengthen the design, I will strengthen the equipment according to the design.";
 		next;
 		mes "[MARS_01]";
-		mes "According to the standard design drawings of the operation, the equipment will not be damaged during the process, but the number of maximum upgrade will change depending on the type of equipement.";
+		mes "According to the standard design drawings of the operation, the equipment will not be damaged during the process, but the number of maximum upgrade will change depending on the type of equipment.";
 		next;
 		mes "[MARS_01]";
 		mes "Welcome back again~";

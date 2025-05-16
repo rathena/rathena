@@ -1,0 +1,81 @@
+name: Bug Report
+description: Create an Issue that details broken or unexpected behaviour
+labels: ["type:bug"]
+body:
+  - type: input
+    id: hash
+    attributes:
+      label: rAthena Hash
+      description: |
+        Please specify the rAthena [GitHub hash](https://help.github.com/articles/autolinked-references-and-urls/#commit-shas) on which you encountered this issue.
+        One way to get your hash is to type `git rev-parse --short HEAD` on your console.
+    validations:
+      required: true
+  - type: input
+    id: date
+    attributes:
+      label: Client Date
+      description: Specify the client date you are using when this Issue occured.
+      placeholder: YYYY-MM-DD
+    validations:
+      required: true
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Server Mode
+      description: Specify the server-mode you are using when this Issue occured.
+      multiple: true
+      options:
+        - Pre-Renewal
+        - Renewal
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Result
+      description: Describe the issue that you experienced in detail.
+      placeholder: |
+        1. In this environment...
+        2. With this config...
+        3. Trigger event '...'
+        4. See error...
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant Log Output
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: Shell
+    validations:
+      required: false
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Result
+      description: Describe what you would expect to happen in detail.
+    validations:
+      required: true
+  - type: textarea
+    id: howto
+    attributes:
+      label: How to Reproduce
+      description: If you have not stated in the description of the result already, please give us a short guide how we can reproduce your issue.
+    validations:
+      required: true
+  - type: textarea
+    id: info
+    attributes:
+      label: Official Information
+      description: If possible, provide information from official servers (kRO or other sources) which prove that the result is wrong. Please take into account that iRO (especially iRO Wiki) is not always the same as kRO.
+    validations:
+      required: true
+  - type: textarea
+    id: modifications
+    attributes:
+      label: Modifications that may affect results
+      description: |
+        If you are using any modifications, especially in /src/, you must type them here.
+        Even the smallest changes can cause things to break. We need to know what you have customized.
+        This can be either configurations you changed, database values you changed, or even external source modifications.

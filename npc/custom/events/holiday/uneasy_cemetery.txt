@@ -14,7 +14,7 @@
 //= with needed amount of Holy Water. Every citizen can take his part in the 
 //= saving of Prontera city. After some days of quiet life... the Cemetery strikes back.
 //===== Additional Comments: ================================= 
-//= 1.1 More advanced ver. Added some bonus the the one who'd kill the last walking undead
+//= 1.1 More advanced ver. Added some bonus for the one who'd kill the last walking undead
 //= 1.2 Added coords to the script to make label OmMobDead working
 //= 1.2a Changed item names to item IDs. [Samuray22]
 //============================================================ 

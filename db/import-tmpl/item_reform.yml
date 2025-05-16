@@ -1,0 +1,44 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2022 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Item Reform Database
+###########################################################################
+#
+# Item Reform Settings
+#
+###########################################################################
+# - Item                       Item that triggers Item Reform UI.
+#   BaseItems:                 Items that can be reformed.
+#     - BaseItem               Item that can be reformed.
+#       MinimumRefine          Minimum refine level of the required items. (Default: 0)
+#       MaximumRefine          Maximum refine level of the required items. (Default: MAX_REFINE)
+#       RequiredRandomOptions  Amount of random options have to be in the item. (Default: 0)
+#       CardsAllowed           Allow cards in the target item. (Default: true)
+#       Materials:             Additional items needed for the reformation. (Default: none)
+#         - Material           Material item that is needed.
+#           Amount             Amount of the material item that is needed. (Default: 1)
+#       ResultItem             Item after the reform.
+#       ChangeRefine           Increase or decrease the refine during reformation. (Default: 0)
+#       RandomOptionGroup      Name of the random option group that will be applied. (Default: none)
+#       ClearSlots             Remove cards and socket enchants during reformation. (Default: false)
+#       RemoveEnchantgrade     Remove enchantgrade during reformation. (Default: false)
+###########################################################################
+
+Header:
+  Type: ITEM_REFORM_DB
+  Version: 1

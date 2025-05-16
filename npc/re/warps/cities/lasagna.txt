@@ -1,0 +1,47 @@
+//===== rAthena Script =======================================
+//= Lasagna Warps
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [Capuche]
+//= 1.1 Official conversion. [Lemongrass]
+//============================================================
+
+lasa_fild02,348,244,0	warp	lasadun01_in	1,1,lasa_dun01,24,143
+lasa_dun01,18,143,0	warp	lasadun_out	1,1,lasa_fild02,344,243
+
+lasa_dun_q,190,14,0	warp	dun_q_dun01	1,1,lasa_dun01,152,98
+lasa_dun01,157,98,0	warp	lasadun01_to2f	1,1,lasa_dun02,22,171
+lasa_dun02,18,171,0	warp	lasadun02_to1f	1,1,lasa_dun01,153,98
+
+lasa_dun02,146,58,0	warp	lasadun02_to3f	1,1,lasa_dun03,190,18
+lasa_dun03,190,15,0	warp	lasadun03_to2f	1,1,lasa_dun02,146,54
+
+lasa_fild01,134,381,0	warp	lasagna_in01	2,2,lasagna,153,58
+lasagna,150,54,0	warp	lasagna_out01	2,2,lasa_fild01,131,378
+
+lasa_fild01,341,375,0	warp	lasagna_in02	1,1,lasagna,327,56
+lasagna,327,51,0	warp	lasagna_out02	1,1,lasa_fild01,344,371
+
+lasagna,358,91,0	warp	lasagna_in03	1,1,lasa_fild02,20,98
+// lasa_fild02,16,98,0	warp	lasagna_in03	1,1,lasagna,355,92 // (NPC name is not unique)
+lasa_fild02,16,98,0	warp	lasagna_in03#01	1,1,lasagna,355,92
+
+lasa_in01,159,61,0	warp	dining_lasa	1,1,lasagna,68,202
+
+// Boat
+conch_in,60,61,0	warp2	conch_lasagna	1,1,lasagna,206,323
+conch_in,51,60,0	warp2	hall_cap	1,1,conch_in,31,60
+conch_in,34,60,0	warp2	cap_hall	1,1,conch_in,53,59
+conch_in,63,53,0	warp2	hall_in04	1,1,conch_in,63,33
+conch_in,63,35,0	warp2	in04_hall	1,1,conch_in,64,55
+conch_in,64,66,0	warp2	hall_in01	1,1,conch_in,63,89
+conch_in,63,87,0	warp2	in01_hall	1,1,conch_in,63,64
+conch_in,101,53,0	warp2	hall_in05	1,1,conch_in,101,33
+conch_in,101,35,0	warp2	in05_hall	1,1,conch_in,102,55
+conch_in,101,66,0	warp2	hall_in02	1,1,conch_in,101,89
+conch_in,102,87,0	warp2	in02_hall	1,1,conch_in,101,64
+conch_in,137,53,0	warp2	hall_in06	1,1,conch_in,139,33
+conch_in,139,35,0	warp2	in06_hall	1,1,conch_in,138,55
+conch_in,137,66,0	warp2	hall_in03	1,1,conch_in,139,89
+conch_in,140,87,0	warp2	in03_hall	1,1,conch_in,137,64
+conch_in,142,60,0	warp2	hall_dining	1,1,conch_in,162,61
+conch_in,159,61,0	warp2	dining_hall	1,1,conch_in,140,59

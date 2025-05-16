@@ -389,7 +389,7 @@ bat_room,160,150,3	script	Erundek	109,{
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
 		mes "- Please try again -";
-		mes "- after you loose some weight. -";
+		mes "- after you lose some weight. -";
 		close;
 	}
 	mes "[Erundek]";

@@ -12,16 +12,16 @@ bool IsCurrentUserLocalAdministrator(void){
 	DWORD  dwAccessDesired;
 	DWORD  dwACLSize;
 	DWORD  dwStructureSize = sizeof(PRIVILEGE_SET);
-	PACL   pACL = NULL;
-	PSID   psidAdmin = NULL;
+	PACL   pACL = nullptr;
+	PSID   psidAdmin = nullptr;
 
-	HANDLE hToken = NULL;
-	HANDLE hImpersonationToken = NULL;
+	HANDLE hToken = nullptr;
+	HANDLE hImpersonationToken = nullptr;
 
 	PRIVILEGE_SET   ps;
 	GENERIC_MAPPING GenericMapping;
 
-	PSECURITY_DESCRIPTOR     psdAdmin = NULL;
+	PSECURITY_DESCRIPTOR     psdAdmin = nullptr;
 	SID_IDENTIFIER_AUTHORITY SystemSidAuthority = SECURITY_NT_AUTHORITY;
 
 
@@ -90,7 +90,7 @@ bool IsCurrentUserLocalAdministrator(void){
 			__leave;
 
 		psdAdmin = LocalAlloc(LPTR, SECURITY_DESCRIPTOR_MIN_LENGTH);
-		if (psdAdmin == NULL)
+		if (psdAdmin == nullptr)
 			__leave;
 
 		if (!InitializeSecurityDescriptor(psdAdmin,
@@ -103,7 +103,7 @@ bool IsCurrentUserLocalAdministrator(void){
 			GetLengthSid(psidAdmin) - sizeof(DWORD);
 
 		pACL = (PACL)LocalAlloc(LPTR, dwACLSize);
-		if (pACL == NULL)
+		if (pACL == nullptr)
 			__leave;
 
 		if (!InitializeAcl(pACL, dwACLSize, ACL_REVISION2))

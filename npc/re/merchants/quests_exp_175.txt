@@ -1,0 +1,90 @@
+//===== rAthena Script =======================================
+//= Merchants from new dungeons for Level 175
+//===== Description: =========================================
+//= [Walkthrough Conversion]
+//--- Merchants related to new dungeons.
+//===== Changelog: ===========================================
+//= 1.0 Initial release of Einbech Dungeon 3 merchants. [Capuche]
+//============================================================
+
+einbech,149,257,4	script	Site manager Elmen#extdq0	4_TOWER_16,{
+	if (checkweight(25814,100) == 0 || checkweight(1201,1) == 0 || (MaxWeight - Weight) < 10000) {
+		mes "- You cannot proceed because you have too many items. -";
+		close;
+	}
+	mes "[Elmen]";
+	mes "Hello. Adventurer.";
+	mes "If you're here to purchase Dynite mining equipment or refine ore into Dynite, you've come to the right place.";
+	next;
+	switch( select( "Dynite Refinement", "Dynite Shop", "Dynite Equipment Exchange" ) ) {
+	case 1:
+		npctalk "Elmen: You can refine up to 100 Dynite at a time. The machine is small.", "", bc_self;
+		mes "[Elmen]";
+		mes "" + mesitemlink(25814) + " Refined Ore.";
+		mes "" + mesitemlink(25809) + " ^777777(currently " + countitem(25809) + ")^000000";
+		mes "" + mesitemlink(25810) + " ^777777(currently " + countitem(25810) + ")^000000";
+		mes "" + mesitemlink(25811) + " ^777777(currently " + countitem(25811) + ")^000000";
+		mes "" + mesitemlink(25812) + " ^777777(currently " + countitem(25812) + ")^000000";
+		mes "" + mesitemlink(25813) + " ^777777(currently " + countitem(25813) + ")^000000";
+		mes "You need one each of the five types of ore.";
+		next;
+		input .@val;
+		if (.@val > 100) {
+			mes "[Elmen]";
+			mes "I'm sorry. Adventurer.";
+			mes "Dynite Refinement can only be refined up to 100 at a time? The machine is small, so there is no help. Please understand.";
+			close;
+		}
+		if (.@val == 0) {
+			mes "[Elmen]";
+			mes "Cancel?";
+			mes "If you need refinement of the Dynite, please find it anytime. There is no one who can do it without me.";
+			close;
+		}
+		if (countitem(25809) < .@val || countitem(25810) < .@val || countitem(25811) < .@val || countitem(25812) < .@val || countitem(25813) < .@val) {
+			mes "[Elmen]";
+			mes "Hey! This makes it difficult for each other, don't you run out of materials needed for refining? The materials!";
+			close;
+		}
+		specialeffect EF_REPAIRWEAPON;
+		progressbar_npc "FFFF00",1;
+		delitem 25809,.@val;	// Ein_REDIUM
+		delitem 25810,.@val;	// Ein_RINDIUM
+		delitem 25811,.@val;	// Ein_ODIUM
+		delitem 25812,.@val;	// Ein_PURDIUM
+		delitem 25813,.@val;	// Ein_WHIDIUM
+		getitem 25814,.@val;	// Ein_DYNITE
+		mes "[Elmen]";
+		mes "" + .@val + " Dynite have been refined. It's perfect today!";
+		close;
+	case 2:
+		mes "[Elmen]";
+		mes "There are various accessories and modification permits. Look carefully at what you want before buying.";
+		close2;
+		callshop "barter_ein_dun03";
+		end;
+	case 3:
+		mes "[Elmen]";
+		mes "I can exchange the equipment with the Dynite, but it's already in a tightly sealed box.";
+		mes "Give me 50 ^4d4dffDynites^000000 and I will open a ^4d4dffweapon box^000000 for you.";
+		next;
+		mes "[Elmen]";
+		mes "I don't know what will come out, but the quality is good. Would you like to open it?";
+		next;
+		if (select( "Close your eyes and exchange.", "Do not exchange." ) == 2) {
+			mes "[Elmen]";
+			mes "Kee, this is a waste, it was a good deal.";
+			close;
+		}
+		if (countitem(25814) < 50) {
+			mes "[Elmen]";
+			mes "You don't have enough Dynite friends.";
+			mes "I don't know what's going to come out, so it's hard to go anywhere and get this kind of equipment at this price.";
+			close;
+		}
+		delitem 25814,50;
+		// unknown text
+		getgroupitem(IG_EIN_1HITEMBOX);
+		end;
+	}
+}

@@ -52,7 +52,7 @@ prontera,129,215,5	script	Questboard	4_BOARD3,{
 		set .@size, getarraysize(getd("."+ currentquest$ + "_huntingmob"));
 		for( set .@j, 0; .@j < .@size; set .@j,.@j+2){
 			set .@currentmob, getd("."+currentquest$+"_huntingmob["+(.@j)+"]");
-			mes "^FF0000"+strmobinfo(1,getd("."+currentquest$+"_huntingmob["+.@j+"]"))+" - "+getd(currentquest$+"_"+.@currentmob+"_"+(.@j+1)+"_killcount")+"/"+getd("."+currentquest$+"_huntingmob["+(.@j+1)+"]")+" ea.^000000";
+			mes "^FF0000"+getmonsterinfo(getd("."+currentquest$+"_huntingmob["+.@j+"]"), MOB_NAME)+" - "+getd(currentquest$+"_"+.@currentmob+"_"+(.@j+1)+"_killcount")+"/"+getd("."+currentquest$+"_huntingmob["+(.@j+1)+"]")+" ea.^000000";
 		}
 		mes "--------------------------------";
 		mes "[Reward]";
@@ -163,7 +163,7 @@ prontera,129,215,5	script	Questboard	4_BOARD3,{
 		mes "--------------------------------";
 		set .@size, getarraysize(getd("."+ .@selection + "_huntingmob"));
 		for( set .@j, 0; .@j < .@size; set .@j,.@j+2){
-			mes "^FF0000"+strmobinfo(1,getd("."+.@selection+"_huntingmob["+.@j+"]"))+" - "+getd("."+.@selection+"_huntingmob["+(.@j+1)+"]")+" ea.^000000";
+			mes "^FF0000"+getmonsterinfo(getd("."+.@selection+"_huntingmob["+.@j+"]"), MOB_NAME)+" - "+getd("."+.@selection+"_huntingmob["+(.@j+1)+"]")+" ea.^000000";
 		}
 		mes "--------------------------------";
 		mes "[Reward]";
@@ -264,7 +264,7 @@ OnNPCKillEvent:
 			set .@currentmob, getd("."+currentquest$+"_huntingmob["+(.@i-1)+"]");
 			if(getd(currentquest$+"_"+.@currentmob+"_"+.@i+"_killcount")<getd("."+currentquest$+"_huntingmob["+.@i+"]")){
 				setd(currentquest$+"_"+.@currentmob+"_"+.@i+"_killcount", getd(currentquest$+"_"+.@currentmob+"_"+.@i+"_killcount")+1);
-				dispbottom getd("."+currentquest$+"_huntingname$")+": ["+strmobinfo(1,.@currentmob)+"] ("+ getd(currentquest$+"_"+.@currentmob+"_"+.@i+"_killcount")+"/"+getd("."+currentquest$+"_huntingmob["+.@i+"]")+")";
+				dispbottom getd("."+currentquest$+"_huntingname$")+": ["+getmonsterinfo(.@currentmob, MOB_NAME)+"] ("+ getd(currentquest$+"_"+.@currentmob+"_"+.@i+"_killcount")+"/"+getd("."+currentquest$+"_huntingmob["+.@i+"]")+")";
 			}
 			if(getcharid(1) != 0 && .party_support == true){
 				getmapxy(.@map1$,.@x1,.@y1);
@@ -282,7 +282,7 @@ OnNPCKillEvent:
 								if(.@kill_amt<.@kill_goal)
 								{
 									setd(.@currentquest$+"_"+.@currentmob+"_"+.@i+"_killcount", .@kill_amt+1, $@partymembercid[.@j]);
-									dispbottom getd("."+.@currentquest$+"_huntingname$")+": ["+strmobinfo(1,.@currentmob)+"] ("+(.@kill_amt+1)+"/"+.@kill_goal+")", 0xB6FF00, $@partymembercid[.@j];
+									dispbottom getd("."+.@currentquest$+"_huntingname$")+": ["+getmonsterinfo(.@currentmob, MOB_NAME)+"] ("+(.@kill_amt+1)+"/"+.@kill_goal+")", 0xB6FF00, $@partymembercid[.@j];
 								}
 							}
 						}

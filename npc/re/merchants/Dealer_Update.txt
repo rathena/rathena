@@ -1,0 +1,177 @@
+//===== rAthena Script ======================================= 
+//= Dealer Update
+//===== Description: ========================================= 
+// This script is linked to the Extension of Ammunition Sales!
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [JohnnyPlayy]
+//============================================================
+
+//= When the Barter Shop Feature is deactivated
+//= The Old Dealers will be used again!
+//============================================================
+-	script	Barter_Init	HIDDEN_NPC,{
+	end;
+	
+OnInit:
+	if ( getbattleflag("feature.barter") ) {
+		//= Trap Specialist
+		unloadnpc "Trap Specialist#lhz";
+		unloadnpc "Trap Specialist#mid";
+		unloadnpc "Trap Specialist#pay";
+		unloadnpc "Trap Specialist#prt";
+		unloadnpc "Trap Specialist#ra";
+		
+		//= Black Marketeer
+		unloadnpc "Black Marketeer#ein";
+		unloadnpc "Black Marketeer#lhz";
+		unloadnpc "Black Marketeer#mid";
+		unloadnpc "Black Marketeer#prt";
+		unloadnpc "Black Marketeer#ra";
+		
+		//= Johnny Waiker
+		unloadnpc "Johnny Waiker";
+		
+		//= Rebellion Sellers
+		unloadnpc "Rebellion Accessories";
+		unloadnpc "Rebellion Weapons";
+		
+		//= Arrow Quiver Event
+		unloadnpc "Inventor Jaax";
+		
+		//= Ammunition Dealer
+		unloadnpc "Magazine Dealer Kenny#iz";
+		unloadnpc "Magazine Dealer Kenny#al";
+		
+		//= Ammunition Vending Machine
+		unloadnpc "Prop Vending Machine";
+		
+		//= Unsold items
+		npcshopdelitem "Trading Merchant#alb",13200,13221,13222;
+		npcshopdelitem "Trading Merchant#iz",13200,13221,13222;
+		npcshopdelitem "Weapon Dealer#gef2",1750,1751;
+		npcshopdelitem "Weapon Dealer#iz",1750,1751;
+		npcshopdelitem "Weapon Dealer#yuno",1750,1751;
+		npcshopdelitem "Weapon Dealer#moc1",1750,1751;
+		npcshopdelitem "Weapon Dealer#pay",1750,1751;
+		npcshopdelitem "Weapon Dealer#prt",1750,1751;
+		npcshopdelitem "Tool Dealer#mora",1773,1774;
+		
+		//= NPC Moved Place
+		movenpc "Trading Merchant#iz", 72,110,3;
+	
+		//= Tool Dealer Before Upgrade!
+		unloadnpc "Tool Dealer#alb";
+		unloadnpc "Tool Dealer#alb2";
+		unloadnpc "Tool Dealer#alde";
+		unloadnpc "Tool Dealer#ama";
+		unloadnpc "Tool Dealer#ayo";
+		unloadnpc "Tool Dealer#bra";
+		unloadnpc "Tool Dealer#cmd";
+		unloadnpc "Tool Dealer#cmd2";
+		unloadnpc "Tool Dealer#ein";
+		unloadnpc "Tool Dealer#gef";
+		unloadnpc "Tool Dealer#gef2";
+		unloadnpc "Tool Dealer#gon";
+		unloadnpc "Tool Dealer#hu";
+		unloadnpc "Tool Dealer#hu2";
+		unloadnpc "Tool Dealer#yuno";
+		unloadnpc "Tool Dealer#yuno1";
+		unloadnpc "Tool Dealer#yuno2";
+		unloadnpc "Tool Dealer#lhz";
+		unloadnpc "Tool Dealer#lhz2";
+		unloadnpc "Tool Dealer#lou";
+		unloadnpc "Tool Dealer#xmas";
+		unloadnpc "Tool Dealer#mosk";
+		unloadnpc "Tool Dealer#pay";
+		unloadnpc "Tool Dealer#pay2";
+		unloadnpc "Tool Dealer#prt";
+		unloadnpc "Tool Dealer#prt1";
+		unloadnpc "Tool Dealer#ra";
+		unloadnpc "Tool Dealer#tu";
+		unloadnpc "Tool Dealer#um";
+		unloadnpc "Tool Dealer#ve";
+		unloadnpc "Tool Dealer#moc1";
+		unloadnpc "Tool Dealer#moc2";
+		unloadnpc "Tool Dealer#moc3";
+		unloadnpc "Tool Dealer#moc4";
+	} else {
+		//= About Sellers
+		unloadnpc "#over_arrow";
+		unloadnpc "#over_bullet";
+		unloadnpc "#over_kunai";
+		unloadnpc "#over_madogear";
+		unloadnpc "#over_talisman";
+		
+		//= Tool Dealer After Upgrade!
+		unloadnpc "Tool Dealer#Extended_Alb";
+		unloadnpc "Tool Dealer#Extended_Alb2";
+		unloadnpc "Tool Dealer#Extended_Alde";
+		unloadnpc "Tool Dealer#Extended_Ama";
+		unloadnpc "Tool Dealer#Extended_Ayo";
+		unloadnpc "Tool Dealer#Extended_Bra";
+		unloadnpc "Tool Dealer#Extended_Cmd";
+		unloadnpc "Tool Dealer#Extended_Cmd2";
+		unloadnpc "Tool Dealer#Extended_Ein";
+		unloadnpc "Tool Dealer#Extended_Gef";
+		unloadnpc "Tool Dealer#Extended_Gef2";
+		unloadnpc "Tool Dealer#Extended_Gon";
+		unloadnpc "Tool Dealer#Extended_Hu2";
+		unloadnpc "Tool Dealer#Extended_Yuno";
+		unloadnpc "Tool Dealer#Extended_Yuno1";
+		unloadnpc "Tool Dealer#Extended_Yuno2";
+		unloadnpc "Tool Dealer#Extended_Lhz";
+		unloadnpc "Tool Dealer#Extended_Lhz2";
+		unloadnpc "Tool Dealer#Extended_Lou";
+		unloadnpc "Tool Dealer#Extended_Xmas";
+		unloadnpc "Tool Dealer#Extended_Mosk";
+		unloadnpc "Tool Dealer#Extended_Pay";
+		unloadnpc "Tool Dealer#Extended_Pay2";
+		unloadnpc "Tool Dealer#Extended_Prt";
+		unloadnpc "Tool Dealer#Extended_Prt1";
+		unloadnpc "Tool Dealer#Extended_Ra";
+		unloadnpc "Tool Dealer#Extended_Tu";
+		unloadnpc "Tool Dealer#Extended_Um";
+		unloadnpc "Tool Dealer#Extended_Ve";
+		unloadnpc "Tool Dealer#Extended_Moc1";
+		unloadnpc "Tool Dealer#Extended_Moc2";
+		unloadnpc "Tool Dealer#Extended_Moc3";
+		unloadnpc "Tool Dealer#Extended_Moc4";
+	}
+	end;
+}
+
+//= Tool Dealers
+//============================================================
+alb2trea,87,65,5	shop	Tool Dealer#Extended_Alb	83,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1
+alberta_in,182,97,0	shop	Tool Dealer#Extended_Alb2	73,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1
+aldeba_in,94,56,5	shop	Tool Dealer#Extended_Alde	83,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1
+ama_in01,24,30,5	shop	Tool Dealer#Extended_Ama	763,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1
+ayo_in01,18,182,1	shop	Tool Dealer#Extended_Ayo	840,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1
+brasilis,252,257,3	shop	Tool Dealer#Extended_Bra	478,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1
+cmd_in01,79,182,5	shop	Tool Dealer#Extended_Cmd	83,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1
+cmd_fild07,257,126,5	shop	Tool Dealer#Extended_Cmd2	83,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1
+ein_in01,189,15,1	shop	Tool Dealer#Extended_Ein	850,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1
+geffen_in,77,167,0	shop	Tool Dealer#Extended_Gef	68,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1
+geffen_in,171,123,4	shop	Tool Dealer#Extended_Gef2	64,1092:-1,1093:-1,713:-1
+gonryun,147,84,5	shop	Tool Dealer#Extended_Gon	777,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1
+hu_in01,252,368,3	shop	Tool Dealer#Extended_Hu2	90,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,1771:-1,717:-1
+yuno,218,97,5	shop	Tool Dealer#Extended_Yuno	84,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1
+yuno,226,107,5	shop	Tool Dealer#Extended_Yuno1	83,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1
+yuno_in01,25,34,5	shop	Tool Dealer#Extended_Yuno2	83,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1
+lhz_in02,31,145,4	shop	Tool Dealer#Extended_Lhz	90,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1
+lhz_in03,239,106,5	shop	Tool Dealer#Extended_Lhz2	850,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1
+lou_in02,239,176,5	shop	Tool Dealer#Extended_Lou	818,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1
+xmas_in,40,38,5	shop	Tool Dealer#Extended_Xmas	83,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1
+mosk_in,21,254,5	shop	Tool Dealer#Extended_Mosk	968,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1
+payon_in01,5,49,7	shop	Tool Dealer#Extended_Pay	88,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1
+payon_in02,87,34,0	shop	Tool Dealer#Extended_Pay2	75,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1
+prt_fild05,290,221,2	shop	Tool Dealer#Extended_Prt	83,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1
+prt_in,126,76,0	shop	Tool Dealer#Extended_Prt1	53,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1
+ra_in01,257,269,3	shop	Tool Dealer#Extended_Ra	919,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1
+tur_dun01,158,54,6	shop	Tool Dealer#Extended_Tu	99,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1
+um_in,104,124,3	shop	Tool Dealer#Extended_Um	788,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1
+ve_in,243,303,5	shop	Tool Dealer#Extended_Ve	943,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1
+moc_ruins,91,128,4	shop	Tool Dealer#Extended_Moc1	93,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1
+moc_ruins,114,63,6	shop	Tool Dealer#Extended_Moc2	99,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1
+morocc,146,103,6	shop	Tool Dealer#Extended_Moc3	93,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1
+morocc,151,241,4	shop	Tool Dealer#Extended_Moc4	93,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1

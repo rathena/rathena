@@ -21,7 +21,7 @@ ayothaya,203,169,3	script	Noi#ayo	839,{
 	mes "by a dense forest.";
 	next;
 	mes "[Noi]";
-	mes "There are many tourist attractions in this village that you won't be able to find anywhere else. Our fish markets and the the unique architecture of our buildings is enough reason to visit Ayotaya.";
+	mes "There are many tourist attractions in this village that you won't be able to find anywhere else. Our fish markets and the unique architecture of our buildings are enough reason to visit Ayotaya.";
 	next;
 	mes "[Noi]";
 	mes "Please feel free";

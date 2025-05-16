@@ -84,8 +84,8 @@ dicastes01,234,158,0	script	Training Galten#a	450,{
 		mes "if I keep up with my training every day.";
 		close;
 	}
-	mes "ø¡ô¡ü ¡¡ø¡ô¡ü ¡ø";
-	mes "ô ¡ø";
+	mes "¡ø¡ô¡ü ¡ø ¡ø¡ô¡ü ¡ø";
+	mes "¡ô ¡ø";
 	next;
 	mes "Don't know what it means.";
 	close;
@@ -130,7 +130,7 @@ dicastes01,248,129,0	script	Training Galten#d	450,{
 		close; 
 	}
 	mes "¡ø¡ô¡ü ¡ø ¡ø¡ô¡ü";
-	mes "¡ø¡ô¡ü ¡ø¡ ø¡ô¡ü ¡ø";
+	mes "¡ø¡ô¡ü ¡ø ¡ø¡ô¡ü ¡ø";
 	next;
 	mes "Don't know what it means.";
 	close;

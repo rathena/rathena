@@ -741,8 +741,8 @@ REPLACE INTO `mob_skill_db` VALUES (1140,'Marduk@NPC_MAGICALATTACK','attack',192
 REPLACE INTO `mob_skill_db` VALUES (1141,'Marina@NPC_CRITICALSLASH','attack',170,1,500,500,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'6',NULL);
 REPLACE INTO `mob_skill_db` VALUES (1141,'Marina@NPC_EMOTION','walk',197,1,2000,0,5000,'yes','self','always','0',19,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1141,'Marina@NPC_WATERATTACK','attack',184,2,500,500,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'6',NULL);
-REPLACE INTO `mob_skill_db` VALUES (1142,'Marine Sphere@NPC_RANDOMMOVE','idle',331,1,10000,0,30000,'yes','target','alchemist',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `mob_skill_db` VALUES (1142,'Marine Sphere@NPC_SELFDESTRUCTION','idle',173,1,10000,3000,0,'yes','self','alchemist',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db` VALUES (1142,'Marine Sphere@NPC_RANDOMMOVE','idle',331,1,10000,0,30000,'no','target','alchemist',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db` VALUES (1142,'Marine Sphere@NPC_SELFDESTRUCTION','idle',173,1,10000,3000,0,'no','self','alchemist',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1142,'Marine Sphere@NPC_SELFDESTRUCTION','idle',173,1,500,2000,5000,'no','self','myhpltmaxrate','99',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1142,'Marine Sphere@NPC_SELFDESTRUCTION','idle',173,1,10000,2000,5000,'no','self','skillused','173',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1142,'Marine Sphere@NPC_SPEEDUP','idle',332,1,10000,0,700,'yes','target','always',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);

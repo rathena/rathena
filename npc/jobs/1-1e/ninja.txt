@@ -317,7 +317,7 @@ que_ng,30,65,3	script	Kuuga Gai#nq	730,{
 			mes "Joe thinks highly of you. Just";
 			mes "remember that, as a Ninja, your";
 			mes "mission is your highest priority. But don't let mission objectives";
-			mes "supercede your conscience.";
+			mes "supersede your conscience.";
 			next;
 			mes "[Kuuga Gai]";
 			mes "''Secrecy above all else.''";

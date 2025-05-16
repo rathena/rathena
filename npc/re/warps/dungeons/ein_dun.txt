@@ -1,0 +1,17 @@
+//===== rAthena Script =======================================
+//= Einbroch Warp Script
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Capuche]
+//============================================================
+
+ein_dun02,16,250,0	script	enter_ein_dun03	WARPNPC,1,1,{
+	end;
+OnTouch:
+	if (BaseLevel < 180) {
+		unittalk getcharid(3), "" + strcharinfo(0) + " : I think the next area needs a bit more training...", bc_self;
+		end;
+	}
+	warp "ein_dun03",268,279;
+	end;
+}
+ein_dun03,268,283,0	warp2	out_to_dun02	1,1,ein_dun02,24,250

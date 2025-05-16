@@ -1,0 +1,9 @@
+# Massive EOL normalization & 'svn:eol-style native' flag setting for all txt/conf/h/c files.
+# https://github.com/rathena/rathena/commit/637ae9a4dcde0d5885a18841d2f3875e06893c30
+637ae9a4dcde0d5885a18841d2f3875e06893c30
+# Applied AStyle code formating as discussed on tid:74602.
+# https://github.com/rathena/rathena/commit/a7c32653f70bd420bdf5a621acdf3aea5c6e6002
+a7c32653f70bd420bdf5a621acdf3aea5c6e6002
+# Undid r16968: SVN Replaced with source:/trunk/src/@16966 (tid:74924).
+# https://github.com/rathena/rathena/commit/a2bdc47dafb32f6d18ed350d8bbe79b8f679a049
+a2bdc47dafb32f6d18ed350d8bbe79b8f679a049

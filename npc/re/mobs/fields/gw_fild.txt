@@ -1,0 +1,17 @@
+//===== rAthena Script =======================================
+//= gw_fild Monsters Spawn Script
+//===== Current Version: =====================================
+//= 1.0
+//===== Additional Comments: =================================
+//= 1.0 First version. [Capuche]
+//============================================================
+
+gw_fild01	monster	Ashhopper	21302,50
+gw_fild01	monster	Ashring	21303,70
+gw_fild01	monster	Grey Wolf	21304,35
+
+gw_fild02	monster	Ashring	21303,15
+gw_fild02	monster	Bushring	21305,60
+gw_fild02	monster	Phantom Wolf	21307,25
+gw_fild02	monster	Grey Wolf	21304,35
+gw_fild02	monster	Firewind Kite	21306,35

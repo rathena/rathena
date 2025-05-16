@@ -3042,10 +3042,10 @@ OnTimer5000:
 	end;
 OnInit:
 OnDisable:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 }
 
@@ -3399,10 +3399,10 @@ job3_guil03,2,4,0	duplicate(#3rdgc_sunchal_kill01)	#3rdgc_sunchal_kill03	844
 job3_guil03,64,68,3	script	#3rdgc_gojung_kill01	456,7,7,{
 	end;
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 OnDisable:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 OnStop:
 	mapannounce "job3_guil03","Guard : Am I imagining things? I just heard something.",bc_map,"0xA8A8A8"; //FW_NORMAL 12 0 0
@@ -3416,7 +3416,7 @@ OnTouch_:
 	setarray .@x[1],64,86,83;
 	setarray .@y[1],68,63,36;
 	mapannounce "job3_guil03","Guard : Who are you?!",bc_map,"0x7b68ee"; //FW_NORMAL 12 0 0
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	monster "job3_guil03",.@x[.@i],.@y[.@i],"Guard",1985,1,strnpcinfo(0)+"::OnMyMobDead";
 	initnpctimer;
 	end;

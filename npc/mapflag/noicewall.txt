@@ -1,11 +1,5 @@
 //===== rAthena Script =======================================
 //= Mapflag: Disable Ice Wall.
-//===== By: ==================================================
-//= rAthena Dev Team
-//===== Current Version: =====================================
-//= 1.9
-//===== Compatible With: =====================================
-//= rAthena Project
 //===== Description: ========================================= 
 //= Blocks usage of WZ_ICEWALL.
 //===== Additional Comments: ================================= 
@@ -102,7 +96,9 @@
 //ve_in	mapflag	noicewall
 //ve_in02	mapflag	noicewall
 
-// Guild Castles ==========
+//============================================================
+// WoE:FE Castles
+//============================================================
 aldeg_cas01	mapflag	noicewall
 aldeg_cas02	mapflag	noicewall
 aldeg_cas03	mapflag	noicewall
@@ -123,6 +119,10 @@ prtg_cas02	mapflag	noicewall
 prtg_cas03	mapflag	noicewall
 prtg_cas04	mapflag	noicewall
 prtg_cas05	mapflag	noicewall
+
+//============================================================
+// WoE:SE Castles
+//============================================================
 schg_cas01	mapflag	noicewall
 schg_cas02	mapflag	noicewall
 schg_cas03	mapflag	noicewall
@@ -133,12 +133,17 @@ arug_cas02	mapflag	noicewall
 arug_cas03	mapflag	noicewall
 arug_cas04	mapflag	noicewall
 arug_cas05	mapflag	noicewall
-// Novice Guild Castles ===
+
+//============================================================
+// WoE:Novice Castles
+//============================================================
 nguild_alde	mapflag	noicewall
 nguild_gef	mapflag	noicewall
 nguild_pay	mapflag	noicewall
 nguild_prt	mapflag	noicewall
 
-// Poring War ====================
+//============================================================
+// Poring War
+//============================================================
 poring_w01	mapflag	noicewall
 poring_w02	mapflag	noicewall

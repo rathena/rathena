@@ -29,7 +29,7 @@ function	script	F_tt	{
 	end;
 
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	enablewaitingroomevent strnpcinfo(0);
 	end;
 
@@ -2044,7 +2044,7 @@ OnTouch_:
 	
 OnInit:
 	set .@w$,callfunc("F_tt");
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 }
 turbo_e_4,11,266,0	duplicate(Flasher#tt_main)	Flasher_Exit_1#e4	45,1,1

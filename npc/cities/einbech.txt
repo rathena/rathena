@@ -743,7 +743,7 @@ einbech,46,107,6	script	Shena#ein::EinMonsters	846,{
 	}
 }
 
-einbech,48,107,4	duplicate(EinMonsters)	Luda#ein	850,{
+einbech,48,107,4	duplicate(EinMonsters)	Luda#ein	850
 
 einbech,148,242,5	script	Jung#ein	855,{
 	mes "[Jung]";
@@ -888,7 +888,7 @@ einbech,148,246,5	script	Franz#ein	851,{
 	mes "S-somebody...";
 	next;
 	mes "[Franz]";
-	mes "Hey, a traveller!";
+	mes "Hey, a traveler!";
 	mes "Are you planning to explore";
 	mes "the Mine Dungeon or the fields";
 	mes "around here? Let's chat for a bit and maybe you'll learn something.";

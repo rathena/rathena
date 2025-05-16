@@ -293,15 +293,15 @@ alberta,190,173,4	script	Phelix	4_M_03,{
 		mes "There is nothing you can get for free on this ship, if you want somethin', work for it!!";
 		next;
 		mes "[Phelix]";
-		mes "Hmm, so why don't you bring me 10 jellopies and I will give 1 potion. How's that sound?";
-		mes "Or if that's too hard for your pansy ass, 3 jellopies for 1 Carrot.";
+		mes "Hmm, so why don't you bring me 10 Jellopies and I will give 1 potion. How's that sound?";
+		mes "Or if that's too hard for your pansy ass, 3 Jellopies for 1 Carrot.";
 		next;
 		mes "[Phelix]";
 		mes "If you're interested in my offer, get me the stuff I mentioned.";
 		@event_zelopy = 1;
 		close;
 	}
-	mes "Hmm.. you want to exchange jellopies for Red Potions or some Carrots eh? Well.. which one?";
+	mes "Hmm.. you want to exchange Jellopies for Red Potions or some Carrots eh? Well.. which one?";
 	next;
 	switch(select("Red Potions please.","Carrots please.")) {
 	case 1:
@@ -312,7 +312,7 @@ alberta,190,173,4	script	Phelix	4_M_03,{
 		next;
 		mes "[Phelix]";
 		if (countitem(909) < 10) {
-			mes "Hey! Weren't you listening?. I said 10 jellopies for 1 Red Potion.. are ya deaf?";
+			mes "Hey! Weren't you listening? I said 10 Jellopies for 1 Red Potion.. are ya deaf?";
 			close;
 		} else {
 			.@max = countitem(909)/10;
@@ -327,7 +327,7 @@ alberta,190,173,4	script	Phelix	4_M_03,{
 				break;
 			case 2:
 				mes "[Phelix]";
-				mes "I'm not giving you more then 100 at a time so don't bother, OK? If you don't want any, just say '0'.";
+				mes "I'm not giving you more than 100 at a time so don't bother, OK? If you don't want any, just say '0'.";
 				mes "Right now, the most you can get is " + .@max + " but remember, 100 at most, you want to break my back?.";
 				input .@amount;
 				next;
@@ -341,7 +341,7 @@ alberta,190,173,4	script	Phelix	4_M_03,{
 					close;
 				}
 				if (countitem(909) < .@amount*10) {
-					mes "Hmm, it looks like you don't have enough. Go get more jellopies if you want anything else from me.";
+					mes "Hmm, it looks like you don't have enough. Go get more Jellopies if you want anything else from me.";
 					close;
 				}
 				delitem 909,.@amount*10;// Jellopy
@@ -363,7 +363,7 @@ alberta,190,173,4	script	Phelix	4_M_03,{
 		next;
 		mes "[Phelix]";
 		if (countitem(909) < 3) {
-			mes "Hmm, look pansy ass, I said 3 jellopies for 1 Carrot.. got it?";
+			mes "Hmm, look pansy ass, I said 3 Jellopies for 1 Carrot.. got it?";
 			close;
 		}
 		.@max = countitem(909)/3;
@@ -377,7 +377,7 @@ alberta,190,173,4	script	Phelix	4_M_03,{
 			break;
 		case 2:
 			mes "[Phelix]";
-			mes "Right I'm not giving you more then 100 at a time so don't bother, okay? If you don't want any, just say '0'.";
+			mes "Right I'm not giving you more than 100 at a time so don't bother, okay? If you don't want any, just say '0'.";
 			input .@amount;
 			next;
 			mes "[Phelix]";
@@ -386,7 +386,7 @@ alberta,190,173,4	script	Phelix	4_M_03,{
 				close;
 			}
 			if (.@amount > 100) {
-				mes "Hey pansy ass, I said 100 at most, no more then that! I'm not going to break my back for the likes of you!";
+				mes "Hey pansy ass, I said 100 at most, no more than that! I'm not going to break my back for the likes of you!";
 				close;
 			}
 			if (countitem(909) < .@amount*3) {

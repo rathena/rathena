@@ -120,7 +120,7 @@
 
 	if (.@Jeremy) {
 		for ( .@i = 0; .@i < MAX_SLOTS; .@i++ ) {
-			if (callfunc("F_IsCharm",.@equip_card[.@i]) == true)
+			if (getiteminfo(.@equip_card[.@i], ITEMINFO_SUBTYPE) == CARD_ENCHANT)
 				.@equip_card[.@i] = 0;// Armor Enchant System
 		}
 		if (!getarraysize(.@equip_card)) {
@@ -146,7 +146,7 @@
 		next;
 		set .@menu$,"";
 		for ( .@i = 0; .@i < MAX_SLOTS; .@i++ ) {
-			if (.@equip_card[.@i] && callfunc("F_IsCharm",.@equip_card[.@i]) == false) // Armor Enchant System
+			if (.@equip_card[.@i] && getiteminfo(.@equip_card[.@i], ITEMINFO_SUBTYPE) == CARD_NORMAL) // Armor Enchant System
 				.@menu$ = .@menu$ + "Socket " + (.@i+1) + " - " + getitemname(.@equip_card[.@i])+":";
 			else {
 				.@menu$ = .@menu$ + "^777777Socket " + (.@i+1) + " - No card^000000:";
@@ -160,7 +160,7 @@
 			close;
 		default:
 			set .@slot, .@i-2;
-			if (.@equip_card[.@slot] == 0 || callfunc("F_IsCharm",.@equip_card[.@slot]) == true) {
+			if (.@equip_card[.@slot] == 0 || getiteminfo(.@equip_card[.@slot], ITEMINFO_SUBTYPE) == CARD_ENCHANT) {
 				mes .@n$;
 				mes "This socket is not equipped with any card. Why don't you check again?";
 				close;

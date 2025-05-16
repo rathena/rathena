@@ -332,7 +332,7 @@ payon,132,235,3	script	Monster Scholar#02	98,{
 		mes "[Monster Scholar Vuicokk]";
 		mes "As his subjects,";
 		mes "King Tristram III";
-		mes "feels some responsbility";
+		mes "feels some responsibility";
 		mes "to release their souls.";
 		next;
 		mes "[Monster Scholar Vuicokk]";

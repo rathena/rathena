@@ -11,6 +11,7 @@
 //= 1.1 More accurate spawns [Playtester]
 //= 1.2 Removed Ktullanux spawn, quest implemented [L0ne_W0lf]
 //= 1.3 Correct Spawn by Navigation's mob data. [attackjom]
+//= 1.4 Added Illusion of Frozen. [Capuche]
 //============================================================
 
 //==================================================
@@ -37,3 +38,11 @@ ice_dun03,0,0	monster	Ice Titan	1777,70,5000
 ice_dun03,0,0	monster	Gazeti	1778,42,5000
 ice_dun03,0,0	monster	Iceicle	1789,32,5000
 ice_dun03,0,0	monster	Snowier	1775,15,5000
+
+//==================================================
+// ice_d03_i - Illusion of Frozen
+//==================================================
+ice_d03_i	monster	Angry Gazeti	3792,30
+ice_d03_i	monster	Angry Snowier	3793,30
+ice_d03_i	monster	Angry Ice Titan	3794,20
+ice_d03_i	monster	Solid Icicle	3795,20

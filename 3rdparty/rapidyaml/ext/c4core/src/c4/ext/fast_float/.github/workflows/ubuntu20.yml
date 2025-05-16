@@ -1,0 +1,29 @@
+name: Ubuntu 20.04 CI (GCC 9)
+
+on: [push, pull_request]
+
+jobs:
+  ubuntu-build:
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Legacy/x86 compilers cause CI failures.
+          #- {cxx: -DCMAKE_CXX_COMPILER=g++-8, arch:                         }
+          - {cxx:                           , arch:                         } # default=gcc9
+          #- {cxx:                           , arch: -DCMAKE_CXX_FLAGS="-m32"} # default=gcc9
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use cmake
+        run: |
+          mkdir build &&
+          cd build &&
+          cmake  ${{matrix.cxx}} ${{matrix.arch}} -DFASTFLOAT_TEST=ON -DCMAKE_INSTALL_PREFIX:PATH=destination ..  &&
+          cmake --build .   &&
+          ctest --output-on-failure  &&
+          cmake --install . &&
+          cd ../tests/installation_tests/find &&
+          mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX:PATH=../../../build/destination .. &&  cmake --build . &&
+          cd ../../issue72_installation  &&
+          mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX:PATH=../../../build/destination .. &&  cmake --build .

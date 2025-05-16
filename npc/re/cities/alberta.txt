@@ -21,6 +21,10 @@ alberta,246,74,3	duplicate(Sea_Captain_amatsu)	Sea Captain#ama1	709
 //============================================================
 alberta,246,29,3	duplicate(Aibakthing_ayothaya)	Aibakthing#ayo	843
 
+// cities/brasilis.txt
+//============================================================
+alberta,246,82,3	duplicate(Crewman_bra2)	Crewman#bra2	100
+
 // cities/gonryun.txt
 //============================================================
 alberta,246,62,3	duplicate(Kunlun_Envoy_gonryun)	Kunlun Envoy#gon	776

@@ -30,7 +30,7 @@ bat_room,151,144,3	script	KVM Logistic Officer#a	734,{
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
 		mes "- Please try again -";
-		mes "- after you loose some weight. -";
+		mes "- after you lose some weight. -";
 		close;
 	}
 	mes "[Logistics]";

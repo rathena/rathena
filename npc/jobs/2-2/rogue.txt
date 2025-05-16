@@ -822,10 +822,10 @@ in_rogue,376,23,1	script	Mr. Smith#rg	57,{
 				mes "I've heard lately that he's been complaining a lot about the noise outside of his house, and he fears an assassination attempt. Anyway...";
 				next;
 				mes "[Mr. Smith]";
-				mes "He's kind of tense, so he throws a dagger at anyone who approches his house. He has a violent personality.";
+				mes "He's kind of tense, so he throws a dagger at anyone who approaches his house. He has a violent personality.";
 				next;
 				mes "[Mr. Smith]";
-				mes "However, he does have magnificiant business skills. And he also loves gambling. Once you get to know him, he'll take care of your Rogue training really well.";
+				mes "However, he does have magnificent business skills. And he also loves gambling. Once you get to know him, he'll take care of your Rogue training really well.";
 				next;
 				mes "[Mr. Smith]";
 				mes "Ah, you might want to remember the password to meet him in person. The password is ^0000FFAntonio doesn't enjoy destroying upgrade items^000000.";
@@ -854,7 +854,7 @@ in_rogue,376,23,1	script	Mr. Smith#rg	57,{
 				mes "a genius at manipulation.";
 				next;
 				mes "[Mr. Smith]";
-				mes "However, because of something his father did long ago, people ahve been trying to kill him. Because of this, he is very high strung and will throw daggers at people he doesn't trust.";
+				mes "However, because of something his father did long ago, people have been trying to kill him. Because of this, he is very high strung and will throw daggers at people he doesn't trust.";
 				next;
 				mes "[Mr. Smith]";
 				mes "Our leader has been able to get him to join our guild, and his brilliant mind has been an asset to us. Once you get to know him, he'll take care of your Rogue training really well.";
@@ -1245,7 +1245,7 @@ in_rogue,272,135,1	script	Hermanthorn Jr#rg	85,{
 		mes "Well, since you were tortured by him, I'll try to be especially generous to you. My test for you will be simple, so simple.";
 		next;
 		mes "[HermanthornJr.]";
-		mes "All you have to do is go through a underground tunnel, and walk all the way back to the Rogue Guild.";
+		mes "All you have to do is go through an underground tunnel, and walk all the way back to the Rogue Guild.";
 		next;
 		mes "[HermanthornJr.]";
 		mes "There is one thing I should tell you, though. You might want to be careful inside, alright?";

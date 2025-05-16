@@ -157,19 +157,19 @@ geffen,132,38,3	script	Bard#2	51,{
 		next;
 		mes "[Errende]";
 		mes "I hope that you'll always remain honest and respectful towards other people, and that you continue to ignore greed for fortune or power.";
-		goto L_End;
+		close3;
 
 	} else if (gef_bard_q > 11 && gef_bard_q < 14) {
 		cutin "bard_eland02",2;
 		mes "[Errende]";
 		mes "It seems you haven't found it yet. Well, take your time, I can wait as long as you want. It doesn't really bore me, since waiting seems to be a part of my profession.";
-		goto L_End;
+		close3;
 
 	} else if (gef_bard_q == 11) {
 		cutin "bard_eland01",2;
 		mes "[Errende]";
 		mes "Mr. Skezti has a small book store on the book street at the right side of Mineta in Juno. If you show him the seal, he'll help you out.";
-		goto L_End;
+		close3;
 
 	} else if (gef_bard_q == 10) {
 		cutin "bard_eland01",2;
@@ -199,7 +199,7 @@ geffen,132,38,3	script	Bard#2	51,{
 		mes "show him the Seal of Friendship.";
 		mes "Good luck, now~";
 		set gef_bard_q,11;
-		goto L_End;
+		close3;
 
 	} else if (gef_bard_q == 20) {
 		cutin "bard_eland03",2;
@@ -249,7 +249,7 @@ geffen,132,38,3	script	Bard#2	51,{
 			mes "[Errende]";
 			mes "Waaah, wah~";
 			mes "You can't just ignore me like that! Where's your sense of merriment, your sense of romance?";
-			goto L_End;
+			close3;
 		}
 
 	} else if (gef_bard_q == 27) {
@@ -295,7 +295,7 @@ geffen,132,38,3	script	Bard#2	51,{
 			mes "I beseech you, if you meet him, please ask him of the 8th love and inform me of that lyric immediately~";
 			set gef_bard_q,22;
 		}
-		goto L_End;
+		close3;
 
 	} else if (gef_bard_q == 26) {
 		cutin "bard_eland01",2;
@@ -349,17 +349,17 @@ geffen,132,38,3	script	Bard#2	51,{
 				mes "in advance~";
 				set gef_bard_q,24;
 			}
-			goto L_End;
+			close3;
 
 		} else if (.@inputstr$ == "Gunther") {
 			mes "[Errende]";
 			mes "Gunther? I don't think he would do this. He always puts lines in his songs like 'doubleharmony for you.' Plus, he's too silly for that.";
-			goto L_End;
+			close3;
 
 		} else if (.@inputstr$ == "Gunther Doubleharmony") {
 			mes "[Errende]";
 			mes "Gunther? I don't think he would do this. He always puts lines in his songs like 'doubleharmony for you.' Plus, he's too silly for that.";
-			goto L_End;
+			close3;
 
 		} else if (.@inputstr$ == "Errende") {
 			cutin "bard_eland04",2;
@@ -368,7 +368,7 @@ geffen,132,38,3	script	Bard#2	51,{
 			mes "If I did, why would";
 			mes "I not know what";
 			mes "this song is about?";
-			goto L_End;
+			close3;
 
 		} else {
 			mes "[Errende]";
@@ -381,7 +381,7 @@ geffen,132,38,3	script	Bard#2	51,{
 			mes "How could I forget";
 			mes "the 8th love?";
 			set gef_bard_q,26;
-			goto L_End;
+			close3;
 		}
 
 	} else if (gef_bard_q == 25) {
@@ -427,7 +427,7 @@ geffen,132,38,3	script	Bard#2	51,{
 				mes "heart wrenching song.";
 				mes "But at what cost to your soul?^000000";
 			}
-			goto L_End;
+			close3;
 
 		} else {
 			cutin "bard_eland01",2;
@@ -438,7 +438,7 @@ geffen,132,38,3	script	Bard#2	51,{
 			mes "Noboooody looooves meee";
 			mes "Friends foooooor never...";
 			mes "Ooooooooh wah!^000000";
-			goto L_End;
+			close3;
 		}
 
 	} else if (gef_bard_q == 24) {
@@ -464,7 +464,7 @@ geffen,132,38,3	script	Bard#2	51,{
 		mes "Once again,";
 		mes "thank you so much";
 		mes "for your help.";
-		goto L_End;
+		close3;
 
 	} else if (gef_bard_q == 22) {
 		mes "[Errende]";
@@ -480,7 +480,7 @@ geffen,132,38,3	script	Bard#2	51,{
 		next;
 		mes "[Errende]";
 		mes "Please ask ^483D8BGunther^000000 about the ^483D8B8th love^000000 in ^483D8BAt One, I Fall in Love^000000. Thank you in advance.";
-		goto L_End;
+		close3;
 
 	} else if (gef_bard_q == 23) {
 		cutin "bard_eland02",2;
@@ -570,19 +570,19 @@ geffen,132,38,3	script	Bard#2	51,{
 				mes "in advance~";
 				set gef_bard_q,24;
 			}
-			goto L_End;
+			close3;
 
 		} else if (.@inputstr$ == "Gunther") {
 			mes "[Errende]";
 			mes "Gunther? I don't think he would do this. He always puts lines in his songs like 'doubleharmony for you.' Plus, he's too silly for that.";
 			set gef_bard_q,26;
-			goto L_End;
+			close3;
 
 		} else if (.@inputstr$ == "Gunther Doubleharmony") {
 			mes "[Errende]";
 			mes "Gunther? I don't think he would do this. He always puts lines in his songs like 'doubleharmony for you.' Plus, he's too silly for that.";
 			set gef_bard_q,26;
-			goto L_End;
+			close3;
 
 		} else if (.@inputstr$ == "Errende") {
 			cutin "bard_eland04",2;
@@ -592,7 +592,7 @@ geffen,132,38,3	script	Bard#2	51,{
 			mes "I not know what this";
 			mes "song is about?";
 			set gef_bard_q,26;
-			goto L_End;
+			close3;
 
 		} else {
 			mes "[Errende]";
@@ -605,7 +605,7 @@ geffen,132,38,3	script	Bard#2	51,{
 			mes "How could I forget";
 			mes "the 8th love?";
 			set gef_bard_q,26;
-			goto L_End;
+			close3;
 		}
 
 	} else if (gef_bard_q == 21) {
@@ -655,7 +655,7 @@ geffen,132,38,3	script	Bard#2	51,{
 			mes "I beseech you, if you meet him, please ask him of the 8th love and inform me of that lyric immediately~";
 			set gef_bard_q,2;
 		}
-		goto L_End;
+		close3;
 
 	} else if (gef_bard_q == 6) {
 		cutin "bard_eland04",2;
@@ -699,23 +699,23 @@ geffen,132,38,3	script	Bard#2	51,{
 				mes "I'll pay you back somehow! Thank you for your trouble in advance~";
 				set gef_bard_q,4;
 			}
-			goto L_End;
+			close3;
 
 		} else if (.@inputstr$ == "Gunther") {
 			mes "[Errende]";
 			mes "Gunther? I don't think he would do this. He always puts lines in his songs like 'doubleharmony for you.' Plus, he's too silly for that.";
-			goto L_End;
+			close3;
 
 		} else if (.@inputstr$ == "Gunther Doubleharmony") {
 			mes "[Errende]";
 			mes "Gunther? I don't think he would do this. He always puts lines in his songs like 'doubleharmony for you.' Plus, he's too silly for that.";
-			goto L_End;
+			close3;
 
 		} else if (.@inputstr$ == "Errende") {
 			cutin "bard_eland04",2;
 			mes "[Errende]";
 			mes "Surely you jest! If I did, why would I not know what this song is about?";
-			goto L_End;
+			close3;
 
 		} else {
 			mes "[Errende]";
@@ -727,7 +727,7 @@ geffen,132,38,3	script	Bard#2	51,{
 			mes "How could I forget";
 			mes "the 8th love?";
 			set gef_bard_q,6;
-			goto L_End;
+			close3;
 		}
 
 	} else if (gef_bard_q == 5) {
@@ -764,7 +764,7 @@ geffen,132,38,3	script	Bard#2	51,{
 				mes "heart wrenching song.";
 				mes "But at what cost to your soul?^000000";
 			}
-			goto L_End;
+			close3;
 
 		} else {
 			cutin "bard_eland01",2;
@@ -775,7 +775,7 @@ geffen,132,38,3	script	Bard#2	51,{
 			mes "Noboooody looooves meee";
 			mes "Friends foooooor never...";
 			mes "Ooooooooooh wah!^000000";
-			goto L_End;
+			close3;
 		}
 
 	} else if (gef_bard_q == 4) {
@@ -800,7 +800,7 @@ geffen,132,38,3	script	Bard#2	51,{
 		mes "Once again,";
 		mes "thank you so much";
 		mes "for your help.";
-		goto L_End;
+		close3;
 
 	} else if (gef_bard_q == 2) {
 		cutin "bard_eland04",2;
@@ -813,7 +813,7 @@ geffen,132,38,3	script	Bard#2	51,{
 		next;
 		mes "[Errende]";
 		mes "Please ask ^483D8BGunther^000000 about the ^483D8B8th love^000000 in ^483D8BAt One, I Fall in Love^000000. Thank you in advance.";
-		goto L_End;
+		close3;
 
 	} else if (gef_bard_q == 3) {
 		cutin "bard_eland02",2;
@@ -898,27 +898,27 @@ geffen,132,38,3	script	Bard#2	51,{
 				mes "I'll pay you back somehow! Thank you for your trouble in advance~";
 				set gef_bard_q,4;
 			}
-			goto L_End;
+			close3;
 
 		} else if (.@inputstr$ == "Gunther") {
 			mes "[Errende]";
 			mes "Gunther? I don't think he would do this. He always puts lines in his songs like 'doubleharmony for you.' Plus, he's too silly for that.";
 			set gef_bard_q,6;
-			goto L_End;
+			close3;
 		}
 
 		else if (.@inputstr$ == "Gunther Doubleharmony") {
 			mes "[Errende]";
 			mes "Gunther? I don't think he would do this. He always puts lines in his songs like 'doubleharmony for you.' Plus, he's too silly for that.";
 			set gef_bard_q,6;
-			goto L_End;
+			close3;
 
 		} else if (.@inputstr$ == "Errende") {
 			cutin "bard_eland04",2;
 			mes "[Errende]";
 			mes "Surely you jest! If I did, why would I not know what this song is about?";
 			set gef_bard_q,6;
-			goto L_End;
+			close3;
 
 		} else {
 			mes "[Errende]";
@@ -930,7 +930,7 @@ geffen,132,38,3	script	Bard#2	51,{
 			mes "How could I forget";
 			mes "the 8th love?";
 			set gef_bard_q,6;
-			goto L_End;
+			close3;
 		}
 
 	} else if (gef_bard_q == 1) {
@@ -993,11 +993,7 @@ geffen,132,38,3	script	Bard#2	51,{
 		}
 
 	}
-
-L_End:
-	close2;
-	cutin "",255;
-	end;
+	close3;
 
 // SubRoutine for 5 similiar dialogues of the quest
 
@@ -1114,7 +1110,7 @@ S_StorySong:
 			mes "[Errende]";
 			mes "Oh, how disappointing. But promise me that you will drop by later, so that we can share stories and merriment.";
 		}
-		goto L_End;
+		close3;
 
 	case 2:
 		.@num = getarg(0);
@@ -1149,7 +1145,7 @@ S_StorySong:
 				mes "My apologies,";
 				mes "But I cannot offer my services for free. Even a Bard needs zeny to live, wouldn't you agree?";
 			}
-			goto L_End;
+			close3;
 
 		case 2:
 			cutin "bard_eland03",2;
@@ -1218,7 +1214,7 @@ S_StorySong:
 					mes "may never know";
 					mes "with certainty.";
 				}
-				goto L_End;
+				close3;
 
 			} else if (.@random == 2) {
 
@@ -1321,7 +1317,7 @@ S_StorySong:
 						if(gef_bard_q==1) set gef_bard_q,7;
 						if(gef_bard_q==21) set gef_bard_q,27;
 					}
-					goto L_End;
+					close3;
 
 				}
 				mes "^483D8BA good Bard sings";
@@ -1345,7 +1341,7 @@ S_StorySong:
 				mes "[Errende]";
 				mes "H-how can you say such a thing, "+ @name$ +"? Have you ever been a Bard before? It's difficult to come up with fresh, original melodies!";
 			}
-			goto L_End;
+			close3;
 
 		case 3:
 			cutin "bard_eland01",2;
@@ -1355,7 +1351,7 @@ S_StorySong:
 			mes "enjoyed when you";
 			mes "are in the mood for it.";
 			mes "Please come again.";
-			goto L_End;
+			close3;
 
 		}
 
@@ -1364,7 +1360,7 @@ S_StorySong:
 		mes "[Errende]";
 		mes "Hmm~?";
 		mes "Well, alright. Though, listening to a good story or cheerful song can really do you some good. Alright then, see you later.";
-		goto L_End;
+		close3;
 	}
 }
 

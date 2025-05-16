@@ -1,0 +1,11 @@
+###########################################################################
+# Elemental Attribute Damage Adjustment Tables
+###########################################################################
+#
+# Elemental Attribute Damage Adjustment Settings
+#
+###########################################################################
+# - Level                        Level of the Attribute.
+#   <element>:                   Attacker's weapon element.
+#       <element>: <value>       Target's defense element. <value> in %, default 100. Value accepted from -100 to 200.
+###########################################################################

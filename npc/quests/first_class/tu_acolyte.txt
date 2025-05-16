@@ -605,7 +605,7 @@ prt_monk,230,106,3	script	Asthe#tu	1_F_PRIEST,{
 		mes "After learning Level 2 Teleport, you can learn ^3131FFWarp Portal^000000 which will allow you to warp to a Memo Point, or saved destination, by consuming ^FF00001 Blue Gemstone^000000.";
 		next;
 		mes "[Asthe]";
-		mes "Once you have mastered Warp Portal you can ^3131FFremember three Memo Points^000000. You can't save Memo Points in in most fields or dungeons, but you can use the ^FF0000/memo^000000 command in";
+		mes "Once you have mastered Warp Portal you can ^3131FFremember three Memo Points^000000. You can't save Memo Points in most fields or dungeons, but you can use the ^FF0000/memo^000000 command in";
 		mes "towns and certain fields.";
 		next;
 		mes "[Asthe]";

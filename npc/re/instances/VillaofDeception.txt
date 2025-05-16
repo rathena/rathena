@@ -1,0 +1,959 @@
+//===== rAthena Script =======================================
+//= Instance Villa of Deception.
+//===== Description: =========================================
+//- [Walkthrough conversion]
+//- Require to complete the Episode 18 main quest.
+//- The function to drop an item with random option is defined in re/other/glocal_npc2.txt
+// Notes:
+//   Some of the setting can be modified in 'Optional settings'.
+//   The monster inside the hard mode are using relieve level 10 (-99% damages).
+//   Change it if you think the player damage are too low, this level is a workaround but the damages
+//   on the mobs are lower in hard mode than in normal on official. The level is 9 on official.
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Capuche]
+//============================================================
+
+wolfvill,79,260,0	script	#con_wp11	HIDDEN_WARP_NPC,4,4,{
+	end;
+OnTouch:
+	if (ep18_main < 57)
+		end;
+	cloakoffnpcself( "Aira#con" );
+	end;
+}
+
+wolfvill,79,260,4	script(CLOAKED)	Aira#con	4_M_BRZ_JACI,{
+	if (ep18_main < 57)
+		end;
+	switch( checkquest(12522,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "[Aira]";
+		mes "Please wait the end of the quest delay.";
+		close;
+	case 2:
+		erasequest 12522;
+		mes "^0000ff All the aftereffects of access are gone.^000000";
+		close;
+	}
+	mes "[Aira]";
+	mes "" + strcharinfo(0) + "Thanks to Mr. I arrived safely in the village.";
+	mes "But it seems that something has been revived in the villa. I think I need to get help one more time.";
+	next;
+	.@md_name_normal$ = "Villa of Deception";
+	.@md_name_hard$ = "Villa of Deception Advanced";
+
+	if (is_party_leader() == true) {
+		.@create_normal$ = "^000044Create " + .@md_name_normal$ + "^000000";
+		if (countitem(1000471) > 0)
+			.@create_hard$ = "^000044Create " + .@md_name_hard$ + "^000000";
+	}
+	switch( select( "Entry", .@create_normal$, .@create_hard$ ) ) {
+	case 1:
+		if (select( .@md_name_normal$, .@md_name_hard$ ) == 1) {
+			if (BaseLevel < 170) {
+				mes "[Aira]";
+				mes "You must be at least BaseLevel 170 to enter.";
+				close;
+			}
+			.@enter_to$ = .@md_name_normal$;
+		}
+		else {
+			if (BaseLevel < 200) {
+				mes "[Aira]";
+				mes "You must be at least BaseLevel 200 to enter.";
+				close;
+			}
+			.@enter_to$ = .@md_name_hard$;
+		}
+
+		switch( instance_enter(.@enter_to$) ) {
+		case IE_OTHER:
+			mes "^ff0000An unknown error occurred.^000000";
+			close;
+		case IE_NOINSTANCE:
+			mes "^0000ff The dungeon has not been created or you are trying to enter a dungeon different from the party leader.^000000";
+			close;
+		case IE_NOMEMBER:
+			mes "^ff0000Only a member of the party can enter the Memorial Dungeon.^000000";
+			close;
+		case IE_OK:
+			mapannounce "wolfvill", "" + strcharinfo(0) + " of the party, " + getpartyname( getcharid(1) ) + ", is entering " + .@enter_to$ + ".",bc_map,"0x00ff99",FW_NORMAL,12;
+			if (.@enter_to$ == .@md_name_normal$)
+				setquest 12520;
+			else
+				setquest 12521;
+			setquest 12522;
+			// warp "1@advs",111,19;
+			end;
+		}
+		end;
+	case 2:
+		if (BaseLevel < 170) {
+			mes "[Aira]";
+			mes "You must be at least BaseLevel 170 to create the instance.";
+			close;
+		}
+		if (instance_create(.@md_name_normal$) < 0) {
+			mes "Party: " + getpartyname(getcharid(1)) + "";
+			mes "Leader: " + strcharinfo(0) + "";
+			mes "^0000ff" + .@md_name_normal$ + " ^000000- Unknown error";
+			close;
+		}
+		end;
+	case 3:
+		if (BaseLevel < 200) {
+			mes "[Aira]";
+			mes "You must be at least BaseLevel 200 to create the instance.";
+			close;
+		}
+		if (countitem(1000471) < 1) {
+			mes "[Aira]";
+			mes "Where is the " + getitemname(1000471) + "?";
+			close;
+		}
+		if (instance_create(.@md_name_hard$) < 0) {
+			mes "Party: " + getpartyname(getcharid(1)) + "";
+			mes "Leader: " + strcharinfo(0) + "";
+			mes "^0000ff" + .@md_name_hard$ + " ^000000- Unknown error";
+			close;
+		}
+		delitem 1000471,1;
+		end;
+	}
+	end;
+}
+
+
+
+
+1@advs,1,1,0	script	advs_init	-1,{
+	end;
+OnInstanceInit:
+	//--------------------------------------------
+	// variables initialization
+	//--------------------------------------------
+
+	'advs_step = 0;
+	'map_advs$ = instance_mapname("1@advs");
+
+	// variables step 1
+	'sw_timer = 0;
+	deletearray 'sw[0], 2;
+
+	// variables step 3
+	deletearray 'x_reaper[0], 'size_reaper;
+	deletearray 'y_reaper[0], 'size_reaper;
+	'size_reaper = 0;
+
+	//--------------------------------------------
+	// Optional settings
+	//--------------------------------------------
+
+	// Number minimum of reaper spawn on step 3
+	'min_reaper = 3;
+
+	// Setting according to the mode
+	if (instance_live_info(ILI_NAME) == "Villa of Deception Advanced") {
+		'advs_difficult = 1;
+		'sanare_id = 21377;	// EP18_MD_SANARE_L
+		'hunter_id = 21378;	// EP18_MD_HEARTHUNTER_L
+		'monster_relieve = 10;	// need check but the damages are very low compared to normal mode
+
+		// Total of monster to kill in step 1, 2, 3
+		'total_monster_step_1 = 80;
+		'total_monster_step_2 = 70;
+		'total_monster_step_3 = 80;
+
+		// Number of monster spawn at the start of step 1, 2, 3
+		'init_monster_step_1 = 40;
+		'init_monster_step_2 = 30;
+		'init_monster_step_3 = 40;
+
+		'schulang_id = 21360;	// EP18_MD_SCHULANG_L
+		'freyja_id = 21361;	// EP18_MD_DEMI_FREYJA_L
+	
+		// Don't touch this unless you know what you're doing
+		.@interval = 5;	// distance between each reaper
+		.@max_reaper = 48;	// number max of reaper spawn
+	}
+	else {
+		'advs_difficult = 0;
+		'sanare_id = 21318;	// EP18_MD_SANARE_R
+		'hunter_id = 21319;	// EP18_MD_HEARTHUNTER_R2
+		'monster_relieve = 9;
+
+		// Total of monster to kill in step 1, 2, 3
+		'total_monster_step_1 = 35;
+		'total_monster_step_2 = 35;
+		'total_monster_step_3 = 35;
+
+		// Number of monster spawn at the start of step 1, 2, 3
+		'init_monster_step_1 = 35;
+		'init_monster_step_2 = 25;
+		'init_monster_step_3 = 24;
+
+		'schulang_id = 21316;	// EP18_MD_SCHULANG_R
+		'freyja_id = 21317;	// EP18_MD_DEMI_FREYJA_R
+
+		// Don't touch this unless you know what you're doing
+		.@interval = 10;
+		.@max_reaper = 16;
+	}
+
+	for ( .@i = 109; .@i <= 139; .@i += .@interval ) {
+		for ( .@j = 219; .@j <= 249; .@j += .@interval ) {
+			if (.@i == 124 && .@j == 234)
+				continue;
+			'x_reaper[ 'size_reaper ] = .@i;
+			'y_reaper[ 'size_reaper ] = .@j;
+			'size_reaper++;
+		}
+	}
+	'total_reaper = min(.@max_reaper, 'size_reaper);
+
+	// number total of food necessary to reduce the number of reaper to 'min_reaper
+	'max_food = ('total_reaper * 2) - ('min_reaper * 2);
+
+	// debug
+	'total_monster_step_1 = max('init_monster_step_1, 'total_monster_step_1);
+	'total_monster_step_2 = max('init_monster_step_2, 'total_monster_step_2);
+	'total_monster_step_3 = max('init_monster_step_3, 'total_monster_step_3);
+
+	//--------------------------------------------
+	// npcs management
+	//--------------------------------------------
+	disablenpc instance_npcname("#boss2");
+	disablenpc instance_npcname("#box_admin");
+
+	// warps
+	disablenpc instance_npcname("#wp1");
+	disablenpc instance_npcname("#wp2");
+	disablenpc instance_npcname("#wp3");
+	disablenpc instance_npcname("#wp4");
+
+	disablenpc instance_npcname("#food1");
+	disablenpc instance_npcname("#food2");
+	disablenpc instance_npcname("#food3");
+	disablenpc instance_npcname("#food4");
+
+	// circles step final
+	disablenpc instance_npcname("#b_tr1");
+	disablenpc instance_npcname("#b_tr2");
+	disablenpc instance_npcname("#b_tr3");
+	disablenpc instance_npcname("#b_tr4");
+
+	// stop circles from moving
+	disablenpc instance_npcname("#b_sw1");
+	disablenpc instance_npcname("#b_sw2");
+	disablenpc instance_npcname("#b_sw3");
+	disablenpc instance_npcname("#b_sw4");
+
+	disablenpc instance_npcname("#boss1");
+	disablenpc instance_npcname("#boss2_sw");
+
+	donpcevent instance_npcname("#advs_step_1") + "::OnStart";
+	end;
+}
+
+// Entrance
+// (npc probably used to enable the npcs according to the instance mode - normal or hard)
+// 1@advs,111,19,0	duplicate(dummy_npc)	#hidden_wp1	HIDDEN_WARP_NPC,2,2
+// 1@advs,134,19,0	duplicate(dummy_npc)	#hidden_wp2	HIDDEN_WARP_NPC,2,2
+
+
+//---------------------------------------------------------------
+// Warps
+//---------------------------------------------------------------
+1@advs,124,101,0	warp	#wp1	2,2,1@advs,124,115
+
+
+1@advs,124,205,0	script	#wp2	WARPNPC,2,2,{
+	end;
+OnTouch:
+	.@r = rand(3);
+	if (.@r == 0)
+		warp 'map_advs$,101,235;
+	else if (.@r == 1)
+		warp 'map_advs$,155,233;
+	else
+		warp 'map_advs$,124,211;
+	end;
+}
+
+1@advs,124,266,0	warp	#wp3	2,2,1@advs,124,277
+1@advs,124,307,0	warp	#wp4	2,2,1@advs,124,319
+// 1@advs,124,307,0	duplicate(dummy_npc)	#wp4	WARPNPC,10,10
+
+
+//---------------------------------------------------------------
+// Step 1
+//---------------------------------------------------------------
+1@advs,1,1,0	script	#advs_step_1	-1,{
+	end;
+OnStart:
+	'mob_to_respawn = 'total_monster_step_1 - 'init_monster_step_1;
+
+	// The coordinates may be inaccurates (maybe not random on official)
+	for ( .@i = 0; .@i < 'init_monster_step_1; ++.@i )
+		callsub( S_Spawn );
+	end;
+	
+OnMobDead:
+	if ('mob_to_respawn > 0)
+		'mob_to_respawn--;
+	initnpctimer;
+	sleep 2000;
+	if ('advs_step == 0 && 'mob_to_respawn > 0) {
+		if ('mob_to_respawn > 0)
+			callsub( S_Spawn );
+		if ('mob_to_respawn > 1)
+			callsub( S_Spawn );
+	}
+	end;
+OnTimer2000:
+	stopnpctimer;
+	.@alive = mobcount('map_advs$, instance_npcname("#advs_step_1") + "::OnMobDead");
+	mapannounce 'map_advs$, "Number of monsters left: " + .@alive, bc_map, 0xAAAAFF;
+	end;
+S_Spawn:
+	.@label$ = instance_npcname("#advs_step_1") + "::OnMobDead";
+	if (rand(2))
+		.@mob_id = 'hunter_id;
+	else
+		.@mob_id = 'sanare_id;
+	.@r = rand(3);
+	if (.@r == 0)
+		areamonster 'map_advs$,63,89,72,182,"--en--",.@mob_id,1, .@label$;
+	else if (.@r == 1)
+		areamonster 'map_advs$,63,89,184,101,"--en--",.@mob_id,1, .@label$;
+	else
+		areamonster 'map_advs$,184,89,174,182,"--en--",.@mob_id,1, .@label$;
+	unitskilluseid $@mobid[0], 771, 'monster_relieve;	// NPC_RELIEVE_ON
+	return;
+}
+
+1@advs,67,182,5	script	#sw_1	4_NFWISP,1,1,{
+	if ('advs_step != 0)
+		end;
+	mes "[Unidentified grudge]";
+	mes "Are you here to set me free?";
+	next;
+	if (select( "Stop", "Do it" ) == 1)
+		end;
+	if ('advs_step != 0)
+		end;
+	disablenpc instance_npcname("#sw_1");
+	'sw[0] = 1;
+	donpcevent instance_npcname("#sw_timer") + "::OnStart";
+	end;
+
+OnTouch_:
+	end;
+}
+
+1@advs,180,182,5	script	#sw_2	4_NFWISP,1,1,{
+	if ('advs_step != 0)
+		end;
+	mes "[Unidentified grudge]";
+	mes "Are you here to set me free?";
+	next;
+	if (select( "Stop", "Do it" ) == 1)
+		end;
+	if ('advs_step != 0)
+		end;
+	disablenpc instance_npcname("#sw_2");
+	'sw[1] = 1;
+	donpcevent instance_npcname("#sw_timer") + "::OnStart";
+	end;
+
+OnTouch_:
+	end;
+}
+
+1@advs,1,1,5	script	#sw_timer	-1,{
+	end;
+OnStart:
+	if ('sw_timer == 1)
+		end;
+	'sw_timer = 1;
+	initnpctimer;
+	end;
+
+OnTimer3000:
+	stopnpctimer;
+	if ('sw[0] != 1 || 'sw[1] != 1) {
+		'sw_timer = 0;
+		if ('sw[0] == 1)
+			enablenpc instance_npcname("#sw_1");
+		if ('sw[1] == 1)
+			enablenpc instance_npcname("#sw_2");
+		'sw[0] = 0;
+		'sw[1] = 0;
+		npctalk "Ah... my half soul beyond this hallway is still unfulfilled...", instance_npcname("#sw_1");
+		npctalk "Ah... my half soul beyond this hallway is still unfulfilled...", instance_npcname("#sw_2");
+		mapannounce 'map_advs$, "You must free both souls on the left and right of the hallway at the same time.", bc_map, 0xAAAAFF;
+		end;
+	}
+	if ('advs_step != 0)
+		end;
+	mapannounce 'map_advs$, "Two souls are simultaneously liberated, opening the door to the center.", bc_map, 0xAAAAFF;
+	donpcevent instance_npcname("#advs_step_2") + "::OnStart";
+	end;
+}
+
+1@advs,75,89,5	script	#trap_1	4_M_DEATH,1,1,{
+	end;
+OnTouch:
+	specialeffect2 EF_FIREHIT;
+	specialeffect2 EF_ACIDDEMON;
+	getmapxy( .@map$, .@x, .@y, BL_PC );
+	getmapxy( .@map$, .@x_npc, .@y_npc, BL_NPC );
+
+	if (.@x == .@x_npc) {
+		if (.@y < 89)
+			pushpc DIR_SOUTH, 1;
+		else if (.@y > 99)
+			pushpc DIR_NORTH, 1;
+		else
+			pushpc DIR_EAST, 1;	// default
+	}
+	else if (.@x < .@x_npc)
+		pushpc DIR_WEST, 1;
+	else
+		pushpc DIR_EAST, 1;
+
+	heal -((MaxHp*50)/100),0;	// note: heal command is used to (potentially) kill the target
+	end;
+
+OnMove1:
+	getmapxy( .@map$, .@x, .@y, BL_NPC );
+	unitwalk( getnpcid(0),.@x,99, instance_npcname( strnpcinfo(0) ) + "::OnMove2" );
+	end;
+OnMove2:
+	getmapxy( .@map$, .@x, .@y, BL_NPC );
+	unitwalk( getnpcid(0),.@x,89, instance_npcname( strnpcinfo(0) ) + "::OnMove1" );
+	end;
+
+OnInstanceInit:
+	npcspeed 150;
+	sleep rand(100,3000);
+	donpcevent instance_npcname( strnpcinfo(0) ) + "::OnMove1";
+	end;
+}
+// traps left
+1@advs,80,89,1	duplicate(#trap_1)	#trap_2	4_M_DEATH,1,1
+1@advs,85,89,1	duplicate(#trap_1)	#trap_3	4_M_DEATH,1,1
+1@advs,90,89,1	duplicate(#trap_1)	#trap_4	4_M_DEATH,1,1
+1@advs,95,89,1	duplicate(#trap_1)	#trap_5	4_M_DEATH,1,1
+1@advs,100,89,1	duplicate(#trap_1)	#trap_6	4_M_DEATH,1,1
+1@advs,105,89,1	duplicate(#trap_1)	#trap_7	4_M_DEATH,1,1
+1@advs,110,89,1	duplicate(#trap_1)	#trap_8	4_M_DEATH,1,1
+1@advs,115,89,1	duplicate(#trap_1)	#trap_9	4_M_DEATH,1,1
+// traps right
+1@advs,130,89,1	duplicate(#trap_1)	#trap_10	4_M_DEATH,1,1
+1@advs,135,89,1	duplicate(#trap_1)	#trap_11	4_M_DEATH,1,1
+1@advs,140,89,1	duplicate(#trap_1)	#trap_12	4_M_DEATH,1,1
+1@advs,145,89,1	duplicate(#trap_1)	#trap_13	4_M_DEATH,1,1
+1@advs,150,89,1	duplicate(#trap_1)	#trap_14	4_M_DEATH,1,1
+1@advs,155,89,1	duplicate(#trap_1)	#trap_15	4_M_DEATH,1,1
+1@advs,160,89,1	duplicate(#trap_1)	#trap_16	4_M_DEATH,1,1
+1@advs,165,89,1	duplicate(#trap_1)	#trap_17	4_M_DEATH,1,1
+1@advs,170,89,1	duplicate(#trap_1)	#trap_18	4_M_DEATH,1,1
+
+
+//---------------------------------------------------------------
+// Step 2
+//---------------------------------------------------------------
+1@advs,1,1,0	script	#advs_step_2	-1,{
+	end;
+OnStart:
+	if ('advs_step != 0)
+		end;
+	'advs_step = 1;
+	disablenpc instance_npcname("#advs_step_1");
+	enablenpc instance_npcname("#wp1");
+	enablenpc instance_npcname("#food1");
+	enablenpc instance_npcname("#food2");
+	enablenpc instance_npcname("#food3");
+	enablenpc instance_npcname("#food4");
+	killmonster 'map_advs$, instance_npcname("#advs_step_1") + "::OnMobDead";
+
+	'mob_to_respawn = 'total_monster_step_2 - 'init_monster_step_2;
+
+	for ( .@i = 0; .@i < 'init_monster_step_2; ++.@i )
+		callsub( S_Spawn );
+	end;
+OnMobDead:
+	if ('mob_to_respawn > 0)
+		'mob_to_respawn--;
+	initnpctimer;
+	sleep 2000;
+	if ('advs_step == 1 && 'mob_to_respawn > 0) {
+		if ('mob_to_respawn > 0)
+			callsub( S_Spawn );
+		if ('mob_to_respawn > 1)
+			callsub( S_Spawn );
+	}
+	end;
+OnTimer2000:
+	stopnpctimer;
+	.@alive = mobcount('map_advs$, instance_npcname("#advs_step_2") + "::OnMobDead");
+	mapannounce 'map_advs$, "Number of monsters left: " + .@alive, bc_map, 0xAAAAFF;
+	if ('advs_step == 1 && 'mob_to_respawn == 0 && .@alive == 0)
+		donpcevent instance_npcname("#advs_step_3_A") + "::OnStart";
+	end;
+S_Spawn:
+	.@label$ = instance_npcname("#advs_step_2") + "::OnMobDead";
+	if (rand(2))
+		.@mob_id = 'hunter_id;
+	else
+		.@mob_id = 'sanare_id;
+	.@r = rand(3);
+	if (.@r == 0)
+		areamonster 'map_advs$,76,145,171,139,"--en--",.@mob_id,1, .@label$;
+	else if (.@r == 1)
+		areamonster 'map_advs$,113,205,135,125,"--en--",.@mob_id,1, .@label$;
+	else
+		areamonster 'map_advs$,113,205,135,125,"--en--",.@mob_id,1, .@label$;
+	unitskilluseid $@mobid[0], 771, 'monster_relieve;	// NPC_RELIEVE_ON
+	return;
+}
+
+1@advs,101,159,5	script	#food1	4_EP16_FOOD,1,1,{
+	if ('max_food <= 0) {
+		mapannounce 'map_advs$, "??? : You really don't know how to cook well, you deserve a casual tour of my garden.", bc_map, 0xAAAAFF;
+		end;
+	}
+	progressbar "",4;
+	'max_food--;
+	
+	.@r = rand(5);
+	if (.@r == 0)
+		sc_start SC_CONFUSION,30000,0,100, SCSTART_NOAVOID|SCSTART_NOTICKDEF|SCSTART_NORATEDEF;
+	else if (.@r == 1)
+		sc_start SC_CURSE,30000,0,100, SCSTART_NOAVOID|SCSTART_NOTICKDEF|SCSTART_NORATEDEF;
+	else if (.@r == 2)
+		sc_start SC_BLIND,30000,0,100, SCSTART_NOAVOID|SCSTART_NOTICKDEF|SCSTART_NORATEDEF;
+	else if (.@r == 3)
+		sc_start SC_POISON,30000,0,100, SCSTART_NOAVOID|SCSTART_NOTICKDEF|SCSTART_NORATEDEF;
+	else
+		sc_start SC_SILENCE,30000,0,100, SCSTART_NOAVOID|SCSTART_NOTICKDEF|SCSTART_NORATEDEF;
+
+	if ('total_reaper > 'min_reaper && ('max_food % 2) == 0)
+		'total_reaper--;
+	end;
+}
+1@advs,101,125,5	duplicate(#food1)	#food2	4_EP16_FOOD,1,1
+1@advs,147,162,5	duplicate(#food1)	#food3	4_EP16_FOOD,1,1
+1@advs,147,122,5	duplicate(#food1)	#food4	4_EP16_FOOD,1,1
+
+
+//---------------------------------------------------------------
+// Step 3
+//---------------------------------------------------------------
+1@advs,1,1,5	script	#advs_step_3_A	-1,{
+	end;
+OnStart:
+	if ('advs_step != 1)
+		end;
+	'advs_step = 2;
+	enablenpc instance_npcname("#wp2");
+	disablenpc instance_npcname("#advs_step_2");
+	donpcevent instance_npcname("#advs_step_3_A") + "::OnEvent";
+	donpcevent instance_npcname("#advs_step_3_B") + "::OnEvent";
+	end;
+OnEvent:
+	.@label$ = instance_npcname("#advs_step_3_A") + "::OnMobDead";
+		
+	copyarray .@x[0], 'x_reaper[0], 'size_reaper;
+	copyarray .@y[0], 'y_reaper[0], 'size_reaper;
+	.@size = 'size_reaper;
+
+	for ( .@i = 0; .@i < 'total_reaper; ++.@i ) {
+		.@r = rand(.@size);
+		
+		monster 'map_advs$,.@x[.@r],.@y[.@r],"--en--",20846,1, .@label$;	// MD_HIDDEN_GROUND01
+		deletearray .@x[.@r],1;
+		deletearray .@y[.@r],1;
+		.@size--;
+	}
+	initnpctimer;
+	end;
+OnTimer10000:
+	killmonster 'map_advs$, instance_npcname("#advs_step_3_A") + "::OnMobDead";
+	donpcevent instance_npcname("#advs_step_3_A") + "::OnEvent";	// this event never stop
+	end;
+OnMobDead:
+	end;
+}
+
+1@advs,1,1,0	script	#advs_step_3_B	-1,{
+	end;
+OnEvent:
+	'mob_to_respawn = 'total_monster_step_3 - 'init_monster_step_3;
+
+	for ( .@i = 0; .@i < 'init_monster_step_3; ++.@i )
+		callsub( S_Spawn );
+	end;
+OnMobDead:
+	if ('mob_to_respawn > 0)
+		'mob_to_respawn--;
+	initnpctimer;
+	sleep 2000;
+	if ('advs_step == 2 && 'mob_to_respawn > 0) {
+		if ('mob_to_respawn > 0)
+			callsub( S_Spawn );
+		if ('mob_to_respawn > 1)
+			callsub( S_Spawn );
+	}
+	end;
+OnTimer2000:
+	stopnpctimer;
+	.@alive = mobcount('map_advs$, instance_npcname("#advs_step_3_B") + "::OnMobDead");
+	mapannounce 'map_advs$, "Number of monsters left: " + .@alive, bc_map, 0xAAAAFF;
+	if ('advs_step == 2 && 'mob_to_respawn == 0 && .@alive == 0)
+		donpcevent instance_npcname("#boss1_advs") + "::OnStart";
+	end;
+S_Spawn:
+	.@label$ = instance_npcname("#advs_step_3_B") + "::OnMobDead";
+	if (rand(2))
+		.@mob_id = 'hunter_id;
+	else
+		.@mob_id = 'sanare_id;
+	.@r = rand(4);
+	if (.@r == 0)
+		areamonster 'map_advs$,109,238,119,248,"--en--",.@mob_id,1, .@label$;
+	else if (.@r == 1)
+		areamonster 'map_advs$,109,219,119,229,"--en--",.@mob_id,1, .@label$;
+	else if (.@r == 2)
+		areamonster 'map_advs$,128,238,138,248,"--en--",.@mob_id,1, .@label$;
+	else
+		areamonster 'map_advs$,128,219,138,229,"--en--",.@mob_id,1, .@label$;
+	unitskilluseid $@mobid[0], 771, 'monster_relieve;	// NPC_RELIEVE_ON
+	return;
+}
+
+
+//---------------------------------------------------------------
+// Step 4
+//---------------------------------------------------------------
+1@advs,1,1,4	script	#boss1_advs	-1,{
+	end;
+OnStart:
+	if ('advs_step != 2)
+		end;
+	'advs_step = 3;
+	enablenpc instance_npcname("#wp3");
+	disablenpc instance_npcname("#advs_step_3_B");
+	enablenpc instance_npcname("#boss1");
+	end;
+OnMobDead:
+	if ('advs_step != 4)
+		end;
+	'advs_step = 5;
+	enablenpc instance_npcname("#wp4");
+	enablenpc instance_npcname("#boss2_sw");
+	donpcevent instance_npcname("#boss1_advs_skill_1") + "::OnStop";
+	end;
+}
+
+// 1@advs,124,295,4	script	#boss1	EP18_MD_SCHULANG_R,1,1,{
+1@advs,124,295,4	script	#boss1	EP18_MD_SCHULANG_R,{
+	if ('advs_step != 3)
+		end;
+	if (is_party_leader() == false)
+		end;
+	'advs_step = 4;
+	npctalk "That's all human.";
+	unitwalk getnpcid(0), 124,290, instance_npcname("#boss1") + "::OnMove";
+	end;
+
+OnMove:
+	disablenpc instance_npcname("#boss1");
+	monster 'map_advs$,124,290,"--en--",'schulang_id,1, instance_npcname("#boss1_advs") + "::OnMobDead";
+	'schulang_gid = $@mobid[0];
+	unitskilluseid $@mobid[0], 771, 1;	// NPC_RELIEVE_ON
+	unittalk 'schulang_gid, "I'm in a bit of trouble if I approach this more than that!!!";
+	monster 'map_advs$,123,285,"--en--",21319,1;	// EP18_MD_HEARTHUNTER_R2
+	unitskilluseid $@mobid[0], 771, 'monster_relieve;	// NPC_RELIEVE_ON
+	donpcevent instance_npcname("#boss1_advs_skill_1") + "::OnStart";
+	end;
+// OnTouch:	// effect ?
+	// end;
+}
+
+
+1@advs,1,1,0	script	#boss1_advs_skill_1	-1,{
+	end;
+OnStart:
+	initnpctimer;
+	getunitdata 'schulang_gid, .@data;
+	'x_sch_event = .@data[UMOB_X];
+	'y_sch_event = .@data[UMOB_Y];
+	'ignore_column = rand(5);	// one column is randomly free
+	end;
+OnTimer1000:
+	callsub( S_Skill,-8 );
+	end;
+OnTimer1500:
+	callsub( S_Skill,-4 );
+	end;
+OnTimer2000:
+	callsub( S_Skill,0 );
+	end;
+OnTimer2500:
+	callsub( S_Skill,4 );
+	end;
+OnTimer3000:
+	callsub( S_Skill,8 );
+	stopnpctimer;
+	donpcevent instance_npcname("#boss1_advs_skill_1") + "::OnStart";
+	end;
+S_Skill:
+	.@dxy = getarg(0);
+	if ('ignore_column != 0)
+		unitskillusepos 'schulang_gid,"MG_THUNDERSTORM",4, ('x_sch_event - 8), ('y_sch_event + .@dxy), -50;
+	if ('ignore_column != 1)
+		unitskillusepos 'schulang_gid,"MG_THUNDERSTORM",4, ('x_sch_event - 4), ('y_sch_event + .@dxy), -50;
+	if ('ignore_column != 2)
+		unitskillusepos 'schulang_gid,"MG_THUNDERSTORM",4, 'x_sch_event, ('y_sch_event + .@dxy), -50;
+	if ('ignore_column != 3)
+		unitskillusepos 'schulang_gid,"MG_THUNDERSTORM",4, ('x_sch_event + 4), ('y_sch_event + .@dxy), -50;
+	if ('ignore_column != 4)
+		unitskillusepos 'schulang_gid,"MG_THUNDERSTORM",4, ('x_sch_event + 8), ('y_sch_event + .@dxy), -50;
+	return;
+OnStop:
+	stopnpctimer;
+	end;
+}
+
+
+//---------------------------------------------------------------
+// Step 5 (final)
+//---------------------------------------------------------------
+// 1@advs,124,358,4	script	#boss2_sw	CLEAR_NPC,1,1,{
+1@advs,124,358,4	script	#boss2_sw	CLEAR_NPC,{
+	if ('advs_step != 5)
+		end;
+	if (is_party_leader() == false)
+		end;
+	'advs_step = 6;
+	cloakonnpc instance_npcname("#boss2_sw");	// cloakonnpc to display effect
+	specialeffect EF_CLOUD4;
+	specialeffect EF_DQ9_CHARGE3;
+	sleep 4000;
+	specialeffect EF_SCREEN_QUAKE;
+	setnpcdisplay( instance_npcname("#boss2"), 'freyja_id );
+	enablenpc instance_npcname("#boss2");
+	specialeffect EF_BEGINSPELL_YB;
+	sleep 2000;
+	npctalk "I... and... together... let's play...", instance_npcname("#boss2");
+	unitwalk getnpcid(0, instance_npcname("#boss2")), 124,346, instance_npcname("#boss2_sw") + "::OnMove";
+	end;
+OnMove:
+	setnpcdisplay( instance_npcname("#boss2"), CLEAR_NPC );
+	disablenpc instance_npcname("#boss2");
+	monster 'map_advs$,124,346,"--en--",'freyja_id,1, instance_npcname("#boss2_sw") + "::OnMobDead";
+	'freyja_gid = $@mobid[0];
+	donpcevent instance_npcname("#advs_boss_relieve") + "::OnStart";
+	sleep 3000;
+	mapannounce 'map_advs$, "Tip: Twisted God Freyja is weaken as it get closer to the chandelier.", bc_map, 0xFFCC;
+	if ('advs_difficult == 1)
+		sleep 8000;
+	else
+		sleep 30000;
+
+	// circles
+	if ('advs_difficult == 1) {
+		donpcevent instance_npcname("#b_tr1") + "::OnEnable";
+		donpcevent instance_npcname("#b_tr2") + "::OnEnable";
+	}
+	donpcevent instance_npcname("#b_tr3") + "::OnEnable";
+	donpcevent instance_npcname("#b_tr4") + "::OnEnable";
+
+	// stop the circles from moving
+	enablenpc instance_npcname("#b_sw1");
+	enablenpc instance_npcname("#b_sw2");
+	enablenpc instance_npcname("#b_sw3");
+	enablenpc instance_npcname("#b_sw4");
+	end;
+
+OnMobDead:
+	'freyja_gid = 0;
+	donpcevent instance_npcname("#advs_boss_relieve") + "::OnStop";
+	disablenpc instance_npcname("#boss2_sw");
+	enablenpc instance_npcname("#box_admin");
+	if ('advs_difficult == 1) {
+		donpcevent instance_npcname("#b_tr1") + "::OnStop";
+		donpcevent instance_npcname("#b_tr2") + "::OnStop";
+	}
+	donpcevent instance_npcname("#b_tr3") + "::OnStop";
+	donpcevent instance_npcname("#b_tr4") + "::OnStop";
+	end;
+// OnTouch:	// effect ?
+	// end;
+}
+1@advs,124,356,4	duplicate(dummy_npc)	#boss2	CLEAR_NPC,1,1
+
+1@advs,1,1,4	script	#advs_boss_relieve	-1,{
+	end;
+OnStart:
+	if (unitexists('freyja_gid) == false)
+		end;
+	getunitdata 'freyja_gid, .@data;
+	.@d = distance(124,356,.@data[UMOB_X],.@data[UMOB_Y]);
+	.@lv = (.@d / 2) + 1;	// level 6 on spawn
+	.@lv = min(10,.@lv);
+	.@lv = max(1,.@lv);
+	unitskilluseid 'freyja_gid, 772, 1;	// NPC_RELIEVE_OFF
+	unitskilluseid 'freyja_gid, 771, .@lv;	// NPC_RELIEVE_ON
+	initnpctimer;
+	end;
+OnTimer2000:
+	donpcevent instance_npcname("#advs_boss_relieve") + "::OnStart";
+	end;
+OnStop:
+	stopnpctimer;
+	end;
+}
+
+// circles
+1@advs,124,337,5	script	#b_tr1	MD_HIDDEN_GROUND02,2,2,{
+	end;
+OnTouch:	// note: warp dead player
+	if ('freyja_gid == 0)
+		end;
+	specialeffect2 EF_FIREHIT;
+	specialeffect2 EF_ACIDDEMON;
+	percentheal -10,0;	// deal some damage
+	if (rand(2))
+		warp 'map_advs$,67,182;
+	else
+		warp 'map_advs$,180,182;
+	end;
+
+OnEnable:
+	enablenpc instance_npcname( strnpcinfo(0) );
+OnStart:
+	'circle_move = 1;
+OnMove:
+	if ('freyja_gid == 0)
+		end;
+	if ('circle_move == 0)
+		end;
+	getmapxy( .@map$, .@x, .@y, BL_NPC );
+	do {
+		.@dx = rand(-2,2);
+		.@dy = rand(-2,2);
+		.@new_x = .@x + .@dx;
+		.@new_y = .@y + .@dy;
+	}
+	while ((.@dx == 0 && .@dy == 0) || .@new_x < 108 || .@new_x > 139 || .@new_y < 325 || .@new_y > 351);
+	unitwalk( getnpcid(0),.@new_x,.@new_y, instance_npcname( strnpcinfo(0) ) + "::OnMove" );
+	end;
+
+OnStop:
+	'circle_move = 0;	// double check just because
+	unitstopwalk getnpcid(0);
+	end;
+}
+1@advs,124,337,5	duplicate(#b_tr1)	#b_tr2	MD_HIDDEN_GROUND02,2,2
+1@advs,124,337,5	duplicate(#b_tr1)	#b_tr3	MD_HIDDEN_GROUND02,2,2
+1@advs,124,337,5	duplicate(#b_tr1)	#b_tr4	MD_HIDDEN_GROUND02,2,2
+
+
+// stop the circles from moving
+1@advs,108,358,4	script	#b_sw1	4_ENERGY_YELLOW,2,2,{
+	mes "Ddispel the circle ^ff0000requires your health and mana.^000000 During the process, you ^ff0000becomes immobile and defenseless.^000000 Are you sure you want to start dispelling?";
+	next;
+	if (select( "Cancel", "Proceed" ) == 1)
+		end;
+	if ('freyja_gid == 0)
+		end;
+	// this part need to be checked when more information are available
+	.@success = callsub( S_Venom );
+	mes "^0000ffThe magic stone that absorbed your stamina and magic resonates. The magic circle that has been wandering disappears.^000000";
+	specialeffect EF_BASH3D6;
+	if (.@success == true && 'circle_move == 1) {
+		disablenpc();
+		if ('advs_difficult == 1) {
+			donpcevent instance_npcname("#b_tr1") + "::OnStop";
+			donpcevent instance_npcname("#b_tr2") + "::OnStop";
+		}
+		donpcevent instance_npcname("#b_tr3") + "::OnStop";
+		donpcevent instance_npcname("#b_tr4") + "::OnStop";
+		initnpctimer;
+	}
+	close;
+
+S_Venom:
+	.@percent_hp = max(1, (MaxHp/100));	// deal random damage to the player
+	.@percent_sp = max(1, (MaxSp/100));
+	.@r = rand(2,20);
+
+	for ( .@i = 0; .@i < .@r; ++.@i ) {
+		specialeffect2 EF_INVENOM;
+		heal -.@percent_hp, -.@percent_sp;
+		if (Hp < 1)
+			return 0;
+		sleep2 500;
+	}
+	return (Hp > 0);
+
+OnTimer10000:	// seems to be around 10s to re-enable the circle, 20s the npc
+	if ('freyja_gid == 0)
+		end;
+	if ('advs_difficult == 1) {
+		donpcevent instance_npcname("#b_tr1") + "::OnStart";
+		donpcevent instance_npcname("#b_tr2") + "::OnStart";
+	}
+	donpcevent instance_npcname("#b_tr3") + "::OnStart";
+	donpcevent instance_npcname("#b_tr4") + "::OnStart";
+	end;
+
+OnTimer20000:
+	stopnpctimer;
+	enablenpc();
+	end;
+OnTouch:	// effect ?
+	end;
+}
+1@advs,101,351,4	duplicate(#b_sw1)	#b_sw2	4_ENERGY_YELLOW,2,2
+1@advs,139,358,4	duplicate(#b_sw1)	#b_sw3	4_ENERGY_YELLOW,2,2
+1@advs,145,351,4	duplicate(#b_sw1)	#b_sw4	4_ENERGY_YELLOW,2,2
+
+// exit
+1@advs,123,358,4	script	#box_admin	4_ENERGY_YELLOW,2,2,{
+	.@is_hard = (instance_live_info(ILI_NAME) == "Villa of Deception Advanced");
+	if (isbegin_quest(12520) == 1 && !.@is_hard || isbegin_quest(12521) == 1 && .@is_hard) {
+		if (checkweight(1000405,10, 1000471,1) == 0) {
+			mes "- Wait a minute !! -";
+			mes "- Currently you're carrying -";
+			mes "- too many items with you. -";
+			mes "- Please try again -";
+			mes "- after you loose some weight. -";
+			close;
+		}
+		mes "^0000ffFound something in a bright glowing halo.^000000";
+		if (get_reputation_points(3) >= 5000)
+			.@bonus = 2;
+		getitem 1000405,8+.@bonus;	// Ep18_Amethyst_Fragment
+		if (.@is_hard)
+			erasequest 12521;
+		else
+			erasequest 12520;
+		if (rand(100) < 10)
+			getitem 1000471,1;
+		close;
+	}
+	mes "^0000ffI think you can get out now.^000000";
+	next;
+	if (select( "Cancel", "Exit" ) == 1)
+		end;
+	warp "wolfvill",77,258;
+	end;
+}
+

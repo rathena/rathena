@@ -1135,7 +1135,7 @@ job3_arch02,113,327,5	script	Valkyrie#arch_01	403,{
 	mes "It'll be helpful to find the rest of pieces.";
 	next;
 	mes "[Valkyrie Anguhilde]";
-	mes "Then I look forward a good news.";
+	mes "Then I look forward to good news.";
 	close2;
 	getitem 12382,1; //ValkyrieB_Scroll
 	viewpoint 1,244,46,1,0xFFFF99;

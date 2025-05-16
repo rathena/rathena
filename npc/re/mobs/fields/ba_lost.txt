@@ -1,0 +1,14 @@
+//===== rAthena Script =======================================
+//= Monsters from Varmundt's Mansion
+//===== Changelog: ===========================================
+//= 1.0 First version. [JohnnyPlayy]
+//============================================================
+
+//= Forgotten Valley
+//============================================================
+ba_lost,0,0	monster	Pitaya	20649,50,5000
+ba_lost,0,0	monster	Pitaya	20650,50,5000
+ba_lost,0,0	monster	Pitaya	20651,50,5000
+ba_lost,0,0	monster	Pitaya	20652,50,5000
+ba_lost,0,0	monster	Pitaya	20653,30,5000
+ba_lost,0,0,0,0	boss_monster	Boss Pitaya	20648,1,7200000,600000,0

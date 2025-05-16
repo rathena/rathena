@@ -1,0 +1,881 @@
+//===== rAthena Script =======================================
+//= Friday Memorial Dungeon
+//===== Description: =========================================
+//= [Walkthrough Conversion]
+//= Friday Memorial Dungeon
+//===== Changelogs: ==========================================
+//= 1.0 Initial release [Everade]
+//= 1.1 Clean-up [Capuche]
+//============================================================
+
+gef_tower,57,170,3	script	Marry Jay	4_F_JOB_BLACKSMITH,{
+	if (BaseLevel < 130) {
+		mes "[Marry Jay]";
+		mes "Your base level is too low, come back when you hit level 130.";
+		close;
+	}
+	mes "^ff0000If you do any monster processing, such as monster taming within the dungeon, it won't count towards your progress. Please take note.^000000";
+	next;
+	.@day = gettime(DT_DAYOFWEEK);
+	if (.@day != FRIDAY) {
+		mes "[Marry Jay]";
+		mes "Oh, a curious onlooker? I'm Marry Jay, the person in charge of Fridays among the days of the week.";
+		next;
+		select( "When is the opening time?" );
+		mes "[Marry Jay]";
+		mes "The dungeon will be open during:";
+		mes "^0000FFFriday 00:00 ~ Friday 23:59^000000";
+		next;
+		mes "[Marry Jay]";
+		mes "I hope to see you when Friday arrives~";
+		close;
+	}
+	.@md_name$ = "Friday Dungeon";
+
+	switch(checkquest(12379,PLAYTIME)) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "[Marry Jay]";
+		mes "Sorry, but the entry period to the " + .@md_name$ + " has expired.";
+		mes "Take a rest while waiting for the dungeon to be available again.";
+		close;
+	case 2:
+		erasequest 12379;
+		mes "[Marry Jay]";
+		mes "The cooldown has expired.";
+		mes "You may re-enter the Memorial Dungeon.";
+		close;
+	}
+	mes "[Marry Jay]";
+	mes "You came just in time.";
+	mes "The memorial dungeon is just ready to be opened.";
+	mes "Would you like to enter now?";
+	next;
+
+	if (is_party_leader() == true)
+		.@menu$ = "Prepare Friday Memorial";
+
+	switch( select( .@menu$, "Enter Friday Memorial", "Cancel" ) ) {
+	case 1:
+		instance_create(.@md_name$);
+		mes "[Marry Jay]";
+		mes "The Memorial Dungeon has been created.";
+		mes "You may now enter.";
+		close;
+	case 2:
+		switch( instance_enter(.@md_name$) ) {
+		case IE_NOMEMBER:
+			if (is_party_leader() == true)
+				end;
+			mes "Only party members can enter this Memorial dungeon.";
+			close;
+		case IE_NOINSTANCE:
+			if (is_party_leader() == true) {
+				mes "There is no Memorial Dungeon registered.";
+				close;
+			}
+			mes "The Friday Memorial Dungeon does not exist.";
+			mes "Your party leader has not yet created the Memorial dungeon.";
+			close;
+		case IE_OTHER:
+			mes "An unknown error occurred.";
+			close;
+		case IE_OK:
+			mes "[Marry Jay]";
+			mes "Off you go!";
+			mapannounce "gef_tower", "" + strcharinfo(0) + " of the party, " + getpartyname( getcharid(1) ) + ", is entering the " + .@md_name$ + ".", bc_map, 0xFF99;
+			if (isbegin_quest(12379) < 1)
+				setquest 12379;
+			end;
+		}
+		end;
+	case 3:
+		mes "[Marry Jay]";
+		mes "You have not prepared?";
+		mes "Can't really help it I guess";
+		close;
+	}
+	end;
+}
+
+//Instance
+1@md_gef,185,81	monster	Shining Plant	1083,1,1800000,900000
+
+1@md_gef,110,129,6	script	Marry Jay#0_1	4_F_JOB_BLACKSMITH,{
+	if (is_party_leader() == false)
+		end;
+	mes "[Marry Jay]";
+	mes "Before we start setting up the environment here, we'll give you the chance to choose an appropriate difficulty level.";
+	mes "I could make my own choice, but each person handles it differently based on their abilities.";
+	next;
+	switch( select( "Cancel", "LV130 ~ 199", "LV200 + " ) ) {
+	case 1:
+		close;
+	case 2:
+		//MinLevel, Lich Lord, Nightmare, Jakk, Ghoul, Drainliar
+		'hard = 0;
+		setarray 'mob[0],130,3658,3660,3662,3664,3666;
+		break;
+	case 3:
+		if (BaseLevel < 200) {
+			mes "[Marry Jay]";
+			mes "You can't choose this difficulty, because your base level is below 200.";
+			close;
+		}
+		'hard = 1;
+		setarray 'mob[0],200,3659,3661,3663,3665,3667;
+		break;
+	}
+	if (BaseLevel < 'mob[0]) {
+		mes "[Marry Jay]";
+		mes "Your base level is too low to select this, you need to be level " + 'mob[0] + " or above.";
+		close;
+	}
+	close2;
+	npctalk "Now, this place is about to become a hunting ground. I'll get out and close the front door.";
+	sleep 4000;
+	npctalk "Good Luck~";
+	sleep 3000;
+	if ('step == 0) {
+		'step = 1;
+		donpcevent instance_npcname("md_gef_mobs_spawn") + "::OnStart";
+		disablenpc();
+		enablenpc instance_npcname("The Stranger#cadaver");
+		enablenpc instance_npcname("Bizzare Sculpture#boss");
+	}
+	end;
+}
+
+1@md_gef,1,1,6	script	md_gef_mobs_spawn	-1,{
+	end;
+OnStart:
+	.@npc_name$ = instance_npcname("md_gef_mobs_spawn");
+	monster 'map_md_gef$,0,0,"Nightmare",'mob[2],20, .@npc_name$ + "::OnNightmareDead";
+	monster 'map_md_gef$,0,0,"Jakk",'mob[3],30, .@npc_name$ + "::OnJakkDead";
+	monster 'map_md_gef$,0,0,"Ghoul",'mob[4],30, .@npc_name$ + "::OnGhoulDead";
+	monster 'map_md_gef$,0,0,"Drainliar",'mob[5],20, .@npc_name$ + "::OnDrainliarDead";
+	end;
+
+OnNightmareDead:
+	callsub( S_Mob, 'mob[2], "Nightmare", "OnNightmareDead" );
+OnJakkDead:
+	callsub( S_Mob, 'mob[3], "Jakk", "OnJakkDead" );
+OnGhoulDead:
+	callsub( S_Mob, 'mob[4], "Ghoul", "OnGhoulDead" );
+OnDrainliarDead:
+	callsub( S_Mob, 'mob[5], "Drainliar", "OnDrainliarDead" );
+
+S_Mob:
+	'count++;
+	if (('count % 100) == 0) {
+		'rand_chest++;
+		if ('rand_chest > 4)
+			'rand_chest = 1;
+		// Treasure Chest Spawn
+		donpcevent instance_npcname("#fd_box" + 'rand_chest) + "::OnStart";
+	}
+	sleep 10000;
+	monster 'map_md_gef$,0,0, getarg(1), getarg(0),1, instance_npcname("md_gef_mobs_spawn") + "::" + getarg(2);
+	end;
+
+OnInstanceInit:
+	'step = 0;
+	'hard = 0;
+	'count = 0;
+	'rand_chest = 0;
+	'freestones = 0;
+	'boss_actv = 0;
+	'map_md_gef$ = instance_mapname("1@md_gef");
+	end;
+}
+
+
+1@md_gef,110,129,6	script(DISABLED)	Mary Juj#0_2	4_F_JOB_BLACKSMITH,{
+	npctalk "Hello";
+	end;
+}
+
+1@md_gef,183,222,5	script(DISABLED)	The Stranger#cadaver	4_TOWER_11,{
+	mes "It is a stranger's corpse.";
+	mes "Perhaps he died while wandering in this place on the search for treasure.";
+	next;
+	if (select( "Calm down", "Investigate the body" ) == 1) {
+		mes "You respect the dead and decided to leave the body alone.";
+		close;
+	}
+	mes "Looking at a hastily scribbled note in his pocket, perhaps the adventurer's name was Walter.";
+	next;
+	mes "[Adventurer's Log]";
+	mes "My name is Walter. For the adventurers who will visit this place in the future, I'm leaving this so that you don't make the same mistake again.";
+	next;
+	mes "[Adventurer's Log]";
+	mes "On the first day, I curiously put my hand on the slab of a strange Sculpture nearby.";
+	mes "...and I awokened something that I should not have.";
+	next;
+	mes "[Adventurer's Log]";
+	mes "Right now the revived ancient king is wandering in front of me.";
+	mes "Perhaps he has no memories of his previous life.";
+	mes "One thing is certain, he will kill me.";
+	next;
+	mes "[Adventurer's Log]";
+	mes "To the adventurers who will visit this place in the future, I hope you do not make the same mistake as me.";
+	mes "If you do see a suspicious slab, do not show any interest and pass by it.";
+	next;
+	mes "[Adventurer's Log]";
+	mes "Again, never touch the slab. Whatever temptation you may have.";
+	if ('freestones != 0)
+		close;
+	next;
+	mes "Several craft stones fall from his body. They were probably collected while exploring this place.";
+	close2;
+	if ('freestones == 0) {
+		'freestones = 1;
+		if ('hard == 1)
+			.@num = rand(7,9);
+		else
+			.@num = rand(5,7);
+		for ( .@i = 0; .@i < .@num; ++.@i )
+			makeitem 25235,1, 'map_md_gef$, rand(181,183), rand(221,224);
+	}
+	end;
+}
+
+1@md_gef,199,73,0	script(DISABLED)	Bizzare Sculpture#boss	CLEAR_NPC,{
+	if ('count < 100) {
+		mes "It is a strange sculpture with a lot of dust piled up. I don't see anything suspicious.";
+		close;
+	}
+	if ('boss_actv >= 1) {
+		mes "Craft Stones have been melted by a powerful force into the sockets.";
+		mes "Seems like the sockets can't be used for a while.";
+		close;
+	}
+	mes "At some point, the accumulated dust scatters, and 10 hollow holes are visible on the slab under the sculpture.";
+	next;
+	mes "Each of the 10 hollow sockets seem to perfectly fit a craft stone.";
+	next;
+	if (select( "Ignore", "Try inserting craft stones" ) == 1)
+		end;
+	if (countitem(25235) < 10) {
+		mes "Craft Stones have been melted by a powerful force into the sockets.";
+		mes "Seems like the sockets can't be used for a while.";
+		close;
+	}
+	mes "When you insert a craft stone into a hole, it emits a bright light and melts.";
+	next;
+	delitem 25235,10;
+	specialeffect EF_ANGELUS;
+
+	if (rand(1,10) == 10) {
+		mes "Something seems to have changed in the air around me.";
+		instance_announce 0, "Lord of the Dead: Who Awakened Me? I will meet you in person and ask you why.", bc_map, "0xFFFF00";
+		if ('boss_actv == 0) {
+			'boss_actv = 1;
+			monster 'map_md_gef$,210,110,"Lich King",'mob[1],1;
+		}
+	}
+	else {
+		mes "But nothing else happened.";
+		close2;
+		if ('boss_actv == 0) {
+			disablenpc();	// Disable NPC for 5 minutes when MVP didn't spawn.
+			initnpctimer;
+		}
+		end;
+	}
+	close;
+
+OnTimer300000:
+	stopnpctimer;
+	enablenpc();
+	end;
+}
+
+
+// Treasure Chest Reward
+1@md_gef,212,212,3	script(DISABLED)	#fd_box1	4_TREASURE_BOX,{
+	specialeffect EF_COIN;
+	disablenpc();
+	stopnpctimer;
+	sleep 500;
+
+	if ('hard == 1)
+		.@num = rand(7,9);
+	else
+		.@num = rand(5,7);
+
+	.@npc_name$ = strnpcinfo(2);
+
+	if (.@npc_name$ == "fd_box1") {
+		for ( .@i = 0; .@i < .@num; ++.@i )
+			makeitem 25235,1, 'map_md_gef$, rand(210,214), rand(210,214);
+	}
+	if (.@npc_name$ == "fd_box2") {
+		for ( .@i = 0; .@i < .@num; ++.@i )
+			makeitem 25235,1, 'map_md_gef$, rand(188,192), rand(54,58);
+	}
+	if (.@npc_name$ == "fd_box3") {
+		for ( .@i = 0; .@i < .@num; ++.@i )
+			makeitem 25235,1, 'map_md_gef$, rand(47,51), rand(55,59);
+	}
+	if (.@npc_name$ == "fd_box4") {
+		for ( .@i = 0; .@i < .@num; ++.@i )
+			makeitem 25235,1, 'map_md_gef$, rand(42,46), rand(209,213);
+	}
+	end;
+
+OnStart:
+	enablenpc();
+	instance_announce 0, "A treasure chest appeared somewhere in the dungeon. It'll disappear after a while, so let's find it.", bc_map, "0xff5500";
+	initnpctimer;
+	end;
+OnTimer180000:	//3min before chest disappears
+	disablenpc();
+	stopnpctimer;
+	end;
+}
+1@md_gef,190,56,3	duplicate(#fd_box1)	#fd_box2	4_TREASURE_BOX
+1@md_gef,49,57,3	duplicate(#fd_box1)	#fd_box3	4_TREASURE_BOX
+1@md_gef,44,211,3	duplicate(#fd_box1)	#fd_box4	4_TREASURE_BOX
+
+
+//Merchant
+gef_tower,57,167,3	script	Amateur Collector#pa0829	1_F_01,{
+	disable_items;
+	function F_equip_menu;
+	function F_enchant;
+
+	if (checkweight(1201,1) == 0) {
+		mes "You have too many kinds of objects. Clear your inventory.";
+		close;
+	}
+	if (MaxWeight - Weight < 10000) {
+		mes "Can't continue because you have too many heavy objects. Reduce your total weight by clearing your inventory.";
+		close;
+	}
+	mes "[Amateur Collector]";
+	mes "If you bring me a " + mesitemlink(25235, false) + ", I can enchant a wonderful effect on your accessory!";
+	next;
+	switch( select( "What can you do with the Crafting Stone?", "Accessory Enchantment", "Reset Enchant" ) ) {
+	case 1:
+		mes "[Amateur Collector]";
+		mes "I trade expensive stones from the dungeon in exchange for my craftsmanship. I'm still a beginner, but my skills are passable.";
+		mes "Please take care of me.";
+		next;
+		if (select( "I've heard this before.", "I'm listening." ) == 1) {
+			mes "[Amateur Collector]";
+			mes "Is that so?";
+			close;
+		}
+		mes "[Amateur Collector]";
+		mes "By using the Craft Stone, I can enchant one of your accessories with abilities.";
+		next;
+		mes "[Amateur Collector]";
+		mes "I need 10 x " + mesitemlink(25235, false) + " and 100,000 Zeny.";
+		mes "There is no failure in the enchantment process.";
+		next;
+		mes "[Amateur Collector]";
+		mes "However ^0000FFif the accessory has a random option, the random option will be removed after enchantment.^000000";
+		next;
+		select( "Anything else?" );
+		mes "[Amateur Collector]";
+		mes "Cards slotted to the accessory will remain after the enchantement.";
+		next;
+		mes "[Amateur Collector]";
+		mes "A reset is possible, but I can't say that I'm experienced.";
+		mes "My success rate is:";
+		mes "Royal Ring: 80%";
+		mes "Other Accessory: 20%";
+		next;
+		mes "[Amateur Collector]";
+		mes "^0000FFIf the accessory has a random option, the random option will be removed after initialization.^000000";
+		close;
+	case 2:
+		.@type = 1;
+		.@type_name$ = "enchant";
+		break;
+	case 3:
+		.@type = 2;
+		.@type_name$ = "reset";
+		break;
+	}
+
+	.@slot = F_equip_menu();
+	.@equip_id = getequipid(.@slot);
+	setarray .@equip_card[0], getequipcardid(.@slot,0), getequipcardid(.@slot,1), getequipcardid(.@slot,2), getequipcardid(.@slot,3);
+    copyarray .@card[0], .@equip_card[0], 4;
+	
+	switch( .@equip_id ) {
+	case 0:
+		mes "[Amateur Collector]";
+		mes "Please equip your accessory.";
+		close;
+	case 28483:
+	case 2601:
+	case 2602:
+	case 2603:
+	case 2605:
+	case 2607:
+	case 2608:
+	case 2609:
+	case 2610:
+	case 2611:
+	case 2612:
+	case 2613:
+	case 2614:
+	case 2615:
+	case 2616:
+	case 2617:
+	case 2618:
+	case 2619:
+	case 2620:
+	case 2621:
+	case 2622:
+	case 2623:
+	case 2625:
+	case 2626:
+	case 2627:
+	case 2628:
+	case 2636:
+	case 2637:
+	case 2638:
+	case 2639:
+	case 2640:
+	case 2641:
+	case 2645:
+	case 2648:
+	case 2649:
+	case 2650:
+	case 2651:
+	case 2652:
+	case 2653:
+	case 2654:
+	case 2655:
+	case 2656:
+	case 2658:
+	case 2663:
+	case 2664:
+	case 2665:
+	case 2666:
+	case 2667:
+	case 2671:
+	case 2680:
+	case 2692:
+	case 2700:
+	case 2701:
+	case 2702:
+	case 2703:
+	case 2712:
+	case 2714:
+	case 2715:
+	case 2716:
+	case 2718:
+	case 2719:
+	case 2720:
+	case 2721:
+	case 2722:
+	case 2723:
+	case 2724:
+	case 2725:
+	case 2726:
+	case 2727:
+	case 2728:
+	case 2729:
+	case 2730:
+	case 2731:
+	case 2732:
+	case 2736:
+	case 2737:
+	case 2743:
+	case 2744:
+	case 2745:
+	case 2746:
+	case 2747:
+	case 2748:
+	case 2749:
+	case 2766:
+	case 2767:
+	case 2768:
+	case 2769:
+	case 2770:
+	case 2771:
+	case 2772:
+	case 2773:
+	case 2774:
+	case 2777:
+	case 2778:
+	case 2779:
+	case 2780:
+	case 2781:
+	case 2783:
+	case 2784:
+	case 2787:
+	case 2788:
+	case 2789:
+	case 2790:
+	case 2794:
+	case 2795:
+	case 2800:
+	case 2801:
+	case 2802:
+	case 2803:
+	case 2804:
+	case 2805:
+	case 2807:
+	case 2808:
+	case 2809:
+	case 2810:
+	case 2826:
+	case 2827:
+	case 2843:
+	case 2853:
+	case 2854:
+	case 2881:
+	case 2956:
+		break;
+	default:
+		mes "[Amateur Collector]";
+		mes "I cannot " + .@type_name$ + " this " + mesitemlink(.@equip_id, false) + " accessory.";
+		close;
+	}
+
+	if (.@type == 1) {	// enchant
+		switch( .@equip_id ) {
+		case 28483:	//Royal Ring Enchantment
+			if (.@equip_card[2] != 0) {
+				mes "[Amateur Collector]";
+				mes "The " + mesitemlink(.@equip_id, false) + " already has maximum enchantment.";
+				mes "I cannot work on this any further.";
+				close;
+			}
+			.@pos = .@equip_card[3] != 0 ? 2 : 3;
+			mes "[Amateur Collector]";
+			mes "Please select an enchantment type~";
+			next;
+			switch( select( "Physical", "Magical", "Ranged" ) ) {
+			case 1:
+				if (.@pos == 2)
+					.@equip_card[2] = F_enchant(2);
+				else
+					.@equip_card[3] = F_enchant(3);
+				break;
+			case 2:
+				if (.@pos == 2)
+					.@equip_card[2] = F_enchant(4);
+				else
+					.@equip_card[3] = F_enchant(5);
+				break;
+			case 3:
+				if (.@pos == 2)
+					.@equip_card[2] = F_enchant(6);
+				else
+					.@equip_card[3] = F_enchant(7);
+				break;
+			}
+			if (.@pos == 2) {
+				mes "[Amateur Collector]";
+				mes "Are you sure to enhance the " + mesitemlink(.@equip_id, false) + "?";
+				mes "^0000FFThere is a no chance of failure^000000.";
+				next;
+				if (select( "Yes, please proceed", "Cancel" ) == 2)
+					end;
+			}
+			if (countitem(25235) < 10) {
+				mes "[Amateur Collector]";
+				mes "Please bring me 10 x " + mesitemlink(25235, false) + ".";
+				close;
+			}
+			if (Zeny < 100000) {
+				mes "[Amateur Collector]";
+				mes "I need 100,000 zeny!";
+				close;
+			}
+			delitem 25235,10; //Catalyst
+			Zeny -= 100000;
+
+			// anti-hack
+			if (callfunc("F_IsEquipIDHack", .@slot, .@equip_id) || callfunc("F_IsEquipCardHack", .@slot, .@card[0], .@card[1], .@card[2], .@card[3]))
+				end;
+
+			delequip .@slot;
+			specialeffect2 EF_REPAIRWEAPON;
+			mes "[Amateur Collector]";
+			mes "The " + mesitemlink(.@equip_id, false) + " has been enchanted!!";
+			getitem2 .@equip_id,1,1,0,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],.@equip_card[3];
+			close;
+
+		default:	// Normal Accessory Enchantment
+			if (.@equip_card[3] != 0) {
+				mes "[Amateur Collector]";
+				mes "The " + mesitemlink(.@equip_id, false) + " already has an enchant.";
+				mes "I cannot work on this any further.";
+				close;
+			}
+			mes "[Amateur Collector]";
+			mes "Are you sure you want to enhance the " + mesitemlink(.@equip_id, false) + "?";
+			mes "^0000FFThere is a no chance of failure^000000.";
+			next;
+			if (select( "Yes, please proceed", "Cancel") == 2)
+				end;
+			if (countitem(25235) < 10) {
+				mes "[Amateur Collector]";
+				mes "Please bring me 10 x " + mesitemlink(25235, false) + ".";
+				close;
+			}
+			if (Zeny < 100000) {
+				mes "[Amateur Collector]";
+				mes "I need 100,000 zeny!";
+				close;
+			}
+			delitem 25235,10; //Catalyst
+			Zeny -= 100000;
+
+			// anti-hack
+			if (callfunc("F_IsEquipIDHack", .@slot, .@equip_id) || callfunc("F_IsEquipCardHack", .@slot, .@card[0], .@card[1], .@card[2], .@card[3]))
+				end;
+
+			delequip .@slot;
+			.@enchant = F_enchant(1);
+			specialeffect2 EF_REPAIRWEAPON;
+			mes "[Amateur Collector]";
+			mes "The " + mesitemlink(.@equip_id, false) + " has been enchanted with " + mesitemlink(.@enchant, false) + ".";
+			getitem2 .@equip_id,1,1,0,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],.@enchant;
+			close;
+		}
+		end;
+	}
+	else {	// reset
+		if (.@equip_id == 28483) {
+			.@pos = 2;
+			.@success = 80;	// success royal
+		} else {
+			.@pos = 3;
+			.@success = 20;	// success normal
+		}
+		if (.@equip_card[.@pos] == 0) {
+			mes "[Amateur Collector]";
+			mes "The " + mesitemlink(.@equip_id, false) + " is not at its maximum enchantment.";
+			mes "I cannot reset this accessory.";
+			close;
+		}
+		mes "[Amateur Collector]";
+		mes "All enchanted effects will be removed from the " + mesitemlink(.@equip_id, false) + "?";
+		mes "^FF0000There is a " + .@success + "% chance of success. The accessory will be destroyed if the reset fails!^000000";
+		next;
+		if (select( "I'll be back later", "Please proceed") == 1)
+			end;
+		if (countitem(25235) < 10) {
+			mes "[Amateur Collector]";
+			mes "Please bring me 10 x " + mesitemlink(25235, false) + "";
+			close;
+		}
+		if (Zeny < 100000) {
+			mes "[Amateur Collector]";
+			mes "I need 100,000 zeny!";
+			close;
+		}
+		delitem 25235,10; //Catalyst
+		Zeny -= 100000;
+
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", .@slot, .@equip_id) || callfunc("F_IsEquipCardHack", .@slot, .@card[0], .@card[1], .@card[2], .@card[3]))
+			end;
+
+		delequip .@slot;
+		if (rand(100) > .@success) {
+			specialeffect2 EF_SUI_EXPLOSION;
+			mes "[Amateur Collector]";
+			mes "Darn it...";
+			mes "I have failed and the accessory has been destroyed. I'm so sorry.";
+			close;
+		}
+		specialeffect2 EF_REPAIRWEAPON;
+		mes "[Amateur Collector]";
+		mes "I have succeeded.";
+		mes "The " + mesitemlink(.@equip_id, false) + " has been initialized.";
+		getitem2 .@equip_id,1,1,0,0,.@equip_card[0],.@equip_card[1],0,0;
+		close;
+	}
+	end;
+
+function	F_equip_menu {
+	.@l$ = getitemname(getequipid(EQI_ACC_L));
+	.@r$ = getitemname(getequipid(EQI_ACC_R));
+	.@acc_l$ = .@l$ == "null" ? "" : "Left Acc - " + .@l$;
+	.@acc_r$ = .@r$ == "null" ? "" : "Right Acc - " + .@r$;
+
+	switch( select( .@acc_l$, .@acc_r$ ) ) {
+	case 1:
+		.@slot = EQI_ACC_L;
+		break;
+	case 2:
+		.@slot = EQI_ACC_R;
+		break;
+	}
+	return .@slot;
+}
+
+function	F_enchant {
+	.@type = getarg(0);
+
+	switch(.@type) {
+	case 1: //Normal Enchant
+		.@i = rand(920);
+			 if (.@i < 30) .@enchant = 4701; //STR+2
+		else if (.@i < 60) .@enchant = 4702; //STR+3
+		else if (.@i < 90) .@enchant = 4703; //STR+4
+		else if (.@i < 120) .@enchant = 4711; //INT+2
+		else if (.@i < 150) .@enchant = 4712; //INT+3
+		else if (.@i < 180) .@enchant = 4713; //INT+4
+		else if (.@i < 210) .@enchant = 4721; //DEX+2
+		else if (.@i < 240) .@enchant = 4722; //DEX+3
+		else if (.@i < 270) .@enchant = 4723; //DEX+4
+		else if (.@i < 300) .@enchant = 4731; //AGI+2
+		else if (.@i < 330) .@enchant = 4732; //AGI+3
+		else if (.@i < 360) .@enchant = 4733; //AGI+4
+		else if (.@i < 390) .@enchant = 4741; //VIT+2
+		else if (.@i < 420) .@enchant = 4742; //VIT+3
+		else if (.@i < 450) .@enchant = 4743; //VIT+4
+		else if (.@i < 480) .@enchant = 4796; //HP+200
+		else if (.@i < 510) .@enchant = 4798; //HP+400
+		else if (.@i < 540) .@enchant = 4792; //DEF+6
+		else if (.@i < 570) .@enchant = 4794; //DEF+12
+		else if (.@i < 600) .@enchant = 4800; //SP+50
+		else if (.@i < 630) .@enchant = 4801; //SP+100
+		else if (.@i < 660) .@enchant = 4786; //MDEF+2
+		else if (.@i < 690) .@enchant = 4787; //MDEF+4
+		else if (.@i < 710) .@enchant = 4861; //MHP+1%
+		else if (.@i < 730) .@enchant = 4862; //MHP+2%
+		else if (.@i < 750) .@enchant = 4929; //MSP+1%
+		else if (.@i < 770) .@enchant = 4882; //ATK+1%
+		else if (.@i < 790) .@enchant = 4883; //MATK+1%
+		else if (.@i < 800) .@enchant = 4817; //Sharp2
+		else if (.@i < 810) .@enchant = 4816; //Sharp3
+		else if (.@i < 815) .@enchant = 4843; //Sharp4
+		else if (.@i < 825) .@enchant = 29047; //Fatal
+		else if (.@i < 835) .@enchant = 4863; //Fatal1Lv
+		else if (.@i < 840) .@enchant = 4864; //Fatal2Lv
+		else if (.@i < 850) .@enchant = 4832; //Expert Archer1
+		else if (.@i < 860) .@enchant = 4813; //Spell3
+		else if (.@i < 870) .@enchant = 4812; //Spell4
+		else if (.@i < 875) .@enchant = 4826; //Spell5
+		else if (.@i < 885) .@enchant = 4805; //Archbishop1Lv
+		else if (.@i < 895) .@enchant = 4850; //Heal Amount2
+		else if (.@i < 905) .@enchant = 4809; //Fighting Spirit3
+		else if (.@i < 915) .@enchant = 4808; //Fighting Spirit4
+		else .@enchant = 4820; //Fighting Spirit5
+		break;
+	case 2: //Royal Physical Slot 3
+		.@i = rand(225);
+			 if (.@i < 30) .@enchant = 4809; //Fighting Spirit3
+		else if (.@i < 60) .@enchant = 4808; //Fighting Spirit4
+		else if (.@i < 70) .@enchant = 4820; //Fighting Spirit5
+		else if (.@i < 80) .@enchant = 4821; //Fighting Spirit6
+		else if (.@i < 85) .@enchant = 4822; //Fighting Spirit7
+		else if (.@i < 115) .@enchant = 4818; //Sharp1
+		else if (.@i < 145) .@enchant = 4817; //Sharp2
+		else if (.@i < 155) .@enchant = 4816; //Sharp3
+		else if (.@i < 165) .@enchant = 4843; //Sharp4
+		else if (.@i < 170) .@enchant = 4844; //Sharp5
+		else if (.@i < 200) .@enchant = 4819; //Atk1
+		else if (.@i < 210) .@enchant = 4766; //ATK+2%
+		else if (.@i < 215) .@enchant = 4767; //ATK+3%
+		else if (.@i < 220) .@enchant = 4807; //Atk Speed1
+		else .@enchant = 4842; //Atk Speed2
+		break;
+	case 3: //Royal Physical Slot 4
+		.@i = rand(375);
+			 if (.@i < 50) .@enchant = 4702; //STR+3
+		else if (.@i < 100) .@enchant = 4703; //STR+4
+		else if (.@i < 110) .@enchant = 4704; //STR+5
+		else if (.@i < 120) .@enchant = 4705; //STR+6
+		else if (.@i < 125) .@enchant = 4706; //STR+7
+		else if (.@i < 175) .@enchant = 4732; //AGI+3
+		else if (.@i < 225) .@enchant = 4733; //AGI+4
+		else if (.@i < 235) .@enchant = 4734; //AGI+5
+		else if (.@i < 245) .@enchant = 4735; //AGI+6
+		else if (.@i < 250) .@enchant = 4736; //AGI+7
+		else if (.@i < 300) .@enchant = 4742; //VIT+3
+		else if (.@i < 350) .@enchant = 4743; //VIT+4
+		else if (.@i < 360) .@enchant = 4744; //VIT+5
+		else if (.@i < 370) .@enchant = 4745; //VIT+6
+		else .@enchant = 4746; //VIT+7
+		break;
+	case 4: //Royal Magical Slot 3
+		.@i = rand(230);
+			 if (.@i < 30) .@enchant = 4813; //Spell3
+		else if (.@i < 60) .@enchant = 4812; //Spell4
+		else if (.@i < 70) .@enchant = 4826; //Spell5
+		else if (.@i < 80) .@enchant = 4827; //Spell6
+		else if (.@i < 85) .@enchant = 4828; //Spell7
+		else if (.@i < 115) .@enchant = 4929; //MSP+1%
+		else if (.@i < 145) .@enchant = 4805; //Archbishop1Lv
+		else if (.@i < 155) .@enchant = 4850; //Archbishop2Lv
+		else if (.@i < 165) .@enchant = 4851; //Archbishop3Lv
+		else if (.@i < 170) .@enchant = 4852; //Archbishop4Lv
+		else if (.@i < 200) .@enchant = 4883; //MATK + 1%
+		else if (.@i < 210) .@enchant = 4896; //MATK + 2%
+		else if (.@i < 215) .@enchant = 4897; //MATK + 3%
+		else if (.@i < 225) .@enchant = 4760; //MATK 1Lv
+		else .@enchant = 4761; //MATK 2Lv
+		break;
+	case 5: //Royal Magical Slot 4
+		.@i = rand(375);
+			 if (.@i < 50) .@enchant = 4712; //INT+3
+		else if (.@i < 100) .@enchant = 4713; //INT+4
+		else if (.@i < 110) .@enchant = 4714; //INT+5
+		else if (.@i < 120) .@enchant = 4715; //INT+6
+		else if (.@i < 125) .@enchant = 4716; //INT+7
+		else if (.@i < 175) .@enchant = 4722; //DEX+3
+		else if (.@i < 225) .@enchant = 4723; //DEX+4
+		else if (.@i < 235) .@enchant = 4724; //DEX+5
+		else if (.@i < 245) .@enchant = 4725; //DEX+6
+		else if (.@i < 250) .@enchant = 4726; //DEX+7
+		else if (.@i < 300) .@enchant = 4742; //VIT+3
+		else if (.@i < 350) .@enchant = 4743; //VIT+4
+		else if (.@i < 360) .@enchant = 4744; //VIT+5
+		else if (.@i < 370) .@enchant = 4745; //VIT+6
+		else .@enchant = 4746; //VIT+7
+		break;
+	case 6: //Royal Ranged Slot 3
+		.@i = rand(225);
+			 if (.@i < 30) .@enchant = 29047; //Fatal
+		else if (.@i < 60) .@enchant = 4863; //Fatal1Lv
+		else if (.@i < 70) .@enchant = 4864; //Fatal2Lv
+		else if (.@i < 80) .@enchant = 4865; //Fatal3Lv
+		else if (.@i < 85) .@enchant = 4866; //Fatal4Lv
+		else if (.@i < 115) .@enchant = 4818; //Sharp1
+		else if (.@i < 145) .@enchant = 4817; //Sharp2
+		else if (.@i < 155) .@enchant = 4816; //Sharp3
+		else if (.@i < 165) .@enchant = 4843; //Sharp4
+		else if (.@i < 170) .@enchant = 4844; //Sharp5
+		else if (.@i < 200) .@enchant = 4832; //Expert Archer1
+		else if (.@i < 210) .@enchant = 4833; //Expert Archer2
+		else if (.@i < 215) .@enchant = 4834; //Expert Archer3
+		else if (.@i < 220) .@enchant = 4807; //Atk Speed1
+		else .@enchant = 4842; //Atk Speed2
+		break;
+	case 7: //Royal Ranged Slot 4
+		.@i = rand(375);
+			 if (.@i < 50) .@enchant = 4732; //AGI+3
+		else if (.@i < 100) .@enchant = 4733; //AGI+4
+		else if (.@i < 110) .@enchant = 4734; //AGI+5
+		else if (.@i < 120) .@enchant = 4735; //AGI+6
+		else if (.@i < 125) .@enchant = 4736; //AGI+7
+		else if (.@i < 175) .@enchant = 4722; //DEX+3
+		else if (.@i < 225) .@enchant = 4723; //DEX+4
+		else if (.@i < 235) .@enchant = 4724; //DEX+5
+		else if (.@i < 245) .@enchant = 4725; //DEX+6
+		else if (.@i < 250) .@enchant = 4726; //DEX+7
+		else if (.@i < 300) .@enchant = 4752; //LUK+3
+		else if (.@i < 350) .@enchant = 4753; //LUK+4
+		else if (.@i < 360) .@enchant = 4754; //LUK+5
+		else if (.@i < 370) .@enchant = 4755; //LUK+6
+		else .@enchant = 4756; //LUK+7
+		break;
+	}
+	return .@enchant;
+}
+}

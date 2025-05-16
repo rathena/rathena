@@ -1,0 +1,25 @@
+###########################################################################
+# Achievement Database
+###########################################################################
+#
+# Achievement Settings
+#
+###########################################################################
+# - Id                  Achievement ID.
+#   Group               Achievement group type. (Defaut: None)
+#   Name                Achievement name.
+#   Targets:            List of targets the achievement requires. (Default: null)
+#     - Id              Index value used for import methods.
+#       Mob             Target mob. (Default: 0)
+#       Count           Target count. (Default: 1)
+#   Condition           Conditional statement that must be met for the achievement to be considered complete. (Default: null)
+#   Map                 Map name that is used for the AG_CHATTING type. (Default: -1)
+#   Dependents:         List of achievements that need to be completed before this achievement is considered complete. (Default: null)
+#     - Id: <bool>      Achievement ID pre-requisite.
+#   Rewards:            List of rewards that are given on completion. (Default: null)
+#     Item              Item name.
+#     Amount            Amount of item. (Default: 1)
+#     Script            Bonus Script. (Default: null)
+#     TitleId           Title ID. (Default: 0)
+#   Score               Achievement points that are given on completion. (Default: 0)
+###########################################################################

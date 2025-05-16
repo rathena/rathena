@@ -63,11 +63,12 @@ The eA Job System:
 	EAJL_2		0x300
 
 - The third category is type. Classes can either be normal, rebirth/advanced,
-  adopted, or third class.
+  adopted, third class or fourth class.
 
 	EAJL_UPPER	0x1000
 	EAJL_BABY	0x2000
 	EAJL_THIRD	0x4000
+	EAJL_FOURTH	0x8000
 
 So using these three categories, any job class can be constructed from the
 others. Let's take a swordman, for example.
@@ -143,6 +144,11 @@ EAJL_THIRD:
 	if(@eac&EAJL_THIRD)
 		mes "Wow, you've really grown!";
 
+EAJL_FOURTH:
+	Checks if a class is a fourth job.
+	if(@eac&EAJL_FOURTH)
+		mes "Wow, you've really grown!";
+
 EAJ_UPPERMASK:
 	The upper mask can be used to "strip" the upper/baby characteristics of a
 	class, used when you want to know if someone is a certain class regardless
@@ -169,12 +175,18 @@ EAJ_BASEMASK:
 	check will  always fail for the same reasons previously explained.
 
 EAJ_THIRDMASK:
-	This mask strips 3rd class attributes.  It will give the "normal" class of
+	This mask strips 3rd class attributes. It will give the "normal" class of
 	a third job, regardless of rebirth/adopted status.  When used on non-third
 	class characters, it will return the second job, or, if that also doesn't
 	exist, the first.
 	if ((@eac&EAJ_THIRDMASK) == EAJ_WARLOCK_T)
 		mes "You've gone through rebirth, I see.";
+
+EAJ_FOURTHMASK:
+	This mask strips 4th class attributes. Although currently there are none,
+	it is suggested to use this for checking.
+	if ((@eac&EAJ_FOURTHMASK) == EAJ_DRAGON_KNIGHT)
+		mes "Oh you are a Dragon Knight, I see.";
 
 The script commands eaclass, roclass:
 -------------------------------------------------------------------------------

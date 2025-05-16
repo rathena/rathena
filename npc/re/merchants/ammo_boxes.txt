@@ -167,8 +167,8 @@ S_Sphere_Exchange:
 				case 1:
 					mes "[Kenny]";
 					mes "All done.";
-					delitem .@slug_id, .@new_count * 10;
-					getitem .@new_slug_id, .@old_count;
+					delitem .@old_id, .@new_count * 10;
+					getitem .@new_id, .@new_count;
 					close;
 				case 2:
 					close;
@@ -214,8 +214,8 @@ S_Old_Sphere_Exchange:
 				case 1:
 					mes "[Kenny]";
 					mes "All done.";
-					delitem .@slug_id, .@old_count;
-					getitem .@new_slug_id, .@old_count;
+					delitem .@old_id, .@old_count;
+					getitem .@new_id, .@old_count;
 					close;
 				case 2:
 					close;
@@ -262,7 +262,7 @@ S_Slug_Exchange:
 				case 1:
 					mes "[Kenny]";
 					mes "All done.";
-					delitem .@slug_id, .@new_count * 500;
+					delitem .@slug_id, .@new_count * .@req_count;
 					getitem 25187, .@new_count;
 					close;
 				case 2:

@@ -179,7 +179,7 @@ izlude,103,106,3	script	Guildsman#1	48,3,3,{
 			mes "[Guildsman]";
 			mes "Let's see here... Something";
 			mes "about a missing children's case";
-			mes "the the Assassin Guild is working on... Ah! The Assassin Guild has";
+			mes "the Assassin Guild is working on... Ah! The Assassin Guild has";
 			mes "requested help from the Crusaders. So I guess you were recommended.";
 			next;
 			mes "[Guildsman]";
@@ -427,7 +427,7 @@ OnTouch:
 				mes "[Guildsman]";
 				mes "Let's see here... Something";
 				mes "about a missing children's case";
-				mes "the the Assassin Guild is working on... Ah! The Assassin Guild has";
+				mes "the Assassin Guild is working on... Ah! The Assassin Guild has";
 				mes "requested help from the Crusaders. So I guess you were recommended.";
 				next;
 				mes "[Guildsman]";
@@ -1711,7 +1711,7 @@ payon,231,323,3	script	Guildsman#3	59,3,3,{
 			mes "[Guildsman]";
 			mes "Here, please take this";
 			mes "letter of recommendation";
-			mes "and meet with our Asssasin";
+			mes "and meet with our Assassin";
 			mes "Guild contact to the west";
 			mes "of the Oasis in Morocc.";
 			mes "Well, good luck, pal~";
@@ -1823,7 +1823,7 @@ payon,231,323,3	script	Guildsman#3	59,3,3,{
 			mes "[Guildsman]";
 			mes "Please take your";
 			mes "letter of recommendation";
-			mes "and meet with our Asssasin";
+			mes "and meet with our Assassin";
 			mes "Guild contact to the west";
 			mes "of the Oasis in Morocc.";
 			mes "Well, good luck, pal~";
@@ -1984,7 +1984,7 @@ OnTouch:
 				mes "[Guildsman]";
 				mes "Here, please take this";
 				mes "letter of recommendation";
-				mes "and meet with our Asssasin";
+				mes "and meet with our Assassin";
 				mes "Guild contact to the west";
 				mes "of the Oasis in Morocc.";
 				mes "Well, good luck, pal~";
@@ -2318,7 +2318,7 @@ OnTouch_:
 					
 				case 2:
 					mes "[Litheron]";
-					mes "Not the saavy type,";
+					mes "Not the savvy type,";
 					mes "are you...? Fine, fine.";
 					mes "If you're not gonna do";
 					mes "me any favors, then why";
@@ -2577,7 +2577,7 @@ que_job01,82,95,3	script	Bar Master	46,{
 				if(Class == Job_Assassin || Class == Job_Assassin_Cross)
 				{
 					mes "[Master]";
-					mes "How's your asssignment";
+					mes "How's your assignment";
 					mes "coming along? Sometimes,";
 					mes "you need to relax and take a";
 					mes "break. When that time comes,";
@@ -3748,7 +3748,7 @@ que_job01,84,17,3	script	Lin#2-1	885,{
 		mes "They're, um...";
 		mes "They're labeled with";
 		mes "the name, ''Moore.''";
-		mes "Just... another psuedonym.";
+		mes "Just... another pseudonym.";
 		next;
 		mes "[Lin]";
 		mes "Once you're in the";
@@ -5395,7 +5395,7 @@ que_job01,91,83,3	script	Kidd#hall	884,{
 		mes "[Kidd]";
 		mes "What, Lin's client?!";
 		mes "Wait, "+ strcharinfo(0) +", do you recall";
-		mes "what Lin's assignent was?";
+		mes "what Lin's assignment was?";
 		next;
 		switch( select( "Well, um...","Bodyguard, right?" ) )
 		{
@@ -6550,7 +6550,7 @@ que_job01,8,77,1	script	#linstairs	139,3,3,{
 		mes "[" + strcharinfo(0) + "]";
 		mes "Well, I was only able to";
 		mes "speak to the historian's";
-		mes "asssistant. Let's see...";
+		mes "assistant. Let's see...";
 		mes "I found out about the";
 		mes "origin of this city's name...";
 		next;
@@ -6865,7 +6865,7 @@ moc_fild19,21,33,1	script	Unturned Spot#wind	111,{
 					mes "[" + strcharinfo(0) + "]";
 					mes "Ice...? No...";
 					mes "The power of Wind, of";
-					mes "lightning, supercedes";
+					mes "lightning, supersedes";
 					mes "the power of Ice and water...";
 					close2;
 					break;
@@ -7863,10 +7863,10 @@ OnTouch:
 	mes "to b-be... the last...";
 	mes "sacrifice... Heh heh heh...^000000";
 	next;
-	mes "^3355FFThe maniacial laughter";
+	mes "^3355FFThe maniacal laughter";
 	mes "from that strange voice";
 	mes "echoes in your head as you";
-	mes "wake up in some strage place.^000000";
+	mes "wake up in some strange place.^000000";
 	next;
 	mes "[" + strcharinfo(0) + "]";
 	mes "Where am I...?";
@@ -8846,10 +8846,10 @@ OnTouch:
 	mes "to b-be... the last...";
 	mes "sacrifice... Heh heh heh...^000000";
 	next;
-	mes "^3355FFThe maniacial laughter";
+	mes "^3355FFThe maniacal laughter";
 	mes "from that strange voice";
 	mes "echoes in your head as you";
-	mes "wake up in some strage place.^000000";
+	mes "wake up in some strange place.^000000";
 	next;
 	mes "[" + strcharinfo(0) + "]";
 	mes "Where am I...?";
@@ -10210,7 +10210,7 @@ sec_in02,38,162,0	script	Morocc Invasion Manager	882,{
 	mes "completed the Lin Quest must";
 	mes "approach the Dandelion Org";
 	mes "NPCs at the outskirts of Morocc to trigger the monster invasion.";
-	mes "Change the GlobalVar to affect status of Satan Morocc invasation?";
+	mes "Change the GlobalVar to affect status of Satan Morocc invasion?";
 	next;
 	switch( select( "Set Globalvar","Cancel" ) )
 	{

@@ -263,6 +263,7 @@ payon_in02,54,13,3	script	Master Kavaruk	1_M_JOBTESTER,{
 				mes "[Master Kavaruk]";
 				mes "If you're interested, it would probably be best to speak to the Alchemist Guild member who is waiting to hear from us at the ^3131FFshop next to the road south of Icarus^000000.";
 				tu_archer02 = 1;
+				close;
 			} else if(tu_archer02 == 1){
 				mes "Hmmm...";
 				mes "..........";
@@ -287,11 +288,13 @@ payon_in02,54,13,3	script	Master Kavaruk	1_M_JOBTESTER,{
 				mes "Please find out if he is all right and help him with whatever he";
 				mes "may need. In the meantime, I will be waiting to hear from you. Thank you very much.";
 				tu_archer02 = 2;
+				close;
 			} else if(tu_archer02 == 2){
 				mes "Find Arthail";
 				mes "of the Wind for me.";
 				mes "He must be somewhere";
 				mes "in Prontera...";
+				close;
 			} else if(tu_archer02 == 9){
 				mes "Hmmm, I see. Thank you";
 				mes "for bringing me the news. As Arthail has said, I shall wait until he has more news for me.";
@@ -301,8 +304,8 @@ payon_in02,54,13,3	script	Master Kavaruk	1_M_JOBTESTER,{
 					getexp 1000,1000;
 				else
 					getexp 2000,1000;
+				close;
 			}
-			close;
 		}
 		mes "I don't know...";
 		mes "Recently, I haven't heard any noteworthy news. For now, the warmth of the sun seems to be protecting the peace here.";

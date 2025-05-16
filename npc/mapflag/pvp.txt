@@ -1,18 +1,15 @@
 //===== rAthena Script =======================================
 //= Mapflag: Player versus Player mode.
-//===== By: ==================================================
-//= rAthena Dev Team
-//===== Current Version: =====================================
-//= 1.0
-//===== Compatible With: =====================================
-//= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Enables PvP on a map.
-//===== Additional Comments: ================================= 
+//===== Changelog: ===========================================
 //= 1.0 Initial script.
+//= 1.1 Disable costumes on PvP maps. [Aleos]
 //============================================================
 
-// PvP ========================
+//============================================================
+// PvP Arenas
+//============================================================
 pvp_y_1-1	mapflag	pvp
 pvp_y_1-2	mapflag	pvp
 pvp_y_1-3	mapflag	pvp
@@ -95,7 +92,9 @@ pvp_n_8-4	mapflag	pvp
 pvp_n_8-5	mapflag	pvp
 pvp_2vs2	mapflag	pvp
 
-//Aldebaran Turbo Track
+//============================================================
+// Aldebaran Turbo Track
+//============================================================
 turbo_e_4	mapflag	pvp
 turbo_e_8	mapflag	pvp
 turbo_e_16	mapflag	pvp

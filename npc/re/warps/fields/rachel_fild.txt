@@ -37,9 +37,9 @@ ra_fild08,165,29,0	warp	ra018	1,1,ra_fild12,149,369
 ra_fild12,149,374,0	warp	ra019	1,1,ra_fild08,165,36
 //ra_fild12,303,27,0	warp	ra020	1,1,ra_fild13,295,341
 //ra_fild13,295,346,0	warp	ra021	1,1,ra_fild12,303,33
-//ra_fild11,360,226,0	warp	ra022	1,1,rachel,30,125
-//ra_fild11,21,290,0	warp	ra023	1,1,ra_fild10,379,283
-//ra_fild10,384,287,0	warp	ra024	1,1,ra_fild11,28,290
+ra_fild11,360,226,0	warp	ra022	1,1,rachel,30,125
+ra_fild11,21,290,0	warp	ra023	1,1,ra_fild10,379,283
+ra_fild10,384,287,0	warp	ra024	1,1,ra_fild11,28,290
 //ra_fild11,202,335,0	warp	ra025a	1,1,ra_fild07,215,32
 //ra_fild07,215,27,0	warp	ra025b	1,1,ra_fild11,201,329
 //ra_fild07,168,353,0	warp	ra026	1,1,ra_fild02,171,45

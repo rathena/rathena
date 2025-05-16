@@ -15,7 +15,7 @@
 //= Geoborg Family Curse:
 //= - [Official Conversion]
 //= - Variable in use: prt_curse (max 61)
-//===== Changelogs: ==========================================
+//===== Changelog: ===========================================
 //= 1.0 First Version. [kobra_k88] [L0ne_W0lf]
 //= Fixed flower name Dreamy -> Illusion
 //= 1.2 Fixed exploit [Lupus]
@@ -44,6 +44,7 @@
 //= 2.7 Corrected 'IProntera' typo. (bugreport:4522) [L0ne_W0lf]
 //= 2.8 Updated RE/Pre-RE EXP. [Euphy]
 //= 2.9 Updated Nameless Island addition and added questlog support. [Euphy]
+//= 3.0 Commented custom quest log support for Geoborg Family Curse Quest [Everade]
 //============================================================
 
 // Prontera Culvert :: prt_npc
@@ -560,7 +561,7 @@ S_GetBooks:
 		mes "thanks for doing this for me.";
 		mes "I was really at my wit's end...";
 		set prt_curse,3;
-		setquest 18030;// custom addition to make the script consistent
+		//setquest 18030;// custom addition to make the script consistent
 		getitem 7431,1; //Books
 		close;
 	}
@@ -860,7 +861,7 @@ yuno,311,195,3	script	Historian#prt01	754,{
 		mes "somewhere in that desert town.";
 		set prt_curse,6;
 		getitem 7342,1; //File01
-		changequest 18030,18031;// custom addition to make the script consistent
+		//changequest 18030,18031;// custom addition to make the script consistent
 		close;
 	}
 	else if (prt_curse == 6) {
@@ -1251,10 +1252,10 @@ morocc_in,45,126,3	script	Historian#prt02	702,{
 			mes "back to the priests...)^000000";
 			if (prt_curse == 30)  {
 				set prt_curse,31;
-				changequest 18042,18044;
+				//changequest 18042,18044;
 			} else {
 				set prt_curse,60;
-				changequest 18051,18052;
+				//changequest 18051,18052;
 			}
 			close;
 		}
@@ -1282,10 +1283,10 @@ morocc_in,45,126,3	script	Historian#prt02	702,{
 		mes "to return to Father Bamph.^000000";
 		if (prt_curse == 30) {
 			set prt_curse,40;
-			changequest 18042,18045;
+			//changequest 18042,18045;
 		} else {
 			set prt_curse,56;
-			completequest 18051;
+			//completequest 18051;
 		}
 		close;
 	}
@@ -1361,7 +1362,7 @@ S_GiveName:
 	mes "for the sake of my research...";
 	if (getarg(0) == 1) delitem 7342,1; //File01
 	set prt_curse,8;
-	changequest 18031,18032;
+	//changequest 18031,18032;
 	close;
 }
 
@@ -1500,7 +1501,7 @@ mjolnir_01,135,168,3	script	Historian#prt03	754,{
 		mes "for. Good luck in your";
 		mes "travels, adventurer.";
 		set prt_curse,11;
-		changequest 18032,18033;
+		//changequest 18032,18033;
 		close;
 	}
 	else {
@@ -1943,7 +1944,7 @@ mjolnir_01,316,268,3	script	Exhausted-Looking Woman	879,{
 		mes "before I talk to Rodafrian.)^000000";
 		getitem 7432,1; //Leather_Pouch
 		set prt_curse,13;
-		changequest 18033,18034;
+		//changequest 18033,18034;
 		close;
 	}
 	else if (prt_curse > 12 && prt_curse < 16) {
@@ -2042,7 +2043,7 @@ mjolnir_01,316,268,3	script	Exhausted-Looking Woman	879,{
 		mes "and let Father Bamph";
 		mes "know about this information.)^000000";
 		set prt_curse,17;
-		changequest 18035,18036;
+		//changequest 18035,18036;
 		close;
 	}
 	else if (prt_curse == 17) {
@@ -2119,17 +2120,17 @@ mjolnir_01,316,268,3	script	Exhausted-Looking Woman	879,{
 		mes "Thank you, kind adventurer~";
 		if (prt_curse == 35) {
 			set prt_curse,36;
-			completequest 18050;
+			//completequest 18050;
 		} else if (prt_curse == 44) {
 			set prt_curse,45;
-			completequest 18049;
+			//completequest 18049;
 		} else {
 			next;
 			mes "^3355FFNow, you can return to";
 			mes "Rodafrian, the historian";
 			mes "stationed in Morocc.^000000";
 			set prt_curse,55;
-			changequest 18049,18051;
+			//changequest 18049,18051;
 		}
 
 		close;
@@ -2456,7 +2457,7 @@ prt_church,185,106,3	script	Father Bamph	60,{
 		mes "remember anything that happened";
 		mes "after the exorcism failed...";
 		set prt_curse,16;
-		changequest 18034,18035;
+		//changequest 18034,18035;
 		close;
 	}
 	else if (prt_curse == 16) {
@@ -2497,7 +2498,7 @@ prt_church,185,106,3	script	Father Bamph	60,{
 		mes "within the bookshelf and";
 		mes "I will meet you there.";
 		set prt_curse,18;
-		changequest 18036,18037;
+		//changequest 18036,18037;
 		close;
 	}
 	else if (prt_curse > 17 && prt_curse < 22) {
@@ -2534,7 +2535,7 @@ prt_church,185,106,3	script	Father Bamph	60,{
 		mes "we can verify whether poison";
 		mes "was used to kill the princes?";
 		set prt_curse,23;
-		changequest 18039,18040;
+		//changequest 18039,18040;
 		close;
 	}
 	else if (prt_curse == 23) {
@@ -2568,7 +2569,7 @@ prt_church,185,106,3	script	Father Bamph	60,{
 		mes "to the secret ceremonial grounds as soon as you can? I will wait";
 		mes "over there for you once again.";
 		set prt_curse,32;
-		changequest 18044,18046;
+		//changequest 18044,18046;
 		close;
 	}
 	else if (prt_curse == 32 || prt_curse == 33 || prt_curse == 41 || prt_curse == 42 || prt_curse == 51 || prt_curse == 52) {
@@ -2609,7 +2610,7 @@ prt_church,185,106,3	script	Father Bamph	60,{
 		mes "you for all of your help. I'm very grateful for what you have done,";
 		mes "adventurer. May safety accompany you on all of your journeys.";
 		set prt_curse,35;
-		changequest 18047,18050;
+		//changequest 18047,18050;
 		close;
 	}
 	else if (prt_curse > 34 && prt_curse < 40 && !aru_monas) {
@@ -2642,7 +2643,7 @@ prt_church,185,106,3	script	Father Bamph	60,{
 		mes "to the secret ceremonial grounds as soon as you can? I will wait";
 		mes "over there for you once again.";
 		set prt_curse,41;
-		changequest 18045,18046;
+		//changequest 18045,18046;
 		close;
 	}
 	else if (prt_curse == 43 || prt_curse == 53) {
@@ -2684,7 +2685,7 @@ prt_church,185,106,3	script	Father Bamph	60,{
 			set prt_curse,44;
 		else
 			set prt_curse,54;
-		changequest 18047,18049;
+		//changequest 18047,18049;
 		getexp (checkre(3))?90000:1600000,0;
 		close;
 	}
@@ -2720,7 +2721,7 @@ prt_church,185,106,3	script	Father Bamph	60,{
 		mes "to the secret ceremonial grounds as soon as you can? I will wait";
 		mes "over there for you once again.";
 		set prt_curse,51;
-		changequest 18043,18046;
+		//changequest 18043,18046;
 		close;
 	}
 	else if (prt_curse == 60) {
@@ -2775,7 +2776,7 @@ prt_church,185,106,3	script	Father Bamph	60,{
 		mes "secret ceremonial grounds";
 		mes "from now on. Thanks again for your help, "+strcharinfo(0)+".";
 		set prt_curse,61;
-		completequest 18052;
+		//completequest 18052;
 		close;
 	}
 	else {
@@ -2819,7 +2820,7 @@ prt_church,185,106,3	script	Father Bamph	60,{
 				mes "and he will assist you in your";
 				mes "search for the lost official.";
 				set aru_monas,2;
-				changequest 17000,17001;
+				//changequest 17000,17001;
 				close;
 			}
 			else if (aru_monas == 2 || aru_monas == 3) {
@@ -2894,7 +2895,7 @@ prt_church,185,106,3	script	Father Bamph	60,{
 					mes "Thank you, and good luck.";
 					set aru_monas,6;
 					set Zeny, Zeny + (checkre(0)?5000:1500);
-					changequest 17002,17003;
+					//changequest 17002,17003;
 					close;
 				}
 				else {
@@ -3010,8 +3011,7 @@ prt_church,184,110,3	script	Father Biscuss	60,{
 		mes "Church, I want to thank";
 		mes "you for all of your help.";
 		set prt_curse,36;
-		// completequest 18048;
-		completequest 18050;
+		//completequest 18050;
 		getexp (checkre(3))?90000:1600000,0;
 		close;
 	}
@@ -3170,7 +3170,7 @@ prt_church,19,111,5	script	#prince1	887,{
 		mes "note that the mark resembles";
 		mes "the scales of a serpent.^000000";
 		set prt_curse,20;
-		changequest 18037,18038;
+		//changequest 18037,18038;
 		close;
 	}
 	else if (prt_curse == 33 || prt_curse > 41 && prt_curse < 51 || prt_curse == 52) {
@@ -3231,7 +3231,7 @@ prt_church,21,111,5	script	#prince2	887,{
 		mes "involved. Let's go check";
 		mes "the body of the third prince.";
 		set prt_curse,21;
-		changequest 18038,18039;
+		//changequest 18038,18039;
 		close;
 	}
 	else if (prt_curse == 33 || prt_curse > 41 && prt_curse < 51 || prt_curse == 52) {
@@ -3342,7 +3342,7 @@ prt_church,24,111,5	script	#prince3	887,{
 			if (prt_curse == 32) set prt_curse,33;
 			else if (prt_curse == 41) set prt_curse,42;
 			else set prt_curse,52;
-			changequest 18046,18047;
+			//changequest 18046,18047;
 			close;
 		}
 		mes "^3355FFYou'll need to have";
@@ -3402,7 +3402,7 @@ moc_fild16,201,295,5	script	Assassin Guildsman#poiso	884,{
 			mes "in Morocc. Go find someone";
 			mes "named ^3131FFMarjana^000000 inside.";
 			set prt_curse,24;
-			changequest 18040,18041;
+			//changequest 18040,18041;
 			close;
 		}
 		mes "[Assassin Guildsman]";
@@ -3589,7 +3589,7 @@ OnTouch:
 			mes "Father Bamph, so I guess";
 			mes "that I'll go talk to her first.";
 			set prt_curse,30;
-			changequest 18041,18042;
+			//changequest 18041,18042;
 			close;
 		}
 		mes "["+strcharinfo(0)+"]";
@@ -3599,7 +3599,7 @@ OnTouch:
 		mes "bodies. I better head over";
 		mes "to Prontera right away.";
 		set prt_curse,50;
-		changequest 18041,18043;
+		//changequest 18041,18043;
 		close;
 	}
 }

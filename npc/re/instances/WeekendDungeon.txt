@@ -1,0 +1,405 @@
+//===== rAthena Script =======================================
+//= Weekend Memorial Dungeon
+//===== Description: =========================================
+//= [Walkthrough Conversion]
+//= Weekend Memorial Dungeon
+//===== Changelogs: ==========================================
+//= 1.0 Initial release [Everade]
+//============================================================
+
+pay_arche,44,124,5	script	Marry Jae	4_F_JOB_BLACKSMITH,{
+	mes "[Marry Jae]";
+	if (BaseLevel < 60) {
+		mes "Your base level is too low, come back when you hit level 60+.";
+		close;
+	}
+	mes "^ff0000If you attempt to tame any monsters, it will not count as a kill. Please be careful.^000000";
+	next;
+	.@day = gettime(DT_DAYOFWEEK);
+	if (.@day != SATURDAY && .@day != SUNDAY) {
+		mes "[Marry Jae]";
+		mes "Oh, a curious onlooker? I'm Marry Jae, the person in charge of weekends among the days of the week.";
+		next;
+		mes "[Marry Jae]";
+		mes "What is the weekend dungeon? Actually, it's a specially designed space for new adventurers to train.";
+		next;
+		mes "^0000FFLooking around, it's obvious that Marry Jae is talking to you.^000000";
+		next;
+		mes "[Marry Jae]";
+		mes "For those who do not have a party on the weekends, this place is hunting and experience gaining grounds for lonely adventurers!";
+		next;
+		mes "[Marry Jae]";
+		mes "Besides, the experience gain here is very generous.";
+		next;
+		select( "When is the opening time?" );
+		mes "[Marry Jae]";
+		mes "The dungeon will be open during:";
+		mes "^0000FFSaturday 00:00 ~ Sunday 23:59^000000";
+		next;
+		mes "[Marry Jae]";
+		mes "I hope to see you when the weekend arrives~";
+		close;
+	}
+	.@md_name$ = "Weekend Dungeon";
+
+	if (getcharid(1) < 1) {
+		mes "[Marry Jae]";
+		mes "You need to form a party of one member or more.";
+		close;
+	}
+	switch( checkquest(12378,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		switch( checkquest(12377,PLAYTIME) ) {
+		case -1:
+		case 2:
+			mes "[Marry Jae]";
+			mes "Sorry, but the entry period to the " + .@md_name$ + " has expired.";
+			mes "Take a rest while waiting for the dungeon to be available again.";
+			close;
+		case 0:
+		case 1:
+			break;
+		}
+		break;
+	case 2:
+		erasequest 12377;
+		erasequest 12378;
+		mes "[Marry Jae]";
+		mes "The cooldown has expired.";
+		mes "You may re-enter the Memorial Dungeon.";
+		close;
+	}
+
+	if (is_party_leader() == true)
+		.@menu$ = "Prepare Memorial Dungeon";
+
+	mes "[Marry Jae]";
+	mes "I think you're just about ready.";
+	mes "Now, would you like to enter it now?";
+	next;
+	switch( select( .@menu$, "Enter Weekend Dungeon", "Cancel" ) ) {
+	case 1:
+		instance_create(.@md_name$);
+		mes "[Marry Jae]";
+		mes "The Memorial Dungeon has been created.";
+		mes "You may now enter.";
+		close;
+	case 2:
+		switch( instance_enter(.@md_name$) ) {
+		case IE_NOMEMBER:
+			end;
+		case IE_NOINSTANCE:
+			mes "There is no Memorial Dungeon registered.";
+			close;
+		case IE_OTHER:
+			mes "An unknown error has occurred.";
+			close;
+		case IE_OK:
+			mes "[Marry Jae]";
+			mes "Off you go!";
+			mapannounce "pay_arche", "" + strcharinfo(0) + " of the party, " + getpartyname( getcharid(1) ) + ", is entering the " + .@md_name$ + ".", bc_map, 0xFF99;
+			if (isbegin_quest(12377) == 0)
+				setquest 12377;
+			if (isbegin_quest(12378) == 0)
+				setquest 12378;
+			end;
+		}
+		end;
+	case 3:
+		mes "[Marry Jae]";
+		mes "You have not prepared?";
+		mes "Can't really help it I guess.";
+		close;
+	}
+}
+
+//Merchant
+pay_arche,44,121,5	script	Gift Supplies Clerk	4_F_02,{
+	.@zeny = 60000;
+	mes "[Gift Supplies Clerk]";
+	mes "I offer packaging services for those who wish to present a precious gift to a cherished one.";
+	next;
+	mes "[Gift Supplies Clerk]";
+	mes "If you have 5 units of <ITEM>" + getitemname(23143) + "<INFO>23143</INFO></ITEM> or <ITEM>" + getitemname(23142) + "<INFO>23142</INFO></ITEM>, I can pack it for just ^FF0000" + F_InsertComma(.@zeny) + "^000000 Zeny!";
+	mes "Do you want to pack it right now?";
+	next;
+	switch( select( "Cancel", "Growth Elixir Packing", "Job Elixir Packing" ) ) {
+	case 1:
+		mes "[Gift Supplies Clerk]";
+		mes "Come back whenever you need packaging services!";
+		close;
+	case 2:
+		.@item = 23142;
+		.@box = 23144;
+		break;
+	case 3:
+		.@item = 23143;
+		.@box = 23145;
+		break;
+	}
+	mes "[Gift Supplies Clerk]";
+	if (countitem(.@item) < 5) {
+		mes "Please come back when you have enough materials.";
+		close;
+	}
+	if (Zeny < .@zeny) {
+		mes "Please come back when you have enough Zeny.";
+		mes F_InsertComma(.@zeny) + "z to be specific.";
+		close;
+	}
+	if (checkweight(23144,1) == 0) {
+		mes "You have too many kinds of objects. Clear your inventory.";
+		close;
+	}
+	if (MaxWeight - Weight < 10000) {
+		mes "Can't continue because you have too many heavy objects. Reduce your total weight by clearing your inventory.";
+		close;
+	}
+	mes "Confirm to spend " + F_InsertComma(.@zeny) + "z to package 5 <ITEM>" + getitemname(.@item) + "<INFO>" + .@item + "</INFO></ITEM> into <ITEM>" + getitemname(.@box) + "<INFO>" + .@box + "</INFO></ITEM>?";
+	next;
+	if (select( "Yes", "No" ) == 2) {
+		mes "[Gift Supplies Clerk]";
+		mes "Come back whenever you need packaging services!";
+		close;
+	}
+	Zeny -= .@zeny;
+	delitem .@item,5;
+	getitem .@box,1;
+	end;
+}
+
+//Instance
+1@md_pay,239,30,6	script	Marry Jae#0_1	4_F_JOB_BLACKSMITH,{
+	if (is_party_leader() == false)
+		end;
+	mes "[Marry Jae]";
+	mes "Before we start setting up the environment here, we'll give you the chance to choose an appropriate difficulty level.";
+	mes "I could make my own choice, but each person handles it differently based on their abilities.";
+	next;
+	switch( select( "Cancel", "Lv60 ~ 79", "Lv80 ~ 99", "Lv100 ~ 119", "Lv120 ~ 139", "Lv140 ~ 159", "Lv160 ~ " ) ) {
+	case 1:
+		end;
+	//Familiar, Skeleton, Zombie
+	case 2:
+		.@min_level = 60;
+		setarray 'mob[0],3643,3637,3649;
+		break;
+	case 3:
+		.@min_level = 80;
+		setarray 'mob[0],3644,3638,3650;
+		break;
+	case 4:
+		.@min_level = 100;
+		setarray 'mob[0],3645,3639,3651;
+		break;
+	case 5:
+		.@min_level = 120;
+		setarray 'mob[0],3646,3640,3652;
+		break;
+	case 6:
+		.@min_level = 140;
+		setarray 'mob[0],3647,3641,3653;
+		break;
+	case 7:
+		.@min_level = 160;
+		setarray 'mob[0],3648,3642,3654;
+		break;
+	}
+	mes "[Marry Jae]";
+	if (BaseLevel < .@min_level) {
+		mes "Your base level is too low to select this, you need to be level " + .@min_level + " + .";
+		close;
+	}
+
+	mes "Good luck finding the treasures!";
+	npctalk "Good luck~";
+	donpcevent instance_npcname("map_md_pay_spawn") + "::OnStart";
+	close;
+}
+
+1@md_pay,1,1,6	script	map_md_pay_spawn	-1,{
+	end;
+OnStart:
+	sleep 2500;
+	disablenpc instance_npcname("Marry Jae#0_1");
+
+	.@event$ = instance_npcname("map_md_pay_spawn") + "::OnFarmiliarDead";
+	killmonster 'map_md_pay$, .@event$;
+	monster 'map_md_pay$,252,54,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,260,40,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,249,93,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,224,38,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,255,125,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,264,132,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,255,165,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,265,181,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,225,165,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,235,115,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,205,145,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,190,180,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,213,250,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,90,263,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,135,200,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,175,155,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,165,145,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,180,117,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,175,115,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,185,66,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,155,55,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,165,45,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,124,57,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,54,45,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,53,48,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,55,65,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,51,66,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,42,84,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,41,152,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,46,171,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,45,185,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,64,172,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,75,181,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,50,202,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,55,205,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,75,245,"Familiar",'mob[0],1,.@event$;
+	monster 'map_md_pay$,90,263,"Familiar",'mob[0],1,.@event$;
+
+	.@event$ = instance_npcname("map_md_pay_spawn") + "::OnSkelDead";
+	killmonster 'map_md_pay$, .@event$;
+	monster 'map_md_pay$,245,55,"Skeleton",'mob[1],1,.@event$;
+	monster 'map_md_pay$,243,63,"Skeleton",'mob[1],1,.@event$;
+	monster 'map_md_pay$,259,98,"Skeleton",'mob[1],1,.@event$;
+	monster 'map_md_pay$,258,204,"Skeleton",'mob[1],1,.@event$;
+	monster 'map_md_pay$,239,122,"Skeleton",'mob[1],1,.@event$;
+	monster 'map_md_pay$,189,190,"Skeleton",'mob[1],1,.@event$;
+	monster 'map_md_pay$,239,231,"Skeleton",'mob[1],1,.@event$;
+	monster 'map_md_pay$,205,225,"Skeleton",'mob[1],1,.@event$;
+	monster 'map_md_pay$,172,207,"Skeleton",'mob[1],1,.@event$;
+	monster 'map_md_pay$,166,234,"Skeleton",'mob[1],1,.@event$;
+	monster 'map_md_pay$,171,236,"Skeleton",'mob[1],1,.@event$;
+	monster 'map_md_pay$,126,180,"Skeleton",'mob[1],1,.@event$;
+	monster 'map_md_pay$,150,150,"Skeleton",'mob[1],1,.@event$;
+	monster 'map_md_pay$,155,135,"Skeleton",'mob[1],1,.@event$;
+	monster 'map_md_pay$,174,75,"Skeleton",'mob[1],1,.@event$;
+	monster 'map_md_pay$,186,67,"Skeleton",'mob[1],1,.@event$;
+	monster 'map_md_pay$,95,65,"Skeleton",'mob[1],1,.@event$;
+	monster 'map_md_pay$,55,85,"Skeleton",'mob[1],1,.@event$;
+	monster 'map_md_pay$,37,92,"Skeleton",'mob[1],1,.@event$;
+	monster 'map_md_pay$,34,90,"Skeleton",'mob[1],1,.@event$;
+	monster 'map_md_pay$,27,99,"Skeleton",'mob[1],1,.@event$;
+	monster 'map_md_pay$,57,76,"Skeleton",'mob[1],1,.@event$;
+	monster 'map_md_pay$,62,93,"Skeleton",'mob[1],1,.@event$;
+	monster 'map_md_pay$,33,97,"Skeleton",'mob[1],1,.@event$;
+	monster 'map_md_pay$,60,45,"Skeleton",'mob[1],1,.@event$;
+	monster 'map_md_pay$,48,60,"Skeleton",'mob[1],1,.@event$;
+	monster 'map_md_pay$,73,51,"Skeleton",'mob[1],1,.@event$;
+
+	.@event$ = instance_npcname("map_md_pay_spawn") + "::OnZombieDead";
+	killmonster 'map_md_pay$, .@event$;
+	monster 'map_md_pay$,245,65,"Zombie",'mob[2],1,.@event$;
+	monster 'map_md_pay$,218,61,"Zombie",'mob[2],1,.@event$;
+	monster 'map_md_pay$,255,171,"Zombie",'mob[2],1,.@event$;
+	monster 'map_md_pay$,215,165,"Zombie",'mob[2],1,.@event$;
+	monster 'map_md_pay$,237,127,"Zombie",'mob[2],1,.@event$;
+	monster 'map_md_pay$,215,105,"Zombie",'mob[2],1,.@event$;
+	monster 'map_md_pay$,198,168,"Zombie",'mob[2],1,.@event$;
+	monster 'map_md_pay$,243,267,"Zombie",'mob[2],1,.@event$;
+	monster 'map_md_pay$,165,207,"Zombie",'mob[2],1,.@event$;
+	monster 'map_md_pay$,157,236,"Zombie",'mob[2],1,.@event$;
+	monster 'map_md_pay$,113,259,"Zombie",'mob[2],1,.@event$;
+	monster 'map_md_pay$,105,255,"Zombie",'mob[2],1,.@event$;
+	monster 'map_md_pay$,117,238,"Zombie",'mob[2],1,.@event$;
+	monster 'map_md_pay$,164,194,"Zombie",'mob[2],1,.@event$;
+	monster 'map_md_pay$,159,172,"Zombie",'mob[2],1,.@event$;
+	monster 'map_md_pay$,175,155,"Zombie",'mob[2],1,.@event$;
+	monster 'map_md_pay$,146,131,"Zombie",'mob[2],1,.@event$;
+	monster 'map_md_pay$,152,126,"Zombie",'mob[2],1,.@event$;
+	monster 'map_md_pay$,181,85,"Zombie",'mob[2],1,.@event$;
+	monster 'map_md_pay$,165,81,"Zombie",'mob[2],1,.@event$;
+	monster 'map_md_pay$,157,74,"Zombie",'mob[2],1,.@event$;
+	monster 'map_md_pay$,175,45,"Zombie",'mob[2],1,.@event$;
+	monster 'map_md_pay$,49,48,"Zombie",'mob[2],1,.@event$;
+	monster 'map_md_pay$,65,175,"Zombie",'mob[2],1,.@event$;
+	monster 'map_md_pay$,78,180,"Zombie",'mob[2],1,.@event$;
+	monster 'map_md_pay$,33,207,"Zombie",'mob[2],1,.@event$;
+	monster 'map_md_pay$,49,227,"Zombie",'mob[2],1,.@event$;
+	monster 'map_md_pay$,55,235,"Zombie",'mob[2],1,.@event$;
+	monster 'map_md_pay$,60,240,"Zombie",'mob[2],1,.@event$;
+	monster 'map_md_pay$,70,237,"Zombie",'mob[2],1,.@event$;
+	monster 'map_md_pay$,65,265,"Zombie",'mob[2],1,.@event$;
+
+	'rand_chest = rand(1,4);
+	end;
+
+OnFarmiliarDead:
+	callsub( S_Mob, 'mob[0], "Familiar", "OnFarmiliarDead" );
+OnSkelDead:
+	callsub( S_Mob, 'mob[1], "Skeleton", "OnSkelDead" );
+OnZombieDead:
+	callsub( S_Mob, 'mob[2], "Zombie", "OnZombieDead" );
+
+S_Mob:
+	if (rand(100) == 0) {
+		'rand_chest++;
+		if ('rand_chest > 4)
+			'rand_chest = 1;
+		// Treasure Chest Spawn
+		donpcevent instance_npcname("#WDbox" + 'rand_chest) + "::OnStart";
+	}
+	sleep 10000;
+	monster 'map_md_pay$,0,0, getarg(1), getarg(0),1, instance_npcname("map_md_pay_spawn") + "::" + getarg(2);
+	end;
+
+OnInstanceInit:
+	'count = 0;
+	'rand_chest = 0;
+	'map_md_pay$ = instance_mapname("1@md_pay");
+	disablenpc instance_npcname("#WDbox1");
+	disablenpc instance_npcname("#WDbox2");
+	disablenpc instance_npcname("#WDbox3");
+	disablenpc instance_npcname("#WDbox4");
+	end;
+}
+
+// Treasure Chest Reward
+1@md_pay,99,172,3	script	#WDbox1	4_TREASURE_BOX,{
+	specialeffect EF_COIN;
+	disablenpc();
+	stopnpctimer;
+	sleep 500;
+	.@chestname$ = strnpcinfo(2);
+
+	if (.@chestname$ == "WDbox1") {
+		for ( .@i = 0; .@i < 3; ++.@i )
+			makeitem rand(23142,23143),1, 'map_md_pay$, rand(97,101), rand(170,174);
+	}
+	else if (.@chestname$ == "WDbox2") {
+		for ( .@i = 0; .@i < 3; ++.@i )
+			makeitem rand(23142,23143),1, 'map_md_pay$, rand(233,237), rand(58,62);
+	}
+	else if (.@chestname$ == "WDbox3") {
+		for ( .@i = 0; .@i < 3; ++.@i )
+			makeitem rand(23142,23143),1, 'map_md_pay$, rand(51,55), rand(265,269);
+	}
+	else if (.@chestname$ == "WDbox4") {
+		for ( .@i = 0; .@i < 3; ++.@i )
+			makeitem rand(23142,23143),1, 'map_md_pay$, rand(236,240), rand(250,254);
+	}
+	end;
+
+OnStart:
+	enablenpc();
+	instance_announce -1, "A treasure chest appeared somewhere in the dungeon. It'll disappear after a while, so let's find it.", bc_map, "0xff5500";
+	initnpctimer;
+	end;
+OnTimer180000:	//3min before chest disappears
+	disablenpc();
+	stopnpctimer;
+	end;
+}
+
+1@md_pay,235,60,3	duplicate(#WDbox1)	#WDbox2	4_TREASURE_BOX
+1@md_pay,53,267,3	duplicate(#WDbox1)	#WDbox3	4_TREASURE_BOX
+1@md_pay,238,252,3	duplicate(#WDbox1)	#WDbox4	4_TREASURE_BOX

@@ -1,0 +1,3351 @@
+//===== rAthena Script =======================================
+//= Edda Half Moon In The Daylight
+//===== Description: =========================================
+//= [Walkthrough Conversion]
+//= Episode 16.1 - Edda Half Moon In The Daylight
+//===== Changelog: ===========================================
+//= 1.0 Initial Release [Everade]
+//= 1.1 Clean-up [Capuche]
+//============================================================
+
+rachel,174,138,6	script	High Priestess Niren#HM	4_F_MADAME,{
+	cutin "ra_gwoman",2;
+
+	if (BaseLevel < 80) {
+		mes "[Niren]";
+		mes "Sorry. I am busy at the moment.";
+		next;
+		mes "[Niren]";
+		mes "May Freyja's blessing be with you.";
+		close3;
+	}
+	.@player_name$ = strcharinfo(0);
+
+	if (isbegin_quest(14594) == 0) {
+		mes "[Niren]";
+		mes "Adventurer, you came. Thank you so much for taking the time while you are busy.";
+		next;
+		mes "[Niren]";
+		mes "I asked to meet you like this because I have something to ask of the adventurer.";
+		next;
+		mes "[" + .@player_name$ + "]";
+		mes "If it's a long request...did anything happen to the Pope?";
+		next;
+		mes "[Niren]";
+		mes "First of all, forgive me for giving you the request.";
+		next;
+		mes "[Niren]";
+		mes "Regarding the Pope, it is strictly forbidden to make any public announcement except that it is permitted to be revealed in the temple. It is a felony punishment for anyone who speaks or hears.";
+		next;
+		mes "[Niren]";
+		mes "However, even if this is the situation and the adventurer sees me as a reliable person, listen to what I have to say from now on, and whether you accept the request or not, you must keep today's dialogue absolutely confidential.";
+		next;
+		mes "[Niren]";
+		mes "Do you understand?";
+		next;
+		select( "I don't really know." );
+		mes "[Niren]";
+		mes "After all, I think you are trustworthy, so I will trust you and tell you.";
+		next;
+		mes "[Niren]";
+		mes "As the adventurer speculates, a small problem recently occurred with the Pope.";
+		next;
+		mes "[Niren]";
+		mes "^0000cdPope's sleeping time^000000 is abnormal, and it is increasing more and more.";
+		next;
+		mes "[Niren]";
+		mes "At first, she started to go to bed early in the evening, then she started to get up much later in the morning, and now she goes to bed more often.";
+		next;
+		mes "[Niren]";
+		mes "Right now, she's still asleep.";
+		next;
+		mes "[" + .@player_name$ + "]";
+		mes "Is there something wrong with her health?";
+		next;
+		mes "[Niren]";
+		mes "It's not like that. We also tried all kinds of tests, thinking that the Pope's health might have been abnormal, but the physical condition was extremely good except for falling asleep all the time.";
+		next;
+		mes "[Niren]";
+		mes "But...";
+		next;
+		mes "[" + .@player_name$ + "]";
+		mes "But?";
+		next;
+		mes "[Niren]";
+		mes "After waking up, she has a sad expression, often immersed in other thoughts, and shows a loss of concentration. And she just goes back to sleep.";
+		next;
+		mes "[Niren]";
+		mes "As the situation continues like this, words of mouth are starting to spread out little by little even inside the temple.";
+		next;
+		mes "[" + .@player_name$ + "]";
+		mes "If it's not her health, what is the problem?";
+		next;
+		mes "[Niren]";
+		mes "It must be a psychological issue. In my opinion, it seems to be connected to what she sees in her ^0000cdDreams^000000.";
+		next;
+		mes "[Niren]";
+		mes "Just once, she woke up and asked about her ^0000cdbrother Luwmin^000000.";
+		next;
+		mes "[" + .@player_name$ + "]";
+		mes "So the Pope has a family...?";
+		next;
+		mes "[Niren]";
+		mes "Yes. However, it is a matter of our religion that before coming to the temple and becoming a Pope, everything must be washed away and forgotten.";
+		next;
+		mes "[Niren]";
+		mes "This includes any connection to families.";
+		next;
+		mes "[Niren]";
+		mes "It is a once in a life chance: born as a child of choice and entering the temple to be reborn as a body to enshrine the goddess.";
+		next;
+		mes "[Niren]";
+		mes "So, officially, the Pope has no secular family.";
+		next;
+		mes "[Niren]";
+		mes "When the Pope, who knows that fact, asks about her family's affairs after dreaming, it means she's seeing something in her dreams.";
+		next;
+		mes "[" + .@player_name$ + "]";
+		mes "But it's just a dream, isn't it?";
+		next;
+		mes "[Niren]";
+		mes "Yes, it's just a dream, of course, but I don't see it that way. And that's why we enlisted adventurers.";
+		next;
+		mes "[Niren]";
+		mes "The Pope is not allowed to touch anyone in the temple, and if someone had to approach the Pope, this person would have to bribe someone within the temple or use another method.";
+		next;
+		mes "[Niren]";
+		mes "However, that method is rather unlikely due to the high probability of getting caught.";
+		next;
+		mes "[Niren]";
+		mes "The only way to get in touch without getting anyone else's suspicions is to dream. It seems that someone is breaking through the surveillance and interfering with the Pope's dream.";
+		next;
+		mes "[" + .@player_name$ + "]";
+		mes "Is that possible?";
+		next;
+		mes "[Niren]";
+		mes "It cannot be confirmed, but it is possible.";
+		next;
+		mes "[Niren]";
+		mes "And there is one, someone who has doubts.";
+		next;
+		mes "[Niren]";
+		mes "The Pope's ^0000cdtwin brother^000000, who was sealed in ice by ^0000ffKthullanax^000000 in the depths of the ^0000ffIce Cave^000000.";
+		next;
+		mes "[Niren]";
+		mes "According to a recent investigation report, it was due to the influence of Kthullanax that it was given a weak magical power.";
+		next;
+		mes "[Niren]";
+		mes "In one instance, there must be a special connection as the twins born at one day and at one o'clock.";
+		next;
+		mes "[Niren]";
+		mes "If somehow, through a dream, consciousness came into contact with the Pope, it would be possible to intervene in everything about the Pope through a dream.";
+		next;
+		mes "[Niren]";
+		mes "In the unconscious way.";
+		next;
+		mes "[Niren]";
+		mes "As the current Pope's sleep time is getting slower, it is speculated that someone is trying to hold onto her or that the Pope does not want to wake herself up.";
+		next;
+		mes "[Niren]";
+		mes "So I hope you can get into the Pope's dream and see what's going on, and if you find any problems, you can solve them.";
+		next;
+		mes "[" + .@player_name$ + "]";
+		mes "But how do you get into someone else's dream?";
+		next;
+		mes "[Niren]";
+		mes "It is possible through a ^0000cdspecial device^000000 that crosses the dreams.";
+		next;
+		mes "[" + .@player_name$ + "]";
+		mes "But why do I have to go, not the temple officials?";
+		next;
+		mes "[Niren]";
+		mes "I can't give you more details, but the situation in Arunafelz is not very good, especially inside the temple.";
+		next;
+		mes "[Niren]";
+		mes "It is a situation in which the current state of the Pope may be politically exploited.";
+		next;
+		mes "[Niren]";
+		mes "That's why the Pope secretly enlisted the adventurer after trying to find someone who was open to both sides and was reliable.";
+		next;
+		mes "[Niren]";
+		mes "I was inevitably asked to do this because I had to keep my position and take care of the Pope.";
+		next;
+		mes "[Niren]";
+		mes "The Pope is Arunafelz's hope and dream.";
+		next;
+		mes "[Niren]";
+		mes "If her dreaming duration continually increase, then one day she won't wake up and sleep forever...";
+		next;
+		mes "[Niren]";
+		mes "Protect the Pope in your dreams and go as far as possible to find out what's going on.";
+		next;
+		mes "[Niren]";
+		mes "However, as it is a dream, I do not know what there might be. No one knows what the Pope will show or how she will react.";
+		next;
+		mes "[Niren]";
+		mes "Maybe it's really dangerous. So please be careful.";
+		next;
+		mes "[" + .@player_name$ + "]";
+		mes "Okay.";
+		next;
+		mes "[" + .@player_name$ + "]";
+		mes "Would you like to enter her dream right now? Or do you need time to prepare?";
+		next;
+		select( "Let me do some preparations." );
+		mes "[Niren]";
+		mes "Okay. Then, please prepare yourself and speak to me again when you are ready to walk your dream path.";
+		setquest 14594;
+		close3;
+	}
+	if (checkquest(14585,HUNTING) == 2 || checkquest(14587,HUNTING) == 2) {
+		mes "[Niren]";
+		mes "Adventurer, what was the Pope's dream state like?";
+		next;
+		mes "- You describe the dream of the Pope and Luwmin in detail -";
+		next;
+		mes "[Niren]";
+		mes "That's bizzare. So you found out that her dream was due to her anxiety in daily life?";
+		next;
+		mes "[Niren]";
+		mes "I'm sure she came to her senses.";
+		next;
+		mes "[Niren]";
+		mes "Adventurer, do you mind if I were to ask for another favour?";
+		next;
+		mes "[Niren]";
+		mes "Could you accompany the Pope in her dream again? She...needs company.";
+		next;
+		mes "[" + .@player_name$ + "]";
+		mes "Sure. I've also promised that to the Pope herself.";
+		next;
+		mes "[Niren]";
+		mes "Thank you very much. She is haunted by her inner demons...";
+		next;
+		mes "[Niren]";
+		mes "As for today, it's time for you to relax comfortably.";
+		if (checkquest(14585,HUNTING) == 2)
+			erasequest 14585;
+		else
+			erasequest 14587;
+		getexp 126000,90000;
+		close3;
+	}
+	switch( checkquest(14586,PLAYTIME) ) {
+	case -1:
+		if (!is_party_leader()) {
+			mes "[Niren]";
+			mes "...I don't think that this is right.";
+			next;
+			mes "[Niren]";
+			mes "You should form a party first before we proceed any further.";
+			close3;
+		}
+		mes "[Niren]";
+		mes "I need your help.";
+		mes "Recently, the Pope began to have long dreams. And they got longer as days went by.";
+		next;
+		mes "[Niren]";
+		mes "Maybe by entering her dream, we could identify the cause behind it and resolve it safely.";
+		next;
+		if (select( "I will enter the Pope's dreams. ", "Cancel" ) == 2)
+			close3;
+		if (isbegin_quest(14594) == 1)
+			completequest 14594;
+		if (isbegin_quest(14585) == 2)
+			erasequest 14585;
+		if (isbegin_quest(14587) == 2)
+			erasequest 14587;
+		.@md_name$ = "Half Moon In The Daylight";
+		instance_create(.@md_name$);
+		close3;
+	case 0:
+	case 1:
+		mes "[Niren]";
+		mes "The Pope has yet to fall into slumber.";
+		close3;
+	case 2:
+		mes "^0000ffThe trace of dimensional space travelling has disappeared. You can now move between dimensions.^000000";
+		erasequest 14586;
+		close3;
+	}
+}
+
+rachel,176,145,6	script	Dream#poent	PORTAL,{
+	switch( checkquest(14586,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "[Dream Path]";
+		mes "The crack in time is not safe enough to pass back and forth. Please come back again when the after effect timer has passed.";
+		close;
+	case 2:
+		mes "^0000ffThe trace of dimensional space travelling has disappeared. You can now move between dimensions.^000000";
+		erasequest 14586;
+		close;
+	}
+	if (!is_party_leader()) {
+		mes "[Dream Path]";
+		mes "Only party leaders may enter.";
+		close;
+	}
+	mes "[Dream Path]";
+	mes "Hello, I am a pathway to dreams. How can I help you?";
+	next;
+	if (select( "Let me enter your dreams.", "Cancel" ) == 2) {
+		mes "[Dream Path]";
+		mes "Okay, I got it. Please come back again if you change your mind.";
+		close;
+	}
+	if (!is_party_leader()) {	// shouldn't happen
+		mes "[Dream Path]";
+		mes "Only party leaders may enter.";
+		close;
+	}
+	.@md_name$ = "Half Moon In The Daylight";
+
+	switch( instance_enter(.@md_name$) ) {
+	case IE_NOMEMBER:
+		end;
+	case IE_NOINSTANCE:
+		mes "The passage is not activated yet.";
+		close;
+	case IE_OTHER:
+		mes "An unknown error has occurred.";
+		close;
+	case IE_OK:
+		mes "[Dream Path]";
+		mes "I will open my dreams.";
+		mes "I hope you have a pleasant dream.";
+		mapannounce "rachel", "" + strcharinfo(0) + " of the party, " + getpartyname( getcharid(1) ) + ", is entering the " + .@md_name$ + ".", bc_map, 0xFF99;
+		if (BaseLevel < 130) {
+			if (isbegin_quest(14585) == 0)
+				setquest 14585;
+		} else {
+			if (isbegin_quest(14587) == 0)
+				setquest 14587;
+		}
+		setquest 14586;
+		close;
+	}
+	end;
+}
+
+//============================================================
+//== Map 1
+//============================================================
+1@pop1,50,137,3	script	Pope#1hmoon01	4_F_ARUNA_POP,{
+	if (!is_party_leader())	// shouldn't happen
+		end;
+	if ('progress != 0)
+		end;
+
+	'account_id_leader = getcharid(3);
+	if (BaseLevel > 129)
+		'mode = 1;
+	.@player_name$ = strcharinfo(0);
+
+	cutin "pop_sim",2;
+	mes "[Pope]";
+	mes ".... Niren?";
+	npctalk ".... Niren?";
+	next;
+	mes "[Pope]";
+	mes "Niren ...?";
+	next;
+	mes "[Pope]";
+	mes "I can't find Tilibi.";
+	mes "It is too ... dark here ...";
+	npctalk "I can't see anything ...";
+	next;
+	mes "[Pope]";
+	mes "Niren ...?";
+	next;
+	mes "[Pope]";
+	mes ".... Where are you ...?";
+	next;
+	mes "[" + .@player_name$ + "]";
+	mes "Pope, I'm here for you.";
+	next;
+	mes "[Pope]";
+	mes "...........";
+	mes "...........";
+	next;
+	mes "[" + .@player_name$ + "]";
+	mes "Pope, please calm down. I have been sent by Niren.";
+	next;
+	mes "[Pope]";
+	mes "Who ...?";
+	npctalk "By Niren ...?";
+	next;
+	mes "[" + .@player_name$ + "]";
+	mes "I am the adventurer, " + .@player_name$ + ".";
+	next;
+	mes "[Pope]";
+	mes "" + .@player_name$ + "?";
+	next;
+	mes "[Pope]";
+	mes "Niren ... did she send you?";
+	next;
+	mes "[Pope]";
+	mes "Where is Niren?";
+	next;
+	mes "[" + .@player_name$ + "]";
+	mes "Niren has been busy for a while and sent me instead.";
+	next;
+	mes "[Pope]";
+	mes "Yeah ... I remember now. Adventurer ...";
+	npctalk "I remember ...";
+	next;
+	mes "[" + .@player_name$ + "]";
+	mes "What were you doing?";
+	next;
+	mes "[Pope]";
+	mes "Tilibi ... is gone. No matter how much I searched...";
+	next;
+	mes "[" + .@player_name$ + "]";
+	mes "Who is Tilibi?";
+	next;
+	mes "[Pope]";
+	mes "Niren gave the doll to me. I had it just a little while ago.";
+	next;
+	mes "[Pope]";
+	mes "I think I lost the doll here.";
+	npctalk "Where did you go ...";
+	next;
+	mes "[" + .@player_name$ + "]";
+	mes "Let's find it.";
+	next;
+	mes "[Pope]";
+	mes "No, it's too late now..";
+	next;
+	mes "[" + .@player_name$ + "]";
+	mes "It's okay. You'll be able to find it.";
+	next;
+	mes "[Pope]";
+	mes "No ... I have a promise.";
+	mes "I have someone to meet.";
+	npctalk "I am late.";
+	next;
+	mes "[" + .@player_name$ + "]";
+	mes "Promise? Is it here?";
+	next;
+	mes "[Pope]";
+	mes "It's outside of the temple ... But it does not look like Tilibi.";
+	next;
+	mes "[Pope]";
+	mes "It's too late to find Tilibi.";
+	next;
+	mes "[" + .@player_name$ + "]";
+	mes "Tilbi does not seem to be here, so how about looking for it elsewhere?";
+	next;
+	mes "[" + .@player_name$ + "]";
+	mes "Let's find it together.";
+	next;
+	cutin "POP_nor", 2;
+	mes "[Pope]";
+	mes "... okay.";
+	next;
+	mes "[Pope]";
+	mes "Your name, what was it again?";
+	next;
+	mes "[" + .@player_name$ + "]";
+	mes "" + .@player_name$ + ".";
+	next;
+	mes "[Pope]";
+	mes "Come on, let us go together.";
+	disablenpc();
+	enablenpc instance_npcname("#1hmoond01");	// (warp)
+	if ('progress == 0)
+		'progress = 1;
+	close3;
+
+OnInstanceInit:
+	'progress = 0;
+	'mode = 0;
+	'account_id_leader = 0;
+	'1hmoon = 0;
+	'2hmoon = 0;
+	'3hmoon = 0;
+
+	'map_pop1$ = instance_mapname("1@pop1");
+	'map_pop2$ = instance_mapname("1@pop2");
+	'map_pop3$ = instance_mapname("1@pop3");
+	end;
+}
+
+1@pop1,100,142,3	script	Pope#1hmoon03	4_F_ARUNA_POP,5,5,{
+	end;
+OnTouch:
+	if ('progress != 1)
+		end;
+	'progress = 2;
+	npctalk "Head south...";
+	disablenpc();
+	enablenpc instance_npcname("#1hmoond03");	// (warp)
+	end;
+}
+
+1@pop1,100,98,3	script	Pope#1hmoon04	4_F_ARUNA_POP,{
+	if ('progress != 2)
+		end;
+	mes "[Priest]";
+	mes "Your Holiness.";
+	npctalk "Your Holiness", instance_npcname("Priest#1hmoon01");
+	next;
+	mes "[Priest]";
+	mes "The Pope has arrived.";
+	npctalk "The Pope has arrived.", instance_npcname("Priest#1hmoon02");
+	next;
+	mes "[Devotee]";
+	mes "We have been waiting.";
+	npctalk "We have been waiting.", instance_npcname("Devotee#1hmoon01");
+	next;
+	mes "[Devotee]";
+	mes "It is also a blasphemy of Freyja to not honour one's time. Please act with discretion.";
+	npctalk "It is also a blasphemy of Freyja to not honour one's time. Please act with discretion.", instance_npcname("Devotee#1hmoon03");
+	next;
+	mes "[Devotee]";
+	mes "Pope, please behave yourself in public.";
+	npctalk "Pope, please behave yourself in public.", instance_npcname("Devotee#1hmoon02");
+	next;
+	mes "[Devotee]";
+	mes "What a disrespect to the Pope! Take a look at yourself!";
+	npctalk "What a disrespect to the Pope! Take a look at yourself!", instance_npcname("Devotee#1hmoon04");
+	next;
+	mes "[Devotee]";
+	mes "The Pope is divine! Let's keep that ideal. Don't speak up!";
+	npctalk "The Pope is divine! Let's keep that ideal. Don't speak up!", instance_npcname("Devotee#1hmoon05");
+	next;
+	mes "[Devotee]";
+	mes "The pope is a vessel for the Goddess, who will one day rise. Isn't it natural that the Avatar should be clean?";
+	npctalk "The pope is a vessel for the Goddess, who will one day rise. Isn't it natural that the Avatar should be clean?", instance_npcname("Devotee#1hmoon06");
+	next;
+	mes "[Priest]";
+	mes "Stop the ruckus! The Pope is the one who gives us joy and hope, just by her being!";
+	npctalk "Stop the ruckus! The Pope is the one who gives us joy and hope, just by her being!", instance_npcname("Priest#1hmoon01");
+	next;
+	cutin "pop_sim",2;
+	mes "[Pope]";
+	mes "..... I, I am.... the Pope...";
+	next;
+	mes "[Pope]";
+	mes "..... I have to go....";
+	next;
+	mes "[Pope]";
+	mes "........ got promise...";
+	mes "to keep............";
+	next;
+	cutin "pop_sim",255;
+	mes "[Devotee]";
+	mes "A promise? The Pope should not leave the temple.";
+	npctalk "A promise? The Pope should not leave the temple.", instance_npcname("Devotee#1hmoon02");
+	next;
+	mes "[Devotee]";
+	mes "She should not be in contact with outsiders!";
+	npctalk "Outsiders are filthy", instance_npcname("Priest#1hmoon01");
+	next;
+	mes "[Devotee]";
+	mes "Pope can only meet people who are authorized in the temple.";
+	npctalk "Pope can only meet people who are authorized in the temple.", instance_npcname("Devotee#1hmoon01");
+	next;
+	mes "[Devotee]";
+	mes "The Pope will need to act according to our objectives.";
+	npctalk "The Pope will need to act according to our objectives.", instance_npcname("Devotee#1hmoon03");
+	next;
+	mes "[Priest]";
+	mes "The Pope's actions are none of your concern.";
+	npctalk "The Pope's actions are none of your concern.", instance_npcname("Priest#1hmoon02");
+	next;
+	mes "[Devotee]";
+	mes "Step down if you disagree.";
+	npctalk "Step down if you disagree.", instance_npcname("Devotee#1hmoon06");
+	next;
+	mes "[Devotee]";
+	mes "Quiet! You dare to disobey us?";
+	npctalk "Quiet! You dare to disobey us?", instance_npcname("Devotee#1hmoon01");
+	next;
+	mes "[Devotee]";
+	mes "Please listen to me. You should stop whatever you're doing!";
+	npctalk "Please listen to me. You should stop whatever you're doing!", instance_npcname("Priest#1hmoon02");
+	next;
+	mes "[Devotee]";
+	mes "However, it is true that the current Pope lacks qualities.";
+	npctalk "However, it is true that the current Pope lacks qualities.", instance_npcname("Priest#1hmoon01");
+	next;
+	mes "[Devotee]";
+	mes "If she's not enough, we can swap her out. Isn't there another perfect candidate?";
+	npctalk "If she's not enough, we can swap her out. Isn't there another perfect candidate?", instance_npcname("Devotee#1hmoon04");
+	next;
+	mes "[Devotee]";
+	mes "The second Avatar, born at the same time...!";
+	npctalk "The second Avatar, born at the same time...!", instance_npcname("Devotee#1hmoon05");
+	next;
+	mes "[Devotee]";
+	mes "We may have made the wrong choice.";
+	npctalk "We may have made the wrong choice.", instance_npcname("Devotee#1hmoon06");
+	next;
+	mes "[Devotee]";
+	mes "If I had to change my choice right now...!";
+	npctalk "If I had to change my choice right now...!", instance_npcname("Devotee#1hmoon02");
+	next;
+	mes "[Priest]";
+	mes "The imperfect Pope needs to be replaced.";
+	npctalk "The imperfect Pope needs to be replaced.", instance_npcname("Priest#1hmoon02");
+	next;
+	mes "[Devotee]";
+	mes "I need a Pope who listens to my concerns.";
+	npctalk "I need a Pope who listens to my concerns.", instance_npcname("Devotee#1hmoon03");
+	next;
+	mes "[Priest]";
+	mes "We don't need the current Pope.";
+	npctalk "We don't need the current Pope.", instance_npcname("Priest#1hmoon01");
+	next;
+	mes "[Devotee]";
+	mes "Don't stand still Pope, and make a stand!";
+	npctalk "Don't stand still Pope, and make a stand!", instance_npcname("Devotee#1hmoon01");
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "Pope, Pope! Get the hang of it!!";
+	unittalk getcharid(3), "" + strcharinfo(0) + ": Pope, Pope! Keep your mind up!!";
+	next;
+	disablenpc();
+	.@pop_npc$ = instance_npcname("Pope#1hmoon09");
+	enablenpc .@pop_npc$;
+	cutin "pop_sim",2;
+	mes "[Pope]";
+	mes ".... I... I am... I...";
+	npctalk ".... I... I am... I...", .@pop_npc$;
+	next;
+	mes "[Pope]";
+	mes ".......... I am not needed....?";
+	next;
+	mes "[Pope]";
+	mes "What am I... to these people?";
+	next;
+	mes "[Pope]";
+	mes "A sacred vessel of the Goddess.";
+	next;
+	mes "[Pope]";
+	mes "An imperfect being.";
+	next;
+	mes "[Pope]";
+	mes "I am incomplete.";
+	next;
+	mes "[Pope]";
+	mes "I was the result of a wrong decision.";
+	next;
+	mes "[Pope]";
+	mes "I didn't have any qualifications from the beginning.";
+	next;
+	mes "[Pope]";
+	mes "This is not my seat.";
+	npctalk "This is not my seat.", .@pop_npc$;
+	specialeffect EF_MAGICCRASHER, AREA, .@pop_npc$;
+	next;
+	mes "[Pope]";
+	mes "But this is not what I want.";
+	npctalk "But this is not what I want.", .@pop_npc$;
+	specialeffect EF_MAGICCRASHER, AREA, .@pop_npc$;
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "Pope, calm down. This is all a dream.";
+	mes "Your anxiety distorts the dream. Outside the dream, everyone awaits you as the Pope!";
+	next;
+	mes "[Pope]";
+	mes "Dream...?";
+	next;
+	mes "[Pope]";
+	mes "But... I... I've made a promise.";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "This is a dream!";
+	next;
+	disablenpc .@pop_npc$;
+	.@pop_npc$ = instance_npcname("Pope#1hmoon10");
+	enablenpc .@pop_npc$;
+	mes "[Pope]";
+	mes "I have an appointment. I have to meet.";
+	mes "Come on, we have to get out of here.";
+	npctalk "I have an appointment. I have to meet. Come on, we have to get out of here.","Pope#1hmoon10";
+	cutin "pop_sim",255;
+	specialeffect EF_MAGICCRASHER, AREA, .@pop_npc$;
+	sleep2 1000;
+	specialeffect EF_MAGICCRASHER, AREA, .@pop_npc$;
+	sleep2 1000;
+	specialeffect EF_MAGICCRASHER, AREA, .@pop_npc$;
+	sleep2 1000;
+	specialeffect EF_4WAYBODY, AREA, .@pop_npc$;
+	specialeffect EF_ELECTRIC, AREA, .@pop_npc$;
+	sleep2 500;
+	specialeffect 1065, AREA, .@pop_npc$;
+	sleep2 1000;
+	next;
+	mes "[Devotee]";
+	mes "Pope! Where are you?";
+	npctalk "Pope! Where are you?", .@pop_npc$;
+	next;
+	disablenpc instance_npcname("Devotee#1hmoon01");
+	disablenpc instance_npcname("Devotee#1hmoon02");
+	disablenpc instance_npcname("Devotee#1hmoon03");
+	disablenpc instance_npcname("Devotee#1hmoon04");
+	disablenpc instance_npcname("Devotee#1hmoon05");
+	disablenpc instance_npcname("Devotee#1hmoon06");
+	enablenpc instance_npcname("Devotee#1hmoon11");
+	enablenpc instance_npcname("Devotee#1hmoon12");
+	enablenpc instance_npcname("Devotee#1hmoon13");
+	enablenpc instance_npcname("Devotee#1hmoon14");
+	enablenpc instance_npcname("Devotee#1hmoon15");
+	enablenpc instance_npcname("Devotee#1hmoon16");
+	mes "[Devotee]";
+	mes "Pope, don't leave your seat!";
+	npctalk "Pope, don't leave your seat!", instance_npcname("Devotee#1hmoon16");
+	next;
+	mes "[Devotee]";
+	mes "This is where the Pope should remain!";
+	npctalk "This is where the Pope should remain!", instance_npcname("Devotee#1hmoon12");
+	next;
+	cutin "pop_sim",2;
+	mes "[Pope]";
+	mes "Nobody actually needs me!";
+	next;
+	mes "[Pope]";
+	mes "Nobody treats me properly!";
+	next;
+	disablenpc .@pop_npc$;
+	.@pop_npc$ = instance_npcname("Pope#1hmoon11");
+	enablenpc .@pop_npc$;
+	mes "[Pope]";
+	mes "I do not have a place here!";
+	npctalk "I do not have a place here!", .@pop_npc$;
+	cutin "pop_sim",255;
+	specialeffect EF_MAGICCRASHER, AREA, .@pop_npc$;
+	emotion ET_THINK, getnpcid(0, .@pop_npc$);
+	next;
+	sleep2 500;
+	disablenpc instance_npcname("Priest#1hmoon01");
+	disablenpc instance_npcname("Priest#1hmoon02");
+	disablenpc instance_npcname("Devotee#1hmoon11");
+	disablenpc instance_npcname("Devotee#1hmoon12");
+	disablenpc instance_npcname("Devotee#1hmoon13");
+	disablenpc instance_npcname("Devotee#1hmoon14");
+	disablenpc instance_npcname("Devotee#1hmoon15");
+	disablenpc instance_npcname("Devotee#1hmoon16");
+	enablenpc instance_npcname("Priest#1hmoon21");
+	enablenpc instance_npcname("Priest#1hmoon22");
+	enablenpc instance_npcname("Devotee#1hmoon23");
+	enablenpc instance_npcname("Devotee#1hmoon24");
+	enablenpc instance_npcname("Devotee#1hmoon25");
+	enablenpc instance_npcname("Devotee#1hmoon26");
+	enablenpc instance_npcname("Devotee#1hmoon27");
+	enablenpc instance_npcname("Devotee#1hmoon28");
+	mes "[Devotee]";
+	mes "Pope! Please remain seated, for your own good!";
+	npctalk "Pope! Please remain seated, for your own good!", instance_npcname("Devotee#1hmoon27");
+	next;
+	cutin "pop_sim",2;
+	mes "[Pope]";
+	mes "I really have to go...";
+	next;
+	mes "[Devotee]";
+	mes "All of you, restrain the Pope!";
+	next;
+	mes "[Pope]";
+	mes "Adventurer, please....help me.";
+	cutin "pop_sim",255;
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "Certainly, Pope. Please stand behind me.";
+	if ('mode == 1)
+		mercenary_create 3569,1800000; //POPE_MD_H_MERC_NORMAL
+	else
+		mercenary_create 3570,1800000; //POPE_MD_H_MERC_CASUAL
+	close2;
+	setpcblock PCBLOCK_NPC, true;
+	disablenpc .@pop_npc$;
+	enablenpc instance_npcname("Guard#1hmoon21");
+	enablenpc instance_npcname("Guard#1hmoon22");
+	npctalk "We are here for a greater purpose!", instance_npcname("Guard#1hmoon21");
+	disablenpc instance_npcname("Guard#1hmoon01");
+	disablenpc instance_npcname("Guard#1hmoon02");
+	disablenpc instance_npcname("Guard#1hmoon03");
+	disablenpc instance_npcname("Guard#1hmoon04");
+	disablenpc instance_npcname("Guard#1hmoon05");
+	disablenpc instance_npcname("Guard#1hmoon06");
+	disablenpc instance_npcname("Priest#1hmoon21");
+	disablenpc instance_npcname("Priest#1hmoon22");
+	disablenpc instance_npcname("Devotee#1hmoon23");
+	disablenpc instance_npcname("Devotee#1hmoon24");
+	disablenpc instance_npcname("Devotee#1hmoon25");
+	disablenpc instance_npcname("Devotee#1hmoon26");
+	disablenpc instance_npcname("Devotee#1hmoon27");
+	disablenpc instance_npcname("Devotee#1hmoon28");
+	sleep2 1500;
+	npctalk "We have outnumbered you, adventurer.", instance_npcname("Guard#1hmoon21");
+	sleep2 1000;
+	npctalk "Stop!!", instance_npcname("Guard#1hmoon22");
+	npctalk "Stop!!", instance_npcname("Guard#1hmoon22");
+	sleep2 1000;
+	disablenpc instance_npcname("Guard#1hmoon07");
+	disablenpc instance_npcname("Guard#1hmoon08");
+	disablenpc instance_npcname("Guard#1hmoon09");
+	disablenpc instance_npcname("Guard#1hmoon10");
+	enablenpc instance_npcname("Guard#1hmoon24");
+	enablenpc instance_npcname("Guard#1hmoon25");
+	npctalk "Halt!", instance_npcname("Guard#1hmoon24");
+	npctalk "Halt!", instance_npcname("Guard#1hmoon25");
+	npctalk "Halt!", instance_npcname("Guard#1hmoon24");
+	npctalk "Halt!", instance_npcname("Guard#1hmoon25");
+	sleep2 500;
+	enablenpc instance_npcname("Guard#1hmoon23");
+	enablenpc instance_npcname("Guard#1hmoon26");
+	npctalk "Halt!!", instance_npcname("Guard#1hmoon23");
+	npctalk "Halt!!", instance_npcname("Guard#1hmoon26");
+	npctalk "Halt!!", instance_npcname("Guard#1hmoon23");
+	npctalk "Halt!!", instance_npcname("Guard#1hmoon26");
+	sleep2 500;
+	enablenpc instance_npcname("Guard#1hmoon27");
+	enablenpc instance_npcname("Guard#1hmoon30");
+	npctalk "Halt!", instance_npcname("Guard#1hmoon27");
+	npctalk "Halt!", instance_npcname("Guard#1hmoon30");
+	npctalk "Halt!", instance_npcname("Guard#1hmoon27");
+	npctalk "Halt!", instance_npcname("Guard#1hmoon30");
+	sleep2 500;
+	enablenpc instance_npcname("Guard#1hmoon28");
+	enablenpc instance_npcname("Guard#1hmoon29");
+	npctalk "Halt!", instance_npcname("Guard#1hmoon28");
+	npctalk "Halt!", instance_npcname("Guard#1hmoon29");
+	npctalk "Halt!", instance_npcname("Guard#1hmoon28");
+	npctalk "Halt!", instance_npcname("Guard#1hmoon29");
+	sleep2 1000;
+	npctalk "You shall not leave the temple!", instance_npcname("Guard#1hmoon21");
+	npctalk "You shall not leave the temple!", instance_npcname("Guard#1hmoon21");
+	sleep2 2000;
+	npctalk "Please step back. Otherwise, we will exercise force.", instance_npcname("Guard#1hmoon21");
+	npctalk "Please step back. Otherwise, we will exercise force.", instance_npcname("Guard#1hmoon21");
+	sleep2 1000;
+	npctalk "Three !!", instance_npcname("Guard#1hmoon21");
+	npctalk "Three !!", instance_npcname("Guard#1hmoon21");
+	sleep2 1000;
+	npctalk "Two !!", instance_npcname("Guard#1hmoon21");
+	npctalk "Two !!", instance_npcname("Guard#1hmoon21");
+	sleep2 1000;
+	npctalk "One !!!", instance_npcname("Guard#1hmoon21");
+	npctalk "One !!!", instance_npcname("Guard#1hmoon21");
+	instance_announce 0, "Security Captain: From now on, the adventurer is considered our enemy!", bc_map, "0xFFFF00";
+	npctalk "From now on, the adventurer is considered our enemy!", instance_npcname("Guard#1hmoon21");
+	sleep2 1000;
+	instance_announce 0, "Security Captain: Protect the Pope and eliminate the adventurer!", bc_map, "0xFFFF00";
+	npctalk "Protect the Pope and eliminate the adventurer!", instance_npcname("Guard#1hmoon21");
+	sleep2 1000;
+	npctalk "Protect the Pope and eliminate the adventurer!", instance_npcname("Guard#1hmoon21");
+	sleep2 1000;
+	npctalk "Protect the Pope and eliminate the adventurer!", instance_npcname("Guard#1hmoon22");
+	sleep2 1000;
+	npctalk "Protect the Pope and eliminate the adventurer!", instance_npcname("Guard#1hmoon22");
+	sleep2 1000;
+	npctalk "Aye Aye Sir !!", instance_npcname("Guard#1hmoon23");
+	npctalk "Aye Aye Sir !!", instance_npcname("Guard#1hmoon24");
+	npctalk "Aye Aye Sir !!", instance_npcname("Guard#1hmoon25");
+	npctalk "Aye Aye Sir !!", instance_npcname("Guard#1hmoon26");
+	npctalk "Aye Aye Sir !!", instance_npcname("Guard#1hmoon27");
+	npctalk "Aye Aye Sir !!", instance_npcname("Guard#1hmoon28");
+	npctalk "Aye Aye Sir !!", instance_npcname("Guard#1hmoon29");
+	npctalk "Aye Aye Sir !!", instance_npcname("Guard#1hmoon30");
+	sleep2 500;
+	disablenpc instance_npcname("Guard#1hmoon21");
+	disablenpc instance_npcname("Guard#1hmoon22");
+	disablenpc instance_npcname("Guard#1hmoon23");
+	disablenpc instance_npcname("Guard#1hmoon24");
+	disablenpc instance_npcname("Guard#1hmoon25");
+	disablenpc instance_npcname("Guard#1hmoon26");
+	disablenpc instance_npcname("Guard#1hmoon27");
+	disablenpc instance_npcname("Guard#1hmoon28");
+	disablenpc instance_npcname("Guard#1hmoon29");
+	disablenpc instance_npcname("Guard#1hmoon30");
+	donpcevent instance_npcname("#mob1hmoon") + "::OnStart";	// (mobs spawn)
+	setpcblock PCBLOCK_NPC, false;
+	if ('progress == 2)
+		'progress = 3;
+	end;
+}
+
+1@pop1,0,0,0	script	#mob1hmoon	139,{
+	end;
+OnStart:
+OnMyMobDead:
+	.@event$ = instance_npcname("#mob1hmoon") + "::OnMyMobDead";
+	if (mobcount('map_pop1$, .@event$) > 0)
+		end;
+	if ('mode == 0) {
+		.@guard = 3510; //Easy
+		.@fbel = 3511;
+		.@mbel = 3512;
+		.@priest = 3514;
+	}
+	else {
+		.@guard = 3518; //Hard
+		.@fbel = 3519;
+		.@mbel = 3520;
+		.@priest = 3522;
+	}
+	switch( '1hmoon ) {
+	case 0:
+		monster 'map_pop1$,99,89,"Temple Guard",.@guard,1, .@event$;
+		monster 'map_pop1$,100,81,"Temple Guard",.@guard,1, .@event$;
+		monster 'map_pop1$,96,87,"Temple Guard",.@guard,1, .@event$;
+		monster 'map_pop1$,98,87,"Temple Guard",.@guard,1, .@event$;
+		monster 'map_pop1$,101,87,"Temple Guard",.@guard,1, .@event$;
+		monster 'map_pop1$,103,87,"Temple Guard",.@guard,1, .@event$;
+		monster 'map_pop1$,96,84,"Temple Guard",.@guard,1, .@event$;
+		monster 'map_pop1$,98,84,"Temple Guard",.@guard,1, .@event$;
+		monster 'map_pop1$,101,84,"Temple Guard",.@guard,1, .@event$;
+		monster 'map_pop1$,103,84,"Temple Guard",.@guard,1, .@event$;
+		monster 'map_pop1$,101,81,"Temple Guard",.@guard,1, .@event$;
+		'1hmoon++;
+		end;
+	case 1:
+		instance_announce 0, "Guards: Do your best to stop the Pope!!", bc_map, "0xFFFF00";
+		sleep 1000;
+		instance_announce 0, "Guards: Make sure you stop the Pope!!", bc_map, "0xFFFF00";
+		areamonster 'map_pop1$,60,90,90,100,"Fanatical Worshipper",.@fbel,8, .@event$;
+		areamonster 'map_pop1$,139,90,104,90,"Enraged Worshipper",.@mbel,7, .@event$;
+		'1hmoon++;
+		end;
+	case 2:
+		instance_announce 0, "I feel a rather powerful presence...", bc_map, "0xFFFF00";
+		sleep 2000;
+		monster 'map_pop1$,99,96,"Furious High Priest",.@priest,1, .@event$;
+		.@gid = $@mobid[0];
+		'1hmoon++;
+		unittalk .@gid, "How dare you...!";
+		sleep 1500;
+		if (unitexists(.@gid))
+			unittalk .@gid, "Don't you understand where we are...?!";
+		end;
+	case 3:
+		if (playerattached()) {
+			.@merc = getmercinfo(8);
+			if (.@merc)
+				unitkill .@merc;
+		}
+		if (countitem(25087) < 1 && rand(3) == 0) {	// #todo! chance unknown
+			instance_announce 0, "The sound of something falling as the High Priest appeared can be heard.", bc_map, "0xFFFF00";
+			enablenpc instance_npcname("#dollbox01");
+			sleep 1000;
+		}
+		instance_announce 0, "The threats have disappeared. Now is the time for us to leave this place.", bc_map, "0xFFFF00";
+		enablenpc instance_npcname("Pope#1hmoon05");
+		end;
+	}
+}
+
+1@pop1,101,91,3	script(DISABLED)	Pope#1hmoon05	4_F_ARUNA_POP,{
+	if ('progress != 3)
+		end;
+	'progress = 4;
+	setpcblock PCBLOCK_NPC, true;
+	unittalk getcharid(3), "This is dangerous. Are you sure about leaving...?";
+	sleep2 2000;
+	npctalk "It's aready too late, you know.";
+	sleep2 2000;
+	npctalk "Come on, we need to get out of here.";
+	sleep2 2000;
+	unittalk getcharid(3), "... Let's follow the Pope.";
+	disablenpc();
+	enablenpc instance_npcname("#1hmoond05");	// (warp)
+	setpcblock PCBLOCK_NPC, false;
+	end;
+}
+
+1@pop1,100,16,3	script	Pope#1hmoon06	4_F_ARUNA_POP,{
+	if ('progress != 4)
+		end;
+	mes "[???]";
+	mes "Oh, now is my chance.";
+	npctalk "I was waiting.", instance_npcname("Luwmin#1hmoon01");
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "He has white hair...";
+	mes "A boy with white hair and a pale complexion appeared.";
+	unittalk getcharid(3), "He looks the same as Pope.";
+	next;
+	cutin "pop_nor", 2;
+	mes "[Pope]";
+	mes "Brother.";
+	unittalk getcharid(3), "Brother...?";
+	next;
+	mes "[This boy seems to be Luwmin that High Priestess Niren mentioned.]";
+	next;
+	cutin "loo_nor",0;
+	mes "[Luwmin]";
+	mes "I heard you crying, hence I came here to check on you.";
+	next;
+	cutin "pop_nor", 2;
+	mes "[Pope]";
+	mes "I couldn't sneak out.";
+	next;
+	cutin "loo_sim",0;
+	mes "[Luwmin]";
+	mes "Are you okay? What happened?";
+	next;
+	cutin "pop_nor", 2;
+	mes "[Pope]";
+	mes "Yes. I'm okay now. The adventurers helped me.";
+	next;
+	cutin "loo_nor",0;
+	mes "[Luwmin]";
+	mes "Thank you for helping my sister. I'll take it from here.";
+	npctalk "Just watch from here onwards.", instance_npcname("Luwmin#1hmoon01");
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "I'm in charge of the Pope's welfare until she returns back here safely.";
+	mes "I will accompany her.";
+	unittalk getcharid(3), "I will accompany her.";
+	next;
+	cutin "loo_sim",0;
+	mes "[Luwmin]";
+	mes "......";
+	next;
+	cutin "pop_nor", 2;
+	mes "[Pope]";
+	mes "Let's go.";
+	npctalk "Brother...", instance_npcname("Pope#1hmoon06");
+	next;
+	cutin "loo_nor",0;
+	mes "[Luwmin]";
+	mes "These clothes attract attention. Lets get you a change of attire.";
+	next;
+	cutin "pop_nor", 2;
+	mes "[Pope]";
+	mes "Changing clothes ...?";
+	next;
+	cutin "loo_nor",0;
+	mes "[Luwmin]";
+	mes "It's what normal children usually...wear";
+	next;
+	cutin "pop_nor", 2;
+	mes "[Pope]";
+	mes "Ordinary clothes?";
+	next;
+	mes "[Pope]";
+	mes "Okay.";
+	next;
+	cutin "pop_nor", 255;
+	disablenpc();
+	sleep2 2000;
+	enablenpc instance_npcname("Pope#1hmoon07");
+	cutin "pops_bug", 2;
+	mes "[Pope]";
+	mes "Fuzzy ...";
+	next;
+	mes "[Pope]";
+	mes "This seems rather strange...";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "No, not the least.";
+	next;
+	cutin "Loo_smi",0;
+	mes "[Luwmin]";
+	mes "It's really pretty.";
+	next;
+	cutin "pops_lau", 2;
+	mes "[Pope]";
+	mes "That is fortunate.";
+	next;
+	cutin "Loo_smi",0;
+	mes "[Luwmin]";
+	mes "Let's go now. Mom and Dad are waiting.";
+	next;
+	cutin "pops_lau", 2;
+	mes "[Pope]";
+	mes "Yes.";
+	close2;
+	cutin "pops_lau", 255;
+	setpcblock PCBLOCK_NPC, true;
+	disablenpc instance_npcname("Pope#1hmoon07");
+	disablenpc instance_npcname("Luwmin#1hmoon01");
+	sleep2 2000;
+	enablenpc instance_npcname("Pope#1hmoon08");
+	emotion ET_THINK, getnpcid(0, instance_npcname("Pope#1hmoon08"));
+	sleep2 2000;
+	unittalk getcharid(3), "Pope? Didn't you just go out?";
+	sleep2 2000;
+	emotion ET_THINK, getnpcid(0, instance_npcname("Pope#1hmoon08"));
+	sleep2 2000;
+	specialeffect EF_HITBODY, AREA, instance_npcname("Pope#1hmoon08");
+	enablenpc instance_npcname("#1hmoond07");
+	disablenpc instance_npcname("Pope#1hmoon08");
+	unittalk getcharid(3), "I may be mistaken ... but I have to follow the Pope.";
+	if ('progress == 4)
+		'progress = 5;
+	setpcblock PCBLOCK_NPC, false;
+	end;
+}
+
+1@pop1,95,99,6	duplicate(dummy_npc)	Priest#1hmoon01	4_M_TRAINEE
+1@pop1,104,99,4	duplicate(dummy_npc)	Priest#1hmoon02	4_M_TRAINEE
+1@pop1,93,97,6	duplicate(dummy_npc)	Devotee#1hmoon01	4_M_MASK
+1@pop1,106,97,4	duplicate(dummy_npc)	Devotee#1hmoon02	4_F_MASK
+1@pop1,91,95,6	duplicate(dummy_npc)	Devotee#1hmoon03	4_M_MASK
+1@pop1,108,95,4	duplicate(dummy_npc)	Devotee#1hmoon04	4_M_MASK1
+1@pop1,91,92,6	duplicate(dummy_npc)	Devotee#1hmoon05	4_M_MASK
+1@pop1,108,92,4	duplicate(dummy_npc)	Devotee#1hmoon06	4_M_MASK1
+1@pop1,89,103,5	duplicate(dummy_npc)	Guard#1hmoon01	4_M_RASWORD
+1@pop1,110,103,3	duplicate(dummy_npc)	Guard#1hmoon02	4_M_RASWORD
+1@pop1,96,83,5	duplicate(dummy_npc)	Guard#1hmoon03	4_M_RASWORD
+1@pop1,103,83,3	duplicate(dummy_npc)	Guard#1hmoon04	4_M_RASWORD
+1@pop1,96,80,5	duplicate(dummy_npc)	Guard#1hmoon05	4_M_RASWORD
+1@pop1,103,80,3	duplicate(dummy_npc)	Guard#1hmoon06	4_M_RASWORD
+1@pop1,96,77,5	duplicate(dummy_npc)	Guard#1hmoon07	4_M_RASWORD
+1@pop1,103,77,3	duplicate(dummy_npc)	Guard#1hmoon08	4_M_RASWORD
+1@pop1,96,74,5	duplicate(dummy_npc)	Guard#1hmoon09	4_M_RASWORD
+1@pop1,103,74,3	duplicate(dummy_npc)	Guard#1hmoon10	4_M_RASWORD
+1@pop1,98,17,6	duplicate(dummy_npc)	Luwmin#1hmoon01	4_M_CHILD
+
+1@pop1,97,97,6	duplicate(dummy_disabled_npc)	Devotee#1hmoon11	4_M_MASK
+1@pop1,102,97,4	duplicate(dummy_disabled_npc)	Devotee#1hmoon12	4_F_MASK
+1@pop1,97,95,6	duplicate(dummy_disabled_npc)	Devotee#1hmoon13	4_M_MASK
+1@pop1,102,95,4	duplicate(dummy_disabled_npc)	Devotee#1hmoon14	4_M_MASK1
+1@pop1,97,92,6	duplicate(dummy_disabled_npc)	Devotee#1hmoon15	4_M_MASK
+1@pop1,102,92,4	duplicate(dummy_disabled_npc)	Devotee#1hmoon16	4_M_MASK1
+1@pop1,101,94,3	duplicate(dummy_disabled_npc)	Priest#1hmoon21	4_M_TRAINEE
+1@pop1,98,94,5	duplicate(dummy_disabled_npc)	Priest#1hmoon22	4_M_TRAINEE
+1@pop1,96,92,6	duplicate(dummy_disabled_npc)	Devotee#1hmoon23	4_M_MASK
+1@pop1,103,92,4	duplicate(dummy_disabled_npc)	Devotee#1hmoon24	4_F_MASK
+1@pop1,96,90,7	duplicate(dummy_disabled_npc)	Devotee#1hmoon25	4_M_MASK
+1@pop1,103,90,1	duplicate(dummy_disabled_npc)	Devotee#1hmoon26	4_M_MASK1
+1@pop1,101,89,1	duplicate(dummy_disabled_npc)	Devotee#1hmoon27	4_M_MASK
+1@pop1,98,89,7	duplicate(dummy_disabled_npc)	Devotee#1hmoon28	4_M_MASK1
+1@pop1,99,89,7	duplicate(dummy_disabled_npc)	Guard#1hmoon21	4_M_RASWORD
+1@pop1,100,82,1	duplicate(dummy_disabled_npc)	Guard#1hmoon22	4_M_RASWORD
+1@pop1,96,87,7	duplicate(dummy_disabled_npc)	Guard#1hmoon23	4_M_RASWORD
+1@pop1,98,87,7	duplicate(dummy_disabled_npc)	Guard#1hmoon24	4_M_RASWORD
+1@pop1,101,87,1	duplicate(dummy_disabled_npc)	Guard#1hmoon25	4_M_RASWORD
+1@pop1,103,87,1	duplicate(dummy_disabled_npc)	Guard#1hmoon26	4_M_RASWORD
+1@pop1,96,84,7	duplicate(dummy_disabled_npc)	Guard#1hmoon27	4_M_RASWORD
+1@pop1,98,84,7	duplicate(dummy_disabled_npc)	Guard#1hmoon28	4_M_RASWORD
+1@pop1,101,84,1	duplicate(dummy_disabled_npc)	Guard#1hmoon29	4_M_RASWORD
+1@pop1,103,84,1	duplicate(dummy_disabled_npc)	Guard#1hmoon30	4_M_RASWORD
+1@pop1,100,98,3	duplicate(dummy_disabled_npc)	Pope#1hmoon02	4_F_ARUNA_POP
+1@pop1,100,16,3	duplicate(dummy_disabled_npc)	Pope#1hmoon07	POPE_MD_MERC_CASUAL
+1@pop1,101,16,3	duplicate(dummy_disabled_npc)	Pope#1hmoon08	4_F_ARUNA_POP
+1@pop1,100,96,3	duplicate(dummy_disabled_npc)	Pope#1hmoon09	4_F_ARUNA_POP
+1@pop1,99,94,3	duplicate(dummy_disabled_npc)	Pope#1hmoon10	4_F_ARUNA_POP
+1@pop1,100,92,3	duplicate(dummy_disabled_npc)	Pope#1hmoon11	4_F_ARUNA_POP
+
+//============================================================
+//== Map 2
+//============================================================
+1@pop2,117,221,3	script	Pope#2hmoon01	POPE_MD_MERC_CASUAL,{
+	if ('progress != 5)
+		end;
+	'progress = 6;
+	setpcblock PCBLOCK_NPC, true;
+	npctalk "Where is it ... Where is it?", instance_npcname("Luwmin#2hmoon01");
+	sleep2 2000;
+	unittalk getcharid(3), "...This is near High Priest Zhed's residence.";
+	sleep2 2000;
+	npctalk "Zhed? Then I'll be safe here.";
+	sleep2 2000;
+	npctalk "It's too late. We have to hurry.", instance_npcname("Luwmin#2hmoon01");
+	sleep2 2000;
+	disablenpc instance_npcname("Luwmin#2hmoon01");
+	sleep2 1000;
+	npctalk "Let's go brother.";
+	sleep2 500;
+	enablenpc instance_npcname("Pope#2hmoon02");
+	enablenpc instance_npcname("Luwmin#2hmoon02");
+	disablenpc();
+	setpcblock PCBLOCK_NPC, false;
+	end;
+}
+
+1@pop2,63,237,3	script(DISABLED)	Pope#2hmoon02	4_F_ARUNA_POP2,{
+	if ('progress != 6)
+		end;
+	mes "[Luwmin]";
+	mes "This is the residence of the Priest right?";
+	next;
+	cutin "loo_nor", 255;
+	mes "[" + strcharinfo(0) + "]";
+	mes "I will survey the parameter of this guy's residence.";
+	next;
+	enablenpc instance_npcname("Guard#2hmoon01");
+	enablenpc instance_npcname("Guard#2hmoon02");
+	mes "[Guards]";
+	mes "Halt! Who goes there?";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "We do not mean harm.";
+	next;
+	mes "[Guards]";
+	mes "Oh yeah? Identify yourself!";
+	npctalk "Who is it here!", instance_npcname("Guard#2hmoon02");
+	next;
+	mes "[Guards]";
+	mes "We have intruders spotted in the garden!";
+	next;
+	enablenpc instance_npcname("High Priest Zhed#2hmoon");
+	cutin "ra_gman2", 0;
+	mes "[High Priest Zhed]";
+	mes "D-amn, what's this noise here. What's going on..?";
+	next;
+	cutin "RA_GMAN2", 255;
+	mes "[Guards]";
+	mes "High Priest, your enemes have sent children assassins to harm you!";
+	next;
+	mes "[Guards]";
+	mes "Intuders have broken into the mansion compound!!";
+	next;
+	mes "[Guards]";
+	mes "We will handle this situation.";
+	next;
+	cutin "ra_gman2", 0;
+	mes "[High Priest Zhed]";
+	mes "P-Pope, are you not the Pope?";
+	npctalk "P-Pope, are you not the Pope?", instance_npcname("High Priest Zhed#2hmoon");
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "Ah ...";
+	npctalk "Ah ...", instance_npcname("Pope#2hmoon02");
+	next;
+	cutin "ra_gman2", 0;
+	mes "[High Priest Zhed]";
+	mes "Where did you come from? The temple? What did you do to the Pope?";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "I am escorting the Pope.";
+	unittalk getcharid(3), "I am in charge.";
+	next;
+	mes "[High Priest Zhed]";
+	mes "You are an... adventurer?";
+	next;
+	mes "[High Priest Zhed]";
+	mes "Still, the Pope should not have left the temple. We have strict protocols.";
+	next;
+	mes "[High Priest Zhed]";
+	mes "In many cases, the fanatical worshippers takes things into their hands... Now before it is too late, please return to the temple.";
+	next;
+	mes "[High Priest Zhed]";
+	mes "Niren would not have wanted this..";
+	next;
+	mes "[High Priest Zhed]";
+	mes "If something were to happen to the Pope, it won't just be her problem as an individual. It will be a problem of all citizens of Arunafeltz!";
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "Am I just a vessel of the Goddess?";
+	next;
+	mes "[Pope]";
+	mes "Are you treating me as a mere vessel?";
+	next;
+	cutin "ra_gman2", 0;
+	mes "[High Priest Zhed]";
+	mes "Citizens of Arunafeltz find comfort, inspiration and hope in the Pope.";
+	next;
+	mes "[High Priest Zhed]";
+	mes "It is the duty of us priests to ensure the safety of the Pope.";
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "But Zhed ... For a while, even for a while.";
+	next;
+	mes "[Pope]";
+	mes "Please help me. Please understand...";
+	npctalk "I'll ask you again...", instance_npcname("Pope#2hmoon02");
+	next;
+	cutin "ra_gman2", 0;
+	mes "[High Priest Zhed]";
+	mes "I shall not put your safety at any risk. Allow me to escort you back to the temple.";
+	next;
+	cutin "LOO_ANG", 0;
+	mes "[Luwmin]";
+	mes "You are the real danger here... Imprisoning a little girl to some scary temple..!";
+	next;
+	cutin "ra_gman2", 0;
+	mes "[High Priest Zhed]";
+	mes "This face...and eyes. Are you Luwmin?";
+	next;
+	mes "[High Priest Zhed]";
+	mes "H-How... did you get out?";
+	npctalk "H-How... did you get out?", instance_npcname("High Priest Zhed#2hmoon");
+	next;
+	cutin "loo_smi", 0;
+	mes "[Luwmin]";
+	mes "I ...";
+	next;
+	cutin "ra_gman2", 0;
+	mes "[High Priest Zhed]";
+	mes "Guards, sieze that boy!";
+	next;
+	cutin "loo_smi", 0;
+	mes "[Luwmin]";
+	mes "It's best for us to scatter here to lose them. Let's regroup at the village.";
+	sleep2 1000;
+	cutin "loo_smi", 255;
+	disablenpc instance_npcname("Luwmin#2hmoon02");
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "This is just like...";
+	npctalk "This is just like...", instance_npcname("Pope#2hmoon02");
+	next;
+	cutin "ra_gman2", 0;
+	mes "[High Priest Zhed]";
+	mes "Pope, was that boy there..?";
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "The person...";
+	next;
+	cutin "pops_sim", 255;
+	instance_announce 0, "Guard: The Pope is here!", bc_map, "0xFFFF00";
+	sleep2 1000;
+	instance_announce 0, "Guard: Over here! Quick!!!", bc_map, "0xFFFF00";
+	sleep2 3000;
+	cutin "ra_gman2", 0;
+	mes "[High Priest Zhed]";
+	mes "Pope, did Niren approve of you sneaking out of the temple?";
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "Zhed! I am not relinquishing my duties. It's just that for a short while... Please! just for a short while...";
+	next;
+	cutin "ra_gman2", 0;
+	mes "[High Priest Zhed]";
+	mes "We cannot waste any more time being outside the temple compounds. I will take you on personally.";
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "I hate it.";
+	next;
+	cutin "ra_gman2", 0;
+	mes "[High Priest Zhed]";
+	mes "Pope, you should go.";
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "I hate it! I will not go !!!";
+	npctalk "I hate it!", instance_npcname("Pope#2hmoon02");
+	next;
+	cutin "pops_sim", 255;
+	enablenpc instance_npcname("Guard#2hmoon03");
+	enablenpc instance_npcname("Guard#2hmoon04");
+	enablenpc instance_npcname("Guard#2hmoon05");
+	enablenpc instance_npcname("Guard#2hmoon06");
+	enablenpc instance_npcname("Guard#2hmoon07");
+	enablenpc instance_npcname("Guard#2hmoon08");
+	mes "[Guards]";
+	mes "The Pope is over here!";
+	npctalk "Pope is here", instance_npcname("Guard#2hmoon03");
+	next;
+	mes "[Guards]";
+	mes "Pope, please do not resist. We're just doing our job.";
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "No, I will not go now!";
+	next;
+	cutin "pops_sim", 255;
+	mes "[Guards]";
+	mes "Pope! You must go together!";
+	npctalk "Pope! You have to go together!", instance_npcname("Guard#2hmoon03");
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "I hate, hate it!!";
+	npctalk "I hate, hate it!!", instance_npcname("Pope#2hmoon02");
+	specialeffect EF_MAGICCRASHER, AREA, instance_npcname("Pope#2hmoon02");
+	next;
+	cutin "pops_sim", 255;
+	mes "[" + strcharinfo(0) + "]";
+	mes "Let the Pope leave peacefully. Otherwise, I will exercise force.";
+	next;
+	mes "[Guards]";
+	mes "Submit! You are just a mere adventurer!";
+	npctalk "You are just a mere adventurer!", instance_npcname("Guard#2hmoon07");
+	next;
+	mes "[Guards]";
+	mes "Outsiders should not bother about our business!";
+	npctalk "Outsiders should not bother about our business!", instance_npcname("Guard#2hmoon05");
+	sleep2 500;
+	npctalk "All of you! Shut up!", instance_npcname("Guard#2hmoon04");
+	next;
+	mes "[Guards]";
+	mes "The adventurer is a hostle target. Eliminate him with prejudice!";
+	next;
+	mes "[Guards]";
+	mes "Remember, don't hurt the Pope!";
+	next;
+	mes "[Guards]";
+	mes "Ready?";
+	next;
+	mes "[Guards]";
+	mes "Halt !!";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "Pope, come here.";
+	for ( .@i = 1; .@i <= 8; ++.@i ) {
+		npctalk "Halt !!", instance_npcname("Guard#2hmoon0" + .@i);
+		disablenpc instance_npcname("Guard#2hmoon0" + .@i);
+	}
+	disablenpc instance_npcname("High Priest Zhed#2hmoon");
+	disablenpc instance_npcname("Pope#2hmoon02");
+	if ('mode == 1)
+		mercenary_create 3569,1800000; //POPE_MD_H_MERC_NORMAL
+	else
+		mercenary_create 3570,1800000; //POPE_MD_H_MERC_CASUAL
+	sleep2 1000;
+	instance_announce 0, "Guard: Pope, you must return with us!", bc_map, "0xFFFF00";
+	donpcevent instance_npcname("#mob2hmoon") + "::OnStart";
+	if ('progress == 6)
+		'progress = 7;
+	close3;
+}
+
+1@pop2,69,158,3	script(DISABLED)	Pope#2hmoon03	4_F_ARUNA_POP2,{
+	if ('progress != 7)
+		end;
+	'progress = 8;
+	setpcblock PCBLOCK_NPC, true;
+	npctalk "Thank you so much.", instance_npcname("Pope#2hmoon03");
+	sleep2 1000;
+	unittalk getcharid(3), "It's nothing. I've seen worse.";
+	sleep2 1000;
+	npctalk "Huh? I'll be waiting for you there.", instance_npcname("Pope#2hmoon03");
+	sleep2 1000;
+	unittalk getcharid(3), "Okay. I hope you weren't disturbed by that incident earlier.";
+	sleep2 1000;
+	npctalk "Don't worry. I'm fine.", instance_npcname("Pope#2hmoon03");
+	sleep2 1000;
+	enablenpc instance_npcname("#2hmoond01");
+	disablenpc instance_npcname("Pope#2hmoon03");
+	enablenpc instance_npcname("Pope#2hmoon04");
+	enablenpc instance_npcname("Luwmin#2hmoon03");
+	enablenpc instance_npcname("Puppy#2hmoon01");
+	setpcblock PCBLOCK_NPC, false;
+	end;
+}
+
+1@pop2,56,116,5	script(DISABLED)	Pope#2hmoon04	4_F_ARUNA_POP2,{
+	if ('progress != 8)
+		end;
+	mes "[Luwmin]";
+	mes "Why were you so late?";
+	npctalk "Woof!!", instance_npcname("Puppy#2hmoon01");
+	next;
+	cutin "pops_smi", 2;
+	mes "[Pope]";
+	mes "Puppy?";
+	next;
+	cutin "loo_nor", 0;
+	mes "[Luwmin]";
+	mes "Yea, I found it wandering without an owner...";
+	next;
+	cutin "pops_lau", 2;
+	mes "[Pope]";
+	mes "Cute!";
+	next;
+	cutin "LOO_SMI", 0;
+	mes "[Luwmin]";
+	mes "I thought that perhaps you might be interested in raising one?";
+	next;
+	cutin "pops_lau", 2;
+	mes "[Pope]";
+	mes "Certainly! Shall we raise him together as our pet?";
+	next;
+	cutin "loo_nor", 0;
+	mes "[Luwmin]";
+	mes "Let's get mom and dad to approve.";
+	next;
+	cutin "pops_lau", 2;
+	mes "[Pope]";
+	mes "Right!";
+	npctalk "What is your name?", instance_npcname("Pope#2hmoon04");
+	next;
+	cutin "pops_lau", 255;
+	enablenpc instance_npcname("Friend#2hmoon01");
+	mes "[Friend]";
+	mes "Are you coming?";
+	npctalk "Are you coming?", instance_npcname("Friend#2hmoon01");
+	next;
+	enablenpc instance_npcname("Friend#2hmoon02");
+	sleep2 1000;
+	enablenpc instance_npcname("Friend#2hmoon03");
+	mes "[Friend]";
+	mes "I thought you were not coming today.";
+	npctalk "I thought you were not coming today.", instance_npcname("Friend#2hmoon02");
+	next;
+	cutin "loo_smi", 0;
+	mes "[Luwmin]";
+	mes "We... were in the middle of something.";
+	next;
+	cutin "loo_smi", 255;
+	mes "[Friend]";
+	mes "Since this is a rare opporutnity, let's play together. Then we will visit each other's home~";
+	next;
+	mes "[Friend]";
+	mes "Sure, let's do that.";
+	npctalk "Sure, let's do that.", instance_npcname("Friend#2hmoon03");
+	next;
+	mes "[Friend]";
+	mes "How about we head home first?";
+	next;
+	cutin "pops_lau", 2;
+	mes "[Pope]";
+	mes "Yes !!!";
+	next;
+	cutin "loo_smi", 0;
+	mes "[Luwmin]";
+	mes "I have to hurry. Mom and dad should be expecting us..";
+	sleep2 500;
+	cutin "loo_smi", 255;
+	disablenpc instance_npcname("Pope#2hmoon04");
+	disablenpc instance_npcname("Luwmin#2hmoon03");
+	disablenpc instance_npcname("Friend#2hmoon01");
+	disablenpc instance_npcname("Friend#2hmoon02");
+	disablenpc instance_npcname("Friend#2hmoon03");
+	disablenpc instance_npcname("Puppy#2hmoon01");
+	enablenpc instance_npcname("Pope#2hmoon05");
+	enablenpc instance_npcname("Luwmin#2hmoon04");
+	enablenpc instance_npcname("Friend#2hmoon04");
+	enablenpc instance_npcname("Friend#2hmoon05");
+	enablenpc instance_npcname("Friend#2hmoon06");
+	enablenpc instance_npcname("Puppy#2hmoon02");
+	unittalk getcharid(3), "They are heading towards the Weapon Shop, I need to catch up.";
+	navigateto( "1@pop2",48,86 );
+	if ('progress == 8)
+		'progress = 9;
+	close3;
+}
+
+1@pop2,48,86,7	script(DISABLED)	Pope#2hmoon05	4_F_ARUNA_POP2,{
+	if ('progress != 9)
+		end;
+	'progress = 10;
+	setpcblock PCBLOCK_NPC, true;
+	npctalk "Your dad is making weapons for a living now?", instance_npcname("Pope#2hmoon05");
+	sleep2 2000;
+	npctalk "Yup. Do you want to see him at work?", instance_npcname("Friend#2hmoon06");
+	sleep2 2000;
+	npctalk "No ... I'm scared.", instance_npcname("Pope#2hmoon05");
+	sleep2 2000;
+	npctalk "Well what sort of weapons does he make?", instance_npcname("Luwmin#2hmoon04");
+	sleep2 2000;
+	npctalk "I think it's some common swords and the likes of it, for the guards.", instance_npcname("Friend#2hmoon05");
+	sleep2 2000;
+	npctalk "That's interesting.", instance_npcname("Friend#2hmoon06");
+	sleep2 2000;
+	npctalk "Why? You interested in such stuff?", instance_npcname("Friend#2hmoon05");
+	sleep2 2000;
+	npctalk "I really do not know to what say...", instance_npcname("Friend#2hmoon04");
+	sleep2 2000;
+	npctalk "Well if you want to, go ahead.", instance_npcname("Friend#2hmoon06");
+	sleep2 2000;
+	npctalk "Hey, how about we go the Ra's place next?", instance_npcname("Friend#2hmoon05");
+	sleep2 2000;
+	npctalk "I haven't been there for some time.", instance_npcname("Pope#2hmoon05");
+	sleep2 2000;
+	npctalk "Hehe. Let's go~.", instance_npcname("Friend#2hmoon06");
+	sleep2 2000;
+	npctalk "Really? But we just got here....", instance_npcname("Pope#2hmoon05");
+	sleep2 2000;
+	npctalk "Kids, don't forget to go home before dusk!", instance_npcname("#2mum01");
+	sleep2 2000;
+	npctalk "You guys go ahead. My curfew starts now...", instance_npcname("Friend#2hmoon06");
+	sleep2 2000;
+	npctalk "It was fun meeting you guys after all this while.", instance_npcname("Friend#2hmoon06");
+	sleep2 2000;
+	npctalk "Yes. So we'll see you tomorrow.", instance_npcname("Pope#2hmoon05");
+	sleep2 2000;
+	npctalk "Yup! Tomorrow let's play just like today!", instance_npcname("Friend#2hmoon06");
+	sleep2 2000;
+	npctalk "Yes !!", instance_npcname("Pope#2hmoon05");
+	sleep2 2000;
+	npctalk "Bye!", instance_npcname("Friend#2hmoon06");
+	sleep2 2000;
+	npctalk "Bye!", instance_npcname("Friend#2hmoon04");
+	sleep2 2000;
+	npctalk "Bye ~", instance_npcname("Friend#2hmoon05");
+	sleep2 2000;
+	npctalk "Bye ~", instance_npcname("Pope#2hmoon05");
+	disablenpc instance_npcname("Friend#2hmoon06");
+	npctalk "Let's go guys?", instance_npcname("Luwmin#2hmoon04");
+	sleep2 2000;
+	npctalk "Right!", instance_npcname("Pope#2hmoon05");
+	sleep2 2000;
+	disablenpc instance_npcname("Pope#2hmoon05");
+	disablenpc instance_npcname("Luwmin#2hmoon04");
+	disablenpc instance_npcname("Friend#2hmoon04");
+	disablenpc instance_npcname("Friend#2hmoon05");
+	disablenpc instance_npcname("Puppy#2hmoon02");
+	enablenpc instance_npcname("Pope#2hmoon08");
+	enablenpc instance_npcname("Luwmin#2hmoon07");
+	enablenpc instance_npcname("Friend#2hmoon07");
+	enablenpc instance_npcname("Friend#2hmoon08");
+	enablenpc instance_npcname("Puppy#2hmoon04");
+	unittalk getcharid(3), "The Pope is heading towards the market, I'll have to follow.";
+	navigateto( "1@pop2",89,44 );
+	setpcblock PCBLOCK_NPC, false;
+	end;
+}
+
+1@pop2,89,44,7	script(DISABLED)	Pope#2hmoon08	4_F_ARUNA_POP2,{
+	if ('progress != 10)
+		end;
+	'progress = 11;
+	setpcblock PCBLOCK_NPC, true;
+	npctalk "Your home is quite clean.";
+	sleep2 2000;
+	npctalk "Isn't it pretty?", instance_npcname("Friend#2hmoon08");
+	sleep2 2000;
+	npctalk "Yes. It's well maintained.";
+	sleep2 2000;
+	npctalk "Let's play a game while we're here.", instance_npcname("Luwmin#2hmoon07");
+	sleep2 1000;
+	npctalk "Good idea!";
+	sleep2 2000;
+	npctalk "Let's play Whack-the-Poring?", instance_npcname("Friend#2hmoon08");
+	sleep2 2000;
+	npctalk "Or hide-and-seek?", instance_npcname("Friend#2hmoon07");
+	sleep2 1000;
+	npctalk "Let's Role Play!", instance_npcname("Friend#2hmoon08");
+	sleep2 2000;
+	npctalk "That's more fun than hide-and-seek.", instance_npcname("Friend#2hmoon07");
+	sleep2 1000;
+	npctalk "It's decided!! I shall be the Pope.", instance_npcname("Friend#2hmoon08");
+	sleep2 2000;
+	npctalk "No, I want to be the Pope.", instance_npcname("Friend#2hmoon07");
+	sleep2 2000;
+	npctalk "We can only have one Pope...", instance_npcname("Friend#2hmoon08");
+	sleep2 2000;
+	npctalk "Well, we have other roles like the High Priest, the Guard...", instance_npcname("Friend#2hmoon07");
+	sleep2 2000;
+	npctalk "Both of you can become Popes!";
+	sleep2 2000;
+	npctalk "It's eating time, come and get your delicous food!", instance_npcname("#2mum02");
+	sleep2 1000;
+	npctalk "Yeah ~", instance_npcname("Friend#2hmoon08");
+	sleep2 2000;
+	npctalk "How about we just play hide-and-seek tommorow?";
+	sleep2 2000;
+	npctalk "Agreed, it's easier that way~", instance_npcname("Friend#2hmoon08");
+	sleep2 2000;
+	npctalk "Bye ~";
+	sleep2 2000;
+	npctalk "Bye ~", instance_npcname("Friend#2hmoon08");
+	sleep2 2000;
+	npctalk "Bye ~", instance_npcname("Friend#2hmoon07");
+	sleep2 2000;
+	npctalk "Tomorrow then ~";
+	disablenpc instance_npcname("Friend#2hmoon08");
+	npctalk "We will go quickly and have our food !!", instance_npcname("Luwmin#2hmoon07");
+	sleep2 1000;
+	disablenpc instance_npcname("Pope#2hmoon08");
+	disablenpc instance_npcname("Luwmin#2hmoon07");
+	disablenpc instance_npcname("Friend#2hmoon07");
+	disablenpc instance_npcname("Puppy#2hmoon04");
+	enablenpc instance_npcname("Pope#2hmoon09");
+	enablenpc instance_npcname("Luwmin#2hmoon08");
+	enablenpc instance_npcname("Friend#2hmoon09");
+	enablenpc instance_npcname("Puppy#2hmoon05");
+	unittalk getcharid(3), "Now they're moving to the right, I'll just follow.";
+	navigateto( "1@pop2",136,47 );
+	setpcblock PCBLOCK_NPC, false;
+	end;
+}
+
+1@pop2,136,47,5	script(DISABLED)	Pope#2hmoon09	4_F_ARUNA_POP2,{
+	if ('progress != 11)
+		end;
+	'progress = 12;
+	setpcblock PCBLOCK_NPC, true;
+	npctalk "Brother! Look at that! It looks delicious.";
+	sleep2 2000;
+	npctalk "Do you want to have a little?", instance_npcname("Friend#2hmoon09");
+	sleep2 2000;
+	npctalk "No, it's okay.";
+	sleep2 2000;
+	npctalk "It's always good to have guests over for a meal.", instance_npcname("Friend#2hmoon09");
+	sleep2 2000;
+	npctalk "Well ... Still ...";
+	sleep2 2000;
+	npctalk "Thank you. I'll eat well.", instance_npcname("Luwmin#2hmoon08");
+	sleep2 2000;
+	npctalk "Brother?";
+	sleep2 2000;
+	npctalk "Oh ~ My hunger has been satisfied ~", instance_npcname("Luwmin#2hmoon08");
+	sleep2 2000;
+	npctalk "Yes. Go go and eat dinner.", instance_npcname("Friend#2hmoon09");
+	sleep2 2000;
+	npctalk "Yes. So we'll see you tomorrow.";
+	sleep2 2000;
+	npctalk "Yeah. - let's meet up again tomorrow! Do not forget to play hide and seek!", instance_npcname("Friend#2hmoon09");
+	sleep2 2000;
+	npctalk "Yes! And play hide-and-seek!";
+	sleep2 2000;
+	npctalk "Bye ~", instance_npcname("Friend#2hmoon09");
+	sleep2 2000;
+	npctalk "Good bye !!";
+	disablenpc instance_npcname("Friend#2hmoon09");
+	npctalk "What do we have for this evening?";
+	sleep2 2000;
+	cutin "pops_smi", 2;
+	npctalk "Let's go.", instance_npcname("Luwmin#2hmoon08");
+	sleep2 1000;
+	disablenpc instance_npcname("Pope#2hmoon09");
+	disablenpc instance_npcname("Luwmin#2hmoon08");
+	disablenpc instance_npcname("Puppy#2hmoon05");
+	enablenpc instance_npcname("Pope#2hmoon06");
+	enablenpc instance_npcname("Luwmin#2hmoon05");
+	enablenpc instance_npcname("Puppy#2hmoon03");
+	enablenpc instance_npcname("Mom#2hmoon01");
+	enablenpc instance_npcname("Dad#2hmoon01");
+	unittalk getcharid(3), "The Pope is heading north, I'll follow.";
+	sleep2 2000;
+	cutin "", 255;
+	navigateto( "1@pop2",124,81 );
+	setpcblock PCBLOCK_NPC, false;
+	end;
+}
+
+1@pop2,124,81,5	script(DISABLED)	Pope#2hmoon06	4_F_ARUNA_POP2,{
+	if ('progress != 12)
+		end;
+	mes "[Pope]";
+	mes "Mom!";
+	npctalk "Mom!", instance_npcname("Pope#2hmoon06");
+	next;
+	cutin "pops_smi", 255;
+	mes "[Mom]";
+	mes "Where did you go? I told you to come back before the meal time.";
+	next;
+	cutin "loo_smi", 0;
+	mes "[Luwmin]";
+	mes "I'm sorry. We will come home earlier next time.";
+	next;
+	cutin "pops_smi", 2;
+	mes "[Pope]";
+	mes "Mom, we brought this little doggy back!";
+	next;
+	cutin "pops_smi", 255;
+	mes "[Mom]";
+	mes "Cute puppy.";
+	next;
+	cutin "pops_smi", 2;
+	mes "[Pope]";
+	mes "Could I raise it?";
+	next;
+	cutin "pops_smi", 255;
+	mes "[Dad]";
+	mes "I'm not sure if that's a good idea...";
+	next;
+	cutin "loo_smi", 0;
+	mes "[Luwmin]";
+	mes "Yeah.";
+	npctalk "Yeah.", instance_npcname("Luwmin#2hmoon05");
+	next;
+	cutin "loo_smi", 255;
+	mes "[" + strcharinfo(0) + "]";
+	mes "I wonder if this is the Pope's fantasy - to live a normal life.";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "It's a far cry from her daily routines as the Pope.";
+	next;
+	mes "[???]";
+	mes "There She is.";
+	npctalk "There She is.", instance_npcname("High Priest#2hmoon01");
+	next;
+	mes "[???]";
+	mes "You are right. That is indeed her..";
+	npctalk "You are right. That is indeed her.", instance_npcname("High Priest#2hmoon02");
+	next;
+	mes "[Mom]";
+	mes "What's with this noise...?";
+	next;
+	enablenpc instance_npcname("High Priest#2hmoon01");
+	sleep2 2000;
+	cutin "ra_gwoman", 0;
+	mes "[High Priest]";
+	mes "This search has been fruitful after all.";
+	npctalk "This search has been fruitful after all.", instance_npcname("High Priest#2hmoon01");
+	next;
+	enablenpc instance_npcname("High Priest#2hmoon02");
+	sleep2 2000;
+	cutin "ra_gman2", 2;
+	mes "[High Priest]";
+	mes "This is the home of our new Pope.";
+	npctalk "This is the home of our new Pope.", instance_npcname("High Priest#2hmoon02");
+	next;
+	cutin "ra_gman2", 255;
+	enablenpc instance_npcname("Devotee#2hmoon01");
+	mes "[Devotee]";
+	mes "Behold, the birth of our new Pope!";
+	next;
+	enablenpc instance_npcname("Devotee#2hmoon03");
+	enablenpc instance_npcname("Guard#2hmoon41");
+	enablenpc instance_npcname("Guard#2hmoon42");
+	enablenpc instance_npcname("Guard#2hmoon43");
+	enablenpc instance_npcname("Guard#2hmoon44");
+	enablenpc instance_npcname("Guard#2hmoon45");
+	enablenpc instance_npcname("Guard#2hmoon46");
+	enablenpc instance_npcname("Guard#2hmoon47");
+	enablenpc instance_npcname("Guard#2hmoon48");
+	enablenpc instance_npcname("Guard#2hmoon49");
+	sleep2 500;
+	npctalk "You must prevent outsiders from approaching here!", instance_npcname("Devotee#2hmoon03");
+	npctalk "Yes Sir!", instance_npcname("Guard#2hmoon41");
+	npctalk "Yes Sir!", instance_npcname("Guard#2hmoon42");
+	npctalk "Yes Sir!", instance_npcname("Guard#2hmoon43");
+	npctalk "Yes Sir!", instance_npcname("Guard#2hmoon44");
+	npctalk "Yes Sir!", instance_npcname("Guard#2hmoon45");
+	npctalk "Yes Sir!", instance_npcname("Guard#2hmoon46");
+	npctalk "Yes Sir!", instance_npcname("Guard#2hmoon47");
+	npctalk "Yes Sir!", instance_npcname("Guard#2hmoon48");
+	npctalk "Yes Sir!", instance_npcname("Guard#2hmoon49");
+	sleep2 2000;
+	disablenpc instance_npcname("Devotee#2hmoon03");
+	disablenpc instance_npcname("Guard#2hmoon41");
+	disablenpc instance_npcname("Guard#2hmoon42");
+	disablenpc instance_npcname("Guard#2hmoon43");
+	disablenpc instance_npcname("Guard#2hmoon44");
+	disablenpc instance_npcname("Guard#2hmoon45");
+	disablenpc instance_npcname("Guard#2hmoon46");
+	disablenpc instance_npcname("Guard#2hmoon47");
+	disablenpc instance_npcname("Guard#2hmoon48");
+	disablenpc instance_npcname("Guard#2hmoon49");
+	sleep2 500;
+	enablenpc instance_npcname("Devotee#2hmoon02");
+	npctalk "The Pope, our Glory!", instance_npcname("Devotee#2hmoon02");
+	mes "[Villager]";
+	mes "Did you just heard?";
+	npctalk "Did you just heard?", instance_npcname("Townsfolk#2hmoon02");
+	next;
+	mes "[Villager]";
+	mes "To think that the Pope would have been born within our neighborhood!";
+	npctalk "To think that the Pope would have been born within our neighborhood!", instance_npcname("Townsfolk#2hmoon03");
+	next;
+	enablenpc instance_npcname("Townsfolk#2hmoon01");
+	mes "[Villager]";
+	mes "What? Pope?";
+	npctalk "What? Pope ??", instance_npcname("Townsfolk#2hmoon01");
+	next;
+	enablenpc instance_npcname("Townsfolk#2hmoon02");
+	mes "[Villager]";
+	mes "We were blessed with such a gift...!";
+	npctalk "We were blessed with such a gift...!", instance_npcname("Townsfolk#2hmoon02");
+	next;
+	enablenpc instance_npcname("Townsfolk#2hmoon03");
+	mes "[Villager]";
+	mes "It seems to be a kid living next to our home. I had some close encounters with her before.... Ahem!";
+	npctalk "It seems to be a kid living next to our home. I had some close encounters with her before.... Ahem!", instance_npcname("Townsfolk#2hmoon03");
+	next;
+	enablenpc instance_npcname("Townsfolk#2hmoon04");
+	mes "[Villager]";
+	mes "Pope? Am I dreaming...?";
+	npctalk "Pope? Am I dreaming...?", instance_npcname("Townsfolk#2hmoon04");
+	next;
+	enablenpc instance_npcname("Townsfolk#2hmoon17");
+	npctalk "This is the house where the new Pope....?", instance_npcname("Townsfolk#2hmoon17");
+	mes "[Mom]";
+	mes "What is this about?";
+	next;
+	cutin "ra_gwoman", 0;
+	mes "[High Priest]";
+	mes "I came to find a child who meets the criteria for a new Pope.";
+	next;
+	enablenpc instance_npcname("Townsfolk#2hmoon12");
+	enablenpc instance_npcname("Townsfolk#2hmoon23");
+	npctalk "This is the house where the new Pope is from....?", instance_npcname("Townsfolk#2hmoon12");
+	sleep2 500;
+	cutin "ra_gman2", 2;
+	mes "[High Priest]";
+	mes "Fair skin, white hair, eyes of different colours. There is no doubt.";
+	next;
+	npctalk "Pope, the chosen one hailing from such a tattered neighbourhood?", instance_npcname("Townsfolk#2hmoon23");
+	sleep2 500;
+	cutin "ra_gwoman", 0;
+	mes "[High Priest]";
+	mes "We have waited for this special moment!!";
+	npctalk "We have waited for this special moment!!", instance_npcname("High Priest#2hmoon01");
+	next;
+	enablenpc instance_npcname("Townsfolk#2hmoon14");
+	npctalk "Without a doubt. She is indeed the Pope.", instance_npcname("Townsfolk#2hmoon14");
+	mes "[Dad]";
+	mes "Pope? Our kids are just kids.";
+	next;
+	cutin "ra_gwoman", 0;
+	mes "[High Priest]";
+	mes "Whether or not she would be the vessel for the Goddess, it shall be determined in the temple.";
+	next;
+	enablenpc instance_npcname("Townsfolk#2hmoon27");
+	enablenpc instance_npcname("Townsfolk#2hmoon22");
+	npctalk "Or, so these are the new candidates?", instance_npcname("Townsfolk#2hmoon22");
+	sleep2 500;
+	cutin "ra_gman2", 2;
+	mes "[High Priest]";
+	mes "If she fails, we shall send her back here.";
+	next;
+	npctalk "A little louder please, I can't hear what's going on!!", instance_npcname("Townsfolk#2hmoon27");
+	sleep2 500;
+	cutin "ra_gman2", 255;
+	mes "[Mom]";
+	mes "These are just ordinary children.";
+	next;
+	enablenpc instance_npcname("Townsfolk#2hmoon16");
+	npctalk "I can't miss this moment!", instance_npcname("Townsfolk#2hmoon16");
+	sleep2 500;
+	cutin "ra_gman2", 2;
+	mes "[High Priest]";
+	mes "These children have the same signs?";
+	npctalk "These children have the same signs?", instance_npcname("High Priest#2hmoon02");
+	next;
+	cutin "ra_gwoman", 0;
+	mes "[High Priest]";
+	mes "There wasn't such a precedent before..!";
+	next;
+	enablenpc instance_npcname("Townsfolk#2hmoon25");
+	npctalk "Make space, I need to see!", instance_npcname("Townsfolk#2hmoon25");
+	enablenpc instance_npcname("Townsfolk#2hmoon18");
+	npctalk "Praise the birth of a new Pope!", instance_npcname("Townsfolk#2hmoon18");
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "Niren? Is that you, Niren? Don't separate me from my family!";
+	next;
+	cutin "ra_gwoman", 0;
+	mes "[High Priest]";
+	mes "How do you know my...name? Is this Freyja's will?";
+	next;
+	mes "[High Priest]";
+	mes "This girl is undoubtly the true Pope.";
+	npctalk "This girl is undoubtly the true Pope.", instance_npcname("High Priest#2hmoon01");
+	next;
+	enablenpc instance_npcname("Townsfolk#2hmoon21");
+	npctalk "I know that kid! I know !!", instance_npcname("Townsfolk#2hmoon21");
+	mes "[High Priest]";
+	mes "It is Freyja's will, to be reincarnated in such a vessel.";
+	npctalk "It is Freyja's will, to be reincarnated in such a vessel.", instance_npcname("High Priest#2hmoon01");
+	next;
+	enablenpc instance_npcname("Townsfolk#2hmoon11");
+	npctalk "This is a historical moment!", instance_npcname("Townsfolk#2hmoon11");
+	cutin "ra_gwoman", 255;
+	mes "[Devotee]";
+	mes "Oh, praise the birth of a new Pope!";
+	npctalk "Oh, praise the birth of a new Pope!", instance_npcname("Devotee#2hmoon01");
+	next;
+	npctalk "Praise the Pope!", instance_npcname("Townsfolk#2hmoon11");
+	npctalk "Praise the Pope!", instance_npcname("Townsfolk#2hmoon12");
+	npctalk "Praise the Pope!", instance_npcname("Townsfolk#2hmoon13");
+	npctalk "Praise the Pope!", instance_npcname("Townsfolk#2hmoon14");
+	npctalk "Praise the Pope!", instance_npcname("Townsfolk#2hmoon15");
+	npctalk "Praise the Pope!", instance_npcname("Townsfolk#2hmoon16");
+	npctalk "Praise the Pope!", instance_npcname("Townsfolk#2hmoon17");
+	npctalk "Praise the Pope!", instance_npcname("Townsfolk#2hmoon18");
+	npctalk "Praise the Pope!", instance_npcname("Townsfolk#2hmoon21");
+	npctalk "Praise the Pope!", instance_npcname("Townsfolk#2hmoon22");
+	npctalk "Praise the Pope!", instance_npcname("Townsfolk#2hmoon23");
+	npctalk "Praise the Pope!", instance_npcname("Townsfolk#2hmoon24");
+	npctalk "Praise the Pope!", instance_npcname("Townsfolk#2hmoon25");
+	npctalk "Praise the Pope!", instance_npcname("Townsfolk#2hmoon26");
+	npctalk "Praise the Pope!", instance_npcname("Townsfolk#2hmoon27");
+	npctalk "Praise the Pope!", instance_npcname("Townsfolk#2hmoon01");
+	npctalk "Praise the Pope!", instance_npcname("Townsfolk#2hmoon02");
+	npctalk "Praise the Pope!", instance_npcname("Townsfolk#2hmoon03");
+	npctalk "Praise the Pope!", instance_npcname("Townsfolk#2hmoon04");
+	sleep2 500;
+	enablenpc instance_npcname("Townsfolk#2hmoon15");
+	npctalk "Hmmm, this is indeed my fortune to witness such an event!", instance_npcname("Townsfolk#2hmoon15");
+	enablenpc instance_npcname("Townsfolk#2hmoon24");
+	npctalk "The Pope has finally descended!", instance_npcname("Townsfolk#2hmoon24");
+	mes "[Devotee]";
+	mes "Praise the goddess!";
+	npctalk "Praise the goddess!", instance_npcname("Devotee#2hmoon02");
+	next;
+	npctalk "Long live the Goddess!!", instance_npcname("Townsfolk#2hmoon11");
+	npctalk "Long live the Goddess!!", instance_npcname("Townsfolk#2hmoon12");
+	npctalk "Long live the Goddess!!", instance_npcname("Townsfolk#2hmoon13");
+	npctalk "Long live the Goddess!!", instance_npcname("Townsfolk#2hmoon14");
+	npctalk "Long live the Goddess!!", instance_npcname("Townsfolk#2hmoon15");
+	npctalk "Long live the Goddess!!", instance_npcname("Townsfolk#2hmoon16");
+	npctalk "Long live the Goddess!!", instance_npcname("Townsfolk#2hmoon17");
+	npctalk "Long live the Goddess!!", instance_npcname("Townsfolk#2hmoon18");
+	npctalk "Long live the Goddess!!", instance_npcname("Townsfolk#2hmoon21");
+	npctalk "Long live the Goddess!!", instance_npcname("Townsfolk#2hmoon22");
+	npctalk "Long live the Goddess!!", instance_npcname("Townsfolk#2hmoon23");
+	npctalk "Long live the Goddess!!", instance_npcname("Townsfolk#2hmoon24");
+	npctalk "Long live the Goddess!!", instance_npcname("Townsfolk#2hmoon25");
+	npctalk "Long live the Goddess!!", instance_npcname("Townsfolk#2hmoon26");
+	npctalk "Long live the Goddess!!", instance_npcname("Townsfolk#2hmoon27");
+	npctalk "Long live the Goddess!!", instance_npcname("Townsfolk#2hmoon01");
+	npctalk "Long live the Goddess!!", instance_npcname("Townsfolk#2hmoon02");
+	npctalk "Long live the Goddess!!", instance_npcname("Townsfolk#2hmoon03");
+	npctalk "Long live the Goddess!!", instance_npcname("Townsfolk#2hmoon04");
+	sleep2 500;
+	enablenpc instance_npcname("Townsfolk#2hmoon13");
+	npctalk "I'm afraid I'm going to go! Pope I love you!", instance_npcname("Townsfolk#2hmoon13");
+	mes "[Mom]";
+	mes "Our child is the Pope...? Is that really true?";
+	next;
+	enablenpc instance_npcname("Townsfolk#2hmoon26");
+	npctalk "Without a doubt. I shall take the girl.", instance_npcname("Townsfolk#2hmoon26");
+	cutin "ra_gwoman", 0;
+	mes "[High Priest]";
+	mes "Without a doubt. I shall take the girl.";
+	next;
+	cutin "ra_gman2", 2;
+	mes "[High Priest]";
+	mes "Life in the temple will be safe and comfortable.";
+	next;
+	cutin "ra_gman2", 255;
+	mes "[Dad]";
+	mes "What about our son then?";
+	next;
+	cutin "ra_gwoman", 0;
+	mes "[High Priest]";
+	mes "A boy with the same citeria but knows nothing is useless...";
+	next;
+	cutin "ra_gman2", 2;
+	mes "[High Priest]";
+	mes "The Pope was only one minute apart from generations. And not a single boy was selected.";
+	next;
+	cutin "ra_gwoman", 0;
+	mes "[High Priest]";
+	mes "What does that mean? Or does Freyja want to have her words communicated through this boy?.";
+	next;
+	cutin "ra_gman2", 2;
+	mes "[High Priest]";
+	mes "We need to study this further. The experts should be the ones determining on this issue.";
+	next;
+	cutin "ra_gwoman", 0;
+	mes "[High Priest]";
+	mes "...We must make a decision soon.";
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "I don't want to go. I hate it. Please! Mom...? Dad...? Adventurer...? Save me...!!";
+	next;
+	cutin "loo_smi", 0;
+	mes "[Luwmin]";
+	mes "Listen to me. We will never be apart from one another.";
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "Yes!";
+	next;
+	cutin "loo_smi", 0;
+	mes "[Luwmin]";
+	mes "Remember the dreamland that the two of us often talked about?";
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "Yes, the 'Secret Garden'! I remember that.";
+	next;
+	cutin "loo_smi", 0;
+	mes "[Luwmin]";
+	mes "You can reach there via the south gate. I'll meet you there. We shall be protected from any threats over there.";
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "You're going to leave me now?";
+	npctalk "Are you going to leave me now?", instance_npcname("Pope#2hmoon06");
+	next;
+	cutin "loo_smi", 0;
+	mes "[Luwmin]";
+	mes "It's best for us to part ways here. I'll meet you at the south gate.";
+	sleep2 1000;
+	cutin "loo_smi", 255;
+	disablenpc instance_npcname("Luwmin#2hmoon05");
+	next;
+	specialeffect EF_MAGICCRASHER, AREA, instance_npcname("Pope#2hmoon06");
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "Don't go! Don't leave me just like that...";
+	npctalk "Don't go! Don't leave me just like that...", instance_npcname("Pope#2hmoon06");
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "Pope, Pope! Relax! This is a dream! It's just a dream, just wake up!";
+	next;
+	mes "[Pope]";
+	mes "Mom! Dad!! ...Don't call me Pope!";
+	npctalk "Mom! Dad !!", instance_npcname("Pope#2hmoon06");
+	cutin "pops_sim", 255;
+	next;
+	mes "[Dad]";
+	mes "I am very pleased to have such a child!";
+	npctalk "I am very pleased to have such a child!", instance_npcname("Dad#2hmoon01");
+	next;
+	mes "[Mom]";
+	mes "It is our honor to have our child as the Pope, vessel of the Goddess!";
+	npctalk "It is our honor to have our child as the Pope, vessel of the Goddess!", instance_npcname("Mom#2hmoon01");
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "Mom...? Dad...? Are you abandoning me?";
+	next;
+	cutin "pops_sim", 255;
+	mes "[Dad]";
+	mes "Pope, come on. Follow them.";
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "I hate separations, no!";
+	next;
+	cutin "pops_sim", 255;
+	mes "[Mom]";
+	mes "Isn't it a great honor, my child...?";
+	next;
+	cutin "ra_gwoman", 0;
+	mes "[High Priest]";
+	mes "We will ensure the safety of our Pope.";
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "No !!";
+	npctalk "I hate it !!", instance_npcname("Pope#2hmoon06");
+	next;
+	cutin "ra_gman2", 2;
+	mes "[High Priest]";
+	mes "We have no choice but to use force.";
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "I hate it! I will not go !!";
+	next;
+	cutin "ra_gman2", 2;
+	mes "[High Priest]";
+	mes "It is not up for you to decide. It's been determined.";
+	next;
+	cutin "ra_gman2", 255;
+	mes "[" + strcharinfo(0) + "]";
+	mes "It's pointless to use force!";
+	next;
+	mes "[Devotee]";
+	mes "How dare you interfere with this...!";
+	next;
+	mes "[Devotee]";
+	mes "It is unforgivable to defy the will of the Goddess!";
+	npctalk "It is unforgivable to defy the will of the Goddess!", instance_npcname("Devotee#2hmoon01");
+	instance_announce 0, "Townsfolk: Pope, we are all looking foward to seeing you in the temple...", bc_map, "0xFFFF00";
+	sleep2 500;
+	donpcevent instance_npcname("#mob2hmoon") + "::OnStart";
+	disablenpc instance_npcname("Pope#2hmoon06");
+	disablenpc instance_npcname("Puppy#2hmoon03");
+	disablenpc instance_npcname("Mom#2hmoon01");
+	disablenpc instance_npcname("Dad#2hmoon01");
+	disablenpc instance_npcname("High Priest#2hmoon01");
+	disablenpc instance_npcname("High Priest#2hmoon02");
+	disablenpc instance_npcname("Devotee#2hmoon01");
+	disablenpc instance_npcname("Devotee#2hmoon02");
+	disablenpc instance_npcname("Townsfolk#2hmoon01");
+	disablenpc instance_npcname("Townsfolk#2hmoon02");
+	disablenpc instance_npcname("Townsfolk#2hmoon03");
+	disablenpc instance_npcname("Townsfolk#2hmoon04");
+	disablenpc instance_npcname("Guard#2hmoon21");
+	disablenpc instance_npcname("Guard#2hmoon22");
+	disablenpc instance_npcname("Guard#2hmoon23");
+	disablenpc instance_npcname("Guard#2hmoon24");
+	disablenpc instance_npcname("Guard#2hmoon25");
+	disablenpc instance_npcname("Guard#2hmoon26");
+	disablenpc instance_npcname("Guard#2hmoon27");
+	disablenpc instance_npcname("Guard#2hmoon28");
+	disablenpc instance_npcname("Townsfolk#2hmoon11");
+	disablenpc instance_npcname("Townsfolk#2hmoon12");
+	disablenpc instance_npcname("Townsfolk#2hmoon13");
+	disablenpc instance_npcname("Townsfolk#2hmoon14");
+	disablenpc instance_npcname("Townsfolk#2hmoon15");
+	disablenpc instance_npcname("Townsfolk#2hmoon16");
+	disablenpc instance_npcname("Townsfolk#2hmoon17");
+	disablenpc instance_npcname("Townsfolk#2hmoon18");
+	disablenpc instance_npcname("Townsfolk#2hmoon21");
+	disablenpc instance_npcname("Townsfolk#2hmoon22");
+	disablenpc instance_npcname("Townsfolk#2hmoon23");
+	disablenpc instance_npcname("Townsfolk#2hmoon24");
+	disablenpc instance_npcname("Townsfolk#2hmoon25");
+	disablenpc instance_npcname("Townsfolk#2hmoon26");
+	disablenpc instance_npcname("Townsfolk#2hmoon27");
+	if ('mode == 1)
+		mercenary_create 3569,1800000; //POPE_MD_H_MERC_NORMAL
+	else
+		mercenary_create 3570,1800000; //POPE_MD_H_MERC_CASUAL
+	if ('progress == 12)
+		'progress = 13;
+	end;
+}
+
+1@pop2,64,75,3	duplicate(dummy_disabled_npc)	Pope#2hmoon07	4_F_ARUNA_POP2
+
+1@pop2,66,206,0	script(DISABLED)	#2hmoon05	139,5,5,{
+	disablenpc();
+	donpcevent instance_npcname("#mob2hmoon") + "::OnStart";
+	end;
+}
+
+1@pop2,66,156,0	duplicate(#2hmoon05)	#2hmoon06	139,5,5
+1@pop2,119,123,0	duplicate(#2hmoon05)	#2hmoon07	139,5,5
+1@pop2,48,126,0	duplicate(#2hmoon07)	#2hmoon08	139,5,5
+1@pop2,57,83,0	duplicate(#2hmoon07)	#2hmoon09	139,5,5
+1@pop2,129,38,0	duplicate(#2hmoon07)	#2hmoon10	139,5,5
+
+1@pop2,116,219,1	duplicate(dummy_npc)	Luwmin#2hmoon01	4_M_CHILD
+1@pop2,42,87,0	duplicate(dummy_npc)	#2mum01	111
+1@pop2,94,47,0	duplicate(dummy_npc)	#2mum02	111
+
+1@pop2,66,236,3	duplicate(dummy_disabled_npc)	Luwmin#2hmoon02	4_M_CHILD
+1@pop2,55,114,6	duplicate(dummy_disabled_npc)	Luwmin#2hmoon03	4_M_CHILD
+1@pop2,60,237,5	duplicate(dummy_disabled_npc)	Guard#2hmoon01	4_M_RASWORD
+1@pop2,62,234,7	duplicate(dummy_disabled_npc)	Guard#2hmoon02	4_M_RASWORD
+1@pop2,65,232,7	duplicate(dummy_disabled_npc)	Guard#2hmoon03	4_M_RASWORD
+1@pop2,62,240,5	duplicate(dummy_disabled_npc)	Guard#2hmoon04	4_M_RASWORD
+1@pop2,66,240,3	duplicate(dummy_disabled_npc)	Guard#2hmoon05	4_M_RASWORD
+1@pop2,68,239,3	duplicate(dummy_disabled_npc)	Guard#2hmoon06	4_M_RASWORD
+1@pop2,68,234,1	duplicate(dummy_disabled_npc)	Guard#2hmoon07	4_M_RASWORD
+1@pop2,70,236,1	duplicate(dummy_disabled_npc)	Guard#2hmoon08	4_M_RASWORD
+1@pop2,66,206,7	duplicate(dummy_disabled_npc)	Guard#2hmoon10	4_M_RASWORD
+1@pop2,60,204,7	duplicate(dummy_disabled_npc)	Guard#2hmoon11	4_M_RASWORD
+1@pop2,62,202,7	duplicate(dummy_disabled_npc)	Guard#2hmoon12	4_M_RASWORD
+1@pop2,64,200,7	duplicate(dummy_disabled_npc)	Guard#2hmoon13	4_M_RASWORD
+1@pop2,66,198,1	duplicate(dummy_disabled_npc)	Guard#2hmoon14	4_M_RASWORD
+1@pop2,68,200,1	duplicate(dummy_disabled_npc)	Guard#2hmoon15	4_M_RASWORD
+1@pop2,70,202,1	duplicate(dummy_disabled_npc)	Guard#2hmoon16	4_M_RASWORD
+1@pop2,72,204,1	duplicate(dummy_disabled_npc)	Guard#2hmoon17	4_M_RASWORD
+1@pop2,124,84,7	duplicate(dummy_disabled_npc)	Guard#2hmoon21	4_M_RASWORD
+1@pop2,127,83,7	duplicate(dummy_disabled_npc)	Guard#2hmoon22	4_M_RASWORD
+1@pop2,128,81,5	duplicate(dummy_disabled_npc)	Guard#2hmoon23	4_M_RASWORD
+1@pop2,128,77,5	duplicate(dummy_disabled_npc)	Guard#2hmoon24	4_M_RASWORD
+1@pop2,127,73,5	duplicate(dummy_disabled_npc)	Guard#2hmoon25	4_M_RASWORD
+1@pop2,124,71,5	duplicate(dummy_disabled_npc)	Guard#2hmoon26	4_M_RASWORD
+1@pop2,121,72,3	duplicate(dummy_disabled_npc)	Guard#2hmoon27	4_M_RASWORD
+1@pop2,119,74,3	duplicate(dummy_disabled_npc)	Guard#2hmoon28	4_M_RASWORD
+1@pop2,66,156,7	duplicate(dummy_disabled_npc)	Guard#2hmoon30	4_M_RASWORD
+1@pop2,60,154,7	duplicate(dummy_disabled_npc)	Guard#2hmoon31	4_M_RASWORD
+1@pop2,62,152,7	duplicate(dummy_disabled_npc)	Guard#2hmoon32	4_M_RASWORD
+1@pop2,64,150,7	duplicate(dummy_disabled_npc)	Guard#2hmoon33	4_M_RASWORD
+1@pop2,66,148,1	duplicate(dummy_disabled_npc)	Guard#2hmoon34	4_M_RASWORD
+1@pop2,68,150,1	duplicate(dummy_disabled_npc)	Guard#2hmoon35	4_M_RASWORD
+1@pop2,70,152,1	duplicate(dummy_disabled_npc)	Guard#2hmoon36	4_M_RASWORD
+1@pop2,72,154,1	duplicate(dummy_disabled_npc)	Guard#2hmoon37	4_M_RASWORD
+1@pop2,128,81,7	duplicate(dummy_disabled_npc)	Guard#2hmoon41	4_M_RASWORD
+1@pop2,130,81,1	duplicate(dummy_disabled_npc)	Guard#2hmoon42	4_M_RASWORD
+1@pop2,128,79,7	duplicate(dummy_disabled_npc)	Guard#2hmoon43	4_M_RASWORD
+1@pop2,130,79,1	duplicate(dummy_disabled_npc)	Guard#2hmoon44	4_M_RASWORD
+1@pop2,128,77,7	duplicate(dummy_disabled_npc)	Guard#2hmoon45	4_M_RASWORD
+1@pop2,130,77,1	duplicate(dummy_disabled_npc)	Guard#2hmoon46	4_M_RASWORD
+1@pop2,128,75,7	duplicate(dummy_disabled_npc)	Guard#2hmoon47	4_M_RASWORD
+1@pop2,130,75,1	duplicate(dummy_disabled_npc)	Guard#2hmoon48	4_M_RASWORD
+1@pop2,129,73,1	duplicate(dummy_disabled_npc)	Guard#2hmoon49	4_M_RASWORD
+1@pop2,59,235,7	duplicate(dummy_disabled_npc)	High Priest Zhed#2hmoon	4_M_RACHOLD1
+1@pop2,49,84,1	duplicate(dummy_disabled_npc)	Luwmin#2hmoon04	4_M_CHILD
+1@pop2,123,78,7	duplicate(dummy_disabled_npc)	Luwmin#2hmoon05	4_M_CHILD
+1@pop2,62,76,5	duplicate(dummy_disabled_npc)	Luwmin#2hmoon06	4_M_CHILD
+1@pop2,88,43,7	duplicate(dummy_disabled_npc)	Luwmin#2hmoon07	4_M_CHILD
+1@pop2,135,46,5	duplicate(dummy_disabled_npc)	Luwmin#2hmoon08	4_M_CHILD
+1@pop2,58,114,4	duplicate(dummy_disabled_npc)	Puppy#2hmoon01	4_DOG01
+1@pop2,50,85,1	duplicate(dummy_disabled_npc)	Puppy#2hmoon02	4_DOG01
+1@pop2,124,79,1	duplicate(dummy_disabled_npc)	Puppy#2hmoon03	4_DOG01
+1@pop2,90,42,1	duplicate(dummy_disabled_npc)	Puppy#2hmoon04	4_DOG01
+1@pop2,135,49,5	duplicate(dummy_disabled_npc)	Puppy#2hmoon05	4_DOG01
+1@pop2,59,118,3	duplicate(dummy_disabled_npc)	Friend#2hmoon01	4_F_CHILD
+1@pop2,60,117,3	duplicate(dummy_disabled_npc)	Friend#2hmoon02	4_M_MIKID
+1@pop2,60,115,1	duplicate(dummy_disabled_npc)	Friend#2hmoon03	4_F_KID2
+1@pop2,46,88,7	duplicate(dummy_disabled_npc)	Friend#2hmoon04	4_F_CHILD
+1@pop2,46,85,6	duplicate(dummy_disabled_npc)	Friend#2hmoon05	4_M_MIKID
+1@pop2,49,88,3	duplicate(dummy_disabled_npc)	Friend#2hmoon06	4_F_KID2
+1@pop2,91,43,1	duplicate(dummy_disabled_npc)	Friend#2hmoon07	4_F_CHILD
+1@pop2,92,44,3	duplicate(dummy_disabled_npc)	Friend#2hmoon08	4_M_MIKID
+1@pop2,136,45,7	duplicate(dummy_disabled_npc)	Friend#2hmoon09	4_F_CHILD
+1@pop2,121,80,5	duplicate(dummy_disabled_npc)	Mom#2hmoon01	4_F_GODEMOM
+1@pop2,121,78,7	duplicate(dummy_disabled_npc)	Dad#2hmoon01	4_M_RACHMAN1
+1@pop2,125,78,1	duplicate(dummy_disabled_npc)	High Priest#2hmoon01	4_F_MADAME
+1@pop2,123,76,7	duplicate(dummy_disabled_npc)	High Priest#2hmoon02	4_M_RACHOLD1
+1@pop2,126,80,3	duplicate(dummy_disabled_npc)	Devotee#2hmoon01	4_F_MASK
+1@pop2,122,81,5	duplicate(dummy_disabled_npc)	Devotee#2hmoon02	4_M_MASK
+1@pop2,129,83,3	duplicate(dummy_disabled_npc)	Devotee#2hmoon03	4_M_MASK
+1@pop2,130,80,1	duplicate(dummy_disabled_npc)	Townsfolk#2hmoon01	4_F_CAVE1
+1@pop2,132,76,3	duplicate(dummy_disabled_npc)	Townsfolk#2hmoon02	4_F_EINOLD
+1@pop2,129,74,1	duplicate(dummy_disabled_npc)	Townsfolk#2hmoon03	4_M_MIDDLE1
+1@pop2,130,85,3	duplicate(dummy_disabled_npc)	Townsfolk#2hmoon04	4_M_MIDDLE
+1@pop2,127,89,3	duplicate(dummy_disabled_npc)	Townsfolk#2hmoon11	1_F_01
+1@pop2,131,87,3	duplicate(dummy_disabled_npc)	Townsfolk#2hmoon12	1_M_SIGNMONK
+1@pop2,130,84,3	duplicate(dummy_disabled_npc)	Townsfolk#2hmoon13	1_M_04
+1@pop2,133,81,3	duplicate(dummy_disabled_npc)	Townsfolk#2hmoon14	1_M_SIGNMONK
+1@pop2,136,83,3	duplicate(dummy_disabled_npc)	Townsfolk#2hmoon15	1_M_JOBTESTER
+1@pop2,135,76,1	duplicate(dummy_disabled_npc)	Townsfolk#2hmoon16	4_M_MASK
+1@pop2,132,72,1	duplicate(dummy_disabled_npc)	Townsfolk#2hmoon17	4_F_04
+1@pop2,129,68,1	duplicate(dummy_disabled_npc)	Townsfolk#2hmoon18	4_KID01
+1@pop2,131,68,1	duplicate(dummy_disabled_npc)	Townsfolk#2hmoon21	1_F_01
+1@pop2,125,67,1	duplicate(dummy_disabled_npc)	Townsfolk#2hmoon22	4_F_RACHOLD
+1@pop2,119,69,7	duplicate(dummy_disabled_npc)	Townsfolk#2hmoon23	4_M_04
+1@pop2,123,84,7	duplicate(dummy_disabled_npc)	Townsfolk#2hmoon24	4_M_DESERT
+1@pop2,116,73,7	duplicate(dummy_disabled_npc)	Townsfolk#2hmoon25	4_M_CAVE1
+1@pop2,117,75,7	duplicate(dummy_disabled_npc)	Townsfolk#2hmoon26	4_F_SHABBY
+1@pop2,114,78,7	duplicate(dummy_disabled_npc)	Townsfolk#2hmoon27	101
+1@pop2,119,123,5	duplicate(dummy_disabled_npc)	Pope#2hmoon10	4_F_ARUNA_POP
+1@pop2,48,126,5	duplicate(dummy_disabled_npc)	Pope#2hmoon11	4_F_ARUNA_POP
+1@pop2,57,83,7	duplicate(dummy_disabled_npc)	Pope#2hmoon12	4_F_ARUNA_POP
+1@pop2,129,38,1	duplicate(dummy_disabled_npc)	Pope#2hmoon13	4_F_ARUNA_POP
+
+1@pop2,0,0,0	script	#mob2hmoon	139,{
+	end;
+OnStart:
+OnMyMobDead:
+	attachrid 'account_id_leader;
+	.@event$ = instance_npcname("#mob2hmoon") + "::OnMyMobDead";
+
+	if (mobcount('map_pop2$, .@event$) > 0)
+		end;
+
+	if (!'mode) {
+		.@guard = 3510; //Easy
+		.@fbel = 3511;
+		.@mbel = 3512;
+		.@dog = 3513;
+		.@priest = 3514;
+	}
+	else {
+		.@guard = 3518; //Hard
+		.@fbel = 3519;
+		.@mbel = 3520;
+		.@dog = 3521;
+		.@priest = 3522;
+	}
+	switch( '2hmoon ) {
+	case 0:
+		monster 'map_pop2$,59,235,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,60,237,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,62,234,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,65,232,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,62,240,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,66,240,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,68,239,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,68,234,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,70,236,"Guard",.@guard,1, .@event$;
+		'2hmoon++;
+		end;
+	case 1:
+		instance_announce 0, "Guards: She's heading south, stop her!", bc_map, "0xFFFF00";
+		enablenpc instance_npcname("Guard#2hmoon10");
+		enablenpc instance_npcname("Guard#2hmoon11");
+		enablenpc instance_npcname("Guard#2hmoon12");
+		enablenpc instance_npcname("Guard#2hmoon13");
+		enablenpc instance_npcname("Guard#2hmoon14");
+		enablenpc instance_npcname("Guard#2hmoon15");
+		enablenpc instance_npcname("Guard#2hmoon16");
+		enablenpc instance_npcname("Guard#2hmoon17");
+		enablenpc instance_npcname("#2hmoon05");
+		'2hmoon++;
+		end;
+	case 2:
+		setpcblock PCBLOCK_NPC, true;
+		npctalk "We will secure the safety of our new Pope.", instance_npcname("Guard#2hmoon10");
+		sleep2 1500;
+		npctalk "Anyone who disagrees will be dealt with by force.", instance_npcname("Guard#2hmoon10");
+		sleep2 1500;
+		disablenpc instance_npcname("Guard#2hmoon10");
+		disablenpc instance_npcname("Guard#2hmoon11");
+		disablenpc instance_npcname("Guard#2hmoon12");
+		disablenpc instance_npcname("Guard#2hmoon13");
+		disablenpc instance_npcname("Guard#2hmoon14");
+		disablenpc instance_npcname("Guard#2hmoon15");
+		disablenpc instance_npcname("Guard#2hmoon16");
+		disablenpc instance_npcname("Guard#2hmoon17");
+		monster 'map_pop2$,66,206,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,60,204,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,62,202,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,64,200,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,66,198,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,68,200,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,70,202,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,72,204,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,63,195,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,65,195,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,69,195,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,71,195,"Guard",.@guard,1, .@event$;
+		'2hmoon++;
+		setpcblock PCBLOCK_NPC, false;
+		end;
+	case 3:
+		instance_announce 0, "Guards: Go down! Both of them moved south!!!!", bc_map, "0xFFFF00";
+		enablenpc instance_npcname("Guard#2hmoon30");
+		enablenpc instance_npcname("Guard#2hmoon31");
+		enablenpc instance_npcname("Guard#2hmoon32");
+		enablenpc instance_npcname("Guard#2hmoon33");
+		enablenpc instance_npcname("Guard#2hmoon34");
+		enablenpc instance_npcname("Guard#2hmoon35");
+		enablenpc instance_npcname("Guard#2hmoon36");
+		enablenpc instance_npcname("Guard#2hmoon37");
+		enablenpc instance_npcname("#2hmoon06");
+		'2hmoon++;
+		end;
+	case 4:
+		setpcblock PCBLOCK_NPC, true;
+		npctalk "We must take care not to injure the Pope!", instance_npcname("Guard#2hmoon30");
+		sleep2 1500;
+		npctalk "We will secure her safety.", instance_npcname("Guard#2hmoon30");
+		sleep2 1500;
+		disablenpc instance_npcname("Guard#2hmoon30");
+		disablenpc instance_npcname("Guard#2hmoon31");
+		disablenpc instance_npcname("Guard#2hmoon32");
+		disablenpc instance_npcname("Guard#2hmoon33");
+		disablenpc instance_npcname("Guard#2hmoon34");
+		disablenpc instance_npcname("Guard#2hmoon35");
+		disablenpc instance_npcname("Guard#2hmoon36");
+		disablenpc instance_npcname("Guard#2hmoon37");
+		monster 'map_pop2$,66,156,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,60,154,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,62,152,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,64,150,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,66,148,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,68,150,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,70,152,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,72,154,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,61,145,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,63,145,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,65,145,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,67,145,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,69,145,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,71,145,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,73,145,"Guard",.@guard,1, .@event$;
+		'2hmoon++;
+		setpcblock PCBLOCK_NPC, false;
+		end;
+	case 5:
+		if (playerattached()) {
+			.@merc = getmercinfo(8,getcharid(0));
+			if (.@merc)
+				unitkill .@merc;
+		}
+		instance_announce 0, "The guards are gone. We need to hurry!", bc_map, "0xFFFF00";
+		enablenpc instance_npcname("Pope#2hmoon03");
+		'2hmoon++;
+		end;
+	case 6:
+		monster 'map_pop2$,124,84,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,127,83,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,128,81,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,128,77,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,127,73,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,124,71,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,121,72,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,119,74,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,118,77,"Guard",.@guard,1, .@event$;
+		'2hmoon++;
+		end;
+	case 7:
+		instance_announce 0, "Guards: The enemy is too strong!", bc_map, "0xFFFF00";
+		sleep2 1000;
+		instance_announce 0, "Guards: Stop the Pope from leaving!", bc_map, "0xFFFF00";
+		monster 'map_pop2$,126,80,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,129,80,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,132,80,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,126,83,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,129,83,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,132,83,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,126,82,"Suddenly Changed Dog",.@dog,1, .@event$;
+		monster 'map_pop2$,135,83,"Suddenly Changed Dog",.@dog,1, .@event$;
+		monster 'map_pop2$,130,84,"Suddenly Changed Dog",.@dog,1, .@event$;
+		monster 'map_pop2$,134,85,"Suddenly Changed Dog",.@dog,1, .@event$;
+		'2hmoon++;
+		end;
+	case 8:
+		instance_announce 0, "Guards: Watch out, they went north!", bc_map, "0xFFFF00";
+		enablenpc instance_npcname("Pope#2hmoon10");
+		enablenpc instance_npcname("#2hmoon07");
+		navigateto( "1@pop2",119,123 );
+		'2hmoon++;
+		end;
+	case 9:
+		setpcblock PCBLOCK_NPC, true;
+		npctalk "Running away won't solve anything.", instance_npcname("Pope#2hmoon10");
+		sleep2 1000;
+		npctalk "We will need to face them anyhow...", instance_npcname("Pope#2hmoon10");
+		sleep2 1000;
+		unittalk getcharid(3), "Pope...?";
+		sleep2 1500;
+		npctalk "......", instance_npcname("Pope#2hmoon10");
+		sleep2 1500;
+		specialeffect EF_MAGICCRASHER, AREA, instance_npcname("Pope#2hmoon10");
+		disablenpc instance_npcname("Pope#2hmoon10");
+		sleep2 1000;
+		instance_announce 0, "Devotees: The birth of the Pope is the will of the Goddess. Do you understand?.", bc_map, "0xFFFF00";
+		monster 'map_pop2$,116,126,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,119,126,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,122,126,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,116,123,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,119,123,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,122,123,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,116,120,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,119,120,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,122,120,"Guard",.@guard,1, .@event$;
+		monster 'map_pop2$,112,114,"Enraged Devotee",.@fbel,1, .@event$;
+		monster 'map_pop2$,113,115,"Enraged Devotee",.@fbel,1, .@event$;
+		monster 'map_pop2$,121,111,"Enraged Devotee",.@fbel,1, .@event$;
+		monster 'map_pop2$,114,115,"Enraged Devotee",.@fbel,1, .@event$;
+		monster 'map_pop2$,120,117,"Angry Devotee",.@mbel,1, .@event$;
+		monster 'map_pop2$,114,120,"Angry Devotee",.@mbel,1, .@event$;
+		monster 'map_pop2$,120,112,"Angry Devotee",.@mbel,1, .@event$;
+		monster 'map_pop2$,112,117,"Angry Devotee",.@mbel,1, .@event$;
+		'2hmoon++;
+		setpcblock PCBLOCK_NPC, false;
+		end;
+	case 10:
+		instance_announce 0, "Guards: Don't lose sight of her!", bc_map, "0xFFFF00";
+		enablenpc instance_npcname("Pope#2hmoon11");
+		enablenpc instance_npcname("#2hmoon08");
+		navigateto( "1@pop2",48,126 );
+		'2hmoon++;
+		end;
+	case 11:
+		setpcblock PCBLOCK_NPC, true;
+		npctalk "I miss Mom, Dad and Luwmin.", instance_npcname("Pope#2hmoon11");
+		sleep2 1000;
+		npctalk "I feel like I want to escape reality.", instance_npcname("Pope#2hmoon11");
+		sleep2 1000;
+		npctalk "......", instance_npcname("Pope#2hmoon11");
+		sleep2 1000;
+		specialeffect EF_MAGICCRASHER, AREA, instance_npcname("Pope#2hmoon11");
+		disablenpc instance_npcname("Pope#2hmoon11");
+		sleep2 1000;
+		instance_announce 0, "Devotees: Pope, we will welcome you with open arms.", bc_map, "0xFFFF00";
+		monster 'map_pop2$,46,122,"Enraged Devotee",.@fbel,1, .@event$;
+		monster 'map_pop2$,35,127,"Enraged Devotee",.@fbel,1, .@event$;
+		monster 'map_pop2$,51,124,"Enraged Devotee",.@fbel,1, .@event$;
+		monster 'map_pop2$,46,127,"Enraged Devotee",.@fbel,1, .@event$;
+		monster 'map_pop2$,49,122,"Enraged Devotee",.@fbel,1, .@event$;
+		monster 'map_pop2$,52,126,"Enraged Devotee",.@fbel,1, .@event$;
+		monster 'map_pop2$,46,125,"Enraged Devotee",.@fbel,1, .@event$;
+		monster 'map_pop2$,42,122,"Enraged Devotee",.@fbel,1, .@event$;
+		monster 'map_pop2$,54,113,"Angry Devotee",.@mbel,1, .@event$;
+		monster 'map_pop2$,52,116,"Angry Devotee",.@mbel,1, .@event$;
+		monster 'map_pop2$,56,116,"Angry Devotee",.@mbel,1, .@event$;
+		monster 'map_pop2$,58,119,"Angry Devotee",.@mbel,1, .@event$;
+		monster 'map_pop2$,51,112,"Angry Devotee",.@mbel,1, .@event$;
+		'2hmoon++;
+		setpcblock PCBLOCK_NPC, false;
+		end;
+	case 12:
+		instance_announce 0, "Guards: The south gate, they're heading to the south gate!!!", bc_map, "0xFFFF00";
+		enablenpc instance_npcname("Pope#2hmoon12");
+		enablenpc instance_npcname("#2hmoon09");
+		navigateto( "1@pop2",57,83 );
+		'2hmoon++;
+		end;
+	case 13:
+		setpcblock PCBLOCK_NPC, true;
+		npctalk "Don't bother with me.", instance_npcname("Pope#2hmoon12");
+		sleep2 1500;
+		npctalk "Go back to where you belong!", instance_npcname("Pope#2hmoon12");
+		sleep2 1000;
+		specialeffect EF_MAGICCRASHER, AREA, instance_npcname("Pope#2hmoon12");
+		disablenpc instance_npcname("Pope#2hmoon12");
+		sleep2 1500;
+		monster 'map_pop2$,57,80,"Furious High Priest",.@priest,1, .@event$;
+		'2hmoon++;
+		setpcblock PCBLOCK_NPC, false;
+		end;
+	case 14:
+		if (playerattached()) {
+			.@merc = getmercinfo(8,getcharid(0));
+			if (.@merc)
+				unitkill .@merc;
+		}
+		if (countitem(25087) < 1 && rand(3) == 0) {
+			instance_announce 0, "The sound of something falling when High Priest appeared was heard.", bc_map, "0xFFFF00";
+			enablenpc instance_npcname("#dollbox02");
+			sleep2 1000;
+		}
+		setpcblock PCBLOCK_NPC, true;
+		instance_announce 0, "Pope: They're all gone. Come on, I gotta get out of here.", bc_map, "0xFFFF00";
+		enablenpc instance_npcname("Pope#2hmoon07");
+		sleep2 2000;
+		enablenpc instance_npcname("Luwmin#2hmoon06");
+		npctalk "I'm not waiting for it. I came to take her. Let's go before the come back. Hurry up!", instance_npcname("Luwmin#2hmoon06");
+		sleep2 2000;
+		disablenpc instance_npcname("Luwmin#2hmoon06");
+		npctalk "Adventurer, come with us.", instance_npcname("Pope#2hmoon07");
+		sleep2 2000;
+		disablenpc instance_npcname("Pope#2hmoon07");
+		enablenpc instance_npcname("#2hmoon10");
+		enablenpc instance_npcname("Pope#2hmoon13");
+		unittalk getcharid(3), "I have to follow them!";
+		'2hmoon++;
+		setpcblock PCBLOCK_NPC, false;
+		end;
+	case 15:
+		setpcblock PCBLOCK_NPC, true;
+		npctalk "Adventurer ...", instance_npcname("Pope#2hmoon13");
+		sleep2 2000;
+		unittalk getcharid(3), "Who are you?";
+		sleep2 2000;
+		unittalk getcharid(3), "Why do you have the Pope's appearence and why are you following us?";
+		sleep2 2000;
+		npctalk "I ... I ... I ... I am ...", instance_npcname("Pope#2hmoon13");
+		sleep2 2000;
+		unittalk getcharid(3), "Pope?";
+		sleep2 2000;
+		npctalk "Adventurer, please follow me ...", instance_npcname("Pope#2hmoon13");
+		disablenpc instance_npcname("Pope#2hmoon13");
+		enablenpc instance_npcname("#2hmoond03");
+		if ('progress == 13)
+			'progress = 14;
+		setpcblock PCBLOCK_NPC, false;
+		end;
+	}
+}
+
+//============================================================
+//== Dolls
+//============================================================
+1@pop1,95,99,4	script(DISABLED)	#dollbox01	4_ENERGY_WHITE,5,5,{
+	end;
+OnTouch:
+	getitem 25087,1;
+	disablenpc();
+	end;
+}
+1@pop2,43,81,4	duplicate(#dollbox01)	#dollbox02	4_ENERGY_WHITE,5,5
+1@pop3,55,61,4	duplicate(#dollbox01)	#dollbox03	4_ENERGY_WHITE,5,5
+
+//============================================================
+//== Warps
+//============================================================
+1@pop1,63,139,0	warp2(DISABLED)	#1hmoond01	2,2,1@pop1,92,143
+1@pop1,100,134,0	warp2(DISABLED)	#1hmoond03	2,2,1@pop1,99,111
+1@pop1,99,68,0	warp2(DISABLED)	#1hmoond05	2,2,1@pop1,99,54
+1@pop1,100,8,0	warp2(DISABLED)	#1hmoond07	2,2,1@pop2,124,218
+
+1@pop2,66,134,0	warp2(DISABLED)	#2hmoond01	2,2,1@pop2,66,125
+1@pop2,130,22,0	warp2(DISABLED)	#2hmoond03	2,2,1@pop3,46,62
+
+1@pop3,79,67,0	warp2(DISABLED)	#3hmoond01	2,2,rachel,177,134
+
+//============================================================
+//== Part 3
+//============================================================
+1@pop3,45,66,3	script	Pope#3hmoon01	4_F_ARUNA_POP2,{
+	if ('progress != 14)
+		end;
+	mes "[Pope]";
+	mes "Brother, this is the place...?";
+	next;
+	cutin "loo_nor", 0;
+	mes "[Luwmin]";
+	mes "It's okay now. We are safe.";
+	next;
+	cutin "pops_nor", 2;
+	mes "[Pope]";
+	mes "The place of dreams that we always talked about? How?";
+	next;
+	cutin "loo_nor", 0;
+	mes "[Luwmin]";
+	mes "I wish, I wished. I wanted to make my dream into reality.";
+	next;
+	cutin "pops_nor", 2;
+	mes "[Pope]";
+	mes "I thought this was a place that existed only in dreams.";
+	next;
+	mes "[Pope]";
+	mes "This fountain is the same as I imagined. That tree too. And... that doll!";
+	next;
+	cutin "loo_smi", 0;
+	mes "[Luwmin]";
+	mes "If we're hiding in here. Nobody can find us.";
+	next;
+	cutin "pops_nor", 2;
+	mes "[Pope]";
+	mes "No one can ever find us?";
+	npctalk "Nobody?", instance_npcname("Pope#3hmoon01");
+	next;
+	cutin "loo_smi", 0;
+	mes "[Luwmin]";
+	mes "Yes, you can send that adventurer back now.";
+	npctalk "Let's return now.", instance_npcname("Luwmin#3hmoon01");
+	next;
+	mes "[Luwmin]";
+	mes "They are no longer needed as we are now safe.";
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "Adventurer? But ...";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "I will stay with the Pope until the end.";
+	unittalk getcharid(3), "I will stay with the Pope to the end.";
+	next;
+	cutin "loo_ang", 0;
+	mes "[Luwmin]";
+	mes "Keep her safe from what? We were fine until you came!";
+	next;
+	mes "[Luwmin]";
+	mes "After you appeared, we had high priests and guards coming for us.... We even got separated from our parents!!";
+	next;
+	mes "[Luwmin]";
+	mes "You are a risk to us!";
+	npctalk "You are a risk to us!", instance_npcname("Luwmin#3hmoon01");
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "Brother, don't say that. The Adventurer has been a trustful companion.";
+	next;
+	cutin "loo_ang", 0;
+	mes "[Luwmin]";
+	mes "Really? Are you for real? Even though everyone out there betrayed us?";
+	next;
+	cutin "pops_smi", 2;
+	mes "[Pope]";
+	mes "Yes. I believe in the adventurer.";
+	next;
+	cutin "loo_smi", 0;
+	mes "[Luwmin]";
+	mes "I thought this place was just for the two of us...now this?";
+	next;
+	cutin "loo_ang", 0;
+	mes "[Luwmin]";
+	mes "You think that this adventurer could protect you better than I could?";
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "But ...";
+	npctalk "But ...", instance_npcname("Pope#3hmoon01");
+	next;
+	cutin "loo_smi", 0;
+	mes "[Luwmin]";
+	mes "We will be hidden here forever. Free from the priests, guards... even mom and dad.";
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "... Nobody will ever find us! I would bet my life on that..!";
+	npctalk "Forever ... Nobody will find ...", instance_npcname("Pope#3hmoon01");
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "Pope! You cannot stay here forever, you need to wake up eventually!";
+	next;
+	cutin "pops_nor", 2;
+	mes "[Pope]";
+	mes "Dream ...?";
+	npctalk "Dream ...?", instance_npcname("Pope#3hmoon01");
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "In reality, many people are awaiting your presence. This is just a dream which may not reflect what have happened in the past.";
+	next;
+	cutin "loo_ang", 0;
+	mes "[Luwmin]";
+	mes "Do not listen to him! It's all a lie!";
+	npctalk "Do not listen to him! It's all a lie!", instance_npcname("Luwmin#3hmoon01");
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "This is a dream ...?";
+	npctalk "This is a dream ...?", instance_npcname("Pope#3hmoon01");
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "Yes, that's right. This is just a dream. It's a manifestation of all of your anxiety and Luwmin's. Not everything you saw was real.";
+	next;
+	cutin "loo_ang", 0;
+	mes "[Luwmin]";
+	mes "A lie! It's all a lie!!";
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "I lost Tilibi in the darkness, and...then, I met the adventurer.";
+	next;
+	cutin "pops_sim", 255;
+	mes "[" + strcharinfo(0) + "]";
+	mes "Your anxiety has been terribly distorted in this dream.";
+	next;
+	cutin "loo_ang", 0;
+	mes "[Luwmin]";
+	mes "Don't listen to that. Don't even think about that!";
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "Mom and dad abandoned me...";
+	next;
+	cutin "pops_sim", 255;
+	mes "[" + strcharinfo(0) + "]";
+	mes "Those people weren't your real parents...";
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "I... I need to go back there...";
+	next;
+	cutin "loo_smi", 0;
+	mes "[Luwmin]";
+	mes "You want to go back? You can stay here forever without the interference from others. You told me life outside is...suffocating.";
+	next;
+	cutin "pops_smi", 2;
+	mes "[Pope]";
+	mes "I can withstand it brother. I can withstand it.";
+	npctalk "Going together.", instance_npcname("Pope#3hmoon01");
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "Don't do that. Luwmin is frozen and can not move.";
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "He's frozen?";
+	npctalk "He's frozen?", instance_npcname("Pope#3hmoon01");
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "Before coming here, I was told by Niren.";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "That the Pope's twin brother, Luwmin, was sealed in the depths of the Ice Cave.";
+	next;
+	cutin "loo_ang", 0;
+	mes "[Luwmin]";
+	mes "What do you know...! People are evil to the core! We never had a choice!";
+	next;
+	mes "[Luwmin]";
+	mes "Just because we were born with this appearance, we were snatched to the temple. I was imprisoned in ice for this very reason!";
+	next;
+	mes "[Luwmin]";
+	mes "We didn't even receive a proper explanation!";
+	next;
+	mes "[Luwmin]";
+	mes "Why was I even born into such a fate in the first place...";
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "Sealed? My brother...sealed?";
+	next;
+	cutin "loo_smi", 0;
+	mes "[Luwmin]";
+	mes "It doesn't matter now. We will always be together from now on.";
+	npctalk "We are always together.", instance_npcname("Luwmin#3hmoon01");
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "That was a long time ago...";
+	npctalk "That was a long time ago...", instance_npcname("Pope#3hmoon01");
+	next;
+	mes "[Pope]";
+	mes "My brother suddenly disappeared.";
+	npctalk "My brother suddenly disappeared.", instance_npcname("Pope#3hmoon01");
+	next;
+	mes "[Pope]";
+	mes "Seal ... Ice Cave ... It's cold now.";
+	npctalk "It's cold now.", instance_npcname("Pope#3hmoon01");
+	next;
+	mes "[Pope]";
+	mes "What do you dream of now, brother?";
+	npctalk "What do you dream of now, brother?", instance_npcname("Pope#3hmoon01");
+	next;
+	mes "[Pope]";
+	mes "Is that why my brother wants to share a dream with me?";
+	npctalk "Is that why my brother wants to share a dream with me?", instance_npcname("Pope#3hmoon01");
+	next;
+	mes "[Pope]";
+	mes "What do you want to dream about?";
+	npctalk "What do you want to dream about?", instance_npcname("Pope#3hmoon01");
+	next;
+	cutin "loo_smi", 0;
+	mes "[Luwmin]";
+	mes "To be together as before.";
+	npctalk "To be together as before.", instance_npcname("Luwmin#3hmoon01");
+	next;
+	mes "[Luwmin]";
+	mes "Here.";
+	npctalk "Here.", instance_npcname("Luwmin#3hmoon01");
+	next;
+	mes "[Luwmin]";
+	mes "Forever.";
+	npctalk "Forever.", instance_npcname("Luwmin#3hmoon01");
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "This isn't right.";
+	next;
+	cutin "loo_ang", 0;
+	mes "[Luwmin]";
+	mes "Don't you dare interfere!";
+	specialeffect2 EF_FROSTDIVER2;
+	next;
+	mes "[Luwmin]";
+	mes "The annoying adventurer will soon be gone!!!!";
+	npctalk "The annoying adventurer will soon be gone!!!!", instance_npcname("Luwmin#3hmoon01");
+	cutin "loo_ang", 255;
+	specialeffect2 EF_ICEWALL;
+	unittalk getcharid(3), "?? ....";
+	sleep2 1000;
+	cutin "loo_ang", 0;
+	next;
+	mes "[Luwmin]";
+	mes "Begone!";
+	next;
+	cutin "loo_ang", 255;
+	mes "[Pope]";
+	mes "Brother...?";
+	npctalk "Brother...?", instance_npcname("Pope#3hmoon01");
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "Pope, it's dangerous!";
+	mes "Come closer to me...!!!";
+	disablenpc instance_npcname("Luwmin#3hmoon01");
+	disablenpc instance_npcname("Pope#3hmoon01");
+	if ('mode == 1)
+		mercenary_create 3569,1800000; //POPE_MD_H_MERC_NORMAL
+	else
+		mercenary_create 3570,1800000; //POPE_MD_H_MERC_CASUAL
+	instance_announce 0, "There seems to be a chilling presence...", bc_map, "0xFFFF00";
+	if ('progress == 14) {
+		'progress = 15;
+		donpcevent instance_npcname("#mob3hmoon") + "::OnStart";
+	}
+	close3;
+}
+
+1@pop3,42,64,7	duplicate(dummy_npc)	Luwmin#3hmoon01	4_M_CHILD
+
+1@pop3,51,65,7	duplicate(dummy_disabled_npc)	Pope#3hmoon03	4_F_ARUNA_POP
+1@pop3,51,65,7	duplicate(dummy_disabled_npc)	Pope#3hmoon04	4_F_ARUNA_POP2
+1@pop3,57,68,3	duplicate(dummy_disabled_npc)	Pope#3hmoon05	4_F_ARUNA_POP2
+1@pop3,57,68,3	duplicate(dummy_disabled_npc)	Pope#3hmoon06	4_F_ARUNA_POP
+1@pop3,54,69,6	duplicate(dummy_disabled_npc)	Luwmin#3hmoon02	925
+
+1@pop3,54,69,6	script(DISABLED)	Ktullanux#3hmoon01	1779,5,5,{
+	if ('progress != 16)
+		end;
+	mes "[?????]";
+	mes "It's a trivial human.";
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "Who are you?";
+	next;
+	cutin "pops_sim", 255;
+	mes "[Ktullanux]";
+	mes "This here is the owner of the Ice Cave.";
+	npctalk "Do you not recognize me?", instance_npcname("Ktullanux#3hmoon01");
+	sleep2 1000;
+	unittalk getcharid(3), "Who knows?";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "The owner of the Ice Cave? Was this not the dream of the Pope and Luwmin?";
+	next;
+	mes "[Ktullanux]";
+	mes "Siblings can share a dream, through sheer determination.";
+	npctalk "Siblings can share a dream, through sheer determination.", instance_npcname("Ktullanux#3hmoon01");
+	next;
+	mes "[Ktullanux]";
+	mes "A mere child who became the Pope and her twin sibling Luwmin who was sealed?";
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "Why was my brother...";
+	npctalk "Why ...", instance_npcname("Pope#3hmoon04");
+	next;
+	cutin "pops_sim", 255;
+	mes "[Ktullanux]";
+	mes "Why? Why you ask?";
+	next;
+	mes "[Ktullanux]";
+	mes "Luwmin, the younger sibling, was forcefully pushed deep into the cave and became frozen.";
+	npctalk "......", instance_npcname("Pope#3hmoon04");
+	next;
+	mes "[Ktullanux]";
+	mes "Humans carrying the fire of Odin threatening me to keep this child frozen here...";
+	next;
+	mes "[Ktullanux]";
+	mes "I am still capable of some compassion to humans.";
+	next;
+	mes "[Ktullanux]";
+	mes "Hence I looked into the consciousness of Luwmin.";
+	next;
+	mes "[Ktullanux]";
+	mes "I could see what transpired back then...";
+	next;
+	mes "[Ktullanux]";
+	mes "The memories were mainly related to his twin.";
+	next;
+	mes "[Ktullanux]";
+	mes "Remember that you used to play together with your brother, share conversations in bed, and to cry and laugh together.";
+	npctalk "That was a precious memory.", instance_npcname("Ktullanux#3hmoon01");
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "Brother ...";
+	next;
+	cutin "pops_sim", 255;
+	mes "[Ktullanux]";
+	mes "I decided to help Luwmin. It was a way to help him.";
+	next;
+	mes "[Ktullanux]";
+	mes "We have found a way to be liberated. And it was not difficult.";
+	next;
+	mes "[Ktullanux]";
+	mes "Luwmin had the power to share a dream with his sibling.";
+	next;
+	mes "[Ktullanux]";
+	mes "To make his sister, sitting on the throne of the Pope, to be trapped forever in a dream.";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "How did it help you?";
+	next;
+	mes "[Ktullanux]";
+	mes "The men who threatened the Pope had me stuck in eternal slumber must be worried right now. Both of us have a common enemy.";
+	next;
+	mes "[Ktullanux]";
+	mes "How upsetting it must be having their leader in slumber... deep slumber.";
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "So you could share this revenge with Luwmin?";
+	next;
+	cutin "pops_sim", 255;
+	mes "[" + strcharinfo(0) + "]";
+	mes "What a dream you have...";
+	unittalk getcharid(3), "This is an unstable dream.";
+	sleep2 2000;
+	npctalk "You are rude!", instance_npcname("Ktullanux#3hmoon01");
+	next;
+	mes "[Ktullanux]";
+	mes "If you did not interfere !!!";
+	next;
+	mes "[Ktullanux]";
+	mes "I will get rid of both the Pope and Luwmin.";
+	next;
+	mes "[Ktullanux]";
+	mes "Pope, come here!";
+	disablenpc instance_npcname("Ktullanux#3hmoon01");
+	disablenpc instance_npcname("Pope#3hmoon04");
+	if ('mode == 1)
+		mercenary_create 3569,1800000; //POPE_MD_H_MERC_NORMAL
+	else
+		mercenary_create 3570,1800000; //POPE_MD_H_MERC_CASUAL
+	instance_announce 0, "Ktullanux: I shall grant you a painless demise!", bc_map, "0xFFFF00";
+	if ('progress == 16) {
+		'progress = 17;
+		donpcevent instance_npcname("#mob3hmoon") + "::OnStart";
+	}
+	close3;
+}
+
+1@pop3,57,68,1	script(DISABLED)	Pope#3hmoon02	4_F_ARUNA_POP2,{
+	if ('progress != 18)
+		end;
+	mes "[" + strcharinfo(0) + "]";
+	mes "Pope, are you all right?";
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "Brother...was frozen in the Ice Cave.";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "Luwmin's consciousness is no longer in this dream.";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "This was a dream realm created by Luwmin, shared by the Pope. The fate of twins simultaneously made this dream possible.";
+	next;
+	mes "[Pope]";
+	mes "I wish to save my brother. I want to accompany him here..";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "If the Pope does not return, many will be upset.";
+	next;
+	mes "[Pope]";
+	mes "I don't wanna go back. This is where I belong.";
+	next;
+	enablenpc instance_npcname("Pope#3hmoon03");
+	cutin "pop_nor", 0;
+	mes "[Pope]";
+	mes "Go back.";
+	npctalk "Go back to where you belong.", instance_npcname("Pope#3hmoon03");
+	next;
+	mes "[Pope]";
+	mes "The place of dreams whose passage opens at night...";
+	next;
+	mes "[Pope]";
+	mes "I cannot hide.";
+	next;
+	disablenpc instance_npcname("Pope#3hmoon02");
+	enablenpc instance_npcname("Pope#3hmoon05");
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "Who are you, who are you?";
+	npctalk "Who are you, who are you?", instance_npcname("Pope#3hmoon05");
+	next;
+	cutin "pop_nor", 0;
+	mes "[Pope]";
+	mes "Do you know who you are?";
+	npctalk "Who are you?", instance_npcname("Pope#3hmoon03");
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "I ... I ...";
+	next;
+	cutin "pop_nor", 0;
+	mes "[Pope]";
+	mes "You already know the answer.";
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "I do not know the answer ... I'll be with my brother, here.";
+	npctalk "... I'll be with my brother, here.", instance_npcname("Pope#3hmoon05");
+	next;
+	cutin "pop_nor", 0;
+	mes "[Pope]";
+	mes "I always wanted to be with my brother.";
+	npctalk "I always wanted to be with my brother.", instance_npcname("Pope#3hmoon03");
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "Mom and dad would not have wanted this...";
+	npctalk "Mom and dad would not have wanted this...", instance_npcname("Pope#3hmoon05");
+	next;
+	cutin "pop_nor", 0;
+	mes "[Pope]";
+	mes "Our mom, our dad. They were 'honored' to offer us.";
+	npctalk "Our mom, our dad. They were 'honored' to offer us.", instance_npcname("Pope#3hmoon03");
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "Nobody wanted me in the first place.";
+	npctalk "Nobody wanted me in the first place.", instance_npcname("Pope#3hmoon05");
+	next;
+	cutin "pop_nor", 0;
+	mes "[Pope]";
+	mes "Then what about the people waiting for you in reality?";
+	npctalk "Then what about the people waiting for you in reality?", instance_npcname("Pope#3hmoon03");
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "...I'm nobody's replacement, I did not want anything like this to happen in the first place!";
+	npctalk "...I'm nobody's replacement, I did not want anything like this to happen in the first place!", instance_npcname("Pope#3hmoon05");
+	next;
+	cutin "pop_nor", 0;
+	mes "[Pope]";
+	mes "Life is a blessing. Sometimes, you don't get to choose what you want in life.";
+	npctalk "Life is a blessing. Sometimes, you don't get to choose what you want in life.", instance_npcname("Pope#3hmoon03");
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "Even so, that would...make me very happy.";
+	npctalk "Even so, that would...make me very happy.", instance_npcname("Pope#3hmoon05");
+	next;
+	cutin "pop_nor", 0;
+	mes "[Pope]";
+	mes "You are the one who can give yourself a chance by giving others a chance. You are of a special existence, such as being a moon in the darkness.";
+	npctalk "You are the one who can give yourself a chance by giving others a chance. You are of a special existence, such as being a moon in the darkness.", instance_npcname("Pope#3hmoon03");
+	next;
+	cutin "pops_sim", 2;
+	mes "[Pope]";
+	mes "I, I ...";
+	next;
+	cutin "pop_nor", 0;
+	mes "[Pope]";
+	mes "Who are you?";
+	next;
+	cutin "pops_smi", 2;
+	mes "[Pope]";
+	mes "I am the Pope of Arunafeltz.";
+	npctalk "I am the Pope of Arunafeltz.", instance_npcname("Pope#3hmoon05");
+	next;
+	cutin "pops_smi", 2;
+	mes "[Pope]";
+	mes "You are me.";
+	npctalk "You are me.", instance_npcname("Pope#3hmoon05");
+	next;
+	cutin "pop_nor", 0;
+	mes "[Pope]";
+	mes "I am you.";
+	npctalk "I am you.", instance_npcname("Pope#3hmoon03");
+	next;
+	cutin "pops_smi", 2;
+	mes "[Pope]";
+	mes "I am the Pope of Arunafeltz.";
+	npctalk "I am the Pope of Arunafeltz.", instance_npcname("Pope#3hmoon05");
+	next;
+	cutin "pop_nor", 0;
+	mes "[Pope]";
+	mes "I am the Pope of Arunafeltz.";
+	npctalk "I am the Pope of Arunafeltz.", instance_npcname("Pope#3hmoon03");
+	cutin "pop_nor", 255;
+	sleep2 2000;
+	specialeffect EF_CONCENTRATION2, AREA, instance_npcname("Pope#3hmoon03");
+	specialeffect EF_CONCENTRATION2, AREA, instance_npcname("Pope#3hmoon03");
+	sleep2 1000;
+	specialeffect EF_BASH3D6, AREA, instance_npcname("Pope#3hmoon05");
+	specialeffect EF_ITEM315, AREA, instance_npcname("Pope#3hmoon05");
+	specialeffect EF_BASH3D6, AREA, instance_npcname("Pope#3hmoon03");
+	specialeffect EF_ITEM315, AREA, instance_npcname("Pope#3hmoon03");
+	specialeffect 1044, AREA, instance_npcname("Pope#3hmoon03");
+	specialeffect 1044, AREA, instance_npcname("Pope#3hmoon03");
+	disablenpc instance_npcname("Pope#3hmoon03");
+	sleep2 2000;
+	specialeffect EF_PRIMECHARGE4, AREA, instance_npcname("Pope#3hmoon05");
+	disablenpc instance_npcname("Pope#3hmoon05");
+	enablenpc instance_npcname("Pope#3hmoon06");
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "Are you okay?";
+	next;
+	cutin "pop_nor", 2;
+	mes "[Pope]";
+	mes "I finally understood...";
+	next;
+	mes "[Pope]";
+	mes "People love me. To do my best...is to be myself.";
+	next;
+	mes "[Pope]";
+	mes "It's time to wake up from this dream.";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "How was your dream?";
+	next;
+	mes "[Pope]";
+	mes "It was fun, I would never want to forget it. I was so happy. Still, it was a happy dream and it can also be terrible nightmare.";
+	next;
+	cutin "pop_nor", 2;
+	mes "[Pope]";
+	mes "... But I was happy to meet my brother like this.";
+	next;
+	mes "[Pope]";
+	mes "It's been a long time";
+	next;
+	mes "[Pope]";
+	mes "If I can have this dream again, I want to save my brother.";
+	npctalk "If you can get ...", instance_npcname("Pope#3hmoon06");
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "However...";
+	next;
+	mes "[Pope]";
+	mes "Don't worry, it's not as if I will be sleeping forever.";
+	next;
+	mes "[Pope]";
+	mes "I still ... Perhaps I'll have this dream again.";
+	next;
+	cutin "pop_nor", 2;
+	mes "[Pope]";
+	mes "...and a dream of having my brother by my side...";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "We will face this together.";
+	next;
+	cutin "pop_nor", 2;
+	mes "[Pope]";
+	mes "Thank...you.";
+	next;
+	cutin "pop_nor", 2;
+	mes "[Pope]";
+	mes "To wait for a Half Moon in the Daylight.";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "By the way, I found this doll.";
+	next;
+	mes "[Pope]";
+	mes "Tilibi!";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "The lost doll.. does it have a special significance to you?";
+	next;
+	mes "[Pope]";
+	mes "My brother gave me the doll to comfort me.";
+	next;
+	mes "[Pope]";
+	mes "Now I no longer need it, as long as I have my brother. I am not lonely.";
+	next;
+	mes "[Pope]";
+	mes "I will go back to where I belong.";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "Well, I'll see you tomorrow.";
+	next;
+	mes "[Pope]";
+	mes "Thank you for helping me.";
+	if (countitem(25087) > 0) {
+		delitem 25087,1; //Old_Doll
+		getexp 350000,350000;
+		getitem 25088,2; //Dream_Piece
+	}
+	if ('progress == 18)
+		'progress = 19;
+	disablenpc instance_npcname("Pope#3hmoon06");
+	instance_announce 0, "An exit has appeared in the east direction.", bc_map, "0xFFFF00";
+	enablenpc instance_npcname("#3hmoond01");
+	cutin "pop_nor",255;
+	navigateto( "1@pop3",79,67 );
+	close3;
+}
+
+1@pop3,0,0,0	script	#mob3hmoon	139,{
+OnStart:
+OnMyMobDead:
+	if (mobcount('map_pop3$, instance_npcname("#mob3hmoon") + "::OnMyMobDead") > 0)
+		end;
+	killmonsterall 'map_pop3$;
+	if (!'mode) {
+		.@ice = 3515; //Easy
+		.@loo = 3516;
+	} else {
+		.@ice = 3523; //Hard
+		.@loo = 3524;
+	}
+	switch( '3hmoon ) {
+	case 0:
+		monster 'map_pop3$,55,61,"Enraged Luwmin",.@loo,1, instance_npcname("#mob3hmoon") + "::OnMyMobDead";
+		monster 'map_pop3$,50,62,"Frozen Heart",.@ice,1;
+		monster 'map_pop3$,49,65,"Frozen Heart",.@ice,1;
+		monster 'map_pop3$,60,62,"Frozen Heart",.@ice,1;
+		monster 'map_pop3$,44,56,"Frozen Heart",.@ice,1;
+		monster 'map_pop3$,42,60,"Frozen Heart",.@ice,1;
+		monster 'map_pop3$,42,51,"Frozen Heart",.@ice,1;
+		'3hmoon++;
+		end;
+	case 1:
+		if (playerattached()) {
+			.@merc = getmercinfo(8,getcharid(0));
+			if (.@merc)
+				unitkill .@merc;
+		}
+		if (countitem(25087) < 1) {
+			instance_announce 0, "The sound of something falling when Luwmin appeared can be heard.", bc_map, "0xFFFF00";
+			enablenpc instance_npcname("#dollbox03");
+			sleep 1000;
+		}
+		instance_announce 0, "... Lonely... Alone... I hate this coldness...", bc_map, "0xFFFF00";
+		if (!'mode) {
+			if ('progress == 15)
+				'progress = 18;	// (final)
+			enablenpc instance_npcname("Pope#3hmoon02");
+			enablenpc instance_npcname("Luwmin#3hmoon02");
+			end;
+		}
+		sleep 1000;
+		instance_announce 0, "Someday you will be abandoned, like me!!", bc_map, "0xFFFF00";
+		enablenpc instance_npcname("Ktullanux#3hmoon01");
+		enablenpc instance_npcname("Pope#3hmoon04");
+		if ('progress == 15)
+			'progress = 16;
+		'3hmoon++;
+		end;
+	case 2:
+		monster 'map_pop3$,54,69,"Ktullanux",3526,1, instance_npcname("#mob3hmoon") + "::OnMyMobDead";
+		monster 'map_pop3$,62,57,"Frozen Heart",.@ice,1;
+		monster 'map_pop3$,49,62,"Frozen Heart",.@ice,1;
+		monster 'map_pop3$,63,54,"Frozen Heart",.@ice,1;
+		monster 'map_pop3$,59,51,"Frozen Heart",.@ice,1;
+		monster 'map_pop3$,59,55,"Frozen Heart",.@ice,1;
+		monster 'map_pop3$,53,61,"Frozen Heart",.@ice,1;
+		monster 'map_pop3$,53,58,"Frozen Heart",.@ice,1;
+		monster 'map_pop3$,48,61,"Frozen Heart",.@ice,1;
+		monster 'map_pop3$,54,53,"Frozen Heart",.@ice,1;
+		monster 'map_pop3$,44,68,"Frozen Heart",.@ice,1;
+		monster 'map_pop3$,51,54,"Frozen Heart",.@ice,1;
+		'3hmoon++;
+		end;
+	case 3:
+		if (playerattached()) {
+			.@merc = getmercinfo(8,getcharid(0));
+			if (.@merc)
+				unitkill .@merc;
+		}
+		instance_announce 0, "Arghh...... To think that this was just a mere mortal...! What a disgrace...!!!", bc_map, "0xFFFF00";
+		enablenpc instance_npcname("Pope#3hmoon02");
+		enablenpc instance_npcname("Luwmin#3hmoon02");
+		if ('progress == 17)
+			'progress = 18;
+		end;
+	}
+}

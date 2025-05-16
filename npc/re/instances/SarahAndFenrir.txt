@@ -2038,7 +2038,7 @@ OnMobDead:
 OnTouch:
 	getmapxy .@map$,.@x,.@y, BL_NPC;
 	monster .@map$,.@x,.@y, "Mutant Gargoyle",3197,1, instance_npcname( strnpcinfo(0) ) + "::OnMobDead";	// MM_M_GARGOYLE
-	disablenpc instance_npcname( strnpcinfo(0) );
+	disablenpc();
 	end;
 OnMobDead:
 	end;

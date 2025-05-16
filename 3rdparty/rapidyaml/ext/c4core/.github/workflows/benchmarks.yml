@@ -1,0 +1,87 @@
+name: benchmarks
+
+defaults:
+  run:
+    # Use a bash shell so we can use the same syntax for environment variable
+    # access regardless of the host operating system
+    shell: bash -e -x {0}
+
+on:
+  # https://github.community/t/how-to-trigger-an-action-on-push-or-pull-request-but-not-both/16662
+  workflow_dispatch:
+  push:
+    branches:
+    - master
+  pull_request:
+    branches:
+    - master
+
+env:
+  PROJ_PFX_TARGET: c4core-
+  PROJ_PFX_CMAKE: C4CORE_
+  CMAKE_FLAGS:
+  NUM_JOBS_BUILD: # 4
+
+
+jobs:
+  benchmarks:
+    name: bm/c++${{matrix.std}}/${{matrix.cxx}}/${{matrix.bt}}
+    if: |
+      (!contains(github.event.head_commit.message, 'skip all')) ||
+      (!contains(github.event.head_commit.message, 'skip benchmarks')) ||
+      contains(github.event.head_commit.message, 'only benchmarks')
+    continue-on-error: true
+    runs-on: ${{matrix.os}}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {std: 11, cxx: g++-10, bt: Debug  , os: ubuntu-18.04  , bitlinks: static64 static32}
+          - {std: 11, cxx: g++-10, bt: Release, os: ubuntu-18.04  , bitlinks: static64 static32}
+          - {std: 17, cxx: g++-10, bt: Debug  , os: ubuntu-18.04  , bitlinks: static64 static32}
+          - {std: 17, cxx: g++-10, bt: Release, os: ubuntu-18.04  , bitlinks: static64 static32}
+          - {std: 20, cxx: g++-10, bt: Debug  , os: ubuntu-18.04  , bitlinks: static64 static32}
+          - {std: 20, cxx: g++-10, bt: Release, os: ubuntu-18.04  , bitlinks: static64 static32}
+          - {std: 11, cxx: vs2019, bt: Debug  , os: windows-latest, bitlinks: static64 static32}
+          - {std: 11, cxx: vs2019, bt: Release, os: windows-latest, bitlinks: static64 static32}
+          - {std: 17, cxx: vs2019, bt: Debug  , os: windows-latest, bitlinks: static64 static32}
+          - {std: 17, cxx: vs2019, bt: Release, os: windows-latest, bitlinks: static64 static32}
+          - {std: 20, cxx: vs2019, bt: Debug  , os: windows-latest, bitlinks: static64 static32}
+          - {std: 20, cxx: vs2019, bt: Release, os: windows-latest, bitlinks: static64 static32}
+    env: {BM: ON, STD: "${{matrix.std}}", CXX_: "${{matrix.cxx}}", BT: "${{matrix.bt}}", BITLINKS: "${{matrix.bitlinks}}", VG: "${{matrix.vg}}", SAN: "${{matrix.san}}", LINT: "${{matrix.lint}}", OS: "${{matrix.os}}"}
+    steps:
+      # use fetch-depth to ensure all tags are fetched
+      - {name: checkout, uses: actions/checkout@v2, with: {submodules: recursive, fetch-depth: 0}}
+      - {name: install requirements, run: source .github/reqs.sh && c4_install_test_requirements $OS}
+      - {name: show info, run: source .github/setenv.sh && c4_show_info}
+      - name: shared64-configure---------------------------------------------------
+        run: source .github/setenv.sh && c4_cfg_test shared64
+      - {name: shared64-build, run: source .github/setenv.sh && c4_build_target shared64 c4core-bm-build}
+      - {name: shared64-run, run: export NUM_JOBS_BUILD=1 && source .github/setenv.sh && c4_run_target shared64 c4core-bm-run}
+      - name: static64-configure---------------------------------------------------
+        run: source .github/setenv.sh && c4_cfg_test static64
+      - {name: static64-build, run: source .github/setenv.sh && c4_build_target static64 c4core-bm-build}
+      - {name: static64-run, run: export NUM_JOBS_BUILD=1 && source .github/setenv.sh && c4_run_target static64 c4core-bm-run}
+      - name: static32-configure---------------------------------------------------
+        run: source .github/setenv.sh && c4_cfg_test static32
+      - {name: static32-build, run: source .github/setenv.sh && c4_build_target static32 c4core-bm-build}
+      - {name: static32-run, run: export NUM_JOBS_BUILD=1 && source .github/setenv.sh && c4_run_target static32 c4core-bm-run}
+      - name: shared32-configure---------------------------------------------------
+        run: source .github/setenv.sh && c4_cfg_test shared32
+      - {name: shared32-build, run: source .github/setenv.sh && c4_build_target shared32 c4core-bm-build}
+      - {name: shared32-run, run: export NUM_JOBS_BUILD=1 && source .github/setenv.sh && c4_run_target shared32 c4core-bm-run}
+      - name: gather benchmark results
+        run: |
+          set -x
+          desc=$(git describe || git rev-parse --short HEAD)
+          for bl in ${{matrix.bitlinks}} ; do
+            dst=$(echo benchmark_results/$desc/${{matrix.cxx}}-${{matrix.bt}}-c++${{matrix.std}}-$bl | sed 's:++-:xx:g' | sed 's:+:x:g')
+            mkdir -p $dst
+            find build -name bm-results
+            mv -vf build/$bl/bm/bm-results/* $dst/.
+          done
+      - name: upload benchmark result artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: benchmark_results
+          path: benchmark_results/

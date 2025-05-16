@@ -59,7 +59,7 @@ aldeba_in,96,181,4	script	Kafra Service	113,{
 			mes "seems that you don't";
 			mes "have the 20 zeny to pay";
 			mes "the Storage access fee...";
-			close;
+			close3;
 		}
 		mes "[Kafra Leilah]";
 		mes "Although this facility is";
@@ -686,4 +686,13 @@ alb2trea,59,69,5	script	Kafra Employee::kaf_alb2trea	117,{
 	callfunc "F_Kafra",5,2,1,50,0;
 	savepoint "alb2trea",92,64,1,1;
 	callfunc "F_KafEnd",0,1,"at Sunken Ship";
+}
+
+// Brasilis
+//============================================================
+brasilis,197,221,4	script	Kafra Employee::kaf_bra	4_F_KAFRA1,{
+	cutin "kafra_01",2;
+	callfunc "F_Kafra",0,3,0,80,700;
+	savepoint "brasilis",195,259,1,1;
+	callfunc "F_KafEnd",0,1,"in the city of Brasilis";
 }

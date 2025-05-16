@@ -1,0 +1,1 @@
+- Update fast_float to [3.2.1](https://github.com/fastfloat/fast_float/releases/tag/v3.2.0)

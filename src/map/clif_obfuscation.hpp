@@ -5,7 +5,7 @@
 #define CLIF_OBFUSCATION_HPP
 
 #if defined(PACKET_OBFUSCATION) || defined(PACKET_OBFUSCATION_WARN)
-	#define packet_keys(a,b,c) static unsigned int clif_cryptKey[] = { a, b, c };
+	#define packet_keys(a,b,c) static uint32 clif_cryptKey[] = { a, b, c };
 
 	#if defined(PACKET_OBFUSCATION_KEY1) || defined(PACKET_OBFUSCATION_KEY2) || defined(PACKET_OBFUSCATION_KEY3)
 		#ifndef PACKET_OBFUSCATION_KEY1

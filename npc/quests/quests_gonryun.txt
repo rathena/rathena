@@ -2922,7 +2922,7 @@ geffen_in,71,112,2	script	Blacksmith#SaYumMoon	731,{
 				mes "5 Live Coals^000000";
 				next;
 				mes "[Aumgarl]";
-				mes "It's quite alot, huh?";
+				mes "It's quite a lot, huh?";
 				mes "These are necessary supplies.";
 				mes "We need them to repair the sword.";
 				mes "I'll go find some other materials.";
@@ -3713,6 +3713,7 @@ gonryun,237,226,3	script	Han Ran Jiao#gon	776,{
 		next;
 		if (BaseLevel >= 20) {
 			set nakha,1;
+			setquest 10034;
 			mes "[Han Ran Jiao]";
 			mes "I need to go down to get it";
 			mes "but...the monsters...";
@@ -3759,6 +3760,7 @@ gonryun,237,226,3	script	Han Ran Jiao#gon	776,{
 		next;
 		if (select("Return the knife.:Refuse.") == 1) {
 			set nakha,3;
+			completequest 10035;
 			delitem 1201,1; //Knife
 			mes "[Han Ran Jiao]";
 			mes "Thank you! Thank you so much!";
@@ -3803,6 +3805,7 @@ gon_fild01,245,257,0	script	#gonknife	111,3,3,{
 OnTouch_:
 	if (nakha == 1) {
 		set nakha,2;
+		changequest 10034,10035;
 		mes "^3355FFHm? What's this?";
 		mes " ";
 		mes "Something was hidden beneath the leaves...^000000";

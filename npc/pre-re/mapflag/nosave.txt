@@ -1,0 +1,37 @@
+//===== rAthena Script =======================================
+//= Mapflag: Disable auto-save.
+//===== Description: ========================================= 
+//= Characters logging out on the specified map will be warped
+//= to the map specified in the last field, or "SavePoint".
+//===== Additional Comments: ================================= 
+//= 1.0 Renewal Split. [Lemongrass]
+//============================================================
+
+//============================================================
+// Endless Tower
+//============================================================
+e_tower	mapflag	nosave	SavePoint
+1@tower	mapflag	nosave	SavePoint
+2@tower	mapflag	nosave	SavePoint
+3@tower	mapflag	nosave	SavePoint
+4@tower	mapflag	nosave	SavePoint
+5@tower	mapflag	nosave	SavePoint
+6@tower	mapflag	nosave	SavePoint
+
+//============================================================
+// Sealed Shrine
+//============================================================
+1@cata	mapflag	nosave	SavePoint
+2@cata	mapflag	nosave	SavePoint
+
+//============================================================
+// Orc's Memory
+//============================================================
+1@orcs	mapflag	nosave	SavePoint
+2@orcs	mapflag	nosave	SavePoint
+
+//============================================================
+// Nidhoggr's Instance
+//============================================================
+1@nyd	mapflag	nosave	SavePoint
+2@nyd	mapflag	nosave	SavePoint

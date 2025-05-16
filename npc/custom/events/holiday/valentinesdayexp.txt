@@ -97,7 +97,7 @@ M_CHOCO:
 	mes "[Stephen]";
 	mes "Hah!";
 	mes "I knew it!";
-	mes "But I can't sell you more then 5 at once....but, if you really need more....";
+	mes "But I can't sell you more than 5 at once....but, if you really need more....";
 	mes "you can come back again.";
 	mes "So how many do you want?";
 	next;
@@ -158,7 +158,7 @@ alberta,29,243,4	script	Jainie#val1	53,{
 
 M_CHOCO:
 	mes "[Jainie]";
-	mes "I can't sell you more then 5 at once....but, if you really need more....";
+	mes "I can't sell you more than 5 at once....but, if you really need more....";
 	mes "you can come back again.";
 	mes "So how many do you want? 1 portion is 4500z + 1 Milk.";
 	next;

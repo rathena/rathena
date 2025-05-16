@@ -1,0 +1,23 @@
+//===== rAthena Script =======================================
+//= Mapflag: nocostume
+//===== Description: =========================================
+//= A mapflag to disable costume's sprite on map.
+//= Usage:
+//=     [mapname]	mapflag	nocostume
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [Cydh]
+//============================================================
+
+//============================================================
+// WoE:TE Castles
+//============================================================
+te_prtcas01	mapflag	nocostume
+te_prtcas02	mapflag	nocostume
+te_prtcas03	mapflag	nocostume
+te_prtcas04	mapflag	nocostume
+te_prtcas05	mapflag	nocostume
+te_aldecas1	mapflag	nocostume
+te_aldecas2	mapflag	nocostume
+te_aldecas3	mapflag	nocostume
+te_aldecas4	mapflag	nocostume
+te_aldecas5	mapflag	nocostume

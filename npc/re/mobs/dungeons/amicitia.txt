@@ -1,0 +1,18 @@
+//===== rAthena Script =======================================
+//= Amicitia dungeons
+//===== Description: =========================================
+//= Amicitia dungeons Monster Spawn Script.
+//===== Additional Comments: =================================
+//= 1.0 First version. [Capuche]
+//============================================================
+
+amicitia1	monster	Amitera	20924,55
+amicitia1	monster	Litus	20925,55
+amicitia1	monster	Fillia	20926,55
+amicitia1	monster	Vanilaqus	20927,55
+
+amicitia2	monster	Lavaeter	20920,65
+amicitia2	monster	Fulgor	20921,65
+amicitia2	monster	Napeo	20922,65
+amicitia2	monster	Galensis	20923,65
+amicitia2	boss_monster	The One	20928,1,21600000,600000,0

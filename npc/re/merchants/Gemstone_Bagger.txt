@@ -1,0 +1,59 @@
+//===== rAthena Script =======================================
+//= Gemstone Bagger
+//===== Description: =========================================
+// The information in this script was taken from kro
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [JohnnyPlayy, Pokye]
+//============================================================
+ 
+//= Gemstone Bagger
+//============================================================
+-	script	#GemstoneBagger	HIDDEN_NPC,{
+	mes "[Gemstone Bagger]";
+	mes "We pack gemstones in bags in an easy to find way.";
+	mes "What would you like to do?";
+	next;
+	switch(select("Exchange Gemstones:Cancel")) {
+	case 1:
+		mes "[Gemstone Bagger]";
+		mes "I will prepare a bag for gemstones.";
+		close2;
+		callshop "Gemstone_Bagger";
+		break;
+	case 2:
+		mes "[Gemstone Bagger]";
+		mes "Come back if you need help.";
+		close;
+	}
+}
+
+//= Duplicate
+//============================================================
+alb2trea,89,65,3	duplicate(#GemstoneBagger)	Gemstone Bagger#01	1_F_MERCHANT_01
+alberta_in,178,97,5	duplicate(#GemstoneBagger)	Gemstone Bagger#02	4_M_01
+aldeba_in,100,54,3	duplicate(#GemstoneBagger)	Gemstone Bagger#03	4_F_02
+ama_in01,20,26,5	duplicate(#GemstoneBagger)	Gemstone Bagger#04	4_M_JPN
+cmd_fild07,259,126,5	duplicate(#GemstoneBagger)	Gemstone Bagger#05	4_F_01
+cmd_in01,84,178,3	duplicate(#GemstoneBagger)	Gemstone Bagger#06	4_M_04
+ein_in01,197,22,5	duplicate(#GemstoneBagger)	Gemstone Bagger#07	4_F_EINWOMAN
+einbroch,222,206,5	duplicate(#GemstoneBagger)	Gemstone Bagger#08	4_M_EINMAN
+geffen_in,77,175,3	duplicate(#GemstoneBagger)	Gemstone Bagger#09	1_F_03
+gonryun,146,82,5	duplicate(#GemstoneBagger)	Gemstone Bagger#10	4_M_TWOLDMAN
+hu_in01,252,370,3	duplicate(#GemstoneBagger)	Gemstone Bagger#11	4_F_02
+izlude_in,55,110,5	duplicate(#GemstoneBagger)	Gemstone Bagger#12	4_M_01
+lhz_in02,40,145,5	duplicate(#GemstoneBagger)	Gemstone Bagger#13	4_F_03
+lhz_in03,243,106,5	duplicate(#GemstoneBagger)	Gemstone Bagger#14	4_M_EINMAN
+lou_in02,244,175,5	duplicate(#GemstoneBagger)	Gemstone Bagger#15	4_F_CHNWOMAN
+malangdo,233,160,3	duplicate(#GemstoneBagger)	Gemstone Bagger#16	4_CAT_ADV2
+moc_ruins,95,128,3	duplicate(#GemstoneBagger)	Gemstone Bagger#17	1_F_01
+morocc,153,241,7	duplicate(#GemstoneBagger)	Gemstone Bagger#18	4W_M_03
+morocc,143,101,5	duplicate(#GemstoneBagger)	Gemstone Bagger#19	4_F_04
+payon,163,96,3	duplicate(#GemstoneBagger)	Gemstone Bagger#20	1_F_ORIENT_01
+payon_in01,12,47,3	duplicate(#GemstoneBagger)	Gemstone Bagger#21	1_F_ORIENT_01
+payon_in02,84,40,3	duplicate(#GemstoneBagger)	Gemstone Bagger#22	4_M_ORIENT01
+prt_fild05,292,226,3	duplicate(#GemstoneBagger)	Gemstone Bagger#23	1_M_01
+prt_in,125,78,5	duplicate(#GemstoneBagger)	Gemstone Bagger#24	1_M_INNKEEPER
+um_in,103,115,3	duplicate(#GemstoneBagger)	Gemstone Bagger#25	4_M_UMOLDMAN
+xmas_in,36,37,5	duplicate(#GemstoneBagger)	Gemstone Bagger#26	4_M_04
+yuno,221,115,3	duplicate(#GemstoneBagger)	Gemstone Bagger#27	4_F_02
+yuno_in01,34,30,3	duplicate(#GemstoneBagger)	Gemstone Bagger#28	4_F_02

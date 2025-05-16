@@ -1272,7 +1272,7 @@ OnTouch_:
 	case 4: mapannounce "job_hunte",strcharinfo(0) + ", has failed me! Go back to where you started!",bc_map; break;
 	case 5: mapannounce "job_hunte",strcharinfo(0) + ", you have blundered into a trap. I'm sorry, but for now, YOU LOSE.",bc_map; break;
 	case 6: mapannounce "job_hunte",strcharinfo(0) + ", what are you doing!? Go back and do it again!",bc_map; break;
-	case 7: mapannounce "job_hunte",strcharinfo(0) + ", come on! You can do better then this!! Try again!",bc_map; break;
+	case 7: mapannounce "job_hunte",strcharinfo(0) + ", come on! You can do better than this!! Try again!",bc_map; break;
 	case 8: mapannounce "job_hunte",strcharinfo(0) + ", has fallen into a trap...again. But don't worry, you're getting better.",bc_map; break;
 	case 9: mapannounce "job_hunte",strcharinfo(0) + ", fail, fail, fail... Go back to where you started!",bc_map; break;
 	case 10: mapannounce "job_hunte",strcharinfo(0) + "... aww~ Try again! You can do it!",bc_map; break;

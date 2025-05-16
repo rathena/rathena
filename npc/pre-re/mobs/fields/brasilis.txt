@@ -1,0 +1,48 @@
+//===== rAthena Script =======================================
+//= Brasilis Fields Monster Spawn Script
+//===== Description: =========================================
+//= [Official Conversion based on bRO & jRO servers]
+//
+// Note:
+// - Brasilis was introduced in Pre-Renewal only for bRO and
+//   jRO official servers with differences in monster stats,
+//   spawns and quests.
+//   It was added in Renewal for every other official server.
+//   Since we follow kRO this is disabled by default.
+//   You can enable it on npc/pre-re/scripts_athena.conf
+//===== Changelog: ===========================================
+//= 1.0 First Version [Playtester]
+//============================================================
+
+//==================================================
+// Brasilis, Strange Hydras
+//==================================================
+brasilis,283,88,6,6	monster	Strange Hydra	2081,5,30000
+brasilis,284,104,6,6	monster	Strange Hydra	2081,4,30000
+brasilis,215,80,6,6	monster	Strange Hydra	2081,4,30000
+brasilis,96,50,8,8	monster	Strange Hydra	2081,5,30000
+
+//bRO Pre-Renewal spawns
+
+//==================================================
+// bra_fild01 - Brasilis Field
+//==================================================
+bra_fild01	monster	Headless Mule	2071,40,5000
+bra_fild01	monster	Curupira	2074,80,5000
+bra_fild01	monster	Dokebi	1110,20,5000
+bra_fild01	monster	Jaguar	2072,10,5000
+bra_fild01	monster	Savage	1166,20,5000
+bra_fild01	monster	Toucan	2073,10,5000
+bra_fild01	monster	Red Mushroom	1085,3,360000,180000
+
+//jRO Pre-Renewal spawns
+
+//==================================================
+// bra_fild01
+//==================================================
+//bra_fild01	monster	Savage	1166,10,5000
+//bra_fild01	monster	Dokebi	1110,20,5000
+//bra_fild01	monster	Curupira	2074,50,5000
+//bra_fild01	monster	Jaguar	2072,35,5000
+//bra_fild01	monster	Toucan	2073,40,5000
+//bra_fild01	monster	Red Mushroom	1085,5,120000,60000

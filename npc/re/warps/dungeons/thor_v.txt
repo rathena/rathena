@@ -1,0 +1,9 @@
+//===== rAthena Script =======================================
+//= Warps
+//===== Description: =========================================
+//= Warp Points for thor_v01
+//===== Additional Comments: =================================
+//= 1.0 First version. [Capuche]
+//============================================================
+
+que_thr,186,58,0	warp	#Secret passage - Logistics base	2,2,thor_v01,169,169
