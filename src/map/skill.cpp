@@ -20686,6 +20686,11 @@ void skill_identify(map_session_data *sd, int32 idx)
 		}
 	}
 	clif_item_identified( *sd, idx, failure );
+	
+	if(!failure) {
+		pc_setreg(sd, add_str("@identify_idx"), idx);
+		npc_script_event( *sd, NPCE_IDENTIFY );
+	}
 }
 
 /*==========================================
