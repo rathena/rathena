@@ -58,6 +58,7 @@ struct s_stylist_entry{
 	uint32 value;
 	std::shared_ptr<s_stylist_costs> human;
 	std::shared_ptr<s_stylist_costs> doram;
+	std::vector<uint16> required_job;
 };
 
 struct s_stylist_list{
@@ -70,7 +71,7 @@ private:
 	bool parseCostNode( std::shared_ptr<s_stylist_entry> entry, bool doram, const ryml::NodeRef& node );
 
 public:
-	StylistDatabase() : TypesafeYamlDatabase( "STYLIST_DB", 1 ){
+	StylistDatabase() : TypesafeYamlDatabase( "STYLIST_DB", 2 ){
 
 	}
 

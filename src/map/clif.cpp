@@ -4080,8 +4080,10 @@ void clif_changelook(struct block_list *bl, int32 type, int32 val) {
 #if PACKETVER < 20150513
 				return;
 #else
+#if PACKETVER < 20231220
 				if (val && sd && sd->sc.option&OPTION_COSTUME)
  					val = 0;
+#endif
  				vd->body_style = val;
 #endif
 				break;
@@ -22856,10 +22858,17 @@ bool clif_parse_stylist_buy_sub( map_session_data* sd, _look look, int16 index )
 	}
 
 	switch( look ){
+		case LOOK_BODY2:
+#if PACKETVER >= 20231220
+			if (!entry->required_job.empty()) {
+				if (std::find(entry->required_job.begin(), entry->required_job.end(), sd->status.class_) == entry->required_job.end()) {
+					return false;
+				}
+			}
+#endif
 		case LOOK_HAIR:
 		case LOOK_HAIR_COLOR:
 		case LOOK_CLOTHES_COLOR:
-		case LOOK_BODY2:
 			pc_changelook( sd, look, entry->value );
 			break;
 		case LOOK_HEAD_BOTTOM:
@@ -22889,6 +22898,53 @@ bool clif_parse_stylist_buy_sub( map_session_data* sd, _look look, int16 index )
 }
 
 void clif_parse_stylist_buy( int32 fd, map_session_data* sd ){
+	if( sd == nullptr ){
+		return;
+	}
+#if PACKETVER >= 20231220
+	const PACKET_CZ_REQ_STYLE_CHANGE3* p = reinterpret_cast<PACKET_CZ_REQ_STYLE_CHANGE3*>(RFIFOP(fd, 0));
+
+	for (int i = 0; i < p->count; i++) {
+		if (p->data[i].value == 0)
+			continue;
+
+		switch (p->data[i].action) {
+		case 0:
+			if(!clif_parse_stylist_buy_sub(sd, LOOK_HAIR_COLOR, p->data[i].value))
+				clif_stylist_response(sd, true);
+			break;
+		case 1:
+			if(!clif_parse_stylist_buy_sub(sd, LOOK_HAIR, p->data[i].value))
+				clif_stylist_response(sd, true);
+			break;
+		case 2:
+			if(!clif_parse_stylist_buy_sub(sd, LOOK_CLOTHES_COLOR, p->data[i].value))
+				clif_stylist_response(sd, true);
+			break;
+		case 3:
+			if(!clif_parse_stylist_buy_sub(sd, LOOK_HEAD_TOP, p->data[i].value))
+				clif_stylist_response(sd, true);
+			break;
+		case 4:
+			if(!clif_parse_stylist_buy_sub(sd, LOOK_HEAD_MID, p->data[i].value))
+				clif_stylist_response(sd, true);
+			break;
+		case 5:
+			if(!clif_parse_stylist_buy_sub(sd, LOOK_HEAD_BOTTOM, p->data[i].value))
+				clif_stylist_response(sd, true);
+			break;
+		case 9:
+			if(!clif_parse_stylist_buy_sub(sd, LOOK_BODY2, p->data[i].value))
+				clif_stylist_response(sd, true);
+			break;
+		default:
+			ShowError("clif_parse_stylist_buy: Unknown action type %d\n", p->data[i].action);
+			break;
+		}
+	}
+
+	clif_stylist_response(sd, false);
+#else
 #if PACKETVER >= 20151104
 #if PACKETVER >= 20180516
 	const PACKET_CZ_REQ_STYLE_CHANGE2* p = reinterpret_cast<PACKET_CZ_REQ_STYLE_CHANGE2*>( RFIFOP( fd, 0 ) );
@@ -22933,6 +22989,7 @@ void clif_parse_stylist_buy( int32 fd, map_session_data* sd ){
 #endif
 
 	clif_stylist_response( sd, false );
+#endif
 #endif
 }
 
