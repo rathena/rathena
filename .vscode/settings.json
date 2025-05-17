@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "xlocale.h": "c",
+        "_ctype.h": "c"
+    }
+}

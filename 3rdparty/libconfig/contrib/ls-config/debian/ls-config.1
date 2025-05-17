@@ -1,0 +1,103 @@
+.\"Created with GNOME Manpages Editor
+.\"https://github.com/lucas-net-pl/ls-config
+
+.\"Replace <program> with the program name, x with the Section Number
+.TH ls-config x "1" "" "Linux User's Manual"
+
+.SH NAME
+ls-config \- program to use libconfig9 configuration files in bash scripts
+
+..SH SYNOPSIS
+.B ls-config
+[\fB\-f\fR \fIFILE\fR]
+.RI [ options ]
+.br
+
+.SH DESCRIPTION
+You can use libcongig9 files directly invoking ls-config.
+
+Remember to call ls-config always with -f parameter,
+wich give ls-config inormation wich config file use.
+
+Then this program operate in three based modes:
+-g (get) for reading values (default)
+-s (set) for store values
+-h (help) for display help message
+both parameter (-g and -s) nedd to give it variable path
+(internal configuration variable path)
+
+.SH OPTIONS
+.TP
+.BR \-f ", " \-\-file =\fIFILE\fR
+Configuration file to handle.
+.TP
+.BR \-s ", " \-\-set =\fIPATH\fR
+Set configuration variable of given path.
+.TP
+.BR \-d ", " \-\-data =\fIDATA\fR
+Configuration variable value (only with -s)
+.TP
+.BR \-p ", " \-\-type =\fITYPE\fR
+Configuration value type
+.TP
+.BR \-g ", " \-\-get =\fIPATH\fR
+Get configuration variable of given path.
+.TP
+.BR \-n ", " \-\-names
+Printout variables names.
+.TP
+.BR \-t ", " \-\-types
+ Printout variables types.
+.TP
+.BR \-v ", " \-\-values
+Printout variables values.
+.TP
+.BR \-i ", " \-\-indexes
+Printout variables indexes.
+.TP
+.BR \-c ", " \-\-count
+Printout elements count (only: array, list, group).
+.TP
+.BR \-b ", " \-\-bool\-string
+Printout boolean variables as text.
+.TP
+.BR \-q ", " \-\-quiet
+ Quiet output to use in scripts.
+.TP
+.BR \-h ", " \-\-help 
+Print this help message.
+.TP 
+Variable \fITYPE\fRs:
+ group  - variables group,
+ array  - array of variables,
+ list   - list of variables,
+ int    - integer number,
+ int64  - 64bit integer number,
+ float  - float point number,
+ bool   - boolean value,
+ string - character string.
+
+.SH NOTES
+
+Exiting eerror codes:
+
+ 0 - exit with no error
+ 1 - Cen't access witch right mode (read or write) configuration file.
+ 2 - (not used),
+ 3 - Variable of given path not found (path not found).
+ 4 - Variable path not given.
+ 5 - Can't remove root element (cused if someone try to unset it)
+ 6 - Can't find parent element
+ 7 - Variable unset failed.
+ 8 - Configuration file write failed.
+ 9 - Variable value not given.
+ 10 - Inconsistent value type (caused if set exisitng variablen and give type another then saved).
+ 11 - Variable set failed.
+ 12 - Incorrect data format.
+ 13 - Variable type not given (in som cases tu set variable, giving his type are necesery).
+ 14 - Inlegal data type (caused if user give type thet not known for libconfig9).
+ 15 - Bad name of variable (curently chcecking only if enpty stringa are given).
+ 16 - Inavlid configuration variable path.
+ 17 - New named configuration variable can be added only to group element.
+ 18 - Prohibited data type (caused when use type then connot be use in given case).
+

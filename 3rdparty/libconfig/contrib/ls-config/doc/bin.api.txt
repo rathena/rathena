@@ -1,0 +1,75 @@
+Instalation:
+------------
+
+First place somewhere ls-config binary, or make it from source
+
+Then if You woud like use it with national translation, then You muas build
+it form source and then copy *.mo files according to You system
+
+Usage:
+------
+
+Remember to call ls-config always with -f parameter,
+wich give ls-config inormation wich config file use.
+
+Then this program operate in three based modes:
+-g (get) for reading values (default)
+-s (set) for store values
+-h (help) for display help message
+both parameter (-g and -s) nedd to give it variable path
+(internal configuration variable path)
+
+for exapmle read info value from config file:
+ls-config -f config -g info
+
+Then You can set this value to another
+ls-config -f config -s info -d "Somethint to write"
+
+But when You wand to addn new configutation variable you must
+specify his type:
+ls-config -f config -s someint -d 10 -p int
+
+You can remove (unset) variable too. This is subfunstion of setting:
+ls-config -f config -s someint -u
+
+When reading You cent use following flag:
+-v - read only variable valut
+-t - read only variable type
+-c - read only variable element count (sense only in types: array, list, group)
+-i - read only variable index (sense only in type: array, list) 
+-n - read only variable name
+
+and sometimes usable 
+-q  - to wori in quiet mode usable in scripts.
+
+For example to read variable somevar type, where variable in group foo:
+ls-config -f config -g "foo.somevar" -t
+
+For detailed list of parametera (long options available too) run ls-config
+in help mode:
+ls-config -h
+
+Configuraiton files:
+--------------------
+
+Detailed configuration file shema are publicated on:
+http://www.hyperrealm.com/libconfig/
+And his gramar on:
+http://www.hyperrealm.com/libconfig/libconfig_manual.html#Configuration-Files
+
+there are only short describe:
+configuration = setting-list | empty
+setting-list = setting | setting-list setting
+setting = name (":" | "=") value (";" | "," | empty)
+value = scalar-value | array | list | group
+value-list = value | value-list "," value
+scalar-value = boolean | integer | integer64 | hex | hex64 | float | string
+scalar-value-list = scalar-value | scalar-value-list "," scalar-value
+array = "[" (scalar-value-list | empty) "]"
+list = "(" (value-list | empty) ")"
+group = "{" (setting-list | empty) "}"
+empty =
+
+smaple configuration file and script are available on sample/ directory
+config - samble configuration file
+script - sample script, then read info variable from config file

@@ -1,0 +1,12 @@
+libdir=@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_LIBDIR@
+includedir=@CMAKE_INSTALL_PREFIX@/include
+
+Name: libconfig
+Description: C Configuration File Library
+Version: @PROJECT_VERSION@
+URL: http://www.hyperrealm.com/main.php?s=libconfig
+Requires:
+Conflicts:
+Libs: -L${libdir} -lconfig
+Libs.private:
+Cflags: -I${includedir}

@@ -62,18 +62,20 @@ target_sources(minicore PRIVATE
 	"${COMMON_SOURCE_DIR}/malloc.cpp"
 	"${COMMON_SOURCE_DIR}/showmsg.cpp"
 	"${COMMON_SOURCE_DIR}/strlib.cpp"
-	${LIBCONFIG_SOURCES} # needed by showmsg.cpp
+	#${LIBCONFIG_SOURCES} # needed by showmsg.cpp
 	${COMMON_ADDITIONALL_CPP} # needed by Windows
 )
 
 target_include_directories(minicore PUBLIC
 	${COMMON_SOURCE_DIR}
-	${LIBCONFIG_INCLUDE_DIRS}
+	#${LIBCONFIG_INCLUDE_DIRS}
 	${COMMON_ADDITIONALL_HPP} # needed by Windows
 )
 
 
-target_compile_definitions(minicore PRIVATE "-DMINICORE" ${LIBCONFIG_DEFINITIONS})
+target_compile_definitions(minicore PRIVATE "-DMINICORE" )
+target_include_directories(minicore PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../../3rdparty/libconfig/lib> )	
+target_link_libraries( minicore config++ )
 
 #
 # common_base
@@ -102,7 +104,7 @@ set( COMMON_BASE_HEADERS
 	"${COMMON_SOURCE_DIR}/msg_conf.hpp"
 	"${COMMON_SOURCE_DIR}/cli.hpp"
 	"${COMMON_SOURCE_DIR}/utilities.hpp"
-	${LIBCONFIG_HEADERS} # needed by conf.hpp/showmsg.hpp
+	#${LIBCONFIG_HEADERS} # needed by conf.hpp/showmsg.hpp
 	${COMMON_ADDITIONALL_HPP} # needed by Windows
 	CACHE INTERNAL "common_base headers" )
 set( COMMON_BASE_SOURCES
@@ -126,17 +128,17 @@ set( COMMON_BASE_SOURCES
 	"${COMMON_SOURCE_DIR}/msg_conf.cpp"
 	"${COMMON_SOURCE_DIR}/cli.cpp"
 	"${COMMON_SOURCE_DIR}/utilities.cpp"
-	${LIBCONFIG_SOURCES} # needed by conf.cpp/showmsg.cpp
+	#${LIBCONFIG_SOURCES} # needed by conf.cpp/showmsg.cpp
 	${COMMON_ADDITIONALL_CPP} # needed by Windows
 	CACHE INTERNAL "common_base sources" )
 set( COMMON_BASE_INCLUDE_DIRS
-	${LIBCONFIG_INCLUDE_DIRS}
+	#${LIBCONFIG_INCLUDE_DIRS}
 	${YAML_INCLUDE_DIRS}
 	CACHE INTERNAL "common_base include dirs" )
 set( COMMON_BASE_DEFINITIONS
-	${LIBCONFIG_DEFINITIONS}
+	#${LIBCONFIG_DEFINITIONS}
 	CACHE INTERNAL "common_base definitions" )
-set( LIBRARIES ${GLOBAL_LIBRARIES} ${ZLIB_LIBRARIES} yaml-cpp ryml )
+set( LIBRARIES ${GLOBAL_LIBRARIES} ${ZLIB_LIBRARIES} yaml-cpp ryml config++ )
 set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${RA_INCLUDE_DIRS} ${YAML_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIRS} ${COMMON_BASE_INCLUDE_DIRS} )
 set( DEFINITIONS "${GLOBAL_DEFINITIONS} ${COMMON_BASE_DEFINITIONS}" )
 set( SOURCE_FILES ${COMMON_BASE_HEADERS} ${COMMON_BASE_SOURCES} )
@@ -144,6 +146,7 @@ source_group( common FILES ${COMMON_BASE_HEADERS} ${COMMON_BASE_SOURCES} )
 
 add_library( common_base ${SOURCE_FILES} )
 #message( STATUS "common_base LIBRARIES=${LIBRARIES}, DEFINITIONS=${DEFINITIONS}")
+target_include_directories(common_base PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../../3rdparty/libconfig/lib> )
 target_link_libraries( common_base ${LIBRARIES} )
 set_target_properties( common_base PROPERTIES COMPILE_FLAGS "${DEFINITIONS}" )
 include_directories( ${INCLUDE_DIRS} )

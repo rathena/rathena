@@ -1,0 +1,26 @@
+Version 1.0.3
+-------------
+
+Fully commented code,
+Startin with documentation
+
+bugfixes
+- fix some badly returned exit codes
+- remove duplicate error messages
+- l10n textdomain corrected
+- extend sample configuration file to be full representative
+- some corrections in sample script (adding directly usaga)
+
+new features
+- adding documentation files (api)
+
+Version 1.0.1
+-------------
+
+Internaly translated tu englich
+
+
+Verison 1.0.0
+-------------
+
+First publicated and working version

@@ -1,0 +1,9 @@
+The Debian Package ls-config
+----------------------------
+
+This package allow to use libconfig9 style configuration files
+in bash scripts
+
+Comments regarding the Package
+
+ -- Łukasz A. Grabowski <www@lucas.net.pl>  Fri, 11 Oct 2013 21:07:07 +0200

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.1...4.0)
 
 ## start setting
 SET (this_target yaml-cpp)

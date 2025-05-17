@@ -1,0 +1,20 @@
+ 0 - exit with no error
+ 1 - Cen't access witch right mode (read or write) configuration file.
+ 2 - (not used),
+ 3 - Variable of given path not found (path not found).
+ 4 - Variable path not given.
+ 5 - Can't remove root element (cused if someone try to unset it)
+ 6 - Can't find parent element
+ 7 - Variable unset failed.
+ 8 - Configuration file write failed.
+ 9 - Variable value not given.
+10 - Inconsistent value type (caused if set exisitng variablen and give type another then saved).
+11 - Variable set failed.
+12 - Incorrect data format.
+13 - Variable type not given (in som cases tu set variable, giving his type are necesery).
+14 - Inlegal data type (caused if user give type thet not known for libconfig9).
+15 - Bad name of variable (curently chcecking only if enpty stringa are given).
+16 - Inavlid configuration variable path.
+17 - New named configuration variable can be added only to group element.
+18 - Prohibited data type (caused when use type then connot be use in given case).
+

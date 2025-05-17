@@ -1,0 +1,28 @@
+name: build conan package
+on: [push, pull_request]
+jobs:
+  build_conan:
+    strategy:
+      matrix:
+        os: [ windows-latest, ubuntu-latest, macos-latest ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+          architecture: 'x64'
+      # install dependencies
+      - name: install conan
+        run: pip3 install conan
+      - name: setup conan
+        run: |
+          conan profile new default --detect --force # Generates default profile detecting GCC and sets old ABI
+      # new ABI version needs to be set on GCC >= 5
+      - name: set ABI
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        run: |
+          conan profile update settings.compiler.libcxx=libstdc++11 default  # Sets libcxx to C++11 ABI
+      - name: build conan package
+        run: |
+          conan create .

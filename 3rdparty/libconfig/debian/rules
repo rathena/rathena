@@ -1,0 +1,14 @@
+#!/usr/bin/make -f
+
+# Uncomment this to turn on verbose mode.
+# # export DH_VERBOSE=1
+
+override_dh_auto_build-indep:
+	$(MAKE) -C doc pdf
+
+override_dh_strip:
+	dh_strip -p libconfig9 --dbg-package=libconfig-dbg
+	dh_strip -p libconfig++9v5 --dbg-package=libconfig++-dbg
+	
+%:
+	dh $@ --parallel --with autoreconf

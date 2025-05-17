@@ -1,3 +1,4 @@
+cmake_minimum_required(VERSION 3.1...4.0)
 
 # macro to configure the use of local or system version of a package
 # Uses:

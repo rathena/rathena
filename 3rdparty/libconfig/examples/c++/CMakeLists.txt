@@ -1,0 +1,15 @@
+if(CMAKE_HOST_WIN32)
+    set(libname "libconfig")
+else()
+    set(libname "config")
+endif()
+
+add_executable(c++_example1	example1.cpp )
+add_executable(c++_example2	example2.cpp )
+add_executable(c++_example3	example3.cpp )
+add_executable(c++_example4	example4.cpp )
+
+target_link_libraries(c++_example1 ${libname}++ )
+target_link_libraries(c++_example2 ${libname}++ )
+target_link_libraries(c++_example3 ${libname}++ )
+target_link_libraries(c++_example4 ${libname}++ )

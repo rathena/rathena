@@ -1,0 +1,75 @@
+Instalation:
+------------
+
+First of all, You must place ls-config binary and lslib-core bash
+script in the same directory (default: /usr/share/ls/lib)
+
+Next in lslib-core header chcange configuration:
+PACD tu point to parent directory of paced files
+then LIBD must point relative (tu PACD) to directory 
+whrere script placed
+
+Usage:
+------
+
+In You bash script, first of all define LS_EXEC variable,
+and set his value to 1. (It protect lslib-core) to run
+standalone
+
+Next, source library:
+source /usr/share/ls/lib/lslib-core
+
+After thet You can use following function:
+
+Functions:
+----------
+
+cfg_g $PATH               - this echo variable value of given PATH 
+                            and return error code
+cfg_t $PATH               - this echo variable type of given PATH 
+                            and return error code
+cfg_c $PATH               - this echo cout of variable elements 
+                            and return error code
+cfg_s $PATH $DATA [$TYPE] - this set variable of given PATH or create new
+                            variable valuse are set to DATA, and if this
+                            create new variable, variable will be type TYPE
+cfg_u $PATH               - this unset (remove) variable of given PATH
+                            and return error code
+cfg_f_g $FILE $PATH       - same as cfg_g, but operate on given FILE
+cfg_f_t $FILE $PATH       - same as cfg_t, but operate on given FILE
+cfg_f_c $FILE $PATH       - same as cfg_c, but operate on given FILE
+cfg_f_s $FILE $PATH $DATA [$TYPE] - same as cfg_s, but operate on given FILE
+cfg_f_u $FILE $PATH       - same as cfg_u, but operate on given FILE
+
+Configuration files:
+--------------------
+
+By default configuration file are placed in /etc/ls/
+with the same name as script file name
+(used in cfg_g, cfg_t, cfg_c, cfg_s, cfg_u)
+
+But if You need, You can use any location of configuration file
+by using cfg_f_* functions, giving configuration file location as
+first argument
+
+Detailed configuration file shema are publicated on:
+http://www.hyperrealm.com/libconfig/
+And his gramar on:
+http://www.hyperrealm.com/libconfig/libconfig_manual.html#Configuration-Files
+
+there are only short describe:
+configuration = setting-list | empty
+setting-list = setting | setting-list setting
+setting = name (":" | "=") value (";" | "," | empty)
+value = scalar-value | array | list | group
+value-list = value | value-list "," value
+scalar-value = boolean | integer | integer64 | hex | hex64 | float | string
+scalar-value-list = scalar-value | scalar-value-list "," scalar-value
+array = "[" (scalar-value-list | empty) "]"
+list = "(" (value-list | empty) ")"
+group = "{" (setting-list | empty) "}"
+empty =
+
+smaple configuration file and script are available on sample/ directory
+config - samble configuration file
+script - sample script, then read info variable from config file

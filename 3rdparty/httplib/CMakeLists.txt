@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.1...4.0)
 
 if ( NOT ENABLE_WEB_SERVER )
     return()

@@ -11,6 +11,8 @@ find_path( MYSQL_INCLUDE_DIRS "mysql.h"
 		"/usr/include/mysql"
 		"/usr/local/include/mysql"
 		"/usr/mysql/include/mysql"
+		"/opt/homebrew/include/mysql"  # for Apple Silicon (M1, M2)
+    	"/usr/local/include/mysql"     # for Intel-based Macs
 		"$ENV{PROGRAMFILES}/MySQL/*/include"
 		"$ENV{SYSTEMDRIVE}/MySQL/*/include" )
 
