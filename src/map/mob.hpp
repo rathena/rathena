@@ -277,6 +277,8 @@ struct s_mob_db {
 	uint32 option;
 	std::vector<std::shared_ptr<s_mob_skill>> skill;
 	uint16 damagetaken;
+	int32 group_id;
+	std::string title;
 
 	e_mob_bosstype get_bosstype();
 	s_mob_db();
