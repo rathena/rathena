@@ -16613,6 +16613,21 @@ BUILDIN_FUNC(mapid2name)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/// Returns the map ID of given map name. By [KWDev]
+///
+/// mapname2id <"map name">;
+BUILDIN_FUNC(mapname2id)
+{
+    const char* map_name = script_getstr(st, 2);
+    uint16 m = map_mapname2mapid(map_name);
+    if (m >= MAX_MAP_PER_SERVER) {
+        script_pushint(st, -1); 
+        return SCRIPT_CMD_FAILURE;
+    }
+    script_pushint(st, m); 
+    return SCRIPT_CMD_SUCCESS;
+}
+
 /*==========================================
  * Allows player to write NPC logs (i.e. Bank NPC, etc) [Lupus]
  *------------------------------------------*/
@@ -28072,6 +28087,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(npcstop,"??"),
 	BUILDIN_DEF(getmapxy,"rrr??"),	//by Lorky [Lupus]
 	BUILDIN_DEF(mapid2name,"i"),
+	BUILDIN_DEF(mapname2id,"i"), // By [KWDev]
 	BUILDIN_DEF(checkoption1,"i?"),
 	BUILDIN_DEF(checkoption2,"i?"),
 	BUILDIN_DEF(guildgetexp,"i"),
