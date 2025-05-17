@@ -1,0 +1,1180 @@
+//===== rAthena Script =======================================
+//= Instance: Iwin Patrol.
+//===== Description: =========================================
+//- [Walkthrough conversion]
+//- Daily instance of episode 19.
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Atemo]
+//============================================================
+
+// Main Quest: Step 10 to 11
+icecastle,23,115,8	script	Captain#iws	EP19_NPC_IWIN_SR,{
+	if (checkweight(1201,3) == 0) {
+		mes "- You cannot proceed because you have too many items. -";
+		close;
+	}
+	if (ep19_main < 10) {
+		mes "[" + strcharinfo(0) + "]";
+		mes "Eagle patrol? What do they do?";
+		next;
+		mes "[Captain of Patrol]";
+		mes "A unit that periodically patrols the Frozen Scale area.";
+		next;
+		mes "[Captain of Patrol]";
+		mes "Well, now it's made up of Iwin, and we're the only ones in charge of patrolling, but... ";
+		next;
+		mes "[Captain of Patrol]";
+		mes "Because adventurers have begun to flow into Isgadr's Ice Castle.";
+		next;
+		mes "[Captain of Patrol]";
+		mes "If there are more people like you, won't there be a chance to patrol with you and build friendships?";
+		next;
+		mes "[Captain of Patrol]";
+		mes "Hahaha! I'm looking forward to that day.";
+		close;
+	}
+	if (ep19_main == 10) {
+		mes "[Captain of Patrol]";
+		mes "Did you come here after seeing the announcement? Huh? No?";
+		next;
+		mes "[Captain of Patrol]";
+		mes "Well, you came to me anyway.";
+		mes "I am Captain Marsha Gigi Happy Rev Eve of Eagle Patrol, Alice Lloyd Broad-Minded Tess Vortexrao.";
+		next;
+		cloakoffnpcself( "Private Holly #exiwp" );
+		sleep2 1000;
+		npctalk "Horiryu: We report the completion of the patrol of Captain Hyoryo.", "Private Holly #exiwp", bc_self;
+		sleep2 500;
+		npctalk "Guard Captain: Are you all right?", "", bc_self;
+		sleep2 500;
+		npctalk "Horiryu: It's okay.", "Private Holly #exiwp", bc_self;
+		sleep2 500;
+		npctalk "Horiryu: Huh?! Are those adventurers who say that the ashes have been recruited to the Ice Castle this time?", "Private Holly #exiwp", bc_self;
+		sleep2 500;
+		npctalk "Captain of Patrol: Ah! Come to think of it, I've heard that kind of thing. Anyway, you've worked hard. Rest.", "", bc_self;
+		sleep2 500;
+		npctalk "Horiryu: Yep.", "Private Holly #exiwp", bc_self;
+		sleep2 500;
+		cloakonnpcself( "Private Holly #exiwp" );
+		mes "[Captain of Patrol]";
+		mes "These were precious people, I'm sorry to have kept you waiting. It's more important to receive reports.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Is it called Hyoryo-ryo?";
+		next;
+		npctalk "(Shit! Extraterrestrial creatures..)", "", bc_self;
+		mes "[Captain of Patrol]";
+		mes "Hmmmm.. I'm not an official patrol member, so call me whatever you like. Documents for joining the Eagle Patrol.";
+		next;
+		mes "[Captain of Patrol]";
+		mes "Well, I really want to sign up. There is a problem with the procedure. Please read it carefully and sign it.";
+		next;
+		mes "[Documents for joining the Eagle Patrol]";
+		mes "Aren't you Rgan?";
+		mes "Is your body healthy?";
+		mes "Are you at peace?";
+		mes "If there is nothing urgent, will you join the patrol every day?";
+		mes "----";
+		mes "If you agree to the above, please sign.";
+		next;
+		select( "Sign" );
+		mes "[Captain of Patrol]";
+		mes "Have you ever practiced? Your signature looks really cool. I'll put your name on the Eagle Patrol's honorary member.";
+		next;
+		ep19_main = 11;
+		erasequest 18127;
+		setquest 5972;
+		mes "[Captain of Patrol]";
+		mes "You can do it alone or with a co-worker. Let me know when you're ready to make a party and go on patrol.";
+		close;
+	}
+
+	if (getstatus(SC_MONSTER_TRANSFORM,1) == 21530) {
+		setpcblock PCBLOCK_NPC, true;
+		npctalk "(Ah! Surprise!)", "", bc_self;
+		emotion ET_HUK;
+		sleep2 500;
+		npctalk "Captain of Patrol: I guess that's because an adventurer can transform into a Rgan.", "", bc_self;
+		setpcblock PCBLOCK_NPC, false;
+	}
+
+	.@md_name$ = "Iwin Patrol";
+
+	if (isbegin_quest(5974) == 1) {
+		erasequest 5974;
+		setquest 5973;
+		mes "[Captain of Patrol]";
+		mes "It's strange. Did anything urgent happen while on patrol? The kids have already been on patrol.. You can't send them again, so come back tomorrow.";
+		close;
+	}
+	switch( checkquest(5973,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:	// note: player can re-enter if the instance is still active, but no reward !
+		mes "[Captain of Patrol]";
+		mes "Have you already been on patrol? What's going on?";
+		next;
+		switch( select( "I'm going on patrol.", "We're chatting.", "I just came." ) ) {
+		case 1:
+			mes "[Captain of Patrol]";
+			mes "You're a hardworking friend. I don't recommend it, but if you're going to join another party, well, I won't stop you.";
+			next;
+			switch( instance_enter(.@md_name$) ) {
+			case IE_OTHER:
+				mes "^ff0000An unknown error occurred.^000000";
+				close;
+			case IE_NOINSTANCE:
+				mes "[Captain of Patrol]";
+				mes "Then rest.";
+				close;
+			case IE_NOMEMBER:
+				mes "[Captain of Patrol]";
+				mes "Didn't I tell you to make a party even if you're going alone? Have you never done it? Then you've done it now, so let's go and make a party.";
+				close;
+			case IE_OK:
+				mapannounce "icecastle", "" + strcharinfo(0) + ": I will patrol", bc_map, 0xDF297;
+				// warp "1@iwp",380,229;
+				end;
+			}
+			end;
+		case 2:
+			callsub( S_Talk );
+		case 3:
+			mes "[Captain of Patrol]";
+			mes "You're a refreshing friend. If you're bored, you can even take a lap around the castle. You won't want to move because it's cold.";
+			close;
+		}
+	case 2:
+		erasequest 5973;
+		npctalk "Captain of Patrol: Come to think of it, is it time to patrol? When you're ready, tell me.", "", bc_self;
+		break;
+	}
+	if (ep19_main == 11) {	// note: slightly different dialogue from daily quests
+		mes "[Captain of Patrol]";
+		mes "Is this your first patrol? It's not like you're sending it alone, it's with the patrol members, so you don't have to be afraid.";
+		next;
+		switch( select( "Report the number of patrols.", "I will go on patrol.", "Wait a minute." ) ) {
+		case 1:
+			if (is_party_leader() == false) {
+				mes "[Captain of Patrol]";
+				mes "Didn't I tell you to make a party even if you're going alone? Have you never done it? Then you've done it now, so let's go and make a party.";
+				close;
+			}
+			instance_create(.@md_name$);
+			getpartymember getcharid(1), 2;
+			mes "[Captain of Patrol]";
+			mes "I have registered the number of patrol members as " + $@partymembercount + ". It is not necessary to register all of them, but we will check the number of people when we go out on patrol, so please join us.";
+			close;
+		case 2:
+			switch( instance_enter(.@md_name$) ) {
+			case IE_OTHER:
+				mes "^ff0000An unknown error occurred.^000000";
+				close;
+			case IE_NOINSTANCE:
+				mes "[Captain of Patrol]";
+				mes "The crew aren't ready yet, so please wait a bit.";
+				close;
+			case IE_NOMEMBER:
+				mes "[Captain of Patrol]";
+				mes "Didn't I tell you to make a party even if you're going alone? Have you never done it? Then you've done it now, so let's go and make a party.";
+				close;
+			case IE_OK:
+				mapannounce "icecastle", "" + strcharinfo(0) + ": I will patrol", bc_map, 0xDF297;
+				setquest 5974;
+				// warp "1@iwp",380,229;
+				end;
+			}
+			end;
+		case 3:
+			mes "[Captain of Patrol]";
+			mes "The patrol is not urgent, so take it slow. If you are really busy, you can send only the crew.";
+			close;
+		}
+	}
+	mes "[Captain of Patrol]";
+	mes "Ah! Is it time already?";
+	next;
+	switch( select( "Report the number of patrols.", "I will go on patrol.", "Let's chat." ) ) {
+	case 1:
+		if (is_party_leader() == false) {
+			mes "[Captain of Patrol]";
+			mes "Didn't I tell you to make a party even if you're going alone? Have you never done it? Then you've done it now, so let's go and make a party.";
+			close;
+		}
+		instance_create(.@md_name$);
+		getpartymember getcharid(1), 2;
+		mes "[Captain of Patrol]";
+		mes "I have registered the number of patrol members as " + $@partymembercount + ". It is not necessary to register all of them, but we will check the number of people when we go out on patrol, so please join us.";
+		close;
+	case 2:
+		switch( instance_enter(.@md_name$) ) {
+		case IE_OTHER:
+			mes "^ff0000An unknown error occurred.^000000";
+			close;
+		case IE_NOINSTANCE:
+			mes "[Captain of Patrol]";
+			mes "The crew aren't ready yet, so please wait a bit.";
+			close;
+		case IE_NOMEMBER:
+			mes "[Captain of Patrol]";
+			mes "Didn't I tell you to make a party even if you're going alone? Have you never done it? Then you've done it now, so let's go and make a party.";
+			close;
+		case IE_OK:
+			mapannounce "icecastle", "" + strcharinfo(0) + ": I will patrol", bc_map, 0xDF297;
+			setquest 5974;
+			// warp "1@iwp",380,229;
+			end;
+		}
+		end;
+	case 3:
+		callsub( S_Talk );
+	}
+	end;
+
+S_Talk:
+	switch( rand(8) ) {
+	case 0:
+		mes "[" + strcharinfo(0) + "]";
+		mes "I.. Horiryuga..";
+		next;
+		mes "[Captain of Patrol]";
+		mes "Are you talking about Private Hori-ryu? Do you mean by any chance asking the outside adventurers to bring you feathers?";
+		next;
+		mes "[Captain of Patrol]";
+		mes "I already know this. Well, I'm cold too, aren't the crews cold?";
+		next;
+		mes "[Captain of Patrol]";
+		mes "I can't change the supply to something better, and I'll try to avoid the cold.";
+		next;
+		mes "[Captain of Patrol]";
+		mes "What are you going to do with it? You know and pretend you don't know.";
+		close;
+	case 1:
+		mes "[" + strcharinfo(0) + "]";
+		mes "Tell me how to overcome the cold.";
+		next;
+		mes "[Captain of Patrol]";
+		mes "How to overcome the cold? The longer the hair, the less it gets cold.";
+		next;
+		mes "[Captain of Patrol]";
+		mes "From my point of view, adventurers around here come from warm places and tend to dress too cold.";
+		close;
+	case 2:
+		mes "[" + strcharinfo(0) + "]";
+		mes "Is the patrol food served well?";
+		next;
+		mes "[Captain of Patrol]";
+		mes "It comes out relatively well.";
+		next;
+		mes "[Captain of Patrol]";
+		mes "Well, sometimes I don't like Iwin like monster prey, but there are side dishes I don't know in English that come out constantly...";
+		next;
+		mes "[Captain of Patrol]";
+		mes "On average, you can say that you are on the good side.";
+		close;
+	case 3:
+		mes "[" + strcharinfo(0) + "]";
+		mes "What kind of Iwin is the supply officer?";
+		next;
+		mes "[Captain of Patrol]";
+		mes "Supplier? Are you talking about Agorir Supply Officer?";
+		next;
+		mes "[Captain of Patrol]";
+		mes "Well, I can't say there aren't any problems, but he's a relatively sincere and steady friend.";
+		next;
+		mes "[Captain of Patrol]";
+		mes "I tried to pretend to be an agent to the crew, so I scratched the raven a few times...";
+		next;
+		mes "[Captain of Patrol]";
+		mes "Are you shocked? They don't seem to do it these days.";
+		close;
+	case 4:
+		mes "[" + strcharinfo(0) + "]";
+		mes "Dried ice cubes are really delicious? I didn't like them..";
+		next;
+		mes "[Captain of Patrol]";
+		mes "I can't eat it because I don't have it. I don't know why it's bad.";
+		close;
+	case 5:
+		mes "[" + strcharinfo(0) + "]";
+		mes "Masha.. Captain of the Patrol.";
+		next;
+		mes "[Captain of Patrol]";
+		mes "My name is Marsha Gigi Happy Rev Eve Alice Lloyd Broad-Minded Tess Vortex";
+		next;
+		mes "[Captain of Patrol]";
+		mes "If you want to shorten your name, just call it Hororyo.";
+		close;
+	case 6:
+		mes "[" + strcharinfo(0) + "]";
+		mes "What do Eagle Patrols usually do?";
+		next;
+		mes "[Captain of Patrol]";
+		mes "My job is to keep an eye out for any rgans in our area.";
+		next;
+		mes "[Captain of Patrol]";
+		mes "That's how I patrol the Frozen Scale Hill.";
+		next;
+		mes "[Captain of Patrol]";
+		mes "Oh, and I am grateful that the number of accidents has greatly decreased after the adventurers joined the patrol. Please continue to ask.";
+		close;
+	default:
+		mes "[" + strcharinfo(0) + "]";
+		mes "Do you know all the crew names?";
+		next;
+		mes "[Captain of Patrol]";
+		mes "Of course. I wonder whose name it is";
+		next;
+		switch( select( "Private Borira", "Recruit Pororon", "Recruit Hororung", "Private Loruru", "Pr. Torari", "Private Torari", "Private Horiryu", "Private Porarang", "Pr. Soruru", "Pr. Morurang", "Pr. Moruryu", "Pr. Porulyo" ) ) {
+		case 1:
+			mes "[Captain of Patrol]";
+			mes "Bolly, the recruit's name is..";
+			mes "Isabel Buck Hollis.";
+			close;
+		case 2:
+			mes "[Captain of Patrol]";
+			mes "The name of the new recruit Pororon is..";
+			mes "It's a Supernova Self-Controlled Cooper.";
+			close;
+		case 3:
+			mes "[Captain of Patrol]";
+			mes "Holulung recruitThe name is...";
+			mes "Baby Gabriel Denver.";
+			close;
+		case 4:
+			mes "[Captain of Patrol]";
+			mes "Private Louru's name is...";
+			mes "Violet Matilda Luis Laviada.";
+			close;
+		case 5:
+			mes "[Captain of Patrol]";
+			mes "Private Torari's name is...";
+			mes "This is Ted Eldora's Encounter Isabelle.";
+			close;
+		case 6:
+			mes "[Captain of Patrol]";
+			mes "Private Toralong's name is...";
+			mes "Harley is hard-walking Victoria Evan.";
+			close;
+		case 7:
+			mes "[Captain of Patrol]";
+			mes "Pr. Hoririu's name is...";
+			mes "Rev Diallo is Carmen Jefferson Linda.";
+			close;
+		case 8:
+			mes "[Captain of Patrol]";
+			mes "Pr. Porarang's name is...";
+			mes "Avid Oblivion Daisy Esteban Raffy.";
+			close;
+		case 9:
+		case 10:
+		case 11:
+		case 12:
+			end;
+		}
+	}
+	end;
+
+OnInit:
+	setunittitle( getnpcid(0), "<Eagle Patrol>" );
+
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(18127) == 1" );
+
+	// first time
+	questinfo( QTYPE_CLICKME, QMARK_YELLOW, "ep19_main == 11 && isbegin_quest(5974) == 0 && checkquest(5973,PLAYTIME) == -1" );
+	questinfo( QTYPE_CLICKME, QMARK_YELLOW, "ep19_main == 11 && isbegin_quest(5974) == 0 && checkquest(5973,PLAYTIME) == 2" );
+
+	// daily
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "ep19_main > 11 && isbegin_quest(5974) == 0 && checkquest(5973,PLAYTIME) == -1" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "ep19_main > 11 && isbegin_quest(5974) == 0 && checkquest(5973,PLAYTIME) == 2" );
+	end;
+}
+icecastle,21,118,6	duplicate(dummy_cloaked_npc)	Private Holly #exiwp	EP19_NPC_IWIN_SB
+
+
+// warps
+1@iwp,98,10,0	script	MD exit warp#tail1	WARPNPC,2,2,{
+	mes "[Information]";
+	mes "Patrol with Iwin";
+	mes "Leave the Memorial Dungeon. Some progress may not be saved.";
+	next;
+	if (select( "Do not leave", "Exit" ) == 1)
+		end;
+	warp "icecastle",20,123;
+	end;
+}
+1@iwp,214,390,0	duplicate(MD exit warp#tail1)	MD exit warp#plain	WARPNPC,2,2
+1@iwp,385,229,0	duplicate(MD exit warp#tail1)	MD Exit Warp#Ice Castle	WARPNPC,2,2
+
+
+// random npcs + mobs spawn
+1@iwp,1,1,0	script	iwp_mobs_respawn	-1,{
+	end;
+OnInstanceInit:
+	sleep 10;
+	deletearray 'step_player;
+	deletearray 'npc_step;
+	'map_iwp$ = instance_mapname("1@iwp");
+	'step = 0;
+	'final_enabled = 0;
+
+	// choose a random npc (each npc has a random set of dialog)
+	// For now only one set has been parsed
+	// 'npc_index = rand(1,3);
+	'npc_index = 2;
+
+	// store the npc visible name and name for npctalk
+	'EP19_NPC_IWIN_SG$ = instance_npcname("ep19_iwp_set" + 'npc_index + "_SG");
+	'EP19_NPC_IWIN_SN$ = instance_npcname("ep19_iwp_set" + 'npc_index + "_SN");
+	'EP19_NPC_IWIN_SY$ = instance_npcname("ep19_iwp_set" + 'npc_index + "_SY");
+	'EP19_NPC_IWIN_SB$ = instance_npcname("ep19_iwp_set" + 'npc_index + "_SB");
+
+	'EP19_NPC_IWIN_SG_id = getnpcid(0, 'EP19_NPC_IWIN_SG$);
+	'EP19_NPC_IWIN_SN_id = getnpcid(0, 'EP19_NPC_IWIN_SN$);
+	'EP19_NPC_IWIN_SY_id = getnpcid(0, 'EP19_NPC_IWIN_SY$);
+	'EP19_NPC_IWIN_SB_id = getnpcid(0, 'EP19_NPC_IWIN_SB$);
+
+	'EP19_NPC_IWIN_SG_visible$ = 'npc_visible_name$[ 'EP19_NPC_IWIN_SG_id ];
+	'EP19_NPC_IWIN_SN_visible$ = 'npc_visible_name$[ 'EP19_NPC_IWIN_SN_id ];
+	'EP19_NPC_IWIN_SY_visible$ = 'npc_visible_name$[ 'EP19_NPC_IWIN_SY_id ];
+	'EP19_NPC_IWIN_SB_visible$ = 'npc_visible_name$[ 'EP19_NPC_IWIN_SB_id ];
+
+	for ( .@i = 1; .@i < 4; .@i++ ) {
+		disablenpc instance_npcname("ep19_iwp_set" + .@i + "_SG");
+		disablenpc instance_npcname("ep19_iwp_set" + .@i + "_SN");
+		disablenpc instance_npcname("ep19_iwp_set" + .@i + "_SY");
+		disablenpc instance_npcname("ep19_iwp_set" + .@i + "_SB");
+	}
+	enablenpc 'EP19_NPC_IWIN_SG$;
+	enablenpc 'EP19_NPC_IWIN_SN$;
+	enablenpc 'EP19_NPC_IWIN_SY$;
+	enablenpc 'EP19_NPC_IWIN_SB$;
+
+	// mob spawn
+	setarray 'mob_id[0],
+		21524,	// EP19_SHINING_SEAWEED
+		21525,	// EP19_ICE_GANGU
+		21523,	// EP19_ICE_STRAW
+	'event$[0] = instance_npcname("iwp_mobs_respawn") + "::OnMobDead0";	// EP19_SHINING_SEAWEED
+	'event$[1] = instance_npcname("iwp_mobs_respawn") + "::OnMobDead1";	// EP19_ICE_GANGU
+	'event$[2] = instance_npcname("iwp_mobs_respawn") + "::OnMobDead2";	// EP19_ICE_STRAW
+
+	monster 'map_iwp$,0,0,"--ja--",21524,1, .@event$[0];
+	monster 'map_iwp$,0,0,"--ja--",21525,1, .@event$[1];
+	monster 'map_iwp$,0,0,"--ja--",21523,1, .@event$[2];
+	end;
+
+OnMobDead0: callsub( S_Spawn, 0 );
+OnMobDead1: callsub( S_Spawn, 1 );
+OnMobDead2: callsub( S_Spawn, 2 );
+
+S_Spawn:
+	sleep 5000;
+	.@i = getarg(0);
+	monster 'map_iwp$,0,0,"--ja--",'mob_id[.@i],1, 'event$[.@i];
+	end;
+}
+
+1@iwp,370,224,0	script	Corporate Morulang#set01::ep19_iwp_set1_SG	EP19_NPC_IWIN_SG,{
+	end;
+OnInstanceInit:
+	npcspeed 400;
+
+	'npc_visible_name$[ getnpcid(0) ] = strnpcinfo(1);
+	end;
+}
+1@iwp,370,227,0	duplicate(ep19_iwp_set1_SG)	Recruit Bolira#set01::ep19_iwp_set1_SN	EP19_NPC_IWIN_SN
+1@iwp,370,230,0	duplicate(ep19_iwp_set1_SG)	Pil Loruru#set01::ep19_iwp_set1_SY	EP19_NPC_IWIN_SY
+1@iwp,370,233,0	duplicate(ep19_iwp_set1_SG)	Private Horoscope#set01::ep19_iwp_set1_SB	EP19_NPC_IWIN_SB
+
+1@iwp,370,224,0	duplicate(ep19_iwp_set1_SG)	Corporal Anvil#set02::ep19_iwp_set2_SG	EP19_NPC_IWIN_SG
+1@iwp,370,227,0	duplicate(ep19_iwp_set1_SG)	Recruit Pororon#set02::ep19_iwp_set2_SN	EP19_NPC_IWIN_SN
+1@iwp,370,230,0	duplicate(ep19_iwp_set1_SG)	Pilic Torari#set02::ep19_iwp_set2_SY	EP19_NPC_IWIN_SY
+1@iwp,370,233,0	duplicate(ep19_iwp_set1_SG)	Pr. Porarang#set02::ep19_iwp_set2_SB	EP19_NPC_IWIN_SB
+
+1@iwp,370,224,0	duplicate(ep19_iwp_set1_SG)	Corporal Porulyo#set03::ep19_iwp_set3_SG	EP19_NPC_IWIN_SG
+1@iwp,370,227,0	duplicate(ep19_iwp_set1_SG)	Recruit Horulung#set03::ep19_iwp_set3_SN	EP19_NPC_IWIN_SN
+1@iwp,370,230,0	duplicate(ep19_iwp_set1_SG)	People Toralong#set03::ep19_iwp_set3_SY	EP19_NPC_IWIN_SY
+1@iwp,370,233,0	duplicate(ep19_iwp_set1_SG)	Pr. Soruru#set03::ep19_iwp_set3_SB	EP19_NPC_IWIN_SB
+
+
+// starter npc
+1@iwp,375,229,4	script	Guard Captain#stiwp	EP19_NPC_IWIN_SR,{
+	if (ep19_main < 11)
+		end;
+	if ('step != 0)
+		end;
+	if (ep19_main == 11) {
+		npctalk "Captain of Patrol: This is my first time, so let me explain lightly.";
+		mes "[Captain of Patrol]";
+		mes "This is my first time, so let me explain lightly.";
+		next;
+		npctalk "Captain of Patrol: A walk with our reliable Eagle Rangers.. no hmm hmmm..";
+		mes "[Captain of Patrol]";
+		mes "Walking with our reliable eagle patrols.. no hmm hmmm..";
+		next;
+		npctalk "Guardian: You can go on patrol. Well, the actual patrol will be done by our crews...";
+		mes "[Captain of Patrol]";
+		mes "All you have to do is go on patrol. Our crews will do the actual patrol.";
+		next;
+		npctalk "Guard Captain: I can't ignore anything that's safer when patrolling in groups.";
+		mes "[Captain of Patrol]";
+		mes "Can't ignore what's safer when patrolling in groups.";
+	}
+	else {
+		npctalk "Captain of Patrol: Well, this isn't the first time, no explanation needed?";
+		mes "[Captain of Patrol]";
+		mes "It's not the first time, no explanation needed?";
+	}
+	next;
+	if ('step == 0) {
+		'step = 1;
+		npcspeed 400;
+		donpcevent instance_npcname( strnpcinfo(0) ) + "::OnStart";	// this npc move near the warp on right and disappear
+		donpcevent instance_npcname("iwp_patrol_move") + "::OnStart";
+		donpcevent instance_npcname("iwp_patrol_talk") + "::OnStart";
+	}
+	npctalk "Guard Captain: Then let's go!";
+	mes "[Captain of Patrol]";
+	mes "Then let's go!";
+	close;
+
+OnStart:
+	unitwalk getnpcid(0),385,229, instance_npcname( strnpcinfo(0) ) + "::OnEnd";
+	sleep 500;
+	npctalk "Guard Captain: We'll meet you around the end of the patrol.";
+	end;
+OnEnd:
+	disablenpc();
+	end;
+}
+
+
+1@iwp,1,1,0	script	iwp_patrol_move	-1,{
+	end;
+OnStart:
+	callsub( S_FirstMove, 'EP19_NPC_IWIN_SG_id );
+	sleep 200;
+	callsub( S_FirstMove, 'EP19_NPC_IWIN_SN_id );
+	sleep 200;
+	callsub( S_FirstMove, 'EP19_NPC_IWIN_SY_id );
+	sleep 200;
+	callsub( S_FirstMove, 'EP19_NPC_IWIN_SB_id );
+	end;
+
+S_FirstMove:
+	.@npc_id = getarg(0);
+	'npc_step[ .@npc_id ] = 0;
+
+	unitwalk .@npc_id, 370,219, instance_npcname("iwp_patrol_move") + "::OnMove00";
+	'npc_step[ .@npc_id ]++;
+	return;
+
+S_Move:
+	.@string$ = ( (getarg(0) < 10) ? "0" + getarg(0) : getarg(0) );
+	unitwalk 0, getarg(1), getarg(2), instance_npcname("iwp_patrol_move") + "::OnMove" + .@string$;
+	set getarg(0), getarg(0) + 1;
+	if (getarg(3,0))
+		'step = getarg(3,0);
+	if (getarg(4,0) && 'final_enabled == 0) {
+		'final_enabled = 1;
+		enablenpc instance_npcname("Guardmaster#ediwp");
+	}
+	end;
+
+OnMove00: callsub( S_Move, 'npc_step[ getattachedrid() ], 340,219 );
+OnMove01: callsub( S_Move, 'npc_step[ getattachedrid() ], 332,227 );
+OnMove02: callsub( S_Move, 'npc_step[ getattachedrid() ], 309,227 );
+OnMove03: callsub( S_Move, 'npc_step[ getattachedrid() ], 309,207 );
+OnMove04: callsub( S_Move, 'npc_step[ getattachedrid() ], 309,191 );
+OnMove05: callsub( S_Move, 'npc_step[ getattachedrid() ], 286,168 );
+OnMove06: callsub( S_Move, 'npc_step[ getattachedrid() ], 286,140 );
+OnMove07: callsub( S_Move, 'npc_step[ getattachedrid() ], 306,120 );
+OnMove08: callsub( S_Move, 'npc_step[ getattachedrid() ], 306,116 );
+OnMove09: callsub( S_Move, 'npc_step[ getattachedrid() ], 311,111 );
+OnMove10: callsub( S_Move, 'npc_step[ getattachedrid() ], 311,94, 2 );	// step 2
+OnMove11: callsub( S_Move, 'npc_step[ getattachedrid() ], 306,89 );
+OnMove12: callsub( S_Move, 'npc_step[ getattachedrid() ], 306,80 );
+OnMove13: callsub( S_Move, 'npc_step[ getattachedrid() ], 279,80 );
+OnMove14: callsub( S_Move, 'npc_step[ getattachedrid() ], 269,90 );
+OnMove15: callsub( S_Move, 'npc_step[ getattachedrid() ], 253,90 );
+OnMove16: callsub( S_Move, 'npc_step[ getattachedrid() ], 242,101 );
+OnMove17: callsub( S_Move, 'npc_step[ getattachedrid() ], 230,101 );
+OnMove18: callsub( S_Move, 'npc_step[ getattachedrid() ], 216,87 );
+OnMove19: callsub( S_Move, 'npc_step[ getattachedrid() ], 209,87 );
+OnMove20: callsub( S_Move, 'npc_step[ getattachedrid() ], 192,70 );
+OnMove21: callsub( S_Move, 'npc_step[ getattachedrid() ], 192,56 );
+OnMove22: callsub( S_Move, 'npc_step[ getattachedrid() ], 162,66 );
+OnMove23: callsub( S_Move, 'npc_step[ getattachedrid() ], 132,56 );
+OnMove24: callsub( S_Move, 'npc_step[ getattachedrid() ], 115,77, 3 );	// step 3
+OnMove25: callsub( S_Move, 'npc_step[ getattachedrid() ], 131,93 );
+OnMove26: callsub( S_Move, 'npc_step[ getattachedrid() ], 131,110 );
+OnMove27: callsub( S_Move, 'npc_step[ getattachedrid() ], 143,122 );
+OnMove28: callsub( S_Move, 'npc_step[ getattachedrid() ], 143,137 );
+OnMove29: callsub( S_Move, 'npc_step[ getattachedrid() ], 134,139 );
+OnMove30: callsub( S_Move, 'npc_step[ getattachedrid() ], 117,156 );
+OnMove31: callsub( S_Move, 'npc_step[ getattachedrid() ], 117,169 );
+OnMove32: callsub( S_Move, 'npc_step[ getattachedrid() ], 128,180 );
+OnMove33: callsub( S_Move, 'npc_step[ getattachedrid() ], 128,200 );
+OnMove34: callsub( S_Move, 'npc_step[ getattachedrid() ], 128,222 );
+OnMove35: callsub( S_Move, 'npc_step[ getattachedrid() ], 139,233 );
+OnMove36: callsub( S_Move, 'npc_step[ getattachedrid() ], 139,242 );
+OnMove37: callsub( S_Move, 'npc_step[ getattachedrid() ], 129,252 );
+OnMove38: callsub( S_Move, 'npc_step[ getattachedrid() ], 129,260 );
+OnMove39: callsub( S_Move, 'npc_step[ getattachedrid() ], 150,281, 4 );	// step 4
+OnMove40: callsub( S_Move, 'npc_step[ getattachedrid() ], 153,281 );
+OnMove41: callsub( S_Move, 'npc_step[ getattachedrid() ], 153,284 );
+OnMove42: callsub( S_Move, 'npc_step[ getattachedrid() ], 160,291 );
+OnMove43: callsub( S_Move, 'npc_step[ getattachedrid() ], 145,306 );
+OnMove44: callsub( S_Move, 'npc_step[ getattachedrid() ], 145,312 );
+OnMove45: callsub( S_Move, 'npc_step[ getattachedrid() ], 137,320 );
+OnMove46: callsub( S_Move, 'npc_step[ getattachedrid() ], 138,327 );
+OnMove47: callsub( S_Move, 'npc_step[ getattachedrid() ], 160,327 );
+OnMove48: callsub( S_Move, 'npc_step[ getattachedrid() ], 179,327 );
+OnMove49: callsub( S_Move, 'npc_step[ getattachedrid() ], 185,333 );
+OnMove50: callsub( S_Move, 'npc_step[ getattachedrid() ], 194,333 );
+OnMove51: callsub( S_Move, 'npc_step[ getattachedrid() ], 194,346 );
+OnMove52: callsub( S_Move, 'npc_step[ getattachedrid() ], 202,354 );
+OnMove53: callsub( S_Move, 'npc_step[ getattachedrid() ], 215,354, 5 );	// step 5
+OnMove54: callsub( S_Move, 'npc_step[ getattachedrid() ], 215,373 );
+OnMove55: callsub( S_Move, 'npc_step[ getattachedrid() ], 240,373 );
+OnMove56: callsub( S_Move, 'npc_step[ getattachedrid() ], 240,362 );
+OnMove57: callsub( S_Move, 'npc_step[ getattachedrid() ], 244,358 );
+OnMove58: callsub( S_Move, 'npc_step[ getattachedrid() ], 244,343, 6, true );	// step 6 + enabled final npc
+OnMove59: callsub( S_Move, 'npc_step[ getattachedrid() ], 252,335 );
+OnMove60: callsub( S_Move, 'npc_step[ getattachedrid() ], 264,335 );
+OnMove61: callsub( S_Move, 'npc_step[ getattachedrid() ], 264,320 );
+OnMove62: callsub( S_Move, 'npc_step[ getattachedrid() ], 287,320 );
+OnMove63: callsub( S_Move, 'npc_step[ getattachedrid() ], 293,314 );
+OnMove64: callsub( S_Move, 'npc_step[ getattachedrid() ], 306,314 );
+OnMove65:
+	if (getattachedrid() != 'EP19_NPC_IWIN_SB_id)
+		callsub( S_Move, 'npc_step[ getattachedrid() ], 306,311 );
+	else {
+		'step = 7;
+		unittalk 'EP19_NPC_IWIN_SB_id, 'EP19_NPC_IWIN_SB_visible$ + ": Arrival.";
+	}
+	end;
+OnMove66:
+	if (getattachedrid() != 'EP19_NPC_IWIN_SY_id)
+		callsub( S_Move, 'npc_step[ getattachedrid() ], 306,308 );
+	else
+		unittalk 'EP19_NPC_IWIN_SY_id, 'EP19_NPC_IWIN_SY_visible$ + ": Arrival.";
+	end;
+OnMove67:
+	if (getattachedrid() != 'EP19_NPC_IWIN_SN_id)
+		callsub( S_Move, 'npc_step[ getattachedrid() ], 306,305 );
+	else
+		unittalk 'EP19_NPC_IWIN_SN_id, 'EP19_NPC_IWIN_SN_visible$ + ": Arrival.";
+	end;
+OnMove68:
+	unittalk getattachedrid(), 'EP19_NPC_IWIN_SG_visible$ + ": Arrived.";
+	end;
+}
+
+1@iwp,1,1,0	script	iwp_patrol_talk	-1,{
+	end;
+OnStart:
+	npctalk 'EP19_NPC_IWIN_SG_visible$ + ": I'm on patrol~", 'EP19_NPC_IWIN_SG$;
+	sleep 1000;
+	npctalk 'EP19_NPC_IWIN_SG_visible$ + ": Hey, did you put some hot stuff in the recruit's feathers?", 'EP19_NPC_IWIN_SG$;
+	sleep 500;
+	npctalk 'EP19_NPC_IWIN_SN_visible$ + ": Not imported.", 'EP19_NPC_IWIN_SN$;
+	sleep 500;
+	npctalk 'EP19_NPC_IWIN_SG_visible$ + ": Why did you do that? What are you cold or I'm cold? Take care of it next time.", 'EP19_NPC_IWIN_SG$;
+	sleep 500;
+	npctalk 'EP19_NPC_IWIN_SN_visible$ + ": Yes I understand", 'EP19_NPC_IWIN_SN$;
+	sleep 5000;
+	npctalk 'EP19_NPC_IWIN_SG_visible$ + ": Recruit? Do you see ice around you?", 'EP19_NPC_IWIN_SG$;
+	sleep 500;
+	npctalk 'EP19_NPC_IWIN_SN_visible$ + ": I see you.", 'EP19_NPC_IWIN_SN$;
+	sleep 500;
+	npctalk 'EP19_NPC_IWIN_SG_visible$ + ": Will it hurt if you get stabbed with a sharp point?", 'EP19_NPC_IWIN_SG$;
+	sleep 500;
+	npctalk 'EP19_NPC_IWIN_SN_visible$ + ": Yes it hurts.", 'EP19_NPC_IWIN_SN$;
+	sleep 500;
+	npctalk 'EP19_NPC_IWIN_SG_visible$ + ": Should I be careful? Can I ignore it?", 'EP19_NPC_IWIN_SG$;
+	sleep 500;
+	npctalk 'EP19_NPC_IWIN_SN_visible$ + ": Be careful", 'EP19_NPC_IWIN_SN$;
+	sleep 500;
+	npctalk 'EP19_NPC_IWIN_SG_visible$ + ": Yes, yes.", 'EP19_NPC_IWIN_SG$;
+	sleep 3000;
+	callsub( S_RandomText );
+	sleep 3000;
+	callsub( S_RandomText );
+	sleep 3000;
+	callsub( S_RandomText );
+	sleep 3000;
+	callsub( S_RandomText );
+	sleep 3000;
+	npctalk 'EP19_NPC_IWIN_SG_visible$ + ": Yay! Recruit!", 'EP19_NPC_IWIN_SG$;
+	sleep 500;
+	npctalk 'EP19_NPC_IWIN_SN_visible$ + ": Why are you doing this? Corporal Anvilu?", 'EP19_NPC_IWIN_SN$;
+	sleep 500;
+	npctalk 'EP19_NPC_IWIN_SG_visible$ + ": Look up when you pass under that rock. There are a lot of icicles.", 'EP19_NPC_IWIN_SG$;
+	sleep 500;
+	npctalk 'EP19_NPC_IWIN_SG_visible$ + ": It shakes when you scream like wow!", 'EP19_NPC_IWIN_SG$;
+	sleep 500;
+	npctalk 'EP19_NPC_IWIN_SN_visible$ + ": Whoa!!! Isn't that dangerous?", 'EP19_NPC_IWIN_SN$;
+	sleep 1000;
+	npctalk 'EP19_NPC_IWIN_SG_visible$ + ": Yeah, it's dangerous, so be careful. If you get hurt in your first glance, you're only going to lose, okay?", 'EP19_NPC_IWIN_SG$;
+	sleep 500;
+	npctalk 'EP19_NPC_IWIN_SN_visible$ + ": Yes I understand", 'EP19_NPC_IWIN_SN$;
+	for ( .@i = 0; .@i < 9; ++.@i ) {
+		sleep 3000;
+		callsub( S_RandomText );
+	}
+	sleep 3000;
+	npctalk 'EP19_NPC_IWIN_SN_visible$ + ": Corporal Anvilyu? I have a question for you.", 'EP19_NPC_IWIN_SN$;
+	sleep 500;
+	npctalk 'EP19_NPC_IWIN_SG_visible$ + ": What?", 'EP19_NPC_IWIN_SG$;
+	sleep 500;
+	npctalk 'EP19_NPC_IWIN_SN_visible$ + ": How long was the ice on the Ice Bridge?", 'EP19_NPC_IWIN_SN$;
+	sleep 500;
+	npctalk 'EP19_NPC_IWIN_SG_visible$ + ": How do I know that?", 'EP19_NPC_IWIN_SG$;
+	sleep 500;
+	npctalk 'EP19_NPC_IWIN_SN_visible$ + ": There are some things that even Corporal Anvil Ryu don't know.", 'EP19_NPC_IWIN_SN$;
+	sleep 500;
+	npctalk 'EP19_NPC_IWIN_SG_visible$ + ": Wow, our new recruit, no answer, no answer. Ah!!! I don't know Ice's age, but I know that.", 'EP19_NPC_IWIN_SG$;
+	sleep 500;
+	npctalk 'EP19_NPC_IWIN_SG_visible$ + ": Slipping and falling is embarrassing and dangerous! And!!", 'EP19_NPC_IWIN_SG$;
+	sleep 500;
+	npctalk 'EP19_NPC_IWIN_SG_visible$ + ": Even if you don't get hurt, you feel threatened with someone's life!", 'EP19_NPC_IWIN_SG$;
+	for ( .@i = 0; .@i < 3; ++.@i ) {
+		sleep 3000;
+		callsub( S_RandomText );
+	}
+	npctalk 'EP19_NPC_IWIN_SG_visible$ + ": I don't believe Iwin will fall stupidly here.", 'EP19_NPC_IWIN_SG$;
+	sleep 500;
+	npctalk 'EP19_NPC_IWIN_SN_visible$ + ": Yes, I'll be careful.", 'EP19_NPC_IWIN_SN$;
+	npctalk 'EP19_NPC_IWIN_SY_visible$ + ": Yes, I'll be careful.", 'EP19_NPC_IWIN_SY$;
+	npctalk 'EP19_NPC_IWIN_SB_visible$ + ": Yes, I'll be careful.", 'EP19_NPC_IWIN_SB$;
+	for ( .@i = 0; .@i < 10; ++.@i ) {
+		sleep 3000;
+		callsub( S_RandomText );
+	}
+	npctalk 'EP19_NPC_IWIN_SG_visible$ + ": Oops! The icicles are bloody, use it with caution.", 'EP19_NPC_IWIN_SG$;
+	sleep 500;
+	npctalk 'EP19_NPC_IWIN_SG_visible$ + ": Especially Pora and you! You know what I'm talking about?", 'EP19_NPC_IWIN_SG$;
+	sleep 500;
+	npctalk 'EP19_NPC_IWIN_SB_visible$ + ": Oh, I got it, Corporal Anoryu. You really are like that every time you come here", 'EP19_NPC_IWIN_SB$;
+	for ( .@i = 0; .@i < 4; ++.@i ) {
+		sleep 3000;
+		callsub( S_RandomText );
+	}
+	npctalk 'EP19_NPC_IWIN_SG_visible$ + ": Why doesn't Iwin have scales? I've been thinking about it for a while.", 'EP19_NPC_IWIN_SG$;
+	npctalk 'EP19_NPC_IWIN_SG_visible$ + ": Is this the frozen scale hill? There are scales here, so Iwin doesn't have scales!", 'EP19_NPC_IWIN_SG$;
+	sleep 500;
+	npctalk 'EP19_NPC_IWIN_SN_visible$ + ": ?", 'EP19_NPC_IWIN_SN$;
+	npctalk 'EP19_NPC_IWIN_SY_visible$ + ": ?", 'EP19_NPC_IWIN_SY$;
+	npctalk 'EP19_NPC_IWIN_SB_visible$ + ": ?", 'EP19_NPC_IWIN_SB$;
+	sleep 500;
+	npctalk 'EP19_NPC_IWIN_SG_visible$ + ": I'm sorry, I don't even know what I was talking about.", 'EP19_NPC_IWIN_SG$;
+	for ( .@i = 0; .@i < 18; ++.@i ) {
+		sleep 3000;
+		callsub( S_RandomText );
+	}
+	npctalk 'EP19_NPC_IWIN_SN_visible$ + ": Private Torari.", 'EP19_NPC_IWIN_SN$;
+	sleep 500;
+	npctalk 'EP19_NPC_IWIN_SY_visible$ + ": What?", 'EP19_NPC_IWIN_SY$;
+	sleep 500;
+	npctalk 'EP19_NPC_IWIN_SN_visible$ + ": Oh, no.", 'EP19_NPC_IWIN_SN$;
+	sleep 500;
+	npctalk 'EP19_NPC_IWIN_SY_visible$ + ": ?", 'EP19_NPC_IWIN_SY$;
+	sleep 500;
+	npctalk 'EP19_NPC_IWIN_SY_visible$ + ": Recruit? Do you want to die?", 'EP19_NPC_IWIN_SY$;
+	sleep 500;
+	emotion ET_KIK, 'EP19_NPC_IWIN_SG_id;
+	emotion ET_KIK, 'EP19_NPC_IWIN_SB_id;
+	npctalk 'EP19_NPC_IWIN_SG_visible$ + ": Recruit! Agang soup call after patrol?", 'EP19_NPC_IWIN_SG$;
+	npctalk 'EP19_NPC_IWIN_SN_visible$ + ": No. It's fine.", 'EP19_NPC_IWIN_SN$;
+	sleep 500;
+	npctalk 'EP19_NPC_IWIN_SG_visible$ + ": No, you told me to do it.. ah.. it's frustrating..", 'EP19_NPC_IWIN_SG$;
+	sleep 500;
+	npctalk 'EP19_NPC_IWIN_SN_visible$ + ": I will fix it.", 'EP19_NPC_IWIN_SN$;
+	sleep 500;
+	npctalk 'EP19_NPC_IWIN_SG_visible$ + ": Yes yes yes", 'EP19_NPC_IWIN_SG$;
+	for ( .@i = 0; .@i < 9; ++.@i ) {
+		sleep 3000;
+		callsub( S_RandomText );
+	}
+	end;
+
+S_RandomText:
+	switch( rand(10) ) {
+	case 0:	// x5
+		npctalk 'EP19_NPC_IWIN_SG_visible$ + ": Hey! Recruit..", 'EP19_NPC_IWIN_SG$;
+		sleep 500;
+		npctalk 'EP19_NPC_IWIN_SN_visible$ + ": Recruit! Pororon!", 'EP19_NPC_IWIN_SN$;
+		sleep 500;
+		npctalk 'EP19_NPC_IWIN_SG_visible$ + ": I was just about to tell you, but you're going crazy?", 'EP19_NPC_IWIN_SG$;
+		sleep 500;
+		npctalk 'EP19_NPC_IWIN_SN_visible$ + ": I'm sorry.. I'm sorry", 'EP19_NPC_IWIN_SN$;
+		sleep 500;
+		npctalk 'EP19_NPC_IWIN_SG_visible$ + ": No.. Do you go to the bathroom before work and make your seniors wait for 10 minutes?", 'EP19_NPC_IWIN_SG$;
+		sleep 500;
+		emotion ET_OHNO, 'EP19_NPC_IWIN_SG_id;
+		npctalk 'EP19_NPC_IWIN_SG_visible$ + ": Ha.. I'm really excited.", 'EP19_NPC_IWIN_SG$;
+		break;
+	case 1:	// x7
+		npctalk 'EP19_NPC_IWIN_SY_visible$ + ": Corporal Anvilu, did you hear the news?", 'EP19_NPC_IWIN_SY$;
+		sleep 500;
+		npctalk 'EP19_NPC_IWIN_SG_visible$ + ": What news?", 'EP19_NPC_IWIN_SG$;
+		sleep 500;
+		npctalk 'EP19_NPC_IWIN_SY_visible$ + ": Someone uses magic and punishes the Vendor.", 'EP19_NPC_IWIN_SY$;
+		sleep 500;
+		npctalk 'EP19_NPC_IWIN_SG_visible$ + ": Ah.. that.. I wrote it.", 'EP19_NPC_IWIN_SG$;
+		sleep 500;
+		emotion ET_SURPRISE, 'EP19_NPC_IWIN_SN_id;
+		emotion ET_QUESTION, 'EP19_NPC_IWIN_SY_id;
+		emotion ET_HUK, 'EP19_NPC_IWIN_SB_id;
+		sleep 500;
+		npctalk 'EP19_NPC_IWIN_SG_visible$ + ": Where did you see what you saw. At the end of every word, Agent! Agent!", 'EP19_NPC_IWIN_SG$;
+		sleep 500;
+		npctalk 'EP19_NPC_IWIN_SG_visible$ + ": You're angry, not once or twice.", 'EP19_NPC_IWIN_SG$;
+		break;
+	case 2:	// x4
+		npctalk 'EP19_NPC_IWIN_SG_visible$ + ": Hey! Porarang~", 'EP19_NPC_IWIN_SG$;
+		sleep 500;
+		npctalk 'EP19_NPC_IWIN_SB_visible$ + ": Private! Porarang! Why is that?", 'EP19_NPC_IWIN_SB$;
+		sleep 500;
+		npctalk 'EP19_NPC_IWIN_SG_visible$ + ": Are you a head stone? How did Iwin hit icicles and only the icicles break?", 'EP19_NPC_IWIN_SG$;
+		sleep 500;
+		npctalk 'EP19_NPC_IWIN_SB_visible$ + ": Icicles are weak. I am strong.", 'EP19_NPC_IWIN_SB$;
+		sleep 500;
+		npctalk 'EP19_NPC_IWIN_SG_visible$ + ": All~ confidence~", 'EP19_NPC_IWIN_SG$;
+		break;
+	case 3:	// x9
+		npctalk 'EP19_NPC_IWIN_SG_visible$ + ": Oh, that's right. The commander of the range says...", 'EP19_NPC_IWIN_SG$;
+		sleep 500;
+		npctalk 'EP19_NPC_IWIN_SG_visible$ + ": I heard that Iwin ran from the shower to the dormitory with wet feathers...", 'EP19_NPC_IWIN_SG$;
+		sleep 500;
+		npctalk 'EP19_NPC_IWIN_SG_visible$ + ": None of us?", 'EP19_NPC_IWIN_SG$;
+		sleep 500;
+		emotion ET_PROFUSELY_SWEAT, 'EP19_NPC_IWIN_SN_id;
+		emotion ET_QUESTION, 'EP19_NPC_IWIN_SY_id;
+		emotion ET_QUESTION, 'EP19_NPC_IWIN_SB_id;
+		sleep 500;
+		npctalk 'EP19_NPC_IWIN_SG_visible$ + ": There must be some crazy Iwin like that.", 'EP19_NPC_IWIN_SG$;
+		break;
+	case 4:	// x4
+		npctalk 'EP19_NPC_IWIN_SG_visible$ + ": Calamari was delicious, but isn't it difficult to catch?", 'EP19_NPC_IWIN_SG$;
+		sleep 500;
+		emotion ET_DELIGHT, 'EP19_NPC_IWIN_SN_id;
+		emotion ET_KEK, 'EP19_NPC_IWIN_SY_id;
+		emotion ET_STARE_ABOUT, 'EP19_NPC_IWIN_SB_id;
+		sleep 500;
+		npctalk 'EP19_NPC_IWIN_SG_visible$ + ": Guys? Who am I talking to now?", 'EP19_NPC_IWIN_SG$;
+		break;
+	case 5:	// x5
+		npctalk 'EP19_NPC_IWIN_SG_visible$ + ": Doesn't it seem like you can't see the Rgan these days?", 'EP19_NPC_IWIN_SG$;
+		sleep 500;
+		emotion ET_COOL, 'EP19_NPC_IWIN_SB_id;
+		npctalk 'EP19_NPC_IWIN_SB_visible$ + ": Corporal Anvilyu is here, so why is Rgan coming down here?", 'EP19_NPC_IWIN_SB$;
+		sleep 500;
+		npctalk 'EP19_NPC_IWIN_SB_visible$ + ": I don't know if it's on the plain over there.", 'EP19_NPC_IWIN_SB$;
+		sleep 500;
+		emotion ET_KIK, 'EP19_NPC_IWIN_SG_id;
+		npctalk 'EP19_NPC_IWIN_SG_visible$ + ": Is it true?", 'EP19_NPC_IWIN_SG$;
+		break;
+	default:
+		sleep 2000;
+		break;
+	}
+	sleep 1000;
+	return;
+}
+
+
+// Related to the main quest
+1@iwp,260,390,4	script	The mysterious young man#dlunch	4_EP19_LUNCH,{
+	if (ep19_main == 11) {
+		cutin "ep19_lunch01.png",2;
+		mes "[Young man in question]";
+		mes "Wow! Have you come to arrest me?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "No.";
+		next;
+		mes "[Young man in question]";
+		mes "Oh! I'm glad. I had a hard time escaping here.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "But you look very similar to Morning? If I had to say it, I think she will look just like you when she grows up.";
+		next;
+		mes "[Young man in question]";
+		mes "Breakfast? Who is that?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Ugh? Don't you know morning? He's a boy who looks just like you, maybe we met at Ludus?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I don't know if it's still there.";
+		next;
+		mes "[Young man in question]";
+		mes "Ludus? Ludus.. Ludus..";
+		next;
+		mes "[Young man in question]";
+		mes "Oh! There! My data says it's a place to dump discarded specimens.";
+		next;
+		mes "[Young man in question]";
+		mes "I guess from the data, maybe that morning child is my early model.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Early model?";
+		next;
+		cutin "ep19_lunch02.png",2;
+		mes "[Young man in question]";
+		mes "I am an Illusion subject.";
+		next;
+		mes "[Young man in question]";
+		mes "I was made by the scientists of Illusion who improved and improved the test object called that morning.";
+		next;
+		mes "[Young man in question]";
+		mes "Compared to the subject of that morning, it can be said to be about 210426 times superior!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "That.. that's right. But how did you get here?";
+		next;
+		cutin "ep19_lunch01.png",2;
+		mes "[Young man in question]";
+		mes "Oh! That's a sharp question, but well? I'm not sure about that either.";
+		next;
+		mes "[Young man in question]";
+		mes "I got here too and fled when the scientists were out of control because they were doing other experiments.";
+		next;
+		mes "[Young man in question]";
+		mes "But I don't think it's safe here as the birds patrol there.";
+		next;
+		mes "[Young man in question]";
+		mes "I think the plain side is safer. I think I should go to the plain side now.. I'll see you when I get a chance.";
+		next;
+		mes "[Mysterious young man]";
+		mes "It was fun talking to you.";
+		next;
+		cutin "",255;
+		cloakonnpcself();
+		ep19_main = 12;
+		setquest 5983;
+		mes "The young man disappeared like that. You said you were going to the Frozen Scale Plains? Let's go see it when the time comes.";
+		close;
+	}
+	end;
+
+OnInstanceInit:
+	// todo ss for setunittitle
+	cloakonnpc();
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ep19_main == 11" );
+	end;
+}
+
+
+// Daily quest : Do not Feed Wildlife
+1@iwp,359,349,0	script	Something#df00	HODE,{
+	if (checkweight(528,1) == 0) {
+		mes "- Wait a minute !! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please try again -";
+		mes "- after you loose some weight. -";
+		close;
+	}
+	mes "^4A94F7something^000000 seems to be slightly covered with dirt. It seems to be moving. Is this dirt?";
+	next;
+	if (select( "Look at it", "Leave it alone" ) == 2) {
+		mes "Yeah! A scary something might come out, so let's just leave it alone.";
+		close;
+	}
+	progressbar "FFFFFF",1;
+
+	.@r = rand(100);
+	if (.@r < 50 || isbegin_quest(5978) == 0) {
+		mes "Ah.. what is it, just plain dirt?";
+		disablenpc();
+		initnpctimer;
+		close;
+	}
+	if (.@r < 60) {
+		mes "Ugh! It's a bug? What the hell happened?!";
+		disablenpc();
+		initnpctimer;
+		getmapxy .@map$,.@x,.@y, BL_NPC;
+		monster .@map$,.@x,.@y,"--ja--","G_THIEF_BUG__",5, instance_npcname( strnpcinfo(0) ) + "::OnMobDead";
+		close;
+	}
+	erasequest 5978;
+	setquest 5979;
+	getitem 528,1;	// Monster's_Feed
+	disablenpc();
+	initnpctimer;
+	mes "Someone has found food here. Let's bring it to Supply Officer Gorir.";
+	close;
+
+OnTimer30000:
+	enablenpc();
+	stopnpctimer;
+	killmonster 'map_iwp$, instance_npcname( strnpcinfo(0) ) + "::OnMobDead";
+	end;
+
+OnMobDead:
+	end;
+
+OnInstanceInit:
+	questinfo( QTYPE_CLICKME, QMARK_YELLOW, "isbegin_quest(5978) == 1" );
+	end;
+}
+1@iwp,113,142,0	duplicate(Something#df00)	Something#df01	HODE
+1@iwp,342,292,0	duplicate(Something#df00)	Something#df02	HODE
+1@iwp,292,259,0	duplicate(Something#df00)	Something#df03	HODE
+1@iwp,265,154,0	duplicate(Something#df00)	Something#df04	HODE
+1@iwp,278,103,0	duplicate(Something#df00)	Something#df05	HODE
+1@iwp,152,60,0	duplicate(Something#df00)	Something#df06	HODE
+1@iwp,100,70,0	duplicate(Something#df00)	Something#df07	HODE
+1@iwp,136,175,0	duplicate(Something#df00)	Something#df08	HODE
+1@iwp,149,239,0	duplicate(Something#df00)	Something#df09	HODE
+
+
+// checkpoints for players
+1@iwp,279,80,0	script	checkpoint#pcp01	HIDDEN_WARP_NPC,10,10,{
+	end;
+OnTouch:
+	if ('step < 2)
+		end;
+	if ('step_player[ getcharid(0) ] != 0)
+		end;
+	'step_player[ getcharid(0) ] = 1;
+	emotion ET_SURPRISE, playerattached();
+	end;
+}
+
+1@iwp,131,110,0	script	checkpoint#pcp02	HIDDEN_WARP_NPC,10,10,{
+	end;
+OnTouch:
+	if ('step < 3)
+		end;
+	if ('step_player[ getcharid(0) ] != 1)
+		end;
+	'step_player[ getcharid(0) ] = 2;
+	emotion ET_SURPRISE, playerattached();
+	end;
+}
+
+1@iwp,145,306,0	script	checkpoint#pcp03	HIDDEN_WARP_NPC,10,10,{
+	end;
+OnTouch:
+	if ('step < 4)
+		end;
+	if ('step_player[ getcharid(0) ] != 2)
+		end;
+	'step_player[ getcharid(0) ] = 3;
+	emotion ET_SURPRISE, playerattached();
+	end;
+}
+
+1@iwp,240,373,0	script	checkpoint#pcp04	HIDDEN_WARP_NPC,10,10,{
+	end;
+OnTouch:
+	if ('step < 5)
+		end;
+	if (ep19_main == 11) {
+		cloakoffnpcself( instance_npcname("The mysterious young man#dlunch" ) );
+		navigateto("1@iwp",260,390);
+		viewpoint 1,260,390,1,0xFF0000;
+		unittalk getcharid(3), "" + strcharinfo(0) + " : Anvil looks like there's something in the corner over there?", bc_self;
+		sleep2 500;
+		npctalk 'EP19_NPC_IWIN_SG_visible$ + ": Is that true? I don't think I've seen it. If you're concerned, how about coming and checking?", 'EP19_NPC_IWIN_SG$;
+	}
+	if ('step_player[ getcharid(0) ] != 3)
+		end;
+	'step_player[ getcharid(0) ] = 4;
+	emotion ET_SURPRISE, playerattached();
+	end;
+}
+
+1@iwp,264,310,0	script	checkpoint#pcp05	HIDDEN_WARP_NPC,10,20,{
+	end;
+OnTouch:
+	if ('step < 6)
+		end;
+	if ('step_player[ getcharid(0) ] != 4)
+		end;
+	'step_player[ getcharid(0) ] = 5;
+	emotion ET_SURPRISE, playerattached();
+	if (isbegin_quest(5972) == 1)	// note: no idea what it's for
+		erasequest 5972;
+	erasequest 5974;
+	setquest 5975;
+	end;
+}
+
+// Final step
+1@iwp,301,315,6	script	Guardmaster#ediwp	EP19_NPC_IWIN_SR,{
+	if ('step < 7) {
+		mes "[Captain of Patrol]";
+		mes "You've worked hard to get here. If you've worked hard, would you mind waiting for our crew to finish patrolling?";
+		close;
+	}
+	if ('step_player[ getcharid(0) ] != 5) {	// ongoing / player didn't walk on all the checkpoints
+		mes "[Captain of Patrol]";
+		mes "Neither you nor your comrades seem to have patrolled properly with our crew.";
+		next;
+		mes "[Captain of Patrol]";
+		mes "I can't even give you compensation because I didn't do the patrol properly. If you come around alone even now, I'll take care of you..";
+		next;
+		mes "[Captain of Patrol]";
+		mes "I don't know if you guys know about our patrol area.";
+		close;
+	}
+	if (isbegin_quest(5973) == 1) {	// already completed
+		mes "[Captain of Patrol]";
+		mes "You did a great job patrolling today. By the way, I'll take you back to the Ice Castle.";
+	}
+	else {
+		switch( isbegin_quest(5975) ) {
+		case 0:	// ongoing / player didn't walk on all the checkpoints
+			mes "[Captain of Patrol]";
+			mes "Neither you nor your comrades seem to have patrolled properly with our crew.";
+			next;
+			mes "[Captain of Patrol]";
+			mes "I can't even give you compensation because I didn't do the patrol properly. If you come around alone even now, I'll take care of you..";
+			next;
+			mes "[Captain of Patrol]";
+			mes "I don't know if you guys know about our patrol area.";
+			close;
+		case 1:
+			erasequest 5975;
+			setquest 5973;
+			add_reputation_points( REPUTATION_EP19, 5 );
+			getitem 1000608,2;	// Ep19_Snow_Flower
+			if (get_reputation_points(4) >= 3000)
+				getitem 1000608,1;	// Ep19_Snow_Flower
+			getexp2 52243795,0;
+			getexp 0,3000000;
+			mes "[Captain of Patrol]";
+			mes "Today's patrol was also very hard work. A small reward for this patrol.";
+			next;
+			mes "[Captain of Patrol]";
+			mes "By the way, where are you going? I'll take you back to the Ice Castle.";
+		case 2:
+			end;
+		}
+	}
+	next;
+	if (select( "To the Ice Castle..", "There is still work to be done." ) == 2) {
+		mes "[Captain of Patrol]";
+		mes "If that's the case, then why should we break up here? See you tomorrow.";
+		close;
+	}
+	mes "[Captain of Patrol]";
+	mes "Now, shall we go to the Ice Castle?";
+	close2;
+	warp "icecastle",20,123;
+	end;
+
+OnInstanceInit:
+	// todo setunittitle
+	disablenpc();
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(5975) == 1" );
+	end;
+}
