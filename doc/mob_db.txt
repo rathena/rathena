@@ -224,6 +224,14 @@ DamageTaken: Rate at which the monster will recieve damage from players.
 
 ---------------------------------------
 
+GroupID: Group ID applied on the monster.
+
+---------------------------------------
+
+Title: Title applied on the monster.
+
+---------------------------------------
+
 Ai: Aegis Monster Type behavior. Full explanation can be found in 'doc/mob_db_mode_list.txt'.
 
 ---------------------------------------
