@@ -153,4 +153,5 @@ prontera,156,179,6	script	test_getiteminfo	117,{
 		}
 	}
 	close;
+
 }
