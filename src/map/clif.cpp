@@ -25538,6 +25538,108 @@ void clif_parse_macro_checker( int32 fd, map_session_data* sd ){
 }
 
 /*==========================================
+ * macro user report client packet processing function
+ *------------------------------------------*/
+void clif_parse_macro_user_report(int32 fd, map_session_data *sd)
+{
+#if (PACKETVER_MAIN_NUM > 20230915)
+	nullpo_retv(sd);
+
+	PACKET_CZ_MACRO_USER_REPORT_REQ* const Packet = reinterpret_cast<PACKET_CZ_MACRO_USER_REPORT_REQ*>(RFIFOP(fd, 0));
+
+	//
+	// Packets that may be forged needs to be integrity checked before processing them.
+	//
+
+	if (Packet->ReportType > 1)
+	{
+		return;
+	}
+
+	if (Packet->ReporterAID == Packet->ReportedAID)
+	{
+		return;
+	}
+
+	if (Packet->ReporterAID != sd->status.account_id)
+	{
+		return;
+	}
+
+	map_session_data* tsd = map_id2sd(Packet->ReportedAID);
+	if (tsd == nullptr)
+	{
+		clif_macro_user_report_ack(sd, MACRO_USER_REPORT_INVALID, nullptr);
+		return;
+	}
+
+	//
+	// Checks whether the reported user character name matches.
+	//
+
+	if (strcmpi(Packet->ReportName, tsd->status.name) != 0)
+	{
+		clif_macro_user_report_ack(sd, MACRO_USER_REPORT_INVALID, nullptr);
+		return;
+	}
+
+	//
+	// Limits the maximum report count per reporter user.
+	//
+
+	const uint32 ReportCount = static_cast<uint32>(pc_readreg2(sd, "#MUR_ReportCount"));
+	if (ReportCount > 999)
+	{
+		clif_macro_user_report_ack(sd, MACRO_USER_REPORT_COUNTLIMIT, nullptr);
+		return;
+	}
+
+	pc_setreg2(sd, "#MUR_ReportCount", ReportCount + 1);
+
+	//
+	// Limits the interval between reports per reporter user.
+	//
+
+	const uint32 LastReportTime = static_cast<uint32>(pc_readreg2(sd, "#MUR_LastReportTime"));
+	if (LastReportTime > 0 && LastReportTime + 60 > time(nullptr))
+	{
+		clif_macro_user_report_ack(sd, MACRO_USER_REPORT_COOLTIME, nullptr);
+		return;
+	}
+
+	pc_setreg2(sd, "#MUR_LastReportTime", static_cast<uint32>(time(nullptr)));
+
+	chrif_macro_user_report(Packet->ReporterAID, Packet->ReportedAID, Packet->ReportType, Packet->ReportMessage);
+	clif_macro_user_report_ack(sd, MACRO_USER_REPORT_SUCCESS, Packet->ReportName);
+#endif
+}
+
+void clif_macro_user_report_ack(map_session_data *sd, int32 status, const char* const report_name)
+{
+#if (PACKETVER_MAIN_NUM > 20230915)
+	nullpo_retv(sd);
+
+	const int32 fd = sd->fd;
+
+	PACKET_ZC_MACRO_USER_REPORT_ACK* const Packet = reinterpret_cast<PACKET_ZC_MACRO_USER_REPORT_ACK*>(packet_buffer);
+	Packet->PacketType = HEADER_ZC_MACRO_USER_REPORT_ACK;
+	Packet->ReporterAID = sd->status.account_id;
+
+	if (report_name != nullptr)
+	{
+		memcpy(Packet->ReportName, report_name, NAME_LENGTH);
+	}
+	else
+	{
+		memset(Packet->ReportName, '\0', NAME_LENGTH);
+	}
+
+	Packet->Status = status;
+	clif_send(Packet, sizeof(PACKET_ZC_MACRO_USER_REPORT_ACK), &sd->bl, SELF);
+#endif
+}
+
+/*==========================================
  * Main client packet processing function
  *------------------------------------------*/
 static int32 clif_parse(int32 fd)
