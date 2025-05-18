@@ -983,7 +983,7 @@ int32 char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf, uint8* co
 	||	SQL_ERROR == stmt.BindColumn( 56, SQLDT_UINT8,  &p.body_direction, 0, nullptr, nullptr)
 	||	SQL_ERROR == stmt.BindColumn( 57, SQLDT_UINT16, &p.disable_call, 0, nullptr, nullptr)
 	||	SQL_ERROR == stmt.BindColumn( 58, SQLDT_UINT8, &p.disable_partyinvite, 0, nullptr, nullptr)
-	||	SQL_ERROR == stmt.BindColumn( 59, SQLDT_UINT16, &p.disable_showcostumes, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn( 59, SQLDT_UINT8, &p.disable_showcostumes, 0, nullptr, nullptr)
 	)
 	{
 		SqlStmt_ShowDebug(stmt);
@@ -1120,7 +1120,7 @@ int32 char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_
 	||	SQL_ERROR == stmt.BindColumn(74, SQLDT_UINT8,	&p->disable_call, 0, nullptr, nullptr)
 	||	SQL_ERROR == stmt.BindColumn(75, SQLDT_INT32,    &p->last_point_instanceid, 0, nullptr, nullptr)
 	||	SQL_ERROR == stmt.BindColumn(76, SQLDT_UINT8,	&p->disable_partyinvite, 0, nullptr, nullptr)
-	||	SQL_ERROR == stmt.BindColumn(77, SQLDT_UINT16,	&p->disable_showcostumes, 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(77, SQLDT_UINT8,	&p->disable_showcostumes, 0, nullptr, nullptr)
 	)
 	{
 		SqlStmt_ShowDebug(stmt);
