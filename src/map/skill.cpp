@@ -3250,7 +3250,6 @@ void skill_combo_toggle_inf(struct block_list* bl, uint16 skill_id, int32 inf){
 			}
 			break;
 		case MO_COMBOFINISH:
-		case CH_TIGERFIST:
 		case CH_CHAINCRUSH:
 			if( sd != nullptr ){
 				clif_skillinfo( *sd, MO_EXTREMITYFIST, inf );
@@ -3319,30 +3318,44 @@ void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_li
 			}
 			break;
 		case MO_CHAINCOMBO:
-			if (pc_checkskill(sd, MO_COMBOFINISH) > 0 && sd->spiritball > 0) {
+			if (pc_checkskill(sd, MO_COMBOFINISH) > 0 && sd->spiritball >= 1) {
 				duration = 1;
 				target_id = 0; // Will target current auto-target instead
 			}
 			break;
 		case MO_COMBOFINISH:
 			if (sd->status.party_id > 0) //bonus from SG_FRIEND [Komurka]
-				party_skill_check(sd, sd->status.party_id, MO_COMBOFINISH, skill_lv);
-			if (pc_checkskill(sd, CH_TIGERFIST) > 0 && sd->spiritball > 0) {
+				party_skill_check(sd, sd->status.party_id, skill_id, skill_lv);
+			if (pc_checkskill(sd, CH_TIGERFIST) > 0 && sd->spiritball >= 1) {
 				duration = 1;
 				target_id = 0; // Will target current auto-target instead
 			}
-			[[fallthrough]]; // so we can possibly cast TigerFist or straight to ExtremityFist
+			else if (pc_checkskill(sd, CH_CHAINCRUSH) > 0 && sd->spiritball >= 2) {
+				duration = 1;
+				target_id = 0; // Will target current auto-target instead
+			}
+			else if (pc_checkskill(sd, MO_EXTREMITYFIST) > 0 && sd->spiritball >= 4 && sd->sc.getSCE(SC_EXPLOSIONSPIRITS) != nullptr) {
+				duration = 1;
+				target_id = 0; // Will target current auto-target instead
+			}
+			break;
 		case CH_TIGERFIST:
-			if (!duration && pc_checkskill(sd, CH_CHAINCRUSH) > 0 && sd->spiritball > 1) {
+			if (pc_checkskill(sd, CH_CHAINCRUSH) > 0 && sd->spiritball >= 2) {
 				duration = 1;
 				target_id = 0; // Will target current auto-target instead
 			}
-			[[fallthrough]]; // so we can possibly cast ChainCrush or straight to ExtremityFist
+			break;
 		case CH_CHAINCRUSH:
-			if (!duration && pc_checkskill(sd, MO_EXTREMITYFIST) > 0 && sd->spiritball > 0 && sd->sc.getSCE(SC_EXPLOSIONSPIRITS)) {
+			if (pc_checkskill(sd, MO_EXTREMITYFIST) > 0 && sd->spiritball >= 1 && sd->sc.getSCE(SC_EXPLOSIONSPIRITS) != nullptr) {
 				duration = 1;
 				target_id = 0; // Will target current auto-target instead
 			}
+#ifndef RENEWAL
+			else if (pc_checkskill(sd, CH_TIGERFIST) > 0 && sd->spiritball >= 1) {
+				duration = 1;
+				target_id = 0; // Will target current auto-target instead
+			}
+#endif
 			break;
 		case AC_DOUBLE:
 			if (pc_checkskill(sd, HT_POWER)) {
@@ -16443,9 +16456,9 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(struct block_list *src, ui
 		if( !alive )
 			continue;
 
-		nullpo_retr(nullptr, (unit = skill_initunit(group,i,ux,uy,unit_val1,unit_val2,hidden)));
-		unit->limit = limit;
-		unit->range = range;
+		unit = skill_initunit(group, i, ux, uy, unit_val1, unit_val2, hidden, range, limit);
+		if (unit == nullptr)
+			return nullptr;
 
 		if (skill_id == PF_FOGWALL && alive == 2)
 		{	//Double duration of cells on top of Deluge/Suiton
@@ -18564,8 +18577,17 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 				return false;
 			break;
 		case CH_TIGERFIST:
-			if(!(sc && sc->getSCE(SC_COMBO) && sc->getSCE(SC_COMBO)->val1 == MO_COMBOFINISH))
+			if (sc == nullptr || sc->getSCE(SC_COMBO) == nullptr)
 				return false;
+#ifdef RENEWAL
+			// In Renewal Tiger Fist can only be used after Combo Finish
+			if (sc->getSCE(SC_COMBO)->val1 != MO_COMBOFINISH)
+				return false;
+#else
+			// In Pre-Renewal Tiger Fist can be used after Combo Finish or after Chain Crush Combo
+			if (sc->getSCE(SC_COMBO)->val1 != MO_COMBOFINISH && sc->getSCE(SC_COMBO)->val1 != CH_CHAINCRUSH)
+				return false;
+#endif
 			break;
 		case CH_CHAINCRUSH:
 			if(!(sc && sc->getSCE(SC_COMBO)))
@@ -18585,7 +18607,6 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 			if( sc && sc->getSCE(SC_COMBO) ) {
 				switch(sc->getSCE(SC_COMBO)->val1) {
 					case MO_COMBOFINISH:
-					case CH_TIGERFIST:
 					case CH_CHAINCRUSH:
 						break;
 					default:
@@ -20099,9 +20120,6 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 					switch( sc->getSCE(SC_COMBO)->val1 ) {
 						case MO_COMBOFINISH:
 							req.spiritball = 4;
-							break;
-						case CH_TIGERFIST:
-							req.spiritball = 3;
 							break;
 						case CH_CHAINCRUSH: //It should consume whatever is left as long as it's at least 1.
 							req.spiritball = sd->spiritball?sd->spiritball:1;
@@ -21799,8 +21817,10 @@ void skill_getareachar_skillunit_visibilty_single(struct skill_unit *su, struct 
  * @param y
  * @param val1
  * @param val2
+ * @param range Range of the unit (modern clients use this information for the display size of some units)
+ * @param limit Duration for which the unit stays
  */
-struct skill_unit *skill_initunit(std::shared_ptr<s_skill_unit_group> group, int32 idx, int32 x, int32 y, int32 val1, int32 val2, bool hidden)
+skill_unit* skill_initunit(std::shared_ptr<s_skill_unit_group> group, int32 idx, int32 x, int32 y, int32 val1, int32 val2, bool hidden, int32 range, t_tick limit)
 {
 	if (group == nullptr || group->unit == nullptr)
 		return nullptr;
@@ -21826,6 +21846,8 @@ struct skill_unit *skill_initunit(std::shared_ptr<s_skill_unit_group> group, int
 	unit->val1 = val1;
 	unit->val2 = val2;
 	unit->hidden = hidden;
+	unit->range = range;
+	unit->limit = limit;
 
 	// Stores new skill unit
 	idb_put(skillunit_db, unit->bl.id, unit);
@@ -22552,7 +22574,10 @@ static int32 skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 
 	if( unit->range >= 0 && group->interval != -1 )
 	{
-		map_foreachinrange(skill_unit_timer_sub_onplace, bl, unit->range, group->bl_flag, bl,tick);
+		if (skill_get_unit_flag(group->skill_id, UF_PATHCHECK))
+			map_foreachinrange(skill_unit_timer_sub_onplace, bl, unit->range, group->bl_flag, bl, tick);
+		else
+			map_foreachinallrange(skill_unit_timer_sub_onplace, bl, unit->range, group->bl_flag, bl, tick);
 
 		if(unit->range == -1) //Unit disabled, but it should not be deleted yet.
 			group->unit_id = UNT_USED_TRAPS;
