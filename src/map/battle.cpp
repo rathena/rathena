@@ -4650,7 +4650,7 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 #endif
 		if (!skill_id || skill_id == KN_AUTOCOUNTER) {
 			if (status_change_entry* sce = sc->getSCE(SC_POISONREACT); sce != nullptr && sce->val4 == 1) {
-				// Damage boost from poison react (bonus depends on level learned)
+				// Damage boost from poison react (for players bonus depends on level learned)
 				if (sd != nullptr)
 					skillratio += 30 * pc_checkskill(sd, AS_POISONREACT);
 				else
@@ -10525,7 +10525,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		}
 	}
 
-	// Poison React counter activates on normal poison attacks as well as attacks from poison-element enemies
+	// Poison React counter activates on attacks from poison-element enemies as well as normal poison attacks
 	if (tsc != nullptr && ((src->type != BL_PC && sstatus->def_ele == ELE_POISON) || sstatus->rhw.ele == ELE_POISON)) {
 		if (status_change_entry* sce = tsc->getSCE(SC_POISONREACT); sce != nullptr && sce->val4 == 0) {
 			// Next normal attack will receive a damage boost
