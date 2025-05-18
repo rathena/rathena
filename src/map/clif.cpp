@@ -1657,15 +1657,14 @@ void clif_weather(int16 m)
  * @param bl: Block data
  * @return True if NPC is disabled or false otherwise
  */
-static inline bool clif_npc_mayapurple(block_list *bl) {
-	nullpo_retr(false, bl);
-
-	if (bl->type == BL_NPC) {
-		npc_data *nd = map_id2nd(bl->id);
+static inline bool clif_npc_mayapurple( block_list& bl ){
+	if( bl.type == BL_NPC ){
+		npc_data& nd = reinterpret_cast<npc_data&>( bl );
 
 		// TODO: Confirm if waitingroom cause any special cases
-		if (/* nd->chat_id == 0 && */ nd->is_invisible)
+		if( /* nd->chat_id == 0 && */ nd.is_invisible ){
 			return true;
+		}
 	}
 
 	return false;
@@ -1697,6 +1696,10 @@ void clif_refresh_clothcolor( block_list& bl, enum send_target target, block_lis
  * Main function to spawn a unit on the client (player/mob/pet/etc)
  **/
 int32 clif_spawn( struct block_list *bl, bool walking ){
+	if( bl == nullptr ){
+		return 0;
+	}
+
 	struct view_data *vd;
 
 	vd = status_get_viewdata(bl);
@@ -1704,8 +1707,9 @@ int32 clif_spawn( struct block_list *bl, bool walking ){
 		return 0;
 
 	// Hide NPC from Maya Purple card
-	if (clif_npc_mayapurple(bl))
+	if( clif_npc_mayapurple( *bl ) ){
 		return 0;
+	}
 
 	if( bl->type == BL_NPC && !vd->dead_sit ){
 		clif_set_unit_idle( bl, walking, AREA_WOS, bl );
@@ -2087,8 +2091,9 @@ void clif_move( struct unit_data& ud )
 		return;
 
 	// Hide NPC from Maya Purple card
-	if (clif_npc_mayapurple(bl))
+	if( clif_npc_mayapurple( *bl ) ){
 		return;
+	}
 
 	status_change* sc = nullptr;
 
@@ -4087,8 +4092,10 @@ void clif_changelook(struct block_list *bl, int32 type, int32 val) {
 		target = SELF;
 
 #if PACKETVER < 4
-	if (target != SELF && bl->type == BL_NPC && (((TBL_NPC*)bl)->is_invisible))
+	if( target != SELF && clif_npc_mayapurple( *bl ) ){
 		target = SELF;
+	}
+
 	clif_sprite_change(bl, bl->id, type, val, 0, target);
 #else
 	if (bl->type != BL_NPC) {
@@ -4808,11 +4815,17 @@ void clif_tradeadditem( map_session_data* sd, map_session_data* tsd, int32 index
 ///     0 = success
 ///     1 = overweight
 ///     2 = trade canceled
+///     3 = inventory full
+///     4 = stacked item amount exceeded
 void clif_tradeitemok(map_session_data& sd, int32 index, e_exitem_add_result result)
 {
 	PACKET_ZC_ACK_ADD_EXCHANGE_ITEM p = {};
 	p.packetType = HEADER_ZC_ACK_ADD_EXCHANGE_ITEM;
 	p.index = client_index(index);
+#if PACKETVER < 20110705
+	if (result > EXITEM_ADD_FAILED_CLOSED)
+		result = EXITEM_ADD_FAILED_OVERWEIGHT;
+#endif
 	p.result = static_cast<uint8>(result);
 
 	clif_send(&p, sizeof(p), &sd.bl, SELF);
@@ -5019,6 +5032,10 @@ static void clif_getareachar_pc(map_session_data* sd,map_session_data* dstsd)
 }
 
 void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
+	if( bl == nullptr ){
+		return;
+	}
+
 	struct unit_data *ud;
 	struct view_data *vd;
 	bool option = false;
@@ -5029,8 +5046,9 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 		return;
 
 	// Hide NPC from Maya Purple card
-	if (clif_npc_mayapurple(bl))
+	if( clif_npc_mayapurple( *bl ) ){
 		return;
+	}
 
 	if( bl->type == BL_NPC && npc_is_hidden_dynamicnpc( *( (struct npc_data*)bl ), *sd ) ){
 		// Do not send anything
@@ -5613,8 +5631,9 @@ int32 clif_outsight(struct block_list *bl,va_list ap)
 			clif_clearchar_skillunit( *((skill_unit *)bl), *tsd );
 			break;
 		case BL_NPC:
-			if(!(((TBL_NPC*)bl)->is_invisible))
+			if( !clif_npc_mayapurple( *bl ) ){
 				clif_clearunit_single( bl->id, CLR_OUTSIGHT, *tsd );
+			}
 			break;
 		default:
 			if((vd=status_get_viewdata(bl)) && vd->class_ != JT_INVISIBLE)
@@ -5627,7 +5646,7 @@ int32 clif_outsight(struct block_list *bl,va_list ap)
 		if(tbl->type == BL_SKILL) //Trap knocked out of sight
 			clif_clearchar_skillunit( *((skill_unit *)tbl), *sd );
 		else if(((vd=status_get_viewdata(tbl)) && vd->class_ != JT_INVISIBLE) &&
-			!(tbl->type == BL_NPC && (((TBL_NPC*)tbl)->is_invisible)))
+			!clif_npc_mayapurple( *tbl ) )
 			clif_clearunit_single( tbl->id, CLR_OUTSIGHT, *sd );
 	}
 	return 0;
