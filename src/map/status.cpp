@@ -9385,8 +9385,8 @@ void status_set_viewdata(struct block_list *bl, int32 class_)
 					}
 				}
 				sd->vd.look[LOOK_BASE] = class_;
-				sd->vd.update( *sd, LOOK_WEAPON );
-				sd->vd.update( *sd, LOOK_SHIELD );
+				sd->update_look( LOOK_WEAPON );
+				sd->update_look( LOOK_SHIELD );
 				sd->vd.look[LOOK_HEAD_TOP] = sd->status.head_top;
 				sd->vd.look[LOOK_HEAD_MID] = sd->status.head_mid;
 				sd->vd.look[LOOK_HEAD_BOTTOM] = sd->status.head_bottom;
@@ -13954,8 +13954,8 @@ int32 status_change_end( struct block_list* bl, enum sc_type type, int32 tid ){
 		clif_changeoption(bl);
 		if (sd && opt_flag[SCF_SENDLOOK]) {
 			clif_changelook(bl,LOOK_BASE,sd->vd.look[LOOK_BASE]);
-			sd->vd.update( *sd, LOOK_WEAPON );
-			sd->vd.update( *sd, LOOK_SHIELD );
+			sd->update_look( LOOK_WEAPON );
+			sd->update_look( LOOK_SHIELD );
 			clif_changelook(bl,LOOK_WEAPON,sd->vd.look[LOOK_WEAPON]);
 			clif_changelook(bl,LOOK_SHIELD,sd->vd.look[LOOK_SHIELD]);
 			clif_changelook(bl,LOOK_CLOTHES_COLOR,cap_value(sd->status.clothes_color,0,battle_config.max_cloth_color));

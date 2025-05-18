@@ -620,6 +620,68 @@ void PenaltyDatabase::loadingFinished(){
 
 PenaltyDatabase penalty_db;
 
+void map_session_data::update_look( _look look ){
+	int32 val = this->vd.look[look];
+
+	switch( look ){
+		case LOOK_WEAPON:
+			if( this->sc.option&OPTION_COSTUME ){
+				val = 0;
+				break;
+			}else{
+				enum equip_index eqi = EQI_HAND_R;
+
+				if( this->equip_index[eqi] >= 0 && this->inventory_data[this->equip_index[eqi]] != nullptr ){
+					const item_data& id = *this->inventory_data[this->equip_index[eqi]];
+
+					if( id.view_id != 0 ){
+						val = id.view_id;
+					}else{
+						val = id.nameid;
+					}
+				}else{
+					// Nothing equipped
+					val = 0;
+				}
+			}
+			break;
+
+		case LOOK_SHIELD:
+			if( this->sc.option&OPTION_COSTUME ){
+				val = 0;
+				break;
+			}else{
+				enum equip_index eqi = EQI_HAND_L;
+
+				if( this->equip_index[eqi] >= 0 && this->inventory_data[this->equip_index[eqi]] != nullptr ){
+					if( this->equip_index[eqi] == this->equip_index[EQI_HAND_R] ){
+						// 2-handed weapons or 2-handed shields are only sent on LOOK_WEAPON
+						val = 0;
+						break;
+					}
+
+					const item_data& id = *this->inventory_data[this->equip_index[eqi]];
+
+					if( id.view_id != 0 ){
+						val = id.view_id;
+					}else{
+						val = id.nameid;
+					}
+				}else{
+					// Nothing equipped
+					val = 0;
+				}
+			}
+			break;
+
+		default:
+			// Do nothing
+			return;
+	}
+
+	this->vd.look[look] = val;
+}
+
 #define MOTD_LINE_SIZE 128
 static char motd_text[MOTD_LINE_SIZE][CHAT_SIZE_MAX]; // Message of the day buffer [Valaris]
 

@@ -3937,8 +3937,8 @@ void clif_changelook(struct block_list *bl, int32 type, int32 val) {
 		switch(type) {
 			case LOOK_WEAPON:
 				if (sd) {
-					vd->update( *sd, LOOK_WEAPON );
-					vd->update( *sd, LOOK_SHIELD );
+					sd->update_look( LOOK_WEAPON );
+					sd->update_look( LOOK_SHIELD );
 					val = vd->look[LOOK_WEAPON];
 				}
 				else 
@@ -3946,8 +3946,8 @@ void clif_changelook(struct block_list *bl, int32 type, int32 val) {
 				break;
 			case LOOK_SHIELD:
 				if (sd) {
-					vd->update( *sd, LOOK_WEAPON );
-					vd->update( *sd, LOOK_SHIELD );
+					sd->update_look( LOOK_WEAPON );
+					sd->update_look( LOOK_SHIELD );
 					val = vd->look[LOOK_SHIELD];
 				}
 				else 
@@ -3958,8 +3958,8 @@ void clif_changelook(struct block_list *bl, int32 type, int32 val) {
 					return;
 
 				if( sd != nullptr ){
-					vd->update( *sd, LOOK_WEAPON );
-					vd->update( *sd, LOOK_SHIELD );
+					sd->update_look( LOOK_WEAPON );
+					sd->update_look( LOOK_SHIELD );
 				}
 
 				if( sc != nullptr ){

@@ -86,9 +86,6 @@ struct view_data {
 	int32 look[LOOK_MAX];
 	char sex;
 	unsigned dead_sit : 2; // 0: Standing, 1: Dead, 2: Sitting
-
-public:
-	void update( map_session_data& sd, _look look );
 };
 
 /// Enum for unit_blown_immune
