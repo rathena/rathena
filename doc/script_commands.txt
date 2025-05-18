@@ -11338,8 +11338,6 @@ item description client side.
 If the feature is disabled, by default the database name of the item will be used.
 However if you provide a <display_name>, this name will be displayed instead.
 
-Item IDs over 8 digits ( >= 10,000,000 ) might not be rendered by the client.
-
 Examples:
 
 	mes mesitemicon( 1201 ); // Will display a Knife icon and will be clickable. If clicked it opens the description for Knife [3]
