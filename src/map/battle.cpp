@@ -4655,9 +4655,9 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 					skillratio += 30 * pc_checkskill(sd, AS_POISONREACT);
 				else
 					skillratio += 30 * sce->val1;
-				// This attack has a 50% chance to cause poison
+				// This attack has a chance to cause poison
 				// TODO: Effect should be delayed by attack motion
-				sc_start2(src, target, SC_POISON, 50, sce->val1, src->id, skill_get_time2(AS_POISONREACT, sce->val1));
+				sc_start2(src, target, SC_POISON, sce->val3, sce->val1, src->id, skill_get_time2(AS_POISONREACT, sce->val1));
 				status_change_end(src, SC_POISONREACT);
 			}
 			if (sc->getSCE(SC_CRUSHSTRIKE)) {
@@ -7363,6 +7363,7 @@ static void battle_calc_weapon_final_atk_modifiers(struct Damage* wd, struct blo
 		if (status_change_entry* sce = tsc->getSCE(SC_POISONREACT); sce != nullptr && rnd_chance_official(sce->val3, 100)) {
 			if (status_check_skilluse(target, src, TF_POISON, 0))
 				skill_attack(BF_WEAPON, target, target, src, TF_POISON, 5, gettick(), 0);
+			// Counter is reduced even if the autocast fails
 			if (--sce->val2 <= 0)
 				status_change_end(target, SC_POISONREACT);
 		}
