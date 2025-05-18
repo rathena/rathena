@@ -169,6 +169,17 @@ struct s_mercenary_skill_csv {
 };
 
 std::unordered_map<uint16, std::vector<s_mercenary_skill_csv>> mercenary_skill_tree;
+struct s_mob_skill_csv {
+	std::string skill_name, state_name, cond1_name, cond2_name, target_name, emotion;
+	uint16 skill_lv, permillage, msg_id;
+	int32 casttime, delay;
+	std::string mob_ai;
+	int32 cond3;	// another condition value for MYHPINRATE and FRIENDHPINRATE
+	std::unordered_map<int, std::string> val;
+	bool cancel;
+};
+
+std::unordered_map<std::string, std::vector<s_mob_skill_csv>> mob_skill_db;
 
 static std::map<std::string, int32> um_mapid2jobname {
 	{ "Novice", JOB_NOVICE }, // Novice and Super Novice share the same value
@@ -229,6 +240,30 @@ static std::unordered_map<std::string, equip_pos> um_equipnames {
 	{ "Shadow_Shoes", EQP_SHADOW_SHOES },
 	{ "Shadow_Right_Accessory", EQP_SHADOW_ACC_R },
 	{ "Shadow_Left_Accessory", EQP_SHADOW_ACC_L },
+};
+
+static std::unordered_map<int, std::string> um_mob_mode2ai {	// mode, AI
+	{ 0x0081, "01" },
+	{ 0x0083, "02" },
+	{ 0x1089, "03" },
+	{ 0x3885, "04" },
+	{ 0x2085, "05" },
+	{ 0x0000, "06" },
+	{ 0x108B, "07" },
+	{ 0x7085, "08" },
+	{ 0x3095, "09" },
+	{ 0x0084, "10" },
+	{ 0x0084, "11" },
+	{ 0x2085, "12" },
+	{ 0x308D, "13" },
+	{ 0x0091, "17" },
+	{ 0x3095, "19" },
+	{ 0x3295, "20" },
+	{ 0x3695, "21" },
+	{ 0x00A1, "24" },
+	{ 0x0001, "25" },
+	{ 0xB695, "26" },
+	{ 0x8084, "27" },
 };
 
 // Initialize Random Option constants
@@ -536,5 +571,7 @@ static bool itemdb_read_combos(const char* file);
 static bool cashshop_parse_dbrow( char* fields[], size_t columns, size_t current );
 static bool read_homunculus_skilldb( char* split[], size_t columns, size_t current );
 static bool read_homunculusdb( char* str[], size_t columns, size_t current );
+static bool mob_parse_row_mobskilldb(char* str[], size_t columns, size_t current);
+static bool mob_parse_row_mobskilldb_yaml(void);
 
 #endif /* CSV2YAML_HPP */
