@@ -1399,17 +1399,17 @@ int32 chmapif_parse_macro_user_report(int32 fd)
 	}
 
 	const uint32 reporterAID = RFIFOL(fd, 2);
-	const uint32 ReportedAID = RFIFOL(fd, 6);
-	const uint16 ReportType = RFIFOW(fd, 10);
-	const char* ReportMessage = RFIFOCP(fd, 12);
+	const uint32 reportedAID = RFIFOL(fd, 6);
+	const uint16 reportType = RFIFOW(fd, 10);
+	const char* reportMessage = RFIFOCP(fd, 12);
 
-	StringBuf Buffer;
-	StringBuf_Init(&Buffer);
-	StringBuf_Printf(&Buffer, "INSERT INTO `macro_user_report` (`reporter_aid`, `reported_aid`, `report_type`, `report_msg`) VALUES ('%u', '%u', '%hu', '%s')",
-		ReporterAID, ReportedAID, ReportType, ReportMessage
+	StringBuf buffer;
+	StringBuf_Init(&buffer);
+	StringBuf_Printf(&buffer, "INSERT INTO `macro_user_report` (`reporter_aid`, `reported_aid`, `report_type`, `report_msg`) VALUES ('%u', '%u', '%hu', '%s')",
+		reporterAID, reportedAID, reportType, reportMessage
 	);
 
-	if (Sql_QueryStr(sql_handle, StringBuf_Value(&Buffer)) == SQL_ERROR)
+	if (Sql_QueryStr(sql_handle, StringBuf_Value(&buffer)) == SQL_ERROR)
 	{
 		Sql_ShowDebug(sql_handle);
 	}

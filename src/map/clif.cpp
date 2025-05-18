@@ -25555,7 +25555,7 @@ void clif_parse_macro_checker( int32 fd, map_session_data* sd ){
  *------------------------------------------*/
 void clif_parse_macro_user_report(int32 fd, map_session_data *sd)
 {
-#if (PACKETVER_MAIN_NUM > 20230915)
+#if PACKETVER_MAIN_NUM >= 20230915
 	if( sd == nullptr ){
 		return;
 	}
@@ -25601,20 +25601,19 @@ void clif_parse_macro_user_report(int32 fd, map_session_data *sd)
 	//
 
 	const uint32 reportCount = static_cast<uint32>(pc_readreg2(sd, "#MUR_ReportCount"));
-	if (ReportCount > 999)
+	if (reportCount > 999)
 	{
-		clif_macro_user_report_ack(sd, MACRO_USER_REPORT_COUNTLIMIT, nullptr);
 		return;
 	}
 
-	pc_setreg2(sd, "#MUR_ReportCount", ReportCount + 1);
+	pc_setreg2(sd, "#MUR_ReportCount", reportCount + 1);
 
 	//
 	// Limits the interval between reports per reporter user.
 	//
 
-	const uint32 LastReportTime = static_cast<uint32>(pc_readreg2(sd, "#MUR_LastReportTime"));
-	if (LastReportTime > 0 && LastReportTime + 60 > time(nullptr))
+	const uint32 lastReportTime = static_cast<uint32>(pc_readreg2(sd, "#MUR_LastReportTime"));
+	if (lastReportTime > 0 && lastReportTime + 60 > time(nullptr))
 	{
 		clif_macro_user_report_ack(sd, MACRO_USER_REPORT_COOLTIME, nullptr);
 		return;
@@ -25622,25 +25621,22 @@ void clif_parse_macro_user_report(int32 fd, map_session_data *sd)
 
 	pc_setreg2(sd, "#MUR_LastReportTime", static_cast<uint32>(time(nullptr)));
 
-	chrif_macro_user_report(Packet->ReporterAID, Packet->ReportedAID, Packet->ReportType, Packet->ReportMessage);
-	clif_macro_user_report_ack(sd, MACRO_USER_REPORT_SUCCESS, Packet->ReportName);
+	chrif_macro_user_report(packet->reporterAID, packet->reportedAID, packet->reportType, packet->reportMessage);
+	clif_macro_user_report_ack(sd, MACRO_USER_REPORT_SUCCESS, packet->reportName);
 #endif
 }
 
-void clif_macro_user_report_ack(map_session_data *sd, int32 status, const char* const report_name)
+void clif_macro_user_report_ack(map_session_data *sd, int32 status, const char* report_name)
 {
-#if (PACKETVER_MAIN_NUM > 20230915)
-	nullpo_retv(sd);
+#if PACKETVER_MAIN_NUM >= 20230915
 
-	const int32 fd = sd->fd;
-
-	PACKET_ZC_MACRO_USER_REPORT_ACK* const Packet = reinterpret_cast<PACKET_ZC_MACRO_USER_REPORT_ACK*>(packet_buffer);
-	Packet->PacketType = HEADER_ZC_MACRO_USER_REPORT_ACK;
-	Packet->ReporterAID = sd->status.account_id;
+	PACKET_ZC_MACRO_USER_REPORT_ACK packet = {};
+	packet.packetType = HEADER_ZC_MACRO_USER_REPORT_ACK;
+	packet.reporterAID = sd->status.account_id;
 
 	if (report_name != nullptr)
 	{
-		memcpy(Packet->ReportName, report_name, NAME_LENGTH);
+		safestrncpy(packet.reportName, report_name, sizeof(packet.reportName));
 	}
 	else
 	{

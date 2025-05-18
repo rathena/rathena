@@ -80,7 +80,7 @@ int32 chrif_divorce(int32 partner_id1, int32 partner_id2);
 
 int32 chrif_removefriend(uint32 char_id, int32 friend_id);
 
-int32 chrif_macro_user_report(const uint32 InReporterAID, const uint32 InReportedAID, const uint16 InReportType, const char* const InReportMessage);
+int32 chrif_macro_user_report(const uint32 inReporterAID, const uint32 inReportedAID, const uint16 inReportType, const char* inReportMessage);
 
 void chrif_parse_ack_vipActive(int32 fd);
 
