@@ -18541,7 +18541,7 @@ BUILDIN_FUNC(addmonsterdrop)
 		}
 	}
 
-	bool exists = drop != nullptr;
+	bool exists = (drop != nullptr);
 
 	if( !exists ){
 		// No place to put the new drop
