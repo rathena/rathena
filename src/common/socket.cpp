@@ -1655,7 +1655,7 @@ uint32_t host2ip(const char* hostname)
 
     return ip;
 }
-#elif defined(HAVE_GETHOSTBYNAME)
+#else
 // Resolves hostname into a numeric ip.
 uint32 host2ip(const char* hostname)
 {
