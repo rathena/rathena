@@ -25646,7 +25646,7 @@ void clif_macro_user_report_ack(map_session_data *sd, int32 status, const char* 
 	}
 	else
 	{
-		memset(Packet->ReportName, '\0', NAME_LENGTH);
+		safestrncpy(packet.reportName, "", sizeof(packet.reportName));
 	}
 
 	Packet->Status = status;
