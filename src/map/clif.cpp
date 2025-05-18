@@ -25556,7 +25556,9 @@ void clif_parse_macro_checker( int32 fd, map_session_data* sd ){
 void clif_parse_macro_user_report(int32 fd, map_session_data *sd)
 {
 #if (PACKETVER_MAIN_NUM > 20230915)
-	nullpo_retv(sd);
+	if( sd == nullptr ){
+		return;
+	}
 
 	PACKET_CZ_MACRO_USER_REPORT_REQ* const Packet = reinterpret_cast<PACKET_CZ_MACRO_USER_REPORT_REQ*>(RFIFOP(fd, 0));
 
