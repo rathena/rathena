@@ -25571,7 +25571,7 @@ void clif_parse_macro_user_report(int32 fd, map_session_data *sd)
 		return;
 	}
 
-	if (Packet->ReporterAID == Packet->ReportedAID)
+	if (packet->reporterAID == packet->reportedAID)
 	{
 		return;
 	}
