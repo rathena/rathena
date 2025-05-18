@@ -1398,7 +1398,7 @@ int32 chmapif_parse_macro_user_report(int32 fd)
 		return 0;
 	}
 
-	const uint32 ReporterAID = RFIFOL(fd, 2);
+	const uint32 reporterAID = RFIFOL(fd, 2);
 	const uint32 ReportedAID = RFIFOL(fd, 6);
 	const uint16 ReportType = RFIFOW(fd, 10);
 	const char* ReportMessage = RFIFOCP(fd, 12);
