@@ -37,6 +37,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Update & Install packages
+        # Macos runners already have most of the packages rAthena requires to build.
+        # https://github.com/actions/runner-images/blob/main/images/macos/macos-15-Readme.md
+        run: |
+          brew update
+          brew install pcre
+          brew install mysql
+          brew install mysql-client
+          brew install cmake
+
+
       # Install latest CMake.
       - uses: lukka/get-cmake@latest
 
