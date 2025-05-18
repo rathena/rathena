@@ -2031,6 +2031,26 @@ struct PACKET_CZ_REQ_REPORT_USER{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_REQ_REPORT_USER, 0xbe2);
 
+struct PACKET_CZ_MACRO_USER_REPORT_REQ
+{
+	int16 packetType;
+	uint32 reporterAID;
+	uint32 reportedAID;
+	char reportName[NAME_LENGTH];
+	uint16 reportType;
+	char reportMessage[101];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_MACRO_USER_REPORT_REQ, 0x0be2);
+
+struct PACKET_ZC_MACRO_USER_REPORT_ACK
+{
+	int16 packetType;
+	uint32 reporterAID;
+	char reportName[NAME_LENGTH];
+	uint32 status;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_MACRO_USER_REPORT_ACK, 0x0be3);
+
 struct PACKET_CZ_QUEST_STATUS_REQ{
 	int16 packetType;
 	int16 packetLength;
