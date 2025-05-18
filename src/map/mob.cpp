@@ -719,12 +719,6 @@ int32 mob_once_spawn(map_session_data* sd, int16 m, int16 x, int16 y, const char
 
 		mob_spawn(md);
 
-		if (!md->db->title.empty())
-			safestrncpy(md->ud.title, md->db->title.c_str(), NAME_LENGTH);
-		md->ud.group_id = md->db->group_id;
-		unit_refresh(&md->bl);
-		clif_name_area(&md->bl);
-
 		if (mob_id < 0 && battle_config.dead_branch_active)
 			//Behold Aegis's masterful decisions yet again...
 			//"I understand the "Aggressive" part, but the "Can Move" and "Can Attack" is just stupid" - Poki#3
