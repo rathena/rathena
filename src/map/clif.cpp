@@ -25650,7 +25650,7 @@ void clif_macro_user_report_ack(map_session_data *sd, int32 status, const char* 
 	}
 
 	packet.status = status;
-	clif_send(Packet, sizeof(PACKET_ZC_MACRO_USER_REPORT_ACK), &sd->bl, SELF);
+	clif_send(&packet, sizeof(packet), &sd->bl, SELF);
 #endif
 }
 
