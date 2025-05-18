@@ -25600,7 +25600,7 @@ void clif_parse_macro_user_report(int32 fd, map_session_data *sd)
 	// Limits the maximum report count per reporter user.
 	//
 
-	const uint32 ReportCount = static_cast<uint32>(pc_readreg2(sd, "#MUR_ReportCount"));
+	const uint32 reportCount = static_cast<uint32>(pc_readreg2(sd, "#MUR_ReportCount"));
 	if (ReportCount > 999)
 	{
 		clif_macro_user_report_ack(sd, MACRO_USER_REPORT_COUNTLIMIT, nullptr);
