@@ -74201,6 +74201,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Script: |
+      sc_start SC_EXPBOOST,3600000,100;
   - Id: 101475
     AegisName: Booster_B_M_2
     Name: Booster Advanced Combat Manual    # !todo check english name
@@ -74214,6 +74216,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Script: |
+      sc_start SC_EXPBOOST,3600000,200;
   - Id: 101476
     AegisName: Booster230_Gift
     Name: Booster Gift Box    # !todo check english name
