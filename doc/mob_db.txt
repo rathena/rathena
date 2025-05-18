@@ -228,7 +228,7 @@ GroupID: Group ID applied on the monster.
 
 ---------------------------------------
 
-Title: Title applied on the monster.
+Title: Title applied on the monster. It will only work on mobs if battle_config.show_mob_info is not enabled.
 
 ---------------------------------------
 

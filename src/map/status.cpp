@@ -2767,8 +2767,7 @@ int32 status_calc_mob_(struct mob_data* md, uint8 opt)
 			;
 		else
 			md->level = md->db->lv;
-		if (!md->db->title.empty())
-			safestrncpy(md->ud.title, md->db->title.c_str(), NAME_LENGTH);
+		safestrncpy(md->ud.title, md->db->title.c_str(), NAME_LENGTH);
 		md->damagetaken = md->db->damagetaken;
 		md->ud.group_id = md->db->group_id;
 	}
