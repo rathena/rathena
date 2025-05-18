@@ -25566,7 +25566,7 @@ void clif_parse_macro_user_report(int32 fd, map_session_data *sd)
 	// Packets that may be forged needs to be integrity checked before processing them.
 	//
 
-	if (Packet->ReportType > 1)
+	if (packet->reportType > 1)
 	{
 		return;
 	}
