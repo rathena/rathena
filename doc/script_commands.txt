@@ -1023,7 +1023,7 @@ OnPCIdentifyEvent:
 This special label triggers when a player successfully identifies an item.
 It is invoked each time the player uses an identifying action (such as using a Magnifier or MC_IDENTIFY).
 The temporary variable '@identify_idx' contains the index number of the item that was
-identified in the list, allowing scripts to determine which item was selected by the player.
+identified in the list, allowing scripts to determine which item was identified by the player.
 
 OnWhisperGlobal:
 
