@@ -25560,7 +25560,7 @@ void clif_parse_macro_user_report(int32 fd, map_session_data *sd)
 		return;
 	}
 
-	PACKET_CZ_MACRO_USER_REPORT_REQ* const Packet = reinterpret_cast<PACKET_CZ_MACRO_USER_REPORT_REQ*>(RFIFOP(fd, 0));
+	const PACKET_CZ_MACRO_USER_REPORT_REQ* packet = reinterpret_cast<PACKET_CZ_MACRO_USER_REPORT_REQ*>(RFIFOP(fd, 0));
 
 	//
 	// Packets that may be forged needs to be integrity checked before processing them.
