@@ -25584,7 +25584,6 @@ void clif_parse_macro_user_report(int32 fd, map_session_data *sd)
 	map_session_data* tsd = map_id2sd(packet->reportedAID);
 	if (tsd == nullptr)
 	{
-		clif_macro_user_report_ack(sd, MACRO_USER_REPORT_INVALID, nullptr);
 		return;
 	}
 
