@@ -33,7 +33,7 @@
 
 #include <locale.h>
 
-#ifdef HAVE_XLOCALE_H
+#if defined(HAVE_XLOCALE_H) || defined(__APPLE__)
 #include <xlocale.h>
 #endif
 
