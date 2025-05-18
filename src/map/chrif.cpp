@@ -501,6 +501,19 @@ int32 chrif_connectack(int32 fd) {
 	return 0;
 }
 
+int32 chrif_macro_user_report(const uint32 inReporterAID, const uint32 inReportedAID, const uint16 inReportType, const char* inReportMessage)
+{
+	WFIFOHEAD(char_fd, 268);
+	WFIFOW(char_fd, 0) = 0x2b2c;
+	WFIFOL(char_fd, 2) = inReporterAID;
+	WFIFOL(char_fd, 6) = inReportedAID;
+	WFIFOW(char_fd, 10) = inReportType;
+	safestrncpy(WFIFOCP(char_fd, 12), inReportMessage, 256);
+	WFIFOSET(char_fd, 268);
+
+	return 0;
+}
+
 /**
  * @see DBApply
  */

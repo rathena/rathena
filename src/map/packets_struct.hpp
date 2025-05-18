@@ -5252,6 +5252,26 @@ struct PACKET_CZ_REQ_TAKEOFF_EQUIP_ALL {
 DEFINE_PACKET_HEADER(CZ_REQ_TAKEOFF_EQUIP_ALL, 0x0bad);
 #endif  // PACKETVER_MAIN_NUM >= 20210818 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20210818
 
+struct PACKET_CZ_MACRO_USER_REPORT_REQ
+{
+	int16 packetType;
+	uint32 reporterAID;
+	uint32 reportedAID;
+	char reportName[NAME_LENGTH];
+	uint16 reportType;
+	char reportMessage[101];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_MACRO_USER_REPORT_REQ, 0x0be2);
+
+struct PACKET_ZC_MACRO_USER_REPORT_ACK
+{
+	int16 packetType;
+	uint32 reporterAID;
+	char reportName[NAME_LENGTH];
+	uint32 status;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_MACRO_USER_REPORT_ACK, 0x0be3);
+
 #if PACKETVER_MAIN_NUM >= 20210818 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
 struct PACKET_ZC_ACK_TAKEOFF_EQUIP_ALL {
 	int16 PacketType;
