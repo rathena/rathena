@@ -25591,7 +25591,7 @@ void clif_parse_macro_user_report(int32 fd, map_session_data *sd)
 	// Checks whether the reported user character name matches.
 	//
 
-	if (strcmpi(Packet->ReportName, tsd->status.name) != 0)
+	if (strcmpi(packet->reportName, tsd->status.name) != 0)
 	{
 		clif_macro_user_report_ack(sd, MACRO_USER_REPORT_INVALID, nullptr);
 		return;
