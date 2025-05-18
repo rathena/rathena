@@ -25593,7 +25593,6 @@ void clif_parse_macro_user_report(int32 fd, map_session_data *sd)
 
 	if (strcmpi(packet->reportName, tsd->status.name) != 0)
 	{
-		clif_macro_user_report_ack(sd, MACRO_USER_REPORT_INVALID, nullptr);
 		return;
 	}
 
