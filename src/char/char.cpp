@@ -296,7 +296,7 @@ int32 char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 		(p->rename != cp->rename) || (p->robe != cp->robe) || (p->character_moves != cp->character_moves) ||
 		(p->unban_time != cp->unban_time) || (p->font != cp->font) || (p->uniqueitem_counter != cp->uniqueitem_counter) ||
 		(p->hotkey_rowshift != cp->hotkey_rowshift) || (p->clan_id != cp->clan_id ) || (p->title_id != cp->title_id) ||
-		(p->show_equip != cp->show_equip) || (p->disable_showcostumes != cp->disable_showcostumes) || (p->hotkey_rowshift2 != cp->hotkey_rowshift2) ||
+		(p->show_equip != cp->show_equip) || (p->hotkey_rowshift2 != cp->hotkey_rowshift2) ||
 		(p->max_ap != cp->max_ap) || (p->ap != cp->ap) || (p->trait_point != cp->trait_point) ||
 		(p->pow != cp->pow) || (p->sta != cp->sta) || (p->wis != cp->wis) ||
 		(p->spl != cp->spl) || (p->con != cp->con) || (p->crt != cp->crt)
@@ -311,7 +311,7 @@ int32 char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 			"`last_map`='%s',`last_x`='%d',`last_y`='%d',`last_instanceid`='%d',"
 			"`save_map`='%s',`save_x`='%d',`save_y`='%d', `rename`='%d',"
 			"`delete_date`='%lu',`robe`='%d',`moves`='%d',`font`='%u',`uniqueitem_counter`='%u',"
-			"`hotkey_rowshift`='%d', `clan_id`='%d', `title_id`='%lu', `show_equip`='%d',  `disable_showcostumes`='%d', `hotkey_rowshift2`='%d',"
+			"`hotkey_rowshift`='%d', `clan_id`='%d', `title_id`='%lu', `show_equip`='%d', `hotkey_rowshift2`='%d',"
 			"`max_ap`='%u',`ap`='%u',`trait_point`='%d',"
 			"`pow`='%d',`sta`='%d',`wis`='%d',`spl`='%d',`con`='%d',`crt`='%d'"
 			" WHERE `account_id`='%d' AND `char_id` = '%d'",
@@ -325,7 +325,7 @@ int32 char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 			p->save_point.map, p->save_point.x, p->save_point.y, p->rename,
 			(unsigned long)p->delete_date, // FIXME: platform-dependent size
 			p->robe, p->character_moves, p->font, p->uniqueitem_counter,
-			p->hotkey_rowshift, p->clan_id, p->title_id, p->show_equip,  p->disable_showcostumes, p->hotkey_rowshift2,
+			p->hotkey_rowshift, p->clan_id, p->title_id, p->show_equip, p->hotkey_rowshift2,
 			p->max_ap, p->ap, p->trait_point,
 			p->pow, p->sta, p->wis, p->spl, p->con, p->crt,
 			p->account_id, p->char_id) )
@@ -344,20 +344,21 @@ int32 char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 		(p->mother != cp->mother) || (p->child != cp->child) ||
  		(p->karma != cp->karma) || (p->manner != cp->manner) ||
 		(p->fame != cp->fame) || (p->inventory_slots != cp->inventory_slots) ||
-		(p->body_direction != cp->body_direction) || (p->disable_call != cp->disable_call) || (p->disable_partyinvite != cp->disable_partyinvite)
+		(p->body_direction != cp->body_direction) || (p->disable_call != cp->disable_call) || (p->disable_partyinvite != cp->disable_partyinvite) ||
+		(p->disable_showcostumes != cp->disable_showcostumes)
 	)
 	{
 		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `class`='%d',"
 			"`hair`='%d', `hair_color`='%d', `clothes_color`='%d', `body`='%d',"
 			"`partner_id`='%u', `father`='%u', `mother`='%u', `child`='%u',"
 			"`karma`='%d',`manner`='%d', `fame`='%d', `inventory_slots`='%hu',"
-			"`body_direction`='%d',`disable_call`='%d',`disable_partyinvite`='%d'"
+			"`body_direction`='%d',`disable_call`='%d',`disable_partyinvite`='%d',`disable_showcostumes`='%d',"
 			" WHERE  `account_id`='%d' AND `char_id` = '%d'",
 			schema_config.char_db, p->class_,
 			p->hair, p->hair_color, p->clothes_color, p->body,
 			p->partner_id, p->father, p->mother, p->child,
 			p->karma, p->manner, p->fame, p->inventory_slots,
-			p->body_direction, p->disable_call, p->disable_partyinvite,
+			p->body_direction, p->disable_call, p->disable_partyinvite, p->disable_showcostumes,
 			p->account_id, p->char_id) )
 		{
 			Sql_ShowDebug(sql_handle);
