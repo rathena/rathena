@@ -27706,7 +27706,7 @@ BUILDIN_FUNC(mesitemicon){
 		data = item_db.searchname( item_name );
 
 		if( data == nullptr ){
-			ShowError( "buildin_mesitemlink: Item \"%s\" does not exist.\n", item_name );
+			ShowError( "buildin_mesitemicon: Item \"%s\" does not exist.\n", item_name );
 			script_pushconststr( st, "" );
 			return SCRIPT_CMD_FAILURE;
 		}
@@ -27716,7 +27716,7 @@ BUILDIN_FUNC(mesitemicon){
 		data = item_db.find( nameid );
 
 		if( data == nullptr ){
-			ShowError( "buildin_mesitemlink: Item ID %u does not exist.\n", nameid );
+			ShowError( "buildin_mesitemicon: Item ID %u does not exist.\n", nameid );
 			script_pushconststr( st, "" );
 			return SCRIPT_CMD_FAILURE;
 		}
