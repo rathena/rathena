@@ -16620,7 +16620,7 @@ BUILDIN_FUNC(mapname2id)
 {
     const char* map_name = script_getstr(st, 2);
 	int16 mapid = map_mapname2mapid(map_name);
-    if (m >= MAX_MAP_PER_SERVER) {
+	if (mapid < 0 || mapid >= MAX_MAP_PER_SERVER) {
         script_pushint(st, -1); 
         return SCRIPT_CMD_FAILURE;
     }
