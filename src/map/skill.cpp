@@ -15783,6 +15783,7 @@ void skill_dance_overlap_revert(skill_unit* unit) {
 	unit->val2 &= ~(1 << UF_ENSEMBLE);
 	// If the unit is removed because overlap dissonance killed the caster, we need to reset it here
 	skill_dance_switch(unit, true);
+	// Respawn the unit with the original unit_id
 	skill_getareachar_skillunit_visibilty(unit, AREA);
 }
 
