@@ -16624,7 +16624,7 @@ BUILDIN_FUNC(mapname2id)
         script_pushint(st, -1); 
         return SCRIPT_CMD_FAILURE;
     }
-    script_pushint(st, m); 
+	script_pushint(st, mapid); 
     return SCRIPT_CMD_SUCCESS;
 }
 
