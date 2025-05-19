@@ -3700,8 +3700,7 @@ void pc_bonus(map_session_data *sd,int32 type,int32 val)
 				bonus = sd->bonus.eatk + val;
 				sd->bonus.eatk = cap_value(bonus, SHRT_MIN, SHRT_MAX);
 #else
-				bonus = status->batk + val;
-				status->batk = cap_value(bonus, 0, USHRT_MAX);
+				status->batk += val;
 #endif
 			}
 			break;
@@ -6089,7 +6088,6 @@ bool pc_takeitem(map_session_data *sd,struct flooritem_data *fitem)
 {
 	int32 flag = 0;
 	t_tick tick = gettick();
-	struct party_data *p = nullptr;
 
 	nullpo_ret(sd);
 	nullpo_ret(fitem);
@@ -6100,8 +6098,8 @@ bool pc_takeitem(map_session_data *sd,struct flooritem_data *fitem)
 	if (sd->sc.cant.pickup)
 		return false;
 
-	if (sd->status.party_id)
-		p = party_search(sd->status.party_id);
+	party_data* p = party_search(sd->status.party_id);
+	bool share = (p != nullptr && (p->party.item&1));
 
 	// Time the player needs to wait until the item can be taken
 	// By default the player needs to wait for top, second and third attacker loot priority times
@@ -6112,15 +6110,15 @@ bool pc_takeitem(map_session_data *sd,struct flooritem_data *fitem)
 		// Top attacker or no attacker, no wait time
 		item_get_tick = 0;
 	}
-	else if (fitem->second_get_charid > 0 && fitem->second_get_charid == sd->status.char_id) {
+	else if (fitem->second_get_charid > 0 && fitem->second_get_charid == sd->status.char_id && !share) {
 		// Second top attacker, needs to wait for top attacker
 		item_get_tick = fitem->first_get_tick;
 	}
-	else if (fitem->third_get_charid > 0 && fitem->third_get_charid == sd->status.char_id) {
+	else if (fitem->third_get_charid > 0 && fitem->third_get_charid == sd->status.char_id && !share) {
 		// Third top attacker, needs to wait for top and second attacker
 		item_get_tick = fitem->second_get_tick;
 	}
-	else if (p != nullptr && p->party.item&1) {
+	else if (share) {
 		// Party member loot priority
 		map_session_data* first_sd = nullptr;
 		map_session_data* second_sd = nullptr;
@@ -6864,6 +6862,16 @@ enum e_setpos pc_setpos(map_session_data* sd, uint16 mapindex, int32 x, int32 y,
 	sd->state.workinprogress = WIP_DISABLE_NONE;
 	sd->state.mail_writing = false;
 	sd->state.refineui_open = false;
+	sd->state.stylist_open = false;
+	sd->state.inventory_expansion_confirmation = 0;
+	sd->state.barter_open = false;
+	sd->state.barter_extended_open = false;
+	sd->state.laphine_synthesis = 0;
+	sd->state.laphine_upgrade = 0;
+	sd->state.roulette_open = false;
+	sd->state.enchantgrade_open = false;
+	sd->state.item_reform = 0;
+	sd->state.item_enchant_index = 0;
 
 	if( sd->state.changemap ) { // Misc map-changing settings
 		int32 curr_map_instance_id = map_getmapdata(sd->bl.m)->instance_id, new_map_instance_id = (mapdata ? mapdata->instance_id : 0);
@@ -12237,7 +12245,6 @@ static void pc_unequipitem_sub(map_session_data *sd, int32 n, int32 flag) {
 	}
 
 	if (flag & 1 || status_calc) {
-		pc_checkallowskill(sd);
 		status_calc_pc(sd, SCO_FORCE);
 	}
 
@@ -12282,7 +12289,7 @@ static void pc_unequipitem_sub(map_session_data *sd, int32 n, int32 flag) {
  *  0 - only unequip
  *  1 - calculate status after unequipping
  *  2 - force unequip
- *  4 - unequip by switching equipment
+ *  4 - equip switch (do not end status changes based on weapon/armor requirements)
  * @return True on success or false on failure
  */
 bool pc_unequipitem(map_session_data *sd, int32 n, int32 flag) {
@@ -12377,12 +12384,6 @@ bool pc_unequipitem(map_session_data *sd, int32 n, int32 flag) {
 	if (pos & EQP_ARMOR) {
 		status_db.removeByStatusFlag(&sd->bl, { SCF_REMOVEONUNEQUIPARMOR });
 	}
-
-	// On equipment change
-#ifndef RENEWAL
-	if (!(flag&4))
-		status_change_end(&sd->bl, SC_CONCENTRATION);
-#endif
 
 	// On ammo change
 	if (sd->inventory_data[n]->type == IT_AMMO && (sd->inventory_data[n]->nameid != ITEMID_SILVER_BULLET || sd->inventory_data[n]->nameid != ITEMID_PURIFICATION_BULLET || sd->inventory_data[n]->nameid != ITEMID_SILVER_BULLET_))
