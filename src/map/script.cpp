@@ -16613,7 +16613,7 @@ BUILDIN_FUNC(mapid2name)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/// Returns the map ID of given map name. By [KWDev]
+/// Returns the map ID of given map name.
 ///
 /// mapname2id <"map name">;
 BUILDIN_FUNC(mapname2id)
