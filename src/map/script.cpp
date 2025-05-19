@@ -18556,7 +18556,9 @@ BUILDIN_FUNC(addmonsterdrop)
 		}
 	}
 
-	if( drop == nullptr ){
+	bool exists = (drop != nullptr);
+
+	if( !exists ){
 		// No place to put the new drop
 		if( mob->dropitem.size() == MAX_MOB_DROP ){
 			script_pushint(st, false);
@@ -18591,7 +18593,13 @@ BUILDIN_FUNC(addmonsterdrop)
 	drop->rate = rate;
 	drop->steal_protected = steal_protected > 0;
 	drop->randomopt_group = group;
-	mob_reload_itemmob_data(); // Reload the mob search data stored in the item_data
+
+	if( !exists ){
+		mob->dropitem.push_back( drop );
+	}
+
+	// Reload the mob search data stored in the item_data
+	mob_reload_itemmob_data();
 
 	script_pushint(st, true);
 	return SCRIPT_CMD_SUCCESS;
@@ -28198,7 +28206,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(setunittitle,"is"),
 	BUILDIN_DEF(getunittitle,"i"),
 	BUILDIN_DEF(getunitdata,"i*"),
-	BUILDIN_DEF(setunitdata,"iii"),
+	BUILDIN_DEF(setunitdata,"iiv"),
 	BUILDIN_DEF(unitwalk,"iii?"),
 	BUILDIN_DEF2(unitwalk,"unitwalkto","ii?"),
 	BUILDIN_DEF(unitkill,"i"),
