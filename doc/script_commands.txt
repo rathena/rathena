@@ -3360,7 +3360,8 @@ map ID doesn't exist.
 
 *mapname2id(<"map name">)
 
-Returns the map ID of the given map name. Returns -1 if given map name doesn't exist.
+Returns the map ID of the given map name or -1 if the given
+map name doesn't exist or is on another map-server.
 
 ---------------------------------------
 
