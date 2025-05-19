@@ -28087,7 +28087,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(npcstop,"??"),
 	BUILDIN_DEF(getmapxy,"rrr??"),	//by Lorky [Lupus]
 	BUILDIN_DEF(mapid2name,"i"),
-	BUILDIN_DEF(mapname2id,"i"), // By [KWDev]
+	BUILDIN_DEF(mapname2id,"s"), // By [KWDev]
 	BUILDIN_DEF(checkoption1,"i?"),
 	BUILDIN_DEF(checkoption2,"i?"),
 	BUILDIN_DEF(guildgetexp,"i"),
