@@ -294,7 +294,7 @@ int32 intif_main_message(map_session_data* sd, const char* message)
 	intif_broadcast2( output, strlen(output) + 1, 0xFE000000, 0, 0, 0, 0 );
 
 	// log the chat message
-	log_chat( LOG_CHAT_MAINCHAT, 0, sd->status.char_id, sd->status.account_id, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, nullptr, message );
+	log_chat( LOG_CHAT_MAINCHAT, 0, sd->status.char_id, sd->status.account_id, mapindex_id2name(sd->mapindex), sd->x, sd->y, nullptr, message );
 
 	return 1;
 }
@@ -2366,7 +2366,7 @@ int32 intif_parse_Mail_inboxreceived(int32 fd)
 	{
 		char output[128];
 		sprintf(output, msg_txt(sd,510), sd->mail.inbox.unchecked, sd->mail.inbox.unread + sd->mail.inbox.unchecked);
-		clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
+		clif_messagecolor(sd, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 	}
 
 	return 1;
@@ -3243,7 +3243,7 @@ void intif_parse_MessageToFD(int32 fd) {
 		int32 aid = RFIFOL(fd,8);
 		map_session_data * sd = (map_session_data *)session[u_fd]->session_data;
 		/* matching e.g. previous fd owner didn't dc during request or is still the same */
-		if( sd->bl.id == aid ) {
+		if( sd->id == aid ) {
 			char msg[512];
 			safestrncpy(msg, RFIFOCP(fd,12), RFIFOW(fd,2) - 12);
 			clif_displaymessage(u_fd,msg);
@@ -3496,7 +3496,7 @@ static bool intif_parse_StorageReceived(int32 fd)
 			}
 #endif
 			//Set here because we need the inventory data for weapon sprite parsing.
-			status_set_viewdata(&sd->bl, sd->status.class_);
+			status_set_viewdata(sd, sd->status.class_);
 			// Set headgear data here, otherwise this is done in loadEndAck
 			if( sd->state.autotrade ){
 				pc_set_costume_view(sd);
@@ -3512,7 +3512,7 @@ static bool intif_parse_StorageReceived(int32 fd)
 			pc_check_available_item(sd, ITMCHK_CART);
 			if (sd->state.autotrade) {
 				clif_parse_LoadEndAck(sd->fd, sd);
-				sd->autotrade_tid = add_timer(gettick() + battle_config.feature_autotrade_open_delay, pc_autotrade_timer, sd->bl.id, 0);
+				sd->autotrade_tid = add_timer(gettick() + battle_config.feature_autotrade_open_delay, pc_autotrade_timer, sd->id, 0);
 			}else if( sd->state.prevend ){
 				clif_clearcart(sd->fd);
 				clif_cartlist(sd);
