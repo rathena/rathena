@@ -352,7 +352,7 @@ int32 char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 			"`hair`='%d', `hair_color`='%d', `clothes_color`='%d', `body`='%d',"
 			"`partner_id`='%u', `father`='%u', `mother`='%u', `child`='%u',"
 			"`karma`='%d',`manner`='%d', `fame`='%d', `inventory_slots`='%hu',"
-			"`body_direction`='%d',`disable_call`='%d',`disable_partyinvite`='%d',`disable_showcostumes`='%d',"
+			"`body_direction`='%d',`disable_call`='%d',`disable_partyinvite`='%d',`disable_showcostumes`='%d'"
 			" WHERE  `account_id`='%d' AND `char_id` = '%d'",
 			schema_config.char_db, p->class_,
 			p->hair, p->hair_color, p->clothes_color, p->body,
