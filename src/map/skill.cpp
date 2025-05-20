@@ -15851,26 +15851,26 @@ static int32 skill_dance_overlap_sub(struct block_list* bl, va_list ap)
  * @param flag see enum e_dance_overlap
  * @return Number of skill units that overlap with current skill unit and meet the overlap criteria (excluding current skill unit)
  */
-int32 skill_dance_overlap(struct skill_unit* unit, e_dance_overlap flag)
+int32 skill_dance_overlap(skill_unit& unit, e_dance_overlap flag)
 {
-	if (!unit || !unit->group || !(unit->group->state.song_dance&0x1))
+	if (unit.group == nullptr || !(unit.group->state.song_dance&0x1))
 		return 0;
 
 	if (flag == OVERLAP_REMOVE) {
 		// Nothing to remove, this unit is not overlapped
-		if (!(unit->val2&(1 << UF_ENSEMBLE)))
+		if (!(unit.val2&(1 << UF_ENSEMBLE)))
 			return 0;
 
 		// When the unit is removed, but there are more than one other skill unit that overlaps,
 		// dissonance is only removed from the unit that is removed and not the other units
-		if (int32 count = map_foreachincell(skill_dance_overlap_sub, unit->bl.m, unit->bl.x, unit->bl.y, BL_SKILL, unit, OVERLAP_COUNT); count > 1) {
+		if (int32 count = map_foreachincell(skill_dance_overlap_sub, unit.bl.m, unit.bl.x, unit.bl.y, BL_SKILL, &unit, OVERLAP_COUNT); count > 1) {
 			// Remove dissonance
-			skill_dance_overlap_revert(*unit);
+			skill_dance_overlap_revert(unit);
 			return count;
 		}
 	}
 
-	return map_foreachincell(skill_dance_overlap_sub, unit->bl.m,unit->bl.x,unit->bl.y,BL_SKILL, unit,flag);
+	return map_foreachincell(skill_dance_overlap_sub, unit.bl.m, unit.bl.x, unit.bl.y, BL_SKILL, &unit, flag);
 }
 
 /**
@@ -16939,6 +16939,9 @@ int32 skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t
 			case UNT_MANHOLE:
 				return 0;
 			default:
+				// Dissonance effect might have killed another bard/dancer and skill returned to normal
+				if (unit->group->state.song_dance&0x1)
+					return 0;
 				ShowError("skill_unit_onplace_timer: interval error (unit id %x)\n", sg->unit_id);
 				return 0;
 		}
@@ -21883,7 +21886,7 @@ skill_unit* skill_initunit(std::shared_ptr<s_skill_unit_group> group, int32 idx,
 			break;
 		default:
 			if (group->state.song_dance&0x1) //Check for dissonance.
-				skill_dance_overlap(unit, OVERLAP_SET);
+				skill_dance_overlap(*unit, OVERLAP_SET);
 			break;
 	}
 
@@ -21910,7 +21913,7 @@ int32 skill_delunit(struct skill_unit* unit)
 		return 0;
 
 	if( group->state.song_dance&0x1 ) //Cancel dissonance effect.
-		skill_dance_overlap(unit, OVERLAP_REMOVE);
+		skill_dance_overlap(*unit, OVERLAP_REMOVE);
 
 	// invoke onout event
 	if( !unit->range )
@@ -22842,7 +22845,7 @@ void skill_unit_move_unit_group(std::shared_ptr<s_skill_unit_group> group, int16
 			continue;
 		if (!(m_flag[i]&0x2)) {
 			if (group->state.song_dance&0x1) //Cancel dissonance effect.
-				skill_dance_overlap(unit1, OVERLAP_REMOVE);
+				skill_dance_overlap(*unit1, OVERLAP_REMOVE);
 			map_foreachincell(skill_unit_effect,unit1->bl.m,unit1->bl.x,unit1->bl.y,group->bl_flag,&unit1->bl,tick,4);
 		}
 		//Move Cell using "smart" criteria (avoid useless moving around)
@@ -22875,7 +22878,7 @@ void skill_unit_move_unit_group(std::shared_ptr<s_skill_unit_group> group, int16
 		}
 		if (!(m_flag[i]&0x2)) { //We only moved the cell in 0-1
 			if (group->state.song_dance&0x1) //Check for dissonance effect.
-				skill_dance_overlap(unit1, OVERLAP_SET);
+				skill_dance_overlap(*unit1, OVERLAP_SET);
 			skill_getareachar_skillunit_visibilty(unit1, AREA);
 			map_foreachincell(skill_unit_effect,unit1->bl.m,unit1->bl.x,unit1->bl.y,group->bl_flag,&unit1->bl,tick,1);
 		}
