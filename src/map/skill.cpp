@@ -15776,15 +15776,15 @@ static bool skill_dance_switch(struct skill_unit* unit, bool revert);
  * Turn a dissonance-overlapped skill unit back to its original form
  * @param unit: Unit to transform back
  */
-void skill_dance_overlap_revert(skill_unit* unit) {
+void skill_dance_overlap_revert(skill_unit& unit) {
 	// Need to delete previous unit on the client as it can't handle unit_id changes
-	clif_skill_delunit(*unit);
+	clif_skill_delunit(unit);
 	// Remove overlap signal
-	unit->val2 &= ~(1 << UF_ENSEMBLE);
+	unit.val2 &= ~(1 << UF_ENSEMBLE);
 	// If the unit is removed because overlap dissonance killed the caster, we need to reset it here
-	skill_dance_switch(unit, true);
+	skill_dance_switch(&unit, true);
 	// Respawn the unit with the original unit_id
-	skill_getareachar_skillunit_visibilty(unit, AREA);
+	skill_getareachar_skillunit_visibilty(&unit, AREA);
 }
 
 /**
@@ -15833,7 +15833,7 @@ static int32 skill_dance_overlap_sub(struct block_list* bl, va_list ap)
 		else if (flag == OVERLAP_REMOVE) {
 			if ((unit->val2&(1 << UF_ENSEMBLE))) {
 				// Remove dissonance
-				skill_dance_overlap_revert(unit);
+				skill_dance_overlap_revert(*unit);
 				// Trigger onplace event on all affected units on the cell
 				// Don't do this for src as that unit is to be removed
 				if (unit == target)
@@ -15865,7 +15865,7 @@ int32 skill_dance_overlap(struct skill_unit* unit, e_dance_overlap flag)
 		// dissonance is only removed from the unit that is removed and not the other units
 		if (int32 count = map_foreachincell(skill_dance_overlap_sub, unit->bl.m, unit->bl.x, unit->bl.y, BL_SKILL, unit, OVERLAP_COUNT); count > 1) {
 			// Remove dissonance
-			skill_dance_overlap_revert(unit);
+			skill_dance_overlap_revert(*unit);
 			return count;
 		}
 	}
@@ -17810,18 +17810,7 @@ int32 skill_unit_onout(struct skill_unit *src, struct block_list *bl, t_tick tic
 			break;
 
 		case UNT_DISSONANCE:
-		case UNT_UGLYDANCE: //Used for updating timers in song overlap instances
-			{
-				for(uint16 i = BA_WHISTLE; i <= DC_SERVICEFORYOU; i++) {
-					if(skill_get_inf2(i, INF2_ISSONG)) {
-						type = skill_get_sc(i);
-						sce = (sc && type != SC_NONE)?sc->getSCE(type):nullptr;
-						if(sce)
-							return i;
-					}
-				}
-			}
-			[[fallthrough]];
+		case UNT_UGLYDANCE:
 		case UNT_WHISTLE:
 		case UNT_ASSASSINCROSS:
 		case UNT_POEMBRAGI:
@@ -17916,22 +17905,6 @@ int32 skill_unit_onleft(uint16 skill_id, struct block_list *bl, t_tick tick)
 		case SU_NYANGGRASS:
 			if (sce)
 				status_change_end(bl, type);
-			break;
-		case BA_DISSONANCE:
-		case DC_UGLYDANCE: //Used for updating song timers in overlap instances
-			{
-				for(uint16 i = BA_WHISTLE; i <= DC_SERVICEFORYOU; i++){
-					if(skill_get_inf2(i, INF2_ISSONG)){
-						type = skill_get_sc(i);
-						sce = (sc && type != SC_NONE)?sc->getSCE(type):nullptr;
-						if(sce && !sce->val4){ //We don't want dissonance updating this anymore
-							delete_timer(sce->timer, status_change_timer);
-							sce->val4 = 1; //Store the fact that this is a "reduced" duration effect.
-							sce->timer = add_timer(tick+skill_get_time2(i,1), status_change_timer, bl->id, type);
-						}
-					}
-				}
-			}
 			break;
 		case BA_POEMBRAGI:
 		case BA_WHISTLE:
