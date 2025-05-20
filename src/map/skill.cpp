@@ -15792,7 +15792,7 @@ void skill_dance_overlap_revert(skill_unit* unit) {
  * @param bl: Target skill unit found that is on the same cell as source skill unit
  * @param ap: func* with va_list values:
  *  src - source skill unit
- *  flag - Whether to remove dissonance, add dissonance or just return if the overlap conditions are met (OVERLAP_COUNT)
+ *  flag - see enum e_dance_overlap
  * @return Whether unit met the conditions for overlap (1) or not (0)
  */
 static int32 skill_dance_overlap_sub(struct block_list* bl, va_list ap)
@@ -15848,9 +15848,7 @@ static int32 skill_dance_overlap_sub(struct block_list* bl, va_list ap)
 /**
  * Does the song / dance overlapping->dissonance check.
  * @param unit The unit that is about to be removed or was placed
- * @param flag Whether unit is about to be removed or was placed
- *   When flag is OVERLAP_REMOVE, this unit is about to be removed, remove the dissonance effect from applicable units on the cell
- *   When flag is OVERLAP_SET, this unit has been positioned, start the dissonance effect for applicable units on the cell
+ * @param flag see enum e_dance_overlap
  * @return Number of skill units that overlap with current skill unit and meet the overlap criteria (excluding current skill unit)
  */
 int32 skill_dance_overlap(struct skill_unit* unit, e_dance_overlap flag)
