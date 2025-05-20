@@ -5147,7 +5147,7 @@ jor_nest,51,152,0	script	#hw_ep19re2	HIDDEN_WARP_NPC,5,5,{
 OnTouch:
 	if (ep19_main == 34) {
 		if (isbegin_quest(16636) == 1) {
-			unittalk getcharid(3), "" + strcharinfo(0) + " : Let's go further inside.", bc_self;
+			unittalk getcharid(3), "" + strcharinfo(0) + " : Let's go a little further inside.", bc_self;
 			setquest 16639;
 			setquest 16640;
 			erasequest 16636;
@@ -5167,12 +5167,12 @@ OnTouch:
 		end;
 	}
 	if (ep19_main == 45) {	// Step 53
-		cloakoffnpcself( "Unseen Box#ep19re1" );
+		cloakoffnpcself( "Unnoticed Box#ep19re1" );
 		end;
 	}
 	if (ep19_main == 46 || ep19_main == 47) {	// Step 54, 55
-		cloakoffnpcself( "Unseen Box#ep19re1" );
-		cloakoffnpcself( "empty test tube#ep19re1" );
+		cloakoffnpcself( "Unnoticed Box#ep19re1" );
+		cloakoffnpcself( "Empty Test Tube#ep19re1" );
 		end;
 	}
 	if (ep19_main == 48) {	// Step 56
@@ -5188,83 +5188,82 @@ jor_nest,43,141,0	duplicate(#hw_ep19re2)	#hw_ep19re2-2	HIDDEN_WARP_NPC,5,5
 jor_nest,21,195,3	script(CLOAKED)	Pile of Papers#ep19re2	4_EP18_PAPERS,{
 	if (ep19_main == 34 && isbegin_quest(16640) == 1) {
 		mes "[" + strcharinfo(0) + "]";
-		mes "There is a jumble of unorganized papers.";
-		mes "It may take some time to read and understand.";
+		mes "The pile of papers are piled in an unorganized way.";
+		mes "I may take some time to read and understand.";
 		next;
-		progressbar "",5;
-		mes "[report]";
-		mes "...as well as using the same method for already-born objects...";
-		mes "...the fact that it can be reborn as a better individual...";
+		progressbar "FFFF00",5;
+		mes "[Report]";
+		mes "...In addition to that, using the same method for object that have already been born...";
+		mes "...and the fact that they can be reborn as something better...";
 		next;
-		cloakoffnpcself( "Yugrungand#ep19re2" );
-		sleep2 500;
-		npctalk "Who is there, an intruder!", "Yugrungand#ep19re2", bc_self;
-		mes "[Yugrungand]";
-		mes "The outsiders must have been away? What are you doing!";
+		cloakoffnpcself( "Yugurungand#ep19re2" );
+		npctalk "Who's there, an intruder!", "Yugurungand#ep19re2", bc_self;
+		mes "[Yugurungand]";
+		mes "Didn't the outsiders left? What are you doing here!";
 		next;
-		mes "[Yugrungand]";
-		mes "Um? It's a face I've never seen. Priest rank?";
-		mes "Oh, yes. Are you the one who was born again? You're cute. What's your name?";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "I'm Seneki Organd.";
-		next;
-		mes "[Yugrungand]";
-		mes "Yes, Senekiogand. Did you come all the way here after playing alone?";
-		mes "But there are a lot of dangerous things in the residence of outsiders. You must not enter without permission.";
+		mes "[Yugurungand]";
+		mes "Hm? I've never seen you before. A priest-grade?";
+		mes "Oh, I see. You're the new born. That's cute. What's your name?";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "(...I don't need excuses, so it's comfortable.)";
-		mes "Yes, that's right. I won't do that in the future.";
+		mes "Senekiogand.";
 		next;
-		mes "[Yugrungand]";
-		mes "Yeah, that's nice. I'm Yugurungand.do. I'm in charge of the guards of the outsiders' residences.";
-		next;
-		mes "[Yugrungand]";
-		mes "The purpose is to protect them... but also to monitor them. Humans cannot be trusted.";
-		next;
-		mes "[Yugrungand]";
-		mes "But it seems that humans do not trust each other, even among humans.";
-		next;
-		mes "[Yugrungand]";
-		mes "At one time, it was like pretending to be a little closer, but now it seems like we've revealed our true nature";
-		next;
-		mes "[Yugrungand]";
-		mes "People who mainly use this place... Yeah, Juncea seems to think that Bagot lost her place.";
+		mes "[Yugurungand]";
+		mes "Okay, Senekiogand. Did you come all the way here after wandering alone?";
+		mes "There are many dangerous things here in the residence of the outsiders. You shouldn't come here recklessly.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Do you lose his place?";
+		mes "(...It's convenient that I don't need to make excuses.)";
+		mes "Yes, I understand. I won't come here again.";
 		next;
-		mes "[Yugrungand]";
-		mes "Yes. Ras Gand's favourites have been taken away by Bagot.";
+		mes "[Yugurungand]";
+		mes "Good, you're nice. My name is Yugurungand. I'm the one in charge of guarding the humans from the outside.";
 		next;
-		mes "[Yugrungand]";
-		mes "So it looks like you're trying to achieve something somehow...but now it's just too much.";
-		mes "Hey, did I say something too difficult to my little friend?";
+		mes "[Yugurungand]";
+		mes "It's for their protection, then... there's also the purpose of monitoring. It's because humans can't be trusted.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "(You'd better pretend you didn't understand)";
-		mes "It's ok. It was fun.";
+		mes "[Yugurungand]";
+		mes "But, those humans doesn't seem to trust each other.";
 		next;
-		mes "[Yugrungand]";
-		mes "Haha, this guy. The fact that he didn't understand anything is evident on his face.";
-		mes "Don't worry, I've talked a lot.";
+		mes "[Yugurungand]";
+		mes "They used to pretend to be close to each other, but recently, they've shown their true nature";
 		next;
-		mes "[Yugrungand]";
-		mes "Then I'll go first, Senecchio, so don't touch anything useless and go back quickly.";
+		mes "[Yugurungand]";
+		mes "The person who mainly uses this place... Yes, Juncea's place seems to have been taken by Bagot.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Don't worry. Thank you, Yugrungand.";
+		mes "Is she going to lose this place?";
 		next;
-		cloakonnpcself( "Yugrungand#ep19re2" );
+		mes "[Yugurungand]";
+		mes "Yes. Bagot has already taken all of Lasgand's favor.";
+		next;
+		mes "[Yugurungand]";
+		mes "It seems that they're trying to get results... But it's too much right now.";
+		mes "Oh, did I tell you a story that's too hard to understand?";
+		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "(I think I've found everything I can find out in Juncea's lab.)";
+		mes "(It's better to pretend that I didn't understand)";
+		mes "It's okay. It was fun.";
+		next;
+		mes "[Yugurungand]";
+		mes "Haha, you child. Your expression completely shows that you didn't understand anything.";
+		mes "Don't worry about it, I just talked too much.";
+		next;
+		mes "[Yugurungand]";
+		mes "I'll return first, Senekiogand, you should return quickly without touching anything around here.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Don't worry. Thank you, Yugurungand.";
+		next;
+		cloakonnpcself( "Yugurungand#ep19re2" );
+		mes "[" + strcharinfo(0) + "]";
+		mes "(I think I've figured out everything I can about Juncea's lab.)";
 		completequest 16640;
 		if (isbegin_quest(16639) != 2 || isbegin_quest(16640) != 2 || isbegin_quest(16641) != 2 || isbegin_quest(16642) != 2 || isbegin_quest(16643) != 2 || isbegin_quest(16644) != 2)
 			close;
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "(Have you looked around enough to look elsewhere... Now let's go back to <NAVI>[Lazy]<INFO>jor_nest,127,207,0,101,0</INFO></NAVI>)";
+		mes "(I've already looked around enough at other places... let's go back to <NAVI>[Lazy]<INFO>jor_nest,127,207,0,101,0</INFO></NAVI>.)";
 		ep19_main = 35;
 		setquest 16645;
 		// custom removal (keeping the quests is useless)
@@ -5273,7 +5272,7 @@ jor_nest,21,195,3	script(CLOAKED)	Pile of Papers#ep19re2	4_EP18_PAPERS,{
 		close;
 	}
 	mes "[" + strcharinfo(0) + "]";
-	mes "This Pile of Papers has already been looked at.";
+	mes "I've already examined this pile of papers.";
 	close;
 
 OnInit:
@@ -5281,7 +5280,7 @@ OnInit:
 	end;
 }
 
-jor_nest,22,192,3	duplicate(dummy_cloaked_npc)	Yugrungand#ep19re2	4_EP19_RGAN_SR1
+jor_nest,22,192,3	duplicate(dummy_cloaked_npc)	Yugurungand#ep19re2	4_EP19_RGAN_SR1
 
 
 // Main Quest: Step 38
@@ -5355,30 +5354,31 @@ OnTouch:
 jor_dun03,74,71,3	script(CLOAKED)	Pile of Papers#ep19re3	4_EP18_PAPERS,{
 	if (ep19_main == 34 && isbegin_quest(16641) == 1) {
 		mes "[" + strcharinfo(0) + "]";
-		mes "I have a Pile of Papers written in sharp handwriting.";
-		mes "I think it will take some time to read it and pick out what you need.";
+		mes "There are piles of papers that are written in sleek handwriting.";
+		mes "It will take some time to read and sort out the necessary contents.";
 		next;
-		progressbar "",5;
-		mes "[report]";
-		mes "...even those who have already been born using the magical powers of their skin...";
-		mes "...can create even better and stronger objects...";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "When I look at the subjects in the laboratory, I feel a bit nauseous...";
+		progressbar "FFFF00",5;
+		mes "[Report]";
+		mes "...To the individuals who are already born using the mana of the snake...";
+		mes "...It can create better and stronger objects...";
+		unittalk getcharid(3), "" + strcharinfo(0) + " : Is this similar to what Juncea's doing? I'm not sure....", bc_self;
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Yes. The false god I met in Rachel...";
-		mes "I feel a force similar to that.";
+		mes "When I look around at the laboratory's experiments, It feels strange somehow....";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "That's right. It feels like the False God that I met in Rachel...";
+		mes "I feel a similar force from it.";
 		completequest 16641;
 		if (isbegin_quest(16639) != 2 || isbegin_quest(16640) != 2 || isbegin_quest(16641) != 2 || isbegin_quest(16642) != 2 || isbegin_quest(16643) != 2 || isbegin_quest(16644) != 2) {
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			mes "(Let's take a closer look inside the lab.)";
+			mes "(Let's take a closer look inside the laboratory.)";
 			close;
 		}
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "(Have you looked around enough to look elsewhere... Now let's go back to <NAVI>[Lazy]<INFO>jor_nest,127,207,0,101,0</INFO></NAVI>)";
+		mes "(I've already looked around enough at other places... let's go back to <NAVI>[Lazy]<INFO>jor_nest,127,207,0,101,0</INFO></NAVI>.)";
 		ep19_main = 35;
 		setquest 16645;
 		// custom removal (keeping the quests is useless)
@@ -5387,7 +5387,7 @@ jor_dun03,74,71,3	script(CLOAKED)	Pile of Papers#ep19re3	4_EP18_PAPERS,{
 		close;
 	}
 	mes "[" + strcharinfo(0) + "]";
-	mes "This Pile of Papers has already been looked at.";
+	mes "I've already examined this pile of papers.";
 	close;
 
 OnInit:
@@ -5400,40 +5400,40 @@ OnInit:
 jor_dun03,49,80,3	script(CLOAKED)	Pile of Papers#ep19re4	4_EP18_PAPERS,{
 	if (ep19_main == 34 && isbegin_quest(16642) == 1) {
 		mes "[" + strcharinfo(0) + "]";
-		mes "I have a Pile of Papers written in sharp handwriting.";
-		mes "This document in that niche... is written top secret. Let's read it carefully.";
+		mes "There are piles of papers that are written in sleek handwriting.";
+		mes "That document in the gap..., it says top secret. Let's read it carefully.";
 		next;
-		progressbar "",5;
+		progressbar "FFFF00",5;
 		mes "[Top Secret]";
-		mes "...as in the experiment in Rachel, the specimen that has started mutation undergoes biological replacement at the cell level...";
-		next;
-		mes "[Top Secret]";
-		mes "It is impossible to return it to its original state before mutation begins.";
+		mes "...Like the experiment in Rachel, the specimen that has started mutation undergoes biological replacement at the cellular level...";
 		next;
 		mes "[Top Secret]";
-		mes "...However, if the magic wave of the test object is correct, the possibility of reversing it remains low, but these are all hypotheses...";
+		mes "It's impossible to return the specimen to its original shape once it starts mutating.";
 		next;
 		mes "[Top Secret]";
-		mes "...to restore it, you need a material with the correct wavelength of magic and a magician who can inject the appropriate magic for it...";
+		mes "...However, even if the mana wavelength of the experiment is correct, the possibility of reversibility remains low, but this is all just a hypothesis...";
 		next;
 		mes "[Top Secret]";
-		mes "However, the importance of this study is low, as it is not necessary to return the specimens currently used in the experiment to their original shape...";
+		mes "...In order to reverse it, we'll need the right materials with the proper mana wavelength and someone who can inject the correct mana...";
 		next;
 		mes "[Top Secret]";
-		mes "If it is leaked to some organists, the wavelength may increase, so it is classified as Top Secret....";
+		mes "But, the importance of this research is low since there's no need to reutn the specimens to it's original form...";
+		next;
+		mes "[Top Secret]";
+		mes "It may have a big impact if it was leaked to the Rgans, so I'll classify this as top secret....";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "(Juncea said that he didn't test on advanced rgans... Anyway...)";
+		mes "(Juncea said that they don't do experiments on high-grade Rgans... anyway...)";
 		completequest 16642;
 		if (isbegin_quest(16639) != 2 || isbegin_quest(16640) != 2 || isbegin_quest(16641) != 2 || isbegin_quest(16642) != 2 || isbegin_quest(16643) != 2 || isbegin_quest(16644) != 2) {
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			mes "(Let's look elsewhere.)";
+			mes "(Let's go somewhere else.)";
 			close;
 		}
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "(Have you looked around enough to look elsewhere... Now let's go back to <NAVI>[Lazy]<INFO>jor_nest,127,207,0,101,0</INFO></NAVI>)";
+		mes "(I've already looked around enough at other places... let's go back to <NAVI>[Lazy]<INFO>jor_nest,127,207,0,101,0</INFO></NAVI>.)";
 		ep19_main = 35;
 		setquest 16645;
 		// custom removal (keeping the quests is useless)
@@ -5442,7 +5442,7 @@ jor_dun03,49,80,3	script(CLOAKED)	Pile of Papers#ep19re4	4_EP18_PAPERS,{
 		close;
 	}
 	mes "[" + strcharinfo(0) + "]";
-	mes "This Pile of Papers has already been looked at.";
+	mes "I've already examined this pile of papers.";
 	close;
 
 OnInit:
@@ -5475,16 +5475,16 @@ OnTouch:
 jor_nest,181,173,3	script(CLOAKED)	Pile of Papers#ep19re5	4_EP18_PAPERS,{
 	if (ep19_main == 34 && isbegin_quest(16643) == 1) {
 		mes "[" + strcharinfo(0) + "]";
-		mes "There are things that appear to be books. Let's take a look...";
-		mes "There is a lot of content, so it will take some time to figure out what you want.";
+		mes "There's a thing that appears to be a ledger. Let's take a look...";
+		mes "There's a lot of content, it'll take time to figure everything what I need.";
 		next;
-		progressbar "",5;
-		mes "[Book of Accounts]";
-		mes "It can be seen that a large amount of material has flowed into Bagot's laboratory.";
-		mes "By comparison, the amount allocated to Juncea is remarkably small.";
+		progressbar "FFFF00",5;
+		mes "[" + strcharinfo(0) + "]";
+		mes "It's written here that a large amount of supplies flowed into Bagot's laboratory.";
+		mes "Compared to that, the amount allocated to Juncea is significantly smaller.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Isn't this supposed to be useful? Let's take a look...";
+		mes "I can use this, I think? Let's take a look...";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		getitem 1000845,1;	// Ep19_Ledger
@@ -5497,7 +5497,7 @@ jor_nest,181,173,3	script(CLOAKED)	Pile of Papers#ep19re5	4_EP18_PAPERS,{
 		}
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "(Have you looked around enough to look elsewhere... Now let's go back to <NAVI>[Lazy]<INFO>jor_nest,127,207,0,101,0</INFO></NAVI>)";
+		mes "(I've already looked around enough at other places... let's go back to <NAVI>[Lazy]<INFO>jor_nest,127,207,0,101,0</INFO></NAVI>.)";
 		ep19_main = 35;
 		setquest 16645;
 		// custom removal (keeping the quests is useless)
@@ -5517,17 +5517,17 @@ OnInit:
 jor_nest,19,142,3	script(CLOAKED)	Pile of Papers#ep19re1	4_EP18_PAPERS,{
 	if (ep19_main == 34 && isbegin_quest(16639) == 1) {
 		mes "[" + strcharinfo(0) + "]";
-		mes "There is a jumble of unorganized papers.";
-		mes "It may take some time to read and understand.";
+		mes "The pile of papers are piled in an unorganized way.";
+		mes "I may take some time to read and understand.";
 		next;
-		progressbar "",5;
-		mes "[report]";
-		mes "...artificially implanted artificial energy into objects...";
-		mes "...Using this method, it turns out that unborn eggs can be further graded...";
+		progressbar "FFFF00",5;
+		mes "[Report]";
+		mes "...Inject artifial mana into an object...";
+		mes "...Using this method, results show that we could increase the grade of the unhatched eggs...";
 		unittalk getcharid(3), "" + strcharinfo(0) + " : Is this similar to Bagot's experiment? I don't know...", bc_self;
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Is this the amount of information you can find out....";
+		mes "Is this the only information I can find...";
 		completequest 16639;
 		if (isbegin_quest(16639) != 2 || isbegin_quest(16640) != 2 || isbegin_quest(16641) != 2 || isbegin_quest(16642) != 2 || isbegin_quest(16643) != 2 || isbegin_quest(16644) != 2) {
 			next;
@@ -5537,7 +5537,7 @@ jor_nest,19,142,3	script(CLOAKED)	Pile of Papers#ep19re1	4_EP18_PAPERS,{
 		}
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "(Have you looked around enough to look elsewhere... Now let's go back to <NAVI>[Lazy]<INFO>jor_nest,127,207,0,101,0</INFO></NAVI>)";
+		mes "(I've already looked around enough at other places... let's go back to <NAVI>[Lazy]<INFO>jor_nest,127,207,0,101,0</INFO></NAVI>.)";
 		ep19_main = 35;
 		setquest 16645;
 		// custom removal (keeping the quests is useless)
@@ -5546,7 +5546,7 @@ jor_nest,19,142,3	script(CLOAKED)	Pile of Papers#ep19re1	4_EP18_PAPERS,{
 		close;
 	}
 	mes "[" + strcharinfo(0) + "]";
-	mes "This Pile of Papers has already been looked at.";
+	mes "I've already examined this pile of papers.";
 	close;
 
 OnInit:
@@ -5566,54 +5566,53 @@ OnInit:
 jor_nest,173,177,3	script(CLOAKED)	Rgan Guard#ep19re1	4_EP19_RGAN_R2,{
 	if (ep19_main == 34 && isbegin_quest(16644) == 1) {
 		mes "[" + strcharinfo(0) + "]";
-		mes "(Pretending to be a regular passerby, let's try to hang around casually.... Fortunately, they don't mind talking among themselves.)";
+		mes "(I'll pretend to be a Rgan who's just passing by, Let's casually hang around next to then.... Fortunately, they don't mind talking amongst themselves.)";
 		next;
-		mes "[Rgan Guard Captain]";
-		mes "Ah~ I've been scolded by Yugrungand again. It's hard to act as a guard, really.";
+		mes "[Rgan Guards Captain]";
+		mes "Oh~ I got scolded by Yugurungand again. It's hard to be a guard, really.";
 		next;
-		mes "[Rgan Guard]";
-		mes "That must have been a big deal! What happened!";
+		mes "[Rgan Guards Member]";
+		mes "It must have been a big deal! Something must have happened!";
 		next;
-		mes "[Rgan Guard Captain]";
-		mes "No, I'm not talking to you guys... Oh, and again, Rasgand's living quarters have too few people allotted.";
+		mes "[Rgan Guards Captain]";
+		mes "No, it's not something about you members... it's about Lasgand's residence, there's too little personnel there.";
 		next;
-		mes "[Rgan Guard Captain]";
-		mes "Why are there so many black-haired people coming and going these days. But can I be so lax? Uh.";
+		mes "[Rgan Guards Captain]";
+		mes "The human with black hair just come and go there recently. We are too relaxed about this. Hm.";
 		next;
-		mes "[Rgan Guard]";
-		mes "Are you talking about that human being called Bagot? It seems like he's been visiting Rasgand a lot lately!";
+		mes "[Rgan Guards Member]";
+		mes "You mean the guy named Bagot! He's been visiting Lasgand a lot lately!";
 		next;
-		mes "[Rgan Guard Captain]";
-		mes "Uh, yes. But I don't know if I can really trust that person.";
+		mes "[Rgan Guards Captain]";
+		mes "Uh, yeah. I don't know if we can trust him.";
 		next;
-		mes "[Rgan Guard Captain]";
-		mes "Rasgand seems to believe in that person... But Yugurungand doesn't.";
+		mes "[Rgan Guards Captain]";
+		mes "You seem to trust him, but... that's not the case for Yugurungand.";
 		next;
-		mes "[Rgan Guard]";
-		mes "Is that so? So what should we do with the sword?";
+		mes "[Rgan Guards Member]";
+		mes "Really? Then, what should we do?";
 		next;
-		mes "[Rgan Guard Captain]";
-		mes "So that's the problem. It's better to be careful for now than not to do it.";
-		mes "I'm going to redistribute the number of people, so read the schedule again. Then let's get back to work! Let's go!";
+		mes "[Rgan Guards Captain]";
+		mes "That's the problem. Right now, we can only be careful.";
+		mes "We're going to reallocate the personnel, so be familiar with your new places. Let's get back to work again! Go!";
 		next;
-		mes "[Rgan Guard]";
-		mes "I see!";
+		mes "[Rgan Guards Member]";
+		mes "Yes sir!";
 		next;
 		cloakonnpcself( "Rgan Guard#ep19re1" );
-		sleep2 500;
 		cloakonnpcself( "Rgan Guard#ep19re2" );
 		mes "[" + strcharinfo(0) + "]";
-		mes "(How much information can you hear here?)";
+		mes "(I've everything they talked about.)";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		completequest 16644;
 		if (isbegin_quest(16639) != 2 || isbegin_quest(16640) != 2 || isbegin_quest(16641) != 2 || isbegin_quest(16642) != 2 || isbegin_quest(16643) != 2 || isbegin_quest(16644) != 2) {
-			mes "(I've heard the story)";
+			mes "(Let's go somewhere else.)";
 			close;
 		}
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "(Have you looked around enough to look elsewhere... Now let's go back to <NAVI>[Lazy]<INFO>jor_nest,127,207,0,101,0</INFO></NAVI>)";
+		mes "(I've already looked around enough at other places... let's go back to <NAVI>[Lazy]<INFO>jor_nest,127,207,0,101,0</INFO></NAVI>.)";
 		ep19_main = 35;
 		setquest 16645;
 		// custom removal (keeping the quests is useless)
@@ -5638,65 +5637,65 @@ jor_nest,31,140,5	script(CLOAKED)	Juncea#ep19re1	4_EP19_JUNCEA,{
 	if (ep19_main == 36) {
 		cutin "ep19_juncea01.png",2;
 		mes "[Juncea]";
-		mes "...and someone said nothing... Ah, Senekiogand. It's you.";
+		mes "...And another one entered with saying anything... Oh, Senekiogand. It's you.";
 		next;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
-		mes "I'm Seneki Organd. Juncea, human, what are you doing?";
+		mes "It's me Senekiogand. Human Juncea, what are you doing?";
 		next;
 		cutin "ep19_juncea01.png",2;
 		mes "[Juncea]";
-		mes "You see. Experiment.";
+		mes "You'll know when you see it. An Experiment.";
 		next;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Is it an experiment to insert a needle into one's body? Juncea, human, is the experimental material your own body?";
+		mes "Is it an experiment to put a needle in your own body? Human Juncea, is your own body the experiment?";
 		next;
 		cutin "ep19_juncea03.png",2;
 		mes "[Juncea]";
-		mes "I'm doing this because I can't help it. You guys promised not to use it as a test subject,";
+		mes "I'm doing this because I have no choice. I promised not to use them as test subject, ";
 		next;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Do it secretly. It's okay for me.";
+		mes "Do it secretly. You can test it on me.";
 		next;
 		cutin "ep19_juncea02.png",2;
 		mes "[Juncea]";
-		mes "...you're making a pretty attractive offer?";
-		mes "But no. You can't hide the process to get the right results.";
+		mes "......You're giving me a pretty attractive suggestion?";
+		mes "But I can't. You can't hide the process if you want to get the correct result.";
 		next;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
-		mes "It's difficult, but I think you're right.";
+		mes "It's difficult. But I think you're right.";
 		next;
 		cutin "ep19_juncea01.png",2;
 		mes "[Juncea]";
-		mes "Yeah. I don't do anything wrong.";
-		mes "Then don't disturb me any more and leave.";
+		mes "Yes. I'm not doing anything wrong.";
+		mes "Then, don't disturb me anymore and go out.";
 		next;
 		cutin "ep19_juncea03.png",2;
 		mes "[Juncea]";
-		mes "I'm tired of falling apart. No matter how precious you are, I don't have the energy to take care of you.";
+		mes "I'm tired because I'm low on sugar. No matter how important child you are, I don't have the energy to take care of you.";
 		next;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
-		mes "What is it? Is it bad? Juncea, did humans experiment with their own bodies?";
+		mes "What does that mean? Is that a bad thing? Juncea, is it because you experimented on your own body?";
 		next;
 		cutin "ep19_juncea03.png",2;
 		mes "[Juncea]";
-		mes "I can't say anything, really. But I'll keep doing it, so don't disturb me.";
+		mes "I can't tell you anything, really. But, I'll continue doing it, so don't disturb me.";
 		next;
 		cutin "ep19_juncea01.png",2;
 		mes "[Juncea]";
-		mes "Low sugar means you want something sweet.";
-		mes "If you bring me something sweet, I can listen to you...";
+		mes "Low sugar means I have to eat something sweet.";
+		mes "If you could bring me something sweet, I might able to listen to your chatter....";
 		next;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
-		mes "(Sweet... you're giving a congratulatory order knowing I won't be able to save you. But if you do, you'll get points.)";
+		mes "(A sweet... she's giving me order this because she knows I won't be able to get it. But if I do, I might be able to get good points from here.)";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "(<NAVI>[Ice Castle]<INFO>icas_in,245,197,0,101,0</INFO></NAVI> Let's go back and find out if there's anyone with a kettle? Wouldn't there be someone at the adventurer's dorm? Because if you do, you can use an excuse in moderation.)";
+		mes "(Should I go back to the <NAVI>[Ice Castle]<INFO>icas_in,245,197,0,101,0</INFO></NAVI> and ask if anyone has any sweets? If I go to the adventurers dorm, will there be anyone there? As long as I get one, I can come up with excuses later.)";
 		erasequest 16646;
 		setquest 16647;
 		ep19_main = 37;
@@ -5705,15 +5704,15 @@ jor_nest,31,140,5	script(CLOAKED)	Juncea#ep19re1	4_EP19_JUNCEA,{
 	if (ep19_main == 37) {
 		cutin "ep19_juncea03.png",2;
 		mes "[Juncea]";
-		mes "...it's hard to play with you right now, Senekiogand.";
-		mes "I'm busy.";
+		mes "...It's hard for me to play with you now, Senekiogand.";
+		mes "What I mean is I'm busy.";
 		next;
 		mes "[Juncea]";
-		mes "Ah, off the party...";
-		mes "I'm tired of filling my meals with stockpile.";
+		mes "Oh, I'm low on sugar.......";
+		mes "I'm sick and tired of eating the stock rations.";
 		next;
 		mes "[Juncea]";
-		mes "I'll be away for a while, so don't touch anything and go back.";
+		mes "I'm going to leave for a while, so don't touch anything and go out.";
 		close2;
 		cutin "",255;
 		cloakonnpcself();
@@ -5725,82 +5724,82 @@ jor_nest,31,140,5	script(CLOAKED)	Juncea#ep19re1	4_EP19_JUNCEA,{
 		}
 		cutin "ep19_juncea01.png",2;
 		mes "[Juncea]";
-		mes "...Senechiorgand.";
-		mes "The only people who come in and out without saying a word are you and I.";
+		mes "...Senekiogand.";
+		mes "It's only you, who just come and go without saying a word.";
 		next;
 		cutin "ep19_juncea03.png",2;
 		mes "[Juncea]";
-		mes "Did I tell you not to?";
-		mes "If Bagot is ignoring me, do you mean too?";
+		mes "Haven't I told you not to do that?";
+		mes "Bagot is already ignoring me, are you going to do that too?";
 		next;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
-		mes "I didn't ignore it. You said that if you bring something sweet, you'll listen to the story, right?";
-		mes "I brought you something sweet.";
+		mes "I'm not ignoring you. Didn't you said that you'd listen to me if I brought you sweets?";
+		mes "I brought something sweet.";
 		next;
 		cutin "ep19_juncea01.png",2;
 		mes "[Juncea]";
-		mes "Really? How many times are you?";
+		mes "Really? Why did you bring?";
 		next;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
-		mes "I went outside and said that I would save the round and hairy things... if I caught Iwin and put them out.";
-		mes "Then they gave it to me. They said it was sweet.";
+		mes "I went outside and those round furry things... He said he was an Iwin, I saw him caught somewhere and freed him.";
+		mes "And he gave this to me. He said it was a sweet.";
 		next;
 		cutin "ep19_juncea02.png",2;
 		mes "[Juncea]";
-		mes "Are you talented?";
-		mes "...well, you're really talented. It's cold and sweet. I like it.";
+		mes "Aren't you talented?";
+		mes "...Well, you're very talented. It's cold and sweet. I like it.";
 		next;
 		mes "[Juncea]";
-		mes "Yeah, what are you trying to talk about?";
-		mes "I'll give you a special treat. Well, it's delicious. It's full of sugar.";
+		mes "So, what did you want to talk about?";
+		mes "I'll give you a special listen. Well, this is quite delicious. I'm full of sugar.";
 		next;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
-		mes "I didn't mean to say anything special";
-		mes "Juncea, do humans like sweets?";
+		mes "I didn't want to say anything special.";
+		mes "Juncea, does human likes sweets?";
 		next;
 		cutin "ep19_juncea03.png",2;
 		mes "[Juncea]";
-		mes "Blood, I only take it because I need it.";
-		mes "Likes and dislikes, what's important?";
+		mes "Pff, I'm only eating it because I need it.";
+		mes "Like it or hate it, it doesn't matter.";
 		next;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Can't you ask the great Rasgand?";
-		mes "Rasgand said that he would give us what we needed on behalf of Jormungand.";
+		mes "Can't we just ask the great Lasgand?";
+		mes "Lasgand said that he'd provide us what we need on behalf of Jormungandr.";
 		next;
 		cutin "ep19_juncea01.png",2;
 		mes "[Juncea]";
-		mes "Oh, you don't even take care of all these snacks.";
-		mes "Still, I did provide research materials properly, but in the past.";
+		mes "Oh, they don't even make these kind of snacks.";
+		mes "They used to provide me with proper research materials, that's in the past though.";
 		next;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Isn't it now?";
+		mes "Is it different now?";
 		next;
 		cutin "ep19_juncea01.png",2;
 		mes "[Juncea]";
-		mes "It's because of tight finances now in many ways.";
-		mes "I can't help it.";
+		mes "Right now my support are tight in many ways.";
+		mes "There is nothing I can do.";
 		next;
 		cutin "ep19_juncea03.png",2;
 		mes "[Juncea]";
-		mes "Okay. A child is not worried about that.";
-		mes "I'm busy, so go ahead.";
+		mes "That's enough. A child shouldn't worry about that.";
+		mes "I'm busy, so go now.";
 		next;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
-		mes "I want to talk more";
+		mes "I want to talk more.";
 		next;
 		cutin "ep19_juncea03.png",2;
 		mes "[Juncea]";
 		mes "I just can't. I'm busy.";
-		mes "Bring me more of this main beak...or bring me 10 " + mesitemlink(1000707) + " for research.";
+		mes "Bring me more of this snack.., or bring me 10 <ITEM>[" + getitemname(1000707) + "]<INFO>1000707</INFO></ITEM> for research.";
 		next;
 		mes "[Juncea]";
-		mes "Don't talk to me before that.";
+		mes "Otherwise don't talk to me.";
 		delitem 1000846,1;	// Ep19_Ice_Cookie
 		erasequest 16648;
 		setquest 16649;
@@ -5810,13 +5809,13 @@ jor_nest,31,140,5	script(CLOAKED)	Juncea#ep19re1	4_EP19_JUNCEA,{
 	if (ep19_main == 39) {	// step 48
 		cutin "ep19_juncea01.png",2;
 		mes "[Juncea]";
-		mes "Come here, Senekiogand.";
+		mes "You're here, Senekiogand.";
 		next;
 		mes "[Juncea]";
-		mes "I said I can't just play because I'm busy. Did you bring more ice cream? Or 10 " + mesitemlink(1000707) + "?";
+		mes "I said I can't play with you because I'm busy. Did you bring more Ice Cookie? or 10 " + mesitemlink(1000707) + "?";
 		next;
 		cutin "",255;
-		if (select( "I brought more Ice Cookies.", "I brought 10 low-grade Magic Cores from Rgan." ) == 1) {
+		if (select( "I brought more Ice Cookie.", "I brought 10 " + getitemname(1000707) + "." ) == 1) {
 			.@item = 1000846;	// Ep19_Ice_Cookie
 			.@amount = 1;
 		}
@@ -5833,65 +5832,65 @@ jor_nest,31,140,5	script(CLOAKED)	Juncea#ep19re1	4_EP19_JUNCEA,{
 		}
 		cutin "ep19_juncea02.png",2;
 		mes "[Juncea]";
-		mes "I really brought it. You're not really a newborn ragan, are you?";
+		mes "You really brought it. You, are you sure that you're a newborn Rgan?";
 		next;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
-		mes "(...)";
+		mes "(...*Shivers*)";
 		next;
 		cutin "ep19_juncea01.png",2;
 		mes "[Juncea]";
-		mes "I'm joking. There's no way a grown Rgan could come out of the ground. If that's the case, it'd be really worth researching.";
+		mes "I'm kidding. There's no way an adult Rgan could rise from the ground. If it were, it would be worth researching.";
 		next;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Isn't there enough to study? The last time I brought you an eggshell, isn't it enough?";
+		mes "You don't have enough to research? Is the eggshells I brought last time not enough?";
 		next;
 		cutin "ep19_juncea01.png",2;
 		mes "[Juncea]";
-		mes "I can experiment with it for a while...but it's probably too much. If you want to keep getting results.";
-		mes "The bagots will keep hitting...";
+		mes "I cant test it for a while, but... it's probably a waste of time. To continue doing it.";
+		mes "I'm sure Bagot is already getting it....";
 		next;
 		mes "[Juncea]";
-		mes "I want to experiment directly with the Rgan, not the eggshell.";
-		mes "Then you can prove it.";
+		mes "I want to experiment with the Rgans directly, not the eggshells.";
+		mes "Then, I'll be able to prove it.";
 		next;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
-		mes "What are you proving?";
+		mes "Prove what?";
 		next;
 		cutin "ep19_juncea02.png",2;
 		mes "[Juncea]";
-		mes "The hypothesis that even an already-born Rgan can be made stronger by infusing it with magic.";
-		mes "But it's dangerous. You can't experiment with it.";
+		mes "My hypothesis is that you can make a already Bornt Rgan stronger by injecting mana into them.";
+		mes "But it's dangerous. I can't experiment without permission.";
 		next;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Wow! I want to be stronger";
-		mes "It's okay to experiment on me, too.";
+		mes "Wow! I want to be stronger.";
+		mes "It's okay to experiment with me.";
 		next;
 		cutin "ep19_juncea03.png",2;
 		mes "[Juncea]";
-		mes "Because I can't promise it. Besides, it's a risky experiment.";
-		mes "You cannot experiment.";
+		mes "I can't, it's a promise. Besides, it's a dangerous experiment.";
+		mes "I can't experiment with you.";
 		next;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
-		mes "But if it's dangerous for Juncea, human, or Rgan, isn't it more dangerous for Juncea's human?";
+		mes "Juncea is a human, If it's dangerous to a Rgan, isn't it more dangerous for you Juncea?";
 		mes "Juncea, I'm worried about humans.";
 		next;
 		cutin "ep19_juncea03.png",2;
 		mes "[Juncea]";
-		mes "...a kid who cares about everything.";
-		mes "Come on, break is over! Let's go and play.";
+		mes "......You worry about everything.";
+		mes "Now, break is over! Go play somewhere else.";
 		next;
 		cutin "ep19_juncea01.png",2;
 		mes "[Juncea]";
-		mes "If you want to talk more... you know? Not empty-handed.";
-		mes "Bring one of the ice cookies you brought or " + mesitemlink(1000707) + ".";
+		mes "If you want to talk more... You know already? Not with empty hands.";
+		mes "Bring me one Ice Cookie or 10 <ITEM>[" + getitemname(1000707) + "]<INFO>1000707</INFO></ITEM>.";
 		next;
 		mes "[Juncea]";
-		mes "Then I will listen to you.";
+		mes "Then, I'll listen to you atleast.";
 		delitem .@item, .@amount;
 		erasequest 16649;
 		setquest 16650;
@@ -5901,13 +5900,13 @@ jor_nest,31,140,5	script(CLOAKED)	Juncea#ep19re1	4_EP19_JUNCEA,{
 	if (ep19_main == 40) {	// step 49
 		cutin "ep19_juncea01.png",2;
 		mes "[Juncea]";
-		mes "Come here, Senekiogand.";
+		mes "You really don't get tired coming and going. Do you like my laboratory, Senekiogand?";
 		next;
 		mes "[Juncea]";
-		mes "I said I can't just play because I'm busy. Did you bring more ice cream? Or 10 " + mesitemlink(1000707) + "?";
+		mes "But I can't just play with you. Which one did you bring an Ice Cookie or 10 <ITEM>[" + getitemname(1000707) + "]<INFO>1000707</INFO></ITEM>?";
 		next;
 		cutin "",255;
-		if (select( "I brought more Ice Cookies.", "I brought 10 low-grade Magic Cores from Rgan." ) == 1) {
+		if (select( "I brought 1 Ice Cookie.", "I brought 10 " + getitemname(1000707) + "." ) == 1) {
 			.@item = 1000846;	// Ep19_Ice_Cookie
 			.@amount = 1;
 		}
@@ -5919,31 +5918,31 @@ jor_nest,31,140,5	script(CLOAKED)	Juncea#ep19re1	4_EP19_JUNCEA,{
 			cutin "ep19_juncea03.png",2;
 			mes "[Juncea]";
 			mes "Wait, you didn't bring anything.";
-			mes "Then I can't play with you.";
+			mes "Then, I can't play with you.";
 			close3;
 		}
 		cutin "ep19_juncea01.png",2;
 		mes "[Juncea]";
-		mes "...what am I doing to a child.";
-		mes "Thank you anyway";
+		mes "...What am I doing to this child.";
+		mes "Anyway, thank you.";
 		next;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Can you spare me some time now?";
+		mes "Can you make time for me now?";
 		next;
 		cutin "ep19_juncea01.png",2;
 		mes "[Juncea]";
-		mes "You're giving it to me, even now.";
-		mes "Actually, you should be busy experimenting.";
+		mes "I'm already giving it to you, even now.";
+		mes "I'll be busy doing experiments actually.";
 		next;
 		cutin "ep19_juncea03.png",2;
 		mes "[Juncea]";
-		mes "Even if you try hard to pick out the data anyway, it will all go to Bagot.";
-		mes "Let it happen.";
+		mes "No matter how much I try to extract data, it'll all go to Bagot anyways.";
+		mes "I don't care how it'll end.";
 		next;
 		mes "[Juncea]";
-		mes "I'm going to die because I don't have any test materials already.";
-		mes "But that would be the case with Bagot.";
+		mes "I'm already dying because I don't have any test subjects.";
+		mes "But it will be the same for Bagot.";
 		next;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
@@ -5951,24 +5950,24 @@ jor_nest,31,140,5	script(CLOAKED)	Juncea#ep19re1	4_EP19_JUNCEA,{
 		next;
 		cutin "ep19_juncea01.png",2;
 		mes "[Juncea]";
-		mes "Yeah. Neither me nor Bagot have little magical power in their bodies left here these days. They're not making progress.";
+		mes "Yes. Neither me or Bagot have an increased in mana in our body these days. There's no progress.";
 		next;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Still, I've heard that bagots get a lot of support.";
+		mes "But I heard that Bagot gets a lot of support.";
 		next;
 		cutin "ep19_juncea01.png",2;
 		mes "[Juncea]";
-		mes "What? It can't be.";
-		mes "I've heard you get paid more than I do, but I wouldn't say it's a lot.";
+		mes "What? There's no way.";
+		mes "I already know that he gets more than I do. But I don't think it's too much.";
 		next;
 		cutin "ep19_juncea03.png",2;
 		mes "[Juncea]";
-		mes "Already, they are taking care of various conveniences... I don't think they discriminate that much. Besides, the overall resource is lacking.";
+		mes "I'm already receiving this much convenience... I don't think they're discriminating me that much. Besides, there is an overall shortage of resources.";
 		next;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
-		mes "(...I brought the ledger. Shall I show the evidence to Juncea?)";
+		mes "(...I brought the Ledger. I should show Juncea the proof.)";
 		delitem .@item, .@amount;
 		erasequest 16650;
 		setquest 16651;
@@ -5980,30 +5979,30 @@ jor_nest,31,140,5	script(CLOAKED)	Juncea#ep19re1	4_EP19_JUNCEA,{
 			// unknown text
 		// }
 		mes "[" + strcharinfo(0) + "]";
-		mes "(...I brought the ledger. Shall I show the evidence to Juncea?)";
+		mes "(...I brought the Ledger. I should show Juncea the proof.)";
 		next;
 		cutin "ep19_juncea03.png",2;
 		mes "[Juncea]";
-		mes "I can't. It's not really possible. You said you don't have the resources. But that's a lie and you said you gave it all to Bagot?";
+		mes "I can't. I can't believe it. He said he didn't have any resources. But that's a lie and now they're giving everything to Bagot?";
 		next;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
-		mes "(How to show this? If you act like you know too well, you'll get suspicious.)";
+		mes "(How should I show this? She'll be suspicious if I act that I know it well.)";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Hey, isn't this~ Juncea or human? It's nice to see the same text as written over there, so I brought it.";
+		mes "Uhm, This~ Juncea, isn't this thing written in human text? I was happy to see the same text as written there, so I brought it.";
 		next;
 		cutin "ep19_juncea02.png",2;
 		mes "[Juncea]";
-		mes "Where did you get this from?";
+		mes "Where did you get this?";
 		next;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
-		mes "I'm a young priest, so I don't say anything when I go in. I brought it while playing.";
+		mes "I'm a young priest, so I don't ask anyone when I go anywhere. I found it while I was playing.";
 		next;
 		cutin "ep19_juncea01.png",2;
 		mes "[Juncea]";
-		mes "Anyway the books of accounts... but you can really tell by looking at this.";
+		mes "Anyway this is an accounting ledger... You can tell by just looking at it.";
 		if (countitem(1000845) > 0)
 			delitem 1000845,1;	// Ep19_Ledger
 		next;
@@ -6014,23 +6013,23 @@ jor_nest,31,140,5	script(CLOAKED)	Juncea#ep19re1	4_EP19_JUNCEA,{
 		next;
 		cutin "ep19_juncea03.png",2;
 		mes "[Juncea]";
-		mes "...nonsense. Have you ever cheated on me?";
-		mes "Did there really exist so many experimental materials? And they all went to Bagot?";
+		mes "...No way. Was he cheating until now?";
+		mes "Did such experimental materials really exist? and it's all going to Bagot?";
 		next;
 		mes "[Juncea]";
-		mes "How! How can it be!";
+		mes "How! I can't believe this!";
 		next;
 		mes "[Juncea]";
 		mes "I came first!!";
 		mes "I did more!!";
 		next;
 		mes "[Juncea]";
-		mes "I told you all about this body's magical powers!";
-		mes "I am more urgent!!!!!";
+		mes "I told them everything about mana!!!";
+		mes "I'm more relevant!!!!!";
 		next;
 		mes "[Juncea]";
-		mes "It wasn't enough to give me less support, so I even hid what I had.";
-		mes "How can you really do this?";
+		mes "It wasn't enough that they're not giving me enough support, but they hid what they had.";
+		mes "How can they do this to me?";
 		erasequest 16651;
 		setquest 16652;
 		ep19_main = 42;
@@ -6040,7 +6039,7 @@ jor_nest,31,140,5	script(CLOAKED)	Juncea#ep19re1	4_EP19_JUNCEA,{
 		cloakoffnpcself( "Bagot#ep19re1" );
 		cutin "ep18_bagot_01.png",2;
 		mes "[Bagot]";
-		mes "Hey, what is it? It's noisy. Why are you making such a loud noise, Juncea?";
+		mes "Oh, what's happening? It's noisy. Why are you making such a loud noise, Juncea?";
 		next;
 		cutin "ep19_juncea03.png",2;
 		mes "[Juncea]";
@@ -6048,54 +6047,54 @@ jor_nest,31,140,5	script(CLOAKED)	Juncea#ep19re1	4_EP19_JUNCEA,{
 		next;
 		cutin "ep18_bagot_03.png",2;
 		mes "[Bagot]";
-		mes "Why would you? Do you have something to say to Bagot?";
-		mes "Hey, are you...?";
+		mes "What's wrong? Don't you have anything to say to me?";
+		mes "Uh, you are...?";
 		next;
 		cutin "ep18_bagot_02.png",2;
 		mes "[Bagot]";
-		mes "What was your name? So... You were born with the superintendent, wasn't it?";
+		mes "What was his name again. I mean... weren't you the one born with the superior Rgan?";
 		next;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
-		mes "I'm Seneki Organd.";
+		mes "It's Senekiogand.";
 		next;
 		cutin "ep18_bagot_01.png",2;
 		mes "[Bagot]";
-		mes "Ah, I remember Bagot. Come to think of it, Sveggand was with Bagot a little while ago.";
+		mes "Oh, I remember now. Come to think of it, Svegand was with me just a little while ago.";
 		next;
 		cutin "ep18_bagot_03.png",2;
 		mes "[Bagot]";
-		mes "I went there after telling a lot of interesting stories. It was so much fun. I really don't feel like a young ragan these days. Ahaha!";
+		mes "He told me a lot of interesting stories. I had so much fun. These days young Rgans don't feel like one. Wahahaha!";
 		next;
 		cutin "ep19_juncea03.png",2;
 		mes "[Juncea]";
-		mes "Is that important now? I have something to tell you. It's important, Bagot.";
+		mes "Is that important now? I have something to say. It's important, Bagot.";
 		next;
 		cutin "ep18_bagot_03.png",2;
 		mes "[Bagot]";
-		mes "I came here because Bagot also wanted to talk to Juncea? It went well.";
-		mes "Then the grown-ups will tell you important things, so will the children go out?";
+		mes "It just happens that I came here because I have something important to say to you, isn't it nice? It's good.";
+		mes "Then we adults are going to have a talk, so can the child leave?";
 		next;
 		cutin "ep19_juncea03.png",2;
 		mes "[Juncea]";
-		mes "...Yes. Senechiorgand. You are out.";
-		mes "Because it's not a good story for a child to hear.";
+		mes "...Yes. Senekiogand. You stay out.";
+		mes "It won't be a good story for a child.";
 		next;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
-		mes "(You'd better do what you're told. If you insist on doing it, you'll only get suspicious.)";
-		mes "Okay";
+		mes "(I'd better do as I told. They'll be suspicious if I insist on staying.)";
+		mes "Okay.";
 		next;
 		cutin "ep18_bagot_03.png",2;
 		mes "[Bagot]";
-		mes "Bagot would like us to change our seats.";
-		mes "Would you like to go over there, Juncea?";
+		mes "I want to move somewhere.";
+		mes "Should we go there, Juncea?";
 		next;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
-		mes "(By the way, it's a bit unusual for Bagot to see me. Let's go back to the Ice Castle and find <NAVI>[Lazy]<INFO>icas_in,245,197,0,101,0</INFO></NAVI> and talk about it.) ";
+		mes "(Bagot looks a little off to me. Let's return to the Ice Castle and discuss it with <NAVI>[Lazy]<INFO>icas_in,245,197,0,101,0</INFO></NAVI>.)";
 		cloakonnpcself( "Bagot#ep19re1" );
-		cloakonnpcself();
+		cloakonnpcself( "Juncea#ep19re1" );
 		erasequest 16652;
 		setquest 16653;
 		ep19_main = 43;
@@ -6105,11 +6104,11 @@ jor_nest,31,140,5	script(CLOAKED)	Juncea#ep19re1	4_EP19_JUNCEA,{
 
 OnInit:
 	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(16646) == 1" );
-	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(16648) == 1" );
-	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(16649) == 1" );
-	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(16650) == 1" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(16648) == 1 && countitem(1000846) > 0" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(16649) == 1 && countitem(1000707) >= 10 || countitem(1000846) > 0" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(16650) == 1 && countitem(1000707) >= 10 || countitem(1000846) > 0" );
 	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(16651) == 1" );
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(16652) == 1" );	// !
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(16652) == 1" );
 	end;
 }
 jor_nest,34,139,3	duplicate(dummy_cloaked_npc)	Bagot#ep19re1	4_EP18_BAGOT
@@ -6120,8 +6119,8 @@ icas_in,255,200,0	script	#hw_ep19re5	HIDDEN_WARP_NPC,2,2,{
 	end;
 OnTouch:
 	if (ep19_main == 37 || ep19_main == 38) {
-		cloakoffnpcself( "Long #ep19re2" );
-		cloakoffnpcself( "Comfort#ep19re1" );
+		cloakoffnpcself( "Jaerorong#ep19re2" );
+		cloakoffnpcself( "Wirorong#ep19re1" );
 		end;
 	}
 	if (ep19_main == 43 || ep19_main == 44) {	// Step 51, 52
@@ -6132,7 +6131,7 @@ OnTouch:
 	end;
 }
 
-icas_in,245,197,7	script(CLOAKED)	Long #ep19re2	4_EP19_IWIN,{
+icas_in,245,197,7	script(CLOAKED)	Jaerorong#ep19re2	4_EP19_IWIN,{
 	if (ep19_main == 37) {
 		if (checkweight(1000846,1) == 0) {
 			mes "You cannot proceed with the conversation due to the large number of items you have.";
@@ -6140,32 +6139,29 @@ icas_in,245,197,7	script(CLOAKED)	Long #ep19re2	4_EP19_IWIN,{
 			close;
 		}
 		cutin "ep19_iwin01.png",2;
-		mes "[Jerolong]";
-		mes "Oooh, crunchy! Oh, it's cold. But it's so delicious.";
+		mes "[Jaerorong]";
+		mes "*crunch*, *crunch*! Oh, It's cold. But it's delicious.";
 		next;
-		mes "[Jerolong]";
-		mes "Uh, what are you eating? Ice candy. It's delicious. Would you like one too?";
+		mes "[Jaerorong]";
+		mes "Oh, what I'm eating? Ice Cookies. It's delicious. Do you want one?";
 		next;
 		cutin "",255;
-		if (select( "Ask for one", "Please decline" ) == 2) {
-			// unknown text
+		if (select( "Ask for one.", "No thanks." ) == 2) {
 			cutin "ep19_iwin01.png",2;
-			mes "[Jerolong]";
-			mes "Heh, I don't have hair, so I can't even hide my face.";
-			mes "It's not an expression of disinterest. What's going on?";
+			mes "[Jaerorong]";
+			mes "Oh, is it too cold? Nothing we can do then.";
 			close3;
 		}
-		// unknown text (custom text)
 		cutin "ep19_iwin01.png",2;
-		mes "[Jerolong]";
-		mes "For free? But I'm Awin, so I'll give you a special one.";
+		mes "[Jaerorong]";
+		mes "Our Iwin Patissier is really good!";
 		next;
-		mes "[Jerolong]";
-		mes "Eat it sparingly. It's delicious!";
+		mes "[Jaerorong]";
+		mes "Here, don't hesitate to try it.";
 		next;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
-		mes "(If you say you stole it from Iwin who was walking around, you can turn it around... <NAVI>[Juncea]<INFO>jor_nest,31,140,0,101,0</INFO></NAVI>)";
+		mes "(I'll just say that I receive it from the Iwins who were walking around.... Let's bring it to <NAVI>[Juncea]<INFO>jor_nest,31,140,0,101,0</INFO></NAVI>.)";
 		getitem 1000846,1;	// Ep19_Ice_Cookie
 		erasequest 16647;
 		setquest 16648;
@@ -6177,9 +6173,9 @@ icas_in,245,197,7	script(CLOAKED)	Long #ep19re2	4_EP19_IWIN,{
 			getitem 1000846,1;	// Ep19_Ice_Cookie
 		}
 		cutin "ep19_iwin01.png",2;
-		mes "[Jerolong]";
-		mes "You already have one? Ask for more? No.";
-		mes "If you eat too much, your throat will freeze.";
+		mes "[Jaerorong]";
+		mes "Don't you already have one? You want more? No.";
+		mes "Your throat will freeze if you eat too much.";
 		close3;
 	}
 	end;
@@ -6197,28 +6193,28 @@ icas_in,248,197,3	script(CLOAKED)	Comfort#ep19re1	4_EP19_IWIN,{
 			close;
 		}
 		cutin "ep19_iwin01.png",2;
-		mes "[Comfort]";
-		mes "Crunchy, stinky...";
-		mes "Why are you looking at me like that? Are you interested in Iwin's Treasure Ice Snacks?";
+		mes "[Wirorong]";
+		mes "*crunch*, *crunch*...";
+		mes "Why are you looking at me like that? Are you interested in the Iwin's secret ice cookie?";
 		next;
 		cutin "",255;
-		if (select( "Ask for one", "Tell me you're not interested." ) == 2) {
+		if (select( "Ask for one.", "I'm not interested." ) == 2) {
 			cutin "ep19_iwin01.png",2;
-			mes "[Comfort]";
-			mes "Heh, I don't have hair, so I can't even hide my face.";
-			mes "It's not an expression of disinterest. What's going on?";
+			mes "[Wirorong]";
+			mes "Well, you're featherless and you can't hide your expressions .";
+			mes "It's not a heartless expression. Whatever.";
 			close3;
 		}
 		cutin "ep19_iwin01.png",2;
-		mes "[Comfort]";
-		mes "For free? But I'm Awin, so I'll give you a special one.";
+		mes "[Wirorong]";
+		mes "Our Iwin Patissier is really good!";
 		next;
-		mes "[Comfort]";
-		mes "Eat it sparingly. It's delicious!";
+		mes "[Wirorong]";
+		mes "Here, don't hesitate to try it.";
 		next;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
-		mes "(If you say you stole it from Iwin who was walking around, you can turn it around... <NAVI>[Juncea]<INFO>jor_nest,31,140,0,101,0</INFO></NAVI>)";
+		mes "(I'll just say that I receive it from the Iwins who were walking around.... Let's bring it to <NAVI>[Juncea]<INFO>jor_nest,31,140,0,101,0</INFO></NAVI>.)";
 		getitem 1000846,1;	// Ep19_Ice_Cookie
 		erasequest 16647;
 		setquest 16648;
@@ -6230,12 +6226,12 @@ icas_in,248,197,3	script(CLOAKED)	Comfort#ep19re1	4_EP19_IWIN,{
 			getitem 1000846,1;	// Ep19_Ice_Cookie
 		}
 		cutin "ep19_iwin01.png",2;
-		mes "[Comfort]";
-		mes "You already have one? Ask for more? No.";
+		mes "[Wirorong]";
+		mes "Don't you already have one? You want more? No.";
 		next;
-		mes "[Comfort]";
-		mes "If you eat too much at once, it will freeze.";
-		mes "It's really delicious, but it's really cold. Eat sparingly.";
+		mes "[Wirorong]";
+		mes "It will freeze if you eat too much at once.";
+		mes "It's really delicious, but it's very cold. Eat it one at a time.";
 		close3;
 	}
 	end;
@@ -6263,48 +6259,48 @@ icas_in,245,197,7	script(CLOAKED)	Lazy#ep19re2	4_EP19_LAZY,{
 	if (ep19_main == 43) {	// Step 51
 		cutin "ep19_leizi01.png",2;
 		mes "[Lazy]";
-		mes "Hey, how are you doing. How are you doing?";
-		mes "This place was resting for a while. Let's have a look and see.";
+		mes "Hey, the job went well. How is it on your side?";
+		mes "I'm resting for a while. I'm going to look at everything bit by bit.";
 		next;
 		mes "[Lazy]";
-		mes "I've done some work with Bagot. There are a lot of dubious tales about Juncea.";
+		mes "I also did some work with Bagot. He's been talking about a lot of suspicious things about Juncea.";
 		next;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
-		mes "I think I've become closer with Juncea.";
-		mes "I also informed Juncea that Bagot was treated much better.";
+		mes "I've gotten closer to Juncea too.";
+		mes "I also informed her that Bagot.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Juncea didn't seem to know that Bagot was receiving much more supplies than he did.";
+		mes "Juncea doesn't seem to know that Bagot is receiving more supplies than she is.";
 		next;
 		cutin "ep19_leizi01.png",2;
 		mes "[Lazy]";
-		mes "Yeah? Then you deserve to be more vindictive.";
-		mes "Now it's time to convince Juncea well...";
+		mes "Really? Then she might aim for revenge.";
+		mes "Now is the time to convince Juncea....";
 		next;
 		cutin "ep18_miriam_01.png",2;
 		mes "[Miriam]";
-		mes "Is it going well, both of you?";
-		mes "I heard about Lazy-san... how about adventurer?";
+		mes "Both of you, how is it going?";
+		mes "I heard what Lazy's story, but... how about you adventurer?";
 		next;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Well, but I also feel like I need to get things done a little faster.";
-		mes "Because Juncea came to see you.";
+		mes "Well, I also feel like I need to get things done quickly.";
+		mes "Bagot came to Juncea earlier.";
 		next;
 		cutin "ep19_leizi03.png",2;
 		mes "[Lazy]";
-		mes "What! Really? So you let them talk, adventurers?";
-		mes "No way!";
+		mes "What! Really? You allowed them to talk, adventurer?";
+		mes "We can't let that happen!";
 		next;
 		cutin "ep18_miriam_01.png",2;
 		mes "[Miriam]";
-		mes "But there was no way to stop it, right?";
-		mes "You're pretending to be a young Rgan, so it must have been a little difficult to get out of there.";
+		mes "But there wasn't a way stop it, right?";
+		mes "Since you were pretending to be a young Rgan, it would have been difficult to step in.";
 		next;
 		cutin "ep19_leizi01.png",2;
 		mes "Lazy";
-		mes "But <NAVI>[Miriam]<INFO>icas_in,249,199,0,101,0</INFO></NAVI>, then shouldn't you have overheard what he was saying?";
+		mes "But <NAVI>[Miriam]<INFO>icas_in,249,199,0,101,0</INFO></NAVI>, didn't you overheard what we were talking about?";
 		erasequest 16653;
 		setquest 16654;
 		ep19_main = 44;
@@ -6313,8 +6309,8 @@ icas_in,245,197,7	script(CLOAKED)	Lazy#ep19re2	4_EP19_LAZY,{
 	if (ep19_main == 44) {	// Step 52
 		cutin "ep19_leizi01.png",2;
 		mes "[Lazy]";
-		mes "Oh, it's Saksin.";
-		mes "I'm busy, I'm busy.";
+		mes "Ouch, my body.";
+		mes "Busy, so busy.";
 		close3;
 	}
 	end;
@@ -6330,42 +6326,42 @@ icas_in,249,199,3	script(CLOAKED)	Miriam#ep19re1	4_EP18_MIRIAM,{
 	if (ep19_main == 43) {
 		cutin "ep18_miriam_01.png",2;
 		mes "[Miriam]";
-		mes "How are you doing?";
-		mes "I believe. Please take care of me.";
+		mes "How is it going?";
+		mes "I trust you. I'll leave it up to you.";
 		close3;
 	}
 	if (ep19_main == 44) {	// Step 52
 		cutin "ep18_miriam_01.png",2;
 		mes "[Miriam]";
-		mes "Although an adventurer is an advanced ragan, he's just born. If he tries to get involved too deeply, it'll look weird.";
+		mes "The adventurer might be a senior Rgan, but still a newborn. It'll look suspicious if you try to get too involved.";
 		next;
 		cutin "ep19_leizi03.png",2;
 		mes "[Lazy]";
-		mes "But, oh my! It's frustrating because I don't know what to talk about.";
-		mes "Adventurer, I guess I'll have to move on a little faster.";
+		mes "But, Argh! It's frustrating not to know what to discuss.";
+		mes "Adventurer, I think we need to speed things up.";
 		next;
 		mes "[Lazy]";
-		mes "If the two of us talk, we might find out what we've been working on under the water.";
-		mes "If Bagot moved, it means that Bagot may have noticed.";
+		mes "If we walk together, we might be found out the we are working under the water.";
+		mes "The fact that Bagot made a move, means that he may have noticed something.";
 		next;
 		cutin "ep19_leizi02.png",2;
 		mes "[Lazy]";
 		mes "Let's persuade Juncea first.";
-		mes "If you can't persuade me, even in a coercive way... you know what I'm talking about?";
+		mes "If you she can't be persuaded, even in a coercive way... you already know what I'm talking about, right?";
 		next;
 		cutin "ep18_miriam_01.png",2;
 		mes "[Miriam]";
-		mes "You have to bring it somehow.";
-		mes "If you use the Rgan transformation scroll, you will be less noticeable whether you use persuasion or coercion.";
+		mes "We need to get her somehow.";
+		mes "If you use a Rgan transformation scroll, you'll be less noticeable, whether you're persuading or using force.";
 		next;
 		cutin "ep19_leizi02.png",2;
 		mes "[Lazy]";
-		mes "One o'clock is urgent.";
-		mes "Go back to <NAVI>[Juncea]<INFO>jor_nest,19,190,0,101,0</INFO></NAVI> immediately.";
+		mes "We need to hurry.";
+		mes "Let's go back to <NAVI>[Juncea]<INFO>jor_nest,19,190,0,101,0</INFO></NAVI> immediately.";
 		next;
 		mes "[Lazy]";
-		mes "Now that we've all rested, it's time to finish our work.";
-		mes "Oh, my back hurts when I transform into a Rgan.";
+		mes "Now that we've all rested, we'll have to go and finish what we were doing.";
+		mes "My back, it hurts when I transform into a Rgan.";
 		erasequest 16654;
 		setquest 16655;
 		ep19_main = 45;
@@ -6384,31 +6380,38 @@ OnInit:
 
 
 // Main Quest: Step 53, 55
-jor_nest,19,190,3	script(CLOAKED)	Unseen Box#ep19re1	4_WOODBOX,{
+jor_nest,19,190,3	script(CLOAKED)	Unnoticed Box#ep19re1	4_WOODBOX,{
+	if (getstatus(SC_MONSTER_TRANSFORM,1) != 21530) {
+		mes "[" + strcharinfo(0) + "]";
+		mes "(Whoops, the transformation scroll! Let's not forget to use it.)";
+		close2;
+		warp "jor_back3",65,321;
+		end;
+	}
 	if (ep19_main == 45) {	// Step 53
 		mes "[" + strcharinfo(0) + "]";
-		mes "(No one there? Where did Juncea go?)";
+		mes "(There's no one here? Where did Juncea go?)";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "(It's a box I haven't seen. There's something pouring around. It looks like a drink... It looks a little suspicious. <NAVI>[Courage]<INFO>jor_nest,20,194,0,101,0</INFO></NAVI> Is there not? Let's look around.)";
+		mes "(This box, I haven't noticed it before. There is something coming out of it. It looks like a liquid.... it looks a little suspicious. Doesn't it have a <NAVI>[container]<INFO>jor_nest,20,194,0,101,0</INFO></NAVI> where I can put it in to? Let's look around.)";
 		erasequest 16655;
 		setquest 16656;
 		ep19_main = 46;
 		close2;
-		cloakoffnpcself( "empty test tube#ep19re1" );
+		cloakoffnpcself( "Empty Test Tube#ep19re1" );
 		end;
 	}
 	if (ep19_main == 46) {	// Step 54
 		mes "[" + strcharinfo(0) + "]";
-		mes "(The suspicious liquid is still alive. Shall we move it around a bit?)";
+		mes "(The suspicious liquid is still buoyant. Should we move it around a little?)";
 		next;
-		if (select( "You don't have to.", "Let's move it." ) == 2) {
+		if (select( "No need to move it.", "Let's move it." ) == 1) {
 			mes "[" + strcharinfo(0) + "]";
-			mes "(I want to go with some suspicious liquid, but I don't have the courage to move it. Let's look around.)";
+			mes "(I don't need it anymore.)";
 			close;
 		}
 		mes "[" + strcharinfo(0) + "]";
-		mes "(No more needed)";
+		mes "(I want to carry the suspicious liquid, but I don't have the container to carry it. Let's look around.)";
 		close;
 	}
 	if (ep19_main == 47) {	// Step 55
@@ -6421,10 +6424,10 @@ jor_nest,19,190,3	script(CLOAKED)	Unseen Box#ep19re1	4_WOODBOX,{
 			close;
 		}
 		mes "[" + strcharinfo(0) + "]";
-		mes "(The suspicious liquid was transferred to the test tube.)";
+		mes "(I transferred the suspicious liquid into the test tube.)";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "(Now I have to sneak out..., ah, I feel like I'm popular outside. Let's pretend we don't know anything.)";
+		mes "(Now I have to sneak out..., ah, I can feel some movement outside. Let's walk out pretending that I don't know anything.)";
 		delitem 1000604,1;	// Ep19_Juncea_Tube
 		getitem 1000605,1;	// Ep19_Red_Tube
 		erasequest 16657;
@@ -6436,7 +6439,7 @@ jor_nest,19,190,3	script(CLOAKED)	Unseen Box#ep19re1	4_WOODBOX,{
 		end;
 	}
 	mes "[" + strcharinfo(0) + "]";
-	mes "(Suspicious liquid still alive.)";
+	mes "(The liquid is still buoyant.)";
 	close;
 
 OnInit:
@@ -6446,7 +6449,7 @@ OnInit:
 }
 
 // Main Quest: Step 54
-jor_nest,20,194,3	script(CLOAKED)	empty test tube#ep19re1	4_POINT_BLUE,{
+jor_nest,20,194,3	script(CLOAKED)	Empty Test Tube#ep19re1	4_POINT_BLUE,{
 	if (ep19_main == 46) {	// Step 54
 		if (checkweight(1000604,1) == 0) {
 			mes "- Wait a minute !! -";
@@ -6457,15 +6460,15 @@ jor_nest,20,194,3	script(CLOAKED)	empty test tube#ep19re1	4_POINT_BLUE,{
 			close;
 		}
 		mes "[" + strcharinfo(0) + "]";
-		mes "(There is an empty, clean test tube. Would you like to take one?)";
+		mes "(There is a clean empty test tube. Should I take one?)";
 		next;
-		if (select( "take", "do not take" ) == 2) {
+		if (select( "Take it.", "Don't take it." ) == 2) {
 			mes "[" + strcharinfo(0) + "]";
-			mes "(I don't need it now)";
+			mes "(I won't need it now.)";
 			close;
 		}
 		mes "[" + strcharinfo(0) + "]";
-		mes "(I took a clean test tube)";
+		mes "(I took a clean test tube.)";
 		getitem 1000604,1;	// Ep19_Juncea_Tube
 		erasequest 16656;
 		setquest 16657;
@@ -6473,7 +6476,7 @@ jor_nest,20,194,3	script(CLOAKED)	empty test tube#ep19re1	4_POINT_BLUE,{
 		close;
 	}
 	mes "[" + strcharinfo(0) + "]";
-	mes "(There are several empty test tubes.)";
+	mes "There are several empty test tubes.";
 	close;
 
 OnInit:
@@ -6482,35 +6485,42 @@ OnInit:
 }
 
 // Main Quest: Step 55
-// jor_nest,19,190,3	script	unseen box#ep19re1	4_WOODBOX,{
+// jor_nest,19,190,3	script	Unnoticed Box#ep19re1	4_WOODBOX,{
 
 // Main Quest: Step 56
 jor_nest,24,185,1	script(CLOAKED)	Rgan#ep19re1	4_EP19_RGAN_SR2,{
+	if (getstatus(SC_MONSTER_TRANSFORM,1) != 21530) { //TODO
+		mes "[" + strcharinfo(0) + "]";
+		mes "(Whoops, the transformation scroll! Let's not forget to use it.)"; 
+		close2;
+		warp "jor_back3",65,321;
+		end;
+	}
 	if (ep19_main == 48) {	// Step 56
 		mes "[" + strcharinfo(0) + "]";
-		mes "...Me, did you call me?";
+		mes "...Uh, did you call me?";
 		next;
 		mes "[Rgan]";
-		mes "Yeah. Seeing a face I've never seen before, are you a Senecchiogand? They said you'd still be here.";
+		mes "Yeah. I've never seen you before. You're Senekiogand, right? He said you'd be here anyway.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Who is it? Who says that?";
+		mes "Who? Who said that?";
 		next;
 		mes "[Rgan]";
-		mes "Human scientist. A human named Juncea. Now in Bagot's lab.";
-		mes "I'm waiting for you, so come over there?";
+		mes "The human scientist. The human named Juncea. She is in Bagot's laboratory right now.";
+		mes "She is waiting for you, so maybe you should go?";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "(Juncea says I will come herehow did you know Something is strange.)";
+		mes "(How did Juncea know that I was coming here? Something's strange.)";
 		next;
 		mes "[Rgan]";
-		mes "As a bishop, it's embarrassing to have me do chores, but I told you to listen to people as much as possible, so it's not too late to do it.";
+		mes "They dare to make a Bishop do chores, But I was told to listen to the words of the humans as much as possible, so don't be late.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "(...There's nothing good about being noticed right now, so let's do what we're told.)";
+		mes "(...there's nothing good to be seen by others now, let's just do what they tell us to do.)";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Okay. <NAVI>[Bagot Human Lab]<INFO>jor_nest,66,260,0,101,0</INFO></NAVI>? I'll go right away.";
+		mes "I see. <NAVI>[Human Bagot's Laboratory]<INFO>jor_nest,66,260,0,101,0</INFO></NAVI>, right? I'll go there.";
 		erasequest 16658;
 		setquest 16659;
 		ep19_main = 49;
@@ -6575,7 +6585,7 @@ OnTouch:
 		cloakoffnpcself( "Vellgunde#i19ms00" );
 		cloakoffnpcself( "Lazy#i19ms00" );
 		cloakoffnpcself( "Aurelie#i19ms00" );
-		cloakoffnpcself( "irwin#i19ms00" );
+		cloakoffnpcself( "Iwin#i19ms00" );
 		end;
 	}
 	if (ep19_main == 56) {
@@ -6592,70 +6602,58 @@ icas_in,245,115,1	script(CLOAKED)	Miriam#i19ms00	4_EP18_MIRIAM,{
 	if (ep19_main == 52) {
 		cutin "ep18_miriam_01.png",0;
 		mes "[Miriam]";
-		mes "What's going on? Isn't that Illusion?";
+		mes "What's going on? That one, isn't she an Illusion?";
 		close3;
 	}
 	if (ep19_main == 53) {
 		cutin "ep18_miriam_01.png",0;
 		mes "[Miriam]";
-		mes "Low-level magic core, I've seen it in the warmth of the snake god.";
+		mes "A Low-Grade Mana Core, I've seen it in the warmth of the snake god.";
 		close3;
 	}
-	if (ep19_main == 54) {
-		cutin "ep18_miriam_01.png",0;
-		mes "[Miriam]";
-		mes "Could you grab the Bagot and get a clue to get Ymir's heart back?";
-		close3;
-	}
-	if (ep19_main == 55) {
-		cutin "ep18_miriam_01.png",0;
-		mes "[Miriam]";
-		mes "Could you grab the Bagot and get a clue to get Ymir's heart back?";
-		close3;
-	}
-	end;
+	cutin "ep18_miriam_01.png",0;
+	mes "[Miriam]";
+	mes "Will we able to catch Bagot and get the Heart of Ymir back.";
+	close3;
 }
 
 icas_in,248,118,3	script(CLOAKED)	Lehar#i19ms00	4_EP19_LEHAR,{
 	if (ep19_main == 52) {
 		cutin "ep19_lehar01.png",1;
 		mes "[Lehar]";
-		mes "Me? It's me. I've been invited. I got to know him a little bit in the den of Rgan. But what happened to that person?";
+		mes "Me? I've been invited here. We've got to know each other in the Rgan's nest. But what happened to that person?";
 		close3;
 	}
 	if (ep19_main == 53) {
 		cutin "ep19_lehar01.png",1;
 		mes "[Lehar]";
-		mes "What I needed was a low-level magic core. The writing was so messed up I couldn't read it.";
+		mes "We we need is Low-Grade Mana Core. The writing was so messy I couldn't read it immediately.";
 		close3;
 	}
-	if (ep19_main == 54 || ep19_main == 55) {
-		cutin "ep19_lehar01.png",1;
-		mes "[Lehar]";
-		mes "Okay, my aunt. By the way, what is that person talking about?";
-		close3;
-	}
-	end;
+	cutin "ep19_lehar01.png",1;
+	mes "[Lehar]";
+	mes "It as expected, from my aunt. By the way, what is that person saying?";
+	close3;
 }
 
 icas_in,246,119,3	script(CLOAKED)	Lazy#i19ms00	4_EP19_LAZY,{
 	if (ep19_main == 52) {
 		cutin "ep19_leizi03.png",1;
 		mes "[Lazy]";
-		mes "No, how did you become a human, Juncea, after you closed your eyes for a moment?";
+		mes "Just what happened to the human Juncea while we weren't there?";
 		close3;
 	}
 	if (ep19_main == 53) {
 		cutin "ep19_leizi03.png",1;
 		mes "[Lazy]";
-		mes "Isn't it easy to bring 20 low-grade magic cores to an adventurer? Do you have 30,000 in your bag right now?";
+		mes "It's easy bringing 20 Low-Grade Mana Core for you adventurer, right? I mean, is there 30000 items in your bag right now?";
 		close3;
 	}
 	// if (ep19_main == 54) {	// cloaked
 	if (ep19_main == 55) {
 		cutin "ep19_leizi03.png",1;
 		mes "[Lazy]";
-		mes "Criminals from Illusion all seem a bit alike. So you think it's easy to deal with?";
+		mes "I think all the criminals from the Illusion are quite the same. Maybe that's why they're easy to handle?";
 		close3;
 	}
 	end;
@@ -6667,88 +6665,87 @@ icas_in,247,116,1	script	Horuru#i19ms00	4_EP19_IWIN,5,5,{
 		// }
 		cutin "ep19_iwin07.png",2;
 		mes "[Horuru]";
-		mes "I don't think you've ever brought Rgan here without a reason... What the hell is going on?";
-		npctalk "what's going on?", "Lehar#i19ms00", bc_self;
+		mes "I don't think that you've brought this Rgan here for no reason... just what happened?";
+		npctalk "What happened?", "Lehar#i19ms00", bc_self;
 		next;
 		cutin "ep19_leizi03.png",1;
 		mes "[Lazy]";
-		mes "That's right, ^0000cd Juncea or human^000000? Why does it look like that?";
+		mes "That's right, isn't that the ^0000CDhuman Juncea^000000? Why is she in that shape?";
 		next;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
-		mes "I had no choice but to get out of Rgan's lair safely.";
+		mes "I had no choice but to ger her out of the Rgan's nest safely.";
 		next;
 		cutin "ep19_leizi03.png",1;
 		mes "[Lazy]";
-		mes "Put it down over there.";
-		npctalk "For a moment, you thought this was Lazy's house?", "", bc_self;
+		mes "Lie her down over there for now.";
+		npctalk "For a moment there, did you think this is your house, Lazy?", "Horuru#i19ms00", bc_self;
 		next;
 		cutin "ep19_lehar05.png",1;
 		mes "[Lehar]";
-		mes "You said you'd bring me out, did you intend to keep your breath like this?";
+		mes "You said that you brought her out, are we just going to keep her in a shape like this?";
 		next;
 		cutin "ep19_leizi03.png",1;
 		mes "[Lazy]";
-		mes "Oh, we'll talk about that later and change him into a human form first, so I'll get treatment or not.";
+		mes "Oh, let's talk about that later, change her into human form for now. That way, we can get her some treatment or something.";
 		next;
 		specialeffect EF_FOOD02, AREA, "Juncea#i19ms00";
-		sleep2 500;
 		specialeffect EF_CHAINCOMBO, AREA, "Juncea#i19ms00";
 		cutin "",255;
-		sleep2 500;
+		sleep2 1000;
 		cloakonnpcself( "Juncea#i19ms00" );
 		cloakoffnpcself( "Juncea#i19ms01" );
-		sleep2 500;
+		sleep2 1000;
 		cutin "ep18_miriam_01.png",1;
 		mes "[Miriam]";
-		mes "The body... the wings...!";
+		mes "This body... has wings...!";
 		next;
 		cutin "ep19_leizi03.png",1;
 		mes "[Lazy]";
-		mes "There, nephew, do you have the power of God? Please help me.";
-		npctalk "Yes, four!!", "Lehar#i19ms00", bc_self;
-		sleep2 500;
+		mes "Hey newphew, don't you have god's power? Please give her some treatment.";
+		npctalk "Ye, Yes!!", "Lehar#i19ms00", bc_self;
+		sleep2 1000;
 		specialeffect EF_HEAL4, AREA, "Juncea#i19ms01";
 		sleep2 500;
 		specialeffect EF_CURE, AREA, "Juncea#i19ms01";
 		sleep2 500;
-		specialeffect EF_RECOVERY, AREA, "Juncea#i19ms01";
+		specialeffect EF_RECOVERY , AREA, "Juncea#i19ms01";
 		next;
 		cutin "ep19_iwin06.png",2;
 		mes "[Horuru]";
 		mes "Now explain the situation.";
 		next;
-		select( "I think we've caught our plan." );
+		select( "I think our plan was found out." );
 		cutin "ep19_leizi03.png",1;
 		mes "[Lazy]";
-		mes "Hmm, I don't know if it's us, but did you know that someone is flirting?";
+		mes "Well, I don't know how, but I guess he found out that someone was trying to deceive them?";
 		next;
 		cutin "ep18_miriam_01.png",1;
 		mes "[Miriam]";
-		mes "That's why you made your co-workers like this and tried to find and get rid of the bastards?";
+		mes "But making your colleague like this to get rid of the other person, isn't it too much?";
 		next;
 		cutin "ep19_lehar05.png",1;
 		mes "[Lehar]";
-		mes "But what the hell is this body... how can I do this?";
+		mes "But this body.... How did this happen?";
 		next;
 		select( "I think it's related to Bagot's experiment." );
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Something like a chimera like a fake god created by Rachel.";
+		mes "It feels like the false god chimera that was made in Rachel.";
 		next;
 		cutin "ep18_miriam_01.png",1;
 		mes "[Miriam]";
-		mes "Then, Bagot's research... No way...!";
+		mes "Then, Bagot's research... It can't be...!";
 		next;
 		cutin "ep19_leizi03.png",1;
 		mes "[Lazy]";
-		mes "No matter what happens, it won't be good for us. Let's wake up this person first and ask for more details.";
+		mes "Whatever it may be, it won't be good for us. Let's wake her up first and ask for the details.";
 		next;
-		select( "Because you can't go in blindly." );
+		select( "Don't just bump her." );
 		cutin "ep19_leizi03.png",1;
 		mes "[Lazy]";
-		mes "Hey, Juncea human. Wake up. I have so many questions to ask.";
-		npctalk "Juncea or human?", "Lehar#i19ms00", bc_self;
+		mes "Hey. Human Juncea. Wake up. I have a lot to ask.";
+		npctalk "Juncea is a human?", "Lehar#i19ms00", bc_self;
 		next;
 		cutin "",255;
 		mes "[Juncea]";
@@ -6756,86 +6753,84 @@ icas_in,247,116,1	script	Horuru#i19ms00	4_EP19_IWIN,5,5,{
 		next;
 		cutin "ep19_leizi03.png",1;
 		mes "[Lazy]";
-		mes "No, what about this? Are you out of your mind?";
-		mes "How long have you been unconscious? Why can't you go back to your original form?";
+		mes "What should we do? She can't even get it together?";
+		mes "How long has she been unconcious? Why doesn't she return to her original form?";
 		next;
 		cutin "ep19_iwin06.png",2;
 		mes "[Horuru]";
-		mes "How did this happen? Did you have any clues?";
+		mes "How did this happen? Are there any clues?";
 		next;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Um... I've picked up these in the lab, but I don't know if they'll help.";
+		mes "Hm...... I picked this up in the laboratory, but I don't know if it'll help.";
 		next;
 		cutin "ep19_leizi01.png",1;
 		mes "[Lazy]";
-		mes "Can anyone read this?";
+		mes "Can anyone investigate this?";
 		next;
 		cutin "ep19_lehar01.png",1;
 		mes "[Lehar]";
-		mes "What is this? Would you like to try it?";
+		mes "What, is this? Is this something edible?";
 		next;
 		cutin "ep19_iwin07.png",2;
 		mes "[Horuru]";
-		mes "No, I know what it is! I know it can be a sauce!";
+		mes "No, I know what it is! It maybe a sauce!";
 		next;
 		cutin "ep19_leizi03.png",1;
 		mes "[Lazy]";
-		mes "Unfortunately, none of us are here. Since it was brought from there, there must be a clue to the detoxification.";
+		mes "Unfortunately, none of us know what this is. It's from that place, so it may be give us a clue to the detoxification.";
 		next;
 		cutin "ep19_lehar02.png",1;
 		mes "[Lehar]";
-		mes "Ah! If that's the case, I'll bring my aunt. You see things like this.";
-		npctalk "Oh, scientist. Oh.", "Lazy#i19ms00", bc_self;
+		mes "Oh! If that's the case, I'll bring my aunt. She's good at things like this.";
+		npctalk "Oh, a scientist. yeah.", "Lazy#i19ms00", bc_self;
 		next;
 		cloakonnpcself( "Lehar#i19ms00" );
-		sleep2 500;
 		cutin "ep19_leizi01.png",1;
 		mes "[Lazy]";
-		mes "By the way, you'll be found out so quickly. Our faces are known, so we won't even look at them.";
+		mes "Anyway, I didn't expect us to be caught so soon. Our faces are probably known, so we can't show our faces there anymore.";
 		next;
 		cutin "ep19_iwin07.png",2;
 		mes "[Horuru]";
-		mes "I can't use the method of infiltrating using the transformation scroll anymore.";
+		mes "We can't use the transformation scroll method to infiltrate anymore.";
 		next;
 		cutin "ep19_leizi01.png",1;
 		mes "[Lazy]";
-		mes "That's not it, Iwin-san. You said that the upper-class and the upper-class know each other because they don't have many faces? That means you can keep using it if you're an intermediate-level or lower class.";
+		mes "That's not it, Mr. Iwin. Didn't you said that there are only a few senior and superior Rgans so they know the faces of each one? You can still continue using that method as long you're an intermediate Rgan.";
 		next;
 		cutin "ep19_leizi03.png",1;
 		mes "[Lazy]";
-		mes "However, there is a problem that there is a limit to the information that can be obtained with an intermediate Rgan... The range of access is also narrowed.";
+		mes "But the information that an intermediate Rgan can get is a problem... The range of access is smaller.";
 		next;
 		cloakoffnpcself( "Vellgunde#i19ms00" );
-		sleep2 500;
 		cloakoffnpcself( "Lehar#i19ms00" );
 		cutin "ep19_vellgunde01.png",2;
 		mes "[Vellgunde]";
-		mes "You need me? What do you see...";
-		mes "Ho, that body...? Is it the result of that Illusion scientist's experiment? Did you use a colleague as a test material?";
+		mes "Did you need me? Take a look at something...";
+		mes "Ho, This body...? Is it a result of an experimet from an Illusion scientist? Did he use his colleague as an experimental subject?";
 		next;
 		cutin "",255;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Yeah, I need to get this guy back, but I don't know how. Get this...";
+		mes "Yes, we need this person to return to normal, but I don't know how. This is...";
 		next;
 		cutin "ep19_vellgunde02.png",2;
 		mes "[Vellgunde]";
 		mes "I'll take a look.";
-		mes "ho... um... hmmm... ";
+		mes "Ho... Hm...... Uhm... ";
 		next;
 		cutin "ep19_vellgunde01.png",2;
 		mes "[Vellgunde]";
-		mes "I know roughly what it is. Fortunately, it looks like you've got what you need. You can get the rest separately.";
-		npctalk "Scientist too!!!", "Lazy#i19ms00", bc_self;
+		mes "I know the gist of it. Fortunately, I think I've got the things I need. We can get the rest separately.";
+		npctalk "As expected of a scientist!!!", "Lazy#i19ms00", bc_self;
 		next;
 		cutin "ep19_vellgunde02.png",2;
 		mes "[Vellgunde]";
-		mes "Bring the low-level magic core of ^000cd of Rgan^000000. As many as possible. At least 20 ^0000cd^000000.";
+		mes "Bring me a ^0000CD" + getitemname(1000707) + "^000000. As many as possible. ^0000CD20 or more^000000.";
 		next;
-		select( "Is that enough?" );
+		select( "Is that everything?" );
 		cutin "ep19_vellgunde02.png",2;
 		mes "[Vellgunde]";
-		mes "Yeah. There's nothing good about being delayed, so it's better to go right away?";
+		mes "Yes. There's nothing good if we delay too much, so why don't you go right away?";
 		if (countitem(1000605) > 0)
 			delitem 1000605,1;	// Ep19_Red_Tube
 		erasequest 17640;
@@ -6846,24 +6841,24 @@ icas_in,247,116,1	script	Horuru#i19ms00	4_EP19_IWIN,5,5,{
 	if (ep19_main == 53) {
 		cutin "ep19_iwin06.png",2;
 		mes "[Horuru]";
-		mes "I need 20^000000 of each ^0000cd Rgan's low-grade magic core. Adventurers must suffer a bit. I want to go, but I can't leave the house at the moment.";
+		mes "We need ^0000CD20 " + getitemname(1000707) + "^000000. Adventurer will suffer a bit. I wanted to go, but I can't leave the house at the moment.";
 		close3;
 	}
 	if (ep19_main == 54 || ep19_main == 55) {
 		cutin "ep19_iwin06.png",2;
 		mes "[Horuru]";
-		mes "What is he saying now?";
+		mes "What is she saying now?";
 		close3;
 	}
 	if (ep19_main == 56) {
 		cutin "ep19_iwin06.png",2;
 		mes "[Horuru]";
-		mes "I heard that something was wrong in Rgan's lair, so it's good to go.";
+		mes "We've detected abnormalities in the Rgan's nest, so we'd better get going.";
 		close3;
 	}
 	cutin "ep19_iwin06.png",2;
 	mes "[Horuru]";
-	mes "If possible, I would like to visit only when invited.";
+	mes "If possible, I'd like you to visit only when invited.";
 	close3;
 
 OnTouch:	// unknown effect
@@ -6890,20 +6885,20 @@ icas_in,244,117,1	script(CLOAKED)	Vellgunde#i19ms00	4_EP19_VELLGUNDE,{
 		if (countitem(1000707) < 20) {
 			cutin "ep19_vellgunde02.png",2;
 			mes "[Vellgunde]";
-			mes "This is not enough. I think you should have enough.";
-			mes "Bring only 20 low-grade magic cores from Rgan.";
+			mes "This is not enough. We need plenty of it.";
+			mes "Bring me 20 " + getitemname(1000707) + ".";
 			close3;
 		}
 		cutin "ep19_vellgunde02.png",2;
+		cloakoffnpcself( "Juncea#i19ms01" );
 		mes "[Vellgunde]";
-		mes "Yes, you did a good job.";
-		mes "Now you can mix it according to the recipe.";
+		mes "Yes, well done.";
+		mes "Now, we can just combine it according to the recipe.";
 		next;
-		specialeffect EF_PRIMECHARGE, AREA, "Juncea#i19ms01";
-		sleep2 500;
+		specialeffect EF_PRIMECHARGE , AREA, "Juncea#i19ms01";
 		cutin "ep19_vellgunde01.png",2;
 		mes "[Vellgunde]";
-		mes "Now, let's give it a shot? You should all step back just in case you don't know.";
+		mes "Now, shall we inject it? You'd better step back just in case.";
 		next;
 		cutin "",255;
 		mes "[Juncea]";
@@ -6911,42 +6906,40 @@ icas_in,244,117,1	script(CLOAKED)	Vellgunde#i19ms00	4_EP19_VELLGUNDE,{
 		next;
 		cutin "ep19_vellgunde01.png",2;
 		mes "[Vellgunde]";
-		mes "Shh- nice. Slowly... Slowly... Now, it's good to relax your body and not move in a hurry.";
+		mes "Sh- not good. Slowly... slowly... yes, just relax your body and don't rush.";
 		next;
 		specialeffect EF_HITLINE8, AREA, "Juncea#i19ms01";
-		sleep2 500;
 		cutin "",255;
-		npctalk "Uh....", "Juncea#i19ms01", bc_self;
-		npctalk "Oh, you're back to normal!", "Horuru#i19ms00", bc_self;
-		npctalk "Actually, a scientist. It's in my name.", "Lazy#i19ms00", bc_self;
-		npctalk "What's the deal with the name and the scientist?", "Lehar#i19ms00", bc_self;
-		sleep2 500;
+		npctalk "Ugh...............", "Juncea#i19ms01", bc_self;
+		npctalk "Oh, she's returning to her original form!", "Horuru#i19ms00", bc_self;
+		npctalk "A scientist indeed. Is not for show.", "Lazy#i19ms00", bc_self;
+		npctalk "What does being a scientist have to do with it?", "Lehar#i19ms00", bc_self;
+		sleep2 1500;
 		specialeffect EF_HITLINE8, AREA, "Juncea#i19ms01";
 		specialeffect EF_CHAINCOMBO, AREA, "Juncea#i19ms01";
-		sleep2 500;
+		sleep2 1000;
 		cloakonnpcself( "Juncea#i19ms01" );
 		cloakoffnpcself( "Juncea#i19ms02" );
 		cutin "ep19_juncea04.png",0;
 		mes "[Juncea]";
-		mes "Uh... I...";
+		mes "Ugh...... I......";
 		next;
 		cutin "ep19_vellgunde01.png",2;
 		mes "[Vellgunde]";
-		mes "Okay, are you crazy? You. Who are you? Do you know who you are?";
+		mes "So,are you finally awake? You. Who are you? Do you know who you are?";
 		next;
 		cutin "",255;
-		sleep2 500;
 		specialeffect EF_SCREEN_QUAKE, AREA, "Juncea#i19ms02";
 		mes "[Juncea]";
 		mes "<FONT SIZE = 18><B><I>Bagot!!!!</I></B></FONT>";
-		npctalk "Bagot? Didn't you say Juncea?", "Miriam#i19ms00", bc_self;
-		unittalk getcharid(3), "" + strcharinfo(0) + " : No. It's a grudge.", bc_self;
+		npctalk "Bagot? Didn't you say she's Juncea?", "Miriam#i19ms00", bc_self;
+		unittalk getcharid(3), "" + strcharinfo(0) + " : No. She's just resenting her.", bc_self;
 		next;
 		specialeffect EF_SCREEN_QUAKE, AREA, "Juncea#i19ms02";
 		mes "[Juncea]";
-		mes "<FONT SIZE = 18><B><I>You used me as a test subject!!!</I></B></FONT>";
-		npctalk "I feel good as soon as I wake up. Well, my nephew's power must be really strong.", "Lazy#i19ms00", bc_self;
-		npctalk "Haha, what is this?", "Lehar#i19ms00", bc_self;
+		mes "<FONT SIZE = 18><B><I>You used me as a subject!!!</I></B></FONT>";
+		npctalk "To have this energy as soon as she wake up. Well, your nephew must have really strong powers.", "Lazy#i19ms00", bc_self;
+		npctalk "Haha, what do you mean.", "Lehar#i19ms00", bc_self;
 		next;
 		cutin "",255;
 		mes "[Juncea]";
@@ -6957,122 +6950,121 @@ icas_in,244,117,1	script(CLOAKED)	Vellgunde#i19ms00	4_EP19_VELLGUNDE,{
 		next;
 		cutin "ep19_vellgunde02.png",2;
 		mes "[Vellgunde]";
-		mes "This is not the abode of the rgans. They don't come out looking for him.";
-		npctalk "You better calm down. The one you're looking for isn't here.", "Lehar#i19ms00", bc_self;
+		mes "This is not the Rgan's Nest. So don't go looking for him.";
+		npctalk "You better calm down. The man you're looking for is not here.", "Lehar#i19ms00", bc_self;
 		next;
 		cutin "ep19_juncea02.png",0;
 		mes "[Juncea]";
-		mes "......? Here, where? The nest... isn't it?";
+		mes "......? Where, am I? The nest... No?";
 		next;
 		cutin "ep19_iwin06.png",2;
 		mes "[Horuru]";
-		mes "This is the Ice Castle. As you can see, we are Iwin and humans. We rescued you from the snake's lair.";
+		mes "This is the Ice Castle. As you can see, I'm an Iwin and they're humans. We saved you from the snake's nest.";
 		next;
 		cutin "ep19_leizi01.png",1;
 		mes "[Lazy]";
-		mes "Hello! I'm Gumyeon! Do you want to recognize me? Sveggand!";
+		mes "Hi! We've met before! Can you recognize me? It's Svegand!";
 		next;
-		select( "I am... Senechiorgand." );
+		select( "I'm... Senekiogand." );
 		cutin "ep19_juncea02.png",0;
 		mes "[Juncea]";
-		mes "What...? Are you human? Those two, how...? It must have been a ragan.";
+		mes "What...? You guys were humans? How, did you do it...? You were definitely a Rgan.";
 		next;
 		cutin "ep19_leizi02.png",1;
 		mes "[Lazy]";
-		mes "Well, unintentionally, there was a super-genius here.";
-		npctalk "You only used such a person as a test material.", "Lazy#i19ms00", bc_self;
+		mes "Well, there was a super genius who's on our side unintentionally.";
+		npctalk "And you people just used that kind of person as an experimental subject.", "Lazy#i19ms00", bc_self;
 		next;
 		cutin "ep19_juncea02.png",0;
 		mes "[Juncea]";
-		mes "Metamorphosis? Human to Rgan?";
-		mes "Did you ever deceive me? Did you use me?";
+		mes "Transformation? Human, into a Rgan?";
+		mes "You've been deceiving me all this time? Did you use me?";
 		next;
 		cutin "ep19_leizi02.png",1;
 		mes "[Lazy]";
-		mes "If possible, would you tell me that you used your hair to separate you and bring you back? In the end, it went well, right?";
-		npctalk "Do you want an apology?", "Lazy#i19ms00", bc_self;
-		npctalk "What apologize! This person is not a criminal group!", "Horuru#i19ms00", bc_self;
+		mes "Why don't you tell me a bad reason for separating and bringing you back here? It all turned out well, didn't it?";
+		npctalk "You want an apology?", "Lazy#i19ms00", bc_self;
+		npctalk "An apology! Those people are criminals!", "Horuru#i19ms00", bc_self;
 		next;
 		cutin "ep19_juncea03.png",0;
 		mes "[Juncea]";
-		mes "What are you going to do with me? Are you going to get rid of me now? If you get rid of me, you won't gain anything.";
+		mes "What are you going to do with me? Are you going to dispose me? You'll gain nothing even if you get rid of me.";
 		next;
 		cutin "ep19_leizi01.png",1;
 		mes "[Lazy]";
-		mes "I've never seen anyone arrested who doesn't speak like that.";
-		npctalk "I made a bet with myself, even though I didn't do one this time!", "Lazy#i19ms00", bc_self;
+		mes "I've never seen anyone arrested before who doesn't speak that line.";
+		npctalk "I made a bet with myself that it won't happen!", "Lazy#i19ms00", bc_self;
 		next;
-		select( "Please be quiet" );
+		select( "Please be quiet." );
 		cutin "ep19_juncea04.png",0;
 		mes "[Juncea]";
-		mes "Did Bagot even sell me? Since when did the two of you hold hands?";
-		mes "Uh--";
+		mes "Did Bagot sold me out?? Since when did you work together?";
+		mes "Ugh--";
 		next;
 		cutin "ep19_vellgunde01.png",2;
 		mes "[Vellgunde]";
-		mes "Where can you go with your body?";
-		mes "I'm just being treated quietly. It's not a minor injury.";
+		mes "So where else can you go?";
+		mes "You need to be treated well. It's not a minor injury.";
 		next;
 		cutin "ep19_leizi02.png",1;
 		mes "[Lazy]";
-		mes "I've never worked with Bagot. It's the same with you? If that was the case, would you have brought you here?";
-		mes "Right now, you just have to eat something delicious and get well. Did you have a decent meal there? And from now on, you should cooperate with us.";
+		mes "I would never cooperate with Bagot. Isn't it the for you? If so, why have I brought you here?";
+		mes "Just eat something and recuperate for now. You haven't got any decent meal there, right? And we'll have you cooperate with us from now on.";
 		next;
 		cutin "ep19_juncea04.png",0;
 		mes "[Juncea]";
-		mes "I want to eat now...! How me! How dare me! ?!!";
+		mes "You want me to eat......! How can I! How dare you! ?!!";
 		next;
 		cutin "ep19_leizi03.png",1;
 		mes "[Lazy]";
-		mes "Hey, I dared to save you. If we hadn't gone, you would have died. Do you think dying is better than living?";
-		npctalk "I can't.", "Lazy#i19ms00", bc_self;
+		mes "Hey, we went out there to save you. You'd be dead already if we didn't go. Would you rather die than live?";
+		npctalk "No way again.", "Lazy#i19ms00", bc_self;
 		npctalk "......", "Juncea#i19ms02", bc_self;
 		next;
 		cutin "ep19_leizi03.png",1;
 		mes "[Lazy]";
-		mes "If it's not like that, please cooperate. If you tell me politely, I'll do it for you.";
-		mes "Don't forget that Illusion is wanted in the Three Kingdoms of the Midgard Continent. There is nowhere to escape.";
+		mes "Then cooperate with us if that's not the case. If you can tell me that without hesistation, then I'll make a deal with you.";
+		mes "Don't forget that the Illusions are wanted in the three kingdom of Midgars. There's nowhere to run.";
 		npctalk ".........", "Juncea#i19ms02", bc_self;
 		next;
 		cutin "ep19_leizi03.png",1;
 		mes "[Lazy]";
-		mes "You must have run away from us here, but we've been following you all the way here. Where's the next one? Anywhere to go? Not sure?";
+		mes "He escaped us and fled all the way here, but we followed him all the way here. Where next? Do you have a place to go? Nowhere, right?";
 		npctalk "............", "Juncea#i19ms02", bc_self;
 		next;
 		cutin "ep19_leizi03.png",1;
 		mes "[Lazy]";
-		mes "Hey. We're not doing this because we don't have a way. We're doing this because we don't want unnecessary wars.";
-		mes "If you don't open your mouth, you'll have no choice but to go back and just wipe out the lab.";
-		npctalk "Researchers don't like that? Touching their own.", "Lazy#i19ms00", bc_self;
+		mes "Look. We're not doing this because we're desperate. It's because we don't want to waste resources on unnecessary battles..";
+		mes "If you don't speak out now, I'll go back to the laboratory and destroy everything in it.";
+		npctalk "I heard researchers don't like that? Don't like their stuffs getting touched.", "Lazy#i19ms00", bc_self;
 		next;
 		cutin "ep19_juncea02.png",0;
 		mes "[Juncea]";
-		mes "Transform...? Trying to transform again?";
+		mes "Transformation......? Are you going to use that again?";
 		next;
 		cutin "ep19_leizi03.png",1;
 		mes "[Lazy]";
-		mes "Uh, yes. Why? Are you interested? Oh, I've never seen her transforming before. Curious? There's nothing I can't show.";
+		mes "Oh, yeah. Why? Are you interested? Oh, you've never seen me transform before. Curious? I can show it if you want.";
 		next;
 		cutin "",255;
-		sleep2 500;
 		specialeffect EF_FOOD06, AREA, "Lazy#i19ms00";
 		cloakonnpcself( "Lazy#i19ms00" );
 		cloakoffnpcself( "Lazy#i19ms01" );
 		mes "[Lazy]";
-		mes "Ahhhhhhhhhhhhhhhhhhhhhhhhhhhhhh?";
+		mes "Tada!!! How is it! It's exactly the same, right?";
 		next;
 		cutin "ep19_juncea02.png",0;
 		mes "[Juncea]";
-		mes "Human, as a human... it was definitely a Rgan. Magical waves and internal organs... How...?";
+		mes "A human, into a Rgan... it's definitely a Rgan. The mana wavelength, organs.. How......?";
 		next;
 		cutin "ep19_vellgunde02.png",2;
 		mes "[Vellgunde]";
-		mes "I can explain that. Do you want to satisfy your curiosity as a scientist?";
-		mes "Instead, you also have something to tell us.";
+		mes "I can explain it to you. Don't you want to satisfy your curiosity as a scientist?";
+		mes "Instead, there's something you need to tell us.";
 		next;
 		cutin "ep19_juncea03.png",0;
 		mes "[Juncea]";
-		mes "...Think about it.";
+		mes "...I'll think about it.";
 		delitem 1000707,20;	// Ep19_Rgan_Core_F
 		erasequest 17641;
 		setquest 17642;
@@ -7081,25 +7073,16 @@ icas_in,244,117,1	script(CLOAKED)	Vellgunde#i19ms00	4_EP19_VELLGUNDE,{
 		// unknown amount of exp
 		close3;
 	}
-	if (ep19_main == 54) {
+	if (ep19_main == 54 || ep19_main == 55) {
 		cutin "ep19_vellgunde01.png",2;
 		mes "[Vellgunde]";
-		mes "It doesn't look too difficult to convince? How about it? What do you think of an adventurer?";
+		mes "Persuading her doesn't seem difficult, or is it? What do you think? Adventurer?";
 		close3;
 	}
-	if (ep19_main == 55) {
-		cutin "ep19_vellgunde01.png",2;
-		mes "[Vellgunde]";
-		mes "It doesn't look too difficult to convince? How about it? What do you think of an adventurer?";
-		close3;
-	}
-	if (ep19_main == 56) {
-		cutin "ep19_vellgunde01.png",2;
-		mes "[Vellgunde]";
-		mes "I'll take a closer look at Juncea. You never know when you'll need it?";
-		close3;
-	}
-	end;
+	cutin "ep19_vellgunde01.png",2;
+	mes "[Vellgunde]";
+	mes "I'll watch Juncea a bit more. You'll never know when we'll need her, right?";
+	close3;
 
 OnInit:
 	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(17641) == 1 && countitem(1000707) >= 20" );
@@ -7277,7 +7260,7 @@ icas_in,243,120,5	script(CLOAKED)	Juncea#i19ms02	4_EP19_JUNCEA,{
 		next;
 		cloakoffnpcself( "Aurelie#i19ms00" );
 		sleep2 500;
-		cloakoffnpcself( "irwin#i19ms00" );
+		cloakoffnpcself( "Iwin#i19ms00" );
 		cutin "ep19_aurelie03.png",2;
 		mes "[Aurelie]";
 		mes "Everyone was here. Is that...?";
@@ -7315,7 +7298,7 @@ OnInit:
 
 
 // Main Quest: Step 65
-icas_in,247,113,1	script(CLOAKED)	irwin#i19ms00	4_EP19_IWIN,{
+icas_in,247,113,1	script(CLOAKED)	Iwin#i19ms00	4_EP19_IWIN,{
 	if (ep19_main == 55) {
 		cutin "ep19_iwin02.png",2;
 		mes "[Iwin]";
@@ -7359,7 +7342,7 @@ icas_in,249,113,3	script(CLOAKED)	Aurelie#i19ms00	4_EP19_AURELIE,{
 		cloakonnpcself( "Lazy#i19ms00" );
 		cloakonnpcself( "Lehar#i19ms00" );
 		cloakonnpcself( "Miriam#i19ms00" );
-		cloakonnpcself( "irwin#i19ms00" );
+		cloakonnpcself( "Iwin#i19ms00" );
 		cutin "",255;
 		end;
 	}
@@ -7612,7 +7595,7 @@ OnTouch:
 
 // Misc event 2
 jor_que,125,41,5	duplicate(dummy_npc)	human#i19ms106	4_M_MASKMAN
-jor_que,121,39,7	duplicate(dummy_cloaked_npc)	irwin#i19ms104	EP19_RGAN_D
+jor_que,121,39,7	duplicate(dummy_cloaked_npc)	Iwin#i19ms104	EP19_RGAN_D
 
 jor_que,121,39,0	script	#i19ms104	HIDDEN_WARP_NPC,5,5,{
 	end;
@@ -7621,23 +7604,23 @@ OnTouch:
 	setpcblock PCBLOCK_NPC, true;
 	npctalk "I hear footsteps... Please just pass by... How did you get here...", "human#i19ms106", bc_self;
 	sleep2 1000;
-	cloakoffnpcself( "irwin#i19ms104" );
-	npctalk "You've been hiding here! Anyone else?", "irwin#i19ms104", bc_self;
+	cloakoffnpcself( "Iwin#i19ms104" );
+	npctalk "You've been hiding here! Anyone else?", "Iwin#i19ms104", bc_self;
 	sleep2 1500;
 	npctalk "Mom... I was wrong. I don't want to be punished. I don't want to die. Please, take a look.", "human#i19ms106", bc_self;
 	sleep2 1500;
-	npctalk "This is so... This is why I didn't want to go around like this. Sir, I'm Rgan and Iwin.", "irwin#i19ms104", bc_self;
+	npctalk "This is so... This is why I didn't want to go around like this. Sir, I'm Rgan and Iwin.", "Iwin#i19ms104", bc_self;
 	sleep2 1500;
-	npctalk "It won't hurt you, so go out with me. There's a safe place.", "irwin#i19ms104", bc_self;
+	npctalk "It won't hurt you, so go out with me. There's a safe place.", "Iwin#i19ms104", bc_self;
 	sleep2 1500;
 	npctalk "How can you believe that...", "human#i19ms106", bc_self;
 	sleep2 1500;
-	npctalk "Child, if you don't go now, you're in trouble.", "irwin#i19ms104", bc_self;
+	npctalk "Child, if you don't go now, you're in trouble.", "Iwin#i19ms104", bc_self;
 	sleep2 1500;
 	npctalk "What a big deal... If you die like this and die like that... Black...", "human#i19ms106", bc_self;
 	sleep2 1500;
-	npctalk "Let's go", "irwin#i19ms104", bc_self;
-	cloakonnpcself( "irwin#i19ms104" );
+	npctalk "Let's go", "Iwin#i19ms104", bc_self;
+	cloakonnpcself( "Iwin#i19ms104" );
 	cloakonnpcself( "human#i19ms106" );
 	setpcblock PCBLOCK_NPC, false;
 	end;
@@ -7646,7 +7629,7 @@ OnTouch:
 
 // Misc event 3
 jor_que,183,272,5	duplicate(dummy_npc)	human#i19ms105	4_M_SITDOWN
-jor_que,187,269,1	duplicate(dummy_cloaked_npc)	irwin#i19ms103	EP19_RGAN_D
+jor_que,187,269,1	duplicate(dummy_cloaked_npc)	Iwin#i19ms103	EP19_RGAN_D
 
 jor_que,187,269,0	script	#i19ms103	HIDDEN_WARP_NPC,5,5,{
 	end;
@@ -7654,21 +7637,21 @@ OnTouch:
 	cloakonnpcself();
 	setpcblock PCBLOCK_NPC, true;
 	npctalk "If I go out now, would it be hard? I'll go out secretly when it calms down a bit.", "human#i19ms105", bc_self;
-	cloakoffnpcself( "irwin#i19ms103" );
+	cloakoffnpcself( "Iwin#i19ms103" );
 	sleep2 1000;
-	npctalk "Here's another one...! Sir, you have to leave now.", "irwin#i19ms103", bc_self;
+	npctalk "Here's another one...! Sir, you have to leave now.", "Iwin#i19ms103", bc_self;
 	sleep2 1500;
 	npctalk "What, what? What is Intermediate Rgan so polite?", "human#i19ms105", bc_self;
 	sleep2 1500;
-	npctalk "I'm not a ragan. I'll explain the situation as we go, so we have to leave now.", "irwin#i19ms103", bc_self;
+	npctalk "I'm not a ragan. I'll explain the situation as we go, so we have to leave now.", "Iwin#i19ms103", bc_self;
 	sleep2 1500;
-	npctalk "I'll drive you to a safe place.", "irwin#i19ms103", bc_self;
+	npctalk "I'll drive you to a safe place.", "Iwin#i19ms103", bc_self;
 	sleep2 1500;
 	npctalk "I don't know what it is, but if you deceive me, I won't stand still!", "human#i19ms105", bc_self;
 	sleep2 1500;
-	npctalk "Yes, yes. Pack everything. Let's go.", "irwin#i19ms103", bc_self;
+	npctalk "Yes, yes. Pack everything. Let's go.", "Iwin#i19ms103", bc_self;
 	sleep2 1000;
-	cloakonnpcself( "irwin#i19ms103" );
+	cloakonnpcself( "Iwin#i19ms103" );
 	cloakonnpcself( "human#i19ms105" );
 	setpcblock PCBLOCK_NPC, false;
 	end;
@@ -7678,7 +7661,7 @@ OnTouch:
 // Misc event 4
 jor_que,227,277,3	duplicate(dummy_npc)	human#i19ms103	4_M_TELEPORTER
 jor_que,223,277,3	duplicate(dummy_npc)	human#i19ms104	4_M_ORIENT02
-jor_que,222,275,7	duplicate(dummy_cloaked_npc)	irwin#i19ms102	EP19_RGAN_D
+jor_que,222,275,7	duplicate(dummy_cloaked_npc)	Iwin#i19ms102	EP19_RGAN_D
 
 jor_que,222,275,0	script	#i19ms102	HIDDEN_WARP_NPC,5,5,{
 	end;
@@ -7690,8 +7673,8 @@ OnTouch:
 	npctalk "I'll come and see you.", "human#i19ms103", bc_self;
 	npctalk "Careful...", "human#i19ms104", bc_self;
 	sleep2 1000;
-	cloakoffnpcself( "irwin#i19ms102" );
-	npctalk "Only the two of you? By the way, I'm not Rgan! I'm Iwin in disguise!", "irwin#i19ms102", bc_self;
+	cloakoffnpcself( "Iwin#i19ms102" );
+	npctalk "Only the two of you? By the way, I'm not Rgan! I'm Iwin in disguise!", "Iwin#i19ms102", bc_self;
 	sleep2 1500;
 	npctalk "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa!!!!!!!!!!", "human#i19ms104", bc_self;
 	sleep2 500;
@@ -7699,19 +7682,19 @@ OnTouch:
 	sleep2 1000;
 	npctalk "That means we can get out of here now?", "human#i19ms103", bc_self;
 	sleep2 1500;
-	npctalk "Yes, follow me. I will take you to safety.", "irwin#i19ms102", bc_self;
+	npctalk "Yes, follow me. I will take you to safety.", "Iwin#i19ms102", bc_self;
 	sleep2 1500;
 	npctalk "Hey, let's go. Now is your chance.", "human#i19ms103", bc_self;
 	sleep2 500;
 	cloakonnpcself( "human#i19ms103" );
 	npctalk "Hey! If you just follow someone you don't know...!", "human#i19ms104", bc_self;
 	sleep2 1000;
-	npctalk "Believe it is true", "irwin#i19ms102", bc_self;
+	npctalk "Believe it is true", "Iwin#i19ms102", bc_self;
 	sleep2 1500;
 	npctalk "If you say so...", "human#i19ms104", bc_self;
 	sleep2 500;
 	cloakonnpcself( "human#i19ms104" );
-	cloakonnpcself( "irwin#i19ms102" );
+	cloakonnpcself( "Iwin#i19ms102" );
 	setpcblock PCBLOCK_NPC, false;
 	end;
 }
@@ -7719,7 +7702,7 @@ OnTouch:
 
 // Misc event 5
 jor_que,252,244,7	duplicate(dummy_npc)	human#i19ms102	4_M_ALCHE_A
-jor_que,255,240,1	duplicate(dummy_cloaked_npc)	irwin#i19ms101	EP19_RGAN_D
+jor_que,255,240,1	duplicate(dummy_cloaked_npc)	Iwin#i19ms101	EP19_RGAN_D
 
 jor_que,255,240,0	script	#i19ms101	HIDDEN_WARP_NPC,5,5,{
 	end;
@@ -7728,19 +7711,19 @@ OnTouch:
 	setpcblock PCBLOCK_NPC, true;
 	npctalk "Ugh... get out? Don't you? Why are surveillance disappearing and people's hearts shake...", "human#i19ms102", bc_self;
 	sleep2 1500;
-	cloakoffnpcself( "irwin#i19ms101" );
-	npctalk "Teacher, are you alone?", "irwin#i19ms101", bc_self;
+	cloakoffnpcself( "Iwin#i19ms101" );
+	npctalk "Teacher, are you alone?", "Iwin#i19ms101", bc_self;
 	sleep2 1500;
 	npctalk "Aww!!! Me,I never thought of leaving!", "human#i19ms102", bc_self;
 	sleep2 1500;
-	npctalk "You must leave when there is no monitoring. If there are no more parties, then leave now.", "irwin#i19ms101", bc_self;
+	npctalk "You must leave when there is no monitoring. If there are no more parties, then leave now.", "Iwin#i19ms101", bc_self;
 	sleep2 1500;
 	npctalk "Why all of a sudden...?", "human#i19ms102", bc_self;
 	sleep2 1500;
-	npctalk "We're rescuing the humans here. Let's go out and talk about it.", "irwin#i19ms101", bc_self;
+	npctalk "We're rescuing the humans here. Let's go out and talk about it.", "Iwin#i19ms101", bc_self;
 	sleep2 1500;
 	npctalk "That's right!!! I'm the only one, so I can leave like this!", "human#i19ms102", bc_self;
-	cloakonnpcself( "irwin#i19ms101" );
+	cloakonnpcself( "Iwin#i19ms101" );
 	cloakonnpcself( "human#i19ms102" );
 	setpcblock PCBLOCK_NPC, false;
 	end;
@@ -7956,8 +7939,8 @@ OnInit:
 // Main Quest: Step 69
 jor_que,128,146,7	duplicate(dummy_cloaked_npc)	Horuru#i19ms31	EP19_RGAN_D
 jor_que,134,146,1	duplicate(dummy_cloaked_npc)	Iwin#i19ms31	EP19_RGAN_D
-jor_que,127,151,5	duplicate(dummy_cloaked_npc)	irwin#i19ms32	EP19_RGAN_D
-jor_que,134,151,3	duplicate(dummy_cloaked_npc)	irwin#i19ms33	EP19_RGAN_D
+jor_que,127,151,5	duplicate(dummy_cloaked_npc)	Iwin#i19ms32	EP19_RGAN_D
+jor_que,134,151,3	duplicate(dummy_cloaked_npc)	Iwin#i19ms33	EP19_RGAN_D
 
 jor_que,131,148,3	script	Intermediate Rgan#i19ms21	EP19_RGAN_D,5,5,{
 	if (ep19_main < 58) {
@@ -7992,7 +7975,7 @@ jor_que,131,148,3	script	Intermediate Rgan#i19ms21	EP19_RGAN_D,5,5,{
 		next;
 		mes "[Horuru]";
 		mes "It's awful, it's awful.";
-		npctalk "Literally a workworm, a workworm.", "irwin#i19ms32", bc_self;
+		npctalk "Literally a workworm, a workworm.", "Iwin#i19ms32", bc_self;
 		next;
 		select( "You are here" );
 		mes "[Horuru]";
@@ -8028,16 +8011,16 @@ jor_que,131,148,3	script	Intermediate Rgan#i19ms21	EP19_RGAN_D,5,5,{
 		mes "[Horuru]";
 		mes "If it's upstairs, it's probably the upper section. Only two of them follow me, and the other stays to rescue escapees.";
 		npctalk "four!!", "Iwin#i19ms31", bc_self;
-		npctalk "four!!", "irwin#i19ms32", bc_self;
-		npctalk "four!!", "irwin#i19ms33", bc_self;
+		npctalk "four!!", "Iwin#i19ms32", bc_self;
+		npctalk "four!!", "Iwin#i19ms33", bc_self;
 		erasequest 17646;
 		setquest 17647;
 		ep19_main = 59;
 		close2;
 		cloakonnpcself( "Horuru#i19ms31" );
 		cloakonnpcself( "Iwin#i19ms31" );
-		cloakonnpcself( "irwin#i19ms32" );
-		cloakonnpcself( "irwin#i19ms33" );
+		cloakonnpcself( "Iwin#i19ms32" );
+		cloakonnpcself( "Iwin#i19ms33" );
 		end;
 	}
 	if (ep19_main == 59) {
@@ -8051,8 +8034,8 @@ OnTouch:
 	if (ep19_main == 58) {
 		cloakoffnpcself( "Horuru#i19ms31" );
 		cloakoffnpcself( "Iwin#i19ms31" );
-		cloakoffnpcself( "irwin#i19ms32" );
-		cloakoffnpcself( "irwin#i19ms33" );
+		cloakoffnpcself( "Iwin#i19ms32" );
+		cloakoffnpcself( "Iwin#i19ms33" );
 		end;
 	}
 	end;
