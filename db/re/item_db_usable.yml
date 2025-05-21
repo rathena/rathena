@@ -73094,8 +73094,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      transform 21530,1200000; /* Confirm time */
-      bonus_script " bonus2 bAddItemHealRate,1100006,100; ",120,1,1;
+      specialeffect2 EF_CLOAKING;
+      transform 21530,1200000,SC_MTP_W_POTION_100,100;
   - Id: 101166
     AegisName: Kr_B_Special05
     Name: G-Star RO Shop Box

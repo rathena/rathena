@@ -7096,182 +7096,180 @@ icas_in,243,120,5	script(CLOAKED)	Juncea#i19ms02	4_EP19_JUNCEA,{
 	if (ep19_main == 54) {
 		cutin "ep19_juncea03.png",0;
 		mes "[Juncea]";
-		mes "Okay. I'll accept that offer. I promise you the treatment you did before.";
-		npctalk "Come back to your original form! No ragans in my house!", "Horuru#i19ms00", bc_self;
-		npctalk "Hey, that's very picky.", "Lazy#i19ms00", bc_self;
+		mes "Okay. I accept your offer. The treatment you gave earlier, Promise it.";
+		npctalk "Return to your original form! No Rgans in my house!", "Horuru#i19ms00", bc_self;
+		npctalk "Well, you're stingy.", "Lazy#i19ms00", bc_self;
 		next;
 		specialeffect EF_CHAINCOMBO, AREA, "Lazy#i19ms00";
-		sleep2 500;
 		cloakonnpcself( "Lazy#i19ms01" );
 		cloakoffnpcself( "Lazy#i19ms00" );
 		cutin "ep19_leizi01.png",1;
 		mes "[Lazy]";
-		mes "Of course. I have been fully delegated by the government of the Schwalzwald Republic, so you can trust me. Not only me but everyone here represents the Three Kingdoms?";
+		mes "Of course. I'm fully supported by the government of Schwarzwald, so you can count on me. Not only me, isn't everyone here representing one of the three kingdoms?";
 		next;
 		cutin "ep19_juncea03.png",0;
 		mes "[Juncea]";
-		mes "You told me that there is no one in the world to trust.";
-		npctalk "Where else can I find an icon of faith and trust like mine?", "Lazy#i19ms00", bc_self;
+		mes "You told me there's no one I can trust in the world.";
+		npctalk "Wherever can you find an icon of trust like myself?", "Lazy#i19ms00", bc_self;
 		next;
 		cutin "ep19_leizi02.png",1;
 		mes "[Lazy]";
-		mes "The Illusions who cooperated with us and dealt with are not just Junceas or humans. The Illusions captured earlier are also in a safe place.";
-		npctalk "Fuck that name.", "Juncea#i19ms02", bc_self;
-		npctalk "Hey! That's right. It's not that hard.", "Lazy#i19ms00", bc_self;
+		mes "You're not the only Illusion who traded sentences for cooperation. The Illusion that we caught earlier is also in a safe place.";
+		npctalk "Forget that name.", "Juncea#i19ms02", bc_self;
+		npctalk "Ouch! Let's do that. it's not difficult.", "Lazy#i19ms00", bc_self;
 		next;
 		cutin "ep19_juncea03.png",0;
 		mes "[Juncea]";
-		mes "That's detention. Putting a criminal in jail is a classy thing to say. That's a prison sentence anyway.";
-		mes "What kind of generosity and acknowledgment is not to kill.";
+		mes "That's a detention. It's a classy way to put a criminal in jail. It's a prison sentence basically.";
+		mes "What kind of generosity and acceptance does it give by not killing them. Don't go off pretending to show sentiment.";
 		next;
 		cutin "ep19_lehar02.png",1;
 		mes "[Lehar]";
-		mes "Oh, so how about this? Bagot has filth? We'll take revenge for you. Juncea will also become a traitor.";
-		npctalk "No, nephew?", "Lazy#i19ms00", bc_self;
+		mes "Oh, how about this? Does Bagot have any sentinment? We'll take that revenge for you. You, Juncea will be a traitor to them.";
+		npctalk "No, is this really your nephew?", "Lazy#i19ms00", bc_self;
 		next;
 		cutin "ep19_juncea02.png",0;
 		mes "[Juncea]";
-		mes "Vengeance... Traitor... I like it. Traitor... I was betrayed, what can I not betray?";
-		npctalk "But it would be difficult to betray us too.", "Lazy#i19ms00", bc_self;
+		mes "Revenge... traitor... I like it. Traitor... I've been betrayed, why can't I betray them?";
+		npctalk "But it won't be good if you betray us.", "Lazy#i19ms00", bc_self;
 		next;
 		cutin "ep19_juncea04.png",0;
 		mes "[Juncea]";
-		mes "Okay. Now, what do you want to know?";
+		mes "Okay. Now, what are you curious about?";
 		next;
 		cutin "ep19_leizi01.png",1;
 		mes "[Lazy]";
-		mes "How strong is the Jormungand Church?";
+		mes "How powerful is the Jormungandr Church?";
 		next;
 		cutin "ep19_juncea04.png",0;
 		mes "[Juncea]";
-		mes "As you have seen, they are numerous, and as long as there is blood and time, they can create infinitely.";
+		mes "As you may have seen, they are numerous and can create theirselves indefinitely, as long as they have blood and time.";
 		next;
 		cutin "ep19_juncea01.png",0;
 		mes "[Juncea]";
-		mes "However, it requires magical power to hatch and gain power, but the source of magic ^0000cd Jormungand's main body ^000000 has almost run out of magic, so the future prospects are not good.";
+		mes "However, it needs mana to make it hatch and gain power, but the source of their mana, ^0000CDJormungandr's main body^000000 is running out of mana, so the future is not looking good for them.";
 		next;
 		cutin "ep19_leizi03.png",1;
 		mes "[Lazy]";
-		mes "The body of Jormungand?";
+		mes "The main body of Jormungandr?";
 		next;
 		cutin "ep19_juncea01.png",0;
 		mes "[Juncea]";
-		mes "The main body is the place that Rgan made a base for. Although it is a corpse, the residual magical power was considerable.";
-		mes "But the remaining magical power is finite, but since I've been eating it for a long time, there's almost nothing left.";
+		mes "The main body is where the Rgan made their base. That place is a body, it got a lot of residual mana.";
+		mes "But the remaining mana is not infinite, there is only a little left since they've been using it for a long time.";
 		next;
 		cutin "ep19_vellgunde01.png",2;
 		mes "[Vellgunde]";
-		mes "Rasgand must have been very nervous.";
-		mes "That's why you reached out to the continent and joined hands with Illusion?";
+		mes "Lasgand must have been worried about it.";
+		mes "Is that why he reached out of the continent and joined hands with the Illusion?";
 		next;
-		select( "How is the power?" );
+		select( "How is their power?" );
 		cutin "ep19_juncea01.png",0;
 		mes "[Juncea]";
-		mes "As you can see, the upper class and higher class Rgan are strong. When they had abundant mana in the beginning, they absorbed a lot of mana and grew up.";
-		mes "But, not to the point that you can't deal with it.";
+		mes "As you saw, the senior and superior Rgans are strong. They already had lots of mana from the beginning, but grew even more by absorbing a lot of it.";
+		mes "But, not to the point that you won't be able to deal with it.";
 		next;
 		cutin "ep19_juncea04.png",0;
 		mes "[Juncea]";
-		mes "How many are the highest grades?no. Besides, it's almost out of magic, so if you have enough time here, there's a possibility. But beware of Rasgand.";
+		mes "There aren't many superior ones. Besides, their mana is almost dry, so it's possible if we have enough time. Lasgand is the only one we should watch for.";
 		next;
 		cutin "ep19_juncea01.png",0;
 		mes "[Juncea]";
-		mes "As much as a survivor, the magic power is enormous. The magic power absorbed by living for a long time must not be too great.";
-		mes "All superlative rgans are born of his blood.";
+		mes "Lasgand is a long time survivor, he must have a lot of mana. I'm sure the mana he absorbed all his life is not easy to handle.";
+		mes "That's why all the superior Rgans was born from the blood he sowed.";
 		next;
 		cutin "ep19_juncea04.png",0;
 		mes "[Juncea]";
-		mes "Actually, I don't know much about him. He wanted to study it, but he doesn't let him touch his body.";
+		mes "I don't know much about him actually. I wanted to study him before, but I wasn't allowed to touch the bodies.";
 		next;
 		cutin "ep19_vellgunde02.png",2;
 		mes "[Vellgunde]";
-		mes "Hmm, Rasgand is the variable. He is the last survivor... ^0000cd He is also the one who cursed the royal family ^000000. Such a person holds hands with Illusion and even has a favourite." ;
+		mes "Hm, Lasgand is the key. The final survivor...... the one who put the curse on the ^0000CDroyal families^000000. To think that such a thing would cooperate with the Illusions, and even favors them.";
 		next;
 		cutin "ep19_vellgunde01.png",2;
 		mes "[Vellgunde]";
-		mes "What did he ask of Illusion? I heard he worked on magic amplification?";
+		mes "What did he ask from the Illusions? I heard that you studied the amplification of the remaining mana?";
 		next;
 		cutin "ep19_juncea01.png",0;
 		mes "[Juncea]";
-		mes "I studied Jormungand's body and its magical powers.";
-		mes "If the corpse can hold magic power for a long time, then it can hold it for a little longer.";
+		mes "What I studied was the body of Jormungandr and it's mana.";
+		mes "If it was able to contain such mana for a long time, it can contain it for more longer.";
 		next;
 		cutin "ep19_leizi03.png",1;
 		mes "[Lazy]";
-		mes "So Ras Gand gave full support. But he lost the chance to Bagot.";
-		mes "What did Bagot offer?";
+		mes "That's why Lasgand gave full support. But, Bagot took the opportunity away.";
+		mes "What did he offer?";
 		next;
 		cutin "ep19_juncea03.png",0;
 		mes "[Juncea]";
-		mes "Probably... the resurrection of Jormungand.";
+		mes "Perhaps... the resurrection of Jormungandr.";
 		npctalk "Resurrection...!", "Lazy#i19ms00", bc_self;
-		npctalk "Resurrection?? Does that make sense?", "Lehar#i19ms00", bc_self;
-		npctalk "Yeah, I did...", "Vellgunde#i19ms00", bc_self;
+		npctalk "Resurrection?? Does that make any sense?", "Lehar#i19ms00", bc_self;
+		npctalk "As expected, I see...", "Vellgunde#i19ms00", bc_self;
 		npctalk "...!!!", "Horuru#i19ms00", bc_self;
 		next;
 		cutin "ep19_juncea01.png",0;
 		mes "[Juncea]";
-		mes "What he was interested in. And it's easy to guess what he did to me.";
-		mes "With the rest of the body and the heart of Ymir, I will try to resurrect ^0000cd Jormungand^000000, or even try to reproduce the deity of ^0000cd Jormungand^000000.";
+		mes "Their interest. It's easy to predict it if you think about what they did to me.";
+		mes "Wi the remaining body and the Heart of Ymir, they might be able to ^0000cdressurect Jormungandr^000000 or if it fails, he'll ^0000CDrecreate the deity Jormungandr^000000.";
 		next;
-		select( "Thinking about what happened at Arunafelz..." );
+		select( "If you think about what happened in Arunafeltz..." );
 		cutin "ep19_juncea03.png",0;
 		mes "[Juncea]";
-		mes "I don't know how complete Bagot's experiments are, but they've made great progress... they're probably near completion.";
+		mes "I don't know how complete Bagot's experiment is, but it's making a lot of progress... it's probably on the verge of completion.";
 		next;
 		cutin "ep19_leizi03.png",1;
 		mes "[Lazy]";
-		mes "The resurrection of Jormungand... Just thinking about it makes me want to faint.";
+		mes "The resurrection of Jormungandr...... just the tought of it is enough to make me faint.";
 		next;
 		cutin "ep18_miriam_01.png",1;
 		mes "[Miriam]";
-		mes "Wait, even if Rasgand is like that, what does Bagot gain from doing that?";
+		mes "Wait, what will Bagot get from Lasgand for doing that?";
 		next;
 		cutin "ep19_juncea04.png",0;
 		mes "[Juncea]";
-		mes "He is crazy about the research he wants to do.";
-		mes "Putting the Absolute under his control, he will do what he wants to do. That is in line with Ras Gand's desire.";
+		mes "He's crazy, the research itself is what he wants to do.";
+		mes "He'll do whatever he needs to just to get it absolutely in his hands. And it just happened to match Lasgand's desire.";
 		next;
 		cutin "ep19_vellgunde03.png",2;
 		mes "[Vellgunde]";
-		mes "If it resurrects under their hands, the continent will once again be in great danger.";
-		npctalk "You don't have time to think!!!", "Lehar#i19ms00", bc_self;
+		mes "If it resurrected under their hands, The continent will once again be in a big crisis.";
+		npctalk "We don't have much time as you think!!!", "Lehar#i19ms00", bc_self;
 		next;
 		cutin "ep19_leizi03.png",1;
 		mes "[Lazy]";
-		mes "I'm going to start planning right now. Now, tell me everything you know about Snake's Nest.";
+		mes "We're going to have to make a plan right now. Now, tell me everything you know about the snake's nest.";
 		next;
 		cutin "ep19_juncea01.png",0;
 		mes "[Juncea]";
-		mes "As far as I know, there is only one entrance. All you have to do is to occupy the area with the lower ranks first, then block the middle passage.";
-		mes "Then you won't be able to go astray, so you'll either get out through the entrance of the secret passage or dig in the ground.";
+		mes "As far as I know there's only one entrance. We need to preempt the area where the low-grade Rgans are located, and then block the middle passage.";
+		mes "They'll be stranded with that, so they'll either come out through secret passages or dig the ground.";
 		next;
 		cutin "ep19_iwin06.png",2;
 		mes "[Horuru]";
-		mes "You can besiege around and attack those who come out.";
+		mes "We can surround the place and attack those who comes out.";
 		next;
 		cutin "ep19_juncea01.png",0;
 		mes "[Juncea]";
-		mes "Utilize the scrolls you have. It's the same Rgan, so you're going to get caught.";
+		mes "Use the scrolls that you have. I'm sure they'll be careless if you're the same Rgan as them.";
 		next;
 		cutin "ep19_leizi01.png",1;
 		mes "[Lazy]";
-		mes "Oh, is this the taste of betrayal you want?";
+		mes "Oh, is this the taste of betrayal that you want?";
 		next;
 		cloakoffnpcself( "Aurelie#i19ms00" );
-		sleep2 500;
 		cloakoffnpcself( "Iwin#i19ms00" );
 		cutin "ep19_aurelie03.png",2;
 		mes "[Aurelie]";
-		mes "Everyone was here. Is that...?";
+		mes "Everyone is here. Who...?";
 		next;
 		cutin "ep19_leizi01.png",1;
 		mes "[Lazy]";
-		mes "Criminals captured by adventurers.";
+		mes "It's a criminal captured by the adventurer.";
 		next;
 		cutin "ep19_vellgunde01.png",2;
 		mes "[Vellgunde]";
-		mes "What's going on?";
+		mes "What's the matter?";
 		erasequest 17642;
 		setquest 17643;
 		ep19_main = 55;
@@ -7280,16 +7278,19 @@ icas_in,243,120,5	script(CLOAKED)	Juncea#i19ms02	4_EP19_JUNCEA,{
 	if (ep19_main == 55) {
 		cutin "ep19_juncea04.png",0;
 		mes "[Juncea]";
-		mes "What kind of meeting place is this? Why are you so crowded in such a small place?";
+		mes "What kind of a meeting place is this? Why are you gathering in such a small place?";
 		close3;
 	}
 	if (ep19_main == 56) {
 		cutin "ep19_juncea01.png",0;
 		mes "[Juncea]";
-		mes "Don't forget the transformation scroll when you go to the snake's lair... ...and show me later.";
+		mes "Don't forget the transformation scroll when you into the snake's nest. ...and don't forget to show it to me later.";
 		close3;
 	}
-	end;
+	cutin "ep19_juncea03.png",0;
+	mes "[Juncea]";
+	mes "Are you here to interrogate me? Don't touch me. I went too far and I'm not in a shape to do anything right now. Please let me take a little break.";
+	close3;
 
 OnInit:
 	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(17642) == 1" );
@@ -7299,41 +7300,38 @@ OnInit:
 
 // Main Quest: Step 65
 icas_in,247,113,1	script(CLOAKED)	Iwin#i19ms00	4_EP19_IWIN,{
-	if (ep19_main == 55) {
-		cutin "ep19_iwin02.png",2;
-		mes "[Iwin]";
-		mes "Something seems to have happened!";
-		close3;
-	}
-	end;
+	cutin "ep19_iwin02.png",2;
+	mes "[Iwin]";
+	mes "It seems that something strange has occured!";
+	close3;
 }
 
 icas_in,249,113,3	script(CLOAKED)	Aurelie#i19ms00	4_EP19_AURELIE,{
 	if (ep19_main == 55) {
 		cutin "ep19_aurelie03.png",2;
 		mes "[Aurelie]";
-		mes "There have been reports from the reconnaissance team that the movements of the rgans are suspicious.";
+		mes "There have been reports from the reconnaissance unit about suspicious movements from the Rgans.";
 		next;
 		cutin "ep19_iwin02.png",2;
 		mes "[Iwin]";
-		mes "The Rgans are hurriedly moving somewhere.";
+		mes "The Rgans are rushing to somewhere";
 		next;
-		select( "Did any command pass?" );
+		select( "Did they get any orders?" );
 		cutin "ep19_aurelie03.png",2;
 		mes "[Aurelie]";
-		mes "It seems to be the case when you look at the movement. The senior rgans who were scouting outside said that they hurried back.";
+		mes "It seems so, judging from their movement. Even the senior Rgans who were scouting also went back.";
 		next;
 		cutin "ep19_leizi03.png",1;
 		mes "[Lazy]";
-		mes "You don't know what happened? I think now is the right time for us to move. This has to go now.";
+		mes "Does anyone know what's happening? I think now is the right time for us to move. We should go now.";
 		next;
 		cutin "ep19_iwin08.png",2;
 		mes "[Horuru]";
-		mes "Take advantage of the chaos to summon Chaos of Chaos. We need to find out quickly.";
+		mes "We need to take advantage of the confusion to bring chaos. We need to hurry and find out.";
 		next;
 		cutin "ep19_juncea04.png",0;
 		mes "[Juncea]";
-		mes "Scroll, don't forget. If they're all gone, no one will know your face, so it'll be useful.";
+		mes "The scroll, don't forget it. If they all gather, no one will know your faces, so it'll be useful.";
 		erasequest 17643;
 		setquest 17644;
 		ep19_main = 56;
@@ -7355,31 +7353,30 @@ OnInit:
 
 
 // Main Quest: Step 66
-jor_dun01,12,240,3	duplicate(dummy_cloaked_npc)	Iwin Reconnaissance Team#epm00	EP19_RGAN_D
+jor_dun01,12,240,3	duplicate(dummy_cloaked_npc)	Iwin Recon Unit#epm00	EP19_RGAN_D
 
 // jor_dun01,8,238,0	script	#to_jor_dun02_	WARPNPC,10,10,{
 jor_dun01,8,238,0	script	#to_jor_dun02	WARPNPC,1,1,{
 	end;
 OnTouch:
 	if (ep19_main >= 56 && ep19_main <= 60) {
-		cloakoffnpcself( "Iwin Reconnaissance Team#epm00" );
-		mes "[Iwin Search Party]";
-		mes "Adventurer! Are you entering now?";
-		mes "If you start a search operation now, you need to put all your efforts into it. The atmosphere over there is a bit chaotic.";
+		cloakoffnpcself( "Iwin Recon Unit#epm00" );
+		mes "[Iwin Recon Unit]";
+		mes "Adventurer! Are you entering?";
+		mes "If you start a search operation now, you'll have to put all your efforts into it. The atmosphere over there is bad.";
 		next;
-		mes "^FF0000¡Ø If you start a search operation, you cannot enter the existing Warmth of the Snake 2nd floor map until the operation is over.^000000";
+		mes "^FF0000¡Ø If you start a search operation, you will not be able to enter the existing 2nd floor map of the snake's nest until the operation is completed.^000000";
 		next;
-		if (select( "Enter now", "I need time to prepare." ) == 2) {
-			mes "[Iwin Search Party]";
-			mes "Yes. Then, be prepared before entering!";
+		if (select( "Enter now.", "I need to prepare." ) == 2) {
+			mes "[Iwin Recon Unit]";
+			mes "Okay. Then prepare and enter!";
 			close2;
-			cloakonnpcself( "Iwin Reconnaissance Team#epm00" );
+			cloakonnpcself( "Iwin Recon Unit#epm00" );
 			end;
 		}
-		mes "[Iwin Search Party]";
-		mes "Good luck!";
+		mes "[Iwin Recon Unit]";
+		mes "Goodluck!";
 		close2;
-		cloakonnpcself( "Iwin Reconnaissance Team#epm00" );
 		warp "jor_que",282,87;
 		end;
 	}
@@ -7396,40 +7393,43 @@ OnTouch:
 		cloakoffnpcself( "Miriam#i19ms11" );
 		cloakoffnpcself( "Lehar#i19ms11" );
 		cloakoffnpcself( "Lazy#i19ms11" );
-		cloakoffnpcself( "Iwin Scouting#i19ms12" );
-		cloakoffnpcself( "Iwin Scouting#i19ms13" );
-		cloakoffnpcself( "Iwin Scouting#i19ms14" );
+		cloakoffnpcself( "Iwin Recon#i19ms12" );
+		cloakoffnpcself( "Iwin Recon#i19ms13" );
+		cloakoffnpcself( "Iwin Recon#i19ms14" );
 		end;
 	}
 	end;
 }
 
 jor_que,273,85,1	script(CLOAKED)	Horuru#i19ms11	EP19_RGAN_D,{
-	npctalk "Let's hear what happened.", "", bc_self;
+	npctalk "Let's hear what they have to say.", "Horuru#i19ms11", bc_self;
 	end;
 }
 jor_que,273,89,3	script(CLOAKED)	Miriam#i19ms11	EP19_RGAN_D,{
-	npctalk "Something is strange. Why are there only low-intermediate ragans?", "", bc_self;
+	npctalk "There's something wrong. Why is there only intermediate Rgans?", "Miriam#i19ms11", bc_self;
 	end;
 }
 jor_que,274,86,1	script(CLOAKED)	Lehar#i19ms11	EP19_RGAN_D,{
-	npctalk "I can't get used to seeing this again.", "", bc_self;
+	npctalk "I can't get used to this place no matter how long I look.", "Lehar#i19ms11", bc_self;
+	end;
+}
+jor_que,270,86,7	script(CLOAKED)	Lazy#i19ms11	4_EP19_RGAN_SR3,{
+	npctalk "if I ever I'm in danger, you have to protect me adventurer.", "Lazy#i19ms11", bc_self;
 	end;
 }
 
-jor_que,270,86,7	duplicate(dummy_cloaked_npc)	Lazy#i19ms11	4_EP19_RGAN_SR3
-jor_que,268,87,5	duplicate(dummy_cloaked_npc)	Iwin Scouting#i19ms12	EP19_RGAN_D
-jor_que,276,90,3	duplicate(dummy_cloaked_npc)	Iwin Scouting#i19ms13	EP19_RGAN_D
-jor_que,277,86,1	duplicate(dummy_cloaked_npc)	Iwin Scouting#i19ms14	EP19_RGAN_D
+jor_que,268,87,5	duplicate(dummy_cloaked_npc)	Iwin Recon#i19ms12	EP19_RGAN_D
+jor_que,276,90,3	duplicate(dummy_cloaked_npc)	Iwin Recon#i19ms13	EP19_RGAN_D
+jor_que,277,86,1	duplicate(dummy_cloaked_npc)	Iwin Recon#i19ms14	EP19_RGAN_D
 
 
 // Main Quest: Step 67
-jor_que,271,84,7	duplicate(dummy_cloaked_npc)	Iwin Scouting#i19ms15	EP19_RGAN_D
-jor_que,270,83,7	duplicate(dummy_cloaked_npc)	human#i19ms91	4_F_BRZ_WOMAN
-jor_que,269,83,7	duplicate(dummy_cloaked_npc)	human#i19ms92	4_M_PHILMAN
-jor_que,268,84,7	duplicate(dummy_cloaked_npc)	human#i19ms93	4_F_CAPEGIRL
+jor_que,271,84,7	duplicate(dummy_cloaked_npc)	Iwin Recon#i19ms15	EP19_RGAN_D
+jor_que,270,83,7	duplicate(dummy_cloaked_npc)	Human#i19ms91	4_F_BRZ_WOMAN
+jor_que,269,83,7	duplicate(dummy_cloaked_npc)	Human#i19ms92	4_M_PHILMAN
+jor_que,268,84,7	duplicate(dummy_cloaked_npc)	Human#i19ms93	4_F_CAPEGIRL
 
-jor_que,271,88,5	script	Iwin Scouting#i19ms11	EP19_RGAN_D,5,5,{
+jor_que,271,88,5	script	Iwin Recon#i19ms11	EP19_RGAN_D,5,5,{
 	if (getstatus(SC_MONSTER_TRANSFORM,1) != 21530) {
 		mes "[Recon of Iwin]";
 		mes "Here, you have to transform into a Rgan and then go!";
@@ -7447,81 +7447,80 @@ jor_que,271,88,5	script	Iwin Scouting#i19ms11	EP19_RGAN_D,5,5,{
 	}
 	if (ep19_main == 56) {
 		mes "[Iwin]";
-		mes "Are you here!!";
+		mes "Welcome!!";
 		next;
 		mes "[Horuru]";
-		mes "What is the current situation?";
+		mes "What's the situation?";
 		next;
 		mes "[Iwin]";
-		mes "Rgans of advanced level or higher have moved to some place, and only intermediate level and lower level remain, making the atmosphere somewhat chaotic.";
+		mes "The higher grade Rgans moved somewhere and only the lesser and intermediate-grades remained, making it somewhat chaotic.";
 		next;
-		cloakoffnpcself( "Iwin Scouting#i19ms15" );
-		cloakoffnpcself( "human#i19ms91" );
-		cloakoffnpcself( "human#i19ms92" );
-		cloakoffnpcself( "human#i19ms93" );
-		mes "[Human trying to escape]";
-		mes "Let go of this! Let go!";
-		npctalk "Why are you so strong?", "human#i19ms91", bc_self;
+		cloakoffnpcself( "Iwin Recon#i19ms15" );
+		cloakoffnpcself( "Human#i19ms91" );
+		cloakoffnpcself( "Human#i19ms92" );
+		cloakoffnpcself( "Human#i19ms93" );
+		mes "[Escaping Human]";
+		mes "Let me go! Let go!";
+		npctalk "Why are you so strong?", "Human#i19ms91", bc_self;
 		next;
 		mes "[Horuru]";
-		mes "What are those people?";
+		mes "What are they?";
 		next;
 		mes "[Iwin]";
-		mes "These humans were trying to escape, so I brought them here because they looked dangerous.";
-		npctalk "That's why you should leave when you asked to leave!", "human#i19ms92", bc_self;
+		mes "They're humans trying to escape, they looked dangerous that's why I brought them here.";
+		npctalk "This is why I wished that I left much earlier!", "Human#i19ms92", bc_self;
 		next;
-		mes "[Human trying to escape]";
-		mes "I didn't mean to escape, but to go to the bathroom, the bathroom!";
+		mes "[Escaping Human]";
+		mes "I'm not trying to escape, I was, going to take a toilet break!";
 		next;
-		mes "[Human trying to escape]";
-		mes "We really don't know anything! They're all gone all of a sudden!";
-		npctalk "Will you wait patiently??", "human#i19ms93", bc_self;
-		next;
-		mes "[Horuru]";
-		mes "These people guide them out.";
-		npctalk "four!", "Iwin Scouting#i19ms15", bc_self;
-		npctalk "Where are you taking us!", "human#i19ms91", bc_self;
-		npctalk "Let go of this! Let go!!", "human#i19ms93", bc_self;
+		mes "[Escaping Human]";
+		mes "We really don't know anything! Everyone disappeared all of a sudden!";
+		npctalk "Didn't you said that we'd wait and see??", "Human#i19ms93", bc_self;
 		next;
 		mes "[Horuru]";
-		mes "Have you seen more humans besides them?";
-		cloakonnpcself( "Iwin Scouting#i19ms15" );
-		cloakonnpcself( "human#i19ms91" );
-		cloakonnpcself( "human#i19ms92" );
-		cloakonnpcself( "human#i19ms93" );
+		mes "Lead those humans outside.";
+		npctalk "Yes!", "Iwin Recon#i19ms15", bc_self;
+		npctalk "Where are you taking us!", "Human#i19ms91", bc_self;
+		npctalk "Let me go! Let go!!", "Human#i19ms93", bc_self;
+		next;
+		mes "[Horuru]";
+		mes "Did you see any more humans beside those people?";
+		cloakonnpcself( "Iwin Recon#i19ms15" );
+		cloakonnpcself( "Human#i19ms91" );
+		cloakonnpcself( "Human#i19ms92" );
+		cloakonnpcself( "Human#i19ms93" );
 		next;
 		mes "[Iwin]";
-		mes "Some of them got lost, so I led them out. Some of them seem to have escaped before we even got in.";
+		mes "Some of them were wandering, so guided them outside. Some of them sem to have escaped already before we even entered.";
 		next;
 		mes "[Horuru]";
-		mes "Where have all the Rgans gone?";
+		mes "Where did all the Rgans move?";
 		next;
 		mes "[Iwin]";
-		mes "That hasn't been revealed yet!";
+		mes "We haven't found out yet!";
 		next;
 		mes "[Miriam]";
-		mes "It's definitely strange. From what I've seen so far, even though there is a difference in status, it doesn't seem like there was an atmosphere where people gathered together.";
+		mes "It's definitely strange. From what I've seen so far, I don7t think there was a thing where they would gathered separetely even though there was differences in their grades.";
 		next;
 		mes "[Lehar]";
-		mes "I'm also concerned about the humans who were working. It's unlikely that they would have escaped safely from the chaos.";
+		mes "The humans who were working here is also worried. I don't think they would have escaped safely in a chaotic situation.";
 		next;
 		mes "[Lazy]";
-		mes "Then, it's better to split up and look at the situation. Those found during the search are sent here and taken out together.";
+		mes "Then, we'd better take a look at the situation separately. Those you found during the search sent them all outside.";
 		next;
 		mes "[Horuru]";
-		mes "One remains here, and the rest disperse and closely monitor the situation here.";
-		npctalk "four!", "", bc_self;
-		npctalk "four!", "Iwin Scouting#i19ms12", bc_self;
-		npctalk "four!", "Iwin Scouting#i19ms13", bc_self;
-		npctalk "four!", "Iwin Scouting#i19ms14", bc_self;
+		mes "One should stay here, and the rest should scatter and investigate the situation of this place.";
+		npctalk "Yes!", "Iwin Recon#i19ms11", bc_self;
+		npctalk "Yes!", "Iwin Recon#i19ms12", bc_self;
+		npctalk "Yes!", "Iwin Recon#i19ms13", bc_self;
+		npctalk "Yes!", "Iwin Recon#i19ms14", bc_self;
 		next;
 		cloakonnpcself( "Horuru#i19ms11" );
-		sleep2 500;
-		cloakonnpcself( "Iwin Scouting#i19ms12" );
-		cloakonnpcself( "Iwin Scouting#i19ms13" );
-		cloakonnpcself( "Iwin Scouting#i19ms14" );
+		cloakonnpcself( "Iwin Recon#i19ms12" );
+		cloakonnpcself( "Iwin Recon#i19ms13" );
+		cloakonnpcself( "Iwin Recon#i19ms14" );
 		mes "[Lehar]";
-		mes "First of all, we should go to the place where we were taken before. Humans may remain.";
+		mes "Let's go to the place where they brought us before first. There might still be some humans there.";
 		erasequest 17644;
 		setquest 17645;
 		add_reputation_points( REPUTATION_EP19, 25 );
@@ -7536,7 +7535,7 @@ jor_que,271,88,5	script	Iwin Scouting#i19ms11	EP19_RGAN_D,5,5,{
 	}
 	if (ep19_main == 57) {
 		mes "[Iwin]";
-		mes "I think we should look into the situation a bit more! I saw traces from the inside!";
+		mes "I think we need to take a closer look at the situation in this place! I saw a trail in there!";
 		close;
 	}
 	mes "[Iwin]";
@@ -7553,48 +7552,48 @@ OnInit:
 
 
 // Misc event 1
-jor_que,277,34,3	duplicate(dummy_npc)	human#i19ms100	4_M_REPAIR
-jor_que,276,33,7	duplicate(dummy_npc)	human#i19ms101	4_M_REPAIR
+jor_que,277,34,3	duplicate(dummy_npc)	Human#i19ms100	4_M_REPAIR
+jor_que,276,33,7	duplicate(dummy_npc)	Human#i19ms101	4_M_REPAIR
 jor_que,271,34,5	duplicate(dummy_cloaked_npc)	Iwin#i19ms100	EP19_RGAN_D
 
 jor_que,271,34,0	script	#i19ms100	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch:
-	cloakonnpcself();	// (custom) officially the event can be re-triggered while the npcs are cloaked
 	setpcblock PCBLOCK_NPC, true;
-	npctalk "Why... the watch is gone? Is it shift time?", "human#i19ms100", bc_self;
-	sleep2 1500;
-	npctalk "It's been a while since I switched. Isn't that a trap? You want to punish us if we move?", "human#i19ms101", bc_self;
-	sleep2 500;
-	npctalk "Why would we go through such trouble?", "human#i19ms100", bc_self;
+	cloakoffnpcself( "Human#i19ms100" );
+	cloakoffnpcself( "Human#i19ms101" );
+	npctalk "Why... is the surveillance gone? Is it time for work?", "Human#i19ms100", bc_self;
 	sleep2 1000;
-	npctalk "You may be trying to get in the way. You won't even dare to run away.", "human#i19ms101", bc_self;
-	sleep2 500;
+	npctalk "It hasn't been long since we ended our turn. Is this a trap? Will they punish us if we move?", "Human#i19ms101", bc_self;
+	sleep2 2500;
+	npctalk "Why would they go for such a trouble?", "Human#i19ms100", bc_self;
+	npctalk "Maybe they're trying to get rid of us. I won't even dare run away.", "Human#i19ms101", bc_self;
 	cloakoffnpcself( "Iwin#i19ms100" );
-	sleep2 500;
-	npctalk "I was here too! Everyone! Let's get out of here!", "Iwin#i19ms100", bc_self;
+	sleep2 1000;
+	npctalk "There's one here! Everyone! Let's get out of here!", "Iwin#i19ms100", bc_self;
 	sleep2 1500;
-	npctalk "What, what? Why?", "human#i19ms100", bc_self;
-	npctalk "Look at this!!! It's a trap!", "human#i19ms101", bc_self;
+	npctalk "Eh, what? Why?", "Human#i19ms100", bc_self;
+	npctalk "I knew it!!! This is a trap!", "Human#i19ms101", bc_self;
 	sleep2 1500;
-	npctalk "You are now free. Let's go.", "Iwin#i19ms100", bc_self;
+	npctalk "You are free now. Let's get out of here.", "Iwin#i19ms100", bc_self;
 	sleep2 1500;
-	npctalk "I don't know what it is, but I'll get out of here! Even if it's a trap!", "human#i19ms100", bc_self;
+	npctalk "I don't know what's happening but I'm out of here! Even if it's a trap!", "Human#i19ms100", bc_self;
 	sleep2 500;
-	cloakonnpcself( "human#i19ms100" );
+	cloakonnpcself( "Human#i19ms100" );
 	sleep2 500;
-	npctalk "Teacher has to go too. I don't have time for this.", "Iwin#i19ms100", bc_self;
-	npctalk "Era I don't know!!", "human#i19ms101", bc_self;
-	cloakonnpcself( "human#i19ms101" );
+	npctalk "You should go now. We don't have much time.", "Iwin#i19ms100", bc_self;
+	npctalk "Argh, whatever!!", "Human#i19ms101", bc_self;
 	sleep2 500;
-	cloakonnpcself( "Iwin#i19ms100" );
+	cloakonnpcself( "Human#i19ms101" );
+	sleep2 500;
 	setpcblock PCBLOCK_NPC, false;
+	cloakonnpcself( "Iwin#i19ms100" );
 	end;
 }
 
 
 // Misc event 2
-jor_que,125,41,5	duplicate(dummy_npc)	human#i19ms106	4_M_MASKMAN
+jor_que,125,41,5	duplicate(dummy_npc)	Human#i19ms106	4_M_MASKMAN
 jor_que,121,39,7	duplicate(dummy_cloaked_npc)	Iwin#i19ms104	EP19_RGAN_D
 
 jor_que,121,39,0	script	#i19ms104	HIDDEN_WARP_NPC,5,5,{
@@ -7602,98 +7601,101 @@ jor_que,121,39,0	script	#i19ms104	HIDDEN_WARP_NPC,5,5,{
 OnTouch:
 	cloakonnpcself();
 	setpcblock PCBLOCK_NPC, true;
-	npctalk "I hear footsteps... Please just pass by... How did you get here...", "human#i19ms106", bc_self;
+	cloakoffnpcself( "Human#i19ms106" );
+	npctalk "I can hear footsteps... Please just walk by... How did you get here...", "Human#i19ms106", bc_self;
 	sleep2 1000;
 	cloakoffnpcself( "Iwin#i19ms104" );
-	npctalk "You've been hiding here! Anyone else?", "Iwin#i19ms104", bc_self;
+	npctalk "Someone is hiding here! Is there anyone else?", "Iwin#i19ms104", bc_self;
 	sleep2 1500;
-	npctalk "Mom... I was wrong. I don't want to be punished. I don't want to die. Please, take a look.", "human#i19ms106", bc_self;
+	npctalk "Oh... sorry. I don't want to be punished. I don't want to die. Please, forgive me.", "Human#i19ms106", bc_self;
 	sleep2 1500;
-	npctalk "This is so... This is why I didn't want to go around like this. Sir, I'm Rgan and Iwin.", "Iwin#i19ms104", bc_self;
+	npctalk "Sigh... this is why I don't want to look like this. Human, I'm not a Rgan but an Iwin.", "Iwin#i19ms104", bc_self;
 	sleep2 1500;
-	npctalk "It won't hurt you, so go out with me. There's a safe place.", "Iwin#i19ms104", bc_self;
+	npctalk "Go outside with me, I won't hurt you. There's a safe place there.", "Iwin#i19ms104", bc_self;
 	sleep2 1500;
-	npctalk "How can you believe that...", "human#i19ms106", bc_self;
+	npctalk "How can I believe that...", "Human#i19ms106", bc_self;
 	sleep2 1500;
-	npctalk "Child, if you don't go now, you're in trouble.", "Iwin#i19ms104", bc_self;
+	npctalk "Oh, sigh... we'll be in big trouble if we don't go now.", "Iwin#i19ms104", bc_self;
 	sleep2 1500;
-	npctalk "What a big deal... If you die like this and die like that... Black...", "human#i19ms106", bc_self;
+	npctalk "Why is it important... Will I die just like this... No...", "Human#i19ms106", bc_self;
 	sleep2 1500;
-	npctalk "Let's go", "Iwin#i19ms104", bc_self;
+	npctalk "Let's go.", "Iwin#i19ms104", bc_self;
+	sleep2 500;
+	cloakonnpcself( "Human#i19ms106" );
 	cloakonnpcself( "Iwin#i19ms104" );
-	cloakonnpcself( "human#i19ms106" );
 	setpcblock PCBLOCK_NPC, false;
 	end;
 }
 
 
 // Misc event 3
-jor_que,183,272,5	duplicate(dummy_npc)	human#i19ms105	4_M_SITDOWN
+jor_que,183,272,5	duplicate(dummy_npc)	Human#i19ms105	4_M_SITDOWN
 jor_que,187,269,1	duplicate(dummy_cloaked_npc)	Iwin#i19ms103	EP19_RGAN_D
 
 jor_que,187,269,0	script	#i19ms103	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch:
-	cloakonnpcself();
 	setpcblock PCBLOCK_NPC, true;
-	npctalk "If I go out now, would it be hard? I'll go out secretly when it calms down a bit.", "human#i19ms105", bc_self;
+	cloakoffnpcself( "Human#i19ms105" );
+	npctalk "Won't it be hard if I go out now? I'll sneak out when everything calms down.", "Human#i19ms105", bc_self;
 	cloakoffnpcself( "Iwin#i19ms103" );
 	sleep2 1000;
-	npctalk "Here's another one...! Sir, you have to leave now.", "Iwin#i19ms103", bc_self;
+	npctalk "Here's another one...! Human, you have to leave now.", "Iwin#i19ms103", bc_self;
 	sleep2 1500;
-	npctalk "What, what? What is Intermediate Rgan so polite?", "human#i19ms105", bc_self;
+	npctalk "What, what? Why is an intermediate Rgan is so polite?", "Human#i19ms105", bc_self;
 	sleep2 1500;
-	npctalk "I'm not a ragan. I'll explain the situation as we go, so we have to leave now.", "Iwin#i19ms103", bc_self;
+	npctalk "I'm not a Rgan. We have to go out for now, I'll explain the situation as we go.", "Iwin#i19ms103", bc_self;
 	sleep2 1500;
-	npctalk "I'll drive you to a safe place.", "Iwin#i19ms103", bc_self;
+	npctalk "I'll take you to a safe place.", "Iwin#i19ms103", bc_self;
 	sleep2 1500;
-	npctalk "I don't know what it is, but if you deceive me, I won't stand still!", "human#i19ms105", bc_self;
+	npctalk "I don't know what's happening, but I found out your lying to me, I won't stay still!", "Human#i19ms105", bc_self;
 	sleep2 1500;
-	npctalk "Yes, yes. Pack everything. Let's go.", "Iwin#i19ms103", bc_self;
-	sleep2 1000;
+	npctalk "Yes, yes. Make sure to bring your belongings. Let's go.", "Iwin#i19ms103", bc_self;
+	sleep2 500;
 	cloakonnpcself( "Iwin#i19ms103" );
-	cloakonnpcself( "human#i19ms105" );
+	cloakonnpcself( "Human#i19ms105" );
 	setpcblock PCBLOCK_NPC, false;
 	end;
 }
 
 
 // Misc event 4
-jor_que,227,277,3	duplicate(dummy_npc)	human#i19ms103	4_M_TELEPORTER
-jor_que,223,277,3	duplicate(dummy_npc)	human#i19ms104	4_M_ORIENT02
+jor_que,227,277,3	duplicate(dummy_npc)	Human#i19ms103	4_M_TELEPORTER
+jor_que,223,277,3	duplicate(dummy_npc)	Human#i19ms104	4_M_ORIENT02
 jor_que,222,275,7	duplicate(dummy_cloaked_npc)	Iwin#i19ms102	EP19_RGAN_D
 
 jor_que,222,275,0	script	#i19ms102	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch:
-	cloakonnpcself();
 	setpcblock PCBLOCK_NPC, true;
-	npctalk "Did you really go?", "human#i19ms104", bc_self;
+	cloakoffnpcself( "Human#i19ms103" );
+	cloakoffnpcself( "Human#i19ms104" );
+	npctalk "Are they really gone?", "Human#i19ms104", bc_self;
 	sleep2 1000;
-	npctalk "I'll come and see you.", "human#i19ms103", bc_self;
-	npctalk "Careful...", "human#i19ms104", bc_self;
+	npctalk "I'll go and take a look.", "Human#i19ms103", bc_self;
+	sleep2 500;
+	npctalk "Be careful...", "Human#i19ms104", bc_self;
 	sleep2 1000;
 	cloakoffnpcself( "Iwin#i19ms102" );
-	npctalk "Only the two of you? By the way, I'm not Rgan! I'm Iwin in disguise!", "Iwin#i19ms102", bc_self;
+	npctalk "Are there only the two of you? And I'm not a Rgan! I'm an Iwin in a disguise!", "Iwin#i19ms102", bc_self;
 	sleep2 1500;
-	npctalk "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa!!!!!!!!!!", "human#i19ms104", bc_self;
+	npctalk "Ahhhhhhhh!!!!!!!!!!", "Human#i19ms104", bc_self;
+	npctalk "Please be quiet. This is a surprise.", "Human#i19ms103", bc_self;
+	sleep2 1500;
+	npctalk "Does that mean, we can leave this place now?", "Human#i19ms103", bc_self;
+	sleep2 1500;
+	npctalk "Yes, please follow me. I'll take you somewhere safe.", "Iwin#i19ms102", bc_self;
+	sleep2 1500;
+	npctalk "Hey, let's go. This is our chance.", "Human#i19ms103", bc_self;
 	sleep2 500;
-	npctalk "Be quiet. Surprise.", "human#i19ms103", bc_self;
-	sleep2 1000;
-	npctalk "That means we can get out of here now?", "human#i19ms103", bc_self;
+	cloakonnpcself( "Human#i19ms103" );
+	npctalk "Hey! Don't just go following someone you don't know...!", "Human#i19ms104", bc_self;
 	sleep2 1500;
-	npctalk "Yes, follow me. I will take you to safety.", "Iwin#i19ms102", bc_self;
+	npctalk "I'm telling the truth.", "Iwin#i19ms102", bc_self;
 	sleep2 1500;
-	npctalk "Hey, let's go. Now is your chance.", "human#i19ms103", bc_self;
+	npctalk "Even if you say that...", "Human#i19ms104", bc_self;
 	sleep2 500;
-	cloakonnpcself( "human#i19ms103" );
-	npctalk "Hey! If you just follow someone you don't know...!", "human#i19ms104", bc_self;
-	sleep2 1000;
-	npctalk "Believe it is true", "Iwin#i19ms102", bc_self;
-	sleep2 1500;
-	npctalk "If you say so...", "human#i19ms104", bc_self;
-	sleep2 500;
-	cloakonnpcself( "human#i19ms104" );
+	cloakonnpcself( "Human#i19ms104" );
 	cloakonnpcself( "Iwin#i19ms102" );
 	setpcblock PCBLOCK_NPC, false;
 	end;
@@ -7701,83 +7703,84 @@ OnTouch:
 
 
 // Misc event 5
-jor_que,252,244,7	duplicate(dummy_npc)	human#i19ms102	4_M_ALCHE_A
+jor_que,252,244,7	duplicate(dummy_npc)	Human#i19ms102	4_M_ALCHE_A
 jor_que,255,240,1	duplicate(dummy_cloaked_npc)	Iwin#i19ms101	EP19_RGAN_D
 
 jor_que,255,240,0	script	#i19ms101	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch:
-	cloakonnpcself();
+	cloakoffnpcself( "Human#i19ms102" );
 	setpcblock PCBLOCK_NPC, true;
-	npctalk "Ugh... get out? Don't you? Why are surveillance disappearing and people's hearts shake...", "human#i19ms102", bc_self;
+	npctalk "Should... I go out? Or not? Why is the surveillance gone, it's making me anxious...", "Human#i19ms102", bc_self;
 	sleep2 1500;
 	cloakoffnpcself( "Iwin#i19ms101" );
-	npctalk "Teacher, are you alone?", "Iwin#i19ms101", bc_self;
+	npctalk "Human, are you alone?", "Iwin#i19ms101", bc_self;
 	sleep2 1500;
-	npctalk "Aww!!! Me,I never thought of leaving!", "human#i19ms102", bc_self;
+	npctalk "Ahh!!! No, I never even thought about going out!", "Human#i19ms102", bc_self;
 	sleep2 1500;
-	npctalk "You must leave when there is no monitoring. If there are no more parties, then leave now.", "Iwin#i19ms101", bc_self;
+	npctalk "You have to leave now when there is no surveillance. If there's no other person with you then let's go out now.", "Iwin#i19ms101", bc_self;
 	sleep2 1500;
-	npctalk "Why all of a sudden...?", "human#i19ms102", bc_self;
+	npctalk "Why all of a sudden...?", "Human#i19ms102", bc_self;
 	sleep2 1500;
-	npctalk "We're rescuing the humans here. Let's go out and talk about it.", "Iwin#i19ms101", bc_self;
+	npctalk "We're rescuing all the humans here. Let's go out and talk about the details later.", "Iwin#i19ms101", bc_self;
 	sleep2 1500;
-	npctalk "That's right!!! I'm the only one, so I can leave like this!", "human#i19ms102", bc_self;
-	cloakonnpcself( "Iwin#i19ms101" );
-	cloakonnpcself( "human#i19ms102" );
+	npctalk "Let's do that!!! It's just me here, so we can leave now!", "Human#i19ms102", bc_self;
+	sleep2 500;
 	setpcblock PCBLOCK_NPC, false;
+	cloakonnpcself( "Iwin#i19ms101" );
+	cloakonnpcself( "Human#i19ms102" );
 	end;
 }
 
 
 // Misc
 jor_que,67,168,5	script	Rgan#i19ms100	EP19_RGAN_D,{
-	npctalk "I should report that I'm done... Where have you been...?", "", bc_self;
+	npctalk "I was about to report that my work is done... Where did everyone go...?", "Rgan#i19ms100", bc_self;
 	end;
 }
 
 jor_que,156,191,3	script	Rgan#i19ms101	EP19_RGAN_D,{
-	npctalk "Wow... everyone is busy... getting dizzy.", "", bc_self;
+	npctalk "Woah... Everyone's busy... I'm getting dizzy.", "Rgan#i19ms101", bc_self;
 	end;
 }
 
 jor_que,204,237,3	script	Rgan#i19ms102	EP19_RGAN_D,{
-	npctalk "Honor... Min. Audi... Go...?", "", bc_self;
+	npctalk "Great... one. Where... they go...?", "Rgan#i19ms102", bc_self;
 	end;
 }
 
 jor_que,81,77,5	script	Rgan#i19ms103	EP19_RGAN_D,{
-	npctalk "Those who honored you... Come here with me... If you go, things will get better---", "", bc_self;
+	npctalk "You're... a priest... here with me... I'd better go---", "Rgan#i19ms103", bc_self;
 	end;
 }
 
 jor_que,208,140,1	script	Rgan#i19ms104	EP19_RGAN_D,{
-	npctalk "Aren't you eating today?", "", bc_self;
+	npctalk "Is there no food today?", "Rgan#i19ms104", bc_self;
 	end;
 }
 
 jor_que,184,184,7	script	Rgan#i19ms105	EP19_RGAN_D,{
-	npctalk "Why are you quiet? Why are you quiet today? Are you quiet? Why are you quiet?", "", bc_self;
+	npctalk "Why is it quiet? Why is it quiet today? Is it quiet? Why is it quiet?", "Rgan#i19ms105", bc_self;
 	end;
 }
 
 jor_que,128,81,7	script	Rgan#i19ms106	EP19_RGAN_D,{
-	npctalk "The eggs are growing well. I'm glad I didn't get attacked. Grow well.", "", bc_self;
+	npctalk "Grow well eggs. I'm glad it didn't get attacked. Grow well.", "Rgan#i19ms106", bc_self;
 	end;
 }
 
 jor_que,173,195,3	script	Rgan#i19ms107	EP19_RGAN_D,{
-	npctalk "It hurts... It hurts... I want to go out-", "", bc_self;
+	npctalk "Hurts.. it hurts... I want to go outside-", "Rgan#i19ms107", bc_self;
 	end;
 }
 
 jor_que,162,58,1	script	Rgan#i19ms108	EP19_RGAN_D,{
-	npctalk "I, I'm not playing. Really- true, true.", "", bc_self;
+	npctalk "Ah, I'm not playing. Really- I am, telling the truth.", "Rgan#i19ms108", bc_self;
 	end;
 }
 
 jor_que,159,105,3	script	Rgan#i19ms109	EP19_RGAN_D,{
-	npctalk "Aaaaaaaaaaaaaaaaaaaaaaaaaaaa!!!", "", bc_self;
+	npctalk "Aghhh!!! Save me!!!", "Rgan#i19ms109", bc_self;
 	end;
 }
 
@@ -7789,143 +7792,142 @@ OnTouch:
 	if (ep19_main == 57) {
 		cloakoffnpcself( "Lazy#i19ms12" );
 		cloakoffnpcself( "Miriam#i19ms12" );
-		cloakoffnpcself( "human#i19ms94" );
-		cloakoffnpcself( "human#i19ms95" );
-		cloakoffnpcself( "human#i19ms96" );
+		cloakoffnpcself( "Human#i19ms94" );
+		cloakoffnpcself( "Human#i19ms95" );
+		cloakoffnpcself( "Human#i19ms96" );
 		end;
 	}
 	end;
 }
 
 jor_que,139,257,5	duplicate(dummy_cloaked_npc)	Lazy#i19ms12	4_EP19_RGAN_SR3
-jor_que,134,257,5	duplicate(dummy_cloaked_npc)	human#i19ms94	4_F_04
-jor_que,136,254,5	duplicate(dummy_cloaked_npc)	human#i19ms95	4_M_LGTPOOR
-jor_que,140,253,5	duplicate(dummy_cloaked_npc)	human#i19ms96	4_M_02
+jor_que,134,257,5	duplicate(dummy_cloaked_npc)	Human#i19ms94	4_F_04
+jor_que,136,254,5	duplicate(dummy_cloaked_npc)	Human#i19ms95	4_M_LGTPOOR
+jor_que,140,253,5	duplicate(dummy_cloaked_npc)	Human#i19ms96	4_M_02
 
-jor_que,146,252,3	duplicate(dummy_cloaked_npc)	Rehar#i19ms12	EP19_RGAN_D
+jor_que,146,252,3	duplicate(dummy_cloaked_npc)	Lehar#i19ms12	EP19_RGAN_D
 jor_que,146,252,3	duplicate(dummy_cloaked_npc)	Lehar#i19ms13	4_EP19_LEHAR
 
 jor_que,144,253,3	script(CLOAKED)	Miriam#i19ms12	EP19_RGAN_D,{
 	if (ep19_main == 57) {
 		mes "[Miriam]";
-		mes "I thought the humans would have left everything behind";
+		mes "Just as I thought, they left behind all the humans";
 		next;
-		cloakoffnpcself( "Rehar#i19ms12" );
-		sleep2 500;
-		npctalk "I, true-", "Rehar#i19ms12", bc_self;
+		cloakoffnpcself( "Lehar#i19ms12" );
+		npctalk "I, checked-", "Lehar#i19ms12", bc_self;
 		next;
 		mes "[Lazy]";
 		mes "How about elsewhere?";
 		next;
 		mes "[Lehar]";
-		mes "The same goes for other places. You just left without taking any action. Did you move quickly?";
-		npctalk "I handed it over to Iwin passing by.", "Rehar#i19ms12", bc_self;
+		mes "The same goes for other places. They just left without doing anything. Did they move in a hurry?";
+		npctalk "I handed them to the Iwin who passed by.", "Lehar#i19ms12", bc_self;
 		next;
 		mes "[Lazy]";
-		mes "Now, teachers, let's go out now.";
+		mes "Now~ Everyone, let's get out of here.";
 		next;
-		emotion ET_CONFUSE, getnpcid(0,"human#i19ms94");
-		mes "[Man in labor]";
-		mes "Whamma! Sir, Priest to Bishop!";
+		emotion ET_CONFUSE, getnpcid(0,"Human#i19ms94");
+		mes "[Human Laborer]";
+		mes "No! It's, a priest and a bishop!";
 		next;
-		mes "[Man in labor]";
-		mes "We stayed quiet!";
-		npctalk "Really!", "human#i19ms95", bc_self;
+		mes "[Human Laborer]";
+		mes "We didn't leave our place and stayed quiet!";
+		npctalk "It's true!", "Human#i19ms95", bc_self;
 		next;
-		mes "[Man in labor]";
-		mes "Really! We were quiet when everyone left!";
-		npctalk "So bees please...", "human#i19ms96", bc_self;
+		mes "[Human Laborer]";
+		mes "I'm telling you the truth! We all stayed quiet when everyone left!";
+		npctalk "Don't punish me please...", "Human#i19ms96", bc_self;
 		next;
 		mes "[Lehar]";
-		mes "I'm not here to harm you, don't worry.";
+		mes "Don't worry, we're not here to hurt you.";
 		next;
-		mes "[Man in labor]";
-		mes "Hold on? I know that face, I used to work here...?";
+		mes "[Human Laborer]";
+		mes "What? I know that face, we used to work here together, right...?";
 		next;
 		mes "[Lehar]";
-		mes "Yes, that Rgan is me. Can you recognize me now?";
+		mes "Yes, Gregan is me. Do you understand now?";
 		next;
-		mes "[Man in labor]";
-		mes "Where did the Rgan guards at the entrance go?";
-		next;
-		mes "[Lazy]";
-		mes "That's what this person wants to ask.";
-		next;
-		mes "[Man in labor]";
-		mes "Well, all of a sudden the entrance is noisy, where is everyone going?";
-		next;
-		mes "[Man in labor]";
-		mes "Will you come back?";
+		mes "[Human Laborer]";
+		mes "Where did the Rgans who were guarding the entrance go?";
 		next;
 		mes "[Lazy]";
-		mes "I don't know if I'll come back, but it's not now.";
+		mes "That's actually what we want to ask you.";
+		next;
+		mes "[Human Laborer]";
+		mes "Well, the entrance was suddenly noisy, where did everyone go?";
+		next;
+		mes "[Human Laborer]";
+		mes "Are they coming back?";
+		next;
+		mes "[Lazy]";
+		mes "I don't know if they'll be back.";
 		next;
 		mes "[Miriam]";
-		mes "Why are you still here? The guard is gone.";
+		mes "Why are you still here? All the guards are gone.";
 		next;
-		mes "[Man in labor]";
-		mes "Oh, I don't know when it will come back...";
+		mes "[Human Laborer]";
+		mes "Oh, I don't know when they'll return...";
 		next;
-		mes "[Man in labor]";
-		mes "If you are caught while running away, you will face harsh conditions, so how can you act recklessly?";
+		mes "[Human Laborer]";
+		mes "If you get caught escaping, you'll be put in a dire situation.";
 		next;
-		mes "[Man in labor]";
-		mes "And there are so many scary ragans out there. So you'd better just wait here.";
+		mes "[Human Laborer]";
+		mes "And there are scary Rgans walking around outside. So we thought it would be better to wait here.";
 		next;
 		mes "[Miriam]";
-		mes "I'll drive you to the entrance.";
+		mes "I'll walk you to the entrance.";
 		next;
 		mes "[Lazy]";
-		mes "Teachers, are you listening? Just follow this guy. Then you'll be safe.";
+		mes "Everyone, did you hear that, just follow her. You'll be safe.";
 		next;
-		mes "[Man in labor]";
-		mes "But why is the ragan saving us?";
+		mes "[Human Laborer]";
+		mes "Why is a Rgan helping us?";
 		next;
 		mes "[Lehar]";
-		mes "Oh, that's! Actually, we are humans just like you. So don't worry.";
-		specialeffect EF_FOOD02, AREA, "Rehar#i19ms12";
-		npctalk "Now look.", "Rehar#i19ms12", bc_self;
-		cloakonnpcself( "Rehar#i19ms12" );
+		mes "Oh, about that! Actually, we're humans just like you. So don't worry.";
+		specialeffect EF_FOOD02, AREA, "Lehar#i19ms12";
+		cloakonnpcself( "Lehar#i19ms12" );
 		cloakoffnpcself( "Lehar#i19ms13" );
+		npctalk "Now, look.", "Lehar#i19ms12", bc_self;
 		next;
-		mes "[Man in labor]";
-		mes "Huh?? Really?";
-		npctalk "Is the human posing as a Rgan? Or did the Rgan pretending to be a human?", "human#i19ms96", bc_self;
-		npctalk "What's going on with this?", "human#i19ms94", bc_self;
+		mes "[Human Laborer]";
+		mes "Oh?? Am I imagining things?";
+		npctalk "Are you humans pretending as a Rgan? or a Rgan pretending as a human?", "Human#i19ms96", bc_self;
+		npctalk "This, what is going on?", "Human#i19ms94", bc_self;
 		next;
 		mes "[Lehar]";
-		mes "Are you relieved now? I'm doing this for a number of reasons, but I don't have time to explain, so please follow him and listen to what he has to say.";
+		mes "Will you believe us now? We're doing thos for various reasons, but we don't have the time to explain it now, so please just listen and follow her.";
 		next;
+		specialeffect EF_CHAINCOMBO, AREA, "Lehar#i19ms12";
 		cloakonnpcself( "Lehar#i19ms13" );
-		cloakoffnpcself( "Rehar#i19ms12" );
-		specialeffect EF_CHAINCOMBO, AREA, "Rehar#i19ms12";
-		mes "[Man in labor]";
-		mes "Is it really okay to go?";
-		npctalk "Okay~", "Rehar#i19ms12", bc_self;
-		npctalk "Really, really?", "human#i19ms96", bc_self;
+		cloakoffnpcself( "Lehar#i19ms12" );
+		mes "[Human Laborer]";
+		mes "Can we really go?";
+		npctalk "Of course~", "Lehar#i19ms12", bc_self;
+		npctalk "Really, really??", "Human#i19ms96", bc_self;
 		next;
-		mes "[Man in labor]";
-		mes "Oops, thank you, thank you";
-		npctalk "Because it's real. Have you been deceived every day?", "Lazy#i19ms12", bc_self;
-		npctalk "How did you know?", "human#i19ms95", bc_self;
+		mes "[Human Laborer]";
+		mes "Oh, Thank you, thank you.";
+		npctalk "I'm telling you the truth. Have you been deceived by them every single day?", "Lazy#i19ms12", bc_self;
+		npctalk "How do you know that?", "Human#i19ms95", bc_self;
 		next;
 		mes "[Lazy]";
-		mes "I'll go and meet Rasgand, so you guys take a look around here.";
+		mes "I'll go and find Lasgand, so you can go finish looking around here..";
 		next;
 		cloakonnpcself( "Lazy#i19ms12" );
 		mes "[Miriam]";
-		mes "Then I'll take care of them and join them right away. Now, shall we go?";
-		npctalk "Hey, can I really go out...?", "human#i19ms94", bc_self;
-		npctalk "Let's think about it as we go.", "human#i19ms96", bc_self;
+		mes "Then, I'll walk them off and join you back right away. Now, Shall we go?";
+		npctalk "Oh~ Can I really go out...?", "Human#i19ms94", bc_self;
+		npctalk "Let's think about it as we go.", "Human#i19ms96", bc_self;
 		erasequest 17645;
 		setquest 17646;
 		ep19_main = 58;
 		close2;
 		cloakonnpcself();
-		cloakonnpcself( "Rehar#i19ms12" );
-		cloakonnpcself( "human#i19ms94" );
-		cloakonnpcself( "human#i19ms95" );
-		cloakonnpcself( "human#i19ms96" );
+		cloakonnpcself( "Lehar#i19ms12" );
+		cloakonnpcself( "Human#i19ms94" );
+		cloakonnpcself( "Human#i19ms95" );
+		cloakonnpcself( "Human#i19ms96" );
 		end;
 	}
 	end;
@@ -7949,70 +7951,74 @@ jor_que,131,148,3	script	Intermediate Rgan#i19ms21	EP19_RGAN_D,5,5,{
 		close;
 	}
 	if (ep19_main == 58) {
+		cloakoffnpcself( "Horuru#i19ms31" );
+		cloakoffnpcself( "Iwin#i19ms31" );
+		cloakoffnpcself( "Iwin#i19ms32" );
+		cloakoffnpcself( "Iwin#i19ms33" );
 		mes "[Iwin]";
-		mes "Speak the right words!";
+		mes "Atleast say something!";
 		next;
 		mes "[Intermediate Rgan]";
-		mes "I have to work.";
+		mes "Have to work.";
 		next;
 		mes "[Horuru]";
-		mes "Where have you all gone? Senior ragans.";
+		mes "Where did everyone go? I mean the senior Rgans.";
 		next;
 		mes "[Intermediate Rgan]";
 		mes "You have to work too.";
 		next;
 		mes "[Iwin]";
-		mes "Oh, it's frustrating. Priest, Bishop! Where have you all gone?";
+		mes "Argh. The priests, the Bishops! Where did everyone go.";
 		next;
 		mes "[Intermediate Rgan]";
-		mes "We have to work";
+		mes "We have to work.";
 		next;
 		mes "[Iwin]";
-		mes "Yes, I will work, so just tell me. What did you all hear and where did you go?";
+		mes "Yeah, I'll work, so tell me. What did they say and where did they go.";
 		next;
 		mes "[Intermediate Rgan]";
-		mes "You can't play. You have to work.";
+		mes "Not allowed to play. Have to work.";
 		next;
 		mes "[Horuru]";
-		mes "It's awful, it's awful.";
-		npctalk "Literally a workworm, a workworm.", "Iwin#i19ms32", bc_self;
+		mes "This is just, terrible.";
+		npctalk "They're literally a work worms, working worms.", "Iwin#i19ms32", bc_self;
 		next;
-		select( "You are here" );
+		select( "You were here." );
 		mes "[Horuru]";
-		mes "Did you find anything? I've searched all over here, but there have been no rgans above the ranks left here.";
+		mes "Did you find anything? I've searched while on the way here, but there was no higher-grade Rgans left here.";
 		next;
 		mes "[Horuru]";
-		mes "All that remain is the lower-intermediate-level Rgan, but even the intermediate-level Rgan that can speak doesn't speak at all.";
+		mes "All that was left are those under Intermediate Rgan, but they left the Intermediate Rgans who can't speak properly, ti doesn't make sense at all.";
 		next;
 		mes "[Intermediate Rgan]";
-		mes "Honor, venerable one...";
+		mes "Great, great one...";
 		next;
 		mes "[Iwin]";
-		mes "Uh, now you're talking about something other than work!!!";
+		mes "Oh, now he is talking about something other than work!!!";
 		next;
 		mes "[Horuru]";
-		mes "Huh! Would an adventurer try to convince you? We only talk about work, won.";
+		mes "Huh! Would like to try talking to an adventurer? When we try talking to them, they only talk about work, sigh.";
 		next;
-		select( "Where did the priests and bishops go?" );
+		select( "Where did the priests and the bishops go?" );
 		mes "[Intermediate Rgan]";
-		mes "People who honored you.. Gather together... Not us...";
+		mes "Those.. great.. went gather... not us...";
 		next;
-		select( "Get together?" );
+		select( "Gather?" );
 		mes "[Intermediate Rgan]";
-		mes "Kyo... Lord... People...";
+		mes "To... the... lord...";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "So, you said that the superiors and higher should gather together under Rasgand's order? Where is that place?";
-		npctalk "I understand that!", "Iwin#i19ms31", bc_self;
+		mes "So you're saying that the seniors and above gathered together on the order of Lasgand? Where is it?";
+		npctalk "You understood that!", "Iwin#i19ms31", bc_self;
 		next;
 		mes "[Intermediate Rgan]";
-		mes "Yes, yes... Upstairs... So come on... Honorable One, go quickly...";
+		mes "Yes, yes... upstairs... so, go... great one, you have to go too.";
 		next;
 		mes "[Horuru]";
-		mes "If it's upstairs, it's probably the upper section. Only two of them follow me, and the other stays to rescue escapees.";
-		npctalk "four!!", "Iwin#i19ms31", bc_self;
-		npctalk "four!!", "Iwin#i19ms32", bc_self;
-		npctalk "four!!", "Iwin#i19ms33", bc_self;
+		mes "It's up there, the higher level. Two of you follow me, the other one remains and continue to rescue the escapees.";
+		npctalk "Yes!!", "Iwin#i19ms31", bc_self;
+		npctalk "Yes!!", "Iwin#i19ms32", bc_self;
+		npctalk "Yes!!", "Iwin#i19ms33", bc_self;
 		erasequest 17646;
 		setquest 17647;
 		ep19_main = 59;
@@ -8025,7 +8031,7 @@ jor_que,131,148,3	script	Intermediate Rgan#i19ms21	EP19_RGAN_D,5,5,{
 	}
 	if (ep19_main == 59) {
 		mes "[Rgan]";
-		mes "Advanced area... Come on... Even the nobles... Hurry up, let's go...";
+		mes "Yes, yes... upstairs... so, go... great one, you have to go too.";
 		close;
 	}
 	end;
@@ -8056,7 +8062,7 @@ jor_que,38,33,1	duplicate(dummy_cloaked_npc)	Iwin#i19ms21	EP19_RGAN_D
 jor_que,37,31,1	duplicate(dummy_cloaked_npc)	Iwin#i19ms22	EP19_RGAN_D
 
 jor_que,36,38,3	script	Rgan#i19ms20	EP19_RGAN_D,5,5,{
-	npctalk "Do not harm me...", "", bc_self;
+	npctalk "No, please don't hurt me...", "Rgan#i19ms20", bc_self;
 	end;
 OnTouch:
 	if (ep19_main == 59 || ep19_main == 60) {
@@ -8069,7 +8075,7 @@ OnTouch:
 
 jor_que,34,38,5	script(CLOAKED)	Lazy#i19ms21	4_EP19_RGAN_SR3,{
 	mes "[Lazy]";
-	mes "I'll take a closer look at the situation here, because there are more things I can do here than I can do there.";
+	mes "I'll take a closer look at the situation here. There are more things that I can do here than there.";
 	close;
 }
 
