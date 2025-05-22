@@ -212,7 +212,7 @@ OnMyMobDead:
 		end;
 	.@mob_id = killedrid;
 	sleep 5000;
-	monster 'map_eom$,0,0,"--ja--", .@mob_id,1, instance_npcname("#demon_god_variables") + "::OnMyMobDead";
+	monster 'map_eom$,0,0,"--en--", .@mob_id,1, instance_npcname("#demon_god_variables") + "::OnMyMobDead";
 	end;
 OnInstanceInit:
 	donpcevent instance_npcname("#demon_god_variables") + "::OnVariableReset";
@@ -270,9 +270,9 @@ OnInstanceInit:
 
 	// mimic permanent spawn
 	.@event$ = instance_npcname("#demon_god_variables") + "::OnMyMobDead";
-	monster 'map_eom$,0,0,"--ja--", 3101,3, .@event$;	// MM_MANA_WHITE
-	monster 'map_eom$,0,0,"--ja--", 3102,3, .@event$;	// MM_MANA_RED
-	monster 'map_eom$,0,0,"--ja--", 3103,3, .@event$;	// MM_MANA_YELLOW
+	monster 'map_eom$,0,0,"--en--", 3101,3, .@event$;	// MM_MANA_WHITE
+	monster 'map_eom$,0,0,"--en--", 3102,3, .@event$;	// MM_MANA_RED
+	monster 'map_eom$,0,0,"--en--", 3103,3, .@event$;	// MM_MANA_YELLOW
 	end;
 }
 

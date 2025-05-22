@@ -22,10 +22,6 @@ Name: The name of the monster, this will be used when you use "--en--".
 
 ---------------------------------------
 
-JapaneseName: The name of the monster, this will be used when you use "--ja--". Defaults to Name if not defined.
-
----------------------------------------
-
 Level: The level of the monster.
 
 ---------------------------------------
