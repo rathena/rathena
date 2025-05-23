@@ -27706,13 +27706,28 @@ BUILDIN_FUNC(permission_add)
 }
 
 BUILDIN_FUNC(mesitemicon){
-	t_itemid nameid = script_getnum( st, 2 );
-	std::shared_ptr<item_data> data = item_db.find( nameid );
-	
-	if( data == nullptr ){
-		ShowError( "buildin_mesitemicon: Item ID %u does not exists.\n", nameid );
-		script_pushconststr( st, "" );
-		return SCRIPT_CMD_FAILURE;
+	std::shared_ptr<item_data> data;
+
+	if( script_isstring( st, 2 ) ){
+		const char* item_name = script_getstr( st, 2 );
+
+		data = item_db.searchname( item_name );
+
+		if( data == nullptr ){
+			ShowError( "buildin_mesitemicon: Item \"%s\" does not exist.\n", item_name );
+			script_pushconststr( st, "" );
+			return SCRIPT_CMD_FAILURE;
+		}
+	}else{
+		t_itemid nameid = script_getnum( st, 2 );
+
+		data = item_db.find( nameid );
+
+		if( data == nullptr ){
+			ShowError( "buildin_mesitemicon: Item ID %u does not exist.\n", nameid );
+			script_pushconststr( st, "" );
+			return SCRIPT_CMD_FAILURE;
+		}
 	}
 
 	const char* name = nullptr;
@@ -28502,7 +28517,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(permission_add, "i?"),
 	BUILDIN_DEF2(permission_add, "permission_remove", "i?"),
 
-	BUILDIN_DEF( mesitemicon, "i??" ),
+	BUILDIN_DEF( mesitemicon, "v??" ),
 
 #include <custom/script_def.inc>
 
