@@ -1371,6 +1371,54 @@ public:
 
 extern PlayerStatPointDatabase statpoint_db;
 
+enum EEmotionStatus : uint8
+{
+	EMSG_EMOTION_EXPANTION_USE_FAIL_DATE,
+	EMSG_EMOTION_EXPANTION_USE_FAIL_UNPURCHASED,
+	EMSG_EMOTION_USE_FAIL_SKILL_LEVEL,
+	EMSG_EMOTION_EXPANTION_USE_FAIL_UNKNOWN,
+};
+
+enum EEmotionExpantionStatus : uint8
+{
+	EMSG_EMOTION_EXPANTION_NOT_ENOUGH_NYANGVINE,
+	EMSG_EMOTION_EXPANTION_FAIL_DATE,
+	EMSG_EMOTION_EXPANTION_FAIL_ALREADY_BUY,
+	EMSG_EMOTION_EXPANTION_FAIL_ANOTHER_SALE_BUY,
+	EMSG_EMOTION_EXPANTION_NOT_ENOUGH_BASICSKILL_LEVEL,
+	EMSG_NOT_YET_SALE_START_TIME,
+	EMSG_EMOTION_EXPANTION_FAIL_UNKNOWN,
+};
+
+struct s_emotion_db
+{
+	uint16 Id;
+	uint16 Price;
+	uint16 Type;
+	uint32 SaleStart;
+	uint32 SaleEnd;
+	uint16 SaleRentalPeriod;
+	std::vector<emotion_type> Emotions;
+};
+
+class EmotionDatabase : public TypesafeCachedYamlDatabase<uint16, s_emotion_db>
+{
+public:
+	EmotionDatabase() : TypesafeCachedYamlDatabase("EMOTION_DB", 1) {}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const ryml::NodeRef &node) override;
+};
+
+extern EmotionDatabase emotion_db;
+
+void do_init_emotions(void);
+void do_final_emotions(void);
+
+void pc_use_emotion(map_session_data* const sd, const uint16 ExpantionId, const uint16 EmotionId);
+void pc_buy_emotion_expantion(map_session_data* const sd, const uint16 ExapntionId, const uint16 ItemId, const uint8 Amount);
+void pc_load_emotion_expantion_list(map_session_data* const sd);
+
 /// Enum of Summoner Power of 
 enum e_summoner_power_type {
 	SUMMONER_POWER_LAND = 0,
