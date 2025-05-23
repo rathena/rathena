@@ -5493,7 +5493,8 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 #ifdef RENEWAL
 		int32 dist = skill_get_blewcount(skill_id, skill_lv);
 #else
-		uint32 dist = distance_bl(src, bl);
+		// Charge attack in pre-renewal calculates the distance mathetically
+		uint32 dist = static_cast<uint32>(sqrt((src->x - bl->x) * (src->x - bl->x) + (src->y - bl->y) * (src->y - bl->y)));
 #endif
 		uint8 dir = map_calc_dir(bl, src->x, src->y);
 
