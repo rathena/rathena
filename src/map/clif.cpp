@@ -6052,11 +6052,11 @@ void clif_skill_damage( block_list& src, block_list& dst, t_tick tick, int32 sde
 	// a issue that causes players and monsters to endure
 	// type 6 (ACTION_SKILL) skills. So we have to do a small
 	// hack to set all type 6 to be sent as type 8 ACTION_ATTACK_MULTIPLE
-#if PACKETVER < 20131223
-	packet.action = static_cast<decltype(packet.action)>(type);
-#else
-	packet.action = static_cast<decltype(packet.action)>(( type == DMG_SINGLE ) ? DMG_MULTI_HIT : type);
+#if PACKETVER >= 20131223
+	if (damage != DMGVAL_IGNORE && type == DMG_SINGLE)
+		type = DMG_MULTI_HIT;
 #endif
+	packet.action = static_cast<decltype(packet.action)>(type);
 
 	if (disguised(&dst)) {
 		clif_send( &packet, sizeof( packet ), &dst, AREA_WOS );

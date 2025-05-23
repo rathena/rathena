@@ -4541,16 +4541,6 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 				wd->div_ = 3;
 			}
 			break;
-#ifdef RENEWAL
-		case AS_POISONREACT:
-			skill_lv = pc_checkskill(sd, TF_DOUBLE);
-			if (skill_lv > 0) {
-				if(rnd()%100 < (7 * skill_lv)) {
-					wd->div_++;
-				}
-			}
-		break;
-#endif
 		case NW_SPIRAL_SHOOTING:
 			if (sd && sd->weapontype1 == W_GRENADE)
 				wd->div_ += 1;
@@ -4659,6 +4649,17 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			skillratio += 200;
 #endif
 		if (!skill_id || skill_id == KN_AUTOCOUNTER) {
+			if (status_change_entry* sce = sc->getSCE(SC_POISONREACT); sce != nullptr && sce->val4 == 1) {
+				// Damage boost from poison react (for players bonus depends on level learned)
+				if (sd != nullptr)
+					skillratio += 30 * pc_checkskill(sd, AS_POISONREACT);
+				else
+					skillratio += 30 * sce->val1;
+				// This attack has a chance to cause poison
+				// TODO: Effect should be delayed by attack motion
+				sc_start2(src, target, SC_POISON, sce->val3, sce->val1, src->id, skill_get_time2(AS_POISONREACT, sce->val1));
+				status_change_end(src, SC_POISONREACT);
+			}
 			if (sc->getSCE(SC_CRUSHSTRIKE)) {
 				if (sd) { //ATK [{Weapon Level * (Weapon Upgrade Level + 6) * 100} + (Weapon ATK) + (Weapon Weight)]%
 					int16 index = sd->equip_index[EQI_HAND_R];
@@ -4763,9 +4764,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			break;
 		case AS_GRIMTOOTH:
 			skillratio += 20 * skill_lv;
-			break;
-		case AS_POISONREACT:
-			skillratio += 30 * skill_lv;
 			break;
 		case AS_SONICBLOW:
 #ifdef RENEWAL
@@ -7358,6 +7356,17 @@ static void battle_calc_weapon_final_atk_modifiers(struct Damage* wd, struct blo
 			return;
 		if( --(tsc->getSCE(SC_REJECTSWORD)->val3) <= 0 )
 			status_change_end(target, SC_REJECTSWORD);
+	}
+
+	// Poison React Envenom Level 5 Autocast
+	if (tsc != nullptr && wd->damage > 0) {
+		if (status_change_entry* sce = tsc->getSCE(SC_POISONREACT); sce != nullptr && rnd_chance_official(sce->val3, 100)) {
+			if (status_check_skilluse(target, src, TF_POISON, 0))
+				skill_attack(BF_WEAPON, target, target, src, TF_POISON, 5, gettick(), 0);
+			// Counter is reduced even if the autocast fails
+			if (--sce->val2 <= 0)
+				status_change_end(target, SC_POISONREACT);
+		}
 	}
 
 	if( tsc && tsc->getSCE(SC_CRESCENTELBOW) && wd->flag&BF_SHORT && rnd()%100 < tsc->getSCE(SC_CRESCENTELBOW)->val2 ) {
@@ -10140,7 +10149,7 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 					int64 rd1 = i64min(damage, status_get_max_hp(tbl)) * tsc->getSCE(SC_DEATHBOUND)->val2 / 100; // Amplify damage.
 
 					*dmg = rd1 * 30 / 100; // Received damage = 30% of amplified damage.
-					clif_skill_damage( *src, *tbl, gettick(), status_get_amotion(src), 0, -30000, 1, RK_DEATHBOUND, tsc->getSCE(SC_DEATHBOUND)->val1, DMG_SINGLE );
+					clif_skill_damage( *src, *tbl, gettick(), status_get_amotion(src), 0, DMGVAL_IGNORE, 1, RK_DEATHBOUND, tsc->getSCE(SC_DEATHBOUND)->val1, DMG_SINGLE );
 					skill_blown(tbl, src, skill_get_blewcount(RK_DEATHBOUND, tsc->getSCE(SC_DEATHBOUND)->val1), unit_getdir(src), BLOWN_NONE);
 					status_change_end(tbl, SC_DEATHBOUND);
 					rdamage += rd1 * 70 / 100; // Target receives 70% of the amplified damage. [Rytech]
@@ -10517,6 +10526,19 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		}
 	}
 
+	// Poison React counter activates on attacks from poison-element enemies as well as normal poison attacks
+	if (tsc != nullptr && ((src->type != BL_PC && sstatus->def_ele == ELE_POISON) || sstatus->rhw.ele == ELE_POISON)) {
+		if (status_change_entry* sce = tsc->getSCE(SC_POISONREACT); sce != nullptr && sce->val4 == 0) {
+			// Next normal attack will receive a damage boost
+			sce->val4 = 1;
+
+			// The target will start attacking instead of the source
+			unit_attack(target, src->id, 0);
+
+			return ATK_BLOCK;
+		}
+	}
+
 	if( tsc && tsc->getSCE(SC_BLADESTOP_WAIT) &&
 #ifndef RENEWAL
 		status_get_class_(src) != CLASS_BOSS &&
@@ -10749,7 +10771,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			s_elemental_data *ed = ((TBL_PC*)target)->ed;
 
 			if (ed) {
-				clif_skill_damage( ed->bl, *target, tick, status_get_amotion(src), 0, -30000, 1, EL_CIRCLE_OF_FIRE, tsc->getSCE(SC_CIRCLE_OF_FIRE_OPTION)->val1, DMG_SINGLE );
+				clif_skill_damage( ed->bl, *target, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, EL_CIRCLE_OF_FIRE, tsc->getSCE(SC_CIRCLE_OF_FIRE_OPTION)->val1, DMG_SINGLE );
 				skill_attack(BF_WEAPON,&ed->bl,&ed->bl,src,EL_CIRCLE_OF_FIRE,tsc->getSCE(SC_CIRCLE_OF_FIRE_OPTION)->val1,tick,wd.flag);
 			}
 		}
@@ -11036,26 +11058,6 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				battle_drain(sd, target, wd.damage, wd.damage, tstatus->race, tstatus->class_);
 			else
 				battle_drain(sd, target, wd.damage, wd.damage2, tstatus->race, tstatus->class_);
-		}
-	}
-
-	if (tsc) {
-		if (damage > 0 && tsc->getSCE(SC_POISONREACT) &&
-			(rnd()%100 < tsc->getSCE(SC_POISONREACT)->val3
-			|| sstatus->def_ele == ELE_POISON) &&
-//			check_distance_bl(src, target, tstatus->rhw.range+1) && Doesn't checks range! o.O;
-			status_check_skilluse(target, src, TF_POISON, 0)
-		) {	//Poison React
-			struct status_change_entry *sce = tsc->getSCE(SC_POISONREACT);
-			if (sstatus->def_ele == ELE_POISON) {
-				sce->val2 = 0;
-				skill_attack(BF_WEAPON,target,target,src,AS_POISONREACT,sce->val1,tick,0);
-			} else {
-				skill_attack(BF_WEAPON,target,target,src,TF_POISON, 5, tick, 0);
-				--sce->val2;
-			}
-			if (sce->val2 <= 0)
-				status_change_end(target, SC_POISONREACT);
 		}
 	}
 
