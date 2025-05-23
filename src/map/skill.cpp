@@ -5494,7 +5494,7 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 		int32 dist = skill_get_blewcount(skill_id, skill_lv);
 #else
 		// Charge attack in pre-renewal calculates the distance mathetically
-		uint32 dist = static_cast<uint32>(sqrt((src->x - bl->x) * (src->x - bl->x) + (src->y - bl->y) * (src->y - bl->y)));
+		int32 dist = static_cast<int32>(distance_math_bl(src, bl));
 #endif
 		uint8 dir = map_calc_dir(bl, src->x, src->y);
 
@@ -5511,9 +5511,6 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 #endif
 				skill_blown(src, bl, dist, dir, BLOWN_NONE);
 			}
-			//HACK: since knockback officially defaults to the left, the client also turns to the left... therefore,
-			// make the caster look in the direction of the target
-			unit_setdir(src, (dir+4)%8);
 		}
 
 		}
