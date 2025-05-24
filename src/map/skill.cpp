@@ -5863,6 +5863,11 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 				case MH_XENO_SLASHER:
 					clif_skill_damage( *src, *bl,tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, DMG_SINGLE );
 					break;
+				case ABC_ABYSS_FLAME_ATK:
+					clif_skill_damage( *src, *bl, tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, DMG_SINGLE);
+					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+					skill_attack(BF_MAGIC, src, src, bl, skill_id, skill_lv, tick, flag);
+					break;
 				case NPC_REVERBERATION_ATK:
 				case NC_ARMSCANNON:
 					skill_area_temp[1] = 0;
