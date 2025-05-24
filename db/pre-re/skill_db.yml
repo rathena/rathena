@@ -4244,7 +4244,6 @@ Body:
     Range: 3
     Hit: Single
     HitCount: 1
-    SplashArea: 1
     Duration1:
       - Level: 1
         Time: 200000
@@ -4330,7 +4329,6 @@ Body:
     Range: 3
     Hit: Single
     HitCount: 1
-    SplashArea: 1
     Duration1:
       - Level: 1
         Time: 150000
@@ -4347,7 +4345,7 @@ Body:
       SpCost: 12
       ItemCost:
         - Item: Booby_Trap
-          Amount: 2
+          Amount: 1
     Unit:
       Id: Flasher
       Range: 1
@@ -4407,7 +4405,7 @@ Body:
       SpCost: 10
       ItemCost:
         - Item: Booby_Trap
-          Amount: 2
+          Amount: 1
     Unit:
       Id: Freezingtrap
       Range: 1

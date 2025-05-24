@@ -565,6 +565,7 @@ struct Battle_Config
 
 	int32 mob_size_influence; // Enable modifications on earned experience, drop rates and monster status depending on monster size. [mkbu95]
 	int32 skill_trap_type;
+	int32 multi_trigger_trap;
 	int32 allow_consume_restricted_item;
 	int32 allow_equip_restricted_item;
 	int32 max_walk_path;
