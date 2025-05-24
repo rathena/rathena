@@ -11329,6 +11329,7 @@ Examples:
 ---------------------------------------
 
 *mesitemicon(<item_id>{,<display_name>});
+*mesitemicon(<"item_name">{,<display_name>});
 
 Generates an itemicon string for an item and can be used with NPC's mes command.
 The NPC message will show the item's icon which will be clickable and opens the
@@ -11340,6 +11341,7 @@ However if you provide a <display_name>, this name will be displayed instead.
 Examples:
 
 	mes mesitemicon( 1201 ); // Will display a Knife icon and will be clickable. If clicked it opens the description for Knife [3]
+	mes mesitemicon( "Knife" ); // Will display a Knife icon and will be clickable. If clicked it opens the description for Knife [3]
 
 ========================
 |14.- Channel commands.|
