@@ -8496,9 +8496,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 							skillratio += 30;
 						break;
 					case BA_DISSONANCE:
-						skillratio += skill_lv * 10;
-						if (sd)
-							skillratio += 3 * pc_checkskill(sd, BA_MUSICALLESSON);
+						skillratio += 10 + skill_lv * 50;
+						if (sd != nullptr)
+							skillratio = skillratio * sd->status.job_level / 10;
 						break;
 					case HW_GRAVITATION:
 						skillratio += -100 + 100 * skill_lv;
