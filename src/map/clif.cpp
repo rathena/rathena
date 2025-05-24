@@ -25551,6 +25551,104 @@ void clif_parse_macro_checker( int32 fd, map_session_data* sd ){
 }
 
 /*==========================================
+ * macro user report client packet processing function
+ *------------------------------------------*/
+void clif_parse_macro_user_report(int32 fd, map_session_data *sd)
+{
+#if PACKETVER_MAIN_NUM >= 20230915
+	if( sd == nullptr ){
+		return;
+	}
+
+	const PACKET_CZ_MACRO_USER_REPORT_REQ* packet = reinterpret_cast<PACKET_CZ_MACRO_USER_REPORT_REQ*>(RFIFOP(fd, 0));
+
+	//
+	// Packets that may be forged needs to be integrity checked before processing them.
+	//
+
+	if (packet->reportType > 1)
+	{
+		return;
+	}
+
+	if (packet->reporterAID == packet->reportedAID)
+	{
+		return;
+	}
+
+	if (packet->reporterAID != sd->status.account_id)
+	{
+		return;
+	}
+
+	map_session_data* tsd = map_id2sd(packet->reportedAID);
+	if (tsd == nullptr)
+	{
+		return;
+	}
+
+	//
+	// Checks whether the reported user character name matches.
+	//
+
+	if (strcmpi(packet->reportName, tsd->status.name) != 0)
+	{
+		return;
+	}
+
+	//
+	// Limits the maximum report count per reporter user.
+	//
+
+	const uint32 reportCount = static_cast<uint32>(pc_readreg2(sd, "#MUR_ReportCount"));
+	if (reportCount > 999)
+	{
+		return;
+	}
+
+	pc_setreg2(sd, "#MUR_ReportCount", reportCount + 1);
+
+	//
+	// Limits the interval between reports per reporter user.
+	//
+
+	const uint32 lastReportTime = static_cast<uint32>(pc_readreg2(sd, "#MUR_LastReportTime"));
+	if (lastReportTime > 0 && lastReportTime + 60 > time(nullptr))
+	{
+		clif_macro_user_report_ack(sd, MACRO_USER_REPORT_COOLTIME, nullptr);
+		return;
+	}
+
+	pc_setreg2(sd, "#MUR_LastReportTime", static_cast<uint32>(time(nullptr)));
+
+	chrif_macro_user_report(packet->reporterAID, packet->reportedAID, packet->reportType, packet->reportMessage);
+	clif_macro_user_report_ack(sd, MACRO_USER_REPORT_SUCCESS, packet->reportName);
+#endif
+}
+
+void clif_macro_user_report_ack(map_session_data *sd, int32 status, const char* report_name)
+{
+#if PACKETVER_MAIN_NUM >= 20230915
+
+	PACKET_ZC_MACRO_USER_REPORT_ACK packet = {};
+	packet.packetType = HEADER_ZC_MACRO_USER_REPORT_ACK;
+	packet.reporterAID = sd->status.account_id;
+
+	if (report_name != nullptr)
+	{
+		safestrncpy(packet.reportName, report_name, sizeof(packet.reportName));
+	}
+	else
+	{
+		safestrncpy(packet.reportName, "", sizeof(packet.reportName));
+	}
+
+	packet.status = status;
+	clif_send(&packet, sizeof(packet), &sd->bl, SELF);
+#endif
+}
+
+/*==========================================
  * Main client packet processing function
  *------------------------------------------*/
 static int32 clif_parse(int32 fd)

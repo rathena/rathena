@@ -1764,10 +1764,11 @@ void pc_macro_captcha_register_upload(map_session_data & sd, uint16 upload_size,
 TIMER_FUNC(pc_macro_detector_timeout);
 void pc_macro_detector_process_answer(map_session_data &sd, const char captcha_answer[CAPTCHA_ANSWER_SIZE_MAX]);
 void pc_macro_detector_disconnect(map_session_data &sd);
-
+void clif_macro_user_report_ack(map_session_data *sd, int32 status, const char* report_name);
 // Macro Reporter
 void pc_macro_reporter_area_select(map_session_data &sd, const int16 x, const int16 y, const int8 radius);
 void pc_macro_reporter_process(map_session_data &sd, int32 reporter_account_id = -1);
+void clif_parse_macro_user_report(int32 fd, map_session_data *sd);
 
 #ifdef MAP_GENERATOR
 void pc_reputation_generate();
