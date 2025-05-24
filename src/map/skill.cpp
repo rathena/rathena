@@ -17239,12 +17239,6 @@ int32 skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t
 				status_change_start(ss,bl,type,10000,sg->skill_lv,sg->src_id,0,0,skill_get_time2(sg->skill_id,sg->skill_lv),SCSTART_NONE);
 			break;
 
-		case UNT_LANDMINE:
-			//Land Mine only hits single target
-			skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
-			sg->unit_id = UNT_USED_TRAPS; //Changed ID so it does not invoke a for each in area again.
-			sg->limit = 1500;
-			break;
 		case UNT_MAGENTATRAP:
 		case UNT_COBALTTRAP:
 		case UNT_MAIZETRAP:
@@ -17258,6 +17252,7 @@ int32 skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t
 			if( bl->id == ss->id )// it won't trigger on caster
 				break;
 			[[fallthrough]];
+		case UNT_LANDMINE:
 		case UNT_BLASTMINE:
 		case UNT_SHOCKWAVE:
 		case UNT_SANDMAN:
@@ -17266,18 +17261,38 @@ int32 skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t
 		case UNT_FIREPILLAR_ACTIVE:
 		case UNT_CLAYMORETRAP:
 		{
-			int32 bl_flag = sg->bl_flag;
-			if (tsc && tsc->getSCE(SC__MANHOLE))
+			if (tsc != nullptr && tsc->getSCE(SC__MANHOLE) != nullptr)
 				break;
+
+			int32 bl_flag = sg->bl_flag;
 			if (sg->unit_id == UNT_FIRINGTRAP || sg->unit_id == UNT_ICEBOUNDTRAP || sg->unit_id == UNT_CLAYMORETRAP)
 				bl_flag = bl_flag|BL_SKILL|~BCT_SELF;
-			map_foreachinrange(skill_trap_splash, &unit->bl, skill_get_splash(sg->skill_id, sg->skill_lv), bl_flag, &unit->bl, tick);
+
+			block_list* center = &unit->bl;
+			if (sg->unit_id == UNT_SANDMAN || sg->unit_id == UNT_FREEZINGTRAP)
+				center = bl;
+
+			int32 splash_range = skill_get_splash(sg->skill_id, sg->skill_lv);
+			if (splash_range == 0) {
+				// If no splash range, it only hits the unit that activated the trap
+				if (skill_get_nk(skill_id, NK_NODAMAGE))
+					skill_additional_effect(ss, bl, sg->skill_id, sg->skill_lv, BF_MISC, ATK_DEF, tick);
+				else
+					skill_attack(skill_get_type(sg->skill_id), ss, &unit->bl, bl, sg->skill_id, sg->skill_lv, tick, 0);
+			}
+			else
+				map_foreachinrange(skill_trap_splash, center, splash_range, bl_flag, &unit->bl, tick);
+
 			if (sg->unit_id != UNT_FIREPILLAR_ACTIVE)
 				clif_changetraplook(&unit->bl,(sg->unit_id == UNT_LANDMINE ? UNT_FIREPILLAR_ACTIVE : UNT_USED_TRAPS));
 			sg->limit = DIFF_TICK(tick, sg->tick) +
 				(sg->unit_id == UNT_CLUSTERBOMB || sg->unit_id == UNT_ICEBOUNDTRAP ? 1000 : 0) + // Cluster Bomb/Icebound has 1s to disappear once activated.
 				(sg->unit_id == UNT_FIRINGTRAP ? 0 : 1500); // Firing Trap gets removed immediately once activated.
-			sg->unit_id = UNT_USED_TRAPS; // Change ID so it does not invoke a for each in area again.
+
+			if (battle_config.multi_trigger_trap == 1)
+				unit->range = -1; // Trap will still process all units on it and will then be disabled in the calling function
+			else 
+				sg->unit_id = UNT_USED_TRAPS; // Change ID so it does not invoke a for each in area again
 		}
 			break;
 
@@ -21502,9 +21517,7 @@ static int32 skill_trap_splash(struct block_list *bl, va_list ap)
 			if (battle_check_target(ss, bl, sg->target_flag&~BCT_SELF) > 0)
 				skill_castend_damage_id(ss, bl, sg->skill_id, sg->skill_lv, tick, SD_ANIMATION|SD_LEVEL|SD_SPLASH|1);
 			break;
-		case UNT_SHOCKWAVE:
 		case UNT_SANDMAN:
-		case UNT_FLASHER:
 			skill_additional_effect(ss,bl,sg->skill_id,sg->skill_lv,BF_MISC,ATK_DEF,tick);
 			break;
 		case UNT_GROUNDDRIFT_WIND:
