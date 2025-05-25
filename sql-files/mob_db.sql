@@ -76,6 +76,8 @@ CREATE TABLE `mob_db` (
   `attack_motion` smallint unsigned DEFAULT NULL,
   `damage_motion` smallint unsigned DEFAULT NULL,
   `damage_taken` smallint unsigned DEFAULT NULL,
+  `groupid` smallint unsigned DEFAULT NULL,
+  `title` text DEFAULT NULL,
   `ai` varchar(2) DEFAULT NULL,
   `class` varchar(50) DEFAULT NULL,
   `mode_canmove` tinyint unsigned DEFAULT NULL,
