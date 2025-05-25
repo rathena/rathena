@@ -37483,7 +37483,7 @@ Body:
     AttackMotion: 768
     ClientAttackMotion: 0
     DamageMotion: 576
-    Class: Boss
+    Class: Guardian
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
@@ -37510,7 +37510,7 @@ Body:
     AttackMotion: 768
     ClientAttackMotion: 0
     DamageMotion: 576
-    Class: Boss
+    Class: Guardian
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
@@ -37537,7 +37537,7 @@ Body:
     AttackMotion: 768
     ClientAttackMotion: 0
     DamageMotion: 576
-    Class: Boss
+    Class: Guardian
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
