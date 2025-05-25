@@ -3,7 +3,7 @@
 //===== By:==================================================
 //= rAthena Dev Team
 //===== Last Updated:========================================
-//= 20220308
+//= 20250517
 //===== Description:=========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -3355,6 +3355,13 @@ Notice that NPC objects disabled with 'disablenpc' will still be located.
 
 Returns the map name of the given map ID. Returns an empty string if given
 map ID doesn't exist.
+
+---------------------------------------
+
+*mapname2id(<"map name">)
+
+Returns the map ID of the given map name or -1 if the given
+map name doesn't exist or is on another map-server.
 
 ---------------------------------------
 
