@@ -34226,6 +34226,11 @@ Body:
     DamageMotion: 576
     Ai: 01
     Class: Boss
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Gold_Coin_US
         Rate: 2000
@@ -34263,6 +34268,11 @@ Body:
     DamageMotion: 576
     Ai: 17
     Class: Boss
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Gold_Coin_US
         Rate: 3500
@@ -34301,6 +34311,11 @@ Body:
     DamageMotion: 576
     Ai: 09
     Class: Boss
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Gold_Coin_US
         Rate: 7000
@@ -34339,6 +34354,11 @@ Body:
     DamageMotion: 336
     Ai: 09
     Class: Boss
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Gold_Coin_US
         Rate: 8000
@@ -36528,6 +36548,11 @@ Body:
     DamageMotion: 480
     Ai: 13
     Class: Boss
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
   - Id: 1905
     AegisName: BARRICADE
     Name: Barricade
