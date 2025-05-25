@@ -14513,7 +14513,7 @@ int32 skill_castend_pos2(struct block_list* src, int32 x, int32 y, uint16 skill_
 	case SA_VOLCANO:
 	case SA_DELUGE:
 	case SA_VIOLENTGALE:
-		// Does not consumes if the skill is already active. [Skotlex]
+		// Does not consume gemstones if the skill is already active.
 		if (std::shared_ptr<s_skill_unit_group> sg2 = skill_locate_element_field(src); sg2 != nullptr) {
 			switch( sg2->skill_id ) {
 				case SA_VOLCANO:
@@ -16023,13 +16023,13 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(struct block_list *src, ui
 	case SC_CHAOSPANIC:
 	case SOA_TOTEM_OF_TUTELARY:
 		if (std::shared_ptr<s_skill_unit_group> old_sg = skill_locate_element_field(src); old_sg != nullptr) {
-			// HelloKitty confirmed that these are interchangeable, so you can change element and not consume gemstones.
 			if (old_sg->limit > 0) {
 				switch( old_sg->skill_id ) {
 					case SA_VOLCANO:
 					case SA_DELUGE:
 					case SA_VIOLENTGALE:
-						// Use the previous limit (minus the elapsed time) [Skotlex]
+						// These are interchangeable, so you can change the element and casting does not consume gemstones.
+						// Use the previous limit (minus the elapsed time)
 						limit = old_sg->limit - DIFF_TICK(gettick(), old_sg->tick);
 						if (limit < 0)	// This can happen...
 							limit = skill_get_time(skill_id,skill_lv);
