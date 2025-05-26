@@ -453,7 +453,7 @@ int32 mob_parse_dataset(struct spawn_data *data)
 	if(strcmp(data->name,"--en--")==0)
 		safestrncpy(data->name, mob_db.find(data->id)->name.c_str(), sizeof(data->name));
 	else if (strcmp(data->name,"--ja--") == 0) {
-		ShowError("mob_parse_dataset: \"--ja--\" is no longer supported, defaulting to \"--en--\".");
+		ShowError("mob_parse_dataset: \"--ja--\" is no longer supported, defaulting to \"--en--\".");	// 2025-05-26
 		safestrncpy(data->name, mob_db.find(data->id)->name.c_str(), sizeof(data->name));
 	}
 

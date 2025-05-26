@@ -8028,9 +8028,9 @@ ACMD_FUNC(mobinfo)
 #endif
 		// stats
 		if( mob->get_bosstype() == BOSSTYPE_MVP )
-			sprintf(atcmd_output, msg_txt(sd,1240), mob->name.c_str(), mob->name.c_str(), mob->sprite.c_str(), mob->id); // MVP Monster: '%s'/'%s'/'%s' (%d)
+			sprintf(atcmd_output, msg_txt(sd,1240), mob->name.c_str(), mob->sprite.c_str(), mob->id); // MVP Monster: '%s'/'%s' (%d)
 		else
-			sprintf(atcmd_output, msg_txt(sd,1241), mob->name.c_str(), mob->name.c_str(), mob->sprite.c_str(), mob->id); // Monster: '%s'/'%s'/'%s' (%d)
+			sprintf(atcmd_output, msg_txt(sd,1241), mob->name.c_str(), mob->sprite.c_str(), mob->id); // Monster: '%s'/'%s' (%d)
 		clif_displaymessage(fd, atcmd_output);
 		sprintf(atcmd_output, msg_txt(sd,1242), mob->lv, mob->status.max_hp, base_exp, job_exp, MOB_HIT(mob), MOB_FLEE(mob)); //  Lv:%d  HP:%d  Base EXP:%llu  Job EXP:%llu  HIT:%d  FLEE:%d
 		clif_displaymessage(fd, atcmd_output);
