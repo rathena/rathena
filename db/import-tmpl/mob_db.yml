@@ -1146,7 +1146,7 @@ Header:
 #        Rate: 1
 #        StealProtected: true
 
-# Pre-Renewal old 'JapaneseName' field
+# Pre-Renewal monster names of the old 'JapaneseName' field
 #=============================================================
 #  - Id: 1025
 #    Name: Snake
@@ -1443,7 +1443,7 @@ Header:
 #  - Id: 2081
 #    Name: Suspicious Hydra
 
-# Renewal old 'JapaneseName' field
+# Renewal monster names of the old 'JapaneseName' field
 #=============================================================
 #  - Id: 1025
 #    Name: Snake
