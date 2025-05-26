@@ -14578,7 +14578,7 @@ BUILDIN_FUNC(strmobinfo)
 	switch (num) {
 	case 1: script_pushstrcopy(st,mob->name.c_str()); break;
 	case 2:
-		ShowWarning("buildin_strmobinfo: Japanese monster name (type 2) is no longer supported, defaulting to English monster name (type 1).");
+		ShowWarning("buildin_strmobinfo: Japanese monster name (type 2) is no longer supported, defaulting to English monster name (type 1).\n");
 		script_reportsrc(st);
 		script_pushstrcopy(st, mob->name.c_str());
 		break;
