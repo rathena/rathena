@@ -58,6 +58,8 @@
 #   ClientAttackMotion      Client attack speed. (Default: AttackMotion)
 #   DamageMotion            Damage animation speed. (Default: 0)
 #   DamageTaken             Rate at which the monster will receive incoming damage. (Default: 100)
+#   GroupID                 Monster group ID. (Default: 0)
+#   Title                   Monster title. (Default: None)
 #   Ai                      Aegis monster type AI behavior. (Default: 06)
 #   Class                   Aegis monster class. (Default: Normal)
 #   Modes:                  List of unique behavior not defined by AI, Class, or Attribute. (Optional)
@@ -108452,7 +108454,7 @@ Body:
     AttackMotion: 864
     ClientAttackMotion: 648
     DamageMotion: 1440
-#   Ai: 
+    Ai: Abr_Offensive
   - Id: 20835
     AegisName: ABR_DUAL_CANNON
     Name: ABR Duel Cannon
@@ -108477,7 +108479,7 @@ Body:
     AttackMotion: 768
     ClientAttackMotion: 576
     DamageMotion: 1008
-#   Ai: 
+    Ai: Abr_Offensive
   - Id: 20836
     AegisName: ABR_MOTHER_NET
     Name: ABR Mother Net
@@ -108502,7 +108504,7 @@ Body:
     AttackMotion: 1008
     ClientAttackMotion: 672
     DamageMotion: 576
-#   Ai: 
+    Ai: Abr_Passive
   - Id: 20837
     AegisName: ABR_INFINITY
     Name: ABR Infinity
@@ -108527,7 +108529,7 @@ Body:
     AttackMotion: 1728
     ClientAttackMotion: 840
     DamageMotion: 1008
-#   Ai: 
+    Ai: Abr_Offensive
 #  - Id: 20838
 #    AegisName: ELEMETAL_MASTER_S1
 #  - Id: 20839
