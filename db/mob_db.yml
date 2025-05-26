@@ -79,7 +79,7 @@
 
 Header:
   Type: MOB_DB
-  Version: 5
+  Version: 6
 
 Footer:
   Imports:
