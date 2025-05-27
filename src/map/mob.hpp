@@ -334,8 +334,7 @@ struct s_dmglog{
 	uint32 flag : 2; //0: Normal. 1: Homunc exp. 2: Pet exp
 };
 
-struct mob_data {
-	struct block_list bl;
+struct mob_data : public block_list {
 	struct unit_data  ud;
 	struct view_data *vd;
 	bool vd_changed;

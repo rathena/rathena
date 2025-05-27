@@ -1162,7 +1162,7 @@ bool instance_reqinfo(map_session_data *sd, int32 instance_id)
 			}
 		}
 	} else if (idata->state == INSTANCE_BUSY) { // Give info on the instance if busy
-		int32 map_instance_id = map_getmapdata(sd->bl.m)->instance_id;
+		int32 map_instance_id = map_getmapdata(sd->m)->instance_id;
 		if (map_instance_id == 0 || map_instance_id == instance_id) {
 			clif_instance_status(instance_id, static_cast<uint32>(idata->keep_limit), static_cast<uint32>(idata->idle_limit));
 			sd->instance_mode = idata->mode;
@@ -1252,14 +1252,14 @@ void do_reload_instance(void)
 	map_session_data *sd;
 
 	for (sd = (TBL_PC *)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC *)mapit_next(iter)) {
-		struct map_data *mapdata = map_getmapdata(sd->bl.m);
+		struct map_data *mapdata = map_getmapdata(sd->m);
 
 		if (sd && mapdata->instance_id > 0) {
 			struct party_data *pd;
 			std::shared_ptr<MapGuild> gd;
 			struct clan *cd;
 			int32 instance_id;
-			std::shared_ptr<s_instance_data> idata = util::umap_find(instances, map[sd->bl.m].instance_id);
+			std::shared_ptr<s_instance_data> idata = util::umap_find(instances, map[sd->m].instance_id);
 			std::shared_ptr<s_instance_db> db = instance_db.find(idata->id);
 
 			switch (idata->mode) {

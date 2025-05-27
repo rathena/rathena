@@ -1519,7 +1519,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 		if (sd && pc_issit(sd))
 			pc_setstand(sd, true);
 		if (sce_d && (d_bl = map_id2bl(sce_d->val1)) &&
-			((d_bl->type == BL_MER && ((TBL_MER*)d_bl)->master && ((TBL_MER*)d_bl)->master->bl.id == target->id) ||
+			((d_bl->type == BL_MER && ((TBL_MER*)d_bl)->master && ((TBL_MER*)d_bl)->master->id == target->id) ||
 			(d_bl->type == BL_PC && ((TBL_PC*)d_bl)->devotion[sce_d->val2] == target->id)) &&
 			check_distance_bl(target, d_bl, sce_d->val3))
 		{ //If player is target of devotion, show guard effect on the devotion caster rather than the target
@@ -9041,27 +9041,27 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case EM_EL_FLAMEROCK:
 						skillratio += -100 + 2400;
 						if (ed)
-							skillratio += skillratio * status_get_lv(&ed->master->bl) / 100;
+							skillratio += skillratio * status_get_lv(ed->master) / 100;
 						break;
 					case EM_EL_AGE_OF_ICE:
 						skillratio += -100 + 3700;
 						if (ed)
-							skillratio += skillratio * status_get_lv(&ed->master->bl) / 100;
+							skillratio += skillratio * status_get_lv(ed->master) / 100;
 						break;
 					case EM_EL_STORM_WIND:
 						skillratio += -100 + 2600;
 						if (ed)
-							skillratio += skillratio * status_get_lv(&ed->master->bl) / 100;
+							skillratio += skillratio * status_get_lv(ed->master) / 100;
 						break;
 					case EM_EL_AVALANCHE:
 						skillratio += -100 + 450;
 						if (ed)
-							skillratio += skillratio * status_get_lv(&ed->master->bl) / 100;
+							skillratio += skillratio * status_get_lv(ed->master) / 100;
 						break;
 					case EM_EL_DEADLY_POISON:
 						skillratio += -100 + 700;
 						if (ed)
-							skillratio += skillratio * status_get_lv(&ed->master->bl) / 100;
+							skillratio += skillratio * status_get_lv(ed->master) / 100;
 						break;
 					case NPC_RAINOFMETEOR:
 						skillratio += 350;	// unknown ratio
@@ -10036,7 +10036,7 @@ void battle_vanish_damage(map_session_data *sd, struct block_list *target, int32
 	}
 
 	if (vanish_hp > 0 || vanish_sp > 0)
-		status_percent_damage(&sd->bl, target, -vanish_hp, -vanish_sp, false); // Damage HP/SP applied once
+		status_percent_damage(sd, target, -vanish_hp, -vanish_sp, false); // Damage HP/SP applied once
 }
 
 /*==========================================
@@ -10127,7 +10127,7 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 				block_list *d_bl;
 
 				if( (sce_d = tsc->getSCE(SC_DEVOTION)) && (d_bl = map_id2bl(sce_d->val1)) &&
-					((d_bl->type == BL_MER && ((TBL_MER*)d_bl)->master && ((TBL_MER*)d_bl)->master->bl.id == tbl->id) ||
+					((d_bl->type == BL_MER && ((TBL_MER*)d_bl)->master && ((TBL_MER*)d_bl)->master->id == tbl->id) ||
 					(d_bl->type == BL_PC && ((TBL_PC*)d_bl)->devotion[sce_d->val2] == tbl->id)) )
 				{ //Don't reflect non-skill attack if has SC_REFLECTSHIELD from Devotion bonus inheritance
 					if( (!skill_id && battle_config.devotion_rdamage_skill_only && tsc->getSCE(SC_REFLECTSHIELD)->val4) ||
@@ -10220,7 +10220,7 @@ bool battle_check_coma(map_session_data& sd, struct block_list& target, e_battle
 	mob_data* dstmd = BL_CAST(BL_MOB, &target);
 
 	// Coma
-	if (sd.special_state.bonus_coma && (!dstmd || (!util::vector_exists(status_get_race2(&dstmd->bl), RC2_GVG) && status_get_class(&dstmd->bl) != CLASS_BATTLEFIELD))) {
+	if (sd.special_state.bonus_coma && (!dstmd || (!util::vector_exists(status_get_race2(dstmd), RC2_GVG) && status_get_class(dstmd) != CLASS_BATTLEFIELD))) {
 		int32 rate = 0;
 		rate += sd.indexed_bonus.coma_class[tstatus->class_] + sd.indexed_bonus.coma_class[CLASS_ALL];
 		if(!status_bl_has_mode(&target, MD_STATUSIMMUNE))
@@ -10338,7 +10338,7 @@ void battle_drain(map_session_data *sd, struct block_list *tbl, int64 rdamage, i
 	if (!thp && !tsp)
 		return;
 
-	status_heal(&sd->bl, thp, tsp, battle_config.show_hp_sp_drain?3:1);
+	status_heal(sd, thp, tsp, battle_config.show_hp_sp_drain?3:1);
 
 	//if (rhp || rsp)
 	//	status_zap(tbl, rhp, rsp);
@@ -10418,9 +10418,9 @@ void battle_autocast_elembuff_skill(map_session_data* sd, struct block_list* tar
 	skill_lv = max(1, skill_lv);
 
 	sd->state.autocast = 1;
-	if (status_charge(&sd->bl, 0, skill_get_sp(skill_id, skill_lv))) {
-		skill_castend_damage_id(&sd->bl, target, skill_id, skill_lv, tick, flag);
-		battle_autocast_aftercast(&sd->bl, skill_id, skill_lv, tick);
+	if (status_charge(sd, 0, skill_get_sp(skill_id, skill_lv))) {
+		skill_castend_damage_id(sd, target, skill_id, skill_lv, tick, flag);
+		battle_autocast_aftercast(sd, skill_id, skill_lv, tick);
 	}
 	sd->state.autocast = 0;
 }
@@ -10739,7 +10739,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			struct block_list *d_bl = map_id2bl(sce->val1);
 
 			if( d_bl && (
-				(d_bl->type == BL_MER && ((TBL_MER*)d_bl)->master && ((TBL_MER*)d_bl)->master->bl.id == target->id) ||
+				(d_bl->type == BL_MER && ((TBL_MER*)d_bl)->master && ((TBL_MER*)d_bl)->master->id == target->id) ||
 				(d_bl->type == BL_PC && ((TBL_PC*)d_bl)->devotion[sce->val2] == target->id)
 				) && check_distance_bl(target, d_bl, sce->val3) )
 			{
@@ -10771,8 +10771,8 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			s_elemental_data *ed = ((TBL_PC*)target)->ed;
 
 			if (ed) {
-				clif_skill_damage( ed->bl, *target, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, EL_CIRCLE_OF_FIRE, tsc->getSCE(SC_CIRCLE_OF_FIRE_OPTION)->val1, DMG_SINGLE );
-				skill_attack(BF_WEAPON,&ed->bl,&ed->bl,src,EL_CIRCLE_OF_FIRE,tsc->getSCE(SC_CIRCLE_OF_FIRE_OPTION)->val1,tick,wd.flag);
+				clif_skill_damage(*ed, *target, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, EL_CIRCLE_OF_FIRE, tsc->getSCE(SC_CIRCLE_OF_FIRE_OPTION)->val1, DMG_SINGLE );
+				skill_attack(BF_WEAPON,ed,ed,src,EL_CIRCLE_OF_FIRE,tsc->getSCE(SC_CIRCLE_OF_FIRE_OPTION)->val1,tick,wd.flag);
 			}
 		}
 		if (tsc->getSCE(SC_WATER_SCREEN_OPTION)) {

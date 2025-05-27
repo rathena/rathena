@@ -256,15 +256,15 @@ int32 channel_mjoin(map_session_data *sd) {
 	char mout[60];
 	if(!sd) return -1;
 
-	struct map_data *mapdata = map_getmapdata(sd->bl.m);
+	struct map_data *mapdata = map_getmapdata(sd->m);
 
 	if( !mapdata->channel ) {
-		mapdata->channel = channel_create_simple(nullptr,nullptr,CHAN_TYPE_MAP,sd->bl.m);
+		mapdata->channel = channel_create_simple(nullptr,nullptr,CHAN_TYPE_MAP,sd->m);
 	}
 
 	if( mapdata->channel->opt & CHAN_OPT_ANNOUNCE_SELF ) {
 		sprintf(mout, msg_txt(sd,1435),mapdata->channel->name,mapdata->name); // You're now in the '#%s' channel for '%s'.
-		clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], mout, false, SELF);
+		clif_messagecolor(sd, color_table[COLOR_LIGHT_GREEN], mout, false, SELF);
 	}
 
 	return channel_join(mapdata->channel,sd);
@@ -418,7 +418,7 @@ int32 channel_pcquit(map_session_data *sd, int32 type){
 		}
 	}
 
-	struct map_data *mapdata = map_getmapdata(sd->bl.m);
+	struct map_data *mapdata = map_getmapdata(sd->m);
 
 	if(type&4 && channel_config.map_tmpl.name[0] && channel_haspc(mapdata->channel,sd)==1){ //quit map chan
 		channel_clean(mapdata->channel,sd,0);
@@ -450,7 +450,7 @@ int32 channel_send(struct Channel *channel, map_session_data *sd, const char *ms
 		return -1;
 
 	if(!pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN) && channel->msg_delay != 0 && DIFF_TICK(sd->channel_tick[idx] + channel->msg_delay, gettick()) > 0) {
-		clif_messagecolor(&sd->bl,color_table[COLOR_RED],msg_txt(sd,1455),false,SELF); //You're talking too fast!
+		clif_messagecolor(sd,color_table[COLOR_RED],msg_txt(sd,1455),false,SELF); //You're talking too fast!
 		return -2;
 	}
 	else {
@@ -509,11 +509,11 @@ struct Channel* channel_name2channel(char *chname, map_session_data *sd, int32 f
 	if(channel_chk(chname, nullptr, 1))
 		return nullptr;
 
-	struct map_data *mapdata = sd ? map_getmapdata(sd->bl.m) : nullptr;
+	struct map_data *mapdata = sd ? map_getmapdata(sd->m) : nullptr;
 
 	if(sd && strcmpi(chname + 1,channel_config.map_tmpl.name) == 0){
 		if(flag&1 && !mapdata->channel)
-			mapdata->channel = channel_create_simple(nullptr,nullptr,CHAN_TYPE_MAP,sd->bl.m);
+			mapdata->channel = channel_create_simple(nullptr,nullptr,CHAN_TYPE_MAP,sd->m);
 		if(flag&2 && channel_pc_haschan(sd,mapdata->channel) < 1)
 			channel_mjoin(sd);
 		return mapdata->channel;
@@ -595,7 +595,7 @@ int32 channel_display_list(map_session_data *sd, const char *options){
 		for( k = 0; k < channel_config.colors_count; k++ ) {
 			if (channel_config.colors[k]) {
 				sprintf(msg, msg_txt(sd,1445),channel_config.colors_name[k]);// - '%s'
-				clif_messagecolor(&sd->bl,channel_config.colors[k],msg,false,SELF);
+				clif_messagecolor(sd,channel_config.colors[k],msg,false,SELF);
 			}
 		}
 	}
@@ -623,7 +623,7 @@ int32 channel_display_list(map_session_data *sd, const char *options){
 		bool has_perm = pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN) ? true : false;
 		struct Channel *channel;
 		char output[CHAT_SIZE_MAX];
-		struct map_data *mapdata = map_getmapdata(sd->bl.m);
+		struct map_data *mapdata = map_getmapdata(sd->m);
 
 		clif_displaymessage(sd->fd, msg_txt(sd,1410)); // ---- Public Channels ----
 		if( channel_config.map_tmpl.name[0] && mapdata->channel ) {
