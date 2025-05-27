@@ -9133,7 +9133,7 @@ int32 status_get_guild_id(struct block_list *bl)
 		case BL_PC:
 			return ((TBL_PC*)bl)->status.guild_id;
 		case BL_PET:
-			if (battle_config.companion_show_guild_emblem && ((TBL_PET*)bl)->master)
+			if ((battle_config.companion_show_guild_emblem & 4) && ((TBL_PET*)bl)->master)
 				return ((TBL_PET*)bl)->master->status.guild_id;
 			break;
 		case BL_MOB:
@@ -9147,11 +9147,11 @@ int32 status_get_guild_id(struct block_list *bl)
 			}
 			break;
 		case BL_HOM:
-			if (battle_config.companion_show_guild_emblem && ((TBL_HOM*)bl)->master)
+			if ((battle_config.companion_show_guild_emblem & 8) && ((TBL_HOM*)bl)->master)
 				return ((TBL_HOM*)bl)->master->status.guild_id;
 			break;
 		case BL_MER:
-			if (battle_config.companion_show_guild_emblem && ((TBL_MER*)bl)->master)
+			if ((battle_config.companion_show_guild_emblem & 16) && ((TBL_MER*)bl)->master)
 				return ((TBL_MER*)bl)->master->status.guild_id;
 			break;
 		case BL_NPC:
@@ -9163,7 +9163,7 @@ int32 status_get_guild_id(struct block_list *bl)
 				return ((TBL_SKILL*)bl)->group->guild_id;
 			break;
 		case BL_ELEM:
-			if (battle_config.companion_show_guild_emblem && ((TBL_ELEM*)bl)->master)
+			if ((battle_config.companion_show_guild_emblem & 512) && ((TBL_ELEM*)bl)->master)
 				return ((TBL_ELEM*)bl)->master->status.guild_id;
 			break;
 	}
@@ -9182,7 +9182,7 @@ int32 status_get_emblem_id(struct block_list *bl)
 		case BL_PC:
 			return ((TBL_PC*)bl)->guild_emblem_id;
 		case BL_PET:
-			if (battle_config.companion_show_guild_emblem && ((TBL_PET*)bl)->master)
+			if ((battle_config.companion_show_guild_emblem & 4) && ((TBL_PET*)bl)->master)
 				return ((TBL_PET*)bl)->master->guild_emblem_id;
 			break;
 		case BL_MOB:
@@ -9196,11 +9196,11 @@ int32 status_get_emblem_id(struct block_list *bl)
 			}
 			break;
 		case BL_HOM:
-			if (battle_config.companion_show_guild_emblem && ((TBL_HOM*)bl)->master)
+			if ((battle_config.companion_show_guild_emblem & 8) && ((TBL_HOM*)bl)->master)
 				return ((TBL_HOM*)bl)->master->guild_emblem_id;
 			break;
 		case BL_MER:
-			if (battle_config.companion_show_guild_emblem && ((TBL_MER*)bl)->master)
+			if ((battle_config.companion_show_guild_emblem & 16) && ((TBL_MER*)bl)->master)
 				return ((TBL_MER*)bl)->master->guild_emblem_id;
 			break;
 		case BL_NPC:
@@ -9211,7 +9211,7 @@ int32 status_get_emblem_id(struct block_list *bl)
 			}
 			break;
 		case BL_ELEM:
-			if (battle_config.companion_show_guild_emblem && ((TBL_ELEM*)bl)->master)
+			if ((battle_config.companion_show_guild_emblem & 512) && ((TBL_ELEM*)bl)->master)
 				return ((TBL_ELEM*)bl)->master->guild_emblem_id;
 			break;
 	}
