@@ -9182,8 +9182,8 @@ int32 status_get_emblem_id(struct block_list *bl)
 		case BL_PC:
 			return ((TBL_PC*)bl)->guild_emblem_id;
 		case BL_PET:
-			if (((TBL_PET*)bl)->master)
 			if (battle_config.companion_show_guild_emblem && ((TBL_PET*)bl)->master)
+				return ((TBL_PET*)bl)->master->guild_emblem_id;
 			break;
 		case BL_MOB:
 			{
