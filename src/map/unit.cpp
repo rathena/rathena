@@ -2059,7 +2059,7 @@ int32 unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int32
  * @param castcancel: Whether or not the skill can be cancelled by interruption (hit)
  * @return Success(1); Fail(0);
  */
-int32 unit_skilluse_id2(struct block_list *src, int32 target_id, uint16 skill_id, uint16 skill_lv, int32 casttime, int32 castcancel, bool ignore_range)
+int32 unit_skilluse_id2(struct block_list *src, int32 target_id, uint16 skill_id, uint16 skill_lv, int32 casttime, bool castcancel, bool ignore_range)
 {
 	struct unit_data *ud;
 	status_change *sc;
@@ -2580,7 +2580,7 @@ int32 unit_skilluse_pos(struct block_list *src, int16 skill_x, int16 skill_y, ui
  * @param castcancel: Whether or not the skill can be cancelled by interuption (hit)
  * @return Success(1); Fail(0);
  */
-int32 unit_skilluse_pos2( struct block_list *src, int16 skill_x, int16 skill_y, uint16 skill_id, uint16 skill_lv, int32 casttime, int32 castcancel, bool ignore_range)
+int32 unit_skilluse_pos2( struct block_list *src, int16 skill_x, int16 skill_y, uint16 skill_id, uint16 skill_lv, int32 casttime, bool castcancel, bool ignore_range)
 {
 	map_session_data *sd = nullptr;
 	struct unit_data *ud = nullptr;

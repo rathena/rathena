@@ -94,6 +94,7 @@ std::unordered_map<const char *, int64> constants;
 // Forward declaration of conversion functions
 static bool item_db_yaml2sql(const std::string &file, const std::string &table);
 static bool mob_db_yaml2sql(const std::string &file, const std::string &table);
+static bool mob_skill_db_yaml2sql(const std::string &file, const std::string &table);
 
 bool fileExists( const std::string& path );
 bool askConfirmation( const char* fmt, ... );
@@ -221,11 +222,15 @@ bool Yaml2SqlTool::initialize( int32 argc, char* argv[] ){
 	const std::string item_import_table_name = "item_db2_re";
 	const std::string mob_table_name = "mob_db_re";
 	const std::string mob_import_table_name = "mob_db2_re";
+	const std::string mob_skill_table_name = "mob_skill_db_re";
+	const std::string mob_skill_import_table_name = "mob_skill_db2_re";
 #else
 	const std::string item_table_name = "item_db";
 	const std::string item_import_table_name = "item_db2";
 	const std::string mob_table_name = "mob_db";
 	const std::string mob_import_table_name = "mob_db2";
+	const std::string mob_skill_table_name = "mob_skill_db";
+	const std::string mob_skill_import_table_name = "mob_skill_db2";
 #endif
 	std::vector<std::string> item_table_suffixes = {
 		"usable",
@@ -260,6 +265,18 @@ bool Yaml2SqlTool::initialize( int32 argc, char* argv[] ){
 		return mob_db_yaml2sql(path + name_ext, table);
 	})) {
 		return false;
+	}
+
+	if (!process("MOB_SKILL_DB", 1, { path_db_mode }, "mob_skill_db", mob_skill_table_name, mob_skill_table_name, [](const std::string &path, const std::string &name_ext, const std::string &table) -> bool {
+		return mob_skill_db_yaml2sql(path + name_ext, table);
+	})) {
+		return 0;
+	}
+
+	if (!process("MOB_SKILL_DB", 1, { path_db_import }, "mob_skill_db", mob_skill_import_table_name, mob_skill_import_table_name, [](const std::string &path, const std::string &name_ext, const std::string &table) -> bool {
+		return mob_skill_db_yaml2sql(path + name_ext, table);
+	})) {
+		return 0;
 	}
 
 	// TODO: add implementations ;-)
@@ -959,6 +976,72 @@ static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
 	}
 
 	ShowStatus("Done converting '" CL_WHITE "%zu" CL_RESET "' mobs in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
+
+	return true;
+}
+
+static bool mob_skill_db_yaml2sql(const std::string &file, const std::string &table) {
+	size_t entries = 0;
+
+	for (const YAML::Node &input : inNode["Body"]) {
+		for (const YAML::Node &skill : input["Skills"]) {
+			std::string column = "", value = "";
+
+			if (appendEntry(input["Mob"], value, true))
+				column.append("`MOB_AEGIS_NAME`,");
+			if (appendEntry(skill["Index"], value))
+				column.append("`INDEX`,");
+			if (appendEntry(skill["Name"], value, true))
+				column.append("`SKILL_NAME`,");
+			if (appendEntry(skill["Level"], value))
+				column.append("`SKILL_LV`,");
+			if (appendEntry(skill["State"], value, true))
+				column.append("`STATE`,");
+			if (appendEntry(skill["CastRate"], value))
+				column.append("`RATE`,");
+			if (appendEntry(skill["CastTime"], value))
+				column.append("`CASTTIME`,");
+			if (appendEntry(skill["CastDelay"], value))
+				column.append("`DELAY`,");
+			if (appendEntry(skill["CastCancel"], value))
+				column.append("`CANCELABLE`,");
+			if (appendEntry(skill["Target"], value, true))
+				column.append("`TARGET`,");
+			if (appendEntry(skill["Condition"], value, true))
+				column.append("`CONDITION`,");
+			if (appendEntry(skill["ConditionValue1"], value, true))
+				column.append("`CONDITION_VALUE1`,");
+			if (appendEntry(skill["ConditionValue2"], value))
+				column.append("`CONDITION_VALUE2`,");
+			if (appendEntry(skill["Ai"], value, true))
+				column.append("`AI`,");
+
+			for (uint16 i = 0; i < 6; i++) {
+				if (!skill["Summon"].IsDefined())
+					continue;
+
+				const YAML::Node &summon = skill["Summon"][i];
+
+				if (summon) {
+					if (appendEntry(summon["Mob"], value, true))
+						column.append("`SUMMON" + std::to_string(i + 1) + "`,");
+				}
+			}
+
+			if (appendEntry(skill["Emotion"], value, true))
+				column.append("`EMOTION`,");
+			if (appendEntry(skill["Chat"], value))
+				column.append("`CHAT`,");
+
+			column.pop_back(); // Remove last ','
+			value.pop_back(); // Remove last ','
+
+			outFile << "REPLACE INTO `" + table + "` (" + column + ") VALUES (" + value + ");\n";
+			entries++;
+		}
+	}
+
+	ShowStatus("Done converting '" CL_WHITE "%d" CL_RESET "' mob skills in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
 
 	return true;
 }

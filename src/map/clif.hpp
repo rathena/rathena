@@ -261,6 +261,8 @@ enum broadcast_flags : uint8_t {
 };
 
 enum emotion_type {
+	ET_NONE = -1,
+	//
 	ET_SURPRISE = 0,	// /!
 	ET_QUESTION,		// /?
 	ET_DELIGHT,

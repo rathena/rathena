@@ -1,0 +1,59 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2022 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Monster Skill Database
+###########################################################################
+#
+# Monster Skill Settings
+#
+###########################################################################
+# - Mob                     Monster AegisName.
+#   Skills:                 List of Skills casted by the monster.
+#    - Index                Unique Index in the list to edit the skill on import.
+#      Name                 Skill AegisName.
+#      Level                Skill Level.
+#      State                State of the monster to cast the skill. (Default: ATTACK)
+#      CastRate             Rate to cast the skill (from 1-10000). (Default: 10000)
+#      CastTime             Time in millisecond to cast the skill. (Default: 0)
+#      CastDelay            Delay in millisecond to recast the skill. (Default: 5000)
+#      CastCancel           Whether the skill is cancelable or not. (Default: true)
+#      Target               Target of the skill. (Default: TARGET)
+#      Condition            Type of condition. (Default: ALWAYS)
+#      ConditionValue1      Value given at certain conditions.
+#      ConditionValue2      Value given at certain conditions.
+#      Ai                   Change the monster mode using the given Aegis monster type AI. (Default: 00)
+#      Summon:              List of monsters to summon, required for certain skills. (Default: null) 
+#        - Index            Unique Index in the list to edit the monster on import. Range of 0-5.
+#          Mob              Monster AegisName.
+#          Clear            True to remove the given monster at this index. (Optional)
+#      Emotion              Emotion displayed on the monster after the cast. (Default: ET_NONE)
+#      Chat                 Chat ID to display the associated sentence defined in mob_chat_db.yml. (Default: 0)
+#      Clear                True to remove the skill. (Optional)
+###########################################################################
+
+Header:
+  Type: MOB_SKILL_DB
+  Version: 1
+
+Footer:
+  Imports:
+  - Path: db/pre-re/mob_skill_db.yml
+    Mode: Prerenewal
+  - Path: db/re/mob_skill_db.yml
+    Mode: Renewal
+  - Path: db/import/mob_skill_db.yml

@@ -5423,7 +5423,7 @@
 1991,Tendrilion@AS_SONICBLOW,attack,136,10,2000,0,5000,yes,target,always,0,,,,,,,
 1991,Tendrilion@NPC_DRAGONFEAR,attack,659,2,500,0,10000,yes,self,always,0,,,,,,,
 1991,Tendrilion@NPC_GROUNDATTACK,attack,185,4,1000,0,5000,yes,target,always,0,,,,,,21,
-1991,Tendrilion@PF_SPIDERWEB,attack,405,1,3000,0,10000,yes,target,always,0,,0x39A5,,,,7,
+1991,Tendrilion@PF_SPIDERWEB,attack,405,1,3000,0,10000,yes,target,always,0,,0x3885,,,,7,
 1991,Tendrilion@NPC_ALLHEAL,idle,687,1,10000,30000,30000,yes,self,myhpltmaxrate,80,,,,,,,
 1992,Cornus@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,,
 1992,Cornus@AL_TELEPORT,walk,26,1,5000,0,5000,yes,self,rudeattacked,,,,,,,,

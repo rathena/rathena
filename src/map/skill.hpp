@@ -526,7 +526,7 @@ int32 skill_get_castdef( uint16 skill_id );
 int32 skill_get_nocast( uint16 skill_id );
 int32 skill_get_unit_id( uint16 skill_id );
 int32 skill_get_unit_id2( uint16 skill_id );
-int32 skill_get_castcancel( uint16 skill_id );
+bool skill_get_castcancel( uint16 skill_id );
 int32 skill_get_maxcount( uint16 skill_id ,uint16 skill_lv );
 int32 skill_get_blewcount( uint16 skill_id ,uint16 skill_lv );
 int32 skill_get_cooldown( uint16 skill_id, uint16 skill_lv );

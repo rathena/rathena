@@ -13820,8 +13820,8 @@ BUILDIN_FUNC(emotion)
 	struct block_list *bl = nullptr;
 	int32 type = script_getnum(st,2);
 
-	if (type < ET_SURPRISE || type >= ET_MAX) {
-		ShowWarning("buildin_emotion: Unknown emotion %d (min=%d, max=%d).\n", type, ET_SURPRISE, (ET_MAX-1));
+	if (type <= ET_NONE || type >= ET_MAX) {
+		ShowWarning("buildin_emotion: Unknown emotion %d (min=%d, max=%d).\n", type, (ET_NONE+1), (ET_MAX-1));
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -22414,7 +22414,7 @@ static int32 buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 	uint16 skill_id	= va_arg(ap,int32);
 	uint16 skill_lv	= va_arg(ap,int32);
 	int32 casttime	= va_arg(ap,int32);
-	int32 cancel		= va_arg(ap,int32);
+	bool cancel		= va_arg(ap,int32);
 	int32 emotion		= va_arg(ap,int32);
 	int32 target		= va_arg(ap,int32);
 
@@ -22450,14 +22450,15 @@ static int32 buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
  *------------------------------------------*/
 BUILDIN_FUNC(areamobuseskill)
 {
-	struct block_list center;
-	int16 m;
+	int16 m = map_mapname2mapid(script_getstr(st,2));
 
-	if( (m = map_mapname2mapid(script_getstr(st,2))) < 0 ) {
+	if (m < 0) {
 		ShowError("areamobuseskill: invalid map name.\n");
 		return SCRIPT_CMD_SUCCESS;
 	}
 
+	block_list center;
+	
 	center.m = m;
 	center.x = script_getnum(st,3);
 	center.y = script_getnum(st,4);
@@ -22509,7 +22510,7 @@ BUILDIN_FUNC(areamobuseskill)
 	}
 
 	int32 casttime = script_getnum( st, 9 );
-	int32 cancel = script_getnum( st, 10 );
+	bool cancel = script_getnum( st, 10 );
 	int32 emotion = script_getnum( st, 11 );
 	int32 target = script_getnum( st, 12 );
 
@@ -23340,9 +23341,9 @@ BUILDIN_FUNC(npcskill)
 		status_calc_npc(nd, SCO_NONE);
 
 	if (skill_get_inf(skill_id)&INF_GROUND_SKILL)
-		unit_skilluse_pos2(&nd->bl, sd->bl.x, sd->bl.y, skill_id, skill_level,0,0,true);
+		unit_skilluse_pos2(&nd->bl, sd->bl.x, sd->bl.y, skill_id, skill_level,0,false,true);
 	else
-		unit_skilluse_id2(&nd->bl, sd->bl.id, skill_id, skill_level,0,0,true);
+		unit_skilluse_id2(&nd->bl, sd->bl.id, skill_id, skill_level,0,false,true);
 
 	return SCRIPT_CMD_SUCCESS;
 }
