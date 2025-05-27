@@ -35,10 +35,16 @@ jobs:
               cc: gcc-13
             - cxx: g++-14
               cc: gcc-14
+            - cxx: clang++-13
+              cc: clang-13
             - cxx: clang++-17
               cc: clang-17
             - cxx: clang++-18
               cc: clang-18
+            - cxx: clang++-19
+              cc: clang-19
+            - cxx: clang++-20
+              cc: clang-20
 
     steps:
       - uses: actions/checkout@v4
@@ -52,5 +58,4 @@ jobs:
         run: CXX=${{matrix.compiler.cxx}} CC=${{matrix.compiler.cc}} cmake -B build
 
       - name: Build
-        # Execute the build.  You can specify a specific target with "--target <NAME>"
         run: cmake --build build -j $(nproc) --target all

@@ -358,6 +358,12 @@ job4_tro	mapflag	noteleport
 1@4drk	mapflag	monster_noteleport
 
 //============================================================
+// Spirit Handler Job Change
+//============================================================
+1@exsh	mapflag	noteleport
+1@exsh	mapflag	monster_noteleport
+
+//============================================================
 // Geffen Night Arena
 //============================================================
 1@ge_sn	mapflag	noteleport

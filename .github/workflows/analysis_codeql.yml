@@ -31,7 +31,7 @@ jobs:
       fail-fast: false
       matrix:
           # The ubuntu-latest label currently points to ubuntu-20.04.
-          # Available: ubuntu-22.04, ubuntu-20.04
+          # Available: ubuntu-24.04, ubuntu-22.04
           os: [ubuntu-latest]
           # We run build checks for both Renewal and PRE-Renewal
           mode: ['PRE','RE']

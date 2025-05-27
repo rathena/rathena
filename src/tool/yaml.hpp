@@ -340,7 +340,7 @@ uint8 skill_split_atoi2(char *str, int64 *val, const char *delim, int32 min_valu
  * @param val1: Temporary storage to first value
  * @param val2: Temporary storage to second value
  */
-static void itemdb_re_split_atoi(char* str, int* val1, int* val2) {
+static void itemdb_re_split_atoi(char* str, int32* val1, int32* val2) {
 	int32 i, val[2];
 
 	for (i = 0; i < 2; i++) {

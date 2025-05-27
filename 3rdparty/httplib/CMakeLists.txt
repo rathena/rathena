@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 3.13)
+
 add_library(httplib STATIC)
 
 target_sources(httplib PRIVATE "httplib.cc")

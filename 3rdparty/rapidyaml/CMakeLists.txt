@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.13)
 include(./ext/c4core/cmake/c4Project.cmake)
 project(ryml
     DESCRIPTION "Rapid YAML parsing and emitting"

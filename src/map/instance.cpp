@@ -29,7 +29,7 @@ using namespace rathena;
 
 /// Instance Idle Queue data
 struct s_instance_wait {
-	std::deque<int> id;
+	std::deque<int32> id;
 	int32 timer;
 } instance_wait;
 
@@ -1048,7 +1048,7 @@ bool instance_destroy(int32 instance_id)
  * @param y: Y coordinate
  * @return e_instance_enter value
  */
-e_instance_enter instance_enter(map_session_data *sd, int32 instance_id, const char *name, short x, short y)
+e_instance_enter instance_enter(map_session_data *sd, int32 instance_id, const char *name, int16 x, int16 y)
 {
 	nullpo_retr(IE_OTHER, sd);
 	
@@ -1235,10 +1235,15 @@ void do_reload_instance(void)
 				instance_addnpc(idata);
 
 			// Create new keep timer
-			std::shared_ptr<s_instance_db> db = instance_db.find(idata->id);
-
-			if (db)
+			if (std::shared_ptr<s_instance_db> db = instance_db.find(idata->id); db != nullptr) {
+				// Save the expire time
 				idata->keep_limit = time(nullptr) + db->limit;
+
+				// Recreate a timer and save the associated timer ID
+				if (idata->keep_timer != INVALID_TIMER)
+					delete_timer(idata->keep_timer, instance_delete_timer);
+				idata->keep_timer = add_timer(gettick() + db->limit * 1000, instance_delete_timer, it.first, 0);
+			}
 		}
 	}
 

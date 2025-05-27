@@ -9800,6 +9800,7 @@ Body:
       bonus2 bHPDrainRate,1000,100;
       bonus2 bSPDrainRate,1000,20;
       bonus bHealPower,200;
+      bonus bAspdRate,100;
       bonus2 bAddClass,Class_All,100;
       skill "WZ_STORMGUST",10;
       Skill "WZ_METEOR",10;
@@ -15229,11 +15230,11 @@ Body:
       Left_Hand: true
     ArmorLevel: 1
     EquipLevelMin: 1
-    Refineable: true
     View: 1
     Script: |
       bonus bAllStats,50;
       bonus bMdef,99;
+      bonus bUnbreakableShield;
       bonus bShortWeaponDamageReturn,100;
       bonus2 bSubRace,RC_DemiHuman,95;
       bonus2 bSubRace,RC_Player_Human,95;

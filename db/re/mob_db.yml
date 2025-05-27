@@ -59,6 +59,8 @@
 #   ClientAttackMotion      Client attack speed. (Default: AttackMotion)
 #   DamageMotion            Damage animation speed. (Default: 0)
 #   DamageTaken             Rate at which the monster will receive incoming damage. (Default: 100)
+#   GroupID                 Monster group ID. (Default: 0)
+#   Title                   Monster title. (Default: None)
 #   Ai                      Aegis monster type AI behavior. (Default: 06)
 #   Class                   Aegis monster class. (Default: Normal)
 #   Modes:                  List of unique behavior not defined by AI, Class, or Attribute. (Optional)
@@ -78,7 +80,7 @@
 
 Header:
   Type: MOB_DB
-  Version: 4
+  Version: 5
 
 Body:
   - Id: 1001
@@ -93067,6 +93069,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Plant
+    RaceGroups:
+      Lasagna: true
     Element: Water
     ElementLevel: 1
     WalkSpeed: 200
@@ -93115,6 +93119,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Brute
+    RaceGroups:
+      Lasagna: true
     Element: Earth
     ElementLevel: 1
     WalkSpeed: 300
@@ -93163,6 +93169,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Brute
+    RaceGroups:
+      Lasagna: true
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 250
@@ -93211,6 +93219,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Brute
+    RaceGroups:
+      Lasagna: true
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 250
@@ -93314,6 +93324,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Plant
+    RaceGroups:
+      Lasagna: true
     Element: Earth
     ElementLevel: 3
     WalkSpeed: 1000
@@ -93362,6 +93374,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Insect
+    RaceGroups:
+      Lasagna: true
     Element: Earth
     ElementLevel: 3
     WalkSpeed: 250
@@ -102421,6 +102435,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Glast_Heim_Abyss: true
     Element: Dark
     ElementLevel: 3
     WalkSpeed: 120
@@ -102466,6 +102482,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Glast_Heim_Abyss: true
     Element: Dark
     ElementLevel: 3
     WalkSpeed: 150
@@ -102508,6 +102526,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demon
+    RaceGroups:
+      Glast_Heim_Abyss: true
     Element: Water
     ElementLevel: 3
     WalkSpeed: 150
@@ -102558,6 +102578,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Formless
+    RaceGroups:
+      Glast_Heim_Abyss: true
     Element: Earth
     ElementLevel: 3
     WalkSpeed: 200
@@ -102604,6 +102626,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Glast_Heim_Abyss: true
     Element: Undead
     ElementLevel: 2
     WalkSpeed: 150
@@ -103000,6 +103024,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demon
+    RaceGroups:
+      Glast_Heim_Abyss: true
     Element: Water
     ElementLevel: 3
     WalkSpeed: 150
@@ -103049,6 +103075,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demon
+    RaceGroups:
+      Glast_Heim_Abyss: true
     Element: Fire
     ElementLevel: 3
     WalkSpeed: 150
@@ -103315,6 +103343,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demon
+    RaceGroups:
+      Glast_Heim_Abyss: true
     Element: Wind
     ElementLevel: 2
     WalkSpeed: 100
@@ -103365,6 +103395,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Demon
+    RaceGroups:
+      Glast_Heim_Abyss: true
     Element: Dark
     ElementLevel: 3
     WalkSpeed: 150
@@ -103422,6 +103454,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Undead
+    RaceGroups:
+      Glast_Heim_Abyss: true
     Element: Undead
     ElementLevel: 3
     WalkSpeed: 100
@@ -108780,7 +108814,7 @@ Body:
     AttackMotion: 864
     ClientAttackMotion: 648
     DamageMotion: 1440
-#   Ai: 
+    Ai: Abr_Offensive
   - Id: 20835
     AegisName: ABR_DUAL_CANNON
     Name: ABR Duel Cannon
@@ -108805,7 +108839,7 @@ Body:
     AttackMotion: 768
     ClientAttackMotion: 576
     DamageMotion: 1008
-#   Ai: 
+    Ai: Abr_Offensive
   - Id: 20836
     AegisName: ABR_MOTHER_NET
     Name: ABR Mother Net
@@ -108830,7 +108864,7 @@ Body:
     AttackMotion: 1008
     ClientAttackMotion: 672
     DamageMotion: 576
-#   Ai: 
+    Ai: Abr_Passive
   - Id: 20837
     AegisName: ABR_INFINITY
     Name: ABR Infinity
@@ -108855,7 +108889,7 @@ Body:
     AttackMotion: 1728
     ClientAttackMotion: 840
     DamageMotion: 1008
-#   Ai: 
+    Ai: Abr_Offensive
 #  - Id: 20838
 #    AegisName: ELEMETAL_MASTER_S1
 #  - Id: 20839
@@ -117610,10 +117644,20 @@ Body:
 #    AegisName: EP21_B_YORTUS_A_H
 #  - Id: 22422
 #    AegisName: EP21_B_YORTUS_B_H
+#  - Id: 22423
+#    AegisName: 2501_EV_MATJALAL
+#  - Id: 22424
+#    AegisName: 2501_EV_ACARI
 #  - Id: 22425
 #    AegisName: E_LEADER_SHEEP
 #  - Id: 22426
 #    AegisName: E_WINTER_SAVAGE
+#  - Id: 22427
+#    AegisName: MANDURING
+#  - Id: 22429
+#    AegisName: KINGMANDURING
+#  - Id: 22430
+#    AegisName: E_WINTER_KEEPER
 #  - Id: 22431
 #    AegisName: TATSI
 #  - Id: 22432

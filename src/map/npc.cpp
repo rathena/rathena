@@ -1222,7 +1222,7 @@ int32 npc_event_doall_sub(DBKey key, DBData *data, va_list ap)
 {
 	const char* p = key.str;
 	struct event_data* ev;
-	int* c;
+	int32* c;
 	const char* name;
 	int32 rid;
 
@@ -1251,7 +1251,7 @@ static int32 npc_event_do_sub(DBKey key, DBData *data, va_list ap)
 {
 	const char* p = key.str;
 	struct event_data* ev;
-	int* c, rid;
+	int32* c, rid;
 	const char* name;
 
 	nullpo_ret(ev = (struct event_data*)db_data2ptr(data));
@@ -2196,7 +2196,7 @@ int32 npc_click(map_session_data* sd, struct npc_data* nd)
 	}
 
 	if (sd->state.block_action & PCBLOCK_NPCCLICK) {
-		clif_msg(sd, MSI_BUSY);
+		clif_msg( *sd, MSI_BUSY );
 		return 1;
 	}
 
@@ -3798,7 +3798,7 @@ struct npc_data *npc_create_npc(int16 m, int16 x, int16 y){
  * @param to_y : y coordinate to warp to
  * @return nullptr:failed creation, npc_data* new warp
  */
-struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short from_y, short xs, short ys, uint16 to_mapindex, short to_x, short to_y)
+struct npc_data* npc_add_warp(char* name, int16 from_mapid, int16 from_x, int16 from_y, int16 xs, int16 ys, uint16 to_mapindex, int16 to_x, int16 to_y)
 {
 	int32 i, flag = 0;
 	struct npc_data *nd;
@@ -3859,7 +3859,7 @@ struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short 
  */
 static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
-	short x, y, xs, ys, to_x, to_y;
+	int16 x, y, xs, ys, to_x, to_y;
 	char mapname[MAP_NAME_LENGTH_EXT], to_mapname[MAP_NAME_LENGTH_EXT];
 
 	// w1=<from map name>,<fromX>,<fromY>,<facing>
@@ -3971,7 +3971,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 	char *p, point_str[32];
 	int32 m, is_discount = 0;
 	uint16 dir;
-	short x, y;
+	int16 x, y;
 	t_itemid nameid = 0;
 	struct npc_data *nd;
 	enum npc_subtype type;
@@ -4237,13 +4237,13 @@ int32 npc_convertlabel_db(DBKey key, DBData *data, va_list ap)
 	const char* lname = (const char*)key.str;
 	int32 lpos = db_data2i(data);
 	struct npc_label_list** label_list;
-	int* label_list_num;
+	int32* label_list_num;
 	const char* filepath;
 	struct npc_label_list* label;
 	const char *p;
 
 	nullpo_ret(label_list = va_arg(ap,struct npc_label_list**));
-	nullpo_ret(label_list_num = va_arg(ap,int*));
+	nullpo_ret(label_list_num = va_arg(ap,int32*));
 	nullpo_ret(filepath = va_arg(ap,const char*));
 
 	// In case of labels not terminated with ':', for user defined function support
@@ -4348,7 +4348,7 @@ static const char* npc_skip_script(const char* start, const char* buffer, const 
  */
 static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath) {
 	int16 dir = 0;
-	short m, x, y, xs = 0, ys = 0; // [Valaris] thanks to fov
+	int16 m, x, y, xs = 0, ys = 0; // [Valaris] thanks to fov
 	struct script_code *script;
 	int32 i;
 	const char* end;
@@ -4492,7 +4492,7 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 /// npc: -%TAB%duplicate(<name of target>)%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>
 /// npc: <map name>,<x>,<y>,<facing>%TAB%duplicate(<name of target>)%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>
 const char* npc_parse_duplicate( char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath, map_session_data* owner = nullptr ){
-	short x, y, m, xs = -1, ys = -1;
+	int16 x, y, m, xs = -1, ys = -1;
 	int16 dir;
 	char srcname[128];
 	int32 i;
@@ -5048,7 +5048,7 @@ void npc_setdisplayname(struct npc_data* nd, const char* newname)
 ///
 /// @param nd Target npc
 /// @param class_ New display class
-void npc_setclass(struct npc_data* nd, short class_)
+void npc_setclass(struct npc_data* nd, int16 class_)
 {
 	nullpo_retv(nd);
 
@@ -5189,7 +5189,7 @@ void npc_parse_mob2(struct spawn_data* mob)
 static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
 	int32 num, mob_id, mob_lv = -1, delay = 5000, size = -1, w1count, w4count;
-	short m, x = 0, y = 0, xs = 0, ys = 0;
+	int16 m, x = 0, y = 0, xs = 0, ys = 0;
 	char mapname[MAP_NAME_LENGTH_EXT], mobname[NAME_LENGTH], sprite[NAME_LENGTH];
 	struct spawn_data mob, *data;
 	int32 ai = AI_NONE; // mob_ai
@@ -5277,11 +5277,11 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 
 	mob.num = (uint16)num;
 	mob.active = 0;
-	mob.id = (short) mob_id;
+	mob.id = (int16) mob_id;
 	mob.x = (uint16)x;
 	mob.y = (uint16)y;
-	mob.xs = (signed short)xs;
-	mob.ys = (signed short)ys;
+	mob.xs = (int16)xs;
+	mob.ys = (int16)ys;
 	if (mob_lv > 0 && mob_lv <= MAX_LEVEL)
 		mob.level = mob_lv;
 	if (size > SZ_SMALL && size <= SZ_BIG)
@@ -5660,7 +5660,7 @@ int32 npc_parsesrcfile(const char* filepath)
 
 		// fill w1
 		if( pos[3]-pos[2] > ARRAYLENGTH(w1)-1 )
-			ShowWarning("npc_parsesrcfile: w1 truncated, too much data (%d) in file '%s', line '%d'.\n", pos[3]-pos[2], filepath, strline(buffer,p-buffer));
+			ShowWarning("npc_parsesrcfile: w1 truncated, too much data (%" PRIuPTR ") in file '%s', line '%d'.\n", pos[3]-pos[2], filepath, strline(buffer,p-buffer));
 
 		size_t index = std::min( pos[3] - pos[2], ARRAYLENGTH( w1 ) - 1 );
 		memcpy( w1, p + pos[2], index * sizeof( char ) );
@@ -5668,7 +5668,7 @@ int32 npc_parsesrcfile(const char* filepath)
 
 		// fill w2
 		if( pos[5]-pos[4] > ARRAYLENGTH(w2)-1 )
-			ShowWarning("npc_parsesrcfile: w2 truncated, too much data (%d) in file '%s', line '%d'.\n", pos[5]-pos[4], filepath, strline(buffer,p-buffer));
+			ShowWarning("npc_parsesrcfile: w2 truncated, too much data (%" PRIuPTR ") in file '%s', line '%d'.\n", pos[5]-pos[4], filepath, strline(buffer,p-buffer));
 
 		index = std::min( pos[5] - pos[4], ARRAYLENGTH( w2 ) - 1 );
 		memcpy( w2, p + pos[4], index * sizeof( char ) );
@@ -5676,7 +5676,7 @@ int32 npc_parsesrcfile(const char* filepath)
 
 		// fill w3
 		if( pos[7]-pos[6] > ARRAYLENGTH(w3)-1 )
-			ShowWarning("npc_parsesrcfile: w3 truncated, too much data (%d) in file '%s', line '%d'.\n", pos[7]-pos[6], filepath, strline(buffer,p-buffer));
+			ShowWarning("npc_parsesrcfile: w3 truncated, too much data (%" PRIuPTR ") in file '%s', line '%d'.\n", pos[7]-pos[6], filepath, strline(buffer,p-buffer));
 
 		index = std::min( pos[7] - pos[6], ARRAYLENGTH( w3 ) - 1 );
 		memcpy( w3, p + pos[6], index * sizeof( char ) );
@@ -5684,7 +5684,7 @@ int32 npc_parsesrcfile(const char* filepath)
 
 		// fill w4 (to end of line)
 		if( pos[1]-pos[8] > ARRAYLENGTH(w4)-1 )
-			ShowWarning("npc_parsesrcfile: w4 truncated, too much data (%d) in file '%s', line '%d'.\n", pos[1]-pos[8], filepath, strline(buffer,p-buffer));
+			ShowWarning("npc_parsesrcfile: w4 truncated, too much data (%" PRIuPTR ") in file '%s', line '%d'.\n", pos[1]-pos[8], filepath, strline(buffer,p-buffer));
 		if (pos[8] != -1) {
 			index = std::min( pos[1] - pos[8], ARRAYLENGTH( w4 ) - 1 );
 			memcpy( w4, p + pos[8], index * sizeof( char ) );
