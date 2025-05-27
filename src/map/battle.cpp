@@ -11950,7 +11950,7 @@ static const struct _battle_data {
 	{ "client_limit_unit_lv",               &battle_config.client_limit_unit_lv,            0,      0,      BL_ALL,         },
 	{ "land_protector_behavior",            &battle_config.land_protector_behavior,         0,      0,      1,              },
 	{ "npc_emotion_behavior",               &battle_config.npc_emotion_behavior,            0,      0,      1,              },
-	{ "companion_show_guild_emblem",        &battle_config.companion_show_guild_emblem,     0,     0,      540,            },
+	{ "companion_show_guild_emblem",        &battle_config.companion_show_guild_emblem, BL_NUL,BL_NUL,      BL_ALL,         },
 // BattleGround Settings
 	{ "bg_update_interval",                 &battle_config.bg_update_interval,              1000,   100,    INT_MAX,        },
 	{ "bg_short_attack_damage_rate",        &battle_config.bg_short_damage_rate,            80,     0,      INT_MAX,        },
