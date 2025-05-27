@@ -648,7 +648,7 @@ struct mob_data *mob_once_spawn_sub(struct block_list *bl, int16 m, int16 x, int
 
 	if (mobname)
 		safestrncpy(data.name, mobname, sizeof(data.name));
-	else if (battle_config.override_mob_names == 1)
+	else if (battle_config.override_mob_names != 0)
 		strcpy(data.name, "--en--");
 
 	if (event)
@@ -3783,7 +3783,7 @@ int32 mob_class_change (struct mob_data *md, int32 mob_id)
 	hp_rate = get_percentage(md->status.hp, md->status.max_hp);
 	md->mob_id = mob_id;
 	md->db = mob_db.find(mob_id);
-	if (battle_config.override_mob_names==1)
+	if (battle_config.override_mob_names!=0)
 		memcpy(md->name,md->db->name.c_str(),NAME_LENGTH);
 
 	status_change_end(&md->bl,SC_KEEPING); // End before calling status_calc_mob().
@@ -3977,7 +3977,7 @@ int32 mob_summonslave(struct mob_data *md2,int32 *value,int32 amount,uint16 skil
 		}
 
 		//These two need to be loaded from the db for each slave.
-		if(battle_config.override_mob_names==1)
+		if(battle_config.override_mob_names!=0)
 			strcpy(data.name,"--en--");
 
 		if (!mob_parse_dataset(&data))
