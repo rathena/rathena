@@ -266,7 +266,7 @@ OnStart:
 		}
 		.@size = getarraysize(.@coord);
 		for ( .@i = 0; .@i < .@size; .@i += 2 )
-			monster 'map_dth1$, .@coord[.@i], .@coord[.@i+1], "--ja--", .@mob_id,1, .@label$;
+			monster 'map_dth1$, .@coord[.@i], .@coord[.@i+1], "--en--", .@mob_id,1, .@label$;
 	}
 	end;
 
@@ -323,7 +323,7 @@ OnStart:
 		}
 		.@size = getarraysize(.@coord);
 		for ( .@i = 0; .@i < .@size; .@i += 2 )
-			monster 'map_dth2$, .@coord[.@i], .@coord[.@i+1], "--ja--", .@mob_id,1, .@label$;
+			monster 'map_dth2$, .@coord[.@i], .@coord[.@i+1], "--en--", .@mob_id,1, .@label$;
 	}
 	end;
 

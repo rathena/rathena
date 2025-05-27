@@ -768,22 +768,22 @@ OnTouch:
 	enablenpc instance_npcname("#to_bamq2");
 	enablenpc instance_npcname("#to_bamn");
 
-	monster 'map_bamn$,120,257,"--ja--",20681,1;	// G_EP17_2_HEART_HUNTER
-	monster 'map_bamn$,130,255,"--ja--",20681,1;
-	monster 'map_bamn$,130,244,"--ja--",20681,1;
-	monster 'map_bamn$,127,184,"--ja--",20681,1;
-	monster 'map_bamn$,188,240,"--ja--",20699,1;	// G_BELLARE3
-	monster 'map_bamn$,203,248,"--ja--",20699,1;
-	monster 'map_bamn$,203,252,"--ja--",20699,1;
-	monster 'map_bamn$,301,234,"--ja--",20681,1;
-	monster 'map_bamn$,302,239,"--ja--",20681,1;
-	monster 'map_bamn$,297,244,"--ja--",20681,1;
-	monster 'map_bamn$,197,52,"--ja--",20699,1;
-	monster 'map_bamn$,120,83,"--ja--",20681,1;
-	monster 'map_bamn$,117,84,"--ja--",20681,1;
-	monster 'map_bamn$,137,176,"--ja--",20681,1;
-	monster 'map_bamn$,143,181,"--ja--",20681,1;
-	monster 'map_bamn$,62,165,"--ja--",20699,1;
+	monster 'map_bamn$,120,257,"--en--",20681,1;	// G_EP17_2_HEART_HUNTER
+	monster 'map_bamn$,130,255,"--en--",20681,1;
+	monster 'map_bamn$,130,244,"--en--",20681,1;
+	monster 'map_bamn$,127,184,"--en--",20681,1;
+	monster 'map_bamn$,188,240,"--en--",20699,1;	// G_BELLARE3
+	monster 'map_bamn$,203,248,"--en--",20699,1;
+	monster 'map_bamn$,203,252,"--en--",20699,1;
+	monster 'map_bamn$,301,234,"--en--",20681,1;
+	monster 'map_bamn$,302,239,"--en--",20681,1;
+	monster 'map_bamn$,297,244,"--en--",20681,1;
+	monster 'map_bamn$,197,52,"--en--",20699,1;
+	monster 'map_bamn$,120,83,"--en--",20681,1;
+	monster 'map_bamn$,117,84,"--en--",20681,1;
+	monster 'map_bamn$,137,176,"--en--",20681,1;
+	monster 'map_bamn$,143,181,"--en--",20681,1;
+	monster 'map_bamn$,62,165,"--en--",20699,1;
 	end;
 }
 

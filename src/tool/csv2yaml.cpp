@@ -358,14 +358,14 @@ bool Csv2YamlTool::initialize( int32 argc, char* argv[] ){
 #endif
 
 	mob_txt_data(path_db_mode, path_db);
-	if (!process("MOB_DB", 3, { path_db_mode }, "mob_db", [](const std::string &path, const std::string &name_ext) -> bool {
+	if (!process("MOB_DB", 6, { path_db_mode }, "mob_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &mob_readdb_sub, false);
 	})) {
 		return false;
 	}
 
 	mob_txt_data(path_db_import, path_db_import);
-	if (!process("MOB_DB", 3, { path_db_import }, "mob_db", [](const std::string &path, const std::string &name_ext) -> bool {
+	if (!process("MOB_DB", 6, { path_db_import }, "mob_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &mob_readdb_sub, false);
 	})) {
 		return false;
@@ -3349,8 +3349,6 @@ static bool mob_readdb_sub( char *fields[], size_t columns, size_t current ){
 	body << YAML::Key << "Id" << YAML::Value << mob_id;
 	body << YAML::Key << "AegisName" << YAML::Value << fields[1];
 	body << YAML::Key << "Name" << YAML::Value << fields[3];
-	if (strcmp(fields[3], fields[2]) != 0)
-		body << YAML::Key << "JapaneseName" << YAML::Value << fields[2];
 	if (strtol(fields[4], nullptr, 10) > 0)
 		body << YAML::Key << "Level" << YAML::Value << fields[4];
 	if (strtol(fields[5], nullptr, 10) > 1)

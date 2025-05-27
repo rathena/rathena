@@ -11129,7 +11129,7 @@ BUILDIN_FUNC(makepet)
 
 	std::shared_ptr<s_mob_db> mdb = mob_db.find(pet->class_);
 
-	intif_create_pet( sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->jname.c_str() );
+	intif_create_pet( sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->name.c_str() );
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -14578,7 +14578,11 @@ BUILDIN_FUNC(strmobinfo)
 
 	switch (num) {
 	case 1: script_pushstrcopy(st,mob->name.c_str()); break;
-	case 2: script_pushstrcopy(st, mob->jname.c_str()); break;
+	case 2:
+		ShowWarning("buildin_strmobinfo: Japanese monster name (type 2) is no longer supported, defaulting to English monster name (type 1).\n");
+		script_reportsrc(st);
+		script_pushstrcopy(st, mob->name.c_str());
+		break;
 	case 3: script_pushint(st,mob->lv); break;
 	case 4: script_pushint(st,mob->status.max_hp); break;
 	case 5: script_pushint(st,mob->status.max_sp); break;
@@ -18738,7 +18742,7 @@ BUILDIN_FUNC(getmonsterinfo)
 	}
 
 	switch ( type ) {
-		case MOB_NAME:       script_pushstrcopy(st, mob->jname.c_str()); break;
+		case MOB_NAME:       script_pushstrcopy(st, mob->name.c_str()); break;
 		case MOB_LV:         script_pushint(st, mob->lv); break;
 		case MOB_MAXHP:      script_pushint(st, mob->status.max_hp); break;
 		case MOB_MAXSP:      script_pushint(st, mob->status.max_sp); break;

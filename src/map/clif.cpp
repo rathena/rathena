@@ -10215,7 +10215,7 @@ void clif_hate_info(map_session_data *sd, unsigned char hate_level,int32 class_,
 	if( pcdb_checkid(class_) ) {
 		clif_starskill(sd, job_name(class_), class_, hate_level, type ? 10 : 11);
 	} else if( mobdb_checkid(class_) ) {
-		clif_starskill(sd, mob_db.find(class_)->jname.c_str(), class_, hate_level, type ? 10 : 11);
+		clif_starskill(sd, mob_db.find(class_)->name.c_str(), class_, hate_level, type ? 10 : 11);
 	} else {
 		ShowWarning("clif_hate_info: Received invalid class %d for this packet (char_id=%d, hate_level=%u, type=%u).\n", class_, sd->status.char_id, (uint32)hate_level, (uint32)type);
 	}
@@ -10226,7 +10226,7 @@ void clif_hate_info(map_session_data *sd, unsigned char hate_level,int32 class_,
  *------------------------------------------*/
 void clif_mission_info(map_session_data *sd, int32 mob_id, unsigned char progress)
 {
-	clif_starskill(sd, mob_db.find(mob_id)->jname.c_str(), mob_id, progress, 20);
+	clif_starskill(sd, mob_db.find(mob_id)->name.c_str(), mob_id, progress, 20);
 }
 
 /*==========================================
@@ -17629,7 +17629,7 @@ void clif_bossmapinfo( map_session_data& sd, mob_data* md, e_bossmap_info flag )
 	}
 
 	if( md != nullptr ){
-		safestrncpy( p.name, md->db->jname.c_str(), sizeof( p.name ) );
+		safestrncpy( p.name, md->db->name.c_str(), sizeof( p.name ) );
 	}
 
 	clif_send( &p, sizeof( p ), &sd.bl, SELF );
@@ -17883,7 +17883,7 @@ void clif_quest_send_list(map_session_data *sd)
 				WFIFOW(fd, offset) = qi->objectives[j]->count;
 				offset += 2;
 				if (mob && qi->objectives[j]->mob_id > 0)
-					safestrncpy(WFIFOCP(fd,offset), mob->jname.c_str(), NAME_LENGTH);
+					safestrncpy(WFIFOCP(fd,offset), mob->name.c_str(), NAME_LENGTH);
 				else
 					safestrncpy(WFIFOCP(fd,offset), clif_quest_string(qi->objectives[j]).c_str(), NAME_LENGTH);
 				offset += NAME_LENGTH;
@@ -17941,7 +17941,7 @@ void clif_quest_send_mission(map_session_data *sd)
 			WFIFOL(fd, i*104+22+j*30) = (mob ? qi->objectives[j]->mob_id : MOBID_PORING);
 			WFIFOW(fd, i*104+26+j*30) = sd->quest_log[i].count[j];
 			if (mob && qi->objectives[j]->mob_id > 0)
-				safestrncpy(WFIFOCP(fd, i*104+28+j*30), mob->jname.c_str(), NAME_LENGTH);
+				safestrncpy(WFIFOCP(fd, i*104+28+j*30), mob->name.c_str(), NAME_LENGTH);
 			else
 				safestrncpy(WFIFOCP(fd, i*104+28+j*30), clif_quest_string(qi->objectives[j]).c_str(), NAME_LENGTH);
 		}
@@ -18001,7 +18001,7 @@ void clif_quest_add(map_session_data *sd, struct quest *qd)
 		WFIFOW(fd, offset) = qd->count[i];
 		offset += 2;
 		if (mob && qi->objectives[i]->mob_id > 0)
-			safestrncpy(WFIFOCP(fd,offset), mob->jname.c_str(), NAME_LENGTH);
+			safestrncpy(WFIFOCP(fd,offset), mob->name.c_str(), NAME_LENGTH);
 		else
 			safestrncpy(WFIFOCP(fd,offset), clif_quest_string(qi->objectives[i]).c_str(), NAME_LENGTH);
 		offset += NAME_LENGTH;

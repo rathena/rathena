@@ -25,7 +25,6 @@
 # - Id                      Monster ID.
 #   AegisName               Server name to reference the monster in scripts and lookups, should use no spaces.
 #   Name                    Name in English.
-#   JapaneseName            Name in Japanese. (Default: 'Name' value)
 #   Level                   Level. (Default: 1)
 #   Hp                      Total HP. (Default: 1)
 #   Sp                      Total SP. (Default: 1)
@@ -80,7 +79,7 @@
 
 Header:
   Type: MOB_DB
-  Version: 5
+  Version: 6
 
 Footer:
   Imports:

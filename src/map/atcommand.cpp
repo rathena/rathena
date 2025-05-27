@@ -2342,7 +2342,7 @@ ACMD_FUNC(monster)
 		number = 1;
 
 	if( !name[0] )
-		strcpy(name, "--ja--");
+		strcpy(name, "--en--");
 
 	// If value of atcommand_spawn_quantity_limit directive is greater than or equal to 1 and quantity of monsters is greater than value of the directive
 	if (battle_config.atc_spawn_quantity_limit && number > battle_config.atc_spawn_quantity_limit)
@@ -3211,7 +3211,7 @@ ACMD_FUNC(makeegg) {
 	if (pet != nullptr) {
 		std::shared_ptr<s_mob_db> mdb = mob_db.find(pet->class_);
 		if(mdb){
-			if(intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->jname.c_str())){
+			if(intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->name.c_str())){
 				res = 0;
 			} else {
 				res = -2; //char server down
@@ -7343,8 +7343,7 @@ ACMD_FUNC(mobsearch)
 		return -1;
 	}
 
-	strcpy(mob_name, mob->jname.c_str());	// --ja--
-//	strcpy(mob_name, mob->name.c_str());	// --en--
+	strcpy(mob_name, mob->name.c_str());	// --en--
 
 	snprintf(atcmd_output, sizeof atcmd_output, msg_txt(sd,1220), mob_name, mapindex_id2name(sd->mapindex)); // Mob Search... %s %s
 	clif_displaymessage(fd, atcmd_output);
@@ -7604,7 +7603,7 @@ ACMD_FUNC(summon)
 		return -1;
 	}
 
-	md = mob_once_spawn_sub(&sd->bl, sd->bl.m, -1, -1, "--ja--", mob_id, "", SZ_SMALL, AI_NONE);
+	md = mob_once_spawn_sub(&sd->bl, sd->bl.m, -1, -1, "--en--", mob_id, "", SZ_SMALL, AI_NONE);
 
 	if(!md)
 		return -1;
@@ -8029,9 +8028,9 @@ ACMD_FUNC(mobinfo)
 #endif
 		// stats
 		if( mob->get_bosstype() == BOSSTYPE_MVP )
-			sprintf(atcmd_output, msg_txt(sd,1240), mob->name.c_str(), mob->jname.c_str(), mob->sprite.c_str(), mob->id); // MVP Monster: '%s'/'%s'/'%s' (%d)
+			sprintf(atcmd_output, msg_txt(sd,1240), mob->name.c_str(), mob->sprite.c_str(), mob->id); // MVP Monster: '%s'/'%s' (%d)
 		else
-			sprintf(atcmd_output, msg_txt(sd,1241), mob->name.c_str(), mob->jname.c_str(), mob->sprite.c_str(), mob->id); // Monster: '%s'/'%s'/'%s' (%d)
+			sprintf(atcmd_output, msg_txt(sd,1241), mob->name.c_str(), mob->sprite.c_str(), mob->id); // Monster: '%s'/'%s' (%d)
 		clif_displaymessage(fd, atcmd_output);
 		sprintf(atcmd_output, msg_txt(sd,1242), mob->lv, mob->status.max_hp, base_exp, job_exp, MOB_HIT(mob), MOB_FLEE(mob)); //  Lv:%d  HP:%d  Base EXP:%llu  Job EXP:%llu  HIT:%d  FLEE:%d
 		clif_displaymessage(fd, atcmd_output);
@@ -8166,9 +8165,8 @@ ACMD_FUNC(showmobs)
 		return 0;
 	}
 
-	if(mob_id == strtol(mob_name, nullptr, 10) && !mob->jname.empty())
-		strcpy(mob_name, mob->jname.c_str());    // --ja--
-		//strcpy(mob_name, mob->name.c_str());    // --en--
+	if(mob_id == strtol(mob_name, nullptr, 10) && !mob->name.empty())
+		strcpy(mob_name, mob->name.c_str());    // --en--
 
 	snprintf(atcmd_output, sizeof atcmd_output, msg_txt(sd,1252), // Mob Search... %s %s
 		mob_name, mapindex_id2name(sd->mapindex));
@@ -8638,7 +8636,7 @@ ACMD_FUNC(whodrops)
 #endif
 				if (pc_isvip(sd)) // Display item rate increase for VIP
 					dropchance += (dropchance * battle_config.vip_drop_increase) / 100;
-				sprintf(atcmd_output, "- %s (%d): %02.02f%%", mob->jname.c_str(), id->mob[j].id, dropchance/100.);
+				sprintf(atcmd_output, "- %s (%d): %02.02f%%", mob->name.c_str(), id->mob[j].id, dropchance/100.);
 				clif_displaymessage(fd, atcmd_output);
 			}
 		}
@@ -8681,7 +8679,7 @@ ACMD_FUNC(whereis)
 		std::shared_ptr<s_mob_db> mob = mob_db.find(mob_id);
 
 		if(!mob) continue;
-		snprintf(atcmd_output, sizeof atcmd_output, msg_txt(sd,1289), mob->jname.c_str()); // %s spawns in:
+		snprintf(atcmd_output, sizeof atcmd_output, msg_txt(sd,1289), mob->name.c_str()); // %s spawns in:
 		clif_displaymessage(fd, atcmd_output);
 		
 		const std::vector<spawn_info> spawns = mob_get_spawns(mob_id);

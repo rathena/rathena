@@ -25,7 +25,6 @@
 # - Id                      Monster ID.
 #   AegisName               Server name to reference the monster in scripts and lookups, should use no spaces.
 #   Name                    Name in English.
-#   JapaneseName            Name in Japanese. (Default: 'Name' value)
 #   Level                   Level. (Default: 1)
 #   Hp                      Total HP. (Default: 1)
 #   Sp                      Total SP. (Default: 1)
@@ -80,7 +79,7 @@
 
 Header:
   Type: MOB_DB
-  Version: 5
+  Version: 6
 
 #Body:
 # eAthena Dev Team
@@ -1146,3 +1145,1021 @@ Header:
 #      - Item: Zombie_Master_Card
 #        Rate: 1
 #        StealProtected: true
+
+# Pre-Renewal monster names of the old 'JapaneseName' field
+#=============================================================
+#  - Id: 1025
+#    Name: Snake
+#  - Id: 1107
+#    Name: Desert Wolf Baby
+#  - Id: 1194
+#    Name: Arclouse
+#  - Id: 1200
+#    Name: Zherlthsh
+#  - Id: 1204
+#    Name: Tirfing
+#  - Id: 1208
+#    Name: Wander Man
+#  - Id: 1219
+#    Name: Knight of Abyss
+#  - Id: 1251
+#    Name: Knight of Windstorm
+#  - Id: 1252
+#    Name: Garm
+#  - Id: 1255
+#    Name: Neraid
+#  - Id: 1262
+#    Name: Mutant Dragon
+#  - Id: 1280
+#    Name: Steam Goblin
+#  - Id: 1317
+#    Name: Fur Seal
+#  - Id: 1371
+#    Name: Fake Angel
+#  - Id: 1373
+#    Name: Lord of Death
+#  - Id: 1388
+#    Name: Archangeling
+#  - Id: 1403
+#    Name: Antique Firelock
+#  - Id: 1404
+#    Name: Miyabi Ningyo
+#  - Id: 1409
+#    Name: Rice Cake Boy
+#  - Id: 1410
+#    Name: Live Peach Tree
+#  - Id: 1411
+#    Name: Peach Tree Bullet
+#  - Id: 1412
+#    Name: Evil Cloud Hermit
+#  - Id: 1413
+#    Name: Wild Ginseng
+#  - Id: 1414
+#    Name: Ginseng Bullet
+#  - Id: 1416
+#    Name: Wicked Nymph
+#  - Id: 1449
+#    Name: Mutant Dragon
+#  - Id: 1477
+#    Name: Arclouse
+#  - Id: 1482
+#    Name: Zherlthsh
+#  - Id: 1486
+#    Name: Tirfing
+#  - Id: 1490
+#    Name: Wander Man
+#  - Id: 1492
+#    Name: Incantation Samurai
+#  - Id: 1501
+#    Name: Parasite Bullet
+#  - Id: 1502
+#    Name: Pori Pori
+#  - Id: 1510
+#    Name: Hylozoist
+#  - Id: 1512
+#    Name: Hyegun
+#  - Id: 1513
+#    Name: Civil Servant
+#  - Id: 1514
+#    Name: Dancing Dragon
+#  - Id: 1515
+#    Name: Garm Baby
+#  - Id: 1516
+#    Name: Increase Soil
+#  - Id: 1517
+#    Name: Li Me Mang Ryang
+#  - Id: 1518
+#    Name: Bacsojin
+#  - Id: 1519
+#    Name: Chung E
+#  - Id: 1523
+#    Name: Antique Firelock
+#  - Id: 1529
+#    Name: Dark Snake Lord
+#  - Id: 1531
+#    Name: Evil Cloud Hermit
+#  - Id: 1533
+#    Name: Fur Seal
+#  - Id: 1550
+#    Name: Live Peach Tree
+#  - Id: 1552
+#    Name: Miyabi Ningyo
+#  - Id: 1556
+#    Name: Poison Toad
+#  - Id: 1564
+#    Name: Wicked Nymph
+#  - Id: 1565
+#    Name: Wild Ginseng
+#  - Id: 1606
+#    Name: Garm Baby
+#  - Id: 1609
+#    Name: Dancing Dragon
+#  - Id: 1612
+#    Name: Hyegun
+#  - Id: 1617
+#    Name: Waste Stove
+#  - Id: 1623
+#    Name: RSX 0806
+#  - Id: 1624
+#    Name: Waste Stove
+#  - Id: 1628
+#    Name: Mole
+#  - Id: 1630
+#    Name: Bacsojin
+#  - Id: 1631
+#    Name: Chung E
+#  - Id: 1634
+#    Name: Seyren
+#  - Id: 1635
+#    Name: Eremes
+#  - Id: 1636
+#    Name: Harword
+#  - Id: 1637
+#    Name: Magaleta
+#  - Id: 1638
+#    Name: Shecil
+#  - Id: 1639
+#    Name: Katrinn
+#  - Id: 1642
+#    Name: Whitesmith Harword
+#  - Id: 1643
+#    Name: High Priest Magaleta
+#  - Id: 1644
+#    Name: Sniper Shecil
+#  - Id: 1645
+#    Name: High Wizard Katrinn
+#  - Id: 1648
+#    Name: Whitesmith Harword
+#  - Id: 1649
+#    Name: High Priest Magaleta
+#  - Id: 1650
+#    Name: Sniper Shecil
+#  - Id: 1651
+#    Name: High Wizard Katrinn
+#  - Id: 1652
+#    Name: Ygnizem
+#  - Id: 1653
+#    Name: Whikebain
+#  - Id: 1654
+#    Name: Armaia
+#  - Id: 1655
+#    Name: Erend
+#  - Id: 1656
+#    Name: Kavac
+#  - Id: 1657
+#    Name: Rawrel
+#  - Id: 1658
+#    Name: Ygnizem
+#  - Id: 1659
+#    Name: Whikebain
+#  - Id: 1660
+#    Name: Armaia
+#  - Id: 1661
+#    Name: Erend
+#  - Id: 1662
+#    Name: Kavac
+#  - Id: 1663
+#    Name: Rawrel
+#  - Id: 1682
+#    Name: Removal
+#  - Id: 1687
+#    Name: Green Iguana
+#  - Id: 1689
+#    Name: Bacsojin
+#  - Id: 1698
+#    Name: Deathword
+#  - Id: 1700
+#    Name: Observation
+#  - Id: 1701
+#    Name: Shelter
+#  - Id: 1702
+#    Name: Retribution
+#  - Id: 1703
+#    Name: Solace
+#  - Id: 1704
+#    Name: Thanatos Odium
+#  - Id: 1705
+#    Name: Thanatos Despero
+#  - Id: 1706
+#    Name: Thanatos Maero
+#  - Id: 1707
+#    Name: Thanatos Dolor
+#  - Id: 1708
+#    Name: Thanatos
+#  - Id: 1709
+#    Name: Thanatos Odium
+#  - Id: 1710
+#    Name: Thanatos Despero
+#  - Id: 1711
+#    Name: Thanatos Maero
+#  - Id: 1712
+#    Name: Thanatos Dolor
+#  - Id: 1719
+#    Name: Detale
+#  - Id: 1720
+#    Name: Hydro
+#  - Id: 1723
+#    Name: Shecil Damon
+#  - Id: 1728
+#    Name: Desert Wolf Baby
+#  - Id: 1733
+#    Name: Kiel
+#  - Id: 1747
+#    Name: Snake
+#  - Id: 1756
+#    Name: Hydro
+#  - Id: 1801
+#    Name: Whitesmith Harword
+#  - Id: 1802
+#    Name: High Priest Magaleta
+#  - Id: 1803
+#    Name: Sniper Shecil
+#  - Id: 1804
+#    Name: High Wizard Katrinn
+#  - Id: 1807
+#    Name: Whitesmith Harword
+#  - Id: 1808
+#    Name: High Priest Magaleta
+#  - Id: 1809
+#    Name: Sniper Shecil
+#  - Id: 1810
+#    Name: High Wizard Katrinn
+#  - Id: 1811
+#    Name: Smokie
+#  - Id: 1812
+#    Name: Lude
+#  - Id: 1813
+#    Name: Hydro
+#  - Id: 1817
+#    Name: Detale
+#  - Id: 1824
+#    Name: Garm Baby
+#  - Id: 1829
+#    Name: Sword Guardian
+#  - Id: 1830
+#    Name: Bow Guardian
+#  - Id: 1837
+#    Name: Imp
+#  - Id: 1871
+#    Name: Fallen Bishop
+#  - Id: 1875
+#    Name: Tristan III
+#  - Id: 1879
+#    Name: Eclipse Pet
+#  - Id: 1888
+#    Name: Garm Baby
+#  - Id: 1893
+#    Name: Knight of the Abyss
+#  - Id: 1895
+#    Name: Seyren
+#  - Id: 1896
+#    Name: Katrinn
+#  - Id: 1948
+#    Name: Ygnizem
+#  - Id: 1967
+#    Name: Ygnizem
+#  - Id: 1975
+#    Name: Beholder Master
+#  - Id: 1978
+#    Name: Hell Apocalips
+#  - Id: 1979
+#    Name: Zukadam
+#  - Id: 1980
+#    Name: Kubkin
+#  - Id: 1991
+#    Name: Tendrillion
+#  - Id: 1996
+#    Name: Bacsojin
+#  - Id: 2000
+#    Name: Male Game Master
+#  - Id: 2001
+#    Name: Female Game Master
+#  - Id: 2040
+#    Name: Tirfing
+#  - Id: 2056
+#    Name: Zherlthsh
+#  - Id: 2062
+#    Name: Poporing
+#  - Id: 2081
+#    Name: Suspicious Hydra
+
+# Renewal monster names of the old 'JapaneseName' field
+#=============================================================
+#  - Id: 1025
+#    Name: Snake
+#  - Id: 1107
+#    Name: Desert Wolf Baby
+#  - Id: 1194
+#    Name: Arclouse
+#  - Id: 1200
+#    Name: Zherlthsh
+#  - Id: 1204
+#    Name: Tirfing
+#  - Id: 1208
+#    Name: Wander Man
+#  - Id: 1219
+#    Name: Knight of Abyss
+#  - Id: 1251
+#    Name: Knight of Windstorm
+#  - Id: 1252
+#    Name: Garm
+#  - Id: 1255
+#    Name: Neraid
+#  - Id: 1262
+#    Name: Mutant Dragon
+#  - Id: 1280
+#    Name: Steam Goblin
+#  - Id: 1317
+#    Name: Fur Seal
+#  - Id: 1371
+#    Name: Fake Angel
+#  - Id: 1373
+#    Name: Lord of Death
+#  - Id: 1388
+#    Name: Archangeling
+#  - Id: 1402
+#    Name: Poison Toad
+#  - Id: 1403
+#    Name: Antique Firelock
+#  - Id: 1404
+#    Name: Miyabi Ningyo
+#  - Id: 1409
+#    Name: Rice Cake Boy
+#  - Id: 1410
+#    Name: Live Peach Tree
+#  - Id: 1411
+#    Name: Peach Tree Bullet
+#  - Id: 1412
+#    Name: Evil Cloud Hermit
+#  - Id: 1413
+#    Name: Wild Ginseng
+#  - Id: 1414
+#    Name: Ginseng Bullet
+#  - Id: 1416
+#    Name: Wicked Nymph
+#  - Id: 1449
+#    Name: Mutant Dragon
+#  - Id: 1477
+#    Name: Arclouse
+#  - Id: 1482
+#    Name: Zherlthsh
+#  - Id: 1486
+#    Name: Tirfing
+#  - Id: 1490
+#    Name: Wander Man
+#  - Id: 1492
+#    Name: Incantation Samurai
+#  - Id: 1501
+#    Name: Parasite Bullet
+#  - Id: 1502
+#    Name: Pori Pori
+#  - Id: 1510
+#    Name: Hylozoist
+#  - Id: 1512
+#    Name: Hyegun
+#  - Id: 1513
+#    Name: Civil Servant
+#  - Id: 1514
+#    Name: Dancing Dragon
+#  - Id: 1515
+#    Name: Garm Baby
+#  - Id: 1516
+#    Name: Increase Soil
+#  - Id: 1517
+#    Name: Li Me Mang Ryang
+#  - Id: 1518
+#    Name: Bacsojin
+#  - Id: 1519
+#    Name: Chung E
+#  - Id: 1523
+#    Name: Antique Firelock
+#  - Id: 1529
+#    Name: Dark Snake Lord
+#  - Id: 1531
+#    Name: Evil Cloud Hermit
+#  - Id: 1533
+#    Name: Fur Seal
+#  - Id: 1550
+#    Name: Live Peach Tree
+#  - Id: 1552
+#    Name: Miyabi Ningyo
+#  - Id: 1556
+#    Name: Poison Toad
+#  - Id: 1564
+#    Name: Wicked Nymph
+#  - Id: 1565
+#    Name: Wild Ginseng
+#  - Id: 1606
+#    Name: Garm Baby
+#  - Id: 1609
+#    Name: Dancing Dragon
+#  - Id: 1612
+#    Name: Hyegun
+#  - Id: 1617
+#    Name: Waste Stove
+#  - Id: 1623
+#    Name: RSX 0806
+#  - Id: 1624
+#    Name: Waste Stove
+#  - Id: 1628
+#    Name: Mole
+#  - Id: 1630
+#    Name: Bacsojin
+#  - Id: 1631
+#    Name: Chung E
+#  - Id: 1634
+#    Name: Seyren
+#  - Id: 1635
+#    Name: Eremes
+#  - Id: 1636
+#    Name: Harword
+#  - Id: 1637
+#    Name: Magaleta
+#  - Id: 1638
+#    Name: Shecil
+#  - Id: 1639
+#    Name: Katrinn
+#  - Id: 1642
+#    Name: Whitesmith Harword
+#  - Id: 1643
+#    Name: High Priest Magaleta
+#  - Id: 1644
+#    Name: Sniper Shecil
+#  - Id: 1645
+#    Name: High Wizard Katrinn
+#  - Id: 1648
+#    Name: Whitesmith Harword
+#  - Id: 1649
+#    Name: High Priest Magaleta
+#  - Id: 1650
+#    Name: Sniper Shecil
+#  - Id: 1651
+#    Name: High Wizard Katrinn
+#  - Id: 1652
+#    Name: Ygnizem
+#  - Id: 1653
+#    Name: Whikebain
+#  - Id: 1654
+#    Name: Armaia
+#  - Id: 1655
+#    Name: Erend
+#  - Id: 1656
+#    Name: Kavac
+#  - Id: 1657
+#    Name: Rawrel
+#  - Id: 1658
+#    Name: Ygnizem
+#  - Id: 1659
+#    Name: Whikebain
+#  - Id: 1660
+#    Name: Armaia
+#  - Id: 1661
+#    Name: Erend
+#  - Id: 1662
+#    Name: Kavac
+#  - Id: 1663
+#    Name: Rawrel
+#  - Id: 1682
+#    Name: Removal
+#  - Id: 1687
+#    Name: Green Iguana
+#  - Id: 1689
+#    Name: Bacsojin
+#  - Id: 1698
+#    Name: Deathword
+#  - Id: 1700
+#    Name: Observation
+#  - Id: 1701
+#    Name: Shelter
+#  - Id: 1702
+#    Name: Retribution
+#  - Id: 1703
+#    Name: Solace
+#  - Id: 1704
+#    Name: Thanatos Odium
+#  - Id: 1705
+#    Name: Thanatos Despero
+#  - Id: 1706
+#    Name: Thanatos Maero
+#  - Id: 1707
+#    Name: Thanatos Dolor
+#  - Id: 1708
+#    Name: Thanatos
+#  - Id: 1709
+#    Name: Thanatos Odium
+#  - Id: 1710
+#    Name: Thanatos Despero
+#  - Id: 1711
+#    Name: Thanatos Maero
+#  - Id: 1712
+#    Name: Thanatos Dolor
+#  - Id: 1719
+#    Name: Detale
+#  - Id: 1720
+#    Name: Hydro
+#  - Id: 1723
+#    Name: Shecil Damon
+#  - Id: 1728
+#    Name: Desert Wolf Baby
+#  - Id: 1733
+#    Name: Kiel
+#  - Id: 1747
+#    Name: Snake
+#  - Id: 1756
+#    Name: Hydro
+#  - Id: 1801
+#    Name: Whitesmith Harword
+#  - Id: 1802
+#    Name: High Priest Magaleta
+#  - Id: 1803
+#    Name: Sniper Shecil
+#  - Id: 1804
+#    Name: High Wizard Katrinn
+#  - Id: 1807
+#    Name: Whitesmith Harword
+#  - Id: 1808
+#    Name: High Priest Magaleta
+#  - Id: 1809
+#    Name: Sniper Shecil
+#  - Id: 1810
+#    Name: High Wizard Katrinn
+#  - Id: 1811
+#    Name: Smokie
+#  - Id: 1812
+#    Name: Lude
+#  - Id: 1813
+#    Name: Hydro
+#  - Id: 1817
+#    Name: Detale
+#  - Id: 1824
+#    Name: Garm Baby
+#  - Id: 1839
+#    Name: Byorgue
+#  - Id: 1866
+#    Name: Hell Poodle
+#  - Id: 1871
+#    Name: Fallen Bishop
+#  - Id: 1878
+#    Name: Shining Plant
+#  - Id: 1879
+#    Name: Eclipse Pet
+#  - Id: 1880
+#    Name: Wood Goblin
+#  - Id: 1881
+#    Name: Les
+#  - Id: 1882
+#    Name: Baba Yaga
+#  - Id: 1883
+#    Name: Uzhas
+#  - Id: 1888
+#    Name: Garm Baby
+#  - Id: 1893
+#    Name: Knight of the Abyss
+#  - Id: 1895
+#    Name: Seyren
+#  - Id: 1896
+#    Name: Katrinn
+#  - Id: 1922
+#    Name: Incarnation of Morocc
+#  - Id: 1923
+#    Name: Incarnation of Morocc
+#  - Id: 1924
+#    Name: Incarnation of Morocc
+#  - Id: 1925
+#    Name: Incarnation of Morocc
+#  - Id: 1929
+#    Name: Great Demon Baphomet
+#  - Id: 1948
+#    Name: Ygnizem
+#  - Id: 1967
+#    Name: Ygnizem
+#  - Id: 1978
+#    Name: Hell Apocalips
+#  - Id: 1979
+#    Name: Zukadam
+#  - Id: 1980
+#    Name: Kubkin
+#  - Id: 1981
+#    Name: Safeguard Chief
+#  - Id: 1982
+#    Name: Orc Sniper
+#  - Id: 1983
+#    Name: Depraved Orc Spirit
+#  - Id: 1984
+#    Name: Shaman Cargalache
+#  - Id: 1989
+#    Name: Hillslion
+#  - Id: 1996
+#    Name: Bacsojin
+#  - Id: 2022
+#    Name: Nidhoggr's Shadow
+#  - Id: 2040
+#    Name: Tirfing
+#  - Id: 2056
+#    Name: Zherlthsh
+#  - Id: 2057
+#    Name: Suspicious Mouse
+#  - Id: 2062
+#    Name: Poporing
+#  - Id: 2081
+#    Name: Suspicious Hydra
+#  - Id: 2083
+#    Name: Scaraba
+#  - Id: 2084
+#    Name: Scaraba
+#  - Id: 2087
+#    Name: Queen Scaraba
+#  - Id: 2101
+#    Name: Lord of Death
+#  - Id: 2104
+#    Name: Dark Snake Lord
+#  - Id: 2107
+#    Name: Fallen Bishop
+#  - Id: 2111
+#    Name: Whitesmith Harword
+#  - Id: 2138
+#    Name: Nydhogg's Memory
+#  - Id: 2139
+#    Name: Nydhogg's Memory
+#  - Id: 2140
+#    Name: Nydhogg's Memory
+#  - Id: 2141
+#    Name: Nydhogg's Memory
+#  - Id: 2142
+#    Name: Nydhogg's Memory
+#  - Id: 2143
+#    Name: Nydhogg's Memory
+#  - Id: 2146
+#    Name: G_S_NYDHOG
+#  - Id: 2150
+#    Name: Watermelon
+#  - Id: 2151
+#    Name: Alnoldi
+#  - Id: 2174
+#    Name: Ancient Crustacean
+#  - Id: 2175
+#    Name: Deepsea Marse
+#  - Id: 2176
+#    Name: Deepsea Crab
+#  - Id: 2177
+#    Name: Deepsea Cornutus
+#  - Id: 2178
+#    Name: Deepsea Shellfish
+#  - Id: 2179
+#    Name: Ancient Kukre
+#  - Id: 2180
+#    Name: Ancient Sea Lord
+#  - Id: 2181
+#    Name: Ancient Sword Fish
+#  - Id: 2182
+#    Name: Ancient Seahorse
+#  - Id: 2183
+#    Name: Mutant Anolian
+#  - Id: 2184
+#    Name: Deepsea Mermaid
+#  - Id: 2185
+#    Name: Transform Kapha
+#  - Id: 2187
+#    Name: Dark Coelacanth
+#  - Id: 2188
+#    Name: Grotesque Coelacanth
+#  - Id: 2190
+#    Name: Ferocious Coelacanth
+#  - Id: 2192
+#    Name: Small Octopus
+#  - Id: 2193
+#    Name: Octupus Leg
+#  - Id: 2195
+#    Name: Ancient Kukre
+#  - Id: 2196
+#    Name: Ancient Sea Lord
+#  - Id: 2198
+#    Name: King Kray
+#  - Id: 2206
+#    Name: Kraken Leg
+#  - Id: 2210
+#    Name: Xmas Lunatic
+#  - Id: 2211
+#    Name: Teddy Bear
+#  - Id: 2212
+#    Name: Knight of Windstorm
+#  - Id: 2213
+#    Name: Wander Man
+#  - Id: 2214
+#    Name: Wicked Nymph
+#  - Id: 2218
+#    Name: Octopus Leg
+#  - Id: 2220
+#    Name: Quve
+#  - Id: 2244
+#    Name: Champion Chen
+#  - Id: 2245
+#    Name: Exp Test
+#  - Id: 2247
+#    Name: Increase Soil
+#  - Id: 2249
+#    Name: Pyuriel
+#  - Id: 2250
+#    Name: Lora
+#  - Id: 2253
+#    Name: Daehyon
+#  - Id: 2254
+#    Name: Soheon
+#  - Id: 2255
+#    Name: Kades
+#  - Id: 2264
+#    Name: Armaia
+#  - Id: 2265
+#    Name: Armaia
+#  - Id: 2266
+#    Name: Erend
+#  - Id: 2267
+#    Name: Erend
+#  - Id: 2268
+#    Name: Kavac
+#  - Id: 2269
+#    Name: Kavac
+#  - Id: 2270
+#    Name: Rawrel
+#  - Id: 2271
+#    Name: Rawrel
+#  - Id: 2272
+#    Name: Whikebain
+#  - Id: 2273
+#    Name: Whikebain
+#  - Id: 2274
+#    Name: Ygnizem
+#  - Id: 2275
+#    Name: Ygnizem
+#  - Id: 2277
+#    Name: Lora
+#  - Id: 2279
+#    Name: Soheon
+#  - Id: 2281
+#    Name: Abysmal Dark Shadow
+#  - Id: 2282
+#    Name: Abysmal Dark Frame
+#  - Id: 2283
+#    Name: Abysmal Dark Priest
+#  - Id: 2284
+#    Name: Abysmal Kobold
+#  - Id: 2285
+#    Name: Abysmal Kobold
+#  - Id: 2286
+#    Name: Abysmal Kobold
+#  - Id: 2287
+#    Name: Abysmal Kobold Archer
+#  - Id: 2330
+#    Name: Buwaya's Slave
+#  - Id: 2332
+#    Name: Fake Buwaya
+#  - Id: 2333
+#    Name: Buwaya's Weakness
+#  - Id: 2335
+#    Name: Treasure Chest
+#  - Id: 2337
+#    Name: Hidden Mob
+#  - Id: 2338
+#    Name: Bangungot Manananggal
+#  - Id: 2339
+#    Name: Bangungot Mangkukulam
+#  - Id: 2341
+#    Name: RWC Boss
+#  - Id: 2345
+#    Name: Zherlthsh
+#  - Id: 2348
+#    Name: Civil Servant
+#  - Id: 2353
+#    Name: Nightmare Minorous
+#  - Id: 2354
+#    Name: Nightmare Mummy
+#  - Id: 2355
+#    Name: Nightmare Verit
+#  - Id: 2356
+#    Name: Nightmare Mimic
+#  - Id: 2357
+#    Name: Nightmare Mimic
+#  - Id: 2358
+#    Name: Nightmare Arclouse
+#  - Id: 2359
+#    Name: Nightmare Arclouse
+#  - Id: 2360
+#    Name: Nightmare Ancient Mummy
+#  - Id: 2361
+#    Name: Nightmare Ancient Mummy
+#  - Id: 2362
+#    Name: Nightmare Amon Ra
+#  - Id: 2367
+#    Name: Blue Lichtern
+#  - Id: 2368
+#    Name: Yellow Lichtern
+#  - Id: 2369
+#    Name: Red Lichtern
+#  - Id: 2370
+#    Name: Green Lichtern
+#  - Id: 2379
+#    Name: Smokey Sock
+#  - Id: 2380
+#    Name: Smokey Gift
+#  - Id: 2402
+#    Name: POPORING_IMMUNE_M
+#  - Id: 2403
+#    Name: POPORING_IMMUNE_A
+#  - Id: 2417
+#    Name: Blacksmith Harword
+#  - Id: 2418
+#    Name: Hunter Shecil
+#  - Id: 2419
+#    Name: Wizard Katrinn
+#  - Id: 2420
+#    Name: Prist Magaleta
+#  - Id: 2421
+#    Name: Crusader Ygnizem
+#  - Id: 2422
+#    Name: Log Whikebain
+#  - Id: 2423
+#    Name: Alchemist Armaia
+#  - Id: 2424
+#    Name: Bard Kavac
+#  - Id: 2425
+#    Name: Dancer Joshepina
+#  - Id: 2426
+#    Name: Sage Rawrel
+#  - Id: 2427
+#    Name: Monk Erend
+#  - Id: 2430
+#    Name: Blacksmith Harword
+#  - Id: 2431
+#    Name: Hunter Shecil
+#  - Id: 2432
+#    Name: Wizard Katrinn
+#  - Id: 2433
+#    Name: Prist Magaleta
+#  - Id: 2434
+#    Name: Crusader Ygnizem
+#  - Id: 2435
+#    Name: Log Whikebain
+#  - Id: 2436
+#    Name: Alchemist Armaia
+#  - Id: 2437
+#    Name: Bard Kavac
+#  - Id: 2438
+#    Name: Dancer Joshepina
+#  - Id: 2439
+#    Name: Sage Rawrel
+#  - Id: 2440
+#    Name: Monk Erend
+#  - Id: 2451
+#    Name: Suspicious Baby
+#  - Id: 2470
+#    Name: Corrupted Knight of Abys
+#  - Id: 2530
+#    Name: Faceworm Dark
+#  - Id: 2532
+#    Name: Faceworm Queen (Red)
+#  - Id: 2533
+#    Name: Faceworm Queen (Green)
+#  - Id: 2534
+#    Name: Faceworm Queen (Blue)
+#  - Id: 2535
+#    Name: Faceworm Queen (Yellow)
+#  - Id: 2536
+#    Name: Hidden Mob 3
+#  - Id: 2537
+#    Name: Hidden Mob 4
+#  - Id: 2539
+#    Name: Hidden Mob 5
+#  - Id: 2542
+#    Name: Irene Elder
+#  - Id: 2563
+#    Name: Fei Kanabian
+#  - Id: 2564
+#    Name: Geffen Fenrir
+#  - Id: 3021
+#    Name: Fire Sand Man
+#  - Id: 3029
+#    Name: Grim Reaper Ankou
+#  - Id: 3038
+#    Name: Hidden Mob 7
+#  - Id: 3073
+#    Name: Grand Pere
+#  - Id: 3090
+#    Name: Loco Salamander
+#  - Id: 3123
+#    Name: Charleston 3
+#  - Id: 3126
+#    Name: Rock Step
+#  - Id: 3127
+#    Name: Kick Step
+#  - Id: 3128
+#    Name: Kick And Kick
+#  - Id: 3190
+#    Name: Sarah
+#  - Id: 3197
+#    Name: Gargoyle
+#  - Id: 3198
+#    Name: Galion
+#  - Id: 3199
+#    Name: Mutant Dragon
+#  - Id: 3208
+#    Name: V Eremes
+#  - Id: 3209
+#    Name: V Magaleta
+#  - Id: 3210
+#    Name: V Katrinn
+#  - Id: 3211
+#    Name: V Shecil
+#  - Id: 3212
+#    Name: V Harword
+#  - Id: 3213
+#    Name: V Seyren
+#  - Id: 3214
+#    Name: V G Eremes
+#  - Id: 3215
+#    Name: V G Magaleta
+#  - Id: 3216
+#    Name: V G Katrinn
+#  - Id: 3217
+#    Name: V G Shecil
+#  - Id: 3218
+#    Name: V G Harword
+#  - Id: 3219
+#    Name: V G Seyren
+#  - Id: 3222
+#    Name: Ranger Shecil
+#  - Id: 3223
+#    Name: Mechanic Harword
+#  - Id: 3224
+#    Name: Warlock Katrinn
+#  - Id: 3226
+#    Name: V Randel
+#  - Id: 3227
+#    Name: V Flamel
+#  - Id: 3228
+#    Name: V Celia
+#  - Id: 3229
+#    Name: V Chen
+#  - Id: 3230
+#    Name: V Gertie
+#  - Id: 3231
+#    Name: V Alphoccio
+#  - Id: 3232
+#    Name: V Trentini
+#  - Id: 3233
+#    Name: V G Randel
+#  - Id: 3234
+#    Name: V G Flamel
+#  - Id: 3235
+#    Name: V G Celia
+#  - Id: 3236
+#    Name: V G Chen
+#  - Id: 3237
+#    Name: V G Gertie
+#  - Id: 3238
+#    Name: V G Alphoccio
+#  - Id: 3239
+#    Name: V G Trentini
+#  - Id: 3247
+#    Name: Cenere G
+#  - Id: 3248
+#    Name: Repair Robot T
+#  - Id: 3249
+#    Name: Exploration Rover T
+#  - Id: 3250
+#    Name: Scr Mt Robots
+#  - Id: 3253
+#    Name: Sys Msg
+#  - Id: 3255
+#    Name: Ghoul H
+#  - Id: 3256
+#    Name: Zombie H
+#  - Id: 3412
+#    Name: Green Iguana
+#  - Id: 3415
+#    Name: Fur Seal
+#  - Id: 3442
+#    Name: Frozenwolf
+#  - Id: 3445
+#    Name: P Archer Skeleton
+#  - Id: 3446
+#    Name: P Skeleton
+#  - Id: 3447
+#    Name: P Soldier Skeleton
+#  - Id: 3448
+#    Name: P Amdarais
+#  - Id: 3449
+#    Name: P Amdarais
+#  - Id: 3454
+#    Name: Heart Hunter N
+#  - Id: 3455
+#    Name: Glass Plate
+#  - Id: 3741
+#    Name: Mechaspider
+#  - Id: 3742
+#    Name: Purplestone
+#  - Id: 3743
+#    Name: Seaanemone
+#  - Id: 3787
+#    Name: Rr Arclouse
+#  - Id: 3788
+#    Name: Rr Cramp

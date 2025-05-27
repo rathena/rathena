@@ -7,7 +7,6 @@ CREATE TABLE `mob_db2` (
   `id` int(11) unsigned NOT NULL,
   `name_aegis` varchar(24) DEFAULT NULL,
   `name_english` text DEFAULT NULL,
-  `name_japanese` text DEFAULT NULL,
   `level` smallint(6) unsigned DEFAULT NULL,
   `hp` int(11) unsigned DEFAULT NULL,
   `sp` mediumint(9) unsigned DEFAULT NULL,

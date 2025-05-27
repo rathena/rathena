@@ -262,7 +262,6 @@ struct s_mob_db {
 	uint32 id;
 	std::string sprite;
 	std::string name;
-	std::string jname;
 	t_exp base_exp;
 	t_exp job_exp;
 	t_exp mexp;
@@ -289,7 +288,7 @@ private:
 	bool parseDropNode( std::string nodeName, const ryml::NodeRef& node, uint8 max, std::vector<std::shared_ptr<s_mob_drop>>& drops );
 
 public:
-	MobDatabase() : TypesafeCachedYamlDatabase("MOB_DB", 5, 1) {
+	MobDatabase() : TypesafeCachedYamlDatabase("MOB_DB", 6, 1) {
 
 	}
 

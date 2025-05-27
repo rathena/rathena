@@ -25,7 +25,6 @@
 # - Id                      Monster ID.
 #   AegisName               Server name to reference the monster in scripts and lookups, should use no spaces.
 #   Name                    Name in English.
-#   JapaneseName            Name in Japanese. (Default: 'Name' value)
 #   Level                   Level. (Default: 1)
 #   Hp                      Total HP. (Default: 1)
 #   Sp                      Total SP. (Default: 1)
@@ -80,7 +79,7 @@
 
 Header:
   Type: MOB_DB
-  Version: 5
+  Version: 6
 
 Body:
   - Id: 1001
@@ -1132,7 +1131,6 @@ Body:
   - Id: 1025
     AegisName: SNAKE
     Name: Boa
-    JapaneseName: Snake
     Level: 15
     Hp: 471
     BaseExp: 72
@@ -4982,7 +4980,6 @@ Body:
   - Id: 1107
     AegisName: DESERT_WOLF_B
     Name: Baby Desert Wolf
-    JapaneseName: Desert Wolf Baby
     Level: 9
     Hp: 164
     BaseExp: 20
@@ -9039,7 +9036,6 @@ Body:
   - Id: 1194
     AegisName: ARCLOUSE
     Name: Arclouze
-    JapaneseName: Arclouse
     Level: 59
     Hp: 6075
     BaseExp: 860
@@ -9327,7 +9323,6 @@ Body:
   - Id: 1200
     AegisName: ZHERLTHSH
     Name: Zealotus
-    JapaneseName: Zherlthsh
     Level: 63
     Hp: 18300
     BaseExp: 3608
@@ -9517,7 +9512,6 @@ Body:
   - Id: 1204
     AegisName: TIRFING
     Name: Ogretooth
-    JapaneseName: Tirfing
     Level: 71
     Hp: 29900
     BaseExp: 5412
@@ -9711,7 +9705,6 @@ Body:
   - Id: 1208
     AegisName: WANDER_MAN
     Name: Wanderer
-    JapaneseName: Wander Man
     Level: 74
     Hp: 8170
     BaseExp: 5786
@@ -10141,7 +10134,6 @@ Body:
   - Id: 1219
     AegisName: KNIGHT_OF_ABYSS
     Name: Abysmal Knight
-    JapaneseName: Knight of Abyss
     Level: 79
     Hp: 36140
     BaseExp: 8469
@@ -11594,7 +11586,6 @@ Body:
   - Id: 1251
     AegisName: KNIGHT_OF_WINDSTORM
     Name: Stormy Knight
-    JapaneseName: Knight of Windstorm
     Level: 77
     Hp: 240000
     BaseExp: 64350
@@ -11654,7 +11645,6 @@ Body:
   - Id: 1252
     AegisName: GARM
     Name: Hatii
-    JapaneseName: Garm
     Level: 73
     Hp: 197000
     BaseExp: 50050
@@ -11805,7 +11795,6 @@ Body:
   - Id: 1255
     AegisName: NERAID
     Name: Nereid
-    JapaneseName: Neraid
     Level: 40
     Hp: 4120
     BaseExp: 1126
@@ -12131,7 +12120,6 @@ Body:
   - Id: 1262
     AegisName: MUTANT_DRAGON
     Name: Mutant Dragonoid
-    JapaneseName: Mutant Dragon
     Level: 65
     Hp: 62600
     BaseExp: 4730
@@ -12986,7 +12974,6 @@ Body:
   - Id: 1280
     AegisName: STEAM_GOBLIN
     Name: Goblin Steamrider
-    JapaneseName: Steam Goblin
     Level: 35
     Hp: 2490
     BaseExp: 864
@@ -14737,7 +14724,6 @@ Body:
   - Id: 1317
     AegisName: FUR_SEAL
     Name: Seal
-    JapaneseName: Fur Seal
     Level: 63
     Hp: 9114
     BaseExp: 3765
@@ -16782,7 +16768,6 @@ Body:
   - Id: 1371
     AegisName: FAKE_ANGEL
     Name: False Angel
-    JapaneseName: Fake Angel
     Level: 65
     Hp: 16845
     BaseExp: 3371
@@ -16873,7 +16858,6 @@ Body:
   - Id: 1373
     AegisName: LORD_OF_DEATH
     Name: Lord of the Dead
-    JapaneseName: Lord of Death
     Level: 94
     Hp: 603383
     BaseExp: 131343
@@ -17548,7 +17532,6 @@ Body:
   - Id: 1388
     AegisName: ARCHANGELING
     Name: Arc Angeling
-    JapaneseName: Archangeling
     Level: 60
     Hp: 79523
     BaseExp: 4152
@@ -18206,7 +18189,6 @@ Body:
   - Id: 1403
     AegisName: ANTIQUE_FIRELOCK
     Name: Firelock Soldier
-    JapaneseName: Antique Firelock
     Level: 47
     Hp: 3852
     BaseExp: 1293
@@ -18255,7 +18237,6 @@ Body:
   - Id: 1404
     AegisName: MIYABI_NINGYO
     Name: Miyabi Doll
-    JapaneseName: Miyabi Ningyo
     Level: 33
     Hp: 6300
     BaseExp: 795
@@ -18457,7 +18438,6 @@ Body:
   - Id: 1409
     AegisName: RICE_CAKE_BOY
     Name: Dumpling Child
-    JapaneseName: Rice Cake Boy
     Level: 27
     Hp: 2098
     BaseExp: 231
@@ -18503,7 +18483,6 @@ Body:
   - Id: 1410
     AegisName: LIVE_PEACH_TREE
     Name: Enchanted Peach Tree
-    JapaneseName: Live Peach Tree
     Level: 53
     Hp: 8905
     BaseExp: 2591
@@ -18548,7 +18527,6 @@ Body:
 #  - Id: 1411
 #    AegisName: PEACH_TREE_BULLET
 #    Name: Peach Tree Bullet... (mode  129)
-#    JapaneseName: Peach Tree Bullet
 #    Size: Small
 #    Race: Formless
 #    Element: Neutral
@@ -18556,7 +18534,6 @@ Body:
   - Id: 1412
     AegisName: EVIL_CLOUD_HERMIT
     Name: Taoist Hermit
-    JapaneseName: Evil Cloud Hermit
     Level: 56
     Hp: 10392
     BaseExp: 3304
@@ -18604,7 +18581,6 @@ Body:
   - Id: 1413
     AegisName: WILD_GINSENG
     Name: Hermit Plant
-    JapaneseName: Wild Ginseng
     Level: 46
     Hp: 6900
     BaseExp: 1038
@@ -18653,7 +18629,6 @@ Body:
 #  - Id: 1414
 #    AegisName: GINSENG_BULLET
 #    Name: Ginseng Bullet... (mode 129)
-#    JapaneseName: Ginseng Bullet
 #    Size: Small
 #    Race: Formless
 #    Element: Neutral
@@ -18706,7 +18681,6 @@ Body:
   - Id: 1416
     AegisName: WICKED_NYMPH
     Name: Evil Nymph
-    JapaneseName: Wicked Nymph
     Level: 63
     Hp: 16029
     BaseExp: 3945
@@ -19677,7 +19651,6 @@ Body:
   - Id: 1449
     AegisName: G_MUTANT_DRAGON
     Name: Mutant Dragonoid
-    JapaneseName: Mutant Dragon
     Level: 65
     Hp: 62600
     Attack: 2400
@@ -20442,7 +20415,6 @@ Body:
   - Id: 1477
     AegisName: G_ARCLOUSE
     Name: Arclouze
-    JapaneseName: Arclouse
     Level: 59
     Hp: 6075
     Attack: 570
@@ -20581,7 +20553,6 @@ Body:
   - Id: 1482
     AegisName: G_ZHERLTHSH
     Name: Zealotus
-    JapaneseName: Zherlthsh
     Level: 63
     Hp: 18300
     Attack: 700
@@ -20695,7 +20666,6 @@ Body:
   - Id: 1486
     AegisName: G_TIRFING
     Name: Ogretooth
-    JapaneseName: Tirfing
     Level: 71
     Hp: 29900
     Attack: 950
@@ -20809,7 +20779,6 @@ Body:
   - Id: 1490
     AegisName: G_WANDER_MAN
     Name: Wanderer
-    JapaneseName: Wander Man
     Level: 74
     Hp: 8170
     Attack: 450
@@ -20868,7 +20837,6 @@ Body:
   - Id: 1492
     AegisName: INCANTATION_SAMURAI
     Name: Samurai Specter
-    JapaneseName: Incantation Samurai
     Level: 71
     Hp: 218652
     BaseExp: 33095
@@ -21262,7 +21230,6 @@ Body:
 #  - Id: 1501
 #    AegisName: PARASITE_BULLET
 #    Name: Parasite Bullet... (mode 2181)
-#    JapaneseName: Parasite Bullet
 #    Size: Small
 #    Race: Formless
 #    Element: Neutral
@@ -21270,7 +21237,6 @@ Body:
   - Id: 1502
     AegisName: PORING_V
     Name: Bring it on!
-    JapaneseName: Pori Pori
     Level: 99
     Hp: 95000000
     BaseExp: 87250
@@ -21658,7 +21624,6 @@ Body:
   - Id: 1510
     AegisName: HYLOZOIST
     Name: Heirozoist
-    JapaneseName: Hylozoist
     Level: 51
     Hp: 7186
     BaseExp: 2314
@@ -21767,7 +21732,6 @@ Body:
   - Id: 1512
     AegisName: HYEGUN
     Name: Yao Jun
-    JapaneseName: Hyegun
     Level: 56
     Hp: 9981
     BaseExp: 2199
@@ -21812,7 +21776,6 @@ Body:
   - Id: 1513
     AegisName: CIVIL_SERVANT
     Name: Mao Guai
-    JapaneseName: Civil Servant
     Level: 62
     Hp: 14390
     BaseExp: 4023
@@ -21857,7 +21820,6 @@ Body:
   - Id: 1514
     AegisName: DANCING_DRAGON
     Name: Zhu Po Long
-    JapaneseName: Dancing Dragon
     Level: 54
     Hp: 9136
     BaseExp: 3030
@@ -21902,7 +21864,6 @@ Body:
   - Id: 1515
     AegisName: GARM_BABY
     Name: Baby Hatii
-    JapaneseName: Garm Baby
     Level: 61
     Hp: 20199
     BaseExp: 1022
@@ -21947,7 +21908,6 @@ Body:
   - Id: 1516
     AegisName: INCREASE_SOIL
     Name: Mi Gao
-    JapaneseName: Increase Soil
     Level: 51
     Hp: 8230
     BaseExp: 2760
@@ -21990,7 +21950,6 @@ Body:
   - Id: 1517
     AegisName: LI_ME_MANG_RYANG
     Name: Jing Guai
-    JapaneseName: Li Me Mang Ryang
     Level: 48
     Hp: 5920
     BaseExp: 1643
@@ -22035,7 +21994,6 @@ Body:
   - Id: 1518
     AegisName: BACSOJIN
     Name: White Lady
-    JapaneseName: Bacsojin
     Level: 72
     Hp: 56380
     BaseExp: 5590
@@ -22082,7 +22040,6 @@ Body:
   - Id: 1519
     AegisName: CHUNG_E
     Name: Green Maiden
-    JapaneseName: Chung E
     Level: 49
     Hp: 23900
     BaseExp: 2396
@@ -22222,7 +22179,6 @@ Body:
   - Id: 1523
     AegisName: G_ANTIQUE_FIRELOCK
     Name: Firelock Soldier
-    JapaneseName: Antique Firelock
     Level: 47
     Hp: 3852
     Attack: 289
@@ -22387,7 +22343,6 @@ Body:
   - Id: 1529
     AegisName: G_DARK_SNAKE_LORD
     Name: Evil Snake Lord
-    JapaneseName: Dark Snake Lord
     Level: 73
     Hp: 254993
     Attack: 1433
@@ -22445,7 +22400,6 @@ Body:
   - Id: 1531
     AegisName: G_EVIL_CLOUD_HERMIT
     Name: Taoist Hermit
-    JapaneseName: Evil Cloud Hermit
     Level: 56
     Hp: 10392
     Attack: 311
@@ -22500,7 +22454,6 @@ Body:
   - Id: 1533
     AegisName: G_FUR_SEAL
     Name: Seal
-    JapaneseName: Fur Seal
     Level: 63
     Hp: 9114
     Attack: 845
@@ -22964,7 +22917,6 @@ Body:
   - Id: 1550
     AegisName: G_LIVE_PEACH_TREE
     Name: Enchanted Peach Tree
-    JapaneseName: Live Peach Tree
     Level: 53
     Hp: 8905
     Attack: 301
@@ -23019,7 +22971,6 @@ Body:
   - Id: 1552
     AegisName: G_MIYABI_NINGYO
     Name: Miyabi Doll
-    JapaneseName: Miyabi Ningyo
     Level: 33
     Hp: 6300
     Attack: 250
@@ -23131,7 +23082,6 @@ Body:
   - Id: 1556
     AegisName: G_POISON_TOAD
     Name: Poisonous Toad
-    JapaneseName: Poison Toad
     Level: 46
     Hp: 6629
     Attack: 288
@@ -23356,7 +23306,6 @@ Body:
   - Id: 1564
     AegisName: G_WICKED_NYMPH
     Name: Evil Nymph
-    JapaneseName: Wicked Nymph
     Level: 63
     Hp: 16029
     Attack: 399
@@ -23386,7 +23335,6 @@ Body:
   - Id: 1565
     AegisName: G_WILD_GINSENG
     Name: Hermit Plant
-    JapaneseName: Wild Ginseng
     Level: 46
     Hp: 6900
     Attack: 220
@@ -24692,7 +24640,6 @@ Body:
   - Id: 1606
     AegisName: G_GARM_BABY
     Name: Baby Hatii
-    JapaneseName: Garm Baby
     Level: 61
     Hp: 20199
     Attack: 680
@@ -24777,7 +24724,6 @@ Body:
   - Id: 1609
     AegisName: G_DANCING_DRAGON
     Name: Zhu Po Long
-    JapaneseName: Dancing Dragon
     Level: 54
     Hp: 9136
     BaseExp: 3030
@@ -24894,7 +24840,6 @@ Body:
   - Id: 1612
     AegisName: A_HYEGUN
     Name: Yao Jun
-    JapaneseName: Hyegun
     Level: 56
     Hp: 9981
     Attack: 710
@@ -25122,7 +25067,6 @@ Body:
   - Id: 1617
     AegisName: WASTE_STOVE
     Name: Old Stove
-    JapaneseName: Waste Stove
     Level: 68
     Hp: 15895
     BaseExp: 4412
@@ -25401,7 +25345,6 @@ Body:
   - Id: 1623
     AegisName: RSX_0806
     Name: RSX-0806
-    JapaneseName: RSX 0806
     Level: 86
     Hp: 560733
     BaseExp: 31010
@@ -25461,7 +25404,6 @@ Body:
   - Id: 1624
     AegisName: G_WASTE_STOVE
     Name: Old Stove
-    JapaneseName: Waste Stove
     Level: 68
     Hp: 15895
     Attack: 500
@@ -25602,7 +25544,6 @@ Body:
   - Id: 1628
     AegisName: MOLE
     Name: Holden
-    JapaneseName: Mole
     Level: 36
     Hp: 2209
     BaseExp: 268
@@ -25682,7 +25623,6 @@ Body:
   - Id: 1630
     AegisName: BACSOJIN_
     Name: White Lady
-    JapaneseName: Bacsojin
     Level: 85
     Hp: 253221
     BaseExp: 45250
@@ -25742,7 +25682,6 @@ Body:
   - Id: 1631
     AegisName: CHUNG_E_
     Name: Green Maiden
-    JapaneseName: Chung E
     Level: 59
     Hp: 23900
     BaseExp: 4256
@@ -25881,7 +25820,6 @@ Body:
   - Id: 1634
     AegisName: SEYREN
     Name: Seyren Windsor
-    JapaneseName: Seyren
     Level: 91
     Hp: 88402
     BaseExp: 100000
@@ -25932,7 +25870,6 @@ Body:
   - Id: 1635
     AegisName: EREMES
     Name: Eremes Guile
-    JapaneseName: Eremes
     Level: 87
     Hp: 60199
     BaseExp: 100000
@@ -25983,7 +25920,6 @@ Body:
   - Id: 1636
     AegisName: HARWORD
     Name: Howard Alt-Eisen
-    JapaneseName: Harword
     Level: 83
     Hp: 78690
     BaseExp: 100000
@@ -26032,7 +25968,6 @@ Body:
   - Id: 1637
     AegisName: MAGALETA
     Name: Margaretha Sorin
-    JapaneseName: Magaleta
     Level: 90
     Hp: 61282
     BaseExp: 100000
@@ -26080,7 +26015,6 @@ Body:
   - Id: 1638
     AegisName: SHECIL
     Name: Cecil Damon
-    JapaneseName: Shecil
     Level: 82
     Hp: 58900
     BaseExp: 100000
@@ -26128,7 +26062,6 @@ Body:
   - Id: 1639
     AegisName: KATRINN
     Name: Kathryne Keyron
-    JapaneseName: Katrinn
     Level: 92
     Hp: 47280
     BaseExp: 100000
@@ -26246,7 +26179,6 @@ Body:
   - Id: 1642
     AegisName: G_HARWORD
     Name: Whitesmith Howard
-    JapaneseName: Whitesmith Harword
     Level: 99
     Hp: 310000
     BaseExp: 18000
@@ -26282,7 +26214,6 @@ Body:
   - Id: 1643
     AegisName: G_MAGALETA
     Name: High Priest Margaretha
-    JapaneseName: High Priest Magaleta
     Level: 99
     Hp: 182910
     BaseExp: 18000
@@ -26317,7 +26248,6 @@ Body:
   - Id: 1644
     AegisName: G_SHECIL
     Name: Sniper Cecil
-    JapaneseName: Sniper Shecil
     Level: 99
     Hp: 209000
     BaseExp: 18000
@@ -26352,7 +26282,6 @@ Body:
   - Id: 1645
     AegisName: G_KATRINN
     Name: High Wizard Kathryne
-    JapaneseName: High Wizard Katrinn
     Level: 99
     Hp: 189920
     BaseExp: 18000
@@ -26505,7 +26434,6 @@ Body:
   - Id: 1648
     AegisName: B_HARWORD
     Name: Whitesmith Howard
-    JapaneseName: Whitesmith Harword
     Level: 99
     Hp: 1460000
     BaseExp: 4002340
@@ -26565,7 +26493,6 @@ Body:
   - Id: 1649
     AegisName: B_MAGALETA
     Name: High Priest Margaretha
-    JapaneseName: High Priest Magaleta
     Level: 99
     Hp: 1092910
     BaseExp: 4257000
@@ -26624,7 +26551,6 @@ Body:
   - Id: 1650
     AegisName: B_SHECIL
     Name: Sniper Cecil
-    JapaneseName: Sniper Shecil
     Level: 99
     Hp: 1349000
     BaseExp: 4093000
@@ -26683,7 +26609,6 @@ Body:
   - Id: 1651
     AegisName: B_KATRINN
     Name: High Wizard Kathryne
-    JapaneseName: High Wizard Katrinn
     Level: 99
     Hp: 1069920
     BaseExp: 4008200
@@ -26742,7 +26667,6 @@ Body:
   - Id: 1652
     AegisName: YGNIZEM
     Name: Egnigem Cenia
-    JapaneseName: Ygnizem
     Level: 58
     Hp: 11200
     BaseExp: 4870
@@ -26791,7 +26715,6 @@ Body:
   - Id: 1653
     AegisName: WHIKEBAIN
     Name: Wickebine Tres
-    JapaneseName: Whikebain
     Level: 62
     Hp: 7320
     BaseExp: 4204
@@ -26839,7 +26762,6 @@ Body:
   - Id: 1654
     AegisName: ARMAIA
     Name: Armeyer Dinze
-    JapaneseName: Armaia
     Level: 66
     Hp: 7110
     BaseExp: 4008
@@ -26888,7 +26810,6 @@ Body:
   - Id: 1655
     AegisName: EREND
     Name: Errende Ebecee
-    JapaneseName: Erend
     Level: 59
     Hp: 6980
     BaseExp: 4501
@@ -26936,7 +26857,6 @@ Body:
   - Id: 1656
     AegisName: KAVAC
     Name: Kavach Icarus
-    JapaneseName: Kavac
     Level: 60
     Hp: 7899
     BaseExp: 4090
@@ -26985,7 +26905,6 @@ Body:
   - Id: 1657
     AegisName: RAWREL
     Name: Laurell Weinder
-    JapaneseName: Rawrel
     Level: 61
     Hp: 6168
     BaseExp: 4620
@@ -27033,7 +26952,6 @@ Body:
   - Id: 1658
     AegisName: B_YGNIZEM
     Name: Egnigem Cenia
-    JapaneseName: Ygnizem
     Level: 79
     Hp: 214200
     BaseExp: 258760
@@ -27093,7 +27011,6 @@ Body:
   - Id: 1659
     AegisName: G_WHIKEBAIN
     Name: Wickebine Tres
-    JapaneseName: Whikebain
     Level: 62
     Hp: 7320
     Attack: 593
@@ -27124,7 +27041,6 @@ Body:
   - Id: 1660
     AegisName: G_ARMAIA
     Name: Armeyer Dinze
-    JapaneseName: Armaia
     Level: 66
     Hp: 7110
     Attack: 650
@@ -27156,7 +27072,6 @@ Body:
   - Id: 1661
     AegisName: G_EREND
     Name: Errende Ebecee
-    JapaneseName: Erend
     Level: 59
     Hp: 6980
     Attack: 796
@@ -27187,7 +27102,6 @@ Body:
   - Id: 1662
     AegisName: G_KAVAC
     Name: Kavach Icarus
-    JapaneseName: Kavac
     Level: 60
     Hp: 7899
     Attack: 584
@@ -27219,7 +27133,6 @@ Body:
   - Id: 1663
     AegisName: G_RAWREL
     Name: Laurell Weinder
-    JapaneseName: Rawrel
     Level: 61
     Hp: 6168
     Attack: 330
@@ -28014,7 +27927,6 @@ Body:
   - Id: 1682
     AegisName: REMOVAL
     Name: Remover
-    JapaneseName: Removal
     Level: 55
     Hp: 10289
     BaseExp: 3831
@@ -28222,7 +28134,6 @@ Body:
   - Id: 1687
     AegisName: GREEN_IGUANA
     Name: Grove
-    JapaneseName: Green Iguana
     Level: 54
     Hp: 6444
     BaseExp: 2400
@@ -28327,7 +28238,6 @@ Body:
   - Id: 1689
     AegisName: G_BACSOJIN
     Name: White Lady
-    JapaneseName: Bacsojin
     Level: 85
     Hp: 253221
     BaseExp: 45250
@@ -28692,7 +28602,6 @@ Body:
   - Id: 1698
     AegisName: DEATHWORD
     Name: Death Word
-    JapaneseName: Deathword
     Level: 65
     Hp: 18990
     BaseExp: 2986
@@ -28789,7 +28698,6 @@ Body:
   - Id: 1700
     AegisName: OBSERVATION
     Name: Dame of Sentinel
-    JapaneseName: Observation
     Level: 81
     Hp: 65111
     BaseExp: 39872
@@ -28839,7 +28747,6 @@ Body:
   - Id: 1701
     AegisName: SHELTER
     Name: Mistress of Shelter
-    JapaneseName: Shelter
     Level: 80
     Hp: 38000
     BaseExp: 29010
@@ -28887,7 +28794,6 @@ Body:
   - Id: 1702
     AegisName: RETRIBUTION
     Name: Baroness of Retribution
-    JapaneseName: Retribution
     Level: 79
     Hp: 46666
     BaseExp: 28332
@@ -28937,7 +28843,6 @@ Body:
   - Id: 1703
     AegisName: SOLACE
     Name: Lady Solace
-    JapaneseName: Solace
     Level: 77
     Hp: 25252
     BaseExp: 21000
@@ -28987,7 +28892,6 @@ Body:
   - Id: 1704
     AegisName: THA_ODIUM
     Name: Odium of Thanatos
-    JapaneseName: Thanatos Odium
     Level: 92
     Hp: 72389
     BaseExp: 88420
@@ -29035,7 +28939,6 @@ Body:
   - Id: 1705
     AegisName: THA_DESPERO
     Name: Despero of Thanatos
-    JapaneseName: Thanatos Despero
     Level: 88
     Hp: 86666
     BaseExp: 62001
@@ -29083,7 +28986,6 @@ Body:
   - Id: 1706
     AegisName: THA_MAERO
     Name: Maero of Thanatos
-    JapaneseName: Thanatos Maero
     Level: 83
     Hp: 62000
     BaseExp: 56699
@@ -29131,7 +29033,6 @@ Body:
   - Id: 1707
     AegisName: THA_DOLOR
     Name: Dolor of Thanatos
-    JapaneseName: Thanatos Dolor
     Level: 83
     Hp: 59922
     BaseExp: 43200
@@ -29179,7 +29080,6 @@ Body:
   - Id: 1708
     AegisName: THANATOS
     Name: Memory of Thanatos
-    JapaneseName: Thanatos
     Level: 99
     Hp: 445660
     BaseExp: 3666000
@@ -29239,7 +29139,6 @@ Body:
   - Id: 1709
     AegisName: G_THA_ODIUM
     Name: Odium of Thanatos
-    JapaneseName: Thanatos Odium
     Level: 92
     Hp: 72389
     BaseExp: 10000
@@ -29278,7 +29177,6 @@ Body:
   - Id: 1710
     AegisName: G_THA_DESPERO
     Name: Despero of Thanatos
-    JapaneseName: Thanatos Despero
     Level: 88
     Hp: 86666
     BaseExp: 10000
@@ -29317,7 +29215,6 @@ Body:
   - Id: 1711
     AegisName: G_THA_MAERO
     Name: Maero of Thanatos
-    JapaneseName: Thanatos Maero
     Level: 83
     Hp: 62000
     BaseExp: 10000
@@ -29356,7 +29253,6 @@ Body:
   - Id: 1712
     AegisName: G_THA_DOLOR
     Name: Dolor of Thanatos
-    JapaneseName: Thanatos Dolor
     Level: 83
     Hp: 59922
     BaseExp: 10000
@@ -29659,7 +29555,6 @@ Body:
   - Id: 1719
     AegisName: DETALE
     Name: Detardeurus
-    JapaneseName: Detale
     Level: 90
     Hp: 960000
     BaseExp: 291850
@@ -29719,7 +29614,6 @@ Body:
   - Id: 1720
     AegisName: HYDRO
     Name: Hydrolancer
-    JapaneseName: Hydro
     Level: 89
     Hp: 308230
     BaseExp: 83450
@@ -29849,7 +29743,6 @@ Body:
   - Id: 1723
     AegisName: A_SHECIL
     Name: Cecil Damon
-    JapaneseName: Shecil Damon
     Level: 82
     Hp: 30000
     Attack: 600
@@ -29979,7 +29872,6 @@ Body:
   - Id: 1728
     AegisName: R_DESERT_WOLF_B
     Name: Baby Desert Wolf
-    JapaneseName: Desert Wolf Baby
     Level: 9
     Hp: 164
     Attack: 30
@@ -30114,7 +30006,6 @@ Body:
   - Id: 1733
     AegisName: KIEL
     Name: Kiehl
-    JapaneseName: Kiel
     Level: 90
     Hp: 523000
     BaseExp: 36500
@@ -30633,7 +30524,6 @@ Body:
   - Id: 1747
     AegisName: G_SNAKE
     Name: Boa
-    JapaneseName: Snake
     Level: 15
     Hp: 471
     Attack: 46
@@ -30996,7 +30886,6 @@ Body:
   - Id: 1756
     AegisName: G_HYDRO
     Name: Hydrolancer
-    JapaneseName: Hydro
     Level: 89
     Hp: 308230
     Attack: 2554
@@ -32729,7 +32618,6 @@ Body:
   - Id: 1801
     AegisName: G_HARWORD_
     Name: Mastersmith Howard
-    JapaneseName: Whitesmith Harword
     Level: 99
     Hp: 310000
     BaseExp: 18000
@@ -32764,7 +32652,6 @@ Body:
   - Id: 1802
     AegisName: G_MAGALETA_
     Name: High Priest Margaretha
-    JapaneseName: High Priest Magaleta
     Level: 99
     Hp: 182910
     BaseExp: 18000
@@ -32798,7 +32685,6 @@ Body:
   - Id: 1803
     AegisName: G_SHECIL_
     Name: Sniper Cecil
-    JapaneseName: Sniper Shecil
     Level: 99
     Hp: 209000
     BaseExp: 18000
@@ -32832,7 +32718,6 @@ Body:
   - Id: 1804
     AegisName: G_KATRINN_
     Name: High Wizard Kathryne
-    JapaneseName: High Wizard Katrinn
     Level: 99
     Hp: 189920
     BaseExp: 18000
@@ -32934,7 +32819,6 @@ Body:
   - Id: 1807
     AegisName: B_HARWORD_
     Name: Mastersmith Howard
-    JapaneseName: Whitesmith Harword
     Level: 99
     Hp: 1460000
     BaseExp: 4002340
@@ -32969,7 +32853,6 @@ Body:
   - Id: 1808
     AegisName: B_MAGALETA_
     Name: High Priest Margaretha
-    JapaneseName: High Priest Magaleta
     Level: 99
     Hp: 1092910
     BaseExp: 4257000
@@ -33003,7 +32886,6 @@ Body:
   - Id: 1809
     AegisName: B_SHECIL_
     Name: Sniper Cecil
-    JapaneseName: Sniper Shecil
     Level: 99
     Hp: 1349000
     BaseExp: 4093000
@@ -33037,7 +32919,6 @@ Body:
   - Id: 1810
     AegisName: B_KATRINN_
     Name: High Wizard Kathryne
-    JapaneseName: High Wizard Katrinn
     Level: 99
     Hp: 1069920
     BaseExp: 4008200
@@ -33071,7 +32952,6 @@ Body:
   - Id: 1811
     AegisName: G_SMOKIE_
     Name: Bandit
-    JapaneseName: Smokie
     Level: 18
     Hp: 641
     Attack: 61
@@ -33109,7 +32989,6 @@ Body:
   - Id: 1812
     AegisName: EVENT_LUDE
     Name: Delightful Lude
-    JapaneseName: Lude
     Level: 99
     Hp: 15
     Defense: 100
@@ -33141,7 +33020,6 @@ Body:
   - Id: 1813
     AegisName: EVENT_HYDRO
     Name: Hydrolancer
-    JapaneseName: Hydro
     Level: 99
     Hp: 1880000
     BaseExp: 4000000
@@ -33282,7 +33160,6 @@ Body:
   - Id: 1817
     AegisName: EVENT_DETALE
     Name: Detarderous
-    JapaneseName: Detale
     Level: 99
     Hp: 8880000
     BaseExp: 4500000
@@ -33507,7 +33384,6 @@ Body:
   - Id: 1824
     AegisName: EVENT_GARM_BABY
     Name: Baby Hatii
-    JapaneseName: Garm Baby
     Level: 61
     Hp: 20199
     Attack: 680
@@ -33662,7 +33538,6 @@ Body:
   - Id: 1829
     AegisName: SWORD_GUARDIAN
     Name: Sword Master
-    JapaneseName: Sword Guardian
     Level: 86
     Hp: 152533
     BaseExp: 155013
@@ -33709,7 +33584,6 @@ Body:
   - Id: 1830
     AegisName: BOW_GUARDIAN
     Name: Bow Master
-    JapaneseName: Bow Guardian
     Level: 80
     Hp: 80404
     BaseExp: 50149
@@ -34007,7 +33881,6 @@ Body:
   - Id: 1837
     AegisName: IMP
     Name: Fire Imp
-    JapaneseName: Imp
     Level: 76
     Hp: 46430
     BaseExp: 25200
@@ -35377,7 +35250,6 @@ Body:
   - Id: 1871
     AegisName: FALLINGBISHOP
     Name: Fallen Bishop Hibram
-    JapaneseName: Fallen Bishop
     Level: 80
     Hp: 3333333
     BaseExp: 1111111
@@ -35550,7 +35422,6 @@ Body:
   - Id: 1875
     AegisName: TRISTAN_3RD
     Name: Dead King
-    JapaneseName: Tristan III
     Level: 80
     Hp: 43000
     BaseExp: 1
@@ -35687,7 +35558,6 @@ Body:
   - Id: 1879
     AegisName: ECLIPSE_P
     Name: Eclipse
-    JapaneseName: Eclipse Pet
     Level: 6
     Hp: 1800
     Attack: 20
@@ -36050,7 +35920,6 @@ Body:
   - Id: 1888
     AegisName: GARM_BABY_R
     Name: Baby Hatii
-    JapaneseName: Garm Baby
     Level: 61
     Hp: 15199
     BaseExp: 100
@@ -36209,7 +36078,6 @@ Body:
   - Id: 1893
     AegisName: G_KNIGHT_OF_ABYSS
     Name: Abysmal Knight
-    JapaneseName: Knight of the Abyss
     Level: 79
     Hp: 36140
     Attack: 1600
@@ -36268,7 +36136,6 @@ Body:
   - Id: 1895
     AegisName: EVENT_SEYREN
     Name: Seyren Windsor
-    JapaneseName: Seyren
     Level: 91
     Hp: 88402
     Attack: 2100
@@ -36297,7 +36164,6 @@ Body:
   - Id: 1896
     AegisName: EVENT_KATRINN
     Name: Kathryne Keyron
-    JapaneseName: Katrinn
     Level: 92
     Hp: 47280
     Attack: 497
@@ -37920,7 +37786,6 @@ Body:
   - Id: 1948
     AegisName: G_YGNIZEM
     Name: Egnigem Cenia
-    JapaneseName: Ygnizem
     Level: 58
     Hp: 11200
     Attack: 823
@@ -38515,7 +38380,6 @@ Body:
   - Id: 1967
     AegisName: M_YGNIZEM
     Name: Egnigem Cenia
-    JapaneseName: Ygnizem
     Level: 79
     Hp: 7800
     Sp: 200
@@ -38860,7 +38724,6 @@ Body:
   - Id: 1975
     AegisName: BEHOLDER_MASTER
     Name: Beholder master
-    JapaneseName: Beholder Master
     Level: 70
     Hp: 24150
     BaseExp: 9000
@@ -38999,7 +38862,6 @@ Body:
   - Id: 1978
     AegisName: HELL_APOCALIPS
     Name: Hell Apocalypse
-    JapaneseName: Hell Apocalips
     Level: 86
     Hp: 65433
     BaseExp: 46666
@@ -39047,7 +38909,6 @@ Body:
   - Id: 1979
     AegisName: ZAKUDAM
     Name: Zakudam
-    JapaneseName: Zukadam
     Level: 82
     Hp: 43699
     BaseExp: 27213
@@ -39093,7 +38954,6 @@ Body:
   - Id: 1980
     AegisName: KUBLIN
     Name: Kublin
-    JapaneseName: Kubkin
     Level: 85
     Hp: 1176000
     BaseExp: 100000
@@ -39530,7 +39390,6 @@ Body:
   - Id: 1991
     AegisName: TENDRILRION
     Name: Tendrilion
-    JapaneseName: Tendrillion
     Level: 113
     Hp: 3657330
     BaseExp: 731466
@@ -39774,7 +39633,6 @@ Body:
 #  - Id: 1996
 #    AegisName: BACSOJIN_T
 #    Name: White Lady
-#    JapaneseName: Bacsojin
 #    Level: 85
 #    Hp: 253221
 #    BaseExp: 45250
@@ -39923,7 +39781,6 @@ Body:
 #  - Id: 2000
 #    AegisName: M_GAMEMASTER
 #    Name: Game Master
-#    JapaneseName: Male Game Master
 #    Level: 50
 #    Hp: 7000
 #    Sp: 250
@@ -39952,7 +39809,6 @@ Body:
 #  - Id: 2001
 #    AegisName: F_GAMEMASTER
 #    Name: Game Master
-#    JapaneseName: Female Game Master
 #    Level: 50
 #    Hp: 7000
 #    Sp: 250
@@ -41316,7 +41172,6 @@ Body:
 #  - Id: 2040
 #    AegisName: TIRFING_R
 #    Name: Ogretooth
-#    JapaneseName: Tirfing
 #    Level: 71
 #    Hp: 29900
 #    Attack: 950
@@ -41755,7 +41610,6 @@ Body:
 #  - Id: 2056
 #    AegisName: E_ZHERLTHSH
 #    Name: Zealotus
-#    JapaneseName: Zherlthsh
 #    Level: 1
 #    Hp: 50
 #    Attack: 7
@@ -41894,7 +41748,6 @@ Body:
 #  - Id: 2062
 #    AegisName: E_POPORING
 #    Name: poporing
-#    JapaneseName: Poporing
 #    Level: 1
 #    Hp: 50
 #    Attack: 7
@@ -42507,7 +42360,6 @@ Body:
   - Id: 2081
     AegisName: E_HYDRA
     Name: Strange Hydra
-    JapaneseName: Suspicious Hydra
     Level: 14
     Hp: 660
     Attack: 22

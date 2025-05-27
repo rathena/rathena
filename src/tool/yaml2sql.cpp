@@ -250,13 +250,13 @@ bool Yaml2SqlTool::initialize( int32 argc, char* argv[] ){
 		return false;
 	}
 
-	if (!process("MOB_DB", 1, { path_db_mode }, "mob_db", mob_table_name, mob_table_name, [](const std::string &path, const std::string &name_ext, const std::string &table) -> bool {
+	if (!process("MOB_DB", 6, { path_db_mode }, "mob_db", mob_table_name, mob_table_name, [](const std::string &path, const std::string &name_ext, const std::string &table) -> bool {
 		return mob_db_yaml2sql(path + name_ext, table);
 	})) {
 		return false;
 	}
 
-	if (!process("MOB_DB", 1, { path_db_import }, "mob_db", mob_import_table_name, mob_import_table_name, [](const std::string &path, const std::string &name_ext, const std::string &table) -> bool {
+	if (!process("MOB_DB", 6, { path_db_import }, "mob_db", mob_import_table_name, mob_import_table_name, [](const std::string &path, const std::string &name_ext, const std::string &table) -> bool {
 		return mob_db_yaml2sql(path + name_ext, table);
 	})) {
 		return false;
@@ -761,8 +761,6 @@ static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
 			column.append("`name_aegis`,");
 		if (appendEntry(input["Name"], value, true))
 			column.append("`name_english`,");
-		if (appendEntry(input["Name"], value, true))
-			column.append("`name_japanese`,");
 		if (appendEntry(input["Level"], value))
 			column.append("`level`,");
 		if (appendEntry(input["Hp"], value))
