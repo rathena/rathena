@@ -779,6 +779,7 @@ struct Battle_Config
 	int32 open_box_weight_rate;
 	int32 major_overweight_rate;
 	int32 trade_count_stackable;
+	int32 companion_show_guild_emblem;
 
 #include <custom/battle_config_struct.inc>
 };
