@@ -17269,12 +17269,20 @@ int32 skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t
 				break;
 
 			int32 bl_flag = sg->bl_flag;
-			if (sg->unit_id == UNT_FIRINGTRAP || sg->unit_id == UNT_ICEBOUNDTRAP || sg->unit_id == UNT_CLAYMORETRAP)
-				bl_flag = bl_flag|BL_SKILL|~BCT_SELF;
-
 			block_list* center = &unit->bl;
-			if (sg->unit_id == UNT_SANDMAN || sg->unit_id == UNT_FREEZINGTRAP)
-				center = bl;
+			switch (sg->unit_id) {
+				case UNT_CLAYMORETRAP:
+				case UNT_FIRINGTRAP:
+				case UNT_ICEBOUNDTRAP:
+					// These can hit other traps
+					bl_flag = bl_flag|BL_SKILL|~BCT_SELF;
+					break;
+				case UNT_SANDMAN:
+				case UNT_FREEZINGTRAP:
+					// These have their effect centered around the unit that triggered the trap
+					center = bl;
+					break;
+			}
 
 			int32 splash_range = skill_get_splash(sg->skill_id, sg->skill_lv);
 			if (splash_range == 0) {
@@ -17287,16 +17295,15 @@ int32 skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t
 			else
 				map_foreachinrange(skill_trap_splash, center, splash_range, bl_flag, &unit->bl, tick);
 
-			if (sg->unit_id != UNT_FIREPILLAR_ACTIVE)
+			if (sg->unit_id != UNT_FIREPILLAR_ACTIVE && (battle_config.multi_trigger_trap == 0 || unit->range >= 0))
 				clif_changetraplook(&unit->bl, UNT_USED_TRAPS);
-			sg->limit = DIFF_TICK(tick, sg->tick) +
-				(sg->unit_id == UNT_CLUSTERBOMB || sg->unit_id == UNT_ICEBOUNDTRAP ? 1000 : 0) + // Cluster Bomb/Icebound has 1s to disappear once activated.
-				(sg->unit_id == UNT_FIRINGTRAP ? 0 : 1500); // Firing Trap gets removed immediately once activated.
+
+			sg->limit = DIFF_TICK(tick, sg->tick) + (sg->unit_id == UNT_FIRINGTRAP ? 0 : 1500);
 
 			if (battle_config.multi_trigger_trap == 1)
 				unit->range = -1; // Trap will still process all units on it and will then be disabled in the calling function
 			else 
-				sg->unit_id = UNT_USED_TRAPS; // Change ID so it does not invoke a for each in area again
+				sg->unit_id = UNT_USED_TRAPS; // Change ID so it does not invoke for each in area again
 		}
 			break;
 
