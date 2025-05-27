@@ -49,6 +49,10 @@ struct shootpath_data {
 #define check_distance_client_blxy(bl, x1, y1, distance) check_distance_client((bl)->x-(x1), (bl)->y-(y1), distance)
 #define check_distance_client_xy(x0, y0, x1, y1, distance) check_distance_client((x0)-(x1), (y0)-(y1), distance)
 
+#define distance_math_bl(bl1, bl2) distance_math((bl1)->x - (bl2)->x, (bl1)->y - (bl2)->y)
+#define distance_math_blxy(bl, x1, y1) distance_math((bl)->x-(x1), (bl)->y-(y1))
+#define distance_math_xy(x0, y0, x1, y1) distance_math((x0)-(x1), (y0)-(y1))
+
 #define distance_client_bl(bl1, bl2) distance_client((bl1)->x - (bl2)->x, (bl1)->y - (bl2)->y)
 #define distance_client_blxy(bl, x1, y1) distance_client((bl)->x-(x1), (bl)->y-(y1))
 #define distance_client_xy(x0, y0, x1, y1) distance_client((x0)-(x1), (y0)-(y1))
@@ -66,6 +70,7 @@ bool path_search_long(struct shootpath_data *spd,int16 m,int16 x0,int16 y0,int16
 bool check_distance(int32 dx, int32 dy, int32 distance);
 uint32 distance(int32 dx, int32 dy);
 bool check_distance_client(int32 dx, int32 dy, int32 distance);
+double distance_math(int32 dx, int32 dy);
 int32 distance_client(int32 dx, int32 dy);
 
 bool direction_diagonal( enum directions direction );

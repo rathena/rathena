@@ -1657,15 +1657,14 @@ void clif_weather(int16 m)
  * @param bl: Block data
  * @return True if NPC is disabled or false otherwise
  */
-static inline bool clif_npc_mayapurple(block_list *bl) {
-	nullpo_retr(false, bl);
-
-	if (bl->type == BL_NPC) {
-		npc_data *nd = map_id2nd(bl->id);
+static inline bool clif_npc_mayapurple( block_list& bl ){
+	if( bl.type == BL_NPC ){
+		npc_data& nd = reinterpret_cast<npc_data&>( bl );
 
 		// TODO: Confirm if waitingroom cause any special cases
-		if (/* nd->chat_id == 0 && */ nd->is_invisible)
+		if( /* nd->chat_id == 0 && */ nd.is_invisible ){
 			return true;
+		}
 	}
 
 	return false;
@@ -1697,6 +1696,10 @@ void clif_refresh_clothcolor( block_list& bl, enum send_target target, block_lis
  * Main function to spawn a unit on the client (player/mob/pet/etc)
  **/
 int32 clif_spawn( struct block_list *bl, bool walking ){
+	if( bl == nullptr ){
+		return 0;
+	}
+
 	struct view_data *vd;
 
 	vd = status_get_viewdata(bl);
@@ -1704,8 +1707,9 @@ int32 clif_spawn( struct block_list *bl, bool walking ){
 		return 0;
 
 	// Hide NPC from Maya Purple card
-	if (clif_npc_mayapurple(bl))
+	if( clif_npc_mayapurple( *bl ) ){
 		return 0;
+	}
 
 	if( bl->type == BL_NPC && !vd->dead_sit ){
 		clif_set_unit_idle( bl, walking, AREA_WOS, bl );
@@ -1752,6 +1756,7 @@ int32 clif_spawn( struct block_list *bl, bool walking ){
 				clif_specialeffect(md,EF_BABYBODY2,AREA);
 			if ( md->special_state.ai == AI_ABR || md->special_state.ai == AI_BIONIC )
 				clif_summon_init(*md);
+			clif_name_area(&md->bl);
 		}
 		break;
 	case BL_NPC:
@@ -2087,8 +2092,9 @@ void clif_move( struct unit_data& ud )
 		return;
 
 	// Hide NPC from Maya Purple card
-	if (clif_npc_mayapurple(bl))
+	if( clif_npc_mayapurple( *bl ) ){
 		return;
+	}
 
 	status_change* sc = nullptr;
 
@@ -4087,8 +4093,10 @@ void clif_changelook(struct block_list *bl, int32 type, int32 val) {
 		target = SELF;
 
 #if PACKETVER < 4
-	if (target != SELF && bl->type == BL_NPC && (((TBL_NPC*)bl)->is_invisible))
+	if( target != SELF && clif_npc_mayapurple( *bl ) ){
 		target = SELF;
+	}
+
 	clif_sprite_change(bl, bl->id, type, val, 0, target);
 #else
 	if (bl->type != BL_NPC) {
@@ -5025,6 +5033,10 @@ static void clif_getareachar_pc(map_session_data* sd,map_session_data* dstsd)
 }
 
 void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
+	if( bl == nullptr ){
+		return;
+	}
+
 	struct unit_data *ud;
 	struct view_data *vd;
 	bool option = false;
@@ -5035,8 +5047,9 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 		return;
 
 	// Hide NPC from Maya Purple card
-	if (clif_npc_mayapurple(bl))
+	if( clif_npc_mayapurple( *bl ) ){
 		return;
+	}
 
 	if( bl->type == BL_NPC && npc_is_hidden_dynamicnpc( *( (struct npc_data*)bl ), *sd ) ){
 		// Do not send anything
@@ -5111,6 +5124,7 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 				}
 			}
 #endif
+		clif_name_area(&md->bl);
 		}
 		break;
 	case BL_PET:
@@ -5619,8 +5633,9 @@ int32 clif_outsight(struct block_list *bl,va_list ap)
 			clif_clearchar_skillunit( *((skill_unit *)bl), *tsd );
 			break;
 		case BL_NPC:
-			if(!(((TBL_NPC*)bl)->is_invisible))
+			if( !clif_npc_mayapurple( *bl ) ){
 				clif_clearunit_single( bl->id, CLR_OUTSIGHT, *tsd );
+			}
 			break;
 		default:
 			if((vd=status_get_viewdata(bl)) && vd->class_ != JT_INVISIBLE)
@@ -5633,7 +5648,7 @@ int32 clif_outsight(struct block_list *bl,va_list ap)
 		if(tbl->type == BL_SKILL) //Trap knocked out of sight
 			clif_clearchar_skillunit( *((skill_unit *)tbl), *sd );
 		else if(((vd=status_get_viewdata(tbl)) && vd->class_ != JT_INVISIBLE) &&
-			!(tbl->type == BL_NPC && (((TBL_NPC*)tbl)->is_invisible)))
+			!clif_npc_mayapurple( *tbl ) )
 			clif_clearunit_single( tbl->id, CLR_OUTSIGHT, *sd );
 	}
 	return 0;
@@ -6037,11 +6052,11 @@ void clif_skill_damage( block_list& src, block_list& dst, t_tick tick, int32 sde
 	// a issue that causes players and monsters to endure
 	// type 6 (ACTION_SKILL) skills. So we have to do a small
 	// hack to set all type 6 to be sent as type 8 ACTION_ATTACK_MULTIPLE
-#if PACKETVER < 20131223
-	packet.action = static_cast<decltype(packet.action)>(type);
-#else
-	packet.action = static_cast<decltype(packet.action)>(( type == DMG_SINGLE ) ? DMG_MULTI_HIT : type);
+#if PACKETVER >= 20131223
+	if (damage != DMGVAL_IGNORE && type == DMG_SINGLE)
+		type = DMG_MULTI_HIT;
 #endif
+	packet.action = static_cast<decltype(packet.action)>(type);
 
 	if (disguised(&dst)) {
 		clif_send( &packet, sizeof( packet ), &dst, AREA_WOS );

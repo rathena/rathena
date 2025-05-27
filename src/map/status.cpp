@@ -2767,7 +2767,9 @@ int32 status_calc_mob_(struct mob_data* md, uint8 opt)
 			;
 		else
 			md->level = md->db->lv;
+		safestrncpy(md->ud.title, md->db->title.c_str(), NAME_LENGTH);
 		md->damagetaken = md->db->damagetaken;
+		md->ud.group_id = md->db->group_id;
 	}
 
 	// Check if we need custom base-status
@@ -10772,12 +10774,9 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 			}
 			break;
 		case SC_POISONREACT:
-#ifdef RENEWAL
-			val2= (val1 + 1) / 2;
-#else
-			val2=(val1+1)/2 + val1/10; // Number of counters [Skotlex]
-#endif
-			val3=50; // + 5*val1; // Chance to counter. [Skotlex]
+			val2 = val1 / 2; // Number of Envenom autocasts
+			val3 = 50; // Chance to autocast Envenom on hit / Poison chance of attack after block
+			val4 = 0; // 0: Poison Block Mode; 1: Damage Boost Mode
 			break;
 		case SC_MAGICROD:
 			val2 = val1*20; // SP gained
