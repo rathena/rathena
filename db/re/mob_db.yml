@@ -104520,6 +104520,7 @@ Body:
   - Id: 20620
     AegisName: MD_REDPEPPER
     Name: Red Pepper
+    Title: "<Red Pepper>"
     Level: 135
     Hp: 9514800
     BaseExp: 426099
@@ -104573,6 +104574,7 @@ Body:
   - Id: 20621
     AegisName: MD_REDPEPPER_H
     Name: Senior Red Pepper
+    Title: "<Red Pepper>"
     Level: 185
     Hp: 1008398847
     BaseExp: 3381619
