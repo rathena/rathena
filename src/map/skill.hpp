@@ -442,6 +442,13 @@ enum e_skill_blown	{
 	BLOWN_TARGET_BASILICA		= 0x20, // If target is in Basilica area
 };
 
+// Enum for skill_dance_overlap flag parameter
+enum e_dance_overlap : int32 {
+	OVERLAP_REMOVE = 0, // Skill unit is about to be removed, remove overlap marker from overlapping units on the cell if applicable
+	OVERLAP_SET, // Skill unit was placed, add overlap marker to overlapping units on the cell
+	OVERLAP_COUNT, // Don't change overlap marker, just count units overlapping with skill unit (excluding itself)
+};
+
 /// Create Database item
 struct s_skill_produce_db {
 	t_itemid nameid; /// Product ID

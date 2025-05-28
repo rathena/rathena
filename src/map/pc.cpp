@@ -7363,6 +7363,9 @@ static void pc_checkallowskill(map_session_data *sd)
 		}
 
 		if (flag[SCF_REQUIRESHIELD]) { // Skills requiring a shield
+			// Only crusader-type classes require a shield for Defender
+			if (status == SC_DEFENDER && (sd->class_&MAPID_UPPERMASK) != MAPID_CRUSADER)
+				continue;
 			if (sd->sc.getSCE(status) && sd->status.shield <= 0)
 				status_change_end(&sd->bl, status);
 		}

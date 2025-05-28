@@ -8496,9 +8496,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 							skillratio += 30;
 						break;
 					case BA_DISSONANCE:
-						skillratio += skill_lv * 10;
-						if (sd)
-							skillratio += 3 * pc_checkskill(sd, BA_MUSICALLESSON);
+						skillratio += 10 + skill_lv * 50;
+						if (sd != nullptr)
+							skillratio = skillratio * sd->status.job_level / 10;
 						break;
 					case HW_GRAVITATION:
 						skillratio += -100 + 100 * skill_lv;
@@ -10149,7 +10149,7 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 					int64 rd1 = i64min(damage, status_get_max_hp(tbl)) * tsc->getSCE(SC_DEATHBOUND)->val2 / 100; // Amplify damage.
 
 					*dmg = rd1 * 30 / 100; // Received damage = 30% of amplified damage.
-					clif_skill_damage( *src, *tbl, gettick(), status_get_amotion(src), 0, -30000, 1, RK_DEATHBOUND, tsc->getSCE(SC_DEATHBOUND)->val1, DMG_SINGLE );
+					clif_skill_damage( *src, *tbl, gettick(), status_get_amotion(src), 0, DMGVAL_IGNORE, 1, RK_DEATHBOUND, tsc->getSCE(SC_DEATHBOUND)->val1, DMG_SINGLE );
 					skill_blown(tbl, src, skill_get_blewcount(RK_DEATHBOUND, tsc->getSCE(SC_DEATHBOUND)->val1), unit_getdir(src), BLOWN_NONE);
 					status_change_end(tbl, SC_DEATHBOUND);
 					rdamage += rd1 * 70 / 100; // Target receives 70% of the amplified damage. [Rytech]
@@ -10771,7 +10771,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			s_elemental_data *ed = ((TBL_PC*)target)->ed;
 
 			if (ed) {
-				clif_skill_damage( ed->bl, *target, tick, status_get_amotion(src), 0, -30000, 1, EL_CIRCLE_OF_FIRE, tsc->getSCE(SC_CIRCLE_OF_FIRE_OPTION)->val1, DMG_SINGLE );
+				clif_skill_damage( ed->bl, *target, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, EL_CIRCLE_OF_FIRE, tsc->getSCE(SC_CIRCLE_OF_FIRE_OPTION)->val1, DMG_SINGLE );
 				skill_attack(BF_WEAPON,&ed->bl,&ed->bl,src,EL_CIRCLE_OF_FIRE,tsc->getSCE(SC_CIRCLE_OF_FIRE_OPTION)->val1,tick,wd.flag);
 			}
 		}

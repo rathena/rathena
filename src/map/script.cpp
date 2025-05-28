@@ -268,6 +268,7 @@ struct Script_Config script_config = {
 	"OnPCLoadMapEvent", //loadmap_event_name
 	"OnPCBaseLvUpEvent", //baselvup_event_name
 	"OnPCJobLvUpEvent", //joblvup_event_name
+	"OnPCIdentifyEvent", //identify_event_name
 	// NPC related
 	"OnTouch_",	//ontouch_event_name (runs on first visible char to enter area, picks another char if the first char leaves)
 	"OnTouch",	//ontouch2_event_name (run whenever a char walks into the OnTouch area)
@@ -16613,6 +16614,22 @@ BUILDIN_FUNC(mapid2name)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/// Returns the map ID of given map name.
+///
+/// mapname2id <"map name">;
+BUILDIN_FUNC(mapname2id)
+{
+	const char* map_name = script_getstr(st, 2);
+	int16 mapid = map_mapname2mapid(map_name);
+	if (mapid < 0 || mapid >= MAX_MAP_PER_SERVER) {
+		// Note: no error message here, as map_mapname2mapid will already have reported an error message.
+		script_pushint(st, -1); 
+		return SCRIPT_CMD_FAILURE;
+	}
+	script_pushint(st, mapid); 
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /*==========================================
  * Allows player to write NPC logs (i.e. Bank NPC, etc) [Lupus]
  *------------------------------------------*/
@@ -27706,13 +27723,28 @@ BUILDIN_FUNC(permission_add)
 }
 
 BUILDIN_FUNC(mesitemicon){
-	t_itemid nameid = script_getnum( st, 2 );
-	std::shared_ptr<item_data> data = item_db.find( nameid );
-	
-	if( data == nullptr ){
-		ShowError( "buildin_mesitemicon: Item ID %u does not exists.\n", nameid );
-		script_pushconststr( st, "" );
-		return SCRIPT_CMD_FAILURE;
+	std::shared_ptr<item_data> data;
+
+	if( script_isstring( st, 2 ) ){
+		const char* item_name = script_getstr( st, 2 );
+
+		data = item_db.searchname( item_name );
+
+		if( data == nullptr ){
+			ShowError( "buildin_mesitemicon: Item \"%s\" does not exist.\n", item_name );
+			script_pushconststr( st, "" );
+			return SCRIPT_CMD_FAILURE;
+		}
+	}else{
+		t_itemid nameid = script_getnum( st, 2 );
+
+		data = item_db.find( nameid );
+
+		if( data == nullptr ){
+			ShowError( "buildin_mesitemicon: Item ID %u does not exist.\n", nameid );
+			script_pushconststr( st, "" );
+			return SCRIPT_CMD_FAILURE;
+		}
 	}
 
 	const char* name = nullptr;
@@ -28080,6 +28112,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(npcstop,"??"),
 	BUILDIN_DEF(getmapxy,"rrr??"),	//by Lorky [Lupus]
 	BUILDIN_DEF(mapid2name,"i"),
+	BUILDIN_DEF(mapname2id,"s"),
 	BUILDIN_DEF(checkoption1,"i?"),
 	BUILDIN_DEF(checkoption2,"i?"),
 	BUILDIN_DEF(guildgetexp,"i"),
@@ -28502,7 +28535,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(permission_add, "i?"),
 	BUILDIN_DEF2(permission_add, "permission_remove", "i?"),
 
-	BUILDIN_DEF( mesitemicon, "i??" ),
+	BUILDIN_DEF( mesitemicon, "v??" ),
 
 #include <custom/script_def.inc>
 

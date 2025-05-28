@@ -1756,6 +1756,7 @@ int32 clif_spawn( struct block_list *bl, bool walking ){
 				clif_specialeffect(&md->bl,EF_BABYBODY2,AREA);
 			if ( md->special_state.ai == AI_ABR || md->special_state.ai == AI_BIONIC )
 				clif_summon_init(*md);
+			clif_name_area(&md->bl);
 		}
 		break;
 	case BL_NPC:
@@ -5123,6 +5124,7 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 				}
 			}
 #endif
+		clif_name_area(&md->bl);
 		}
 		break;
 	case BL_PET:
@@ -6050,11 +6052,11 @@ void clif_skill_damage( block_list& src, block_list& dst, t_tick tick, int32 sde
 	// a issue that causes players and monsters to endure
 	// type 6 (ACTION_SKILL) skills. So we have to do a small
 	// hack to set all type 6 to be sent as type 8 ACTION_ATTACK_MULTIPLE
-#if PACKETVER < 20131223
-	packet.action = static_cast<decltype(packet.action)>(type);
-#else
-	packet.action = static_cast<decltype(packet.action)>(( type == DMG_SINGLE ) ? DMG_MULTI_HIT : type);
+#if PACKETVER >= 20131223
+	if (damage != DMGVAL_IGNORE && type == DMG_SINGLE)
+		type = DMG_MULTI_HIT;
 #endif
+	packet.action = static_cast<decltype(packet.action)>(type);
 
 	if (disguised(&dst)) {
 		clif_send( &packet, sizeof( packet ), &dst, AREA_WOS );
