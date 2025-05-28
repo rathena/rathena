@@ -100699,6 +100699,7 @@ Body:
     Race: Insect
     RaceGroups:
       Illusion_Luanda: true
+    GroupID: 5
     Element: Earth
     ElementLevel: 1
     WalkSpeed: 200
@@ -100751,6 +100752,7 @@ Body:
     Race: Formless
     RaceGroups:
       Illusion_Luanda: true
+    GroupID: 5
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 150
@@ -100801,6 +100803,7 @@ Body:
     Race: Formless
     RaceGroups:
       Illusion_Luanda: true
+    GroupID: 5
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 200
@@ -100850,6 +100853,7 @@ Body:
     Race: Demon
     RaceGroups:
       Illusion_Luanda: true
+    GroupID: 5
     Element: Neutral
     ElementLevel: 3
     WalkSpeed: 150
@@ -100910,6 +100914,7 @@ Body:
     Race: Plant
     RaceGroups:
       Illusion_Luanda: true
+    GroupID: 4
     Element: Fire
     ElementLevel: 3
     WalkSpeed: 175
@@ -100960,6 +100965,7 @@ Body:
     Race: Demihuman
     RaceGroups:
       Illusion_Luanda: true
+    GroupID: 4
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 200
@@ -101010,6 +101016,7 @@ Body:
     Race: Demihuman
     RaceGroups:
       Illusion_Luanda: true
+    GroupID: 4
     Element: Fire
     ElementLevel: 2
     WalkSpeed: 200
@@ -101061,6 +101068,7 @@ Body:
     Race: Demihuman
     RaceGroups:
       Illusion_Luanda: true
+    GroupID: 4
     Element: Fire
     ElementLevel: 4
     WalkSpeed: 150
@@ -101119,6 +101127,7 @@ Body:
     Race: Formless
     RaceGroups:
       Illusion_Luanda: true
+#   GroupID: 5    # !TODO
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 200
@@ -101149,6 +101158,7 @@ Body:
     Race: Demihuman
     RaceGroups:
       Illusion_Luanda: true
+#   GroupID: 4    # !TODO
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 200
@@ -101179,6 +101189,7 @@ Body:
     Race: Demihuman
     RaceGroups:
       Illusion_Luanda: true
+#   GroupID: 4    # !TODO
     Element: Fire
     ElementLevel: 2
     WalkSpeed: 200
