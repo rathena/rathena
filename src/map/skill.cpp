@@ -17284,8 +17284,7 @@ int32 skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t
 					break;
 			}
 
-			int32 splash_range = skill_get_splash(sg->skill_id, sg->skill_lv);
-			if (splash_range == 0) {
+			if (int32 splash_range = skill_get_splash(sg->skill_id, sg->skill_lv); splash_range == 0) {
 				// If no splash range, it only hits the unit that activated the trap
 				if (skill_get_nk(skill_id, NK_NODAMAGE))
 					skill_additional_effect(ss, bl, sg->skill_id, sg->skill_lv, BF_MISC, ATK_DEF, tick);
