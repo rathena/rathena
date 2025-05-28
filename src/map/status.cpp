@@ -1171,6 +1171,10 @@ status_change::status_change(){
 	this->lastStatus = { SC_NONE, nullptr };
 }
 
+bool status_change::hasSCE( enum sc_type type ){
+	return this->getSCE( type ) != nullptr;
+}
+
 /**
  * Accessor for a status_change_entry in a status_change
  */
@@ -2767,7 +2771,9 @@ int32 status_calc_mob_(struct mob_data* md, uint8 opt)
 			;
 		else
 			md->level = md->db->lv;
+		safestrncpy(md->ud.title, md->db->title.c_str(), NAME_LENGTH);
 		md->damagetaken = md->db->damagetaken;
+		md->ud.group_id = md->db->group_id;
 	}
 
 	// Check if we need custom base-status

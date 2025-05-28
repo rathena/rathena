@@ -5493,13 +5493,14 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 #ifdef RENEWAL
 		int32 dist = skill_get_blewcount(skill_id, skill_lv);
 #else
-		uint32 dist = distance_bl(src, bl);
+		// Charge attack in pre-renewal calculates the distance mathetically
+		int32 dist = static_cast<int32>(distance_math_bl(src, bl));
 #endif
 		uint8 dir = map_calc_dir(bl, src->x, src->y);
 
 		// teleport to target (if not on WoE grounds)
-		if (skill_check_unit_movepos(5, src, bl->x, bl->y, 0, 1))
-			skill_blown(src, src, 1, (dir+4)%8, BLOWN_NONE); //Target position is actually one cell next to the target
+		if (skill_check_unit_movepos(5, src, bl->x + dirx[dir], bl->y + diry[dir], 0, true))
+			clif_blown(src);
 
 		// cause damage and knockback if the path to target was a straight one
 		if (path) {
@@ -5510,9 +5511,6 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 #endif
 				skill_blown(src, bl, dist, dir, BLOWN_NONE);
 			}
-			//HACK: since knockback officially defaults to the left, the client also turns to the left... therefore,
-			// make the caster look in the direction of the target
-			unit_setdir(src, (dir+4)%8);
 		}
 
 		}
@@ -5933,7 +5931,6 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 				status_change_end(src, SC_USE_SKILL_SP_SPA);
 
 			switch ( skill_id ) {
-				case LG_EARTHDRIVE:
 				case GN_CARTCANNON:
 				case SU_SCRATCH:
 				case BO_MAYHEMIC_THORNS:
@@ -11333,6 +11330,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			i = skill_get_splash(skill_id,skill_lv);
 			map_foreachinallarea(skill_cell_overlap, src->m, src->x-i, src->y-i, src->x+i, src->y+i, BL_SKILL, LG_EARTHDRIVE, &dummy, src);
 			map_foreachinrange(skill_area_sub, bl,i,BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
+			clif_skill_nodamage(src, *src, skill_id, skill_lv);
 		}
 		break;
 	case RK_LUXANIMA:
@@ -14464,7 +14462,6 @@ int32 skill_castend_pos2(struct block_list* src, int32 x, int32 y, uint16 skill_
 		case MO_BODYRELOCATION:
 		case CR_CULTIVATION:
 		case HW_GANBANTEIN:
-		case LG_EARTHDRIVE:
 		case SC_ESCAPE:
 		case SU_CN_METEOR:
 		case NPC_RAINOFMETEOR:
@@ -17240,12 +17237,6 @@ int32 skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t
 				status_change_start(ss,bl,type,10000,sg->skill_lv,sg->src_id,0,0,skill_get_time2(sg->skill_id,sg->skill_lv),SCSTART_NONE);
 			break;
 
-		case UNT_LANDMINE:
-			//Land Mine only hits single target
-			skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
-			sg->unit_id = UNT_USED_TRAPS; //Changed ID so it does not invoke a for each in area again.
-			sg->limit = 1500;
-			break;
 		case UNT_MAGENTATRAP:
 		case UNT_COBALTTRAP:
 		case UNT_MAIZETRAP:
@@ -17259,26 +17250,57 @@ int32 skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t
 			if( bl->id == ss->id )// it won't trigger on caster
 				break;
 			[[fallthrough]];
+		case UNT_FLASHER:
+			// Flasher doesn't activate on plant bosses
+			if (sg->unit_id == UNT_FLASHER && bl->type == BL_MOB && tstatus->class_ == CLASS_BOSS && tstatus->race == RC_PLANT)
+				break;
+			[[fallthrough]];
+		case UNT_LANDMINE:
 		case UNT_BLASTMINE:
 		case UNT_SHOCKWAVE:
 		case UNT_SANDMAN:
-		case UNT_FLASHER:
 		case UNT_FREEZINGTRAP:
 		case UNT_FIREPILLAR_ACTIVE:
 		case UNT_CLAYMORETRAP:
 		{
-			int32 bl_flag = sg->bl_flag;
-			if (tsc && tsc->getSCE(SC__MANHOLE))
+			if (tsc != nullptr && tsc->getSCE(SC__MANHOLE) != nullptr)
 				break;
-			if (sg->unit_id == UNT_FIRINGTRAP || sg->unit_id == UNT_ICEBOUNDTRAP || sg->unit_id == UNT_CLAYMORETRAP)
-				bl_flag = bl_flag|BL_SKILL|~BCT_SELF;
-			map_foreachinrange(skill_trap_splash, &unit->bl, skill_get_splash(sg->skill_id, sg->skill_lv), bl_flag, &unit->bl, tick);
-			if (sg->unit_id != UNT_FIREPILLAR_ACTIVE)
-				clif_changetraplook(&unit->bl,(sg->unit_id == UNT_LANDMINE ? UNT_FIREPILLAR_ACTIVE : UNT_USED_TRAPS));
-			sg->limit = DIFF_TICK(tick, sg->tick) +
-				(sg->unit_id == UNT_CLUSTERBOMB || sg->unit_id == UNT_ICEBOUNDTRAP ? 1000 : 0) + // Cluster Bomb/Icebound has 1s to disappear once activated.
-				(sg->unit_id == UNT_FIRINGTRAP ? 0 : 1500); // Firing Trap gets removed immediately once activated.
-			sg->unit_id = UNT_USED_TRAPS; // Change ID so it does not invoke a for each in area again.
+
+			int32 bl_flag = sg->bl_flag;
+			block_list* center = &unit->bl;
+			switch (sg->unit_id) {
+				case UNT_CLAYMORETRAP:
+				case UNT_FIRINGTRAP:
+				case UNT_ICEBOUNDTRAP:
+					// These can hit other traps
+					bl_flag = bl_flag|BL_SKILL|~BCT_SELF;
+					break;
+				case UNT_SANDMAN:
+				case UNT_FREEZINGTRAP:
+					// These have their effect centered around the unit that triggered the trap
+					center = bl;
+					break;
+			}
+
+			if (int32 splash_range = skill_get_splash(sg->skill_id, sg->skill_lv); splash_range == 0) {
+				// If no splash range, it only hits the unit that activated the trap
+				if (skill_get_nk(skill_id, NK_NODAMAGE))
+					skill_additional_effect(ss, bl, sg->skill_id, sg->skill_lv, BF_MISC, ATK_DEF, tick);
+				else
+					skill_attack(skill_get_type(sg->skill_id), ss, &unit->bl, bl, sg->skill_id, sg->skill_lv, tick, 0);
+			}
+			else
+				map_foreachinrange(skill_trap_splash, center, splash_range, bl_flag, &unit->bl, tick);
+
+			if (sg->unit_id != UNT_FIREPILLAR_ACTIVE && (battle_config.multi_trigger_trap == 0 || unit->range >= 0))
+				clif_changetraplook(&unit->bl, UNT_USED_TRAPS);
+
+			sg->limit = DIFF_TICK(tick, sg->tick) + (sg->unit_id == UNT_FIRINGTRAP ? 0 : 1500);
+
+			if (battle_config.multi_trigger_trap == 1)
+				unit->range = -1; // Trap will still process all units on it and will then be disabled in the calling function
+			else 
+				sg->unit_id = UNT_USED_TRAPS; // Change ID so it does not invoke for each in area again
 		}
 			break;
 
@@ -20697,6 +20719,11 @@ void skill_identify(map_session_data *sd, int32 idx)
 		}
 	}
 	clif_item_identified( *sd, idx, failure );
+	
+	if(!failure) {
+		pc_setreg(sd, add_str("@identify_idx"), idx);
+		npc_script_event( *sd, NPCE_IDENTIFY );
+	}
 }
 
 /*==========================================
@@ -21503,9 +21530,7 @@ static int32 skill_trap_splash(struct block_list *bl, va_list ap)
 			if (battle_check_target(ss, bl, sg->target_flag&~BCT_SELF) > 0)
 				skill_castend_damage_id(ss, bl, sg->skill_id, sg->skill_lv, tick, SD_ANIMATION|SD_LEVEL|SD_SPLASH|1);
 			break;
-		case UNT_SHOCKWAVE:
 		case UNT_SANDMAN:
-		case UNT_FLASHER:
 			skill_additional_effect(ss,bl,sg->skill_id,sg->skill_lv,BF_MISC,ATK_DEF,tick);
 			break;
 		case UNT_GROUNDDRIFT_WIND:

@@ -1756,6 +1756,7 @@ int32 clif_spawn( struct block_list *bl, bool walking ){
 				clif_specialeffect(&md->bl,EF_BABYBODY2,AREA);
 			if ( md->special_state.ai == AI_ABR || md->special_state.ai == AI_BIONIC )
 				clif_summon_init(*md);
+			clif_name_area(&md->bl);
 		}
 		break;
 	case BL_NPC:
@@ -5123,6 +5124,7 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 				}
 			}
 #endif
+		clif_name_area(&md->bl);
 		}
 		break;
 	case BL_PET:
