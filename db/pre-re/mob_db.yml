@@ -13242,16 +13242,8 @@ Body:
     AttackDelay: 1200
     AttackMotion: 1200
     DamageMotion: 384
-    Ai: 10
+    Ai: 12
     Class: Guardian
-    Modes:
-      CanMove: true
-      CastSensorChase: true
-      Angry: true
-      ChangeChase: true
-      ChangeTargetMelee: true
-      Detector: true
-      KnockBackImmune: true
   - Id: 1286
     AegisName: KNIGHT_GUARDIAN
     Name: Knight Guardian
@@ -13280,16 +13272,8 @@ Body:
     AttackDelay: 1200
     AttackMotion: 1200
     DamageMotion: 384
-    Ai: 10
+    Ai: 12
     Class: Guardian
-    Modes:
-      CanMove: true
-      CastSensorChase: true
-      Angry: true
-      ChangeChase: true
-      ChangeTargetMelee: true
-      Detector: true
-      KnockBackImmune: true
   - Id: 1287
     AegisName: SOLDIER_GUARDIAN
     Name: Soldier Guardian
@@ -13318,11 +13302,8 @@ Body:
     AttackMotion: 288
     ClientAttackMotion: 624
     DamageMotion: 384
-    Ai: 05
+    Ai: 12
     Class: Guardian
-    Modes:
-      Detector: true
-      KnockBackImmune: true
   - Id: 1288
     AegisName: EMPELIUM
     Name: Emperium
@@ -31313,12 +31294,10 @@ Body:
     AttackMotion: 288
     ClientAttackMotion: 312
     DamageMotion: 384
-    Ai: 17
-    Class: Guardian
+    Ai: 21
+    Class: Boss
     Modes:
-      Aggressive: true
-      ChangeChase: true
-      KnockBackImmune: true
+      Mvp: true
     MvpDrops:
       - Item: Jellopy
         Rate: 5000
@@ -31352,12 +31331,10 @@ Body:
     AttackMotion: 288
     ClientAttackMotion: 864
     DamageMotion: 384
-    Ai: 17
-    Class: Guardian
+    Ai: 21
+    Class: Boss
     Modes:
-      Aggressive: true
-      ChangeChase: true
-      KnockBackImmune: true
+      Mvp: true
     MvpDrops:
       - Item: Jellopy
         Rate: 5000
@@ -32641,11 +32618,7 @@ Body:
     Race: Formless
     Element: Neutral
     ElementLevel: 1
-    Modes:
-      IgnoreMagic: true
-      IgnoreMelee: true
-      IgnoreMisc: true
-      IgnoreRanged: true
+    Class: Boss
     Drops:
       - Item: Gem_Of_Ruin
         Rate: 10000
@@ -33115,6 +33088,7 @@ Body:
     AttackMotion: 960
     ClientAttackMotion: 288
     DamageMotion: 480
+    Class: Boss
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
@@ -33644,7 +33618,13 @@ Body:
     AttackMotion: 960
     ClientAttackMotion: 192
     DamageMotion: 384
-    Ai: 21
+    Ai: 17
+    Class: Boss
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Bag_Of_Rice
         Rate: 6000
@@ -37429,13 +37409,12 @@ Body:
     ClientAttackMotion: 288
     DamageMotion: 576
     Ai: 01
-    Class: Guardian
+    Class: Boss
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-      KnockBackImmune: true
     Drops:
       - Item: Crystal_Key
         Rate: 9000
@@ -38164,7 +38143,7 @@ Body:
     Race: Formless
     Element: Neutral
     ElementLevel: 1
-    Ai: 02
+    Class: Boss
     Drops:
       - Item: Tresure_Box_WoE
         Rate: 3000
@@ -38571,7 +38550,6 @@ Body:
     AttackMotion: 672
     ClientAttackMotion: 108
     DamageMotion: 384
-    Class: Boss
     Drops:
       - Item: Fin
         Rate: 5335
@@ -38618,7 +38596,6 @@ Body:
     AttackMotion: 72
     ClientAttackMotion: 216
     DamageMotion: 480
-    Class: Boss
     Drops:
       - Item: Mistic_Frozen
         Rate: 36
@@ -38664,7 +38641,6 @@ Body:
     AttackMotion: 672
     ClientAttackMotion: 384
     DamageMotion: 288
-    Class: Boss
     Drops:
       - Item: Mistic_Frozen
         Rate: 26
@@ -38710,7 +38686,6 @@ Body:
     AttackMotion: 432
     ClientAttackMotion: 420
     DamageMotion: 540
-    Class: Boss
     Drops:
       - Item: Crystal_Blue
         Rate: 40
@@ -38756,7 +38731,6 @@ Body:
     AttackMotion: 1080
     ClientAttackMotion: 288
     DamageMotion: 864
-    Class: Boss
     Drops:
       - Item: Single_Cell
         Rate: 5000
@@ -38798,7 +38772,6 @@ Body:
     AttackMotion: 672
     ClientAttackMotion: 288
     DamageMotion: 480
-    Class: Boss
     Drops:
       - Item: Jellopy
         Rate: 7000
