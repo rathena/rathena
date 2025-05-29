@@ -38,6 +38,8 @@
 
 using namespace rathena;
 
+static struct eri* delay_status_ers; // For delayed status structures
+
 // Regen related flags.
 enum e_regen {
 	RGN_NONE = 0x00,
@@ -10071,9 +10073,52 @@ void status_display_remove(struct block_list *bl, enum sc_type type) {
 	}
 }
 
+int32 status_change_start_post_delay(block_list* src, block_list* bl, sc_type type, int32 val1, int32 val2, int32 val3, int32 val4, int32 tick, unsigned char flag);
+
+/// Delayed Status Structure
+struct delay_status {
+	int32 src_id;
+	int32 bl_id;
+	sc_type type;
+	int32 val1;
+	int32 val2;
+	int32 val3;
+	int32 val4;
+	int32 tick;
+	unsigned char flag;
+};
+
+/**
+ * Timer for delayed status changes
+ * Triggers at the end of the delay
+ * Checks if target is still valid and then proceeds with applying the status change
+ * @param data delay_status struct that contains all required status data
+ * @return 0
+ */
+TIMER_FUNC(status_change_start_timer) {
+	struct delay_status* dat = reinterpret_cast<delay_status*>(data);
+
+	if (dat != nullptr) {
+		block_list* src = nullptr;
+		if (dat->src_id > 0)
+			src = map_id2bl(dat->src_id);
+
+		block_list* bl = nullptr;
+		if (dat->bl_id > 0)
+			bl = map_id2bl(dat->bl_id);
+
+		if (bl != nullptr && !status_isdead(*bl))
+			status_change_start_post_delay(src, bl, dat->type, dat->val1, dat->val2, dat->val3, dat->val4, dat->tick, dat->flag);
+	}
+	ers_free(delay_status_ers, dat);
+	return 0;
+}
+
 /**
  * Applies SC defense to a given status change
  * This function also determines whether or not the status change will be applied
+ * If not resisted, it will attempt to apply the status change after the given delay
+ * Please note that certain conditions can still make the status change fail after the delay
  * @param src: Source of the status change [PC|MOB|HOM|MER|ELEM|NPC]
  * @param bl: Target of the status change (See: enum sc_type)
  * @param type: Status change (SC_*)
@@ -10082,19 +10127,13 @@ void status_display_remove(struct block_list *bl, enum sc_type type) {
  * @param duration: Initial duration that the status change affects bl
  * @param flag: Value which determines what parts to calculate. See e_status_change_start_flags
  * @param delay: Delay in milliseconds before the SC is applied
- * @return adjusted duration based on flag values
+ * @return Whether the status change was resisted (0) or will be applied (1)
  */
 int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_type type,int32 rate,int32 val1,int32 val2,int32 val3,int32 val4,t_tick duration,unsigned char flag, int32 delay) {
-	map_session_data *sd = nullptr;
-	status_change* sc;
-	struct status_change_entry* sce;
-	struct view_data *vd;
-	int32 undead_flag, tick_time = 0;
-	bool sc_isnew = true;
 	std::shared_ptr<s_status_change_db> scdb = status_db.find(type);
 
 	nullpo_ret(bl);
-	sc = status_get_sc(bl);
+	status_change* sc = status_get_sc(bl);
 
 	if( !scdb ) {
 		ShowError("status_change_start: Invalid status change (%d)!\n", type);
@@ -10173,26 +10212,79 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 
 	int32 tick = (int32)duration;
 
-	sd = BL_CAST(BL_PC, bl);
-	vd = status_get_viewdata(bl);
-
-	undead_flag = battle_check_undead(status->race,status->def_ele);
-	// Check for immunities / sc fails
+	// Type-specific checks that need to happen before the delay
 	switch (type) {
-		case SC_VACUUM_EXTREME:
-			if (sc && sc->getSCE(SC_VACUUM_EXTREME_POSTDELAY) && sc->getSCE(SC_VACUUM_EXTREME_POSTDELAY)->val2 == val2) // Ignore post delay from other vacuum (this will make stack effect enabled)
-				return 0;
-			break;
 		case SC_STONE:
 		case SC_STONEWAIT:
 		case SC_FREEZE:
 			// Undead are immune to Freeze/Stone
-			if (undead_flag && !(flag&SCSTART_NOAVOID))
+			if (battle_check_undead(status->race, status->def_ele) != 0 && !(flag&SCSTART_NOAVOID))
 				return 0;
+			else if (type == SC_STONEWAIT) {
+				// Stonewait has a unique handling where the delay is actually duration until stone kicks in
+				val3 = max(1, tick - delay); // Petrify time
+				tick = delay;
+				delay = 0;
+			}
 			break;
 		case SC_BURNING:
 			// Level 2 Fire Element is immune
 			if (status->def_ele == ELE_FIRE && status->ele_lv == 2)
+				return 0;
+			break;
+	}
+
+	// If there is no delay, we proceed immediately
+	// Otherwise, we store the status change data in a struct and set up a timer for after the delay
+	if (delay <= 0) {
+		return status_change_start_post_delay(src, bl, type, val1, val2, val3, val4, tick, flag);
+	}
+	else {
+		delay_status* dat = ers_alloc(delay_status_ers, struct delay_status);
+		dat->src_id = src->id;
+		dat->bl_id = bl->id;
+		dat->type = type;
+		dat->val1 = val1;
+		dat->val2 = val2;
+		dat->val3 = val3;
+		dat->val4 = val4;
+		dat->tick = tick;
+		dat->flag = flag;
+
+		add_timer(gettick() + delay, status_change_start_timer, 0, (intptr_t)dat);
+	}
+
+	// Assume success
+	return 1;
+}
+
+/**
+ * Applies given status change and executes all related actions
+ * This function handles all immunities that should be checked at the end of delay
+ * @param src: Source of the status change [PC|MOB|HOM|MER|ELEM|NPC]
+ * @param bl: Target of the status change (See: enum sc_type)
+ * @param type: Status change (SC_*)
+ * @param val1~4: Depends on type of status change
+ * @param tick: Final duration of the status change
+ * @param flag: Value which determines what parts to calculate. See e_status_change_start_flags
+ * @return Whether the status change was resisted (0) or applied (1)
+ */
+int32 status_change_start_post_delay(block_list* src, block_list* bl, sc_type type, int32 val1, int32 val2, int32 val3, int32 val4, int32 tick, unsigned char flag)
+{
+	map_session_data* sd = BL_CAST(BL_PC, bl);
+	view_data* vd = status_get_viewdata(bl);
+	status_change* sc = status_get_sc(bl);
+	status_change_entry* sce;
+	status_data* status = status_get_status_data(*bl);
+	int32 undead_flag = battle_check_undead(status->race,status->def_ele);
+	int32 tick_time = 0;
+	bool sc_isnew = true;
+	std::shared_ptr<s_status_change_db> scdb = status_db.find(type);
+
+	// Check for immunities / sc fails
+	switch (type) {
+		case SC_VACUUM_EXTREME:
+			if (sc && sc->getSCE(SC_VACUUM_EXTREME_POSTDELAY) && sc->getSCE(SC_VACUUM_EXTREME_POSTDELAY)->val2 == val2) // Ignore post delay from other vacuum (this will make stack effect enabled)
 				return 0;
 			break;
 		case SC_ALL_RIDING:
@@ -11022,11 +11114,6 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 				clif_changemanner( *sd );
 				clif_updatestatus(*sd,SP_MANNER);
 			}
-			break;
-
-		case SC_STONEWAIT:
-			val3 = max(1, tick - delay); // Petrify time
-			tick = delay;
 			break;
 
 		case SC_DPOISON:
@@ -16374,6 +16461,9 @@ void status_readdb( bool reload ){
 void do_init_status(void) {
 	memset(SCDisabled, 0, sizeof(SCDisabled));
 
+	delay_status_ers = ers_new(sizeof(struct delay_status), "status.cpp::delay_status_ers", ERS_OPT_CLEAR);
+	add_timer_func_list(status_change_start_timer, "status_change_start_timer");
+
 	add_timer_func_list(status_change_timer,"status_change_timer");
 	add_timer_func_list(status_natural_heal_timer,"status_natural_heal_timer");
 	add_timer_func_list(status_clear_lastEffect_timer, "status_clear_lastEffect_timer");
@@ -16390,4 +16480,5 @@ void do_final_status(void) {
 	refine_db.clear();
 	status_db.clear();
 	elemental_attribute_db.clear();
+	ers_destroy(delay_status_ers);
 }
