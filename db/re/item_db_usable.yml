@@ -72754,7 +72754,7 @@ Body:
   - Id: 101099
     AegisName: ClockTower_Regulator
     Name: Spring Regulator
-    Type: Usable
+    Type: DelayConsume
     Weight: 10
     Script: |
       item_enchant(24);
