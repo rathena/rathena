@@ -10096,7 +10096,7 @@ struct delay_status {
  * @return 0
  */
 TIMER_FUNC(status_change_start_timer) {
-	struct delay_status* dat = reinterpret_cast<delay_status*>(data);
+	delay_status* dat = reinterpret_cast<delay_status*>(data);
 
 	if (dat != nullptr) {
 		block_list* src = nullptr;
@@ -10222,7 +10222,7 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 				return 0;
 			else if (type == SC_STONEWAIT) {
 				// Stonewait has a unique handling where the delay is actually duration until stone kicks in
-				val3 = max(1, tick - delay); // Petrify time
+				val3 = std::max<int32>(1, tick - delay); // Petrify time
 				tick = delay;
 				delay = 0;
 			}
@@ -10284,7 +10284,7 @@ int32 status_change_start_post_delay(block_list* src, block_list* bl, sc_type ty
 	// Check for immunities / sc fails
 	switch (type) {
 		case SC_VACUUM_EXTREME:
-			if (sc && sc->getSCE(SC_VACUUM_EXTREME_POSTDELAY) && sc->getSCE(SC_VACUUM_EXTREME_POSTDELAY)->val2 == val2) // Ignore post delay from other vacuum (this will make stack effect enabled)
+			if (sc != nullptr && sc->hasSCE(SC_VACUUM_EXTREME_POSTDELAY) && sc->getSCE(SC_VACUUM_EXTREME_POSTDELAY)->val2 == val2) // Ignore post delay from other vacuum (this will make stack effect enabled)
 				return 0;
 			break;
 		case SC_ALL_RIDING:
