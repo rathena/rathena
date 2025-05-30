@@ -8,7 +8,7 @@ Note that this Dockerized environment **is not suitable** for production deploym
 2. `docker-compose run builder bash` in order to run aditional build or shell scripts within the linux context.
 3. All rAthena development commands can be executed inside the dev container, such as compiling (`./configure`, `make clean server`) and starting the server (`./athena-start`, `gdb map-server`, etc ...)
 4. `docker-compose down` outside the dev container when done to close database and free resources
-5. All commands expect you to have change directory to this directory, `$projectRoot/tools/docker`.
+5. All commands expect you to have change directory to this directory, `$projectRoot/tools/docker/dev`.
 6. Change the value of `BUILDER_CONFIGURE` environment variable of the `builder` service in order to change the parameters sent to the `./configure` command
 > If you have already compiled the project once, you might want to connect directly to the builder service (see 2.) and run commands from there (see 3.). 
 7. If you want the builder to build your project on each start change line 8 from
