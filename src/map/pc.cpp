@@ -5885,7 +5885,7 @@ int16 pc_search_inventory(map_session_data *sd, t_itemid nameid) {
  *   6 = ?
  *   7 = stack limitation
  */
-enum e_additem_result pc_additem(map_session_data *sd,struct item *item,int32 amount,e_log_pick_type log_type) {
+enum e_additem_result pc_additem(map_session_data *sd,struct item *item,int32 amount,e_log_pick_type log_type, bool favorite) {
 	struct item_data *id;
 	int16 i;
 	uint32 w;
@@ -5944,15 +5944,14 @@ enum e_additem_result pc_additem(map_session_data *sd,struct item *item,int32 am
 		}
 
 		memcpy(&sd->inventory.u.items_inventory[i], item, sizeof(sd->inventory.u.items_inventory[0]));
-		// clear equip and favorite fields first, just in case
+		// clear equip and equip switch fields first, just in case
 		if( item->equip )
 			sd->inventory.u.items_inventory[i].equip = 0;
-		if( item->favorite != 0 )
-			sd->inventory.u.items_inventory[i].favorite = 0;
 		if( item->equipSwitch )
 			sd->inventory.u.items_inventory[i].equipSwitch = 0;
 
 		sd->inventory.u.items_inventory[i].amount = amount;
+		sd->inventory.u.items_inventory[i].favorite = favorite;
 		sd->inventory_data[i] = id;
 		sd->last_addeditem_index = i;
 

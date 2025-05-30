@@ -1445,7 +1445,7 @@ char pc_checkadditem(map_session_data *sd, t_itemid nameid, int32 amount);
 uint8 pc_inventoryblank(map_session_data *sd);
 int16 pc_search_inventory(map_session_data *sd, t_itemid nameid);
 char pc_payzeny(map_session_data *sd, int32 zeny, enum e_log_pick_type type, uint32 log_charid = 0);
-enum e_additem_result pc_additem(map_session_data *sd, struct item *item, int32 amount, e_log_pick_type log_type);
+enum e_additem_result pc_additem(map_session_data *sd, struct item *item, int32 amount, e_log_pick_type log_type, bool favorite=false);
 char pc_getzeny(map_session_data *sd, int32 zeny, enum e_log_pick_type type, uint32 log_charid = 0);
 char pc_delitem(map_session_data *sd, int32 n, int32 amount, int32 type, int16 reason, e_log_pick_type log_type);
 

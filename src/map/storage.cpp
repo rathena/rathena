@@ -364,7 +364,7 @@ void storage_storageadd(map_session_data* sd, struct s_storage *stor, int32 inde
  * @param amount : number of item to take
  * @return 0:fail, 1:success
  */
-void storage_storageget(map_session_data *sd, struct s_storage *stor, int32 index, int32 amount)
+void storage_storageget(map_session_data *sd, struct s_storage *stor, int32 index, int32 amount, bool favorite)
 {
 	unsigned char flag = 0;
 	enum e_storage_add result;
@@ -375,7 +375,7 @@ void storage_storageget(map_session_data *sd, struct s_storage *stor, int32 inde
 	if (result != STORAGE_ADD_OK)
 		return;
 
-	if ((flag = pc_additem(sd,&stor->u.items_storage[index],amount,LOG_TYPE_STORAGE)) == ADDITEM_SUCCESS)
+	if ((flag = pc_additem(sd,&stor->u.items_storage[index],amount,LOG_TYPE_STORAGE, favorite)) == ADDITEM_SUCCESS)
 		storage_delitem(sd,stor,index,amount);
 	else {
 		clif_storageitemremoved( *sd, index, 0 );
@@ -911,7 +911,7 @@ void storage_guild_storageadd(map_session_data* sd, int32 index, int32 amount)
  * @param amount : number of item to get
  * @return 1:success, 0:fail
  */
-void storage_guild_storageget(map_session_data* sd, int32 index, int32 amount)
+void storage_guild_storageget(map_session_data* sd, int32 index, int32 amount, bool favorite)
 {
 	struct s_storage *stor;
 	unsigned char flag = 0;
@@ -936,7 +936,7 @@ void storage_guild_storageget(map_session_data* sd, int32 index, int32 amount)
 		return;
 	}
 
-	if((flag = pc_additem(sd,&stor->u.items_guild[index],amount,LOG_TYPE_GSTORAGE)) == 0)
+	if((flag = pc_additem(sd,&stor->u.items_guild[index],amount,LOG_TYPE_GSTORAGE,favorite)) == 0)
 		storage_guild_delitem(sd,stor,index,amount);
 	else { // inform fail
 		clif_storageitemremoved( *sd, index, 0 );

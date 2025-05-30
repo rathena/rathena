@@ -25552,6 +25552,28 @@ void clif_parse_macro_checker( int32 fd, map_session_data* sd ){
 #endif
 }
 
+/// In clients 2025-01-22 and newer if you hold shift and right-click an item in the storage,
+/// the item will be moved to the favorite tab of the inventory.
+/// However if it is a stackable item and that item already exists in your inventory, it will
+/// be added to the respective tab, where the item is currently.
+/// 0c22 <unknown>.L <index>.W <amount>.L (CZ_MOVE_ITEM_TO_PERSONAL)
+void clif_parse_MoveFromKafraFav( int32 fd, map_session_data* sd ){
+#if PACKETVER_MAIN_NUM >= 20250122
+	const PACKET_CZ_MOVE_ITEM_TO_PERSONAL* p = reinterpret_cast<PACKET_CZ_MOVE_ITEM_TO_PERSONAL*>( RFIFOP( fd, 0 ) );
+
+	uint16 item_index = server_storage_index( p->index );
+	uint32 item_amount = p->amount;
+
+	if( sd->state.storage_flag == 1 ){
+		storage_storageget( sd, &sd->storage, item_index, item_amount, true );
+	}else if( sd->state.storage_flag == 2 ){
+		storage_guild_storageget( sd, item_index, item_amount, true );
+	}else if( sd->state.storage_flag == 3 ){
+		storage_storageget( sd, &sd->premiumStorage, item_index, item_amount, true );
+	}
+#endif
+}
+
 /*==========================================
  * Main client packet processing function
  *------------------------------------------*/
