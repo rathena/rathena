@@ -2057,4 +2057,8 @@
 	parseable_packet( 0xc22, 12, clif_parse_dull, 0 );
 #endif
 
+#if PACKETVER_MAIN_NUM >= 20230915
+	parseable_packet(HEADER_CZ_MACRO_USER_REPORT_REQ, sizeof(struct PACKET_CZ_MACRO_USER_REPORT_REQ), clif_parse_macro_user_report, 0);
+#endif
+
 #endif /* CLIF_PACKETDB_HPP */
