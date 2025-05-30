@@ -2057,4 +2057,14 @@
 	parseable_packet( 0xc22, 12, clif_parse_dull, 0 );
 #endif
 
+#if (PACKETVER_MAIN_NUM >= 20230925)
+	parseable_packet(HEADER_CZ_REQ_EMOTION2, sizeof(PACKET_CZ_REQ_EMOTION2), clif_parse_emotion2, 0);
+	packet(HEADER_ZC_EMOTION2, sizeof(PACKET_ZC_EMOTION2));
+	packet(HEADER_ZC_EMOTION2_FAIL, sizeof(PACKET_ZC_EMOTION2_FAIL));
+	parseable_packet(HEADER_CZ_REQ_EMOTION2_EXPANTION, sizeof(PACKET_CZ_REQ_EMOTION2_EXPANTION), clif_parse_emotion2_expantion, 0);
+	packet(HEADER_ZC_EMOTION2_EXPANTION, sizeof(PACKET_ZC_EMOTION2_EXPANTION));
+	packet(HEADER_ZC_EMOTION2_EXPANTION_FAIL, sizeof(PACKET_ZC_EMOTION2_EXPANTION_FAIL));
+	packet(HEADER_ZC_EMOTION2_EXPANTION_LIST, -1);
+#endif
+
 #endif /* CLIF_PACKETDB_HPP */

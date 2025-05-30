@@ -1,0 +1,168 @@
+###########################################################################
+# Emotions Database
+###########################################################################
+#
+# Emotions Settings
+#
+###########################################################################
+# - Id                      Emotion expantion ID.
+#   Price                   Purchase price in Nyangvine Fruit (item id: 6909). (Default: 0)
+#   Type                    Bound type. 0 for account bound, 1 for character bound. (Default: 0)
+#   SaleStart               Rental starting time to be sold in the fomat YYYYMMDD. (Default: 0)
+#   SaleEnd                 Rental ending time to be sold in the fomat YYYYMMDD. (Default: 0)
+#   SaleRentalPeriod        Rental availability duration in days. 0 for unlimited. (Default: 0)
+#   Emotions                Emotions list for this expantion ID.
+###########################################################################
+
+Header:
+  Type: EMOTION_DB
+  Version: 1
+
+Body:
+  - Id: 0
+    Price: 0
+    Type: 0
+    SaleStart: 0
+    SaleEnd: 0
+    SaleRentalPeriod: 0
+    Emotions:
+      - ET_SURPRISE
+      - ET_QUESTION
+      - ET_DELIGHT
+      - ET_THROB
+      - ET_BIGTHROB
+      - ET_SWEAT
+      - ET_AHA
+      - ET_FRET
+      - ET_ANGER
+      - ET_MONEY
+      - ET_THINK
+      - ET_ROCK
+      - ET_SCISSOR
+      - ET_WRAP
+      - ET_THANKS
+      - ET_KEK
+      - ET_SORRY
+      - ET_SMILE
+      - ET_PROFUSELY_SWEAT
+      - ET_SCRATCH
+      - ET_BEST
+      - ET_STARE_ABOUT
+      - ET_HUK
+      - ET_O
+      - ET_X
+      - ET_HELP
+      - ET_GO
+      - ET_CRY
+      - ET_KIK
+      - ET_CHUP
+      - ET_CHUPCHUP
+      - ET_HNG
+      - ET_OK
+      - ET_STARE
+      - ET_HUNGRY
+      - ET_COOL
+      - ET_MERONG
+      - ET_SHY
+      - ET_GOODBOY
+      - ET_SPTIME
+      - ET_SEXY
+      - ET_COMEON
+      - ET_SLEEPY
+      - ET_CONGRATULATION
+      - ET_HPTIME
+      - ET_SPARK
+      - ET_CONFUSE
+      - ET_OHNO
+      - ET_HUM
+      - ET_BLABLA
+      - ET_OTL
+      - ET_LUV
+      - ET_MOBILE
+      - ET_MAIL
+      - ET_ANTENNA1
+      - ET_ANTENNA2
+      - ET_ANTENNA3
+      - ET_HUM2
+      - ET_ABS
+      - ET_OOPS
+      - ET_SPIT
+      - ET_ENE
+      - ET_PANIC
+      - ET_WHISP
+      - ET_FLAG
+      - ET_INDONESIA_FLAG
+      - ET_PH_FLAG
+      - ET_MY_FLAG
+      - ET_SI_FLAG
+      - ET_BR_FLAG
+      - ET_INDIA_FLAG
+      - ET_FLAG8
+      - ET_FLAG9
+      - ET_DICE1
+      - ET_DICE2
+      - ET_DICE3
+      - ET_DICE4
+      - ET_DICE5
+      - ET_DICE6
+      - ET_YUT1
+      - ET_YUT2
+      - ET_YUT3
+      - ET_YUT4
+      - ET_YUT5
+      - ET_YUT6
+      - ET_YUT7
+
+  - Id: 1
+    Price: 10
+    Type: 0
+    SaleStart: 0
+    SaleEnd: 0
+    SaleRentalPeriod: 0
+    Emotions:
+      - ET_KIK
+      - ET_GO
+      - ET_COOL
+      - ET_SPARK
+      - ET_QUESTION
+      - ET_CUSTOM_1
+      - ET_CUSTOM_2
+      - ET_CUSTOM_3
+      - ET_CUSTOM_4
+      - ET_CUSTOM_5
+
+  - Id: 2
+    Price: 10
+    Type: 0
+    SaleStart: 20230810
+    SaleEnd: 0
+    SaleRentalPeriod: 0
+    Emotions:
+      - ET_THANKS
+      - ET_AHA
+      - ET_OK
+      - ET_HUNGRY
+      - ET_SURPRISE
+      - ET_QUESTION
+      - ET_DELIGHT
+      - ET_SCISSOR
+      - ET_ROCK
+      - ET_WRAP
+
+  - Id: 3
+    Price: 10
+    Type: 0
+    SaleStart: 20231101
+    SaleEnd: 0
+    SaleRentalPeriod: 0
+    Emotions:
+      - ET_SEXY
+      - ET_MERONG
+      - ET_SHY
+      - ET_COMEON
+      - ET_HUNGRY
+      - ET_SPTIME
+      - ET_HPTIME
+      - ET_BIGTHROB
+      - ET_SWEAT
+      - ET_BLABLA
