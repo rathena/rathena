@@ -64,7 +64,7 @@ struct s_delay_status {
 
 int32 delay_status_index = 0;
 // delay_status : delay_status_index -> data
-std::unordered_map<uint32, std::shared_ptr<s_delay_status>> delay_status;
+std::unordered_map<int32, std::shared_ptr<s_delay_status>> delay_status;
 
 int16 current_equip_item_index; /// Contains inventory index of an equipped item. To pass it into the EQUP_SCRIPT [Lupus]
 uint32 current_equip_combo_pos; /// For combo items we need to save the position of all involved items here
