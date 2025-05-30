@@ -38,8 +38,6 @@
 
 using namespace rathena;
 
-static struct eri* delay_status_ers; // For delayed status structures
-
 // Regen related flags.
 enum e_regen {
 	RGN_NONE = 0x00,
@@ -50,6 +48,23 @@ enum e_regen {
 };
 
 static struct status_data dummy_status;
+
+/// Delayed Status Structure
+struct s_delay_status {
+	int32 src_id;
+	int32 bl_id;
+	sc_type type;
+	int32 val1;
+	int32 val2;
+	int32 val3;
+	int32 val4;
+	int32 tick;
+	uint8 flag;
+};
+
+int32 delay_status_index = 0;
+// delay_status : delay_status_index -> data
+std::unordered_map<uint32, std::shared_ptr<s_delay_status>> delay_status;
 
 int16 current_equip_item_index; /// Contains inventory index of an equipped item. To pass it into the EQUP_SCRIPT [Lupus]
 uint32 current_equip_combo_pos; /// For combo items we need to save the position of all involved items here
@@ -106,6 +121,7 @@ static uint32 status_calc_maxhp_pc( map_session_data& sd, uint32 vit );
 static uint32 status_calc_maxsp_pc( map_session_data& sd, uint32 int_ );
 static uint32 status_calc_maxap_pc( map_session_data& sd );
 static int32 status_get_sc_interval(enum sc_type type);
+static int32 status_change_start_post_delay(block_list* src, block_list* bl, sc_type type, int32 val1, int32 val2, int32 val3, int32 val4, int32 tick, uint8 flag);
 
 static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, uint32 mapZone, bool mapIsTE);
 #define status_change_isDisabledOnMap(type, m) ( status_change_isDisabledOnMap_((type), mapdata_flag_vs2((m)), m->getMapFlag(MF_PVP) != 0, mapdata_flag_gvg2_no_te((m)), m->getMapFlag(MF_BATTLEGROUND) != 0, (m->zone << 3) != 0, mapdata_flag_gvg2_te((m))) )
@@ -10073,21 +10089,6 @@ void status_display_remove(struct block_list *bl, enum sc_type type) {
 	}
 }
 
-int32 status_change_start_post_delay(block_list* src, block_list* bl, sc_type type, int32 val1, int32 val2, int32 val3, int32 val4, int32 tick, unsigned char flag);
-
-/// Delayed Status Structure
-struct delay_status {
-	int32 src_id;
-	int32 bl_id;
-	sc_type type;
-	int32 val1;
-	int32 val2;
-	int32 val3;
-	int32 val4;
-	int32 tick;
-	unsigned char flag;
-};
-
 /**
  * Timer for delayed status changes
  * Triggers at the end of the delay
@@ -10096,21 +10097,25 @@ struct delay_status {
  * @return 0
  */
 TIMER_FUNC(status_change_start_timer) {
-	delay_status* dat = reinterpret_cast<delay_status*>(data);
+	int32 index = static_cast<int32>(id);
+	std::shared_ptr<s_delay_status> entry = util::umap_find(delay_status, index);
 
-	if (dat != nullptr) {
-		block_list* src = nullptr;
-		if (dat->src_id > 0)
-			src = map_id2bl(dat->src_id);
+	if (entry == nullptr)
+		return 0;
 
-		block_list* bl = nullptr;
-		if (dat->bl_id > 0)
-			bl = map_id2bl(dat->bl_id);
+	block_list* src = nullptr;
+	if (entry->src_id > 0)
+		src = map_id2bl(entry->src_id);
 
-		if (bl != nullptr && !status_isdead(*bl))
-			status_change_start_post_delay(src, bl, dat->type, dat->val1, dat->val2, dat->val3, dat->val4, dat->tick, dat->flag);
-	}
-	ers_free(delay_status_ers, dat);
+	block_list* bl = nullptr;
+	if (entry->bl_id > 0)
+		bl = map_id2bl(entry->bl_id);
+
+	if (bl != nullptr && !status_isdead(*bl))
+		status_change_start_post_delay(src, bl, entry->type, entry->val1, entry->val2, entry->val3, entry->val4, entry->tick, entry->flag);
+
+	delay_status.erase(index);
+
 	return 0;
 }
 
@@ -10133,14 +10138,15 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 	std::shared_ptr<s_status_change_db> scdb = status_db.find(type);
 
 	nullpo_ret(bl);
-	status_change* sc = status_get_sc(bl);
 
 	if( !scdb ) {
 		ShowError("status_change_start: Invalid status change (%d)!\n", type);
 		return 0;
 	}
 
-	if( !sc )
+	status_change* sc = status_get_sc(bl);
+
+	if (sc == nullptr)
 		return 0; // Unable to receive status changes
 
 	// Scripted status changes only work for players for the time being
@@ -10236,23 +10242,25 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 
 	// If there is no delay, we proceed immediately
 	// Otherwise, we store the status change data in a struct and set up a timer for after the delay
-	if (delay <= 0) {
+	if (delay <= 0)
 		return status_change_start_post_delay(src, bl, type, val1, val2, val3, val4, tick, flag);
-	}
-	else {
-		delay_status* dat = ers_alloc(delay_status_ers, struct delay_status);
-		dat->src_id = src->id;
-		dat->bl_id = bl->id;
-		dat->type = type;
-		dat->val1 = val1;
-		dat->val2 = val2;
-		dat->val3 = val3;
-		dat->val4 = val4;
-		dat->tick = tick;
-		dat->flag = flag;
 
-		add_timer(gettick() + delay, status_change_start_timer, 0, (intptr_t)dat);
-	}
+	std::shared_ptr<s_delay_status> entry = std::make_shared<s_delay_status>();
+
+	entry->src_id = src->id;
+	entry->bl_id = bl->id;
+	entry->type = type;
+	entry->val1 = val1;
+	entry->val2 = val2;
+	entry->val3 = val3;
+	entry->val4 = val4;
+	entry->tick = tick;
+	entry->flag = flag;
+
+	int32 index = delay_status_index++;
+	delay_status.insert({ index, entry });
+
+	add_timer(gettick() + delay, status_change_start_timer, index, 0);
 
 	// Assume success
 	return 1;
@@ -16461,7 +16469,6 @@ void status_readdb( bool reload ){
 void do_init_status(void) {
 	memset(SCDisabled, 0, sizeof(SCDisabled));
 
-	delay_status_ers = ers_new(sizeof(struct delay_status), "status.cpp::delay_status_ers", ERS_OPT_CLEAR);
 	add_timer_func_list(status_change_start_timer, "status_change_start_timer");
 
 	add_timer_func_list(status_change_timer,"status_change_timer");
@@ -16480,5 +16487,5 @@ void do_final_status(void) {
 	refine_db.clear();
 	status_db.clear();
 	elemental_attribute_db.clear();
-	ers_destroy(delay_status_ers);
+	delay_status.clear();
 }
