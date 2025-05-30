@@ -61,23 +61,19 @@ S_Mob:
 			.count++;
 		if (.count == 1500 && !.boss_spawn && !.cooldown) {
 			getunitdata( killedgid, .@data );
-			callsub( S_Boss, (20273 + .swap), .@group, .@data[UMOB_X], .@data[UMOB_Y] );
+			callsub( S_Boss, (20273 + .swap), .@data[UMOB_X], .@data[UMOB_Y] );
 		}
 	}
 	.@mob_id = getarg(0);
 	sleep 5000;
-	if (.@group == .group) {
+	if (.@group == .group)
 		monster "com_d02_i",0,0,"--ja--",.@mob_id,1,"illusion_luanda::OnMob" + .@mob_id;
-		// setunittitle for the title, setunitdata
-		setunitdata $@mobid[0], UMOB_GROUP_ID, getarg(1);
-	}
 	end;
 
 S_Boss:
 	killmonster "com_d02_i", "illusion_luanda::OnBossDeath";
 	.boss_spawn = true;
-	monster "com_d02_i",getarg(2),getarg(3),"--ja--",getarg(0),1,"illusion_luanda::OnBossDeath";
-	setunitdata $@mobid[0], UMOB_GROUP_ID, getarg(1);
+	monster "com_d02_i",getarg(1),getarg(2),"--ja--",getarg(0),1,"illusion_luanda::OnBossDeath";
 	if (.swap == 0)	// ILL_TAO_GUNKA
 		mapannounce "com_d02_i", "Ancient Tao Gunka: Is it time to show off your megalithic power?", bc_map, 0x70DBDB;
 	else	// ILL_WOOTAN_DEFENDER
@@ -130,14 +126,8 @@ OnTimer7200000:
 S_SpawnInit:
 	.count = 0;
 	monster "com_d02_i",0,0,"--ja--",getarg(0),50,"illusion_luanda::OnMob" + getarg(0);
-	copyarray .@gid[0], $@mobid[0], 50;
 	monster "com_d02_i",0,0,"--ja--",getarg(1),50,"illusion_luanda::OnMob" + getarg(1);
-	copyarray .@gid[50], $@mobid[0], 50;
 	monster "com_d02_i",0,0,"--ja--",getarg(2),50,"illusion_luanda::OnMob" + getarg(2);
-	copyarray .@gid[100], $@mobid[0], 50;
-
-	for ( .@i = 0; .@i < 150; ++.@i )
-		setunitdata .@gid[.@i], UMOB_GROUP_ID, .group;
 	return;
 
 OnInit:
