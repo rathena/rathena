@@ -156,8 +156,12 @@ bool is_infinite_defense(struct block_list *target, int32 flag);
 #define MAX_HAIR_COLOR battle_config.max_hair_color
 #define MIN_CLOTH_COLOR battle_config.min_cloth_color
 #define MAX_CLOTH_COLOR battle_config.max_cloth_color
-#define MIN_BODY_STYLE battle_config.min_body_style
-#define MAX_BODY_STYLE battle_config.max_body_style
+#define MIN_BODY_STYLE 0
+#if PACKETVER >= 20231220
+#define MAX_BODY_STYLE (JOB_MAX-1)
+#else
+#define MAX_BODY_STYLE 1
+#endif
 
 struct Battle_Config
 {
@@ -647,8 +651,6 @@ struct Battle_Config
 	int32 feature_roulette;
 	int32 feature_roulette_bonus_reward;
 	int32 monster_hp_bars_info;
-	int32 min_body_style;
-	int32 max_body_style;
 	int32 save_body_style;
 	int32 mob_eye_range_bonus; //Vulture's Eye and Snake's Eye range bonus
 	int32 mob_stuck_warning; //Show warning if a monster is stuck too long

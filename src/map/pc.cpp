@@ -1287,8 +1287,13 @@ void pc_makesavestatus(map_session_data *sd) {
 		sd->status.clothes_color = 0;
 
 	if(!battle_config.save_body_style)
+	{
+#if PACKETVER >= 20231220
+ 		sd->status.body = sd->status.class_;
+#else
 		sd->status.body = 0;
-
+#endif
+ 	}
 	//Only copy the Cart/Peco/Falcon options, the rest are handled via
 	//status change load/saving. [Skotlex]
 #ifdef NEW_CARTS
@@ -10817,8 +10822,12 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 
 	// Reset body style to 0 before changing job to avoid
 	// errors since not every job has a alternate outfit.
+#if PACKETVER >= 20231220
+ 	sd->status.body = job;
+#else
 	sd->status.body = 0;
-	clif_changelook(&sd->bl,LOOK_BODY2,0);
+#endif
+	clif_changelook(&sd->bl,LOOK_BODY2,sd->status.body);
 
 	sd->status.class_ = job;
 	fame_flag = pc_famerank(sd->status.char_id,sd->class_&MAPID_UPPERMASK);

@@ -62,16 +62,16 @@ jobs:
         run: sudo systemctl start mysql.service
 
       - name: Setup Database and import table data
-        run: ./tools/ci/sql.sh
+        run: chmod 777 ./tools/ci/sql.sh && ./tools/ci/sql.sh
           
       - name: Command - configure
         env:
             CONFIGURE_FLAGS: 'CC=gcc-${{ matrix.gcc }} CXX=g++-${{ matrix.gcc }} --enable-prere=${{ env.PRERE }} --enable-buildbot=yes'
-        run: ./configure $CONFIGURE_FLAGS
+        run: chmod 777 ./configure && ./configure $CONFIGURE_FLAGS
       
       # npc.sh enables all NPC scripts in the custom and test folders.
       - name: Enable All NPCs for Testing
-        run: ./tools/ci/npc.sh
+        run: chmod 777 ./tools/ci/npc.sh && ./tools/ci/npc.sh
 
       - name: Command - make clean
         run: make clean
@@ -84,4 +84,4 @@ jobs:
         run: make map
 
       - name: Run Once - map-server
-        run: ./map-server --run-once
+        run: chmod 777 ./map-server && ./map-server --run-once

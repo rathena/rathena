@@ -59,7 +59,7 @@ jobs:
         run: sudo systemctl start mysql.service
 
       - name: Setup Database and import table data
-        run: ./tools/ci/sql.sh
+        run: chmod 777 ./tools/ci/sql.sh && ./tools/ci/sql.sh
 
       - name: Command - configure
         env:
@@ -73,10 +73,10 @@ jobs:
         run: make server
 
       - name: Run Once - login-server
-        run: ./login-server --run-once
+        run: chmod 777 ./login-server && ./login-server --run-once
 
       - name: Run Once - char-server
-        run: ./char-server --run-once
+        run: chmod 777 ./char-server && ./char-server --run-once
 
       - name: Run Once - map-server
-        run: ./map-server --run-once
+        run: chmod 777 ./map-server && ./map-server --run-once
