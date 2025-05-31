@@ -10227,11 +10227,15 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 			if (battle_check_undead(status->race, status->def_ele) != 0 && !(flag&SCSTART_NOAVOID))
 				return 0;
 			else if (type == SC_STONEWAIT) {
-				// Stonewait has a unique handling where the delay is actually duration until stone kicks in
+				// Stonewait has a unique handling where the delay is actually the duration until stone kicks in
 				val3 = std::max<int32>(1, tick - delay); // Petrify time
 				tick = delay;
 				delay = 0;
 			}
+			break;
+		case SC_BLEEDING:
+			// Bleeding always starts immediately
+			delay = 0;
 			break;
 		case SC_BURNING:
 			// Level 2 Fire Element is immune
@@ -10254,7 +10258,12 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 	entry->val2 = val2;
 	entry->val3 = val3;
 	entry->val4 = val4;
+#ifdef RENEWAL
+	// In renewal, the delay is substracted from the duration
+	entry->tick = std::max<int32>(1, tick - delay);
+#else
 	entry->tick = tick;
+#endif
 	entry->flag = flag;
 
 	int32 index = delay_status_index++;
