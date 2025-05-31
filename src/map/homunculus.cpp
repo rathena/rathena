@@ -2056,7 +2056,7 @@ void do_init_homunculus(void){
 	//Stock view data for homuncs
 	memset(&hom_viewdb, 0, sizeof(hom_viewdb));
 	for (class_ = 0; class_ < ARRAYLENGTH(hom_viewdb); class_++)
-		hom_viewdb[class_].class_ = HM_CLASS_BASE+class_;
+		hom_viewdb[class_].look[LOOK_BASE] = HM_CLASS_BASE+class_;
 }
 
 void do_final_homunculus(void) {
