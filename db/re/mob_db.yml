@@ -117682,6 +117682,120 @@ Body:
 #    AegisName: CP_SIRENA
 #  - Id: 22442
 #    AegisName: CP_DIOSA
+#  - Id: 22443
+#    AegisName: CH1_YGGRING
+#  - Id: 22444
+#    AegisName: CH1_LEAFEING
+#  - Id: 22445
+#    AegisName: CH1_CHARCOARING
+#  - Id: 22446
+#    AegisName: CH1_VULRING
+#  - Id: 22447
+#    AegisName: CH1_FIRELOOP
+#  - Id: 22448
+#    AegisName: CH1_FIRAFFLESIA
+#  - Id: 22449
+#    AegisName: CH1_VOLIMPET
+#  - Id: 22450
+#    AegisName: CH1_FIRE_FLOWER
+#  - Id: 22451
+#    AegisName: CH1_PEEPING
+#  - Id: 22452
+#    AegisName: CH1_SILK_FROG
+#  - Id: 22453
+#    AegisName: CH1_SILK_SNAIL
+#  - Id: 22454
+#    AegisName: CH1_EX_ROBOT
+#  - Id: 22455
+#    AegisName: CH1_REPAIR_ROBOT
+#  - Id: 22456
+#    AegisName: CH1_DIMIC_1
+#  - Id: 22457
+#    AegisName: CH1_DIMIC_2
+#  - Id: 22458
+#    AegisName: CH1_DIMIC_3
+#  - Id: 22459
+#    AegisName: CH1_DIMIC_4
+#  - Id: 22460
+#    AegisName: CH1_IMMORTAL_CORPS1
+#  - Id: 22461
+#    AegisName: CH1_IMMORTAL_CORPS2
+#  - Id: 22462
+#    AegisName: CH1_IMMORTAL_CORPS3
+#  - Id: 22463
+#    AegisName: CH1_NYAISE
+#  - Id: 22464
+#    AegisName: CH1_SHADOW_JAILER
+#  - Id: 22465
+#    AegisName: CH1_TULIP
+#  - Id: 22466
+#    AegisName: CH1_CALENDULA
+#  - Id: 22467
+#    AegisName: CH1_SCABIOSA
+#  - Id: 22468
+#    AegisName: CH1_LOBELIA
+#  - Id: 22469
+#    AegisName: CH1_MYOSOTIS
+#  - Id: 22470
+#    AegisName: CH1_ANEMONE
+#  - Id: 22471
+#    AegisName: CH1_SKOGL
+#  - Id: 22472
+#    AegisName: CH1_FRUS
+#  - Id: 22473
+#    AegisName: CH1_LISTENER
+#  - Id: 22474
+#    AegisName: CH1_IMMORTAL_OFFICER1
+#  - Id: 22475
+#    AegisName: CH1_IMMORTAL_OFFICER2
+#  - Id: 22476
+#    AegisName: CH1_TOXIT
+#  - Id: 22477
+#    AegisName: CP_CH1_TOXIT
+#  - Id: 22478
+#    AegisName: CH1_LUNARINA
+#  - Id: 22479
+#    AegisName: CP_CH1_LUNARINA
+#  - Id: 22480
+#    AegisName: CH1_BLOODY_SLASHER
+#  - Id: 22481
+#    AegisName: CP_CH1_BLOODY_SLASHER
+#  - Id: 22482
+#    AegisName: CH1_SHADIEST
+#  - Id: 22483
+#    AegisName: CP_CH1_SHADIEST
+#  - Id: 22484
+#    AegisName: CH1_SUCCUBUS
+#  - Id: 22485
+#    AegisName: CP_CH1_SUCCUBUS
+#  - Id: 22486
+#    AegisName: CH1_INCCUBUS
+#  - Id: 22487
+#    AegisName: CP_CH1_INCCUBUS
+#  - Id: 22488
+#    AegisName: CH1_ABYSS_KNIGHT
+#  - Id: 22489
+#    AegisName: CP_CH1_ABYSS_KNIGHT
+#  - Id: 22490
+#    AegisName: G_CH1_FIRELOOP
+#  - Id: 22491
+#    AegisName: G_CH1_VOLIMPET
+#  - Id: 22492
+#    AegisName: G_CH1_MYOSOTIS
+#  - Id: 22493
+#    AegisName: G_CH1_ANEMONE
+#  - Id: 22494
+#    AegisName: CH1_BULGASARI
+#  - Id: 22495
+#    AegisName: CH1_GLUTTO
+#  - Id: 22496
+#    AegisName: CH1_MD_HEMEL_N
+#  - Id: 22497
+#    AegisName: CH1_MD_HEMEL
+#  - Id: 22498
+#    AegisName: CH1_MD_AMDARAIS
+#  - Id: 22499
+#    AegisName: CH1_MD_VESSEL
 #  - Id: 23000
 #    AegisName: DARK_ILLUSION2
 #  - Id: 23001

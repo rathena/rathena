@@ -1426,6 +1426,11 @@ enum sc_type : int16 {
 	SC_CONTENTS_35,
 	SC_NOACTION,
 
+	SC_C_BUFF_3,
+	SC_C_BUFF_4,
+	SC_C_BUFF_5,
+	SC_C_BUFF_6,
+
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 
@@ -2891,10 +2896,21 @@ enum efst_type : int16{
 	EFST_CONTENTS_32,
 	EFST_CONTENTS_33,
 	EFST_CONTENTS_34,
-	EFST_CONTENTS_35,	//1493
+	EFST_CONTENTS_35,
+	EFST_CONTENTS_36,
+	EFST_CONTENTS_37,
+	EFST_CONTENTS_38,
+	EFST_CONTENTS_39,	// 1497
 
 	EFST_C_BUFF_1 = 1509,
 	EFST_C_BUFF_2,
+	EFST_C_BUFF_3,
+	EFST_C_BUFF_4,
+	EFST_C_BUFF_5,
+	EFST_C_BUFF_6,
+	EFST_C_BUFF_7,
+	EFST_C_BUFF_8,
+	EFST_C_BUFF_9,	// 1517
 
 	EFST_CHASING = 1560,
 
