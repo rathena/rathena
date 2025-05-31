@@ -49,6 +49,23 @@ enum e_regen {
 
 static struct status_data dummy_status;
 
+/// Delayed Status Structure
+struct s_delay_status {
+	int32 src_id;
+	int32 bl_id;
+	sc_type type;
+	int32 val1;
+	int32 val2;
+	int32 val3;
+	int32 val4;
+	int32 tick;
+	uint8 flag;
+};
+
+int32 delay_status_index = 0;
+// delay_status : delay_status_index -> data
+std::unordered_map<int32, std::shared_ptr<s_delay_status>> delay_status;
+
 int16 current_equip_item_index; /// Contains inventory index of an equipped item. To pass it into the EQUP_SCRIPT [Lupus]
 uint32 current_equip_combo_pos; /// For combo items we need to save the position of all involved items here
 int32 current_equip_card_id; /// To prevent card-stacking (from jA) [Skotlex]
@@ -104,6 +121,7 @@ static uint32 status_calc_maxhp_pc( map_session_data& sd, uint32 vit );
 static uint32 status_calc_maxsp_pc( map_session_data& sd, uint32 int_ );
 static uint32 status_calc_maxap_pc( map_session_data& sd );
 static int32 status_get_sc_interval(enum sc_type type);
+static int32 status_change_start_post_delay(block_list* src, block_list* bl, sc_type type, int32 val1, int32 val2, int32 val3, int32 val4, int32 tick, uint8 flag);
 
 static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, uint32 mapZone, bool mapIsTE);
 #define status_change_isDisabledOnMap(type, m) ( status_change_isDisabledOnMap_((type), mapdata_flag_vs2((m)), m->getMapFlag(MF_PVP) != 0, mapdata_flag_gvg2_no_te((m)), m->getMapFlag(MF_BATTLEGROUND) != 0, (m->zone << 3) != 0, mapdata_flag_gvg2_te((m))) )
@@ -10072,8 +10090,40 @@ void status_display_remove(struct block_list *bl, enum sc_type type) {
 }
 
 /**
+ * Timer for delayed status changes
+ * Triggers at the end of the delay
+ * Checks if target is still valid and then proceeds with applying the status change
+ * @param data delay_status struct that contains all required status data
+ * @return 0
+ */
+TIMER_FUNC(status_change_start_timer) {
+	int32 index = static_cast<int32>(id);
+	std::shared_ptr<s_delay_status> entry = util::umap_find(delay_status, index);
+
+	if (entry == nullptr)
+		return 0;
+
+	block_list* src = nullptr;
+	if (entry->src_id > 0)
+		src = map_id2bl(entry->src_id);
+
+	block_list* bl = nullptr;
+	if (entry->bl_id > 0)
+		bl = map_id2bl(entry->bl_id);
+
+	if (bl != nullptr && !status_isdead(*bl))
+		status_change_start_post_delay(src, bl, entry->type, entry->val1, entry->val2, entry->val3, entry->val4, entry->tick, entry->flag);
+
+	delay_status.erase(index);
+
+	return 0;
+}
+
+/**
  * Applies SC defense to a given status change
  * This function also determines whether or not the status change will be applied
+ * If not resisted, it will attempt to apply the status change after the given delay
+ * Please note that certain conditions can still make the status change fail after the delay
  * @param src: Source of the status change [PC|MOB|HOM|MER|ELEM|NPC]
  * @param bl: Target of the status change (See: enum sc_type)
  * @param type: Status change (SC_*)
@@ -10082,26 +10132,21 @@ void status_display_remove(struct block_list *bl, enum sc_type type) {
  * @param duration: Initial duration that the status change affects bl
  * @param flag: Value which determines what parts to calculate. See e_status_change_start_flags
  * @param delay: Delay in milliseconds before the SC is applied
- * @return adjusted duration based on flag values
+ * @return Whether the status change was resisted (0) or will be applied (1)
  */
 int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_type type,int32 rate,int32 val1,int32 val2,int32 val3,int32 val4,t_tick duration,unsigned char flag, int32 delay) {
-	map_session_data *sd = nullptr;
-	status_change* sc;
-	struct status_change_entry* sce;
-	struct view_data *vd;
-	int32 undead_flag, tick_time = 0;
-	bool sc_isnew = true;
 	std::shared_ptr<s_status_change_db> scdb = status_db.find(type);
 
 	nullpo_ret(bl);
-	sc = status_get_sc(bl);
 
 	if( !scdb ) {
 		ShowError("status_change_start: Invalid status change (%d)!\n", type);
 		return 0;
 	}
 
-	if( !sc )
+	status_change* sc = status_get_sc(bl);
+
+	if (sc == nullptr)
 		return 0; // Unable to receive status changes
 
 	// Scripted status changes only work for players for the time being
@@ -10173,26 +10218,85 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 
 	int32 tick = (int32)duration;
 
-	sd = BL_CAST(BL_PC, bl);
-	vd = status_get_viewdata(bl);
-
-	undead_flag = battle_check_undead(status->race,status->def_ele);
-	// Check for immunities / sc fails
+	// Type-specific checks that need to happen before the delay
 	switch (type) {
-		case SC_VACUUM_EXTREME:
-			if (sc && sc->getSCE(SC_VACUUM_EXTREME_POSTDELAY) && sc->getSCE(SC_VACUUM_EXTREME_POSTDELAY)->val2 == val2) // Ignore post delay from other vacuum (this will make stack effect enabled)
-				return 0;
-			break;
 		case SC_STONE:
 		case SC_STONEWAIT:
 		case SC_FREEZE:
 			// Undead are immune to Freeze/Stone
-			if (undead_flag && !(flag&SCSTART_NOAVOID))
+			if (battle_check_undead(status->race, status->def_ele) != 0 && !(flag&SCSTART_NOAVOID))
 				return 0;
+			else if (type == SC_STONEWAIT) {
+				// Stonewait has a unique handling where the delay is actually the duration until stone kicks in
+				val3 = std::max<int32>(1, tick - delay); // Petrify time
+				tick = delay;
+				delay = 0;
+			}
+			break;
+		case SC_BLEEDING:
+			// Bleeding always starts immediately
+			delay = 0;
 			break;
 		case SC_BURNING:
 			// Level 2 Fire Element is immune
 			if (status->def_ele == ELE_FIRE && status->ele_lv == 2)
+				return 0;
+			break;
+	}
+
+	// If there is no delay, we proceed immediately
+	// Otherwise, we store the status change data in a struct and set up a timer for after the delay
+	if (delay <= 0)
+		return status_change_start_post_delay(src, bl, type, val1, val2, val3, val4, tick, flag);
+
+	std::shared_ptr<s_delay_status> entry = std::make_shared<s_delay_status>();
+
+	entry->src_id = src->id;
+	entry->bl_id = bl->id;
+	entry->type = type;
+	entry->val1 = val1;
+	entry->val2 = val2;
+	entry->val3 = val3;
+	entry->val4 = val4;
+#ifdef RENEWAL
+	// In renewal, the delay is substracted from the duration
+	entry->tick = std::max<int32>(1, tick - delay);
+#else
+	entry->tick = tick;
+#endif
+	entry->flag = flag;
+
+	int32 index = delay_status_index++;
+	delay_status.insert({ index, entry });
+
+	add_timer(gettick() + delay, status_change_start_timer, index, 0);
+
+	// Assume success
+	return 1;
+}
+
+/**
+ * Applies given status change and executes all related actions
+ * This function handles all immunities that should be checked at the end of delay
+ * @param src: Source of the status change [PC|MOB|HOM|MER|ELEM|NPC]
+ * @param bl: Target of the status change (See: enum sc_type)
+ * @param type: Status change (SC_*)
+ * @param val1~4: Depends on type of status change
+ * @param tick: Final duration of the status change
+ * @param flag: Value which determines what parts to calculate. See e_status_change_start_flags
+ * @return Whether the status change was resisted (0) or applied (1)
+ */
+int32 status_change_start_post_delay(block_list* src, block_list* bl, sc_type type, int32 val1, int32 val2, int32 val3, int32 val4, int32 tick, unsigned char flag)
+{
+	map_session_data* sd = BL_CAST(BL_PC, bl);
+	status_change* sc = status_get_sc(bl);
+	status_data* status = status_get_status_data(*bl);
+	int32 undead_flag = battle_check_undead(status->race,status->def_ele);
+
+	// Check for immunities / sc fails
+	switch (type) {
+		case SC_VACUUM_EXTREME:
+			if (sc != nullptr && sc->hasSCE(SC_VACUUM_EXTREME_POSTDELAY) && sc->getSCE(SC_VACUUM_EXTREME_POSTDELAY)->val2 == val2) // Ignore post delay from other vacuum (this will make stack effect enabled)
 				return 0;
 			break;
 		case SC_ALL_RIDING:
@@ -10536,6 +10640,8 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 			break;
 	}
 
+	std::shared_ptr<s_status_change_db> scdb = status_db.find(type);
+
 	// Check for OPT1 stacking
 	if (sc->opt1 > OPT1_NONE && scdb->opt1 > OPT1_NONE) {
 		for (const auto &status_it : status_db) {
@@ -10619,7 +10725,7 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 	}
 
 	// Check for overlapping fails
-	if( (sce = sc->getSCE(type)) ) {
+	if (status_change_entry* sce = sc->getSCE(type); sce != nullptr) {
 		switch( type ) {
 			case SC_MERC_FLEEUP:
 			case SC_MERC_ATKUP:
@@ -10678,8 +10784,9 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 		}
 	}
 
-	vd = status_get_viewdata(bl);
+	view_data* vd = status_get_viewdata(bl);
 	std::bitset<SCB_MAX> calc_flag = scdb->calc_flag;
+	int32 tick_time = 0;
 
 	if(!(flag&SCSTART_LOADED)) // &4 - Do not parse val settings when loading SCs
 	switch(type)
@@ -11022,11 +11129,6 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 				clif_changemanner( *sd );
 				clif_updatestatus(*sd,SP_MANNER);
 			}
-			break;
-
-		case SC_STONEWAIT:
-			val3 = max(1, tick - delay); // Petrify time
-			tick = delay;
 			break;
 
 		case SC_DPOISON:
@@ -13077,8 +13179,10 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 	if( tick_time )
 		tick = tick_time;
 
-	// Don't trust the previous sce assignment, in case the SC ended somewhere between there and here.
-	if((sce=sc->getSCE(type))) { // reuse old sc
+	status_change_entry* sce = sc->getSCE(type);
+	bool sc_isnew = true;
+
+	if (sce != nullptr) {
 		if( sce->timer != INVALID_TIMER )
 			delete_timer(sce->timer, status_change_timer);
 		sc_isnew = false;
@@ -16374,6 +16478,8 @@ void status_readdb( bool reload ){
 void do_init_status(void) {
 	memset(SCDisabled, 0, sizeof(SCDisabled));
 
+	add_timer_func_list(status_change_start_timer, "status_change_start_timer");
+
 	add_timer_func_list(status_change_timer,"status_change_timer");
 	add_timer_func_list(status_natural_heal_timer,"status_natural_heal_timer");
 	add_timer_func_list(status_clear_lastEffect_timer, "status_clear_lastEffect_timer");
@@ -16390,4 +16496,5 @@ void do_final_status(void) {
 	refine_db.clear();
 	status_db.clear();
 	elemental_attribute_db.clear();
+	delay_status.clear();
 }
