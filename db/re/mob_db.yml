@@ -1835,7 +1835,6 @@ Body:
     AttackMotion: 672
     ClientAttackMotion: 192
     DamageMotion: 384
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -1895,7 +1894,6 @@ Body:
     AttackMotion: 768
     ClientAttackMotion: 600
     DamageMotion: 576
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -2222,7 +2220,6 @@ Body:
     AttackMotion: 480
     ClientAttackMotion: 192
     DamageMotion: 288
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -2877,7 +2874,6 @@ Body:
     AttackMotion: 648
     ClientAttackMotion: 504
     DamageMotion: 300
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -4214,7 +4210,6 @@ Body:
     AttackMotion: 768
     ClientAttackMotion: 720
     DamageMotion: 480
-    DamageTaken: 10
     Ai: 07
     Class: Boss
     Modes:
@@ -4276,7 +4271,6 @@ Body:
     AttackMotion: 780
     ClientAttackMotion: 660
     DamageMotion: 648
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -5515,7 +5509,6 @@ Body:
     AttackMotion: 420
     ClientAttackMotion: 108
     DamageMotion: 360
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -5677,7 +5670,6 @@ Body:
     AttackMotion: 1344
     ClientAttackMotion: 408
     DamageMotion: 432
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -7240,7 +7232,6 @@ Body:
     AttackMotion: 1000
     ClientAttackMotion: 624
     DamageMotion: 480
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -7398,7 +7389,6 @@ Body:
     AttackMotion: 576
     ClientAttackMotion: 120
     DamageMotion: 288
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -7741,7 +7731,6 @@ Body:
     AttackMotion: 768
     ClientAttackMotion: 576
     DamageMotion: 288
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -7849,7 +7838,6 @@ Body:
     AttackMotion: 1020
     ClientAttackMotion: 324
     DamageMotion: 288
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -9251,7 +9239,6 @@ Body:
     AttackMotion: 500
     ClientAttackMotion: 624
     DamageMotion: 360
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -12111,7 +12098,6 @@ Body:
     AttackMotion: 468
     ClientAttackMotion: 252
     DamageMotion: 288
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -12172,7 +12158,6 @@ Body:
     AttackMotion: 408
     ClientAttackMotion: 312
     DamageMotion: 336
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -13154,7 +13139,6 @@ Body:
     AttackMotion: 768
     ClientAttackMotion: 408
     DamageMotion: 480
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -15067,7 +15051,6 @@ Body:
     AttackMotion: 1000
     ClientAttackMotion: 624
     DamageMotion: 500
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -17631,7 +17614,6 @@ Body:
     AttackMotion: 1296
     ClientAttackMotion: 768
     DamageMotion: 360
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -18395,7 +18377,6 @@ Body:
     AttackMotion: 1140
     ClientAttackMotion: 780
     DamageMotion: 576
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -19661,7 +19642,6 @@ Body:
     AttackMotion: 816
     ClientAttackMotion: 1440
     DamageMotion: 420
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -21943,7 +21923,6 @@ Body:
     AttackMotion: 1344
     ClientAttackMotion: 1152
     DamageMotion: 576
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -22798,7 +22777,6 @@ Body:
     AttackMotion: 2016
     ClientAttackMotion: 720
     DamageMotion: 480
-    DamageTaken: 10
     Ai: 10
     Class: Boss
     Modes:
@@ -25181,7 +25159,6 @@ Body:
     AttackMotion: 288
     ClientAttackMotion: 384
     DamageMotion: 144
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -26725,7 +26702,6 @@ Body:
     AttackMotion: 1104
     ClientAttackMotion: 480
     DamageMotion: 240
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -27022,7 +26998,6 @@ Body:
     AttackMotion: 960
     ClientAttackMotion: 768
     DamageMotion: 480
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -29589,7 +29564,6 @@ Body:
     AttackMotion: 912
     ClientAttackMotion: 528
     DamageMotion: 432
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -29747,7 +29721,6 @@ Body:
     AttackMotion: 432
     ClientAttackMotion: 384
     DamageMotion: 360
-    DamageTaken: 10
     Ai: 10
     Class: Boss
     Modes:
@@ -30690,7 +30663,6 @@ Body:
     AttackMotion: 816
     ClientAttackMotion: 672
     DamageMotion: 504
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -31203,7 +31175,6 @@ Body:
     AttackMotion: 936
     ClientAttackMotion: 240
     DamageMotion: 360
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -31716,7 +31687,6 @@ Body:
     AttackMotion: 576
     ClientAttackMotion: 384
     DamageMotion: 432
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -32356,7 +32326,6 @@ Body:
     AttackMotion: 576
     ClientAttackMotion: 504
     DamageMotion: 480
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -33041,7 +33010,6 @@ Body:
     AttackMotion: 2880
     ClientAttackMotion: 288
     DamageMotion: 576
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -33628,7 +33596,6 @@ Body:
     AttackMotion: 840
     ClientAttackMotion: 660
     DamageMotion: 216
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -33930,7 +33897,6 @@ Body:
     AttackMotion: 600
     ClientAttackMotion: 480
     DamageMotion: 240
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -35722,7 +35688,6 @@ Body:
     AttackMotion: 384
     ClientAttackMotion: 288
     DamageMotion: 360
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -37372,7 +37337,6 @@ Body:
     AttackMotion: 432
     ClientAttackMotion: 288
     DamageMotion: 360
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -37490,7 +37454,6 @@ Body:
     AttackMotion: 504
     ClientAttackMotion: 252
     DamageMotion: 432
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -37973,7 +37936,6 @@ Body:
     AttackMotion: 864
     ClientAttackMotion: 648
     DamageMotion: 432
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -38953,7 +38915,6 @@ Body:
     AttackMotion: 624
     ClientAttackMotion: 336
     DamageMotion: 432
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -44774,7 +44735,6 @@ Body:
     AttackMotion: 1152
     ClientAttackMotion: 240
     DamageMotion: 576
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -45621,7 +45581,6 @@ Body:
     AttackMotion: 1000
     ClientAttackMotion: 300
     DamageMotion: 360
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -48378,7 +48337,6 @@ Body:
     AttackMotion: 576
     ClientAttackMotion: 432
     DamageMotion: 360
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -48765,7 +48723,6 @@ Body:
     AttackMotion: 1000
     ClientAttackMotion: 300
     DamageMotion: 360
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -50496,7 +50453,6 @@ Body:
     AttackMotion: 864
     ClientAttackMotion: 480
     DamageMotion: 360
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -52570,7 +52526,6 @@ Body:
     AttackMotion: 1380
     ClientAttackMotion: 324
     DamageMotion: 360
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -52680,7 +52635,6 @@ Body:
     AttackMotion: 2592
     ClientAttackMotion: 432
     DamageMotion: 432
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -52790,7 +52744,6 @@ Body:
     AttackMotion: 792
     ClientAttackMotion: 504
     DamageMotion: 432
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -52901,7 +52854,6 @@ Body:
     AttackMotion: 648
     ClientAttackMotion: 360
     DamageMotion: 480
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -56620,7 +56572,6 @@ Body:
     AttackMotion: 2016
     ClientAttackMotion: 1140
     DamageMotion: 480
-    DamageTaken: 10
     Ai: 10
     Class: Boss
     Modes:
@@ -82822,7 +82773,6 @@ Body:
     AttackMotion: 576
     ClientAttackMotion: 960
     DamageMotion: 480
-    DamageTaken: 10
     Ai: 04
     Class: Boss
     Modes:
@@ -94986,7 +94936,6 @@ Body:
     AttackMotion: 672
     ClientAttackMotion: 576
     DamageMotion: 360
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -96909,7 +96858,6 @@ Body:
     AttackMotion: 1000
     ClientAttackMotion: 960
     DamageMotion: 500
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -103140,7 +103088,6 @@ Body:
     AttackMotion: 144
     ClientAttackMotion: 528
     DamageMotion: 288
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -103296,7 +103243,6 @@ Body:
     AttackMotion: 408
     ClientAttackMotion: 1056
     DamageMotion: 336
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -103410,7 +103356,6 @@ Body:
     AttackMotion: 500
     ClientAttackMotion: 1056
     DamageMotion: 768
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -103469,7 +103414,6 @@ Body:
     AttackMotion: 768
     ClientAttackMotion: 408
     DamageMotion: 480
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -104935,7 +104879,6 @@ Body:
     AttackMotion: 576
     ClientAttackMotion: 240
     DamageMotion: 420
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -105083,11 +105026,9 @@ Body:
 #    AegisName: PLASMA_SPT
 #  - Id: 20610
 #    AegisName: REGINLEIF
-#    DamageTaken: 10
-#  - Id: 20611
+##  - Id: 20611
 #    AegisName: INGRID
-#    DamageTaken: 10
-#  - Id: 20612
+##  - Id: 20612
 #    AegisName: FERUS_P
 #  - Id: 20613
 #    AegisName: TREASURE_MIMIC
@@ -106448,7 +106389,6 @@ Body:
     AttackMotion: 768
     ClientAttackMotion: 288
     DamageMotion: 480
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -110274,7 +110214,6 @@ Body:
     AttackMotion: 2880
     ClientAttackMotion: 864
     DamageMotion: 576
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -110584,7 +110523,6 @@ Body:
     AttackMotion: 1344
     ClientAttackMotion: 1056
     DamageMotion: 768
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -111046,7 +110984,6 @@ Body:
     AttackMotion: 1134
     ClientAttackMotion: 864
     DamageMotion: 480
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -112642,7 +112579,6 @@ Body:
     AttackMotion: 840
     ClientAttackMotion: 480
     DamageMotion: 432
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -113206,7 +113142,6 @@ Body:
     AttackMotion: 1440
     ClientAttackMotion: 2592
     DamageMotion: 480
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -113248,7 +113183,6 @@ Body:
     AttackMotion: 1104
     ClientAttackMotion: 672
     DamageMotion: 480
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Modes:
@@ -115715,7 +115649,6 @@ Body:
     AttackDelay: 224
     AttackMotion: 672
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Drops:
       - Item: Stone_Piece
@@ -115760,7 +115693,6 @@ Body:
     AttackDelay: 256
     AttackMotion: 768
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -115807,7 +115739,6 @@ Body:
     AttackDelay: 288
     AttackMotion: 864
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -115854,7 +115785,6 @@ Body:
     AttackDelay: 288
     AttackMotion: 864
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -115901,7 +115831,6 @@ Body:
     AttackDelay: 448
     AttackMotion: 1344
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Drops:
       - Item: Ice_Heart
@@ -115946,7 +115875,6 @@ Body:
     AttackDelay: 320
     AttackMotion: 960
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -115993,7 +115921,6 @@ Body:
     AttackDelay: 224
     AttackMotion: 672
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -116039,7 +115966,6 @@ Body:
     AttackDelay: 224
     AttackMotion: 672
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -116086,7 +116012,6 @@ Body:
     AttackDelay: 288
     AttackMotion: 864
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Drops:
       - Item: Sharp_Leaf
@@ -116131,7 +116056,6 @@ Body:
     AttackDelay: 256
     AttackMotion: 768
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -116178,7 +116102,6 @@ Body:
     AttackDelay: 256
     AttackMotion: 768
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -116225,7 +116148,6 @@ Body:
     AttackDelay: 256
     AttackMotion: 768
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -116272,7 +116194,6 @@ Body:
     AttackDelay: 320
     AttackMotion: 960
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Drops:
       - Item: Ice_Piece
@@ -116317,7 +116238,6 @@ Body:
     AttackDelay: 448
     AttackMotion: 1344
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -116364,7 +116284,6 @@ Body:
     AttackDelay: 512
     AttackMotion: 1536
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -116411,7 +116330,6 @@ Body:
     AttackDelay: 512
     AttackMotion: 1536
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -116458,7 +116376,6 @@ Body:
     AttackDelay: 224
     AttackMotion: 672
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -116506,7 +116423,6 @@ Body:
     AttackDelay: 256
     AttackMotion: 768
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -116555,7 +116471,6 @@ Body:
     AttackDelay: 288
     AttackMotion: 864
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -116604,7 +116519,6 @@ Body:
     AttackDelay: 288
     AttackMotion: 864
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -116653,7 +116567,6 @@ Body:
     AttackDelay: 448
     AttackMotion: 1344
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -116701,7 +116614,6 @@ Body:
     AttackDelay: 320
     AttackMotion: 960
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -116750,7 +116662,6 @@ Body:
     AttackDelay: 224
     AttackMotion: 672
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -116799,7 +116710,6 @@ Body:
     AttackDelay: 224
     AttackMotion: 672
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -116848,7 +116758,6 @@ Body:
     AttackDelay: 320
     AttackMotion: 960
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Drops:
       - Item: Burning_Heart
@@ -116893,7 +116802,6 @@ Body:
     AttackDelay: 448
     AttackMotion: 1344
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -116940,7 +116848,6 @@ Body:
     AttackDelay: 512
     AttackMotion: 1536
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -116987,7 +116894,6 @@ Body:
     AttackDelay: 512
     AttackMotion: 1536
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -117034,7 +116940,6 @@ Body:
     AttackDelay: 288
     AttackMotion: 864
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Drops:
       - Item: Great_Leaf
@@ -117079,7 +116984,6 @@ Body:
     AttackDelay: 256
     AttackMotion: 768
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -117126,7 +117030,6 @@ Body:
     AttackDelay: 256
     AttackMotion: 768
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -117173,7 +117076,6 @@ Body:
     AttackDelay: 256
     AttackMotion: 768
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -117220,7 +117122,6 @@ Body:
     AttackDelay: 448
     AttackMotion: 1344
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Drops:
       - Item: Live_Coal
@@ -117265,7 +117166,6 @@ Body:
     AttackDelay: 320
     AttackMotion: 960
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -117312,7 +117212,6 @@ Body:
     AttackDelay: 224
     AttackMotion: 672
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -117359,7 +117258,6 @@ Body:
     AttackDelay: 224
     AttackMotion: 672
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -117406,7 +117304,6 @@ Body:
     AttackDelay: 224
     AttackMotion: 672
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Drops:
       - Item: Stone_Heart
@@ -117451,7 +117348,6 @@ Body:
     AttackDelay: 256
     AttackMotion: 768
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -117498,7 +117394,6 @@ Body:
     AttackDelay: 288
     AttackMotion: 864
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -117545,7 +117440,6 @@ Body:
     AttackDelay: 288
     AttackMotion: 864
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -117592,7 +117486,6 @@ Body:
     AttackDelay: 320
     AttackMotion: 960
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -117640,7 +117533,6 @@ Body:
     AttackDelay: 448
     AttackMotion: 1344
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -117689,7 +117581,6 @@ Body:
     AttackDelay: 512
     AttackMotion: 1536
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -117738,7 +117629,6 @@ Body:
     AttackDelay: 512
     AttackMotion: 1536
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -117787,7 +117677,6 @@ Body:
     AttackDelay: 288
     AttackMotion: 864
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -117835,7 +117724,6 @@ Body:
     AttackDelay: 256
     AttackMotion: 768
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -117884,7 +117772,6 @@ Body:
     AttackDelay: 256
     AttackMotion: 768
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
@@ -117933,7 +117820,6 @@ Body:
     AttackDelay: 256
     AttackMotion: 768
     DamageMotion: 1000    # (unknown)
-    DamageTaken: 10
     Ai: 21
     Class: Boss
     Drops:
