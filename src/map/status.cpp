@@ -10289,14 +10289,9 @@ int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_
 int32 status_change_start_post_delay(block_list* src, block_list* bl, sc_type type, int32 val1, int32 val2, int32 val3, int32 val4, int32 tick, unsigned char flag)
 {
 	map_session_data* sd = BL_CAST(BL_PC, bl);
-	view_data* vd = status_get_viewdata(bl);
 	status_change* sc = status_get_sc(bl);
-	status_change_entry* sce;
 	status_data* status = status_get_status_data(*bl);
 	int32 undead_flag = battle_check_undead(status->race,status->def_ele);
-	int32 tick_time = 0;
-	bool sc_isnew = true;
-	std::shared_ptr<s_status_change_db> scdb = status_db.find(type);
 
 	// Check for immunities / sc fails
 	switch (type) {
@@ -10645,6 +10640,8 @@ int32 status_change_start_post_delay(block_list* src, block_list* bl, sc_type ty
 			break;
 	}
 
+	std::shared_ptr<s_status_change_db> scdb = status_db.find(type);
+
 	// Check for OPT1 stacking
 	if (sc->opt1 > OPT1_NONE && scdb->opt1 > OPT1_NONE) {
 		for (const auto &status_it : status_db) {
@@ -10728,7 +10725,7 @@ int32 status_change_start_post_delay(block_list* src, block_list* bl, sc_type ty
 	}
 
 	// Check for overlapping fails
-	if( (sce = sc->getSCE(type)) ) {
+	if (status_change_entry* sce = sc->getSCE(type); sce != nullptr) {
 		switch( type ) {
 			case SC_MERC_FLEEUP:
 			case SC_MERC_ATKUP:
@@ -10787,8 +10784,9 @@ int32 status_change_start_post_delay(block_list* src, block_list* bl, sc_type ty
 		}
 	}
 
-	vd = status_get_viewdata(bl);
+	view_data* vd = status_get_viewdata(bl);
 	std::bitset<SCB_MAX> calc_flag = scdb->calc_flag;
+	int32 tick_time = 0;
 
 	if(!(flag&SCSTART_LOADED)) // &4 - Do not parse val settings when loading SCs
 	switch(type)
@@ -13181,8 +13179,10 @@ int32 status_change_start_post_delay(block_list* src, block_list* bl, sc_type ty
 	if( tick_time )
 		tick = tick_time;
 
-	// Don't trust the previous sce assignment, in case the SC ended somewhere between there and here.
-	if((sce=sc->getSCE(type))) { // reuse old sc
+	status_change_entry* sce = sc->getSCE(type);
+	bool sc_isnew = true;
+
+	if (sce != nullptr) {
 		if( sce->timer != INVALID_TIMER )
 			delete_timer(sce->timer, status_change_timer);
 		sc_isnew = false;
