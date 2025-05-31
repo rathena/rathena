@@ -40,7 +40,7 @@
 
 using namespace rathena;
 
-#ifndef MAX_SHADOW_SCAR 
+#ifndef MAX_SHADOW_SCAR
 	#define MAX_SHADOW_SCAR 100 /// Max Shadow Scars
 #endif
 
@@ -392,10 +392,10 @@ int32 unit_check_start_teleport_timer(struct block_list *sbl)
 	int32 max_dist = 0;
 
 	switch(sbl->type) {
-		case BL_HOM:	
-		case BL_ELEM:	
-		case BL_PET:	
-		case BL_MER:	
+		case BL_HOM:
+		case BL_ELEM:
+		case BL_PET:
+		case BL_MER:
 			msd = unit_get_master(sbl);
 			break;
 		default:
@@ -473,7 +473,7 @@ TIMER_FUNC(unit_step_timer){
 	//Execute request now if target is in attack range
 	if(ud->stepskill_id && skill_get_inf(ud->stepskill_id) & INF_GROUND_SKILL) {
 		//Execute ground skill
-		struct map_data *md = &map[bl->m];			
+		struct map_data *md = &map[bl->m];
 		unit_skilluse_pos(bl, target_id%md->xs, target_id/md->xs, ud->stepskill_id, ud->stepskill_lv);
 	} else {
 		//If a player has target_id set and target is in range, attempt attack
@@ -525,7 +525,7 @@ int32 unit_walktoxy_ontouch(struct block_list *bl, va_list ap)
 		break;
 	// case BL_MOB:	// unsupported
 	}
-	
+
 	return 0;
 }
 
@@ -543,7 +543,7 @@ static TIMER_FUNC(unit_walktoxy_timer)
 
 	if(bl == nullptr)
 		return 0;
-	
+
 	unit_data *ud = unit_bl2ud(bl);
 
 	if(ud == nullptr)
@@ -600,7 +600,7 @@ static TIMER_FUNC(unit_walktoxy_timer)
 	int32 y = bl->y;
 
 	//Monsters will walk into an icewall from the west and south if they already started walking
-	if(map_getcell(bl->m,x+dx,y+dy,CELL_CHKNOPASS) 
+	if(map_getcell(bl->m,x+dx,y+dy,CELL_CHKNOPASS)
 		&& (icewall_walk_block == 0 || dx < 0 || dy < 0 || !map_getcell(bl->m,x+dx,y+dy,CELL_CHKICEWALL)))
 		return unit_walktoxy_sub(bl);
 
@@ -735,7 +735,7 @@ static TIMER_FUNC(unit_walktoxy_timer)
 
 	if(ud->state.change_walk_target) {
 		if(unit_walktoxy_sub(bl)) {
-			return 1;	
+			return 1;
 		} else {
 			clif_fixpos( *bl );
 			return 0;
@@ -1160,7 +1160,7 @@ t_tick unit_escape(struct block_list *bl, struct block_list *target, int16 dist,
  * @param bl: Object to instant warp
  * @param dst_x: X coordinate to warp to
  * @param dst_y: Y coordinate to warp to
- * @param easy: 
+ * @param easy:
  *		0: Hard path check (attempt to go around obstacle)
  *		1: Easy path check (no obstacle on movement path)
  *		2: Long path check (no obstacle on line from start to destination)
@@ -1786,7 +1786,7 @@ int32 unit_is_walking(struct block_list *bl)
 	return (ud->walktimer != INVALID_TIMER);
 }
 
-/** 
+/**
  * Checks if a unit is able to move based on status changes
  * View the StatusChangeStateTable in status.cpp for a list of statuses
  * Some statuses are still checked here due too specific variables
@@ -2340,7 +2340,11 @@ int32 unit_skilluse_id2(struct block_list *src, int32 target_id, uint16 skill_id
 	if(ud->stepaction || ud->steptimer != INVALID_TIMER)
 		unit_stop_stepaction(src);
 	// Remember the skill request from the client while walking to the next cell
-	if(src->type == BL_PC && ud->walktimer != INVALID_TIMER && (!battle_check_range(src, target, range-1) || ignore_range)) {
+	if(src->type == BL_PC && (!battle_check_range(src, target, range) || ignore_range)) {
+		if (ud->walktimer == INVALID_TIMER) {
+			unit_walktoxy(src, target->x, target->y, 8);
+		}
+
 		ud->stepaction = true;
 		ud->target_to = target_id;
 		ud->stepskill_id = skill_id;
@@ -2676,7 +2680,10 @@ int32 unit_skilluse_pos2( struct block_list *src, int16 skill_x, int16 skill_y, 
 	if(ud->stepaction || ud->steptimer != INVALID_TIMER)
 		unit_stop_stepaction(src);
 	// Remember the skill request from the client while walking to the next cell
-	if(src->type == BL_PC && ud->walktimer != INVALID_TIMER && (!battle_check_range(src, &bl, range-1) || ignore_range)) {
+	if(src->type == BL_PC && (!battle_check_range(src, &bl, range) || ignore_range)) {
+		if (ud->walktimer == INVALID_TIMER) {
+			unit_walktoxy(src, bl.x, bl.y, 8);
+		}
 		struct map_data *md = &map[src->m];
 		// Convert coordinates to target_to so we can use it as target later
 		ud->stepaction = true;
@@ -2784,7 +2791,7 @@ int32 unit_set_target(struct unit_data* ud, int32 target_id)
 	if( ud->target != target_id ) {
 		struct unit_data * ux;
 		struct block_list* target;
-	
+
 		if (ud->target && (target = map_id2bl(ud->target)) && (ux = unit_bl2ud(target)) && ux->target_count > 0)
 			ux->target_count--;
 
@@ -2892,7 +2899,7 @@ int32 unit_unattackable(struct block_list *bl)
  * Requests a unit to attack a target
  * @param src: Object initiating attack
  * @param target_id: Target ID (bl->id)
- * @param continuous: 
+ * @param continuous:
  *		0x1 - Whether or not the attack is ongoing
  *		0x2 - Whether function was called from unit_step_timer or not
  * @return How the unit should stop; see e_unit_stop_walking
@@ -2954,7 +2961,10 @@ int32 unit_attack(struct block_list *src,int32 target_id,int32 continuous)
 	if(ud->stepaction || ud->steptimer != INVALID_TIMER)
 		unit_stop_stepaction(src);
 	// Remember the attack request from the client while walking to the next cell
-	if(src->type == BL_PC && ud->walktimer != INVALID_TIMER && !battle_check_range(src, target, range-1)) {
+	if(src->type == BL_PC && !battle_check_range(src, target, range)) {
+		if (ud->walktimer == INVALID_TIMER) {
+			unit_walktoxy(src, target->x, target->y, 8);
+		}
 		ud->stepaction = true;
 		ud->target_to = ud->target;
 		ud->stepskill_id = 0;
@@ -2984,7 +2994,7 @@ int32 unit_attack(struct block_list *src,int32 target_id,int32 continuous)
 	return stop_flag;
 }
 
-/** 
+/**
  * Cancels an ongoing combo, resets attackable time, and restarts the
  * attack timer to resume attack after amotion time
  * @author [Skotlex]
@@ -3294,7 +3304,7 @@ static int32 unit_attack_timer_sub(struct block_list* src, int32 tid, t_tick tic
 			unit_stop_walking( src, USW_FIXPOS );
 
 		if(md) {
-			if (status_has_mode(sstatus,MD_ASSIST) && DIFF_TICK(tick, md->last_linktime) >= MIN_MOBLINKTIME) { 
+			if (status_has_mode(sstatus,MD_ASSIST) && DIFF_TICK(tick, md->last_linktime) >= MIN_MOBLINKTIME) {
 				// Link monsters nearby [Skotlex]
 				md->last_linktime = tick;
 				map_foreachinshootrange(mob_linksearch, src, battle_config.assist_range, BL_MOB, md->mob_id, target->id, tick);
