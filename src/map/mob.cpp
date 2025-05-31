@@ -1269,7 +1269,7 @@ static int32 mob_can_changetarget(struct mob_data* md, struct block_list* target
  * @param target_id Target ID to modify
  */
 void mob_randomtarget(mob_data& md, int32& target_id) {
-	if (!(md.status.mode&MD_RANDOMTARGET))
+	if (!status_has_mode(md.status, MD_RANDOMTARGET))
 		return;
 
 	int32 search_size = md.status.rhw.range;
