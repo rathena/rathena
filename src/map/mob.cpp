@@ -1263,6 +1263,24 @@ static int32 mob_can_changetarget(struct mob_data* md, struct block_list* target
 	}
 }
 
+/**
+ * Randomizes the target ID of a monster if it has the given mode
+ * @param bl Unit that is going to attack
+ * @param target_id Target ID to modify
+ */
+void mob_randomtarget(mob_data& md, int32& target_id) {
+	if (!status_has_mode(&md.status, MD_RANDOMTARGET))
+		return;
+
+	int32 search_size = md.status.rhw.range;
+	if (md.sc.hasSCE(SC_BLIND))
+		search_size = 1;
+
+	block_list* target = battle_getenemy(&md, DEFAULT_ENEMY_TYPE((&md)), search_size);
+	if (target != nullptr)
+		target_id = target->id;
+}
+
 /*==========================================
  * Determination for an attack of a monster
  *------------------------------------------*/
@@ -2119,8 +2137,8 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 	// Normal attack / berserk skill is only used when target is in range
 	if (battle_check_range(md, tbl, md->status.rhw.range))
 	{
-		// Make sure there is no chase target when already in attack range
-		md->ud.target_to = 0;
+		// Stop and make sure there is no chase target when already in attack range
+		unit_stop_walking(md, USW_FIXPOS|USW_RELEASE_TARGET);
 
 		// Hiding is a special case because it prevents normal attacks but allows skill usage
 		// TODO: Some other states also have this behavior and should be investigated
@@ -2129,16 +2147,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 			// Target within range and potentially able to use normal attack, engage
 			if (md->ud.target != tbl->id || md->ud.attacktimer == INVALID_TIMER)
 			{ //Only attack if no more attack delay left
-				if (!(mode&MD_RANDOMTARGET))
-					unit_attack(md,tbl->id,1);
-				else { // Attack once and find a new random target
-					int32 search_size = (view_range < md->status.rhw.range) ? view_range : md->status.rhw.range;
-					unit_attack(md, tbl->id, 0);
-					tbl = battle_getenemy(md, DEFAULT_ENEMY_TYPE(md), search_size);
-					if (tbl != nullptr) {
-						md->target_id = tbl->id;
-					}
-				}
+				unit_attack(md, tbl->id, 1);
 			}
 		}
 		else {
@@ -4233,7 +4242,6 @@ bool mobskill_use(struct mob_data *md, t_tick tick, int32 event, int64 damage)
 	struct block_list *bl;
 	struct mob_data *fmd = nullptr;
 	int32 i,j,n;
-	int16 skill_target;
 
 	nullpo_ret(md);
 
@@ -4341,11 +4349,10 @@ bool mobskill_use(struct mob_data *md, t_tick tick, int32 event, int64 damage)
 			continue; //Skill requisite failed to be fulfilled.
 
 		//Execute skill
-		skill_target = status_has_mode(&md->db->status,MD_RANDOMTARGET) ? MST_RANDOM : ms[i]->target;
 		if (skill_get_casttype(ms[i]->skill_id) == CAST_GROUND)
 		{	//Ground skill.
 			int16 x, y;
-			switch (skill_target) {
+			switch (ms[i]->target) {
 				case MST_RANDOM: //Pick a random enemy within skill range.
 					bl = battle_getenemy(md, DEFAULT_ENEMY_TYPE(md),
 						skill_get_range2(md, ms[i]->skill_id, ms[i]->skill_lv, true));
@@ -4381,10 +4388,10 @@ bool mobskill_use(struct mob_data *md, t_tick tick, int32 event, int64 damage)
 			x = bl->x;
 		  	y = bl->y;
 			// Look for an area to cast the spell around...
-			if (skill_target >= MST_AROUND5) {
-				j = skill_target >= MST_AROUND1?
-					(skill_target-MST_AROUND1) +1:
-					(skill_target-MST_AROUND5) +1;
+			if (ms[i]->target >= MST_AROUND5) {
+				j = ms[i]->target >= MST_AROUND1 ?
+					(ms[i]->target - MST_AROUND1) + 1 :
+					(ms[i]->target - MST_AROUND5) + 1;
 				map_search_freecell(md, md->m, &x, &y, j, j, 3);
 			}
 			md->skill_idx = i;
@@ -4400,7 +4407,7 @@ bool mobskill_use(struct mob_data *md, t_tick tick, int32 event, int64 damage)
 			}
 		} else {
 			//Targetted skill
-			switch (skill_target) {
+			switch (ms[i]->target) {
 				case MST_RANDOM: //Pick a random enemy within skill range.
 					bl = battle_getenemy(md, DEFAULT_ENEMY_TYPE(md),
 						skill_get_range2(md, ms[i]->skill_id, ms[i]->skill_lv, true));
