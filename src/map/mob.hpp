@@ -334,13 +334,20 @@ struct s_dmglog{
 	uint32 flag : 2; //0: Normal. 1: Homunc exp. 2: Pet exp
 };
 
-struct mob_data : public block_list {
-	struct unit_data  ud;
-	struct view_data *vd;
-	bool vd_changed;
-	struct status_data status, *base_status; //Second one is in case of leveling up mobs, or tiny/large mobs.
-	status_change sc;
-	std::shared_ptr<s_mob_db> db;	//For quick data access (saves doing mob_db(md->mob_id) all the time) [Skotlex]
+class mob_data : public block_list {
+	public:
+	mob_data() : block_list(BL_MOB) {
+		memset(&special_state, 0, sizeof(special_state));
+		memset(&state, 0, sizeof(state));
+	}
+
+	struct unit_data  ud{};
+	struct view_data *vd{nullptr};
+	bool vd_changed{false};
+	struct status_data status{};
+	struct status_data *base_status{nullptr}; // in case of leveling up mobs, or tiny/large mobs.
+	status_change sc{};
+	std::shared_ptr<s_mob_db> db{nullptr};	//For quick data access (saves doing mob_db(md->mob_id) all the time) [Skotlex]
 	char name[NAME_LENGTH];
 	struct s_specialState {
 		uint32 size : 2; //Small/Big monsters.
@@ -361,42 +368,51 @@ struct mob_data : public block_list {
 		unsigned char attacked_count; //For rude attacked.
 		int32 provoke_flag; // Celest
 	} state;
-	struct guardian_data* guardian_data;
-	std::deque<s_dmglog> dmglog;
-	uint32 spotted_log[DAMAGELOG_SIZE];
-	struct spawn_data *spawn; //Spawn data.
-	int32 spawn_timer; //Required for Convex Mirror
-	int16 centerX, centerY; // Spawn center of this individual monster
-	struct s_mob_lootitem *lootitems;
-	int16 mob_id;
-	int32 level;
-	int32 target_id,attacked_id,norm_attacked_id;
-	int32 areanpc_id; //Required in OnTouchNPC (to avoid multiple area touchs)
-	int32 bg_id; // BattleGround System
+	struct guardian_data* guardian_data{nullptr}; //todo: switch to shared_ptr
+	std::deque<s_dmglog> dmglog{};
+	uint32 spotted_log[DAMAGELOG_SIZE] = {};
+	struct spawn_data *spawn{nullptr}; //Spawn data.
+	int32 spawn_timer{0}; //Required for Convex Mirror
+	int16 centerX{0};
+	int16 centerY{0}; // Spawn center of this individual monster
+	struct s_mob_lootitem *lootitems{nullptr};
+	int16 mob_id{0};
+	int32 level{0};
+	int32 target_id{0};
+	int32 attacked_id{0};
+	int32 norm_attacked_id{0};
+	int32 areanpc_id{0}; //Required in OnTouchNPC (to avoid multiple area touchs)
+	int32 bg_id{0}; // BattleGround System
 
-	t_tick next_walktime,next_thinktime,last_linktime,last_pcneartime,last_canmove,last_skillcheck;
-	t_tick trickcasting; // Special state where you show a fake castbar while moving
-	int16 move_fail_count;
-	int16 lootitem_count;
-	unsigned char walktoxy_fail_count; //Pathfinding succeeds but the actual walking failed (e.g. Icewall lock)
+	t_tick next_walktime{0};
+	t_tick next_thinktime{0};
+	t_tick last_linktime{0};
+	t_tick last_pcneartime{0};
+	t_tick last_canmove{0};
+	t_tick last_skillcheck{0};
+	t_tick trickcasting{0}; // Special state where you show a fake castbar while moving
+	int16 move_fail_count{0};
+	int16 lootitem_count{0};
+	unsigned char walktoxy_fail_count{0}; //Pathfinding succeeds but the actual walking failed (e.g. Icewall lock)
 
-	int32 deletetimer;
-	int32 master_id,master_dist;
+	int32 deletetimer{INVALID_TIMER};
+	int32 master_id{0};
+	int32 master_dist{0};
 
-	int8 skill_idx; // Index of last used skill from db->skill[]
-	t_tick skilldelay[MAX_MOBSKILL];
-	char npc_event[EVENT_NAME_LENGTH];
-	char idle_event[EVENT_NAME_LENGTH];
+	int8 skill_idx{0}; // Index of last used skill from db->skill[]
+	t_tick skilldelay[MAX_MOBSKILL] = {};
+	char npc_event[EVENT_NAME_LENGTH] = {};
+	char idle_event[EVENT_NAME_LENGTH] = {};
 	/**
 	 * Did this monster summon something?
 	 * Used to flag summon deletions, saves a worth amount of memory
 	 **/
-	bool can_summon;
+	bool can_summon{false};
 	/**
 	 * MvP Tombstone NPC ID
 	 **/
-	int32 tomb_nid;
-	uint16 damagetaken;
+	int32 tomb_nid{0};
+	uint16 damagetaken{0};
 
 	e_mob_bosstype get_bosstype();
 	map_session_data* get_mvp_player();

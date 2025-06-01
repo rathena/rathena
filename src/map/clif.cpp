@@ -991,6 +991,7 @@ static TIMER_FUNC(clif_clearunit_delayed_sub){
 
 	if( bl != nullptr ){
 		clif_clearunit_area( *bl, (clr_type)id );
+		bl->~block_list();
 		ers_free( delay_clearunit_ers, bl );
 	}
 
@@ -998,14 +999,14 @@ static TIMER_FUNC(clif_clearunit_delayed_sub){
 }
 void clif_clearunit_delayed(struct block_list* bl, clr_type type, t_tick tick)
 {
-	struct block_list *tbl = ers_alloc(delay_clearunit_ers, struct block_list);
+	struct block_list *tbl = ers_alloc(delay_clearunit_ers, block_list);
+	new(tbl) block_list(BL_NUL);
 	tbl->next = nullptr;
 	tbl->prev = nullptr;
 	tbl->id = bl->id;
 	tbl->m = bl->m;
 	tbl->x = bl->x;
 	tbl->y = bl->y;
-	tbl->type = BL_NUL;
 	add_timer(tick, clif_clearunit_delayed_sub, (int32)type, (intptr_t)tbl);
 }
 
@@ -5331,9 +5332,8 @@ void clif_changemapcell( int16 m, int16 x, int16 y, int16 type, send_target targ
 	if( tbl != nullptr ){
 		clif_send( &p, sizeof( p ), tbl, target );
 	}else{
-		block_list dummy_bl = {};
+		block_list dummy_bl{BL_NUL};
 
-		dummy_bl.type = BL_NUL;
 		dummy_bl.x = x;
 		dummy_bl.y = y;
 		dummy_bl.m = m;
@@ -6887,10 +6887,9 @@ void clif_pvpset(map_session_data *sd,int32 pvprank,int32 pvpnum,int32 type)
  *------------------------------------------*/
 void clif_map_property_mapall(int32 map_idx, enum map_property property)
 {
-	struct block_list bl;
+	struct block_list bl{BL_NUL};
 
 	bl.id = 0;
-	bl.type = BL_NUL;
 	bl.m = map_idx;
 	
 	clif_map_property( &bl, property, ALL_SAMEMAP );
@@ -10631,8 +10630,7 @@ void clif_parse_WantToConnection(int32 fd, map_session_data* sd)
 		return;
 	}
 
-	CREATE(sd, TBL_PC, 1);
-	new(sd) map_session_data();
+	sd = new map_session_data();
 	sd->fd = fd;
 #ifdef PACKET_OBFUSCATION
 	sd->cryptKey = (((((clif_cryptKey[0] * clif_cryptKey[1]) + clif_cryptKey[2]) & 0xFFFFFFFF) * clif_cryptKey[1]) + clif_cryptKey[2]) & 0xFFFFFFFF;
@@ -18417,12 +18415,11 @@ void clif_parse_BattleChat(int32 fd, map_session_data* sd){
 /// 02de <camp A points>.W <camp B points>.W
 void clif_bg_updatescore(int16 m)
 {
-	struct block_list bl;
+	struct block_list bl{BL_NUL};
 	unsigned char buf[6];
 	struct map_data *mapdata = map_getmapdata(m);
 
 	bl.id = 0;
-	bl.type = BL_NUL;
 	bl.m = m;
 
 	WBUFW(buf,0) = 0x2de;

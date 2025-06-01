@@ -1442,7 +1442,6 @@ void pc_setnewpc(map_session_data *sd, uint32 account_id, uint32 char_id, int32 
 	sd->login_id2 = 0; // at this point, we can not know the value :(
 	sd->client_tick = client_tick;
 	sd->state.active = 0; //to be set to 1 after player is fully authed and loaded.
-	sd->type = BL_PC;
 	if(battle_config.prevent_logout_trigger&PLT_LOGIN)
 		sd->canlog_tick = gettick();
 	//Required to prevent homunculus copuing a base speed of 0.
@@ -2171,7 +2170,6 @@ bool pc_authok(map_session_data *sd, uint32 login_id2, time_t expiration_time, i
 		sd->status.option &= ~OPTION_INVISIBLE;
 	}
 
-	status_change_init(sd);
 
 	sd->sc.option = sd->status.option; //This is the actual option used in battle.
 

@@ -30,7 +30,7 @@ static struct chat_data* chat_createchat(struct block_list* bl, const char* titl
 	struct chat_data* cd;
 	nullpo_retr(nullptr, bl);
 
-	cd = (struct chat_data *) aMalloc(sizeof(struct chat_data));
+	cd = new chat_data();
 
 	safestrncpy(cd->title, title, sizeof(cd->title));
 	safestrncpy(cd->pass, pass, sizeof(cd->pass));
@@ -49,7 +49,6 @@ static struct chat_data* chat_createchat(struct block_list* bl, const char* titl
 	cd->m    = bl->m;
 	cd->x    = bl->x;
 	cd->y    = bl->y;
-	cd->type = BL_CHAT;
 	cd->next = cd->prev = nullptr;
 
 	if( cd->id == 0 ) {

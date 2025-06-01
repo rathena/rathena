@@ -4839,8 +4839,7 @@ void do_final_script() {
 	db_destroy(st_db);
 
 	if( dummy_sd != nullptr ){
-		dummy_sd->~map_session_data();
-		aFree( dummy_sd );
+		delete dummy_sd;
 		dummy_sd = nullptr;
 	}
 }
@@ -4870,8 +4869,7 @@ void do_init_script(void) {
 	constant_db.load();
 	script_hardcoded_constants();
 
-	CREATE( dummy_sd, map_session_data, 1 );
-	new( dummy_sd ) map_session_data();
+	dummy_sd = new map_session_data();
 	dummy_sd->group_id = 99;
 	dummy_sd->fd = 0;
 }
@@ -22451,7 +22449,7 @@ static int32 buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
  *------------------------------------------*/
 BUILDIN_FUNC(areamobuseskill)
 {
-	struct block_list center;
+	struct block_list center{BL_NUL};
 	int16 m;
 
 	if( (m = map_mapname2mapid(script_getstr(st,2))) < 0 ) {

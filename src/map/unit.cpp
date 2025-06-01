@@ -2605,7 +2605,7 @@ int32 unit_skilluse_pos2( struct block_list *src, int16 skill_x, int16 skill_y, 
 	map_session_data *sd = nullptr;
 	struct unit_data *ud = nullptr;
 	status_change *sc;
-	struct block_list bl;
+	struct block_list bl{BL_NUL};
 	t_tick tick = gettick();
 	int32 range;
 
@@ -2662,7 +2662,6 @@ int32 unit_skilluse_pos2( struct block_list *src, int16 skill_x, int16 skill_y, 
 	}
 
 	// Check range and obstacle
-	bl.type = BL_NUL;
 	bl.m = src->m;
 	bl.x = skill_x;
 	bl.y = skill_y;
@@ -4112,8 +4111,7 @@ int32 unit_free(struct block_list *bl, clr_type clrtype)
 						gc->temp_guardians[i] = 0;
 				}
 
-				md->guardian_data->~guardian_data();
-				aFree(md->guardian_data);
+				delete (md->guardian_data);
 				md->guardian_data = nullptr;
 			}
 

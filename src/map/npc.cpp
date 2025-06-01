@@ -810,7 +810,6 @@ void BarterDatabase::loadingFinished(){
 		nd->class_ = barter->sprite;
 		nd->speed = DEFAULT_NPC_WALK_SPEED;
 
-		nd->type = BL_NPC;
 		nd->subtype = NPCTYPE_BARTER;
 
 		nd->u.barter.extended = extended;
@@ -823,7 +822,6 @@ void BarterDatabase::loadingFinished(){
 				continue;
 			}
 			
-			status_change_init( nd );
 			unit_dataset( nd );
 			nd->ud.dir = barter->dir;
 
@@ -3584,8 +3582,7 @@ int32 npc_unload(struct npc_data* nd, bool single) {
 		}
 	}
 
-	nd->~npc_data();
-	aFree(nd);
+	delete(nd);
 
 	return 0;
 }
@@ -3793,8 +3790,7 @@ int32 npc_parseview(const char* w4, const char* start, const char* buffer, const
 struct npc_data *npc_create_npc(int16 m, int16 x, int16 y){
 	struct npc_data *nd = nullptr;
 
-	CREATE(nd, struct npc_data, 1);
-	new (nd) npc_data();
+	nd = new npc_data();
 
 	nd->id = npc_get_new_npc_id();
 	nd->prev = nd->next = nullptr;
@@ -3860,7 +3856,6 @@ struct npc_data* npc_add_warp(char* name, int16 from_mapid, int16 from_x, int16 
 	nd->u.warp.y = to_y;
 	nd->u.warp.xs = xs;
 	nd->u.warp.ys = ys;
-	nd->type = BL_NPC;
 	nd->subtype = NPCTYPE_WARP;
 	nd->trigger_on_hidden = false;
 	map_addnpc(from_mapid, nd);
@@ -3868,7 +3863,6 @@ struct npc_data* npc_add_warp(char* name, int16 from_mapid, int16 from_x, int16 
 	if(map_addblock(nd))
 		return nullptr;
 	status_set_viewdata(nd, nd->class_);
-	status_change_init(nd);
 	unit_dataset(nd);
 	if( map_getmapdata(nd->m)->users )
 		clif_spawn(nd);
@@ -3938,7 +3932,6 @@ static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const 
 #endif
 
 	npc_warp++;
-	nd->type = BL_NPC;
 	nd->subtype = NPCTYPE_WARP;
 	if (is_type_warp2)
 		nd->trigger_on_hidden = true;
@@ -3949,7 +3942,6 @@ static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const 
 	if(map_addblock(nd)) //couldn't add on map
 		return strchr(start,'\n');
 	status_set_viewdata(nd, nd->class_);
-	status_change_init(nd);
 	unit_dataset(nd);
 	if( map_getmapdata(nd->m)->users )
 		clif_spawn(nd);
@@ -4192,8 +4184,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 	}
 	if( nd->u.shop.count == 0 ) {
 		ShowWarning("npc_parse_shop: Ignoring empty shop in file '%s', line '%d'.\n", filepath, strline(buffer,start-buffer));
-		nd->~npc_data();
-		aFree(nd);
+		delete nd;
 		return strchr(start,'\n');// continue
 	}
 
@@ -4212,7 +4203,6 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 	nd->speed = DEFAULT_NPC_WALK_SPEED;
 
 	++npc_shop;
-	nd->type = BL_NPC;
 	nd->subtype = type;
 #if PACKETVER >= 20131223
 	// Insert market data to table
@@ -4227,7 +4217,6 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		map_addnpc(m,nd);
 		if(map_addblock(nd))
 			return strchr(start,'\n');
-		status_change_init(nd);
 		unit_dataset(nd);
 		nd->ud.dir = (uint8)dir;
 		if( nd->class_ != JT_FAKENPC ){
@@ -4453,13 +4442,11 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 	nd->u.scr.label_list_num = label_list_num;
 
 	++npc_script;
-	nd->type = BL_NPC;
 	nd->subtype = NPCTYPE_SCRIPT;
 
 	if( m >= 0 )
 	{
 		map_addnpc(m, nd);
-		status_change_init(nd);
 		unit_dataset(nd);
 		nd->ud.dir = (uint8)dir;
 		npc_setcells(nd);
@@ -4588,7 +4575,6 @@ const char* npc_parse_duplicate( char* w1, char* w2, char* w3, char* w4, const c
 	nd->class_ = m == -1 ? JT_FAKENPC : npc_parseview(w4, start, buffer, filepath);
 	nd->speed = DEFAULT_NPC_WALK_SPEED;
 	nd->src_id = src_id;
-	nd->type = BL_NPC;
 	nd->subtype = (enum npc_subtype)type;
 
 	if( owner != nullptr ){
@@ -4637,7 +4623,6 @@ const char* npc_parse_duplicate( char* w1, char* w2, char* w3, char* w4, const c
 	//Add the npc to its location
 	if( m >= 0 ) {
 		map_addnpc(m, nd);
-		status_change_init(nd);
 		unit_dataset(nd);
 		nd->ud.dir = (uint8)dir;
 		npc_setcells(nd);
@@ -4725,7 +4710,6 @@ int32 npc_duplicate4instance(struct npc_data *snd, int16 m) {
 		wnd->u.warp.y = snd->u.warp.y;
 		wnd->u.warp.xs = snd->u.warp.xs;
 		wnd->u.warp.ys = snd->u.warp.ys;
-		wnd->type = BL_NPC;
 		wnd->subtype = NPCTYPE_WARP;
 		wnd->trigger_on_hidden = snd->trigger_on_hidden;
 		wnd->src_id = snd->src_id ? snd->src_id : snd->id;
@@ -4734,7 +4718,6 @@ int32 npc_duplicate4instance(struct npc_data *snd, int16 m) {
 		if(map_addblock(wnd))
 			return 1;
 		status_set_viewdata(wnd, wnd->class_);
-		status_change_init(wnd);
 		unit_dataset(wnd);
 		if( map_getmapdata(wnd->m)->users )
 			clif_spawn(wnd);
@@ -6366,7 +6349,6 @@ void do_init_npc(void){
 	memcpy(fake_nd->exname, fake_nd->name, 9);
 
 	npc_script++;
-	fake_nd->type = BL_NPC;
 	fake_nd->subtype = NPCTYPE_SCRIPT;
 
 	strdb_put(npcname_db, fake_nd->exname, fake_nd);

@@ -84,20 +84,24 @@ enum e_hom_state2 : uint8 {
 	SP_HUNGRY   = 0x2,
 };
 
-struct homun_data : public block_list {
-	struct unit_data  ud;
-	struct view_data *vd;
-	struct status_data base_status, battle_status;
-	status_change sc;
-	struct regen_data regen;
-	std::shared_ptr<s_homunculus_db> homunculusDB;	//[orn]
-	struct s_homunculus homunculus;	//[orn]
+class homun_data : public block_list {
+public:
+	homun_data() : block_list(BL_HOM) {}
 
-	int32 masterteleport_timer;
-	map_session_data *master; //pointer back to its master
-	int32 hungry_timer;	//[orn]
-	t_exp exp_next;
-	std::unordered_map<uint16, int32> scd;
+	struct unit_data ud{};
+	struct view_data *vd{nullptr};
+	struct status_data base_status{};
+	struct status_data battle_status{};
+	status_change sc{};
+	struct regen_data regen{};
+	std::shared_ptr<s_homunculus_db> homunculusDB{nullptr};
+	struct s_homunculus homunculus{};
+
+	int32 masterteleport_timer{0};
+	map_session_data *master{nullptr}; //pointer back to its master
+	int32 hungry_timer{0};
+	t_exp exp_next{0};
+	std::unordered_map<uint16, int32> scd{};
 };
 
 #define HOM_EVO 0x100 //256

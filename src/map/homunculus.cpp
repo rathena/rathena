@@ -1057,10 +1057,8 @@ void hom_alloc(map_session_data *sd, struct s_homunculus *hom)
 	struct homun_data *hd;
 	t_tick tick = gettick();
 
-	sd->hd = hd = (struct homun_data*)aCalloc(1,sizeof(struct homun_data));
-	new (sd->hd) homun_data();
+	sd->hd = hd = new homun_data();
 
-	hd->type = BL_HOM;
 	hd->id = npc_get_new_npc_id();
 
 	hd->master = sd;
@@ -1069,7 +1067,6 @@ void hom_alloc(map_session_data *sd, struct s_homunculus *hom)
 	hd->exp_next = homun_exp_db.get_nextexp(hd->homunculus.level);
 
 	status_set_viewdata(hd, hd->homunculus.class_);
-	status_change_init(hd);
 	unit_dataset(hd);
 	hd->ud.dir = sd->ud.dir;
 

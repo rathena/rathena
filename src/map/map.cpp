@@ -233,58 +233,11 @@ void map_destroyblock( block_list* bl ){
 		return;
 	}
 
-	switch( bl->type ){
-		case BL_NUL:
-			// Dummy type, has no destructor
-			break;
-
-		case BL_PC:
-			// Do not call the destructor here, it will be done in chrif_auth_delete
-			//static_cast<map_session_data*>( bl )->~map_session_data();
-			break;
-
-		case BL_MOB:
-			static_cast<mob_data*>( bl )->~mob_data();
-			break;
-
-		case BL_PET:
-			static_cast<pet_data*>( bl )->~pet_data();
-			break;
-
-		case BL_HOM:
-			static_cast<homun_data*>( bl )->~homun_data();
-			break;
-
-		case BL_MER:
-			static_cast<s_mercenary_data*>( bl )->~s_mercenary_data();
-			break;
-
-		case BL_ITEM:
-			static_cast<flooritem_data*>( bl )->~flooritem_data();
-			break;
-
-		case BL_SKILL:
-			static_cast<skill_unit*>( bl )->~skill_unit();
-			break;
-
-		case BL_NPC:
-			static_cast<npc_data*>( bl )->~npc_data();
-			break;
-
-		case BL_CHAT:
-			static_cast<chat_data*>( bl )->~chat_data();
-			break;
-
-		case BL_ELEM:
-			static_cast<s_elemental_data*>( bl )->~s_elemental_data();
-			break;
-
-		default:
-			ShowError( "map_destroyblock: unknown type %d\n", bl->type );
-			break;
+	if (bl->type == BL_PC) {
+		// players are destroyed in chrif_auth_delete
+		return;
 	}
-
-	aFree( bl );
+	delete bl;
 }
 
 /*==========================================
@@ -295,7 +248,7 @@ int32 map_freeblock (struct block_list *bl)
 	nullpo_retr(block_free_lock, bl);
 	if (block_free_lock == 0 || block_free_count >= block_free_max)
 	{
-		map_destroyblock( bl );
+		map_destroyblock(bl);
 		bl = nullptr;
 		if (block_free_count >= block_free_max)
 			ShowWarning("map_freeblock: too many free block! %d %d\n", block_free_count, block_free_lock);
@@ -352,7 +305,7 @@ TIMER_FUNC(map_freeblock_timer){
  * Handling of map_bl[]
  * The address of bl_heal is set in bl->prev
  *------------------------------------------*/
-static struct block_list bl_head;
+static struct block_list bl_head{BL_NUL};
 
 #ifdef CELL_NOSTACK
 /*==========================================
@@ -2016,15 +1969,13 @@ int32 map_addflooritem(struct item *item, int32 amount, int16 m, int16 x, int16 
 		}
 	}
 
-	CREATE(fitem, struct flooritem_data, 1);
-	fitem->type=BL_ITEM;
-	fitem->prev = fitem->next = nullptr;
-	fitem->m=m;
+	fitem = new flooritem_data();
+ 	fitem->m=m;
 	fitem->x=x;
 	fitem->y=y;
 	fitem->id = map_get_new_object_id();
 	if (fitem->id==0) {
-		aFree(fitem);
+		delete fitem;
 		return 0;
 	}
 

@@ -9799,17 +9799,10 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		if(sd) {
 			unsigned char eflag;
 			struct item item_tmp;
-			struct block_list tbl;
 			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 			memset(&item_tmp,0,sizeof(item_tmp));
-			memset(&tbl,0,sizeof(tbl)); // [MouseJstr]
 			item_tmp.nameid = ITEMID_STONE;
 			item_tmp.identify = 1;
-			tbl.id = 0;
-			// Commented because of duplicate animation [Lemongrass]
-			// At the moment this displays the pickup animation a second time
-			// If this is required in older clients, we need to add a version check here
-			//clif_takeitem(*sd,tbl);
 			eflag = pc_additem(sd,&item_tmp,1,LOG_TYPE_PRODUCE);
 			if(eflag) {
 				clif_additem(sd,0,0,eflag);
@@ -21923,7 +21916,6 @@ skill_unit* skill_initunit(std::shared_ptr<s_skill_unit_group> group, int32 idx,
 		group->alive_count++;
 
 	unit->id = map_get_new_object_id();
-	unit->type = BL_SKILL;
 	unit->m = group->map;
 	unit->x = x;
 	unit->y = y;

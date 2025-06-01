@@ -72,24 +72,30 @@ struct s_elemental_db {
 	std::unordered_map<e_elemental_skillmode, std::shared_ptr<s_elemental_skill>> skill;	/// mode, skill
 };
 
-struct s_elemental_data : public block_list {
-	unit_data ud;
-	view_data *vd;
-	status_data base_status, battle_status;
-	status_change sc;
-	regen_data regen;
+class s_elemental_data : public block_list {
+public:
+	s_elemental_data() : block_list(BL_ELEM) {}
+	unit_data ud{};
+	view_data *vd{nullptr};
+	status_data base_status{};
+	status_data battle_status{};
+	status_change sc{};
+	regen_data regen{};
 
-	std::shared_ptr<s_elemental_db> db;
-	s_elemental elemental;
+	std::shared_ptr<s_elemental_db> db{nullptr};
+	s_elemental elemental{};
 
-	int32 masterteleport_timer;
-	map_session_data *master;
-	int32 summon_timer;
-	int32 skill_timer;
+	int32 masterteleport_timer{INVALID_TIMER};
+	map_session_data *master{nullptr};
+	int32 summon_timer{0};
+	int32 skill_timer{0};
 
-	t_tick last_thinktime, last_linktime, last_spdrain_time;
-	int16 min_chase;
-	int32 target_id, attacked_id;
+	t_tick last_thinktime{0};
+	t_tick last_linktime{0};
+	t_tick last_spdrain_time{0};
+	int16 min_chase{0};
+	int32 target_id{0};
+	int32 attacked_id{0};
 };
 
 class ElementalDatabase : public TypesafeYamlDatabase<int32, s_elemental_db> {

@@ -1016,10 +1016,8 @@ bool pet_data_init(map_session_data *sd, struct s_pet *pet)
 		return false;
 	}
 
-	pd = (struct pet_data *)aCalloc(1,sizeof(struct pet_data));
-	new(pd) pet_data();
+	pd = new pet_data();
 	sd->pd = pd;
-	pd->type = BL_PET;
 	pd->id = npc_get_new_npc_id();
 
 	pd->master = sd;

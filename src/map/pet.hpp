@@ -181,30 +181,34 @@ struct s_pet_autobonus_wrapper {
 
 extern std::unordered_map<std::string, std::shared_ptr<s_pet_autobonus_wrapper>> pet_autobonuses;
 
-struct pet_data : public block_list {
-	struct unit_data ud;
-	struct view_data vd;
-	struct s_pet pet;
-	struct status_data status;
-	std::shared_ptr<s_mob_db> db;
-	int32 pet_hungry_timer;
-	int32 target_id;
+class pet_data : public block_list {
+public:
+	pet_data() : block_list(BL_PET) {}
+
+	struct unit_data ud{};
+	struct view_data vd{};
+	struct s_pet pet{};
+	struct status_data status{};
+	std::shared_ptr<s_mob_db> db{nullptr};
+	int32 pet_hungry_timer{0};
+	int32 target_id{0};
 	struct {
 		unsigned skillbonus : 1;
 	} state;
-	int32 move_fail_count;
-	t_tick next_walktime,last_thinktime;
-	uint16 rate_fix;	//Support rate as modified by intimacy (1000 = 100%) [Skotlex]
+	int32 move_fail_count{0};
+	t_tick next_walktime{0};
+	t_tick last_thinktime{0};
+	uint16 rate_fix{0};	//Support rate as modified by intimacy (1000 = 100%)
 
-	struct pet_recovery* recovery;
-	struct pet_bonus* bonus;
-	struct pet_skill_attack* a_skill;
-	struct pet_skill_support* s_skill;
-	struct pet_loot* loot;
-	std::vector<std::shared_ptr<s_petautobonus>> autobonus, autobonus2, autobonus3;
+	struct pet_recovery* recovery{nullptr};
+	struct pet_bonus* bonus{nullptr};
+	struct pet_skill_attack* a_skill{nullptr};
+	struct pet_skill_support* s_skill{nullptr};
+	struct pet_loot* loot{nullptr};
+	std::vector<std::shared_ptr<s_petautobonus>> autobonus{}, autobonus2{}, autobonus3{};
 
-	int32 masterteleport_timer;
-	map_session_data *master;
+	int32 masterteleport_timer{0};
+	map_session_data *master{nullptr};
 
 	std::shared_ptr<s_pet_db> get_pet_db() {
 		return pet_db.find(this->pet.class_);

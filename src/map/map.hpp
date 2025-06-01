@@ -453,11 +453,15 @@ enum auto_trigger_flag {
 };
 
 struct block_list {
-	struct block_list *next,*prev;
-	int32 id;
-	int16 m,x,y;
-	enum bl_type type;
+	struct block_list *next{nullptr};
+	struct block_list *prev{nullptr};
+	int32 id{0};
+	int16 m{0};
+	int16 x{0};
+	int16 y{0};
+	enum bl_type type{BL_NUL};
 	virtual ~block_list() = default;
+	block_list(bl_type t) : type(t) {}
 };
 
 
@@ -481,13 +485,15 @@ struct spawn_data {
 	char filepath[256];
 };
 
-struct flooritem_data : public block_list {
-	unsigned char subx,suby;
-	int32 cleartimer;
-	int32 first_get_charid,second_get_charid,third_get_charid;
-	t_tick first_get_tick,second_get_tick,third_get_tick;
+class flooritem_data : public block_list {
+public:
+	flooritem_data() : block_list(BL_ITEM) {}
+	unsigned char subx{0},suby{0};
+	int32 cleartimer{0};
+	int32 first_get_charid{0},second_get_charid{0},third_get_charid{0};
+	t_tick first_get_tick{0},second_get_tick{0},third_get_tick{0};
 	struct item item;
-	uint16 mob_id; ///< ID of monster who dropped it. 0 for non-monster who dropped it.
+	uint16 mob_id{0}; ///< ID of monster who dropped it. 0 for non-monster who dropped it.
 };
 
 enum _sp {

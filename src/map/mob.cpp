@@ -190,8 +190,7 @@ void mvptomb_create(struct mob_data *md, char *killer, time_t time)
 	if ( md->tomb_nid )
 		mvptomb_destroy(md);
 
-	CREATE(nd, struct npc_data, 1);
-	new (nd) npc_data();
+	nd = new npc_data();
 
 	nd->id = md->tomb_nid = npc_get_new_npc_id();
 
@@ -199,7 +198,6 @@ void mvptomb_create(struct mob_data *md, char *killer, time_t time)
 	nd->m = md->m;
 	nd->x = md->x;
 	nd->y = md->y;
-	nd->type = BL_NPC;
 
 	safestrncpy(nd->name, msg_txt(nullptr,656), sizeof(nd->name));
 
@@ -224,7 +222,6 @@ void mvptomb_create(struct mob_data *md, char *killer, time_t time)
 	if(map_addblock(nd))
 		return;
 	status_set_viewdata(nd, nd->class_);
-	status_change_init(nd);
 	unit_dataset(nd);
 
 	mvptomb_setdelayspawn(nd);
@@ -465,10 +462,8 @@ int32 mob_parse_dataset(struct spawn_data *data)
  *------------------------------------------*/
 struct mob_data* mob_spawn_dataset(struct spawn_data *data)
 {
-	struct mob_data *md = (struct mob_data*)aCalloc(1, sizeof(struct mob_data));
-	new(md) mob_data();
+	struct mob_data *md = new mob_data();
 	md->id= npc_get_new_npc_id();
-	md->type = BL_MOB;
 	md->m = data->m;
 	md->x = data->x;
 	md->y = data->y;
@@ -492,7 +487,6 @@ struct mob_data* mob_spawn_dataset(struct spawn_data *data)
 	md->centerX = data->x;
 	md->centerY = data->y;
 	status_set_viewdata(md, md->mob_id);
-	status_change_init(md);
 	unit_dataset(md);
 
 	map_addiddb(md);
@@ -702,8 +696,7 @@ int32 mob_once_spawn(map_session_data* sd, int16 m, int16 x, int16 y, const char
 			auto g = (gc) ? guild_search(gc->guild_id) : nullptr;
 			if (gc)
 			{
-				md->guardian_data = (struct guardian_data*)aCalloc(1, sizeof(struct guardian_data));
-				new(md->guardian_data) guardian_data();
+				md->guardian_data = new guardian_data();
 				md->guardian_data->castle = gc;
 				md->guardian_data->number = MAX_GUARDIANS;
 				md->guardian_data->guild_id = gc->guild_id;
@@ -905,8 +898,7 @@ int32 mob_spawn_guardian(const char* mapname, int16 x, int16 y, const char* mobn
 	}
 
 	md = mob_spawn_dataset(&data);
-	md->guardian_data = (struct guardian_data*)aCalloc(1, sizeof(struct guardian_data));
-	new (md->guardian_data) guardian_data();
+	md->guardian_data = new guardian_data();
 	md->guardian_data->number = guardian;
 	md->guardian_data->guild_id = gc->guild_id;
 	md->guardian_data->castle = gc;

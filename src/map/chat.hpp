@@ -11,20 +11,22 @@ struct chat_data;
 
 #define MAX_CHAT_USERS 20
 
-struct chat_data : public block_list {
+class chat_data : public block_list {
+public:
+	chat_data() : block_list(BL_CHAT) {	}
 	char title[CHATROOM_TITLE_SIZE]; // room title 
 	char pass[CHATROOM_PASS_SIZE];   // password
-	bool pub;                        // private/public flag
-	uint8 users;                     // current user count
-	uint8 limit;                     // join limit
-	uint8 trigger;                   // number of users needed to trigger event
-	uint32 zeny;						 // required zeny to join
-	uint32 minLvl;					 // minimum base level to join
-	uint32 maxLvl;					 // maximum base level allowed to join
+	bool pub{false};                        // private/public flag
+	uint8 users{0};                     // current user count
+	uint8 limit{MAX_CHAT_USERS};                     // join limit
+	uint8 trigger{0};                   // number of users needed to trigger event
+	uint32 zeny{0};						 // required zeny to join
+	uint32 minLvl{1};					 // minimum base level to join
+	uint32 maxLvl{MAX_LEVEL};					 // maximum base level allowed to join
 	map_session_data* usersd[MAX_CHAT_USERS];
-	struct block_list* owner;
+	struct block_list* owner{nullptr}; // owner of the chat (map_session_data or npc_data)
 	char npc_event[EVENT_NAME_LENGTH];
-	DBMap* kick_list;				//DBMap of users who were kicked from this chat
+	DBMap* kick_list{nullptr};				//DBMap of users who were kicked from this chat
 };
 
 int32 chat_createpcchat(map_session_data* sd, const char* title, const char* pass, int32 limit, bool pub);

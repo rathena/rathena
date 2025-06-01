@@ -155,32 +155,40 @@ enum e_npcv_status : uint8 {
 	NPCVIEW_CLOAK     = NPCVIEW_CLOAKOFF | NPCVIEW_CLOAKON,
 };
 
-struct npc_data : public block_list {
-	struct unit_data ud; //Because they need to be able to move....
-	struct view_data vd;
-	status_change sc; //They can't have status changes, but.. they want the visual opt values.
-	struct npc_data *master_nd;
-	int16 class_,speed;
+class npc_data : public block_list {
+public:
+	npc_data() : block_list(BL_NPC), size(0) {
+		memset(&u, 0, sizeof(u));
+	}
+
+	struct unit_data ud{}; //Because they need to be able to move....
+	struct view_data vd{};
+	status_change sc{}; //They can't have status changes, but.. they want the visual opt values.
+	struct npc_data *master_nd{nullptr};
+	int16 class_{0};
+	int16 speed{0};
 	char name[NPC_NAME_LENGTH+1];// display name
 	char exname[NPC_NAME_LENGTH+1];// unique npc name
-	int32 chat_id,touching_id;
-	uint32 next_walktime;
-	int32 instance_id;
+	int32 chat_id{0};
+	int32 touching_id{0};
+	uint32 next_walktime{0};
+	int32 instance_id{0};
 	e_npcv_status state{NPCVIEW_ENABLE};
 
 	unsigned size : 2;
 
-	struct status_data status;
-	uint32 level,stat_point;
+	struct status_data status{};
+	uint32 level{0};
+	uint32 stat_point{0};
 	struct s_npc_params {
 		uint16 str, agi, vit, int_, dex, luk;
 	} params;
 
-	void* chatdb; // pointer to a npc_parse struct (see npc_chat.cpp)
-	char* path;/* path dir */
+	void* chatdb{nullptr}; // pointer to a npc_parse struct (see npc_chat.cpp)
+	char* path{nullptr};/* path dir */
 	enum npc_subtype subtype;
-	bool trigger_on_hidden;
-	int32 src_id;
+	bool trigger_on_hidden{false};
+	int32 src_id{0};
 	union {
 		struct {
 			struct script_code *script;
@@ -216,10 +224,10 @@ struct npc_data : public block_list {
 		} barter;
 	} u;
 
-	struct sc_display_entry **sc_display;
-	unsigned char sc_display_count;
+	struct sc_display_entry **sc_display{nullptr};
+	unsigned char sc_display_count{0};
 
-	std::vector<std::shared_ptr<s_questinfo>> qi_data;
+	std::vector<std::shared_ptr<s_questinfo>> qi_data{};
 
 	struct {
 		t_tick timeout;
@@ -233,10 +241,10 @@ struct npc_data : public block_list {
 	} dynamicnpc;
 
 #ifdef MAP_GENERATOR
-	struct navi_link navi; // for warps and the src of npcs
-	std::vector<navi_link> links; // for extra links, like warper npc
+	struct navi_link navi{}; // for warps and the src of npcs
+	std::vector<navi_link> links{}; // for extra links, like warper npc
 #endif
-	bool is_invisible;
+	bool is_invisible{false};
 };
 
 struct eri;
