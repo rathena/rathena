@@ -109,7 +109,7 @@ static int32 battle_gettargeted_sub(struct block_list *bl, va_list ap)
  */
 struct block_list* battle_gettargeted(struct block_list *target)
 {
-	struct block_list *bl_list[MAX_ENEMY_SEARCH_COUNT];
+	block_list* bl_list[MAX_ENEMY_SEARCH_COUNT];
 	int32 c = 0;
 	nullpo_retr(nullptr, target);
 
@@ -192,7 +192,7 @@ static int32 battle_getenemy_sub(struct block_list *bl, va_list ap)
  */
 struct block_list* battle_getenemy(struct block_list *target, int32 type, int32 range)
 {
-	struct block_list *bl_list[MAX_ENEMY_SEARCH_COUNT];
+	block_list* bl_list[MAX_ENEMY_SEARCH_COUNT];
 	int32 c = 0;
 
 	memset(bl_list, 0, sizeof(bl_list));
@@ -252,7 +252,7 @@ static int32 battle_getenemyarea_sub(struct block_list *bl, va_list ap)
  */
 struct block_list* battle_getenemyarea(struct block_list *src, int32 x, int32 y, int32 range, int32 type, int32 ignore_id)
 {
-	struct block_list *bl_list[MAX_ENEMY_SEARCH_COUNT];
+	block_list* bl_list[MAX_ENEMY_SEARCH_COUNT];
 	int32 c = 0;
 
 	memset(bl_list, 0, sizeof(bl_list));
