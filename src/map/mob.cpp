@@ -1276,7 +1276,7 @@ void mob_randomtarget(mob_data& md, int32& target_id) {
 	if (md.sc.hasSCE(SC_BLIND))
 		search_size = 1;
 
-	block_list* target = battle_getenemy(&md.bl, DEFAULT_ENEMY_TYPE((&md)), search_size);
+	block_list* target = battle_getenemy(&md, DEFAULT_ENEMY_TYPE((&md)), search_size);
 	if (target != nullptr)
 		target_id = target->id;
 }
@@ -2138,7 +2138,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 	if (battle_check_range(md, tbl, md->status.rhw.range))
 	{
 		// Stop and make sure there is no chase target when already in attack range
-		unit_stop_walking(&md->bl, USW_FIXPOS|USW_RELEASE_TARGET);
+		unit_stop_walking(md, USW_FIXPOS|USW_RELEASE_TARGET);
 
 		// Hiding is a special case because it prevents normal attacks but allows skill usage
 		// TODO: Some other states also have this behavior and should be investigated
