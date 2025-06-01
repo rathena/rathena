@@ -378,9 +378,8 @@ struct s_qi_display {
 	e_questinfo_markcolor color;
 };
 
-class map_session_data {
+class map_session_data : public block_list {
 public:
-	struct block_list bl;
 	struct unit_data ud;
 	struct view_data vd;
 	struct status_data base_status, battle_status;
@@ -1151,7 +1150,7 @@ extern JobDatabase job_db;
 #endif
 
 #define pc_setdead(sd)        ( (sd)->state.dead_sit = (sd)->vd.dead_sit = 1 )
-#define pc_setsit(sd)         { unit_stop_walking( &(sd)->bl, USW_FIXPOS|USW_MOVE_FULL_CELL ); unit_stop_attack( &(sd)->bl ); (sd)->state.dead_sit = (sd)->vd.dead_sit = 2; }
+#define pc_setsit(sd)         { unit_stop_walking( (sd), USW_FIXPOS|USW_MOVE_FULL_CELL ); unit_stop_attack( (sd) ); (sd)->state.dead_sit = (sd)->vd.dead_sit = 2; }
 #define pc_isdead(sd)         ( (sd)->state.dead_sit == 1 )
 #define pc_issit(sd)          ( (sd)->vd.dead_sit == 2 )
 #define pc_isidle_party(sd)   ( (sd)->chatID || (sd)->state.vending || (sd)->state.buyingstore || DIFF_TICK(last_tick, (sd)->idletime) >= battle_config.idle_no_share )
@@ -1247,7 +1246,7 @@ enum e_mado_type : uint16 {
 	#define pc_rightside_def(sd) ((sd)->battle_status.def)
 	#define pc_leftside_mdef(sd) ((sd)->battle_status.mdef2)
 	#define pc_rightside_mdef(sd) ((sd)->battle_status.mdef)
-	#define pc_leftside_matk(sd) (status_base_matk_min(&(sd)->bl, status_get_status_data((sd)->bl), (sd)->status.base_level))
+	#define pc_leftside_matk(sd) (status_base_matk_min((sd), status_get_status_data(*(sd)), (sd)->status.base_level))
 #define pc_rightside_matk(sd) \
 	(\
 	(sd)->battle_status.rhw.matk + \
