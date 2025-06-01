@@ -342,7 +342,7 @@ int32 battle_damage(struct block_list *src, struct block_list *target, int64 dam
 	// This is the last place where we have access to the actual damage type, so any monster events depending on type must be placed here
 	// These events trigger when the attack connects
 	if (src != nullptr && target->type == BL_MOB && dmg_lv > ATK_BLOCK) {
-		mob_data& md = *reinterpret_cast<mob_data*>(target);
+		mob_data& md = *static_cast<mob_data*>(target);
 
 		// Trigger monster skill conditions
 		if (src != target && !status_isdead(*target)) {
@@ -9765,7 +9765,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			md.damage = 200 + 200 * skill_lv;
 			md.dmotion = 0; //No flinch animation
 			if (target->type == BL_MOB) {
-				mob_data& mob = *reinterpret_cast<mob_data*>(target);
+				mob_data& mob = *static_cast<mob_data*>(target);
 				// Deals 400 damage to Emperium on all levels
 				if (mob.mob_id == MOBID_EMPERIUM)
 					md.damage = 400;
@@ -10767,7 +10767,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		// Certain AI types only switch target on this trigger
 		// This event only triggers if the target is not already the current attacker
 		// We need to do this here because it needs to be calculated before waiting for attack motion
-		mob_data& md = *reinterpret_cast<mob_data*>(target);
+		mob_data& md = *static_cast<mob_data*>(target);
 		if (md.state.skillstate == MSS_BERSERK && md.target_id != src->id) {
 			is_norm_attacked = ((battle_config.mob_ai&0x4) || check_distance_bl(src, target, md.status.rhw.range + 1));
 		}

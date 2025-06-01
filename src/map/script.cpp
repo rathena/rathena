@@ -7011,7 +7011,7 @@ static int32 buildin_viewpointmap_sub(block_list *bl, va_list ap) {
 	id = va_arg(ap, int32);
 	color = va_arg(ap, int32);
 
-	clif_viewpoint( *reinterpret_cast<map_session_data*>( bl ), oid, type, x, y, id, color );
+	clif_viewpoint( *static_cast<map_session_data*>( bl ), oid, type, x, y, id, color );
 
 	return 0;
 }
@@ -15546,7 +15546,7 @@ BUILDIN_FUNC(skilleffect)
 	if (bl->type == BL_PC) {
 		/* Ensure we're standing because the following packet causes the client to virtually set the char to stand,
 		 * which leaves the server thinking it still is sitting. */
-		sd = reinterpret_cast<map_session_data*>( bl );
+		sd = static_cast<map_session_data*>( bl );
 
 		if (pc_issit(sd) && pc_setstand(sd, false)) {
 			skill_sit(sd, 0);
@@ -19097,7 +19097,7 @@ BUILDIN_FUNC(getunitdata)
 
 	switch(bl->type) {
 		case BL_MOB: {
-			mob_data* md = reinterpret_cast<mob_data*>( bl );
+			mob_data* md = static_cast<mob_data*>( bl );
 
 			getunitdata_sub(UMOB_SIZE, md->status.size);
 			getunitdata_sub(UMOB_LEVEL, md->level);
@@ -19159,7 +19159,7 @@ BUILDIN_FUNC(getunitdata)
 			} break;
 
 		case BL_HOM: {
-			homun_data* hd = reinterpret_cast<homun_data*>( bl );
+			homun_data* hd = static_cast<homun_data*>( bl );
 
 			getunitdata_sub(UHOM_SIZE, hd->base_status.size);
 			getunitdata_sub(UHOM_LEVEL, hd->homunculus.level);
@@ -19205,7 +19205,7 @@ BUILDIN_FUNC(getunitdata)
 			} break;
 
 		case BL_PET: {
-			pet_data* pd = reinterpret_cast<pet_data*>( bl );
+			pet_data* pd = static_cast<pet_data*>( bl );
 
 			getunitdata_sub(UPET_SIZE, pd->status.size);
 			getunitdata_sub(UPET_LEVEL, pd->pet.level);
@@ -19248,7 +19248,7 @@ BUILDIN_FUNC(getunitdata)
 			} break;
 
 		case BL_MER: {
-			s_mercenary_data* mc = reinterpret_cast<s_mercenary_data*>( bl );
+			s_mercenary_data* mc = static_cast<s_mercenary_data*>( bl );
 
 			getunitdata_sub(UMER_SIZE, mc->base_status.size);
 			getunitdata_sub(UMER_HP, mc->base_status.hp);
@@ -19291,7 +19291,7 @@ BUILDIN_FUNC(getunitdata)
 			} break;
 
 		case BL_ELEM: {
-			s_elemental_data* ed = reinterpret_cast<s_elemental_data*>( bl );
+			s_elemental_data* ed = static_cast<s_elemental_data*>( bl );
 
 			getunitdata_sub(UELE_SIZE, ed->base_status.size);
 			getunitdata_sub(UELE_HP, ed->elemental.hp);
@@ -19336,7 +19336,7 @@ BUILDIN_FUNC(getunitdata)
 			} break;
 
 		case BL_NPC: {
-			npc_data* nd = reinterpret_cast<npc_data*>( bl );
+			npc_data* nd = static_cast<npc_data*>( bl );
 
 			getunitdata_sub(UNPC_LEVEL, nd->level);
 			getunitdata_sub(UNPC_HP, nd->status.hp);
@@ -19420,7 +19420,7 @@ BUILDIN_FUNC(setunitdata)
 
 	switch (bl->type) {
 	case BL_MOB: {
-		mob_data* md = reinterpret_cast<mob_data*>( bl );
+		mob_data* md = static_cast<mob_data*>( bl );
 
 		if (!md->base_status) {
 			md->base_status = (struct status_data*)aCalloc(1, sizeof(struct status_data));
@@ -19541,7 +19541,7 @@ BUILDIN_FUNC(setunitdata)
 		} break;
 
 	case BL_HOM: {
-		homun_data* hd = reinterpret_cast<homun_data*>( bl );
+		homun_data* hd = static_cast<homun_data*>( bl );
 
 		switch (type) {
 			case UHOM_SIZE: hd->battle_status.size = hd->base_status.size = (unsigned char)value; break;
@@ -19609,7 +19609,7 @@ BUILDIN_FUNC(setunitdata)
 		} break;
 
 	case BL_PET: {
-		pet_data* pd = reinterpret_cast<pet_data*>( bl );
+		pet_data* pd = static_cast<pet_data*>( bl );
 
 		switch (type) {
 			case UPET_SIZE: pd->status.size = (unsigned char)value; break;
@@ -19660,7 +19660,7 @@ BUILDIN_FUNC(setunitdata)
 		} break;
 
 	case BL_MER: {
-		s_mercenary_data* mc = reinterpret_cast<s_mercenary_data*>( bl );
+		s_mercenary_data* mc = static_cast<s_mercenary_data*>( bl );
 
 		switch (type) {
 			case UMER_SIZE: mc->battle_status.size = mc->base_status.size = (unsigned char)value; break;
@@ -19728,7 +19728,7 @@ BUILDIN_FUNC(setunitdata)
 		} break;
 
 	case BL_ELEM: {
-		s_elemental_data* ed = reinterpret_cast<s_elemental_data*>( bl );
+		s_elemental_data* ed = static_cast<s_elemental_data*>( bl );
 
 		switch (type) {
 			case UELE_SIZE: ed->battle_status.size = ed->base_status.size = (unsigned char)value; break;
@@ -19796,7 +19796,7 @@ BUILDIN_FUNC(setunitdata)
 		} break;
 
 	case BL_NPC: {
-		npc_data* nd = reinterpret_cast<npc_data*>( bl );
+		npc_data* nd = static_cast<npc_data*>( bl );
 
 		if( nd->status.hp == 0 ){
 			status_calc_npc( nd, SCO_FIRST );

@@ -1646,26 +1646,26 @@ int32 status_damage(struct block_list *src,struct block_list *target,int64 dhp, 
 	dhp = cap_value(dhp, INT_MIN, INT_MAX);
 	switch (target->type) {
 	case BL_PC:
-		pc_damage(reinterpret_cast<map_session_data*>(target), src, hp, sp, ap);
+		pc_damage(static_cast<map_session_data*>(target), src, hp, sp, ap);
 		break;
 	case BL_MOB:
-		mob_damage(reinterpret_cast<mob_data*>(target), src, static_cast<int32>(dhp));
+		mob_damage(static_cast<mob_data*>(target), src, static_cast<int32>(dhp));
 		break;
 	case BL_HOM:
-		hom_heal(reinterpret_cast<homun_data&>(*target), hp != 0, sp != 0);
+		hom_heal(static_cast<homun_data&>(*target), hp != 0, sp != 0);
 		break;
 	case BL_MER:
-		mercenary_heal(reinterpret_cast<s_mercenary_data*>(target), hp, sp);
+		mercenary_heal(static_cast<s_mercenary_data*>(target), hp, sp);
 		break;
 	case BL_ELEM:
-		elemental_heal(reinterpret_cast<s_elemental_data*>(target), hp, sp);
+		elemental_heal(static_cast<s_elemental_data*>(target), hp, sp);
 		break;
 	}
 
 	// Normal attack damage is logged in the monster's dmglog as attack damage
 	// This counts as exp tap and is used for determining the MVP
 	if (src && src->type == BL_MOB && skill_id == 0)
-		mob_log_damage(reinterpret_cast<mob_data*>(src), target, 0, dhp);
+		mob_log_damage(static_cast<mob_data*>(src), target, 0, dhp);
 
 	if( src && target->type == BL_PC && ((TBL_PC*)target)->disguise ) { // Stop walking when attacked in disguise to prevent walk-delay bug
 		unit_stop_walking( target, USW_FIXPOS );
@@ -1873,19 +1873,19 @@ int32 status_heal(struct block_list *bl,int64 hhp,int64 hsp, int64 hap, int32 fl
 	// Send HP update to client
 	switch(bl->type) {
 	case BL_PC:
-		pc_heal(reinterpret_cast<map_session_data*>(bl), hp, sp, ap, flag);
+		pc_heal(static_cast<map_session_data*>(bl), hp, sp, ap, flag);
 		break;
 	case BL_MOB:
-		mob_heal(reinterpret_cast<mob_data*>(bl), hp);
+		mob_heal(static_cast<mob_data*>(bl), hp);
 		break;
 	case BL_HOM:
-		hom_heal(reinterpret_cast<homun_data&>(*bl), hp != 0, sp != 0);
+		hom_heal(static_cast<homun_data&>(*bl), hp != 0, sp != 0);
 		break;
 	case BL_MER:
-		mercenary_heal(reinterpret_cast<s_mercenary_data*>(bl), hp, sp);
+		mercenary_heal(static_cast<s_mercenary_data*>(bl), hp, sp);
 		break;
 	case BL_ELEM:
-		elemental_heal(reinterpret_cast<s_elemental_data*>(bl), hp, sp);
+		elemental_heal(static_cast<s_elemental_data*>(bl), hp, sp);
 		break;
 	}
 
@@ -6105,14 +6105,14 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 			break;
 
 		case BL_PET:{
-			pet_data* pd = reinterpret_cast<pet_data*>(&bl);
+			pet_data* pd = static_cast<pet_data*>(&bl);
 
 			if (pd->master != nullptr)
 				status->speed = status_get_speed(pd->master);
 		} break;
 
 		case BL_HOM:{
-			homun_data* hd = reinterpret_cast<homun_data*>(&bl);
+			homun_data* hd = static_cast<homun_data*>(&bl);
 
 			if (hd->master != nullptr) {
 				if (battle_config.hom_setting & HOMSET_COPY_SPEED)
@@ -6124,14 +6124,14 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 		} break;
 
 		case BL_MER:{
-			s_mercenary_data* mc = reinterpret_cast<s_mercenary_data*>(&bl);
+			s_mercenary_data* mc = static_cast<s_mercenary_data*>(&bl);
 
 			if (mc->master != nullptr)
 				status->speed = status_get_speed(mc->master);
 		} break;
 
 		case BL_ELEM:{
-			s_elemental_data* ed = reinterpret_cast<s_elemental_data*>(&bl);
+			s_elemental_data* ed = static_cast<s_elemental_data*>(&bl);
 
 			if (ed->master != nullptr)
 				status->speed = status_get_speed(ed->master);
@@ -6378,11 +6378,11 @@ void status_calc_bl_main(struct block_list& bl, std::bitset<SCB_MAX> flag)
 
 		if ( bl.type == BL_HOM ) {
 #ifdef RENEWAL_ASPD
-			amotion = (reinterpret_cast<homun_data*>(&bl))->homunculusDB->baseASPD;
+			amotion = (static_cast<homun_data*>(&bl))->homunculusDB->baseASPD;
 			amotion = amotion - amotion * status_get_homdex(&bl) / 1000 - status_get_homagi(&bl) * amotion / 250;
 			amotion = (amotion * status_calc_aspd(&bl, sc, true) + status_calc_aspd(&bl, sc, false)) / - 100 + amotion;
 #else
-			amotion = (1000 - 4 * status->agi - status->dex) * (reinterpret_cast<homun_data*>(&bl))->homunculusDB->baseASPD / 1000;
+			amotion = (1000 - 4 * status->agi - status->dex) * (static_cast<homun_data*>(&bl))->homunculusDB->baseASPD / 1000;
 
 			amotion = status_calc_aspd_rate(&bl, sc, amotion);
 			amotion = amotion * status->aspd_rate / 1000;
@@ -8927,7 +8927,7 @@ void status_calc_slave_mode(mob_data& md)
 const char* status_get_name( block_list& bl ){
 	switch( bl.type ){
 		case BL_PC: {
-				map_session_data& sd = reinterpret_cast<map_session_data&>( bl );
+				map_session_data& sd = static_cast<map_session_data&>( bl );
 
 				if( sd.fakename[0] != '\0' ){
 					return sd.fakename;
@@ -8937,24 +8937,24 @@ const char* status_get_name( block_list& bl ){
 			} break;
 
 		case BL_MOB:
-			return reinterpret_cast<mob_data&>( bl ).name;
+			return static_cast<mob_data&>( bl ).name;
 
 		case BL_PET:
-			return reinterpret_cast<pet_data&>( bl ).pet.name;
+			return static_cast<pet_data&>( bl ).pet.name;
 
 		case BL_HOM:
-			return reinterpret_cast<homun_data&>( bl ).homunculus.name;
+			return static_cast<homun_data&>( bl ).homunculus.name;
 
 		case BL_MER:
 			// They only have database names which are global, not specific to GID.
-			return reinterpret_cast<s_mercenary_data&>( bl ).db->name.c_str();
+			return static_cast<s_mercenary_data&>( bl ).db->name.c_str();
 
 		case BL_NPC:
-			return reinterpret_cast<npc_data&>( bl ).name;
+			return static_cast<npc_data&>( bl ).name;
 
 		case BL_ELEM:
 			// They only have database names which are global, not specific to GID.
-			return reinterpret_cast<s_elemental_data&>( bl ).db->name.c_str();
+			return static_cast<s_elemental_data&>( bl ).db->name.c_str();
 	}
 
 	return "Unknown";
@@ -9026,19 +9026,19 @@ struct regen_data *status_get_regen_data(struct block_list *bl)
 status_data* status_get_status_data(block_list& bl){
 	switch (bl.type) {
 		case BL_PC:
-			return &reinterpret_cast<map_session_data*>( &bl )->battle_status;
+			return &static_cast<map_session_data*>( &bl )->battle_status;
 		case BL_MOB:
-			return &reinterpret_cast<mob_data*>( &bl )->status;
+			return &static_cast<mob_data*>( &bl )->status;
 		case BL_PET:
-			return &reinterpret_cast<pet_data*>( &bl )->status;
+			return &static_cast<pet_data*>( &bl )->status;
 		case BL_HOM:
-			return &reinterpret_cast<homun_data*>( &bl )->battle_status;
+			return &static_cast<homun_data*>( &bl )->battle_status;
 		case BL_MER:
-			return &reinterpret_cast<s_mercenary_data*>( &bl )->battle_status;
+			return &static_cast<s_mercenary_data*>( &bl )->battle_status;
 		case BL_ELEM:
-			return &reinterpret_cast<s_elemental_data*>( &bl )->battle_status;
+			return &static_cast<s_elemental_data*>( &bl )->battle_status;
 		case BL_NPC: {
-				npc_data* nd = reinterpret_cast<npc_data*>( &bl );
+				npc_data* nd = static_cast<npc_data*>( &bl );
 
 				if( mobdb_checkid( nd->class_ ) == 0 ){
 					return &nd->status;
@@ -9311,7 +9311,7 @@ bool status_isendure(block_list& bl, t_tick tick, bool visible)
 	// Endure is forbidden on some maps, but the bonus is still set to true on such maps.
 	// That's why we need to check it here and disable the bonus to correctly mimic official behavior.
 	if (bl.m >= 0 && bl.type == BL_PC && !status_change_isDisabledOnMap(SC_ENDURE, map_getmapdata(bl.m))) {
-		if (reinterpret_cast<map_session_data&>(bl).special_state.no_walk_delay)
+		if (static_cast<map_session_data&>(bl).special_state.no_walk_delay)
 			return true;
 	}
 

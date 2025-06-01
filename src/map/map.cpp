@@ -240,43 +240,43 @@ void map_destroyblock( block_list* bl ){
 
 		case BL_PC:
 			// Do not call the destructor here, it will be done in chrif_auth_delete
-			//reinterpret_cast<map_session_data*>( bl )->~map_session_data();
+			//static_cast<map_session_data*>( bl )->~map_session_data();
 			break;
 
 		case BL_MOB:
-			reinterpret_cast<mob_data*>( bl )->~mob_data();
+			static_cast<mob_data*>( bl )->~mob_data();
 			break;
 
 		case BL_PET:
-			reinterpret_cast<pet_data*>( bl )->~pet_data();
+			static_cast<pet_data*>( bl )->~pet_data();
 			break;
 
 		case BL_HOM:
-			reinterpret_cast<homun_data*>( bl )->~homun_data();
+			static_cast<homun_data*>( bl )->~homun_data();
 			break;
 
 		case BL_MER:
-			reinterpret_cast<s_mercenary_data*>( bl )->~s_mercenary_data();
+			static_cast<s_mercenary_data*>( bl )->~s_mercenary_data();
 			break;
 
 		case BL_ITEM:
-			reinterpret_cast<flooritem_data*>( bl )->~flooritem_data();
+			static_cast<flooritem_data*>( bl )->~flooritem_data();
 			break;
 
 		case BL_SKILL:
-			reinterpret_cast<skill_unit*>( bl )->~skill_unit();
+			static_cast<skill_unit*>( bl )->~skill_unit();
 			break;
 
 		case BL_NPC:
-			reinterpret_cast<npc_data*>( bl )->~npc_data();
+			static_cast<npc_data*>( bl )->~npc_data();
 			break;
 
 		case BL_CHAT:
-			reinterpret_cast<chat_data*>( bl )->~chat_data();
+			static_cast<chat_data*>( bl )->~chat_data();
 			break;
 
 		case BL_ELEM:
-			reinterpret_cast<s_elemental_data*>( bl )->~s_elemental_data();
+			static_cast<s_elemental_data*>( bl )->~s_elemental_data();
 			break;
 
 		default:

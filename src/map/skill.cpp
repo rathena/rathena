@@ -2617,7 +2617,7 @@ int32 skill_counter_additional_effect (struct block_list* src, struct block_list
 		break;
 	case HFLI_SBR44:	//[orn]
 		if(src->type == BL_HOM){
-			homun_data& hd = reinterpret_cast<homun_data&>( *src );
+			homun_data& hd = static_cast<homun_data&>( *src );
 
 			hd.homunculus.intimacy = hom_intimacy_grade2intimacy(HOMGRADE_HATE_WITH_PASSION);
 
@@ -5192,7 +5192,7 @@ bool skill_mirage_cast( block_list& src, block_list* bl, uint16 skill_id, uint16
 
 int32 skill_shimiru_check_cell( block_list* target, va_list ap ){
 	if( target != nullptr && target->type == BL_SKILL ){
-		skill_unit* su = reinterpret_cast<skill_unit*>( target );
+		skill_unit* su = static_cast<skill_unit*>( target );
 
 		if( su->group != nullptr && su->group->skill_id == SS_SHINKIROU ){
 			return 1;
@@ -12213,7 +12213,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			tstatus->hp = max(tstatus->sp, 1);
 			tstatus->sp -= tstatus->sp * ( 60 - 10 * skill_lv ) / 100;
 			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			pc_revive(reinterpret_cast<map_session_data*>(bl),true,true);
+			pc_revive(static_cast<map_session_data*>(bl),true,true);
 			clif_resurrection( *bl );
 		}
 		break;
@@ -14165,7 +14165,7 @@ TIMER_FUNC(skill_castend_id){
 			break;
 			case BL_HOM:
 			{
-				homun_data &hd = reinterpret_cast<homun_data &>(*src);
+				homun_data &hd = static_cast<homun_data &>(*src);
 #ifdef RENEWAL
 				skill_blockhomun_start(hd, ud->skill_id, skill_get_cooldown(ud->skill_id, ud->skill_lv));
 #else
@@ -14175,7 +14175,7 @@ TIMER_FUNC(skill_castend_id){
 			break;
 			case BL_MER:
 			{
-				s_mercenary_data &mc = reinterpret_cast<s_mercenary_data &>(*src);
+				s_mercenary_data &mc = static_cast<s_mercenary_data &>(*src);
 
 				skill_blockmerc_start(mc, ud->skill_id, skill_get_cooldown(ud->skill_id, ud->skill_lv));
 			}
@@ -21135,7 +21135,7 @@ int32 skill_attack_area(struct block_list *bl, va_list ap)
 	}
 
 	if (skill_id == SS_FUUMAKOUCHIKU && bl->type == BL_SKILL) {
-		skill_unit* unit = reinterpret_cast<skill_unit*>( bl );
+		skill_unit* unit = static_cast<skill_unit*>( bl );
 
 		if( unit->group == nullptr ){
 			return 0;

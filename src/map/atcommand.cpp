@@ -11311,7 +11311,7 @@ int32 atcommand_macrochecker_sub( block_list* bl, va_list ap ){
 	uint32 reporter_aid = va_arg( ap, uint32 );
 	uint32 reporter_gmlv = va_arg( ap, uint32 );
 
-	map_session_data* tsd = reinterpret_cast<map_session_data*>( bl );
+	map_session_data* tsd = static_cast<map_session_data*>( bl );
 
 	// Dont start the macro checking on self
 	if( tsd->status.account_id == reporter_aid ){

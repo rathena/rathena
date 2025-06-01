@@ -1414,9 +1414,9 @@ static void clif_set_unit_walking( struct block_list& bl, map_session_data* tsd,
 	}
 
 	if( bl.type == BL_MOB ){
-		p.isBoss = reinterpret_cast<mob_data*>( &bl )->get_bosstype();
+		p.isBoss = static_cast<mob_data*>( &bl )->get_bosstype();
 	}else if( bl.type == BL_PET ){
-		p.isBoss = reinterpret_cast<pet_data*>( &bl )->db->get_bosstype();
+		p.isBoss = static_cast<pet_data*>( &bl )->db->get_bosstype();
 	}else{
 		p.isBoss = BOSSTYPE_NONE;
 	}
@@ -1622,7 +1622,7 @@ void clif_weather(int16 m)
  */
 static inline bool clif_npc_mayapurple( block_list& bl ){
 	if( bl.type == BL_NPC ){
-		npc_data& nd = reinterpret_cast<npc_data&>( bl );
+		npc_data& nd = static_cast<npc_data&>( bl );
 
 		// TODO: Confirm if waitingroom cause any special cases
 		if( /* nd->chat_id == 0 && */ nd.is_invisible ){
@@ -1736,7 +1736,7 @@ int32 clif_spawn( struct block_list *bl, bool walking ){
 	case BL_PET:
 		// If the pet wears equip
 		if( vd->look[LOOK_HEAD_BOTTOM] != 0 ){
-			pet_data& pd = *reinterpret_cast<pet_data*>( bl );
+			pet_data& pd = *static_cast<pet_data*>( bl );
 			clif_send_petdata( nullptr, pd, CHANGESTATEPET_ACCESSORY );
 		}
 		break;
@@ -2071,7 +2071,7 @@ void clif_move( struct unit_data& ud )
 	switch (bl->type) {
 	case BL_PC:
 		{
-			map_session_data* sd = reinterpret_cast<map_session_data*>( bl );
+			map_session_data* sd = static_cast<map_session_data*>( bl );
 			if (sd->state.size == SZ_BIG) // tiny/big players [Valaris]
 				clif_specialeffect(sd, EF_GIANTBODY2, AREA);
 			else if (sd->state.size == SZ_MEDIUM)
@@ -2080,7 +2080,7 @@ void clif_move( struct unit_data& ud )
 	break;
 	case BL_MOB:
 		{
-			mob_data* md = reinterpret_cast<mob_data*>( bl );
+			mob_data* md = static_cast<mob_data*>( bl );
 			if (md->special_state.size == SZ_BIG) // tiny/big mobs [Valaris]
 				clif_specialeffect(md, EF_GIANTBODY2, AREA);
 			else if (md->special_state.size == SZ_MEDIUM)
@@ -2090,7 +2090,7 @@ void clif_move( struct unit_data& ud )
 	case BL_PET:
 		// If the pet wears equip
 		if( vd->look[LOOK_HEAD_BOTTOM] != 0 ){
-			pet_data& pd = *reinterpret_cast<pet_data*>( bl );
+			pet_data& pd = *static_cast<pet_data*>( bl );
 			clif_send_petdata( nullptr, pd, CHANGESTATEPET_ACCESSORY );
 		}
 		break;
@@ -4601,7 +4601,7 @@ void clif_joinchatok(map_session_data& sd, chat_data& cd){
 	if(cd.owner->type == BL_NPC){
 		PACKET_ZC_ENTER_ROOM_sub& owner = p->members[0];
 		owner.flag = 0;
-		safestrncpy(owner.name, reinterpret_cast<npc_data*>(cd.owner)->name, sizeof(owner.name));
+		safestrncpy(owner.name, static_cast<npc_data*>(cd.owner)->name, sizeof(owner.name));
 		p->packetSize += static_cast<decltype(p->packetSize)>( sizeof( owner ) );
 
 		for (size_t i = 0; i < cd.users; i++) {
@@ -5089,7 +5089,7 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 	case BL_PET:
 		// If the pet wears equip
 		if( vd->look[LOOK_HEAD_BOTTOM] != 0 ){
-			pet_data& pd = *reinterpret_cast<pet_data*>( bl );
+			pet_data& pd = *static_cast<pet_data*>( bl );
 			clif_send_petdata( sd, pd, CHANGESTATEPET_ACCESSORY );
 		}
 		break;
@@ -5541,7 +5541,7 @@ static int32 clif_getareachar(struct block_list* bl,va_list ap)
 
 	switch(bl->type){
 	case BL_ITEM:
-		clif_getareachar_item( *sd, *reinterpret_cast<flooritem_data*>( bl ) );
+		clif_getareachar_item( *sd, *static_cast<flooritem_data*>( bl ) );
 		break;
 	case BL_SKILL:
 		skill_getareachar_skillunit_visibilty_single((TBL_SKILL*)bl, sd);
@@ -5586,7 +5586,7 @@ int32 clif_outsight(struct block_list *bl,va_list ap)
 				clif_buyingstore_disappear_entry( *sd, tsd );
 			break;
 		case BL_ITEM:
-			clif_clearflooritem( *reinterpret_cast<flooritem_data*>( bl ), tsd );
+			clif_clearflooritem( *static_cast<flooritem_data*>( bl ), tsd );
 			break;
 		case BL_SKILL:
 			clif_clearchar_skillunit( *((skill_unit *)bl), *tsd );
@@ -5630,7 +5630,7 @@ int32 clif_insight(struct block_list *bl,va_list ap)
 	if (clif_session_isValid(tsd)) { //Tell tsd that bl entered into his view
 		switch(bl->type){
 		case BL_ITEM:
-			clif_getareachar_item( *tsd, *reinterpret_cast<flooritem_data*>( bl ) );
+			clif_getareachar_item( *tsd, *static_cast<flooritem_data*>( bl ) );
 			break;
 		case BL_SKILL:
 			skill_getareachar_skillunit_visibilty_single((TBL_SKILL*)bl, tsd);
@@ -11498,7 +11498,7 @@ void clif_changed_dir(block_list& bl, enum send_target target){
 	p.packetType = HEADER_ZC_CHANGE_DIRECTION;
 	p.srcId = bl.id;
 	if( bl.type == BL_PC ){
-		p.headDir = reinterpret_cast<map_session_data*>(&bl)->head_dir;
+		p.headDir = static_cast<map_session_data*>(&bl)->head_dir;
 	}else{
 		p.headDir = 0;
 	}

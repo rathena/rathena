@@ -1020,7 +1020,7 @@ int32 mob_linksearch(struct block_list *bl,va_list ap)
 	t_tick tick;
 
 	nullpo_ret(bl);
-	md = reinterpret_cast<mob_data*>(bl);
+	md = static_cast<mob_data*>(bl);
 	mob_id = va_arg(ap, int32);
 	target_id = va_arg(ap, int32);
 	tick=va_arg(ap, t_tick);
@@ -1445,7 +1445,7 @@ static int32 mob_warpchase_sub(struct block_list *bl,va_list ap) {
 		case BL_NPC:
 		{
 			// NPC Warp
-			npc_data* nd = reinterpret_cast<npc_data*>(bl);
+			npc_data* nd = static_cast<npc_data*>(bl);
 
 			// Not a warp
 			if (nd->subtype != NPCTYPE_WARP)
@@ -1477,7 +1477,7 @@ static int32 mob_warpchase_sub(struct block_list *bl,va_list ap) {
 		case BL_SKILL:
 		{
 			// Skill Warp
-			skill_unit* su = reinterpret_cast<skill_unit*>(bl);
+			skill_unit* su = static_cast<skill_unit*>(bl);
 
 			if (su->group == nullptr)
 				return 0;
@@ -1603,7 +1603,7 @@ static int32 mob_ai_sub_hard_slavemob(struct mob_data *md,t_tick tick)
 			}
 			else if (bl->type == BL_MOB) {
 				// If master is a monster, it might still have a target after using a skill
-				mob_data& mmd = reinterpret_cast<mob_data&>(*bl);
+				mob_data& mmd = static_cast<mob_data&>(*bl);
 				if (mmd.target_id > 0)
 					tbl = map_id2bl(mmd.target_id);
 			}
@@ -2271,7 +2271,7 @@ void mob_set_attacked_id(int32 src_id, int32 target_id, t_tick tick, bool is_nor
 	{
 		case BL_PET:
 		{
-			struct pet_data& pd = *reinterpret_cast<pet_data*>(src);
+			struct pet_data& pd = *static_cast<pet_data*>(src);
 			if (pd.master)
 			{
 				// Let mobs retaliate against the pet's master
@@ -2281,7 +2281,7 @@ void mob_set_attacked_id(int32 src_id, int32 target_id, t_tick tick, bool is_nor
 		}
 		case BL_MOB:
 		{
-			struct mob_data& md2 = *reinterpret_cast<mob_data*>(src);
+			struct mob_data& md2 = *static_cast<mob_data*>(src);
 			// Config to decide whether to retaliate versus the master or the mob
 			if (md2.master_id && battle_config.retaliate_to_master)
 				md->attacked_id = md2.master_id;

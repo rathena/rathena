@@ -6198,7 +6198,7 @@ bool npc_remove_mob_spawns(const char* path) {
 	s_mapiterator* iter = mapit_geteachmob();
 
 	for( block_list* bl = mapit_first( iter ); mapit_exists( iter ); bl = mapit_next( iter ) ){
-		mob_data* md = reinterpret_cast<mob_data*>( bl );
+		mob_data* md = static_cast<mob_data*>( bl );
 
 		if( md->spawn != nullptr && !strcmp( md->spawn->filepath, path ) ){
 			if( !battle_config.dynamic_mobs )

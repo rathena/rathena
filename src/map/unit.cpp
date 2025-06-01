@@ -139,7 +139,7 @@ bool unit_update_chase(block_list& bl, t_tick tick, bool fullcheck) {
 	else if (tbl == nullptr || (fullcheck && !status_check_visibility(&bl, tbl, (bl.type == BL_MOB)))) {
 		// Looted items will have no tbl but target ID is still set, that's why we need to check for the ID here
 		if (ud->target_to != 0 && bl.type == BL_MOB) {
-			mob_data& md = reinterpret_cast<mob_data&>(bl);
+			mob_data& md = static_cast<mob_data&>(bl);
 			if (tbl != nullptr) {
 				int32 warp = mob_warpchase(&md, tbl);
 				// Do warp chase
@@ -186,13 +186,13 @@ bool unit_walktoxy_nextcell(block_list& bl, bool sendMove, t_tick tick) {
 		// We need to send the reply to the client even if already at the target cell
 		// This allows the client to synchronize the position correctly
 		if (sendMove && bl.type == BL_PC)
-			clif_walkok(reinterpret_cast<map_session_data&>(bl));
+			clif_walkok(static_cast<map_session_data&>(bl));
 		return false;
 	}
 
 	// Monsters first check for a chase skill and if they didn't use one if their target is in range each cell after checking for a chase skill
 	if (bl.type == BL_MOB) {
-		mob_data& md = reinterpret_cast<mob_data&>(bl);
+		mob_data& md = static_cast<mob_data&>(bl);
 		// Walk skills are triggered regardless of target due to the idle-walk mob state.
 		// But avoid triggering when already reached the end of the walkpath.
 		// Monsters use walk/chase skills every second, but we only get here every "speed" ms
@@ -239,7 +239,7 @@ bool unit_walktoxy_nextcell(block_list& bl, bool sendMove, t_tick tick) {
 	if (sendMove || DIFF_TICK(tick, ud->dmg_tick) < MOVE_REFRESH_TIME) {
 		clif_move(*ud);
 		if (bl.type == BL_PC)
-			clif_walkok(reinterpret_cast<map_session_data&>(bl));
+			clif_walkok(static_cast<map_session_data&>(bl));
 	}
 	return true;
 }
@@ -308,7 +308,7 @@ int32 unit_walktoxy_sub(struct block_list *bl)
 	// Set mobstate here already as chase skills can be used on the first frame of movement
 	// If we don't set it now the monster will always move a full cell before checking
 	else if (bl->type == BL_MOB && ud->state.attack_continue) {
-		mob_data& md = reinterpret_cast<mob_data&>(*bl);
+		mob_data& md = static_cast<mob_data&>(*bl);
 		mob_setstate(md, MSS_RUSH);
 	}
 
@@ -988,7 +988,7 @@ int32 unit_walktobl(struct block_list *bl, struct block_list *tbl, int32 range, 
 
 		// New target, make sure a monster is still in chase state
 		if (bl->type == BL_MOB && ud->state.attack_continue) {
-			mob_data& md = reinterpret_cast<mob_data&>(*bl);
+			mob_data& md = static_cast<mob_data&>(*bl);
 			mob_setstate(md, MSS_RUSH);
 		}
 
@@ -1487,14 +1487,14 @@ int32 unit_warp(struct block_list *bl,int16 m,int16 x,int16 y,clr_type type)
 	switch (bl->type) {
 		case BL_NPC:
 		{
-			TBL_NPC* nd = reinterpret_cast<npc_data*>(bl);
+			TBL_NPC* nd = static_cast<npc_data*>(bl);
 			map_addnpc(m, nd);
 			npc_setcells(nd);
 			break;
 		}
 		case BL_MOB:
 		{
-			TBL_MOB* md = reinterpret_cast<mob_data*>(bl);
+			TBL_MOB* md = static_cast<mob_data*>(bl);
 			// If slaves are set to stick with their master they should drop target if recalled at range
 			if (battle_config.slave_stick_with_master && md->target_id != 0) {
 				block_list* tbl = map_id2bl(md->target_id);
@@ -1879,7 +1879,7 @@ void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event)
 			switch (event) {
 				case DELAY_EVENT_CASTBEGIN_ID:
 				case DELAY_EVENT_CASTBEGIN_POS:
-					if (reinterpret_cast<map_session_data*>(&bl)->skillitem == ud->skill_id) {
+					if (static_cast<map_session_data*>(&bl)->skillitem == ud->skill_id) {
 						// Skills used from items don't seem to give any attack or act delay
 						return;
 					}
@@ -1891,7 +1891,7 @@ void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event)
 					attack_delay = status_get_adelay(&bl);
 					// A fixed delay is added here which is equal to the minimum attack motion you can get
 					// This ensures that at max ASPD attackabletime and canact_tick are equal
-					act_delay = status_get_amotion(&bl) + (pc_maxaspd(reinterpret_cast<map_session_data*>(&bl)) / AMOTION_DIVIDER_PC);
+					act_delay = status_get_amotion(&bl) + (pc_maxaspd(static_cast<map_session_data*>(&bl)) / AMOTION_DIVIDER_PC);
 					break;
 			}
 			break;
@@ -1909,7 +1909,7 @@ void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event)
 					break;
 			}
 			// Set monster-specific delays (inactive AI time, monster skill delays)
-			mob_set_delay(reinterpret_cast<mob_data&>(bl), tick, event);
+			mob_set_delay(static_cast<mob_data&>(bl), tick, event);
 			break;
 		case BL_HOM:
 			switch (event) {
@@ -2014,7 +2014,7 @@ int32 unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int32
 			return 0;
 	} else {
 		if (bl->type == BL_MOB) {
-			mob_data& md = *reinterpret_cast<mob_data*>(bl);
+			mob_data& md = *static_cast<mob_data*>(bl);
 
 			// Mob needs to escape, don't stop it
 			if (md.state.can_escape == 1)
@@ -3461,7 +3461,7 @@ int32 unit_skillcastcancel(struct block_list *bl, char type)
 	unit_set_attackdelay(*bl, tick, DELAY_EVENT_CASTCANCEL);
 
 	if (bl->type == BL_MOB) {
-		mob_data& md = reinterpret_cast<mob_data&>(*bl);
+		mob_data& md = static_cast<mob_data&>(*bl);
 		md.skill_idx = -1;
 	}
 
@@ -3561,7 +3561,7 @@ void unit_changetarget_sub(unit_data& ud, block_list& target) {
 		return;
 
 	if (ud.bl->type == BL_MOB)
-		reinterpret_cast<mob_data*>(ud.bl)->target_id = target.id;
+		static_cast<mob_data*>(ud.bl)->target_id = target.id;
 	if (ud.target_to > 0)
 		ud.target_to = target.id;
 	if (ud.skilltarget > 0)
