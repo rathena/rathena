@@ -525,6 +525,7 @@ bool mob_ai_sub_hard_attacktimer(mob_data &md, t_tick tick);
 TIMER_FUNC(mob_attacked);
 TIMER_FUNC(mob_norm_attacked);
 int32 mob_target(struct mob_data *md,struct block_list *bl,int32 dist);
+void mob_randomtarget(mob_data& md, int32& target_id);
 int32 mob_unlocktarget(struct mob_data *md, t_tick tick);
 struct mob_data* mob_spawn_dataset(struct spawn_data *data);
 int32 mob_spawn(struct mob_data *md);
