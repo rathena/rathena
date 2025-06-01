@@ -39,6 +39,10 @@ using namespace rathena;
 struct Battle_Config battle_config;
 static struct eri *delay_damage_ers; //For battle delay damage structures.
 
+#ifndef MAX_ENEMY_SEARCH_COUNT
+	#define MAX_ENEMY_SEARCH_COUNT 30
+#endif
+
 // Early declaration
 int32 battle_get_weapon_element(struct Damage *wd, struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv, int16 weapon_position, bool calc_for_damage_only);
 int32 battle_get_magic_element(struct block_list* src, struct block_list* target, uint16 skill_id, uint16 skill_lv, int32 mflag);
@@ -84,7 +88,7 @@ static int32 battle_gettargeted_sub(struct block_list *bl, va_list ap)
 	if (bl->id == target_id)
 		return 0;
 
-	if (*c >= 24)
+	if (*c >= MAX_ENEMY_SEARCH_COUNT)
 		return 0;
 
 	if ( !(ud = unit_bl2ud(bl)) )
@@ -105,16 +109,19 @@ static int32 battle_gettargeted_sub(struct block_list *bl, va_list ap)
  */
 struct block_list* battle_gettargeted(struct block_list *target)
 {
-	struct block_list *bl_list[24];
+	struct block_list *bl_list[MAX_ENEMY_SEARCH_COUNT];
 	int32 c = 0;
 	nullpo_retr(nullptr, target);
 
 	memset(bl_list, 0, sizeof(bl_list));
 	map_foreachinallrange(battle_gettargeted_sub, target, AREA_SIZE, BL_CHAR, bl_list, &c, target->id);
+
 	if ( c == 0 )
 		return nullptr;
-	if( c > 24 )
-		c = 24;
+
+	if (c > MAX_ENEMY_SEARCH_COUNT)
+		c = MAX_ENEMY_SEARCH_COUNT;
+
 	return bl_list[rnd()%c];
 }
 
@@ -158,10 +165,13 @@ static int32 battle_getenemy_sub(struct block_list *bl, va_list ap)
 	if (bl->id == target->id)
 		return 0;
 
-	if (*c >= 24)
+	if (*c >= MAX_ENEMY_SEARCH_COUNT)
 		return 0;
 
 	if (status_isdead(*bl))
+		return 0;
+
+	if (!status_check_visibility(target, bl, true))
 		return 0;
 
 	if (battle_check_target(target, bl, BCT_ENEMY) > 0) {
@@ -173,7 +183,7 @@ static int32 battle_getenemy_sub(struct block_list *bl, va_list ap)
 }
 
 /**
- * Returns list of enemies within given range
+ * Returns list of visible enemies within given range
  * @param target
  * @param type
  * @param range
@@ -182,7 +192,7 @@ static int32 battle_getenemy_sub(struct block_list *bl, va_list ap)
  */
 struct block_list* battle_getenemy(struct block_list *target, int32 type, int32 range)
 {
-	struct block_list *bl_list[24];
+	struct block_list *bl_list[MAX_ENEMY_SEARCH_COUNT];
 	int32 c = 0;
 
 	memset(bl_list, 0, sizeof(bl_list));
@@ -191,8 +201,8 @@ struct block_list* battle_getenemy(struct block_list *target, int32 type, int32 
 	if ( c == 0 )
 		return nullptr;
 
-	if( c > 24 )
-		c = 24;
+	if (c > MAX_ENEMY_SEARCH_COUNT)
+		c = MAX_ENEMY_SEARCH_COUNT;
 
 	return bl_list[rnd()%c];
 }
@@ -216,7 +226,7 @@ static int32 battle_getenemyarea_sub(struct block_list *bl, va_list ap)
 	if( bl->id == src->id || bl->id == ignore_id )
 		return 0; // Ignores Caster and a possible pre-target
 
-	if( *c >= 23 )
+	if (*c >= MAX_ENEMY_SEARCH_COUNT)
 		return 0;
 
 	if( status_isdead(*bl) )
@@ -242,7 +252,7 @@ static int32 battle_getenemyarea_sub(struct block_list *bl, va_list ap)
  */
 struct block_list* battle_getenemyarea(struct block_list *src, int32 x, int32 y, int32 range, int32 type, int32 ignore_id)
 {
-	struct block_list *bl_list[24];
+	struct block_list *bl_list[MAX_ENEMY_SEARCH_COUNT];
 	int32 c = 0;
 
 	memset(bl_list, 0, sizeof(bl_list));
@@ -250,8 +260,9 @@ struct block_list* battle_getenemyarea(struct block_list *src, int32 x, int32 y,
 
 	if( c == 0 )
 		return nullptr;
-	if( c >= 24 )
-		c = 23;
+
+	if (c > MAX_ENEMY_SEARCH_COUNT)
+		c = MAX_ENEMY_SEARCH_COUNT;
 
 	return bl_list[rnd()%c];
 }
