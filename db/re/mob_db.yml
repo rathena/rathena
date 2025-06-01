@@ -59,7 +59,7 @@
 #   ClientAttackMotion      Client attack speed. (Default: AttackMotion)
 #   DamageMotion            Damage animation speed. (Default: 0)
 #   DamageTaken             Rate at which the monster will receive incoming damage. (Default: 100)
-#   GroupID                 Monster group ID. (Default: 0)
+#   GroupId                 Monster group ID. (Default: 0)
 #   Title                   Monster title. (Default: None)
 #   Ai                      Aegis monster type AI behavior. (Default: 06)
 #   Class                   Aegis monster class. (Default: Normal)
@@ -100699,7 +100699,7 @@ Body:
     Race: Insect
     RaceGroups:
       Illusion_Luanda: true
-    GroupID: 5
+    GroupId: 5
     Element: Earth
     ElementLevel: 1
     WalkSpeed: 200
@@ -100752,7 +100752,7 @@ Body:
     Race: Formless
     RaceGroups:
       Illusion_Luanda: true
-    GroupID: 5
+    GroupId: 5
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 150
@@ -100803,7 +100803,7 @@ Body:
     Race: Formless
     RaceGroups:
       Illusion_Luanda: true
-    GroupID: 5
+    GroupId: 5
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 200
@@ -100853,7 +100853,7 @@ Body:
     Race: Demon
     RaceGroups:
       Illusion_Luanda: true
-    GroupID: 5
+    GroupId: 5
     Element: Neutral
     ElementLevel: 3
     WalkSpeed: 150
@@ -100914,7 +100914,7 @@ Body:
     Race: Plant
     RaceGroups:
       Illusion_Luanda: true
-    GroupID: 4
+    GroupId: 4
     Element: Fire
     ElementLevel: 3
     WalkSpeed: 175
@@ -100965,7 +100965,7 @@ Body:
     Race: Demihuman
     RaceGroups:
       Illusion_Luanda: true
-    GroupID: 4
+    GroupId: 4
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 200
@@ -101016,7 +101016,7 @@ Body:
     Race: Demihuman
     RaceGroups:
       Illusion_Luanda: true
-    GroupID: 4
+    GroupId: 4
     Element: Fire
     ElementLevel: 2
     WalkSpeed: 200
@@ -101068,7 +101068,7 @@ Body:
     Race: Demihuman
     RaceGroups:
       Illusion_Luanda: true
-    GroupID: 4
+    GroupId: 4
     Element: Fire
     ElementLevel: 4
     WalkSpeed: 150
@@ -101127,7 +101127,7 @@ Body:
     Race: Formless
     RaceGroups:
       Illusion_Luanda: true
-#   GroupID: 5    # !TODO
+#   GroupId: 5    # !TODO
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 200
@@ -101158,7 +101158,7 @@ Body:
     Race: Demihuman
     RaceGroups:
       Illusion_Luanda: true
-#   GroupID: 4    # !TODO
+#   GroupId: 4    # !TODO
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 200
@@ -101189,7 +101189,7 @@ Body:
     Race: Demihuman
     RaceGroups:
       Illusion_Luanda: true
-#   GroupID: 4    # !TODO
+#   GroupId: 4    # !TODO
     Element: Fire
     ElementLevel: 2
     WalkSpeed: 200
