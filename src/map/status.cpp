@@ -1171,6 +1171,10 @@ status_change::status_change(){
 	this->lastStatus = { SC_NONE, nullptr };
 }
 
+bool status_change::hasSCE( enum sc_type type ){
+	return this->getSCE( type ) != nullptr;
+}
+
 /**
  * Accessor for a status_change_entry in a status_change
  */

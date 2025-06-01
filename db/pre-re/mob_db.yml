@@ -13244,16 +13244,8 @@ Body:
     AttackDelay: 1200
     AttackMotion: 1200
     DamageMotion: 384
-    Ai: 10
+    Ai: 12
     Class: Guardian
-    Modes:
-      CanMove: true
-      CastSensorChase: true
-      Angry: true
-      ChangeChase: true
-      ChangeTargetMelee: true
-      Detector: true
-      KnockBackImmune: true
   - Id: 1286
     AegisName: KNIGHT_GUARDIAN
     Name: Knight Guardian
@@ -13282,16 +13274,8 @@ Body:
     AttackDelay: 1200
     AttackMotion: 1200
     DamageMotion: 384
-    Ai: 10
+    Ai: 12
     Class: Guardian
-    Modes:
-      CanMove: true
-      CastSensorChase: true
-      Angry: true
-      ChangeChase: true
-      ChangeTargetMelee: true
-      Detector: true
-      KnockBackImmune: true
   - Id: 1287
     AegisName: SOLDIER_GUARDIAN
     Name: Soldier Guardian
@@ -13320,11 +13304,8 @@ Body:
     AttackMotion: 288
     ClientAttackMotion: 624
     DamageMotion: 384
-    Ai: 05
+    Ai: 12
     Class: Guardian
-    Modes:
-      Detector: true
-      KnockBackImmune: true
   - Id: 1288
     AegisName: EMPELIUM
     Name: Emperium
@@ -24268,10 +24249,8 @@ Body:
     AttackMotion: 456
     ClientAttackMotion: 264
     DamageMotion: 336
-    Ai: 01
-    Class: Guardian
-    Modes:
-      KnockBackImmune: true
+    Ai: 04
+    Class: Boss
     Drops:
       - Item: Orange_Potion
         Rate: 2000
@@ -24341,11 +24320,8 @@ Body:
     AttackMotion: 120
     ClientAttackMotion: 288
     DamageMotion: 384
-    Ai: 17
-    Class: Guardian
-    Modes:
-      Aggressive: true
-      KnockBackImmune: true
+    Ai: 04
+    Class: Boss
     Drops:
       - Item: Orange_Potion
         Rate: 2000
@@ -24805,9 +24781,7 @@ Body:
     ClientAttackMotion: 480
     DamageMotion: 504
     Ai: 02
-    Class: Guardian
-    Modes:
-      KnockBackImmune: true
+    Class: Boss
     Drops:
       - Item: Lucky_Candy
         Rate: 500
@@ -31322,12 +31296,10 @@ Body:
     AttackMotion: 288
     ClientAttackMotion: 312
     DamageMotion: 384
-    Ai: 17
-    Class: Guardian
+    Ai: 21
+    Class: Boss
     Modes:
-      Aggressive: true
-      ChangeChase: true
-      KnockBackImmune: true
+      Mvp: true
     MvpDrops:
       - Item: Jellopy
         Rate: 5000
@@ -31361,12 +31333,10 @@ Body:
     AttackMotion: 288
     ClientAttackMotion: 864
     DamageMotion: 384
-    Ai: 17
-    Class: Guardian
+    Ai: 21
+    Class: Boss
     Modes:
-      Aggressive: true
-      ChangeChase: true
-      KnockBackImmune: true
+      Mvp: true
     MvpDrops:
       - Item: Jellopy
         Rate: 5000
@@ -32650,11 +32620,7 @@ Body:
     Race: Formless
     Element: Neutral
     ElementLevel: 1
-    Modes:
-      IgnoreMagic: true
-      IgnoreMelee: true
-      IgnoreMisc: true
-      IgnoreRanged: true
+    Class: Boss
     Drops:
       - Item: Gem_Of_Ruin
         Rate: 10000
@@ -33124,6 +33090,7 @@ Body:
     AttackMotion: 960
     ClientAttackMotion: 288
     DamageMotion: 480
+    Class: Boss
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
@@ -33230,6 +33197,7 @@ Body:
     AttackDelay: 1320
     ClientAttackMotion: 504
     DamageMotion: 300
+    Class: Boss
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
@@ -33271,6 +33239,7 @@ Body:
     AttackDelay: 96
     AttackMotion: 96
     DamageMotion: 96
+    Class: Boss
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
@@ -33651,7 +33620,13 @@ Body:
     AttackMotion: 960
     ClientAttackMotion: 192
     DamageMotion: 384
-    Ai: 21
+    Ai: 17
+    Class: Boss
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Bag_Of_Rice
         Rate: 6000
@@ -34178,14 +34153,13 @@ Body:
     AttackMotion: 480
     ClientAttackMotion: 192
     DamageMotion: 384
-    Ai: 17
-    Class: Guardian
+    Ai: 01
+    Class: Boss
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-      KnockBackImmune: true
     Drops:
       - Item: Leaf_Of_Yggdrasil
         Rate: 3000
@@ -34233,6 +34207,12 @@ Body:
     ClientAttackMotion: 288
     DamageMotion: 576
     Ai: 01
+    Class: Boss
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Gold_Coin_US
         Rate: 2000
@@ -34269,6 +34249,12 @@ Body:
     ClientAttackMotion: 288
     DamageMotion: 576
     Ai: 17
+    Class: Boss
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Gold_Coin_US
         Rate: 3500
@@ -34306,6 +34292,12 @@ Body:
     ClientAttackMotion: 288
     DamageMotion: 576
     Ai: 09
+    Class: Boss
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Gold_Coin_US
         Rate: 7000
@@ -34343,8 +34335,12 @@ Body:
     ClientAttackMotion: 480
     DamageMotion: 336
     Ai: 09
+    Class: Boss
     Modes:
-      Detector: true
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Gold_Coin_US
         Rate: 8000
@@ -34560,6 +34556,7 @@ Body:
     AttackMotion: 560
     ClientAttackMotion: 576
     DamageMotion: 580
+    Class: Boss
     Ai: 21
   - Id: 1852
     AegisName: G_EM_ANGELING
@@ -36400,10 +36397,8 @@ Body:
     AttackDelay: 140
     AttackMotion: 384
     DamageMotion: 288
-    Ai: 05
-    Class: Guardian
-    Modes:
-      KnockBackImmune: true
+    Ai: 12
+    Class: Boss
 #  - Id: 1900
 #    AegisName: BOW_GUARDIAN_
 #    Name: Archer Guardian
@@ -36534,6 +36529,12 @@ Body:
     ClientAttackMotion: 288
     DamageMotion: 480
     Ai: 13
+    Class: Boss
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
   - Id: 1905
     AegisName: BARRICADE
     Name: Barricade
@@ -36581,14 +36582,12 @@ Body:
     AttackMotion: 288
     ClientAttackMotion: 0
     DamageMotion: 384
-    Class: Guardian
+    Class: Boss
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-      Detector: true
-      KnockBackImmune: true
   - Id: 1907
     AegisName: S_EMPEL_1
     Name: Guardian Stone
@@ -36649,14 +36648,12 @@ Body:
     AttackMotion: 288
     ClientAttackMotion: 288
     DamageMotion: 384
-    Class: Guardian
+    Class: Battlefield
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-      Detector: true
-      KnockBackImmune: true
   - Id: 1910
     AegisName: OBJ_B
     Name: Food Depot
@@ -36675,14 +36672,12 @@ Body:
     AttackMotion: 288
     ClientAttackMotion: 288
     DamageMotion: 384
-    Class: Guardian
+    Class: Battlefield
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-      Detector: true
-      KnockBackImmune: true
   - Id: 1911
     AegisName: OBJ_NEUTRAL
     Name: Neutrality Flag
@@ -36701,14 +36696,12 @@ Body:
     AttackMotion: 288
     ClientAttackMotion: 0
     DamageMotion: 384
-    Class: Guardian
+    Class: Battlefield
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-      Detector: true
-      KnockBackImmune: true
   - Id: 1912
     AegisName: OBJ_FLAG_A
     Name: Lion Flag
@@ -36727,14 +36720,12 @@ Body:
     AttackMotion: 288
     ClientAttackMotion: 0
     DamageMotion: 384
-    Class: Guardian
+    Class: Battlefield
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-      Detector: true
-      KnockBackImmune: true
   - Id: 1913
     AegisName: OBJ_FLAG_B
     Name: Eagle Flag
@@ -36753,14 +36744,12 @@ Body:
     AttackMotion: 288
     ClientAttackMotion: 0
     DamageMotion: 384
-    Class: Guardian
+    Class: Battlefield
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-      Detector: true
-      KnockBackImmune: true
   - Id: 1914
     AegisName: OBJ_A2
     Name: Blue Crystal
@@ -36779,14 +36768,12 @@ Body:
     AttackMotion: 288
     ClientAttackMotion: 0
     DamageMotion: 384
-    Class: Guardian
+    Class: Battlefield
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-      Detector: true
-      KnockBackImmune: true
   - Id: 1915
     AegisName: OBJ_B2
     Name: Pink Crystal
@@ -36805,14 +36792,12 @@ Body:
     AttackMotion: 288
     ClientAttackMotion: 0
     DamageMotion: 384
-    Class: Guardian
+    Class: Battlefield
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-      Detector: true
-      KnockBackImmune: true
   - Id: 1916
     AegisName: MOROCC
     Name: Satan Morocc
@@ -37426,13 +37411,12 @@ Body:
     ClientAttackMotion: 288
     DamageMotion: 576
     Ai: 01
-    Class: Guardian
+    Class: Boss
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-      KnockBackImmune: true
     Drops:
       - Item: Crystal_Key
         Rate: 9000
@@ -37485,13 +37469,12 @@ Body:
     AttackMotion: 768
     ClientAttackMotion: 0
     DamageMotion: 576
-    Class: Guardian
+    Class: Boss
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-      KnockBackImmune: true
   - Id: 1935
     AegisName: RED_FLOWER
     Name: Red Flower
@@ -37512,13 +37495,12 @@ Body:
     AttackMotion: 768
     ClientAttackMotion: 0
     DamageMotion: 576
-    Class: Guardian
+    Class: Boss
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-      KnockBackImmune: true
   - Id: 1936
     AegisName: YELL_FLOWER
     Name: Yellow Flower
@@ -37539,13 +37521,12 @@ Body:
     AttackMotion: 768
     ClientAttackMotion: 0
     DamageMotion: 576
-    Class: Guardian
+    Class: Boss
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-      KnockBackImmune: true
   - Id: 1937
     AegisName: CONSTANT_
     Name: Constant
@@ -37973,6 +37954,7 @@ Body:
     AttackMotion: 384
     DamageMotion: 288
     Ai: 05
+    Class: Boss
   - Id: 1950
     AegisName: B_B_GUARDIAN
     Name: Camp Guardian
@@ -38000,6 +37982,7 @@ Body:
     AttackMotion: 384
     DamageMotion: 288
     Ai: 05
+    Class: Boss
   - Id: 1951
     AegisName: CRYSTAL_6
     Name: Crystal
@@ -38162,7 +38145,7 @@ Body:
     Race: Formless
     Element: Neutral
     ElementLevel: 1
-    Ai: 02
+    Class: Boss
     Drops:
       - Item: Tresure_Box_WoE
         Rate: 3000
@@ -38482,7 +38465,6 @@ Body:
     AttackMotion: 864
     ClientAttackMotion: 840
     DamageMotion: 288
-    Class: Boss
   - Id: 1966
     AegisName: M_DOPPELGANGER
     Name: Doppelganger
@@ -38570,7 +38552,6 @@ Body:
     AttackMotion: 672
     ClientAttackMotion: 108
     DamageMotion: 384
-    Class: Boss
     Drops:
       - Item: Fin
         Rate: 5335
@@ -38617,7 +38598,6 @@ Body:
     AttackMotion: 72
     ClientAttackMotion: 216
     DamageMotion: 480
-    Class: Boss
     Drops:
       - Item: Mistic_Frozen
         Rate: 36
@@ -38663,7 +38643,6 @@ Body:
     AttackMotion: 672
     ClientAttackMotion: 384
     DamageMotion: 288
-    Class: Boss
     Drops:
       - Item: Mistic_Frozen
         Rate: 26
@@ -38709,7 +38688,6 @@ Body:
     AttackMotion: 432
     ClientAttackMotion: 420
     DamageMotion: 540
-    Class: Boss
     Drops:
       - Item: Crystal_Blue
         Rate: 40
@@ -38755,7 +38733,6 @@ Body:
     AttackMotion: 1080
     ClientAttackMotion: 288
     DamageMotion: 864
-    Class: Boss
     Drops:
       - Item: Single_Cell
         Rate: 5000
@@ -38797,7 +38774,6 @@ Body:
     AttackMotion: 672
     ClientAttackMotion: 288
     DamageMotion: 480
-    Class: Boss
     Drops:
       - Item: Jellopy
         Rate: 7000
