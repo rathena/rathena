@@ -3643,13 +3643,13 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type);
 void status_change_clear_onChangeMap(struct block_list *bl, status_change *sc);
 TIMER_FUNC(status_clear_lastEffect_timer);
 
-#define status_calc_mob(md, opt) status_calc_bl_(md, status_db.getSCB_ALL(), opt)
-#define status_calc_pet(pd, opt) status_calc_bl_(pd, status_db.getSCB_ALL(), opt)
-#define status_calc_pc(sd, opt) status_calc_bl_(sd, status_db.getSCB_ALL(), opt)
-#define status_calc_homunculus(hd, opt) status_calc_bl_(hd, status_db.getSCB_ALL(), opt)
-#define status_calc_mercenary(md, opt) status_calc_bl_(md, status_db.getSCB_ALL(), opt)
-#define status_calc_elemental(ed, opt) status_calc_bl_(ed, status_db.getSCB_ALL(), opt)
-#define status_calc_npc(nd, opt) status_calc_bl_(nd, status_db.getSCB_ALL(), opt)
+#define status_calc_mob(md, opt) status_calc_bl_((md), status_db.getSCB_ALL(), opt)
+#define status_calc_pet(pd, opt) status_calc_bl_((pd), status_db.getSCB_ALL(), opt)
+#define status_calc_pc(sd, opt) status_calc_bl_((sd), status_db.getSCB_ALL(), opt)
+#define status_calc_homunculus(hd, opt) status_calc_bl_((hd), status_db.getSCB_ALL(), opt)
+#define status_calc_mercenary(md, opt) status_calc_bl_((md), status_db.getSCB_ALL(), opt)
+#define status_calc_elemental(ed, opt) status_calc_bl_((ed), status_db.getSCB_ALL(), opt)
+#define status_calc_npc(nd, opt) status_calc_bl_((nd), status_db.getSCB_ALL(), opt)
 
 bool status_calc_weight(map_session_data *sd, enum e_status_calc_weight_opt flag);
 bool status_calc_cart_weight(map_session_data *sd, enum e_status_calc_weight_opt flag);
