@@ -52,7 +52,7 @@ jobs:
       - name: Update & Install compilers
         run: |
           sudo apt update
-          sudo apt install zlib1g-dev libpcre3-dev
+          sudo apt install zlib1g-dev libpcre3-dev ${{matrix.compiler.cc}} ${{matrix.compiler.cxx}}
 
       - name: Configure CMake
         run: CXX=${{matrix.compiler.cxx}} CC=${{matrix.compiler.cc}} cmake -B build
