@@ -10132,7 +10132,7 @@ TIMER_FUNC(status_change_start_timer) {
  * @param duration: Initial duration that the status change affects bl
  * @param flag: Value which determines what parts to calculate. See e_status_change_start_flags
  * @param delay: Delay in milliseconds before the SC is applied
- * @return Whether the status change was resisted (0) or will be applied (1)
+ * @return Whether the status change was resisted (false) or will be applied (true)
  */
 bool status_change_start(block_list* src, block_list* bl, sc_type type, int32 rate, int32 val1, int32 val2, int32 val3, int32 val4, t_tick duration, uint8 flag, int32 delay) {
 	std::shared_ptr<s_status_change_db> scdb = status_db.find(type);
@@ -10284,7 +10284,7 @@ bool status_change_start(block_list* src, block_list* bl, sc_type type, int32 ra
  * @param val1~4: Depends on type of status change
  * @param tick: Final duration of the status change
  * @param flag: Value which determines what parts to calculate. See e_status_change_start_flags
- * @return Whether the status change was resisted (0) or applied (1)
+ * @return Whether the status change was resisted (false) or applied (true)
  */
 static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_type type, int32 val1, int32 val2, int32 val3, int32 val4, int32 tick, uint8 flag)
 {
