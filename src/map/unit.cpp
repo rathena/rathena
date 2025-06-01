@@ -2887,7 +2887,7 @@ int32 unit_attack(struct block_list *src,int32 target_id,int32 continuous)
 
 	// Check for special monster random target mode
 	if (src->type == BL_MOB) {
-		mob_data& md = *reinterpret_cast<mob_data*>(src);
+		mob_data& md = *static_cast<mob_data*>(src);
 		mob_randomtarget(md, target_id);
 	}
 
