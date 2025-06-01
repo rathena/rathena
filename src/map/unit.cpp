@@ -2885,6 +2885,12 @@ int32 unit_attack(struct block_list *src,int32 target_id,int32 continuous)
 
 	nullpo_ret(ud = unit_bl2ud(src));
 
+	// Check for special monster random target mode
+	if (src->type == BL_MOB) {
+		mob_data& md = *static_cast<mob_data*>(src);
+		mob_randomtarget(md, target_id);
+	}
+
 	target = map_id2bl(target_id);
 	if( target == nullptr || status_isdead(*target) ) {
 		unit_unattackable(src);
