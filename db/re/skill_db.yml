@@ -18538,7 +18538,7 @@ Body:
     CastTime: 800
     AfterCastActDelay: 2000
     Duration1: 10000
-    Duration2: 17000
+    Duration2: 18000
     FixedCastTime: 200
     Requires:
       SpCost: 40
