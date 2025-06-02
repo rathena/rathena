@@ -4667,8 +4667,7 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 				else
 					skillratio += 30 * sce->val1;
 				// This attack has a chance to cause poison
-				// TODO: Effect should be delayed by attack motion
-				sc_start2(src, target, SC_POISON, sce->val3, sce->val1, src->id, skill_get_time2(AS_POISONREACT, sce->val1));
+				sc_start2(src, target, SC_POISON, sce->val3, sce->val1, src->id, skill_get_time2(AS_POISONREACT, sce->val1), sstatus->amotion);
 				status_change_end(src, SC_POISONREACT);
 			}
 			if (sc->getSCE(SC_CRUSHSTRIKE)) {
