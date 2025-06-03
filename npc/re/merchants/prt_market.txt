@@ -121,13 +121,7 @@ function	script	F_Box_Store	{
 	switch( select( "Insert 50z", "Cancel" )) {
 		case 1:
 			Zeny = Zeny - 50;
-			if(getstatus(SC_PREMIUM_STORAGEBOOST)) {
-				if (.@vip_store_id < 1)
-					openstorage;
-				else
-					openstorage2 .@vip_store_id,STOR_MODE_GET|STOR_MODE_PUT;
-			} else
-				openstorage2 .@store_id,STOR_MODE_GET|STOR_MODE_PUT;
+			callfunc "F_CallStorage", .@store_id, .@vip_store_id;
 			close;
 		case 2:
 			mes "Thank you for using our service.";
