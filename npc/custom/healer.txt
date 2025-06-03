@@ -34,8 +34,16 @@
 	if (.@Buffs) {
 		specialeffect2 EF_INCAGILITY;
 		sc_start SC_INCREASEAGI,3600000,10;
-		specialeffect2 EF_BLESSING;
-		sc_start SC_BLESSING,3600000,10;
+
+		if (BaseLevel >= 10) {
+			specialeffect2 EF_BLESSING;
+			sc_start SC_BLESSING,3600000,10;
+		}else if (BaseLevel >= 60) {
+			specialeffect2 "HP_ASSUMPTIO",0;
+			sc_start SC_ASSUMPTIO,3600000,5;
+		} else if (BaseLevel >= 120) {
+			sc_start CR_FULLPROTECTION,3600000,5;
+		}
 	}
 	if (.@Delay)
 		@HD = gettimetick(2) + .@Delay;

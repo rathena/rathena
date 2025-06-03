@@ -25129,6 +25129,8 @@ Body:
         Rate: 50
       - Item: Ghost_Scroll_1_3
         Rate: 50
+      - Item: Deviling_Card
+        Rate: 1
   - Id: 1583
     AegisName: TAO_GUNKA
     Name: Tao Gunka
@@ -37172,6 +37174,10 @@ Body:
       - Item: Old_White_Cloth
         Rate: 1500
       - Item: Orleans_Gown
+        Rate: 5
+      - Item: Orleans_Glove
+        Rate: 5
+      - Item: Orleans_Necklace
         Rate: 5
       - Item: Scalpel
         Rate: 5

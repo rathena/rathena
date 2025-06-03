@@ -66,7 +66,7 @@ valkyrie,48,86,4	script	Valkyrie#	811,{
 		mes "begin an entirely new life.";
 		mes "Honor to the warriors!";
 		next;
-		if (Weight > 0 || Zeny > 0 || checkcart() != 0 || checkfalcon() != 0 || checkriding() != 0) {
+		if (Weight > 0 || checkcart() != 0 || checkfalcon() != 0 || checkriding() != 0) {
 			mes "[Valkyrie]";
 			mes "There are a few things you must";
 			mes "do before we start. You must";
@@ -75,7 +75,7 @@ valkyrie,48,86,4	script	Valkyrie#	811,{
 			mes "all your selfish desires...";
 			next;
 			mes "[Valkyrie]";
-			mes "You cannot take anything with you to the next life. Your items, zeny, pets and Pushcart all have to be left behind.";
+			mes "You cannot take anything with you to the next life. Your items, pets and Pushcart all have to be left behind.";
 			next;
 			mes "[Valkyrie]";
 			mes "When you are ready";
@@ -229,11 +229,11 @@ yuno_in02,88,164,5	script	Metheus Sylphe#Library	742,{
 			mes "[Metheus Sylphe]";
 			mes "The suggested";
 			mes "donation amount is";
-			mes "1,285,000 zeny.";
+			mes "100 zeny.";
 			next;
 			if (select("Donate.:Cancel.") == 1) {
-				if (Zeny >= 1285000) {
-					set Zeny, Zeny-1285000;
+				if (Zeny >= 100) {
+					set Zeny, Zeny-100;
 					set valkyrie_Q,1;
 					mes "[Metheus Sylphe]";
 					mes "Thank you, your donation will be used for a good cause. You may";

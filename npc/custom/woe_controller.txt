@@ -29,12 +29,6 @@
 prontera,149,193,4	script	WOE Information	835,{
 	doevent "WOE_CONTROL::OnMenu";
 	end;
-OnAgitStart:
-	while(agitcheck() || agitcheck2() || agitcheck3()) {
-		sleep 425;
-		specialeffect EF_BEGINSPELL6;
-	}
-	end;
 }
 
 // Script Core

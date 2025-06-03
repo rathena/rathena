@@ -101,41 +101,41 @@ Body:
     Name: Red Potion
     Type: Healing
     Buy: 10
-    Weight: 70
+    Weight: 7
     Script: |
-      itemheal rand(45,65),0;
+      percentheal 5,0;
   - Id: 502
     AegisName: Orange_Potion
     Name: Orange Potion
     Type: Healing
     Buy: 50
-    Weight: 100
+    Weight: 10
     Script: |
-      itemheal rand(105,145),0;
+      percentheal 15,0;
   - Id: 503
     AegisName: Yellow_Potion
     Name: Yellow Potion
     Type: Healing
     Buy: 180
-    Weight: 130
+    Weight: 30
     Script: |
-      itemheal rand(175,235),0;
+      percentheal 25,0;
   - Id: 504
     AegisName: White_Potion
     Name: White Potion
     Type: Healing
-    Buy: 1200
-    Weight: 150
+    Buy: 300
+    Weight: 50
     Script: |
-      itemheal rand(325,405),0;
+      percentheal 35,0;
   - Id: 505
     AegisName: Blue_Potion
     Name: Blue Potion
     Type: Healing
-    Buy: 5000
-    Weight: 150
+    Buy: 150
+    Weight: 50
     Script: |
-      itemheal 0,rand(40,60);
+      percentheal 0,rand(40,60);
   - Id: 506
     AegisName: Green_Potion
     Name: Green Potion
@@ -56556,8 +56556,6 @@ Body:
     Type: Usable
     Flags:
       NoConsume: true
-    Delay:
-      Duration: 1200000
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56568,7 +56566,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      warp "moc_para01",171,115;
+      warp "moc_para01",38,30;
   - Id: 22510
     AegisName: WolfKing_Scroll
     Name: King Wolf Scroll
