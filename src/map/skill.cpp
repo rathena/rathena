@@ -13725,14 +13725,7 @@ static int8 skill_castend_id_check(struct block_list *src, struct block_list *ta
 			}
 			break;
 		case DC_WINKCHARM:
-			{
-				status_data* tstatus = status_get_status_data(*target);
-				if (tstatus->race == RC_DEMON || tstatus->race == RC_DEMIHUMAN || tstatus->race == RC_ANGEL)
-					break;
-				if (tstatus->race == RC_PLAYER_HUMAN || tstatus->race == RC_PLAYER_DORAM)
-					break;
-				return USESKILL_FAIL_LEVEL;
-				switch (status_get_status_data(*target)->race) {
+			switch (status_get_status_data(*target)->race) {
 				case RC_DEMON:
 				case RC_DEMIHUMAN:
 				case RC_ANGEL:
@@ -13741,7 +13734,7 @@ static int8 skill_castend_id_check(struct block_list *src, struct block_list *ta
 					break;
 				default:
 					return USESKILL_FAIL_LEVEL;
-				}
+			}
 			break;
 		case PR_LEXDIVINA:
 		case MER_LEXDIVINA:
