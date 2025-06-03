@@ -13732,7 +13732,16 @@ static int8 skill_castend_id_check(struct block_list *src, struct block_list *ta
 				if (tstatus->race == RC_PLAYER_HUMAN || tstatus->race == RC_PLAYER_DORAM)
 					break;
 				return USESKILL_FAIL_LEVEL;
-			}
+				switch (status_get_status_data(*target)->race) {
+				case RC_DEMON:
+				case RC_DEMIHUMAN:
+				case RC_ANGEL:
+				case RC_PLAYER_HUMAN:
+				case RC_PLAYER_DORAM:
+					break;
+				default:
+					return USESKILL_FAIL_LEVEL;
+				}
 			break;
 		case PR_LEXDIVINA:
 		case MER_LEXDIVINA:
