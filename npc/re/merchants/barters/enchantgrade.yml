@@ -100,7 +100,7 @@ Body:
             Amount: 1
       - Index: 5
         Item: Etel_Amber
-        Zeny: 300000
+        Zeny: 500000
         RequiredItems:
           - Index: 0
             Item: Etel_Stone

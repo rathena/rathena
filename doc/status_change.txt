@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20171207
+//= 20241024
 //===== Description: =========================================
 //= List of all Status Changes and theirs val1, val2, val3, and
 //= val4 usage in source. Providing easier guide to use
@@ -107,8 +107,11 @@ SC_ENCPOISON	(EFST_ENCHANTPOISON)
 	val1:
 
 SC_POISONREACT	(EFST_POISONREACT)
-	desc: Increase ATK by (100+30*Skill Lv))%; Counter physical attack with Envenoms skill
-	val1:
+	desc: Blocks poison attacks; Increases damage by (30*Skill Lv)% after block; Counters non-poison attacks with Envenom 5 autocast
+	val1: Skill level
+	val2: Number of Envenom autocasts
+	val3: Chance to autocast Envenom on hit / Poison chance after block
+	val4: 0=Poison Block Mode; 1=Damage Boost Mode
 
 SC_QUAGMIRE	(EFST_QUAGMIRE)
 	desc: Removes Increase AGI, Twhohand Quicken, Wind Walk, Adrenaline Rush, Attention Concentrate, Cart Boost, True Sight, Magnetic Field & Onehand Quicken skill effect; Movement Speed -50; Decrease AGI & DEX by (10*Skill Lv) but can't below 75% for players and 50% for mobs
@@ -2875,3 +2878,43 @@ SC_STR_SCROLL	(EFST_STR_SCROLL)
 SC_INT_SCROLL	(EFST_INT_SCROLL)
 	desc: Increases INT.
 	val1: + INT
+
+SC_CONTENTS_1	(EFST_CONTENTS_1)
+	desc: Increase physical and magical damage to all element enemies
+	val1: +% damage
+	
+SC_CONTENTS_2	(EFST_CONTENTS_2)
+	desc: Increase melee physical damage, range physical damage, and all elemental magic damage.
+	val1: +% damage
+	
+SC_CONTENTS_3	(EFST_CONTENTS_3)
+	desc: Increase ATK and MATK
+	val1: +% damage
+	
+SC_CONTENTS_4	(EFST_CONTENTS_4)
+	desc: Increase ATK and MATK
+	val1: +% damage
+	
+SC_CONTENTS_5	(EFST_CONTENTS_5)
+	desc: Increase ASPD and reduce variable casttime
+	val1: +% increase ASPD, -% reduce variable casttime
+	
+SC_CONTENTS_6	(EFST_CONTENTS_6)
+	desc: Increase physical and magical damage to Dragon and Plant race.
+	val1: +% damage
+	
+SC_CONTENTS_7	(EFST_CONTENTS_7)
+	desc: Increase physical and magical damage to Demon and Undead race.
+	val1: +% damage
+	
+SC_CONTENTS_8	(EFST_CONTENTS_8)
+	desc: Increase physical and magical damage to Formless and Fish race.
+	val1: +% damage
+	
+SC_CONTENTS_9	(EFST_CONTENTS_9)
+	desc: Increase physical and magical damage to Angel and Brute race.
+	val1: +% damage
+	
+SC_CONTENTS_10	(EFST_CONTENTS10)
+	desc: Increase physical and magical damage to Insect and Demihuman race.
+	val1: +% damage

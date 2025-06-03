@@ -21,10 +21,10 @@
 #endif
 
 // Global variable
-static unsigned int *pX;
+static uint32 *pX;
 
 // String Table
-static const unsigned int T[] = {
+static const uint32 T[] = {
    0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee, //0
    0xf57c0faf, 0x4787c62a, 0xa8304613, 0xfd469501, //4
    0x698098d8, 0x8b44f7af, 0xffff5bb1, 0x895cd7be, //8
@@ -47,70 +47,65 @@ static const unsigned int T[] = {
 #define ROTATE_LEFT(x, n) (((x) << (n)) | ((x) >> (32-(n))))
 
 // The function used for other calculation
-static unsigned int F(unsigned int X, unsigned int Y, unsigned int Z)
+static uint32 F(uint32 X, uint32 Y, uint32 Z)
 {
    return (X & Y) | (~X & Z);
 }
-static unsigned int G(unsigned int X, unsigned int Y, unsigned int Z)
+static uint32 G(uint32 X, uint32 Y, uint32 Z)
 {
    return (X & Z) | (Y & ~Z);
 }
-static unsigned int H(unsigned int X, unsigned int Y, unsigned int Z)
+static uint32 H(uint32 X, uint32 Y, uint32 Z)
 {
    return X ^ Y ^ Z;
 }
-static unsigned int I(unsigned int X, unsigned int Y, unsigned int Z)
+static uint32 I(uint32 X, uint32 Y, uint32 Z)
 {
    return Y ^ (X | ~Z);
 }
 
-static unsigned int Round(unsigned int a, unsigned int b, unsigned int FGHI,
-                     unsigned int k, unsigned int s, unsigned int i)
+static uint32 Round(uint32 a, uint32 b, uint32 FGHI, uint32 k, uint32 s, uint32 i)
 {
    return b + ROTATE_LEFT(a + FGHI + pX[k] + T[i], s);
 }
 
-static void Round1(unsigned int *a, unsigned int b, unsigned int c,
-		unsigned int d,unsigned int k, unsigned int s, unsigned int i)
+static void Round1(uint32 *a, uint32 b, uint32 c, uint32 d,uint32 k, uint32 s, uint32 i)
 {
 	*a = Round(*a, b, F(b,c,d), k, s, i);
 }
-static void Round2(unsigned int *a, unsigned int b, unsigned int c,
-		unsigned int d,unsigned int k, unsigned int s, unsigned int i)
+static void Round2(uint32 *a, uint32 b, uint32 c, uint32 d,uint32 k, uint32 s, uint32 i)
 {
 	*a = Round(*a, b, G(b,c,d), k, s, i);
 }
-static void Round3(unsigned int *a, unsigned int b, unsigned int c,
-		unsigned int d,unsigned int k, unsigned int s, unsigned int i)
+static void Round3(uint32 *a, uint32 b, uint32 c, uint32 d,uint32 k, uint32 s, uint32 i)
 {
 	*a = Round(*a, b, H(b,c,d), k, s, i);
 }
-static void Round4(unsigned int *a, unsigned int b, unsigned int c,
-		unsigned int d,unsigned int k, unsigned int s, unsigned int i)
+static void Round4(uint32 *a, uint32 b, uint32 c, uint32 d,uint32 k, uint32 s, uint32 i)
 {
 	*a = Round(*a, b, I(b,c,d), k, s, i);
 }
 
 static void MD5_Round_Calculate(const unsigned char *block,
-	unsigned int *A2, unsigned int *B2, unsigned int *C2, unsigned int *D2)
+	uint32 *A2, uint32 *B2, uint32 *C2, uint32 *D2)
 {
 	//create X It is since it is required.
-	unsigned int X[16]; //512bit 64byte
-	int j,k;
+	uint32 X[16]; //512bit 64byte
+	int32 j,k;
 
 	//Save A as AA, B as BB, C as CC, and and D as DD (saving of A, B, C, and D)
-	unsigned int A=*A2, B=*B2, C=*C2, D=*D2;
-	unsigned int AA = A,BB = B,CC = C,DD = D;
+	uint32 A=*A2, B=*B2, C=*C2, D=*D2;
+	uint32 AA = A,BB = B,CC = C,DD = D;
 
 	//It is a large region variable reluctantly because of calculation of a round. . . for Round1...4
 	pX = X;
 
 	//Copy block(padding_message) i into X
 	for (j=0,k=0; j<64; j+=4,k++)
-		X[k] = ( (unsigned int )block[j] )         // 8byte*4 -> 32byte conversion
-			| ( ((unsigned int )block[j+1]) << 8 ) // A function called Decode as used in the field of RFC
-			| ( ((unsigned int )block[j+2]) << 16 )
-			| ( ((unsigned int )block[j+3]) << 24 );
+		X[k] = ( (uint32)block[j] )         // 8byte*4 -> 32byte conversion
+			| ( ((uint32)block[j+1]) << 8 ) // A function called Decode as used in the field of RFC
+			| ( ((uint32)block[j+2]) << 16 )
+			| ( ((uint32)block[j+3]) << 24 );
 
 
    //Round 1
@@ -155,15 +150,15 @@ static void MD5_String2binary(const char * string, unsigned char * output)
    unsigned char *pstring;            //The position of string in the present scanning notes is held.
 
    /*32bit*/
-   unsigned int string_byte_len,     //The byte chief of string is held.
+   uint32 string_byte_len,     //The byte chief of string is held.
                 string_bit_len,      //The bit length of string is held.
                 copy_len,            //The number of bytes which is used by 1-3 and which remained
                 msg_digest[4];       //Message digest   128bit 4byte
-   unsigned int *A = &msg_digest[0], //The message digest in accordance with RFC (reference)
+   uint32 *A = &msg_digest[0], //The message digest in accordance with RFC (reference)
                 *B = &msg_digest[1],
                 *C = &msg_digest[2],
                 *D = &msg_digest[3];
-	int i;
+	int32 i;
 
 //prog
    //Step 3.Initialize MD Buffer (although it is the initialization; step 3 of A, B, C, and D -- unavoidable -- a head)
@@ -174,7 +169,7 @@ static void MD5_String2binary(const char * string, unsigned char * output)
 
    //Step 1.Append Padding Bits (extension of a mark bit)
    //1-1
-   string_byte_len = (unsigned int)strlen(string);    //The byte chief of a character sequence is acquired.
+   string_byte_len = (uint32)strlen(string);    //The byte chief of a character sequence is acquired.
    pstring = (unsigned char *)string; //The position of the present character sequence is set.
 
    //1-2  Repeat calculation until length becomes less than 64 bytes.
@@ -200,7 +195,7 @@ static void MD5_String2binary(const char * string, unsigned char * output)
 
    //When bit length cannot be expressed in 32 bytes of low rank, it is a beam raising to a higher rank.
   if (UINT_MAX / 8 < string_byte_len) {
-      unsigned int high = (string_byte_len - UINT_MAX / 8) * 8;
+      uint32 high = (string_byte_len - UINT_MAX / 8) * 8;
       memcpy(&padding_message[60], &high, 4);
   } else
       memset(&padding_message[60], 0, 4); //In this case, it is good for a higher rank at 0.

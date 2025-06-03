@@ -15,7 +15,7 @@ namespace rathena{
 	namespace tool_yamlupgrade{
 		class YamlUpgradeTool : public Core{
 			protected:
-				bool initialize( int argc, char* argv[] ) override;
+				bool initialize( int32 argc, char* argv[] ) override;
 
 			public:
 				YamlUpgradeTool() : Core( e_core_type::TOOL ){

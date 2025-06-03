@@ -87,7 +87,7 @@ Target Weak: Allows aggressive monsters to only be aggressive against
 	characters that are five levels below it's own level.
 	For example, a monster of level 104 will not pick fights with a level 99.
 
-Random Target: Picks a new random target in range on each attack / skill.
+Random Target: Picks a new random target in range for each normal attack.
 
 Ignore Melee: The mob will take 1 HP damage from physical attacks.
 
@@ -141,6 +141,11 @@ Aegis/rA (description)
 25: 0x0001 (passive, can't attack) [Pet]
 26: 0xB695 (aggressive, change-target melee/chase, cast sensor idle/chase, chase-change target, random target)
 27: 0x8084 (aggressive, immobile, random target)
+
+Special AI:
+
+ABR_PASSIVE: 0x0021 (passive, does not walk randomly, can't attack)
+ABR_OFFENSIVE: 0x00A5 (aggressive, does not walk randomly)
 
 Aegis Class Types
 -------------------------------------------------------------------------------
