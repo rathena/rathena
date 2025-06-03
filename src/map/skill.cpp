@@ -9450,10 +9450,13 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 
 	case DC_WINKCHARM:
 		if( dstsd ) {
-			if (sc_start(src, bl, SC_CONFUSION, 10, 7, skill_get_time2(skill_id, skill_lv)))
-				sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 #ifdef RENEWAL
-			sc_start(src, bl, SC_HALLUCINATION, 30, skill_lv, skill_get_time(skill_id, skill_lv)); // TODO: Confirm success rate and duration
+			// Causes Confusion and Hallucination to 100% base chance in renewal
+			sc_start(src, bl, SC_CONFUSION, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
+			sc_start(src, bl, SC_HALLUCINATION, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+#else
+			if (sc_start(src, bl, SC_CONFUSION, 10, skill_lv, skill_get_time2(skill_id, skill_lv)))
+				sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 #endif
 		} else
 		if( dstmd )
