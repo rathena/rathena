@@ -38,11 +38,11 @@
 		if (BaseLevel >= 10) {
 			specialeffect2 EF_BLESSING;
 			sc_start SC_BLESSING,3600000,10;
-		}else if (BaseLevel >= 60) {
-			specialeffect2 "HP_ASSUMPTIO",0;
+		}
+		
+		if (BaseLevel >= 60) {
+			specialeffect2 EF_ASSUMPTIO;
 			sc_start SC_ASSUMPTIO,3600000,5;
-		} else if (BaseLevel >= 120) {
-			sc_start CR_FULLPROTECTION,3600000,5;
 		}
 	}
 	if (.@Delay)

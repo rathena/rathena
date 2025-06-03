@@ -5877,7 +5877,6 @@ Body:
     HitCount: 1
     Element: Dark
     Duration2: 28000
-    Status: Curse
   - Id: 182
     Name: NPC_SLEEPATTACK
     Description: Sleep attack
@@ -15956,7 +15955,6 @@ Body:
     HitCount: 1
     SplashArea: 14
     Duration2: 18000
-    Status: Curse
   - Id: 663
     Name: NPC_WIDESILENCE
     Description: Wide Silence
@@ -16087,7 +16085,6 @@ Body:
       - Level: 5
         Area: 14
     Duration2: 18000
-    Status: Confusion
   - Id: 668
     Name: NPC_WIDESLEEP
     Description: Wide Sleep
@@ -16380,7 +16377,6 @@ Body:
       - Level: 5
         Area: 14
     Duration2: 18000
-    Status: Curse
   - Id: 678
     Name: NPC_WIDESTUN
     Description: Wide Stun
@@ -17954,7 +17950,6 @@ Body:
       - Level: 5
         Area: 14
     Duration2: 18000
-    Status: Curse
   - Id: 762
     Name: NPC_WIDECONFUSE2
     Description: Wide Confusion
@@ -17980,7 +17975,6 @@ Body:
       - Level: 5
         Area: 14
     Duration2: 18000
-    Status: Confusion
   - Id: 763
     Name: NPC_WIDEFREEZE2
     Description: Wide Freeze
@@ -18054,7 +18048,6 @@ Body:
     Element: Neutral
     SplashArea: 14
     Duration2: 18000
-    Status: Curse
   - Id: 769
     Name: NPC_RAINOFMETEOR
     Description: Rain of Meteor
@@ -24038,7 +24031,6 @@ Body:
         NoOverlap: true
         RangedSingleUnit: true
         RemovedByFireRain: true
-    Status: Confusion
   - Id: 2302
     Name: SC_MAELSTROM
     Description: Maelstrom
@@ -32133,7 +32125,6 @@ Body:
           Amount: 52
         - Level: 5
           Amount: 56
-    Status: Curse
   - Id: 3015
     Name: KO_KAHU_ENTEN
     Description: Fire Charm
