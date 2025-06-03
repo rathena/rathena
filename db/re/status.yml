@@ -504,6 +504,8 @@ Body:
   - Status: Slowpoison
     Icon: EFST_SLOWPOISON
     DurationLookup: PR_SLOWPOISON
+    CalcFlags:
+      Regen: true
     Flags:
       NoClearance: true
       RemoveOnHermode: true
