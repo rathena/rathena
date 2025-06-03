@@ -1025,20 +1025,48 @@ ACMD_FUNC(storage)
 {
 	nullpo_retr(-1, sd);
 
-	if (sd->npc_id || sd->state.vending || sd->state.buyingstore || sd->state.trading || sd->state.storage_flag)
+	if (sd->npc_id || sd->state.vending || sd->state.buyingstore || sd->state.trading)
 		return -1;
 
-	if (storage_storageopen(sd) == 1)
-	{	//Already open.
-		clif_displaymessage(fd, msg_txt(sd,250)); // You have already opened your storage. Close it first.
+	int storage = 1; // treat @storage as if it's @storage 1 [Haydrich]
+	if (message && *message)
+		storage = atoi(message);
+
+	uint8 stor_id;
+
+	switch (storage) {
+	case 1:
+		stor_id = (sd->sc.getSCE(SC_PREMIUM_STORAGEBOOST)) ? 0 : 4;
+		break;
+	case 2:
+		stor_id = (sd->sc.getSCE(SC_PREMIUM_STORAGEBOOST)) ? 5 : 1;
+		break;
+	case 3:
+		stor_id = (sd->sc.getSCE(SC_PREMIUM_STORAGEBOOST)) ? 6 : 2;
+		break;
+	default:
+		clif_displaymessage(fd, msg_txt(sd, 253)); // Invalid storage ID.
 		return -1;
 	}
 
-	clif_displaymessage(fd, msg_txt(sd,919)); // Storage opened.
+	if (sd->state.storage_flag) {
+		clif_displaymessage(fd, msg_txt(sd, 250)); // You have already opened your storage. Close it first.
+		return -1;
+	}
 
+	switch (stor_id) {
+	case 0:
+		storage_storageopen(sd);
+		clif_displaymessage(fd, msg_txt(sd, 919)); // Storage opened.
+		return 0;
+	default:
+		if (storage_premiumStorage_load(sd, stor_id, STOR_MODE_ALL)) {
+			clif_displaymessage(fd, msg_txt(sd, 919)); // Storage opened.
+			return 0;
+		}
+	}
 	return 0;
 }
-
 
 /*==========================================
  *
