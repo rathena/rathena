@@ -88156,6 +88156,7 @@ Body:
     AegisName: Evil_Water
     Name: Evil Water
     Type: Etc
+    Buy: 1000
     Weight: 10
     Flags:
       BuyingStore: true
@@ -89408,6 +89409,7 @@ Body:
     AegisName: Mixed_Fruits_Juice
     Name: Compound Fruit Juice
     Type: Etc
+    Buy: 1000
     Weight: 10
     Flags:
       BuyingStore: true
