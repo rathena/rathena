@@ -3130,7 +3130,7 @@ Body:
       - Level: 10
         Area: 3
       - Level: 11
-        Area: 14
+        Area: 16
     CopyFlags:
       Skill:
         Plagiarism: true
@@ -3178,6 +3178,8 @@ Body:
         Time: 6000
       - Level: 10
         Time: 7000
+      - Level: 11
+        Time: 10000
     Duration2: 4500
     Cooldown: 7000
     FixedCastTime:
@@ -4466,7 +4468,6 @@ Body:
     Range: 3
     Hit: Single
     HitCount: 1
-    SplashArea: 1
     Duration1:
       - Level: 1
         Time: 200000
@@ -4554,7 +4555,6 @@ Body:
     Range: 3
     Hit: Single
     HitCount: 1
-    SplashArea: 1
     Duration1:
       - Level: 1
         Time: 150000
@@ -4687,7 +4687,7 @@ Body:
       SpCost: 10
       ItemCost:
         - Item: Booby_Trap
-          Amount: 1
+          Amount: 2
     Unit:
       Id: Blastmine
       Range: 1
@@ -33575,15 +33575,15 @@ Body:
     AfterCastActDelay: 1000
     Duration1:
       - Level: 1
-        Time: 1500
+        Time: 2100
       - Level: 2
-        Time: 2000
+        Time: 2800
       - Level: 3
-        Time: 2500
-      - Level: 4
-        Time: 3000
-      - Level: 5
         Time: 3500
+      - Level: 4
+        Time: 4200
+      - Level: 5
+        Time: 4900
     Duration2: 18000
     Cooldown: 5000
     FixedCastTime: 1500
@@ -33602,7 +33602,7 @@ Body:
     Unit:
       Id: Dummyskill
       Range: 3
-      Interval: 500
+      Interval: 700
       Target: Enemy
       Flag:
         PathCheck: true
@@ -33969,15 +33969,15 @@ Body:
     SplashArea: 3
     Duration1:
       - Level: 1
-        Time: 1500
+        Time: 2100
       - Level: 2
-        Time: 2000
+        Time: 2800
       - Level: 3
-        Time: 2500
-      - Level: 4
-        Time: 3000
-      - Level: 5
         Time: 3500
+      - Level: 4
+        Time: 4200
+      - Level: 5
+        Time: 4900
     Duration2: 20000
     Requires:
       ItemCost:
@@ -33986,7 +33986,7 @@ Body:
     Unit:
       Id: Dummyskill
       Range: 3
-      Interval: 500
+      Interval: 700
       Target: Enemy
       Flag:
         PathCheck: true

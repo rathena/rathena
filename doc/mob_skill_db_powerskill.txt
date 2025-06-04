@@ -31,7 +31,7 @@ Skill | rAthena Lv | Explanation
 57,KN_BRANDISHSPEAR   |10| 562% damage at all ranges.
 60,KN_TWOHANDQUICKEN  |30| Increases ASPD by 70%. Duration 300 seconds.
 80,WZ_FIREPILLAR      |10| Damage multiplied by number of hits.
-83,WZ_METEOR          |11| Meteors drop in 29x29 AoE. 15 hits per meteor.
+83,WZ_METEOR          |11| Meteors drop in 33x33 AoE. 10 meteors. 15 hits per meteor.
 84,WZ_JUPITEL         |28| 30 hits, knockback out of visible range.
 85,WZ_VERMILION       |21| 15x15 unit placement. 1 splash into LP. 500% damage.
 86,WZ_WATERBALL       |10| 9x9 unit placement. 67 hits.

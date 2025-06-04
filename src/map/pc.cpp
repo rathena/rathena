@@ -756,7 +756,7 @@ void pc_delete_bg_queue_timer(map_session_data *sd) {
 static TIMER_FUNC(pc_invincible_timer){
 	map_session_data *sd;
 
-	if( (sd=(map_session_data *)map_id2sd(id)) == nullptr || sd->bl.type!=BL_PC )
+	if( (sd=(map_session_data *)map_id2sd(id)) == nullptr || sd->type!=BL_PC )
 		return 1;
 
 	if(sd->invincible_timer != tid){
@@ -764,7 +764,7 @@ static TIMER_FUNC(pc_invincible_timer){
 		return 0;
 	}
 	sd->invincible_timer = INVALID_TIMER;
-	skill_unit_move(&sd->bl,tick,1);
+	skill_unit_move(sd,tick,1);
 
 	return 0;
 }
@@ -774,7 +774,7 @@ void pc_setinvincibletimer(map_session_data* sd, int32 val) {
 
 	if( sd->invincible_timer != INVALID_TIMER )
 		delete_timer(sd->invincible_timer,pc_invincible_timer);
-	sd->invincible_timer = add_timer(gettick()+val,pc_invincible_timer,sd->bl.id,0);
+	sd->invincible_timer = add_timer(gettick()+val,pc_invincible_timer,sd->id,0);
 }
 
 void pc_delinvincibletimer(map_session_data* sd)
@@ -785,7 +785,7 @@ void pc_delinvincibletimer(map_session_data* sd)
 	{
 		delete_timer(sd->invincible_timer,pc_invincible_timer);
 		sd->invincible_timer = INVALID_TIMER;
-		skill_unit_move(&sd->bl,gettick(),1);
+		skill_unit_move(sd,gettick(),1);
 	}
 }
 
@@ -793,7 +793,7 @@ static TIMER_FUNC(pc_spiritball_timer){
 	map_session_data *sd;
 	int32 i;
 
-	if( (sd=(map_session_data *)map_id2sd(id)) == nullptr || sd->bl.type!=BL_PC )
+	if( (sd=(map_session_data *)map_id2sd(id)) == nullptr || sd->type!=BL_PC )
 		return 1;
 
 	if( sd->spiritball <= 0 )
@@ -815,7 +815,7 @@ static TIMER_FUNC(pc_spiritball_timer){
 		memmove(sd->spirit_timer+i, sd->spirit_timer+i+1, (sd->spiritball-i)*sizeof(int32));
 	sd->spirit_timer[sd->spiritball] = INVALID_TIMER;
 
-	clif_spiritball(&sd->bl);
+	clif_spiritball(sd);
 
 	return 0;
 }
@@ -848,16 +848,16 @@ void pc_addspiritball(map_session_data *sd,int32 interval,int32 max)
 		sd->spirit_timer[sd->spiritball] = INVALID_TIMER;
 	}
 
-	tid = add_timer(gettick()+interval, pc_spiritball_timer, sd->bl.id, 0);
+	tid = add_timer(gettick()+interval, pc_spiritball_timer, sd->id, 0);
 	ARR_FIND(0, sd->spiritball, i, sd->spirit_timer[i] == INVALID_TIMER || DIFF_TICK(get_timer(tid)->tick, get_timer(sd->spirit_timer[i])->tick) < 0);
 	if( i != sd->spiritball )
 		memmove(sd->spirit_timer+i+1, sd->spirit_timer+i, (sd->spiritball-i)*sizeof(int32));
 	sd->spirit_timer[i] = tid;
 	sd->spiritball++;
 	if( (sd->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD )
-		clif_millenniumshield( sd->bl, sd->spiritball );
+		clif_millenniumshield( *sd, sd->spiritball );
 	else
-		clif_spiritball(&sd->bl);
+		clif_spiritball(sd);
 }
 
 /**
@@ -898,9 +898,9 @@ void pc_delspiritball(map_session_data *sd,int32 count,int32 type)
 
 	if(!type) {
 		if( (sd->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD )
-			clif_millenniumshield( sd->bl, sd->spiritball );
+			clif_millenniumshield( *sd, sd->spiritball );
 		else
-			clif_spiritball(&sd->bl);
+			clif_spiritball(sd);
 	}
 }
 
@@ -911,7 +911,7 @@ void pc_delspiritball(map_session_data *sd,int32 count,int32 type)
  * @param max: Max amount of soulballs
  */
 void pc_addsoulball( map_session_data& sd, int32 number, int32 max ) {
-	status_change *sc = status_get_sc(&sd.bl);
+	status_change *sc = status_get_sc(&sd);
 
 	// Save previous soulball number
 	int32 val = sd.soulball;
@@ -925,7 +925,7 @@ void pc_addsoulball( map_session_data& sd, int32 number, int32 max ) {
 
 	// Refresh the SC_SOULENERGY timer (which is 10 minutes by default) if the number has changed. The soul is removed when the timer expire.
 	if (sd.soulball != val)
-		sc_start( &sd.bl, &sd.bl, SC_SOULENERGY, 100, sd.soulball, skill_get_time2(SP_SOULCOLLECT, 1));
+		sc_start( &sd, &sd, SC_SOULENERGY, 100, sd.soulball, skill_get_time2(SP_SOULCOLLECT, 1));
 
 	clif_soulball(&sd);
 }
@@ -940,16 +940,16 @@ void pc_delsoulball( map_session_data& sd, int32 count, bool no_client_effect ) 
 	if (count <= 0)
 		return;
 
-	status_change *sc = status_get_sc(&sd.bl);
+	status_change *sc = status_get_sc(&sd);
 
 	if (sd.soulball <= 0)
 		sd.soulball = 0;
 	else {
 		sd.soulball -= cap_value(count, 0, sd.soulball);
 		if (sd.soulball == 0)
-			status_change_end(&sd.bl, SC_SOULENERGY);
+			status_change_end(&sd, SC_SOULENERGY);
 		else
-			sc_start( &sd.bl, &sd.bl, SC_SOULENERGY, 100, sd.soulball, skill_get_time2(SP_SOULCOLLECT, 1));	// refresh val1 and status MATK
+			sc_start( &sd, &sd, SC_SOULENERGY, 100, sd.soulball, skill_get_time2(SP_SOULCOLLECT, 1));	// refresh val1 and status MATK
 	}
 
 	if (!no_client_effect)
@@ -1074,9 +1074,9 @@ void pc_setrestartvalue(map_session_data *sd, char type) {
 
 	if (type&1) {	//Normal resurrection
 		status->hp = 1; //Otherwise status_heal may fail if dead.
-		status_heal(&sd->bl, b_status->hp, 0, 1);
+		status_heal(sd, b_status->hp, 0, 1);
 		if( status->sp < b_status->sp )
-			status_set_sp(&sd->bl, b_status->sp, 1);
+			status_set_sp(sd, b_status->sp, 1);
 	} else { //Just for saving on the char-server (with values as if respawned)
 		sd->status.hp = b_status->hp;
 		sd->status.sp = (status->sp < b_status->sp)?b_status->sp:status->sp;
@@ -1138,7 +1138,7 @@ void pc_inventory_rentals(map_session_data *sd)
 			continue;
 		if( sd->inventory.u.items_inventory[i].expire_time <= time(nullptr) ) {
 			if (sd->inventory_data[i]->unequip_script)
-				run_script(sd->inventory_data[i]->unequip_script, 0, sd->bl.id, fake_nd->bl.id);
+				run_script(sd->inventory_data[i]->unequip_script, 0, sd->id, fake_nd->id);
 			clif_rental_expired(sd, i, sd->inventory.u.items_inventory[i].nameid);
 			pc_delitem(sd, i, sd->inventory.u.items_inventory[i].amount, 0, 0, LOG_TYPE_OTHER);
 		} else {
@@ -1151,7 +1151,7 @@ void pc_inventory_rentals(map_session_data *sd)
 	}
 
 	if( c > 0 ) // min(next_tick,3600000) 1 hour each timer to keep announcing to the owner, and to avoid a but with rental time > 15 days
-		sd->rental_timer = add_timer(gettick() + umin(next_tick,3600000), pc_inventory_rental_end, sd->bl.id, 0);
+		sd->rental_timer = add_timer(gettick() + umin(next_tick,3600000), pc_inventory_rental_end, sd->id, 0);
 	else
 		sd->rental_timer = INVALID_TIMER;
 }
@@ -1174,10 +1174,10 @@ void pc_inventory_rental_add(map_session_data *sd, uint32 seconds)
 		td = get_timer(sd->rental_timer);
 		if( DIFF_TICK(td->tick, gettick()) > tick ) { // Update Timer as this one ends first than the current one
 			pc_inventory_rental_clear(sd);
-			sd->rental_timer = add_timer(gettick() + tick, pc_inventory_rental_end, sd->bl.id, 0);
+			sd->rental_timer = add_timer(gettick() + tick, pc_inventory_rental_end, sd->id, 0);
 		}
 	} else
-		sd->rental_timer = add_timer(gettick() + i64min(tick,3600000), pc_inventory_rental_end, sd->bl.id, 0);
+		sd->rental_timer = add_timer(gettick() + i64min(tick,3600000), pc_inventory_rental_end, sd->id, 0);
 }
 
 /**
@@ -1309,8 +1309,8 @@ void pc_makesavestatus(map_session_data *sd) {
 			sd->status.ap = sd->battle_status.ap;
 		}
 		mapindex_getmapname( mapindex_id2name( sd->mapindex ), sd->status.last_point.map );
-		sd->status.last_point.x = sd->bl.x;
-		sd->status.last_point.y = sd->bl.y;
+		sd->status.last_point.x = sd->x;
+		sd->status.last_point.y = sd->y;
 		return;
 	}
 
@@ -1326,7 +1326,7 @@ void pc_makesavestatus(map_session_data *sd) {
 		sd->status.sp = sd->battle_status.sp;
 		sd->status.ap = sd->battle_status.ap;
 
-		struct map_data* mapdata = map_getmapdata( sd->bl.m );
+		struct map_data* mapdata = map_getmapdata( sd->m );
 
 		// If saving is not allowed on the map, we return the player to the designated point
 		if( mapdata->getMapFlag(MF_NOSAVE) ){
@@ -1348,8 +1348,8 @@ void pc_makesavestatus(map_session_data *sd) {
 				struct map_data* mapdata_source = map_getmapdata( mapdata->instance_src_map );
 
 				mapindex_getmapname( mapindex_id2name( mapdata_source->index ), sd->status.last_point.map );
-				sd->status.last_point.x = sd->bl.x;
-				sd->status.last_point.y = sd->bl.y;
+				sd->status.last_point.x = sd->x;
+				sd->status.last_point.y = sd->y;
 				sd->status.last_point_instanceid = mapdata->instance_id;
 			}else{
 				// Return the user to his save point
@@ -1360,8 +1360,8 @@ void pc_makesavestatus(map_session_data *sd) {
 		}else{
 			// Save normally
 			mapindex_getmapname( mapindex_id2name( sd->mapindex ), sd->status.last_point.map );
-			sd->status.last_point.x = sd->bl.x;
-			sd->status.last_point.y = sd->bl.y;
+			sd->status.last_point.x = sd->x;
+			sd->status.last_point.y = sd->y;
 		}
 	}
 }
@@ -1372,7 +1372,7 @@ void pc_makesavestatus(map_session_data *sd) {
 void pc_setnewpc(map_session_data *sd, uint32 account_id, uint32 char_id, int32 login_id1, t_tick client_tick, int32 sex, int32 fd) {
 	nullpo_retv(sd);
 
-	sd->bl.id = account_id;
+	sd->id = account_id;
 	sd->status.account_id = account_id;
 	sd->status.char_id = char_id;
 	sd->status.sex = sex;
@@ -1380,7 +1380,7 @@ void pc_setnewpc(map_session_data *sd, uint32 account_id, uint32 char_id, int32 
 	sd->login_id2 = 0; // at this point, we can not know the value :(
 	sd->client_tick = client_tick;
 	sd->state.active = 0; //to be set to 1 after player is fully authed and loaded.
-	sd->bl.type = BL_PC;
+	sd->type = BL_PC;
 	if(battle_config.prevent_logout_trigger&PLT_LOGIN)
 		sd->canlog_tick = gettick();
 	//Required to prevent homunculus copuing a base speed of 0.
@@ -1822,7 +1822,7 @@ uint8 pc_isequip(map_session_data *sd,int32 n)
 		return ITEM_EQUIP_ACK_FAIL;
 
 	//fail to equip if item is restricted
-	if (!battle_config.allow_equip_restricted_item && itemdb_isNoEquip(item, sd->bl.m))
+	if (!battle_config.allow_equip_restricted_item && itemdb_isNoEquip(item, sd->m))
 		return ITEM_EQUIP_ACK_FAIL;
 
 	if (item->equip&EQP_AMMO) {
@@ -2109,11 +2109,11 @@ bool pc_authok(map_session_data *sd, uint32 login_id2, time_t expiration_time, i
 		sd->status.option &= ~OPTION_INVISIBLE;
 	}
 
-	status_change_init(&sd->bl);
+	status_change_init(sd);
 
 	sd->sc.option = sd->status.option; //This is the actual option used in battle.
 
-	unit_dataset(&sd->bl);
+	unit_dataset(sd);
 
 	sd->guild_x = -1;
 	sd->guild_y = -1;
@@ -2189,7 +2189,7 @@ bool pc_authok(map_session_data *sd, uint32 login_id2, time_t expiration_time, i
 		// Message of the Day [Valaris]
 		for(int32 i=0; i < MOTD_LINE_SIZE && motd_text[i][0]; i++) {
 			if (battle_config.motd_type)
-				clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], motd_text[i], false, SELF);
+				clif_messagecolor(sd, color_table[COLOR_LIGHT_GREEN], motd_text[i], false, SELF);
 			else
 				clif_displaymessage(sd->fd, motd_text[i]);
 		}
@@ -2200,7 +2200,7 @@ bool pc_authok(map_session_data *sd, uint32 login_id2, time_t expiration_time, i
 		/**
 		 * Fixes login-without-aura glitch (the screen won't blink at this point, don't worry :P)
 		 **/
-		clif_changemap( *sd, sd->bl.m, sd->bl.x, sd->bl.y );
+		clif_changemap( *sd, sd->m, sd->x, sd->y );
 	}
 
 	pc_validate_skill(sd);
@@ -2400,7 +2400,7 @@ void pc_reg_received(map_session_data *sd)
 	if( sd->status.ele_id > 0 )
 		intif_elemental_request(sd->status.ele_id, sd->status.char_id);
 
-	map_addiddb(&sd->bl);
+	map_addiddb(sd);
 	map_delnickdb(sd->status.char_id, sd->status.name);
 	if (!chrif_auth_finished(sd))
 		ShowError("pc_reg_received: Failed to properly remove player %d:%d from logging db!\n", sd->status.account_id, sd->status.char_id);
@@ -2433,15 +2433,15 @@ void pc_reg_received(map_session_data *sd)
 			sd->vd.class_ = JT_INVISIBLE;
 			clif_displaymessage( sd->fd, msg_txt( sd, 11 ) ); // Invisible: On
 			// decrement the number of pvp players on the map
-			map_getmapdata( sd->bl.m )->users_pvp--;
+			map_getmapdata( sd->m )->users_pvp--;
 
-			if( map_getmapflag( sd->bl.m, MF_PVP ) && !map_getmapflag( sd->bl.m, MF_PVP_NOCALCRANK ) && sd->pvp_timer != INVALID_TIMER ){
+			if( map_getmapflag( sd->m, MF_PVP ) && !map_getmapflag( sd->m, MF_PVP_NOCALCRANK ) && sd->pvp_timer != INVALID_TIMER ){
 				// unregister the player for ranking
 				delete_timer( sd->pvp_timer, pc_calc_pvprank_timer );
 				sd->pvp_timer = INVALID_TIMER;
 			}
 
-			clif_changeoption( &sd->bl );
+			clif_changeoption( sd );
 		}
 	}
 
@@ -2973,14 +2973,14 @@ void pc_updateweightstatus(map_session_data& sd)
 
 	switch (new_overweight) {
 	case 0:
-		status_change_end(&sd.bl, SC_WEIGHT50);
-		status_change_end(&sd.bl, SC_WEIGHT90);
+		status_change_end(&sd, SC_WEIGHT50);
+		status_change_end(&sd, SC_WEIGHT90);
 		break;
 	case 1:
-		sc_start(&sd.bl, &sd.bl, SC_WEIGHT50, 100, 0, 0);
+		sc_start(&sd, &sd, SC_WEIGHT50, 100, 0, 0);
 		break;
 	case 2:
-		sc_start(&sd.bl, &sd.bl, SC_WEIGHT90, 100, 0, 0);
+		sc_start(&sd, &sd, SC_WEIGHT90, 100, 0, 0);
 		break;
 	}
 
@@ -3001,9 +3001,9 @@ int32 pc_disguise(map_session_data *sd, int32 class_)
 		return 2;
 	}
 
-	if (sd->bl.prev != nullptr) {
-		unit_stop_walking( &sd->bl, USW_NONE );
-		clif_clearunit_area( sd->bl, CLR_OUTSIGHT );
+	if (sd->prev != nullptr) {
+		unit_stop_walking( sd, USW_NONE );
+		clif_clearunit_area( *sd, CLR_OUTSIGHT );
 	}
 
 	if (!class_) {
@@ -3012,11 +3012,11 @@ int32 pc_disguise(map_session_data *sd, int32 class_)
 	} else
 		sd->disguise=class_;
 
-	status_set_viewdata(&sd->bl, class_);
-	clif_changeoption(&sd->bl);
+	status_set_viewdata(sd, class_);
+	clif_changeoption(sd);
 
-	if (sd->bl.prev != nullptr) {
-		clif_spawn(&sd->bl);
+	if (sd->prev != nullptr) {
+		clif_spawn(sd);
 		if (class_ == sd->status.class_ && pc_iscarton(sd))
 		{	//It seems the cart info is lost on undisguise.
 			clif_cartlist(sd);
@@ -3419,7 +3419,7 @@ void pc_exeautobonus(map_session_data &sd, std::vector<std::shared_ptr<s_autobon
 			script_run_autobonus(autobonus->other_script,&sd,autobonus->pos);
 	}
 
-	autobonus->active = add_timer(gettick()+autobonus->duration, pc_endautobonus, sd.bl.id, (intptr_t)bonus);
+	autobonus->active = add_timer(gettick()+autobonus->duration, pc_endautobonus, sd.id, (intptr_t)bonus);
 	status_calc_pc(&sd,SCO_FORCE);
 }
 
@@ -4111,7 +4111,7 @@ void pc_bonus(map_session_data *sd,int32 type,int32 val)
 		case SP_INTRAVISION: // Maya Purple Card effect allowing to see Hiding/Cloaking people [DracoRPG]
 			if (sd->state.lr_flag != LR_FLAG_ARROW) {
 				sd->special_state.intravision = 1;
-				clif_status_load(&sd->bl, EFST_CLAIRVOYANCE, 1);
+				clif_status_load(sd, EFST_CLAIRVOYANCE, 1);
 			}
 			break;
 		case SP_NO_KNOCKBACK:
@@ -5710,7 +5710,7 @@ char pc_payzeny(map_session_data *sd, int32 zeny, enum e_log_pick_type type, uin
 	if( zeny > 0 && sd->state.showzeny ) {
 		char output[255];
 		sprintf(output, "Removed %dz.", zeny);
-		clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
+		clif_messagecolor(sd, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 	}
 
 	return 0;
@@ -5744,7 +5744,7 @@ char pc_getzeny(map_session_data *sd, int32 zeny, enum e_log_pick_type type, uin
 	if( zeny > 0 && sd->state.showzeny ) {
 		char output[255];
 		sprintf(output, "Gained %dz.", zeny);
-		clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
+		clif_messagecolor(sd, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 	}
 
 	achievement_update_objective(sd, AG_GET_ZENY, 1, sd->status.zeny);
@@ -5792,7 +5792,7 @@ int32 pc_paycash(map_session_data *sd, int32 price, int32 points, e_log_pick_typ
 		char output[CHAT_SIZE_MAX];
 
 		sprintf(output, msg_txt(sd,504), points, cash, sd->kafraPoints, sd->cashPoints); // Used %d kafra points and %d cash points. %d kafra and %d cash points remaining.
-		clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
+		clif_messagecolor(sd, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 	}
 	return cash+points;
 }
@@ -5828,7 +5828,7 @@ int32 pc_getcash(map_session_data *sd, int32 cash, int32 points, e_log_pick_type
 		if( battle_config.cashshop_show_points )
 		{
 			sprintf(output, msg_txt(sd,505), cash, sd->cashPoints);
-			clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
+			clif_messagecolor(sd, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 		}
 		return cash;
 	}
@@ -5848,7 +5848,7 @@ int32 pc_getcash(map_session_data *sd, int32 cash, int32 points, e_log_pick_type
 		if( battle_config.cashshop_show_points )
 		{
 			sprintf(output, msg_txt(sd,506), points, sd->kafraPoints);
-			clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
+			clif_messagecolor(sd, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 		}
 		return points;
 	}
@@ -5885,7 +5885,7 @@ int16 pc_search_inventory(map_session_data *sd, t_itemid nameid) {
  *   6 = ?
  *   7 = stack limitation
  */
-enum e_additem_result pc_additem(map_session_data *sd,struct item *item,int32 amount,e_log_pick_type log_type) {
+enum e_additem_result pc_additem(map_session_data *sd,struct item *item,int32 amount,e_log_pick_type log_type, bool favorite) {
 	struct item_data *id;
 	int16 i;
 	uint32 w;
@@ -5944,15 +5944,14 @@ enum e_additem_result pc_additem(map_session_data *sd,struct item *item,int32 am
 		}
 
 		memcpy(&sd->inventory.u.items_inventory[i], item, sizeof(sd->inventory.u.items_inventory[0]));
-		// clear equip and favorite fields first, just in case
+		// clear equip and equip switch fields first, just in case
 		if( item->equip )
 			sd->inventory.u.items_inventory[i].equip = 0;
-		if( item->favorite != 0 )
-			sd->inventory.u.items_inventory[i].favorite = 0;
 		if( item->equipSwitch )
 			sd->inventory.u.items_inventory[i].equipSwitch = 0;
 
 		sd->inventory.u.items_inventory[i].amount = amount;
+		sd->inventory.u.items_inventory[i].favorite = favorite;
 		sd->inventory_data[i] = id;
 		sd->last_addeditem_index = i;
 
@@ -6053,7 +6052,7 @@ bool pc_dropitem(map_session_data *sd,int32 n,int32 amount)
 	if( sd->inventory.u.items_inventory[n].equipSwitch )
 		return false;
 
-	if( map_getmapflag(sd->bl.m, MF_NODROP) )
+	if( map_getmapflag(sd->m, MF_NODROP) )
 	{
 		clif_displaymessage (sd->fd, msg_txt(sd,271));
 		return false; //Can't drop items in nodrop mapflag maps.
@@ -6066,7 +6065,7 @@ bool pc_dropitem(map_session_data *sd,int32 n,int32 amount)
 	}
 
 	// Bypass drop restriction in map_addflooritem because we've already checked it above
-	if (!map_addflooritem(&sd->inventory.u.items_inventory[n], amount, sd->bl.m, sd->bl.x, sd->bl.y, 0, 0, 0, 2|4, 0,
+	if (!map_addflooritem(&sd->inventory.u.items_inventory[n], amount, sd->m, sd->x, sd->y, 0, 0, 0, 2|4, 0,
 		false, DIR_MAX, battle_config.item_stacking?BL_NUL:BL_ITEM))
 	{
 		return false;
@@ -6092,7 +6091,7 @@ bool pc_takeitem(map_session_data *sd,struct flooritem_data *fitem)
 	nullpo_ret(sd);
 	nullpo_ret(fitem);
 
-	if (!check_distance_bl(&fitem->bl, &sd->bl, 2) && sd->ud.skill_id!=BS_GREED)
+	if (!check_distance_bl(fitem, sd, 2) && sd->ud.skill_id!=BS_GREED)
 		return false;	// Distance is too far
 
 	if (sd->sc.cant.pickup)
@@ -6152,8 +6151,8 @@ bool pc_takeitem(map_session_data *sd,struct flooritem_data *fitem)
 	}
 
 	//Display pickup animation.
-	unit_stop_attack( &sd->bl );
-	clif_takeitem(sd->bl,fitem->bl);
+	unit_stop_attack( sd );
+	clif_takeitem(*sd, *fitem);
 
 	if (fitem->mob_id &&
 		(itemdb_search(fitem->item.nameid))->flag.broadcast &&
@@ -6161,7 +6160,7 @@ bool pc_takeitem(map_session_data *sd,struct flooritem_data *fitem)
 		)
 		intif_broadcast_obtain_special_item(sd, fitem->item.nameid, fitem->mob_id, ITEMOBTAIN_TYPE_MONSTER_ITEM);
 
-	map_clearflooritem(&fitem->bl);
+	map_clearflooritem(fitem);
 	return true;
 }
 
@@ -6189,7 +6188,7 @@ bool pc_isUseitem(map_session_data *sd,int32 n)
 	if (pc_has_permission(sd,PC_PERM_ITEM_UNCONDITIONAL))
 		return true;
 
-	struct map_data *mapdata = map_getmapdata(sd->bl.m);
+	struct map_data *mapdata = map_getmapdata(sd->m);
 
 	if(mapdata->getMapFlag(MF_NOITEMCONSUMPTION)) //consumable but mapflag prevent it
 		return false;
@@ -6205,7 +6204,7 @@ bool pc_isUseitem(map_session_data *sd,int32 n)
 	}
 
 	if (sd->state.storage_flag && item->type != IT_CASH) {
-		clif_messagecolor(&sd->bl, color_table[COLOR_RED], msg_txt(sd,388), false, SELF);
+		clif_messagecolor(sd, color_table[COLOR_RED], msg_txt(sd,388), false, SELF);
 		return false; // You cannot use this item while storage is open.
 	}
 
@@ -6249,7 +6248,7 @@ bool pc_isUseitem(map_session_data *sd,int32 n)
 				return false;
 			}
 
-			ARR_FIND( 0, MAX_PARTY, i, pd->data[i].sd && pd->data[i].sd != sd && pd->data[i].sd->bl.m == sd->bl.m && !pc_isdead( pd->data[i].sd ) );
+			ARR_FIND( 0, MAX_PARTY, i, pd->data[i].sd && pd->data[i].sd != sd && pd->data[i].sd->m == sd->m && !pc_isdead( pd->data[i].sd ) );
 
 			// No party members found on same map
 			if( i == MAX_PARTY ){
@@ -6398,14 +6397,14 @@ int32 pc_useitem(map_session_data *sd,int32 n)
 	//perform a skill-use check before going through. [Skotlex]
 	//resurrection was picked as testing skill, as a non-offensive, generic skill, it will do.
 	//FIXME: Is this really needed here? It'll be checked in unit.cpp after all and this prevents skill items using when silenced [Inkfish]
-	if( id->flag.delay_consume > 0 && ( sd->ud.skilltimer != INVALID_TIMER /*|| !status_check_skilluse(&sd->bl, &sd->bl, ALL_RESURRECTION, 0)*/ ) )
+	if( id->flag.delay_consume > 0 && ( sd->ud.skilltimer != INVALID_TIMER /*|| !status_check_skilluse(sd, sd, ALL_RESURRECTION, 0)*/ ) )
 		return 0;
 
 	if( id->delay.duration > 0 && !pc_has_permission(sd,PC_PERM_ITEM_UNCONDITIONAL) && pc_itemcd_check(sd, id, tick, n))
 		return 0;
 
 	/* on restricted maps the item is consumed but the effect is not used */
-	if (!pc_has_permission(sd,PC_PERM_ITEM_UNCONDITIONAL) && itemdb_isNoEquip(id,sd->bl.m)) {
+	if (!pc_has_permission(sd,PC_PERM_ITEM_UNCONDITIONAL) && itemdb_isNoEquip(id,sd->m)) {
 		clif_msg( *sd, MSI_IMPOSSIBLE_USEITEM_AREA ); // This item cannot be used within this area
 		if( battle_config.allow_consume_restricted_item && id->flag.delay_consume > 0 ) { //need confirmation for delayed consumption items
 			clif_useitemack(sd,n,item.amount-1,true);
@@ -6414,7 +6413,7 @@ int32 pc_useitem(map_session_data *sd,int32 n)
 		return 0;/* regardless, effect is not run */
 	}
 
-	if (pet_db_search(id->nameid, PET_CATCH) != nullptr && map_getmapflag(sd->bl.m, MF_NOPETCAPTURE)) {
+	if (pet_db_search(id->nameid, PET_CATCH) != nullptr && map_getmapflag(sd->m, MF_NOPETCAPTURE)) {
 		clif_displaymessage(sd->fd, msg_txt(sd, 669)); // You can't catch any pet on this map.
 		return 0;
 	}
@@ -6444,7 +6443,7 @@ int32 pc_useitem(map_session_data *sd,int32 n)
 	if( itemdb_group.item_exists(IG_CASH_FOOD, nameid) )
 		sd->canusecashfood_tick = tick + battle_config.cashfood_use_interval;
 
-	run_script(script,0,sd->bl.id,fake_nd->bl.id);
+	run_script(script,0,sd->id,fake_nd->id);
 	potion_flag = 0;
 	return 1;
 }
@@ -6700,10 +6699,10 @@ bool pc_steal_item(map_session_data *sd,struct block_list *bl, uint16 skill_lv)
 	if(md->state.steal_flag == UCHAR_MAX || ( md->sc.opt1 && md->sc.opt1 != OPT1_BURNING ) ) //already stolen from / status change check
 		return false;
 
-	status_data* sd_status = status_get_status_data(sd->bl);
+	status_data* sd_status = status_get_status_data(*sd);
 	status_data* md_status = status_get_status_data(*bl);
 
-	if (md->master_id || status_has_mode(md_status, MD_STATUSIMMUNE) || util::vector_exists(status_get_race2(&md->bl), RC2_TREASURE) ||
+	if (md->master_id || status_has_mode(md_status, MD_STATUSIMMUNE) || util::vector_exists(status_get_race2(md), RC2_TREASURE) ||
 		map_getmapflag(bl->m, MF_NOMOBLOOT) || // check noloot map flag [Lorky]
 		(battle_config.skill_steal_max_tries && //Reached limit of steal attempts. [Lupus]
 			md->state.steal_flag++ >= battle_config.skill_steal_max_tries)
@@ -6808,7 +6807,7 @@ int32 pc_steal_coin(map_session_data *sd,struct block_list *target)
 
 	if (md->state.steal_coin_flag || md->sc.getSCE(SC_STONE) || md->sc.getSCE(SC_FREEZE) || md->sc.getSCE(SC_HANDICAPSTATE_FROSTBITE) || 
 		md->sc.getSCE(SC_HANDICAPSTATE_SWOONING) || md->sc.getSCE(SC_HANDICAPSTATE_LIGHTNINGSTRIKE) || md->sc.getSCE(SC_HANDICAPSTATE_CRYSTALLIZATION) || 
-		status_bl_has_mode(target,MD_STATUSIMMUNE) || util::vector_exists(status_get_race2(&md->bl), RC2_TREASURE))
+		status_bl_has_mode(target,MD_STATUSIMMUNE) || util::vector_exists(status_get_race2(md), RC2_TREASURE))
 		return 0;
 
 	rate = sd->battle_status.dex / 2 + 2 * (sd->status.base_level - target_lv) + (10 * pc_checkskill(sd, RG_STEALCOIN)) + sd->battle_status.luk / 2;
@@ -6855,7 +6854,7 @@ enum e_setpos pc_setpos(map_session_data* sd, uint16 mapindex, int32 x, int32 y,
 
 	int16 m = map_mapindex2mapid(mapindex);
 	struct map_data *mapdata = map_getmapdata(m);
-	status_change *sc = status_get_sc(&sd->bl);
+	status_change *sc = status_get_sc(sd);
 
 	sd->state.changemap = (sd->mapindex != mapindex);
 	sd->state.warping = 1;
@@ -6874,7 +6873,7 @@ enum e_setpos pc_setpos(map_session_data* sd, uint16 mapindex, int32 x, int32 y,
 	sd->state.item_enchant_index = 0;
 
 	if( sd->state.changemap ) { // Misc map-changing settings
-		int32 curr_map_instance_id = map_getmapdata(sd->bl.m)->instance_id, new_map_instance_id = (mapdata ? mapdata->instance_id : 0);
+		int32 curr_map_instance_id = map_getmapdata(sd->m)->instance_id, new_map_instance_id = (mapdata ? mapdata->instance_id : 0);
 
 		if (curr_map_instance_id != new_map_instance_id) {
 			if (curr_map_instance_id > 0) { // Update instance timer for the map on leave
@@ -6889,7 +6888,7 @@ enum e_setpos pc_setpos(map_session_data* sd, uint16 mapindex, int32 x, int32 y,
 		if (sd->bg_id && mapdata && !mapdata->getMapFlag(MF_BATTLEGROUND)) // Moving to a map that isn't a Battlegrounds
 			bg_team_leave(sd, false, true);
 
-		sd->state.pmap = sd->bl.m;
+		sd->state.pmap = sd->m;
 		if (sc != nullptr && !sc->empty()) { // Cancel some map related stuff.
 			if (sc->cant.warp)
 				return SETPOS_MAPINDEX; // You may not get out!
@@ -6897,14 +6896,14 @@ enum e_setpos pc_setpos(map_session_data* sd, uint16 mapindex, int32 x, int32 y,
 			for (const auto &it : status_db) {
 				if (sc->getSCE(it.first)) {
 					if (it.second->flag[SCF_REMOVEONMAPWARP])
-						status_change_end(&sd->bl, static_cast<sc_type>(it.first));
+						status_change_end(sd, static_cast<sc_type>(it.first));
 
 					if (it.second->flag[SCF_RESTARTONMAPWARP] && it.second->skill_id > 0) {
 						status_change_entry *sce = sd->sc.getSCE(it.first);
 
 						if (sce->timer != INVALID_TIMER)
 							delete_timer(sce->timer, status_change_timer);
-						sce->timer = add_timer(gettick() + skill_get_time(it.second->skill_id, sce->val1), status_change_timer, sd->bl.id, it.first);
+						sce->timer = add_timer(gettick() + skill_get_time(it.second->skill_id, sce->val1), status_change_timer, sd->id, it.first);
 					}
 				}
 			}
@@ -6916,9 +6915,9 @@ enum e_setpos pc_setpos(map_session_data* sd, uint16 mapindex, int32 x, int32 y,
 				}
 		}
 		if (battle_config.clear_unit_onwarp&BL_PC)
-			skill_clear_unitgroup(&sd->bl);
+			skill_clear_unitgroup(sd);
 		if( battle_config.loose_ap_on_map && mapdata_flag_vs( mapdata ) ){
-			status_percent_damage( nullptr, &sd->bl, 0, 0, 100, 0 );
+			status_percent_damage( nullptr, sd, 0, 0, 100, 0 );
 		}
 		party_send_dot_remove(sd); //minimap dot fix [Kevin]
 		guild_send_dot_remove(sd);
@@ -6975,8 +6974,8 @@ enum e_setpos pc_setpos(map_session_data* sd, uint16 mapindex, int32 x, int32 y,
 		//remove from map, THEN change x/y coordinates
 		unit_remove_map_pc(sd,clrtype);
 		sd->mapindex = mapindex;
-		sd->bl.x=x;
-		sd->bl.y=y;
+		sd->x=x;
+		sd->y=y;
 		pc_clean_skilltree(sd);
 		chrif_save(sd, CSAVE_CHANGE_MAPSERV|CSAVE_INVENTORY|CSAVE_CART);
 		chrif_changemapserver(sd, ip, (int16)port);
@@ -7022,16 +7021,16 @@ enum e_setpos pc_setpos(map_session_data* sd, uint16 mapindex, int32 x, int32 y,
 		buyingstore_close(sd);
 	}
 
-	if(sd->bl.prev != nullptr){
+	if(sd->prev != nullptr){
 		unit_remove_map_pc(sd,clrtype);
 		clif_changemap( *sd, m, x, y );
 	} else if(sd->state.active) //Tag player for rewarping after map-loading is done. [Skotlex]
 		sd->state.rewarp = 1;
 
 	sd->mapindex = mapindex;
-	sd->bl.m = m;
-	sd->bl.x = sd->ud.to_x = x;
-	sd->bl.y = sd->ud.to_y = y;
+	sd->m = m;
+	sd->x = sd->ud.to_x = x;
+	sd->y = sd->ud.to_y = y;
 
 	if( sd->status.guild_id > 0 && mapdata->getMapFlag(MF_GVG_CASTLE) )
 	{	// Increased guild castle regen [Valaris]
@@ -7042,41 +7041,41 @@ enum e_setpos pc_setpos(map_session_data* sd, uint16 mapindex, int32 x, int32 y,
 
 	if( sd->status.pet_id > 0 && sd->pd && sd->pd->pet.intimate > 0 )
 	{
-		sd->pd->bl.m = m;
-		sd->pd->bl.x = sd->pd->ud.to_x = x;
-		sd->pd->bl.y = sd->pd->ud.to_y = y;
+		sd->pd->m = m;
+		sd->pd->x = sd->pd->ud.to_x = x;
+		sd->pd->y = sd->pd->ud.to_y = y;
 		sd->pd->ud.dir = sd->ud.dir;
 	}
 
 	if( hom_is_active(sd->hd) )
 	{
 		if (sd->state.changemap)
-			status_db.removeByStatusFlag(&sd->hd->bl, { SCF_REMOVEFROMHOMONMAPWARP });
+			status_db.removeByStatusFlag(sd->hd, { SCF_REMOVEFROMHOMONMAPWARP });
 		else
-			status_db.removeByStatusFlag(&sd->hd->bl, { SCF_REMOVEFROMHOMONWARP });
+			status_db.removeByStatusFlag(sd->hd, { SCF_REMOVEFROMHOMONWARP });
 
 		if (battle_config.hom_delay_reset_warp) {
 			skill_blockhomun_clear(*sd->hd);
 		}
 
-		sd->hd->bl.m = m;
-		sd->hd->bl.x = sd->hd->ud.to_x = x;
-		sd->hd->bl.y = sd->hd->ud.to_y = y;
+		sd->hd->m = m;
+		sd->hd->x = sd->hd->ud.to_x = x;
+		sd->hd->y = sd->hd->ud.to_y = y;
 		sd->hd->ud.dir = sd->ud.dir;
 	}
 
 	if( sd->md )
 	{
-		sd->md->bl.m = m;
-		sd->md->bl.x = sd->md->ud.to_x = x;
-		sd->md->bl.y = sd->md->ud.to_y = y;
+		sd->md->m = m;
+		sd->md->x = sd->md->ud.to_x = x;
+		sd->md->y = sd->md->ud.to_y = y;
 		sd->md->ud.dir = sd->ud.dir;
 	}
 
 	if( sd->ed ) {
-		sd->ed->bl.m = m;
-		sd->ed->bl.x = sd->ed->ud.to_x = x;
-		sd->ed->bl.y = sd->ed->ud.to_y = y;
+		sd->ed->m = m;
+		sd->ed->x = sd->ed->ud.to_x = x;
+		sd->ed->y = sd->ed->ud.to_y = y;
 		sd->ed->ud.dir = sd->ud.dir;
 	}
 
@@ -7098,7 +7097,7 @@ enum e_setpos pc_setpos(map_session_data* sd, uint16 mapindex, int32 x, int32 y,
 }
 
 enum e_setpos pc_setpos_savepoint( map_session_data& sd, clr_type clrtype ){
-	struct map_data *mapdata = map_getmapdata( sd.bl.m );
+	struct map_data *mapdata = map_getmapdata( sd.m );
 
 	if( mapdata != nullptr && mapdata->getMapFlag(MF_NOSAVE) && mapdata->save.map ){
 		return pc_setpos( &sd, mapdata->save.map, mapdata->save.x, mapdata->save.y, clrtype );
@@ -7120,7 +7119,7 @@ char pc_randomwarp(map_session_data *sd, clr_type type, bool ignore_mapflag)
 
 	nullpo_ret(sd);
 
-	struct map_data *mapdata = map_getmapdata(sd->bl.m);
+	struct map_data *mapdata = map_getmapdata(sd->m);
 
 	if (mapdata->getMapFlag(MF_NOTELEPORT) && !ignore_mapflag) //Teleport forbidden
 		return 3;
@@ -7129,7 +7128,7 @@ char pc_randomwarp(map_session_data *sd, clr_type type, bool ignore_mapflag)
 	do {
 		x = rnd_value<int16>(edge, mapdata->xs - edge - 1);
 		y = rnd_value<int16>(edge, mapdata->ys - edge - 1);
-	} while((map_getcell(sd->bl.m,x,y,CELL_CHKNOPASS) || (!battle_config.teleport_on_portal && npc_check_areanpc(1,sd->bl.m,x,y,1))) && (i++) < 1000);
+	} while((map_getcell(sd->m,x,y,CELL_CHKNOPASS) || (!battle_config.teleport_on_portal && npc_check_areanpc(1,sd->m,x,y,1))) && (i++) < 1000);
 
 	if (i < 1000)
 		return pc_setpos(sd,mapdata->index,x,y,type);
@@ -7148,7 +7147,7 @@ bool pc_memo(map_session_data* sd, int32 pos)
 	nullpo_ret(sd);
 
 	// check mapflags
-	if( sd->bl.m >= 0 && (map_getmapflag(sd->bl.m, MF_NOMEMO) || map_getmapflag(sd->bl.m, MF_NOWARPTO)) && !pc_has_permission(sd, PC_PERM_WARP_ANYWHERE) ) {
+	if( sd->m >= 0 && (map_getmapflag(sd->m, MF_NOMEMO) || map_getmapflag(sd->m, MF_NOWARPTO)) && !pc_has_permission(sd, PC_PERM_WARP_ANYWHERE) ) {
 		clif_skill_teleportmessage( *sd, NOTIFY_MAPINFO_CANT_MEMO ); // "Saved point cannot be memorized."
 		return false;
 	}
@@ -7171,7 +7170,7 @@ bool pc_memo(map_session_data* sd, int32 pos)
 	if( pos == -1 )
 	{
 		uint8 i;
-		const char* mapname = map_mapid2mapname( sd->bl.m );
+		const char* mapname = map_mapid2mapname( sd->m );
 
 		// prevent memo-ing the same map multiple times
 		ARR_FIND( 0, MAX_MEMOPOINTS, i, strncmp( sd->status.memo_point[i].map, mapname, sizeof( sd->status.memo_point[i].map ) ) == 0 );
@@ -7179,14 +7178,14 @@ bool pc_memo(map_session_data* sd, int32 pos)
 		pos = 0;
 	}
 
-	if( map_getmapdata(sd->bl.m)->instance_id ) {
+	if( map_getmapdata(sd->m)->instance_id ) {
 		clif_displaymessage( sd->fd, msg_txt(sd,384) ); // You cannot create a memo in an instance.
 		return false;
 	}
 
-	safestrncpy( sd->status.memo_point[pos].map, map_mapid2mapname( sd->bl.m ), sizeof( sd->status.memo_point[pos].map ) );
-	sd->status.memo_point[pos].x = sd->bl.x;
-	sd->status.memo_point[pos].y = sd->bl.y;
+	safestrncpy( sd->status.memo_point[pos].map, map_mapid2mapname( sd->m ), sizeof( sd->status.memo_point[pos].map ) );
+	sd->status.memo_point[pos].x = sd->x;
+	sd->status.memo_point[pos].y = sd->y;
 
 	clif_skill_memomessage( *sd, WARPPOINT_SUCCESS );
 
@@ -7207,7 +7206,7 @@ bool pc_memo(map_session_data* sd, int32 pos)
  */
 int32 pc_get_skillcooldown(map_session_data *sd, uint16 skill_id, uint16 skill_lv) {
 	if (skill_id == SJ_NOVAEXPLOSING) {
-		status_change *sc = status_get_sc(&sd->bl);
+		status_change *sc = status_get_sc(sd);
 
 		if (sc && sc->getSCE(SC_DIMENSION))
 			return 0;
@@ -7355,11 +7354,11 @@ static void pc_checkallowskill(map_session_data *sd)
 			if (status == SC_DANCING && !battle_config.dancing_weaponswitch_fix)
 				continue;
 			if (sd->sc.getSCE(status) && !pc_check_weapontype(sd, skill_get_weapontype(it.second->skill_id)))
-				status_change_end(&sd->bl, status);
+				status_change_end(sd, status);
 		}
 		if (flag[SCF_REQUIRENOWEAPON]) { 
 			if (sd->sc.getSCE(status) && sd->status.weapon)
-				status_change_end( &sd->bl, status );
+				status_change_end( sd, status );
 		}
 
 		if (flag[SCF_REQUIRESHIELD]) { // Skills requiring a shield
@@ -7367,7 +7366,7 @@ static void pc_checkallowskill(map_session_data *sd)
 			if (status == SC_DEFENDER && (sd->class_&MAPID_UPPERMASK) != MAPID_CRUSADER)
 				continue;
 			if (sd->sc.getSCE(status) && sd->status.shield <= 0)
-				status_change_end(&sd->bl, status);
+				status_change_end(sd, status);
 		}
 	}
 }
@@ -8107,18 +8106,18 @@ TIMER_FUNC(pc_follow_timer){
 
 	// either player or target is currently detached from map blocks (could be teleporting),
 	// but still connected to this map, so we'll just increment the timer and check back later
-	if (sd->bl.prev != nullptr && tbl->prev != nullptr &&
+	if (sd->prev != nullptr && tbl->prev != nullptr &&
 		sd->ud.skilltimer == INVALID_TIMER && sd->ud.attacktimer == INVALID_TIMER && sd->ud.walktimer == INVALID_TIMER)
 	{
-		if((sd->bl.m == tbl->m) && unit_can_reach_bl(&sd->bl,tbl, AREA_SIZE, 0, nullptr, nullptr)) {
-			if (!check_distance_bl(&sd->bl, tbl, 5))
-				unit_walktobl(&sd->bl, tbl, 5, 0);
+		if((sd->m == tbl->m) && unit_can_reach_bl(sd,tbl, AREA_SIZE, 0, nullptr, nullptr)) {
+			if (!check_distance_bl(sd, tbl, 5))
+				unit_walktobl(sd, tbl, 5, 0);
 		} else
 			pc_setpos(sd, map_id2index(tbl->m), tbl->x, tbl->y, CLR_TELEPORT);
 	}
 	sd->followtimer = add_timer(
 		tick + 1000,	// increase time a bit to loosen up map's load
-		pc_follow_timer, sd->bl.id, 0);
+		pc_follow_timer, sd->id, 0);
 	return 0;
 }
 
@@ -8133,7 +8132,7 @@ int32 pc_stop_following (map_session_data *sd)
 	sd->followtarget = -1;
 	sd->ud.target_to = 0;
 
-	unit_stop_walking( &sd->bl, USW_FIXPOS );
+	unit_stop_walking( sd, USW_FIXPOS );
 
 	return 0;
 }
@@ -8147,7 +8146,7 @@ int32 pc_follow(map_session_data *sd,int32 target_id)
 		pc_stop_following(sd);
 
 	sd->followtarget = target_id;
-	pc_follow_timer(INVALID_TIMER, gettick(), sd->bl.id, 0);
+	pc_follow_timer(INVALID_TIMER, gettick(), sd->id, 0);
 
 	return 0;
 }
@@ -8185,22 +8184,22 @@ int32 pc_checkbaselevelup(map_session_data *sd) {
 	clif_updatestatus(*sd,SP_BASEEXP);
 	clif_updatestatus(*sd,SP_NEXTBASEEXP);
 	status_calc_pc(sd,SCO_FORCE);
-	status_percent_heal(&sd->bl,100,100);
+	status_percent_heal(sd,100,100);
 
 	if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE) {
 		for (const auto &status : status_db) {
 			if (status.second->flag[SCF_SUPERNOVICEANGEL])
-				sc_start(&sd->bl, &sd->bl, status.second->type, 100, 1, 120000); //All buffs with super novice flag for 2 minutes
+				sc_start(sd, sd, status.second->type, 100, 1, 120000); //All buffs with super novice flag for 2 minutes
 		}
 		if (sd->state.snovice_dead_flag)
 			sd->state.snovice_dead_flag = 0; //Reenable steelbody resurrection on dead.
 	} else if( (sd->class_&MAPID_BASEMASK) == MAPID_TAEKWON ) {
 		for (const auto &status : status_db) {
 			if (status.second->flag[SCF_TAEKWONANGEL])
-				sc_start(&sd->bl, &sd->bl, status.second->type, 100, 10, 600000);
+				sc_start(sd, sd, status.second->type, 100, 10, 600000);
 		}
 	}
-	clif_misceffect( sd->bl, NOTIFYEFFECT_BASE_LEVEL_UP );
+	clif_misceffect( *sd, NOTIFYEFFECT_BASE_LEVEL_UP );
 	npc_script_event( *sd, NPCE_BASELVUP );
 
 	if(sd->status.party_id)
@@ -8255,9 +8254,9 @@ int32 pc_checkjoblevelup(map_session_data *sd)
 	clif_updatestatus(*sd,SP_NEXTJOBEXP);
 	clif_updatestatus(*sd,SP_SKILLPOINT);
 	status_calc_pc(sd,SCO_FORCE);
-	clif_misceffect( sd->bl, NOTIFYEFFECT_JOB_LEVEL_UP );
+	clif_misceffect( *sd, NOTIFYEFFECT_JOB_LEVEL_UP );
 	if (pc_checkskill(sd, SG_DEVIL) && ((sd->class_&MAPID_THIRDMASK) == MAPID_STAR_EMPEROR || pc_is_maxjoblv(sd)) )
-		clif_status_change(&sd->bl, EFST_DEVIL1, 1, 0, 0, 0, 1); //Permanent blind effect from SG_DEVIL.
+		clif_status_change(sd, EFST_DEVIL1, 1, 0, 0, 0, 1); //Permanent blind effect from SG_DEVIL.
 
 	npc_script_event( *sd, NPCE_JOBLVUP );
 
@@ -8348,7 +8347,7 @@ void pc_gainexp_disp(map_session_data *sd, t_exp base_exp, t_exp next_base_exp, 
 		(lost) ? msg_txt(sd,742) : msg_txt(sd,741),
 		(long)base_exp * (lost ? -1 : 1), (base_exp / (float)next_base_exp * 100 * (lost ? -1 : 1)),
 		(long)job_exp * (lost ? -1 : 1), (job_exp / (float)next_job_exp * 100 * (lost ? -1 : 1)));
-	clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
+	clif_messagecolor(sd, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 }
 
 /**
@@ -8367,12 +8366,12 @@ void pc_gainexp(map_session_data *sd, struct block_list *src, t_exp base_exp, t_
 
 	nullpo_retv(sd);
 
-	if(sd->bl.prev == nullptr || pc_isdead(sd))
+	if(sd->prev == nullptr || pc_isdead(sd))
 		return;
 
 	if (!(exp_flag&2)) {
 
-		if (!battle_config.pvp_exp && map_getmapflag(sd->bl.m, MF_PVP))  // [MouseJstr]
+		if (!battle_config.pvp_exp && map_getmapflag(sd->m, MF_PVP))  // [MouseJstr]
 			return; // no exp on pvp maps
 	
 		if (sd->status.guild_id>0)
@@ -9075,14 +9074,14 @@ void pc_skillup(map_session_data *sd,uint16 skill_id)
 				pc_check_skilltree(sd); // Check if a new skill can Lvlup
 
 			uint16 lv = sd->status.skill[idx].lv;
-			int32 range = skill_get_range2(&sd->bl, skill_id, lv, false);
+			int32 range = skill_get_range2(sd, skill_id, lv, false);
 			bool upgradable = ( lv < skill_tree_get_max( sd->status.skill[idx].id, sd->status.class_ ) );
 			clif_skillup( *sd, skill_id, lv, range, upgradable );
 			clif_updatestatus(*sd,SP_SKILLPOINT);
 			if( skill_id == GN_REMODELING_CART ) /* cart weight info was updated by status_calc_pc */
 				clif_updatestatus(*sd,SP_CARTINFO);
 			if (pc_checkskill(sd, SG_DEVIL) && ((sd->class_&MAPID_THIRDMASK) == MAPID_STAR_EMPEROR || pc_is_maxjoblv(sd)))
-				clif_status_change(&sd->bl, EFST_DEVIL1, 1, 0, 0, 0, 1); //Permanent blind effect from SG_DEVIL.
+				clif_status_change(sd, EFST_DEVIL1, 1, 0, 0, 0, 1); //Permanent blind effect from SG_DEVIL.
 			if (!pc_has_permission(sd, PC_PERM_ALL_SKILL)) // may skill everything at any time anyways, and this would cause a huge slowdown
 				clif_skillinfoblock(sd);
 		}
@@ -9352,7 +9351,7 @@ int32 pc_resetskill(map_session_data* sd, int32 flag)
 			return 0;
 
 		if( pc_checkskill(sd, SG_DEVIL) && ((sd->class_&MAPID_THIRDMASK) == MAPID_STAR_EMPEROR || pc_is_maxjoblv(sd)) )
-			clif_status_load(&sd->bl, EFST_DEVIL1, 0); //Remove perma blindness due to skill-reset. [Skotlex]
+			clif_status_load(sd, EFST_DEVIL1, 0); //Remove perma blindness due to skill-reset. [Skotlex]
 		i = sd->sc.option;
 		if( i&OPTION_RIDING && pc_checkskill(sd, KN_RIDING) )
 			i &= ~OPTION_RIDING;
@@ -9380,9 +9379,9 @@ int32 pc_resetskill(map_session_data* sd, int32 flag)
 			hom_vaporize(sd, HOM_ST_ACTIVE);
 
 		if (sd->sc.getSCE(SC_SPRITEMABLE) && pc_checkskill(sd, SU_SPRITEMABLE))
-			status_change_end(&sd->bl, SC_SPRITEMABLE);
+			status_change_end(sd, SC_SPRITEMABLE);
 		if (sd->sc.getSCE(SC_SOULATTACK) && pc_checkskill(sd, SU_SOULATTACK))
-			status_change_end(&sd->bl, SC_SOULATTACK);
+			status_change_end(sd, SC_SOULATTACK);
 	}
 
 	for (const auto &skill : skill_db) {
@@ -9571,7 +9570,7 @@ void pc_respawn(map_session_data* sd, clr_type clrtype)
 	pc_setstand(sd, true);
 	pc_setrestartvalue(sd,3);
 	if( pc_setpos( sd, mapindex_name2id( sd->status.save_point.map ), sd->status.save_point.x, sd->status.save_point.y, clrtype ) != SETPOS_OK ){
-		clif_resurrection( sd->bl ); //If warping fails, send a normal stand up packet.
+		clif_resurrection( *sd ); //If warping fails, send a normal stand up packet.
 	}
 }
 
@@ -9646,7 +9645,7 @@ void pc_close_npc(map_session_data *sd,int32 flag)
 
 		if (sd->st) {
 			if(sd->st->state == RUN){ //wait ending code execution
-				add_timer(gettick()+500,pc_close_npc_timer,sd->bl.id,flag);
+				add_timer(gettick()+500,pc_close_npc_timer,sd->id,flag);
 				return;
 			}
 			sd->st->state = ((flag==1 && sd->st->mes_active)?CLOSE:END);
@@ -9683,7 +9682,7 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 {
 	int32 i=0,k=0;
 	t_tick tick = gettick();
-	struct map_data *mapdata = map_getmapdata(sd->bl.m);
+	struct map_data *mapdata = map_getmapdata(sd->m);
 
 	// Activate Steel body if a super novice dies at 99+% exp [celest]
 	// Super Novices have no kill or die functions attached when saved by their angel
@@ -9693,13 +9692,13 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 		if( exp && get_percentage_exp(sd->status.base_exp, exp) >= 99 ) {
 			sd->state.snovice_dead_flag = 1;
 			pc_setrestartvalue(sd,1);
-			status_percent_heal(&sd->bl, 100, 100);
-			clif_resurrection( sd->bl );
+			status_percent_heal(sd, 100, 100);
+			clif_resurrection( *sd );
 			if(battle_config.pc_invincible_time)
 				pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
-			sc_start(&sd->bl,&sd->bl,SC_STEELBODY,100,5,skill_get_time(MO_STEELBODY,5));
+			sc_start(sd,sd,SC_STEELBODY,100,5,skill_get_time(MO_STEELBODY,5));
 			if(mapdata_flag_gvg2(mapdata))
-				pc_respawn_timer(INVALID_TIMER, gettick(), sd->bl.id, 0);
+				pc_respawn_timer(INVALID_TIMER, gettick(), sd->id, 0);
 			return 0;
 		}
 	}
@@ -9708,7 +9707,7 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 		if (sd->devotion[k]){
 			map_session_data *devsd = map_id2sd(sd->devotion[k]);
 			if (devsd)
-				status_change_end(&devsd->bl, SC_DEVOTION);
+				status_change_end(devsd, SC_DEVOTION);
 			sd->devotion[k] = 0;
 		}
 	}
@@ -9718,7 +9717,7 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 			map_session_data *smarksd = map_id2sd(sd->stellar_mark[k]);
 
 			if (smarksd)
-				status_change_end(&smarksd->bl, SC_FLASHKICK);
+				status_change_end(smarksd, SC_FLASHKICK);
 			sd->stellar_mark[k] = 0;
 		}
 	}
@@ -9728,7 +9727,7 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 			map_session_data *usoulsd = map_id2sd(sd->united_soul[k]);
 
 			if (usoulsd)
-				status_change_end(&usoulsd->bl, SC_SOULUNITY);
+				status_change_end(usoulsd, SC_SOULUNITY);
 			sd->united_soul[k] = 0;
 		}
 	}
@@ -9738,7 +9737,7 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 			map_session_data *ssignsd = map_id2sd(sd->servant_sign[k]);
 
 			if (ssignsd)
-				status_change_end(&ssignsd->bl, SC_SERVANT_SIGN);
+				status_change_end(ssignsd, SC_SERVANT_SIGN);
 			sd->servant_sign[k] = 0;
 		}
 	}
@@ -9784,7 +9783,7 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 
 	/* e.g. not killed thru pc_damage */
 	if( pc_issit(sd) ) {
-		clif_status_load(&sd->bl,EFST_SIT,0);
+		clif_status_load(sd,EFST_SIT,0);
 	}
 
 	pc_setdead(sd);
@@ -9795,7 +9794,7 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 	pc_setparam(sd, SP_KILLERRID, src?src->id:0);
 
 	if (battle_config.loose_ap_on_death == 1)
-		status_percent_damage( nullptr, &sd->bl, 0, 0, 100, 0 );
+		status_percent_damage( nullptr, sd, 0, 0, 100, 0 );
 
 	//Reset menu skills/item skills
 	if ((sd->skillitem) != 0)
@@ -9822,20 +9821,20 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 		case BL_MOB:
 		{
 			struct mob_data *md=(struct mob_data *)src;
-			if(md->target_id==sd->bl.id)
+			if(md->target_id==sd->id)
 				mob_unlocktarget(md,tick);
 			if(battle_config.mobs_level_up && md->status.hp &&
 				(uint32)md->level < pc_maxbaselv(sd) &&
 				!md->guardian_data && !md->special_state.ai// Guardians/summons should not level. [Skotlex]
 			) { 	// monster level up [Valaris]
-				clif_misceffect( md->bl, NOTIFYEFFECT_BASE_LEVEL_UP );
+				clif_misceffect( *md, NOTIFYEFFECT_BASE_LEVEL_UP );
 				md->level++;
 				status_calc_mob(md, SCO_NONE);
 				status_percent_heal(src,10,0);
 
 				if( battle_config.show_mob_info&4 )
 				{// update name with new level
-					clif_name_area(&md->bl);
+					clif_name_area(md);
 				}
 			}
 			src = battle_get_master(src); // Maybe Player Summon
@@ -9850,13 +9849,13 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 
 	if (src && src->type == BL_PC) {
 		map_session_data *ssd = (map_session_data *)src;
-		pc_setparam(ssd, SP_KILLEDRID, sd->bl.id);
+		pc_setparam(ssd, SP_KILLEDRID, sd->id);
 		npc_script_event( *ssd, NPCE_KILLPC );
 
 		if (battle_config.pk_mode&2) {
 			ssd->status.manner -= 5;
 			if(ssd->status.manner < 0)
-				sc_start(&sd->bl,src,SC_NOCHAT,100,0,0);
+				sc_start(sd,src,SC_NOCHAT,100,0,0);
 #if 0
 			// PK/Karma system code (not enabled yet) [celest]
 			// originally from Kade Online, so i don't know if any of these is correct ^^;
@@ -9894,7 +9893,7 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 		item_tmp.card[1]=0;
 		item_tmp.card[2]=GetWord(sd->status.char_id,0); // CharId
 		item_tmp.card[3]=GetWord(sd->status.char_id,1);
-		map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,4,0);
+		map_addflooritem(&item_tmp,1,sd->m,sd->x,sd->y,0,0,0,4,0);
 	}
 
 	//Remove bonus_script when dead
@@ -10025,13 +10024,13 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 			ssd->pvp_won++;
 		}
 		if( sd->pvp_point < 0 ) {
-			sd->respawn_tid = add_timer(tick+1000, pc_respawn_timer,sd->bl.id,0);
+			sd->respawn_tid = add_timer(tick+1000, pc_respawn_timer,sd->id,0);
 			return 1|8;
 		}
 	}
 	//GvG
 	if( mapdata_flag_gvg2(mapdata) ) {
-		sd->respawn_tid = add_timer(tick+1000, pc_respawn_timer, sd->bl.id, 0);
+		sd->respawn_tid = add_timer(tick+1000, pc_respawn_timer, sd->id, 0);
 		return 1|8;
 	}
 	else if( sd->bg_id ) {
@@ -10039,7 +10038,7 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 
 		if (bg) {
 			if (bg->cemetery.map > 0) { // Respawn by BG
-				sd->respawn_tid = add_timer(tick + 1000, pc_respawn_timer, sd->bl.id, 0);
+				sd->respawn_tid = add_timer(tick + 1000, pc_respawn_timer, sd->id, 0);
 				return 1|8;
 			}
 		}
@@ -10089,15 +10088,15 @@ bool pc_revive_item(map_session_data *sd) {
 			return false;
 	}
 
-	if (!status_revive(&sd->bl, hp, sp))
+	if (!status_revive(sd, hp, sp))
 		return false;
 
 	if (item_position < 0)
-		status_change_end(&sd->bl, SC_LIGHT_OF_REGENE);
+		status_change_end(sd, SC_LIGHT_OF_REGENE);
 	else
 		pc_delitem(sd, item_position, 1, 0, 1, LOG_TYPE_CONSUME);
 
-	clif_skill_nodamage(&sd->bl, sd->bl, ALL_RESURRECTION, 4);
+	clif_skill_nodamage(sd, *sd, ALL_RESURRECTION, 4);
 
 	return true;
 }
@@ -10473,9 +10472,9 @@ bool pc_setparam(map_session_data *sd,int64 type,int64 val_tmp)
 	case SP_MANNER:
 		sd->status.manner = val;
 		if( val < 0 )
-			sc_start(nullptr, &sd->bl, SC_NOCHAT, 100, 0, 0);
+			sc_start(nullptr, sd, SC_NOCHAT, 100, 0, 0);
 		else {
-			status_change_end(&sd->bl, SC_NOCHAT);
+			status_change_end(sd, SC_NOCHAT);
 			clif_manner_message(sd, 5);
 		}
 		return true; // status_change_start/status_change_end already sends packets warning the client
@@ -10687,7 +10686,7 @@ int32 pc_itemheal(map_session_data *sd, t_itemid itemid, int32 hp, int32 sp)
 			hp = 0;
 	}
 
-	return status_heal(&sd->bl, hp, sp, 1);
+	return status_heal(sd, hp, sp, 1);
 }
 
 /*==========================================
@@ -10705,24 +10704,24 @@ int32 pc_percentheal(map_session_data *sd,int32 hp,int32 sp)
 	else if (sp <-100) sp = -100;
 
 	if(hp >= 0 && sp >= 0) //Heal
-		return status_percent_heal(&sd->bl, hp, sp);
+		return status_percent_heal(sd, hp, sp);
 
 	if(hp <= 0 && sp <= 0) //Damage (negative rates indicate % of max rather than current), and only kill target IF the specified amount is 100%
-		return status_percent_damage(nullptr, &sd->bl, hp, sp, hp==-100);
+		return status_percent_damage(nullptr, sd, hp, sp, hp==-100);
 
 	//Crossed signs
 	if(hp) {
 		if(hp > 0)
-			status_percent_heal(&sd->bl, hp, 0);
+			status_percent_heal(sd, hp, 0);
 		else
-			status_percent_damage(nullptr, &sd->bl, hp, 0, hp==-100);
+			status_percent_damage(nullptr, sd, hp, 0, hp==-100);
 	}
 
 	if(sp) {
 		if(sp > 0)
-			status_percent_heal(&sd->bl, 0, sp);
+			status_percent_heal(sd, 0, sp);
 		else
-			status_percent_damage(nullptr, &sd->bl, 0, sp, false);
+			status_percent_damage(nullptr, sd, 0, sp, false);
 	}
 	return 0;
 }
@@ -10736,7 +10735,7 @@ static int32 jobchange_killclone(struct block_list *bl, va_list ap)
 	flag = va_arg(ap, int32);
 
 	if (md->master_id && md->special_state.clone && md->master_id == flag)
-		status_kill(&md->bl);
+		status_kill(md);
 	return 1;
 }
 
@@ -10818,7 +10817,7 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 	// Reset body style to 0 before changing job to avoid
 	// errors since not every job has a alternate outfit.
 	sd->status.body = 0;
-	clif_changelook(&sd->bl,LOOK_BODY2,0);
+	clif_changelook(sd,LOOK_BODY2,0);
 
 	sd->status.class_ = job;
 	fame_flag = pc_famerank(sd->status.char_id,sd->class_&MAPID_UPPERMASK);
@@ -10894,16 +10893,16 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 	if (sd->disguise)
 		pc_disguise(sd, 0);
 
-	status_set_viewdata(&sd->bl, job);
-	clif_changelook(&sd->bl,LOOK_BASE,sd->vd.class_); // move sprite update to prevent client crashes with incompatible equipment [Valaris]
+	status_set_viewdata(sd, job);
+	clif_changelook(sd,LOOK_BASE,sd->vd.class_); // move sprite update to prevent client crashes with incompatible equipment [Valaris]
 #if PACKETVER >= 20151001
-	clif_changelook(&sd->bl, LOOK_HAIR, sd->vd.hair_style); // Update player's head (only matters when switching to or from Doram)
+	clif_changelook(sd, LOOK_HAIR, sd->vd.hair_style); // Update player's head (only matters when switching to or from Doram)
 #endif
 	if(sd->vd.cloth_color)
-		clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->vd.cloth_color);
+		clif_changelook(sd,LOOK_CLOTHES_COLOR,sd->vd.cloth_color);
 	/*
 	if(sd->vd.body_style)
-		clif_changelook(&sd->bl,LOOK_BODY2,sd->vd.body_style);
+		clif_changelook(sd,LOOK_BODY2,sd->vd.body_style);
 	*/
 	//Update skill tree.
 	pc_calc_skilltree(sd);
@@ -10916,7 +10915,7 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 	if (sd->state.buyingstore)
 		buyingstore_close(sd);
 
-	map_foreachinmap(jobchange_killclone, sd->bl.m, BL_MOB, sd->bl.id);
+	map_foreachinmap(jobchange_killclone, sd->m, BL_MOB, sd->id);
 
 	//Remove peco/cart/falcon
 	i = sd->sc.option;
@@ -10946,11 +10945,11 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 		hom_vaporize(sd, HOM_ST_ACTIVE);
 
 	if (sd->sc.getSCE(SC_SPRITEMABLE) && !pc_checkskill(sd, SU_SPRITEMABLE))
-		status_change_end(&sd->bl, SC_SPRITEMABLE);
+		status_change_end(sd, SC_SPRITEMABLE);
 	if (sd->sc.getSCE(SC_SOULATTACK) && !pc_checkskill(sd, SU_SOULATTACK))
-		status_change_end(&sd->bl, SC_SOULATTACK);
+		status_change_end(sd, SC_SOULATTACK);
 	if( sd->sc.getSCE(SC_SPIRIT) ){
-		status_change_end( &sd->bl, SC_SPIRIT );
+		status_change_end( sd, SC_SPIRIT );
 	}
 
 	if(sd->status.manner < 0){
@@ -11000,12 +10999,12 @@ void pc_equiplookall(map_session_data *sd)
 {
 	nullpo_retv(sd);
 
-	clif_changelook(&sd->bl,LOOK_WEAPON,0);
-	clif_changelook(&sd->bl,LOOK_SHOES,0);
-	clif_changelook(&sd->bl,LOOK_HEAD_BOTTOM,sd->status.head_bottom);
-	clif_changelook(&sd->bl,LOOK_HEAD_TOP,sd->status.head_top);
-	clif_changelook(&sd->bl,LOOK_HEAD_MID,sd->status.head_mid);
-	clif_changelook(&sd->bl,LOOK_ROBE, sd->status.robe);
+	clif_changelook(sd,LOOK_WEAPON,0);
+	clif_changelook(sd,LOOK_SHOES,0);
+	clif_changelook(sd,LOOK_HEAD_BOTTOM,sd->status.head_bottom);
+	clif_changelook(sd,LOOK_HEAD_TOP,sd->status.head_top);
+	clif_changelook(sd,LOOK_HEAD_MID,sd->status.head_mid);
+	clif_changelook(sd,LOOK_ROBE, sd->status.robe);
 }
 
 /*==========================================
@@ -11070,7 +11069,7 @@ void pc_changelook(map_session_data *sd,int32 type,int32 val) {
 		sd->status.body = val;
 		break;
 	}
-	clif_changelook(&sd->bl, type, val);
+	clif_changelook(sd, type, val);
 }
 
 /*==========================================
@@ -11084,16 +11083,16 @@ void pc_setoption(map_session_data *sd,int32 type, int32 subtype)
 
 	//Option has to be changed client-side before the class sprite or it won't always work (eg: Wedding sprite) [Skotlex]
 	sd->sc.option=type;
-	clif_changeoption(&sd->bl);
+	clif_changeoption(sd);
 
 	if( (type&OPTION_RIDING && !(p_type&OPTION_RIDING)) || (type&OPTION_DRAGON && !(p_type&OPTION_DRAGON) && pc_checkskill(sd,RK_DRAGONTRAINING) > 0) )
 	{ // Mounting
-		clif_status_load(&sd->bl,EFST_RIDING,1);
+		clif_status_load(sd,EFST_RIDING,1);
 		status_calc_pc(sd,SCO_NONE);
 	}
 	else if( (!(type&OPTION_RIDING) && p_type&OPTION_RIDING) || (!(type&OPTION_DRAGON) && p_type&OPTION_DRAGON && pc_checkskill(sd,RK_DRAGONTRAINING) > 0) )
 	{ // Dismount
-		clif_status_load(&sd->bl,EFST_RIDING,0);
+		clif_status_load(sd,EFST_RIDING,0);
 		status_calc_pc(sd,SCO_NONE);
 	}
 
@@ -11111,22 +11110,22 @@ void pc_setoption(map_session_data *sd,int32 type, int32 subtype)
 #endif
 
 	if (type&OPTION_FALCON && !(p_type&OPTION_FALCON)) //Falcon ON
-		clif_status_load(&sd->bl,EFST_FALCON,1);
+		clif_status_load(sd,EFST_FALCON,1);
 	else if (!(type&OPTION_FALCON) && p_type&OPTION_FALCON) //Falcon OFF
-		clif_status_load(&sd->bl,EFST_FALCON,0);
+		clif_status_load(sd,EFST_FALCON,0);
 
 	if( type&OPTION_WUGRIDER && !(p_type&OPTION_WUGRIDER) ) { // Mounting
-		clif_status_load(&sd->bl,EFST_WUGRIDER,1);
+		clif_status_load(sd,EFST_WUGRIDER,1);
 		status_calc_pc(sd,SCO_NONE);
 	} else if( !(type&OPTION_WUGRIDER) && p_type&OPTION_WUGRIDER ) { // Dismount
-		clif_status_load(&sd->bl,EFST_WUGRIDER,0);
+		clif_status_load(sd,EFST_WUGRIDER,0);
 		status_calc_pc(sd,SCO_NONE);
 	}
 
 	if( type&OPTION_MADOGEAR && !(p_type&OPTION_MADOGEAR) ) {
-		sc_start(&sd->bl, &sd->bl, SC_MADOGEAR, 100, subtype, INFINITE_TICK);
+		sc_start(sd, sd, SC_MADOGEAR, 100, subtype, INFINITE_TICK);
 	} else if( !(type&OPTION_MADOGEAR) && p_type&OPTION_MADOGEAR ) {
-		status_change_end(&sd->bl, SC_MADOGEAR);
+		status_change_end(sd, SC_MADOGEAR);
 	}
 
 	if (type&OPTION_FLYING && !(p_type&OPTION_FLYING))
@@ -11138,17 +11137,17 @@ void pc_setoption(map_session_data *sd,int32 type, int32 subtype)
 		return; //Disguises break sprite changes
 
 	if (new_look < 0) { //Restore normal look.
-		status_set_viewdata(&sd->bl, sd->status.class_);
+		status_set_viewdata(sd, sd->status.class_);
 		new_look = sd->vd.class_;
 	}
 
 	// Stop attacking on new view change (to prevent wedding/santa attacks).
-	unit_stop_attack( &sd->bl );
-	clif_changelook(&sd->bl,LOOK_BASE,new_look);
+	unit_stop_attack( sd );
+	clif_changelook(sd,LOOK_BASE,new_look);
 	if (sd->vd.cloth_color)
-		clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->vd.cloth_color);
+		clif_changelook(sd,LOOK_CLOTHES_COLOR,sd->vd.cloth_color);
 	if( sd->vd.body_style )
-		clif_changelook(&sd->bl,LOOK_BODY2,sd->vd.body_style);
+		clif_changelook(sd,LOOK_BODY2,sd->vd.body_style);
 	clif_skillinfoblock(sd); // Skill list needs to be updated after base change.
 }
 
@@ -11176,7 +11175,7 @@ bool pc_setcart(map_session_data *sd,int32 type) {
 		case 0:
 			if( !sd->sc.getSCE(SC_PUSH_CART) )
 				return 0;
-			status_change_end(&sd->bl,SC_PUSH_CART);
+			status_change_end(sd,SC_PUSH_CART);
 			clif_clearcart(sd->fd);
 			break;
 		default:/* everything else is an allowed ID so we can move on */
@@ -11185,7 +11184,7 @@ bool pc_setcart(map_session_data *sd,int32 type) {
 				status_calc_cart_weight(sd, (e_status_calc_weight_opt)(CALCWT_ITEM|CALCWT_MAXBONUS|CALCWT_CARTSTATE));
 			}
 			clif_updatestatus(*sd, SP_CARTINFO);
-			sc_start(&sd->bl, &sd->bl, SC_PUSH_CART, 100, type, 0);
+			sc_start(sd, sd, SC_PUSH_CART, 100, type, 0);
 			break;
 	}
 
@@ -11617,7 +11616,7 @@ bool pc_addeventtimer(map_session_data *sd,int32 tick,const char *name)
 	if( i == MAX_EVENTTIMER )
 		return false;
 
-	sd->eventtimer[i] = add_timer(gettick()+tick, pc_eventtimer, sd->bl.id, (intptr_t)aStrdup(name));
+	sd->eventtimer[i] = add_timer(gettick()+tick, pc_eventtimer, sd->id, (intptr_t)aStrdup(name));
 	sd->eventcount++;
 
 	return true;
@@ -12076,7 +12075,7 @@ bool pc_equipitem(map_session_data *sd,int16 n,int32 req_pos,bool equipswitch)
 		else
 			sd->weapontype1 = W_FIST;
 		pc_calcweapontype(sd);
-		clif_changelook(&sd->bl,LOOK_WEAPON,sd->status.weapon);
+		clif_changelook(sd,LOOK_WEAPON,sd->status.weapon);
 	}
 	if(pos & EQP_HAND_L) {
 		if(id) {
@@ -12093,10 +12092,10 @@ bool pc_equipitem(map_session_data *sd,int16 n,int32 req_pos,bool equipswitch)
 		else
 			sd->status.shield = sd->weapontype2 = W_FIST;
 		pc_calcweapontype(sd);
-		clif_changelook(&sd->bl,LOOK_SHIELD,sd->status.shield);
+		clif_changelook(sd,LOOK_SHIELD,sd->status.shield);
 	}
 	if(pos & EQP_SHOES)
-		clif_changelook(&sd->bl,LOOK_SHOES,0);
+		clif_changelook(sd,LOOK_SHOES,0);
 
 	if (battle_config.ammo_unequip && (pos&EQP_ARMS) && id->type == IT_WEAPON) {
 		int16 idx = sd->equip_index[EQI_AMMO];
@@ -12160,8 +12159,8 @@ bool pc_equipitem(map_session_data *sd,int16 n,int32 req_pos,bool equipswitch)
 		current_equip_item_index = n;
 		current_equip_card_id = 0;
 		//only run the script if item isn't restricted
-		if (id->equip_script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(id,sd->bl.m)))
-			run_script(id->equip_script,0,sd->bl.id,fake_nd->bl.id);
+		if (id->equip_script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(id,sd->m)))
+			run_script(id->equip_script,0,sd->id,fake_nd->id);
 		if(itemdb_isspecial(sd->inventory.u.items_inventory[n].card[0]))
 			; //No cards
 		else {
@@ -12171,9 +12170,9 @@ bool pc_equipitem(map_session_data *sd,int16 n,int32 req_pos,bool equipswitch)
 				std::shared_ptr<item_data> data = item_db.find(sd->inventory.u.items_inventory[n].card[i]);
 
 				if ( data != nullptr ) {
-					if (data->equip_script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(data.get(), sd->bl.m))) {
+					if (data->equip_script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(data.get(), sd->m))) {
 						current_equip_card_id = sd->inventory.u.items_inventory[n].card[i];
-						run_script(data->equip_script,0,sd->bl.id,fake_nd->bl.id);
+						run_script(data->equip_script,0,sd->id,fake_nd->id);
 					}
 				}
 				current_equip_card_id = 0;
@@ -12252,14 +12251,14 @@ static void pc_unequipitem_sub(map_session_data *sd, int32 n, int32 flag) {
 	}
 
 	if (sd->sc.getSCE(SC_SIGNUMCRUCIS) && !battle_check_undead(sd->battle_status.race, sd->battle_status.def_ele))
-		status_change_end(&sd->bl, SC_SIGNUMCRUCIS);
+		status_change_end(sd, SC_SIGNUMCRUCIS);
 
 	//OnUnEquip script [Skotlex]
 	if (sd->inventory_data[n]) {
 		current_equip_item_index = n;
 		current_equip_card_id = 0;
 		if (sd->inventory_data[n]->unequip_script)
-			run_script(sd->inventory_data[n]->unequip_script, 0, sd->bl.id, fake_nd->bl.id);
+			run_script(sd->inventory_data[n]->unequip_script, 0, sd->id, fake_nd->id);
 		if (itemdb_isspecial(sd->inventory.u.items_inventory[n].card[0]))
 			; //No cards
 		else {
@@ -12272,7 +12271,7 @@ static void pc_unequipitem_sub(map_session_data *sd, int32 n, int32 flag) {
 				if (data != nullptr) {
 					if (data->unequip_script) {
 						current_equip_card_id = sd->inventory.u.items_inventory[n].card[i];
-						run_script(data->unequip_script, 0, sd->bl.id, fake_nd->bl.id);
+						run_script(data->unequip_script, 0, sd->id, fake_nd->id);
 					}
 				}
 				current_equip_card_id = 0;
@@ -12328,33 +12327,33 @@ bool pc_unequipitem(map_session_data *sd, int32 n, int32 flag) {
 		sd->weapontype1 = W_FIST;
 		sd->status.weapon = sd->weapontype2;
 		pc_calcweapontype(sd);
-		clif_changelook(&sd->bl,LOOK_WEAPON,sd->status.weapon);
+		clif_changelook(sd,LOOK_WEAPON,sd->status.weapon);
 		if( !battle_config.dancing_weaponswitch_fix )
-			status_change_end(&sd->bl, SC_DANCING); // Unequipping => stop dancing.
+			status_change_end(sd, SC_DANCING); // Unequipping => stop dancing.
 #ifdef RENEWAL
 		if (battle_config.switch_remove_edp&2) {
 #else
 		if (battle_config.switch_remove_edp&1) {
 #endif
-			status_change_end(&sd->bl, SC_EDP);
+			status_change_end(sd, SC_EDP);
 		}
 	}
 	if(pos & EQP_HAND_L) {
-		if (sd->status.shield && battle_getcurrentskill(&sd->bl) == LG_SHIELDSPELL)
-			unit_skillcastcancel(&sd->bl, 0); // Cancel Shield Spell if player swaps shields.
+		if (sd->status.shield && battle_getcurrentskill(sd) == LG_SHIELDSPELL)
+			unit_skillcastcancel(sd, 0); // Cancel Shield Spell if player swaps shields.
 
 		sd->status.shield = sd->weapontype2 = W_FIST;
 		pc_calcweapontype(sd);
-		clif_changelook(&sd->bl,LOOK_SHIELD,sd->status.shield);
+		clif_changelook(sd,LOOK_SHIELD,sd->status.shield);
 	}
 
 	if(pos & EQP_SHOES)
-		clif_changelook(&sd->bl,LOOK_SHOES,0);
+		clif_changelook(sd,LOOK_SHOES,0);
 
 	clif_unequipitemack(*sd,n,pos,true);
 	pc_set_costume_view(sd);
 
-	status_db.removeByStatusFlag(&sd->bl, { SCF_REMOVEONUNEQUIP });
+	status_db.removeByStatusFlag(sd, { SCF_REMOVEONUNEQUIP });
 
 	// On weapon change (right and left hand)
 	if ((pos & EQP_ARMS) && sd->inventory_data[n]->type == IT_WEAPON) {
@@ -12380,17 +12379,17 @@ bool pc_unequipitem(map_session_data *sd, int32 n, int32 flag) {
 			}
 		}
 
-		status_db.removeByStatusFlag(&sd->bl, { SCF_REMOVEONUNEQUIPWEAPON });
+		status_db.removeByStatusFlag(sd, { SCF_REMOVEONUNEQUIPWEAPON });
 	}
 
 	// On armor change
 	if (pos & EQP_ARMOR) {
-		status_db.removeByStatusFlag(&sd->bl, { SCF_REMOVEONUNEQUIPARMOR });
+		status_db.removeByStatusFlag(sd, { SCF_REMOVEONUNEQUIPARMOR });
 	}
 
 	// On ammo change
 	if (sd->inventory_data[n]->type == IT_AMMO && (sd->inventory_data[n]->nameid != ITEMID_SILVER_BULLET || sd->inventory_data[n]->nameid != ITEMID_PURIFICATION_BULLET || sd->inventory_data[n]->nameid != ITEMID_SILVER_BULLET_))
-		status_change_end(&sd->bl, SC_P_ALTER);
+		status_change_end(sd, SC_P_ALTER);
 
 	pc_unequipitem_sub(sd, n, flag);
 
@@ -12526,7 +12525,7 @@ void pc_checkitem(map_session_data *sd) {
 			continue;
 		}
 
-		if( !pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && !battle_config.allow_equip_restricted_item && itemdb_isNoEquip(sd->inventory_data[i], sd->bl.m) ) {
+		if( !pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && !battle_config.allow_equip_restricted_item && itemdb_isNoEquip(sd->inventory_data[i], sd->m) ) {
 			pc_unequipitem(sd, i, 2);
 			calc_flag = 1;
 			continue;
@@ -12541,7 +12540,7 @@ void pc_checkitem(map_session_data *sd) {
 		if( !it->equipSwitch )
 			continue;
 		if( it->equipSwitch&~pc_equippoint(sd,i) ||
-			( !pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && !battle_config.allow_equip_restricted_item && itemdb_isNoEquip(sd->inventory_data[i], sd->bl.m) ) ){
+			( !pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && !battle_config.allow_equip_restricted_item && itemdb_isNoEquip(sd->inventory_data[i], sd->m) ) ){
 			
 			for( int32 j = 0; j < EQI_MAX; j++ ){
 				if( sd->equip_switch_index[j] == i ){
@@ -12658,10 +12657,10 @@ static int32 pc_calc_pvprank_sub(struct block_list *bl,va_list ap)
 int32 pc_calc_pvprank(map_session_data *sd)
 {
 	int32 old = sd->pvp_rank;
-	struct map_data *mapdata = map_getmapdata(sd->bl.m);
+	struct map_data *mapdata = map_getmapdata(sd->m);
 
 	sd->pvp_rank=1;
-	map_foreachinmap(pc_calc_pvprank_sub,sd->bl.m,BL_PC,sd);
+	map_foreachinmap(pc_calc_pvprank_sub,sd->m,BL_PC,sd);
 	if(old!=sd->pvp_rank || sd->pvp_lastusers!=mapdata->users_pvp)
 		clif_pvpset(sd,sd->pvp_rank,sd->pvp_lastusers=mapdata->users_pvp,0);
 	return sd->pvp_rank;
@@ -12838,7 +12837,7 @@ void pc_bleeding (map_session_data *sd, t_tick diff_tick)
 	}
 
 	if (hp > 0 || sp > 0)
-		status_zap(&sd->bl, hp, sp);
+		status_zap(sd, hp, sp);
 }
 
 //Character regen. Flag is used to know which types of regen can take place.
@@ -12881,7 +12880,7 @@ void pc_regen (map_session_data *sd, t_tick diff_tick)
 	}
 
 	if (hp > 0 || sp > 0)
-		status_heal(&sd->bl, hp, sp, 0);
+		status_heal(sd, hp, sp, 0);
 }
 
 /*==========================================
@@ -12915,7 +12914,7 @@ static TIMER_FUNC(pc_autosave){
 	{
 		if (!sd->state.pc_loaded) // Player data hasn't fully loaded
 			continue;
-		if(sd->bl.id == last_save_id && save_flag != 1) {
+		if(sd->id == last_save_id && save_flag != 1) {
 			save_flag = 1;
 			continue;
 		}
@@ -12924,7 +12923,7 @@ static TIMER_FUNC(pc_autosave){
 			continue;
 
 		//Save char.
-		last_save_id = sd->bl.id;
+		last_save_id = sd->id;
 		save_flag = 2;
 
 		chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
@@ -12942,9 +12941,9 @@ static TIMER_FUNC(pc_autosave){
 
 static int32 pc_daynight_timer_sub(map_session_data *sd,va_list ap)
 {
-	if (sd->state.night != night_flag && map_getmapflag(sd->bl.m, MF_NIGHTENABLED))
+	if (sd->state.night != night_flag && map_getmapflag(sd->m, MF_NIGHTENABLED))
 	{	//Night/day state does not match.
-		clif_status_load(&sd->bl, EFST_SKE, night_flag); //New night effect by dynamix [Skotlex]
+		clif_status_load(sd, EFST_SKE, night_flag); //New night effect by dynamix [Skotlex]
 		sd->state.night = night_flag;
 		return 1;
 	}
@@ -13004,9 +13003,9 @@ bool pc_setstand(map_session_data *sd, bool force){
 	if (!force && (sd->sc.getSCE(SC_SITDOWN_FORCE) || sd->sc.getSCE(SC_BANANA_BOMB_SITDOWN)))
 		return false;
 
-	status_change_end(&sd->bl, SC_TENSIONRELAX);
-	clif_status_load(&sd->bl,EFST_SIT,0);
-	clif_standing(sd->bl); //Inform area PC is standing
+	status_change_end(sd, SC_TENSIONRELAX);
+	clif_status_load(sd,EFST_SIT,0);
+	clif_standing(*sd); //Inform area PC is standing
 	//Reset sitting tick.
 	sd->ssregen.tick.hp = sd->ssregen.tick.sp = 0;
 	if( pc_isdead( sd ) ){
@@ -13031,11 +13030,11 @@ void pc_overheat(map_session_data &sd, int16 heat) {
 		sce->val1 = cap_value(sce->val1, 0, 1000);
 
 		if (heat < 0 && sce->val1 == 0) { // Cooling device used.
-			status_change_end(&sd.bl, SC_OVERHEAT_LIMITPOINT);
-			status_change_end(&sd.bl, SC_OVERHEAT);
+			status_change_end(&sd, SC_OVERHEAT_LIMITPOINT);
+			status_change_end(&sd, SC_OVERHEAT);
 		}
 	} else if (heat > 0)
-		sc_start(&sd.bl, &sd.bl, SC_OVERHEAT_LIMITPOINT, 100, heat, 1000);
+		sc_start(&sd, &sd, SC_OVERHEAT_LIMITPOINT, 100, heat, 1000);
 }
 
 /**
@@ -13088,7 +13087,7 @@ static TIMER_FUNC(pc_spiritcharm_timer){
 	map_session_data *sd;
 	int32 i;
 
-	if ((sd = (map_session_data *)map_id2sd(id)) == nullptr || sd->bl.type != BL_PC)
+	if ((sd = (map_session_data *)map_id2sd(id)) == nullptr || sd->type != BL_PC)
 		return 1;
 
 	if (sd->spiritcharm <= 0) {
@@ -13151,7 +13150,7 @@ void pc_addspiritcharm(map_session_data *sd, int32 interval, int32 max, int32 ty
 		sd->spiritcharm_timer[sd->spiritcharm] = INVALID_TIMER;
 	}
 
-	tid = add_timer(gettick() + interval, pc_spiritcharm_timer, sd->bl.id, 0);
+	tid = add_timer(gettick() + interval, pc_spiritcharm_timer, sd->id, 0);
 	ARR_FIND(0, sd->spiritcharm, i, sd->spiritcharm_timer[i] == INVALID_TIMER || DIFF_TICK(get_timer(tid)->tick, get_timer(sd->spiritcharm_timer[i])->tick) < 0);
 
 	if (i != sd->spiritcharm)
@@ -13228,7 +13227,7 @@ uint16 pc_level_penalty_mod( map_session_data* sd, e_penalty_type type, std::sha
 		return 100;
 	}
 
-	if ((type == PENALTY_DROP && map_getmapflag(sd->bl.m, MF_NORENEWALDROPPENALTY)) || (type == PENALTY_EXP && map_getmapflag(sd->bl.m, MF_NORENEWALEXPPENALTY))) {
+	if ((type == PENALTY_DROP && map_getmapflag(sd->m, MF_NORENEWALDROPPENALTY)) || (type == PENALTY_EXP && map_getmapflag(sd->m, MF_NORENEWALEXPPENALTY))) {
 		return 100;
 	}
 
@@ -14595,7 +14594,7 @@ uint8 pc_itemcd_add(map_session_data *sd, struct item_data *id, t_tick tick, uin
 				else
 					sprintf(e_msg,msg_txt(sd,380), // Item Failed. [%s] is cooling down. Wait %d seconds.
 									itemdb_ename(sd->item_delay[i].nameid), e_tick+1);
-				clif_messagecolor(&sd->bl,color_table[COLOR_YELLOW],e_msg,false,SELF);
+				clif_messagecolor(sd,color_table[COLOR_YELLOW],e_msg,false,SELF);
 				return 1; // Delay has not expired yet
 			}
 		} else {// not yet used item (all slots are initially empty)
@@ -14642,7 +14641,7 @@ uint8 pc_itemcd_check(map_session_data *sd, struct item_data *id, t_tick tick, u
 		return 1;
 	}
 
-	sc_start(&sd->bl, &sd->bl, id->delay.sc, 100, id->nameid, id->delay.duration);
+	sc_start(sd, sd, id->delay.sc, 100, id->nameid, id->delay.duration);
 	return 0;
 }
 
@@ -14763,7 +14762,7 @@ void pc_expire_check(map_session_data *sd) {
 		return;
 	}
 
-	sd->expiration_tid = add_timer(gettick() + (uint32)(sd->expiration_time - time(nullptr)) * 1000, pc_expiration_timer, sd->bl.id, 0);
+	sd->expiration_tid = add_timer(gettick() + (uint32)(sd->expiration_time - time(nullptr)) * 1000, pc_expiration_timer, sd->id, 0);
 }
 
 /**
@@ -14810,7 +14809,7 @@ enum e_BANKING_WITHDRAW_ACK pc_bank_withdraw(map_session_data *sd, int32 money) 
 		return BWA_NO_MONEY;
 	} else if ( limit_check > MAX_ZENY ) {
 		/* no official response for this scenario exists. */
-		clif_messagecolor(&sd->bl,color_table[COLOR_RED],msg_txt(sd,1495),false,SELF); //You can't withdraw that much money
+		clif_messagecolor(sd,color_table[COLOR_RED],msg_txt(sd,1495),false,SELF); //You can't withdraw that much money
 		return BWA_UNKNOWN_ERROR;
 	}
 	
@@ -14882,14 +14881,14 @@ void pc_bonus_script(map_session_data *sd) {
 			// Only start timer for new bonus_script
 			if (entry->tid == INVALID_TIMER) {
 				if (entry->icon != EFST_BLANK) // Gives status icon if exist
-					clif_status_change(&sd->bl, entry->icon, 1, entry->tick, 1, 0, 0);
+					clif_status_change(sd, entry->icon, 1, entry->tick, 1, 0, 0);
 
 				entry->tick += now;
-				entry->tid = add_timer(entry->tick, pc_bonus_script_timer, sd->bl.id, (intptr_t)entry);
+				entry->tid = add_timer(entry->tick, pc_bonus_script_timer, sd->id, (intptr_t)entry);
 			}
 
 			if (entry->script)
-				run_script(entry->script, 0, sd->bl.id, 0);
+				run_script(entry->script, 0, sd->id, 0);
 			else
 				ShowError("pc_bonus_script: The script has been removed somewhere. \"%s\"\n", StringBuf_Value(entry->script_buf));
 		}
@@ -14976,7 +14975,7 @@ void pc_bonus_script_free_entry(map_session_data *sd, struct s_bonus_script_entr
 
 	if (sd) {
 		if (entry->icon != EFST_BLANK)
-			clif_status_load(&sd->bl, entry->icon, 0);
+			clif_status_load(sd, entry->icon, 0);
 		if (sd->bonus_script.count > 0)
 			sd->bonus_script.count--;
 	}
@@ -15078,12 +15077,12 @@ void pc_cell_basilica(map_session_data *sd) {
 
 	enum sc_type type = SC_BASILICA;
 
-	if (!map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKBASILICA)) {
+	if (!map_getcell(sd->m,sd->x,sd->y,CELL_CHKBASILICA)) {
 		if (sd->sc.getSCE(type))
-			status_change_end(&sd->bl, type);
+			status_change_end(sd, type);
 	}
 	else if (!sd->sc.getSCE(type))
-		sc_start(&sd->bl,&sd->bl, type,100,0,INFINITE_TICK);
+		sc_start(sd,sd, type,100,0,INFINITE_TICK);
 #endif
 }
 
@@ -15232,10 +15231,10 @@ void pc_show_questinfo(map_session_data *sd) {
 #if PACKETVER >= 20090218
 	nullpo_retv(sd);
 
-	if (sd->bl.m < 0 || sd->bl.m >= MAX_MAPINDEX)
+	if (sd->m < 0 || sd->m >= MAX_MAPINDEX)
 		return;
 
-	struct map_data *mapdata = map_getmapdata(sd->bl.m);
+	struct map_data *mapdata = map_getmapdata(sd->m);
 	nullpo_retv(mapdata);
 
 	if (mapdata->qi_npc.empty())
@@ -15259,7 +15258,7 @@ void pc_show_questinfo(map_session_data *sd) {
 					sd->qi_display[i].is_active = true;
 					sd->qi_display[i].icon = qi->icon;
 					sd->qi_display[i].color = qi->color;
-					clif_quest_show_event(sd, &nd->bl, qi->icon, qi->color);
+					clif_quest_show_event(sd, nd, qi->icon, qi->color);
 				}
 				break;
 			}
@@ -15271,9 +15270,9 @@ void pc_show_questinfo(map_session_data *sd) {
 				sd->qi_display[i].icon = QTYPE_NONE;
 				sd->qi_display[i].color = QMARK_NONE;
 #if PACKETVER >= 20120410
-				clif_quest_show_event(sd, &nd->bl, QTYPE_NONE, QMARK_NONE);
+				clif_quest_show_event(sd, nd, QTYPE_NONE, QMARK_NONE);
 #else
-				clif_quest_show_event(sd, &nd->bl, QTYPE_QUEST, QMARK_NONE);
+				clif_quest_show_event(sd, nd, QTYPE_QUEST, QMARK_NONE);
 #endif
 			}
 		}
@@ -15291,10 +15290,10 @@ void pc_show_questinfo_reinit(map_session_data *sd) {
 
 	sd->qi_display.clear();
 
-	if (sd->bl.m < 0 || sd->bl.m >= MAX_MAPINDEX)
+	if (sd->m < 0 || sd->m >= MAX_MAPINDEX)
 		return;
 
-	struct map_data *mapdata = map_getmapdata(sd->bl.m);
+	struct map_data *mapdata = map_getmapdata(sd->m);
 	nullpo_retv(mapdata);
 
 	if (mapdata->qi_npc.empty())
@@ -15383,7 +15382,7 @@ void pc_set_costume_view(map_session_data *sd) {
 		sd->status.robe = id->look;
 
 	// Costumes check
-	if (!map_getmapflag(sd->bl.m, MF_NOCOSTUME)) {
+	if (!map_getmapflag(sd->m, MF_NOCOSTUME)) {
 		if ((i = sd->equip_index[EQI_COSTUME_HEAD_LOW]) != -1 && (id = sd->inventory_data[i])) {
 			if (!(id->equip&(EQP_COSTUME_HEAD_MID|EQP_COSTUME_HEAD_TOP)))
 				sd->status.head_bottom = id->look;
@@ -15412,13 +15411,13 @@ void pc_set_costume_view(map_session_data *sd) {
 		sd->status.robe = sd->setlook_robe;
 
 	if (head_low != sd->status.head_bottom)
-		clif_changelook(&sd->bl, LOOK_HEAD_BOTTOM, sd->status.head_bottom);
+		clif_changelook(sd, LOOK_HEAD_BOTTOM, sd->status.head_bottom);
 	if (head_mid != sd->status.head_mid)
-		clif_changelook(&sd->bl, LOOK_HEAD_MID, sd->status.head_mid);
+		clif_changelook(sd, LOOK_HEAD_MID, sd->status.head_mid);
 	if (head_top != sd->status.head_top)
-		clif_changelook(&sd->bl, LOOK_HEAD_TOP, sd->status.head_top);
+		clif_changelook(sd, LOOK_HEAD_TOP, sd->status.head_top);
 	if (robe != sd->status.robe)
-		clif_changelook(&sd->bl, LOOK_ROBE, sd->status.robe);
+		clif_changelook(sd, LOOK_ROBE, sd->status.robe);
 }
 
 std::shared_ptr<s_attendance_period> pc_attendance_period(){
@@ -15557,9 +15556,9 @@ void pc_jail(map_session_data &sd, int32 duration) {
 	// If duration == INT_MAX then triggered via jail for infinite duration.
 	// If duration == 0 then triggered via unjail and end status.
 	if (duration > 0)
-		sc_start4(nullptr, &sd.bl, SC_JAILED, 100, duration, m_index, x, y, 60000);
+		sc_start4(nullptr, &sd, SC_JAILED, 100, duration, m_index, x, y, 60000);
 	else
-		status_change_end(&sd.bl, SC_JAILED);
+		status_change_end(&sd, SC_JAILED);
 }
 
 /**
@@ -15694,7 +15693,7 @@ TIMER_FUNC(pc_macro_detector_timeout) {
 		clif_macro_detector_request_show(*sd);
 
 		// Start a new timer
-		sd->macro_detect.timer = add_timer(gettick() + battle_config.macro_detection_timeout, pc_macro_detector_timeout, sd->bl.id, 0);
+		sd->macro_detect.timer = add_timer(gettick() + battle_config.macro_detection_timeout, pc_macro_detector_timeout, sd->id, 0);
 	}
 	return 0;
 }
@@ -15732,7 +15731,7 @@ void pc_macro_detector_process_answer(map_session_data &sd, const char captcha_a
 
 		// Grant bonuses via script
 		if( cd->bonus_script != nullptr ){
-			run_script(cd->bonus_script, 0, sd.bl.id, fake_nd->bl.id);
+			run_script(cd->bonus_script, 0, sd.id, fake_nd->id);
 		}
 
 		// Notify the client
@@ -15798,7 +15797,7 @@ int32 pc_macro_reporter_area_select_sub(block_list *bl, va_list ap) {
 void pc_macro_reporter_area_select(map_session_data &sd, const int16 x, const int16 y, const int8 radius) {
 	std::vector<uint32> aid_list;
 
-	map_foreachinarea(pc_macro_reporter_area_select_sub, sd.bl.m, x - radius, y - radius, x + radius, y + radius, BL_PC, &aid_list);
+	map_foreachinarea(pc_macro_reporter_area_select_sub, sd.m, x - radius, y - radius, x + radius, y + radius, BL_PC, &aid_list);
 
 	clif_macro_reporter_select(sd, aid_list);
 }
@@ -15827,7 +15826,7 @@ void pc_macro_reporter_process(map_session_data &sd, int32 reporter_account_id) 
 	clif_macro_detector_request(sd);
 
 	// Start the timeout timer.
-	sd.macro_detect.timer = add_timer(gettick() + battle_config.macro_detection_timeout, pc_macro_detector_timeout, sd.bl.id, 0);
+	sd.macro_detect.timer = add_timer(gettick() + battle_config.macro_detection_timeout, pc_macro_detector_timeout, sd.id, 0);
 }
 
 /**
