@@ -1035,7 +1035,7 @@ ACMD_FUNC(storage)
 	if (sd->npc_id || sd->state.vending || sd->state.buyingstore || sd->state.trading)
 		return -1;
 
-	int storage = 1; // treat @storage as if it's @storage 1 [Haydrich]
+	int32 storage = 1; // treat @storage as if it's @storage 1 [Haydrich]
 	if (message && *message)
 		storage = atoi(message);
 
