@@ -11141,6 +11141,8 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 		case SC_BLEEDING:
 		case SC_BURNING:
 		case SC_KILLING_AURA:
+		case SC_WINKCHARM:
+		case SC_VOICEOFSIREN:
 			tick_time = status_get_sc_interval(type);
 			val4 = tick - tick_time; // Remaining time
 			break;
@@ -12040,11 +12042,6 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 			break;
 		case SC_HARMONIZE:
 			val2 = 5 + 5 * val1;
-			break;
-		case SC_WINKCHARM:
-		case SC_VOICEOFSIREN:
-			tick_time = status_get_sc_interval(type);
-			val4 = tick - tick_time; // Remaining time
 			break;
 		case SC_DEEPSLEEP:
 			val4 = tick / 2000;
