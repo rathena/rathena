@@ -9451,16 +9451,18 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 	case DC_WINKCHARM:
 		if( dstsd ) {
 #ifdef RENEWAL
-			// Causes Confusion and Hallucination to 100% base chance in renewal
+			// In Renewal it causes Confusion and Hallucination to 100% base chance
 			sc_start(src, bl, SC_CONFUSION, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
 			sc_start(src, bl, SC_HALLUCINATION, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 #else
+			// In Pre-Renewal it only causes Wink Charm, if Confusion was successfully started
 			if (sc_start(src, bl, SC_CONFUSION, 10, skill_lv, skill_get_time2(skill_id, skill_lv)))
 				sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 #endif
 		} else
 		if( dstmd )
 		{
+			// For monsters it causes Wink Charm with a chance depending on the level difference
 			if (sc_start2(src, bl, type, (status_get_lv(src) - status_get_lv(bl)) + 40, skill_lv, src->id, skill_get_time(skill_id, skill_lv))) {
 				// This triggers a 0 damage event and might make the monster switch target to caster
 				battle_damage(src, bl, 0, 1, skill_lv, 0, ATK_DEF, BF_WEAPON|BF_LONG|BF_NORMAL, true, tick, false);
