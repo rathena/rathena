@@ -25,7 +25,7 @@
 			mes "[Pet Groomer]";
 			mes "Okay, let's barter.";
 			close2;
-			callshop "Pet_Groomer";
+			callshop "barter_Pet_Groomer";
 			end;
 		case 3:
 			mes "[Pet Groomer]";

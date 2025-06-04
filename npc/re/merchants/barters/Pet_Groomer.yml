@@ -49,7 +49,7 @@ Body:
 ###########################################################################
 ##= Pet Groomer ( Exchange )
 ###########################################################################
-  - Name: Pet_Groomer
+  - Name: barter_Pet_Groomer
     Items:
       - Index: 0
         Item: Monster_Juice
