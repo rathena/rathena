@@ -2115,19 +2115,6 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		)
 			return false;
 
-		if (sc->getSCE(SC_WINKCHARM) && target && !flag) { // Prevents skill usage
-			block_list *wink_target = map_id2bl(sc->getSCE(SC_WINKCHARM)->val2);
-
-			if (wink_target != nullptr) {
-				unit_data *wink_ud = unit_bl2ud(src);
-				if (wink_ud != nullptr && wink_ud->walktimer == INVALID_TIMER)
-					unit_walktobl(src, map_id2bl(sc->getSCE(SC_WINKCHARM)->val2), 3, 1);
-				clif_emotion( *src, ET_THROB );
-				return false;
-			} else
-				status_change_end(src, SC_WINKCHARM);
-		}
-
 		if (sc->getSCE(SC_BLADESTOP)) {
 			switch (sc->getSCE(SC_BLADESTOP)->val1) {
 				case 5:
@@ -5679,6 +5666,12 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 		status_calc_state_sub( bl, sc, start, scdb, sc.cant.cast, SCS_NOCAST, SCS_NOCASTCOND, []( block_list& bl, status_change& sc, bool& restriction, const sc_type type, const status_change_entry& sce ) -> bool {
 			// Check the specific conditions
 			switch( type ){
+				case SC_WINKCHARM:
+					if (bl.type != BL_PC) {
+						restriction = true;
+					}
+					break;
+
 				case SC_OBLIVIONCURSE:
 					if( sce.val3 == 1 ){
 						restriction = true;
@@ -9566,6 +9559,9 @@ static int32 status_get_sc_interval(enum sc_type type)
 		case SC_KILLING_AURA:
 		case SC_BOSSMAPINFO:
 			return 1000;
+		case SC_WINKCHARM:
+		case SC_VOICEOFSIREN:
+			return 2250;
 		case SC_BURNING:
 		case SC_PYREXIA:
 			return 3000;
@@ -11145,6 +11141,8 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 		case SC_BLEEDING:
 		case SC_BURNING:
 		case SC_KILLING_AURA:
+		case SC_WINKCHARM:
+		case SC_VOICEOFSIREN:
 			tick_time = status_get_sc_interval(type);
 			val4 = tick - tick_time; // Remaining time
 			break;
@@ -12044,10 +12042,6 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 			break;
 		case SC_HARMONIZE:
 			val2 = 5 + 5 * val1;
-			break;
-		case SC_VOICEOFSIREN:
-			val4 = tick / 2000;
-			tick_time = 2000; // [GodLesZ] tick time
 			break;
 		case SC_DEEPSLEEP:
 			val4 = tick / 2000;
@@ -13786,6 +13780,11 @@ int32 status_change_end( struct block_list* bl, enum sc_type type, int32 tid ){
 				}
 			}
 			break;
+		case SC_WINKCHARM:
+			if (bl->type == BL_MOB) {
+				mob_unlocktarget(static_cast<mob_data*>(bl), gettick());
+			}
+			break;
 		case SC_TENSIONRELAX:
 			if (sc && (sc->getSCE(SC_WEIGHT50) || sc->getSCE(SC_WEIGHT90)))
 				status_get_regen_data(bl)->state.overweight = true; // Add the overweight flag back
@@ -14676,11 +14675,10 @@ TIMER_FUNC(status_change_timer){
 		}
 		break;
 
+	case SC_WINKCHARM:
 	case SC_VOICEOFSIREN:
-		if( --(sce->val4) >= 0 ) {
+		if (sce->val4 >= 0) {
 			clif_emotion( *bl, ET_THROB );
-			sc_timer_next(2000 + tick);
-			return 0;
 		}
 		break;
 

@@ -2230,6 +2230,13 @@ int32 unit_skilluse_id2(struct block_list *src, int32 target_id, uint16 skill_id
 
 				sd->skill_id_old = skill_id;
 				break;
+			case BA_PANGVOICE:
+			case DC_WINKCHARM:
+				if (status_get_class_(target) == CLASS_BOSS) {
+					clif_skill_fail(*sd, skill_id, USESKILL_FAIL_TOTARGET);
+					return 0;
+				}
+				break;
 			case WL_WHITEIMPRISON:
 				if( battle_check_target(src,target,BCT_SELF|BCT_ENEMY) < 0 ) {
 					clif_skill_fail( *sd, skill_id, USESKILL_FAIL_TOTARGET );
@@ -3357,6 +3364,9 @@ bool unit_can_attack(struct block_list *bl, int32 target_id) {
 		return true;
 
 	if (sc->cant.attack || (sc->getSCE(SC_VOICEOFSIREN) && sc->getSCE(SC_VOICEOFSIREN)->val2 == target_id))
+		return false;
+
+	if (bl->type != BL_PC && sc->hasSCE(SC_WINKCHARM) && sc->getSCE(SC_WINKCHARM)->val2 == target_id)
 		return false;
 
 	return true;
