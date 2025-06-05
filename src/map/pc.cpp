@@ -14481,7 +14481,7 @@ void pc_use_emotion(map_session_data* const sd, const uint16 Id, const uint16 Em
 	if (battle_config.client_reshuffle_dice && EmotionId >= ET_DICE1 && EmotionId <= ET_DICE6) // re-roll dice
 	{
 		const uint16 DiceEmotionId = (rnd() % 6 + ET_DICE1);
-		clif_emotion2(&sd->bl, 0, DiceEmotionId);
+		clif_emotion2(sd, 0, DiceEmotionId);
 		return;
 	}
 
@@ -14547,7 +14547,7 @@ void pc_use_emotion(map_session_data* const sd, const uint16 Id, const uint16 Em
 		}
 	}
 
-	clif_emotion2(&sd->bl, Id, EmotionId);
+	clif_emotion2(sd, Id, EmotionId);
 }
 
 void pc_buy_emotion_expantion(map_session_data* const sd, const uint16 Id, const uint16 ItemId, const uint8 Amount)
