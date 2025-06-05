@@ -39,6 +39,10 @@ using namespace rathena;
 struct Battle_Config battle_config;
 static struct eri *delay_damage_ers; //For battle delay damage structures.
 
+#ifndef MAX_ENEMY_SEARCH_COUNT
+	#define MAX_ENEMY_SEARCH_COUNT 30
+#endif
+
 // Early declaration
 int32 battle_get_weapon_element(struct Damage *wd, struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv, int16 weapon_position, bool calc_for_damage_only);
 int32 battle_get_magic_element(struct block_list* src, struct block_list* target, uint16 skill_id, uint16 skill_lv, int32 mflag);
@@ -84,7 +88,7 @@ static int32 battle_gettargeted_sub(struct block_list *bl, va_list ap)
 	if (bl->id == target_id)
 		return 0;
 
-	if (*c >= 24)
+	if (*c >= MAX_ENEMY_SEARCH_COUNT)
 		return 0;
 
 	if ( !(ud = unit_bl2ud(bl)) )
@@ -105,16 +109,19 @@ static int32 battle_gettargeted_sub(struct block_list *bl, va_list ap)
  */
 struct block_list* battle_gettargeted(struct block_list *target)
 {
-	struct block_list *bl_list[24];
+	block_list* bl_list[MAX_ENEMY_SEARCH_COUNT];
 	int32 c = 0;
 	nullpo_retr(nullptr, target);
 
 	memset(bl_list, 0, sizeof(bl_list));
 	map_foreachinallrange(battle_gettargeted_sub, target, AREA_SIZE, BL_CHAR, bl_list, &c, target->id);
+
 	if ( c == 0 )
 		return nullptr;
-	if( c > 24 )
-		c = 24;
+
+	if (c > MAX_ENEMY_SEARCH_COUNT)
+		c = MAX_ENEMY_SEARCH_COUNT;
+
 	return bl_list[rnd()%c];
 }
 
@@ -158,10 +165,13 @@ static int32 battle_getenemy_sub(struct block_list *bl, va_list ap)
 	if (bl->id == target->id)
 		return 0;
 
-	if (*c >= 24)
+	if (*c >= MAX_ENEMY_SEARCH_COUNT)
 		return 0;
 
 	if (status_isdead(*bl))
+		return 0;
+
+	if (!status_check_visibility(target, bl, true))
 		return 0;
 
 	if (battle_check_target(target, bl, BCT_ENEMY) > 0) {
@@ -173,7 +183,7 @@ static int32 battle_getenemy_sub(struct block_list *bl, va_list ap)
 }
 
 /**
- * Returns list of enemies within given range
+ * Returns list of visible enemies within given range
  * @param target
  * @param type
  * @param range
@@ -182,7 +192,7 @@ static int32 battle_getenemy_sub(struct block_list *bl, va_list ap)
  */
 struct block_list* battle_getenemy(struct block_list *target, int32 type, int32 range)
 {
-	struct block_list *bl_list[24];
+	block_list* bl_list[MAX_ENEMY_SEARCH_COUNT];
 	int32 c = 0;
 
 	memset(bl_list, 0, sizeof(bl_list));
@@ -191,8 +201,8 @@ struct block_list* battle_getenemy(struct block_list *target, int32 type, int32 
 	if ( c == 0 )
 		return nullptr;
 
-	if( c > 24 )
-		c = 24;
+	if (c > MAX_ENEMY_SEARCH_COUNT)
+		c = MAX_ENEMY_SEARCH_COUNT;
 
 	return bl_list[rnd()%c];
 }
@@ -216,7 +226,7 @@ static int32 battle_getenemyarea_sub(struct block_list *bl, va_list ap)
 	if( bl->id == src->id || bl->id == ignore_id )
 		return 0; // Ignores Caster and a possible pre-target
 
-	if( *c >= 23 )
+	if (*c >= MAX_ENEMY_SEARCH_COUNT)
 		return 0;
 
 	if( status_isdead(*bl) )
@@ -242,7 +252,7 @@ static int32 battle_getenemyarea_sub(struct block_list *bl, va_list ap)
  */
 struct block_list* battle_getenemyarea(struct block_list *src, int32 x, int32 y, int32 range, int32 type, int32 ignore_id)
 {
-	struct block_list *bl_list[24];
+	block_list* bl_list[MAX_ENEMY_SEARCH_COUNT];
 	int32 c = 0;
 
 	memset(bl_list, 0, sizeof(bl_list));
@@ -250,8 +260,9 @@ struct block_list* battle_getenemyarea(struct block_list *src, int32 x, int32 y,
 
 	if( c == 0 )
 		return nullptr;
-	if( c >= 24 )
-		c = 23;
+
+	if (c > MAX_ENEMY_SEARCH_COUNT)
+		c = MAX_ENEMY_SEARCH_COUNT;
 
 	return bl_list[rnd()%c];
 }
@@ -1519,7 +1530,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 		if (sd && pc_issit(sd))
 			pc_setstand(sd, true);
 		if (sce_d && (d_bl = map_id2bl(sce_d->val1)) &&
-			((d_bl->type == BL_MER && ((TBL_MER*)d_bl)->master && ((TBL_MER*)d_bl)->master->bl.id == target->id) ||
+			((d_bl->type == BL_MER && ((TBL_MER*)d_bl)->master && ((TBL_MER*)d_bl)->master->id == target->id) ||
 			(d_bl->type == BL_PC && ((TBL_PC*)d_bl)->devotion[sce_d->val2] == target->id)) &&
 			check_distance_bl(target, d_bl, sce_d->val3))
 		{ //If player is target of devotion, show guard effect on the devotion caster rather than the target
@@ -4656,8 +4667,7 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 				else
 					skillratio += 30 * sce->val1;
 				// This attack has a chance to cause poison
-				// TODO: Effect should be delayed by attack motion
-				sc_start2(src, target, SC_POISON, sce->val3, sce->val1, src->id, skill_get_time2(AS_POISONREACT, sce->val1));
+				sc_start2(src, target, SC_POISON, sce->val3, sce->val1, src->id, skill_get_time2(AS_POISONREACT, sce->val1), sstatus->amotion);
 				status_change_end(src, SC_POISONREACT);
 			}
 			if (sc->getSCE(SC_CRUSHSTRIKE)) {
@@ -9041,27 +9051,27 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case EM_EL_FLAMEROCK:
 						skillratio += -100 + 2400;
 						if (ed)
-							skillratio += skillratio * status_get_lv(&ed->master->bl) / 100;
+							skillratio += skillratio * status_get_lv(ed->master) / 100;
 						break;
 					case EM_EL_AGE_OF_ICE:
 						skillratio += -100 + 3700;
 						if (ed)
-							skillratio += skillratio * status_get_lv(&ed->master->bl) / 100;
+							skillratio += skillratio * status_get_lv(ed->master) / 100;
 						break;
 					case EM_EL_STORM_WIND:
 						skillratio += -100 + 2600;
 						if (ed)
-							skillratio += skillratio * status_get_lv(&ed->master->bl) / 100;
+							skillratio += skillratio * status_get_lv(ed->master) / 100;
 						break;
 					case EM_EL_AVALANCHE:
 						skillratio += -100 + 450;
 						if (ed)
-							skillratio += skillratio * status_get_lv(&ed->master->bl) / 100;
+							skillratio += skillratio * status_get_lv(ed->master) / 100;
 						break;
 					case EM_EL_DEADLY_POISON:
 						skillratio += -100 + 700;
 						if (ed)
-							skillratio += skillratio * status_get_lv(&ed->master->bl) / 100;
+							skillratio += skillratio * status_get_lv(ed->master) / 100;
 						break;
 					case NPC_RAINOFMETEOR:
 						skillratio += 350;	// unknown ratio
@@ -10036,7 +10046,7 @@ void battle_vanish_damage(map_session_data *sd, struct block_list *target, int32
 	}
 
 	if (vanish_hp > 0 || vanish_sp > 0)
-		status_percent_damage(&sd->bl, target, -vanish_hp, -vanish_sp, false); // Damage HP/SP applied once
+		status_percent_damage(sd, target, -vanish_hp, -vanish_sp, false); // Damage HP/SP applied once
 }
 
 /*==========================================
@@ -10127,7 +10137,7 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 				block_list *d_bl;
 
 				if( (sce_d = tsc->getSCE(SC_DEVOTION)) && (d_bl = map_id2bl(sce_d->val1)) &&
-					((d_bl->type == BL_MER && ((TBL_MER*)d_bl)->master && ((TBL_MER*)d_bl)->master->bl.id == tbl->id) ||
+					((d_bl->type == BL_MER && ((TBL_MER*)d_bl)->master && ((TBL_MER*)d_bl)->master->id == tbl->id) ||
 					(d_bl->type == BL_PC && ((TBL_PC*)d_bl)->devotion[sce_d->val2] == tbl->id)) )
 				{ //Don't reflect non-skill attack if has SC_REFLECTSHIELD from Devotion bonus inheritance
 					if( (!skill_id && battle_config.devotion_rdamage_skill_only && tsc->getSCE(SC_REFLECTSHIELD)->val4) ||
@@ -10220,7 +10230,7 @@ bool battle_check_coma(map_session_data& sd, struct block_list& target, e_battle
 	mob_data* dstmd = BL_CAST(BL_MOB, &target);
 
 	// Coma
-	if (sd.special_state.bonus_coma && (!dstmd || (!util::vector_exists(status_get_race2(&dstmd->bl), RC2_GVG) && status_get_class(&dstmd->bl) != CLASS_BATTLEFIELD))) {
+	if (sd.special_state.bonus_coma && (!dstmd || (!util::vector_exists(status_get_race2(dstmd), RC2_GVG) && status_get_class(dstmd) != CLASS_BATTLEFIELD))) {
 		int32 rate = 0;
 		rate += sd.indexed_bonus.coma_class[tstatus->class_] + sd.indexed_bonus.coma_class[CLASS_ALL];
 		if(!status_bl_has_mode(&target, MD_STATUSIMMUNE))
@@ -10338,7 +10348,7 @@ void battle_drain(map_session_data *sd, struct block_list *tbl, int64 rdamage, i
 	if (!thp && !tsp)
 		return;
 
-	status_heal(&sd->bl, thp, tsp, battle_config.show_hp_sp_drain?3:1);
+	status_heal(sd, thp, tsp, battle_config.show_hp_sp_drain?3:1);
 
 	//if (rhp || rsp)
 	//	status_zap(tbl, rhp, rsp);
@@ -10418,9 +10428,9 @@ void battle_autocast_elembuff_skill(map_session_data* sd, struct block_list* tar
 	skill_lv = max(1, skill_lv);
 
 	sd->state.autocast = 1;
-	if (status_charge(&sd->bl, 0, skill_get_sp(skill_id, skill_lv))) {
-		skill_castend_damage_id(&sd->bl, target, skill_id, skill_lv, tick, flag);
-		battle_autocast_aftercast(&sd->bl, skill_id, skill_lv, tick);
+	if (status_charge(sd, 0, skill_get_sp(skill_id, skill_lv))) {
+		skill_castend_damage_id(sd, target, skill_id, skill_lv, tick, flag);
+		battle_autocast_aftercast(sd, skill_id, skill_lv, tick);
 	}
 	sd->state.autocast = 0;
 }
@@ -10739,7 +10749,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			struct block_list *d_bl = map_id2bl(sce->val1);
 
 			if( d_bl && (
-				(d_bl->type == BL_MER && ((TBL_MER*)d_bl)->master && ((TBL_MER*)d_bl)->master->bl.id == target->id) ||
+				(d_bl->type == BL_MER && ((TBL_MER*)d_bl)->master && ((TBL_MER*)d_bl)->master->id == target->id) ||
 				(d_bl->type == BL_PC && ((TBL_PC*)d_bl)->devotion[sce->val2] == target->id)
 				) && check_distance_bl(target, d_bl, sce->val3) )
 			{
@@ -10771,8 +10781,8 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			s_elemental_data *ed = ((TBL_PC*)target)->ed;
 
 			if (ed) {
-				clif_skill_damage( ed->bl, *target, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, EL_CIRCLE_OF_FIRE, tsc->getSCE(SC_CIRCLE_OF_FIRE_OPTION)->val1, DMG_SINGLE );
-				skill_attack(BF_WEAPON,&ed->bl,&ed->bl,src,EL_CIRCLE_OF_FIRE,tsc->getSCE(SC_CIRCLE_OF_FIRE_OPTION)->val1,tick,wd.flag);
+				clif_skill_damage(*ed, *target, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, EL_CIRCLE_OF_FIRE, tsc->getSCE(SC_CIRCLE_OF_FIRE_OPTION)->val1, DMG_SINGLE );
+				skill_attack(BF_WEAPON,ed,ed,src,EL_CIRCLE_OF_FIRE,tsc->getSCE(SC_CIRCLE_OF_FIRE_OPTION)->val1,tick,wd.flag);
 			}
 		}
 		if (tsc->getSCE(SC_WATER_SCREEN_OPTION)) {
