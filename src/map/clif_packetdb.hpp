@@ -2054,7 +2054,7 @@
 #endif
 
 #if PACKETVER_MAIN_NUM >= 20250122
-	parseable_packet( 0xc22, 12, clif_parse_dull, 0 );
+	parseable_packet( HEADER_CZ_MOVE_ITEM_TO_PERSONAL, sizeof( PACKET_CZ_MOVE_ITEM_TO_PERSONAL ), clif_parse_MoveFromKafraFav, 0 );
 #endif
 
 #if PACKETVER_MAIN_NUM >= 20230915
