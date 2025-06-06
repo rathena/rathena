@@ -623,7 +623,7 @@ uint64 BarterDatabase::parseBodyNode( const ryml::NodeRef& node ){
 				}
 
 				if( refine > MAX_REFINE ){
-					this->invalidWarning( itemNode["Amount"], "barter_parseBodyNode: Refine %hd is too high, capping to %d.\n", refine, MAX_REFINE );
+					this->invalidWarning( itemNode["Refine"], "barter_parseBodyNode: Refine %hd is too high, capping to %d.\n", refine, MAX_REFINE );
 					refine = MAX_REFINE;
 				}
 
@@ -710,7 +710,7 @@ uint64 BarterDatabase::parseBodyNode( const ryml::NodeRef& node ){
 						}
 
 						if( refine > MAX_REFINE ){
-							this->invalidWarning( requiredItemNode["Amount"], "barter_parseBodyNode: Refine %hd is too high, capping to %d.\n", refine, MAX_REFINE );
+							this->invalidWarning( requiredItemNode["Refine"], "barter_parseBodyNode: Refine %hd is too high, capping to %d.\n", refine, MAX_REFINE );
 							refine = MAX_REFINE;
 						}
 
