@@ -289,7 +289,7 @@ int32 unit_walktoxy_sub(struct block_list *bl)
 	}
 #if PACKETVER >= 20170726
 	// If this is a walking NPC and it will use a player sprite
-	else if( bl->type == BL_NPC && pcdb_checkid( status_get_viewdata( bl )->class_ ) ){
+	else if( bl->type == BL_NPC && pcdb_checkid( status_get_viewdata( bl )->look[LOOK_BASE] ) ){
 		// Respawn the NPC as player unit
 		unit_refresh( bl, true );
 	}
@@ -621,7 +621,7 @@ static TIMER_FUNC(unit_walktoxy_timer)
 	if (bl->x == ud->to_x && bl->y == ud->to_y) {
 #if PACKETVER >= 20170726
 		// If this was a walking NPC and it used a player sprite
-		if( bl->type == BL_NPC && pcdb_checkid( status_get_viewdata( bl )->class_ ) ){
+		if( bl->type == BL_NPC && pcdb_checkid( status_get_viewdata( bl )->look[LOOK_BASE] ) ){
 			// Respawn the NPC as NPC unit
 			unit_refresh( bl, false );
 		}

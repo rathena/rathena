@@ -1140,7 +1140,7 @@ ACMD_FUNC(hide)
 		map_foreachinmovearea(clif_insight, sd, AREA_SIZE, sd->x, sd->y, BL_ALL, sd);
 	} else {
 		sd->sc.option |= OPTION_INVISIBLE;
-		sd->vd.class_ = JT_INVISIBLE;
+		sd->vd.look[LOOK_BASE] = JT_INVISIBLE;
 		clif_displaymessage(fd, msg_txt(sd,11)); // Invisible: On
 
 		// decrement the number of pvp players on the map
