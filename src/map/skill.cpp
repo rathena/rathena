@@ -9450,23 +9450,25 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 
 	case DC_WINKCHARM:
 		if( dstsd ) {
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv, sc_start(src,bl,SC_CONFUSION,10,7,skill_get_time2(skill_id,skill_lv)));
 #ifdef RENEWAL
-			sc_start(src, bl, SC_HALLUCINATION, 30, skill_lv, skill_get_time(skill_id, skill_lv)); // TODO: Confirm success rate and duration
+			// In Renewal it causes Confusion and Hallucination to 100% base chance
+			sc_start(src, bl, SC_CONFUSION, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
+			sc_start(src, bl, SC_HALLUCINATION, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+#else
+			// In Pre-Renewal it only causes Wink Charm, if Confusion was successfully started
+			if (sc_start(src, bl, SC_CONFUSION, 10, skill_lv, skill_get_time2(skill_id, skill_lv)))
+				sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 #endif
 		} else
 		if( dstmd )
 		{
-			if( status_get_lv(src) > status_get_lv(bl)
-			&&  (tstatus->race == RC_DEMON || tstatus->race == RC_DEMIHUMAN || tstatus->race == RC_PLAYER_HUMAN || tstatus->race == RC_PLAYER_DORAM || tstatus->race == RC_ANGEL)
-			&&  !status_has_mode(tstatus,MD_STATUSIMMUNE) )
-				clif_skill_nodamage(src,*bl,skill_id,skill_lv, sc_start2(src,bl,type,(status_get_lv(src) - status_get_lv(bl)) + 40, skill_lv, src->id, skill_get_time(skill_id, skill_lv)));
-			else
-			{
-				clif_skill_nodamage(src,*bl,skill_id,skill_lv,false);
-				if(sd) clif_skill_fail( *sd, skill_id );
+			// For monsters it causes Wink Charm with a chance depending on the level difference
+			if (sc_start2(src, bl, type, (status_get_lv(src) - status_get_lv(bl)) + 40, skill_lv, src->id, skill_get_time(skill_id, skill_lv))) {
+				// This triggers a 0 damage event and might make the monster switch target to caster
+				battle_damage(src, bl, 0, 1, skill_lv, 0, ATK_DEF, BF_WEAPON|BF_LONG|BF_NORMAL, true, tick, false);
 			}
 		}
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		break;
 
 #ifdef RENEWAL
@@ -13724,6 +13726,18 @@ static int8 skill_castend_id_check(struct block_list *src, struct block_list *ta
 					return USESKILL_FAIL_MAX;
 			}
 			break;
+		case DC_WINKCHARM:
+			switch (status_get_status_data(*target)->race) {
+				case RC_DEMON:
+				case RC_DEMIHUMAN:
+				case RC_ANGEL:
+				case RC_PLAYER_HUMAN:
+				case RC_PLAYER_DORAM:
+					break;
+				default:
+					return USESKILL_FAIL_LEVEL;
+			}
+			break;
 		case PR_LEXDIVINA:
 		case MER_LEXDIVINA:
 			{
@@ -17157,7 +17171,7 @@ int32 skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t
 		case UNT_SKIDTRAP: {
 				//Knockback away from position of user during placement [Playtester]
 				skill_blown(unit,bl,skill_get_blewcount(sg->skill_id,sg->skill_lv),
-					(map_calc_dir_xy(sg->val1>>16,sg->val1&0xFFFF,bl->x,bl->y,6)+4)%8,BLOWN_NONE);
+					map_calc_dir_xy(bl->x,bl->y,sg->val1>>16,sg->val1&0xFFFF,DIR_EAST),BLOWN_NONE);
 				sg->unit_id = UNT_USED_TRAPS;
 				clif_changetraplook(unit, UNT_USED_TRAPS);
 				sg->limit=DIFF_TICK(tick,sg->tick)+1500;

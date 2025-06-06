@@ -2115,19 +2115,6 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		)
 			return false;
 
-		if (sc->getSCE(SC_WINKCHARM) && target && !flag) { // Prevents skill usage
-			block_list *wink_target = map_id2bl(sc->getSCE(SC_WINKCHARM)->val2);
-
-			if (wink_target != nullptr) {
-				unit_data *wink_ud = unit_bl2ud(src);
-				if (wink_ud != nullptr && wink_ud->walktimer == INVALID_TIMER)
-					unit_walktobl(src, map_id2bl(sc->getSCE(SC_WINKCHARM)->val2), 3, 1);
-				clif_emotion( *src, ET_THROB );
-				return false;
-			} else
-				status_change_end(src, SC_WINKCHARM);
-		}
-
 		if (sc->getSCE(SC_BLADESTOP)) {
 			switch (sc->getSCE(SC_BLADESTOP)->val1) {
 				case 5:
@@ -5679,6 +5666,12 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 		status_calc_state_sub( bl, sc, start, scdb, sc.cant.cast, SCS_NOCAST, SCS_NOCASTCOND, []( block_list& bl, status_change& sc, bool& restriction, const sc_type type, const status_change_entry& sce ) -> bool {
 			// Check the specific conditions
 			switch( type ){
+				case SC_WINKCHARM:
+					if (bl.type != BL_PC) {
+						restriction = true;
+					}
+					break;
+
 				case SC_OBLIVIONCURSE:
 					if( sce.val3 == 1 ){
 						restriction = true;
@@ -8965,7 +8958,7 @@ int32 status_get_class(struct block_list *bl)
 	nullpo_ret(bl);
 	switch( bl->type ) {
 		case BL_PC:	return ((TBL_PC*)bl)->status.class_;
-		case BL_MOB:	return ((TBL_MOB*)bl)->vd->class_; // Class used on all code should be the view class of the mob.
+		case BL_MOB:	return ((TBL_MOB*)bl)->vd->look[LOOK_BASE]; // Class used on all code should be the view class of the mob.
 		case BL_PET:	return ((TBL_PET*)bl)->pet.class_;
 		case BL_HOM:	return ((TBL_HOM*)bl)->homunculus.class_;
 		case BL_MER:	return ((TBL_MER*)bl)->mercenary.class_;
@@ -9404,32 +9397,33 @@ void status_set_viewdata(struct block_list *bl, int32 class_)
 							break;
 					}
 				}
-				sd->vd.class_ = class_;
-				clif_get_weapon_view(sd, &sd->vd.weapon, &sd->vd.shield);
-				sd->vd.head_top = sd->status.head_top;
-				sd->vd.head_mid = sd->status.head_mid;
-				sd->vd.head_bottom = sd->status.head_bottom;
-				sd->vd.hair_style = cap_value(sd->status.hair, MIN_HAIR_STYLE, MAX_HAIR_STYLE);
-				sd->vd.hair_color = cap_value(sd->status.hair_color, MIN_HAIR_COLOR, MAX_HAIR_COLOR);
-				sd->vd.cloth_color = cap_value(sd->status.clothes_color, MIN_CLOTH_COLOR, MAX_CLOTH_COLOR);
-				sd->vd.body_style = cap_value(sd->status.body, MIN_BODY_STYLE, MAX_BODY_STYLE);
+				sd->vd.look[LOOK_BASE] = class_;
+				sd->update_look( LOOK_WEAPON );
+				sd->update_look( LOOK_SHIELD );
+				sd->vd.look[LOOK_HEAD_TOP] = sd->status.head_top;
+				sd->vd.look[LOOK_HEAD_MID] = sd->status.head_mid;
+				sd->vd.look[LOOK_HEAD_BOTTOM] = sd->status.head_bottom;
+				sd->vd.look[LOOK_HAIR] = cap_value(sd->status.hair, MIN_HAIR_STYLE, MAX_HAIR_STYLE);
+				sd->vd.look[LOOK_HAIR_COLOR] = cap_value(sd->status.hair_color, MIN_HAIR_COLOR, MAX_HAIR_COLOR);
+				sd->vd.look[LOOK_CLOTHES_COLOR] = cap_value(sd->status.clothes_color, MIN_CLOTH_COLOR, MAX_CLOTH_COLOR);
+				sd->vd.look[LOOK_BODY2] = cap_value(sd->status.body, MIN_BODY_STYLE, MAX_BODY_STYLE);
 				sd->vd.sex = sd->status.sex;
-				sd->vd.robe = sd->status.robe;
+				sd->vd.look[LOOK_ROBE] = sd->status.robe;
 
-				if (sd->vd.cloth_color) {
+				if (sd->vd.look[LOOK_CLOTHES_COLOR]) {
 					if(sd->sc.option&OPTION_WEDDING && battle_config.wedding_ignorepalette)
-						sd->vd.cloth_color = 0;
+						sd->vd.look[LOOK_CLOTHES_COLOR] = 0;
 					if(sd->sc.option&OPTION_XMAS && battle_config.xmas_ignorepalette)
-						sd->vd.cloth_color = 0;
+						sd->vd.look[LOOK_CLOTHES_COLOR] = 0;
 					if(sd->sc.option&(OPTION_SUMMER|OPTION_SUMMER2) && battle_config.summer_ignorepalette)
-						sd->vd.cloth_color = 0;
+						sd->vd.look[LOOK_CLOTHES_COLOR] = 0;
 					if(sd->sc.option&OPTION_HANBOK && battle_config.hanbok_ignorepalette)
-						sd->vd.cloth_color = 0;
+						sd->vd.look[LOOK_CLOTHES_COLOR] = 0;
 					if(sd->sc.option&OPTION_OKTOBERFEST && battle_config.oktoberfest_ignorepalette)
-						sd->vd.cloth_color = 0;
+						sd->vd.look[LOOK_CLOTHES_COLOR] = 0;
 				}
-				if ( sd->vd.body_style && sd->sc.option&OPTION_COSTUME)
- 					sd->vd.body_style = 0;
+				if ( sd->vd.look[LOOK_BODY2] && sd->sc.option&OPTION_COSTUME)
+ 					sd->vd.look[LOOK_BODY2] = 0;
 			} else if (vd)
 				memcpy(&sd->vd, vd, sizeof(struct view_data));
 			else
@@ -9446,9 +9440,9 @@ void status_set_viewdata(struct block_list *bl, int32 class_)
 			}else if( pcdb_checkid( class_ ) ){
 				mob_set_dynamic_viewdata( md );
 
-				md->vd->class_ = class_;
-				md->vd->hair_style = cap_value(md->vd->hair_style, MIN_HAIR_STYLE, MAX_HAIR_STYLE);
-				md->vd->hair_color = cap_value(md->vd->hair_color, MIN_HAIR_COLOR, MAX_HAIR_COLOR);
+				md->vd->look[LOOK_BASE] = class_;
+				md->vd->look[LOOK_HAIR] = cap_value(md->vd->look[LOOK_HAIR], MIN_HAIR_STYLE, MAX_HAIR_STYLE);
+				md->vd->look[LOOK_HAIR_COLOR] = cap_value(md->vd->look[LOOK_HAIR_COLOR], MIN_HAIR_COLOR, MAX_HAIR_COLOR);
 			}else
 				ShowError("status_set_viewdata (MOB): No view data for class %d\n", class_);
 		}
@@ -9458,12 +9452,12 @@ void status_set_viewdata(struct block_list *bl, int32 class_)
 			TBL_PET* pd = (TBL_PET*)bl;
 			if (vd) {
 				memcpy(&pd->vd, vd, sizeof(struct view_data));
-				if (!pcdb_checkid(vd->class_)) {
-					pd->vd.hair_style = battle_config.pet_hair_style;
+				if (!pcdb_checkid(vd->look[LOOK_BASE])) {
+					pd->vd.look[LOOK_HAIR] = battle_config.pet_hair_style;
 					if(pd->pet.equip) {
-						pd->vd.head_bottom = itemdb_viewid(pd->pet.equip);
-						if (!pd->vd.head_bottom)
-							pd->vd.head_bottom = pd->pet.equip;
+						pd->vd.look[LOOK_HEAD_BOTTOM] = itemdb_viewid(pd->pet.equip);
+						if (!pd->vd.look[LOOK_HEAD_BOTTOM])
+							pd->vd.look[LOOK_HEAD_BOTTOM] = pd->pet.equip;
 					}
 				}
 			} else
@@ -9477,8 +9471,8 @@ void status_set_viewdata(struct block_list *bl, int32 class_)
 				memcpy(&nd->vd, vd, sizeof(struct view_data));
 			else if (pcdb_checkid(class_)) {
 				memset(&nd->vd, 0, sizeof(struct view_data));
-				nd->vd.class_ = class_;
-				nd->vd.hair_style = cap_value(nd->vd.hair_style, MIN_HAIR_STYLE, MAX_HAIR_STYLE);
+				nd->vd.look[LOOK_BASE] = class_;
+				nd->vd.look[LOOK_HAIR] = cap_value(nd->vd.look[LOOK_HAIR], MIN_HAIR_STYLE, MAX_HAIR_STYLE);
 			} else {
 				ShowError("status_set_viewdata (NPC): Invalid view data %d\n", class_);
 				if (bl->m >= 0)
@@ -9566,6 +9560,9 @@ static int32 status_get_sc_interval(enum sc_type type)
 		case SC_KILLING_AURA:
 		case SC_BOSSMAPINFO:
 			return 1000;
+		case SC_WINKCHARM:
+		case SC_VOICEOFSIREN:
+			return 2250;
 		case SC_BURNING:
 		case SC_PYREXIA:
 			return 3000;
@@ -11145,6 +11142,8 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 		case SC_BLEEDING:
 		case SC_BURNING:
 		case SC_KILLING_AURA:
+		case SC_WINKCHARM:
+		case SC_VOICEOFSIREN:
 			tick_time = status_get_sc_interval(type);
 			val4 = tick - tick_time; // Remaining time
 			break;
@@ -12044,10 +12043,6 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 			break;
 		case SC_HARMONIZE:
 			val2 = 5 + 5 * val1;
-			break;
-		case SC_VOICEOFSIREN:
-			val4 = tick / 2000;
-			tick_time = 2000; // [GodLesZ] tick time
 			break;
 		case SC_DEEPSLEEP:
 			val4 = tick / 2000;
@@ -13017,10 +13012,10 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 			case SC_DRESSUP:
 				if( !vd )
 					break;
-				clif_changelook(bl,LOOK_BASE,vd->class_);
+				clif_changelook(bl,LOOK_BASE,vd->look[LOOK_BASE]);
 				clif_changelook(bl,LOOK_WEAPON,0);
 				clif_changelook(bl,LOOK_SHIELD,0);
-				clif_changelook(bl,LOOK_CLOTHES_COLOR,vd->cloth_color);
+				clif_changelook(bl,LOOK_CLOTHES_COLOR,vd->look[LOOK_CLOTHES_COLOR]);
 				clif_changelook(bl,LOOK_BODY2,0);
 				break;
 			case SC_STONE:
@@ -13149,16 +13144,16 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 	if (!disable_opt_flag && (opt_flag[SCF_SENDOPTION] || opt_flag[SCF_ONTOUCH] || opt_flag[SCF_UNITMOVE] || opt_flag[SCF_NONPLAYER] || opt_flag[SCF_SENDLOOK])) {
 		clif_changeoption(bl);
 		if(sd && opt_flag[SCF_SENDLOOK]) {
-			clif_changelook(bl,LOOK_BASE,vd->class_);
+			clif_changelook(bl,LOOK_BASE,vd->look[LOOK_BASE]);
 			clif_changelook(bl,LOOK_WEAPON,0);
 			clif_changelook(bl,LOOK_SHIELD,0);
-			clif_changelook(bl,LOOK_CLOTHES_COLOR,vd->cloth_color);
+			clif_changelook(bl,LOOK_CLOTHES_COLOR,vd->look[LOOK_CLOTHES_COLOR]);
 		}
 	}
 
 	if (calc_flag[SCB_DYE]) { // Reset DYE color
-		if (vd && vd->cloth_color) {
-			val4 = vd->cloth_color;
+		if (vd && vd->look[LOOK_CLOTHES_COLOR]) {
+			val4 = vd->look[LOOK_CLOTHES_COLOR];
 			clif_changelook(bl,LOOK_CLOTHES_COLOR,0);
 		}
 		calc_flag.reset(SCB_DYE);
@@ -13786,6 +13781,11 @@ int32 status_change_end( struct block_list* bl, enum sc_type type, int32 tid ){
 				}
 			}
 			break;
+		case SC_WINKCHARM:
+			if (bl->type == BL_MOB) {
+				mob_unlocktarget(static_cast<mob_data*>(bl), gettick());
+			}
+			break;
 		case SC_TENSIONRELAX:
 			if (sc && (sc->getSCE(SC_WEIGHT50) || sc->getSCE(SC_WEIGHT90)))
 				status_get_regen_data(bl)->state.overweight = true; // Add the overweight flag back
@@ -14046,7 +14046,7 @@ int32 status_change_end( struct block_list* bl, enum sc_type type, int32 tid ){
 		sc->option &= ~scdb->look;
 
 	if (calc_flag[SCB_DYE]) { // Restore DYE color
-		if (vd && !vd->cloth_color && val4)
+		if (vd && !vd->look[LOOK_CLOTHES_COLOR] && val4)
 			clif_changelook(bl,LOOK_CLOTHES_COLOR,val4);
 		calc_flag.reset(SCB_DYE);
 	}
@@ -14066,10 +14066,11 @@ int32 status_change_end( struct block_list* bl, enum sc_type type, int32 tid ){
 	else if (!disable_opt_flag && (opt_flag[SCF_SENDOPTION] || opt_flag[SCF_ONTOUCH] || opt_flag[SCF_UNITMOVE] || opt_flag[SCF_NONPLAYER] || opt_flag[SCF_SENDLOOK])) {
 		clif_changeoption(bl);
 		if (sd && opt_flag[SCF_SENDLOOK]) {
-			clif_changelook(bl,LOOK_BASE,sd->vd.class_);
-			clif_get_weapon_view(sd,&sd->vd.weapon,&sd->vd.shield);
-			clif_changelook(bl,LOOK_WEAPON,sd->vd.weapon);
-			clif_changelook(bl,LOOK_SHIELD,sd->vd.shield);
+			clif_changelook(bl,LOOK_BASE,sd->vd.look[LOOK_BASE]);
+			sd->update_look( LOOK_WEAPON );
+			sd->update_look( LOOK_SHIELD );
+			clif_changelook(bl,LOOK_WEAPON,sd->vd.look[LOOK_WEAPON]);
+			clif_changelook(bl,LOOK_SHIELD,sd->vd.look[LOOK_SHIELD]);
 			clif_changelook(bl,LOOK_CLOTHES_COLOR,cap_value(sd->status.clothes_color,0,battle_config.max_cloth_color));
 			clif_changelook(bl,LOOK_BODY2,cap_value(sd->status.body,0,battle_config.max_body_style));
 		}
@@ -14676,11 +14677,10 @@ TIMER_FUNC(status_change_timer){
 		}
 		break;
 
+	case SC_WINKCHARM:
 	case SC_VOICEOFSIREN:
-		if( --(sce->val4) >= 0 ) {
+		if (sce->val4 >= 0) {
 			clif_emotion( *bl, ET_THROB );
-			sc_timer_next(2000 + tick);
-			return 0;
 		}
 		break;
 

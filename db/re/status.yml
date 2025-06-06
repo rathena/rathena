@@ -1731,6 +1731,8 @@ Body:
   - Status: Winkcharm
     Icon: EFST_DC_WINKCHARM
     DurationLookup: DC_WINKCHARM
+    States:
+      NoCastCond: true
     Flags:
       RemoveOnDamaged: true
       Debuff: true

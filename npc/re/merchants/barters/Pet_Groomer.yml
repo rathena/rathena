@@ -34,7 +34,6 @@
 #        Item           Aegis name of the item.
 #        Stock          Amount of item in stock. 0 means unlimited. (Default: 0)
 #        Zeny           Cost of them item in Zeny. (Default: 0)
-#        Refine         Refine level of the item. (Default: 0)
 #        RequiredItems: List of required items (Optional)
 #          - Index      Index of the required item. (0-4)
 #            Item       Aegis name of required item.
@@ -47,41 +46,96 @@ Header:
   Version: 2
 
 Body:
-  - Name: barter_ein_dun03
+###########################################################################
+##= Pet Groomer ( Exchange )
+###########################################################################
+  - Name: barter_Pet_Groomer
     Items:
       - Index: 0
-        Item: Ein_SAFETY_PENDR
+        Item: Monster_Juice
         RequiredItems:
           - Index: 0
-            Item: Ein_DYNITE
-            Amount: 75
+            Item: Apple
+            Amount: 2
+          - Index: 1
+            Item: Animal_Blood
+            Amount: 1
       - Index: 1
-        Item: Ein_SAFETY_PENDL
+        Item: Singing_Flower
         RequiredItems:
           - Index: 0
-            Item: Ein_DYNITE
-            Amount: 75
+            Item: Singing_Plant
+            Amount: 1
       - Index: 2
-        Item: Ein_SAFETY_EPAULR
+        Item: Wild_Flower
         RequiredItems:
           - Index: 0
-            Item: Ein_DYNITE
-            Amount: 75
+            Item: Fancy_Flower
+            Amount: 1
+          - Index: 1
+            Item: Clover
+            Amount: 1
       - Index: 3
-        Item: Ein_SAFETY_EPAULL
+        Item: Book_Of_Devil
         RequiredItems:
           - Index: 0
-            Item: Ein_DYNITE
-            Amount: 75
+            Item: Horrendous_Mouth
+            Amount: 2
+          - Index: 1
+            Item: Old_Magic_Book
+            Amount: 1
       - Index: 4
-        Item: Ein_Ddbox2
+        Item: No_Recipient
         RequiredItems:
           - Index: 0
-            Item: Ein_DYNITE
-            Amount: 30
+            Item: Old_Portrait
+            Amount: 1
       - Index: 5
-        Item: Ein_Ddbox
+        Item: Horror_Of_Tribe
         RequiredItems:
           - Index: 0
-            Item: Ein_DYNITE
-            Amount: 30
+            Item: Scorpion's_Tail
+            Amount: 1
+          - Index: 1
+            Item: Patriotism_Marks
+            Amount: 1
+      - Index: 6
+        Item: Skull_Helm
+        RequiredItems:
+          - Index: 0
+            Item: Bone_Helm
+            Amount: 1
+      - Index: 7
+        Item: Monster_Oxygen_Mask
+        RequiredItems:
+          - Index: 0
+            Item: Oxygen_Mask
+            Amount: 1
+      - Index: 8
+        Item: Silk_Ribbon
+        RequiredItems:
+          - Index: 0
+            Item: Ribbon
+            Amount: 1
+      - Index: 9
+        Item: Stellar_Hairpin
+        RequiredItems:
+          - Index: 0
+            Item: Star_Dust
+            Amount: 1
+      - Index: 10
+        Item: Tiny_Egg_Shell
+        RequiredItems:
+          - Index: 0
+            Item: Egg_Shell
+            Amount: 1
+      - Index: 11
+        Item: Rocker_Glasses
+        Zeny: 400
+        RequiredItems:
+          - Index: 0
+            Item: Zargon
+            Amount: 2
+          - Index: 1
+            Item: Ribbon
+            Amount: 1
