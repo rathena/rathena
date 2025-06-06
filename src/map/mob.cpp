@@ -1267,18 +1267,23 @@ static int32 mob_can_changetarget(struct mob_data* md, struct block_list* target
  * Randomizes the target ID of a monster if it has the given mode
  * @param bl Unit that is going to attack
  * @param target_id Target ID to modify
+ * @return Whether a target was found (true) or not (false)
  */
-void mob_randomtarget(mob_data& md, int32& target_id) {
+bool mob_randomtarget(mob_data& md, int32& target_id) {
 	if (!status_has_mode(&md.status, MD_RANDOMTARGET))
-		return;
+		return true;
 
-	int32 search_size = md.status.rhw.range;
-	if (md.sc.hasSCE(SC_BLIND))
-		search_size = 1;
+	// Pick a random visible target
+	block_list* target = battle_getenemy(&md, DEFAULT_ENEMY_TYPE((&md)), md.status.rhw.range);
+	if (target == nullptr)
+		return false;
 
-	block_list* target = battle_getenemy(&md, DEFAULT_ENEMY_TYPE((&md)), search_size);
-	if (target != nullptr)
-		target_id = target->id;
+	// Check if target is in shoot range
+	if (!battle_check_range(&md, target, md.status.rhw.range))
+		return false;
+
+	target_id = target->id;
+	return true;
 }
 
 /*==========================================
