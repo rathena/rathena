@@ -55,7 +55,7 @@ bool storage_exists(uint8 id);
 int32 storage_delitem(map_session_data* sd, struct s_storage *stor, int32 index, int32 amount);
 int32 storage_storageopen(map_session_data *sd);
 void storage_storageadd(map_session_data *sd, struct s_storage *stor, int32 index, int32 amount);
-void storage_storageget(map_session_data *sd, struct s_storage *stor, int32 index, int32 amount);
+void storage_storageget(map_session_data *sd, struct s_storage *stor, int32 index, int32 amount, bool favorite=false);
 void storage_storageaddfromcart(map_session_data *sd, struct s_storage *stor, int32 index, int32 amount);
 void storage_storagegettocart(map_session_data *sd, struct s_storage *stor, int32 index, int32 amount);
 void storage_storagesave(map_session_data *sd);
@@ -75,7 +75,7 @@ bool storage_guild_additem(map_session_data *sd,struct s_storage *stor,struct it
 bool storage_guild_additem2(struct s_storage* stor, struct item* item, int32 amount);
 bool storage_guild_delitem(map_session_data *sd,struct s_storage *stor,int32 n,int32 amount);
 void storage_guild_storageadd(map_session_data *sd,int32 index,int32 amount);
-void storage_guild_storageget(map_session_data *sd,int32 index,int32 amount);
+void storage_guild_storageget(map_session_data *sd,int32 index,int32 amount, bool favorite=false);
 void storage_guild_storageaddfromcart(map_session_data *sd,int32 index,int32 amount);
 void storage_guild_storagegettocart(map_session_data *sd,int32 index,int32 amount);
 void storage_guild_storageclose(map_session_data *sd);

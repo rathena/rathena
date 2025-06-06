@@ -481,6 +481,8 @@ Body:
   - Status: Slowpoison
     Icon: EFST_SLOWPOISON
     DurationLookup: PR_SLOWPOISON
+    CalcFlags:
+      Regen: true
     Flags:
       NoClearance: true
       RemoveOnHermode: true
@@ -1170,6 +1172,7 @@ Body:
     Flags:
       NoSave: true
       RequireWeapon: true
+      RemoveOnUnequipWeapon: true
       RemoveOnHermode: true
   - Status: Parrying
     Icon: EFST_PARRYING
@@ -1192,6 +1195,7 @@ Body:
       Quicken: true
     Flags:
       NoSave: true
+      RemoveOnUnequip: true
       RemoveOnHermode: true
   - Status: Tensionrelax
     Icon: EFST_TENSIONRELAX
@@ -1723,6 +1727,8 @@ Body:
   - Status: Winkcharm
     Icon: EFST_DC_WINKCHARM
     DurationLookup: DC_WINKCHARM
+    States:
+      NoCastCond: true
     Flags:
       RemoveOnDamaged: true
       Debuff: true

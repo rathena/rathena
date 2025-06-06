@@ -2037,6 +2037,14 @@ struct PACKET_CZ_QUEST_STATUS_REQ{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_QUEST_STATUS_REQ, 0xbf3);
 
+struct PACKET_CZ_MOVE_ITEM_TO_PERSONAL{
+	int16 packetType;
+	uint32 unknown;
+	uint16 index;
+	uint32 amount;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_MOVE_ITEM_TO_PERSONAL, 0xc22);
+
 #if PACKETVER_MAIN_NUM >= 20250402
 struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub2 {
 	uint32 nameid;
